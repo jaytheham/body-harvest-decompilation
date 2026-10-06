@@ -95,6 +95,70 @@ s32 D_800313C4_31FC4 = 0;
 s32 D_800313CC = 0;
 
 // https://decomp.me/scratch/cHVpz
+/* Save/load diagnostics and main-loop switch targets. */
+const char D_80036840_37440[] = "Rumble pak(tm)  detected!\n";
+const char D_8003685C_3745C[] = "Version %d failed\n";
+const char D_80036870_37470[] = "Checksum failed\n";
+const char D_80036884_37484[] = "Save:score %d\n";
+const char D_80036894_37494[] = "People %d\n";
+const char D_800368A0_374A0[] = "Time %d\n";
+const char D_800368AC_374AC[] = "-----Save Info-------\n";
+const char D_800368C4_374C4[] = "Level:%d, completed %d\n";
+const char D_800368DC_374DC[] = "WarpPointNumber :%d\n";
+const char D_800368F4_374F4[] = "Game State %x\n";
+const char D_80036904_37504[] = "Inventory\n{";
+const char D_80036910_37510[] = "SAVING Inventory[%d] = %d,\n";
+const char D_8003692C_3752C[] = "}\n";
+const char D_80036930_37530[] = "\nKeys:\n";
+const char D_80036938_37538[] = "(%llX)\n";
+const char D_80036940_37540[] = "\n*************SAVING AlienArtefacts=%d:\n";
+const char D_8003696C_3756C[] = "\nConversation states:\n";
+const char D_80036984_37584[] = "(%llX)\n";
+const char D_8003698C_3758C[] = "beacon states:%d\n";
+const char D_800369A0_375A0[] = "complete set: %x\n";
+const char D_800369B4_375B4[] = "failed set: %x\n";
+const char D_800369C4_375C4[] = "AMMO SAVE\n{";
+const char D_800369D0_375D0[] = "SAVING AMMO to the nearest multiple of 1, 2 or 4\n";
+const char D_80036A04_37604[] = "SAVING aAmmunition[%d]==%d,";
+const char D_80036A20_37620[] = "current objective:%d\n";
+const char D_80036A38_37638[] = "game info:%d\n";
+const char D_80036A48_37648[] = "alpha tank ammos: %d,%d,%d,%d\n";
+const char D_80036A68_37668[] = "}\n";
+const char D_80036A6C_3766C[] = "------------------------------\n";
+const char D_80036A8C_3768C[] = "Restore:Score %d\n";
+const char D_80036AA0_376A0[] = "People:%d\n";
+const char D_80036AAC_376AC[] = "Time:%d\n";
+const char D_80036AB8_376B8[] = "-----Restore Info------\n";
+const char D_80036AD4_376D4[] = "Level:%d, completed %d\n";
+const char D_80036AEC_376EC[] = "Warp point:%d\n";
+const char D_80036AFC_376FC[] = "game state: %x\n";
+const char D_80036B0C_3770C[] = "Inventory\n{";
+const char D_80036B18_37718[] = "%d,";
+const char D_80036B1C_3771C[] = "}\n";
+const char D_80036B20_37720[] = "\nKeys:\n";
+const char D_80036B28_37728[] = "(%llX)\n";
+const char D_80036B30_37730[] = "\n******************LOADING AlienArtefacts=%d:\n";
+const char D_80036B60_37760[] = "\nConversation states:\n";
+const char D_80036B78_37778[] = "(%llX)\n";
+const char D_80036B80_37780[] = "beacon states:%d\n";
+const char D_80036B94_37794[] = "Start point:%d\n";
+const char D_80036BA4_377A4[] = "complete set: %x\n";
+const char D_80036BB8_377B8[] = "failed set: %x\n";
+const char D_80036BC8_377C8[] = "AMMO LOAD\n{";
+const char D_80036BD4_377D4[] = "LOADING aAmmunition[%d]==%d\n";
+const char D_80036BF4_377F4[] = "current objective : %d\n";
+const char D_80036C0C_3780C[] = "game info: %x\n";
+const char D_80036C1C_3781C[] = "game info: %x\n";
+const char D_80036C2C_3782C[] = "alpha tank ammos: %d,%d,%d,%d\n";
+const char D_80036C4C_3784C[] = "}\n";
+const char D_80036C50_37850[] = "CALLING RECURSIVELY";
+const char D_80036C64_37864[] = "SCRUB GAMENOTE\n";
+const char D_80036C74_37874[] = "RESTORE GAMENOTE\n";
+const f32 D_80036C88_37888[] = {10000.0f};
+const u32 jtbl_80036C8C_3788C[] = {
+	0x80002FB4, 0x80003024, 0x80002FEC, 0x80002FFC, 0x80003014, 0x80002FD0
+};
+
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 {
 	s32 s2;
@@ -374,7 +438,7 @@ void checkForRumblePak(void) {
 		return;
 	}
 
-	osSyncPrintf(D_80036840); // Rumble pak(tm)  detected!
+	osSyncPrintf(D_80036840_37440); // Rumble pak(tm)  detected!
 	D_80047678 = 1;
 	func_8000108C_1C8C(0);
 	D_800313CC = 0;
@@ -474,7 +538,7 @@ void func_80001190_1D90(void) {
 		if (D_80047678 == 1) {
 			D_800313CC_31FCC = D_8004767C;
 			if (D_8004768C >= 0x2711) {
-				temp_f0 = D_80036C88_37888 / D_8004768C;
+				temp_f0 = D_80036C88_37888_R / D_8004768C;
 				D_800313CC_31FCC = D_800313CC_31FCC * (temp_f0 * temp_f0 * temp_f0);
 				D_800313CC_31FCC /= 2;
 			}
@@ -589,7 +653,7 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 
 	if (D_800431C0[arg0] != 0x1C)
 	{
-		osSyncPrintf(&D_8003685C_3745C, D_800431C0[arg0]);
+		osSyncPrintf(D_8003685C_3745C, D_800431C0[arg0]);
 		return 0;
 	}
 	stored_checksum = D_800431C0[arg0 + 2] + (D_800431C0[arg0 + 3] << 8);
@@ -602,7 +666,7 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 	}
 	if (stored_checksum != computed_checksum)
 	{
-		osSyncPrintf(&D_80036870_37470);
+		osSyncPrintf(D_80036870_37470);
 		return 0;
 	}
 	return 1;
@@ -713,14 +777,14 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 	stats = D_80052A98;
 	do {
-		osSyncPrintf(&D_80036884_37484, stats->score);
+		osSyncPrintf(D_80036884_37484, stats->score);
 		dest += 4;
 		dest[-3] = (u8)(stats->score >> 8);
 		dest[-2] = (u8)(stats->score >> 16);
 		dest[-1] = (u8)(stats->score >> 24);
-		osSyncPrintf(&D_80036894_37494, (u16)stats->humansKilled), dest[-4] = (u8)stats->score;
+		osSyncPrintf(D_80036894_37494, (u16)stats->humansKilled), dest[-4] = (u8)stats->score;
 		dest += 1;
-		osSyncPrintf(&D_800368A0_374A0, stats->secondsElapsed), dest[-1] = (u8)(u16)stats->humansKilled;
+		osSyncPrintf(D_800368A0_374A0, stats->secondsElapsed), dest[-1] = (u8)(u16)stats->humansKilled;
 		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
 		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
 		dest += 3;
@@ -728,7 +792,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[-3] = (u8)stats[-1].secondsElapsed;
 	} while (stats < (Unk80052A98 *)&D_80052AC8);
 
-	osSyncPrintf(&D_800368AC_374AC);
+	osSyncPrintf(D_800368AC_374AC);
 	{
 		u32 level;
 		u32 area;
@@ -736,14 +800,14 @@ void guess_prepareToSaveGame(s32 arg0) {
 		level = currentLevel;
 		area = D_80047FA0;
 		*dest++ = (u8)((area * 0x10) | level);
-		osSyncPrintf(&D_800368C4_374C4, level, area);
+		osSyncPrintf(D_800368C4_374C4, level, area);
 	}
 	{
 		u32 value;
 
 		value = D_80047F9C;
 		*dest++ = (u8)value;
-		osSyncPrintf(&D_800368DC_374DC, value);
+		osSyncPrintf(D_800368DC_374DC, value);
 	}
 	{
 		u32 value;
@@ -754,7 +818,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[2] = (u8)(value >> 0x10);
 		dest[3] = (u8)(value >> 0x18);
 		dest += 4;
-		osSyncPrintf(&D_800368F4_374F4, (s32)value);
+		osSyncPrintf(D_800368F4_374F4, (s32)value);
 	}
 
 	{
@@ -765,22 +829,22 @@ void guess_prepareToSaveGame(s32 arg0) {
 			*dest++ = *p++;
 		} while ((u32)p < (u32)&D_80047FAE);
 	}
-	osSyncPrintf(&D_80036904_37504);
+	osSyncPrintf(D_80036904_37504);
 
 	for (i = 0; i < 7; i++) {
 		u8 slot;
 
 		slot = weaponSlots[i];
 		*dest++ = slot;
-		osSyncPrintf(&D_80036910_37510, i, (s32)slot);
+		osSyncPrintf(D_80036910_37510, i, (s32)slot);
 	}
 
-	osSyncPrintf(&D_8003692C_3752C);
+	osSyncPrintf(D_8003692C_3752C);
 	{
 		u64 flags1;
 
 		flags1 = *(u64 *)&D_8004DC48;
-		osSyncPrintf(&D_80036930_37530);
+		osSyncPrintf(D_80036930_37530);
 		*dest++ = (s8)flags1;
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 8);
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x10);
@@ -789,7 +853,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x28);
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x30);
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x38);
-		osSyncPrintf(&D_80036938_37538, ((Flags2x32 *)&D_8004DC48)->unk4, ((Flags2x32 *)&D_8004DC48)->unk0);
+		osSyncPrintf(D_80036938_37538, ((Flags2x32 *)&D_8004DC48)->unk4, ((Flags2x32 *)&D_8004DC48)->unk0);
 	}
 
 	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
@@ -801,7 +865,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest += 2;
 		dest[-1] = (u8)((s32)value1 >> 8);
 		dest[-2] = (u8)value1;
-		osSyncPrintf(&D_80036940_37540, (s32)value1);
+		osSyncPrintf(D_80036940_37540, (s32)value1);
 	}
 
 	{
@@ -811,7 +875,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest += 2;
 		dest[-1] = (u8)((s32)value2 >> 8);
 		dest[-2] = (u8)value2;
-		osSyncPrintf(&D_8003696C_3756C);
+		osSyncPrintf(D_8003696C_3756C);
 	}
 
 	{
@@ -826,7 +890,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x28);
 		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x30);
 		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x38);
-		osSyncPrintf(&D_80036984_37584, D_8004DC50.unk4, D_8004DC50.unk0);
+		osSyncPrintf(D_80036984_37584, D_8004DC50.unk4, D_8004DC50.unk0);
 	}
 
 	{
@@ -844,7 +908,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[3] = (s8)(playtime >> 0x18);
 		dest[4] = (s8)progress;
 		dest += 5;
-		osSyncPrintf(&D_8003698C_3758C, progress);
+		osSyncPrintf(D_8003698C_3758C, progress);
 	}
 
 	{
@@ -856,22 +920,22 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[-3] = (u8)(value >> 8);
 		dest[-2] = (u8)(value >> 0x10);
 		dest[-1] = (u8)(value >> 0x18);
-		osSyncPrintf(&D_800369A0_375A0, (s32)value);
+		osSyncPrintf(D_800369A0_375A0, (s32)value);
 		value = D_8004D158;
 		dest += 4;
 		dest[-4] = (u8)value;
 		dest[-3] = (u8)(value >> 8);
 		dest[-2] = (u8)(value >> 0x10);
 		dest[-1] = (u8)(value >> 0x18);
-		osSyncPrintf(&D_800369B4_375B4, (s32)value);
+		osSyncPrintf(D_800369B4_375B4, (s32)value);
 	}
 
-	osSyncPrintf(&D_800369C4_375C4);
-	osSyncPrintf(&D_800369D0_375D0);
+	osSyncPrintf(D_800369C4_375C4);
+	osSyncPrintf(D_800369D0_375D0);
 
 	for (i = 0; i < 7; i++) {
 		*dest++ = (s8)(D_80048140[weaponSlots[i]] >> D_80031374_31F74[weaponSlots[i]]);
-		osSyncPrintf(&D_80036A04_37604, i, (s32)D_80048140[i]);
+		osSyncPrintf(D_80036A04_37604, i, (s32)D_80048140[i]);
 	}
 
 	{
@@ -879,7 +943,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 		value = D_80048030;
 		*dest++ = value;
-		osSyncPrintf(&D_80036A20_37620, (s32)value);
+		osSyncPrintf(D_80036A20_37620, (s32)value);
 	}
 
 	{
@@ -887,7 +951,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 		value = D_80052ACD;
 		*dest++ = value;
-		osSyncPrintf(&D_80036A38_37638, (s32)value);
+		osSyncPrintf(D_80036A38_37638, (s32)value);
 	}
 
 	{
@@ -905,12 +969,12 @@ void guess_prepareToSaveGame(s32 arg0) {
 		dest[2] = (s8)value2;
 		dest[3] = (s8)value3;
 		dest += 3;
-		osSyncPrintf(&D_80036A48_37648, (s32)value0, (s32)value1, (s32)value2, (s32)value3);
+		osSyncPrintf(D_80036A48_37648, (s32)value0, (s32)value1, (s32)value2, (s32)value3);
 	}
 
-	osSyncPrintf(&D_80036A68_37668);
+	osSyncPrintf(D_80036A68_37668);
 	func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
-	osSyncPrintf(&D_80036A6C_3766C);
+	osSyncPrintf(D_80036A6C_3766C);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
@@ -1068,17 +1132,17 @@ void guess_loadSavedGame(s32 arg0) {
 			stat->score += (s32)src[2] << 16;
 			stat->score += (s32)src[3] << 24;
 			src += 4;
-			osSyncPrintf(&D_80036A8C_3768C, stat->score);
+			osSyncPrintf(D_80036A8C_3768C, stat->score);
 			stat->humansKilled = *src++;
-			osSyncPrintf(&D_80036AA0_376A0, stat->humansKilled);
+			osSyncPrintf(D_80036AA0_376A0, stat->humansKilled);
 			stat->secondsElapsed = src[0];
 			stat->secondsElapsed += src[1] << 8;
 			stat->secondsElapsed += src[2] << 16;
-			osSyncPrintf(&D_80036AAC_376AC, stat->secondsElapsed);
+			osSyncPrintf(D_80036AAC_376AC, stat->secondsElapsed);
 			src += 3;
 			stat++;
 		} while ((u32)stat < (u32)&D_80052AC8);
-		osSyncPrintf(&D_80036AB8_376B8);
+		osSyncPrintf(D_80036AB8_376B8);
 		{
 			u8 b;
 
@@ -1086,9 +1150,9 @@ void guess_loadSavedGame(s32 arg0) {
 			currentLevel = b & 0xF;
 			D_80047FA0 = (s32)b >> 4;
 		}
-		osSyncPrintf(&D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
+		osSyncPrintf(D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
 		D_80047F9C = *src++ & 0xF;
-		osSyncPrintf(&D_80036AEC_376EC, D_80047F9C);
+		osSyncPrintf(D_80036AEC_376EC, D_80047F9C);
 		D_80031420 = 0;
 		shift = 0;
 		do {
@@ -1101,13 +1165,13 @@ void guess_loadSavedGame(s32 arg0) {
 		}
 		func_80016FD0_17BD0((s16)((D_80031420 & 0x60) >> 5));
 		func_800170F4_17CF4((s16)((D_80031420 & 0x18) >> 3));
-		osSyncPrintf(&D_80036AFC_376FC, D_80031420);
+		osSyncPrintf(D_80036AFC_376FC, D_80031420);
 		p = D_80047FA8;
 		do {
 			*p++ = *src++;
 		} while ((u32)p < (u32)&D_80047FAE);
 		D_80047FAE = 0;
-		osSyncPrintf(&D_80036B0C_3770C);
+		osSyncPrintf(D_80036B0C_3770C);
 		p = &weaponSlots[0];
 		{
 			u8 b;
@@ -1115,14 +1179,14 @@ void guess_loadSavedGame(s32 arg0) {
 		do {
 			b = *src++;
 			*p = b;
-			osSyncPrintf(&D_80036B18_37718, b);
+			osSyncPrintf(D_80036B18_37718, b);
 			p++;
 		} while ((u32)p < (u32)&D_8004813F);
 		}
-		osSyncPrintf(&D_80036B1C_3771C);
+		osSyncPrintf(D_80036B1C_3771C);
 		sp34 = 0;
 		sp30 = 0;
-		osSyncPrintf(&D_80036B20_37720);
+		osSyncPrintf(D_80036B20_37720);
 		shift = 0;
 		do {
 			s64 shifted = __ll_lshift(*src, shift);
@@ -1134,7 +1198,7 @@ void guess_loadSavedGame(s32 arg0) {
 		} while (shift < 0x40);
 		((Flags2x32 *)&D_8004DC48)->unk0 = sp30;
 		((Flags2x32 *)&D_8004DC48)->unk4 = sp34;
-		osSyncPrintf(&D_80036B28_37728, sp30, sp34);
+		osSyncPrintf(D_80036B28_37728, sp30, sp34);
 		{
 			u8 b;
 
@@ -1145,13 +1209,13 @@ void guess_loadSavedGame(s32 arg0) {
 		D_80048026 = src[1];
 		D_80048026 += src[2] << 8;
 		src += 3;
-		osSyncPrintf(&D_80036B30_37730, D_80048026);
+		osSyncPrintf(D_80036B30_37730, D_80048026);
 		D_80048028 = src[0];
 		D_80048028 += src[1] << 8;
 		src += 2;
 		D_8004DC50.unk0 = 0;
 		D_8004DC54 = 0;
-		osSyncPrintf(&D_80036B60_37760);
+		osSyncPrintf(D_80036B60_37760);
 		shift = 0;
 		do {
 			s64 shifted = __ll_lshift(*src, shift);
@@ -1161,7 +1225,7 @@ void guess_loadSavedGame(s32 arg0) {
 			src++;
 			shift += 8;
 		} while (shift < 0x40);
-		osSyncPrintf(&D_80036B78_37778, D_8004DC50.unk0, D_8004DC54);
+		osSyncPrintf(D_80036B78_37778, D_8004DC50.unk0, D_8004DC54);
 		D_80052A90 = 0;
 		shift = 0;
 		do {
@@ -1169,19 +1233,19 @@ void guess_loadSavedGame(s32 arg0) {
 			shift += 8;
 		} while (shift < 0x20);
 		D_80047F98 = *src++;
-		osSyncPrintf(&D_80036B80_37780, D_80047F98);
+		osSyncPrintf(D_80036B80_37780, D_80047F98);
 		if (D_80047F98 < D_80047F9C) {
 			D_80047F98 = D_80047F9C;
 		}
-		osSyncPrintf(&D_80036B94_37794, D_80047F98);
-		D_80047F94 = D_8003E000[currentLevel-1][D_80047F98].unk0;
+		osSyncPrintf(D_80036B94_37794, D_80047F98);
+		D_80047F94 = D_8003E000_3EC00[currentLevel-1][D_80047F98].unk0;
 		D_8004D154 = 0;
 		shift = 0;
 		do {
 			D_8004D154 += *src++ << shift;
 			shift += 8;
 		} while (shift < 0x20);
-		osSyncPrintf(&D_80036BA4_377A4, D_8004D154);
+		osSyncPrintf(D_80036BA4_377A4, D_8004D154);
 		D_8004D150 = 0;
 		D_8004D158 = 0;
 		shift = 0;
@@ -1190,8 +1254,8 @@ void guess_loadSavedGame(s32 arg0) {
 			shift += 8;
 			continue;
 		} while (shift < 0x20);
-		osSyncPrintf(&D_80036BB8_377B8, D_8004D158);
-		osSyncPrintf(&D_80036BC8_377C8);
+		osSyncPrintf(D_80036BB8_377B8, D_8004D158);
+		osSyncPrintf(D_80036BC8_377C8);
 		{
 			s16 *q;
 			s32 i;
@@ -1202,26 +1266,26 @@ void guess_loadSavedGame(s32 arg0) {
 		do {
 			u8 slot = *p;
 			D_80048140[slot] = (s16)(*src++ << D_80031374_31F74[slot]);
-			osSyncPrintf(&D_80036BD4_377D4, i, *q);
+			osSyncPrintf(D_80036BD4_377D4, i, *q);
 			i++;
 			p++;
 			q++;
 		} while (i != 7);
 		}
 		D_80048030 = *src++;
-		osSyncPrintf(&D_80036BF4_377F4, D_80048030);
-		osSyncPrintf(&D_80036C0C_3780C, D_80052ACD);
+		osSyncPrintf(D_80036BF4_377F4, D_80048030);
+		osSyncPrintf(D_80036C0C_3780C, D_80052ACD);
 		D_80052ACD = *src++;
-		osSyncPrintf(&D_80036C1C_3781C, D_80052ACD);
+		osSyncPrintf(D_80036C1C_3781C, D_80052ACD);
 		D_8004815C = src[0];
 		D_80048160 = src[1];
 		D_80048162 = src[2];
 		D_8004815E = src[3];
 		src += 3;
-		osSyncPrintf(&D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
-		osSyncPrintf(&D_80036C4C_3784C);
+		osSyncPrintf(D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
+		osSyncPrintf(D_80036C4C_3784C);
 	} else {
-		osSyncPrintf(&D_80036C50_37850, 0);
+		osSyncPrintf(D_80036C50_37850, 0);
 		func_800021CC_2DCC(arg0);
 		guess_loadSavedGame(arg0);
 		D_80052A90 = 0;
@@ -1310,7 +1374,7 @@ void guess_deleteSavedData(void)
 	short new_var;
 	u8 *var_v1;
 	do {
-		osSyncPrintf(&D_80036C64); // SCRUB GAMENOTE
+		osSyncPrintf(D_80036C64_37864); // SCRUB GAMENOTE
 		var_v0 = &D_800431C0; new_var = 0; var_v1 = &D_8004337D;
 		do { var_v0++; *(var_v0 - 1) = new_var; } while (((u32) var_v0) < ((u32) var_v1));
 		func_80001830_2430();
@@ -1328,7 +1392,7 @@ void guess_restoreSavedData(void) {
 	if (D_80047608 != 0) {
 		func_8001D5A0_1E1A0(&D_80043388, 0, &D_800431C0, 0x1BD);
 	}
-	osSyncPrintf(D_80036C74); // RESTORE GAMENOTE
+	osSyncPrintf(D_80036C74_37874); // RESTORE GAMENOTE
 	if (validateSaveVersionAndChecksum(0, 0x1B9) == 0) {
 		guess_deleteSavedData();
 	}

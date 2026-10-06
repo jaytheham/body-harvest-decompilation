@@ -3455,8 +3455,8 @@ void func_800789E4_48E94(void) {
 		} else if (result == 2) {
 		  func_80007570_8170();
 		  D_80047F9C = 5;
-		  D_80047F98 = D_8003E0EE[currentLevel];
-		  D_80047F94 = D_8003E0EE[currentLevel];
+		  D_80047F98 = D_8003E0EE_3ECEE[currentLevel];
+		  D_80047F94 = D_8003E0EE_3ECEE[currentLevel];
 		  if (currentLevel == LEVEL_COMET) {
 			func_800072CC_7ECC(0x1FULL);
 		  }

@@ -8096,9 +8096,9 @@ void func_801095BC_11856C(VehicleInstance *vehicle) {
 #endif
 
 void func_801098E8_118898(VehicleInstance *vehicle) {
-	D_8015922C = &D_8003E290[func_800056D0_62D0(vehicle->unk0, vehicle->unk4)];
+	D_8015922C = &D_8003E290_3EE90[func_800056D0_62D0(vehicle->unk0, vehicle->unk4)];
 	if ((vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE) && (currentLevel != LEVEL_COMET)) {
-		D_8015922C = &D_8003E3A0;
+		D_8015922C = &D_8003E3A0_3EFA0;
 	}
 }
 

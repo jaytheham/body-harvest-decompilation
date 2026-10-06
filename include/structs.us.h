@@ -2817,7 +2817,7 @@ typedef struct {
 	/* 0x5A */ s16 unk5A;
 } Unk802E70C8; /* size = 0x5C */
 
-/* Gate entry in shield wall. Array: D_8003E0FC[5][8], access [currentLevel-1][idx] */
+/* Gate entry in shield wall. Array: D_8003E0FC_3ECFC[5][8], access [currentLevel-1][idx] */
 typedef struct {
 	/* 0x00 */ s16 xPosition; /* world X position */
 	/* 0x02 */ s16 yPosition; /* world Y position */

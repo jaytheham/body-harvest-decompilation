@@ -4250,7 +4250,7 @@ s32 func_80082B30_91AE0(u8 arg0)
 	zPos = alien->unk4;
 	threshold = ((u32)(alienTypes[typeIndex].unk54 & 0x180000)) >> 19;
 	terrainIndex = func_800056D0_62D0(xPos, zPos);
-	if (D_8003E290[terrainIndex].unkC <= threshold)
+	if (D_8003E290_3EE90[terrainIndex].unkC <= threshold)
 	{
 		return -1;
 	}

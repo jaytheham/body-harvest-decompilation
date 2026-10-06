@@ -1158,10 +1158,10 @@ s32 func_802D563C_254D7C(void) {
 			}
 		}
 		if (D_80157F8E == 2) {
-			((s8 *)D_8003E0FC)[0xB0]++;
-			tx = *(s16 *)((s8 *)D_8003E0FC + currentLevel * 80 - 0x46);
-			ty = *(s16 *)((s8 *)D_8003E0FC + currentLevel * 80 - 0x44);
-			tz = *(s16 *)((s8 *)D_8003E0FC + currentLevel * 80 - 0x42);
+			((s8 *)D_8003E0FC_3ECFC)[0xB0]++;
+			tx = *(s16 *)((s8 *)D_8003E0FC_3ECFC + currentLevel * 80 - 0x46);
+			ty = *(s16 *)((s8 *)D_8003E0FC_3ECFC + currentLevel * 80 - 0x44);
+			tz = *(s16 *)((s8 *)D_8003E0FC_3ECFC + currentLevel * 80 - 0x42);
 			func_800DEE5C_EDE0C((tx << 24) >> 16, ty, (tz << 24) >> 16, 0x64, 3);
 			func_800DEE5C_EDE0C((tx << 24) >> 16, ty, (tz << 24) >> 16, 0x32, 3);
 			func_800D05A8_DF558((tx << 24) >> 16, ty, (tz << 24) >> 16, 0x1F4, 0xC8, 0xC8, 0xFA);
@@ -1184,7 +1184,7 @@ s32 func_802D563C_254D7C(void) {
 		}
 		return 0;
 	case 6:
-		((s8 *)D_8003E0FC)[0xB0] = 0;
+		((s8 *)D_8003E0FC_3ECFC)[0xB0] = 0;
 		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C++;

@@ -2,6 +2,17 @@
 #include <ultra64.h>
 #include "common.h"
 
+/* Read-only strings, numeric constants, and switch targets. */
+const f64 D_80037620_38220[] = {32767.0};
+const f64 D_80037628_38228[] = {32767.0};
+const f64 D_80037630_38230[] = {32767.0};
+const f64 D_80037638_38238[] = {32767.0};
+const f64 D_80037640_38240[] = {32767.0};
+const f64 D_80037648_38248[] = {2.8};
+const f32 D_80037650_38250[] = {6000.0f};
+const f32 D_80037654_38254[] = {0.2617993950843811f};
+const f32 D_80037658_38258[] = {0.2617993950843811f};
+
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
@@ -140,13 +151,13 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			temp_v0 -= 4;
 			temp_v1 = (arg1 + arg3) - 1;
 			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037628 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628);
+			var_f0 = (f32) ((D_80037628_38228_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628_38228_R);
 			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
 		} else {
 			temp_v0 -= 4;
 			temp_v1 = (arg1 + arg3) - 7;
 			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037630 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630);
+			var_f0 = (f32) ((D_80037630_38230_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630_38230_R);
 			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
 		}
 		D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 - 0x480) * var_f0) + 1152.0f);
@@ -157,13 +168,13 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		temp_v0 -= 6;
 		temp_v1 = (arg1 + arg3) - 1;
 		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037638 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638);
+		var_f0 = (f32) ((D_80037638_38238_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638_38238_R);
 		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
 	} else {
 		temp_v0 -= 6;
 		temp_v1 = (arg1 + arg3) - 7;
 		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037640 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640);
+		var_f0 = (f32) ((D_80037640_38240_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640_38240_R);
 		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
 	}
 	D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 + 0x480) * var_f0) - 1152.0f);
@@ -176,7 +187,7 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 	D_8005BAE8->unk0 = (f32) (D_8005BAE8->unk0 + D_8005BAE8->unkC);
 	D_8005BAE8->unk4 = (f32) (D_8005BAE8->unk4 + D_8005BAE8->unk10);
-	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648_38248);
+	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648_38248_R);
 	D_80059CD2 = (s16) (s32) (D_8005BAE8->unk0 + (f32) (arg2 << 8));
 	D_80059CD4 = (s16) (s32) (-D_8005BAE8->unk4 - (f32) (arg3 << 8));
 	D_80059CD6 = 0;
@@ -252,11 +263,11 @@ s32 func_8000E53C_F13C(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, D_80037650_38250, 1.0f);
+	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, D_80037650_38250_R, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, (u32) &sp136);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	spA0 = sinf(D_80037654_38254);
-	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	spA0 = sinf(D_80037654_38254_R);
+	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((spA0 / cosf(D_80037658_38258_R)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 

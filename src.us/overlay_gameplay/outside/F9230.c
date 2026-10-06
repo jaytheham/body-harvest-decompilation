@@ -249,7 +249,7 @@ void func_800EA434_F93E4(void)
 	D_80157600.unk408 = func_8000C6F4_D2F4();
 	D_80157600.unk410 = 1.0f;
 	D_80157A34 = 0;
-	func_8000C790_D390(&D_80157600, &D_8003BAE0, 0x10);
+	func_8000C790_D390(&D_80157600, D_8003BAE0_3C6E0, 0x10);
 	temp_zero = 0.0f;
 	D_80157600.unk40C = 0x27;
 	func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 7, temp_zero);
@@ -264,7 +264,7 @@ void func_800EA434_F93E4(void)
 	D_80157A48.unk404 = func_8000C6F4_D2F4();
 	D_80157A48.unk408 = func_8000C6F4_D2F4();
 	D_80157A48.unk410 = 1.0f;
-	func_8000C790_D390(&D_80157A48, &D_8003BAE0, 0x10);
+	func_8000C790_D390(&D_80157A48, D_8003BAE0_3C6E0, 0x10);
 	D_80157E70 = 0;
 	D_80157A48.unkC = 145.0f;
 	D_80157A48.unk8 = 0.0f;
@@ -1299,7 +1299,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					var_v1 = -sp96;
 				}
 
-				temp_f16 = (f32)D_8003E820[var_v1] / 61.0f;
+				temp_f16 = (f32)D_8003E820_3F420[var_v1] / 61.0f;
 				if ((D_8013FC0C_14EBBC[0] - sp96) >= 0) {
 					var_f2 = (f32)(D_8013FC0C_14EBBC[0] - sp96);
 				} else {

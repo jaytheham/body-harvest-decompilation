@@ -168,7 +168,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x8, /* unk3E */
 		0x400, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A770, /* unk44 */
+		(void *)D_8003A770_3B370, /* unk44 */
 		func_8008F9E4_9E994, /* unk48 */
 		(void *)func_8008F818_9E7C8, /* unk4C */
 		0xFF, /* unk50 */
@@ -213,7 +213,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0xC, /* unk3E */
 		0xC0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A530, /* unk44 */
+		(void *)D_8003A530_3B130, /* unk44 */
 		func_800920C0_A1070, /* unk48 */
 		(void *)func_80091E70_A0E20, /* unk4C */
 		0x1, /* unk50 */
@@ -303,7 +303,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x8, /* unk3E */
 		0x100, /* unk40 */
 		0x258, /* unk42 */
-		(void *)0x8003A900, /* unk44 */
+		(void *)D_8003A900_3B500, /* unk44 */
 		func_802DBDDC_1F4AEC, /* unk48 */
 		(void *)func_802DBCB0_1F49C0, /* unk4C */
 		0xFF, /* unk50 */
@@ -348,7 +348,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x0, /* unk3E */
 		0x0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003AAA0, /* unk44 */
+		(void *)D_8003AAA0_3B6A0, /* unk44 */
 		func_802D91F8_1F1F08, /* unk48 */
 		(void *)func_800800DC_8F08C, /* unk4C */
 		0xFF, /* unk50 */
@@ -393,7 +393,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x20, /* unk3E */
 		0x100, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003AB50, /* unk44 */
+		(void *)D_8003AB50_3B750, /* unk44 */
 		func_802DA548_1F3258, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0x4, /* unk50 */
@@ -438,7 +438,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x84, /* unk3E */
 		0x180, /* unk40 */
 		0x15E, /* unk42 */
-		(void *)0x8003B5A0, /* unk44 */
+		(void *)D_8003B5A0_3C1A0, /* unk44 */
 		func_802DB468_1F4178, /* unk48 */
 		(void *)func_802DB428_1F4138, /* unk4C */
 		0xFF, /* unk50 */
@@ -483,7 +483,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x20, /* unk3E */
 		0x400, /* unk40 */
 		0x800, /* unk42 */
-		(void *)0x8003AEF0, /* unk44 */
+		(void *)D_8003AEF0_3BAF0, /* unk44 */
 		func_80092EF4_A1EA4, /* unk48 */
 		(void *)func_80092DFC_A1DAC, /* unk4C */
 		0xFF, /* unk50 */
@@ -528,7 +528,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x10, /* unk3E */
 		0x200, /* unk40 */
 		0x80, /* unk42 */
-		(void *)0x8003AEB0, /* unk44 */
+		(void *)D_8003AEB0_3BAB0, /* unk44 */
 		func_802DD5CC_1F62DC, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0xFF, /* unk50 */
@@ -573,7 +573,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x20, /* unk3E */
 		0x100, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003AB50, /* unk44 */
+		(void *)D_8003AB50_3B750, /* unk44 */
 		func_802DA548_1F3258, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0x4, /* unk50 */
@@ -618,7 +618,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x80, /* unk3E */
 		0x180, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003B490, /* unk44 */
+		(void *)D_8003B490_3C090, /* unk44 */
 		func_802D8830_1F1540, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0xFF, /* unk50 */
@@ -663,7 +663,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0xA0, /* unk3E */
 		0x200, /* unk40 */
 		0x320, /* unk42 */
-		(void *)0x8003B4B0, /* unk44 */
+		(void *)D_8003B4B0_3C0B0, /* unk44 */
 		func_802DB14C_1F3E5C, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0xFF, /* unk50 */
@@ -708,7 +708,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x20, /* unk3E */
 		0x2C0, /* unk40 */
 		0x258, /* unk42 */
-		(void *)0x8003AF50, /* unk44 */
+		(void *)D_8003AF50_3BB50, /* unk44 */
 		func_802DD294_1F5FA4, /* unk48 */
 		(void *)func_802DD244_1F5F54, /* unk4C */
 		0xFF, /* unk50 */
@@ -933,7 +933,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x10, /* unk3E */
 		0xC0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003AF80, /* unk44 */
+		(void *)D_8003AF80_3BB80, /* unk44 */
 		func_802D8D68_1F1A78, /* unk48 */
 		(void *)func_802D8D14_1F1A24, /* unk4C */
 		0xFF, /* unk50 */
@@ -978,7 +978,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x10, /* unk3E */
 		0x200, /* unk40 */
 		0x1F4, /* unk42 */
-		(void *)0x8003B5E0, /* unk44 */
+		(void *)D_8003B5E0_3C1E0, /* unk44 */
 		func_802DCA54_1F5764, /* unk48 */
 		(void *)func_802DCDD4_1F5AE4, /* unk4C */
 		0xFF, /* unk50 */
@@ -1023,7 +1023,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x40, /* unk3E */
 		0x600, /* unk40 */
 		0x2EE, /* unk42 */
-		(void *)0x8003B160, /* unk44 */
+		(void *)D_8003B160_3BD60, /* unk44 */
 		func_80093C7C_A2C2C, /* unk48 */
 		(void *)func_8008735C_9630C, /* unk4C */
 		0xFF, /* unk50 */
@@ -1068,7 +1068,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x0, /* unk3E */
 		0x0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003B460, /* unk44 */
+		(void *)D_8003B460_3C060, /* unk44 */
 		func_80094BE0_A3B90, /* unk48 */
 		(void *)func_800800DC_8F08C, /* unk4C */
 		0xFF, /* unk50 */
@@ -1158,7 +1158,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0xC, /* unk3E */
 		0x80, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003A660, /* unk44 */
+		(void *)D_8003A660_3B260, /* unk44 */
 		func_80091220_A01D0, /* unk48 */
 		(void *)func_800908C4_9F874, /* unk4C */
 		0x2, /* unk50 */
@@ -1203,7 +1203,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x0, /* unk3E */
 		0x0, /* unk40 */
 		0x80, /* unk42 */
-		(void *)0x8003A9B0, /* unk44 */
+		(void *)D_8003A9B0_3B5B0, /* unk44 */
 		func_800A4C28_B3BD8, /* unk48 */
 		(void *)func_800A41B0_B3160, /* unk4C */
 		0xFF, /* unk50 */
@@ -1248,7 +1248,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x20, /* unk3E */
 		0x280, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A040, /* unk44 */
+		(void *)D_8003A040_3AC40, /* unk44 */
 		func_802DE594_1F72A4, /* unk48 */
 		(void *)func_802DE594_1F72A4, /* unk4C */
 		0x8, /* unk50 */
@@ -1293,7 +1293,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x0, /* unk3E */
 		0x0, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003A0E0, /* unk44 */
+		(void *)D_8003A0E0_3ACE0, /* unk44 */
 		func_802DE9B8_1F76C8, /* unk48 */
 		(void *)func_802DE9B8_1F76C8, /* unk4C */
 		0xFF, /* unk50 */
@@ -1338,7 +1338,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x8, /* unk3E */
 		0x1C0, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003A0A0, /* unk44 */
+		(void *)D_8003A0A0_3ACA0, /* unk44 */
 		func_802DF69C_1F83AC, /* unk48 */
 		(void *)func_802DF69C_1F83AC, /* unk4C */
 		0xFF, /* unk50 */
@@ -1383,7 +1383,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x8, /* unk3E */
 		0x1C0, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003A0C0, /* unk44 */
+		(void *)D_8003A0C0_3ACC0, /* unk44 */
 		func_802DF7BC_1F84CC, /* unk48 */
 		(void *)func_802DF7BC_1F84CC, /* unk4C */
 		0xFF, /* unk50 */
@@ -1563,7 +1563,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0xA0, /* unk3E */
 		0x200, /* unk40 */
 		0x320, /* unk42 */
-		(void *)0x8003B4B0, /* unk44 */
+		(void *)D_8003B4B0_3C0B0, /* unk44 */
 		func_802DB14C_1F3E5C, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0xFF, /* unk50 */
@@ -1698,7 +1698,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x10, /* unk3E */
 		0x0, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003AB50, /* unk44 */
+		(void *)D_8003AB50_3B750, /* unk44 */
 		func_800800DC_8F08C, /* unk48 */
 		(void *)func_800800DC_8F08C, /* unk4C */
 		0x4, /* unk50 */
@@ -1743,7 +1743,7 @@ AlienType D_80332000_24AD10[0x30] = {
 		0x0, /* unk3E */
 		0x0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003B540, /* unk44 */
+		(void *)D_8003B540_3C140, /* unk44 */
 		func_802D7B68_1F0878, /* unk48 */
 		(void *)func_800800DC_8F08C, /* unk4C */
 		0xFF, /* unk50 */

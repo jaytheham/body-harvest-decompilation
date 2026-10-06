@@ -379,18 +379,18 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 	osSyncPrintf("Wave type %d\n", waveType); // Wave type %d
 	D_80223780[arg3].unk11 = 0;
 	for (i = 0; i < 0xC; i++) {
-		if (D_8003BCC0[waveType][i].alienTypeId == 0) {
+		if (D_8003BCC0_3C8C0[waveType][i].alienTypeId == 0) {
 			break;
 		}
 		if (i != 0) {
-			followerIdx = func_8007956C_8851C(D_8003BCC0[waveType][i].alienTypeId);
+			followerIdx = func_8007956C_8851C(D_8003BCC0_3C8C0[waveType][i].alienTypeId);
 			if (followerIdx == 0xFF) {
 				break;
 			}
 			alienInstances[followerIdx].unk25 = leaderId;
 			((u8 *)leaderGroup)[i - 1] = followerIdx;
 		} else {
-			leaderId = func_8007956C_8851C(D_8003BCC0[waveType][i].alienTypeId);
+			leaderId = func_8007956C_8851C(D_8003BCC0_3C8C0[waveType][i].alienTypeId);
 			if (leaderId == 0xFF) {
 				return 0;
 			}
@@ -410,13 +410,13 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 		alienInstances[followerIdx].unk3E = arg3;
 		alienInstances[followerIdx].unk3D = D_80223780[arg3].unk13;
 		D_80223780[arg3].unk10++;
-		alienInstances[followerIdx].unk0 = D_8003BCC0[waveType][i].xOffset + arg0;
-		alienInstances[followerIdx].unk4 = D_8003BCC0[waveType][i].zOffset + arg1;
+		alienInstances[followerIdx].unk0 = D_8003BCC0_3C8C0[waveType][i].xOffset + arg0;
+		alienInstances[followerIdx].unk4 = D_8003BCC0_3C8C0[waveType][i].zOffset + arg1;
 		alienInstances[followerIdx].unk2E = alienInstances[followerIdx].unk0;
 		alienInstances[followerIdx].unk32 = alienInstances[followerIdx].unk4;
 		func_8011E6FC_12D6AC(alienInstances[followerIdx].unk0, alienInstances[followerIdx].unk4, &alienInstances[followerIdx].unk2);
 		alienInstances[followerIdx].unk1B = func_800B0F20_BFED0(alienInstances[followerIdx].unk0, alienInstances[followerIdx].unk4);
-		alienInstances[followerIdx].unkE = alienInstances[followerIdx].unk6 = D_8003BCC0[waveType][i].unk4 + (D_80223780[arg3].unkF << 8);
+		alienInstances[followerIdx].unkE = alienInstances[followerIdx].unk6 = D_8003BCC0_3C8C0[waveType][i].unk4 + (D_80223780[arg3].unkF << 8);
 		func_80080510_8F4C0(followerIdx);
 	}
 
@@ -448,13 +448,13 @@ void func_800AF1F8_BE1A8(s16 arg0, s16 arg1, u8 arg2)
   
   for (i = 0; i < 0xC; i++)
   {
-	if (!D_8003BCC0[arg2][i].alienTypeId)
+	if (!D_8003BCC0_3C8C0[arg2][i].alienTypeId)
 	{
 	  return;
 	}
-	temp = D_8003BCC0[arg2][i].xOffset + arg0;
-	temp2 = D_8003BCC0[arg2][i].zOffset + arg1;
-	func_800AF0C0_BE070(temp, temp2, D_8003BCC0[arg2][i].alienTypeId);
+	temp = D_8003BCC0_3C8C0[arg2][i].xOffset + arg0;
+	temp2 = D_8003BCC0_3C8C0[arg2][i].zOffset + arg1;
+	func_800AF0C0_BE070(temp, temp2, D_8003BCC0_3C8C0[arg2][i].alienTypeId);
   }
 }
 
@@ -731,14 +731,14 @@ void func_800AFD48_BECF8(Unk80222A78 *arg0) {
 	tmp.unk0 = 2;
 	tmp.unkC = func_800AFBF8_BEBA8;
 	tmp.unk9 = waveIdx;
-	if (arg0->unk0 == 1 && D_8003BCC0[(s8)D_80223780[waveIdx].waveTypeId][0].alienTypeId != 0x19) {
+	if (arg0->unk0 == 1 && D_8003BCC0_3C8C0[(s8)D_80223780[waveIdx].waveTypeId][0].alienTypeId != 0x19) {
 		tmp.unk1 = arg0->unk1;
 		tmp.unk2 = arg0->unk2;
 		tmp.pad3 = arg0->pad3;
 	} else {
 		tmp.pad3 = 0;
 	}
-	if (D_8003BCC0[(s8)D_80223780[waveIdx].waveTypeId][0].alienTypeId == 0x19) {
+	if (D_8003BCC0_3C8C0[(s8)D_80223780[waveIdx].waveTypeId][0].alienTypeId == 0x19) {
 		func_8001A650_1B250(0x17);
 		func_800BECE0_CDC90();
 	}
@@ -897,7 +897,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
 	{
 		func_80011A40_12640(6, D_8006AA70);
 	}
-	temp_v0 = func_8007956C_8851C(D_8003CEC0[arg0].slots[0].type);
+	temp_v0 = func_8007956C_8851C(D_8003CEC0_3DAC0[arg0].slots[0].type);
 	temp_v1 = temp_v0;
 	if (temp_v0 == 0xFF)
 	{
@@ -927,19 +927,19 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
 
 	for (i = 1; i < 5; i++)
 	{
-		if (D_8003CEC0[arg0].slots[i].type == 0)
+		if (D_8003CEC0_3DAC0[arg0].slots[i].type == 0)
 		{
 			break;
 		}
-		followerId = func_8007956C_8851C(D_8003CEC0[arg0].slots[i].type);
+		followerId = func_8007956C_8851C(D_8003CEC0_3DAC0[arg0].slots[i].type);
 		if (followerId == 0xFF)
 		{
 			alienInstances[temp_v0].unk20 |= 1 << (i + 0xB);
 		}
 		else
 		{
-			alienInstances[followerId].unk0 = D_8003CEC0[arg0].slots[i].relX + arg1;
-			alienInstances[followerId].unk4 = arg2 - D_8003CEC0[arg0].slots[i].relZ;
+			alienInstances[followerId].unk0 = D_8003CEC0_3DAC0[arg0].slots[i].relX + arg1;
+			alienInstances[followerId].unk4 = arg2 - D_8003CEC0_3DAC0[arg0].slots[i].relZ;
 			alienInstances[followerId].unk25 = temp_v0;
 			alienInstances[followerId].unk1B = alienInstances[temp_v0].unk1B;
 			sp60.unk2 = (s8)temp_v0;
@@ -978,7 +978,7 @@ void func_800B0710_BF6C0(s16 arg0, s16 arg1)
 	s32 g2, g3, g4, g5;
 
 	levelIdx = (currentLevel - 1);
-	alienTypeId = D_8003CEC0[levelIdx].slots[0].type;
+	alienTypeId = D_8003CEC0_3DAC0[levelIdx].slots[0].type;
 	y = (func_800B84D0_C7480(arg0, arg1) >> 8) + alienTypes[alienTypeId].unk58;
 	func_800CF80C_DE7BC(arg0, y, arg1, D_8013D91C[currentLevel].unk2, 0xA0, 0xFF, 0, 0);
 	func_800BECF0_CDCA0();
@@ -1018,7 +1018,7 @@ void func_800B08DC_BF88C(s32 arg0)
   {
 	a0 = &D_80222A78[v0];
 	if (((a0->unkC == (void (*)(void *))func_800AFD48_BECF8) || (a0->unkC == 0)) &&
-	  D_8003BCC0[D_80223780[a0->unk9].waveTypeId][0].alienTypeId != 0x18 &&
+	  D_8003BCC0_3C8C0[D_80223780[a0->unk9].waveTypeId][0].alienTypeId != 0x18 &&
 	  (D_80223780[a0->unk9].unk12 < arg0))
 	{
 		if (((!a0->unkC) && (!a0->unkC)) && (!a0->unkC)){}

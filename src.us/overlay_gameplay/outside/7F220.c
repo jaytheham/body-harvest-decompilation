@@ -65,7 +65,7 @@ void func_800702C0_7F270(s16 arg0) {
 	}
 	D_80149444 = referenceTick;
 
-	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
+	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610_36210);
 
 	if (gameplayMode == 1) {
 		D_80052A90 += elapsedMicro / 1000U;
@@ -105,7 +105,7 @@ void func_80070440_7F3F0(void)
 	f32 temp_f0;
 	s16 sp26;
 	func_8001599C_1659C();
-	new_var = D_8003E000;
+	new_var = D_8003E000_3EC00;
 	osSyncPrintf("WarpPointNumber = %d\n", D_80047F9C);
 	if (D_80047F98 == 0 || currentLevel == 5)
 	{
@@ -124,16 +124,16 @@ void func_80070440_7F3F0(void)
 		weaponSlots[6] = var_a0;
 	}
 
-	spawnX = D_8003E000[currentLevel - 1][D_80047F9C].unk0 << 8;
-	spawnY = D_8003E000[currentLevel - 1][D_80047F9C].unk2 << 8;
-	temp_t5 = D_8003E000[currentLevel - 1][D_80047F9C].unk6;
+	spawnX = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk0 << 8;
+	spawnY = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk2 << 8;
+	temp_t5 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk6;
 	D_801493A0 = -0x6F;
 	D_80149398 = 0x6F;
 	D_801493A4 = -0x6F;
 	D_8014939C = 0x6F;
 	D_80052B2C = &D_80052AE8;
-	D_80259490.unk0 = D_8003E000[currentLevel - 1][D_80047F9C].unk0;
-	D_80259490.unk2 = D_8003E000[currentLevel - 1][D_80047F9C].unk2;
+	D_80259490.unk0 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk0;
+	D_80259490.unk2 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk2;
 	D_80259490.unk8 = temp_t5;
 	D_80052AD0 = 1;
 	D_80052A8C = 0;

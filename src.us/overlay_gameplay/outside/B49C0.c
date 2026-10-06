@@ -417,9 +417,9 @@ void func_800A68CC_B587C(void) {
 		}
 
 		if (D_8014F808 == 0xA) {
-			sp2E = D_8003E000[currentLevel-1][D_8013D894_14C844].unk0 << 8;
-			sp2C = (D_8003E000[currentLevel-1][D_8013D894_14C844].unk2 + 1) << 8;
-			sp28 = D_8003E000[currentLevel-1][D_8013D894_14C844].unk6;
+			sp2E = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk0 << 8;
+			sp2C = (D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk2 + 1) << 8;
+			sp28 = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk6;
 
 			if (D_8013D894_14C844 == 0) {
 				D_80047F94 = 0;

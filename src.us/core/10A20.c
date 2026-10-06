@@ -30,7 +30,7 @@ void func_8000FE50_10A50(void *arg0) {
 	func_800056A8_62A8();
 	osRecvMesg(&D_8006A8F0, &D_80068038, 1);
 	func_80001984_2584();
-	osSyncPrintf(&D_80037764_38364, 0x28928);
+	osSyncPrintf(D_80037764_38364, 0x28928);
 	loadFrontendData();
 	func_80070270(1);
 }
