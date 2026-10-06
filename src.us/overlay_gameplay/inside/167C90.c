@@ -99,7 +99,7 @@ void func_8007FC74_167D34(void) {
 		if (func_800703EC_1584AC() != 4) {
 			D_800E73DF = 1;
 		}
-	} else if ((D_800E7398 != 0) && (D_80034484 == 0) && (func_8001A114_1AD14() != 0xFF)) {
+	} else if ((D_800E7398 != 0) && (D_80034484_35084 == 0) && (func_8001A114_1AD14() != 0xFF)) {
 		D_800E73DF = 3;
 	} else if (D_800E73DF != 2 && D_800E73DF != 5 && D_800E73DF != 6) {
 		D_800E73DF = D_80047F80;
@@ -1198,20 +1198,20 @@ void func_8008247C_16A53C(void) {
 // AI - Set up interior gameplay pointer tables (initialisation)
 void func_80082AA0_16AB60(void) {
 	func_80017AAC_186AC();
-	D_80034460 = &D_800E7490;
-	D_80034468 = (s32) &D_800EAD90;
-	D_80034470 = (s32) &D_800EAE98;
+	D_80034460_35060 = &D_800E7490;
+	D_80034468_35068 = (s32) &D_800EAD90;
+	D_80034470_35070 = (s32) &D_800EAE98;
 	D_8006C550 = &D_800EAC90;
 	D_80052AD8 = 0;
 }
 
 // AI - Set up interior gameplay pointer tables (re-entry)
 void func_80082B04_16ABC4(void) {
-	D_80034460 = &D_800E7490;
-	D_80034468 = (s32) &D_800EAD90;
-	D_80034470 = (s32) &D_800EAE98;
+	D_80034460_35060 = &D_800E7490;
+	D_80034468_35068 = (s32) &D_800EAD90;
+	D_80034470_35070 = (s32) &D_800EAE98;
 	D_8006C550 = &D_800EAC90;
-	D_80034484 = 0;
+	D_80034484_35084 = 0;
 }
 
 // AI - Handle interior gameplay: screen fade colors and entering/exiting state transitions
@@ -1222,7 +1222,7 @@ void func_80082B50_16AC10(void)
 	{
 		if (func_80017B78_18778() == 1)
 		{
-			D_800A0A1C_188ADC = D_80034484;
+			D_800A0A1C_188ADC = D_80034484_35084;
 			D_800E7398 = 1;
 			if (!(D_800E65A8 & 0x408))
 			{
