@@ -2684,15 +2684,7 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 } UnkF9230Func8010065CEntry; /* size = 0x08 */
 
-typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
-	/* 0x10 */ f32 unk10;
-} UnkA6C64Keyframe; /* stride = 0x14 */
+
 
 typedef struct {
 	/* 0x00 */ s16 x;
@@ -2778,7 +2770,8 @@ typedef struct {
 	/* 0x01 */ s8 unk1;      /* center Z in 1/256 world units */
 	/* 0x02 */ s8 unk2;      /* half-size in 1/256 world units */
 	/* 0x03 */ s8 unk3;      /* 0 = active zone entry */
-	/* 0x04 */ u8 pad04[6];
+	/* 0x04 */ u8 *name;
+	/* 0x08 */ u8 pad08[2];
 	/* 0x0A */ s16 unk0A;
 	/* 0x0C */ s16 unk0C;
 	/* 0x0E */ u8 pad0E[2];
@@ -3415,5 +3408,30 @@ typedef union {
 		s16 low;
 	} halves;
 } SignedWord;
+
+typedef struct {
+	s16 unk0;     // 0x00
+	s16 unk2;     // 0x02
+	s16 unk4;     // 0x04
+	s16 unk6;     // 0x06
+	s16 unk8;     // 0x08
+} Unk14C280Entry; // 0x0A bytes
+
+
+
+typedef u8 MapTextureStrip[2048];
+
+typedef union {
+	u16 pixels[8][8][8][4][8][4];
+	u8 rows[8][16384];
+	u8 bytes[131072];
+} MapTexture;
+
+typedef struct {
+	s8 x;
+	s8 z;
+	u8 size;
+	u8 music;
+} MapStage;
 
 #endif
