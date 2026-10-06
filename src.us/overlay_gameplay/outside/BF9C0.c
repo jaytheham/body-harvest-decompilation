@@ -3256,45 +3256,33 @@ void func_800B9954_C8904(u8 arg0) {
 }
 
 /* Spawn a particle/effect (light ring) at a position with color, radius, and duration */
-#ifdef NON_MATCHING
-void func_800B99A8_C8958(Vec2_S16 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
+void func_800B99A8_C8958(Vec2_S16 *arg0, s16 arg1, s16 arg2, u8 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
 	u8 i;
-	Unk80152B80 *entry;
 
 	if (D_8013DAE0_14CA90 == 0xF) {
 		osSyncPrintf(&D_80142D94_151D44); // WARNING : Cannot create new land ring effect - out of storage space - blame it on Westy
 		return;
 	}
-	entry = &D_80152B80[D_8013DAE4_14CA94];
-	entry->unk0 = arg0->x;
-	entry->unk4 = arg1;
-	entry->unk6 = arg2;
-	entry->unk2 = arg0->z;
-	entry->unk8 = arg3;
-	entry->unk9 = arg4[0];
-	entry->unkA = arg4[1];
+	D_80152B80[D_8013DAE4_14CA94].unk0 = arg0->x;
+	D_80152B80[D_8013DAE4_14CA94].unk2 = arg0->z;
+	D_80152B80[D_8013DAE4_14CA94].unk4 = arg1;
+	D_80152B80[D_8013DAE4_14CA94].unk6 = arg2;
+	D_80152B80[D_8013DAE4_14CA94].unk8 = arg3;
+	D_80152B80[D_8013DAE4_14CA94].unk9 = arg4[0];
+	D_80152B80[D_8013DAE4_14CA94].unkA = arg4[1];
+	D_80152B80[D_8013DAE4_14CA94].unkB = arg4[2];
+	D_80152B80[D_8013DAE4_14CA94].unkC = arg5;
+	D_80152B80[D_8013DAE4_14CA94].unkE = arg6;
+	D_80152B80[D_8013DAE4_14CA94].unk10 = arg7;
 	D_8013DAE0_14CA90++;
-	entry->unkC = arg5;
-	entry->unkE = arg6;
-	entry->unk10 = arg7;
-	entry->unkB = arg4[2];
-	if (D_8013DAE4_14CA94 < 0xF) {
-		i = D_8013DAE4_14CA94;
-		for (;;) {
-			if (D_80152B80[i].unk8 == 0) {
-				D_8013DAE4_14CA94 = i;
-				break;
-			}
-			i = (i + 1) & 0xFF;
-			if (i >= 0xF) {
-				break;
-			}
+
+	for (i = D_8013DAE4_14CA94; i < 0xF; i++) {
+		if (D_80152B80[i].unk8 == 0) {
+			D_8013DAE4_14CA94 = i;
+			break;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B99A8_C8958.s")
-#endif
 
 /* Update all active particle/effects: interpolate brightness and position */
 #ifdef NON_MATCHING
