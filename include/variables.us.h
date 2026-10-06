@@ -4014,3 +4014,9 @@ extern s16 D_8013DAFC_14CAAC[2];
 extern u8 D_8013DB00_14CAB0;
 extern s32 D_8013DB04_14CAB4;
 extern s32 D_8013DB08_14CAB8;
+
+extern EffectRgb D_8013DAE8_14CA98;
+extern EffectRgb D_8013DAEC_14CA9C;
+extern EffectRgb D_8013DAF0_14CAA0;
+extern EffectRgb D_8013DAF4_14CAA4;
+extern EffectRgb D_8013DAF8_14CAA8;

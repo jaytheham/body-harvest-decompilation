@@ -3434,4 +3434,10 @@ typedef struct {
 	u8 music;
 } MapStage;
 
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+} EffectRgb;
+
 #endif

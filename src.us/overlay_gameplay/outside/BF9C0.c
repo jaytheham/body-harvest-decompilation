@@ -126,11 +126,11 @@ u8 D_8013DAE0_14CA90 = 0;
 /* Particle/effect slot allocator index */
 u8 D_8013DAE4_14CA94 = 0;
 /* Colors for 5 debug effect display rings */
-s32 D_8013DAE8_14CA98 = (s32)0xFF5AFF00U;
-s32 D_8013DAEC_14CA9C = (s32)0xFF5A5000U;
-s32 D_8013DAF0_14CAA0 = (s32)0x50FF5000U;
-s32 D_8013DAF4_14CAA4 = (s32)0xFF9BFF00U;
-s32 D_8013DAF8_14CAA8 = (s32)0xFFE6C800U;
+EffectRgb D_8013DAE8_14CA98 = {0xFF, 0x5A, 0xFF};
+EffectRgb D_8013DAEC_14CA9C = {0xFF, 0x5A, 0x50};
+EffectRgb D_8013DAF0_14CAA0 = {0x50, 0xFF, 0x50};
+EffectRgb D_8013DAF4_14CAA4 = {0xFF, 0x9B, 0xFF};
+EffectRgb D_8013DAF8_14CAA8 = {0xFF, 0xE6, 0xC8};
 /* Unused sprite/pointer */
 s16 D_8013DAFC_14CAAC[2] = { -1, 0 };
 /* Water animation frame counter */
@@ -3257,7 +3257,7 @@ void func_800B9954_C8904(u8 arg0) {
 
 /* Spawn a particle/effect (light ring) at a position with color, radius, and duration */
 #ifdef NON_MATCHING
-void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
+void func_800B99A8_C8958(Vec2_S16 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7) {
 	u8 i;
 	Unk80152B80 *entry;
 
@@ -3266,10 +3266,10 @@ void func_800B99A8_C8958(Unk80152B80 *arg0, s16 arg1, s16 arg2, s32 arg3, u8 *ar
 		return;
 	}
 	entry = &D_80152B80[D_8013DAE4_14CA94];
-	entry->unk0 = arg0->unk0;
+	entry->unk0 = arg0->x;
 	entry->unk4 = arg1;
 	entry->unk6 = arg2;
-	entry->unk2 = arg0->unk2;
+	entry->unk2 = arg0->z;
 	entry->unk8 = arg3;
 	entry->unk9 = arg4[0];
 	entry->unkA = arg4[1];
@@ -3335,53 +3335,33 @@ void func_800B9AC8_C8A78(void) {
 	#endif
 
 /* render 5 colored effect rings at the camera position? */
-#ifdef NON_MATCHING
 void func_800B9C28_C8BD8(void) {
-	s16 pos[2];
-	u8 color0[3];
-	u8 color1[3];
-	u8 color2[3];
-	u8 color3[3];
-	u8 color4[3];
-	u8 *src;
+	Vec2_S16 pos;
+	EffectRgb color0;
+	EffectRgb color1;
+	EffectRgb color2;
+	EffectRgb color3;
+	EffectRgb color4;
 
-	src = (u8 *) &D_8013DAE8_14CA98;
-	color0[0] = src[0];
-	color0[1] = src[1];
-	color0[2] = src[2];
+	color0 = D_8013DAE8_14CA98;
 
-	src = (u8 *) &D_8013DAEC_14CA9C;
-	color1[0] = src[0];
-	color1[1] = src[1];
-	color1[2] = src[2];
+	color1 = D_8013DAEC_14CA9C;
 
-	src = (u8 *) &D_8013DAF0_14CAA0;
-	color2[0] = src[0];
-	color2[1] = src[1];
-	color2[2] = src[2];
+	color2 = D_8013DAF0_14CAA0;
 
-	src = (u8 *) &D_8013DAF4_14CAA4;
-	color3[0] = src[0];
-	color3[1] = src[1];
-	color3[2] = src[2];
+	color3 = D_8013DAF4_14CAA4;
 
-	src = (u8 *) &D_8013DAF8_14CAA8;
-	color4[0] = src[0];
-	color4[1] = src[1];
-	color4[2] = src[2];
+	color4 = D_8013DAF8_14CAA8;
 
-	pos[0] = D_80052B34->unk0;
-	pos[1] = D_80052B34->unk4;
+	pos.x = D_80052B34->unk0;
+	pos.z = D_80052B34->unk4;
 
-	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color0, 65, 7, 0);
-	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color1, 65, 7, 15);
-	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color2, 65, 7, 30);
-	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color3, 65, 7, 45);
-	func_800B99A8_C8958((Unk80152B80 *) pos, 200, 500, 255, color4, 65, 7, 60);
+	func_800B99A8_C8958(&pos, 200, 500, 255, &color0.r, 65, 7, 0);
+	func_800B99A8_C8958(&pos, 200, 500, 255, &color1.r, 65, 7, 15);
+	func_800B99A8_C8958(&pos, 200, 500, 255, &color2.r, 65, 7, 30);
+	func_800B99A8_C8958(&pos, 200, 500, 255, &color3.r, 65, 7, 45);
+	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9C28_C8BD8.s")
-#endif
 
 // CURRENT(7852)
 #ifdef NON_MATCHING
@@ -4892,7 +4872,7 @@ void func_800BDDCC_CCD7C(void) {
 			sp54 = (func_800038E0_44E0() / 512) + 0x7F;
 			sp55 = (func_800038E0_44E0() / 512) + 0x7F;
 			sp56 = (func_800038E0_44E0() / 512) + 0x7F;
-			func_800B99A8_C8958((Unk80152B80 *)&sp50, 0x1E, 0x1F4, 0xFF, (u8 *)&sp54, 0x50, 0xA, 0);
+			func_800B99A8_C8958((Vec2_S16 *)&sp50, 0x1E, 0x1F4, 0xFF, (u8 *)&sp54, 0x50, 0xA, 0);
 			ticks = D_80052A8C;
 		}
 
