@@ -3285,10 +3285,9 @@ void func_800B99A8_C8958(Vec2_S16 *arg0, s16 arg1, s16 arg2, u8 arg3, u8 *arg4, 
 }
 
 /* Update all active particle/effects: interpolate brightness and position */
-#ifdef NON_MATCHING
 void func_800B9AC8_C8A78(void) {
 	s32 brightness;
-	s8 color[3];
+	u8 color[3];
 	s32 i;
 
 	if ((s32) D_8013DAE0_14CA90 > 0) {
@@ -3298,9 +3297,9 @@ void func_800B9AC8_C8A78(void) {
 				if (D_80152B80[i].unk10 > 0) {
 					D_80152B80[i].unk10 = D_80152B80[i].unk10 - 1;
 				} else {
-					color[0] = (s8) ((s32) (brightness * D_80152B80[i].unk9) >> 8);
-					color[1] = (s8) ((s32) (brightness * D_80152B80[i].unkA) >> 8);
-					color[2] = (s8) ((s32) (brightness * D_80152B80[i].unkB) >> 8);
+					color[0] = (s8) ((s32) (D_80152B80[i].unk9 * D_80152B80[i].unk8) >> 8);
+					color[1] = (s8) ((s32) (D_80152B80[i].unkA * D_80152B80[i].unk8) >> 8);
+					color[2] = (s8) ((s32) (D_80152B80[i].unkB * D_80152B80[i].unk8) >> 8);
 					func_800B2854_C1804(&D_80152B80[i], color, D_80152B80[i].unk4, D_80152B80[i].unk6);
 					if ((s16) (D_80152B80[i].unk8 - D_80152B80[i].unkE) <= 0) {
 						func_800B9954_C8904((u8) i);
@@ -3318,9 +3317,6 @@ void func_800B9AC8_C8A78(void) {
 		}
 	}
 }
-	#else
-	#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9AC8_C8A78.s")
-	#endif
 
 /* render 5 colored effect rings at the camera position? */
 void func_800B9C28_C8BD8(void) {

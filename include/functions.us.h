@@ -770,6 +770,7 @@ void func_800B604C_C4FFC(Vtx *, s16, s16, s16, s16, u16, u8);
 void func_800B753C_C64EC(void);
 void func_800B879C_C774C(void);
 void func_800B9AC8_C8A78(void);
+void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3);
 void func_800B9954_C8904(u8);
 void func_800B99A8_C8958(Vec2_S16 *arg0, s16 arg1, s16 arg2, u8 arg3, u8 *arg4, s16 arg5, s16 arg6, u16 arg7);
 void func_800BD20C_CC1BC(void);
