@@ -4501,69 +4501,65 @@ void func_802DEF70_1F7C80(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0, -0x45, 0x2B3);
 }
 
-// CURRENT(8175)
-#ifdef NON_MATCHING
-void func_802DEFC0_1F7CD0(u8 arg0, s32 arg1, s16 arg2, s16 arg3) {
-	void *sp10;
-	s32 sp14;
-	s32 sp18;
-	s16 sp1E;
-	s16 temp_s0;
-	s16 type_val;
+void func_802DEFC0_1F7CD0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 sum;
+	s32 pad1;
+	s32 firstAngle;
+	Unk8014DD50 *savedFirst[1];
+	s32 type_val;
+	s32 pitch;
 	s16 diff;
-	AlienInstance *temp_v0;
-	Unk8014DD50 *type1;
+	s32 firstIndex;
+	s32 typeIndex;
+	s32 child;
 	Unk8014DD50 *type2;
 
-	temp_v0 = &alienInstances[arg0 & 0xFF];
-	type1 = &D_8014DD50[D_8014DD50[temp_v0->unkC].unkC];
-	sp10 = (void *)type1;
-	temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
-	type2 = &D_8014DD50[type1->unkC];
-	temp_s0 = type1->unk6;
-	type_val = alienTypes[temp_v0->typeIndex].unk42;
-	sum = (s16)((s16)temp_s0 + (s16)type2->unk6 + arg1);
-	sp1E = sum;
+	typeIndex = alienInstances[arg0].typeIndex;
+	firstIndex = D_8014DD5C[alienInstances[arg0].unkC].unk0;
+	savedFirst[0] = &D_8014DD50[firstIndex];
+	child = savedFirst[0]->unkC;
+	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
+	type2 = &D_8014DD50[child];
+	sum = (u32)(firstAngle = savedFirst[0]->unk6Unsigned) + type2->unk6Unsigned + arg1;
+	type_val = alienTypes[typeIndex].unk42;
 	if (sum < -type_val) {
-		if ((s16)temp_s0 < 0x1000) {
-			type1->unk6 += type_val;
+		if ((s16)firstAngle < 0x1000) {
+			savedFirst[0]->unk6Unsigned = firstAngle + type_val;
 		}
-		if ((s16)type2->unk6 < 0x2000) {
-			type2->unk6 += type_val;
+		if ((s16)type2->unk6Unsigned < 0x2000) {
+			type2->unk6 = type2->unk6Unsigned + type_val;
 		}
-	} else if (type_val < sp1E) {
-		if ((s16)temp_s0 >= -0xFFF) {
-			((Unk8014DD50 *)sp10)->unk6 -= type_val;
+	} else if (type_val < sum) {
+		if ((s16)firstAngle >= -0xFFF) {
+			savedFirst[0]->unk6Unsigned = firstAngle - type_val;
 		}
-		if ((s16)type2->unk6 >= -0x1FFF) {
-			type2->unk6 -= type_val;
+		if ((s16)type2->unk6Unsigned >= -0x1FFF) {
+			type2->unk6 = type2->unk6Unsigned - type_val;
 		}
 	} else {
-		temp_v0->unk20 |= ALIEN_FLAG_UNKG;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
 	}
-	diff = (s16)(type2->unkA - arg2);
+	pitch = type2->unkAUnsigned;
+	diff = pitch - arg2;
 	if (diff < -type_val) {
-		type2->unkA += type_val;
-		temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+		type2->unkAUnsigned = pitch + type_val;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
 	} else if (type_val < diff) {
-		type2->unkA -= type_val;
-		temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+		type2->unkAUnsigned = pitch - type_val;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
 	}
-	diff = temp_v0->unkA - arg3;
+	pitch = alienInstances[arg0].unkA;
+	diff = pitch - arg3;
 	if (diff < -type_val) {
-		temp_v0->unkA += type_val;
-		temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+		alienInstances[arg0].unkA = pitch + type_val;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
 		return;
 	}
 	if (type_val < diff) {
-		temp_v0->unkA -= type_val;
-		temp_v0->unk20 &= ~ALIEN_FLAG_UNKG;
+		alienInstances[arg0].unkA = pitch - type_val;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKG;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DEFC0_1F7CD0.s")
-#endif
 
 /* Process an alien attack against the vehicle. */
 void func_802DF1F8_1F7F08(u8 arg0) {
