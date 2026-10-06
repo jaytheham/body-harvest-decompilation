@@ -3107,32 +3107,32 @@ s32 func_800B9228_C81D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	return 0;
 }
 
-// CURRENT(5612)
-#ifdef NON_MATCHING
 s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 arg5) {
-	s32 diffX;
-	s32 diffZ;
+	s32 pad0;
+	s32 pad1;
 	s32 dist;
 	s32 angle;
-	s32 edge;
+	s32 diffX;
+	s32 diffZ;
 	s32 absX;
 	s32 absZ;
 
-	if (D_80157590 != 0 || D_8014FD2A == (u16)-0x8000) {
+	if (D_80157590 != 0 || D_8014FD2A == -0x8000U) {
 		return 1;
 	}
 
-	diffX = (s16)(arg0 - arg3);
-	diffZ = (s16)(arg1 - (s16)arg4);
-	dist = sqrtf((f32)((diffX * diffX) + (diffZ * diffZ)));
-	angle = func_80003824_4424((f32)diffX, (f32)diffZ) - arg5;
-	edge = angle + (D_8014FD2A >> 1);
+	diffX = arg0 - arg3;
+	diffZ = arg1 - (s16)arg4;
+	dist = sqrtf((f32)(((s16)diffX * (s16)diffX) + ((s16)diffZ * (s16)diffZ)));
+	angle = func_80003824_4424((f32)(s16)diffX, (f32)(s16)diffZ) - arg5;
+	angle += D_8014FD2A / 2;
 
-	if ((s16)((((f32)sins(edge & 0xFFFF) / 32768.0) * dist)) < -(u16)arg2) {
+	if ((s16)((((f32)sins(angle) / 32768.0) * dist)) < -(u16)arg2) {
 		return 0;
 	}
 
-	if ((s16)((((f32)sins((edge - D_8014FD2A) & 0xFFFF) / 32768.0) * dist)) > (u16)arg2) {
+	angle -= D_8014FD2A;
+	if ((s16)((((f32)sins(angle) / 32768.0) * dist)) > (u16)arg2) {
 		return 0;
 	}
 
@@ -3148,18 +3148,16 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 		absZ = -diffZ;
 	}
 
-	edge = absX * absX;
-	dist = 0;
-	edge += absZ * absZ;
-	if (edge > 0) {
-		dist = sqrtf((f32)edge);
-	}
+	angle = absX * absX;
+	angle += absZ * absZ;
+	absZ = angle > 0 ? (s32)sqrtf((f32)angle) : 0;
 
-	return (dist < 0xFA0) ? 1 : 0;
+	if (absZ >= 0xFA0) {
+		return 0;
+	}
+	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B93AC_C835C.s")
-#endif
+
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
 // CURRENT(7540)
