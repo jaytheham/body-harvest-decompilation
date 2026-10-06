@@ -829,8 +829,6 @@ const f64 D_802E3040_2C5470[] = { 540000.0 };
 const f64 D_802E3048_2C5478[] = { 0.90000000000000002 };
 const f32 D_802E3050_2C5480[] = { 0.100000001f };
 const f32 D_802E3054_2C5484[] = { 0.100000001f };
-const f64 D_802E3058_2C5488[] = { 1000.0 };
-const f64 D_802E3060_2C5490[] = { 1000.0 };
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 void func_802D6A70_2B8EA0(void);
@@ -4531,27 +4529,26 @@ void func_802DEB5C_2C0F8C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DEB5C_2C0F8C.s")
 #endif
 
-// CURRENT(590)
-#ifdef NON_MATCHING
 void func_802DEDE4_2C1214(u8 arg0) {
-	u8 temp;
-	s32 sp54;
-	s32 sp50;
-	s32 sp4C;
+	s32 pad5C;
+	u8 spawnIndex;
+	s32 worldX;
+	s32 worldY;
+	s32 worldZ;
 
-	temp = func_8007956C_8851C(0x26);
-	if (temp != 0xFF) {
+	spawnIndex = func_8007956C_8851C(0x26);
+	if (spawnIndex != 0xFF) {
 		AlienInstance *parent;
 		AlienInstance *child;
-		s16 orientation;
+		s32 orientation;
 
 		parent = &alienInstances[arg0];
-		func_80128428_1373D8(parent, -15, -110, -30, &sp54, &sp50, &sp4C);
+		func_80128428_1373D8(parent, -15, -110, -30, &worldX, &worldY, &worldZ);
 
-		child = &alienInstances[temp];
-		child->unk0 = (s16)sp54;
-		child->unk2 = (s16)sp50;
-		child->unk4 = (s16)sp4C;
+		child = &alienInstances[spawnIndex];
+		child->unk0 = worldX;
+		child->unk2 = worldY;
+		child->unk4 = worldZ;
 
 		orientation = parent->unk6;
 		child->unkA = 0xFA0;
@@ -4563,14 +4560,12 @@ void func_802DEDE4_2C1214(u8 arg0) {
 		parent->unk3C++;
 		child->unk3A = 0x32;
 
-		child->unk14 = (s16)((f64)(float)coss(orientation & 0xFFFF) / 32768.0 * D_802E3058_2C5488 + (f64)parent->unk0);
+		child->unk14 = (s16)((f32)coss(orientation) / 32768.0 * 1000.0 + parent->unk0);
 		child->unk16 = D_80052B34->unk2;
-		child->unk18 = (s16)((f64)(float)sins(orientation & 0xFFFF) / 32768.0 * D_802E3060_2C5490 + (f64)parent->unk4);
+		child->unk18 = (s16)((f32)sins(orientation) / 32768.0 * 1000.0 + parent->unk4);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DEDE4_2C1214.s")
-#endif
+
 
 void func_802DEFB4_2C13E4(u8 arg0) {
 	s16 rootJoint;
