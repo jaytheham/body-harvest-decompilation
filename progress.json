@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-06T08:42:51Z",
-  "commit": "1c6b2b88",
-  "commit_timestamp": "2026-10-06T21:42:00+13:00",
+  "generated": "2026-10-06T08:45:42Z",
+  "commit": "07c05def",
+  "commit_timestamp": "2026-10-06T21:44:52+13:00",
   "overall": {
     "total_functions": 2716,
     "matched": 1852,
@@ -146,6 +146,16 @@
     },
     {
       "path": "core/32000.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/32050.c",
       "segment": "core",
       "matched": 0,
       "non_matching": 0,
@@ -898,7 +908,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 76,
+      "files": 77,
       "matched": 1803,
       "non_matching": 855,
       "asm_stubs": 0
@@ -1166,7 +1176,7 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "1c6b2b8",
+      "commit": "07c05de",
       "matched": 1852,
       "non_matching": 864,
       "total": 2716
