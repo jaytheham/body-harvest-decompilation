@@ -2,13 +2,22 @@
 #include <ultra64.h>
 #include "common.h"
 
-s32 D_80031450_32050 = 0;
-s32 D_80031454 = 0;
-s32 D_80031458[] = {0x69, 0x6A, 0x6D, 0x6B, 0x6C, 0x05, 0x05};
-s32 D_80031474[] = {0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 0, 1, 9, 21, 22, 23, 24, 0, 0};
-s8 D_800314C4 = 0x19; // Number humans killed to end game?
-s32 D_800314C8_320C8 = 0;
-OSMesg D_800314CC_320CC = 1;
+void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3);
+
+/* Unreferenced zero block preceding the projection effect table. */
+s32 D_80031A80_32680[] = {0, 0, 0, 0};
+
+UnkE830ModeEntry D_80031A90_32690[] = {
+	{func_8000DCCC_E8CC, 0, {0, 0}, 0.0f, 0.7f, 1000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{func_8000DEFC_EAFC, 0, {0, 0}, 0.0f, 0.8f, 3000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E048_EC48, 0, {0, 0}, 0.0f, 2.0f, 1000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E048_EC48, 1000, {0, 0}, 49.2f, -2.0f, 1000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E3DC_EFDC, 0, {0, 0}, 0.0f, 0.1f, 0x4000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E048_EC48, 0, {0, 0}, 0.0f, 0.0f, 0x4000, 0x7B, 0xEA, 0x159, 0, {0, 0}, 0.0f},
+};
 
 void func_8000DC30_E830(s32 arg0, s32 arg1) {
 	s16 *src;
@@ -179,9 +188,9 @@ void osSetTime(s32 arg0, s32 arg1) {
 	D_8005BAF0 = arg1;
 }
 
-/* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
+/* Initialise projection state from entry arg0 in D_80031A90_32690 table, then copy framebuffer region. */
 void func_8000E4C4_F0C4(s32 arg0) {
-	D_80059CDC = &D_80031A90[arg0];
+	D_80059CDC = &D_80031A90_32690[arg0];
 	D_80059CD0 = D_80059CDC->unk4;
 	D_80059CE0 = D_80059CDC->unk8;
 	D_80059CD8 = 0;

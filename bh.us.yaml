@@ -226,10 +226,11 @@ segments:
       - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
       - [0x31FD0, .data, core/53F0]
       - [0x32000, .data, core/32000]
-      - [0x32050, .data, core/E830]
+      - [0x32050, .data, core/32050]
       - [0x320D0, .data, core/320D0]
       - [0x32250, .data, core/AD60]
-      - [0x32680, bin]
+      - [0x32680, .data, core/E830]
+      - [0x32750, bin]
 
   - name: overlay_gameplay_frontend
     type: code
