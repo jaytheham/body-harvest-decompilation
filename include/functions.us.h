@@ -1385,6 +1385,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 void func_80078720_876D0(AlienInstance *alien);
 s32 func_8013B8C8_14A878(void);
 void func_800C0678_CF628(void);
+s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2);
 void func_800DB714_EA6C4(void);
 void func_800DBA9C_EAA4C(void);
 void func_800C5894_D4844(u8 arg0);

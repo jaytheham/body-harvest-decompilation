@@ -5350,53 +5350,24 @@ void func_800C0678_CF628(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
 #endif
 
-#ifdef NON_MATCHING
-s32 func_800C0D1C_CFCCC(s32 arg0, s32 arg1, s32 arg2) {
-	VehicleInstance *vehicle;
-	s32 temp_a0;
-	s32 temp_v0;
-	s32 var_a1;
-	s32 var_v1;
-	Level level;
+s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
+	s32 dx;
+	s32 dz;
 
-	if (D_8013D9C0_14C970[0] != 0) {
+	if ((D_8013D9C0_14C970[0] == 0) && ((u8)D_8013D9B0_14C960 == 0) && (D_8013D9AC_14C95C == 0)) {
+		D_8013D9CC_14C97C = arg2;
+		dx = BH_ABS((D_80052B34->unk0 >> 7) - arg0);
+		dz = BH_ABS((D_80052B34->unk4 >> 7) - arg1);
+		D_8013D9C4_14C974[0] = (s32)sqrtf(dx * dx + dz * dz);
+		if (arg2 != 0) {
+			D_8013D9C0_14C970[0] = 0;
+		} else {
+			D_8013D9C0_14C970[0] = D_8013D9C4_14C974[0] / 2;
+		}
+		D_800313F8 = D_80031634_32234[(currentLevel - 1) << 1];
+		func_80007410_8010(func_800C0678_CF628);
+		return 1;
+	} else {
 		return 0;
 	}
-	if ((u8) D_8013D9B0_14C960 != 0) {
-		return 0;
-	}
-	if ((u8) D_8013D9AC_14C95C != 0) {
-		return 0;
-	}
-
-	vehicle = D_80052B34;
-	D_8013D9CC_14C97C = arg2;
-	temp_v0 = (vehicle->unk0 >> 7) - (s16) arg0;
-	// Agent - these abs assignments likely should use an ABC macro or ternary op
-	temp_a0 = -temp_v0;
-	if (temp_a0 < temp_v0) {
-		var_a1 = temp_v0;
-	} else {
-		var_a1 = temp_a0;
-	}
-	temp_v0 = (vehicle->unk4 >> 7) - (s16) arg1;
-	temp_a0 = -temp_v0;
-	if (temp_a0 < temp_v0) {
-		var_v1 = temp_v0;
-	} else {
-		var_v1 = temp_a0;
-	}
-	D_8013D9C4_14C974[0] = (s16) (s32) sqrtf((f32) ((var_a1 * var_a1) + (var_v1 * var_v1)));
-	if (arg2 != 0) {
-		D_8013D9C0_14C970[0] = 0;
-	} else {
-		D_8013D9C0_14C970[0] = (s16) (D_8013D9C4_14C974[0] / 2);
-	}
-	level = currentLevel - 1;
-	D_800313F8 = D_80031634_32234[level * 2];
-	func_80007410_8010(func_800C0678_CF628);
-	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0D1C_CFCCC.s")
-#endif
