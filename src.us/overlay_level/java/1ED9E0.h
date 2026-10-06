@@ -46,7 +46,7 @@ void func_802DD5A0_1F62B0(u8 arg0);
 void func_802DD5CC_1F62DC(u8 arg0);
 void func_802DD8E8_1F65F8(u8 arg0);
 void func_802DE594_1F72A4(u8 arg0);
-void func_802DE9B8_1F76C8(s32 arg0);
+void func_802DE9B8_1F76C8(u8 arg0);
 void func_802DEE4C_1F7B5C(u8 arg0);
 void func_802DF69C_1F83AC(u8 arg0);
 void func_802DF7BC_1F84CC(u8 arg0);
