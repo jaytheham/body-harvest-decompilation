@@ -3030,23 +3030,18 @@ void func_802DB7A4_1F44B4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB7A4_1F44B4.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DBB58_1F4868(u8 arg0) {
+	s32 sp18;
 	AlienInstance *alien;
-	u8 index;
-
-	index = arg0 & 0xFF;
-	alien = &alienInstances[index];
+	sp18 = 0;
+	alien = &alienInstances[arg0];
 	if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-		if ((func_80085448_943F8(index) != 0) && (func_80129354_138304(alien, 0, 0, 0, 0) != NULL)) {
-			func_80137468_146418(index, 0x65);
+		if ((func_80085448_943F8(arg0) != 0) && (func_80129354_138304((s32) alien, sp18, sp18, sp18, sp18) != 0)) {
+			func_80137468_146418(arg0, 0x65);
 			alien->unk1E = 0x1E;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBB58_1F4868.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802DBBE4_1F48F4(u8 arg0) {
