@@ -2658,7 +2658,6 @@ void func_80089E54_171F14(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-#ifdef NON_MATCHING
 // AI - Render an oriented textured quad (camera-facing billboard with rotation)
 void func_8008A1D8_172298(void) {
 	f32 sp4;
@@ -2668,12 +2667,18 @@ void func_8008A1D8_172298(void) {
 	f32 temp_f16;
 	f32 temp_f18;
 
-	temp_f0 = D_800FB6E0 * D_800FB6A8[0];
-	temp_f12 = D_800FB6E0 * D_800FB6A8[1];
-	temp_f14 = D_800FB6E0 * D_800FB6A8[2];
-	temp_f16 = D_800FB6E0 * D_800FB6A8[3];
-	temp_f18 = D_800FB6E0 * D_800FB6A8[4];
-	sp4 = D_800FB6E0 * D_800FB6A8[5];
+	temp_f0 = D_800FB6E0;
+	temp_f0 *= D_800FB6A8[0];
+	temp_f12 = D_800FB6E0;
+	temp_f12 *= D_800FB6A8[1];
+	temp_f14 = D_800FB6E0;
+	temp_f14 *= D_800FB6A8[2];
+	temp_f16 = D_800FB6E0;
+	temp_f16 *= D_800FB6A8[3];
+	temp_f18 = D_800FB6E0;
+	temp_f18 *= D_800FB6A8[4];
+	sp4 = D_800FB6E0;
+	sp4 *= D_800FB6A8[5];
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800FB6D0.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800FB6D0.y + temp_f12);
@@ -2726,9 +2731,6 @@ void func_8008A1D8_172298(void) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A1D8_172298.s")
-#endif
 
 // AI - Initialize/clear the UnkFC8E8Entry sprite table
 void func_8008A59C_17265C(void) {
