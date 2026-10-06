@@ -1725,25 +1725,20 @@ s32 func_802D8578_1F1288(u8 arg0, s32 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8578_1F1288.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D872C_1F143C(u8 arg0) {
 	s32 sp24;
-	AlienInstance *temp_s0;
-
-	temp_s0 = &alienInstances[arg0];
-	if ((temp_s0->unk20 & ALIEN_FLAG_UNKE) && (temp_s0->unk2C >= 0xF)) {
-		func_80088760_97710(temp_s0);
+	AlienInstance *alien;
+	alien = &alienInstances[arg0];
+	if ((alien->unk20 & ALIEN_FLAG_UNKE) && (alien->unk2C >= 0xF)) {
+		func_80088760_97710(alien);
 	}
-	if (temp_s0->unk2C == 0xE) {
-		sp24 = (func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)temp_s0) - vehicleTypes[D_80052B34->unk1A].unkC) - alienTypes[temp_s0->typeIndex].unkC;
+	if (alien->unk2C == 0xE) {
+		sp24 = func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)alien) - vehicleTypes[D_80052B34->unk1A].unkC - alienTypes[alien->typeIndex].unkC;
 		if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
-			temp_s0->unk20 = (s32) (temp_s0->unk20 | ALIEN_FLAG_UNKE);
+			alien->unk20 = alien->unk20 | ALIEN_FLAG_UNKE;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D872C_1F143C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802D8830_1F1540(u8 arg0) {
