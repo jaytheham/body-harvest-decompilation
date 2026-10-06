@@ -4009,3 +4009,8 @@ extern const f64 D_80038348_38F48_R;
 extern const f32 D_80038350_38F50_R;
 extern const f64 D_80038358_38F58_R;
 extern const f32 D_80039830_3A430_R;
+
+extern s16 D_8013DAFC_14CAAC[2];
+extern u8 D_8013DB00_14CAB0;
+extern s32 D_8013DB04_14CAB4;
+extern s32 D_8013DB08_14CAB8;
