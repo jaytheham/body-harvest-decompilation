@@ -744,15 +744,13 @@ void func_8007166C_41B1C(void)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80071738_41BE8(void) {
-
 	s32 i;
-	i = 0x29; do { D_800D6DC0[i].unk16 = 0; } while (i--);
+	i = 0x2A;
+	while (i--) {
+		D_800D6DC0[i].unk16 = 0;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071738_41BE8.s")
-#endif
 
 s32 func_80071760_41C10(s32 arg0)
 {

@@ -2730,22 +2730,16 @@ void func_8008A1D8_172298(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A1D8_172298.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Initialize/clear the UnkFC8E8Entry sprite table
 void func_8008A59C_17265C(void) {
-	UnkFC8E8Entry *ptr = &D_800FC8E8;
-	s32 var_v0 = 0;
+	u8 i;
 
-	do {
-		ptr[var_v0].unkA = 0;
-		var_v0 = (var_v0 + 1) & 0xFF;
-	} while (var_v0 < 0x14);
+	for (i = 0; i < 0x14; i++) {
+		(&D_800FC8E8)[i].unkA = 0;
+	}
 	D_800FCA78 = 0;
 	D_800FCA79 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A59C_17265C.s")
-#endif
 
 // AI - Update UnkFC8E8Entry animated sprite entries (advance animation frames)
 void func_8008A5E4_1726A4(void) {
