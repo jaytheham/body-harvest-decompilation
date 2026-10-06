@@ -1,14 +1,14 @@
 {
-  "generated": "2026-10-06T09:25:39Z",
-  "commit": "7bda2689",
-  "commit_timestamp": "2026-10-06T22:24:47+13:00",
+  "generated": "2026-10-06T10:27:26Z",
+  "commit": "b17072d2",
+  "commit_timestamp": "2026-10-06T23:26:51+13:00",
   "overall": {
-    "total_functions": 2716,
+    "total_functions": 2720,
     "matched": 1852,
     "non_matching": 864,
-    "asm_stubs": 0,
-    "matched_pct": 68.19,
-    "decompiled_pct": 100.0
+    "asm_stubs": 4,
+    "matched_pct": 68.09,
+    "decompiled_pct": 99.85
   },
   "segments": {
     "core": {
@@ -91,6 +91,15 @@
       "total": 122,
       "matched_pct": 62.3,
       "decompiled_pct": 100.0
+    },
+    "libultra": {
+      "display_name": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "decompiled_pct": 0.0
     }
   },
   "files": [
@@ -117,11 +126,21 @@
     {
       "path": "core/12C80.c",
       "segment": "core",
-      "matched": 109,
-      "non_matching": 11,
+      "matched": 86,
+      "non_matching": 6,
       "asm_stubs": 0,
-      "total": 120,
-      "matched_pct": 90.8,
+      "total": 92,
+      "matched_pct": 93.5,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/17EE0.c",
+      "segment": "core",
+      "matched": 23,
+      "non_matching": 5,
+      "asm_stubs": 0,
+      "total": 28,
+      "matched_pct": 82.1,
       "contributor": "jaytheham"
     },
     {
@@ -235,6 +254,36 @@
       "contributor": "jaytheham"
     },
     {
+      "path": "core/alien_parts.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/alien_waves.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/camera_curve.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
       "path": "core/loader.c",
       "segment": "core",
       "matched": 36,
@@ -242,6 +291,436 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 92.3,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/rsp_data.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/surface_properties.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/terrain_lookup.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/trig_tables.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/world_tables.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/aisetnextbuf_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/align_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/cents2ratio_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/controller_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/cosf_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/cseq_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/csplayer_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/devmgr_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/drvrNew_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/env_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/exceptasm_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/globalintmask_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/libm_qnan_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/lookatref_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/parameters_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/perspective_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/piacs_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/pimgr_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/resample_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/reverb_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/rotateRPY_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/rotate_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sched_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/seq_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/seqplayer_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/siacs_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sinf_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sins_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sl.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 4,
+      "total": 4,
+      "matched_pct": 0.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/sndplayer_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/synthesizer_rodata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/thread_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vi_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vidata.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vimgr_data.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vimodempallan1.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vimodentsclan1.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "libultra/vimodepallan1.c",
+      "segment": "libultra",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -652,7 +1131,7 @@
       "asm_stubs": 0,
       "total": 20,
       "matched_pct": 75.0,
-      "contributor": "goliath2526"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/B8290.c",
@@ -908,16 +1387,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 77,
-      "matched": 1803,
-      "non_matching": 855,
-      "asm_stubs": 0
+      "files": 125,
+      "matched": 1818,
+      "non_matching": 860,
+      "asm_stubs": 4
     },
     {
       "name": "goliath2526",
-      "files": 3,
-      "matched": 47,
-      "non_matching": 9,
+      "files": 2,
+      "matched": 32,
+      "non_matching": 4,
       "asm_stubs": 0
     },
     {
@@ -1176,10 +1655,10 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "7bda268",
+      "commit": "b17072d",
       "matched": 1852,
       "non_matching": 864,
-      "total": 2716
+      "total": 2720
     }
   ]
 }
