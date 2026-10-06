@@ -4986,45 +4986,38 @@ void func_802E088C_2C2CBC(u8 arg0) {
 	}
 }
 
-// CURRENT(16)
-#ifdef NON_MATCHING
 void func_802E0958_2C2D88(u8 arg0) {
-	AlienInstance *alien;
 	u8 typeIndex;
 
-	alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 
-	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
-		alien->unk20 |= ALIEN_FLAG_FALL;
-		alien->unk20 |= ALIEN_FLAG_UNKF;
-		func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienTypes[typeIndex].unkC, 2);
-		alien->unk2C = 0x64;
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF;
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[typeIndex].unkC, 2);
+		alienInstances[arg0].unk2C = 0x64;
 		func_80137468_146418(arg0, 0x11);
 	}
 
-	if (alien->unk2C < 0x10 && (alien->unk2C & 1)) {
+	if (alienInstances[arg0].unk2C < 0x10 && (alienInstances[arg0].unk2C & 1)) {
 		u8 newIdx;
 		newIdx = func_8007956C_8851C(0x26);
 		if (newIdx != 0xFF) {
-			alienInstances[newIdx].unk0 = alien->unk0;
-			alienInstances[newIdx].unk2 = alien->unk2;
-			alienInstances[newIdx].unk4 = alien->unk4;
+			alienInstances[newIdx].unk0 = alienInstances[arg0].unk0;
+			alienInstances[newIdx].unk2 = alienInstances[arg0].unk2;
+			alienInstances[newIdx].unk4 = alienInstances[arg0].unk4;
 			alienInstances[newIdx].unkE = func_800038E0_44E0();
 			alienInstances[newIdx].unk12 = alienTypes[10].unk40;
 		}
 	}
 
-	if (alien->unk20 & ALIEN_FLAG_UNKF) {
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF) {
 		if (func_8008AAFC_99AAC(arg0, (s32)((f64)alienTypes[typeIndex].unkC * 1.5), 5)) {
-			alien->unk20 &= ~ALIEN_FLAG_UNKF;
-			alien->unk2C = 0x10;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKF;
+			alienInstances[arg0].unk2C = 0x10;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802E0958_2C2D88.s")
-#endif
 
 void func_802E0B08_2C2F38(u8 arg0) {
 	AlienInstance *grandparent;
