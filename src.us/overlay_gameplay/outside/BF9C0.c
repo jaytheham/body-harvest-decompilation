@@ -3081,15 +3081,15 @@ void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F838 = 1;
 }
 
-// CURRENT(20)
+// CURRENT(16)
 #ifdef NON_MATCHING
 s32 func_800B9228_C81D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
-	s16 tempT0;
 	s16 tempV1;
+	s16 tempT0;
 	s32 n0;
 	s32 n2;
-	s32 dx;
 	s32 dz;
+	s32 dx;
 	s32 abs0;
 
 	tempT0 = D_8014FD2A >> 1;
