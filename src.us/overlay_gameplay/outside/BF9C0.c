@@ -2754,40 +2754,33 @@ s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 }
 
 /* Get minimum terrain height of the 4 corners of a tile */
-#ifdef NON_MATCHING
-// CURRENT(1460)
 s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
-	s16 var_v1;
-	s16 temp_t0;
-	s16 temp_t7;
-	s16 temp_t5;
-	s16 temp_t4;
-	s16 temp_a0;
-	s16 temp_t1;
+	s16 (*map)[256];
+	s32 result;
+	s16 tileX;
+	s16 tileZ;
+	s16 height0;
+	s16 height1;
+	s16 firstMinimum;
 
-	var_v1 = arg0 + 0x80;
-	temp_t0 = arg1 + 0x80;
-	temp_t7 = (u16)D_8014F8A0[temp_t0][var_v1] & 0x3F;
-	temp_t5 = (u16)D_8014F8A0[temp_t0][var_v1 + 1] & 0x3F;
-	if (temp_t7 < temp_t5) {
-		temp_a0 = temp_t7;
+	map = D_8014F8A0;
+	tileX = arg0 + 0x80; tileZ = arg1 + 0x80;
+	height0 = (u16)map[tileZ][tileX] & 0x3F;
+	height1 = (u16)map[tileZ][tileX + 1] & 0x3F;
+	if (height0 < height1) {
+		firstMinimum = height0;
 	} else {
-		temp_a0 = temp_t5;
+		firstMinimum = height1;
 	}
-	temp_t1 = (u16)D_8014F8A0[temp_t0][var_v1 + 0x100] & 0x3F;
-	temp_t4 = (u16)D_8014F8A0[temp_t0][var_v1 + 0x101] & 0x3F;
-	if (temp_t1 >= temp_t4) {
-		temp_t1 = temp_t4;
+	height0 = (u16)map[tileZ + 1][tileX] & 0x3F;
+	height1 = (u16)map[tileZ + 1][tileX + 1] & 0x3F;
+	if (height0 >= height1) {
+		height0 = height1;
 	}
-	var_v1 = temp_t1;
-	if (temp_a0 < temp_t1) {
-		var_v1 = temp_a0;
-	}
-	return var_v1;
+	result = firstMinimum < height0 ? firstMinimum : height0;
+	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8688_C7638.s")
-#endif
+
 
 /* Animate crater expansion (destroyed ground tiles with expanding bright ring) */
 // CURRENT(13990)
