@@ -4449,85 +4449,82 @@ void func_802DE584_2C09B4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DE584_2C09B4.s")
 #endif
 
-// CURRENT(4026)
-#ifdef NON_MATCHING
-void func_802DEB5C_2C0F8C(s32 arg0) {
-	u8 sp4F;
-	s16 sp48;
-	s32 sp50;
-	AlienInstance *alien;
+void func_802DEB5C_2C0F8C(u8 arg0) {
+	u8 typeIndex;
+	s16 pad4C;
+	s16 pad4A;
+	s16 groundHeight;
+	s32 flags;
 
-	alien = &alienInstances[arg0 & 0xFF];
-	sp4F = alien->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 
 	if (D_80052A8C & 1) {
-		alien->unk20 |= ALIEN_FLAG_UNKP;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKP;
 	}
 
-	if (alien->unk3A != 0) {
-		if (alien->unk3A >= 0x29) {
-			func_8008EB20_5EFD0(arg0 & 0xFF, 0x32, 0x3E8);
+	if (alienInstances[arg0].unk3A != 0) {
+		if (alienInstances[arg0].unk3A >= 0x29) {
+			func_8008EB20_9DAD0(arg0, 0x32, 0x3E8);
 		} else {
-			func_8008EB20_5EFD0(arg0 & 0xFF, 0x1F4, 0x3E8);
+			func_8008EB20_9DAD0(arg0, 0x1F4, 0x3E8);
 		}
 	} else {
-		func_8008064C_8F5FC(arg0 & 0xFF);
+		func_8008064C_8F5FC(arg0);
 	}
 
-	if (alien->unk20 & ALIEN_FLAG_UNKD) {
-		s16 temp;
-		u16 temp_a0;
+	flags = alienInstances[arg0].unk20;
+	if (flags & ALIEN_FLAG_UNKD) {
+		s16 rootJoint;
+		s32 childJoint;
 
-		func_80137468_146418(arg0 & 0xFF, 0x25);
+		func_80137468_146418(arg0, 0x25);
 
-		alien->unk6 = alien->unkE;
-		temp = D_8014DD50[alien->unkC].unkC;
-		temp_a0 = (u16)D_8014DD50[temp].unk8;
-		if ((s32)temp_a0 >= 0x7D1) {
-			D_8014DD50[temp].unk8 = temp_a0 - 0x7D0;
-			D_8014DD50[D_8014DD50[temp].unkD].unk8 += 0x7D0;
+		alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
+		rootJoint = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		childJoint = D_8014DD50[rootJoint].unkD;
+		if (D_8014DD50[rootJoint].unk8Unsigned >= 0x7D1) {
+			D_8014DD50[rootJoint].unk8Unsigned -= 0x7D0;
+			D_8014DD50[childJoint].unk8Unsigned += 0x7D0;
 		}
 
-		func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &sp48);
+		func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &groundHeight);
 
-		if ((alien->unk47 & 0xE) || ((alien->unk2 - alienTypes[sp4F].unkC) < sp48)) {
-			if (alien->unk3F != 0xFF) {
-				func_800765C4_85574(alien->unk3F);
+		if ((alienInstances[arg0].unk47 & 0xE) || ((alienInstances[arg0].unk2 - alienTypes[typeIndex].unkC) < groundHeight)) {
+			if (alienInstances[arg0].unk3F != 0xFF) {
+				func_800765C4_85574(alienInstances[arg0].unk3F);
 			}
-			func_80088760_97710(alien);
-			func_80124B5C_133B0C(alien->unk0, alien->unk2, alien->unk4, 0x3E8, 0x100);
+			func_80088760_97710(&alienInstances[arg0]);
+			func_80124B5C_133B0C(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x3E8, 0x100);
 		}
 	} else {
-		if (alien->unk20 & ALIEN_FLAG_UNKC) {
-			s16 v;
+		if (flags & ALIEN_FLAG_UNKC) {
+			s16 adjustedHeight;
 
-			v = func_8008E524_9D4D4(arg0 & 0xFF, 0x1F4, 0x4);
-			sp48 = v;
-			func_8008E978_9D928(arg0 & 0xFF, v);
+			adjustedHeight = func_8008E524_9D4D4(arg0, 0x1F4, 0x4);
+			groundHeight = adjustedHeight;
+			func_8008E978_9D928(arg0, adjustedHeight);
 		} else {
-			func_8008EDFC_9DDAC(arg0 & 0xFF);
+			func_8008EDFC_9DDAC(arg0);
 		}
-		func_8008EF1C_9DECC(arg0 & 0xFF);
-		func_80092C40_A1BF0(arg0 & 0xFF);
+		func_8008EF1C_9DECC(arg0);
+		func_80092C40_A1BF0(arg0);
 
-		if (alien->unk3A == 0 && alien->unk1E == 0) {
-			if (func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)(EntityInstance *)alien) < 0x3E8) {
-				func_800871CC_9617C(arg0 & 0xFF, 0, 0x40);
-				alien->unk1E = (func_800038E0_44E0() % 7) + 5;
+		if (alienInstances[arg0].unk3A == 0 && alienInstances[arg0].unk1E == 0) {
+			if (func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)&alienInstances[arg0]) < 0x3E8) {
+				func_800871CC_9617C(arg0, 0, 0x40);
+				alienInstances[arg0].unk1E = (func_800038E0_44E0() % 7) + 5;
 			}
 		}
 	}
 
-	if (alien->unk3A != 0) {
-		alien->unk3A--;
+	if (alienInstances[arg0].unk3A != 0) {
+		alienInstances[arg0].unk3A--;
 	}
-	if (alien->unk1E != 0) {
-		alien->unk1E--;
+	if (alienInstances[arg0].unk1E != 0) {
+		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DEB5C_2C0F8C.s")
-#endif
+
 
 void func_802DEDE4_2C1214(u8 arg0) {
 	s32 pad5C;
