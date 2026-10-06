@@ -4150,8 +4150,6 @@ void func_800BB5E0_CA590(void) {
 #endif
 
 // (short playerX, short playerZ)
-#ifdef NON_MATCHING
-// CURRENT(25)
 void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	s16 tileZ;
 	s16 tileX;
@@ -4172,7 +4170,7 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	tilePtr = &tiles[tileZ][tileX];
 	tile = *tilePtr;
 	tileBits = (u32)tile << 0x16;
-	tileType = (s32)(tileBits >> 0x1C);
+	tileType = tileBits >> 0x1C;
 
 	if ((tileType < 8) || (tileType >= 0xD)) {
 		return;
@@ -4221,9 +4219,9 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	if ((D_80052B34->unk1A != 7) || !(D_80052B34->unk58 < 0.0f)) {
 		randVal = func_800038E0_44E0();
 		func_80102D00_111CB0(D_80052B34,
-			(f32)(0x10 - (s32)((randVal & 0xFF) / 8)),
+			(f32)(0x10 - ((randVal & 0xFF) / 8)),
 			40.0f,
-			(f32)(0x10 - (s32)((func_800038E0_44E0() & 0xFF) / 8)));
+			(f32)(0x10 - ((func_800038E0_44E0() & 0xFF) / 8)));
 	}
 
 	D_80159320 |= 0x800;
@@ -4236,9 +4234,7 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 		func_80124118_1330C8(D_80052B34, 0x96);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC2F8_CB2A8.s")
-#endif
+
 
 // CURRENT(98)
 s32 func_800BC5DC_CB58C(s16 arg0) {

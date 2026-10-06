@@ -10759,10 +10759,13 @@ void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF848_EE7F8.s")
 #endif
 
-void func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
+s32 func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
+	s32 result;
+
 	D_80153B87 = 1;
-	func_800DF038_EDFE8(arg0, arg1, arg2, arg3, (s32) arg4, arg5);
+	result = func_800DF038_EDFE8(arg0, arg1, arg2, arg3, (s32) arg4, arg5);
 	D_80153B87 = 0;
+	return result;
 }
 
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
