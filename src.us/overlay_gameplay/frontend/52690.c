@@ -482,14 +482,10 @@ void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
 }
 
 /* Computes the dot product of two 3D vectors */
-#ifdef NON_MATCHING
 // AI - Computes the dot product of two 3D vectors
-f32 func_80083820_53CD0(f32 *arg0, f32 *arg1) {
-	return (arg0[0] * arg1[0]) + (arg0[1] * arg1[1]) + (arg1[2] * arg0[2]);
+f32 func_80083820_53CD0(Vec3f *arg0, Vec3f *arg1) {
+	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083820_53CD0.s")
-#endif
 
 /* Subtracts two 3D vectors: arg2 = arg0 - arg1 */
 // AI - Subtracts two 3D vectors: arg2 = arg0 - arg1
