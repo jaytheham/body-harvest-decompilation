@@ -4289,15 +4289,12 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 #endif
 
 // CURRENT(98)
-#ifdef NON_MATCHING
 s32 func_800BC5DC_CB58C(s16 arg0) {
 	s16 sp36;
 	s16 sp34;
 	s16 a1;
 	s16 a3;
 	u16 *tilePtr;
-	u16 tile;
-	s32 tileType;
 	s16 (*tiles)[256];
 
 	sp36 = alienInstances[arg0].unk0;
@@ -4306,12 +4303,9 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	a1 = (sp34 >> 8) + 0x80;
 	a3 = (sp36 >> 8) + 0x80;
 	tilePtr = (u16 *)&tiles[a1][a3];
-	tile = *tilePtr;
-	tileType = (s32)(((u32)tile << 0x16) >> 0x1C);
-
-	if ((tileType >= 8) && (tileType < 0xD) &&
-		((D_8021EA30[(a1 / 4) * 0x40 + (a3 / 4)] & 0xF) == 7) && (((u32)tile >> 0xF) != 1)) {
-		*tilePtr = (tile & 0xFC3F) | 0x380;
+	if (((s32)(((u32)*tilePtr << 0x16) >> 0x1C) >= 8) && ((s32)(((u32)*tilePtr << 0x16) >> 0x1C) < 0xD) &&
+		((D_8021EA30[(a1 / 4) * 0x40 + (a3 / 4)] & 0xF) == 7) && (((u32)*tilePtr >> 0xF) != 1)) {
+		*tilePtr = (*tilePtr & 0xFC3F) | 0x380;
 		func_800DF038_EDFE8(sp36, (func_800B84D0_C7480(sp36, sp34) >> 8) + 0xA, sp34, 0x78, 0, 0);
 		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienTypes[alienInstances[arg0].typeIndex].unkC, 0);
 		func_80079910_888C0(arg0);
@@ -4320,9 +4314,6 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC5DC_CB58C.s")
-#endif
 
 // CURRENT(21044)
 #ifdef NON_MATCHING
