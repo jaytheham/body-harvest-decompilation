@@ -944,7 +944,7 @@ typedef struct {
 	/* 0x00 */ s8 xOffset; // lateral offset from vehicle
 	/* 0x01 */ s8 yOffset; // vertical offset from vehicle
 	/* 0x02 */ s8 zOffset; // forward offset from vehicle
-	/* 0x03 */ u8 type;    // spawn param
+	/* 0x03 */ s8 type;    // spawn param
 } VehicleSpawnOffset; /* size = 0x04 */
 
 typedef enum VehicleFlags {
