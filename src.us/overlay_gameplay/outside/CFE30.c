@@ -12176,47 +12176,26 @@ void func_800E5044_F3FF4(void) {
 #endif
 
 // CURRENT(12125)
-#ifdef NON_MATCHING
 void func_800E520C_F41BC(void) {
-	LaserEntryPair *entry;
+	s32 i;
 
-	entry = (LaserEntryPair *)D_80152D00;
-	do {
-		if (entry->lasers[0].type != 0) {
-			if (entry->lasers[0].type == 1) {
-				entry->lasers[0].timer--;
-				if (entry->lasers[0].timer <= 0) {
-					entry->lasers[0].type = 0;
+	for (i = 0; i < 64; i++) {
+		if (D_80152D00[i].type != 0) {
+			if (D_80152D00[i].type == 1) {
+				D_80152D00[i].timer--;
+				if (D_80152D00[i].timer <= 0) {
+					D_80152D00[i].type = 0;
 				}
 			}
-			if (entry->lasers[0].type == 2) {
-				entry->lasers[0].timer--;
-				if (entry->lasers[0].timer <= 0) {
-					entry->lasers[0].type = 0;
-				}
-			}
-		}
-		if (entry->lasers[1].type != 0) {
-			if (entry->lasers[1].type == 1) {
-				entry->lasers[1].timer--;
-				if (entry->lasers[1].timer <= 0) {
-					entry->lasers[1].type = 0;
-				}
-			}
-			if (entry->lasers[1].type == 2) {
-				entry->lasers[1].timer--;
-				if (entry->lasers[1].timer <= 0) {
-					entry->lasers[1].type = 0;
+			if (D_80152D00[i].type == 2) {
+				D_80152D00[i].timer--;
+				if (D_80152D00[i].timer <= 0) {
+					D_80152D00[i].type = 0;
 				}
 			}
 		}
-		entry++;
-	} while (entry != &D_80153300);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E520C_F41BC.s")
-#endif
-
 #ifdef NON_MATCHING
 void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6) {
 	u8 i;
