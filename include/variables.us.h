@@ -2395,7 +2395,11 @@ extern f32 D_80153BA4;
 extern s16 D_80153BAC;
 extern s16 D_80153BAE;
 extern s16 D_80153BB0;
+#ifdef OUTSIDE_CFE30_BSS
+Vec3f D_80153BB8;
+#else
 extern Vec3f D_80153BB8;
+#endif
 extern void *D_80153BC4;
 extern f32 D_80153BC8;
 extern u8 D_80153BCC;

@@ -1,3 +1,4 @@
+#define OUTSIDE_CFE30_BSS
 #include <ultra64.h>
 #include "common.h"
 
@@ -5326,9 +5327,7 @@ void func_800CF070_DE020(void) {
 }
 
 // CURRENT(25)
-#ifdef NON_MATCHING
-void func_800CF174_DE124(Vec3f *arg0, s32 arg1) {
-	arg1 = (u8)arg1;
+void func_800CF174_DE124(Vec3f *arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_8013DCF0_14CCA0[arg1]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
@@ -5346,9 +5345,7 @@ void func_800CF174_DE124(Vec3f *arg0, s32 arg1) {
 	func_800DB350_EA300();
 	D_80156EDA += 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF174_DE124.s")
-#endif
+
 
 // CURRENT(11193)
 #ifdef NON_MATCHING
