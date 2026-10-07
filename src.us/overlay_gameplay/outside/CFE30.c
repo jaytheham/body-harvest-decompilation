@@ -3300,8 +3300,7 @@ void func_800C8F5C_D7F0C(u8 arg0) {
 #endif
 
 // CURRENT(225)
-#ifdef NON_MATCHING
-s16 *func_800C927C_D822C(u8 arg0) {
+void func_800C927C_D822C(u8 arg0) {
 	Unk801541F8Entry *effect;
 	s16 index;
 
@@ -3337,12 +3336,9 @@ s16 *func_800C927C_D822C(u8 arg0) {
 		} while ((index != -5) && (index != -6));
 	}
 
-	D_80156EDA += effect->unk4 * 4;
-	return &D_80156EDA;
+	D_80156EDA_Draw += effect->unk4 * 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C927C_D822C.s")
-#endif
+
 
 void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s32 pad;

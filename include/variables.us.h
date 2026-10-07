@@ -2450,6 +2450,7 @@ extern Unk80154318Entry D_80154329[];
 extern u8 D_80156ED8;
 extern u8 D_80156ED9;
 extern s16 D_80156EDA;
+extern volatile s16 D_80156EDA_Draw;
 extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
 extern UnkFC8E8Entry D_80156EF0[];
