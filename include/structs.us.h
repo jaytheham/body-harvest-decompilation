@@ -1893,8 +1893,13 @@ typedef struct {
 	/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
 	/* 0x04 */ s16 x1;        /* start point */
 	/* 0x06 */ s16 y1;
-	/* 0x08 */ s16 z1;
-	/* 0x0A */ s16 x2;        /* end point */
+	union {
+		struct {
+			/* 0x08 */ s16 z1;
+			/* 0x0A */ s16 x2;        /* end point */
+		};
+		/* 0x08 */ AlienInstance *alien; /* type 2 */
+	};
 	/* 0x0C */ s16 y2;
 	/* 0x0E */ s16 z2;
 	/* 0x10 */ s32 extra;     /* passed to the draw fn; restores render mode when non-zero */
@@ -1974,10 +1979,7 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-	/* 0x03 */ u8 unk3;
-	/* 0x04 */ u8 unk4;
+	/* 0x01 */ u8 lights[4];
 } Unk80080588Entry5; /* size = 0x05 */
 
 typedef struct {
@@ -1986,11 +1988,7 @@ typedef struct {
 	/* 0x02 */ u8 unk2;
 } Unk80080588Entry3; /* size = 0x03 */
 
-typedef struct {
-	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-} Unk80080588Rgb; /* size = 0x03 */
+typedef Unk80080588Entry3 Unk80080588Rgb;
 
 typedef struct {
 	/* 0x00 */ s32 unk0;
@@ -2031,8 +2029,7 @@ typedef struct {
 	/* 0x1A */ u8 pad1A[0x2];
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ s32 unk20;
-	/* 0x24 */ u8 unk24;
-	/* 0x25 */ u8 pad25[3];
+	/* 0x24 */ s32 unk24;
 	/* 0x28 */ u8 unk28;
 	/* 0x29 */ u8 unk29;
 	/* 0x2A */ u8 unk2A;
@@ -2072,9 +2069,16 @@ typedef struct {
 } Unk8007FE8CArg; /* size = 0x24 */
 
 typedef struct {
-	/* 0x00 */ u8 pad[0x50];
-	/* 0x50 */ s32 unk50;
-	/* 0x54 */ void* unk54;
+ u32 frameCount;
+ struct { u16 start; u16 count; } channels[15];
+ u8 pad40[8];
+} FrontendStreamHeader; /* size = 0x48 */
+
+typedef struct {
+ /* 0x00 */ u8 pad0[8];
+ /* 0x08 */ FrontendStreamHeader header;
+ /* 0x50 */ s32 unk50;
+ /* 0x54 */ void* unk54;
 } FrontendStreamSlot; /* size = 0x58 */
 
 
@@ -2511,14 +2515,20 @@ typedef struct {
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 unkF;
-	/* 0x10 */ u8 unk10;
-	/* 0x11 */ u8 unk11;
-	/* 0x12 */ s16 unk12;
+	union {
+		struct {
+			/* 0x08 */ s16 unk8;
+			/* 0x0A */ s16 unkA;
+			/* 0x0C */ s16 unkC;
+			/* 0x0E */ u8 unkE;
+			/* 0x0F */ u8 unkF;
+			/* 0x10 */ u8 unk10;
+			/* 0x11 */ u8 unk11;
+			/* 0x12 */ s16 unk12;
+		};
+		/* 0x08 */ s16 coordinates[6];
+		/* 0x08 */ u8 payload[12];
+	};
 	/* 0x14 */ u8 unk14;
 	/* 0x15 */ u8 unk15;
 	/* 0x16 */ u8 pad16[6];
@@ -2684,15 +2694,7 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 } UnkF9230Func8010065CEntry; /* size = 0x08 */
 
-typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
-	/* 0x10 */ f32 unk10;
-} UnkA6C64Keyframe; /* stride = 0x14 */
+
 
 typedef struct {
 	/* 0x00 */ s16 x;
@@ -2778,7 +2780,8 @@ typedef struct {
 	/* 0x01 */ s8 unk1;      /* center Z in 1/256 world units */
 	/* 0x02 */ s8 unk2;      /* half-size in 1/256 world units */
 	/* 0x03 */ s8 unk3;      /* 0 = active zone entry */
-	/* 0x04 */ u8 pad04[6];
+	/* 0x04 */ u8 *name;
+	/* 0x08 */ u8 pad08[2];
 	/* 0x0A */ s16 unk0A;
 	/* 0x0C */ s16 unk0C;
 	/* 0x0E */ u8 pad0E[2];
@@ -3395,7 +3398,9 @@ typedef struct {
 
 typedef struct {
 	u16 terrainObject : 1;
-	u16 unusedFlags : 3;
+	u16 flag14 : 1;
+	u16 flag13 : 1;
+	u16 flag12 : 1;
 	u16 flag11 : 1;
 	u16 flag10 : 1;
 	u16 terrainType : 4;
@@ -3410,10 +3415,55 @@ typedef union {
 
 typedef union {
 	s32 word;
+	u8 bytes[4];
 	struct {
 		s16 high;
 		s16 low;
 	} halves;
 } SignedWord;
+
+typedef struct {
+	s16 unk0;     // 0x00
+	s16 unk2;     // 0x02
+	s16 unk4;     // 0x04
+	s16 unk6;     // 0x06
+	s16 unk8;     // 0x08
+} Unk14C280Entry; // 0x0A bytes
+
+
+
+typedef u8 MapTextureStrip[2048];
+
+typedef union {
+	u16 pixels[8][8][8][4][8][4];
+	u8 rows[8][16384];
+	u8 bytes[131072];
+} MapTexture;
+
+typedef struct {
+	s8 x;
+	s8 z;
+	u8 size;
+	u8 music;
+} MapStage;
+
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+} EffectRgb;
+
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 unk3;
+} TerrainPaletteColor;
+
+typedef struct {
+	f32 r;
+	f32 g;
+	f32 b;
+} TerrainLightTint;
 
 #endif

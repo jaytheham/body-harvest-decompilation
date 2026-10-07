@@ -12,7 +12,7 @@ void func_802D5FE4_1EECF4(void);
 void func_802D6338_1EF048(void);
 void func_802D68F4_1EF604(void);
 void func_802D6E70_1EFB80();
-void func_802D7EAC_1F0BBC(s32);
+void func_802D7EAC_1F0BBC(u8);
 void func_802DA844_1F3554(u8);
 void func_802DD140_1F5E50(u8 arg0, u8 arg1);
 void func_802DF3C0_1F80D0(u8 arg0, s16 *arg1, s16 *arg2);

@@ -1,5 +1,7 @@
 ### Array base address and immediate offsets
 
+- In `func_800D80B4_E7064`, IDO folded coordinate subobject loads into offsets `8`, `0xA`, and `0xC` of the effect entry. Assigning `coordinates = (s16 *)(s32)entry->coordinates` before the call retained the target `addiu v0,s0,8` and loads at offsets `0`, `2`, and `4`. A typed coordinate-array union preserves the existing effect payload fields. This matched the full ROM; the same cast did not retain separate bases in a coordinate-copy callback, so verify each use.
+
 - When a u8 (or other) array is declared at address X+N (e.g. `D_80259D92` starts 2 bytes into `D_80259D90`), accessing `D_80259D92[i][0]` generates a different base pointer in the compiled output vs `D_80259D90[i][2]`, even though both access the same memory. The immediate offset in `sb/lb` instructions will differ by N. Match the original assembly's immediate (e.g. `-0x4E` vs `-0x50`) to pick the right base variable and field index.
 - **`li reg, -1` vs `li reg, 0xff`**: To get `addiu reg, zero, -1` (signed -1 load) for a byte store, use a `s8 neg_one = -1;` variable and assign from it. Directly assigning `-1` or `(u8)-1` to a `u8` array element generates `li reg, 0xff` (unsigned 0xFF load) instead.
 
