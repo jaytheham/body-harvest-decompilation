@@ -2660,21 +2660,33 @@ typedef struct {
 } Unk80152CA0Entry; /* stride = 0x3 */
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ s16 pad6;
+	/* 0x08 */ u16 angle;
+	/* 0x0A */ s16 padA;
+	/* 0x0C */ s16 scale[3];
+	/* 0x12 */ u8 duration;
+	/* 0x13 */ u8 pad13;
+} NukeKeyframe; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ s16 unk8;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ union { s16 unk8; u16 angle; };
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 padF;
+	/* 0x0E */ union {
+		s16 scaleY;
+		struct { u8 unkE; u8 padF; };
+	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
 	/* 0x14 */ u8 unk14;
 	/* 0x15 */ u8 pad15[3];
-	/* 0x18 */ s32 unk18;
+	/* 0x18 */ union { s32 unk18; NukeKeyframe *keyframe; };
 	/* 0x1C */ s32 unk1C;
 } Unk80153AE0Entry; /* stride = 0x20 */
 

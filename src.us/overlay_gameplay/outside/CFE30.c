@@ -7788,56 +7788,53 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	func_80135D08_144CB8(3.0f, 1, 0x3C, 1);
 }
 
-// CURRENT(675)
-#ifdef NON_MATCHING
 void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 	Unk80153AE0Entry *entry;
-	s16 *data;
-	u8 phase;
+	NukeKeyframe *data;
+	s32 phase;
+	s32 currentPhase;
 
 	(void)arg0;
 	entry = &D_80153AE0[arg1];
-	if ((phase = entry->unk13) == 0) {
-		data = (s16 *)entry->unk18;
-		entry->unk0 = data[0];
-		entry->unk2 = data[1];
-		entry->unk4 = data[2];
-		((s16 *)entry)[3] = 0;
+	phase = entry->unk13;
+	currentPhase = phase;
+	if (phase == 0) {
+		data = entry->keyframe;
+		entry->unk0 = data->position[0];
+		entry->unk2 = data->position[1];
+		entry->unk4 = data->position[2];
+		entry->unk6 = 0;
 		entry->unk8 = 0;
 		entry->unkA = 0;
-		entry->unkC = data[6];
-		((s16 *)entry)[7] = data[7];
-		entry->unk10 = data[8];
-		phase++;
-		entry->unk13 = phase;
+		entry->unkC = data->scale[0];
+		entry->scaleY = data->scale[1];
+		entry->unk10 = data->scale[2];
+		entry->unk13 = phase + 1;
 		entry->unk14 = 0;
-		entry->unk18 = (s32)(data + 10);
+		entry->keyframe = &data[1];
 		return;
 	}
 
-	data = (s16 *)entry->unk18;
-	if (entry->unk14 == ((u8 *)data)[0x12]) {
-		phase++;
-		entry->unk13 = phase;
+	data = entry->keyframe;
+	if (data->duration == entry->unk14) {
+		entry->unk13 = phase + 1;
 		entry->unk14 = 0;
-		entry->unk18 = (s32)((u8 *)data + 0x14);
+		entry->keyframe = &data[1];
+		currentPhase = entry->unk13;
 	}
 
-	if ((u8)phase < entry->unk12) {
-		data = (s16 *)entry->unk18;
-		entry->unk0 += data[0] / ((u8 *)data)[0x12];
-		entry->unk2 += data[1] / ((u8 *)data)[0x12];
-		entry->unk4 += data[2] / ((u8 *)data)[0x12];
-		entry->unk8 = (u16)((((u16 *)data)[4] / ((u8 *)data)[0x12]) + (u16)entry->unk8);
-		entry->unkC += data[6] / ((u8 *)data)[0x12];
-		((s16 *)entry)[7] += data[7] / ((u8 *)data)[0x12];
-		entry->unk10 += data[8] / ((u8 *)data)[0x12];
+	if (currentPhase < entry->unk12) {
+		data = entry->keyframe;
+		entry->unk0 += data->position[0] / data->duration;
+		entry->unk2 += data->position[1] / data->duration;
+		entry->unk4 += data->position[2] / data->duration;
+		entry->angle += data->angle / data->duration;
+		entry->unkC += data->scale[0] / data->duration;
+		entry->scaleY += data->scale[1] / data->duration;
+		entry->unk10 += data->scale[2] / data->duration;
 		entry->unk14++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6C18_E5BC8.s")
-#endif
 
 void func_800D6EAC_E5E5C(u8 arg0) {
 	s16 next;
