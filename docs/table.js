@@ -34,6 +34,7 @@ export function renderFilesTable(files) {
           <option value="path">Sort: Name</option>
           <option value="matched_pct" selected>Sort: Matched %</option>
           <option value="matched">Sort: Matched count</option>
+		  <option value="non_matching">Sort: Not matched count</option>
           <option value="total">Sort: Total functions</option>
           <option value="asm_stubs">Sort: ASM remaining</option>
         </select>
@@ -64,7 +65,8 @@ export function initFilesTable(files) {
     const rows = files
       .filter(f =>
         (!search || f.path.toLowerCase().includes(search) || (f.contributor || '').toLowerCase().includes(search)) &&
-        (!segF || f.segment === segF)
+        (!segF || f.segment === segF) &&
+		(f.total > 0)
       )
       .sort((a, b) => {
         const av = a[sortKey] ?? 0, bv = b[sortKey] ?? 0;

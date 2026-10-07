@@ -42,3 +42,7 @@ Without the named `devAddr`, IDO defers the load of `offset` and uses `beqzl` wi
 - arg1 sign-extend happens via `lb t3, 0x1f(sp)` (reload from stack) rather than early `sll/sra`
 
 Side effect: the named `s32 devAddr` may NOT inflate the frame if the baseline frame is small enough (e.g., 0x18 stays at 0x18). Declaration order: `s32 devAddr` before `s16 var_a2`.
+
+### Two cached tile scalars can add eight bytes
+
+In func_800BC5DC_CB58C, caching the halfword tile and its extracted terrain type in u16 and s32 locals inflated the frame from 0x38 to 0x40. All instructions otherwise matched. Removing both locals and reading *tilePtr directly in the comparisons and update kept IDO's cached lhu result and restored the exact frame. Removing only one local did not fix alignment. Keep the named map pointer: removing it changed register allocation and control flow.

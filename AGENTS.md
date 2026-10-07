@@ -24,7 +24,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - Important: Rather than blindly making changes when dealing with incorrect or out-of-order instructions, first check for other functions with sections of assembly that are the same as the target assembly section you are focussed on using `.\tools\Search-AsmPattern.ps1 -Offset <ROM offset> -Count <number of instructions to match>` e.g. `.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 8` look up the C implementation of any functions it returns as reference for your own implementation - if they're not wrapped in NON_MATCHING then they are already matched and can be used as a reference for how to implement the same logic in your function.
 
 # Your Workflow
-1. Create a new git branch named like `decomp-yyyy-MM-dd-HH-mm`
+1. If on master branch, create a new git branch named like `decomp-yyyy-MM-dd-HH-mm`
 2. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build.
 3. Read the closest already matched functions before and after the target one, IDO codegen is very dependant on code style, so nearby matched functions will help guide your implementation. Ignore NON_MATCHING wrapped functions as their logic may be wrong.
 4. Build, compare with target, identify differences.
@@ -46,6 +46,7 @@ If a function has a switch statement and there is an associated jump table const
 - Add or update declarations for any called functions in `include/functions.us.h`.
 - Important: Replace all pointer math with struct/array access!
 - Remove unnecessary casts.
+- Remove excessive temporary variables.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Search in `/asm` for any `jal` references (e.g. `jal        func_80073DC0_82D70`) to the target function to determine correct parameter and return types.
 

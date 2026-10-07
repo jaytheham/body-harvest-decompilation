@@ -1,5 +1,7 @@
 ### uopt temp for pointer spill vs explicit user-declared pointer variable
 
+`func_800C4938_D38E8` matched its instruction sequence but saved the effect-entry pointer at `sp+0x18` rather than `sp+0x1C`. Removing the named payload pointer and inlining `((u8 *)(s32)D_80154318[idx].payload)[offset]` for each byte store preserved the separate payload base and moved the compiler-generated entry spill to `sp+0x1C`, with the same `0x28` frame. Direct payload field accesses without the conversion folded away that base and changed the schedule. Full ROM verification passed.
+
 When a pointer (e.g. boss pointer `v0`) is spilled to the stack in a JAL delay slot and reloaded immediately after, the spill location depends on whether it is a user-declared variable or a uopt temp:
 
 1. A **user-declared** local pointer variable (e.g. `AlienInstance *sp1C`) is placed at the lowest available slot after `ra` (e.g. 0x18 if nothing else is declared first).

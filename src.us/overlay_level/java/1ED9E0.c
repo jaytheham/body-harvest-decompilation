@@ -1528,32 +1528,15 @@ void func_802D7B68_1F0878(u8 arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7B68_1F0878.s")
 #endif
-#ifdef NON_MATCHING
 void func_802D7EAC_1F0BBC(u8 arg0) {
-	AlienInstance *alien;
-	s16 baseValue;
-	s16 adjustedValue;
-	u16 typeTableValue;
-
-	alien = &alienInstances[arg0];
-
-	if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-		baseValue = alienTypes[alien->typeIndex].unkC;
-		func_800DF848_EE7F8(alien->unk0, (s16)(alien->unk2 + 0x14), alien->unk4, baseValue, 0);
-
-		alien->unk24 = func_800C2274_D1224(alien->unk0, (s16)(alien->unk2 + 0x64), alien->unk4, 2);
-		alien->unk2C = 0x5A;
-		alien->unk3D = 0;
-
-		typeTableValue = alienTypes[alien->typeIndex].unkC;
-		adjustedValue = (s16)((typeTableValue + 0x32) & 0xFFFF);
-
-		func_800C3BD8_D2B88(alien->unk0, alien->unk2, alien->unk4, adjustedValue, 0x5A, 0xF0, 0x78, 0);
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x14, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC, 0);
+		alienInstances[arg0].unk24 = func_800C2274_D1224(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x64, alienInstances[arg0].unk4, 2);
+		alienInstances[arg0].unk2C = 0x5A;
+		alienInstances[arg0].unk3D = 0;
+		func_800C3BD8_D2B88(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC + 0x32, 0x5A, 0xF0, 0x78, 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7EAC_1F0BBC.s")
-#endif
 
 // CURRENT(22434)
 #ifdef NON_MATCHING
@@ -1657,93 +1640,70 @@ void func_802D7FCC_1F0CDC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7FCC_1F0CDC.s")
 #endif
 
-#ifdef NON_MATCHING
 /* Alien state machine: compute movement deltas, check height threshold, update flags based on unk20 bit 30 */
 s32 func_802D8578_1F1288(u8 arg0, s32 arg1, s32 arg2) {
-	AlienInstance *alien;
 	s32 sp24;
+	AlienInstance *alien;
 
-	alien = &alienInstances[arg0 & 0xFF];
+	alien = &alienInstances[arg0];
 	sp24 = 0;
 
-	/* Compute movement deltas */
-	alien->unkA = func_8009395C_A290C(arg0 & 0xFF, alien->unk6);
-	alien->unk8 = func_8009395C_A290C(arg0 & 0xFF, (s16)(alien->unk6 + 0x4000));
+	alien->unkA = func_8009395C_A290C(arg0, alien->unk6);
+	alien->unk8 = func_8009395C_A290C(arg0, alien->unk6 + 0x4000);
 
-	/* Check if alien is above threshold and call initialization */
 	if (((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) + 0x12C) < alien->unk2) {
 		func_80088760_97710(alien);
 	}
 
-	/* Main state logic based on unk20 flags */
 	if (alien->unk20 & ALIEN_FLAG_FALL) {
-		/* High flag set: restore stored values and apply modifications */
 		alien->unk6 = alien->unkE;
-
 		if (D_80222A70 < alien->unk2) {
-			alien->unk10 = (s16)(alien->unk10 + 0x30);
+			alien->unk10 = alien->unk10 + 0x30;
 		}
-
-		if (alien->unk47 & 0x4) {
+		if (alien->unk47 & 4) {
 			alien->unk12 = 0;
 		}
-
-		if ((alien->unk47 & 0x2) && ((alien->unk3A == 0) || (alien->unk10 != 0))) {
-			alien->unk20 = (s32)(alien->unk20 | (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD));
+		if ((alien->unk47 & 2) && ((alien->unk3A == 0) || (alien->unk10 != 0))) {
+			alien->unk20 = alien->unk20 | (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
 			alien->unk36 = 0;
+			alien->unk10 = arg2;
+			alien->unk2C = arg1;
 			sp24 = 1;
-			alien->unk10 = (s16)arg2;
-			alien->unk2C = (s16)arg1;
 		}
-
-		alien->unk3A = (s16)alien->unk10;
+		alien->unk3A = alien->unk10;
 	} else {
-		/* Low flag: countdown timer logic */
-		s16 temp_v0;
-
-		temp_v0 = alien->unk2C;
 		alien->unk12 = 0;
-
-		if (temp_v0 != 0) {
-			alien->unk2C = (s16)(temp_v0 - 1);
+		if (alien->unk2C != 0) {
+			alien->unk2C = alien->unk2C - 1;
 		} else {
-			alien->unk20 = (s32)(alien->unk20 | (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD));
+			alien->unk20 = alien->unk20 | (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
 			alien->unk36 = 0;
+			alien->unk10 = arg2;
+			alien->unk2C = arg1;
 			sp24 = 1;
-			alien->unk10 = (s16)arg2;
-			alien->unk2C = (s16)arg1;
 		}
-
-		if (alien->unk47 & 0x1) {
+		if (alien->unk47 & 1) {
 			alien->unk2C = 0;
 		}
 	}
 
 	return sp24;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8578_1F1288.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_802D872C_1F143C(u8 arg0) {
 	s32 sp24;
-	AlienInstance *temp_s0;
-
-	temp_s0 = &alienInstances[arg0];
-	if ((temp_s0->unk20 & ALIEN_FLAG_UNKE) && (temp_s0->unk2C >= 0xF)) {
-		func_80088760_97710(temp_s0);
+	AlienInstance *alien;
+	alien = &alienInstances[arg0];
+	if ((alien->unk20 & ALIEN_FLAG_UNKE) && (alien->unk2C >= 0xF)) {
+		func_80088760_97710(alien);
 	}
-	if (temp_s0->unk2C == 0xE) {
-		sp24 = (func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)temp_s0) - vehicleTypes[D_80052B34->unk1A].unkC) - alienTypes[temp_s0->typeIndex].unkC;
+	if (alien->unk2C == 0xE) {
+		sp24 = func_80084F00_93EB0((EntityInstance *)D_80052B34, (EntityInstance *)alien) - vehicleTypes[D_80052B34->unk1A].unkC - alienTypes[alien->typeIndex].unkC;
 		if ((func_80084FE8_93F98(arg0, 0x800) != 0) && (sp24 < 0x8C)) {
-			temp_s0->unk20 = (s32) (temp_s0->unk20 | ALIEN_FLAG_UNKE);
+			alien->unk20 = alien->unk20 | ALIEN_FLAG_UNKE;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D872C_1F143C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802D8830_1F1540(u8 arg0) {
@@ -2990,49 +2950,31 @@ void func_802DB7A4_1F44B4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB7A4_1F44B4.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DBB58_1F4868(u8 arg0) {
+	s32 sp18;
 	AlienInstance *alien;
-	u8 index;
-
-	index = arg0 & 0xFF;
-	alien = &alienInstances[index];
+	sp18 = 0;
+	alien = &alienInstances[arg0];
 	if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-		if ((func_80085448_943F8(index) != 0) && (func_80129354_138304(alien, 0, 0, 0, 0) != NULL)) {
-			func_80137468_146418(index, 0x65);
+		if ((func_80085448_943F8(arg0) != 0) && (func_80129354_138304((s32) alien, sp18, sp18, sp18, sp18) != 0)) {
+			func_80137468_146418(arg0, 0x65);
 			alien->unk1E = 0x1E;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBB58_1F4868.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_802DBBE4_1F48F4(u8 arg0) {
 	AlienInstance *alien;
-	s8 temp_x;
-	s8 temp_z;
-
 	func_80091470_A0420(arg0);
 	alien = &alienInstances[arg0];
 	if (!(alien->unk20 & ALIEN_FLAG_UNKF)) {
 		func_8009170C_A06BC(arg0);
 	}
-	if (alien->unk20 & ALIEN_FLAG_TARGET_PT) {
-		temp_x = (s8) (alien->unk0 >> 8);
-		temp_z = (s8) (alien->unk4 >> 8);
-		if (func_800B325C_C220C(temp_x, temp_z, 0x800) != 0) {
-			if (func_80129354_138304((s32) alien, 0, 0, 0, 0) != 0) {
-				func_80137468_146418((s32) arg0, 0x65);
-				alien->unk1E = 0x1E;
-			}
-		}
+	if ((alien->unk20 & ALIEN_FLAG_TARGET_PT) && (func_800B325C_C220C((s8)((s16)alien->unk0 >> 8), (s8)((s16)alien->unk4 >> 8), 0x800) != 0) && (func_80129354_138304((s32)alien, 0, 0, 0, 0) != 0)) {
+		func_80137468_146418(arg0, 0x65);
+		alien->unk1E = 0x1E;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBBE4_1F48F4.s")
-#endif
 
 // Locust (Greece green glider enemy) behavior specs.unk4C
 #ifdef NON_MATCHING
