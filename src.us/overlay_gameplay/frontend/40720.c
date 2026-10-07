@@ -5275,7 +5275,7 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A40 = (Unk8007E12CEntry8*)D_80096548_669F8;
 	D_800D7A48 = (u8*)D_800965E8_66A98;
 	D_800D7A44 = (u8*)D_800965D8_66A88; /* legacy - kept for asm */
-	D_800D7A4C = (u8*)D_800965F0_66AA0;
+	D_800D7A4C = D_800965F0_66AA0;
 
 	D_800D7A58 = 0x22;
 	D_800D7A8D = 0x0F;
@@ -5608,7 +5608,7 @@ s32 func_8007E12C_4E5DC(void) {
 				D_800949BC_64E6C = 1;
 				break;
 			case 28:
-				argEntry = &((Unk8007E12CEntry8*)D_800D7A4C)[arg];
+				argEntry = &D_800D7A4C[arg];
 				if (argEntry->unk4 == 6) {
 					D_800D8518 = argEntry->unk0;
 					D_800D851C = argEntry->unk4;
@@ -7053,15 +7053,14 @@ void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_80081F9C_5244C(void) {
+	s32 index;
+
+	index = D_800949D4;
 	D_800D8524 = 0xF;
-	D_800D8520 = ((s32*)(D_800D7A4C + D_800949D4 * 8))[8];
-	D_800949D4 = (u8)((s32)(D_800949D4 + 1) % 4);
+	D_800D8520 = D_800D7A4C[index + 4].unk0;
+	D_800949D4_64E84 = (index + 1) % 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081F9C_5244C.s")
-#endif
 
 /**
  * @brief Dampens D_800D8528 by 87.5% and reverses direction, zeroing if below threshold.

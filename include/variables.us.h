@@ -1515,7 +1515,7 @@ extern u8* D_800D7A3C;
 extern Unk8007E12CEntry8* D_800D7A40;
 extern u8* D_800D7A44; /* legacy - kept for asm; use D_800D7A40 in C */
 extern u8* D_800D7A48;
-extern u8* D_800D7A4C;
+extern Unk8007E12CEntry8* D_800D7A4C;
 extern s32 D_800D7A50;
 extern s32 D_800D7A54;
 extern u8 D_800D7A58;
