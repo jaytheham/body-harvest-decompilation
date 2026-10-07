@@ -1,38 +1,38 @@
 {
-  "generated": "2026-10-07T10:21:34Z",
-  "commit": "909ff967",
-  "commit_timestamp": "2026-10-07T23:20:42+13:00",
+  "generated": "2026-10-07T18:56:49Z",
+  "commit": "0b202607",
+  "commit_timestamp": "2026-10-08T07:56:18+13:00",
   "overall": {
     "total_functions": 2720,
-    "matched": 1918,
-    "non_matching": 798,
+    "matched": 1930,
+    "non_matching": 786,
     "asm_stubs": 4,
-    "matched_pct": 70.51,
+    "matched_pct": 70.96,
     "decompiled_pct": 99.85
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 302,
-      "non_matching": 54,
+      "matched": 303,
+      "non_matching": 53,
       "asm_stubs": 0,
       "total": 356,
-      "matched_pct": 84.8,
+      "matched_pct": 85.1,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 130,
-      "non_matching": 88,
+      "matched": 131,
+      "non_matching": 87,
       "asm_stubs": 0,
       "total": 218,
-      "matched_pct": 59.6,
+      "matched_pct": 60.1,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1042,
-      "non_matching": 406,
+      "matched": 1043,
+      "non_matching": 405,
       "asm_stubs": 0,
       "total": 1448,
       "matched_pct": 72.0,
@@ -40,11 +40,11 @@
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
-      "matched": 143,
-      "non_matching": 94,
+      "matched": 144,
+      "non_matching": 93,
       "asm_stubs": 0,
       "total": 237,
-      "matched_pct": 60.3,
+      "matched_pct": 60.8,
       "decompiled_pct": 100.0
     },
     "overlay_level/greece": {
@@ -58,11 +58,11 @@
     },
     "overlay_level/java": {
       "display_name": "Level / Java",
-      "matched": 56,
-      "non_matching": 46,
+      "matched": 60,
+      "non_matching": 42,
       "asm_stubs": 0,
       "total": 102,
-      "matched_pct": 54.9,
+      "matched_pct": 58.8,
       "decompiled_pct": 100.0
     },
     "overlay_level/america": {
@@ -76,20 +76,20 @@
     },
     "overlay_level/siberia": {
       "display_name": "Level / Siberia",
-      "matched": 54,
-      "non_matching": 41,
+      "matched": 55,
+      "non_matching": 40,
       "asm_stubs": 0,
       "total": 95,
-      "matched_pct": 56.8,
+      "matched_pct": 57.9,
       "decompiled_pct": 100.0
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
-      "matched": 76,
-      "non_matching": 46,
+      "matched": 79,
+      "non_matching": 43,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 62.3,
+      "matched_pct": 64.8,
       "decompiled_pct": 100.0
     },
     "libultra": {
@@ -286,12 +286,12 @@
     {
       "path": "core/loader.c",
       "segment": "core",
-      "matched": 36,
-      "non_matching": 3,
+      "matched": 37,
+      "non_matching": 2,
       "asm_stubs": 0,
       "total": 39,
-      "matched_pct": 92.3,
-      "contributor": "jaytheham"
+      "matched_pct": 94.9,
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/rsp_data.c",
@@ -731,16 +731,16 @@
       "asm_stubs": 0,
       "total": 113,
       "matched_pct": 58.4,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 64,
-      "non_matching": 41,
+      "matched": 65,
+      "non_matching": 40,
       "asm_stubs": 0,
       "total": 105,
-      "matched_pct": 61.0,
+      "matched_pct": 61.9,
       "contributor": "lunarlaurus"
     },
     {
@@ -951,7 +951,7 @@
       "asm_stubs": 0,
       "total": 22,
       "matched_pct": 63.6,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/inside/167C90.c",
@@ -966,11 +966,11 @@
     {
       "path": "overlay_gameplay/inside/16AF30.c",
       "segment": "overlay_gameplay/inside",
-      "matched": 49,
-      "non_matching": 29,
+      "matched": 50,
+      "non_matching": 28,
       "asm_stubs": 0,
       "total": 78,
-      "matched_pct": 62.8,
+      "matched_pct": 64.1,
       "contributor": "lunarlaurus"
     },
     {
@@ -986,12 +986,12 @@
     {
       "path": "overlay_gameplay/outside/101840.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 137,
-      "non_matching": 82,
+      "matched": 138,
+      "non_matching": 81,
       "asm_stubs": 0,
       "total": 219,
-      "matched_pct": 62.6,
-      "contributor": "jaytheham"
+      "matched_pct": 63.0,
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/1312D0.c",
@@ -1111,7 +1111,7 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 59.0,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/B2CB0.c",
@@ -1306,12 +1306,12 @@
     {
       "path": "overlay_level/comet/318E20.c",
       "segment": "overlay_level/comet",
-      "matched": 76,
-      "non_matching": 46,
+      "matched": 79,
+      "non_matching": 43,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 62.3,
-      "contributor": "jaytheham"
+      "matched_pct": 64.8,
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_level/comet/alien_types.c",
@@ -1346,11 +1346,11 @@
     {
       "path": "overlay_level/java/1ED9E0.c",
       "segment": "overlay_level/java",
-      "matched": 56,
-      "non_matching": 46,
+      "matched": 60,
+      "non_matching": 42,
       "asm_stubs": 0,
       "total": 102,
-      "matched_pct": 54.9,
+      "matched_pct": 58.8,
       "contributor": "lunarlaurus"
     },
     {
@@ -1366,11 +1366,11 @@
     {
       "path": "overlay_level/siberia/2B7100.c",
       "segment": "overlay_level/siberia",
-      "matched": 54,
-      "non_matching": 41,
+      "matched": 55,
+      "non_matching": 40,
       "asm_stubs": 0,
       "total": 95,
-      "matched_pct": 56.8,
+      "matched_pct": 57.9,
       "contributor": "lunarlaurus"
     },
     {
@@ -1387,16 +1387,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 121,
-      "matched": 1661,
-      "non_matching": 637,
+      "files": 115,
+      "matched": 1309,
+      "non_matching": 435,
       "asm_stubs": 4
     },
     {
       "name": "lunarlaurus",
-      "files": 4,
-      "matched": 223,
-      "non_matching": 157,
+      "files": 10,
+      "matched": 587,
+      "non_matching": 347,
       "asm_stubs": 0
     },
     {
@@ -1662,9 +1662,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "b7d6d3a",
-      "matched": 1918,
-      "non_matching": 798,
+      "commit": "8ffd339",
+      "matched": 1930,
+      "non_matching": 786,
       "total": 2720
     }
   ]
