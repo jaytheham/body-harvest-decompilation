@@ -3240,8 +3240,11 @@ void func_802DBD18_31FE68(u8 arg0) {
 	}
 }
 
+// CURRENT(945)
 #ifdef NON_MATCHING
 void func_802DBDD0_31FF20(u8 arg0) {
+	s32 pad0;
+	s32 pad1;
 	void *sp24;
 	s16 temp_v1;
 	AlienInstance *inst;
@@ -3256,13 +3259,9 @@ void func_802DBDD0_31FF20(u8 arg0) {
 		return;
 	}
 	temp_v1 = inst->unk2C;
-	if (temp_v1 >= 0) {
-		t3 = 0;
-	} else {
-		t3 = temp_v1 & 1;
-		if (t3 != 0) {
-			t3 += -2;
-		}
+	t3 = temp_v1 & 1;
+	if (temp_v1 < 0 && t3 != 0) {
+		t3 += -2;
 	}
 	if (t3 == 0) {
 		func_800DFA34_EE9E4(inst->unk0, (s16)((inst->unk2 - (s16)(temp_v1 * 0x28)) + 0x190), inst->unk4, 0x96, 0);
