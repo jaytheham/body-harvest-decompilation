@@ -5769,52 +5769,67 @@ void func_8007EE8C_4F33C(s32** arg0) {
 	D_800D7A18[3] = 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2605)
 s32 func_8007EEE0_4F390(void) {
 	FrontendCamKeyframe* keyframe;
+	void* data;
+	s32 remaining;
+	s32 total;
+	s32 elapsed;
+	s32 angleX;
+	s32 angleY;
+	s32 angleZ;
+	s32 fov;
 	f32 t;
 
-	if (((FrontendCamState*)D_800D7A18)->unkC == 0) {
-		return 0;
-	}
+	if (((FrontendCamState*)D_800D7A18)->unkC != 0) {
+		data = (void*)((FrontendCamState*)D_800D7A18)->unk0;
+		keyframe = data;
+		remaining = ((FrontendCamState*)D_800D7A18)->unk4;
+		if (remaining <= 0) {
+			((FrontendCamState*)D_800D7A18)->unk36 = keyframe->unkA;
+			((FrontendCamState*)D_800D7A18)->unk38 = keyframe->unkC;
+			((FrontendCamState*)D_800D7A18)->unk34 = keyframe->unkE;
+			((FrontendCamState*)D_800D7A18)->unk1C.x = keyframe->unk4;
+			((FrontendCamState*)D_800D7A18)->unk1C.y = keyframe->unk6;
+			((FrontendCamState*)D_800D7A18)->unk1C.z = keyframe->unk8;
+			((FrontendCamState*)D_800D7A18)->unk3C = keyframe->unk10;
+			((FrontendCamState*)D_800D7A18)->unk8++;
 
-	keyframe = (FrontendCamKeyframe*)((FrontendCamState*)D_800D7A18)->unk0;
-	if (((FrontendCamState*)D_800D7A18)->unk4 <= 0) {
-		((FrontendCamState*)D_800D7A18)->unk36 = keyframe->unkA;
-		((FrontendCamState*)D_800D7A18)->unk38 = keyframe->unkC;
-		((FrontendCamState*)D_800D7A18)->unk34 = keyframe->unkE;
-		((FrontendCamState*)D_800D7A18)->unk1C.x = keyframe->unk4;
-		((FrontendCamState*)D_800D7A18)->unk1C.y = keyframe->unk6;
-		((FrontendCamState*)D_800D7A18)->unk1C.z = keyframe->unk8;
-		((FrontendCamState*)D_800D7A18)->unk3C = keyframe->unk10;
-		((FrontendCamState*)D_800D7A18)->unk8++;
-
-		if (((FrontendCamState*)D_800D7A18)->unk8 == ((FrontendCamTrack*)((FrontendCamState*)D_800D7A18)->unkC)->unk4) {
-			((FrontendCamState*)D_800D7A18)->unkC = 0;
+			data = (void*)((FrontendCamState*)D_800D7A18)->unkC;
+			remaining = ((FrontendCamState*)D_800D7A18)->unk8;
+			if (remaining == ((FrontendCamTrack*)data)->unk4) {
+				((FrontendCamState*)D_800D7A18)->unkC = 0;
+			} else {
+				((FrontendCamState*)D_800D7A18)->unk0 = (s32)(&((FrontendCamTrack*)data)->unk0[remaining]);
+				((FrontendCamState*)D_800D7A18)->unk4 = ((FrontendCamKeyframe*)((FrontendCamState*)D_800D7A18)->unk0)->unk14;
+			}
 		} else {
-			((FrontendCamState*)D_800D7A18)->unk0 = (s32)(((FrontendCamTrack*)((FrontendCamState*)D_800D7A18)->unkC)->unk0 + ((FrontendCamState*)D_800D7A18)->unk8);
-			((FrontendCamState*)D_800D7A18)->unk4 = ((FrontendCamKeyframe*)((FrontendCamState*)D_800D7A18)->unk0)->unk14;
+			total = ((FrontendCamKeyframe*)data)->unk14;
+			elapsed = total - remaining;
+			t = 1.0f / (f32)(total - elapsed);
+			data = &D_800D7974;
+			*((f32*)data) = *((f32*)data) + (keyframe->unk0 - *((f32*)data)) * t;
+
+			((FrontendCamState*)D_800D7A18)->unk1C.x = ((f32)keyframe->unk4 - ((FrontendCamState*)D_800D7A18)->unk1C.x) * t + ((FrontendCamState*)D_800D7A18)->unk1C.x;
+			((FrontendCamState*)D_800D7A18)->unk1C.y = ((f32)keyframe->unk6 - ((FrontendCamState*)D_800D7A18)->unk1C.y) * t + ((FrontendCamState*)D_800D7A18)->unk1C.y;
+			((FrontendCamState*)D_800D7A18)->unk1C.z = ((f32)keyframe->unk8 - ((FrontendCamState*)D_800D7A18)->unk1C.z) * t + ((FrontendCamState*)D_800D7A18)->unk1C.z;
+			angleX = ((FrontendCamState*)D_800D7A18)->unk36;
+			((FrontendCamState*)D_800D7A18)->unk36 = (s16)((f32)(keyframe->unkA - angleX) * t + (f32)angleX);
+			angleY = ((FrontendCamState*)D_800D7A18)->unk38;
+			((FrontendCamState*)D_800D7A18)->unk38 = (s16)((f32)(keyframe->unkC - angleY) * t + (f32)angleY);
+			angleZ = ((FrontendCamState*)D_800D7A18)->unk34;
+			((FrontendCamState*)D_800D7A18)->unk34 = (s16)((f32)(keyframe->unkE - angleZ) * t + (f32)angleZ);
+			fov = ((FrontendCamState*)D_800D7A18)->unk3C;
+			((FrontendCamState*)D_800D7A18)->unk3C = (s16)((f32)fov + (f32)(keyframe->unk10 - fov) * t);
+			/* Keep elapsed live through interpolation for IDO register allocation. */
+			if (elapsed) {}
 		}
-	} else {
-		t = 1.0f / (f32)((FrontendCamState*)D_800D7A18)->unk4;
-		D_800D7974 += (keyframe->unk0 - D_800D7974) * t;
 
-		((FrontendCamState*)D_800D7A18)->unk1C.x += ((f32)keyframe->unk4 - ((FrontendCamState*)D_800D7A18)->unk1C.x) * t;
-		((FrontendCamState*)D_800D7A18)->unk1C.y += ((f32)keyframe->unk6 - ((FrontendCamState*)D_800D7A18)->unk1C.y) * t;
-		((FrontendCamState*)D_800D7A18)->unk1C.z += ((f32)keyframe->unk8 - ((FrontendCamState*)D_800D7A18)->unk1C.z) * t;
-		((FrontendCamState*)D_800D7A18)->unk36 = (s16)((f32)(keyframe->unkA - ((FrontendCamState*)D_800D7A18)->unk36) * t + (f32)((FrontendCamState*)D_800D7A18)->unk36);
-		((FrontendCamState*)D_800D7A18)->unk38 = (s16)((f32)(keyframe->unkC - ((FrontendCamState*)D_800D7A18)->unk38) * t + (f32)((FrontendCamState*)D_800D7A18)->unk38);
-		((FrontendCamState*)D_800D7A18)->unk34 = (s16)((f32)(keyframe->unkE - ((FrontendCamState*)D_800D7A18)->unk34) * t + (f32)((FrontendCamState*)D_800D7A18)->unk34);
-		((FrontendCamState*)D_800D7A18)->unk3C = (s16)((f32)(keyframe->unk10 - ((FrontendCamState*)D_800D7A18)->unk3C) * t + (f32)((FrontendCamState*)D_800D7A18)->unk3C);
+		((FrontendCamState*)D_800D7A18)->unk4--;
+		return 1;
 	}
-
-	((FrontendCamState*)D_800D7A18)->unk4--;
-	return 1;
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EEE0_4F390.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3566)
@@ -6648,24 +6663,12 @@ void func_80080F8C_5143C(AnimChannelState *arg0, s16 *arg1, s32 arg2)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(2760)
 void func_80081058_51508(void) {
 	Vtx *vtx;
-	Gfx *dl;
+	Vtx **buffer;
 
-	vtx = D_8005BB34;
-	vtx[0].v.cn[2] = 0xFF;
-	vtx[0].v.cn[3] = 0xFF;
-	vtx[1].v.cn[2] = 0xFF;
-	vtx[1].v.cn[3] = 0xFF;
-	vtx[2].v.cn[0] = 0xFF;
-	vtx[2].v.cn[3] = 0xFF;
-	vtx[3].v.cn[0] = 0xFF;
-	vtx[3].v.cn[3] = 0xFF;
-	vtx[4].v.cn[1] = 0xFF;
-	vtx[4].v.cn[3] = 0xFF;
-	vtx[5].v.cn[1] = 0xFF;
-	vtx[5].v.cn[3] = 0xFF;
+	buffer = &D_8005BB34;
+	vtx = *buffer;
 	vtx[0].v.ob[0] = 0;
 	vtx[0].v.ob[1] = 0;
 	vtx[0].v.ob[2] = 0;
@@ -6674,6 +6677,8 @@ void func_80081058_51508(void) {
 	vtx[0].v.tc[1] = 0;
 	vtx[0].v.cn[0] = 0;
 	vtx[0].v.cn[1] = 0;
+	vtx[0].v.cn[2] = 0xFF;
+	vtx[0].v.cn[3] = 0xFF;
 	vtx[1].v.ob[0] = 0x12C;
 	vtx[1].v.ob[1] = 0;
 	vtx[1].v.ob[2] = 0;
@@ -6682,22 +6687,28 @@ void func_80081058_51508(void) {
 	vtx[1].v.tc[1] = 0;
 	vtx[1].v.cn[0] = 0;
 	vtx[1].v.cn[1] = 0;
+	vtx[1].v.cn[2] = 0xFF;
+	vtx[1].v.cn[3] = 0xFF;
 	vtx[2].v.ob[0] = 0;
 	vtx[2].v.ob[1] = 0;
 	vtx[2].v.ob[2] = 0;
 	vtx[2].v.flag = 0;
 	vtx[2].v.tc[0] = 0;
 	vtx[2].v.tc[1] = 0;
+	vtx[2].v.cn[0] = 0xFF;
 	vtx[2].v.cn[1] = 0;
 	vtx[2].v.cn[2] = 0;
-	vtx[3].v.ob[0] = 0;
+	vtx[2].v.cn[3] = 0xFF;
 	vtx[3].v.ob[1] = 0x12C;
+	vtx[3].v.ob[0] = 0;
 	vtx[3].v.ob[2] = 0;
 	vtx[3].v.flag = 0;
 	vtx[3].v.tc[0] = 0;
 	vtx[3].v.tc[1] = 0;
+	vtx[3].v.cn[0] = 0xFF;
 	vtx[3].v.cn[1] = 0;
 	vtx[3].v.cn[2] = 0;
+	vtx[3].v.cn[3] = 0xFF;
 	vtx[4].v.ob[0] = 0;
 	vtx[4].v.ob[1] = 0;
 	vtx[4].v.ob[2] = 0;
@@ -6705,26 +6716,29 @@ void func_80081058_51508(void) {
 	vtx[4].v.tc[0] = 0;
 	vtx[4].v.tc[1] = 0;
 	vtx[4].v.cn[0] = 0;
+	vtx[4].v.cn[1] = 0xFF;
 	vtx[4].v.cn[2] = 0;
+	vtx[4].v.cn[3] = 0xFF;
+	vtx[5].v.ob[2] = 0x12C;
 	vtx[5].v.ob[0] = 0;
 	vtx[5].v.ob[1] = 0;
-	vtx[5].v.ob[2] = 0x12C;
 	vtx[5].v.flag = 0;
 	vtx[5].v.tc[0] = 0;
 	vtx[5].v.tc[1] = 0;
 	vtx[5].v.cn[0] = 0;
+	vtx[5].v.cn[1] = 0xFF;
 	vtx[5].v.cn[2] = 0;
-
+	vtx[5].v.cn[3] = 0xFF;
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, -1);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_LINE, G_RM_AA_ZB_XLU_LINE2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(vtx), 10, 0);
-	D_8005BB34 += 6;
-	gSPLine3D(D_8005BB2C++, 0, 1, 0);
-	gSPLine3D(D_8005BB2C++, 2, 3, 0);
-	gSPLine3D(D_8005BB2C++, 4, 5, 0);
+	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(*buffer), 10, 0);
+	*buffer += 6;
+	gSPLineW3D(D_8005BB2C++, 0, 1, 10, 0);
+	gSPLineW3D(D_8005BB2C++, 2, 3, 10, 0);
+	gSPLineW3D(D_8005BB2C++, 4, 5, 10, 0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081058_51508.s")
