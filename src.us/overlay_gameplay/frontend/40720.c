@@ -6534,28 +6534,19 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 arg2) {
-	typedef struct { s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; } AnimFrame12;
 	s32 temp_v0;
 
 	if (arg1->unk14 > (temp_v0 = arg1->unk18)) {
-		s32 start_frame = *(u16 *)((s32)arg0 + arg2 * 4 + 0xC);
-		AnimFrameData14 *temp_t3;
-		u16 temp_at;
+		u16 start_frame;
 
+		start_frame = arg0->channels[arg2].start;
 		start_frame += temp_v0;
-		temp_t3 = (start_frame & 0xFFFF) + (AnimFrameData14 *)arg0->unk50;
-		*(AnimFrame12 *)&arg1->unk24 = *(AnimFrame12 *)temp_t3;
-		temp_at = temp_t3->g;
+		*(AnimFrameData14 *)&arg1->unk24 = ((AnimFrameData14 *)arg0->unk50)[start_frame];
 		arg1->unk1C = 0.0f;
-		arg1->unk30 = temp_at;
-		arg1->unk20 = (f32)(u32)(temp_at & 0xFFFF);
+		arg1->unk20 = (f32)(u32)arg1->unk30;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080AD4_50F84.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3) {
