@@ -1883,7 +1883,6 @@ void func_800C4900_D38B0(s16 arg0) {
 }
 
 // Draws ripples on shield wall when hit?
-// CURRENT(8)
 void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	s16 val;
 	s16 idx;
@@ -9086,17 +9085,14 @@ s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	return temp_s16;
 }
 
-// CURRENT(45)
-#ifdef NON_MATCHING
 void func_800DA7CC_E977C(s16 arg0, s16 arg1) {
 	u8 *entryUnk8Bytes;
-	s16 value;
+	s32 value;
 
-	entryUnk8Bytes = (u8 *)&D_80154318[arg1].unk8;
-	if (*(s16 *)entryUnk8Bytes != 0xFB) {
+	entryUnk8Bytes = D_80154318[arg1].payload;
+	if (D_80154318[arg1].unk8 != 0xFB) {
 		func_800DDD30_ECCE0(entryUnk8Bytes[1], D_80052B34->unk0, (s16)(D_80052B34->unk2 + 0x50), D_80052B34->unk4);
-		value = D_80154318[arg0].unkC;
-		func_800DDDE4_ECD94(entryUnk8Bytes[1], (value * 3) & 0xFF);
+		func_800DDDE4_ECD94(entryUnk8Bytes[1], (u8)(D_80154318[arg0].unkC * 3));
 	}
 
 	value = D_80154318[arg0].unkC;
@@ -9111,9 +9107,6 @@ void func_800DA7CC_E977C(s16 arg0, s16 arg1) {
 			0x14, 0xC8, 0xC8, 0xFF);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA7CC_E977C.s")
-#endif
 
 void func_800DA994_E9944(void) {
 	struct {
