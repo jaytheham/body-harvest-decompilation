@@ -1232,6 +1232,7 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 f32 func_800C0FD4_CFF84(Vec3f *arg0);
 void func_800DAFCC_E9F7C(void);
 void func_800CD7FC_DC7AC(u8 arg0);
+void func_800E3738_F26E8(u16 arg0, u8 arg1);
 void func_800DB350_EA300(void);
 void func_800DDB18_ECAC8(void);
 u8 func_800DDB60_ECB10(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4);
