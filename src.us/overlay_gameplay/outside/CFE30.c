@@ -546,9 +546,7 @@ s16 D_8013E3F4_14D3A4 = 0;
 s16 D_8013E3F8_14D3A8 = 0;
 u32 D_pad14D3AA[3] = { 0 };
 u32 D_8013E408_14D3B8 = 0;
-u8 D_8013E40C_14D3BC[4] = {
-	0xFF, 0x80, 0x80, 0x00,
-};
+EffectRgb D_8013E40C_14D3BC = { 0xFF, 0x80, 0x80 };
 
 
 void func_800C0E80_CFE30(f32 *mat, f32 *vec, f32 *out) {
@@ -12103,24 +12101,21 @@ void func_800E520C_F41BC(void) {
 		}
 	}
 }
-#ifdef NON_MATCHING
 void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6) {
 	u8 i;
 	u8 slot;
 	u8 minValue;
 	u8 minSlot;
-	s16 start[2];
-	s16 end[2];
-	u8 color[3];
+	Vec2_S16 start;
+	Vec2_S16 end;
+	EffectRgb color;
+	s16 temp;
 
-	start[0] = arg0;
-	start[1] = arg2;
-	end[0] = arg3;
-	end[1] = (s16) arg5;
-
-	color[0] = D_8013E40C_14D3BC[0];
-	color[1] = D_8013E40C_14D3BC[1];
-	color[2] = D_8013E40C_14D3BC[2];
+	color = D_8013E40C_14D3BC;
+	start.x = arg0;
+	start.z = arg2;
+	end.x = arg3;
+	end.z = arg5;
 
 	slot = 0x40;
 	for (i = 0; i < 0x40; i++) {
@@ -12133,30 +12128,29 @@ void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	if (slot == 0x40) {
 		minValue = D_8013DD18_14CCC8[2];
 		for (i = 0; i < 0x40; i++) {
-			if (minValue >= D_80152D00[i].timer) {
+			temp = D_80152D00[i].timer;
+			if (minValue >= temp) {
 				minSlot = i;
-				minValue = D_80152D00[i].timer;
+				minValue = temp;
 			}
 		}
 		slot = minSlot;
 	}
 
+	D_80152D00[slot].timer = D_8013DD18_14CCC8[arg6];
 	D_80152D00[slot].extra = 0;
 	D_80152D00[slot].colorIdx = arg6;
-	D_80152D00[slot].type = 1;
-	D_80152D00[slot].timer = D_8013DD18_14CCC8[arg6];
 	D_80152D00[slot].x1 = arg0;
 	D_80152D00[slot].y1 = arg1;
 	D_80152D00[slot].z1 = arg2;
 	D_80152D00[slot].x2 = arg3;
-	D_80152D00[slot].y2 = (s16) arg4;
-	D_80152D00[slot].z2 = (s16) arg5;
+	D_80152D00[slot].y2 = arg4;
+	D_80152D00[slot].z2 = arg5;
+	D_80152D00[slot].type = 1;
 
-	func_800B1A68_C0A18(start, end, color);
+	func_800B1A68_C0A18(&start, &end, &color);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E52E8_F4298.s")
-#endif
+
 
 void func_800E5450_F4400(AlienInstance *arg0, s32 arg1) {
 	u8 i;
