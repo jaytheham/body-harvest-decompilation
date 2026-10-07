@@ -2607,49 +2607,61 @@ typedef struct {
 } SmokePuffState; /* size = 0x0C */
 
 typedef struct {
+	union {
+		u16 size;
+		u8 bytes[14];
+	};
+} EffectInterpolationState;
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	union {
-		/* 0x08 */ Unk80052B40 spatialVectors[2];
-		/* 0x08 */ Gfx *displayList;
-		/* 0x08 */ Unk80052B40 positionVector;
-		/* 0x08 */ SmokePuffState smokePuff;
-		/* 0x08 */ EffectFirePayload firePayload;
-		/* 0x08 */ TrailParticleState trailParticle;
-		/* 0x08 */ SparkEmitterState sparkEmitter;
-		/* 0x08 */ SpurtVisualState spurtVisual;
-		/* 0x08 */ SpurtEmitterState spurtEmitter;
-		/* 0x08 */ EffectCallbackState callbackState;
-		/* 0x08 */ SpinnerParentState spinnerState;
-		/* 0x08 */ SpinnerMotionState spinnerMotion;
+		EffectInterpolationState interpolation;
 		struct {
-			/* 0x08 */ s16 unk8;
-			/* 0x0A */ s16 unkA;
-			/* 0x0C */ s16 unkC;
-			/* 0x0E */ u8 unkE;
-			/* 0x0F */ u8 unkF;
-			/* 0x10 */ u8 unk10;
-			/* 0x11 */ u8 unk11;
-			/* 0x12 */ s16 unk12;
+			union {
+				/* 0x08 */ Unk80052B40 spatialVectors[2];
+				/* 0x08 */ Gfx *displayList;
+				/* 0x08 */ Unk80052B40 positionVector;
+				/* 0x08 */ SmokePuffState smokePuff;
+				/* 0x08 */ EffectFirePayload firePayload;
+				/* 0x08 */ TrailParticleState trailParticle;
+				/* 0x08 */ SparkEmitterState sparkEmitter;
+				/* 0x08 */ SpurtVisualState spurtVisual;
+				/* 0x08 */ SpurtEmitterState spurtEmitter;
+				/* 0x08 */ EffectCallbackState callbackState;
+				/* 0x08 */ SpinnerParentState spinnerState;
+				/* 0x08 */ SpinnerMotionState spinnerMotion;
+				struct {
+					/* 0x08 */ s16 unk8;
+					/* 0x0A */ s16 unkA;
+					/* 0x0C */ s16 unkC;
+					/* 0x0E */ u8 unkE;
+					/* 0x0F */ u8 unkF;
+					/* 0x10 */ u8 unk10;
+					/* 0x11 */ u8 unk11;
+					/* 0x12 */ s16 unk12;
+				};
+				struct {
+					/* 0x08 */ s16 position[3];
+					/* 0x0E */ s16 previousPosition[3];
+				};
+				/* 0x08 */ s16 coordinates[6];
+				/* 0x08 */ u8 payload[12];
+			};
+			union {
+				/* 0x14 */ s16 radialRadius;
+				struct {
+					/* 0x14 */ u8 unk14;
+					/* 0x15 */ u8 unk15;
+				};
+			};
+			/* 0x16 */ u8 pad16[6];
 		};
-		struct {
-			/* 0x08 */ s16 position[3];
-			/* 0x0E */ s16 previousPosition[3];
-		};
-		/* 0x08 */ s16 coordinates[6];
-		/* 0x08 */ u8 payload[12];
 	};
-	union {
-		/* 0x14 */ s16 radialRadius;
-		struct {
-			/* 0x14 */ u8 unk14;
-			/* 0x15 */ u8 unk15;
-		};
-	};
-	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
 
 typedef struct {

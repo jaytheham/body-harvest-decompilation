@@ -2513,17 +2513,16 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 #endif
 
 // CURRENT(255)
-#ifdef NON_MATCHING
 void func_800C6558_D5508(void) {
 	s16 idx;
-	u8 *entryBytes;
-	u8 *linkedBytes;
-	u8 *nextBytes;
+	EffectInterpolationState *entryBytes;
+	EffectInterpolationState *linkedBytes;
+	EffectInterpolationState *nextBytes;
 	s16 entryUnk4;
 	s16 linkedIdx;
 	s16 nextIdx;
 	s32 age;
-	s32 steps;
+	u8 steps;
 
 	idx = D_8015420A;
 	if ((idx == -5) || (idx == -6)) {
@@ -2531,81 +2530,86 @@ void func_800C6558_D5508(void) {
 		return;
 	}
 
-	while ((idx != -5) && (idx != -6)) {
-		entryBytes = (u8*) &D_80154318[idx].unk8;
-		entryUnk4 = D_80154318[idx].unk4;
-		linkedBytes = (u8*) &D_80154318[entryUnk4].unk8;
-		linkedIdx = D_80154318[entryUnk4].unk4;
+	/* Keep these block boundaries for IDO sentinel register allocation. */
+	if (1) {
+		if (1) {
+			if (1) {
+				while ((idx != -5) && (idx != -6)) {
+					entryBytes = &D_80154318[idx].interpolation;
+					entryUnk4 = D_80154318[idx].unk4;
+					linkedBytes = &D_80154318[entryUnk4].interpolation;
+					linkedIdx = D_80154318[entryUnk4].unk4;
 
-		if (D_80154318[idx].unk14 >= (0x23 / ((u8*) &D_80154318[entryUnk4])[0x13])) {
-			nextIdx = D_80154318[linkedIdx].unk4;
-			func_800C1D40_D0CF0(idx, 1, 1);
-			idx = nextIdx;
-			continue;
-		}
+					if (D_80154318[idx].unk14 >= (0x23 / D_80154318[entryUnk4].interpolation.bytes[0xB])) {
+						nextIdx = D_80154318[linkedIdx].unk4;
+						func_800C1D40_D0CF0(idx, 1, 1);
+						idx = nextIdx;
+						continue;
+					}
 
-		age = entryBytes[0xC];
-		nextBytes = (u8*) &D_80154318[linkedIdx].unk8;
+					age = entryBytes->bytes[0xC];
+					nextBytes = &D_80154318[linkedIdx].interpolation;
 
-		if (age == 0) {
-			*(u16*) nextBytes = (func_800038E0_44E0() % 11) + 0x3C;
-		} else if (age == 1) {
-			*(u16*) nextBytes += (func_800038E0_44E0() % 11) + 0xF;
-		} else if (age < (7 / linkedBytes[0xB])) {
-			*(u16*) nextBytes += ((func_800038E0_44E0() % 5) + 5) * linkedBytes[0xB];
-		} else if (age < (0xF / linkedBytes[0xB])) {
-			*(u16*) nextBytes += ((func_800038E0_44E0() % 4) + 4) * linkedBytes[0xB];
-			linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
-		} else if (age < (0x18 / linkedBytes[0xB])) {
-			*(u16*) nextBytes += ((func_800038E0_44E0() % 4) + 3) * linkedBytes[0xB];
-			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes[0xB];
-			if ((linkedBytes[0xB] * 0xF) < linkedBytes[0xA]) {
-				linkedBytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes[0xB];
+					if (age == 0) {
+						nextBytes->size = (func_800038E0_44E0() % 11) + 0x3C;
+					} else if (age == 1) {
+						nextBytes->size += (func_800038E0_44E0() % 11) + 0xF;
+					} else if (age < (7 / linkedBytes->bytes[0xB])) {
+						nextBytes->size += ((func_800038E0_44E0() % 5) + 5) * linkedBytes->bytes[0xB];
+					} else if (age < (0xF / linkedBytes->bytes[0xB])) {
+						nextBytes->size += ((func_800038E0_44E0() % 4) + 4) * linkedBytes->bytes[0xB];
+						linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes->bytes[0xB];
+					} else if (age < (0x18 / linkedBytes->bytes[0xB])) {
+						nextBytes->size += ((func_800038E0_44E0() % 4) + 3) * linkedBytes->bytes[0xB];
+						linkedBytes->bytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes->bytes[0xB];
+						if ((linkedBytes->bytes[0xB] * 0xF) < linkedBytes->bytes[0xA]) {
+							linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes->bytes[0xB];
+						}
+					} else if (age < (0x1C / linkedBytes->bytes[0xB])) {
+						nextBytes->size += ((func_800038E0_44E0() % 3) + 2) * linkedBytes->bytes[0xB];
+						linkedBytes->bytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes->bytes[0xB];
+						if ((linkedBytes->bytes[0xB] * 0x19) < linkedBytes->bytes[0xA]) {
+							linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes->bytes[0xB];
+						}
+					} else {
+						nextBytes->size += ((func_800038E0_44E0() % 2) + 2) * linkedBytes->bytes[0xB];
+						if ((linkedBytes->bytes[0xB] * 0x19) < linkedBytes->bytes[0xA]) {
+							linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes->bytes[0xB];
+						}
+						if ((linkedBytes->bytes[0xB] * 0x25) < linkedBytes->bytes[9]) {
+							linkedBytes->bytes[9] -= ((func_800038E0_44E0() % 15) + 0x16) * linkedBytes->bytes[0xB];
+						}
+					}
+
+					age = entryBytes->bytes[0xC];
+					if (age < 3) {
+						;
+					} else {
+						steps = (0x23 / linkedBytes->bytes[0xB]) - age;
+						entryBytes->bytes[6] = entryBytes->bytes[6] - ((entryBytes->bytes[6] - linkedBytes->bytes[0]) / steps);
+						entryBytes->bytes[7] = entryBytes->bytes[7] - ((entryBytes->bytes[7] - linkedBytes->bytes[1]) / steps);
+						entryBytes->bytes[8] = entryBytes->bytes[8] - ((entryBytes->bytes[8] - linkedBytes->bytes[2]) / steps);
+						entryBytes->bytes[9] = entryBytes->bytes[9] - ((entryBytes->bytes[9] - linkedBytes->bytes[3]) / steps);
+						entryBytes->bytes[0xA] = entryBytes->bytes[0xA] - ((entryBytes->bytes[0xA] - linkedBytes->bytes[4]) / steps);
+						entryBytes->bytes[0xB] = entryBytes->bytes[0xB] - ((entryBytes->bytes[0xB] - linkedBytes->bytes[5]) / steps);
+					}
+
+					nextBytes->bytes[2] += nextBytes->bytes[5];
+					nextBytes->bytes[3] += nextBytes->bytes[6];
+					nextBytes->bytes[4] += nextBytes->bytes[7];
+					linkedBytes->bytes[6]++;
+					if (linkedBytes->bytes[6] == 0x10) {
+						linkedBytes->bytes[6] = 0;
+					}
+
+					entryBytes->bytes[0xC]++;
+					idx = D_80154318[linkedIdx].unk4;
+				}
 			}
-		} else if (age < (0x1C / linkedBytes[0xB])) {
-			*(u16*) nextBytes += ((func_800038E0_44E0() % 3) + 2) * linkedBytes[0xB];
-			linkedBytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes[0xB];
-			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
-				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
-			}
-		} else {
-			*(u16*) nextBytes += ((func_800038E0_44E0() % 2) + 2) * linkedBytes[0xB];
-			if ((linkedBytes[0xB] * 0x19) < linkedBytes[0xA]) {
-				linkedBytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes[0xB];
-			}
-			if ((linkedBytes[0xB] * 0x25) < linkedBytes[9]) {
-				linkedBytes[9] -= ((func_800038E0_44E0() % 15) + 0x16) * linkedBytes[0xB];
-			}
 		}
-
-		age = entryBytes[0xC];
-		if (age < 3) {
-			;
-		} else {
-			steps = ((0x23 / linkedBytes[0xB]) - age) & 0xFF;
-			entryBytes[6] = entryBytes[6] - ((entryBytes[6] - linkedBytes[0]) / steps);
-			entryBytes[7] = entryBytes[7] - ((entryBytes[7] - linkedBytes[1]) / steps);
-			entryBytes[8] = entryBytes[8] - ((entryBytes[8] - linkedBytes[2]) / steps);
-			entryBytes[9] = entryBytes[9] - ((entryBytes[9] - linkedBytes[3]) / steps);
-			entryBytes[0xA] = entryBytes[0xA] - ((entryBytes[0xA] - linkedBytes[4]) / steps);
-			entryBytes[0xB] = entryBytes[0xB] - ((entryBytes[0xB] - linkedBytes[5]) / steps);
-		}
-
-		nextBytes[2] += nextBytes[5];
-		nextBytes[3] += nextBytes[6];
-		nextBytes[4] += nextBytes[7];
-		linkedBytes[6]++;
-		if (linkedBytes[6] == 0x10) {
-			linkedBytes[6] = 0;
-		}
-
-		entryBytes[0xC]++;
-		idx = D_80154318[linkedIdx].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6558_D5508.s")
-#endif
+
 
 // CURRENT(26417)
 #ifdef NON_MATCHING
@@ -12313,6 +12317,7 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 }
 
 // CURRENT(16)
+// Remove a matching shield and compact its entry list.
 #ifdef NON_MATCHING
 // Remove a matching shield and compact its entry list.
 void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
