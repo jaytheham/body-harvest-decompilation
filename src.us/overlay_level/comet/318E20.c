@@ -1193,7 +1193,6 @@ void func_802D522C_31937C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D58BC_319A0C(void) {
 	s16 i;
 
@@ -1208,9 +1207,6 @@ void func_802D58BC_319A0C(void) {
 	}
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")
-#endif
 
 void func_802D59BC_319B0C(void) {
 	s16 i;
