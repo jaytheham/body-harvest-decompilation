@@ -350,14 +350,17 @@ const f64 D_802E0F90_1F9CA0[] = { 3000.0 };
 const f64 D_802E0F98_1F9CA8[] = { 65535.0 };
 const f64 D_802E0FA0_1F9CB0[] = { 3000.0 };
 
-#ifdef NON_MATCHING
-void func_802D4CD0_1ED9E0(s32 arg0, void *arg1) {
+void func_802D6DF8_1EFB08(void);
+
+void func_802D4CD0_1ED9E0(s32 arg0, s32 arg1) {
+	arg1 = arg0;
+
 	if (arg0 < 0x14) {
-		((void (*)(s32))D_802E04A4[arg0])(arg0);
+		((void (*)(void))D_802E04A4_1F91B4[arg0])();
 		return;
 	}
 
-	switch (arg0) {
+	switch (arg1) {
 	case 0x14:
 		func_802D6DF8_1EFB08();
 		func_800EFEB4_FEE64((void *)&func_800F1134_1000E4, 9, 0);
@@ -376,9 +379,6 @@ void func_802D4CD0_1ED9E0(s32 arg0, void *arg1) {
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4CD0_1ED9E0.s")
-#endif
 
 s16 func_802D4DB0_1EDAC0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 temp_v0;
