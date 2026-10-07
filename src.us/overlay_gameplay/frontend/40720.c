@@ -5655,11 +5655,8 @@ s32 func_8007E12C_4E5DC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007E12C_4E5DC.s")
 #endif
 
-// CURRENT(450)
-#ifdef NON_MATCHING
 void func_8007EA0C_4EEBC(s32* arg0) {
-	u8 sp1F;
-	s32 v1;
+	u8 v1;
 
 	D_80094900 = 0;
 	D_800D7A60 = 0;
@@ -5671,37 +5668,26 @@ void func_8007EA0C_4EEBC(s32* arg0) {
 	D_800D7A50 = *arg0;
 	D_800D7A54 = ((s32*)D_800D7A50)[D_800D7A60];
 
-	v1 = 0;
-	if (D_800D7A58 > 0) {
-		do {
-			*((s32*)((u8*)D_800D7A1C + (v1 * 0x2C) + 0x1C)) = 0;
-			*((s32*)((u8*)D_800D7A1C + (v1 * 0x2C) + 8)) = 0;
-			v1 = (v1 + 1) & 0xFF;
-		} while (v1 < D_800D7A58);
-
-		v1 = 0;
+	for (v1 = 0; v1 < D_800D7A58; v1++) {
+		D_800D7A1C[v1].unk1C = 0;
+		D_800D7A1C[v1].unk8 = NULL;
 	}
+	v1 = 0;
 
 	D_800D7B08.unk0 = 0;
 	D_800D7B08.unk1 = 0;
 	D_800D7B08.unk2 = 0;
 	D_80094908_64DB8 = 7;
-	sp1F = v1;
 
 	func_8007EBB0_4F060();
 
-	v1 = sp1F;
 	D_800D7A86.unk0 = 0;
 	D_800D7A86.unk1 = 0;
 	D_800D7A86.unk2 = 0;
 	D_80094934_64DE4 = 0;
 
-	for (;;) {
+	for (; v1 < 10; v1++) {
 		D_800D8550[v1] = NULL;
-		v1 = (v1 + 1) & 0xFF;
-		if (!(v1 < 10)) {
-			break;
-		}
 	}
 
 	D_800DE068 = (s32)&D_800D88E8;
@@ -5713,9 +5699,6 @@ void func_8007EA0C_4EEBC(s32* arg0) {
 	D_80094950_64E00 = 0.0f;
 	D_80094904_64DB4 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EA0C_4EEBC.s")
-#endif
 
 void func_8007EB98_4F048(void) {
 	D_80094900++;
@@ -5912,7 +5895,7 @@ void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 #ifdef NON_MATCHING
 void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
 	Vec3f direction;
-	Vec3f *vector;
+	f32 *vector;
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
@@ -5921,10 +5904,10 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
 	f32 sinY;
 	f32 sinX;
 	f32 cosX;
-	f32 z;
 	f32 zero;
 	f32 scale;
 	f32 one;
+	f32 z;
 	f64 radians;
 	f64 degrees;
 
@@ -5934,18 +5917,20 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
 	cosY = cosf((f32)((f64)(f32)arg0->unk12 * radians / degrees));
 	sinX = sinf((f32)((f64)(f32)arg0->unk10 * radians / degrees));
 	cosX = cosf((f32)((f64)(f32)arg0->unk10 * radians / degrees));
-	vector = &direction;
-	vector->x = 0.0f;
-	vector->y = 0.0f;
-	zero = vector->x;
+	vector = &direction.x;
+	vector[0] = 0.0f;
+	vector[1] = 0.0f;
+	zero = vector[0];
 	scale = 100.0f;
-	vector->z = 1.0f;
-	 one = vector->z;
+	vector[2] = 1.0f;
+	 one = vector[2];
 	z = zero * sinX + one * cosX;
 	arg1->l.dir[0] = (s32)(-(z * sinY + zero * cosY) * scale);
 	arg1->l.dir[1] = (s32)(-(zero * cosX - one * sinX) * scale);
 	arg1->l.dir[2] = (s32)(-(z * cosY - zero * sinY) * scale);
 }
+
+
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3F8_4F8A8.s")
