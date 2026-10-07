@@ -1550,6 +1550,7 @@ typedef struct {
             };
 		};
 		/* 0x08 */ u32 unk8;
+		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
 	};
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
@@ -2526,6 +2527,14 @@ typedef struct {
 	/* 0x06 */ s8 step[3];
 	/* 0x09 */ u8 unit[3];
 } SpinnerMotionState;
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 age;
+	/* 0x07 */ u8 pad7;
+	/* 0x08 */ s16 buildingId;
+	/* 0x0A */ u8 padA[2];
+} EffectBuildingRecoveryState; /* size = 0x0C */
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
