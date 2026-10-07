@@ -445,7 +445,7 @@ void setFullResolution(void);
 void func_800710D8_41588(s16 arg0, s16 arg1);
 void func_800801BC_5066C(Unk800801BCEntry* arg0, u8 arg1);
 void func_80081290_51740(void);
-void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, u32* arg2, s32 arg3, u8 arg4);
+void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, FrontendStreamHeader* arg2, s32 arg3, u8 arg4);
 void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 arg2);
 void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3);
 void func_80070440_7F3F0(void);

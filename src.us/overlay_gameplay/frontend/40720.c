@@ -2174,41 +2174,31 @@ s32 func_80076FD8_47488(void) {
  */
 #ifdef NON_MATCHING
 void func_80076FE0_47490(s32* arg0, s32* arg1) {
-  s32 *src;
-  s32 *dst;
-  s32 j;
-  s32 i;
-  s32 k;
-  s32 l;
-  src = arg0;
-  dst = arg1;
-  i = 7;
-  do
-  {
-	j = 9;
-	do
-	{
-	  k = 0x1F;
-	  do
-	  {
-		l = 0xF;
-		do
-		{
-		  if (!arg0)
-		  {
-		  }
-		  *(dst++) = *(src++);
-		}
-		while (l--);
-		src += 0x90;
-	  }
-	  while (k--);
-	  src -= 0x13F0;
-	}
-	while (j--);
-	src += 0x1360;
-  }
-  while (i--);
+ s32 *src;
+ s32 *dst;
+ s32 j;
+ s32 i;
+ s32 k;
+ s32 l;
+ src = arg0;
+ dst = arg1;
+ i = 7;
+ do {
+  j = 9;
+  do {
+   k = 31;
+   do {
+    l = 15;
+    do {
+     if (!arg0) {} 
+     *dst++ = *src++;
+    } while (l--);
+    src = &src[144];
+   } while (k--);
+   src = &src[-5104];
+  } while (j--);
+  src = &src[4960];
+ } while (i--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
@@ -5467,7 +5457,7 @@ s32 func_8007E12C_4E5DC(void) {
 				dst = &D_800D7A1C[argEntry->unk4];
 				dst->unk8 = func_800809DC_50E8C(*(s32*)argEntry->unk0);
 				dst->unk29 = argEntry->unk5;
-				func_8008035C_5080C(dst->unk8, &D_800D7B10[dst->unk18], (u32*)argEntry->unk0, 1, dst->unk19);
+				func_8008035C_5080C(dst->unk8, &D_800D7B10[dst->unk18], (FrontendStreamHeader*)argEntry->unk0, 1, dst->unk19);
 				break;
 			case 1:
 				D_80094930_64DE0 = 1;
@@ -6253,77 +6243,52 @@ void func_800801BC_5066C(Unk800801BCEntry* arg0, u8 arg1) {
 }
 
 // Called during start movie, mostly before scene changes
-#ifdef NON_MATCHING
-void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, u32* arg2, s32 arg3, u8 arg4) {
-	s32 i;
+void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, FrontendStreamHeader* arg2, s32 arg3, u8 arg4) {
+	u8 i;
 	s32 copiedCount;
 	s32 byteOffset;
-	AnimFrameData14* srcFrame;
-	AnimFrameData14* dstFrame;
 
 	arg0->unk54 = arg2;
 
-	for (i = 0; i < (0x48 / 0xC); i++) {
-		((u32*)arg0)[(i * 3) + 0] = arg2[(i * 3) + 0];
-		((u32*)arg0)[(i * 3) + 1] = arg2[(i * 3) + 1];
-		((u32*)arg0)[(i * 3) + 2] = arg2[(i * 3) + 2];
-	}
+	arg0->header = *arg2;
 
 	copiedCount = 0;
 	byteOffset = 0;
-	srcFrame = (AnimFrameData14*)((u8*)arg2 + 0x48);
-	if (arg2[0] != 0) {
+	if (arg2->frameCount != 0) {
 		do {
-			dstFrame = (AnimFrameData14*)((u8*)arg0->unk50 + byteOffset);
-			copiedCount += 1;
-			dstFrame->a = srcFrame->a;
-			dstFrame->b = srcFrame->b;
-			dstFrame->c = srcFrame->c;
-			dstFrame->d = srcFrame->d;
-			dstFrame->e = srcFrame->e;
-			dstFrame->f = srcFrame->f;
-			dstFrame->g = srcFrame->g;
-			byteOffset += 0xE;
-			srcFrame += 1;
-		} while ((u32)copiedCount < arg2[0]);
+			*(AnimFrameData14*)&((u8*)arg0->unk50)[byteOffset] = ((AnimFrameData14*)&arg2[1])[copiedCount];
+			byteOffset += sizeof(AnimFrameData14);
+			copiedCount++;
+		} while ((u32)copiedCount < arg2->frameCount);
 	}
 
-	i = 0;
-	if (arg4 != 0) {
-		do {
+	for (i = 0; i != arg4; i++) {
 			AnimChannelState* state;
-			u16 frameLimit;
 
 			state = &arg1[i];
 			state->unk18 = 0;
-			frameLimit = *(u16*)((u8*)arg0 + (i * 4) + 0xE);
-			state->unk14 = frameLimit;
-			if (frameLimit >= 0x65) {
+			state->unk14 = arg0->header.channels[i].count;
+			if (state->unk14 >= 0x65) {
 				osSyncPrintf(&D_800AE920_7EDD0);
 			}
 
-			func_80080AD4_50F84(arg0, state, i & 0xFF);
+			func_80080AD4_50F84(arg0, state, i);
 			if (arg3 != 0) {
-				state->unk8 = (f32)state->unk24;
-				state->unk18 += 1;
-				state->unkC = (f32)state->unk26;
 				state->unk0 = state->unk2A;
 				state->unk2 = state->unk2C;
 				state->unk4 = state->unk2E;
+				state->unk8 = (f32)state->unk24;
+				state->unkC = (f32)state->unk26;
 				state->unk10 = (f32)state->unk28;
+				state->unk18 += 1;
 
-				func_80080AD4_50F84(arg0, state, i & 0xFF);
+				func_80080AD4_50F84(arg0, state, i);
 			}
 
-			i = (i + 1) & 0xFF;
-		} while (arg4 != i);
 	}
 
 	return arg2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008035C_5080C.s")
-#endif
 
 void func_80080530_509E0(Unk80080530_Src* arg0) {
 	Unk80080530_Dst* dst;
@@ -6499,7 +6464,7 @@ void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 ar
 	if (arg1->unk14 > (temp_v0 = arg1->unk18)) {
 		u16 start_frame;
 
-		start_frame = arg0->channels[arg2].start;
+		start_frame = arg0->header.channels[arg2].start;
 		start_frame += temp_v0;
 		*(AnimFrameData14 *)&arg1->unk24 = ((AnimFrameData14 *)arg0->unk50)[start_frame];
 		arg1->unk1C = 0.0f;
