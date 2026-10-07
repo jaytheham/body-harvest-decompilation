@@ -1653,4 +1653,6 @@ void func_802DE584_2C09B4(u8 arg0);
 void func_802DEDE4_2C1214(u8 arg0);
 void func_802DEFB4_2C13E4(u8 arg0);
 
+void func_80079F30_4A3E0(u8 arg0);
+
 #endif
