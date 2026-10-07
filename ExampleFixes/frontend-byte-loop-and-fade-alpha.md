@@ -11,3 +11,9 @@ In func_80080588_50A38, use one shared three-byte color type for the source arra
 In func_80080AD4_50F84, copying the full 14-byte frame into the state also copies its duration. Direct indexed structure assignment avoids the extra named source pointer register. The channel descriptor is a pair of u16 start/count fields at offset 0xC.
 
 In func_80081F9C_5244C, reading the existing absolute alias D_800949D4 and writing the defined data symbol D_800949D4_64E84 preserves the target independent address materialization. Do not judge the data symbol address while the function size differs: text changes shift subsequent linked data alignment. Verify the whole ROM.
+
+## Channel matrix conversion: one working pointer
+
+`func_800801BC_5066C` matched with a byte count parameter and byte loop index, a `Vec3s` rotation and `Vec3i` position, and one `void*` working pointer reused for the input entry and output matrix. Declare the index before the vectors and the pointer last. Separate entry and matrix pointers reserve extra local slots; direct array field access reverses the operands of the address `addu`. A single pointer retains the desired address operands and the 0x68 frame. Use `for (i = 1; i != count; i++)` to obtain both target branch operand orders. Allocate the output with a separate `matrix = D_8005BB38; D_8005BB38++;` sequence before the call. Passing post-increment directly in the call retains the old value in another saved register.
+
+The render destination alpha at offset 0x24 is a full `s32`: its consumers use `lw`, and the fade writes `sw` to entry 26 at offset 0x49C. Convert the old byte/padding initializers to equivalent big-endian 32-bit values when correcting the struct.

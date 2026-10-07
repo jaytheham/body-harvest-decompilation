@@ -2024,8 +2024,7 @@ typedef struct {
 	/* 0x1A */ u8 pad1A[0x2];
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ s32 unk20;
-	/* 0x24 */ u8 unk24;
-	/* 0x25 */ u8 pad25[3];
+	/* 0x24 */ s32 unk24;
 	/* 0x28 */ u8 unk28;
 	/* 0x29 */ u8 unk29;
 	/* 0x2A */ u8 unk2A;
