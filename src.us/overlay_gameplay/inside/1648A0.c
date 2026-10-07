@@ -2683,6 +2683,7 @@ void func_8007F778_167838(void) {
 	}
 }
 
+// CURRENT(100)
 #ifdef NON_MATCHING
 // AI - Render NPC while animation is still playing
 void func_8007F878_167938(void) {
@@ -2690,16 +2691,19 @@ void func_8007F878_167938(void) {
 	Unk8007F878_404 *temp;
 
 	ptr = &D_800E6AD8;
-	if (ptr->unk404 == NULL) {
+	temp = (Unk8007F878_404 *) D_800E6AD8.unk404;
+	if (temp == NULL) {
 		return;
 	}
 
-	temp = (Unk8007F878_404 *) ptr->unk404;
-	if ((temp->unkE50 == 0) || (ptr->unk18 == 0)) {
+	if (temp->unkE50 == 0) {
+		return;
+	}
+	if (D_800E6AD8.unk18 == 0) {
 		return;
 	}
 
-	func_8000CF4C_DB4C(ptr->unk404, ptr, D_8009E4C8_186588[ptr->unk426][ptr->unk425].unkC, ptr->unk410);
+	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[D_800E6AD8.unk426][D_800E6AD8.unk425].unkC, *(s32 *)&D_800E6AD8.unk410);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F878_167938.s")
