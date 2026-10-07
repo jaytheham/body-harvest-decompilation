@@ -2416,156 +2416,75 @@ void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2)
 	}
 }
 
-// CURRENT(1548)
 void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2);
-#ifdef NON_MATCHING
-void func_802DA548_1F3258(u8 arg0) {
-	void *sp18;
+void func_802DA548_1F3258(u8 arg0)
+{
 	s16 sp4E;
 	s16 sp4C;
 	s16 sp4A;
+	s16 pad48;
 	s16 sp46;
 	s16 sp44;
-	s16 pad46;
-	s32 temp_v0;
-	s32 temp_a0;
-	s32 temp_a1;
-	s32 var_v0;
+	AlienInstance *alien;
 	s32 var_v1;
-	s32 var_v0_2;
-	s32 var_v1_2;
-	s32 var_v0_3;
-	s32 var_v1_3;
+	s32 var_v0;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
 
-	sp4E = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	alien = &alienInstances[arg0];
+	sp4E = D_8014DD50[alien->unkC].unkC;
 	sp4A = D_8014DD50[sp4E].unkD;
 	sp4C = D_8014DD50[sp4A].unkD;
-	sp18 = &alienInstances[arg0];
-
 	func_802DA210_1F2F20(arg0, sp4A, sp4C);
-
-	if (D_80052B34->unk1A == 0) {
+	if (D_80052B34->unk1A == 0)
+	{
 		func_800877E8_96798(arg0, 0x73, 0x78);
-	} else {
+	}
+	else
+	{
 		func_800877E8_96798(arg0, 0x2BC, 0x320);
 	}
+	if (!(alien->unk20 & ALIEN_FLAG_UNKD) && !(alien->unk47 & 1))
+	{
+		sp46 = alien->unk0 - D_80052B34->unk0;
+		sp44 = alien->unk4 - D_80052B34->unk4;
+		if (func_80086230_951E0(arg0, sp4E, 0x2000) == 0)
+		{
+			var_v1 = BH_ABS(sp46);
+			var_v0 = BH_ABS(sp44);
+			var_v1 = (var_v0 < var_v1) ? BH_ABS(sp46) : BH_ABS(sp44);
 
-	if (!(((AlienInstance *)sp18)->unk20 & ALIEN_FLAG_UNKD) && !(((AlienInstance *)sp18)->unk47 & 1)) {
-		sp46 = ((AlienInstance *)sp18)->unk0 - D_80052B34->unk0;
-		sp44 = ((AlienInstance *)sp18)->unk4 - D_80052B34->unk4;
+			if ((var_v1 >= 0x79) && (alien->unk4E != 0) && (func_80087188_96138(arg0, 0, 0x20) != 0))
+			{
+				alien->unk1E = 8;
+			}
+		}
+		var_v1 = BH_ABS(sp46);
+		var_v0 = BH_ABS(sp44);
+		var_v1 = (var_v0 < var_v1) ? BH_ABS(sp46) : BH_ABS(sp44);
 
-		if (func_80086230_951E0(arg0, sp4E, 0x2000) == 0) {
-			temp_a1 = -sp46;
-			temp_a0 = -sp44;
-			if (temp_a1 < sp46) {
-				var_v1 = sp46;
-			} else {
-				var_v1 = temp_a1;
-			}
-			if (temp_a0 < sp44) {
-				var_v0 = sp44;
-			} else {
-				var_v0 = temp_a0;
-			}
-			if (var_v0 < var_v1) {
-				if (temp_a1 < sp46) {
-					var_v1_2 = sp46;
-				} else {
-					var_v0_2 = temp_a1;
-					var_v1_2 = var_v0_2;
-				}
-				var_v0_3 = temp_a1;
-				if (temp_a1 < sp46) {
-					temp_v0 = sp46;
-				} else {
-					temp_v0 = var_v0_3;
-				}
-			} else {
-				var_v0_2 = temp_a0;
-				if (temp_a0 < sp44) {
-					var_v0_2 = sp44;
-				}
-				var_v1_2 = var_v0_2;
-				var_v0_3 = temp_a0;
-				if (temp_a0 < sp44) {
-					temp_v0 = sp44;
-				} else {
-					temp_v0 = var_v0_3;
-				}
-			}
-			if (temp_v0 >= 0x79) {
-				if (((AlienInstance *)sp18)->unk4E != 0) {
-					if (func_80087188_96138(arg0, 0, 0x20)) {
-						((AlienInstance *)sp18)->unk1E = 8;
-					}
-				}
-			}
-		}
-		temp_a1 = -sp46;
-		temp_a0 = -sp44;
-		if (temp_a1 < sp46) {
-			var_v1 = sp46;
-		} else {
-			var_v1 = temp_a1;
-		}
-		if (temp_a0 < sp44) {
-			var_v0 = sp44;
-		} else {
-			var_v0 = temp_a0;
-		}
-		if (var_v0 < var_v1) {
-			if (temp_a1 < sp46) {
-				var_v1_2 = sp46;
-			} else {
-				var_v0_2 = temp_a1;
-				var_v1_2 = var_v0_2;
-			}
-		} else {
-			var_v0_2 = temp_a0;
-			if (temp_a0 < sp44) {
-				var_v0_2 = sp44;
-			}
-			var_v1_2 = var_v0_2;
-		}
-		if (var_v1_2 < 0x79) {
-			if (temp_a1 < sp46) {
-				temp_v0 = sp46;
-			} else {
-				temp_v0 = temp_a1;
-			}
-			if (temp_a0 < sp44) {
-				var_v0_3 = sp44;
-			} else {
-				var_v0_3 = temp_a0;
-			}
-			if (var_v0_3 < temp_v0) {
-				if (temp_a1 < sp46) {
-					temp_v0 = sp46;
-				} else {
-					temp_v0 = temp_a1;
-				}
-			} else {
-				if (temp_a0 < sp44) {
-					temp_v0 = sp44;
-				} else {
-					temp_v0 = temp_a0;
-				}
-			}
-			if (temp_v0 >= 0x73) {
+		if (var_v1 < 0x79)
+		{
+			var_v1 = BH_ABS(sp46);
+			var_v0 = BH_ABS(sp44);
+			var_v1 = (var_v0 < var_v1) ? BH_ABS(sp46) : BH_ABS(sp44);
+
+			if (var_v1 >= 0x73)
+			{
 				func_802DA18C_1F2E9C(arg0, sp4A, sp4C);
 			}
 		}
 		func_80090A6C_9FA1C(arg0, sp4C, 0xBB8);
 		func_80090A6C_9FA1C(arg0, sp4A, 0xBB8);
 	}
-	temp_v0 = ((AlienInstance *)sp18)->unk1E;
-	if (temp_v0 != 0) {
-		((AlienInstance *)sp18)->unk1E = temp_v0 - 1;
+	if (alien->unk1E != 0)
+	{
+		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA548_1F3258.s")
-#endif
 
 void func_802DA844_1F3554(u8 arg0) {
 	s32 sp6C;
