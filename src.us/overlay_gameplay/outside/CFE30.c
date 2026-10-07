@@ -9004,22 +9004,17 @@ s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2) {
 	return temp_v0;
 }
 
-#ifdef NON_MATCHING
 void func_800DA3A8_E9358(s16 arg0, s16 arg1) {
-	Unk80154318Entry *sp2C;
-	Unk80154318Entry *sp28;
+    s16 *src;
+    s16 *dst;
 
-	sp2C = &D_80154318[arg0];
-	sp28 = &D_80154318[arg1];
-	func_800E52E8_F4298(sp2C->unkE, sp2C->unk10, sp2C->unk12, sp28->unk8, (s32) sp28->unkA, (s32) sp28->unkC, (s32) sp28->unk14);
-	(&sp28->unk8)[0] = (&sp2C->unk8)[3];
-	(&sp28->unk8)[1] = (&sp2C->unk8)[4];
-	(&sp28->unk8)[2] = (&sp2C->unk8)[5];
+    func_800E52E8_F4298(D_80154318[arg0].coordinates[3], D_80154318[arg0].coordinates[4], D_80154318[arg0].coordinates[5], D_80154318[arg1].coordinates[0], D_80154318[arg1].coordinates[1], D_80154318[arg1].coordinates[2], D_80154318[arg1].unk14);
+    src = (s16 *)(s32)D_80154318[arg0].coordinates;
+    dst = (s16 *)(s32)D_80154318[arg1].coordinates;
+    dst[0] = src[3];
+    dst[1] = src[4];
+    dst[2] = src[5];
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA3A8_E9358.s")
-#endif
-
 s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s32 retval;
 	s16 temp_v0;
