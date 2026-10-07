@@ -2491,18 +2491,11 @@ void func_802D93D8_31D528(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D93D8_31D528.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_802D95F8_31D748(s32 arg0) {
-	u8 saved_index;
-
-	alienInstances[arg0 & 0xFF].unk20 &= ~ALIEN_FLAG_UNK5;
-	saved_index = arg0 & 0xFF;
-	func_80137468_146418(arg0 & 0xFF, 0x1FB);
-	func_8008735C_9630C(saved_index);
+void func_802D95F8_31D748(u8 arg0) {
+	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNK5;
+	func_80137468_146418(arg0, 0x1FB);
+	func_8008735C_9630C(arg0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D95F8_31D748.s")
-#endif
 
 // CURRENT(2307)
 #ifdef NON_MATCHING
