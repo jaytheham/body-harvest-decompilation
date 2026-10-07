@@ -357,21 +357,8 @@ void func_8009C4E8_AB498(void) {
 	D_8014F1F8 = -0x10;
 }
 
-// CURRENT(1224)
-#ifdef NON_MATCHING
+// Textured-rect draw (same tile setup as func_8009BDB8_AAD68 above, screen-relative)
 void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
-	Gfx *dl;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-	s32 pad8;
-	s32 pad9;
-
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_1009C70 + (arg1 << 7)));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -380,10 +367,10 @@ void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 1, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 	gSPTextureRectangle(D_8005BB2C++,
-		arg0 * 4,
-		(D_80068088 - 0x24) * 4,
-		(arg0 + 0xB) * 4,
-		(D_80068088 - 0x19) * 4,
+		(s32)arg0 * 4,
+		(D_80068088 - 0x24) << 2,
+		(arg0 + 0xB) << 2,
+		(D_80068088 - 0x19) << 2,
 		G_TX_RENDERTILE,
 		0,
 		0,
@@ -391,9 +378,6 @@ void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 		0x0600);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C4F8_AB4A8.s")
-#endif
 
 // Additional params
 // sp10 Pointer to icon
