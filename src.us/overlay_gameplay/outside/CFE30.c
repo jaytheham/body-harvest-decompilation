@@ -9563,7 +9563,6 @@ void func_800DB714_EA6C4(void) {
 }
 
 /* CURRENT(2775) */
-#ifdef NON_MATCHING
 void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[0] = (s16)(s32)D_80153BB8.x;
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y + D_80153BC8);
@@ -9581,7 +9580,7 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y + D_80153BC8);
 	D_8005BB34->v.ob[2] = (s16)(s32)(D_80153BB8.z - D_80153BC8);
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = (s16)(D_80153BCD << 6);
+	D_8005BB34->v.tc[0] = (*(u8 *)&D_80153BCD) << 6;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = ((u8 *)D_80153BC4)[0];
 	D_8005BB34->v.cn[1] = ((u8 *)D_80153BC4)[1];
@@ -9593,8 +9592,8 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y - D_80153BC8);
 	D_8005BB34->v.ob[2] = (s16)(s32)(D_80153BB8.z - D_80153BC8);
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = (s16)(D_80153BCD << 6);
-	D_8005BB34->v.tc[1] = (s16)(D_80153BCE << 6);
+	D_8005BB34->v.tc[0] = (*(u8 *)&D_80153BCD) << 6;
+	D_8005BB34->v.tc[1] = (*(u8 *)&D_80153BCE) << 6;
 	D_8005BB34->v.cn[0] = ((u8 *)D_80153BC4)[0];
 	D_8005BB34->v.cn[1] = ((u8 *)D_80153BC4)[1];
 	D_8005BB34->v.cn[2] = ((u8 *)D_80153BC4)[2];
@@ -9606,7 +9605,7 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[2] = (s16)(s32)(D_80153BB8.z + D_80153BC8);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = (s16)(D_80153BCE << 6);
+	D_8005BB34->v.tc[1] = (*(u8 *)&D_80153BCE) << 6;
 	D_8005BB34->v.cn[0] = ((u8 *)D_80153BC4)[0];
 	D_8005BB34->v.cn[1] = ((u8 *)D_80153BC4)[1];
 	D_8005BB34->v.cn[2] = ((u8 *)D_80153BC4)[2];
@@ -9616,9 +9615,6 @@ void func_800DBA9C_EAA4C(void) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DBA9C_EAA4C.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2840)
