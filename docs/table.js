@@ -34,6 +34,7 @@ export function renderFilesTable(files) {
           <option value="path">Sort: Name</option>
           <option value="matched_pct" selected>Sort: Matched %</option>
           <option value="matched">Sort: Matched count</option>
+		  <option value="non_matching">Sort: Not matched count</option>
           <option value="total">Sort: Total functions</option>
           <option value="asm_stubs">Sort: ASM remaining</option>
         </select>
