@@ -961,6 +961,7 @@ void func_802D4CD0_318E20(s32 arg0, void *arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(75) - 16-bit store to Unk80154318Entry.unk14 (u8 field, sh in ROM): 641 -> 75
 s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 temp_v0;
 	s16 temp_v0_2;
@@ -972,8 +973,8 @@ s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 		temp_v0_2 = (arg4 / 3) * 2;
 		temp_v0_3 = func_800D249C_E144C(arg0, arg1, arg2, arg3, (s32) temp_v0_2, (s32) temp_v0_2, -0xB, 2);
 		if (temp_v0_3 != -3) {
-			D_80154318[temp_v0].unk14 = temp_v0_3;
-			D_80154318[temp_v0_3].unk14 = temp_v0;
+			*(s16 *)&D_80154318[temp_v0].unk14 = temp_v0_3;
+			*(s16 *)&D_80154318[temp_v0_3].unk14 = temp_v0;
 		} else {
 			func_800C1A4C_D09FC(temp_v0, 0xB, 1);
 			return -3;
