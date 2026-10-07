@@ -2412,7 +2412,7 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 		sp2C = tempA2;
 
 		if (arg4 == NULL) {
-			func_800DFA98_EEA48(sp30);
+			func_800DFA98_EEA48((s8 (*)[3])sp30);
 			varV0 = (u8 *) &D_80154318[sp3E];
 			varV0 += 8;
 			varA1 = (u8 *) &tempA2->unk8;
@@ -10729,33 +10729,23 @@ void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	D_80153B87 = 0;
 }
 
-// CURRENT(1165)
-#ifdef NON_MATCHING
-void func_800DFA98_EEA48(s8 *arg0) {
+void func_800DFA98_EEA48(s8 arg0[][3]) {
 	s32 i;
 	s32 j;
 	s16 temp;
 
-	i = 0;
-	do {
-		j = 0;
-		while (j < 3) {
-			temp = (func_800038E0_44E0() % 120) + D_8013DF84_14CF34[(i * 3) + j] - 0x3C;
+	for (i = 0; i < 4; i = (i + 1) & 0xFF) {
+		for (j = 0; j < 3; j = (j + 1) & 0xFF) {
+			temp = D_8013DF84_14CF34[(i * 3) + j] + (func_800038E0_44E0() % 120) - 0x3C;
 			if (temp < 0) {
 				temp = 0;
 			} else if (temp >= 0x100) {
 				temp = 0xFF;
 			}
-			arg0[(i * 3) + j] = temp;
-			j = (j + 1) & 0xFF;
+			arg0[i][j] = temp;
 		}
-		i = (i + 1) & 0xFF;
-	} while (i < 4);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFA98_EEA48.s")
-#endif
-
 #ifdef NON_MATCHING
 // CURRENT(4815)
 // large explosion effect with smaller random explosions
@@ -10794,7 +10784,7 @@ void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 		sp5C = arg4;
 
 		do {
-			func_800DFA98_EEA48(tempS5);
+			func_800DFA98_EEA48((s8 (*)[3])tempS5);
 			func_801371B8_146168(0, 0xE8, arg0, arg1, arg2, tempF20);
 			tempS1 = func_800038E0_44E0() & 0xFFFF;
 			tempS2 = func_800038E0_44E0() & 0xFFFF;
