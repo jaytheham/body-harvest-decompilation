@@ -942,33 +942,26 @@ void func_800F375C_10270C(s8 arg0) {
 
 // CURRENT(540)
 #ifdef NON_MATCHING
-s16 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
+s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 sp36;
-	f32 var_f2;
-	s32 sp36_s32;
-
+	f32 scale;
+	s32 height;
+	s32 radius;
 	func_8011E6FC_12D6AC(arg2, arg3, &sp36);
-	sp36_s32 = alienTypes[alienInstances[arg0->unk144].typeIndex].unk58;
-
-	if (sp36_s32 < 0x33) {
-		var_f2 = 3.0f;
-	} else {
-		var_f2 = 2.0f;
+	height = alienInstances[arg0->unk144].typeIndex;
+	radius = alienTypes[height].unk58;
+	if (radius < 51) { scale = 3.0f; } else { scale = 2.0f; }
+	height = sp36;
+	if ((f32)height < (f32)arg1 - (f32)radius * scale) {
+		height = (s16)((f32)arg1 - (f32)radius * scale);
+	} else if ((f32)arg1 - (f32)radius * scale < (f32)height) {
+		height = (s16)((f32)arg1 + (f32)radius * scale);
 	}
-
-	sp36_s32 = sp36;
-	if ((f32)sp36_s32 < (f32)arg1 - (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2) {
-		sp36_s32 = (s16)((f32)arg1 - (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2);
-	} else if ((f32)arg1 - (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2 < (f32)sp36_s32) {
-		sp36_s32 = (s16)((f32)arg1 + (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2);
+	if (arg1 < height) {
+		sp36 = height;
+		height = (s16)(func_800B84D0_C7480(arg2, arg3) >> 8);
 	}
-
-	if (arg1 < sp36_s32) {
-		sp36 = (s16)sp36_s32;
-		sp36_s32 = (s16)(func_800B84D0_C7480(arg2, arg3) >> 8);
-	}
-
-	return sp36_s32;
+	return height;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F384C_1027FC.s")
