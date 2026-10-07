@@ -3146,14 +3146,10 @@ void func_800C8814_D77C4(void) {
 #endif
 
 // CURRENT(663)
-#ifdef NON_MATCHING
 u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 idx;
 	u8 effect;
-	Unk80154318Entry *entry;
-	Unk801541F8Entry *sfx;
-	u8 *entryBytes;
-	u8 *srcBytes;
+	Unk80154318Entry *source;
 
 	if (arg4 == -3) {
 		return 0xFB;
@@ -3164,38 +3160,33 @@ u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 			func_800C1384_D0334(effect);
 			effect = 0xFB;
 		} else {
-			entry = &D_80154318[idx];
-			entryBytes = (u8 *)entry;
 			if (arg4 == -8) {
-				entryBytes[0xE] = 0xC8;
-				entryBytes[0xF] = 0xC8;
-				entryBytes[0x10] = 0xC8;
-				entryBytes[0x11] = 0x64;
-				entryBytes[0x12] = 0x64;
-				entryBytes[0x13] = 0x64;
+				D_80154318[idx].payload[6] = 0xC8;
+				D_80154318[idx].payload[7] = 0xC8;
+				D_80154318[idx].payload[8] = 0xC8;
+				D_80154318[idx].payload[9] = 0x64;
+				D_80154318[idx].payload[10] = 0x64;
+				D_80154318[idx].payload[11] = 0x64;
 			} else {
-				srcBytes = (u8 *)&D_80154318[arg4];
-				entryBytes[0xE] = srcBytes[0xE];
-				entryBytes[0xF] = srcBytes[0xF];
-				entryBytes[0x10] = srcBytes[0x10];
-				entryBytes[0x11] = ((u8 *)&D_80154318[D_80154318[arg4].unk4])[0x8];
-				entryBytes[0x12] = ((u8 *)&D_80154318[D_80154318[arg4].unk4])[0x9];
-				entryBytes[0x13] = ((u8 *)&D_80154318[D_80154318[arg4].unk4])[0xA];
+				source = &D_80154318[arg4];
+				D_80154318[idx].payload[6] = source->payload[6];
+				D_80154318[idx].payload[7] = source->payload[7];
+				D_80154318[idx].payload[8] = source->payload[8];
+				D_80154318[idx].payload[9] = D_80154318[source->unk4].payload[0];
+				D_80154318[idx].payload[10] = D_80154318[source->unk4].payload[1];
+				D_80154318[idx].payload[11] = D_80154318[source->unk4].payload[2];
 			}
 
-			entry->unk8 = arg0;
-			entry->unkA = arg1;
-			entry->unkC = arg2;
-			sfx = &D_80154088[effect];
-			sfx->unk2 = arg3;
+			D_80154318[idx].unk8 = arg0;
+			D_80154318[idx].unkA = arg1;
+			D_80154318[idx].unkC = arg2;
+			D_80154088[effect].unk2 = arg3;
 		}
 	}
 
 	return effect;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8C7C_D7C2C.s")
-#endif
+
 
 void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 {

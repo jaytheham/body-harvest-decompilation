@@ -83,3 +83,11 @@ if (D_800FB7B0[effect].unk12 < 9) {
 ```
 
 In Siberia `func_802E0B08_2C2F38`, declare only the grandparent pointer and a `u8` parent index. Access the alien and parent through `alienInstances[arg0]` and `alienInstances[index]`. IDO caches both addresses automatically. Explicit alien or parent pointer locals enlarge the frame from 0x38 to 0x40. The named parent index also places its initial load in v0, aligning register allocation throughout the function. Inline the type radius in both double multiplications instead of caching it in a signed halfword local. Whole-ROM checksum passed.
+
+`func_800C8C7C_D7C2C` also needs direct `D_80154318[idx]` accesses.
+Keeping the destination in a local entry pointer matched the color-copy branches,
+but interleaved the final position stores with argument reloads and effect-index
+address calculation. Removing that pointer lets IDO load the four halfword
+arguments before the stores, matching the reference `func_800891F8_596A8`.
+Raw byte accesses can still be replaced by the entry's existing `payload` array
+without changing those instructions. Full ROM checksum and diff score 0 pass.
