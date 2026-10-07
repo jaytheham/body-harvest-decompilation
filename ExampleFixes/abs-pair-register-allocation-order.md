@@ -70,6 +70,51 @@ Putting the decrement first causes IDO to pre-hoist the unk20 load into the
 beqzl delay slot (for both code paths), locking unk20 into a higher t register
 (t7) and assigning unk24 the next lower t register (t5).
 
+#### 4. The ternary spelling is a third valid form — and it is worth whole instructions
+
+Measured on `func_800E95BC_F856C` (`overlay_gameplay/outside/F7870.c`, 171 instr, port *Draw
+distance*), 2026-10-07. The committed best body spelled both abs values as init+conditional:
+
+```c
+absDeltaX = -deltaX;
+if (absDeltaX < deltaX) { absDeltaX = deltaX; }
+absDeltaZ = -deltaZ;
+if (absDeltaZ < deltaZ) { absDeltaZ = deltaZ; }
+```
+
+Against this target that form is **one instruction short per abs**: IDO folds the second arm into
+the `beqz` delay slot (`beqz at,L` + `move dst,-d`), so the function compiled to **163 instructions
+to the target's 171** — and because a TU packs sequentially, every later symbol in the file landed
+0x20 low and `check` reported **4252** for a ~33-row real divergence (see
+`check-score-charges-shipped-tail-on-instr-count-deficit.md`).
+
+Rewriting the same two computations as ternaries
+
+```c
+absDeltaX = (-deltaX < deltaX) ? deltaX : -deltaX;
+absDeltaZ = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
+```
+
+made IDO materialise **both arms plus the `b`**, exactly as the target does:
+
+```
+negu v1,a3 / slt at,v1,a3 / ... / beqz at,L / or <d>,t1  (delay)
+b L2 / or a2,a3,zero (delay) / L: or a2,v1,zero
+```
+
+and the same for the second abs. **Measured: 163 -> 169 instructions, `check` 4252 -> 1965**, with
+the whole prologue/branch/loop register map falling into place at once — the argument home
+`sw $a1,0x4C($sp)`, `or $s0,$a2,$zero` + `sll $t3,$s0,8` (arg2 preserved across the `absDeltaX`
+that clobbers `a2`), and DeltaX->a3 / absDeltaX->a2 / deltaZ->a1 / -deltaZ->a0 / absDeltaZ->v0 all
+matching the target. The clue that this was the answer: the abs **inside**
+`nSteps = ((-dX < dX) ? dX : -dX) >> 8` already matched as a ternary, while the two standalone abs
+blocks did not.
+
+**Rule.** When the target's abs block shows *two* branches (`beqz` + `b`) with an explicit second
+arm, the source spelling is a ternary (or an if/else with both arms materialised), not
+`x = -d; if (x < d) x = d;`. The extra arm is not cosmetic: it is worth 6 instructions here
+because it unblocks the register allocator for the rest of the function.
+
 #### Full working pattern (func_800AB730_BA6E0)
 
 ```c
