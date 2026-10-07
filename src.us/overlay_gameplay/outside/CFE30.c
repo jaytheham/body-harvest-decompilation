@@ -981,53 +981,49 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 #ifdef NON_MATCHING
 // CURRENT(1929)
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
-	Unk80154318Sub *temp_s0_2;
+	SmokePuffState *puff;
 	s32 sp3C;
 	Unk801541F8Entry *sp38;
 	s16 sp42;
 	u8 temp_v0;
-	sp3C = arg3 & 0xFF;
+	sp3C = arg3;
 	if (sp3C < 0x1E) {
 		sp38 = &D_80154088[sp3C];
 		if (sp38->unk0 == 0) {
-			temp_v0 = D_80156ED8;
-			if (temp_v0 == 1) {
-				if ((func_800038E0_44E0() % 9) < 6) {
-					goto block_5; // Agent - Refactor this to remove the goto and use if/else instead
-				}
-			} else {
-block_5:
-				if ((temp_v0 != 2) || ((func_800038E0_44E0() % 9) < 3)) {
-					sp42 = func_800C18D0_D0880(sp3C & 0xFF);
+			if ((D_80156ED8 != 1) || ((func_800038E0_44E0() % 9) < 6)) {
+				if ((D_80156ED8 != 2) || ((func_800038E0_44E0() % 9) < 3)) {
+					sp42 = func_800C18D0_D0880(sp3C);
+					if (1) {
 					if (sp42 != -3) {
 						if ((arg4 == 0) || (arg4 == 2)) {
 							D_80154318[sp42].unk2 = (func_800038E0_44E0() % 12) + 0x10;
-							temp_s0_2 = (Unk80154318Sub *) &D_80154318[sp42].unk8;
-							temp_s0_2->unk0 = (func_800038E0_44E0() % 13) + arg0 - 6;
-							temp_s0_2->unk2 = (func_800038E0_44E0() % 19) + arg1 - 9;
-							temp_s0_2->unk4 = (func_800038E0_44E0() % 13) + arg2 - 6;
+							puff = &D_80154318[sp42].smokePuff;
+							puff->position[0] = (func_800038E0_44E0() % 13) + arg0 - 6;
+							puff->position[1] = (func_800038E0_44E0() % 19) + arg1 - 9;
+							puff->position[2] = (func_800038E0_44E0() % 13) + arg2 - 6;
 							temp_v0 = 0xF5;
-							temp_s0_2->unk6 = temp_v0;
-							temp_s0_2->unk7 = temp_v0;
-							temp_s0_2->unk8 = temp_v0;
-							temp_s0_2->unk9 = 0xFF;
+							puff->color[0] = temp_v0;
+							puff->color[1] = temp_v0;
+							puff->color[2] = temp_v0;
+							puff->opacity = 0xFF;
 							if (arg4 == 0) {
-								func_80137368_146318(temp_s0_2->unk0, temp_s0_2->unk2, temp_s0_2->unk4, 4, sp3C);
+								func_80137368_146318(puff->position[0], puff->position[1], puff->position[2], 4, sp3C);
 							}
 						} else if (arg4 == 1) {
 							D_80154318[sp42].unk2 = (func_800038E0_44E0() % 20) + 0x14;
-							temp_s0_2 = (Unk80154318Sub *) &D_80154318[sp42].unk8;
-							temp_s0_2->unk0 = (func_800038E0_44E0() % 20) + arg0 - 0xA;
-							temp_s0_2->unk2 = (func_800038E0_44E0() % 20) + arg1 - 0xA;
-							temp_s0_2->unk4 = (func_800038E0_44E0() % 20) + arg2 - 0xA;
-							temp_s0_2->unk6 = (func_800038E0_44E0() % 100) + 0x82;
-							temp_s0_2->unk7 = (func_800038E0_44E0() % 100) + 0x82;
-							temp_s0_2->unk8 = (func_800038E0_44E0() % 100) + 0x82;
-							temp_s0_2->unk9 = 0xFF;
-							func_80137368_146318(temp_s0_2->unk0, temp_s0_2->unk2, temp_s0_2->unk4, 5, sp3C);
+							puff = &D_80154318[sp42].smokePuff;
+							puff->position[0] = (func_800038E0_44E0() % 20) + arg0 - 0xA;
+							puff->position[1] = (func_800038E0_44E0() % 20) + arg1 - 0xA;
+							puff->position[2] = (func_800038E0_44E0() % 20) + arg2 - 0xA;
+							puff->color[0] = (func_800038E0_44E0() % 100) + 0x82;
+							puff->color[1] = (func_800038E0_44E0() % 100) + 0x82;
+							puff->color[2] = (func_800038E0_44E0() % 100) + 0x82;
+							puff->opacity = 0xFF;
+							func_80137368_146318(puff->position[0], puff->position[1], puff->position[2], 5, sp3C);
 						}
-						D_80154329[sp42].unk1 = arg4;
+						D_80154318[sp42].smokePuff.kind = arg4;
 						sp38->unkA = sp42;
+					}
 					}
 				}
 			}
@@ -1603,16 +1599,17 @@ void func_800C3300_D22B0(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(975) */
+/* CURRENT(695) */
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
 	u16 color;
+	s32 channel;
 	u16 height;
 	u16 temp_u16;
 	Unk80154318Entry *base = D_80154318;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
-	Unk80154318Sub *entrySub;
+	EffectFirePayload *entrySub;
 
 	slot = func_800C19D4_D0984(0xC, 1);
 	if (slot != -3) {
@@ -1622,7 +1619,7 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		entry->unkC = arg2;
 
 		linkedEntry = &base[entry->unk4];
-		((u8 *)linkedEntry)[0xC] = 0;
+		linkedEntry->firePayload.control.phase = 0;
 
 		entry->unkE = arg5;
 		entry->unkF = arg6;
@@ -1645,37 +1642,37 @@ s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 			entry->unk2 = arg3 / 8;
 		}
 
-		entrySub = (Unk80154318Sub *)&linkedEntry->unk8;
-		entrySub->unk2 = arg3;
-		entrySub->unk0 = height;
-		((u8 *)entrySub)[5] = 8;
+		entrySub = &linkedEntry->firePayload;
+		entrySub->control.width = arg3;
+		entrySub->control.height = height;
+		entrySub->control.step = 8;
 
-		entrySub = (Unk80154318Sub *)&entry->unk8;
+		entrySub = &entry->firePayload;
 
-		color = arg5;
-		color = (u8)(color / 2) + color;
+		channel = arg5;
+		color = (u8)(channel / 2) + channel;
 		if ((u16)color >= 0x100) {
 			color = 0xFF;
 		}
-		entrySub->unk9 = color;
+		entrySub->visual.highlight[0] = color;
 
-		color = arg6;
-		color = (u8)(color / 2) + color;
-		if ((u16)color >= 0x100) {
-			color = 0xFF;
-		} else {
-			color = (u16)color;
-		}
-		entrySub->unkA = color;
-
-		color = arg7;
-		color = (u8)(color / 2) + color;
+		channel = arg6;
+		color = (u8)(channel / 2) + channel;
 		if ((u16)color >= 0x100) {
 			color = 0xFF;
 		} else {
 			color = (u16)color;
 		}
-		entrySub->unkB = color;
+		entrySub->visual.highlight[1] = color;
+
+		channel = arg7;
+		color = (u8)(channel / 2) + channel;
+		if ((u16)color >= 0x100) {
+			color = 0xFF;
+		} else {
+			color = (u16)color;
+		}
+		entrySub->visual.highlight[2] = color;
 	}
 
 	return slot;
@@ -2081,28 +2078,30 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 #endif
 
-// CURRENT(3437)
-// spawn splash/burst visual effect? called from dozens of places
+// CURRENT(2993)
+// Spark emitter allocation.
 #ifdef NON_MATCHING
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
 						 u8 arg11, u8 arg12) {
 	s32 i;
-	s32 effect;
+	u8 effect;
 	s32 spawnCount;
 	s16 idx;
 	Unk801541F8Entry *sfx;
 	Unk80154318Entry *entry;
 	Vec3f sp44;
-	spawnCount = arg8;
-	if (spawnCount >= 0x29) {
-		spawnCount = 0x28;
+	i = arg8;
+	if (i >= 0x29) {
+		i = 0x28;
 	}
 
-	if ((D_80156ED8 == 1) || (D_80156ED8 == 2) || ((0x230 - spawnCount) < ((((s32)D_8005BB30 - (s32)D_8005BB20) - 0xE380) >> 3))) {
+	if ((D_80156ED8 == 1) || (D_80156ED8 == 2) || ((0x230 - i) < ((((s32)D_8005BB30 - (s32)D_8005BB20) - 0xE380) >> 3))) {
 		spawnCount = 0;
+	} else {
+		spawnCount = i;
 	}
 
-	if ((spawnCount == 0) || (func_800B93AC_C835C(arg0, arg2, 0x96, (s16)(s32)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0)) {
+	if ((spawnCount == 0) || (func_800B93AC_C835C(arg0, arg2, 0x96, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0)) {
 		return;
 	}
 
@@ -2111,38 +2110,38 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 		return;
 	}
 
-	idx = func_800C17B4_D0764(effect & 0xFF, 0);
+	idx = func_800C17B4_D0764(effect, 0);
 	if (idx == -3) {
 		osSyncPrintf(&D_80143504_1524B4);
-		func_800C1384_D0334(effect & 0xFF);
+		func_800C1384_D0334(effect);
 		return;
 	}
 
-	sfx = &D_80154088[effect & 0xFF];
+	sfx = &D_80154088[effect];
 	entry = &D_80154318[idx];
 
 	sfx->unk1 = sfx->unk1;
 	sfx->unkA = idx;
 
-	entry->unk8 = arg0;
-	entry->unkC = arg2;
-	((u8 *)entry)[0x12] = 1;
+	entry->sparkEmitter.position[0] = arg0;
+	entry->sparkEmitter.position[2] = arg2;
+	entry->sparkEmitter.active = 1;
 
 	sp44.x = arg3;
 	sp44.y = arg4;
 	sp44.z = arg5;
 
 	entry->unk2 = arg9;
-	entry->unkA = arg1;
-	entry->unkE = arg10;
-	entry->unkF = arg11;
-	entry->unk10 = arg12;
+	entry->sparkEmitter.position[1] = arg1;
+	entry->sparkEmitter.color[0] = arg10;
+	entry->sparkEmitter.color[1] = arg11;
+	entry->sparkEmitter.color[2] = arg12;
 
 	func_800C1024_CFFD4(&sp44, &sp44);
 
 	i = 0;
 	while (i < spawnCount) {
-		func_800C4F48_D3EF8(effect & 0xFF, &sp44, arg6 & 0xFF, arg7 & 0xFF);
+		func_800C4F48_D3EF8(effect, &sp44, arg6, arg7);
 		i = (i + 1) & 0xFF;
 	}
 }
@@ -2157,7 +2156,7 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	s32 i;
 	u8 effect;
 	u8 count;
-	s16 idx;
+	s32 idx;
 
 	if (D_80156ED9 == 2) {
 		return;
@@ -2192,19 +2191,19 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	}
 
 	D_80154088[effect].unk1 = D_80154088[effect].unk1;
-	D_80154088[effect].unkA = idx;
+	D_80154088[effect].unkA = (s16)idx;
 
-	D_80154318[idx].unkE = 0xFF;
-	D_80154318[idx].unkF = 0xFF;
-	D_80154318[idx].unk10 = 0xFF;
-	((u8 *)&D_80154318[idx])[0x12] = 2;
+	D_80154318[(s16)idx].unkE = 0xFF;
+	D_80154318[(s16)idx].unkF = 0xFF;
+	D_80154318[(s16)idx].unk10 = 0xFF;
+	D_80154318[(s16)idx].payload[10] = 2;
 	i = 0;
-	D_80154318[idx].unk2 = arg6;
-	D_80154318[idx].unk8 = arg0;
-	D_80154318[idx].unkA = arg1;
-	D_80154318[idx].unkC = arg2;
-	*(s16 *)&D_80154318[idx].unk14 = arg3;
-	D_80154318[idx].unk11 = arg4;
+	D_80154318[(s16)idx].unk2 = arg6;
+	D_80154318[(s16)idx].unk8 = arg0;
+	D_80154318[(s16)idx].unkA = arg1;
+	D_80154318[(s16)idx].unkC = arg2;
+	D_80154318[(s16)idx].radialRadius = arg3;
+	D_80154318[(s16)idx].unk11 = arg4;
 
 	while (i < count) {
 		func_800C4F48_D3EF8(effect, 0, 0, 0);
@@ -3226,7 +3225,6 @@ void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 	D_80154318[idx].unk10 = D_80154318[D_80154088[arg3].unk6].unk10;
 }
 
-// CURRENT(1700)
 void func_800C8F5C_D7F0C(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
@@ -4368,47 +4366,43 @@ void func_800CC090_DB040(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC090_DB040.s")
 #endif
 
+// CURRENT(20)
 #ifdef NON_MATCHING
-// CURRENT(210)
-s16 func_800CC7B0_DB760(s16 arg0, s16 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
-	s32 sp4C;
-	Unk80154318Entry *temp_v1;
-	u16 sp58;
-	u16 sp5A;
-	s16 sp5E;
-	s8 sp66;
-	s8 var_s0;
-	Unk80154318Sub *temp_s0;
+s32 func_800CC7B0_DB760(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
+	struct { s16 pad; s8 value; } zVelocity;
+	EffectSparkState *spark;
+	s16 unitId;
+	s8 xVelocity;
+	u16 randomAlpha;
+	u16 randomYVelocity;
 
-	sp5E = func_800C17B4_D0764(6, 1);
-	if (sp5E != -3) {
-		temp_v1 = &D_80154318[sp5E];
-		temp_v1->unk2 = arg0;
-		temp_s0 = (Unk80154318Sub *)&temp_v1->unk8;
-		sp4C = arg1 / 2;
-		temp_s0->unk0 = (func_800038E0_44E0() % arg1) + arg3 - sp4C;
-		temp_s0->unk2 = (func_800038E0_44E0() % arg1) + arg4 - sp4C;
-		temp_s0->unk4 = (func_800038E0_44E0() % arg1) + arg5 - sp4C;
-		*(u8 *)&temp_s0->unk6 = 0xFF;
-		*(u8 *)&temp_s0->unk7 = 0xFF;
-		*(u8 *)&temp_s0->unk8 = 0xFF;
-		*(s16 *)&temp_s0->unkA = arg1;
-		temp_s0->unkC = func_800038E0_44E0() % 8;
-		temp_s0->unkD = arg2;
-		var_s0 = (func_800038E0_44E0() % 0x46) + 0x37;
-		sp66 = (func_800038E0_44E0() % 0x46) + 0x37;
+	unitId = func_800C17B4_D0764(6, 1);
+	if (unitId != -3) {
+		D_80154318[unitId].unk2 = arg0;
+		spark = (EffectSparkState *)&D_80154318[unitId].unk8;
+		spark->x = (func_800038E0_44E0() % arg1) + arg3 - (arg1 / 2);
+		spark->y = (func_800038E0_44E0() % arg1) + arg4 - (arg1 / 2);
+		spark->z = (func_800038E0_44E0() % arg1) + arg5 - (arg1 / 2);
+		spark->r = 0xFF;
+		spark->g = 0xFF;
+		spark->b = 0xFF;
+		spark->width = arg1;
+		spark->phase = func_800038E0_44E0() % 8;
+		spark->lifetime = ((u8 *)&arg2)[3];
+		xVelocity = (func_800038E0_44E0() % 0x46) + 0x37;
+		zVelocity.value = (func_800038E0_44E0() % 0x46) + 0x37;
 		if ((func_800038E0_44E0() % 0x14) < 0xA) {
-			var_s0 = -var_s0;
+			xVelocity = -xVelocity;
 		}
 		if ((func_800038E0_44E0() % 0x14) < 0xA) {
-			sp66 = -sp66;
+			zVelocity.value = -zVelocity.value;
 		}
-		sp58 = func_800038E0_44E0();
-		sp5A = func_800038E0_44E0();
-		func_800C541C_D43CC(arg3, arg4, arg5, var_s0, (sp58 % 60) + 0x41, sp66, 0x14, (sp5A % 60) + 0x46,
+		randomYVelocity = func_800038E0_44E0();
+		randomAlpha = func_800038E0_44E0();
+		func_800C541C_D43CC(arg3, arg4, arg5, xVelocity, (randomYVelocity % 60) + 0x41, zVelocity.value, 0x14, (randomAlpha % 60) + 0x46,
 			(func_800038E0_44E0() % 4) + 4, 4, 0xC8, 0xC8, 0xFF);
 	}
-	return sp5E;
+	return unitId;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC7B0_DB760.s")
@@ -4817,16 +4811,18 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 	}
 }
 
-// CURRENT(3858)
+// CURRENT(2143)
 #ifdef NON_MATCHING
 void func_800CDDE4_DCD94(void) {
-	s16 idx;
+	s32 idx;
+	s32 unused[2];
 	Unk80154318Entry *entry;
-	Unk80052B40 sp78;
 	Unk80052B40 sp80;
+	Unk80052B40 sp78;
 	Unk80052B40 sp88;
-	s32 offset;
+	Unk80052B40 *position;
 
+	if (1) { sp88.unk4 = 0x46; }
 	idx = D_8015426A;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -4839,9 +4835,8 @@ void func_800CDDE4_DCD94(void) {
 		do {
 			gDPPipeSync(D_8005BB2C++);
 
-			offset = ((s32)idx << 3) - idx;
-			offset <<= 2;
-			entry = (Unk80154318Entry *)((u8 *)D_80154318 + offset);
+			entry = &D_80154318[idx];
+			position = &entry->positionVector;
 		if (entry->unk11 == 1) {
 			sp78.unk0 = 0;
 			sp78.unk2 = 0;
@@ -4858,18 +4853,18 @@ void func_800CDDE4_DCD94(void) {
 			sp88.unk4 = 0x46;
 		}
 
-		sp80.unk0 = entry->unk8;
-		sp80.unk2 = entry->unkA;
-		sp80.unk4 = entry->unkC;
+		sp80.unk0 = position->unk0;
+		sp80.unk2 = position->unk2;
+		sp80.unk4 = position->unk4;
 
 		func_800039D0_45D0(&sp80, &sp78, &sp88, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-		gSPDisplayList(D_8005BB2C++, (Gfx *)0x05033E00);
+		gSPDisplayList(D_8005BB2C++, D_5033E00);
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-		D_80156EDA += 0x1E;
 		idx = entry->unk4;
+		D_80156EDA += 0x1E;
 		} while ((idx != -6) && (idx != -5));
 	}
 }
@@ -7847,65 +7842,56 @@ void func_800D6EAC_E5E5C(u8 arg0) {
 
 #ifdef NON_MATCHING
 void func_800D702C_E5FDC(s16 arg0, s32 arg1) {
-	s16 sp54;
-	s16 sp56;
-	s16 sp58;
-	s16 pad5A;
-	u16 sp5C;
-	s16 sp5E;
-	s16 sp60;
-	s16 pad62;
-	s16 sp64;
-	s16 sp66;
-	s16 sp68;
+	s32 padStack;
+	struct { Unk80052B40 scale; s16 pad5A; Unk80052B40 rotation; s16 pad62; Unk80052B40 position; } transform;
 	Unk80153AE0Entry *sp24;
 	s16 temp_v0;
 	s32 temp_t8;
 	s32 var_a1;
-	u8 temp_v0_2;
-	u8 temp_v0_3;
 	Unk80153AE0Entry *temp_t1;
+	Unk80052B40 *modelScale;
 	Unk80154318Entry *temp_v1;
 
-	temp_t8 = arg1 & 0xFF;
+	arg1 = (u8)arg1;
+	temp_t8 = arg1;
 	temp_t1 = &D_80153AE0[temp_t8];
 	temp_v1 = &D_80154318[arg0];
-	temp_v0 = *(u16 *)&temp_v1->unk8;
-	sp54 = temp_t1->unkC * temp_v0;
-	sp5C = *(u16 *)&temp_t1->unk8;
-	sp5E = 0;
-	sp60 = 0;
-	sp56 = temp_t1->unkE * temp_v0;
-	sp58 = temp_t1->unk10 * temp_v0;
-	sp64 = (temp_v0 * temp_t1->unk0) + temp_v1->unk8;
-	sp66 = (temp_v0 * temp_t1->unk2) + temp_v1->unkA;
-	sp68 = (temp_v0 * temp_t1->unk4) + temp_v1->unkC;
+	modelScale = (Unk80052B40 *)&temp_t1->unkC;
+	temp_v0 = temp_v1->unk2;
+	transform.scale.unk0 = modelScale->unk0 * temp_v0;
+	transform.rotation.unk0 = (u16)temp_t1->unk8;
+	transform.rotation.unk2 = 0;
+	transform.rotation.unk4 = 0;
+	transform.scale.unk2 = modelScale->unk2 * temp_v0;
+	transform.scale.unk4 = modelScale->unk4 * temp_v0;
+	transform.position.unk0 = (temp_v0 * temp_t1->unk0) + temp_v1->unk8;
+	transform.position.unk2 = (temp_v0 * temp_t1->unk2) + temp_v1->unkA;
+	transform.position.unk4 = (temp_v0 * temp_t1->unk4) + temp_v1->unkC;
 	if ((temp_t8 == 3) || (temp_t8 == 4)) {
-		temp_v0_2 = temp_t1->unkE;
-		if (temp_v0_2 < 0xE) {
+		temp_v0 = temp_v1->unkE;
+		if (temp_v0 < 0xE) {
 			var_a1 = 0xFF;
-		} else if (temp_v0_2 >= 0x15) {
+		} else if (temp_v0 >= 0x15) {
 			var_a1 = 0;
 		} else {
-			var_a1 = (0x2F4 - (temp_v0_2 * 0x24)) & 0xFF;
+			var_a1 = (0x2F4 - (temp_v0 * 0x24)) & 0xFF;
 		}
 	} else {
-		temp_v0_3 = temp_t1->unkE;
-		if (temp_v0_3 < 0x28) {
+		temp_v0 = temp_v1->unkE;
+		if (temp_v0 < 0x28) {
 			var_a1 = 0xFF;
 		} else {
-			var_a1 = ((temp_v0_3 * -0x11) + 0x3A7) & 0xFF;
+			var_a1 = ((-temp_v0 * 0x11) + 0x3A7) & 0xFF;
 		}
 	}
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, var_a1);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, var_a1);
 	gDPPipeSync(D_8005BB2C++);
 	sp24 = temp_t1;
-	func_800039D0_45D0((Unk80052B40 *)&sp64, (Unk80052B40 *)&sp5C, (Unk80052B40 *)&sp54, D_8005BB38);
+	func_800039D0_45D0(&transform.position, &transform.rotation, &transform.scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, sp24->unk1C);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D702C_E5FDC.s")
 #endif
@@ -8684,7 +8670,7 @@ void func_800D9754_E8704(s16 arg0) {
 	}
 }
 
-// CURRENT(1924)
+// CURRENT(429)
 #ifdef NON_MATCHING
 void func_800D978C_E873C(void) {
 	s16 var_v1;
@@ -8694,12 +8680,13 @@ void func_800D978C_E873C(void) {
 
 	var_v1 = D_801542EE;
 	if ((var_v1 != -6) && (var_v1 != -5)) {
-		gSPDisplayList(D_8005BB2C++, D_80031230);
+		if (1) { if (1) { if (1) { if (1) { 		gSPDisplayList(D_8005BB2C++, D_80031230);
 		gSPDisplayList(D_8005BB2C++, D_800311D0);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
+		}}}}
 		if ((var_v1 != -6) && (var_v1 != -5)) {
 			do {
 				entry = &D_80154318[var_v1];
@@ -8707,10 +8694,10 @@ void func_800D978C_E873C(void) {
 				if (func_800B93AC_C835C(linkedEntry->unk8, linkedEntry->unkC, 0x100,
 										(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
 										0x4000 - D_80047950) != 0) {
-					spatial = (Unk80052B40 *)&linkedEntry->unk8;
-					func_800039D0_45D0(spatial, (Unk80052B40 *)((u8 *)spatial + 6), 0, D_8005BB38);
+					spatial = &linkedEntry->spatialVectors[0];
+					func_800039D0_45D0(spatial, &spatial[1], 0, D_8005BB38);
 					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-					gSPDisplayList(D_8005BB2C++, *(Gfx **)&entry->unk8);
+					gSPDisplayList(D_8005BB2C++, entry->displayList);
 					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 				}
 				var_v1 = linkedEntry->unk4;
@@ -11068,23 +11055,23 @@ void func_800E1C10_F0BC0(void) {
 	D_80156EDC.unk4 = D_80052B34->unk4;
 }
 
-// CURRENT(3027)
+// CURRENT(15): jump table address and one branch operand order remain.
 #ifdef NON_MATCHING
 void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
-	s32 shouldClamp;
 	s32 skipSecondCall;
-	s32 level;
+	s32 shouldClamp;
 	s16 tempA2;
 
 	if (D_80052B34->unk3C == 0) {
 		return;
 	}
 
+	if (1) {
 	shouldClamp = 0;
 	skipSecondCall = 0;
+	}
 	if ((func_800038E0_44E0() % 100) < (arg0 + 30)) {
-		level = currentLevel;
-		switch (level) {
+		switch (currentLevel) {
 			case 1:
 				if ((D_80052B34->unk1A == 4) || (D_80052B34->unk1A == 7) || (D_80052B34->unk1A == 8) || (D_80052B34->unk1A == 0x10)) {
 					shouldClamp = 1;
@@ -11115,13 +11102,18 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 				break;
 
 			case 4:
-				if (D_80052B34->unk1A == 2) {
-					skipSecondCall = 1;
-					shouldClamp = 1;
-				} else if (D_80052B34->unk1A == 0x11) {
-					shouldClamp = 1;
-				}
-				break;
+                switch (D_80052B34->unk1A) {
+                    case 2:
+                        skipSecondCall = 1;
+                        shouldClamp = 1;
+                        break;
+                    case 0x11:
+                        shouldClamp = 1;
+                        break;
+                    default:
+                        break;
+                }
+                break;
 
 			default:
 				break;
@@ -11133,18 +11125,12 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 			}
 		}
 
-		if (shouldClamp == 0) {
-			if (arg1 < 0xA7) {
-				return;
+		if (((shouldClamp == 0) && (arg1 < 0xA7)) || ((shouldClamp != 0) && (arg1 < 0xC9))) {
+			tempA2 = D_8013DB10_14CAC0[currentLevel - 1][D_80052B34->unk1A].zOffset;
+			func_800DEB7C_EDB2C(arg0, arg1, tempA2);
+			if ((tempA2 != 0) && (skipSecondCall == 0)) {
+				func_800DEB7C_EDB2C(arg0, arg1, -tempA2);
 			}
-		} else if (arg1 >= 0xC9) {
-			return;
-		}
-
-		tempA2 = D_8013DB10_14CAC0[level - 1][D_80052B34->unk1A].zOffset;
-		func_800DEB7C_EDB2C(arg0, arg1, tempA2);
-		if ((tempA2 != 0) && (skipSecondCall == 0)) {
-			func_800DEB7C_EDB2C(arg0, arg1, -tempA2);
 		}
 	}
 }
@@ -11206,18 +11192,18 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1F70_F0F20.s")
 #endif
 
-// CURRENT(6629)
+// CURRENT(3839)
 #ifdef NON_MATCHING
 void func_800E24B8_F1468(u8 arg0) {
-	s16 sp24;
-	s16 sp26;
-	s16 sp28;
 	AlienInstance *alien;
 	s32 temp_v0;
 	s32 temp_a0;
 	s32 temp_t9;
 	s32 var_a1;
-	s16 typeValue;
+	s32 divisor;
+	u16 sp28;
+	u16 sp26;
+	u16 sp24;
 
 	temp_v0 = func_800038E0_44E0();
 	alien = &alienInstances[arg0];
@@ -11230,33 +11216,16 @@ void func_800E24B8_F1468(u8 arg0) {
 	}
 
 	if ((temp_v0 % 40) < (var_a1 + 10)) {
-		s32 divisor;
-		s32 temp1;
-		s32 temp2;
-		s32 temp3;
-
 		sp24 = func_800038E0_44E0();
 		sp26 = func_800038E0_44E0();
 		sp28 = func_800038E0_44E0();
-		temp_v0 = func_800038E0_44E0();
 		divisor = 30;
-		temp1 = (u16)sp24 % divisor;
-		temp2 = (u16)sp26 % divisor;
-		temp3 = (u16)sp28 % 20;
-
-		typeValue = alienTypes[alien->typeIndex].unkC;
-		if (typeValue < 0) {
-			typeValue = (typeValue + 1) >> 1;
-		} else {
-			typeValue = typeValue >> 1;
-		}
-
 		func_800DEED0_EDE80(
-			(s16) ((temp1 + alien->unk0) - 15),
-			(s16) (D_80222A70 + 5),
-			(s16) ((temp2 + alien->unk4) - 15),
-			((temp3 + typeValue) & 0xFF),
-			((temp_v0 % 10) + 50));
+			(sp24 % divisor) + alien->unk0 - 15,
+			D_80222A70 + 5,
+			(sp26 % divisor) + alien->unk4 - 15,
+			(sp28 % 20) + alienTypes[alien->typeIndex].unkC / 2,
+			(func_800038E0_44E0() % 10) + 50);
 	}
 }
 #else
@@ -11264,6 +11233,7 @@ void func_800E24B8_F1468(u8 arg0) {
 #endif
 
 void func_800E2668_F1618(void) {
+
 	if (currentLevel == 2) {
 		D_801541F0.unk0 = 0x96;
 		D_801541F0.unk1 = 0xDC;
@@ -12263,39 +12233,43 @@ void func_800E5538_F44E8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
 #endif
 
-// CURRENT(1674)
+// CURRENT(200)
 #ifdef NON_MATCHING
 // Remove shield (wtf is a shield?)
 void func_800E5B78_F4B28(void) {
 	Unk80152CA0Entry *entry;
 	s16 i;
 	s16 j;
+	s32 timer;
 	s16 count;
-	u32 val;
-	u32 shifted;
+	s32 one;
 
+	one = 1;
 	count = D_80152C96;
 	for (i = 0; i < count; i++) {
 		entry = &D_80152CA0[i];
 
-		if (entry->unk2 != 0) {
-			entry->unk2--;
+		timer = entry->unk2;
+		if (timer != 0) {
+			entry->unk2 = timer - 1;
+			count = D_80152C96;
+			timer = entry->unk2;
 		}
 
-		if (entry->unk2 == 1) {
+		if (one == timer) {
 			if (entry->unk1 == 2) {
 				vehicleInstances[entry->unk0].unk20 &= ~VEHICLE_FLAG_UNK8;
-			} else if (entry->unk1 == 1) {
-				val = buildingInstances[entry->unk0].unk8;
-				shifted = val >> 12;
-				buildingInstances[entry->unk0].unk8 = ((((shifted & ~0x1000) ^ shifted) << 12) ^ val);
+			} else if (one == entry->unk1) {
+				buildingInstances[entry->unk0].statusFlags &= ~0x1000;
 			}
 
-			count--;
-			for (j = i; j < count; j++) {
+			j = i;
+			timer = count - 1;
+			for (; j < timer; j++) {
 				D_80152CA0[j] = D_80152CA0[j + 1];
 			}
-			D_80152C96 = count;
+			D_80152C96 = timer;
+			count = D_80152C96;
 		}
 	}
 }
@@ -12339,65 +12313,41 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	}
 }
 
-// CURRENT(4465)
+// CURRENT(16)
 #ifdef NON_MATCHING
-// Remove shield (wtf is a shield?)
+// Remove a matching shield and compact its entry list.
 void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
-	s16 var_s2;
-	s16 var_v0;
-	s16 temp_a1_2;
-	s16 temp_a2_2;
-	s32 var_a3;
-	u8 temp_a1;
-	u8 temp_v0;
-	Unk80152CA0Entry *temp_v1;
+	s16 i;
+	s16 j;
+	s32 newCount;
+	s16 count;
+	s32 type;
 
-	osSyncPrintf(&D_80143F7C_152F2C, (s32) arg1);
-	temp_a2_2 = D_80152C96;
-	var_s2 = 0;
-	var_a3 = arg0;
+	osSyncPrintf(&D_80143F7C_152F2C, arg1);
+	count = D_80152C96;
+	type = arg0;
 
-	if (temp_a2_2 >= 0) {
-		do {
-			temp_v1 = &D_80152CA0[var_s2];
-			temp_v0 = temp_v1->unk1;
-			if (var_a3 == temp_v0) {
-				temp_a1 = temp_v1->unk0;
-				if (arg1 == temp_a1) {
-					if (temp_v0 == 2) {
-						vehicleInstances[temp_a1].unk20 &= ~0x80;
-					} else if (temp_v0 == 1) {
-						u32 temp_v1_2;
-						u32 temp_a0;
-
-						temp_v1_2 = buildingInstances[temp_a1].unk8;
-						temp_a0 = temp_v1_2 >> 0xC;
-						buildingInstances[temp_a1].unk8 = ((((temp_a0 & ~0x1000) ^ temp_a0) << 0xC) ^ temp_v1_2);
-					}
-
-					temp_a1_2 = temp_a2_2 - 1;
-					var_v0 = var_s2;
-					if (var_s2 < temp_a1_2) {
-						do {
-							temp_v1 = &D_80152CA0[var_v0];
-							temp_v1->unk0 = (temp_v1 + 1)->unk0;
-							temp_v1->unk1 = (temp_v1 + 1)->unk1;
-							temp_v1->unk2 = (temp_v1 + 1)->unk2;
-							var_v0 += 1;
-						} while (var_v0 < temp_a1_2);
-					}
-
-					D_80152C96 = temp_a1_2;
-					temp_v1 = &D_80152CA0[var_v0];
-					((u8 *)temp_v1)[5] = 0;
-					((u8 *)temp_v1)[3] = 0;
-					osSyncPrintf(&D_80143F94_152F44, (s32) temp_a1_2, (s32) temp_a2_2, var_a3);
-					((u8 *)temp_v1)[4] = 0;
-					temp_a2_2 = D_80152C96;
+	for (i = 0; i <= count; i++) {
+		if (type == D_80152CA0[i].unk1) {
+			if (arg1 == D_80152CA0[i].unk0) {
+				if (D_80152CA0[i].unk1 == 2) {
+					vehicleInstances[D_80152CA0[i].unk0].unk20 &= ~0x80;
+				} else if (D_80152CA0[i].unk1 == 1) {
+					buildingInstances[D_80152CA0[i].unk0].statusFlags &= ~0x1000;
 				}
+
+				newCount = count - 1;
+				for (j = i; j < count - 1; j++) {
+					D_80152CA0[j] = D_80152CA0[j + 1];
+				}
+
+				D_80152C96 = newCount;
+				D_80152CA0[j + 1].unk2 = 0;
+				D_80152CA0[j + 1].unk0 = 0;
+				D_80152CA0[j + 1].unk1 = 0;
+				osSyncPrintf(&D_80143F94_152F44), count = D_80152C96;
 			}
-			var_s2 += 1;
-		} while (temp_a2_2 >= var_s2);
+		}
 	}
 }
 #else
@@ -12916,21 +12866,23 @@ void func_800E7338_F62E8(void)
 	}
 }
 
+// CURRENT(180)
 #ifdef NON_MATCHING
 void func_800E74DC_F648C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
-	temp_t2 = arg3;
-	D_80157532 = temp_t2;
-	var_v1 = temp_t2;
-	if ((s32)arg4 < (s32)temp_t2) {
-		var_v1 = arg4;
-	}
-	temp_lo = (s32)arg4 / (s32)var_v1;
-	D_80157533 = temp_lo;
-	D_80157534 = temp_lo;
-	D_80157536 = arg0;
-	D_80157538 = arg1;
-	D_8015753A = arg2;
-	D_8015753C = arg5;
+    s32 count;
+    s32 minimum;
+    count = arg3;
+    D_80157532 = count;
+    minimum = count;
+    if (arg4 < minimum) {
+        minimum = arg4;
+    }
+    D_80157533 = arg4 / minimum;
+    D_80157534 = D_80157533;
+    D_80157536 = arg0;
+    D_80157538 = arg1;
+    D_8015753A = arg2;
+    D_8015753C = arg5;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E74DC_F648C.s")

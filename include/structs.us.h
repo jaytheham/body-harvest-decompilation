@@ -2551,6 +2551,21 @@ typedef struct {
 	/* 0x0A */ u8 padA[2];
 } EffectBuildingRecoveryState; /* size = 0x0C */
 
+typedef union {
+	struct {
+		s16 position[3];
+		u8 color[3];
+		u8 highlight[3];
+	} visual;
+	struct {
+		s16 height;
+		s16 width;
+		u8 phase;
+		u8 step;
+		u8 pad6[6];
+	} control;
+} EffectFirePayload; /* size = 0x0C */
+
 typedef struct {
 	/* 0x00 */ s16 position[3];
 	/* 0x06 */ u8 color[3];
@@ -2576,6 +2591,22 @@ typedef struct {
 } TrailParticleState; /* size = 0x0C */
 
 typedef struct {
+    s16 position[3];
+    u8 color[3];
+    u8 pad9;
+    u8 active;
+    u8 padB;
+} SparkEmitterState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ u8 kind;
+	/* 0x0B */ u8 padB;
+} SmokePuffState; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
@@ -2583,7 +2614,12 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	union {
 		/* 0x08 */ Unk80052B40 spatialVectors[2];
+		/* 0x08 */ Gfx *displayList;
+		/* 0x08 */ Unk80052B40 positionVector;
+		/* 0x08 */ SmokePuffState smokePuff;
+		/* 0x08 */ EffectFirePayload firePayload;
 		/* 0x08 */ TrailParticleState trailParticle;
+		/* 0x08 */ SparkEmitterState sparkEmitter;
 		/* 0x08 */ SpurtVisualState spurtVisual;
 		/* 0x08 */ SpurtEmitterState spurtEmitter;
 		/* 0x08 */ EffectCallbackState callbackState;
@@ -2606,8 +2642,13 @@ typedef struct {
 		/* 0x08 */ s16 coordinates[6];
 		/* 0x08 */ u8 payload[12];
 	};
-	/* 0x14 */ u8 unk14;
-	/* 0x15 */ u8 unk15;
+	union {
+		/* 0x14 */ s16 radialRadius;
+		struct {
+			/* 0x14 */ u8 unk14;
+			/* 0x15 */ u8 unk15;
+		};
+	};
 	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
 

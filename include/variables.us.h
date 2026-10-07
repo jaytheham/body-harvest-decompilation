@@ -2459,7 +2459,7 @@ extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
 extern u8 D_80157531;
 extern u8 D_80157532;
-extern s8 D_80157533;
+extern u8 D_80157533;
 extern u8 D_80157534;
 extern s16 D_80157536;
 extern s16 D_80157538;
@@ -4044,3 +4044,5 @@ extern TerrainLightTint D_8013DA48_14C9F8[5];
 extern TerrainLightTint D_8013DA84_14CA34[5];
 
 extern EffectRgb D_8013E40C_14D3BC;
+
+extern Gfx D_5033E00[];
