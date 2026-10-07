@@ -9385,12 +9385,12 @@ void func_800DABBC_E9B6C(void) {
 #endif
 
 // CURRENT(1262)
-#ifdef NON_MATCHING
 void func_800DAF24_E9ED4(u8 arg0) {
 	u8 i;
 	u8 count;
 	Unk801541F8Entry *entry;
 
+	count = (func_800038E0_44E0() % 3) + 1;
 	entry = &D_80154088[arg0];
 	for (i = 0; i < count; i++) {
 		if (entry->unk4 < 0x96) {
@@ -9398,9 +9398,6 @@ void func_800DAF24_E9ED4(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DAF24_E9ED4.s")
-#endif
 
 void func_800DAFCC_E9F7C(void) {
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_80153BB8.x + D_80153BC8);
