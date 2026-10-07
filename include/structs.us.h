@@ -2527,6 +2527,7 @@ typedef struct {
 			/* 0x12 */ s16 unk12;
 		};
 		/* 0x08 */ s16 coordinates[6];
+		/* 0x08 */ u8 payload[12];
 	};
 	/* 0x14 */ u8 unk14;
 	/* 0x15 */ u8 unk15;

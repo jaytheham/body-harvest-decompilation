@@ -1884,11 +1884,9 @@ void func_800C4900_D38B0(s16 arg0) {
 
 // Draws ripples on shield wall when hit?
 // CURRENT(8)
-#ifdef NON_MATCHING
 void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	s16 val;
 	s16 idx;
-	u8 *sub;
 	s32 mod;
 
 	val = D_80156ED8;
@@ -1909,19 +1907,15 @@ void func_800C4938_D38E8(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	D_80154318[idx].unk8 = arg0;
 	D_80154318[idx].unkA = arg1;
 	D_80154318[idx].unkC = arg2;
-	((u8 *)&D_80154318[idx])[0x12] = arg4;
-	((u8 *)&D_80154318[idx])[0x13] = arg3;
-	sub = (u8 *)&D_80154318[idx].unk8;
+	D_80154318[idx].payload[10] = arg4;
+	D_80154318[idx].payload[11] = arg3;
 	mod = func_800038E0_44E0() % 3;
-	sub[6] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][0];
-	sub[7] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][1];
-	sub[8] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][2];
-	sub[9] = mod;
+	((u8 *)(s32)D_80154318[idx].payload)[6] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][0];
+	((u8 *)(s32)D_80154318[idx].payload)[7] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][1];
+	((u8 *)(s32)D_80154318[idx].payload)[8] = D_8013DFA8_14CF58[(u32)(mod & 0xFF)][2];
+	((u8 *)(s32)D_80154318[idx].payload)[9] = mod;
 	func_801372B4_146264(arg0, arg1, arg2, 2);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4938_D38E8.s")
-#endif
 
 s32 func_800C4A64_D3A14(u8 arg0, u8 arg1) {
 	if (arg1 < arg0) {
