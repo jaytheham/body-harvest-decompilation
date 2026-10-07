@@ -1404,34 +1404,27 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 #endif
 
 /* Copy a 19x19 tile region from the world map into the ring buffer and compute vertex colors */
-// https://decomp.me/scratch/TODO
-#ifdef NON_MATCHING
-// CURRENT(2065)
 void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
-	s32 t1;
-	s32 v1;
-	s32 v0;
-	s32 a0;
-	s32 a1;
+	u8 row;
+	u8 column;
+	s32 rowOffset;
+	s32 tileIndex;
 
 	D_8014F8A0 = (s16(*)[256])arg2;
-	D_80151DD8.mapPosX = arg0;
-	D_80151DD8.mapPosY = arg1;
 	D_8014F89C = arg0;
 	D_8014F89D = arg1;
-	for (t1 = 0, v1 = 0; v1 < 0x13; t1 = (t1 + 1) & 0xFF, v1 = t1) {
-		a1 = (arg1 + v1) << 8;
-		for (v0 = 0, a0 = 0; a0 < 0x13; a0 = (v0 + 1) & 0xFF, v0 = a0) {
-			D_80151DD8.tiles[t1][v0].tileType = ((u16 *)arg2)[(u16)((arg0 + a0) + a1)];
+	D_80151DD8.mapPosX = D_8014F89C;
+	D_80151DD8.mapPosY = D_8014F89D;
+	for (row = 0; row < 19; row++) {
+		rowOffset = (D_8014F89D + row) << 8; for (column = 0; column < 19; column++) {
+			tileIndex = D_8014F89C + column + rowOffset;
+			D_80151DD8.tiles[row][column].tileType = ((u16 *)arg2)[(u16)tileIndex];
 		}
 	}
 	D_80151DD8.ringY = 0;
 	D_80151DD8.ringX = 0;
 	func_800B345C_C240C(arg0, arg1, arg2, arg3);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B4050_C3000.s")
-#endif
 
 /* Register a tile coordinate for special lighting treatment */
 void func_800B415C_C310C(s16 arg0, s16 arg1) {
