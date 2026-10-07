@@ -6519,19 +6519,14 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_8008098C_50E3C(void) {
-	s32 i;
+	u8 i;
 
-	i = 0; do {
+	for (i = 0; i < 10; i++) {
 		D_800D8550[i] = NULL;
 		D_800D8578[i].unk50 = 0;
-		i++;
-	} while (i < 10);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8008098C_50E3C.s")
-#endif
 
 #ifdef NON_MATCHING
 FrontendStreamSlot* func_800809DC_50E8C(s32 arg0) {
