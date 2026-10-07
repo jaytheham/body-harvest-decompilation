@@ -962,34 +962,23 @@ void func_802D614C_1EEE5C(void)
   }
 }
 
-#ifdef NON_MATCHING
 void func_802D62A0_1EEFB0(void)
 {
   s16 v0;
-  s16 v1;
   v0 = D_802E0FB6;
-  if (!v0)
-  {
-  }
   if ((v0 < 0x1E) && ((((u32) D_80052A8C) % 5) == 0))
   {
 	D_802E0FB6 = v0 + 1;
 	v0 = D_802E0FB6;
   }
-  v1 = buildingInstances[50].xCoord;
-  v1 = (s16) (v1 - v0);
-  buildingInstances[50].xCoord = v1;
-  v1 = buildingInstances[50].xCoord;
-  if (v1 < (-0x5207))
+  buildingInstances[50].xCoord -= v0;
+  if (buildingInstances[50].xCoord < (-0x5207))
   {
 	D_802E0FB6 = 0x28;
 	func_800074BC_80BC(func_802D62A0_1EEFB0);
 	func_80007410_8010(&func_802D614C_1EEE5C);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D62A0_1EEFB0.s")
-#endif
 
 #ifdef NON_MATCHING
 /* State machine for java zone building display sequence
