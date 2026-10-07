@@ -2187,7 +2187,7 @@ void func_80088654_170714(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 #endif
 
-// CURRENT(3176)
+// CURRENT(110)
 // AI - Render slot type 6 effects: shrinking sprites
 #ifdef NON_MATCHING
 void func_80088B9C_170C5C(void) {
@@ -2227,18 +2227,26 @@ void func_80088B9C_170C5C(void) {
 
 	if ((effect != -6) && (effect != -5)) {
 		do {
-			Unk84EECEffect *entry;
+			s16 posX;
+			s16 posY;
+			s16 posZ;
+			s16 scale;
+			u8 alpha;
 
 			gDPPipeSync(D_8005BB2C++);
-			entry = &D_800FB7B0[effect];
-			D_800FB6D0.x = entry->unk8;
-			D_800FB6DC = &entry->unkE;
-			D_800FB6D0.y = entry->unkA;
-			D_800FB6D0.z = entry->unkC;
-			D_800FB6E0 = entry->unk2;
-			D_800FB6E4 = entry->unk12;
+			posX = D_800FB7B0[effect].unk8;
+			posY = D_800FB7B0[effect].unkA;
+			posZ = D_800FB7B0[effect].unkC;
+			scale = D_800FB7B0[effect].unk2;
+			alpha = D_800FB7B0[effect].unk12;
+			D_800FB6D0.x = posX;
+			D_800FB6DC = &D_800FB7B0[effect].unkE;
+			D_800FB6D0.y = posY;
+			D_800FB6D0.z = posZ;
+			D_800FB6E0 = scale;
+			D_800FB6E4 = alpha;
 			func_80089E54_171F14();
-			effect = entry->unk4;
+			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -6) && (effect != -5));
 	}
 }
