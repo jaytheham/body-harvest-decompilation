@@ -3298,11 +3298,10 @@ void func_800C8F5C_D7F0C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8F5C_D7F0C.s")
 #endif
 
+// CURRENT(225)
 #ifdef NON_MATCHING
-// CURRENT(2700)
-void func_800C927C_D822C(u8 arg0) {
+s16 *func_800C927C_D822C(u8 arg0) {
 	Unk801541F8Entry *effect;
-	Unk80154318Entry *entry;
 	s16 index;
 
 	effect = &D_80154088[arg0];
@@ -3326,19 +3325,19 @@ void func_800C927C_D822C(u8 arg0) {
 
 	if ((index != -5) && (index != -6)) {
 		do {
-			entry = &D_80154318[index];
-			D_80153BB8.x = (f32)entry->unk8;
-			D_80153BC4 = &entry->unkE;
-			D_80153BCC = entry->unk11;
-			D_80153BB8.y = (f32)entry->unkA;
-			D_80153BB8.z = (f32)entry->unkC;
-			D_80153BC8 = (f32)entry->unk2;
+			D_80153BB8.x = (f32)D_80154318[index].unk8;
+			D_80153BB8.y = (f32)D_80154318[index].unkA;
+			D_80153BB8.z = (f32)D_80154318[index].unkC;
+			D_80153BC4 = &D_80154318[index].unkE;
+			D_80153BC8 = (f32)D_80154318[index].unk2;
+			D_80153BCC = D_80154318[index].unk11;
 			func_800DB350_EA300();
-			index = entry->unk4;
+			index = D_80154318[index].unk4;
 		} while ((index != -5) && (index != -6));
 	}
 
 	D_80156EDA += effect->unk4 * 4;
+	return &D_80156EDA;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C927C_D822C.s")
