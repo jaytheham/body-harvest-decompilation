@@ -3632,27 +3632,20 @@ void func_800CA1B0_D9160(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA1B0_D9160.s")
 #endif
 
-// CURRENT(4556)
 // spurt/blood visual effect?
-#ifdef NON_MATCHING
 u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
+	/* These unused locals preserve the target frame and effect-byte slot. */
+	s32 padding[6];
+	s16 unused;
 	u8 effect;
 	s16 unitIdx;
 	s16 linkedIdx;
 	s16 value;
-	u8 colorR;
-	u8 colorG;
-	u8 colorB;
 	Unk80154318Entry *unit;
-	u8 *unitBytes;
-	u8 *linkedBytes;
-	u8 *linkedSubBytes;
-	u8 intensity;
-
-	colorR = arg10;
-	colorG = arg11;
-	colorB = arg12;
+	SpurtVisualState *unitBytes;
+	Unk80154318Entry *linked;
+	SpurtEmitterState *linkedSubBytes;
 
 	if (D_80156ED9 == 2) {
 		return 0xFB;
@@ -3671,65 +3664,60 @@ u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 			return 0xFB;
 		}
 
-		D_80154088[effect].unk1 = D_80154088[effect].unk1;
-
 		unit = &D_80154318[unitIdx];
 		linkedIdx = unit->unk4;
+		D_80154088[effect].unk1 = D_80154088[effect].unk1;
 		unit->unk2 = arg7;
 		unit->unk8 = arg0;
 		unit->unkA = arg1;
 		unit->unkC = arg2;
 
-		linkedBytes = (u8 *) &D_80154318[linkedIdx];
-		linkedBytes[8] = arg3;
-		linkedBytes[9] = arg4;
-		linkedBytes[0xA] = arg5;
-		linkedBytes[0xB] = arg6;
-		linkedBytes[0xC] = arg9;
-		linkedSubBytes = &linkedBytes[8];
+		linked = &D_80154318[linkedIdx];
+		linked->spurtEmitter.velocity[0] = arg3;
+		linked->spurtEmitter.velocity[1] = arg4;
+		linked->spurtEmitter.velocity[2] = arg5;
+		linked->spurtEmitter.size = arg6;
+		linked->spurtEmitter.kind = arg9;
+		linkedSubBytes = &linked->spurtEmitter;
 
-		unit->unkE = colorR;
+		unit->unkE = arg10;
 		unit->unk14 = 0;
-		unit->unkF = colorG;
-		unit->unk10 = colorB;
+		unit->unkF = arg11;
+		unit->unk10 = arg12;
 
-		unitBytes = (u8 *) &unit->unk8;
+		unitBytes = &unit->spurtVisual;
 
-		value = (s16) (colorR - 0x78);
+		value = (s16) (arg10 - 0x78);
 		if (value < 0) {
 			value = 0;
 		}
-		unitBytes[9] = value;
+		unitBytes->shadowColor[0] = value;
 
-		value = (s16) (colorG - 0x78);
+		value = (s16) (arg11 - 0x78);
 		if (value < 0) {
 			value = 0;
 		}
-		unitBytes[0xA] = value;
+		unitBytes->shadowColor[1] = value;
 
-		value = (s16) (colorB - 0x78);
+		value = (s16) (arg12 - 0x78);
 		if (value < 0) {
 			value = 0;
 		}
-		unitBytes[0xB] = value;
+		unitBytes->shadowColor[2] = value;
 
-		linkedSubBytes[8] = arg13;
+		linkedSubBytes->alpha = arg13;
 
-		intensity = arg8;
-		if (intensity >= 0x97) {
-			intensity = 0x96;
-		} else if (intensity == 0) {
-			intensity = 1;
+		if (arg8 >= 0x97) {
+			arg8 = 0x96;
+		} else if (arg8 == 0) {
+			arg8 = 1;
 		}
-		linkedSubBytes[5] = intensity;
-		*((s16 *) &linkedSubBytes[6]) = 0;
+		linkedSubBytes->intensity = arg8;
+		linkedSubBytes->age = 0;
 	}
 
 	return effect;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA5EC_D959C.s")
-#endif
 
 /* CURRENT(3911) */
 #ifdef NON_MATCHING

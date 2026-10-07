@@ -2552,12 +2552,30 @@ typedef struct {
 } EffectBuildingRecoveryState; /* size = 0x0C */
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 shadowColor[3];
+} SpurtVisualState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s8 velocity[3];
+	/* 0x03 */ u8 size;
+	/* 0x04 */ u8 kind;
+	/* 0x05 */ u8 intensity;
+	/* 0x06 */ s16 age;
+	/* 0x08 */ u8 alpha;
+	/* 0x09 */ u8 pad9[3];
+} SpurtEmitterState; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	union {
+		/* 0x08 */ SpurtVisualState spurtVisual;
+		/* 0x08 */ SpurtEmitterState spurtEmitter;
 		/* 0x08 */ EffectCallbackState callbackState;
 		/* 0x08 */ SpinnerParentState spinnerState;
 		/* 0x08 */ SpinnerMotionState spinnerMotion;
