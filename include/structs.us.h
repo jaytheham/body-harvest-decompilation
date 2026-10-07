@@ -2603,6 +2603,16 @@ typedef struct {
 } Unk8007E12CEntry8;
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 highDigits;
+	/* 0x0A */ u8 lowDigits;
+	/* 0x0B */ u8 riseSpeed;
+	/* 0x0C */ u8 alpha;
+	/* 0x0D */ u8 padD;
+} FloatingNumberState; /* size = 0x0E */
+
+typedef struct {
 	s16 x;
 	s16 y;
 	s16 z;

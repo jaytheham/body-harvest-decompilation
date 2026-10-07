@@ -5233,22 +5233,16 @@ void func_800CE6E8_DD698(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CE6E8_DD698.s")
 #endif
 
-// CURRENT(4564)
-#ifdef NON_MATCHING
 void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 idx;
-	s16 var_s0;
 	s16 temp;
 	s16 rem;
 	s16 tens;
-	s16 temp_a2;
+	s16 units;
 	Unk80154318Entry *entry;
-	u8 *p;
+	FloatingNumberState *p;
 
-	var_s0 = arg3;
-
-	temp_a2 = D_80047950;
-	if (func_800B93AC_C835C(arg0, arg2, 0xC8, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - temp_a2) == 0) {
+	if (func_800B93AC_C835C(arg0, arg2, 0xC8, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0) {
 		return;
 	}
 
@@ -5257,37 +5251,34 @@ void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		return;
 	}
 
-	temp = var_s0 / 50;
 	entry = &D_80154318[idx];
-	entry->unk2 = temp + 0x19;
+	entry->unk2 = arg3 / 50 + 0x19;
 	entry->unk8 = arg0;
 	entry->unkA = arg1;
 	entry->unkC = arg2;
 
-	temp = var_s0 / 1000;
-	var_s0 -= temp * 1000;
-	rem = var_s0 / 100;
-	var_s0 -= rem * 100;
-	tens = var_s0 / 10;
-	p = (u8 *)&entry->unk8;
-	p[9] = (temp << 4) | rem;
-	p[0xA] = (tens << 4) | (var_s0 - (tens * 10));
-	p[0xC] = 0xFF;
-	p[0xB] = (var_s0 / 300) + 5;
+	temp = arg3 / 1000;
+	arg3 -= temp * 1000;
+	rem = arg3 / 100;
+	arg3 -= rem * 100;
+	tens = arg3 / 10;
+	p = (FloatingNumberState *)&entry->unk8;
+	p->highDigits = (temp << 4) | rem;
+	units = arg3 - (tens * 10);
+	p->lowDigits = (tens << 4) | units;
+	p->alpha = 0xFF;
+	p->riseSpeed = (arg3 / 300) + 5;
 
 	if (arg3 < 1000) {
-		p[6] = 0xFF;
-		p[7] = 0xFF;
-		p[8] = 0xFF;
+		p->color[0] = 0xFF;
+		p->color[1] = 0xFF;
+		p->color[2] = 0xFF;
 	} else {
-		p[6] = 0xFF;
-		p[7] = 0xE6;
-		p[8] = 0x28;
+		p->color[0] = 0xFF;
+		p->color[1] = 0xE6;
+		p->color[2] = 0x28;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CEE00_DDDB0.s")
-#endif
 
 void func_800CF070_DE020(void) {
 	s16 var_s0;
