@@ -1276,7 +1276,7 @@ s16 func_801225C4_131574(Projectile *arg0);
 void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-void func_800D8000_E6FB0(s32 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_800D8000_E6FB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s32 func_800C21F0_D11A0(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
 void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4);
 void func_801372B4_146264(s16 arg0, s16 arg1, s16 arg2, u8 arg3);

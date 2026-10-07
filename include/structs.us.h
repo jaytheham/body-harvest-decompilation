@@ -2526,6 +2526,10 @@ typedef struct {
 			/* 0x11 */ u8 unk11;
 			/* 0x12 */ s16 unk12;
 		};
+		struct {
+			/* 0x08 */ s16 position[3];
+			/* 0x0E */ s16 previousPosition[3];
+		};
 		/* 0x08 */ s16 coordinates[6];
 		/* 0x08 */ u8 payload[12];
 	};

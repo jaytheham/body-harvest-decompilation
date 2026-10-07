@@ -8261,29 +8261,26 @@ void func_800D7FB4_E6F64(s16 arg0) {
 	func_800C1A4C_D09FC(arg0, 0x12, 1);
 }
 
-// CURRENT(604)
-#ifdef NON_MATCHING
-void func_800D8000_E6FB0(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	u8 *temp_a0;
+void func_800D8000_E6FB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	Unk80154318Entry *entry;
 	s16 *temp_v0;
 	s16 *temp_v1;
 
-	if ((arg3 == -3) || (temp_a0 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_a0 + 8), ((*temp_a0 & 1) == 0))) {
+	if ((arg3 == -3) || (entry = &D_80154318[arg3], temp_v0 = (s16 *)(s32)entry->coordinates, ((entry->unk0 & 1) == 0))) {
 		osSyncPrintf(&D_801439EC_15299C); // DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!
-		return;
-	}
+	} else {
 
-	temp_v1 = (s16 *)(temp_a0 + 0xE);
-	temp_v1[0] = temp_v0[0];
-	temp_v1[1] = temp_v0[1];
-	temp_v1[2] = temp_v0[2];
-	temp_v0[1] = arg1;
-	temp_v0[2] = arg2;
-	temp_v0[0] = (s16) arg0;
+		temp_v1 = (s16 *)(s32)entry->previousPosition;
+		/* Keep the coordinate bases across this block for IDO. */
+		if (1) {
+			temp_v1[0] = temp_v0[0];
+			temp_v1[1] = temp_v0[1];
+			temp_v1[2] = temp_v0[2];
+			temp_v0[0] = arg0; temp_v0[2] = arg2; temp_v0[1] = arg1;
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8000_E6FB0.s")
-#endif
+
 
 // CURRENT(250)
 void func_800D80B4_E7064(void) {
