@@ -630,8 +630,6 @@ void func_800C1150_D0100(void) {
 
 void func_800C1268_D0218(f32 arg0, f32 arg1, f32 arg2) { D_80153BA0.x = arg0; D_80153BA0.y = arg1; D_80153BA0.z = arg2; }
 
-#ifdef NON_MATCHING
-// CURRENT(90)
 void func_800C1288_D0238(u8 arg0, u8 arg1, s32 arg2) {
 	u8 var_v0;
 
@@ -639,7 +637,7 @@ void func_800C1288_D0238(u8 arg0, u8 arg1, s32 arg2) {
 		D_80154088[arg0].unk1 = 0;
 		D_80154088[arg0].unk0 = arg1;
 		if (arg2 != 0) {
-			D_80154088[arg0].unk1 = 8;
+			D_80154088[arg0].unk1 |= 8;
 		}
 		D_80154088[arg0].unk4 = 0;
 		D_80154088[arg0].unk6 = -6;
@@ -661,9 +659,6 @@ void func_800C1288_D0238(u8 arg0, u8 arg1, s32 arg2) {
 		osSyncPrintf(&D_80142EA0_151E50, arg0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1288_D0238.s")
-#endif
 
 void func_800C1384_D0334(u8 arg0) {
 	if (D_80154088[arg0].unk0 == 0xFA) {
