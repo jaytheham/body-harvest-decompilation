@@ -203,3 +203,51 @@ void func_800918E0_A0890(u8 arg0) {
 }
 ```
 
+
+#### 5. Integer abs from an m2c-style guess, and an inverted m2c branch condition
+
+Confirmed on `func_802D5E98_1EEBA8` (`overlay_level/java/1ED9E0.c`, 64 instr), 2026-10-07. The
+committed body was an m2c transcript (`goto block_N`, `var_*`-style temps) that had never compiled,
+spelling each of the four abs computations as
+
+```c
+v1 = -v0;
+if (v0 >= 0) { v1 = v0; }
+```
+
+`check` measured **1435**. Rewriting all four as ternaries (`v1 = (v0 >= 0) ? v0 : -v0;`) —
+the section-4 rule, here on *integers*, not floats — took it to **200** with no other change: the
+targets
+
+#### 5. Integer abs from an m2c-style guess, and an inverted m2c branch condition
+
+Confirmed on `func_802D5E98_1EEBA8` (`overlay_level/java/1ED9E0.c`, 64 instr), 2026-10-07. The
+committed body was an m2c transcript (`goto block_N`, `var_*`-style temps) that had never compiled,
+spelling each of the four abs computations as
+
+```c
+v1 = -v0;
+if (v0 >= 0) { v1 = v0; }
+```
+
+`check` measured **1435**. Rewriting all four as ternaries (`v1 = (v0 >= 0) ? v0 : -v0;`) —
+the section-4 rule, here on *integers*, not floats — took it to **200** with no other change: the
+target's shape is `bltz v0,L` + delay `negu v1,v0` / `b L2` + delay `move v1,v0`, i.e. both arms plus
+the `b`. So the rule is not float-specific.
+
+**The remaining 200 was one row: an inverted branch condition inherited from m2c.** The last block is
+
+    TARGET:  1eec88: bgtzl t2,1eec9c      (skip the call when t2 > 0)
+    OURS:    1eec88: blezl t2,1eec9c      (skip the call when t2 <= 0)
+
+`ins_diff -noregs` reads the pair as delta +0, and a per-row compare of the raw differ table finds
+*no other* differing row in the function's own range — so a five-point-looking 200 is a single
+`blezl`/`bgtzl` opcode mismatch. m2c had transcribed the guard as `if (vehicleInstances[49].unk1C > 0)`
+where the ROM's condition is `<= 0`; flipping the operator emitted `bgtzl` and took **200 -> 0**,
+gate PASSED.
+
+**Rule.** When the sole differing row in a function's own range is a branch whose *condition* is
+inverted (`bgtz`/`blez`, `beq`/`bne`, `bltz`/`bgez` at the same address, same operands), an m2c-derived
+guess is the likely cause: m2c guesses sign/equality direction from the branch layout, and it is wrong
+about as often as the guess is right. Flip the operator rather than hunting for a register lever — and
+verify with `gate`, since a flipped condition is a real behaviour change, not a spelling.
