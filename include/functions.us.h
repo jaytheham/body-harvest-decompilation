@@ -190,6 +190,8 @@ void func_8000E4C4_F0C4(s32 arg0);
 s32 func_8000E53C_F13C(void);
 #ifdef GAME_OSSETTIME_IMPL
 void osSetTime(s32 arg0, s32 arg1);
+void func_80080588_50A38(u8 arg0);
+
 #endif
 void func_80011D24_12924(void);
 s32 func_80011D6C_1296C(s32 arg0);
@@ -205,6 +207,8 @@ void loadLevelCode(u8 arg0);
 void func_80011E14_12A14(u8 arg0);
 #ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
+void func_80080588_50A38(u8 arg0);
+
 #endif
 void func_800791A0_49650(s32 arg0);
 void func_8000F618_10218(void);
@@ -1368,7 +1372,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80075B64_46014(s16 arg0);
 void func_80076FE0_47490();
 void func_80075710_45BC0(void);
-void func_8007EE0C_4F2BC(s32* arg0);
+void func_8007EE0C_4F2BC(FrontendCamEntry* arg0);
 void func_8007EE8C_4F33C(s32** arg0);
 void func_8007FB90_50040();
 void func_8007FBC8_50078(u8 arg0);
@@ -1654,5 +1658,7 @@ void func_802DEDE4_2C1214(u8 arg0);
 void func_802DEFB4_2C13E4(u8 arg0);
 
 void func_80079F30_4A3E0(u8 arg0);
+
+void func_80080588_50A38(u8 arg0);
 
 #endif

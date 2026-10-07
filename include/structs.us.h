@@ -1974,10 +1974,7 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-	/* 0x03 */ u8 unk3;
-	/* 0x04 */ u8 unk4;
+	/* 0x01 */ u8 lights[4];
 } Unk80080588Entry5; /* size = 0x05 */
 
 typedef struct {
@@ -1986,11 +1983,7 @@ typedef struct {
 	/* 0x02 */ u8 unk2;
 } Unk80080588Entry3; /* size = 0x03 */
 
-typedef struct {
-	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-} Unk80080588Rgb; /* size = 0x03 */
+typedef Unk80080588Entry3 Unk80080588Rgb;
 
 typedef struct {
 	/* 0x00 */ s32 unk0;

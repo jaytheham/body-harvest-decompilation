@@ -5528,7 +5528,7 @@ s32 func_8007E12C_4E5DC(void) {
 				break;
 			case 8:
 				D_80094930_64DE0 = 0;
-				func_8007EE0C_4F2BC((s32*)(D_800D7A30 + (arg * 0x20)));
+				func_8007EE0C_4F2BC(&((FrontendCamEntry*)D_800D7A30)[arg]);
 				break;
 			case 9:
 				D_800D7A86 = D_800D7A38[arg];
@@ -5767,18 +5767,15 @@ void func_8007EBB8_4F068(void) {
 	func_800839F0_53EA0(&((FrontendCamState*)D_800D7A18)->unk10.x, &((FrontendCamState*)D_800D7A18)->unk1C.x);
 }
 
+/* Typed camera pose copy: instruction sequence matches; register allocation remains unresolved after 25 candidates. */
 #ifdef NON_MATCHING
-void func_8007EE0C_4F2BC(s32* arg0) {
+void func_8007EE0C_4F2BC(FrontendCamEntry* arg0) {
 	if (D_80094938 == 0) {
-		D_800D7A18[4] = arg0[0];
-		D_800D7A18[5] = arg0[1];
-		D_800D7A18[6] = arg0[2];
-		D_800D7A18[7] = arg0[3];
-		D_800D7A18[8] = arg0[4];
-		D_800D7A18[9] = arg0[5];
-		((s16*)D_800D7A18)[26] = ((s16*)arg0)[12];
-		((s16*)D_800D7A18)[29] = (s16)(((s16*)arg0)[13] - 10);
-		((s16*)D_800D7A18)[30] = ((s16*)arg0)[14];
+		((FrontendCamState*)D_800D7A18)->unk10 = *(Vec3f*)&arg0->unk0;
+		((FrontendCamState*)D_800D7A18)->unk1C = *(Vec3f*)&arg0->unkC;
+		((FrontendCamState*)D_800D7A18)->unk34 = arg0->unk18;
+		((FrontendCamState*)D_800D7A18)->unk3A = arg0->unk1A - 10;
+		((FrontendCamState*)D_800D7A18)->unk3C = arg0->unk1C;
 	}
 }
 #else
@@ -6362,42 +6359,24 @@ void func_80080530_509E0(Unk80080530_Src* arg0) {
 
 // ambient light ?
 // CURRENT(1245)
-#ifdef NON_MATCHING
-void func_80080588_50A38(s32 arg0) {
-	u8 *temp_t0;
-	Unk80080588Entry3* temp_t3;
-	u8 temp_t5;
-	u8 temp_v1;
-	u8 temp_v1_2;
-	u8 temp_at;
-	s32 temp_t2;
-	s32 var_v0;
+void func_80080588_50A38(u8 arg0) {
+	Unk80080588Entry5 *selection;
+	u8 color;
+	u8 i;
 
-	temp_t0 = ((arg0 & 0xFF) * 5) + (u8*)D_800D7A28;
-	temp_v1 = *temp_t0;
-	if (temp_v1 != 0xFF) {
-		temp_t3 = D_800D7A38 + temp_v1;
-		D_800D7A86.unk0 = temp_t3->unk0;
-		temp_t5 = temp_t3->unk1;
-		D_800D7A86.unk1 = temp_t5;
-		temp_at = temp_t3->unk2;
-		D_800D7A86.unk2 = temp_at;
-		osSyncPrintf(&D_800AE958_7EE08, D_800D7A86.unk0, temp_t5 & 0xFF, temp_at & 0xFF);
+	selection = &D_800D7A28[arg0];
+	color = selection->unk0;
+	if (color != 0xFF) {
+		D_800D7A86 = D_800D7A38[color];
+		osSyncPrintf(D_800AE958_7EE08, D_800D7A86.unk0, D_800D7A86.unk1, D_800D7A86.unk2);
 	}
-
-	var_v0 = 0;
-	do {
-		temp_v1_2 = *(temp_t0 + var_v0 + 1);
-		temp_t2 = (var_v0 + 1) & 0xFF;
-		if (temp_v1_2 != 0xFF) {
-			((Unk80080588Entry1C*) ((u8*)D_800D7A34 + (temp_v1_2 * 0x1C)))->unk18 = 1;
+	for (i = 0; i < 3; i++) {
+		color = selection->lights[i];
+		if (color != 0xFF) {
+			D_800D7A34[color].unk18 = 1;
 		}
-		var_v0 = temp_t2;
-	} while (temp_t2 < 3);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080588_50A38.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(8571)
