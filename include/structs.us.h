@@ -2568,12 +2568,22 @@ typedef struct {
 } SpurtEmitterState; /* size = 0x0C */
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ u8 age;
+	/* 0x0B */ u8 padB;
+} TrailParticleState; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	union {
+		/* 0x08 */ Unk80052B40 spatialVectors[2];
+		/* 0x08 */ TrailParticleState trailParticle;
 		/* 0x08 */ SpurtVisualState spurtVisual;
 		/* 0x08 */ SpurtEmitterState spurtEmitter;
 		/* 0x08 */ EffectCallbackState callbackState;

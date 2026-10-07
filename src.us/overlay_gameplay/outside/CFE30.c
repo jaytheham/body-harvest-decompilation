@@ -3227,66 +3227,63 @@ void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 }
 
 // CURRENT(1700)
-#ifdef NON_MATCHING
 void func_800C8F5C_D7F0C(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
-	Unk80154318Entry *next;
-	Unk80154318Sub *sub;
-	u8 *baseBytes;
-	u8 *subBytes;
-	s32 index;
-	s32 nextIndex;
+	Unk80052B40 *source;
+	TrailParticleState *sub;
+	u8 *baseColor;
+	u8 *bytes;
+	s16 index;
+	s16 nextIndex;
 	s8 step;
 
 	effect = &D_80154088[arg0];
-	next = &D_80154318[effect->unk2];
-	entry = &D_80154318[effect->unk6];
-	entry->unk8 = next->unk8;
-	entry->unkA = next->unkA;
-	entry->unkC = next->unkC;
+	source = &D_80154318[effect->unk2].spatialVectors[0];
+	index = effect->unk6;
+	entry = &D_80154318[index];
+	entry->unk8 = source->unk0;
+	entry->unkA = source->unk2;
+	entry->unkC = source->unk4;
 
-	baseBytes = &entry->unk11;
-	if ((entry->unk4 == -5) || (entry->unk4 == -6)) {
+	baseColor = entry->spurtVisual.shadowColor;
+	index = entry->unk4;
+	if ((index == -5) || (index == -6)) {
 		func_800C1418_D03C8(arg0, 0);
 		func_800C1384_D0334(arg0);
 		return;
 	}
-	index = (s16)entry->unk4;
 
 	while ((index != -5) && (index != -6)) {
 		entry = &D_80154318[index];
-		sub = (Unk80154318Sub *)&entry->unk8;
-		subBytes = (u8 *)sub;
+		sub = &entry->trailParticle;
+		bytes = entry->payload;
 
-		if (entry->unk11 < 10) {
-			nextIndex = entry->unk4;
+		if (D_80154318[index].unk11 < 10) {
+			nextIndex = D_80154318[index].unk4;
 			func_800C1A4C_D09FC(index, arg0, 0);
 			if (effect->unk4 == 1) {
 				func_800C1A4C_D09FC(effect->unk6, arg0, 0);
 				func_800C1384_D0334(arg0);
 				return;
 			}
-			index = (s16)nextIndex;
+			index = nextIndex;
 		} else {
-			step = (s8)(0x23 - sub->unkA);
+			step = (s8)(0x23 - sub->age);
 			if (step > 0) {
-				subBytes[6] -= ((s32)subBytes[6] - baseBytes[0]) / step;
-				subBytes[7] -= ((s32)subBytes[7] - baseBytes[1]) / step;
-				subBytes[8] -= ((s32)subBytes[8] - baseBytes[2]) / step;
+				sub->color[0] -= ((s32)sub->color[0] - baseColor[0]) / step;
+				sub->color[1] -= ((s32)sub->color[1] - baseColor[1]) / step;
+				sub->color[2] -= ((s32)sub->color[2] - baseColor[2]) / step;
 			}
 
-			sub->unk2 += (func_800038E0_44E0() % 2) + 1;
-			entry->unk2 += (func_800038E0_44E0() % 3) + 2;
-			sub->unkA++;
-			sub->unk9 -= 9;
-			index = (s16)entry->unk4;
+			sub->position[1] += (func_800038E0_44E0() % 2) + 1;
+			D_80154318[index].unk2 += (func_800038E0_44E0() % 3) + 2;
+			bytes[10]++;
+			bytes[9] -= 9;
+			index = D_80154318[index].unk4;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8F5C_D7F0C.s")
-#endif
 
 // CURRENT(225)
 void func_800C927C_D822C(u8 arg0) {
