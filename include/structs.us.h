@@ -3447,4 +3447,10 @@ typedef struct {
 	u8 unk3;
 } TerrainPaletteColor;
 
+typedef struct {
+	f32 r;
+	f32 g;
+	f32 b;
+} TerrainLightTint;
+
 #endif

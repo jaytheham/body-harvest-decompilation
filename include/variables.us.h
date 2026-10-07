@@ -4020,3 +4020,7 @@ extern EffectRgb D_8013DAEC_14CA9C;
 extern EffectRgb D_8013DAF0_14CAA0;
 extern EffectRgb D_8013DAF4_14CAA4;
 extern EffectRgb D_8013DAF8_14CAA8;
+extern TerrainLightTint D_8013D9D0_14C980[5];
+extern TerrainLightTint D_8013DA0C_14C9BC[5];
+extern TerrainLightTint D_8013DA48_14C9F8[5];
+extern TerrainLightTint D_8013DA84_14CA34[5];

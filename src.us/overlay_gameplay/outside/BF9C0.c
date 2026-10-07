@@ -87,30 +87,36 @@ s16 D_8013D9C4_14C974[2] = { 0, 0 };
 s32 D_8013D9C8_14C978 = 0;
 s32 D_8013D9CC_14C97C = 0;
 /* Per-level terrain color multipliers (base tints, one per level) */
-f32 D_8013D9D0_14C980[15] = {
-	0.35f, 0.35f, 0.35f, 0.25f, 0.25f, 0.25f,
-	0.35f, 0.35f, 0.35f, 0.35f, 0.35f, 0.35f,
-	0.35f, 0.35f, 0.35f,
+TerrainLightTint D_8013D9D0_14C980[5] = {
+	{ 0.35f, 0.35f, 0.35f },
+	{ 0.25f, 0.25f, 0.25f },
+	{ 0.35f, 0.35f, 0.35f },
+	{ 0.35f, 0.35f, 0.35f },
+	{ 0.35f, 0.35f, 0.35f },
 };
 /* Per-level terrain color multipliers (bright, one per level) */
-f32 D_8013DA0C_14C9BC[15] = {
-	1.0f, 1.0f, 1.0f, 0.8f, 0.8f, 0.8f,
-	1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-	1.0f, 1.0f, 1.0f,
+TerrainLightTint D_8013DA0C_14C9BC[5] = {
+	{ 1.0f, 1.0f, 1.0f },
+	{ 0.8f, 0.8f, 0.8f },
+	{ 1.0f, 1.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f },
+	{ 1.0f, 1.0f, 1.0f },
 };
 /* Per-level water alpha/min light multipliers (one per level) */
-f32 D_8013DA48_14C9F8[15] = {
-	0.13f, 0.13f, 0.13f, 0.1f, 0.1f, 0.1f,
-	0.13f, 0.13f, 0.13f, 0.13f, 0.13f, 0.13f,
-	0.13f, 0.13f, 0.13f,
+TerrainLightTint D_8013DA48_14C9F8[5] = {
+	{ 0.13f, 0.13f, 0.13f },
+	{ 0.1f, 0.1f, 0.1f },
+	{ 0.13f, 0.13f, 0.13f },
+	{ 0.13f, 0.13f, 0.13f },
+	{ 0.13f, 0.13f, 0.13f },
 };
 /* Per-level water alpha/max light multipliers (one per level) */
-f32 D_8013DA84_14CA34[15] = {
-	0.5f, 0.5f, 0.75f,
-	0.4f, 0.4f, 0.65f,
-	0.5f, 0.5f, 0.75f,
-	0.5f, 0.5f, 0.75f,
-	0.5f, 0.5f, 0.75f,
+TerrainLightTint D_8013DA84_14CA34[5] = {
+	{ 0.5f, 0.5f, 0.75f },
+	{ 0.4f, 0.4f, 0.65f },
+	{ 0.5f, 0.5f, 0.75f },
+	{ 0.5f, 0.5f, 0.75f },
+	{ 0.5f, 0.5f, 0.75f },
 };
 /* Sunlight direction vector (normalized) */
 f32 D_8013DAC0_14CA70[3] = { 0.39f, 0.89f, -0.3f };
@@ -1097,27 +1103,25 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
 #endif
 
-// CURRENT(5858)
-#ifdef NON_MATCHING
-void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
+void func_800B2CF0_C1CA0(u8 *arg0, u8 *arg1, u8 *arg2) {
+	s32 temp_v0;
+	f32 factor;
 	f32 sp2C;
 	f32 sp28;
-	f32 sp[5];
-	s32 temp_v0;
-	f32 temp_f2;
-	f32 factor;
-	s8 sp18;
-	s8 sp19;
-	s8 sp1A;
+	f32 sp[3];
+	s8 normal[3];
 
-	sp2C = (f32)((((u8 *)arg0)[3] - ((u8 *)arg0)[1]) << 5);
-	sp28 = (f32)((((u8 *)arg0)[4] - ((u8 *)arg0)[0]) << 5);
-	temp_f2 = (f32)(D_80142E18_151DC8[0] / sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
-	sp18 = (s8)(s32)(temp_f2 * sp2C);
-	sp19 = (s8)(s32)(temp_f2 * 512.0f);
-	sp1A = (s8)(s32)(temp_f2 * sp28);
+	sp2C = (f32)((arg0[3] - arg0[1]) << 5);
+	sp28 = (f32)((arg0[4] - arg0[0]) << 5);
+	{
+		f32 temp_f2;
+		temp_f2 = (f32)(D_80142E18_151DC8[0] / sqrtf((sp2C * sp2C) + 262144.0f + (sp28 * sp28)));
+		normal[0] = (s8)(s32)(temp_f2 * sp2C);
+		normal[1] = (s8)(s32)(temp_f2 * 512.0f);
+		normal[2] = (s8)(s32)(temp_f2 * sp28);
+	}
 
-	temp_v0 = (s32)(((f32)sp18 * D_8013DAC0_14CA70[0]) + ((f32)sp19 * D_8013DAC0_14CA70[1]) + ((f32)sp1A * D_8013DAC0_14CA70[2]));
+	temp_v0 = (s32)((((f32)normal[0] * D_8013DAC0_14CA70[0]) + ((f32)normal[1] * D_8013DAC0_14CA70[1])) + ((f32)normal[2] * D_8013DAC0_14CA70[2]));
 	if (temp_v0 <= 0) {
 		temp_v0 = 1;
 	} else if (temp_v0 >= 0x80) {
@@ -1125,25 +1129,21 @@ void func_800B2CF0_C1CA0(s8 *arg0, u8 *arg1, s8 *arg2) {
 	}
 
 	factor = (f32)(temp_v0 / D_80142E18_151DC8[0]);
-	if ((((u8 *)arg0)[2] << 5) < D_80222A70) {
-		s32 levelOffset = currentLevel * 12;
-		sp[2] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-3] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-3]);
-		sp[1] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-2] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-2]);
-		sp[0] = ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1] + factor * (((f32 *)((u8 *)D_8013DA84_14CA34 + levelOffset))[-1] - ((f32 *)((u8 *)D_8013DA48_14C9F8 + levelOffset))[-1]);
+	if ((arg0[2] << 5) < D_80222A70) {
+		sp[0] = factor * (D_8013DA84_14CA34[currentLevel - 1].r - D_8013DA48_14C9F8[currentLevel - 1].r) + D_8013DA48_14C9F8[currentLevel - 1].r;
+		sp[1] = factor * (D_8013DA84_14CA34[currentLevel - 1].g - D_8013DA48_14C9F8[currentLevel - 1].g) + D_8013DA48_14C9F8[currentLevel - 1].g;
+		sp[2] = factor * (D_8013DA84_14CA34[currentLevel - 1].b - D_8013DA48_14C9F8[currentLevel - 1].b) + D_8013DA48_14C9F8[currentLevel - 1].b;
 	} else {
-		s32 levelOffset = currentLevel * 12;
-		sp[2] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-3] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-3]);
-		sp[1] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-2] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-2]);
-		sp[0] = ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1] + factor * (((f32 *)((u8 *)D_8013DA0C_14C9BC + levelOffset))[-1] - ((f32 *)((u8 *)D_8013D9D0_14C980 + levelOffset))[-1]);
+		sp[0] = factor * (D_8013DA0C_14C9BC[currentLevel - 1].r - D_8013D9D0_14C980[currentLevel - 1].r) + D_8013D9D0_14C980[currentLevel - 1].r;
+		sp[1] = factor * (D_8013DA0C_14C9BC[currentLevel - 1].g - D_8013D9D0_14C980[currentLevel - 1].g) + D_8013D9D0_14C980[currentLevel - 1].g;
+		sp[2] = factor * (D_8013DA0C_14C9BC[currentLevel - 1].b - D_8013D9D0_14C980[currentLevel - 1].b) + D_8013D9D0_14C980[currentLevel - 1].b;
 	}
 
-	arg2[0] = (s8)(u32)((f32)arg1[0] * sp[2]);
-	arg2[1] = (s8)(u32)((f32)arg1[1] * sp[1]);
-	arg2[2] = (s8)(u32)((f32)arg1[2] * sp[0]);
+	arg2[0] = (u32)(sp[0] * (f32)arg1[0]);
+	arg2[1] = (u32)(sp[1] * (f32)arg1[1]);
+	arg2[2] = (u32)(sp[2] * (f32)arg1[2]);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2CF0_C1CA0.s")
-#endif
+
 
 /* Set or clear bits in the world tile map at (arg0, arg1) */
 void func_800B316C_C211C(s8 arg0, s8 arg1, u16 arg2, u8 arg3) {
@@ -1243,7 +1243,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	RingEntry *entry;
 	u8 spA0[3];
 	u8 spA8[3];
-	s8 spAC[5];
+	u8 spAC[5];
 	s16 sp94;
 
 	(void)arg3;
@@ -1311,7 +1311,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 				spA0[2] = 0xFF;
 			}
 
-			func_800B2CF0_C1CA0(spAC, spA0, (s8 *)spA8);
+			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
 			entry = &D_80151DD8.tiles
 				[(((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
@@ -1423,7 +1423,7 @@ void func_800B42B0_C3260(s32 arg0) {
 	u8 var_s0;
 	u8 temp_t8;
 	u8 sp68[3];
-	s8 sp60[5];
+	u8 sp60[5];
 	u16 *sp5C;
 	u16 temp_t9;
 	u8 sp59;
@@ -1449,7 +1449,7 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + sp6F), (D_8014F89C + 0x12), sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
+		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 
 		var_s0 = 0;
 		while (var_s0 < 0x40) {
@@ -1499,7 +1499,7 @@ void func_800B4660_C3610(s32 arg0) {
 	u8 var_s0;
 	u8 temp_t8;
 	u8 sp68[3];
-	s8 sp60[5];
+	u8 sp60[5];
 	u16 *sp5C;
 	u16 temp_t9;
 	u8 sp59;
@@ -1526,7 +1526,7 @@ void func_800B4660_C3610(s32 arg0) {
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + sp6F), D_8014F89C, sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
+		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 
 		var_s0 = 0;
 		while (var_s0 < 0x40) {
@@ -1574,7 +1574,7 @@ void func_800B49A4_C3954(s32 arg0) {
 	u8 var_s0;
 	u8 temp_t8;
 	u8 sp68[3];
-	s8 sp60[5];
+	u8 sp60[5];
 	u16 *sp5C;
 	u16 temp_t9;
 	u8 sp59;
@@ -1600,7 +1600,7 @@ void func_800B49A4_C3954(s32 arg0) {
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + 0x12), (D_8014F89C + sp6F), sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
+		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 
 		var_s0 = 0;
 		while (var_s0 < 0x40) {
@@ -1648,7 +1648,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 	u8 var_s0;
 	u8 temp_t8;
 	u8 sp68[3];
-	s8 sp60[5];
+	u8 sp60[5];
 	u16 *sp5C;
 	u16 temp_t9;
 	u8 sp59;
@@ -1675,7 +1675,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
 		func_800B1814_C07C4(D_8014F89D, (D_8014F89C + sp6F), sp54);
-		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
+		func_800B2CF0_C1CA0(sp60, sp54, sp68);
 
 		var_s0 = 0;
 		while (var_s0 < 0x40) {
