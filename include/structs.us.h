@@ -1893,8 +1893,13 @@ typedef struct {
 	/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
 	/* 0x04 */ s16 x1;        /* start point */
 	/* 0x06 */ s16 y1;
-	/* 0x08 */ s16 z1;
-	/* 0x0A */ s16 x2;        /* end point */
+	union {
+		struct {
+			/* 0x08 */ s16 z1;
+			/* 0x0A */ s16 x2;        /* end point */
+		};
+		/* 0x08 */ AlienInstance *alien; /* type 2 */
+	};
 	/* 0x0C */ s16 y2;
 	/* 0x0E */ s16 z2;
 	/* 0x10 */ s32 extra;     /* passed to the draw fn; restores render mode when non-zero */
@@ -2510,14 +2515,20 @@ typedef struct {
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 unkF;
-	/* 0x10 */ u8 unk10;
-	/* 0x11 */ u8 unk11;
-	/* 0x12 */ s16 unk12;
+	union {
+		struct {
+			/* 0x08 */ s16 unk8;
+			/* 0x0A */ s16 unkA;
+			/* 0x0C */ s16 unkC;
+			/* 0x0E */ u8 unkE;
+			/* 0x0F */ u8 unkF;
+			/* 0x10 */ u8 unk10;
+			/* 0x11 */ u8 unk11;
+			/* 0x12 */ s16 unk12;
+		};
+		/* 0x08 */ s16 coordinates[6];
+		/* 0x08 */ u8 payload[12];
+	};
 	/* 0x14 */ u8 unk14;
 	/* 0x15 */ u8 unk15;
 	/* 0x16 */ u8 pad16[6];

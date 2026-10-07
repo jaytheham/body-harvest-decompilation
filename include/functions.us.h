@@ -1521,7 +1521,7 @@ extern s32 func_800EF0B0_FE060(s32 arg0);
 void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8012E204_13D1B4(s16 arg0, s32 arg1);
 void func_800D9F60_E8F10(s32 arg0);
-void func_800E5450_F4400(s32 arg0, s32 arg1);
+void func_800E5450_F4400(AlienInstance *arg0, s32 arg1);
 s16 func_800D3C88_E2C38(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5);
 s32 func_800794F8_884A8(s32 arg0, s32 arg1);
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
