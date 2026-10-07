@@ -64,7 +64,8 @@ export function initFilesTable(files) {
     const rows = files
       .filter(f =>
         (!search || f.path.toLowerCase().includes(search) || (f.contributor || '').toLowerCase().includes(search)) &&
-        (!segF || f.segment === segF)
+        (!segF || f.segment === segF) &&
+		(f.total > 0)
       )
       .sort((a, b) => {
         const av = a[sortKey] ?? 0, bv = b[sortKey] ?? 0;

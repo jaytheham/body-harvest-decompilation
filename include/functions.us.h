@@ -190,6 +190,8 @@ void func_8000E4C4_F0C4(s32 arg0);
 s32 func_8000E53C_F13C(void);
 #ifdef GAME_OSSETTIME_IMPL
 void osSetTime(s32 arg0, s32 arg1);
+void func_80080588_50A38(u8 arg0);
+
 #endif
 void func_80011D24_12924(void);
 s32 func_80011D6C_1296C(s32 arg0);
@@ -205,6 +207,8 @@ void loadLevelCode(u8 arg0);
 void func_80011E14_12A14(u8 arg0);
 #ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
+void func_80080588_50A38(u8 arg0);
+
 #endif
 void func_800791A0_49650(s32 arg0);
 void func_8000F618_10218(void);
@@ -364,7 +368,7 @@ void func_8007EBB8_4F068(void);
 s32 func_8007EEE0_4F390(void);
 void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s32 arg3, u16 arg4, u16 arg5, s16 arg6);
 void func_8007F3EC_4F89C(FrontendStruct* arg0);
-void func_8007F3F8_4F8A8(FrontendStruct* arg0, u8* arg1);
+void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1);
 void func_8007F580_4FA30(s32 arg0);
 void func_8007F830_4FCE0(Unk80080588Entry1C* arg0);
 void func_8007FBF8_500A8(void);
@@ -439,9 +443,9 @@ void func_80075D58_46208(s32 arg0);
 void func_800731A8_43658(void);
 void setFullResolution(void);
 void func_800710D8_41588(s16 arg0, s16 arg1);
-void func_800801BC_5066C(s32 arg0, s32 arg1);
+void func_800801BC_5066C(Unk800801BCEntry* arg0, u8 arg1);
 void func_80081290_51740(void);
-void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, u32* arg2, s32 arg3, u8 arg4);
+void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, FrontendStreamHeader* arg2, s32 arg3, u8 arg4);
 void func_80080AD4_50F84(FrontendStreamSlot *arg0, AnimChannelState *arg1, u8 arg2);
 void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 arg3);
 void func_80070440_7F3F0(void);
@@ -1368,7 +1372,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80075B64_46014(s16 arg0);
 void func_80076FE0_47490();
 void func_80075710_45BC0(void);
-void func_8007EE0C_4F2BC(s32* arg0);
+void func_8007EE0C_4F2BC(FrontendCamEntry* arg0);
 void func_8007EE8C_4F33C(s32** arg0);
 void func_8007FB90_50040();
 void func_8007FBC8_50078(u8 arg0);
@@ -1652,5 +1656,9 @@ void func_802DF1F8_1F7F08(u8 arg0);
 void func_802DE584_2C09B4(u8 arg0);
 void func_802DEDE4_2C1214(u8 arg0);
 void func_802DEFB4_2C13E4(u8 arg0);
+
+void func_80079F30_4A3E0(u8 arg0);
+
+void func_80080588_50A38(u8 arg0);
 
 #endif

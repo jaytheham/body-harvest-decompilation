@@ -1974,10 +1974,7 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-	/* 0x03 */ u8 unk3;
-	/* 0x04 */ u8 unk4;
+	/* 0x01 */ u8 lights[4];
 } Unk80080588Entry5; /* size = 0x05 */
 
 typedef struct {
@@ -1986,11 +1983,7 @@ typedef struct {
 	/* 0x02 */ u8 unk2;
 } Unk80080588Entry3; /* size = 0x03 */
 
-typedef struct {
-	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-} Unk80080588Rgb; /* size = 0x03 */
+typedef Unk80080588Entry3 Unk80080588Rgb;
 
 typedef struct {
 	/* 0x00 */ s32 unk0;
@@ -2031,8 +2024,7 @@ typedef struct {
 	/* 0x1A */ u8 pad1A[0x2];
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ s32 unk20;
-	/* 0x24 */ u8 unk24;
-	/* 0x25 */ u8 pad25[3];
+	/* 0x24 */ s32 unk24;
 	/* 0x28 */ u8 unk28;
 	/* 0x29 */ u8 unk29;
 	/* 0x2A */ u8 unk2A;
@@ -2072,9 +2064,16 @@ typedef struct {
 } Unk8007FE8CArg; /* size = 0x24 */
 
 typedef struct {
-	/* 0x00 */ u8 pad[0x50];
-	/* 0x50 */ s32 unk50;
-	/* 0x54 */ void* unk54;
+ u32 frameCount;
+ struct { u16 start; u16 count; } channels[15];
+ u8 pad40[8];
+} FrontendStreamHeader; /* size = 0x48 */
+
+typedef struct {
+ /* 0x00 */ u8 pad0[8];
+ /* 0x08 */ FrontendStreamHeader header;
+ /* 0x50 */ s32 unk50;
+ /* 0x54 */ void* unk54;
 } FrontendStreamSlot; /* size = 0x58 */
 
 
