@@ -1527,107 +1527,101 @@ void func_802D7EAC_1F0BBC(u8 arg0) {
 	}
 }
 
-// CURRENT(22434)
-#ifdef NON_MATCHING
-void func_802D7FCC_1F0CDC(s32 arg0) {
-	AlienInstance *s0;
+void func_802D7FCC_1F0CDC(u8 arg0) {
+	u8 rootId;
+	u8 bodyId;
+	u8 limbId;
+	u8 tipId;
 	u8 sp73;
+	s16 childId;
+	s16 childValue;
 	s32 sp68;
 	s32 sp64;
 	s32 sp60;
-	s16 sp50;
-	s16 sp4E;
-	s16 sp4C;
-	Unk8014DD50 *sp44;
-	Unk8014DD50 *sp40;
-	Unk8014DD50 *sp3C;
-	Unk8014DD50 *sp34;
-	arg0 &= 0xFF;
-	s0 = &alienInstances[arg0];
+	s32 randomSize;
+	s32 pad1[2];
+	u16 randomOffset[3];
 
-	if ((s0->unk20 << 11) < 0) {
-		sp44 = &D_8014DD50[(u8)D_8014DD50[(u8)s0->unkC].unkC];
-		sp40 = &D_8014DD50[(u8)sp44->unkC];
-		sp3C = &D_8014DD50[(u8)sp40->unkD];
-		sp73 = (u8)sp3C->unkD;
-
-		if (s0->unk2C < 0x51) {
-			sp34 = &D_8014DD50[sp73];
-			func_80128428_1373D8(s0, sp34->unk0 + sp44->unk0, sp34->unk2 + sp44->unk2, sp34->unk4 + sp44->unk4, &sp68, &sp64, &sp60);
-
-			if (s0->unk2C >= 0x4B) {
-				sp34->unk2 += 0xA;
-				if (s0->unk24 != 0xFC) {
-					func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
-				}
-			} else if (s0->unk2C == 0x4A) {
-				AlienInstance *v1;
-
-				sp34->unk2 += 0xA;
-				arg0 = func_8007956C_8851C(0xD);
-				v1 = &alienInstances[(s16)arg0];
-				s0->unk3C = (s8)arg0;
-				s0->unk26 = 0;
-				v1->unk48 = sp64 + 0xA;
-				v1->unk1B = s0->unk1B;
-				v1->unk2E = sp68;
-				v1->unk0 = sp68;
-				v1->unk32 = sp60;
-				v1->unk4 = sp60;
-				v1->unk30 = v1->unk48;
-				v1->unk2 = v1->unk48;
-				v1->unk20 |= ALIEN_FLAG_FALL;
-				v1->unk12 = 0x200;
-				v1->unk6 = s0->unk6;
-				v1->unkE = s0->unk6;
-				func_8007A2A0_89250((s16)arg0);
-			} else if (s0->unk26 == 0) {
-				AlienInstance *v1;
-
-				v1 = &alienInstances[(s8)s0->unk3C];
-				if (v1->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-					func_80088E10_97DC0(sp73);
-					s0->unk26 = 1;
-				} else {
-					v1->unk48 = sp64 + 0xA;
-					sp34->unk2 += 0xA;
-					if (s0->unk24 != 0xFC) {
-						func_800C1ECC_D0E7C((s16)sp68, (s16)sp64, (s16)sp60, s0->unk3C, 2);
-					}
-				}
-			}
-		}
-
-		if ((u16)sp3C->unkA < 0x1000) {
-			sp3C->unkA += 0x400;
-			sp40->unkA += 0x400;
-		}
-
-		if (s0->unk2C < 0x4A) {
-			*(u16 *)&sp44->unk6 += 0x96;
-			if (((s16)s0->unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
-				sp4C = (u16)func_800038E0_44E0();
-				sp4E = (u16)func_800038E0_44E0();
-				sp50 = (u16)func_800038E0_44E0();
-				func_800DFA34_EE9E4(
-					(u16)sp4C % 100 + s0->unk0 - 0x32,
-					(u16)sp4E % 100 + s0->unk2 - 0x32,
-					(u16)sp50 % 100 + s0->unk4 - 0x32,
-					((func_800038E0_44E0() % 20) + 0x14) & 0xFFFF,
-					0);
-			}
-		}
-
-		if (s0->unk2C == 1) {
-			func_800DF848_EE7F8(s0->unk0, s0->unk2, s0->unk4, (u16)(s32)((f64)alienTypes[s0->typeIndex].unkC * 1.5), 6);
-		}
-	} else {
+	if ((alienInstances[arg0].unk20 << 11) >= 0) {
 		func_802D7EAC_1F0BBC(arg0);
+		return;
+	}
+
+	rootId = alienInstances[arg0].unkD;
+	bodyId = D_8014DD50[rootId].unkC;
+	limbId = D_8014DD50[bodyId].unkC;
+	tipId = D_8014DD50[limbId].unkD;
+	sp73 = D_8014DD50[tipId].unkD;
+
+	if (alienInstances[arg0].unk2C < 0x51) {
+		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[bodyId].unk0 + D_8014DD50[sp73].unk0, D_8014DD50[bodyId].unk2 + D_8014DD50[sp73].unk2, D_8014DD50[bodyId].unk4 + D_8014DD50[sp73].unk4, &sp68, &sp64, &sp60);
+
+		if (alienInstances[arg0].unk2C >= 0x4B) {
+			D_8014DD50[sp73].unk2 += 0xA;
+			if (alienInstances[arg0].unk24 != 0xFC) {
+				func_800C1ECC_D0E7C(sp68, sp64, sp60, alienInstances[arg0].unk3C, 2);
+			}
+		} else if (alienInstances[arg0].unk2C == 0x4A) {
+			D_8014DD50[sp73].unk2 += 0xA;
+			childId = func_8007956C_8851C(0xD);
+			alienInstances[arg0].unk3C = childId;
+			alienInstances[arg0].unk26 = 0;
+			alienInstances[childId].unk48 = sp64 + 0xA;
+			alienInstances[childId].unk1B = alienInstances[arg0].unk1B;
+			alienInstances[childId].unk2E = sp68;
+			alienInstances[childId].unk0 = sp68;
+			alienInstances[childId].unk32 = sp60;
+			alienInstances[childId].unk4 = sp60;
+			childValue = alienInstances[childId].unk48;
+			alienInstances[childId].unk30 = childValue;
+			alienInstances[childId].unk2 = childValue;
+			childValue = alienInstances[arg0].unk6;
+			alienInstances[childId].unk6 = childValue;
+			alienInstances[childId].unkE = childValue;
+			alienInstances[childId].unk20 |= ALIEN_FLAG_FALL;
+			alienInstances[childId].unk12 = 0x200;
+			func_8007A2A0_89250(childId);
+		} else if (alienInstances[arg0].unk26 == 0) {
+			childId = (s8)alienInstances[arg0].unk3C;
+
+			if (alienInstances[childId].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+				func_80088E10_97DC0(sp73);
+				alienInstances[arg0].unk26 = 1;
+			} else {
+				D_8014DD50[sp73].unk2 += 0xA;
+				alienInstances[childId].unk48 = sp64 + 0xA;
+				if (alienInstances[arg0].unk24 != 0xFC) {
+					func_800C1ECC_D0E7C(sp68, sp64, sp60, alienInstances[arg0].unk3C, 2);
+				}
+			}
+		}
+	}
+
+	if (D_8014DD50[tipId].unkAUnsigned < 0x1000) {
+		D_8014DD50[tipId].unkAUnsigned += 0x400;
+		D_8014DD50[limbId].unkAUnsigned += 0x400;
+	}
+
+	if (alienInstances[arg0].unk2C < 0x4A) {
+		D_8014DD50[bodyId].unk6Unsigned += 0x96;
+		if ((alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 7) + 1)) == 0) {
+			randomOffset[0] = func_800038E0_44E0();
+			randomOffset[1] = func_800038E0_44E0();
+			randomOffset[2] = func_800038E0_44E0();
+			randomSize = func_800038E0_44E0();
+			func_800DFA34_EE9E4(
+					alienInstances[arg0].unk0 + randomOffset[0] % 100 - 0x32,
+					alienInstances[arg0].unk2 + randomOffset[1] % 100 - 0x32,
+					alienInstances[arg0].unk4 + randomOffset[2] % 100 - 0x32,
+				(randomSize % 20) + 0x14,
+				0);
+		}
+	}
+
+	if (alienInstances[arg0].unk2C == 1) {
+		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC * 1.5, 6);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7FCC_1F0CDC.s")
-#endif
 
 /* Alien state machine: compute movement deltas, check height threshold, update flags based on unk20 bit 30 */
 s32 func_802D8578_1F1288(u8 arg0, s32 arg1, s32 arg2) {
