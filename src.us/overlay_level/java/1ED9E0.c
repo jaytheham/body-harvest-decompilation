@@ -3055,94 +3055,51 @@ void func_802DBDDC_1F4AEC(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBDDC_1F4AEC.s")
 #endif
 
-#ifdef NON_MATCHING
+// Transplanted from the matched greece twin func_802D8898_1913A8 (same `unk5C` on-death handler slot).
+// Java overlay differs only in: no func_80137468(arg0, 0x66) else-branch; alienTypes table resolved
+// via D_8025668C. Literals taken from the java target .s.
 void func_802DBF34_1F4C44(u8 arg0) {
-	AlienInstance *alien;
-	s32 flags;
-	s16 val14;
-	s16 val38;
-	s16 delta;
-	s32 limit;
-	s32 param;
-	s16 type_val;
-
-	/* Get alien instance from arg0; manages alien state machine for harvest behavior */
-	alien = &alienInstances[arg0];
-	flags = alien->unk20;
-
-	/* Check if flags bits 0x600 are set */
-	if (flags & 0x600) {
-		/* Check if bit 0x100000 is NOT set */
-		if (!(flags & 0x100000)) {
-			/* Set flags with 0x40000000 OR'd in */
-			alien->unk20 = flags | ALIEN_FLAG_FALL;
-			alien->unk2C = 0x7FFF;
-			alien->unk10 = 0;
-			alien->unk38 = 0;
-			alien->unk14 = arg0 & 1;
-
-			/* If new flags still have 0x600 bits set, call function */
-			if ((flags | 0x40000000) & 0x600) {
-				/* type lookup table indexed by typeIndex*0x68 */
-				type_val = alienTypes[alien->typeIndex].unkC;
-				param = (s32)((f64)type_val * 0.75);
-				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4,
-									(s32)(param & 0xFFFF), 0);
+	if (alienInstances[arg0].unk20 & 0x600) {
+		if (!(alienInstances[arg0].unk20 & 0x100000)) {
+			alienInstances[arg0].unk2C = 0x7FFF;
+			alienInstances[arg0].unk10 = 0;
+			alienInstances[arg0].unk20 |= 0x40000000;
+			alienInstances[arg0].unk38 = 0;
+			alienInstances[arg0].unk14 = arg0 & 1;
+			if (alienInstances[arg0].unk20 & 0x600) {
+				func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(((f64)alienTypes[alienInstances[arg0].typeIndex].unkC) * 0.75), 0);
+				return;
 			}
 		} else {
-			/* flags & 0x40000000 is set */
-			limit = D_80222A70;
-
-			if (limit < alien->unk2) {
-				val14 = alien->unk14;
-				val38 = alien->unk38;
-
-				if (val14 != 0) {
-					if (val38 >= -8) {
-						alien->unk38 = val38 - 1;
+			if (alienInstances[arg0].unk20 & 0x40000000) {
+				if (D_80222A70 < alienInstances[arg0].unk2) {
+					if (alienInstances[arg0].unk14 != 0 && alienInstances[arg0].unk38 >= (-9)) {
+						alienInstances[arg0].unk38 = alienInstances[arg0].unk38 - 1;
+					} else if (alienInstances[arg0].unk14 == 0) {
+						if (alienInstances[arg0].unk38 < 0xA) {
+							alienInstances[arg0].unk38 = alienInstances[arg0].unk38 + 1;
+						}
 					}
-				} else {
-					if (val38 < 0xA) {
-						alien->unk38 = val38 + 1;
-					}
+					alienInstances[arg0].unkE += alienInstances[arg0].unk38 * 0xC8;
+					alienInstances[arg0].unk6 += alienInstances[arg0].unk38 * 0xC8;
+					alienInstances[arg0].unk10 = alienInstances[arg0].unk10 + 0x60;
+					alienInstances[arg0].unk12 = alienInstances[arg0].unk12 + 0x10;
 				}
-
-				/* Calculate delta based on unk38 value */
-				val38 = alien->unk38;
-				delta = val38 * 0xC8;
-				alien->unkE = (s16)(alien->unkE + delta);
-				alien->unk6 = (s16)(alien->unk6 + delta);
-				alien->unk10 = (s16)(alien->unk10 + 0x60);
-				alien->unk12 = (s16)(alien->unk12 + 0x10);
+				alienInstances[arg0].unk8 = (s16)(alienInstances[arg0].unk38 << 8);
+				alienInstances[arg0].unkA = (s16)((-alienInstances[arg0].unk10) * 4);
+				if (!(alienInstances[arg0].unk2C & 3)) {
+					func_800DEA08_ED9B8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
+				}
+				if ((D_80222A70 < alienInstances[arg0].unk30) && (alienInstances[arg0].unk2 < D_80222A70)) {
+					alienInstances[arg0].unk38 = 0;
+					alienInstances[arg0].unk12 = (s16)(alienInstances[arg0].unk12 >> 1);
+					alienInstances[arg0].unk10 = (s16)(alienInstances[arg0].unk10 >> 1);
+				}
 			}
-
-			/* Set fields based on unk38 */
-			alien->unk8 = (s16)(alien->unk38 << 8);
-			alien->unkA = (s16)(alien->unk10 * -4);
-
-			/* Call function if unk2C & 3 == 0 */
-			if (!(alien->unk2C & 3)) {
-				func_800DEA08_ED9B8(alien->unk0, alien->unk2, alien->unk4,
-									0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
-			}
-
-			/* Check if in range and adjust unk38 */
-			limit = D_80222A70;
-			if ((limit < alien->unk30) && (alien->unk2 < limit)) {
-				alien->unk38 = 0;
-				alien->unk12 = (s16)((s16)alien->unk12 >> 1);
-				alien->unk10 = (s16)((s16)alien->unk10 >> 1);
-			}
-
-			/* Call with type value */
-			type_val = alienTypes[alien->typeIndex].unkC;
-			func_8008AAFC_99AAC(arg0, (s32)type_val, 3);
+			func_8008AAFC_99AAC(arg0, alienTypes[alienInstances[arg0].typeIndex].unkC, 3);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBF34_1F4C44.s")
-#endif
 
 // CURRENT(829)
 #ifdef NON_MATCHING
