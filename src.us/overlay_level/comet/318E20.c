@@ -4321,7 +4321,7 @@ void func_802DF188_3232D8(void) {
 s16 coss(u16);
 s16 sins(u16);
 void func_800D1054_E0004(s16);
-void func_800D0FE0_DFF90(s16, s32);
+void func_800D0FE0_DFF90(s16, u16);
 void func_800D0F5C_DFF0C(s16, s16, s16, s16);
 
 #ifdef NON_MATCHING
