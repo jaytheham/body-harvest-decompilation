@@ -1175,44 +1175,36 @@ s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 }
 
 /* Set "underwater" flag (bit 12) on tiles below the water level */
-// CURRENT(960)
-#ifdef NON_MATCHING
 void func_800B32AC_C225C(u16 *arg0) {
-	u16 *ptr;
-	u8 x;
+	s32 x;
 	u8 y;
 	s32 level;
 	u32 i;
+	s32 tile;
 
 	x = 0;
 	y = 0;
 	level = D_80222A70 / 32;
-	ptr = arg0;
-	i = 0;
-	do {
-		i += 2;
+	for (i = 0; i != 0xFF01; i++) {
 		if (currentLevel == 4) {
 			level = (x < 0x4C && y < 0x9C && y >= 0x59) ? 0x20 : 6;
 		}
-		if (((ptr[0] & 0x3F) < level) || ((ptr[1] & 0x3F) < level) || ((ptr[0x100] & 0x3F) < level) ||
-			((ptr[0x101] & 0x3F) < level)) {
-			ptr[0] |= 0x1000;
+		tile = arg0[i];
+		x++;
+		if ((tile & 0x3F) < level || (arg0[i + 1] & 0x3F) < level ||
+			(arg0[i + 0x100] & 0x3F) < level ||
+			(arg0[i + 0x101] & 0x3F) < level) {
+			arg0[i] = tile | 0x1000;
 		} else {
-			ptr[0] &= ~0x1000;
+			arg0[i] = tile & ~0x1000;
 		}
-
-		x = x + 1;
+		x &= 255;
 		if (x == 0) {
-			y = y + 1;
+			y = (u8)((s32)y + 1);
 		}
-		ptr++;
-	} while (i != 0x1FE02);
-
-	*arg0 = 0;
+	}
+	arg0[0] = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B32AC_C225C.s")
-#endif
 
 /* Update fog distance based on camera pitch angle */
 void func_800B33BC_C236C(s32 arg0) {
