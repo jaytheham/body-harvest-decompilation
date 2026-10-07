@@ -3910,14 +3910,14 @@ void func_802DD240_2BF670(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD240_2BF670.s")
 #endif
 
-// CURRENT(133)
+// CURRENT(109)
 #ifdef NON_MATCHING
 s32 func_802DD408_2BF838(u8 arg0, u32 arg1) {
-	s16 sp30;
 	s32 diff_x;
 	s32 diff_z;
 	s32 result_heading;
 	s32 sp30_heading;
+	s16 sp30;
 
 	diff_x = D_80052B34->unk0 - alienInstances[arg0].unk0;
 	diff_z = D_80052B34->unk4 - alienInstances[arg0].unk4;
