@@ -4054,9 +4054,7 @@ void func_80094BE0_A3B90(u8 arg0)
 	}
 }
 
-// CURRENT(543)
 // AI - Boss/mech animation sync
-#ifdef NON_MATCHING
 void func_80094DE0_A3D90(u8 arg0)
 {
 	s16 sp5E;
@@ -4069,6 +4067,7 @@ void func_80094DE0_A3D90(u8 arg0)
 	s32 sp40;
 	 s16 sp3E;
 	s16 sp38[2];
+	s16 sp36;
 	s16 sp34;
 	sp3E = alienInstances[arg0].typeIndex;
 	sp5E = alienInstances[arg0].unkC;
@@ -4077,8 +4076,8 @@ void func_80094DE0_A3D90(u8 arg0)
 	sp5A = D_8014DD50[sp58].unkD;
 	sp56 = D_8014DD50[sp5A].unkD;
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
-	D_8014DD50[sp5E].unk6 = alienInstances[arg0].unk6;
-	D_8014DD50[sp5C].unk6 = -D_8014DD50[sp5E].unk6;
+	D_8014DD50[sp5E].unk6Unsigned = alienInstances[arg0].unk6;
+	D_8014DD50[sp5C].unk6 = -D_8014DD50[sp5E].unk6Unsigned;
 	func_80086164_95114(arg0, sp5C);
 	sp50[0] = 0x3C;
 	sp50[1] = -8;
@@ -4146,9 +4145,6 @@ void func_80094DE0_A3D90(u8 arg0)
 		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80094DE0_A3D90.s")
-#endif
 
 // AI - Standard update wrapper
 void func_800950A8_A4058(u8 arg0)
