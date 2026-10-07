@@ -8680,13 +8680,12 @@ void func_800D978C_E873C(void) {
 
 	var_v1 = D_801542EE;
 	if ((var_v1 != -6) && (var_v1 != -5)) {
-		if (1) { if (1) { if (1) { if (1) { 		gSPDisplayList(D_8005BB2C++, D_80031230);
+		gSPDisplayList(D_8005BB2C++, D_80031230);
 		gSPDisplayList(D_8005BB2C++, D_800311D0);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
-		}}}}
 		if ((var_v1 != -6) && (var_v1 != -5)) {
 			do {
 				entry = &D_80154318[var_v1];
