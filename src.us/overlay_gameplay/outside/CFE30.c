@@ -4438,13 +4438,10 @@ void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(1279)
-#ifdef NON_MATCHING
 void func_800CCB60_DBB10(void) {
 	s16 unitId;
 	s16 nextUnitId;
-	Unk80154318Entry *entry;
-	Unk80154318Sub *sub;
+	EffectSparkState *sub;
 	u8 alpha;
 
 	unitId = D_80154246;
@@ -4457,37 +4454,42 @@ void func_800CCB60_DBB10(void) {
 
 	if ((unitId != -5) && (unitId != -6)) {
 		do {
-			entry = &D_80154318[unitId];
-			entry->unk15--;
+			--D_80154318[unitId].unk15;
 
-			if ((entry->unk15 & 0xFF) == 0) {
-				nextUnitId = entry->unk4;
+			if (D_80154318[unitId].unk15 == 0) {
+				nextUnitId = D_80154318[unitId].unk4;
 				func_800C1A4C_D09FC(unitId, 6, 1);
 				unitId = nextUnitId;
 			} else {
-				sub = (Unk80154318Sub *)&entry->unk8;
-				if ((entry->unk12 & 0x80) == 1) {
-					sub->unk0 += D_80156EE4.unk0;
-					sub->unk2 += D_80156EE4.unk2;
-					sub->unk4 += D_80156EE4.unk4;
+				sub = (EffectSparkState *)&D_80154318[unitId].unk8;
+				/* Preserve IDO block boundaries for payload loads and sentinel registers. */
+				if (1) {
+					if (1) {
+						if (1) {
+							if (1) {
+								if ((sub->width & 0x80) == 1) {
+									sub->x += D_80156EE4.unk0;
+									sub->y += D_80156EE4.unk2;
+									sub->z += D_80156EE4.unk4;
+								}
+
+							}
+						}
+					}
+				}
+				sub->r = (func_800038E0_44E0() % 85) + 0xAA;
+				sub->g = (func_800038E0_44E0() % 85) + 0xAA;
+				sub->b = alpha;
+				sub->phase++;
+				if (sub->phase >= 8) {
+					sub->phase = 0;
 				}
 
-				sub->unk6 = (func_800038E0_44E0() % 85) + 0xAA;
-				sub->unk7 = (func_800038E0_44E0() % 85) + 0xAA;
-				sub->unk8 = alpha;
-				sub->unkC++;
-				if (sub->unkC >= 8) {
-					sub->unkC = 0;
-				}
-
-				unitId = entry->unk4;
+				unitId = D_80154318[unitId].unk4;
 			}
 		} while ((unitId != -5) && (unitId != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCB60_DBB10.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1836)

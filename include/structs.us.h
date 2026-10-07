@@ -2603,6 +2603,19 @@ typedef struct {
 } Unk8007E12CEntry8;
 
 typedef struct {
+	s16 x;
+	s16 y;
+	s16 z;
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 pad9;
+	s16 width;
+	u8 phase;
+	u8 lifetime;
+} EffectSparkState; /* size = 0x0E */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
