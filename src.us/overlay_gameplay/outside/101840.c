@@ -3964,15 +3964,13 @@ void func_800FC568_10B518(void) {
 #ifdef NON_MATCHING
 void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
 	s32 result;
-	u32 bits;
-	s32 idx;
+	u8 idx;
 	u32 val;
 
-	val = D_80052A94[arg1].unk0[arg0];
-	bits = (u8)((val << 22) >> 28);
-	idx = bits;
+	val = D_80052A94[arg1].col[arg0];
+	idx = (u8)((val << 22) >> 28);
 	if ((s32)(val << 21) < 0) {
-		idx = (u8)(bits + 16);
+		idx += 16;
 	}
 	*arg2 = D_801407F4_14F7A4[idx * 6];
 	*arg3 = D_801407F4_14F7A4[idx * 6 + 1];
@@ -10078,10 +10076,10 @@ void func_8010F5D8_11E588(VehicleInstance *arg0) {
 #ifdef NON_MATCHING
 s32 func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	BuildingInstance *building;
-	s16 idx;
-	s16 temp;
+	s32 temp;
+	s32 idx;
 
-	idx = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg2 >> 8));
+	idx = (s16)func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg2 >> 8));
 	if (idx == -1) {
 		return 0;
 	}
@@ -10100,12 +10098,8 @@ s32 func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		temp = arg0;
 	}
 
-	temp = (temp & 0xFF) >> 2;
-	if (temp < 9) {
-		return 1;
-	}
-
-	return temp >= 0x38;
+	temp = (s16)((temp & 0xFF) >> 2);
+	return (temp < 9) || (temp >= 0x38);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010F72C_11E6DC.s")
