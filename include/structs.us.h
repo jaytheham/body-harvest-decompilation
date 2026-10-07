@@ -2470,6 +2470,21 @@ typedef struct {
 } Unk169EC8Entry; /* stride 0x14 */
 
 typedef struct {
+	/* 0x00 */ s8 phaseCount;
+	/* 0x01 */ s8 sizeStep;
+	/* 0x02 */ s8 heightStep;
+	/* 0x03 */ s8 fadeStep;
+	/* 0x04 */ u8 pad4[4];
+} EffectParticleConfig; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ u8 r;
+	/* 0x01 */ u8 g;
+	/* 0x02 */ u8 b;
+	/* 0x03 */ u8 alpha;
+} EffectParticleColor; /* size = 0x04 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

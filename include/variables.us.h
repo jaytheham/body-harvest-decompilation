@@ -2453,6 +2453,8 @@ extern s16 D_80156EDA;
 extern volatile s16 D_80156EDA_Draw;
 extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
+extern u8 D_8013DFF4_14CFA4[0x78];
+extern u8 D_8013E06C_14D01C[0x3C];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
 extern u8 D_80157531;
