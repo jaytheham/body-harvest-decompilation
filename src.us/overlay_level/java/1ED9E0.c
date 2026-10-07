@@ -3320,30 +3320,22 @@ void func_802DCE34_1F5B44(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCE34_1F5B44.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DD140_1F5E50(u8 arg0, u8 arg1) {
-	AlienInstance *alien;
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
 
-	alien = &alienInstances[arg0];
-
-	if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-		alien->unk20 |= ALIEN_FLAG_FALL;
-
-		if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienTypes[alien->typeIndex].unkC, 4);
-			alien->unk2C = 0x50;
+		if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+			func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC, 4);
+			alienInstances[arg0].unk2C = 0x50;
 		}
 
 		func_802DCE34_1F5B44(arg0);
 
-		if (alien->unk2C == 1) {
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienTypes[alien->typeIndex].unkC, 4);
+		if (alienInstances[arg0].unk2C == 1) {
+			func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC, 4);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD140_1F5E50.s")
-#endif
 
 void func_802DD244_1F5F54(u8 arg0) {
 	alienInstances[arg0].unk20 |= ALIEN_FLAG_PLAYER;
