@@ -2479,12 +2479,20 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(8685) - spelling the head as a real member of the global (Unk8014F618.head, no cast,
+// CURRENT(1860) - two fixes took this from 8685. (1) The `(s16)distScale` store must be spelled
+// UNSIGNED: `*(u16 *)&D_8014F618.unk60 = (u16)distScale;` makes IDO emit its full unsigned
+// float->int sequence (cfc1/ctc1 round-to-zero, cvt.w.s, the 0x4F000000 overflow check, the
+// 0x80000000 fixup, `sh`). The `(s16)` form compiled to a bare `trunc.w.s` and was the whole
+// 25-instruction deficit (421 vs 446) that A8 recorded - close that deficit and the whole TU tail
+// realigns. (2) `func_800A2260_B1210()` takes no arguments (prototype `void ...()`); the guess's
+// `(NULL, NULL, NULL, NULL)` emitted four `move aN,zero`. Structure is now 446 = 446 with every
+// opcode in place; the residual 1860 is register allocation (posX in $f16 vs the target's $f0, the
+// float temp band, and the packed-colour byte load order).
+// Earlier finding: spelling the head as a real member of the global (Unk8014F618.head, no cast,
 // no pointer local) makes every head access a constant-address expression and IDO then assigns the
 // two hoisted bases the way the target does ($s0=&D_8014F618, $s1=&D_8005BB2C); the cast form gave
 // the reverse. One declared-but-unused s32 first in the frame restores the target's posZ home at
-// 0x20 (it lands at 0x24 without it). Open: 421 instrs vs the target's 446 (25 glue instrs missing;
-// all 7 calls present) and posX in $f16 where the target uses $f0.
+// 0x20 (it lands at 0x24 without it).
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	s32 pad0;
@@ -2554,7 +2562,7 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 				 ((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY) +
 				 ((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ));
 
-	*(s16 *)&D_8014F618.unk60 = (s16)distScale;
+	*(u16 *)&D_8014F618.unk60 = (u16)distScale;
 	distScale /= 6.0f;
 	D_8014F618.head.unkC = distScale * ((f32 *)&D_80153AB8)[0];
 	D_8014F618.head.unk10 = distScale * ((f32 *)&D_80153AB8)[1];
@@ -2565,7 +2573,7 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	D_8014F618.head.unk24 = D_8014F618.head.unk0 + D_8014F618.head.unk18;
 	D_8014F618.head.unk28 = D_8014F618.head.unk4 + D_8014F618.head.unk1C;
 	D_8014F618.head.unk2C = D_8014F618.head.unk8 + D_8014F618.head.unk20;
-	func_800A2260_B1210(NULL, NULL, NULL, NULL);
+	func_800A2260_B1210();
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, D_8014F618.unk73, D_8014F618.unk6B);
 
