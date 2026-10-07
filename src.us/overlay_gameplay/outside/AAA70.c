@@ -1614,14 +1614,14 @@ void func_8009FB58_AEB08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
 #endif
 
-// CURRENT(22016)
+// CURRENT(15082) - qu016/qu102 spelled as literals (0xFFFF/0x8000/0x7C) so the body compiles;
+// the guess's s32 pad[66] deleted (it inflated the frame 0x290 -> 0x188; target 0x180).
 #ifdef NON_MATCHING
 // DisplayScanner
 void func_800A03FC_AF3AC(void) {
 	Unk80052B40 sp170;
 	Unk80052B40 sp168;
 	Unk80052B40 sp160;
-	s32 pad[66];
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
 	s16 mapX;
@@ -1711,7 +1711,7 @@ void func_800A03FC_AF3AC(void) {
 		osWritebackDCacheAll();
 
 		gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
-		gSPPerspNormalize(D_8005BB2C++, qu016(0.999985));
+		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
 		gSPMatrix(D_8005BB2C++, &D_8014ED98, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
@@ -1736,14 +1736,14 @@ void func_800A03FC_AF3AC(void) {
 			gDPSetAlphaCompare(D_8005BB2C++, G_AC_DITHER);
 		}
 
-		gSPTexture(D_8005BB2C++, qu016(0.5), qu016(0.5), 0, G_TX_RENDERTILE, G_ON);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_502E110);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 4, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, qu102(31), qu102(31));
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
@@ -1775,7 +1775,7 @@ void func_800A03FC_AF3AC(void) {
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, qu102(31), qu102(31));
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 		gSPVertex(D_8005BB2C++, &D_8013D5E8_14C598, 4, 0);
 		gSP1Quadrangle(D_8005BB2C++, 1, 0, 2, 3, 0);
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
@@ -1792,7 +1792,7 @@ void func_800A03FC_AF3AC(void) {
 		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x60, 0x20, 0x20, 0xFF);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-		gSPTexture(D_8005BB2C++, qu016(0.999985), qu016(0.999985), 0, G_TX_RENDERTILE, G_ON);
+		gSPTexture(D_8005BB2C++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_503C8B0);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_MIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -1800,12 +1800,12 @@ void func_800A03FC_AF3AC(void) {
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 4, 0x0000, G_TX_RENDERTILE, 0, G_TX_MIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, qu102(31), qu102(31));
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 		gSPVertex(D_8005BB2C++, &D_8013D628_14C5D8, 4, 0);
 		gDPPipeSync(D_8005BB2C++);
 		gSP1Quadrangle(D_8005BB2C++, 1, 0, 2, 3, 0);
 		gDPPipeSync(D_8005BB2C++);
-		gSPTexture(D_8005BB2C++, qu016(0.5), qu016(0.5), 0, G_TX_RENDERTILE, G_ON);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 		gSPSetGeometryMode(D_8005BB2C++, G_SHADING_SMOOTH);
 
 		func_8009D96C_AC91C();
@@ -1853,7 +1853,7 @@ void func_800A03FC_AF3AC(void) {
 		func_8009FB58_AEB08();
 
 		gDPPipeSync(D_8005BB2C++);
-		gSPTexture(D_8005BB2C++, qu016(0.5), qu016(0.5), 0, G_TX_RENDERTILE, G_OFF);
+		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	}
