@@ -2510,12 +2510,19 @@ typedef struct {
 } Unk8015408EEntry; /* stride = 0xC */
 
 typedef struct {
+	/* 0x00 */ void (*callback)(s16, s16);
+	/* 0x04 */ s16 timer;
+	/* 0x06 */ s16 position[3];
+} EffectCallbackState;
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	union {
+		/* 0x08 */ EffectCallbackState callbackState;
 		struct {
 			/* 0x08 */ s16 unk8;
 			/* 0x0A */ s16 unkA;
