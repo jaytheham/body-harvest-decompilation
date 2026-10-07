@@ -823,7 +823,6 @@ void func_802D5DFC_1EEB0C(Unk8004773C *arg0) {
 	func_800DF038_EDFE8((s16)sp28, (s16)sp30, (s16)sp24, 200, 0, 0);
 }
 
-#ifdef NON_MATCHING
 void func_802D5E98_1EEBA8(void) {
 	s32 v0;
 	s32 v0_2;
@@ -835,16 +834,10 @@ void func_802D5E98_1EEBA8(void) {
 	s32 v1_3;
 
 	v0 = vehicleInstances[49].unk0 - buildingInstances[147].xCoord;
-	v1 = -v0;
-	if (v0 >= 0) {
-		v1 = v0;
-	}
+	v1 = (v0 >= 0) ? v0 : -v0;
 	if (v1 < 0x500) {
 		v0_2 = vehicleInstances[49].unk4 - buildingInstances[147].zCoord;
-		v1_2 = -v0_2;
-		if (v0_2 >= 0) {
-			v1_2 = v0_2;
-		}
+		v1_2 = (v0_2 >= 0) ? v0_2 : -v0_2;
 		if (v1_2 >= 0x500) {
 			goto block_6;
 		}
@@ -852,16 +845,10 @@ void func_802D5E98_1EEBA8(void) {
 	}
 block_6:
 	v0_3 = D_80052B34->unk0 - buildingInstances[147].xCoord;
-	a0 = -v0_3;
-	if (v0_3 >= 0) {
-		a0 = v0_3;
-	}
+	a0 = (v0_3 >= 0) ? v0_3 : -v0_3;
 	if (a0 < 0xC8) {
 		v0_4 = D_80052B34->unk4 - buildingInstances[147].zCoord;
-		v1_3 = -v0_4;
-		if (v0_4 >= 0) {
-			v1_3 = v0_4;
-		}
+		v1_3 = (v0_4 >= 0) ? v0_4 : -v0_4;
 		if (v1_3 < 0x15E) {
 block_12:
 			func_800072CC_7ECC(0xDu);
@@ -872,13 +859,10 @@ block_12:
 block_13:
 		func_800073B8_7FB8(0xDu);
 	}
-	if (vehicleInstances[49].unk1C > 0) {
+	if (vehicleInstances[49].unk1C <= 0) {
 		func_800074BC_80BC(func_802D5E98_1EEBA8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5E98_1EEBA8.s")
-#endif
 
 void func_802D5F98_1EECA8(void) {
 	func_80007410_8010(&func_802D5E98_1EEBA8);
