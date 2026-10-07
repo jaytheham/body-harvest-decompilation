@@ -1904,7 +1904,7 @@ extern Light D_8013D960_14C910;
 extern Ambient D_8013D970_14C920;
 extern Light D_8013D978_14C928;
 extern u8 D_8013D9AC_14C95C; // used as a timer during human meter game over sequence, maybe lighting related
-extern s8 D_8013D9B0_14C960;
+extern u8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
 extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
@@ -2330,6 +2330,14 @@ extern s32 D_8014F810;
 extern s16 D_8014F812;
 extern u32 D_8014F820;
 extern s32 D_8014F824;
+extern SignedWord D_8013D940_14C8F0;
+extern SignedWord D_8013D944_14C8F4;
+extern SignedWord D_8013D948_14C8F8;
+extern SignedWord D_8013D94C_14C8FC;
+extern SignedWord D_8013D950_14C900;
+extern SignedWord D_8013D954_14C904;
+extern SignedWord D_8013D9A8_14C958;
+
 extern s32 D_8014F828;
 extern s16 D_8014F830;
 extern s16 D_8014F832;
@@ -2940,8 +2948,8 @@ extern u8 D_8025F0C0;
 extern u8 D_8025F540;
 extern u8 D_8025F780;
 extern u8 D_80260500[];
-extern u8 D_80260700[0x4000]; // Landscape colors
-extern u8 D_80264700[0x400]; // Landscape palettes
+extern u8 D_80260700[128][128]; // Landscape colors
+extern TerrainPaletteColor D_80264700[256]; // Landscape palettes
 extern u8 D_80264B00[];
 extern u8 D_80265880[];
 extern u8 D_80265A80[];
@@ -2956,7 +2964,7 @@ extern Gfx D_802C9EA8[];
 extern u8 D_802CA8D0;
 extern u8 D_802D48CF;
 extern u8 D_802D48D0;
-extern u8 D_802D4AD0;
+extern u16 D_802D4AD0[256];
 extern void (*D_802DDBF4_196704[])(void);
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;
@@ -4009,3 +4017,18 @@ extern const f64 D_80038348_38F48_R;
 extern const f32 D_80038350_38F50_R;
 extern const f64 D_80038358_38F58_R;
 extern const f32 D_80039830_3A430_R;
+
+extern s16 D_8013DAFC_14CAAC[2];
+extern u8 D_8013DB00_14CAB0;
+extern s32 D_8013DB04_14CAB4;
+extern s32 D_8013DB08_14CAB8;
+
+extern EffectRgb D_8013DAE8_14CA98;
+extern EffectRgb D_8013DAEC_14CA9C;
+extern EffectRgb D_8013DAF0_14CAA0;
+extern EffectRgb D_8013DAF4_14CAA4;
+extern EffectRgb D_8013DAF8_14CAA8;
+extern TerrainLightTint D_8013D9D0_14C980[5];
+extern TerrainLightTint D_8013DA0C_14C9BC[5];
+extern TerrainLightTint D_8013DA48_14C9F8[5];
+extern TerrainLightTint D_8013DA84_14CA34[5];

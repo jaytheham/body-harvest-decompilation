@@ -3388,7 +3388,9 @@ typedef struct {
 
 typedef struct {
 	u16 terrainObject : 1;
-	u16 unusedFlags : 3;
+	u16 flag14 : 1;
+	u16 flag13 : 1;
+	u16 flag12 : 1;
 	u16 flag11 : 1;
 	u16 flag10 : 1;
 	u16 terrainType : 4;
@@ -3403,6 +3405,7 @@ typedef union {
 
 typedef union {
 	s32 word;
+	u8 bytes[4];
 	struct {
 		s16 high;
 		s16 low;
@@ -3433,5 +3436,24 @@ typedef struct {
 	u8 size;
 	u8 music;
 } MapStage;
+
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+} EffectRgb;
+
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 unk3;
+} TerrainPaletteColor;
+
+typedef struct {
+	f32 r;
+	f32 g;
+	f32 b;
+} TerrainLightTint;
 
 #endif

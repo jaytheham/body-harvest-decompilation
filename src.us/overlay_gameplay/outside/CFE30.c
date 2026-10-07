@@ -6206,7 +6206,7 @@ void func_800D1A94_E0A44(u8 arg0) {
 	temp_v0 = &D_80154318[temp_t3->unk8];
 	sp3C = temp_v0->unk8;
 	sp3E = temp_v0->unkC;
-	func_800B1A68_C0A18(&sp40, &sp3C, (s8 *)sp38, (LaserEntry *)D_80154318);
+	func_800B1A68_C0A18(&sp40, &sp3C, (s8 *)sp38);
 	func_80137368_146318(sp34->unk0, sp34->unk2, sp34->unk4, 7, arg0);
 }
 #else
@@ -10759,10 +10759,13 @@ void func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF848_EE7F8.s")
 #endif
 
-void func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
+s32 func_800DF9C8_EE978(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
+	s32 result;
+
 	D_80153B87 = 1;
-	func_800DF038_EDFE8(arg0, arg1, arg2, arg3, (s32) arg4, arg5);
+	result = func_800DF038_EDFE8(arg0, arg1, arg2, arg3, (s32) arg4, arg5);
 	D_80153B87 = 0;
+	return result;
 }
 
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
@@ -12279,7 +12282,7 @@ void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_80152D00[slot].y2 = (s16) arg4;
 	D_80152D00[slot].z2 = (s16) arg5;
 
-	func_800B1A68_C0A18(start, end, color, D_80152D00);
+	func_800B1A68_C0A18(start, end, color);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E52E8_F4298.s")
