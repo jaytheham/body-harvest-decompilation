@@ -3343,9 +3343,8 @@ void func_800C927C_D822C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C927C_D822C.s")
 #endif
 
-// CURRENT(298)
-#ifdef NON_MATCHING
 void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
+	s32 pad;
 	s16 sp1A;
 	s16 temp_a2;
 	Unk80154318Entry *entry;
@@ -3367,21 +3366,19 @@ void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5
 			var_v0->unk0 = arg0;
 			var_v0->unk4 = arg1;
 			var_v0->unkA = arg6;
-			entry->unk2 = arg2;
+			D_80154318[sp1A].unk2 = arg2;
 			var_v0->unk6 = arg3;
 			var_v0->unk7 = arg4;
-			var_v0->unk9 = 0;
 			var_v0->unk8 = arg5;
+			var_v0->unk9 = 0;
 			var_v0->unkB = (s32)arg2 / 2;
-			if (!(var_v0->unkB & 0xFF)) {
+			if (var_v0->unkB == 0) {
 				var_v0->unkB = 1;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C9530_D84E0.s")
-#endif
+
 
 void func_800C9668_D8618(void) {
 	s16 var_s0;
