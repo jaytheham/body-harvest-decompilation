@@ -85,3 +85,29 @@ the correct size, the source had an extra `s16` there whose value was fully rema
 (eliminated after layout). Reproducing it with a real variable fixes the layout but usually
 shifts register allocation from `t*` to `v*`; if that regalloc must stay intact, the slot
 likely came from a compiler artefact that has to be found by another route.
+
+
+## UPDATE (2026-10-07, worker B): the UNUSED declaration form is the fix - no register cost
+
+`func_80094DE0_A3D90` (`overlay_gameplay/outside/9BFF0.c`) reached **score 0** with exactly this
+layout, and the resolution contradicts the "why it is not a full fix" section above. The `s16 sp36;`
+must be **declared and never referenced**. That section tried *using* it (`sp36 = ...; ... = sp36;`),
+which is what allocates a variable register (`v0` where the target has the temp `t4`). A declaration
+with no use costs nothing: IDO reserves the 2-byte slot at `0x36` (so `sp34` drops to `0x34`, frame
+stays `0x60`) and emits no instruction for it, because there is no value to allocate. So the recipe is
+
+    s16 sp3E;
+    s16 sp38[2];
+    s16 sp36;     /* declared, NEVER used */
+    s16 sp34;
+
+Two levers together closed the function (both measured on it):
+
+| lever | score |
+|---|---|
+| committed split body (run 15) | 543 |
+| spell the store/negate through the union's `unk6Unsigned` member | **4** |
+| add the unused `s16 sp36;` declaration | **0** |
+
+The sibling `func_802D7B68_1F0878` (java/1ED9E0.c) named at the top of this note carries the same
+1-slot diff and is also a `union { s16 unk6; u16 unk6Unsigned; }` user - try the same two levers.
