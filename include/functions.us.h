@@ -930,7 +930,7 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2);
 s32 func_80118670_127620(s16 arg0, s16 arg1);
 void func_8011A604_1295B4(void);
 void func_8011D030_12BFE0(u8 arg0);
-void func_8011BB94_12AB44();
+void func_8011BB94_12AB44(s32, s32);
 s32 func_8011C25C_12B20C();
 s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3);
 void func_8011FA90_12EA40(BuildingInstance *, u8, s16, s16, s16, s16, s16, s16, s32);
