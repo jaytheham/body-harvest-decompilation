@@ -3440,4 +3440,11 @@ typedef struct {
 	u8 b;
 } EffectRgb;
 
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 unk3;
+} TerrainPaletteColor;
+
 #endif

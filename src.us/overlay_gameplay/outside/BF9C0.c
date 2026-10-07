@@ -597,44 +597,39 @@ void func_800B165C_C060C(s32 arg0) {
 	}
 }
 
-// CURRENT(4684)
-#ifdef NON_MATCHING
 /* Sample terrain color at tile coordinate, bilinear-interpolating the landscape palette */
-void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
-	// Agent - these two args probably should be u8
-	u8 x = arg0 & 0xFF;
-	u8 y = arg1 & 0xFF;
-	u8 tileX = ((x >> 1) - 1) & 0xFF;
-	u8 tileY = (y >> 1) & 0xFF;
+void func_800B1814_C07C4(u8 arg0, u8 arg1, u8* arg2) {
+	u16 corners[4];
+	u8 tileX;
+	u8 tileY;
 	u16 top[3];
 	u16 bot[3];
-	u8 c00 = D_80260700[(tileX << 7) + tileY];
-	u8 c10 = D_80260700[(tileX << 7) + tileY + 0x80];
-	u8 c11 = D_80260700[((tileX + 1) << 7) + tileY + 0x01];
-	u8 c01 = D_80260700[(tileX << 7) + tileY + 1];
 
-	if (!(x & 1)) {
-		// Agent - use D_80264700 directly without the palette var
-		u8 *palette = (u8 *)D_80264700;
-		top[0] = palette[c00 * 4 + 0];
-		top[1] = palette[c00 * 4 + 1];
-		top[2] = palette[c00 * 4 + 2];
+	tileX = (arg0 >> 1) - 1;
+	tileY = arg1 >> 1;
+	corners[0] = D_80260700[tileX][tileY];
+	corners[1] = D_80260700[tileX + 1][tileY];
+	corners[2] = D_80260700[tileX][tileY + 1];
+	corners[3] = D_80260700[tileX + 1][tileY + 1];
+	if (!(arg0 & 1)) {
+		top[0] = D_80264700[corners[0]].r;
+		top[1] = D_80264700[corners[0]].g;
+		top[2] = D_80264700[corners[0]].b;
 
-		bot[0] = palette[c01 * 4 + 0];
-		bot[1] = palette[c01 * 4 + 1];
-		bot[2] = palette[c01 * 4 + 2];
+		bot[0] = D_80264700[corners[2]].r;
+		bot[1] = D_80264700[corners[2]].g;
+		bot[2] = D_80264700[corners[2]].b;
 	} else {
-		u8 *palette = (u8 *)D_80264700;
-		top[0] = (palette[c00 * 4 + 0] + palette[c10 * 4 + 0]) >> 1;
-		top[1] = (palette[c00 * 4 + 1] + palette[c10 * 4 + 1]) >> 1;
-		top[2] = (palette[c00 * 4 + 2] + palette[c10 * 4 + 2]) >> 1;
+		top[0] = (D_80264700[corners[0]].r + D_80264700[corners[1]].r) >> 1;
+		top[1] = (D_80264700[corners[0]].g + D_80264700[corners[1]].g) >> 1;
+		top[2] = (D_80264700[corners[0]].b + D_80264700[corners[1]].b) >> 1;
 
-		bot[0] = (palette[c01 * 4 + 0] + palette[c11 * 4 + 0]) >> 1;
-		bot[1] = (palette[c01 * 4 + 1] + palette[c11 * 4 + 1]) >> 1;
-		bot[2] = (palette[c01 * 4 + 2] + palette[c11 * 4 + 2]) >> 1;
+		bot[0] = (D_80264700[corners[2]].r + D_80264700[corners[3]].r) >> 1;
+		bot[1] = (D_80264700[corners[2]].g + D_80264700[corners[3]].g) >> 1;
+		bot[2] = (D_80264700[corners[2]].b + D_80264700[corners[3]].b) >> 1;
 	}
 
-	if (!(y & 1)) {
+	if (!(arg1 & 1)) {
 		arg2[0] = top[0];
 		arg2[1] = top[1];
 		arg2[2] = top[2];
@@ -644,9 +639,6 @@ void func_800B1814_C07C4(s32 arg0, s32 arg1, u8* arg2) {
 		arg2[2] = (top[2] + bot[2]) >> 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1814_C07C4.s")
-#endif
 
 // ClearDynamicLightBuffer
 // Clear the dynamic lighting buffer (19x19 grid of RGB values)
@@ -1456,7 +1448,7 @@ void func_800B42B0_C3260(s32 arg0) {
 		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
-		func_800B1814_C07C4((D_8014F89D + sp6F) & 0xFF, (D_8014F89C + 0x12) & 0xFF, sp54);
+		func_800B1814_C07C4((D_8014F89D + sp6F), (D_8014F89C + 0x12), sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
@@ -1533,7 +1525,7 @@ void func_800B4660_C3610(s32 arg0) {
 		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
-		func_800B1814_C07C4((D_8014F89D + sp6F) & 0xFF, D_8014F89C, sp54);
+		func_800B1814_C07C4((D_8014F89D + sp6F), D_8014F89C, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
@@ -1607,7 +1599,7 @@ void func_800B49A4_C3954(s32 arg0) {
 		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
-		func_800B1814_C07C4((D_8014F89D + 0x12) & 0xFF, (D_8014F89C + sp6F) & 0xFF, sp54);
+		func_800B1814_C07C4((D_8014F89D + 0x12), (D_8014F89C + sp6F), sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
@@ -1682,7 +1674,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
 		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
 
-		func_800B1814_C07C4(D_8014F89D, (D_8014F89C + sp6F) & 0xFF, sp54);
+		func_800B1814_C07C4(D_8014F89D, (D_8014F89C + sp6F), sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, (s8 *)sp68);
 
 		var_s0 = 0;
