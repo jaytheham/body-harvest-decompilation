@@ -3649,7 +3649,7 @@ void func_800CA1B0_D9160(u8 arg0) {
 // CURRENT(4556)
 // spurt/blood visual effect?
 #ifdef NON_MATCHING
-s32 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
+u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	u8 effect;
 	s16 unitIdx;
@@ -11026,12 +11026,9 @@ void func_800E0C8C_EFC3C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	func_800CA5EC_D959C(arg0, arg1, arg2, arg3, arg4, arg5, 0x37, 7, (func_800038E0_44E0() % 9) + 0xA, 0x64, 0xDC, 0xBE, 0x2D, 0xFF);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(725)
 void func_800E0D28_EFCD8(s16 arg0, s16 arg1, s16 arg2) {
 	u8 i;
-	s32 temp_v0;
-	s32 stride;
+	u8 temp_v0;
 	Unk801541F8Entry *spEffect;
 	Unk80154318Entry *fxEntry;
 
@@ -11047,15 +11044,12 @@ void func_800E0D28_EFCD8(s16 arg0, s16 arg1, s16 arg2) {
 	}
 
 	temp_v0 = func_800CA5EC_D959C(arg0, arg1, arg2, 1, 0x78, 1, 0x28, 3, 0, 0x5A, 0x96, 0xB4, 0xFF, 0x6E);
-	stride = sizeof(Unk801541F8Entry);
 	if (temp_v0 != 0xFB) {
-		spEffect = (Unk801541F8Entry *) ((u8 *) D_80154088 + (temp_v0 * stride));
+		spEffect = &D_80154088[temp_v0];
 		D_80154318[spEffect->unk6].unk14 = 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E0D28_EFCD8.s")
-#endif
+
 
 void func_800E0E9C_EFE4C(s16 arg0, s16 arg1, u16 arg2)
 {
