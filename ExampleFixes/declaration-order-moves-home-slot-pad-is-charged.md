@@ -19,3 +19,29 @@ this shape, and a pad declared last reserves nothing at all.
 
 Do not reach for the phantom-pad recipe (`ExampleFixes/phantom-s16-slot-between-array-and-scalar.md`)
 until reordering the existing declarations has been measured.
+
+## Second case: *inserting* the result local between the other two moves its home up a slot
+
+Measured on `func_802D5DFC_1EEB0C` (`overlay_level/java/1ED9E0.c`, 36 instr, marker
+`CURRENT(8)`). Three `s32` locals homed in the frame `0x38`: `sp24`, `sp28`, `sp30`. The target
+homes them `0x24 / 0x28 / 0x30`, i.e. with a **4-byte hole at `0x2C`** — the marker had read that
+hole as a "cfe temp at 0x30 vs declared at 0x2C". The whole residual was two rows (`sw v1,0x30` vs
+`0x2C`, `lh a1,0x32` vs `0x2E`); everything else identical, frame identical.
+
+Declaration orders measured (score from a real compile of the unwrapped body):
+
+| decl order | score |
+|---|---|
+| `sp24; sp28; sp30;` (committed guess) | 8 |
+| `sp30; sp24; sp28;` | 8 |
+| `sp28; sp24; sp30;` | 8 |
+| `sp24; sp28; sp30; sp2C;` (unused pad last) | 32 |
+| `sp2C; sp24; sp28; sp30;` (unused pad first) | 40 |
+| **`sp24; sp30; sp28;`** (result local moved between the other two) | **0** |
+
+So with three same-typed locals the home is **not** simply declaration-ascending: moving the
+*third* declaration to the middle gave `sp24@0x24, sp28@0x28, sp30@0x30` — the holes and offsets the
+target had. Try permutations of the existing declarations before adding anything, and note that an
+added unused pad is placed at the **top** slot and shifts every used local *down* (that is why the
+pad variants scored worse, not frame growth: the frame stayed `0x38`).
+
