@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-07T04:14:07Z",
-  "commit": "85264cfd",
-  "commit_timestamp": "2026-10-07T17:13:37+13:00",
+  "generated": "2026-10-07T06:23:40Z",
+  "commit": "22565d4c",
+  "commit_timestamp": "2026-10-07T19:22:51+13:00",
   "overall": {
     "total_functions": 2720,
-    "matched": 1884,
-    "non_matching": 832,
+    "matched": 1894,
+    "non_matching": 822,
     "asm_stubs": 4,
-    "matched_pct": 69.26,
+    "matched_pct": 69.63,
     "decompiled_pct": 99.85
   },
   "segments": {
@@ -22,11 +22,11 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 120,
-      "non_matching": 98,
+      "matched": 130,
+      "non_matching": 88,
       "asm_stubs": 0,
       "total": 218,
-      "matched_pct": 55.0,
+      "matched_pct": 59.6,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/outside": {
@@ -726,12 +726,12 @@
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 56,
-      "non_matching": 57,
+      "matched": 66,
+      "non_matching": 47,
       "asm_stubs": 0,
       "total": 113,
-      "matched_pct": 49.6,
-      "contributor": "lunarlaurus"
+      "matched_pct": 58.4,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
@@ -1387,16 +1387,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 120,
-      "matched": 1571,
-      "non_matching": 614,
+      "files": 121,
+      "matched": 1637,
+      "non_matching": 661,
       "asm_stubs": 4
     },
     {
       "name": "lunarlaurus",
-      "files": 5,
-      "matched": 279,
-      "non_matching": 214,
+      "files": 4,
+      "matched": 223,
+      "non_matching": 157,
       "asm_stubs": 0
     },
     {
@@ -1662,9 +1662,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "5e6c2cb",
-      "matched": 1884,
-      "non_matching": 832,
+      "commit": "12b8953",
+      "matched": 1894,
+      "non_matching": 822,
       "total": 2720
     }
   ]
