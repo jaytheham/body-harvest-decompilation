@@ -2679,35 +2679,20 @@ s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 
 
 /* Animate crater expansion (destroyed ground tiles with expanding bright ring) */
-// CURRENT(13990)
-#ifdef NON_MATCHING
 void func_800B879C_C774C(void) {
-	typedef union {
-		u16 h;
-		struct {
-			u8 hi;
-			u8 lo;
-		} b;
-	} TileWord;
-
-	s16 temp_s2;
-	s32 temp_a0;
-	s32 temp_t2;
-	s32 temp_t0;
-	s32 temp_t8;
-	s32 temp_v0_2;
-	s32 temp_v0_3;
-	s32 temp_v1;
-	s32 var_s1;
-	s32 var_s1_2;
-	s32 var_s3;
-	s32 temp_a2;
-	s32 temp_a3;
-	u8* var_v1;
-	u8 temp_t1;
-	u8 var_t5;
-	TileWord* var_s0;
-	VehicleInstance* temp_v0;
+	s16 radiusLimit;
+	s32 distanceSquared;
+	s32 levelIndex;
+	s32 height;
+	s32 xDistance;
+	s32 terrainObject;
+	s32 zDistance;
+	s32 count;
+	s32 rows;
+	s32 craterX;
+	s32 craterZ;
+	TerrainCell* tile;
+	VehicleInstance* vehicle;
 	f32 two;
 
 	if (gameplayMode != 2) {
@@ -2715,57 +2700,52 @@ void func_800B879C_C774C(void) {
 			D_80222A70 -= D_80222A70 >> 2;
 		}
 
-		if (D_80158FD8 != 0) {
-			var_s1 = D_80158FD8 - 1;
-			var_v1 = &D_80158E80[var_s1];
+		count = D_80158FD8;
+		if (count--) {
 			do {
-				temp_t1 = *var_v1;
-				var_v1--;
-				temp_v0 = &vehicleInstances[temp_t1];
-				if ((((temp_v0->unk0 >> 8) - D_8014F83C) < 0x60) && (((temp_v0->unk4 >> 8) - D_8014F83E) < 0x60)) {
-					temp_v0->unk20 |= 1;
+				vehicle = &vehicleInstances[D_80158E80[count]];
+				if ((((vehicle->unk0 >> 8) - D_8014F83C) < 0x60) && (((vehicle->unk4 >> 8) - D_8014F83E) < 0x60)) {
+					vehicle->unk20 |= 1;
 				}
-			} while (var_s1-- != 0);
+			} while (count--);
 		}
 
-		var_s0 = (TileWord*)((u8*)D_80052A94 + (D_8014F83E << 9) + (D_8014F83C << 1));
-		temp_s2 = (s16)(s32)D_8014F84C;
+		tile = &D_80052A94[D_8014F83E].cells[D_8014F83C];
+		radiusLimit = D_8014F84C;
 		two = 2.0f;
 
-		if (D_8014F842 != 0) {
-			var_s3 = D_8014F842 - 1;
+		rows = D_8014F842;
+		if (rows--) {
 			do {
-				if (D_8014F840 != 0) {
-					var_s1_2 = D_8014F840 - 1;
+				count = D_8014F840;
+				if (count--) {
 					do {
-						temp_a2 = D_8014F846 + var_s1_2;
-						temp_v0_2 = temp_a2 - 0x30;
-						temp_a3 = var_s3 + D_8014F848;
-						temp_v1 = temp_a3 - 0x30;
-						temp_a0 = (temp_v0_2 * temp_v0_2) + (temp_v1 * temp_v1);
-						if (temp_a0 < temp_s2) {
-							if (((f32)temp_s2 - (D_8014F850 * two)) < (f32)temp_a0) {
-								temp_t0 = (s32)(D_8014F834 + ((0x3F - D_8014F834) * ((f32)D_8014F830 / (f32)D_8014F832)));
-								var_t5 = (temp_t0 & 0x3F) | (var_s0->b.lo & 0xC0);
+						craterX = D_8014F846 + count;
+						xDistance = craterX - 0x30;
+						craterZ = (u32)rows + D_8014F848;
+						zDistance = craterZ - 0x30;
+						distanceSquared = (xDistance * xDistance) + (zDistance * zDistance);
+						if (distanceSquared < radiusLimit) {
+							if (((f32)radiusLimit - (D_8014F850 * two)) < (f32)distanceSquared) {
+								tile->height = (u32)(D_8014F834 + ((0x3F - D_8014F834) * ((f32)D_8014F830 / (f32)D_8014F832)));
 							} else {
-								temp_v0_3 = func_8011D260_12C210((s8)temp_a2, (s8)temp_a3);
-								if (temp_v0_3 != -1) {
-									func_8011C080_12B030(temp_v0_3 & 0xFF);
+								terrainObject = func_8011D260_12C210(craterX, craterZ);
+								if (terrainObject != -1) {
+									func_8011C080_12B030(terrainObject);
 								}
-								temp_t8 = var_s0->h & 0x3F;
-								var_t5 = ((temp_t8 - (temp_t8 >> 2)) & 0x3F) | (var_s0->b.lo & 0xC0);
+								height = tile->height;
+								tile->height = height - (height >> 2);
 							}
-							var_s0->b.lo = var_t5;
 						}
-						var_s0++;
-					} while (var_s1_2-- != 0);
+						tile = &tile[1];
+					} while (count--);
 				}
-				var_s0 += D_8014F844;
-			} while (var_s3-- != 0);
+				tile = &((TerrainCell *)tile)[D_8014F844];
+			} while (rows--);
 		}
 
 		D_8014F84C += D_8014F850;
-		D_8014F850 = (f32)((f64)D_8014F850 * D_80142E40_151DF0[0]);
+		D_8014F850 *= D_80142E40_151DF0[0];
 		D_8014F830 += 1;
 
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
@@ -2773,16 +2753,13 @@ void func_800B879C_C774C(void) {
 
 		if (D_8014F830 >= D_8014F832) {
 			func_800B32AC_C225C((u16 *)D_801FEA30);
-			temp_t2 = currentLevel - 1;
-			D_800313F8 = D_80031634_32234[temp_t2 * 2];
-			D_800313E8 = D_80031620_32220[temp_t2].unk0;
+			levelIndex = currentLevel - 1;
+			D_800313F8 = D_80031634_32234[levelIndex * 2];
+			D_800313E8 = D_80031620_32220[levelIndex].unk0;
 			D_8014F838 = 0;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B879C_C774C.s")
-#endif
 
 /* Initialize crater creation parameters at a world position */
 #ifdef NON_MATCHING
