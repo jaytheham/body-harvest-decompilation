@@ -1971,13 +1971,8 @@ void func_800C4AA0_D3A50(void) {
 	}
 }
 
-// CURRENT(310)
-#ifdef NON_MATCHING
 void func_800C4CB8_D3C68(void) {
 	s16 index;
-	s16 temp82;
-	s16 tempA;
-	s16 tempC;
 
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
@@ -1998,18 +1993,14 @@ void func_800C4CB8_D3C68(void) {
 	index = D_801541FE;
 	if ((index != -5) && (index != -6)) {
 		do {
-			temp82 = D_80154318[index].unk8;
-			tempA = D_80154318[index].unkA;
-			tempC = D_80154318[index].unkC;
-			D_80153BB8.x = (f32) temp82;
+			D_80153BB8.x = (f32)D_80154318[index].unk8;
+			D_80153BB8.y = (f32)D_80154318[index].unkA;
+			D_80153BB8.z = (f32)D_80154318[index].unkC;
 			D_80153BC4 = &D_80154318[index].unkE;
-			D_80153BCC = ((u8 *)&D_80154318[index])[0x12];
-			D_80153BB8.y = (f32) tempA;
-			D_80153BB8.z = (f32) tempC;
-			temp82 = D_80154318[index].unk2;
-			D_80153BC8 = (f32) temp82;
+			D_80153BC8 = (f32)D_80154318[index].unk2;
+			D_80153BCC = D_80154318[index].payload[10];
 
-			if (((u8 *)&D_80154318[index])[0x13] == 0) {
+			if (D_80154318[index].payload[11] == 0) {
 				func_800DB714_EA6C4();
 			} else {
 				func_800DBA9C_EAA4C();
@@ -2020,9 +2011,7 @@ void func_800C4CB8_D3C68(void) {
 		} while ((index != -5) && (index != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4CB8_D3C68.s")
-#endif
+
 
 // CURRENT(4247)
 // spawn particle?
