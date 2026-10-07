@@ -1267,7 +1267,7 @@ void func_800C1150_D0100(void);
 void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
 s32 func_800C2D50_D1D00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5);
 s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2);
-s16 func_800D5424_E43D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5);
+s16 func_800D5424_E43D4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5);
 s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2);
 s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2);

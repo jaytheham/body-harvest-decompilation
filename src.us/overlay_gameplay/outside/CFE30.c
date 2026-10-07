@@ -7309,40 +7309,35 @@ void func_800D4C10_E3BC0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4C10_E3BC0.s")
 #endif
 
-// CURRENT(1450)
-#ifdef NON_MATCHING
 s16 func_800D5424_E43D4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
-	u8 *base2;
-	Unk80154318Entry *entry;
+	u8 *base;
+	s32 pad;
 	s16 sp2E;
 	s16 sp2C;
-	u8 *base;
 
 	sp2E = func_800C19D4_D0984(0x10, 1);
 	sp2C = D_80154318[sp2E].unk4;
 	if (sp2E != -3) {
-		entry = &D_80154318[sp2E];
-		entry->unk2 = 1;
-		entry->unkF = (u8)1;
-		entry->unk10 = entry->unkE = 2;
-		entry->unk8 = arg0;
-		entry->unkA = arg1;
-		entry->unkC = arg2;
-		base = (u8 *)&entry->unk8;
+		D_80154318[sp2E].unk2 = 1;
+		D_80154318[sp2E].spinnerMotion.step[0] = 2;
+		D_80154318[sp2E].spinnerMotion.step[1] = 1;
+		D_80154318[sp2E].spinnerMotion.step[2] = 2;
+		D_80154318[sp2E].unk8 = arg0;
+		D_80154318[sp2E].unkA = arg1;
+		D_80154318[sp2E].unkC = arg2;
+		base = (u8 *)(s32)D_80154318[sp2E].payload;
 		base[9] = func_800D5FD4_E4F84(arg0, arg1, arg2, arg3, arg4, arg5);
 		base[10] = func_800D5FD4_E4F84(arg0, arg1, arg2, arg3, arg4, arg5);
 		base[11] = func_800D5FD4_E4F84(arg0, arg1, arg2, arg3, arg4, arg5);
-		base2 = (u8 *)&D_80154318[sp2C].unk8;
-		*(s16 *)base2 = 0;
-		base2[2] = arg3;
-		base2[3] = arg4;
-		base2[4] = arg5;
+		base = (u8 *)(s32)&D_80154318[sp2C].spinnerState;
+		((SpinnerParentState *)base)->angle = 0;
+		((SpinnerParentState *)base)->color[0] = arg3;
+		((SpinnerParentState *)base)->color[1] = arg4;
+		((SpinnerParentState *)base)->color[2] = arg5;
 	}
 	return sp2E;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5424_E43D4.s")
-#endif
+
 
 void func_800D5588_E4538(s16 arg0) {
 	if (arg0 != -3) {

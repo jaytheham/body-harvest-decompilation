@@ -2516,6 +2516,18 @@ typedef struct {
 } EffectCallbackState;
 
 typedef struct {
+	/* 0x00 */ s16 angle;
+	/* 0x02 */ u8 color[3];
+	/* 0x05 */ u8 pad5[7];
+} SpinnerParentState;
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ s8 step[3];
+	/* 0x09 */ u8 unit[3];
+} SpinnerMotionState;
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
@@ -2523,6 +2535,8 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	union {
 		/* 0x08 */ EffectCallbackState callbackState;
+		/* 0x08 */ SpinnerParentState spinnerState;
+		/* 0x08 */ SpinnerMotionState spinnerMotion;
 		struct {
 			/* 0x08 */ s16 unk8;
 			/* 0x0A */ s16 unkA;
