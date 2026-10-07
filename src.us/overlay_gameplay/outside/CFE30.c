@@ -8882,31 +8882,25 @@ void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(1905)
-#ifdef NON_MATCHING
 void func_800D9E38_E8DE8(s16 arg0, s16 arg1) {
-	Unk80154318Entry *entry;
-	s16 *entryData;
+	s32 temp = D_80154318[arg1].unk8;
 	VehicleInstance *vehicle;
-	u8 effectId;
 
-	entry = &D_80154318[arg0];
-	entryData = (s16 *)&entry->unk8;
-	vehicle = &vehicleInstances[D_80154318[arg1].unk8];
+	vehicle = &vehicleInstances[temp];
 
-	entryData[4] = vehicle->unk2 + 0x3C;
-	entryData[3] = vehicle->unk0;
-	entryData[5] = vehicle->unk4;
+	D_80154318[arg0].previousPosition[0] = vehicle->unk0; D_80154318[arg0].previousPosition[1] = vehicle->unk2 + 0x3C; D_80154318[arg0].previousPosition[2] = vehicle->unk4;
 
-	if ((entryData[2] % 3) == 0) {
+	if ((D_80154318[arg0].unkC % 3) == 0) {
+		s16 effectId;
+		s16 *entryData = (s16 *)(s32)D_80154318[arg0].coordinates;
 		effectId = func_800DEE5C_EDE0C(entryData[3], entryData[4], entryData[5], 0x32, 0x18 - entryData[2]);
-		func_800DDD90_ECD40(effectId, ((func_800038E0_44E0() & 0x7F) + 0x80) & 0xFF, 0, 0xFF);
+		temp = func_800038E0_44E0() & 0x7F;
+		temp += 0x80;
+		func_800DDD90_ECD40(effectId, (u8)temp, 0, 0xFF);
 		func_80135D44_144CF4(entryData[3], entryData[4], entryData[5], (f32)(entryData[2] >> 1));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D9E38_E8DE8.s")
-#endif
+
 
 void func_800D9F60_E8F10(s32 arg0) {
 	struct {
