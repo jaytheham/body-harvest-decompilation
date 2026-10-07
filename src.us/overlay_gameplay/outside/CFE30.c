@@ -8589,12 +8589,9 @@ void func_800D8FA0_E7F50(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(1123)
-#ifdef NON_MATCHING
 void func_800D90A4_E8054(void) {
 	s16 curr;
 	s16 next;
-	Unk80154318Entry *entry;
 	Unk80154318Sub *entrySub;
 
 	curr = D_801542E2;
@@ -8603,23 +8600,20 @@ void func_800D90A4_E8054(void) {
 		return;
 	}
 	while ((curr != -5) && (curr != -6)) {
-		entry = &D_80154318[curr];
-		entrySub = (Unk80154318Sub *)&entry->unk8;
-		entrySub->unk0 = entrySub->unk0 + entrySub->unk6 + (func_800038E0_44E0() % 5) - 2;
-		entrySub->unk2 = entrySub->unk2 + entrySub->unk7 + (func_800038E0_44E0() % 5) - 2;
-		entrySub->unk4 = entrySub->unk4 + entrySub->unk8 + (func_800038E0_44E0() % 5) - 2;
+		entrySub = (Unk80154318Sub *)(s32)D_80154318[curr].coordinates;
+		entrySub->unk0 += entrySub->unk6 + (func_800038E0_44E0() % 5) - 2;
+		entrySub->unk2 += entrySub->unk7 + (func_800038E0_44E0() % 5) - 2;
+		entrySub->unk4 += entrySub->unk8 + (func_800038E0_44E0() % 5) - 2;
 		if (entrySub->unk2 >= D_80222A70) {
-			next = entry->unk4;
+			next = D_80154318[curr].unk4;
 			func_800C1A4C_D09FC(curr, 0x13, 1);
 			curr = next;
 		} else {
-			curr = entry->unk4;
+			curr = D_80154318[curr].unk4;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D90A4_E8054.s")
-#endif
+
 
 void func_800D9294_E8244(void) {
 	s16 var_s2;
