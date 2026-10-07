@@ -2386,11 +2386,9 @@ void func_802D9100_31D250(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(8)
 void func_802D9128_31D278(u8 arg0) {
-	AlienInstance *inst;
 	s16 parentId;
+	AlienInstance *inst;
 
 	inst = &alienInstances[arg0];
 	parentId = inst->unk25;
@@ -2414,9 +2412,6 @@ void func_802D9128_31D278(u8 arg0) {
 
 	inst->unk2C = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9128_31D278.s")
-#endif
 
 void func_802D92A8_31D3F8(u8 arg0) {
 	u8 typeIndex;
