@@ -1550,6 +1550,7 @@ typedef struct {
             };
 		};
 		/* 0x08 */ u32 unk8;
+		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
 	};
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
@@ -2469,6 +2470,21 @@ typedef struct {
 } Unk169EC8Entry; /* stride 0x14 */
 
 typedef struct {
+	/* 0x00 */ s8 phaseCount;
+	/* 0x01 */ s8 sizeStep;
+	/* 0x02 */ s8 heightStep;
+	/* 0x03 */ s8 fadeStep;
+	/* 0x04 */ u8 pad4[4];
+} EffectParticleConfig; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ u8 r;
+	/* 0x01 */ u8 g;
+	/* 0x02 */ u8 b;
+	/* 0x03 */ u8 alpha;
+} EffectParticleColor; /* size = 0x04 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
@@ -2528,12 +2544,84 @@ typedef struct {
 } SpinnerMotionState;
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 age;
+	/* 0x07 */ u8 pad7;
+	/* 0x08 */ s16 buildingId;
+	/* 0x0A */ u8 padA[2];
+} EffectBuildingRecoveryState; /* size = 0x0C */
+
+typedef union {
+	struct {
+		s16 position[3];
+		u8 color[3];
+		u8 highlight[3];
+	} visual;
+	struct {
+		s16 height;
+		s16 width;
+		u8 phase;
+		u8 step;
+		u8 pad6[6];
+	} control;
+} EffectFirePayload; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 shadowColor[3];
+} SpurtVisualState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s8 velocity[3];
+	/* 0x03 */ u8 size;
+	/* 0x04 */ u8 kind;
+	/* 0x05 */ u8 intensity;
+	/* 0x06 */ s16 age;
+	/* 0x08 */ u8 alpha;
+	/* 0x09 */ u8 pad9[3];
+} SpurtEmitterState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ u8 age;
+	/* 0x0B */ u8 padB;
+} TrailParticleState; /* size = 0x0C */
+
+typedef struct {
+    s16 position[3];
+    u8 color[3];
+    u8 pad9;
+    u8 active;
+    u8 padB;
+} SparkEmitterState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ u8 kind;
+	/* 0x0B */ u8 padB;
+} SmokePuffState; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	union {
+		/* 0x08 */ Unk80052B40 spatialVectors[2];
+		/* 0x08 */ Gfx *displayList;
+		/* 0x08 */ Unk80052B40 positionVector;
+		/* 0x08 */ SmokePuffState smokePuff;
+		/* 0x08 */ EffectFirePayload firePayload;
+		/* 0x08 */ TrailParticleState trailParticle;
+		/* 0x08 */ SparkEmitterState sparkEmitter;
+		/* 0x08 */ SpurtVisualState spurtVisual;
+		/* 0x08 */ SpurtEmitterState spurtEmitter;
 		/* 0x08 */ EffectCallbackState callbackState;
 		/* 0x08 */ SpinnerParentState spinnerState;
 		/* 0x08 */ SpinnerMotionState spinnerMotion;
@@ -2554,8 +2642,13 @@ typedef struct {
 		/* 0x08 */ s16 coordinates[6];
 		/* 0x08 */ u8 payload[12];
 	};
-	/* 0x14 */ u8 unk14;
-	/* 0x15 */ u8 unk15;
+	union {
+		/* 0x14 */ s16 radialRadius;
+		struct {
+			/* 0x14 */ u8 unk14;
+			/* 0x15 */ u8 unk15;
+		};
+	};
 	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
 
@@ -2577,6 +2670,29 @@ typedef struct {
 	/* 0x05 */ u8 unk5;
 	/* 0x06 */ u8 pad6[2];
 } Unk8007E12CEntry8;
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 highDigits;
+	/* 0x0A */ u8 lowDigits;
+	/* 0x0B */ u8 riseSpeed;
+	/* 0x0C */ u8 alpha;
+	/* 0x0D */ u8 padD;
+} FloatingNumberState; /* size = 0x0E */
+
+typedef struct {
+	s16 x;
+	s16 y;
+	s16 z;
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 pad9;
+	s16 width;
+	u8 phase;
+	u8 lifetime;
+} EffectSparkState; /* size = 0x0E */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2623,21 +2739,33 @@ typedef struct {
 } Unk80152CA0Entry; /* stride = 0x3 */
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ s16 pad6;
+	/* 0x08 */ u16 angle;
+	/* 0x0A */ s16 padA;
+	/* 0x0C */ s16 scale[3];
+	/* 0x12 */ u8 duration;
+	/* 0x13 */ u8 pad13;
+} NukeKeyframe; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ s16 unk8;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ union { s16 unk8; u16 angle; };
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 padF;
+	/* 0x0E */ union {
+		s16 scaleY;
+		struct { u8 unkE; u8 padF; };
+	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
 	/* 0x14 */ u8 unk14;
 	/* 0x15 */ u8 pad15[3];
-	/* 0x18 */ s32 unk18;
+	/* 0x18 */ union { s32 unk18; NukeKeyframe *keyframe; };
 	/* 0x1C */ s32 unk1C;
 } Unk80153AE0Entry; /* stride = 0x20 */
 

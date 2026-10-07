@@ -2396,7 +2396,11 @@ extern f32 D_80153BA4;
 extern s16 D_80153BAC;
 extern s16 D_80153BAE;
 extern s16 D_80153BB0;
+#ifdef OUTSIDE_CFE30_BSS
+Vec3f D_80153BB8;
+#else
 extern Vec3f D_80153BB8;
+#endif
 extern void *D_80153BC4;
 extern f32 D_80153BC8;
 extern u8 D_80153BCC;
@@ -2447,13 +2451,16 @@ extern Unk80154318Entry D_80154329[];
 extern u8 D_80156ED8;
 extern u8 D_80156ED9;
 extern s16 D_80156EDA;
+extern volatile s16 D_80156EDA_Draw;
 extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
+extern u8 D_8013DFF4_14CFA4[0x78];
+extern u8 D_8013E06C_14D01C[0x3C];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
 extern u8 D_80157531;
 extern u8 D_80157532;
-extern s8 D_80157533;
+extern u8 D_80157533;
 extern u8 D_80157534;
 extern s16 D_80157536;
 extern s16 D_80157538;
@@ -4036,3 +4043,7 @@ extern TerrainLightTint D_8013D9D0_14C980[5];
 extern TerrainLightTint D_8013DA0C_14C9BC[5];
 extern TerrainLightTint D_8013DA48_14C9F8[5];
 extern TerrainLightTint D_8013DA84_14CA34[5];
+
+extern EffectRgb D_8013E40C_14D3BC;
+
+extern Gfx D_5033E00[];
