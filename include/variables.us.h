@@ -2956,7 +2956,7 @@ extern Gfx D_802C9EA8[];
 extern u8 D_802CA8D0;
 extern u8 D_802D48CF;
 extern u8 D_802D48D0;
-extern u8 D_802D4AD0;
+extern u16 D_802D4AD0[256];
 extern void (*D_802DDBF4_196704[])(void);
 extern Unk8014DD50 *D_802DDC88_196798;
 extern Unk8014DD50 *D_802DDCD0_1967E0;
