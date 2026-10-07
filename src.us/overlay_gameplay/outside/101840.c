@@ -4457,7 +4457,7 @@ void func_800FDC30_10CBE0(s16 arg0) {
 			i = 127;
 			v2 = &vehicleInstances[127];
 			do {
-				if ((v2->unk1A == 0x11) && (v2->unk20 & 0x8000)) {
+				if ((v2->unk1A == 0x11) && (v2->unk20 & 0x8000)) {// if Plane Training Target?
 					return;
 				}
 				v2--;
@@ -4465,7 +4465,7 @@ void func_800FDC30_10CBE0(s16 arg0) {
 			D_8004DC58 = 5;
 			break;
 		case 0xC:
-			func_800AE190_BD140(0xA);
+			func_800AE190_BD140(0xA);// ambulance dying adds 10 to human meter (during mission, NPC vehicle dying adds 2 more separately)
 			return;
 		}
 		break;
