@@ -32,3 +32,9 @@ When a value needs to be preserved across function calls and is used as a (s16) 
 - Inline computation without declaration (triggers callee-save register usage)
 - Different cast patterns on sp24/sp28 assignments
 - Anonymous inner blocks for scoping
+
+### Inline one delta to control the paired save slots
+
+In func_800B9228_C81D8, both named s32 deltas produced a0 at sp+0x18 and a2 at sp+0x1C. The target instead saves a0 at sp+0x20 while retaining a2 at sp+0x1C. Remove the named Z delta and repeat (arg1 - arg3) in the angle call and absolute-value calculation. IDO caches this expression and preserves it across the call, with exactly the target save slots and no new instructions. Inlining the X delta instead exchanges the two slots and still fails.
+
+Declare the temporary angle halfword before the saved half-angle halfword so the latter occupies sp+0x34. Verified with a full ROM checksum match.

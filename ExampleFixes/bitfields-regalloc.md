@@ -1,5 +1,7 @@
 ### Bitfields
 
+In `func_800C1288_D0238`, clearing a flag byte and then assigning `8` generated `addiu` and shifted subsequent temporary registers. Using `flags |= 8` after the clear generated the target `ori` and restored the exact register sequence. The full ROM verified the match.
+
 ```c=
 struct A {
     u8 x;
@@ -34,3 +36,8 @@ Conditions like `if (glob.singleBitField)` are sometimes (but not always) emitte
 `if (value & power of two)` can also emit this kind of pattern.
 
 The underlying type of the bitfield cannot easily be determined from the asm (IDO can emit lw even for u8-based bitfields, or lbu for u32 ones, depending on which bits it needs), however, it can sometimes have an impact on regalloc.
+
+
+## Narrowing a multiplied call argument
+
+In `func_800DA7CC_E977C`, passing `(u8)(D_80154318[arg0].unkC * 3)` matched the target's reused multiplication temporary and final `andi` in the call delay slot. The equivalent expression with `& 0xFF` introduced a second multiplication-result temporary and shifted subsequent register allocation. Loading a named value first instead allocated the input to v0 rather than a1. Keep the field access inline and express the byte conversion as a u8 cast when the target exhibits this pattern. Full ROM checksum verified OK.
