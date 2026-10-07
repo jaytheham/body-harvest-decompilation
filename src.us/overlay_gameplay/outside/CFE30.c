@@ -7762,11 +7762,11 @@ void func_800D6290_E5240(u8 arg0) {
 
 void func_800D6A84_E5A34(u8 arg0)
 {
-  D_80153AE0[arg0].unk13 = 0;
-  D_80153AE0[arg0].unk14 = 0;
-  D_80153AE0[arg0].unk18 = ((s32 *) (&D_8013E2F4_14D2A4))[arg0];
-  D_80153AE0[arg0].unk12 = ((u8 *) (&D_8013E2EC_14D29C))[arg0];
-  D_80153AE0[arg0].unk1C = ((s32 *) (&D_8013E308_14D2B8))[arg0];
+	D_80153AE0[arg0].unk13 = 0;
+	D_80153AE0[arg0].unk14 = 0;
+	D_80153AE0[arg0].unk18 = ((s32 *)(&D_8013E2F4_14D2A4))[arg0];
+	D_80153AE0[arg0].unk12 = ((u8 *)(&D_8013E2EC_14D29C))[arg0];
+	D_80153AE0[arg0].unk1C = ((s32 *)(&D_8013E308_14D2B8))[arg0];
 }
 
 // Create nuke?
@@ -8219,22 +8219,22 @@ void func_800D7870_E6820(void) {
 
 s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
-  s32 dummy;
-  s16 dummy2;
-  s16 temp_v0;
-  temp_v0 = func_800C17B4_D0764(0x12, 1);
-  if (temp_v0 != (-3))
-  {
-	D_80154318[temp_v0].unk8 = arg0;
-	D_80154318[temp_v0].unkA = arg1;
-	D_80154318[temp_v0].unk2 = arg3;
-	D_80154318[temp_v0].unkC = arg2;
-	*((s16 *) (&D_80154318[temp_v0].unkE)) = (s16) (arg0 + 5);
-	*((s16 *) (&D_80154318[temp_v0].unk10)) = (s16) (arg1 + 1);
-	D_80154318[temp_v0].unk12 = arg2 + 5;
-	D_80154318[temp_v0].unk14 = func_800C2274_D1224(arg0, arg1, arg2, 0);
-  }
-  return temp_v0;
+	s32 dummy;
+	s16 dummy2;
+	s16 temp_v0;
+	temp_v0 = func_800C17B4_D0764(0x12, 1);
+	if (temp_v0 != (-3))
+	{
+		D_80154318[temp_v0].unk8 = arg0;
+		D_80154318[temp_v0].unkA = arg1;
+		D_80154318[temp_v0].unk2 = arg3;
+		D_80154318[temp_v0].unkC = arg2;
+		*((s16 *)(&D_80154318[temp_v0].unkE)) = (s16)(arg0 + 5);
+		*((s16 *)(&D_80154318[temp_v0].unk10)) = (s16)(arg1 + 1);
+		D_80154318[temp_v0].unk12 = arg2 + 5;
+		D_80154318[temp_v0].unk14 = func_800C2274_D1224(arg0, arg1, arg2, 0);
+	}
+	return temp_v0;
 }
 
 // Kill fireball effect?
@@ -8699,24 +8699,26 @@ void func_800D95D0_E8580(void) {
 
 void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
-  s16 new_var;
-  Unk80154318Entry *temp_v1;
-  new_var = D_80154318[arg0].unk4;
-  temp_v1 = &D_80154318[new_var];
-  temp_v1->unk8 = arg1;
-  temp_v1->unkA = arg2;
-  temp_v1->unkC = arg3;
+	s16 new_var;
+	Unk80154318Entry *temp_v1;
+	new_var = D_80154318[arg0].unk4;
+	temp_v1 = &D_80154318[new_var];
+	temp_v1->unk8 = arg1;
+	temp_v1->unkA = arg2;
+	temp_v1->unkC = arg3;
 }
 
 void func_800D9704_E86B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
-  s16 new_var;
-  s16 new_var2;
-  Unk80154318Entry *temp_v1;
- temp_v1 = &D_80154318[new_var2 = D_80154318[arg0].unk4]; new_var = arg2; new_var2 = new_var;
-  *(s16*)&temp_v1->unkE = arg1;
-  *(s16*)&temp_v1->unk10 = new_var2;
-  (*temp_v1).unk12 = arg3;
+	s16 new_var;
+	s16 new_var2;
+	Unk80154318Entry *temp_v1;
+	temp_v1 = &D_80154318[new_var2 = D_80154318[arg0].unk4];
+	new_var = arg2;
+	new_var2 = new_var;
+	*(s16 *)&temp_v1->unkE = arg1;
+	*(s16 *)&temp_v1->unk10 = new_var2;
+	(*temp_v1).unk12 = arg3;
 }
 
 void func_800D9754_E8704(s16 arg0) {
@@ -8963,16 +8965,18 @@ s16 func_800DA260_E9210(s16 arg0, s16 arg1, s16 arg2) {
 	return temp_v0;
 }
 
-void func_800DA3A8_E9358(s16 arg0, s16 arg1) {
-    s16 *src;
-    s16 *dst;
+void func_800DA3A8_E9358(s16 arg0, s16 arg1)
+{
+	s16 *src;
+	s16 *dst;
 
-    func_800E52E8_F4298(D_80154318[arg0].coordinates[3], D_80154318[arg0].coordinates[4], D_80154318[arg0].coordinates[5], D_80154318[arg1].coordinates[0], D_80154318[arg1].coordinates[1], D_80154318[arg1].coordinates[2], D_80154318[arg1].unk14);
-    src = (s16 *)(s32)D_80154318[arg0].coordinates;
-    dst = (s16 *)(s32)D_80154318[arg1].coordinates;
-    dst[0] = src[3];
-    dst[1] = src[4];
-    dst[2] = src[5];
+	func_800E52E8_F4298(D_80154318[arg0].coordinates[3], D_80154318[arg0].coordinates[4], D_80154318[arg0].coordinates[5], D_80154318[arg1].coordinates[0], D_80154318[arg1].coordinates[1], D_80154318[arg1].coordinates[2], D_80154318[arg1].unk14);
+	src = (s16 *)(s32)D_80154318[arg0].coordinates;
+	dst = (s16 *)(s32)D_80154318[arg1].coordinates;
+	dst[0] = src[3];
+	dst[1] = src[4];
+	dst[2] = src[5];
+
 }
 s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s32 retval;
@@ -10206,10 +10210,10 @@ void func_800DDDE4_ECD94(u8 arg0, u8 arg1) {
 
 void func_800DDE1C_ECDCC(u8 arg0, u8 arg1)
 {
-  if (arg0 != 0xFF)
-  {
-	D_80156EF0[arg0].unkD = arg1;
-  }
+	if (arg0 != 0xFF)
+	{
+		D_80156EF0[arg0].unkD = arg1;
+	}
 }
 
 void func_800DDE54_ECE04(u8 arg0, s8 arg1) {
@@ -11620,10 +11624,10 @@ void func_800E32C4_F2274(void) {
 
 void func_800E35E0_F2590(u8 arg0)
 {
-  if (D_8013E344_14D2F4 < arg0)
-  {
-	D_8013E344_14D2F4 = arg0;
-  }
+	if (D_8013E344_14D2F4 < arg0)
+	{
+		D_8013E344_14D2F4 = arg0;
+	}
 }
 
 void func_800E360C_F25BC(void) {
