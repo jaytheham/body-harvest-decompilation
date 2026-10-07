@@ -3226,37 +3226,24 @@ void func_802DB9FC_31FB4C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DB9FC_31FB4C.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DBD18_31FE68(u8 arg0) {
 	AlienInstance *inst;
-	s16 hitpoints;
-	s32 rand;
+	s16 countdown;
 
 	inst = &alienInstances[arg0];
-	if (func_80084E54_93E04(D_80052B34, inst) < 0x1388) {
-		if (func_80084FE8_93F98(arg0, 0x8000)) {
-			if (func_800871CC_9617C(arg0, 0, 0)) {
-				rand = func_800038E0_44E0();
-				*(s16 *)&inst->unk1E = (s16)(rand % 0xF + 0xF);
-			} else {
-				hitpoints = *(s16 *)&inst->unk1E;
-				goto countdown;
-			}
-		} else {
-			func_800800DC_8F08C(arg0);
+	if ((func_80084E54_93E04((EntityInstance *)D_80052B34, (EntityInstance *)inst) < 0x1388) &&
+		(func_80084FE8_93F98(arg0, 0x8000) != 0)) {
+		if (func_800871CC_9617C(arg0, 0, 0) != 0) {
+			inst->unk1E = func_800038E0_44E0() % 0xF + 0xF;
 		}
 	} else {
-		func_800800DC_8F08C(arg0);
+		func_800800DC_8F08C((s32)arg0);
 	}
-	hitpoints = *(s16 *)&inst->unk1E;
-countdown:
-	if (hitpoints != 0) {
-		*(s16 *)&inst->unk1E = hitpoints - 1;
+	countdown = inst->unk1E;
+	if (countdown != 0) {
+		inst->unk1E = (s16)(countdown - 1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBD18_31FE68.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802DBDD0_31FF20(u8 arg0) {
