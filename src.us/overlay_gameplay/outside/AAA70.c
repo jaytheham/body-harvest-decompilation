@@ -2268,10 +2268,17 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
-// CURRENT(13000)
+// CURRENT(1402) - the cast was the whole 9730: `ghostPos = (AAA70Unk8014F618Head *)&D_8014F618;`
+// makes the base a variable, so IDO rematerialises the address per access (31 lui $at against the
+// target's 4). Spelling the head as a real member of the global (Unk8014F618.head, no cast, no pointer
+// local) makes every access a constant-address expression and IDO then keeps the base in a register:
+// 9730 -> 1542. Two declared-but-unused s32 at the head of the frame: 1542 -> 1402. Open: 520 instrs
+// against the target's 522, and the six f32 locals still home 8 bytes low (ours 0x50..0x64, target
+// 0x58..0x6C) - the remaining rows are that block plus the vertex x in $t3 where the target uses $s0.
 #ifdef NON_MATCHING
 void func_800A2260_B1210() {
-	AAA70Unk8014F618Head *ghostPos;
+	s32 pad0;
+	s32 pad1;
 	f32 sp6C;
 	f32 sp64;
 	f32 sp68;
@@ -2289,18 +2296,17 @@ void func_800A2260_B1210() {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
 	gDPPipeSync(D_8005BB2C++);
 
-	ghostPos = (AAA70Unk8014F618Head *)&D_8014F618;
-	sp8 = ghostPos->unk20;
-	sp64 = (f32)((f64)(ghostPos->unkC + ghostPos->unk18) * 0.5);
-	sp68 = (f32)((f64)(ghostPos->unk10 + ghostPos->unk1C) * 0.5);
-	sp6C = (f32)((f64)(ghostPos->unk14 + sp8) * 0.5);
-	sp58 = (f32)((f64)(ghostPos->unkC - ghostPos->unk18) * 0.5);
-	sp5C = (f32)((f64)(ghostPos->unk10 - ghostPos->unk1C) * 0.5);
-	sp60 = (f32)((f64)(ghostPos->unk14 - sp8) * 0.5);
+	sp8 = D_8014F618.head.unk20;
+	sp64 = (f32)((f64)(D_8014F618.head.unkC + D_8014F618.head.unk18) * 0.5);
+	sp68 = (f32)((f64)(D_8014F618.head.unk10 + D_8014F618.head.unk1C) * 0.5);
+	sp6C = (f32)((f64)(D_8014F618.head.unk14 + sp8) * 0.5);
+	sp58 = (f32)((f64)(D_8014F618.head.unkC - D_8014F618.head.unk18) * 0.5);
+	sp5C = (f32)((f64)(D_8014F618.head.unk10 - D_8014F618.head.unk1C) * 0.5);
+	sp60 = (f32)((f64)(D_8014F618.head.unk14 - sp8) * 0.5);
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 + ghostPos->unkC);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 + ghostPos->unk10);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 + ghostPos->unk14);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + D_8014F618.head.unkC);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + D_8014F618.head.unk10);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + D_8014F618.head.unk14);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2310,9 +2316,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 + sp64);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 + sp68);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 + sp6C);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + sp64);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + sp68);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + sp6C);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0;
@@ -2322,9 +2328,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 + ghostPos->unk18);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 + ghostPos->unk1C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 + ghostPos->unk20);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + D_8014F618.head.unk18);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + D_8014F618.head.unk1C);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + D_8014F618.head.unk20);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2334,9 +2340,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 + sp58);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 + sp5C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 + sp60);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + sp58);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + sp5C);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + sp60);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -2346,9 +2352,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)ghostPos->unk0;
-	D_8005BB34->v.ob[1] = (s16)(s32)ghostPos->unk4;
-	D_8005BB34->v.ob[2] = (s16)(s32)ghostPos->unk8;
+	D_8005BB34->v.ob[0] = (s16)(s32)D_8014F618.head.unk0;
+	D_8005BB34->v.ob[1] = (s16)(s32)D_8014F618.head.unk4;
+	D_8005BB34->v.ob[2] = (s16)(s32)D_8014F618.head.unk8;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -2358,9 +2364,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 - sp58);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 - sp5C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 - sp60);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - sp58);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - sp5C);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - sp60);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -2370,9 +2376,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 - ghostPos->unk18);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 - ghostPos->unk1C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 - ghostPos->unk20);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - D_8014F618.head.unk18);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - D_8014F618.head.unk1C);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - D_8014F618.head.unk20);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2382,9 +2388,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 - sp64);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 - sp68);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 - sp6C);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - sp64);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - sp68);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - sp6C);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0;
@@ -2394,9 +2400,9 @@ void func_800A2260_B1210() {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(ghostPos->unk0 - ghostPos->unkC);
-	D_8005BB34->v.ob[1] = (s16)(s32)(ghostPos->unk4 - ghostPos->unk10);
-	D_8005BB34->v.ob[2] = (s16)(s32)(ghostPos->unk8 - ghostPos->unk14);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - D_8014F618.head.unkC);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - D_8014F618.head.unk10);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - D_8014F618.head.unk14);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
