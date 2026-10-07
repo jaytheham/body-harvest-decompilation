@@ -1978,83 +1978,75 @@ void func_80087E3C_16FEFC(void) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(1724) - permuter: single-pointer form (s2 merged into s1), 2451 -> 1724
 // AI - Render slot type 4 effects: animated billboards with dual textures
-void func_800881C0_170280(void) {
-	Unk89834Pos *spAC;
-	Vec3f sp9C;
-	s16 var_t2;
-	s32 var_s6;
-	Unk89834Pos *var_s3;
-	Unk84EECEffect *s2;
-	Unk89834Pos *s1;
-
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-
-	D_800FB6E5 = 0x20;
-	D_800FB6E6 = 0x20;
-	var_t2 = D_800FB79A;
-	var_s6 = 0;
-
-	if ((var_t2 != -5) && (var_t2 != -6)) {
-		var_s3 = spAC;
-		do {
-			gDPPipeSync(D_8005BB2C++);
-			if (var_s6 == 0) {
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DA00));
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPLoadSync(D_8005BB2C++);
-				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
-				var_s6 = 1;
-				D_800FB6E4 = var_s3->unk9 - 0x28;
-			} else {
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DC00));
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPLoadSync(D_8005BB2C++);
-				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
-				var_s6 = 0;
-				D_800FB6E4 = var_s3->unk9 + var_s3->unkA;
-			}
-
-			gDPPipeSync(D_8005BB2C++);
-
-			s2 = &D_800FB7B0[var_t2];
-			s1 = (Unk89834Pos *)&s2->unk8;
-			var_s3 = s1;
-
-			sp9C.x = D_800E7410.x * 4.0f - (f32)s2->unk8;
-			sp9C.y = D_800E7410.y * 4.0f - (f32)s2->unkA;
-			sp9C.z = D_800E7410.z * 4.0f - (f32)s2->unkC;
-			func_80083014_16B0D4(&sp9C, &sp9C);
-
-			D_800FB6D0.x = (f32)s1->unk0 + sp9C.x * (f32)s1->unkD;
-			D_800FB6D0.y = (f32)s1->unk2 + sp9C.y * (f32)s1->unkD;
-			D_800FB6D0.z = (f32)s1->unk4 + sp9C.z * (f32)s1->unkD;
-			D_800FB6DC = &s1->unk6;
-			D_800FB6E0 = (f32)s2->unk2;
-			D_800FB6E4 = s1->unk9 + s1->unkA;
-			func_8008A1D8_172298();
-
-			var_t2 = s2->unk4;
-		} while ((var_t2 != -5) && (var_t2 != -6));
-		if (var_t2 == -6) {
-			spAC = var_s3;
-		}
-	}
+void func_800881C0_170280(void)
+{
+  Unk89834Pos *spAC;
+  Vec3f sp9C;
+  s16 var_t2;
+  s32 var_s6;
+  Unk89834Pos *var_s3;
+  Unk89834Pos *s1;
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+  D_800FB6E5 = 0x20;
+  D_800FB6E6 = 0x20;
+  var_t2 = D_800FB79A;
+  var_s6 = 0;
+  if ((var_t2 != (-5)) && (var_t2 != (-6)))
+  {
+    var_s3 = spAC;
+    do
+    {
+      gDPPipeSync(D_8005BB2C++);
+      if (var_s6 == 0)
+      {
+        gDPSetTextureImage(D_8005BB2C++, 4, G_IM_SIZ_16b, 1, ((u32) D_100DA00) & 0x1FFFFFFF);
+        gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_16b, 0, 0x0000, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+        gDPLoadSync(D_8005BB2C++);
+        gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
+        gDPPipeSync(D_8005BB2C++);
+        gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0x0000, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+        gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
+        var_s6 = 1;
+        D_800FB6E4 = var_s3->unk9 - 0x28;
+      }
+      else
+      {
+        gDPSetTextureImage(D_8005BB2C++, 4, G_IM_SIZ_16b, 1, ((u32) D_100DC00) & 0x1FFFFFFF);
+        gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_16b, 0, 0x0000, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+        gDPLoadSync(D_8005BB2C++);
+        gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
+        gDPPipeSync(D_8005BB2C++);
+        gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0x0000, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+        gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
+        var_s6 = 0;
+        D_800FB6E4 = var_s3->unk9 + var_s3->unkA;
+      }
+      gDPPipeSync(D_8005BB2C++);
+      s1 = &D_800FB7B0[var_t2];
+      s1 = (Unk89834Pos *) (&s1->unk8);
+      var_s3 = s1;
+      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) s1->unk8);
+      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) s1->unkA);
+      sp9C.z = (D_800E7410.z * 4.0f) - ((f32) s1->unkC);
+      func_80083014_16B0D4(&sp9C, &sp9C);
+      D_800FB6D0.x = ((f32) s1->unk0) + (sp9C.x * ((f32) s1->unkD));
+      D_800FB6D0.y = ((f32) s1->unk2) + (sp9C.y * ((f32) s1->unkD));
+      D_800FB6D0.z = ((f32) s1->unk4) + (sp9C.z * ((f32) s1->unkD));
+      D_800FB6DC = &s1->unk6;
+      D_800FB6E0 = (f32) s1->unk2;
+      D_800FB6E4 = s1->unk9 + s1->unkA;
+      func_8008A1D8_172298();
+      var_t2 = s1->unk4;
+    }
+    while ((var_t2 != (-5)) && (var_t2 != (-6)));
+    if (var_t2 == (-6))
+    {
+      spAC = var_s3;
+    }
+  }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800881C0_170280.s")
@@ -2658,7 +2650,6 @@ void func_80089E54_171F14(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-#ifdef NON_MATCHING
 // AI - Render an oriented textured quad (camera-facing billboard with rotation)
 void func_8008A1D8_172298(void) {
 	f32 sp4;
@@ -2668,12 +2659,18 @@ void func_8008A1D8_172298(void) {
 	f32 temp_f16;
 	f32 temp_f18;
 
-	temp_f0 = D_800FB6E0 * D_800FB6A8[0];
-	temp_f12 = D_800FB6E0 * D_800FB6A8[1];
-	temp_f14 = D_800FB6E0 * D_800FB6A8[2];
-	temp_f16 = D_800FB6E0 * D_800FB6A8[3];
-	temp_f18 = D_800FB6E0 * D_800FB6A8[4];
-	sp4 = D_800FB6E0 * D_800FB6A8[5];
+	temp_f0 = D_800FB6E0;
+	temp_f0 *= D_800FB6A8[0];
+	temp_f12 = D_800FB6E0;
+	temp_f12 *= D_800FB6A8[1];
+	temp_f14 = D_800FB6E0;
+	temp_f14 *= D_800FB6A8[2];
+	temp_f16 = D_800FB6E0;
+	temp_f16 *= D_800FB6A8[3];
+	temp_f18 = D_800FB6E0;
+	temp_f18 *= D_800FB6A8[4];
+	sp4 = D_800FB6E0;
+	sp4 *= D_800FB6A8[5];
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800FB6D0.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800FB6D0.y + temp_f12);
@@ -2726,9 +2723,6 @@ void func_8008A1D8_172298(void) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A1D8_172298.s")
-#endif
 
 // AI - Initialize/clear the UnkFC8E8Entry sprite table
 void func_8008A59C_17265C(void) {

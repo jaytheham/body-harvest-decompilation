@@ -4347,14 +4347,18 @@ void func_800FD4D4_10C484(void *arg0) {
 	}
 }
 
-// CURRENT(762)
-#ifdef NON_MATCHING
 // Set new player vehicle
+// `vehicleGroup` is deliberately declared but unused: the original reserves a 4-byte stack
+// home at 0x28 that no instruction touches, and this declaration reproduces it (the
+// first-declared local gets the highest offset, so `wasAudioActive` stays at 0x2C).
+// The index into vehicleInstances must stay inline: a named `vehicleGroup` used as the
+// subscript allocates a variable register (a0) instead of the target's first temp (t3).
+// AI - Vehicle entry path; reads D_80052AE8, D_80052B34 and D_8013FD88.
 void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	Unk80052B2C *playerData;
 	VehicleType *type;
-	s16 vehicleGroup;
 	s32 wasAudioActive;
+	s16 vehicleGroup;
 
 	wasAudioActive = 0;
 	if (func_800E60CC_F507C(2, *((u8 *)D_80052B2C + 0x35)) != 0) {
@@ -4366,8 +4370,7 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	playerData->unk34 = arg1;
 	D_80159318 = 0;
 
-	vehicleGroup = playerData->unk34;
-	playerData->unk38 = &vehicleInstances[vehicleGroup];
+	playerData->unk38 = &vehicleInstances[playerData->unk34];
 	D_80052B34 = playerData->unk38;
 	type = &vehicleTypes[D_80052B34->unk1A];
 
@@ -4429,9 +4432,6 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	D_8004DCB4 = (f32)D_80052B34->unk0;
 	D_8004DCB8 = (f32)D_80052B34->unk4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD510_10C4C0.s")
-#endif
 
 // CURRENT(7084)
 #ifdef NON_MATCHING

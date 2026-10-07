@@ -985,19 +985,16 @@ s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4DA8_318EF8.s")
 #endif
 
-#ifdef NON_MATCHING
+// AI - Level state setup over D_802E7A60, D_802E7C30 and D_802E7C32.
 void func_802D4EE4_319034(s16 arg0) {
 	s16 sp1E;
 
 	if (arg0 != -3) {
-		sp1E = D_80154318[arg0].unk14;
+		sp1E = *(s16 *)&D_80154318[arg0].unk14;
 		func_800C1E24_D0DD4(arg0, 0xB, 1);
 		func_800C1E24_D0DD4(sp1E, 0xB, 1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4EE4_319034.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802D4F4C_31909C(void) {
@@ -2495,18 +2492,12 @@ void func_802D93D8_31D528(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D93D8_31D528.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_802D95F8_31D748(s32 arg0) {
-	u8 saved_index;
-
-	alienInstances[arg0 & 0xFF].unk20 &= ~ALIEN_FLAG_UNK5;
-	saved_index = arg0 & 0xFF;
-	func_80137468_146418(arg0 & 0xFF, 0x1FB);
-	func_8008735C_9630C(saved_index);
+// AI - Alien-type callback that calls func_8008735C_9630C; reads alienInstances and alienTypes.
+void func_802D95F8_31D748(u8 arg0) {
+	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNK5;
+	func_80137468_146418(arg0, 0x1FB);
+	func_8008735C_9630C(arg0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D95F8_31D748.s")
-#endif
 
 // CURRENT(2307)
 #ifdef NON_MATCHING
@@ -4512,13 +4503,14 @@ s16 func_802DFF04_324054(u8 arg0) {
 	return D_8014DD50[chain].unkD;
 }
 
-#ifdef NON_MATCHING
+// AI - Walks D_8014DD50 to the tip of the alien chain and returns that entry's unkD.
 s16 func_802DFF84_3240D4(u8 arg0) {
-	return D_8014DD50[D_8014DD50[func_802DFF04_324054(arg0 & 0xFF)].unkC].unkD;
+	s32 chain;
+
+	chain = func_802DFF04_324054(arg0);
+	chain = D_8014DD50[chain].unkC;
+	return D_8014DD50[chain].unkD;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DFF84_3240D4.s")
-#endif
 
 s16 func_802DFFC8_324118(u8 arg0) {
 	s32 chain;
