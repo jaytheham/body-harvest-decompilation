@@ -3405,6 +3405,7 @@ typedef union {
 
 typedef union {
 	s32 word;
+	u8 bytes[4];
 	struct {
 		s16 high;
 		s16 low;

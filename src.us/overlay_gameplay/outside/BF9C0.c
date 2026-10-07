@@ -47,14 +47,14 @@ const f64 D_80142E88_151E38[1] = {0.1};
 /* Initial crater radius (legacy) */
 const f32 D_80142E90_151E40[1] = {0.10000000149011612f};
 
-/* Unused zero-initialized variables */
-s32 D_8013D940_14C8F0 = 0;
-s32 D_8013D944_14C8F4 = 0;
-s32 D_8013D948_14C8F8 = 0;
+/* Water palette color words (first byte updated during rendering). */
+SignedWord D_8013D940_14C8F0 = { 0 };
+SignedWord D_8013D944_14C8F4 = { 0 };
+SignedWord D_8013D948_14C8F8 = { 0 };
 /* RGBA black colors for ground tile blending */
-s32 D_8013D94C_14C8FC = 0xFF000000;
-s32 D_8013D950_14C900 = 0xFF000000;
-s32 D_8013D954_14C904 = 0xFF000000;
+SignedWord D_8013D94C_14C8FC = { 0xFF000000 };
+SignedWord D_8013D950_14C900 = { 0xFF000000 };
+SignedWord D_8013D954_14C904 = { 0xFF000000 };
 /* Ambient and directional light for indoor/no-lighting mode */
 Ambient D_8013D958_14C908 = { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } };
 Light D_8013D960_14C910 = { { { 0xFF, 0xFF, 0xFF }, 0x00, { 0xFF, 0xFF, 0xFF }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } };
@@ -68,8 +68,8 @@ u8 D_8013D988_14C938[0x20] = {
 	0x2E, 0x65, 0x05, 0x50, 0xAC, 0x8E, 0xAD, 0xFC,
 	0xAF, 0x4A, 0x76, 0xD8, 0xD3, 0x00, 0x00, 0x00,
 };
-/* Unused */
-s32 D_8013D9A8_14C958 = 0;
+/* Stage gate transition timer in the high halfword. */
+SignedWord D_8013D9A8_14C958 = { 0 };
 /* Dynamic lighting shade value */
 u8 D_8013D9AC_14C95C = 0;
 
@@ -1321,7 +1321,7 @@ void func_800B415C_C310C(s16 arg0, s16 arg1) {
 	u8 *entry;
 
 	idx = D_8014FDC8;
-	entry = D_8014FD48 + idx * 2;
+	entry = &D_8014FD48[idx * 2];
 	entry[0] = arg0 + 0x80;
 	entry[1] = arg1 + 0x80;
 	D_8014FDC8 = (idx + 1) % 64;
@@ -1375,11 +1375,11 @@ void func_800B42B0_C3260(s32 arg0) {
 	for (sp6F = 0; sp6F < 0x13; sp6F++) {
 		temp_t9 = D_8014F89C + ((D_8014F89D + sp6F) << 8) + 0x12;
 
-		sp60[0] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-0x100] & 0x3F;
-		sp60[1] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x3F;
+		sp60[0] = (&sp5C[(s32)temp_t9])[-0x100] & 0x3F;
+		sp60[1] = (&sp5C[(s32)temp_t9])[-1] & 0x3F;
 		sp60[2] = sp5C[temp_t9] & 0x3F;
-		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
-		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
+		sp60[3] = (&sp5C[(s32)temp_t9])[1] & 0x3F;
+		sp60[4] = (&sp5C[(s32)temp_t9])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + sp6F), (D_8014F89C + 0x12), sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
@@ -1408,7 +1408,7 @@ void func_800B42B0_C3260(s32 arg0) {
 		}
 
 		D_80151DD8.tiles[sp59][D_8014F899].tileType = sp5C[temp_t9];
-		if (((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x800) {
+		if ((&sp5C[(s32)temp_t9])[-1] & 0x800) {
 			D_80151DD8.tiles[sp59][D_8014F899].r = (sp68[0] / 4) * 3;
 			D_80151DD8.tiles[sp59][D_8014F899].b = (sp68[2] / 4) * 3;
 			D_80151DD8.tiles[sp59][D_8014F899].g = (sp68[1] / 4) * 3;
@@ -1451,11 +1451,11 @@ void func_800B4660_C3610(s32 arg0) {
 	for (sp6F = 0; sp6F < 0x13; sp6F++) {
 		temp_t9 = D_8014F89C + ((D_8014F89D + sp6F) << 8);
 
-		sp60[0] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-0x100] & 0x3F;
-		sp60[1] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x3F;
+		sp60[0] = (&sp5C[(s32)temp_t9])[-0x100] & 0x3F;
+		sp60[1] = (&sp5C[(s32)temp_t9])[-1] & 0x3F;
 		sp60[2] = sp5C[temp_t9] & 0x3F;
-		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
-		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
+		sp60[3] = (&sp5C[(s32)temp_t9])[1] & 0x3F;
+		sp60[4] = (&sp5C[(s32)temp_t9])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + sp6F), D_8014F89C, sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
@@ -1484,7 +1484,7 @@ void func_800B4660_C3610(s32 arg0) {
 		}
 
 		D_80151DD8.tiles[sp59][D_8014F899].tileType = sp5C[temp_t9];
-		if (((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x800) {
+		if ((&sp5C[(s32)temp_t9])[-1] & 0x800) {
 			D_80151DD8.tiles[sp59][D_8014F899].r = (sp68[0] / 4) * 3;
 			D_80151DD8.tiles[sp59][D_8014F899].b = (sp68[2] / 4) * 3;
 			D_80151DD8.tiles[sp59][D_8014F899].g = (sp68[1] / 4) * 3;
@@ -1524,11 +1524,11 @@ void func_800B49A4_C3954(s32 arg0) {
 	for (sp6F = 0; sp6F < 0x13; sp6F++) {
 		temp_t9 = (D_8014F89C + sp6F) + ((D_8014F89D + 0x12) << 8);
 
-		sp60[0] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-0x100] & 0x3F;
-		sp60[1] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x3F;
+		sp60[0] = (&sp5C[(s32)temp_t9])[-0x100] & 0x3F;
+		sp60[1] = (&sp5C[(s32)temp_t9])[-1] & 0x3F;
 		sp60[2] = sp5C[temp_t9] & 0x3F;
-		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
-		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
+		sp60[3] = (&sp5C[(s32)temp_t9])[1] & 0x3F;
+		sp60[4] = (&sp5C[(s32)temp_t9])[0x100] & 0x3F;
 
 		func_800B1814_C07C4((D_8014F89D + 0x12), (D_8014F89C + sp6F), sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
@@ -1557,7 +1557,7 @@ void func_800B49A4_C3954(s32 arg0) {
 		}
 
 		D_80151DD8.tiles[D_8014F898][sp59].tileType = sp5C[temp_t9];
-		if (((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x800) {
+		if ((&sp5C[(s32)temp_t9])[-1] & 0x800) {
 			D_80151DD8.tiles[D_8014F898][sp59].r = (sp68[0] / 4) * 3;
 			D_80151DD8.tiles[D_8014F898][sp59].b = (sp68[2] / 4) * 3;
 			D_80151DD8.tiles[D_8014F898][sp59].g = (sp68[1] / 4) * 3;
@@ -1598,11 +1598,11 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 	for (sp6F = 0; sp6F < 0x13; sp6F++) {
 		temp_t9 = (D_8014F89C + sp6F) + (D_8014F89D << 8);
 
-		sp60[0] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-0x100] & 0x3F;
-		sp60[1] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x3F;
+		sp60[0] = (&sp5C[(s32)temp_t9])[-0x100] & 0x3F;
+		sp60[1] = (&sp5C[(s32)temp_t9])[-1] & 0x3F;
 		sp60[2] = sp5C[temp_t9] & 0x3F;
-		sp60[3] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[1] & 0x3F;
-		sp60[4] = ((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[0x100] & 0x3F;
+		sp60[3] = (&sp5C[(s32)temp_t9])[1] & 0x3F;
+		sp60[4] = (&sp5C[(s32)temp_t9])[0x100] & 0x3F;
 
 		func_800B1814_C07C4(D_8014F89D, (D_8014F89C + sp6F), sp54);
 		func_800B2CF0_C1CA0(sp60, sp54, sp68);
@@ -1631,7 +1631,7 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 		}
 
 		D_80151DD8.tiles[D_8014F898][sp59].tileType = sp5C[temp_t9];
-		if (((u16 *)&((u8 *)sp5C)[temp_t9 * 2])[-1] & 0x800) {
+		if ((&sp5C[(s32)temp_t9])[-1] & 0x800) {
 			D_80151DD8.tiles[D_8014F898][sp59].r = (sp68[0] / 4) * 3;
 			D_80151DD8.tiles[D_8014F898][sp59].b = (sp68[2] / 4) * 3;
 			D_80151DD8.tiles[D_8014F898][sp59].g = (sp68[1] / 4) * 3;
@@ -1658,11 +1658,10 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	s8 ringY;
 	u8 rowWrap;
 	s32 col;
-	s32 colWrap;
 	s16 scrollX;
 	s16 scrollY;
-	s16 *tileCenter;
-	u8 *ringRow;
+	RingEntry *tileCenter;
+	RingEntry *ringRow;
 	u8 *shade;
 	u8 *shadeMix;
 	s8 edgeParityX;
@@ -1701,7 +1700,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	do {
 		u8 ringCol;
 
-		ringRow = (u8 *)&D_80151DD8.tiles[color0][0];
+		ringRow = D_80151DD8.tiles[color0];
 		shade = &D_80152740[(color0 * 0x39) + (ringX * 3)];
 		worldBaseY = ((s8)color2 - 0x80) << 8;
 		edgeParityY = color2 & 1;
@@ -1712,10 +1711,10 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 		ringCol = 0;
 
 		do {
-			s16 *tileEast;
-			s16 *tileWest;
-			s16 *tileNorth;
-			s16 *tileSouth;
+			RingEntry *tileEast;
+			RingEntry *tileWest;
+			RingEntry *tileNorth;
+			RingEntry *tileSouth;
 			s32 c0;
 			s32 c1;
 			s32 c2;
@@ -1737,54 +1736,53 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 
 			worldY = worldBaseY;
 
-			colWrap = (col * 6);
-			tileCenter = (s16 *)(ringRow + colWrap);
+			tileCenter = &ringRow[col];
 
 			if (col != 0x12) {
-				tileEast = (s16 *)(ringRow + colWrap + 6);
+				tileEast = &ringRow[col + 1];
 			} else {
-				tileEast = (s16 *)ringRow;
+				tileEast = &ringRow[0];
 			}
 
 			if (col != 0) {
-				tileWest = (s16 *)(ringRow + colWrap - 6);
+				tileWest = &ringRow[col - 1];
 			} else {
-				tileWest = (s16 *)(ringRow + 0x6C);
+				tileWest = &ringRow[18];
 			}
 
 			if (color0 != 0x12) {
-				tileSouth = &D_80151DD8.tiles[color0 + 1][col].tileType;
+				tileSouth = &D_80151DD8.tiles[color0 + 1][col];
 			} else {
-				tileSouth = &D_80151DD8.tiles[0][col].tileType;
+				tileSouth = &D_80151DD8.tiles[0][col];
 			}
 
 			if (color0 != 0) {
-				tileNorth = &D_80151DD8.tiles[color0 - 1][col].tileType;
+				tileNorth = &D_80151DD8.tiles[color0 - 1][col];
 			} else {
-				tileNorth = &D_80151DD8.tiles[18][col].tileType;
+				tileNorth = &D_80151DD8.tiles[18][col];
 			}
 
 			shadeMix = &shade[(col * 3) - (ringX * 3)];
 			c0 = shadeMix[0];
 			if (c0 != 0) {
-				c0 += (u8)((u8 *)tileCenter)[2];
+				c0 += tileCenter->r;
 				if (c0 > 0xFF) {
 					c0 = 0xFF;
 				}
 
-				c1 = shadeMix[1] + (u8)((u8 *)tileCenter)[3];
+				c1 = shadeMix[1] + tileCenter->g;
 				if (c1 > 0xFF) {
 					c1 = 0xFF;
 				}
 
-				c2 = shadeMix[2] + (u8)((u8 *)tileCenter)[4];
+				c2 = shadeMix[2] + tileCenter->b;
 				if (c2 > 0xFF) {
 					c2 = 0xFF;
 				}
 			} else {
-				c0 = (u8)((u8 *)tileCenter)[2];
-				c1 = (u8)((u8 *)tileCenter)[3];
-				c2 = (u8)((u8 *)tileCenter)[4];
+				c0 = tileCenter->r;
+				c1 = tileCenter->g;
+				c2 = tileCenter->b;
 			}
 			blur0 = c0;
 			blur1 = c1;
@@ -1806,7 +1804,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 				hueY = D_8013DAD8_14CA88[currentLevel - 1];
 			}
 
-			cellH = ((*tileCenter) & 0x3F) << 5;
+			cellH = (tileCenter->tileType & 0x3F) << 5;
 			posZ = cellH;
 
 			if (scrollX < 0) {
@@ -1823,7 +1821,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			worldX = worldY;
 			if (tilesMinX < worldX) {
 				posX = worldX + waveX - 0x100;
-				inA = ((*tileWest) & 0x3F) << 5;
+				inA = (tileWest->tileType & 0x3F) << 5;
 				posZ = func_800B0A10_BF9C0(inA, cellH, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = waveX;
@@ -1832,7 +1830,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 				}
 			} else if (worldX < (scrollX - 0x901)) {
 				posX = worldX + waveX;
-				inA = ((*tileEast) & 0x3F) << 5;
+				inA = (tileEast->tileType & 0x3F) << 5;
 				posZ = func_800B0A10_BF9C0(cellH, inA, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = 0xFF - waveX;
@@ -1856,7 +1854,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 
 			if (tilesMinY < worldY) {
 				posY = worldY + waveY - 0x100;
-				inA = ((*tileNorth) & 0x3F) << 5;
+				inA = (tileNorth->tileType & 0x3F) << 5;
 				posZ = func_800B0A10_BF9C0(inA, posZ, waveY, 0x100);
 				if (edgeParityY == 1) {
 					hueY = waveY;
@@ -1865,7 +1863,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 				}
 			} else if (worldY < (scrollY - 0x901)) {
 				posY = worldY + waveY;
-				inA = ((*tileSouth) & 0x3F) << 5;
+				inA = (tileSouth->tileType & 0x3F) << 5;
 				posZ = func_800B0A10_BF9C0(posZ, inA, waveY, 0x100);
 				if (edgeParityY == 1) {
 					hueY = 0xFF - waveY;
@@ -1983,11 +1981,11 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #endif
 
 // CURRENT(1202)
-s32 func_800B5EE4_C4E94(u16 arg0, u8 *arg1, s32 arg2, u8 arg3, u8 arg4) {
+s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4) {
 
 	if (arg0 & 0x8000) {
 		if (arg0 & 0x400) {
-			D_8014F8A8[D_8014FD28].unk0 = (Vtx *)&(&arg1[(arg4 * 9) << 5])[arg3 * 16];
+			D_8014F8A8[D_8014FD28].unk0 = &(&arg1[arg4 * 18])[arg3];
 			D_8014F8A8[D_8014FD28].unk4 = (arg0 & 0x3C0) >> 6;
 			D_8014F8A8[D_8014FD28].unk5 = (arg0 & 0x4000) >> 14;
 			D_8014F8A8[D_8014FD28].unk6 = (arg0 & 0x2000) >> 13;
@@ -1998,7 +1996,7 @@ s32 func_800B5EE4_C4E94(u16 arg0, u8 *arg1, s32 arg2, u8 arg3, u8 arg4) {
 			return 0;
 		}
 
-		D_8014F8A8[D_8014F89A].unk0 = (Vtx *)&(&arg1[(arg4 * 9) << 5])[arg3 * 16];
+		D_8014F8A8[D_8014F89A].unk0 = &(&arg1[arg4 * 18])[arg3];
 		D_8014F8A8[D_8014F89A].unk4 = (arg0 & 0x3C0) >> 6;
 		D_8014F8A8[D_8014F89A].unk5 = (arg0 & 0x4000) >> 14;
 		D_8014F8A8[D_8014F89A].unk6 = (arg0 & 0x2000) >> 13;
@@ -2076,7 +2074,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * 5) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2148,7 +2146,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2216,7 +2214,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2284,7 +2282,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, (u8 *)arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2569,17 +2567,17 @@ s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
   var_t2 = 0;
   if ((xPosInTile + zPosInTile) < 0x100U)
   {
-	var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x0) & 0x3F;
-	var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
-	var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
+	var_t0 = D_80052A94[zPosition >> 8].col[xPosition >> 8] & 0x3F;
+	var_t1 = ((&D_80052A94[zPosition >> 8].col[xPosition >> 8])[1] & 0x3F) - var_t0;
+	var_t2 = ((&D_80052A94[zPosition >> 8])[1].col[xPosition >> 8] & 0x3F) - var_t0;
   }
   else
   {
 	xPosInTile = 0x100 - xPosInTile;
 	zPosInTile = 0x100 - zPosInTile;
-	var_t0 = *(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x202) & 0x3F;
-	var_t1 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x200) & 0x3F) - var_t0;
-	var_t2 = (*(u16 *)((u8 *)D_80052A94 + ((zPosition >> 8) << 9) + ((xPosition >> 8) << 1) + 0x2) & 0x3F) - var_t0;
+	var_t0 = (&D_80052A94[zPosition >> 8])[1].col[(xPosition >> 8) + 1] & 0x3F;
+	var_t1 = ((&D_80052A94[zPosition >> 8])[1].col[xPosition >> 8] & 0x3F) - var_t0;
+	var_t2 = ((&D_80052A94[zPosition >> 8].col[xPosition >> 8])[1] & 0x3F) - var_t0;
   }
   return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
 }
@@ -3332,7 +3330,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	f32 delta;
 
 
-	water = &((Unk80052B2C *)&D_80052AE8)[arg0 & 0xFF];
+	water = (&D_80052AE8)[arg0 & 0xFF];
 	waterX = water->unk3C;
 	waterZ = water->unk3E;
 	hiddenCount = 0;
@@ -3355,16 +3353,16 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	}
 
 	palette = &D_8013D988_14C938[(currentLevel * 6) - 6];
-	*(u8 *)&D_8013D940_14C8F0 = palette[0];
-	*(u8 *)&D_8013D944_14C8F4 = palette[1];
-	*(u8 *)&D_8013D948_14C8F8 = palette[2];
-	*(u8 *)&D_8013D94C_14C8FC = palette[3];
-	*(u8 *)&D_8013D950_14C900 = palette[4];
-	*(u8 *)&D_8013D954_14C904 = palette[5];
+	D_8013D940_14C8F0.bytes[0] = palette[0];
+	D_8013D944_14C8F4.bytes[0] = palette[1];
+	D_8013D948_14C8F8.bytes[0] = palette[2];
+	D_8013D94C_14C8FC.bytes[0] = palette[3];
+	D_8013D950_14C900.bytes[0] = palette[4];
+	D_8013D954_14C904.bytes[0] = palette[5];
 
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
-	gDPSetEnvColor(D_8005BB2C++, D_8013D940_14C8F0, D_8013D944_14C8F4, D_8013D948_14C8F8, 0xFF);
-	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_8013D94C_14C8FC, D_8013D950_14C900, D_8013D954_14C904, 0xFF);
+	gDPSetEnvColor(D_8005BB2C++, D_8013D940_14C8F0.word, D_8013D944_14C8F4.word, D_8013D948_14C8F8.word, 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_8013D94C_14C8FC.word, D_8013D950_14C900.word, D_8013D954_14C904.word, 0xFF);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 1, G_TX_RENDERTILE, G_ON);
@@ -3518,7 +3516,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	n_alSynFreeFX(hiddenCount);
 
 	for (batch = 3; batch >= 0; batch--) {
-		gSPVertex(D_8005BB2C++, (Vtx*)((u32)(D_8005BB34 - (batch * 0x12)) - 0x1B0), 0x1B, 0);
+		gSPVertex(D_8005BB2C++, &(&D_8005BB34[-(batch * 0x12)])[-0x1B], 0x1B, 0);
 
 		for (row = 0; row < 2; row++) {
 			for (col = 0; col < 8; col++) {
@@ -3693,7 +3691,7 @@ void func_800BB5E0_CA590(void) {
 		f64 texScale;
 
 
-		linkTable = (ShieldWallLink *)(D_801479B0_156960 - 0x80);
+		linkTable = (ShieldWallLink *)D_801479B0_156960[-0x80];
 		texScale = D_80142E68_151E18[0];
 
 		for (i = 0; i < linkCount; i++) {
@@ -4453,14 +4451,14 @@ void func_800BD8B8_CC868(void) {
 					}
 					func_800B0C80_BFC30();
 					func_800FAC90_109C40();
-					*(s16*)&D_8013D9A8_14C958 = 30;
+					D_8013D9A8_14C958.halves.high = 30;
 				}
 			}
 		}
 	}
 
-	if (*(s16*)&D_8013D9A8_14C958 > 0) {
-		*(s16*)&D_8013D9A8_14C958 -= 1;
+	if (D_8013D9A8_14C958.halves.high > 0) {
+		D_8013D9A8_14C958.halves.high -= 1;
 	}
 }
 
@@ -4743,7 +4741,7 @@ void func_800BED30_CDCE0(void) {
 	f32 var_f20;
 	f32 var_f20_2;
 	f32 var_f8;
-	s16 *temp_v0;
+	u16 *temp_v0;
 	s16 temp_a0;
 	s16 temp_t3;
 	s16 temp_t6;
@@ -4786,7 +4784,7 @@ void func_800BED30_CDCE0(void) {
 				var_t0 = (u32)(((s32)sp4A >> 2) + ((var_f20 * (f32)sp4A) * 0.75)) & 0xFF;
 				var_t1 = (u32)(((s32)sp49 >> 2) + (((var_f20 * (f32)sp49) * 0.75)) & 0xFF;
 			}
-			temp_v0 = (s16 *)((u8 *)&D_802D4AD0 + (var_s0 * 2));
+			temp_v0 = &D_802D4AD0[var_s0];
 			temp_t3 = var_v1 << 0xB;
 			temp_t6 = temp_t3 + (var_t0 << 6);
 			var_s0 += 1;
