@@ -146,34 +146,37 @@ const char D_80038158_38D58[] = "    Start of ZBuffer: %8x\n";
 const char D_80038174_38D74[] = "                Free: %x, (%.2fK)\n";
 const char D_80038198_38D98[] = "------------------------------\n";
 
-#ifdef NON_MATCHING
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 var_s0;
 	s32 var_s1;
 	s32 var_s2;
-	s32 var_v1;
-	OSIoMesg sp58;
 	s32 temp_v0;
+	OSIoMesg sp58;
+	/* The original TU saw no prototype for osRecvMesg, so the `1U` flag keeps
+	   its unsigned type through the call. include/2.0I/PR/os.h declares the
+	   flag `s32`, which coerces it to a signed node and merges it with the
+	   `case 1:` constant (move $a2,$s4 where the ROM materialises $a2 fresh).
+	   Retyping the shared header instead breaks func_800720F4_810A4. */
+	extern s32 osRecvMesg();
 
-	if (1 == D_80068078) {
+	if (D_80068078 == 1U) {
 		return 0;
 	}
 	osWritebackDCacheAll();
 	var_s1 = arg1;
 	var_s2 = arg2;
-	var_v1 = arg3 / 2048;
-	var_s0 = var_v1 - 1;
-	if (var_v1 != 0) {
+	var_s0 = arg3 / 2048 - 1;
+	if (arg3 / 2048 != 0) {
 		do {
 			osPiStartDma(&sp58, 0, 0, var_s2, var_s1, 0x800, arg0);
-			osRecvMesg(arg0, 0, 1);
+			osRecvMesg(arg0, 0, 1U);
 			temp_v0 = func_8001F6E0_202E0();
 			switch (temp_v0) {
-			case 1:
-				osSyncPrintf(D_80037794_38394);
-				break;
 			case 2:
 				osSyncPrintf(D_80037780_38380);
+				break;
+			case 1:
+				osSyncPrintf(D_80037794_38394);
 				break;
 			case 4:
 				osSyncPrintf(D_800377A8_383A8);
@@ -183,17 +186,17 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 			var_s1 += 0x800;
 		} while (var_s0--);
 	}
-	temp_v0 = arg3 - (var_v1 << 0xB);
+	temp_v0 = arg3 - ((arg3 / 2048) << 0xB);
 	if (temp_v0 != 0) {
 		osPiStartDma(&sp58, 0, 0, var_s2, var_s1, temp_v0, arg0);
-		osRecvMesg(arg0, 0, 1);
+		osRecvMesg(arg0, 0, 1U);
 		temp_v0 = func_8001F6E0_202E0();
 		switch (temp_v0) {
-		case 1:
-			osSyncPrintf(D_800377D0_383D0);
-			break;
 		case 2:
 			osSyncPrintf(D_800377BC_383BC);
+			break;
+		case 1:
+			osSyncPrintf(D_800377D0_383D0);
 			break;
 		case 4:
 			osSyncPrintf(D_800377E4_383E4);
@@ -207,9 +210,6 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	D_8006AA60 = arg3;
 	return arg2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_8000FFC0_10BC0.s")
-#endif
 
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2) {
 	return func_8000FFC0_10BC0(&D_80067F70, arg0, arg1, arg2);
