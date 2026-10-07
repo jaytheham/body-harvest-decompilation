@@ -1614,8 +1614,16 @@ void func_8009FB58_AEB08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
 #endif
 
-// CURRENT(15082) - qu016/qu102 spelled as literals (0xFFFF/0x8000/0x7C) so the body compiles;
-// the guess's s32 pad[66] deleted (it inflated the frame 0x290 -> 0x188; target 0x180).
+// CURRENT(15011) - qu016/qu102 spelled as literals (0xFFFF/0x8000/0x7C) so the body compiles;
+// the guess's s32 pad[66] deleted (0x290 -> 0x188) and the two declared-but-unused locals
+// (s32 idx, Gfx *dl) deleted (frame 0x188 -> 0x180 = the target's; 15082 -> 15011).
+// Remaining: 972 instructions vs the target's 986 (-14), and the struct homes sit +8
+// (sp168@0x170 / sp160@0x168 where the target has 0x168 / 0x160).
+// The 0x40 shift of EVERY AAA70-owned data symbol (D_8013D744_14C6F4 at 0x8013D704, target
+// 0x8013D744) is NOT a data-layout batch item: the segment's text is 0xcb640 where the ROM's is
+// 0xcb680, i.e. exactly this body's 14-instruction deficit after ALIGN(16) -
+// `overlay_gameplay_outside_AAA70_c` (the data block start) moves with the text end. Close the
+// deficit and the data addresses snap back; do not chase the data layout.
 #ifdef NON_MATCHING
 // DisplayScanner
 void func_800A03FC_AF3AC(void) {
@@ -1629,9 +1637,7 @@ void func_800A03FC_AF3AC(void) {
 	s16 tempA0;
 	s32 i;
 	s32 temp;
-	s32 idx;
 	s32 tempMatrixColor;
-	Gfx *dl;
 
 	sp168 = D_8013D744_14C6F4;
 	sp160 = D_8013D74C_14C6FC;
