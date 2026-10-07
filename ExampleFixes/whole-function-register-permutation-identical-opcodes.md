@@ -35,6 +35,9 @@ If `ins_diff -noregs` says delta +0 *and* every role has a counterpart (no missi
 instruction, no different immediate, no moved home), stop permuting declarations -- it is
 allocation. Do not re-tread declaration order, casts, or pads expecting the band to move.
 
+See also `hoist-vs-rematerialise-last-callee-saved-slot.md` for the sibling case where the band size
+and every home match and only *which* value takes the last callee-saved slot differs.
+
 ## Measured (all worse than the committed body, which stays at 145)
 
 | shape | score |
