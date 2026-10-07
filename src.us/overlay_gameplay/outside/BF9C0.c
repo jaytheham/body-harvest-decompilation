@@ -74,7 +74,7 @@ s32 D_8013D9A8_14C958 = 0;
 u8 D_8013D9AC_14C95C = 0;
 
 /* Screen flash timer for transitions */
-s8 D_8013D9B0_14C960 = 0;
+u8 D_8013D9B0_14C960 = 0;
 /* Screen flash brightness */
 s32 D_8013D9B4_14C964 = 0;
 /* Unused controller pad states */
@@ -357,12 +357,11 @@ s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
     return 0xFF;
 }
 
-// CURRENT(4946)
+// CURRENT(9462)
 #ifdef NON_MATCHING
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
-	// Agent - you must clean up these excess temp vars and replace the gotos with loops/ifs
-	Unk8014FD30Type *var_v1;
+	s32 wallIndex;
 	f32 temp_f0;
 	f32 temp_f12;
 	f32 temp_f14;
@@ -388,169 +387,160 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	*arg6 = 0;
 	temp_v0 = *arg3;
 	var_t3 = 0;
-	if (D_8014FD30.main.maxX < temp_v0) {
-		if (var_t0 == 0) {
-			goto block_43;
-		}
-		temp_f14 = var_t0;
-		*arg3 = D_8014FD30.main.maxX;
-		var_t3 = 1;
-		temp_f2 = (D_8014FD30.main.maxX - arg0) / temp_f14;
-		temp_f0 = var_t2 * temp_f2;
-		temp_f12 = var_t1 * temp_f2;
-		*arg4 = temp_t7 + temp_f0;
-		var_t0 = temp_f14 * temp_f2;
-		var_t2 = temp_f0;
-		*arg5 = arg2 + temp_f12;
-		*arg6 = 1;
-		var_t1 = temp_f12;
-		goto block_6;
-	}
-	if (temp_v0 < D_8014FD30.main.minX) {
-		if (var_t0 == 0) {
-			goto block_43;
-		}
-		temp_f14 = var_t0;
-		*arg3 = D_8014FD30.main.minX;
-		var_t3 = 1;
-		temp_f2 = (D_8014FD30.main.minX - arg0) / temp_f14;
-		temp_f0 = var_t2 * temp_f2;
-		temp_f12 = var_t1 * temp_f2;
-		*arg4 = temp_t7 + temp_f0;
-		var_t0 = temp_f14 * temp_f2;
-		*arg5 = arg2 + temp_f12;
-		var_t2 = temp_f0;
-		*arg6 = 1;
-		var_t1 = temp_f12;
-	}
-
-block_6:
-	temp_v0_2 = *arg5;
-	if (D_8014FD30.main.maxZ < temp_v0_2) {
-		if (var_t1 == 0) {
-			goto block_43;
-		}
-		temp_f14 = var_t1;
-		var_t3 = 1;
-		temp_f2 = (D_8014FD30.main.maxZ - arg2) / temp_f14;
-		temp_f12 = var_t0 * temp_f2;
-		temp_f0 = var_t2 * temp_f2;
-		*arg3 = arg0 + temp_f12;
-		var_t0 = temp_f12;
-		*arg4 = temp_t7 + temp_f0;
-		var_t2 = temp_f0;
-		var_t1 = temp_f14 * temp_f2;
-		*arg5 = D_8014FD30.main.maxZ;
-		goto block_12;
-	}
-	if (temp_v0_2 < D_8014FD30.main.minZ) {
-		if (var_t1 == 0) {
-			goto block_43;
-		}
-		temp_f14 = var_t1;
-		var_t3 = 1;
-		temp_f2 = (D_8014FD30.main.minZ - arg2) / temp_f14;
-		temp_f12 = var_t0 * temp_f2;
-		temp_f0 = var_t2 * temp_f2;
-		*arg3 = arg0 + temp_f12;
-		var_t0 = temp_f12;
-		*arg4 = temp_t7 + temp_f0;
-		var_t2 = temp_f0;
-		*arg5 = D_8014FD30.main.minZ;
-		var_t1 = temp_f14 * temp_f2;
-
-block_12:
-		*arg6 = 0;
-	}
-
-	var_v1 = &D_8014FD30.sub[0];
-	var_a3 = 0;
-	var_a2 = 0;
-loop_14:
-	temp_a0 = var_v1->minX;
-	temp_a1 = var_v1->maxX;
-	if (temp_a0 == temp_a1) {
-		goto block_42;
-	}
-	if ((temp_a0 < arg0) && (arg0 < temp_a1) && (var_v1->minZ < arg2) && (arg2 < var_v1->maxZ)) {
-		*arg3 = arg0;
-		*arg4 = temp_t7;
-		*arg5 = arg2;
-		*arg6 = 0xFF;
-		return 1;
-	}
-
-	if (var_t0 != 0) {
-		temp_v0_3 = *arg3;
-		temp_f14 = var_t0;
-		if (arg0 < temp_v0_3) {
-			var_a2 = temp_a0;
-		} else if (temp_v0_3 < arg0) {
-			var_a2 = temp_a1;
-		}
-		temp_f0 = (var_a2 - arg0) / temp_f14;
-		if ((temp_f0 > 0.0f) && (temp_f0 < 1.0f)) {
-			temp_f2 = temp_f0;
-			temp_f12 = var_t1 * temp_f0;
-			temp_v0_4 = arg2 + temp_f12;
-			var_a3 = temp_v0_4;
-			if ((var_v1->minZ < temp_v0_4) && (temp_v0_4 < var_v1->maxZ)) {
-				*arg3 = var_a2;
-				var_t3 = 1;
-				temp_f0 = var_t2 * temp_f0;
-				*arg4 = temp_t7 + temp_f0;
-				*arg5 = temp_v0_4;
-				var_t0 = temp_f14 * temp_f2;
-				var_t2 = temp_f0;
-				*arg6 = 1;
-				var_t1 = temp_f12;
+	do {
+		if (D_8014FD30.main.maxX < temp_v0) {
+			if (var_t0 == 0) {
+				break;
 			}
-		}
-	}
-
-	if (var_t1 != 0) {
-		temp_v0_3 = *arg5;
-		temp_f14 = var_t1;
-		if (arg2 < temp_v0_3) {
-			var_a3 = var_v1->minZ;
-		} else if (temp_v0_3 < arg2) {
-			var_a3 = var_v1->maxZ;
-		}
-		temp_f0 = (var_a3 - arg2) / temp_f14;
-		if ((temp_f0 > 0.0f) && (temp_f0 < 1.0f)) {
-			temp_f2 = temp_f0;
-			temp_f12 = var_t0 * temp_f0;
-			temp_v0_4 = arg0 + temp_f12;
-			var_a2 = temp_v0_4;
-			if ((var_v1->minX < temp_v0_4) && (temp_v0_4 < var_v1->maxX)) {
-				*arg3 = temp_v0_4;
-				var_t3 = 1;
-				temp_f0 = var_t2 * temp_f0;
-				var_t0 = temp_f12;
-				*arg4 = temp_t7 + temp_f0;
-				var_t2 = temp_f0;
-				*arg5 = var_a3;
-				*arg6 = 0;
-				var_t1 = temp_f14 * temp_f2;
+			temp_f14 = var_t0;
+			var_t3 = 1;
+			temp_f2 = (D_8014FD30.main.maxX - arg0) / temp_f14;
+			*arg3 = D_8014FD30.main.maxX;
+			temp_f0 = var_t2 * temp_f2;
+			temp_f12 = var_t1 * temp_f2;
+			*arg4 = temp_t7 + temp_f0;
+			*arg5 = arg2 + temp_f12;
+			var_t0 = temp_f14 * temp_f2;
+			var_t2 = temp_f0;
+			*arg6 = 1;
+			var_t1 = temp_f12;
+		} else if (temp_v0 < D_8014FD30.main.minX) {
+			if (var_t0 == 0) {
+				break;
 			}
+			temp_f14 = var_t0;
+			var_t3 = 1;
+			temp_f2 = (D_8014FD30.main.minX - arg0) / temp_f14;
+			*arg3 = D_8014FD30.main.minX;
+			temp_f0 = var_t2 * temp_f2;
+			temp_f12 = var_t1 * temp_f2;
+			*arg4 = temp_t7 + temp_f0;
+			var_t0 = temp_f14 * temp_f2;
+			*arg5 = arg2 + temp_f12;
+			var_t2 = temp_f0;
+			*arg6 = 1;
+			var_t1 = temp_f12;
 		}
-	}
 
-	var_v1++;
-	if (var_v1 != &D_8014FD30.sub[2]) {
-		goto loop_14;
-	}
-block_42:
-	return var_t3;
+		temp_v0_2 = *arg5;
+		if (D_8014FD30.main.maxZ < temp_v0_2) {
+			if (var_t1 == 0) {
+				break;
+			}
+			temp_f14 = var_t1;
+			var_t3 = 1;
+			temp_f2 = (D_8014FD30.main.maxZ - arg2) / temp_f14;
+			temp_f12 = var_t0 * temp_f2;
+			temp_f0 = var_t2 * temp_f2;
+			*arg3 = arg0 + temp_f12;
+			var_t0 = temp_f12;
+			*arg4 = temp_t7 + temp_f0;
+			var_t2 = temp_f0;
+			*arg5 = D_8014FD30.main.maxZ;
+			var_t1 = temp_f14 * temp_f2;
+			*arg6 = 0;
+		} else if (temp_v0_2 < D_8014FD30.main.minZ) {
+			if (var_t1 == 0) {
+				break;
+			}
+			temp_f14 = var_t1;
+			var_t3 = 1;
+			temp_f2 = (D_8014FD30.main.minZ - arg2) / temp_f14;
+			temp_f12 = var_t0 * temp_f2;
+			temp_f0 = var_t2 * temp_f2;
+			*arg3 = arg0 + temp_f12;
+			var_t0 = temp_f12;
+			*arg4 = temp_t7 + temp_f0;
+			var_t2 = temp_f0;
+			*arg5 = D_8014FD30.main.minZ;
+			var_t1 = temp_f14 * temp_f2;
 
-block_43:
-	osSyncPrintf(&D_80142D10_151CC0);
+			*arg6 = 0;
+		}
+
+		var_a3 = 0;
+		var_a2 = 0;
+		for (wallIndex = 0; wallIndex != 2; wallIndex++) {
+			temp_a0 = D_8014FD30.sub[wallIndex].minX;
+			temp_a1 = D_8014FD30.sub[wallIndex].maxX;
+			if (temp_a0 == temp_a1) {
+				break;
+			}
+			if ((temp_a0 < arg0) && (arg0 < temp_a1) && (D_8014FD30.sub[wallIndex].minZ < arg2) && (arg2 < D_8014FD30.sub[wallIndex].maxZ)) {
+				*arg3 = arg0;
+				*arg4 = temp_t7;
+				*arg5 = arg2;
+				*arg6 = 0xFF;
+				return 1;
+			}
+
+			if (var_t0 != 0) {
+				temp_v0_3 = *arg3;
+				temp_f14 = var_t0;
+				if (arg0 < temp_v0_3) {
+					var_a2 = temp_a0;
+				} else if (temp_v0_3 < arg0) {
+					var_a2 = temp_a1;
+				}
+				temp_f0 = (var_a2 - arg0) / temp_f14;
+				temp_f2 = temp_f0;
+				if ((temp_f0 > 0.0f) && (temp_f0 < 1.0)) {
+					temp_f12 = var_t1 * temp_f0;
+					temp_v0_4 = arg2 + temp_f12;
+					var_a3 = temp_v0_4;
+					if ((D_8014FD30.sub[wallIndex].minZ < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxZ)) {
+						*arg3 = var_a2;
+						var_t3 = 1;
+						temp_f0 = var_t2 * temp_f0;
+						*arg4 = temp_t7 + temp_f0;
+						*arg5 = temp_v0_4;
+						var_t0 = temp_f14 * temp_f2;
+						var_t2 = temp_f0;
+						*arg6 = 1;
+						var_t1 = temp_f12;
+					}
+				}
+			}
+
+			if (var_t1 != 0) {
+				temp_v0_3 = *arg5;
+				temp_f14 = var_t1;
+				if (arg2 < temp_v0_3) {
+					var_a3 = D_8014FD30.sub[wallIndex].minZ;
+				} else if (temp_v0_3 < arg2) {
+					var_a3 = D_8014FD30.sub[wallIndex].maxZ;
+				}
+				temp_f0 = (var_a3 - arg2) / temp_f14;
+				temp_f2 = temp_f0;
+				if ((temp_f0 > 0.0f) && (temp_f0 < 1.0)) {
+					temp_f12 = var_t0 * temp_f0;
+					temp_v0_4 = arg0 + temp_f12;
+					var_a2 = temp_v0_4;
+					if ((D_8014FD30.sub[wallIndex].minX < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxX)) {
+						*arg3 = temp_v0_4;
+						var_t3 = 1;
+						temp_f0 = var_t2 * temp_f0;
+						var_t0 = temp_f12;
+						*arg4 = temp_t7 + temp_f0;
+						var_t2 = temp_f0;
+						*arg5 = var_a3;
+						*arg6 = 0;
+						var_t1 = temp_f14 * temp_f2;
+					}
+				}
+			}
+
+		}
+		return var_t3;
+	} while (0);
+	osSyncPrintf(D_80142D10_151CC0);
 	*arg3 = arg0;
 	*arg4 = temp_t7;
 	*arg5 = arg2;
 	*arg6 = 0;
 	return 0;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
@@ -661,14 +651,10 @@ void func_800B19F8_C09A8(void) {
 	} while (i < 0x13);
 }
 
-// CURRENT(24448)
+// CURRENT(9662)
 #ifdef NON_MATCHING
-void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, LaserEntry *arg3) {
-	// Agent - you need to reduce the number of vars declared
-	// probably most of the temp vars don't need a declared var and are temp register values
-	u8 sp6E;
-	u8 sp6D;
-	u8 sp6C;
+void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
+	u8 quarterColor[3];
 	s16 temp_s0;
 	s16 temp_s1;
 	s16 temp_s2;
@@ -678,39 +664,33 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, LaserEntry *arg3) {
 	s16 temp_t5;
 	s16 temp_v1;
 	s32 temp_a3;
-	s32 temp_a3_2;
-	s32 temp_fp;
-	s32 temp_s7;
 	s32 temp_t6;
 	s32 temp_v0;
 	s8 temp_a0;
 	s8 temp_v1_2;
-	s8 var_a0;
-	s8 var_a0_2;
 	s8 var_a2;
-	s8 var_a2_2;
-	s8 var_a3;
+	s32 var_a3;
 	s8 var_s3;
-	s8 var_s3_2;
 	s8 var_s4;
 	s8 var_s5;
 	s8 var_s6;
-	s8 var_t0;
-	s8 var_t1;
-	s8 var_t2;
-	s8 var_v0;
-	s8 var_v1;
-	s8 var_v1_2;
-	u8 *temp_v0_2;
+	s32 var_t0;
+	s32 var_t1;
+	s32 var_t2;
+	s32 var_v0;
+	EffectRgb *pixel;
+	EffectRgb (*lights)[19];
 
+	lights = (EffectRgb (*)[19])D_80152740;
 	temp_t5 = D_8014F89C - 0x7F;
 	temp_s0 = D_8014F89D - 0x7F;
 	temp_s1 = D_8014F899 - temp_t5;
 	temp_s2 = D_8014F898 - temp_s0;
-	temp_v1 = arg0[0];
-	temp_t3 = arg0[1];
-	temp_t4 = arg1[0];
-	temp_s3 = arg1[1];
+	temp_v1 = arg0->x;
+	temp_t3 = arg0->z;
+	temp_t4 = arg1->x;
+	temp_s3 = arg1->z;
+	var_v0 = 0;
 	var_a3 = (temp_v1 >> 8) + 1;
 	var_t0 = (temp_t3 >> 8) + 1;
 	var_t1 = (temp_t4 >> 8) + 1;
@@ -730,69 +710,59 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, LaserEntry *arg3) {
 	}
 	temp_v1_2 = var_t1 - var_a3;
 	temp_a0 = var_t2 - var_t0;
-	sp6C = (u8)((s32)arg2[0] >> 2);
-	sp6D = (u8)((s32)arg2[1] >> 2);
-	sp6E = (u8)((s32)arg2[2] >> 2);
-	var_v0 = 0;
+	quarterColor[0] = arg2->r >> 2;
+	quarterColor[1] = arg2->g >> 2;
+	quarterColor[2] = arg2->b >> 2;
 	if (temp_v1_2 > 0) {
 		var_v0 = 1;
 	}
 	if (temp_a0 < 0) {
-		var_v0 = -1 - var_v0;
+		var_v0 = ~var_v0;
 	}
-	if (var_v0 != 0) {
-		var_s6 = 1;
-	}
-	var_s5 = -temp_v1_2;
-	if (temp_v1_2 >= 0) {
-		var_s5 = temp_v1_2;
-	}
-	if (temp_a0 >= 0) {
-		var_s4 = temp_a0;
-	} else {
-		var_s4 = -temp_a0;
-	}
+	var_s6 = var_v0 != 0 ? 1 : -1;
+	var_s5 = temp_v1_2 >= 0 ? temp_v1_2 : -temp_v1_2;
+	var_s4 = temp_a0 >= 0 ? temp_a0 : -temp_a0;
 
 	if (var_s4 < var_s5) {
 		if (temp_v1_2 > 0) {
-			var_v1 = var_a3;
-			var_a0 = var_t0;
+			var_a3 = (s8)var_a3;
+			var_t0 = (s8)var_t0;
 			var_s3 = var_t1;
 		} else {
-			var_v1 = var_t1;
-			var_a0 = var_t2;
 			var_s3 = var_a3;
+			var_a3 = (s8)var_t1;
+			var_t0 = (s8)var_t2;
 		}
 		temp_t6 = var_s4 * 2;
 		var_a2 = temp_t6 - var_s5;
-		while (var_s3 >= var_v1) {
-			if (var_v1 >= temp_t5) {
-				temp_v0 = var_a0 - 1;
-				if ((s16)(temp_t5 + 0x13) >= var_v1) {
-					temp_a3 = var_a0 + 1;
+		while (var_s3 >= var_a3) {
+			if (var_a3 >= temp_t5) {
+				temp_v0 = var_t0 - 1;
+				if ((s16)(temp_t5 + 0x13) >= var_a3) {
+					temp_a3 = var_t0 + 1;
 					if ((temp_v0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= temp_v0)) {
-						temp_v0_2 = D_80152740 + ((s8)((temp_s2 + var_a0 - 1) % 0x13) * 57) + ((s8)((temp_s1 + var_v1) % 0x13) * 3);
-						temp_v0_2[0] = sp6C + temp_v0_2[0];
-						temp_v0_2[1] = (sp6D + temp_v0_2[1]) & 0xFF;
-						temp_v0_2[2] = (sp6E + temp_v0_2[2]) & 0xFF;
+						pixel = &lights[(s8)((temp_s2 + var_t0 - 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel->r = quarterColor[0] + pixel->r;
+						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
+						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((var_a0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= var_a0)) {
-						temp_v0_2 = D_80152740 + ((s8)((temp_s2 + var_a0) % 0x13) * 57) + ((s8)((temp_s1 + var_v1) % 0x13) * 3);
-						temp_v0_2[0] = sp6C + temp_v0_2[0];
-						temp_v0_2[1] = arg2[1];
-						temp_v0_2[2] = (sp6E + temp_v0_2[2]) & 0xFF;
+					if ((var_t0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= var_t0)) {
+						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel->r = quarterColor[0] + pixel->r;
+						pixel->g = arg2->g;
+						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 					if ((temp_a3 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= temp_a3)) {
-						temp_v0_2 = D_80152740 + ((s8)((temp_s2 + var_a0 + 1) % 0x13) * 57) + ((s8)((temp_s1 + var_v1) % 0x13) * 3);
-						temp_v0_2[0] = sp6C + temp_v0_2[0];
-						temp_v0_2[1] = (sp6D + temp_v0_2[1]) & 0xFF;
-						temp_v0_2[2] = (sp6E + temp_v0_2[2]) & 0xFF;
+						pixel = &lights[(s8)((temp_s2 + var_t0 + 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel->r = quarterColor[0] + pixel->r;
+						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
+						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 				}
 			}
-			var_v1++;
+			var_a3 = (s8)(var_a3 + 1);
 			if (var_a2 >= 0) {
-				var_a0 += var_s6;
+				var_t0 = (s8)(var_t0 + var_s6);
 				var_a2 = (s8)(var_a2 + ((var_s4 - var_s5) * 2));
 			} else {
 				var_a2 = (s8)(var_a2 + (s8)temp_t6);
@@ -800,47 +770,47 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, LaserEntry *arg3) {
 		}
 	} else {
 		if (temp_a0 > 0) {
-			var_v1_2 = var_a3;
-			var_a0_2 = var_t0;
-			var_s3_2 = var_t2;
+			var_a3 = (s8)var_a3;
+			var_t0 = (s8)var_t0;
+			var_s3 = var_t2;
 		} else {
-			var_v1_2 = var_t1;
-			var_a0_2 = var_t2;
-			var_s3_2 = var_t0;
+			var_s3 = var_t0;
+			var_a3 = (s8)var_t1;
+			var_t0 = (s8)var_t2;
 		}
-		temp_a3_2 = var_s5 * 2;
-		var_a2_2 = temp_a3_2 - var_s4;
-		while (var_s3_2 >= var_a0_2) {
-			if (var_a0_2 >= temp_s0) {
-				temp_fp = var_v1_2 - 1;
-				if ((s16)(temp_s0 + 0x13) >= var_a0_2) {
-					temp_s7 = var_v1_2 + 1;
-					if ((temp_fp >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_s7)) {
-						temp_v0_2 = D_80152740 + ((s8)((temp_s2 + var_a0_2) % 0x13) * 57) + ((s8)((temp_s1 + var_v1_2 - 1) % 0x13) * 3);
-						temp_v0_2[0] = sp6C + temp_v0_2[0];
-						temp_v0_2[1] = (sp6D + temp_v0_2[1]) & 0xFF;
-						temp_v0_2[2] = (sp6E + temp_v0_2[2]) & 0xFF;
+		temp_t6 = var_s5 * 2;
+		var_a2 = temp_t6 - var_s4;
+		while (var_s3 >= var_t0) {
+			if (var_t0 >= temp_s0) {
+				temp_v0 = var_a3 - 1;
+				if ((s16)(temp_s0 + 0x13) >= var_t0) {
+					temp_a3 = var_a3 + 1;
+					if ((temp_v0 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_a3)) {
+						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 - 1) % 0x13)];
+						pixel->r = quarterColor[0] + pixel->r;
+						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
+						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((var_v1_2 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= var_v1_2)) {
-						temp_v0_2 = D_80152740 + ((s8)((temp_s2 + var_a0_2) % 0x13) * 57) + ((s8)((temp_s1 + var_v1_2) % 0x13) * 3);
-						temp_v0_2[0] = sp6C + temp_v0_2[0];
-						temp_v0_2[1] = (sp6D + temp_v0_2[1]) & 0xFF;
-						temp_v0_2[2] = (sp6E + temp_v0_2[2]) & 0xFF;
+					if ((var_a3 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= var_a3)) {
+						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel->r = quarterColor[0] + pixel->r;
+						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
+						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((temp_s7 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_fp)) {
-						temp_v0_2 = D_80152740 + ((s8)((temp_s2 + var_a0_2) % 0x13) * 57) + ((s8)((temp_s1 + var_v1_2 + 1) % 0x13) * 3);
-						temp_v0_2[0] = sp6C + temp_v0_2[0];
-						temp_v0_2[1] = (sp6D + temp_v0_2[1]) & 0xFF;
-						temp_v0_2[2] = (sp6E + temp_v0_2[2]) & 0xFF;
+					if ((temp_a3 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_v0)) {
+						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 + 1) % 0x13)];
+						pixel->r = quarterColor[0] + pixel->r;
+						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
+						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 				}
 			}
-			var_a0_2++;
-			if (var_a2_2 >= 0) {
-				var_v1_2 += var_s6;
-				var_a2_2 = (s8)(var_a2_2 + ((var_s5 - var_s4) * 2));
+			var_t0 = (s8)(var_t0 + 1);
+			if (var_a2 >= 0) {
+				var_a3 = (s8)(var_a3 + var_s6);
+				var_a2 = (s8)(var_a2 + ((var_s5 - var_s4) * 2));
 			} else {
-				var_a2_2 = (s8)(var_a2_2 + temp_a3_2);
+				var_a2 = (s8)(var_a2 + temp_t6);
 			}
 		}
 	}
@@ -849,129 +819,103 @@ void func_800B1A68_C0A18(s16 *arg0, s16 *arg1, u8 *arg2, LaserEntry *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
-// CURRENT(9868)
-#ifdef NON_MATCHING
-void func_800B2354_C1304(s16 *arg0, u8 *arg1, s32 arg2, s16 arg3) {
-	// Agent - reduce the number of vars
-	s32 sp70;
-	s32 sp6C;
-	s32 sp68;
-	s16 sp62;
-	s16 sp60;
-	s32 sp58;
-	s32 sp54;
-	s32 sp50;
-	s32 sp4C;
-	f32 temp_f8;
-	f32 temp_f10;
-	s16 temp_ra;
-	s16 temp_s3;
-	s16 temp_s4;
-	s32 temp_v0;
-	s16 temp_v0_3;
-	s16 temp_v0_4;
-	s32 temp_v1;
-	s16 temp_v1_3;
-	s16 var_s0;
-	s16 var_s2;
-	s16 var_t2;
-	s16 var_t3;
-	s16 var_v0;
-	s16 var_v0_2;
-	s16 var_v0_3;
-	s16 var_v0_4;
-	s16 var_v0_5;
-	s16 var_v1_2;
-	s32 temp_fp;
-	u8 temp_s5;
-	s32 temp_t5;
-	s16 temp_t7;
-	s32 temp_v0_2;
-	s32 var_a3;
-	u8 *var_a0;
 
-	temp_v0 = arg0[0];
-	temp_s4 = D_8014F89D - 0x7F;
-	sp70 = (temp_v0 >> 8) + 1;
-	temp_v1 = arg0[1];
-	temp_s3 = D_8014F89C - 0x7F;
-	sp6C = (temp_v1 >> 8) + 1;
-	var_t2 = (D_8014F899 + sp70) - temp_s3;
-	var_t3 = (D_8014F898 + sp6C) - temp_s4;
-	temp_f10 = (f32)(arg2 + arg3) / 256;
-	sp68 = temp_v0 & 0xFF;
-	temp_s5 = temp_v1 & 0xFF;
-	temp_t5 = (((u32)temp_f10) + 1) & 0xFF;
-	temp_ra = 1 - temp_t5;
-	temp_fp = temp_t5 + 1;
-	var_s2 = temp_ra;
-	sp50 = temp_fp;
-	sp54 = temp_ra;
-	sp58 = temp_ra;
-	if (temp_ra < temp_fp) {
-		var_a3 = temp_fp;
-		do {
-			var_s0 = (s16)((u32)sp58 >> 16);
-			if (var_s2 <= 0) {
-				var_v0 = sp68 + (var_s2 * -0x100);
+
+
+
+
+
+
+
+
+
+// CURRENT(4712)
+#ifdef NON_MATCHING
+void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
+	s32 tileX;
+	s32 tileY;
+	u32 fracX;
+	s16 ringX;
+	s16 ringY;
+	s32 start;
+	s32 end;
+	s16 baseY;
+	s16 baseX;
+	s16 x;
+	s16 y;
+	s16 dx;
+	s16 dy;
+	s16 distance;
+	s32 intensity;
+	u32 fracY;
+	u8 radius; s32 rawRadius; 
+	s32 squareX; s32 cellSize = 256;
+	u8 *pixel;
+
+	baseY = D_8014F89D - 127;
+	tileX = (arg0[0] >> 8) + 1;
+	baseX = D_8014F89C - 127;
+	tileY = (arg0[1] >> 8) + 1;
+	ringX = D_8014F899 + tileX - baseX;
+	ringY = D_8014F898 + tileY - baseY;
+	fracX = arg0[0] & 255;
+	fracY = arg0[1] & 255;
+	rawRadius = (u32)((f32)(arg2 + arg3) / 256);
+	rawRadius++;
+	radius = rawRadius;
+	start = 1 - (rawRadius & 255);
+	end = (rawRadius & 255) + 1;
+	x = start;
+	if ((s16)start < end) {
+	 do {
+		if (x <= 0) {
+			dx = (s16)fracX + x * -256;
+		} else {
+			dx = cellSize - fracX + (x << 8) - 256;
+		}
+		squareX = dx * dx;
+		y = start;
+		if ((s16)start < end) {
+		 do {
+			if (y <= 0) {
+				dy = fracY + y * -256;
 			} else {
-				var_v0 = ((0x100 - sp68) + (var_s2 << 8)) - 0x100;
+				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			if (sp54 < sp50) {
-				do {
-					if (var_s0 <= 0) {
-						var_v0_2 = temp_s5 + (var_s0 * -0x100);
-					} else {
-						var_v0_2 = ((0x100 - temp_s5) + (var_s0 << 8)) - 0x100;
+			distance = (s32)sqrtf(dy * dy + squareX) - arg2;
+			if (distance > 0) {
+				intensity = (s16)(arg3 - distance);
+				if (intensity > 0) {
+					intensity = (s16)(s32)(((f32)intensity / arg3) * 255.0f);
+					if (intensity >= 256) {
+						intensity = 255;
 					}
-					sp4C = var_a3;
-					sp62 = var_t2;
-					sp60 = var_t3;
-					temp_v0_2 = (s32)sqrtf((f32)((var_v0_2 * var_v0_2) + (var_v0 * var_v0))) - arg2;
-					temp_t7 = (s16)temp_v0_2;
-					if ((s16)temp_t7 > 0) {
-						temp_v1_3 = arg3 - (s16)temp_t7;
-						if (temp_v1_3 > 0) {
-							var_v1_2 = (s16)(((f32)temp_v1_3 / (f32)arg3) * 255.0f);
-							if (var_v1_2 >= 0x100) {
-								var_v1_2 = 0xFF;
-							}
-						} else {
-							var_v1_2 = 0;
-						}
-					} else {
-						var_v1_2 = 0xFF;
-					}
-					if (var_v1_2 > 0) {
-						temp_v0_3 = var_s2 + sp70;
-						if (temp_v0_3 >= temp_s3) {
-							temp_v0_4 = var_s0 + sp6C;
-							if (((s16)(temp_s3 + 0x13) >= temp_v0_3) && (temp_v0_4 >= temp_s4) && ((s16)(temp_s4 + 0x13) >= temp_v0_4)) {
-								var_a0 = &D_80152740[(((u16)((s16)((var_s0 + sp60) % 0x13))) * 0x39) + (((u16)((s16)((var_s2 + sp62) % 0x13))) * 3)];
-								var_v0_3 = (s16)(((s32)arg1[0] * var_v1_2) >> 8) + var_a0[0];
-								if (var_v0_3 >= 0x100) {
-									var_v0_3 = 0xFF;
-								}
-								var_a0[0] = var_v0_3;
-								var_v0_4 = (s16)(((s32)arg1[1] * var_v1_2) >> 8) + var_a0[1];
-								if (var_v0_4 >= 0x100) {
-									var_v0_4 = 0xFF;
-								}
-								var_a0[1] = var_v0_4;
-								var_v0_5 = (s16)(((s32)arg1[2] * var_v1_2) >> 8) + var_a0[2];
-								if (var_v0_5 >= 0x100) {
-									var_v0_5 = 0xFF;
-								}
-								var_a0[2] = var_v0_5;
-							}
-						}
-					}
-					var_s0++;
-					var_a3 = sp4C;
-				} while (var_s0 < var_a3);
+				}
+			} else {
+				intensity = 255;
 			}
-			var_s2++;
-		} while (var_s2 < var_a3);
+			if (intensity > 0) {
+				s16 color;
+				if ((s16)(x + tileX) >= baseX && (s16)(x + tileX) <= (s16)(baseX + 19)) {
+					if ((s16)(y + tileY) >= baseY && (s16)(y + tileY) <= (s16)(baseY + 19)) {
+						pixel = &D_80152740[(u16)((y + ringY) % 19) * 57 + (u16)((x + ringX) % 19) * 3];
+						color = ((arg1[0] * intensity) >> 8) + pixel[0];
+						if (color >= 256) color = 255;
+						pixel[0] = color;
+						color = ((arg1[1] * intensity) >> 8) + pixel[1];
+						if (color >= 256) color = 255;
+						pixel[1] = color;
+						color = ((arg1[2] * intensity) >> 8) + pixel[2];
+						if (color >= 256) color = 255;
+						pixel[2] = color;
+					}
+				}
+			}
+			y++;
+		} while (y < radius + 1);
+		}
+		x++;
+	} while (x < radius + 1);
 	}
 }
 #else
@@ -1221,17 +1165,17 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(23916)
+// CURRENT(7341)
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	u32 baseXWord;
-	s32 row;
-	s32 col;
+	u8 row;
+	u8 col;
 	s32 i;
 	u8 mode;
 	u16 mapIndex;
 	f32 f0;
-	u8 baseY;
+	s32 baseY;
 	RingEntry *entry;
 	u8 spA0[3];
 	u8 spA8[3];
@@ -1243,10 +1187,10 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	sp94 = D_8014F89C;
 	baseY = D_8014F89D;
 
-	for (row = 0; row < 0x13; row = (row + 1) & 0xFF) {
+	for (row = 0; row < 0x13; row++) {
 		baseXWord = baseY + row;
 
-		for (col = 0; col < 0x13; col = (col + 1) & 0xFF) {
+		for (col = 0; col < 0x13; col++) {
 			mapIndex = (u16)(sp94 + col + (baseXWord << 8));
 
 			spAC[0] = ((u16 *)arg2)[mapIndex - 0x100] & 0x3F;
@@ -1255,24 +1199,24 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			spAC[3] = ((u16 *)arg2)[mapIndex + 1] & 0x3F;
 			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
 
-			func_800B1814_C07C4(baseXWord & 0xFF, (sp94 + col) & 0xFF, spA0);
-			mode = D_80151DD0;
+			func_800B1814_C07C4(baseXWord, (sp94 + col), spA0);
+			
 
-			if (mode == 2) {
-				spA0[0] = func_800B0A10_BF9C0((s32)(s8)spA0[0] / 2, spA0[0], D_8013D9AC_14C95C, 0x40);
-				spA0[1] = func_800B0A10_BF9C0((s32)(s8)spA0[1] / 2, spA0[1], D_8013D9AC_14C95C, 0x40);
-				spA0[2] = func_800B0A10_BF9C0((s32)(s8)spA0[2] / 2, spA0[2], D_8013D9AC_14C95C, 0x40);
-				mode = D_80151DD0;
+			if (D_80151DD0 == 2) {
+				spA0[0] = func_800B0A10_BF9C0(spA0[0] / 2, spA0[0], D_8013D9AC_14C95C, 0x40);
+				spA0[1] = func_800B0A10_BF9C0(spA0[1] / 2, spA0[1], D_8013D9AC_14C95C, 0x40);
+				spA0[2] = func_800B0A10_BF9C0(spA0[2] / 2, spA0[2], D_8013D9AC_14C95C, 0x40);
+				
 			}
 
-			if (mode == 3) {
-				spA0[0] = func_800B0A10_BF9C0(0, (s32)(s8)spA0[0] / 2, D_8013D9AC_14C95C, 0x96);
-				spA0[1] = func_800B0A10_BF9C0(0, (s32)(s8)spA0[1] / 2, D_8013D9AC_14C95C, 0x96);
-				spA0[2] = func_800B0A10_BF9C0(0, (s32)(s8)spA0[2] / 2, D_8013D9AC_14C95C, 0x96);
-				mode = D_80151DD0;
+			if (D_80151DD0 == 3) {
+				spA0[0] = func_800B0A10_BF9C0(0, spA0[0] / 2, D_8013D9AC_14C95C, 0x96);
+				spA0[1] = func_800B0A10_BF9C0(0, spA0[1] / 2, D_8013D9AC_14C95C, 0x96);
+				spA0[2] = func_800B0A10_BF9C0(0, spA0[2] / 2, D_8013D9AC_14C95C, 0x96);
+				
 			}
 
-			if (mode == 4) {
+			if (D_80151DD0 == 4) {
 				spA0[0] = 0;
 				spA0[1] = 0;
 				spA0[2] = 0;
@@ -1280,19 +1224,19 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			if (D_8013D9B0_14C960 != 0) {
 				if (D_8013D9B0_14C960 >= 0x3D) {
-					f0 = (f32)((1.0 - ((f32)coss((u16)((s32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2.0);
+					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 				} else {
-					f0 = (f32)((((f32)coss((u16)((s32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2.0);
+					f0 = (f32)((((f32)coss((u16)((u32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 				}
 
 				if (D_8013D9B4_14C964 != 0) {
-					spA0[0] = (((f32)spA0[0] * f0) / 2.0f) + ((s32)spA0[0] >> 1);
-					spA0[1] = (((f32)spA0[1] * f0) / 2.0f) + ((s32)spA0[1] >> 1);
-					spA0[2] = (((f32)spA0[2] * f0) / 2.0f) + ((s32)spA0[2] >> 1);
+					spA0[0] = (spA0[0] >> 1) + (((f32)(u32)spA0[0] * f0) / 2);
+					spA0[1] = (spA0[1] >> 1) + (((f32)(u32)spA0[1] * f0) / 2);
+					spA0[2] = (spA0[2] >> 1) + (((f32)(u32)spA0[2] * f0) / 2);
 				} else {
-					spA0[0] = (((f32)spA0[0] * f0) * 0.75) + ((s32)spA0[0] >> 2);
-					spA0[1] = (((f32)spA0[1] * f0) * 0.75) + ((s32)spA0[1] >> 2);
-					spA0[2] = (((f32)spA0[2] * f0) * 0.75) + ((s32)spA0[2] >> 2);
+					spA0[0] = (spA0[0] >> 2) + (((f32)(u32)spA0[0] * f0) * 0.75);
+					spA0[1] = (spA0[1] >> 2) + (((f32)(u32)spA0[1] * f0) * 0.75);
+					spA0[2] = (spA0[2] >> 2) + (((f32)(u32)spA0[2] * f0) * 0.75);
 				}
 			}
 
@@ -1305,17 +1249,17 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
 			entry = &D_80151DD8.tiles
-				[(((s32)(D_80151DD8.ringY + row) % 19) & 0xFFFF)]
-				[(((s32)(D_80151DD8.ringX + col) % 19) & 0xFFFF)];
+				[(((D_80151DD8.ringY + row) % 19) & 0xFFFF)]
+				[(((D_80151DD8.ringX + col) % 19) & 0xFFFF)];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
 		}
 	}
 
-	for (row = 0; row < 0x13; row = (row + 1) & 0xFF) {
-		for (col = 0; col < 0x13; col = (col + 1) & 0xFF) {
-			for (i = 0; i < 0x40; i = (i + 1) & 0xFF) {
+	for (row = 0; row < 0x13; row++) {
+		for (col = 0; col < 0x13; col++) {
+			for (i = 0; i < 0x40; i = (i + 1) & 255) {
 				if (((sp94 + col) == D_8014FD48[i * 2]) && ((baseY + row) == D_8014FD48[(i * 2) + 1])) {
 					entry = &D_80151DD8.tiles[row][col];
 					mapIndex = ((D_8014FD48[(i * 2) + 1] * D_8014FD48[i * 2]) % 60) & 0xFF;
@@ -1343,6 +1287,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
 #endif
@@ -2762,6 +2707,7 @@ void func_800B879C_C774C(void) {
 }
 
 /* Initialize crater creation parameters at a world position */
+// CURRENT(360)
 #ifdef NON_MATCHING
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F830 = 0;
@@ -2769,7 +2715,7 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F84C = 0.0f;
 	arg0++;
 	D_8014F850 = D_80142E48_151DF8[0];
-	D_8014F834 = arg2;
+	D_8014F834 = (&arg2)[0];
 	D_8014F83C = arg0 - 0x30;
 	arg1++;
 	D_8014F840 = 0x60;
@@ -2862,19 +2808,18 @@ void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 #endif
 
 /* Initialize crater at nearest tile center to (arg0, arg1) with given brightness */
-// CURRENT
+// CURRENT(1338)
 #ifdef NON_MATCHING
-void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
-	u8 mode;
-	u16 *cell;
-	u8 *cellBytes;
+void func_800B8F30_C7EE0(s16 arg0, s16 arg1, u8 arg2) {
+	s32 padding[4];
+	s32 mode;
 	s32 temp;
 
 	if (D_8014F838 != 0) {
 		return;
 	}
 
-	mode = arg2 & 0xFF;
+	mode = arg2;
 	osSyncPrintf(&D_80142D80_151D30, mode);
 
 	if (mode == 0) {
@@ -2894,19 +2839,15 @@ void func_800B8F30_C7EE0(s16 arg0, s16 arg1, s32 arg2) {
 			return;
 		}
 
-		cell = &D_80052A94[arg1].unk0[arg0];
-		*cell = (*cell & 0xFC3F) | 0x2C0;
-
-		cellBytes = (u8 *)cell;
-		cellBytes[0] &= 0xBF;
-		cellBytes[0] &= 0xDF;
-		cellBytes[0] |= 0x80;
-		cellBytes[0] &= 0xFB;
-		cellBytes[1] = (cellBytes[1] & 0xC0) | 0x1B;
-		cellBytes[3] = (cellBytes[3] & 0xC0) | 0x1B;
-		cellBytes[0x201] = (cellBytes[0x201] & 0xC0) | 0x1B;
-		cellBytes[0x203] = (cellBytes[0x203] & 0xC0) | 0x1B;
-
+		D_80052A94[arg1].objects[arg0].terrainType = 0xB;
+		D_80052A94[arg1].objects[arg0].flag14 = 0;
+		D_80052A94[arg1].objects[arg0].flag13 = 0;
+		D_80052A94[arg1].objects[arg0].terrainObject = 1;
+		D_80052A94[arg1].objects[arg0].flag10 = 0;
+		D_80052A94[arg1].objects[arg0].height = 0x1B;
+		D_80052A94[arg1].objects[arg0 + 1].height = 0x1B;
+		D_80052A94[arg1].objects[arg0 + 0x100].height = 0x1B;
+		D_80052A94[arg1].objects[arg0 + 0x101].height = 0x1B;
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 		return;
 	}
@@ -3204,63 +3145,55 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(7852)
+// CURRENT(5753)
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
 {
-  u8 sp117;
-  Vtx *spFC;
-  Vtx *spF8;
-  s16 spF4;
-  s16 spF2;
-  s32 sp50;
-  s32 sp54;
-  s16 var_s3;
-  s16 sp10C;
-  s16 sp10A;
-  s32 sp68;
-  s32 sp6C;
-  s16 var_s4;
-  s16 var_s5;
-  s16 var_s6;
-  s32 s7;
-  s32 ra;
-  s32 var_t5;
-  s32 s1;
-  s32 s2;
-  Vtx *temp_s1;
-  u8 t4;
-  spF4 = 0;
-  spF2 = 0;
+  s32 tileSize;
+  Vtx *startVertices;
+  u8 row;
+  Vtx *vertices[2];
+  s16 visibleCount;
+  s16 culledCount;
+  s32 worldZ;
+  s32 tileZ;
+  s16 bottom;
+  s16 map[2];
+  s32 firstTile[2];
+  s16 left;
+  s16 top;
+  s16 right;
+  u8 column;
+  s32 palette;
+  u8 tileX;
+  u8 tile;
+  visibleCount = 0;
+  culledCount = 0;
   func_800B9AC8_C8A78();
   if (D_8014F838 != 0)
   {
 	func_800B879C_C774C();
   }
-  temp_s1 = D_8005BB34;
-  func_800B5090_C4040(&D_8005BB34, (s32) arg0);
+  startVertices = D_8005BB34;
+  func_800B5090_C4040(&D_8005BB34, arg0 & 0xFF);
   gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
   
   D_8014F89A = 0;
   D_8014FD28 = 0x8F;
-  sp10C = (s16) D_80151DD8.mapPosX;
-  sp10A = (s16) D_80151DD8.mapPosY;
-  spF8 = temp_s1;
-  spFC = temp_s1;
+  map[1] = D_80151DD8.mapPosX;
+  map[0] = D_80151DD8.mapPosY;
+  vertices[0] = startVertices;
+  vertices[1] = startVertices;
   gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
   gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
   gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
-  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, (u8 *) (((u32) (&D_80254E80)) & 0x1FFFFFFF));
-  gDPTileSync(D_8005BB2C++);
-  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
-  gDPLoadSync(D_8005BB2C++);
-  gDPLoadTLUTCmd(D_8005BB2C++, 7, 255);
-  gDPPipeSync(D_8005BB2C++);
+  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)D_80254E80 & 0x1FFFFFFF));
   gDPLoadSync(D_8005BB2C++);
   
+  tileSize = 4;
   if (D_801493CC != 0)
   {
 	gSPNumLights(D_8005BB2C++, 1);
@@ -3273,59 +3206,47 @@ void func_800B9DB8_C8D68(u8 arg0)
 	gSPLight(D_8005BB2C++, &D_8013D960_14C910, 1);
 	gSPLight(D_8005BB2C++, &D_8013D958_14C908, 2);
   }
-  ra = 0;
-  sp117 = 0;
-  sp6C = sp10A / 4;
-  sp68 = sp10C / 4;
-  do
+
+  firstTile[1] = map[0] / 4;
+  firstTile[0] = map[1] / 4;
+  for (row = 0; row < 5; row++)
   {
-  sp54 = (sp6C + ra) & 0xFF;
-  sp50 = (sp54 << 10) + 0x8000;
-	s7 = 0;
-	var_t5 = 0;
-	do
+  tileZ = (firstTile[1] + row) & 0xFF;
+  worldZ = (s16)((tileZ << 10) + 0x8000);
+	for (column = 0; column < 5; column++)
 	{
-	  var_s4 = (var_t5 == 0) ? (sp10C % 4) : 0;
-	  var_s6 = (var_t5 == 4) ? (sp10C % 4) + 1 : 4;
-	  var_s5 = (ra == 0) ? (sp10A % 4) : 0;
-	  var_s3 = (ra == 4) ? (sp10A % 4) + 1 : 4;
+	  left = (column == 0) ? (map[1] % 4) : 0;
+	  right = (column == tileSize) ? (map[1] % 4) + 1 : tileSize;
+	  top = (row == 0) ? (map[0] % 4) : 0;
+	  bottom = (row == tileSize) ? (map[0] % 4) + 1 : tileSize;
 	  
-	  s2 = (sp68 + var_t5) & 0xFF;
-	  s1 = D_8021EA30[(sp54 << 6) + s2] & 0xF;
-	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, ((u32) (&D_80254E80[(s1 & 0xF) * 512])) & 0x1FFFFFFF);
-	  gDPTileSync(D_8005BB2C++);
-	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_4b, 0, 0x0100, 7, 0, 0 | 0, 0, 0, 0 | 0, 0, 0);
+	  tileX = (firstTile[0] + column) & 0xFF;
+	  palette = D_8021EA30[(tileZ << 6) + tileX] & 0xF;
+	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[(palette & 0xF) * 512])) & 0x1FFFFFFF);
 	  gDPLoadSync(D_8005BB2C++);
-	  gDPLoadTLUTCmd(D_8005BB2C++, 7, 255);
-	  gDPPipeSync(D_8005BB2C++);
-	  gDPLoadSync(D_8005BB2C++);
-	  ra = 4;
-	  t4 = D_8021EA30[(sp54 << 6) + s2];
-	  if ((t4 & 0xF0) != 0xF0)
+	
+	  tile = D_8021EA30[(tileZ << 6) + tileX];
+	  if ((tile & 0xF0) != 0xF0)
 	  {
-		D_8021EA30[(sp54 << 6) + s2] = t4 + 0x10;
+		D_8021EA30[(tileZ << 6) + tileX] = tile + 0x10;
 	  }
 	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
-	  if (func_800B960C_C85BC((s16) ((s2 << 10) + 0x8000), sp50, 0x400, 0x400) != 0)
+	  if (func_800B960C_C85BC((s16) ((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
 	  {
-		spF4 += 1;
-		func_800B604C_C4FFC(spF8, var_s4, var_s5, var_s6, var_s3, ((((s2 * 4) + (sp54 * 0x400)) + (var_s5 * 0x100)) & 0xFFFF) + var_s4, s1);
+		visibleCount += 1;
+		func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
 	  }
 	  else
 	  {
-		spF2 += 1;
+		culledCount += 1;
 	  }
-	  var_t5 = (s7 + 1) & 0xFF;
-	  s7 = var_t5;
-	  spF8 += (ra - var_s4) * 0x10;
+	  
+	  vertices[0] = &vertices[0][tileSize - left];
 	}
-	while (var_t5 < 5);
-	ra = (sp117 + 1) & 0xFF;
-	spFC += (4 - var_s5) * 0x120;
-	sp117 = (u8) ra;
-	spF8 = spFC;
+	
+	vertices[1] = &vertices[1][(tileSize - top) * 18];
+	vertices[0] = vertices[1];
   }
-  while (ra < 5);
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
   func_800B753C_C64EC();
@@ -3875,7 +3796,7 @@ void func_800BB5E0_CA590(void) {
 						color[1] = 0xEF - colorEnd;
 						color[2] = 0xFF - colorEnd;
 
-						func_800B1A68_C0A18(&segStartX, &segEndX, color, D_80152D00);
+						func_800B1A68_C0A18(&segStartX, &segEndX, color);
 
 						if (segStartX == segEndX) {
 							scrollT = 0;
@@ -4125,28 +4046,23 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	return 0;
 }
 
-// CURRENT(21044)
+// CURRENT(5228)
 #ifdef NON_MATCHING
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
-	s16 spE4;
-	s16 spE2;
-	s16 spE0;
-	s16 spDC;
-	s16 spDA;
-	s16 spD8;
 	s16 i;
 	s16 temp_s2;
 	s16 temp_s5;
+	u8 spE9;
 	s32 spCC;
 	s32 var_s2;
 	s32 var_s3;
+	Unk80052B40 position;
+	Unk80052B40 rotation;
 	s32 temp_fp;
-	s32 temp_fp_2;
 	s32 temp_lo;
 	s32 temp_lo_2;
 	s32 var_a0;
 	u8 var_v0;
-	u8 spE9;
 	f64 temp_f22;
 
 	D_80052B58 = 0x80;
@@ -4163,20 +4079,22 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 		spCC = var_s2 + 0x1E;
 	}
 
-	var_s3 = D_80052A8C & 0x1F;
+	var_s3 = (u8)(D_80052A8C & 0x1F);
 	if ((u32)var_s3 >= 0x11) {
 		var_s3 = (0x20 - var_s3) & 0xFF;
+	} else {
+		var_s3 = (u8)var_s3;
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 
-	spE0 = arg0;
-	spE2 = arg1;
-	spE4 = arg2;
-	spD8 = arg4;
-	spDA = 0;
-	spDC = 0;
-	func_800039D0_45D0((Unk80052B40 *)&spE0, (Unk80052B40 *)&spD8, NULL, D_8005BB38);
+	position.unk0 = arg0;
+	position.unk2 = arg1;
+	position.unk4 = arg2;
+	rotation.unk0 = arg4;
+	rotation.unk2 = 0;
+	rotation.unk4 = 0;
+	func_800039D0_45D0(&position, &rotation, NULL, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
@@ -4192,20 +4110,22 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
+	var_a0 = 0;
 	temp_f22 = var_s2;
 	temp_fp = (var_s3 * 4) + 0x64;
 	for (i = 0; i < 10; i++) {
 		temp_lo = (i << 0x10) / 10;
 		temp_lo_2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
 		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
 		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s2);
 
-		var_v0 = temp_fp & 0xFF;
 		if (D_80052B58 < temp_fp) {
-			var_v0 = D_80052B58 & 0xFF;
+			var_v0 = D_80052B58;
+		} else {
+			var_v0 = temp_fp;
 		}
 
 		D_8005BB34->v.ob[0] = temp_s5;
@@ -4222,62 +4142,70 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 
 	temp_f22 = spCC;
-	temp_fp_2 = 0xB4 - (var_s3 * 6);
+	temp_fp = 0xB4 - (var_s3 * 6);
 	for (i = 0; i < 10; i++) {
 		temp_lo = (i << 0x10) / 10;
 		temp_lo_2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
 		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + 0.0);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
 		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s2);
 
-		var_v0 = temp_fp_2 & 0xFF;
-		if (D_80052B58 < temp_fp_2) {
-			var_v0 = D_80052B58 & 0xFF;
+		if (D_80052B58 < temp_fp) {
+			var_v0 = D_80052B58;
+		} else {
+			var_v0 = temp_fp;
 		}
 
-		D_8005BB34->v.ob[0] = temp_s5;
-		D_8005BB34->v.ob[1] = temp_s2;
-		D_8005BB34->v.ob[2] = 3;
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0;
 		if (!(i & 1)) {
+			D_8005BB34->v.ob[0] = temp_s5;
+			D_8005BB34->v.ob[1] = temp_s2;
+			D_8005BB34->v.ob[2] = 3;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
 			D_8005BB34->v.cn[0] = 0x47;
 			D_8005BB34->v.cn[1] = 0x0A;
 			D_8005BB34->v.cn[2] = 0xD4;
+			D_8005BB34->v.cn[3] = var_v0;
 		} else {
+			D_8005BB34->v.ob[0] = temp_s5;
+			D_8005BB34->v.ob[1] = temp_s2;
+			D_8005BB34->v.ob[2] = 3;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
 			D_8005BB34->v.cn[0] = 0x62;
 			D_8005BB34->v.cn[1] = 0xEF;
 			D_8005BB34->v.cn[2] = 0xFF;
+			D_8005BB34->v.cn[3] = var_v0;
 		}
-		D_8005BB34->v.cn[3] = var_v0;
 		D_8005BB34++;
 	}
 
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x15), 21, 0);
 	for (i = 1; i < 10; i++) {
-		gSP1Triangle(D_8005BB2C++, i, i + 1, 0, 0);
+		gSP1Triangle(D_8005BB2C++, 0, i, i + 1, 0);
 	}
-	gSP1Triangle(D_8005BB2C++, 10, 1, 0, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 10, 1, 0);
 
 	for (i = 1; i < 10; i++) {
 		gSP2Triangles(D_8005BB2C++, i + 1, i, i + 10, 0, i + 10, i + 11, i + 1, 0);
 	}
 	gSP2Triangles(D_8005BB2C++, 1, 10, 20, 0, 20, 11, 1, 0);
 
-	spD8 = 0x8000;
-	spDA = 0;
-	spDC = 0;
-	func_800039D0_45D0(NULL, (Unk80052B40 *)&spD8, NULL, D_8005BB38);
+	rotation.unk0 = 0x8000;
+	rotation.unk2 = 0;
+	rotation.unk4 = 0;
+	func_800039D0_45D0(NULL, &rotation, NULL, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x15), 21, 0);
 	for (i = 1; i < 10; i++) {
-		gSP1Triangle(D_8005BB2C++, i, i + 1, 0, 0);
+		gSP1Triangle(D_8005BB2C++, 0, i, i + 1, 0);
 	}
-	gSP1Triangle(D_8005BB2C++, 10, 1, 0, 0);
+	gSP1Triangle(D_8005BB2C++, 0, 10, 1, 0);
 
 	for (i = 1; i < 10; i++) {
 		gSP2Triangles(D_8005BB2C++, i + 1, i, i + 10, 0, i + 10, i + 11, i + 1, 0);

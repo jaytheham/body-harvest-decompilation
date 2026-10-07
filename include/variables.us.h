@@ -1904,7 +1904,7 @@ extern Light D_8013D960_14C910;
 extern Ambient D_8013D970_14C920;
 extern Light D_8013D978_14C928;
 extern u8 D_8013D9AC_14C95C; // used as a timer during human meter game over sequence, maybe lighting related
-extern s8 D_8013D9B0_14C960;
+extern u8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
 extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
