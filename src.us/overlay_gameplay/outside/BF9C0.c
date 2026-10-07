@@ -147,7 +147,7 @@ s32 D_8013DB08_14CAB8 = 0;
 
 // AI- Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
-	return (s32)(((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
+	return (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
 // AI - Check if any of the 4 corners of a tile have height difference >= 10
@@ -1238,7 +1238,6 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	u8 spAC[5];
 	s16 sp94;
 
-	(void)arg3;
 
 	D_8014F8A0 = (s16 (*)[256])arg2;
 	sp94 = D_8014F89C;
@@ -1343,8 +1342,6 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 		}
 	}
 
-	(void)arg0;
-	(void)arg1;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
@@ -1421,7 +1418,6 @@ void func_800B42B0_C3260(s32 arg0) {
 	u8 sp59;
 	u8 sp54[3];
 
-	(void)arg0;
 
 	sp5C = (u16 *)D_8014F8A0;
 	D_8014F89C = D_80151DD8.mapPosX++;
@@ -1497,7 +1493,6 @@ void func_800B4660_C3610(s32 arg0) {
 	u8 sp59;
 	u8 sp54[3];
 
-	(void)arg0;
 
 	sp5C = (u16 *)D_8014F8A0;
 	D_8014F89C = D_80151DD8.mapPosX--;
@@ -1572,7 +1567,6 @@ void func_800B49A4_C3954(s32 arg0) {
 	u8 sp59;
 	u8 sp54[3];
 
-	(void)arg0;
 
 	sp5C = (u16 *)D_8014F8A0;
 	D_8014F89C = D_80151DD8.mapPosX;
@@ -1646,7 +1640,6 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 	u8 sp59;
 	u8 sp54[3];
 
-	(void)arg0;
 
 	sp5C = (u16 *)D_8014F8A0;
 	D_8014F89C = D_80151DD8.mapPosX;
@@ -2846,7 +2839,6 @@ void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	s32 temp_t2;
 	s32 temp_t7;
 
-	(void)arg3;
 	temp_t2 = (arg0 + 0x80) >> 8;
 	temp_v1 = (s16)temp_t2 - arg2;
 	if (temp_v1 < -0x7F) {
@@ -3441,7 +3433,6 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	f32 worldZf;
 	f32 delta;
 
-	(void)unused;
 
 	water = &((Unk80052B2C *)&D_80052AE8)[arg0 & 0xFF];
 	waterX = water->unk3C;
