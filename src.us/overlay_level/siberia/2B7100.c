@@ -1880,14 +1880,15 @@ void func_802D769C_2B9ACC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D769C_2B9ACC.s")
 #endif
 
+// CURRENT(60)
 #ifdef NON_MATCHING
 void func_802D77BC_2B9BEC(void) {
 	u16 temp;
 
 	func_80013468_14068(0xC);
+	temp = *(u16 *)&buildingInstances[150].state;
 	buildingInstances[150].door1InteriorId = 0x6E;
-	temp = buildingInstances[150].state;
-	buildingInstances[150].state = (u16) ((temp & 0xF03F) | 0x400);
+	*(u16 *)&buildingInstances[150].state = (temp & 0xF03F) | 0x400;
 	D_8014D17C = 0;
 	func_80007410_8010(&func_802D75E4_2B9A14);
 	func_802D769C_2B9ACC();
