@@ -53,3 +53,20 @@ every caller, so it is worth looking at the declarations already there before in
 
 Found with the chunk-level matcher, which reported 75% `lift` (coverage from matched functions) with
 an 18-instruction identical run against this donor - the highest-lift small target on the board.
+
+## Second instance: the same lever, and no header to move
+
+`func_8009C4F8_AB4A8` (`AAA70.c`) was wrapped at `CURRENT(1737)`, its guess already in its twin's
+statement shape but declaring `(s32 arg0, s32 arg1)` where the matched twin `func_8009BDB8_AAD68`
+(same file, a 72-instruction identical run) declares `(u8 arg0, u8 arg1)`. The target's own `.s` masks
+both arguments - `andi $t6,$a0,0xFF` and `andi $t7,$a1,0xFF` - identical to the twin's opening, which is
+the evidence that the guess's types were wrong rather than unlucky. Changing the definition alone took
+the score from **1737 to 1224**, a 30% cut, committed as an `imp`. This overlay has no `AAA70.h`, so no
+prototype had to move.
+
+The remaining two deltas were the target's own computed arguments (`(D_80068088 - 0x24) * 4` where the
+twin writes the literal `0xA0`). Those are deliberate, not shape errors - a delta list cannot know
+that, and reporting them is still correct.
+
+**Read the twin's parameter types before anything else.** They are the cheapest lever available, and a
+guess that types a parameter wide and then compensates inside the body is the signature of the mistake.

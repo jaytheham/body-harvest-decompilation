@@ -357,9 +357,9 @@ void func_8009C4E8_AB498(void) {
 	D_8014F1F8 = -0x10;
 }
 
-// CURRENT(1737)
+// CURRENT(1224)
 #ifdef NON_MATCHING
-void func_8009C4F8_AB4A8(s32 arg0, s32 arg1) {
+void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 	Gfx *dl;
 	s32 pad0;
 	s32 pad1;
