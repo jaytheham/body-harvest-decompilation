@@ -11856,52 +11856,50 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #endif
 
 // CURRENT(1348)
-#ifdef NON_MATCHING
-void func_800E4CEC_F3C9C(s32 arg0, u8 arg1) {
-	s16 sp84, sp82, sp80;
-	s32 sp70, sp68, sp64, sp60, sp5C;
-	s16 sp6E, sp6C, sp62, sp5E, sp66;
-	u8 sp7B, sp7A, sp79;
-	
-	func_80128504_1374B4((AlienInstance *) arg0, 0, &sp70, &sp6C, &sp68);
-	sp60 = 0;
-	sp64 = sp70;
-	sp5C = sp68;
-	
-	func_80126268_135218((s16) sp70, sp6E, (s16) sp68, &sp64, &sp60, &sp5C, 1, 5);
-	
-	if (func_800B325C_C220C((s8) (sp64 >> 8), (s8) (sp5C >> 8), 0x1000) != 0) {
+void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
+	Unk80052B40 position;
+	s32 unused; /* Preserve the gap below the matrix position. */
+	u8 red, green, blue;
+	s32 unused2; /* Preserve the gap above the coordinate words. */
+	SignedWord sourceX, sourceY, sourceZ, hitX, hitY, hitZ;
+
+	func_80128504_1374B4(arg0, 0, &sourceX.word, &sourceY.word, &sourceZ.word);
+	hitY.word = 0;
+	hitX.word = sourceX.word;
+	hitZ.word = sourceZ.word;
+
+	func_80126268_135218((s16) sourceX.word, sourceY.halves.low, (s16) sourceZ.word, &hitX.word, &hitY.word, &hitZ.word, 1, 5);
+
+	if (func_800B325C_C220C((s8) (hitX.word >> 8), (s8) (hitZ.word >> 8), 0x1000) != 0) {
 		if (!(D_80052A8C & 7)) {
-			func_800E0E9C_EFE4C(sp66, sp5E, 0xC8);
-			func_800DEA08_ED9B8(sp66, sp62, sp5E, 0x32, 0xA, 8, 0x1E, 0xC8, 0xC8, 0xC8, 0xFF);
+			func_800E0E9C_EFE4C(hitX.halves.low, hitZ.halves.low, 0xC8);
+			func_800DEA08_ED9B8(hitX.halves.low, hitY.halves.low, hitZ.halves.low, 0x32, 0xA, 8, 0x1E, 0xC8, 0xC8, 0xC8, 0xFF);
 		}
 	} else {
 		if (!(D_80052A8C & 7)) {
-			func_800DEA08_ED9B8(sp66, sp62, sp5E, 0x32, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
+			func_800DEA08_ED9B8(hitX.halves.low, hitY.halves.low, hitZ.halves.low, 0x32, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
 		}
 		if (!(D_80052A8C & 1)) {
-			func_800C541C_D43CC(sp66, sp62, sp5E, 0, 0x7F, 0, 0x32, 0xFF, 0x28, 0xA, 0x6A, 0x53, 0);
+			func_800C541C_D43CC(hitX.halves.low, hitY.halves.low, hitZ.halves.low, 0, 0x7F, 0, 0x32, 0xFF, 0x28, 0xA, 0x6A, 0x53, 0);
 		}
 	}
-	
-	func_800E3928_F28D8((s16) sp70, sp6E, (s16) sp68, sp66, sp60, sp5C, 0, (s32) arg1, 3);
-	
+
+	func_800E3928_F28D8((s16) sourceX.word, sourceY.halves.low, (s16) sourceZ.word, hitX.halves.low, hitY.word, hitZ.word, 0, (s32) arg1, 3);
+
 	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-	
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, sp7B, sp7A, sp79, 0xFF);
-	
-	sp80 = (s16) sp70;
-	sp82 = (s16) sp6C;
-	sp84 = (s16) sp68;
-	func_800039D0_45D0((Unk80052B40 *) &sp80, 0, 0, D_8005BB38);
-	
+
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, red, green, blue, 0xFF);
+
+	position.unk0 = (s16) sourceX.word;
+	position.unk2 = (s16) sourceY.word;
+	position.unk4 = (s16) sourceZ.word;
+	func_800039D0_45D0(&position, 0, 0, D_8005BB38);
+
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, D_50332A0);
+	gSPDisplayList(D_8005BB2C++, &D_50332A0);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E4CEC_F3C9C.s")
-#endif
+
 
 // CURRENT(380)
 #ifdef NON_MATCHING
