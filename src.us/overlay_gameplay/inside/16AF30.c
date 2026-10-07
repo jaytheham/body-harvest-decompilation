@@ -2187,8 +2187,9 @@ void func_80088654_170714(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(3176)
 // AI - Render slot type 6 effects: shrinking sprites
+#ifdef NON_MATCHING
 void func_80088B9C_170C5C(void) {
 	typedef struct {
 		s16 unk0;
@@ -2207,18 +2208,10 @@ void func_80088B9C_170C5C(void) {
 	} Unk84EECEffect;
 
 	s16 effect;
-	Vec3f *pos;
-	s8 **color;
-	f32 *scale;
-	Unk84EECEffect *effectBase;
 
 	D_800FB6E5 = 0x20;
 	D_800FB6E6 = 0x20;
 	effect = D_800FB782;
-	pos = &D_800FB6D0;
-	color = &D_800FB6DC;
-	scale = &D_800FB6E0;
-	effectBase = (Unk84EECEffect *)&D_800FB7B0;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -2237,12 +2230,12 @@ void func_80088B9C_170C5C(void) {
 			Unk84EECEffect *entry;
 
 			gDPPipeSync(D_8005BB2C++);
-			entry = &effectBase[effect];
-			pos->x = entry->unk8;
-			pos->y = entry->unkA;
-			pos->z = entry->unkC;
-			*color = &entry->unkE;
-			*scale = entry->unk2;
+			entry = &D_800FB7B0[effect];
+			D_800FB6D0.x = entry->unk8;
+			D_800FB6DC = &entry->unkE;
+			D_800FB6D0.y = entry->unkA;
+			D_800FB6D0.z = entry->unkC;
+			D_800FB6E0 = entry->unk2;
 			D_800FB6E4 = entry->unk12;
 			func_80089E54_171F14();
 			effect = entry->unk4;
