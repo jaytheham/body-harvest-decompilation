@@ -2473,10 +2473,15 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(11278)
+// CURRENT(8685) - spelling the head as a real member of the global (Unk8014F618.head, no cast,
+// no pointer local) makes every head access a constant-address expression and IDO then assigns the
+// two hoisted bases the way the target does ($s0=&D_8014F618, $s1=&D_8005BB2C); the cast form gave
+// the reverse. One declared-but-unused s32 first in the frame restores the target's posZ home at
+// 0x20 (it lands at 0x24 without it). Open: 421 instrs vs the target's 446 (25 glue instrs missing;
+// all 7 calls present) and posX in $f16 where the target uses $f0.
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
-	AAA70Unk8014F618Head *temp_s0;
+	s32 pad0;
 	f32 posX;
 	f32 posY;
 	f32 posZ;
@@ -2485,15 +2490,14 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	s32 pulse;
 
 	(void)arg3;
-	temp_s0 = (AAA70Unk8014F618Head *)&D_8014F618;
 	posX = (f32)arg0;
 	posY = (f32)arg1;
 	posZ = (f32)arg2;
 
 	D_8014F618.unk66 = 1;
-	temp_s0->unk0 = posX;
-	temp_s0->unk4 = posY;
-	temp_s0->unk8 = posZ;
+	D_8014F618.head.unk0 = posX;
+	D_8014F618.head.unk4 = posY;
+	D_8014F618.head.unk8 = posZ;
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
@@ -2546,15 +2550,15 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 
 	*(s16 *)&D_8014F618.unk60 = (s16)distScale;
 	distScale /= 6.0f;
-	temp_s0->unkC = distScale * ((f32 *)&D_80153AB8)[0];
-	temp_s0->unk10 = distScale * ((f32 *)&D_80153AB8)[1];
-	temp_s0->unk14 = distScale * ((f32 *)&D_80153AB8)[2];
-	temp_s0->unk18 = distScale * ((f32 *)&D_80153AB8)[3];
-	temp_s0->unk1C = distScale * ((f32 *)&D_80153AB8)[4];
-	temp_s0->unk20 = distScale * ((f32 *)&D_80153AB8)[5];
-	temp_s0->unk24 = temp_s0->unk0 + temp_s0->unk18;
-	temp_s0->unk28 = temp_s0->unk4 + temp_s0->unk1C;
-	temp_s0->unk2C = temp_s0->unk8 + temp_s0->unk20;
+	D_8014F618.head.unkC = distScale * ((f32 *)&D_80153AB8)[0];
+	D_8014F618.head.unk10 = distScale * ((f32 *)&D_80153AB8)[1];
+	D_8014F618.head.unk14 = distScale * ((f32 *)&D_80153AB8)[2];
+	D_8014F618.head.unk18 = distScale * ((f32 *)&D_80153AB8)[3];
+	D_8014F618.head.unk1C = distScale * ((f32 *)&D_80153AB8)[4];
+	D_8014F618.head.unk20 = distScale * ((f32 *)&D_80153AB8)[5];
+	D_8014F618.head.unk24 = D_8014F618.head.unk0 + D_8014F618.head.unk18;
+	D_8014F618.head.unk28 = D_8014F618.head.unk4 + D_8014F618.head.unk1C;
+	D_8014F618.head.unk2C = D_8014F618.head.unk8 + D_8014F618.head.unk20;
 	func_800A2260_B1210(NULL, NULL, NULL, NULL);
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, D_8014F618.unk73, D_8014F618.unk6B);
