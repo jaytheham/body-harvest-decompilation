@@ -549,25 +549,19 @@ block_43:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
 
-// CURRENT(2905)
-#ifdef NON_MATCHING
 void func_800B165C_C060C(s32 arg0) {
 	Unk8014FD30Type *wall;
 	s32 z;
 	s32 maxZ;
 
 	wall = &D_80147C30_156BE0[currentLevel - 1][arg0];
-	z = wall->main.minZ >> 10;
-	maxZ = wall->main.maxZ >> 10;
+	z = wall->main.minZ >> 10; maxZ = wall->main.maxZ >> 10;
 
 	if (z < maxZ) {
 		do {
 			s32 minX;
 			s32 maxX;
 			s32 x;
-			s32 xEnd;
-			s32 curX;
-			u8 *row;
 
 			minX = wall->main.minX;
 			maxX = wall->main.maxX;
@@ -584,8 +578,7 @@ void func_800B165C_C060C(s32 arg0) {
 			{
 				s32 zSub1MinZ = wall->sub[1].minZ >> 10;
 				if (!(z < zSub1MinZ)) {
-					s32 zSub1MaxZ = wall->sub[1].maxZ >> 10;
-					if (z < zSub1MaxZ) {
+					if (z < (wall->sub[1].maxZ >> 10)) {
 						if (minX >= wall->sub[1].minX) {
 							minX = wall->sub[1].maxX;
 						} else if (wall->sub[1].maxX >= maxX) {
@@ -595,44 +588,14 @@ void func_800B165C_C060C(s32 arg0) {
 				}
 			}
 
-			row = D_8021EA30 + (z << 6);
-			x = minX >> 10;
-			xEnd = maxX >> 10;
-
-			if (x < xEnd) {
-				s32 rem;
-
-				curX = x;
-				rem = (xEnd - x) & 3;
-				if (rem != 0) {
-					do {
-						row[curX + 0x820] |= 0xF0;
-						curX++;
-					} while (curX < (rem + x));
-					if (curX == xEnd) {
-						// Agent - you must replace this goto with loop/if logic
-						goto done_row;
-					}
-				}
-
-				do {
-					row[curX + 0x820] |= 0xF0;
-					row[curX + 0x821] |= 0xF0;
-					row[curX + 0x822] |= 0xF0;
-					row[curX + 0x823] |= 0xF0;
-					curX += 4;
-				} while (curX < xEnd);
-			done_row:
-				;
+			for (x = minX >> 10; x < (maxX >> 10); x++) {
+				D_8021EA30[(z + 32) * 64 + x + 32] |= 0xF0;
 			}
 			maxZ = wall->main.maxZ >> 10;
 			z++;
 		} while (z < maxZ);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B165C_C060C.s")
-#endif
 
 // CURRENT(4684)
 #ifdef NON_MATCHING
