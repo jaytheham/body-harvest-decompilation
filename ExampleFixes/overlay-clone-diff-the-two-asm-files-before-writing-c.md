@@ -34,3 +34,31 @@ Notes on the mechanical rebuild:
 - `include/common.us.h` includes every overlay header, so an overlay-`.h` retype looks like a
   tree-wide header edit. Only the two TUs that name the function (`1ED9E0.c` + the overlay's
   `alien_types.c` table) need a rebuild; `touch` those, then gate.
+
+## The transplant queue: rank sibling-overlay pairs by raw `.s` diff, not by the board's `lift`
+
+The board names only the *best* donor per target, so it hides the rest of the family. Enumerate the
+pairs directly and rank them by the raw normalised diff: resolve each row's donor and target `.s`
+(`find` in both directions), keep the rows where the donor is a **matched** function of one level
+overlay and the target is an **unmatched** function of a *different* level overlay, and sort by
+`diff | wc -l`. Measured 2026-10-07 (band 80-700, 25 such pairs): the two cheapest - **12** and **23**
+diff lines - both reached `check` 0 on the first compile (`func_802DA548_1F3258`,
+`func_802DBDDC_1F4AEC`); everything at 100+ was a reconstruction (`func_802D8830_1F1540` 159,
+`func_802D7B68_1F0878` 177). The overlays pair function-by-function against **greece** (every win in
+this window took a greece donor), so `greece -> {java, comet, america, siberia}` is a generator, not a
+one-off. Run it as a queue, not a board.
+
+Use this sed diff, not the board's `diff` column, as the authority: the board's column comes from
+`asm_chunks.py`'s normaliser, which collapses `%hi(...)`/`%lo(...)` operands to a placeholder and is
+therefore **blind to data-symbol differences**, while the sed form above keeps them.
+
+Two classes the `.s` diff *does* authorise but does not settle on its own:
+
+- **Data symbols shared by name.** `func_802DA548_1F3258` uses `D_8014DD50`, `D_80052B34` and
+  `ALIEN_FLAG_UNKD` exactly as its greece donor does, so the donor's C went in verbatim. Always check
+  the donor's symbols against the target's own `.s` (`grep -n "%hi\|%lo" <target>.s`) before splicing.
+- **A callee the sibling overlay does not have.** `func_802DBDDC_1F4AEC` calls
+  `func_8008EDFC_9DDAC(arg0)` where greece calls the *pair* `func_8008E524_9D4D4(arg0, 0x190, 2)` +
+  `func_8008E978_9D928(arg0, new_var2)` - 8 donor instructions against 1, and the donor's `new_var2`
+  declaration goes with them. Substitute from the target's `.s`, and drop any local the substitution
+  orphans (a surviving unused local would reserve a stack home the target does not have).
