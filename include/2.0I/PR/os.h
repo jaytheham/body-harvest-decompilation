@@ -799,7 +799,7 @@ extern OSPri		osGetThreadPri(OSThread *);
 extern void		osCreateMesgQueue(OSMesgQueue *, OSMesg *, s32);
 extern s32		osSendMesg(OSMesgQueue *, OSMesg, s32);
 extern s32		osJamMesg(OSMesgQueue *, OSMesg, s32);
-extern s32		osRecvMesg(OSMesgQueue *, OSMesg *, s32);
+extern s32		osRecvMesg(OSMesgQueue *, OSMesg *, u32);
 
 /* Event operations */
 
