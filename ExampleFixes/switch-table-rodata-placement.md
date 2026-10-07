@@ -24,3 +24,14 @@ Two body fixes are required to reach the 5 at all (both cost instructions otherw
 For `func_802D4F74_18DA84`, enabling the C implementation and removing the placeholder table produced an exact instruction match, but the full ROM checksum still failed. The source assigned labels 0 through 8 to physically ordered handler blocks. The original table instead mapped those blocks to cases `0, 1, 2, 8, 3, 4, 5, 6, 7`.
 
 Relabeling the cases while preserving the order of their bodies fixed the compiler-generated table and yielded `build/bh.us.z64: OK`. Read the original jump table before trusting the case labels in unmatched C. Function instruction diffs compare dispatch code and handler bodies, but do not validate the table entries in rodata; the full ROM build catches this difference.
+
+## Second instance: a 14-case frontend dispatcher table shifted 0x760
+
+`func_80070270_40720` (`overlay_gameplay/frontend/40720.c`, 72 instr, `// CURRENT(5)`) is the frontend overlay entry dispatcher. Unwrapped it compiles and the marker is honest: `asm-differ` reports **5** and the whole stream is instruction-identical to the target apart from **one row** — the generated table's base address.
+
+    target 40740: lw t6,%lo(jtbl_800AE4E0_7E990)($at)   -> 0x800AE4E0
+    ours   40740: lw t6,-0x13c0($at)                     -> 0x800AEC40   (0x760 later)
+
+The prologue dispatch (`sltiu`/`beqz`/`sll`/`lui at,%hi(jtbl)`/`addu at,at,t6`/`lw`/`jr`), all fourteen case bodies and the shared `move v0,zero`/`lw ra,0x14`/`addiu sp,sp,0x18` epilogue match exactly; `ins_diff.py -noregs` reports 72 vs 72, delta +0.
+
+The target table sits inside a generated-table cluster (`jtbl_800AE4E0_7E990` at ROM 0x7E990, then `D_800AE518_7E9C8`, then `jtbl_800AE528_7E9D8` — that last one belongs to `func_800731A8_43658`, still unmatched); ours lands beside a *different* cluster (0x800AEC40, near `jtbl_800AEC88_7F138`). This is the same diagnosis as `func_80086D88_16EE48`: the TU's compiler-generated tables can only land at the target addresses once the co-tenant switch functions are compiled too, so the function is a **batch dependency**, not solo work. Add `func_80070270_40720` to the batch list — it depends on `func_800731A8_43658` (itself a DESIRED "High" entry) and the file's other switch owners. Before sinking attempts into such a body, check whether the only diff is the `lw %lo(jtbl)` immediate.
