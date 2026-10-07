@@ -641,14 +641,13 @@ void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 		return;
 	}
 
-	*(s32 *)&walker->limbs[0].unk0 = (s16)arg1;
-	*(s32 *)&walker->limbs[0].unk4 = arg2;
-	*(s32 *)&walker->limbs[0].unk14 = arg2;
-	*(s32 *)&walker->limbs[0].unk10 = (s16)arg1;
-	*(s32 *)&walker->limbs[0].unkC = arg2;
-	*(s16 *)&walker->limbs[0].unk1C = 0;
-	*((s32 *) (&walker->limbs[0].unk14)) = arg2;
-	*(s32 *)&walker->limbs[0].unk8 = (s16)arg1;
+	walker->limbs[0].words[0] = arg1;
+	walker->limbs[0].words[1] = arg2;
+	walker->limbs[0].words[5] = arg2;
+	walker->limbs[0].words[4] = (s16)arg1;
+	walker->limbs[0].words[3] = arg2;
+	walker->limbs[0].unk1C = 0;
+	walker->limbs[0].words[2] = (s16)arg1;
 
 	func_800F2980_101930(walker);
 
@@ -863,19 +862,19 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1)
 
 // CURRENT(1074)
 #ifdef NON_MATCHING
-void func_800F34AC_10245C(s32 arg0) {
+void func_800F34AC_10245C(u8 arg0) {
 	UnkF9230ShadowWalker *walker;
-	s32 temp = arg0 & 0xFF;
-	if (temp >= 9) {
-		osSyncPrintf(D_80144828_1537D8, temp);
+	
+	if (arg0 >= 9) {
+		osSyncPrintf(D_80144828_1537D8);
 	}
-	if (D_80157FF0[temp] != -1) {
-		osSyncPrintf(D_80144840_1537F0, temp);
+	if (D_80157FF0[arg0] != -1) {
+		osSyncPrintf(D_80144840_1537F0);
 	}
-	walker = &D_80158000[temp];
+	walker = &D_80158000[arg0];
 	walker->limbs[0].unk22 = 0x10;
-	*(s32*)&walker->limbs[0].unk0 = *(s32*)&walker->limbs[0].unk10;
-	*(s32*)&walker->limbs[0].unk4 = *(s32*)&walker->limbs[0].unk14;
+	walker->limbs[0].words[0] = walker->limbs[0].words[4];
+	walker->limbs[0].words[1] = walker->limbs[0].words[5];
 	walker->unk16A = D_8014DD50[alienInstances[walker->alienIdx].unkC].unk2 + alienInstances[walker->alienIdx].unk2;
 }
 #else
@@ -3267,39 +3266,16 @@ void func_800FAC90_109C40(void) {
 }
 
 // CURRENT(535)
-#ifdef NON_MATCHING
 void func_800FAD10_109CC0(void) {
-	VehicleInstance *var_v1;
-	s8 var_v0;
-
+	s32 i;
 	D_80158FD8 = 0;
-	var_v1 = vehicleInstances;
-	var_v0 = 0;
-	do {
-		if (var_v1[0].unk20 & 0x8000) {
-			D_80158E80[D_80158FD8] = var_v0;
-			D_80158FD8++;
+	for (i = 0; i < 128; i++) {
+		if (vehicleInstances[i].unk20 & 0x8000) {
+			D_80158E80[D_80158FD8++] = i;
 		}
-		if (var_v1[1].unk20 & 0x8000) {
-			D_80158E80[D_80158FD8] = var_v0 + 1;
-			D_80158FD8++;
-		}
-		if (var_v1[2].unk20 & 0x8000) {
-			D_80158E80[D_80158FD8] = var_v0 + 2;
-			D_80158FD8++;
-		}
-		if (var_v1[3].unk20 & 0x8000) {
-			D_80158E80[D_80158FD8] = var_v0 + 3;
-			D_80158FD8++;
-		}
-		var_v0 += 4;
-		var_v1 += 4;
-	} while (var_v0 != 0x80);
+	}
 	D_80159320 &= ~0x2000;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FAD10_109CC0.s")
-#endif
 
 s16 func_800FADF8_109DA8(s16 arg0) {
 	s32 var_v1;
