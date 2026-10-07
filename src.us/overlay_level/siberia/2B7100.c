@@ -1448,6 +1448,7 @@ end:
 	}
 }
 
+// AI - Adjusts buildingInstances coordinates; level fields D_8014D17C and D_802E0E48.
 void func_802D6674_2B8AA4(void) {
 	if (D_8014D17C >= 0x15) {
 		func_802D64DC_2B890C(0xA0, D_8014D17C - 0x14, 0xC8, 0x18, &D_802E0E48, 6, 0x28, 1);

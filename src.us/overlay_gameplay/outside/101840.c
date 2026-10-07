@@ -4353,6 +4353,7 @@ void func_800FD4D4_10C484(void *arg0) {
 // first-declared local gets the highest offset, so `wasAudioActive` stays at 0x2C).
 // The index into vehicleInstances must stay inline: a named `vehicleGroup` used as the
 // subscript allocates a variable register (a0) instead of the target's first temp (t3).
+// AI - Vehicle entry path; reads D_80052AE8, D_80052B34 and D_8013FD88.
 void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	Unk80052B2C *playerData;
 	VehicleType *type;

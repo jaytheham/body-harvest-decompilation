@@ -146,6 +146,7 @@ const char D_80038158_38D58[] = "    Start of ZBuffer: %8x\n";
 const char D_80038174_38D74[] = "                Free: %x, (%.2fK)\n";
 const char D_80038198_38D98[] = "------------------------------\n";
 
+// AI - Whole-transfer path of the overlay loader.
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 var_s0;
 	s32 var_s1;

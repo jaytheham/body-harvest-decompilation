@@ -962,6 +962,7 @@ void func_802D614C_1EEE5C(void)
   }
 }
 
+// AI - Positions an effect from buildingInstances and calls func_800E0F4C_EFEFC; uses the D_80157F8C / D_80157F8E pair.
 void func_802D62A0_1EEFB0(void)
 {
   s16 v0;
@@ -1753,6 +1754,7 @@ void func_802D8830_1F1540(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D8830_1F1540.s")
 #endif
 
+// AI - Alien type lookup through typeIndex and alienTypes, then a func_800038E0_44E0 call.
 void func_802D89C4_1F16D4(u8 arg0)
 {
 	u8 alienTypeIndex;
@@ -2339,6 +2341,7 @@ void func_802DA18C_1F2E9C(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk36 = 0;
 }
 
+// AI - Walks the alien bone chain from alienInstances through D_8014DD50 and writes the resulting transform into D_802E06E0.
 void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2)
 {
 	u8 currentNode;
@@ -2573,6 +2576,7 @@ void func_802DA548_1F3258(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DA548_1F3258.s")
 #endif
 
+// AI - The longer alien bone and type path; calls func_8008916C_9811C.
 void func_802DA844_1F3554(u8 arg0) {
 	s32 sp6C;
 	s32 sp68;
