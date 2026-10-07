@@ -3009,45 +3009,38 @@ void func_802DBCB0_1F49C0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBCB0_1F49C0.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_802DBDDC_1F4AEC(u8 arg0) {
-	AlienInstance *alien;
-	s32 flags;
-	u32 temp_t5;
-	s16 temp_v0;
-
-	alien = &alienInstances[arg0];
-
-	if (!(alien->unk20 & ALIEN_FLAG_UNKF)) {
-		if ((func_8008E478_9D428(arg0, alien) != 0) || (func_8008E30C_9D2BC(arg0, 0x80000000, alien) != 0)) {
-			func_80085900_948B0(arg0, 0x3E8, alien);
-			func_802DBB58_1F4868(arg0);
-		} else {
-			func_802DBBE4_1F48F4(arg0);
-			flags = alien->unk20;
-			if ((flags & 0x100) && ((D_80052A8C & 0x3F) == (arg0 & 0x3F))) {
-				temp_t5 = (u32) *(u32*)((u8*)buildingInstances + 0x8 + alien->unk39 * 0x28) /* TODO: non-standard stride */ >> 0xC;
-				if (((temp_t5 & 1) != 0) || (temp_t5 & 0x10)) {
-					alien->unk20 = (s32) (flags & ~ALIEN_FLAG_TARGET_PT);
-				}
+void func_802DBDDC_1F4AEC(u8 arg0)
+{
+	u8 new_var;
+	if ((!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)) &&
+		((func_8008E478_9D428(arg0) != 0) || (func_8008E30C_9D2BC(arg0, 0x80000000) != 0)))
+	{
+		func_80085900_948B0(arg0, 0x3E8);
+		func_802DBB58_1F4868(arg0);
+	}
+	else
+	{
+		func_802DBBE4_1F48F4(arg0);
+		if ((alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT) && ((arg0 & 0x3F) == (D_80052A8C & 0x3F)))
+		{
+			new_var = alienInstances[arg0].unk38;
+			if ((((buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) ||
+				((buildingInstances[new_var].unk8 >> 0xC) & 0x10))
+			{
+				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
 			}
 		}
 	}
-
-	temp_v0 = alien->unk1E;
-	if (temp_v0 != 0) {
-		alien->unk1E = (s16) (temp_v0 - 1);
+	if (alienInstances[arg0].unk1E != 0)
+	{
+		alienInstances[arg0].unk1E--;
 	}
-
 	func_8008076C_8F71C(arg0);
 	func_800A53C0_B4370(arg0, 0x100, 0x1000);
 	func_8008EDFC_9DDAC(arg0);
 	func_8008EF1C_9DECC(arg0);
 	func_80137468_146418(arg0, 7);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBDDC_1F4AEC.s")
-#endif
 
 // Transplanted from the matched greece twin func_802D8898_1913A8 (same `unk5C` on-death handler slot).
 // Java overlay differs only in: no func_80137468(arg0, 0x66) else-branch; alienTypes table resolved
