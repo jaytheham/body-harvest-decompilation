@@ -33,6 +33,25 @@ both the literal and the parameter it is passed to are the two places to fix it.
 The prototype change is evidence-driven (the asm proves the constant is typed
 unsigned) and `gate` re-verifies the whole ROM.
 
+**Trap (measured on this very retype): a shared prototype is global.** Flipping `osRecvMesg`'s
+third parameter to `u32` retyped the flag constant in **every** caller. In
+`overlay_gameplay/outside/7F220.c:858` (`func_800720F4_810A4`, an upstream match) the target keeps its
+`1` hoisted in `$s6` and passes it as `or a2,s6,zero`; with the `u32` prototype our build emitted a
+fresh materialisation (`li a2,1`) instead - 4 bytes of ROM at file offset `0x811D8` and a failed gate,
+while that function still reported `check` = 0.
+
+The call-site alternative to a header change is a **u32 local**: `u32 one = 1;` and pass `one`. It
+rematerialises the constant in the call's delay slot (measured: the delay slot becomes `li a2,1`, the
+target's bytes) without retyping anyone else's constant - but the extra local reserves a stack home,
+which shifted another local of the same function from `0x50($sp)` to `0x4C($sp)` (2 bytes), so it is
+not free either. A suffix alone does not work: `(u32)1`, `1U + 0` and `1U` all still merged.
+
+**The gate cannot see a header change.** The Makefile tracks no header dependencies, so editing a
+prototype rebuilds no caller: the stale (and correct) objects stay in `build/` and the ROM keeps
+matching. After touching a shared header, delete the affected `.o` files (or `build/`) before trusting
+`check` or `gate` - a one- or two-instruction ROM diff in a function that scores clean is the
+signature.
+
 **Related, same function:** the *order of `case` bodies in the source* sets the
 order the blocks are emitted in. The target had `case 2`'s body before `case 1`'s
 (dispatch order is still 1,2,4), so the source listed the cases as 2,1,4. Writing
