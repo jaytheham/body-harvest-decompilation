@@ -12272,8 +12272,7 @@ void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E52E8_F4298.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800E5450_F4400(s32 arg0, s32 arg1) {
+void func_800E5450_F4400(AlienInstance *arg0, s32 arg1) {
 	u8 i;
 	u8 slot;
 	u8 minValue;
@@ -12290,7 +12289,7 @@ void func_800E5450_F4400(s32 arg0, s32 arg1) {
 	}
 	
 	if (slot == 0x40) {
-		minValue = D_8013DD1A;
+		minValue = D_8013DD18_14CCC8[2];
 		for (i = 0; i < 0x40; i++) {
 			temp = D_80152D00[i].timer;
 			if (minValue >= temp) {
@@ -12303,12 +12302,9 @@ void func_800E5450_F4400(s32 arg0, s32 arg1) {
 	
 	entry = &D_80152D00[slot];
 	entry->timer = 10;
-	*(s32 *)&entry->z1 = arg0; /* type 2: coordinate area reused as an alien-instance ptr */
+	entry->alien = arg0;
 	entry->type = 2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5450_F4400.s")
-#endif
 
 void func_800E5520_F44D0(s32 arg0, s32 arg1) {
 }

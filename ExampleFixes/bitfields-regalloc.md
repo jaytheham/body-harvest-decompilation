@@ -1,5 +1,7 @@
 ### Bitfields
 
+In `func_800C1288_D0238`, clearing a flag byte and then assigning `8` generated `addiu` and shifted subsequent temporary registers. Using `flags |= 8` after the clear generated the target `ori` and restored the exact register sequence. The full ROM verified the match.
+
 ```c=
 struct A {
     u8 x;

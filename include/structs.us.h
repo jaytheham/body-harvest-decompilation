@@ -1893,8 +1893,13 @@ typedef struct {
 	/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
 	/* 0x04 */ s16 x1;        /* start point */
 	/* 0x06 */ s16 y1;
-	/* 0x08 */ s16 z1;
-	/* 0x0A */ s16 x2;        /* end point */
+	union {
+		struct {
+			/* 0x08 */ s16 z1;
+			/* 0x0A */ s16 x2;        /* end point */
+		};
+		/* 0x08 */ AlienInstance *alien; /* type 2 */
+	};
 	/* 0x0C */ s16 y2;
 	/* 0x0E */ s16 z2;
 	/* 0x10 */ s32 extra;     /* passed to the draw fn; restores render mode when non-zero */
