@@ -1778,8 +1778,6 @@ void func_80075C84_46134(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1235)
 void func_80075D58_46208(s32 arg0) {
 	u16 perspectiveNormal;
 
@@ -1820,9 +1818,9 @@ void func_80075D58_46208(s32 arg0) {
 	D_80052B40.unk4 = 0;
 
 	if (arg0 != 0) {
-		D_80052B48.unk0 = (s16)((D_80094860_64D10 * -30) + 30);
+		D_80052B48.unk0 = (s16)((-D_80094860_64D10 * 30) + 30);
 	} else {
-		D_80052B48.unk0 = (s16)(D_80094860_64D10 * -30);
+		D_80052B48.unk0 = (s16)(-D_80094860_64D10 * 30);
 	}
 	D_80052B48.unk2 = 0;
 	D_80052B48.unk4 = 0;
@@ -1862,12 +1860,9 @@ void func_80075D58_46208(s32 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if (arg0 == 0) {
-		D_80094860_64D10++;
+		D_80094860_64D10_W = D_80094860_64D10 + 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075D58_46208.s")
-#endif
 
 /**
  * @brief Runs several frontend update/render passes for four ticks.

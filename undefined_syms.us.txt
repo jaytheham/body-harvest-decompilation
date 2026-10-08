@@ -6939,3 +6939,6 @@ D_8003E29C_3EE9C = D_8003E290_3EE90_initial + 0xC;
 
 D_8013E3F4_W = 0x8013E3F4;
 D_8013E3F8_W = 0x8013E3F8;
+
+/* Separate write reference for the frontend logo frame counter. */
+D_80094860_64D10_W = D_80094860_64D10;
