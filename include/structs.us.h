@@ -3654,3 +3654,9 @@ typedef struct {
 } TerrainLightTint;
 
 #endif
+
+/* Adjacent camera basis vectors share a single six-float storage block. */
+typedef struct {
+	f32 x, y, z;
+	f32 rightX, rightY, rightZ;
+} CameraBasis;

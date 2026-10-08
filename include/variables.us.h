@@ -2390,7 +2390,7 @@ extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
 extern Unk800E614CFxSlot D_80153300[4];
 extern Unk800E614CFxSlot D_801538C4;
 extern u8 D_80153AB0; // Nuke in progress?
-extern Vec3f D_80153AB8;
+extern CameraBasis D_80153AB8;
 extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Unk80153AE0Entry D_80153AE0[];
