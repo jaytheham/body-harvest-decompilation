@@ -2262,7 +2262,6 @@ void func_80088DFC_170EBC(s32 arg0) {
 #endif
 
 // CURRENT(60)
-#ifdef NON_MATCHING
 // AI - Render a single textured triangle
 void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	f32 sp4;
@@ -2272,12 +2271,18 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	f32 temp_f16;
 	f32 temp_f18;
 
-	temp_f0 = D_800FB6A8[0] * (f32)arg2;
-	temp_f12 = D_800FB6A8[1] * (f32)arg2;
-	temp_f14 = D_800FB6A8[2] * (f32)arg2;
-	temp_f16 = D_800FB6A8[3] * (f32)arg2;
-	temp_f18 = D_800FB6A8[4] * (f32)arg2;
-	sp4 = D_800FB6A8[5] * (f32)arg2;
+	temp_f0 = (f32)arg2;
+	temp_f0 *= D_800FB6A8[0];
+	temp_f12 = (f32)arg2;
+	temp_f12 *= D_800FB6A8[1];
+	temp_f14 = (f32)arg2;
+	temp_f14 *= D_800FB6A8[2];
+	temp_f16 = (f32)arg2;
+	temp_f16 *= D_800FB6A8[3];
+	temp_f18 = (f32)arg2;
+	temp_f18 *= D_800FB6A8[4];
+	sp4 = (f32)arg2;
+	sp4 *= D_800FB6A8[5];
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f12);
@@ -2318,9 +2323,6 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089148_171208.s")
-#endif
 
 // CURRENT(3705)
 // AI - Spawn a child particle effect for rendering
