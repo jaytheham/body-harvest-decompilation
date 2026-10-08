@@ -130,3 +130,41 @@ Three rules from it:
    would also be produced by a stale object.
 
 `Match func_8008EDB4_5F264` (75 instructions, `check` 0, gate PASSED).
+
+### Third win in the same pair: the third clone, where one statement had to move (`Match func_80089764_59C14`)
+
+`func_80089764_59C14` (52690, 163 instr) is a third clone of `func_800CD7FC_DC7AC` (CFE30) and the
+same-file sibling of `func_8008B534_5B9E4`. The `u8 arg0` rule applied again (`andi $t6,$a0,0xFF` at
+entry, `sw $a0,0x40($sp)` argument home) - but that alone left the body at **2161**, with `ins_diff`
+reporting target 163 / ours 162 (delta -1) and the *entire* body as one `REPLACE target[0:130] ->
+ours[0:129]`. That shape - a clean compile, one instruction short, one giant REPLACE - is a
+statement-**position** residual, not a spelling one.
+
+The lever was where the second table lookup runs relative to the GBI block. The donor reads both index
+levels together at the top:
+
+```c
+index = D_800DE130[arg0].unk6;
+index = D_800DE840[index].unk4;      /* ours: here */
+<gDPPipeSync ... gDPSetTileSize block>
+```
+
+The target's own `.s` completes that second lookup (`lh $s1,0x4($t9)`) *after* the last GBI store, just
+before the loop guard, with its `multu` interleaved into the tile-size setup. Moving the statement below
+the block - and below `D_800DE12D = 0x20; D_800DE12E = 0x20;` - measured **2161 -> 0**. The rest of the
+five-variant placement sweep:
+
+| shape | check |
+|---|---|
+| both lookups at top (donor's own order) | 2161 |
+| lookup after the GBI block, before the byte stores | 1425 |
+| **lookup after the GBI block and the byte stores** | **0** |
+| byte stores hoisted above the GBI block, lookup at top | 3115 |
+| byte stores hoisted above the GBI block, lookup after it | 1553 |
+
+So the order is a real three-way choice between the lookup, the byte stores and the GBI block. Sweep it
+(5 variants, 74 s total) instead of reasoning about the scheduler: when a near-copy transplant is one
+instruction short with a whole-body REPLACE, read where the *target* completes each dependency chain and
+move the source statement to that point.
+
+`Match func_80089764_59C14` (163 instructions, `check` 0, gate PASSED).
