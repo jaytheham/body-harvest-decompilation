@@ -2474,7 +2474,17 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(415) - A25: a fresh warm-started permuter run (from the 447 body, -j3 --stack-diffs) topped
+// CURRENT(407) - A26: the declaration-position lever still had room. `int new_var;` (A24's named
+// first product) moves from FIRST in the frame to directly after `f32 posZ;` - 415 -> 407. Its
+// neighbours were re-swept this run (after pad0 415, after posX 415, after posY 415, after flatDistI
+// 407, after distScale 415, after new_var2 415, after pulse 415, first 415), so the gain is the move
+// itself. The +8 frame is NOT the lever: dropping `new_var2` restores the target's 0x90 frame but
+// measures 466, and dropping both new_var and new_var2 measures 852 (frame 0x90). `swap_mul` (table
+// first on the six distScale products), deleting the dead `pad0`, dropping the empty `if (arg2)`
+// (1484) and holding unk6D in pad0 are all neutral or worse. Residual 407 = the +8 frame (ours 0x98
+// vs 0x90) plus whole-function allocation (posX in $f16 vs $f0, the packed-colour byte load order,
+// $v0/$v1 on the pulse clamp).
+// Previous: CURRENT(415) - A25: a fresh warm-started permuter run (from the 447 body, -j3 --stack-diffs) topped
 // out at 392 in the permuter's own metric, but only ONE of its constructs is real. The permuter's
 // score is not asm-differ's: splicing its best outputs back measured 2900 (the `flatDistI = ...;
 // new_var = flatDistI;` split) and 2868 (that plus the `unk6F = unk6F - 0xF` rewrite), while the one
@@ -2513,12 +2523,12 @@ void func_800A2B58_B1B08(void)
 // 0x20 (it lands at 0x24 without it).
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
-	int new_var;
 	s32 pad0;
 	f32 posX;
 	f32 posY;
 	s32 flatDistI;
 	f32 posZ;
+	int new_var;
 	f32 distScale;
 	s16 new_var2;
 	s32 pulse;
