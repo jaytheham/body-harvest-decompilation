@@ -5987,43 +5987,48 @@ void func_801027E8_111798(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3)
 	arg0->unk20 |= VEHICLE_FLAG_UNK1;
 }
 
-// CURRENT(4905)
-#ifdef NON_MATCHING
 void func_80102A0C_1119BC(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 {
 	s32 temp_v0;
+	f32 sp50;
+	f32 sp4C;
 	f32 sp48;
-  f32 sp4C;
-  f32 sp50;
-  f32 temp_f22;
-  if ((arg0->unk1C <= 0) || ((gameplayMode != 1) && (arg0 == D_80052B34)))
-  {
-	return;
-  }
-  
-  sp50 = (f32) (((((f32) coss(arg2) / 32768.0) * ((f32) coss(arg1) / 32768.0)) * (arg3)) + ((((f32) coss((u16) arg0->unkE) / 32768.0) * ((((f32)coss((u16) arg0->unk10))) / 32768.0)) * arg0->unk58));
-  sp4C = (f32) (((((f32) coss(arg2) / 32768.0) * ((f32) sins(arg1) / 32768.0)) * (arg3)) + ((((f32) sins((u16) arg0->unkE) / 32768.0) * ((((f32) coss((u16) arg0->unk10))) / 32768.0)) * arg0->unk58));
-  sp48 = (f32) ((((f32) sins(arg2) / 32768.0) * (arg3)) + (((f32) sins((u16) arg0->unk10) / 32768.0) * arg0->unk58));
-  
-  temp_f22 = sqrtf((sp48 * sp48) + ((sp50 * sp50) + (sp4C * sp4C)));
-  arg0->unkE = func_80003824_4424(sp50, sp4C);
-  arg0->unk10 = func_80003824_4424(sqrtf((sp50 * sp50) + (sp4C * sp4C)), sp48);
-  func_800FB430_10A3E0(arg0, temp_f22);
-  temp_v0 = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
-  if ((temp_v0 >= 0x4001) || (temp_v0 < (-0x4000)))
-  {
-	arg0->unkE += 0x8000;
-	func_800FB430_10A3E0(arg0, -arg0->unk12);
-  }
-  if (arg0 == D_80052B34)
-  {
-	D_80157A2C = func_80003824_4424(arg1, arg3);
-  }
-  arg0->unk20 |= VEHICLE_FLAG_UNK1;
+	f32 horizontal;
+	f32 temp_f22;
+	s16 inputTrig, oldYawTrig, oldPitchTrig;
+	if ((arg0->unk1C <= 0) || ((gameplayMode != 1) && (arg0 == D_80052B34)))
+	{
+		return;
+	}
+	
+	oldPitchTrig = coss((u16)arg0->unk10);
+	oldYawTrig = coss((u16)arg0->unkE);
+	inputTrig = coss((u16)arg1);
+	sp50 = ((f32)coss((u16)arg2) / 32768.0) * ((f32)inputTrig / 32768.0) * arg3 + ((f32)oldYawTrig / 32768.0) * ((f32)oldPitchTrig / 32768.0) * arg0->unk58;
+	oldPitchTrig = coss((u16)arg0->unk10);
+	oldYawTrig = sins((u16)arg0->unkE);
+	inputTrig = sins((u16)arg1);
+	sp4C = ((f32)coss((u16)arg2) / 32768.0) * ((f32)inputTrig / 32768.0) * arg3 + ((f32)oldYawTrig / 32768.0) * ((f32)oldPitchTrig / 32768.0) * arg0->unk58;
+	inputTrig = sins((u16)arg0->unk10);
+	sp48 = ((f32)sins((u16)arg2) / 32768.0) * arg3 + ((f32)inputTrig / 32768.0) * arg0->unk58;
+	horizontal = (sp50 * sp50) + (sp4C * sp4C);
+	temp_f22 = sqrtf((sp48 * sp48) + horizontal);
+	horizontal = sqrtf(horizontal);
+	arg0->unkE = func_80003824_4424(sp50, sp4C);
+	arg0->unk10 = func_80003824_4424(horizontal, sp48);
+	func_800FB430_10A3E0(arg0, temp_f22);
+	temp_v0 = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+	if ((temp_v0 >= 0x4001) || (temp_v0 < (-0x4000)))
+	{
+		arg0->unkE += 0x8000;
+		func_800FB430_10A3E0(arg0, -arg0->unk12);
+	}
+	if (arg0 == D_80052B34)
+	{
+		D_80157A2C = arg1;
+	}
+	arg0->unk20 |= VEHICLE_FLAG_UNK1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80102A0C_1119BC.s")
-#endif
 
 void func_80102D00_111CB0(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3) {
 	if (arg0->unk1C <= 0) {
