@@ -363,6 +363,7 @@ void func_8009C4E8_AB498(void) {
 }
 
 // Textured-rect draw (same tile setup as func_8009BDB8_AAD68 above, screen-relative)
+// AI - Draws a 16x16 I4 tile (D_1009C70 + arg1<<7) as a screen-relative rectangle at arg0 via gSPTextureRectangle.
 void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_1009C70 + (arg1 << 7)));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
@@ -1201,6 +1202,7 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
 }
 
+// AI - Draws a 10-vertex arc sized by vehicleTypes[D_80052B34->unk1A].arcOfFire via func_8009EC90_ADC40 and four gSP1Quadrangle.
 void func_8009EE30_ADDE0(void)
 {
 	s32 var_s0;

@@ -1195,6 +1195,7 @@ void func_802D522C_31937C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
 #endif
 
+// AI - Iterates the nine D_802E4ED8_329028 entries, calling func_802D522C_31937C for active ones in range per func_800B960C_C85BC.
 void func_802D58BC_319A0C(void) {
 	s16 i;
 
@@ -2387,6 +2388,7 @@ void func_802D9100_31D250(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
+// AI - Alien hit/death handler over type table D_8025668C: func_800DF038_EDFE8, func_80137468_146418(0xD), parent type 0x1B unk26-- and func_800CA5EC_D959C.
 void func_802D9128_31D278(u8 arg0) {
 	s16 parentId;
 	AlienInstance *inst;
@@ -2494,6 +2496,7 @@ void func_802D95F8_31D748(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
+// AI - Alien death/spin handler: unk20 0x600 sets unk2C=0x7FFF, ramps unk38/unk10 fall, emits func_800DEA08_ED9B8 dust and func_80137468_146418(0x66).
 void func_802D9658_31D7A8(u8 arg0) {
 	if (alienInstances[arg0].unk20 & 0x600) {
 		if (!(alienInstances[arg0].unk20 & 0x100000)) {
@@ -3223,6 +3226,7 @@ void func_802DB9FC_31FB4C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DB9FC_31FB4C.s")
 #endif
 
+// AI - Alien attack check: func_80084E54_93E04/func_80084FE8_93F98(0x8000) gates func_800871CC_9617C and a random unk1E timer, else func_800800DC_8F08C.
 void func_802DBD18_31FE68(u8 arg0) {
 	AlienInstance *inst;
 	s16 countdown;

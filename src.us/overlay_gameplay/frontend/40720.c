@@ -2182,6 +2182,7 @@ s32 func_80076FD8_47488(void) {
 /**
  * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
  */
+// AI - Copies the tiled framebuffer from strided src (arg0) to contiguous dst (arg1): 16 dwords per tile across 8x10x32 tiles.
 void func_80076FE0_47490(s32 arg0, s32 arg1) {
 	s32 *src;
 	s32 *dst;

@@ -352,6 +352,7 @@ const f64 D_802E0FA0_1F9CB0[] = { 3000.0 };
 
 void func_802D6DF8_1EFB08(void);
 
+// AI - Mission id dispatcher: calls D_802E04A4_1F91B4[arg0] for ids < 0x14, else the 0x14/0x15 cutscene and 0x44/0x45 cases.
 void func_802D4CD0_1ED9E0(s32 arg0, s32 arg1) {
 	arg1 = arg0;
 
@@ -439,6 +440,7 @@ void func_802D4F70_1EDC80(s32 arg0) {
 }
 
 // Blackness Harbor Black Adam encounter
+// AI - Spawns the Black Adam alien via func_8007956C_8851C(0x12), sets D_80256DEC and D_80157E7C, arms func_802D4F70_1EDC80.
 void func_802D4F98_1EDCA8(void) {
 	Unk80222A78 callback_struct;
 	s16 position;
@@ -784,6 +786,7 @@ void func_802D5BA0_1EE8B0(void) {
 	func_800076D4_82D4(9);
 }
 
+// AI - Level 2 placement: func_802D4DB0_1EDAC0 and func_800DF038_EDFE8 at fixed coords, then schedules func_800072CC_7ECC(0x15).
 void func_802D5BF8_1EE908(void) {
 	if (currentLevel == 2) {
 		func_802D4DB0_1EDAC0(0x2CB7, (s16) (func_800B84D0_C7480(0x2CB7, -0x42FA) >> 8), -0x42FA, 0x8C);
@@ -827,6 +830,7 @@ void func_802D5DE4_1EEAF4(void) {
 	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & ~VEHICLE_FLAG_UNKB);
 }
 
+// AI - Maps arg0 tile coords to world space, samples the floor via func_800B84D0_C7480, then func_80124B5C_133B0C and func_800DF038_EDFE8.
 void func_802D5DFC_1EEB0C(Unk8004773C *arg0) {
 	s32 sp24;
 	s32 sp30;
@@ -841,6 +845,7 @@ void func_802D5DFC_1EEB0C(Unk8004773C *arg0) {
 	func_800DF038_EDFE8((s16)sp28, (s16)sp30, (s16)sp24, 200, 0, 0);
 }
 
+// AI - Proximity test of vehicleInstances[49] and the player against buildingInstances[147], gating func_800072CC_7ECC(0xD); self-reschedules.
 void func_802D5E98_1EEBA8(void) {
 	s32 v0;
 	s32 v0_2;
@@ -1529,6 +1534,7 @@ void func_802D7EAC_1F0BBC(u8 arg0) {
 	}
 }
 
+// AI - Alien limb/tip chain walk over D_8014DD50; spawns child alien 0xD and emits func_800DFA34_EE9E4/func_800C1ECC_D0E7C.
 void func_802D7FCC_1F0CDC(u8 arg0) {
 	u8 rootId;
 	u8 bodyId;
@@ -1690,6 +1696,7 @@ void func_802D872C_1F143C(u8 arg0) {
 	}
 }
 
+// AI - Alien updater: applies the unk48 override, runs func_802D8578_1F1288, then func_80081F18_90EC8 or func_802D872C_1F143C by unk20 bit 30.
 void func_802D8830_1F1540(u8 arg0) {
 	s16 sp3C[2];
 	AlienInstance *alien;
@@ -1817,6 +1824,7 @@ void func_802D8D14_1F1A24(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
+// AI - Alien targeting/fall driver: distance-squared selects TARGET_PT/UNKC/AWAY flags over D_80222A70, then func_800E24B8_F1468.
 void func_802D8D68_1F1A78(u8 arg0)
 {
 	s32 temp_v0;
@@ -2390,6 +2398,7 @@ void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2)
 }
 
 void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2);
+// AI - Uses vehicle D_80052B34->unk1A to pick func_800877E8_96798 ranges, then func_802DA18C_1F2E9C/func_80090A6C_9FA1C on player distance.
 void func_802DA548_1F3258(u8 arg0)
 {
 	s16 sp4E;
@@ -2856,6 +2865,7 @@ void func_802DBBE4_1F48F4(u8 arg0) {
 }
 
 // Locust (Greece green glider enemy) behavior specs.unk4C
+// AI - Locust behavior: func_8008E478_9D428/func_8008E30C_9D2BC select func_802DBB58_1F4868 or func_802DBBE4_1F48F4, with a buildingInstances bit test.
 void func_802DBCB0_1F49C0(u8 arg0) {
 	u8 new_var;
 	s16 temp_v0;
@@ -2882,6 +2892,7 @@ void func_802DBCB0_1F49C0(u8 arg0) {
 	}
 }
 
+// AI - Locust variant: func_80085900_948B0(0x3E8) with func_800A53C0_B4370, func_8008EDFC_9DDAC, func_8008EF1C_9DECC and func_80137468_146418(7).
 void func_802DBDDC_1F4AEC(u8 arg0)
 {
 	u8 new_var;
@@ -2918,6 +2929,7 @@ void func_802DBDDC_1F4AEC(u8 arg0)
 // Transplanted from the matched greece twin func_802D8898_1913A8 (same `unk5C` on-death handler slot).
 // Java overlay differs only in: no func_80137468(arg0, 0x66) else-branch; alienTypes table resolved
 // via D_8025668C. Literals taken from the java target .s.
+// AI - Alien death/spin handler: unk20 0x600 sets unk2C=0x7FFF, ramps unk38/unk10 fall, emits func_800DEA08_ED9B8 dust and func_8008AAFC_99AAC.
 void func_802DBF34_1F4C44(u8 arg0) {
 	if (alienInstances[arg0].unk20 & 0x600) {
 		if (!(alienInstances[arg0].unk20 & 0x100000)) {
@@ -3318,6 +3330,7 @@ void func_802DCE34_1F5B44(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCE34_1F5B44.s")
 #endif
 
+// AI - Alien death FX: on ALIEN_FLAG_UNKA/UNKB spawns func_800DF848_EE7F8, sets unk2C=0x50, calls func_802DCE34_1F5B44, re-emits at unk2C==1.
 void func_802DD140_1F5E50(u8 arg0, u8 arg1) {
 	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
 		alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
