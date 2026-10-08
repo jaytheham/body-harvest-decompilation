@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-07T21:08:17Z",
-  "commit": "10df2ced",
-  "commit_timestamp": "2026-10-08T10:07:28+13:00",
+  "generated": "2026-10-08T03:52:05Z",
+  "commit": "7f47370f",
+  "commit_timestamp": "2026-10-08T16:51:18+13:00",
   "overall": {
     "total_functions": 2720,
     "matched": 1951,
@@ -1111,7 +1111,7 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 59.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/B2CB0.c",
@@ -1311,7 +1311,7 @@
       "asm_stubs": 0,
       "total": 122,
       "matched_pct": 64.8,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/comet/alien_types.c",
@@ -1351,7 +1351,7 @@
       "asm_stubs": 0,
       "total": 102,
       "matched_pct": 58.8,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/java/alien_types.c",
@@ -1371,7 +1371,7 @@
       "asm_stubs": 0,
       "total": 95,
       "matched_pct": 57.9,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/siberia/alien_types.c",
@@ -1387,16 +1387,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 116,
-      "matched": 1468,
-      "non_matching": 495,
+      "files": 120,
+      "matched": 1685,
+      "non_matching": 636,
       "asm_stubs": 4
     },
     {
       "name": "lunarlaurus",
-      "files": 9,
-      "matched": 449,
-      "non_matching": 266,
+      "files": 5,
+      "matched": 232,
+      "non_matching": 125,
       "asm_stubs": 0
     },
     {
@@ -1662,7 +1662,7 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "10df2ce",
+      "commit": "50c4655",
       "matched": 1951,
       "non_matching": 765,
       "total": 2720
