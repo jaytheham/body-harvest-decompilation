@@ -114,3 +114,26 @@ The ROM's `0x18d030` is the string `"ieNormVecF3()  {0,0,0} -> {0,0,0}\n"`; with
 mips-linux-gnu-objdump -h build/src.us/<path>.c.o | grep -E 'text|rodata|data'
 python3 -c "b=open('baserom.us.z64','rb').read(); u=open('build/bh.us.z64','rb').read(); print(b==u, b[o:o+16].hex(), u[o:o+16].hex())"
 ```
+
+## Sixth and seventh instances (seam2 run 13): both land on the declared-block delta
+
+Two more mid-rodata switch owners in `overlay_gameplay/inside/`, each measured by unwrapping only (no
+body edits), and each confirming the arithmetic rule above:
+
+    func_80072E88_15AF48  (158330.c, 6-entry `jtbl_800A4A88_18CB48`, recorded marker CURRENT(0))
+      target 15af68: lw t7,0x4a88(at)  -> 0x800A4A88
+      ours   15af68: lw t7,0x4bb0(at)  -> 0x800A4BB0   (+0x128, placeholder kept)
+      ours   15af68: lw t7,0x4b98(at)  -> 0x800A4B98   (+0x110, placeholder deleted)
+      unwrap check = 5 (one row). Deleting the 24-byte `jtbl_800A4A88_18CB48[]` placeholder moved ours
+      the *wrong* way by exactly 24 bytes, the same signature as the siberia pair - do not re-tread it.
+      The recorded `CURRENT(0)` (a decomp.me scratch claim) is stale: the on-tree score is 5.
+
+    func_8007FC74_167D34  (167C90.c, 6-entry `jtbl_800A4F08_18CFC8`, recorded marker CURRENT(30), honest)
+      target 167e54: lw t8,%lo(jtbl_800A4F08_18CFC8)(at) -> 0x800A4F08
+      ours   167e54: lw t8,0x4f70(at)                     -> 0x800A4F70   (+0x68)
+      unwrap check = 30; the only non-branch diff row is this `lw` immediate.
+
+Both are batch dependencies - the declared items after the table address must be compiler-generated
+before the table can land (six `f64` doubles plus the next `jtbl` placeholder follow `0x800A4F08` on
+167C90; strings/doubles/floats follow `0x800A4A88` on 158330). Add both to their file's switch-owner
+batch list. Cheap triage before any body attempt: `grep -l "jtbl_" asm/nonmatchings/overlay_gameplay/inside/<file>/*.s`.
