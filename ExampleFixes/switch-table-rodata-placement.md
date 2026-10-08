@@ -78,6 +78,25 @@ lists the file's switch owners, and `CURRENT(5)` plus `diff` of the ROM bytes ar
 addresses over that span is the whole diagnosis. See also the same-file test: if the delta equals the
 declared items in the span, stop and batch the file's switch owners together.
 
+## Seventh instance (seam1 run 10): the delta is the placeholder plus the trailing pair, exactly
+
+`func_800ABCC8_BAC78` (`overlay_gameplay/outside/B8290.c`, 109 instr, `// CURRENT(20)`, two `switch`
+statements) is the same class, and the arithmetic rule above holds on a clean measurement:
+
+    target bacc8: lw t2,%lo(jtbl_80142928_1518D8)($at) -> 0x80142928
+    ours   bacc8: lw t2,0x2a20($at)                    -> 0x80142A20   (0xF8 later, placeholder kept)
+
+`ins_diff -noregs` is 109 vs 109, delta +0; apart from this row and its twin for the second switch
+(`0x8014299C` vs `0x80142A94`, same 0xF8) the stream is byte-identical. The 0xF8 is exactly the declared
+rodata between the target table and the end of the file's rodata prefix: the two `jtbl_` placeholders
+(0xE8) plus the trailing `D_80142A10_1519C0`/`D_80142A18_1519C8` f64 pair (0x10). Deleting the
+placeholders reproduced the documented negative - the score went **10 -> 20**, the generated table
+moving to `rodata+0x38` (the 0x28 declared prefix plus the trailing pair) rather than onto the target.
+The file already carries a `// todo file split here` marker at its head: the two trailing f64s belong to
+a later object in the ROM, and the function closes only once that span is compiler-generated (or the
+file is split). Treat `func_800ABCC8_BAC78` as a batch dependency; do not re-tread placeholder deletion.
+
+
 ## Sixth instance: the table is the *first* datum of the TU's rodata (seam run 6)
 
 `func_8000A2B8_AEB8` (`core/AD60.c`, 35 instr, the text-width helper the frontend multiplies by 0x1C,
