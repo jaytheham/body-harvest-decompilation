@@ -49,3 +49,34 @@ The same transplant and the same lever landed the sibling `func_8008B534_5B9E4`
 used a `do/while` with early `return`s and a pointer local) plus the `u8 arg0`
 retype; `check` 0, gate PASSED. This file has no header prototype, so only the
 definition changed.
+
+### A hoisted global address above the entry `andi` is the same defect (func_80087A40_16FB00, 2026-10-08)
+
+`func_80087A40_16FB00` (`overlay_gameplay/inside/16AF30.c`, 158 instr) is the fourth and last
+member of the `func_800CD7FC_DC7AC` (`CFE30.c`) clone family, and here the `u8` retype moves
+more than the argument home. With the donor-shaped body committed (`while` loop, direct
+`D_800FB6F8[arg0].unk6` / `D_800FB7B0[...]` access) it measured **295** at `objdump` 157
+against the target\s
+
+### A hoisted global address above the entry `andi` is the same defect (func_80087A40_16FB00, 2026-10-08)
+
+`func_80087A40_16FB00` (`overlay_gameplay/inside/16AF30.c`, 158 instr) is the fourth and last
+member of the `func_800CD7FC_DC7AC` (`CFE30.c`) clone family, and here the `u8` retype moves
+more than the argument home. With a donor-shaped body in place (`while` loop, direct
+`D_800FB6F8[arg0].unk6` / `D_800FB7B0[...]` access) it measured **295** at `objdump` 157
+against the target's 158, and the *first* differing row was the head schedule: with
+`s32 arg0` plus an explicit `u8 slot = arg0 & 0xFF;` IDO emits
+
+    lui   v1, %hi(D_8005BB2C)        <-- the first gDPPipeSync base, hoisted above the andi
+    addiu v1, v1, %lo(D_8005BB2C)
+    andi  t6, a0, 0xFF
+
+where the target emits the `andi` first and the `D_8005BB2C` address after it. Declaring the
+parameter `u8` makes the `andi` part of cfe's *entry* code rather than of the subscript
+expression, so the andi leads, the argument home `sw $a0, 0x40($sp)` appears, and the four
+callee-saved saves that ride with the extra live values come back: **295 -> 0 on the u8 retype
+alone**, ROM byte-identical.
+
+So the tell is not only "an `andi` plus a missing `sw a0` home": a *hoisted global address*
+sitting above the entry `andi` is the same defect seen from the scheduler's side, and both go
+away with the `u8` parameter.
