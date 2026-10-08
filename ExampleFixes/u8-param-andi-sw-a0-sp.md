@@ -22,3 +22,24 @@ s32 func(u8 arg0) {
 ```
 
 Using `u8` ensures arg0 is treated as a byte value, generating the `andi` (zero-extend) and `sw a0, 0(sp)` (save arg) with the correct instruction ordering.
+
+### Confirmed on a non-leaf clone transplant (`func_80089BCC_171C8C`, 2026-10-08)
+
+The mechanism is not limited to leaf functions. `func_80089BCC_171C8C`
+(`overlay_gameplay/inside/16AF30.c`, 162 instr) is **non-leaf** (it calls
+`func_8008A1D8_172298`) and is a clone of the matched donor `func_800CD7FC_DC7AC`
+(`overlay_gameplay/outside/CFE30.c`, `u8 arg0`). The wrapped guess declared
+`s32 arg0` + `arg0 & 0xFF`: `check` **225** (marker `CURRENT(192)` stale), and
+`ins_diff` aligned *every* instruction except **one missing row** - the
+`sw $a0, 0x40($sp)` argument home. Retyping the parameter to `u8 arg0` (dropping
+the `& 0xFF`) reproduced the home and `check` went to **0**.
+
+Two mechanical points when the rest of the body is already right:
+
+- The prototype must change with the definition (`include/functions.us.h`,
+  `void func_80089BCC_171C8C(u8 arg0);`); `s32` vs `u8` is `conflicting types`.
+- `include/functions.us.h` is a make prerequisite, so one prototype line forces a
+  **full** rebuild - start `make --jobs=8` in the background, never a foreground
+  `check`. The prototype retype also recompiles the caller TU (the sole caller
+  passes `i & 0xFF`, which stayed ROM-neutral here); trust the sha1 `gate`, not
+  `check` 0 alone.
