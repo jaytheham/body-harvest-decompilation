@@ -9609,16 +9609,12 @@ s32 func_8010E480_11D430(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010E480_11D430.s")
 #endif
 
-// CURRENT(4450)
-#ifdef NON_MATCHING
 s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
 	AlienType *type;
 	f32 playerX;
 	f32 alienX;
 	f32 playerZ;
 	f32 alienZ;
-	f32 valueX;
-	f32 valueZ;
 	s32 deltaX;
 	s32 deltaZ;
 	s32 i;
@@ -9634,11 +9630,8 @@ s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
 	alienZ = arg1->unk4;
 
 	for (i = 0; i < 4; i++) {
-		valueX = D_80159D78[i] + playerX;
-		valueZ = D_80159D98[i] + playerZ;
-
-		deltaX = (s32)(valueX - alienX);
-		deltaZ = (s32)(valueZ - alienZ);
+		deltaX = (s32)((D_80159D78[i] + playerX) - alienX);
+		deltaZ = (s32)((D_80159D98[i] + playerZ) - alienZ);
 
 		if (((deltaX * deltaX) + (deltaZ * deltaZ)) < type->unk8) {
 			return 1;
@@ -9670,9 +9663,6 @@ s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010E684_11D634.s")
-#endif
 
 // CURRENT(7430)
 #ifdef NON_MATCHING
