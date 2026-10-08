@@ -7139,41 +7139,36 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 
 // https://decomp.me/scratch/kngxs
 // CURRENT(5064)
-#ifdef NON_MATCHING
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3)
 {
-	s32 temp_v0;
-  f32 sp48;
-  s32 pad;
-  f32 sp40;
-  f32 temp_f0;
-	s16 angle;
-	s32 sp44;
-  angle = (func_80003824_4424((f32) arg1, (f32) arg2) - arg0->unk6);
-  sp48 = (((f32) sins(angle) / 32768.0) / ((f32) coss(angle) / 32768.0));
-  sp44 = ((f32) vehicleTypes[arg0->unk1A].unk36) / ((f32) vehicleTypes[arg0->unk1A].unk34);
-  sp40 = (((((f32) coss(arg0->unk10) / 32768.0) * ((f32) coss(arg0->unkE) / 32768.0)) * arg0->unk12) + arg0->unk30);
-  temp_v0 = func_800F9C50_108C00(
+	s32 headingDelta;
+	f32 slope;
+	f32 aspectRatio;
+	f32 velocityX;
+	f32 impulse;
+	u32 wrappedAngle;
+	s16 relativeAngle;
+	s16 trigValue;
+	s32 pad;
+	relativeAngle = func_80003824_4424((f32) arg1, (f32) arg2) - arg0->unk6;
+	wrappedAngle = (u16)relativeAngle;
+	trigValue = sins(wrappedAngle);
+	slope = (((f32) trigValue / 32768.0) / ((f32) coss(wrappedAngle) / 32768.0));
+	aspectRatio = ((f32) vehicleTypes[arg0->unk1A].unk36) / ((f32) vehicleTypes[arg0->unk1A].unk34);
+	trigValue = coss(arg0->unkE);
+	velocityX = (((((f32) coss(arg0->unk10) / 32768.0) * ((f32) trigValue / 32768.0)) * arg0->unk12) + arg0->unk30);
+	trigValue = sins(arg0->unkE);
+	headingDelta = func_800F9C50_108C00(
 	  func_80003824_4424(
-		  sp40,
-		  (((((f32) coss(arg0->unk10) / 32768.0) * ((((f32) sins(arg0->unkE))) / 32768.0)) * arg0->unk12) + arg0->unk38)), arg0->unk6);
-  if (sp48 < 0.0f)
-  {
-	sp44 = -sp44;
-  }
-  if (sp44 < sp48)
-  {
-	temp_f0 = (temp_v0 * (arg3 * 0.5));
-  }
-  else
-  {
-	temp_f0 = -((f32) (temp_v0 * (arg3 * 0.5)));
-  }
-  arg0->unk22 = ((f32) arg0->unk22) + temp_f0;
+		  velocityX,
+		  (((((f32) coss(arg0->unk10) / 32768.0) * ((((f32) trigValue)) / 32768.0)) * arg0->unk12) + arg0->unk38)), arg0->unk6);
+	if (slope < 0.0f)
+	{
+	aspectRatio = -aspectRatio;
+	}
+	impulse = aspectRatio < slope ? (f32)(headingDelta * (arg3 * 0.5)) : -(f32)(headingDelta * (arg3 * 0.5));
+	arg0->unk22 = ((f32) arg0->unk22) + impulse;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80107184_116134.s")
-#endif
 
 // CURRENT(3443)
 #ifdef NON_MATCHING
