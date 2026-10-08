@@ -9160,9 +9160,10 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 
 // jtbl_800A4AE8_18CBA8
 #ifdef NON_MATCHING
+// CURRENT(170)
 // AI - Removes/despawns objects from a room based on type
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
-	switch (*(s16 *) ((u8 *) &D_800E65BC[arg1] + 0xC)) {
+	switch (D_800E65BC[arg1].unkC) {
 		case 1:
 			func_80086E90_16EF50(D_800E66B3[arg0 * 0x30]);
 			break;
@@ -9174,6 +9175,11 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 			break;
 		case 4:
 			func_80089794_171854(D_800E66B3[arg0 * 0x30]);
+			break;
+		case 5:
+		case 6:
+		case 7:
+		case 8:
 			break;
 	}
 }
