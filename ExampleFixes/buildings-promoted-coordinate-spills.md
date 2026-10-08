@@ -13,3 +13,7 @@ Use a shared s32 result assigned in if/else branches for the flag-dependent retu
 ## Hash lookup: direct byte table access
 
 In `func_8011D19C_12C14C`, passing explicitly promoted `(u8)` arguments directly to both helpers produces the required argument caches. A leading unused `u16` before the live `u16` key puts the key at 0x2c. Read `D_8015D0B0[index]` directly in the empty-slot comparison and return instead of assigning a named slot temporary. IDO shares the byte load, selects the target table-base registers, and reserves the correct argument cache slots. The named temporary produced identical logic but different registers and stack offsets.
+
+## Alien loop index and scheduling
+
+For `func_8011C8E8_12B898`, a named `s32 alienId = *alienIds` (separate assignment after declarations for C89) moves the byte index load into v0 and the live global count into v1, matching the target. Keeping `alienIds = D_8014D408; do {` on one source line schedules the alien table base before the ID pointer base.

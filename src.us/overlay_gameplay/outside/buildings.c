@@ -2927,17 +2927,17 @@ void func_8011C770_12B720(s32 arg0, s32 arg1) {
 #endif
 
 // CURRENT(135)
-#ifdef NON_MATCHING
 void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
-	s32 var_s2;
+	s32 i;
+	s32 alienId;
 	AlienInstance *alien;
-	u8 *var_s1;
+	u8 *alienIds;
 
-	var_s2 = 0;
+	i = 0;
 	if ((s32)D_8014D507 > 0) {
-		var_s1 = D_8014D408;
-		do {
-			alien = &alienInstances[*var_s1];
+		alienIds = D_8014D408; do {
+			alienId = *alienIds;
+			alien = &alienInstances[alienId];
 			if (arg0 == alien->unk3D) {
 				alien->unk38 = arg1;
 				func_8011B3F0_12A3A0(alien->unk38, &alien->unk14, &alien->unk16, &alien->unk18);
@@ -2945,14 +2945,11 @@ void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
 				alien->unk12 = 0xA0;
 				alien->unk20 |= 0x1100;
 			}
-			var_s2 += 1;
-			var_s1 += 1;
-		} while (var_s2 < (s32)D_8014D507);
+			i += 1;
+			alienIds += 1;
+		} while (i < (s32)D_8014D507);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C8E8_12B898.s")
-#endif
 
 // CURRENT(1476)
 #ifdef NON_MATCHING
