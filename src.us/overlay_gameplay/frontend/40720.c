@@ -6038,47 +6038,61 @@ void func_8007F580_4FA30(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F580_4FA30.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2105)
 void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
-	FrontendLightAnimState* state;
 	FrontendLightTrack* track;
+	void* data;
 	FrontendLightKeyframe* keyframe;
+	s32 remaining;
+	s32 index;
+	s32 total;
+	s32 elapsed;
+	s32 angleX;
+	s32 angleY;
+	u32 red;
+	u32 green;
+	u32 blue;
 	f32 factor;
-
-	state = (FrontendLightAnimState*)arg0;
-	track = state->unkC;
-	if (track == NULL) {
-		return;
-	}
-
-	keyframe = state->unk0;
-	if (state->unk4 <= 0) {
-		state->unk12 = keyframe->unk2;
-		state->unk8++;
-		state->unk10 = keyframe->unk0;
-
-		if (state->unk8 == track->unk4) {
-			state->unkC = NULL;
+	track = ((FrontendLightAnimState*)arg0)->unkC;
+	if (track != NULL) {
+		/* Reserve the keyframe snapshot register before loading the current frame. */
+		keyframe = (FrontendLightKeyframe*)track;
+		if (keyframe) {}
+		data = ((FrontendLightAnimState*)arg0)->unk0;
+		keyframe = data;
+		remaining = ((FrontendLightAnimState*)arg0)->unk4;
+		if (remaining <= 0) {
+			((FrontendLightAnimState*)arg0)->unk12 = keyframe->unk2;
+			((FrontendLightAnimState*)arg0)->unk10 = keyframe->unk0;
+			((FrontendLightAnimState*)arg0)->unk8++;
+			index = ((FrontendLightAnimState*)arg0)->unk8;
+			data = track;
+			if (index == ((FrontendLightTrack*)data)->unk4) {
+				((FrontendLightAnimState*)arg0)->unkC = NULL;
+			} else {
+				((FrontendLightAnimState*)arg0)->unk0 = &((FrontendLightTrack*)data)->unk0[index];
+				((FrontendLightAnimState*)arg0)->unk4 = ((FrontendLightAnimState*)arg0)->unk0->unk8;
+			}
 		} else {
-			keyframe = &track->unk0[state->unk8];
-			state->unk0 = keyframe;
-			state->unk4 = keyframe->unk8;
+			total = ((FrontendLightKeyframe*)data)->unk8;
+			elapsed = total - remaining;
+			factor = 1.0f / (f32)(total - elapsed);
+			angleX = ((FrontendLightAnimState*)arg0)->unk12;
+			((FrontendLightAnimState*)arg0)->unk12 = (f32)angleX + (keyframe->unk2 - angleX) * factor;
+			angleY = ((FrontendLightAnimState*)arg0)->unk10;
+			((FrontendLightAnimState*)arg0)->unk10 = (f32)angleY + (keyframe->unk0 - angleY) * factor;
+			data = &((FrontendLightAnimState*)arg0)->unk14;
+			red = *(u8*)data;
+			((FrontendLightAnimState*)arg0)->unk14 = (f32)red + (keyframe->unk4 - (s32)red) * factor;
+			green = ((FrontendLightAnimState*)arg0)->unk15;
+			((FrontendLightAnimState*)arg0)->unk15 = (f32)green + (keyframe->unk5 - (s32)green) * (1.0f / (f32)(total - elapsed));
+			blue = ((FrontendLightAnimState*)arg0)->unk16;
+			((FrontendLightAnimState*)arg0)->unk16 = (f32)blue + (keyframe->unk6 - (s32)blue) * factor;
+			/* Keep the elapsed duration live through all channel interpolation. */
+			if (elapsed) {}
 		}
-	} else {
-		factor = 1.0f / (f32)(keyframe->unk8 - (keyframe->unk8 - state->unk4));
-		state->unk12 = (s16)(s32)((f32)state->unk12 + ((f32)(keyframe->unk2 - state->unk12) * factor));
-		state->unk10 = (s16)(s32)((f32)state->unk10 + ((f32)(keyframe->unk0 - state->unk10) * factor));
-		state->unk14 = (u8)((f32)state->unk14 + ((f32)(keyframe->unk4 - state->unk14) * factor));
-		state->unk15 = (u8)((f32)state->unk15 + ((f32)(keyframe->unk5 - state->unk15) * factor));
-		state->unk16 = (u8)((f32)state->unk16 + ((f32)(keyframe->unk6 - state->unk16) * factor));
+		((FrontendLightAnimState*)arg0)->unk4--;
 	}
-
-	state->unk4--;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F830_4FCE0.s")
-#endif
 
 /**
  * @brief Initializes a small frontend playback/state block from a source descriptor.
