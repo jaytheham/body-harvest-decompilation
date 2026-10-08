@@ -1978,7 +1978,7 @@ void func_80087E3C_16FEFC(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(1456) - permuter warm-start: var_s3 merged into spAC (single pointer local); 1724 -> 1456
+// CURRENT(1236) - permuter warm-start: var_s3 merged into spAC, plus a redundant s1 re-assign that extends its live range; 1724 -> 1456 -> 1236
 // AI - Render slot type 4 effects: animated billboards with dual textures
 void func_800881C0_170280(void)
 {
@@ -2029,6 +2029,7 @@ void func_800881C0_170280(void)
       spAC = s1;
       sp9C.x = (D_800E7410.x * 4.0f) - ((f32) s1->unk8);
       sp9C.y = (D_800E7410.y * 4.0f) - ((f32) s1->unkA);
+      s1 = &D_800FB7B0[var_t2];
       sp9C.z = (D_800E7410.z * 4.0f) - ((f32) s1->unkC);
       func_80083014_16B0D4(&sp9C, &sp9C);
       D_800FB6D0.x = ((f32) s1->unk0) + (sp9C.x * ((f32) s1->unkD));
