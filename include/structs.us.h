@@ -1891,7 +1891,13 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ s16 type;      /* 0 = free, 1 = laser, 2 = laser type 2 */
-	/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
+	union {
+		/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
+		struct {
+			u8 timerHigh;
+			u8 timerLow;
+		};
+	};
 	/* 0x04 */ s16 x1;        /* start point */
 	/* 0x06 */ s16 y1;
 	union {
