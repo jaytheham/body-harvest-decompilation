@@ -1816,21 +1816,11 @@ void func_80086FC4_16F084(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086FC4_16F084.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Render slot type 1 effects: textured billboard quads
-void func_80087A40_16FB00(s32 arg0) {
-	u8 slot;
-	Vec3f *pos;
-	Unk84EECEffect *effectBase;
-	s8 **color;
-	f32 *scale;
-	u8 *alpha;
-	s16 effect;
-	s16 end;
-	s16 stride;
+void func_80087A40_16FB00(u8 arg0) {
+	s16 var_s1;
 
-	slot = arg0 & 0xFF;
-	effect = *(s16 *)(&D_800FB6FE + (slot * 0xC));
+	var_s1 = D_800FB6F8[arg0].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -1848,33 +1838,19 @@ void func_80087A40_16FB00(s32 arg0) {
 	D_800FB6E5 = 0x20;
 	D_800FB6E6 = 0x20;
 
-	if ((effect != -5) && (effect != -6)) {
-		pos = &D_800FB6D0;
-		effectBase = D_800FB7B0;
-		color = &D_800FB6DC;
-		scale = &D_800FB6E0;
-		alpha = &D_800FB6E4;
-		end = -6;
-		stride = 0x16;
-
-		do {
-			Unk84EECEffect *entry;
-
-			entry = (Unk84EECEffect *)((u8 *)effectBase + (effect * stride));
-			pos->x = entry->unk8;
-			*color = &entry->unkE;
-			*alpha = entry->unk11;
-			pos->y = entry->unkA;
-			pos->z = entry->unkC;
-			*scale = entry->unk2;
+	while ((var_s1 != -5) && (var_s1 != -6)) {
+		D_800FB6D0.x = (f32)D_800FB7B0[var_s1].unk8;
+		D_800FB6D0.y = (f32)D_800FB7B0[var_s1].unkA;
+		D_800FB6D0.z = (f32)D_800FB7B0[var_s1].unkC;
+		D_800FB6DC = &D_800FB7B0[var_s1].unkE;
+		D_800FB6E0 = (f32)D_800FB7B0[var_s1].unk2;
+		D_800FB6E4 = D_800FB7B0[var_s1].unk11;
 		func_8008A1D8_172298();
-			effect = entry->unk4;
-		} while ((effect != -5) && (effect != end));
+		var_s1 = D_800FB7B0[var_s1].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087A40_16FB00.s")
-#endif
+
+
 
 #ifdef NON_MATCHING
 // CURRENT(3405)

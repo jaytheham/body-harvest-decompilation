@@ -1652,7 +1652,7 @@ s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4)
 void func_8011BA80_12AA30(u8 arg0, s16 arg1);
 
 void func_80086FC4_16F084(s32 arg0);
-void func_80087A40_16FB00(s32 arg0);
+void func_80087A40_16FB00(u8 arg0);
 void func_80087CB8_16FD78(s32 arg0);
 void func_80087E3C_16FEFC(void);
 void func_800881C0_170280(void);
