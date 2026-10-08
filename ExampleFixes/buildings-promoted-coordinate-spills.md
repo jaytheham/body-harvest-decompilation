@@ -17,3 +17,7 @@ In `func_8011D19C_12C14C`, passing explicitly promoted `(u8)` arguments directly
 ## Alien loop index and scheduling
 
 For `func_8011C8E8_12B898`, a named `s32 alienId = *alienIds` (separate assignment after declarations for C89) moves the byte index load into v0 and the live global count into v1, matching the target. Keeping `alienIds = D_8014D408; do {` on one source line schedules the alien table base before the ID pointer base.
+
+## Variadic target list
+
+`func_8011C9D8_12B988` uses unconditional `va_start` followed by a `for` loop of `va_arg(args, s32)`, which produces the aligned and unrolled target argument-copy sequence. A four-element target array declared after the loop index, alien index, and va_list gives the target frame and array offset. Place the timeout assignment after both flag updates: IDO still schedules the timeout store early, but now places the redundant flag-result move before the global count reload.
