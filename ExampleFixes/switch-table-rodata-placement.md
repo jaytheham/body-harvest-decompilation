@@ -78,6 +78,28 @@ lists the file's switch owners, and `CURRENT(5)` plus `diff` of the ROM bytes ar
 addresses over that span is the whole diagnosis. See also the same-file test: if the delta equals the
 declared items in the span, stop and batch the file's switch owners together.
 
+## Sixth instance: the table is the *first* datum of the TU's rodata (seam run 6)
+
+`func_8000A2B8_AEB8` (`core/AD60.c`, 35 instr, the text-width helper the frontend multiplies by 0x1C,
+recorded marker `// CURRENT(10)`) measures **5** when unwrapped: one differing row, the generated
+table's base address.
+
+    target af94: lw t6,%lo(jtbl_80037460_38060)(at)  -> 0x80037460
+    ours   af94: lw t6,0x7618(at)                    -> 0x80037618   (0x1B8 later)
+
+`ins_diff.py -noregs` is 35 vs 35, delta +0, so the body is finished. Here the target table is the
+**first** datum of the TU's rodata, so the delta equals the *entire* declared block (0x1B8: the three
+`drawText` tables `jtbl_80037478_38078`/`jtbl_80037490_38090`/`jtbl_80037560_38160`, the scalars
+`D_80037578_38178`/`D_80037580_38180`, `jtbl_80037588_38188`, `D_80037600_38200`/`D_80037608_38208`/
+`D_80037610_38210`). The ROM shows all of it compiler-generated inside the two unmatched co-tenants,
+so this is the same batch dependency: the address can only land once `drawText` (marker 67025) and
+`func_8000B044_BC44` (marker 112386) are compiled C. Placeholder deletion is refuted by arithmetic
+(it would move the table to 0x37600, not 0x37460); do not attempt it.
+
+Corollary for the class: when the target table is the first datum, the delta is the whole declared
+block rather than one placeholder, so the arithmetic rule above identifies the dependency without a
+build. Re-measure a wrapped marker before trusting it - this one recorded 10 and measured 5.
+
 ## Overlay layout: a file's `.text` size decides where its `.data` lands
 
 The overlay linker script lays a file's sections out **consecutively** inside the overlay segment (`bh.ld`, per-overlay blocks — `.text`, then `. = ALIGN(., 16)`, then each file's `.data`):
