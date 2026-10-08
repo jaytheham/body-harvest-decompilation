@@ -63,3 +63,40 @@ Symptom: a function sharing an unbroken instruction run with a *matched* functio
 2. **`* 4` and `<< 2` are not the same expression to IDO.** Rectangle args spelled `arg0 * 4`, `(D_80068088 - 0x24) * 4`, `(arg0 + 0xB) * 4`, `(D_80068088 - 0x19) * 4` (**116** instructions, score **1110**): IDO strength-reduces and *distributes* the difference - `addiu t6,t9,-0x19; sll t7,t6,2` becomes `sll t6,t9,2; addiu t7,t6,-100` - and CSEs `arg0*4` with `(arg0+0xB)*4`, so it computes `xl` first and spills the **product** to `sp+0`. Respelling as `(s32)arg0 * 4` and `(X - k) << 2` (**117** instructions, score **0**): the shift applies to the *difference* (`addiu t6,t9,-0x19; sll t7,t6,2`), `xh` is computed first as the target does, and the **raw parameter** is what gets spilled to `sp+0`. Both spellings are legal and compute the same value; only one reproduces the schedule.
 
 Recipe: rank the target's own file for a matched twin with `asm_chunks.py <target>.s --corpus asm` - a same-file twin means the data symbols, macros and declaration context are already right, so the residual is nearly always spelling or allocation. Copy the twin's statement *spellings*, not just its statement order, then take every literal from the target's own `.s`.
+
+## The CFE30 `.c` <-> 52690 `.c` pair is its own clone family
+
+`src.us/overlay_gameplay/outside/CFE30.c` and `src.us/overlay_gameplay/frontend/52690.c` carry the *same
+logical functions*, so a match in one is a donor for the other in **either** direction. The
+`func_800C8C7C_D7C2C` (CFE30) <- `func_800891F8_596A8` (52690) graft above is one direction; the reverse
+landed `func_800870AC_5755C` (52690, 510 instr) from `func_800C6558_D5508` (CFE30, 522 instr) - raw
+normalised `.s` diff **51 lines**, board `graftable` 0.98x, recorded marker `CURRENT(13418)` (26/instr,
+i.e. poor). The seam board lists them as unrelated rows because it names only the *best* donor per target;
+when either file has a match, grep the other for the counterpart before sweeping markers.
+
+The three levers, each measured (13428 -> 200 -> 0):
+
+1. **The guess's declaration set, not its logic, was the whole score.** The wrapped guess was logically
+   faithful - right symbols, right callee - but declared its temporaries *inside* the loop body and viewed
+   the record through `u8 *` plan pointers; it compiled to frame `0x60` with a 486-instruction body against
+   the target's `0x40` / 510. Taking the donor's declaration set at **function scope** (`s16 idx;` plus typed
+   `EffectInterpolationState *` views, in the donor's order) and its statement order took **13428 -> 200** on
+   the first compile. Symptom to look for: `addiu sp,sp,-0x60` where the target has `-0x40`.
+2. **A field can be a different width in the donor's struct than in the target's.** The donor's
+   `Unk80154318Entry.unk14` is a `u8` (union with `s16 radialRadius`), so `D_80154318[idx].unk14 >= x` reads
+   a byte; the target's `Unk800DE840.unk14` is declared `s16`, so the direct translation
+   `D_800DE840[idx].unk14 >= x` emits `lh` where the target has `lbu`. Reading the same byte through the byte
+   view (`entryBytes->bytes[0xC]`) took **200 -> 0** - same offset `0x14`, only the load width differs. When
+   a transplant has one stubborn row, check whether that address is reached through a wider-typed field on
+   the target side.
+3. **Take the donor's shape but the target's call set.** The donor opens with
+   `if ((idx == -5) || (idx == -6)) { func_800C1418_D03C8(1, 1); return; }` and calls
+   `func_800C1D40_D0CF0(idx, 1, 1)` in the loop; the target has only the `while` guard (no early call) and
+   calls `func_80083F8C_5443C(idx, 0x95)`. Both come straight off the target's own `.s`.
+
+`EffectInterpolationState` (`union { u16 size; u8 bytes[14]; }`) is a **shared** type in
+`include/structs.us.h`, so both overlays' records can be viewed through it: the donor uses it directly, the
+target casts `(EffectInterpolationState *)&D_800DE840[i].unk8`. That keeps the byte arithmetic typed and
+avoids `*(u16 *)` casts at every site.
+
+`Match func_800870AC_5755C`, gate PASSED.
