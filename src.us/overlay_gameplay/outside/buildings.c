@@ -4066,8 +4066,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 #endif
 
-// CURRENT(265)
-#ifdef NON_MATCHING
+
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
 
@@ -4087,7 +4086,7 @@ void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	D_80052B40.unk4 = D_80159DCC;
 	D_80052B48.unk0 = 0;
 	D_80052B48.unk2 = 0;
-	D_80052B48.unk4 = (s16)((s32)arg0->unkD * -0x154);
+	D_80052B48.unk4 = (s16)(-arg0->unkD * 0x154);
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
@@ -4097,9 +4096,6 @@ void func_8011F818_12E7C8(BuildingInstance *arg0) {
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F818_12E7C8.s")
-#endif
 
 void func_8011F9A0_12E950(s32 arg0)
 {
