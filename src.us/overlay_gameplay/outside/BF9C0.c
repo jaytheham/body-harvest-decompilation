@@ -2971,7 +2971,7 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(1716)
+// CURRENT(1216)
 #ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	s16 centerX;
@@ -3024,7 +3024,7 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 		}
 		if (hit != 0) {
 			D_8014F854 = 1;
-			return D_8014F854;
+			break;
 		}
 	}
 
