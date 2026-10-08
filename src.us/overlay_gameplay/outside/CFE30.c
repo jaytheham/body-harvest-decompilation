@@ -6788,10 +6788,8 @@ void func_800D3D40_E2CF0(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2240)
 void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6) {
-	s16 temp;
+	s32 temp;
 	u8 c0;
 	u8 c1;
 	u8 c2;
@@ -6802,7 +6800,7 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gDPPipeSync(D_8005BB2C++);
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-		K0_TO_PHYS((((func_800038E0_44E0() % 4) << 9) + (s32)&D_100B4F0)));
+		K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -6815,16 +6813,19 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
 	gDPPipeSync(D_8005BB2C++);
 
-	c0 = (u8)((func_800038E0_44E0() % 0x37) + 0xC8);
-	c1 = (u8)((func_800038E0_44E0() % 0x37) + 0x32);
-	c2 = (u8)((func_800038E0_44E0() % 0x37) + 0x82);
+	c0 = (func_800038E0_44E0() % 55) + 0xC8;
+	c1 = (func_800038E0_44E0() % 55) + 0x32;
+	c2 = (func_800038E0_44E0() % 55) + 0x82;
 
-	temp = func_800038E0_44E0() % 0xF;
-	D_8005BB34->v.ob[0] = (arg0 + temp) + 0x14;
-	temp = func_800038E0_44E0() % 0xF;
-	D_8005BB34->v.ob[1] = (arg1 + temp) + 0x14;
-	temp = func_800038E0_44E0() % 0xF;
-	D_8005BB34->v.ob[2] = (arg2 + temp) + 0x14;
+	temp = func_800038E0_44E0() % 15;
+	temp += arg0;
+	D_8005BB34->v.ob[0] = temp + 0x14;
+	temp = func_800038E0_44E0() % 15;
+	temp += arg1;
+	D_8005BB34->v.ob[1] = temp + 0x14;
+	temp = func_800038E0_44E0() % 15;
+	temp += arg2;
+	D_8005BB34->v.ob[2] = temp + 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -6834,11 +6835,11 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	temp = func_800038E0_44E0() % 0xF;
+	temp = func_800038E0_44E0() % 15;
 	D_8005BB34->v.ob[0] = (arg0 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 0xF;
+	temp = func_800038E0_44E0() % 15;
 	D_8005BB34->v.ob[1] = (arg1 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 0xF;
+	temp = func_800038E0_44E0() % 15;
 	D_8005BB34->v.ob[2] = (arg2 - temp) - 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
@@ -6849,12 +6850,15 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	temp = func_800038E0_44E0() % 0xF;
-	D_8005BB34->v.ob[0] = (arg3 + temp) + 0x14;
-	temp = func_800038E0_44E0() % 0xF;
-	D_8005BB34->v.ob[1] = (arg4 + temp) + 0x14;
-	temp = func_800038E0_44E0() % 0xF;
-	D_8005BB34->v.ob[2] = (arg5 + temp) + 0x14;
+	temp = func_800038E0_44E0() % 15;
+	temp += arg3;
+	D_8005BB34->v.ob[0] = temp + 0x14;
+	temp = func_800038E0_44E0() % 15;
+	temp += arg4;
+	D_8005BB34->v.ob[1] = temp + 0x14;
+	temp = func_800038E0_44E0() % 15;
+	temp += arg5;
+	D_8005BB34->v.ob[2] = temp + 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -6864,11 +6868,11 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	temp = func_800038E0_44E0() % 0xF;
+	temp = func_800038E0_44E0() % 15;
 	D_8005BB34->v.ob[0] = (arg3 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 0xF;
+	temp = func_800038E0_44E0() % 15;
 	D_8005BB34->v.ob[1] = (arg4 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 0xF;
+	temp = func_800038E0_44E0() % 15;
 	D_8005BB34->v.ob[2] = (arg5 - temp) - 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
@@ -6879,12 +6883,10 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, D_8005BB34 - 4, 4, 0);
-	gSP2Triangles(D_8005BB2C++, 0, 2, 1, 0, 0, 3, 2, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3E3C_E2DEC.s")
-#endif
+
 
 // CURRENT(2425)
 #ifdef NON_MATCHING
