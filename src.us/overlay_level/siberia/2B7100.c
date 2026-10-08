@@ -3681,7 +3681,7 @@ void func_802DC4D0_2BE900(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DC4D0_2BE900.s")
 #endif
 
-// CURRENT(4753)
+// CURRENT(2756)
 #ifdef NON_MATCHING
 void func_802DCA14_2BEE44(u8 arg0) {
 	s16 sp74;
@@ -3691,7 +3691,6 @@ void func_802DCA14_2BEE44(u8 arg0) {
 	s32 sp50;
 	u8 sp4F;
 	AlienInstance *alien;
-	Unk8014DD50 *nodeA;
 	s8 v1, a1, a0, a3, t0, t2, t4, t5;
 
 	if ((func_800038E0_44E0() % 50) == 0) {
@@ -3701,32 +3700,31 @@ void func_802DCA14_2BEE44(u8 arg0) {
 	alien = &alienInstances[arg0];
 	if (alien->unk20 & ALIEN_FLAG_UNKD) {
 		v1 = D_8014DD50[alien->unkC].unkC;
-		nodeA = &D_8014DD50[v1];
-		a1 = nodeA->unkD;
-		a0 = nodeA->unkC;
+		a1 = D_8014DD50[v1].unkD;
+		a0 = D_8014DD50[v1].unkC;
 		a3 = D_8014DD50[a1].unkD;
 		t4 = D_8014DD50[a0].unkC;
 		t0 = D_8014DD50[a3].unkC;
 		t2 = D_8014DD50[a3].unkD;
 		t5 = D_8014DD50[a1].unkC;
 
-		arr[0] = v1;
 		arr[3] = a1;
 		arr[1] = a0;
-		arr[2] = t4;
 		arr[5] = a3;
+		arr[7] = D_8014DD50[t0].unkC;
+		arr[0] = v1;
 		arr[6] = t0;
+		arr[2] = t4;
 		arr[8] = t2;
 		arr[4] = t5;
-		arr[7] = D_8014DD50[t0].unkC;
 		sp74 = D_8014DD50[t2].unkC;
 		arr[9] = sp74;
-		arr[10] = D_8014DD50[sp74].unkC;
-		arr[11] = arr[10];
+		arr[11] = D_8014DD50[sp74].unkC;
+		arr[10] = arr[11];
 
 		sp4F = func_80081F18_90EC8(arg0, 11, 2, arr, &D_802E2408_2C4838);
 
-		if (nodeA->unkE == 8) {
+		if (D_8014DD50[v1].unkE == 8) {
 			if (alien->unk36 == 1) {
 				func_80128428_1373D8(alien, -60, -50, 138, &sp58, &sp54, &sp50);
 			} else if (alien->unk36 == 2) {
