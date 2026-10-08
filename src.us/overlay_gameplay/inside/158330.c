@@ -10541,10 +10541,11 @@ void func_8007A618_1626D8(void) {
 }
 
 #ifdef NON_MATCHING
+// CURRENT(290) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1735)
 // AI - Checks if a specific event building has been visited
 s32 func_8007A634_1626F4(s32 arg0) {
 	s16 var_v0;
-	s32 three;
+	u32 three;
 
 	three = 3;
 	if (arg0 == 0x14) {
@@ -10564,10 +10565,11 @@ s32 func_8007A634_1626F4(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(145) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1710)
 // AI - Checks if a second event building has been visited
 s32 func_8007A6DC_16279C(s32 arg0) {
 	s16 var_v0;
-	s32 three;
+	u32 three;
 
 	three = 3;
 	if (arg0 == 0x13) {
