@@ -2345,7 +2345,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
 #endif
 
-// CURRENT(60)
+// CURRENT(34)
 #ifdef NON_MATCHING
 void func_800EF9F0_FE9A0(s16 arg0)
 {
@@ -2354,16 +2354,17 @@ void func_800EF9F0_FE9A0(s16 arg0)
 	Unk80052B40 sp5C;
 	s32 spPad[2];
 	Unk80052B40 sp48;
+	s32 spBot;
 	alien = &alienInstances[arg0];
 	modelDisplayList = alienTypes[alien->typeIndex].unk0;
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
-	sp48.unk2 = 0;
-	sp48.unk4 = 0;
 	sp5C.unk0 = alien->unk0;
 	sp5C.unk2 = alien->unk2;
 	sp5C.unk4 = alien->unk4;
 	sp48.unk0 = 0x4000 - alien->unk6;
+	sp48.unk2 = 0;
+	sp48.unk4 = 0;
 	func_800039D0_45D0(&sp5C, &sp48, &D_800311A0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
 	sp5C.unk0 = (sp5C.unk4 = 0);
