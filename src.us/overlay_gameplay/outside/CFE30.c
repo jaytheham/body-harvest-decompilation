@@ -3151,56 +3151,46 @@ void func_800C8814_D77C4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8814_D77C4.s")
 #endif
 
-u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
-{
+// CURRENT(663)
+u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 idx;
-	Unk80154318Entry *dst;
-	Unk80154318Entry *src;
-	u8 *dstBytes;
-	u8 *srcBytes;
-	u8 allocId;
-	if (arg4 == (-3))
-	{
+	u8 effect;
+	Unk80154318Entry *source;
+
+	if (arg4 == -3) {
 		return 0xFB;
 	}
-	allocId = func_800C14D4_D0484(3);
-	if (allocId != 0xFB)
-	{
-		idx = func_800C17B4_D0764(allocId, 0);
-		if (idx == -3)
-		{
-			func_800C1384_D0334(allocId);
-			allocId = 0xFB;
-		}
-		else
-		{
-			if (arg4 == (-8))
-			{
-				((u8 *)(&D_80154318[idx]))[0xE] = 0xC8;
-				((u8 *)(&D_80154318[idx]))[0xF] = 0xC8;
-				((u8 *)(&D_80154318[idx]))[0x10] = 0xC8;
-				((u8 *)(&D_80154318[idx]))[0x11] = 0x64;
-				((u8 *)(&D_80154318[idx]))[0x12] = 0x64;
-				((u8 *)(&D_80154318[idx]))[0x13] = 0x64;
+
+	if ((effect = func_800C14D4_D0484(3)) != 0xFB) {
+		if ((idx = func_800C17B4_D0764(effect, 0)) == -3) {
+			func_800C1384_D0334(effect);
+			effect = 0xFB;
+		} else {
+			if (arg4 == -8) {
+				D_80154318[idx].payload[6] = 0xC8;
+				D_80154318[idx].payload[7] = 0xC8;
+				D_80154318[idx].payload[8] = 0xC8;
+				D_80154318[idx].payload[9] = 0x64;
+				D_80154318[idx].payload[10] = 0x64;
+				D_80154318[idx].payload[11] = 0x64;
+			} else {
+				source = &D_80154318[arg4];
+				D_80154318[idx].payload[6] = source->payload[6];
+				D_80154318[idx].payload[7] = source->payload[7];
+				D_80154318[idx].payload[8] = source->payload[8];
+				D_80154318[idx].payload[9] = D_80154318[source->unk4].payload[0];
+				D_80154318[idx].payload[10] = D_80154318[source->unk4].payload[1];
+				D_80154318[idx].payload[11] = D_80154318[source->unk4].payload[2];
 			}
-			else
-			{
-				src = &D_80154318[arg4];
-				srcBytes = (u8 *)src;
-				((u8 *)(&D_80154318[idx]))[0xE] = srcBytes[0xE] ^ 0;
-				((u8 *)(&D_80154318[idx]))[0xF] = srcBytes[0xF];
-				((u8 *)(&D_80154318[idx]))[0x10] = srcBytes[0x10];
-				((u8 *)(&D_80154318[idx]))[0x11] = ((u8 *)(&D_80154318[src->unk4]))[8];
-				((u8 *)(&D_80154318[idx]))[0x12] = ((u8 *)(&D_80154318[src->unk4]))[9];
-				((u8 *)(&D_80154318[idx]))[0x13] = ((u8 *)(&D_80154318[src->unk4]))[0xA];
-			}
-			(&D_80154318[idx])->unk8 = arg0;
-			(&D_80154318[idx])->unkA = arg1;
-			(&D_80154318[idx])->unkC = arg2;
-			((s16 *)(&D_80154088[allocId]))[1] = arg3;
+
+			D_80154318[idx].unk8 = arg0;
+			D_80154318[idx].unkA = arg1;
+			D_80154318[idx].unkC = arg2;
+			D_80154088[effect].unk2 = arg3;
 		}
 	}
-	return allocId;
+
+	return effect;
 }
 
 
@@ -9495,7 +9485,7 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y + D_80153BC8);
 	D_8005BB34->v.ob[2] = (s16)(s32)(D_80153BB8.z - D_80153BC8);
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = (*(u8 *)&D_80153BCD) << 6;
+	D_8005BB34->v.tc[0] = (u8)D_80153BCD << 6;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = ((u8 *)D_80153BC4)[0];
 	D_8005BB34->v.cn[1] = ((u8 *)D_80153BC4)[1];
@@ -9507,8 +9497,8 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y - D_80153BC8);
 	D_8005BB34->v.ob[2] = (s16)(s32)(D_80153BB8.z - D_80153BC8);
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = (*(u8 *)&D_80153BCD) << 6;
-	D_8005BB34->v.tc[1] = (*(u8 *)&D_80153BCE) << 6;
+	D_8005BB34->v.tc[0] = (u8)D_80153BCD << 6;
+	D_8005BB34->v.tc[1] = (u8)D_80153BCE << 6;
 	D_8005BB34->v.cn[0] = ((u8 *)D_80153BC4)[0];
 	D_8005BB34->v.cn[1] = ((u8 *)D_80153BC4)[1];
 	D_8005BB34->v.cn[2] = ((u8 *)D_80153BC4)[2];
@@ -9520,7 +9510,7 @@ void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[2] = (s16)(s32)(D_80153BB8.z + D_80153BC8);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = (*(u8 *)&D_80153BCE) << 6;
+	D_8005BB34->v.tc[1] = (u8)D_80153BCE << 6;
 	D_8005BB34->v.cn[0] = ((u8 *)D_80153BC4)[0];
 	D_8005BB34->v.cn[1] = ((u8 *)D_80153BC4)[1];
 	D_8005BB34->v.cn[2] = ((u8 *)D_80153BC4)[2];
