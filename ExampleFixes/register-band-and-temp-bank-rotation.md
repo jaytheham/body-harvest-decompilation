@@ -113,3 +113,23 @@ Measured, all >= 20 (baseline 20): `pattern_probe.py` every learned transform ne
 extending the vtx pointer's life *before* the gfx block 20; a third unused `s32 pad;` local 20;
 swapped `vtx`/`buffer` declarations 20; `~0` for the `gSPClearGeometryMode` `-1` 20; an empty
 `if (vtx) { }` *after* the last line command 2845. Park as allocation.
+
+## The same rotation happens in the FP bank, and there it is shape-proof
+
+`func_8007C1DC_16429C` (`src.us/overlay_gameplay/inside/158330.c`, 61 instructions, marker
+`CURRENT(215)` stale - re-measured **265**) is a small line/segment intersection test whose
+`ins_diff -noregs` is **delta +0** with every block an encoding alias, i.e. the whole residual is
+allocation. Unlike the integer cases above, the rotation is in the **floating-point** registers, and
+its tell is that the C's own temporary names already mirror the target's registers while the register
+*numbers* are permuted:
+
+    target: lwc1 $f16,8(v1)   lwc1 $f18,8(a0)   lwc1 $f14,8(v0)   sub.s $f0,$f14,$f18   div.s $f12,...
+    ours:   lwc1 $f0,8(v1)    lwc1 $f14,8(a0)   lwc1 $f12,8(v0)   sub.s $f2,$f12,$f14   div.s $f18,...
+
+Every source-shape lever measured **neutral at 265**: fully inlining the three `f32` temporaries,
+reversing their declaration order, splitting the quadratic (`t_f18 = a*a; t_f18 += b*b;`), dropping
+`temp_f18` and comparing the expression inline, and collapsing to a single temp local. The `mul.s`
+split lever (the note `split-assignment-drives-mul-operand-order.md`) measured **worse (295)** here,
+and `pattern_probe`'s learned transforms were neutral (`swap-commutative` 311). Conclusion: an FP
+temp-bank rotation is cfe-internal the same way an integer one is - when the C's temp names already
+match the roles, do not permute the source; park as allocation.
