@@ -4053,9 +4053,7 @@ void func_80094BE0_A3B90(u8 arg0)
 	}
 }
 
-// CURRENT(609)
 // AI - Boss/mech animation sync
-#ifdef NON_MATCHING
 void func_80094DE0_A3D90(u8 arg0)
 {
 	s16 sp5E;
@@ -4068,27 +4066,29 @@ void func_80094DE0_A3D90(u8 arg0)
 	s32 sp40;
 	 s16 sp3E;
 	s16 sp38[2];
+	s16 sp36;
 	s16 sp34;
 	sp3E = alienInstances[arg0].typeIndex;
 	sp5E = alienInstances[arg0].unkC;
-	sp5C = (s8)D_8014DD50[sp5E].unkC;
-	sp58 = (s8)D_8014DD50[sp5C].unkC;
-	sp5A = (s8)D_8014DD50[sp58].unkD;
-	sp56 = (s8)D_8014DD50[sp5A].unkD;
+	sp5C = D_8014DD50[sp5E].unkC;
+	sp58 = D_8014DD50[sp5C].unkC;
+	sp5A = D_8014DD50[sp58].unkD;
+	sp56 = D_8014DD50[sp5A].unkD;
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
-	D_8014DD50[sp5C].unk6 = -(D_8014DD50[sp5E].unk6 = alienInstances[arg0].unk6);
+	D_8014DD50[sp5E].unk6Unsigned = alienInstances[arg0].unk6;
+	D_8014DD50[sp5C].unk6 = -D_8014DD50[sp5E].unk6Unsigned;
 	func_80086164_95114(arg0, sp5C);
 	sp50[0] = 0x3C;
 	sp50[1] = -8;
 	sp50[2] = 0x70;
-	func_800A931C_B82CC((s8)sp5C, sp50, sp44);
-	sp50[0] = (s16)sp44[0];
-	sp50[1] = (s16)sp44[1];
-	sp50[2] = (s16)sp44[2];
-	func_800A931C_B82CC((s8)sp5E, sp50, sp44);
-	alienTypes[sp3E].unk20 = (s16)sp44[0];
-	alienTypes[sp3E].unk22 = (s16)sp44[1];
-	alienTypes[sp3E].unk24 = (s16)sp44[2];
+	func_800A931C_B82CC(sp5C, sp50, sp44);
+	sp50[0] = sp44[0];
+	sp50[1] = sp44[1];
+	sp50[2] = sp44[2];
+	func_800A931C_B82CC(sp5E, sp50, sp44);
+	alienTypes[sp3E].unk20 = sp44[0];
+	alienTypes[sp3E].unk22 = sp44[1];
+	alienTypes[sp3E].unk24 = sp44[2];
 	sp40 = func_80084E54_93E04(D_80052B34, &alienInstances[arg0]);
 	if (currentLevel == 1)
 	{
@@ -4110,9 +4110,9 @@ void func_80094DE0_A3D90(u8 arg0)
 		if (func_80087188_96138(arg0, 0, 0x28) != 0)
 		{
 			alienInstances[arg0].unk36 = 0;
-			alienInstances[arg0].unk1E = 6;
 			alienInstances[arg0].unk20 |= (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKE);
 			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
+			alienInstances[arg0].unk1E = 6;
 		}
 	}
 	else
@@ -4144,9 +4144,6 @@ void func_80094DE0_A3D90(u8 arg0)
 		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80094DE0_A3D90.s")
-#endif
 
 // AI - Standard update wrapper
 void func_800950A8_A4058(u8 arg0)

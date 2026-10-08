@@ -961,6 +961,7 @@ void func_802D4CD0_318E20(s32 arg0, void *arg1) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(75) - 16-bit store to Unk80154318Entry.unk14 (u8 field, sh in ROM): 641 -> 75
 s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 temp_v0;
 	s16 temp_v0_2;
@@ -972,8 +973,8 @@ s16 func_802D4DA8_318EF8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 		temp_v0_2 = (arg4 / 3) * 2;
 		temp_v0_3 = func_800D249C_E144C(arg0, arg1, arg2, arg3, (s32) temp_v0_2, (s32) temp_v0_2, -0xB, 2);
 		if (temp_v0_3 != -3) {
-			D_80154318[temp_v0].unk14 = temp_v0_3;
-			D_80154318[temp_v0_3].unk14 = temp_v0;
+			*(s16 *)&D_80154318[temp_v0].unk14 = temp_v0_3;
+			*(s16 *)&D_80154318[temp_v0_3].unk14 = temp_v0;
 		} else {
 			func_800C1A4C_D09FC(temp_v0, 0xB, 1);
 			return -3;
@@ -1194,7 +1195,7 @@ void func_802D522C_31937C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
 #endif
 
-#ifdef NON_MATCHING
+// AI - Iterates the nine D_802E4ED8_329028 entries, calling func_802D522C_31937C for active ones in range per func_800B960C_C85BC.
 void func_802D58BC_319A0C(void) {
 	s16 i;
 
@@ -1209,9 +1210,6 @@ void func_802D58BC_319A0C(void) {
 	}
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D58BC_319A0C.s")
-#endif
 
 void func_802D59BC_319B0C(void) {
 	s16 i;
@@ -2390,15 +2388,14 @@ void func_802D9100_31D250(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(8)
+// AI - Alien hit/death handler over type table D_8025668C: func_800DF038_EDFE8, func_80137468_146418(0xD), parent type 0x1B unk26-- and func_800CA5EC_D959C.
 void func_802D9128_31D278(u8 arg0) {
-	AlienInstance *inst;
 	s16 parentId;
+	AlienInstance *inst;
 
 	inst = &alienInstances[arg0];
 	parentId = inst->unk25;
-	func_800DF038_EDFE8(inst->unk0, inst->unk2, inst->unk4, *(u16 *)((u8 *)&D_8025668C + inst->typeIndex * 0x68), 0, 0);
+	func_800DF038_EDFE8(inst->unk0, inst->unk2, inst->unk4, alienTypes[inst->typeIndex].unkC, 0, 0);
 
 	if (!(inst->unk20 & ALIEN_FLAG_UNKL)) {
 		func_80137468_146418(arg0, 0xD);
@@ -2418,9 +2415,6 @@ void func_802D9128_31D278(u8 arg0) {
 
 	inst->unk2C = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9128_31D278.s")
-#endif
 
 void func_802D92A8_31D3F8(u8 arg0) {
 	u8 typeIndex;
@@ -2502,63 +2496,51 @@ void func_802D95F8_31D748(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
-// CURRENT(2307)
-#ifdef NON_MATCHING
+// AI - Alien death/spin handler: unk20 0x600 sets unk2C=0x7FFF, ramps unk38/unk10 fall, emits func_800DEA08_ED9B8 dust and func_80137468_146418(0x66).
 void func_802D9658_31D7A8(u8 arg0) {
-	AlienInstance *alien;
-	s32 flags;
-
-	alien = &alienInstances[arg0];
-	flags = alien->unk20;
-	if (flags & 0x600) {
-		if (!(flags & 0x100000)) {
-			alien->unk2C = 0x7FFF;
-			alien->unk10 = 0;
-			flags |= 0x40000000;
-			alien->unk20 = flags;
-			alien->unk38 = 0;
-			alien->unk14 = arg0 & 1;
-			if (flags & 0x600) {
-				func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, (u16)((f64)alienTypes[alien->typeIndex].unkC * 0.75), 0);
+	if (alienInstances[arg0].unk20 & 0x600) {
+		if (!(alienInstances[arg0].unk20 & 0x100000)) {
+			alienInstances[arg0].unk2C = 0x7FFF;
+			alienInstances[arg0].unk10 = 0;
+			alienInstances[arg0].unk20 |= 0x40000000;
+			alienInstances[arg0].unk38 = 0;
+			alienInstances[arg0].unk14 = arg0 & 1;
+			if (alienInstances[arg0].unk20 & 0x600) {
+				func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(((f64)alienTypes[alienInstances[arg0].typeIndex].unkC) * 0.75), 0);
 			}
 			func_80137468_146418(arg0, 0xF);
 			return;
 		}
-		if (flags & 0x40000000) {
-			if (D_80222A70 < alien->unk2) {
-				if (alien->unk14 != 0) {
-					if (alien->unk38 >= -9) {
-						alien->unk38--;
-					}
-				} else {
-					if (alien->unk38 < 0xA) {
-						alien->unk38++;
+		if (alienInstances[arg0].unk20 & 0x40000000) {
+			if (D_80222A70 < alienInstances[arg0].unk2) {
+				if (alienInstances[arg0].unk14 != 0 && alienInstances[arg0].unk38 >= (-9)) {
+					alienInstances[arg0].unk38 = alienInstances[arg0].unk38 - 1;
+				} else if (alienInstances[arg0].unk14 == 0) {
+					if (alienInstances[arg0].unk38 < 0xA) {
+						alienInstances[arg0].unk38 = alienInstances[arg0].unk38 + 1;
 					}
 				}
-				alien->unkE += alien->unk38 * 0xC8;
-				alien->unk6 += alien->unk38 * 0xC8;
-				alien->unk10 += 0x60;
-				alien->unk12 += 0x10;
+				alienInstances[arg0].unkE += alienInstances[arg0].unk38 * 0xC8;
+				alienInstances[arg0].unk6 += alienInstances[arg0].unk38 * 0xC8;
+				alienInstances[arg0].unk10 = alienInstances[arg0].unk10 + 0x60;
+				alienInstances[arg0].unk12 = alienInstances[arg0].unk12 + 0x10;
 			}
-			alien->unk8 = (s16)(alien->unk38 << 8);
-			alien->unkA = (s16)((-alien->unk10) * 4);
-			if (!(alien->unk2C & 3)) {
-				func_800DEA08_ED9B8(alien->unk0, alien->unk2, alien->unk4, 0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
+			alienInstances[arg0].unk8 = (s16)(alienInstances[arg0].unk38 << 8);
+			alienInstances[arg0].unkA = (s16)((-alienInstances[arg0].unk10) * 4);
+			if (!(alienInstances[arg0].unk2C & 3)) {
+				func_800DEA08_ED9B8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0xFA, 2, 2, 0x1E, 0xC8, 0x82, 0x82, 0x82);
 			}
-			if ((D_80222A70 < alien->unk30) && (alien->unk2 < D_80222A70)) {
-				alien->unk38 = 0;
-				alien->unk12 = (s16)((s16)alien->unk12 >> 1);
-				alien->unk10 = (s16)((s16)alien->unk10 >> 1);
+			if ((D_80222A70 < alienInstances[arg0].unk30) && (alienInstances[arg0].unk2 < D_80222A70)) {
+				alienInstances[arg0].unk38 = 0;
+				alienInstances[arg0].unk12 = (s16)(alienInstances[arg0].unk12 >> 1);
+				alienInstances[arg0].unk10 = (s16)(alienInstances[arg0].unk10 >> 1);
 			} else {
 				func_80137468_146418(arg0, 0x66);
 			}
 		}
-		func_8008AAFC_99AAC(arg0, alienTypes[alien->typeIndex].unkC, 3);
+		func_8008AAFC_99AAC(arg0, alienTypes[alienInstances[arg0].typeIndex].unkC, 3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D9658_31D7A8.s")
-#endif
 
 // CURRENT(19000)
 #ifdef NON_MATCHING
@@ -3244,40 +3226,31 @@ void func_802DB9FC_31FB4C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DB9FC_31FB4C.s")
 #endif
 
-#ifdef NON_MATCHING
+// AI - Alien attack check: func_80084E54_93E04/func_80084FE8_93F98(0x8000) gates func_800871CC_9617C and a random unk1E timer, else func_800800DC_8F08C.
 void func_802DBD18_31FE68(u8 arg0) {
 	AlienInstance *inst;
-	s16 hitpoints;
-	s32 rand;
+	s16 countdown;
 
 	inst = &alienInstances[arg0];
-	if (func_80084E54_93E04(D_80052B34, inst) < 0x1388) {
-		if (func_80084FE8_93F98(arg0, 0x8000)) {
-			if (func_800871CC_9617C(arg0, 0, 0)) {
-				rand = func_800038E0_44E0();
-				*(s16 *)&inst->unk1E = (s16)(rand % 0xF + 0xF);
-			} else {
-				hitpoints = *(s16 *)&inst->unk1E;
-				goto countdown;
-			}
-		} else {
-			func_800800DC_8F08C(arg0);
+	if ((func_80084E54_93E04((EntityInstance *)D_80052B34, (EntityInstance *)inst) < 0x1388) &&
+		(func_80084FE8_93F98(arg0, 0x8000) != 0)) {
+		if (func_800871CC_9617C(arg0, 0, 0) != 0) {
+			inst->unk1E = func_800038E0_44E0() % 0xF + 0xF;
 		}
 	} else {
-		func_800800DC_8F08C(arg0);
+		func_800800DC_8F08C((s32)arg0);
 	}
-	hitpoints = *(s16 *)&inst->unk1E;
-countdown:
-	if (hitpoints != 0) {
-		*(s16 *)&inst->unk1E = hitpoints - 1;
+	countdown = inst->unk1E;
+	if (countdown != 0) {
+		inst->unk1E = (s16)(countdown - 1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBD18_31FE68.s")
-#endif
 
+// CURRENT(945)
 #ifdef NON_MATCHING
 void func_802DBDD0_31FF20(u8 arg0) {
+	s32 pad0;
+	s32 pad1;
 	void *sp24;
 	s16 temp_v1;
 	AlienInstance *inst;
@@ -3292,13 +3265,9 @@ void func_802DBDD0_31FF20(u8 arg0) {
 		return;
 	}
 	temp_v1 = inst->unk2C;
-	if (temp_v1 >= 0) {
-		t3 = 0;
-	} else {
-		t3 = temp_v1 & 1;
-		if (t3 != 0) {
-			t3 += -2;
-		}
+	t3 = temp_v1 & 1;
+	if (temp_v1 < 0 && t3 != 0) {
+		t3 += -2;
 	}
 	if (t3 == 0) {
 		func_800DFA34_EE9E4(inst->unk0, (s16)((inst->unk2 - (s16)(temp_v1 * 0x28)) + 0x190), inst->unk4, 0x96, 0);
@@ -3953,21 +3922,24 @@ void func_802DDC44_321D94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DDC44_321D94.s")
 #endif
 
+// CURRENT(629)
 #ifdef NON_MATCHING
 void func_802DDFFC_32214C(u8 arg0, s16 arg1, s16 arg2) {
 	s16 sp2C[2];
-	u8 sp33;
+	s8 sp33;
 	u8 sp2B;
+	s32 t3;
 
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) {
 		sp2C[0] = arg1;
 		sp2C[1] = arg2;
 		sp33 = func_80081F18_90EC8(arg0, 2, 6, sp2C, (Unk8014DD50 **)D_802E5EC8_32A018);
+		t3 = sp33 & 1;
 		sp2B = sp33;
-		if ((s32)sp33 < 0 && (sp33 & 1)) {
-			sp33 = (sp33 & 0xFF) - 2;
+		if ((s32)sp33 < 0 && t3 != 0) {
+			t3 += -2;
 		}
-		if ((sp33 & 1) == 0 && sp33 < 6) {
+		if (t3 == 0 && sp33 < 6) {
 			alienInstances[arg0].unk1E = 0;
 			func_800871CC_9617C(arg0, 1, 10);
 		}
@@ -4566,20 +4538,23 @@ void func_802E0104_324254(VehicleInstance *vehicle) {
 	alien->unk20 &= ~(ALIEN_FLAG_UNKO | ALIEN_FLAG_INVINCIBLE);
 }
 
-void func_802E015C_3242AC(VehicleInstance *vehicle);
+void func_802E015C_3242AC(Unk80222A78 *vehicle);
 
+// CURRENT(22) - residual is the frame alone (ours 0x38, target 0x30) and the
+// alien spill home it sets (0x1C vs 0x18); every other instruction matches
+// register-for-register. See NOTES.md - the bank and the frame are one lever.
 #ifdef NON_MATCHING
-void func_802E015C_3242AC(VehicleInstance *vehicle) {
-	s16 u, v;
+void func_802E015C_3242AC(Unk80222A78 *vehicle) {
+	s32 u, v;
 	s32 du, dv;
 	AlienInstance *alien;
 	u8 typeIndex;
 
-	typeIndex = vehicle->unk1A;
+	typeIndex = vehicle->unk8;
 	alien = &alienInstances[typeIndex];
 
-	u = (vehicle->unk1B << 8) + 0x80;
-	v = (vehicle->unk1C << 8) + 0x80;
+	u = (vehicle->unk1 << 8) + 0x80;
+	v = (vehicle->unk2 << 8) + 0x80;
 
 	alien->unk0 = u;
 	alien->unk4 = v;
@@ -4587,7 +4562,7 @@ void func_802E015C_3242AC(VehicleInstance *vehicle) {
 	alien->unk20 = (s32)(alien->unk20 | ALIEN_FLAG_UNKO);
 
 	vehicle->unk4 = (s32)(vehicle->unk4 + 9);
-	vehicle->unkC = &func_802E0104_324254;
+	vehicle->unkC = (void (*)(void *))func_802E0104_324254;
 
 	func_800AE454_BD404(vehicle);
 

@@ -1179,26 +1179,31 @@ void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4258_103208.s")
 #endif
 
-// CURRENT(3738)
 s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
-	s32 angle;
-	f32 value;
+	u32 angle;
 
 	osSyncPrintf(D_80144960_153910);
-	osSyncPrintf(D_80144980_153930, (s32)arg0, (s32)arg1);
-	angle = (((u32)arg0 << 15) / arg1) & 0xFFFF;
-	osSyncPrintf(D_80144988_153938, (u32)angle, angle);
-	value = (f32)coss(angle) / 32768.0;
-	osSyncPrintf(D_80144990_153940, value);
+	osSyncPrintf(D_80144980_153930, arg0, arg1);
+	angle = ((u32)arg0 << 0xF) / arg1;
+	angle = (u16)angle;
+	osSyncPrintf(D_80144988_153938, (s32)angle, angle);
+	{
+		f32 cos_val;
+	cos_val = (f32)coss(angle) / 32768.0;
+	osSyncPrintf(D_80144990_153940, cos_val);
+
 	if ((s32)arg0 < (s32)arg1 / 2) {
-		value = 1.0 - value;
+		cos_val = 1.0 - cos_val;
 	} else {
-		value = ((value >= 0.0f) ? value : -value) + 1.0;
+		cos_val = (cos_val >= 0.0f ? cos_val : -cos_val) + 1.0;
 	}
-	value /= 2;
-	osSyncPrintf(D_80144998_153948, value);
-	angle = (u8)((f32)arg1 * value);
-	osSyncPrintf(D_801449A0_153950, (u32)angle);
+
+	cos_val /= 2;
+	osSyncPrintf(D_80144998_153948, cos_val);
+	angle = (u32)((f32)(u32)arg1 * cos_val);
+	angle = (u8)angle;
+	osSyncPrintf(D_801449A0_153950, (s32)angle);
+	}
 	return angle;
 }
 
@@ -3782,23 +3787,24 @@ s32 func_800FC1CC_10B17C(void) {
 		return 0;
 	}
 
-	while (i--) {
-		VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
-		selected = (VehicleInstance **)(s32)&D_80158F8C;
+	if (i--) {
+		do {
+			VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
 
-		if (vehicle->unk1A != 0x12) {
-			if (vehicle != D_80052B34) {
-				s32 x = (D_80052B34->unk0 - vehicle->unk0) >> 4;
-				s32 y = (D_80052B34->unk2 - vehicle->unk2) >> 4;
-				s32 z = (D_80052B34->unk4 - vehicle->unk4) >> 4;
-				s32 dist = (x * x) + (y * y) + (z * z);
+			if (vehicle->unk1A != 0x12) {
+				if (vehicle != D_80052B34) {
+					s32 x = (D_80052B34->unk0 - vehicle->unk0) >> 4;
+					s32 y = (D_80052B34->unk2 - vehicle->unk2) >> 4;
+					s32 z = (D_80052B34->unk4 - vehicle->unk4) >> 4;
+					s32 dist = (x * x) + (y * y) + (z * z);
 
-				if (dist < bestDist) {
-					bestDist = dist;
-					*selected = vehicle;
+					if (dist < bestDist) {
+						bestDist = dist;
+						D_80158F8C = vehicle;
+					}
 				}
 			}
-		}
+		} while (i--);
 	}
 
 	if (bestDist >= 0x384) {
@@ -3862,29 +3868,26 @@ void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 }
 
 void func_800FC568_10B518(void) {
-	u8 color_r, color_g, color_b, color_a;
 	s16 counter;
+	UnkF9230Func80102FA4Point *point;
 	Vtx *startVtx;
 
 	counter = 12;
-	color_r = 0x8E;
-	color_g = 0x63;
-	color_b = 0x3C;
-	color_a = 0xFF;
 
 	startVtx = D_8005BB34;
 	while (counter--) {
+		point = &D_801593F0[counter];
 
-		D_8005BB34->v.ob[0] = (s16)D_801593F0[counter].pos.x;
-		D_8005BB34->v.ob[1] = (s16)D_801593F0[counter].pos.y;
-		D_8005BB34->v.ob[2] = (s16)D_801593F0[counter].pos.z;
+		D_8005BB34->v.ob[0] = (s16)point->pos.x;
+		D_8005BB34->v.ob[1] = (s16)point->pos.y;
+		D_8005BB34->v.ob[2] = (s16)point->pos.z;
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = color_r;
-		D_8005BB34->v.cn[1] = color_g;
-		D_8005BB34->v.cn[2] = color_b;
-		D_8005BB34->v.cn[3] = color_a;
+		D_8005BB34->v.cn[0] = 0x8E;
+		D_8005BB34->v.cn[1] = 0x63;
+		D_8005BB34->v.cn[2] = 0x3C;
+		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 	}
 
@@ -4813,15 +4816,17 @@ void func_800FED60_10DD10(s32 arg0) {
 }
 
 void func_800FEDBC_10DD6C(s32 arg0) {
-	f32 pos[3];
-	s16 red;
-	s16 green;
-	s16 blue;
-	s8 dirX;
+	f32 posX;
+	f32 posY;
+	f32 posZ;
+	u8 red;
+	u8 green;
+	u8 blue;
+	s32 dirX;
 	f32 tempSin;
 	f32 tempCos;
 
-	guMtxXFML(&D_801592C0, 160.0f, 134.0f, -10.0f, &pos[2], &pos[1], &pos[0]);
+	guMtxXFML(&D_801592C0, 160.0f, 134.0f, -10.0f, &posX, &posY, &posZ);
 
 	if (D_80159320 & 0x400) {
 		red = 0x1E;
@@ -4835,7 +4840,7 @@ void func_800FEDBC_10DD6C(s32 arg0) {
 		}
 
 		if (gameplayMode == 1) {
-			func_800CA5EC_D959C((s16)(s32)pos[2], (s16)(s32)pos[1], (s16)(s32)pos[0], 0, -0xA, 0, 0x1E, 5, 2, 5, red, green, blue, 0xFF);
+			func_800CA5EC_D959C((s16)(s32)posX, (s16)(s32)posY, (s16)(s32)posZ, 0, -0xA, 0, 0x1E, 5, 2, 5, red, green, blue, 0xFF);
 
 			tempSin = (f32)((f32)sins((u16)(D_80052B34->unkE + 0x4000)) / 32768.0);
 			tempCos = (f32)-((f32)coss((u16)(D_80052B34->unkE + 0x4000)) / 32768.0);
@@ -4850,8 +4855,8 @@ void func_800FEDBC_10DD6C(s32 arg0) {
 					(s32)(tempCos * 127.0f), 0x78, 6, 0x14, 0x64, 0, 0xFF, 0, 0xFF);
 			}
 
-			func_80137130_1460E0(0, 0xAB, (s16)(s32)pos[2], (s16)(s32)pos[1], (s32)pos[0]);
-			func_80137130_1460E0(0, 0xD4, (s16)(s32)pos[2], (s16)(s32)pos[1], (s32)pos[0]);
+			func_80137130_1460E0(0, 0xAB, (s16)(s32)posX, (s16)(s32)posY, (s32)posZ);
+			func_80137130_1460E0(0, 0xD4, (s16)(s32)posX, (s16)(s32)posY, (s32)posZ);
 		}
 	}
 
@@ -5852,7 +5857,8 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 // CURRENT(1466)
 void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s16 temp_s0;
-	f32 temp_f14, temp_f20;
+	f32 temp_f14;
+	f32 temp_f20;
 	s32 diff;
 	s32 pad1;
 	
@@ -5961,44 +5967,48 @@ void func_80102A0C_1119BC(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 {
 	s32 temp_v0;
 	f32 sp50;
-	f32 sp4C;
-	f32 sp48;
-	f32 horizontal;
-	f32 temp_f22;
-	s16 inputTrig, oldYawTrig, oldPitchTrig;
-	if ((arg0->unk1C <= 0) || ((gameplayMode != 1) && (arg0 == D_80052B34)))
-	{
-		return;
-	}
-	
-	oldPitchTrig = coss((u16)arg0->unk10);
-	oldYawTrig = coss((u16)arg0->unkE);
-	inputTrig = coss((u16)arg1);
-	sp50 = ((f32)coss((u16)arg2) / 32768.0) * ((f32)inputTrig / 32768.0) * arg3 + ((f32)oldYawTrig / 32768.0) * ((f32)oldPitchTrig / 32768.0) * arg0->unk58;
-	oldPitchTrig = coss((u16)arg0->unk10);
-	oldYawTrig = sins((u16)arg0->unkE);
-	inputTrig = sins((u16)arg1);
-	sp4C = ((f32)coss((u16)arg2) / 32768.0) * ((f32)inputTrig / 32768.0) * arg3 + ((f32)oldYawTrig / 32768.0) * ((f32)oldPitchTrig / 32768.0) * arg0->unk58;
-	inputTrig = sins((u16)arg0->unk10);
-	sp48 = ((f32)sins((u16)arg2) / 32768.0) * arg3 + ((f32)inputTrig / 32768.0) * arg0->unk58;
-	horizontal = (sp50 * sp50) + (sp4C * sp4C);
-	temp_f22 = sqrtf((sp48 * sp48) + horizontal);
-	horizontal = sqrtf(horizontal);
-	arg0->unkE = func_80003824_4424(sp50, sp4C);
-	arg0->unk10 = func_80003824_4424(horizontal, sp48);
-	func_800FB430_10A3E0(arg0, temp_f22);
-	temp_v0 = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
-	if ((temp_v0 >= 0x4001) || (temp_v0 < (-0x4000)))
-	{
-		arg0->unkE += 0x8000;
-		func_800FB430_10A3E0(arg0, -arg0->unk12);
-	}
-	if (arg0 == D_80052B34)
-	{
-		D_80157A2C = arg1;
-	}
-	arg0->unk20 |= VEHICLE_FLAG_UNK1;
+  f32 sp4C;
+  f32 sp48;
+  f32 horizontalLength;
+  f32 temp_f22;
+  s16 inputYawCos;
+  s16 vehicleYawCos;
+  s16 vehiclePitchCos;
+  if ((arg0->unk1C <= 0) || ((gameplayMode != 1) && (arg0 == D_80052B34)))
+  {
+	return;
+  }
+  
+  vehiclePitchCos = coss(arg0->unk10);
+  vehicleYawCos = coss(arg0->unkE);
+  inputYawCos = coss(arg1);
+  sp50 = (((((f32)coss(arg2) / 32768.0) * ((f32)inputYawCos / 32768.0)) * arg3) + ((((f32)vehicleYawCos / 32768.0) * ((f32)vehiclePitchCos / 32768.0)) * arg0->unk58));
+  vehiclePitchCos = coss(arg0->unk10);
+  vehicleYawCos = sins(arg0->unkE);
+  inputYawCos = sins(arg1);
+  sp4C = (((((f32)coss(arg2) / 32768.0) * ((f32)inputYawCos / 32768.0)) * arg3) + ((((f32)vehicleYawCos / 32768.0) * ((f32)vehiclePitchCos / 32768.0)) * arg0->unk58));
+  inputYawCos = sins(arg0->unk10);
+  sp48 = ((((f32)sins(arg2) / 32768.0) * arg3) + (((f32)inputYawCos / 32768.0) * arg0->unk58));
+
+  horizontalLength = (sp50 * sp50) + (sp4C * sp4C);
+  temp_f22 = sqrtf((sp48 * sp48) + horizontalLength);
+  horizontalLength = sqrtf(horizontalLength);
+  arg0->unkE = func_80003824_4424(sp50, sp4C);
+  arg0->unk10 = func_80003824_4424(horizontalLength, sp48);
+  func_800FB430_10A3E0(arg0, temp_f22);
+  temp_v0 = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
+  if ((temp_v0 >= 0x4001) || (temp_v0 < (-0x4000)))
+  {
+	arg0->unkE += 0x8000;
+	func_800FB430_10A3E0(arg0, -arg0->unk12);
+  }
+  if (arg0 == D_80052B34)
+  {
+	D_80157A2C = arg1;
+  }
+  arg0->unk20 |= VEHICLE_FLAG_UNK1;
 }
+
 
 void func_80102D00_111CB0(VehicleInstance *arg0, f32 arg1, f32 arg2, f32 arg3) {
 	if (arg0->unk1C <= 0) {
@@ -7824,10 +7834,8 @@ void func_80108D80_117D30(VehicleInstance *arg0, VehicleType *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80108D80_117D30.s")
 #endif
 
-// CURRENT(4000)
 void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 	s32 temp_v1;
-	s32 temp_v0;
 	f32 temp_f0;
 
 	temp_v0 = arg1->unk4C;
@@ -7858,10 +7866,10 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 		temp_v1 = 0x3E8;
 	}
 	arg0->unk24 = arg0->unk24 + temp_v1;
-	arg0->unk30 = arg0->unk30 / temp_f0;
 	arg0->unk8 = arg0->unk8 + arg0->unk24;
-	arg0->unk34 = arg0->unk34 - 5.0f;
-	arg0->unk38 = arg0->unk38 / temp_f0;
+	arg0->unk30 /= temp_f0;
+	arg0->unk34 -= 5.0f;
+	arg0->unk38 /= temp_f0;
 	temp_v0 = arg0->unk16;
 	arg0->unkA = arg0->unkA + arg0->unk26;
 	arg0->unk6 = arg0->unk6 + arg0->unk22 + temp_v0;
@@ -7872,9 +7880,7 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 	}
 	if (!(arg1->unk4C & 0x100)) {
 		arg0->unk34 += 6.0f;
-		if (arg0->unk34 > 20.0f) {
-			arg0->unk34 = 20.0f;
-		}
+		if (arg0->unk34 > 20.0f) arg0->unk34 = 20.0f;
 		if (D_80222A70 < arg0->unk50 + arg0->unk34) {
 			arg0->unk20 &= ~VEHICLE_FLAG_AIRBORNE;
 			func_800FB468_10A418(arg0, (f32)D_80222A70);
@@ -7882,7 +7888,6 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 		}
 	}
 }
-
 
 void func_801095BC_11856C(VehicleInstance *vehicle) {
 	f64 scaledPitch;
@@ -9963,7 +9968,6 @@ int func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	return (arg0 < 9) || (arg0 >= 0x38);
 }
 
-// CURRENT(2210)
 void func_8010F834_11E7E4(VehicleInstance *arg0, s32 arg1, s32 arg2, s32 arg3) {
 	f32 x;
 	f32 y;
@@ -9974,21 +9978,20 @@ void func_8010F834_11E7E4(VehicleInstance *arg0, s32 arg1, s32 arg2, s32 arg3) {
 	y = arg0->unk2 - arg2;
 	z = arg0->unk4 - arg3;
 	length = sqrtf(x * x + y * y + z * z);
-	if (length == 0.0f) {
-		return;
+	if (length != 0.0f) {
+		x /= length;
+		y /= length;
+		z /= length;
+		if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE)) {
+			y = 0.0f;
+		} else if (y > 0.0f) {
+			y *= 2;
+		}
+		arg0->unk30 = 0.0f;
+		arg0->unk34 = 0.0f;
+		arg0->unk38 = 0.0f;
+		func_80102D00_111CB0(arg0, x * 10.0f, y * 10.0f, z * 10.0f);
 	}
-	x /= length;
-	y /= length;
-	z /= length;
-	if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE)) {
-		y = 0.0f;
-	} else if (y > 0.0f) {
-		y *= 2;
-	}
-	arg0->unk30 = 0.0f;
-	arg0->unk34 = 0.0f;
-	arg0->unk38 = 0.0f;
-	func_80102D00_111CB0(arg0, x * 10.0f, y * 10.0f, z * 10.0f);
 }
 
 void func_8010F93C_11E8EC(VehicleInstance *arg0, Unk80052B40 *arg1) {
@@ -12020,55 +12023,42 @@ void func_8011592C_1248DC(s16 arg0, s16 arg1) {
 	D_801591C8 = D_801591CA;
 }
 
-// CURRENT(455)
-#ifdef NON_MATCHING
 void func_80115A74_124A24(void) {
-	VehicleInstance *var_s0;
-	s16 temp_v0;
-	s8 *var_s4;
-	s32 twelve;
-	s32 ten;
+	s32 i;
+	s16 value;
+	s32 xRange;
+	s32 zRange;
 
 	if ((currentLevel == 1) && !(D_80159320 & 0x400000) && (D_80052B34->unk1A == 3)) {
 		D_80159320 |= 0x400000;
 		func_802D4CD0_18D7E0(7, 0);
 		setRandomSeed(0xFEEDABED);
-		var_s0 = &vehicleInstances[115];
-		var_s4 = &D_80158C43;
-		twelve = 12;
-		ten = 10;
-		do {
-			VehicleInstance *temp_s1;
+		xRange = 12;
+		zRange = 10;
+		for (i = 115; i < 121; i++) {
+			VehicleInstance *vehicle;
 
-			temp_s1 = var_s0;
-			var_s0->unk1A = 0x11;
-			func_800FAE84_109E34(var_s0);
-		loop_5:
-			func_800FB44C_10A3FC(var_s0, (f32)(((func_800038E0_44E0() % twelve) + 0x4B) << 8));
-			func_800FB484_10A434(var_s0, (f32)(((func_800038E0_44E0() % ten) - 0x66) << 8));
-			func_800FB468_10A418(var_s0, (f32)(func_800F9D24_108CD4(var_s0->unk0, var_s0->unk4) + 0x190));
-			temp_v0 = var_s0->unk0;
-			if ((temp_v0 >= 0x4E00) && (temp_v0 < 0x5501) && (var_s0->unk4 >= -0x6400)) {
-				if (temp_s1->unk4 < 0x5E01) {
-					goto loop_5;
-				}
-			}
-			temp_v0 = func_800038E0_44E0();
-			temp_s1->unkE = temp_v0;
-			temp_s1->unk6 = temp_v0;
-			temp_s1->unk46 |= 0x3F;
-			*var_s4 = 2;
-			var_s4 += 1;
-			var_s0 += 1;
-			temp_s1->unk20 = temp_s1->unk20 | (0x8000 | VEHICLE_FLAG_UNK7);
-			temp_s1->unk20 = temp_s1->unk20 & -2;
-		} while (var_s4 != &D_80158C49);
+			vehicle = &vehicleInstances[i];
+			vehicle->unk1A = 0x11;
+			func_800FAE84_109E34(vehicle);
+			do {
+				func_800FB44C_10A3FC(vehicle, (f32)(((func_800038E0_44E0() % xRange) + 0x4B) << 8));
+				func_800FB484_10A434(vehicle, (f32)(((func_800038E0_44E0() % zRange) - 0x66) << 8));
+				func_800FB468_10A418(vehicle, (f32)(func_800F9D24_108CD4(vehicle->unk0, vehicle->unk4) + 0x190));
+				value = vehicle->unk0;
+			} while ((value >= 0x4E00) && (value < 0x5501) && (vehicle->unk4 >= -0x6400) && (vehicle->unk4 < 0x5E01));
+			value = func_800038E0_44E0();
+			do {} while (0);
+			vehicle->unkE = value;
+			vehicle->unk6 = value;
+			vehicle->unk46 |= 0x3F;
+			D_80158BD0[i] = 2;
+			vehicle->unk20 = vehicle->unk20 | (0x8000 | VEHICLE_FLAG_UNK7);
+			vehicle->unk20 = vehicle->unk20 & -2;
+		}
 	}
 	func_800FAD10_109CC0();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80115A74_124A24.s")
-#endif
 
 void func_80115CC0_124C70(void)
 {
