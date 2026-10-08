@@ -727,327 +727,349 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 // CURRENT(19959)
 #ifdef NON_MATCHING
 // Draws Health/Human/vehicle/+more bars on HUD
-void func_8009D96C_AC91C(void) {
-	AlienInstance *alien;
-	VehicleInstance *vehicle;
-	BuildingInstance *building;
-	f32 sp98;
-	s32 sp8C;
-	s16 sp8A;
-	f32 sp84;
-	s16 sp82;
-	s32 sp7C;
-	s16 sp76;
-	s16 sp74;
-	s16 sp72;
-	s16 varV0;
-
-	alien = D_80158FEC;
-
-	guOrtho(&D_8014ED98, 0.0f, (f32) D_80068084, (f32) D_80068088, 0.0f, -1000.0f, 1000.0f, 1.0f);
-
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-
-	func_800039D0_45D0(0, 0, 0, D_8005BB38);
-
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-
-	if (D_8014F1F6 != 0) {
-		varV0 = D_8014F1F4 + D_8014F1F6;
-		D_8014F1F4 = varV0;
-		if (varV0 >= 0x81) {
-			D_8014F1F4 = 0x80;
-			D_8014F1F6 = 0;
-			varV0 = D_8014F1F4;
-		}
-		if (varV0 < 0) {
-			D_8014F1F4 = 0;
-			D_8014F1F6 = 0;
-		}
-	}
-
-	if (D_8014F1F8 != 0) {
-		varV0 = D_8014F1FA + D_8014F1F8;
-		D_8014F1FA = varV0;
-		if (varV0 >= 0x81) {
-			D_8014F1FA = 0x80;
-			D_8014F1F8 = 0;
-			varV0 = D_8014F1FA;
-		}
-		if (varV0 < 0) {
-			D_8014F1FA = 0;
-			D_8014F1F8 = 0;
-		}
-	}
-
-	D_8014F202 = 0;
-
-	if (gameplayMode != 0xC) {
-		if (alien != NULL) {
-			if (alien->typeIndex != 0) {
-				u16 tempU16;
-
-				if (alien->unk20 & ALIEN_FLAG_UNKL) {
-					sp98 = 0.0f;
-				} else {
-					sp98 = (f32) ((f64) (f32) alien->hitPoints / 100.0);
-				}
-
-				tempU16 = alienTypes[alien->typeIndex].unk3A;
-				sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
-				func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
-
-				tempU16 = alienTypes[alien->typeIndex].unk3A;
-				D_8014F202 = 3;
-				sp8C = (s32) &D_8025EC40;
-				sp7C = (s32) alien;
-				sp82 = D_8014ED44;
-				sp84 = (f32) alien->hitPoints / (f32) tempU16;
-
-				if (D_80158FF0 != 0) {
-					D_8014F202 = 4;
-				}
-			}
-		} else if (currentControllerStates[CONTROLLER_ONE].button & 0x10) {
-			if (D_80158FE4 != NULL) {
-				u16 tempU16;
-
-				vehicle = D_80158FE4;
-				if ((currentLevel != 1) || (vehicle->unk1A != 0x12)) {
-					sp98 = (f32) ((f64) (f32) vehicle->unk1C / 100.0);
-					tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
-					sp8A = (s16) (((f64) tempU16 / 100.0) * 50.0);
-					func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
-
-					tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
-					sp8C = (s32) &D_8025EE80;
-					D_8014F202 = 2;
-					sp7C = (s32) vehicle;
-					sp82 = D_8014ED4A;
-					sp84 = (f32) vehicle->unk1C / (f32) tempU16;
-				}
-			} else if (D_80158FE8 != NULL) {
-				s8 tempA3;
-				s8 varV1_2;
-
-				building = D_80158FE8;
-				varV1_2 = *(s8 *) &building->hitPoints;
-				tempA3 = buildingTypes[building->buildingType].unk19;
-				if (currentLevel == 5) {
-					varV1_2 = (s8) ((s16) varV1_2 / 3);
-				}
-
-				sp98 = (f32) ((f64) (f32) varV1_2 * 0.0625);
-				sp8A = (s16) (((f64) (f32) tempA3 / 100.0) * 312.5);
-				func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
-
-				D_8014F202 = 1;
-				sp8C = (s32) &D_8025F0C0;
-				sp82 = D_8014ED48;
-				sp7C = (s32) building;
-				sp84 = (f32) varV1_2 / (f32) tempA3;
-			}
-		}
-	}
-
-	if ((u8) D_8014F202 == 0) {
-		sp82 = 0;
-		sp8A = 0;
-		sp7C = 0;
-		sp84 = 0.0f;
-		sp8C = D_8013D5E0_14C590;
-	}
-
-	D_8013D5E0_14C590 = sp8C;
-	func_8009E994_AD944(sp84, sp8C, sp82, sp8A, sp7C);
-	D_8014F203 = D_8014F202;
-
-	if (D_8014F1FA != 0x80) {
-		s16 tempA0;
-		s32 varT1;
-
-		tempA0 = 5 - (D_8015931A / 200);
-
-		if (currentLevel == 5) {
-			varT1 = 0;
-		} else {
-			varT1 = -0x14;
-		}
-
-		if ((D_80052B34->unk1C > 0) && (tempA0 != 0)) {
-			varV0 = 7 - ((D_80052A8C / (u32) tempA0) & 7);
-			if (varV0 >= 5) {
-				varV0 -= 4;
-			}
-			if (D_8015931A == 0) {
-				varV0 = 0;
-			}
-
-			if ((D_8015931A > 0) && (D_8015931A < 0xC9)) {
-				D_8014ED4C = D_8014ED42;
-				func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), (f32) (0xC8 - D_8015931A) / 200.0f, 0,
-					(s32) &D_8025F540, 4, varV0, D_8014ED4C, 0x30);
-			} else {
-				u16 tempU16;
-
-				tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-				if (vehicleInstances[0].unk1C >= ((s32) tempU16 >> 2)) {
-					D_8014ED4C = D_8014ED42;
-				}
-				func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), (f32) vehicleInstances[0].unk1C / (f32) tempU16, 0,
-					(s32) &D_8025F540, 1, varV0, D_8014ED4C, 0x30);
-			}
-		} else {
-			func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), 0.0f, 0, (s32) &D_8025F540, 0, 0, 0, 0x30);
-		}
-
-		if (currentLevel < 5) {
-			if ((D_8014F204 != D_8004816A) && (((u8) D_800314C4 - 3) >= D_8004816A)) {
-				D_8014ED52 = 8;
-			}
-
-			if ((s32) (u8) D_800314C4 < D_8004816A) {
-				D_8014F204 = (u8) D_800314C4;
-			} else {
-				D_8014F204 = D_8004816A;
-			}
-
-			func_8009C6CC_AB67C(0x50, (s16) (D_80068088 - 0x1E), (f32) D_8014F204 / (f32) D_800314C4, 0,
-				(s32) &D_8025F780, 3, 0, D_8014ED52, 0x30);
-
-			D_8014F204 = D_8004816A;
-			if ((D_80052A8C % 10) == 0) {
-				D_8013D5DC_14C58C = func_800880B8_97068();
-			}
-		}
-	}
-
-	if (D_8014F1F4 != 0x80) {
-		s8 varV1_2;
-		u16 tempU16;
-
-		vehicle = D_80052B34;
-		varV1_2 = vehicle->unk1A;
-
-		if (varV1_2 != 0) {
-			if (D_80052AC8 != 2) {
-				func_8009C4B0_AB460();
-				vehicle = D_80052B34;
-				varV1_2 = vehicle->unk1A;
-			}
-
-			sp76 = vehicle->unk3C;
-			D_8014F69C = sp76;
-			sp74 = vehicle->unk1C;
-			tempU16 = vehicleTypes[varV1_2].hitPoints;
-			sp72 = (s16) tempU16;
-
-			D_8014F69E = sp74;
-			D_8014F6A0 = sp72;
-		} else {
-			func_8009C4A0_AB450();
-			sp76 = D_8014F69C;
-			sp74 = D_8014F69E;
-			sp72 = D_8014F6A0;
-		}
-
-		sp98 = (f32) ((f64) (f32) sp74 / 100.0);
-		sp8A = (s16) (((f64) (f32) sp72 / 100.0) * 48.0);
-		func_8009D900_AC8B0(&sp8A, &sp98, 0x30);
-
-		if (sp74 >= (sp72 >> 2)) {
-			D_8014ED4E = D_8014ED46;
-		}
-
-			func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), (f32) sp74 / (f32) sp72, 1,
-				(s32) &D_8025EE80, 1, 0, D_8014ED4E, sp8A);
-
-		if (D_80052B34->unk1A != 0x13) {
-			func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x32), (f32) ((f64) (f32) sp76 / 100.0), 1,
-				(s32) &D_8025D800, 1, 0, D_8014ED50, 0x30);
-		}
-	}
-
-	if (D_8014ED42 > 0) {
-		D_8014ED42--;
-	}
-	if (D_8014ED46 > 0) {
-		D_8014ED46--;
-	}
-	if (D_8014ED44 > 0) {
-		D_8014ED44--;
-	}
-	if (D_8014ED4A > 0) {
-		D_8014ED4A--;
-	}
-	if (D_8014ED48 > 0) {
-		D_8014ED48--;
-	}
-
-	if (sp76 < 0x13C1) {
-		D_8014ED50 = 8 - (D_80052A8C & 7);
-	} else {
-		D_8014ED50 = 0;
-	}
-
-	if (((u8) D_800314C4 - 3) < D_8004816A) {
-		D_8014ED52 = 8 - (D_80052A8C & 7);
-	} else {
-		D_8014ED52 = 0;
-	}
-
-	{
-		u16 tempU16;
-
-		tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-		if (vehicleInstances[0].unk1C < ((s32) tempU16 >> 2)) {
-			D_8014ED4C = 8 - (D_80052A8C & 7);
-		} else {
-			D_8014ED4C = 0;
-		}
-	}
-
-	if (sp74 < (sp72 >> 2)) {
-		D_8014ED4E = 8 - (D_80052A8C & 7);
-	} else {
-		D_8014ED4E = 0;
-	}
-
-	if (D_8013D5DC_14C58C != 0) {
-		D_8014ED52 = 8 - (D_80052A8C & 7);
-	} else if (D_8014ED52 > 0) {
-		D_8014ED52--;
-	}
-
-	drawText(&D_80142510_1514C0, 0, 0xFF);
-
-	if ((D_8006C6C6 > 0) && (func_80018AC8_196C8() == 0)) {
-		s16 varT2;
-
-		if ((D_8006C6C4 - 8) < D_8006C6C6) {
-			varT2 = D_8006C6C4 - D_8006C6C6;
-		} else {
-			varT2 = 8;
-			if (D_8006C6C6 < 8) {
-				varT2 = D_8006C6C6;
-			}
-		}
-
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
-
-		func_800092B8_9EB8(((D_80068084 >> 1) - 0x2A) * 4, ((0x30 - (varT2 * 6)) + 0xAF) * 4,
-			((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
-	}
-
-	gDPPipeSync(D_8005BB2C++);
-	gDPTileSync(D_8005BB2C++);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+void func_8009D96C_AC91C(void)
+{
+  AlienInstance *alien;
+  VehicleInstance *vehicle;
+  BuildingInstance *building;
+  f32 sp98;
+  s32 sp8C;
+  s16 sp8A;
+  f32 sp84;
+  s16 sp82;
+  s32 sp7C;
+  s16 sp76;
+  s16 sp74;
+  s16 sp72;
+  BuildingInstance **new_var;
+  s16 varV0;
+  alien = D_80158FEC;
+  guOrtho(&D_8014ED98, 0.0f, (f32) D_80068084, (f32) D_80068088, 0.0f, -1000.0f, 1000.0f, 1.0f);
+  gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 0);
+  gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+  gDPSetRenderMode(D_8005BB2C++, ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+  gDPSetCycleType(D_8005BB2C++, 0 << 20);
+  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
+  func_800039D0_45D0(0, 0, 0, D_8005BB38);
+  gSPMatrix(D_8005BB2C++, ((u32) (D_8005BB38++)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
+  if (D_8014F1F6 != 0)
+  {
+    varV0 = D_8014F1F4 + D_8014F1F6;
+    D_8014F1F4 = varV0;
+    if (varV0 >= 0x81)
+    {
+      D_8014F1F4 = 0x80;
+      D_8014F1F6 = 0;
+      varV0 = D_8014F1F4;
+    }
+    if (varV0 < 0)
+    {
+      D_8014F1F4 = 0;
+      D_8014F1F6 = 0;
+    }
+  }
+  if (D_8014F1F8 != 0)
+  {
+    varV0 = D_8014F1FA + D_8014F1F8;
+    D_8014F1FA = varV0;
+    if (varV0 >= 0x81)
+    {
+      D_8014F1FA = 0x80;
+      D_8014F1F8 = 0;
+      varV0 = D_8014F1FA;
+    }
+    if (varV0 < 0)
+    {
+      D_8014F1FA = 0;
+      D_8014F1F8 = 0;
+    }
+  }
+  D_8014F202 = 0;
+  if (gameplayMode != 0xC)
+  {
+    if (alien != 0)
+    {
+      if (alien->typeIndex != 0)
+      {
+        u16 tempU16;
+        if (alien->unk20 & ALIEN_FLAG_UNKL)
+        {
+          sp98 = 0.0f;
+        }
+        else
+        {
+          sp98 = (f32) (((f64) ((f32) alien->hitPoints)) / 100.0);
+        }
+        tempU16 = alienTypes[alien->typeIndex].unk3A;
+        sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
+        func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+        tempU16 = alienTypes[alien->typeIndex].unk3A;
+        D_8014F202 = 3;
+        sp8C = (s32) (&D_8025EC40);
+        sp7C = (s32) alien;
+        sp82 = D_8014ED44;
+        sp84 = ((f32) alien->hitPoints) / ((f32) tempU16);
+        if (D_80158FF0 != 0)
+        {
+          D_8014F202 = 4;
+        }
+      }
+    }
+    else
+    {
+      new_var = &building;
+      if (currentControllerStates[0].button & 0x10)
+      {
+        if (D_80158FE4 != 0)
+        {
+          u16 tempU16;
+          vehicle = D_80158FE4;
+          if ((currentLevel != 1) || (vehicle->unk1A != 0x12))
+          {
+            sp98 = (f32) (((f64) ((f32) vehicle->unk1C)) / 100.0);
+            tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
+            sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
+            func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+            tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
+            sp8C = (s32) (&D_8025EE80);
+            D_8014F202 = 2;
+            sp7C = (s32) vehicle;
+            sp84 = ((f32) vehicle->unk1C) / ((f32) tempU16);
+            sp82 = D_8014ED4A;
+          }
+        }
+        else
+          if (D_80158FE8 != 0)
+        {
+          s8 tempA3;
+          s8 varV1_2;
+          building = D_80158FE8;
+          varV1_2 = *((s8 *) (&building->hitPoints));
+          tempA3 = buildingTypes[(*new_var)->buildingType].unk19;
+          if (currentLevel == 5)
+          {
+            varV1_2 = (s8) (((s16) varV1_2) / 3);
+          }
+          sp98 = (f32) (((f64) ((f32) varV1_2)) * 0.0625);
+          sp8A = (s16) ((((f64) ((f32) tempA3)) / 100.0) * 312.5);
+          func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+          D_8014F202 = 1;
+          sp8C = (s32) (&D_8025F0C0);
+          sp82 = D_8014ED48;
+          sp7C = (s32) building;
+          sp84 = ((f32) varV1_2) / ((f32) tempA3);
+        }
+      }
+    }
+  }
+  if (((u8) D_8014F202) == 0)
+  {
+    sp82 = 0;
+    sp8A = 0;
+    sp7C = 0;
+    sp84 = 0.0f;
+    sp8C = D_8013D5E0_14C590;
+  }
+  D_8013D5E0_14C590 = sp8C;
+  func_8009E994_AD944(sp84, sp8C, sp82, sp8A, sp7C);
+  D_8014F203 = D_8014F202;
+  if (D_8014F1FA != 0x80)
+  {
+    s16 tempA0;
+    s32 varT1;
+    tempA0 = 5 - (D_8015931A / 200);
+    if (currentLevel == 5)
+    {
+      varT1 = 0;
+    }
+    else
+    {
+      varT1 = -0x14;
+    }
+    if ((D_80052B34->unk1C > 0) && (tempA0 != 0))
+    {
+      varV0 = 7 - ((D_80052A8C / ((u32) tempA0)) & 7);
+      if (varV0 >= 5)
+      {
+        varV0 -= 4;
+      }
+      if (D_8015931A == 0)
+      {
+        varV0 = 0;
+      }
+      if ((D_8015931A > 0) && (D_8015931A < 0xC9))
+      {
+        D_8014ED4C = D_8014ED42;
+        func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), ((f32) (0xC8 - D_8015931A)) / 200.0f, 0, (s32) (&D_8025F540), 4, varV0, D_8014ED4C, 0x30);
+      }
+      else
+      {
+        u16 tempU16;
+        tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
+        if (vehicleInstances[0].unk1C >= (((s32) tempU16) >> 2))
+        {
+          D_8014ED4C = D_8014ED42;
+        }
+        func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), ((f32) vehicleInstances[0].unk1C) / ((f32) tempU16), 0, (s32) (&D_8025F540), 1, varV0, D_8014ED4C, 0x30);
+      }
+    }
+    else
+    {
+      func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), 0.0f, 0, (s32) (&D_8025F540), 0, 0, 0, 0x30);
+    }
+    if (currentLevel < 5)
+    {
+      if ((D_8014F204 != D_8004816A) && ((((u8) D_800314C4) - 3) >= D_8004816A))
+      {
+        D_8014ED52 = 8;
+      }
+      if (((s32) ((u8) D_800314C4)) < D_8004816A)
+      {
+        D_8014F204 = (u8) D_800314C4;
+      }
+      else
+      {
+        D_8014F204 = D_8004816A;
+      }
+      func_8009C6CC_AB67C(0x50, (s16) (D_80068088 - 0x1E), ((f32) D_8014F204) / ((f32) D_800314C4), 0, (s32) (&D_8025F780), 3, 0, D_8014ED52, 0x30);
+      D_8014F204 = D_8004816A;
+      if ((D_80052A8C % 10) == 0)
+      {
+        D_8013D5DC_14C58C = func_800880B8_97068();
+      }
+    }
+  }
+  if (D_8014F1F4 != 0x80)
+  {
+    s8 varV1_2;
+    u16 tempU16;
+    vehicle = D_80052B34;
+    varV1_2 = vehicle->unk1A;
+    if (varV1_2 != 0)
+    {
+      if (D_80052AC8 != 2)
+      {
+        func_8009C4B0_AB460();
+        vehicle = D_80052B34;
+        varV1_2 = vehicle->unk1A;
+      }
+      sp76 = vehicle->unk3C;
+      D_8014F69C = sp76;
+      sp74 = vehicle->unk1C;
+      tempU16 = vehicleTypes[varV1_2].hitPoints;
+      sp72 = (s16) tempU16;
+      D_8014F69E = sp74;
+      D_8014F6A0 = sp72;
+    }
+    else
+    {
+      func_8009C4A0_AB450();
+      sp76 = D_8014F69C;
+      sp74 = D_8014F69E;
+      sp72 = D_8014F6A0;
+    }
+    sp98 = (f32) (((f64) ((f32) sp74)) / 100.0);
+    sp8A = (s16) ((((f64) ((f32) sp72)) / 100.0) * 48.0);
+    func_8009D900_AC8B0(&sp8A, &sp98, 0x30);
+    if (sp74 >= (sp72 >> 2))
+    {
+      D_8014ED4E = D_8014ED46;
+    }
+    func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), ((f32) sp74) / ((f32) sp72), 1, (s32) (&D_8025EE80), 1, 0, D_8014ED4E, sp8A);
+    if (D_80052B34->unk1A != 0x13)
+    {
+      func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x32), (f32) (((f64) ((f32) sp76)) / 100.0), 1, (s32) (&D_8025D800), 1, 0, D_8014ED50, 0x30);
+    }
+  }
+  if (D_8014ED42 > 0)
+  {
+    D_8014ED42--;
+  }
+  if (D_8014ED46 > 0)
+  {
+    D_8014ED46--;
+  }
+  if (D_8014ED44 > 0)
+  {
+    D_8014ED44--;
+  }
+  if (D_8014ED4A > 0)
+  {
+    D_8014ED4A--;
+  }
+  if (D_8014ED48 > 0)
+  {
+    D_8014ED48--;
+  }
+  if (sp76 < 0x13C1)
+  {
+    D_8014ED50 = 8 - (D_80052A8C & 7);
+  }
+  else
+  {
+    D_8014ED50 = 0;
+  }
+  if ((((u8) D_800314C4) - 3) < D_8004816A)
+  {
+    D_8014ED52 = 8 - (D_80052A8C & 7);
+  }
+  else
+  {
+    D_8014ED52 = 0;
+  }
+  {
+    u16 tempU16;
+    tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
+    if (vehicleInstances[0].unk1C < (((s32) tempU16) >> 2))
+    {
+      D_8014ED4C = 8 - (D_80052A8C & 7);
+    }
+    else
+    {
+      D_8014ED4C = 0;
+    }
+  }
+  if (sp74 < (sp72 >> 2))
+  {
+    D_8014ED4E = 8 - (D_80052A8C & 7);
+  }
+  else
+  {
+    D_8014ED4E = 0;
+  }
+  if (D_8013D5DC_14C58C != 0)
+  {
+    D_8014ED52 = 8 - (D_80052A8C & 7);
+  }
+  else
+    if (D_8014ED52 > 0)
+  {
+    D_8014ED52--;
+  }
+  drawText(&D_80142510_1514C0, 0, 0xFF);
+  if ((D_8006C6C6 > 0) && (func_80018AC8_196C8() == 0))
+  {
+    s16 varT2;
+    if ((D_8006C6C4 - 8) < D_8006C6C6)
+    {
+      varT2 = D_8006C6C4 - D_8006C6C6;
+    }
+    else
+    {
+      varT2 = 8;
+      if (D_8006C6C6 < 8)
+      {
+        varT2 = D_8006C6C6;
+      }
+    }
+    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
+    func_800092B8_9EB8(((D_80068084 >> 1) - 0x2A) * 4, ((0x30 - (varT2 * 6)) + 0xAF) * 4, ((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
+  }
+  gDPPipeSync(D_8005BB2C++);
+  gDPTileSync(D_8005BB2C++);
+  gDPSetRenderMode(D_8005BB2C++, ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009D96C_AC91C.s")
