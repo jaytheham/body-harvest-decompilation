@@ -7850,14 +7850,9 @@ void func_80108D80_117D30(VehicleInstance *arg0, VehicleType *arg1) {
 #endif
 
 // CURRENT(4000)
-#ifdef NON_MATCHING
 void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
-	s32 temp_v0;
 	s32 temp_v1;
-	s32 temp_v2;
-	f32 temp_f4;
-	f32 temp_f16;
-	f32 temp_f18;
+	s32 temp_v0;
 	f32 temp_f0;
 
 	temp_v0 = arg1->unk4C;
@@ -7883,27 +7878,29 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 	}
 	arg0->unk26 = arg0->unk26 + temp_v1;
 	if (arg0->unk8 > 0) {
-		temp_v2 = -0x3E8;
+		temp_v1 = -0x3E8;
 	} else {
-		temp_v2 = 0x3E8;
+		temp_v1 = 0x3E8;
 	}
-	arg0->unk24 = arg0->unk24 + temp_v2;
-	temp_f4 = arg0->unk30 / temp_f0;
+	arg0->unk24 = arg0->unk24 + temp_v1;
+	arg0->unk30 = arg0->unk30 / temp_f0;
 	arg0->unk8 = arg0->unk8 + arg0->unk24;
-	temp_f16 = arg0->unk34 - 6.0f;
-	temp_f18 = arg0->unk38 / temp_f0;
-	arg0->unk30 = temp_f4;
-	arg0->unk34 = temp_f16;
-	arg0->unk38 = temp_f18;
-	arg0->unk6 = arg0->unk6 + arg0->unk22 + arg0->unk16;
+	arg0->unk34 = arg0->unk34 - 5.0f;
+	arg0->unk38 = arg0->unk38 / temp_f0;
+	temp_v0 = arg0->unk16;
 	arg0->unkA = arg0->unkA + arg0->unk26;
-	arg0->unk16 = arg0->unk12 >> 1;
-	func_800FB430_10A3E0(arg0, (f32)(arg0->unk24 >> 1));
-	if (arg0->unk34 > 20.0f) {
-		arg0->unk34 = 20.0f;
+	arg0->unk6 = arg0->unk6 + arg0->unk22 + temp_v0;
+	arg0->unk16 = temp_v0 >> 1;
+	func_800FB430_10A3E0(arg0, (f32)(arg0->unk12 >> 1));
+	if (arg0->unk34 < -20.0f) {
+		arg0->unk34 = -20.0f;
 	}
 	if (!(arg1->unk4C & 0x100)) {
-		if (D_80222A70 < (s32)(arg0->unk50 + arg0->unk34)) {
+		arg0->unk34 += 6.0f;
+		if (arg0->unk34 > 20.0f) {
+			arg0->unk34 = 20.0f;
+		}
+		if (D_80222A70 < arg0->unk50 + arg0->unk34) {
 			arg0->unk20 &= ~VEHICLE_FLAG_AIRBORNE;
 			func_800FB468_10A418(arg0, (f32)D_80222A70);
 			arg0->unk34 = 0.0f;
@@ -7911,9 +7908,6 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 	}
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80109370_118320.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3725)
