@@ -1978,10 +1978,10 @@ void func_80087E3C_16FEFC(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(987) - permuter warm-start: var_s3 merged into spAC + redundant s1 re-assign (1724 -> 1456 -> 1236);
-// then the s1->unkC read re-expressed as (&D_800FB7B0[var_t2])->unkC, a live-range-extending empty if(!s1->unk4),
-// and var_s6 declared between spAC and sp9C - 1236 -> 987
-// AI - Render slot type 4 effects: animated billboards with dual textures
+// CURRENT(40) - permuter campaign 987 -> 452 -> 40: sp9C.x/sp9C.y field reads re-expressed as
+// (&D_800FB7B0[var_t2])->unkN (matching sp9C.z, 987 -> 452), and the `var_t2 = D_800FB79A` load hoisted to
+// the first statement (452 -> 40; the target schedules it into the `lw`-delay slot at instruction 5).
+// Earlier in the campaign: 1724 -> 1456 -> 1236 -> 987 (see NOTES.md).
 void func_800881C0_170280(void)
 {
   Unk89834Pos *spAC;
@@ -1989,11 +1989,11 @@ void func_800881C0_170280(void)
   Vec3f sp9C;
   s16 var_t2;
   Unk89834Pos *s1;
+  var_t2 = D_800FB79A;
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
   D_800FB6E5 = 0x20;
   D_800FB6E6 = 0x20;
-  var_t2 = D_800FB79A;
   var_s6 = 0;
   if ((var_t2 != (-5)) && (var_t2 != (-6)))
   {
@@ -2032,8 +2032,8 @@ void func_800881C0_170280(void)
       s1 = &D_800FB7B0[var_t2];
       s1 = (Unk89834Pos *) (&s1->unk8);
       spAC = s1;
-      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) s1->unk8);
-      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) s1->unkA);
+      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unk8);
+      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkA);
       s1 = &D_800FB7B0[var_t2];
       sp9C.z = (D_800E7410.z * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkC);
       func_80083014_16B0D4(&sp9C, &sp9C);
