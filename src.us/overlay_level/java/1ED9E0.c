@@ -3595,6 +3595,7 @@ void func_802DD5CC_1F62DC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(187) - buildable: D_802E0F80_1F9C90[0], AlienInstance.typeIndex, use-site u8 cast on the D_8014DD50 idx; residual is the a2/a3 base band + float-temp bank
 void func_802DD8E8_1F65F8(u8 arg0) {
 	s16 sp28;
 	s32 temp_v0;
@@ -3607,8 +3608,8 @@ void func_802DD8E8_1F65F8(u8 arg0) {
 	if (temp_v0 & 0x600) {
 		if (!(temp_v0 & 0x100000)) {
 			sp28 = sins(alien->unk6);
-			func_800DF848_EE7F8((s16) (s32) ((f64) alien->unk0 - (((f64) (f32) sp28 / 32768.0) * D_802E0F80)), alien->unk2, (s16) (s32) ((((f64) (f32) coss(alien->unk6) / 32768.0) * D_802E0F80) + (f64) alien->unk4), alienTypes[alienInstances[arg0].unk1A].unkC, 2);
-			temp_a1 = (&D_8014DD50[((&D_8014DD50[alienInstances[arg0].unkC])->unkC)])->unkC;
+			func_800DF848_EE7F8((s16) (s32) ((f64) alien->unk0 - (((f64) (f32) sp28 / 32768.0) * D_802E0F80_1F9C90[0])), alien->unk2, (s16) (s32) ((((f64) (f32) coss(alien->unk6) / 32768.0) * D_802E0F80_1F9C90[0]) + (f64) alien->unk4), alienTypes[alien->typeIndex].unkC, 2);
+			temp_a1 = (&D_8014DD50[(*(u8 *) &(&D_8014DD50[alien->unkC])->unkC)])->unkC;
 			temp_a2 = (&D_8014DD50[temp_a1])->unkD;
 			func_80088E10_97DC0((s16) temp_a2);
 		}
