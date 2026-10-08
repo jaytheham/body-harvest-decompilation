@@ -155,7 +155,6 @@ The ROM's `0x18d030` is the string `"ieNormVecF3()  {0,0,0} -> {0,0,0}\n"`; with
 mips-linux-gnu-objdump -h build/src.us/<path>.c.o | grep -E 'text|rodata|data'
 python3 -c "b=open('baserom.us.z64','rb').read(); u=open('build/bh.us.z64','rb').read(); print(b==u, b[o:o+16].hex(), u[o:o+16].hex())"
 ```
-
 ### The residual is one duplicated load, not a source shape
 
 Re-measured (seam2 run 37): with the guard off the body compiles to **32** instructions against the
