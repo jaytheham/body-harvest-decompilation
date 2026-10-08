@@ -249,7 +249,7 @@ void func_800EA434_F93E4(void)
 	D_80157600.unk408 = func_8000C6F4_D2F4();
 	D_80157600.unk410 = 1.0f;
 	D_80157A34 = 0;
-	func_8000C790_D390(&D_80157600, &D_8003BAE0, 0x10);
+	func_8000C790_D390(&D_80157600, D_8003BAE0_3C6E0, 0x10);
 	temp_zero = 0.0f;
 	D_80157600.unk40C = 0x27;
 	func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 7, temp_zero);
@@ -264,7 +264,7 @@ void func_800EA434_F93E4(void)
 	D_80157A48.unk404 = func_8000C6F4_D2F4();
 	D_80157A48.unk408 = func_8000C6F4_D2F4();
 	D_80157A48.unk410 = 1.0f;
-	func_8000C790_D390(&D_80157A48, &D_8003BAE0, 0x10);
+	func_8000C790_D390(&D_80157A48, D_8003BAE0_3C6E0, 0x10);
 	D_80157E70 = 0;
 	D_80157A48.unkC = 145.0f;
 	D_80157A48.unk8 = 0.0f;
@@ -922,46 +922,42 @@ s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1)
 	return new_var;
 }
 
-// https://decomp.me/scratch/YkPag
-// CURRENT(529)
-#ifdef NON_MATCHING
 void func_800EBA54_FAA04(Unk80052B40 *arg0, s32 arg1, AnimChannelState *arg2)
 {
-  if (arg1 == 5)
-  {
-	if ((arg2->unk18 == 3) && (arg2->unk1C == 1.0f))
+	if (arg1 == 5)
 	{
-	  func_800E0E9C_EFE4C(arg0->unk0, arg0->unk4, 0x32);
+		if ((arg2->unk18 == 3) && (arg2->unk1C == 1.0f))
+		{
+			func_800E0E9C_EFE4C(arg0->unk0, arg0->unk4, 0x32);
+		}
 	}
-  }
-  else if (arg1 == 0x30)
-  {
-	if ((arg2->unk18 == 1) && (arg2->unk1C == 1.0f))
+	else if (arg1 == 0x30)
 	{
-	  func_801371B8_146168(D_80052B34, 0x8D, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		if ((arg2->unk18 == 1) && (arg2->unk1C == 1.0f))
+		{
+			func_801371B8_146168(D_80052B34, 0x8D, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		}
 	}
-  }
-  else if (arg1 == 0x2A)
-  {
-	if ((arg2->unk18 == 2) && (arg2->unk1C == 1.0f))
+	else if (arg1 == 0x2A)
 	{
-	  func_801371B8_146168(D_80052B34, 0x8D, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		if ((arg2->unk18 == 2) && (arg2->unk1C == 1.0f))
+		{
+			func_801371B8_146168(D_80052B34, 0x8D, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		}
 	}
-  }
-  else if (arg1 == 0 && (arg2->unk18 == 3 || arg2->unk18 == 8) && arg2->unk1C == 1.0f)
-  {
-	if (D_80052B34->unk2 < D_80222A70)
+	else if (arg1 == 0 && (arg2->unk18 == 3 || arg2->unk18 == 8) && arg2->unk1C == 1.0f)
 	{
-	  func_801371B8_146168(D_80052B34, (s16) ((func_800038E0_44E0() & 1) + 0xA0), D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
-	  func_800DEF2C_EDEDC(D_80052B34->unk0, (s16) (D_80222A70 + 3), D_80052B34->unk4, 0x3C, 1);
-	  return;
+		if (D_80052B34->unk2 < D_80222A70)
+		{
+			func_801371B8_146168(D_80052B34, (func_800038E0_44E0() & 1) + 0xA0, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+			func_800DEF2C_EDEDC(D_80052B34->unk0, D_80222A70 + 3, D_80052B34->unk4, 0x3C, 1);
+		}
+		else
+		{
+			func_801371B8_146168(D_80052B34, 0x3E7, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		}
 	}
-	func_801371B8_146168(D_80052B34, 0x3E7, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBA54_FAA04.s")
-#endif
 
 void func_800EBC94_FAC44(VehicleInstance *arg0, OSContPad *arg1) {
 	s32 var_v1;
@@ -1303,7 +1299,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					var_v1 = -sp96;
 				}
 
-				temp_f16 = (f32)D_8003E820[var_v1] / 61.0f;
+				temp_f16 = (f32)D_8003E820_3F420[var_v1] / 61.0f;
 				if ((D_8013FC0C_14EBBC[0] - sp96) >= 0) {
 					var_f2 = (f32)(D_8013FC0C_14EBBC[0] - sp96);
 				} else {

@@ -168,7 +168,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x8, /* unk3E */
 		0x400, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A850, /* unk44 */
+		(void *)D_8003A850_3B450, /* unk44 */
 		func_8008F9E4_9E994, /* unk48 */
 		(void *)func_8008F818_9E7C8, /* unk4C */
 		0xFF, /* unk50 */
@@ -213,7 +213,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0xC, /* unk3E */
 		0xC0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A590, /* unk44 */
+		(void *)D_8003A590_3B190, /* unk44 */
 		func_800920C0_A1070, /* unk48 */
 		(void *)func_80091E70_A0E20, /* unk4C */
 		0x01, /* unk50 */
@@ -348,7 +348,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x20, /* unk3E */
 		0x400, /* unk40 */
 		0x1F4, /* unk42 */
-		(void *)0x8003B700, /* unk44 */
+		(void *)D_8003B700_3C300, /* unk44 */
 		func_802DAA20_2BCE50, /* unk48 */
 		(void *)func_802DACA0_2BD0D0, /* unk4C */
 		0xFF, /* unk50 */
@@ -438,7 +438,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x18, /* unk3E */
 		0x200, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003ABA0, /* unk44 */
+		(void *)D_8003ABA0_3B7A0, /* unk44 */
 		func_802D9BFC_2BC02C, /* unk48 */
 		(void *)func_802D9FB4_2BC3E4, /* unk4C */
 		0xFF, /* unk50 */
@@ -483,7 +483,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x20, /* unk3E */
 		0x460, /* unk40 */
 		0x800, /* unk42 */
-		(void *)0x8003AEF0, /* unk44 */
+		(void *)D_8003AEF0_3BAF0, /* unk44 */
 		func_802DEB5C_2C0F8C, /* unk48 */
 		(void *)func_80092DFC_A1DAC, /* unk4C */
 		0xFF, /* unk50 */
@@ -528,7 +528,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x12, /* unk3E */
 		0x100, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003ABD0, /* unk44 */
+		(void *)D_8003ABD0_3B7D0, /* unk44 */
 		func_802D7CD4_2BA104, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0x06, /* unk50 */
@@ -573,7 +573,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0xA, /* unk3E */
 		0x80, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003ACF0, /* unk44 */
+		(void *)D_8003ACF0_3B8F0, /* unk44 */
 		func_802D84B0_2BA8E0, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0x07, /* unk50 */
@@ -618,7 +618,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x8, /* unk3E */
 		0x400, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A850, /* unk44 */
+		(void *)D_8003A850_3B450, /* unk44 */
 		func_8008F9E4_9E994, /* unk48 */
 		(void *)func_8008F818_9E7C8, /* unk4C */
 		0xFF, /* unk50 */
@@ -663,7 +663,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x10, /* unk3E */
 		0xA0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A5F0, /* unk44 */
+		(void *)D_8003A5F0_3B1F0, /* unk44 */
 		func_80093438_A23E8, /* unk48 */
 		(void *)func_8009335C_A230C, /* unk4C */
 		0x00, /* unk50 */
@@ -708,7 +708,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x18, /* unk3E */
 		0x200, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003ABA0, /* unk44 */
+		(void *)D_8003ABA0_3B7A0, /* unk44 */
 		func_802D9BFC_2BC02C, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0xFF, /* unk50 */
@@ -888,7 +888,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x40, /* unk3E */
 		0x300, /* unk40 */
 		0x320, /* unk42 */
-		(void *)0x8003B7A0, /* unk44 */
+		(void *)D_8003B7A0_3C3A0, /* unk44 */
 		func_802DD668_2BFA98, /* unk48 */
 		(void *)func_802DDE3C_2C026C, /* unk4C */
 		0x0A, /* unk50 */
@@ -933,7 +933,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x10, /* unk3E */
 		0xC0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003B6B0, /* unk44 */
+		(void *)D_8003B6B0_3C2B0, /* unk44 */
 		func_802DA4CC_2BC8FC, /* unk48 */
 		(void *)func_800873A8_96358, /* unk4C */
 		0x09, /* unk50 */
@@ -978,7 +978,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x10, /* unk3E */
 		0x300, /* unk40 */
 		0x2BC, /* unk42 */
-		(void *)0x8003B630, /* unk44 */
+		(void *)D_8003B630_3C230, /* unk44 */
 		func_802DAEBC_2BD2EC, /* unk48 */
 		(void *)func_802DB390_2BD7C0, /* unk4C */
 		0xFF, /* unk50 */
@@ -1023,7 +1023,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x30, /* unk3E */
 		0x300, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003B2E0, /* unk44 */
+		(void *)D_8003B2E0_3BEE0, /* unk44 */
 		func_802DBF54_2BE384, /* unk48 */
 		(void *)func_802DC4A0_2BE8D0, /* unk4C */
 		0xFF, /* unk50 */
@@ -1068,7 +1068,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x40, /* unk3E */
 		0x0, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003B460, /* unk44 */
+		(void *)D_8003B460_3C060, /* unk44 */
 		func_80094BE0_A3B90, /* unk48 */
 		(void *)func_800800DC_8F08C, /* unk4C */
 		0xFF, /* unk50 */
@@ -1158,7 +1158,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0xC, /* unk3E */
 		0x80, /* unk40 */
 		0x100, /* unk42 */
-		(void *)0x8003A6C0, /* unk44 */
+		(void *)D_8003A6C0_3B2C0, /* unk44 */
 		func_80091220_A01D0, /* unk48 */
 		(void *)func_800908C4_9F874, /* unk4C */
 		0x02, /* unk50 */
@@ -1203,7 +1203,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x20, /* unk3E */
 		0x0, /* unk40 */
 		0x80, /* unk42 */
-		(void *)0x8003AA30, /* unk44 */
+		(void *)D_8003AA30_3B630, /* unk44 */
 		func_800A4C28_B3BD8, /* unk48 */
 		(void *)func_800A41B0_B3160, /* unk4C */
 		0xFF, /* unk50 */
@@ -1248,7 +1248,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x10, /* unk3E */
 		0x1C0, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A340, /* unk44 */
+		(void *)D_8003A340_3AF40, /* unk44 */
 		func_802DF4C8_2C18F8, /* unk48 */
 		(void *)func_802DF4C8_2C18F8, /* unk4C */
 		0xFF, /* unk50 */
@@ -1293,7 +1293,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x20, /* unk3E */
 		0x400, /* unk40 */
 		0x80, /* unk42 */
-		(void *)0x8003A3F0, /* unk44 */
+		(void *)D_8003A3F0_3AFF0, /* unk44 */
 		func_802DF98C_2C1DBC, /* unk48 */
 		(void *)func_802DF98C_2C1DBC, /* unk4C */
 		0xFF, /* unk50 */
@@ -1563,7 +1563,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x8, /* unk3E */
 		0x400, /* unk40 */
 		0x200, /* unk42 */
-		(void *)0x8003A850, /* unk44 */
+		(void *)D_8003A850_3B450, /* unk44 */
 		func_8008F9E4_9E994, /* unk48 */
 		(void *)func_8008F818_9E7C8, /* unk4C */
 		0xFF, /* unk50 */
@@ -1743,7 +1743,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x20, /* unk3E */
 		0x460, /* unk40 */
 		0x800, /* unk42 */
-		(void *)0x8003AEF0, /* unk44 */
+		(void *)D_8003AEF0_3BAF0, /* unk44 */
 		func_802DEB5C_2C0F8C, /* unk48 */
 		(void *)func_80092DFC_A1DAC, /* unk4C */
 		0xFF, /* unk50 */

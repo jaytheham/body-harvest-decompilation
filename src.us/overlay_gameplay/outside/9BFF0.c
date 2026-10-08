@@ -1200,7 +1200,6 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #endif
 
 // AI - Vertical velocity/gravity update
-#ifdef NON_MATCHING
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
 	s32 sp2C;
@@ -1214,7 +1213,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	{
 		sp2A = (s16)D_80222A70;
 	}
-	sp2C = (arg1 += sp2A);
+	arg1 += sp2A;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
 	{
 		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
@@ -1225,48 +1224,39 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	}
 	if (sp24)
 	{
-		sp2C = D_80052B34->unk2;
+		arg1 = D_80052B34->unk2;
 	}
-	if (alienInstances[arg0].unk2 < sp2C)
+	if (alienInstances[arg0].unk2 < arg1)
 	{
 		alienInstances[arg0].unkA -= 0x1F4;
 	}
-	if (sp2C < alienInstances[arg0].unk2)
+	if (arg1 < alienInstances[arg0].unk2)
 	{
 		alienInstances[arg0].unkA += 0x1F4;
 	}
 	alienInstances[arg0].unkA *= D_80141EE0_150E90[0];
-	sp2C = -((s16)alienInstances[arg0].unk12);
-	if (sp2C < alienInstances[arg0].unk12)
-	{
-		sp2C = alienInstances[arg0].unk12;
-	}
-	else if (sp2C < 0x301)
+	sp2C = -alienInstances[arg0].unk12 < alienInstances[arg0].unk12 ? alienInstances[arg0].unk12 : -alienInstances[arg0].unk12;
+	if (sp2C < 0x301)
 	{
 		sp2C = 0x300;
 	}
-	alienInstances[arg0].unk10 = -((s32)(((f32)sins(alienInstances[arg0].unkA) / 32768.0) * sp2C));
+	alienInstances[arg0].unk10 = -((s16)(((f32)sins(alienInstances[arg0].unkA) / 32768.0) * sp2C));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E978_9D928.s")
-#endif
 
 // AI - Gravity with type-driven height offset
-#ifdef NON_MATCHING
 void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 {
 	s32 temp2;
-	s32 temp;
+	s32 pad; // Preserve the unused stack slot at sp+0x48.
 	s16 sp46;
 	s16 typeIndex;
 	s32 sp24;
 	f64 factor;
-	AlienInstance *inst;
+
 	typeIndex = alienInstances[arg0].typeIndex;
 	sp24 = 0;
 	func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp46);
-	inst = &alienInstances[arg0];
-	if (inst->unk20 & ALIEN_FLAG_PLAYER)
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
 	{
 		sp24 = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
 		if (sp24 && (D_80222A70 >= D_80052B34->unk2))
@@ -1293,35 +1283,24 @@ void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 	{
 		arg1 += sp46;
 	}
-	if (inst->unk2 < arg1)
+	if (alienInstances[arg0].unk2 < arg1)
 	{
-		factor = (((arg1 - inst->unk2) / 160) > 1.0) ? (1.0) : ((arg1 - inst->unk2) / 160);
-		inst->unkA = inst->unkA - (arg2 * factor);
+		factor = (((arg1 - alienInstances[arg0].unk2) / 160) > 1.0) ? (1.0) : ((arg1 - alienInstances[arg0].unk2) / 160);
+		alienInstances[arg0].unkA = alienInstances[arg0].unkA - (arg2 * factor);
 	}
-	if (arg1 < inst->unk2)
+	if (arg1 < alienInstances[arg0].unk2)
 	{
-		factor = (((inst->unk2 - arg1) / 160) > 1.0) ? (1.0) : ((inst->unk2 - arg1) / 160);
-		inst->unkA = inst->unkA + (arg2 * factor);
+		factor = (((alienInstances[arg0].unk2 - arg1) / 160) > 1.0) ? (1.0) : ((alienInstances[arg0].unk2 - arg1) / 160);
+		alienInstances[arg0].unkA = alienInstances[arg0].unkA + (arg2 * factor);
 	}
-	inst->unkA *= D_80141EE8_150E98[0];
-	temp = -inst->unk12;
-	if (temp < inst->unk12)
-	{
-		temp2 = inst->unk12;
-	}
-	else
-	{
-		temp2 = (u64)temp;
-	}
+	alienInstances[arg0].unkA *= D_80141EE8_150E98[0];
+	temp2 = -alienInstances[arg0].unk12 < alienInstances[arg0].unk12 ? alienInstances[arg0].unk12 : -alienInstances[arg0].unk12;
 	if (temp2 < 0x101)
 	{
 		temp2 = 0x100;
 	}
-	inst->unk10 = -((s32)((((f32)sins(inst->unkA)) / 32768.0) * temp2));
+	alienInstances[arg0].unk10 = -((s16)((((f32)sins(alienInstances[arg0].unkA)) / 32768.0) * temp2));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008EB20_9DAD0.s")
-#endif
 
 // AI - Apply gravity using type height offset
 void func_8008EDFC_9DDAC(u8 arg0)
@@ -2216,34 +2195,28 @@ void func_80090A6C_9FA1C(u8 arg0, s16 arg1, u16 arg2)
 	}
 }
 
-// https://decomp.me/scratch/qLxSW
-// CURRENT(15)
-#ifdef NON_MATCHING
 // AI - Face toward the player
 void func_80090C14_9FBC4(u8 arg0)
 {
-	s16 sp2C2;
-	s16 sp2C;
+	s16 playerAngle;
+	s16 targetAngle;
 	s32 diffX;
 	s32 diffZ;
 
 	diffX = alienInstances[arg0].unk14 - alienInstances[arg0].unk0;
 	diffZ = alienInstances[arg0].unk18 - alienInstances[arg0].unk4;
-	sp2C = func_80003824_4424((f32)-diffZ, (f32)diffX);
+	targetAngle = func_80003824_4424(-diffZ, diffX);
 	diffX = D_80052B34->unk0 - alienInstances[arg0].unk0;
 	diffZ = D_80052B34->unk4 - alienInstances[arg0].unk4;
-	diffX = sp2C - func_80003824_4424((f32)diffX, (f32)diffZ);
-	if (((-diffX < diffX) ? diffX : -diffX) < 0x4000)
+	playerAngle = func_80003824_4424(diffX, diffZ);
+	if (BH_ABS(targetAngle - playerAngle) < 0x4000)
 	{
-		sp2C += 0x8000;
+		targetAngle += 0x8000;
 	}
 	alienInstances[arg0].unk34 = 0x78;
 	alienInstances[arg0].unk47 |= 1;
-	alienInstances[arg0].unk2A = sp2C;
+	alienInstances[arg0].unk2A = targetAngle;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090C14_9FBC4.s")
-#endif
 
 // CURRENT(1434)
 #ifdef NON_MATCHING
@@ -2759,17 +2732,18 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091AC0_A0A70.s")
 #endif
 
-// https://decomp.me/scratch/TAjH8
-// CURRENT(38)
-#ifdef NON_MATCHING
 // AI - Movement AI with building attack
 // Goliath/"Spyder" behavior specs.unk4C
 void func_80091E70_A0E20(u8 arg0)
 {
-	s32 x;
-	u8 useAttack = 0;
-	s16 targetSpeed;
 	u8 specIndex = alienInstances[arg0].typeIndex;
+	u8 pad0;
+	u8 pad1;
+	u8 useAttack = 0;
+	u8 pad2;
+	u8 pad3;
+	s16 targetSpeed;
+	s32 x;
 	s32 z;
 
 	targetSpeed = alienTypes[specIndex].unk40;
@@ -2814,9 +2788,6 @@ void func_80091E70_A0E20(u8 arg0)
 		alienInstances[arg0].unk12 -= alienTypes[specIndex].unk3E * 4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091E70_A0E20.s")
-#endif
 
 // CURRENT(10706)
 // AI - Drone/Boss attack AI with melee patterns
@@ -3203,18 +3174,15 @@ void func_80092DFC_A1DAC(u8 arg0)
 	}
 }
 
-// https://decomp.me/scratch/NgKhQ
-// CURRENT(136)
 // AI - Patrol alien update with rotation sync
-#ifdef NON_MATCHING
 void func_80092EF4_A1EA4(u8 arg0)
 {
-	u8 sp3F;
-	u8 new_var;
-	s8 temp_a1;
-	s16 pad;
-	s16 sp38;
-	sp3F = alienInstances[arg0].typeIndex;
+	u8 typeIndex;
+	u8 pad;
+	s8 nextJointIndex;
+	s16 jointIndex;
+	s16 height;
+	typeIndex = alienInstances[arg0].typeIndex;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKC)
 	{
 		func_8008064C_8F5FC(arg0);
@@ -3227,16 +3195,16 @@ void func_80092EF4_A1EA4(u8 arg0)
 	{
 		func_80137468_146418(arg0, 0x25);
 		alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
-		temp_a1 = D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unkD;
-		if (D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk8 >= 0x7D1)
+		jointIndex = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		nextJointIndex = D_8014DD50[jointIndex].unkD;
+		if (D_8014DD50[jointIndex].unk8Unsigned >= 0x7D1)
 		{
-			D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk8 -= 0x7D0;
-			D_8014DD50[temp_a1].unk8 = (s16)(((u16)D_8014DD50[temp_a1].unk8) + 0x7D0);
+			D_8014DD50[jointIndex].unk8Unsigned -= 0x7D0;
+			D_8014DD50[nextJointIndex].unk8Unsigned += 0x7D0;
 		}
 
-		func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp38);
-		new_var = alienInstances[arg0].unk47;
-		if ((new_var & 0xE) || ((alienInstances[arg0].unk2 - alienTypes[sp3F].unkC) < sp38))
+		func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &height);
+		if ((alienInstances[arg0].unk47 & 0xE) || ((alienInstances[arg0].unk2 - alienTypes[typeIndex].unkC) < height))
 		{
 			if (alienInstances[arg0].unk3F != 0xFF)
 			{
@@ -3251,7 +3219,7 @@ void func_80092EF4_A1EA4(u8 arg0)
 			else
 			{
 				func_80124B5C_133B0C(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x320, 0x100);
-				func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)(alienTypes[sp3F].unkC * 4), 0);
+				func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[typeIndex].unkC * 4, 0);
 			}
 		}
 	}
@@ -3259,8 +3227,8 @@ void func_80092EF4_A1EA4(u8 arg0)
 	{
 		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKC)
 		{
-			sp38 = func_8008E524_9D4D4(arg0, 0x2EE, 4);
-			func_8008E978_9D928(arg0, sp38);
+			height = func_8008E524_9D4D4(arg0, 0x2EE, 4);
+			func_8008E978_9D928(arg0, height);
 		}
 		else
 		{
@@ -3274,9 +3242,6 @@ void func_80092EF4_A1EA4(u8 arg0)
 		alienInstances[arg0].unk3A--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80092EF4_A1EA4.s")
-#endif
 
 // AI - Support alien update
 void func_80093164_A2114(u8 arg0)

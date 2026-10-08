@@ -371,78 +371,93 @@ u8 D_8009D298_185358[0x1230] = {
 	0xFF,0xFB,0xFF,0xE1,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xFF,0xFF,0x00,0x00,
 };
 
-// AI - NPC animation data table (part 1)
-u8 D_8009E4C8_186588[0xC] = {
-	0x05,0x01,0x27,0x50,0x80,0x09,0xD2,0x98,0x00,0x00,0x00,0x4E,
+// AI - NPC animation/model table: 5 categories x 13 models
+Unk8009E4C8_Row D_8009E4C8_186588[5] = {
+	/* category 0 */
+	{
+		{ 0x05012750, (s16 *)&D_8009D298_185358[0x0000], 0x4E, 0x06 },
+		{ 0x0902ED30, (s16 *)&D_8009D298_185358[0x0050], 0x42, 0x08 },
+		{ 0x090303D0, (s16 *)&D_8009D298_185358[0x00C0], 0x43, 0x05 },
+		{ 0x09032248, (s16 *)&D_8009D298_185358[0x0100], 0x4A, 0x05 },
+		{ 0x09034880, (s16 *)&D_8009D298_185358[0x0140], 0x4C, 0x03 },
+		{ 0x09035DF8, (s16 *)&D_8009D298_185358[0x0160], 0x4B, 0x02 },
+		{ 0x090379D8, (s16 *)&D_8009D298_185358[0x0170], 0x47, 0x08 },
+		{ 0x09039680, (s16 *)&D_8009D298_185358[0x01E0], 0x4D, 0x09 },
+		{ 0x0903AF90, (s16 *)&D_8009D298_185358[0x0260], 0x46, 0x07 },
+		{ 0x0903CB10, (s16 *)&D_8009D298_185358[0x02C0], 0x49, 0x03 },
+		{ 0x0903EBE8, (s16 *)&D_8009D298_185358[0x02E0], 0x48, 0x0A },
+		{ 0x09041230, (s16 *)&D_8009D298_185358[0x0370], 0x44, 0x03 },
+		{ 0x09042A10, (s16 *)&D_8009D298_185358[0x0390], 0x45, 0x03 },
+	},
+	/* category 1 */
+	{
+		{ 0x05012750, (s16 *)&D_8009D298_185358[0x0000], 0x4E, 0x06 },
+		{ 0x0A036928, (s16 *)&D_8009D298_185358[0x04F0], 0x55, 0x07 },
+		{ 0x0A038678, (s16 *)&D_8009D298_185358[0x04C0], 0x56, 0x04 },
+		{ 0x0A039DA8, (s16 *)&D_8009D298_185358[0x04B0], 0x54, 0x02 },
+		{ 0x0A03B888, (s16 *)&D_8009D298_185358[0x0400], 0x50, 0x05 },
+		{ 0x0A042378, (s16 *)&D_8009D298_185358[0x0550], 0x57, 0x0B },
+		{ 0x0A03D320, (s16 *)&D_8009D298_185358[0x05F0], 0x58, 0x04 },
+		{ 0x0A03EEC8, (s16 *)&D_8009D298_185358[0x0620], 0x59, 0x07 },
+		{ 0x0A032040, (s16 *)&D_8009D298_185358[0x03B0], 0x4F, 0x06 },
+		{ 0x0A0338F8, (s16 *)&D_8009D298_185358[0x0450], 0x52, 0x05 },
+		{ 0x0A030760, (s16 *)&D_8009D298_185358[0x0440], 0x51, 0x02 },
+		{ 0x0A040750, (s16 *)&D_8009D298_185358[0x0680], 0x5A, 0x07 },
+		{ 0x0A035258, (s16 *)&D_8009D298_185358[0x0490], 0x53, 0x03 },
+	},
+	/* category 2 */
+	{
+		{ 0x05012750, (s16 *)&D_8009D298_185358[0x0000], 0x4E, 0x06 },
+		{ 0x0B0345A0, (s16 *)&D_8009D298_185358[0x06E0], 0x5B, 0x09 },
+		{ 0x0B036038, (s16 *)&D_8009D298_185358[0x0760], 0x5C, 0x06 },
+		{ 0x0B042738, (s16 *)&D_8009D298_185358[0x0B10], 0x64, 0x09 },
+		{ 0x0B044028, (s16 *)&D_8009D298_185358[0x0B90], 0x65, 0x06 },
+		{ 0x0B040F40, (s16 *)&D_8009D298_185358[0x0AB0], 0x66, 0x07 },
+		{ 0x0B037A40, (s16 *)&D_8009D298_185358[0x07B0], 0x5D, 0x06 },
+		{ 0x0B039360, (s16 *)&D_8009D298_185358[0x0800], 0x5E, 0x09 },
+		{ 0x0B03AB20, (s16 *)&D_8009D298_185358[0x0880], 0x5F, 0x07 },
+		{ 0x0B03C170, (s16 *)&D_8009D298_185358[0x08E0], 0x60, 0x09 },
+		{ 0x0B03DA50, (s16 *)&D_8009D298_185358[0x0960], 0x61, 0x09 },
+		{ 0x0B03F518, (s16 *)&D_8009D298_185358[0x09E0], 0x62, 0x06 },
+		{ 0x0B045978, (s16 *)&D_8009D298_185358[0x0A30], 0x63, 0x09 },
+	},
+	/* category 3 */
+	{
+		{ 0x05012750, (s16 *)&D_8009D298_185358[0x0000], 0x4E, 0x06 },
+		{ 0x0C030108, (s16 *)&D_8009D298_185358[0x0BE0], 0x67, 0x09 },
+		{ 0x0C031B18, (s16 *)&D_8009D298_185358[0x0C60], 0x68, 0x06 },
+		{ 0x0C0335A0, (s16 *)&D_8009D298_185358[0x0CB0], 0x69, 0x09 },
+		{ 0x0C035098, (s16 *)&D_8009D298_185358[0x0D30], 0x6A, 0x09 },
+		{ 0x0C036CA0, (s16 *)&D_8009D298_185358[0x0DB0], 0x6B, 0x09 },
+		{ 0x0C0389E0, (s16 *)&D_8009D298_185358[0x0E30], 0x6C, 0x09 },
+		{ 0x0C03A5F8, (s16 *)&D_8009D298_185358[0x0EB0], 0x6D, 0x09 },
+		{ 0x0C03C080, (s16 *)&D_8009D298_185358[0x0F30], 0x6E, 0x07 },
+		{ 0x0C03D950, (s16 *)&D_8009D298_185358[0x0F90], 0x6F, 0x06 },
+		{ 0x0C03FDE8, (s16 *)&D_8009D298_185358[0x1040], 0x71, 0x10 },
+		{ 0x0C030108, (s16 *)&D_8009D298_185358[0x0BE0], 0x67, 0x09 },
+		{ 0x0C041888, (s16 *)&D_8009D298_185358[0x0FE0], 0x70, 0x07 },
+	},
+	/* category 4 */
+	{
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x74, 0x10 },
+		{ 0x0D00D9D8, (s16 *)&D_8009D298_185358[0x1130], 0x72, 0x02 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+		{ 0x0D00F650, (s16 *)&D_8009D298_185358[0x1140], 0x73, 0x10 },
+	},
 };
 
-// AI - NPC animation data table (part 2)
-u8 D_8009E4D4_186594[0x40C] = {
-	0x06,0x00,0x00,0x00,0x09,0x02,0xED,0x30,0x80,0x09,0xD2,0xE8,0x00,0x00,0x00,0x42,
-	0x08,0x00,0x00,0x00,0x09,0x03,0x03,0xD0,0x80,0x09,0xD3,0x58,0x00,0x00,0x00,0x43,
-	0x05,0x00,0x00,0x00,0x09,0x03,0x22,0x48,0x80,0x09,0xD3,0x98,0x00,0x00,0x00,0x4A,
-	0x05,0x00,0x00,0x00,0x09,0x03,0x48,0x80,0x80,0x09,0xD3,0xD8,0x00,0x00,0x00,0x4C,
-	0x03,0x00,0x00,0x00,0x09,0x03,0x5D,0xF8,0x80,0x09,0xD3,0xF8,0x00,0x00,0x00,0x4B,
-	0x02,0x00,0x00,0x00,0x09,0x03,0x79,0xD8,0x80,0x09,0xD4,0x08,0x00,0x00,0x00,0x47,
-	0x08,0x00,0x00,0x00,0x09,0x03,0x96,0x80,0x80,0x09,0xD4,0x78,0x00,0x00,0x00,0x4D,
-	0x09,0x00,0x00,0x00,0x09,0x03,0xAF,0x90,0x80,0x09,0xD4,0xF8,0x00,0x00,0x00,0x46,
-	0x07,0x00,0x00,0x00,0x09,0x03,0xCB,0x10,0x80,0x09,0xD5,0x58,0x00,0x00,0x00,0x49,
-	0x03,0x00,0x00,0x00,0x09,0x03,0xEB,0xE8,0x80,0x09,0xD5,0x78,0x00,0x00,0x00,0x48,
-	0x0A,0x00,0x00,0x00,0x09,0x04,0x12,0x30,0x80,0x09,0xD6,0x08,0x00,0x00,0x00,0x44,
-	0x03,0x00,0x00,0x00,0x09,0x04,0x2A,0x10,0x80,0x09,0xD6,0x28,0x00,0x00,0x00,0x45,
-	0x03,0x00,0x00,0x00,0x05,0x01,0x27,0x50,0x80,0x09,0xD2,0x98,0x00,0x00,0x00,0x4E,
-	0x06,0x00,0x00,0x00,0x0A,0x03,0x69,0x28,0x80,0x09,0xD7,0x88,0x00,0x00,0x00,0x55,
-	0x07,0x00,0x00,0x00,0x0A,0x03,0x86,0x78,0x80,0x09,0xD7,0x58,0x00,0x00,0x00,0x56,
-	0x04,0x00,0x00,0x00,0x0A,0x03,0x9D,0xA8,0x80,0x09,0xD7,0x48,0x00,0x00,0x00,0x54,
-	0x02,0x00,0x00,0x00,0x0A,0x03,0xB8,0x88,0x80,0x09,0xD6,0x98,0x00,0x00,0x00,0x50,
-	0x05,0x00,0x00,0x00,0x0A,0x04,0x23,0x78,0x80,0x09,0xD7,0xE8,0x00,0x00,0x00,0x57,
-	0x0B,0x00,0x00,0x00,0x0A,0x03,0xD3,0x20,0x80,0x09,0xD8,0x88,0x00,0x00,0x00,0x58,
-	0x04,0x00,0x00,0x00,0x0A,0x03,0xEE,0xC8,0x80,0x09,0xD8,0xB8,0x00,0x00,0x00,0x59,
-	0x07,0x00,0x00,0x00,0x0A,0x03,0x20,0x40,0x80,0x09,0xD6,0x48,0x00,0x00,0x00,0x4F,
-	0x06,0x00,0x00,0x00,0x0A,0x03,0x38,0xF8,0x80,0x09,0xD6,0xE8,0x00,0x00,0x00,0x52,
-	0x05,0x00,0x00,0x00,0x0A,0x03,0x07,0x60,0x80,0x09,0xD6,0xD8,0x00,0x00,0x00,0x51,
-	0x02,0x00,0x00,0x00,0x0A,0x04,0x07,0x50,0x80,0x09,0xD9,0x18,0x00,0x00,0x00,0x5A,
-	0x07,0x00,0x00,0x00,0x0A,0x03,0x52,0x58,0x80,0x09,0xD7,0x28,0x00,0x00,0x00,0x53,
-	0x03,0x00,0x00,0x00,0x05,0x01,0x27,0x50,0x80,0x09,0xD2,0x98,0x00,0x00,0x00,0x4E,
-	0x06,0x00,0x00,0x00,0x0B,0x03,0x45,0xA0,0x80,0x09,0xD9,0x78,0x00,0x00,0x00,0x5B,
-	0x09,0x00,0x00,0x00,0x0B,0x03,0x60,0x38,0x80,0x09,0xD9,0xF8,0x00,0x00,0x00,0x5C,
-	0x06,0x00,0x00,0x00,0x0B,0x04,0x27,0x38,0x80,0x09,0xDD,0xA8,0x00,0x00,0x00,0x64,
-	0x09,0x00,0x00,0x00,0x0B,0x04,0x40,0x28,0x80,0x09,0xDE,0x28,0x00,0x00,0x00,0x65,
-	0x06,0x00,0x00,0x00,0x0B,0x04,0x0F,0x40,0x80,0x09,0xDD,0x48,0x00,0x00,0x00,0x66,
-	0x07,0x00,0x00,0x00,0x0B,0x03,0x7A,0x40,0x80,0x09,0xDA,0x48,0x00,0x00,0x00,0x5D,
-	0x06,0x00,0x00,0x00,0x0B,0x03,0x93,0x60,0x80,0x09,0xDA,0x98,0x00,0x00,0x00,0x5E,
-	0x09,0x00,0x00,0x00,0x0B,0x03,0xAB,0x20,0x80,0x09,0xDB,0x18,0x00,0x00,0x00,0x5F,
-	0x07,0x00,0x00,0x00,0x0B,0x03,0xC1,0x70,0x80,0x09,0xDB,0x78,0x00,0x00,0x00,0x60,
-	0x09,0x00,0x00,0x00,0x0B,0x03,0xDA,0x50,0x80,0x09,0xDB,0xF8,0x00,0x00,0x00,0x61,
-	0x09,0x00,0x00,0x00,0x0B,0x03,0xF5,0x18,0x80,0x09,0xDC,0x78,0x00,0x00,0x00,0x62,
-	0x06,0x00,0x00,0x00,0x0B,0x04,0x59,0x78,0x80,0x09,0xDC,0xC8,0x00,0x00,0x00,0x63,
-	0x09,0x00,0x00,0x00,0x05,0x01,0x27,0x50,0x80,0x09,0xD2,0x98,0x00,0x00,0x00,0x4E,
-	0x06,0x00,0x00,0x00,0x0C,0x03,0x01,0x08,0x80,0x09,0xDE,0x78,0x00,0x00,0x00,0x67,
-	0x09,0x00,0x00,0x00,0x0C,0x03,0x1B,0x18,0x80,0x09,0xDE,0xF8,0x00,0x00,0x00,0x68,
-	0x06,0x00,0x00,0x00,0x0C,0x03,0x35,0xA0,0x80,0x09,0xDF,0x48,0x00,0x00,0x00,0x69,
-	0x09,0x00,0x00,0x00,0x0C,0x03,0x50,0x98,0x80,0x09,0xDF,0xC8,0x00,0x00,0x00,0x6A,
-	0x09,0x00,0x00,0x00,0x0C,0x03,0x6C,0xA0,0x80,0x09,0xE0,0x48,0x00,0x00,0x00,0x6B,
-	0x09,0x00,0x00,0x00,0x0C,0x03,0x89,0xE0,0x80,0x09,0xE0,0xC8,0x00,0x00,0x00,0x6C,
-	0x09,0x00,0x00,0x00,0x0C,0x03,0xA5,0xF8,0x80,0x09,0xE1,0x48,0x00,0x00,0x00,0x6D,
-	0x09,0x00,0x00,0x00,0x0C,0x03,0xC0,0x80,0x80,0x09,0xE1,0xC8,0x00,0x00,0x00,0x6E,
-	0x07,0x00,0x00,0x00,0x0C,0x03,0xD9,0x50,0x80,0x09,0xE2,0x28,0x00,0x00,0x00,0x6F,
-	0x06,0x00,0x00,0x00,0x0C,0x03,0xFD,0xE8,0x80,0x09,0xE2,0xD8,0x00,0x00,0x00,0x71,
-	0x10,0x00,0x00,0x00,0x0C,0x03,0x01,0x08,0x80,0x09,0xDE,0x78,0x00,0x00,0x00,0x67,
-	0x09,0x00,0x00,0x00,0x0C,0x04,0x18,0x88,0x80,0x09,0xE2,0x78,0x00,0x00,0x00,0x70,
-	0x07,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x74,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xD9,0xD8,0x80,0x09,0xE3,0xC8,0x00,0x00,0x00,0x72,
-	0x02,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x0D,0x00,0xF6,0x50,0x80,0x09,0xE3,0xD8,0x00,0x00,0x00,0x73,
-	0x10,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x03,0x00,0x02,0xF0,
+// AI - Two words following the NPC table (aliased by D_8009E8D8 / D_8009E8DC_18699C)
+u8 D_186998_unk[0x8] = {
+	0x00,0x00,0x00,0x00,0x03,0x00,0x02,0xF0,
 };
 
 
@@ -1562,27 +1577,17 @@ u8 D_800A2220_18A2E0[0x400] = {
 // 1648A0 rodata
 // ============================================================
 
-const char D_800A4BB0_18CC70[] = "ALLOCATE 2 PLAYER BUFFERS:\n";
-
-const char D_800A4BCC_18CC8C[] = "ERROR: could not find search animation for object %d. Using SEARCH_MED\n";
-
-const char D_800A4C14_18CCD4[] = "Ussr Search Table Parse\n";
-
-const char D_800A4C30_18CCF0[] = "Usa Search Table Parse\n";
-
-const char D_800A4C48_18CD08[] = "Java Search Table Parse\n";
-
-const char D_800A4C64_18CD24[] = "Greec Search Table Parse\n";
-
-const char D_800A4C80_18CD40[] = "For obj=%d style = %d,  search anim is %s\n";
-
-const char D_800A4CAC_18CD6C[] = "Call Doug - inSearchObject() NOW!\n";
-
-const char D_800A4CD0_18CD90[] = "Turn to door\n";
-
-const char D_800A4CE0_18CDA0[] = "ouch\n";
-
-const char D_800A4CE8_18CDA8[] = "ALLOCATE 2 CHARACTER BUFFERS\n";
+const char D_800A4BB0_18CC70[] = "ALLOCATE 2 PLAYER BUFFERS:\n"; // "ALLOCATE 2 PLAYER BUFFERS:\n"
+const char D_800A4BCC_18CC8C[] = "ERROR: could not find search animation for object %d. Using SEARCH_MED\n"; // "ERROR: could not find search animation for object %d. Using SEARCH_MED\n"
+const char D_800A4C14_18CCD4[] = "Ussr Search Table Parse\n"; // "Ussr Search Table Parse\n"
+const char D_800A4C30_18CCF0[] = "Usa Search Table Parse\n"; // "Usa Search Table Parse\n"
+const char D_800A4C48_18CD08[] = "Java Search Table Parse\n"; // "Java Search Table Parse\n"
+const char D_800A4C64_18CD24[] = "Greec Search Table Parse\n"; // "Greec Search Table Parse\n"
+const char D_800A4C80_18CD40[] = "For obj=%d style = %d,  search anim is %s\n"; // "For obj=%d style = %d,  search anim is %s\n"
+const char D_800A4CAC_18CD6C[] = "Call Doug - inSearchObject() NOW!\n"; // "Call Doug - inSearchObject() NOW!\n"
+const char D_800A4CD0_18CD90[] = "Turn to door\n"; // "Turn to door\n"
+const char D_800A4CE0_18CDA0[] = "ouch\n"; // "ouch\n"
+const char D_800A4CE8_18CDA8[] = "ALLOCATE 2 CHARACTER BUFFERS\n"; // "ALLOCATE 2 CHARACTER BUFFERS\n"
 
 const f64 D_800A4D08_18CDC8[1] = {3.141592654};
 
@@ -1637,7 +1642,7 @@ void func_8007C7E0_1648A0(void) {
 	D_800E7304 = (s32)func_8000C6F4_D2F4();
 	((Unk80157600 *)D_800E6F00)->unk408 = func_8000C6F4_D2F4();
 	((Unk80157600 *)D_800E6F00)->unk410 = 1.0f;
-	func_8000C790_D390(D_800E6F00, &D_8003BAE0, 0x10);
+	func_8000C790_D390(D_800E6F00, D_8003BAE0_3C6E0, 0x10);
 	func_8007DAA8_165B68(D_800E6F00, 0x11, 0x7, 0, 0x10);
 	D_800E7328 = 0;
 	if (!(D_800E65A8 & 0x200)) {
@@ -1645,21 +1650,18 @@ void func_8007C7E0_1648A0(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 // AI - Free player animation memory and cleanup
-void func_8007C8BC_16497C(void) {
+void func_8007C8BC_16497C(void)
+{
 	volatile Unk80157600 *ptr;
-
 	func_8000C764_D364(D_800E7304);
-	ptr = (volatile Unk80157600 *) &D_800E6AD8;
-	func_8000C764_D364((s32) ptr->unk408);
-	ptr = (volatile Unk80157600 *) &D_800E6AD8;
+	ptr = (Unk80157600 *)D_800E6F00;
+	if (ptr) {}
+	func_8000C764_D364((s32)ptr->unk408);
+	ptr = (Unk80157600 *)D_800E6F00;
 	ptr->unk408 = NULL;
 	ptr->unk404 = NULL;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C8BC_16497C.s")
-#endif
 
 // AI - Dispatch main player update each frame
 void func_8007C8FC_1649BC(void) {
@@ -1673,7 +1675,6 @@ void func_8007C93C_1649FC(void) {
 	func_8007EFD4_167094(&D_800E6A78);
 }
 
-#ifdef NON_MATCHING
 // AI - Normalize analog stick input to speed scalar (0.0-1.0)
 f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	f32 temp_f0;
@@ -1686,15 +1687,7 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	temp_v0 = (s16) (s32) ((f64) arg0->stick_x / 5.0);
 	temp_v1 = (s16) (s32) -((f64) arg0->stick_y / 5.0);
 	temp_f0 = sqrtf((f32) ((temp_v0 * temp_v0) + (temp_v1 * temp_v1)));
-	if (temp_f0 <= 0.0f) {
-		var_f12 = 0.0f;
-	} else {
-		if (8.0f <= temp_f0) {
-			var_f12 = 8.0f;
-		} else {
-			var_f12 = temp_f0;
-		}
-	}
+	var_f12 = (temp_f0 <= 0.0f) ? 0.0f : ((temp_f0 >= 8.0f) ? 8.0f : temp_f0);
 	temp_f0_2 = (f64) var_f12 / 13.0;
 	if (temp_f0_2 >= 0.0) {
 		var_f2 = (f32) temp_f0_2;
@@ -1706,130 +1699,149 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	}
 	return var_f2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007C96C_164A2C.s")
-#endif
 
-#ifdef NON_MATCHING
+// CURRENT(2073)
 // AI - Handle player input, movement, and collision
-void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
+#ifdef NON_MATCHING
+void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
+{
 	s16 sp4E;
 	s16 sp4C;
-	s32 sp38;
+	s64 stackPad;
+	s32 sp2C;
+	s32 var_v0;
 	s32 sp34;
 	s32 sp30;
-	s32 sp2C;
-	f32 sp24;
 	f32 sp20;
 	f32 sp1C;
-	s32 var_v0;
-	s32 temp_t1;
-	s32 temp_t8;
-	f32 temp_f0;
-	f32 temp_f12;
-	f32 temp_f12_2;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 var_f2;
-
-	if (((s16)D_80052B34->unk1C <= 0) && (D_80052AD0 != 0)) {
+	f32 sp24;
+	if (((s16)D_80052B34->unk1C <= 0) && (D_80052AD0 != 0))
+	{
 		D_800E65A8 |= 0x4000;
 		func_80006DAC_79AC(0x96, 0);
 	}
 
-	temp_t1 = D_800E6A68 & 0x200;
-	if (temp_t1 != 0x200) {
+	if ((D_800E6A68 & 0x200) != 0x200)
+	{
 		var_v0 = D_8009E8E0_1869A0[((Unk80157600 *)D_800E6F00)->unk40C].unk0;
-		if (!(var_v0 & 0x40) && (temp_t1 != 0x200)) {
+		if (!(var_v0 & 0x40) && ((D_800E6A68 & 0x200) != 0x200))
+		{
 			arg0->unk22 = 0;
-			sp4E = (s16) ((f64) arg1->stick_x / 5.0);
-			sp4C = (s16) ((f64) -arg1->stick_y / 5.0);
-			temp_f0 = sqrtf((f32) ((sp4E * sp4E) + (sp4C * sp4C)));
-			if (temp_f0 <= 0.0f) {
+			sp4E = (s16)((f64)arg1->stick_x / 5.0);
+			sp4C = (s16)(-((f64)arg1->stick_y / 5.0));
+			sp1C = sqrtf((f32)((sp4E * sp4E) + (sp4C * sp4C)));
+			if (sp1C <= 0.0f)
+			{
 				D_800A08F8_1889B8 = 0.0f;
-			} else {
-				if (temp_f0 >= 8.0f) {
-					var_f2 = 8.0f;
-				} else {
-					var_f2 = temp_f0;
+			}
+			else
+			{
+				if (sp1C >= 8.0f)
+				{
+					sp24 = 8.0f;
 				}
-				D_800A08F8_1889B8 = var_f2;
+				else
+				{
+					sp24 = sp1C;
+				}
+				D_800A08F8_1889B8 = sp24;
 			}
-			if (D_8009E8E0_1869A0[D_800E730C].unk0 & 0x10) {
+			if (D_8009E8E0_1869A0[D_800E730C].unk0 & 0x10)
+			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
-			temp_f12 = (f32) (((f64) ((arg0->unk6 - D_800E6A74) + 0x4000) * D_800A4D08) / 32768.0);
-			sp20 = temp_f12;
-			sp24 = cosf(temp_f12);
-			sp2C = (s32) (((f32) arg1->stick_x * sp24) - (sinf(temp_f12) * (f32) arg1->stick_y));
-			sp24 = sinf(temp_f12);
-			D_800E6A64 = func_80003824_4424((f32) -sp2C, (f32) (s32) ((cosf(temp_f12) * (f32) arg1->stick_y) + ((f32) arg1->stick_x * sp24)));
-			if (D_800A08F8_1889B8 > 0.0f) {
+			sp1C = (f32)(((f64)(f32)((arg0->unk6 - D_800E6A74) + 0x4000) * D_800A4D08_18CDC8[0]) / 32768.0);
+
+			sp24 = cosf(sp1C);
+			sp2C = (((f32)arg1->stick_x * sp24) - (sinf(sp1C) * (f32)arg1->stick_y));
+			sp24 = sinf(sp1C);
+			var_v0 = (cosf(sp1C) * (f32)arg1->stick_y) + ((f32)arg1->stick_x * sp24);
+			D_800E6A64 = func_80003824_4424((f32)-sp2C, (f32)var_v0);
+			if (D_800A08F8_1889B8 > 0.0f)
+			{
 				func_8007D37C_16543C(arg0, D_800E6A66, 0);
 			}
 			var_v0 = D_8009E8E0_1869A0[D_800E730C].unk0;
-			if (var_v0 & 0x100) {
+			if (var_v0 & 0x100)
+			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
-			D_800E733C = (s16) (s32) D_800A08F8_1889B8;
+			D_800E733C = (s16)(s32)D_800A08F8_1889B8;
 		}
 
-		if (!(var_v0 & 0x10)) {
-			if ((var_v0 & 0x800) && (D_8009E8D8 == 0)) {
-				temp_t8 = ((s32) (((Unk80157600 *)D_800E6F00)->unk8 - ((Unk80157600 *)D_800E6F00)->unk414)) / 4;
-				sp34 = ((s32) (((Unk80157600 *)D_800E6F00)->unk10 - ((Unk80157600 *)D_800E6F00)->unk418)) / 4;
-				sp38 = temp_t8;
-				sp24 = cosf((f32) (((f64) (f32) arg0->unkE * D_800A4D10) / 32768.0));
-				temp_f14 = (f32) sp34;
-				temp_f16 = (f32) temp_t8;
-				D_800E7340.x = (f32) ((sp24 * temp_f14) - (sinf((f32) (((f64) (f32) arg0->unkE * D_800A4D18) / 32768.0)) * temp_f16));
-				sp1C = temp_f16;
-				sp20 = temp_f14;
-				sp24 = sinf((f32) (((f64) (f32) arg0->unkE * D_800A4D20) / 32768.0));
-				D_800E7340.z = (f32) ((cosf((f32) (((f64) (f32) arg0->unkE * D_800A4D28) / 32768.0)) * sp1C) + (sp24 * sp20));
-			} else if (D_8009E8D8 != 0) {
-				sp30 = (s32) (s16) (s32) ((f64) (D_8008DDF0 * 32768.0f) / D_800A4D30);
-				D_800A08F8_1889B8 = sqrtf((f32) ((sp4E * sp4E) + (sp4C * sp4C)));
-				temp_f12_2 = (f32) (((f64) (f32) sp30 * D_800A4D38) / 32768.0);
-				sp20 = temp_f12_2;
-				D_800E7340.z = (f32) (sinf(temp_f12_2) * D_800A08F8_1889B8);
-				D_800E7340.x = (f32) (cosf(temp_f12_2) * D_800A08F8_1889B8);
-			} else {
-				D_800E7340.z = (f32) (sinf((f32) (((f64) (f32) D_800E6A78.unkE * D_800A4D40) / 32768.0)) * D_800A08F8_1889B8);
-				D_800E7340.x = (f32) (cosf((f32) (((f64) (f32) D_800E6A78.unkE * D_800A4D48) / 32768.0)) * D_800A08F8_1889B8);
+		if (!(var_v0 & 0x10))
+		{
+			if ((var_v0 & 0x800) && (D_8009E8D8_186998 == 0))
+			{
+				var_v0 = (s32)(((Unk80157600 *)D_800E6F00)->unk8 - ((Unk80157600 *)D_800E6F00)->unk414) / 4;
+				sp30 = arg0->unkE;
+				sp34 = (s32)(((Unk80157600 *)D_800E6F00)->unk10 - ((Unk80157600 *)D_800E6F00)->unk418) / 4;
+				sp24 = cosf((f32)(((f64)(f32)sp30 * D_800A4D10_18CDD0[0]) / 32768.0));
+				D_800E7340.x = ((sp24 * (f32)sp34) - (sinf((f32)(((f64)(f32)arg0->unkE * D_800A4D18_18CDD8[0]) / 32768.0)) * (f32)var_v0));
+
+				sp24 = sinf((f32)(((f64)(f32)arg0->unkE * D_800A4D20_18CDE0[0]) / 32768.0));
+				D_800E7340.z = ((cosf((f32)(((f64)(f32)arg0->unkE * D_800A4D28_18CDE8[0]) / 32768.0)) * (f32)var_v0) + (sp24 * (f32)sp34));
+			}
+			else if (D_8009E8D8_186998)
+			{
+				sp30 = (s16)((f64)(D_8008DDF0_175EB0 * 32768.0f) / D_800A4D30_18CDF0[0]);
+				D_800A08F8_1889B8 = sqrtf((f32)((sp4E * sp4E) + (sp4C * sp4C)));
+				sp1C = (f32)(((f64)(f32)sp30 * D_800A4D38_18CDF8[0]) / 32768.0);
+				D_800E7340.z = (f32)(sinf(sp1C) * D_800A08F8_1889B8);
+				D_800E7340.x = (f32)(cosf(sp1C) * D_800A08F8_1889B8);
+			}
+			else
+			{
+				D_800E7340.z = (f32)(sinf((f32)(((f64)(f32)D_800E6A78.unkE * D_800A4D40_18CE00[0]) / 32768.0)) * D_800A08F8_1889B8);
+				D_800E7340.x = (f32)(cosf((f32)(((f64)(f32)D_800E6A78.unkE * D_800A4D48_18CE08[0]) / 32768.0)) * D_800A08F8_1889B8);
 			}
 			D_800E7314 = ((Unk80157600 *)D_800E6F00)->unk8;
 			D_800E7318 = ((Unk80157600 *)D_800E6F00)->unk10;
-			if ((D_800E730C == 8) || (D_800E730C == 0x2D) || (D_800E730C == 0x2E)) {
+			if ((D_800E730C == 8) || (D_800E730C == 0x2D) || (D_800E730C == 0x2E))
+			{
 				D_800E6A78.unk4C += D_800E7340.x;
 				D_800E6A78.unk54 += D_800E7340.z;
-			} else {
+			}
+			else
+			{
 				D_800E6A10.x = D_800E6A78.unk4C;
 				D_800E6A10.y = D_800E6A78.unk50;
 				D_800E6A10.z = D_800E6A78.unk54;
 				func_8007B65C_16371C(&D_800E6A10, &D_800E7340, 15.0f, &D_800E6A40);
 				func_80070294_158354(&D_800E6A40);
-				if ((D_800E6A40.unk10 == 0.0f) && (D_800E6A40.unkE != 0)) {
-					if ((D_800E6A40.unkE == 1) || (D_800E6A40.unkE == 2)) {
-						D_800E7340.x = 0.0f;
-						D_800E7340.z = (f32) (D_800E7340.z / 2.0f);
-					} else {
-						D_800E7340.z = 0.0f;
-						D_800E7340.x = (f32) (D_800E7340.x / 2.0f);
+				if (D_800E6A40.unk10 == 0.0f)
+				{
+					if (D_800E6A40.unkE != 0)
+					{
+						if ((D_800E6A40.unkE == 1) || (D_800E6A40.unkE == 2))
+						{
+							D_800E7340.x = 0.0f;
+							D_800E7340.z = (f32)(D_800E7340.z / 2);
+							func_8007B65C_16371C(&D_800E6A10, &D_800E7340, 15.0f, &D_800E6A40);
+						}
+						else
+						{
+							D_800E7340.z = 0.0f;
+							D_800E7340.x = (f32)(D_800E7340.x / 2);
+							func_8007B65C_16371C(&D_800E6A10, &D_800E7340, 15.0f, &D_800E6A40);
+						}
 					}
-					func_8007B65C_16371C(&D_800E6A10, &D_800E7340, 15.0f, &D_800E6A40);
 				}
-				if (D_800E6A40.unkE != 0) {
+				if (D_800E6A40.unkE != 0)
+				{
 					D_800E6A78.unk4C = D_800E6A40.unk0;
 					D_800E6A78.unk54 = D_800E6A40.unk8;
-				} else {
+				}
+				else
+				{
 					D_800E6A78.unk4C += D_800E7340.x;
 					D_800E6A78.unk54 += D_800E7340.z;
 				}
 			}
 		}
 
-		if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_L) != 0) && (func_80018A58_19658() == 0) && (D_800E65A8 == 1)) {
+		if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_L) != 0) && (func_80018A58_19658() == 0) && (D_800E65A8 == 1))
+		{
 			D_800E65A8 |= 0x40000;
 		}
 	}
@@ -1838,74 +1850,58 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007CAA8_164B68.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Smoothly rotate player toward target yaw angle
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2) {
-	s32 var_v0;
-	s32 var_v1;
-
-	var_v0 = arg0->unkE;
-	var_v1 = var_v0 - arg1;
-	var_v1 = (var_v1 << 16) >> 16;
+	s32 var_v1 = (s16)(arg0->unkE - arg1);
 	if (var_v1 < -0x4000) {
 		if (((Unk80157600 *)D_800E6F00)->unk40C != 0xA) {
 			func_8007DAA8_165B68((Unk80157600 *)D_800E6F00, 0xA, NULL, 0.0f, 0x10);
-			var_v0 = arg0->unkE;
 		}
-		D_800E732C = (s16)(arg1 - var_v0) / 10;
-		var_v0 = arg0->unkE;
-		var_v1 = var_v0 - arg1;
-		var_v1 = (var_v1 << 16) >> 16;
+		D_800E732C = (s16)(arg1 - arg0->unkE) / 10;
+		var_v1 = (s16)(arg0->unkE - arg1);
 	} else if (var_v1 >= 0x4001) {
 		if (((Unk80157600 *)D_800E6F00)->unk40C != 0xB) {
 			func_8007DAA8_165B68((Unk80157600 *)D_800E6F00, 0xB, NULL, 0.0f, 0x10);
-			var_v1 = arg0->unkE - arg1;
-			var_v1 = (var_v1 << 16) >> 16;
+			var_v1 = (s16)(arg0->unkE - arg1);
 		}
 		D_800E732C = var_v1 / 10;
-		var_v0 = arg0->unkE;
-		var_v1 = var_v0 - arg1;
-		var_v1 = (var_v1 << 16) >> 16;
+		var_v1 = (s16)(arg0->unkE - arg1);
 	} else if (!(D_8009E8E0_1869A0[((Unk80157600 *)D_800E6F00)->unk40C].unk0 & 0x100)) {
 		D_800E732C = 0x5DC;
-		var_v0 = arg0->unkE;
-		var_v1 = var_v0 - arg1;
-		var_v1 = (var_v1 << 16) >> 16;
+		var_v1 = (s16)(arg0->unkE - arg1);
 	}
 	if (-D_800E732C >= var_v1) {
-		arg0->unkE = (s16)(var_v0 + D_800E732C);
+		arg0->unkE = (s16)(arg0->unkE + D_800E732C);
 		return;
 	}
 	if (var_v1 >= D_800E732C) {
-		arg0->unkE = (s16)(var_v0 - D_800E732C);
+		arg0->unkE = (s16)(arg0->unkE - D_800E732C);
 		return;
 	}
 	arg0->unkE = arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D37C_16543C.s")
-#endif
 
 // AI - Clear movement-in-progress flag
 void func_8007D52C_1655EC(void) {
 	D_800E6A68 &= ~0x200;
 }
 
-#ifdef NON_MATCHING
 // AI - Set up search mode with target coordinates and yaw
 void func_8007D548_165608(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	f32 xDiff;
+	f32 zDiff;
 	func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 	D_800E6A1C = arg0;
 	D_800E6A20 = arg1;
 	D_800E6A24 = arg2;
 	D_800E6A28 = arg3;
 	D_800E6A2C = arg4;
-	D_800E6A30 = (func_80003824_4424(D_800E6A78.unk4C - (f32) D_800E6A20, D_800E6A78.unk54 - (f32) D_800E6A24) + 0x8000) & 0xFFFF;
+	xDiff = D_800E6A78.unk4C - (f32) D_800E6A20;
+	zDiff = D_800E6A78.unk54 - (f32) D_800E6A24;
+	D_800E6A30 = (func_80003824_4424(xDiff, zDiff) + 0x8000) & 0xFFFF;
 	D_800E6A68 |= 0x80;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D548_165608.s")
-#endif
+
 
 // AI - Look up search animation ID for a given object
 s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
@@ -1923,7 +1919,6 @@ s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
 	}
 
 	if (found == 0) {
-		// ERROR: could not find search animation for object %d. Using SEARCH_MED.
 		osSyncPrintf(D_800A4BCC_18CC8C, arg1);
 		result = 0x1A;
 	}
@@ -1931,22 +1926,20 @@ s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
 	return result;
 }
 
-// CURRENT (4604)
-#ifdef NON_MATCHING
+// CURRENT (760)
 // AI - Handle search behavior: turn, animate, and detect found state
+#ifdef NON_MATCHING
 void func_8007D69C_16575C(VehicleInstance *arg0) {
+	s32 stackPad;
 	typedef struct {
 		u8 pad0[0xE];
-		s16 unkE;
+		u16 unkE;
 	} Unk8007D69C_404;
 
 	Unk8007D62C_Entry *searchTable;
 	s32 searchAnim;
 	s32 curAnim;
-	s16 frameHalfSrc;
-	s32 pad;
-
-	pad = 0;
+	s32 frameHalfSrc;
 
 	if ((D_800E6A30 & 0xFFFF) != (arg0->unkE & 0xFFFF)) {
 		curAnim = ((Unk165E60AnimState *)D_800E6F00)->unk40C;
@@ -1961,18 +1954,10 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 
 	if ((D_800E6A68 & 0x80) == 0x80) {
 		D_800E6A68 &= ~0x80;
-		if (currentLevel == LEVEL_JAVA) {
-			goto level_java;
-		}
-		if (currentLevel == LEVEL_AMERICA) {
-			goto level_america;
-		}
-		if (currentLevel == LEVEL_SIBERIA) {
-			goto level_siberia;
-		}
-		if (currentLevel != LEVEL_COMET) {
-			goto level_default;
-		}
+		if (currentLevel == LEVEL_JAVA) goto level_java;
+		if (currentLevel == LEVEL_AMERICA) goto level_america;
+		if (currentLevel == LEVEL_SIBERIA) goto level_siberia;
+		if (currentLevel != LEVEL_COMET) goto level_default;
 		searchTable = D_800A08F0_1889B0;
 		goto level_done;
 
@@ -1980,21 +1965,11 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 		osSyncPrintf(D_800A4C14_18CCD4);
 		searchTable = D_800A0784_188844;
 		switch (D_800E6A2C) {
-			case 0:
-				searchTable = D_800A0878_188938;
-				break;
-			case 1:
-				searchTable = D_800A0890_188950;
-				break;
-			case 2:
-				searchTable = D_800A08AC_18896C;
-				break;
-			case 3:
-				searchTable = D_800A08C4_188984;
-				break;
-			case 4:
-				searchTable = D_800A08D8_188998;
-				break;
+		case 0: searchTable = D_800A0878_188938; break;
+		case 1: searchTable = D_800A0890_188950; break;
+		case 2: searchTable = D_800A08AC_18896C; break;
+		case 3: searchTable = D_800A08C4_188984; break;
+		case 4: searchTable = D_800A08D8_188998; break;
 		}
 		goto level_done;
 
@@ -2002,62 +1977,37 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 		osSyncPrintf(D_800A4C30_18CCF0);
 		searchTable = D_800A0784_188844;
 		switch (D_800E6A2C) {
-			case 0:
-				searchTable = D_800A080C_1888CC;
-				break;
-			case 1:
-				searchTable = D_800A0820_1888E0;
-				break;
-			case 2:
-				searchTable = D_800A0834_1888F4;
-				break;
-			case 3:
-				searchTable = D_800A0844_188904;
-				break;
-			case 4:
-				searchTable = D_800A0860_188920;
-				break;
+		case 0: searchTable = D_800A080C_1888CC; break;
+		case 1: searchTable = D_800A0820_1888E0; break;
+		case 2: searchTable = D_800A0834_1888F4; break;
+		case 3: searchTable = D_800A0844_188904; break;
+		case 4: searchTable = D_800A0860_188920; break;
 		}
 		goto level_done;
 
 	level_java:
-			osSyncPrintf(D_800A4C48_18CD08);
-			if (D_800E6A2C == 0) {
-				searchTable = D_800A0790_188850;
-			} else if (D_800E6A2C == 1) {
-				searchTable = D_800A07AC_18886C;
-			} else if (D_800E6A2C == 2) {
-				searchTable = D_800A07CC_18888C;
-			} else if (D_800E6A2C == 3) {
-				searchTable = D_800A07EC_1888AC;
-			} else {
-				searchTable = D_800A0784_188844;
-			}
-			goto level_done;
+		osSyncPrintf(D_800A4C48_18CD08);
+		switch (D_800E6A2C) {
+		case 0: searchTable = D_800A0790_188850; break;
+		case 1: searchTable = D_800A07AC_18886C; break;
+		case 2: searchTable = D_800A07CC_18888C; break;
+		case 3: searchTable = D_800A07EC_1888AC; break;
+		default: searchTable = D_800A0784_188844; break;
+		}
+		goto level_done;
 
 	level_default:
-			osSyncPrintf(D_800A4C64_18CD24);
-			searchTable = D_800A0784_188844;
-			switch (D_800E6A2C) {
-				case 0:
-					searchTable = D_800A06EC_1887AC;
-					break;
-				case 1:
-					searchTable = D_800A070C_1887CC;
-					break;
-				case 2:
-					searchTable = D_800A0724_1887E4;
-					break;
-				case 3:
-					searchTable = D_800A0740_188800;
-					break;
-				case 4:
-					searchTable = D_800A075C_18881C;
-					break;
-			}
+		osSyncPrintf(D_800A4C64_18CD24);
+		searchTable = D_800A0784_188844;
+		switch (D_800E6A2C) {
+		case 0: searchTable = D_800A06EC_1887AC; break;
+		case 1: searchTable = D_800A070C_1887CC; break;
+		case 2: searchTable = D_800A0724_1887E4; break;
+		case 3: searchTable = D_800A0740_188800; break;
+		case 4: searchTable = D_800A075C_18881C; break;
+		}
 
 	level_done:
-
 		searchAnim = func_8007D62C_1656EC(searchTable, D_800E6A28);
 		osSyncPrintf(D_800A4C80_18CD40, D_800E6A28, D_800E6A2C, D_8009E8DC_18699C[searchAnim].pad20);
 		func_8007DAA8_165B68(D_800E6F00, searchAnim, NULL, 0.0f, 0x10);
@@ -2065,27 +2015,22 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 		return;
 	}
 
-	curAnim = ((Unk165E60AnimState *)D_800E6F00)->unk40C;
+	frameHalfSrc = ((Unk8007D69C_404 *)((Unk80157600 *)D_800E6F00)->unk404)->unkE / 2;
 	if ((D_800E6A68 & 0x100) == 0x100) {
-		frameHalfSrc = ((Unk8007D69C_404 *)((Unk80157600 *)D_800E6F00)->unk404)->unkE;
-		if (((Unk165E60AnimState *)D_800E6F00)->unk18 >= (frameHalfSrc / 2)) {
+		if (((Unk165E60AnimState *)D_800E6F00)->unk18 >= frameHalfSrc) {
 			osSyncPrintf(D_800A4CAC_18CD6C);
 			func_8007B124_1631E4(D_800E6A1C);
 			D_800E6A68 &= ~0x100;
-			curAnim = ((Unk165E60AnimState *)D_800E6F00)->unk40C;
+			stackPad = 0;
 		}
 	}
-
-	if ((curAnim == 0x10) && (D_800E65A8 & 4)) {
+	if ((((Unk165E60AnimState *)D_800E6F00)->unk40C == 0x10) && (D_800E65A8 & 4)) {
 		func_8007A618_1626D8();
 	}
-
-	if (pad != 0) {}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D69C_16575C.s")
 #endif
-
 // AI - Switch to a new animation (blended or direct)
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4) {
 	s32 temp_v0;
@@ -2127,11 +2072,10 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 }
 
-#ifdef NON_MATCHING
 // AI - Handle animation-end callback with yaw and chained anims
 void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 	if (((Unk8007F878_404 *)arg1->unk404)->unkE50 == 0) {
-		arg0->unkE += (s32)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / D_800A4D90);
+		arg0->unkE += (s16)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / D_800A4D90_18CE50[0]);
 		arg1->unk2 = 0;
 		if (D_8009E8DC_18699C[arg1->unk40C].unk4 & 1) {
 			func_8007DAA8_165B68(arg1, arg1->unk40C, (void *)D_8009E8DC_18699C[arg1->unk40C].unk8, *(f32*)&arg2, 0x10);
@@ -2141,19 +2085,16 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DC80_165D40.s")
-#endif
 
-#ifdef NON_MATCHING
+// CURRENT(14377)
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
+#ifdef NON_MATCHING
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
+	u8 stackPad2[0x10];
 	f32 speedScale;
 	s32 anim;
+	u8 stackPad[0x28];
 	s32 flags;
-	s32 sp6C;
-	s32 sp34;
-	s32 sp20;
 
 	speedScale = 1.0f;
 	flags = D_800E65A8;
@@ -2173,11 +2114,16 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			return;
 		}
 	} else if (flags & 0x8000) {
+		
+		Unk165E60Route *route;
+		Unk165E60PathView *pathView;
+		s32 sp34;
+		s32 *timeline;
+		s32 *timelineEntry;
+		s16 transitionValue;
+		s16 previousTimelineStep;
 		s32 canAdvance;
 		s32 stepFrame;
-		Unk165E60Route *route;
-		Unk165E60Path *path;
-		Unk165E60Timeline *timeline;
 
 		D_800E6A34 = func_80079304_1613C4();
 		D_800A0924_1889E4 = D_800E6A34;
@@ -2189,9 +2135,10 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			func_8007D52C_1655EC();
 		}
 
-		canAdvance = 1;
 		if (D_800A091C_1889DC != 0) {
 			canAdvance = func_80005B30_6730();
+		} else {
+			canAdvance = 1;
 		}
 
 		if (canAdvance != 0) {
@@ -2204,75 +2151,79 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800A0900_1889C0 = 0;
 				D_800A0904_1889C4 = 0;
 
-				((void (*)(s32, s32))func_80081A18_169AD8)(D_800A0614_1886D4[D_800E6A34].unk14, D_800E6A34);
+				func_80081A18_169AD8(D_800A0614_1886D4[D_800E6A34].unk14);
 				func_80081A24_169AE4();
 				func_80081E08_169EC8(D_800A090A_1889CA);
 
-				route = &D_800A05FC_1886BC[D_800E6A34];
-				path = route->unk14;
-				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4D98_18CE58[0]);
+				{
+					s32 routeStride;
+					routeStride = 0x1C;
+					route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * routeStride);
+				}
+				pathView = route->unk14;
+				arg0->unkE = (s16)((f64)((f32)pathView->heading.headings[D_800A0904_1889C4] * 32768.0f) / D_800A4D98_18CE58[0]);
 
-				D_800E6A78.unk4C = (f32)path[D_800A0904_1889C4].unk0;
-				D_800E6A78.unk50 = (f32)path[D_800A0904_1889C4].unk2;
-				D_800E6A78.unk54 = (f32)path[D_800A0904_1889C4].unk4;
-				D_800E6A38 = path->unk34;
+				D_800E6A78.unk4C = (f32)pathView->coordinates.points[D_800A0904_1889C4][0];
+				D_800E6A78.unk50 = (f32)pathView->coordinates.points[D_800A0904_1889C4][1];
+				D_800E6A78.unk54 = (f32)pathView->coordinates.points[D_800A0904_1889C4][2];
+				D_800E6A38 = pathView->metadata.unk34;
 				D_800A090C_1889CC = 0;
 				D_800A0908_1889C8++;
 
-				func_8007DAA8_165B68(D_800E6F00, path[D_800A0904_1889C4].unk20, NULL, 0.0f, 0x10);
+				func_8007DAA8_165B68(D_800E6F00, pathView->animation.frames[D_800A0904_1889C4], NULL, 0.0f, 0x10);
 			}
 
 			if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
 				D_800A0904_1889C4++;
 			}
 
-			route = &D_800A05FC_1886BC[D_800E6A34];
-			path = route->unk14;
-			stepFrame = path[D_800A0904_1889C4].unk20;
-			sp20 = stepFrame;
-			if (D_800E730C != stepFrame) {
-				func_8007DAA8_165B68(D_800E6F00, stepFrame, NULL, 0.0f, 0x10);
-				route = &D_800A05FC_1886BC[D_800E6A34];
-				path = route->unk14;
+			route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			pathView = route->unk14;
+			if (D_800E730C != (stepFrame = pathView->animation.frames[D_800A0904_1889C4])) {
+				func_8007DAA8_165B68(D_800E6F00, pathView->animation.frames[D_800A0904_1889C4], NULL, 0.0f, 0x10);
+				route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+				pathView = route->unk14;
 			}
 
-			if (path[D_800A0904_1889C4].unk14 != 0x7D0) {
-				arg0->unkE = (s16)((f64)((f32)path[D_800A0904_1889C4].unk14 * 32768.0f) / D_800A4DA0_18CE60[0]);
-				route = &D_800A05FC_1886BC[D_800E6A34];
+			if (pathView->heading.headings[D_800A0904_1889C4] != 0x7D0) {
+				arg0->unkE = (s16)((f64)((f32)pathView->heading.headings[D_800A0904_1889C4] * 32768.0f) / D_800A4DA0_18CE60[0]);
+				route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
 			}
 
-			timeline = &route->unk18[D_800A0908_1889C8];
-			if (D_800A0900_1889C0 >= timeline->unk3C) {
+			timeline = (s32 *)route->unk18;
+			timelineEntry = timeline + D_800A0908_1889C8;
+			if (D_800A0900_1889C0 >= timelineEntry[15]) {
 				if (D_800A0908_1889C8 < 3) {
-					func_80081E90_169F50((s16)(D_800A0908_1889C8 - 1), (s16)D_800A0908_1889C8, timeline->unk4A);
+					previousTimelineStep = (s16)(D_800A0908_1889C8 - 1);
+					transitionValue = *(s16 *)((u8 *)timelineEntry + 0x4A);
+					func_80081E90_169F50(previousTimelineStep, (s16)D_800A0908_1889C8, transitionValue);
 					D_800A0908_1889C8++;
-					timeline = D_800A0614_1886D4[D_800E6A34].unk0;
+					timeline = (s32 *)D_800A0614_1886D4[D_800E6A34].unk0;
 				}
 			}
 
-			if (D_800A0900_1889C0 == timeline[D_800A0910_1889D0].unk54) {
+			if (D_800A0900_1889C0 == timeline[D_800A0910_1889D0 + 21]) {
 				D_800A0920_1889E0 = 1;
 				func_80005AEC_66EC(0, 0, 0, 0x14);
 				D_800A0910_1889D0++;
 			}
 
-			sp34 = 0;
 			if (D_800A0920_1889E0 != 0) {
 				sp34 = func_80005B30_6730();
-				if (sp34 != 0) {
-					D_800A0920_1889E0 = 0;
-				}
 			}
 
-			route = &D_800A05FC_1886BC[D_800E6A34];
-			path = route->unk14;
-			if ((D_800A0900_1889C0 >= path->unk30) && (path->unk32 >= D_800A0900_1889C0)) {
-				if (path->unk2C != 0) {
-					D_800E6A70 = path->unk2C;
-					if (D_800A0900_1889C0 >= path->unk38) {
+			route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			pathView = route->unk14;
+			if (sp34 != 0) {
+				D_800A0920_1889E0 = 0;
+			}
+			if ((D_800A0900_1889C0 >= pathView->metadata.unk30) && (pathView->metadata.unk32 >= D_800A0900_1889C0)) {
+				if (pathView->metadata.unk2C != 0) {
+					D_800E6A70 = pathView->metadata.unk2C;
+					if (D_800A0900_1889C0 >= pathView->metadata.unk38) {
 						f32 speed;
 
-						speed = path->unk3C[D_800A090C_1889CC];
+						speed = pathView->metadata.unk3C[D_800A090C_1889CC];
 						if (speed != 2000.0f) {
 							D_800E6A38 = speed;
 							D_800A090C_1889CC++;
@@ -2283,20 +2234,19 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800E6A70 = 0;
 			}
 
-			if (D_800A0900_1889C0 == route->unk4) {
+			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk4) {
 				func_8007B124_1631E4(D_800E6A1C);
 				if (D_800E6A34 == 7) {
 					func_8007DAA8_165B68(&D_800E6AD8, 0x73, NULL, 0.0f, 0x10);
 				}
 			}
 
-			if (D_800A0900_1889C0 == route->unk8) {
-				((void (*)(s16, s32, s32))func_800153D8_15FD8)(route->unkE, D_800E6A34, D_800A0900_1889C0);
-				route = &D_800A05FC_1886BC[D_800E6A34];
+			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk8) {
+				func_800153D8_15FD8(D_800A05FC_1886BC[D_800E6A34].unkE);
 			}
 
 			D_800A0900_1889C0++;
-			if (D_800A0900_1889C0 == route->unk0) {
+			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk0) {
 				if ((D_800E6A34 == 6) || (D_800E6A34 == 7)) {
 					D_800E65A8 |= 0x100;
 				} else {
@@ -2309,11 +2259,11 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 		}
-	} else if (flags & 4) {
+			} else if (flags & 4) {
 		if (func_8008DDC0_175E80() != 0) {
 			func_8007D69C_16575C(arg0);
 		}
-	} else if (flags & 0x40) {
+				} else if (flags & 0x40) {
 		func_8007D52C_1655EC();
 		anim = 4;
 		if (arg1->button & 0x2000) {
@@ -2330,17 +2280,21 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 		}
 	} else if ((flags & 0x800) || (flags & 0x80)) {
-		s16 targetYaw;
+		s32 targetYaw;
+		s32 currentYaw;
+		s32 originX;
+		f32 xDiff;
 
 		func_8007D52C_1655EC();
-		targetYaw = (s16)((func_80003824_4424((f32)(s32)((D_800E6A78.unk4C - 96.0f) - (f32)func_800703D0_158490()),
-										 (f32)(s32)D_800E6A78.unk54) + 0x8000) & 0xFFFF);
+		originX = func_800703D0_158490();
+		xDiff = D_800E6A78.unk4C - 96.0f;
+		targetYaw = (func_80003824_4424((f32)(s32)(xDiff - (f32)originX),
+										 (f32)(s32)D_800E6A78.unk54) + 0x8000) & 0xFFFF;
 
-		if ((u16)targetYaw != (u16)arg0->unkE) {
+		currentYaw = arg0->unkE;
+		if ((u16)targetYaw != (u16)currentYaw) {
 			if ((D_800E730C != 0x11) && (D_800E730C != 0xB) && (D_800E730C != 0xA)) {
-				sp6C = targetYaw;
 				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
-				targetYaw = sp6C;
 			}
 			func_8007D37C_16543C(arg0, targetYaw, 0);
 			osSyncPrintf(D_800A4CD0_18CD90);
@@ -2411,16 +2365,29 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		vehicleInstances[0].unk1C++;
 	}
 
-	func_8007DC80_165D40(arg0, (Unk80157600 *)D_800E6F00, speedScale);
+	func_8007DC80_165D40(arg0, (Unk80157600 *)D_800E6F00, *(s32 *)&speedScale);
 	if (D_8009E8E0_1869A0[D_800E730C].unk0 & 4) {
-		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, D_800E7310);
+		f32 channelRate;
+		channelRate = *(f32 *)&D_800E7310;
+		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, channelRate);
 	} else {
 		func_8000CF4C_DB4C((void *)D_800E7304, D_800E6F00, 0x10, *(s32 *)&D_800E7310);
 	}
 
-	if ((((Unk165E60AnimState *)D_800E6F00)->unk40C == 0) && ((((Unk165E60AnimState *)D_800E6F00)->unk18 == 3) || (((Unk165E60AnimState *)D_800E6F00)->unk18 == 8)) && (((Unk165E60AnimState *)D_800E6F00)->unk1C == 1.0f)) {
-		func_800153D8_15FD8(0x96);
-		func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68[0]) + D_800A4DB0_18CE70[0]));
+	{
+		Unk165E60AnimState *animState;
+		f32 randomFrame;
+		s32 currentAnim;
+
+		animState = (Unk165E60AnimState *)D_800E6F00;
+		if (animState->unk40C == 0) {
+			currentAnim = animState->unk18;
+			if (((currentAnim == 3) || (currentAnim == 8)) && (animState->unk1C == 1.0f)) {
+				func_800153D8_15FD8(0x96);
+				randomFrame = (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68[0]) + D_800A4DB0_18CE70[0]);
+				func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, randomFrame);
+			}
+		}
 	}
 
 	D_800A08FC_1889BC = D_800E65A8;
@@ -2429,103 +2396,78 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(10096)
 // AI - Draw shadow/floor marker quad beneath the player
+#ifdef NON_MATCHING
 void func_8007EB1C_166BDC(void *arg0) {
 	s16 sp2E;
 	s16 sp2C;
+	s16 temp_y;
 	s16 sp2A;
-	s16 *temp_t8;
-	s16 *temp_t8_2;
-	s16 *temp_t8_3;
 	s16 temp_a2;
 	s16 temp_a3;
 	s16 temp_t0;
 	s16 temp_t1;
-	s8 temp_v0;
-	void *temp_t2;
-	void *temp_v1;
-	void *temp_v1_10;
-	void *temp_v1_11;
-	void *temp_v1_12;
-	void *temp_v1_13;
-	void *temp_v1_14;
-	void *temp_v1_15;
-	void *temp_v1_16;
-	void *temp_v1_17;
-	void *temp_v1_18;
-	void *temp_v1_19;
-	void *temp_v1_20;
-	void *temp_v1_2;
-	void *temp_v1_3;
-	void *temp_v1_4;
-	void *temp_v1_5;
-	void *temp_v1_6;
-	void *temp_v1_7;
-	void *temp_v1_8;
-	void *temp_v1_9;
-
-	sp2E = (s16) (s32) ((f64) (arg0->unk4C - 96.0f) + 0.5);
-	sp2C = (s16) (s32) (arg0->unk50 + 2.0f);
-	sp2A = (s16) (s32) ((f64) (arg0->unk54 - 96.0f) + 0.5);
+	u8 temp_v0;
+	sp2E = (s16) (s32) ((f64) (((VehicleInstance *)arg0)->unk4C - 96.0f) + 0.5);
+	sp2A = (s16) (s32) ((f64) (((VehicleInstance *)arg0)->unk54 - 96.0f) + 0.5);
+	sp2C = (s16) (s32) (((VehicleInstance *)arg0)->unk50 + 2.0f);
 	temp_v0 = func_800717A8_159868();
+	temp_y = sp2C;
 	temp_a2 = sp2E - 0x14;
-	D_8005BB34->unk0 = temp_a2;
-	D_8005BB34->unk2 = sp2C;
+	D_8005BB34->v.ob[0] = temp_a2;
+	D_8005BB34->v.ob[1] = temp_y;
 	temp_a3 = sp2A - 0x14;
-	D_8005BB34->unk4 = temp_a3;
-	D_8005BB34->unk6 = 0;
-	D_8005BB34->unk8 = 0x800;
-	D_8005BB34->unkA = 0x800;
-	D_8005BB34->unkC = 0;
-	D_8005BB34->unkD = 0;
-	D_8005BB34->unkE = 0;
-	D_8005BB34->unkF = temp_v0;
-	temp_t8 = D_8005BB34 + 0x10;
-	D_8005BB34 = temp_t8;
+	D_8005BB34->v.ob[2] = temp_a3;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = temp_v0;
+	D_8005BB34++;
 	temp_t0 = sp2E + 0x14;
-	*temp_t8 = temp_t0;
-	D_8005BB34->unk2 = sp2C;
-	D_8005BB34->unk4 = temp_a3;
-	D_8005BB34->unk6 = 0;
-	D_8005BB34->unk8 = 0;
-	D_8005BB34->unkA = 0x800;
-	D_8005BB34->unkC = 0;
-	D_8005BB34->unkD = 0;
-	D_8005BB34->unkE = 0;
-	D_8005BB34->unkF = temp_v0;
-	temp_t8_2 = D_8005BB34 + 0x10;
-	D_8005BB34 = temp_t8_2;
-	*temp_t8_2 = temp_t0;
-	D_8005BB34->unk2 = sp2C;
+	D_8005BB34->v.ob[0] = temp_t0;
+	D_8005BB34->v.ob[1] = temp_y;
+	D_8005BB34->v.ob[2] = temp_a3;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = temp_v0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = temp_t0;
+	D_8005BB34->v.ob[1] = temp_y;
 	temp_t1 = sp2A + 0x14;
-	D_8005BB34->unk4 = temp_t1;
-	D_8005BB34->unk6 = 0;
-	D_8005BB34->unk8 = 0;
-	D_8005BB34->unkA = 0;
-	D_8005BB34->unkC = 0;
-	D_8005BB34->unkD = 0;
-	D_8005BB34->unkE = 0;
-	D_8005BB34->unkF = temp_v0;
-	temp_t8_3 = D_8005BB34 + 0x10;
-	D_8005BB34 = temp_t8_3;
-	*temp_t8_3 = temp_a2;
-	D_8005BB34->unk2 = sp2C;
-	D_8005BB34->unk4 = temp_t1;
-	D_8005BB34->unk6 = 0;
-	D_8005BB34->unk8 = 0x800;
-	D_8005BB34->unkA = 0;
-	D_8005BB34->unkC = 0;
-	D_8005BB34->unkD = 0;
-	D_8005BB34->unkE = 0;
-	D_8005BB34->unkF = temp_v0;
-	D_8005BB34 += 0x10;
+	D_8005BB34->v.ob[2] = temp_t1;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = temp_v0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = temp_a2;
+	D_8005BB34->v.ob[1] = temp_y;
+	D_8005BB34->v.ob[2] = temp_t1;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = temp_v0;
+	D_8005BB34++;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
-	gSPTexture(D_8005BB2C++, qu016(0.5), qu016(0.5), 0, G_TX_RENDERTILE, G_ON);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPLoadSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 1, &D_8009CE60_184F20);
@@ -2534,8 +2476,8 @@ void func_8007EB1C_166BDC(void *arg0) {
 	gDPLoadBlock(D_8005BB2C++, 1, 0, 0, 0x1FF, 0x200);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0x050, 0, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, 0, 0, 0, qu102(31), qu102(31));
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x40), 4, 0);
+	gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 0x7C, 0x7C);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -2546,147 +2488,122 @@ void func_8007EB1C_166BDC(void *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EB1C_166BDC.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(12777)
 // AI - Render player character model with full matrix setup and damage flash
+#ifdef NON_MATCHING
 void func_8007EFD4_167094(VehicleInstance *arg0) {
-	s32 spBC;
-	s32 spB8;
-	s32 spB4;
-	s16 spB0;
-	s16 spAE;
-	s16 spAC;
-	s16 spA8;
-	s16 spA6;
-	s16 spA4;
-	s16 spA0;
-	s16 sp9E;
-	s16 sp9C;
-	u8 sp84[24];
-	u8 sp6C[24];
-	s32 *temp_v0;
-	s32 *temp_v0_10;
-	s32 *temp_v0_11;
-	s32 *temp_v0_12;
-	s32 *temp_v0_13;
-	s32 *temp_v0_14;
-	s32 *temp_v0_2;
-	s32 *temp_v0_3;
-	s32 *temp_v0_4;
-	s32 *temp_v0_5;
-	s32 *temp_v0_6;
-	s32 *temp_v0_7;
-	s32 *temp_v0_8;
-	s32 *temp_v0_9;
 	s32 temp_a3;
-	s32 temp_a3_2;
-	s32 temp_a3_3;
-	s32 temp_a3_4;
-	s32 temp_a3_5;
-	s32 temp_a3_6;
 	s32 temp_f10;
-	s32 temp_f18;
-	s32 temp_f6;
-	u16 temp_t2;
+	s32 translation[3];
+	struct {
+		u32 table2[6];
+		u32 table1[6];
+		Unk80052B40 rotation;
+		u16 rotationPad;
+		Unk80052B40 scale;
+		u16 scalePad;
+		Unk80052B40 position;
+	} locals;
 
-	*(u32*)&sp84[0x0] = *(u32*)&D_800A092C[0x0];
-	*(u32*)&sp84[0x4] = *(u32*)&D_800A092C[0x4];
-	*(u32*)&sp84[0xC] = *(u32*)&D_800A092C[0xC];
-	*(u32*)&sp84[0x8] = *(u32*)&D_800A092C[0x8];
-	*(u32*)&sp84[0x10] = *(u32*)&D_800A092C[0x10];
-	*(u32*)&sp84[0x14] = *(u32*)&D_800A092C[0x14];
-	*(u32*)&sp6C[0x4] = *(u32*)&D_800A0944[0x4];
-	*(u32*)&sp6C[0x0] = *(u32*)&D_800A0944[0x0];
-	*(u32*)&sp6C[0x8] = *(u32*)&D_800A0944[0x8];
-	*(u32*)&sp6C[0xC] = *(u32*)&D_800A0944[0xC];
-	*(u32*)&sp6C[0x14] = *(u32*)&D_800A0944[0x14];
-	*(u32*)&sp6C[0x10] = *(u32*)&D_800A0944[0x10];
+	*(u32 *)&locals.table1[0] = *(u32 *)&D_800A092C_1889EC[0];
+	*(u32 *)&locals.table1[1] = *(u32 *)&D_800A092C_1889EC[1];
+	*(u32 *)&locals.table1[3] = *(u32 *)&D_800A092C_1889EC[3];
+	*(u32 *)&locals.table1[2] = *(u32 *)&D_800A092C_1889EC[2];
+	*(u32 *)&locals.table1[4] = *(u32 *)&D_800A092C_1889EC[4];
+	*(u32 *)&locals.table1[5] = *(u32 *)&D_800A092C_1889EC[5];
+	*(u32 *)&locals.table2[1] = *(u32 *)&D_800A0944_188A04[1];
+	*(u32 *)&locals.table2[0] = *(u32 *)&D_800A0944_188A04[0];
+	*(u32 *)&locals.table2[2] = *(u32 *)&D_800A0944_188A04[2];
+	*(u32 *)&locals.table2[3] = *(u32 *)&D_800A0944_188A04[3];
+	*(u32 *)&locals.table2[5] = *(u32 *)&D_800A0944_188A04[5];
+	*(u32 *)&locals.table2[4] = *(u32 *)&D_800A0944_188A04[4];
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, &D_80031200);
-	if (((u8*)D_80052B34)[0x20] & 0x2000) {
+	if (D_80052B34->unk20 & 0x2000) {
 		gDPSetFogColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF);
 		gSPFogPosition(D_8005BB2C++, 0, 100);
-		osSyncPrintf(&D_800A4CE0);
+		osSyncPrintf(D_800A4CE0_18CDA0);
 	} else {
 		gSPFogPosition(D_8005BB2C++, 995, 1000);
 	}
-	spAC = (s16) (s32) ((f64) (arg0->unk4C - 96.0f) + 0.5);
-	spAE = (s16) (s32) ((f64) arg0->unk50 + 0.5);
-	spB0 = (s16) (s32) ((f64) (arg0->unk54 - 96.0f) + 0.5);
-	sp9E = 0;
-	sp9C = 0x4000 - arg0->unkE;
-	spA0 = 0;
-	spA4 = 0x40;
-	spA6 = 0x40;
-	spA8 = 0x40;
-	func_800039D0_45D0(&spAC, &sp9C, &spA4, D_8005BB38);
+	locals.position.unk0 = (s16) (s32) ((f64) (arg0->unk4C - 96.0f) + 0.5);
+	locals.position.unk2 = (s16) (s32) ((f64) arg0->unk50 + 0.5);
+	locals.position.unk4 = (s16) (s32) ((f64) (arg0->unk54 - 96.0f) + 0.5);
+	locals.rotation.unk2 = 0;
+	locals.rotation.unk0 = 0x4000 - arg0->unkE;
+	locals.rotation.unk4 = 0;
+	locals.scale.unk0 = 0x40;
+	locals.scale.unk2 = 0x40;
+	locals.scale.unk4 = 0x40;
+	func_800039D0_45D0(&locals.position, &locals.rotation, &locals.scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	spB4 = 0;
-	spBC = 0;
-	sp9C = *(s16*)&D_800E6F00[0x0] * 8;
-	sp9E = *(s16*)&D_800E6F00[0x4] * 8;
-	spA0 = *(s16*)&D_800E6F00[0x2] * 8;
-	spB8 = (s32) (*(f32*)&D_800E6F00[0xC] * 65536.0f);
-	func_8000C81C_D41C(&spB4, &sp9C, 0, D_8005BB38);
+	translation[0] = 0;
+	translation[2] = 0;
+	locals.rotation.unk0 = *(s16*)&D_800E6F00[0x0] * 8;
+	locals.rotation.unk2 = *(s16*)&D_800E6F00[0x4] * 8;
+	locals.rotation.unk4 = *(s16*)&D_800E6F00[0x2] * 8;
+	translation[1] = (s32) (*(f32*)&D_800E6F00[0xC] * 65536.0f);
+	func_8000C81C_D41C(translation, &locals.rotation, 0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
 	gSPSegment(D_8005BB2C++, 0x06, func_80012000_12C00(*(s32*)(&D_8009D260_185320 + (D_800E6A70 * 4))));
 	func_8000CC3C_D83C(&D_800E6F00, 0x10);
 	switch (*(s32*)&D_800E6F00[0x40C]) {
 	case 4:
-		if ((*(s16*)&D_800E6F00[0x18] >= 7) && (D_800A095C < 6)) {
+		if ((*(s32*)&D_800E6F00[0x18] >= 7) && (D_800A095C_188A1C < 6)) {
 			temp_a3 = D_8005BB38;
+			temp_f10 = (s32) (*(f32 *)&locals.table1[D_800A095C_188A1C] * 256.0f);
 			D_8005BB38 = temp_a3 + 0x40;
-			temp_f10 = (s32) ((*(f32*)&sp84[D_800A095C * 4]) * 256.0f);
-			spA6 = (s16) temp_f10;
-			spA4 = (s16) temp_f10;
-			spA8 = (s16) temp_f10;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3);
-			D_800A095C += 1;
-			if (spA4 == 0) {
+			locals.scale.unk2 = (s16) temp_f10;
+			locals.scale.unk0 = (s16) temp_f10;
+			locals.scale.unk4 = (s16) temp_f10;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
+			D_800A095C_188A1C += 1;
+			if (locals.scale.unk0 == 0) {
 				D_800E6A70 = 0;
 			}
 		} else {
-			temp_a3_2 = D_8005BB38;
-			D_8005BB38 = temp_a3_2 + 0x40;
-			func_800039D0_45D0(NULL, NULL, NULL, temp_a3_2);
+			temp_a3 = D_8005BB38;
+			D_8005BB38 = temp_a3 + 0x40;
+			func_800039D0_45D0(NULL, NULL, NULL, temp_a3);
 		}
 		break;
 	case 5:
-		if ((*(s16*)&D_800E6F00[0x18] >= 0xE) && (D_800A095C < 6)) {
-			temp_a3_3 = D_8005BB38;
-			D_8005BB38 = temp_a3_3 + 0x40;
-			temp_f6 = (s32) ((*(f32*)&sp84[D_800A095C * 4]) * 256.0f);
-			spA6 = (s16) temp_f6;
-			spA4 = (s16) temp_f6;
-			spA8 = (s16) temp_f6;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3_3);
-			D_800A095C += 1;
-			if (spA4 == 0) {
+		if ((*(s16*)&D_800E6F00[0x18] >= 0xE) && (D_800A095C_188A1C < 6)) {
+			temp_a3 = D_8005BB38;
+			temp_f10 = (s32) (*(f32 *)&locals.table1[D_800A095C_188A1C] * 256.0f);
+			D_8005BB38 = temp_a3 + 0x40;
+			locals.scale.unk2 = (s16) temp_f10;
+			locals.scale.unk0 = (s16) temp_f10;
+			locals.scale.unk4 = (s16) temp_f10;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
+			D_800A095C_188A1C += 1;
+			if (locals.scale.unk0 == 0) {
 				D_800E6A70 = 0;
 			}
 		} else {
-			temp_a3_4 = D_8005BB38;
-			D_8005BB38 = temp_a3_4 + 0x40;
-			func_800039D0_45D0(NULL, NULL, NULL, temp_a3_4);
-			D_800A095C = 0;
+			temp_a3 = D_8005BB38;
+			D_8005BB38 = temp_a3 + 0x40;
+			func_800039D0_45D0(NULL, NULL, NULL, temp_a3);
+			D_800A095C_188A1C = 0;
 		}
 		break;
 	default:
 		if (D_800E65A8 & 0x8000) {
-			temp_a3_5 = D_8005BB38;
-			D_8005BB38 = temp_a3_5 + 0x40;
-			temp_f18 = (s32) (256.0f * D_800E6A38);
-			spA6 = (s16) temp_f18;
-			spA4 = (s16) temp_f18;
-			spA8 = (s16) temp_f18;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3_5);
+			temp_a3 = D_8005BB38;
+			temp_f10 = (s32) (256.0f * D_800E6A38);
+			D_8005BB38 = temp_a3 + 0x40;
+			locals.scale.unk2 = (s16) temp_f10;
+			locals.scale.unk0 = (s16) temp_f10;
+			locals.scale.unk4 = (s16) temp_f10;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
 		} else {
-			temp_a3_6 = D_8005BB38;
-			spA6 = 0;
-			spA4 = 0;
-			D_8005BB38 = temp_a3_6 + 0x40;
-			spA8 = 0;
-			func_800039D0_45D0(NULL, NULL, &spA4, temp_a3_6);
+			temp_a3 = D_8005BB38;
+			locals.scale.unk2 = 0;
+			locals.scale.unk0 = 0;
+			D_8005BB38 = temp_a3 + 0x40;
+			locals.scale.unk4 = 0;
+			func_800039D0_45D0(NULL, NULL, &locals.scale, temp_a3);
 		}
 		break;
 	}
@@ -2695,9 +2612,8 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-	temp_t2 = *(u16*)&((u8*)D_80052B34)[0x20];
-	if (temp_t2 & 0x2000) {
-		*(u16*)&((u8*)D_80052B34)[0x20] = (u16) (temp_t2 & 0xDFFF);
+	if (D_80052B34->unk20 & 0x2000) {
+		D_80052B34->unk20 &= 0xDFFF;
 	}
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
@@ -2709,31 +2625,35 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 // AI - Initialize NPC entity and its animation
 void func_8007F668_167728(u8 arg0, u8 arg1) {
 	s32 sp24;
+	Unk8009E4C8 *entry;
 
 	sp24 = arg0;
 	D_800E6AD8.unk426 = sp24 - 1;
 	D_800E6AD8.unk425 = arg1;
-	osSyncPrintf(D_800A4CE8, sp24);
+	osSyncPrintf(D_800A4CE8_18CDA8, sp24);
 	D_800E6AD8.unk404 = func_8000C6F4_D2F4();
 	D_800E6AD8.unk408 = func_8000C6F4_D2F4();
 	D_800E6AD8.unk410 = 1.0f;
+	entry = &D_8009E4C8_186588[sp24 - 1][arg1];
 	func_8000C790_D390(&D_800E6AD8,
-		*(s32 *)(D_8009E4C8_186588 + sp24 * 0xD0 + arg1 * 0x10 - 0xCC),
-		*(D_8009E4C8_186588 + sp24 * 0xD0 + arg1 * 0x10 - 0xC4));
+		entry->unk4,
+		entry->unkC);
 	((Unk8007F878_404 *)D_800E6AD8.unk404)->unkE50 = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F668_167728.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Free NPC animation memory
 void func_8007F724_1677E4(void) {
-	Unk80157600 *ptr;
+	volatile Unk80157600 *ptr;
+	s32 unk404;
 
 	ptr = (Unk80157600 *) &D_800E6AD8;
-	if (ptr->unk404 != NULL) {
-		func_8000C764_D364((s32) ptr->unk404);
+	if (ptr){}
+	unk404 = (s32) ptr->unk404;
+	if (unk404 != 0) {
+		func_8000C764_D364(unk404);
 		ptr = (Unk80157600 *) &D_800E6AD8;
 		func_8000C764_D364((s32) ptr->unk408);
 		ptr = (Unk80157600 *) &D_800E6AD8;
@@ -2741,31 +2661,29 @@ void func_8007F724_1677E4(void) {
 		ptr->unk404 = NULL;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F724_1677E4.s")
-#endif
 
 // AI - Update NPC animation state each frame
 void func_8007F778_167838(void) {
 	u8 temp_v1;
 	u8 temp_t0;
-	u8 *temp_v0;
+	Unk8009E4C8 *temp_v0;
 
 	if ((Unk8007F878_404 *)D_800E6AD8.unk404 != NULL) {
 		temp_v1 = D_800E6AD8.unk426;
 		temp_t0 = D_800E6AD8.unk425;
 		if (((Unk8007F878_404 *)D_800E6AD8.unk404)->unkE50 == 0) {
 			if (!((currentLevel == LEVEL_COMET) && (temp_v1 == 4) && (temp_t0 == 0) && (D_800E65A8 & 0x100))) {
-				temp_v0 = &D_8009E4C8_186588[temp_v1 * 0xD0 + temp_t0 * 0x10];
-				func_8007DAA8_165B68(&D_800E6AD8, *(s32*)(temp_v0 + 8), NULL, 0.0f, temp_v0[0xC]);
+				temp_v0 = &D_8009E4C8_186588[temp_v1][temp_t0];
+				func_8007DAA8_165B68(&D_800E6AD8, temp_v0->unk8, NULL, 0.0f, temp_v0->unkC);
 			}
 		}
 		func_8000CF4C_DB4C((Unk8007F878_404 *)D_800E6AD8.unk404, &D_800E6AD8,
-			D_8009E4D4_186594[temp_v1 * 0xD0 + temp_t0 * 0x10],
+			D_8009E4C8_186588[temp_v1][temp_t0].unkC,
 			*(s32*)&D_800E6AD8.unk410);
 	}
 }
 
+// CURRENT(100)
 #ifdef NON_MATCHING
 // AI - Render NPC while animation is still playing
 void func_8007F878_167938(void) {
@@ -2773,73 +2691,70 @@ void func_8007F878_167938(void) {
 	Unk8007F878_404 *temp;
 
 	ptr = &D_800E6AD8;
-	if (ptr->unk404 == NULL) {
+	temp = (Unk8007F878_404 *) D_800E6AD8.unk404;
+	if (temp == NULL) {
 		return;
 	}
 
-	temp = (Unk8007F878_404 *) ptr->unk404;
-	if ((temp->unkE50 == 0) || (ptr->unk18 == 0)) {
+	if (temp->unkE50 == 0) {
+		return;
+	}
+	if (D_800E6AD8.unk18 == 0) {
 		return;
 	}
 
-	func_8000CF4C_DB4C(ptr->unk404, ptr, D_8009E4D4_186594[ptr->unk426 * 0xD0 + ptr->unk425 * 0x10], ptr->unk410);
+	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[D_800E6AD8.unk426][D_800E6AD8.unk425].unkC, *(s32 *)&D_800E6AD8.unk410);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F878_167938.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(1160)
 // AI - Render NPC model with full matrix transforms
-void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s32 sp64;
-	s32 sp60;
-	s32 sp5C;
-	s16 sp58;
-	s16 sp56;
-	s16 sp54;
-	s16 sp50;
-	s16 sp4E;
-	s16 sp4C;
-	u8 sp4B;
-	u8 sp4A;
-	s32 sp44;
-	s32 sp40;
-	s32 sp3C;
-	void *sp20;
-	void *temp_t1;
-
-	sp5C = arg0 << 0x10;
-	sp4B = D_800E6AD8.unk426;
-	sp4C = arg3;
-	sp60 = arg1 << 0x10;
-	sp64 = arg2 << 0x10;
-	sp4E = 0;
-	sp50 = 0;
-	sp54 = 0x40;
-	sp56 = 0x40;
-	sp58 = 0x40;
-	sp4A = D_800E6AD8.unk425;
-	func_8000C81C_D41C(&sp5C, &sp4C, &sp54, D_8005BB38);
+#ifdef NON_MATCHING
+void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+{
+	s32 position[3];
+	s16 scale[3];
+	u8 model;
+	u8 category;
+	s16 rotation[3];
+	Unk8009E4C8 *entry;
+	s32 translation[3];
+	position[0] = arg0 << 0x10;
+	category = D_800E6AD8.unk426;
+	position[1] = arg1 << 0x10;
+	model = D_800E6AD8.unk425;
+	position[2] = arg2 << 0x10;
+	rotation[0] = arg3;
+	rotation[1] = 0;
+	rotation[2] = 0;
+	scale[0] = 0x40;
+	scale[1] = 0x40;
+	scale[2] = 0x40;
+	func_8000C81C_D41C(position, rotation, scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0)) {
-		sp3C = (s32) (D_800E6AD8.unk8 * 65536.0f);
-		sp40 = (s32) (D_800E6AD8.unkC * 65536.0f);
-		sp44 = (s32) (D_800E6AD8.unk10 * 65536.0f);
-	} else {
-		sp40 = 0;
-		sp3C = (s32) (D_800E6AD8.unk8 * 65536.0f);
-		sp44 = (s32) (D_800E6AD8.unk10 * 65536.0f);
+	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0))
+	{
+		translation[0] = (s32)(D_800E6AD8.unk8 * 65536.0f);
+		translation[1] = (s32)(D_800E6AD8.unkC * 65536.0f);
+		translation[2] = (s32)(D_800E6AD8.unk10 * 65536.0f);
 	}
-	sp4C = D_800E6AD8.unk2 * 8;
-	sp4E = D_800E6AD8.unk4 * 8;
-	sp50 = D_800E6AD8.unk0 * 8;
-	func_8000C81C_D41C(&sp3C, &sp4C, NULL, D_8005BB38);
+	else
+	{
+		translation[1] = 0;
+		translation[0] = (s32)(D_800E6AD8.unk8 * 65536.0f);
+		translation[2] = (s32)(D_800E6AD8.unk10 * 65536.0f);
+	}
+	rotation[0] = D_800E6AD8.unk2 * 8;
+	rotation[1] = D_800E6AD8.unk4 * 8;
+	rotation[2] = D_800E6AD8.unk0 * 8;
+	func_8000C81C_D41C(translation, rotation, NULL, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
-	temp_t1 = (sp4B * 0xD0) + (sp4A * 0x10) + &D_8009E4C8_186588;
-	sp20 = temp_t1;
-	func_8000CC3C_D83C(&D_800E6AD8, temp_t1->unkC);
-	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(temp_t1->unk0));
+	entry = &D_8009E4C8_186588[category][model];
+	func_8000CC3C_D83C(&D_800E6AD8, entry->unkC);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(entry->unk0));
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }

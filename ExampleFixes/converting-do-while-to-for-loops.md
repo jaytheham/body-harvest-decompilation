@@ -128,3 +128,36 @@ IDO consistently places the most-recently-written register (`t0`, from the `andi
 If the target uses `bne a1_bound, t0_counter` (bound first, counter second) and your code generates `bne t0_counter, a1_bound`, the bne ordering cannot be fixed by C-level changes to the comparison expression. This count as score 10 (one `r` mismatch). The function is functionally identical and this is acceptable.
 
 **Note:** Introducing an additional explicit temp variable for the bound (`s32 max = 6`) works against you — it shifts the base-address pointer from `v0` to `a1`, and `max` takes `v0`, causing more mismatches rather than fewer.
+
+#### Small constant trip count: `s32` counter makes IDO fully unroll the loop
+
+A guessed `do { ... } while` with a **small constant bound** and an `s32` counter does not just schedule badly — IDO **unrolls the whole loop**, constant-folds every index and address, and the score explodes. Symptom: a 20-instruction target scoring in the thousands (4055 here), with the compiled `.o` containing ~10 unrolled copies of the body and no backward branch at all.
+
+Two changes, in order:
+
+1. **`u8` counter for a counted loop the target masks.** The target's `andi r, r, 0xFF` in the loop means the counter is `u8`; an `s32` counter both changes the mask's meaning and invites the unroller. Switching `s32 i` → `u8 i` (keeping the loop form) took 4055 → 180.
+2. **`for` form** for the body scheduling: 180 → 0.
+
+```c
+// ❌ WRONG – s32 counter, do-while: IDO unrolls 10 iterations (score 4055)
+s32 i;
+i = 0; do {
+    D_800D8550[i] = NULL;
+    D_800D8578[i].unk50 = 0;
+    i++;
+} while (i < 10);
+
+// ⚠️ HALFWAY – u8 counter, while form: real loop, body schedule still wrong (180)
+u8 i;
+i = 0;
+while (i < 10) { D_800D8550[i] = NULL; D_800D8578[i].unk50 = 0; i++; }
+
+// ✅ CORRECT – for form: loop kept, `andi`/`addu` ordering matches (score 0)
+u8 i;
+for (i = 0; i < 10; i++) {
+    D_800D8550[i] = NULL;
+    D_800D8578[i].unk50 = 0;
+}
+```
+
+The remaining 180 was the scheduler's ordering of the counter mask (`andi`) against the address `addu` inside the body — exactly the class the `for` form fixes elsewhere in this note. When a guessed loop scores in the thousands on a tiny function, check whether the `.o` unrolled it before touching anything else.

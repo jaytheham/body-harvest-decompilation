@@ -3,6 +3,16 @@
 
 #include <PR/sched.h>
 
+typedef struct MissionCommand {
+    u8 opcode;
+    u8 args[2];
+} MissionCommand; /* size = 0x03 */
+
+typedef struct MissionInfo {
+    u8 flags;
+    u8 command[3];
+} MissionInfo;
+
 typedef enum GameplayMode {
 	GAMEPLAY_MODE_LEVEL_MAP = 0, // Actually something else?
 	GAMEPLAY_MODE_UNK1 = 1, // Normal gameplay
@@ -231,9 +241,12 @@ typedef struct {
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
 } Unk8010D234Data; /* size = 0x38 */
-typedef struct {
-	/* 0x00 */ s32 unk0;
-	/* 0x04 */ s32 unk4;
+typedef union {
+	struct {
+		/* 0x00 */ s32 unk0;
+		/* 0x04 */ s32 unk4;
+	};
+	/* 0x00 */ u64 flags;
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
@@ -300,7 +313,9 @@ typedef struct {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u8 pad18[0x08];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ u8 pad1A[2];
+	/* 0x1C */ f32 unk1C;
 } UnkE830ModeEntry; /* size = 0x20 */
 
 typedef struct {
@@ -308,6 +323,18 @@ typedef struct {
 	/* 0x04 */ f32 y;
 	/* 0x08 */ f32 z;
 } Vec3f; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 y;
+	/* 0x04 */ s16 z;
+} Vec3s; /* size = 0x06 */
+
+typedef struct {
+	/* 0x00 */ s32 x;
+	/* 0x04 */ s32 y;
+	/* 0x08 */ s32 z;
+} Vec3i; /* size = 0x0C */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -323,6 +350,9 @@ typedef struct {
 	/* 0x04 */ u8 unk4;
 	/* 0x05 */ u8 unk5;
 } MissionCondEntry; /* size = 0x06 */
+
+/* Two three-byte operands, two byte parameters, and an opcode. */
+typedef u8 MissionGameCondition[9];
 
 typedef struct {
 	/* 0x00 */ u8 cheatPattern[0xC];
@@ -366,11 +396,11 @@ typedef struct {
 	/* 0x10 */ s16 unk10; // AI - object-local Y position (height)
 	/* 0x12 */ s16 unk12; // AI - object-local Z position
 	/* 0x14 */ s16 unk14; // AI - object type in some reinterpretations
-	/* 0x16 */ s16 unk16; // AI - room-visit related value (copied to the instance's unkC)
+	/* 0x16 */ u16 unk16; // AI - room-visit related value (copied to the instance's unkC)
 	/* 0x18 */ u16 unk18; // AI - object/room width (dimension, halved for positioning & culling)
 	/* 0x1A */ u16 unk1A; // AI - object/room depth (dimension, halved for positioning & culling)
 	/* 0x1C */ u8 pad1C[0x2]; // AI - pad1C[0] = signed height offset written to the instance's unk4
-	/* 0x1E */ u16 unk1E; // AI - animation offset/scale parameter for the room entry
+	/* 0x1E */ s16 unk1E; // AI - signed animation offset/scale parameter for the room entry
 	/* 0x20 */ f32 unk20; // AI - animation speed/magnitude (float, e.g. 0.1 / 2.0 / 5.0 / 25.0)
 	/* 0x24 */ u8 pad24[0x02];
 	/* 0x26 */ s16 unk26; // AI - base offset for animated geometry (X)
@@ -418,6 +448,39 @@ typedef struct {
 	/* 0x3C */ f32 *unk3C; // speed curve pointer (2000.0f sentinel-terminated)
 } Unk165E60Path; /* size = 0x40 */
 
+typedef union {
+	struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6[7];
+		s32 unk14;
+		s32 unk18;
+		s32 unk1C;
+		s32 unk20;
+		s32 unk24;
+		s32 unk28;
+		s32 unk2C;
+		s16 unk30;
+		s16 unk32;
+		f32 unk34;
+		s16 unk38;
+		s16 unk3A;
+		f32 *unk3C;
+	} metadata;
+	struct {
+		s16 points[2][6];
+	} coordinates;
+	struct {
+		u8 pad0[0x14];
+		s32 headings[2];
+	} heading;
+	struct {
+		u8 pad0[0x20];
+		s32 frames[2];
+	} animation;
+} Unk165E60PathView;
+
 typedef struct {
 	/* 0x00 */ Unk165E60Keyframe keyframes[3]; // movement keyframes
 	/* 0x3C */ s32 unk3C;
@@ -432,7 +495,6 @@ typedef struct {
 	/* 0x5C */ s32 unk5C;
 } Unk165E60Timeline; /* size = 0x60 */
 
-
 typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
@@ -440,7 +502,7 @@ typedef struct {
 	/* 0x0C */ u8 padC[0x2];
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ u8 pad10[0x4];
-	/* 0x14 */ Unk165E60Path *unk14;
+	/* 0x14 */ Unk165E60PathView *unk14;
 	/* 0x18 */ Unk165E60Timeline *unk18;
 } Unk165E60Route;
 
@@ -479,9 +541,31 @@ typedef struct {
 } Unk84EECEffect; /* size = 0x16 */
 
 typedef struct {
+	/* 0x00 */ u8 unk0;
+	/* 0x01 */ u8 pad1;
+	/* 0x02 */ u16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ s8 unk8;
+	/* 0x09 */ s8 unk9;
+	/* 0x0A */ s8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+	/* 0x0E */ union { u16 word; struct { u8 high; u8 low; } bytes; } unkE;
+	/* 0x10 */ u8 unk10;
+	/* 0x11 */ u8 unk11;
+	/* 0x12 */ u8 unk12;
+	/* 0x13 */ u8 unk13;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+} Unk84EECEffectBytes; /* size = 0x16 */
+
+typedef struct {
 	/* 0x00 */ s16 pad0;
 	/* 0x02 */ s16 pad2;
-	/* 0x04 */ s16 pad4;
+	/* 0x04 */ u8 pad4;
+	/* 0x05 */ u8 unk5;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u8 pad8;
 	/* 0x09 */ u8 unk9;
@@ -489,6 +573,76 @@ typedef struct {
 	/* 0x0B */ u8 unkB;
 	/* 0x0C */ u8 unkC;
 } Unk84EECEffectTail;
+
+typedef struct {
+	/* 0x00 */ u16 pad0;
+	/* 0x02 */ s16 pad2;
+	/* 0x04 */ u8 pad4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ union { s16 word; struct { u8 high; u8 low; } bytes; } unk6;
+	/* 0x08 */ u8 pad8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+} Unk84EECEffectTailUpdate;
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+} Unk84EECEffectTailView;
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ union { s16 word; struct { u8 high; u8 low; } bytes; } unk6;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+} Unk84EECEffectPositionView;
+
+typedef struct {
+	/* 0x00 */ s8 offsetX;
+	/* 0x01 */ s8 offsetY;
+	/* 0x02 */ s8 offsetZ;
+	/* 0x03 */ u8 strength;
+	/* 0x04 */ u8 radius;
+} Unk84EECEffectRandomData;
+
+typedef struct {
+	/* 0x00 */ s8 offsetX;
+	/* 0x01 */ s8 offsetY;
+	/* 0x02 */ s8 offsetZ;
+	/* 0x03 */ u8 strength;
+	/* 0x04 */ u8 radius;
+	/* 0x05 */ u8 pad5[3];
+	/* 0x08 */ u8 unk10;
+} Unk84EECEffectTemplateData;
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 unk7;
+	/* 0x08 */ u8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+} UnkScatterEffectTail;
 
 /* Cutscene entry: 24 bytes (6 s32), stored in D_80157E90[5] (120 bytes) */
 typedef struct {
@@ -661,7 +815,9 @@ typedef struct Unk8006AA80Node {
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
-	/* 0x18 */ u8 pad18[0x08];
+	/* 0x18 */ s16 unk18;
+	/* 0x1A */ u8 pad1A[2];
+	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ s8 unk22;
 	/* 0x23 */ u8 pad23;
@@ -1010,10 +1166,20 @@ typedef struct {
 		};
 	};
 	/* 0x20 */ s32 unk20; // Bit flags
-	/* 0x24 */ u8 unk24; // Human type/behavior. Harvester humans eaten count. Processor child alien spawned count. Black Adam behavior.
-	/* 0x25 */ u8 unk25; // Parent alien instance id
-	/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
-	/* 0x27 */ u8 unk27;
+	union {
+		struct {
+			/* 0x24 */ u8 unk24; // Human type/behavior. Harvester humans eaten count. Processor child alien spawned count. Black Adam behavior.
+			/* 0x25 */ u8 unk25; // Parent alien instance id
+		};
+		/* 0x24 */ s16 unk24Signed; // Siberia boss target X
+	};
+	union {
+		struct {
+			/* 0x26 */ u8 unk26; // Harvester unspawned HCU count
+			/* 0x27 */ u8 unk27;
+		};
+		/* 0x26 */ s16 unk26Signed; // Siberia boss target Z
+	};
 	/* 0x28 */ s8 unk28; // Last collision tile X
 	/* 0x29 */ s8 unk29; // Last collision tile Z
 	/* 0x2A */ s16 unk2A; // Desired direction
@@ -1374,9 +1540,17 @@ typedef struct {
 			/* 0x08 */ u8 isDestroyable;
 			/* 0x09 */ u8 unk9;
 			/* 0x0A */ u8 state;
-			/* 0x0B */ u8 rotation;
+			/* 0x0B */ union {
+                u8 rotation;
+                struct {
+                    u8 rotationHighFlags : 2;
+                    u8 rotationIndex : 4;
+                    u8 rotationLowFlags : 2;
+                };
+            };
 		};
 		/* 0x08 */ u32 unk8;
+		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
 	};
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
@@ -1384,9 +1558,14 @@ typedef struct {
 	/* 0x0F */ s8 hitPoints;
 	/* 0x10 */ u8 unk10;
 	/* 0x11 */ s8 unk11;
-	/* 0x12 */ u8 door1InteriorId;
-	/* 0x13 */ u8 door2InteriorId;
-	/* 0x14 */ u8 door3InteriorId;
+	union {
+		struct {
+			/* 0x12 */ u8 door1InteriorId;
+			/* 0x13 */ u8 door2InteriorId;
+			/* 0x14 */ u8 door3InteriorId;
+		};
+		/* 0x12 */ u8 doorInteriorIds[3];
+	};
 	/* 0x15 */ u8 unk15;
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 unk17;
@@ -1635,9 +1814,9 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
+	/* 0x06 */ union { s16 unk6; u16 unk6Unsigned; };
+	/* 0x08 */ union { s16 unk8; u16 unk8Unsigned; };
+	/* 0x0A */ union { s16 unkA; u16 unkAUnsigned; };
 	/* 0x0C */ s8 unkC;
 	/* 0x0D */ s8 unkD;
 	/* 0x0E */ s16 unkE;
@@ -1715,8 +1894,13 @@ typedef struct {
 	/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
 	/* 0x04 */ s16 x1;        /* start point */
 	/* 0x06 */ s16 y1;
-	/* 0x08 */ s16 z1;
-	/* 0x0A */ s16 x2;        /* end point */
+	union {
+		struct {
+			/* 0x08 */ s16 z1;
+			/* 0x0A */ s16 x2;        /* end point */
+		};
+		/* 0x08 */ AlienInstance *alien; /* type 2 */
+	};
 	/* 0x0C */ s16 y2;
 	/* 0x0E */ s16 z2;
 	/* 0x10 */ s32 extra;     /* passed to the draw fn; restores render mode when non-zero */
@@ -1796,10 +1980,7 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-	/* 0x03 */ u8 unk3;
-	/* 0x04 */ u8 unk4;
+	/* 0x01 */ u8 lights[4];
 } Unk80080588Entry5; /* size = 0x05 */
 
 typedef struct {
@@ -1808,14 +1989,19 @@ typedef struct {
 	/* 0x02 */ u8 unk2;
 } Unk80080588Entry3; /* size = 0x03 */
 
-typedef struct {
-	/* 0x00 */ u8 unk0;
-	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 unk2;
-} Unk80080588Rgb; /* size = 0x03 */
+typedef Unk80080588Entry3 Unk80080588Rgb;
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x18];
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ s32 unkC;
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ u8 unk14;
+	/* 0x15 */ u8 unk15;
+	/* 0x16 */ u8 unk16;
+	/* 0x17 */ u8 pad17;
 	/* 0x18 */ s32 unk18;
 } Unk80080588Entry1C; /* size = 0x1C */
 
@@ -1844,8 +2030,7 @@ typedef struct {
 	/* 0x1A */ u8 pad1A[0x2];
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ s32 unk20;
-	/* 0x24 */ u8 unk24;
-	/* 0x25 */ u8 pad25[3];
+	/* 0x24 */ s32 unk24;
 	/* 0x28 */ u8 unk28;
 	/* 0x29 */ u8 unk29;
 	/* 0x2A */ u8 unk2A;
@@ -1885,9 +2070,16 @@ typedef struct {
 } Unk8007FE8CArg; /* size = 0x24 */
 
 typedef struct {
-	/* 0x00 */ u8 pad[0x50];
-	/* 0x50 */ s32 unk50;
-	/* 0x54 */ void* unk54;
+ u32 frameCount;
+ struct { u16 start; u16 count; } channels[15];
+ u8 pad40[8];
+} FrontendStreamHeader; /* size = 0x48 */
+
+typedef struct {
+ /* 0x00 */ u8 pad0[8];
+ /* 0x08 */ FrontendStreamHeader header;
+ /* 0x50 */ s32 unk50;
+ /* 0x54 */ void* unk54;
 } FrontendStreamSlot; /* size = 0x58 */
 
 
@@ -1925,7 +2117,7 @@ typedef struct {
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
-	/* 0x0E */ s8 unkE;
+	/* 0x0E */ u8 unkE;
 	/* 0x0F */ u8 unkF;
 	/* 0x10 */ s8 unk10;
 	/* 0x11 */ s8 unk11;
@@ -2171,7 +2363,14 @@ typedef struct {
 } AnimChannelState; /* size = 0x40 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x18];
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ u8 pad6[0x2];
+	/* 0x08 */ f32 unk8;
+	/* 0x0C */ f32 unkC;
+	/* 0x10 */ f32 unk10;
+	/* 0x14 */ u8 pad14[0x4];
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ u8 pad1C[0x3E8];
 	/* 0x404 */ void *unk404;
@@ -2182,6 +2381,16 @@ typedef struct {
 	/* 0x425 */ u8 unk425;
 	/* 0x426 */ u8 unk426;
 } Unk8007F878_D6AD8; /* size = 0x428 */
+
+typedef struct {
+	/* 0x00 */ u32 unk0; /* segmented display-list address */
+	/* 0x04 */ s16 *unk4; /* animation data */
+	/* 0x08 */ s32 unk8;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 padD[0x3];
+} Unk8009E4C8; /* stride = 0x10 */
+
+typedef Unk8009E4C8 Unk8009E4C8_Row[0xD];
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
@@ -2202,7 +2411,7 @@ typedef struct {
 	/* 0x30 */ s32 unk30;
 } Unk8009E8E0; /* size = 0x34 */
 
-// AI - Placed room object instance (one entry in the current room's layout, built from the building data block)
+// AI - Placed room object instance (one entry in the current room's layout, built from the InteriorRoomData record)
 // AI - Each instance references an object type from the room's 32-entry catalog (Unk80070F7CObj) via unk0
 typedef struct {
 	/* 0x00 */ u8 unk0; // AI - room object type index (0-31) into D_800E65BC catalog
@@ -2261,6 +2470,21 @@ typedef struct {
 } Unk169EC8Entry; /* stride 0x14 */
 
 typedef struct {
+	/* 0x00 */ s8 phaseCount;
+	/* 0x01 */ s8 sizeStep;
+	/* 0x02 */ s8 heightStep;
+	/* 0x03 */ s8 fadeStep;
+	/* 0x04 */ u8 pad4[4];
+} EffectParticleConfig; /* size = 0x08 */
+
+typedef struct {
+	/* 0x00 */ u8 r;
+	/* 0x01 */ u8 g;
+	/* 0x02 */ u8 b;
+	/* 0x03 */ u8 alpha;
+} EffectParticleColor; /* size = 0x04 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
@@ -2302,21 +2526,129 @@ typedef struct {
 } Unk8015408EEntry; /* stride = 0xC */
 
 typedef struct {
+	/* 0x00 */ void (*callback)(s16, s16);
+	/* 0x04 */ s16 timer;
+	/* 0x06 */ s16 position[3];
+} EffectCallbackState;
+
+typedef struct {
+	/* 0x00 */ s16 angle;
+	/* 0x02 */ u8 color[3];
+	/* 0x05 */ u8 pad5[7];
+} SpinnerParentState;
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ s8 step[3];
+	/* 0x09 */ u8 unit[3];
+} SpinnerMotionState;
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 age;
+	/* 0x07 */ u8 pad7;
+	/* 0x08 */ s16 buildingId;
+	/* 0x0A */ u8 padA[2];
+} EffectBuildingRecoveryState; /* size = 0x0C */
+
+typedef union {
+	struct {
+		s16 position[3];
+		u8 color[3];
+		u8 highlight[3];
+	} visual;
+	struct {
+		s16 height;
+		s16 width;
+		u8 phase;
+		u8 step;
+		u8 pad6[6];
+	} control;
+} EffectFirePayload; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 shadowColor[3];
+} SpurtVisualState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s8 velocity[3];
+	/* 0x03 */ u8 size;
+	/* 0x04 */ u8 kind;
+	/* 0x05 */ u8 intensity;
+	/* 0x06 */ s16 age;
+	/* 0x08 */ u8 alpha;
+	/* 0x09 */ u8 pad9[3];
+} SpurtEmitterState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ u8 age;
+	/* 0x0B */ u8 padB;
+} TrailParticleState; /* size = 0x0C */
+
+typedef struct {
+    s16 position[3];
+    u8 color[3];
+    u8 pad9;
+    u8 active;
+    u8 padB;
+} SparkEmitterState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ u8 kind;
+	/* 0x0B */ u8 padB;
+} SmokePuffState; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 unkF;
-	/* 0x10 */ u8 unk10;
-	/* 0x11 */ u8 unk11;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ u8 unk14;
-	/* 0x15 */ u8 unk15;
+	union {
+		/* 0x08 */ Unk80052B40 spatialVectors[2];
+		/* 0x08 */ Gfx *displayList;
+		/* 0x08 */ Unk80052B40 positionVector;
+		/* 0x08 */ SmokePuffState smokePuff;
+		/* 0x08 */ EffectFirePayload firePayload;
+		/* 0x08 */ TrailParticleState trailParticle;
+		/* 0x08 */ SparkEmitterState sparkEmitter;
+		/* 0x08 */ SpurtVisualState spurtVisual;
+		/* 0x08 */ SpurtEmitterState spurtEmitter;
+		/* 0x08 */ EffectCallbackState callbackState;
+		/* 0x08 */ SpinnerParentState spinnerState;
+		/* 0x08 */ SpinnerMotionState spinnerMotion;
+		struct {
+			/* 0x08 */ s16 unk8;
+			/* 0x0A */ s16 unkA;
+			/* 0x0C */ s16 unkC;
+			/* 0x0E */ u8 unkE;
+			/* 0x0F */ u8 unkF;
+			/* 0x10 */ u8 unk10;
+			/* 0x11 */ u8 unk11;
+			/* 0x12 */ s16 unk12;
+		};
+		struct {
+			/* 0x08 */ s16 position[3];
+			/* 0x0E */ s16 previousPosition[3];
+		};
+		/* 0x08 */ s16 coordinates[6];
+		/* 0x08 */ u8 payload[12];
+	};
+	union {
+		/* 0x14 */ s16 radialRadius;
+		struct {
+			/* 0x14 */ u8 unk14;
+			/* 0x15 */ u8 unk15;
+		};
+	};
 	/* 0x16 */ u8 pad16[6];
 } Unk80154318Entry; /* stride = 0x1C */
 
@@ -2338,6 +2670,29 @@ typedef struct {
 	/* 0x05 */ u8 unk5;
 	/* 0x06 */ u8 pad6[2];
 } Unk8007E12CEntry8;
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 highDigits;
+	/* 0x0A */ u8 lowDigits;
+	/* 0x0B */ u8 riseSpeed;
+	/* 0x0C */ u8 alpha;
+	/* 0x0D */ u8 padD;
+} FloatingNumberState; /* size = 0x0E */
+
+typedef struct {
+	s16 x;
+	s16 y;
+	s16 z;
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 pad9;
+	s16 width;
+	u8 phase;
+	u8 lifetime;
+} EffectSparkState; /* size = 0x0E */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2384,21 +2739,33 @@ typedef struct {
 } Unk80152CA0Entry; /* stride = 0x3 */
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ s16 pad6;
+	/* 0x08 */ u16 angle;
+	/* 0x0A */ s16 padA;
+	/* 0x0C */ s16 scale[3];
+	/* 0x12 */ u8 duration;
+	/* 0x13 */ u8 pad13;
+} NukeKeyframe; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ s16 unk8;
+	/* 0x06 */ s16 unk6;
+	/* 0x08 */ union { s16 unk8; u16 angle; };
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
-	/* 0x0E */ u8 unkE;
-	/* 0x0F */ u8 padF;
+	/* 0x0E */ union {
+		s16 scaleY;
+		struct { u8 unkE; u8 padF; };
+	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
 	/* 0x14 */ u8 unk14;
 	/* 0x15 */ u8 pad15[3];
-	/* 0x18 */ s32 unk18;
+	/* 0x18 */ union { s32 unk18; NukeKeyframe *keyframe; };
 	/* 0x1C */ s32 unk1C;
 } Unk80153AE0Entry; /* stride = 0x20 */
 
@@ -2424,26 +2791,29 @@ typedef struct {
 	/* 0x23 */ u8 unk23;
 } UnkF9230Func800F4748Entry; /* size = 0x24 */
 
-typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
-	/* 0x16 */ s16 unk16;
-	/* 0x18 */ s16 unk18;
-	/* 0x1A */ s16 unk1A;
-	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ s16 unk1E;
-	/* 0x20 */ s16 unk20;
-	/* 0x22 */ u8 unk22;
-	/* 0x23 */ u8 unk23;
+typedef union {
+	struct {
+		/* 0x00 */ s16 unk0;
+		/* 0x02 */ s16 unk2;
+		/* 0x04 */ s16 unk4;
+		/* 0x06 */ s16 unk6;
+		/* 0x08 */ s16 unk8;
+		/* 0x0A */ s16 unkA;
+		/* 0x0C */ s16 unkC;
+		/* 0x0E */ s16 unkE;
+		/* 0x10 */ s16 unk10;
+		/* 0x12 */ s16 unk12;
+		/* 0x14 */ s16 unk14;
+		/* 0x16 */ s16 unk16;
+		/* 0x18 */ s16 unk18;
+		/* 0x1A */ s16 unk1A;
+		/* 0x1C */ s16 unk1C;
+		/* 0x1E */ s16 unk1E;
+		/* 0x20 */ s16 unk20;
+		/* 0x22 */ u8 unk22;
+		/* 0x23 */ u8 unk23;
+	};
+	s32 words[9];
 } UnkF9230ShadowLimb; /* size = 0x24 */
 
 typedef struct {
@@ -2480,15 +2850,7 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 } UnkF9230Func8010065CEntry; /* size = 0x08 */
 
-typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
-	/* 0x10 */ f32 unk10;
-} UnkA6C64Keyframe; /* stride = 0x14 */
+
 
 typedef struct {
 	/* 0x00 */ s16 x;
@@ -2574,7 +2936,8 @@ typedef struct {
 	/* 0x01 */ s8 unk1;      /* center Z in 1/256 world units */
 	/* 0x02 */ s8 unk2;      /* half-size in 1/256 world units */
 	/* 0x03 */ s8 unk3;      /* 0 = active zone entry */
-	/* 0x04 */ u8 pad04[6];
+	/* 0x04 */ u8 *name;
+	/* 0x08 */ u8 pad08[2];
 	/* 0x0A */ s16 unk0A;
 	/* 0x0C */ s16 unk0C;
 	/* 0x0E */ u8 pad0E[2];
@@ -2592,8 +2955,13 @@ typedef struct {
 
 #pragma pack(1)
 typedef struct {
-	/* 0x00 */ s32 unk0;
-	/* 0x04 */ u16 unk4;
+	union {
+		struct {
+			/* 0x00 */ s32 unk0;
+			/* 0x04 */ u16 unk4;
+		};
+		s16 coordinates[3];
+	};
 } Unk802E71B8; /* size = 0x6 */
 #pragma pack()
 
@@ -2608,7 +2976,7 @@ typedef struct {
 	/* 0x5A */ s16 unk5A;
 } Unk802E70C8; /* size = 0x5C */
 
-/* Gate entry in shield wall. Array: D_8003E0FC[5][8], access [currentLevel-1][idx] */
+/* Gate entry in shield wall. Array: D_8003E0FC_3ECFC[5][8], access [currentLevel-1][idx] */
 typedef struct {
 	/* 0x00 */ s16 xPosition; /* world X position */
 	/* 0x02 */ s16 yPosition; /* world Y position */
@@ -2918,6 +3286,26 @@ typedef struct {
 } Unk158330SrcState;
 
 typedef struct {
+	f32 unk0;
+	f32 unk4;
+	f32 unk8;
+	f32 unkC;
+	f32 unk10;
+	f32 unk14;
+	u8 unk18;
+	u8 unk19;
+	u8 pad1A[0x2];
+} Unk158330SavedObjectState; /* size = 0x1C */
+
+typedef struct {
+	s32 unk0;
+	Unk158330SavedObjectState objects[16];
+	s32 unk1C4;
+	f32 unk1C8;
+	f32 unk1CC;
+} Unk158330SavedRoomState; /* size = 0x1D0 */
+
+typedef struct {
 	u8 pad00[0x14];
 	f32 unk14;
 	f32 unk18;
@@ -2968,12 +3356,39 @@ typedef struct {
 	/* 0x28 */ u8 pad28[0x8];
 } Unk8007C698Npc; /* size = 0x30 */
 
+// AI - One exit/door row of a building-interior layout record
 typedef struct {
-	/* 0x00 */ u8 pad0[0x40];
-	/* 0x40 */ u8 unk40;
-	/* 0x41 */ u8 pad41[0xF];
-	/* 0x50 */ u8 unk50;
-} Unk8007C698CellObj;
+	/* 0x0 */ u8 interiorId;  // destination buildingInteriorToLoadId (-> D_800E65ED)
+	/* 0x1 */ u8 objectIndex; // entry object index into D_800E66A8 (-> D_800E65EC)
+} InteriorRoomExit; /* size = 0x2 */
+
+// AI - Building-interior layout record. D_800D6460 holds the current level's interior
+// asset (0xFE00 bytes = 254 records); the live record is
+// D_800D6460 + buildingInteriorToLoadId * sizeof(InteriorRoomData) (pointed to by D_800E65E8).
+typedef struct {
+	/* 0x00 */ u8 unk00[0x28];        // unreferenced by code
+	/* 0x28 */ u8 anchorCellX;        // world X = (v - 0.5) * 96
+	/* 0x29 */ u8 anchorCellZ;        // world Z = (v - 0.5) * 96
+	/* 0x2A */ u8 unk2A;
+	/* 0x2B */ u8 unk2B;
+	/* 0x2C */ u8 unk2C;
+	/* 0x2D */ u8 unk2D;
+	/* 0x2E */ u8 anchorHeight;       // world Y = ((v >> 1) & 0x7F) + 50
+	/* 0x2F */ u8 unk2F;
+	/* 0x30 */ u8 objectType[16];     // bits 0-4 catalogue id, bits 5-6 orientation, bit 7 flag
+	/* 0x40 */ u8 objectCellX[16];
+	/* 0x50 */ u8 objectCellY[16];
+	/* 0x60 */ u8 objectFlags[16];    // bits 2-7 event/room id, bits 0-1 sub-state
+	/* 0x70 */ u8 objectRoomId[16];   // low 6 bits loading-zone id, 0x40 flag
+	/* 0x80 */ u8 tileMap[10 * 10];   // gridWidth * gridHeight tile ids, 0xFF = solid
+	/* 0xE4 */ u8 gridWidth;          // <= 10
+	/* 0xE5 */ u8 gridHeight;         // <= 10
+	/* 0xE6 */ u8 objectCount;        // <= 16
+	/* 0xE7 */ u8 roomSetIndex;       // + D_8009C4C4_184584[currentLevel] = room index
+	/* 0xE8 */ u8 viewMode;           // copied to D_800A0960_188A20
+	/* 0xE9 */ InteriorRoomExit exitTable[3];
+	/* 0xEF */ u8 padEF[0x11];
+} InteriorRoomData; /* size = 0x100 */
 
 // AI - Interior lighting/color data (D_8008DE78_175F38): 8 s16 color/brightness components
 typedef struct {
@@ -3130,5 +3545,81 @@ typedef struct {
 	/* 0x00 */ u8 tick;
 	/* 0x01 */ u8 frame;
 } Unk8016006C; /* size = 0x02 */
+
+/* Terrain cells store flags above the six-bit height. */
+typedef struct {
+	u16 flags : 10;
+	u16 height : 6;
+} TerrainCell;
+
+typedef struct {
+	u16 terrainObject : 1;
+	u16 flag14 : 1;
+	u16 flag13 : 1;
+	u16 flag12 : 1;
+	u16 flag11 : 1;
+	u16 flag10 : 1;
+	u16 terrainType : 4;
+	u16 height : 6;
+} TerrainObjectCell;
+
+typedef union {
+	u16 col[256];
+	TerrainCell cells[256];
+	TerrainObjectCell objects[256];
+} D_801FEA30_Row;
+
+typedef union {
+	s32 word;
+	u8 bytes[4];
+	struct {
+		s16 high;
+		s16 low;
+	} halves;
+} SignedWord;
+
+typedef struct {
+	s16 unk0;     // 0x00
+	s16 unk2;     // 0x02
+	s16 unk4;     // 0x04
+	s16 unk6;     // 0x06
+	s16 unk8;     // 0x08
+} Unk14C280Entry; // 0x0A bytes
+
+
+
+typedef u8 MapTextureStrip[2048];
+
+typedef union {
+	u16 pixels[8][8][8][4][8][4];
+	u8 rows[8][16384];
+	u8 bytes[131072];
+} MapTexture;
+
+typedef struct {
+	s8 x;
+	s8 z;
+	u8 size;
+	u8 music;
+} MapStage;
+
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+} EffectRgb;
+
+typedef struct {
+	u8 r;
+	u8 g;
+	u8 b;
+	u8 unk3;
+} TerrainPaletteColor;
+
+typedef struct {
+	f32 r;
+	f32 g;
+	f32 b;
+} TerrainLightTint;
 
 #endif

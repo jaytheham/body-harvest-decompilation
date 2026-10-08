@@ -2,13 +2,33 @@
 #include <ultra64.h>
 #include "common.h"
 
-s32 D_80031450_32050 = 0;
-s32 D_80031454 = 0;
-s32 D_80031458[] = {0x69, 0x6A, 0x6D, 0x6B, 0x6C, 0x05, 0x05};
-s32 D_80031474[] = {0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 0, 1, 9, 21, 22, 23, 24, 0, 0};
-s8 D_800314C4 = 0x19; // Number humans killed to end game?
-s32 D_800314C8_320C8 = 0;
-OSMesg D_800314CC_320CC = 1;
+/* Read-only strings, numeric constants, and switch targets. */
+const f64 D_80037620_38220[] = {32767.0};
+const f64 D_80037628_38228[] = {32767.0};
+const f64 D_80037630_38230[] = {32767.0};
+const f64 D_80037638_38238[] = {32767.0};
+const f64 D_80037640_38240[] = {32767.0};
+const f64 D_80037648_38248[] = {2.8};
+const f32 D_80037650_38250[] = {6000.0f};
+const f32 D_80037654_38254[] = {0.2617993950843811f};
+const f32 D_80037658_38258[] = {0.2617993950843811f};
+
+void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
+void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3);
+
+/* Unreferenced zero block preceding the projection effect table. */
+s32 D_80031A80_32680[] = {0, 0, 0, 0};
+
+UnkE830ModeEntry D_80031A90_32690[] = {
+	{func_8000DCCC_E8CC, 0, {0, 0}, 0.0f, 0.7f, 1000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{func_8000DEFC_EAFC, 0, {0, 0}, 0.0f, 0.8f, 3000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E048_EC48, 0, {0, 0}, 0.0f, 2.0f, 1000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E048_EC48, 1000, {0, 0}, 49.2f, -2.0f, 1000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E3DC_EFDC, 0, {0, 0}, 0.0f, 0.1f, 0x4000, 0, 0, 0, 0, {0, 0}, 0.0f},
+	{(void (*)(s32, s32, s32, s32))func_8000E048_EC48, 0, {0, 0}, 0.0f, 0.0f, 0x4000, 0x7B, 0xEA, 0x159, 0, {0, 0}, 0.0f},
+};
 
 void func_8000DC30_E830(s32 arg0, s32 arg1) {
 	s16 *src;
@@ -63,29 +83,18 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 	while (new_var != (1 * 0));
 }
 
-// https://decomp.me/scratch/QRS82
-// CURRENT(121)
 #ifdef NON_MATCHING
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
   s32 sp54;
   s32 sp50;
-  s32 pad4C;
-  s32 pad48;
-  s32 pad44;
-  s32 sp40;
-  s16 pad3E;
-  s16 pad3C;
-  s16 pad3A;
-  s16 pad38;
-  s16 sp36;
-  f64 sp28;
-  f64 sp20;
   s32 temp_a1;
   s32 temp_t1;
   s32 var_s1;
+  s32 sp40;
   f32 temp_f12;
-  f64 temp_f18;
+  s32 pad38;
+  s16 sp36;
   s16 temp_v0;
   sp54 = D_80059CD2;
   sp50 = D_80059CD4;
@@ -94,19 +103,18 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
   var_s1 = (((D_80059CD0 * 2) * (temp_t1 - temp_a1)) + (D_80059CD0 * temp_a1)) / 1296;
   
   sp36 = coss(var_s1);
-  temp_f18 = (f32) sins(var_s1);
-  sp28 = sp50;
-  sp20 = sp54;
-  sp40 = (((temp_f18 / 32768.0) * sp28) + ((((f32) sp36) / 32768.0) * sp20));
+
+
+  sp40 = ((((f32) sins(var_s1) / 32768.0) * sp50) + ((((f32) sp36) / 32768.0) * sp54));
   sp36 = sins(var_s1);
   temp_v0 = coss(var_s1);
   if (var_s1 >= 0x8000)
   {
 	var_s1 = 0x7FFF;
   }
-  temp_f12 = ((D_80037620_38220 - (((f32) var_s1))) / D_80037620_38220);
+  temp_f12 = (32767.0 - (f32) var_s1) / 32767.0;
   D_80059CD2 = ((((f32) sp40) * temp_f12));
-  D_80059CD4 = (((((s32) (((((f32) temp_v0) / 32768.0) * sp28) + (-(((f32) sp36) / 32768.0) * sp20)))) * temp_f12));
+  D_80059CD4 = (((((s32) (((((f32) temp_v0) / 32768.0) * sp50) + (-(((f32) sp36) / 32768.0) * sp54)))) * temp_f12));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DCCC_E8CC.s")
@@ -143,13 +151,13 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			temp_v0 -= 4;
 			temp_v1 = (arg1 + arg3) - 1;
 			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037628 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628);
+			var_f0 = (f32) ((D_80037628_38228_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628_38228_R);
 			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
 		} else {
 			temp_v0 -= 4;
 			temp_v1 = (arg1 + arg3) - 7;
 			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037630 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630);
+			var_f0 = (f32) ((D_80037630_38230_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630_38230_R);
 			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
 		}
 		D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 - 0x480) * var_f0) + 1152.0f);
@@ -160,13 +168,13 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		temp_v0 -= 6;
 		temp_v1 = (arg1 + arg3) - 1;
 		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037638 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638);
+		var_f0 = (f32) ((D_80037638_38238_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638_38238_R);
 		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
 	} else {
 		temp_v0 -= 6;
 		temp_v1 = (arg1 + arg3) - 7;
 		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037640 - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640);
+		var_f0 = (f32) ((D_80037640_38240_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640_38240_R);
 		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
 	}
 	D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 + 0x480) * var_f0) - 1152.0f);
@@ -179,7 +187,7 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 	D_8005BAE8->unk0 = (f32) (D_8005BAE8->unk0 + D_8005BAE8->unkC);
 	D_8005BAE8->unk4 = (f32) (D_8005BAE8->unk4 + D_8005BAE8->unk10);
-	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648_38248);
+	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648_38248_R);
 	D_80059CD2 = (s16) (s32) (D_8005BAE8->unk0 + (f32) (arg2 << 8));
 	D_80059CD4 = (s16) (s32) (-D_8005BAE8->unk4 - (f32) (arg3 << 8));
 	D_80059CD6 = 0;
@@ -191,9 +199,9 @@ void osSetTime(s32 arg0, s32 arg1) {
 	D_8005BAF0 = arg1;
 }
 
-/* Initialise projection state from entry arg0 in D_80031A90 table, then copy framebuffer region. */
+/* Initialise projection state from entry arg0 in D_80031A90_32690 table, then copy framebuffer region. */
 void func_8000E4C4_F0C4(s32 arg0) {
-	D_80059CDC = &D_80031A90[arg0];
+	D_80059CDC = &D_80031A90_32690[arg0];
 	D_80059CD0 = D_80059CDC->unk4;
 	D_80059CE0 = D_80059CDC->unk8;
 	D_80059CD8 = 0;
@@ -255,11 +263,11 @@ s32 func_8000E53C_F13C(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, D_80037650_38250, 1.0f);
+	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, D_80037650_38250_R, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, (u32) &sp136);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	spA0 = sinf(D_80037654_38254);
-	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((spA0 / cosf(D_80037658_38258)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	spA0 = sinf(D_80037654_38254_R);
+	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((spA0 / cosf(D_80037658_38258_R)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 

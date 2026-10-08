@@ -1,3 +1,4 @@
+#define FEC70_BSS
 #include <ultra64.h>
 #include "common.h"
 
@@ -46,6 +47,8 @@ const f64 D_80144698_153648[1] = {0.0};
 
 u32 D_8013FCC4_14EC70[1] = {0x8004F374};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
+
+
 
 // CURRENT(3405)
 #ifdef NON_MATCHING
@@ -941,32 +944,38 @@ void func_800F1134_1000E4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1134_1000E4.s")
 #endif
 
-// CURRENT(21609)
 // Cutscene - Alpha 1 landing at start of levels 1-4 (Comet uses func_802D67A8 in Comet overlay)
 #ifdef NON_MATCHING
-s32 func_800F1DDC_100D8C(void) {
-	s16 minX;
-	s16 maxX;
-	s16 minZ;
-	s16 maxZ;
+int func_800F1DDC_100D8C(void) {
+	f32 speed;
+	s32 level;
 	s16 p3X;
 	s16 p3Z;
+	s16 maxX;
+	s16 maxZ;
+	s16 minX;
+	s16 minZ;
 	f32 f12;
-	s32 temp;
+	f32 temp;
+	s32 x;
+	s32 z;
+	s32 flag;
 
-	D_80157F96 = 1;
-	if ((currentControllerStates[0].button & 0x9000) && (D_80157F8C > 0) && (D_80031B50 == 1)) { // cutscene would be skippable, but D_80031B50 is never set to 1 in finished game
+	flag = 1;
+	D_80157F96 = flag;
+  // cutscene would be skippable, but D_80031B50 is never set to 1 in finished game
+	if ((currentControllerStates[0].button & 0x9000) && ((s16)D_80157F8C > 0) && (D_80031B50_32750 == flag)) {
 		buildingInstances[D_80159DDF].yCoord =
 			func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8;
 		D_80159DE2 = 0;
 
-		func_800CD390_DC340(D_80157F9E[0]);
-		func_800CD390_DC340(D_80157F9E[1]);
-		func_800CD390_DC340(D_80157F9E[2]);
+		func_800CD390_DC340(D_80157F9E);
+		func_800CD390_DC340(D_80157F9F);
+		func_800CD390_DC340(D_80157FA0);
 
 		if (currentLevel == LEVEL_GREECE) {
 			func_800FB44C_10A3FC(D_80052B34, -5296.0f);
-			func_800FB484_10A434(D_80052B34, -31744.0f);
+			func_800FB484_10A434(D_80052B34, -7936.0f);
 			func_800FB468_10A418(D_80052B34, (f32)func_800F9F00_108EB0(D_80052B34->unk0, D_80052B34->unk4));
 		} else if (currentLevel == LEVEL_JAVA) {
 			func_800FB44C_10A3FC(D_80052B34, -256.0f);
@@ -990,25 +999,25 @@ s32 func_800F1DDC_100D8C(void) {
 
 	D_80159DDF = func_80120634_12F5E4();
 
-	if (currentLevel == LEVEL_AMERICA) {
-		p3X = buildingInstances[D_80159DDF].xCoord;
-		p3Z = buildingInstances[D_80159DDF].zCoord;
-
-		maxZ = p3Z + 0x64;
-		maxX = p3X + 0x78;
-		minZ = p3Z - 0x50;
-		minX = p3X - 0x78;
+	level = currentLevel;
+	if (level == LEVEL_AMERICA) {
+		x = buildingInstances[D_80159DDF].xCoord;
+		z = buildingInstances[D_80159DDF].zCoord;
+		p3Z = z + 0x64;
+		maxX = x + 0x78;
+		maxZ = z - 0x50;
+		minX = x - 0x78;
+		minZ = maxZ;
+		p3X = x;
 	} else {
-		p3X = buildingInstances[D_80159DDF].xCoord - 0x64;
-		maxX = buildingInstances[D_80159DDF].xCoord + 0x64;
-		maxZ = buildingInstances[D_80159DDF].zCoord + 0x78;
-		minX = buildingInstances[D_80159DDF].xCoord + 0x50;
-		minZ = buildingInstances[D_80159DDF].zCoord - 0x78;
-		p3Z = buildingInstances[D_80159DDF].zCoord;
-	}
-
-	if ((u16)D_80157F8C >= 6) {
-		return 0;
+		x = buildingInstances[D_80159DDF].xCoord;
+		z = buildingInstances[D_80159DDF].zCoord;
+		p3X = x - 0x64;
+		maxX = x + 0x64;
+		maxZ = z + 0x78;
+		minX = x + 0x50;
+		minZ = z - 0x78;
+		p3Z = z;
 	}
 
 	switch (D_80157F8C) {
@@ -1037,87 +1046,79 @@ s32 func_800F1DDC_100D8C(void) {
 		func_800FB484_10A434(D_80052B34, (f32)buildingInstances[D_80159DDF].zCoord);
 
 		D_80157F8E = 0;
-		D_80157F9E[0] = 0xFF;
-		D_80157F9E[1] = 0xFF;
-		D_80157F9E[2] = 0xFF;
-		D_80157F8C++;
+		D_80157F9E = D_80157F9F = D_80157FA0 = 0xFF;
+		D_80157F8C = (s16)D_80157F8C + 1;
 
 		if (currentLevel == LEVEL_GREECE) {
-			D_80157FE4 = 655.0f;
+			temp = 15.9f;
 			D_80159DE2 = 0x28F;
+			D_80157FE4_Write = temp;
 		} else {
-			D_80157FE4 = 500.0f;
+			temp = 13.7f;
 			D_80159DE2 = 0x1F4;
+			D_80157FE4_Write = temp;
+		}
+		/* Retain the float temporary through IDO's branch-store optimization. */
+		if (temp) {
 		}
 
-		D_80157F9E[0] = func_800CD1F8_DC1A8(p3X, buildingInstances[D_80159DDF].yCoord, p3Z, 0, -35, 0);
-		D_80157F9E[1] = func_800CD1F8_DC1A8(maxX, buildingInstances[D_80159DDF].yCoord, maxZ, 0, -35, 0);
-		D_80157F9E[2] = func_800CD1F8_DC1A8(minX, buildingInstances[D_80159DDF].yCoord, minZ, 0, -35, 0);
+		D_80157F9E = func_800CD1F8_DC1A8(p3X, buildingInstances[D_80159DDF].yCoord, p3Z, 0, -35, 0);
+		D_80157F9F = func_800CD1F8_DC1A8(maxX, buildingInstances[D_80159DDF].yCoord, maxZ, 0, -35, 0);
+		D_80157FA0 = func_800CD1F8_DC1A8(minX, buildingInstances[D_80159DDF].yCoord, minZ, 0, -35, 0);
 
-		if (D_80157F8E < 2) {
-			D_80157F8E++;
-			return 0;
+		if (D_80157F8E++ >= 2) {
+			D_80157F8E = 0;
+			D_80157F8C = (s16)D_80157F8C + 1;
 		}
-
-		D_80157F8E = 0;
-		D_80157F8C++;
-		return 0;
+		break;
 
 	case 1:
-		D_80159DE2 = (u16)(s32)((f32)D_80159DE2 - D_80157FE4);
-		if ((D_80159DE2 >= 0x8001) || (D_80159DE2 == 0)) {
-			if (D_80157FE4 != 0.0f) {
-				D_80159DE2 = 0;
-				func_80135D44_144CF4(0, D_80052B34->unk2, 0, 2.0f);
-				D_80157FE4 = 0.0f;
-			}
-		} else if (D_80157FE4 != 0.0f) {
-			D_80157FE4 -= 0.5f;
+		speed = D_80157FE4;
+		D_80159DE2 -= speed;
+		if (((D_80159DE2 >= 0x8001) || (D_80159DE2 == 0)) && (speed != 0.0f)) {
+			D_80159DE2 = 0;
+			level = buildingInstances[D_80159DDF].yCoord;
+			D_80157FE4_Write = 0.0f;
+			func_80135D44_144CF4(x, level, z, 2.0f);
+		} else if (speed != 0.0f) {
+			speed -= 0.2;
+			D_80157FE4_Write = speed;
 		}
 
-		func_800CD2E8_DC298(p3X, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), p3Z, D_80157F9E[0]);
-		func_800CD2E8_DC298(maxX, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), maxZ, D_80157F9E[1]);
-		func_800CD2E8_DC298(minX, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), minZ, D_80157F9E[2]);
+		func_800CD2E8_DC298(p3X, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), p3Z, D_80157F9E);
+		func_800CD2E8_DC298(maxX, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), maxZ, D_80157F9F);
+		func_800CD2E8_DC298(minX, (s16)(buildingInstances[D_80159DDF].yCoord + (D_80159DE2 * 4)), minZ, D_80157FA0);
 
-		if (D_80157F8E < 0x79) {
-			D_80157F8E++;
-			return 0;
+		if (D_80157F8E++ >= 0x79) {
+			D_80157F8E = 0;
+			D_80157F8C = (s16)D_80157F8C + 1;
 		}
-
-		D_80157F8E = 0;
-		D_80157F8C++;
-		return 0;
+		break;
 
 	case 2:
 		if (D_80157F8E == 0) {
-			func_800CD390_DC340(D_80157F9E[0]);
-			func_800CD390_DC340(D_80157F9E[1]);
-			func_800CD390_DC340(D_80157F9E[2]);
+			func_800CD390_DC340(D_80157F9E);
+			func_800CD390_DC340(D_80157F9F);
+			func_800CD390_DC340(D_80157FA0);
 			D_801493E0 = 1;
 		}
 
-		D_8015EA2C += 0.5f;
+		D_8015EA2C += 0.04511;
 
-		if (D_80157F8E < 0x14) {
-			D_80157F8E++;
-			return 0;
+		if (D_80157F8E++ >= 0x14) {
+			D_80157F8E = 0;
+			D_80157F8C = (s16)D_80157F8C + 1;
 		}
-
-		D_80157F8E = 0;
-		D_80157F8C++;
-		return 0;
+		break;
 
 	case 3:
 		func_800EC3A0_FB350(4);
 
-		if (D_80157F8E < 2) {
-			D_80157F8E++;
-			return 0;
+		if (D_80157F8E++ >= 2) {
+			D_80157F8E = 0;
+			D_80157F8C = (s16)D_80157F8C + 1;
 		}
-
-		D_80157F8E = 0;
-		D_80157F8C++;
-		return 0;
+		break;
 
 	case 4:
 		func_800EC484_FB434(D_80052B34, currentControllerStates);
@@ -1127,8 +1128,8 @@ s32 func_800F1DDC_100D8C(void) {
 		if (D_80157F8E < 0x17) {
 			func_800FB468_10A418(D_80052B34, ((f32)temp + 44.0f) - ((f32)(D_80157F8E * 2)));
 		} else {
-			if (D_8015EA2C >= 0.0f) {
-				D_8015EA2C -= 1.0f;
+			if (D_8015EA2C >= 0.0) {
+				D_8015EA2C -= 0.022;
 			} else {
 				D_8015EA2C = 0.0f;
 				D_8005254C = -1;
@@ -1136,14 +1137,11 @@ s32 func_800F1DDC_100D8C(void) {
 			func_800FB468_10A418(D_80052B34, (f32)temp);
 		}
 
-		if (D_80157F8E < 0xB5) {
-			D_80157F8E++;
-			return 0;
+		if (D_80157F8E++ >= 0xB5) {
+			D_80157F8E = 0;
+			D_80157F8C = (s16)D_80157F8C + 1;
 		}
-
-		D_80157F8E = 0;
-		D_80157F8C++;
-		return 0;
+		break;
 
 	case 5:
 		D_80159DDF = 0xFF;
@@ -1154,6 +1152,11 @@ s32 func_800F1DDC_100D8C(void) {
 
 	return 0;
 }
+
+
+static void func_800F2888_101838(void) {
+}
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1DDC_100D8C.s")
 #endif

@@ -1,7 +1,7 @@
 compiler_type = "ido"
 
 [preserve_macros]
-"_?g[DS]P.*" = "void"
+"_?gs?[DS]P.*" = "void"
 "G_IM_SIZ_.*" = "int"
 "G_[AC]C.*" = "int"
 "G_MTX_.*" = "int"

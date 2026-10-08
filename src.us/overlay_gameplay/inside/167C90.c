@@ -85,10 +85,9 @@ void func_8007FBD0_167C90(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FBD0_167C90.s")
 #endif
 
-// https://decomp.me/scratch/2g3yf
-// CURRENT(1920) 
-#ifdef NON_MATCHING
+// CURRENT(30) 
 // AI - Main camera update dispatch: select view mode, set up projection and look-at matrices
+#ifdef NON_MATCHING
 void func_8007FC74_167D34(void) {
 	u16 sp56;
 	f32 sp50;
@@ -100,17 +99,17 @@ void func_8007FC74_167D34(void) {
 		if (func_800703EC_1584AC() != 4) {
 			D_800E73DF = 1;
 		}
-	} else if ((D_800E7398 != 0) && (D_80034484 == 0) && (func_8001A114_1AD14() != 0xFF)) {
+	} else if ((D_800E7398 != 0) && (D_80034484_35084 == 0) && (func_8001A114_1AD14() != 0xFF)) {
 		D_800E73DF = 3;
-	} else if ((u8)D_800E73DF != 2 && (u8)D_800E73DF != 5 && (u8)D_800E73DF != 6) {
+	} else if (D_800E73DF != 2 && D_800E73DF != 5 && D_800E73DF != 6) {
 		D_800E73DF = D_80047F80;
 	}
 
-	if (((u8)D_800E73DE == 1) && ((u8)D_800E73DF == 4)) {
+	if ((D_800E73DE == 1) && (D_800E73DF == 4)) {
 		func_800808D0_168990();
 	}
 
-	switch ((u8)D_800E73DF - 1) {
+	switch (D_800E73DF - 1) {
 		case 2: // Talking to NPC view
 			func_800804E0_1685A0();
 			break;
@@ -139,7 +138,7 @@ void func_8007FC74_167D34(void) {
 	}
 
 	D_800A096C_188A2C = D_800A0968_188A28;
-	D_800E73DE = (u8)D_800E73DF;
+	D_800E73DE = D_800E73DF;
 
 	if ((D_800E659C == D_8008DDF4_175EB4) && (D_800E65A4 == D_8008DDFC_175EBC)) {
 		D_8008DDF4_175EB4 -= 10.0f;
@@ -150,11 +149,11 @@ void func_8007FC74_167D34(void) {
 	sp4C = D_800E65A4 - D_8008DDFC_175EBC;
 	temp_f0 = sqrtf((sp50 * sp50) + (sp4C * sp4C));
 
-	if ((D_800E7398 == 0) && ((u8)D_800E73DF != 4) && ((u8)D_800E73DF != 5)) {
+	if ((D_800E7398 == 0) && (D_800E73DF != 4) && (D_800E73DF != 5)) {
 		D_800E65A0 = 50.0f - (temp_f0 / 6.0f);
 	}
 
-	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * D_800A4F20_18CFE0[0]) / 32768.0);
+	D_8008DDF0_175EB0 = ((((f32)func_80003824_4424(sp4C, sp50)) * 180.0) / 32768.0);
 	if (D_8008DDF0_175EB0 < 0.0f) {
 		D_8008DDF0_175EB0 += 360.0f;
 	}
@@ -165,18 +164,19 @@ void func_8007FC74_167D34(void) {
 	D_800E6A74 = 0x4000 - D_800E73E0;
 	func_80073A50_15BB10();
 
-	guPerspective((Mtx *)D_8005BB38, &sp56, 40.0f, 1.3333334f, D_800A097C_188A3C, D_800A0978_188A38, 1.0f);
+	guPerspective(D_8005BB38, &sp56, 40.0f, 1.3333334f, D_800A097C_188A3C, D_800A0978_188A38, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, &sp56);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt((Mtx *)D_8005BB38, D_8008DDF4_175EB4, D_8008DDF8_175EB8, D_8008DDFC_175EBC, D_800E659C, D_800E65A0,
+	guLookAt(D_8005BB38, D_8008DDF4_175EB4, D_8008DDF8_175EB8, D_8008DDFC_175EBC, D_800E659C, D_800E65A0,
 			 D_800E65A4, 0.0f, 1.0f, 0.0f);
-	guMtxL2F(D_800E7350, (Mtx *)D_8005BB38);
+	guMtxL2F(D_800E7350, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FC74_167D34.s")
 #endif
+
 
 // AI - Store three view-related values (NPC target coordinates)
 void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
@@ -189,7 +189,7 @@ void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
 #ifdef NON_MATCHING
 // AI - Compute camera position from spherical coords (yaw/pitch/distance) with collision smoothing
 void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4) {
-	volatile f32 sp74;
+	f32 sp74;
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
@@ -200,9 +200,9 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 	s32 pad7;
 	s32 pad8;
 	s32 pad9;
-	volatile f32 sp70;
-	volatile f32 sp68;
-	volatile f32 sp64;
+	f32 sp70;
+	f32 sp68;
+	f32 sp64;
 	f32 temp_f0;
 	f32 temp_f0_2;
 	f32 temp_f2;
@@ -310,21 +310,13 @@ void func_800804E0_1685A0(void) {
 	s32 temp_t6;
 	u16 temp_t2;
 	u16 temp_t3;
-	u8 *temp_v0;
 
-	temp_t6 = D_800E7394[0x28];
-	temp_v0 = &D_800E7394[0x28];
+	temp_t6 = D_800E7394->anchorCellX;
 	temp_f6 = (f64) temp_t6;
-	if (temp_t6 < 0) {
-		temp_f6 += 4294967296.0;
-	}
-	temp_t1 = temp_v0[1];
-	temp_f12 = ((temp_v0[6] >> 1) & 0x7F) + 50;
+	temp_t1 = D_800E7394->anchorCellZ;
+	temp_f12 = ((D_800E7394->anchorHeight >> 1) & 0x7F) + 50;
 	temp_f2 = (f32) ((temp_f6 - 0.5) * 96.0);
 	temp_f10 = (f64) temp_t1;
-	if (temp_t1 < 0) {
-		temp_f10 += 4294967296.0;
-	}
 	temp_f14 = (f32) ((temp_f10 - 0.5) * 96.0);
 
 	if ((f64) D_800E73B0 < 1.0) {
@@ -618,7 +610,7 @@ s16 func_80080FD8_169098(void) {
 // CURRENT(1620)
 #ifdef NON_MATCHING
 // AI - Map yaw angle to a compass-direction marker index for the debug map
-s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
+u8 func_800811DC_16929C(s16 arg0, s32 arg1) {
 	f32 temp_f2;
 	s32 var_v1;
 
@@ -942,55 +934,69 @@ void func_80081E90_169F50(s16 arg0, s16 arg1, s16 arg2) {
 	D_800E746A = a3->unk12;
 }
 
-#ifdef NON_MATCHING
+// CURRENT(935)
 // AI - Render an ASCII debug map showing collision grid, player position, and camera markers
+#ifdef NON_MATCHING
 void func_80081F98_16A058(void) {
-	u8 sp58[0x9C50];
-	u8 temp;
-	u8 firstMarker;
-	u8 secondMarker;
 	s16 playerX;
 	s16 playerY;
-	s16 markerYaw;
-	s16 row;
+	s32 row;
 	s16 x;
 	s16 y;
 	s32 col;
+	s8 markerCol;
 	s32 width;
+	u8 sp58[0x9C38];
+	u8 (*mapRows)[0xC8];
+	s32 printWidth;
+	u8 secondMarker;
+	u8 firstMarker;
 	s32 height;
-	UnkS8Pair *markerOffsets;
+	s16 markerYaw;
+	const UnkS8Pair *markerOffsets;
+	s32 cell;
 
 	height = D_800E6464 + 2;
+	row = 0;
 	if (height > 0) {
+	do {
 		width = D_800E6460 + 2;
-		for (row = 0; row < height; row++) {
-			if (width > 0) {
-				for (col = 0; col < width; col++) {
-					temp = D_800E6468[(row * width) + col];
-					if (temp == 0xFF) {
-						sp58[(row * 0xC8) + col] = 0x5F;
-					} else if (temp == 1) {
-						sp58[(row * 0xC8) + col] = 0x31;
-					} else {
-						sp58[(row * 0xC8) + col] = 0x2E;
-					}
-				}
+		col = 0;
+		if (width > 0) {
+			printWidth = width * row;
+			do {
+				cell = D_800E6468[printWidth];
+				if (cell == 0xFF) {
+				((u8 (*)[0xC8]) sp58)[row][col] = 0x5F;
+			} else if (cell == 1) {
+				((u8 (*)[0xC8]) sp58)[row][col] = 0x31;
+			} else {
+				((u8 (*)[0xC8]) sp58)[row][col] = 0x2E;
 			}
+				col++;
+				col--;
+				col++;
+				printWidth++;
+			} while (col < width);
 		}
+		row++;
+	} while (row < (D_800E6464 + 2));
 	}
 
+	mapRows = (u8 (*)[0xC8]) sp58;
 	playerX = (s16) (D_800E6A78.unk4C / 96.0f);
 	playerY = (s16) (D_800E6A78.unk54 / 96.0f);
-	sp58[(playerY * 0xC8) + playerX] = 0x50;
+	mapRows[playerY][playerX] = 0x50;
 	markerYaw = 0x4000 - D_800E6A78.unkE;
 
 	if (D_800E73E8 > 155.0f) {
 		markerOffsets = D_800A09A4_188A64;
-		for (col = 0; col < 0x18; col += 2) {
-			x = markerOffsets[col / 2].unk0 + playerX;
-			y = markerOffsets[col / 2].unk1 + playerY;
+		for (markerCol = 0; markerCol < 0x18; markerCol += 2) {
+			x = ((const s8 *) markerOffsets)[markerCol];
+			x += playerX;
+			y = ((const s8 *) markerOffsets)[markerCol + 1] + playerY;
 			if ((x >= 0) && (y >= 0)) {
-				sp58[(y * 0xC8) + x] = 0x4F;
+				mapRows[y][x] = 0x4F;
 			}
 		}
 
@@ -1000,70 +1006,69 @@ void func_80081F98_16A058(void) {
 		x = markerOffsets[firstMarker].unk0 + playerX;
 		y = markerOffsets[firstMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x5E;
+			mapRows[y][x] = 0x5E;
 		}
 
 		x = markerOffsets[secondMarker].unk0 + playerX;
 		y = markerOffsets[secondMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x21;
+			mapRows[y][x] = 0x21;
 		}
 	} else {
 		markerOffsets = D_800A09BC_188A7C;
-		for (col = 0; col < 0x10; col += 2) {
-			x = markerOffsets[col / 2].unk0 + playerX;
-			y = markerOffsets[col / 2].unk1 + playerY;
-			sp58[(y * 0xC8) + x] = 0x2A;
+		for (markerCol = 0; markerCol < 0x10; markerCol += 2) {
+			x = ((const s8 *) markerOffsets)[markerCol] + playerX;
+			y = ((const s8 *) markerOffsets)[markerCol + 1] + playerY;
+			mapRows[y][x] = 0x2A;
 		}
 
 		firstMarker = func_800811DC_16929C(D_800E73E0, 0);
 		secondMarker = func_800811DC_16929C(markerYaw, 0);
 
-		x = markerOffsets[firstMarker].unk0 + playerX;
+		x = markerOffsets[firstMarker].unk0;
+		x += playerX;
 		y = markerOffsets[firstMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x5E;
+			mapRows[y][x] = 0x5E;
 		}
 
 		x = markerOffsets[secondMarker].unk0 + playerX;
 		y = markerOffsets[secondMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
-			sp58[(y * 0xC8) + x] = 0x21;
+			mapRows[y][x] = 0x21;
 		}
 	}
 
-	osSyncPrintf("\n");
-	if (height > 0) {
-		for (row = 0; row < height; row++) {
-			width = D_800E6460 + 2;
-			if (width > 0) {
-				for (col = 0; col < width; col++) {
-					osSyncPrintf("%c", D_800E6468[(row * D_800E6464) + col]);
-				}
-			}
-			osSyncPrintf("\n");
+	osSyncPrintf(D_800A4E34_18CEF4);
+	for (row = 0; row < (D_800E6464 + 2); row++) {
+		if ((D_800E6460 + 2) > 0) {
+			col = 0;
+			do {
+				osSyncPrintf(D_800A4E3C_18CEFC, D_800E6468[(row * D_800E6464) + col]);
+				col++;
+			} while (col < (D_800E6460 + 2));
 		}
+		osSyncPrintf(D_800A4E40_18CF00);
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081F98_16A058.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(1655)
 // AI - Camera wall avoidance: detect collisions and rotate camera to prevent clipping
+#ifdef NON_MATCHING
 void func_8008247C_16A53C(void) {
 	s32 delta;
-	s32 pad0;
-	s32 pad1;
 	s32 magnitude;
+ s32 tempYaw;
+	u8 sp6A;
+	u8 sp6B;
 	Vec3f sp5C;
 	Vec3f sp50;
 	Unk8007CAA8_6A40 sp2C;
-	s16 width;
 	s16 tempA0;
 	s16 tempA1;
-	u8 sp6A;
-	u8 sp6B;
 
 	if (D_800E7480 != 0) {
 		delta = func_80080DA8_168E68(D_800E7484, D_800E73E0);
@@ -1075,12 +1080,12 @@ void func_8008247C_16A53C(void) {
 
 		if (magnitude < 0xB6) {
 			D_800E7480 = 0;
-			if (D_800A0964_188A24 == 0) {
+			if (D_800A0964_188A24_target == 0) {
 				D_800E73E0 = D_800E7484;
 			} else {
 				D_800E73E0 = D_800E739C;
 			}
-		} else if (D_800A0964_188A24 == 0) {
+		} else if (D_800A0964_188A24_target == 0) {
 			D_800E73E0 -= delta / 8;
 		} else {
 			D_800E73E0 = D_800E739C;
@@ -1099,15 +1104,14 @@ void func_8008247C_16A53C(void) {
 		sp6A = sp2C.unkD;
 		osSyncPrintf(&D_800A4E44_18CF04);
 
-		if (sp2C.unkE < 5U) {
-			switch (sp2C.unkE) {
-				case 0:
+		switch (sp2C.unkE) {
+				case 1:
 					D_800E7480 = 1;
-					width = D_800E6460 + 2;
+					
 					tempA0 = (s16) (sp6B + 1);
-					if (D_800E6468[(width * (s16) (sp6A + 1)) + tempA0] != 0xFF) {
+					if (D_800E6468[((D_800E6460 + 2) * (s16) (sp6A + 1)) + tempA0] != 0xFF) {
 						D_800E7484 = 0;
-					} else if (D_800E6468[(width * (s16) (sp6A - 1)) + tempA0] != 0xFF) {
+					} else if (D_800E6468[((D_800E6460 + 2) * (s16) (sp6A - 1)) + tempA0] != 0xFF) {
 						D_800E7484 = 0x7FFF;
 					} else if (D_800E73F0.z < D_800E7410.z) {
 						D_800E7484 = 0;
@@ -1117,13 +1121,13 @@ void func_8008247C_16A53C(void) {
 					osSyncPrintf(&D_800A4E6C_18CF2C);
 					return;
 
-				case 1:
+				case 2:
 					D_800E7480 = 1;
-					width = D_800E6460 + 2;
+					
 					tempA0 = (s16) (sp6B - 1);
-					if (D_800E6468[(width * (s16) (sp6A + 1)) + tempA0] != 0xFF) {
+					if (D_800E6468[((D_800E6460 + 2) * (s16) (sp6A + 1)) + tempA0] != 0xFF) {
 						D_800E7484 = 0;
-					} else if (D_800E6468[(width * (s16) (sp6A - 1)) + tempA0] != 0xFF) {
+					} else if (D_800E6468[((D_800E6460 + 2) * (s16) (sp6A - 1)) + tempA0] != 0xFF) {
 						D_800E7484 = 0x7FFF;
 					} else if (D_800E73F0.z < D_800E7410.z) {
 						D_800E7484 = 0x7FFF;
@@ -1133,14 +1137,14 @@ void func_8008247C_16A53C(void) {
 					osSyncPrintf(&D_800A4E7C_18CF3C);
 					return;
 
-				case 2:
+				case 3:
 					D_800E7480 = 1;
-					width = D_800E6460 + 2;
+					
 					tempA0 = (s16) (sp6A - 1);
 					tempA1 = tempA0;
-					if (D_800E6468[(width * tempA0) + (s16) (sp6B - 1)] != 0xFF) {
+					if (D_800E6468[((D_800E6460 + 2) * tempA0) + (s16) (sp6B - 1)] != 0xFF) {
 						D_800E7484 = -0x4000;
-					} else if (D_800E6468[(width * tempA1) + (s16) (sp6B + 1)] != 0xFF) {
+					} else if (D_800E6468[((D_800E6460 + 2) * tempA1) + (s16) (sp6B + 1)] != 0xFF) {
 						D_800E7484 = 0x4000;
 					} else if (D_800E73F0.x < D_800E7410.x) {
 						D_800E7484 = 0x4000;
@@ -1150,14 +1154,14 @@ void func_8008247C_16A53C(void) {
 					osSyncPrintf(&D_800A4E8C_18CF4C);
 					return;
 
-				case 3:
+				case 4:
 					D_800E7480 = 1;
-					width = D_800E6460 + 2;
+					
 					tempA0 = (s16) (sp6A + 1);
 					tempA1 = tempA0;
-					if (D_800E6468[(width * tempA0) + (s16) (sp6B - 1)] != 0xFF) {
+					if (D_800E6468[((D_800E6460 + 2) * tempA0) + (s16) (sp6B - 1)] != 0xFF) {
 						D_800E7484 = -0x4000;
-					} else if (D_800E6468[(width * tempA1) + (s16) (sp6B + 1)] != 0xFF) {
+					} else if (D_800E6468[((D_800E6460 + 2) * tempA1) + (s16) (sp6B + 1)] != 0xFF) {
 						D_800E7484 = 0x4000;
 					} else if (D_800E73F0.x < D_800E7410.x) {
 						D_800E7484 = -0x4000;
@@ -1167,15 +1171,22 @@ void func_8008247C_16A53C(void) {
 					osSyncPrintf(&D_800A4E9C_18CF5C);
 					return;
 
-				case 4:
+				case 0:
 					osSyncPrintf(&D_800A4EAC_18CF6C);
 					return;
-			}
 		}
 	} else if (D_800E7484 == D_800E73E0) {
 		if (func_8007C698_164758((s32) D_800E7410.x, (s32) D_800E7410.z) != 0) {
 			D_800E7480 = 1;
-			D_800E7484 = (s16) (D_800E73E0 + 0x4000);
+			tempYaw = (D_800E7484 = D_800E73E0 + 0x4000);
+			if (tempYaw < 0) {
+				tempYaw &= 0xFFFF;
+				if (tempYaw != 0) {
+					tempYaw -= 0x10000;
+				}
+			} else {
+				tempYaw &= 0xFFFF;
+			}
 			osSyncPrintf(&D_800A4EC4_18CF84, D_800E7484);
 		}
 	}
@@ -1187,106 +1198,111 @@ void func_8008247C_16A53C(void) {
 // AI - Set up interior gameplay pointer tables (initialisation)
 void func_80082AA0_16AB60(void) {
 	func_80017AAC_186AC();
-	D_80034460 = &D_800E7490;
-	D_80034468 = (s32) &D_800EAD90;
-	D_80034470 = (s32) &D_800EAE98;
+	D_80034460_35060 = &D_800E7490;
+	D_80034468_35068 = (s32) &D_800EAD90;
+	D_80034470_35070 = (s32) &D_800EAE98;
 	D_8006C550 = &D_800EAC90;
 	D_80052AD8 = 0;
 }
 
 // AI - Set up interior gameplay pointer tables (re-entry)
 void func_80082B04_16ABC4(void) {
-	D_80034460 = &D_800E7490;
-	D_80034468 = (s32) &D_800EAD90;
-	D_80034470 = (s32) &D_800EAE98;
+	D_80034460_35060 = &D_800E7490;
+	D_80034468_35068 = (s32) &D_800EAD90;
+	D_80034470_35070 = (s32) &D_800EAE98;
 	D_8006C550 = &D_800EAC90;
-	D_80034484 = 0;
+	D_80034484_35084 = 0;
 }
 
-// CURRENT(3045)
-#ifdef NON_MATCHING
 // AI - Handle interior gameplay: screen fade colors and entering/exiting state transitions
-void func_80082B50_16AC10(void) {
-	s32 temp_v0;
-
-	if (D_800E65A8 & 1) {
-		if (func_80017B78_18778() == 1) {
-			D_800A0A1C_188ADC = D_80034484;
+void func_80082B50_16AC10(void)
+{
+	s32 temp;
+	if (D_800E65A8 & 1)
+	{
+		if (func_80017B78_18778() == 1)
+		{
+			D_800A0A1C_188ADC = D_80034484_35084;
 			D_800E7398 = 1;
-			if (!(D_800E65A8 & 0x408)) {
+			if (!(D_800E65A8 & 0x408))
+			{
 				D_800E65A8 |= 2;
 			}
 		}
-
-		if (func_80018A58_19658() != 0) {
-			if (D_800A0A1C_188ADC != 0) {
+		if (func_80018A58_19658() != 0)
+		{
+			if (D_800A0A1C_188ADC != 0)
+			{
 				func_80018AEC_196EC(0x32, 0x32, 0x78);
-			} else {
+			}
+			else
+			{
 				func_80018AEC_196EC(0x78, 0x32, 0x78);
 			}
-
-			if (func_80018AA0_196A0() != 0) {
+			if (func_80018AA0_196A0() != 0)
+			{
 				D_80053BF4 = 0xFF;
 				D_80053BF2 = D_80053BF4;
 				D_80053BF0 = D_80053BF2;
-				if (D_800A0A1C_188ADC != 0) {
+				if (D_800A0A1C_188ADC != 0)
+				{
 					D_80053BF8 = 0x7F;
 					D_80053BFA = 0xC8;
 					D_80053BFC = 0xDC;
 					D_80053BF6 = 0;
-				} else {
+					D_80053BFE = 0xFF;
+				}
+				else
+				{
 					D_80053BF8 = 0xDC;
 					D_80053BFA = 0xC8;
 					D_80053BFC = 0x7F;
 					D_80053BF6 = 0;
+					D_80053BFE = 0xFF;
 				}
-				D_80053BFE = 0xFF;
-
 				gDPPipeSync(D_8005BB2C++);
-				func_80017CA4_188A4(0xFF, &D_80053BF4, &D_80053BF2);
-
-				if (D_800A0A1C_188ADC != 0) {
+				func_80017CA4_188A4();
+				if (D_800A0A1C_188ADC != 0)
+				{
 					D_80053BF0 = 0x7F;
 					D_80053BF2 = 0xC8;
 					D_80053BF4 = 0xDC;
 					D_80053BF6 = 0;
-				} else {
+					D_80053BFE = 0xFF;
+				}
+				else
+				{
 					D_80053BF0 = 0xDC;
 					D_80053BF2 = 0xC8;
 					D_80053BF4 = 0x7F;
 					D_80053BF6 = 0;
+					D_80053BFE = 0xFF;
 				}
-				D_80053BFE = 0xFF;
 				D_80053BFC = 0xFF;
 				D_80053BFA = D_80053BFC;
 				D_80053BF8 = D_80053BFA;
-
-				if (func_80017B78_18778() == -1) {
+				if (func_80017B78_18778() == 0xFFFF)
+				{
 					D_800E7398 = 0;
-					temp_v0 = D_800E65A8 & ~2;
-					D_800E65A8 = temp_v0;
-					if (temp_v0 & 8) {
+					D_800E65A8 &= ~2;
+					if (D_800E65A8 & 8)
+					{
 						func_8007AE40_162F00();
-						temp_v0 = D_800E65A8 & ~8;
-						D_800E65A8 = temp_v0;
+						D_800E65A8 &= ~8;
 					}
-					if (temp_v0 & 0x1000) {
-						temp_v0 &= ~0x1000;
-						D_800E65A8 = temp_v0;
+					if (D_800E65A8 & 0x1000)
+					{
+						D_800E65A8 &= ~0x1000;
 					}
-					if (temp_v0 & 0x400) {
-						D_800E65A8 = temp_v0 & ~0x400;
+					if (D_800E65A8 & 0x400)
+					{
+						D_800E65A8 &= ~0x400;
 					}
 				}
-
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
 			}
 		}
 	}
-
 	D_80052AD8 += 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80082B50_16AC10.s")
-#endif

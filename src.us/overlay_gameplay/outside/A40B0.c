@@ -213,7 +213,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   else if (arg0 < 0x64)
   {
 	v0 = &D_8013CBC0[arg0];
-	v1 = (u8 *)&D_8003E290[D_8013CBBC] + (v0->unk8 - v0->unk4);
+	v1 = (u8 *)&D_8003E290_3EE90[D_8013CBBC] + (v0->unk8 - v0->unk4);
   }
   else
   {
@@ -256,7 +256,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
   {
 	if ((D_8013CBB4 == 0xB) || (D_8013CBB4 == 0xC))
 	{
-	  drawText(D_801421A8, D_80034574[s0 * 2]);
+	  drawText(D_801421A8, D_80034574_35174[s0 * 2]);
 	  return;
 	}
   }
@@ -334,7 +334,7 @@ void func_80095530_A44E0(s16 arg0) {
 		propPtr = (u8 *) entry->unk4;
 	} else if (arg0 < 0x64) {
 		entry = &D_8013CBC0_14BB70[arg0];
-		propPtr = (u8 *)&D_8003E290[D_8013CBBC_14BB6C] + (entry->unk8 - entry->unk4);
+		propPtr = (u8 *)&D_8003E290_3EE90[D_8013CBBC_14BB6C] + (entry->unk8 - entry->unk4);
 	} else {
 		entry = &D_8013CBC0_14BB70[arg0];
 		propPtr = (u8 *)&D_80140768_14F718[vehicleTypes[D_80052B34->unk1A].unk55] + (entry->unk8 - entry->unk4);

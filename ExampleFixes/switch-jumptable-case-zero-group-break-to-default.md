@@ -43,3 +43,9 @@ This generates a jump table where entry [0] (case 0x98) = end/default address (e
 
 ## When to Apply
 When examining the target jump table (in rodata), if a particular case value's jump table entry points to the default/end label rather than the shared handler, it means that case was written separately in the original source, even though its behavior is functionally identical to just falling through to default.
+
+## Identical Instructions Can Hide Incorrect Case Labels
+
+In `func_802D6D20_18F830`, the instruction diff was identical while the full ROM checksum failed. The target jump table had case 4 pointing to the epilogue, with the remaining action handlers at cases 5 through 14. The existing C instead assigned those handlers to cases 4 through 13 and grouped case 14 with the empty cases.
+
+Moving the action case labels up by one and grouping case 4 with the empty cases produced `build/bh.us.z64: OK`. The handler instruction order and switch range were already correct, so only the generated jump table entries changed. When instructions match but the ROM does not, compare every target jump table entry against its C case label. Remove the placeholder table when enabling the C function so the compiler generates the replacement.

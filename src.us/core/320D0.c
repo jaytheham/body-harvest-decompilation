@@ -1,44 +1,68 @@
 #include <ultra64.h>
 #include "common.h"
 
-s16 D_800314D0_320D0[] = {
+extern const char D_80036CB0_378B0[];
+extern const char D_80036CBC_378BC[];
+extern const char D_80036CC4_378C4[];
+extern const char D_80036CCC_378CC[];
+extern const char D_80036CD4_378D4[];
+extern const char D_80036CDC_378DC[];
+extern const char D_80036CE4_378E4[];
+extern const char D_80036CF0_378F0[];
+extern const char D_80036CF8_378F8[];
+extern const char D_80036D00_37900[];
+extern const char D_80036D04_37904[];
+extern const char D_80036D0C_3790C[];
+extern const char D_80036D14_37914[];
+extern const char D_80036D20_37920[];
+extern const char D_80036D30_37930[];
+extern const char D_80036D38_37938[];
+extern const char D_80036D40_37940[];
+extern const char D_80036D4C_3794C[];
+extern const char D_80036D54_37954[];
+extern const char D_80036D58_37958[];
+extern const char D_80036D5C_3795C[];
+extern const char D_80036D60_37960[];
+extern const char D_80036D64_37964[];
+
+Vp D_800314D0_320D0[] = {
 	640, 480, 511, 0, 640, 480, 511, 0,
 	640, 320, 511, 0, 640, 480, 511, 0
 };
 
 u8 *D_800314F0_320F0[] = {
-	(u8 *)0x80036CB0,
-	(u8 *)0x80036CBC,
-	(u8 *)0x80036CC4,
-	(u8 *)0x80036CCC,
-	(u8 *)0x80036CD4,
-	(u8 *)0x80036CDC,
+	(u8 *)D_80036CB0_378B0,
+	(u8 *)D_80036CBC_378BC,
+	(u8 *)D_80036CC4_378C4,
+	(u8 *)D_80036CCC_378CC,
+	(u8 *)D_80036CD4_378D4,
+	(u8 *)D_80036CDC_378DC,
 };
 
 u8 *D_80031508_32108[] = {
-	(u8 *)0x80036CE4,
-	(u8 *)0x80036CF0,
-	(u8 *)0x80036CF8,
-	(u8 *)0x80036D00,
-	(u8 *)0x80036D04,
-	(u8 *)0x80036D0C,
+	(u8 *)D_80036CE4_378E4,
+	(u8 *)D_80036CF0_378F0,
+	(u8 *)D_80036CF8_378F8,
+	(u8 *)D_80036D00_37900,
+	(u8 *)D_80036D04_37904,
+	(u8 *)D_80036D0C_3790C,
 };
 
 u8 *D_80031520_32120[] = {
-	(u8 *)0x80036D14,
-	(u8 *)0x80036D20,
-	(u8 *)0x80036D30,
-	(u8 *)0x80036D38,
-	(u8 *)0x80036D40,
-	(u8 *)0x80036D4C,
+	(u8 *)D_80036D14_37914,
+	(u8 *)D_80036D20_37920,
+	(u8 *)D_80036D30_37930,
+	(u8 *)D_80036D38_37938,
+	(u8 *)D_80036D40_37940,
+	(u8 *)D_80036D4C_3794C,
 };
 
 u8 *D_80031538_32138[] = {
-	(u8 *)0x80036D54,
-	(u8 *)0x80036D58,
-	(u8 *)0x80036D5C,
-	(u8 *)0x80036D60,
-	(u8 *)0x80036D64,
+	(u8 *)D_80036D54_37954,
+	(u8 *)D_80036D58_37958,
+	(u8 *)D_80036D5C_3795C,
+	(u8 *)D_80036D60_37960,
+	(u8 *)D_80036D64_37964,
 };
 
 BeaconEntry D_8003154C[5][6] = {

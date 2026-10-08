@@ -13,6 +13,28 @@ s32 func_80070270_7F220(s32 arg0) {
 	return 0;
 }
 
+/*
+ * AI Matching notes: best diff score is 10. All instructions, control flow and
+ * stack offsets match except the final timestamp reload/store at ROM 0x7F34C
+ * and 0x7F35C: current uses t6, target uses t0. The timestamp is correctly
+ * spilled at sp+0x1C in the __ll_mul delay slot; the frame is correctly 0x20.
+ *
+ * Native u64 multiplication/division generates the same code as explicit
+ * __ll_mul/__ull_div calls. Keep the subtraction 32-bit before widening.
+ * Reusing referenceTick for the final store, changing scalar signedness,
+ * chaining initial assignments and introducing local scopes did not fix the
+ * final reload register. Swapping currentTick/referenceTick declaration order
+ * moved the timestamp spill to sp+0x18, making the match worse.
+ *
+ * A one-element currentTick array kept the same score but reloaded into t1.
+ * A referenceTick array reused for the saved timestamp could reload into t0:
+ * compute a u32 delta, overwrite referenceTick[0] with currentTick BEFORE the
+ * helpers, and store referenceTick[0] at the end. Declaring that array first
+ * preserved sp+0x1C. This variant had score 60 because the gameplay-mode load
+ * and millisecond arithmetic temporary registers shifted down by one. Leaving
+ * the array overwrite until after the helpers added an unwanted old-reference
+ * spill. Retain the simpler scalar version below as the best known baseline.
+ */
 // https://decomp.me/scratch/bBdJM
 // CURRENT(10)
 #ifdef NON_MATCHING
@@ -43,7 +65,7 @@ void func_800702C0_7F270(s16 arg0) {
 	}
 	D_80149444 = referenceTick;
 
-	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610);
+	elapsedMicro = (u32)__ull_div(__ll_mul((u64)(currentTick - referenceTick), 0xF4240ULL), D_80035610_36210);
 
 	if (gameplayMode == 1) {
 		D_80052A90 += elapsedMicro / 1000U;
@@ -83,7 +105,7 @@ void func_80070440_7F3F0(void)
 	f32 temp_f0;
 	s16 sp26;
 	func_8001599C_1659C();
-	new_var = D_8003E000;
+	new_var = D_8003E000_3EC00;
 	osSyncPrintf("WarpPointNumber = %d\n", D_80047F9C);
 	if (D_80047F98 == 0 || currentLevel == 5)
 	{
@@ -102,16 +124,16 @@ void func_80070440_7F3F0(void)
 		weaponSlots[6] = var_a0;
 	}
 
-	spawnX = D_8003E000[currentLevel - 1][D_80047F9C].unk0 << 8;
-	spawnY = D_8003E000[currentLevel - 1][D_80047F9C].unk2 << 8;
-	temp_t5 = D_8003E000[currentLevel - 1][D_80047F9C].unk6;
+	spawnX = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk0 << 8;
+	spawnY = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk2 << 8;
+	temp_t5 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk6;
 	D_801493A0 = -0x6F;
 	D_80149398 = 0x6F;
 	D_801493A4 = -0x6F;
 	D_8014939C = 0x6F;
 	D_80052B2C = &D_80052AE8;
-	D_80259490.unk0 = D_8003E000[currentLevel - 1][D_80047F9C].unk0;
-	D_80259490.unk2 = D_8003E000[currentLevel - 1][D_80047F9C].unk2;
+	D_80259490.unk0 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk0;
+	D_80259490.unk2 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk2;
 	D_80259490.unk8 = temp_t5;
 	D_80052AD0 = 1;
 	D_80052A8C = 0;
@@ -179,7 +201,7 @@ void func_80070440_7F3F0(void)
 	func_800048B8_54B8();
 	func_800048E8_54E8();
 	func_80004918_5518();
-	D_80047B70 = 0;
+	D_80047B70.unk0 = 0;
 	D_80047F80 = 0;
 	func_800A17EC_B079C();
 	func_800B41C8_C3178((u8)((spawnX >> 8) + 0x77), (u8)((spawnY >> 8) + 0x77), (u8 *)D_801FEA30, 0);

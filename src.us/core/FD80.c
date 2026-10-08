@@ -2,6 +2,27 @@
 #include "common.h"
 
 
+Vp D_80031B60_32760[] = {
+	{ {{640, 480, 511, 0}, {640, 480, 511, 0}} },
+	{ {{640, 480, 511, 0}, {640, 480, 511, 0}} },
+};
+s32 D_80031B80_32780 = 0;
+s32 D_80031B84_32784 = 0;
+
+/* Read-only strings, numeric constants, and switch targets. */
+const char D_80037660_38260[] = "Schedule Stack Overflow\n";
+const char D_8003767C_3827C[] = "Boot Stack Overflow\n";
+const char D_80037694_38294[] = "Idle Stack Overflow\n";
+const char D_800376AC_382AC[] = "IO Stack Overflow\n";
+const char D_800376C0_382C0[] = "Main Stack Overflow\n";
+const char D_800376D8_382D8[] = "Rmon Stack Overflow\n";
+const char D_800376F0_382F0[] = "Controller Stack Overflow\n";
+const char D_8003770C_3830C[] = "Load Level Stack Overflow\n";
+const char D_80037728_38328[] = "RCP hang detected\n";
+const char D_8003773C_3833C[] = "black screen off\n";
+const char D_80037750_38350[] = "black screen on\n";
+const char D_80037764_38364[] = "level data %x\n";
+
 void func_8000F190_FD90(void (*arg0)(void *)) {
 	D_80067A48.next = NULL;
 	D_80067A48.queue = NULL;
@@ -31,7 +52,7 @@ void func_8000F218_FE18(void) {
 }
 
 void func_8000F368_FF68(void) {
-	D_8005BB20 = (u8 *)&D_801CE710 - D_80031B84 * 0x22B00;
+	D_8005BB20 = (u8 *)&D_801CE710 - D_80031B84_32784 * 0x22B00;
 	D_8005BB28 = (s32)D_8005BB20;
 	D_8005BB3C = (s32)(D_8005BB20 + 0x180);
 	D_8005BB40 = (s32)(D_8005BB20 + 0x200);
@@ -40,7 +61,7 @@ void func_8000F368_FF68(void) {
 	D_8005BB34 = (Vtx *)(D_8005BB20 + 0xF500);
 	D_8005BB38 = (s32)(D_8005BB20 + 0x1E280);
 
-	D_8005BB24 = (s32)&D_80031B60_32760[D_80031B84];
+	D_8005BB24 = (s32)&D_80031B60_32760[D_80031B84_32784];
 	((Vp *)D_8005BB24)->vp.vscale[0] = D_80068084 * 2;
 	((Vp *)D_8005BB24)->vp.vscale[1] = (s16)(D_80068088 * 2);
 	((Vp *)D_8005BB24)->vp.vtrans[0] = (s16)(D_80068084 * 2);
@@ -91,11 +112,11 @@ void func_8000F478_10078(BhGfxTask *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F478_10078.s")
 #endif
 
-void func_8000F5A8_101A8(s32 arg0, s32 arg1, s32 arg2) {
+void func_8000F5A8_101A8(s32 arg0, void *arg1, s32 arg2) {
 	OSIoMesg sp28;
 
 	osWritebackDCacheAll();
-	osPiStartDma(&sp28, 0, 0, arg0, (void *)arg1, arg2, &D_80067FD0);
+	osPiStartDma(&sp28, 0, 0, arg0, arg1, arg2, &D_80067FD0);
 	osRecvMesg(&D_80067FD0, &D_80068038, 1);
 }
 
@@ -154,7 +175,7 @@ void func_8000F6B0_102B0(s32 arg0) {
 	D_8006A940[1].unk88 = FrameBufferB;
 	D_8005BB48[0] = (s32)D_80267080;
 	D_8005BB48[1] = (s32)FrameBufferB;
-	D_80031B84 = 0;
+	D_80031B84_32784 = 0;
 	osScAddClient(&D_800680A0, &sp80, &D_8006A908);
 
 	func_80012A74_13674();
@@ -184,34 +205,34 @@ void func_8000F6B0_102B0(s32 arg0) {
 	D_80068098 = 1.0f;
 	setVideoInterfaceXSize(0x140);
 	setVideoInterfaceYSize(0xF0);
-	D_80035B5C = 0x400;
+	D_80035B5C_3675C = 0x400;
 	osViBlack(1);
 	D_80068080 = 4;
 
 	for (;;) {
 		if (D_80068328 != 0 || D_8006832C != 0xCEC) {
-			osSyncPrintf(&D_80037660_38260);
+			osSyncPrintf(D_80037660_38260);
 		}
 		if (D_8005BB50 != 0 || D_8005BB54 != 0xCEC) {
-			osSyncPrintf(&D_8003767C_3827C);
+			osSyncPrintf(D_8003767C_3827C);
 		}
 		if (D_8005BF58 != 0 || D_8005BF5C != 0xCEC) {
-			osSyncPrintf(&D_80037694_38294);
+			osSyncPrintf(D_80037694_38294);
 		}
 		if (D_8005C760 != 0 || D_8005C764 != 0xCEC) {
-			osSyncPrintf(&D_800376AC_382AC);
+			osSyncPrintf(D_800376AC_382AC);
 		}
 		if (*(s32 *)D_8005CF68 != 0 || D_8005CF6C != 0xCEC) {
-			osSyncPrintf(&D_800376C0_382C0);
+			osSyncPrintf(D_800376C0_382C0);
 		}
 		if (*(s32 *)D_80064F70 != 0 || D_80064F74 != 0xCEC) {
-			osSyncPrintf(&D_800376D8_382D8);
+			osSyncPrintf(D_800376D8_382D8);
 		}
 		if (D_80065F78 != 0 || D_80065F7C != 0xCEC) {
-			osSyncPrintf(&D_800376F0_382F0);
+			osSyncPrintf(D_800376F0_382F0);
 		}
 		if (*(s32 *)D_80066780 != 0 || D_80066784 != 0xCEC) {
-			osSyncPrintf(&D_8003770C_3830C);
+			osSyncPrintf(D_8003770C_3830C);
 		}
 
 		osRecvMesg(&D_8006A908, (OSMesg *)&sp70, 1);
@@ -224,7 +245,7 @@ void func_8000F6B0_102B0(s32 arg0) {
 				sp64++;
 			}
 			if (sp64 >= 0xB) {
-				osSyncPrintf(&D_80037728_38328);
+				osSyncPrintf(D_80037728_38328);
 				sp64 = 0;
 			}
 			func_80013818_14418();
@@ -255,14 +276,14 @@ void func_8000F6B0_102B0(s32 arg0) {
 				}
 				if (D_8006807C != 0) {
 					if (D_80068080 == 0) {
-						osSyncPrintf(&D_8003773C_3833C);
+						osSyncPrintf(D_8003773C_3833C);
 						osViBlack(0);
-						D_80035B5C = 0x36D;
+						D_80035B5C_3675C = 0x36D;
 						osViSetYScale(D_80068090);
 						D_8006807C = 0;
 					} else {
-						osSyncPrintf(&D_80037750_38350);
-						D_80035B5C = 0x400;
+						osSyncPrintf(D_80037750_38350);
+						D_80035B5C_3675C = 0x400;
 						osViSetYScale(1.0f);
 						osViBlack(1);
 					}
@@ -276,7 +297,7 @@ void func_8000F6B0_102B0(s32 arg0) {
 				gSPEndDisplayList((Gfx *)(D_8005BB20 + 0xe378));
 				func_8000F478_10078(&D_8006A940[var_s4]);
 				sp5C[var_s4] = osGetCount();
-				D_80031B84 = 1 - D_80031B84;
+				D_80031B84_32784 = 1 - D_80031B84_32784;
 				var_s4 ^= 1;
 				var_s0++;
 			}

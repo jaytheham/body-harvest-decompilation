@@ -1,34 +1,183 @@
 #include <ultra64.h>
 #include "common.h"
 
-#ifdef NON_MATCHING
+/* ROM offsets and RAM destinations used by the loader. */
+s32 D_80031B90_32790[] = {
+	0x0043A340, 0x00579D50, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
+};
+
+s32 D_80031BAC_327AC[] = {
+	0x004EBF80, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
+};
+
+s32 D_80031BC4_327C4[] = {
+	0x00791C20, 0x00196F70, 0x001F9CC0, 0x00260570, 0x002C54C0, 0x0032BD80,
+};
+
+s32 D_80031BDC_327DC[] = {
+	0x007A4400, 0x007F9530, 0x008463D0, 0x00898450, 0x008E4090,
+};
+
+s32 D_80031BF0_327F0[] = {
+	0x007E6E50, 0x0083B9B0, 0x0088BE20, 0x008D9D80, 0x008F3850,
+};
+
+s32 D_80031C04_32804[] = {
+	0x007E6E50, 0x0083B9B0, 0x0088BE20, 0x008D9D80, 0x008F3850,
+};
+
+s32 D_80031C18_32818[] = {
+	0x0018D7E0, 0x001ED9E0, 0x00254410, 0x002B7100, 0x00318E20,
+};
+
+s32 D_80031C2C_3282C[] = {
+	0x00196F70, 0x001F9CC0, 0x00260570, 0x002C54C0, 0x0032BD80,
+};
+
+/* The fifth start address is also the first entry of the following table. */
+u8 *D_80031C40_32840[] = {
+	(u8 *)0x802D4CD0, (u8 *)0x802D4CD0, (u8 *)0x802D4CD0, (u8 *)0x802D4CD0,
+};
+
+u8 *D_80031C50_32850[] = {
+	(u8 *)0x802D4CD0, (u8 *)0x802DE470, (u8 *)0x802E0FC0, (u8 *)0x802E0E50, (u8 *)0x802E3110, (u8 *)0x802E7C70,
+};
+
+s32 D_80031C68_32868[] = {
+	0x00000004, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C, 0x0000000D, 0x0000000E,
+};
+
+void (*__printfunc)(s32, s32) = func_802D4CD0_18D7E0;
+
+Unk8031C88 D_80031C88_32888 = {0, 0, 0, 0, 0};
+
+/* Loader diagnostics. */
+const char D_80037780_38380[] = "PI_STATUS_IO_BUSY\n";
+const char D_80037794_38394[] = "PI_STATUS_DMA_BUSY\n";
+const char D_800377A8_383A8[] = "PI_STATUS_ERROR\n";
+const char D_800377BC_383BC[] = "PI_STATUS_IO_BUSY\n";
+const char D_800377D0_383D0[] = "PI_STATUS_DMA_BUSY\n";
+const char D_800377E4_383E4[] = "PI_STATUS_ERROR\n";
+const char D_800377F8_383F8[] = "romsize %6d, ";
+const char D_80037808_38408[] = "header ID wrong, ";
+const char D_8003781C_3841C[] = "packed %6d, unpacked %6d, ";
+const char D_80037838_38438[] = "\n\nLoading level %d\n\n";
+const char D_80037850_38450[] = "------------------------------\n";
+const char D_80037870_38470[] = "  Start of anim data: %x\n";
+const char D_8003788C_3848C[] = "    End of anim data: %x\n";
+const char D_800378A8_384A8[] = "                Size: %x (%.2fK)\n";
+const Unk80154082 D_800378CC_384CC = {'O', 'K', 0};
+const Unk80378D0 D_800378D0_384D0 = {0x2A2A2A2A, 0x20455252, 0x4F52202A, 0x2A2A2A00};
+const char D_800378E0_384E0[] = "         postData:";
+const char D_800378F4_384F4[] = "should be %6d, %s\n";
+const char D_80037908_38508[] = "      texBlockMap:";
+const char D_8003791C_3851C[] = "should be %6d, %s\n";
+const char D_80037930_38530[] = " landscapeColours:";
+const char D_80037944_38544[] = "should be %6d, %s\n";
+const char D_80037958_38558[] = " landscapePalette:";
+const char D_8003796C_3856C[] = "should be %6d, %s\n";
+const char D_80037980_38580[] = "      treeStructs:";
+const char D_80037994_38594[] = "should be %6d, Free structs:%d\n";
+const char D_800379B4_385B4[] = "            trees:";
+const char D_800379C8_385C8[] = "should be %6d, %s\n";
+const char D_800379DC_385DC[] = "          treeGfx:                                ";
+const char D_80037A10_38610[] = "should be %6d, %s\n";
+const char D_80037A24_38624[] = " WaterTableHeight:                                ";
+const char D_80037A58_38658[] = "should be %6d, %s\n";
+const char D_80037A6C_3866C[] = "    BuildingTypes:                                ";
+const char D_80037AA0_386A0[] = "should be %6d, %s\n";
+const char D_80037AB4_386B4[] = "        Buildings:                                ";
+const char D_80037AE8_386E8[] = "should be %6d, %s\n";
+const char D_80037AFC_386FC[] = "     triggerArray:                                ";
+const char D_80037B30_38730[] = "should be %6d, %s\n";
+const char D_80037B44_38744[] = "      nextTrigger:                                ";
+const char D_80037B78_38778[] = "should be %6d, %s\n";
+const char D_80037B8C_3878C[] = "    levelWaveData:                                ";
+const char D_80037BC0_387C0[] = "should be %6d, %s\n";
+const char D_80037BD4_387D4[] = "VehicleStartInfos:                                ";
+const char D_80037C08_38808[] = "should be %6d, %s\n";
+const char D_80037C1C_3881C[] = "         Missions:                                ";
+const char D_80037C50_38850[] = "should be %6d, %s, ";
+const char D_80037C64_38864[] = "data verified\n";
+const char D_80037C74_38874[] = "**** DATA BAD ****\n";
+const char D_80037C88_38888[] = "  terrainTextures:";
+const char D_80037C9C_3889C[] = "should be %6d, %s\n";
+const char D_80037CB0_388B0[] = "      terrainCMAP:";
+const char D_80037CC4_388C4[] = "should be %6d, %s\n";
+const char D_80037CD8_388D8[] = "      skyBackDrop:";
+const char D_80037CEC_388EC[] = "should be %6d, %s\n";
+const char D_80037D00_38900[] = "  skyBackDropCMAP:";
+const char D_80037D14_38914[] = "should be %6d, %s\n";
+const char D_80037D28_38928[] = "        typeArray:                                ";
+const char D_80037D5C_3895C[] = "should be %6d, %s\n";
+const char D_80037D70_38970[] = "     LandVehicles:                                ";
+const char D_80037DA4_389A4[] = "should be %6d, %s, ";
+const char D_80037DB8_389B8[] = "data verified\n";
+const char D_80037DC8_389C8[] = "**** DATA BAD ****\n";
+const char D_80037DDC_389DC[] = "     SignPostData:                                ";
+const char D_80037E10_38A10[] = "should be %6d, %s\n";
+const char D_80037E24_38A24[] = "      SignStrings:  %d version                              ";
+const char D_80037E64_38A64[] = "should be %6d, %s\n";
+const char D_80037E78_38A78[] = "    signs_dialogue_offsets:    ";
+const char D_80037E98_38A98[] = "should be %6d, %s\n";
+const char D_80037EAC_38AAC[] = "    commsMessages:                                ";
+const char D_80037EE0_38AE0[] = "should be %6d, %s\n";
+const char D_80037EF4_38AF4[] = "    comms_dialogue_offsets:    ";
+const char D_80037F14_38B14[] = "should be %6d, %s\n";
+const char D_80037F28_38B28[] = "commsSentenceInfo:                                ";
+const char D_80037F5C_38B5C[] = "should be %6d, %s\n";
+const char D_80037F70_38B70[] = "            Doors:                                ";
+const char D_80037FA4_38BA4[] = "should be %6d, %s\n";
+const char D_80037FB8_38BB8[] = "         BCPoints:                                ";
+const char D_80037FEC_38BEC[] = "should be %6d, %s\n";
+const char D_80038000_38C00[] = "Loading level %d code\n";
+const char D_80038018_38C18[] = "%x from %x size %x\n";
+const char D_8003802C_38C2C[] = "end %x\n";
+const char D_80038034_38C34[] = " ******************************************\n";
+const char D_80038064_38C64[] = " *\n * WARNING: inside textures too large\n *\n";
+const char D_80038094_38C94[] = " ******************************************\n";
+const char D_800380C4_38CC4[] = "------------------------------\n";
+const char D_800380E4_38CE4[] = "Start of model segment: %8x\n";
+const char D_80038104_38D04[] = "free>0";
+const char D_8003810C_38D0C[] = "src/loader.c";
+const char D_8003811C_38D1C[] = "------------------------------\n";
+const char D_8003813C_38D3C[] = "End of model segment: %8x\n";
+const char D_80038158_38D58[] = "    Start of ZBuffer: %8x\n";
+const char D_80038174_38D74[] = "                Free: %x, (%.2fK)\n";
+const char D_80038198_38D98[] = "------------------------------\n";
+
+// AI - Whole-transfer path of the overlay loader.
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 var_s0;
 	s32 var_s1;
 	s32 var_s2;
-	s32 var_v1;
-	OSIoMesg sp58;
 	s32 temp_v0;
+	OSIoMesg sp58;
+	/* The original TU saw no prototype for osRecvMesg, so the `1U` flag keeps
+	   its unsigned type through the call. include/2.0I/PR/os.h declares the
+	   flag `s32`, which coerces it to a signed node and merges it with the
+	   `case 1:` constant (move $a2,$s4 where the ROM materialises $a2 fresh).
+	   Retyping the shared header instead breaks func_800720F4_810A4. */
+	extern s32 osRecvMesg();
 
-	if (1 == D_80068078) {
+	if (D_80068078 == 1U) {
 		return 0;
 	}
 	osWritebackDCacheAll();
 	var_s1 = arg1;
 	var_s2 = arg2;
-	var_v1 = arg3 / 2048;
-	var_s0 = var_v1 - 1;
-	if (var_v1 != 0) {
+	var_s0 = arg3 / 2048 - 1;
+	if (arg3 / 2048 != 0) {
 		do {
 			osPiStartDma(&sp58, 0, 0, var_s2, var_s1, 0x800, arg0);
-			osRecvMesg(arg0, 0, 1);
+			osRecvMesg(arg0, 0, 1U);
 			temp_v0 = func_8001F6E0_202E0();
 			switch (temp_v0) {
-			case 1:
-				osSyncPrintf(D_80037794_38394);
-				break;
 			case 2:
 				osSyncPrintf(D_80037780_38380);
+				break;
+			case 1:
+				osSyncPrintf(D_80037794_38394);
 				break;
 			case 4:
 				osSyncPrintf(D_800377A8_383A8);
@@ -38,17 +187,17 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 			var_s1 += 0x800;
 		} while (var_s0--);
 	}
-	temp_v0 = arg3 - (var_v1 << 0xB);
+	temp_v0 = arg3 - ((arg3 / 2048) << 0xB);
 	if (temp_v0 != 0) {
 		osPiStartDma(&sp58, 0, 0, var_s2, var_s1, temp_v0, arg0);
-		osRecvMesg(arg0, 0, 1);
+		osRecvMesg(arg0, 0, 1U);
 		temp_v0 = func_8001F6E0_202E0();
 		switch (temp_v0) {
-		case 1:
-			osSyncPrintf(D_800377D0_383D0);
-			break;
 		case 2:
 			osSyncPrintf(D_800377BC_383BC);
+			break;
+		case 1:
+			osSyncPrintf(D_800377D0_383D0);
 			break;
 		case 4:
 			osSyncPrintf(D_800377E4_383E4);
@@ -62,9 +211,6 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	D_8006AA60 = arg3;
 	return arg2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/func_8000FFC0_10BC0.s")
-#endif
 
 s32 func_800101F0_10DF0(s32 arg0, s32 arg1, s32 arg2) {
 	return func_8000FFC0_10BC0(&D_80067F70, arg0, arg1, arg2);
@@ -121,12 +267,12 @@ s32 func_8001032C_10F2C(s32 arg0, s32 arg1, s32 arg2) {
 	func_80010228_10E28(arg1, header);
 	if (header[0] != 0x4D494F30) { // MIO0
 		if (D_8006AA64 == 0xBABEFACE) {
-			osSyncPrintf(D_80037808); // header ID wrong, 
+			osSyncPrintf(D_80037808_38408); // header ID wrong,
 		}
 		return 0;
 	}
 	if (D_8006AA64 == 0xBABEFACE) {
-		osSyncPrintf(D_8003781C, header[1], header[2]);
+		osSyncPrintf(D_8003781C_3841C, header[1], header[2]);
 		// packed %6d, unpacked %6d, 
 	}
 	var_a2 = header[1];
@@ -258,7 +404,7 @@ s32 destroyThreadIfMessageInQueue(void) {
 void loadLevel(s32 arg0) {
 	s32 temp_a1;
 
-	osSyncPrintf(D_80037838, currentLevel); // Loading level %d
+	osSyncPrintf(D_80037838_38438, currentLevel); // Loading level %d
 	D_8006AA64 = 0xBABEFACE;
 	loadLevelData(D_80047F93);
 	D_8006AA64 = 0;
@@ -266,11 +412,11 @@ void loadLevel(s32 arg0) {
 	loadLevelCode(D_80047F93);
 	func_80011D6C_1296C(D_80047F93);
 	func_800118F8_124F8();
-	osSyncPrintf(D_80037850); // ------------------------------
-	osSyncPrintf(D_80037870, D_8F4960); //   Start of anim data: %x
-	osSyncPrintf(D_8003788C, D_955300); //      End of anim data: %x
+	osSyncPrintf(D_80037850_38450); // ------------------------------
+	osSyncPrintf(D_80037870_38470, D_8F4960); //   Start of anim data: %x
+	osSyncPrintf(D_8003788C_3848C, D_955300); //      End of anim data: %x
 	temp_a1 = D_955300 - D_8F4960;
-	osSyncPrintf(D_800378A8, temp_a1, (f64)temp_a1 * 0.0009765625);
+	osSyncPrintf(D_800378A8_384A8, temp_a1, (f64)temp_a1 * 0.0009765625);
 	//                 Size: %x (%.2fK)
 	osSendMesg(&D_80067F88, 0, 0);
 	osSetThreadPri(0, 0);
@@ -278,130 +424,129 @@ void loadLevel(s32 arg0) {
 }
 
 // https://decomp.me/scratch/8dWr0
-// CURRENT(2435)
-#ifdef NON_MATCHING
 void loadLevelData(u8 arg0)
 {
 	s32 j;
-	s32 tempKey;
 	s32 row;
-	u16 *cells;
-	u16 *rows;	u16 new_var;	Unk8031C88 sp48;
+	s32 var_s0;
+	s32 sp64;
+	s32 sp60;
+	u16 new_var;
+	Unk8031C88 sp48;
 	Unk80154082 sp44;
 	Unk80378D0 sp34;
-	s32 var_s0;
 	sp48 = D_80031C88_32888;
 	sp44 = D_800378CC_384CC;
 	sp34 = D_800378D0_384D0;
 	var_s0 = func_80010490_11090(arg0);
 	osWritebackDCacheAll();
-	osSyncPrintf(&D_800378E0_384E0);
+	osSyncPrintf(D_800378E0_384E0);
 	var_s0 = func_80010420_11020(&D_801FEA30, var_s0);
-	osSyncPrintf(&D_800378F4_384F4, 0x20000, (D_8006AA60 == 0x20000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037908_38508);
+	osSyncPrintf(D_800378F4_384F4, 0x20000, (D_8006AA60 == 0x20000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037908_38508);
 	var_s0 = func_80010420_11020(&D_8021EA30, var_s0);
-	osSyncPrintf(&D_8003791C_3851C, 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037930_38530);
+	osSyncPrintf(D_8003791C_3851C, 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037930_38530);
 	var_s0 = func_80010420_11020(&D_80260700, var_s0);
-	osSyncPrintf(&D_80037944_38544, 0x4000, (D_8006AA60 == 0x4000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037958_38558);
+	osSyncPrintf(D_80037944_38544, 0x4000, (D_8006AA60 == 0x4000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037958_38558);
 	var_s0 = func_80010420_11020(&D_80264700, var_s0);
-	osSyncPrintf(&D_8003796C_3856C, 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_8003796C_3856C, 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSetThreadPri(0, 4);
-	osSyncPrintf(&D_80037980_38580);
+	osSyncPrintf(D_80037980_38580);
 	var_s0 = func_80010420_11020(&D_8021FA30, var_s0);
-	osSyncPrintf(&D_80037994_38594, 0x2000, (((u32)(0x2000 - D_8006AA60)) >> 5) - 1);
-	osSyncPrintf(&D_800379B4_385B4);
+	osSyncPrintf(D_80037994_38594, 0x2000, (((u32)(0x2000 - D_8006AA60)) >> 5) - 1);
+	osSyncPrintf(D_800379B4_385B4);
 	var_s0 = func_80010420_11020(&D_80221A30, var_s0);
-	osSyncPrintf(&D_800379C8_385C8, 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_800379C8_385C8, 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osWritebackDCacheAll();
-	osSyncPrintf(&D_800379DC_385DC);
+	osSyncPrintf(D_800379DC_385DC);
 	var_s0 = func_800101F0_10DF0(&D_80222A30, var_s0, 0x40);
-	osSyncPrintf(&D_80037A10_38610, 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037A24_38624);
+	osSyncPrintf(D_80037A10_38610, 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037A24_38624);
 	var_s0 = func_800101F0_10DF0(&D_80222A70, var_s0, 8);
 	D_80222A70 <<= 5;
-	osSyncPrintf(&D_80037A58_38658, 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037A6C_3866C);
+	osSyncPrintf(D_80037A58_38658, 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037A6C_3866C);
 	var_s0 = func_800101F0_10DF0(&buildingTypes, var_s0, 0x400);
-	osSyncPrintf(&D_80037AA0_386A0, 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037AB4_386B4);
+	osSyncPrintf(D_80037AA0_386A0, 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037AB4_386B4);
 	var_s0 = func_800101F0_10DF0(&buildingInstances, var_s0, 0x17E8);
-	osSyncPrintf(&D_80037AE8_386E8, 0x17E8, (D_8006AA60 == 0x17E8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037AE8_386E8, 0x17E8, (D_8006AA60 == 0x17E8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	var_s0 += 4;
-	osSyncPrintf(&D_80037AFC_386FC);
+	osSyncPrintf(D_80037AFC_386FC);
 	var_s0 = func_800101F0_10DF0(&D_80222A78, var_s0, 0xC00);
-	osSyncPrintf(&D_80037B30_38730, 0xC00, (D_8006AA60 == 0xD00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037B44_38744);
+	osSyncPrintf(D_80037B30_38730, 0xC00, (D_8006AA60 == 0xD00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037B44_38744);
 	var_s0 = func_800101F0_10DF0(&D_80223778, var_s0, 8);
-	osSyncPrintf(&D_80037B78_38778, 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037B8C_3878C);
+	osSyncPrintf(D_80037B78_38778, 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037B8C_3878C);
 	var_s0 = func_800101F0_10DF0(&D_80223780, var_s0, 0xF00);
-	osSyncPrintf(&D_80037BC0_387C0, 0xF00, (D_8006AA60 == 0xF00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037BD4_387D4);
+	osSyncPrintf(D_80037BC0_387C0, 0xF00, (D_8006AA60 == 0xF00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037BD4_387D4);
 	var_s0 = func_800101F0_10DF0(&D_80259490, var_s0, 0x900);
-	osSyncPrintf(&D_80037C08_38808, 0x900, (D_8006AA60 == 0x900) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037C1C_3881C);
+	osSyncPrintf(D_80037C08_38808, 0x900, (D_8006AA60 == 0x900) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037C1C_3881C);
 	var_s0 = func_800101F0_10DF0(&D_80224680, var_s0, 0x800);
-	osSyncPrintf(&D_80037C50_38850, 0x800, (D_8006AA60 == 0x800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037C50_38850, 0x800, (D_8006AA60 == 0x800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (((D_80224680 == 0xA8) || (D_80224680 == 0x90)) || (D_80224680 == 0xB0))
 	{
-		osSyncPrintf(&D_80037C64_38864);
+		osSyncPrintf(D_80037C64_38864);
 	}
 	else
 	{
-		osSyncPrintf(&D_80037C74_38874);
+		osSyncPrintf(D_80037C74_38874);
 	}
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037C88_38888);
+	osSyncPrintf(D_80037C88_38888);
 	var_s0 = func_80010420_11020(&D_80224E80, var_s0);
-	osSyncPrintf(&D_80037C9C_3889C, 0x30000, (D_8006AA60 == 0x30000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037CB0_388B0);
+	osSyncPrintf(D_80037C9C_3889C, 0x30000, (D_8006AA60 == 0x30000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037CB0_388B0);
 	var_s0 = func_80010420_11020(&D_80254E80, var_s0);
-	osSyncPrintf(&D_80037CC4_388C4, 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037CC4_388C4, 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037CD8_388D8);
+	osSyncPrintf(D_80037CD8_388D8);
 	var_s0 = func_80010420_11020(&D_802CA8D0, var_s0);
-	osSyncPrintf(&D_80037CEC_388EC, 0xA000, (D_8006AA60 == 0xA000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037D00_38900);
+	osSyncPrintf(D_80037CEC_388EC, 0xA000, (D_8006AA60 == 0xA000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037D00_38900);
 	var_s0 = func_80010420_11020(&D_802D48D0, var_s0);
-	osSyncPrintf(&D_80037D14_38914, 0x200, (D_8006AA60 == 0x200) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037D14_38914, 0x200, (D_8006AA60 == 0x200) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037D28_38928);
+	osSyncPrintf(D_80037D28_38928);
 	var_s0 = func_800101F0_10DF0(&alienTypes, var_s0, 0x1380);
-	osSyncPrintf(&D_80037D5C_3895C, 0x1380, (D_8006AA60 == 0x1380) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037D70_38970);
+	osSyncPrintf(D_80037D5C_3895C, 0x1380, (D_8006AA60 == 0x1380) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037D70_38970);
 	var_s0 = func_800101F0_10DF0(&vehicleTypes, var_s0, 0x930);
-	osSyncPrintf(&D_80037DA4_389A4, 0x930, (D_8006AA60 == 0x930) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037DA4_389A4, 0x930, (D_8006AA60 == 0x930) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (vehicleTypes[0].unk14 == 0x3039)
 	{
-		osSyncPrintf(&D_80037DB8_389B8);
+		osSyncPrintf(D_80037DB8_389B8);
 	}
 	else
 	{
-		osSyncPrintf(&D_80037DC8_389C8);
+		osSyncPrintf(D_80037DC8_389C8);
 	}
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037DDC_389DC);
+	osSyncPrintf(D_80037DDC_389DC);
 	var_s0 = func_800101F0_10DF0(&D_80258330, var_s0, 0x60);
-	osSyncPrintf(&D_80037E10_38A10, 0x60, (D_8006AA60 == 0x60) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037E10_38A10, 0x60, (D_8006AA60 == 0x60) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037E24_38A24, D_800313D0_31FD0);
+	osSyncPrintf(D_80037E24_38A24, D_800313D0_31FD0);
 	switch (D_800313D0_31FD0)
 	{
 	default:
@@ -411,16 +556,18 @@ void loadLevelData(u8 arg0)
 		break;
 
 	case 1:
-		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0 + 0xD00, 0xC00);
+		var_s0 += 0xD00;
+		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0, 0xC00);
 		break;
 
 	case 2:
-		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0 + 0x1A00, 0xC00);
+		var_s0 += 0x1A00;
+		var_s0 = func_800101F0_10DF0(&D_80258390, var_s0, 0xC00);
 		break;
 	}
 
-	osSyncPrintf(&D_80037E64_38A64, 0xC00, (D_8006AA60 == 0xC00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037E78_38A78);
+	osSyncPrintf(D_80037E64_38A64, 0xC00, (D_8006AA60 == 0xC00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037E78_38A78);
 	switch (D_800313D0_31FD0)
 	{
 	default:
@@ -438,12 +585,12 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf(&D_80037E98_38A98, 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037E98_38A98, 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037EAC_38AAC);
+	osSyncPrintf(D_80037EAC_38AAC);
 	switch (D_800313D0_31FD0)
 	{
 	default:
@@ -453,16 +600,18 @@ void loadLevelData(u8 arg0)
 		break;
 
 	case 1:
-		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0 + 0x1900, 0x1800);
+		var_s0 += 0x1900;
+		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0, 0x1800);
 		break;
 
 	case 2:
-		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0 + 0x3200, 0x1800);
+		var_s0 += 0x3200;
+		var_s0 = func_800101F0_10DF0(&D_8006AC10, var_s0, 0x1800);
 		break;
 	}
 
-	osSyncPrintf(&D_80037EE0_38AE0, 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037EF4_38AF4);
+	osSyncPrintf(D_80037EE0_38AE0, 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037EF4_38AF4);
 	switch (D_800313D0_31FD0)
 	{
 	default:
@@ -480,51 +629,36 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf(&D_80037F14_38B14, 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037F14_38B14, 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037F28_38B28);
+	osSyncPrintf(D_80037F28_38B28);
 	var_s0 = func_800101F0_10DF0(&D_8006C410, var_s0, 0x40);
-	osSyncPrintf(&D_80037F5C_38B5C, 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037F5C_38B5C, 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
-	osSyncPrintf(&D_80037F70_38B70);
+	osSyncPrintf(D_80037F70_38B70);
 	var_s0 = func_800101F0_10DF0(&D_800522C0, var_s0, 0x280);
-	osSyncPrintf(&D_80037FA4_38BA4, 0x280, (D_8006AA60 == 0x280) ? ((void *)(&sp44)) : ((void *)(&sp34)));
-	osSyncPrintf(&D_80037FB8_38BB8);
+	osSyncPrintf(D_80037FA4_38BA4, 0x280, (D_8006AA60 == 0x280) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037FB8_38BB8);
 	func_800101F0_10DF0(&D_80052560, var_s0, 0x528);
-	osSyncPrintf(&D_80037FEC_38BEC, 0x528, (D_8006AA60 == 0x528) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf(D_80037FEC_38BEC, 0x528, (D_8006AA60 == 0x528) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 
-	cells = rows = &D_801FEA30[0][0];
 	for (row = 0; row != 0xFF; row++)
 	{
-		j = 3;
-		tempKey = (row % 2) << 13;
-		if (1)
+		for (j = 0; j != 0xFF; j++)
 		{
-			cells[2] ^= tempKey;
-			cells[1] = (cells[1] ^ 0x4000) ^ tempKey;
-			cells[0] ^= tempKey;
+			new_var = D_801FEA30[row][j];
+			new_var ^= (j % 2) << 14;
+			new_var ^= (row % 2) << 13;
+			D_801FEA30[row][j] = new_var;
 		}
-		do
-		{
-			s32 cellVal;
-			new_var = rows[j];
-			cellVal = new_var ^ ((j % 2) << 14);
-			rows[j] = cellVal ^ tempKey;
-		} while (++j != 0xFF);
-		rows += 0x100;
-		cells += 0x100;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelData.s")
-#endif
-
 void loadFrontendData(void) {
 	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
@@ -538,30 +672,20 @@ void func_80011674_12274(void) {
 	func_800101F0_10DF0(func_80070270, D_7F220, D_158330 - D_7F220);
 }
 
-// https://decomp.me/scratch/ktq8M
-// CURRENT(28)
-#ifdef NON_MATCHING
 void loadLevelCode(u8 arg0)
 {
-  s32 level = arg0;
-  s32 loadAddr;
-  osSyncPrintf(&D_80038000_38C00, level);
-  func_800101F0_10DF0(
-	  D_80031C40_32840[level - 1],
-	  D_80031C18_32818[level - 1],
-	  D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-  osSyncPrintf(&D_80038018_38C18,
-			   D_80031C40_32840[level - 1],
-			   D_80031C18_32818[level - 1],
-			   D_80031C2C_3282C[level - 1] - D_80031C18_32818[level - 1]);
-  loadAddr = D_80031C40_32840[level - 1] + (D_80031C50_32850[level] - D_80031C40_32840[level - 1]);
-  D_8006AA68 = loadAddr;
-  osSyncPrintf(&D_8003802C_38C2C, loadAddr);
-  __printfunc = (void (*)(s32, s32)) D_8006AA68;
+	osSyncPrintf(D_80038000_38C00, (s32)arg0);
+	func_800101F0_10DF0(
+		D_80031C40_32840[(s32)arg0 - 1],
+		D_80031C18_32818[(s32)arg0 - 1],
+		D_80031C2C_3282C[(s32)arg0 - 1] - D_80031C18_32818[(s32)arg0 - 1]);
+	osSyncPrintf(D_80038018_38C18,
+				 D_80031C40_32840[(s32)arg0 - 1],
+				 D_80031C18_32818[(s32)arg0 - 1],
+				 D_80031C2C_3282C[(s32)arg0 - 1] - D_80031C18_32818[(s32)arg0 - 1]);
+	osSyncPrintf(D_8003802C_38C2C, (s32)(D_8006AA68 = &D_80031C40_32840[(s32)arg0 - 1][D_80031C50_32850[(s32)arg0] - D_80031C40_32840[(s32)arg0 - 1]]));
+	__printfunc = (void (*)(s32, s32))D_8006AA68;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/loader/loadLevelCode.s")
-#endif
 
 void func_800117D8_123D8(void) {
 	osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - (u8*)&func_80070270);
@@ -572,9 +696,9 @@ void func_800117D8_123D8(void) {
 
 void func_80011858_12458(u8 arg0, s32 arg1) {
 	if ((u32)(func_8001032C_10F2C(arg1, D_80031C04_32804[arg0 - 1], D_8006AA6C) - D_80031C04_32804[arg0 - 1]) >= 0x30D41U) {
-		osSyncPrintf(&D_80038034_38C34); //  ******************************************
-		osSyncPrintf(&D_80038064_38C64); //  ** WARNING: inside textures too large. *
-		osSyncPrintf(&D_80038094_38C94); //  ******************************************
+		osSyncPrintf(D_80038034_38C34); //  ******************************************
+		osSyncPrintf(D_80038064_38C64); //  ** WARNING: inside textures too large. *
+		osSyncPrintf(D_80038094_38C94); //  ******************************************
 	}
 }
 
@@ -662,8 +786,8 @@ s32 func_80011BE8_127E8(s32 arg0) {
 }
 
 void debug_printModelSegmentStart(void *arg0) {
-	osSyncPrintf(D_800380C4); // ------------------------------
-	osSyncPrintf(D_800380E4, arg0); // Start of model segment: %8x
+	osSyncPrintf(D_800380C4_38CC4); // ------------------------------
+	osSyncPrintf(D_800380E4_38CE4, arg0); // Start of model segment: %8x
 }
 
 s32 debug_printModelSegmentEnd(void *arg0) {
@@ -671,16 +795,16 @@ s32 debug_printModelSegmentEnd(void *arg0) {
 
 	sp18 = (u8 *)&D_803DA800 - (u8 *)arg0;
 	if (sp18 <= 0) {
-		sourceTaggedPrintF(&D_80038104_38D04, &D_8003810C_38D0C, 0x47A);
+		sourceTaggedPrintF(D_80038104_38D04, D_8003810C_38D0C, 0x47A);
 		// free>0
 		// src/loader.c
 	}
-	osSyncPrintf(&D_8003811C_38D1C); // ------------------------------
-	osSyncPrintf(&D_8003813C_38D3C, arg0); // End of model segment: %8x
-	osSyncPrintf(&D_80038158_38D58, &D_803DA800); //     Start of ZBuffer: %8x
-	osSyncPrintf(&D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
+	osSyncPrintf(D_8003811C_38D1C); // ------------------------------
+	osSyncPrintf(D_8003813C_38D3C, arg0); // End of model segment: %8x
+	osSyncPrintf(D_80038158_38D58, &D_803DA800); //     Start of ZBuffer: %8x
+	osSyncPrintf(D_80038174_38D74, sp18, (f64)sp18 * 0.0009765625);
 	//                 Free: %x, (%.2fK)
-	osSyncPrintf(&D_80038198_38D98); // ------------------------------
+	osSyncPrintf(D_80038198_38D98); // ------------------------------
 }
 
 void func_80011D24_12924(void) {

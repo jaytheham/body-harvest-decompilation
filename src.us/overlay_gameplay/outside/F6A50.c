@@ -1,12 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-const char D_801441F0_1531A0[] = "%d,%d,%d,  %d,%d\n"; // "%d,%d,%d,  %d,%d\n"
-const char D_80144204_1531B4[] = "-------- INVALID CAMERA STATUS: %d -------- See Grant\n"; // "-------- INVALID CAMERA STATUS: %d -------- See Grant\n"
-const f64 D_80144240_1531F0[1] = {10000.0};
-const f64 D_80144248_1531F8[1] = {10000.0};
-const f64 D_80144250_153200[1] = {10000.0};
-const f64 D_80144258_153208[1] = {0.0};
 
 s16 D_8013B8F0 = 0xE38;
 s16 D_8013B8F4_14A8A4 = 0x1F4;
@@ -65,81 +59,71 @@ void func_800E7BC4_F6B74(void) {
 	D_8015758E = D_80047712;
 }
 
-// https://decomp.me/scratch/oQG01
-// CURRENT(370)
-#ifdef NON_MATCHING
 // Outdoors debug camera? Controller 2 moves camera when function runs
 void func_800E7C28_F6BD8(void)
 {
-  s32 sp3C;
-  s32 sp38;
-  s32 sp34;
-  s16 sp32;
-  s16 sp30;
-  if (!(currentControllerStates[1].button & 0x20))
-  {
-	if (D_80157590 == 4)
+	s32 sp3C;
+	s32 sp38;
+	s32 sp34;
+	s16 sp32;
+	s16 sp30;
+	if (!(currentControllerStates[1].button & 0x20))
 	{
-	  D_8015758E -= currentControllerStates[1].stick_x * 0x10;
-	  D_8015758C += currentControllerStates[1].stick_y * 8;
-		sp32 = 5;
-	  if (currentControllerStates[1].button & 4)
-	  {
-		D_8013E438_14D3E8 += sp32;
-	  }
-	  if (currentControllerStates[1].button & 8)
-	  {
-		D_8013E438_14D3E8 -= sp32;
-	  }
-	  D_80157586 = sp3C;
-	  D_80157588 = sp38;
-	  D_8015758A = sp34;
-	  sp32 = coss(D_8015758C);
-	  D_80157580 = ((((f32) coss(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_8013E438_14D3E8)) + D_80157586;
-	  D_80157582 = ((((f32) sins(D_8015758C)) / 32768.0) * D_8013E438_14D3E8) + D_80157588;
-
-		// Hmmmmmmm
-	  if (currentControllerStates){}
-
-		
-	  sp32 = coss(D_8015758C);
-	  D_80157584 = ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_8013E438_14D3E8)) + D_8015758A;
-	  return;
+		if (D_80157590 == 4)
+		{
+			D_8015758E -= currentControllerStates[1].stick_x * 0x10;
+			D_8015758C += currentControllerStates[1].stick_y * 8;
+			sp32 = 5;
+			if (currentControllerStates[1].button & 4)
+			{
+				D_8013E438_14D3E8 = D_8013E438_14D3E8 + sp32;
+			}
+			if (currentControllerStates[1].button & 8)
+			{
+				D_8013E438_14D3E8 = D_8013E438_14D3E8 - sp32;
+			}
+			D_80157586 = sp3C;
+			D_80157588 = sp38;
+			D_8015758A = sp34;
+			sp32 = coss(D_8015758C);
+			D_80157580 = ((f32)coss(D_8015758E) / 32768.0) * (((f32)sp32 / 32768.0) * debugCameraDistanceX) + D_80157586;
+			D_80157582 = ((((f32) sins(D_8015758C)) / 32768.0) * debugCameraDistanceY) + D_80157588;
+			sp32 = coss(D_8015758C);
+			D_80157584 = ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * debugCameraDistanceZ)) + D_8015758A;
+		}
+		else {
+			if (currentControllerStates[1].button & 0x10)
+			{
+				D_8015758E += currentControllerStates[1].stick_x * 0x10;
+				D_8015758C += currentControllerStates[1].stick_y * 8;
+			}
+			else
+			{
+				sp30 = sins(D_8015758E);
+				D_80157580 += (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) coss(D_8015758E)) / 32768.0)) + ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)));
+				sp30 = coss(D_8015758E);
+				D_80157584 += (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) sins(D_8015758E)) / 32768.0)) - ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)));
+			}
+			if (currentControllerStates[1].button & 8)
+			{
+				D_80157582 += 1;
+			}
+			if (currentControllerStates[1].button & 4)
+			{
+				D_80157582 -= 1;
+			}
+			sp32 = coss(D_8015758C);
+			D_80157586 = D_80157580 - ((((f32) coss(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * 10000.0));
+			D_80157588 = D_80157582 - ((((f32) sins(D_8015758C)) / 32768.0) * 10000.0);
+			sp32 = coss(D_8015758C);
+			D_8015758A = D_80157584 - ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * 10000.0));
+			if (currentControllerStates[1].button & 1)
+			{
+				osSyncPrintf("%d,%d,%d,  %d,%d\n", D_80157580, D_80157582, D_80157584, D_8015758C, D_8015758E);
+			}
+		}
 	}
-	if (currentControllerStates[1].button & 0x10)
-	{
-	  D_8015758E += currentControllerStates[1].stick_x * 0x10;
-	  D_8015758C += currentControllerStates[1].stick_y * 8;
-	}
-	else
-	{
-	  sp30 = sins(D_8015758E);
-	  D_80157580 += (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) coss(D_8015758E)) / 32768.0)) + ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)));
-	  sp30 = coss(D_8015758E);
-	  D_80157584 += (((-(currentControllerStates[1].stick_y >> 2)) * (((f32) sins(D_8015758E)) / 32768.0)) - ((currentControllerStates[1].stick_x >> 2) * (((f32) sp30) / 32768.0)));
-	}
-	if (currentControllerStates[1].button & 8)
-	{
-	  D_80157582 += 1;
-	}
-	if (currentControllerStates[1].button & 4)
-	{
-	  D_80157582 -= 1;
-	}
-	sp32 = coss(D_8015758C);
-	D_80157586 = D_80157580 - ((((f32) coss(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_80144240_1531F0[0]));
-	D_80157588 = D_80157582 - ((((f32) sins(D_8015758C)) / 32768.0) * D_80144248_1531F8[0]);
-	sp32 = coss(D_8015758C);
-	D_8015758A = D_80157584 - ((((f32) sins(D_8015758E)) / 32768.0) * ((((f32) sp32) / 32768.0) * D_80144250_153200[0]));
-	if (currentControllerStates[1].button & 1)
-	{
-	  osSyncPrintf(&D_801441F0_1531A0, D_80157580, D_80157582, D_80157584, (s32) D_8015758C, (s32) D_8015758E);
-	}
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F6A50/func_800E7C28_F6BD8.s")
-#endif
 
 void func_800E8190_F7140(void) {
 	func_80132740_1416F0(&D_80160080);
@@ -212,7 +196,7 @@ void func_800E82AC_F725C(Unk80052B2C *arg0)
 		break;
 
 	default:
-		osSyncPrintf(&D_80144204_1531B4, D_80157590);
+		osSyncPrintf("-------- INVALID CAMERA STATUS: %d -------- See Grant\n", D_80157590);
 		break;
 	}
 

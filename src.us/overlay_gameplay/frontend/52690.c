@@ -482,14 +482,10 @@ void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
 }
 
 /* Computes the dot product of two 3D vectors */
-#ifdef NON_MATCHING
 // AI - Computes the dot product of two 3D vectors
-f32 func_80083820_53CD0(f32 *arg0, f32 *arg1) {
-	return (arg0[0] * arg1[0]) + (arg0[1] * arg1[1]) + (arg1[2] * arg0[2]);
+f32 func_80083820_53CD0(Vec3f *arg0, Vec3f *arg1) {
+	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083820_53CD0.s")
-#endif
 
 /* Subtracts two 3D vectors: arg2 = arg0 - arg1 */
 // AI - Subtracts two 3D vectors: arg2 = arg0 - arg1
@@ -596,52 +592,45 @@ void func_80083B14_53FC4(u8 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/cmxeP
-// CURRENT(165)
-#ifdef NON_MATCHING
 // AI - Allocates an entry in the D_800DE840 linked list pool; returns index or -3 if full
 s16 func_80083B7C_5402C(u8 arg0) {
 	s16 idx;
 	s16 i;
 
 	if (D_800E1978 >= 0x1C2) {
-		return -3;
-	}
-
-	idx = D_800E197A;
-	D_800DE840[idx].unk0 = 1;
-	D_800DE840[idx].unk2 = 1;
-	D_800DE840[idx].unk4 = -5;
-
-	if (D_800DE130[arg0].unk4 == 0) {
-		D_800DE130[arg0].unk6 = idx;
-		D_800DE840[idx].unk6 = -4;
+		idx = -3;
 	} else {
-		D_800DE840[idx].unk6 = D_800DE130[arg0].unk8;
-		D_800DE840[D_800DE130[arg0].unk8].unk4 = idx;
+		idx = D_800E197A;
+		D_800DE840[idx].unk0 = 1;
+		D_800DE840[idx].unk2 = 1;
+		D_800DE840[idx].unk4 = -5;
+
+		if (D_800DE130[arg0].unk4 == 0) {
+			D_800DE130[arg0].unk6 = idx;
+			D_800DE840[idx].unk6 = -4;
+		} else {
+			D_800DE840[idx].unk6 = D_800DE130[arg0].unk8;
+			D_800DE840[D_800DE130[arg0].unk8].unk4 = idx;
+		}
+
+		D_800DE130[arg0].unk8 = idx;
+		D_800DE130[arg0].unk4++;
+		D_800E1978++;
+		D_800E197A = 0x1C2;
+
+		i = idx;
+		if (idx < 0x1C2) {
+			do {
+				if (D_800DE840[i].unk0 == 0) {
+					D_800E197A = i;
+					i = 0x1C2;
+				}
+				i++;
+			} while (i < 0x1C2);
+		}
 	}
-
-	D_800DE130[arg0].unk8 = idx;
-	D_800DE130[arg0].unk4++;
-	D_800E1978++;
-	D_800E197A = 0x1C2;
-
-	i = idx;
-	if (idx < 0x1C2) {
-		do {
-			if (D_800DE840[i].unk0 == 0) {
-				D_800E197A = i;
-				i = 0x1C2;
-			}
-			i++;
-		} while (i < 0x1C2);
-	}
-
 	return idx;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083B7C_5402C.s")
-#endif
 
 /* Allocate 3 linked entries for arg0; free on failure, return first idx or -3 */
 // AI - Allocates three linked entries; rolls back all on any allocation failure
@@ -984,7 +973,7 @@ void func_800847E4_54C94(u8 arg0) {
 	f32 p0x;
 	f32 p0y;
 	f32 p0z;
-	volatile u8 count;
+	u8 count;
 	f32 p1x;
 	f32 p1y;
 	f32 p1z;
@@ -3872,18 +3861,27 @@ void func_8008CDC8_5D278(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(60)
 // AI - Renders a camera-facing billboard quad using orientation basis vectors
 void func_8008D14C_5D5FC(void) {
 	f32 temp_f8;
-	f32 temp_f0 = D_800DE128 * D_800DE0C0[0];
-	f32 temp_f12 = D_800DE128 * D_800DE0C0[1];
-	f32 temp_f14 = D_800DE128 * D_800DE0C0[2];
-	f32 temp_f16 = D_800DE128 * D_800DE0C0[3];
-	f32 temp_f18 = D_800DE128 * D_800DE0C0[4];
-	
-	temp_f8 = D_800DE128 * D_800DE0C0[5];
+	f32 temp_f0;
+	f32 temp_f12;
+	f32 temp_f14;
+	f32 temp_f16;
+	f32 temp_f18;
+
+	temp_f0 = D_800DE128;
+	temp_f0 *= D_800DE0C0[0];
+	temp_f12 = D_800DE128;
+	temp_f12 *= D_800DE0C0[1];
+	temp_f14 = D_800DE128;
+	temp_f14 *= D_800DE0C0[2];
+	temp_f16 = D_800DE128;
+	temp_f16 *= D_800DE0C0[3];
+	temp_f18 = D_800DE128;
+	temp_f18 *= D_800DE0C0[4];
+	temp_f8 = D_800DE128;
+	temp_f8 *= D_800DE0C0[5];
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f12);
@@ -3936,9 +3934,6 @@ void func_8008D14C_5D5FC(void) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D14C_5D5FC.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3245)
@@ -4220,73 +4215,62 @@ void func_8008DF40_5E3F0(u8 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/PjKaT
-// CURRENT(285)
-#ifdef NON_MATCHING
-// AI - Updates sprite slots: handles animation frame timing, advances frames, and frees finished sprites
+// Updates sprite animation and releases finished slots.
 void func_8008DFA0_5E450(void)
 {
-	s16 life;
-	s32 var_s0;
-	s32 temp_a0;
-	u8 temp_v1;
-	s32 temp_t9;
-	s32 var_s2;
-	s32 var_v1;
+	u8 remaining;
+	u8 i;
 	Unk800E1980 *entry;
-	u8 *entryBytes;
-	var_s2 = D_800E1D68;
-	var_s0 = 0;
-	var_v1 = var_s2;
-	if (var_s2 > 0)
+	s16 life;
+	s32 kind;
+	s32 ten = 0xA;
+	s32 thirteen = 0xD;
+
+	remaining = D_800E1D68;
+	i = 0;
+	if ((s32)remaining > 0)
 	{
 		do
 		{
-			entry = &D_800E1980[var_s0];
+			entry = &D_800E1980[i];
 			life = entry->unkA;
 			if (life != 0)
 			{
-				entryBytes = (u8 *)entry;
-				temp_v1 = entry->unkF;
-				if (temp_v1 == 0)
+				if (entry->unkF == 0)
 				{
-					temp_a0 = entry->unkC;
-					temp_v1 = temp_a0;
-					if (((0xD == temp_a0 && entryBytes[0xE] < 7) || ((temp_v1 == 0xA) && (entryBytes[0xD] < (entry->unk12 * (-4))))) || (((temp_v1 != 0xA) && (temp_v1 != 0xD)) && (entry->unk12 < entryBytes[0xD])))
+					kind = entry->unkC;
+					if ((0xD == entry->unkC && entry->unkE < 7) ||
+						(ten == kind && entry->unkD < entry->unk12 * -4) ||
+						(ten != kind && thirteen != kind && entry->unk12 < entry->unkD))
 					{
-						temp_t9 = entryBytes[0xE] + 1;
-						entryBytes[0xD] = entryBytes[0xD] - entry->unk12;
-						entryBytes[0xE] = temp_t9;
-						if (((short)temp_t9 & 0xFF) >= D_800AA694[temp_a0 * 8])
+						entry->unkD -= entry->unk12;
+						entry->unkE++;
+						if (entry->unkE >= D_800AA694[entry->unkC * 8])
 						{
-							entryBytes[0xE] = 0;
+							entry->unkE = 0;
 						}
 						entry->unkA += entry->unk10;
 						entry->unk2 += entry->unk11;
 					}
 					else
 					{
-						if (temp_v1 == 0xA)
+						if (ten == kind)
 						{
 							func_8008DC34_5E0E4(entry->unk0, entry->unk2, entry->unk4, 0xB, life);
 						}
-						func_8008DF40_5E3F0((u8)var_s0);
+						func_8008DF40_5E3F0(i);
 					}
 				}
 				else
 				{
-					entry->unkF = temp_v1 - 1;
+					entry->unkF--;
 				}
-				var_v1 = (var_s2 - 1) & 0xFF;
-				var_s2 = var_v1;
+				remaining--;
 			}
-			var_s0 = (var_s0 + 1) & 0xFF;
-		} while (var_v1 > 0);
+			i++;
+		} while ((s32)remaining > 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DFA0_5E450.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(31147)
