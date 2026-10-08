@@ -2395,7 +2395,7 @@ void func_802D9128_31D278(u8 arg0) {
 
 	inst = &alienInstances[arg0];
 	parentId = inst->unk25;
-	func_800DF038_EDFE8(inst->unk0, inst->unk2, inst->unk4, *(u16 *)((u8 *)&D_8025668C + inst->typeIndex * 0x68), 0, 0);
+	func_800DF038_EDFE8(inst->unk0, inst->unk2, inst->unk4, alienTypes[inst->typeIndex].unkC, 0, 0);
 
 	if (!(inst->unk20 & ALIEN_FLAG_UNKL)) {
 		func_80137468_146418(arg0, 0xD);
