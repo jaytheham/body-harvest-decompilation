@@ -58,3 +58,27 @@ that follow it), which is the positive evidence for the batch diagnosis: the gen
 land at the target address once every datum between is itself compiler-generated. Confirm by summing
 the declared items in `asm/data/<module>/<file>.rodata.s` over that address span before spending a
 body attempt. Do **not** re-tread placeholder deletion on these two.
+
+## Fifth instance (worker B, seam run 38): the delta equals the declared block, exactly
+
+`func_802D7980_1F0690` (java `1ED9E0.c` 1347, 122 instr, `// CURRENT(5)`) is the same class, and it
+confirms the arithmetic rule above on a clean measurement:
+
+    target 1f06b4: lw t6,%lo(jtbl_802E0F20_1F9C30)($at) -> 0x802E0F20
+    ours   1f06b4: lw t6,0xfa8($at)                     -> 0x802E0FA8   (0x88 later, placeholder kept)
+    ours   1f06b4: lw t6,0xf70($at)                     -> 0x802E0F70   (0x50 later, placeholder deleted)
+    ours   1f06b4: lw t6,0xf70($at)                     -> 0x802E0F70   (0x50 later, consts moved after the function)
+
+The 0x50 is exactly the eleven declared `const f64/f32` initialisers sitting between the target table
+and the end of the file's rodata (`D_802E0F58_1F9C68` .. `D_802E0FA0_1F9CB0`, 76 bytes aligned to 80),
+and the 0x88 includes the 0x38 placeholder as well. Two negative results worth not repeating:
+deleting the placeholder and **moving the trailing const declarations to after the function** (to test
+a source-order hypothesis) both leave the address unchanged - IDO emits declared data in source order
+first and appends every generated table after **all** of it, so the table's position is independent of
+where the switch's function sits in the file. The only lever that moves it is a co-tenant datum being
+compiler-generated rather than declared, i.e. the batch dependency.
+
+Check the class **before** spending attempts: `grep -l "jtbl_" asm/nonmatchings/<module>/<file>/*.s`
+lists the file's switch owners, and `CURRENT(5)` plus `diff` of the ROM bytes around the two table
+addresses over that span is the whole diagnosis. See also the same-file test: if the delta equals the
+declared items in the span, stop and batch the file's switch owners together.
