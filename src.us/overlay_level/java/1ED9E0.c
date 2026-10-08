@@ -619,20 +619,19 @@ void func_802D5560_1EE270(void) {
 }
 
 #ifdef NON_MATCHING
+// CURRENT(430)
 void func_802D5590_1EE2A0(void) {
 	f64 temp_f20;
 	s16 temp_s6;
-	s16 temp_v0;
 	s16 var_s1;
-	s16 var_v0;
-	s16 var_v0_2;
+	s32 var_v0;
+	s32 var_v0_2;
 
-	temp_v0 = D_802E0FB0;
-	if (temp_v0 == -1) {
+	if (D_802E0FB0 == -1) {
 		func_800076D4_82D4(8);
 		func_80018D7C_1997C(0xDC);
 	}
-	D_802E0FB0 = temp_v0 + 1;
+	D_802E0FB0++;
 	if (D_802E0FB0 == 0xA) {
 		func_80123E90_132E40(&vehicleInstances[80], 2);
 		D_802E0FB0 = 0;
@@ -648,7 +647,7 @@ void func_802D5590_1EE2A0(void) {
 			var_v0 = D_801591C4;
 		}
 		if (var_v0 > 0) {
-			temp_f20 = D_802E0EA8_1F9BB8;
+			temp_f20 = D_802E0EA8_1F9BB8[0];
 			do {
 				if (var_s1 < 4) {
 					func_801371B8_146168(0, 0x185, vehicleInstances[80].unk0, vehicleInstances[80].unk2, (s32) vehicleInstances[80].unk4, (f32) (((f64) (f32) (func_800038E0_44E0() % 100) / temp_f20) + 1.625));
@@ -666,6 +665,7 @@ void func_802D5590_1EE2A0(void) {
 		func_800076D4_82D4(9);
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5590_1EE2A0.s")
 #endif
