@@ -7884,90 +7884,72 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 }
 
 
-#ifdef NON_MATCHING
-// CURRENT(3725)
 void func_801095BC_11856C(VehicleInstance *vehicle) {
-	s32 sp38;
-	f32 sp30;
-	s16 sp2A;
-	s32 sp20;
-	f32 var_f12;
-	f32 var_f2;
-	f64 temp_f0;
-	f64 var_f0;
-	s16 temp_a1;
-	s32 var_v0;
-	s32 var_v1;
-	s32 var_v1_2;
-	u8 temp_v1;
+	f64 scaledPitch;
+	s32 maxTilt;
 	VehicleType *type;
+	f32 force;
+	s32 tiltAngle;
+	f32 steeringForce;
+	f32 maxCorrection;
+	f32 signedForce;
+	s16 sine;
+	s32 value;
 
-	temp_v1 = vehicle->unk1A;
-	type = &vehicleTypes[temp_v1];
-	sp38 = type->unk46 << 8;
-	sp30 = (f32)((((s32)type->unk48 << 4) - type->unk48) << 4);
-	if ((temp_v1 != 0) || !(vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
+	type = &vehicleTypes[vehicle->unk1A];
+	tiltAngle = type->unk46 << 8;
+	maxCorrection = (f32)(type->unk48 * 240);
+	if ((vehicle->unk1A != 0) || !(vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
 		if (!(vehicle->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)) {
-			var_v1 = -vehicle->unk2A;
-			if (var_v1 < vehicle->unk2A) {
-				var_v1 = vehicle->unk2A;
-			}
-			if (var_v1 >= 0x961) {
-				sp2A = sins(vehicle->unk2A & 0xFFFF);
-				func_80102DDC_111D8C(vehicle, vehicle->unk6, 0,
-					(f32)((((f64)(f32)coss((u16)sp38) / 32768.0) * (((f64)(f32)sp2A / 32768.0) * 2.5)) *
-						  (f64)D_8015922C->unk4));
+			maxTilt = -vehicle->unk2A < vehicle->unk2A ? vehicle->unk2A : -vehicle->unk2A;
+			if (maxTilt >= 0x961) {
+				sine = sins((u16)vehicle->unk2A);
+				force = (f32)((((f64)(f32)coss((u16)tiltAngle) / 32768.0) * (2.5 * ((f64)(f32)sine / 32768.0))) *
+						  (f64)D_8015922C->unk4);
+				func_80102DDC_111D8C(vehicle, vehicle->unk6, 0, force);
 			}
 
-			temp_a1 = vehicle->unk28;
-			var_v1_2 = -temp_a1;
-			if (var_v1_2 < temp_a1) {
-				var_v1_2 = temp_a1;
-			}
-			if (var_v1_2 >= 0x961) {
-				sp20 = sp38;
-				sp2A = sins(temp_a1 & 0xFFFF);
-				func_80102DDC_111D8C(vehicle, (s16)(vehicle->unk6 - 0x4000), 0,
-					(f32)((((f64)(f32)coss((u16)sp20) / 32768.0) * (((f64)(f32)sp2A / 32768.0) * 2.5)) *
-						  (f64)D_8015922C->unk4));
+			maxTilt = -vehicle->unk28 < vehicle->unk28 ? vehicle->unk28 : -vehicle->unk28;
+			if (maxTilt >= 0x961) {
+				value = (u16)tiltAngle;
+				sine = sins((u16)vehicle->unk28);
+				force = (f32)((((f64)(f32)coss((u16)value) / 32768.0) * (2.5 * ((f64)(f32)sine / 32768.0))) *
+						  (f64)D_8015922C->unk4);
+				func_80102DDC_111D8C(vehicle, (s16)(vehicle->unk6 - 0x4000), 0, force);
 			}
 
-			var_f2 = (f32)((f64)vehicle->unk58 / D_80144BE0_153B90[0]);
-			var_f0 = (f64)var_f2;
-			if (D_80144BE8_153B98[0] < var_f0) {
-				var_f2 = D_80144BF0_153BA0[0];
-				var_f0 = (f64)var_f2;
+			steeringForce = (f32)((f64)vehicle->unk58 / D_80144BE0_153B90[0]);
+			if (D_80144BE8_153B98[0] < (f64)steeringForce) {
+				steeringForce = D_80144BF0_153BA0[0];
 			}
-			if (var_f0 < D_80144BF8_153BA8[0]) {
-				var_f2 = D_80144C00_153BB0[0];
+			if ((f64)steeringForce < D_80144BF8_153BA8[0]) {
+				steeringForce = D_80144C00_153BB0[0];
 			}
 
 			if (vehicle->unk28 > 0) {
-				var_f12 = var_f2;
+				signedForce = steeringForce;
 			} else {
-				var_f12 = -var_f2;
+				signedForce = -steeringForce;
 			}
 
-			temp_f0 = (f64)vehicle->unk28 * 0.0625;
-			var_v0 = (s32)((f64)var_f12 * (temp_f0 * temp_f0));
-			if (sp30 < (f32)var_v0) {
-				var_v0 = (s32)sp30;
+			scaledPitch = (f64)vehicle->unk28 * 0.0625;
+			value = (s32)((f64)signedForce * (scaledPitch * scaledPitch));
+			signedForce = -maxCorrection;
+			if (maxCorrection < value) {
+				value = (s32)maxCorrection;
 			}
-			if ((f32)var_v0 < -sp30) {
-				var_v0 = (s32)-sp30;
+			if (value < signedForce) {
+				value = (s32)signedForce;
 			}
 
 			if (vehicle->unk12 >= 0) {
-				vehicle->unk16 = (s16)-var_v0;
+				vehicle->unk16 = -value;
 			} else {
-				vehicle->unk16 = (s16)var_v0;
+				vehicle->unk16 = value;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_801095BC_11856C.s")
-#endif
 
 void func_801098E8_118898(VehicleInstance *vehicle) {
 	D_8015922C = &D_8003E290_3EE90[func_800056D0_62D0(vehicle->unk0, vehicle->unk4)];
