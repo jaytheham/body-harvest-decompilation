@@ -1054,7 +1054,10 @@ void func_8009D96C_AC91C(void) {
 #endif
 
 // drawAlienHealth
-// CURRENT(10486)
+// CURRENT(10501) - Run A36: the 10486 marker was for a body that DID NOT COMPILE (3 errors:
+// `const f64 X[1]` scalars used without a subscript). With `[0]` at the three use sites it compiles
+// and the real score is 10501; objdump counts 184 against the target's 191, i.e. a 7-instruction
+// deficit plus the whole-function register band (reconstruction scale, not a declaration lever).
 #ifdef NON_MATCHING
 void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 	f32 alpha;
@@ -1072,10 +1075,10 @@ void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 
 	interp = D_8013D668_14C618;
 	if (interp > 0.0f) {
-		if (interp < D_80142728_1516D8) {
+		if (interp < D_80142728_1516D8[0]) {
 			interp = 0.0f;
 		} else {
-			interp = (f32)(interp - D_80142728_1516D8);
+			interp = (f32)(interp - D_80142728_1516D8[0]);
 		}
 	}
 
@@ -1110,7 +1113,7 @@ block_5c:
 	interp = D_8013D668_14C618;
 	if (interp < 1.0) {
 		D_8014F6B0 = ((alpha - D_8014F6A4) * interp) + D_8014F6A4;
-		interp = (f32)(interp + D_80142730_1516E0);
+		interp = (f32)(interp + D_80142730_1516E0[0]);
 		D_8014F6AC = D_8014F6A8 + (s16)(interp * (width - D_8014F6A8));
 	} else {
 		interp = 1.0f;
