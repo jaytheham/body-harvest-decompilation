@@ -5,3 +5,5 @@
 Use a shared s32 result assigned in if/else branches for the flag-dependent returns. Verified with the full ROM checksum.
 
 `func_8011C25C_12B20C` required assigning the shifted X center before the Z center and radius. The load/store schedule was already correct, but this source order restored the three shift-result registers (t8, t5, t9). Declaration order retained the stack slots.
+
+`func_8011C594_12B544` matches with the zone count read directly in both the entry guard and do/while bound. Caching the count in a named local let IDO unroll the loop. Assign X, Z, radius in that order and compare the building X field directly. Keep zone initialization and `do {` on the same source line: this moves the building-array low-address instruction before the zone pointer addition. Full ROM checksum passes.

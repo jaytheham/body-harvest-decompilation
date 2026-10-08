@@ -2820,43 +2820,34 @@ s32 func_8011C4D4_12B484(void) {
 	return count;
 }
 
-#ifdef NON_MATCHING
 s32 func_8011C594_12B544(u8 arg0) {
-	s32 var_v1;
-	s8 count;
-	Unk80146688 *var_a0;
-	s16 temp_v0;
-	s16 temp_a2;
-	s16 temp_t5;
-	s16 temp_t1;
-	s16 temp_v0_2;
+	s32 i;
+	Unk80146688 *zone;
+	s16 x;
+	s16 z;
+	s16 radius;
+	s16 buildingZ;
 
-	count = D_8014667F_15562F[currentLevel];
-	var_v1 = 0;
-	if (count > 0) {
-		var_a0 = &D_80146688_155638[currentLevel][0];
-		do {
-			if (var_a0[-0x20].unk3 == 0) {
-				temp_v0 = var_a0[-0x20].unk0 << 8;
-				temp_a2 = var_a0[-0x20].unk1 << 8;
-				temp_t1 = buildingInstances[arg0].xCoord;
-				temp_t5 = var_a0[-0x20].unk2 << 8;
-				if (temp_t1 >= (temp_v0 - temp_t5) && temp_t1 < (temp_v0 + temp_t5)) {
-					temp_v0_2 = buildingInstances[arg0].zCoord;
-					if (temp_v0_2 >= (temp_a2 - temp_t5) && temp_v0_2 < (temp_a2 + temp_t5)) {
-						return var_v1;
+	i = 0;
+	if (D_8014667F_15562F[currentLevel] > 0) {
+		zone = &D_80146688_155638[currentLevel][i]; do {
+			if (zone[-0x20].unk3 == 0) {
+				x = zone[-0x20].unk0 << 8;
+				z = zone[-0x20].unk1 << 8;
+				radius = zone[-0x20].unk2 << 8;
+				if (buildingInstances[arg0].xCoord >= x - radius && buildingInstances[arg0].xCoord < x + radius) {
+					buildingZ = buildingInstances[arg0].zCoord;
+					if (buildingZ >= z - radius && buildingZ < z + radius) {
+						return i;
 					}
 				}
 			}
-			var_v1++;
-			var_a0++;
-		} while (var_v1 < count);
+			i++;
+			zone++;
+		} while (i < D_8014667F_15562F[currentLevel]);
 	}
 	return -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C594_12B544.s")
-#endif
 
 void func_8011C680_12B630(u8 arg0, s8 arg1) {
 	alienInstances[arg0].unk3D = arg1;
