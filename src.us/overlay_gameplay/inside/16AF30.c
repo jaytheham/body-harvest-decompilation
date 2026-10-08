@@ -2165,24 +2165,7 @@ void func_80088654_170714(void) {
 
 // CURRENT(110)
 // AI - Render slot type 6 effects: shrinking sprites
-#ifdef NON_MATCHING
 void func_80088B9C_170C5C(void) {
-	typedef struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		s16 unk6;
-		s16 unk8;
-		s16 unkA;
-		s16 unkC;
-		s8 unkE;
-		s8 unkF;
-		s8 unk10;
-		u8 unk11;
-		u8 unk12;
-		u8 pad13[3];
-	} Unk84EECEffect;
-
 	s16 effect;
 
 	D_800FB6E5 = 0x20;
@@ -2203,32 +2186,18 @@ void func_80088B9C_170C5C(void) {
 
 	if ((effect != -6) && (effect != -5)) {
 		do {
-			s16 posX;
-			s16 posY;
-			s16 posZ;
-			s16 scale;
-			u8 alpha;
-
 			gDPPipeSync(D_8005BB2C++);
-			posX = D_800FB7B0[effect].unk8;
-			posY = D_800FB7B0[effect].unkA;
-			posZ = D_800FB7B0[effect].unkC;
-			scale = D_800FB7B0[effect].unk2;
-			alpha = D_800FB7B0[effect].unk12;
-			D_800FB6D0.x = posX;
+			D_800FB6D0.x = (f32)D_800FB7B0[effect].unk8;
+			D_800FB6D0.y = (f32)D_800FB7B0[effect].unkA;
+			D_800FB6D0.z = (f32)D_800FB7B0[effect].unkC;
 			D_800FB6DC = &D_800FB7B0[effect].unkE;
-			D_800FB6D0.y = posY;
-			D_800FB6D0.z = posZ;
-			D_800FB6E0 = scale;
-			D_800FB6E4 = alpha;
+			D_800FB6E0 = (f32)D_800FB7B0[effect].unk2;
+			D_800FB6E4 = D_800FB7B0[effect].unk12;
 			func_80089E54_171F14();
 			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -6) && (effect != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
-#endif
 
 // CURRENT(4471)
 // AI - Render slot type 6 effects with prim/env colors (glow effects)
