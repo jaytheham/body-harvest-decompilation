@@ -5871,19 +5871,18 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 #endif
 
 // CURRENT(1466)
-#ifdef NON_MATCHING
-void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, f32 arg2) {
+void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s16 temp_s0;
-	f32 temp_f20, temp_f14;
+	f32 temp_f14, temp_f20;
 	s32 diff;
 	s32 pad1;
 	
 	if (arg0->unkC == -2) {
 		temp_s0 = coss((u16)arg0->unkE);
-		temp_f20 = (f32)((((f64)(f32)coss(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk58));
+		temp_f20 = (f32)((((f32)coss(arg1) / 32768.0) * arg2) + (((f32)temp_s0 / 32768.0) * arg0->unk58));
 		
 		temp_s0 = sins((u16)arg0->unkE);
-		temp_f14 = (f32)((((f64)(f32)sins(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk58));
+		temp_f14 = (f32)((((f32)sins(arg1) / 32768.0) * arg2) + (((f32)temp_s0 / 32768.0) * arg0->unk58));
 		
 		func_800FB430_10A3E0(arg0, sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14)));
 		arg0->unkE = func_80003824_4424(temp_f20, temp_f14);
@@ -5901,12 +5900,12 @@ void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, f32 arg2) {
 		arg0->unk20 |= VEHICLE_FLAG_UNK1;
 	} else {
 		temp_s0 = coss((u16)arg0->unkE);
-		temp_f20 = (f32)((((f64)(f32)coss(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk12));
+		temp_f20 = (f32)((((f32)coss(arg1) / 32768.0) * arg2) + (((f32)temp_s0 / 32768.0) * arg0->unk12));
 		
 		temp_s0 = sins((u16)arg0->unkE);
-		temp_f14 = (f32)((((f64)(f32)sins(arg1) / 32768.0) * (f64)arg2) + (((f64)(f32)temp_s0 / 32768.0) * (f64)arg0->unk12));
+		temp_f14 = (f32)((((f32)sins(arg1) / 32768.0) * arg2) + (((f32)temp_s0 / 32768.0) * arg0->unk12));
 		
-		arg0->unk12 = (s16)(s32)sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14));
+		arg0->unk12 = (s32)sqrtf((temp_f20 * temp_f20) + (temp_f14 * temp_f14));
 		arg0->unkE = func_80003824_4424(temp_f20, temp_f14);
 		
 		diff = func_800F9C50_108C00(arg0->unkE, arg0->unk6);
@@ -5916,9 +5915,6 @@ void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, f32 arg2) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_801022F4_1112A4.s")
-#endif
 
 // CURRENT(887)
 void func_80102600_1115B0(VehicleInstance *arg0, s16 arg1, f32 arg2) {
