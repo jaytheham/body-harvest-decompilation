@@ -192,3 +192,32 @@ compile each, file restored afterwards):
   `D_8014DD50[..].unkC` chain `$a3, $t0, $a2(base), $t1`, ours `$a2, $a3, $t0, $t1`. Every home, the
   frame and the literals agree, so the stores match and only the bank membership differs - park as
   allocation (the permuter, not more spellings, is the only lever left).
+
+## A named *intermediate* pointer is the lever when declaration order is not (482 -> 321)
+
+`func_802DAD00_2BD130` (`src.us/overlay_level/siberia/2B7100.c`, 111 instructions, marker
+`CURRENT(674)`, re-measured **482** - the marker was stale). `ins_diff -noregs` reports 111 = 111,
+delta **+0**, and every block it lists is encoding-level (`li` vs `addiu`, `move` vs `or`,
+`jal LBL` vs `jal <addr>`). Two levers, both measured:
+
+- **Declaration order fixes the stack homes but barely moves the score.** With `s16 sp4E;` hoisted
+  out of the `else` and the order `s16 sp4A; s16 sp4E; s32 sp44, sp40, sp3C; s16 sp3A;` the target's
+  `sp3A@0x3A, sp3C@0x3C, sp40@0x40, sp44@0x44` are reproduced exactly and `sp4A` lands on `0x4A`
+  (target `0x4A`), giving **482 -> 415**. Sixteen other orders measured worse (419-537); a
+  two-byte-pad pair can reproduce the target's `sp4A@0x4A`/`sp4E@0x4E` hole pattern on paper, but the
+  pads themselves cost more than they recover. `sp4E`'s home (`0x48` vs the target's `0x4E`) never
+  closed.
+- **Naming the intermediate pointer is what actually rotates the band.** Replacing the inline
+  `sp4A = D_8014DD50[alien->unkC].unkC;` with
+  `node = &D_8014DD50[alien->unkC]; sp4A = node->unkC;` (with `Unk8014DD50 *node;` declared
+  immediately after `s16 sp4A;`) took **415 -> 321 in one edit**: the whole second half of the
+  function (everything after the `bltz`) then matched row for row, where it had been a full
+  permutation. So when a whole-body rotation resists declaration order, try giving the *address that
+  is computed once and dereferenced twice* its own named pointer - it changes the cfe temp list's
+  build order without changing the instruction count.
+
+The `node` pointer costs the frame (`0x50 -> 0x58`) because it takes a stack slot; using it for the
+call's three field reads measured **2153**, and declaring it inside the `if` block does not compile.
+Parked at **321** (committed wrapped, improvement landed): residual is the +8 frame, the head rows
+(`lh v0`/`lh t9`, `sll t9,v0`/`sll t2,t9`, and the address landing in `t2` vs `v0`), and the two
+homes above.
