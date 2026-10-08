@@ -552,8 +552,6 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 	}
 }
 
-// CURRENT(80)
-#ifdef NON_MATCHING
 // AI - Create a particle burst with specified parameters
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
@@ -574,18 +572,18 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 		D_800FB6F8[slot].unkA = effect;
 		entry = &D_800FB7B0[effect];
-			count = arg5;
+		count = arg5;
 		arg5 += 0;
 
+		entry->unk2 = arg6;
 		entry->unk8 = arg0 * 4;
 		entry->unkA = arg1 * 4;
 		entry->unkC = arg2 * 4;
 		entry->unkE = 0xFF;
 		entry->unkF = 0xFF;
 		entry->unk10 = 0xFF;
-		entry->unk12 = 2;
-		entry->unk2 = arg6;
 		*(s16 *)&entry->unk14 = arg3;
+		entry->unk12 = 2;
 		entry->unk11 = arg4;
 
 		if (count >= 0x33) {
@@ -604,9 +602,6 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800840F0_16C1B0.s")
-#endif
 
 // AI - Update effect state: movement, aging, and spawning sub-effects
 void func_80084258_16C318(u8 arg0) {
