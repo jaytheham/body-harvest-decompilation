@@ -2634,6 +2634,7 @@ extern InputStruct_8012B150 D_80159028;
 extern s32 D_80159048;
 extern s16 D_8015904C;
 extern InputStruct_8012B150 D_80159050[];
+extern Vec3f D_80159188;
 extern f32 D_80159194;
 extern f32 D_80159198;
 extern f32 D_8015919C;
@@ -4048,3 +4049,4 @@ extern TerrainLightTint D_8013DA84_14CA34[5];
 extern EffectRgb D_8013E40C_14D3BC;
 
 extern Gfx D_5033E00[];
+
