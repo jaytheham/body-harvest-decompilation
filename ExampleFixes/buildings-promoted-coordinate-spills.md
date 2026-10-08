@@ -25,3 +25,7 @@ For `func_8011C8E8_12B898`, a named `s32 alienId = *alienIds` (separate assignme
 ## Building effect argument temporaries
 
 For `func_80120334_12F2E4`, inline the instance-index expression, adjusted coordinates, and callback in the call. `(s16)(arg0->yCoord + 0x15)` expresses the target truncation directly. Removing the named index, coordinate, and callback temporaries produces the correct temporary registers and ordering of otherwise identical constant stack arguments.
+
+## Compiler-generated unrolled building search
+
+`func_80120634_12F5E4` matches with a single indexed loop over all 256 building instances. IDO generates the four-way unroll. An explicit pointer increment leaves extra pointer updates between the unrolled probes; manually unrolling the C can trigger further unrolling. Initialize `i = 0` separately before `for (; i < 0x100; i++)` to match the prologue scheduling. The target has no explicit fallthrough return: adding one changes register allocation and emits an extra move.

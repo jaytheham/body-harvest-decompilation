@@ -4230,23 +4230,16 @@ void func_801205AC_12F55C(BuildingInstance *arg0) {
 }
 
 // CURRENT(2310)
-#ifdef NON_MATCHING
 s32 func_80120634_12F5E4(void) {
-	s32 i = 0;
-	BuildingInstance *inst = buildingInstances;
+	s32 i;
 
-	for (; i != 0x100; i += 4, inst += 4) {
-		if (D_8015EA29 == inst[0].buildingType) return i;
-		if (D_8015EA29 == inst[1].buildingType) return i + 1;
-		if (D_8015EA29 == inst[2].buildingType) return i + 2;
-		if (D_8015EA29 == inst[3].buildingType) return i + 3;
+	i = 0;
+	for (; i < 0x100; i++) {
+		if (D_8015EA29 == buildingInstances[i].buildingType) {
+			return i;
+		}
 	}
-
-	return D_8015EA29;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120634_12F5E4.s")
-#endif
 
 // CURRENT(4395)
 #ifdef NON_MATCHING
