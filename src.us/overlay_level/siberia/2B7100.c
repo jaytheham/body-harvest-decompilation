@@ -3047,17 +3047,20 @@ void func_802DACA0_2BD0D0(u8 arg0) {
 	func_800873A8_96358(arg0);
 }
 
-// CURRENT(674)
+// CURRENT(321)
 #ifdef NON_MATCHING
 void func_802DAD00_2BD130(u8 arg0) {
 	AlienInstance *alien;
-	s32 sp3C, sp40, sp44;
 	s16 sp4A;
+	Unk8014DD50 *node;
+	s16 sp4E;
+	s32 sp44, sp40, sp3C;
 	s16 sp3A;
 
 	alien = &alienInstances[arg0];
 	sp3A = alien->unk25;
-	sp4A = D_8014DD50[alien->unkC].unkC;
+	node = &D_8014DD50[alien->unkC];
+	sp4A = node->unkC;
 
 	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
 		alien->unk2C = 0x3C;
@@ -3070,8 +3073,6 @@ void func_802DAD00_2BD130(u8 arg0) {
 		func_80088E10_97DC0(sp4A);
 		alien->unk12 >>= 3;
 	} else {
-		s16 sp4E;
-
 		func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &sp4E);
 		alien->unk2 -= 2;
 		alien->unkA += 0xDC;
