@@ -2050,10 +2050,14 @@ void func_800A1924_B08D4(void) {
 	}
 }
 
-// CURRENT(1170)
+// CURRENT(700) - 1160 -> 700 by dropping the local held across the jal: both comparisons read
+// D_8013D5BC_14C56C directly. That deletes the `sh a1,0x26(sp)`/`lh a1,0x26(sp)` spill pair and the
+// redundant sll/sra sign-extension IDO emitted for the s16 local. Residual: ours compiles to 238
+// instructions against the target 240 (the target reloads the state word twice, once per tail path;
+// ours shares one reload), so the whole-file data anchor still sits 0x10 low, plus the register band.
+// Duplicating the reload inside the `== 2` branch measured neutral (IDO CSEs it).
 #ifdef NON_MATCHING
 void func_800A1A18_B09C8(void) {
-	s16 temp_v1;
 	s16 var_v0;
 	s16 var_v1;
 
@@ -2093,8 +2097,7 @@ void func_800A1A18_B09C8(void) {
 	}
 
 	if (((D_80158FEC != 0) || ((D_80158FE8 != 0) && (func_800A18CC_B087C() != 0)) || (D_801591B4 == 0xE)) && (D_8013D5B4_14C564 == 3)) {
-		temp_v1 = D_8013D5BC_14C56C;
-		if (temp_v1 == 0) {
+		if (D_8013D5BC_14C56C == 0) {
 			D_8013D5BC_14C56C = 1;
 			D_8013D5C0_14C570[0] = 0xA;
 			D_8014F698 = func_800143C4_14FC4(0x154);
@@ -2113,7 +2116,7 @@ void func_800A1A18_B09C8(void) {
 			D_8014F618.unk6C = 0xDC;
 		}
 
-		if (temp_v1 == 1) {
+		if (D_8013D5BC_14C56C == 1) {
 			D_8013D5C0_14C570[0] -= 1;
 			if (D_8013D5C0_14C570[0] == 0) {
 				D_8013D5BC_14C56C = 2;
