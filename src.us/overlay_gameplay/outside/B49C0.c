@@ -1,4 +1,3 @@
-#define _SHIFT _SHIFTL
 #include <ultra64.h>
 #include "common.h"
 
@@ -461,7 +460,7 @@ void func_800A68CC_B587C(void) {
 
 			sp26 = coss(D_80052B2C->unk1E);
 			D_80052B2C->unk0 = (((f64)(f32)coss(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unkC;
-			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * ()D_80052B2C->unk1C) + D_80052B34->unk2;
+			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * D_80052B2C->unk1C) + D_80052B34->unk2;
 			D_80052B2C->unk8 = (((f64)(f32)sins(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unk14;
 			func_800153D8_15FD8(0xD7);
 		}

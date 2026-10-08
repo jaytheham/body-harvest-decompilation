@@ -2,12 +2,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-// The 2.0I SDK's gbi.h uses _SHIFT in the F3DEX gSPLine3D macros; it was
-// disabled in mbi.h (decomp-permuter compatibility), so restore it here.
-#ifndef _SHIFT
-#define _SHIFT _SHIFTL
-#endif
-
 const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n"; // "ERROR: tried to create a new effect at %d\n"
 const char D_80142ECC_151E7C[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n"; // "EFFECTS WARNING : Call to free up an effect which does not exist\n"
 const char D_80142F10_151EC0[] = "ERROR : freeing all effect units for unused effect\n"; // "ERROR : freeing all effect units for unused effect\n"
