@@ -3585,7 +3585,7 @@ void func_802DC4A0_2BE8D0(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
-// CURRENT(4162)
+// CURRENT(3792)
 // Siberia Mutant on-death function
 #ifdef NON_MATCHING
 void func_802DC4D0_2BE900(u8 arg0) {
@@ -3662,7 +3662,7 @@ void func_802DC4D0_2BE900(u8 arg0) {
 	}
 
 	func_802DB8D8_2BDD08(arg0, 0x96, 0, sp88,
-		t2, 0x1F40, -0x1388, 0x9C4, D_802E3054_2C5484);
+		t2, 0x1F40, -0x1388, 0x9C4, D_802E3054_2C5484[0]);
 
 	if (alien->unk2C == 1) {
 		if (alienTypes[alien->typeIndex].unk54 & 0x02000000) {
