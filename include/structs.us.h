@@ -3427,13 +3427,17 @@ typedef struct {
 } Unk800E614CFxEntry;
 
 typedef struct {
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 velocityX;
+	s32 velocityY;
+	s32 velocityZ;
+} Unk800E614CFxMotion;
+
+typedef struct {
 	/* 0x000 */ Unk800E614CFxEntry entries[16];
-	/* 0x1C0 */ s32 unk1C0;
-	/* 0x1C4 */ s32 unk1C4;
-	/* 0x1C8 */ s32 unk1C8;
-	/* 0x1CC */ s32 unk1CC;
-	/* 0x1D0 */ s32 unk1D0;
-	/* 0x1D4 */ s32 unk1D4;
+	/* 0x1C0 */ Unk800E614CFxMotion motion;
 	/* 0x1D8 */ u8 pad1D8[4];
 	/* 0x1DC */ s32 unk1DC;
 	/* 0x1E0 */ s32 unk1E0;

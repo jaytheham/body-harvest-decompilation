@@ -216,9 +216,6 @@ const u32 jtbl_801441C4_153174[] = {
 const f64 D_801441E0_153190[1] = {
     1.7
 };
-const f64 D_801441E8_153198[1] = {
-    6000.0,
-};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -375,15 +372,11 @@ u8 D_8013DD40_14CCF0[0x1C0] = {
 	0x41, 0x41, 0x41, 0x0A, 0x0A, 0x32, 0x14, 0x00, 0x4B, 0x00, 0x00, 0x14, 0x00, 0x96, 0x00, 0x01,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
-u8 D_8013DF00_14CEB0[0x80] = {
-	0x00, 0x00, 0x03, 0xE8, 0x00, 0x00, 0x03, 0xE8, 0x00, 0x00, 0x07, 0x08, 0x00, 0x00, 0x0D, 0x48,
-	0x00, 0x00, 0x14, 0x50, 0x00, 0x00, 0x1D, 0xB0, 0x00, 0x00, 0x29, 0xCC, 0x00, 0x00, 0x33, 0x2C,
-	0x00, 0x00, 0x3C, 0x28, 0x00, 0x00, 0x42, 0x04, 0x00, 0x00, 0x48, 0x44, 0x00, 0x00, 0x4B, 0x00,
-	0x00, 0x00, 0x4E, 0x84, 0x00, 0x00, 0x4F, 0xB0, 0x00, 0x00, 0x50, 0x78, 0x00, 0x00, 0x50, 0x14,
-	0x00, 0x00, 0x4E, 0x84, 0x00, 0x00, 0x4B, 0x64, 0x00, 0x00, 0x47, 0x7C, 0x00, 0x00, 0x42, 0xCC,
-	0x00, 0x00, 0x3E, 0x1C, 0x00, 0x00, 0x38, 0x40, 0x00, 0x00, 0x32, 0xC8, 0x00, 0x00, 0x2B, 0xC0,
-	0x00, 0x00, 0x25, 0x80, 0x00, 0x00, 0x1F, 0x40, 0x00, 0x00, 0x17, 0xD4, 0x00, 0x00, 0x10, 0x68,
-	0x00, 0x00, 0x0C, 0x1C, 0x00, 0x00, 0x07, 0xD0, 0x00, 0x00, 0x05, 0x14, 0x00, 0x00, 0x04, 0xB0,
+s32 D_8013DF00_14CEB0[32] = {
+	1000, 1000, 1800, 3400, 5200, 7600, 10700, 13100,
+	15400, 16900, 18500, 19200, 20100, 20400, 20600, 20500,
+	20100, 19300, 18300, 17100, 15900, 14400, 13000, 11200,
+	9600, 8000, 6100, 4200, 3100, 2000, 1300, 1200,
 };
 Unk80154082 D_8013DF80_14CF30 = { 0xB4, 0xFF, 0x32 };
 u8 D_8013DF84_14CF34[0x0C] = {
@@ -12461,9 +12454,9 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 		}
 
 		slot = &slots[slotIdx];
-		slot->unk1C0 = arg0 << 8;
-		slot->unk1C4 = arg1 << 8;
-		slot->unk1C8 = arg2 << 8;
+		slot->motion.x = arg0 << 8;
+		slot->motion.y = arg1 << 8;
+		slot->motion.z = arg2 << 8;
 
 		{
 			s16 angle;
@@ -12471,9 +12464,9 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 			angle = func_800038E0_44E0();
 			scale = D_800313F4 * 100;
-			slot->unk1CC = (s32) (((coss((u16) angle)) / 32768.0) * scale);
-			slot->unk1D0 = 0;
-			slot->unk1D4 = (s32) (((sins((u16) angle)) / 32768.0) * scale);
+			slot->motion.velocityX = (s32) (((coss((u16) angle)) / 32768.0) * scale);
+			slot->motion.velocityY = 0;
+			slot->motion.velocityZ = (s32) (((sins((u16) angle)) / 32768.0) * scale);
 		}
 
 		slot->unk1DC = 0;
@@ -12488,167 +12481,150 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #endif
 
 // CURRENT(9670)
-#ifdef NON_MATCHING
 void func_800E64B4_F5464(void) {
+	s32 slotCount = 4;
 	Unk800E614CFxSlot *slot;
-	s32 pad0;
-	s32 pad1;
+	s32 pad[2];
 	Unk800E614CFxEntry *entry;
-	s32 slotCount;
 	s32 activeCount;
-	f64 scale;
+	Unk800E614CFxMotion *motion;
 
 	activeCount = 0;
 	if (currentLevel != 1) {
 		return;
 	}
 
-	scale = D_801441E8_153198;
-	slot = &D_801538C4;
-	for (slotCount = 4; slotCount != 0; slotCount--) {
-		s16 fxCount;
+	if (slotCount--) {
+		do {
+			s32 fxCount;
 
-		fxCount = slot->unk1E6;
-		if (fxCount != 0) {
-			s32 x;
-			s32 z;
-			s32 distance;
+			slot = &D_80153300[slotCount];
+			fxCount = slot->unk1E6;
+			motion = &slot->motion;
+			if (fxCount != 0) {
 
-			x = slot->unk1C0 + slot->unk1CC;
-			slot->unk1C0 = x;
-			z = slot->unk1C8 + slot->unk1D4;
-			slot->unk1C8 = z;
-			slot->unk1DC += slot->unk1E0;
-			slot->unk1C4 = func_800B84D0_C7480((s16) (x >> 8), (s16) (z >> 8));
-			if (slot->unk1C4 < (D_80222A70 << 8)) {
-				slot->unk1C4 = D_80222A70 << 8;
-			}
+				slot->motion.x += slot->motion.velocityX;
+				slot->motion.z += slot->motion.velocityZ;
+				slot->unk1DC += slot->unk1E0;
+				motion->y = func_800B84D0_C7480((s16) (slot->motion.x >> 8), (s16) (slot->motion.z >> 8));
+				if (motion->y < (D_80222A70 << 8)) {
+					motion->y = D_80222A70 << 8;
+				}
 
-			slot->unk1C4 += slot->unk1DC;
-			if (slot->unk1C0 >= 0x7A0001) {
-				slot->unk1CC = -0x1770;
-				slot->unk1D4 = 0;
-				slot->unk1E4 = -0x8000;
-			}
-			if (slot->unk1C0 < (s32) 0xFF860000) {
-				slot->unk1CC = 0x1770;
-				slot->unk1D4 = 0;
-				slot->unk1E4 = 0;
-			}
+				motion->y += slot->unk1DC;
+				if (motion->x >= 0x7A0001) {
+					motion->velocityX = -0x1770;
+					motion->velocityZ = 0;
+					slot->unk1E4 = -0x8000;
+				}
+				if (motion->x < (s32) 0xFF860000) {
+					motion->velocityX = 0x1770;
+					motion->velocityZ = 0;
+					slot->unk1E4 = 0;
+				}
 
-			if (slot->unk1C8 >= 0x7A0001) {
-				slot->unk1CC = 0;
-				slot->unk1D4 = -0x1770;
-				slot->unk1E4 = -0x4000;
-			}
-			if (slot->unk1C8 < (s32) 0xFF860000) {
-				slot->unk1CC = 0;
-				slot->unk1D4 = 0x1770;
-				slot->unk1E4 = 0x4000;
-			}
+				if (motion->z >= 0x7A0001) {
+					motion->velocityX = 0;
+					motion->velocityZ = -0x1770;
+					slot->unk1E4 = -0x4000;
+				}
+				if (motion->z < (s32) 0xFF860000) {
+					motion->velocityX = 0;
+					motion->velocityZ = 0x1770;
+					slot->unk1E4 = 0x4000;
+				}
 
-			if (slot->unk1E8-- <= 0) {
-				s16 angle;
+				if (slot->unk1E8-- <= 0) {
 
-				slot->unk1E8 = func_800038E0_44E0() & 0x24;
-				slot->unk1E0 = 0;
-				angle = (slot->unk1E4 + (func_800038E0_44E0() & 0x1FFF)) - 0xFFF;
-				slot->unk1E4 = angle;
-				slot->unk1CC = (s32) (((f32) coss((u16) angle) / 32768.0) * scale);
-				slot->unk1D4 = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * scale);
-			}
+					slot->unk1E8 = func_800038E0_44E0() & 0x24;
+					slot->unk1E0 = 0;
+					slot->unk1E4 += (func_800038E0_44E0() & 0x1FFF) - 0xFFF;
+					motion->velocityX = (s32) (((f32) coss((u16) slot->unk1E4) / 32768.0) * 6000.0);
+					motion->velocityZ = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * 6000.0);
+				}
 
-			distance = func_800047FC_53FC((s16) ((((slot->unk1C0 >> 8) - D_80052B34->unk0) >> 8)));
-			distance += func_800047FC_53FC((s16) ((((slot->unk1C8 >> 8) - D_80052B34->unk4) >> 8)));
-			if (distance >= 0x1F5) {
-				slot->unk1E6 = 0;
-			} else {
-				s32 remain;
+				if (func_800047FC_53FC((s16) ((((motion->x >> 8) - D_80052B34->unk0) >> 8))) + func_800047FC_53FC((s16) ((((motion->z >> 8) - D_80052B34->unk4) >> 8))) >= 0x1F5) {
+					slot->unk1E6 = 0;
+				} else {
 
-				activeCount++;
-				remain = fxCount;
-				entry = &slot->entries[fxCount - 1];
-				while (remain != 0) {
-					s32 delta;
+					activeCount++;
+					while (fxCount--) {
+						entry = &slot->entries[fxCount];
+						entry->unk0 += (entry->unkC += (entry->unk0 < motion->x) ? 0x46 : -0x46);
 
-					delta = -0x46;
-					if (entry->unk0 < slot->unk1C0) {
-						delta = 0x46;
+						entry->unk4 += (entry->unk10 += (entry->unk4 < motion->y) ? 0x1E : -0x14);
+
+						entry->unk8 += (entry->unk14 += (entry->unk8 < motion->z) ? 0x46 : -0x46);
+						entry->unk18--;
+
+						if (entry->unk18 < 0) {
+							entry->unk18 = 0x1F;
+						}
+
+						if (entry->unk10 > 0x6A4) {
+							entry->unk10 = 0x6A4;
+						}
+						if (entry->unk10 < -0x6A4) {
+							entry->unk10 = -0x6A4;
+						}
+
+						if (entry->unkC > 0x1B58) {
+							entry->unkC = 0x1B58;
+						}
+						if (entry->unkC < -0x1B58) {
+							entry->unkC = -0x1B58;
+						}
+
+						if (entry->unk14 > 0x1B58) {
+							entry->unk14 = 0x1B58;
+						}
+						if (entry->unk14 < -0x1B58) {
+							entry->unk14 = -0x1B58;
+						}
+
 					}
-					entry->unkC += delta;
-					entry->unk0 += entry->unkC;
-
-					delta = -0x14;
-					if (entry->unk4 < slot->unk1C4) {
-						delta = 0x1E;
-					}
-					entry->unk10 += delta;
-					entry->unk4 += entry->unk10;
-
-					delta = -0x46;
-					if (entry->unk8 < slot->unk1C8) {
-						delta = 0x46;
-					}
-					entry->unk18--;
-					entry->unk14 += delta;
-					entry->unk8 += entry->unk14;
-
-					if (entry->unk18 < 0) {
-						entry->unk18 = 0x1F;
-					}
-
-					if (entry->unk10 > 0x6A4) {
-						entry->unk10 = 0x6A4;
-					} else if (entry->unk10 < -0x6A4) {
-						entry->unk10 = -0x6A4;
-					}
-
-					if (entry->unkC > 0x1B58) {
-						entry->unkC = 0x1B58;
-					} else if (entry->unkC < -0x1B58) {
-						entry->unkC = -0x1B58;
-					}
-
-					if (entry->unk14 > 0x1B58) {
-						entry->unk14 = 0x1B58;
-					} else if (entry->unk14 < -0x1B58) {
-						entry->unk14 = -0x1B58;
-					}
-
-					entry--;
-					remain--;
 				}
 			}
-		}
 
-		slot--;
+		} while (slotCount--);
 	}
 
 	if (!(D_80052A8C & 0x1F) && (activeCount < 4)) {
 		s16 cosVal;
 		s16 sinVal;
-		s32 random;
 
-		random = func_800038E0_44E0();
-		cosVal = coss((u16) random);
+		cosVal = coss((u16) func_800038E0_44E0());
 		sinVal = sins((u16) func_800038E0_44E0());
 		func_800E614C_F50FC(
-			(s16) (s32) (((((f32) cosVal / 32768.0) * 256.0) * 12.0) + D_80052B34->unk0),
-			0,
-			(s16) (s32) (((((f32) sinVal / 32768.0) * 256.0) * 12.0) + D_80052B34->unk4),
-			(s16) ((func_800038E0_44E0() % 16) + 1));
+		(s16) (s32) (((((f32) cosVal / 32768.0) * 256.0) * 12.0) + D_80052B34->unk0),
+		0,
+		(s16) (s32) (((((f32) sinVal / 32768.0) * 256.0) * 12.0) + D_80052B34->unk4),
+		(s16) ((func_800038E0_44E0() % 16) + 1));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E64B4_F5464.s")
-#endif
 
-// CURRENT(15873)
 #ifdef NON_MATCHING
 void func_800E6A38_F59E8(void) {
+	s32 slotCount = 4;
 	Unk800E614CFxSlot *slot;
 	Unk800E614CFxEntry *entry;
-	s32 slotCount;
+	s32 remain;
+	s16 baseX;
+	s16 baseY;
+	s16 baseZ;
+	s16 angle;
+	s32 radius;
+	s16 xOff;
+	s16 zOff;
+	s16 yTop;
+	Vtx *vtx0;
+	Vtx *vtx1;
+	Vtx *vtx2;
+	Vtx *vtx3;
+	Vtx *vtx4;
+	Vtx *vtx5;
+
+
 
 	if ((currentLevel != 1) || (D_80052ACA == 2)) {
 		return;
@@ -12679,146 +12655,121 @@ void func_800E6A38_F59E8(void) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 15);
 	gDPLoadSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_4b, 0, 0, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 15);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
 
-	slot = &D_801538C4;
-	for (slotCount = 0; slotCount < 3; slotCount++) {
-		s16 remain;
+	while (slotCount--) {
+		slot = &D_80153300[slotCount];
+
 
 		remain = slot->unk1E6;
 		if (remain != 0) {
-			entry = &slot->entries[remain - 1];
-			while (remain != 0) {
-				s16 baseX;
-				s16 baseY;
-				s16 baseZ;
-				s16 angle;
-				s16 radius;
-				s16 xOff;
-				s16 zOff;
-				s16 yTop;
-				s16 animType;
-				Vtx *vtx0;
-				Vtx *vtx1;
-				Vtx *vtx2;
-				Vtx *vtx3;
-				Vtx *vtx4;
-				Vtx *vtx5;
+			if (remain--) {
+			entry = &slot->entries[remain];
+			do {
+
 
 				baseX = (s16)((s32)entry->unk0 >> 8);
-				baseY = (s16)(((s32 *)D_8013DF00_14CEB0)[entry->unk18] + entry->unk4 >> 8);
+				baseY = (s16)(D_8013DF00_14CEB0[entry->unk18] + entry->unk4 >> 8);
 				baseZ = (s16)((s32)entry->unk8 >> 8);
 				angle = func_80003824_4424((f32)entry->unk14, (f32)entry->unkC);
-				animType = entry->unk18;
 
-				if ((animType < 0xB) || (animType >= 0x1B)) {
-					radius = animType & 3;
-					if (radius == 3) {
+				if ((entry->unk18 >= 0x1B) || (entry->unk18 < 0xB)) {
+					radius = (s16)(entry->unk18 & 3);
+					if ((s32)radius == 3) {
 						radius = 1;
 					}
 				} else {
 					radius = 2;
 				}
 
-				radius = (radius * 20) + 20;
-				xOff = (s16)(((f32)coss((u16)-angle) / 32768.0) * radius));
-				zOff = (s16)((((f32)sins((u16)-angle) / 32768.0) * radius));
-				yTop = baseY + 0x14;
+				radius = (s16)(radius * 20);
+				xOff = (s16)(((f32)coss((u16)-angle) / 32768.0) * (radius + 20));
+				zOff = (s16)((((f32)sins((u16)-angle) / 32768.0) * (radius + 20)));
 
+				yTop = baseY + 0x14;
 				vtx0 = D_8005BB34;
+				D_8005BB34->v.ob[0] = baseX;
 				D_8005BB34++;
-				vtx0->v.ob[0] = baseX;
 				vtx0->v.ob[1] = baseY;
 				vtx0->v.ob[2] = baseZ;
-				vtx0->v.flag = 0;
 				vtx0->v.tc[0] = 0x1000;
 				vtx0->v.tc[1] = 0x0800;
 
 				vtx1 = D_8005BB34;
+				D_8005BB34->v.ob[0] = baseX;
 				D_8005BB34++;
-				vtx1->v.ob[0] = baseX;
 				vtx1->v.ob[1] = yTop;
 				vtx1->v.ob[2] = baseZ;
-				vtx1->v.flag = 0;
 				vtx1->v.tc[0] = 0x1000;
 				vtx1->v.tc[1] = 0;
 
 				vtx2 = D_8005BB34;
+				D_8005BB34->v.ob[0] = baseX + xOff;
 				D_8005BB34++;
-				vtx2->v.ob[0] = baseX + xOff;
 				vtx2->v.ob[1] = yTop;
 				vtx2->v.ob[2] = baseZ + zOff;
-				vtx2->v.flag = 0;
 				vtx2->v.tc[0] = 0;
 				vtx2->v.tc[1] = 0x0800;
 
 				vtx3 = D_8005BB34;
+				D_8005BB34->v.ob[0] = baseX - xOff;
 				D_8005BB34++;
-				vtx3->v.ob[0] = baseX - xOff;
 				vtx3->v.ob[1] = yTop;
 				vtx3->v.ob[2] = baseZ - zOff;
-				vtx3->v.flag = 0;
 				vtx3->v.tc[0] = 0x1000;
 				vtx3->v.tc[1] = 0;
 
 				entry--;
 				vtx4 = D_8005BB34;
+				D_8005BB34->v.ob[0] = baseX + (entry[1].unkC >> 7);
 				D_8005BB34++;
-				vtx4->v.ob[0] = baseX + (s16)((s32)entry->unk10 >> 7);
-				vtx4->v.ob[1] = baseY + (s16)((s32)entry->unk14 >> 7) + 0x14;
-				vtx4->v.ob[2] = baseZ + (s16)((s32)entry->unk18 >> 7);
-				vtx4->v.flag = 0;
+				vtx4->v.ob[1] = baseY + (entry[1].unk10 >> 7) + 0x14;
+				vtx4->v.ob[2] = baseZ + (entry[1].unk14 >> 7);
 				vtx4->v.tc[0] = 0;
 				vtx4->v.tc[1] = 0x0800;
 
 				vtx5 = D_8005BB34;
+				vtx5->v.ob[0] = vtx4->v.ob[0];
 				D_8005BB34++;
-				*vtx5 = *vtx4;
+				vtx5->v.ob[1] = vtx4->v.ob[1];
+				vtx5->v.ob[2] = vtx4->v.ob[2];
+				vtx5->v.tc[0] = 0;
 				vtx5->v.tc[1] = 0;
 
-				vtx0->v.cn[0] = 0;
-				vtx0->v.cn[1] = 0;
-				vtx0->v.cn[2] = 0;
-				vtx0->v.cn[3] = 0xFF;
-				vtx1->v.cn[0] = 0;
-				vtx1->v.cn[1] = 0;
-				vtx1->v.cn[2] = 0;
-				vtx1->v.cn[3] = 0xFF;
-				vtx2->v.cn[0] = 0;
-				vtx2->v.cn[1] = 0;
-				vtx2->v.cn[2] = 0;
-				vtx2->v.cn[3] = 0xFF;
-				vtx3->v.cn[0] = 0;
-				vtx3->v.cn[1] = 0;
-				vtx3->v.cn[2] = 0;
-				vtx3->v.cn[3] = 0xFF;
-				vtx4->v.cn[0] = 0;
-				vtx4->v.cn[1] = 0;
-				vtx4->v.cn[2] = 0;
-				vtx4->v.cn[3] = 0xFF;
 				vtx5->v.cn[0] = 0;
+				vtx4->v.cn[0] = 0;
+				vtx3->v.cn[0] = 0;
+				vtx2->v.cn[0] = 0;
+				vtx1->v.cn[0] = 0;
+				vtx0->v.cn[0] = 0;
 				vtx5->v.cn[1] = 0;
+				vtx4->v.cn[1] = 0;
+				vtx3->v.cn[1] = 0;
+				vtx2->v.cn[1] = 0;
+				vtx1->v.cn[1] = 0;
+				vtx0->v.cn[1] = 0;
 				vtx5->v.cn[2] = 0;
-				vtx5->v.cn[3] = 0xFF;
+				vtx4->v.cn[2] = 0;
+				vtx3->v.cn[2] = 0;
+				vtx2->v.cn[2] = 0;
+				vtx1->v.cn[2] = 0;
+				vtx0->v.cn[2] = 0;
+				vtx0->v.cn[3] = vtx1->v.cn[3] = vtx2->v.cn[3] = vtx3->v.cn[3] = vtx4->v.cn[3] = vtx5->v.cn[3] = 0xFF;
 
-				gSPVertex(D_8005BB2C++, vtx0, 6, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 6, 0);
 				gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
 				gSP1Triangle(D_8005BB2C++, 2, 3, 5, 0);
 
-				remain--;
+			} while (remain--);
 			}
 		}
 
-		slot--;
 	}
 
 	gDPTileSync(D_8005BB2C++);
