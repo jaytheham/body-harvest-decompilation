@@ -7836,6 +7836,7 @@ void func_80108D80_117D30(VehicleInstance *arg0, VehicleType *arg1) {
 
 void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 	s32 temp_v1;
+	s32 temp_v0;
 	f32 temp_f0;
 
 	temp_v0 = arg1->unk4C;
@@ -7866,10 +7867,10 @@ void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 		temp_v1 = 0x3E8;
 	}
 	arg0->unk24 = arg0->unk24 + temp_v1;
+	arg0->unk30 = arg0->unk30 / temp_f0;
 	arg0->unk8 = arg0->unk8 + arg0->unk24;
-	arg0->unk30 /= temp_f0;
-	arg0->unk34 -= 5.0f;
-	arg0->unk38 /= temp_f0;
+	arg0->unk34 = arg0->unk34 - 5.0f;
+	arg0->unk38 = arg0->unk38 / temp_f0;
 	temp_v0 = arg0->unk16;
 	arg0->unkA = arg0->unkA + arg0->unk26;
 	arg0->unk6 = arg0->unk6 + arg0->unk22 + temp_v0;
