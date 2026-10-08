@@ -29,3 +29,7 @@ For `func_80120334_12F2E4`, inline the instance-index expression, adjusted coord
 ## Compiler-generated unrolled building search
 
 `func_80120634_12F5E4` matches with a single indexed loop over all 256 building instances. IDO generates the four-way unroll. An explicit pointer increment leaves extra pointer updates between the unrolled probes; manually unrolling the C can trigger further unrolling. Initialize `i = 0` separately before `for (; i < 0x100; i++)` to match the prologue scheduling. The target has no explicit fallthrough return: adding one changes register allocation and emits an extra move.
+
+## Three-byte RGB aggregate copy
+
+`func_80122244_1311F4` uses a scalar `EffectRgb` global and local struct assignment to produce `lwr`/`swr` for the three-byte color. An array element or a cast from a byte array instead produced three byte loads/stores. The original twelve-byte data placeholder becomes a three-byte scalar, one byte of compiler alignment padding, and eight trailing zero bytes. Use `Vec2_S16` for the position passed to the particle helper so both coordinate stores are retained. An unsigned modulus divisor (`35U`) selects the target `divu` without changing the global timer type. The callback table places this function among building render callbacks, so its parameter is a `BuildingInstance *`.
