@@ -2954,14 +2954,12 @@ void func_802DBF34_1F4C44(u8 arg0) {
 	}
 }
 
-// CURRENT(829)
-#ifdef NON_MATCHING
 void func_802DC230_1F4F40(u8 arg0) {
 	AlienInstance *alien;
 	s32 temp;
 	s32 pad;
-	s16 sp56;
 	s32 pad2;
+	s16 sp56;
 
 	alien = &alienInstances[arg0];
 	if (!(alien->unk20 & ALIEN_FLAG_UNKE)) {
@@ -2983,7 +2981,7 @@ void func_802DC230_1F4F40(u8 arg0) {
 	} else {
 		alien->unk2C = func_800038E0_44E0() % 8;
 		temp = func_800038E0_44E0();
-		func_800CC7B0_DB760(0x3C, alienTypes[alien->typeIndex].unkC, (temp % 6) + 6, alien->unk0, alien->unk2 + 0x28, alien->unk4);
+		func_800CC7B0_DB760(0x3C, alienTypes[alien->typeIndex].unkC, (u8)((temp % 6) + 6), alien->unk0, alien->unk2 + 0x28, alien->unk4);
 		temp = func_800038E0_44E0();
 		if (temp % 10 != 0) {
 			func_801371B8_146168((s32)alien, 0x13F, alien->unk0, alien->unk2, alien->unk4, -1.0f);
@@ -2996,9 +2994,6 @@ void func_802DC230_1F4F40(u8 arg0) {
 	}
 	func_80137468_146418(arg0, 0xCB);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC230_1F4F40.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802DC4A8_1F51B8(u8 idx) {
