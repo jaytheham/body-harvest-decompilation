@@ -9671,9 +9671,7 @@ void func_800784B8_160578(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s")
 #endif
 
-// CURRENT(240)
 // AI - Handles room selection confirmation and building exit logic
-#ifdef NON_MATCHING
 void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 	s32 type;
 
@@ -9703,9 +9701,8 @@ void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800787E8_1608A8.s")
-#endif
+
+static void func_80078994_stub(void) {}
 // CURRENT(140)
 // AI - Remaps button directions based on room orientation
 #ifdef NON_MATCHING
