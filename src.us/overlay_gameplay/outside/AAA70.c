@@ -2474,7 +2474,11 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(1860) - two fixes took this from 8685. (1) The `(s16)distScale` store must be spelled
+// CURRENT(885) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
+// if (arg2) inserted between the D_80052B40.unk0 and .unk2 stores. It adds no instruction
+// (446 = 446) - it extends arg2's live range, which shifts IDO's whole register allocation
+// toward the target. 1860 -> 885 (asm-differ).
+// Previous: CURRENT(1860) - two fixes took this from 8685. (1) The `(s16)distScale` store must be spelled
 // UNSIGNED: `*(u16 *)&D_8014F618.unk60 = (u16)distScale;` makes IDO emit its full unsigned
 // float->int sequence (cfc1/ctc1 round-to-zero, cvt.w.s, the 0x4F000000 overflow check, the
 // 0x80000000 fixup, `sh`). The `(s16)` form compiled to a bare `trunc.w.s` and was the whole
@@ -2577,6 +2581,9 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	flatDistI = (s32)sqrtf((f32)flatDistI);
 
 	D_80052B40.unk0 = arg0;
+	if (arg2)
+	{
+	}
 	D_80052B40.unk2 = arg1;
 	D_80052B40.unk4 = arg2;
 
