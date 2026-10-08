@@ -2181,39 +2181,35 @@ s32 func_80076FD8_47488(void) {
 
 /**
  * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
- * NON_MATCHING: regalloc only - cfe temp from while(counter--) goes to t0 instead of a0.
  */
-#ifdef NON_MATCHING
 void func_80076FE0_47490(s32* arg0, s32* arg1) {
- s32 *src;
- s32 *dst;
- s32 j;
- s32 i;
- s32 k;
- s32 l;
- src = arg0;
- dst = arg1;
- i = 7;
- do {
-  j = 9;
-  do {
-   k = 31;
-   do {
-    l = 15;
-    do {
-     if (!arg0) {} 
-     *dst++ = *src++;
-    } while (l--);
-    src = &src[144];
-   } while (k--);
-   src = &src[-5104];
-  } while (j--);
-  src = &src[4960];
- } while (i--);
+	s32 *src;
+	s32 *dst;
+	s32 j;
+	s32 i;
+	s32 k;
+	s32 l;
+	src = arg0;
+	dst = arg1;
+	i = 7;
+	do {
+		j = 10;
+		while (j--) {
+			k = 31;
+			do {
+				l = 15;
+				do {
+					dst[0] = src[0];
+					dst = &dst[1];
+					src = &src[1];
+				} while (l--);
+				src = &src[144];
+			} while (k--);
+			src = &src[-5104];
+		}
+		src = &src[4960];
+	} while (i--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FE0_47490.s")
-#endif
 
 // doPressStartLoop
 s32 func_8007704C_474FC(void) {

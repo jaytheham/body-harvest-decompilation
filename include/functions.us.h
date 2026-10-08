@@ -1380,7 +1380,7 @@ void func_800CD0B0_DC060(u8 arg0);
 void func_80092BBC_A1B6C(u8 arg0);
 s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_80075B64_46014(s16 arg0);
-void func_80076FE0_47490();
+void func_80076FE0_47490(s32* source, s32* destination);
 void func_80075710_45BC0(void);
 void func_8007EE0C_4F2BC(FrontendCamEntry* arg0);
 void func_8007EE8C_4F33C(s32** arg0);
