@@ -6788,8 +6788,10 @@ void func_800D3D40_E2CF0(void) {
 	}
 }
 
+#ifdef NON_MATCHING
+// CURRENT(2240)
 void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6) {
-	s32 temp;
+	s16 temp;
 	u8 c0;
 	u8 c1;
 	u8 c2;
@@ -6800,7 +6802,7 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gDPPipeSync(D_8005BB2C++);
 
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-		K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]));
+		K0_TO_PHYS((((func_800038E0_44E0() % 4) << 9) + (s32)&D_100B4F0)));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -6813,19 +6815,16 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
 	gDPPipeSync(D_8005BB2C++);
 
-	c0 = (func_800038E0_44E0() % 55) + 0xC8;
-	c1 = (func_800038E0_44E0() % 55) + 0x32;
-	c2 = (func_800038E0_44E0() % 55) + 0x82;
+	c0 = (u8)((func_800038E0_44E0() % 0x37) + 0xC8);
+	c1 = (u8)((func_800038E0_44E0() % 0x37) + 0x32);
+	c2 = (u8)((func_800038E0_44E0() % 0x37) + 0x82);
 
-	temp = func_800038E0_44E0() % 15;
-	temp += arg0;
-	D_8005BB34->v.ob[0] = temp + 0x14;
-	temp = func_800038E0_44E0() % 15;
-	temp += arg1;
-	D_8005BB34->v.ob[1] = temp + 0x14;
-	temp = func_800038E0_44E0() % 15;
-	temp += arg2;
-	D_8005BB34->v.ob[2] = temp + 0x14;
+	temp = func_800038E0_44E0() % 0xF;
+	D_8005BB34->v.ob[0] = (arg0 + temp) + 0x14;
+	temp = func_800038E0_44E0() % 0xF;
+	D_8005BB34->v.ob[1] = (arg1 + temp) + 0x14;
+	temp = func_800038E0_44E0() % 0xF;
+	D_8005BB34->v.ob[2] = (arg2 + temp) + 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -6835,11 +6834,11 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	temp = func_800038E0_44E0() % 15;
+	temp = func_800038E0_44E0() % 0xF;
 	D_8005BB34->v.ob[0] = (arg0 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 15;
+	temp = func_800038E0_44E0() % 0xF;
 	D_8005BB34->v.ob[1] = (arg1 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 15;
+	temp = func_800038E0_44E0() % 0xF;
 	D_8005BB34->v.ob[2] = (arg2 - temp) - 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
@@ -6850,15 +6849,12 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	temp = func_800038E0_44E0() % 15;
-	temp += arg3;
-	D_8005BB34->v.ob[0] = temp + 0x14;
-	temp = func_800038E0_44E0() % 15;
-	temp += arg4;
-	D_8005BB34->v.ob[1] = temp + 0x14;
-	temp = func_800038E0_44E0() % 15;
-	temp += arg5;
-	D_8005BB34->v.ob[2] = temp + 0x14;
+	temp = func_800038E0_44E0() % 0xF;
+	D_8005BB34->v.ob[0] = (arg3 + temp) + 0x14;
+	temp = func_800038E0_44E0() % 0xF;
+	D_8005BB34->v.ob[1] = (arg4 + temp) + 0x14;
+	temp = func_800038E0_44E0() % 0xF;
+	D_8005BB34->v.ob[2] = (arg5 + temp) + 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -6868,11 +6864,11 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	temp = func_800038E0_44E0() % 15;
+	temp = func_800038E0_44E0() % 0xF;
 	D_8005BB34->v.ob[0] = (arg3 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 15;
+	temp = func_800038E0_44E0() % 0xF;
 	D_8005BB34->v.ob[1] = (arg4 - temp) - 0x14;
-	temp = func_800038E0_44E0() % 15;
+	temp = func_800038E0_44E0() % 0xF;
 	D_8005BB34->v.ob[2] = (arg5 - temp) - 0x14;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
@@ -6883,10 +6879,12 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = arg6;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
-	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
+	gSPVertex(D_8005BB2C++, D_8005BB34 - 4, 4, 0);
+	gSP2Triangles(D_8005BB2C++, 0, 2, 1, 0, 0, 3, 2, 0);
 }
-
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D3E3C_E2DEC.s")
+#endif
 
 // CURRENT(2425)
 #ifdef NON_MATCHING
@@ -8611,13 +8609,15 @@ void func_800D9754_E8704(s16 arg0) {
 }
 
 // CURRENT(429)
-#ifdef NON_MATCHING
 void func_800D978C_E873C(void) {
+	u32 opcode;
 	s16 var_v1;
+	s32 linkedIndex;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
 	Unk80052B40 *spatial;
 
+	opcode = 0x06000000;
 	var_v1 = D_801542EE;
 	if ((var_v1 != -6) && (var_v1 != -5)) {
 		gSPDisplayList(D_8005BB2C++, D_80031230);
@@ -8626,27 +8626,36 @@ void func_800D978C_E873C(void) {
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
-		if ((var_v1 != -6) && (var_v1 != -5)) {
-			do {
-				entry = &D_80154318[var_v1];
-				linkedEntry = &D_80154318[entry->unk4];
-				if (func_800B93AC_C835C(linkedEntry->unk8, linkedEntry->unkC, 0x100,
-										(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
-										0x4000 - D_80047950) != 0) {
-					spatial = &linkedEntry->spatialVectors[0];
-					func_800039D0_45D0(spatial, &spatial[1], 0, D_8005BB38);
-					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-					gSPDisplayList(D_8005BB2C++, entry->displayList);
-					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-				}
-				var_v1 = linkedEntry->unk4;
-			} while ((var_v1 != -6) && (var_v1 != -5));
+		if (1) {
+			if ((var_v1 != -6) && (var_v1 != -5)) {
+				do {
+					entry = &D_80154318[var_v1];
+					linkedIndex = entry->unk4;
+					linkedEntry = &D_80154318[linkedIndex];
+					if (func_800B93AC_C835C(linkedEntry->unk8, linkedEntry->unkC, 0x100,
+											(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
+											0x4000 - D_80047950) != 0) {
+						spatial = &linkedEntry->spatialVectors[0];
+						func_800039D0_45D0(spatial, &((Unk80052B40 *)((s32)spatial | 0))[1], 0, D_8005BB38);
+						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+						{
+							Gfx *cmd = D_8005BB2C++;
+							cmd->words.w0 = opcode;
+							cmd->words.w1 = (u32)entry->displayList;
+						}
+						{
+							Gfx *cmd = D_8005BB2C++;
+							cmd->words.w1 = 0;
+							cmd->words.w0 = -0x43000000;
+						}
+					}
+					var_v1 = linkedEntry->unk4;
+				} while ((var_v1 != -6) && (var_v1 != -5));
 			}
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D978C_E873C.s")
-#endif
+
 
 // Create group effect?
 s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
