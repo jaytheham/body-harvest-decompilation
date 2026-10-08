@@ -1180,39 +1180,27 @@ void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s
 #endif
 
 // CURRENT(3738)
-#ifdef NON_MATCHING
 s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 	s32 angle;
-	f32 cos_val;
-	f32 result;
+	f32 value;
 
 	osSyncPrintf(D_80144960_153910);
-	angle = ((u32)(arg0 << 0xF) / arg1) & 0xFFFF;
-	osSyncPrintf(D_80144980_153930, arg0, arg1);
-	osSyncPrintf(D_80144988_153938, angle, angle);
-	cos_val = (f32)((f64)(f32)coss(angle) / 32768.0);
-	osSyncPrintf(D_80144990_153940, (f64)cos_val);
-
-	if ((s32)arg0 < ((s32)arg1 / 2)) {
-		result = (f32)(1.0 - (f64)cos_val);
+	osSyncPrintf(D_80144980_153930, (s32)arg0, (s32)arg1);
+	angle = (((u32)arg0 << 15) / arg1) & 0xFFFF;
+	osSyncPrintf(D_80144988_153938, (u32)angle, angle);
+	value = (f32)coss(angle) / 32768.0;
+	osSyncPrintf(D_80144990_153940, value);
+	if ((s32)arg0 < (s32)arg1 / 2) {
+		value = 1.0 - value;
 	} else {
-		if (cos_val >= 0.0f) {
-			result = cos_val;
-		} else {
-			result = -cos_val;
-		}
-		result = (f32)((f64)result + 1.0);
+		value = ((value >= 0.0f) ? value : -value) + 1.0;
 	}
-
-	result = result / 2.0f;
-	osSyncPrintf(D_80144998_153948, (f64)result);
-	angle = (s32)((f32)arg1 * result) & 0xFF;
-	osSyncPrintf(D_801449A0_153950, angle);
+	value /= 2;
+	osSyncPrintf(D_80144998_153948, value);
+	angle = (u8)((f32)arg1 * value);
+	osSyncPrintf(D_801449A0_153950, (u32)angle);
 	return angle;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F450C_1034BC.s")
-#endif
 
 // https://decomp.me/scratch/gNcUf
 // CURRENT(28)
