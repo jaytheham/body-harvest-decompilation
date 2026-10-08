@@ -2052,17 +2052,14 @@ s32 func_800768C4_46D74(void) {
 
 // Called once before showing the 'Select Slot' screen
 // doFileSelectLoop
-#ifdef NON_MATCHING
-// CURRENT(3217)
 s16 func_80076C98_47148(void) {
-	u8 saveFileName[7];
-	u8* saveNamePtr;
-	s8* saveValidPtr;
-	s32* saveMetaPtr;
+	s32 selectedFile;
 	u32 frameCounter;
 	s32 saveFile;
-	s16 result;
-	s16 fade;
+	s32 terminal;
+	u8 saveFileName[28];
+	s32 result;
+	s32 fade;
 	s32 hasCorruptSave;
 
 	D_800D74A6 = currentSaveFileIndex + 2;
@@ -2070,30 +2067,27 @@ s16 func_80076C98_47148(void) {
 	frameCounter = 0;
 	result = 1;
 	hasCorruptSave = 0;
+	if (result) {}
 	func_8007166C_41B1C();
 
-	((u8*)D_800909B0)[0x70] = 0;
-	((u8*)D_800909B0)[0x9A] = 0;
-	((u8*)D_800909B0)[0xC4] = 0;
+	D_800909B0[2].unk1C = 0;
+	D_800909B0[3].unk1C = 0;
+	D_800909B0[4].unk1C = 0;
 	D_800909B0[D_800D74A4].unk1C = 1;
 
-	saveFile = 2;
-	saveNamePtr = &D_800D6DB6;
-	saveMetaPtr = &D_800D6DA0;
-	saveValidPtr = &D_800D6D92;
-	do {
-		*saveValidPtr = func_80002A88_3688(saveFile);
-		*saveMetaPtr = func_80002B20_3720(saveFile);
-		getSaveFileName(saveFile, saveNamePtr);
-		saveValidPtr--;
-		if (saveNamePtr[1] != 'm') {
-			hasCorruptSave = 1;
-		}
-		saveMetaPtr--;
-		saveNamePtr -= 7;
-	} while (saveFile-- != 0);
+	if (D_80094900) { saveFile = 3; } else { saveFile = 3; }
+	if (saveFile--) {
+		do {
+			D_800D6D90[saveFile] = func_80002A88_3688(saveFile);
+			D_800D6D98[saveFile] = func_80002B20_3720(saveFile);
+			getSaveFileName(saveFile, &D_800D6DA8[saveFile * 7]);
+			if (D_800D6DA8[saveFile * 7 + 1] != 'm') {
+				hasCorruptSave = 1;
+			}
+		} while (saveFile--);
+	}
 
-	((u8*)D_800909B0)[0xCD] = 5;
+	D_800909B0[4].pad22[3] = 5;
 	while (result == 1) {
 		if (frameCounter < 0x3E8U) {
 			func_80070C64_41114(1, 6, (s16)frameCounter);
@@ -2128,25 +2122,27 @@ s16 func_80076C98_47148(void) {
 		}
 	}
 
-	saveFile = D_800D74A4 - 2;
-	if (saveFile < 3) {
-		currentSaveFileIndex = saveFile;
+	selectedFile = D_800D74A4 - 2;
+	if (selectedFile < 3) {
+		currentSaveFileIndex = selectedFile;
 	}
 
 	func_800153D8_15FD8(0xC8);
 	if (result == 0) {
 		func_800709F0_40EA0();
-		for (fade = 0xA0; fade != -8; fade -= 8) {
+		fade = 0xA0;
+		terminal = -8;
+		for (; terminal != fade; fade -= 8) {
 			func_80075D58_46208(0);
 			func_80075B64_46014(fade);
 			func_800731A8_43658();
 			func_8000B044_BC44();
 			func_8000505C_5C5C();
 		}
-		return result;
-	}
-
-	if ((D_800D74A4 - 1) < 4) {
+	} else {
+		if ((D_800D74A4 - 1) >= 4) {
+			return result;
+		}
 		if (currentSaveFileIndex < 3) {
 			guess_loadSavedGame(currentSaveFileIndex);
 			getSaveFileName(currentSaveFileIndex, saveFileName);
@@ -2163,12 +2159,8 @@ s16 func_80076C98_47148(void) {
 			func_8000AFDC_BBDC();
 		}
 	}
-
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076C98_47148.s")
-#endif
 
 s32 func_80076FD8_47488(void) {
 	return 3;

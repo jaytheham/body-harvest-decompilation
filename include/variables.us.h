@@ -1483,6 +1483,8 @@ extern u8 D_800D6D88;
 extern u8 D_800D6D89;
 extern u8 D_800D6D8A;
 extern s32 D_800D6D8C;
+extern u8 D_800D6D90[];
+extern s32 D_800D6D98[];
 extern s8 D_800D6D92;
 extern s32 D_800D6DA0;
 extern u8 D_800D6DA8[];
