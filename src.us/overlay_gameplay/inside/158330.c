@@ -6807,7 +6807,6 @@ void func_80071854_159914(void) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-
 // AI - Fills the screen with a solid color via RDP
 void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
 {
