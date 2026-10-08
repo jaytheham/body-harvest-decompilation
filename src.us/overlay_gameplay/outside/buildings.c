@@ -2532,7 +2532,7 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
 #endif
 
-// CURRENT(500)
+// CURRENT(443)
 #ifdef NON_MATCHING
 s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 	s32 buildingId;
@@ -2541,7 +2541,7 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 
 	buildingId = arg0 & 0xFF;
 	building = &buildingInstances[buildingId];
-	if (building->padC[0] != 0) {
+	if (building->unkC != 0) {
 		return 0;
 	}
 
