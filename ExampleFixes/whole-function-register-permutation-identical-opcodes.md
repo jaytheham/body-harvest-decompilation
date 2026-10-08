@@ -80,3 +80,35 @@ The choice is **not source-shape-driven** -- three spellings all measured **655 
 array/union access with no base local (`D_80154318[arg3].coordinates`, `&D_80154318[arg3].unkE`).
 Do not re-tread spellings on this class; the lever must change which live value the allocator colours
 onto `$a0` (an empty-condition lifetime extension is the untried one).
+
+## A partial permutation: three saved-register pointers rotated, seven rows (func_800881C0_170280)
+
+Observed 2026-10-08 (worker B, run 49) on `func_800881C0_170280` (`overlay_gameplay/inside/16AF30.c`,
+293 instr, port *Crashes*), committed wrapped at `// CURRENT(40)`. This is the *narrow* end of the
+family: the two columns are **identical for 286 of 293 rows**, and the whole 40 points are seven rows
+that rename the same three live pointers:
+
+| role | target | ours |
+|---|---|---|
+| base `&D_800FB7B0[var_t2]` | `$s2` | `$s1` |
+| base + 8 (the `&s1->unk8` pointer) | `$s1` | `$s3` |
+| the `spAC` copy | `$s3` | `$s2` |
+
+The rotation is self-consistent -- every downstream use is renamed to match, so the differ's table
+reads identically in both columns and the score looks impossible to place by eye.
+
+**Identify it in seconds with asm-differ's JSON output, not the table:**
+
+    python3 tools/asm-differ/diff.py -m <func> --format json --no-pager > /tmp/d.json
+    # strip the leading `make:` line, then compare rows[i]["base"]["text"] vs ["current"]["text"]
+
+That prints the exact differing rows (7 here) where the colour table prints 1024 rows of noise. Use it
+whenever the differ table is content-invisible and the score is small and even.
+
+**What did not move it** (all measured, all >= 40): `pattern_probe.py` (every learned transform neutral
+or worse, `swap-commutative` 480); all **120 declaration permutations** of the five locals (best 40,
+range 40-117); dropping the `spAC = spAC;` no-ops (40); giving the +8 pointer its own variable (95);
+three distinct pointer names base/p8/spAC (1551); computing `spAC` late (235); removing the
+`s1 = &D_800FB7B0[var_t2]` rebase between `sp9C.y` and `sp9C.z` (260, and with the field reads moved to
+the array expression 1697). So it is cfe callee-saved allocation, not a source-shape question -- park
+it as allocation, as the note above says, and do not re-tread declaration order.
