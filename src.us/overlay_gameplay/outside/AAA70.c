@@ -2531,7 +2531,15 @@ void func_800A2B58_B1B08(void)
 // two hoisted bases the way the target does ($s0=&D_8014F618, $s1=&D_8005BB2C); the cast form gave
 // the reverse. One declared-but-unused s32 first in the frame restores the target's posZ home at
 // 0x20 (it lands at 0x24 without it).
-// CURRENT(244) - A28: permuter warm-started from the 349 body (7k iters, -j2 --stack-diffs,
+// CURRENT(234) - A29: permuter warm-started from the 244 body (prep on par2, ~19k iters, -j3
+// --stack-diffs, PRIMITIVE/TEXEL0 base.c C-enum) found ONE transferable construct: the second colour
+// argument of the first gDPSetPrimColor written as a comma form on the GLOBAL, `((0, D_8014F618)).unk78`
+// (a sequence expression that re-materialises the base) - 244 -> 234. Same family as A28s
+// `(0, D_8014F618.unk73)`. Measured refutations: the same wrap on unk77 = 406, unk79 = 386, unk69 =
+// 1011, all four = 1147; the runs other output (splitting the unk2 store off the one-line block) = 244
+// alone, 234 stacked - neutral. Count 446 = 446 (objdump). Residual 234 = the +8 frame, posX $f16 vs
+// $f0, the packed-colour byte order and the pulse-clamp band.
+// Previous: CURRENT(244) - A28: permuter warm-started from the 349 body (7k iters, -j2 --stack-diffs,
 // PRIMITIVE/TEXEL0 base.c C-enum). Three measured constructs, each spliced and re-measured:
 // (1) writing the D_80052B48.unk2/unk4 + empty-if + pulse block as ONE line (349 -> 289) - it
 // reschedules one store (`sh t6,4(a1)`) across two `addiu r,r,0` rows; (2) `distScale =
@@ -2611,7 +2619,7 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   }
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, D_8014F618.unk79, D_8014F618.unk69);
+  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, ((0, D_8014F618)).unk78, D_8014F618.unk79, D_8014F618.unk69);
   distScale = D_80052B34->unk4 - arg2;
   sqrtf(((((f32) (D_80052B34->unk0 - arg0)) * ((f32) (D_80052B34->unk0 - arg0))) + (((f32) (D_80052B34->unk2 - new_var2)) * ((f32) (D_80052B34->unk2 - new_var2)))) + (((f32) (D_80052B34->unk4 - arg2)) * ((f32) distScale)));
   distScale = sqrtf(((((D_80047954 * 4.0f) - posX) * ((D_80047954 * 4.0f) - posX)) + (((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY))) + (((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ)));
