@@ -1054,15 +1054,21 @@ void func_8009D96C_AC91C(void) {
 #endif
 
 // drawAlienHealth
-// CURRENT(10501) - Run A36: the 10486 marker was for a body that DID NOT COMPILE (3 errors:
-// `const f64 X[1]` scalars used without a subscript). With `[0]` at the three use sites it compiles
-// and the real score is 10501; objdump counts 184 against the target's 191, i.e. a 7-instruction
-// deficit plus the whole-function register band (reconstruction scale, not a declaration lever).
+// CURRENT(8863) - Run A37: three measured levers on the 10501 body (all inside the guard).
+// (1) The two `0.0f` guards and the `interp = 0.0f` reset mix with this file's `const f64[1]`
+// scalars, so the literals must be DOUBLE (`0.0`, no `f`): the target emits `cvt.d.s` + `c.lt.d`
+// where the f32 spelling emits `c.lt.s`. 10501 -> 9017, objdump 184 -> 190 of the target's 191 -
+// the missing double conversions were six of the seven-instruction deficit.
+// (2) `s32 width` -> `s16 width` and (3) `s16 width;` declared FIRST (IDO homes top-down):
+// 9017 -> 8863 at 192 instructions.
+// Residual: the head's argument homes - the target stores the raw `s16 arg3` in its arg-save
+// slot and re-reads it with `lh` at a 0x30 frame, ours materialises it (`sll`/`sra`) into a
+// local at 0x34/0x4E with a 0x40 frame - plus the whole-function register band.
 #ifdef NON_MATCHING
 void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
+	s16 width;
 	f32 alpha;
 	f32 interp;
-	s32 width;
 	s32 state;
 	s32 mode;
 
@@ -1074,9 +1080,9 @@ void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 	}
 
 	interp = D_8013D668_14C618;
-	if (interp > 0.0f) {
+	if (interp > 0.0) {
 		if (interp < D_80142728_1516D8[0]) {
-			interp = 0.0f;
+			interp = 0.0;
 		} else {
 			interp = (f32)(interp - D_80142728_1516D8[0]);
 		}
@@ -1126,7 +1132,7 @@ store_results:
 	D_8014F6C0 = width;
 	D_8013D668_14C618 = interp;
 
-	if (interp >= 0.0f) {
+	if (interp >= 0.0) {
 		if (((u8)D_8014F202 != 0) || (interp < 1.0)) {
 			func_8009C6CC_AB67C((s16)((interp * 64.0f) - 32.0f), 0x8B, alpha, 0, arg1, 2, 0, (s16)arg2, width);
 		}
