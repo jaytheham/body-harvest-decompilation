@@ -100,3 +100,33 @@ target casts `(EffectInterpolationState *)&D_800DE840[i].unk8`. That keeps the b
 avoids `*(u16 *)` casts at every site.
 
 `Match func_800870AC_5755C`, gate PASSED.
+
+### Second family win: the same pair of files, a 2-line `.s` diff (`Match func_8008EDB4_5F264`)
+
+`func_8008EDB4_5F264` (52690, 75 instr) <- `func_800DFA98_EEA48` (CFE30, 75 instr, already matched) is
+the cheapest pair in the area: with `.L<addr>_<off>` labels normalised away, the two `.s` files differ
+in **three lines only** - the `glabel` name and the two `%hi`/`%lo` references to the one data symbol
+the pair reads (`D_8013DF84_14CF34` -> `D_800AA688_7AB38`). Rank the transplant queue with labels
+normalised as well as addresses: un-normalised this pair reads 17 diff lines, 9 of them pure label
+churn, and it is easy to skip a perfect graft on that number.
+
+Three rules from it:
+
+1. **A flattened `do/while` guess is the nested-loop donor's signal.** The wrapped body walked the 4x3
+   table with one `do/while` and running `var_s4`/`var_s0` counters plus `u8 *var_s1` / `s8 *var_s2`
+   pointer locals (`(i * 4) - i` index arithmetic); the donor's `for (i...) { for (j...) { ...
+   arg0[i][j] = ... } }` with `table[(i * 3) + j]` reproduces the target's two nested loops and the
+   target's `sll`/`subu` pair exactly. Take the donor's loop spelling *and* its parameter type with the
+   body (`s8 arg0[][3]` here, not the guess's `s32 arg0`).
+2. **A transplanted body can name a data symbol the tree never declared.** The guess's `D_800AA688`
+   exists nowhere in `include/` - the target's own `.s` is the authority for both the name
+   (`addiu $t7,$t7,%lo(D_800AA688_7AB38)`) and the width (its `lbu` proves `u8`, so
+   `extern u8 D_800AA688_7AB38[];` next to its address neighbours in `include/variables.us.h`). Grep the
+   symbol as written in the `.s` before assuming a declaration in the file names the same object.
+3. **`include/variables.us.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
+   (minutes at `--jobs=8`, not seconds). Start `make --jobs=8` in the background first and only then run
+   `check`, which is then a differ-only run; a foreground `check` straight after a header edit times out.
+   `nm build/<path>.c.o` showing `T <func>` plus `check` 0 is the compiled-C proof - a sha1 match alone
+   would also be produced by a stale object.
+
+`Match func_8008EDB4_5F264` (75 instructions, `check` 0, gate PASSED).
