@@ -4310,40 +4310,38 @@ void func_8007A774_4AC24(s32 arg0) {
 #endif
 
 // displayClearSaveData
-#ifdef NON_MATCHING
-// CURRENT(1455)
 void func_8007B618_4BAC8(void) {
+	s32 pad0;
+	s32 pad1;
 	u8 sp3D;
-	u8 sp3E;
-	s32 tempOsc;
+	volatile u8 sp3E;
+	u16 tempOsc;
 	s32 selection;
 	u8 oscillation;
-	s32 startReleased;
-	u16 timer;
+	u16 startReleased;
+	s32 timer;
+	int one;
 
 	timer = 0x4F;
-	tempOsc = 0;
+	tempOsc = D_80094900 * 0;
 	startReleased = 0;
 	func_800791A0_49650(1);
 	gDPFullSync(D_8005BB2C++);
 	gSPEndDisplayList(D_8005BB2C++);
 	func_8000505C_5C5C();
 
-	if (isButtonNewlyPressed(0, 0x1000) != 0) {
-		selection = tempOsc;
-		sp3D = sp3E;
-		oscillation = sp3D;
-		do {
-			func_800791A0_49650(1);
-			tempOsc = oscillation;
-			oscillation = (u8)((s32)(tempOsc + 2) % 64);
+	/* Keep this setup on one line: IDO schedules the constant before the byte load. */
+	if (isButtonNewlyPressed(0, 0x1000) != 0) { selection = tempOsc; one = (int)(selection * 0) + 1; sp3D = sp3E; oscillation = sp3D; if (oscillation) {} do { func_800791A0_49650(one);
+			/* These empty tests preserve the target saved-register allocation. */
+			if (&D_8005BB2C) {} tempOsc = oscillation;
+			oscillation = (u8)(((s32)tempOsc + 2) % 64);
 			drawText(&D_800ADE4C_7E2FC, 0x82, 0xF0, 0x64);
 			drawText(&D_800ADE50_7E300, 0x80, 0);
 			drawText(&D_800ADE64_7E314, 0x64, 0xB4, 0x3C);
 			drawText(&D_800ADE68_7E318, 0x80, 3);
 			drawText(&D_800ADE80_7E330, 0x80, 4);
 
-			if (1 == selection) {
+			if (one == selection) {
 				drawText(&D_800ADEA4_7E354, (oscillation << 1) + 0x7F, 0x32, 0x32);
 			} else {
 				drawText(&D_800ADEA8_7E358, 0x5A, 0x5A, 0x32);
@@ -4358,10 +4356,10 @@ void func_8007B618_4BAC8(void) {
 
 			drawText(&D_800ADEBC_7E36C, 0x1A, 7);
 			if ((selection == 0) && (currentControllerStates[0].stick_x < -0xA)) {
-				selection = 1;
+				selection = selection * 0 + 1;
 			}
 
-			if ((1 == selection) && (currentControllerStates[0].stick_x >= 0xB)) {
+			if ((one == selection) && (currentControllerStates[0].stick_x >= 0xB)) {
 				selection = 0;
 			}
 
@@ -4370,7 +4368,7 @@ void func_8007B618_4BAC8(void) {
 			}
 
 			if (isButtonNewlyPressed(0, 0x9000) != 0) {
-				if (startReleased == 1) {
+				if (one == startReleased) {
 					func_80005AEC_66EC(0, 0, 0, 0x40);
 				}
 			}
@@ -4384,14 +4382,11 @@ void func_8007B618_4BAC8(void) {
 		} while (func_80005B30_6730() == 0);
 
 		sp3E = oscillation;
-		if (1 == selection) {
+		if (one == selection) {
 			D_800476A0 = 4;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B618_4BAC8.s")
-#endif
 
 // displayCopyright
 void func_8007B900_4BDB0(void) {
