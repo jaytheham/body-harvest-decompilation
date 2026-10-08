@@ -2345,7 +2345,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
 #endif
 
-// CURRENT(1550)
+// CURRENT(60)
 #ifdef NON_MATCHING
 void func_800EF9F0_FE9A0(s16 arg0)
 {
@@ -2367,12 +2367,12 @@ void func_800EF9F0_FE9A0(s16 arg0)
 	func_800039D0_45D0(&sp5C, &sp48, &D_800311A0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
 	sp5C.unk0 = (sp5C.unk4 = 0);
+	sp5C.unk2 = (s16)D_80157A48.unkC;
 	sp48.unk0 = D_80157A48.unk2 << 3;
 	sp48.unk2 = D_80157A48.unk4 << 3;
 	sp48.unk4 = D_80157A48.unk0 << 3;
-	sp5C.unk2 = (s16)D_80157A48.unkC;
 	func_800039D0_45D0(&sp5C, &sp48, NULL, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, DK0_TO_PHYS(D_8005BB38++), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
 	func_8000CC3C_D83C((AnimChannelState *)(&D_80157A48), 0x10);
 	gSPDisplayList(D_8005BB2C++, modelDisplayList);
