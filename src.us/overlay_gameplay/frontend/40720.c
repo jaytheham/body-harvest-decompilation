@@ -4705,9 +4705,6 @@ void func_8007BFC4_4C474(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(3430)
-// AI - Displays the end-game credits, scrolling lines from D_800944E8_64998 with a fade.
 void func_8007C4BC_4C96C(void) {
 	u16 fadeCounter;
 	s16 foundCount;
@@ -4715,6 +4712,7 @@ void func_8007C4BC_4C96C(void) {
 	s16 i;
 	s32 line;
 	s32 row;
+	s32 ch;
 
 	fadeCounter = 0x4F;
 	foundCount = 0;
@@ -4724,7 +4722,8 @@ void func_8007C4BC_4C96C(void) {
 		func_800791A0_49650(0);
 		func_8000AFDC_BBDC();
 
-		if (D_800944E8_64998[startIndex + D_80047710][0] == 0x23) {
+		ch = D_800944E8_64998[startIndex + D_80047710][0];
+		if (ch == 0x23) {
 			foundCount++;
 		}
 
@@ -4739,8 +4738,8 @@ void func_8007C4BC_4C96C(void) {
 			line = 0xC - startIndex;
 		}
 
-		if (i > 0) {
-			do {
+		do {
+			if (i > 0) {
 				if (D_800944E8_64998[i - 1][0] == 0) {
 					drawText(&D_800AE078_7E528, 0xAA, 0xAA, 0xEB);
 				} else {
@@ -4748,7 +4747,7 @@ void func_8007C4BC_4C96C(void) {
 				}
 
 				drawText(&D_800AE080_7E530, 0xFF);
-				row = line + i;
+				row = (line + 0) + i;
 
 				if (foundCount == 0) {
 					if (row == 8) {
@@ -4759,14 +4758,14 @@ void func_8007C4BC_4C96C(void) {
 					}
 				}
 
-				row = line + i;
-				if (row < 9) {
-					drawText(&D_800AE08C_7E53C, 0x80, row, D_800944E8_64998[i]);
-				}
+			}
+			row = (line + 0) + i;
+			if (row < 9) {
+				drawText(&D_800AE08C_7E53C, 0x80, row, D_800944E8_64998[i]);
+			}
 
-				i--;
-			} while ((i > 0) && ((startIndex - 0xD) < i));
-		}
+			i--;
+		} while ((i > 0) && ((startIndex - 0xD) < i));
 
 		func_8000B044_BC44();
 		if (foundCount == 0x190) {
@@ -4774,7 +4773,7 @@ void func_8007C4BC_4C96C(void) {
 		}
 
 		if (foundCount == 0) {
-			fadeCounter = (fadeCounter - 1) & 0xFFFF;
+			fadeCounter--;
 		}
 
 		func_80005B84_6784();
@@ -4783,9 +4782,6 @@ void func_8007C4BC_4C96C(void) {
 		func_8000505C_5C5C();
 	} while (func_80005B30_6730() == 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C4BC_4C96C.s")
-#endif
 
 void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 	if (arg1 < arg0) {
