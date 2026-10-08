@@ -1663,15 +1663,15 @@ void func_802D872C_1F143C(u8 arg0) {
 	}
 }
 
+// CURRENT(1571)
 #ifdef NON_MATCHING
 void func_802D8830_1F1540(u8 arg0) {
 	AlienInstance *alien;
 	s32 temp_v1;
-	s32 temp_unk20;
 	s16 sp3C;
 	s16 sp3E;
 
-	alien = &alienInstances[arg0 & 0xFF];
+	alien = &alienInstances[arg0];
 
 	/* If pending unk2 override: apply and clear */
 	if (alien->unk48 != 0) {
@@ -1679,22 +1679,20 @@ void func_802D8830_1F1540(u8 arg0) {
 		alien->unk48 = 0;
 	}
 
-	temp_v1 = func_802D8578_1F1288((u8)(arg0 & 0xFF), 0x14, 0x180);
+	temp_v1 = func_802D8578_1F1288(arg0, 0x14, 0x180);
 
 	if (alien->unk47 & 0x8) {
 		func_80088760_97710(alien);
 	}
-	temp_unk20 = alien->unk20;
 
-	if ((s32)(temp_unk20 << 1) < 0) {
+	if ((s32)(alien->unk20 << 1) < 0) {
 		if (temp_v1 != 0) {
 			if (!(alien->unk47 & 0x1)) {
 				alien->unk12 = alienTypes[alien->typeIndex].unk40;
 			}
 		}
-		func_800808F0_8F8A0((u8)(arg0 & 0xFF), &alien->unkE);
-		temp_unk20 = alien->unk20;
-		if (temp_unk20 & 0x1000) {
+		func_800808F0_8F8A0(arg0, &alien->unkE);
+		if (alien->unk20 & 0x1000) {
 			s8 next_node;
 			s8 next_next;
 
@@ -1702,19 +1700,17 @@ void func_802D8830_1F1540(u8 arg0) {
 			next_next = D_8014DD50[(s32)next_node].unkD;
 			sp3C = next_node;
 			sp3E = next_next;
-			if (func_80081F18_90EC8((u8)(arg0 & 0xFF), 2, 2, &sp3C, &D_802E0608) == 2) {
-				alien->unk20 = (s32)(temp_unk20 & ~ALIEN_FLAG_UNKD);
+			if (func_80081F18_90EC8(arg0, 2, 2, &sp3C, &D_802E0608_1F9318) == 2) {
+				alien->unk20 = (s32)(alien->unk20 & ~ALIEN_FLAG_UNKD);
 			}
 		}
 	} else {
-		func_802D872C_1F143C((u8)(arg0 & 0xFF));
-		temp_unk20 = alien->unk20;
+		func_802D872C_1F143C(arg0);
 	}
 
-	if (temp_unk20 & 0x2000) {
-		s32 new_flags = (s32)(temp_unk20 | 0x80000000);
+	if (alien->unk20 & 0x2000) {
 		if (D_80052A8C & 0x1) {
-			alien->unk20 = new_flags;
+			alien->unk20 = (s32)(alien->unk20 | 0x80000000);
 		}
 	}
 }
