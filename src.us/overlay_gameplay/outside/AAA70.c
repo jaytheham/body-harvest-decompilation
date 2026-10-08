@@ -2474,10 +2474,14 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(885) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
-// if (arg2) inserted between the D_80052B40.unk0 and .unk2 stores. It adds no instruction
-// (446 = 446) - it extends arg2's live range, which shifts IDO's whole register allocation
-// toward the target. 1860 -> 885 (asm-differ).
+// CURRENT(860) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
+// if (arg2) inserted between the D_80052B40.unk0 and .unk2 stores - it extends arg2's live
+// range, which shifts IDO's whole register allocation toward the target. 1860 -> 885.
+// NOTE: the empty if DOES cost one instruction - the permuter's "446 = 446" was ins_diff's
+// miscount (ins_diff is unreliable on this function); objdump reports 447. A23: hold the three
+// equal D_80052B50 halves in the existing `pulse` local instead of reading D_80052B50.unk4 back
+// twice - that removes the redundant `lh v1,4(a2)` reload, restores the exact 446 = 446 count,
+// and measures 885 -> 860 (asm-differ). The store order is the target's (unk4, unk2, unk0).
 // Previous: CURRENT(1860) - two fixes took this from 8685. (1) The `(s16)distScale` store must be spelled
 // UNSIGNED: `*(u16 *)&D_8014F618.unk60 = (u16)distScale;` makes IDO emit its full unsigned
 // float->int sequence (cfc1/ctc1 round-to-zero, cvt.w.s, the 0x4F000000 overflow check, the
@@ -2591,9 +2595,10 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	D_80052B48.unk2 = D_8014F618.unk6D << 8;
 	D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32)flatDistI);
 
-	D_80052B50.unk0 = (s16)(s32)((f32)D_8014F618.unk6F + distScale);
-	D_80052B50.unk2 = D_80052B50.unk0;
-	D_80052B50.unk4 = D_80052B50.unk0;
+	pulse = (s16)(s32)((f32)D_8014F618.unk6F + distScale);
+	D_80052B50.unk4 = pulse;
+	D_80052B50.unk2 = pulse;
+	D_80052B50.unk0 = pulse;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
