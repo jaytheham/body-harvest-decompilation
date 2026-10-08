@@ -2529,16 +2529,19 @@ void func_802DAF5C_1F3C6C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(360)
+// CURRENT(195)
 void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
-	s32 pad[3];
+	s32 pad;
 	s16 sp48[2];
 	s8 sp47;
+	s8 tmp;
+	s32 pad2[3];
 	AlienInstance *temp_s0;
 	AlienType *temp_v0_3;
 
 	sp48[0] = arg1;
-	sp48[1] = D_8014DD50[arg1].unkC;
+	tmp = D_8014DD50[arg1].unkC;
+	sp48[1] = tmp;
 	sp47 = func_80082084_91034(arg0, 2, 0xA, sp48, &D_802E0870_1F9580);
 
 	if (sp47 == 2 || sp47 == 5 || sp47 == 8) {
