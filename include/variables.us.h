@@ -2415,6 +2415,9 @@ extern u8 D_80153BCC;
 extern s8 D_80153BCD;
 extern s8 D_80153BCE;
 extern Unk800311A0 D_80153BD0[];
+extern u8 D_8013E408_14D3B8;
+extern VehicleSpawnOffset D_8013DB10_14CAC0[4][23];
+extern const f64 D_801441E0_153190[1];
 extern s8 D_80154080;
 extern Unk80154082 D_80154082;
 extern Unk801541F8Entry D_80154088[]; // Special effects
