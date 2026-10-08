@@ -242,12 +242,17 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(2713)
+// CURRENT(3123) - Run A20: the 2713 marker was stale; re-measured 3267 with the body
+// unwrapped. The residual is ONE home - var_a3 sits at 0x44 (target 0x18), which grows the
+// frame 0x50 vs the target 0x48 and shifts every stack-touching row; plus 4 extra `or`/move
+// copies (161 instructions vs the target 157, opcode-frequency count: only `or` differs,
+// +4). Best of five declaration orders (this one) - 3267 -> 3123. Do not re-tread the
+// call-site `& 0xFF` (dropping it reaches 2742 only by deleting an `andi` the target HAS).
 #ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
-	u8 sp47;
 	s32 sp1C;
 	s32 var_a3;
+	u8 sp47;
 
 	sp47 = arg0 / 60;
 	arg0 = arg0 % 60;
