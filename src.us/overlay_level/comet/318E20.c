@@ -4528,20 +4528,23 @@ void func_802E0104_324254(VehicleInstance *vehicle) {
 	alien->unk20 &= ~(ALIEN_FLAG_UNKO | ALIEN_FLAG_INVINCIBLE);
 }
 
-void func_802E015C_3242AC(VehicleInstance *vehicle);
+void func_802E015C_3242AC(Unk80222A78 *vehicle);
 
+// CURRENT(22) - residual is the frame alone (ours 0x38, target 0x30) and the
+// alien spill home it sets (0x1C vs 0x18); every other instruction matches
+// register-for-register. See NOTES.md - the bank and the frame are one lever.
 #ifdef NON_MATCHING
-void func_802E015C_3242AC(VehicleInstance *vehicle) {
-	s16 u, v;
+void func_802E015C_3242AC(Unk80222A78 *vehicle) {
+	s32 u, v;
 	s32 du, dv;
 	AlienInstance *alien;
 	u8 typeIndex;
 
-	typeIndex = vehicle->unk1A;
+	typeIndex = vehicle->unk8;
 	alien = &alienInstances[typeIndex];
 
-	u = (vehicle->unk1B << 8) + 0x80;
-	v = (vehicle->unk1C << 8) + 0x80;
+	u = (vehicle->unk1 << 8) + 0x80;
+	v = (vehicle->unk2 << 8) + 0x80;
 
 	alien->unk0 = u;
 	alien->unk4 = v;
@@ -4549,7 +4552,7 @@ void func_802E015C_3242AC(VehicleInstance *vehicle) {
 	alien->unk20 = (s32)(alien->unk20 | ALIEN_FLAG_UNKO);
 
 	vehicle->unk4 = (s32)(vehicle->unk4 + 9);
-	vehicle->unkC = &func_802E0104_324254;
+	vehicle->unkC = (void (*)(void *))func_802E0104_324254;
 
 	func_800AE454_BD404(vehicle);
 
