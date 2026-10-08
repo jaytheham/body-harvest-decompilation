@@ -121,9 +121,8 @@ u8 D_80140AA0_14FA50[4] = {
 	0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_80140AA4_14FA54[0x0C] = {
-	0xFF, 0xFF, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-};
+EffectRgb D_80140AA4_14FA54 = {0xFF, 0xFF, 0xFF};
+u8 D_80140AA8_14FA58[8] = {0};
 
 // CURRENT(940)
 #ifdef NON_MATCHING
@@ -1235,35 +1234,38 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 	return 0;
 }
 
-// CURRENT(42)
-#ifdef NON_MATCHING
 s32 func_80118670_127620(s16 arg0, s16 arg1) {
-	s32 sp20;
-	s32 sp1C;
+	s32 result;
 
 	if (currentLevel != 1) {
 		return 0x400;
 	}
-
-	sp20 = arg0;
-	sp1C = arg1;
-
-	if (func_80118460_127410(sp20, sp1C, 0x4B, -6) < 0x14) {
-		return func_8000726C_7E6C((u64) 0x28) != 0 ? -0x2570 : 0x400;
+	if (func_80118460_127410((s32)arg0, (s32)arg1, 0x4B, -6) < 0x14) {
+		if (func_8000726C_7E6C(0x28)) {
+			result = -0x2570;
+		} else {
+			result = 0x400;
+		}
+		return result;
 	}
-
-	if (func_80118460_127410(sp20, sp1C, 0x27, -0x41) < 0x14) {
-		return func_8000726C_7E6C((u64) 0x29) != 0 ? -0x2970 : 0x400;
+	if (func_80118460_127410((s32)arg0, (s32)arg1, 0x27, -0x41) < 0x14) {
+		if (func_8000726C_7E6C(0x29)) {
+			result = -0x2970;
+		} else {
+			result = 0x400;
+		}
+		return result;
 	}
-
-	if (func_80118460_127410(sp20, sp1C, -0x23, -0x2E) < 0x14) {
-		return func_8000726C_7E6C((u64) 0xB) != 0 ? 0x400 : 0x38A4;
+	if (func_80118460_127410((s32)arg0, (s32)arg1, -0x23, -0x2E) < 0x14) {
+		if (func_8000726C_7E6C(0xB)) {
+			result = 0x400;
+		} else {
+			result = 0x38A4;
+		}
+		return result;
 	}
 	return 0x400;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
-#endif
 
 // CURRENT(70000)
 #ifdef NON_MATCHING
@@ -2465,7 +2467,7 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 	u32 *srcWords;
 	u32 unkSp6C[3];
 
-	srcWords = (u32 *)D_80140AA4_14FA54;
+	srcWords = (u32 *)&D_80140AA4_14FA54;
 	unkSp6C[0] = srcWords[0];
 	unkSp6C[1] = srcWords[1];
 	unkSp6C[2] = srcWords[2];
@@ -2696,21 +2698,19 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C0CC_12B07C.s")
 #endif
 
-// CURRENT(40)
-#ifdef NON_MATCHING
 s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
-	s16 sp1E;
-	s16 sp1A;
-	s16 sp1C;
+	s16 centerX;
+	s16 centerZ;
+	s16 radius;
 	s16 xCoord;
 	BuildingInstance *building;
 	s32 index;
 
-	sp1A = arg0[1] << 8;
-	sp1C = arg0[2] << 8;
-	sp1E = arg0[0] << 8;
+	centerX = arg0[0] << 8;
+	centerZ = arg0[1] << 8;
+	radius = arg0[2] << 8;
 
-	index = func_80117508_1264B8((s16)(sp1A - sp1C)) - 1;
+	index = func_80117508_1264B8((s16)(centerZ - radius)) - 1;
 	arg1++;
 	while (TRUE) {
 		if (arg1 == 0) {
@@ -2721,21 +2721,18 @@ s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
 		building = &buildingInstances[index];
 		xCoord = building->xCoord;
 
-		if ((xCoord >= (sp1E - sp1C)) && (xCoord < (sp1E + sp1C))) {
+		if ((xCoord >= (centerX - radius)) && (xCoord < (centerX + radius))) {
 			arg1--;
 		}
 
 		if (index < 0xFF) {
-			if (building->zCoord < (sp1A + sp1C)) {
+			if (building->zCoord < (centerZ + radius)) {
 				continue;
 			}
 		}
 		return -1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C25C_12B20C.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_8011C338_12B2E8(s8 *arg0, s32 arg1) {
@@ -2820,81 +2817,62 @@ s32 func_8011C4D4_12B484(void) {
 	return count;
 }
 
-#ifdef NON_MATCHING
 s32 func_8011C594_12B544(u8 arg0) {
-	s32 var_v1;
-	s8 count;
-	Unk80146688 *var_a0;
-	s16 temp_v0;
-	s16 temp_a2;
-	s16 temp_t5;
-	s16 temp_t1;
-	s16 temp_v0_2;
+	s32 i;
+	Unk80146688 *zone;
+	s16 x;
+	s16 z;
+	s16 radius;
+	s16 buildingZ;
 
-	count = D_8014667F_15562F[currentLevel];
-	var_v1 = 0;
-	if (count > 0) {
-		var_a0 = &D_80146688_155638[currentLevel][0];
-		do {
-			if (var_a0[-0x20].unk3 == 0) {
-				temp_v0 = var_a0[-0x20].unk0 << 8;
-				temp_a2 = var_a0[-0x20].unk1 << 8;
-				temp_t1 = buildingInstances[arg0].xCoord;
-				temp_t5 = var_a0[-0x20].unk2 << 8;
-				if (temp_t1 >= (temp_v0 - temp_t5) && temp_t1 < (temp_v0 + temp_t5)) {
-					temp_v0_2 = buildingInstances[arg0].zCoord;
-					if (temp_v0_2 >= (temp_a2 - temp_t5) && temp_v0_2 < (temp_a2 + temp_t5)) {
-						return var_v1;
+	i = 0;
+	if (D_8014667F_15562F[currentLevel] > 0) {
+		zone = &D_80146688_155638[currentLevel][i]; do {
+			if (zone[-0x20].unk3 == 0) {
+				x = zone[-0x20].unk0 << 8;
+				z = zone[-0x20].unk1 << 8;
+				radius = zone[-0x20].unk2 << 8;
+				if (buildingInstances[arg0].xCoord >= x - radius && buildingInstances[arg0].xCoord < x + radius) {
+					buildingZ = buildingInstances[arg0].zCoord;
+					if (buildingZ >= z - radius && buildingZ < z + radius) {
+						return i;
 					}
 				}
 			}
-			var_v1++;
-			var_a0++;
-		} while (var_v1 < count);
+			i++;
+			zone++;
+		} while (i < D_8014667F_15562F[currentLevel]);
 	}
 	return -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C594_12B544.s")
-#endif
 
 void func_8011C680_12B630(u8 arg0, s8 arg1) {
 	alienInstances[arg0].unk3D = arg1;
 }
 
-#ifdef NON_MATCHING
 void func_8011C6A8_12B658(u8 arg0) {
-	AlienInstance *alien;
-	s32 index;
-	s16 *ptr;
-	s8 unk3D;
-	s32 temp_unk20;
+	s32 zoneId;
+	Unk80146688 *zone;
 
-	alien = &alienInstances[arg0];
-	unk3D = alien->unk3D;
-	index = unk3D * 16;
-	ptr = (s16 *)(D_80146688 + (currentLevel * 512 + index - 512));
+	zoneId = alienInstances[arg0].unk3D;
+	zone = &D_80146688_155638[currentLevel - 1][zoneId];
 
-	if (alien->unk24 != 1) {
-		if (index != -16) {
-			ptr[5]--;
-			if ((alien->unk20 << 11) < 0) {
-				if (ptr[6] != 0) {
-					ptr[6]--;
+	if (alienInstances[arg0].unk24 != 1) {
+		if (zoneId * 16 != -16) {
+			zone->unk0A--;
+			if ((alienInstances[arg0].unk20 << 11) < 0) {
+				zoneId = zone->unk0C;
+				if (zoneId != 0) {
+					zone->unk0C = zoneId - 1;
 				}
 			}
-		} else {
-			temp_unk20 = alien->unk20;
-			D_8015EA18--;
-			if ((temp_unk20 << 11) < 0) {
+		} else { D_8015EA18--;
+			if ((alienInstances[arg0].unk20 << 11) < 0) {
 				D_8015EA1C--;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C6A8_12B658.s")
-#endif
 
 // CURRENT(1298)
 #ifdef NON_MATCHING
@@ -2945,18 +2923,17 @@ void func_8011C770_12B720(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C770_12B720.s")
 #endif
 
-// CURRENT(135)
-#ifdef NON_MATCHING
 void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
-	s32 var_s2;
+	s32 i;
+	s32 alienId;
 	AlienInstance *alien;
-	u8 *var_s1;
+	u8 *alienIds;
 
-	var_s2 = 0;
+	i = 0;
 	if ((s32)D_8014D507 > 0) {
-		var_s1 = D_8014D408;
-		do {
-			alien = &alienInstances[*var_s1];
+		alienIds = D_8014D408; do {
+			alienId = *alienIds;
+			alien = &alienInstances[alienId];
 			if (arg0 == alien->unk3D) {
 				alien->unk38 = arg1;
 				func_8011B3F0_12A3A0(alien->unk38, &alien->unk14, &alien->unk16, &alien->unk18);
@@ -2964,53 +2941,43 @@ void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
 				alien->unk12 = 0xA0;
 				alien->unk20 |= 0x1100;
 			}
-			var_s2 += 1;
-			var_s1 += 1;
-		} while (var_s2 < (s32)D_8014D507);
+			i += 1;
+			alienIds += 1;
+		} while (i < (s32)D_8014D507);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C8E8_12B898.s")
-#endif
 
-// CURRENT(1476)
-#ifdef NON_MATCHING
 void func_8011C9D8_12B988(s32 arg0, s32 arg1, ...) {
-	s32 assignedTargets[8];
 	s32 i;
+	s32 alienId;
 	va_list args;
+	s32 assignedTargets[4];
 	AlienInstance *alien;
 	u8 *alienIdPtr;
 
-	i = 0;
-	if (arg1 > 0) {
-		args = (va_list)(&arg1 + 1);
-		for (i = 0; i < arg1; i++) {
-			assignedTargets[i] = *(s32 *)args;
-			args = (va_list)((u32)args + sizeof(s32));
-		}
-		i = 0;
+	va_start(args, arg1);
+	for (i = 0; i < arg1; i++) {
+		assignedTargets[i] = va_arg(args, s32);
 	}
+	i = 0;
 
 	if ((s32) D_8014D507 > 0) {
 		alienIdPtr = D_8014D408;
 		do {
-			alien = &alienInstances[*alienIdPtr];
+			alienId = *alienIdPtr;
+			alien = &alienInstances[alienId];
 			if (arg0 == alien->unk3D) {
 				alien->unk38 = assignedTargets[i % arg1];
 				func_8011B3F0_12A3A0(alien->unk38, &alien->unk14, &alien->unk16, &alien->unk18);
-				alien->unk12 = 0xA0;
-				alien->unk20 &= -0x1E1;
+				alien->unk20 &= ~0x1E0;
 				alien->unk20 |= 0x1100;
+				alien->unk12 = 0xA0;
 			}
 			i++;
 			alienIdPtr++;
 		} while (i < (s32) D_8014D507);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C9D8_12B988.s")
-#endif
 
 s32 func_8011CBD8_12BB88(u8 arg0, u8 arg1) {
 	return (s32) ((arg0 * 0x4BAD) + (arg1 * 0xD)) % 6500;
@@ -3174,39 +3141,28 @@ void func_8011D030_12BFE0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D030_12BFE0.s")
 #endif
 
-// CURRENT(930)
-#ifdef NON_MATCHING
 s32 func_8011D19C_12C14C(s8 arg0, s8 arg1) {
-	u16 sp2C;
-	u8 sp20;
-	u8 sp1C;
+	u16 pad;
+	u16 key;
 	u32 var_v1;
 	u32 var_a0;
-	u8 temp_a1;
-	u8 emptyMarker;
 
-	sp20 = arg0 & 0xFF;
-	sp1C = arg1 & 0xFF;
-	sp2C = func_8011CC20_12BBD0(sp20, sp1C);
-	var_v1 = func_8011CBD8_12BB88(sp20, sp1C);
+	key = func_8011CC20_12BBD0((u8)arg0, (u8)arg1);
+	var_v1 = func_8011CBD8_12BB88((u8)arg0, (u8)arg1);
 	var_a0 = 0x17;
-	emptyMarker = 0xFF;
-	
+
 	while (1) {
-		temp_a1 = D_8015D0B0[var_v1];
-		if (emptyMarker == temp_a1) {
+	
+		if (D_8015D0B0[var_v1] == 0xFF) {
 			return -1;
 		}
-		if (sp2C == D_80159DE8[var_v1]) {
-			return temp_a1;
+		if (key == D_80159DE8[var_v1]) {
+			return D_8015D0B0[var_v1];
 		}
 		var_v1 = (var_a0 + var_v1) % 6500;
 		var_a0++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D19C_12C14C.s")
-#endif
 
 s32 func_8011D260_12C210(s8 arg0, s8 arg1) {
 	s32 temp_v0;
@@ -4244,27 +4200,10 @@ void func_801202DC_12F28C(s32 arg0, s32 arg1) {
 	}
 }
 
-// CURRENT(136)
-#ifdef NON_MATCHING
 void func_80120334_12F2E4(BuildingInstance *arg0) {
-	s32 index;
-	s32 indexParam;
-	s32 yShifted;
-	s32 zAdjusted;
-	void (*callback)(s32, s32);
-
 	func_8011FA90_12EA40(arg0, 5, -0xDB, 0, -0x9C, 0x1CC, 0xB8, 0x98, 0xF);
-	index = arg0 - buildingInstances;
-	indexParam = (index << 4) + 5;
-	yShifted = (arg0->yCoord + 0x15) << 16;
-	zAdjusted = arg0->zCoord - 0xC0;
-	callback = func_801202DC_12F28C;
-	func_8012D700_13C6B0(4, indexParam, arg0->xCoord, yShifted >> 16, zAdjusted,
-		0, 0, 0, 0x64, 0x64, 0x64, callback, 0);
+	func_8012D700_13C6B0(4, ((arg0 - buildingInstances) << 4) + 5, arg0->xCoord, (s16)(arg0->yCoord + 0x15), arg0->zCoord - 0xC0, 0, 0, 0, 0x64, 0x64, 0x64, func_801202DC_12F28C, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120334_12F2E4.s")
-#endif
 
 void func_80120414_12F3C4(BuildingInstance *arg0) {
 	func_8011FA90_12EA40(arg0, 5, -0x2CD, 0, 0x35C, 0x218, 0x2C8, 0x164, 0xF);
@@ -4283,24 +4222,16 @@ void func_801205AC_12F55C(BuildingInstance *arg0) {
 	func_8011FA90_12EA40(arg0, 5, 0xD1, 0x3C, 0, 0x4B, 0x3C, 0x596, 0xE);
 }
 
-// CURRENT(2310)
-#ifdef NON_MATCHING
 s32 func_80120634_12F5E4(void) {
-	s32 i = 0;
-	BuildingInstance *inst = buildingInstances;
+	s32 i;
 
-	for (; i != 0x100; i += 4, inst += 4) {
-		if (D_8015EA29 == inst[0].buildingType) return i;
-		if (D_8015EA29 == inst[1].buildingType) return i + 1;
-		if (D_8015EA29 == inst[2].buildingType) return i + 2;
-		if (D_8015EA29 == inst[3].buildingType) return i + 3;
+	i = 0;
+	for (; i < 0x100; i++) {
+		if (D_8015EA29 == buildingInstances[i].buildingType) {
+			return i;
+		}
 	}
-
-	return D_8015EA29;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80120634_12F5E4.s")
-#endif
 
 // CURRENT(4395)
 #ifdef NON_MATCHING
@@ -4815,27 +4746,19 @@ void func_80121EB4_130E64(s16 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121EB4_130E64.s")
 #endif
 
-// CURRENT(3445)
-#ifdef NON_MATCHING
-void func_80122244_1311F4(Unk80152B80 *arg0) {
-	s16 sp30;
-	s16 sp32;
-	u8 sp34[3];
+void func_80122244_1311F4(BuildingInstance *arg0) {
+	EffectRgb color;
+	Vec2_S16 position;
 
-	sp34[0] = D_80140AA4_14FA54[0];
-	sp34[1] = D_80140AA4_14FA54[1];
-	sp34[2] = D_80140AA4_14FA54[2];
+	color = D_80140AA4_14FA54;
 
-	if ((D_80052A8C % 35) == 0) {
-		sp30 = arg0->unk0;
-		sp32 = arg0->unk4;
-		func_800B99A8_C8958(&sp30, 30, 500, 255, sp34, 80, 10, 0);
+	if ((D_80052A8C % 35U) == 0) {
+		position.x = arg0->xCoord;
+		position.z = arg0->zCoord;
+		func_800B99A8_C8958(&position, 30, 500, 255, &color.r, 80, 10, 0);
 	}
 
 	if (gameplayMode == GAMEPLAY_MODE_UNK1) {
-		func_800D16BC_E066C(arg0->unk0, arg0->unk2 + 0x14E, arg0->unk4, arg0->unk0, arg0->unk2 + 0x7D0, arg0->unk4, 1);
+		func_800D16BC_E066C(arg0->xCoord, arg0->yCoord + 0x14E, arg0->zCoord, arg0->xCoord, arg0->yCoord + 0x7D0, arg0->zCoord, 1);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80122244_1311F4.s")
-#endif
