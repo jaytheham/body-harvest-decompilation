@@ -6942,3 +6942,6 @@ D_8013E3F8_W = 0x8013E3F8;
 
 /* Separate write reference for the frontend logo frame counter. */
 D_80094860_64D10_W = D_80094860_64D10;
+
+/* Word-array view of the frontend fixed-point matrix scratch buffer. */
+D_800DE070_words = D_800DE070;
