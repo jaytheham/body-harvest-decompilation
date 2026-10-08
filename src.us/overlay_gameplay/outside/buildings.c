@@ -1236,34 +1236,38 @@ s32 func_801185F8_1275A8(BuildingInstance *arg0, s16 arg1) {
 }
 
 // CURRENT(42)
-#ifdef NON_MATCHING
 s32 func_80118670_127620(s16 arg0, s16 arg1) {
-	s32 sp20;
-	s32 sp1C;
+	s32 result;
 
 	if (currentLevel != 1) {
 		return 0x400;
 	}
-
-	sp20 = arg0;
-	sp1C = arg1;
-
-	if (func_80118460_127410(sp20, sp1C, 0x4B, -6) < 0x14) {
-		return func_8000726C_7E6C((u64) 0x28) != 0 ? -0x2570 : 0x400;
+	if (func_80118460_127410((s32)arg0, (s32)arg1, 0x4B, -6) < 0x14) {
+		if (func_8000726C_7E6C(0x28)) {
+			result = -0x2570;
+		} else {
+			result = 0x400;
+		}
+		return result;
 	}
-
-	if (func_80118460_127410(sp20, sp1C, 0x27, -0x41) < 0x14) {
-		return func_8000726C_7E6C((u64) 0x29) != 0 ? -0x2970 : 0x400;
+	if (func_80118460_127410((s32)arg0, (s32)arg1, 0x27, -0x41) < 0x14) {
+		if (func_8000726C_7E6C(0x29)) {
+			result = -0x2970;
+		} else {
+			result = 0x400;
+		}
+		return result;
 	}
-
-	if (func_80118460_127410(sp20, sp1C, -0x23, -0x2E) < 0x14) {
-		return func_8000726C_7E6C((u64) 0xB) != 0 ? 0x400 : 0x38A4;
+	if (func_80118460_127410((s32)arg0, (s32)arg1, -0x23, -0x2E) < 0x14) {
+		if (func_8000726C_7E6C(0xB)) {
+			result = 0x400;
+		} else {
+			result = 0x38A4;
+		}
+		return result;
 	}
 	return 0x400;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118670_127620.s")
-#endif
 
 // CURRENT(70000)
 #ifdef NON_MATCHING
