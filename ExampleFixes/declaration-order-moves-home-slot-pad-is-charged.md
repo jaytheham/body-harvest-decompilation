@@ -45,3 +45,31 @@ target had. Try permutations of the existing declarations before adding anything
 added unused pad is placed at the **top** slot and shifts every used local *down* (that is why the
 pad variants scored worse, not frame growth: the frame stayed `0x38`).
 
+
+
+## Third case: a pad *above* the result local moves its home down; a second pad below restores the frame
+
+Measured on `func_802DAFD0_1F3CE0` (`overlay_level/java/1ED9E0.c`, 95 instr, marker `CURRENT(360)` - honest,
+re-measured 360; advance to 195, not closed). The target homes `sp48[2]` at `0x48` and `sp47` at `0x47` with
+frame `0x50`, and touches **nothing** at `0x4C..0x4F` - a live 4-byte slot sits *above* the result array, and
+the 31 bytes below it are unused. The guess put its 12-byte pad first, homing `sp48` at `0x40`.
+
+| decl block, in order | frame | `sp48` | `sp47` | score |
+|---|---|---|---|---|
+| `s32 pad[3]; s16 sp48[2]; s8 sp47;` (guess) | 0x50 | 0x40 | 0x3f | 360 |
+| `s32 pad; s16 sp48[2]; s8 sp47;` | 0x48 | 0x40 | 0x3f | 426 |
+| `s16 sp48[2]; s8 sp47; s32 pad[3];` | 0x50 | 0x4c | 0x4b | 340 |
+| `s16 sp48[2]; s8 sp47;` | 0x40 | 0x3c | 0x3b | 502 |
+| **`s32 pad; s16 sp48[2]; s8 sp47; s32 pad2[3];`** | **0x50** | **0x48** | **0x47** | **315** |
+
+Two rules, both measured. (i) The first-declared local takes the top slot, so a result array reaches `0x48`
+(rather than the top `0x4C`) only when a 4-byte declaration precedes it - and the frame is kept at the target's
+`0x50` by a **second** pad below it. (ii) A single unused scalar/array pad placed first or last is eliminated
+and reserves nothing (426 / 502); a pad in the *middle* is kept. So the pad-above/pad-below pair is the way to
+move a home down without changing the frame.
+
+The allocator lever on top of it: routing the `unkC` read through a named temp local
+(`s8 tmp; tmp = D_8014DD50[arg1].unkC; sp48[1] = tmp;` instead of the direct assignment) changed which
+register carried it from `t8` to the target's `v0` and closed the whole first half of the function,
+**315 -> 195**. Same statements, only the named local added; the temp's signedness matters (`s32` 306,
+`u8` 395, `s16`/`s8` 195).
