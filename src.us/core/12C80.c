@@ -1174,6 +1174,7 @@ void func_800136F0_142F0(void) {
 	}
 }
 
+// CURRENT(20)
 #ifdef NON_MATCHING
 void func_80013720_14320(void)
 {
