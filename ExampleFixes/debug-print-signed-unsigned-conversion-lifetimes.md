@@ -1,0 +1,3 @@
+### Debug print argument conversion lifetimes
+
+In `func_800F450C_1034BC`, keep one f32 value and one s32 angle. Compute the angle after printing the inputs. Cast arg0 to u32 before shifting, rather than casting the shifted result: the former reloads the byte argument, while the latter reuses a cached signed printf argument. Passing `(u32)angle, angle` to the angle diagnostic and `(u32)angle` to the final diagnostic reproduces the target argument moves and unsigned conversion temporary. Divide the float by integer `2` to preserve `div.s`; `2.0f` produces reciprocal multiplication. Full ROM checksum verified OK.

@@ -1,0 +1,7 @@
+### Raw post-decrement loops and retained global pointer addresses
+
+In `func_800FC1CC_10B17C`, a signed halfword count and `while (i--)` retain the old count in `v1` while decrementing and sign-extending `i`. Writing `i-- != 0` materializes a boolean with `sltu` instead of the target `move`. Reuse this counter for the twelve-point initialization loop: `i = 12; while (i--)` places the folded initial `li a3,11` after the point-array base address. The equivalent `i = 11; do { ... } while (i--)` emits all the same instructions but places that `li` one instruction too early. Both the while and for post-decrement forms matched the full ROM.
+
+Keep `vehicleInstances[D_80158E80[i]]` inline. A named byte index claimed `v1`, changed the array-base and stride-constant registers, and shifted the later temporary-register sequence. A typed `VehicleInstance **selected` assigned through `(VehicleInstance **)(s32)&D_80158F8C` inside the search loop preserves the target saved address for the selected-vehicle store. A direct global store or ordinary pointer assignment folds that address away; use the direct global clear after the search so the failure path rematerializes the address in the target register.
+
+The distance calculation uses `D_80052B34`, while point initialization uses the separate pointer loaded from `D_80052B20`. The failure path clears the selected vehicle whether or not the warning timer has expired. Function diff score 0 and `build/bh.us.z64: OK` verified.
