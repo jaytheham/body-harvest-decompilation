@@ -93,3 +93,23 @@ The whole t-band is shifted by one (`t8` where the target has `t9`), and the `a`
 The rotation is self-consistent - every downstream use is renamed to match, so the differ's table reads identically in both columns. Identify it in seconds with the asm-differ JSON output above. **What did not move it** (all measured, all >= 40): `pattern_probe.py` (every learned transform neutral or worse, `swap-commutative` 480); all **120 declaration permutations** of the five locals (best 40, range 40-117); dropping the `spAC = spAC;` no-ops (40); giving the +8 pointer its own variable (95); three distinct pointer names base/p8/spAC (1551); computing `spAC` late (235); removing the `s1 = &D_800FB7B0[var_t2]` rebase between `sp9C.y` and `sp9C.z` (260, and with the field reads moved to the array expression 1697). So it is cfe callee-saved allocation, not a source-shape question - park it as allocation.
 
 See also `hoist-vs-rematerialise-last-callee-saved-slot.md` for the sibling case where the band size and every home match and only *which* value takes the last callee-saved slot differs.
+
+
+### A single caller-saved temp on a CSE'd RDP opcode constant (4 rows, score 20)
+
+`func_80081058_51508` (`src.us/overlay_gameplay/frontend/40720.c`, 142 instr, wrapped `#ifdef
+NON_MATCHING` body with no `// CURRENT(n)` marker of its own). Unwrapped it re-measures **20**, and the
+two columns are identical for **138 of 142** rows. The four differing rows all rename ONE live value:
+the `G_LINE3D` opcode word `0xB5000000`, materialised once (`lui`) by cfe CSE across the three
+`gSPLineW3D(D_8005BB2C++, ...)` expansions and held live across them. The target colours it **`$t5`**,
+ours **`$t4`**; its `lui` plus the three `sw t5,0(v0)` stores are the entire score. Every other temp
+agrees (`t6/t7/t8/t9/at`), the homes, the frame and the store order agree, `ins_diff` delta **+0**.
+Both `$t4` and `$t5` are dead at that point, so the choice is a cfe temp-rotation offset, not a
+source-shape question - and the constant cannot be respelled because it is emitted inside the
+`gSPLineW3D` macro.
+
+Measured, all >= 20 (baseline 20): `pattern_probe.py` every learned transform neutral
+(`pad1`/`pad2`/`swap-last-decls`/`cast-s16-consts` 20, `cast-u8-consts` 25); an empty `if (vtx) { }`
+extending the vtx pointer's life *before* the gfx block 20; a third unused `s32 pad;` local 20;
+swapped `vtx`/`buffer` declarations 20; `~0` for the `gSPClearGeometryMode` `-1` 20; an empty
+`if (vtx) { }` *after* the last line command 2845. Park as allocation.
