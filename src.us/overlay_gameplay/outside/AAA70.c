@@ -2474,7 +2474,13 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(860) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
+// CURRENT(447) - A24: a warm-started permuter run (8331 iterations, --stack-diffs) found two more
+// no-cost live-range constructs on top of the 860 body: (1) hoist the first product of the
+// flatDistI expression into a named `int new_var;` declared FIRST in the frame (860 -> 490), and
+// (2) name `arg1` in a `s16 new_var2;` used by posY and by the sqrtf argument (490 -> 447). Both
+// add no instruction - objdump counts 446 = 446. Holding unk6D in the dead `pad0` (a third
+// permuter find) measured 652, so it is NOT in the body.
+// Earlier: CURRENT(860) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
 // if (arg2) inserted between the D_80052B40.unk0 and .unk2 stores - it extends arg2's live
 // range, which shifts IDO's whole register allocation toward the target. 1860 -> 885.
 // NOTE: the empty if DOES cost one instruction - the permuter's "446 = 446" was ins_diff's
@@ -2498,17 +2504,20 @@ void func_800A2B58_B1B08(void)
 // 0x20 (it lands at 0x24 without it).
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
+	int new_var;
 	s32 pad0;
 	f32 posX;
 	f32 posY;
 	f32 posZ;
 	f32 distScale;
+	s16 new_var2;
 	s32 flatDistI;
 	s32 pulse;
 
 	(void)arg3;
 	posX = (f32)arg0;
-	posY = (f32)arg1;
+	new_var2 = arg1;
+	posY = (f32)new_var2;
 	posZ = (f32)arg2;
 
 	D_8014F618.unk66 = 1;
@@ -2558,7 +2567,7 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, D_8014F618.unk79, D_8014F618.unk69);
 
 	sqrtf(((f32)(D_80052B34->unk0 - arg0) * (f32)(D_80052B34->unk0 - arg0)) +
-		  ((f32)(D_80052B34->unk2 - arg1) * (f32)(D_80052B34->unk2 - arg1)) +
+		  ((f32)(D_80052B34->unk2 - new_var2) * (f32)(D_80052B34->unk2 - new_var2)) +
 		  ((f32)(D_80052B34->unk4 - arg2) * (f32)(D_80052B34->unk4 - arg2)));
 
 	distScale = sqrtf((((D_80047954 * 4.0f) - posX) * ((D_80047954 * 4.0f) - posX)) +
@@ -2580,8 +2589,8 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, D_8014F618.unk73, D_8014F618.unk6B);
 
-	flatDistI = (s32)((f32)(s32)((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX)) +
-				  (D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ));
+	new_var = (s32)((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX));
+	flatDistI = (s32)((f32)new_var + (D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ));
 	flatDistI = (s32)sqrtf((f32)flatDistI);
 
 	D_80052B40.unk0 = arg0;
