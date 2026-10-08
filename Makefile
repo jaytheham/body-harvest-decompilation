@@ -445,17 +445,3 @@ baserom.$(VERSION).z64:
 .SECONDARY:
 .PHONY: all clean default
 SHELL = /bin/bash -e -o pipefail
-
-# Preserve late-rodata order while the laser renderer still uses assembly.
-$(BUILD_DIR)/src.us/overlay_gameplay/outside/CFE30_laser_rodata.s: src.us/overlay_gameplay/outside/CFE30_laser_rodata.s asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s
-	@mkdir -p $(dir $@)
-	@cat $^ > $@
-
-$(BUILD_DIR)/src.us/overlay_gameplay/outside/CFE30.c.o: $(BUILD_DIR)/src.us/overlay_gameplay/outside/CFE30_laser_rodata.s
-
-# Keep the remaining ribbon renderer constant after the dispatch tables.
-$(BUILD_DIR)/src.us/overlay_gameplay/outside/CFE30_ribbon_rodata.s: src.us/overlay_gameplay/outside/CFE30_ribbon_rodata.s asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s
-	@mkdir -p $(dir $@)
-	@cat $^ > $@
-
-$(BUILD_DIR)/src.us/overlay_gameplay/outside/CFE30.c.o: $(BUILD_DIR)/src.us/overlay_gameplay/outside/CFE30_ribbon_rodata.s

@@ -159,6 +159,72 @@ const f64 D_80144100_1530B0[1] = {
 const f64 D_80144108_1530B8[1] = {
 	0.8,
 };
+const u32 jtbl_80144110_1530C0[] = {
+    0x800DD7C0,
+    0x800DD7B0,
+    0x800DD7D0,
+    0x800DD7E0,
+    0x800DD7F0,
+    0x800DD800,
+    0x800DD830,
+    0x800DD840,
+    0x800DD820,
+    0x800DD810,
+};
+const u32 jtbl_80144138_1530E8[] = {
+    0x800DD934,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DD944,
+    0x800DD954,
+    0x800DDA20,
+    0x800DD964,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DD974,
+    0x800DD924,
+    0x800DDA20,
+    0x800DD984,
+    0x800DD994,
+    0x800DD9A4,
+    0x800DD9B4,
+    0x800DD9C4,
+    0x800DD9D4,
+    0x800DD9E4,
+    0x800DDA20,
+};
+const f32 D_80144190_153140[1] = {0.6f};
+const u32 jtbl_80144194_153144[] = {
+    0x800E1F60,
+    0x800E1EA8,
+    0x800E1E40,
+    0x800E1E40,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1E40,
+    0x800E1EA8,
+    0x800E1E40,
+};
+const u32 jtbl_801441C4_153174[] = {
+    0x800E39F4,
+    0x800E3B00,
+    0x800E3C10,
+    0x800E3D70,
+    0x800E4488,
+    0x800E3DBC,
+    0x800E3F7C,
+};
+const f64 D_801441E0_153190[1] = {
+    1.7
+};
+const f64 D_801441E8_153198[1] = {
+    6000.0,
+};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -9806,7 +9872,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 // DrawNonZBufferedEffects
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
-// CURRENT(5435)
+#ifdef NON_MATCHING
 void func_800DD604_EC5B4(void) {
 	u8 i;
 	u8 effect;
@@ -9989,6 +10055,9 @@ void func_800DD604_EC5B4(void) {
 		D_80156ED9 = 0;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DD604_EC5B4.s")
+#endif
 
 
 void func_800DDB18_ECAC8(void) {
@@ -10291,7 +10360,7 @@ void func_800DE2E8_ED298(void) {
 	} while (i < 0x50);
 }
 #else
-#pragma GLOBAL_ASM("build/src.us/overlay_gameplay/outside/CFE30_ribbon_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
 #endif
 
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
@@ -11001,6 +11070,7 @@ void func_800E1C10_F0BC0(void) {
 	D_80156EDC.unk4 = D_80052B34->unk4;
 }
 
+#ifdef NON_MATCHING
 void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 	s32 skipSecondCall;
 	s32 shouldClamp;
@@ -11081,6 +11151,9 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 		}
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
+#endif
 
 
 // CURRENT(6532)
@@ -11833,7 +11906,7 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	}
 }
 #else
-#pragma GLOBAL_ASM("build/src.us/overlay_gameplay/outside/CFE30_laser_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 #endif
 
 // CURRENT(1348)
@@ -11947,6 +12020,7 @@ void func_800E520C_F41BC(void) {
 		}
 	}
 }
+
 void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6) {
 	u8 i;
 	u8 slot;

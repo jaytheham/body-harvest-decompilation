@@ -52,7 +52,7 @@ If a function has a switch statement and there is an associated jump table const
 
 `ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases. Also `DecompHints.md`
 
-Make at least 25 attempts to match the function.
+If working on multiple functions, make at least 20 attempts to match the current function before moving on.
 If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
 Be careful when you make changes not to accidently apply those changes to other parts of the file.
