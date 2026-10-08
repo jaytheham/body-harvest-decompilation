@@ -137,3 +137,24 @@ Both are batch dependencies - the declared items after the table address must be
 before the table can land (six `f64` doubles plus the next `jtbl` placeholder follow `0x800A4F08` on
 167C90; strings/doubles/floats follow `0x800A4A88` on 158330). Add both to their file's switch-owner
 batch list. Cheap triage before any body attempt: `grep -l "jtbl_" asm/nonmatchings/overlay_gameplay/inside/<file>/*.s`.
+
+## The case count sets the table extent - empty cases are not optional
+
+`func_80077A5C_15FB1C` (`overlay_gameplay/inside/158330.c`, 57 instr, `// CURRENT(170)`) is a
+four-handler dispatcher (`D_800E65BC[arg1].unkC`, cases 1-4). The wrapped guess listed only
+cases 1-4 and measured **2435**: IDO emitted a **compare chain** (`li`/`beq` per case) instead of a
+jump table, because the target's dispatch is `sltiu at,t9,8` - an **eight**-entry table. Adding the
+empty cases 5-8 (`case 5: case 6: case 7: case 8: break;`) switched IDO to the table and took the
+score **2435 -> 210** in one edit; nothing else in that edit moved it.
+
+Two further levers on the same function: the selector must be the **struct field**
+(`switch (D_800E65BC[arg1].unkC)`, `Unk80070F7CObj`, `structs.us.h`) rather than the raw
+`*(s16 *)((u8 *)&D_800E65BC[arg1] + 0xC)` - the typed read fixes the head's temp assignment
+(`$t6` global / `$t7` index) and took **210 -> 170**.
+
+The residual at 170 is this note's batch class plus a one-slot temp rotation, and it is not
+reachable by source shape: the table lands at **0x4BB0** where the target's is at **0x4AE8**
+(delta **0xC8**), because `jtbl_800A4B08_18CBC8`/`jtbl_800A4B5C_18CC1C` and their consumers earlier
+in the same TU are still unmatched; deleting this function's own placeholder made it worse (225).
+Do not re-tread the case-extent or the selector spelling - they are settled; the file needs its
+remaining switch owners matched together.
