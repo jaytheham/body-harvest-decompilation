@@ -8619,47 +8619,30 @@ void func_8010B60C_11A5BC(VehicleInstance *arg0, VehicleInstance *arg1)
 	func_801095BC_11856C(arg0);
 }
 
-#ifdef NON_MATCHING
 s32 func_8010B804_11A7B4(s32 arg0, VehicleInstance *arg1, s16 arg2, s16 arg3) {
-	VehicleType *sp2C;
-	s32 pad28;
-	s32 sp24;
-	s32 pad20;
-	s16 temp_t5;
-	s16 temp_t7;
-	s16 temp_a1;
-	s16 temp_v1;
-	s32 temp_lo;
-	s32 temp_v0;
-
-	sp2C = &vehicleTypes[arg1->unk1A];
-	temp_v0 = (s32)func_800FB11C_10A0CC(arg1);
-	temp_t5 = arg2 & 0xFFF0;
-	temp_t7 = arg3 & 0xFFF0;
-	temp_lo = (u32)sp2C->unk32 * temp_v0;
-	arg2 = temp_t5;
-	arg3 = temp_t7;
-	temp_a1 = temp_v0 >> 4;
-
+	VehicleType *type;
+	s32 pad;
+	s32 damage;
+	s32 speed;
+	s16 limit;
+	type = &vehicleTypes[arg1->unk1A];
+	speed = func_800FB11C_10A0CC(arg1);
+	damage = type->unk32 * speed;
+	arg2 &= 0xFFF0;
+	arg3 &= 0xFFF0;
 	if (arg1->unk1A != 0) {
-		sp24 = temp_lo;
-		func_80122524_1314D4(arg1, temp_a1, temp_t5, arg3);
-		temp_lo = sp24;
+		func_80122524_1314D4((EntityInstance *)arg1, (s16)(speed >> 4), arg2, arg3);
 	}
-
-	temp_v1 = D_8013BB6C_14AB1C[currentLevel][arg0];
-	if (((temp_v1 * 300) < temp_lo) ||
-		((sp2C->unk4C & 0x20000000) && (arg1->unk20 & VEHICLE_FLAG_AIRBORNE))) {
-		if (func_80078828_877D8(arg2, arg3, func_800FB160_10A110(arg1) & 0xFFFF, 1) != 0) {
+	limit = ((s16 (*)[16])D_8013BB6C_14AB1C)[currentLevel][arg0];
+	if (limit * 300 < damage ||
+		((type->unk4C & 0x20000000) && (arg1->unk20 & VEHICLE_FLAG_AIRBORNE))) {
+		if (func_80078828_877D8(arg2, arg3, (u16)func_800FB160_10A110(arg1), 1) != 0) {
 			func_80014180_14D80((s8)arg0);
 			return 1;
 		}
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010B804_11A7B4.s")
-#endif
 
 s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 	VehicleType *sp1C;
