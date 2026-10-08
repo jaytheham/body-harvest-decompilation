@@ -59,3 +59,24 @@ See also `epilogue-reload-register-temp-bank.md` and
 this one is the whole-function generalisation. The
 `struct-copy-register-skip-switch-if-optimizations.md` lever (an empty condition that extends a
 value's lifetime without emitting an instruction) was **not** tried here and is the one idea left.
+
+## Sibling variant: a base-address register choice cascades into the parameter home (delta *negative*, not +0)
+
+Symptom variant: `ins_diff -noregs` reports a **negative** delta (ours *short*), and the extra target
+instructions are a **parameter home**, a **reload from that home**, and a **materialised sub-pointer** --
+all three following from *which register holds a computed base address*.
+
+Measured on `func_800D8000_E6FB0` (`src.us/overlay_gameplay/outside/CFE30.c:8265`, 45 target
+instructions, `// CURRENT(604)` re-measured **655**), a same-file clone of the matched
+`func_800D76F4_E66A4`. The target holds `&D_80154318[arg3]` in **`$a0`** -- the register the first
+argument arrived in -- so it must `sw a0,0x18(sp)` at entry, `lh t9,0x1A(sp)` to recover `(s16)arg0`
+afterwards, and `addiu v1,a0,0xE` (the `+0xE` pointer can no longer fold into the base's own
+addressing once `v1` is the pointer rather than the base). Ours keeps the base in **`$v1`** and folds
+the `+0xE` stores: 42 instructions, delta **-3**, every opcode and home otherwise identical.
+
+The choice is **not source-shape-driven** -- three spellings all measured **655 / 42 instructions**:
+(i) the committed `u8 *temp_a0` local; (ii) a struct-pointer local
+(`Unk80154318Entry *entry = &D_80154318[arg3];` then `&entry->unk8` / `&entry->unkE`); (iii) direct
+array/union access with no base local (`D_80154318[arg3].coordinates`, `&D_80154318[arg3].unkE`).
+Do not re-tread spellings on this class; the lever must change which live value the allocator colours
+onto `$a0` (an empty-condition lifetime extension is the untried one).
