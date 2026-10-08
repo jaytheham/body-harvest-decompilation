@@ -10057,42 +10057,32 @@ int func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 // CURRENT(2210)
-#ifdef NON_MATCHING
 void func_8010F834_11E7E4(VehicleInstance *arg0, s32 arg1, s32 arg2, s32 arg3) {
-	float fx = (float)(arg0->unk0 - arg1);
-	float fy = (float)(arg0->unk2 - arg2);
-	float fz = (float)(arg0->unk4 - arg3);
-	float len = sqrtf(fx * fx + fy * fy + fz * fz);
-	float nx;
-	float ny;
-	float nz;
-	u16 flags;
+	f32 x;
+	f32 y;
+	f32 z;
+	f32 length;
 
-	if (len == 0.0f) {
+	x = arg0->unk0 - arg1;
+	y = arg0->unk2 - arg2;
+	z = arg0->unk4 - arg3;
+	length = sqrtf(x * x + y * y + z * z);
+	if (length == 0.0f) {
 		return;
 	}
-
-	nx = fx / len;
-	ny = fy / len;
-	nz = fz / len;
-
-	flags = arg0->unk20;
-
-	if (!(flags & 2)) {
-		ny = 0.0f;
-	} else if (0.0f < ny) {
-		ny *= 2.0f;
+	x /= length;
+	y /= length;
+	z /= length;
+	if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE)) {
+		y = 0.0f;
+	} else if (y > 0.0f) {
+		y *= 2;
 	}
-
-	arg0->unk30 = len;
-	arg0->unk34 = len;
-	arg0->unk38 = len;
-
-	func_80102D00_111CB0(arg0, nx * 10.0f, ny * 10.0f, nz * 10.0f);
+	arg0->unk30 = 0.0f;
+	arg0->unk34 = 0.0f;
+	arg0->unk38 = 0.0f;
+	func_80102D00_111CB0(arg0, x * 10.0f, y * 10.0f, z * 10.0f);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010F834_11E7E4.s")
-#endif
 
 void func_8010F93C_11E8EC(VehicleInstance *arg0, Unk80052B40 *arg1) {
 	func_8010F834_11E7E4(arg0, arg1->unk0, arg1->unk2, arg1->unk4);
