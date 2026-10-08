@@ -3886,8 +3886,6 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
 #endif
 
-// CURRENT(170)
-#ifdef NON_MATCHING
 void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	BuildingInstance *temp_v0;
 	s32 objIndex;
@@ -3906,9 +3904,6 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 		func_800072CC_7ECC(0x12);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EFBC_12DF6C.s")
-#endif
 
 void func_8011F094_12E044(BuildingInstance *arg0) {
 	if ((arg0 == &buildingInstances[func_8011D260_12C210(-0x21, 0x38)]) && (arg0->unkD != 2)) {
