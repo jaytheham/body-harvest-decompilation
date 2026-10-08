@@ -11416,19 +11416,16 @@ void func_800E2DB4_F1D64(void) {
 }
 
 // CURRENT(7084)
-#ifdef NON_MATCHING
 void func_800E2ED4_F1E84(void) {
-	Gfx *dl;
 	Unk800311A0 *entry;
 	s32 scroll;
 	u8 i;
-	u8 next;
 
 	if (D_801493CC == 0) {
 		func_800E2DB4_F1D64();
 
 		if (D_80154080 < 0) {
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100E480[(-D_80154080) * 0x80]));
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E480[0 - D_80154080]));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
@@ -11437,7 +11434,7 @@ void func_800E2ED4_F1E84(void) {
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 			scroll = 0x200;
 		} else {
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100E480[D_80154080 * 0x80]));
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E480[D_80154080]));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD, G_TX_MIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 2048);
@@ -11449,28 +11446,19 @@ void func_800E2ED4_F1E84(void) {
 
 		gDPPipeSync(D_8005BB2C++);
 
-		i = 0;
-		if (D_80154300 > 0) {
-			do {
-				entry = &D_80153BD0[i];
+		for (i = 0; i < D_80154300; i++) {
 
 			gDPSetPrimColor(D_8005BB2C++, 0, 0, D_801541F0.unk0, D_801541F0.unk1, D_801541F0.unk2, 0x23);
 
 			gDPPipeSync(D_8005BB2C++);
 
-			gSPTextureRectangle(D_8005BB2C++, ((entry->unk0 >> 4) * 4), ((entry->unk2 >> 4) * 4), ((entry->unk2 >> 4) + 0x10) * 4, ((entry->unk0 >> 4) + 0x10) * 4, G_TX_RENDERTILE, scroll, 0, 0x0400, 0x0400);
+			gSPTextureRectangle(D_8005BB2C++, ((D_80153BD0[i].unk0 >> 4) * 4), ((D_80153BD0[i].unk2 >> 4) * 4), (((D_80153BD0[i].unk0 >> 4) + 0x10) << 2), (((D_80153BD0[i].unk2 >> 4) + 0x10) << 2), G_TX_RENDERTILE, scroll, 0, 0x0400, 0x0400);
 
 			gDPPipeSync(D_8005BB2C++);
 
-				next = (i + 1) & 0xFF;
-				i = next;
-			} while (next < D_80154300);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2ED4_F1E84.s")
-#endif
 
 void func_800E32C4_F2274(void) {
 	Unk800311A0 *entry;

@@ -9,3 +9,11 @@ The native macro also schedules the display-list pointer store one instruction l
 Assigning the height shift in every scale-selection branch, including the first branch, retains the target redundant constant loads. Initializing the height shift before the branches caused IDO to remove those loads and changed register allocation.
 
 Validation: function diff score 0 and `build/bh.us.z64: OK`.
+
+## Constant scaling and negative texture frames
+
+`func_800E2ED4_F1E84` also matches with an indexed `for` loop. Use `((coordinate >> 4) + 16) << 2` when the target adds 16 before shifting: multiplication by four lets IDO distribute the multiplication, shifting first and adding 64.
+
+For the 128-byte texture frame array, `frames[0 - index]` produces the target negative address sequence and redundant pipe-sync constant load. `frames[-index]` generates a different temporary and removes that constant load, shifting the temporary register bank throughout the following setup commands. These expressions have the same intended signed index; their frontend forms affect IDO code generation. The data is declared as a two-dimensional byte array to keep frame access typed.
+
+Validation: second renderer diff score 0 and ROM checksum OK.

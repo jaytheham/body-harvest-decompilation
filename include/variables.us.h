@@ -41,7 +41,7 @@ extern u8 D_100DE00[];
 extern u8 D_100DE80[];
 extern u8 D_100E080[];
 extern u16 D_100E280[];
-extern u8 D_100E480[];
+extern u8 D_100E480[][0x80];
 extern u8 D_100E880[];
 extern u8 D_1010880[];
 extern u8 D_1010A80[];
@@ -2415,6 +2415,7 @@ extern u8 D_80153BCC;
 extern s8 D_80153BCD;
 extern s8 D_80153BCE;
 extern Unk800311A0 D_80153BD0[];
+extern s8 D_80154080;
 extern Unk80154082 D_80154082;
 extern Unk801541F8Entry D_80154088[]; // Special effects
 extern Unk8015408EEntry D_8015408E[];
