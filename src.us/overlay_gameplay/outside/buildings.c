@@ -276,7 +276,7 @@ s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 		temp->hitPoints = hitPoints;
 		arg0->hitPoints = hitPoints;
 
-		arg0->padC[1] = count;
+		arg0->unkD = count;
 		temp->padC[1] = count;
 		prev->buildingType = 0x1F;
 		prev->rotation = (u8)((prev->rotation & 0xFC) | (arg0->unk8 & 3));
@@ -3955,7 +3955,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 	u8 temp_v0_12;
 
 	sp84 = 0;
-	D_80052B40.unk0 = (s16)(arg0->padC[1] + 0x92);
+	D_80052B40.unk0 = (s16)(arg0->unkD + 0x92);
 	D_80052B40.unk2 = 0x5E;
 	D_80052B40.unk4 = 0;
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
@@ -3963,7 +3963,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_80159DC4));
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-	D_80052B40.unk0 = (s16)(-0x92 - arg0->padC[1]);
+	D_80052B40.unk0 = (s16)(-0x92 - arg0->unkD);
 	D_80052B50.unk0 = -0x100;
 	D_80052B50.unk2 = 0x100;
 	D_80052B50.unk4 = 0x100;
@@ -3982,27 +3982,27 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 
 		if (func_8000726C_7E6C(0x14) != 0) {
 			if ((D_8015EA52 != 0) || ((sp5C = func_800F9C40_108BF0(D_80052B34->unk0 - arg0->xCoord), (u32)(func_800F9C40_108BF0(D_80052B34->unk4 - arg0->zCoord) + sp5C) < 0x258U))) {
-				if ((s32)arg0->padC[1] < 0x78) {
-					arg0->padC[1] = (u8)(arg0->padC[1] + 4);
+				if ((s32)arg0->unkD < 0x78) {
+					arg0->unkD = (u8)(arg0->unkD + 4);
 					sp84 = 0x40000;
 					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FCC_153F7C[0]);
-					if (arg0->padC[1] == 0x78) {
+					if (arg0->unkD == 0x78) {
 						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD0_153F80[0]);
 					}
 				}
 			} else {
-				if ((s32)arg0->padC[1] > 0) {
-					arg0->padC[1] = (u8)(arg0->padC[1] - 4);
+				if ((s32)arg0->unkD > 0) {
+					arg0->unkD = (u8)(arg0->unkD - 4);
 					sp84 = -0x40000;
 					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD4_153F84[0]);
-					if (arg0->padC[1] == 0) {
+					if (arg0->unkD == 0) {
 						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD8_153F88[0]);
 					}
 				}
 			}
 		}
 
-		temp_v0_12 = arg0->padC[1];
+		temp_v0_12 = arg0->unkD;
 		if (arg0->unk8 & 1) {
 			temp_v1 = (arg0 - buildingInstances) * 0x10;
 			func_8012D700_13C6B0(1,
@@ -4022,7 +4022,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 				(temp_v1 + 1) & 0xFFFF,
 				arg0->xCoord,
 				(s16)(arg0->yCoord + 0xF1),
-				(arg0->zCoord - arg0->padC[1]) - 0x49,
+				(arg0->zCoord - arg0->unkD) - 0x49,
 				0,
 				0,
 				-sp84,
@@ -4048,7 +4048,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 				func_8012E1F8_13D1A8);
 			func_8012D700_13C6B0(1,
 				(temp_v1 + 1) & 0xFFFF,
-				(s16)(arg0->xCoord - arg0->padC[1] - 0x49),
+				(s16)(arg0->xCoord - arg0->unkD - 0x49),
 				(s16)(arg0->yCoord + 0xF1),
 				arg0->zCoord,
 				-sp84,
@@ -4066,19 +4066,19 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 #endif
 
-// CURRENT(290)
+// CURRENT(265)
 #ifdef NON_MATCHING
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
 
 	result = func_8000726C_7E6C((((s32)arg0 - (s32)&buildingInstances[0]) / 0x18 - D_8015EA54 + 0x18));
 	if (result != 0) {
-		if ((s32)arg0->padC[1] < 0x20) {
-			arg0->padC[1] = (u8)(arg0->padC[1] + 1);
+		if ((s32)arg0->unkD < 0x20) {
+			arg0->unkD = (u8)(arg0->unkD + 1);
 		}
 	} else {
-		if ((s32)arg0->padC[1] > 0) {
-			arg0->padC[1] = (u8)(arg0->padC[1] - 1);
+		if ((s32)arg0->unkD > 0) {
+			arg0->unkD = (u8)(arg0->unkD - 1);
 		}
 	}
 
@@ -4087,7 +4087,7 @@ void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	D_80052B40.unk4 = D_80159DCC;
 	D_80052B48.unk0 = 0;
 	D_80052B48.unk2 = 0;
-	D_80052B48.unk4 = (s16)((s32)arg0->padC[1] * -0x154);
+	D_80052B48.unk4 = (s16)((s32)arg0->unkD * -0x154);
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
@@ -4475,10 +4475,10 @@ void func_80121128_1300D8(BuildingInstance *arg0) {
 		func_800039D0_45D0(0, &D_80052B48, 0, D_8005BB38);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		doorOffset = arg0->pad15[0];
-		doorMask = ~(arg0->padC[1] & 0xF);
+		doorMask = ~(arg0->unkD & 0xF);
 	} else {
 		doorOffset = 0;
-		doorMask = ~(arg0->padC[1] & 0xF);
+		doorMask = ~(arg0->unkD & 0xF);
 	}
 
 	D_80052B40.unk0 = -0x60 - doorOffset;
