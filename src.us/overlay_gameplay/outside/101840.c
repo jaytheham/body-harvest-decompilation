@@ -5089,9 +5089,9 @@ void func_800FFCB8_10EC68(s32 arg0) {
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
 }
 
-// CURRENT(2040)
+// CURRENT(1890)
 #ifdef NON_MATCHING
-void func_800FFD28_10ECD8(VehicleInstance *arg0) {
+void func_800FFD28_10ECD8(VehicleInstance *arg0, f32 *arg1) {
 	VehicleType *typePtr;
 	s16 temp;
 	s16 yOffset;
