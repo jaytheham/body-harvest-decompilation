@@ -2169,33 +2169,42 @@ s32 func_80076FD8_47488(void) {
 /**
  * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
  */
-void func_80076FE0_47490(s32* arg0, s32* arg1) {
+// AI - Copies the tiled framebuffer from strided src (arg0) to contiguous dst (arg1): 16 dwords per tile across 8x10x32 tiles.
+void func_80076FE0_47490(s32 arg0, s32 arg1) {
 	s32 *src;
 	s32 *dst;
-	s32 j;
-	s32 i;
-	s32 k;
-	s32 l;
-	src = arg0;
-	dst = arg1;
-	i = 7;
+	s32 outer;
+
+	src = (s32 *)arg0;
+	dst = (s32 *)arg1;
+	outer = 7;
 	do {
-		j = 10;
-		while (j--) {
-			k = 31;
+		arg1 = 9;
+		do {
+			s32 inner;
+
+			inner = 0x1F;
 			do {
-				l = 15;
+				s32 tile;
+
+				tile = 0xF;
 				do {
-					dst[0] = src[0];
-					dst = &dst[1];
-					src = &src[1];
-				} while (l--);
-				src = &src[144];
-			} while (k--);
-			src = &src[-5104];
-		}
-		src = &src[4960];
-	} while (i--);
+					arg0 = tile;
+					*dst++ = *src++;
+					tile -= 1;
+				} while (arg0 != 0);
+				arg0 = inner;
+				src += 0x90;
+				inner -= 1;
+			} while (arg0 != 0);
+			arg0 = arg1;
+			src -= 0x13F0;
+			arg1 -= 1;
+		} while (arg0 != 0);
+		arg0 = outer;
+		src += 0x1360;
+		outer -= 1;
+	} while (arg0 != 0);
 }
 
 // doPressStartLoop

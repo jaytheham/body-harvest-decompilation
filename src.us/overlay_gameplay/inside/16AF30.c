@@ -1978,25 +1978,29 @@ void func_80087E3C_16FEFC(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(1724) - permuter: single-pointer form (s2 merged into s1), 2451 -> 1724
-// AI - Render slot type 4 effects: animated billboards with dual textures
+// CURRENT(40) - permuter campaign 987 -> 452 -> 40: sp9C.x/sp9C.y field reads re-expressed as
+// (&D_800FB7B0[var_t2])->unkN (matching sp9C.z, 987 -> 452), and the `var_t2 = D_800FB79A` load hoisted to
+// the first statement (452 -> 40; the target schedules it into the `lw`-delay slot at instruction 5).
+// Earlier in the campaign: 1724 -> 1456 -> 1236 -> 987 (see NOTES.md).
 void func_800881C0_170280(void)
 {
   Unk89834Pos *spAC;
+  s32 var_s6;
   Vec3f sp9C;
   s16 var_t2;
-  s32 var_s6;
-  Unk89834Pos *var_s3;
   Unk89834Pos *s1;
+  var_t2 = D_800FB79A;
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
   D_800FB6E5 = 0x20;
   D_800FB6E6 = 0x20;
-  var_t2 = D_800FB79A;
   var_s6 = 0;
   if ((var_t2 != (-5)) && (var_t2 != (-6)))
   {
-    var_s3 = spAC;
+    if (!s1->unk4)
+    {
+    }
+    spAC = spAC;
     do
     {
       gDPPipeSync(D_8005BB2C++);
@@ -2010,7 +2014,7 @@ void func_800881C0_170280(void)
         gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0x0000, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
         gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
         var_s6 = 1;
-        D_800FB6E4 = var_s3->unk9 - 0x28;
+        D_800FB6E4 = spAC->unk9 - 0x28;
       }
       else
       {
@@ -2022,15 +2026,16 @@ void func_800881C0_170280(void)
         gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0x0000, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
         gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
         var_s6 = 0;
-        D_800FB6E4 = var_s3->unk9 + var_s3->unkA;
+        D_800FB6E4 = spAC->unk9 + spAC->unkA;
       }
       gDPPipeSync(D_8005BB2C++);
       s1 = &D_800FB7B0[var_t2];
       s1 = (Unk89834Pos *) (&s1->unk8);
-      var_s3 = s1;
-      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) s1->unk8);
-      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) s1->unkA);
-      sp9C.z = (D_800E7410.z * 4.0f) - ((f32) s1->unkC);
+      spAC = s1;
+      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unk8);
+      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkA);
+      s1 = &D_800FB7B0[var_t2];
+      sp9C.z = (D_800E7410.z * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkC);
       func_80083014_16B0D4(&sp9C, &sp9C);
       D_800FB6D0.x = ((f32) s1->unk0) + (sp9C.x * ((f32) s1->unkD));
       D_800FB6D0.y = ((f32) s1->unk2) + (sp9C.y * ((f32) s1->unkD));
@@ -2044,7 +2049,7 @@ void func_800881C0_170280(void)
     while ((var_t2 != (-5)) && (var_t2 != (-6)));
     if (var_t2 == (-6))
     {
-      spAC = var_s3;
+      spAC = spAC;
     }
   }
 }
@@ -2187,8 +2192,9 @@ void func_80088654_170714(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 #endif
 
-#ifdef NON_MATCHING
+// CURRENT(110)
 // AI - Render slot type 6 effects: shrinking sprites
+#ifdef NON_MATCHING
 void func_80088B9C_170C5C(void) {
 	typedef struct {
 		s16 unk0;
@@ -2207,18 +2213,10 @@ void func_80088B9C_170C5C(void) {
 	} Unk84EECEffect;
 
 	s16 effect;
-	Vec3f *pos;
-	s8 **color;
-	f32 *scale;
-	Unk84EECEffect *effectBase;
 
 	D_800FB6E5 = 0x20;
 	D_800FB6E6 = 0x20;
 	effect = D_800FB782;
-	pos = &D_800FB6D0;
-	color = &D_800FB6DC;
-	scale = &D_800FB6E0;
-	effectBase = (Unk84EECEffect *)&D_800FB7B0;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -2234,18 +2232,26 @@ void func_80088B9C_170C5C(void) {
 
 	if ((effect != -6) && (effect != -5)) {
 		do {
-			Unk84EECEffect *entry;
+			s16 posX;
+			s16 posY;
+			s16 posZ;
+			s16 scale;
+			u8 alpha;
 
 			gDPPipeSync(D_8005BB2C++);
-			entry = &effectBase[effect];
-			pos->x = entry->unk8;
-			pos->y = entry->unkA;
-			pos->z = entry->unkC;
-			*color = &entry->unkE;
-			*scale = entry->unk2;
-			D_800FB6E4 = entry->unk12;
+			posX = D_800FB7B0[effect].unk8;
+			posY = D_800FB7B0[effect].unkA;
+			posZ = D_800FB7B0[effect].unkC;
+			scale = D_800FB7B0[effect].unk2;
+			alpha = D_800FB7B0[effect].unk12;
+			D_800FB6D0.x = posX;
+			D_800FB6DC = &D_800FB7B0[effect].unkE;
+			D_800FB6D0.y = posY;
+			D_800FB6D0.z = posZ;
+			D_800FB6E0 = scale;
+			D_800FB6E4 = alpha;
 			func_80089E54_171F14();
-			effect = entry->unk4;
+			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -6) && (effect != -5));
 	}
 }

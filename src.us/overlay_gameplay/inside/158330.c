@@ -9671,9 +9671,7 @@ void func_800784B8_160578(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s")
 #endif
 
-// CURRENT(240)
 // AI - Handles room selection confirmation and building exit logic
-#ifdef NON_MATCHING
 void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 	s32 type;
 
@@ -9703,9 +9701,8 @@ void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800787E8_1608A8.s")
-#endif
+
+static void func_80078994_stub(void) {}
 // CURRENT(140)
 // AI - Remaps button directions based on room orientation
 #ifdef NON_MATCHING
@@ -10544,10 +10541,11 @@ void func_8007A618_1626D8(void) {
 }
 
 #ifdef NON_MATCHING
+// CURRENT(290) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1735)
 // AI - Checks if a specific event building has been visited
 s32 func_8007A634_1626F4(s32 arg0) {
 	s16 var_v0;
-	s32 three;
+	u32 three;
 
 	three = 3;
 	if (arg0 == 0x14) {
@@ -10567,10 +10565,11 @@ s32 func_8007A634_1626F4(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(145) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1710)
 // AI - Checks if a second event building has been visited
 s32 func_8007A6DC_16279C(s32 arg0) {
 	s16 var_v0;
-	s32 three;
+	u32 three;
 
 	three = 3;
 	if (arg0 == 0x13) {
@@ -10589,16 +10588,23 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A6DC_16279C.s")
 #endif
 
+// CURRENT(95) - r57 hoist-table-element-address lever (was 540 with the sum-3 spelling)
 #ifdef NON_MATCHING
 // AI - Marks an event building as visited
 void func_8007A784_162844(s32 arg0) {
 	s16 var_v0;
+	int new_var;
+	int new_var2;
+	s16 *new_var3;
 
 	if (arg0 == 0x14) {
 		var_v0 = 0;
+		new_var = currentLevel * 3;
 		do {
-			if (buildingInteriorToLoadId == D_8009CE14_184ED4[currentLevel * 3 + var_v0 - 3]) {
-				D_80048026 |= 1 << (currentLevel + currentLevel + currentLevel + var_v0 + 0x1D);
+			new_var3 = &D_8009CE14_184ED4[(new_var + var_v0) - 3];
+			if (buildingInteriorToLoadId == (*new_var3)) {
+				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
+				D_80048026 |= 1 << (new_var2 + 0x1D);
 				return;
 			}
 			var_v0++;
@@ -10609,7 +10615,7 @@ void func_8007A784_162844(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A784_162844.s")
 #endif
 
-// CURRENT(105)
+// CURRENT(95)
 // AI - Marks a second event building as visited
 #ifdef NON_MATCHING
 void func_8007A818_1628D8(s32 arg0)
@@ -10617,13 +10623,15 @@ void func_8007A818_1628D8(s32 arg0)
 	s16 var_v0;
 	int new_var;
 	int new_var2;
+	s16 *new_var3;
 	if (arg0 == 0x13)
 	{
 		var_v0 = 0;
 		new_var = currentLevel * 3;
 		do
 		{
-			if (buildingInteriorToLoadId == D_8009CE34_184EF4[(new_var + var_v0) - 3])
+			new_var3 = &D_8009CE34_184EF4[(new_var + var_v0) - 3];
+			if (buildingInteriorToLoadId == (*new_var3))
 			{
 				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
 				D_80048028 |= 1 << (new_var2 + 0x1D);

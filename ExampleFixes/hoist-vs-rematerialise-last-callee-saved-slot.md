@@ -56,4 +56,4 @@ frame and pushes the existing homes up, away from the target.
 A residual whose *only* difference is which value occupies the last callee-saved register is a
 compiler tie-break. Stop after the three levers above are measured; do not iterate on declaration
 order, literal suffixes, or pads expecting the band to move. Sibling family:
-`whole-function-register-permutation-identical-opcodes.md` (all values permuted, none missing).
+`register-band-and-temp-bank-rotation.md` (all values permuted, none missing).

@@ -3861,6 +3861,7 @@ void func_8008CDC8_5D278(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
+// CURRENT(60)
 // AI - Renders a camera-facing billboard quad using orientation basis vectors
 void func_8008D14C_5D5FC(void) {
 	f32 temp_f8;
