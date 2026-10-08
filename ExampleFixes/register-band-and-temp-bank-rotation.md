@@ -238,3 +238,35 @@ moved last, and the `(s16)` cast dropped) each measured **exactly 3792** - byte-
 blocks in the header (the `sp8C`/`sp88`/`sp90` chain plus one field-width row), so this is a
 structural reconstruction gap over 337 instructions, not a pure rotation. Do not re-tread declaration
 order here.
+
+## A leading run of Gfx macro blocks rotates the whole t-band (one lever, 380 -> 360)
+
+`func_800E5044_F3FF4` (`src.us/overlay_gameplay/outside/CFE30.c`, 114 instructions, committed
+wrapped at `// CURRENT(380)` - **re-measured 380**, so the marker is accurate). `ins_diff -noregs`
+reports 114 = 114, delta **+0**, and every block it lists is encoding-level (`li` vs `addiu`,
+`%hi/%lo` vs the resolved address, `jal <name>` vs `jal <addr>`), so nothing structural is left.
+Read role-for-role:
+
+- **The s-band trades two roles.** Target colours `entry -> s0`, `type1 -> s2`, `end -> s3`, the
+  literal `2 -> s4`; ours is `entry -> s0`, `end -> s2`, `type1 -> s3`, `2 -> s4`. The visible tell
+  is the loop test (`bnel s0,s3` vs `bnel s0,s2`) - everything else in the s-band agrees.
+- **The t-band is rotated from the second macro block on.** The prologue's first block
+  (`gDPPipeSync`) agrees exactly (t6/t7); after it every constant and every `pkt+8` pointer is one
+  or two roles late (`0x80008000` -> target t2, ours t3; `0xB900031D` -> target t4, ours t5; the
+  closing `gSPTexture`/`gSPSetGeometryMode` pair -> target t5/t6/t4, ours t3/t4/t9).
+- **The loop body repeats it**: the nine argument locals load into `t7,t8,t9,t2,t3` (target) and
+  `v0,v1,t0,t1,t2` (ours), while the four that go straight to the call agree (`a0-a3`).
+
+Measured (one compile each, file restored afterwards; baseline **380**):
+
+| variant | score |
+|---|---|
+| declaration order permuted (`type1` first, `end` first, `entry,type1,end`) | 380 |
+| assignment order permuted (`type1 = 1;` before `end = ...`) | 380 |
+| `s32 type1` / `u8 type1` / `s16 type1 = 1;` at the declaration | 380 |
+| drop the `end` local, fold `(LaserEntry *)&D_80153300` into the loop test | **360** |
+| the nine argument locals re-declared `s32` | 3257 |
+| the argument locals inlined into the call | 1207 |
+
+The s-band is not source-shape-driven here, and the single lever that moved anything moved four
+rows, not the band. Park as the cfe temp-bank family; the permuter is the only lever left.
