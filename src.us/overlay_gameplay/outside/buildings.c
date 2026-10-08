@@ -2701,20 +2701,19 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #endif
 
 // CURRENT(40)
-#ifdef NON_MATCHING
 s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
-	s16 sp1E;
-	s16 sp1A;
-	s16 sp1C;
+	s16 centerX;
+	s16 centerZ;
+	s16 radius;
 	s16 xCoord;
 	BuildingInstance *building;
 	s32 index;
 
-	sp1A = arg0[1] << 8;
-	sp1C = arg0[2] << 8;
-	sp1E = arg0[0] << 8;
+	centerX = arg0[0] << 8;
+	centerZ = arg0[1] << 8;
+	radius = arg0[2] << 8;
 
-	index = func_80117508_1264B8((s16)(sp1A - sp1C)) - 1;
+	index = func_80117508_1264B8((s16)(centerZ - radius)) - 1;
 	arg1++;
 	while (TRUE) {
 		if (arg1 == 0) {
@@ -2725,21 +2724,18 @@ s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
 		building = &buildingInstances[index];
 		xCoord = building->xCoord;
 
-		if ((xCoord >= (sp1E - sp1C)) && (xCoord < (sp1E + sp1C))) {
+		if ((xCoord >= (centerX - radius)) && (xCoord < (centerX + radius))) {
 			arg1--;
 		}
 
 		if (index < 0xFF) {
-			if (building->zCoord < (sp1A + sp1C)) {
+			if (building->zCoord < (centerZ + radius)) {
 				continue;
 			}
 		}
 		return -1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C25C_12B20C.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_8011C338_12B2E8(s8 *arg0, s32 arg1) {
