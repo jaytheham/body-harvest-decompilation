@@ -10588,16 +10588,23 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A6DC_16279C.s")
 #endif
 
+// CURRENT(95) - r57 hoist-table-element-address lever (was 540 with the sum-3 spelling)
 #ifdef NON_MATCHING
 // AI - Marks an event building as visited
 void func_8007A784_162844(s32 arg0) {
 	s16 var_v0;
+	int new_var;
+	int new_var2;
+	s16 *new_var3;
 
 	if (arg0 == 0x14) {
 		var_v0 = 0;
+		new_var = currentLevel * 3;
 		do {
-			if (buildingInteriorToLoadId == D_8009CE14_184ED4[currentLevel * 3 + var_v0 - 3]) {
-				D_80048026 |= 1 << (currentLevel + currentLevel + currentLevel + var_v0 + 0x1D);
+			new_var3 = &D_8009CE14_184ED4[(new_var + var_v0) - 3];
+			if (buildingInteriorToLoadId == (*new_var3)) {
+				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
+				D_80048026 |= 1 << (new_var2 + 0x1D);
 				return;
 			}
 			var_v0++;
