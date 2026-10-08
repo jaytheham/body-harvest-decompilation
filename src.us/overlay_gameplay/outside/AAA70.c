@@ -2263,31 +2263,22 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
-// CURRENT(936) - NOT a matched body: the whole residual is the register class IDO picks for the
+// CURRENT(850) - NOT a matched body: the whole residual is the register class IDO picks for the
 // repeated `0x800` texture coordinate. The target materialises it once into CALLEE-SAVED $s0
-// (`addiu $s0,$zero,0x800` at index 85, reused by six `sh $s0,...` at 180/262/296/298/338/416)
-// and pays the save/restore pair (`sw $s0,0x4($sp)` index 9, `lw $s0,0x4($sp)` index 521), which is
-// why the target is 522 instructions to our 520. Fixing that one choice also fixes the two recorded
-// symptoms it causes: the target's `addiu sp,sp,-0x70` sits at index 5 (ours floats to ~index 75) and
-// the local block sits 8 bytes low (ours 0x50..0x64, target 0x58..0x6C), because IDO starts the local
-// block after the saved-register area.
+// (`addiu $s0,$zero,0x800` at index 85, reused by six `sh $s0,...`) and pays the save/restore pair
+// (`sw $s0,0x4($sp)` / `lw $s0,0x4($sp)`); ours materialises the constant at the same index into a
+// caller-saved temp. Superseded body (936) kept in git history.
 //
-// Measure before believing a spelling: the score is charged over the whole register band, so a small
-// source change moves it a long way. Levers measured from the 1402 body (all from a clean checkout):
-//   declaration-order permutations: 1326..1522 (best = drop pad1, 1326)
-//   empty-lifetime-extension `if (!spX) { }` on a float local: neutral (1402); on `sp8` it explodes (4935)
-//   `(s16)0x800` / `(u16)0x800` on the tc stores: neutral (1402)
-//   named local for the constant (`s32 tex800;` etc., 5 spellings, A9): 1422..1466 - IDO folds it away
-// A permuter warm-start from 1402 (~5.5k iterations, -j2 --stack-diffs) produced the constructs below;
-// they were read as individual hypotheses and measured on the tree (`work/` harness scripts):
-//   `D_8014F618.head.unkC = D_8014F618.head.unkC;` as the LAST statement: 1012 (liveness extension of a
-//     global field - cfe hoists the load to the constant's own block, which rotates the allocation);
-//   + dropping `s32 pad1;`: **936** (this body). Dropping both pads regresses to 1292; moving pad1 after
-//     `sp8` gives 944.
-// NOTE: the self-assignment is a *probe* - the ROM has no such load/store, so this body cannot itself
-// reach 0 - but it is the closest verified state and it moves the residual to the register band that
-// the original's allocation exercises. The permuter's own score for this output was 997 against its
-// base 1012; never carry its number into the tree.
+// Run A32: permuter warm-started from the 936 body (13 385 iterations, -j4 --stack-diffs
+// --stop-on-zero, 52 outputs); EVERY output spliced verbatim and measured on the tree. The mapping
+// permuter->tree is monotone with a ~+15 offset here (835->850, 843->858, 855->870, 889->904,
+// 909->924, 921->936), so the permuter's best is the tree's best. Winner: an empty
+// `if ((!D_8014F618.head.unkC) && (!D_8014F618.head.unkC)) { }` between the `v.tc[0] = 0` and
+// `v.tc[1] = 0` stores of the second vertex block - a dead-code liveness probe (the ROM has no such
+// load), so this body cannot itself reach 0; it is the closest verified state.
+// Levers refuted earlier, do not re-tread: declaration-order permutations (1326..1522), empty-`if`
+// lifetime extensions on the float locals, `(s16)/(u16)0x800`, named local for the constant (5
+// spellings), dropping both pads (1292), pad1 after sp8 (944), the A31 self-assignment probe (936).
 #ifdef NON_MATCHING
 void func_800A2260_B1210()
 {
@@ -2385,6 +2376,9 @@ void func_800A2260_B1210()
   D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - D_8014F618.head.unk20));
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
+  if ((!D_8014F618.head.unkC) && (!D_8014F618.head.unkC))
+  {
+  }
   D_8005BB34->v.tc[1] = 0;
   D_8005BB34->v.cn[0] = 0;
   D_8005BB34->v.cn[1] = 0;
