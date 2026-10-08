@@ -17,3 +17,18 @@ Unk8014DD50 sp24;   // second → sp+0x24–0x33 ✓
 Unk8014DD50 sp24;   // first → sp+0x28–0x37
 s16 temp;           // second → sp+0x24 area
 ```
+
+### Instance: a padded frame, and a caller-side narrowing cast (func_802DC230_1F4F40, matched)
+
+Two levers closed this 158-instruction java alien updater (check 1024 -> 9 -> 0); both are the
+rule above in a different dress.
+
+- The frame carried unused `s32 pad;` / `s32 pad2;` locals declared *between* the live ones.
+  Declaring the lone `s16 sp56` (the `&`-out-param of `func_8011E6FC_12D6AC`) **last** instead moved
+  its home `0x5A -> 0x56`, which is the target value. Same rule: first declared = highest offset, so
+  anything declared above it pushes it down. Measured sweep (there is no guessing the count):
+  base 9, sp56 first 17, pads declared below it 0.
+- The residual 9 was a **caller-side narrowing** of one argument: `(... (temp % 6) + 6, ...)` had to
+  be written `(u8)((temp % 6) + 6)`. The callee parameter is wide, so with no cast IDO emits no
+  conversion at all; the target has `andi $t6,$a2,0xFF` + `or $a2,$t6,$zero`. A 2-instruction
+  instruction-count deficit (ins_diff delta -2) pointed straight at it.
