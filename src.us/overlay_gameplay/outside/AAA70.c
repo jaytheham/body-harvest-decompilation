@@ -2263,161 +2263,167 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
-// CURRENT(1402) - the cast was the whole 9730: `ghostPos = (AAA70Unk8014F618Head *)&D_8014F618;`
-// makes the base a variable, so IDO rematerialises the address per access (31 lui $at against the
-// target's 4). Spelling the head as a real member of the global (Unk8014F618.head, no cast, no pointer
-// local) makes every access a constant-address expression and IDO then keeps the base in a register:
-// 9730 -> 1542. Two declared-but-unused s32 at the head of the frame: 1542 -> 1402. Open: 520 instrs
-// against the target's 522, and the six f32 locals still home 8 bytes low (ours 0x50..0x64, target
-// 0x58..0x6C) - the remaining rows are that block plus the vertex x in $t3 where the target uses $s0.
+// CURRENT(936) - NOT a matched body: the whole residual is the register class IDO picks for the
+// repeated `0x800` texture coordinate. The target materialises it once into CALLEE-SAVED $s0
+// (`addiu $s0,$zero,0x800` at index 85, reused by six `sh $s0,...` at 180/262/296/298/338/416)
+// and pays the save/restore pair (`sw $s0,0x4($sp)` index 9, `lw $s0,0x4($sp)` index 521), which is
+// why the target is 522 instructions to our 520. Fixing that one choice also fixes the two recorded
+// symptoms it causes: the target's `addiu sp,sp,-0x70` sits at index 5 (ours floats to ~index 75) and
+// the local block sits 8 bytes low (ours 0x50..0x64, target 0x58..0x6C), because IDO starts the local
+// block after the saved-register area.
+//
+// Measure before believing a spelling: the score is charged over the whole register band, so a small
+// source change moves it a long way. Levers measured from the 1402 body (all from a clean checkout):
+//   declaration-order permutations: 1326..1522 (best = drop pad1, 1326)
+//   empty-lifetime-extension `if (!spX) { }` on a float local: neutral (1402); on `sp8` it explodes (4935)
+//   `(s16)0x800` / `(u16)0x800` on the tc stores: neutral (1402)
+//   named local for the constant (`s32 tex800;` etc., 5 spellings, A9): 1422..1466 - IDO folds it away
+// A permuter warm-start from 1402 (~5.5k iterations, -j2 --stack-diffs) produced the constructs below;
+// they were read as individual hypotheses and measured on the tree (`work/` harness scripts):
+//   `D_8014F618.head.unkC = D_8014F618.head.unkC;` as the LAST statement: 1012 (liveness extension of a
+//     global field - cfe hoists the load to the constant's own block, which rotates the allocation);
+//   + dropping `s32 pad1;`: **936** (this body). Dropping both pads regresses to 1292; moving pad1 after
+//     `sp8` gives 944.
+// NOTE: the self-assignment is a *probe* - the ROM has no such load/store, so this body cannot itself
+// reach 0 - but it is the closest verified state and it moves the residual to the register band that
+// the original's allocation exercises. The permuter's own score for this output was 997 against its
+// base 1012; never carry its number into the tree.
 #ifdef NON_MATCHING
-void func_800A2260_B1210() {
-	s32 pad0;
-	s32 pad1;
-	f32 sp6C;
-	f32 sp64;
-	f32 sp68;
-	f32 sp60;
-	f32 sp5C;
-	f32 sp58;
-	f32 sp8;
-
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_1009A70));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
-	gDPPipeSync(D_8005BB2C++);
-
-	sp8 = D_8014F618.head.unk20;
-	sp64 = (f32)((f64)(D_8014F618.head.unkC + D_8014F618.head.unk18) * 0.5);
-	sp68 = (f32)((f64)(D_8014F618.head.unk10 + D_8014F618.head.unk1C) * 0.5);
-	sp6C = (f32)((f64)(D_8014F618.head.unk14 + sp8) * 0.5);
-	sp58 = (f32)((f64)(D_8014F618.head.unkC - D_8014F618.head.unk18) * 0.5);
-	sp5C = (f32)((f64)(D_8014F618.head.unk10 - D_8014F618.head.unk1C) * 0.5);
-	sp60 = (f32)((f64)(D_8014F618.head.unk14 - sp8) * 0.5);
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + D_8014F618.head.unkC);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + D_8014F618.head.unk10);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + D_8014F618.head.unk14);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + sp64);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + sp68);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + sp6C);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x800;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + D_8014F618.head.unk18);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + D_8014F618.head.unk1C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + D_8014F618.head.unk20);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 + sp58);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 + sp5C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 + sp60);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)D_8014F618.head.unk0;
-	D_8005BB34->v.ob[1] = (s16)(s32)D_8014F618.head.unk4;
-	D_8005BB34->v.ob[2] = (s16)(s32)D_8014F618.head.unk8;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x800;
-	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - sp58);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - sp5C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - sp60);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - D_8014F618.head.unk18);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - D_8014F618.head.unk1C);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - D_8014F618.head.unk20);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - sp64);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - sp68);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - sp6C);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x800;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_8014F618.head.unk0 - D_8014F618.head.unkC);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_8014F618.head.unk4 - D_8014F618.head.unk10);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_8014F618.head.unk8 - D_8014F618.head.unk14);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
-
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 9), 9, 0);
-	gSP1Quadrangle(D_8005BB2C++, 0, 1, 4, 3, 0);
-	gSP2Triangles(D_8005BB2C++, 2, 5, 1, 0, 5, 4, 1, 0);
-	gSP2Triangles(D_8005BB2C++, 7, 3, 4, 0, 6, 3, 7, 0);
-	gSP2Triangles(D_8005BB2C++, 8, 4, 5, 0, 7, 4, 8, 0);
-	gDPPipeSync(D_8005BB2C++);
+void func_800A2260_B1210()
+{
+  s32 pad0;
+  f32 sp6C;
+  f32 sp64;
+  f32 sp68;
+  f32 sp60;
+  f32 sp5C;
+  f32 sp58;
+  f32 sp8;
+  gDPSetTextureImage(D_8005BB2C++, 4, G_IM_SIZ_16b, 1, ((u32) D_1009A70) & 0x1FFFFFFF);
+  gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+  gDPLoadSync(D_8005BB2C++);
+  gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 255, 1024);
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+  gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
+  gDPPipeSync(D_8005BB2C++);
+  sp8 = D_8014F618.head.unk20;
+  sp64 = (f32) (((f64) (D_8014F618.head.unkC + D_8014F618.head.unk18)) * 0.5);
+  sp68 = (f32) (((f64) (D_8014F618.head.unk10 + D_8014F618.head.unk1C)) * 0.5);
+  sp6C = (f32) (((f64) (D_8014F618.head.unk14 + sp8)) * 0.5);
+  sp58 = (f32) (((f64) (D_8014F618.head.unkC - D_8014F618.head.unk18)) * 0.5);
+  sp5C = (f32) (((f64) (D_8014F618.head.unk10 - D_8014F618.head.unk1C)) * 0.5);
+  sp60 = (f32) (((f64) (D_8014F618.head.unk14 - sp8)) * 0.5);
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + D_8014F618.head.unkC));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + D_8014F618.head.unk10));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + D_8014F618.head.unk14));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + sp64));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + sp68));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + sp6C));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x800;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + D_8014F618.head.unk18));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + D_8014F618.head.unk1C));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + D_8014F618.head.unk20));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + sp58));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + sp5C));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + sp60));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x800;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) D_8014F618.head.unk0);
+  D_8005BB34->v.ob[1] = (s16) ((s32) D_8014F618.head.unk4);
+  D_8005BB34->v.ob[2] = (s16) ((s32) D_8014F618.head.unk8);
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x800;
+  D_8005BB34->v.tc[1] = 0x800;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - sp58));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - sp5C));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - sp60));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x800;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - D_8014F618.head.unk18));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - D_8014F618.head.unk1C));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - D_8014F618.head.unk20));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - sp64));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - sp68));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - sp6C));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x800;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - D_8014F618.head.unkC));
+  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - D_8014F618.head.unk10));
+  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - D_8014F618.head.unk14));
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0;
+  D_8005BB34++;
+  gSPVertex(D_8005BB2C++, ((u32) (D_8005BB34 - 9)) & 0x1FFFFFFF, 9, 0);
+  gSP1Quadrangle(D_8005BB2C++, 0, 1, 4, 3, 0);
+  gSP2Triangles(D_8005BB2C++, 2, 5, 1, 0, 5, 4, 1, 0);
+  gSP2Triangles(D_8005BB2C++, 7, 3, 4, 0, 6, 3, 7, 0);
+  gSP2Triangles(D_8005BB2C++, 8, 4, 5, 0, 7, 4, 8, 0);
+  gDPPipeSync(D_8005BB2C++);
+  D_8014F618.head.unkC = D_8014F618.head.unkC;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2260_B1210.s")
 #endif
-
 s32 func_800A2A88_B1A38(void) {
 	s32 temp_v0;
 
