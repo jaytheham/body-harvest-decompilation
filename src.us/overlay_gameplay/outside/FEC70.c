@@ -944,7 +944,7 @@ void func_800F1134_1000E4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1134_1000E4.s")
 #endif
 
-// CURRENT(20)
+// Cutscene - Alpha 1 landing at start of levels 1-4 (Comet uses func_802D67A8 in Comet overlay)
 #ifdef NON_MATCHING
 int func_800F1DDC_100D8C(void) {
 	f32 speed;
@@ -963,6 +963,7 @@ int func_800F1DDC_100D8C(void) {
 
 	flag = 1;
 	D_80157F96 = flag;
+  // cutscene would be skippable, but D_80031B50 is never set to 1 in finished game
 	if ((currentControllerStates[0].button & 0x9000) && ((s16)D_80157F8C > 0) && (D_80031B50_32750 == flag)) {
 		buildingInstances[D_80159DDF].yCoord =
 			func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8;

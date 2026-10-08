@@ -32,3 +32,18 @@ This moved the pointer spills from `0x40/0x3C/0x38/0x30` to
 instruction and register. The assembly diff scored zero and the full ROM
 checksum passed. Reducing padding alone moved the random array instead;
 the named result was necessary to remove the compiler temporary.
+
+## Sparkle creator: replace the payload pointer home with the named result
+
+`func_800CC7B0_DB760` in `src.us/overlay_gameplay/outside/CFE30.c` had identical instructions and registers, but its entry pointer spilled at `sp+0x50` instead of `sp+0x54`, and its cached half-width spilled at `sp+0x48` instead of `sp+0x4C`. The frame and live scalar offsets already matched.
+
+Remove the named `EffectSparkState *spark` and access the payload through the typed converted array expression:
+
+```c
+((EffectSparkState *)(s32)D_80154318[unitId].payload)->x =
+    (func_800038E0_44E0() % arg1) + arg3 - (arg1 / 2);
+```
+
+Declare `s32 randomSize` in the former pointer declaration position. After the two named random halfword assignments, evaluate the last random call into `randomSize`, then pass `(randomSize % 4) + 4` to `func_800C541C_D43CC`. This replaces the pointer home with a word of the same size and removes the nested call temporary. Both spills move up four bytes, while the `0x68` frame and every other instruction and offset remain unchanged. Keep the half-width calculation inline: naming it changed the spill allocation and left an extra four-byte mismatch.
+
+The integer conversion in the typed payload expression preserves the separate entry and payload bases required by the target. The byte view of the word lifetime parameter also preserves its target byte load and scheduling. The final whole-ROM comparison passed.

@@ -224,12 +224,13 @@ extern s16 D_80031634_32234[];
 extern s32 D_80031636[];
 extern u16 D_80031648_32248;
 extern s16 D_80031650_32250[];
+extern UnkE830ModeEntry D_80031A90[];
 extern Vtx D_800316E0_322E0[];
-extern s8 D_80031720_32320[]; // glyph vertical offsets and advances
+extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?// glyph vertical offsets and advances
 extern s8 D_800319C1_325C1; // alias of D_80031720_32320[0x2A1]
 extern s32 D_80031A80_32680[];
 extern UnkE830ModeEntry D_80031A90_32690[];
-extern s16 D_80031B50_32750;
+extern s16 D_80031B50_32750; // if this is set to 1, cutscenes at start of levels are skippable by holding A or Start; but this is never set in final game
 extern u8 D_80031B58_32758;
 extern Vp D_80031B60_32760[];
 extern s32 D_80031B80_32780;
@@ -901,7 +902,7 @@ extern s16 D_80048172;
 extern s16 D_80048174;
 extern s16 D_80048176;
 extern s32 D_80048178;
-extern s32 D_8004817C;
+extern s32 D_8004817C; // bookkeeping for Doodlebugs during Greece ambulance mission
 extern s32 D_80048180;
 extern s32 D_80048184;
 extern s32 D_80048188;
@@ -967,7 +968,7 @@ extern u8 D_80052547;
 extern u32 buildingInteriorToLoadId; // 0x80052548
 extern s32 D_8005254C;
 extern s32 D_80052550;
-extern s16 D_80052554;
+extern s16 D_80052554; // value seems generally used for bridges being animated in Greece (lowering or being destroyed)
 extern s32 D_80052558;
 extern u8 D_80052560[];
 extern u8 D_80052A7C[];
@@ -1938,7 +1939,8 @@ extern Unk8013FDA8Entry D_8013FDA8_14ED58[];
 extern u8 D_80140768[];
 extern WeaponSpecEntry D_80140768_14F718[];
 extern u8 D_801407F4_14F7A4[];
-extern u8 D_80140AA4_14FA54[];
+extern EffectRgb D_80140AA4_14FA54;
+extern u8 D_80140AA8_14FA58[8];
 extern AlienInstance *D_80140AB0_14FA60[];
 extern s32 D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
@@ -2396,7 +2398,11 @@ extern f32 D_80153BA4;
 extern s16 D_80153BAC;
 extern s16 D_80153BAE;
 extern s16 D_80153BB0;
+#ifdef OUTSIDE_CFE30_BSS
+Vec3f D_80153BB8;
+#else
 extern Vec3f D_80153BB8;
+#endif
 extern void *D_80153BC4;
 extern f32 D_80153BC8;
 extern u8 D_80153BCC;
@@ -2447,13 +2453,16 @@ extern Unk80154318Entry D_80154329[];
 extern u8 D_80156ED8;
 extern u8 D_80156ED9;
 extern s16 D_80156EDA;
+extern volatile s16 D_80156EDA_Draw;
 extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
+extern u8 D_8013DFF4_14CFA4[0x78];
+extern u8 D_8013E06C_14D01C[0x3C];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
 extern u8 D_80157531;
 extern u8 D_80157532;
-extern s8 D_80157533;
+extern u8 D_80157533;
 extern u8 D_80157534;
 extern s16 D_80157536;
 extern s16 D_80157538;
@@ -2540,11 +2549,11 @@ extern f32 D_80157F80;
 extern f32 D_80157F84;
 extern f32 D_80157F88;
 #ifdef FEC70_BSS
-extern u16 D_80157F8C;
+extern u16 D_80157F8C; // used often as a state tracker for cutscenes
 #else
-extern s16 D_80157F8C;
+extern s16 D_80157F8C; // used often as a state tracker for cutscenes
 #endif
-extern s16 D_80157F8E;
+extern s16 D_80157F8E; // used often as a timer for state switching/progression in cutscenes
 extern s16 D_80157F90;
 extern s16 D_80157F92;
 extern s16 D_80157F94;
@@ -2994,7 +3003,7 @@ extern const f64 D_802DE428_196F38[];
 extern const f64 D_802DE430_196F40[];
 extern const f32 D_802DE438_196F48[];
 extern const f32 D_802DE43C_196F4C[];
-extern s16 D_802DE460;
+extern s16 D_802DE460; // only used during Greece airport training mission
 extern s16 D_802DE462;
 extern s16 D_802DE464;
 extern u16 D_802DE466;
@@ -3158,7 +3167,7 @@ extern const char D_802E0E24_1F9B34[];
 extern const char D_802E0E30_1F9B40[];
 extern s16 D_802E0E30;
 extern s16 D_802E0E32;
-extern s16 D_802E0E34;
+extern s16 D_802E0E34; // used for delay timer to start school cutscene in America 1 
 extern const char D_802E0E3C_1F9B4C[];
 extern u8 D_802E0E44;
 extern char D_802E0E48;
@@ -4037,3 +4046,7 @@ extern TerrainLightTint D_8013D9D0_14C980[5];
 extern TerrainLightTint D_8013DA0C_14C9BC[5];
 extern TerrainLightTint D_8013DA48_14C9F8[5];
 extern TerrainLightTint D_8013DA84_14CA34[5];
+
+extern EffectRgb D_8013E40C_14D3BC;
+
+extern Gfx D_5033E00[];

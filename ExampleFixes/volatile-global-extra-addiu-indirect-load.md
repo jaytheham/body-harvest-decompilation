@@ -29,3 +29,13 @@ extern u8 D_802E0E44;  // NOT volatile
 ```
 
 Only keep `volatile` if the variable is genuinely modified by hardware or interrupt handlers.
+
+For `func_800C927C_D822C`, the target deliberately retains the counter
+address in `v0` for its halfword read and write. The guessed pointer return
+created an extra store address load; the actual draw helper returns `void`.
+Using a volatile alias at `0x80156EDA` reproduces the indirect read/write
+without changing already matched accesses through `D_80156EDA` elsewhere.
+Declare the alias in `variables.us.h` and give it an absolute linker symbol in the
+tracked `undefined_syms.us.txt` (not in `symbol_addrs.us.txt`, and not in the
+generated `undefined_syms_auto.txt` — see `symbol-addrs-alias-hijacks-auto.md`).
+Verified with function score 0 and the full ROM checksum.

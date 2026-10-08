@@ -786,24 +786,24 @@ void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 void func_802DBD84_25B4C4(u8 arg0);
 void func_802DC244_25B984(u8 arg0);
 
-
+// America mission/cutscene dispatcher
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
 	if (arg0 < 0x14) {
-		D_802DF350_25EA90[arg0](arg0);
+		D_802DF350_25EA90[arg0](arg0); // funcs listed in table at start of America overlay
 	} else {
 		switch (arg0) {
 		case 0x14:
-			func_800EFEB4_FEE64(func_800F1134_1000E4, 0x13, 0);
+			func_800EFEB4_FEE64(func_800F1134_1000E4, 0x13, 0); // boss cutscene/setup
 			break;
 		case 0x15:
-			func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0x10, 1);
+			func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0x10, 1); // level start cutscene
 			break;
 		case 0x1A:
 			D_801493E0 = 0;
-			func_800EFEB4_FEE64(func_802D563C_254D7C, 0x12, 0);
+			func_800EFEB4_FEE64(func_802D563C_254D7C, 0x12, 0); // Vision Quest cutscene
 			break;
 		case 0x1C:
-			func_802D5110_254850();
+			func_802D5110_254850(); // kids/church mission
 			break;
 		case 0x45:
 			func_802D4E70_2545B0();
@@ -815,6 +815,7 @@ void func_802D4CD0_254410(s32 arg0, s32 arg1) {
 	}
 }
 
+// set the 3 Hughs helicopters (vehicleinstances 80, 81, and 82) at height 1970, above the hospital roof (to ensure clean spawn not getting stuck in building?)
 void func_802D4DD4_254514(void) {
 	func_800FB468_10A418(&vehicleInstances[80], 1970.0f);
 	func_800FB468_10A418(&vehicleInstances[81], 1970.0f);
@@ -875,21 +876,23 @@ void func_802D4E70_2545B0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4E70_2545B0.s")
 #endif
 
+// school cutscene + get kids to church mission
 void func_802D4FBC_2546FC(void) {
 	D_802E0E34++;
-	if (D_802E0E34 != 0x96) {
+	if (D_802E0E34 != 0x96) { // delay timer before school cutscene starts (7.5ish seconds)
 		return;
 	}
 	func_800076D4_82D4(1);
 	func_80013468_14068(0x10);
-	func_800EFEB4_FEE64(NULL, 0x14, 0);
+	func_800EFEB4_FEE64(NULL, 0x14, 0); // play cutscene
 	func_800072CC_7ECC(0x1E);
 	D_801493E0 = 0;
 	D_8004816C = 0;
-	func_802D5190_2548D0();
+	func_802D5190_2548D0(); // update bit/flag on the church building
 	func_800074BC_80BC(func_802D4FBC_2546FC);
 }
 
+// kids/church mission
 void func_802D5044_254784(void) {
 	s32 val967;
 	s32 val5D7;
@@ -900,24 +903,25 @@ void func_802D5044_254784(void) {
 	val5D7 = ((u8*)buildingInstances)[0x5D7];
 	temp = D_8004816C + val5D7;
 
-	if (val967 >= 7) {
+	if (val967 >= 7) { // 7 or more kids entered church?
 		func_800072CC_7ECC(0x2E);
 		func_800072CC_7ECC(0x2D);
-		func_800074BC_80BC(func_802D5044_254784);
-		osSyncPrintf(D_802E0CF0_260430);
+		func_800074BC_80BC(func_802D5044_254784); // end mission
+		osSyncPrintf(D_802E0CF0_260430); // "kids entered church"
 	}
 
-	if (temp < 7) {
+	if (temp < 7) { // less than 7 kids entered church?
 		func_800072CC_7ECC(0x2D);
-		func_800074BC_80BC(func_802D5044_254784);
-		osSyncPrintf(D_802E0D08_260448);
+		func_800074BC_80BC(func_802D5044_254784); // end mission
+		osSyncPrintf(D_802E0D08_260448); // "kids failed to enter church"
 	}
 
-	buildingInstances[0x3E].hitPoints = buildingTypes[buildingInstances[0x3E].buildingType].unk19;
+	buildingInstances[0x3E].hitPoints = buildingTypes[buildingInstances[0x3E].buildingType].unk19; // restore school to max health? unneeded, school doesnt actually take damage
 }
 
+// mission- get kids to church- called thru mission dispatcher case 0x1C
 void func_802D5110_254850(void) {
-	D_802E0E34 = 0;
+	D_802E0E34 = 0; // delay timer for school cutscene - starts at 0 and counts up to 0x96 (7.5ish seconds)
 	func_80007410_8010(func_802D4FBC_2546FC);
 	func_80007410_8010(func_802D5044_254784);
 }
@@ -930,8 +934,9 @@ void func_802D516C_2548AC(void) {
 	func_800073B8_7FB8((u64)0x36);
 }
 
+// called thru mission dispatch table offset 0x03
 void func_802D5190_2548D0(void) {
-	u32 *ptr = (u32*)((u8*)buildingInstances + 0x5D8);
+	u32 *ptr = (u32*)((u8*)buildingInstances + 0x5D8); // set a bit/flag on the church building?
 	u32 val = *ptr;
 	*ptr = ((((val >> 12) | 0x20) ^ (val >> 12)) << 12) ^ val;
 }
@@ -959,12 +964,13 @@ void func_802D5288_2549C8(s32 arg0) {
 	func_800072CC_7ECC((u64)0x2C);
 }
 
+// Blackfoot Gulch Black Adam encounter
 void func_802D52B0_2549F0(void) {
 	u8 id;
 	Unk80222A78 sp24;
 	s16 temp;
 
-	id = func_8007956C_8851C(0x12);
+	id = func_8007956C_8851C(0x12); // spawn Black Adam
 	if (id == 0xFF) {
 		return;
 	}
@@ -974,6 +980,7 @@ void func_802D52B0_2549F0(void) {
 
 	func_8011E6FC_12D6AC(-0xF28, -0x6300, &temp);
 
+	// coords and behavior case 4 (standing and shooting)
 	alienInstances[id].unk0 = -0xF28;
 	alienInstances[id].unk4 = -0x6300;
 	alienInstances[id].unk2 = temp + 10;
@@ -986,32 +993,35 @@ void func_802D52B0_2549F0(void) {
 	func_800AE454_BD404(&sp24);
 }
 
+// Doomsday device mission
 void func_802D536C_254AAC(void) {
-	s16 temp = 0x96 - D_8004D1B2;
-	func_8009BF64_AAF14((u16)temp);
-	if (temp == -1) {
+	s16 temp = 0x96 - D_8004D1B2; // timer for 2:30
+	func_8009BF64_AAF14((u16)temp); // draw timer
+	if (temp == -1) { // if time runs out end mission
 		func_800074BC_80BC(func_802D536C_254AAC);
 	}
 }
 
+// Spawn Black Adam for stage 4 doomsday device mission
 void func_802D53BC_254AFC(void) {
 	u8 id;
 
-	id = (D_802E0E44 = func_8007956C_8851C(0x12));
+	id = (D_802E0E44 = func_8007956C_8851C(0x12)); // spawn Black Adam
 	if (id == 0xFF) {
 		return;
 	}
 
-	D_80157E7C = 5;
+	D_80157E7C = 5; // no idea what these two values do but compare to func_802D52B0 for Blackfoot Gulch and func_802D4F98 for Blackness Harbor encounter in Java
 	D_80256DEC = 0x6F;
-	alienInstances[id].unk0 = 0x555C;
+	alienInstances[id].unk0 = 0x555C; // coords on hill in stage 4
 	alienInstances[id].unk4 = 0x568A;
 	alienInstances[id].unk2 = 0;
-	alienInstances[id].unk24 = 4;
+	alienInstances[id].unk24 = 4; // behavior case 4- stand in place and shoot at player
 }
 
+// Doomsday device mission/event offset 0xA in level overlay table
 void func_802D5440_254B80(void) {
-	func_802D53BC_254AFC();
+	func_802D53BC_254AFC(); // Black Adam spawn
 	func_80007410_8010(func_802D536C_254AAC);
 }
 
@@ -1042,9 +1052,10 @@ void func_802D5530_254C70(void) {
 	u8 id;
 
 	func_800076D4_82D4(9);
-	func_800BDAF4_CCAA4();
-	func_800074BC_80BC(func_802D536C_254AAC);
+	func_800BDAF4_CCAA4(); // open shield portal
+	func_800074BC_80BC(func_802D536C_254AAC); // remove from callback
 
+	// despawn Black Adam
 	id = D_802E0E44;
 	if (id != 0xFF) {
 		if (alienInstances[id].typeIndex == ALIEN_TYPE_BLACK_ADAM) {
@@ -1083,6 +1094,7 @@ void func_802D55E4_254D24(void) {
 
 // jtbl_802E0D80_2604C0
 // CURRENT(21261)
+// Vision Quest cutscene
 #ifdef NON_MATCHING
 s32 func_802D563C_254D7C(void) {
 	s16 tx;
@@ -1141,16 +1153,16 @@ s32 func_802D563C_254D7C(void) {
 		return 0;
 	case 4:
 		if (D_80157F8E == 0) {
-			sp24 = func_8007956C_8851C(0x12);
+			sp24 = func_8007956C_8851C(0x12); // spawn Black Adam
 			D_802E0E48 = sp24;
 			if (sp24 != 0xFF) {
 				alienInstances[sp24].unk20 &= ~ (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
-				alienInstances[sp24].unk0 = 0x56D2;
+				alienInstances[sp24].unk0 = 0x56D2; // spawn and target coords
 				alienInstances[sp24].unk4 = -0x3180;
 				alienInstances[sp24].unk14 = 0x56D2;
 				alienInstances[sp24].unk18 = -0x2D80;
 				alienInstances[sp24].unk20 |= ALIEN_FLAG_TARGET_PT;
-				alienInstances[sp24].unk24 = 2;
+				alienInstances[sp24].unk24 = 2; // running state
 				alienInstances[sp24].unkE = 0x4000;
 				alienInstances[sp24].unk2A = 0x4000;
 				func_8007A198_89148(sp24);
@@ -1174,7 +1186,7 @@ s32 func_802D563C_254D7C(void) {
 	case 5:
 		if (D_80157F8E >= 6) {
 			D_8013E344_14D2F4 = 0xFF;
-			func_80079910_888C0(D_802E0E48);
+			func_80079910_888C0(D_802E0E48); // despawn Black Adam
 		} else {
 			D_8013E344_14D2F4 = D_80157F8E * 40;
 		}

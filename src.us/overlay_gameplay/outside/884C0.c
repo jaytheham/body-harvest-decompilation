@@ -5982,7 +5982,7 @@ void func_8008735C_9630C(u8 arg0) {
 	func_8008064C_8F5FC(arg0);
 }
 
-// Alien behavior func on specs for a lot of aliens in multiple levels
+// Alien behavior/update func on specs for a lot of aliens in multiple levels
 void func_800873A8_96358(u8 arg0)
 {
   if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
@@ -6485,6 +6485,7 @@ void func_80088760_97710(AlienInstance* alien) {
 	typeIndex = alien->typeIndex;
 	alien->unk2C = 0x14;
 
+	// if not human, HCU, or Mental HCU... waveIndex bookkeeping
 	if ((typeIndex >= 3) && (typeIndex != 0x20)) {
 		u8 waveIndex = alien->unk3E;
 
@@ -6496,6 +6497,7 @@ void func_80088760_97710(AlienInstance* alien) {
 		}
 	}
 
+	// HCU
 	if (typeIndex == 2) {
 		if (alien->unk20 & ALIEN_FLAG_UNKE) {
 			if (alien->unk20 & ALIEN_FLAG_UNKF) {
@@ -6546,15 +6548,17 @@ void func_80088760_97710(AlienInstance* alien) {
 		}
 	}
 
+	// if human is a zombie (case 1 when walking, case 0x1D when carried by HCU)
 	if ((typeIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0x1D)) && (func_8000726C_7E6C(0xB) == 0) && (func_8000726C_7E6C(0xC) == 0)) {
 		u16 r1;
 		u16 r2;
 		u16 r3;
 
-		alien->hitPoints = 0xA;
+		alien->hitPoints = 0xA; // restore hitpoints to 10
 		alien->unk20 |= ALIEN_FLAG_UNKF;
-		alien->unk2C = (func_800038E0_44E0() % 0x28) + 0x3C;
+		alien->unk2C = (func_800038E0_44E0() % 0x28) + 0x3C; // random timer before stands up again
 
+		//random blood spurts?
 		if ((D_80031420 & 3) == 3) {
 			r1 = func_800038E0_44E0();
 			r2 = func_800038E0_44E0();
@@ -6578,6 +6582,7 @@ void func_80088760_97710(AlienInstance* alien) {
 		return;
 	}
 
+	// bookkeeping for Doodlebugs during Greece ambulance mission, maybe others
 	if ((typeIndex == 0xA) && (alien->unk20 & ALIEN_FLAG_UNKE)) {
 		D_8004817C--;
 		if (D_8004817C == 0) {
@@ -6585,6 +6590,7 @@ void func_80088760_97710(AlienInstance* alien) {
 		}
 	}
 
+	// Siberia boss's tail stinger
 	if ((typeIndex == 0x1C) && (currentLevel == 4)) {
 		alien->unk2C = 0x50;
 	}

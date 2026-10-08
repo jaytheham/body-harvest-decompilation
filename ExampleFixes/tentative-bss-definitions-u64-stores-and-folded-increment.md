@@ -40,3 +40,12 @@ three bits. Use `D_8004DC5C++` for the first set bit, rather than assigning
 differs from the direct constant assignment and matches the target.
 
 Verification: function diff score 0 and `build/bh.us.z64: OK`.
+
+The same issue occurs with three floating-point component stores in
+`func_800CF174_DE124`. An external `Vec3f` encourages a retained base
+register; splitting component aliases instead leaves redundant `lui` instructions.
+A tentative `Vec3f D_80153BB8` definition selected only by
+`OUTSIDE_CFE30_BSS` reproduces the original folded component stores.
+The texture index must also be a `u8` parameter to produce its incoming
+argument save and zero extension. The full ROM checksum and function diff
+(score 0) pass with these two changes.
