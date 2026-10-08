@@ -2562,13 +2562,11 @@ void func_80089834_1718F4(u8 arg0) {
 	}
 }
 
-// CURRENT(192)
 // AI - Render slot type 7 effects: smoke/cloud sprites
-#ifdef NON_MATCHING
-void func_80089BCC_171C8C(s32 arg0) {
+void func_80089BCC_171C8C(u8 arg0) {
 	s16 var_s1;
 
-	var_s1 = D_800FB6F8[arg0 & 0xFF].unk6;
+	var_s1 = D_800FB6F8[arg0].unk6;
 	var_s1 = D_800FB7B0[var_s1].unk4;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -2598,9 +2596,6 @@ void func_80089BCC_171C8C(s32 arg0) {
 		var_s1 = D_800FB7B0[var_s1].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089BCC_171C8C.s")
-#endif
 
 // AI - Render an axis-aligned textured quad/billboard
 void func_80089E54_171F14(void) {
