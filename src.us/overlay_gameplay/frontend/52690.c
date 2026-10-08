@@ -4543,41 +4543,24 @@ void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 ar
 	D_800DE0EB = 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1385)
 // AI - Generates randomized color sets from a base color lookup table
-void func_8008EDB4_5F264(s32 arg0) {
+void func_8008EDB4_5F264(s8 arg0[][3]) {
+	s32 i;
+	s32 j;
 	s16 temp;
-	s32 value;
-	s32 modulo;
-	s32 var_s0;
-	s32 var_s4;
-	u8 *var_s1;
-	s8 *var_s2;
 
-	modulo = 120;
-	var_s4 = 0;
-	do {
-		var_s1 = &D_800AA688[(var_s4 * 4) - var_s4];
-		var_s2 = (s8 *)(arg0 + ((var_s4 * 4) - var_s4));
-		var_s0 = 0;
-		do {
-			temp = (func_800038E0_44E0() % modulo) + var_s1[var_s0] - 60;
-			value = temp;
+	for (i = 0; i < 4; i = (i + 1) & 0xFF) {
+		for (j = 0; j < 3; j = (j + 1) & 0xFF) {
+			temp = D_800AA688_7AB38[(i * 3) + j] + (func_800038E0_44E0() % 120) - 0x3C;
 			if (temp < 0) {
-				value = 0;
-			} else if (value >= 0x100) {
-				value = 0xFF;
+				temp = 0;
+			} else if (temp >= 0x100) {
+				temp = 0xFF;
 			}
-			var_s2[var_s0] = value;
-			var_s0 = (var_s0 + 1) & 0xFF;
-		} while (var_s0 < 3);
-		var_s4 = (var_s4 + 1) & 0xFF;
-	} while (var_s4 < 4);
+			arg0[i][j] = temp;
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EDB4_5F264.s")
-#endif
 
 // AI - Spawns initial ambient particle effects with random positions
 void func_8008EEC4_5F374(void) {
