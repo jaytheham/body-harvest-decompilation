@@ -781,7 +781,6 @@ void func_802D5BA0_1EE8B0(void) {
 	func_800076D4_82D4(9);
 }
 
-#ifdef NON_MATCHING
 void func_802D5BF8_1EE908(void) {
 	if (currentLevel == 2) {
 		func_802D4DB0_1EDAC0(0x2CB7, (s16) (func_800B84D0_C7480(0x2CB7, -0x42FA) >> 8), -0x42FA, 0x8C);
@@ -789,7 +788,6 @@ void func_802D5BF8_1EE908(void) {
 		func_802D4DB0_1EDAC0(0x2751, (s16) (func_800B84D0_C7480(0x2751, -0x4D1F) >> 8), -0x4D1F, 0xAA);
 		func_802D4DB0_1EDAC0(0x2779, (s16) (func_800B84D0_C7480(0x2779, -0x307D) >> 8), -0x307D, 0x5A);
 		func_802D4DB0_1EDAC0(0x2EAA, (s16) (func_800B84D0_C7480(0x2EA7, -0x4E6E) >> 8), -0x4E6E, 0x64);
-		return;
 	}
 	func_80135D08_144CB8(1.0f, 1, 0x3C, 1);
 	func_800DF038_EDFE8(0x2CB7, (s16) ((func_800B84D0_C7480(0x2CB7, -0x42FA) >> 8) + 0x32), -0x42FA, 0x1F4, 0, 0);
@@ -798,9 +796,29 @@ void func_802D5BF8_1EE908(void) {
 	func_800DF038_EDFE8(0x2EAA, (s16) ((func_800B84D0_C7480(0x2EA7, -0x4E6E) >> 8) + 0x1E), -0x4E6E, 0x12C, 0, 0);
 	func_800072CC_7ECC((u64)0x15);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5BF8_1EE908.s")
-#endif
+
+static void func_802D5DDC_stub(void) {
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 void func_802D5DE4_1EEAF4(void) {
 	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & ~VEHICLE_FLAG_UNKB);
