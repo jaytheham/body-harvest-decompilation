@@ -292,3 +292,34 @@ Measured (baseline 160, file restored after each): `col s32` 1533, `row s32` 153
 `x0`/`x1` `s16` 635, `x1` `s16` only 575, `tileRow` `u32` 160, the four `Vtx` declarations moved below
 `col`/`row` 170. `pattern_probe` measures every learned transform neutral or worse (`swap-commutative`
 165; `cast-u8-consts` and `cast-s16-consts` do not compile). Park; the permuter is the only lever left.
+
+## One assignment moved out of a store run rotates the temp bank (130 -> 60)
+
+`func_800EF9F0_FE9A0` (`outside/F9230.c`, 142 instr). The committed wrapped body did not compile
+(`DK0_TO_PHYS` is not a macro - the target `.s` masks the pointer with `& 0x1FFFFFFF`, i.e.
+`K0_TO_PHYS`); fixed, it measured **130**, `ins_diff -noregs` 142 = 142 delta +0.
+
+Every register row was one bank late: the target colours the second and third render-helper setup runs
+`$t1,$t4,$t6` (loads) -> `$t3,$t5,$t7` (shifts) -> `$t2` (the `mfc1`), ours started one slot earlier
+(`$t0,$t1,$t4` -> `$t2,$t3,$t5` -> `$t7`). Hoisting the *scalar* assignment of the block above the
+three `<< 3` stores -
+
+```c
+sp5C.unk2 = (s16)D_80157A48.unkC;      /* FIRST, before the stores below */
+sp48.unk0 = D_80157A48.unk2 << 3;
+sp48.unk2 = D_80157A48.unk4 << 3;
+sp48.unk4 = D_80157A48.unk0 << 3;
+```
+
+- took **130 -> 60** and made every register row byte-identical. It is the *position of one statement
+among the stores*, not its own spelling: the six permutations of the three `<< 3` stores measured
+70/70/70/75/75, splitting `sp5C.unk0 = (sp5C.unk4 = 0);` into two statements was neutral (60), and
+the reverse move (that same scalar assignment last, as committed) is the 130.
+
+The remaining 60 is a **stack-slot layout**, not a register one: the target homes the spilled
+`&alienInstances[arg0]` temp at `0x2C` and `sp5C` at `0x5C`; ours puts them at `0x30` / `0x58`. ~30
+declaration variants (12- and 16-byte middle locals, every declaration order, `Unk80052B40_fp` pads)
+move one or the other but never both - the 12-byte middle fixes the temp to `0x2C` yet leaves `sp5C`
+at `0x58` and scores *worse* (78), and `s32 spPad[4]` overshoots to `0x60`. A body with an
+unverifiable marker (the committed `CURRENT(1550)` was unreproducible - the body did not compile) must
+be made to build before the marker means anything.
