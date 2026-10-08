@@ -159,43 +159,6 @@ const f64 D_80144100_1530B0[1] = {
 const f64 D_80144108_1530B8[1] = {
 	0.8,
 };
-const u32 jtbl_80144110_1530C0[] = {
-	0x800DD7C0,
-	0x800DD7B0,
-	0x800DD7D0,
-	0x800DD7E0,
-	0x800DD7F0,
-	0x800DD800,
-	0x800DD830,
-	0x800DD840,
-	0x800DD820,
-	0x800DD810,
-};
-const u32 jtbl_80144138_1530E8[] = {
-	0x800DD934,
-	0x800DDA20,
-	0x800DDA20,
-	0x800DDA20,
-	0x800DDA20,
-	0x800DD944,
-	0x800DD954,
-	0x800DDA20,
-	0x800DD964,
-	0x800DDA20,
-	0x800DDA20,
-	0x800DD974,
-	0x800DD924,
-	0x800DDA20,
-	0x800DD984,
-	0x800DD994,
-	0x800DD9A4,
-	0x800DD9B4,
-	0x800DD9C4,
-	0x800DD9D4,
-	0x800DD9E4,
-	0x800DDA20,
-};
-const f32 D_80144190_153140[1] = {0.6f};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -1402,7 +1365,7 @@ void func_800C3288_D2238(u8 arg0) {
 
 // CURRENT(25829)
 #ifdef NON_MATCHING
-void func_800C3300_D22B0(s32 arg0) {
+void func_800C3300_D22B0(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
 	Unk80154318Sub *baseSub;
@@ -3782,7 +3745,7 @@ void func_800CA848_D97F8(u8 arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(6336)
-void func_800CABC8_D9B78(s32 arg0) {
+void func_800CABC8_D9B78(u8 arg0) {
 	f32 temp_f0;
 	f32 temp_f12;
 	f32 temp_f14;
@@ -6123,7 +6086,7 @@ void func_800D1A94_E0A44(u8 arg0) {
 
 // CURRENT(19171)
 #ifdef NON_MATCHING
-void func_800D1C24_E0BD4(s32 arg0) {
+void func_800D1C24_E0BD4(u8 arg0) {
 	f32 spF8;
 	f32 spF4;
 	f32 spF0;
@@ -9836,10 +9799,11 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
 // CURRENT(5435)
-#ifdef NON_MATCHING
-void func_800DD604_EC5B4(Gfx **arg0) {
+void func_800DD604_EC5B4(void) {
 	u8 i;
-	u8 type;
+	u8 effect;
+	s32 type;
+	s32 invalid;
 
 	D_80153B88 = 0;
 	func_800C8814_D77C4();
@@ -9859,7 +9823,7 @@ void func_800DD604_EC5B4(Gfx **arg0) {
 	func_800CB4F8_DA4A8();
 
 	for (i = 0; i < 0x1E; i++) {
-		type = D_80157540[i];
+		effect = D_80157540[i];
 
 		if (D_80156EDA >= 0x321) {
 			osSyncPrintf(D_80143B8C_152B3C);
@@ -9871,54 +9835,57 @@ void func_800DD604_EC5B4(Gfx **arg0) {
 			continue;
 		}
 
-		if (type == 0xFE) {
+		if (effect == 0xFE) {
 			continue;
 		}
 
-		type = D_80154088[type].unk0;
+		type = D_80154088[effect].unk0;
 		if (type == 0xFA) {
 			continue;
 		}
 
-		if (type < 10) {
-			switch (type) {
-				case 0:
-					func_800C3300_D22B0();
-					continue;
-				case 1:
-					func_800C25F8_D15A8();
-					continue;
-				case 2:
-					func_800C5D14_D4CC4();
-					continue;
-				case 3:
-					func_800C927C_D822C();
-					continue;
-				case 4:
-					func_800CABC8_D9B78();
-					continue;
-				case 5:
-					func_800CD7FC_DC7AC();
-					continue;
-				case 6:
-					func_800CE6E8_DD698();
-					continue;
-				case 7:
-					func_800D1C24_E0BD4();
-					continue;
-				case 8:
-					func_800D6290_E5240();
-					continue;
-				case 9:
-					func_800D7284_E6234();
-					continue;
-			}
+		switch (type) {
+			case 1:
+				func_800C3300_D22B0(effect);
+				continue;
+			case 0:
+				func_800C25F8_D15A8(effect);
+				continue;
+			case 2:
+				func_800C5D14_D4CC4(effect);
+				continue;
+			case 3:
+				func_800C927C_D822C(effect);
+				continue;
+			case 4:
+				func_800CABC8_D9B78(effect);
+				continue;
+			case 5:
+				func_800CD7FC_DC7AC(effect);
+				continue;
+			case 9:
+				func_800CE6E8_DD698(effect);
+				continue;
+			case 8:
+				func_800D1C24_E0BD4(effect);
+				continue;
+			case 6:
+				func_800D6290_E5240(effect);
+				continue;
+			case 7:
+				func_800D7284_E6234(effect);
+				continue;
 		}
 
 		if (type >= 10) {
-			osSyncPrintf(D_80143C08_152BB8);
+			invalid = 1;
 		} else {
-			osSyncPrintf(D_80143C40_152BF0);
+			invalid = 0;
+		}
+		if (invalid != 0) {
+			osSyncPrintf(D_80143C08_152BB8, type);
+		} else {
+			osSyncPrintf(D_80143C40_152BF0, type);
 		}
 	}
 
@@ -9934,60 +9901,68 @@ void func_800DD604_EC5B4(Gfx **arg0) {
 		}
 
 		type = D_801541F8[i].unk0;
-		switch (type - 10) {
-			case 0:
+		switch (type) {
+			case 22:
 				func_800C4274_D3224();
 				continue;
-			case 1:
+			case 10:
 				func_800C4CB8_D3C68();
 				continue;
-			case 2:
+			case 15:
 				func_800CC090_DB040();
 				continue;
-			case 3:
+			case 16:
 				func_800CCD54_DBD04();
 				continue;
-			case 4:
+			case 18:
 				func_800CF2E0_DE290();
 				continue;
-			case 5:
+			case 21:
 				func_800D2ECC_E1E7C();
 				continue;
-			case 6:
+			case 24:
 				func_800D45B4_E3564();
 				continue;
-			case 7:
+			case 25:
 				func_800D4C10_E3BC0();
 				continue;
-			case 8:
+			case 26:
 				func_800D5AF4_E4AA4();
 				continue;
-			case 9:
+			case 27:
 				func_800D7870_E6820();
 				continue;
-			case 10:
+			case 28:
 				func_800D8190_E7140();
 				continue;
-			case 11:
+			case 29:
 				func_800D9294_E8244();
 				continue;
+			case 11:
 			case 12:
+			case 13:
+			case 14:
+			case 17:
+			case 19:
+			case 20:
+			case 23:
+			case 31:
+				continue;
+			case 30:
 				func_800D978C_E873C();
 				continue;
 		}
 
-		if (type < 10) {
-			osSyncPrintf(D_80143CF0_152CA0);
+		if ((type >= 0) && (type < 10)) {
+			osSyncPrintf(D_80143CF0_152CA0, type);
 		} else {
-			osSyncPrintf(D_80143D2C_152CDC);
+			osSyncPrintf(D_80143D2C_152CDC, type);
 		}
 	}
 
-	if (currentLevel == LEVEL_SIBERIA) {
-		if (func_8000726C_7E6C(0x1EULL) == 0) {
-			func_800E2ED4_F1E84();
-		}
-	} else if ((currentLevel == LEVEL_JAVA) && (D_80052ACA != 2)) {
+	if ((currentLevel == LEVEL_JAVA) && (func_8000726C_7E6C(0x1EULL) == 0)) {
+		func_800E2ED4_F1E84();
+	} else if ((currentLevel == LEVEL_SIBERIA) && (D_80052ACA != 2)) {
 		func_800E32C4_F2274();
 	}
 
@@ -10006,9 +9981,7 @@ void func_800DD604_EC5B4(Gfx **arg0) {
 		D_80156ED9 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DD604_EC5B4.s")
-#endif
+
 
 void func_800DDB18_ECAC8(void) {
 	u8 i;
@@ -10310,7 +10283,7 @@ void func_800DE2E8_ED298(void) {
 	} while (i < 0x50);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
+#pragma GLOBAL_ASM("build/src.us/overlay_gameplay/outside/CFE30_ribbon_rodata.s")
 #endif
 
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
@@ -12779,7 +12752,7 @@ void func_800E71F8_F61A8(void) {
 // displayFXOnWater - Ripples, splashes etc
 void func_800E7234_F61E4(void) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	func_800DD604_EC5B4(&D_8005BB2C);
+	func_800DD604_EC5B4();
 	func_800E6A38_F59E8();
 	func_800CFD84_DED34();
 	func_800E5538_F44E8();
