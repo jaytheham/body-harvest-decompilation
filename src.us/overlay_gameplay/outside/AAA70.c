@@ -2474,7 +2474,16 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(447) - A24: a warm-started permuter run (8331 iterations, --stack-diffs) found two more
+// CURRENT(415) - A25: a fresh warm-started permuter run (from the 447 body, -j3 --stack-diffs) topped
+// out at 392 in the permuter's own metric, but only ONE of its constructs is real. The permuter's
+// score is not asm-differ's: splicing its best outputs back measured 2900 (the `flatDistI = ...;
+// new_var = flatDistI;` split) and 2868 (that plus the `unk6F = unk6F - 0xF` rewrite), while the one
+// declaration move measured 447 -> 415. `s32 flatDistI;` moves from after `s16 new_var2;` to directly
+// after `f32 posY;`. Its neighbours were all swept in the same run: after posZ 447, after distScale
+// 439, after pad0 does not build, with new_var2 before it 431 and pulse before it 423. The residual
+// 415 is still the frame (+8: ours 0x98 vs the target's 0x90) plus whole-function allocation (posX in
+// $f16 vs the target's $f0, the packed-colour byte load order, the argument-evaluation order).
+// Previous: CURRENT(447) - A24: a warm-started permuter run (8331 iterations, --stack-diffs) found two more
 // no-cost live-range constructs on top of the 860 body: (1) hoist the first product of the
 // flatDistI expression into a named `int new_var;` declared FIRST in the frame (860 -> 490), and
 // (2) name `arg1` in a `s16 new_var2;` used by posY and by the sqrtf argument (490 -> 447). Both
@@ -2508,10 +2517,10 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	s32 pad0;
 	f32 posX;
 	f32 posY;
+	s32 flatDistI;
 	f32 posZ;
 	f32 distScale;
 	s16 new_var2;
-	s32 flatDistI;
 	s32 pulse;
 
 	(void)arg3;
