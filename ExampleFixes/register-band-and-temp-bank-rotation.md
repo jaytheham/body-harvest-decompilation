@@ -270,3 +270,25 @@ Measured (one compile each, file restored afterwards; baseline **380**):
 
 The s-band is not source-shape-driven here, and the single lever that moved anything moved four
 rows, not the band. Park as the cfe temp-bank family; the permuter is the only lever left.
+
+## A hoisted global-address register steals the loop counter saved register (160 floor)
+
+`func_800970C0_A6070` (`src.us/overlay_gameplay/outside/A49A0.c`, 225 instructions, no reproducible
+marker) unwraps and compiles: `allblocks -noregs` reports 225 = 225, delta **+0**, and *every* block it
+prints is encoding-level (`li` vs `addiu`, `move` vs `or`, `%hi/%lo` vs the resolved address), so the
+score of **160** is register allocation only. The two rows that set it are the hoisted base pointer and
+the inner loop counter:
+
+    target  lui $t5,%hi(D_8005BB34)  ...  or $s0,$zero,$zero    (col -> s0)
+    ours    lui $t4,%hi(D_8005BB34)  ...  move $t5,$zero        (col -> t5)
+
+Our build hoists the global address into `t4`, which leaves `t5` free for the counter; the target does
+the reverse. Every later row follows from those two choices (`lw a1,0(t5)` vs `lw a0,0(t4)`;
+`addiu a0,s0,-4` vs `addiu v0,t5,-4`; `sll t9,a0,8` vs `sll t9,v0,8`). So a whole-function score in
+the hundreds on a `-noregs` delta of +0 is this family - a register-name cascade - not a missing
+statement, and no declaration sweep will close it.
+
+Measured (baseline 160, file restored after each): `col s32` 1533, `row s32` 1533, both `s32` 160,
+`x0`/`x1` `s16` 635, `x1` `s16` only 575, `tileRow` `u32` 160, the four `Vtx` declarations moved below
+`col`/`row` 170. `pattern_probe` measures every learned transform neutral or worse (`swap-commutative`
+165; `cast-u8-consts` and `cast-s16-consts` do not compile). Park; the permuter is the only lever left.
