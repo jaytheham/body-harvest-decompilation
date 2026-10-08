@@ -366,7 +366,7 @@ s32 func_8007E12C_4E5DC(void);
 void func_8007EB98_4F048(void);
 void func_8007EBB8_4F068(void);
 s32 func_8007EEE0_4F390(void);
-void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s32 arg3, u16 arg4, u16 arg5, s16 arg6);
+void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s16 arg3, u16 arg4, u16 arg5, s16 arg6);
 void func_8007F3EC_4F89C(FrontendStruct* arg0);
 void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1);
 void func_8007F580_4FA30(s32 arg0);
