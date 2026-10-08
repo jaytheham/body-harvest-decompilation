@@ -2658,9 +2658,7 @@ void func_80091A78_A0A28(u8 arg0)
 	alienInstances[arg0].unk2C = 0x64;
 }
 
-// CURRENT(40)
 // AI - Building attack/destruction
-#ifdef NON_MATCHING
 s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 {
 	AlienInstance *temp_s0;
@@ -2728,9 +2726,6 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 	func_80091A78_A0A28(arg0);
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091AC0_A0A70.s")
-#endif
 
 // AI - Movement AI with building attack
 // Goliath/"Spyder" behavior specs.unk4C
