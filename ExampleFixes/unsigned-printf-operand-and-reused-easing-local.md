@@ -1,0 +1,3 @@
+# Unsigned printf operands and reused easing local
+
+`func_800F450C_1034BC` matches with one unsigned word local reused for the angle and the final byte result. Cache no separate promoted copies of the byte parameters: IDO supplies the target stack caches across the printing calls. Cast the unsigned word to `s32` when printing it; this makes IDO keep the computation in the target register and copy it into the signed vararg register. Passing the unsigned word directly coalesces these registers and changes allocation. Cast the input before shifting (`(u32)arg0 << 15`) to preserve the separate byte reload rather than reusing the signed promoted cache. Extra named input and output locals enlarge the frame. Full ROM checksum verifies OK.
