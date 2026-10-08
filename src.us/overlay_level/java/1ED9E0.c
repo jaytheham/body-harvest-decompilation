@@ -858,28 +858,9 @@ void func_802D5E98_1EEBA8(void) {
 
 	v0 = vehicleInstances[49].unk0 - buildingInstances[147].xCoord;
 	v1 = (v0 >= 0) ? v0 : -v0;
-	if (v1 < 0x500) {
-		v0_2 = vehicleInstances[49].unk4 - buildingInstances[147].zCoord;
-		v1_2 = (v0_2 >= 0) ? v0_2 : -v0_2;
-		if (v1_2 >= 0x500) {
-			goto block_6;
-		}
-		goto block_12;
-	}
-block_6:
-	v0_3 = D_80052B34->unk0 - buildingInstances[147].xCoord;
-	a0 = (v0_3 >= 0) ? v0_3 : -v0_3;
-	if (a0 < 0xC8) {
-		v0_4 = D_80052B34->unk4 - buildingInstances[147].zCoord;
-		v1_3 = (v0_4 >= 0) ? v0_4 : -v0_4;
-		if (v1_3 < 0x15E) {
-block_12:
-			func_800072CC_7ECC(0xDu);
-		} else {
-			goto block_13;
-		}
+	if ((v1 < 0x500 && (v0_2 = vehicleInstances[49].unk4 - buildingInstances[147].zCoord, v1_2 = (v0_2 >= 0) ? v0_2 : -v0_2, v1_2 < 0x500)) || ((v0_3 = D_80052B34->unk0 - buildingInstances[147].xCoord, a0 = (v0_3 >= 0) ? v0_3 : -v0_3, a0 < 0xC8) && (v0_4 = D_80052B34->unk4 - buildingInstances[147].zCoord, v1_3 = (v0_4 >= 0) ? v0_4 : -v0_4, v1_3 < 0x15E))) {
+		func_800072CC_7ECC(0xDu);
 	} else {
-block_13:
 		func_800073B8_7FB8(0xDu);
 	}
 	if (vehicleInstances[49].unk1C <= 0) {
