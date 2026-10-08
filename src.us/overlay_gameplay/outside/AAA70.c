@@ -724,7 +724,7 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(16903)
+// CURRENT(16420)
 #ifdef NON_MATCHING
 // Draws Health/Human/vehicle/+more bars on HUD
 void func_8009D96C_AC91C(void)
@@ -735,6 +735,7 @@ void func_8009D96C_AC91C(void)
   u8 *new_var2;
   f32 sp98;
   s32 sp8C;
+  int new_var4;
   s16 sp8A;
   f32 sp84;
   s16 sp82;
@@ -1002,6 +1003,7 @@ void func_8009D96C_AC91C(void)
   {
     D_8014ED4A--;
   }
+  new_var4 = 2;
   if (D_8014ED48 > 0)
   {
     D_8014ED48--;
@@ -1025,7 +1027,7 @@ void func_8009D96C_AC91C(void)
   {
     u16 tempU16;
     tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-    if (vehicleInstances[0].unk1C < (((s32) tempU16) >> 2))
+    if (vehicleInstances[0].unk1C < (((s32) tempU16) >> new_var4))
     {
       D_8014ED4C = 8 - (D_80052A8C & 7);
     }
@@ -1034,7 +1036,7 @@ void func_8009D96C_AC91C(void)
       D_8014ED4C = 0;
     }
   }
-  if (sp74 < (sp72 >> 2))
+  if (sp74 < (sp72 >> new_var4))
   {
     D_8014ED4E = 8 - (D_80052A8C & 7);
   }
@@ -1068,7 +1070,7 @@ void func_8009D96C_AC91C(void)
       }
     }
     gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
-    func_800092B8_9EB8(((D_80068084 >> 1) - 0x2A) * 4, ((0x30 - (varT2 * 6)) + 0xAF) * 4, ((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
+    func_800092B8_9EB8(new_var4 * (new_var4 * ((D_80068084 >> 1) - 0x2A)), ((0x30 - (varT2 * 6)) + 0xAF) * 4, ((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
   }
   gDPPipeSync(D_8005BB2C++);
   gDPTileSync(D_8005BB2C++);
