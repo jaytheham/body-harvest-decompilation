@@ -724,7 +724,7 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(19959)
+// CURRENT(16903)
 #ifdef NON_MATCHING
 // Draws Health/Human/vehicle/+more bars on HUD
 void func_8009D96C_AC91C(void)
@@ -732,6 +732,7 @@ void func_8009D96C_AC91C(void)
   AlienInstance *alien;
   VehicleInstance *vehicle;
   BuildingInstance *building;
+  u8 *new_var2;
   f32 sp98;
   s32 sp8C;
   s16 sp8A;
@@ -740,6 +741,7 @@ void func_8009D96C_AC91C(void)
   s32 sp7C;
   s16 sp76;
   s16 sp74;
+  unsigned char new_var3;
   s16 sp72;
   BuildingInstance **new_var;
   s16 varV0;
@@ -833,7 +835,8 @@ void func_8009D96C_AC91C(void)
             sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
             func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
             tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
-            sp8C = (s32) (&D_8025EE80);
+            new_var2 = &D_8025EE80;
+            sp8C = (s32) new_var2;
             D_8014F202 = 2;
             sp7C = (s32) vehicle;
             sp84 = ((f32) vehicle->unk1C) / ((f32) tempU16);
@@ -848,7 +851,7 @@ void func_8009D96C_AC91C(void)
           building = D_80158FE8;
           varV1_2 = *((s8 *) (&building->hitPoints));
           tempA3 = buildingTypes[(*new_var)->buildingType].unk19;
-          if (currentLevel == 5)
+          if (currentLevel == (new_var3 = 5))
           {
             varV1_2 = (s8) (((s16) varV1_2) / 3);
           }
@@ -977,7 +980,7 @@ void func_8009D96C_AC91C(void)
     {
       D_8014ED4E = D_8014ED46;
     }
-    func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), ((f32) sp74) / ((f32) sp72), 1, (s32) (&D_8025EE80), 1, 0, D_8014ED4E, sp8A);
+    func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), ((f32) sp74) / ((f32) sp72), 1, (s32) new_var2, 1, 0, D_8014ED4E, sp8A);
     if (D_80052B34->unk1A != 0x13)
     {
       func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x32), (f32) (((f64) ((f32) sp76)) / 100.0), 1, (s32) (&D_8025D800), 1, 0, D_8014ED50, 0x30);
