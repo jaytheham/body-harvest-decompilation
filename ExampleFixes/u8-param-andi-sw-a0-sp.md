@@ -43,3 +43,9 @@ Two mechanical points when the rest of the body is already right:
   `check`. The prototype retype also recompiles the caller TU (the sole caller
   passes `i & 0xFF`, which stayed ROM-neutral here); trust the sha1 `gate`, not
   `check` 0 alone.
+The same transplant and the same lever landed the sibling `func_8008B534_5B9E4`
+(`overlay_gameplay/frontend/52690.c`, 166 instr) off the same donor - the
+`while ((index != -5) && (index != -6))` loop restored from the donor (the guess
+used a `do/while` with early `return`s and a pointer local) plus the `u8 arg0`
+retype; `check` 0, gate PASSED. This file has no header prototype, so only the
+definition changed.
