@@ -1978,7 +1978,7 @@ void func_80087E3C_16FEFC(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(1724) - permuter: single-pointer form (s2 merged into s1), 2451 -> 1724
+// CURRENT(1456) - permuter warm-start: var_s3 merged into spAC (single pointer local); 1724 -> 1456
 // AI - Render slot type 4 effects: animated billboards with dual textures
 void func_800881C0_170280(void)
 {
@@ -1986,7 +1986,6 @@ void func_800881C0_170280(void)
   Vec3f sp9C;
   s16 var_t2;
   s32 var_s6;
-  Unk89834Pos *var_s3;
   Unk89834Pos *s1;
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -1996,7 +1995,7 @@ void func_800881C0_170280(void)
   var_s6 = 0;
   if ((var_t2 != (-5)) && (var_t2 != (-6)))
   {
-    var_s3 = spAC;
+    spAC = spAC;
     do
     {
       gDPPipeSync(D_8005BB2C++);
@@ -2010,7 +2009,7 @@ void func_800881C0_170280(void)
         gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0x0000, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
         gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
         var_s6 = 1;
-        D_800FB6E4 = var_s3->unk9 - 0x28;
+        D_800FB6E4 = spAC->unk9 - 0x28;
       }
       else
       {
@@ -2022,12 +2021,12 @@ void func_800881C0_170280(void)
         gDPSetTile(D_8005BB2C++, 4, G_IM_SIZ_4b, 2, 0x0000, 0, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
         gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 31 << 2, 31 << 2);
         var_s6 = 0;
-        D_800FB6E4 = var_s3->unk9 + var_s3->unkA;
+        D_800FB6E4 = spAC->unk9 + spAC->unkA;
       }
       gDPPipeSync(D_8005BB2C++);
       s1 = &D_800FB7B0[var_t2];
       s1 = (Unk89834Pos *) (&s1->unk8);
-      var_s3 = s1;
+      spAC = s1;
       sp9C.x = (D_800E7410.x * 4.0f) - ((f32) s1->unk8);
       sp9C.y = (D_800E7410.y * 4.0f) - ((f32) s1->unkA);
       sp9C.z = (D_800E7410.z * 4.0f) - ((f32) s1->unkC);
@@ -2044,7 +2043,7 @@ void func_800881C0_170280(void)
     while ((var_t2 != (-5)) && (var_t2 != (-6)));
     if (var_t2 == (-6))
     {
-      spAC = var_s3;
+      spAC = spAC;
     }
   }
 }
