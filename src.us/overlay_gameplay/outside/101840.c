@@ -3861,44 +3861,35 @@ void func_800FC434_10B3E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 }
 
-#ifdef NON_MATCHING
-/* CURRENT(4375) */
 void func_800FC568_10B518(void) {
-	Vtx *vtx;
-	s32 counter;
 	u8 color_r, color_g, color_b, color_a;
-	s32 j;
-	Vec3fPadded *ptr_a2;
+	s16 counter;
 	Vtx *startVtx;
 
-	counter = 11;
-	ptr_a2 = D_801593F0;
+	counter = 12;
 	color_r = 0x8E;
 	color_g = 0x63;
 	color_b = 0x3C;
 	color_a = 0xFF;
 
 	startVtx = D_8005BB34;
-	do {
-		j = counter;
-		counter--;
+	while (counter--) {
 
-		vtx = D_8005BB34;
-		vtx->v.ob[0] = (s16)ptr_a2[j].pos.x;
-		vtx->v.ob[1] = (s16)ptr_a2[j].pos.y;
-		vtx->v.ob[2] = (s16)ptr_a2[j].pos.z;
-		vtx->v.flag = 0;
-		vtx->v.tc[0] = 0;
-		vtx->v.tc[1] = 0;
-		vtx->v.cn[0] = color_r;
-		vtx->v.cn[1] = color_g;
-		vtx->v.cn[2] = color_b;
-		vtx->v.cn[3] = color_a;
+		D_8005BB34->v.ob[0] = (s16)D_801593F0[counter].pos.x;
+		D_8005BB34->v.ob[1] = (s16)D_801593F0[counter].pos.y;
+		D_8005BB34->v.ob[2] = (s16)D_801593F0[counter].pos.z;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = color_r;
+		D_8005BB34->v.cn[1] = color_g;
+		D_8005BB34->v.cn[2] = color_b;
+		D_8005BB34->v.cn[3] = color_a;
 		D_8005BB34++;
-	} while (j);
+	}
 
 	gDPPipeSync(D_8005BB30++);
-	gSPVertex(D_8005BB30++, K0_TO_PHYS(startVtx), 12, 0);
+	gSPVertex(D_8005BB30++, startVtx, 12, 0);
 	gSPLine3D(D_8005BB30++, 0, 1, 0);
 	gSPLine3D(D_8005BB30++, 1, 2, 0);
 	gSPLine3D(D_8005BB30++, 2, 3, 0);
@@ -3906,15 +3897,12 @@ void func_800FC568_10B518(void) {
 	gSPLine3D(D_8005BB30++, 4, 5, 0);
 	gSPLine3D(D_8005BB30++, 5, 6, 0);
 	gSPLine3D(D_8005BB30++, 6, 7, 0);
-	gSPLine3D(D_8005BB30++, 9, 10, 0);
 	gSPLine3D(D_8005BB30++, 7, 8, 0);
 	gSPLine3D(D_8005BB30++, 8, 9, 0);
+	gSPLine3D(D_8005BB30++, 9, 10, 0);
 	gSPLine3D(D_8005BB30++, 10, 11, 0);
 	gDPPipeSync(D_8005BB30++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FC568_10B518.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
