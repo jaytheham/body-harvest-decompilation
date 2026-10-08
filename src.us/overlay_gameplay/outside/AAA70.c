@@ -244,6 +244,7 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 }
 
 // CURRENT(2713)
+// draw timer on-screen - used during certain missions
 #ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
 	u8 sp47;

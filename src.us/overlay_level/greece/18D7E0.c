@@ -525,13 +525,13 @@ void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 
 	switch (arg1) {
 	case 0x14:
-		func_800EFEB4_FEE64(func_800F1134_1000E4, 4, 0);
+		func_800EFEB4_FEE64(func_800F1134_1000E4, 4, 0); // boss fight cutscene/setup
 		break;
 	case 0x15:
-		func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0, 1);
+		func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0, 1); // alpha 1 landing start of level cutscene
 		break;
 	case 0x16:
-		func_800EFEB4_FEE64(func_802D57A0_18E2B0, 5, 1);
+		func_800EFEB4_FEE64(func_802D57A0_18E2B0, 5, 1); // Atlantis raising cutscene
 		break;
 	case 0x17:
 		func_802D6F7C_18FA8C();
@@ -569,7 +569,7 @@ void func_802D4E28_18D938(void) {
 		func_800073B8_7FB8(0x1A);
 	}
 	if (func_8000726C_7E6C(0xF) != 0) {
-		buildingInstances[12].door2InteriorId = 0x77;
+		buildingInstances[12].door2InteriorId = 0x77; // Greece 3 northern airfield - door interior changes to different room where trainer is gone
 	}
 	if (func_8000726C_7E6C(0xB) == 0) {
 		func_80007410_8010(func_802D4ECC_18D9DC);
@@ -591,13 +591,14 @@ void func_802D4ECC_18D9DC(void) {
 }
 
 // AI - Video start extension
+// no apparent callers anywhere
 void func_802D4F50_18DA60(void) {
 	osViExtendVStart((s32) &D_802DD170);
 }
 
 #ifdef NON_MATCHING
 /* CURRENT(5) */
-// AI - Main suburbs sequence state machine
+// Airport training sequence state machine
 void func_802D4F74_18DA84(void) {
 	if (D_802DE460 < 0x3E8) {
 		D_802DE460 += 1;
@@ -621,9 +622,9 @@ void func_802D4F74_18DA84(void) {
 		}
 		if (D_802DE460 == 0x48) {
 			func_80018D7C_1997C(0xE8);
-			buildingInstances[12].door2InteriorId = 0x77;
+			buildingInstances[12].door2InteriorId = 0x77; // change hangar building door to empty room without trainer
 		}
-		if (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) {
+		if (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) { // advance mission when plane lifts off
 			D_8004DC58 = 1;
 			D_802DE460 = 0;
 		}
@@ -631,7 +632,7 @@ void func_802D4F74_18DA84(void) {
 
 	case 1:
 		if (D_802DE460 == 0x14) {
-			func_80018D7C_1997C(0xE9);
+			func_80018D7C_1997C(0xE9); // trainer dialogue
 			D_8004DC58 = 2;
 		}
 		break;
@@ -650,7 +651,7 @@ void func_802D4F74_18DA84(void) {
 		break;
 
 	case 4:
-		func_80018D7C_1997C(0xEA);
+		func_80018D7C_1997C(0xEA); // trainer dialogue
 		D_8004DC58 = 2;
 		break;
 
@@ -683,8 +684,8 @@ void func_802D4F74_18DA84(void) {
 
 	case 8:
 		if (D_802DE460 == 0x14) {
-			func_80018D7C_1997C(0xEC);
-			func_800074BC_80BC(func_802D4F74_18DA84);
+			func_80018D7C_1997C(0xEC); // dialogue
+			func_800074BC_80BC(func_802D4F74_18DA84); // end mission
 			func_800072CC_7ECC(0x1E);
 			D_80159320 &= ~0x400000;
 			D_802DE460 = 0;
@@ -696,14 +697,14 @@ void func_802D4F74_18DA84(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/greece/18D7E0/func_802D4F74_18DA84.s")
 #endif
 
-// AI - Reset and start suburbs sequence
+// airport training called thru event/mission table offset 7
 void func_802D5290_18DDA0(void) {
 	D_8004DC58 = 0;
 	D_802DE460 = 0;
 	func_80007410_8010(func_802D4F74_18DA84);
 }
 
-// AI - Decrease shield health each tick
+// Parenthos bridge lowering cutscene state/handling
 s32 func_802D52C4_18DDD4(void) {
 	D_80052554 -= 0x55;
 	if (D_80052554 < 0x401) {
@@ -714,11 +715,11 @@ s32 func_802D52C4_18DDD4(void) {
 	return 0;
 }
 
-// AI - Start shield drain sequence
+// Parenthos bridge lowering event - called thru event/mission table offset 0
 void func_802D531C_18DE2C(void) {
 	func_800072CC_7ECC(0x2A);
 	D_80052554 = 0x38A4;
-	func_800EFEB4_FEE64(func_802D52C4_18DDD4, 1, 1);
+	func_800EFEB4_FEE64(func_802D52C4_18DDD4, 1, 1); // play cutscene 1- bridge lowering
 	func_80013468_14068(1);
 	D_801493E0 = 0;
 }
@@ -731,7 +732,7 @@ void func_802D536C_18DE7C(void) {
 	temp_diff = 0xBD - D_8004D1B9;
 	status = temp_diff;
 	if ((temp_diff < 0xB5) && (D_802DE464 >= 0xA)) {
-		func_8009BF64_AAF14((u16) temp_diff);
+		func_8009BF64_AAF14((u16) temp_diff); // draw timer
 		status = temp_diff;
 	}
 	if (D_802DE464 < 0xA) {
@@ -742,15 +743,16 @@ void func_802D536C_18DE7C(void) {
 	}
 }
 
-// AI - Setup building fire callback and start timer
+// Pollstura building fire event/mission -called thru table D_802DDBF4 offset 8
 void func_802D5434_18DF44(void) {
 	func_800074BC_80BC(func_802D536C_18DE7C);
 	func_800076D4_82D4(5);
 }
 
 // AI - Enable building destruction and start fire
+// called thru event/mission table offset 1
 void func_802D5460_18DF70(void) {
-	func_8011BF7C_12AF2C(0x37);
+	func_8011BF7C_12AF2C(0x37); // 4 building instances in Pollstura
 	func_8011BF7C_12AF2C(0x3F);
 	func_8011BF7C_12AF2C(0x39);
 	func_8011BF7C_12AF2C(0x3E);
@@ -758,8 +760,8 @@ void func_802D5460_18DF70(void) {
 	func_80007410_8010(func_802D536C_18DE7C);
 }
 
-// AI - Check building destruction status
-// Buildings on fire in Pollstura can add 3 each to human meter if they explode at end of mission
+// called thru event/mission table offset 3
+// Pollstura failure? blow up the 4 buildings, add 3 each to human meter
 void func_802D54AC_18DFBC(void) {
 	if ((buildingInstances[55].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x37);
@@ -796,9 +798,9 @@ void func_802D5578_18E088(void) {
 	}
 }
 
-// AI - Start vehicle crash sequence
+// Ambulance/bridge attack event -called thru table D_802DDBF4 offset 2
 void func_802D562C_18E13C(void) {
-	func_80092ADC_A1A8C();
+	func_80092ADC_A1A8C(); // spawns the 5 Doodlebugs that target the bridge
 	D_802DE466 = 0;
 	func_80007410_8010(func_802D5578_18E088);
 }
@@ -812,25 +814,25 @@ void func_802D5660_18E170(void) {
 		func_800073B8_7FB8(0x2A);
 		func_800074BC_80BC(func_802D5660_18E170);
 		func_800076D4_82D4(0x10);
-		func_80123AC4_132A74(&vehicleInstances[84]);
+		func_80123AC4_132A74(&vehicleInstances[84]); // feed the Ambulance through the vehicle on-death handler
 	}
 }
 
-// AI - Initialize vehicle destruction timer
+// ambulance/bridge mission/event? - called thru table D_802DDBF4 offset 4
 void func_802D56E8_18E1F8(void) {
 	D_8014D182 = 0;
 	func_800072CC_7ECC(0x2A);
 	func_80007410_8010(func_802D5660_18E170);
 }
 
-// AI - Start refinery boss battle
+// start TNT bridge cutscene - called thru table D_802DDBF4 offset 5
 void func_802D5720_18E230(void) {
 	D_80157F94 = 0xFF;
 	func_800EFEB4_FEE64(func_802D64D0_18EFE0, 6, 1);
 	func_80013468_14068(2);
 }
 
-// AI - Start boss alien battle
+// start airport TNT cutscene - called thru table D_802DDBF4 offset 6
 void func_802D5760_18E270(void) {
 	extern s32 func_802D6904_18F414(void);
 	D_80157F94 = 0xFF;
@@ -840,7 +842,7 @@ void func_802D5760_18E270(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(2962) */
-// AI - Suburbs building placement and tile manipulation
+// Atlantis raising cutscene
 s32 func_802D57A0_18E2B0(void) {
 	s16 i;
 	u16 x;
@@ -853,14 +855,14 @@ s32 func_802D57A0_18E2B0(void) {
 
 	switch (D_80157F8C) {
 	case 0:
-		v = func_8011D260_12C210(0x46, -0x25);
+		v = func_8011D260_12C210(0x46, -0x25); // find the building at this map coordinate (Atlantis)
 		D_80159DDF = v;
 		osSyncPrintf(&D_802DE2F0_196E00, v & 0xFF);
 		D_80159DE0 = 0;
 		D_80159DE2 = 0;
 		D_80159DE4 = 0;
 		D_80157F8E = 0;
-		D_80157F8C += 1;
+		D_80157F8C += 1; // move to case 1
 		D_80157F84 = 400.0f;
 		D_80157F88 = -2.0f;
 		D_80157F78 = 400.0f;
@@ -871,7 +873,7 @@ s32 func_802D57A0_18E2B0(void) {
 		func_80013468_14068(4);
 		break;
 
-	case 1:
+	case 1: // random water surface splashing
 		x = (u16)func_800038E0_44E0();
 		z = (u16)func_800038E0_44E0();
 		v = func_800038E0_44E0();
@@ -886,11 +888,11 @@ s32 func_802D57A0_18E2B0(void) {
 		func_800C9530_D84E0((s16)((x % 0x4B0) + D_802DE468 - 0x320), (s16)((z % 0x4B0) + D_802DE46A - 0x320), (u16)((v % 0x14) + 0xA), 0xE1, 0xFF, 0xFF, 0x96);
 		if (D_80157F8E++ >= 0x1F) {
 			D_80157F8E = 0;
-			D_80157F8C += 1;
+			D_80157F8C += 1; // move to case 2
 		}
 		break;
 
-	case 2:
+	case 2: // water splashing + raising the ground tiles
 		D_80159DE2 += 1;
 		if (D_80157F8E < 0x4B) {
 			x = (u16)func_800038E0_44E0();
@@ -968,11 +970,11 @@ s32 func_802D57A0_18E2B0(void) {
 		D_8015273E = D_80157F8E & 7;
 		if (D_80157F8E++ >= 0x65) {
 			D_80157F8E = 0;
-			D_80157F8C += 1;
+			D_80157F8C += 1; // move to case 3
 		}
 		break;
 
-	case 3:
+	case 3: // snap the building instance actual position up to new ground level
 		buildingInstances[D_80159DDF].yCoord = (s16)(func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8);
 		D_80159DE2 = 0;
 		D_8015273E = 0;
@@ -992,7 +994,7 @@ s32 func_802D57A0_18E2B0(void) {
 
 #ifdef NON_MATCHING
 /* CURRENT(3063) */
-// AI - Refinery boss multi-phase sequence
+// Black Adam TNT bridge cutscene state machine
 s32 func_802D64D0_18EFE0(void) {
 	u8 typeIndex;
 	s32 alienId;
@@ -1004,7 +1006,7 @@ s32 func_802D64D0_18EFE0(void) {
 		func_800800E4_8F094((u8)D_80157F94);
 		func_80080510_8F4C0(D_80157F95);
 		alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
-		alienTypes[typeIndex].unk48((u8)D_80157F94);
+		alienTypes[typeIndex].unk48((u8)D_80157F94); // Black Adam's unk48 behavior/update function
 	}
 
 	switch (D_80157F8C) {
@@ -1016,18 +1018,20 @@ s32 func_802D64D0_18EFE0(void) {
 		D_80157F8E = 0;
 		D_80052554 = 0x400;
 
+		// spawn the 2 TNT visuals on the bridge
 		D_80157F98 = func_800CDB40_DCAF0(0x4AF0, 0x3B6, -0x664);
 		D_80157F9A = func_800CDB40_DCAF0(0x4AFC, 0x3B6, -0x69C);
 
 		D_80157F8C += 1;
 		func_800072CC_7ECC(0x2A);
 
+		// spawn Black Adam at coords offset from buildinginstance 0x61 (right half of the bridge)
 		alienId = func_8007956C_8851C(0x12);
 		alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
 		alienInstances[alienId].unk20 &= ~ALIEN_FLAG_PLAYER;
 		alienInstances[alienId].unk0 = buildingInstances[0x61].xCoord + 0x80;
 		alienInstances[alienId].unk14 = buildingInstances[0x61].xCoord + 0x600;
-		alienInstances[alienId].unk24 = 2;
+		alienInstances[alienId].unk24 = 2; // Black Adam running state
 		alienInstances[alienId].unk4 = buildingInstances[0x61].zCoord;
 		alienInstances[alienId].unk18 = buildingInstances[0x61].zCoord;
 
@@ -1036,12 +1040,13 @@ s32 func_802D64D0_18EFE0(void) {
 		break;
 
 	case 1:
-		if (D_80157F8E++ >= 0xD8) {
+		if (D_80157F8E++ >= 0xD8) { // timer for Black Adam running
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
 		break;
 
+	// cases 2-4 the camera zoom changes before TNT explodes?
 	case 2:
 		func_800E35E0_F2590(0xA0);
 		D_80157F8C += 1;
@@ -1058,11 +1063,12 @@ s32 func_802D64D0_18EFE0(void) {
 		break;
 
 	case 5:
-		func_800CDD7C_DCD2C(D_80157F98);
+		func_800CDD7C_DCD2C(D_80157F98); // explosions at the TNT coords
 		func_800CDD7C_DCD2C(D_80157F9A);
 		func_800DFBA8_EEB58(0x4AFC, 0x3A2, -0x680, 0xB4, 6);
 		func_800C7E18_D6DC8();
 
+		// the bridge pieces falling symmetrically down into the water?
 		func_800CA5EC_D959C(0x4AFC, 0x3A2, -0x680, 0x28, 0x32, 0x28, 0x32, 0xA, 0x19, 0xB4, 0x5A, 0x50, 0x2D, 0xFF);
 		func_800CA5EC_D959C(0x4AFC, 0x3A2, -0x680, -0x28, 0x32, -0x28, 0x32, 0xA, 0x19, 0xB4, 0x5A, 0x50, 0x2D, 0xFF);
 
@@ -1103,7 +1109,7 @@ s32 func_802D64D0_18EFE0(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(570)
-// AI - Boss alien multi-phase sequence
+// Airport TNT cutscene state handler
 s32 func_802D6904_18F414(void) {
 	s32 pad[2];
 	s32 alienId;
@@ -1142,15 +1148,15 @@ s32 func_802D6904_18F414(void) {
 		D_80157F7C = -2.0f;
 		D_80157F80 = 100.0f;
 
-		alienId = func_8007956C_8851C(0x12);
+		alienId = func_8007956C_8851C(0x12); // spawn Black Adam
 		if (alienId != 0xFF) {
-			alienInstances[alienId].unk0 = 0x4C80;
+			alienInstances[alienId].unk0 = 0x4C80; // spawn coords and target coords
 			alienInstances[alienId].unk4 = -0x6780;
 			alienInstances[alienId].unk14 = 0x4C80;
 			alienInstances[alienId].unk18 = -0x6380;
 			alienInstances[alienId].unk20 &= ~(ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
 			alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
-			alienInstances[alienId].unk24 = 2;
+			alienInstances[alienId].unk24 = 2; // running state
 			alienInstances[alienId].unkE = 0x4000;
 			alienInstances[alienId].unk2A = 0x4000;
 			func_8007A198_89148(alienId);
@@ -1225,6 +1231,7 @@ s32 func_802D6904_18F414(void) {
 // CURERNT(0) rodata
 #ifdef NON_MATCHING
 // AI - Mission progression state machine
+// case 0x45 through mission dispatcher.. what is this?
 void func_802D6D20_18F830(void) {
 	switch (D_80048030) {
 	case 0:

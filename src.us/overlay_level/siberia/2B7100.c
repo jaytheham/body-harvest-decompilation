@@ -849,10 +849,11 @@ extern s16 D_802E278C_2C4BBC;
 void func_802E02CC_2C26FC(u8 arg0);
 
 #ifdef NON_MATCHING
+// Siberia mission dispatcher
 void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
 	arg1 = arg0;
 	if (arg0 < 0x14) {
-		D_802E0DF0_2C3220[arg0]();
+		D_802E0DF0_2C3220[arg0](); // funcs listed in level overlay table at D_802E0DF0
 		return;
 	}
 	switch (arg1) {
@@ -1361,10 +1362,11 @@ void func_802D62B4_2B86E4(void) {
 	func_80007410_8010(&func_802D6220_2B8650);
 }
 
+// pumphouse mission?
 void func_802D62E4_2B8714(void) {
-	s16 temp = 0x28 - D_8004D1B1;
+	s16 temp = 0x28 - D_8004D1B1; // 40 second timer
 
-	func_8009BF64_AAF14(temp);
+	func_8009BF64_AAF14(temp); // draw timer
 
 	if ((temp < 0) || func_8000726C_7E6C(0x28)) {
 		func_800074BC_80BC(&func_802D62E4_2B8714);
@@ -1590,6 +1592,7 @@ void func_802D6A70_2B8EA0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6A70_2B8EA0.s")
 #endif
 
+// oil rig rescue mission
 #ifdef NON_MATCHING
 void func_802D6CA0_2B90D0(void) {
 	s16 temp;
@@ -1598,7 +1601,7 @@ void func_802D6CA0_2B90D0(void) {
 	s32 angle;
 	s16 cosVal, sinVal;
 
-	temp = 0x69 - D_8004D1B2;
+	temp = 0x69 - D_8004D1B2; // timer 1:45
 	if (temp < 0xC8) {
 		func_8009BF64_AAF14((u16)temp);
 	}
@@ -3463,6 +3466,7 @@ void func_802DBE28_2BE258(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 // CURRENT(9826)
+// Siberia Mutant behavior/update specs.unk48
 #ifdef NON_MATCHING
 void func_802DBF54_2BE384(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -3547,7 +3551,7 @@ void func_802DBF54_2BE384(u8 arg0) {
 				var_t0 = func_800B84D0_C7480((s16)sp6C, (s16)sp64) >> 8;
 			}
 			sp68 = var_t0;
-			func_800CD2E8_DC298((s16)sp6C, (s16)var_t0, (s16)sp64, (u8)alien->unk3C);
+			func_800CD2E8_DC298((s16)sp6C, (s16)var_t0, (s16)sp64, (u8)alien->unk3C); // jet stream effect while floating?
 		}
 
 		if (alien->unk3D != -5) {
@@ -3589,12 +3593,14 @@ void func_802DBF54_2BE384(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DBF54_2BE384.s")
 #endif
 
+// Siberia Mutant behavior/update specs.unk4C
 void func_802DC4A0_2BE8D0(u8 arg0) {
 	func_80137468_146418(arg0, 0x1E);
 	func_8008735C_9630C(arg0);
 }
 
 // CURRENT(4162)
+// Siberia Mutant on-death function
 #ifdef NON_MATCHING
 void func_802DC4D0_2BE900(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
@@ -3996,6 +4002,7 @@ void func_802DD514_2BF944(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD514_2BF944.s")
 #endif
 
+// "Snowbeast" (lab spider monster) behavior/updates specs.unk48
 #ifdef NON_MATCHING
 void func_802DD668_2BFA98(s32 arg0) {
 	s32 sp74;
@@ -4193,6 +4200,7 @@ void func_802DD668_2BFA98(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD668_2BFA98.s")
 #endif
 
+// "Snowbeast" (lab spider monster) behavior/updates specs.unk4C
 void func_802DDE3C_2C026C(s32 arg0) {
 	s32 ret;
 	s32 pad1;
@@ -4237,6 +4245,7 @@ void func_802DDE3C_2C026C(s32 arg0) {
 }
 
 // CURRENT(1337)
+// "Snowbeast" (lab spider monster) on-death function
 #ifdef NON_MATCHING
 void func_802DDFF0_2C0420(s32 arg0) {
 	s32 sp4C;

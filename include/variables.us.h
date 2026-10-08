@@ -227,7 +227,7 @@ extern s16 D_80031650_32250[];
 extern s8 D_80031720_32320[]; // maxHumanDeathsAllowed?
 extern s8 D_800319C1_325C1;
 extern UnkE830ModeEntry D_80031A90[];
-extern s16 D_80031B50;
+extern s16 D_80031B50; // if this is set to 1, cutscenes at start of levels are skippable by holding A or Start; but this is never set in final game
 extern u8 D_80031B58_32758;
 extern Vp D_80031B60_32760[];
 extern s32 D_80031B84;
@@ -833,7 +833,7 @@ extern s16 D_80048172;
 extern s16 D_80048174;
 extern s16 D_80048176;
 extern s32 D_80048178;
-extern s32 D_8004817C;
+extern s32 D_8004817C; // bookkeeping for Doodlebugs during Greece ambulance mission
 extern s32 D_80048180;
 extern s32 D_80048184;
 extern s32 D_80048188;
@@ -899,7 +899,7 @@ extern u8 D_80052547;
 extern u32 buildingInteriorToLoadId; // 0x80052548
 extern s32 D_8005254C;
 extern s32 D_80052550;
-extern s16 D_80052554;
+extern s16 D_80052554; // value seems generally used for bridges being animated in Greece (lowering or being destroyed)
 extern s32 D_80052558;
 extern u8 D_80052560[];
 extern u8 D_80052A7C[];
@@ -2453,8 +2453,8 @@ extern f32 D_80157F7C;
 extern f32 D_80157F80;
 extern f32 D_80157F84;
 extern f32 D_80157F88;
-extern s16 D_80157F8C;
-extern s16 D_80157F8E;
+extern s16 D_80157F8C; // used often as a state tracker for cutscenes
+extern s16 D_80157F8E; // used often as a timer for state switching/progression in cutscenes
 extern s16 D_80157F90;
 extern s16 D_80157F92;
 extern s16 D_80157F94;
@@ -2901,7 +2901,7 @@ extern const f64 D_802DE428_196F38[];
 extern const f64 D_802DE430_196F40[];
 extern const f32 D_802DE438_196F48[];
 extern const f32 D_802DE43C_196F4C[];
-extern s16 D_802DE460;
+extern s16 D_802DE460; // only used during Greece airport training mission
 extern s16 D_802DE462;
 extern s16 D_802DE464;
 extern u16 D_802DE466;
@@ -3065,7 +3065,7 @@ extern const char D_802E0E24_1F9B34[];
 extern const char D_802E0E30_1F9B40[];
 extern s16 D_802E0E30;
 extern s16 D_802E0E32;
-extern s16 D_802E0E34;
+extern s16 D_802E0E34; // used for delay timer to start school cutscene in America 1 
 extern const char D_802E0E3C_1F9B4C[];
 extern u8 D_802E0E44;
 extern char D_802E0E48;

@@ -350,20 +350,22 @@ const f64 D_802E0F90_1F9CA0[] = { 3000.0 };
 const f64 D_802E0F98_1F9CA8[] = { 65535.0 };
 const f64 D_802E0FA0_1F9CB0[] = { 3000.0 };
 
+
+// java mission dispatcher
 #ifdef NON_MATCHING
 void func_802D4CD0_1ED9E0(s32 arg0, void *arg1) {
 	if (arg0 < 0x14) {
-		((void (*)(s32))D_802E04A4[arg0])(arg0);
+		((void (*)(s32))D_802E04A4[arg0])(arg0); // mission table in level overlay table at D_802E04A4
 		return;
 	}
 
 	switch (arg0) {
 	case 0x14:
 		func_802D6DF8_1EFB08();
-		func_800EFEB4_FEE64((void *)&func_800F1134_1000E4, 9, 0);
+		func_800EFEB4_FEE64((void *)&func_800F1134_1000E4, 9, 0); // boss cutscene setup
 		break;
 	case 0x15:
-		func_800EFEB4_FEE64((void *)&func_800F1DDC_100D8C, 8, 1);
+		func_800EFEB4_FEE64((void *)&func_800F1DDC_100D8C, 8, 1); // level beginning cutscene
 		break;
 	case 0x45:
 		func_802D7980_1F0690();
@@ -408,7 +410,7 @@ void func_802D4E6C_1EDB7C(void) {
 	u16 temp_t9;
 	u32 temp_v1;
 
-	func_800FB468_10A418(&vehicleInstances[8], 675.0f);
+	func_800FB468_10A418(&vehicleInstances[8], 675.0f); // Gryphon plane on aircraft carrier spawns at height 675 - is later moved higher so it falls cleanly onto roof/not clipped into building
 	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
 	if (func_8000726C_7E6C((u64) 0x1E) != 0) {
 		func_800E2720_F16D0(0);
@@ -422,7 +424,7 @@ void func_802D4E6C_1EDB7C(void) {
 	} else {
 		func_802D4CD0_1ED9E0(0xC, 0);
 	}
-	temp_v1 = buildingInstances[38].unk8 >> 0xC;
+	temp_v1 = buildingInstances[38].unk8 >> 0xC; // buildinginstance 38 is the hut villagers run out of to Old Freighter in Java 3
 	buildingInstances[38].unk8 = (u32) ((((temp_v1 | 0x10000) ^ temp_v1) << 0xC) ^ buildingInstances[38].unk8);
 	if (func_8000726C_7E6C((u64) 0x11) != 0) {
 		func_8011C080_12B030(0x31);
@@ -438,20 +440,21 @@ void func_802D4F70_1EDC80(s32 arg0) {
 	func_800072CC_7ECC((u64)0x2C);
 }
 
+// Blackness Harbor Black Adam encounter
 #ifdef NON_MATCHING
 void func_802D4F98_1EDCA8(void) {
 	Unk80222A78 callback_struct;
 	s16 position;
 
-	D_802E04A0_1F91B0 = func_8007956C_8851C(0x12);
+	D_802E04A0_1F91B0 = func_8007956C_8851C(0x12); // spawn Black Adam
 	if (D_802E04A0_1F91B0 != 0xFF) {
 		alienTypes[0x11].unk54 = 0x6F;
 		D_80157E7C = 2;
 		func_8011E6FC_12D6AC(-0x5954, -0x2258, &position);
-		(&alienInstances[D_802E04A0_1F91B0])->unk0 = -0x5954;
+		(&alienInstances[D_802E04A0_1F91B0])->unk0 = -0x5954; // spawn coords; height +10 to avoid clipping into alien barrier?
 		(&alienInstances[D_802E04A0_1F91B0])->unk4 = -0x2258;
 		(&alienInstances[D_802E04A0_1F91B0])->unk2 = (s16) (position + 0xA);
-		(&alienInstances[D_802E04A0_1F91B0])->unk24 = 4;
+		(&alienInstances[D_802E04A0_1F91B0])->unk24 = 4; // behavior case 4 standing and shooting
 		(&alienInstances[D_802E04A0_1F91B0])->unk1B = 3;
 		callback_struct.unk0 = 3;
 		callback_struct.unk8 = D_802E04A0_1F91B0;
@@ -470,18 +473,19 @@ void func_802D507C_1EDD8C(s32 arg0) {
 	func_800073B8_7FB8(0xBLL);
 }
 
+// func called thru mission/cutscene table start of level overlay offset 0 - handles stage 1 Mantosaur inside the cable car building
 void func_802D50B0_1EDDC0(void) {
 	u8 alien_id;
 	Unk80222A78 callback_struct;
 
-	alien_id = func_8007956C_8851C(0x25);
+	alien_id = func_8007956C_8851C(0x25); // spawn enemy type 0x25 Mantosaur
 	if (alien_id != 0xFF) {
-		alienInstances[alien_id].unk0 = -0x109A;
+		alienInstances[alien_id].unk0 = -0x109A; // coords -4250, 17376, 1131
 		alienInstances[alien_id].unk2 = 0x46B;
 		alienInstances[alien_id].unk4 = 0x43E0;
 		alienInstances[alien_id].unkE = 0x4000;
 		alienInstances[alien_id].unk1B = 0;
-		callback_struct.unk0 = 3;
+		callback_struct.unk0 = 3; // ties Mantosaur into event/trigger system to release cable car etc
 		callback_struct.unk8 = alien_id;
 		callback_struct.unkC = func_802D507C_1EDD8C;
 		func_800AE454_BD404(&callback_struct);
@@ -493,16 +497,17 @@ void func_802D513C_1EDE4C(s32 arg0) {
 	func_800072CC_7ECC(0xC);
 }
 
+// func called thru mission/cutscene table start of level overlay offset 1 - handles stage 1 power station Jelly
 void func_802D5170_1EDE80(void) {
 	u8 alien_id;
 	Unk80222A78 callback_struct;
 
-	alien_id = func_8007956C_8851C(0x24);
+	alien_id = func_8007956C_8851C(0x24); // spawn enemytype 0x24 Jelly ("Brain blob")
 	if (alien_id != 0xFF) {
-		alienInstances[alien_id].unk0 = -0x14D8;
+		alienInstances[alien_id].unk0 = -0x14D8; // spawn coords -5336, 10496
 		alienInstances[alien_id].unk4 = 0x2900;
 		alienInstances[alien_id].unk1B = 0;
-		callback_struct.unk0 = 3;
+		callback_struct.unk0 = 3; // ties Jelly into event/trigger system
 		callback_struct.unk8 = alien_id;
 		callback_struct.unkC = func_802D513C_1EDE4C;
 		func_800AE454_BD404(&callback_struct);
@@ -893,6 +898,7 @@ void func_802D5FBC_1EECCC(void) {
 	func_800EFEB4_FEE64(0, 0xF, 0);
 }
 
+// unused? appears to spawn Doodlebugs to attack the aircraft carrier in Blackness Naval Base (buildinginstance 34)
 #ifdef NON_MATCHING
 void func_802D5FE4_1EECF4(void) {
 	s8 *var_s0;
@@ -922,6 +928,7 @@ void func_802D5FE4_1EECF4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s")
 #endif
 
+// called through mission data table in java overlay D_802E04A4 entry 10
 void func_802D60DC_1EEDEC(void) {
 	func_802D5FE4_1EECF4();
 }
@@ -1358,12 +1365,14 @@ void func_802D6E70_1EFB80(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
 #endif
 
+// 0xC cutscene/mission called thru level overlay table
 void func_802D7938_1F0648(void) {
-	func_80007410_8010(&func_802D6E70_1EFB80);
+	func_80007410_8010(&func_802D6E70_1EFB80); // add lightning to callback list
 }
 
+// 0xD cutscene/mission called thru level overlay table
 void func_802D795C_1F066C(void) {
-	func_800074BC_80BC(&func_802D6E70_1EFB80);
+	func_800074BC_80BC(&func_802D6E70_1EFB80); // remove lightning from callback list
 }
 
 // CURRENT(5) - jump table offset 0xe90 vs 0xf20 (rodata layout)
