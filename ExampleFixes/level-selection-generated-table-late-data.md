@@ -7,3 +7,5 @@ Use the asm processor late-rodata mechanism on the still assembly-backed beam re
 Initialize both flags in their declarations (`s32 skipSecondCall = 0; s32 shouldClamp = 0;`). This removes the unnecessary constant `if (1)` while preserving the same instruction stream. Simple assignment statements, a plain scope, chained assignments, and a comma statement all changed the subsequent switch temporary allocation. Declaration initialization was the natural equivalent that matched.
 
 Validated with function diff score 0 and full ROM checksum OK.
+
+The earlier effects dispatcher `func_800DD604_EC5B4` also matches immediately after removing its two placeholder tables. The explosion float 0.6 must follow those generated tables. A normal C const declaration is emitted ahead of generated switch tables even when written later in the source, shifting both table addresses by four bytes. `CFE30_explosion_late_rodata.s` places this float with the still assembly-backed explosion function. Remove this support pragma when enabling that function and let the C literal generate its constant. Full ROM checksum OK and dispatcher diff score 0.

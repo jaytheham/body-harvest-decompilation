@@ -2481,7 +2481,10 @@ typedef struct {
 	/* 0x01 */ s8 sizeStep;
 	/* 0x02 */ s8 heightStep;
 	/* 0x03 */ s8 fadeStep;
-	/* 0x04 */ u8 pad4[4];
+	/* 0x04 */ s8 drawMode;
+	/* 0x05 */ s8 format;
+	/* 0x06 */ s8 width;
+	/* 0x07 */ s8 height;
 } EffectParticleConfig; /* size = 0x08 */
 
 typedef struct {
@@ -3468,6 +3471,11 @@ typedef struct {
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
 } Unk800E0F4CEntry; /* size = 0x10 */
+
+typedef union {
+	u32 words[3];
+	s8 bytes[12];
+} EffectPalette;
 
 typedef struct {
 	s16 x;
