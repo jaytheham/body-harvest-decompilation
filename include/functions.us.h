@@ -1360,7 +1360,7 @@ void func_8007D424_8C3D4(void);
 void func_800AE190_BD140(s16);
 void func_800AE1C0_BD170(void);
 void func_800AE1EC_BD19C(void);
-void func_80102A0C_1119BC(void *arg0, s16 arg1, s16 arg2, f32 arg3);
+void func_80102A0C_1119BC(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3);
 void func_8011C080_12B030(u8);
 void func_8007D690_8C640(void);
 void func_8007AF8C_89F3C(void);
