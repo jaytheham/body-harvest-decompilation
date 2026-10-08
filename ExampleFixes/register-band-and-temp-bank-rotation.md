@@ -94,7 +94,6 @@ The rotation is self-consistent - every downstream use is renamed to match, so t
 
 See also `hoist-vs-rematerialise-last-callee-saved-slot.md` for the sibling case where the band size and every home match and only *which* value takes the last callee-saved slot differs.
 
-
 ### A single caller-saved temp on a CSE'd RDP opcode constant (4 rows, score 20)
 
 `func_80081058_51508` (`src.us/overlay_gameplay/frontend/40720.c`, 142 instr, wrapped `#ifdef
@@ -163,3 +162,33 @@ masks 210 / 1185 / 210; inline `if (arg0 & 4)` in all three cases 210; swapping 
 `default: break;` and `mask != 0` forms neutral; `case 0` in braces neutral; dropping every `& 0xFF`
 160; making case 1 uniform with `& 0xFF` 230; `ret` as `s32`/`int` 2965; the four `if`s as compound
 `|=` 160. No source shape moves the dispatch mask's colour.
+
+## A named pointer is not always the lever, and a low marker is not evidence
+
+`func_802D7B68_1F0878` (`src.us/overlay_level/java/1ED9E0.c`, 209 instructions, marker
+`CURRENT(1291)`, re-measured **1306**) and `func_802D5F28_2B8358`
+(`src.us/overlay_level/siberia/2B7100.c`, 190 instructions, marker `CURRENT(93)`, re-measured
+**985**) are both `ins_diff -noregs` **delta +0** with an identical instruction count, identical
+frame and identical stack homes, so both are this family. Measured levers on the java one (one
+compile each, file restored afterwards):
+
+| variant | score |
+|---|---|
+| base | 1306 |
+| prologue re-spelled `alienInstances[arg0].<f>` instead of `s0-><f>` | 1306 |
+| **whole body** re-spelled (every `s0->` -> `alienInstances[arg0].`) | 1306 |
+| `AlienInstance *s0;` moved to the top of the declaration block | 1443 |
+
+- **The "drop the named pointer and index the array directly" lever that converted the case above
+  is byte-neutral here.** When the pointer is a single materialised base (`s0 = &alienInstances[arg0]`,
+  kept in `$s0` on both sides) IDO canonicalises the two spellings. Try it, but do not expect it to
+  break a rotation on its own.
+- **A low recorded marker is not evidence of a near-match.** `func_802D5F28_2B8358` carries
+  `CURRENT(93)` and re-measures **985** - the marker was written against a body that is no longer in
+  the tree. Re-measure before treating a sub-1-point-per-instruction marker on an unlogged function as
+  cheap; the same file also carries `CURRENT(4)` (really 136) and `CURRENT(5)` (a rodata-placement item
+  that scores 5 only because asm-differ cannot see the generated jump table's base).
+- The whole score here sits in the **caller-saved argument bank**: target colours the
+  `D_8014DD50[..].unkC` chain `$a3, $t0, $a2(base), $t1`, ours `$a2, $a3, $t0, $t1`. Every home, the
+  frame and the literals agree, so the stores match and only the bank membership differs - park as
+  allocation (the permuter, not more spellings, is the only lever left).
