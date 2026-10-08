@@ -20,7 +20,7 @@ void func_802DF8DC_1F85EC(u8 arg0, s32 arg1);
 
 /* Alien type handlers defined in the java level overlay (1ED9E0.c). */
 void func_802D7B68_1F0878(u8 arg0);
-void func_802D7FCC_1F0CDC(s32 arg0);
+void func_802D7FCC_1F0CDC(u8 arg0);
 void func_802D8830_1F1540(u8 arg0);
 void func_802D89C4_1F16D4(u8 arg0);
 void func_802D8D14_1F1A24(u8 arg0);

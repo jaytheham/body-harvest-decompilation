@@ -2146,7 +2146,8 @@ typedef struct {
 } Unk800DE840; /* size = 0x1C */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x60];
+	/* 0x00 */ AAA70Unk8014F618Head head;
+	/* 0x30 */ u8 pad30[0x30];
 	/* 0x60 */ u8 unk60;
 	/* 0x61 */ u8 unk61;
 	/* 0x62 */ u8 unk62;
