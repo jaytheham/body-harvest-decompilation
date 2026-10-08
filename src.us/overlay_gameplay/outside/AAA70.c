@@ -2474,7 +2474,17 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(407) - A26: the declaration-position lever still had room. `int new_var;` (A24's named
+// CURRENT(349) - A27: a fresh permuter run warm-started from the 407 body (7.1k iters, -j3
+// --stack-diffs, PRIMITIVE/TEXEL0 base.c enum) found three constructs A25/A26 had not, each measured
+// individually then stacked (base 407): (1) `flatDistI = 0xF; D_8014F618.unk6F += flatDistI;` in the
+// unk70==1 branch -> 362; (2) an empty `if (!D_8004795C) { }` just before the `pulse = (s16)...`
+// clamp -> 402 (the A22 live-range class); (3) `f32 posY;` moved from before `s32 flatDistI;` to after
+// `f32 posZ;` -> 399. Stacked: 1+2 = 357, 1+3 = 354, 1+2+3 = 349. Refuted on top of the winner:
+// chaining the flatDistI product into `flatDistI` instead of `new_var` (352 alone, 404 stacked),
+// `posZ = (f32)new_var2; posY = posZ;` (neutral 407/349), flatDistI/pad0/distScale/pulse-first and
+// new_var-first declaration orders (365/357/413/373/365). Count-exact 446 = 446 (objdump); residual
+// 349 is still allocation (the +8 frame, posX $f16 vs $f0, packed-colour byte order, pulse clamp band).
+// Previous: CURRENT(407) - A26: the declaration-position lever still had room. `int new_var;` (A24's named
 // first product) moves from FIRST in the frame to directly after `f32 posZ;` - 415 -> 407. Its
 // neighbours were re-swept this run (after pad0 415, after posX 415, after posY 415, after flatDistI
 // 407, after distScale 415, after new_var2 415, after pulse 415, first 415), so the gain is the move
@@ -2525,9 +2535,9 @@ void func_800A2B58_B1B08(void)
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	s32 pad0;
 	f32 posX;
-	f32 posY;
 	s32 flatDistI;
 	f32 posZ;
+	f32 posY;
 	int new_var;
 	f32 distScale;
 	s16 new_var2;
@@ -2558,7 +2568,8 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if (D_8014F618.unk70 == 1) {
-		D_8014F618.unk6F += 0xF;
+		flatDistI = 0xF;
+		D_8014F618.unk6F += flatDistI;
 		pulse = D_8014F618.unk6F;
 	} else if (D_8014F618.unk70 == 2) {
 		D_8014F618.unk6F -= 0xF;
@@ -2623,6 +2634,9 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 	D_80052B48.unk2 = D_8014F618.unk6D << 8;
 	D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32)flatDistI);
 
+	if (!D_8004795C)
+	{
+	}
 	pulse = (s16)(s32)((f32)D_8014F618.unk6F + distScale);
 	D_80052B50.unk4 = pulse;
 	D_80052B50.unk2 = pulse;
