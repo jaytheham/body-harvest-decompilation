@@ -133,3 +133,33 @@ split lever (the note `split-assignment-drives-mul-operand-order.md`) measured *
 and `pattern_probe`'s learned transforms were neutral (`swap-commutative` 311). Conclusion: an FP
 temp-bank rotation is cfe-internal the same way an integer one is - when the C's temp names already
 match the roles, do not permute the source; park as allocation.
+
+## A per-case mask temp rotated from the switch dispatch delay slots (78 instr, score 130)
+
+`func_8007899C_160A5C` (`src.us/overlay_gameplay/inside/158330.c`, 78 instructions) is a four-case
+`switch` over `D_800E66A8[arg1].unk8` that permutes the bits of `arg0` differently per case. It is a
+fresh, measured body (no `// CURRENT(n)` marker) and unwraps to **130** with `ins_diff -noregs`
+**78 = 78, delta +0** - the entire residual is register allocation. Reading the two listings
+index-for-index shows the shape is exact: two `b`-delay-slot `nop`s, both `andi` chains, the frame
+`0x8` with `ret` homed at `0x7($sp)`, and every branch target agree.
+
+The rotation is concentrated in the **dispatch delay slots**. IDO hoists each case's `arg0 & 4` mask
+into the delay slot of that case's `beq $v0,$at` compare, and colours them in creation order:
+
+    target:  case1 mask $t7   case2 mask $t9   case3 mask $t1
+    ours:    case1 mask $t7   case2 mask $t4   case3 mask $t1
+
+The single wrong colour (`t4` for case 2) then cascades through the case-1 and case-2 bodies
+(14 register rows total; case 3's body is byte-identical). Note the rotated temporary is **reused
+later within the same case**, so it is not a liveness conflict - both colourings are valid, and the
+choice is cfe-internal.
+
+**38 measured variants, floor 130** (control = the committed body, reproduced 130 exactly, so the
+harness was live; a fresh `.o` per variant). Declaration site (`mask2`/`mask3` block-scoped vs
+function-scope) **neutral**; the two-statement `mask = arg0; mask &= 4;` vs the one-statement
+`mask = arg0 & 4;` **210**; a named `mask1` in case 1 (uniform with case 2/3) 230; `s32`/`s8`/`u8`
+masks 210 / 1185 / 210; inline `if (arg0 & 4)` in all three cases 210; swapping the case 2/3 bodies
+240; the switch selector cast `(u8)`, stored in a local, or `& 0xFF` - all **130 neutral**; a
+`default: break;` and `mask != 0` forms neutral; `case 0` in braces neutral; dropping every `& 0xFF`
+160; making case 1 uniform with `& 0xFF` 230; `ret` as `s32`/`int` 2965; the four `if`s as compound
+`|=` 160. No source shape moves the dispatch mask's colour.
