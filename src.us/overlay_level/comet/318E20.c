@@ -1568,11 +1568,13 @@ void func_802D6770_31A8C0(void) {
 
 #ifdef NON_MATCHING
 // CURRENT(41877)
+// Comet starting cutscene - Alpha-1 landing cutscene with buildinginstance moved and vehicleinstance creation
 s32 func_802D67A8_31A8F8(void) {
 	s32 sp4C[3];
 	u8 sp58[4];
 	s16 sp5C[3];
 	
+	// 3 jet stream effects for alpha-1 landing
 	sp4C[0] = D_802E4F88_3290D8[0];
 	sp4C[1] = D_802E4F88_3290D8[1];
 	sp4C[2] = D_802E4F88_3290D8[2];
@@ -1580,6 +1582,7 @@ s32 func_802D67A8_31A8F8(void) {
 	D_80157F96 = 1;
 	D_8015EA2C = 0.0f;
 	
+  // cutscene would be skippable, but D_80031B50 is never set to 1 in finished game
 	if ((currentControllerStates[0].button & 0x9000) && (D_80157F8C > 0) && (D_80031B50_32750 == 1)) {
 		D_80159DE2 = 0;
 		buildingInstances[D_80159DDF].yCoord = func_800B84D0_C7480(buildingInstances[D_80159DDF].xCoord, buildingInstances[D_80159DDF].zCoord) >> 8;
@@ -1712,7 +1715,7 @@ s32 func_802D67A8_31A8F8(void) {
 		break;
 	
 	case 4:
-		D_80157FA4->yCoord = 0x7D00;
+		D_80157FA4->yCoord = 0x7D00; // alpha-1 building isnt despawned, but actually moved out of the way to height 32000 and still exists near the top of the map
 		D_80157FA4->xCoord += 0x2710;
 		if (D_80157F8E == 0) {
 			s16 sp6A = D_80157FA4->zCoord;

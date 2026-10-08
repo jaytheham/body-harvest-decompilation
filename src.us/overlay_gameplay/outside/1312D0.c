@@ -663,6 +663,7 @@ void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 		}
 	}
 }
+
 // CURRENT(13067)
 #ifdef NON_MATCHING
 void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, VehicleInstance *arg5) {

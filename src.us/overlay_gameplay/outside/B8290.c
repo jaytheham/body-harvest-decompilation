@@ -628,25 +628,25 @@ s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
 	return 0;
 }
 
-// AI - Reset on fall
+// human behavior case 28
 void func_800AB32C_BA2DC(u8 arg0) {
-	if (D_80222A70 >= alienInstances[arg0].unk2) { // if height is now underwater..
-		func_80088760_97710(&alienInstances[arg0]); // alien dies?
+	if (D_80222A70 >= alienInstances[arg0].unk2) { // if human is in water
+		func_80088760_97710(&alienInstances[arg0]); // human dies
 		alienInstances[arg0].unk2C = 0xA;
 	}
 }
 
-// AI - Trigger behavior state
+// human behavior case 27
 void func_800AB390_BA340(u8 arg0) {
 	if (func_80080840_8F7F0(arg0, 0x19)) {
 		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
 		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
 		alienInstances[arg0].unk24 = 0x1C;
 	}
-	func_800AB32C_BA2DC(arg0);
+	func_800AB32C_BA2DC(arg0); // human behavior case 28
 }
 
-// AI - Check escape vehicle proximity
+// human behavior case 20 used for America 1 school/church mission- distance check to follow target vehicleinstance13 (Mr Lolly!)
 void func_800AB408_BA3B8(u8 arg0) {
 	s32 temp_a0;
 	s32 temp_v1;
@@ -654,17 +654,17 @@ void func_800AB408_BA3B8(u8 arg0) {
 
 	temp_v0 = &alienInstances[arg0];
 	temp_v0->unk48 = 0xC0;
-	if (*(s16*) ((u8*) temp_v0 + 0x38) != 0x64) {
+	if (*(s16*) ((u8*) temp_v0 + 0x38) != 0x64) { // only follow Mr Lolly if not within range of the church
 		temp_v1 = vehicleInstances[13].unk0 - temp_v0->unk0;
 		temp_a0 = vehicleInstances[13].unk4 - temp_v0->unk4;
 		if (((temp_v1 * temp_v1) + (temp_a0 * temp_a0)) < 0x40000) {
-			func_800AD814_BC7C4(arg0, 0xB, 0xD, *((u8*) temp_v0 + 0x3F));
+			func_800AD814_BC7C4(arg0, 0xB, 0xD, *((u8*) temp_v0 + 0x3F)); // if within 512 units of Mr Lolly, change behavior
 		}
 	}
 }
 
 // AI - Check vehicle follow range
-// human behavior - case 12
+// human behavior - case 12 - if near Mr Lolly, do nothing
 void func_800AB4B4_BA464(u8 arg0) {
 	VehicleInstance *type;
 	s32 dx, dz, ndx, ndz;
@@ -682,12 +682,12 @@ void func_800AB4B4_BA464(u8 arg0) {
 			return;
 		}
 	}
-	alienInstances[arg0].unk24--;
+	alienInstances[arg0].unk24--; // moves to case 11
 	alienInstances[arg0].unk48 = 0xC0;
 	
 }
 
-// AI - Acquire target position
+// human behavior case 11 - following Mr Lolly
 void func_800AB570_BA520(u8 arg0)
 {
 	s16 targetX;
@@ -708,6 +708,7 @@ void func_800AB570_BA520(u8 arg0)
 		alienInstances[arg0].unk24++;
 		return;
 	}
+  // if within range of the church (building 0x64) set building as the target
 	func_8011B3F0_12A3A0(0x64, &targetX, &targetY, &targetZ);
 	dx = alienInstances[arg0].unk0 - targetX;
 	dz = alienInstances[arg0].unk4 - targetZ;
@@ -718,7 +719,7 @@ void func_800AB570_BA520(u8 arg0)
 			 ? -dx < dx ? dx : -dx
 		 : -dz < dz ? dz
 					: -dz;
-	if (dx < 0x4B0)
+	if (dx < 0x4B0) // if within 1200 units of the church (about 4-5 tiles)
 	{
 		alienInstances[arg0].unk24 = 0x14;
 		pad = 0x64;
@@ -779,7 +780,6 @@ void func_800AB730_BA6E0(u8 arg0) {
 	alienInstances[arg0].unk48 = 0xC0;
 }
 
-// AI - Process state input
 // Human behavior - called for case 5, 7, 9, 13
 void func_800AB80C_BA7BC(u8 arg0) {
 	s32 dummy1, dummy2, dummy3, dummy4;
@@ -799,7 +799,6 @@ void func_800AB80C_BA7BC(u8 arg0) {
 
 // CURRENT(7007)
 #ifdef NON_MATCHING
-// AI - Follow squad leader
 // human behavior - for case 3 when captured by HCU
 void func_800AB8CC_BA87C(u8 arg0) {
 	AlienInstance *inst = &alienInstances[arg0];
@@ -887,7 +886,6 @@ void func_800ABC2C_BABDC(u8 arg0) {
 
 // CURRENT(20)
 #ifdef NON_MATCHING
-// AI - Dispatch behavior states
 // Human behaviors - human's unk24 determines case
 s32 func_800ABCC8_BAC78(u8 arg0) {
 	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
@@ -925,7 +923,7 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 				break;
 
 			case 20:
-				func_800AB408_BA3B8(arg0);
+				func_800AB408_BA3B8(arg0); // follow Mr Lolly
 				break;
 
 			case 27:
@@ -1368,7 +1366,6 @@ void func_800ACB3C_BBAEC(u8 arg0) {
 	}
 }
 
-// AI - Update building-spawned AI
 // Human behavior- alienspecs unk4C
 void func_800ACC5C_BBC0C(u8 arg0)
 {
@@ -1552,22 +1549,22 @@ void func_800AD0F0_BC0A0(u8 arg0) {
 	}
 }
 
-// AI - Spawn at building
+// Spawn human from building - generic?
 u8 func_800AD240_BC1F0(u8 arg0)
 {
 	s16 sp2E;
 	s16 sp2C;
 	s16 sp2A;
 	u8 alienIdx;
-	if ((buildingInstances[arg0].unk7 == 0) || ((currentLevel == 3) && (arg0 == 0x3E)))
+	if ((buildingInstances[arg0].unk7 == 0) || ((currentLevel == 3) && (arg0 == 0x3E))) // if spawned from school in America 1, return (special handling in func_800AD3BC )
 	{
 		return 0xFF;
 	}
 	func_8011B454_12A404(arg0, &sp2E, &sp2A, &sp2C);
-	alienIdx = func_8007956C_8851C(1);
+	alienIdx = func_8007956C_8851C(1); // spawn enemy type 0x1 - human
 	if (alienIdx != 0xFF)
 	{
-		buildingInstances[arg0].unk7--;
+		buildingInstances[arg0].unk7--; // decrease building's "humans inside" value
 
 		alienInstances[alienIdx].unk0 = sp2E;
 		alienInstances[alienIdx].unk4 = sp2C;
@@ -1578,16 +1575,16 @@ u8 func_800AD240_BC1F0(u8 arg0)
 
 		func_8011C680_12B630(alienIdx, buildingInstances[arg0].unk11);
 		func_800AD0F0_BC0A0(alienIdx);
-		if (currentLevel == 4 && D_80047F94 == 0 && func_8000726C_7E6C(0xB) == 0 && func_8000726C_7E6C(0xC) == 0)
+		if (currentLevel == 4 && D_80047F94 == 0 && func_8000726C_7E6C(0xB) == 0 && func_8000726C_7E6C(0xC) == 0) // if Siberia something something
 		{
-			func_800AD814_BC7C4(alienIdx, 1, 0, 0);
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0); // case 1 - make this human a zombie
 		}
 	}
 	return alienIdx;
 }
 
 // https://decomp.me/scratch/SVfUg
-// AI - Spawn human from building
+// Spawn human from building
 s32 func_800AD3BC_BC36C(u8 arg0)
 {
 	s16 xPos;
@@ -1596,10 +1593,10 @@ s32 func_800AD3BC_BC36C(u8 arg0)
 	u8 alienIdx;
 	u8 targetBuilding;
 	func_8011B454_12A404(arg0, &xPos, &yPos, &zPos);
-	alienIdx = func_8007956C_8851C(1) & 0xFF;
+	alienIdx = func_8007956C_8851C(1) & 0xFF; // spawn type 0x1 - human
 	if (alienIdx != 0xFF)
 	{
-		buildingInstances[arg0].unk7--;
+		buildingInstances[arg0].unk7--; // decrease this building instance's "humans inside" value
 
 		alienInstances[alienIdx].pad46 = arg0;
 		alienInstances[alienIdx].unk0 = xPos;
@@ -1615,14 +1612,14 @@ s32 func_800AD3BC_BC36C(u8 arg0)
 			alienInstances[alienIdx].unk38 = targetBuilding;
 			alienInstances[alienIdx].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
 		}
-		if (currentLevel == 3 && arg0 == 0x3E)
+		if (currentLevel == 3 && arg0 == 0x3E) // if spawned from America 1 school building
 		{
-			D_8004816C++;
-			func_800AD814_BC7C4(alienIdx, 0x14, 0, 0);
+			D_8004816C++; // increase human tracker value for the school/church mission
+			func_800AD814_BC7C4(alienIdx, 0x14, 0, 0); // human behavior = case 20 (follow Mr Lolly etc)
 		}
-		if ((currentLevel == 4 && func_8000726C_7E6C(0xB) == 0) && func_8000726C_7E6C(0xC) == 0)
+		if ((currentLevel == 4 && func_8000726C_7E6C(0xB) == 0) && func_8000726C_7E6C(0xC) == 0) // if Siberia something something
 		{
-			func_800AD814_BC7C4(alienIdx, 1, 0, 0);
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0); // case 1 - make this human a zombie
 		}
 	}
 	return alienIdx;
@@ -1802,7 +1799,6 @@ void func_800ADAF8_BCAA8(u8 arg0) {
 	}
 }
 
-// AI - Combat AI state machine 
 // Black Adam's behaviors - func is named at unk48 on his enemyspecs table (entry 0x12 in all levels)
 // unk24 on his enemyinstance determines case - running, shooting at you, kneeling on death, etc
 void func_800ADB4C_BCAFC(u8 arg0) {

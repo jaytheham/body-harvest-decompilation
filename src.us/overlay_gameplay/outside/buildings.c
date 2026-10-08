@@ -1965,6 +1965,7 @@ void func_8011A2A0_129250(void) {
 #endif
 
 // CURRENT(21919)
+// building instance updater
 #ifdef NON_MATCHING
 void func_8011A604_1295B4(void) {
 	s32 i;
@@ -2039,9 +2040,10 @@ void func_8011A604_1295B4(void) {
 		D_8015EB78 -= 1;
 	}
 
+	// logic for triggering Atlantis raising?
 	if ((currentLevel == 1) && (func_8000726C_7E6C((u64) 0x1A) != 0) && (func_8000726C_7E6C((u64) 0x19) != 0) &&
 		(func_8000726C_7E6C((u64) 0x17) == 0)) {
-		func_802D4CD0_18D7E0(0x16, 0);
+		func_802D4CD0_18D7E0(0x16, 0); // send case 0x16 to mission/cutscene dispatcher - Atlantis raising cutscene
 		func_800072CC_7ECC((u64) 0x17);
 	}
 
@@ -2144,7 +2146,9 @@ void func_8011A604_1295B4(void) {
 					if (model == D_C012598) {
 						func_8012D84C_13C7FC(currentLevel);
 					}
-				} else if (currentLevel == 5) { // on Comet spawn various ammo pickups depending on building type destroyed
+
+				// on Comet spawn various ammo pickups depending on building type destroyed
+				} else if (currentLevel == 5) {
 					if (model == D_D011660) {
 						func_800A8A68_B7A18(inst->xCoord, inst->yCoord, inst->zCoord, 0x1A);
 					} else if (model == D_D00C4B8) {
@@ -2213,10 +2217,12 @@ void func_8011A604_1295B4(void) {
 			inst->state = 0;
 		}
 
+		// spawn humans from building
 		if ((((u32) inst->unk8 >> 12) & 0x20) && (inst->unk7 != 0) && (((u32) D_80052A8C % 12U) == 0)) {
 			func_800AD3BC_BC36C(entryId & 0xFF);
 		}
 
+		// building specific sound effects?
 		model = *(u8 **) type;
 		if ((currentLevel == 3) && (model == D_B007F80)) {
 			xPos = inst->xCoord;
@@ -2571,12 +2577,13 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #endif
 
 // CURRENT(55)
+// building on fire but not destroyed- called for Pollstura Suburbs fire mission/event
 #ifdef NON_MATCHING
 void func_8011BF7C_12AF2C(u8 arg0) {
 	BuildingInstance *inst = &buildingInstances[arg0];
 	BuildingType *type = &buildingTypes[inst->buildingType];
 
-	if ((s8)inst->hitPoints <= 0) {
+	if ((s8)inst->hitPoints <= 0) { // only if building isn't already destroyed
 		return;
 	}
 	if (!((inst->unk8 >> 12) & 1)) {
@@ -2585,6 +2592,7 @@ void func_8011BF7C_12AF2C(u8 arg0) {
 	if ((inst->unk8 >> 12) & 0x10) {
 		return;
 	}
+	// fire/smoke effect on top of building?
 	func_800D249C_E144C(
 		inst->xCoord,
 		(s16)(s32)(inst->yCoord + type->unk14 * D_80144FA0_153F50[0]),
@@ -2595,7 +2603,7 @@ void func_8011BF7C_12AF2C(u8 arg0) {
 		(s32)arg0,
 		0
 	);
-	inst->hitPoints = 1;
+	inst->hitPoints = 1; // building HP to 1 but won't explode during the mission
 	inst->unk8 = (((inst->unk8 >> 12 | 0x10) ^ (inst->unk8 >> 12)) << 12) ^ inst->unk8;
 }
 #else

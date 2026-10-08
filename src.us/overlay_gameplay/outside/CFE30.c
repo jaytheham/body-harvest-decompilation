@@ -1059,6 +1059,7 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 }
 
 // CURRENT(0)
+// effect type 1
 void func_800C22EC_D129C(u8 arg0) {
 	s16 unitId;
 	s16 nextUnit;
@@ -1324,6 +1325,7 @@ s32 func_800C2D50_D1D00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5)
 	return effectId;
 }
 
+// effect type 2
 void func_800C2EE4_D1E94(u8 arg0) {
 	s16 currentUnitId;
 	s16 nextUnitId;
@@ -2215,6 +2217,7 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #endif
 
 // CURRENT(4947)
+// effect type 0
 #ifdef NON_MATCHING
 void func_800C5894_D4844(u8 arg0) {
 	Unk801541F8Entry *sp3C;
@@ -3225,6 +3228,7 @@ void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 	D_80154318[idx].unk10 = D_80154318[D_80154088[arg3].unk6].unk10;
 }
 
+// effect type 3
 void func_800C8F5C_D7F0C(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
@@ -3323,7 +3327,7 @@ void func_800C927C_D822C(u8 arg0) {
 	D_80156EDA_Draw += effect->unk4 * 4;
 }
 
-
+// water surface splash effect generator?
 void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	s32 pad;
 	s16 sp1A;
@@ -3556,6 +3560,7 @@ void func_800C978C_D873C(void) {
 
 // CURRENT(6335)
 // CURRENT(3380)
+// spawn random water particle?
 #ifdef NON_MATCHING
 void func_800CA1B0_D9160(u8 arg0) {
 	s32 effect;
@@ -3715,6 +3720,7 @@ u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 }
 
 /* CURRENT(3911) */
+// effect type 4 - update water spray particles?
 #ifdef NON_MATCHING
 void func_800CA848_D97F8(u8 arg0) {
 	s16 currentUnitId;
@@ -3740,7 +3746,7 @@ void func_800CA848_D97F8(u8 arg0) {
 		while (1) {
 			current = &D_80154318[currentUnitId];
 			currentBytes = (Unk80154318Sub *)&current->unk8;
-			if (D_80222A70 >= currentBytes->unk2) {
+			if (D_80222A70 >= currentBytes->unk2) { // if particle reaches current water height
 				func_800DEF2C_EDEDC(currentBytes->unk0, (s16)(D_80222A70 + 3), currentBytes->unk4, 0x32, 1);
 				func_800C9530_D84E0(currentBytes->unk0, currentBytes->unk4, (u16)current->unk2, rootBytes[6],
 					rootBytes[7], rootBytes[8], currentBytes->unk9);
@@ -4559,7 +4565,7 @@ void func_800CD0B0_DC060(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD0B0_DC060.s")
 #endif
 
-// Create jet stream effect?
+// Create jet stream effect? - used by Alpha 1 building takeoff/landing, some enemy visual effects
 u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) {
 	Unk80154318Entry *entry;
 	s32 temp_v0;
@@ -4618,6 +4624,7 @@ void func_800CD390_DC340(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
+// effect type 5
 // CURRENT(3159)
 void func_800CD42C_DC3DC(s32 arg0) {
 	Unk801541F8Entry *effect;
@@ -4919,6 +4926,7 @@ s32 func_800CE100_DD0B0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 }
 
 // CURRENT(5334)
+// effect type 6
 #ifdef NON_MATCHING
 void func_800CE1C0_DD170(u8 arg0) {
 	s16 sp74;
@@ -6088,6 +6096,7 @@ void func_800D1A1C_E09CC(u8 arg0) {
 }
 
 // CURRENT(3721)
+// effect type 7
 #ifdef NON_MATCHING
 void func_800D1A94_E0A44(u8 arg0) {
 	Unk80154318Sub *sp34;
@@ -7516,6 +7525,7 @@ void func_800D6084_E5034(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5
 	}
 }
 
+// effect type 8
 void func_800D6140_E50F0(u8 arg0) {
 	Unk801541F8Entry *sfx = &D_80154088[arg0];
 	s16 next = sfx->unk6;
@@ -7807,6 +7817,7 @@ void func_800D6C18_E5BC8(s16 arg0, u8 arg1) {
 	}
 }
 
+// effect type 9
 void func_800D6EAC_E5E5C(u8 arg0) {
 	s16 next;
 	s16 *entryData;
@@ -9067,6 +9078,7 @@ void func_800DAA1C_E99CC(u8 arg0) {
 }
 
 /* CURRENT(2700) */
+// particle effect dispatcher/updater
 #ifdef NON_MATCHING
 void func_800DABBC_E9B6C(void) {
 	s32 i;
@@ -9074,7 +9086,7 @@ void func_800DABBC_E9B6C(void) {
 	u8 type;
 	s32 tmp2;
 
-	for (i = 0; i < 0x1E; i = (i + 1) & 0xFF) {
+	for (i = 0; i < 0x1E; i = (i + 1) & 0xFF) { // iterate through effect pool with 30 slots
 		if ((type = D_80154088[i].unk0) < 10) {
 			switch (type) {
 				case 0:
@@ -9136,7 +9148,7 @@ void func_800DABBC_E9B6C(void) {
 
 	i = 0;
 	while (1) {
-		if ((type = D_801541F8[i].unk0) < 0x20) {
+		if ((type = D_801541F8[i].unk0) < 0x20) { // secondary effect pool?
 			switch (type - 10) {
 				case 0:
 					func_800C3E2C_D2DDC();

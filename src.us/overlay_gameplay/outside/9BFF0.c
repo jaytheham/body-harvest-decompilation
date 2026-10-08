@@ -982,8 +982,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	}
 }
 
-// AI - Wrapper update with target selection
-// HCU behavior - specs unk4C - used in all levels incl Comet
+// HCU behavior/update - specs.unk4C - used in all levels incl Comet
 void func_8008E0D8_9D088(u8 arg0)
 {
 	func_8008DEF4_9CEA4(arg0);
@@ -994,8 +993,7 @@ void func_8008E0D8_9D088(u8 arg0)
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
 }
 
-// AI - Update with player interaction check
-// HCU behavior - specs unk48 - used in all levels incl Comet
+// HCU behavior/update specs.unk48 - used in all levels incl Comet
 void func_8008E16C_9D11C(u8 arg0)
 {
 	s32 result;
@@ -3025,12 +3023,12 @@ void func_800920C0_A1070(u8 arg0)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_800920C0_A1070.s")
 #endif
 
-// AI - Spawn a decoy/statue alien
+// Spawn/allocate Doodlebug/Torabug
 s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 {
 	u8 result;
 	AlienInstance *ptr;
-	result = func_8007956C_8851C(0xA);
+	result = func_8007956C_8851C(0xA); // spawn 0xA = Doodlebug/Torabug depending on level
 	if (result != 0xFF)
 	{
 		ptr = &alienInstances[result];
@@ -3044,7 +3042,7 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 }
 
 // https://decomp.me/scratch/Eb0Us
-// AI - Spawn 6 statue/decoration aliens
+// spawn 5 Doodlebugs to attack bridge during Greece ambulance mission
 void func_80092ADC_A1A8C(void)
 {
 	s32 i;
@@ -3063,6 +3061,7 @@ void func_80092ADC_A1A8C(void)
 }
 
 // AI - Advance patrol waypoint
+// set target for Doodlebug bridge attack in Greece?
 void func_80092BBC_A1B6C(u8 arg0)
 {
 	s8 x = 0;
