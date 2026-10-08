@@ -4304,11 +4304,9 @@ void func_800CC090_DB040(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC090_DB040.s")
 #endif
 
-// CURRENT(20)
-#ifdef NON_MATCHING
 s32 func_800CC7B0_DB760(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	struct { s16 pad; s8 value; } zVelocity;
-	EffectSparkState *spark;
+	s32 randomSize;
 	s16 unitId;
 	s8 xVelocity;
 	u16 randomAlpha;
@@ -4317,16 +4315,15 @@ s32 func_800CC7B0_DB760(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 ar
 	unitId = func_800C17B4_D0764(6, 1);
 	if (unitId != -3) {
 		D_80154318[unitId].unk2 = arg0;
-		spark = (EffectSparkState *)&D_80154318[unitId].unk8;
-		spark->x = (func_800038E0_44E0() % arg1) + arg3 - (arg1 / 2);
-		spark->y = (func_800038E0_44E0() % arg1) + arg4 - (arg1 / 2);
-		spark->z = (func_800038E0_44E0() % arg1) + arg5 - (arg1 / 2);
-		spark->r = 0xFF;
-		spark->g = 0xFF;
-		spark->b = 0xFF;
-		spark->width = arg1;
-		spark->phase = func_800038E0_44E0() % 8;
-		spark->lifetime = ((u8 *)&arg2)[3];
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->x = (func_800038E0_44E0() % arg1) + arg3 - (arg1 / 2);
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->y = (func_800038E0_44E0() % arg1) + arg4 - (arg1 / 2);
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->z = (func_800038E0_44E0() % arg1) + arg5 - (arg1 / 2);
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->r = 0xFF;
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->g = 0xFF;
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->b = 0xFF;
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->width = arg1;
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->phase = func_800038E0_44E0() % 8;
+		((EffectSparkState *)(s32)D_80154318[unitId].payload)->lifetime = ((u8 *)&arg2)[3];
 		xVelocity = (func_800038E0_44E0() % 0x46) + 0x37;
 		zVelocity.value = (func_800038E0_44E0() % 0x46) + 0x37;
 		if ((func_800038E0_44E0() % 0x14) < 0xA) {
@@ -4337,14 +4334,12 @@ s32 func_800CC7B0_DB760(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 ar
 		}
 		randomYVelocity = func_800038E0_44E0();
 		randomAlpha = func_800038E0_44E0();
+		randomSize = func_800038E0_44E0();
 		func_800C541C_D43CC(arg3, arg4, arg5, xVelocity, (randomYVelocity % 60) + 0x41, zVelocity.value, 0x14, (randomAlpha % 60) + 0x46,
-			(func_800038E0_44E0() % 4) + 4, 4, 0xC8, 0xC8, 0xFF);
+			(randomSize % 4) + 4, 4, 0xC8, 0xC8, 0xFF);
 	}
 	return unitId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC7B0_DB760.s")
-#endif
 
 void func_800CCAD4_DBA84(s16 arg0, s16 arg1, s16 arg2) {
 	s32 temp_v0;
