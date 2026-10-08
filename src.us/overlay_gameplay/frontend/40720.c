@@ -6677,13 +6677,10 @@ void func_80080F8C_5143C(AnimChannelState *arg0, s16 *arg1, s32 arg2)
   }
 }
 
-#ifdef NON_MATCHING
 void func_80081058_51508(void) {
 	Vtx *vtx;
-	Vtx **buffer;
 
-	buffer = &D_8005BB34;
-	vtx = *buffer;
+	vtx = D_8005BB34;
 	vtx[0].v.ob[0] = 0;
 	vtx[0].v.ob[1] = 0;
 	vtx[0].v.ob[2] = 0;
@@ -6749,15 +6746,12 @@ void func_80081058_51508(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_LINE, G_RM_AA_ZB_XLU_LINE2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(*buffer), 10, 0);
-	*buffer += 6;
+	gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB34), 10, 0);
+	D_8005BB34 += 6;
 	gSPLineW3D(D_8005BB2C++, 0, 1, 10, 0);
 	gSPLineW3D(D_8005BB2C++, 2, 3, 10, 0);
 	gSPLineW3D(D_8005BB2C++, 4, 5, 10, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081058_51508.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(31401)
