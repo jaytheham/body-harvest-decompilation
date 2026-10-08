@@ -46,3 +46,41 @@ instruction is added or removed, look for a named local being used as an array s
 subscript moves the value from a variable register into the temp band.
 
 Confirmed both ways: `bh.sh check func_800FD510_10C4C0` → 0 and `bh.sh gate` → `build/bh.us.z64: OK`.
+
+## Inverse instance: a *redundant but used* temp charges a frame slot too (`func_802DBCB0_1F49C0`)
+
+**Function**: `func_802DBCB0_1F49C0` (`src.us/overlay_level/java/1ED9E0.c`, 75 instr, no marker).
+**Symptom**: everything matched register-for-register (`allblocks ... delta +0`, 75 = 75) but the
+score sat at **58** and asm-differ's table read identically in both columns. The tell is in the raw
+table's `i`/`s` markers only: target frame `-0x28`, ours `-0x30`, the incoming-arg home
+`sw a0,0x28(sp)` vs `0x30(sp)` and the cfe pointer spill `0x20(sp)` vs `0x24(sp)`.
+
+**Cause**: a declared temp holding a *sub-expression used twice* still gets a home:
+
+```c
+u32 temp_t5;
+...
+temp_t5 = ((u32) buildingInstances[new_var].unk8) >> 0xC;
+if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) { ... }
+```
+
+IDO cannot CSE the two reads of a multi-use named local into a temp band, so it homes `temp_t5` and
+the frame grows by 8 bytes. Inlining the expression at both uses
+
+```c
+if (((((u32) buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) ||
+    (((u32) buildingInstances[new_var].unk8 >> 0xC) & 4)) { ... }
+```
+
+keeps the value in a temp, restores the frame, and takes **58 -> 0** on the first compile
+(`gate` PASSED). Two further levers were required to *reach* the 58, both from the matched same-file
+twin `func_802DBDDC_1F4AEC`: (i) reading the building index through a declared `u8 new_var` (the
+twin's own spelling) rather than inlining `alienInstances[arg0].unk38` — 163 -> 58; and (ii) flipping
+the compare operands to `(arg0 & 0x3C) == (D_80052A8C & 0x3C)` — 198 -> 163. Measured negatives:
+declaration-order permutations of the three locals are all **neutral** (temps are not homed by
+declaration order), and `temp_v1` (the uncached `unk20` read) is fine to keep.
+
+**Rule**: a declared temp with **two or more uses** is charged a stack home just like a named local;
+when a residual is pure frame size with an otherwise identical instruction stream, grep the body for
+a temp used more than once and inline it. This is the same mechanism as the phantom home above, with
+the local *live* rather than dead.

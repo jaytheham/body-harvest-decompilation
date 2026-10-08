@@ -1880,14 +1880,15 @@ void func_802D769C_2B9ACC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D769C_2B9ACC.s")
 #endif
 
+// CURRENT(60)
 #ifdef NON_MATCHING
 void func_802D77BC_2B9BEC(void) {
 	u16 temp;
 
 	func_80013468_14068(0xC);
+	temp = *(u16 *)&buildingInstances[150].state;
 	buildingInstances[150].door1InteriorId = 0x6E;
-	temp = buildingInstances[150].state;
-	buildingInstances[150].state = (u16) ((temp & 0xF03F) | 0x400);
+	*(u16 *)&buildingInstances[150].state = (temp & 0xF03F) | 0x400;
 	D_8014D17C = 0;
 	func_80007410_8010(&func_802D75E4_2B9A14);
 	func_802D769C_2B9ACC();
@@ -3909,14 +3910,14 @@ void func_802DD240_2BF670(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD240_2BF670.s")
 #endif
 
-// CURRENT(133)
+// CURRENT(99)
 #ifdef NON_MATCHING
 s32 func_802DD408_2BF838(u8 arg0, u32 arg1) {
-	s16 sp30;
 	s32 diff_x;
 	s32 diff_z;
 	s32 result_heading;
 	s32 sp30_heading;
+	s16 sp30;
 
 	diff_x = D_80052B34->unk0 - alienInstances[arg0].unk0;
 	diff_z = D_80052B34->unk4 - alienInstances[arg0].unk4;
@@ -3937,7 +3938,7 @@ s32 func_802DD408_2BF838(u8 arg0, u32 arg1) {
 		result_heading = -0x8000 - result_heading;
 	}
 
-	if (result_heading < (s32)(u16)arg1) {
+	if (result_heading < (s32)(((((u16)arg1 & 0xFFFFu) & 0xFFFFu) & 0xFFFFu) & 0xFFFFu)) {
 		return 1;
 	}
 	return 0;

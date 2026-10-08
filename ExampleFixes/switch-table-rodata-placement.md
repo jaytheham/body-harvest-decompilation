@@ -35,3 +35,50 @@ Relabeling the cases while preserving the order of their bodies fixed the compil
 The prologue dispatch (`sltiu`/`beqz`/`sll`/`lui at,%hi(jtbl)`/`addu at,at,t6`/`lw`/`jr`), all fourteen case bodies and the shared `move v0,zero`/`lw ra,0x14`/`addiu sp,sp,0x18` epilogue match exactly; `ins_diff.py -noregs` reports 72 vs 72, delta +0.
 
 The target table sits inside a generated-table cluster (`jtbl_800AE4E0_7E990` at ROM 0x7E990, then `D_800AE518_7E9C8`, then `jtbl_800AE528_7E9D8` — that last one belongs to `func_800731A8_43658`, still unmatched); ours lands beside a *different* cluster (0x800AEC40, near `jtbl_800AEC88_7F138`). This is the same diagnosis as `func_80086D88_16EE48`: the TU's compiler-generated tables can only land at the target addresses once the co-tenant switch functions are compiled too, so the function is a **batch dependency**, not solo work. Add `func_80070270_40720` to the batch list — it depends on `func_800731A8_43658` (itself a DESIRED "High" entry) and the file's other switch owners. Before sinking attempts into such a body, check whether the only diff is the `lw %lo(jtbl)` immediate.
+## Third and fourth instances: deleting the placeholder moves the table the *wrong* way (worker B, seam run 19)
+
+`func_802D9B08_2BBF38` (siberia `2B7100.c`, 61 instr, `// CURRENT(5)`) and `func_80079330_1613F0`
+(`overlay_gameplay/inside/158330.c`, `// CURRENT(5)`) are the same class as the two above, and each is
+**exactly one differing row** - the generated tables
+
+## Third and fourth instances: deleting the placeholder moves the table the *wrong* way (worker B, seam run 19)
+
+`func_802D9B08_2BBF38` (siberia `2B7100.c`, 61 instr, `// CURRENT(5)`) and `func_80079330_1613F0`
+(`overlay_gameplay/inside/158330.c`, `// CURRENT(5)`) are the same class as the two above, and each is
+**exactly one differing row** - the generated table's base address:
+
+    func_802D9B08: target lw t5,0x300c(at) -> 0x802E300C ; ours 0x3058 -> 0x802E3058
+    func_80079330: target lw t3,0x4b78(at) -> 0x800A4B78 ; ours 0x4bb0 -> 0x800A4BB0
+
+Measured, on `func_802D9B08_2BBF38`: **deleting the `jtbl_802E300C_2C543C[13]` placeholder made the
+score worse (5 -> 10)**, not better - the generated table moved but not to the target address, and a
+second row diverged. The target-vs-ours delta (0x4C on siberia, 0x38 on 158330) equals exactly the
+declared rodata block sitting between the two table addresses (the placeholder plus the doubles/floats
+that follow it), which is the positive evidence for the batch diagnosis: the generated table can only
+land at the target address once every datum between is itself compiler-generated. Confirm by summing
+the declared items in `asm/data/<module>/<file>.rodata.s` over that address span before spending a
+body attempt. Do **not** re-tread placeholder deletion on these two.
+
+## Fifth instance (worker B, seam run 38): the delta equals the declared block, exactly
+
+`func_802D7980_1F0690` (java `1ED9E0.c` 1347, 122 instr, `// CURRENT(5)`) is the same class, and it
+confirms the arithmetic rule above on a clean measurement:
+
+    target 1f06b4: lw t6,%lo(jtbl_802E0F20_1F9C30)($at) -> 0x802E0F20
+    ours   1f06b4: lw t6,0xfa8($at)                     -> 0x802E0FA8   (0x88 later, placeholder kept)
+    ours   1f06b4: lw t6,0xf70($at)                     -> 0x802E0F70   (0x50 later, placeholder deleted)
+    ours   1f06b4: lw t6,0xf70($at)                     -> 0x802E0F70   (0x50 later, consts moved after the function)
+
+The 0x50 is exactly the eleven declared `const f64/f32` initialisers sitting between the target table
+and the end of the file's rodata (`D_802E0F58_1F9C68` .. `D_802E0FA0_1F9CB0`, 76 bytes aligned to 80),
+and the 0x88 includes the 0x38 placeholder as well. Two negative results worth not repeating:
+deleting the placeholder and **moving the trailing const declarations to after the function** (to test
+a source-order hypothesis) both leave the address unchanged - IDO emits declared data in source order
+first and appends every generated table after **all** of it, so the table's position is independent of
+where the switch's function sits in the file. The only lever that moves it is a co-tenant datum being
+compiler-generated rather than declared, i.e. the batch dependency.
+
+Check the class **before** spending attempts: `grep -l "jtbl_" asm/nonmatchings/<module>/<file>/*.s`
+lists the file's switch owners, and `CURRENT(5)` plus `diff` of the ROM bytes around the two table
+addresses over that span is the whole diagnosis. See also the same-file test: if the delta equals the
+declared items in the span, stop and batch the file's switch owners together.
