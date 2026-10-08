@@ -1160,7 +1160,13 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
 }
 
-// CURRENT(823)
+// CURRENT(13) - the `>>2` + negative-fixup trio is IDO's signed /4 idiom INVERTED:
+// spelling it `var_s2 / 4` gives the target's exact `bgez` / `sra` (delay slot) /
+// `addiu at,$s2,3` / `sra` sequence. 823 -> 13. Residual: 192 = 192, delta +0, and the ONLY
+// two differing rows are `sp78`
+// homing at 0x80 where the target has 0x78 (`sp7C` matches at 0x7C); every other row is
+// encoding-identical (li/addiu, move/or, fp/s8). Declaration order, pads and float reorder
+// all measured worse (18/36/44/26).
 #ifdef NON_MATCHING
 void func_8009EE30_ADDE0(void)
 {
@@ -1193,10 +1199,7 @@ void func_8009EE30_ADDE0(void)
 	D_8005BB34++;
 
 	for (var_s1 = 0, var_s2 = 0; var_s1 != 9; var_s1++, var_s2 += var_s4) {
-		var_s0 = var_s2 >> 2;
-		if (var_s2 < 0) {
-			var_s0 = (var_s2 + 3) >> 2;
-		}
+		var_s0 = var_s2 / 4;
 
 		func_8009EC90_ADC40((s16)(var_s0 - var_s4), &sp7C, &sp78);
 		var_s0 = (s32)(sp7C * 32.0f);
