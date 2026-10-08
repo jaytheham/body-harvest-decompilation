@@ -35,11 +35,6 @@ Relabeling the cases while preserving the order of their bodies fixed the compil
 The prologue dispatch (`sltiu`/`beqz`/`sll`/`lui at,%hi(jtbl)`/`addu at,at,t6`/`lw`/`jr`), all fourteen case bodies and the shared `move v0,zero`/`lw ra,0x14`/`addiu sp,sp,0x18` epilogue match exactly; `ins_diff.py -noregs` reports 72 vs 72, delta +0.
 
 The target table sits inside a generated-table cluster (`jtbl_800AE4E0_7E990` at ROM 0x7E990, then `D_800AE518_7E9C8`, then `jtbl_800AE528_7E9D8` — that last one belongs to `func_800731A8_43658`, still unmatched); ours lands beside a *different* cluster (0x800AEC40, near `jtbl_800AEC88_7F138`). This is the same diagnosis as `func_80086D88_16EE48`: the TU's compiler-generated tables can only land at the target addresses once the co-tenant switch functions are compiled too, so the function is a **batch dependency**, not solo work. Add `func_80070270_40720` to the batch list — it depends on `func_800731A8_43658` (itself a DESIRED "High" entry) and the file's other switch owners. Before sinking attempts into such a body, check whether the only diff is the `lw %lo(jtbl)` immediate.
-## Third and fourth instances: deleting the placeholder moves the table the *wrong* way (worker B, seam run 19)
-
-`func_802D9B08_2BBF38` (siberia `2B7100.c`, 61 instr, `// CURRENT(5)`) and `func_80079330_1613F0`
-(`overlay_gameplay/inside/158330.c`, `// CURRENT(5)`) are the same class as the two above, and each is
-**exactly one differing row** - the generated tables
 
 ## Third and fourth instances: deleting the placeholder moves the table the *wrong* way (worker B, seam run 19)
 
