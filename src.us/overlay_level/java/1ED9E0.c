@@ -2842,54 +2842,31 @@ void func_802DBBE4_1F48F4(u8 arg0) {
 }
 
 // Locust (Greece green glider enemy) behavior specs.unk4C
-#ifdef NON_MATCHING
 void func_802DBCB0_1F49C0(u8 arg0) {
-	AlienInstance *alien;
+	u8 new_var;
 	s16 temp_v0;
-	s32 temp_s0;
-	s32 temp_v1;
-	u32 temp_t5;
 
-	temp_s0 = arg0 & 0xFF;
-	alien = &alienInstances[temp_s0];
-	if (!(alien->unk20 & ALIEN_FLAG_UNKF)) {
-		if ((func_8008E478_9D428(temp_s0 & 0xFF, alien) != 0) || (func_8008E30C_9D2BC(temp_s0 & 0xFF, 0x80000000, alien) != 0)) {
-			func_802DBB58_1F4868(temp_s0 & 0xFF);
-		} else {
-			func_802DBBE4_1F48F4(temp_s0 & 0xFF);
-			if ((D_80052A8C & 0x3C) == (temp_s0 & 0x3C)) {
-				temp_v1 = alien->unk20;
-				if ((temp_v1 & 0x100)) {
-					temp_t5 = ((u32) buildingInstances[alien->unk39].unk8) >> 0xC;
-					if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
-						alien->unk20 = (s32) (temp_v1 & ~ALIEN_FLAG_TARGET_PT);
-					}
-				}
-			}
-		}
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF) && ((func_8008E478_9D428(arg0) != 0) || (func_8008E30C_9D2BC(arg0, 0x80000000) != 0))) {
+		func_802DBB58_1F4868(arg0);
 	} else {
-		func_802DBBE4_1F48F4(temp_s0 & 0xFF);
-		if ((D_80052A8C & 0x3C) == (temp_s0 & 0x3C)) {
-			temp_v1 = alien->unk20;
-			if ((temp_v1 & 0x100)) {
-				temp_t5 = ((u32) buildingInstances[alien->unk39].unk8) >> 0xC;
-				if (((temp_t5 & 1) == 0) || (temp_t5 & 4)) {
-					alien->unk20 = (s32) (temp_v1 & ~ALIEN_FLAG_TARGET_PT);
+		func_802DBBE4_1F48F4(arg0);
+		if ((arg0 & 0x3C) == (D_80052A8C & 0x3C)) {
+			if (alienInstances[arg0].unk20 & 0x100) {
+				new_var = alienInstances[arg0].unk38;
+				if (((((u32) buildingInstances[new_var].unk8 >> 0xC) & 1) == 0) || (((u32) buildingInstances[new_var].unk8 >> 0xC) & 4)) {
+					alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
 				}
 			}
 		}
 	}
-	func_8008076C_8F71C(temp_s0 & 0xFF);
-	temp_v0 = alien->unk1E;
+	func_8008076C_8F71C(arg0);
+	temp_v0 = alienInstances[arg0].unk1E;
 	if (temp_v0 > 0) {
-		alien->unk1E = (s16) (temp_v0 - 4);
+		alienInstances[arg0].unk1E = temp_v0 - 4;
 	} else {
-		alien->unk1E = 0;
+		alienInstances[arg0].unk1E = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DBCB0_1F49C0.s")
-#endif
 
 void func_802DBDDC_1F4AEC(u8 arg0)
 {
