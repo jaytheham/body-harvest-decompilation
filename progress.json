@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-08T10:59:10Z",
-  "commit": "6e10672a",
-  "commit_timestamp": "2026-10-08T23:58:22+13:00",
+  "generated": "2026-10-08T18:47:20Z",
+  "commit": "c23f00d2",
+  "commit_timestamp": "2026-10-09T07:46:40+13:00",
   "overall": {
     "total_functions": 2722,
-    "matched": 2007,
-    "non_matching": 715,
+    "matched": 2016,
+    "non_matching": 706,
     "asm_stubs": 0,
-    "matched_pct": 73.73,
+    "matched_pct": 74.06,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -22,11 +22,11 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 132,
-      "non_matching": 86,
+      "matched": 141,
+      "non_matching": 77,
       "asm_stubs": 0,
       "total": 218,
-      "matched_pct": 60.6,
+      "matched_pct": 64.7,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/outside": {
@@ -726,12 +726,12 @@
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 67,
-      "non_matching": 46,
+      "matched": 76,
+      "non_matching": 37,
       "asm_stubs": 0,
       "total": 113,
-      "matched_pct": 59.3,
-      "contributor": "lunarlaurus"
+      "matched_pct": 67.3,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
@@ -1387,16 +1387,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 112,
-      "matched": 1323,
-      "non_matching": 397,
+      "files": 113,
+      "matched": 1399,
+      "non_matching": 434,
       "asm_stubs": 0
     },
     {
       "name": "lunarlaurus",
-      "files": 13,
-      "matched": 650,
-      "non_matching": 314,
+      "files": 12,
+      "matched": 583,
+      "non_matching": 268,
       "asm_stubs": 0
     },
     {
@@ -1662,9 +1662,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "6e10672",
-      "matched": 2007,
-      "non_matching": 715,
+      "commit": "bd06f20",
+      "matched": 2016,
+      "non_matching": 706,
       "total": 2722
     }
   ]
