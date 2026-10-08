@@ -221,3 +221,20 @@ call's three field reads measured **2153**, and declaring it inside the `if` blo
 Parked at **321** (committed wrapped, improvement landed): residual is the +8 frame, the head rows
 (`lh v0`/`lh t9`, `sll t9,v0`/`sll t2,t9`, and the address landing in `t2` vs `v0`), and the two
 homes above.
+
+
+## A wrapped body that does not compile has an unverifiable marker
+
+`func_802DC4D0_2BE900` (`src.us/overlay_level/siberia/2B7100.c`, 337 instructions, marker
+`CURRENT(4162)`) could not compile at all, so nothing could confirm its marker. The build failed on
+`func_802DB8D8_2BDD08(..., D_802E3054_2C5484)` - the parameter is `f32` and the TU declares the symbol
+`const f32[]`; the target asm reads it as `lwc1 %lo(D_802E3054_2C5484)($at)`, so the source form is
+`D_802E3054_2C5484[0]`. After that one-word fix it measures **3792** (marker `CURRENT(4162)`) - a
+wrapped body that never compiled has no reproducible marker, so **make it build, then re-measure**.
+
+Six declaration permutations of the three `s16` locals (`sp8C`, `sp88`, `sp90`; each moved first, each
+moved last, and the `(s16)` cast dropped) each measured **exactly 3792** - byte-neutral. `ins_diff
+-noregs` reports 337 vs **332**, delta **-5**, and `allblocks -noregs` puts the earliest INSERT/DELETE
+blocks in the header (the `sp8C`/`sp88`/`sp90` chain plus one field-width row), so this is a
+structural reconstruction gap over 337 instructions, not a pure rotation. Do not re-tread declaration
+order here.
