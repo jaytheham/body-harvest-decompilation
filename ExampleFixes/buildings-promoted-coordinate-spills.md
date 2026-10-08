@@ -21,3 +21,7 @@ For `func_8011C8E8_12B898`, a named `s32 alienId = *alienIds` (separate assignme
 ## Variadic target list
 
 `func_8011C9D8_12B988` uses unconditional `va_start` followed by a `for` loop of `va_arg(args, s32)`, which produces the aligned and unrolled target argument-copy sequence. A four-element target array declared after the loop index, alien index, and va_list gives the target frame and array offset. Place the timeout assignment after both flag updates: IDO still schedules the timeout store early, but now places the redundant flag-result move before the global count reload.
+
+## Building effect argument temporaries
+
+For `func_80120334_12F2E4`, inline the instance-index expression, adjusted coordinates, and callback in the call. `(s16)(arg0->yCoord + 0x15)` expresses the target truncation directly. Removing the named index, coordinate, and callback temporaries produces the correct temporary registers and ordering of otherwise identical constant stack arguments.
