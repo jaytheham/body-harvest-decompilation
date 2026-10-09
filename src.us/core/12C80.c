@@ -2369,17 +2369,17 @@ s32 func_800164C4_170C4(void) {
 }
 
 // https://decomp.me/scratch/CQbLj
-// CURRENT(30)
+// CURRENT(25)
 #ifdef NON_MATCHING
 s8 func_800165EC_171EC(void)
 {
-	int new_var;
-	s32 sp48;
-	s32 sp44;
 	s8 var_s3;
 	s8 var_s6;
 	s16 var_s5;
 	s8 i;
+	int new_var;
+	s32 sp48;
+	s32 sp44;
 	var_s6 = -1;
 	var_s3 = 0;
 	var_s5 = 0x7FFF;
