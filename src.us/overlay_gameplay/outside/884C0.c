@@ -5809,65 +5809,58 @@ s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 	return func_800865F4_955A4(arg0, arg1, sp50, sp4C, sp48);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(4523)
 s32 func_80086A34_959E4(u8 arg0, s32 arg1, s16 arg2)
 {
-	f64 sp28;
-	AlienType* type;
-	f32 sp3C;
-	s16 sp44;
-	s16 sp46;
-	f32 sp48;
-	s16 sp4E;
-	s16 sp54;
 	s16 var_a3;
+	s16 sp54;
+	s32 angle;
+	s16 sp4E;
 	s16 temp_v1;
-	AlienInstance* temp_s0;
-	AlienInstance* var_s1;
+	f32 sp48;
+	s16 sp46;
+	s16 sp44;
+	AlienInstance *var_s1;
+	f32 sp3C;
 
-	temp_s0 = &alienInstances[arg0];
-	temp_v1 = temp_s0->typeIndex;
+	temp_v1 = alienInstances[arg0].typeIndex;
 	var_s1 = (AlienInstance*)D_80052B34;
-	if (temp_s0->unk1E != 0) {
+	if (alienInstances[arg0].unk1E != 0) {
 		return 0;
 	}
 
-	if (!(temp_s0->unk20 & ALIEN_FLAG_PLAYER) && (temp_s0->unk20 & ALIEN_FLAG_TARGET_OBJ)) {
-		s16 temp = temp_s0->unk38;
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER) && (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_OBJ)) {
+		s16 temp = alienInstances[arg0].unk38;
 		if (temp != 0x100) {
 			var_s1 = &alienInstances[temp];
 		}
 	}
 
-	type = &alienTypes[temp_v1];
-	sp46 = (temp_s0->unk0 - var_s1->unk0) >> 2;
-	sp44 = (temp_s0->unk4 - var_s1->unk4) >> 2;
-	sp3C = sinf((((f32)type->unk3C * D_80141E60_150E10[0]) / 32768.0));
-	sp48 = sp3C / cosf((((f32)type->unk3C * D_80141E68_150E18[0]) / (32768.0 * 1.0)));
+	sp46 = (alienInstances[arg0].unk0 - var_s1->unk0) >> 2;
+	sp44 = (alienInstances[arg0].unk4 - var_s1->unk4) >> 2;
+	sp3C = sinf(((D_80141E60_150E10[0] * (f64)(f32)alienTypes[temp_v1].unk3C) / 32768.0));
+	sp48 = sp3C / cosf(((D_80141E68_150E18[0] * (f64)(f32)alienTypes[temp_v1].unk3C) / (32768.0 * 1.0)));
 	sp4E = (s32)sqrtf(sp46 * sp46 + sp44 * sp44) * 4;
-
-	sp28 = sp4E;
-	sp54 = (temp_s0->unk0 + sp28 * ((f32)coss((temp_s0->unk6 + arg2) & 0xFFFF) / 32768.0));
-	temp_v1 = (temp_s0->unk4 + sp28 * ((f32)sins((temp_s0->unk6 + arg2) & 0xFFFF) / 32768.0));
+	angle = alienInstances[arg0].unk6 + arg2;
+	sp3C = coss(angle & 0xFFFF);
+	sp54 = ((f64)alienInstances[arg0].unk0 + (f64)sp4E * (sp3C / 32768.0));
+	angle = alienInstances[arg0].unk6 + arg2;
+	temp_v1 = ((f64)sp4E * ((f32)sins(angle & 0xFFFF) / 32768.0) + (f64)alienInstances[arg0].unk4);
 	var_a3 = var_s1->unk2 + 0x14;
 	if (sp4E == 0) {
 		return 0;
 	}
 
-	if (sp48 * (f32)sp4E < (f32)(temp_s0->unk2 - var_a3)) {
-		var_a3 = ((f32)temp_s0->unk2 - sp48 * (f32)sp4E);
+	if (sp48 * (f32)sp4E < (f32)(alienInstances[arg0].unk2 - var_a3)) {
+		var_a3 = ((f32)alienInstances[arg0].unk2 - sp48 * (f32)sp4E);
 	}
 
-	if ((f32)(temp_s0->unk2 - var_a3) < -sp48 * (f32)sp4E) {
-		var_a3 = ((f32)temp_s0->unk2 + sp48 * (f32)sp4E);
+	if ((f32)(alienInstances[arg0].unk2 - var_a3) < -sp48 * (f32)sp4E) {
+		var_a3 = ((f32)alienInstances[arg0].unk2 + sp48 * (f32)sp4E);
 	}
 
 	return func_800865F4_955A4(arg0, arg1, sp54, var_a3, temp_v1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80086A34_959E4.s")
-#endif
+
 
 #ifdef NON_MATCHING
 // CURRENT(3769)
