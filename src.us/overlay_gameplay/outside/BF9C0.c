@@ -2971,7 +2971,7 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(1216)
+// CURRENT(1201)
 #ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	s16 centerX;
@@ -2990,8 +2990,8 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	angleOffset = 0x4000 - D_80047950;
 	centerX = arg0;
 	centerZ = arg1;
-	objX = (s16)(s32)D_80052B2C->unk0;
 	objZ = (s16)(s32)D_80052B2C->unk8;
+	objX = (s16)(s32)D_80052B2C->unk0;
 
 	{
 		s32 diffX = objX - centerX - (arg2 / 2);
