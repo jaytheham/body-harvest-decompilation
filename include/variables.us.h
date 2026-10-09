@@ -4065,3 +4065,9 @@ extern Gfx D_5033E00[];
 
 
 extern RingPaletteTable D_8013E108_14D0B8;
+
+extern const f32 D_80144020_152FD0[1];
+
+extern const f32 D_80144024_152FD4[1];
+
+extern const f64 D_80144028_152FD8[1];

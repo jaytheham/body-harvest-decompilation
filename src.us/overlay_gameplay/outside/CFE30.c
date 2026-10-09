@@ -89,49 +89,7 @@ const f64 D_80143FF8_152FA8[1] = {0.6};
 const f32 D_80144000_152FB0[1] = {1.6666666f};
 const f32 D_80144004_152FB4[1] = {10000.0f};
 const f64 D_80144008_152FB8[1] = {0.33333};
-const f32 D_80144010_152FC0[1] = {20.833334f};
-const f32 D_80144014_152FC4[1] = {1.6666666f};
-const f32 D_80144018_152FC8[1] = {0.8f};
-const f32 D_8014401C_152FCC[1] = {0.4f};
-const f32 D_80144020_152FD0[1] = {0.4f};
-const f32 D_80144024_152FD4[1] = {0.8f};
-const f64 D_80144028_152FD8[1] = {300.0};
-const u32 jtbl_80144030_152FE0[] = {
-	0x800DAC34,
-	0x800DAC44,
-	0x800DAC24,
-	0x800DAC54,
-	0x800DAC64,
-	0x800DAC74,
-	0x800DACA4,
-	0x800DACB4,
-	0x800DAC94,
-	0x800DAC84,
-};
-const u32 jtbl_80144058_153008[] = {
-	0x800DAD7C,
-	0x800DAD8C,
-	0x800DAD9C,
-	0x800DADAC,
-	0x800DADBC,
-	0x800DADCC,
-	0x800DADDC,
-	0x800DAE1C,
-	0x800DADFC,
-	0x800DADEC,
-	0x800DAE0C,
-	0x800DAE2C,
-	0x800DAD6C,
-	0x800DAE3C,
-	0x800DAE4C,
-	0x800DAE5C,
-	0x800DAE6C,
-	0x800DAE7C,
-	0x800DAE8C,
-	0x800DAE9C,
-	0x800DAEAC,
-	0x800DAEBC,
-};
+
 
 
 
@@ -5367,10 +5325,12 @@ void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2320)
 void func_800CF948_DE8F8(void) {
 	s16 curr;
+	u8 i;
+	s32 distanceX;
+	s32 distanceY;
+	s32 distanceZ;
 
 	curr = D_80154276;
 	if (curr == -5 || curr == -6) {
@@ -5379,122 +5339,95 @@ void func_800CF948_DE8F8(void) {
 	}
 
 	while (curr != -5 && curr != -6) {
-		u8 *entry = (u8 *)&D_80154318[curr];
-		u8 *data = (u8 *)entry + 8;
+		Unk80154318Entry *entry = &D_80154318[curr];
+		AnimatedFlareState *flare = &entry->animatedFlare;
 		s16 temp_s1;
 
-		if ((data[0x10] & 1) == 1) {
-			*(s32 *)&data[0xC] = *(s32 *)&data[0xC] - 1;
+		if ((flare->flags & 1) == 1) {
+			flare->age = flare->age - 1;
 		} else {
-			*(s32 *)&data[0xC] = *(s32 *)&data[0xC] + 1;
+			flare->age = flare->age + 1;
 		}
 
-		if (*(s32 *)&data[0xC] <= 0 || *(s32 *)&data[0xC] >= 0x19) {
-			temp_s1 = *(s16 *)&entry[4];
+		if (flare->age <= 0 || flare->age >= 0x19) {
+			temp_s1 = entry->unk4;
 			func_800C1A4C_D09FC(curr, 0xA, 1);
 			curr = temp_s1;
 			continue;
 		}
 
-		if (*(s32 *)&data[0xC] < 0x10) {
-			s32 i;
+		if (flare->age < 0x10) {
 
-			for (i = 0; i < D_80158FD8; i = (i + 1) & 0xFF) {
-				s16 radius = *(s16 *)&entry[2];
+			for (i = 0; i < D_80158FD8; i++) {
+				s16 radius = entry->unk2;
 				VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
 				s32 absRadius;
 				s32 dx;
-				s32 absX;
 				s32 dy;
-				s32 absY;
 				s32 dz;
-				s32 absZ;
 				s32 maxDist;
 
-				absRadius = -radius;
-				if (absRadius < radius) {
-					absRadius = radius;
-				}
+				absRadius = BH_ABS(radius);
 
-				maxDist = vehicleTypes[vehicle->unk1A].unkC;
-				maxDist = maxDist + absRadius + 0x64;
+				maxDist = vehicleTypes[vehicle->unk1A].unkC + absRadius + 0x64;
 
-				dx = *(s16 *)&data[0] - vehicle->unk0;
+				dx = flare->position[0] - vehicle->unk0;
 				if (-dx < dx) {
-					absX = dx;
+					distanceX = dx;
 				} else {
-					absX = -dx;
+					distanceX = -dx;
 				}
 
-				dy = *(s16 *)&data[2] - vehicle->unk2;
+				dy = flare->position[1] - vehicle->unk2;
 				if (-dy < dy) {
-					absY = dy;
+					distanceY = dy;
 				} else {
-					absY = -dy;
+					distanceY = -dy;
 				}
 
-				dz = *(s16 *)&data[4] - vehicle->unk4;
+				dz = flare->position[2] - vehicle->unk4;
 				if (-dz < dz) {
-					absZ = dz;
+					distanceZ = dz;
 				} else {
-					absZ = -dz;
+					distanceZ = -dz;
 				}
 
-				if (absX < maxDist && absY < maxDist && absZ < maxDist) {
-					u32 distSq = (absX * absX) + (absY * absY) + (absZ * absZ);
-					if ((s32)sqrtf((f32)distSq) < maxDist && *(s16 *)&entry[2] > 0 && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
-						func_80102DDC_111D8C(vehicle, func_80003824_4424((f32)-absX, (f32)-absZ), 0, 9.0f);
+				if (distanceX < maxDist && distanceY < maxDist && distanceZ < maxDist) {
+					u32 distSq = (distanceX * distanceX) + (distanceY * distanceY) + (distanceZ * distanceZ);
+					if ((s32)sqrtf((f32)distSq) < maxDist && entry->unk2 > 0 && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
+						func_80102DDC_111D8C(vehicle, func_80003824_4424((f32)-distanceX, (f32)-distanceZ), 0, 9.0f);
 					}
 				}
 			}
-		} else if (*(s32 *)&data[0xC] == 0x10 && !(data[0x10] & 2)) {
-			u32 i;
+		} else if (flare->age == 0x10 && !(flare->flags & 2)) {
 
-			for (i = 0; i < D_8014ECCC; i = (i + 1) & 0xFF) {
+			for (i = 0; i < D_8014ECCC; i++) {
 				AlienInstance *alien = &alienInstances[D_8014D510[i]];
-				s32 dx = *(s16 *)&data[0] - alien->unk0;
-				s32 dy = *(s16 *)&data[2] - alien->unk2;
-				s32 dz = *(s16 *)&data[4] - alien->unk4;
-				s16 radius = *(s16 *)&entry[2];
+				s16 radius = entry->unk2;
+				distanceX = flare->position[0] - alien->unk0;
+				distanceY = flare->position[1] - alien->unk2;
+				distanceZ = flare->position[2] - alien->unk4;
 
-				if ((dx * dx) + (dy * dy) + (dz * dz) < (s32)(alienTypes[alien->typeIndex].unk8 + (radius * radius))) {
+				if ((distanceX * distanceX) + (distanceY * distanceY) + (distanceZ * distanceZ) < (s32)(alienTypes[alien->typeIndex].unk8 + (radius * radius))) {
 					func_80088760_97710(alien);
 				}
 			}
 		}
 
-		curr = *(s16 *)&entry[4];
+		curr = D_80154318[curr].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF948_DE8F8.s")
-#endif
 
 #ifdef NON_MATCHING
-// CURRENT(2388)
 void func_800CFD84_DED34(void) {
-	typedef struct {
-		u8 unk0;
-		u8 unk1;
-		s16 radius;
-		s16 next;
-		s16 prev;
-		s16 x;
-		s16 y;
-		s16 z;
-		u8 r;
-		u8 g;
-		u8 b;
-		u8 a;
-		s32 life;
-		u8 flags;
-		u8 unk19;
-		u8 pad1A[2];
-	} UnkTrailEntry;
-
 	s16 curr;
-	s32 padStack0;
-	s32 padStack1;
+	AnimatedFlareState *flare;
+	s16 radius;
+	s16 texOffset;
+	Unk80052B40 pos;
+	Unk80052B40 rot;
+	Unk80052B40 scale;
+
 	curr = D_80154276;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -5511,55 +5444,42 @@ void func_800CFD84_DED34(void) {
 
 	if (curr != -6 && curr != -5) {
 		do {
-		UnkTrailEntry *entry = (UnkTrailEntry *)&D_80154318[curr];
+		flare = &D_80154318[curr].animatedFlare;
 
-		if (entry->life >= 9) {
-			Unk80052B40 pos;
-			Unk80052B40 rot;
-			Unk80052B40 scale;
-			s16 absRadius;
-			f32 size;
+		if (flare->age >= 9) {
 
-			if (entry->radius >= 0) {
-				absRadius = entry->radius;
+			if (flare->age < 20) {
+				radius = D_80154318[curr].unk2;
+				scale.unk0 = (f32)(radius >= 0 ? radius : -radius) * (1.6666666f * (f32)(flare->age - 5));
+				scale.unk2 = (f32)(radius >= 0 ? radius : -radius) * (1.6666666f * (f32)(flare->age - 5));
+				scale.unk4 = (f32)(radius >= 0 ? radius : -radius) * (1.6666666f * (f32)(flare->age - 5));
 			} else {
-				absRadius = -entry->radius;
+				radius = D_80154318[curr].unk2;
+				scale.unk0 = (f32)(radius >= 0 ? radius : -radius) * (25.0f + 2.5f * (f32)(20 - flare->age));
+				scale.unk2 = (f32)(radius >= 0 ? radius : -radius) * (25.0f + 2.5f * (f32)(20 - flare->age));
+				scale.unk4 = (f32)(radius >= 0 ? radius : -radius) * (25.0f + 2.5f * (f32)(20 - flare->age));
 			}
 
-			if (entry->life < 20) {
-				size = D_80144014_152FC4 * (f32)(entry->life - 5);
-			} else {
-				size = 25.0f + (2.5f * (f32)(20 - entry->life));
-			}
-
-			scale.unk0 = (s16)((f32)absRadius * size);
-			scale.unk2 = (s16)((f32)absRadius * size);
-			scale.unk4 = (s16)((f32)absRadius * size);
-
-			if (func_800B93AC_C835C(entry->x, entry->z, (u16)scale.unk0,
+			if (func_800B93AC_C835C(flare->position[0], flare->position[2], (u16)scale.unk0,
 				(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-				u8 alpha;
-				s16 texOffset;
 
-				if (entry->life < 20) {
-					alpha = (u8)((f32)(entry->life - 8) * D_80144010_152FC0);
+				if (flare->age < 20) {
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, flare->red, flare->green, flare->blue, (u32)((f32)(flare->age - 8) * 20.833334f));
 				} else {
-					alpha = (u8)(250.0f + ((f32)(20 - entry->life) * 50.0f));
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, flare->red, flare->green, flare->blue, (u32)(250.0f + ((f32)(20 - flare->age) * 50.0f)));
 				}
 
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, entry->r, entry->g, entry->b, alpha);
-
-				rot.unk0 = 0;
+				rot.unk0 = flare->age << 10;
 				rot.unk2 = 0;
-				rot.unk4 = entry->life << 10;
-				pos.unk0 = entry->x;
-				pos.unk2 = entry->y;
-				pos.unk4 = entry->z;
-				texOffset = (entry->life % 8) << 8;
+				rot.unk4 = 0;
+				pos.unk0 = flare->position[0];
+				pos.unk2 = flare->position[1];
+				pos.unk4 = flare->position[2];
+				texOffset = (flare->age % 8) << 8;
 
 				func_800039D0_45D0(&pos, &rot, &scale, D_8005BB38);
 
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_50327B0 + texOffset);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, &D_50327B0[texOffset]);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 					G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 				gDPLoadSync(D_8005BB2C++);
@@ -5578,48 +5498,49 @@ void func_800CFD84_DED34(void) {
 			}
 		}
 
-			curr = entry->next;
+			curr = D_80154318[curr].unk4;
 		} while (curr != -6 && curr != -5);
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CFD84_DED34.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_flare_late_rodata.s")
 #endif
+
 
 void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
 }
 
 #ifdef NON_MATCHING
-// CURRENT(14358)
 s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7) {
-	s16 effectId;
-	u16 distanceU16;
+	s16 spread;
 	s32 distance;
 	Unk80154318Entry *entry;
-	Unk80154318Sub *sub;
-	s32 burstCount;
+	SmokePuffState *sub;
+	u8 burstCount;
+	u8 i;
+	Vec3f dir;
+	s16 effectId;
 
-	distanceU16 = arg3;
-	distance = distanceU16;
-	if (func_800B93AC_C835C(arg0, arg2, (distanceU16 * 2) & 0xFFFF, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+	distance = arg3;
+	if (func_800B93AC_C835C(arg0, arg2, (arg3 * 2) & 0xFFFF, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 		effectId = func_800C17B4_D0764(7, 1);
 		if (effectId != -3) {
 			entry = &D_80154318[effectId];
-			sub = (Unk80154318Sub *)&entry->unk8;
-			func_801371B8_146168(sub, 0x188, arg0, arg1, arg2, D_80144018_152FC8);
+			sub = &entry->smokePuff;
+			func_801371B8_146168(sub, 0x188, arg0, arg1, arg2, D_80144018_152FC8[0]);
 
 			entry->unk2 = distance;
-			sub->unk0 = arg0;
-			sub->unk2 = arg1;
-			sub->unk4 = arg2;
-			sub->unk6 = arg4;
-			sub->unk7 = arg5;
-			sub->unk8 = arg6;
-			sub->unk9 = 0xFF;
-			sub->unkA = 0;
-			sub->unkB = func_800DDB60_ECB10(arg0, arg1, arg2, 9, distance / 6);
-			func_800DDE90_ECE40(sub->unkB, (s8)(distance / 30), 0);
+			sub->position[0] = arg0;
+			sub->position[1] = arg1;
+			sub->position[2] = arg2;
+			sub->color[0] = arg4;
+			sub->color[1] = arg5;
+			sub->color[2] = arg6;
+			sub->opacity = 0xFF;
+			sub->kind = 0;
+			sub->childEffect = func_800DDB60_ECB10(arg0, arg1, arg2, 9, distance / 6);
+			func_800DDE90_ECE40(sub->childEffect, (s8)(distance / 30), 0);
 
 			if (D_80156ED8 == 1) {
 				burstCount = 2;
@@ -5627,7 +5548,6 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 				burstCount = 0;
 			} else {
 				burstCount = (func_800038E0_44E0() % 3) + 3;
-				burstCount &= 0xFF;
 			}
 
 			if (distance >= 1000) {
@@ -5638,19 +5558,11 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 				func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
 			}
 
-			if (arg7 == 1 && burstCount > 0) {
-		s32 i;
-		s32 halfDistance;
-		Vec3f dir;
-		s16 spread;
-		s16 x;
-		s16 y;
-		s16 z;
+			i = 0;
+			if (arg7 == 1) {
 
-		halfDistance = distance / 2;
-		i = 0;
-		do {
-			spread = ((func_800038E0_44E0() % distance) / 4) + halfDistance;
+		for (; i < (s32)burstCount; i++) {
+			spread = ((func_800038E0_44E0() % distance) / 4) + distance / 2;
 
 			dir.x = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
 			if ((func_800038E0_44E0() % 0xB) < 6) {
@@ -5668,12 +5580,8 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 			}
 
 			func_800C1024_CFFD4(&dir, &dir);
-			x = arg0 + (s16)(s32)(dir.x * spread);
-			y = arg1 + (s16)(s32)(dir.y * spread);
-			z = arg2 + (s16)(s32)(dir.z * spread);
-			func_800D16BC_E066C(arg0, arg1, arg2, x, y, z, (func_800038E0_44E0() % 6) + 6);
-			i = (i + 1) & 0xFF;
-		} while (i < burstCount);
+			func_800D16BC_E066C(arg0, arg1, arg2, arg0 + (s32)(dir.x * spread), arg1 + (s16)(s32)(dir.y * spread), arg2 + (s16)(s32)(dir.z * spread), (func_800038E0_44E0() % 6) + 6);
+		}
 			}
 		}
 		return effectId;
@@ -5682,8 +5590,9 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 	return -3;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0614_DF5C4.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_glow_spawn_late_rodata.s")
 #endif
+
 
 // CURRENT(2618)
 void func_800D0C00_DFBB0(void) {

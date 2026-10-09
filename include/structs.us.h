@@ -2620,6 +2620,18 @@ typedef struct {
 } SmokePuffState; /* size = 0x0C */
 
 typedef struct {
+	s16 position[3];
+	u8 red;
+	u8 green;
+	u8 blue;
+	u8 opacity;
+	u8 padA[2];
+	s32 age;
+	u8 flags;
+	u8 pad11[3];
+} AnimatedFlareState; /* size = 0x14 */
+
+typedef struct {
 	union {
 		u16 size;
 		u8 bytes[14];
@@ -2658,6 +2670,7 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	union {
 		EffectInterpolationState interpolation;
+		AnimatedFlareState animatedFlare;
 		struct {
 			union {
 				/* 0x08 */ Unk80052B40 spatialVectors[2];
