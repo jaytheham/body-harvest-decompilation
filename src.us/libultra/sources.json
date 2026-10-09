@@ -1,0 +1,596 @@
+{
+  "aisetfreq": {
+    "reference": "src/io/aisetfreq.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "heapalloc": {
+    "reference": "src/audio/heapalloc.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "createmesgqueue": {
+    "reference": "src/os/createmesgqueue.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "createthread": {
+    "reference": "src/os/createthread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "startthread": {
+    "reference": "src/os/startthread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "recvmesg": {
+    "reference": "src/os/recvmesg.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "virtualtophysical": {
+    "reference": "src/os/virtualtophysical.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "aigetlen": {
+    "reference": "src/io/aigetlen.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sendmesg": {
+    "reference": "src/os/sendmesg.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "pidma": {
+    "reference": "src/io/pidma.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "syncprintf": {
+    "reference": "src/libc/syncprintf.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seteventmesg": {
+    "reference": "src/os/seteventmesg.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "contsetch": {
+    "reference": "src/io/contsetch.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "coss": {
+    "reference": "src/gu/coss.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "ortho": {
+    "reference": "src/gu/ortho.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "lookat": {
+    "reference": "src/gu/lookat.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "visetmode": {
+    "reference": "src/io/visetmode.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "viswapbuf": {
+    "reference": "src/io/viswapbuf.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "setthreadpri": {
+    "reference": "src/os/setthreadpri.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "stopthread": {
+    "reference": "src/os/stopthread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "visetevent": {
+    "reference": "src/io/visetevent.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "visetspecial": {
+    "reference": "src/io/visetspecial.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "viblack": {
+    "reference": "src/io/viblack.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "visetyscale": {
+    "reference": "src/io/visetyscale.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "visetxscale": {
+    "reference": "src/io/visetxscale.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "pigetstat": {
+    "reference": "src/io/pigetstat.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpsetsound": {
+    "reference": "src/audio/sndpsetsound.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpgetstate": {
+    "reference": "src/audio/sndpgetstate.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "heapinit": {
+    "reference": "src/audio/heapinit.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "bnkf": {
+    "reference": "src/audio/bnkf.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seqpsetbank": {
+    "reference": "src/audio/seqpsetbank.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seqpsetseq": {
+    "reference": "src/audio/seqpsetseq.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seqpsetvol": {
+    "reference": "src/audio/seqpsetvol.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seqpplay": {
+    "reference": "src/audio/seqpplay.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpallocate": {
+    "reference": "src/audio/sndpallocate.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpsetpriority": {
+    "reference": "src/audio/sndpsetpriority.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpsetfxmix": {
+    "reference": "src/audio/sndpsetfxmix.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpsetpitch": {
+    "reference": "src/audio/sndpsetpitch.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpsetvol": {
+    "reference": "src/audio/sndpsetvol.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpsetpan": {
+    "reference": "src/audio/sndpsetpan.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpplay": {
+    "reference": "src/audio/sndpplay.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seqpstop": {
+    "reference": "src/audio/seqpstop.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpdeallocate": {
+    "reference": "src/audio/sndpdeallocate.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sndpstop": {
+    "reference": "src/audio/sndpstop.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "seqpsetchlvol": {
+    "reference": "src/audio/seqpsetchlvol.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "translate": {
+    "reference": "src/gu/translate.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "scale": {
+    "reference": "src/gu/scale.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "mtxcatf": {
+    "reference": "src/gu/mtxcatf.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "mtxcatl": {
+    "reference": "src/gu/mtxcatl.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "syndelete": {
+    "reference": "src/audio/syndelete.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sptaskyielded": {
+    "reference": "src/io/sptaskyielded.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "vigetcurrframebuf": {
+    "reference": "src/io/vigetcurrframebuf.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "vigetnextframebuf": {
+    "reference": "src/io/vigetnextframebuf.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "dpsetnextbuf": {
+    "reference": "src/io/dpsetnextbuf.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sptaskyield": {
+    "reference": "src/io/sptaskyield.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "ai": {
+    "reference": "src/io/ai.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synallocfx": {
+    "reference": "src/audio/synallocfx.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "mainbus": {
+    "reference": "src/audio/mainbus.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "auxbus": {
+    "reference": "src/audio/auxbus.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "save": {
+    "reference": "src/audio/save.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "jammesg": {
+    "reference": "src/os/jammesg.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "pigetcmdq": {
+    "reference": "src/io/pigetcmdq.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sirawdma": {
+    "reference": "src/io/sirawdma.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "crc": {
+    "reference": "src/io/crc.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "gettime": {
+    "reference": "src/os/gettime.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "settimer": {
+    "reference": "src/os/settimer.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "normalize": {
+    "reference": "src/gu/normalize.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sirawread": {
+    "reference": "src/io/sirawread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sirawwrite": {
+    "reference": "src/io/sirawwrite.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "pirawread": {
+    "reference": "src/io/pirawread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "getthreadpri": {
+    "reference": "src/os/getthreadpri.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "vigetcurrcontext": {
+    "reference": "src/io/vigetcurrcontext.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "viswapcontext": {
+    "reference": "src/io/viswapcontext.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "pirawdma": {
+    "reference": "src/io/pirawdma.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "epirawdma": {
+    "reference": "src/io/epirawdma.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "event": {
+    "reference": "src/audio/event.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synaddplayer": {
+    "reference": "src/audio/synaddplayer.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synstopvoice": {
+    "reference": "src/audio/synstopvoice.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synfreevoice": {
+    "reference": "src/audio/synfreevoice.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synsetvol": {
+    "reference": "src/audio/synsetvol.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synsetpitch": {
+    "reference": "src/audio/synsetpitch.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synallocvoice": {
+    "reference": "src/audio/synallocvoice.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synstartvoiceparam": {
+    "reference": "src/audio/synstartvoiceparam.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synsetpan": {
+    "reference": "src/audio/synsetpan.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synsetfxmix": {
+    "reference": "src/audio/synsetfxmix.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synstartvoice": {
+    "reference": "src/audio/synstartvoice.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "spgetstat": {
+    "reference": "src/io/spgetstat.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "spsetstat": {
+    "reference": "src/io/spsetstat.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "spsetpc": {
+    "reference": "src/io/spsetpc.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sprawdma": {
+    "reference": "src/io/sprawdma.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "sp": {
+    "reference": "src/io/sp.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "dp": {
+    "reference": "src/io/dp.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "filter": {
+    "reference": "src/audio/filter.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "copy": {
+    "reference": "src/audio/copy.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "si": {
+    "reference": "src/io/si.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "resetglobalintmask": {
+    "reference": "src/os/resetglobalintmask.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "setglobalintmask": {
+    "reference": "src/os/setglobalintmask.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "yieldthread": {
+    "reference": "src/os/yieldthread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "synsetpriority": {
+    "reference": "src/audio/synsetpriority.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  }
+}

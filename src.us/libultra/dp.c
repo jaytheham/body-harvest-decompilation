@@ -1,0 +1,18 @@
+/* Reference: reference/ultralib/src/io/dp.c (libultra 2.0I). */
+#define BUILD_VERSION 6
+#include "PR/os_version.h"
+#include "PR/os_internal.h"
+#include "PR/rcp.h"
+
+// TODO: this comes from a header
+#ident "$Revision: 1.17 $"
+
+int __osDpDeviceBusy(void) {
+    register u32 stat = IO_READ(DPC_STATUS_REG);
+
+    if (stat & DPC_STATUS_DMA_BUSY) {
+        return TRUE;
+    } else {
+        return FALSE;
+    }
+}

@@ -165,7 +165,6 @@ endif
 # Flags
 
 OPT_FLAGS      = -O2
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: OPT_FLAGS := -O1
 LOOP_UNROLL    =
 
 MIPSISET       = -mips2 -32
@@ -175,6 +174,8 @@ INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/libc -I assets \
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
+
+-include $(SRC_DIR)/libultra/compiler_flags.mk
 
 # Files requiring pre/post-processing
 GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) </dev/null 2>/dev/null)

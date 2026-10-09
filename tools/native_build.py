@@ -200,6 +200,8 @@ def build(args):
     asflags = ["-EB", "-mtune=vr4300", "-march=vr4300", "-mabi=32", "-I", "include"]
     cflags = "-G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_US -woff 649,838".split()
     cflags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc", "assets", "src.us", "src.us/libultra/audio")]
+    libultra_sources = json.loads((ROOT / "src.us/libultra/sources.json").read_text(encoding="utf-8"))
+    libultra_includes = ["-Isrc.us/libultra/include", "-Isrc.us/libultra/include/PR", "-Isrc.us/libultra"]
     if args.non_matching:
         cflags.append("-DNON_MATCHING")
     env = compiler_env()
@@ -208,7 +210,7 @@ def build(args):
     marker = build_dir / ".native-config"
     tool_sources = (Path(__file__), ROOT / "tools/asm-processor/asm_processor.py",
                     ROOT / "tools/image_converter.py", ROOT / "tools/rnc_propack_source/main.c")
-    config = json.dumps([cflags, ARCHIVES, [digest(p) for p in tool_sources]], sort_keys=True)
+    config = json.dumps([cflags, libultra_sources, ARCHIVES, [digest(p) for p in tool_sources]], sort_keys=True)
     force = args.rebuild or not marker.exists() or marker.read_text() != config
     if force:
         # A failed build with different flags may leave some successful
@@ -248,7 +250,9 @@ def build(args):
             if source.suffix == ".s":
                 run([assembler, *asflags, "-o", target, source], quiet=args.quiet)
             elif source.suffix == ".c":
-                optimization = "-O1" if source.as_posix() == "src.us/libultra/aisetfreq.c" else "-O2"
+                libultra_config = libultra_sources.get(source.stem, {}) if source.parent.as_posix() == "src.us/libultra" else {}
+                optimization = libultra_config.get("optimization", "-O2")
+                source_cflags = [*libultra_includes, *cflags] if libultra_config else cflags
                 global_asm = "GLOBAL_ASM" in source.read_text(encoding="utf-8")
                 compiled = source
                 processor = [sys.executable, "tools/asm-processor/asm_processor.py", optimization, source]
@@ -256,7 +260,7 @@ def build(args):
                     compiled = Path("build") / source
                     with compiled.open("wb") as out:
                         run(processor, output=out, quiet=args.quiet)
-                run([CACHE / "ido/cc.exe", "-c", *cflags, optimization, "-mips2", "-32", "-o", name, compiled], env=env, quiet=args.quiet)
+                run([CACHE / "ido/cc.exe", "-c", *source_cflags, optimization, libultra_config.get("isa", "-mips2"), "-32", "-o", name, compiled], env=env, quiet=args.quiet)
                 if global_asm:
                     # shlex understands quoted forward-slash Windows paths.
                     asm_command = '"' + assembler.as_posix() + '" ' + " ".join(asflags)
