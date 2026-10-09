@@ -2542,7 +2542,10 @@ typedef struct {
 } EffectCallbackState;
 
 typedef struct {
-	/* 0x00 */ s16 angle;
+	union {
+		/* 0x00 */ s16 angle;
+		/* 0x00 */ u16 age;
+	};
 	/* 0x02 */ u8 color[3];
 	/* 0x05 */ u8 pad5[7];
 } SpinnerParentState;
@@ -2624,6 +2627,11 @@ typedef struct {
 } EffectInterpolationState;
 
 typedef struct {
+	s16 position[3];
+	s16 previousPosition[3];
+} EffectPositionPair;
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
@@ -2660,6 +2668,7 @@ typedef struct {
 					/* 0x0E */ s16 previousPosition[3];
 				};
 				/* 0x08 */ s16 coordinates[6];
+				/* 0x08 */ EffectPositionPair positionPair;
 				/* 0x08 */ u8 payload[12];
 			};
 			union {
@@ -2777,12 +2786,17 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ union { s16 unk8; u16 angle; };
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ union {
-		s16 scaleY;
-		struct { u8 unkE; u8 padF; };
+	union {
+		/* 0x0C */ Unk80052B40 modelScale;
+		struct {
+			/* 0x0C */ s16 unkC;
+			/* 0x0E */ union {
+				s16 scaleY;
+				struct { u8 unkE; u8 padF; };
+			};
+			/* 0x10 */ s16 unk10;
+		};
 	};
-	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
 	/* 0x14 */ u8 unk14;
