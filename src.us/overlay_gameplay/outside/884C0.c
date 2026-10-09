@@ -668,7 +668,6 @@ void func_80079E64_88E14(s32 arg0) {
 }
 
 // CURRENT(1515)
-#ifdef NON_MATCHING
 s32 func_80079F08_88EB8(s32 arg0) {
 	u8 typeIndex;
 	s16 floorY;
@@ -681,61 +680,53 @@ s32 func_80079F08_88EB8(s32 arg0) {
 		return 0;
 	}
 
-	if (alienInstances[arg0].unk20 & ALIEN_FLAG_X) { alienInstances[arg0].unk10 = 0; return 0; }
+	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_X) == 0) {
 
-	floorY = (s16) (func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8);
+		floorY = (s16) (func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8);
 
-	if (alienTypes[typeIndex].unk54 & 0x80000001) {
-		func_8011DE60_12CE10(1);
-	}
-
-	hitType = (u8) func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &hitY);
-
-	if (alienTypes[typeIndex].unk54 & 0x80000001) {
-		func_8011DE60_12CE10(0);
-	}
-
-	if ((alienTypes[typeIndex].unk54 < 0) && (hitType != 0xFF)) {
-		if (alienInstances[arg0].unk2 >= hitY) {
-			floorY = hitY;
+		if (alienTypes[typeIndex].unk54 & 0x80000001) {
+			func_8011DE60_12CE10(1);
 		}
-	}
 
-	if (alienTypes[typeIndex].unk54 & 0x81) {
-		if ((currentLevel != 4) || (typeIndex != 7)) {
-			if (floorY < D_80222A70) {
-				floorY = (s16) D_80222A70;
+		hitType = (u8) func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &hitY);
+
+		if (alienTypes[typeIndex].unk54 & 0x80000001) {
+			func_8011DE60_12CE10(0);
+		}
+
+		if ((alienTypes[typeIndex].unk54 & (s32)0x80000000) && (hitType != 0xFF)) {
+			if (alienInstances[arg0].unk2 >= hitY) {
+				floorY = hitY;
 			}
 		}
-	}
 
-	floorY = floorY + alienTypes[typeIndex].unk58;
-	if (!(alienTypes[typeIndex].unk54 & 0x40)) {
-		if (alienInstances[arg0].unk2 < floorY) {
-			alienInstances[arg0].unk2 = floorY;
-		}
-	}
-
-	if (!(alienTypes[typeIndex].unk54 & 0x841)) {
-		alienInstances[arg0].unk2 = floorY;
-	}
-
-	if (hitType != 0xFF) {
-		if (alienTypes[typeIndex].unk54 & 0x10) {
-			if ((alienInstances[arg0].unk2 < (hitY - 0x32)) || !(alienTypes[typeIndex].unk54 & 0x80000001)) {
-				if ((currentLevel != 3) || ((typeIndex != 9) && (typeIndex != 8))) {
-					return 1;
+		if (alienTypes[typeIndex].unk54 & 0x81) {
+			if ((currentLevel != 4) || (typeIndex != 7)) {
+				if (floorY < D_80222A70) {
+					floorY = (s16) D_80222A70;
 				}
 			}
 		}
-	}
 
+		floorY += alienTypes[typeIndex].unk58;
+		if (((!(alienTypes[typeIndex].unk54 & 0x40)) && (alienInstances[arg0].unk2 < floorY)) || !(alienTypes[typeIndex].unk54 & 0x841)) {
+			alienInstances[arg0].unk2 = floorY;
+		}
+
+		if (hitType != 0xFF) {
+			if (alienTypes[typeIndex].unk54 & 0x10) {
+				if ((alienInstances[arg0].unk2 < (hitY - 0x32)) || !(alienTypes[typeIndex].unk54 & 0x80000001)) {
+					if ((currentLevel != 3) || ((typeIndex != 9) && (typeIndex != 8))) {
+						return 1;
+					}
+				}
+			}
+		}
+
+	}
 	alienInstances[arg0].unk10 = 0;
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80079F08_88EB8.s")
-#endif
 
 s32 func_8007A198_89148(s32 arg0)
 {
