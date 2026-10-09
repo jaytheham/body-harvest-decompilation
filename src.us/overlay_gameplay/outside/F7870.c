@@ -262,16 +262,11 @@ void func_800E94B8_F8468(void) {
 	D_801575A0 = 0;
 }
 
-// CURRENT(3664)
+// CURRENT(2000)
 #ifdef NON_MATCHING
 s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
-	s32 sp34;
-	s32 sp30;
-	s32 sp2C;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
+	s32 pad[4];
+	s32 step[3];
 	s32 baseX;
 	s32 baseY;
 	s32 baseZ;
@@ -279,9 +274,6 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	s32 deltaZ;
 	s32 absDeltaX;
 	s32 absDeltaZ;
-	s32 stepZLocal;
-	s32 stepXLocal;
-	s32 stepYLocal;
 	s32 stepSign;
 
 	baseX = (s32)D_80052B2C->unk0 << 8;
@@ -289,16 +281,10 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	baseZ = (s32)D_80052B2C->unk8 << 8;
 
 	deltaX = (arg0 << 8) - baseX;
-	absDeltaX = -deltaX;
-	if (absDeltaX < deltaX) {
-		absDeltaX = deltaX;
-	}
+	absDeltaX = (-deltaX < deltaX) ? deltaX : -deltaX;
 
 	deltaZ = (arg2 << 8) - baseZ;
-	absDeltaZ = -deltaZ;
-	if (absDeltaZ < deltaZ) {
-		absDeltaZ = deltaZ;
-	}
+	absDeltaZ = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
 
 	if (absDeltaZ < absDeltaX) {
 		arg2 = ((-deltaX < deltaX) ? deltaX : -deltaX) >> 8;
@@ -309,32 +295,26 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 				stepSign = 0x100;
 			}
 
-			sp34 = stepSign << 8;
-			sp30 = (((arg1 << 8) - baseY) << 8) / arg2;
-			sp2C = (deltaZ << 8) / arg2;
+			step[0] = stepSign << 8;
+			step[1] = (((arg1 << 8) - baseY) << 8) / arg2;
+			step[2] = (deltaZ << 8) / arg2;
 		}
 	} else {
 		arg2 = ((-deltaZ < deltaZ) ? deltaZ : -deltaZ) >> 8;
 		if (arg2 != 0) {
-			sp34 = (deltaX << 8) / arg2;
-			sp30 = (((arg1 << 8) - baseY) << 8) / arg2;
-			sp2C = ((deltaZ < 0) ? -0x100 : 0x100) << 8;
+			step[0] = (deltaX << 8) / arg2;
+			step[1] = (((arg1 << 8) - baseY) << 8) / arg2;
+			step[2] = ((deltaZ < 0) ? -0x100 : 0x100) << 8;
 		}
 	}
 
 	arg2 = arg2 >> 8;
-	stepZLocal = sp2C;
-	stepXLocal = sp34;
-	stepYLocal = sp30;
 	if (arg2 != 0) {
 		arg2--;
-		sp2C = stepZLocal;
-		sp34 = stepXLocal;
-		sp30 = stepYLocal;
 		do {
-			baseZ += sp2C;
-			baseX += sp34;
-			baseY += sp30;
+			baseZ += step[2];
+			baseX += step[0];
+			baseY += step[1];
 
 			if (baseY < func_800B84D0_C7480((s16)(baseX >> 8), (s16)(baseZ >> 8))) {
 				return 1;
