@@ -78,6 +78,47 @@ lists the file's switch owners, and `CURRENT(5)` plus `diff` of the ROM bytes ar
 addresses over that span is the whole diagnosis. See also the same-file test: if the delta equals the
 declared items in the span, stop and batch the file's switch owners together.
 
+## Seventh instance (seam1 run 10): the delta is the placeholder plus the trailing pair, exactly
+
+`func_800ABCC8_BAC78` (`overlay_gameplay/outside/B8290.c`, 109 instr, `// CURRENT(20)`, two `switch`
+statements) is the same class, and the arithmetic rule above holds on a clean measurement:
+
+    target bacc8: lw t2,%lo(jtbl_80142928_1518D8)($at) -> 0x80142928
+    ours   bacc8: lw t2,0x2a20($at)                    -> 0x80142A20   (0xF8 later, placeholder kept)
+
+`ins_diff -noregs` is 109 vs 109, delta +0; apart from this row and its twin for the second switch
+(`0x8014299C` vs `0x80142A94`, same 0xF8) the stream is byte-identical. The 0xF8 is exactly the declared
+rodata between the target table and the end of the file's rodata prefix: the two `jtbl_` placeholders
+(0xE8) plus the trailing `D_80142A10_1519C0`/`D_80142A18_1519C8` f64 pair (0x10). Deleting the
+placeholders reproduced the documented negative - the score went **10 -> 20**, the generated table
+moving to `rodata+0x38` (the 0x28 declared prefix plus the trailing pair) rather than onto the target.
+The file already carries a `// todo file split here` marker at its head: the two trailing f64s belong to
+a later object in the ROM, and the function closes only once that span is compiler-generated (or the
+file is split). Treat `func_800ABCC8_BAC78` as a batch dependency; do not re-tread placeholder deletion.
+
+
+## Sixth instance: the table is the *first* datum of the TU's rodata (seam run 6)
+
+`func_8000A2B8_AEB8` (`core/AD60.c`, 35 instr, the text-width helper the frontend multiplies by 0x1C,
+recorded marker `// CURRENT(10)`) measures **5** when unwrapped: one differing row, the generated
+table's base address.
+
+    target af94: lw t6,%lo(jtbl_80037460_38060)(at)  -> 0x80037460
+    ours   af94: lw t6,0x7618(at)                    -> 0x80037618   (0x1B8 later)
+
+`ins_diff.py -noregs` is 35 vs 35, delta +0, so the body is finished. Here the target table is the
+**first** datum of the TU's rodata, so the delta equals the *entire* declared block (0x1B8: the three
+`drawText` tables `jtbl_80037478_38078`/`jtbl_80037490_38090`/`jtbl_80037560_38160`, the scalars
+`D_80037578_38178`/`D_80037580_38180`, `jtbl_80037588_38188`, `D_80037600_38200`/`D_80037608_38208`/
+`D_80037610_38210`). The ROM shows all of it compiler-generated inside the two unmatched co-tenants,
+so this is the same batch dependency: the address can only land once `drawText` (marker 67025) and
+`func_8000B044_BC44` (marker 112386) are compiled C. Placeholder deletion is refuted by arithmetic
+(it would move the table to 0x37600, not 0x37460); do not attempt it.
+
+Corollary for the class: when the target table is the first datum, the delta is the whole declared
+block rather than one placeholder, so the arithmetic rule above identifies the dependency without a
+build. Re-measure a wrapped marker before trusting it - this one recorded 10 and measured 5.
+
 ## Overlay layout: a file's `.text` size decides where its `.data` lands
 
 The overlay linker script lays a file's sections out **consecutively** inside the overlay segment (`bh.ld`, per-overlay blocks — `.text`, then `. = ALIGN(., 16)`, then each file's `.data`):
@@ -114,3 +155,65 @@ The ROM's `0x18d030` is the string `"ieNormVecF3()  {0,0,0} -> {0,0,0}\n"`; with
 mips-linux-gnu-objdump -h build/src.us/<path>.c.o | grep -E 'text|rodata|data'
 python3 -c "b=open('baserom.us.z64','rb').read(); u=open('build/bh.us.z64','rb').read(); print(b==u, b[o:o+16].hex(), u[o:o+16].hex())"
 ```
+### The residual is one duplicated load, not a source shape
+
+Re-measured (seam2 run 37): with the guard off the body compiles to **32** instructions against the
+target 31, and the only difference is a duplicated `lw $a1,0x18(sp)`:
+
+    target: c.eq.d f4,f6 | lui a0,%hi | lw a1,0x18(sp) | bc1f | nop | jal osSyncPrintf | addiu a0,a0,%lo | lw t7,0x18(sp)
+    ours:   c.eq.d f4,f6 | mov.s f12,f0 | lui a0,%hi | addiu a0,a0,%lo | lw a1,0x18(sp) | bc1f | nop | jal | lw a1,0x18(sp) | lw t7,0x18(sp)
+
+The target keeps the `%lo` half in the `jal` delay slot; our compile hoists it before the branch and
+fills the delay slot with a redundant reload of `$a1`. Every other row is an encoding alias, so the
+asm-differ score is pinned at **702** by the layout noise above regardless of the body.
+
+13 body variants all measured **32** instructions (score 702 for every one): struct copy vs three field
+copies, copy-before-print, `const char`/`(void *)` casts on the format arg, a pointer local
+`Vec3f *src`, `f64 d`/`f64 z` compare temps, reversed `0.0 == (f64)t`, `if (0.0 == ...)`, if/else with
+and without `return`, and inlining the magnitude call into the `if`. The count is therefore not
+reachable by body shape - the divergence is cfe scheduling of the `%hi`/`%lo` split. The function
+stays a park while its length is 32; do not re-tread these variants.
+
+## Sixth and seventh instances (seam2 run 13): both land on the declared-block delta
+
+Two more mid-rodata switch owners in `overlay_gameplay/inside/`, each measured by unwrapping only (no
+body edits), and each confirming the arithmetic rule above:
+
+    func_80072E88_15AF48  (158330.c, 6-entry `jtbl_800A4A88_18CB48`, recorded marker CURRENT(0))
+      target 15af68: lw t7,0x4a88(at)  -> 0x800A4A88
+      ours   15af68: lw t7,0x4bb0(at)  -> 0x800A4BB0   (+0x128, placeholder kept)
+      ours   15af68: lw t7,0x4b98(at)  -> 0x800A4B98   (+0x110, placeholder deleted)
+      unwrap check = 5 (one row). Deleting the 24-byte `jtbl_800A4A88_18CB48[]` placeholder moved ours
+      the *wrong* way by exactly 24 bytes, the same signature as the siberia pair - do not re-tread it.
+      The recorded `CURRENT(0)` (a decomp.me scratch claim) is stale: the on-tree score is 5.
+
+    func_8007FC74_167D34  (167C90.c, 6-entry `jtbl_800A4F08_18CFC8`, recorded marker CURRENT(30), honest)
+      target 167e54: lw t8,%lo(jtbl_800A4F08_18CFC8)(at) -> 0x800A4F08
+      ours   167e54: lw t8,0x4f70(at)                     -> 0x800A4F70   (+0x68)
+      unwrap check = 30; the only non-branch diff row is this `lw` immediate.
+
+Both are batch dependencies - the declared items after the table address must be compiler-generated
+before the table can land (six `f64` doubles plus the next `jtbl` placeholder follow `0x800A4F08` on
+167C90; strings/doubles/floats follow `0x800A4A88` on 158330). Add both to their file's switch-owner
+batch list. Cheap triage before any body attempt: `grep -l "jtbl_" asm/nonmatchings/overlay_gameplay/inside/<file>/*.s`.
+
+## The case count sets the table extent - empty cases are not optional
+
+`func_80077A5C_15FB1C` (`overlay_gameplay/inside/158330.c`, 57 instr, `// CURRENT(170)`) is a
+four-handler dispatcher (`D_800E65BC[arg1].unkC`, cases 1-4). The wrapped guess listed only
+cases 1-4 and measured **2435**: IDO emitted a **compare chain** (`li`/`beq` per case) instead of a
+jump table, because the target's dispatch is `sltiu at,t9,8` - an **eight**-entry table. Adding the
+empty cases 5-8 (`case 5: case 6: case 7: case 8: break;`) switched IDO to the table and took the
+score **2435 -> 210** in one edit; nothing else in that edit moved it.
+
+Two further levers on the same function: the selector must be the **struct field**
+(`switch (D_800E65BC[arg1].unkC)`, `Unk80070F7CObj`, `structs.us.h`) rather than the raw
+`*(s16 *)((u8 *)&D_800E65BC[arg1] + 0xC)` - the typed read fixes the head's temp assignment
+(`$t6` global / `$t7` index) and took **210 -> 170**.
+
+The residual at 170 is this note's batch class plus a one-slot temp rotation, and it is not
+reachable by source shape: the table lands at **0x4BB0** where the target's is at **0x4AE8**
+(delta **0xC8**), because `jtbl_800A4B08_18CBC8`/`jtbl_800A4B5C_18CC1C` and their consumers earlier
+in the same TU are still unmatched; deleting this function's own placeholder made it worse (225).
+Do not re-tread the case-extent or the selector spelling - they are settled; the file needs its
+remaining switch owners matched together.

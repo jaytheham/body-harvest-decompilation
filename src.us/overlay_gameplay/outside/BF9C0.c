@@ -2971,15 +2971,14 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(2643)
+// CURRENT(1201)
 #ifdef NON_MATCHING
+// AI - World-space bounding-box frustum cull: tests a tile's corners against the camera view angle
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	s16 centerX;
 	s16 centerZ;
 	s16 objX;
 	s16 objZ;
-	u16 rangeX;
-	u16 rangeZ;
 	s32 angleOffset;
 	s16 i;
 	s16 hit;
@@ -2992,16 +2991,14 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	angleOffset = 0x4000 - D_80047950;
 	centerX = arg0;
 	centerZ = arg1;
-	objX = (s16)(s32)D_80052B2C->unk0;
 	objZ = (s16)(s32)D_80052B2C->unk8;
-	rangeX = arg2;
-	rangeZ = arg3;
+	objX = (s16)(s32)D_80052B2C->unk0;
 
 	{
-		s32 diffX = objX - centerX - (rangeX / 2);
-		if ((diffX >= 0 ? diffX : -diffX) < rangeX) {
-			s32 diffZ = objZ - centerZ - (rangeZ / 2);
-			if ((diffZ >= 0 ? diffZ : -diffZ) < rangeZ) {
+		s32 diffX = objX - centerX - (arg2 / 2);
+		if ((diffX >= 0 ? diffX : -diffX) < arg2) {
+			s32 diffZ = objZ - centerZ - (arg3 / 2);
+			if ((diffZ >= 0 ? diffZ : -diffZ) < arg3) {
 				return 1;
 			}
 		}
@@ -3011,24 +3008,24 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	for (i = 0; i < 5; i++) {
 		switch (i) {
 		case 0:
-			hit = func_800B9228_C81D8((s16)(centerX + (rangeX >> 1)), (s16)(centerZ + (rangeZ >> 1)), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(centerX + (arg2 >> 1)), (s16)(centerZ + (arg3 >> 1)), objX, objZ, angleOffset);
 			break;
 		case 1:
 			hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
 			break;
 		case 2:
-			hit = func_800B9228_C81D8((s16)(centerX + rangeX), centerZ, objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(centerX + arg2), centerZ, objX, objZ, angleOffset);
 			break;
 		case 3:
-			hit = func_800B9228_C81D8(centerX, (s16)(centerZ + rangeZ), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8(centerX, (s16)(centerZ + arg3), objX, objZ, angleOffset);
 			break;
 		case 4:
-			hit = func_800B9228_C81D8((s16)(centerX + rangeX), (s16)(centerZ + rangeZ), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(centerX + arg2), (s16)(centerZ + arg3), objX, objZ, angleOffset);
 			break;
 		}
 		if (hit != 0) {
 			D_8014F854 = 1;
-			return D_8014F854;
+			break;
 		}
 	}
 

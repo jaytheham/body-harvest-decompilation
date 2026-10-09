@@ -56,3 +56,25 @@ signature.
 order the blocks are emitted in. The target had `case 2`'s body before `case 1`'s
 (dispatch order is still 1,2,4), so the source listed the cases as 2,1,4. Writing
 them 1,2,4 swapped two bodies and cost ~40 points.
+
+### The mirror case: a caller needs the parameter *wider* than the matched callee
+
+The same lever has a reverse form, and there it is blocked. `func_8007290C_15A9CC`
+(`overlay_gameplay/inside/158330.c`, 351 instr) is instruction-for-instruction identical to the ROM
+except **one row**: its call `func_80011858_12458(currentLevel, D_800A5720)` loads the argument with
+`lbu` (the low byte of the 4-byte `Level` enum, `lbu a0,3(a0)`), where the ROM passes the whole word
+(`lw a0,%lo(currentLevel)(a0)`). The prototype is `void func_80011858_12458(u8 arg0, s32 arg1);`
+(`include/functions.us.h:146`), so IDO only needs the low byte and narrows the load.
+
+Measured: retyping the prototype to `s32 arg0` takes the *caller* to **score 0** - it is otherwise
+exact. But the callee definition (`core/loader.c:697`) is a matched body whose first two instructions
+(`sw a0,0x20(sp)` / `lbu t6,0x23(sp)`) prove the narrow parameter; with the definition retyped to
+`s32` as well the callee scores **718** and the ROM gate fails, and rebuilding the body with an
+explicit `u8 idx = arg0;` first (so it still truncates) also does not reproduce it. One prototype
+cannot be wide for the caller and narrow for the callee, so this is a **shared-signature batch item**,
+not solo work.
+
+Call-site workarounds all fail and were measured: `*(u32 *)&currentLevel` (200 - IDO still folds to
+`lbu`), `*(volatile s32 *)&currentLevel` (1760), the function-pointer cast
+`((void (*)(s32, s32))func_80011858_12458)(...)` (1420), and an `s32` local copy (495 - the extra home
+changes the frame). Do not re-tread them.

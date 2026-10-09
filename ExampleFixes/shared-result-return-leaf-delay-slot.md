@@ -34,3 +34,28 @@ Changing the scan from guarded do/while to while or for did not fix the
 scheduling. Separate returns after the scan and its skipped path gave the
 right delay slot but duplicated the epilogue. The shared result assignment
 fixed the layout without changing the public `s16` return type.
+
+## Loop-body case: `break` out to the shared `return`, do not repeat the `return`
+
+`func_800B960C_C85BC` (`overlay_gameplay/outside/BF9C0.c`, 210 instr, port *Widescreen* "terrain tile
+cull"): the body had an `if (hit != 0)` arm inside a `for` loop written as
+
+```c
+if (hit != 0) {
+    D_8014F854 = 1;
+    return D_8014F854;
+}
+```
+
+with the loop's own `return D_8014F854;` after it. IDO gives the in-loop `return` a private exit
+path: it materialises the value it has just stored (`li v0,1`) and branches *past* the shared tail
+that loads the global, so ours compiled to 212 instructions against the target's 210 and the
+comparison scored **1716**.
+
+Replacing the in-loop `return D_8014F854;` with `break;` - identical behaviour, the loop exits and the
+single trailing `return` yields the same value - makes both exits share that tail load and takes the
+function to **1216**, with 210 = 210 instructions and `ins_diff -noregs` delta **+0**.
+
+Rule: when a loop arm wants the value that one arm has just stored, exit that arm through `break` and
+let the one trailing `return` do the load. Repeating the `return` is not free: a value IDO can
+constant-fold costs a second exit path, an extra instruction, and the allocation that follows it.

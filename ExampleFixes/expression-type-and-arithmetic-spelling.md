@@ -91,3 +91,23 @@ Measured case: `func_800DBA9C_EAA4C` (`overlay_gameplay/outside/CFE30.c`, 225 in
 - **cast at the use site** - the spelling the already-matched same-shape twin uses: `(*(u8 *)&D_80153BCD) << 6`. Four one-line edits measured **800 -> 0**.
 
 Lever, and why the chunk matcher earned its keep here: the chunk index scored `func_800DBA9C_EAA4C` at 84% lift, 1.00x ratio, graftable, against the matched `func_800DB714_EA6C4` in the *same file* - the upright/flat cross pair, identical shape with the `±scale` on a different axis. `donor_patch.py`'s draft was therefore the *same body with the other axis*, and its gap list pointed straight at the `tc[]` rows. The donor's **literal spelling** (`(*(u8 *)&X) << 6`, not the bare global) is what made the loads unsigned - its *shape* was already present in the guess, but its *spelling* was not. **Note for the next run.** Read the delta list for opcode-level differences the normaliser hides (`lbu` vs `lb`, `li` vs `addiu`) before concluding "allocation"; and when a twin's body is byte-identical in shape, diff its *casts and literal spellings* against the guess.
+
+## Negate the operand, not the constant: `x * -k` builds the chain in `$at` and rotates the temp bank
+
+Symptom: the function's *logic* is right and the only differing rows are a consistent register rotation - our chain starts in `$at`/`$t9` where the target starts in `$t9`/`$t1`, and every later temporary is one slot behind, so a 98-instruction function scores 265 with `ins_diff -noregs` delta +0 and nothing structural in the block list.
+
+Measured on `func_8011F818_12E7C8` (`overlay_gameplay/outside/buildings.c`, 98 instr). The body computed
+
+```c
+D_80052B48.unk4 = (s16)((s32)arg0->unkD * -0x154);
+```
+
+which IDO lowers to `negu $at,$t8` plus a shift-add chain accumulating in `$t9`. The `$at` destination is the tell - it is the assembler scratch, not the expression bank - and it displaced every following temporary (the whole gSP macro block one slot behind). Spelling the negation on the operand and multiplying by the positive constant
+
+```c
+D_80052B48.unk4 = (s16)(-arg0->unkD * 0x154);
+```
+
+took the score **265 -> 0** in one edit (gate PASSED, `build/bh.us.z64: OK`). Variants measured on that line (base 265): dropping the `(s32)` cast 265, operand flip `-0x154 * arg0->unkD` 265, `(s16)`-cast operand 265, `* -340` 265, a named `s32 t = arg0->unkD;` local 275; the cast-preserving form `(s16)(-(s32)arg0->unkD * 0x154)` also reaches **0**, so the lever is the sign's position, not the cast.
+
+**Rule:** when the entire residual is a temp-bank rotation and one operand of a multiply is a negative constant, move the sign onto the variable (`-x * k`) rather than the constant (`x * -k`). `$at` used as an expression destination is the signature; declaration permutations do not move it.

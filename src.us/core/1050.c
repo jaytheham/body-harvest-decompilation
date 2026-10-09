@@ -1403,8 +1403,10 @@ void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
 // https://decomp.me/scratch/VRB5q
-// CURRENT(1200)
+// CURRENT(245) - the opcode/register stream is identical to the target except for one
+// trailing nop the target carries before its epilogue; no source shape tested emits it
 #ifdef NON_MATCHING
+// AI - Background controller/EEPROM thread: polls input, services pending save/load requests
 void func_80002EF8_3AF8(void *arg0)
 {
   OSMesg sp34;

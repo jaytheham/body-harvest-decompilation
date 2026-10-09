@@ -404,8 +404,14 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
 // this requires a function static (D_800315D4_W)
 // which means you may have to map all other .bss data
 // for the file where that func is in (in the best scenario you add this function last and just let splat auto map .bss) 
-// CURRENT(0)
+// Measured 30 (marker was CURRENT(0), a stale layout coincidence): the body below is
+// byte-exact except the three stores, which target the function-static D_800315D4_W and
+// land at 0x18 past the target's global D_800315D4_321D4 (map: 0x800315c4). Using the
+// global directly instead measures 1585/755 (IDO reloads it); the residual is the
+// unpinned .bss symbol address, not the source shape.
+// CURRENT(30)
 #ifdef NON_MATCHING
+// AI - Scrolls one of three credits-style text lines across the screen over a cycling timer
 void func_8000577C_637C(void)
 {
   static s32 D_800315D4_W; // has to be a function static

@@ -5267,6 +5267,7 @@ void func_8008554C_944FC(u8 arg0)
 	}
 }
 
+// AI - Plays a weapon-impact sound at an alien's position if it is newly damaged
 void func_80085690_94640(u8 arg0, s16 arg1)
 {
 	s32 x;
@@ -6347,12 +6348,13 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
 #endif
 
-// CURRENT(92)
+// CURRENT(73)
 #ifdef NON_MATCHING
 // kill alien?
+// AI - Kills an alien, handling zombie-human revival and death side effects (score, drops, HCU release)
 void func_80088760_97710(AlienInstance* alien) {
-	u8 typeIndex;
 	s32 alienIndex;
+	u8 typeIndex;
 	AlienInstance* target;
 
 	if (alien->unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL)) {
@@ -6427,9 +6429,9 @@ void func_80088760_97710(AlienInstance* alien) {
 
 	// if human is a zombie (case 1 when walking, case 0x1D when carried by HCU)
 	if ((typeIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0x1D)) && (func_8000726C_7E6C(0xB) == 0) && (func_8000726C_7E6C(0xC) == 0)) {
-		u16 r1;
-		u16 r2;
 		u16 r3;
+		u16 r2;
+		u16 r1;
 
 		alien->hitPoints = 0xA; // restore hitpoints to 10
 		alien->unk20 |= ALIEN_FLAG_UNKF;

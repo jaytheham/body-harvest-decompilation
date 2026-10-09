@@ -62,7 +62,6 @@ const u32 jtbl_800A4F50_18D010[] = {
 	0x800829E8, 0x80082618, 0x80082704, 0x800827F0, 0x800828EC, 0x00000000, 0x00000000, 0x00000000, 
 };
 
-#ifdef NON_MATCHING
 // AI - Reset all camera/view state variables to default values
 void func_8007FBD0_167C90(void) {
 	D_800E747C = 0;
@@ -81,9 +80,6 @@ void func_8007FBD0_167C90(void) {
 	D_800E73A0 = 0;
 	D_800E73A8 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FBD0_167C90.s")
-#endif
 
 // CURRENT(30) 
 // AI - Main camera update dispatch: select view mode, set up projection and look-at matrices

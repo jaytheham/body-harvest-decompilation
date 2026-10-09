@@ -5089,9 +5089,10 @@ void func_800FFCB8_10EC68(s32 arg0) {
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
 }
 
-// CURRENT(2040)
+// CURRENT(1890)
 #ifdef NON_MATCHING
-void func_800FFD28_10ECD8(VehicleInstance *arg0) {
+// AI - Builds the vehicle's model-view matrix from its position/rotation and draws it
+void func_800FFD28_10ECD8(VehicleInstance *arg0, f32 *arg1) {
 	VehicleType *typePtr;
 	s16 temp;
 	s16 yOffset;
@@ -11225,17 +11226,16 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 	}
 }
 
-// CURRENT(1361)
-#ifdef NON_MATCHING
 // Sets vehicle is airborne flag, and other things?
+// AI - Updates vehicle physics flags (airborne, bridge, water) based on terrain and height checks
 void func_80113310_1222C0(VehicleInstance *arg0) {
 	VehicleType *type;
 	WeaponSpecEntry *tableEntry;
 	s16 sp4E;
 	s16 sp4C;
 	s16 sp4A;
-	s32 pad;
 	s16 varA2;
+	s32 pad;
 	s32 wasAboveWater;
 
 	type = &vehicleTypes[arg0->unk1A];
@@ -11328,9 +11328,6 @@ void func_80113310_1222C0(VehicleInstance *arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80113310_1222C0.s")
-#endif
 
 // CURRENT(2944)
 #ifdef NON_MATCHING
