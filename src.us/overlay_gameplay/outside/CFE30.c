@@ -4585,81 +4585,77 @@ void func_800CD390_DC340(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// effect type 5
-// CURRENT(3159)
-void func_800CD42C_DC3DC(s32 arg0) {
+void func_800CD42C_DC3DC(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
-	Unk89834Pos *sub;
+	JetStreamParticleState *sub;
 	s16 index;
 	s16 nextIndex;
 	s16 temp;
-	u8 effectId;
 
-	effectId = arg0 & 0xFF;
-	effect = &D_80154088[effectId];
-	index = D_80154318[effect->unk6].unk4;
+	effect = &D_80154088[arg0];
+	index = effect->unk6;
+	index = D_80154318[index].unk4;
 
 	if (((index == -5) || (index == -6)) && (D_80154318[effect->unk6].unk11 == 0)) {
-		func_800C1418_D03C8(effectId, 0);
-		func_800C1384_D0334(effectId);
+		func_800C1418_D03C8(arg0, 0);
+		func_800C1384_D0334(arg0);
 		return;
 	}
 
 	if ((index != -5) && (index != -6)) {
-		do {
-			entry = &D_80154318[index];
-			sub = (Unk89834Pos *)&entry->unk8;
-			if (entry->unk11 < 0xD) {
-				if ((effect->unk4 < 3) && (D_80154318[effect->unk6].unk11 == 0)) {
-					func_800C1418_D03C8(effectId, 0);
-					func_800C1384_D0334(effectId);
-					return;
-				}
-
-				nextIndex = entry->unk4;
-				func_800C1A4C_D09FC(index, effectId, 0);
-				index = nextIndex;
-			} else {
-				if (sub->unkD == 0) {
-					sub->unk9 = (u8)(sub->unk9 - (func_800038E0_44E0() % 4) - 4);
-					entry->unk2 = (s16)(entry->unk2 + (func_800038E0_44E0() % 3) + 3);
-				} else {
-					sub->unk9 = (u8)(sub->unk9 - (func_800038E0_44E0() % 6) - 6);
-					entry->unk2 = (s16)(entry->unk2 + (func_800038E0_44E0() % 6) + 6);
-				}
-
-				sub->unk0 = (s16)(sub->unk0 + sub->unkA);
-				sub->unk2 = (s16)(sub->unk2 + sub->unkB);
-				sub->unk4 = (s16)(sub->unk4 + sub->unkC);
-				sub->unk6 = (s8)(sub->unk6 - 4);
-				sub->unk7 = (s8)(sub->unk7 - 4);
-				sub->unk8 = (s8)(sub->unk8 - 4);
-
-				temp = (s16)(func_800B84D0_C7480(sub->unk0, sub->unk4) >> 8);
-				if (sub->unk2 < temp) {
-					sub->unk2 = temp;
-					if (sub->unkD == 0) {
-						sub->unkD = 1;
-						sub->unkA = (s8)(sub->unkA + (func_800038E0_44E0() % 20) - 10);
-						sub->unkC = (s8)(sub->unkC + (func_800038E0_44E0() % 20) - 10);
+		/* Preserve the particle loop's register allocation. */
+		if (1) {
+			do {
+				entry = &D_80154318[index];
+				sub = (JetStreamParticleState *)&entry->unk8;
+				if (entry->unk11 < 0xD) {
+					if ((effect->unk4 < 3) && (D_80154318[effect->unk6].unk11 == 0)) {
+						func_800C1418_D03C8(arg0, 0);
+						func_800C1384_D0334(arg0);
+						return;
 					}
+
+					nextIndex = D_80154318[index].unk4;
+					func_800C1A4C_D09FC(index, arg0, 0);
+					index = nextIndex;
+				} else {
+					if (sub->bounced == 0) {
+						sub->opacity = sub->opacity - (func_800038E0_44E0() % 4) - 4;
+						D_80154318[index].unk2 = (func_800038E0_44E0() % 3) + D_80154318[index].unk2 + 3;
+					} else {
+						sub->opacity = sub->opacity - (func_800038E0_44E0() % 6) - 6;
+						D_80154318[index].unk2 = (func_800038E0_44E0() % 6) + D_80154318[index].unk2 + 6;
+					}
+
+					sub->position[0] += sub->velocity[0];
+					sub->position[1] += sub->velocity[1];
+					sub->position[2] += sub->velocity[2];
+					sub->color[0] -= 4;
+					sub->color[1] -= 4;
+					sub->color[2] -= 4;
+
+					temp = func_800B84D0_C7480(sub->position[0], sub->position[2]) >> 8;
+					if (sub->position[1] < temp) {
+						sub->position[1] = temp;
+						if (sub->bounced == 0) {
+							sub->bounced = 1;
+							sub->velocity[0] += (func_800038E0_44E0() % 20) - 10;
+							sub->velocity[2] += (func_800038E0_44E0() % 20) - 10;
+						}
+					}
+
+					index = D_80154318[index].unk4;
 				}
 
-				index = entry->unk4;
-			}
-
-		} while ((index != -5) && (index != -6));
+			} while ((index != -5) && (index != -6));
+		}
 	}
 
 	if (D_80154318[effect->unk6].unk11 == 1) {
-		func_800CD0B0_DC060(effectId);
+		func_800CD0B0_DC060(arg0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD42C_DC3DC.s")
-#endif
 
 void func_800CD7FC_DC7AC(u8 arg0) {
 	s16 index;
