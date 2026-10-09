@@ -2616,7 +2616,7 @@ typedef struct {
 	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 opacity;
 	/* 0x0A */ u8 kind;
-	/* 0x0B */ u8 padB;
+	/* 0x0B */ u8 childEffect;
 } SmokePuffState; /* size = 0x0C */
 
 typedef struct {
@@ -2625,6 +2625,25 @@ typedef struct {
 		u8 bytes[14];
 	};
 } EffectInterpolationState;
+
+typedef struct {
+	s16 position[3];
+	u8 opacity;
+	u8 pad7[3];
+	u8 paletteIndex;
+	u8 padB;
+} RingVisualState;
+
+typedef struct {
+	s16 width;
+	s16 height;
+	u8 textureSlices[8];
+} RingEmitterState;
+
+typedef union {
+	u8 bytes[0x1E4];
+	u8 colors[3][8];
+} RingPaletteTable;
 
 typedef struct {
 	s16 position[3];
@@ -2653,6 +2672,8 @@ typedef struct {
 				/* 0x08 */ EffectCallbackState callbackState;
 				/* 0x08 */ SpinnerParentState spinnerState;
 				/* 0x08 */ SpinnerMotionState spinnerMotion;
+				/* 0x08 */ RingVisualState ringVisual;
+				/* 0x08 */ RingEmitterState ringEmitter;
 				struct {
 					/* 0x08 */ s16 unk8;
 					/* 0x0A */ s16 unkA;

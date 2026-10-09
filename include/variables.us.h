@@ -18,7 +18,7 @@ extern u16 D_040B1A40[];
 extern u8 D_1001B50[];
 extern u8 D_10031E0[];
 extern u8 D_1003990[];
-extern u8 D_1007A70[];
+extern u8 D_1007A70[][512];
 extern u16 D_1009A70[];
 extern u8 D_1009C70[];
 extern u8 D_100ACB0[];
@@ -4063,3 +4063,5 @@ extern EffectRgb D_8013E40C_14D3BC;
 
 extern Gfx D_5033E00[];
 
+
+extern RingPaletteTable D_8013E108_14D0B8;
