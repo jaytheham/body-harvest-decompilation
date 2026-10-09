@@ -170,8 +170,8 @@ LOOP_UNROLL    =
 
 MIPSISET       = -mips2 -32
 
-INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/libc -I assets \
-				 -I src.$(VERSION) -I src.$(VERSION)/libultra/audio
+INCLUDE_CFLAGS = -I. -Iinclude -Iinclude/2.0I -Iinclude/libc -Iassets \
+				 -Isrc.$(VERSION) -Isrc.$(VERSION)/libultra/audio
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
@@ -198,7 +198,7 @@ VERIFY = no_verify
 PROGRESS_NONMATCHING = --non-matching
 endif
 
-CFLAGS := -G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul
+CFLAGS := -G0 -fullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul
 CFLAGS += $(DEFINES)
 # ignore compiler warnings about anonymous structs
 CFLAGS += -woff 649,838

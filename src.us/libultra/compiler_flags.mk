@@ -2,593 +2,593 @@
 # Original flags: reference/ultralib/makefiles/ido.mk.
 $(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/heapalloc.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/heapalloc.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/heapalloc.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/heapalloc.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/heapalloc.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/heapalloc.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/createmesgqueue.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/createmesgqueue.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/createmesgqueue.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/createmesgqueue.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/createmesgqueue.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/createmesgqueue.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/createthread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/createthread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/createthread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/createthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/createthread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/createthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/startthread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/startthread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/startthread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/startthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/startthread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/startthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/recvmesg.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/recvmesg.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/recvmesg.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/recvmesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/recvmesg.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/recvmesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/virtualtophysical.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/virtualtophysical.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/virtualtophysical.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/virtualtophysical.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/virtualtophysical.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/virtualtophysical.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/aigetlen.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/aigetlen.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aigetlen.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aigetlen.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aigetlen.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aigetlen.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sendmesg.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sendmesg.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sendmesg.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sendmesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sendmesg.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sendmesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pidma.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pidma.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pidma.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pidma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pidma.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pidma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/syncprintf.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/syncprintf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/syncprintf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/syncprintf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/syncprintf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/syncprintf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seteventmesg.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seteventmesg.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seteventmesg.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seteventmesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seteventmesg.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seteventmesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/contsetch.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/contsetch.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/contsetch.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/contsetch.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/contsetch.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/contsetch.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/coss.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/coss.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/coss.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/coss.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/coss.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/coss.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/ortho.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/ortho.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/ortho.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/ortho.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/ortho.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/ortho.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/lookat.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/lookat.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/lookat.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/lookat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/lookat.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/lookat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetmode.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetmode.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetmode.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetmode.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetmode.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetmode.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/viswapbuf.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/viswapbuf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapbuf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapbuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapbuf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapbuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/setthreadpri.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/setthreadpri.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/setthreadpri.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/setthreadpri.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/setthreadpri.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/setthreadpri.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/stopthread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/stopthread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/stopthread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/stopthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/stopthread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/stopthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetevent.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetevent.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetevent.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetevent.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetevent.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetevent.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetspecial.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetspecial.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetspecial.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetspecial.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetspecial.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetspecial.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/viblack.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/viblack.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/viblack.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/viblack.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/viblack.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/viblack.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetyscale.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetyscale.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetyscale.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetyscale.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetyscale.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetyscale.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetxscale.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/visetxscale.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetxscale.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/visetxscale.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetxscale.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/visetxscale.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pigetstat.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pigetstat.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetstat.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetstat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetstat.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetstat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetsound.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetsound.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetsound.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetsound.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetsound.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetsound.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpgetstate.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpgetstate.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpgetstate.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpgetstate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpgetstate.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpgetstate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/heapinit.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/heapinit.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/heapinit.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/heapinit.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/heapinit.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/heapinit.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/bnkf.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/bnkf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/bnkf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/bnkf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/bnkf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/bnkf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetbank.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetbank.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetbank.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetbank.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetbank.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetbank.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetseq.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetseq.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetseq.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetseq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetseq.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetseq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetvol.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetvol.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetvol.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetvol.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpplay.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpplay.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpplay.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpplay.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpplay.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpplay.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpallocate.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpallocate.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpallocate.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpallocate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpallocate.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpallocate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpriority.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpriority.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpriority.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpriority.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpriority.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpriority.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetfxmix.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetfxmix.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetfxmix.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetfxmix.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetfxmix.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetfxmix.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpitch.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpitch.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpitch.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpitch.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpitch.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpitch.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetvol.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetvol.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetvol.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetvol.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpan.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpan.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpan.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpan.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpan.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpsetpan.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpplay.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpplay.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpplay.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpplay.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpplay.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpplay.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpstop.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpstop.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpstop.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpstop.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpstop.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpstop.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpdeallocate.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpdeallocate.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpdeallocate.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpdeallocate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpdeallocate.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpdeallocate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpstop.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndpstop.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpstop.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpstop.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpstop.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndpstop.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetchlvol.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetchlvol.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetchlvol.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetchlvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetchlvol.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqpsetchlvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/translate.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/translate.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/translate.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/translate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/translate.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/translate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/scale.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/scale.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/scale.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/scale.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/scale.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/scale.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatf.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatl.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatl.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatl.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatl.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatl.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxcatl.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/syndelete.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/syndelete.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/syndelete.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/syndelete.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/syndelete.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/syndelete.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyielded.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyielded.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyielded.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyielded.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyielded.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyielded.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrframebuf.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrframebuf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrframebuf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrframebuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrframebuf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrframebuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vigetnextframebuf.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vigetnextframebuf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetnextframebuf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetnextframebuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetnextframebuf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetnextframebuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/dpsetnextbuf.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/dpsetnextbuf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/dpsetnextbuf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/dpsetnextbuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/dpsetnextbuf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/dpsetnextbuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyield.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyield.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyield.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyield.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyield.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sptaskyield.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/ai.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/ai.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/ai.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/ai.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/ai.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/ai.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synallocfx.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synallocfx.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocfx.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocfx.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocfx.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocfx.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mainbus.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mainbus.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mainbus.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mainbus.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mainbus.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mainbus.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/auxbus.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/auxbus.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/auxbus.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/auxbus.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/auxbus.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/auxbus.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/save.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/save.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/save.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/save.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/save.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/save.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/jammesg.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/jammesg.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/jammesg.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/jammesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/jammesg.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/jammesg.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pigetcmdq.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pigetcmdq.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetcmdq.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetcmdq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetcmdq.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pigetcmdq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sirawdma.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sirawdma.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawdma.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawdma.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/crc.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/crc.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/crc.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/crc.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/crc.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/crc.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/gettime.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/gettime.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/gettime.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/gettime.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/gettime.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/gettime.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/settimer.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/settimer.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/settimer.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/settimer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/settimer.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/settimer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/normalize.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/normalize.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/normalize.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/normalize.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/normalize.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/normalize.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sirawread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sirawread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sirawwrite.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sirawwrite.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawwrite.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawwrite.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sirawwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pirawread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pirawread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/getthreadpri.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/getthreadpri.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/getthreadpri.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/getthreadpri.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/getthreadpri.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/getthreadpri.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrcontext.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrcontext.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrcontext.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrcontext.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrcontext.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vigetcurrcontext.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/viswapcontext.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/viswapcontext.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapcontext.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapcontext.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapcontext.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/viswapcontext.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pirawdma.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pirawdma.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawdma.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawdma.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pirawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/epirawdma.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/epirawdma.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawdma.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawdma.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/event.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/event.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/event.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/event.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/event.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/event.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synaddplayer.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synaddplayer.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synaddplayer.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synaddplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synaddplayer.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synaddplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synstopvoice.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synstopvoice.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synstopvoice.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synstopvoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synstopvoice.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synstopvoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synfreevoice.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synfreevoice.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synfreevoice.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synfreevoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synfreevoice.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synfreevoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetvol.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetvol.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetvol.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetvol.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetvol.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpitch.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpitch.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpitch.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpitch.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpitch.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpitch.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synallocvoice.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synallocvoice.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocvoice.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocvoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocvoice.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synallocvoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoiceparam.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoiceparam.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoiceparam.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoiceparam.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoiceparam.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoiceparam.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpan.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpan.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpan.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpan.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpan.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpan.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetfxmix.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetfxmix.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetfxmix.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetfxmix.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetfxmix.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetfxmix.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoice.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoice.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoice.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoice.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synstartvoice.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/spgetstat.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/spgetstat.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/spgetstat.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/spgetstat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/spgetstat.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/spgetstat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/spsetstat.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/spsetstat.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetstat.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetstat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetstat.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetstat.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/spsetpc.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/spsetpc.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetpc.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetpc.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetpc.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/spsetpc.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sprawdma.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sprawdma.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sprawdma.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sprawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sprawdma.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sprawdma.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sp.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sp.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sp.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sp.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sp.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sp.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/dp.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/dp.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/dp.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/dp.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/dp.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/dp.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/filter.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/filter.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/filter.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/filter.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/filter.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/filter.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/copy.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/copy.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/copy.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/copy.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/copy.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/copy.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/si.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/si.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/si.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/si.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/si.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/si.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/resetglobalintmask.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/resetglobalintmask.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/resetglobalintmask.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/resetglobalintmask.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/resetglobalintmask.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/resetglobalintmask.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/setglobalintmask.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/setglobalintmask.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/setglobalintmask.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/setglobalintmask.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/setglobalintmask.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/setglobalintmask.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/yieldthread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/yieldthread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/yieldthread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/yieldthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/yieldthread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/yieldthread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpriority.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpriority.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpriority.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpriority.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpriority.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synsetpriority.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/ll.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/ll.c.o: MIPSISET := -mips3 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/ll.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/ll.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/ll.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/ll.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/initialize.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/initialize.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/initialize.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/initialize.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/initialize.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/initialize.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/thread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/thread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/thread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/thread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/thread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/thread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/load.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/load.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/load.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/load.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/load.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/load.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/timerintr.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/timerintr.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/timerintr.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/timerintr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/timerintr.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/timerintr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/leointerrupt.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/leointerrupt.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/leointerrupt.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/leointerrupt.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/leointerrupt.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/leointerrupt.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sched.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sched.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sched.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sched.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sched.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sched.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/aisetnextbuf.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/aisetnextbuf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetnextbuf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetnextbuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetnextbuf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetnextbuf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synthesizer.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/synthesizer.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synthesizer.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/synthesizer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synthesizer.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/synthesizer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/motor.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/motor.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/motor.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/motor.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/motor.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/motor.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/controller.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/controller.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/controller.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/controller.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/controller.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/controller.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteepprobe.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteepprobe.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepprobe.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepprobe.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepprobe.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepprobe.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongwrite.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongwrite.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongwrite.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongwrite.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteeplongread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/contreaddata.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/contreaddata.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/contreaddata.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/contreaddata.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/contreaddata.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/contreaddata.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sins.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sins.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sins.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sins.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sins.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sins.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/rotate.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/rotate.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/rotate.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/rotate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/rotate.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/rotate.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/perspective.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/perspective.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/perspective.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/perspective.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/perspective.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/perspective.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sinf.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sinf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sinf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sinf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sinf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sinf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/cosf.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/cosf.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/cosf.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/cosf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/cosf.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/cosf.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vimgr.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vimgr.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vimgr.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vimgr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vimgr.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vimgr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pimgr.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pimgr.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pimgr.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pimgr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pimgr.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pimgr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/destroythread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/destroythread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/destroythread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/destroythread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/destroythread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/destroythread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/csplayer.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/csplayer.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/csplayer.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/csplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/csplayer.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/csplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndplayer.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sndplayer.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndplayer.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sndplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndplayer.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sndplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/cseq.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/cseq.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/cseq.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/cseq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/cseq.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/cseq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/lookatref.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/lookatref.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/lookatref.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/lookatref.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/lookatref.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/lookatref.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/align.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/align.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/align.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/align.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/align.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/align.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/rotateRPY.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/rotateRPY.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/rotateRPY.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/rotateRPY.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/rotateRPY.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/rotateRPY.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sptask.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/sptask.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sptask.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/sptask.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sptask.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/sptask.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/drvrNew.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/drvrNew.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/drvrNew.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/drvrNew.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/drvrNew.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/drvrNew.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/resample.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/resample.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/resample.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/resample.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/resample.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/resample.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/env.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/env.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/env.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/env.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/env.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/env.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pfsisplug.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pfsisplug.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsisplug.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsisplug.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsisplug.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsisplug.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/siacs.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/siacs.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/siacs.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/siacs.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/siacs.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/siacs.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/contram.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/contram.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/contram.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/contram.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/contram.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/contram.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteepwrite.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteepwrite.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepwrite.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepwrite.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteepread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/conteepread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/conteepread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mtxutil.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/mtxutil.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxutil.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxutil.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxutil.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/mtxutil.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vi.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/vi.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vi.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/vi.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vi.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/vi.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/piacs.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/piacs.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/piacs.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/piacs.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/piacs.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/piacs.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/devmgr.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/devmgr.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/devmgr.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/devmgr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/devmgr.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/devmgr.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqplayer.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seqplayer.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqplayer.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(filter-out -signed,$(CFLAGS))
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seqplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(subst -fsigned-char,-funsigned-char,$(CC_CHECK))) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqplayer.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(filter-out -signed,$(CFLAGS))
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seqplayer.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(subst -fsigned-char,-funsigned-char,$(CC_CHECK))) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/cents2ratio.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/cents2ratio.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/cents2ratio.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/cents2ratio.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/cents2ratio.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/cents2ratio.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/reverb.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/reverb.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/reverb.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/reverb.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/reverb.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/reverb.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/epirawwrite.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/epirawwrite.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawwrite.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawwrite.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawwrite.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/epirawread.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/epirawread.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawread.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawread.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/epirawread.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seq.c.o: OPT_FLAGS := -O3
 $(BUILD_DIR)/$(SRC_DIR)/libultra/seq.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seq.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/seq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seq.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/seq.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pfsgetstatus.c.o: OPT_FLAGS := -O1
 $(BUILD_DIR)/$(SRC_DIR)/libultra/pfsgetstatus.c.o: MIPSISET := -mips2 -32
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsgetstatus.c.o: CFLAGS := -I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(CFLAGS)
-$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsgetstatus.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I $(SRC_DIR)/libultra/include -I $(SRC_DIR)/libultra/include/PR -I $(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsgetstatus.c.o: CFLAGS := -I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(CFLAGS)
+$(BUILD_DIR)/$(SRC_DIR)/libultra/pfsgetstatus.c.o: CC_CHECK := $(subst $(INCLUDE_CFLAGS),-I$(SRC_DIR)/libultra/include -I$(SRC_DIR)/libultra/include/PR -I$(SRC_DIR)/libultra $(INCLUDE_CFLAGS),$(CC_CHECK)) -D_MIPS_SZLONG=32

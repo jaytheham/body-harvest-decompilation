@@ -71,3 +71,13 @@ syntax checks do not. Pass `-D_MIPS_SZLONG=32` in the generated libultra
 `CC_CHECK` overrides, matching the reference makefile's CPP flags.
 Without it, the header sets its size-type guards without defining the
 actual type, and `xstdio.h` reports an unknown `size_t`.
+
+## Recompiled Linux IDO driver arguments
+
+Keep include options joined (`-Ipath`) in both the global Makefile and
+the generated libultra overrides, matching the native Windows builder.
+With the full generated command, separated include arguments and
+`-Xfullwarn` reproduced a Linux `uld` crash while opening the final
+include directory (`src.us/libultra/audio`). The joined arguments and
+the reference's supported `-fullwarn` compiled the same probe successfully.
+The header enum warning is independent of this driver failure.
