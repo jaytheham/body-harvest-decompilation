@@ -4350,17 +4350,17 @@ s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 }
 
 // https://decomp.me/scratch/fQx5r
-s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3)
+s32 func_80083060_92010(s32 arg0, s32 arg1, s32 arg2, u8 *arg3)
 {
 	s32 sp24;
 	s16 sp22;
 	s16 var_v1;
 	sp24 = alienInstances[arg2].typeIndex;
 
-	*arg3 = func_8011E6FC_12D6AC((s32)arg0, (s32)arg1, &sp22);
+	*arg3 = func_8011E6FC_12D6AC((s16)arg0, (s16)arg1, &sp22);
 
 	var_v1 = (*arg3) != 0xFF
-				 ? (func_800B84D0_C7480((s32)arg0, (s32)arg1) >> 8)
+				 ? (func_800B84D0_C7480((s16)arg0, (s16)arg1) >> 8)
 				 : sp22;
 
 	if ((var_v1 != sp22) && (!(alienTypes[sp24].unk54 & 0x80000041)))
@@ -4379,41 +4379,35 @@ s32 func_80083060_92010(s16 arg0, s16 arg1, s32 arg2, u8 *arg3)
 }
 
 // CURRENT(3293)
-#ifdef NON_MATCHING
 s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
+	s32 x;
+	s32 z;
 	AlienInstance *alien;
-	s32 pad0;
-	s32 pad1;
 	s32 pad2;
 	s32 pad3;
 	s32 i;
+	s32 radius;
+	u8 typeIndex;
 	s32 nearCount;
+	u8 hitBuilding;
+	u8 blockedBuilding;
+	u8 chosenBuilding;
 	s32 spanCount;
-	s16 baseAngle;
+	s16 spare;
 	s16 lowAngle;
 	s16 highAngle;
 	s16 leftAngle;
 	s16 rightAngle;
+	s16 baseAngle;
 	s16 angle;
 	s16 delta;
-	s16 facingDir;
-	s32 x;
-	s32 z;
-	f64 radius;
-	u8 hitBuilding;
-	u8 blockedBuilding;
-	u8 chosenBuilding;
-	u8 typeIndex;
 
 	alien = &alienInstances[arg0];
 	typeIndex = alien->typeIndex;
-	facingDir = alien->unk12;
+	radius = alienTypes[typeIndex].unkC;
+	chosenBuilding = blockedBuilding = hitBuilding = 0xFF;
 	baseAngle = alien->unkE;
-	radius = (f64)alienTypes[typeIndex].unkC;
-	chosenBuilding = 0xFF;
-	blockedBuilding = 0xFF;
-	hitBuilding = 0xFF;
-	if (facingDir < 0) {
+	if (alien->unk12 < 0) {
 		baseAngle += 0x8000;
 	}
 
@@ -4442,13 +4436,13 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 			if (spanCount == 0) {
 				lowAngle = angle;
 				highAngle = angle;
-				spanCount++;
 			} else if ((s16)(angle - lowAngle) < 0) {
 				lowAngle = angle;
+				break;
 			} else {
 				highAngle = angle;
-				spanCount++;
 			}
+			spanCount++;
 		}
 	}
 
@@ -4461,9 +4455,9 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 
 	if (nearCount == 0) {
 		if (spanCount != 0) {
-			alien->unk34 = 6;
-			alien->unk47 |= 1;
 			alien->unk2A = alien->unkE;
+			alien->unk47 |= 1;
+			alien->unk34 = 6;
 		}
 		alien->unk28 = -1;
 		alien->unk29 = -1;
@@ -4493,9 +4487,7 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 	*arg3 = blockedBuilding;
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800831A4_92154.s")
-#endif
+
 
 // CURRENT(40932)
 #ifdef NON_MATCHING
