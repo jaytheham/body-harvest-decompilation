@@ -88,12 +88,137 @@ const f64 D_80143FF0_152FA0[1] = {255.0};
 const f64 D_80143FF8_152FA8[1] = {0.6};
 const f32 D_80144000_152FB0[1] = {1.6666666f};
 const f32 D_80144004_152FB4[1] = {10000.0f};
+const f64 D_80144008_152FB8[1] = {0.33333};
+const f32 D_80144010_152FC0[1] = {20.833334f};
+const f32 D_80144014_152FC4[1] = {1.6666666f};
+const f32 D_80144018_152FC8[1] = {0.8f};
+const f32 D_8014401C_152FCC[1] = {0.4f};
+const f32 D_80144020_152FD0[1] = {0.4f};
+const f32 D_80144024_152FD4[1] = {0.8f};
+const f64 D_80144028_152FD8[1] = {300.0};
+const u32 jtbl_80144030_152FE0[] = {
+    0x800DAC34,
+    0x800DAC44,
+    0x800DAC24,
+    0x800DAC54,
+    0x800DAC64,
+    0x800DAC74,
+    0x800DACA4,
+    0x800DACB4,
+    0x800DAC94,
+    0x800DAC84,
+};
+const u32 jtbl_80144058_153008[] = {
+    0x800DAD7C,
+    0x800DAD8C,
+    0x800DAD9C,
+    0x800DADAC,
+    0x800DADBC,
+    0x800DADCC,
+    0x800DADDC,
+    0x800DAE1C,
+    0x800DADFC,
+    0x800DADEC,
+    0x800DAE0C,
+    0x800DAE2C,
+    0x800DAD6C,
+    0x800DAE3C,
+    0x800DAE4C,
+    0x800DAE5C,
+    0x800DAE6C,
+    0x800DAE7C,
+    0x800DAE8C,
+    0x800DAE9C,
+    0x800DAEAC,
+    0x800DAEBC,
+};
 
+const f64 D_801440B0_153060[1] = {180.0};
+const f64 D_801440B8_153068[1] = {180.0};
+const f64 D_801440C0_153070[1] = {180.0};
+const f64 D_801440C8_153078[1] = {180.0};
+const f64 D_801440D0_153080[1] = {102.0};
+const f32 D_801440D8_153088[1] = {3000.0f};
+const f64 D_801440E0_153090[1] = {
+    0.00035714285714285714,
+};
+const f32 D_801440E8_153098[1] = {3001.0f};
+const f32 D_801440EC_15309C[1] = {3000.0f};
+const f64 D_801440F0_1530A0[1] = {
+    3001.0,
+};
+const f32 D_801440F8_1530A8[1] = {0.003921569f};
+const f64 D_80144100_1530B0[1] = {
+    3001.0,
+};
+const f64 D_80144108_1530B8[1] = {
+    0.8,
+};
 
+const u32 jtbl_80144110_1530C0[] = {
+    0x800DD7C0,
+    0x800DD7B0,
+    0x800DD7D0,
+    0x800DD7E0,
+    0x800DD7F0,
+    0x800DD800,
+    0x800DD830,
+    0x800DD840,
+    0x800DD820,
+    0x800DD810,
+};
+const u32 jtbl_80144138_1530E8[] = {
+    0x800DD934,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DD944,
+    0x800DD954,
+    0x800DDA20,
+    0x800DD964,
+    0x800DDA20,
+    0x800DDA20,
+    0x800DD974,
+    0x800DD924,
+    0x800DDA20,
+    0x800DD984,
+    0x800DD994,
+    0x800DD9A4,
+    0x800DD9B4,
+    0x800DD9C4,
+    0x800DD9D4,
+    0x800DD9E4,
+    0x800DDA20,
+};
+const f32 D_80144190_153140[1] = {0.6f};
 
-
-
-
+const u32 jtbl_80144194_153144[] = {
+    0x800E1F60,
+    0x800E1EA8,
+    0x800E1E40,
+    0x800E1E40,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1E40,
+    0x800E1EA8,
+    0x800E1E40,
+};
+const u32 jtbl_801441C4_153174[] = {
+    0x800E39F4,
+    0x800E3B00,
+    0x800E3C10,
+    0x800E3D70,
+    0x800E4488,
+    0x800E3DBC,
+    0x800E3F7C,
+};
+const f64 D_801441E0_153190[1] = {
+    1.7
+};
 
 
 
@@ -5320,6 +5445,7 @@ void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	}
 }
 
+#ifdef NON_MATCHING
 void func_800CF948_DE8F8(void) {
 	s16 curr;
 	u8 i;
@@ -5412,6 +5538,9 @@ void func_800CF948_DE8F8(void) {
 		curr = D_80154318[curr].unk4;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF948_DE8F8.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800CFD84_DED34(void) {
@@ -5498,7 +5627,7 @@ void func_800CFD84_DED34(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_flare_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CFD84_DED34.s")
 #endif
 
 
@@ -5585,11 +5714,9 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 	return -3;
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_glow_spawn_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0614_DF5C4.s")
 #endif
 
-
-// CURRENT(2618)
 void func_800D0C00_DFBB0(void) {
 	s16 index = D_80154252;
 	s32 soundAge = 8;
@@ -7136,6 +7263,7 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5760_E4710.s")
 #endif
 
+#ifdef NON_MATCHING
 void func_800D5AF4_E4AA4(void) {
 	s16 angle;
 	s16 curr;
@@ -7221,6 +7349,9 @@ void func_800D5AF4_E4AA4(void) {
 		curr = parent->unk4;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5AF4_E4AA4.s")
+#endif
 
 u8 func_800D5FD4_E4F84(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	u8 slot;
@@ -9557,12 +9688,13 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_beam_fade_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC5B8_EB568.s")
 #endif
 
 // DrawNonZBufferedEffects
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
+#ifdef NON_MATCHING
 void func_800DD604_EC5B4(void) {
 	u8 i;
 	u8 effect;
@@ -9745,6 +9877,9 @@ void func_800DD604_EC5B4(void) {
 		D_80156ED9 = 0;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DD604_EC5B4.s")
+#endif
 
 
 void func_800DDB18_ECAC8(void) {
@@ -10327,7 +10462,7 @@ void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_explosion_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFBA8_EEB58.s")
 #endif
 
 void func_800DFE68_EEE18(s16 arg0, s16 arg1, s16 arg2) {
@@ -10730,6 +10865,7 @@ void func_800E1C10_F0BC0(void) {
 	D_80156EDC.unk4 = D_80052B34->unk4;
 }
 
+#ifdef NON_MATCHING
 void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 	s32 skipSecondCall = 0;
 	s32 shouldClamp = 0;
@@ -10806,6 +10942,9 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 		}
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
+#endif
 
 
 
@@ -11515,7 +11654,7 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_beam_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 #endif
 
 // CURRENT(1348)
