@@ -7390,35 +7390,23 @@ void func_80073058_15B118(void)
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Persists the visited-room bitmask to global state
+// Persists the visited-room bitmask to global state
 void func_8007313C_15B1FC(void) {
-	Unk800E66A8 *entry;
-	s32 count;
-	s32 var_v0;
-
-	count = D_800E668C;
-	entry = D_800E66A8;
-	if (count > 0) {
-		s16 *temp_a3 = &D_80047D40[buildingInteriorToLoadId];
-		var_v0 = 0;
-		do {
-			if (D_800E65BC[entry->unk0].unk44 & 2) {
-				entry->unk2E &= ~1;
-			}
-			if (entry->unk2E & 1) {
-				*temp_a3 |= 1 << var_v0;
-			} else {
-				*temp_a3 &= ~(1 << var_v0);
-			}
-			var_v0++;
-			entry++;
-		} while (var_v0 < count);
+	s32 i;
+	u8 type;
+	for (i = 0; i < D_800E668C; i++) {
+		type = D_800E66A8[i].unk0;
+		if (D_800E65BC[type].unk44 & 2) {
+			D_800E66A8[i].unk2E &= ~1;
+		}
+		if (D_800E66A8[i].unk2E & 1) {
+			D_80047D40[buildingInteriorToLoadId] |= 1 << i;
+		} else {
+			D_80047D40[buildingInteriorToLoadId] &= ~(1 << i);
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007313C_15B1FC.s")
-#endif
+
 
 // AI - Handles special building exit teleports to different map locations
 void func_80073200_15B2C0(void) {
