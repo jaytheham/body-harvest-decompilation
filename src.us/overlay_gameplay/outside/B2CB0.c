@@ -574,81 +574,73 @@ void func_800A53C0_B4370(u8 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT (5097)
-#ifdef NON_MATCHING
-void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
-	AlienInstance *entry;
-	s32 sp1C;
-	u8 sp23;
-	AlienType *type;
+void func_800A5554_B4504(u8 arg0, s32 arg1, f32 arg2, s16 arg3) {
+	s32 delta;
+	s32 amount;
+	s32 terrainHeight;
+	u8 typeIndex;
+	s32 airborne;
 
-	entry = &alienInstances[arg0];
-	sp1C = 0;
-	sp23 = entry->typeIndex;
+	airborne = 0;
+	typeIndex = alienInstances[arg0].typeIndex;
 	func_80137468_146418(arg0, 0x1C);
 	func_8008076C_8F71C(arg0);
 	func_800A53C0_B4370(arg0, 0x1F4, 0x1388);
-	if ((s32)(entry->unk20 << 4) < 0) {
-		sp1C = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
-		if (sp1C != 0 && D_80222A70 >= D_80052B34->unk2) {
-			sp1C = 0;
+	if ((s32)(alienInstances[arg0].unk20 << 4) < 0) {
+		airborne = D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE;
+		if (airborne != 0 && D_80222A70 >= D_80052B34->unk2) {
+			airborne = 0;
 		}
 	}
-	type = &alienTypes[sp23];
+	delta = alienInstances[arg0].unk12 - alienInstances[arg0].unk2C;
 	{
-		s32 temp_f10 = (s32)(((f32)(entry->unk12 - entry->unk2C) / (f32)type->unk40) * 8000.0f * 2.0f);
-		if (temp_f10 == 0 || entry->unk12 >= (type->unk40 - type->unk3E * 2)) {
-			if (entry->unkA >= 0xFA1) {
-				entry->unkA = (s16)(entry->unkA - 0xC8);
+		amount = (s32)(((f32)delta / (f32)alienTypes[typeIndex].unk40) * 8000.0f * 2);
+		if (amount == 0 || alienInstances[arg0].unk12 >= (alienTypes[typeIndex].unk40 - alienTypes[typeIndex].unk3E * 2)) {
+			if (alienInstances[arg0].unkA >= 0xFA1) {
+				alienInstances[arg0].unkA = alienInstances[arg0].unkA - 0xC8;
 			}
 		} else {
-			entry->unkA = (s16)(entry->unkA + temp_f10);
+			alienInstances[arg0].unkA = alienInstances[arg0].unkA + amount;
 		}
 	}
-	if (entry->unkA >= 0xFA1) {
-		entry->unkA = entry->unkA;
+	if (alienInstances[arg0].unkA >= 0xFA1) {
+		alienInstances[arg0].unkA = alienInstances[arg0].unkA;
 	} else {
-		entry->unkA = 0xFA0;
+		alienInstances[arg0].unkA = 0xFA0;
 	}
-	if (entry->unkA < 0x1F40) {
-		entry->unkA = entry->unkA;
+	if (alienInstances[arg0].unkA < 0x1F40) {
+		alienInstances[arg0].unkA = alienInstances[arg0].unkA;
 	} else {
-		entry->unkA = 0x1F40;
+		alienInstances[arg0].unkA = 0x1F40;
 	}
 	{
-		s32 var_a0 = func_800B84D0_C7480(entry->unk0, entry->unk4) >> 8;
-		if (var_a0 < D_80222A70) {
-			var_a0 = D_80222A70;
+		terrainHeight = func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8;
+		if (terrainHeight < D_80222A70) {
+			terrainHeight = D_80222A70;
 		}
-		if (entry->unk16 >= var_a0) {
-			var_a0 = entry->unk16;
+		if (alienInstances[arg0].unk16 >= terrainHeight) {
+			terrainHeight = alienInstances[arg0].unk16;
 		}
 		{
-			s32 temp_var = (s16)(arg1 + var_a0);
-			if (sp1C != 0) {
-				temp_var = (s16)(D_80052B34->unk2 + 0x12C);
-			}
-			if (temp_var < entry->unk2) {
-				if (temp_var > (s16)(entry->unk2 - 7)) {
-					entry->unk2 = temp_var;
+			arg1 = airborne != 0 ? D_80052B34->unk2 + 0x12C : arg1 + terrainHeight;
+			if (arg1 < alienInstances[arg0].unk2) {
+				if (arg1 > (alienInstances[arg0].unk2 - 7)) {
+					alienInstances[arg0].unk2 = arg1;
 				} else {
-					entry->unk2 = (s16)(entry->unk2 - 7);
+					alienInstances[arg0].unk2 = (alienInstances[arg0].unk2 - 7);
 				}
-			} else if (temp_var > entry->unk2) {
-				if (temp_var < (s16)(entry->unk2 + 7)) {
-					entry->unk2 = temp_var;
+			} else if (arg1 > alienInstances[arg0].unk2) {
+				if (arg1 < (alienInstances[arg0].unk2 + 7)) {
+					alienInstances[arg0].unk2 = arg1;
 				} else {
-					entry->unk2 = (s16)(entry->unk2 + 7);
+					alienInstances[arg0].unk2 = (alienInstances[arg0].unk2 + 7);
 				}
 			}
 		}
 	}
-	entry->unk2C = entry->unk12;
+	alienInstances[arg0].unk2C = alienInstances[arg0].unk12;
 	D_8014DD50[arg3].unk6 = (s16)((u16)D_8014DD50[arg3].unk6 + 0x2EE0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5554_B4504.s")
-#endif
 
 void func_800A57E4_B4794(u8 arg0) {
 	s32 dx;

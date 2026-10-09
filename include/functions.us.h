@@ -690,7 +690,7 @@ void func_800A41B0_B3160(u8 arg0);
 void func_800A4C28_B3BD8(u8 arg0);
 void func_800A53C0_B4370(u8, s16, s16);
 void func_800A57E4_B4794(u8);
-void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3);
+void func_800A5554_B4504(u8 arg0, s32 arg1, f32 arg2, s16 arg3);
 void func_800A5BD0_B4B80(s32 arg0);
 void func_800A5D3C_B4CEC(void);
 void func_800A5EE8_B4E98(u8);
