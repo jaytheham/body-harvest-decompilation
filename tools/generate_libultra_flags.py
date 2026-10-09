@@ -18,7 +18,7 @@ for name, config in sources.items():
         f"{target}: OPT_FLAGS := {config['optimization']}",
         f"{target}: MIPSISET := {config['isa']} -32",
         f"{target}: CFLAGS := {includes} {cflags}",
-        f"{target}: CC_CHECK := $(subst $(INCLUDE_CFLAGS),{includes} $(INCLUDE_CFLAGS),{check})",
+        f"{target}: CC_CHECK := $(subst $(INCLUDE_CFLAGS),{includes} $(INCLUDE_CFLAGS),{check}) -D_MIPS_SZLONG=32",
     ])
 (root / "src.us/libultra/compiler_flags.mk").write_text(
     "\n".join(lines) + "\n", encoding="utf-8", newline="\n")
