@@ -7488,12 +7488,11 @@ void func_8008B8E4_9A894(u8 arg0)
 
 // CURRENT(1895)
 // Shield Generator on-death function - called in Greece, Java, America, and Siberia - this func does not directly lead to boss cutscene
-#ifdef NON_MATCHING
 void func_8008BC58_9AC08(u8 arg0)
 {
 	AlienInstance *inst;
-	s32 pad0;
-	s32 pad1;
+	s32 effectType;
+	s32 index;
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
@@ -7525,14 +7524,14 @@ void func_8008BC58_9AC08(u8 arg0)
 			randB = func_800038E0_44E0();
 			randC = func_800038E0_44E0();
 			randD = func_800038E0_44E0();
-			func_800038E0_44E0();
+			effectType = func_800038E0_44E0();
 
 			func_800DF848_EE7F8(
 				(s16)(((randA % 0x190) + inst->unk0) - 0xC8),
 				(s16)((randB % 0x2BC) + inst->unk2),
 				(s16)(((randC % 0x190) + inst->unk4) - 0xC8),
 				(u16)((randD % 0x64) + 0x28),
-				inst->unk2C % 4);
+				effectType % 4);
 		}
 	}
 
@@ -7546,34 +7545,37 @@ void func_8008BC58_9AC08(u8 arg0)
 	    // walk through VehicleInstances and apply 32767 damage to non-player vehicles within 8192 distance of the Shield Generator instance
 	    // implementation seems bugged/incomplete as any vehicles in slot 64 or higher aren't actually destroyed by this function
 
-		idx = inst->unk2C - 0x10; 
-		if ((D_80052B34 != &vehicleInstances[idx]) && (vehicleInstances[idx].unk1A != 0))
+		index = inst->unk2C - 0x10; 
+		if ((D_80052B34 != &vehicleInstances[index]) && (vehicleInstances[index].unk1A != 0))
 		{
-			if (func_80084E54_93E04(inst, &vehicleInstances[idx]) < 0x2000)
+			if (func_80084E54_93E04(inst, &vehicleInstances[index]) < 0x2000)
 			{
-				func_80123E90_132E40(&vehicleInstances[idx], 0x7FFF);
+				func_80123E90_132E40(&vehicleInstances[index], 0x7FFF);
 			}
 		}
 
 		// walk through AlienInstances and despawn any active aliens in entire level
 
+		idx = index;
+		index = 0xFF;
 		for (iter = 0; iter != 0x100; iter += 0x40, idx += 0x40)
 		{
-			if ((idx != 0xFF) && (idx >= 0) && (idx != arg0))
+			if ((index == idx) || (idx < 0) || (idx == arg0))
 			{
-				AlienInstance *otherAlien = &alienInstances[idx];
-				if (otherAlien->typeIndex != 0)
+				continue;
+			}
+			{
+				inst = &alienInstances[idx];
+				if (inst->typeIndex != 0)
 				{
 					func_80079910_888C0(idx);
-					func_800DF848_EE7F8(otherAlien->unk0, otherAlien->unk2, otherAlien->unk4, (u16)alienTypes[otherAlien->typeIndex].unkC, 0);
+					func_800DF848_EE7F8(inst->unk0, inst->unk2, inst->unk4, (u16)alienTypes[inst->typeIndex].unkC, 0);
 				}
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008BC58_9AC08.s")
-#endif
+
 
 void func_8008BF8C_9AF3C(u8 arg0)
 {
