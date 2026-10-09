@@ -11891,8 +11891,6 @@ void func_800E5538_F44E8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
 #endif
 
-// CURRENT(120): timer/count reload ordering and compaction-loop sign extension.
-#ifdef NON_MATCHING
 void func_800E5B78_F4B28(void)
 {
 	Unk80152CA0Entry *entry;
@@ -11910,8 +11908,8 @@ void func_800E5B78_F4B28(void)
 		if (timer != 0)
 		{
 			entry->unk2 = timer - 1;
-			timer = entry->unk2;
 		}
+		timer = entry->unk2;
 		if (one == timer)
 		{
 			if (entry->unk1 == 2)
@@ -11922,9 +11920,7 @@ void func_800E5B78_F4B28(void)
 			{
 				buildingInstances[entry->unk0].statusFlags &= ~0x1000;
 			}
-			j = i;
-			count = D_80152C96 - 1;
-			for (; j < count; j++)
+			for (j = i, count = D_80152C96 - 1; j < count; j++)
 			{
 				D_80152CA0[j] = D_80152CA0[j + 1];
 			}
@@ -11932,9 +11928,7 @@ void func_800E5B78_F4B28(void)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5B78_F4B28.s")
-#endif
+
 
 // Allocate shield (temporary shield around Adam, triggered by Defender cheat and by unused item pickup
 void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
