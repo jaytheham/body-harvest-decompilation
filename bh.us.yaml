@@ -51,7 +51,7 @@ segments:
       - [0x17EE0, c, core/17EE0] # Dialogue
       - [0x1B060, c, core/1B060]
       - [0x1B100, c, core/1B100]
-      - [0x1B7E0, lib, libultra_rom, aisetfreq]
+      - [0x1B7E0, c, libultra/aisetfreq]
       - [0x1B940, c, libultra/sl]
       - [0x1BA00, lib, libultra_rom, heapalloc]
       - [0x1BA60, lib, libultra_rom, createmesgqueue]

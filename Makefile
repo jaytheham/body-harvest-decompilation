@@ -165,6 +165,7 @@ endif
 # Flags
 
 OPT_FLAGS      = -O2
+$(BUILD_DIR)/$(SRC_DIR)/libultra/aisetfreq.c.o: OPT_FLAGS := -O1
 LOOP_UNROLL    =
 
 MIPSISET       = -mips2 -32

@@ -248,14 +248,15 @@ def build(args):
             if source.suffix == ".s":
                 run([assembler, *asflags, "-o", target, source], quiet=args.quiet)
             elif source.suffix == ".c":
+                optimization = "-O1" if source.as_posix() == "src.us/libultra/aisetfreq.c" else "-O2"
                 global_asm = "GLOBAL_ASM" in source.read_text(encoding="utf-8")
                 compiled = source
-                processor = [sys.executable, "tools/asm-processor/asm_processor.py", "-O2", source]
+                processor = [sys.executable, "tools/asm-processor/asm_processor.py", optimization, source]
                 if global_asm:
                     compiled = Path("build") / source
                     with compiled.open("wb") as out:
                         run(processor, output=out, quiet=args.quiet)
-                run([CACHE / "ido/cc.exe", "-c", *cflags, "-O2", "-mips2", "-32", "-o", name, compiled], env=env, quiet=args.quiet)
+                run([CACHE / "ido/cc.exe", "-c", *cflags, optimization, "-mips2", "-32", "-o", name, compiled], env=env, quiet=args.quiet)
                 if global_asm:
                     # shlex understands quoted forward-slash Windows paths.
                     asm_command = '"' + assembler.as_posix() + '" ' + " ".join(asflags)

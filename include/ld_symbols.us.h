@@ -304,6 +304,7 @@ extern Addr core_FB00_c;
 extern Addr core_FD80_c;
 extern Addr core_loader_c;
 extern Addr header_s;
+extern Addr libultra_aisetfreq_c;
 extern Addr libultra_aisetnextbuf_data_c;
 extern Addr libultra_aisetnextbuf_s;
 extern Addr libultra_align_s;
