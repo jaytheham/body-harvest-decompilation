@@ -7128,8 +7128,7 @@ void func_8007279C_15A85C(void)
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Main interior game loop: rendering, room selection, building exit
+// Main interior game loop: rendering, room selection, building exit
 void func_8007290C_15A9CC(void)
 {
 	s32 selectionActive;
@@ -7210,7 +7209,7 @@ void func_8007290C_15A9CC(void)
 
 		if ((D_800E6694 != 0) && (D_800E65A8 & 0x200)) {
 			index = D_800E65D4;
-			bitWord = (s32 *)((u8 *)D_80047F40 + ((index / 32) * 4));
+			bitWord = &D_80047F40[index / 32];
 			*bitWord |= 1 << (index % 32);
 			func_8007313C_15B1FC();
 			func_8007C8BC_16497C();
@@ -7237,7 +7236,7 @@ void func_8007290C_15A9CC(void)
 	}
 
 	index = D_800E65D4;
-	bitWord = (s32 *)((u8 *)D_80047F40 + ((index / 32) * 4));
+	bitWord = &D_80047F40[index / 32];
 	*bitWord |= 1 << (index % 32);
 	func_800736C4_15B784();
 	func_8007313C_15B1FC();
@@ -7295,9 +7294,7 @@ void func_8007290C_15A9CC(void)
 	gameplayMode = 1;
 	D_80068080 = 7;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007290C_15A9CC.s")
-#endif
+
 
 // jtbl_800A4A88_18CB48
 // https://decomp.me/scratch/hiUtd
