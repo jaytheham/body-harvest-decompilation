@@ -9863,7 +9863,6 @@ void func_800DD604_EC5B4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DD604_EC5B4.s")
 #endif
 
-
 void func_800DDB18_ECAC8(void) {
 	u8 i;
 
@@ -10120,9 +10119,6 @@ void func_800DE2E8_ED298(void) {
 		i = (i + 1) & 0xFF;
 	} while (i < 0x50);
 }
-
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
 #endif
@@ -10148,7 +10144,6 @@ void func_800DEA08_ED9B8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg
 	}
 }
 
-// https://decomp.me/scratch/BrqyY
 void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	u32 slot;
 	s16 val;
@@ -10163,11 +10158,10 @@ void func_800DEADC_EDA8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-// CURRENT (3200)
 void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2) {
 	s16 sp46;
 	s16 sp44;
-	s32 unused; /* Preserves the original local stack layout. */
+	s32 unused;
 	s16 sp3E;
 	s16 sp3C;
 	u8 sp3B;
@@ -10195,7 +10189,6 @@ void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2) {
 	}
 }
 
-
 u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
 	u8 slot;
 
@@ -10209,7 +10202,6 @@ void func_800DEED0_EDE80(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 5, (s32) arg3), arg4);
 }
 
-// CURRENT(80)
 void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	u8 slot;
 	u8 var_s0;
@@ -10349,7 +10341,6 @@ s16 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s8 *arg
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
 #endif
-
 
 s16 func_800DF848_EE7F8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	s32 randVal;
@@ -10698,7 +10689,6 @@ void func_800E0D28_EFCD8(s16 arg0, s16 arg1, s16 arg2) {
 		D_80154318[spEffect->unk6].unk14 = 1;
 	}
 }
-
 
 void func_800E0E9C_EFE4C(s16 arg0, s16 arg1, u16 arg2)
 {
@@ -11179,7 +11169,6 @@ void func_800E2DB4_F1D64(void) {
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 }
 
-// CURRENT(7084)
 void func_800E2ED4_F1E84(void) {
 	Unk800311A0 *entry;
 	s32 scroll;
@@ -11338,7 +11327,6 @@ void func_800E3738_F26E8(u16 arg0, u8 arg1) {
 		gDPSetColor(D_8005BB2C++, G_SETENVCOLOR, 0x96000000 | (green << 16) | (red << 8) | (arg1 & 0xFF));
 	}
 }
-
 
 #ifdef NON_MATCHING
 void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 arg6, s16 arg7, u8 arg8) {
@@ -11634,9 +11622,9 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 
 void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	Unk80052B40 position;
-	s32 unused; /* Preserve the gap below the matrix position. */
+	s32 unused;
 	u8 red, green, blue;
-	s32 unused2; /* Preserve the gap above the coordinate words. */
+	s32 unused2;
 	SignedWord sourceX, sourceY, sourceZ, hitX, hitY, hitZ;
 
 	func_80128504_1374B4(arg0, 0, &sourceX.word, &sourceY.word, &sourceZ.word);
@@ -11676,7 +11664,6 @@ void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-
 // CURRENT(380)
 #ifdef NON_MATCHING
 void func_800E5044_F3FF4(void) {
@@ -11714,7 +11701,6 @@ void func_800E5044_F3FF4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5044_F3FF4.s")
 #endif
 
-// CURRENT(12125)
 void func_800E520C_F41BC(void) {
 	s32 i;
 
@@ -11785,7 +11771,6 @@ void func_800E52E8_F4298(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 
 	func_800B1A68_C0A18(&start, &end, &color);
 }
-
 
 void func_800E5450_F4400(AlienInstance *arg0, s32 arg1) {
 	u8 i;
@@ -11921,43 +11906,50 @@ void func_800E5538_F44E8(void) {
 
 // CURRENT(120): timer/count reload ordering and compaction-loop sign extension.
 #ifdef NON_MATCHING
-void func_800E5B78_F4B28(void) {
-    Unk80152CA0Entry *entry;
-    s16 i;
-    s16 j;
-    s32 timer;
-    s32 count;
-    s32 one;
+void func_800E5B78_F4B28(void)
+{
+	Unk80152CA0Entry *entry;
+	s16 i;
+	s16 j;
+	s32 timer;
+	s32 count;
+	s32 one;
 
-    one = 1;
-    for (i = 0; i < D_80152C96; i++) {
-        entry = &D_80152CA0[i];
-        timer = entry->unk2;
-        if (timer != 0) {
-            entry->unk2 = timer - 1;
-            timer = entry->unk2;
-        }
-        if (one == timer) {
-            if (entry->unk1 == 2) {
-                vehicleInstances[entry->unk0].unk20 &= ~VEHICLE_FLAG_UNK8;
-            } else if (one == entry->unk1) {
-                buildingInstances[entry->unk0].statusFlags &= ~0x1000;
-            }
-            j = i;
-            count = D_80152C96 - 1;
-            for (; j < count; j++) {
-                D_80152CA0[j] = D_80152CA0[j + 1];
-            }
-            D_80152C96 = count;
-        }
-    }
+	one = 1;
+	for (i = 0; i < D_80152C96; i++)
+	{
+		entry = &D_80152CA0[i];
+		timer = entry->unk2;
+		if (timer != 0)
+		{
+			entry->unk2 = timer - 1;
+			timer = entry->unk2;
+		}
+		if (one == timer)
+		{
+			if (entry->unk1 == 2)
+			{
+				vehicleInstances[entry->unk0].unk20 &= ~VEHICLE_FLAG_UNK8;
+			}
+			else if (one == entry->unk1)
+			{
+				buildingInstances[entry->unk0].statusFlags &= ~0x1000;
+			}
+			j = i;
+			count = D_80152C96 - 1;
+			for (; j < count; j++)
+			{
+				D_80152CA0[j] = D_80152CA0[j + 1];
+			}
+			D_80152C96 = count;
+		}
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5B78_F4B28.s")
 #endif
 
-
-// Allocate shield (wtf is a shield?) (temporary shield around Adam, triggered by Defender cheat and by unused item pickup
+// Allocate shield (temporary shield around Adam, triggered by Defender cheat and by unused item pickup
 void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	Unk80152CA0Entry *entry;
 	s16 count;
@@ -12033,6 +12025,7 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5E3C_F4DEC.s")
 #endif
+
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
 
@@ -12283,8 +12276,6 @@ void func_800E6A38_F59E8(void) {
 	Vtx *vtx4;
 	Vtx *vtx5;
 
-
-
 	if ((currentLevel != 1) || (D_80052ACA == 2)) {
 		return;
 	}
@@ -12324,8 +12315,6 @@ void func_800E6A38_F59E8(void) {
 
 	while (slotCount--) {
 		slot = &D_80153300[slotCount];
-
-
 		remain = slot->unk1E6;
 		if (remain != 0) {
 			if (remain--) {
@@ -12428,7 +12417,6 @@ void func_800E6A38_F59E8(void) {
 			} while (remain--);
 			}
 		}
-
 	}
 
 	gDPTileSync(D_8005BB2C++);
@@ -12475,7 +12463,6 @@ void func_800E72A0_F6250(void)
 	func_800E520C_F41BC();
 }
 
-
 void func_800E7338_F62E8(void)
 {
 	s16 new_var;
@@ -12512,7 +12499,6 @@ void func_800E74DC_F648C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5
 	D_8015753A = arg2;
 	D_8015753C = arg5;
 }
-
 
 void func_800E75A0_F6550(s16 arg0, s16 arg1, s16 arg2) {
 	if (currentLevel == LEVEL_GREECE || currentLevel == LEVEL_AMERICA) {
