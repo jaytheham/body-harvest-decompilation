@@ -115,6 +115,25 @@ mips-linux-gnu-objdump -h build/src.us/<path>.c.o | grep -E 'text|rodata|data'
 python3 -c "b=open('baserom.us.z64','rb').read(); u=open('build/bh.us.z64','rb').read(); print(b==u, b[o:o+16].hex(), u[o:o+16].hex())"
 ```
 
+### The residual is one duplicated load, not a source shape
+
+Re-measured (seam2 run 37): with the guard off the body compiles to **32** instructions against the
+target 31, and the only difference is a duplicated `lw $a1,0x18(sp)`:
+
+    target: c.eq.d f4,f6 | lui a0,%hi | lw a1,0x18(sp) | bc1f | nop | jal osSyncPrintf | addiu a0,a0,%lo | lw t7,0x18(sp)
+    ours:   c.eq.d f4,f6 | mov.s f12,f0 | lui a0,%hi | addiu a0,a0,%lo | lw a1,0x18(sp) | bc1f | nop | jal | lw a1,0x18(sp) | lw t7,0x18(sp)
+
+The target keeps the `%lo` half in the `jal` delay slot; our compile hoists it before the branch and
+fills the delay slot with a redundant reload of `$a1`. Every other row is an encoding alias, so the
+asm-differ score is pinned at **702** by the layout noise above regardless of the body.
+
+13 body variants all measured **32** instructions (score 702 for every one): struct copy vs three field
+copies, copy-before-print, `const char`/`(void *)` casts on the format arg, a pointer local
+`Vec3f *src`, `f64 d`/`f64 z` compare temps, reversed `0.0 == (f64)t`, `if (0.0 == ...)`, if/else with
+and without `return`, and inlining the magnitude call into the `if`. The count is therefore not
+reachable by body shape - the divergence is cfe scheduling of the `%hi`/`%lo` split. The function
+stays a park while its length is 32; do not re-tread these variants.
+
 ## Sixth and seventh instances (seam2 run 13): both land on the declared-block delta
 
 Two more mid-rodata switch owners in `overlay_gameplay/inside/`, each measured by unwrapping only (no
