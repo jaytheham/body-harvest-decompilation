@@ -88,7 +88,6 @@ const f64 D_80143FF0_152FA0[1] = {255.0};
 const f64 D_80143FF8_152FA8[1] = {0.6};
 const f32 D_80144000_152FB0[1] = {1.6666666f};
 const f32 D_80144004_152FB4[1] = {10000.0f};
-const f64 D_80144008_152FB8[1] = {0.33333};
 
 
 
@@ -5194,107 +5193,103 @@ void func_800CF174_DE124(Vec3f *arg0, u8 arg1) {
 
 
 // CURRENT(11193)
-#ifdef NON_MATCHING
 void func_800CF2E0_DE290(void) {
-	s16 curr;
 	Unk80154318Entry *entry;
-	Unk80154318Sub *sub;
-	Vec3f spFC;
-	Vec3f spF0;
-	Vec3f spE0;
-	Vec3f spD4;
-	Vec3f spC8;
-	Vec3f spBC;
-	f32 temp_f20;
+	Unk80154318Sub *ribbon;
+	Vec3f right;
+	Vec3f left;
+	s16 index;
+	Vec3f point0;
+	Vec3f point3;
+	Vec3f point1;
+	Vec3f point2;
+	s32 pad0; /* Preserve the original local stack layout. */
+	s32 pad1;
+	f32 extent;
 	f64 scale;
-	u8 temp_s2;
-	u8 temp_s1;
-	u8 temp_t5;
-	u8 temp_t6;
-	u8 temp_t4;
-	u8 temp_t7;
+	u8 firstTexture;
+	u8 lastTexture;
+	u8 firstHigh;
+	u8 lastHigh;
 
+	index = D_8015425E;
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0, PRIMITIVE, ENVIRONMENT,
-					 TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
-	scale = D_80144008_152FB8;
+	TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
 
-	curr = D_8015425E;
-	if ((curr != -6) && (curr != -5)) {
+	if ((index != -6) && (index != -5)) {
+		scale = 0.33333;
 		do {
-		entry = &D_80154318[curr];
-		if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
-						   0x4000 - D_80047950) != 0) {
-			gDPPipeSync(D_8005BB2C++);
-			sub = (Unk80154318Sub *)&entry->unk8;
+			entry = &D_80154318[index];
+			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
+			0x4000 - D_80047950) != 0) {
+				gDPPipeSync(D_8005BB2C++);
+				ribbon = &entry->ribbonState;
 
-			if ((u32)(D_80052A8C & 3) < 2U) {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, sub->unkC);
-			} else {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0x80, sub->unkC);
-			}
+				if ((u32)(D_80052A8C & 3) < 2U) {
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, ribbon->unkC);
+				} else {
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0x80, ribbon->unkC);
+				}
 
-			gDPSetEnvColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, sub->unkC);
+				gDPSetEnvColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, ribbon->unkC);
 
-			D_80153BC8 = (f32)entry->unk2;
-			temp_f20 = (f32)(entry->unk2 * 3.0);
-			D_80153BCC = sub->unkC;
-			D_80153BC4 = (void *)&sub->unk6;
-			func_800C1128_D00D8(temp_f20, &D_80153AB8, &spF0);
-			func_800C1128_D00D8(temp_f20, &D_80153AC4, &spFC);
+				D_80153BC8 = (f32)D_80154318[index].unk2;
+				extent = D_80154318[index].unk2 * 3.0;
+				D_80153BCC = ribbon->unkC;
+				D_80153BC4 = &ribbon->unk6;
+				func_800C1128_D00D8(extent, &D_80153AB8, &left);
+				func_800C1128_D00D8(extent, &D_80153AC4, &right);
 
-			spE0.x = (f32)(((spF0.x - spFC.x) * 0.5) + sub->unk0);
-			spE0.y = (f32)(((spF0.y - spFC.y) * 0.5) + sub->unk2);
-			spE0.z = (f32)(((spF0.z - spFC.z) * 0.5) + sub->unk4);
+				point0.x = ((left.x - right.x) * 0.5) + (f32)ribbon->unk0;
+				point0.y = ((left.y - right.y) * 0.5) + (f32)ribbon->unk2;
+				point0.z = ((left.z - right.z) * 0.5) + (f32)ribbon->unk4;
 
-			spD4.x = (f32)(((spFC.x - spF0.x) * 0.5) + sub->unk0);
-			spD4.y = (f32)(((spFC.y - spF0.y) * 0.5) + sub->unk2);
-			spD4.z = (f32)(((spFC.z - spF0.z) * 0.5) + sub->unk4);
+				point3.x = ((right.x - left.x) * 0.5) + (f32)ribbon->unk0;
+				point3.y = ((right.y - left.y) * 0.5) + (f32)ribbon->unk2;
+				point3.z = ((right.z - left.z) * 0.5) + (f32)ribbon->unk4;
 
-			spBC.x = (f32)((spD4.x - spE0.x) * scale);
-			spBC.y = (f32)((spD4.y - spE0.y) * scale);
-			spBC.z = (f32)((spD4.z - spE0.z) * scale);
+				point2.x = (point3.x - point0.x) * scale;
+				point2.y = (point3.y - point0.y) * scale;
+				point2.z = (point3.z - point0.z) * scale;
 
-			func_800C10F4_D00A4(&spE0, &spBC, &spC8);
-			func_800C10C0_D0070(&spD4, &spBC, &spBC);
+				func_800C10F4_D00A4(&point0, &point2, &point1);
+				func_800C10C0_D0070(&point3, &point2, &point2);
 
-			temp_s2 = sub->unk9;
-			temp_s1 = sub->unkA;
-			temp_t5 = (temp_s2 >> 4) & 0xFF;
-			temp_t6 = (temp_s1 >> 4) & 0xFF;
-			temp_t4 = temp_s2 & 0xF;
-			temp_t7 = temp_s1 & 0xF;
+				firstTexture = ribbon->unk9;
+				lastTexture = ribbon->unkA;
+				firstHigh = firstTexture >> 4;
+				firstTexture = firstTexture & 0xF;
+				lastHigh = lastTexture >> 4;
+				lastTexture = lastTexture & 0xF;
 
-			if (temp_t5 == 0) {
-				if (temp_t4 == 0) {
-					if (temp_t6 == 0) {
-						func_800CF174_DE124(&spBC, temp_t7);
+				if (firstHigh == 0) {
+					if (firstTexture == 0) {
+						if (lastHigh == 0) {
+							func_800CF174_DE124(&point2, lastTexture);
+						} else {
+							func_800CF174_DE124(&point1, lastHigh);
+							func_800CF174_DE124(&point2, lastTexture);
+						}
 					} else {
-						func_800CF174_DE124(&spC8, temp_t6);
-						func_800CF174_DE124(&spBC, temp_t7);
+						func_800CF174_DE124(&point3, lastTexture);
+						func_800CF174_DE124(&point1, firstTexture);
+						func_800CF174_DE124(&point2, lastHigh);
 					}
 				} else {
-					func_800CF174_DE124(&spD4, temp_t7);
-					func_800CF174_DE124(&spC8, temp_t4);
-					func_800CF174_DE124(&spBC, temp_t6);
+					func_800CF174_DE124(&point0, firstHigh);
+					func_800CF174_DE124(&point3, lastTexture);
+					func_800CF174_DE124(&point1, firstTexture);
+					func_800CF174_DE124(&point2, lastHigh);
 				}
-			} else {
-				func_800CF174_DE124(&spE0, temp_t5);
-				func_800CF174_DE124(&spD4, temp_t7);
-				func_800CF174_DE124(&spC8, temp_t4);
-				func_800CF174_DE124(&spBC, temp_t6);
 			}
-		}
 
-		curr = entry->unk4;
-		} while ((curr != -6) && (curr != -5));
+			index = D_80154318[index].unk4;
+		} while ((index != -6) && (index != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF2E0_DE290.s")
-#endif
 
 void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 idx;
