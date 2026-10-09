@@ -5423,7 +5423,6 @@ void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800CF948_DE8F8(void) {
 	s16 curr;
 	u8 i;
@@ -5516,9 +5515,7 @@ void func_800CF948_DE8F8(void) {
 		curr = D_80154318[curr].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF948_DE8F8.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_800CFD84_DED34(void) {
