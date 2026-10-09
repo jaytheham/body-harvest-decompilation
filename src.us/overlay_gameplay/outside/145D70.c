@@ -329,7 +329,7 @@ void func_801371B8_146168(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, f3
 	}
 }
 
-void func_80137234_1461E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+void func_80137234_1461E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 unused) {
 	f32 temp_f1;
 
 	if (D_8006AB88 != 0) {

@@ -1891,7 +1891,13 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ s16 type;      /* 0 = free, 1 = laser, 2 = laser type 2 */
-	/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
+	union {
+		/* 0x02 */ s16 timer;     /* remaining lifetime in frames */
+		struct {
+			u8 timerHigh;
+			u8 timerLow;
+		};
+	};
 	/* 0x04 */ s16 x1;        /* start point */
 	/* 0x06 */ s16 y1;
 	union {
@@ -2124,6 +2130,20 @@ typedef struct {
 	/* 0x12 */ s8 unk12;
 	/* 0x13 */ u8 unk13;
 } Unk800E1980; /* size = 0x14 */
+
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s8 unk6;
+	/* 0x07 */ s8 unk7;
+	/* 0x08 */ s8 unk8;
+	/* 0x09 */ u8 unk9;
+	/* 0x0A */ u8 unkA;
+	/* 0x0B */ u8 unkB;
+	/* 0x0C */ u8 unkC;
+	/* 0x0D */ u8 unkD;
+} Unk80154318Sub;
 
 typedef struct {
 	/* 0x00 */ u8 unk0;
@@ -2475,7 +2495,10 @@ typedef struct {
 	/* 0x01 */ s8 sizeStep;
 	/* 0x02 */ s8 heightStep;
 	/* 0x03 */ s8 fadeStep;
-	/* 0x04 */ u8 pad4[4];
+	/* 0x04 */ s8 drawMode;
+	/* 0x05 */ s8 format;
+	/* 0x06 */ s8 width;
+	/* 0x07 */ s8 height;
 } EffectParticleConfig; /* size = 0x08 */
 
 typedef struct {
@@ -2533,7 +2556,10 @@ typedef struct {
 } EffectCallbackState;
 
 typedef struct {
-	/* 0x00 */ s16 angle;
+	union {
+		/* 0x00 */ s16 angle;
+		/* 0x00 */ u16 age;
+	};
 	/* 0x02 */ u8 color[3];
 	/* 0x05 */ u8 pad5[7];
 } SpinnerParentState;
@@ -2604,8 +2630,20 @@ typedef struct {
 	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 opacity;
 	/* 0x0A */ u8 kind;
-	/* 0x0B */ u8 padB;
+	/* 0x0B */ u8 childEffect;
 } SmokePuffState; /* size = 0x0C */
+
+typedef struct {
+	s16 position[3];
+	u8 red;
+	u8 green;
+	u8 blue;
+	u8 opacity;
+	u8 padA[2];
+	s32 age;
+	u8 flags;
+	u8 pad11[3];
+} AnimatedFlareState; /* size = 0x14 */
 
 typedef struct {
 	union {
@@ -2615,6 +2653,30 @@ typedef struct {
 } EffectInterpolationState;
 
 typedef struct {
+	s16 position[3];
+	u8 opacity;
+	u8 pad7[3];
+	u8 paletteIndex;
+	u8 padB;
+} RingVisualState;
+
+typedef struct {
+	s16 width;
+	s16 height;
+	u8 textureSlices[8];
+} RingEmitterState;
+
+typedef union {
+	u8 bytes[0x1E4];
+	u8 colors[3][8];
+} RingPaletteTable;
+
+typedef struct {
+	s16 position[3];
+	s16 previousPosition[3];
+} EffectPositionPair;
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
@@ -2622,6 +2684,8 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	union {
 		EffectInterpolationState interpolation;
+		AnimatedFlareState animatedFlare;
+		Unk80154318Sub ribbonState;
 		struct {
 			union {
 				/* 0x08 */ Unk80052B40 spatialVectors[2];
@@ -2636,6 +2700,8 @@ typedef struct {
 				/* 0x08 */ EffectCallbackState callbackState;
 				/* 0x08 */ SpinnerParentState spinnerState;
 				/* 0x08 */ SpinnerMotionState spinnerMotion;
+				/* 0x08 */ RingVisualState ringVisual;
+				/* 0x08 */ RingEmitterState ringEmitter;
 				struct {
 					/* 0x08 */ s16 unk8;
 					/* 0x0A */ s16 unkA;
@@ -2651,6 +2717,7 @@ typedef struct {
 					/* 0x0E */ s16 previousPosition[3];
 				};
 				/* 0x08 */ s16 coordinates[6];
+				/* 0x08 */ EffectPositionPair positionPair;
 				/* 0x08 */ u8 payload[12];
 			};
 			union {
@@ -2707,19 +2774,7 @@ typedef struct {
 	u8 lifetime;
 } EffectSparkState; /* size = 0x0E */
 
-typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s8 unk6;
-	/* 0x07 */ s8 unk7;
-	/* 0x08 */ s8 unk8;
-	/* 0x09 */ u8 unk9;
-	/* 0x0A */ u8 unkA;
-	/* 0x0B */ u8 unkB;
-	/* 0x0C */ u8 unkC;
-	/* 0x0D */ u8 unkD;
-} Unk80154318Sub;
+
 
 typedef struct {
 	/* 0x00 */ u8 unk0; // type
@@ -2768,12 +2823,17 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ union { s16 unk8; u16 angle; };
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ union {
-		s16 scaleY;
-		struct { u8 unkE; u8 padF; };
+	union {
+		/* 0x0C */ Unk80052B40 modelScale;
+		struct {
+			/* 0x0C */ s16 unkC;
+			/* 0x0E */ union {
+				s16 scaleY;
+				struct { u8 unkE; u8 padF; };
+			};
+			/* 0x10 */ s16 unk10;
+		};
 	};
-	/* 0x10 */ s16 unk10;
 	/* 0x12 */ u8 unk12;
 	/* 0x13 */ u8 unk13;
 	/* 0x14 */ u8 unk14;
@@ -3427,13 +3487,17 @@ typedef struct {
 } Unk800E614CFxEntry;
 
 typedef struct {
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 velocityX;
+	s32 velocityY;
+	s32 velocityZ;
+} Unk800E614CFxMotion;
+
+typedef struct {
 	/* 0x000 */ Unk800E614CFxEntry entries[16];
-	/* 0x1C0 */ s32 unk1C0;
-	/* 0x1C4 */ s32 unk1C4;
-	/* 0x1C8 */ s32 unk1C8;
-	/* 0x1CC */ s32 unk1CC;
-	/* 0x1D0 */ s32 unk1D0;
-	/* 0x1D4 */ s32 unk1D4;
+	/* 0x1C0 */ Unk800E614CFxMotion motion;
 	/* 0x1D8 */ u8 pad1D8[4];
 	/* 0x1DC */ s32 unk1DC;
 	/* 0x1E0 */ s32 unk1E0;
@@ -3458,6 +3522,11 @@ typedef struct {
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
 } Unk800E0F4CEntry; /* size = 0x10 */
+
+typedef union {
+	u32 words[3];
+	s8 bytes[12];
+} EffectPalette;
 
 typedef struct {
 	s16 x;
@@ -3636,3 +3705,9 @@ typedef struct {
 } TerrainLightTint;
 
 #endif
+
+/* Adjacent camera basis vectors share a single six-float storage block. */
+typedef struct {
+	f32 x, y, z;
+	f32 rightX, rightY, rightZ;
+} CameraBasis;

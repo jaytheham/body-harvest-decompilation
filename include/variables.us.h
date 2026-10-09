@@ -18,7 +18,7 @@ extern u16 D_040B1A40[];
 extern u8 D_1001B50[];
 extern u8 D_10031E0[];
 extern u8 D_1003990[];
-extern u8 D_1007A70[];
+extern u8 D_1007A70[][512];
 extern u16 D_1009A70[];
 extern u8 D_1009C70[];
 extern u8 D_100ACB0[];
@@ -41,7 +41,7 @@ extern u8 D_100DE00[];
 extern u8 D_100DE80[];
 extern u8 D_100E080[];
 extern u16 D_100E280[];
-extern u8 D_100E480[];
+extern u8 D_100E480[][0x80];
 extern u8 D_100E880[];
 extern u8 D_1010880[];
 extern u8 D_1010A80[];
@@ -2387,10 +2387,10 @@ extern s16 D_80152C90;
 extern s16 D_80152C96;
 extern Unk80152CA0Entry D_80152CA0[];
 extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
-extern LaserEntryPair D_80153300; /* one past end of D_80152D00 */
+extern Unk800E614CFxSlot D_80153300[4];
 extern Unk800E614CFxSlot D_801538C4;
 extern u8 D_80153AB0; // Nuke in progress?
-extern Vec3f D_80153AB8;
+extern CameraBasis D_80153AB8;
 extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Unk80153AE0Entry D_80153AE0[];
@@ -2415,6 +2415,10 @@ extern u8 D_80153BCC;
 extern s8 D_80153BCD;
 extern s8 D_80153BCE;
 extern Unk800311A0 D_80153BD0[];
+extern u8 D_8013E408_14D3B8;
+extern VehicleSpawnOffset D_8013DB10_14CAC0[4][23];
+extern const f64 D_801441E0_153190[1];
+extern s8 D_80154080;
 extern Unk80154082 D_80154082;
 extern Unk801541F8Entry D_80154088[]; // Special effects
 extern Unk8015408EEntry D_8015408E[];
@@ -2462,7 +2466,8 @@ extern s16 D_80156EDA;
 extern volatile s16 D_80156EDA_Draw;
 extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
-extern u8 D_8013DFF4_14CFA4[0x78];
+extern EffectParticleConfig D_8013DFF4_14CFA4[15];
+extern u32 D_8013E0C0_14D070[15];
 extern u8 D_8013E06C_14D01C[0x3C];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
@@ -4058,3 +4063,11 @@ extern EffectRgb D_8013E40C_14D3BC;
 
 extern Gfx D_5033E00[];
 
+
+extern RingPaletteTable D_8013E108_14D0B8;
+
+extern const f32 D_80144020_152FD0[1];
+
+extern const f32 D_80144024_152FD4[1];
+
+extern const f64 D_80144028_152FD8[1];
