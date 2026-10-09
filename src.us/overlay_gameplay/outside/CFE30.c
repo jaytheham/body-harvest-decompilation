@@ -10421,6 +10421,7 @@ void func_800DFA98_EEA48(s8 arg0[][3]) {
 
 #ifdef NON_MATCHING
 // CURRENT(8): only cached loop-count spill 0x58 versus target 0x5C.
+// large explosion effect with smaller random explosions
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	u8 i;
 	s8 sp68[4][3];
