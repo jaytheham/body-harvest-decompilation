@@ -2656,6 +2656,7 @@ typedef struct {
 typedef struct {
 	union {
 		u16 size;
+		s16 position[3];
 		u8 bytes[14];
 	};
 } EffectInterpolationState;

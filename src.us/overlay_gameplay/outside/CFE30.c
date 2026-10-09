@@ -3685,97 +3685,96 @@ u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 	return effect;
 }
 
-/* CURRENT(3911) */
 // effect type 4 - update water spray particles?
-#ifdef NON_MATCHING
 void func_800CA848_D97F8(u8 arg0) {
 	s16 currentUnitId;
 	s16 nextUnitId;
+	s16 rootIndex;
+	s16 leaderIndex;
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *root;
 	Unk80154318Entry *leader;
-	u8 *leaderBytes;
-	u8 *rootBytes;
+	SpurtEmitterState *leaderBytes;
+	EffectInterpolationState *rootBytes;
 	Unk80154318Entry *current;
-	Unk80154318Sub *currentBytes;
+	JetStreamParticleState *currentBytes;
 	u8 count;
 	u8 i;
 
-	arg0 &= 0xFF;
 	effect = &D_80154088[arg0];
-	root = &D_80154318[effect->unk6];
-	leader = &D_80154318[root->unk4];
-	leaderBytes = (u8 *)&leader->unk8;
-	rootBytes = (u8 *)&root->unk8;
+	rootIndex = effect->unk6;
+	root = &D_80154318[rootIndex];
+	leaderIndex = root->unk4;
+	leader = &D_80154318[leaderIndex];
+	leaderBytes = (SpurtEmitterState *)&leader->unk8;
+	rootBytes = (EffectInterpolationState *)&root->unk8;
 	currentUnitId = leader->unk4;
 	if (currentUnitId != -5 && currentUnitId != -6) {
-		while (1) {
-			current = &D_80154318[currentUnitId];
-			currentBytes = (Unk80154318Sub *)&current->unk8;
-			if (D_80222A70 >= currentBytes->unk2) { // if particle reaches current water height
-				func_800DEF2C_EDEDC(currentBytes->unk0, (s16)(D_80222A70 + 3), currentBytes->unk4, 0x32, 1);
-				func_800C9530_D84E0(currentBytes->unk0, currentBytes->unk4, (u16)current->unk2, rootBytes[6],
-					rootBytes[7], rootBytes[8], currentBytes->unk9);
-				if (effect->unk4 < 4 && leaderBytes[5] == 0) {
-					func_800C1418_D03C8(arg0, 0);
-					func_800C1384_D0334(arg0);
-					return;
-				}
-				nextUnitId = current->unk4;
-				func_800C1A4C_D09FC(currentUnitId, arg0, 0);
-				currentUnitId = nextUnitId;
-			} else {
-				currentBytes->unk0 += (s8)currentBytes->unkA;
-				currentBytes->unk4 += (s8)currentBytes->unkC;
-				currentBytes->unk2 += (s8)currentBytes->unkB;
-				if ((s8)currentBytes->unkB >= -0x13) {
-					currentBytes->unkB = (u8)((s8)currentBytes->unkB - 1);
-				} else {
-					currentBytes->unkB = (u8)-0x14;
-				}
-				if ((s16)(func_800B84D0_C7480(currentBytes->unk0, currentBytes->unk4) >> 8) >= currentBytes->unk2) {
-					if (rootBytes[0xC] == 0) {
-						func_800C9530_D84E0(currentBytes->unk0, currentBytes->unk4, (u16)current->unk2, rootBytes[6],
-							rootBytes[7], rootBytes[8], currentBytes->unk9);
-					}
-					if (effect->unk4 < 4 && leaderBytes[5] == 0) {
+		/* Preserve the target stride register and temporary allocation. */
+		if (1) {
+			do {
+				current = &D_80154318[currentUnitId];
+				currentBytes = (JetStreamParticleState *)&current->unk8;
+				if (D_80222A70 >= currentBytes->position[1]) { // if particle reaches current water height
+					func_800DEF2C_EDEDC(currentBytes->position[0], (s16)(D_80222A70 + 3), currentBytes->position[2], 0x32, 1);
+					func_800C9530_D84E0(currentBytes->position[0], currentBytes->position[2], (u16)current->unk2, rootBytes->bytes[6],
+						rootBytes->bytes[7], rootBytes->bytes[8], currentBytes->opacity);
+					if (effect->unk4 < 4 && leaderBytes->intensity == 0) {
 						func_800C1418_D03C8(arg0, 0);
 						func_800C1384_D0334(arg0);
 						return;
 					}
-					nextUnitId = current->unk4;
+					nextUnitId = D_80154318[currentUnitId].unk4;
 					func_800C1A4C_D09FC(currentUnitId, arg0, 0);
 					currentUnitId = nextUnitId;
 				} else {
-					currentUnitId = current->unk4;
+					currentBytes->position[0] += currentBytes->velocity[0];
+					currentBytes->position[2] += currentBytes->velocity[2];
+					currentBytes->position[1] += currentBytes->velocity[1];
+					if (currentBytes->velocity[1] >= -0x13) {
+						currentBytes->velocity[1] = currentBytes->velocity[1] - 1;
+					} else {
+						currentBytes->velocity[1] = -0x14;
+					}
+					if ((s16)(func_800B84D0_C7480(currentBytes->position[0], currentBytes->position[2]) >> 8) >= currentBytes->position[1]) {
+						if (rootBytes->bytes[0xC] == 0) {
+							func_800C9530_D84E0(currentBytes->position[0], currentBytes->position[2], D_80154318[currentUnitId].unk2, rootBytes->bytes[6],
+								rootBytes->bytes[7], rootBytes->bytes[8], currentBytes->opacity);
+						}
+						if (effect->unk4 < 4 && leaderBytes->intensity == 0) {
+							func_800C1418_D03C8(arg0, 0);
+							func_800C1384_D0334(arg0);
+							return;
+						}
+						nextUnitId = D_80154318[currentUnitId].unk4;
+						func_800C1A4C_D09FC(currentUnitId, arg0, 0);
+						currentUnitId = nextUnitId;
+					} else {
+						currentUnitId = D_80154318[currentUnitId].unk4;
+					}
 				}
-			}
-			if (currentUnitId == -5 || currentUnitId == -6) {
-				break;
-			}
+			} while (currentUnitId != -5 && currentUnitId != -6);
 		}
 	}
-	if (*((u16 *)&leaderBytes[6]) > 0) {
-		*((u16 *)&leaderBytes[6]) -= 1;
+	if ((u16)leaderBytes->age > 0) {
+		leaderBytes->age = (u16)leaderBytes->age - 1;
 		return;
 	}
 	count = (func_800038E0_44E0() % 3) + 2;
 	for (i = 0; i < count; i++) {
-		if (leaderBytes[5] > 0) {
+		if (leaderBytes->intensity > 0) {
 			func_800CA1B0_D9160(arg0);
-			leaderBytes[5] -= 1;
+			leaderBytes->intensity -= 1;
 		}
 	}
+	rootBytes = (EffectInterpolationState *)&root->unk8;
 	if (effect->unk4 < 3) {
 		func_800C1418_D03C8(arg0, 0);
 		func_800C1384_D0334(arg0);
 		return;
 	}
-	func_80137368_146318(root->unk8, root->unkA, root->unkC, 6, arg0);
+	func_80137368_146318(rootBytes->position[0], rootBytes->position[1], rootBytes->position[2], 6, arg0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA848_D97F8.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(6336)
