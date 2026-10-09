@@ -10483,31 +10483,20 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 
 
 // CURRENT(95) - r57 hoist-table-element-address lever (was 540 with the sum-3 spelling)
-#ifdef NON_MATCHING
-// AI - Marks an event building as visited
 void func_8007A784_162844(s32 arg0) {
-	s16 var_v0;
-	int new_var;
-	int new_var2;
-	s16 *new_var3;
-
+	s16 i;
 	if (arg0 == 0x14) {
-		var_v0 = 0;
-		new_var = currentLevel * 3;
+		i = 0;
 		do {
-			new_var3 = &D_8009CE14_184ED4.flat[(new_var + var_v0) - 3];
-			if (buildingInteriorToLoadId == (*new_var3)) {
-				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
-				D_80048026 |= 1 << (new_var2 + 0x1D);
+			if (buildingInteriorToLoadId == D_8009CE14_184ED4.byLevel[currentLevel - 1][i]) {
+				D_80048026 |= 1 << (currentLevel * 3 + i + 0x1D);
 				return;
 			}
-			var_v0++;
-		} while (var_v0 < 3);
+			i++;
+		} while (i < 3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A784_162844.s")
-#endif
+
 
 // CURRENT(95)
 // AI - Marks a second event building as visited
