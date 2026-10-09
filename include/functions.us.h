@@ -1551,7 +1551,7 @@ void func_8000FE50_10A50(void *);
 void __osSiCreateAccessQueue(void);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
-void func_8007B370_8A320(s32 arg0);
+void func_8007B370_8A320(u8 arg0);
 void func_800EF9F0_FE9A0(s16 arg0);
 f32 func_8007C96C_164A2C(OSContPad *arg0);
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1);

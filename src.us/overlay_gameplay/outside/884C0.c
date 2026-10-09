@@ -1258,84 +1258,55 @@ void func_8007B2A0_8A250(u8 arg0)
 }
 
 // CURRENT(5834)
-#ifdef NON_MATCHING
-void func_8007B370_8A320(s32 arg0) {
-	AlienInstance *alien;
-	f32 sinValue;
-	s16 phase;
+void func_8007B370_8A320(u8 arg0) {
 	s16 scale;
-	s32 temp;
+	s16 scaling[3];
+	s16 position[3];
+	f32 sinValue;
 	u8 typeIndex;
-	s32 sp88;
-	s16 sp78;
-	s16 sp7A;
-	s16 sp7C;
-	s16 sp80;
-	s16 sp82;
-	s16 sp84;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-	s32 pad8;
-	s32 pad9;
-	s32 pad10;
-	s32 pad11;
-	s32 pad12;
-	s32 pad13;
-	f32 sp74;
 
-	sp88 = arg0;
-	alien = &alienInstances[arg0 & 0xFF];
-	phase = alien->unk48;
-	if (phase < 0xF) {
-		sinValue = (f32)((f64)(f32)sins((u32)((f32)(phase << 0xE) / 15.0f) & 0xFFFF) / 32768.0);
+	if (alienInstances[arg0].unk48 < 0xF) {
+		sinValue = (f32)((f64)(f32)sins((u16)(u32)((f32)(alienInstances[arg0].unk48 << 0xE) / 15.0f)) / 32768.0);
 	} else {
-		sinValue = (f32)((f64)(f32)sins((u32)((f32)((phase * -0x4000) + 0x50000) / 5.0f) & 0xFFFF) / 32768.0);
+		sinValue = (f32)((f64)(f32)sins((u16)(u32)((f32)((-alienInstances[arg0].unk48 << 14) + 0x50000) / 5.0f)) / 32768.0);
 	}
 
-	typeIndex = alien->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 	scale = alienTypes[typeIndex].unkC;
 	if (typeIndex == 0x1A) {
 		scale = (s16)(s32)((f64)scale * 1.5);
 	}
 
-	sp80 = scale * 10;
-	temp = (s32)((f32)sp80 * sinValue);
-	sp80 = temp;
-	sp82 = (s16)((s16)temp / 2);
-	sp84 = temp;
-	sp78 = (s16)(alien->unk0 / 4);
-	sp7A = (s16)(alien->unk2 / 4);
-	sp7C = (s16)(alien->unk4 / 4);
+	scaling[0] = scale * 10;
+	scaling[0] = (f32)scaling[0] * sinValue;
+	scaling[1] = scaling[0] / 2;
+	scaling[2] = scaling[0];
+	position[0] = (s16)(alienInstances[arg0].unk0 / 4);
+	position[1] = (s16)(alienInstances[arg0].unk2 / 4);
+	position[2] = (s16)(alienInstances[arg0].unk4 / 4);
 
 	gSPDisplayList(D_8005BB2C++, (Gfx *)&D_80031230);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_50327B0 + ((D_80052A8C & 7) << 8));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 60, 60);
 	gSPTexture(D_8005BB2C++, 0x1000, 0x1000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_NOOP2);
 
-	if (alien->unk48 != 0) {
-		sp74 = sinValue;
-		func_800039D0_45D0((Unk80052B40 *)&sp78, NULL, (Unk80052B40 *)&sp80, D_8005BB38);
+	if (alienInstances[arg0].unk48 != 0) {
+		func_800039D0_45D0((Unk80052B40 *)position, NULL, (Unk80052B40 *)scaling, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xC8, 0xC8, 0xFF, (u8)(128.0f * sp74));
+		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xC8, 0xC8, 0xFF, (u32)(128.0f * sinValue));
 
 		gSPDisplayList(D_8005BB2C++, (Gfx *)&D_50332A0);
-		gSPEndDisplayList(D_8005BB2C++);
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	}
 
 	gSPDisplayList(D_8005BB2C++, (Gfx *)&D_80031200);
@@ -1343,9 +1314,7 @@ void func_8007B370_8A320(s32 arg0) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B370_8A320.s")
-#endif
+
 
 // CURRENT(3823)
 #ifdef NON_MATCHING
