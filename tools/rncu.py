@@ -82,9 +82,12 @@ class RncUnpackerMethod1:
         self.output = bytearray(self.uncompressed_size)
 
         try:
-            self.librncu = cdll.LoadLibrary(Path(__file__).parent / "librncu.so")
+            library = Path(__file__).parent / "librncu.so"
+            if sys.platform == "win32":
+                library = Path(__file__).parent / "windows" / "librncu.dll"
+            self.librncu = cdll.LoadLibrary(str(library))
         except Exception as err:
-            print("Could not load librncu.so (%s), falling back to Python!" % err)
+            print("Could not load %s (%s), falling back to Python!" % (library.name, err))
             self.librncu = None
 
     def init_unpack(self):

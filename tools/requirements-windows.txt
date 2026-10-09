@@ -1,0 +1,14 @@
+# Libraries needed by native setup, bundled splat, and the image converter.
+zstandard==0.23.0
+PyYAML==6.0.2
+pylibyaml==0.1.0
+tqdm==4.67.1
+intervaltree==3.1.0
+sortedcontainers==2.4.0
+colorama==0.4.6
+spimdisasm==1.33.0
+rabbitizer==1.12.5
+n64img==0.2.1
+pypng==0.20220715.0
+pygfxd==1.0.2
+crunch64==0.3.1

@@ -10,10 +10,47 @@ A decompilation to C of the N64 game Body Harvest.
 
 # Building
 
+## Windows (without Docker)
+
+Install **64-bit [Python 3.12](https://www.python.org/downloads/windows/)** with the Python launcher enabled. This is the only build dependency you need to install yourself; use Git to clone the repository, or download its source ZIP. Windows 10/11 and the included PowerShell and `tar.exe` are required.
+
+```powershell
+git clone https://github.com/jaytheham/body-harvest-decompilation.git
+cd body-harvest-decompilation
+```
+
+Place your **US** ROM at `baserom.us.z64` in the repository root, then run:
+
+```powershell
+.\tools\extract.ps1
+.\tools\make.ps1
+```
+
+The first command automatically downloads pinned, SHA256-checked Windows tools and installs the extraction libraries in `tools/windows/venv`. Nothing is installed globally and no environment activation is needed. Initial setup needs internet access; subsequent extractions and builds work offline. You can also run `.\tools\setup.ps1` separately to prepare the tools before supplying the ROM.
+
+A successful matching build prints `build/bh.us.z64: OK`. Builds are incremental and use up to eight workers. Options:
+
+```powershell
+.\tools\make.ps1 -Jobs 4
+.\tools\make.ps1 -Rebuild
+.\tools\make.ps1 -NonMatching
+.\tools\make.ps1 -VerboseBuild
+```
+
+Some existing `NON_MATCHING` source does not compile; that option reports its source errors. A failed build cannot leave objects from that configuration eligible for reuse in a matching build.
+
+The scripts locate the repository relative to themselves, so they also work when launched from another directory or from a checkout with spaces in its name. If PowerShell blocks scripts, invoke them with `powershell -ExecutionPolicy Bypass -File .\tools\extract.ps1` (and similarly for `make.ps1`); this applies only to that process.
+
+Native builds currently support the US version. The existing Linux/Docker workflow remains available, including `.\tools\extract.ps1 -Docker` and `.\tools\make.ps1 -Docker` for an already running `bh-container`. Other development scripts such as `diff.ps1` still use Docker.
+
+The local tool cache is ignored by Git. To reset setup, remove `tools/windows` and run the commands again. The compiler is [IDO 5.3 v1.2](https://github.com/decompals/ido-static-recomp/releases/tag/v1.2), with [Windows binutils v0.10](https://github.com/decompals/binutils-mips-ps2-decompals/releases/tag/v0.10). A standalone [MSYS runtime](https://repo.msys2.org/msys/x86_64/) DLL supports IDO, and portable [Tiny C](https://download.savannah.gnu.org/releases/tinycc/) builds the repository's RNC tools; no MSYS installation, Bash, Make, WSL, Docker, Visual Studio, or system C compiler is needed.
+
+## Linux / WSL
+
 The instructions below assume that you will be using `Ubuntu 22.04`; either natively, via [WSL2](https://docs.microsoft.com/en-us/windows/wsl/install-win10), or via [Docker](https://docs.docker.com/get-docker/).
 Please check the [packages.txt](packages.txt) and [requirements.txt](requirements.txt) for the prerequisite Linux and Python packages respectively.
 
-## Natively
+### Natively
 
 Clone the repository; note the `--recursive` flag to fetch submodules at the same time:
 
