@@ -191,6 +191,37 @@ const u32 jtbl_80144138_1530E8[] = {
     0x800DD9E4,
     0x800DDA20,
 };
+const f32 D_80144190_153140[1] = {0.6f};
+
+const u32 jtbl_80144194_153144[] = {
+    0x800E1F60,
+    0x800E1EA8,
+    0x800E1E40,
+    0x800E1E40,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1EA8,
+    0x800E1E40,
+    0x800E1EA8,
+    0x800E1E40,
+};
+const u32 jtbl_801441C4_153174[] = {
+    0x800E39F4,
+    0x800E3B00,
+    0x800E3C10,
+    0x800E3D70,
+    0x800E4488,
+    0x800E3DBC,
+    0x800E3F7C,
+};
+const f64 D_801441E0_153190[1] = {
+    1.7
+};
+const f64 D_801441E8_153198[1] = {
+    6000.0,
+};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -10890,11 +10921,8 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
 #endif
-
-
-
 
 // CURRENT(6532)
 #ifdef NON_MATCHING
@@ -11600,7 +11628,6 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
 #endif
 
-// CURRENT(1348)
 void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	Unk80052B40 position;
 	s32 unused; /* Preserve the gap below the matrix position. */
