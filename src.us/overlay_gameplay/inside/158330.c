@@ -6066,7 +6066,7 @@ const char D_800A49D4_18CA94[] = "Going Into Cutscene\n"; // "Going Into Cutscen
 
 const char D_800A49EC_18CAAC[] = "Invalid Switch ID\n"; // "Invalid Switch ID\n"
 
-const f64 D_800A4A00_18CAC0[1] = {180.0};
+const InteriorAngleScale D_800A4A00_18CAC0 = {180.0};
 
 const u32 jtbl_800A4A08_18CAC8[] = {
 	0x80072458, 0x8007248C, 0x800724C4, 0x800724FC, 0x8007260C, 0x80072628, 0x80072648, 0x80072668, 
@@ -6131,9 +6131,6 @@ s32 func_80070270_158330(s32 arg0) {
 	return 0;
 }
 
-// Matching, but needs all prior rodata matched so
-// D_800A4A00_18CAC0 can be deleted and the literal 180.0 will replace it
-#ifdef NON_MATCHING
 // AI - Handles player interaction inside a building
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
 {
@@ -6142,6 +6139,7 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
   s32 halfWidth;
   f32 x;
   f32 xx;
+
   if (D_800E65D0 == 0)
   {
 	return;
@@ -6158,15 +6156,13 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
   room = D_800E65C8;
   if (func_8007C3C0_164480(x, xx, temp_v1 - (room->unk2A / 2), temp_v1 + halfWidth, 0.0f, 30.0f) != 0)
   {
-	if (func_8007A370_162430(0, (s32) ((((f64) ((f32) (D_800E6A86 & 0xFFFF))) * 180.0) / 32768.0)) != 0)
+	if (func_8007A370_162430(0, (s32)((f64)(f32)(D_800E6A86 & 0xFFFF) * D_800A4A00_18CAC0.value / 32768.0)) != 0)
 	{
 	  D_800E65A8 |= 0x800;
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070294_158354.s")
-#endif
+
 
 // AI - Returns the center position offset of the current interior
 s32 func_800703D0_158490(void) {

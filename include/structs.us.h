@@ -3704,6 +3704,10 @@ typedef struct {
 	f32 b;
 } TerrainLightTint;
 
+typedef struct {
+	f64 value;
+} InteriorAngleScale;
+
 #endif
 
 /* Adjacent camera basis vectors share a single six-float storage block. */
