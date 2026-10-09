@@ -200,6 +200,7 @@ extern s32 D_800314C8_320C8;
 extern OSMesg D_800314CC;
 extern OSMesg D_800314CC_320CC;
 extern Vp D_800314D0_320D0[];
+extern Vp D_314D0[];
 extern u8 *D_800314F0_320F0[];
 extern u8 *D_80031508_32108[];
 extern u8 *D_80031520_32120[];
@@ -1349,9 +1350,9 @@ extern Unk9C804 D_8009C804_1848C4[];
 // AI - Room map/layout data (per-room tile map, 0x1E bytes per currentLevel)
 extern u8 D_8009CD7C_184E3C[];
 // AI - Event building interior IDs (first set) that count as visited for missions
-extern s16 D_8009CE14_184ED4[];
+extern InteriorPrimaryEventBuildings D_8009CE14_184ED4;
 // AI - Second event building interior IDs that count as visited for missions
-extern s16 D_8009CE34_184EF4[];
+extern InteriorEventBuildings D_8009CE34_184EF4;
 // AI - 32x32 8-bit intensity texture (radial gradient), used by player rendering
 extern u8 D_8009CE60_184F20[];
 // AI - Table of display-list pointers for each player character/vehicle type (indexed by D_800E6A70)
@@ -4071,3 +4072,5 @@ extern const f32 D_80144020_152FD0[1];
 extern const f32 D_80144024_152FD4[1];
 
 extern const f64 D_80144028_152FD8[1];
+
+extern const InteriorAngleScale D_800A4A00_18CAC0;

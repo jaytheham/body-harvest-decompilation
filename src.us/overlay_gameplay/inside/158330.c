@@ -5938,14 +5938,14 @@ u8 D_8009CD7C_184E3C[0x98] = {
 };
 
 // AI - Event building interior IDs (first set) that count as visited for missions
-s16 D_8009CE14_184ED4[16] = {
+InteriorPrimaryEventBuildings D_8009CE14_184ED4 = {{
 	0x005D, 0x000A, 0x0096, 0x0077, 0x000C, 0x008D, 0x0038, 0x0055, 0x0049, 0x0073, 0x004A, 0x0063, -1, -1, -1, 0x0000,
-};
+}};
 
 // AI - Second event building interior IDs that count as visited for missions
-s16 D_8009CE34_184EF4[22] = {
+InteriorEventBuildings D_8009CE34_184EF4 = {{
 	0x005C, 0x0071, 0x0043, 0x007D, 0x007E, 0x008C, 0x0020, 0x002A, 0x002C, 0x001C, 0x0026, 0x0069, -1, -1, -1, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-};
+}};
 
 
 // ============================================================
@@ -6066,7 +6066,7 @@ const char D_800A49D4_18CA94[] = "Going Into Cutscene\n"; // "Going Into Cutscen
 
 const char D_800A49EC_18CAAC[] = "Invalid Switch ID\n"; // "Invalid Switch ID\n"
 
-const f64 D_800A4A00_18CAC0[1] = {180.0};
+const InteriorAngleScale D_800A4A00_18CAC0 = {180.0};
 
 const u32 jtbl_800A4A08_18CAC8[] = {
 	0x80072458, 0x8007248C, 0x800724C4, 0x800724FC, 0x8007260C, 0x80072628, 0x80072648, 0x80072668, 
@@ -6131,9 +6131,6 @@ s32 func_80070270_158330(s32 arg0) {
 	return 0;
 }
 
-// Matching, but needs all prior rodata matched so
-// D_800A4A00_18CAC0 can be deleted and the literal 180.0 will replace it
-#ifdef NON_MATCHING
 // AI - Handles player interaction inside a building
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
 {
@@ -6142,6 +6139,7 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
   s32 halfWidth;
   f32 x;
   f32 xx;
+
   if (D_800E65D0 == 0)
   {
 	return;
@@ -6158,15 +6156,13 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
   room = D_800E65C8;
   if (func_8007C3C0_164480(x, xx, temp_v1 - (room->unk2A / 2), temp_v1 + halfWidth, 0.0f, 30.0f) != 0)
   {
-	if (func_8007A370_162430(0, (s32) ((((f64) ((f32) (D_800E6A86 & 0xFFFF))) * 180.0) / 32768.0)) != 0)
+	if (func_8007A370_162430(0, (s32)((f64)(f32)(D_800E6A86 & 0xFFFF) * D_800A4A00_18CAC0.value / 32768.0)) != 0)
 	{
 	  D_800E65A8 |= 0x800;
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80070294_158354.s")
-#endif
+
 
 // AI - Returns the center position offset of the current interior
 s32 func_800703D0_158490(void) {
@@ -6746,15 +6742,14 @@ void func_800717B4_159874(void)
 	}
 }
 
-// CURRENT(108)
-// AI - Sets up RDP state for interior rendering
-#ifdef NON_MATCHING
+// Sets up RDP state for interior rendering
 void func_80071854_159914(void) {
+	s32 pad;
 
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 	func_80011E14_12A14(D_80047F93);
 
-	gSPViewport(D_8005BB2C++, D_800314D0_320D0);
+	gSPViewport(D_8005BB2C++, D_314D0);
 
 	func_80004CC8_58C8();
 	func_80004D38_5938();
@@ -6775,7 +6770,7 @@ void func_80071854_159914(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 
-	gSPViewport(D_8005BB2C++, D_800314D0_320D0);
+	gSPViewport(D_8005BB2C++, D_314D0);
 
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 
@@ -6811,9 +6806,7 @@ void func_80071854_159914(void) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071854_159914.s")
-#endif
+
 
 // AI - Fills the screen with a solid color via RDP
 void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
@@ -7135,8 +7128,7 @@ void func_8007279C_15A85C(void)
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Main interior game loop: rendering, room selection, building exit
+// Main interior game loop: rendering, room selection, building exit
 void func_8007290C_15A9CC(void)
 {
 	s32 selectionActive;
@@ -7217,7 +7209,7 @@ void func_8007290C_15A9CC(void)
 
 		if ((D_800E6694 != 0) && (D_800E65A8 & 0x200)) {
 			index = D_800E65D4;
-			bitWord = (s32 *)((u8 *)D_80047F40 + ((index / 32) * 4));
+			bitWord = &D_80047F40[index / 32];
 			*bitWord |= 1 << (index % 32);
 			func_8007313C_15B1FC();
 			func_8007C8BC_16497C();
@@ -7244,7 +7236,7 @@ void func_8007290C_15A9CC(void)
 	}
 
 	index = D_800E65D4;
-	bitWord = (s32 *)((u8 *)D_80047F40 + ((index / 32) * 4));
+	bitWord = &D_80047F40[index / 32];
 	*bitWord |= 1 << (index % 32);
 	func_800736C4_15B784();
 	func_8007313C_15B1FC();
@@ -7302,9 +7294,7 @@ void func_8007290C_15A9CC(void)
 	gameplayMode = 1;
 	D_80068080 = 7;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007290C_15A9CC.s")
-#endif
+
 
 // jtbl_800A4A88_18CB48
 // https://decomp.me/scratch/hiUtd
@@ -7394,35 +7384,23 @@ void func_80073058_15B118(void)
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Persists the visited-room bitmask to global state
+// Persists the visited-room bitmask to global state
 void func_8007313C_15B1FC(void) {
-	Unk800E66A8 *entry;
-	s32 count;
-	s32 var_v0;
-
-	count = D_800E668C;
-	entry = D_800E66A8;
-	if (count > 0) {
-		s16 *temp_a3 = &D_80047D40[buildingInteriorToLoadId];
-		var_v0 = 0;
-		do {
-			if (D_800E65BC[entry->unk0].unk44 & 2) {
-				entry->unk2E &= ~1;
-			}
-			if (entry->unk2E & 1) {
-				*temp_a3 |= 1 << var_v0;
-			} else {
-				*temp_a3 &= ~(1 << var_v0);
-			}
-			var_v0++;
-			entry++;
-		} while (var_v0 < count);
+	s32 i;
+	u8 type;
+	for (i = 0; i < D_800E668C; i++) {
+		type = D_800E66A8[i].unk0;
+		if (D_800E65BC[type].unk44 & 2) {
+			D_800E66A8[i].unk2E &= ~1;
+		}
+		if (D_800E66A8[i].unk2E & 1) {
+			D_80047D40[buildingInteriorToLoadId] |= 1 << i;
+		} else {
+			D_80047D40[buildingInteriorToLoadId] &= ~(1 << i);
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007313C_15B1FC.s")
-#endif
+
 
 // AI - Handles special building exit teleports to different map locations
 void func_80073200_15B2C0(void) {
@@ -7463,106 +7441,26 @@ void func_80073200_15B2C0(void) {
 // AI - Empty stub function
 void func_80073434_stub(void) {}
 
-#ifdef NON_MATCHING
-/* CURRENT(1240) */
-// AI - Restores saved room state (animation offsets, positions)
 void func_8007343C_15B4FC(void) {
-	Unk158330SrcState *src;
-	Unk158330SrcState *srcEnd;
-	Unk158330DstState *dst;
-	f32 tempF4;
-	f32 tempF6;
-	f32 tempF8;
-	f32 tempF10;
-	f32 tempF16;
-	f32 tempF18;
-	u8 tempT6;
-	u8 tempT7;
-	u8 tempT8;
-	u8 tempT9;
-	u8 *srcBase;
+	s32 i;
 
-	dst = (Unk158330DstState *) D_800E66A8;
-	src = (Unk158330SrcState *) &D_80047B70;
-	srcEnd = (Unk158330SrcState *) &D_80047D30;
-	do {
-		tempF4 = src->unk04;
-		tempF6 = src->unk08;
-		tempF8 = src->unk0C;
-		tempF10 = src->unk10;
-		tempF16 = src->unk14;
-		tempF18 = src->unk18;
-		dst->unk14 = tempF4;
-		dst->unk18 = tempF6;
-		dst->unk1C = tempF8;
-		dst->unk20 = tempF10;
-		dst->unk24 = tempF16;
-		dst->unk28 = tempF18;
+	for (i = 0; i < 16; i++) {
+		D_800E66A8[i].unk14 = D_80047B70.objects[i].unk0;
+		D_800E66A8[i].unk18 = D_80047B70.objects[i].unk4;
+		D_800E66A8[i].unk1C = D_80047B70.objects[i].unk8;
+		D_800E66A8[i].unk20 = D_80047B70.objects[i].unkC;
+		D_800E66A8[i].unk24 = D_80047B70.objects[i].unk10;
+		D_800E66A8[i].unk28 = D_80047B70.objects[i].unk14;
+		D_800E66A8[i].unk10 = D_80047B70.objects[i].unk18;
+	}
 
-		tempF18 = src->unk34;
-		tempF16 = src->unk30;
-		tempF10 = src->unk2C;
-		tempF8 = src->unk28;
-		tempF6 = src->unk24;
-		tempF4 = src->unk20;
-		dst->unk58 = tempF18;
-		dst->unk54 = tempF16;
-		dst->unk50 = tempF10;
-		dst->unk4C = tempF8;
-		dst->unk48 = tempF6;
-		dst->unk44 = tempF4;
-
-		tempF4 = src->unk3C;
-		tempF6 = src->unk40;
-		tempF8 = src->unk44;
-		tempF10 = src->unk48;
-		tempF16 = src->unk4C;
-		tempF18 = src->unk50;
-		dst->unk74 = tempF4;
-		dst->unk78 = tempF6;
-		dst->unk7C = tempF8;
-		dst->unk80 = tempF10;
-		dst->unk84 = tempF16;
-		dst->unk88 = tempF18;
-
-		tempF18 = src->unk6C;
-		tempF16 = src->unk68;
-		tempF10 = src->unk64;
-		tempF8 = src->unk60;
-		tempF6 = src->unk5C;
-		tempF4 = src->unk58;
-		tempT7 = src->unk38;
-		tempT8 = src->unk54;
-		tempT9 = src->unk70;
-		tempT6 = src->pad1C[0];
-
-		src = (Unk158330SrcState *) ((u8 *) src + 0x70);
-		dst = (Unk158330DstState *) ((u8 *) dst + 0xC0);
-
-		dst[-1].unkB8 = tempF18;
-		dst[-1].unkB4 = tempF16;
-		dst[-1].unkB0 = tempF10;
-		dst[-1].unkAC = tempF8;
-		dst[-1].unkA8 = tempF6;
-		dst[-1].unkA4 = tempF4;
-		dst[-1].unkA0 = tempT7;
-		dst[-1].unkD0 = tempT8;
-		dst[-1].unk102 = tempT9;
-		dst[-1].unk132 = tempT6;
-	} while (src != srcEnd);
-
-	srcBase = (u8 *) &D_80047B70;
-	D_800E6A78.unkE = *(s32 *) (srcBase + 0x1C4);
-	D_800E6A78.unk4C = *(f32 *) (srcBase + 0x1C8);
-	D_800E6A78.unk54 = *(f32 *) (srcBase + 0x1CC);
+	D_800E6A78.unkE = D_80047B70.unk1C4;
+	D_800E6A78.unk4C = D_80047B70.unk1C8;
+	D_800E6A78.unk54 = D_80047B70.unk1CC;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007343C_15B4FC.s")
-#endif
 
-// CURRENT(810)
+
 // AI - Saves current room state for later restoration
-#ifdef NON_MATCHING
 void func_8007356C_15B62C(void) {
 	s32 i;
 
@@ -7574,7 +7472,7 @@ void func_8007356C_15B62C(void) {
 		D_80047B70.objects[i].unkC = D_800E66A8[i].unk20;
 		D_80047B70.objects[i].unk10 = D_800E66A8[i].unk24;
 		D_80047B70.objects[i].unk14 = D_800E66A8[i].unk28;
-		D_80047B70.objects[i].unk18 = D_800E66A8[i].unk10;
+		D_80047B70.objects[i].unk18 = (u16)D_800E66A8[i].unk10;
 		D_80047B70.objects[i].unk19 = D_800E66A8[i].unk2E;
 	}
 
@@ -7582,9 +7480,7 @@ void func_8007356C_15B62C(void) {
 	D_80047B70.unk1C8 = D_800E6A78.unk4C;
 	D_80047B70.unk1CC = D_800E6A78.unk54;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007356C_15B62C.s")
-#endif
+
 
 // AI - Resets temporary room entry state
 void func_800736C4_15B784(void) {
@@ -10540,8 +10436,6 @@ void func_8007A618_1626D8(void) {
 	D_800E65A8 &= ~4;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(290) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1735)
 // AI - Checks if a specific event building has been visited
 s32 func_8007A634_1626F4(s32 arg0) {
 	s16 var_v0;
@@ -10551,7 +10445,7 @@ s32 func_8007A634_1626F4(s32 arg0) {
 	if (arg0 == 0x14) {
 		var_v0 = 0;
 		do {
-			if ((buildingInteriorToLoadId == D_8009CE14_184ED4[currentLevel * 3 + var_v0 - 3]) &&
+			if ((buildingInteriorToLoadId == D_8009CE14_184ED4.byLevel[currentLevel - 1][var_v0]) &&
 				(D_80048026 & (1 << (currentLevel * three + var_v0 + 0x1D)))) {
 				return 1;
 			}
@@ -10560,12 +10454,8 @@ s32 func_8007A634_1626F4(s32 arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A634_1626F4.s")
-#endif
 
-#ifdef NON_MATCHING
-// CURRENT(145) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1710)
+
 // AI - Checks if a second event building has been visited
 s32 func_8007A6DC_16279C(s32 arg0) {
 	s16 var_v0;
@@ -10575,7 +10465,7 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 	if (arg0 == 0x13) {
 		var_v0 = 0;
 		do {
-			if ((buildingInteriorToLoadId == D_8009CE34_184EF4[currentLevel * 3 + var_v0 - 3]) &&
+			if ((buildingInteriorToLoadId == D_8009CE34_184EF4.byLevel[currentLevel - 1][var_v0]) &&
 				(D_80048028 & (1 << (currentLevel * three + var_v0 + 0x1D)))) {
 				return 1;
 			}
@@ -10584,66 +10474,40 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A6DC_16279C.s")
-#endif
+
 
 // CURRENT(95) - r57 hoist-table-element-address lever (was 540 with the sum-3 spelling)
-#ifdef NON_MATCHING
-// AI - Marks an event building as visited
 void func_8007A784_162844(s32 arg0) {
-	s16 var_v0;
-	int new_var;
-	int new_var2;
-	s16 *new_var3;
-
+	s16 i;
 	if (arg0 == 0x14) {
-		var_v0 = 0;
-		new_var = currentLevel * 3;
+		i = 0;
 		do {
-			new_var3 = &D_8009CE14_184ED4[(new_var + var_v0) - 3];
-			if (buildingInteriorToLoadId == (*new_var3)) {
-				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
-				D_80048026 |= 1 << (new_var2 + 0x1D);
+			if (buildingInteriorToLoadId == D_8009CE14_184ED4.byLevel[currentLevel - 1][i]) {
+				D_80048026 |= 1 << (currentLevel * 3 + i + 0x1D);
 				return;
 			}
-			var_v0++;
-		} while (var_v0 < 3);
+			i++;
+		} while (i < 3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A784_162844.s")
-#endif
+
 
 // CURRENT(95)
 // AI - Marks a second event building as visited
-#ifdef NON_MATCHING
-void func_8007A818_1628D8(s32 arg0)
-{
-	s16 var_v0;
-	int new_var;
-	int new_var2;
-	s16 *new_var3;
-	if (arg0 == 0x13)
-	{
-		var_v0 = 0;
-		new_var = currentLevel * 3;
-		do
-		{
-			new_var3 = &D_8009CE34_184EF4[(new_var + var_v0) - 3];
-			if (buildingInteriorToLoadId == (*new_var3))
-			{
-				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
-				D_80048028 |= 1 << (new_var2 + 0x1D);
+void func_8007A818_1628D8(s32 arg0) {
+	s16 i;
+	if (arg0 == 0x13) {
+		i = 0;
+		do {
+			if (buildingInteriorToLoadId == D_8009CE34_184EF4.byLevel[currentLevel - 1][i]) {
+				D_80048028 |= 1 << (currentLevel * 3 + i + 0x1D);
 				return;
 			}
-			var_v0++;
-		} while (var_v0 < 3);
+			i++;
+		} while (i < 3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A818_1628D8.s")
-#endif
+
 
 // CURRENT(1498)
 // AI - Handles room interaction events and mission triggers

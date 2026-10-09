@@ -143,7 +143,7 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1);
 void func_800787E8_1608A8(u8 arg0, u8 arg1);
 extern s32 func_80004498_5098(f32 arg0);
 void func_8007D52C_1655EC(void);
-void func_80011858_12458(u8 arg0, s32 arg1);
+void func_80011858_12458(int arg0, s32 arg1);
 s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5);
 void func_80071F08_159FC8(void);
 s32 func_80011DBC_129BC();
