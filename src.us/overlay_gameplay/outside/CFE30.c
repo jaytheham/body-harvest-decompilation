@@ -6428,12 +6428,9 @@ void func_800D25D0_E1580(void) {
 #endif
 
 // CURRENT(4753)
-#ifdef NON_MATCHING
 void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6, u8 arg7) {
-	u8 (*color)[8];
 
 	gDPPipeSync(D_8005BB2C++);
-	if (1) {
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_1007A70[arg6]));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK,
 			   G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -6445,18 +6442,16 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 	gDPPipeSync(D_8005BB2C++);
 
-	}
 	D_8005BB34->v.ob[0] = (f32)arg0;
 	D_8005BB34->v.ob[1] = (f32)arg5;
 	D_8005BB34->v.ob[2] = (f32)arg2;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x80;
 	D_8005BB34->v.tc[1] = 0;
-	color = &D_8013E108_14D0B8.colors[arg7];
-	D_8005BB34->v.cn[0] = (*color)[0];
-	D_8005BB34->v.cn[1] = (*color)[1];
-	D_8005BB34->v.cn[2] = (*color)[2];
-	D_8005BB34->v.cn[3] = (*color)[3];
+	D_8005BB34->v.cn[0] = D_8013E108_14D0B8.colors[arg7][0];
+	D_8005BB34->v.cn[1] = D_8013E108_14D0B8.colors[arg7][1];
+	D_8005BB34->v.cn[2] = D_8013E108_14D0B8.colors[arg7][2];
+	D_8005BB34->v.cn[3] = D_8013E108_14D0B8.colors[arg7][3];
 
 	D_8005BB34++;
 	D_8005BB34->v.ob[0] = (f32)arg1;
@@ -6465,10 +6460,10 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x780;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = (*color)[0];
-	D_8005BB34->v.cn[1] = (*color)[1];
-	D_8005BB34->v.cn[2] = (*color)[2];
-	D_8005BB34->v.cn[3] = (*color)[3];
+	D_8005BB34->v.cn[0] = D_8013E108_14D0B8.colors[arg7][0];
+	D_8005BB34->v.cn[1] = D_8013E108_14D0B8.colors[arg7][1];
+	D_8005BB34->v.cn[2] = D_8013E108_14D0B8.colors[arg7][2];
+	D_8005BB34->v.cn[3] = D_8013E108_14D0B8.colors[arg7][3];
 
 	D_8005BB34++;
 	D_8005BB34->v.ob[0] = (f32)arg1;
@@ -6477,10 +6472,10 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x780;
 	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = (*color)[4];
-	D_8005BB34->v.cn[1] = (*color)[5];
-	D_8005BB34->v.cn[2] = (*color)[6];
-	D_8005BB34->v.cn[3] = (*color)[7];
+	D_8005BB34->v.cn[0] = D_8013E108_14D0B8.colors[arg7][4];
+	D_8005BB34->v.cn[1] = D_8013E108_14D0B8.colors[arg7][5];
+	D_8005BB34->v.cn[2] = D_8013E108_14D0B8.colors[arg7][6];
+	D_8005BB34->v.cn[3] = D_8013E108_14D0B8.colors[arg7][7];
 
 	D_8005BB34++;
 	D_8005BB34->v.ob[0] = (f32)arg0;
@@ -6489,18 +6484,16 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x80;
 	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = (*color)[4];
-	D_8005BB34->v.cn[1] = (*color)[5];
-	D_8005BB34->v.cn[2] = (*color)[6];
-	D_8005BB34->v.cn[3] = (*color)[7];
+	D_8005BB34->v.cn[0] = D_8013E108_14D0B8.colors[arg7][4];
+	D_8005BB34->v.cn[1] = D_8013E108_14D0B8.colors[arg7][5];
+	D_8005BB34->v.cn[2] = D_8013E108_14D0B8.colors[arg7][6];
+	D_8005BB34->v.cn[3] = D_8013E108_14D0B8.colors[arg7][7];
 
 	D_8005BB34++;
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D2AB0_E1A60.s")
-#endif
+
 
 // CURRENT(30782)
 #ifdef NON_MATCHING
