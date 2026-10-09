@@ -1806,112 +1806,64 @@ void func_8007C044_8AFF4(void) {
 #endif
 
 // Disable and aliens don't spawn visibly (show on radar tho)
-#ifdef NON_MATCHING
-// CURRENT(3753)
 void func_8007D424_8C3D4(void) {
 	s32 idx;
-	AlienType *type;
-	void (*tickCallback)(u8);
 	AlienInstance *inst;
+	u8 typeIndex;
+	s32 flags;
+	u8 idxU8;
+	s32 dx;
+	s32 dz;
+	void (*tickCallback)(u8);
 
 	idx = D_80052A8C & 3;
-	if (idx >= 0xFF) {
-		return;
-	}
-
+	if (idx >= 0xFF) return;
 	inst = &alienInstances[idx];
-
 	do {
-		u8 typeIndex;
-
-		typeIndex = inst->typeIndex;
-		if (typeIndex != 0) {
-			s32 flags;
-			u8 type;
-
+		do {
+			typeIndex = inst->typeIndex;
+			if (typeIndex == 0) break;
 			flags = inst->unk20;
 			if ((flags & 0x100000) && !(flags & 0x600)) {
-				type = inst->unk24;
-				if ((typeIndex == 1) && ((type == 3) || (type == 4) || (type == 0x1D))) {
-					func_800AB8CC_BA87C((u8)idx);
+				if ((typeIndex == 1) && ((inst->unk24 == 3) || (inst->unk24 == 4) || (inst->unk24 == 0x1D))) {
+					func_800AB8CC_BA87C(idx);
 				} else {
 					func_80079910_888C0(idx);
 				}
 			}
-
 			if (flags & 0x200000) {
-				func_80087AFC_96AAC((u8)idx);
-				idx += 4;
-				inst = (AlienInstance *)((u8 *)inst + 0x140);
-				continue;
+				func_80087AFC_96AAC(idx);
+				break;
 			}
-
-			if (!(flags & 0x600)) {
-				u8 target;
-				u8 idxU8;
-
-				target = inst->unk1B;
-				idxU8 = idx;
-				if (target != 0xFF) {
-					if (D_80047F94 != target) {
-						goto skipUpdate;
-					}
-				}
-
+			if (flags & 0x600) break;
+			idxU8 = idx;
+			if ((inst->unk1B == 0xFF) || (D_80047F94 == inst->unk1B)) {
 				inst->unk2E = inst->unk0;
 				inst->unk30 = inst->unk2;
 				inst->unk32 = inst->unk4;
-				if (inst->unk37 != 0) {
-					inst->unk37 = 0;
-				}
-
-				func_8008030C_8F2BC((u8)idxU8);
+				if (inst->unk37 != 0) inst->unk37 = 0;
+				func_8008030C_8F2BC(idxU8);
 				if (!(inst->unk47 & 1) && !(inst->unk20 & ALIEN_FLAG_UNK5)) {
-					func_8008199C_9094C((u8)idxU8);
-					inst->unk2A = func_80081390_90340((u8)idxU8);
+					func_8008199C_9094C(idxU8);
+					inst->unk2A = func_80081390_90340(idxU8);
 				}
-
-				type = &alienTypes[typeIndex];
+				tickCallback = alienTypes[typeIndex].unk4C;
+				if (tickCallback == NULL) osSyncPrintf(&D_80141C58_150C08, typeIndex);
+				else tickCallback(idxU8);
 			}
-				tickCallback = (void (*)(u8))type->unk4C;
-				if (tickCallback == NULL) {
-					osSyncPrintf(&D_80141C58_150C08, typeIndex);
-				} else {
-					tickCallback((u8)idxU8);
-
-			skipUpdate:
-				{
-					s32 dx;
-					s32 dz;
-
-					dx = inst->unk0 - D_80149434;
-					dz = inst->unk4 - D_80149436;
-					if ((dx < -0x8FF) || (dx >= 0x900) || (dz < -0x8FF) || (dz >= 0x900)) {
-						if ((D_80052ACA != 2) || (typeIndex < 0x1B)) {
-							type = &alienTypes[typeIndex];
-							if (!(type->unk54 & 0x08000000)) {
-								idx += 4;
-								inst = (AlienInstance *)((u8 *)inst + 0x140);
-								continue;
-							}
-						}
-					}
-
-					if (func_8007A2A0_89250(idx) == -1) {
-						func_8007A6B4_89664((u8)idx);
-					}
+			dx = inst->unk0 - D_80149434;
+			dz = inst->unk4 - D_80149436;
+			if ((dx < -0x8FF) || (dx >= 0x900) || (dz < -0x8FF) || (dz >= 0x900)) {
+				if ((D_80052ACA != 2) || (typeIndex < 0x1B)) {
+					if (!(alienTypes[typeIndex].unk54 & 0x08000000)) break;
 				}
 			}
-		}
-
+			if (func_8007A2A0_89250(idx) == -1) func_8007A6B4_89664(idx);
+		} while (0);
 		idx += 4;
-		// Agent - you must replace this ptr math with array access
-		inst = (AlienInstance *)((u8 *)inst + 0x140);
+		inst = &alienInstances[idx];
 	} while (idx < 0xFF);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D424_8C3D4.s")
-#endif
 
 // CURRENT(22760)
 #ifdef NON_MATCHING
