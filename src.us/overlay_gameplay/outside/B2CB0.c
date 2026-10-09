@@ -650,28 +650,25 @@ void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A5554_B4504.s")
 #endif
 
-const f64 D_80142778_151728[1] = {600.0};
-const f64 D_80142780_151730[2] = {600.0, 0.0};
-
-// CURRENT (403)
-#ifdef NON_MATCHING
 void func_800A57E4_B4794(u8 arg0) {
-	s16 sp20;
-	s16 sp2E;
-	s16 a1;
+	s32 dx;
+	s32 dz;
+	s16 angleDifference;
+	s16 angle;
 
-	a1 = (s16)(func_80003824_4424((f32)(alienInstances[arg0].unk0 - D_80052B34->unk0), (f32)(alienInstances[arg0].unk4 - D_80052B34->unk4)) - D_80052B34->unk6);
+	dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+	dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+	angleDifference = func_80003824_4424(dx, dz) - D_80052B34->unk6;
 	if (!(alienInstances[arg0].unk47 & 1)) {
-		if ((-a1 < a1 ? a1 : -a1) < 0x4000) {
+		if ((-angleDifference < angleDifference ? angleDifference : -angleDifference) < 0x4000) {
 			alienInstances[arg0].unk20 &= 0xF7FF7FFF;
-			sp2E = a1;
-			sp20 = (s16)(a1 > 0 ? D_80052B34->unk6 + 0x6000 : D_80052B34->unk6 - 0x6000);
-			alienInstances[arg0].unk14 = (s16)(s32)(((f32)coss(sp20) / 32768.0) * D_80142778_151728[0] + D_80052B34->unk0);
-			alienInstances[arg0].unk18 = (s16)(s32)(((f32)sins(sp20) / 32768.0) * D_80142780_151730[0] + D_80052B34->unk4);
+			angle = (s16)(angleDifference > 0 ? D_80052B34->unk6 + 0x6000 : D_80052B34->unk6 - 0x6000);
+			alienInstances[arg0].unk14 = (s16)(s32)(((f32)coss(angle) / 32768.0) * 600.0 + D_80052B34->unk0);
+			alienInstances[arg0].unk18 = (s16)(s32)(((f32)sins(angle) / 32768.0) * 600.0 + D_80052B34->unk4);
 			alienInstances[arg0].unk16 = D_80052B34->unk2;
 		}
 	}
-	if ((-a1 < a1 ? a1 : -a1) >= 0x6001) {
+	if ((-angleDifference < angleDifference ? angleDifference : -angleDifference) >= 0x6001) {
 		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
 	}
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG) {
@@ -681,6 +678,3 @@ void func_800A57E4_B4794(u8 arg0) {
 		func_8008064C_8F5FC(arg0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A57E4_B4794.s")
-#endif
