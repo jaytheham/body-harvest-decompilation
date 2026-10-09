@@ -547,38 +547,35 @@ void func_800839F0_53EA0(f32 *arg0, f32 *arg1) {
 	D_800DE110 = (s16)arg1[2];
 }
 
-#ifdef NON_MATCHING
 // AI - Allocates an entry in the D_800DE130 pool; returns index or 0xFB if full
 u8 func_80083A58_53F08(u8 arg0) {
 	u8 orig;
 	u8 j;
 
 	if (D_800DE838 >= 0x96) {
-		return 0xFB;
-	}
-	orig = D_800DE839;
-	D_800DE130[orig].unk0 = arg0;
-	D_800DE130[orig].unk1 = 0;
-	D_800DE130[orig].unk4 = 0;
-	D_800DE130[orig].unk6 = -6;
-	D_800DE130[orig].unk8 = -6;
-	D_800DE838++;
-	D_800DE839 = 0x96;
-	j = orig;
-	if (orig < 0x96) {
-		do {
-			if (D_800DE130[j].unk0 == 0xFA) {
-				D_800DE839 = j;
-				j = 0x96;
-			}
-			j++;
-		} while (j < 0x96);
+		orig = 0xFB;
+	} else {
+		orig = D_800DE839;
+		D_800DE130[orig].unk0 = arg0;
+		D_800DE130[orig].unk1 = 0;
+		D_800DE130[orig].unk4 = 0;
+		D_800DE130[orig].unk6 = -6;
+		D_800DE130[orig].unk8 = -6;
+		D_800DE838++;
+		D_800DE839 = 0x96;
+		j = orig;
+		if (orig < 0x96) {
+			do {
+				if (D_800DE130[j].unk0 == 0xFA) {
+					D_800DE839 = j;
+					j = 0x96;
+				}
+				j++;
+			} while (j < 0x96);
+		}
 	}
 	return orig;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083A58_53F08.s")
-#endif
 
 /* Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index */
 // AI - Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index
@@ -1751,103 +1748,91 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 ar
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086C58_57108.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(13418)
 // AI - Updates type-2 particles: animates growth, interpolates colors toward target, cycles animation frames, frees expired entries
 void func_800870AC_5755C(void) {
-	s16 current;
+	s16 idx;
+	EffectInterpolationState *entryBytes;
+	EffectInterpolationState *linkedBytes;
+	EffectInterpolationState *nextBytes;
+	s16 entryUnk4;
+	s16 linkedIdx;
+	s16 nextIdx;
+	s32 age;
+	u8 steps;
 
-	current = D_800DE832;
-	while ((current != -5) && (current != -6)) {
-		s32 temp;
-		s32 step;
-		s16 linkIdx;
-		u8 scale;
-		u8 age;
-		Unk800DE840 *entry;
-		Unk800DE840 *parent;
-		u8 *entryBytes;
-		u8 *parentBytes;
-		u8 *linkBytes;
+	idx = D_800DE832;
+	while ((idx != -5) && (idx != -6)) {
+		entryBytes = (EffectInterpolationState *)&D_800DE840[idx].unk8;
+		entryUnk4 = D_800DE840[idx].unk4;
+		linkedBytes = (EffectInterpolationState *)&D_800DE840[entryUnk4].unk8;
+		linkedIdx = D_800DE840[entryUnk4].unk4;
 
-		entry = &D_800DE840[current];
-		entryBytes = (u8 *)entry + 8;
-		parent = &D_800DE840[entry->unk4];
-		parentBytes = (u8 *)parent + 8;
-		linkIdx = parent->unk4;
-		scale = parentBytes[0xB];
-
-		if (entryBytes[0xC] >= (0x23 / scale)) {
-			temp = D_800DE840[linkIdx].unk4;
-			func_80083F8C_5443C(current, 0x95);
-			current = temp;
+		if (entryBytes->bytes[0xC] >= (0x23 / linkedBytes->bytes[0xB])) {
+			nextIdx = D_800DE840[linkedIdx].unk4;
+			func_80083F8C_5443C(idx, 0x95);
+			idx = nextIdx;
 			continue;
 		}
 
-		age = entryBytes[0xC];
+		age = entryBytes->bytes[0xC];
+		nextBytes = (EffectInterpolationState *)&D_800DE840[linkedIdx].unk8;
+
 		if (age == 0) {
-			D_800DE840[linkIdx].unk8 = (func_800038E0_44E0() % 11) + 0x3C;
+			nextBytes->size = (func_800038E0_44E0() % 11) + 0x3C;
 		} else if (age == 1) {
-			D_800DE840[linkIdx].unk8 += (func_800038E0_44E0() % 11) + 0xF;
-		} else if (age < (7 / scale)) {
-			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 5) + 5) * scale;
-		} else if (age < (0xF / scale)) {
-			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 4) + 4) * scale;
-			parentBytes[2] -= ((func_800038E0_44E0() % 7) + 7) * scale;
-		} else if (age < (0x18 / scale)) {
-			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 4) + 3) * scale;
-			parentBytes[1] -= ((func_800038E0_44E0() % 5) + 3) * scale;
-			if ((scale * 0xF) < parentBytes[2]) {
-				parentBytes[2] -= ((func_800038E0_44E0() % 7) + 7) * scale;
+			nextBytes->size += (func_800038E0_44E0() % 11) + 0xF;
+		} else if (age < (7 / linkedBytes->bytes[0xB])) {
+			nextBytes->size += ((func_800038E0_44E0() % 5) + 5) * linkedBytes->bytes[0xB];
+		} else if (age < (0xF / linkedBytes->bytes[0xB])) {
+			nextBytes->size += ((func_800038E0_44E0() % 4) + 4) * linkedBytes->bytes[0xB];
+			linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes->bytes[0xB];
+		} else if (age < (0x18 / linkedBytes->bytes[0xB])) {
+			nextBytes->size += ((func_800038E0_44E0() % 4) + 3) * linkedBytes->bytes[0xB];
+			linkedBytes->bytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes->bytes[0xB];
+			if ((linkedBytes->bytes[0xB] * 0xF) < linkedBytes->bytes[0xA]) {
+				linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 7) + 7) * linkedBytes->bytes[0xB];
 			}
-		} else if (age < (0x1C / scale)) {
-			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 3) + 2) * scale;
-			parentBytes[1] -= ((func_800038E0_44E0() % 5) + 3) * scale;
-			if ((scale * 0x19) < parentBytes[2]) {
-				parentBytes[2] -= ((func_800038E0_44E0() % 14) + 0xC) * scale;
+		} else if (age < (0x1C / linkedBytes->bytes[0xB])) {
+			nextBytes->size += ((func_800038E0_44E0() % 3) + 2) * linkedBytes->bytes[0xB];
+			linkedBytes->bytes[9] -= ((func_800038E0_44E0() % 5) + 3) * linkedBytes->bytes[0xB];
+			if ((linkedBytes->bytes[0xB] * 0x19) < linkedBytes->bytes[0xA]) {
+				linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes->bytes[0xB];
 			}
 		} else {
-			D_800DE840[linkIdx].unk8 += ((func_800038E0_44E0() % 2) + 2) * scale;
-			if ((scale * 0x19) < parentBytes[2]) {
-				parentBytes[2] -= ((func_800038E0_44E0() % 14) + 0xC) * scale;
+			nextBytes->size += ((func_800038E0_44E0() % 2) + 2) * linkedBytes->bytes[0xB];
+			if ((linkedBytes->bytes[0xB] * 0x19) < linkedBytes->bytes[0xA]) {
+				linkedBytes->bytes[0xA] -= ((func_800038E0_44E0() % 14) + 0xC) * linkedBytes->bytes[0xB];
 			}
-			if ((scale * 0x25) < parentBytes[1]) {
-				parentBytes[1] -= ((func_800038E0_44E0() % 15) + 0x16) * scale;
+			if ((linkedBytes->bytes[0xB] * 0x25) < linkedBytes->bytes[9]) {
+				linkedBytes->bytes[9] -= ((func_800038E0_44E0() % 15) + 0x16) * linkedBytes->bytes[0xB];
 			}
 		}
 
-		age = entryBytes[0xC];
-		if (age >= 3) {
-			step = ((0x23 / scale) - age) & 0xFF;
-			temp = entryBytes[6] - parentBytes[0];
-			entryBytes[6] -= temp / step;
-			temp = entryBytes[7] - parentBytes[1];
-			entryBytes[7] -= temp / step;
-			temp = entryBytes[8] - parentBytes[2];
-			entryBytes[8] -= temp / step;
-			temp = entryBytes[9] - parentBytes[3];
-			entryBytes[9] -= temp / step;
-			temp = entryBytes[0xA] - parentBytes[4];
-			entryBytes[0xA] -= temp / step;
-			temp = entryBytes[0xB] - parentBytes[5];
-			entryBytes[0xB] -= temp / step;
+		age = entryBytes->bytes[0xC];
+		if (age < 3) {
+			;
+		} else {
+			steps = (0x23 / linkedBytes->bytes[0xB]) - age;
+			entryBytes->bytes[6] = entryBytes->bytes[6] - ((entryBytes->bytes[6] - linkedBytes->bytes[0]) / steps);
+			entryBytes->bytes[7] = entryBytes->bytes[7] - ((entryBytes->bytes[7] - linkedBytes->bytes[1]) / steps);
+			entryBytes->bytes[8] = entryBytes->bytes[8] - ((entryBytes->bytes[8] - linkedBytes->bytes[2]) / steps);
+			entryBytes->bytes[9] = entryBytes->bytes[9] - ((entryBytes->bytes[9] - linkedBytes->bytes[3]) / steps);
+			entryBytes->bytes[0xA] = entryBytes->bytes[0xA] - ((entryBytes->bytes[0xA] - linkedBytes->bytes[4]) / steps);
+			entryBytes->bytes[0xB] = entryBytes->bytes[0xB] - ((entryBytes->bytes[0xB] - linkedBytes->bytes[5]) / steps);
 		}
 
-		linkBytes = (u8 *)&D_800DE840[linkIdx] + 8;
-		linkBytes[2] += linkBytes[5];
-		linkBytes[3] += linkBytes[6];
-		linkBytes[4] += linkBytes[7];
-		parentBytes[6]++;
-		if (parentBytes[6] == 0x10) {
-			parentBytes[6] = 0;
+		nextBytes->bytes[2] += nextBytes->bytes[5];
+		nextBytes->bytes[3] += nextBytes->bytes[6];
+		nextBytes->bytes[4] += nextBytes->bytes[7];
+		linkedBytes->bytes[6]++;
+		if (linkedBytes->bytes[6] == 0x10) {
+			linkedBytes->bytes[6] = 0;
 		}
-		entryBytes[0xC]++;
-		current = D_800DE840[linkIdx].unk4;
+
+		entryBytes->bytes[0xC]++;
+		idx = D_800DE840[linkedIdx].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800870AC_5755C.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(40278)
@@ -2479,62 +2464,42 @@ void func_800894A0_59950(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800894A0_59950.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(3538)
 // AI - Renders type-1 particles: loads particle texture and renders each entry as a billboarded sprite
-void func_80089764_59C14(s32 arg0) {
-	s16 idx;
-	s16 neg6;
-	Unk800DE840* entry;
+void func_80089764_59C14(u8 arg0) {
+	s16 index;
 
-	idx = D_800DE130[arg0 & 0xFF].unk6;
+	index = D_800DE130[arg0].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 
 	D_800DE12D = 0x20;
 	D_800DE12E = 0x20;
-	idx = D_800DE840[idx].unk4;
-	neg6 = -6;
+	index = D_800DE840[index].unk4;
 
-	if (idx == -5) {
-		return;
-	}
-	if (idx == neg6) {
-		return;
-	}
-
-	do {
-		entry = &D_800DE840[idx];
-		D_800DE118.x = entry->unk8;
-		D_800DE124 = &entry->unkE;
-		D_800DE12C = entry->unk11;
-		D_800DE118.y = entry->unkA;
-		D_800DE118.z = entry->unkC;
-		D_800DE128 = entry->unk2;
+	while ((index != -5) && (index != -6)) {
+		D_800DE118.x = (f32)D_800DE840[index].unk8;
+		D_800DE118.y = (f32)D_800DE840[index].unkA;
+		D_800DE118.z = (f32)D_800DE840[index].unkC;
+		D_800DE124 = &D_800DE840[index].unkE;
+		D_800DE128 = (f32)D_800DE840[index].unk2;
+		D_800DE12C = D_800DE840[index].unk11;
 		func_8008D14C_5D5FC();
-
-		idx = entry->unk4;
-		if (idx == -5) {
-			return;
-		}
-	} while (idx != neg6);
+		index = D_800DE840[index].unk4;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089764_59C14.s")
-#endif
 
 // AI - Creates a type-5 particle entry with position, color, size, and alpha
 void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
@@ -3227,61 +3192,42 @@ void func_8008B264_5B714(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(3981)
 // AI - Renders type-4 particles as billboarded sprites with loaded texture
-void func_8008B534_5B9E4(s32 arg0) {
-	s16 idx;
-	s16 neg6;
-	Unk800DE840* entry;
+void func_8008B534_5B9E4(u8 arg0) {
+	s16 index;
 
-	idx = D_800DE840[D_800DE130[arg0 & 0xFF].unk6].unk4;
+	index = D_800DE130[arg0].unk6;
+	index = D_800DE840[index].unk4;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100E080));
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 
 	D_800DE12D = 0x20;
 	D_800DE12E = 0x20;
-	neg6 = -6;
 
-	if (idx == -5) {
-		return;
-	}
-	if (idx == neg6) {
-		return;
-	}
-
-	do {
-		entry = &D_800DE840[idx];
-		D_800DE118.x = entry->unk8;
-		D_800DE124 = &entry->unkE;
-		D_800DE12C = entry->unk11;
-		D_800DE118.y = entry->unkA;
-		D_800DE118.z = entry->unkC;
-		D_800DE128 = entry->unk2;
+	while ((index != -5) && (index != -6)) {
+		D_800DE118.x = (f32)D_800DE840[index].unk8;
+		D_800DE118.y = (f32)D_800DE840[index].unkA;
+		D_800DE118.z = (f32)D_800DE840[index].unkC;
+		D_800DE124 = &D_800DE840[index].unkE;
+		D_800DE128 = (f32)D_800DE840[index].unk2;
+		D_800DE12C = D_800DE840[index].unk11;
 		func_8008D14C_5D5FC();
-
-		idx = entry->unk4;
-		if (idx == -5) {
-			return;
-		}
-	} while (idx != neg6);
+		index = D_800DE840[index].unk4;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B534_5B9E4.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(1910)
@@ -4555,41 +4501,24 @@ void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 ar
 	D_800DE0EB = 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1385)
 // AI - Generates randomized color sets from a base color lookup table
-void func_8008EDB4_5F264(s32 arg0) {
+void func_8008EDB4_5F264(s8 arg0[][3]) {
+	s32 i;
+	s32 j;
 	s16 temp;
-	s32 value;
-	s32 modulo;
-	s32 var_s0;
-	s32 var_s4;
-	u8 *var_s1;
-	s8 *var_s2;
 
-	modulo = 120;
-	var_s4 = 0;
-	do {
-		var_s1 = &D_800AA688[(var_s4 * 4) - var_s4];
-		var_s2 = (s8 *)(arg0 + ((var_s4 * 4) - var_s4));
-		var_s0 = 0;
-		do {
-			temp = (func_800038E0_44E0() % modulo) + var_s1[var_s0] - 60;
-			value = temp;
+	for (i = 0; i < 4; i = (i + 1) & 0xFF) {
+		for (j = 0; j < 3; j = (j + 1) & 0xFF) {
+			temp = D_800AA688_7AB38[(i * 3) + j] + (func_800038E0_44E0() % 120) - 0x3C;
 			if (temp < 0) {
-				value = 0;
-			} else if (value >= 0x100) {
-				value = 0xFF;
+				temp = 0;
+			} else if (temp >= 0x100) {
+				temp = 0xFF;
 			}
-			var_s2[var_s0] = value;
-			var_s0 = (var_s0 + 1) & 0xFF;
-		} while (var_s0 < 3);
-		var_s4 = (var_s4 + 1) & 0xFF;
-	} while (var_s4 < 4);
+			arg0[i][j] = temp;
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008EDB4_5F264.s")
-#endif
 
 // AI - Spawns initial ambient particle effects with random positions
 void func_8008EEC4_5F374(void) {

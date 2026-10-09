@@ -6807,7 +6807,6 @@ void func_80071854_159914(void) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-
 // AI - Fills the screen with a solid color via RDP
 void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
 {
@@ -6821,8 +6820,13 @@ void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsi
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(820)
+// CURRENT(535)
 // AI - Interior entry point: resets state, loads building, sets player spawn
+// Two commutative-operand-order fixes landed (switch cases 0 and 1: the (unk1A/2) result
+// is the LEFT operand of the +). Residual is the D_80047B70 second check: the ROM emits a
+// branch-likely (bnel) with the else-path constant in the delay slot and hoists its lui
+// into the outer beqz delay slot; our shape yields a plain bnez. All other rows are
+// encoding aliases (li/addiu zero, or/move) - structural delta is 0 instructions.
 #ifdef NON_MATCHING
 void func_80071F08_159FC8(void) {
 	s32 i;
@@ -6878,7 +6882,7 @@ void func_80071F08_159FC8(void) {
 				D_800E6A78.unkE = 0x4000;
 				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2;
 				
-				D_800E6A78.unk54 = (D_800E65BC[value].unk1A / 2) + D_800E66A8[D_800E65EC].unk6 + 0xF;
+				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6 + (D_800E65BC[value].unk1A / 2) + 0xF;
 				return;
 
 			case 2:
@@ -6891,7 +6895,7 @@ void func_80071F08_159FC8(void) {
 			case 1:
 				D_800E6A78.unkE = 0;
 				
-				D_800E6A78.unk4C = (D_800E65BC[value].unk1A / 2) + D_800E66A8[D_800E65EC].unk2 + 0xF;
+				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2 + (D_800E65BC[value].unk1A / 2) + 0xF;
 				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6;
 				return;
 
@@ -9161,9 +9165,10 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 
 // jtbl_800A4AE8_18CBA8
 #ifdef NON_MATCHING
+// CURRENT(170)
 // AI - Removes/despawns objects from a room based on type
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
-	switch (*(s16 *) ((u8 *) &D_800E65BC[arg1] + 0xC)) {
+	switch (D_800E65BC[arg1].unkC) {
 		case 1:
 			func_80086E90_16EF50(D_800E66B3[arg0 * 0x30]);
 			break;
@@ -9175,6 +9180,11 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 			break;
 		case 4:
 			func_80089794_171854(D_800E66B3[arg0 * 0x30]);
+			break;
+		case 5:
+		case 6:
+		case 7:
+		case 8:
 			break;
 	}
 }

@@ -5734,10 +5734,9 @@ void func_8007EBB8_4F068(void) {
 	func_800839F0_53EA0(&((FrontendCamState*)D_800D7A18)->unk10.x, &((FrontendCamState*)D_800D7A18)->unk1C.x);
 }
 
-/* Typed camera pose copy: instruction sequence matches; register allocation remains unresolved after 25 candidates. */
-#ifdef NON_MATCHING
+// AI - Copies a frontend camera entry's position/rotation into the active playback camera state
 void func_8007EE0C_4F2BC(FrontendCamEntry* arg0) {
-	if (D_80094938 == 0) {
+	if (!D_80094938) {
 		((FrontendCamState*)D_800D7A18)->unk10 = *(Vec3f*)&arg0->unk0;
 		((FrontendCamState*)D_800D7A18)->unk1C = *(Vec3f*)&arg0->unkC;
 		((FrontendCamState*)D_800D7A18)->unk34 = arg0->unk18;
@@ -5745,9 +5744,6 @@ void func_8007EE0C_4F2BC(FrontendCamEntry* arg0) {
 		((FrontendCamState*)D_800D7A18)->unk3C = arg0->unk1C;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007EE0C_4F2BC.s")
-#endif
 
 /**
  * @brief Initializes the global frontend playback block (D_800D7A18) from a pointer-to-pointer source.

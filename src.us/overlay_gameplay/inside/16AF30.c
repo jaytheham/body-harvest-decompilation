@@ -552,8 +552,6 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 	}
 }
 
-// CURRENT(80)
-#ifdef NON_MATCHING
 // AI - Create a particle burst with specified parameters
 void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	u8 slot;
@@ -574,18 +572,18 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 
 		D_800FB6F8[slot].unkA = effect;
 		entry = &D_800FB7B0[effect];
-			count = arg5;
+		count = arg5;
 		arg5 += 0;
 
+		entry->unk2 = arg6;
 		entry->unk8 = arg0 * 4;
 		entry->unkA = arg1 * 4;
 		entry->unkC = arg2 * 4;
 		entry->unkE = 0xFF;
 		entry->unkF = 0xFF;
 		entry->unk10 = 0xFF;
-		entry->unk12 = 2;
-		entry->unk2 = arg6;
 		*(s16 *)&entry->unk14 = arg3;
+		entry->unk12 = 2;
 		entry->unk11 = arg4;
 
 		if (count >= 0x33) {
@@ -604,9 +602,6 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800840F0_16C1B0.s")
-#endif
 
 // AI - Update effect state: movement, aging, and spawning sub-effects
 void func_80084258_16C318(u8 arg0) {
@@ -1821,21 +1816,11 @@ void func_80086FC4_16F084(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086FC4_16F084.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Render slot type 1 effects: textured billboard quads
-void func_80087A40_16FB00(s32 arg0) {
-	u8 slot;
-	Vec3f *pos;
-	Unk84EECEffect *effectBase;
-	s8 **color;
-	f32 *scale;
-	u8 *alpha;
-	s16 effect;
-	s16 end;
-	s16 stride;
+void func_80087A40_16FB00(u8 arg0) {
+	s16 var_s1;
 
-	slot = arg0 & 0xFF;
-	effect = *(s16 *)(&D_800FB6FE + (slot * 0xC));
+	var_s1 = D_800FB6F8[arg0].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -1853,33 +1838,17 @@ void func_80087A40_16FB00(s32 arg0) {
 	D_800FB6E5 = 0x20;
 	D_800FB6E6 = 0x20;
 
-	if ((effect != -5) && (effect != -6)) {
-		pos = &D_800FB6D0;
-		effectBase = D_800FB7B0;
-		color = &D_800FB6DC;
-		scale = &D_800FB6E0;
-		alpha = &D_800FB6E4;
-		end = -6;
-		stride = 0x16;
-
-		do {
-			Unk84EECEffect *entry;
-
-			entry = (Unk84EECEffect *)((u8 *)effectBase + (effect * stride));
-			pos->x = entry->unk8;
-			*color = &entry->unkE;
-			*alpha = entry->unk11;
-			pos->y = entry->unkA;
-			pos->z = entry->unkC;
-			*scale = entry->unk2;
+	while ((var_s1 != -5) && (var_s1 != -6)) {
+		D_800FB6D0.x = (f32)D_800FB7B0[var_s1].unk8;
+		D_800FB6D0.y = (f32)D_800FB7B0[var_s1].unkA;
+		D_800FB6D0.z = (f32)D_800FB7B0[var_s1].unkC;
+		D_800FB6DC = &D_800FB7B0[var_s1].unkE;
+		D_800FB6E0 = (f32)D_800FB7B0[var_s1].unk2;
+		D_800FB6E4 = D_800FB7B0[var_s1].unk11;
 		func_8008A1D8_172298();
-			effect = entry->unk4;
-		} while ((effect != -5) && (effect != end));
+		var_s1 = D_800FB7B0[var_s1].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087A40_16FB00.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3405)
@@ -2192,26 +2161,8 @@ void func_80088654_170714(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 #endif
 
-// CURRENT(110)
 // AI - Render slot type 6 effects: shrinking sprites
-#ifdef NON_MATCHING
 void func_80088B9C_170C5C(void) {
-	typedef struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		s16 unk6;
-		s16 unk8;
-		s16 unkA;
-		s16 unkC;
-		s8 unkE;
-		s8 unkF;
-		s8 unk10;
-		u8 unk11;
-		u8 unk12;
-		u8 pad13[3];
-	} Unk84EECEffect;
-
 	s16 effect;
 
 	D_800FB6E5 = 0x20;
@@ -2232,32 +2183,18 @@ void func_80088B9C_170C5C(void) {
 
 	if ((effect != -6) && (effect != -5)) {
 		do {
-			s16 posX;
-			s16 posY;
-			s16 posZ;
-			s16 scale;
-			u8 alpha;
-
 			gDPPipeSync(D_8005BB2C++);
-			posX = D_800FB7B0[effect].unk8;
-			posY = D_800FB7B0[effect].unkA;
-			posZ = D_800FB7B0[effect].unkC;
-			scale = D_800FB7B0[effect].unk2;
-			alpha = D_800FB7B0[effect].unk12;
-			D_800FB6D0.x = posX;
+			D_800FB6D0.x = (f32)D_800FB7B0[effect].unk8;
+			D_800FB6D0.y = (f32)D_800FB7B0[effect].unkA;
+			D_800FB6D0.z = (f32)D_800FB7B0[effect].unkC;
 			D_800FB6DC = &D_800FB7B0[effect].unkE;
-			D_800FB6D0.y = posY;
-			D_800FB6D0.z = posZ;
-			D_800FB6E0 = scale;
-			D_800FB6E4 = alpha;
+			D_800FB6E0 = (f32)D_800FB7B0[effect].unk2;
+			D_800FB6E4 = D_800FB7B0[effect].unk12;
 			func_80089E54_171F14();
 			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -6) && (effect != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088B9C_170C5C.s")
-#endif
 
 // CURRENT(4471)
 // AI - Render slot type 6 effects with prim/env colors (glow effects)
@@ -2321,8 +2258,6 @@ void func_80088DFC_170EBC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
 #endif
 
-// CURRENT(60)
-#ifdef NON_MATCHING
 // AI - Render a single textured triangle
 void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	f32 sp4;
@@ -2332,12 +2267,18 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	f32 temp_f16;
 	f32 temp_f18;
 
-	temp_f0 = D_800FB6A8[0] * (f32)arg2;
-	temp_f12 = D_800FB6A8[1] * (f32)arg2;
-	temp_f14 = D_800FB6A8[2] * (f32)arg2;
-	temp_f16 = D_800FB6A8[3] * (f32)arg2;
-	temp_f18 = D_800FB6A8[4] * (f32)arg2;
-	sp4 = D_800FB6A8[5] * (f32)arg2;
+	temp_f0 = (f32)arg2;
+	temp_f0 *= D_800FB6A8[0];
+	temp_f12 = (f32)arg2;
+	temp_f12 *= D_800FB6A8[1];
+	temp_f14 = (f32)arg2;
+	temp_f14 *= D_800FB6A8[2];
+	temp_f16 = (f32)arg2;
+	temp_f16 *= D_800FB6A8[3];
+	temp_f18 = (f32)arg2;
+	temp_f18 *= D_800FB6A8[4];
+	sp4 = (f32)arg2;
+	sp4 *= D_800FB6A8[5];
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0[0] + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0[1] + temp_f12);
@@ -2378,9 +2319,6 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089148_171208.s")
-#endif
 
 // CURRENT(3705)
 // AI - Spawn a child particle effect for rendering
@@ -2562,13 +2500,11 @@ void func_80089834_1718F4(u8 arg0) {
 	}
 }
 
-// CURRENT(192)
 // AI - Render slot type 7 effects: smoke/cloud sprites
-#ifdef NON_MATCHING
-void func_80089BCC_171C8C(s32 arg0) {
+void func_80089BCC_171C8C(u8 arg0) {
 	s16 var_s1;
 
-	var_s1 = D_800FB6F8[arg0 & 0xFF].unk6;
+	var_s1 = D_800FB6F8[arg0].unk6;
 	var_s1 = D_800FB7B0[var_s1].unk4;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -2598,9 +2534,6 @@ void func_80089BCC_171C8C(s32 arg0) {
 		var_s1 = D_800FB7B0[var_s1].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089BCC_171C8C.s")
-#endif
 
 // AI - Render an axis-aligned textured quad/billboard
 void func_80089E54_171F14(void) {

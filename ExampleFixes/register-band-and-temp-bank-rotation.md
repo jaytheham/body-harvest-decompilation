@@ -93,3 +93,233 @@ The whole t-band is shifted by one (`t8` where the target has `t9`), and the `a`
 The rotation is self-consistent - every downstream use is renamed to match, so the differ's table reads identically in both columns. Identify it in seconds with the asm-differ JSON output above. **What did not move it** (all measured, all >= 40): `pattern_probe.py` (every learned transform neutral or worse, `swap-commutative` 480); all **120 declaration permutations** of the five locals (best 40, range 40-117); dropping the `spAC = spAC;` no-ops (40); giving the +8 pointer its own variable (95); three distinct pointer names base/p8/spAC (1551); computing `spAC` late (235); removing the `s1 = &D_800FB7B0[var_t2]` rebase between `sp9C.y` and `sp9C.z` (260, and with the field reads moved to the array expression 1697). So it is cfe callee-saved allocation, not a source-shape question - park it as allocation.
 
 See also `hoist-vs-rematerialise-last-callee-saved-slot.md` for the sibling case where the band size and every home match and only *which* value takes the last callee-saved slot differs.
+
+### A single caller-saved temp on a CSE'd RDP opcode constant (4 rows, score 20)
+
+`func_80081058_51508` (`src.us/overlay_gameplay/frontend/40720.c`, 142 instr, wrapped `#ifdef
+NON_MATCHING` body with no `// CURRENT(n)` marker of its own). Unwrapped it re-measures **20**, and the
+two columns are identical for **138 of 142** rows. The four differing rows all rename ONE live value:
+the `G_LINE3D` opcode word `0xB5000000`, materialised once (`lui`) by cfe CSE across the three
+`gSPLineW3D(D_8005BB2C++, ...)` expansions and held live across them. The target colours it **`$t5`**,
+ours **`$t4`**; its `lui` plus the three `sw t5,0(v0)` stores are the entire score. Every other temp
+agrees (`t6/t7/t8/t9/at`), the homes, the frame and the store order agree, `ins_diff` delta **+0**.
+Both `$t4` and `$t5` are dead at that point, so the choice is a cfe temp-rotation offset, not a
+source-shape question - and the constant cannot be respelled because it is emitted inside the
+`gSPLineW3D` macro.
+
+Measured, all >= 20 (baseline 20): `pattern_probe.py` every learned transform neutral
+(`pad1`/`pad2`/`swap-last-decls`/`cast-s16-consts` 20, `cast-u8-consts` 25); an empty `if (vtx) { }`
+extending the vtx pointer's life *before* the gfx block 20; a third unused `s32 pad;` local 20;
+swapped `vtx`/`buffer` declarations 20; `~0` for the `gSPClearGeometryMode` `-1` 20; an empty
+`if (vtx) { }` *after* the last line command 2845. Park as allocation.
+
+## The same rotation happens in the FP bank, and there it is shape-proof
+
+`func_8007C1DC_16429C` (`src.us/overlay_gameplay/inside/158330.c`, 61 instructions, marker
+`CURRENT(215)` stale - re-measured **265**) is a small line/segment intersection test whose
+`ins_diff -noregs` is **delta +0** with every block an encoding alias, i.e. the whole residual is
+allocation. Unlike the integer cases above, the rotation is in the **floating-point** registers, and
+its tell is that the C's own temporary names already mirror the target's registers while the register
+*numbers* are permuted:
+
+    target: lwc1 $f16,8(v1)   lwc1 $f18,8(a0)   lwc1 $f14,8(v0)   sub.s $f0,$f14,$f18   div.s $f12,...
+    ours:   lwc1 $f0,8(v1)    lwc1 $f14,8(a0)   lwc1 $f12,8(v0)   sub.s $f2,$f12,$f14   div.s $f18,...
+
+Every source-shape lever measured **neutral at 265**: fully inlining the three `f32` temporaries,
+reversing their declaration order, splitting the quadratic (`t_f18 = a*a; t_f18 += b*b;`), dropping
+`temp_f18` and comparing the expression inline, and collapsing to a single temp local. The `mul.s`
+split lever (the note `split-assignment-drives-mul-operand-order.md`) measured **worse (295)** here,
+and `pattern_probe`'s learned transforms were neutral (`swap-commutative` 311). Conclusion: an FP
+temp-bank rotation is cfe-internal the same way an integer one is - when the C's temp names already
+match the roles, do not permute the source; park as allocation.
+
+## A per-case mask temp rotated from the switch dispatch delay slots (78 instr, score 130)
+
+`func_8007899C_160A5C` (`src.us/overlay_gameplay/inside/158330.c`, 78 instructions) is a four-case
+`switch` over `D_800E66A8[arg1].unk8` that permutes the bits of `arg0` differently per case. It is a
+fresh, measured body (no `// CURRENT(n)` marker) and unwraps to **130** with `ins_diff -noregs`
+**78 = 78, delta +0** - the entire residual is register allocation. Reading the two listings
+index-for-index shows the shape is exact: two `b`-delay-slot `nop`s, both `andi` chains, the frame
+`0x8` with `ret` homed at `0x7($sp)`, and every branch target agree.
+
+The rotation is concentrated in the **dispatch delay slots**. IDO hoists each case's `arg0 & 4` mask
+into the delay slot of that case's `beq $v0,$at` compare, and colours them in creation order:
+
+    target:  case1 mask $t7   case2 mask $t9   case3 mask $t1
+    ours:    case1 mask $t7   case2 mask $t4   case3 mask $t1
+
+The single wrong colour (`t4` for case 2) then cascades through the case-1 and case-2 bodies
+(14 register rows total; case 3's body is byte-identical). Note the rotated temporary is **reused
+later within the same case**, so it is not a liveness conflict - both colourings are valid, and the
+choice is cfe-internal.
+
+**38 measured variants, floor 130** (control = the committed body, reproduced 130 exactly, so the
+harness was live; a fresh `.o` per variant). Declaration site (`mask2`/`mask3` block-scoped vs
+function-scope) **neutral**; the two-statement `mask = arg0; mask &= 4;` vs the one-statement
+`mask = arg0 & 4;` **210**; a named `mask1` in case 1 (uniform with case 2/3) 230; `s32`/`s8`/`u8`
+masks 210 / 1185 / 210; inline `if (arg0 & 4)` in all three cases 210; swapping the case 2/3 bodies
+240; the switch selector cast `(u8)`, stored in a local, or `& 0xFF` - all **130 neutral**; a
+`default: break;` and `mask != 0` forms neutral; `case 0` in braces neutral; dropping every `& 0xFF`
+160; making case 1 uniform with `& 0xFF` 230; `ret` as `s32`/`int` 2965; the four `if`s as compound
+`|=` 160. No source shape moves the dispatch mask's colour.
+
+## A named pointer is not always the lever, and a low marker is not evidence
+
+`func_802D7B68_1F0878` (`src.us/overlay_level/java/1ED9E0.c`, 209 instructions, marker
+`CURRENT(1291)`, re-measured **1306**) and `func_802D5F28_2B8358`
+(`src.us/overlay_level/siberia/2B7100.c`, 190 instructions, marker `CURRENT(93)`, re-measured
+**985**) are both `ins_diff -noregs` **delta +0** with an identical instruction count, identical
+frame and identical stack homes, so both are this family. Measured levers on the java one (one
+compile each, file restored afterwards):
+
+| variant | score |
+|---|---|
+| base | 1306 |
+| prologue re-spelled `alienInstances[arg0].<f>` instead of `s0-><f>` | 1306 |
+| **whole body** re-spelled (every `s0->` -> `alienInstances[arg0].`) | 1306 |
+| `AlienInstance *s0;` moved to the top of the declaration block | 1443 |
+
+- **The "drop the named pointer and index the array directly" lever that converted the case above
+  is byte-neutral here.** When the pointer is a single materialised base (`s0 = &alienInstances[arg0]`,
+  kept in `$s0` on both sides) IDO canonicalises the two spellings. Try it, but do not expect it to
+  break a rotation on its own.
+- **A low recorded marker is not evidence of a near-match.** `func_802D5F28_2B8358` carries
+  `CURRENT(93)` and re-measures **985** - the marker was written against a body that is no longer in
+  the tree. Re-measure before treating a sub-1-point-per-instruction marker on an unlogged function as
+  cheap; the same file also carries `CURRENT(4)` (really 136) and `CURRENT(5)` (a rodata-placement item
+  that scores 5 only because asm-differ cannot see the generated jump table's base).
+- The whole score here sits in the **caller-saved argument bank**: target colours the
+  `D_8014DD50[..].unkC` chain `$a3, $t0, $a2(base), $t1`, ours `$a2, $a3, $t0, $t1`. Every home, the
+  frame and the literals agree, so the stores match and only the bank membership differs - park as
+  allocation (the permuter, not more spellings, is the only lever left).
+
+## A named *intermediate* pointer is the lever when declaration order is not (482 -> 321)
+
+`func_802DAD00_2BD130` (`src.us/overlay_level/siberia/2B7100.c`, 111 instructions, marker
+`CURRENT(674)`, re-measured **482** - the marker was stale). `ins_diff -noregs` reports 111 = 111,
+delta **+0**, and every block it lists is encoding-level (`li` vs `addiu`, `move` vs `or`,
+`jal LBL` vs `jal <addr>`). Two levers, both measured:
+
+- **Declaration order fixes the stack homes but barely moves the score.** With `s16 sp4E;` hoisted
+  out of the `else` and the order `s16 sp4A; s16 sp4E; s32 sp44, sp40, sp3C; s16 sp3A;` the target's
+  `sp3A@0x3A, sp3C@0x3C, sp40@0x40, sp44@0x44` are reproduced exactly and `sp4A` lands on `0x4A`
+  (target `0x4A`), giving **482 -> 415**. Sixteen other orders measured worse (419-537); a
+  two-byte-pad pair can reproduce the target's `sp4A@0x4A`/`sp4E@0x4E` hole pattern on paper, but the
+  pads themselves cost more than they recover. `sp4E`'s home (`0x48` vs the target's `0x4E`) never
+  closed.
+- **Naming the intermediate pointer is what actually rotates the band.** Replacing the inline
+  `sp4A = D_8014DD50[alien->unkC].unkC;` with
+  `node = &D_8014DD50[alien->unkC]; sp4A = node->unkC;` (with `Unk8014DD50 *node;` declared
+  immediately after `s16 sp4A;`) took **415 -> 321 in one edit**: the whole second half of the
+  function (everything after the `bltz`) then matched row for row, where it had been a full
+  permutation. So when a whole-body rotation resists declaration order, try giving the *address that
+  is computed once and dereferenced twice* its own named pointer - it changes the cfe temp list's
+  build order without changing the instruction count.
+
+The `node` pointer costs the frame (`0x50 -> 0x58`) because it takes a stack slot; using it for the
+call's three field reads measured **2153**, and declaring it inside the `if` block does not compile.
+Parked at **321** (committed wrapped, improvement landed): residual is the +8 frame, the head rows
+(`lh v0`/`lh t9`, `sll t9,v0`/`sll t2,t9`, and the address landing in `t2` vs `v0`), and the two
+homes above.
+
+
+## A wrapped body that does not compile has an unverifiable marker
+
+`func_802DC4D0_2BE900` (`src.us/overlay_level/siberia/2B7100.c`, 337 instructions, marker
+`CURRENT(4162)`) could not compile at all, so nothing could confirm its marker. The build failed on
+`func_802DB8D8_2BDD08(..., D_802E3054_2C5484)` - the parameter is `f32` and the TU declares the symbol
+`const f32[]`; the target asm reads it as `lwc1 %lo(D_802E3054_2C5484)($at)`, so the source form is
+`D_802E3054_2C5484[0]`. After that one-word fix it measures **3792** (marker `CURRENT(4162)`) - a
+wrapped body that never compiled has no reproducible marker, so **make it build, then re-measure**.
+
+Six declaration permutations of the three `s16` locals (`sp8C`, `sp88`, `sp90`; each moved first, each
+moved last, and the `(s16)` cast dropped) each measured **exactly 3792** - byte-neutral. `ins_diff
+-noregs` reports 337 vs **332**, delta **-5**, and `allblocks -noregs` puts the earliest INSERT/DELETE
+blocks in the header (the `sp8C`/`sp88`/`sp90` chain plus one field-width row), so this is a
+structural reconstruction gap over 337 instructions, not a pure rotation. Do not re-tread declaration
+order here.
+
+## A leading run of Gfx macro blocks rotates the whole t-band (one lever, 380 -> 360)
+
+`func_800E5044_F3FF4` (`src.us/overlay_gameplay/outside/CFE30.c`, 114 instructions, committed
+wrapped at `// CURRENT(380)` - **re-measured 380**, so the marker is accurate). `ins_diff -noregs`
+reports 114 = 114, delta **+0**, and every block it lists is encoding-level (`li` vs `addiu`,
+`%hi/%lo` vs the resolved address, `jal <name>` vs `jal <addr>`), so nothing structural is left.
+Read role-for-role:
+
+- **The s-band trades two roles.** Target colours `entry -> s0`, `type1 -> s2`, `end -> s3`, the
+  literal `2 -> s4`; ours is `entry -> s0`, `end -> s2`, `type1 -> s3`, `2 -> s4`. The visible tell
+  is the loop test (`bnel s0,s3` vs `bnel s0,s2`) - everything else in the s-band agrees.
+- **The t-band is rotated from the second macro block on.** The prologue's first block
+  (`gDPPipeSync`) agrees exactly (t6/t7); after it every constant and every `pkt+8` pointer is one
+  or two roles late (`0x80008000` -> target t2, ours t3; `0xB900031D` -> target t4, ours t5; the
+  closing `gSPTexture`/`gSPSetGeometryMode` pair -> target t5/t6/t4, ours t3/t4/t9).
+- **The loop body repeats it**: the nine argument locals load into `t7,t8,t9,t2,t3` (target) and
+  `v0,v1,t0,t1,t2` (ours), while the four that go straight to the call agree (`a0-a3`).
+
+Measured (one compile each, file restored afterwards; baseline **380**):
+
+| variant | score |
+|---|---|
+| declaration order permuted (`type1` first, `end` first, `entry,type1,end`) | 380 |
+| assignment order permuted (`type1 = 1;` before `end = ...`) | 380 |
+| `s32 type1` / `u8 type1` / `s16 type1 = 1;` at the declaration | 380 |
+| drop the `end` local, fold `(LaserEntry *)&D_80153300` into the loop test | **360** |
+| the nine argument locals re-declared `s32` | 3257 |
+| the argument locals inlined into the call | 1207 |
+
+The s-band is not source-shape-driven here, and the single lever that moved anything moved four
+rows, not the band. Park as the cfe temp-bank family; the permuter is the only lever left.
+
+## A hoisted global-address register steals the loop counter saved register (160 floor)
+
+`func_800970C0_A6070` (`src.us/overlay_gameplay/outside/A49A0.c`, 225 instructions, no reproducible
+marker) unwraps and compiles: `allblocks -noregs` reports 225 = 225, delta **+0**, and *every* block it
+prints is encoding-level (`li` vs `addiu`, `move` vs `or`, `%hi/%lo` vs the resolved address), so the
+score of **160** is register allocation only. The two rows that set it are the hoisted base pointer and
+the inner loop counter:
+
+    target  lui $t5,%hi(D_8005BB34)  ...  or $s0,$zero,$zero    (col -> s0)
+    ours    lui $t4,%hi(D_8005BB34)  ...  move $t5,$zero        (col -> t5)
+
+Our build hoists the global address into `t4`, which leaves `t5` free for the counter; the target does
+the reverse. Every later row follows from those two choices (`lw a1,0(t5)` vs `lw a0,0(t4)`;
+`addiu a0,s0,-4` vs `addiu v0,t5,-4`; `sll t9,a0,8` vs `sll t9,v0,8`). So a whole-function score in
+the hundreds on a `-noregs` delta of +0 is this family - a register-name cascade - not a missing
+statement, and no declaration sweep will close it.
+
+Measured (baseline 160, file restored after each): `col s32` 1533, `row s32` 1533, both `s32` 160,
+`x0`/`x1` `s16` 635, `x1` `s16` only 575, `tileRow` `u32` 160, the four `Vtx` declarations moved below
+`col`/`row` 170. `pattern_probe` measures every learned transform neutral or worse (`swap-commutative`
+165; `cast-u8-consts` and `cast-s16-consts` do not compile). Park; the permuter is the only lever left.
+
+## One assignment moved out of a store run rotates the temp bank (130 -> 60)
+
+`func_800EF9F0_FE9A0` (`outside/F9230.c`, 142 instr). The committed wrapped body did not compile
+(`DK0_TO_PHYS` is not a macro - the target `.s` masks the pointer with `& 0x1FFFFFFF`, i.e.
+`K0_TO_PHYS`); fixed, it measured **130**, `ins_diff -noregs` 142 = 142 delta +0.
+
+Every register row was one bank late: the target colours the second and third render-helper setup runs
+`$t1,$t4,$t6` (loads) -> `$t3,$t5,$t7` (shifts) -> `$t2` (the `mfc1`), ours started one slot earlier
+(`$t0,$t1,$t4` -> `$t2,$t3,$t5` -> `$t7`). Hoisting the *scalar* assignment of the block above the
+three `<< 3` stores -
+
+```c
+sp5C.unk2 = (s16)D_80157A48.unkC;      /* FIRST, before the stores below */
+sp48.unk0 = D_80157A48.unk2 << 3;
+sp48.unk2 = D_80157A48.unk4 << 3;
+sp48.unk4 = D_80157A48.unk0 << 3;
+```
+
+- took **130 -> 60** and made every register row byte-identical. It is the *position of one statement
+among the stores*, not its own spelling: the six permutations of the three `<< 3` stores measured
+70/70/70/75/75, splitting `sp5C.unk0 = (sp5C.unk4 = 0);` into two statements was neutral (60), and
+the reverse move (that same scalar assignment last, as committed) is the 130.
+
+The remaining 60 is a **stack-slot layout**, not a register one: the target homes the spilled
+`&alienInstances[arg0]` temp at `0x2C` and `sp5C` at `0x5C`; ours puts them at `0x30` / `0x58`. ~30
+declaration variants (12- and 16-byte middle locals, every declaration order, `Unk80052B40_fp` pads)
+move one or the other but never both - the 12-byte middle fixes the temp to `0x2C` yet leaves `sp5C`
+at `0x58` and scores *worse* (78), and `s32 spPad[4]` overshoots to `0x60`. A body with an
+unverifiable marker (the committed `CURRENT(1550)` was unreproducible - the body did not compile) must
+be made to build before the marker means anything.
