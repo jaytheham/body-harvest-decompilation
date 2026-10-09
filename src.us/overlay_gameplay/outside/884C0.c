@@ -6010,15 +6010,13 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 }
 
 // CURRENT(55)
-#ifdef NON_MATCHING
-s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
+s32 func_8008751C_964CC(u8 arg0, s16 arg1, s16 arg2)
 {
 	AlienInstance *inst;
 	s32 varA2;
 	s32 tempA3;
-	s32 varA1;
 	s32 tempV0;
-	s32 tempV1;
+	s16 tempV1;
 	s32 varV0;
 	s16 typeVal;
 	s32 flags;
@@ -6032,26 +6030,21 @@ s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 	tempV1 = (s16)tempV1;
 	varA2 = (tempA3 < tempV0) ? tempV0 : tempA3;
 
-	varA1 = (-tempV1 < tempV1) ? tempV1 : -tempV1;
-
-	if (varA1 < varA2) {
-		varV0 = (s16)((tempA3 < tempV0) ? tempV0 : tempA3);
-	} else {
-		varA1 = (-tempV1 < tempV1) ? tempV1 : -tempV1;
-		varV0 = (s16)varA1;
-	}
+	varV0 = ((-tempV1 < tempV1 ? tempV1 : -tempV1) < varA2
+		? (s16)(tempA3 < tempV0 ? tempV0 : tempA3)
+		: (s16)(-tempV1 < tempV1 ? tempV1 : -tempV1));
 
 	flags = inst->unk20;
 	if (flags & 0x100) {
 		if (flags & 0x40) {
-			if ((s16)arg2 < varV0) {
+			if (arg2 < varV0) {
 				typeVal *= -1;
-			} else if ((s16)arg1 < varV0) {
+			} else if (arg1 < varV0) {
 				typeVal = 0;
 			}
-		} else if (varV0 < (s16)arg1) {
+		} else if (varV0 < arg1) {
 			typeVal *= -1;
-		} else if (varV0 < (s16)arg2) {
+		} else if (varV0 < arg2) {
 			typeVal = 0;
 		}
 	}
@@ -6073,9 +6066,7 @@ s32 func_8008751C_964CC(u8 arg0, s32 arg1, s32 arg2)
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008751C_964CC.s")
-#endif
+
 
 void func_80087720_966D0(u8 arg0, s32 arg1)
 {
