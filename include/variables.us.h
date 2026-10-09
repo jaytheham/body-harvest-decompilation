@@ -200,6 +200,7 @@ extern s32 D_800314C8_320C8;
 extern OSMesg D_800314CC;
 extern OSMesg D_800314CC_320CC;
 extern Vp D_800314D0_320D0[];
+extern Vp D_314D0[];
 extern u8 *D_800314F0_320F0[];
 extern u8 *D_80031508_32108[];
 extern u8 *D_80031520_32120[];

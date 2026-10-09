@@ -6742,15 +6742,14 @@ void func_800717B4_159874(void)
 	}
 }
 
-// CURRENT(108)
-// AI - Sets up RDP state for interior rendering
-#ifdef NON_MATCHING
+// Sets up RDP state for interior rendering
 void func_80071854_159914(void) {
+	s32 pad;
 
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 	func_80011E14_12A14(D_80047F93);
 
-	gSPViewport(D_8005BB2C++, D_800314D0_320D0);
+	gSPViewport(D_8005BB2C++, D_314D0);
 
 	func_80004CC8_58C8();
 	func_80004D38_5938();
@@ -6771,7 +6770,7 @@ void func_80071854_159914(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 
-	gSPViewport(D_8005BB2C++, D_800314D0_320D0);
+	gSPViewport(D_8005BB2C++, D_314D0);
 
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 
@@ -6807,9 +6806,7 @@ void func_80071854_159914(void) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80071854_159914.s")
-#endif
+
 
 // AI - Fills the screen with a solid color via RDP
 void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsigned char arg3)
