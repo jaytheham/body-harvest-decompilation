@@ -7544,9 +7544,7 @@ void func_8007343C_15B4FC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007343C_15B4FC.s")
 #endif
 
-// CURRENT(810)
 // AI - Saves current room state for later restoration
-#ifdef NON_MATCHING
 void func_8007356C_15B62C(void) {
 	s32 i;
 
@@ -7558,7 +7556,7 @@ void func_8007356C_15B62C(void) {
 		D_80047B70.objects[i].unkC = D_800E66A8[i].unk20;
 		D_80047B70.objects[i].unk10 = D_800E66A8[i].unk24;
 		D_80047B70.objects[i].unk14 = D_800E66A8[i].unk28;
-		D_80047B70.objects[i].unk18 = D_800E66A8[i].unk10;
+		D_80047B70.objects[i].unk18 = (u16)D_800E66A8[i].unk10;
 		D_80047B70.objects[i].unk19 = D_800E66A8[i].unk2E;
 	}
 
@@ -7566,9 +7564,7 @@ void func_8007356C_15B62C(void) {
 	D_80047B70.unk1C8 = D_800E6A78.unk4C;
 	D_80047B70.unk1CC = D_800E6A78.unk54;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007356C_15B62C.s")
-#endif
+
 
 // AI - Resets temporary room entry state
 void func_800736C4_15B784(void) {
