@@ -104,3 +104,23 @@ The two single-component edits are each worth ~195 and are **additive**. This is
 In the previous body the same `s16 var_t2 = D_800FB79A;` read sat *after* the four GBI setup statements, so IDO scheduled it at instruction 32 and the whole register-map/ordering fell one slot out. Moving the assignment to the **first statement of the function body** (above `gDPPipeSync`) reproduces the target's schedule: **452 -> 40**. An initialiser at the declaration (`s16 var_t2 = D_800FB79A;`) measures the **same 40**. Lever to reach for: when the target reads a global very early and ours reads it late, and the target's read sits in a load-delay slot, the *statement position* of the read is the lever - not the declaration order, not a cast. Moving only the read (leaving the GBI statements in place) is what works; moving the GBI statements after it measured **4981**.
 
 Residual and what is refuted: 40 is `delta +0` with the table reading identically in both columns (the documented content-invisible-table case); `allblocks` shows only encoding-equivalent rows (`addiu sp,sp,-N` vs `+N`, `addiu r,r,-N` vs `li r,N`, an `lh`/`lui` pair re-ordered around the prologue) plus one extra `move`. Measured refuted on the 40 body: drop `spAC = s1;` **445**; drop the first or the second `s1 = &D_800FB7B0[var_t2];` re-establish **270**; write the `D_800FB6D0` triplet through the array form **1845**. Do not re-tread those, or the declaration order. Note also: `ins_diff`'s difflib alignment reported three `lh` vs `lb` rows (`REPLACE target[184]` etc.) here; the disassembly shows our reads **are** `lh` (`lh t6,8(s1)`), so those rows were an alignment artifact of the shifted stream - verify an apparent width difference against `objdump` before chasing it (`struct-field-u8-vs-s16-same-offset-register-shift.md` is the real pattern, and it is not this).
+
+## A negated condition spelling moves an independent store across the block (`== 0` vs `!x`)
+
+`func_8007EE0C_4F2BC` (`overlay_gameplay/frontend/40720.c`, 32-instr leaf) is a straight-line body: a guard, two 12-byte `Vec3f` copies, then three scalar stores - five statements, no locals, no frame. The committed body wrote the guard as `if (D_80094938 == 0)` and measured a flat **110** (`ins_diff` delta **+0**, every row a register name - it reads as a pure temp-bank rotation, so it is easy to park). It is not: the build **hoisted the third statement's store to the top of the block** and filled the branch differently.
+
+    TARGET                              OURS (== 0)
+    2  lui   v0,%hi(D_800D7A18)         2  lui   v0,%hi(D_800D7A18)
+    3  bnez  t6,<epilogue>              3  addiu v0,v0,%lo(...)
+    4  addiu v0,v0,%lo(...)  <delay>    4  bnez  t6,<epilogue>
+    6  lw    t7,0(v0)   # vec1          5  nop                      <delay>
+    7  lw    at,0(a0)   ...             6  lh    t7,24(a0)   # unk34 HOISTED
+    13 lw    t1,0(v0)   # vec2          7  lw    t8,0(v0)
+    20 lw    t6,0(v0)   # unk34         8  sh    t7,52(t8)
+    23 lh    t9,26(a0)  # unk3A         9  lw    t9,0(v0)   # vec1
+    ...                                 ...
+    27 lw    t3,0(v0)   # unk3C         27 lw    t0,0(v0)   # unk3C
+
+**Lever: write the guard negated - `if (!D_80094938)` - and nothing else changes. 110 -> 0.** The negation is not a semantic edit (both spell the same test); it changes the IR the scheduler sees, so the independent `unk34` store is no longer lifted to the block head and the `addiu` of the base lands in the `bnez` delay slot instead of before the branch. Measured neighbours, all worse or equal: `if (0 == D_80094938)` **110** (this is the key control, the same semantics in the original spelling keeps the defect), `if (D_80094938 == 0)` re-measured **110**, `unk34` first in source **700**, `unk34` second **790**, `unk34` last **710**, all three scalars first **2200**, splitting both `Vec3f` copies into `x/y/z` scalar stores **2595**, a `FrontendCamState *s` local for the cast target **1190** (one `[v0]` load instead of five), reordering the two `Vec3f` copies **170**.
+
+**Rule.** When the residual is flat across body permutations and `ins_diff` shows delta +0 with only register names, before parking: (1) dump the target and our `.o` **sequentially** (`cmp2.py`) - a hoisted *whole statement* is visible there while difflib's aligned block list hides it; (2) if one statement of a run sits at a different position in ours, try the **other spelling of the guard condition** (`x == 0` <-> `!x`), which reorders the scheduler's basic-block fill without changing a single opcode's meaning. Same family as the statement-position lever above, one level up: the lever is the *shape of the controlling expression*, not the statement order inside the body.
