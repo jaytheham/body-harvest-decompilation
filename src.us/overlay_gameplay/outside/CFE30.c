@@ -2295,73 +2295,66 @@ loop_5:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5894_D4844.s")
 #endif
 
-// CURRENT(649)
-#ifdef NON_MATCHING
 void func_800C5D14_D4CC4(u8 arg0) {
-	s16 var_t1;
+	s16 index;
 	Unk80154318Entry *entry;
-	Unk80154318Sub *sub;
-	s32 var_t4;
-	s32 dummyA;
-	s32 dummyB;
-	u8 var_t2;
-	u8 var_t3;
-	Unk801541F8Entry *sp3C;
+	TrailParticleState *sub;
+	s32 blue;
+	s32 padding[2];
+	u8 red;
+	u8 green;
 
-	sp3C = &D_80154088[arg0];
-	var_t1 = D_80154318[sp3C->unk6].unk4;
-	sub = (Unk80154318Sub *)&D_80154318[sp3C->unk6].unk8;
+	index = D_80154318[D_80154088[arg0].unk6].unk4;
+	sub = &D_80154318[D_80154088[arg0].unk6].trailParticle;
 
 	if ((D_80156EDA < 0x1F5) && (D_80156ED9 != 2) && (D_80153B88 < 0x79)) {
-		var_t2 = ((u8 *)sub)[6];
-		if (var_t2 == 0 && ((u8 *)sub)[7] == 0 && ((u8 *)sub)[8] == 0) {
-			var_t2 = (func_800038E0_44E0() % 55) + 0xC8;
-			var_t3 = (func_800038E0_44E0() % 55) + 0xC8;
-			var_t4 = ((func_800038E0_44E0() % 55) + 0xC8) & 0xFF;
+		if (sub->color[0] == 0 && sub->color[1] == 0 && sub->color[2] == 0) {
+			red = (func_800038E0_44E0() % 55) + 0xC8;
+			green = (func_800038E0_44E0() % 55) + 0xC8;
+			blue = ((func_800038E0_44E0() % 55) + 0xC8) & 0xFF;
 		} else {
-			var_t3 = ((u8 *)sub)[7];
-			var_t4 = ((u8 *)sub)[8];
+			red = sub->color[0];
+			green = sub->color[1];
+			blue = sub->color[2];
 		}
 
-		if (var_t1 != -5 && var_t1 != -6) {
+		if (index != -5 && index != -6) {
 			do {
-				entry = &D_80154318[var_t1];
+				entry = &D_80154318[index];
 				D_8005BB34->v.ob[0] = (s16)((f32)entry->unk8);
 				D_8005BB34->v.ob[1] = (s16)((f32)entry->unkA);
 				D_8005BB34->v.ob[2] = (s16)((f32)entry->unkC);
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = var_t2;
-				D_8005BB34->v.cn[1] = var_t3;
-				D_8005BB34->v.cn[2] = var_t4;
+				D_8005BB34->v.cn[0] = red;
+				D_8005BB34->v.cn[1] = green;
+				D_8005BB34->v.cn[2] = blue;
 				D_8005BB34->v.cn[3] = entry->unk11;
 				D_8005BB34++;
-				D_8005BB34->v.ob[0] = (s16)((f32)(entry->unk8 - (s8)entry->unkE));
-				D_8005BB34->v.ob[1] = (s16)((f32)(entry->unkA - (s8)entry->unkF));
-				D_8005BB34->v.ob[2] = (s16)((f32)(entry->unkC - (s8)entry->unk10));
+				D_8005BB34->v.ob[0] = (s16)((f32)(entry->unk8 - entry->ribbonState.unk6));
+				D_8005BB34->v.ob[1] = (s16)((f32)(entry->unkA - entry->ribbonState.unk7));
+				D_8005BB34->v.ob[2] = (s16)((f32)(entry->unkC - entry->ribbonState.unk8));
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = var_t2;
-				D_8005BB34->v.cn[1] = var_t3;
-				D_8005BB34->v.cn[2] = var_t4;
+				D_8005BB34->v.cn[0] = red;
+				D_8005BB34->v.cn[1] = green;
+				D_8005BB34->v.cn[2] = blue;
 				D_8005BB34->v.cn[3] = 0x14;
 				D_8005BB34++;
 				gSPVertex(D_8005BB30++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
-				gSPLineW3D(D_8005BB30++, 0, 1, entry->unk2 & 0xFF, 0);
+				gSPLineW3D(D_8005BB30++, 0, 1, entry->unk2, 0);
 				gDPPipeSync(D_8005BB30++);
-				var_t1 = entry->unk4;
-			} while (var_t1 != -5 && var_t1 != -6);
+				index = entry->unk4;
+			} while (index != -5 && index != -6);
 		}
 
 		D_80156EDA += D_80154088[arg0].unk4 * 2;
 		D_80153B88 += D_80154088[arg0].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5D14_D4CC4.s")
-#endif
+
 
 // CURRENT(1919)
 #ifdef NON_MATCHING
