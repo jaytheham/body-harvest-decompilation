@@ -383,89 +383,103 @@ void func_800A41B0_B3160(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A41B0_B3160.s")
 #endif
 
-// CURRENT (17849)
 // Processor behavior - enemyspecs.unk48
-#ifdef NON_MATCHING
 void func_800A4C28_B3BD8(u8 arg0) {
-	AlienInstance *alien = &alienInstances[arg0];
-	u8 typeIndex = alien->typeIndex;
-	Unk8014DD50 *node;
-	s32 pad[2];
-	u8 *levelTable = (u8 *)D_8013D786_14C736;
-	u8 *routeTable = (u8 *)D_8014E4D6;
-	s16 coords[3];
-	s32 point[3];
-	s16 direction;
-	s32 originalTypeValue;
+	u8 typeIndex;
+	s8 rootNode;
 	s8 nextNode;
+	s8 childNode;
+	s16 siblingNode;
+	s8 siblingNext;
 	s8 nextNextNode;
 	s8 nextNextNextNode;
+	s16 animationNodes[2];
 	s8 result;
+	u16 direction;
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 originalTypeValue;
+	s16 coords[3];
+	s32 point[3];
+	s16 pad; /* Keeps the saved sine and compiler spill slots at their original offsets. */
+	s16 sinDirection;
+	s16 cosDirection;
+
+	typeIndex = alienInstances[arg0].typeIndex;
 
 	if (currentLevel < 4) {
-		nextNode = D_8014DD50[alien->unkC].unkC;
-		node = &D_8014DD50[nextNode];
-		direction = node->unkC;
-		nextNextNode = D_8014DD50[node->unkD].unkD;
+		nextNode = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		childNode = D_8014DD50[nextNode].unkC;
+		siblingNode = D_8014DD50[nextNode].unkD;
+		nextNextNode = D_8014DD50[siblingNode].unkD;
 		nextNextNextNode = D_8014DD50[nextNextNode].unkD;
 	} else {
-		nextNode = D_8014DD50[alien->unkD].unkC;
-		node = &D_8014DD50[nextNode];
-		direction = node->unkC;
-		nextNextNode = D_8014DD50[node->unkD].unkD;
+		rootNode = alienInstances[arg0].unkD;
+		nextNode = D_8014DD50[rootNode].unkC;
+		siblingNode = D_8014DD50[nextNode].unkD;
+		siblingNext = D_8014DD50[siblingNode].unkD;
+		nextNextNode = D_8014DD50[siblingNext].unkD;
 		nextNextNextNode = D_8014DD50[nextNextNode].unkD;
-		func_80086230_951E0(arg0, nextNextNode, 0x2000);
+		func_80086230_951E0(arg0, (s8)nextNextNode, 0x2000);
 		func_80086230_951E0(arg0, nextNextNextNode, 0x2000);
 	}
 
 	if (D_8014DD50[nextNextNextNode].unkD != -1) {
-		func_80090948_9F8F8(nextNextNode, 0x7D0);
+		func_80090948_9F8F8((s8)nextNextNode, 0x7D0);
 		func_80090948_9F8F8(nextNextNextNode, 0x7D0);
 	} else if (currentLevel != 4) {
 		nextNextNode = -1;
 		nextNextNextNode = -1;
 	}
 
-	func_80085E2C_94DDC(arg0, direction, 0x4000);
-	if (alien->unk20 & ALIEN_FLAG_UNKE) {
+	func_80085E2C_94DDC(arg0, nextNode, 0x4000);
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE) {
 		if (currentLevel < 4) {
-			coords[0] = direction;
-			coords[1] = node->unkE;
-			coords[2] = node->unk4;
-			if (node->unkE == 0 && alien->unk36 < 5) {
-				*((s16 *)(levelTable + (alien->unk36 * 0x10))) = direction;
+			animationNodes[0] = nextNode;
+			animationNodes[1] = childNode;
+			direction = D_8014DD50[nextNode].unk6Unsigned;
+			if (D_8014DD50[nextNode].unkE == 0 && alienInstances[arg0].unk36 < 5) {
+				D_8013D786_14C736[alienInstances[arg0].unk36][0] = direction;
 			}
-			*((s16 *)(routeTable + (nextNode * 0x10))) = direction;
-			result = func_80081F18_90EC8(arg0, 2, 6, coords, (Unk8014DD50 **)&D_8013D840_14C7F0);
-			if (alien->unk36 == 3) {
-				point[0] = (s32)((f64)(f32)sins((u16)direction) * ((f64)alienTypes[typeIndex].unk24 / 32768.0));
-				func_80128428_1373D8(alien, (s16)point[0], alienTypes[typeIndex].unk22, (s16)((f64)(f32)coss((u16)direction) * ((f64)alienTypes[typeIndex].unk24 / 32768.0) + (f64)node->unk4), &point[0], &point[1], &point[2]);
-				func_800C56A4_D4654((s16)point[2], (s16)point[1], (s16)point[0], 0x8C, 0xF, 3, 0x28);
+			D_8014E4D6[nextNode][0] = direction;
+			result = func_80081F18_90EC8(arg0, 2, 6, animationNodes, (Unk8014DD50 **)&D_8013D840_14C7F0);
+			if (alienInstances[arg0].unk36 == 3) {
+				sinDirection = sins(direction);
+				cosDirection = coss(direction);
+				/* Pointer casts preserve IDO's member-access weighting and FP operand order. */
+				func_80128428_1373D8(
+					&alienInstances[arg0],
+					(s16)(((f32)sinDirection / 32768.0) * ((AlienType *)&alienTypes[typeIndex])->unk24),
+					alienTypes[typeIndex].unk22,
+					(s16)(((f32)cosDirection / 32768.0) * ((AlienType *)&alienTypes[typeIndex])->unk24 + ((Unk8014DD50 *)&D_8014DD50[nextNode])->unk4),
+					&x, &y, &z);
+				func_800C56A4_D4654((s16)x, (s16)y, (s16)z, 0x8C, 0xF, 3, 0x28);
 			}
 			if (result == 4) {
-				alien->unk1E = 0;
 				originalTypeValue = alienTypes[typeIndex].unk24;
-				alienTypes[typeIndex].unk20 = (s16)((f64)(f32)sins((u16)direction) * ((f64)originalTypeValue / 32768.0));
-				alienTypes[typeIndex].unk24 = (s16)((f64)(f32)coss((u16)direction) * ((f64)originalTypeValue / 32768.0) + (f64)node->unk4);
+				alienInstances[arg0].unk1E = 0;
+				alienTypes[typeIndex].unk20 = (s16)(((f32)sins(direction) / 32768.0) * originalTypeValue);
+				alienTypes[typeIndex].unk24 = (s16)((f64)D_8014DD50[nextNode].unk4 + ((f32)coss(direction) / 32768.0) * originalTypeValue);
 				if (func_80084FE8_93F98(arg0, 0x3FFF) == 0) {
-					func_80086D70_95D20(arg0, 0, (s16)-direction);
+					func_80086D70_95D20(arg0, 0, (s16)-(u32)direction);
 				} else {
 					func_800871CC_9617C(arg0, 0, 0);
 				}
 				alienTypes[typeIndex].unk24 = (s16)originalTypeValue;
-				if (alien->unk3A != 0) {
-					alien->unk36 = 2;
+				if (alienInstances[arg0].unk3A != 0) {
+					alienInstances[arg0].unk36 = 2;
 				}
 			}
 			if (result == 6) {
-				alien->unk20 &= ~(ALIEN_FLAG_INVINCIBLE | ALIEN_FLAG_UNKE);
+				alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_INVINCIBLE | ALIEN_FLAG_UNKE);
 			}
 		} else {
 			if (D_8013D888_14C838 != 0) {
 				coords[0] = -0x3D;
 				coords[1] = 9;
 				coords[2] = 0x72;
-				func_800A931C_B82CC(nextNextNode, coords, point);
+				func_800A931C_B82CC((s8)nextNextNode, coords, point);
 			} else {
 				coords[0] = 0x3D;
 				coords[1] = 9;
@@ -475,39 +489,40 @@ void func_800A4C28_B3BD8(u8 arg0) {
 			coords[0] = (s16)point[0];
 			coords[1] = (s16)point[1];
 			coords[2] = (s16)point[2];
-			func_800A931C_B82CC(alien->unkD, coords, point);
+			func_800A931C_B82CC(rootNode, coords, point);
 			alienTypes[typeIndex].unk20 = (s16)point[0];
 			alienTypes[typeIndex].unk22 = (s16)point[1];
 			alienTypes[typeIndex].unk24 = (s16)point[2];
-			alienTypes[typeIndex].unk1C = (D_80047F94 == 2) ? 0x33 : 0x2F;
-			if (!(alien->unk20 & (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKD)) && (func_80084FE8_93F98(arg0, 0x27D0) != 0) && (func_800871CC_9617C(arg0, 0, 0) != 0)) {
-				alien->unk1E = 0x28;
-				alien->unk4B = 0;
-				alien->unk20 |= ALIEN_FLAG_UNKG;
+			if (D_80047F94 == 2) {
+				alienTypes[typeIndex].unk1C = 0x33;
+			} else {
+				alienTypes[typeIndex].unk1C = 0x2F;
+			}
+			if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKD)) && (func_80084FE8_93F98(arg0, 0x27D0) != 0) && (func_800871CC_9617C(arg0, 0, 0) != 0)) {
+				alienInstances[arg0].unk1E = 0x28;
+				alienInstances[arg0].unk4B = 0;
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
 				D_8013D888_14C838 = (D_8013D888_14C838 == 0);
 			}
-			if (alien->unk1E != 0) {
-				alien->unk1E--;
+			if (alienInstances[arg0].unk1E != 0) {
+				alienInstances[arg0].unk1E--;
 			}
 		}
-	} else if ((func_80084FE8_93F98(arg0, 0x3FFF) != 0) && ((alien->unk20 & ALIEN_FLAG_UNKD) == 0)) {
-		alien->unk20 |= ALIEN_FLAG_UNKE;
-		alien->unk36 = 0;
-		alien->unk3A = (s16)(currentLevel * 0x12C);
-		*((s16 *)(levelTable + 0)) = direction;
+	} else if ((func_80084FE8_93F98(arg0, 0x3FFF) != 0) && ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) == 0)) {
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE;
+		alienInstances[arg0].unk3A = (s16)(currentLevel * 0x12C);
+		alienInstances[arg0].unk36 = 0;
+		D_8013D786_14C736[0][0] = direction;
 		func_80137468_146418(arg0, 0x17);
-	} else if (alien->unk3A != 0) {
-		alien->unk3A--;
+	} else if (alienInstances[arg0].unk3A != 0) {
+		alienInstances[arg0].unk3A--;
 	}
 
 	func_800A41B0_B3160(arg0);
-	if (alien->unk20 & ALIEN_FLAG_W) {
-		alien->unk20 &= ~ALIEN_FLAG_W;
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_W) {
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_W;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A4C28_B3BD8.s")
-#endif
 
 s32 func_800A52F8_B42A8(u8 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 temp_a0;
