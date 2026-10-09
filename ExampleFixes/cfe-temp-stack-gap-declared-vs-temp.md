@@ -54,3 +54,18 @@ Measured variants (one compile each, file restored after every probe; baseline r
 | declared-but-unused pad, 4 or 8 bytes, first or last | 42, and the frame grows |
 
 So the spill slot is not a declared-block-size or declaration-order question here: the target allocates 8 bytes at `sp+0x44`/`sp+0x48` for something this reconstruction does not declare, and a pad is *charged* rather than free (unlike `func_800FD510_10C4C0`). Parked at 16.
+
+### Counter-instance: declaration order DOES move the gap when a halfword local sits above a 4-byte pad (func_80113310_1222C0)
+
+`overlay_gameplay/outside/101840.c`, 318 instructions, score **26 -> 0**. The five differing rows are all stack
+offsets in two groups: the named `s32 wasAboveWater` at `sp+0x40` (target) vs `sp+0x3C` (ours), and a cfe temp
+spill of a loaded `D_80222A70` halfword at `sp+0x48` vs `sp+0x42`. Declared block:
+`s16 sp4E; s16 sp4C; s16 sp4A; s32 pad; s16 varA2; s32 wasAboveWater;`.
+
+The one lever that closed it: move `s16 varA2;` **above** `s32 pad;`, giving `... sp4A; varA2; pad; wasAboveWater;`.
+Score 26 -> 0, both homes land, frame unchanged at `0x58`. Neighbouring variants measured: `pad` last 8; no `pad`
+201; `pad` as `s16` 6; `s32 varA2` 1603; `s16 wasAboveWater` 418; the trio reversed 60.
+
+So unlike the `func_800E5E3C_F4DEC` instance above, here the spill slot *is* a declaration-order question: ordering
+the 4-byte pad **after** the halfword locals carves the 2-byte hole the temp needs, and the temp only lands correctly
+once the locals are ordered that way. Try this reorder before parking a gap-class residual.
