@@ -1,3 +1,15 @@
+#ifdef LIBULTRA_REFERENCE
+#ifndef LIBULTRA_STRUCTS_US_H
+#define LIBULTRA_STRUCTS_US_H
+/* Reference: reference/ultralib/src/os/initialize.c. */
+typedef struct {
+    u32 inst1;
+    u32 inst2;
+    u32 inst3;
+    u32 inst4;
+} __osExceptionVector;
+#endif
+#else
 #ifndef STRUCTS_US_H
 #define STRUCTS_US_H
 
@@ -3739,3 +3751,5 @@ typedef struct {
 	f32 x, y, z;
 	f32 rightX, rightY, rightZ;
 } CameraBasis;
+
+#endif /* LIBULTRA_REFERENCE */
