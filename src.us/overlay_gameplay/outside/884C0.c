@@ -4733,10 +4733,7 @@ void func_80083EF4_92EA4(AlienInstance *arg0, void *arg1, s16 arg2, s16 arg3)
 }
 
 // CURRENT(3522)
-#ifdef NON_MATCHING
 void func_800840B0_93060(s8 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
-	s16 var_s3;
-	s8 var_s0;
 	s32 minus4;
 	s32 minus8;
 	s32 minus1;
@@ -4749,115 +4746,113 @@ void func_800840B0_93060(s8 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	minus1 = -2;
 	minus2 = -3;
 	rand_half = 0x8000;
-	var_s0 = arg0, var_s3 = arg1;
-
-loop:
 	if (func_800038E0_44E0() >= 0xFBF5) {
-		var_s3 = (s16)-var_s3;
+		arg1 = -arg1;
 	}
 
-	if (var_s3 < 0) {
-		neg_s3 = -var_s3;
-		var_s0 = (s8)(var_s0 & minus4);
+	neg_s3 = -arg1;
+	if (arg1 < 0) {
+		arg0 = (s8)(arg0 & minus4);
 	} else {
-		neg_s3 = var_s3;
-		var_s0 = (s8)(var_s0 & minus1);
+		arg0 = (s8)(arg0 & minus1);
 	}
-	if ((neg_s3 < var_s3 ? var_s3 : neg_s3) < 0x4000) {
-		var_s0 = (s8)(var_s0 & minus8);
+	if ((neg_s3 < arg1 ? arg1 : neg_s3) < 0x4000) {
+		arg0 = (s8)(arg0 & minus8);
 	} else {
-		var_s0 = (s8)(var_s0 & minus2);
+		arg0 = (s8)(arg0 & minus2);
 	}
 
-	if (var_s0 == 0) {
+	if (arg0 == 0) {
 		return;
 	}
 
-	if (var_s0 == 1) {
+	if (arg0 == 1) {
 		*arg3 = (s16)(*arg3 - 1);
 		return;
 	}
-	if (var_s0 == 2) {
+	if (arg0 == 2) {
 		*arg2 = (s16)(*arg2 + 1);
 		return;
 	}
-	if (var_s0 == 4) {
+	if (arg0 == 4) {
 		*arg3 = (s16)(*arg3 + 1);
 		return;
 	}
-	if (var_s0 == 8) {
+	if (arg0 == 8) {
 		*arg2 = (s16)(*arg2 - 1);
 		return;
 	}
 
-	if (func_800B325C_C220C(*((s8 *)arg2 + 1), *((s8 *)arg3 + 1), 0x800) != 0) {
-		if ((var_s0 & 1) != 0) {
-			if (func_800B325C_C220C(*((s8 *)arg2 + 1), (s8)(*arg3 - 1), 0x800) == 0) {
-				var_s0 = (s8)(var_s0 & minus1);
-				goto loop;
+	if (func_800B325C_C220C((s8)*arg2, (s8)*arg3, 0x800) != 0) {
+		do {
+			if ((arg0 & 1) != 0) {
+				if (func_800B325C_C220C((s8)*arg2, (s8)(*arg3 - 1), 0x800) == 0) {
+					arg0 = (s8)(arg0 & minus1);
+					break;
+				}
+			}
+			if ((arg0 & 4) != 0) {
+				if (func_800B325C_C220C((s8)*arg2, (s8)(*arg3 + 1), 0x800) == 0) {
+					arg0 = (s8)(arg0 & minus4);
+					break;
+				}
+			}
+			if ((arg0 & 8) != 0) {
+				if (func_800B325C_C220C((s8)(*arg2 - 1), (s8)*arg3, 0x800) == 0) {
+					arg0 = (s8)(arg0 & minus8);
+					break;
+				}
+			}
+			if ((arg0 & 2) != 0) {
+				if (func_800B325C_C220C((s8)(*arg2 + 1), (s8)*arg3, 0x800) == 0) {
+					arg0 = (s8)(arg0 & minus2);
+					break;
+				}
+			}
+			if (func_800038E0_44E0() < rand_half) {
+				arg0 = (s8)(arg0 & 0xFFF5);
+			} else {
+				arg0 = (s8)(arg0 & 0xFFFA);
+			}
+		} while (0);
+		func_800840B0_93060(arg0, arg1, arg2, arg3);
+		return;
+	}
+
+	do {
+		if ((arg0 & 1) != 0) {
+			if (func_800B325C_C220C((s8)*arg2, (s8)(*arg3 - 1), 0x800) != 0) {
+				arg0 = (s8)(arg0 & minus1);
+				break;
 			}
 		}
-		if ((var_s0 & 4) != 0) {
-			if (func_800B325C_C220C(*((s8 *)arg2 + 1), (s8)(*arg3 + 1), 0x800) == 0) {
-				var_s0 = (s8)(var_s0 & minus4);
-				goto loop;
+		if ((arg0 & 4) != 0) {
+			if (func_800B325C_C220C((s8)*arg2, (s8)(*arg3 + 1), 0x800) != 0) {
+				arg0 = (s8)(arg0 & minus4);
+				break;
 			}
 		}
-		if ((var_s0 & 8) != 0) {
-			if (func_800B325C_C220C((s8)(*arg2 - 1), *((s8 *)arg3 + 1), 0x800) == 0) {
-				var_s0 = (s8)(var_s0 & minus8);
-				goto loop;
+		if ((arg0 & 8) != 0) {
+			if (func_800B325C_C220C((s8)(*arg2 - 1), (s8)*arg3, 0x800) != 0) {
+				arg0 = (s8)(arg0 & minus8);
+				break;
 			}
 		}
-		if ((var_s0 & 2) != 0) {
-			if (func_800B325C_C220C((s8)(*arg2 + 1), *((s8 *)arg3 + 1), 0x800) == 0) {
-				var_s0 = (s8)(var_s0 & minus2);
-				goto loop;
+		if ((arg0 & 2) != 0) {
+			if (func_800B325C_C220C((s8)(*arg2 + 1), (s8)*arg3, 0x800) != 0) {
+				arg0 = (s8)(arg0 & minus2);
+				break;
 			}
 		}
+
 		if (func_800038E0_44E0() < rand_half) {
-			var_s0 = (s8)(var_s0 & 0xFFF5);
+			arg0 = (s8)(arg0 & 0xFFF5);
 		} else {
-			var_s0 = (s8)(var_s0 & 0xFFFA);
+			arg0 = (s8)(arg0 & 0xFFFA);
 		}
-		goto loop;
-	}
-
-	if ((var_s0 & 1) != 0) {
-		if (func_800B325C_C220C(*((s8 *)arg2 + 1), (s8)(*arg3 - 1), 0x800) != 0) {
-			var_s0 = (s8)(var_s0 & minus1);
-			goto loop;
-		}
-	}
-	if ((var_s0 & 4) != 0) {
-		if (func_800B325C_C220C(*((s8 *)arg2 + 1), (s8)(*arg3 + 1), 0x800) != 0) {
-			var_s0 = (s8)(var_s0 & minus4);
-			goto loop;
-		}
-	}
-	if ((var_s0 & 8) != 0) {
-		if (func_800B325C_C220C((s8)(*arg2 - 1), *((s8 *)arg3 + 1), 0x800) != 0) {
-			var_s0 = (s8)(var_s0 & minus8);
-			goto loop;
-		}
-	}
-	if ((var_s0 & 2) != 0) {
-		if (func_800B325C_C220C((s8)(*arg2 + 1), *((s8 *)arg3 + 1), 0x800) != 0) {
-			var_s0 = (s8)(var_s0 & minus2);
-			goto loop;
-		}
-	}
-
-	if (func_800038E0_44E0() < rand_half) {
-		var_s0 = (s8)(var_s0 & 0xFFF5);
-	} else {
-		var_s0 = (s8)(var_s0 & 0xFFFA);
-	}
-	goto loop;
+	} while (0);
+	func_800840B0_93060(arg0, arg1, arg2, arg3);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800840B0_93060.s")
-#endif
 
 // CURRENT(13111)
 #ifdef NON_MATCHING
