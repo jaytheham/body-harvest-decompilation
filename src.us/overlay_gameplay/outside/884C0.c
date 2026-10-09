@@ -5370,7 +5370,6 @@ void func_8008554C_944FC(u8 arg0)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80085690_94640(u8 arg0, s16 arg1)
 {
 	s32 x;
@@ -5380,14 +5379,11 @@ void func_80085690_94640(u8 arg0, s16 arg1)
 	{
 		alien = &alienInstances[arg0];
 		func_80122524_1314D4(D_80052B34,
-			D_80145BE0_154B90[alienTypes[alien->typeIndex].unk1C].unk2,
+			D_80145BE0_154B90[alienTypes[(alien->typeIndex & 0xFF & 0xFF)].unk1C].unk2,
 			alien->unk0, alien->unk4);
 		alien->unk1E = 0x1C;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80085690_94640.s")
-#endif
 
 void func_80085748_946F8(u8 arg0) {
 	alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT);
