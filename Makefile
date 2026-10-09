@@ -1,5 +1,6 @@
 BASENAME  = bh
 VERSION  := us
+.DEFAULT_GOAL := default
 
 # Colors
 
@@ -175,8 +176,6 @@ INCLUDE_CFLAGS = -I . -I include -I include/2.0I -I include/libc -I assets \
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
 
--include $(SRC_DIR)/libultra/compiler_flags.mk
-
 # Files requiring pre/post-processing
 GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) </dev/null 2>/dev/null)
 GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
@@ -208,6 +207,8 @@ CFLAGS += $(INCLUDE_CFLAGS)
 CHECK_WARNINGS := -Wall -Wextra -Wno-format-security -Wno-unknown-pragmas -Wno-unused-parameter -Wno-unused-variable -Wno-missing-braces -Wno-int-conversion
 # CHECK_WARNINGS += -Wdouble-promotion
 CC_CHECK := $(HOSTCC) $(HOSTCC_CHECK_FLAGS) -fsyntax-only -fno-builtin -fsigned-char -std=gnu90 $(CHECK_WARNINGS) $(INCLUDE_CFLAGS) $(DEFINES)
+
+-include $(SRC_DIR)/libultra/compiler_flags.mk
 
 GCC_FLAGS := $(INCLUDE_CFLAGS) $(DEFINES)
 GCC_FLAGS += -G0 -mno-shared -march=vr4300 -mfix4300 -mabi=32 -mhard-float

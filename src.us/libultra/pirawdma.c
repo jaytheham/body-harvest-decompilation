@@ -1,5 +1,6 @@
 /* Reference: reference/ultralib/src/io/pirawdma.c (libultra 2.0I). */
 #define BUILD_VERSION 6
+#include "bindings.h"
 #include "PR/os_version.h"
 #include "PRinternal/piint.h"
 #include "PR/ultraerror.h"

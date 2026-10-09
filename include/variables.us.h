@@ -1,3 +1,16 @@
+#ifdef LIBULTRA_REFERENCE
+#ifndef LIBULTRA_VARIABLES_US_H
+#define LIBULTRA_VARIABLES_US_H
+#include "structs.us.h"
+extern OSTime osClockRate;
+extern s32 osViClock;
+extern OSPiHandle __Dom1SpeedParam;
+extern OSPiHandle __Dom2SpeedParam;
+extern u32 __osFinalrom;
+extern __osExceptionVector __osExceptionPreamble[];
+extern __osExceptionVector __ptExceptionPreamble[];
+#endif
+#else
 #ifndef VARIABLES_US_H
 #define VARIABLES_US_H
 
@@ -4077,3 +4090,5 @@ extern const f64 D_80144028_152FD8[1];
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
+
+#endif /* LIBULTRA_REFERENCE */

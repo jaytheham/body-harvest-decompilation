@@ -1,28 +1,20 @@
 /* Reference: reference/ultralib/src/os/initialize.c (libultra 2.0I). */
 #define BUILD_VERSION 6
+#include "bindings.h"
 #include "PR/os_version.h"
 #include "PR/os_internal.h"
 #include "PR/rcp.h"
 #include "PR/os_version.h"
 #include "PRinternal/piint.h"
 
-typedef struct {
-    /* 0x0 */ unsigned int inst1;
-    /* 0x4 */ unsigned int inst2;
-    /* 0x8 */ unsigned int inst3;
-    /* 0xC */ unsigned int inst4;
-} __osExceptionVector;
-extern __osExceptionVector __osExceptionPreamble[];
-
-extern OSPiHandle __Dom1SpeedParam;
-extern OSPiHandle __Dom2SpeedParam;
+#include "variables.us.h"
 
 OSTime osClockRate;
 s32 osViClock;
 
 
 #ifdef _FINALROM
-extern u32 __osFinalrom;
+
 #else
 u32 __kmc_pt_mode;
 #if BUILD_VERSION >= VERSION_K
@@ -42,7 +34,7 @@ void* __printfunc = NULL;
 static void ptstart(void);
 static void SPEED_PARAM_FUNC(void);
 #endif
-extern __osExceptionVector __ptExceptionPreamble[];
+
 
 #endif
 

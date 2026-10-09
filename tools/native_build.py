@@ -253,6 +253,8 @@ def build(args):
                 libultra_config = libultra_sources.get(source.stem, {}) if source.parent.as_posix() == "src.us/libultra" else {}
                 optimization = libultra_config.get("optimization", "-O2")
                 source_cflags = [*libultra_includes, *cflags] if libultra_config else cflags
+                if libultra_config.get("signed_char") is False:
+                    source_cflags = [flag for flag in source_cflags if flag != "-signed"]
                 global_asm = "GLOBAL_ASM" in source.read_text(encoding="utf-8")
                 compiled = source
                 processor = [sys.executable, "tools/asm-processor/asm_processor.py", optimization, source]

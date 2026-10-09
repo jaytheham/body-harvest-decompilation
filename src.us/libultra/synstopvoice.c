@@ -1,5 +1,6 @@
 /* Reference: reference/ultralib/src/audio/synstopvoice.c (libultra 2.0I). */
 #define BUILD_VERSION 6
+#include "bindings.h"
 #include "PR/os_version.h"
 /*====================================================================
  * synstopvoice.c

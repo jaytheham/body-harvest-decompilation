@@ -1,11 +1,11 @@
 /* Reference: reference/ultralib/src/io/aisetfreq.c (pre-J). */
 #define BUILD_VERSION 6
 #define VERSION_J 7
+#include "bindings.h"
 #include "PR/rcp.h"
 #include "PR/ultraerror.h"
 #include "PRinternal/osint.h"
-// TODO: not sure if this should be here
-extern s32 osViClock;
+#include "variables.us.h"
 
 // TODO: this comes from a header
 #ident "$Revision: 1.17 $"

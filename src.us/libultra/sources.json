@@ -628,5 +628,267 @@
     "optimization": "-O1",
     "isa": "-mips2",
     "version": 6
+  },
+  "sched": {
+    "reference": "src/sched/sched.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "aisetnextbuf": {
+    "reference": "src/io/aisetnextbuf.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "synthesizer": {
+    "reference": "src/audio/synthesizer.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "motor": {
+    "reference": "src/io/motor.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "controller": {
+    "reference": "src/io/controller.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "conteepprobe": {
+    "reference": "src/io/conteepprobe.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "conteeplongwrite": {
+    "reference": "src/io/conteeplongwrite.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "conteeplongread": {
+    "reference": "src/io/conteeplongread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "contreaddata": {
+    "reference": "src/io/contreaddata.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "sins": {
+    "reference": "src/gu/sins.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "rotate": {
+    "reference": "src/gu/rotate.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "perspective": {
+    "reference": "src/gu/perspective.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "sinf": {
+    "reference": "src/gu/sinf.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "cosf": {
+    "reference": "src/gu/cosf.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "vimgr": {
+    "reference": "src/io/vimgr.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "pimgr": {
+    "reference": "src/io/pimgr.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "destroythread": {
+    "reference": "src/os/destroythread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "csplayer": {
+    "reference": "src/audio/csplayer.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "sndplayer": {
+    "reference": "src/audio/sndplayer.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "cseq": {
+    "reference": "src/audio/cseq.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "lookatref": {
+    "reference": "src/gu/lookatref.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "align": {
+    "reference": "src/gu/align.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "rotateRPY": {
+    "reference": "src/gu/rotaterpy.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "sptask": {
+    "reference": "src/io/sptask.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "drvrNew": {
+    "reference": "src/audio/drvrnew.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "resample": {
+    "reference": "src/audio/resample.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "env": {
+    "reference": "src/audio/env.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "pfsisplug": {
+    "reference": "src/io/pfsisplug.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "siacs": {
+    "reference": "src/io/siacs.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "contram": {
+    "reference": [
+      "src/io/contramwrite.c",
+      "src/io/contramread.c"
+    ],
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "conteepwrite": {
+    "reference": "src/io/conteepwrite.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "conteepread": {
+    "reference": "src/io/conteepread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "mtxutil": {
+    "reference": "src/gu/mtxutil.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "vi": {
+    "reference": "src/io/vi.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "piacs": {
+    "reference": "src/io/piacs.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "devmgr": {
+    "reference": "src/io/devmgr.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "seqplayer": {
+    "reference": "src/audio/seqplayer.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4,
+    "signed_char": false
+  },
+  "cents2ratio": {
+    "reference": "src/audio/cents2ratio.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "reverb": {
+    "reference": "src/audio/reverb.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "epirawwrite": {
+    "reference": "src/io/epirawwrite.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "epirawread": {
+    "reference": "src/io/epirawread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "seq": {
+    "reference": "src/audio/seq.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 4
+  },
+  "pfsgetstatus": {
+    "reference": "src/io/pfsgetstatus.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 4
   }
 }

@@ -57,43 +57,43 @@ segments:
       - [0x1BA60, c, libultra/createmesgqueue]
       - [0x1BA90, c, libultra/createthread]
       - [0x1BBE0, c, libultra/startthread]
-      - [0x1BD30, asm, libultra/sched] # osCreateScheduler (has own .data/.rodata - not convertible)
+      - [0x1BD30, c, libultra/sched]
       - [0x1C670, c, libultra/recvmesg]
       - [0x1C7B0, c, libultra/virtualtophysical]
-      - [0x1C830, asm, libultra/aisetnextbuf] # osAiSetNextBuffer, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1C830, c, libultra/aisetnextbuf]
       - [0x1C8E0, c, libultra/aigetlen]
-      - [0x1C8F0, asm, libultra/synthesizer] # alSynNew (has own .rodata - not convertible)
+      - [0x1C8F0, c, libultra/synthesizer]
       - [0x1CFD0, c, libultra/sendmesg]
       - [0x1D120, c, libultra/pidma]
-      - [0x1D230, asm, libultra/motor] # osMotorStop, osMotorStart, osMotorInit (differs from 2.0I)
+      - [0x1D230, c, libultra/motor]
       - [0x1D850, c, libultra/syncprintf]
       - [0x1D890, c, libultra/seteventmesg]
-      - [0x1D900, asm, libultra/controller] # osContInit, libultra 2.0F 2.0G (differs from 2.0I)
-      - [0x1DCC0, asm, libultra/conteepprobe] # osEepromProbe, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1D900, c, libultra/controller]
+      - [0x1DCC0, c, libultra/conteepprobe]
       - [0x1DD30, c, libultra/contsetch]
       - [0x1DDA0, c, libultra/ll]
-      - [0x1E060, asm, libultra/conteeplongwrite] # osEepromLongWrite (differs from 2.0I)
-      - [0x1E1A0, asm, libultra/conteeplongread] # osEepromLongRead (differs from 2.0I)
-      - [0x1E2E0, asm, libultra/contreaddata] # osContStartReadData, osContGetReadData, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1E060, c, libultra/conteeplongwrite]
+      - [0x1E1A0, c, libultra/conteeplongread]
+      - [0x1E2E0, c, libultra/contreaddata]
       - [0x1E540, lib, libultra_rom, sqrtf]
       - [0x1E550, c, libultra/coss]
-      - [0x1E580, asm, libultra/sins] # sins (references own .data sine table - not convertible)
+      - [0x1E580, c, libultra/sins]
       - [0x1E5F0, c, libultra/ortho]
       - [0x1E7B0, c, libultra/lookat]
-      - [0x1EAE0, asm, libultra/rotate] # guRotate (has own .rodata/.bss - not convertible)
+      - [0x1EAE0, c, libultra/rotate]
       - [0x1ECD0, c, libultra/initialize]
-      - [0x1EF60, asm, libultra/perspective] # guPerspective (has own .rodata - not convertible)
-      - [0x1F1F0, asm, libultra/sinf] # sinf (has own .rodata - not convertible)
-      - [0x1F3B0, asm, libultra/cosf] # cosf (has own .rodata - not convertible)
+      - [0x1EF60, c, libultra/perspective]
+      - [0x1F1F0, c, libultra/sinf]
+      - [0x1F3B0, c, libultra/cosf]
       - [0x1F520, lib, libultra_rom, bzero]
-      - [0x1F5C0, asm, libultra/vimgr] # osCreateViManager (has own .bss - not convertible)
+      - [0x1F5C0, c, libultra/vimgr]
       - [0x1F920, asm, libultra/parameters] # Reference parameters.s: 0x60 bytes of text padding
       - [0x1F980, c, libultra/visetmode]
       - [0x1F9F0, c, libultra/viswapbuf]
-      - [0x1FA40, asm, libultra/pimgr] # osCreatePiManager (has own .bss - not convertible)
+      - [0x1FA40, c, libultra/pimgr]
       - [0x1FBD0, c, libultra/setthreadpri]
       - [0x1FCB0, c, libultra/stopthread]
-      - [0x1FD70, asm, libultra/destroythread] # osDestroyThread, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
+      - [0x1FD70, c, libultra/destroythread]
       - [0x1FE70, c, libultra/visetevent]
       - [0x1FEE0, lib, libultra_rom, writebackdcacheall]
       - [0x1FF10, c, libultra/visetspecial]
@@ -108,10 +108,10 @@ segments:
       - [0x20440, c, libultra/sndpgetstate]
       - [0x20460, c, libultra/heapinit]
       - [0x204A0, c, libultra/bnkf]
-      - [0x206F0, asm, libultra/csplayer] # alCSPNew (has own .rodata - not convertible)
-      - [0x21920, asm, libultra/sndplayer] # alSndpNew (has own .rodata - not convertible)
+      - [0x206F0, c, libultra/csplayer]
+      - [0x21920, c, libultra/sndplayer]
       - [0x22030, c, libultra/seqpsetbank]
-      - [0x22070, asm, libultra/cseq] # alCSeqNew (has own .rodata - not convertible)
+      - [0x22070, c, libultra/cseq]
       - [0x22B30, c, libultra/seqpsetseq]
       - [0x22B70, c, libultra/seqpsetvol]
       - [0x22BB0, c, libultra/seqpplay]
@@ -126,11 +126,11 @@ segments:
       - [0x22ED0, c, libultra/sndpdeallocate]
       - [0x22F20, c, libultra/sndpstop]
       - [0x22F70, c, libultra/seqpsetchlvol]
-      - [0x22FD0, asm, libultra/lookatref] # guLookAtReflect, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
-      - [0x23490, asm, libultra/align] # guAlign (has own .rodata/.bss - not convertible)
+      - [0x22FD0, c, libultra/lookatref]
+      - [0x23490, c, libultra/align]
       - [0x236A0, c, libultra/translate]
       - [0x23740, c, libultra/scale]
-      - [0x237E0, asm, libultra/rotateRPY] # guRotateRPY (has own .rodata/.bss - not convertible)
+      - [0x237E0, c, libultra/rotateRPY]
       - [0x23980, c, libultra/mtxcatf]
       - [0x23B90, c, libultra/mtxcatl] # guMtxXFML + guMtxCatL
       - [0x23C50, c, libultra/syndelete]
@@ -141,31 +141,31 @@ segments:
       - [0x24690, c, libultra/sptaskyielded]
       - [0x24710, c, libultra/vigetcurrframebuf]
       - [0x24750, c, libultra/vigetnextframebuf]
-      - [0x24790, asm, libultra/sptask] # osSpTaskLoad (has own .bss - not convertible)
+      - [0x24790, c, libultra/sptask]
       - [0x24A80, c, libultra/dpsetnextbuf]
       - [0x24B30, c, libultra/sptaskyield]
       - [0x24B50, lib, libultra_rom, probetlb]
       - [0x24C10, c, libultra/ai]
-      - [0x24C40, asm, libultra/drvrNew] # alSaveNew etc. (has own .data/.rodata - not convertible)
+      - [0x24C40, c, libultra/drvrNew]
       - [0x253E0, c, libultra/synallocfx]
       - [0x25480, c, libultra/mainbus]
       - [0x255D0, c, libultra/load]
-      - [0x26120, asm, libultra/resample] # alResampleNew (has own .rodata - not convertible)
-      - [0x26420, asm, libultra/env] # alEnvmixerNew (has own .data/.rodata - not convertible)
+      - [0x26120, c, libultra/resample]
+      - [0x26420, c, libultra/env]
       - [0x27080, c, libultra/auxbus]
       - [0x27190, c, libultra/save]
       - [0x27250, c, libultra/jammesg]
       - [0x273A0, c, libultra/pigetcmdq]
-      - [0x273D0, asm, libultra/pfsisplug] # osPfsIsPlug, libultra 2.0F 2.0G (differs from 2.0I)
-      - [0x27740, asm, libultra/siacs] # __osSiCreateAccessQueue (has own .bss - not convertible)
+      - [0x273D0, c, libultra/pfsisplug]
+      - [0x27740, c, libultra/siacs]
       - [0x27800, c, libultra/sirawdma]
       - [0x278B0, c, libultra/crc]
-      - [0x27A30, asm, libultra/contram] # __osContRamWrite, __osContRamRead (differs from 2.0I)
+      - [0x27A30, c, libultra/contram]
       - [0x28140, c, libultra/gettime]
       - [0x281D0, c, libultra/settimer]
-      - [0x282B0, asm, libultra/conteepwrite] # osEepromWrite, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
-      - [0x28790, asm, libultra/conteepread] # osEepromRead, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
-      - [0x28A90, asm, libultra/mtxutil] # guMtxF2L, guMtxL2F, guMtxIdent (differs from 2.0I)
+      - [0x282B0, c, libultra/conteepwrite]
+      - [0x28790, c, libultra/conteepread]
+      - [0x28A90, c, libultra/mtxutil]
       - [0x28D00, c, libultra/normalize]
       - [0x28D90, lib, libultra_rom, setsr]
       - [0x28DA0, lib, libultra_rom, getsr]
@@ -177,16 +177,16 @@ segments:
       - [0x28F40, c, libultra/pirawread]
       - [0x28FA0, c, libultra/timerintr]
       - [0x293A0, c, libultra/getthreadpri]
-      - [0x293C0, asm, libultra/vi] # __osViInit (has own .data - not convertible)
+      - [0x293C0, c, libultra/vi]
       - [0x29500, c, libultra/vigetcurrcontext]
       - [0x29510, c, libultra/viswapcontext]
       - [0x29870, asm] # custom SP task DMA func
       - [0x29960, asm] # custom SP task DMA func
-      - [0x29A60, asm, libultra/piacs] # __osPiCreateAccessQueue (has own .bss - not convertible)
+      - [0x29A60, c, libultra/piacs]
       - [0x29B20, c, libultra/pirawdma]
       - [0x29C00, c, libultra/epirawdma]
-      - [0x29E30, asm, libultra/devmgr] # __osDevMgrMain (has own .rodata - not convertible)
-      - [0x2A2C0, asm, libultra/seqplayer] # alSeqpNew (has own .rodata - not convertible)
+      - [0x29E30, c, libultra/devmgr]
+      - [0x2A2C0, c, libultra/seqplayer]
       - [0x2BC00, c, libultra/event]
       - [0x2BF40, c, libultra/synaddplayer]
       - [0x2BF90, c, libultra/synstopvoice]
@@ -194,7 +194,7 @@ segments:
       - [0x2C0C0, c, libultra/synsetvol]
       - [0x2C160, c, libultra/synsetpitch]
       - [0x2C1F0, c, libultra/synallocvoice]
-      - [0x2C420, asm, libultra/cents2ratio] # alCents2Ratio (has own .rodata - not convertible)
+      - [0x2C420, c, libultra/cents2ratio]
       - [0x2C470, c, libultra/synstartvoiceparam]
       - [0x2C560, c, libultra/synsetpan]
       - [0x2C5F0, c, libultra/synsetfxmix]
@@ -208,17 +208,17 @@ segments:
       - [0x2D3A0, c, libultra/sp]
       - [0x2D3D0, c, libultra/dp]
       - [0x2D400, c, libultra/filter]
-      - [0x2D420, asm, libultra/reverb] # alFxNew (has own .rodata - not convertible)
+      - [0x2D420, c, libultra/reverb]
       - [0x2E070, c, libultra/copy]
       - [0x2E0F0, c, libultra/si]
-      - [0x2E120, asm] # __osPfsGetStatus (differs from 2.0I)
+      - [0x2E120, c, libultra/pfsgetstatus] # __osPfsGetStatus (2.0G)
       - [0x2E230, lib, libultra_rom, setcompare]
       - [0x2E240, c, libultra/resetglobalintmask]
-      - [0x2E2A0, asm, libultra/epirawwrite] # osEPiRawWriteIo, libultra 2.0F 2.0G (differs from 2.0I)
-      - [0x2E2F0, asm, libultra/epirawread] # osEPiRawReadIo, libultra 2.0F 2.0G (differs from 2.0I)
+      - [0x2E2A0, c, libultra/epirawwrite]
+      - [0x2E2F0, c, libultra/epirawread]
       - [0x2E340, c, libultra/setglobalintmask]
       - [0x2E390, c, libultra/yieldthread]
-      - [0x2E3E0, asm, libultra/seq] # alSeqNew (has own .rodata - not convertible)
+      - [0x2E3E0, c, libultra/seq]
       - [0x2EA00, c, libultra/synsetpriority]
       # RSP microcode blobs (binary). Their CPU-side pointers live in core/1050.c and core/FD80.c.
       - [0x2EA10, databin, rsp/rspboot]    # RSP boot ucode: rspbootTextStart, 0xD0 bytes
@@ -238,22 +238,23 @@ segments:
       - [0x348C0, .data, core/17EE0]
       - [0x350B0, .data, core/1B100]
       - [0x359D0, .data, libultra/sl]
-      - [0x359E0, .data, libultra/sched_data]
-      - [0x359F0, .data, libultra/aisetnextbuf_data]
-      - [0x35A00, .data, libultra/controller_data]
-      - [0x35A10, .data, libultra/sins_data]
+      - [0x359E0, .data, libultra/sched]
+      - [0x359F0, .data, libultra/aisetnextbuf]
+      - [0x35A00, .data, libultra/controller]
+      - [0x35A10, .data, libultra/sins]
       - [0x36210, .data, libultra/parameters_data]
       - [0x36220, .data, libultra/globalintmask_data]
       - [0x36230, .data, libultra/vidata]
-      - [0x36F50, .data, libultra/vimgr_data]
-      - [0x36F70, .data, libultra/pimgr_data]
+      - [0x36F50, .data, libultra/vimgr]
+      - [0x36F70, .data, libultra/pimgr]
       - [0x36FA0, .data, libultra/thread_data]
       - [0x36FC0, .data, libultra/exceptasm_data]
-      - [0x36FE0, .data, libultra/drvrNew_data]
-      - [0x37170, .data, libultra/env_data]
-      - [0x372B0, .data, libultra/siacs_data]
-      - [0x372D0, .data, libultra/vi_data]
-      - [0x37340, .data, libultra/piacs_data]
+      - [0x36FE0, .data, libultra/drvrNew]
+      - [0x37170, .data, libultra/env]
+      - [0x372B0, .data, libultra/siacs]
+      - [0x372C0, .data, libultra/timerintr]
+      - [0x372D0, .data, libultra/vi]
+      - [0x37340, .data, libultra/piacs]
       - [0x37350, .data, libultra/vimodepallan1]
       - [0x373A0, .data, libultra/vimodempallan1]
       - [0x373F0, .data, libultra/vimodentsclan1]
@@ -266,28 +267,28 @@ segments:
       - [0x38DC0, .rodata, core/12C80]
       - [0x38FB0, .rodata, core/17EE0]
       - [0x392D0, .rodata, core/1B100]
-      - [0x3A440, .rodata, libultra/sched_data]
-      - [0x3A460, .rodata, libultra/synthesizer_rodata]
-      - [0x3A470, .rodata, libultra/rotate_rodata]
-      - [0x3A480, .rodata, libultra/perspective_rodata]
-      - [0x3A490, .rodata, libultra/sinf_rodata]
-      - [0x3A4E0, .rodata, libultra/cosf_rodata]
-      - [0x3A530, .rodata, libultra/csplayer_rodata]
-      - [0x3A770, .rodata, libultra/sndplayer_rodata]
-      - [0x3A7B0, .rodata, libultra/cseq_rodata]
-      - [0x3A7C0, .rodata, libultra/lookatref_rodata]
-      - [0x3A7D0, .rodata, libultra/align_rodata]
-      - [0x3A7E0, .rodata, libultra/rotateRPY_rodata]
+      - [0x3A440, .rodata, libultra/sched]
+      - [0x3A460, .rodata, libultra/synthesizer]
+      - [0x3A470, .rodata, libultra/rotate]
+      - [0x3A480, .rodata, libultra/perspective]
+      - [0x3A490, .rodata, libultra/sinf]
+      - [0x3A4E0, .rodata, libultra/cosf]
+      - [0x3A530, .rodata, libultra/csplayer]
+      - [0x3A770, .rodata, libultra/sndplayer]
+      - [0x3A7B0, .rodata, libultra/cseq]
+      - [0x3A7C0, .rodata, libultra/lookatref]
+      - [0x3A7D0, .rodata, libultra/align]
+      - [0x3A7E0, .rodata, libultra/rotateRPY]
       - [0x3A7F0, .rodata, libultra/exceptasm_data]
-      - [0x3A8C0, .rodata, libultra/drvrNew_data]
-      - [0x3A8E0, .rodata, libultra/resample_rodata]
-      - [0x3A920, .rodata, libultra/env_data]
+      - [0x3A8C0, .rodata, libultra/drvrNew]
+      - [0x3A8E0, .rodata, libultra/resample]
+      - [0x3A920, .rodata, libultra/env]
       - [0x3A980, .rodata, libultra/libm_qnan_rodata]
-      - [0x3A990, .rodata, libultra/devmgr_rodata]
-      - [0x3A9B0, .rodata, libultra/seqplayer_rodata]
-      - [0x3ABF0, .rodata, libultra/cents2ratio_rodata]
-      - [0x3AC00, .rodata, libultra/reverb_rodata]
-      - [0x3AC30, .rodata, libultra/seq_rodata]
+      - [0x3A990, .rodata, libultra/devmgr]
+      - [0x3A9B0, .rodata, libultra/seqplayer]
+      - [0x3ABF0, .rodata, libultra/cents2ratio]
+      - [0x3AC00, .rodata, libultra/reverb]
+      - [0x3AC30, .rodata, libultra/seq]
       - [0x3AC40, .rodata, core/alien_parts]
       - [0x3C8C0, .rodata, core/alien_waves]
       - [0x3DC00, .rodata, core/trig_tables]
@@ -296,6 +297,10 @@ segments:
       - [0x3F060, .rodata, core/terrain_lookup]
       - [0x3F420, .rodata, core/camera_curve]
       - [0x3F460, .rodata, core/rsp_data]
+
+      # Anchor private reference storage; PI handles occupy the gap before piacs.
+      - {start: 0x40720, type: .fixed_bss, name: libultra/rotate, vram: 0x8006CA50}
+      - {start: 0x40720, type: .fixed_bss, name: libultra/piacs, vram: 0x8006F0A0}
 
   - name: overlay_gameplay_frontend
     type: code

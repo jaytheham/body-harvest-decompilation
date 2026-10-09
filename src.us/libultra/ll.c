@@ -1,5 +1,6 @@
 /* Reference: reference/ultralib/src/libc/ll.c (libultra 2.0I). */
 #define BUILD_VERSION 6
+#include "bindings.h"
 #include "PR/os_version.h"
 unsigned long long __ull_rshift(unsigned long long a0, unsigned long long a1) {
     return a0 >> a1;
