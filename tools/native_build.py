@@ -89,6 +89,9 @@ def setup():
     if not marker.exists() or marker.read_text() != wanted:
         run([PYTHON, "-m", "pip", "install", "--disable-pip-version-check", "-r", REQUIREMENTS])
         marker.write_text(wanted)
+    if Path(sys.executable).resolve() != PYTHON.resolve():
+        run([PYTHON, __file__, "setup"])
+        return
     for name, executable in (("ido", "cc.exe"), ("binutils", "mips-ps2-decompals-as.exe"), ("tcc", "tcc/tcc.exe")):
         directory = CACHE / name
         installed = directory / ".archive-sha256"
@@ -106,12 +109,18 @@ def setup():
     dll = CACHE / "ido/msys-2.0.dll"
     runtime_marker = CACHE / "ido/.runtime-sha256"
     if not dll.exists() or not runtime_marker.exists() or runtime_marker.read_text() != ARCHIVES["runtime"][1]:
-        # Windows 10/11 includes bsdtar, which can read zstd packages.
-        tar = Path(os.environ["SystemRoot"]) / "System32/tar.exe"
-        if not tar.exists():
-            raise RuntimeError("Windows' built-in tar.exe is required (Windows 10 1803 or newer).")
-        run([tar, "-xf", download("runtime"), "-C", CACHE / "ido", "usr/bin/msys-2.0.dll"])
-        shutil.copyfile(CACHE / "ido/usr/bin/msys-2.0.dll", dll)
+        # Some Windows tar builds require an external zstd executable.
+        # Decode in the local Python environment and copy only the needed DLL.
+        import zstandard
+        with download("runtime").open("rb") as archive:
+            with zstandard.ZstdDecompressor().stream_reader(archive) as decoded:
+                with tarfile.open(fileobj=decoded, mode="r|") as contents:
+                    info = next((entry for entry in contents if entry.name == "usr/bin/msys-2.0.dll"), None)
+                    member = contents.extractfile(info) if info is not None else None
+                    if member is None:
+                        raise RuntimeError("MSYS runtime archive is missing msys-2.0.dll")
+                    with member, dll.open("wb") as output:
+                        shutil.copyfileobj(member, output)
         runtime_marker.write_text(ARCHIVES["runtime"][1])
     # Upstream's Windows checkout changes this offset-indexed table to CRLF.
     # That corrupts diagnostics and can crash cfe on otherwise valid input.

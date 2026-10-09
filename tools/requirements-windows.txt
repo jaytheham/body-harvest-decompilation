@@ -1,4 +1,5 @@
-# Only libraries needed by the bundled splat and image converter.
+# Libraries needed by native setup, bundled splat, and the image converter.
+zstandard==0.23.0
 PyYAML==6.0.2
 pylibyaml==0.1.0
 tqdm==4.67.1
