@@ -9,3 +9,5 @@ Read `gameplayMode` directly at the final condition. Assigning it in each veloci
 For zero X velocity, assign `next = 0` inside the positive Z branch, rather than as a default before the branch. IDO still hoists the zero assignment, but places the global-address LUI before it, as in the target.
 
 Declare the orbit helper before the caller: its narrow parameter types generate the target sign and zero extensions at all three calls.
+
+Revalidated 2026-10-10 using tools/make.ps1: the guarded body already contained these fixes, and removing only its NON_MATCHING wrapper produced an exact diff and full ROM OK. No rodata changes were required.

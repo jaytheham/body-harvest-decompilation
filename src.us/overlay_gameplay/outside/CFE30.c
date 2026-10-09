@@ -7237,7 +7237,6 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5760_E4710.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800D5AF4_E4AA4(void) {
 	s16 angle;
 	s16 curr;
@@ -7323,9 +7322,7 @@ void func_800D5AF4_E4AA4(void) {
 		curr = parent->unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5AF4_E4AA4.s")
-#endif
+
 
 u8 func_800D5FD4_E4F84(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	u8 slot;
