@@ -2972,12 +2972,10 @@ s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(10169)
 s32 func_8007FB08_8EAB8(u8 arg0, u8 arg1) {
-	s16 result = -1;
-	AlienInstance *inst;
+	s16 result;
 
+	result = -1;
 	if (alienTypes[arg1].unk54 & 1) {
 		return 0;
 	}
@@ -2987,44 +2985,50 @@ s32 func_8007FB08_8EAB8(u8 arg0, u8 arg1) {
 		result = func_80082CA0_91C50(arg0);
 	}
 	if (result != -1) {
-		inst = &alienInstances[arg0];
-		if (!(inst->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))) {
-			return 0;
-		}
-		inst->unk40++;
-		if (arg1 == 1) {
-			if (inst->unk40 >= 0x201) {
-				func_80088760_97710(inst);
+		if (alienInstances[arg0].unk40 == 0) {
+			func_8007E734_8D6E4(&alienInstances[arg0], result);
+			func_8007EE24_8DDD4(arg0);
+			alienTypes[arg1].unk54;
+			alienInstances[arg0].unk47 |= 4;
+			if (alienTypes[arg1].unk54 & 2) {
+				result = func_80082A98_91A48(arg0);
+			} else if (alienTypes[arg1].unk54 & 0x10000080) {
+				result = func_80082CA0_91C50(arg0);
+			}
+			if (result != -1) {
+				alienInstances[arg0].unk40 = 1;
 			}
 			return 1;
 		}
-		if (inst->unk40 < 0x33) {
-			if (alienTypes[arg1].unk54 & 0x10000080) {
-				func_80088760_97710(inst);
+		else if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+			alienInstances[arg0].unk40++;
+			if (arg1 == 1) {
+				if (alienInstances[arg0].unk40 >= 0x201) {
+					func_80088760_97710(&alienInstances[arg0]);
+				}
+			} else if ((alienInstances[arg0].unk40 >= 0x33) || (alienTypes[arg1].unk54 & 0x10000080)) {
+				func_80088760_97710(&alienInstances[arg0]);
+			}
+			return 1;
+		}
+	} else {
+		if (((u32)(alienTypes[arg1].unk54 & 0x180000)) >> 0x13 < 3) {
+			result = func_80082B30_91AE0(arg0);
+		}
+		if (result == -1) {
+			if (!(alienTypes[arg1].unk54 & 0x20000000)) {
+				result = func_80082C04_91BB4(arg0);
 			}
 		}
-		return 1;
-	}
-	if (((u32)(alienTypes[arg1].unk54 & 0x180000)) >> 0x13 < 3) {
-		result = func_80082B30_91AE0(arg0);
-	}
-	if (result == -1) {
-		if (!(alienTypes[arg1].unk54 & 0x20000000)) {
-			result = func_80082C04_91BB4(arg0);
+		if (result != -1) {
+			func_8007E734_8D6E4(&alienInstances[arg0], result);
+			func_8007EE24_8DDD4(arg0);
+			alienInstances[arg0].unk47 |= 4;
+			return 1;
 		}
 	}
-	if (result == -1) {
-		return 0;
-	}
-	inst = &alienInstances[arg0];
-	func_8007E734_8D6E4(inst, result);
-	func_8007EE24_8DDD4(arg0);
-	inst->unk47 |= 4;
-	return 1;
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007FB08_8EAB8.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(8789)
