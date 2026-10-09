@@ -2585,10 +2585,10 @@ typedef union {
 		u8 highlight[3];
 	} visual;
 	struct {
-		s16 height;
-		s16 width;
+		u16 life;
+		s16 sizeDelta;
 		u8 phase;
-		u8 step;
+		u8 growthFrames;
 		u8 pad6[6];
 	} control;
 } EffectFirePayload; /* size = 0x0C */
