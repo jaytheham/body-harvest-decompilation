@@ -18,14 +18,24 @@ s16 D_80140D40_14FCF0[] = {
 	0x0019, 0x0014, 0x0064, 0x0064,
 };
 
-u8 D_80140D68_14FD18[] = {
-	0xFF, 0x64, 0x64, 0xD2, 0xFF, 0xFF, 0x87, 0xFF, 0x87, 0x00, 0x00, 0x00,
+u8 D_80140D68_14FD18[][3] = {
+	{0xFF, 0x64, 0x64},
+	{0xD2, 0xFF, 0xFF},
+	{0x87, 0xFF, 0x87},
+	{0x00, 0x00, 0x00},
 };
 
-u8 D_80140D74_14FD24[] = {
-	0x64, 0x1E, 0x1E, 0x1E, 0x50, 0x64, 0x28, 0x50, 0x28, 0x00, 0x00, 0x00,
-	0x61, 0x62, 0x65, 0x66, 0x64, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00,
+u8 D_80140D74_14FD24[][3] = {
+	{0x64, 0x1E, 0x1E},
+	{0x1E, 0x50, 0x64},
+	{0x28, 0x50, 0x28},
+	// Unused trailing data; the final zero byte is supplied by alignment.
+	{0x00, 0x00, 0x00},
+	{0x61, 0x62, 0x65},
+	{0x66, 0x64, 0x00},
+	{0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00},
 };
 
 void func_80139050_148000(void) {
@@ -483,15 +493,12 @@ void func_8013A630_1495E0(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
 }
 
-// Opening primitive-color command still differs from the target.
-#ifdef NON_MATCHING
 void func_8013A764_149714(u8 arg0)
 {
 	s16 ammo;
 	s16 yPos;
-	u8 state[4];
-	u8 padding[196];
-	s32 paletteState;
+	u8 state;
+	u8 padding[4]; // Keeps the cached RGB row offset at sp+0x20.
 	s16 clipX;
 	s16 clipY;
 	s32 textureIndex;
@@ -503,22 +510,17 @@ void func_8013A764_149714(u8 arg0)
 	func_8013A630_1495E0();
 	if (ammo == 0)
 	{
-		state[3] = 0;
+		state = 0;
 	}
 	else if (D_801601D0 == arg0)
 	{
-		state[3] = 1;
+		state = 1;
 	}
 	else
 	{
-		state[3] = 2;
+		state = 2;
 	}
-	{
-		Gfx *gfx = D_8005BB2C++;
-		gfx->words.w0 = 0xFA000000;
-		paletteState = state[3] * 3;
-		gfx->words.w1 = _SHIFTL(D_80140D68_14FD18[paletteState], 24, 8) | _SHIFTL(D_80140D68_14FD18[paletteState + 1], 16, 8) | _SHIFTL(D_80140D68_14FD18[paletteState + 2], 8, 8) | _SHIFTL(hudWeaponItems[arg0].opacity, 0, 8);
-	}
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140D68_14FD18[state][0], D_80140D68_14FD18[state][1], D_80140D68_14FD18[state][2], hudWeaponItems[arg0].opacity);
 	gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE);
@@ -537,7 +539,7 @@ void func_8013A764_149714(u8 arg0)
 	}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-	gDPSetColor(D_8005BB2C++, 0xfa, ((unsigned int)((((unsigned int)D_80140D74_14FD24[paletteState + 2]) & ((0x01 << 8) - 1)) << 8)) | (((unsigned int)((((unsigned int)D_80140D74_14FD24[paletteState + 1]) & ((0x01 << 8) - 1)) << 16)) | (((unsigned int)((((unsigned int)D_80140D74_14FD24[paletteState]) & ((0x01 << 8) - 1)) << 24)) | ((unsigned int)((((unsigned int)hudWeaponItems[arg0].opacity) & ((0x01 << 8) - 1)) << 0)))));
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140D74_14FD24[state][0], D_80140D74_14FD24[state][1], D_80140D74_14FD24[state][2], hudWeaponItems[arg0].opacity);
 	gDPPipeSync(D_8005BB2C++);
 	clipX = 0;
 	clipY = 0;
@@ -545,15 +547,12 @@ void func_8013A764_149714(u8 arg0)
 	gDPPipeSync(D_8005BB2C++);
 	gSPTextureRectangle(D_8005BB2C++, MAX((s16)((0x27 - D_8014F1FA) * 4), 0), MAX((s16)(yPos * 4), 0), MAX((s16)((0x47 - D_8014F1FA) << 2), clipX), MAX((s16)((yPos + 0x10) << 2), clipY), 0, -((((s16)((0x27 - D_8014F1FA) * 4)) < 0) ? (MIN((((s16)((0x27 - D_8014F1FA) * 4)) << 10) >> 7, 0)) : (0)), -(((yPos * 4) < 0) ? (MIN((((s16)(yPos * 4)) << 10) >> 7, 0)) : (0)), 0x400, 0x400);
 	gDPPipeSync(D_8005BB2C++);
-	if (state[3] == 1)
+	if (state == 1)
 	{
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, hudWeaponItems[arg0].opacity);
 	}
 	func_8013A4C8_149478(ammo, yPos);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/148000/func_8013A764_149714.s")
-#endif
 
 void func_8013AF58_149F08(void) {
 	u8 i;
