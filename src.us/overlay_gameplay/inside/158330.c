@@ -6820,8 +6820,13 @@ void func_80071D94_159E54(int arg0, unsigned char arg1, unsigned char arg2, unsi
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(820)
+// CURRENT(535)
 // AI - Interior entry point: resets state, loads building, sets player spawn
+// Two commutative-operand-order fixes landed (switch cases 0 and 1: the (unk1A/2) result
+// is the LEFT operand of the +). Residual is the D_80047B70 second check: the ROM emits a
+// branch-likely (bnel) with the else-path constant in the delay slot and hoists its lui
+// into the outer beqz delay slot; our shape yields a plain bnez. All other rows are
+// encoding aliases (li/addiu zero, or/move) - structural delta is 0 instructions.
 #ifdef NON_MATCHING
 void func_80071F08_159FC8(void) {
 	s32 i;
@@ -6877,7 +6882,7 @@ void func_80071F08_159FC8(void) {
 				D_800E6A78.unkE = 0x4000;
 				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2;
 				
-				D_800E6A78.unk54 = (D_800E65BC[value].unk1A / 2) + D_800E66A8[D_800E65EC].unk6 + 0xF;
+				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6 + (D_800E65BC[value].unk1A / 2) + 0xF;
 				return;
 
 			case 2:
@@ -6890,7 +6895,7 @@ void func_80071F08_159FC8(void) {
 			case 1:
 				D_800E6A78.unkE = 0;
 				
-				D_800E6A78.unk4C = (D_800E65BC[value].unk1A / 2) + D_800E66A8[D_800E65EC].unk2 + 0xF;
+				D_800E6A78.unk4C = D_800E66A8[D_800E65EC].unk2 + (D_800E65BC[value].unk1A / 2) + 0xF;
 				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6;
 				return;
 
