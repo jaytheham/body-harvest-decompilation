@@ -4499,39 +4499,41 @@ void func_800CCD54_DBD04(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCD54_DBD04.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(4159)
+// Create a jet-stream particle from the emitter.
 void func_800CD0B0_DC060(u8 arg0) {
 	s16 prevUnitId;
+	Unk80154318Entry *base;
 	s16 unitId;
-	Unk80154318Entry *entry;
-	Unk80154318Sub *sub;
+	s32 result;
+	s32 random;
+	JetStreamParticleState *sub;
 	Unk80154318Sub *prevSub;
 
 	prevUnitId = D_80154088[arg0].unk6;
-	unitId = func_800C17B4_D0764(arg0, 0);
-	if (unitId != -3) {
-		entry = &D_80154318[unitId];
-		entry->unk2 = (func_800038E0_44E0() % 40) + 0x14;
-		entry->unkE = 0xFF;
-		entry->unkF = 0xFF;
-		entry->unk10 = 0xFF;
-		entry->unk11 = 0xFF;
+	result = func_800C17B4_D0764(arg0, 0);
+	unitId = result;
+	if (result != -3) {
+		random = func_800038E0_44E0();
+		/* Convert the array base before indexing to preserve IDO address sharing. */
+		base = (Unk80154318Entry *)(s32)D_80154318;
+		sub = (JetStreamParticleState *)(s32)base[unitId].payload;
+		D_80154318[unitId].unk2 = (random % 40) + 0x14;
+		sub->color[0] = 0xFF;
+		sub->color[1] = 0xFF;
+		sub->color[2] = 0xFF;
+		sub->opacity = 0xFF;
 
-		sub = (Unk80154318Sub *)&entry->unk8;
-		prevSub = (Unk80154318Sub *)&D_80154318[prevUnitId].unk8;
-		sub->unk0 = prevSub->unk0;
-		sub->unk2 = prevSub->unk2;
-		sub->unk4 = prevSub->unk4;
-		sub->unkA = (func_800038E0_44E0() % 6) + prevSub->unk6 - 3;
-		sub->unkB = (func_800038E0_44E0() % 6) + prevSub->unk7 - 3;
-		sub->unkD = 0;
-		sub->unkC = (func_800038E0_44E0() % 6) + prevSub->unk8 - 3;
+		prevSub = (Unk80154318Sub *)(s32)D_80154318[prevUnitId].payload;
+		sub->position[0] = prevSub->unk0;
+		sub->position[1] = prevSub->unk2;
+		sub->position[2] = prevSub->unk4;
+		sub->velocity[0] = (func_800038E0_44E0() % 6) + prevSub->unk6 - 3;
+		sub->velocity[1] = (func_800038E0_44E0() % 6) + prevSub->unk7 - 3;
+		sub->velocity[2] = (func_800038E0_44E0() % 6) + prevSub->unk8 - 3;
+		sub->bounced = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CD0B0_DC060.s")
-#endif
+
 
 // Create jet stream effect? - used by Alpha 1 building takeoff/landing, some enemy visual effects
 u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) {

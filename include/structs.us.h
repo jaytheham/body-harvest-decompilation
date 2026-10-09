@@ -2618,6 +2618,14 @@ typedef struct {
 } TrailParticleState; /* size = 0x0C */
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 opacity;
+	/* 0x0A */ s8 velocity[3];
+	/* 0x0D */ u8 bounced;
+} JetStreamParticleState; /* size = 0x0E */
+
+typedef struct {
     s16 position[3];
     u8 color[3];
     u8 pad9;
@@ -2686,6 +2694,7 @@ typedef struct {
 		EffectInterpolationState interpolation;
 		AnimatedFlareState animatedFlare;
 		Unk80154318Sub ribbonState;
+		JetStreamParticleState jetStreamParticle;
 		struct {
 			union {
 				/* 0x08 */ Unk80052B40 spatialVectors[2];
