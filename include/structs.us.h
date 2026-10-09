@@ -3708,6 +3708,11 @@ typedef struct {
 	f64 value;
 } InteriorAngleScale;
 
+typedef union {
+	s16 flat[22];
+	s16 byLevel[7][3];
+} InteriorEventBuildings;
+
 #endif
 
 /* Adjacent camera basis vectors share a single six-float storage block. */

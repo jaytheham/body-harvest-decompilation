@@ -1351,7 +1351,7 @@ extern u8 D_8009CD7C_184E3C[];
 // AI - Event building interior IDs (first set) that count as visited for missions
 extern s16 D_8009CE14_184ED4[];
 // AI - Second event building interior IDs that count as visited for missions
-extern s16 D_8009CE34_184EF4[];
+extern InteriorEventBuildings D_8009CE34_184EF4;
 // AI - 32x32 8-bit intensity texture (radial gradient), used by player rendering
 extern u8 D_8009CE60_184F20[];
 // AI - Table of display-list pointers for each player character/vehicle type (indexed by D_800E6A70)
