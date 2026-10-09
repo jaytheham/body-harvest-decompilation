@@ -11225,8 +11225,6 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 	}
 }
 
-// CURRENT(1361)
-#ifdef NON_MATCHING
 // Sets vehicle is airborne flag, and other things?
 void func_80113310_1222C0(VehicleInstance *arg0) {
 	VehicleType *type;
@@ -11234,8 +11232,8 @@ void func_80113310_1222C0(VehicleInstance *arg0) {
 	s16 sp4E;
 	s16 sp4C;
 	s16 sp4A;
-	s32 pad;
 	s16 varA2;
+	s32 pad;
 	s32 wasAboveWater;
 
 	type = &vehicleTypes[arg0->unk1A];
@@ -11328,9 +11326,6 @@ void func_80113310_1222C0(VehicleInstance *arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80113310_1222C0.s")
-#endif
 
 // CURRENT(2944)
 #ifdef NON_MATCHING
