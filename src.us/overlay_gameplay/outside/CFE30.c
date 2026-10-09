@@ -978,7 +978,7 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 	osSyncPrintf(&D_80143304_1522B4);
 }
 
-// CURRENT(1929)
+// CURRENT(82)
 #ifdef NON_MATCHING
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	s32 sp3C;
@@ -10408,6 +10408,7 @@ void func_800DFA98_EEA48(s8 arg0[][3]) {
 }
 
 // large explosion effect with smaller random explosions
+#ifdef NON_MATCHING
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	u8 unused; /* Preserve the original local stack layout. */
 	s8 sp68[4][3];
@@ -10442,6 +10443,9 @@ void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 		} while (arg4 < count);
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFBA8_EEB58.s")
+#endif
 
 void func_800DFE68_EEE18(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DEA08_ED9B8(arg0, arg1, arg2, 0xF, 2, 1, 0x14, 0xFF, 0xFF, 0xFA, 0xDC);
