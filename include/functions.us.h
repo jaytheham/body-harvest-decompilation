@@ -456,7 +456,7 @@ void func_800720F4_810A4(void);
 void func_80070FB8_7FF68(void);
 void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2);
 void func_800DD5E0_EC590(void);
-void func_8007B9CC_8A97C(s32 arg0);
+void func_8007B9CC_8A97C(u8 arg0);
 void func_80073A74_82A24(void);
 void func_800734AC_8245C(void);
 void func_80075AA4_84A54(void);
@@ -533,7 +533,7 @@ s32 func_8008E478_9D428(u8);
 s32 func_8008E30C_9D2BC(u8, s32);
 s32 func_80080418_8F3C8(s32, s32, s32);
 void func_8008554C_944FC(u8);
-s32 func_8008751C_964CC(u8, s32, s32);
+s32 func_8008751C_964CC(u8, s16, s16);
 s32 func_800862B4_95264(u8, s32, s32, s32, s32, s32, s32);
 s32 func_800865F4_955A4(u8, s32, s32, s32, s32);
 void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2);
@@ -1551,7 +1551,7 @@ void func_8000FE50_10A50(void *);
 void __osSiCreateAccessQueue(void);
 void func_80002EF8_3AF8(void *);
 void func_8000F218_FE18(void);
-void func_8007B370_8A320(s32 arg0);
+void func_8007B370_8A320(u8 arg0);
 void func_800EF9F0_FE9A0(s16 arg0);
 f32 func_8007C96C_164A2C(OSContPad *arg0);
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1);
@@ -1703,6 +1703,8 @@ void func_800E32C4_F2274(void);
 void func_800C6D80_D5D30(void);
 void func_800D10D0_E0080(void);
 
+void func_8008030C_8F2BC(u8 arg0);
+s32 func_80083060_92010(s32 arg0, s32 arg1, s32 arg2, u8 *arg3);
 #endif
 
 void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4);
