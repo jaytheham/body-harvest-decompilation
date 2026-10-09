@@ -5370,6 +5370,7 @@ void func_8008554C_944FC(u8 arg0)
 	}
 }
 
+// CURRENT(145)
 #ifdef NON_MATCHING
 void func_80085690_94640(u8 arg0, s16 arg1)
 {
