@@ -5938,9 +5938,9 @@ u8 D_8009CD7C_184E3C[0x98] = {
 };
 
 // AI - Event building interior IDs (first set) that count as visited for missions
-s16 D_8009CE14_184ED4[16] = {
+InteriorPrimaryEventBuildings D_8009CE14_184ED4 = {{
 	0x005D, 0x000A, 0x0096, 0x0077, 0x000C, 0x008D, 0x0038, 0x0055, 0x0049, 0x0073, 0x004A, 0x0063, -1, -1, -1, 0x0000,
-};
+}};
 
 // AI - Second event building interior IDs that count as visited for missions
 InteriorEventBuildings D_8009CE34_184EF4 = {{
@@ -10442,8 +10442,6 @@ void func_8007A618_1626D8(void) {
 	D_800E65A8 &= ~4;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(290) - u32 `three` forces the target's unsigned `multu` exponent (signed `three` CSE'd with the index mult, 1735)
 // AI - Checks if a specific event building has been visited
 s32 func_8007A634_1626F4(s32 arg0) {
 	s16 var_v0;
@@ -10453,7 +10451,7 @@ s32 func_8007A634_1626F4(s32 arg0) {
 	if (arg0 == 0x14) {
 		var_v0 = 0;
 		do {
-			if ((buildingInteriorToLoadId == D_8009CE14_184ED4[currentLevel * 3 + var_v0 - 3]) &&
+			if ((buildingInteriorToLoadId == D_8009CE14_184ED4.byLevel[currentLevel - 1][var_v0]) &&
 				(D_80048026 & (1 << (currentLevel * three + var_v0 + 0x1D)))) {
 				return 1;
 			}
@@ -10462,9 +10460,7 @@ s32 func_8007A634_1626F4(s32 arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A634_1626F4.s")
-#endif
+
 
 // AI - Checks if a second event building has been visited
 s32 func_8007A6DC_16279C(s32 arg0) {
@@ -10499,7 +10495,7 @@ void func_8007A784_162844(s32 arg0) {
 		var_v0 = 0;
 		new_var = currentLevel * 3;
 		do {
-			new_var3 = &D_8009CE14_184ED4[(new_var + var_v0) - 3];
+			new_var3 = &D_8009CE14_184ED4.flat[(new_var + var_v0) - 3];
 			if (buildingInteriorToLoadId == (*new_var3)) {
 				new_var2 = ((currentLevel << 2) - currentLevel) + var_v0;
 				D_80048026 |= 1 << (new_var2 + 0x1D);

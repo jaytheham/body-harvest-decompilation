@@ -3713,6 +3713,11 @@ typedef union {
 	s16 byLevel[7][3];
 } InteriorEventBuildings;
 
+typedef union {
+	s16 flat[16];
+	s16 byLevel[5][3];
+} InteriorPrimaryEventBuildings;
+
 #endif
 
 /* Adjacent camera basis vectors share a single six-float storage block. */
