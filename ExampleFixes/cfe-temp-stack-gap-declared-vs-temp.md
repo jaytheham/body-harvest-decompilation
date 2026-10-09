@@ -69,3 +69,29 @@ Score 26 -> 0, both homes land, frame unchanged at `0x58`. Neighbouring variants
 So unlike the `func_800E5E3C_F4DEC` instance above, here the spill slot *is* a declaration-order question: ordering
 the 4-byte pad **after** the halfword locals carves the 2-byte hole the temp needs, and the temp only lands correctly
 once the locals are ordered that way. Try this reorder before parking a gap-class residual.
+
+### Reviewed instance: a byte local's position among the word locals moves its own spill home, but not the frame (func_80088760_97710)
+
+`overlay_gameplay/outside/884C0.c`, 428 instructions, score **97 -> 73**. `ins_diff -noregs` delta **+0** and the
+asm-differ table flags only **10** rows: a `u8` local spilled at `sp+0x5F` (target) vs `sp+0x67` (ours) with its two
+reloads, and the three `u16` locals homed at `sp+0x52/0x54/0x56` (target, ascending) vs `sp+0x54/0x56/0x58` (ours,
+descending under the committed `u16 r1; u16 r2; u16 r3;`). The frame is `0x60` (target) vs `0x68` (ours); every other
+row, home and the whole 14-argument tail are byte-identical (the argument stores at `sp+0x10..0x34` agree exactly).
+
+Two connected levers, both measured (one compile each, file restored after every probe, baseline re-measured 97):
+
+| variant | score |
+|---|---|
+| `u16` trio declared in the target's ascending order (`r1, r2, r3` reversed to `r3, r2, r1`) | 89 |
+| `u8` local moved out of first position - to the **middle** of the word/pointer locals | **73** |
+| `u8` local moved to **last** | 133 |
+| the two together (byte middle + ascending `u16`s) | **73** - the floor |
+| byte local declared `s32` / `u32` / `s16` | 1336 / 1488 / 3496 (changes codegen) |
+| extra declared-but-unused pad, 2/4/8 bytes, first/middle/last | 73-193, never better; an unused pad is not allocated at all (`pad8` first measured 73) |
+
+So the byte home *does* respond to declaration position (it moved 4 bytes with the reorder and 8 with the ascending
+halfwords), but the **frame stays 8 bytes oversized** no matter the order, and the three `u16` homes stay 2 bytes high
+regardless of type (ascending vs descending is the only thing that moves them). The three word/pointer locals are all
+register-allocated (removing `alienIndex` outright and inlining its one `alien - alienInstances` use measured 165),
+so the extra 8 bytes are not a declared-local that can be dropped. Parked at 73: source order lands the ordering but
+cannot shed the frame, which is the residual cfe frame reservation.
