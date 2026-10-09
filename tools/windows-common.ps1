@@ -1,8 +1,7 @@
 # Shared launcher; no activation or changes to the user's PATH are needed.
 $ErrorActionPreference = 'Stop'
 
-function Invoke-NativeBuild {
-    param([string[]]$BuildArguments)
+function Get-NativePython {
     $python = Join-Path $PSScriptRoot 'windows/venv/Scripts/python.exe'
     if (-not (Test-Path -LiteralPath $python)) {
         $python = $null
@@ -17,6 +16,12 @@ function Invoke-NativeBuild {
             throw 'Install 64-bit Python 3.12 from https://www.python.org/downloads/windows/ (enable the Python launcher), then retry.'
         }
     }
+    return $python
+}
+
+function Invoke-NativeBuild {
+    param([string[]]$BuildArguments)
+    $python = Get-NativePython
     & $python (Join-Path $PSScriptRoot 'native_build.py') @BuildArguments
     if ($LASTEXITCODE -ne 0) { throw "Native build command failed (exit $LASTEXITCODE)." }
 }

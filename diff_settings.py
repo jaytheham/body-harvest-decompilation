@@ -9,6 +9,13 @@ def apply(config, args):
     else:
         version = 'us'
 
+    if os.name == 'nt':
+        objdump = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'tools', 'windows', 'binutils',
+                               'mips-ps2-decompals-objdump.exe')
+        if os.path.isfile(objdump):
+            config['objdump_executable'] = objdump
+
     config['baseimg'] = f'baserom.{version}.z64'
     config['myimg'] = f'build/{basename}.{version}.z64'
     config['mapfile'] = f'build/{basename}.{version}.map'
