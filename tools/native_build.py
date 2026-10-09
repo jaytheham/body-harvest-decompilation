@@ -261,6 +261,10 @@ def build(args):
                     with compiled.open("wb") as out:
                         run(processor, output=out, quiet=args.quiet)
                 run([CACHE / "ido/cc.exe", "-c", *source_cflags, optimization, libultra_config.get("isa", "-mips2"), "-32", "-o", name, compiled], env=env, quiet=args.quiet)
+                if libultra_config.get("isa") == "-mips3":
+                    # IDO's -mips3 -32 output omits EF_MIPS_ABI_O32. The
+                    # reference build sets this bit before modern GNU linking.
+                    run([sys.executable, "tools/set_o32abi_bit.py", "--quiet", target], quiet=args.quiet)
                 if global_asm:
                     # shlex understands quoted forward-slash Windows paths.
                     asm_command = '"' + assembler.as_posix() + '" ' + " ".join(asflags)

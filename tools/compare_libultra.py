@@ -27,7 +27,7 @@ def main():
             print(f"{name}: MISSING")
             continue
         address, size = (int(x, 16) for x in match.groups())
-        offset = address - 0x80000C00
+        offset = address - 0x7FFFF400
         expected = target[start:end]
         actual = current[offset:offset + size]
         differences = sum(a != b for a, b in zip(expected, actual)) + abs(len(expected) - len(actual))

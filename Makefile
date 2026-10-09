@@ -301,6 +301,7 @@ $(BUILD_DIR)/%.c.o: %.c
 	$(call RUN,$(CC_CHECK) $<)
 	$(PRINT) "[$(YELLOW) syntax $(NO_COL)]  $<\n"
 	$(call RUN,$(CC) -c $(CFLAGS) $(OPT_FLAGS) $(LOOP_UNROLL) $(MIPSISET) -o $@ $<)
+	$(if $(filter -mips3,$(MIPSISET)),$(call RUN,$(PYTHON) tools/set_o32abi_bit.py $@))
 	$(PRINT) "[$(GREEN) ido5.3 $(NO_COL)]  $<\n"
 
 # use modern gcc or IDO for data

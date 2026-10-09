@@ -592,5 +592,41 @@
     "optimization": "-O3",
     "isa": "-mips2",
     "version": 6
+  },
+  "ll": {
+    "reference": "src/libc/ll.c",
+    "optimization": "-O1",
+    "isa": "-mips3",
+    "version": 6
+  },
+  "initialize": {
+    "reference": "src/os/initialize.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "thread": {
+    "reference": "src/os/thread.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "load": {
+    "reference": "src/audio/load.c",
+    "optimization": "-O3",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "timerintr": {
+    "reference": "src/os/timerintr.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
+  },
+  "leointerrupt": {
+    "reference": "src/io/leointerrupt.c",
+    "optimization": "-O1",
+    "isa": "-mips2",
+    "version": 6
   }
 }

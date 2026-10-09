@@ -71,7 +71,7 @@ segments:
       - [0x1D900, asm, libultra/controller] # osContInit, libultra 2.0F 2.0G (differs from 2.0I)
       - [0x1DCC0, asm, libultra/conteepprobe] # osEepromProbe, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
       - [0x1DD30, c, libultra/contsetch]
-      - [0x1DDA0, lib, libultra_rom, ll]
+      - [0x1DDA0, c, libultra/ll]
       - [0x1E060, asm, libultra/conteeplongwrite] # osEepromLongWrite (differs from 2.0I)
       - [0x1E1A0, asm, libultra/conteeplongread] # osEepromLongRead (differs from 2.0I)
       - [0x1E2E0, asm, libultra/contreaddata] # osContStartReadData, osContGetReadData, libultra 2.0E 2.0F 2.0G (differs from 2.0I)
@@ -81,13 +81,13 @@ segments:
       - [0x1E5F0, c, libultra/ortho]
       - [0x1E7B0, c, libultra/lookat]
       - [0x1EAE0, asm, libultra/rotate] # guRotate (has own .rodata/.bss - not convertible)
-      - [0x1ECD0, lib, libultra_rom, initialize]
+      - [0x1ECD0, c, libultra/initialize]
       - [0x1EF60, asm, libultra/perspective] # guPerspective (has own .rodata - not convertible)
       - [0x1F1F0, asm, libultra/sinf] # sinf (has own .rodata - not convertible)
       - [0x1F3B0, asm, libultra/cosf] # cosf (has own .rodata - not convertible)
       - [0x1F520, lib, libultra_rom, bzero]
       - [0x1F5C0, asm, libultra/vimgr] # osCreateViManager (has own .bss - not convertible)
-      - [0x1F920, lib, libultra_rom, parameters] # osSetParameters
+      - [0x1F920, asm, libultra/parameters] # Reference parameters.s: 0x60 bytes of text padding
       - [0x1F980, c, libultra/visetmode]
       - [0x1F9F0, c, libultra/viswapbuf]
       - [0x1FA40, asm, libultra/pimgr] # osCreatePiManager (has own .bss - not convertible)
@@ -134,7 +134,7 @@ segments:
       - [0x23980, c, libultra/mtxcatf]
       - [0x23B90, c, libultra/mtxcatl] # guMtxXFML + guMtxCatL
       - [0x23C50, c, libultra/syndelete]
-      - [0x23C60, lib, libultra_rom, thread]
+      - [0x23C60, c, libultra/thread]
       - [0x23CA0, asm, libultra/exceptasm] # __osExceptionPreamble, __osException (hand-written, differs from 2.0I)
       - [0x245B0, lib, libultra_rom, interrupt]
       - [0x245F0, lib, libultra_rom, setintmask]
@@ -149,7 +149,7 @@ segments:
       - [0x24C40, asm, libultra/drvrNew] # alSaveNew etc. (has own .data/.rodata - not convertible)
       - [0x253E0, c, libultra/synallocfx]
       - [0x25480, c, libultra/mainbus]
-      - [0x255D0, lib, libultra_rom, load]
+      - [0x255D0, c, libultra/load]
       - [0x26120, asm, libultra/resample] # alResampleNew (has own .rodata - not convertible)
       - [0x26420, asm, libultra/env] # alEnvmixerNew (has own .data/.rodata - not convertible)
       - [0x27080, c, libultra/auxbus]
@@ -175,7 +175,7 @@ segments:
       - [0x28E60, lib, libultra_rom, writebackdcache]
       - [0x28EE0, lib, libultra_rom, maptlbrdb]
       - [0x28F40, c, libultra/pirawread]
-      - [0x28FA0, lib, libultra_rom, timerintr]
+      - [0x28FA0, c, libultra/timerintr]
       - [0x293A0, c, libultra/getthreadpri]
       - [0x293C0, asm, libultra/vi] # __osViInit (has own .data - not convertible)
       - [0x29500, c, libultra/vigetcurrcontext]
@@ -199,7 +199,7 @@ segments:
       - [0x2C560, c, libultra/synsetpan]
       - [0x2C5F0, c, libultra/synsetfxmix]
       - [0x2C690, c, libultra/synstartvoice]
-      - [0x2C720, lib, libultra_rom, leointerrupt]
+      - [0x2C720, c, libultra/leointerrupt]
       - [0x2CFA0, c, libultra/spgetstat]
       - [0x2CFB0, lib, libultra_rom, bcopy]
       - [0x2D2C0, c, libultra/spsetstat]
