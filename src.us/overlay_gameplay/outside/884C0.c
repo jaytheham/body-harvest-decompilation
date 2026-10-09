@@ -1471,19 +1471,16 @@ void func_8007BEC0_8AE70(void)
 }
 
 #ifdef NON_MATCHING
-// drawComplexObjects eg: humans, alien torsos & heads
 void func_8007C044_8AFF4(void) {
-	Unk80052B40 smallScale;
-	Unk80052B40 fullScale;
+	s16 drewType1 = 0;
+	s16 drewType2Or20 = 0;
+	Unk80052B40 rotation = { 0, 0, 0 };
+	AlienRenderScales scales = { { { 0x60, 0x60, 0x60 }, { 0x40, 0x40, 0x40 }, { 0x20, 0x20, 0x20 } } };
+	Unk80052B40 smallScale = { 0x30, 0x30, 0x30 };
+	Unk80052B40 fullScale = { 0x40, 0x40, 0x40 };
+	Unk80052B40 position;
 	AlienInstance *inst;
 	AlienType *type;
-	LookAt *lookAt;
-	s16 drewType1;
-	s16 drewType2Or20;
-	s16 savedX;
-	s16 savedY;
-	s16 savedZ;
-	s16 rotation;
 	s16 animIndex;
 	s16 colorOffset;
 	s32 swappedTexture;
@@ -1491,15 +1488,13 @@ void func_8007C044_8AFF4(void) {
 	s32 flags;
 	s32 color;
 	s32 i;
+	u32 alienId;
+	f32 four = 4.0f;
 	f32 dx;
 	f32 dy;
 	f32 dz;
 	f32 distance;
 
-	smallScale = *(Unk80052B40 *)D_8013C260_14B210;
-	fullScale = *(Unk80052B40 *)D_8013C268_14B218;
-	drewType1 = 0;
-	drewType2Or20 = 0;
 	swappedTexture = 0;
 
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1508,8 +1503,9 @@ void func_8007C044_8AFF4(void) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
-	for (i = 0; i < (s32)D_8014ECCC; i++) {
-			u8 typeIndex;
+	for (i = 0; i < D_8014ECCC; i++) {
+			s32 typeIndex;
+			u8 typeNumber;
 
 		alienId = D_8014D510[i];
 		inst = &alienInstances[alienId];
@@ -1520,6 +1516,7 @@ void func_8007C044_8AFF4(void) {
 		}
 
 		typeIndex = inst->typeIndex;
+		typeNumber = typeIndex;
 		if (typeIndex == 0) {
 			continue;
 		}
@@ -1532,24 +1529,26 @@ void func_8007C044_8AFF4(void) {
 		}
 
 		inst->unk20 |= ALIEN_FLAG_UNKN;
-		if (typeIndex == 1) {
+		if (typeNumber == 1) {
 			drewType1 = 1;
 			continue;
 		}
 
-		if ((typeIndex == 2) || (typeIndex == 0x20)) {
+		if ((typeNumber == 2) || (typeNumber == 0x20)) {
 			drewType2Or20 = 1;
 			continue;
 		}
 
 		type = &alienTypes[typeIndex];
 		if (type->unk54 & 0x200000) {
-			lookAt = (LookAt *)&D_8014D550[i << 5];
-			guLookAtReflect((Mtx *)D_8005BB38, lookAt, D_80047954, D_80047958, D_8004795C, inst->unk0 / 4.0f,
-				inst->unk2 / 4.0f, inst->unk4 / 4.0f, 0.0f, 1.0f, 0.0f);
+			dx = inst->unk0 / four;
+			dz = inst->unk4 / four;
+			dy = inst->unk2 / four;
+			guLookAtReflect((Mtx *)D_8005BB38, &D_8014D550[i], D_80047954, D_80047958, D_8004795C, dx,
+				dy, dz, 0.0f, 1.0f, 0.0f);
 
-			gSPLookAtX(D_8005BB2C++, lookAt);
-			gSPLookAtY(D_8005BB2C++, (u8 *)lookAt + 0x10);
+			gSPLookAtX(D_8005BB2C++, &D_8014D550[i].l[0]);
+			gSPLookAtY(D_8005BB2C++, &D_8014D550[i].l[1]);
 			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
 			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
 			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
@@ -1564,7 +1563,7 @@ void func_8007C044_8AFF4(void) {
 			func_800710D4_80084(0xFF, 0x32, 0);
 		}
 
-		if (typeIndex == 0x12) {
+		if (typeNumber == 0x12) {
 			func_800EF9F0_FE9A0(alienId);
 		} else {
 			func_8007B9CC_8A97C(alienId);
@@ -1594,92 +1593,91 @@ void func_8007C044_8AFF4(void) {
 		gSPLookAtY(D_8005BB2C++, D_8013BD38_14ACE8);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041480);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
 		gDPTileSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 2, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0x40, 2, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 		gDPSetTileSize(D_8005BB2C++, 2, 0, 0, 60, 60);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 		gDPSetTileSize(D_8005BB2C++, 1, 0, 0, 60, 60);
 
 		for (i = 0; i < D_8014D507; i++) {
-					u8 state;
 
 			alienId = D_8014D408[i];
 			inst = &alienInstances[alienId];
 			flags = inst->unk20;
-			state = inst->unk24;
 
-			if (((flags & 0x600) == 0) || (state == 0x13) || !(flags & 0x10000000)) {
-				continue;
-			}
+			if (((flags & 0x600) == 0) || (inst->unk24 == 0x13)) { continue; }
+			if (!(flags & 0x10000000)) { continue; }
 
 			gDPPipeSync(D_8005BB2C++);
 
-			if ((state == 1) || (state == 0x1D)) {
+			if ((inst->unk24 == 1) || (inst->unk24 == 0x1D)) {
 				if (swappedTexture == 0) {
 					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041880);
-					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					gDPLoadSync(D_8005BB2C++);
 					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
 					gDPTileSync(D_8005BB2C++);
-					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					swappedTexture = 1;
 				}
 
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041680);
 			} else {
-				if (swappedTexture != 0) {
+				if (swappedTexture == 1) {
 					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041480);
-					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					gDPLoadSync(D_8005BB2C++);
 					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
 					gDPTileSync(D_8005BB2C++);
-					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					swappedTexture = 0;
 				}
 
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, &D_5040A80[(alienId % 5) << 9]);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, &D_5040A80[((s32)alienId % 5) << 9]);
 			}
 
 			gDPLoadSync(D_8005BB2C++);
 			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
 
-			savedX = inst->unk0;
-			savedY = inst->unk2;
-			savedZ = inst->unk4;
-			rotation = 0x4000 - inst->unkE;
+			position.unk0 = inst->unk0;
+			position.unk2 = inst->unk2;
+			position.unk4 = inst->unk4;
+			rotation.unk0 = 0x4000 - inst->unkE;
 
-			dx = savedX - (D_80047954 * 4.0f);
-			dy = savedY - (D_80047958 * 4.0f);
-			dz = savedZ - (D_8004795C * 4.0f);
+			dx = position.unk0 - (D_80047954 * four);
+			dy = position.unk2 - (D_80047958 * four);
+			dz = position.unk4 - (D_8004795C * four);
 			distance = sqrtf((dx * dx) + (dy * dy) + (dz * dz));
 
-			if (distance < D_80141E18_150DC8) {
+			if (distance < D_80141E18_150DC8[0]) {
 				lod = 0;
 			} else if (distance < 900.0f) {
 				lod = 1;
-			} else if (distance < D_80141E1C_150DCC) {
+			} else if (distance < D_80141E1C_150DCC[0]) {
 				lod = 2;
 			} else {
 				lod = 3;
 			}
 
-			animIndex = 0x40;
-			if (!(flags & 0x100000)) {
-				if ((flags & 0x40000000) || (state == 3) || (state == 4) || (state == 0x1D)) {
+			flags = inst->unk20;
+			if (flags & 0x100000) {
+				animIndex = 0x40;
+			} else {
+				if ((flags & 0x40000000) || (inst->unk24 == 3) || (inst->unk24 == 4) || (inst->unk24 == 0x1D)) {
 					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 0x10;
 				} else if (flags & 0x4000) {
 					animIndex = 0x40;
-				} else if (state == 1) {
+				} else if (inst->unk24 == 1) {
 					animIndex = (((alienId + D_80052A8C) & 0x1C) >> 2) + 0x38;
 				} else if (inst->unk2 < (D_80222A70 - 0x1E)) {
 					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 0x30;
 				} else if (inst->unk12 == 0x40) {
 					animIndex = ((alienId + D_80052A8C) / 3U) & 7;
-				} else if (((flags & 0x8000) && (flags & 0x20)) || (state == 0x10)) {
+				} else if (((flags & 0x8000) && (flags & 0x20)) || (inst->unk24 == 0x10)) {
 					if (gameplayMode != 2) {
 						inst->unk36++;
 					}
@@ -1690,17 +1688,17 @@ void func_8007C044_8AFF4(void) {
 					osSyncPrintf(D_80141C4C_150BFC);
 				} else if (inst->unk12 == 0) {
 					animIndex = 0;
-				} else if ((inst->unk26 == 0) || (state != 0)) {
+				} else if ((inst->unk26 == 0) || (inst->unk24 != 0)) {
 					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 8;
 				} else {
 					animIndex = (((alienId + D_80052A8C) & 0xE) >> 1) + 0x28;
 				}
 			}
 
-			if ((state == 0x14) || (state == 4) || (state == 0xB) || (state == 0xC)) {
-				func_800039D0_45D0((Unk80052B40 *)&savedX, (Unk80052B40 *)&rotation, &smallScale, D_8005BB38);
+			if ((inst->unk24 == 0x14) || (inst->unk24 == 4) || (inst->unk24 == 0xB) || (inst->unk24 == 0xC)) {
+				func_800039D0_45D0(&position, &rotation, &smallScale, D_8005BB38);
 			} else {
-				func_800039D0_45D0((Unk80052B40 *)&savedX, (Unk80052B40 *)&rotation, &fullScale, D_8005BB38);
+				func_800039D0_45D0(&position, &rotation, &fullScale, D_8005BB38);
 			}
 
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -1715,7 +1713,7 @@ void func_8007C044_8AFF4(void) {
 				func_80070FB8_7FF68();
 			}
 
-			gSPEndDisplayList(D_8005BB2C++);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 		}
 
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -1726,7 +1724,7 @@ void func_8007C044_8AFF4(void) {
 
 	if (drewType2Or20 != 0) {
 		gSPDisplayList(D_8005BB2C++, (Gfx *)D_80031230);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, (u8 *)&D_503CF60[((u32)D_80052A8C % 7) << 9]);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[((u32)D_80052A8C % 7) << 9]));
 		gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
@@ -1747,17 +1745,17 @@ void func_8007C044_8AFF4(void) {
 				colorOffset = inst->unk2C * 8;
 				dx = 1.0f;
 			} else {
-				colorOffset = (s16)((sins(((alienId + D_80052A8C) << 13) & 0xFFFF) * 32.0f) / 32768.0f);
+				colorOffset = (s16)((((f32)sins((u16)((alienId + D_80052A8C) << 13))) / 32768.0) * 32.0);
 				dx = 1.0f;
 			}
 
 			if (inst->typeIndex == 0x20) {
-				dx = (3 - inst->unk26) * 0.5f;
+				dx = (3 - inst->unk26) * 0.5;
 			}
 
-			savedX = D_800311A0.unk0;
-			savedY = D_800311A0.unk2;
-			savedZ = D_800311A0.unk4;
+			rotation.unk0 = D_800311A0.unk0;
+			rotation.unk2 = D_800311A0.unk2;
+			rotation.unk4 = D_800311A0.unk4;
 			D_800311A0.unk2 += colorOffset;
 			D_800311A0.unk0 -= colorOffset >> 1;
 			D_800311A0.unk4 -= colorOffset >> 1;
@@ -1766,40 +1764,39 @@ void func_8007C044_8AFF4(void) {
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x7F7F7FFF);
-
-				color = 0x7F7F7FFF;
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x7F7F7FFF);
 			} else if (inst->typeIndex == 0x20) {
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xE50020FF);
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xE50020FF);
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x7F0010FF);
-
-				color = 0x7F0010FF;
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x7F0010FF);
 			} else {
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0x80E580FF);
 				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x407F40FF);
-
-				color = 0x407F40FF;
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x407F40FF);
 			}
 
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, color);
 
 			D_800311A0.unk0 = (s16)((f32)D_800311A0.unk0 * dx);
 			D_800311A0.unk2 = (s16)((f32)D_800311A0.unk2 * dx);
 			D_800311A0.unk4 = (s16)((f32)D_800311A0.unk4 * dx);
 			func_8007B9CC_8A97C(alienId);
-			D_800311A0.unk0 = savedX;
-			D_800311A0.unk2 = savedY;
-			D_800311A0.unk4 = savedZ;
+			D_800311A0.unk0 = (u16)rotation.unk0;
+			D_800311A0.unk2 = (u16)rotation.unk2;
+			D_800311A0.unk4 = (u16)rotation.unk4;
 		}
 
 		gSPDisplayList(D_8005BB2C++, (Gfx *)D_80031200);
 		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 	}
 
-	for (i = 0; i < 0xFF; i++) {
-		alienInstances[i].unk20 &= ~ALIEN_FLAG_UNKP;
-	}
+	inst = &alienInstances[0xFE];
+	i = 0xFE;
+	do {
+		inst->unk20 &= ~ALIEN_FLAG_UNKP;
+		inst = &inst[-1];
+	} while (i--);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")

@@ -2217,6 +2217,10 @@ typedef struct {
 } Unk80052B40; /* size = 0x06 - Often seems to actually be Vtx */
 
 typedef struct {
+	Unk80052B40 values[3];
+} AlienRenderScales;
+
+typedef struct {
 	/* 0x00 */ u16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
