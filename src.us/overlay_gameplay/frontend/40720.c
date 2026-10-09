@@ -5821,16 +5821,14 @@ s32 func_8007EEE0_4F390(void) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s32 arg3, u16 arg4, u16 arg5, s16 arg6) {
+void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s16 arg3, u16 arg4, u16 arg5, s16 arg6) {
 	Vec3f sp44;
 	f32 sp40;
 	f32 sp3C;
 	f32 sp38;
 	f32 sp34;
-	f32 sp30;
-	s32 sp28;
-	s32 temp_v0;
+	f32 temp_f2;
+	u32 sp28;
 
 	sp28 = (u16)arg3;
 	sp38 = (f32)((f64)sins(sp28) / 32768.0);
@@ -5839,8 +5837,8 @@ void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s32 arg3, u16 ar
 	sp40 = (f32)((f64)sins(sp28) / 32768.0);
 	sp3C = (f32)((f64)coss(sp28) / 32768.0);
 	sp28 = arg5;
-	sp30 = (f32)((f64)sins(sp28) / 32768.0);
-	temp_v0 = coss(sp28);
+	temp_f2 = (f32)((f64)sins(sp28) / 32768.0);
+	arg3 = coss(sp28);
 
 	((f32*)&sp44)[0] = 0.0f;
 	((f32*)&sp44)[1] = 0.0f;
@@ -5855,25 +5853,27 @@ void func_8007F188_4F638(Vec3f* arg0, Vec3f* arg1, Vec3f* arg2, s32 arg3, u16 ar
 
 	sp44.x = 0.0f;
 	sp44.z = 0.0f;
-	sp44.y = 1.0f;
-	arg2->x = 0.0f - (1.0f * sp30);
-	arg2->y = (sp44.x * sp30) + (sp44.y * (f32)((f64)temp_v0 / 32768.0));
+	((f32*)&sp44)[1] = 1.0f;
+	if (sp28) {
+		sp38 = 1.0f;
+	} else {
+		sp38 = 1.0f;
+	}
+	arg2->x = 0.0f - (sp38 * temp_f2);
+	arg2->y = (sp44.x * temp_f2) + (sp44.y * (f32)((f64)arg3 / 32768.0));
 	arg2->z = sp44.z;
 
-	/* Keeps the arg6 flag test the ROM has (bnez v1 / or v1,zero,zero). */
 	if (arg6 == 0) {
+		arg6 = 0;
 	}
-	arg0->x = arg0->x * (f32)-arg6;
-	arg0->y = arg0->y * (f32)-arg6;
-	arg0->z = arg0->z * (f32)-arg6;
+	temp_f2 = -arg6;
+	arg0->x = arg0->x * temp_f2;
+	arg0->y = arg0->y * temp_f2;
+	arg0->z = arg0->z * temp_f2;
 	arg0->x = arg0->x + arg1->x;
 	arg0->y = arg0->y + arg1->y;
 	arg0->z = arg0->z + arg1->z;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F188_4F638.s")
-#endif
 
 void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 	arg0->unk12 = 0;
