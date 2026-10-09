@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import argparse
 import tempfile
+import subprocess
+import shlex
 import struct
 import sys
 import re
@@ -1132,7 +1134,9 @@ def fixup_objfile(objfile_name, functions, asm_prelude, assembler, output_enc, d
         for line in asm:
             s_file.write(line.encode(output_enc) + b'\n')
         s_file.close()
-        ret = os.system(assembler + " " + s_name + " -o " + o_name)
+        # Pass paths as arguments: shell concatenation breaks on Windows and
+        # on checkouts or temporary directories containing spaces.
+        ret = subprocess.call(shlex.split(assembler) + [s_name, "-o", o_name])
         if ret != 0:
             raise Failure("failed to assemble")
         with open(o_name, 'rb') as f:
