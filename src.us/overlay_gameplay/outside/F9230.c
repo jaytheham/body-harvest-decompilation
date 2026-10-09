@@ -2120,6 +2120,7 @@ block_211:
 // 13 declaration/init/type variants all floor at 268; not a source-shape question.
 #ifdef NON_MATCHING
 // Is first weapon model valid
+// AI - Checks whether the alien type's first weapon model slot is a valid, non-empty entry
 s32 func_800EF0B0_FE060(s32 arg0)
 {
   Gwords buf;
@@ -2350,6 +2351,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 // CURRENT(34)
 #ifdef NON_MATCHING
+// AI - Builds the model-view matrix stack for an alien and draws its animated model
 void func_800EF9F0_FE9A0(s16 arg0)
 {
 	s32 modelDisplayList;

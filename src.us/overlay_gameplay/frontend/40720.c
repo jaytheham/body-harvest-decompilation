@@ -5734,7 +5734,7 @@ void func_8007EBB8_4F068(void) {
 	func_800839F0_53EA0(&((FrontendCamState*)D_800D7A18)->unk10.x, &((FrontendCamState*)D_800D7A18)->unk1C.x);
 }
 
-/* Typed camera pose copy: instruction sequence matches; register allocation remains unresolved after 25 candidates. */
+// AI - Copies a frontend camera entry's position/rotation into the active playback camera state
 void func_8007EE0C_4F2BC(FrontendCamEntry* arg0) {
 	if (!D_80094938) {
 		((FrontendCamState*)D_800D7A18)->unk10 = *(Vec3f*)&arg0->unk0;

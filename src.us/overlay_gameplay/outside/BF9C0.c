@@ -2973,6 +2973,7 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
 // CURRENT(1201)
 #ifdef NON_MATCHING
+// AI - World-space bounding-box frustum cull: tests a tile's corners against the camera view angle
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	s16 centerX;
 	s16 centerZ;

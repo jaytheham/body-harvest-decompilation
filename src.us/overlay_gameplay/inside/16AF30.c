@@ -1850,8 +1850,6 @@ void func_80087A40_16FB00(u8 arg0) {
 	}
 }
 
-
-
 #ifdef NON_MATCHING
 // CURRENT(3405)
 // AI - Render slot type 2 effects: simple shaded triangles
@@ -2163,7 +2161,6 @@ void func_80088654_170714(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
 #endif
 
-// CURRENT(110)
 // AI - Render slot type 6 effects: shrinking sprites
 void func_80088B9C_170C5C(void) {
 	s16 effect;
@@ -2261,7 +2258,6 @@ void func_80088DFC_170EBC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
 #endif
 
-// CURRENT(60)
 // AI - Render a single textured triangle
 void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 	f32 sp4;

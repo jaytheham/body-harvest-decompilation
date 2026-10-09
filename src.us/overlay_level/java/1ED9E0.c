@@ -2954,6 +2954,7 @@ void func_802DBF34_1F4C44(u8 arg0) {
 	}
 }
 
+// AI - Human NPC wander/flee AI: checks for nearby threats, retreats, and periodically yelps
 void func_802DC230_1F4F40(u8 arg0) {
 	AlienInstance *alien;
 	s32 temp;

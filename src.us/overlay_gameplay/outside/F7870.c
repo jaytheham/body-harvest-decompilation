@@ -264,6 +264,7 @@ void func_800E94B8_F8468(void) {
 
 // CURRENT(2000)
 #ifdef NON_MATCHING
+// AI - Line-of-sight ground raycast: steps from the camera toward a target point checking terrain height
 s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	s32 pad[4];
 	s32 step[3];

@@ -3049,6 +3049,7 @@ void func_802DACA0_2BD0D0(u8 arg0) {
 
 // CURRENT(321)
 #ifdef NON_MATCHING
+// AI - Moves an alien toward its next waypoint node along the Siberia path graph
 void func_802DAD00_2BD130(u8 arg0) {
 	AlienInstance *alien;
 	s16 sp4A;
@@ -3588,6 +3589,7 @@ void func_802DC4A0_2BE8D0(u8 arg0) {
 // CURRENT(3792)
 // Siberia Mutant on-death function
 #ifdef NON_MATCHING
+// AI - Siberia Mutant death handler: spawns death effects/drops and updates wave/score state
 void func_802DC4D0_2BE900(u8 arg0) {
 	AlienInstance *alien = &alienInstances[arg0];
 	Unk8014DD50 *v1;
@@ -3683,6 +3685,7 @@ void func_802DC4D0_2BE900(u8 arg0) {
 
 // CURRENT(2756)
 #ifdef NON_MATCHING
+// AI - Builds a chain of waypoint nodes ahead on the path graph and checks it for collision/attack
 void func_802DCA14_2BEE44(u8 arg0) {
 	s16 sp74;
 	s16 arr[12];

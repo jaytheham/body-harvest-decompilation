@@ -5372,6 +5372,7 @@ void func_8008554C_944FC(u8 arg0)
 
 // CURRENT(145)
 #ifdef NON_MATCHING
+// AI - Plays a weapon-impact sound at an alien's position if it is newly damaged
 void func_80085690_94640(u8 arg0, s16 arg1)
 {
 	s32 x;
@@ -6474,6 +6475,7 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 // CURRENT(73)
 #ifdef NON_MATCHING
 // kill alien?
+// AI - Kills an alien, handling zombie-human revival and death side effects (score, drops, HCU release)
 void func_80088760_97710(AlienInstance* alien) {
 	s32 alienIndex;
 	u8 typeIndex;

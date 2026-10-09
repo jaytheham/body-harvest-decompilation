@@ -225,6 +225,7 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 
 // CURRENT(3558)
 #ifdef NON_MATCHING
+// AI - Converts a destroyed building into rubble/trail debris near the given coordinates
 s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
 	BuildingInstance *temp;
 	BuildingInstance *prev;
@@ -2534,6 +2535,7 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 
 // CURRENT(443)
 #ifdef NON_MATCHING
+// AI - Checks whether a building can currently be destroyed/damaged
 s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 	s32 buildingId;
 	BuildingInstance* building;
@@ -3886,6 +3888,7 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011EB40_12DAF0.s")
 #endif
 
+// AI - Marks a building damaged and plays an impact sound when hit by a specific weapon
 void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	BuildingInstance *temp_v0;
 	s32 objIndex;
@@ -3948,6 +3951,7 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 
 // CURRENT(587)
 #ifdef NON_MATCHING
+// AI - Animates and draws a building's shield-gate wings, opening/closing based on player proximity
 void func_8011F244_12E1F4(BuildingInstance *arg0) {
 	s32 sp84;
 	s32 temp_v1;
@@ -4066,7 +4070,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
 #endif
 
-
+// AI - Animates a building's door tilt based on player proximity and draws it
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
 
@@ -4452,6 +4456,7 @@ void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 
 // CURRENT(1235)
 #ifdef NON_MATCHING
+// AI - Draws a building's door geometry, offsetting and masking it based on state
 void func_80121128_1300D8(BuildingInstance *arg0) {
 	s32 bit2;
 	s32 bit8;

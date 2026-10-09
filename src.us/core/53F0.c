@@ -411,6 +411,7 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
 // unpinned .bss symbol address, not the source shape.
 // CURRENT(30)
 #ifdef NON_MATCHING
+// AI - Scrolls one of three credits-style text lines across the screen over a cycling timer
 void func_8000577C_637C(void)
 {
   static s32 D_800315D4_W; // has to be a function static

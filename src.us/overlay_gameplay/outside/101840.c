@@ -5091,6 +5091,7 @@ void func_800FFCB8_10EC68(s32 arg0) {
 
 // CURRENT(1890)
 #ifdef NON_MATCHING
+// AI - Builds the vehicle's model-view matrix from its position/rotation and draws it
 void func_800FFD28_10ECD8(VehicleInstance *arg0, f32 *arg1) {
 	VehicleType *typePtr;
 	s16 temp;
@@ -11226,6 +11227,7 @@ void func_80113248_1221F8(VehicleInstance *arg0) {
 }
 
 // Sets vehicle is airborne flag, and other things?
+// AI - Updates vehicle physics flags (airborne, bridge, water) based on terrain and height checks
 void func_80113310_1222C0(VehicleInstance *arg0) {
 	VehicleType *type;
 	WeaponSpecEntry *tableEntry;

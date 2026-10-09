@@ -1176,6 +1176,7 @@ void func_800136F0_142F0(void) {
 
 // CURRENT(20)
 #ifdef NON_MATCHING
+// AI - Rotates a message-queue index and prints/queues the next notification string
 void func_80013720_14320(void)
 {
   s8 sp1F;
@@ -2371,6 +2372,7 @@ s32 func_800164C4_170C4(void) {
 // https://decomp.me/scratch/CQbLj
 // CURRENT(25)
 #ifdef NON_MATCHING
+// AI - Picks an available controller slot index, activating/releasing slots as needed
 s8 func_800165EC_171EC(void)
 {
 	s8 var_s3;
