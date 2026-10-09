@@ -4075,3 +4075,5 @@ extern const f32 D_80144024_152FD4[1];
 extern const f64 D_80144028_152FD8[1];
 
 extern const InteriorAngleScale D_800A4A00_18CAC0;
+
+extern const f64 D_801441E8_153198[1];

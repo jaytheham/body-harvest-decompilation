@@ -1411,7 +1411,7 @@ void func_800DBA9C_EAA4C(void);
 void func_800C5894_D4844(u8 arg0);
 void func_800C22EC_D129C(u8 arg0);
 void func_800C8F5C_D7F0C(u8 arg0);
-void func_800CD42C_DC3DC(s32 arg0);
+void func_800CD42C_DC3DC(u8 arg0);
 void func_800CE1C0_DD170(u8 arg0);
 void func_800D1A94_E0A44(u8 arg0);
 void func_800C3E2C_D2DDC(void);
