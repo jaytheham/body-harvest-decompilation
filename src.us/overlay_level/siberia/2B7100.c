@@ -842,7 +842,6 @@ void func_802DCA14_2BEE44(u8 arg0);
 extern s16 D_802E278C_2C4BBC;
 void func_802E02CC_2C26FC(u8 arg0);
 
-#ifdef NON_MATCHING
 // Siberia mission dispatcher
 void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
 	arg1 = arg0;
@@ -867,13 +866,10 @@ void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
 		func_80007690_8290();
 		break;
 	default:
-		osSyncPrintf(D_802E2E90_2C52C0);
+		osSyncPrintf(D_802E2E90_2C52C0, arg0);
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4CD0_2B7100.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802D4DCC_2B71FC(void) {
