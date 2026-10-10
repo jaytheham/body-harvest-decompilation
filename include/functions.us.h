@@ -889,7 +889,7 @@ void func_800FC7E0_10B790(s8, s8, s16 *, s16 *);
 void func_800FCA5C_10BA0C(void);
 void func_800FD410_10C3C0(VehicleType*);
 void func_800FD510_10C4C0(s32 arg0, s16 arg1);
-void func_800FFD28_10ECD8(VehicleInstance *arg0, f32 *arg1);
+void func_800FFD28_10ECD8(VehicleInstance *arg0);
 void func_80100114_10F0C4(VehicleInstance *arg0);
 void func_801001B4_10F164(void);
 void func_801052E8_114298(Unk80052B2C *, OSContPad *);
