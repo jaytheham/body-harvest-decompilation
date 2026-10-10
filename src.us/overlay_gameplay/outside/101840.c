@@ -6039,7 +6039,7 @@ void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 	}
 }
 
-// CURRENT(10274)
+// CURRENT(9396): corrected current-point updates and terrain-test exit; floating allocation remains.
 #ifdef NON_MATCHING
 s32 func_80102FA4_111F54(void) {
 	UnkF9230Func80102FA4Point *points;
@@ -6047,72 +6047,72 @@ s32 func_80102FA4_111F54(void) {
 	UnkF9230Func80102FA4Point *prev;
 	f64 damping;
 	f64 spring;
-	f32 chainX;
-	f32 chainY;
-	f32 chainZ;
+	f32 chain[3];
 	s32 i;
 	s32 ret;
-	f32 targetY;
 	f32 groundY;
 	f32 midX;
 	f32 midY;
 	f32 midZ;
 
-	points = (UnkF9230Func80102FA4Point *)D_801593F0;
+	points = D_801593F0;
 	damping = D_80144A90_153A40[0];
-	spring = D_80144A98_153A48[0];
 
 	points[11].vel.x = (f32)(points[11].vel.x * damping);
-	points[11].vel.y = (f32)((points[11].vel.y * damping) - 4.0);
+	points[11].vel.y = (f32)((points[11].vel.y * damping) - 4);
 	points[11].vel.z = (f32)(points[11].vel.z * damping);
 	points[11].pos.x += points[11].vel.x;
 	points[11].pos.y += points[11].vel.y;
 	points[11].pos.z += points[11].vel.z;
 
-	chainX = points[11].pos.x;
-	chainY = points[11].pos.y;
-	chainZ = points[11].pos.z;
+	spring = D_80144A98_153A48[0];
+	chain[2] = D_801594E0[1].pos.x;
+	chain[1] = D_801594E0[1].pos.y;
+	chain[0] = D_801594E0[1].pos.z;
 
-	for (i = 10; i >= 1; i--) {
-		cur = &points[i];
-		prev = &points[i - 1];
+	cur = D_801594E0;
+	do {
+		prev = cur - 1;
 
-		midX = (f32)(chainX - (((chainX - prev->pos.x)) * 0.5));
-		midY = (f32)(chainY - (((chainY - prev->pos.y)) * 0.5));
-		midZ = (f32)(chainZ - (((chainZ - prev->pos.z)) * 0.5));
+		midX = (f32)(chain[2] - (((chain[2] - prev->pos.x)) * 0.5));
+		midY = (f32)(chain[1] - (((chain[1] - prev->pos.y)) * 0.5));
+		midZ = (f32)(chain[0] - (((chain[0] - prev->pos.z)) * 0.5));
 
-		prev->vel.x = (f32)((prev->vel.x * damping) + (midX - cur->pos.x));
-		prev->vel.y = (f32)(((prev->vel.y * damping) + (midY - cur->pos.y)) - 4.0);
-		prev->vel.z = (f32)((prev->vel.z * damping) + (midZ - cur->pos.z));
+		cur->vel.x = (f32)((cur->vel.x * damping) + (midX - cur->pos.x));
+		cur->vel.y = (f32)(((cur->vel.y * damping) + (midY - cur->pos.y)) - 4);
+		cur->vel.z = (f32)((cur->vel.z * damping) + (midZ - cur->pos.z));
 
-		chainX = (f32)(cur->pos.x + (prev->vel.x * spring));
-		chainY = (f32)(cur->pos.y + (prev->vel.y * spring));
-		chainZ = (f32)(cur->pos.z + (prev->vel.z * spring));
+		midX = (f32)(cur->pos.x + (cur->vel.x * spring));
+		midY = (f32)(cur->pos.y + (cur->vel.y * spring));
+		midZ = (f32)(cur->pos.z + (cur->vel.z * spring));
 
-		prev->pos.x = chainX;
-		prev->pos.y = chainY;
-		prev->pos.z = chainZ;
-	}
+		cur->pos.x = midX;
+		chain[2] = midX;
+		cur->pos.y = midY;
+		chain[1] = midY;
+		cur->pos.z = midZ;
+		chain[0] = midZ;
+	} while ((u32)cur-- >= (u32)D_80159420);
 
 	points[0].vel.x = (f32)(points[0].vel.x * damping);
-	points[0].vel.y = (f32)((points[0].vel.y * damping) - 4.0);
+	points[0].vel.y = (f32)((points[0].vel.y * damping) - 4);
 	points[0].vel.z = (f32)(points[0].vel.z * damping);
 	points[0].pos.x += points[0].vel.x;
 	points[0].pos.y += points[0].vel.y;
 	points[0].pos.z += points[0].vel.z;
 
-	for (i = 10; ; i--) {
-		targetY = points[i].pos.y;
+	cur = D_801594E0;
+	i = 10;
+	do {
+		groundY = func_800F9F64_108F14((s16)(s32)cur->pos.x, (s16)(s32)cur->pos.z);
 		ret = i;
-		groundY = (f32)func_800F9F64_108F14((s16)(s32)points[i].pos.x, (s16)(s32)points[i].pos.z);
-		if (!(groundY < targetY)) {
-			if (i == 0) {
-				ret = (s32)&D_80159320;
-				D_80159320 &= 0x7FFFFFFF;
-			}
+		if (groundY < cur->pos.y) {
 			return ret;
 		}
-	}
+		cur--;
+	} while (i--);
+	D_80159320 &= 0x7FFFFFFF;
+	return (s32)&D_80159320;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80102FA4_111F54.s")
