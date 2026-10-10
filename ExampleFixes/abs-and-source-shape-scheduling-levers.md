@@ -240,3 +240,8 @@ Revalidated func_800F49A4_103954 at score 15: its only differences are double lo
 
 
 Ten further respawn-search variants retain 395 for func_800FD858_10C808. Moving the decrement into a while-nonzero body, using either postdecrement or -= 1, scores 1710. A separate remaining-count word copied into the indexing local scores 961. Named byte/short search indices score 1277; a word index scores 1321, including assignment in the comparison. Reversing comparison operands, enclosing the search in a scope, and explicitly casting the byte index to signed word retain 395. No variant restores the target early partial vehicle stride and late counter-copy/cursor decrement. The original typed candidate remains NON_MATCHING, and its restored full ROM verifies OK.
+
+
+### Intersection helper: inline differences avoid forced float-object spills
+
+Ten further variants improve func_8010EF40_11DEF0 from 2556 to 1834. Remove the delta local and use arg7 - arg5 directly in the first double-zero comparison and slope numerator, and arg6 - arg4 directly in the second double-zero comparison and denominator. IDO CSE retains each subtraction while avoiding the local-assignment swc1/lwc1 pairs absent from the target. Keep separate slope and coordinate locals: reusing slope for the coordinate alone scores 2548, for the delta 2417, and for both 5605. Using coordinate or delta for the initial parameter swaps retains 2556; phase-scoped delta locals score 2804. Inlining only the first difference scores 3001 and only the second 5447; combining inlining with coordinate-to-slope reuse scores 2597. Retained the complete inline-delta candidate under NON_MATCHING; parameter reloads and floating allocation still differ. The restored full ROM verifies OK.

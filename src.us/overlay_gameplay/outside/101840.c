@@ -9534,10 +9534,9 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(2556): Boolean return paths corrected; remaining float parameter loads and temporaries.
+// CURRENT(1834): inline deltas remove assignment spills; parameter reloads and floating allocation remain.
 int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9) {
     f32 slope;
-    f32 delta;
     f32 coordinate;
     if (arg2 < arg0) {
         slope = arg2;
@@ -9556,13 +9555,12 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
         if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0)))) {
             return 0;
         }
-        delta = arg7 - arg5;
-        if (0.0 == delta) {
+        if (0.0 == (arg7 - arg5)) {
             *arg8 = arg0;
             *arg9 = arg5;
             return (arg1 <= arg5) && (arg5 <= arg3);
         }
-        slope = delta / (arg6 - arg4);
+        slope = (arg7 - arg5) / (arg6 - arg4);
         *arg8 = arg0;
         coordinate = slope * arg0 + (arg5 - slope * arg4);
         *arg9 = coordinate;
@@ -9574,13 +9572,12 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
     if (!(((arg5 <= arg1) && (arg1 <= arg7)) || ((arg1 <= arg5) && (arg7 <= arg1)))) {
         return 0;
     }
-    delta = arg6 - arg4;
-    if (0.0 == delta) {
+    if (0.0 == (arg6 - arg4)) {
         *arg8 = arg4;
         *arg9 = arg1;
         return (arg0 <= arg4) && (arg4 <= arg2);
     }
-    slope = (arg7 - arg5) / delta;
+    slope = (arg7 - arg5) / (arg6 - arg4);
     coordinate = (arg1 - (arg5 - slope * arg4)) / slope;
     *arg8 = coordinate;
     *arg9 = arg1;
