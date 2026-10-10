@@ -6190,27 +6190,32 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103308_1122B8.s")
 #endif
 
-// CURRENT(15449)
+// CURRENT(3413): corrected mass conversion and loops; ratio scheduling and local allocation remain.
 #ifdef NON_MATCHING
 void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	VehicleType *type0;
 	VehicleType *type1;
 	UnkF9230Func80102FA4Point *point;
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
 	f32 dist;
 	f32 invDist;
 	f32 ratio;
 	f32 oneMinus;
 	f32 temp;
-	s16 dx;
 	s16 dy;
+	s16 dx;
 	s16 dz;
 	s16 x0;
 	s16 y0;
 	s16 z0;
-	s16 x1;
-	s16 y1;
-	s16 z1;
-	s16 i;
+	s32 i;
 	u32 mass0;
 
 	type0 = &vehicleTypes[arg0->unk1A];
@@ -6241,8 +6246,9 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 
 	dist = (f32)(s32)sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)));
 	mass0 = type0->unk32;
+	ratio = (s32)(mass0 + type1->unk32);
 	invDist = D_80158E60 / dist;
-	ratio = (f32)mass0 / (f32)(mass0 + type1->unk32);
+	ratio = (f32)mass0 / ratio;
 	oneMinus = 1.0f - ratio;
 
 	x0 = (s16)(s32)((f32)arg0->unk0 - ((f32)dx * oneMinus));
@@ -6250,7 +6256,9 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	z0 = (s16)(s32)((f32)arg0->unk4 - ((f32)dz * oneMinus));
 
 	if (D_80158E60 <= dist) {
-		if ((D_80158E60 * 2.0f) <= dist) {
+		f64 damping;
+		f64 impulseScale;
+		if ((D_80158E60 * 2) <= dist) {
 			func_800FDE00_10CDB0();
 			return;
 		}
@@ -6259,27 +6267,28 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 		dy = arg0->unk2 - y0;
 		dz = arg0->unk4 - z0;
 
-		x1 = (s16)(s32)((f32)dx * invDist);
-		y1 = (s16)(s32)((f32)dy * invDist);
-		z1 = (s16)(s32)((f32)dz * invDist);
+		dx = (s16)(s32)((f32)dx * invDist);
+		dy = (s16)(s32)((f32)dy * invDist);
+		dz = (s16)(s32)((f32)dz * invDist);
 
+		impulseScale = D_80144AB0_153A60[0];
 		func_80102D00_111CB0(
 			arg0,
-			(f32)(((x0 + x1) - arg0->unk0) * D_80144AB0_153A60[0]),
-			(f32)(((y0 + y1) - arg0->unk2) * D_80144AB0_153A60[0]),
-			(f32)(((z0 + z1) - arg0->unk4) * D_80144AB0_153A60[0]));
+			(f32)(((x0 + dx) - arg0->unk0) * impulseScale),
+			(f32)(((y0 + dy) - arg0->unk2) * impulseScale),
+			(f32)(((z0 + dz) - arg0->unk4) * impulseScale));
 
 		dx = arg1->unk0 - x0;
 		dy = arg1->unk2 - y0;
 		dz = arg1->unk4 - z0;
 
-		x1 = (s16)(s32)((f32)dx * invDist);
-		y1 = (s16)(s32)((f32)dy * invDist);
-		z1 = (s16)(s32)((f32)dz * invDist);
+		dx = (s16)(s32)((f32)dx * invDist);
+		dy = (s16)(s32)((f32)dy * invDist);
+		dz = (s16)(s32)((f32)dz * invDist);
 
-		dx = (x0 + x1) - arg1->unk0;
-		dy = (y0 + y1) - arg1->unk2;
-		dz = (z0 + z1) - arg1->unk4;
+		dx = (x0 + dx) - arg1->unk0;
+		dy = (y0 + dy) - arg1->unk2;
+		dz = (z0 + dz) - arg1->unk4;
 
 		if (arg1->unk1A == 0x11) {
 			dy = 0;
@@ -6292,26 +6301,30 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 
 		func_80102D00_111CB0(arg1, (f32)dx, (f32)dy, (f32)dz);
 
-		arg1->unk30 = (f32)((f64)arg1->unk30 * D_80144AB8_153A68[0]);
-		arg1->unk34 = (f32)((f64)arg1->unk34 * D_80144AB8_153A68[0]);
-		arg1->unk38 = (f32)((f64)arg1->unk38 * D_80144AB8_153A68[0]);
+		damping = D_80144AB8_153A68[0];
+		arg1->unk30 = (f32)((f64)arg1->unk30 * damping);
+		arg1->unk34 = (f32)((f64)arg1->unk34 * damping);
+		arg1->unk38 = (f32)((f64)arg1->unk38 * damping);
 	}
 
 	i = 2;
 	do {
 		func_80103308_1122B8(arg0, arg1);
-	} while (i-- != 0);
+	} while (i--);
 
 	point = &D_801593F0[11];
 	i = 0xB;
-	do {
-		temp = (f32)func_800F9F64_108F14((s16)(s32)point->pos.x, (s16)(s32)point->pos.z) + 15.0f;
-		if (point->pos.y < temp) {
-			point->pos.y = temp;
-		}
-		point--;
-	} while (i-- != 0);
+	if (1) {
+		do {
+			temp = func_800F9F64_108F14((s16)(s32)point->pos.x, (s16)(s32)point->pos.z);
+			temp += 15;
+			if (point->pos.y < temp) {
+				point->pos.y = temp;
+			}
+			point--;
+		} while (i--);
 
+	}
 	if (arg1->unk2 >= arg0->unk2 + 0x78) {
 		func_800FDE00_10CDB0();
 	}
