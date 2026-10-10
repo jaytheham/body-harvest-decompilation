@@ -2400,10 +2400,8 @@ void func_802D92A8_31D3F8(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(8) - exact instructions; type pointer spill is 0x20 instead of 0x24.
 void func_802D93D8_31D528(u8 arg0) {
-	AlienType *type;
+	s32 pad0;
 	s16 pad2;
 	u8 typeIndex;
 	s32 temp;
@@ -2413,7 +2411,6 @@ void func_802D93D8_31D528(u8 arg0) {
 	s32 pad4;
 	s32 pad5;
 	AlienInstance *inst;
-	s32 pad6;
 
 	inst = &alienInstances[arg0];
 	typeIndex = inst->typeIndex;
@@ -2435,9 +2432,8 @@ void func_802D93D8_31D528(u8 arg0) {
 			inst->unk1E = 3;
 		}
 	}
-	type = &alienTypes[typeIndex];
-	temp = func_8008E524_9D4D4(arg0, type->unk58, 0xF);
-	if (type->unk58 < temp) {
+	temp = func_8008E524_9D4D4(arg0, alienTypes[typeIndex].unk58, 0xF);
+	if (alienTypes[typeIndex].unk58 < temp) {
 		func_8008EB20_9DAD0(arg0, temp, 0x640);
 	} else {
 		func_8008EB20_9DAD0(arg0, temp, 0x320);
@@ -2454,9 +2450,7 @@ void func_802D93D8_31D528(u8 arg0) {
 
 
 // AI - Alien-type callback that calls func_8008735C_9630C; reads alienInstances and alienTypes.
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D93D8_31D528.s")
-#endif
+
 
 void func_802D95F8_31D748(u8 arg0) {
 	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNK5;

@@ -27,3 +27,5 @@ Before permuting declaration order on a uniform +N frame shift, try dropping
 the local that only copies a parameter and using the parameter itself.
 
 func_802D89F0_31CB40 reached score 8 after replacing the signed integer conversion and mask with a direct u16 cast of the double product. Removing the named instance pointer restored the remaining spill from 0x20 to 0x24 while retaining the 0x28 frame, giving a complete ROM match. Access the size through alienTypes[typeIndex].unkC.
+
+The same change matched func_802D93D8_31D528: inline alienTypes[typeIndex].unk58 at both uses instead of keeping a named AlienType pointer. Replace its leading declaration with a padding word and remove a trailing padding word to retain typeIndex at 0x49 and the 0x50 frame; the shared pointer spill then moves from 0x20 to the target 0x24. Its func_8008EB20 call must use the three-argument outside-overlay declaration func_8008EB20_9DAD0 rather than the unrelated seven-argument frontend declaration at the same RAM address.
