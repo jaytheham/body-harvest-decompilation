@@ -139,48 +139,48 @@ void func_800A4150_B3100(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 // Processor behavior with minion spawning - enemyspecs.unk4C
 void func_800A41B0_B3160(u8 arg0) {
+	s16 node2;
+	s16 node3;
+	s16 timer;
+	s16 levelStep;
 	s8 armA;
 	s8 armB;
 	f32 cosDir;
 	f32 sinDir;
+	s16 pad; /* Retains the halfword before typeIndex in the stack layout. */
 	s16 typeIndex;
 	s32 x;
 	s32 y;
 	s32 z;
 	f32 side;
+	f32 forward;
+	s16 rootNode;
+	s16 chain;
+	s16 node1;
 	u16 randA;
-	f32 fx;
-	f32 fz;
-	s8 velX;
-	s8 velZ;
-	s16 swing;
 
 	typeIndex = alienInstances[arg0].typeIndex;
+	rootNode = alienInstances[arg0].unkC;
 
-	if (alienInstances[arg0].unkC != -1) {
-		s8 n0;
+	if (rootNode != -1) {
 
-		n0 = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		chain = D_8014DD50[rootNode].unkC;
 		if (currentLevel < 4) {
-			s8 n1;
-			s8 n2;
-			s8 n3;
 
-			n1 = D_8014DD50[n0].unkD;
-			n2 = D_8014DD50[n1].unkD;
-			n3 = D_8014DD50[n2].unkD;
-			if (D_8014DD50[n3].unkD == -1) {
-				armA = n2;
-				armB = n3;
+			node1 = D_8014DD50[chain].unkD;
+			node2 = D_8014DD50[node1].unkD;
+			node3 = D_8014DD50[node2].unkD;
+			armA = D_8014DD50[node3].unkD;
+			if (armA == -1) {
+				armA = node2;
+				armB = node3;
 			} else {
-				armA = D_8014DD50[n3].unkD;
-				armB = D_8014DD50[D_8014DD50[n3].unkD].unkD;
+				armB = D_8014DD50[armA].unkD;
 			}
 		} else {
-			armA = D_8014DD50[n0].unkD;
+			armA = D_8014DD50[chain].unkD;
 			armB = D_8014DD50[armA].unkD;
 		}
 	}
@@ -189,30 +189,26 @@ void func_800A41B0_B3160(u8 arg0) {
 		alienInstances[arg0].unk2C++;
 
 		if (alienInstances[arg0].unk20 & 0x4000) {
-			if (alienInstances[arg0].unkC != 0xFF) {
-				swing = (s16) ((alienInstances[arg0].unk2C * -0x200) + 0x2000);
-				D_8014DD50[armA].unk6 = swing;
-				D_8014DD50[armB].unk6 = -swing;
+			if (rootNode != 0xFF) {
+				D_8014DD50[armA].unk6Unsigned = (-alienInstances[arg0].unk2C << 9) + 0x2000;
+				D_8014DD50[armB].unk6 = -D_8014DD50[armA].unk6Unsigned;
 			}
 
 			if (alienInstances[arg0].unk2C >= 0x11) {
 				alienInstances[arg0].unk20 &= ~0x5000;
 			}
 		} else {
-			s16 timer = alienInstances[arg0].unk2C;
-			s16 levelStep;
+			timer = alienInstances[arg0].unk2C;
 
-			if ((timer < 0x10) && (alienInstances[arg0].unkC != 0xFF)) {
-				swing = (s16) (timer << 7);
-				D_8014DD50[armA].unk6 = swing;
-				D_8014DD50[armB].unk6 = -swing;
-			} else if ((timer < 0x18) && (alienInstances[arg0].unkC != 0xFF)) {
-				swing = (s16) (timer << 7);
-				D_8014DD50[armA].unk6 = swing;
-				D_8014DD50[armB].unk6 = -swing;
-			} else if (alienInstances[arg0].unkC != 0xFF) {
-				D_8014DD50[armA].unk6 = 0x2000;
-				D_8014DD50[armB].unk6 = (s16) 0xE000;
+			if ((timer < 0x10) && (rootNode != 0xFF)) {
+				D_8014DD50[armA].unk6Unsigned = timer << 7;
+				D_8014DD50[armB].unk6 = -D_8014DD50[armA].unk6Unsigned;
+			} else if ((timer < 0x18) && (rootNode != 0xFF)) {
+				D_8014DD50[armA].unk6Unsigned = timer << 7;
+				D_8014DD50[armB].unk6 = -D_8014DD50[armA].unk6Unsigned;
+			} else if (rootNode != 0xFF) {
+				D_8014DD50[armA].unk6Unsigned = 0x2000;
+				D_8014DD50[armB].unk6Unsigned = 0xE000;
 			}
 
 			if ((currentLevel == 1) || (currentLevel == 3)) {
@@ -222,65 +218,57 @@ void func_800A41B0_B3160(u8 arg0) {
 			}
 
 			if ((timer >= 0x10) && (alienTypes[typeIndex].unk3A / 10 < alienInstances[arg0].hitPoints) && ((timer % levelStep) == 0) && (alienInstances[arg0].unk3D != 0)) {
-				s16 randB;
 
 				func_80137468_146418(arg0, 0x19);
 				cosDir = (f32) ((f32) coss((u16) alienInstances[arg0].unk6) / 32768.0);
 				sinDir = (f32) ((f32) sins((u16) alienInstances[arg0].unk6) / 32768.0);
 				randA = func_800038E0_44E0();
-				randB = func_800038E0_44E0();
-				fx = 180.0f * cosDir;
-				fz = 180.0f * sinDir;
-				velX = (s8) (s32) (127.0f * cosDir);
-				velZ = (s8) (s32) (127.0f * sinDir);
 
 				func_800CA5EC_D959C(
-					(s16) (s32) ((f32) alienInstances[arg0].unk0 + fx),
+					(s16) (s32) ((f32) alienInstances[arg0].unk0 + (180.0f * cosDir)),
 					(s16) (alienInstances[arg0].unk2 + 0xA),
-					(s16) (s32) ((f32) alienInstances[arg0].unk4 + fz),
-					velX,
+					(s16) (s32) ((f32) alienInstances[arg0].unk4 + (180.0f * sinDir)),
+					(s8)(127.0f * cosDir),
 					0x1E,
-					velZ,
+					(s8)(127.0f * sinDir),
 					0x3C,
 					4,
 					(randA % 5) + 4,
-					(randB % 90) + 0x28,
+					(func_800038E0_44E0() % 90) + 0x28,
 					0xF0,
 					0xC8,
 					0x14,
 					0xFF);
 
 				randA = func_800038E0_44E0();
-				randB = func_800038E0_44E0();
 				func_800CA5EC_D959C(
-					(s16) (s32) ((f32) alienInstances[arg0].unk0 + fx),
+					(s16) (s32) ((f32) alienInstances[arg0].unk0 + (180.0f * cosDir)),
 					(s16) (alienInstances[arg0].unk2 + 0x1E),
-					(s16) (s32) ((f32) alienInstances[arg0].unk4 + fz),
-					velX,
+					(s16) (s32) ((f32) alienInstances[arg0].unk4 + (180.0f * sinDir)),
+					(s8)(127.0f * cosDir),
 					0x28,
-					velZ,
+					(s8)(127.0f * sinDir),
 					0x46,
 					4,
 					(randA % 5) + 4,
-					(randB % 90) + 0x28,
+					(func_800038E0_44E0() % 90) + 0x28,
 					0xF0,
 					0xC8,
 					0x14,
 					0xFF);
 
 				randA = func_800038E0_44E0();
-				randB = func_800038E0_44E0();
 				func_800CA5EC_D959C(
-					(s16) (s32) ((f32) alienInstances[arg0].unk0 + fx),
+					(s16) (s32) ((f32) alienInstances[arg0].unk0 + (180.0f * cosDir)),
 					(s16) (alienInstances[arg0].unk2 + 0x32),
-					(s16) (s32) ((f32) alienInstances[arg0].unk4 + fz),
-					velX,
+					(s16) (s32) ((f32) alienInstances[arg0].unk4 + (180.0f * sinDir)),
+					(s8)(127.0f * cosDir),
 					0x32,
-					velZ,
+					(s8)(127.0f * sinDir),
 					0x46,
 					4,
 					(randA % 5) + 4,
-					(randB % 90) + 0x28,
+					(func_800038E0_44E0() % 90) + 0x28,
 					0xF0,
 					0xC8,
 					0x14,
@@ -303,7 +291,7 @@ void func_800A41B0_B3160(u8 arg0) {
 
 	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKP) && (alienTypes[typeIndex].unk3A / 10 < alienInstances[arg0].hitPoints)) { // minions only spawn when processor is damaged
 		if (!((currentLevel == 4) && (alienInstances[arg0].unk1B == 2))) { // if Siberia stage 3, disallow minion spawning in case 3 below
-			if (alienInstances[arg0].unk24 < (currentLevel < 3 ? 0xC : 6)) { // Greece and Java, max minions 12; America and Siberia, max minions 6
+			if (((currentLevel < 3) && (alienInstances[arg0].unk24 < 0xC)) || ((currentLevel >= 3) && (alienInstances[arg0].unk24 < 6))) { // Greece and Java, max minions 12; America and Siberia, max minions 6
 				if ((alienInstances[arg0].unk26 == 0) && !(alienInstances[arg0].unk20 & 0x1000)) {
 					alienInstances[arg0].unk20 |= 0x1000;
 					alienInstances[arg0].unk20 &= ~0x4000;
@@ -339,14 +327,23 @@ void func_800A41B0_B3160(u8 arg0) {
 				}
 
 				if (alienInstances[arg0].pad46 == 0) {
-					f32 forward;
 
 					side = (f32) ((f32) sins((u16) (alienInstances[arg0].unk6 + 0x4000)) / 32768.0);
 					forward = (f32) -((f32) coss((u16) (alienInstances[arg0].unk6 + 0x4000)) / 32768.0);
 
-					x = (s32) ((f32) alienInstances[arg0].unk0 + (side * (currentLevel == 1 ? 0x140 : currentLevel == 4 ? 0xC8 : 0xFA)));
+					switch (currentLevel) {
+					case 1:
+						node1 = 320;
+						break;
+					case 4:
+						node1 = 200;
+						break;
+					default:
+						node1 = 250;
+					}
+					x = (s32) ((f32) alienInstances[arg0].unk0 + (side * node1));
 					y = (s32) (alienInstances[arg0].unk2 + 0x50);
-					z = (s32) ((f32) alienInstances[arg0].unk4 + (forward * (currentLevel == 1 ? 0x140 : currentLevel == 4 ? 0xC8 : 0xFA)));
+					z = (s32) ((f32) alienInstances[arg0].unk4 + (forward * node1));
 
 					if (alienInstances[arg0].unk20 & 0x600) {
 						if (D_80031420 & 3) {
@@ -379,9 +376,6 @@ void func_800A41B0_B3160(u8 arg0) {
 		alienInstances[arg0].pad46--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B2CB0/func_800A41B0_B3160.s")
-#endif
 
 // Processor behavior - enemyspecs.unk48
 void func_800A4C28_B3BD8(u8 arg0) {
