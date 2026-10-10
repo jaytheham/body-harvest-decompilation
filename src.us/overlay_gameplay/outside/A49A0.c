@@ -1,3 +1,4 @@
+#define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
 
@@ -252,102 +253,83 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 }
 
 // draws vehicle triangle icons on map
-/* CURRENT(3118) */
+/* CURRENT(2782) */
 #ifdef NON_MATCHING
-void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, s32 arg4) {
-	s32 mapIndex;
-	u32 vtx0Addr;
-	s32 alpha;
+void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 	Vtx_t *vtx0;
 	Vtx_t *vtx1;
 	Vtx_t *vtx2;
+	Gfx *gfx = NULL;
 
-	arg4 &= 0xFF;
-	arg3 &= 0xFF;
-	arg2 &= 0xFF;
 
 	if ((arg4 != arg2) || (arg3 != 0)) {
-		mapIndex = ((((arg1 >> 8) + 0x80) >> 2) << 6) + (((arg0 >> 8) + 0x80) >> 2);
-		if ((D_8021EA30[mapIndex] & 0xF0) == 0) {
+		if ((((u8 (*)[64])D_8021EA30)[((arg1 >> 8) + 0x80) >> 2][((arg0 >> 8) + 0x80) >> 2] & 0xF0) == 0) {
 			return;
 		}
 	}
 
-	vtx0 = D_8005BB34;
+	vtx0 = &D_8005BB34->v;
 	arg0 >>= 5;
-	arg1 = 0xFF - arg1;
-	vtx0->unk0 = arg0 - 7;
+	arg1 = (0xFF - arg1) >> 5;
+	vtx0->ob[0] = arg0 - 7;
 	D_8005BB34++;
-	arg1 >>= 5;
-	vtx0->unk2 = arg1 - 0xE;
-	vtx0->unk4 = 0;
-	vtx0->unk8 = 0x400;
-	vtx0->unkA = 0x400;
+	vtx0->ob[1] = arg1 - 0xE;
+	vtx0->ob[2] = 0;
+	vtx0->tc[0] = 0x400;
+	vtx0->tc[1] = 0x400;
 
-	vtx1 = D_8005BB34;
-	vtx1->unk0 = arg0 + 7;
+	vtx1 = &D_8005BB34->v;
+	vtx1->ob[0] = arg0 + 7;
 	D_8005BB34++;
-	vtx1->unk2 = arg1 - 0xE;
-	vtx1->unk4 = 0;
-	vtx1->unk8 = 0x400;
-	vtx1->unkA = 0;
+	vtx1->ob[1] = arg1 - 0xE;
+	vtx1->ob[2] = 0;
+	vtx1->tc[0] = 0x400;
+	vtx1->tc[1] = 0;
 
-	vtx2 = D_8005BB34;
-	vtx0Addr = K0_TO_PHYS(vtx0);
-	vtx2->unk0 = arg0;
+	vtx2 = &D_8005BB34->v;
+	vtx2->ob[0] = arg0;
 	D_8005BB34++;
-	vtx2->unk2 = arg1;
-	vtx2->unk4 = 0;
-	vtx2->unk8 = 0;
-	vtx2->unkA = 0x400;
-	vtx2->pad6 = 0;
-	vtx1->pad6 = 0;
-	vtx0->pad6 = 0;
-	vtx2->unkC = arg2;
-	vtx1->unkC = arg2;
-	vtx0->unkC = arg2;
-	vtx2->unkE = arg4;
-	vtx1->unkD = arg3;
-	vtx0->unkD = arg3;
-	vtx2->unkD = arg3;
-	vtx1->unkE = arg4;
-	vtx0->unkE = arg4;
-	alpha = 0xFF;
-	vtx2->padF = alpha;
-	vtx1->padF = alpha;
-	vtx0->padF = alpha;
+	vtx2->ob[1] = arg1;
+	vtx2->ob[2] = 0;
+	vtx2->tc[0] = 0;
+	vtx2->tc[1] = 0x400;
+	vtx0->flag = vtx1->flag = vtx2->flag = 0;
+	vtx2->cn[0] = arg2;
+	vtx1->cn[0] = arg2;
+	vtx0->cn[0] = arg2;
+	vtx0->cn[1] = vtx1->cn[1] = vtx2->cn[1] = arg3;
+	vtx0->cn[2] = vtx1->cn[2] = vtx2->cn[2] = arg4;
+	arg4 = 0xFF;
+	vtx0->cn[3] = vtx1->cn[3] = vtx2->cn[3] = arg4;
 
-	gSPVertex(D_8005BB2C++, (Vtx *)vtx0Addr, 3, 0);
-	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++; gfx->words.w0 = 0x04000C2F; gfx->words.w1 = K0_TO_PHYS(vtx0);
+	gfx = D_8005BB2C++; gfx->words.w1 = 0x204; gfx->words.w0 = 0xBF000000;
+	gfx = D_8005BB2C++; gfx->words.w0 = 0xE7000000; gfx->words.w1 = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
 #endif
 
-// guess_drawMapTiles
-// CURRENT(14819)
+// CURRENT(1812)
 #ifdef NON_MATCHING
-s32 func_80095F08_A4EB8(void) {
+void func_80095F08_A4EB8(void) {
 	s16* dst;
+	u32 rnd, r0, r1;
 	s32 x;
 	s32 y;
 	s32 level4XMin;
 	s32 level4XMax;
 	s32 level4YMin;
 	s32 level4YMax;
-	s32 loopGuard;
 	s32 levelLimit;
-	u16 i;
-	u16 mapValue;
+	u32 i;
+
 	u16 height;
-	s16 mapMask;
-	s16 outColor;
+	u32 mapMask;
+	u32 outColor;
 	s16 tileType;
 	s16 intensity;
-	s16 shaded;
 	s16 mapDark;
-	s32 mapIndex;
 	s32 colorBase;
 	f32 f30;
 	f64 f28;
@@ -367,219 +349,220 @@ s32 func_80095F08_A4EB8(void) {
 		level4YMax = D_80147C30_156BE0[3][2].main.maxZ >> 8;
 	}
 
-	loopGuard = 0x10000;
-	if (loopGuard != 0) {
-		f30 = 2147483648.0;
-		f28 = 500000.0;
-		f26 = 300.0;
-		f24 = 1.0;
-		f22 = 30.0;
+	i = levelLimit * 0 + 0x10000;
+	if (i--) {
+		i = (i & 0) + 0xFFFF;
+		f30 = D_801424A8_151458[0];
+		f28 = D_801424B0_151460[0];
+		f26 = D_801424B8_151468[0];
+		f24 = D_801424C0_151470[0];
+		f22 = D_801424C8_151478[0];
 		colorBase = 0x100;
 
-		i = 0xFFFF;
 		do {
 
-		if (currentLevel == 4) {
-			levelLimit = 6;
-			if ((x >= level4XMin) && (x < level4XMax) && (y >= level4YMin) && (y < level4YMax)) {
-				levelLimit = 0x20;
+			if (currentLevel == 4) {
+				if ((x >= level4XMin) && (x < level4XMax) && (y >= level4YMin) && (y < level4YMax)) {
+					levelLimit = 0x20;
+				} else {
+					levelLimit = 6;
+				}
 			}
-		}
 
-		mapValue = D_80052A94[y].unk0[x];
-		mapIndex = ((((y + 0x80) >> 2) << 6) + ((x + 0x80) >> 2));
-		mapMask = D_8021EA30[mapIndex] & 0xF0;
 
-		if (mapValue & 0x800) {
-			outColor = mapMask ? 0xFFDF : 0;
-		} else {
-			height = mapValue & 0x3F;
-			if (height < levelLimit) {
-				s32 rnd;
-				u32 r0;
-				u32 r1;
-				u32 dist;
-				s32 c0;
-				s32 c2;
-				f32 ratio;
 
-				rnd = func_800038E0_44E0();
-				r0 = rnd & 0xFF;
-				r1 = (rnd & 0xFF00) >> 8;
-				ratio = (f32) ((r0 + f22) / (r1 + f22));
-				dist = (u32) ((f32) (x * x) * ratio) + (u32) ((f32) (y * y) * ratio);
-
-				if (dist < 0x14) {
-					intensity = (s16) f26;
-				} else {
-					intensity = (s16) (f28 / dist);
-				}
-
-				if (intensity >= 0x12D) {
-					intensity = 0x12C;
-				}
-
-				c0 = (((intensity >> 3) * 0x10) >> 9) & 0xFFFF;
-				c2 = ((((intensity >> 2) * 0x10) + ((intensity * 0xF0) << 4)) >> 9) & 0xFFFF;
-				outColor = func_800959F0_A49A0(c0, c0 & 0xFFFF, c2) & 0xFFFF;
-			} else if (mapValue & 0x8000) {
-				tileType = (mapValue >> 10) & 0xF;
-				if (((((mapValue >> 15) & 1) == 1) && (tileType >= 4) && (tileType < 0xC)) || (tileType == 0xD)) {
-					outColor = (D_8021EA30[mapIndex] & 0xF0) ? 0x528A : 0;
-				} else {
-					outColor = (D_8021EA30[mapIndex] & 0xF0) ? 0x8410 : 0;
-				}
+			if (D_80052A94[y].objects[x].flag11) {
+				mapMask = ((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2][(x + 0x80) >> 2] & 0xF0;
+				outColor = mapMask ? 0xFFDF : 0;
 			} else {
-				s32 rnd;
-				u32 r0;
-				u32 r1;
-				u32 ax;
-				u32 ay;
-				f32 ratio;
+				height = D_80052A94[y].objects[x].height;
+				if (height < levelLimit) {
+					u32 dist; f32 ratio; f32 ySquare;
+					ySquare = (f32)(y * y);
+					rnd = func_800038E0_44E0();
+					r0 = rnd & 0xFF;
+					r1 = (rnd & 0xFF00) >> 8;
+					ratio = (f32) ((r0 + f22) / (r1 + f22));
+					dist = (u32) ((f32) (x * x) * ratio) + (u32) (ySquare * ratio);
 
-				rnd = func_800038E0_44E0();
-				r0 = rnd & 0xFF;
-				r1 = (rnd & 0xFF00) >> 8;
-				ratio = (f32) ((r0 + f24) / (r1 + f24));
+					if (dist < 0x14) {
+						intensity = (s16) f26;
+					} else {
+						intensity = (s16) (f28 / dist);
+					}
 
-				ax = (u32) (((f32) (x * x) * ratio) + f30);
-				ay = (u32) (((f32) (y * y) * ratio) + f30);
-				if ((ax | ay) != 0) {
-					intensity = (s16) (D_801424D0_151480 / (ax + ay));
+					if (intensity >= 0x12D) {
+						intensity = 0x12C;
+					}
+
+
+					outColor = func_800959F0_A49A0((((intensity >> 3) * 0x10) >> 9) & 0xFFFF, (((intensity >> 3) * 0x10) >> 9) & 0xFFFF, ((((intensity >> 2) * 0x10) + ((intensity * 0xF) << 4)) >> 9) & 0xFFFF) & 0xFFFF;
 				} else {
-					intensity = (s16) D_801424D8_151488;
-				}
+					u8 *maskRow;
+					s32 maskX;
+					maskRow = ((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
+					maskX = x + 0x80;
+					if (D_80052A94[y].objects[x].terrainObject) {
+						tileType = D_80052A94[y].objects[x].terrainType;
+						if ((D_80052A94[y].objects[x].flag10 == 1) && (((tileType >= 4) && (tileType < 0xC)) || (tileType == 0xD))) {
+							outColor = (maskRow[maskX >> 2] & 0xF0) ? 0x528A : 0;
+						} else {
+							outColor = (maskRow[maskX >> 2] & 0xF0) ? 0x8410 : 0;
+						}
+					} else {
+						u32 ax; f32 ratio; f32 ySquare;
+						u32 ay;
+						ySquare = (f32)(y * y);
+						rnd = func_800038E0_44E0();
+						r0 = rnd & 0xFF;
+						r1 = (rnd & 0xFF00) >> 8;
+						ratio = (f32) ((r0 + f24) / (r1 + f24));
 
-				shaded = intensity + func_80095A6C_A4A1C(x, y, height);
-				if (shaded < 0) {
-					shaded = 0;
-				}
+						ax = (u32) (((f32) (x * x) * ratio) + f30);
+						ay = (u32) ((ySquare * ratio) + f30);
+						if ((ax | ay) != 0) {
+							intensity = (s16) (D_801424D0_151480[0] / (ax + ay));
+						} else {
+							intensity = (s16) D_801424D8_151488[0];
+						}
 
-				mapDark = D_8021EA30[mapIndex] & 0xF0;
-				outColor = func_800959F0_A49A0(((shaded * ((colorBase - mapDark) + (mapDark >> 2))) >> 8) & 0xFFFF,
-					shaded & 0xFFFF,
-					((shaded * (colorBase - mapDark)) >> 7) & 0xFFFF) & 0xFFFF;
+						intensity = intensity + func_80095A6C_A4A1C(x, y, height);
+						if (intensity < 0) {
+							intensity = 0;
+						}
+
+						mapDark = maskRow[maskX >> 2] & 0xF0;
+						outColor = func_800959F0_A49A0(((intensity * ((colorBase - mapDark) + (mapDark >> 2))) >> 8) & 0xFFFF,
+						intensity,
+						((intensity * (colorBase - (maskRow[maskX >> 2] & 0xF0))) >> 7) & 0xFFFF) & 0xFFFF;
+					}
+				}
 			}
-		}
 
-		x += 1;
-		*dst = outColor;
-		dst++;
+			x += 1;
+			*dst = outColor;
+			dst++;
 
-		if (!((x + 0x80) & 0x1F)) {
-			y += 1;
-			x -= 0x20;
-			if (!((y + 0x80) & 0x1F)) {
-				x += 0x20;
-				y -= 0x20;
-				if (x >= 0x80) {
-					x = -0x80;
-					y += 0x20;
+			if (!((x + 0x80) & 0x1F)) {
+				y += 1;
+				x -= 0x20;
+				if (!((y + 0x80) & 0x1F)) {
+					x += 0x20;
+					y -= 0x20;
+					if (x >= 0x80) {
+						x = -0x80;
+						y += 0x20;
+					}
 				}
 			}
-		}
-		} while (i-- != 0);
+		} while (i--);
 	}
 
-	return 0;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
 #endif
 
-// CURRENT(12294)
+// CURRENT(2451)
 #ifdef NON_MATCHING
-void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
+void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	Vtx_t *vtx0;
 	Vtx_t *vtx1;
 	Vtx_t *vtx2;
 	Vtx_t *vtx3;
+	MapMarkerScratch *scratch;
 	s16 wave;
-	s16 absWave;
-	s16 trig;
+	s32 absWave;
+	s16 trig = 0;
 	s16 value;
-	s32 temp_f16;
-	s32 temp_f10;
+	s32 mode;
 
-	vtx0 = D_8005BB34;
-	D_8005BB34 = (Vtx *) (vtx0 + 1);
-	vtx1 = D_8005BB34;
-	D_8005BB34 = (Vtx *) (vtx1 + 1);
-	vtx2 = D_8005BB34;
-	D_8005BB34 = (Vtx *) (vtx2 + 1);
-	vtx3 = D_8005BB34;
-	D_8005BB34 = (Vtx *) (vtx3 + 1);
+	vtx0 = &D_8005BB34->v;
+	D_8005BB34++;
+	vtx1 = &D_8005BB34->v;
+	D_8005BB34++;
+	vtx2 = &D_8005BB34->v;
+	D_8005BB34++;
+	vtx3 = &D_8005BB34->v;
+	D_8005BB34++;
 
 	if (arg3 == 0.0f) {
 		return;
 	}
 
 	arg3 *= 8.0f;
-	arg1 = (s16) (arg1 >> 5);
-	arg2 = (s16) (arg2 >> 5);
+	arg1 >>= 5;
+	arg2 >>= 5;
 
-	temp_f16 = (s32) arg3;
-	temp_f10 = (s32) -arg3;
-	vtx1->unk2 = (s16) temp_f10;
-	vtx0->unk2 = (s16) temp_f10;
-	vtx2->unk0 = (s16) temp_f10;
-	vtx0->unk0 = (s16) temp_f10;
-	vtx3->unk2 = (s16) temp_f16;
-	vtx2->unk2 = (s16) temp_f16;
-	vtx3->unk0 = (s16) temp_f16;
-	vtx1->unk0 = (s16) temp_f16;
-	vtx3->unk4 = 0;
-	value = vtx3->unk4;
-	vtx2->unk4 = value;
-	vtx1->unk4 = value;
-	vtx0->unk4 = value;
+	mode = arg4;
+	if (mode != 1) {
+		mode += mode * 0;
+	}
 
-	if (arg4 == 4) {
-		wave = (s16) ((((sins(D_8013D50C_14C4BC) / 32768.0) * ((f32) arg0[0] / D_801424E0_151490)) * 200.0));
-		trig = coss((u16) -D_80052B34->unk6);
+	vtx1->ob[1] = -arg3;
+	vtx0->ob[1] = -arg3;
+	vtx2->ob[0] = -arg3;
+	vtx0->ob[0] = -arg3;
+	vtx3->ob[1] = arg3;
+	vtx2->ob[1] = arg3;
+	vtx3->ob[0] = arg3;
+	vtx1->ob[0] = arg3;
+	vtx3->ob[2] = 0;
+	value = vtx3->ob[2];
+	vtx2->ob[2] = value;
+	vtx1->ob[2] = value;
+	vtx0->ob[2] = value;
+
+	if (mode == 4) {
+		scratch = (MapMarkerScratch *)&D_80052B40;
+		wave = (((((f32) arg0->distance / D_801424E0_151490[0]) * ((f32)sins(D_8013D50C_14C4BC) / 32768.0)) * 200.0));
+		trig = coss(-D_80052B34->unk6);
 		if (wave >= 0) {
 			absWave = wave;
 		} else {
 			absWave = -wave;
 		}
-		D_80052B40.unk0 = (s16) (arg1 - (((f32) absWave + arg3) * (trig / 32768.0)));
+		scratch->position.unk0 = (arg1 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 
-		trig = sins((u16) -D_80052B34->unk6);
+		trig = sins(-D_80052B34->unk6);
 		if (wave >= 0) {
 			absWave = wave;
 		} else {
 			absWave = -wave;
 		}
 
-		D_80052B40.unk4 = 0;
+		scratch = (MapMarkerScratch *)&D_80052B40;
+		scratch->position.unk4 = 0;
 		D_80052B48.unk0 = 0;
-		D_80052B40.unk2 = (s16) (-arg2 - (((f32) absWave + arg3) * (trig / 32768.0)));
+		scratch->position.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 		D_80052B48.unk4 = 0;
-		D_80052B48.unk2 = (s16) (-0x4000 - D_80052B34->unk6);
-		func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-		D_8013D50C_14C4BC += 0x300;
+		D_80052B48.unk2 = (-0x4000 - D_80052B34->unk6);
+		func_800039D0_45D0(&scratch->position, (Unk80052B40 *)&D_80052B48, NULL, (s32)D_8005BB38);
+		D_8013D50C_14C4BC = (s16)D_8013D50C_14C4BC + 0x300;
 	} else {
-		D_80052B40.unk2 = (s16) -arg2;
-		D_80052B40.unk4 = 0;
-		D_80052B40.unk0 = arg1;
-		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
+		scratch = (MapMarkerScratch *)&D_80052B40;
+		scratch->position.unk2 = -arg2;
+		scratch->position.unk4 = 0;
+		scratch->position.unk0 = arg1;
+		func_800039D0_45D0(&scratch->position, NULL, NULL, (s32)D_8005BB38);
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	vtx3->unkA = 0;
-	value = vtx3->unkA;
-	vtx2->unkA = value;
-	vtx2->unk8 = value;
-	vtx0->unk8 = value;
-	vtx1->unkA = 0x800;
-	value = vtx1->unkA;
-	vtx1->unk8 = value;
-	vtx3->unk8 = value;
-	vtx0->unkA = value;
+	vtx3->tc[1] = 0;
+	value = vtx3->tc[1];
+	vtx2->tc[1] = value;
+	vtx2->tc[0] = value;
+	vtx0->tc[0] = value;
+	vtx1->tc[1] = 0x800;
+	value = vtx1->tc[1];
+	vtx1->tc[0] = value;
+	vtx3->tc[0] = value;
+	vtx0->tc[1] = value;
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+	scratch = (MapMarkerScratch *)D_8005BB2C++; scratch->command[0] = (s32)0xB900031D; scratch->command[1] = 0x00504240;
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 1, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
@@ -589,29 +572,28 @@ void func_800966EC_A569C(s16 *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
 #endif
-
-/* CURRENT(12244) */
+/* CURRENT(6286) */
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
-	TileEntry *tile;
-	ShieldWallPoint *levelCoords;
-	Vtx_t *v0;
-	Vtx_t *v1;
-	Vtx_t *v2;
-	Vtx_t *v3;
+	TileEntry *tile; Level *level;
+	ShieldWallPoint *levelCoords; ShieldWallPoint (*coords)[48];
+	Vtx *v0;
+	Vtx *v1;
+	Vtx *v2;
+	Vtx *v3;
 	Vtx **vtxHead;
-	s16 selectedGroup;
+	s32 selectedGroup;
 	s32 loop;
 	s16 color0;
-	s16 color2;
+	s32 color2;
 	s16 alpha0;
 	s16 alpha2;
 	s16 bright;
-	s16 phase;
 	s16 modBase;
 	s32 tileGroup;
 
-	tile = D_801479B0_156960[currentLevel - 1];
+	level = &currentLevel;
+	tile = (TileEntry *)D_801479B0_156960[level[0] - 1];
 	selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
 
 	gDPPipeSync(D_8005BB2C++);
@@ -625,124 +607,124 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPPipeSync(D_8005BB2C++);
 
-	vtxHead = &D_8005BB34;
-	loop = 0x1F;
-	modBase = 0x1FF;
-	do {
-		s8 leftIdx = tile->unk0;
-		s8 rightIdx;
-		ShieldWallPoint *left;
-		ShieldWallPoint *right;
-		s16 selected;
+	coords = D_801475F0_1565A0; vtxHead = &D_8005BB34;
+	loop = 0x20;
+	modBase = selectedGroup * 0 + 0x1FF; if (modBase) {}
+	if (loop--) {
+		do {
+			s8 leftIdx = tile->unk0;
+			s8 rightIdx;
+			ShieldWallPoint *left;
+			ShieldWallPoint *right;
+			s16 selected;
 
-		if (leftIdx != -1) {
-			selected = selectedGroup;
-			levelCoords = D_801475F0_1565A0[currentLevel - 1];
-			rightIdx = tile->unk1;
-			left = &levelCoords[leftIdx - 48];
-			right = &levelCoords[rightIdx - 48];
+			if (leftIdx != -1) {
+				selected = selectedGroup;
+				levelCoords = coords[level[0]];
+				rightIdx = tile->unk1;
+				left = &levelCoords[leftIdx];
+				right = &levelCoords[rightIdx];
 
-			v0 = &D_8005BB34[0].v;
-			*vtxHead = (Vtx *) (v0 + 1);
-			v1 = &D_8005BB34[0].v;
-			*vtxHead = (Vtx *) (v1 + 1);
-			v2 = &D_8005BB34[0].v;
-			*vtxHead = (Vtx *) (v2 + 1);
-			v3 = &D_8005BB34[0].v;
-			*vtxHead = (Vtx *) (v3 + 1);
+				v0 = D_8005BB34;
+				D_8005BB34 = v0 + 1;
+				v1 = D_8005BB34;
+				D_8005BB34 = v1 + 1;
+				v2 = D_8005BB34;
+				D_8005BB34 = v2 + 1;
+				v3 = D_8005BB34;
+				D_8005BB34 = v3 + 1;
 
-			color0 = left->x * 8;
-			alpha0 = -left->y * 8;
-			color2 = right->x * 8;
-			alpha2 = -right->y * 8;
+				v0->v.ob[0] = v1->v.ob[0] = left[-48].x * 8;
+				v0->v.ob[1] = v1->v.ob[1] = -left[-48].z * 8;
+				left = &left[-48]; color2 = right[-48].x * 8;
+				v3->v.ob[0] = color2;
+				v2->v.ob[0] = color2;
+				right = &right[-48]; alpha2 = -right->z * 8;
+				v3->v.ob[1] = alpha2;
+				v2->v.ob[1] = alpha2;
 
-			v1->unk0 = color0;
-			v0->unk0 = color0;
-			v1->unk2 = alpha0;
-			v0->unk2 = alpha0;
-			v3->unk0 = color2;
-			v2->unk0 = color2;
-			v3->unk2 = alpha2;
-			v2->unk2 = alpha2;
+				v2->v.ob[2] = 0;
+				v0->v.ob[2] = v2->v.ob[2];
+				v3->v.ob[2] = 0x40;
+				v1->v.ob[2] = v3->v.ob[2];
+				color0 = (int)(selected * 0) + 0x8C;
 
-			v2->unk4 = 0;
-			v0->unk4 = v2->unk4;
-			v3->unk4 = 0x40;
-			v1->unk4 = v3->unk4;
-			color0 = 0x8C;
+				tileGroup = tile - ((TileEntry (*)[64])D_801479B0_156960)[level[0] - 1];
+				tileGroup >>= 3;
 
-			// Agent: fix this reference to D_801479B0_156960 to use correct array acces
-			tileGroup = ((s32) ((u8 *) tile - (u8 *) D_801479B0_156960) + (-(currentLevel << 7)) + 0x80) >> 1;
-			tileGroup >>= 3;
+				if (selected == tileGroup) {
+					tileGroup = D_8013D510_14C4C0 << 4;
+					bright = tileGroup % modBase;
+					alpha0 = bright;
+					alpha2 = (tileGroup + 0x200) % 0x1FF;
+					if (alpha0 >= 0x100) {
+						alpha0 = modBase - alpha0;
+					}
 
-			if (selected == tileGroup) {
-				phase = D_8013D510_14C4C0;
-				bright = (phase << 4) % modBase;
-				alpha0 = bright;
-				if (alpha0 >= 0x100) {
-					alpha0 = modBase - alpha0;
+					v3->v.cn[0] = alpha0;
+					v2->v.cn[0] = alpha0;
+					v1->v.cn[0] = alpha0;
+					v0->v.cn[0] = alpha0;
+
+					color0 = 0xFF - alpha0;
+					v3->v.cn[1] = color0;
+					v2->v.cn[1] = color0;
+					v1->v.cn[1] = color0;
+					v0->v.cn[1] = color0;
+
+					if (alpha2 >= 0x100) {
+						alpha2 = modBase - alpha2;
+					}
+					v3->v.cn[2] = alpha2;
+					v2->v.cn[2] = alpha2;
+					v1->v.cn[2] = alpha2;
+					v0->v.cn[2] = alpha2;
+
+					selected = 0xFF; bright = selected;
+				} else {
+					v3->v.cn[0] = color0;
+					v2->v.cn[0] = color0;
+					v1->v.cn[0] = color0;
+					v0->v.cn[0] = color0;
+					color0 = 0xBE;
+
+					v3->v.cn[1] = color0;
+					v2->v.cn[1] = color0;
+					v1->v.cn[1] = color0;
+					v0->v.cn[1] = color0;
+
+					color0 = 0xFF; v3->v.cn[2] = color0;
+					v2->v.cn[2] = color0;
+					v1->v.cn[2] = color0;
+					v0->v.cn[2] = color0;
+
+					bright = 0x46;
 				}
 
-				v3->unkC = alpha0;
-				v2->unkC = alpha0;
-				v1->unkC = alpha0;
-				v0->unkC = alpha0;
+				v2->v.cn[3] = bright;
+				v0->v.cn[3] = bright;
+				v3->v.cn[3] = 0;
+				v1->v.cn[3] = 0;
 
-				color0 = 0xFF - alpha0;
-				v3->unkD = color0;
-				v2->unkD = color0;
-				v1->unkD = color0;
-				v0->unkD = color0;
-
-				alpha2 = ((phase << 4) + 0x200) % modBase;
-				if (alpha2 >= 0x100) {
-					alpha2 = modBase - alpha2;
-				}
-				v3->unkE = alpha2;
-				v2->unkE = alpha2;
-				v1->unkE = alpha2;
-				v0->unkE = alpha2;
-
-				bright = 0xFF;
-			} else {
-				v3->unkC = 0x8C;
-				v2->unkC = 0x8C;
-				v1->unkC = 0x8C;
-				v0->unkC = 0x8C;
-
-				v3->unkD = 0xBE;
-				v2->unkD = 0xBE;
-				v1->unkD = 0xBE;
-				v0->unkD = 0xBE;
-
-				v3->unkE = 0xFF;
-				v2->unkE = 0xFF;
-				v1->unkE = 0xFF;
-				v0->unkE = 0xFF;
-
-				bright = 0x46;
+				if (color0) {} gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
+				gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 			}
-
-			v2->padF = bright;
-			v0->padF = bright;
-			v3->padF = 0;
-			v1->padF = 0;
-
-			gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
-			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
-		}
-		tile++;
-	} while (loop--);
+			if (coords) {}
+			tile++;
+		} while (loop--);
+	}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 	D_8013D510_14C4C0++;
 	gDPPipeSync(D_8005BB2C++);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
 
+// CURRENT(80)
 #ifdef NON_MATCHING
 void func_800970C0_A6070(void)
 {
@@ -756,7 +738,7 @@ void func_800970C0_A6070(void)
   u32 x1;
   s32 y0;
   s32 y1;
-  s32 tileRow;
+  Gfx *dl;
   gDPPipeSync(D_8005BB2C++);
   gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
   gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
@@ -769,7 +751,7 @@ void func_800970C0_A6070(void)
   {
 	y1 = -((row - 4) << 8);
 	y0 = y1 - 0x100;
-	tileRow = row << 3;
+
 	for (col = 0; col < 8; col++)
 	{
 	  x1 = col - 4;
@@ -803,8 +785,8 @@ void func_800970C0_A6070(void)
 	  vtx3->v.tc[1] = -0x20;
 	  vtx1->v.tc[0] = 0x7E0;
 	  vtx1->v.tc[1] = 0x7E0;
-	  gDPSetTextureImage(D_8005BB2C++, 0, G_IM_SIZ_16b, 1, ((u8 (*)[16]) D_8006AA6C)[(tileRow + col) << 7]);
-	  gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
+	  dl = D_8005BB2C++; gDPSetTextureImage(dl, 0, G_IM_SIZ_16b, 1, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10]);
+	  dl = D_8005BB2C++; gDPSetTile(dl, 0, G_IM_SIZ_16b, 0, 0, 7, 0, 0 | 0x2, 0, 0, 0 | 0x2, 0, 0);
 	  gDPLoadSync(D_8005BB2C++);
 	  gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 1023, 256);
 	  gDPPipeSync(D_8005BB2C++);
@@ -819,6 +801,7 @@ void func_800970C0_A6070(void)
 
   gDPPipeSync(D_8005BB2C++);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
 #endif
@@ -1046,7 +1029,7 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 	model1 = D_8005BB30++; model1->words.w0 = 0x01020040; model1->words.w1 = K0_TO_PHYS(&D_80031160);
 }
 
-// CURRENT(42713)
+// CURRENT(43918)
 #ifdef NON_MATCHING
 void func_8009811C_A70CC(void) {
 	f32 temp_f0;
@@ -1177,7 +1160,7 @@ void func_8009811C_A70CC(void) {
 	func_80095F08_A4EB8();
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], ((s32 *) &((u8 *) D_8005BB4C)[-(D_80031B84_32784 * 4)])[0]);
+	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], D_8005BB4C[-D_80031B84_32784]);
 	func_8000505C_5C5C();
 	osSetTime(D_80068084, D_80068088);
 	setGameplayResolution();
@@ -1419,7 +1402,7 @@ void func_8009811C_A70CC(void) {
 			D_80052B50.unk0 = temp_v1;
 			D_80052B50.unk2 = temp_v1;
 			D_80052B50.unk4 = temp_v1;
-			func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
+			func_800039D0_45D0(NULL, NULL, &D_80052B50, (s32)D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		}
 		var_s0 = sp2AC[0];
@@ -1769,7 +1752,7 @@ void func_8009811C_A70CC(void) {
 			vec2DC.unk0 = temp_v1;
 			drawItem.matrix = D_8005BB38;
 			D_8014ED20 = temp_f2;
-			func_800039D0_45D0(NULL, NULL, &vec2DC, drawItem.matrix);
+			func_800039D0_45D0(NULL, NULL, &vec2DC, (s32)drawItem.matrix);
 			temp_f2 = D_8014ED20;
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 			if (temp_f22 <= temp_f2) {
@@ -1792,7 +1775,7 @@ void func_8009811C_A70CC(void) {
 				vec2DC.unk4 = temp_v1;
 				vec2DC.unk2 = temp_v1;
 				vec2DC.unk0 = temp_v1;
-				func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
+				func_800039D0_45D0(NULL, NULL, &vec2DC, (s32)D_8005BB38);
 				var_f12 = D_8014ED24;
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 				scratch.vehicle = &vehicleInstances[D_8013D52C_14C4DC];
@@ -1840,9 +1823,9 @@ void func_8009811C_A70CC(void) {
 				vec2DC.unk4 = temp_v1;
 				vec2DC.unk2 = temp_v1;
 				vec2DC.unk0 = temp_v1;
-				func_800039D0_45D0(&vec2D4, &sp2B0, NULL, D_8005BB38);
+				func_800039D0_45D0(&vec2D4, &sp2B0, NULL, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				func_800039D0_45D0(NULL, &vec2CC, &vec2DC, D_8005BB38);
+				func_800039D0_45D0(NULL, &vec2CC, &vec2DC, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 				if ((var_f28 > 0.0f) && ((var_s3 == &cam3B8) || (var_s3 == &cam32C))) {
@@ -1853,7 +1836,7 @@ void func_8009811C_A70CC(void) {
 				vec2DC.unk4 = temp_v1;
 				vec2DC.unk2 = temp_v1;
 				vec2DC.unk0 = temp_v1;
-				func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
+				func_800039D0_45D0(NULL, NULL, &vec2DC, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 				if (var_f28 > 0.0f) {
 					func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / var_f28), (s32) ((-D_80052B34->unk4 >> 5) / var_f28), 0, 0x4000 - D_80052B34->unk6);
