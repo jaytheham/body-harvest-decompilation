@@ -35,3 +35,4 @@ asm_pattern_index.json
 pah.conf
 tools/windows/
 .vscode/
+.tmp_na_probe/

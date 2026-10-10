@@ -1,107 +1,108 @@
 # PAL (EU) versus NA (US) ROM differences
 
-Reference for porting the EU build. Sections marked **[measured]** were verified
-byte-for-byte against `baserom.us.z64` and `baserom.eu.z64` in this repository.
-Sections marked **[OURS]** come from the 2026-09-30 comparison of a user-supplied
-EU dump and are not yet independently reproduced here.
+Decomp reference. Everything here is measured against `baserom.us.z64` and
+`baserom.eu.z64` in this repository, either by hash, by direct comparison, or by
+`tools/pal_na_diff.py`. Anything not verified is listed as open at the end.
 
-## Identity **[OURS]**
+## Identity
 
 | | US | EU |
 |---|---|---|
 | Internal name | `BODY HARVEST` | `Body Harvest` |
 | Game code | `NBHE` | `NBHP` |
-| CRC1 CRC2 | `5326696F FE9A99C3` | `0B58B8CD B7B291D2` |
 | MD5 (z64) | `3b8585ed03e8ddb89d7de456317545e7` | `b27fa5e9ad0cb47bb3a74ffac7bc8edf` |
-| XXH3-64 (what librecomp checks) | `0x9949AA9BC66F33CB` | `0x2F360C668E9EFA10` |
+| SHA1 | `BBB6666F5014A473747EE4145F036D9FB25D7348` | `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355` |
 
-SHA1s used by the build driver:
-
-- `baserom.us.z64` = `BBB6666F5014A473747EE4145F036D9FB25D7348`
-- `baserom.eu.z64` = `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`
-
-Both builds reproduce their baserom's SHA1 exactly.
+CRC1/CRC2 and the XXH3-64 values are not recomputed here; the MD5 and SHA1 above
+are, and both builds reproduce their baserom's SHA1 exactly.
 
 ## Layout
 
-**[OURS]** The two ROMs are the same shape. Segment order is identical and the
-same overlays appear in both, but the main code region is **0x30 bytes (12
-words) longer** in PAL, so everything after it moves up by that amount in RAM.
+Same shape: identical segment order, the same overlays. The main code region is
+**0x30 bytes (12 words) longer** in PAL, so everything after it moves up by that
+amount in RAM.
 
-**[measured]** The shift is a single insertion, not a cumulative drift. Diffing
-the two ROMs directly:
+That shift is a single insertion, not cumulative drift. `tools/pal_na_diff.py`
+derives the insert point from the ROMs (currently NTSC `0x7E04`) and compares
+word by word:
 
-- Identical from `0x1000` through roughly `0x7A10` (the first differing word is
-  at `0x1008`, from an address immediate, not from code).
-- From `0x7A10` on, PAL is NA shifted by exactly **+0x30** for the rest of core.
-  Every NTSC subsegment boundary at or after `0xAD60` moves by +0x30; all 254
-  boundaries were remapped that way and the result builds matching.
-- The `+0x30` is accounted for almost entirely by one rewritten function,
-  `func_80006DDC_79DC`, which grows by 14 words while the scattered
-  single-word edits elsewhere net minus 2 words.
+- Before the insert, PAL holds the NTSC bytes at the same offset.
+- At or after it, PAL holds them 0x30 later. Every NTSC subsegment boundary at
+  or after `0xAD60` shifts by +0x30; all 254 were remapped that way and the
+  result builds matching.
+- The region just before the insert, roughly NTSC `0x79DC`–`0x7E04`, is where
+  the rewrite lives: there PAL differs at both offsets.
 
-### Unresolved: the `+0xB60` figure
+RAM-side windows in `bh.eu.yaml` already agree with this shift: the gameplay
+overlay window is `0x800702A0` (NTSC `0x80070270`, +0x30) and the level window is
+`0x802D4D10` (NTSC `0x802D4CD0`, +0x40).
 
-**[OURS]** reports that the frontend overlay grows by 0xB30 and that every
-later segment then sits 0xB60 later than in the US ROM.
+### The core-to-overlay seam
 
-**[measured]** does not reproduce that. The core-to-overlay seam is a clean
-+0x30 and nothing more:
+A clean +0x30 and nothing more. The 8-byte trailing pad that ends core —
+`00 00 00 00 10 00 00 36`, where `10 00 00 36` is `bgez $zero` to itself — sits
+at NTSC `0x40750` and at PAL `0x40780`. PAL `0x40750` holds real code
+(`addiu $t6,$gp,-1`, `addiu $sp,$sp,-0x18`), so PAL core ends at `0x40780`.
 
-| NA | PAL | bytes |
-|---|---|---|
-| `0x40750` | `0x40780` | `00 00 00 00 10 00 00 36` |
+The 8 bytes after the pad are identical in both ROMs (`00 00 10 25`,
+`lui $at,0x8004`, `lui $a1,0x8005`, `lw $a1,0x2b5c($a1)`); only the data
+addresses inside differ. The frontend overlay's first function is the same
+*shape* in both versions and differs only in immediates.
 
-`0x10 00 00 36` is `bgez $zero` to itself, i.e. the trailing padding of the
-preceding function. The same 8-byte pad sits at NA `0x40750` and PAL `0x40780`,
-and PAL `0x40750` holds real code (`addiu $t6,$gp,-1` / `addiu $sp,$sp,-0x18`).
-So PAL core ends at `0x40780`, exactly 0x30 later, and the frontend overlay
-begins there.
+## Which functions differ
 
-This has not been reconciled with the 0xB30/0xB60 claim. Either the frontend
-overlay genuinely also grows (which would only affect offsets *after* it, and so
-would not contradict the seam above), or one of the two measurements is looking
-at a different reference point. **Treat downstream overlay offsets as unverified
-until this is resolved.** Do not propagate `+0xB60` into configs without
-checking it against both ROMs.
+`python tools/pal_na_diff.py` splits the NTSC ROM with splat to enumerate its
+functions, then compares each against PAL. Current result over 682 NTSC core
+functions:
 
-## Code
+| class | functions | share of functions | share of core code bytes |
+|---|---|---|---|
+| `EXACT` byte identical | 135 | 19.8% | 5.38% |
+| `SHAPE` same opcode everywhere, different immediates | 512 | 75.1% | 89.55% |
+| `DIFF` genuinely different code | 35 | 5.1% | 5.07% |
 
-**[OURS]** Main code sequence ratio 0.9973 after masking jump targets and
-immediates, over 77 differing hunks:
+**94.93% of core code bytes are reusable from NTSC.** The `SHAPE` bucket is
+dominated by ordinary address relocation, not by logic changes.
 
-- `func_80006DDC_79DC` (US, 1020 bytes) is largely rewritten; it holds 39 of the
-  77 hunks and grows by 14 words. This single function is the whole core delta.
-- About 30 scattered single-word changes, in `func_80006520`, `func_8000B044`,
-  `func_8000CF4C`, `func_8000DCCC`, `func_8000E048` (four places),
-  `func_8000E3DC`, `func_80013B48`, `func_80014508`, `func_80014A3C`, and the
-  libultra/libgcc pieces `_timeToSamples`, `alAudioFrame`, `guPerspectiveF`,
-  `sinf`.
+The 35 `DIFF` functions are the ones that must not share NTSC decomp. They are
+listed in `docs/pal-na-diff.txt`; the largest are:
 
-**[measured]** The last group is almost certainly **intentional regional
-behaviour, not incidental drift**. PAL runs at 50 Hz against NA's 60 Hz, so a
+| NTSC | PAL | bytes | name |
+|---|---|---|---|
+| `0x009EB8` | `0x009EE8` | 3168 | `func_800092B8_9EB8` |
+| `0x0098A8` | `0x0098D8` | 1552 | `func_80008CA8_98A8` |
+| `0x0079DC` | `0x0079DC` | 1020 | `func_80006DDC_79DC` |
+| `0x009538` | `0x009568` | 736 | `func_80008938_9538` |
+| `0x009274` | `0x0092A4` | 708 | `func_80008674_9274` |
+| `0x008DD4` | `0x008E04` | 676 | `func_800081D4_8DD4` |
+
+`func_80006DDC_79DC` is the known rewrite: 143 of its 144 words differ, starting
+at its very first instruction, so it is different code and not a recompilation
+of the same source. The remaining differences cluster in NTSC `0x7ECC`–`0x9EE8`.
+
+Separately, the differing libultra/libgcc pieces `_timeToSamples`,
+`alAudioFrame`, `guPerspectiveF` and `sinf` are **intentional regional
+behaviour, not drift**: PAL runs at 50 Hz against NTSC's 60 Hz, so a
 sampling-rate constant and the sin/cos argument scale are exactly what one
-would expect to differ in `_timeToSamples`, `alAudioFrame` and `sinf`, and a
-different FOV/projection constant in `guPerspectiveF`.
+expects to change, with a different projection constant in `guPerspectiveF`.
+These fall in the `SHAPE` bucket (constants differ, code does not), but they
+still must not be given a verbatim NTSC C body.
 
-This matters for the port: those functions must **never** share NA decomp, and a
-verbatim NA C body will not match. Treat them as separately decompiled.
+## Open, not verified
 
-**[OURS]** Header and boot are 99.4% identical. Six of the seven non-frontend
-overlays are 91.8-98.8% identical word-for-word at the same offset; the
-remainder looks like 0x30/0x40 address relocation and needs the same masked
-comparison to separate from real changes.
-
-## Consequences for the port
-
-1. A PAL build is a separate recompilation: own ELF, own `overlays.eu.txt`, own
-   hash entry. Nothing in `recomp/bh.us.toml` may hard-code an address that EU
-   shifts. Today these hooks do: `unload_overlays(0x8003FB20, 0x117C10)` and
-   the `0xE0000` window are US values (RT-05b).
-2. Frame timing differs (PAL 50 Hz). Faithful-mode pacing must come from the
-   version, not a constant (see QA-02).
-3. EU is a coarser split than US: `bh.us.yaml` lists 28 segments including
-   alien-type data tables, `bh.eu.yaml` lists 18 and has none of them.
+- **Overlay offsets after the frontend.** PAL overlay entry code is version
+  specific, so no offset mapping recovers overlay boundaries from NTSC: each PAL
+  overlay's first bytes match neither NTSC's own offset nor NTSC+0x30. The
+  frontend is pinned by the seam above; the others are not. An earlier
+  comparison reported the frontend overlay growing 0xB30 with everything after
+  it sitting 0xB60 later; **that is not reproduced here** and should not be
+  propagated into a config without checking it against both ROMs.
+- **Header/boot and per-overlay identity percentages.** A previous comparison
+  reported header and boot 99.4% identical and the non-frontend overlays
+  91.8–98.8% identical word-for-word. Not recomputed in this pass; the tool
+  currently covers core only.
+- **`func_80006DDC_79DC` is auto-named on both sides**, so the "largely
+  rewritten" attribution rests on byte comparison rather than a name match.
 
 ## Current state of the EU decomp tree
 
@@ -112,29 +113,29 @@ build.eu/bh.eu.z64: OK   sha1 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
 ```
 
 Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments, producing 42
-hand-decompilable C stubs. What still needs attention:
+hand-decompilable C stubs. Still open:
 
 - **Core/overlay seam is mis-split.** The frontend overlay really starts at
   `0x40780` but the config says `0x40750`. Moving it makes splat emit two
-  one-instruction functions from the 8-byte alignment pad. Fixing it properly
-  also needs the frontend overlay's own subsegment boundaries, which are
-  PAL-specific and cannot be derived from NTSC: every PAL overlay's entry code
-  differs from its NTSC counterpart, so no offset mapping recovers them.
-- **PAL 50 Hz functions are not yet isolated.** They need an explicit marker so
-  that shared NTSC decomp is never applied to them.
-- Overlay offsets downstream of the frontend are unverified pending the
-  0xB30/0xB60 reconciliation above.
+  one-instruction functions from the alignment pad, and the overlay's own
+  subsegment boundaries are PAL specific.
+- **The 35 differing functions are not yet marked** so shared NTSC decomp is
+  never applied to them.
+- Overlay offsets after the frontend are unverified, per above.
 
 ## Tooling notes
 
-- splat derives `bh.ld` and `undefined_syms_auto.txt` from the shared `basename`,
-  so they are configured per version (`ld_script_path`, `undefined_syms_auto_path`)
-  in `bh.eu.yaml`. Without this, extracting EU silently overwrites the US link
-  inputs and breaks the US build.
+- Function comparisons must not be keyed on `symbol_addrs`. Its `type:func`
+  entries number about 267 and none fall in the game-code region, so a
+  symbol-keyed comparison reports "nothing differs" while missing every real
+  difference. Use splat's detection instead, as `tools/pal_na_diff.py` does.
+- splat derives `bh.ld` and `undefined_syms_auto.txt` from the shared
+  `basename`, so they are configured per version (`ld_script_path`,
+  `undefined_syms_auto_path`) in `bh.eu.yaml`. Without this, extracting EU
+  silently overwrites the US link inputs and breaks the US build.
 - `jlabel` in `tools/asm-processor/prelude.inc` emits `.global`. It is the only
   macro that needed it: jump-table targets must resolve across object files once
-  core rodata is split into separate segments. NTSC keeps its jump tables in C and
-  never hit this.
+  core rodata is split into separate segments. NTSC keeps its jump tables in C
+  and never hit this.
 - asm-processor's minimum function size is **2 instructions** for `-O2` without
-  `-framepointer` (`tools/asm-processor/asm_processor.py`), not 5. Only
-  one-instruction GLOBAL_ASM blocks are rejected.
+  `-framepointer`, not 5. Only one-instruction GLOBAL_ASM blocks are rejected.
