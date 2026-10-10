@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-10T11:05:44Z",
-  "commit": "b1246b39",
-  "commit_timestamp": "2026-10-11T00:04:56+13:00",
+  "generated": "2026-10-10T19:07:22Z",
+  "commit": "1b896614",
+  "commit_timestamp": "2026-10-11T08:06:33+13:00",
   "overall": {
     "total_functions": 3056,
-    "matched": 2455,
-    "non_matching": 601,
+    "matched": 2458,
+    "non_matching": 598,
     "asm_stubs": 0,
-    "matched_pct": 80.33,
+    "matched_pct": 80.43,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1137,
-      "non_matching": 311,
+      "matched": 1140,
+      "non_matching": 308,
       "asm_stubs": 0,
       "total": 1448,
-      "matched_pct": 78.5,
+      "matched_pct": 78.7,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -2286,11 +2286,11 @@
     {
       "path": "overlay_gameplay/outside/A49A0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 5,
-      "non_matching": 9,
+      "matched": 8,
+      "non_matching": 6,
       "asm_stubs": 0,
       "total": 14,
-      "matched_pct": 35.7,
+      "matched_pct": 57.1,
       "contributor": "jaytheham"
     },
     {
@@ -2341,7 +2341,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 76.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
@@ -2577,9 +2577,9 @@
   "contributors": [
     {
       "name": "lunarlaurus",
-      "files": 17,
-      "matched": 974,
-      "non_matching": 352,
+      "files": 16,
+      "matched": 917,
+      "non_matching": 334,
       "asm_stubs": 0
     },
     {
@@ -2591,9 +2591,9 @@
     },
     {
       "name": "jaytheham",
-      "files": 73,
-      "matched": 691,
-      "non_matching": 155,
+      "files": 74,
+      "matched": 751,
+      "non_matching": 170,
       "asm_stubs": 0
     },
     {
