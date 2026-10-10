@@ -214,44 +214,23 @@ s32 func_8000E52C_F12C(s32 arg0) {
 
 #ifdef NON_MATCHING
 s32 func_8000E53C_F13C(void) {
+	s32 temp_v0_13;
+	s32 temp_v1;
 	u16 sp136;
-	s32 sp120;
-	s32 sp118;
-	s32 sp114;
-	s32 sp110;
-	s32 sp108;
-	Unk80052B40 spFC;
-	f32 spA0;
-	s32 sp98;
-	s32 sp94;
-	s32 sp90;
-	s32 sp8C;
-	s32 sp88;
-	s32 sp84;
-	s32 sp7C;
-	s32 sp78;
-	u8 *sp74;
-	s32 sp70;
-	s32 sp6C;
-	s32 sp68;
-	s32 sp64;
-	s32 sp60;
-	s32 sp5C;
-	s32 sp58;
-	s16 temp_a0;
-	s16 temp_t9;
-	s16 temp_v0_13;
-	s16 temp_v1;
-	s32 var_t0;
-	s32 var_t5;
-	s32 var_v1;
-	s32 var_ra;
-	s32 var_t3;
-	s32 var_t4;
 	Vtx *temp_s4;
 	Vtx *temp_s0;
 	Vtx *temp_s1;
 	Vtx *temp_s2;
+	s32 sp120;
+	s32 var_t0;
+	s32 sp118;
+	s32 sp114;
+	s32 var_v1;
+	s32 var_t5;
+	s32 sp108;
+	Unk80052B40 spFC;
+	s32 var_t3;
+	s32 sp74;
 
 	sp120 = D_8005BAEC / 0x10;
 	sp118 = -D_8005BAEC / 2;
@@ -263,13 +242,14 @@ s32 func_8000E53C_F13C(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, D_80037650_38250_R, 1.0f);
+	guPerspective(D_8005BB38, &sp136, 30.0f, (f32) D_8005BAEC / (f32) D_8005BAF0, 10.0f, 6000.0f, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, (u32) &sp136);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	spA0 = sinf(D_80037654_38254_R);
-	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((spA0 / cosf(D_80037658_38258_R)) * 2.0f), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	D_8005BB38++;
+	guLookAt(D_8005BB38, 0.0f, 0.0f, (f32) D_8005BAF0 / ((sinf(0.2617993950843811f) / cosf(0.2617993950843811f)) * 2), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	D_8005BB38++;
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	spFC.unk0 = 0;
 	var_t0 = 0x14 - (D_8005BAF0 % 0x14);
@@ -279,151 +259,101 @@ s32 func_8000E53C_F13C(void) {
 	spFC.unk2 = -var_t0;
 	spFC.unk4 = 0;
 	func_800039D0_45D0(&spFC, 0, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	D_8005BB38++;
+	sp74 = (s32) &D_803DA800;
 
-	sp84 = 1;
-	sp74 = (u8 *) &D_803DA800;
-	sp70 = 0;
-	sp64 = 0;
-	sp60 = 0x78;
-	sp58 = 0x14;
-	var_v1 = 0;
-	do {
-		sp8C = 1;
-		sp7C = var_v1;
-		sp68 = 0;
-		sp6C = (sp70 * 4) & 0xFFF;
-		var_t5 = 0;
-		var_t4 = 0;
-		var_ra = sp120;
-		sp98 = var_ra << 6;
-		sp5C = sp118;
-		do {
-			temp_s4 = D_8005BB34;
-			D_8005BB34 = temp_s4 + 1;
-			temp_s0 = D_8005BB34;
-			D_8005BB34 = temp_s0 + 1;
-			temp_s1 = D_8005BB34;
-			D_8005BB34 = temp_s1 + 1;
-			temp_s2 = D_8005BB34;
-			D_8005BB34 = temp_s2 + 1;
 
-			var_t3 = var_ra;
-			sp114 = var_t4;
+	for (var_v1 = 0; var_v1 != 12; var_v1++) {
+
+
+		for (var_t5 = 0; var_t5 != 16; var_t5++) {
+			temp_s4 = D_8005BB34++;
+			temp_s0 = D_8005BB34++;
+			temp_s1 = D_8005BB34++;
+			temp_s2 = D_8005BB34++;
+
+			var_t0 = (s16) var_t5;
+			sp114 = (var_t5 * sp120);
+			temp_v1 = var_t5 + 1;
+			var_t3 = (temp_v1 * sp120);
+			temp_v0_13 = var_v1 + 1;
 			if (D_8005BAEC < var_t3) {
 				var_t3 = D_8005BAEC;
 			}
 
-			sp108 = sp58;
+			sp108 = (temp_v0_13 * 20);
 			if (D_8005BAF0 < sp108) {
 				sp108 = D_8005BAF0;
 			}
 
-			D_80059CD2 = sp5C;
+			D_80059CD2 = (sp114 + sp118);
+
 			temp_v0_13 = 0x78 - sp108;
 			D_80059CD4 = temp_v0_13;
 			D_80059CD6 = 0;
-			sp94 = temp_v0_13;
-			sp110 = var_t3;
-			sp90 = var_t4;
-			sp88 = var_ra;
-			((UnkE830ModeEntry *) D_80059CDC)->unk0((s16) var_t5, (s16) sp7C, 0, 1);
+
+
+			D_80059CDC->unk0((s16) var_t0, (s16) var_v1, 0, 1);
 			temp_s4->v.ob[0] = D_80059CD2;
 			temp_s4->v.ob[1] = D_80059CD4;
 			temp_s4->v.ob[2] = D_80059CD6;
 
 			D_80059CD6 = 0;
 			D_80059CD4 = temp_v0_13;
+
 			temp_v1 = var_t3 + sp118;
 			D_80059CD2 = temp_v1;
-			sp78 = temp_v1;
-			((UnkE830ModeEntry *) D_80059CDC)->unk0((s16) var_t5, (s16) sp7C, 1, 1);
+
+			D_80059CDC->unk0((s16) var_t0, (s16) var_v1, 1, 1);
 			temp_s0->v.ob[0] = D_80059CD2;
 			temp_s0->v.ob[1] = D_80059CD4;
 			temp_s0->v.ob[2] = D_80059CD6;
 
-			D_80059CD2 = sp5C;
-			D_80059CD4 = sp60;
+			D_80059CD2 = (sp114 + sp118);
+			D_80059CD4 = (0x78 - (var_v1 * 20));
 			D_80059CD6 = 0;
-			((UnkE830ModeEntry *) D_80059CDC)->unk0((s16) var_t5, (s16) sp7C, 0, 0);
+			D_80059CDC->unk0((s16) var_t0, (s16) var_v1, 0, 0);
 			temp_s1->v.ob[0] = D_80059CD2;
 			temp_s1->v.ob[1] = D_80059CD4;
 			temp_s1->v.ob[2] = D_80059CD6;
 
-			D_80059CD2 = sp78;
-			D_80059CD4 = sp60;
+			D_80059CD2 = temp_v1;
+			D_80059CD4 = (0x78 - (var_v1 * 20));
 			D_80059CD6 = 0;
 			if (D_8005BAEC < D_80059CD2) {
 				D_80059CD2 = D_8005BAEC;
 			}
-			((UnkE830ModeEntry *) D_80059CDC)->unk0((s16) var_t5, (s16) sp7C, 1, 0);
+			D_80059CDC->unk0((s16) var_t0, (s16) var_v1, 1, 0);
 			temp_s2->v.ob[0] = D_80059CD2;
 			temp_s2->v.ob[1] = D_80059CD4;
 			temp_s2->v.ob[2] = D_80059CD6;
 
-			temp_s4->v.tc[0] = sp68;
-			temp_s1->v.tc[0] = sp68;
-			temp_t9 = sp108 << 6;
-			temp_s4->v.tc[1] = temp_t9;
-			temp_s0->v.tc[1] = temp_t9;
-			temp_a0 = var_t3 << 6;
-			temp_s0->v.tc[0] = temp_a0;
-			temp_s2->v.tc[0] = temp_a0;
-			temp_s1->v.tc[1] = sp64;
-			temp_s2->v.tc[1] = sp64;
+			temp_s4->v.tc[0] = temp_s1->v.tc[0] = (sp114 * 64);
+			temp_s4->v.tc[1] = temp_s0->v.tc[1] = sp108 << 6;
+			temp_s0->v.tc[0] = temp_s2->v.tc[0] = var_t3 << 6;
+			temp_s1->v.tc[1] = temp_s2->v.tc[1] = (var_v1 * 20 * 64);
 
-			temp_s4->v.cn[0] = 0xFF;
-			temp_s4->v.cn[1] = 0xFF;
-			temp_s4->v.cn[2] = 0xFF;
-			temp_s4->v.cn[3] = 0xFF;
-			temp_s0->v.cn[0] = 0xFF;
-			temp_s0->v.cn[1] = 0xFF;
-			temp_s0->v.cn[2] = 0xFF;
-			temp_s0->v.cn[3] = 0xFF;
-			temp_s1->v.cn[0] = 0xFF;
-			temp_s1->v.cn[1] = 0xFF;
-			temp_s1->v.cn[2] = 0xFF;
-			temp_s1->v.cn[3] = 0xFF;
-			temp_s2->v.cn[0] = 0xFF;
-			temp_s2->v.cn[1] = 0xFF;
-			temp_s2->v.cn[2] = 0xFF;
-			temp_s2->v.cn[3] = 0xFF;
+			temp_s4->v.cn[0] = temp_s4->v.cn[1] = temp_s4->v.cn[2] = temp_s4->v.cn[3] = 0xFF;
+			temp_s0->v.cn[0] = temp_s0->v.cn[1] = temp_s0->v.cn[2] = temp_s0->v.cn[3] = 0xFF;
+			temp_s1->v.cn[0] = temp_s1->v.cn[1] = temp_s1->v.cn[2] = temp_s1->v.cn[3] = 0xFF;
+			temp_s2->v.cn[0] = temp_s2->v.cn[1] = temp_s2->v.cn[2] = temp_s2->v.cn[3] = 0xFF;
 
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, sp74);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ((((var_t3 - var_t4) + 1) * 2) + 7) >> 3, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadTile(D_8005BB2C++, G_TX_LOADTILE, var_t4 << 2, sp6C >> 2, var_t3 << 2, sp108 << 2);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, ((((var_t3 - sp114) + 1) * 2) + 7) >> 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, sp114 << 2, sp6C >> 2, var_t3 << 2, sp108 << 2);
+			gDPLoadTextureTile(D_8005BB2C++, sp74, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, 240, sp114, var_v1 * 20, var_t3, sp108, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(temp_s4), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
+		}
+	}
 
-			sp68 += sp98;
-			sp8C = var_t5 + 1;
-			sp5C += sp120;
-			var_t4 += sp120;
-			var_ra += sp120;
-			var_t5 = sp8C;
-		} while (var_t5 != 0x10);
-
-		sp64 += 0x500;
-		sp70 += 0x14;
-		sp60 -= 0x14;
-		sp58 += 0x14;
-		var_v1 = sp84;
-		sp84++;
-	} while (var_v1 != 0xC);
-
-	if (((UnkE830ModeEntry *) D_80059CDC)->unk10 < D_80059CD0) {
-		D_80059CD0 = ((UnkE830ModeEntry *) D_80059CDC)->unk10;
+	if (D_80059CDC->unk10 < D_80059CD0) {
+		D_80059CD0 = D_80059CDC->unk10;
 		D_80059CE0 = 0.0f;
 		return 1;
 	}
 
 	D_80059CD0 = (s16) (D_80059CD0 + D_80059CE0);
+	D_80059CE0 += D_80059CDC->unkC;
 	D_80059CD8++;
-	D_80059CE0 += ((UnkE830ModeEntry *) D_80059CDC)->unkC;
 	if (D_80059CD8 >= 0x80) {
 		D_80059CD8 = 0x7F;
 	}

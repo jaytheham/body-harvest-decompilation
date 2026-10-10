@@ -316,7 +316,7 @@ typedef struct {
 } Unk8004773C; /* size = 0x04 */
 
 typedef struct {
-	/* 0x00 */ void (*unk0)(s32, s32, s32, s32);
+	/* 0x00 */ void (*unk0)(s16, s16, s16, s16);
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ u8 pad6[2];
 	/* 0x08 */ f32 unk8;

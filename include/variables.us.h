@@ -489,9 +489,6 @@ extern const f64 D_80037630_38230[];
 extern const f64 D_80037638_38238[];
 extern const f64 D_80037640_38240[];
 extern const f64 D_80037648_38248[];
-extern const f32 D_80037650_38250[];
-extern const f32 D_80037654_38254[];
-extern const f32 D_80037658_38258[];
 extern const char D_80037660_38260[]; /* osSyncPrintf format string */
 extern const char D_8003767C_3827C[]; /* osSyncPrintf format string */
 extern const char D_80037694_38294[]; /* osSyncPrintf format string */
@@ -4074,9 +4071,6 @@ extern const f64 D_80037630_38230_R;
 extern const f64 D_80037638_38238_R;
 extern const f64 D_80037640_38240_R;
 extern const f64 D_80037648_38248_R;
-extern const f32 D_80037650_38250_R;
-extern const f32 D_80037654_38254_R;
-extern const f32 D_80037658_38258_R;
 extern const f32 D_800382F0_38EF0_R;
 extern const f64 D_800382F8_38EF8_R;
 extern const f32 D_80038300_38F00_R;
