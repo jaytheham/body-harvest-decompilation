@@ -2811,9 +2811,9 @@ extern f32 D_80159D50;
 extern f32 D_80159D54;
 extern f32 D_80159D58;
 extern VehicleInstance *D_80159D5C;
-extern Unk8010ED84Pos *D_80159D60;
+extern VehicleInstance *D_80159D60;
 extern VehicleType *D_80159D64;
-extern Unk8010ED84Data *D_80159D68;
+extern VehicleType *D_80159D68;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern f32 D_80159D78[8]; // X corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
@@ -3010,7 +3010,7 @@ extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
 extern BuildingType buildingTypes[0x20]; // 0x80259090
 extern u8 D_80259470[];
-extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
+extern Unk80259490 D_80259490[128]; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
 extern Unk80259D90 D_80259D90[0x97];
 extern u8 D_8025CCC0[];
@@ -4115,6 +4115,27 @@ extern const f64 D_80144028_152FD8[1];
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
+
+extern const ShadowGeometryConstant D_801449E0_153990;
+extern const ShadowGeometryConstant D_801449F0_1539A0;
+extern const ShadowGeometryConstant D_801449F8_1539A8;
+extern const ShadowGeometryConstant D_80144A00_1539B0;
+extern const ShadowGeometryConstant D_80144A08_1539B8;
+extern const ShadowGeometryConstant D_80144A10_1539C0;
+extern const ShadowGeometryConstant D_80144A18_1539C8;
+extern const f32 D_801449E8_153998[1];
+
+extern const ShadowGeometryConstant D_80144A80_153A30;
+extern const ShadowGeometryConstant D_80144D70_153D20;
+extern const ShadowGeometryConstant D_80144B28_153AD8;
+extern const ShadowGeometryConstant D_80144B30_153AE0;
+extern const ShadowGeometryConstant D_80144B38_153AE8;
+extern const ShadowGeometryConstant D_80144B40_153AF0;
+extern const ShadowGeometryConstant D_80144B58_153B08;
+extern const ShadowGeometryConstant D_80144BA8_153B58;
+extern const ShadowGeometryConstant D_80144CF8_153CA8;
+extern const ShadowGeometryConstant D_80144D00_153CB0;
+
 
 
 extern s32 D_800A4340_Menu1;
