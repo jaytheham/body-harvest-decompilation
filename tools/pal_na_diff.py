@@ -210,6 +210,39 @@ def mark(rows, insert_at):
     return touched, sum(len(v) for v in by_stub.values())
 
 
+def classify_all():
+    """Run the comparison and return its rows.
+
+    Returns ``[(ntsc_rom, ntsc_name, size, class, pal_rom, pal_name)]`` for every
+    NTSC core function, where ``class`` is ``EXACT``, ``SHAPE``, ``DIFF`` or
+    ``MISSING``. ``pal_rom`` is the ROM offset of the PAL function at the
+    corresponding address, which is the key the inventory joins on: a ``DIFF``
+    function is one PAL rewrote, so its name often differs from NTSC's and a
+    name join would miss it.
+    """
+    na = (ROOT / "baserom.us.z64").read_bytes()
+    pal = (ROOT / "baserom.eu.z64").read_bytes()
+    run_probe()
+    insert_at = find_insert_point(na, pal)
+
+    pal_names = {}
+    for f in (ROOT / "asm.eu").rglob("*.s"):
+        for rom, name, _ in parse_functions(f, (CORE_START, CORE_END_PAL)):
+            pal_names.setdefault(rom, name)
+
+    rows = []
+    for rom, name, size in parse_functions(PROBE_ASM, (CORE_START, CORE_END_NA)):
+        cls = classify(na, pal, rom, size, insert_at)
+        p = rom + SHIFT if rom >= insert_at else rom
+        rows.append((rom, name, size, cls, p, pal_names.get(p, "")))
+    return rows
+
+
+def diff_classes():
+    """``{ntsc_name: class}`` from :func:`classify_all`, keyed by NTSC name."""
+    return {name: cls for _rom, name, _size, cls, _p, _pn in classify_all()}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true",
@@ -223,18 +256,7 @@ def main():
     run_probe()
     insert_at = find_insert_point(na, pal)
 
-    pal_names = {}
-    for f in (ROOT / "asm.eu").rglob("*.s"):
-        for rom, name, _ in parse_functions(f, (CORE_START, CORE_END_PAL)):
-            pal_names.setdefault(rom, name)
-
-    funcs = parse_functions(PROBE_ASM, (CORE_START, CORE_END_NA))
-    rows = []
-    for rom, name, size in funcs:
-        cls = classify(na, pal, rom, size, insert_at)
-        p = rom + SHIFT if rom >= insert_at else rom
-        rows.append((rom, name, size, cls, pal_names.get(p, "")))
-
+    rows = classify_all()
     tally = collections.Counter(r[3] for r in rows)
     total = sum(r[2] for r in rows)
     lines = [

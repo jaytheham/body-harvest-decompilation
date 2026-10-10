@@ -8,8 +8,8 @@ Reports, per the seam investigation:
   * decoded `jal`/`j` targets for every differing instruction, so a one-byte
     difference can be read as an address discrepancy rather than a stray byte
 
-Also decodes which segment each difference falls in, using the segment starts
-from bh.eu.yaml, so relocation errors can be separated from layout errors.
+Also decodes which segment each difference falls in, using the segment layout
+from the linker map, so relocation errors can be separated from layout errors.
 
 Baseline (byte-exact) config produces zero differences and therefore no report
 rows; run it against an experimental build.
@@ -17,53 +17,20 @@ rows; run it against an experimental build.
 import argparse
 import hashlib
 import pathlib
-import re
+import sys
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+import decomp_common as dc
+
 REF_SHA = "67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355"
 OUT = pathlib.Path("G:/Temp/opencode/eu_seam")
-
-J_OP = {2, 3}          # j, jal
-JAL_FN = re.compile(r"^\s*- name:\s*(\S+)")
-JAL_START = re.compile(r"^\s*start:\s*(0x[0-9A-Fa-f]+)", re.M)
-
-
-def segment_starts():
-    """(rom_start, name) for every segment, from bh.eu.yaml."""
-    out, name = [], None
-    for line in (ROOT / "bh.eu.yaml").read_text(encoding="utf-8").splitlines():
-        m = JAL_FN.match(line)
-        if m:
-            name = m.group(1)
-        m = JAL_START.match(line)
-        if m and name:
-            out.append((int(m.group(1), 16), name))
-            name = None
-    return sorted(out)
-
-
-def which_segment(off, starts):
-    best = None
-    for start, name in starts:
-        if start <= off:
-            best = name
-        else:
-            break
-    return best or "?"
-
-
-def decode_jal(word, pc):
-    """MIPS j/jal: target = (PC+4)[31:28] | (index << 2)."""
-    index = word & 0x03FFFFFF
-    region = (pc & 0xF0000000) + 4
-    return (region | (index << 2)) & 0xFFFFFFFF
 
 
 def save_artifacts(tag):
     OUT.mkdir(parents=True, exist_ok=True)
-    for name, src in (("bh.eu.ld", ROOT / "bh.eu.ld"),
-                      ("bh.eu.map", ROOT / "build.eu/bh.eu.map"),
-                      ("bh.eu.yaml", ROOT / "bh.eu.yaml")):
+    for name, src in (("bh.eu.ld", dc.ROOT / "bh.eu.ld"),
+                      ("bh.eu.map", dc.ROOT / "build.eu/bh.eu.map"),
+                      ("bh.eu.yaml", dc.ROOT / "bh.eu.yaml")):
         if src.exists():
             (OUT / f"{tag}.{name}").write_bytes(src.read_bytes())
 
@@ -75,13 +42,17 @@ def main():
                     help="copy ld/map/yaml into the experiment folder")
     args = ap.parse_args()
 
-    built = ROOT / "build.eu/bh.eu.z64"
-    ref = ROOT / "baserom.eu.z64"
+    built = dc.ROOT / "build.eu/bh.eu.z64"
+    ref = dc.ROOT / "baserom.eu.z64"
     if not built.exists():
         raise SystemExit("no build.eu/bh.eu.z64; run tools/native_build.py build --version eu")
 
+    # The map is the source of truth for segment layout: it records the load
+    # address ld assigned each segment, which is exactly what a ROM offset has
+    # to be converted against.
+    _, segments = dc.parse_map(dc.ROOT / "build.eu/bh.eu.map", "eu")
+
     b, r = built.read_bytes(), ref.read_bytes()
-    starts = segment_starts()
     lines = []
     lines.append(f"tag              : {args.tag}")
     lines.append(f"built size       : {len(b)}")
@@ -105,7 +76,7 @@ def main():
             print(f"saved artifacts to {OUT}")
         return
 
-    lines.append(f"first difference : 0x{diffs[0]:06X} ({which_segment(diffs[0], starts)})")
+    lines.append(f"first difference : 0x{diffs[0]:06X} ({dc.which_segment_rom(diffs[0], segments)})")
     lines.append("")
 
     runs = [[diffs[0]]]
@@ -117,7 +88,7 @@ def main():
     lines.append("difference runs (start, end, length, segment):")
     for run in runs[:20]:
         s, e = run[0], run[-1]
-        lines.append(f"  0x{s:06X}  0x{e:06X}  {len(run):5d}  {which_segment(s, starts)}")
+        lines.append(f"  0x{s:06X}  0x{e:06X}  {len(run):5d}  {dc.which_segment_rom(s, segments)}")
     if len(runs) > 20:
         lines.append(f"  ... and {len(runs) - 20} more runs")
 
@@ -136,10 +107,13 @@ def main():
             continue
         rw = int.from_bytes(r[base:base + 4], "big")
         bw = int.from_bytes(b[base:base + 4], "big")
-        if (rw >> 26) not in J_OP and (bw >> 26) not in J_OP:
+        if (rw >> 26) not in dc.J_OP and (bw >> 26) not in dc.J_OP:
             continue
-        rt, bt = decode_jal(rw, base), decode_jal(bw, base)
-        seg = which_segment(base, starts)
+        vram = dc.vram_for_rom(base, segments)
+        if vram is None:
+            continue
+        rt, bt = dc.decode_jal(rw, vram), dc.decode_jal(bw, vram)
+        seg = dc.which_segment_rom(base, segments)
         by_region[seg] = by_region.get(seg, 0) + 1
         lines.append(f"  0x{base:06X} {seg:<26} {rw:08X}  {bw:08X} "
                      f"0x{rt:08X}  0x{bt:08X}  {bt - rt:+d}")
