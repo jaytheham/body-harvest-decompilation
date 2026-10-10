@@ -23,7 +23,7 @@ C_FUNC_RE = re.compile(
     r"^(?:static\s+)?[^\s]+\s+([^\s(]+)\(([^;)]*)\)[^;]+?{", re.MULTILINE
 )
 
-C_GLOBAL_ASM_IDO_RE = re.compile(r"GLOBAL_ASM\(\"(\w+\/)*(\w+)\.s\"\)", re.MULTILINE)
+C_GLOBAL_ASM_IDO_RE = re.compile(r"GLOBAL_ASM\(\"([\w.-]+\/)*([\w.-]+)\.s\"\)", re.MULTILINE)
 
 
 class CommonSegC(CommonSegCodeSubsegment):

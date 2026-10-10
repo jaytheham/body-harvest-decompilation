@@ -15,6 +15,17 @@ CYAN    := \033[0;36m
 
 # Directories
 
+ifeq ($(VERSION),eu)
+BUILD_DIR = build.eu
+ASM_DIRS  = asm.eu
+BIN_DIRS  = assets.eu \
+			assets.eu/core \
+			assets.eu/overlay_level/greece \
+			assets.eu/overlay_level/java \
+			assets.eu/overlay_level/america \
+			assets.eu/overlay_level/siberia \
+			assets.eu/overlay_level/comet
+else
 BUILD_DIR = build
 ASM_DIRS  = asm \
 			asm/libultra \
@@ -29,6 +40,7 @@ ASM_DIRS  = asm \
 			asm/data/rsp \
 			asm/data/overlay_gameplay/outside
 BIN_DIRS  = assets
+endif
 SRC_DIR   = src.$(VERSION)
 
 SRC_DIRS  = $(SRC_DIR) \
@@ -271,11 +283,11 @@ compress: dirs $(ALL_RNC_COMPRESSED)
 	#cp $(BUILD_DIR)/assets/rnc*.bin assets/
 
 clean:
-	rm -rf build
+	rm -rf $(BUILD_DIR)
 
 distclean: clean
-	rm -rf asm
-	rm -rf assets
+	rm -rf asm asm.eu
+	rm -rf assets assets.eu
 	rm -f *auto.txt
 	rm -f src.us/data/inc/*
 

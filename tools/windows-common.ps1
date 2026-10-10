@@ -6,14 +6,16 @@ function Get-NativePython {
     if (-not (Test-Path -LiteralPath $python)) {
         $python = $null
         if (Get-Command py -ErrorAction SilentlyContinue) {
-            $candidate = & py -3.12 -c 'import sys; print(sys.executable)' 2>$null
-            if ($LASTEXITCODE -eq 0) { $python = $candidate }
+            foreach ($version in '3.12', '3.11') {
+                $candidate = & py "-$version" -c 'import sys; print(sys.executable)' 2>$null
+                if ($LASTEXITCODE -eq 0) { $python = $candidate; break }
+            }
         }
         if (-not $python -and (Get-Command python -ErrorAction SilentlyContinue)) {
             $python = (Get-Command python).Source
         }
         if (-not $python) {
-            throw 'Install 64-bit Python 3.12 from https://www.python.org/downloads/windows/ (enable the Python launcher), then retry.'
+            throw 'Install 64-bit Python 3.11 or 3.12 from https://www.python.org/downloads/windows/ (enable the Python launcher), then retry.'
         }
     }
     return $python

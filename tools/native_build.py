@@ -1,4 +1,4 @@
-"""Native Windows counterpart of the ROM Makefile (Python 3.12 x64)."""
+"""Native Windows counterpart of the ROM Makefile (Python 3.11/3.12 x64)."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import ctypes
@@ -78,8 +78,10 @@ def download(name):
 
 
 def setup():
-    if os.name != "nt" or sys.version_info[:2] != (3, 12) or ctypes.sizeof(ctypes.c_void_p) != 8:
-        raise RuntimeError("Native builds require 64-bit Python 3.12 on Windows.")
+    # 3.13 is excluded: pygfxd/crunch64 only publish wheels up to cp312 and
+    # their source builds fail on 3.13.
+    if os.name != "nt" or sys.version_info[:2] not in ((3, 11), (3, 12)) or ctypes.sizeof(ctypes.c_void_p) != 8:
+        raise RuntimeError("Native builds require 64-bit Python 3.11 or 3.12 on Windows.")
     CACHE.mkdir(parents=True, exist_ok=True)
     if not PYTHON.exists():
         print("Creating local Python environment...", flush=True)
@@ -134,8 +136,23 @@ def setup():
             run([CACHE / "tcc/tcc/tcc.exe", *extra, source, "-o", target])
 
 
+def layout(version):
+    # US keeps the original directory names; every other version is suffixed so
+    # extractions can coexist. The linker script is always bh.ld because splat
+    # derives it from the basename, so only one version may be extracted at once.
+    suffix = "" if version == "us" else f".{version}"
+    return {
+        "build": f"build{suffix}",
+        "asm": f"asm{suffix}",
+        "assets": f"assets{suffix}",
+        "src": f"src.{version}",
+        "undefined": f"undefined_syms.{version}.txt",
+    }
+
+
 def extract(version):
     import yaml
+    paths = layout(version)
     rom = ROOT / f"baserom.{version}.z64"
     config = ROOT / f"bh.{version}.yaml"
     if not rom.exists():
@@ -143,20 +160,18 @@ def extract(version):
     expected = yaml.safe_load(config.read_text(encoding="utf-8"))["sha1"]
     if hashlib.sha1(rom.read_bytes()).hexdigest() != expected.lower():
         raise RuntimeError(f"{rom.name} does not match the SHA1 in {config.name}; no files were removed.")
-    if version != "us":
-        raise RuntimeError("Native extraction currently supports US only; use the Linux Makefile for EU.")
     # Match extract.ps1's clean extraction, anchored to the repository root.
-    for name in ("asm", "assets"):
+    for name in (paths["asm"], paths["assets"]):
         directory = ROOT / name
         if directory.is_symlink() or directory.resolve() != directory:
             raise RuntimeError(f"Refusing to clean redirected directory: {directory}")
         if directory.exists():
             shutil.rmtree(directory)
     run([sys.executable, "tools/splat/split.py", config.name])
-    run([sys.executable, "tools/fixup_tlut.py"])
+    run([sys.executable, "tools/fixup_tlut.py", paths["assets"]])
     # Paths embedded in GAS string literals must use forward slashes too;
     # otherwise e.g. assets\rsp is interpreted as an escaped carriage return.
-    for assembly in (ROOT / "asm").rglob("*.s"):
+    for assembly in (ROOT / paths["asm"]).rglob("*.s"):
         text = assembly.read_text(encoding="utf-8")
         normalized = re.sub(r'(\.(?:incbin|include)\s+"[^"]+")',
                             lambda match: match.group().replace("\\", "/"), text)
@@ -183,25 +198,32 @@ def compiler_env():
 
 
 def build(args):
-    if args.version != "us":
-        raise RuntimeError("Native builds currently support US only; use the Linux Makefile for EU.")
-    if not (ROOT / "bh.ld").exists() or not (ROOT / "assets/boot.bin").exists():
+    paths = layout(args.version)
+    if not (ROOT / "bh.ld").exists() or not (ROOT / paths["assets"] / "boot.bin").exists():
         raise RuntimeError("Run .\\tools\\extract.ps1 before building.")
     script = (ROOT / "bh.ld").read_text(encoding="utf-8").replace("\\", "/")
     (ROOT / "bh.ld").write_text(script, encoding="utf-8", newline="\n")
     # Splat's script is the source of truth for the link inputs; no duplicated
     # source-directory or asset-format lists are needed here.
-    objects = sorted(set(re.findall(r"(build/[^\s():;]+\.o)\(", script)))
-    build_dir = ROOT / "build"
+    prefix = paths["build"] + "/"
+    objects = sorted(set(re.findall(r"(" + re.escape(prefix) + r"[^\s():;]+\.o)\(", script)))
+    build_dir = ROOT / paths["build"]
+    rel_build = Path(paths["build"])
     build_dir.mkdir(exist_ok=True)
     binutils = CACHE / "binutils"
     assembler = binutils / "mips-ps2-decompals-as.exe"
     linker = binutils / "mips-ps2-decompals-ld.exe"
     asflags = ["-EB", "-mtune=vr4300", "-march=vr4300", "-mabi=32", "-I", "include"]
-    cflags = "-G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_US -woff 649,838".split()
-    cflags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc", "assets", "src.us", "src.us/libultra/audio")]
-    libultra_sources = json.loads((ROOT / "src.us/libultra/sources.json").read_text(encoding="utf-8"))
-    libultra_includes = ["-Isrc.us/libultra/include", "-Isrc.us/libultra/include/PR", "-Isrc.us/libultra"]
+    cflags = f"-G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_{args.version.upper()} -woff 649,838".split()
+    cflags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc",
+                                  paths["assets"], paths["src"], f'{paths["src"]}/libultra/audio')]
+    libultra_sources = {}
+    libultra_includes = []
+    if args.version == "us":
+        sources_file = ROOT / "src.us/libultra/sources.json"
+        if sources_file.exists():
+            libultra_sources = json.loads(sources_file.read_text(encoding="utf-8"))
+            libultra_includes = ["-Isrc.us/libultra/include", "-Isrc.us/libultra/include/PR", "-Isrc.us/libultra"]
     if args.non_matching:
         cflags.append("-DNON_MATCHING")
     env = compiler_env()
@@ -217,8 +239,8 @@ def build(args):
         # objects behind. Invalidate the old configuration before compiling,
         # so switching back cannot accidentally reuse those objects.
         marker.unlink(missing_ok=True)
-    headers_time = max((p.stat().st_mtime_ns for folder in ("include", "src.us") for p in (ROOT / folder).rglob("*.h")), default=0)
-    asm_time = max((p.stat().st_mtime_ns for p in (ROOT / "asm").rglob("*.s")), default=0)
+    headers_time = max((p.stat().st_mtime_ns for folder in ("include", paths["src"]) for p in (ROOT / folder).rglob("*.h")), default=0)
+    asm_time = max((p.stat().st_mtime_ns for p in (ROOT / paths["asm"]).rglob("*.s")), default=0)
 
     def binary(source, target):
         run([linker, "-r", "-b", "binary", "-o", target, source], quiet=args.quiet)
@@ -228,7 +250,7 @@ def build(args):
 
     def compile_object(name):
         target = ROOT / name
-        source = Path(name.removeprefix("build/").removesuffix(".o"))
+        source = Path(name.removeprefix(prefix).removesuffix(".o"))
         # .png, .pal and compressed files have a generated input, whose source
         # is located below before checking timestamps.
         original = source
@@ -259,7 +281,7 @@ def build(args):
                 compiled = source
                 processor = [sys.executable, "tools/asm-processor/asm_processor.py", optimization, source]
                 if global_asm:
-                    compiled = Path("build") / source
+                    compiled = rel_build / source
                     with compiled.open("wb") as out:
                         run(processor, output=out, quiet=args.quiet)
                 run([CACHE / "ido/cc.exe", "-c", *source_cflags, optimization, libultra_config.get("isa", "-mips2"), "-32", "-o", name, compiled], env=env, quiet=args.quiet)
@@ -273,16 +295,16 @@ def build(args):
                     run([*processor, "--post-process", name, "--assembler", asm_command,
                          "--asm-prelude", "tools/asm-processor/prelude.inc"], quiet=args.quiet)
             elif source.suffix == ".png":
-                generated = Path("build") / source
+                generated = rel_build / source
                 convert(source.suffixes[-2][1:], source, generated)
                 binary(generated, target)
             elif source.suffix == ".pal":
-                generated = Path("build") / source
+                generated = rel_build / source
                 convert("palette", original, generated)
                 binary(generated, target)
             elif source.suffix == ".rnc":
-                raw = Path("build") / source.with_suffix("")
-                packed = Path("build") / source
+                raw = rel_build / source.with_suffix("")
+                packed = rel_build / source
                 if original.suffix == ".png":
                     convert(source.suffixes[-2][1:], original, raw)
                 else:
@@ -302,28 +324,31 @@ def build(args):
     print(f"Building {len(objects)} objects ({args.jobs} workers)...", flush=True)
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         list(pool.map(compile_object, objects))
-    library = build_dir / "lib/libultra_rom.a"
-    library.parent.mkdir(exist_ok=True)
+    # The splat script always names build/lib/libultra_rom.a, even for EU.
+    library = ROOT / "build/lib/libultra_rom.a"
+    library.parent.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ROOT / "lib/libultra_rom.a", library)
     run([sys.executable, "tools/set_o32abi_bit.py", "--quiet", library], quiet=args.quiet)
-    ldflags = ["-T", "bh.ld", "-T", "undefined_syms.us.txt", "-T", "undefined_syms_auto.txt",
-               "-Map", "build/bh.us.map", "--no-check-sections", "build/lib/libultra_rom.a"]
-    for symbol in ("osViGetCurrentLine", "osAiGetLength", "osPiGetStatus", "__osLeoInterrupt", "guTranslate"):
-        ldflags += ["-u", symbol]
-    ldflags += ["-o", "build/bh.us.elf"]
+    elf = f'{paths["build"]}/bh.{args.version}.elf'
+    ldflags = ["-T", "bh.ld", "-T", paths["undefined"], "-T", "undefined_syms_auto.txt",
+               "-Map", f'{paths["build"]}/bh.{args.version}.map', "--no-check-sections", "build/lib/libultra_rom.a"]
+    if args.version == "us":
+        for symbol in ("osViGetCurrentLine", "osAiGetLength", "osPiGetStatus", "__osLeoInterrupt", "guTranslate"):
+            ldflags += ["-u", symbol]
+    ldflags += ["-o", elf]
     print("Linking ROM...", flush=True)
     run([linker, *ldflags], quiet=args.quiet)
-    run([binutils / "mips-ps2-decompals-objcopy.exe", "-O", "binary", "build/bh.us.elf", "build/bh.us.bin"], quiet=args.quiet)
-    rom = build_dir / "bh.us.z64"
-    shutil.copyfile(build_dir / "bh.us.bin", rom)
+    run([binutils / "mips-ps2-decompals-objcopy.exe", "-O", "binary", elf, f'{paths["build"]}/bh.{args.version}.bin'], quiet=args.quiet)
+    rom = build_dir / f"bh.{args.version}.z64"
+    shutil.copyfile(build_dir / f"bh.{args.version}.bin", rom)
     marker.write_text(config)
     if args.non_matching:
         run([sys.executable, "tools/n64crc.py", rom])
         print("Skipping SHA1 check (NON_MATCHING); CRC updated.")
     else:
-        expected = (ROOT / "bh.us.sha1").read_text().split()[0].lower()
+        expected = (ROOT / f"bh.{args.version}.sha1").read_text().split()[0].lower()
         actual = hashlib.sha1(rom.read_bytes()).hexdigest()
-        print(f"build/bh.us.z64: {'OK' if actual == expected else 'FAILED'}", flush=True)
+        print(f'{paths["build"]}/bh.{args.version}.z64: {"OK" if actual == expected else "FAILED"}', flush=True)
 
 
 def main():
