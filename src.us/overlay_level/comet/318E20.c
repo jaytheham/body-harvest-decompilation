@@ -992,9 +992,7 @@ void func_802D4EE4_319034(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_802D4F4C_31909C(void) {
-	BuildingInstance *temp_t5;
 
 	osSyncPrintf(&D_802E7A60_32BBB0);
 	if (func_8000726C_7E6C(0x2D) == 0) {
@@ -1051,14 +1049,11 @@ void func_802D4F4C_31909C(void) {
 		func_8011C080_12B030(0xAF);
 	}
 	if (D_80047F98 != 0) {
-		temp_t5 = &buildingInstances[func_80120634_12F5E4()];
-		D_80157FA4 = temp_t5;
-		temp_t5->yCoord = 0x7D00;
+		D_80157FA4 = &buildingInstances[func_80120634_12F5E4()];
+		D_80157FA4->yCoord = 0x7D00;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4F4C_31909C.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_802D522C_31937C(s16 arg0) {
@@ -3243,21 +3238,24 @@ void func_802DBDD0_31FF20(u8 arg0) {
 }
 
 
+
+
+// CURRENT(8) - exact instructions; alien pointer spill is 0x24 instead of 0x28.
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBDD0_31FF20.s")
 #endif
 
-// CURRENT(8) - exact instructions; alien pointer spill is 0x24 instead of 0x28.
 #ifdef NON_MATCHING
 void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2) {
 	s16 params[2];
 	s32 pad0;
-	s32 pad1;
+	u32 result;
 
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) {
 		params[0] = arg1;
 		params[1] = arg2;
-		switch (func_80081F18_90EC8(arg0, 2, 0xD, params, D_802E566C_3297BC) & 0xFF) {
+		result = func_80081F18_90EC8(arg0, 2, 0xD, params, D_802E566C_3297BC) & 0xFF;
+		switch (result) {
 		case 4:
 		case 7:
 		case 0xA:
@@ -3267,9 +3265,10 @@ void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2) {
 		case 0xD:
 			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
 			break;
-		}
-	}
+		}	}
 }
+
+
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBEA4_31FFF4.s")
