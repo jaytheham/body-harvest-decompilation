@@ -1523,7 +1523,9 @@ typedef struct {
 	/* 0x60 */ u8 unk60;
 	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
 	/* 0x62 */ u8 unk62;
-	/* 0x63 */ u8 pad63[0x7];
+	/* 0x63 */ u8 pad63[3];
+	/* 0x66 */ s16 unk66;
+	/* 0x68 */ u8 pad68[2];
 	/* 0x6A */ s16 unk6A;
 	/* 0x6C */ u8 pad6C[0x4];
 } VehicleType; /* size = 0x70 */
@@ -1541,7 +1543,8 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ u8 pad04[4];
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 } WeaponSpecEntry; /* size = 0xA */
 
