@@ -1719,4 +1719,6 @@ s32 func_80083060_92010(s32 arg0, s32 arg1, s32 arg2, u8 *arg3);
 
 void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4);
 
+void func_802DDFF0_2C0420(u8 arg0);
+
 #endif /* LIBULTRA_REFERENCE */
