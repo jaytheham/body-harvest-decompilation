@@ -4,18 +4,9 @@
 
 /* Read-only strings, numeric constants, and switch targets. */
 const f64 D_80037620_38220[] = {32767.0};
-const f64 D_80037628_38228[] = {32767.0};
-const f64 D_80037630_38230[] = {32767.0};
-const f64 D_80037638_38238[] = {32767.0};
-const f64 D_80037640_38240[] = {32767.0};
-const f64 D_80037648_38248[] = {2.8};
-const f32 D_80037650_38250[] = {6000.0f};
-const f32 D_80037654_38254[] = {0.2617993950843811f};
-const f32 D_80037658_38258[] = {0.2617993950843811f};
 
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
-void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3);
 
 /* Unreferenced zero block preceding the projection effect table. */
@@ -136,58 +127,55 @@ void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
   D_80059CD6 = (-D_80059CD0) * 2;
 }
 
-/* Distance-based lens distortion correction: selects rodata constant based on
-   arg0/arg1 threshold, computes distortion factor, updates (D_80059CD2, D_80059CD4). */
-#ifdef NON_MATCHING
+/* Apply distance-based lens distortion around the selected screen quadrant. */
 void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	f32 var_f0;
-	s32 temp_v0;
-	s32 temp_v1;
-	s32 temp_t2;
+    s32 x;
+    s32 y;
+    s32 distortion;
+    f32 scale;
 
-	if (arg0 >= 5) {
-		temp_v0 = arg0 + arg2;
-		if (arg1 >= 4) {
-			temp_v0 -= 4;
-			temp_v1 = (arg1 + arg3) - 1;
-			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037628_38228_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037628_38228_R);
-			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
-		} else {
-			temp_v0 -= 4;
-			temp_v1 = (arg1 + arg3) - 7;
-			temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-			var_f0 = (f32) ((D_80037630_38230_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037630_38230_R);
-			D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
-		}
-		D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 - 0x480) * var_f0) + 1152.0f);
-		return;
-	}
-	temp_v0 = arg0 + arg2;
-	if (arg1 >= 4) {
-		temp_v0 -= 6;
-		temp_v1 = (arg1 + arg3) - 1;
-		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037638_38238_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037638_38238_R);
-		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 + 0x300) * var_f0) - 768.0f);
-	} else {
-		temp_v0 -= 6;
-		temp_v1 = (arg1 + arg3) - 7;
-		temp_t2 = (temp_v0 * temp_v0) + (temp_v1 * temp_v1);
-		var_f0 = (f32) ((D_80037640_38240_R - (f32) ((D_80059CD0 * 2 * (0x19 - temp_t2)) + (D_80059CD0 * temp_t2))) / D_80037640_38240_R);
-		D_80059CD4 = (s16) (s32) (((f32) (D_80059CD4 - 0x300) * var_f0) + 768.0f);
-	}
-	D_80059CD2 = (s16) (s32) (((f32) (D_80059CD2 + 0x480) * var_f0) - 1152.0f);
+    if (arg0 >= 5) {
+        if (arg1 >= 4) {
+            x = arg0 + arg2 - 4;
+            y = arg1 + arg3 - 1;
+            distortion = x * x + y * y;
+            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+            scale = (32767.0 - (f32) distortion) / 32767.0;
+            D_80059CD4 = (D_80059CD4 + 768) * scale - 768.0f;
+        } else {
+            x = arg0 + arg2 - 4;
+            y = arg1 + arg3 - 7;
+            distortion = x * x + y * y;
+            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+            scale = (32767.0 - (f32) distortion) / 32767.0;
+            D_80059CD4 = (D_80059CD4 - 768) * scale + 768.0f;
+        }
+        D_80059CD2 = (D_80059CD2 - 1152) * scale + 1152.0f;
+    } else {
+        if (arg1 >= 4) {
+            x = arg0 + arg2 - 6;
+            y = arg1 + arg3 - 1;
+            distortion = x * x + y * y;
+            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+            scale = (32767.0 - (f32) distortion) / 32767.0;
+            D_80059CD4 = (D_80059CD4 + 768) * scale - 768.0f;
+        } else {
+            x = arg0 + arg2 - 6;
+            y = arg1 + arg3 - 7;
+            distortion = x * x + y * y;
+            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+            scale = (32767.0 - (f32) distortion) / 32767.0;
+            D_80059CD4 = (D_80059CD4 - 768) * scale + 768.0f;
+        }
+        D_80059CD2 = (D_80059CD2 + 1152) * scale - 1152.0f;
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E048_EC48.s")
-#endif
 
 /* Update projection coordinates from struct fields and screen-space offsets. */
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 	D_8005BAE8->unk0 = (f32) (D_8005BAE8->unk0 + D_8005BAE8->unkC);
 	D_8005BAE8->unk4 = (f32) (D_8005BAE8->unk4 + D_8005BAE8->unk10);
-	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + D_80037648_38248_R);
+	D_8005BAE8->unk10 = (f32) ((f64) D_8005BAE8->unk10 + 2.8);
 	D_80059CD2 = (s16) (s32) (D_8005BAE8->unk0 + (f32) (arg2 << 8));
 	D_80059CD4 = (s16) (s32) (-D_8005BAE8->unk4 - (f32) (arg3 << 8));
 	D_80059CD6 = 0;

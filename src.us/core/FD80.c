@@ -10,6 +10,12 @@ Vp D_80031B60_32760[] = {
 s32 D_80031B80_32780 = 0;
 s32 D_80031B84_32784 = 0;
 
+/* E830's remaining assembly constants follow its generated double literals.
+   Keep the final zero so the stack-overflow strings retain their addresses. */
+const f32 D_80037650_38250[] = {6000.0f};
+const f32 D_80037654_38254[] = {0.2617993950843811f};
+const f32 D_80037658_38258[] = {0.2617993950843811f, 0.0f};
+
 /* Read-only strings, numeric constants, and switch targets. */
 const char D_80037660_38260[] = "Schedule Stack Overflow\n";
 const char D_8003767C_3827C[] = "Boot Stack Overflow\n";
