@@ -3014,40 +3014,38 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1) {
 	return (s16) var_v1;
 }
 
-// CURRENT(5674)
+// CURRENT(4601): inline distance conversions and corrected output slots; pointer allocation remains.
 #ifdef NON_MATCHING
 s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	VehicleType *type;
-	s16 h0, h1, h2, h3, h4, h5, h6, h7, temp;
 	f32 xOff, zOff;
-	f64 halfDist;
-	u16 angle;
 
-	angle = arg1;
-	type = &vehicleTypes[arg0->unk1A];
-	xOff = (f32)(((f64)(f32)coss(angle) / 32768.0) * (halfDist = (f64)(arg2 >> 1)));
-	zOff = (f32)(((f64)(f32)sins(angle) / 32768.0) * halfDist);
-	func_800F9D60_108D10((s16)((f32)arg0->unk0 - xOff), (s16)((f32)arg0->unk4 - zOff), &h0, &temp, &h4);
-	func_800F9D60_108D10((s16)((f32)arg0->unk0 + xOff), (s16)((f32)arg0->unk4 + zOff), &h1, &temp, &h5);
+	{
+		s16 h0, h1, temp, h4, h5, h2, h3, h6, h7;
+		type = &vehicleTypes[arg0->unk1A];
+		xOff = (f32)(((f32)coss((u16)arg1) / 32768.0) * (f64)(arg2 >> 1));
+		zOff = (f32)(((f32)sins((u16)arg1) / 32768.0) * (f64)(arg2 >> 1));
+		func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 - xOff), (s16)(s32)((f32)arg0->unk4 - zOff), &h0, &temp, &h4);
+		func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 + xOff), (s16)(s32)((f32)arg0->unk4 + zOff), &h1, &temp, &h5);
 
-	xOff = (f32)(((f64)(f32)coss(angle) / 32768.0) * (halfDist = (f64)(arg2 >> 2)));
-	zOff = (f32)(((f64)(f32)sins(angle) / 32768.0) * halfDist);
-	func_800F9D60_108D10((s16)((f32)arg0->unk0 - xOff), (s16)((f32)arg0->unk4 - zOff), &h2, &temp, &h6);
-	func_800F9D60_108D10((s16)((f32)arg0->unk0 + xOff), (s16)((f32)arg0->unk4 + zOff), &h3, &temp, &h7);
+		xOff = (f32)(((f32)coss((u16)arg1) / 32768.0) * (f64)(arg2 >> 2));
+		zOff = (f32)(((f32)sins((u16)arg1) / 32768.0) * (f64)(arg2 >> 2));
+		func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 - xOff), (s16)(s32)((f32)arg0->unk4 - zOff), &h2, &temp, &h6);
+		func_800F9D60_108D10((s16)(s32)((f32)arg0->unk0 + xOff), (s16)(s32)((f32)arg0->unk4 + zOff), &h3, &temp, &h7);
 
-	if (!(type->unk4C & 0x100)) {
-		if (D_80222A70 >= h0) {
-			h0 = (s16)D_80222A70;
-		}
-		if (D_80222A70 >= h1) {
-			h1 = (s16)D_80222A70;
-		}
-		if (D_80222A70 >= h2) {
-			h2 = (s16)D_80222A70;
-		}
-		if (D_80222A70 >= h3) {
-			h3 = (s16)D_80222A70;
-		}
+		if (!(type->unk4C & 0x100)) {
+			if (D_80222A70 >= h0) {
+				h0 = (s16)D_80222A70;
+			}
+			if (D_80222A70 >= h1) {
+				h1 = (s16)D_80222A70;
+			}
+			if (D_80222A70 >= h2) {
+				h2 = (s16)D_80222A70;
+			}
+			if (D_80222A70 >= h3) {
+				h3 = (s16)D_80222A70;
+			}
 	}
 
 	if ((arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) || (arg0->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)) {
@@ -3073,6 +3071,7 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	}
 
 	return func_80003824_4424((f32)arg2, (f32)(h0 - h1));
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FA018_108FC8.s")
