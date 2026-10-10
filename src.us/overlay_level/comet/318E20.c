@@ -32,12 +32,12 @@ s32 D_802E4F44_329094[9] = {
 
 EffectRgb D_802E4F68_3290B8 = { 100, 100, 255 };
 SignedWord D_802E4F6C_3290BC = { 0x1000C43C };
-volatile s32 D_802E4F70_3290C0 = 0x6464FF00;
-volatile s32 D_802E4F74_3290C4 = 0x10003840;
-s32 D_802E4F78_3290C8 = 0x6464FF00;
-s32 D_802E4F7C_3290CC = 0xC40A3840;
-s32 D_802E4F80_3290D0 = 0x6464FF00;
-s32 D_802E4F84_3290D4 = 0xC40AC43C;
+EffectRgb D_802E4F70_3290C0 = { 100, 100, 255 };
+SignedWord D_802E4F74_3290C4 = { 0x10003840 };
+EffectRgb D_802E4F78_3290C8 = { 100, 100, 255 };
+SignedWord D_802E4F7C_3290CC = { 0xC40A3840 };
+EffectRgb D_802E4F80_3290D0 = { 100, 100, 255 };
+SignedWord D_802E4F84_3290D4 = { 0xC40AC43C };
 
 s32 D_802E4F88_3290D8[11] = {
 	-136, 0x78789696, 0x963C3C3C, 81, 0x00080000, 0,
@@ -1333,21 +1333,18 @@ void func_802D5F24_31A074(void) {
 	func_800072CC_7ECC(0x30);
 }
 
-// CURRENT(2000)
-#ifdef NON_MATCHING
 s32 func_802D5F6C_31A0BC(void) {
-	s32 sp20;
-	s32 levelIdx;
-	s16 sp24;
+	EffectRgb sp24;
+	SignedWord sp20;
 
-	sp24 = *((s16 *)&D_802E4F70_3290C0 + 1);
+	sp24 = D_802E4F70_3290C0;
 	sp20 = D_802E4F74_3290C4;
 	switch (D_80157F8C) {
 	case 0:
 		D_800313FC = 1000;
 		if (D_80157F8E++ >= 71) {
 			D_80157F8E = 0;
-			D_80157F8C = 1;
+			D_80157F8C++;
 		}
 		break;
 	case 1:
@@ -1361,15 +1358,12 @@ s32 func_802D5F6C_31A0BC(void) {
 		}
 		break;
 	case 2:
-		levelIdx = currentLevel - 1;
-		D_800313FC = *(s16 *)((u8 *)D_80031636 + levelIdx * 4);
+		D_800313FC = D_80031634_32234[((currentLevel - 1) << 1) + 1];
 		return 1;
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D5F6C_31A0BC.s")
-#endif
+
 
 void func_802D60B8_31A208(void) {
 	if (func_8000726C_7E6C(0x2E) == 0) {

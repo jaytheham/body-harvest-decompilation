@@ -7,3 +7,5 @@ Define the globals and locals directly as a three-byte struct with named RGB byt
 Use the existing `Vec2_S16` for the position and correct the called spawn routine's position parameter to that type. It reads only the two adjacent halfwords, not an entire effect entry.
 
 Verified with the project build: `build/bh.us.z64: OK`; function diff: `CURRENT (0)`.
+
+Comet func_802D5DD8_319F28 uses the same copy for its unused color local. Declaring the color first and the four-byte SignedWord position next places them at sp+0x24 and sp+0x20 with a 0x28 frame. The aggregate copies survive even though the locals are never subsequently read; scalar assignments were optimized away.
