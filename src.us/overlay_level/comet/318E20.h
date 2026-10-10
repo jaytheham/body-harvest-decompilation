@@ -49,7 +49,7 @@ void func_802D89F0_31CB40(u8 arg0);
 void func_802D8B18_31CC68(u8 arg0);
 void func_802D9100_31D250(u8 arg0);
 void func_802D9128_31D278(u8 arg0);
-void func_802D93D8_31D528(s32 arg0);
+void func_802D93D8_31D528(u8 arg0);
 void func_802D95F8_31D748(u8 arg0);
 void func_802D9658_31D7A8(u8 arg0);
 void func_802D9F60_31E0B0(u8 arg0);

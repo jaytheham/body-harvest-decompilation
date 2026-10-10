@@ -25,3 +25,5 @@ local offset, and produced the ROM flag sequence (`bnez v1` with
 
 Before permuting declaration order on a uniform +N frame shift, try dropping
 the local that only copies a parameter and using the parameter itself.
+
+func_802D89F0_31CB40 reached score 8 after replacing the signed integer conversion and mask with a direct u16 cast of the double product. Removing the named instance pointer restored the remaining spill from 0x20 to 0x24 while retaining the 0x28 frame, giving a complete ROM match. Access the size through alienTypes[typeIndex].unkC.
