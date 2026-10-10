@@ -930,27 +930,27 @@ void func_800F375C_10270C(s8 arg0) {
 	D_80157FF8--;
 }
 
-// CURRENT(130): correct return width; remaining index and add operand registers.
-#ifdef NON_MATCHING
-s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s16 sp36;
+s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, volatile s16 arg2, s16 arg3) {
+	volatile s16 sp36;
 	f32 var_f2;
 	s32 sp36_s32;
+	s32 height;
 
-	func_8011E6FC_12D6AC(arg2, arg3, &sp36);
-	sp36_s32 = alienTypes[alienInstances[arg0->unk144].typeIndex].unk58;
+	func_8011E6FC_12D6AC(arg2, arg3, (s16 *)&sp36);
+	sp36_s32 = alienInstances[arg0->unk144].typeIndex;
+	height = alienTypes[sp36_s32].unk58;
 
-	if (sp36_s32 < 0x33) {
+	if (height < 0x33) {
 		var_f2 = 3.0f;
 	} else {
 		var_f2 = 2.0f;
 	}
 
 	sp36_s32 = sp36;
-	if ((f32)sp36_s32 < (f32)arg1 - (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2) {
-		sp36_s32 = (s16)((f32)arg1 - (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2);
-	} else if ((f32)arg1 - (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2 < (f32)sp36_s32) {
-		sp36_s32 = (s16)((f32)arg1 + (f32)alienTypes[alienInstances[arg0->unk144].typeIndex].unk58 * var_f2);
+	if ((f32)sp36_s32 < (f32)arg1 - (f32)height * var_f2) {
+		sp36_s32 = (s16)((f32)arg1 - (f32)height * var_f2);
+	} else if ((f32)arg1 - (f32)height * var_f2 < (f32)sp36_s32) {
+		sp36_s32 = (s16)((f32)arg1 + (f32)height * var_f2);
 	}
 
 	if (arg1 < sp36_s32) {
@@ -960,9 +960,6 @@ s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 	return sp36_s32;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F384C_1027FC.s")
-#endif
 
 // CURRENT(1716): corrected radii, slot spill and dual counters; allocation and local homes remain.
 #ifdef NON_MATCHING

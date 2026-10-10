@@ -141,7 +141,9 @@ The rotated case accepts a coordinate between an extent and its negation in eith
 
 ### Revisit: terrain clamp index allocation
 
-Twenty further compiled variants of func_800F384C_1027FC did not improve the retained score 130. Naming the byte index, signed-short index, or alien pointer moves the first table lookup into argument registers and can grow the frame. Reusing the word result for the type index and introducing a separate height word exactly fixes the initial V1/T9 lookup allocation, but makes IDO preload the second coordinate into A0 in the branch delay slot. It also moves the short output slot from sp+0x36 to sp+0x32; block-scoped and reordered declarations do not fix all of these effects. Naming the product, clamp bound, argument float, or branch-local sum changes floating allocation without yielding the target addition order. Unsigned index casts and reversing the addition operands leave score 130 unchanged. Retained the original best candidate rather than the larger intermediate variants.
+`func_800F384C_1027FC` now matches all 81 instructions, with a 0x38-byte frame and a verified full ROM checksum. Reuse the word result for the initial alien type index and keep the height in a separate word. This fixes the initial V1/T9 lookup allocation and the floating addition operand order.
+
+Two volatile halfwords control the remaining scheduling: qualify the coordinate parameter and the local terrain-height output. The parameter prevents an early coordinate load in the clamp branch delay slot. The output preserves the final store before that coordinate load, retaining the target V1 store, branch-likely epilogue, and second coordinate load in the call delay slot. Either qualification alone leaves differences. IDO requires the parameter qualification in the header too. The terrain helper takes an ordinary `s16 *`; the explicit cast at its output argument permits the existing helper to initialize the volatile local. Removing the stale partial-match comment and adding that cast retained score zero and `build/bh.us.z64: OK`.
 
 ### Partial airborne controller: unsigned conversion and double negation
 
