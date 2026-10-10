@@ -319,6 +319,8 @@ def run_inner(options: Options, heartbeat: Callable[[], None]) -> List[int]:
     for d in options.directories:
         heartbeat()
         compile_cmd = os.path.join(d, "compile.sh")
+        if os.path.isfile(os.path.join(d, "compile.py")):
+            compile_cmd = os.path.join(d, "compile.py")
         target_o = os.path.join(d, "target.o")
         base_c = os.path.join(d, "base.c")
         for fname in [compile_cmd, target_o, base_c]:

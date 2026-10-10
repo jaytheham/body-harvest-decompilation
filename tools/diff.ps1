@@ -1,5 +1,5 @@
 #!/usr/bin/env pwsh
-# Helper script to run the asm-differ diff inside the bh-container.
+# Run asm-differ using the native Windows Python and MIPS binutils.
 # Usage:
 #   .\diff.ps1 <function name> [<function name with offset>] [--show=target|current] [--structural] [--show-score]
 #
@@ -23,7 +23,9 @@ param(
     [string[]]$RemainingArgs
 )
 
-$Container = 'bh-container'
+$ErrorActionPreference = 'Stop'
+. (Join-Path $PSScriptRoot 'windows-common.ps1')
+$python = Get-NativePython
 
 $NextAddr = ''
 $diffModeArg = ''
@@ -60,34 +62,26 @@ foreach ($arg in $RemainingArgs) {
     }
 }
 
-# build the command string that will be given to bash -c inside the container
-$bashCmd = "tools/asm-differ/diff.py --no-pager"
+# Pass arguments directly, so paths and function names need no shell quoting.
+$diffArgs = @((Join-Path $PSScriptRoot 'asm-differ/diff.py'), '--no-pager')
+if (-not $diffModeArg) { $diffArgs += @('--compress-matching', '3') }
+if ($diffModeArg) { $diffArgs += $diffModeArg }
+if ($structuralArg) { $diffArgs += $structuralArg }
+$diffArgs += $FuncName
+if ($NextAddr) { $diffArgs += "0x$NextAddr" }
 
-# When showing a single side (target/current), omit --compress-matching.
-if (-not $diffModeArg) {
-    $bashCmd += " --compress-matching 3"
+# diff_settings.py and ROM/map paths are relative to the repository root.
+Push-Location (Join-Path $PSScriptRoot '..')
+try {
+    if ($showScore) {
+        & $python @diffArgs
+    } else {
+        & $python @diffArgs | ForEach-Object {
+            $_ -replace '^(TARGET\s+)CURRENT \([0-9]+\)', '$1CURRENT'
+        }
+    }
+    $diffExitCode = $LASTEXITCODE
+} finally {
+    Pop-Location
 }
-
-if ($diffModeArg) {
-    $bashCmd += " $diffModeArg"
-}
-
-if ($structuralArg) {
-    $bashCmd += " $structuralArg"
-}
-
-$bashCmd += " '$FuncName'"
-
-if ($NextAddr) {
-    # prefix with 0x when an address was provided
-    $bashCmd += " 0x$NextAddr"
-}
-
-# execute the command in the container
-if ($showScore) {
-    docker exec $Container bash -c "$bashCmd"
-} else {
-    # Pipe through sed to strip the CURRENT difference amount from the header line.
-    # Using -u (unbuffered) so sed doesn't interfere with interactive output.
-    docker exec $Container bash -c "$bashCmd | sed -uE 's/^(TARGET[[:space:]]+)CURRENT \([0-9]+\)/\1CURRENT/'"
-}
+exit $diffExitCode

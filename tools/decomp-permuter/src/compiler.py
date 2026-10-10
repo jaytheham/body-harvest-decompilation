@@ -2,6 +2,7 @@ from typing import Optional
 import tempfile
 import subprocess
 import shutil
+import sys
 
 from .helpers import try_remove
 
@@ -14,20 +15,23 @@ class Compiler:
         self.show_errors = show_errors
         self.debug_mode = debug_mode
 
+        if compile_cmd.endswith(".py"):
+            self._launcher = sys.executable
+            return
         bash = shutil.which("bash")
         if bash is None:
             raise Exception(
                 "No `bash` executable was found on PATH. Install bash and make "
                 "sure it's on PATH (on Windows, Git for Windows provides one)."
             )
-        self._bash = bash
+        self._launcher = bash
 
     def compile(self, source: str, *, show_errors: bool = False) -> Optional[str]:
         """Try to compile a piece of C code. Returns the filename of the resulting .o
         temp file if it succeeds."""
         show_errors = show_errors or self.show_errors or self.debug_mode
         with tempfile.NamedTemporaryFile(
-            prefix="permuter", suffix=".c", mode="w", delete=False
+            prefix="permuter", suffix=".c", mode="w", encoding="utf-8", newline="\n", delete=False
         ) as f:
             c_name = f.name
             f.write(source)
@@ -49,7 +53,7 @@ class Compiler:
         try:
             stderr = 2 if show_errors else subprocess.DEVNULL
             subprocess.check_call(
-                [self._bash, self.compile_cmd, c_name, "-o", o_name],
+                [self._launcher, self.compile_cmd, c_name, "-o", o_name],
                 stdout=stderr,
                 stderr=stderr,
             )
