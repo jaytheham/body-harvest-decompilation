@@ -127,49 +127,34 @@ void func_8000F368_FF68(void) {
 	((Vp *)D_8005BB24)->vp.vtrans[1] = (s16)(D_80068088 * 2);
 }
 
-// CURRENT(1605)
-#ifdef NON_MATCHING
 void func_8000F478_10078(BhGfxTask *arg0) {
-	void *sp1c;
-	u32 data_size;
-	u32 ucode_boot_size;
-	u64 *ucode;
-	u64 *ucode_data;
-	BhGfxTask *new_var;
+	BhGfxTask *task;
 
 	osWritebackDCacheAll();
-	arg0->list.t.data_ptr = (u64 *)(D_8005BB20 + 0x280);
-	new_var = arg0;
-	data_size = ((((u8 *)D_8005BB2C) - D_8005BB20) - 0x280) >> 3;
-	ucode_boot_size = (u32)(((u8 *)D_8002DEE0_2EAE0) - ((u8 *)rspbootTextStart));
-	ucode_data = (u64 *)D_8003E860_3F460;
-	ucode = (u64 *)D_8002DEE0_2EAE0;
-	sp1c = new_var->unk88;
-	new_var->list.t.data_size = data_size << 3;
-	new_var->list.t.ucode_boot_size = ucode_boot_size;
-	new_var->list.t.type = 1;
-	new_var->list.t.flags = 6 & 0xFFFFFFFFFFFFFFFF;
-	new_var->list.t.ucode_data = ucode_data;
-	new_var->list.t.ucode_data_size = 0x800;
-	new_var->list.t.ucode = ucode;
-	new_var->list.t.ucode_size = 0x1000;
-	new_var->list.t.ucode_boot = (u64 *)rspbootTextStart;
-	new_var->list.t.dram_stack = (u64 *)D_80160300;
-	new_var->list.t.dram_stack_size = 0x400;
-	new_var->list.t.output_buff = (u64 *)D_80161700;
-	new_var->list.t.output_buff_size = (u64 *)D_80165700;
-	new_var->list.t.yield_data_ptr = (u64 *)D_80160B00;
-	new_var->list.t.yield_data_size = 0xC00;
-	new_var->next = NULL;
-	new_var->flags = 0x63;
-	new_var->msgQ = &D_8006A908;
-	new_var->msg = (OSMesg)(((u8 *)new_var) + 0x68);
-	new_var->framebuffer = sp1c;
-	osSendMesg(osScGetCmdQ(&D_800680A0), (OSMesg)new_var, 1);
+	arg0->list.t.data_ptr = (u64 *)&D_8005BB20[0x280];
+	task = arg0;
+	task->list.t.data_size = (u32)(((s32)D_8005BB2C - (s32)D_8005BB20 - 0x280) >> 3) * 8;
+	task->list.t.type = 1;
+	task->list.t.flags = 6;
+	task->list.t.ucode_boot_size = (u32)((u8 *)rspbootTextEnd - (u8 *)rspbootTextStart);
+	task->list.t.ucode = D_8002DEE0_2EAE0;
+	task->list.t.ucode_data = (u64 *)D_8003E860_3F460;
+	task->list.t.ucode_size = 0x1000;
+	task->list.t.ucode_data_size = 0x800;
+	task->list.t.ucode_boot = (u64 *)rspbootTextStart;
+	task->list.t.dram_stack = (u64 *)D_80160300;
+	task->list.t.dram_stack_size = 0x400;
+	task->list.t.output_buff = (u64 *)D_80161700;
+	task->list.t.output_buff_size = (u64 *)D_80165700;
+	task->list.t.yield_data_ptr = (u64 *)D_80160B00;
+	task->list.t.yield_data_size = 0xC00;
+	task->next = NULL;
+	task->flags = 0x63;
+	task->msgQ = &D_8006A908;
+	task->msg = &task->unk68;
+	task->framebuffer = task->unk88;
+	osSendMesg(osScGetCmdQ(&D_800680A0), (OSMesg)task, 1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/FD80/func_8000F478_10078.s")
-#endif
 
 void func_8000F5A8_101A8(s32 arg0, void *arg1, s32 arg2) {
 	OSIoMesg sp28;
