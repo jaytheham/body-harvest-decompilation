@@ -21,3 +21,11 @@ func_80113808_1227B8 matches all 313 instructions and passes the full ROM checks
 In case 3, use one block-local f64 damping. Load the first 0.9 constant before the speed helper, then overwrite damping with the second 0.9 constant before scaling all three velocities. Reusing that local retains both original rodata addresses, assigns the constant to f0, and prevents repeated loads across velocity stores. No new translation unit is required.
 
 Declare the spilled Z difference between the two other float locals to place it at sp+0x28. Compute the X difference before assigning that Z difference to restore the target load/subtract scheduling. Divide by integer 2 rather than 2.0f to preserve the two div.s instructions.
+
+## Airborne controller: operand order and temporary slots
+
+`func_80104E00_113DB0` matches all 314 instructions and the full ROM checksum. Its existing 0.1 array constant always puts the constant first in `mul.d`, even when the C operands are reversed. Use `ShadowGeometryConstant` and `(f64)arg0->unk34 * constant.value` to preserve the original address and put the converted velocity first.
+
+Assign maxSteer directly from `vehicleTypes[arg0->unk1A].unk48` before assigning the type pointer. IDO then stores the pointer before the float conversion and uses the controller-pointer move to fill its latency, eliminating an extra nop. Write negative stick scaling as `-arg1->stick_x * 80` or `* 40`; multiplication by -80/-40 uses AT for negation and shifts the subsequent temporary-register cycle. Keep the original stick and its absolute value in separate word locals.
+
+Three unused word declarations after type, maxSteer, and sp2C preserve their stack slots. Declare stickX, an unused halfword, trig, then absStickX to place the trig spill at sp+0x20. Negate the double cosine ratio before multiplying by sp2C to retain neg.d before mul.d. Cast the unsigned vehicle byte through u32 before float conversion to retain the target unsigned-conversion adjustment. Reuse a block-local double for the two damping constants and three velocity stores.

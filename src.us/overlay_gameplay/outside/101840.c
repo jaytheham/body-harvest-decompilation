@@ -119,7 +119,7 @@ const f64 D_80144B48_153AF8[1] = {0.97};
 
 const f64 D_80144B50_153B00[1] = {0.97};
 
-const f64 D_80144B58_153B08[1] = {0.1};
+const ShadowGeometryConstant D_80144B58_153B08 = {0.1};
 
 const f64 D_80144B60_153B10[1] = {300};
 
@@ -6652,19 +6652,20 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_801047C8_113778.s")
 #endif
 
-// CURRENT(3252)
-#ifdef NON_MATCHING
 void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 	VehicleType *type;
+	s32 pad0;
 	f32 maxSteer;
+	s32 pad1;
 	f32 sp2C;
+	s32 pad2;
+	s32 stickX;
+	s16 pad3;
 	s16 trig;
-	s8 stickX;
-	s8 stickY;
-	u8 temp;
+	s32 absStickX;
 
+	maxSteer = (f32)vehicleTypes[arg0->unk1A].unk48;
 	type = &vehicleTypes[arg0->unk1A];
-	maxSteer = (f32)type->unk48;
 
 	func_800F9F00_108EB0(arg0->unk0, arg0->unk4);
 
@@ -6685,20 +6686,20 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 		}
 
 		if (arg1->button & 0x10) {
-			arg0->unk28 = (s16)(arg1->stick_x * -80);
+			arg0->unk28 = (s16)(-arg1->stick_x * 80);
 		} else {
-			arg0->unk34 = (f32)((f64)arg0->unk34 - ((f64)arg0->unk34 * D_80144B58_153B08[0]));
+			arg0->unk34 = (f32)((f64)arg0->unk34 - ((f64)arg0->unk34 * D_80144B58_153B08.value));
 			arg0->unk2A = (s16)(arg1->stick_y * 80);
-			arg0->unk28 = (s16)(arg1->stick_x * -40);
+			arg0->unk28 = (s16)(-arg1->stick_x * 40);
 
 			stickX = arg1->stick_x;
 			if (-stickX < stickX) {
-				stickX = arg1->stick_x;
+				absStickX = stickX;
 			} else {
-				stickX = -arg1->stick_x;
+				absStickX = -stickX;
 			}
 
-			D_80158E5C = (f32)(((f64)(f32)(stickX * arg1->stick_x) / D_80144B60_153B10[0]) * (f64)maxSteer);
+			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / D_80144B60_153B10[0]) * (f64)maxSteer);
 		}
 
 		if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && arg0->unk34 < 0.0f) {
@@ -6706,41 +6707,39 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 		}
 
 		trig = sins((u16)arg0->unkA);
-		temp = ((u8 *)type)[0x3E];
-		sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)temp * D_801591F0)) / 12.0);
+		sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)(u32)type->unk3E * D_801591F0)) / 12.0);
 
 		trig = coss((u16)arg0->unk6);
 		func_80102D00_111CB0(arg0, (f32)(((f64)(f32)trig / 32768.0) * (f64)sp2C), 0.0f,
 							(f32)(((f64)(f32)sins((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
 
 		trig = sins((u16)arg0->unk8);
-		temp = ((u8 *)type)[0x3E];
-		sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)temp * D_801591F0)) / 12.0);
+		sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)(u32)type->unk3E * D_801591F0)) / 12.0);
 
 		trig = sins((u16)arg0->unk6);
 		func_80102D00_111CB0(arg0, (f32)(((f64)(f32)trig / 32768.0) * (f64)sp2C), 0.0f,
-							-(f32)(((f64)(f32)coss((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
+							(f32)((-((f64)(f32)coss((u16)arg0->unk6) / 32768.0)) * (f64)sp2C));
 
 		if (currentControllerStates[0].button & 0x4000) {
-			func_800FB430_10A3E0(D_80052B34, (f32)((f64)D_80052B34->unk58 * D_80144B68_153B18[0]));
-			D_80052B34->unk30 = (f32)((f64)D_80052B34->unk30 * D_80144B70_153B20[0]);
-			D_80052B34->unk34 = (f32)((f64)D_80052B34->unk34 * D_80144B70_153B20[0]);
-			D_80052B34->unk38 = (f32)((f64)D_80052B34->unk38 * D_80144B70_153B20[0]);
+			f64 damping;
+			damping = D_80144B68_153B18[0];
+			func_800FB430_10A3E0(D_80052B34, (f32)((f64)D_80052B34->unk58 * damping));
+			damping = D_80144B70_153B20[0];
+			D_80052B34->unk30 = (f32)((f64)D_80052B34->unk30 * damping);
+			D_80052B34->unk34 = (f32)((f64)D_80052B34->unk34 * damping);
+			D_80052B34->unk38 = (f32)((f64)D_80052B34->unk38 * damping);
 		}
 
 		if (arg0->unk3C <= 0) {
-			if (*(s16 *)((u8 *)&vehicleTypes[D_80052B34->unk1A] + 0x66) == 0) {
+			if (vehicleTypes[D_80052B34->unk1A].unk66 == 0) {
 				D_80158E5C = 0.0f;
 			}
 
 			D_80158E58 = 0.0f;
-				arg0->unk3C = 0;
+			arg0->unk3C = 0;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80104E00_113DB0.s")
-#endif
 
 // The button press check is Z to shoot the gun.
 // Skiping this call stops adam responding to input

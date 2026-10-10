@@ -4103,6 +4103,7 @@ extern const f32 D_801449E8_153998[1];
 
 extern const ShadowGeometryConstant D_80144A80_153A30;
 extern const ShadowGeometryConstant D_80144D70_153D20;
+extern const ShadowGeometryConstant D_80144B58_153B08;
 
 
 #endif /* LIBULTRA_REFERENCE */
