@@ -5821,20 +5821,19 @@ void func_800D1054_E0004(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800D10D0_E0080(void) {
-	Unk80052B40 spF0;
-	Unk80052B40 spE8;
-	Unk80052B40 spE0;
-	s16 spD8[2];
-	s8 spDC[3];
-	f32 temp_f0;
-	s16 var_v0;
-	s16 var_s5;
-	Unk80154318Entry *var_s3;
-	SmokePuffState *var_s1;
+	Unk80154318Entry *entry;
+	SmokePuffState *puff;
+	Unk80052B40 scale;
+	u16 rotation[3];
+	Unk80052B40 position;
+	u8 color[3];
+	s16 origin[2];
+	f32 distance;
+	s16 index;
+	s16 size;
 
-	var_v0 = D_80154252;
+	index = D_80154252;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_FOG);
@@ -5849,66 +5848,72 @@ void func_800D10D0_E0080(void) {
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM2);
 
-	while ((var_v0 != -6) && (var_v0 != -5)) {
-			var_s3 = &D_80154318[var_v0];
-			var_s1 = &var_s3->smokePuff;
-			if (var_s3->smokePuff.kind < 3) {
-				var_s5 = var_s3->unk2 * var_s1->kind;
-				var_s5 /= 2;
-			} else {
-				var_s5 = var_s3->unk2;
+	while ((index != -6) && (index != -5)) {
+		entry = &D_80154318[index];
+		puff = &entry->smokePuff;
+		if (entry->smokePuff.kind < 3) {
+			size = (entry->unk2 * puff->kind) / 2;
+		} else {
+			size = entry->unk2;
+		}
+
+		scale.unk4 = size * 6;
+		scale.unk2 = size * 6;
+		scale.unk0 = size * 6;
+
+		if (func_800B93AC_C835C(puff->position[0], puff->position[2], (u16)scale.unk0,
+											(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+			position.unk0 = puff->position[0];
+			position.unk2 = puff->position[1];
+			position.unk4 = puff->position[2];
+
+			distance = ((D_80153BA0.x * 4.0f) - puff->position[0]) * ((D_80153BA0.x * 4.0f) - puff->position[0]);
+			distance += ((D_80153BA0.z * 4.0f) - puff->position[2]) * ((D_80153BA0.z * 4.0f) - puff->position[2]);
+			distance = sqrtf(distance);
+
+			rotation[0] = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
+			rotation[1] = 0x8000;
+			rotation[2] = 0x4000 - func_80003824_4424((D_80153BA0.y * 4.0f) - puff->position[1], distance);
+
+			{
+				Gfx *packet = D_8005BB2C++;
+
+				/* Preserve the primitive-color operand order used by IDO. */
+				packet->words.w0 = (_SHIFTL(G_SETPRIMCOLOR, 24, 8) | _SHIFTL(0, 8, 8) | _SHIFTL(0, 0, 8));
+				packet->words.w1 = (_SHIFTL(puff->color[1], 16, 8) | _SHIFTL(puff->color[2], 8, 8) | _SHIFTL(puff->color[0], 24, 8) | _SHIFTL(puff->opacity, 0, 8));
 			}
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100B2F0));
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
+			gDPPipeSync(D_8005BB2C++);
 
-			spF0.unk0 = spF0.unk2 = spF0.unk4 = var_s5 * 6;
+			D_8005BB38++;
+			func_800039D0_45D0(&position, (Unk80052B40 *)rotation, &scale, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38++;
+			gSPDisplayList(D_8005BB2C++, D_504B640);
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-			if (func_800B93AC_C835C(var_s1->position[0], var_s1->position[2], spF0.unk0,
-												(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-				spE0.unk0 = var_s1->position[0];
-				spE0.unk2 = var_s1->position[1];
-				spE0.unk4 = var_s1->position[2];
+			D_80156EDA += 0x15;
+			color[0] = puff->color[0];
+			color[1] = puff->color[1];
+			color[2] = puff->color[2];
+			origin[0] = puff->position[0];
+			origin[1] = puff->position[2];
+			func_800B2354_C1304(origin, color, size, 0x12C);
+		}
 
-				temp_f0 = sqrtf(((D_80153BA0.x * 4.0f) - var_s1->position[0]) * ((D_80153BA0.x * 4.0f) - var_s1->position[0]) + ((D_80153BA0.z * 4.0f) - var_s1->position[2]) * ((D_80153BA0.z * 4.0f) - var_s1->position[2]));
-
-				spE8.unk0 = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
-				spE8.unk2 = 0x8000;
-				spE8.unk4 = 0x4000 - func_80003824_4424((D_80153BA0.y * 4.0f) - (f32)var_s1->position[1], temp_f0);
-
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, var_s1->color[0], var_s1->color[1], var_s1->color[2], var_s1->opacity);
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100B2F0));
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPLoadSync(D_8005BB2C++);
-				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (31 << G_TEXTURE_IMAGE_FRAC));
-				gDPPipeSync(D_8005BB2C++);
-
-				D_8005BB38++;
-				func_800039D0_45D0(&spE0, &spE8, &spF0, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				D_8005BB38++;
-				gSPDisplayList(D_8005BB2C++, D_504B640);
-				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-
-				D_80156EDA += 0x15;
-				spDC[0] = var_s1->color[0];
-				spDC[1] = var_s1->color[1];
-				spDC[2] = var_s1->color[2];
-				spD8[0] = var_s1->position[0];
-				spD8[1] = var_s1->position[2];
-				func_800B2354_C1304(spD8, spDC, (s16)var_s5, 0x12C);
-			}
-
-			var_v0 = D_80154318[var_v0].unk4;
+		index = D_80154318[index].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D10D0_E0080.s")
-#endif
 
 // CURRENT(1310)
 #ifdef NON_MATCHING
