@@ -4092,4 +4092,13 @@ extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
 
+extern const ShadowGeometryConstant D_801449E0_153990;
+extern const ShadowGeometryConstant D_801449F0_1539A0;
+extern const ShadowGeometryConstant D_801449F8_1539A8;
+extern const ShadowGeometryConstant D_80144A00_1539B0;
+extern const ShadowGeometryConstant D_80144A08_1539B8;
+extern const ShadowGeometryConstant D_80144A10_1539C0;
+extern const ShadowGeometryConstant D_80144A18_1539C8;
+extern const f32 D_801449E8_153998[1];
+
 #endif /* LIBULTRA_REFERENCE */

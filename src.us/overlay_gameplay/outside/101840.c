@@ -30,20 +30,20 @@ const char D_80144998_153948[] = "\t%f\n"; // "\t%f\n"
 const char D_801449A0_153950[] = "\t%d\n"; // "\t%d\n"
 const char D_801449A8_153958[] = "AARRGGH!! Alien buggered off leaving it's legs behind!\n"; // "AARRGGH!! Alien buggered off leaving it's legs behind!\n"
 
-const f64 D_801449E0_153990[1] = {0.99};
+const ShadowGeometryConstant D_801449E0_153990 = {0.99};
 const f32 D_801449E8_153998[1] = {0.99};
 
-const f64 D_801449F0_1539A0[1] = {180};
+const ShadowGeometryConstant D_801449F0_1539A0 = {180};
 
-const f64 D_801449F8_1539A8[1] = {180};
+const ShadowGeometryConstant D_801449F8_1539A8 = {180};
 
-const f64 D_80144A00_1539B0[1] = {3.14};
+const ShadowGeometryConstant D_80144A00_1539B0 = {3.14};
 
-const f64 D_80144A08_1539B8[1] = {180};
+const ShadowGeometryConstant D_80144A08_1539B8 = {180};
 
-const f64 D_80144A10_1539C0[1] = {3.14};
+const ShadowGeometryConstant D_80144A10_1539C0 = {3.14};
 
-const f64 D_80144A18_1539C8[1] = {180};
+const ShadowGeometryConstant D_80144A18_1539C8 = {180};
 
 const f64 D_80144A20_1539D0[1] = {180};
 
@@ -551,7 +551,8 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 	}
 }
 
-// CURRENT(965)
+// CURRENT(780): typed word coordinates; temporary and floating registers remain.
+
 #ifdef NON_MATCHING
 void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s32 sp7C;
@@ -568,11 +569,10 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	u8 temp_s0;
 	u8 temp_v1;
 	Unk801601F0 *temp_v0;
-	u8 temp_a0idx;
-	u8 *temp_limb_raw;
+	s32 typeIndex;
 
-	temp_a0idx = walker->limbs[0].unk23;
-	temp_v0 = &D_801601F0[temp_a0idx];
+	typeIndex = walker->limbs[0].unk23;
+	temp_v0 = &D_801601F0[typeIndex];
 	sp6E = temp_v0->unk10;
 	sp6C = temp_v0->unk6;
 	sp6A = temp_v0->unk4;
@@ -589,12 +589,10 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	if (temp_v1 == 0x10) {
 		sp68 = 0;
 	}
-	sp7C = (s32) ((((f32) coss((u16) var_v0) / 32768.0) * walker->limbs[0].unk1C) +
-				 *(s32 *) &walker->limbs[0].unk0);
-	sp78 = (s32) ((((f32) sins((u16) walker->limbs[0].unk18) / 32768.0) * walker->limbs[0].unk1C) +
-				 *(s32 *) &walker->limbs[0].unk4);
-	*(s32 *) &walker->limbs[0].unk8 = sp7C;
-	*(s32 *) &walker->limbs[0].unkC = sp78;
+	sp7C = (s32)((((f32)coss((u16)var_v0) / 32768.0) * walker->limbs[0].unk1C) + walker->limbs[0].position.x);
+	sp78 = (s32)((((f32)sins((u16)walker->limbs[0].unk18) / 32768.0) * walker->limbs[0].unk1C) + walker->limbs[0].position.z);
+	walker->limbs[0].position.anchorX = sp7C;
+	walker->limbs[0].position.anchorZ = sp78;
 	var_s3 = 0;
 	if ((s32) temp_s0 / 2 > 0) {
 		do {
@@ -1137,13 +1135,9 @@ s32 func_800F41E0_103190(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-// Matched - but a number of these const values are rodata 
-// beginning with D_801449E0_153990
-// not sure how to handle that
-#ifdef NON_MATCHING
-void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 *arg5, s16 *arg6)
+void func_800F4258_103208(UnkF9230ShadowWalker *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 *arg5, s16 *arg6)
 {
-	s16 angle;
+	s16 angle[2];
 	f32 angleOffset;
 	s32 dx;
 	s32 dz;
@@ -1154,8 +1148,8 @@ void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s
 
 	dx = arg3 - arg1;
 	dz = arg4 - arg2;
-	baseX = D_801601F0[arg0->unk23].unk0;
-	baseR = D_801601F0[arg0->unk23].unk2;
+	baseX = D_801601F0[arg0->limbs[0].unk23].unk0;
+	baseR = D_801601F0[arg0->limbs[0].unk23].unk2;
 	distSq = (f32)((dx * dx) + (dz * dz));
 	if (distSq <= 0.0f)
 	{
@@ -1166,18 +1160,16 @@ void func_800F4258_103208(UnkF9230Func800F4748Entry *arg0, s16 arg1, s16 arg2, s
 		dist = sqrtf(distSq);
 	}
 	distSq = (-(((baseR * baseR) - (dist * dist)) - (baseX * baseX))) / ((2 * dist) * baseX);
-	if (distSq > 0.99)
+	if (distSq > D_801449E0_153990.value)
 	{
-		distSq = 0.99f;
+		distSq = D_801449E8_153998[0];
 	}
-	angleOffset = (((f32)((s16)(0x4000 - func_80003680_4280(distSq)))) * 180.0) / 32768.0;
-	angle = ((((((f32)func_80003824_4424(dx, dz))) * 180.0) / 32768.0));
-	*arg5 = (cosf(((((f32)angle) + angleOffset) * 3.14) / (180.0 * 1.0)) * baseX) + arg1;
-	*arg6 = (sinf(((((f32)angle) + angleOffset) * 3.14) / 180.0) * baseX) + arg2;
+	angleOffset = (((f32)((s16)(0x4000 - func_80003680_4280(distSq)))) * D_801449F0_1539A0.value) / 32768.0;
+	dx = ((((((f32)func_80003824_4424(dx, dz))) * D_801449F8_1539A8.value) / 32768.0));
+	angle[1] = dx;
+	*arg5 = (cosf(((((f32)(s16)dx) + angleOffset) * D_80144A00_1539B0.value) / D_80144A08_1539B8.value) * baseX) + arg1;
+	*arg6 = (sinf(((((f32)angle[1]) + angleOffset) * D_80144A10_1539C0.value) / D_80144A18_1539C8.value) * baseX) + arg2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4258_103208.s")
-#endif
 
 s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 	u32 angle;
@@ -1322,7 +1314,7 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		distA = (s16)sqrtf((f32)(((currX - posX) * (currX - posX)) + ((currZ - posZ) * (currZ - posZ))));
 		distB = (s16)sqrtf((f32)(((footX - posX) * (footX - posX)) + ((footZ - posZ) * (footZ - posZ))));
 
-		func_800F4258_103208((UnkF9230Func800F4748Entry *)walker, distB, spB2, distA, rootY, &spA8, &spA6);
+		func_800F4258_103208(walker, distB, spB2, distA, rootY, &spA8, &spA6);
 
 		legRadius = (s16)(sinf((f32)(((f64)yawDeg * 3.141592654) / 180.0f)) * (f32)spA8);
 		spA8 = (s16)(cosf((f32)(((f64)yawDeg * 3.141592654) / 180.0f)) * (f32)spA8);
@@ -2492,7 +2484,7 @@ void func_800F842C_1073DC(s32 arg0) {
 		spC8 = spD0;
 		spCC = (s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)spD2);
 
-		func_800F4258_103208((UnkF9230Func800F4748Entry *)walker, anim->unk4, sp8C.unk2, anim->unk6, 0, &spD2, &spD0);
+		func_800F4258_103208(walker, anim->unk4, sp8C.unk2, anim->unk6, 0, &spD2, &spD0);
 
 		switch (anim->unk14) {
 			case 0:
@@ -9394,72 +9386,69 @@ s32 func_8010DC00_11CBB0(s32 arg0, s32 arg1, s32 arg2) {
 	return 0;
 }
 
-// CURRENT(1666)
 #ifdef NON_MATCHING
+// CURRENT(702): corrected four-corner range; entry scheduling and trig slot remain.
 s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
+	Unk8010ED84Pos *vehicle;
 	f32 dx;
 	f32 dz;
 	f32 *xOffsets;
 	f32 *zOffsets;
-	s32 radius;
 	s32 xDelta;
 	s32 zDelta;
-	s32 absX;
+	s32 negX;
 	s32 absZ;
-	s16 trig;
+	s16 trig[2];
 
-	radius = arg2;
+
 
 	if (D_80159D70 == 2) {
-		dx = (f32)(D_80159D60->unk0 - arg0);
-		dz = (f32)(D_80159D60->unk4 - arg1);
-		return sqrtf((dx * dx) + (dz * dz)) <= (f32)(D_80159D68->unkC + radius);
+		vehicle = D_80159D60;
+		dx = (f32)(vehicle->unk0 - arg0);
+		dz = (f32)(vehicle->unk4 - arg1);
+		return sqrtf((dx * dx) + (dz * dz)) <= (f32)(D_80159D68->unkC + arg2);
 	}
 
 	xOffsets = &D_80159D78[7];
-	zOffsets = &D_80159D98[7];
-	for (;;) {
-		xDelta = ((s32)*xOffsets + D_80159D60->unk0) - arg0;
-		zDelta = ((s32)*zOffsets + D_80159D60->unk4) - arg1;
+	zOffsets = &D_80159D98[8];
+	if (1) {
+	while (zOffsets-- >= &D_80159D98[5]) {
+		xDelta = ((s32)xOffsets[0] + D_80159D60->unk0) - arg0;
+		zDelta = ((s32)zOffsets[0] + D_80159D60->unk4) - arg1;
 		xOffsets--;
-		zOffsets--;
 
-		absX = (-xDelta < xDelta) ? xDelta : -xDelta;
+		negX = -xDelta;
+		if (arg2 >= (negX < xDelta ? xDelta : negX)) {
+			absZ = -zDelta < zDelta ? zDelta : -zDelta;
 
-		if (radius >= absX) {
-			absZ = (-zDelta < zDelta) ? zDelta : -zDelta;
-
-			if ((radius >= absZ) && (((xDelta * xDelta) + (zDelta * zDelta)) < (radius * radius))) {
+			if ((arg2 >= absZ) && (((xDelta * xDelta) + (zDelta * zDelta)) < (arg2 * arg2))) {
 				return 1;
 			}
 		}
+	}
+	}
 
-		if ((u32)zOffsets < (u32)&D_80159D98[5]) {
-			break;
-		}
- 	}
-
-	trig = coss(*(u16 *)((u8 *)D_80159D60 + 6));
-	if (func_8010D234_11C1E4((s16)(s32)((((f32)trig / 32768.0) * radius) + arg0),
-			(s16)(s32)((((f32)sins(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * radius) + arg1)) != 0) {
+	trig[0] = coss(D_80159D60->unk6);
+	if (func_8010D234_11C1E4((s16)(s32)((((f32)trig[0] / 32768.0) * arg2) + arg0),
+			(s16)(s32)((((f32)sins(D_80159D60->unk6) / 32768.0) * arg2) + arg1)) != 0) {
 		return 1;
 	}
 
-	trig = coss(*(u16 *)((u8 *)D_80159D60 + 6));
-	if (func_8010D234_11C1E4((s16)(s32)(arg0 - ((((f32)trig / 32768.0) * radius))),
-			(s16)(s32)(arg1 - ((((f32)sins(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * radius)))) != 0) {
+	trig[0] = coss(D_80159D60->unk6);
+	if (func_8010D234_11C1E4((s16)(s32)(arg0 - ((((f32)trig[0] / 32768.0) * arg2))),
+			(s16)(s32)(arg1 - ((((f32)sins(D_80159D60->unk6) / 32768.0) * arg2)))) != 0) {
 		return 1;
 	}
 
-	trig = sins(*(u16 *)((u8 *)D_80159D60 + 6));
-	if (func_8010D234_11C1E4((s16)(s32)((f32)arg0 - ((((f32)trig / 32768.0) * (f32)radius))),
-			(s16)(s32)((((f32)coss(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * (f32)radius) + (f32)arg1)) != 0) {
+	trig[0] = sins(D_80159D60->unk6);
+	if (func_8010D234_11C1E4((s16)(s32)(arg0 - ((((f32)trig[0] / 32768.0) * arg2))),
+			(s16)(s32)((((f32)coss(D_80159D60->unk6) / 32768.0) * arg2) + arg1)) != 0) {
 		return 1;
 	}
 
-	trig = sins(*(u16 *)((u8 *)D_80159D60 + 6));
-	if (func_8010D234_11C1E4((s16)(s32)((((f32)trig / 32768.0) * (f32)radius) + (f32)arg0),
-			(s16)(s32)((f32)arg1 - ((((f32)coss(*(u16 *)((u8 *)D_80159D60 + 6)) / 32768.0) * (f32)radius)))) != 0) {
+	trig[0] = sins(D_80159D60->unk6);
+	if (func_8010D234_11C1E4((s16)(s32)((((f32)trig[0] / 32768.0) * arg2) + arg0),
+			(s16)(s32)(arg1 - ((((f32)coss(D_80159D60->unk6) / 32768.0) * arg2)))) != 0) {
 		return 1;
 	}
 

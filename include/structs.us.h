@@ -236,7 +236,8 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-} Unk8010ED84Pos; /* size = 0x06 */
+	/* 0x06 */ u16 unk6;
+} Unk8010ED84Pos; /* size = 0x08 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2916,6 +2917,12 @@ typedef union {
 		/* 0x22 */ u8 unk22;
 		/* 0x23 */ u8 unk23;
 	};
+	struct {
+		/* 0x00 */ s32 x;
+		/* 0x04 */ s32 z;
+		/* 0x08 */ s32 anchorX;
+		/* 0x0C */ s32 anchorZ;
+	} position;
 	s32 words[9];
 } UnkF9230ShadowLimb; /* size = 0x24 */
 
@@ -3768,5 +3775,9 @@ typedef struct {
 	f32 x, y, z;
 	f32 rightX, rightY, rightZ;
 } CameraBasis;
+
+typedef struct {
+	f64 value;
+} ShadowGeometryConstant;
 
 #endif /* LIBULTRA_REFERENCE */
