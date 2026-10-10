@@ -157,7 +157,8 @@ def extract(version):
     config = ROOT / f"bh.{version}.yaml"
     if not rom.exists():
         raise RuntimeError(f"Place your ROM at {rom}")
-    expected = yaml.safe_load(config.read_text(encoding="utf-8"))["sha1"]
+    config_data = yaml.safe_load(config.read_text(encoding="utf-8"))
+    expected = config_data["sha1"]
     if hashlib.sha1(rom.read_bytes()).hexdigest() != expected.lower():
         raise RuntimeError(f"{rom.name} does not match the SHA1 in {config.name}; no files were removed.")
     # Match extract.ps1's clean extraction, anchored to the repository root.
@@ -180,6 +181,22 @@ def extract(version):
     # GNU ld treats backslashes as escapes, not Windows directory separators.
     script = ROOT / "bh.ld"
     script.write_text(script.read_text(encoding="utf-8").replace("\\", "/"), encoding="utf-8", newline="\n")
+    # splat writes generated c stubs and the linker symbol header with native
+    # Windows separators and CRLF endings. Normalise both so the tree matches the
+    # LF/forward-slash output produced on Linux and stays portable.
+    for source in (ROOT / paths["src"]).rglob("*.c"):
+        text = source.read_bytes().decode("utf-8")
+        normalized = re.sub(r'(#pragma\s+GLOBAL_ASM\s*\(\s*"[^"]*"\s*\))',
+                            lambda match: match.group().replace("\\", "/"), text)
+        normalized = normalized.replace("\r\n", "\n")
+        if normalized != text:
+            source.write_text(normalized, encoding="utf-8", newline="\n")
+    header = config_data.get("options", {}).get("ld_symbol_header_path")
+    if header:
+        symbols = ROOT / header
+        if symbols.exists():
+            text = symbols.read_bytes().decode("utf-8")
+            symbols.write_text(text.replace("\r\n", "\n"), encoding="utf-8", newline="\n")
 
 
 def compiler_env():
