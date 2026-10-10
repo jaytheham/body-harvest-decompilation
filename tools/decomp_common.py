@@ -201,6 +201,12 @@ IN_SECTION = re.compile(
 #: ``                0x80000450                func_80000450_1050``
 SYMBOL = re.compile(r"^\s+0x(?P<vram>[0-9a-f]{8})\s+(?P<name>[A-Za-z_]\w*)\s*$")
 
+#: The linker script delimits each segment's regions with marker symbols:
+#: ``_coreSegmentTextStart = .`` ... ``_coreSegmentTextEnd = .``, then the same
+#: for Data, RoData and Bss. Text is the only region that holds functions.
+TEXT_START = re.compile(r"^\s+0x[0-9a-f]{8}\s+_\S+SegmentTextStart\s*=\s*\.")
+TEXT_END = re.compile(r"^\s+0x[0-9a-f]{8}\s+_\S+SegmentTextEnd\s*=\s*\.")
+
 #: ``  - name: overlay_gameplay_outside`` / ``    start: 0x7f220``
 YAML_NAME = re.compile(r"^\s*-\s*name:\s*(\S+)")
 YAML_START = re.compile(r"^\s*start:\s*(0x[0-9A-Fa-f]+)")
@@ -228,6 +234,22 @@ def vram_for_rom(rom, segments):
         if rom_start <= rom < rom_start + _size:
             return rom - rom_start + vram_start
     return None
+
+
+def rom_for_vram(vram, segments):
+    """ROM offset for a VRAM address, or None.
+
+    Segments repeat a VRAM base across different overlays, so a VRAM address can
+    be covered by several sections. The one with the largest VRAM extent is
+    returned, which picks the segment the address really belongs to rather than
+    an unrelated one that happens to share the base.
+    """
+    best = None
+    for rom_start, size, vram_start, _name in segments:
+        if vram_start <= vram < vram_start + size:
+            if best is None or size > best[1]:
+                best = (rom_start + (vram - vram_start), size)
+    return best[0] if best else None
 
 
 def is_data_segment(name):
@@ -284,6 +306,13 @@ def parse_map(map_path, version=None):
     one gets its own synthetic section key. Without that, sorting by VRAM
     interleaves unrelated overlays and every computed size is wrong. Passing
     ``version`` replaces those synthetic keys with the real names from the yaml.
+
+    Only the text region of each segment is read. A segment lays out text, then
+    data, then rodata, then bss in one unnamed output section, so filtering by
+    output section alone would let data symbols in: ``D_800A5710_18D7D0`` is a
+    712 KiB array that would otherwise be decoded as instructions and
+    manufacture thousands of bogus call edges. The linker script's own
+    ``_<seg>SegmentTextStart`` / ``...TextEnd`` markers delimit the region.
     """
     names = dict(yaml_segment_starts(version)) if version else {}
     data = {n for _r, n, _t in yaml_segments(version) if is_data_segment(n)} \
@@ -293,6 +322,7 @@ def parse_map(map_path, version=None):
     section = None
     obj = None
     prev_line = ""
+    in_text = False
 
     for line in pathlib.Path(map_path).read_text(
             encoding="utf-8", errors="replace").splitlines():
@@ -319,8 +349,17 @@ def parse_map(map_path, version=None):
             prev_line = line
             continue
 
+        if TEXT_START.match(line):
+            in_text = True
+            prev_line = line
+            continue
+        if TEXT_END.match(line):
+            in_text = False
+            prev_line = line
+            continue
+
         m = SYMBOL.match(line)
-        if m and section is not None and section[4]:
+        if m and section is not None and section[4] and in_text:
             rom_start, size, vram_start, name, _loaded = section
             vram = int(m.group("vram"), 16)
             if vram_start <= vram < vram_start + size:
