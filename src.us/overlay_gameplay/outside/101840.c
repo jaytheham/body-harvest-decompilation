@@ -3846,9 +3846,9 @@ void func_800FC568_10B518(void) {
 	gDPPipeSync(D_8005BB30++);
 }
 
-// CURRENT(340): remaining call-result copy; revisit after other candidates.
+// CURRENT(205): word return restores result copy; second flag register and epilogue remain.
 #ifdef NON_MATCHING
-void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
+s32 func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
     u8 *entry;
     s32 result;
     TerrainObjectCell *tile;
@@ -3870,6 +3870,7 @@ void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
     if ((s16)(((result & 0x2000) == 0) ^ ((arg1 & 1) == 0)) != 0) {
         *arg3 = 0x100 - *arg3;
     }
+    return result;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FC7E0_10B790.s")
