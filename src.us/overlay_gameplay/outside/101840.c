@@ -1326,131 +1326,96 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F49A4_103954.s")
 #endif
 
-// CURRENT(26550)
+// CURRENT(215): frame and later instructions match; one promoted-index copy remains.
 #ifdef NON_MATCHING
 void func_800F4DB0_103D60(void) {
-	extern void func_8007A4F8_894A8(u8, void *, u8, u8);
-	u8 i;
 	s32 var_fp;
+	UnkF9230ShadowWalker *walker;
+	s32 limb;
+	u8 i;
+	u8 lerp;
+	s32 pad;
 
 	var_fp = 1;
-	i = 0;
-	while (i < 8) {
+	for (i = 0; i < 8; i++) {
 		if (D_80157FF0[i] == -1) {
-			UnkF9230ShadowWalker *walker;
-			Unk801601F0 *anim;
-			u8 *alienBase;
-			u8 state;
-			u8 alienIdx;
-			s32 limbCount;
-			s32 limb;
 
 			walker = &D_80158000[i];
 			if (((i + D_80052A8C) & 0xF) == 0) {
-				state = walker->limbs[0].unk22;
-				if ((state != 2) && (state != 4) && (state != 8) && (state != 0x10)) {
-					alienIdx = walker->alienIdx;
-					alienBase = (u8 *)&alienInstances[alienIdx];
-					if ((alienBase[0x1A] == 0) || !(*(s32 *)&alienBase[0x20] & 0x80000) || ((*(s32 *)&alienBase[0x20] & 0x80000) && ((*(s32 *)&alienBase[0x20] & 7) != i))) {
-						if (alienBase[0x1A] != 0) {
-							if (*(s32 *)&alienBase[0x20] & 0x600) {
-								func_8007A4F8_894A8(alienIdx, (void *)walker, alienIdx, i);
-								alienBase = (u8 *)&alienInstances[walker->alienIdx];
-								func_800DF848_EE7F8(*(s16 *)&alienBase[0x0], *(s16 *)&alienBase[0x2], *(s16 *)&alienBase[0x4], (u16)alienTypes[alienBase[0x1A]].unkC, 0);
+				if ((((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) == 0 && walker->limbs[0].unk22 != 0x10) {
+					if ((alienInstances[walker->alienIdx].typeIndex == 0) || !(alienInstances[walker->alienIdx].unk20 & 0x80000) || ((alienInstances[walker->alienIdx].unk20 & 0x80000) && (i != (alienInstances[walker->alienIdx].unk20 & 7)))) {
+						if (alienInstances[walker->alienIdx].typeIndex != 0) {
+							if (alienInstances[walker->alienIdx].unk20 & 0x600) {
+								func_8007A4F8_894A8(walker->alienIdx);
+								func_800DF848_EE7F8(alienInstances[walker->alienIdx].unk0, alienInstances[walker->alienIdx].unk2, alienInstances[walker->alienIdx].unk4, (u16)alienTypes[alienInstances[walker->alienIdx].typeIndex].unkC, 0);
 								func_800F3038_101FE8(i);
 							} else {
-								func_80079910_888C0(alienIdx);
-								func_800F375C_10270C((s8)i);
+								func_80079910_888C0(walker->alienIdx);
+								func_800F375C_10270C(i);
 							}
 						}
 						osSyncPrintf(D_801449A8_153958);
-						i = (i + 1) & 0xFF;
 						continue;
 					}
 				}
 			}
-
-			alienBase = (u8 *)&alienInstances[walker->alienIdx];
-			if ((alienBase[0x1B] != 0xFF) && (D_80047F94 != alienBase[0x1B])) {
+			if ((alienInstances[walker->alienIdx].unk1B != 0xFF) && (D_80047F94 != alienInstances[walker->alienIdx].unk1B)) {
 				walker->limbs[0].unk22 = 0;
 			}
-
-			state = walker->limbs[0].unk22;
-			if ((state == 0) || (state == 4)) {
-				anim = &D_801601F0[walker->limbs[0].unk23];
-				limbCount = anim->unkC;
-				for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+			if ((walker->limbs[0].unk22 == 0) || (walker->limbs[0].unk22 == 4)) {
+				for (limb = 0; limb < D_801601F0[walker->limbs[0].unk23].unkC; limb = (limb + 1) & 0xFF) {
 					if (walker->limbs[limb + 1].unk23 == 0) {
-						alienBase = (u8 *)&alienInstances[walker->alienIdx];
-						walker->limbs[limb + 1].unk16 = D_8014DD50[alienBase.unkC].unk2 + *(s16 *)&alienBase[0x2];
+						walker->limbs[limb + 1].unk16 = alienInstances[walker->alienIdx].unk2 + D_8014DD50[alienInstances[walker->alienIdx].unkC].unk2;
 					}
 				}
 				if (walker->limbs[0].unk22 == 0) {
-					i = (i + 1) & 0xFF;
 					continue;
 				}
-				state = walker->limbs[0].unk22;
 			}
 
-			if ((state == 2) || (state == 4) || (state == 8)) {
-				s16 v;
-				s16 speed;
+			if (((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) {
 
 				walker->unk168 = walker->unk168 + 1;
-				v = walker->unk16C >> 3;
-				if (v < 0) {
-					v = -v;
-				}
-				speed = walker->unk16C - v - 2;
-				walker->unk16C = speed;
+				walker->unk16C = walker->unk16C - ((walker->unk16C >> 3) >= 0 ? (walker->unk16C >> 3) : -(walker->unk16C >> 3)) - 2;
 
-				if (state == 2) {
+				switch (walker->limbs[0].unk22) {
+				case 2:
 					if (walker->unk168 == 0x28) {
-						func_800F375C_10270C((s8)i);
+						func_800F375C_10270C(i);
 					}
-				} else if (state == 8) {
-					if (speed < 0) {
-						walker->unk16C = speed / 2;
+					break;
+				case 8:
+					if (walker->unk16C < 0) {
+						walker->unk16C = walker->unk16C / 2;
 					}
 					if (walker->unk168 == 0x78) {
-						func_800F375C_10270C((s8)i);
+						func_800F375C_10270C(i);
 					}
-				} else if (state == 4) {
-					anim = &D_801601F0[walker->limbs[0].unk23];
-					limbCount = anim->unkC;
-					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+					break;
+				case 4:
+					for (limb = 0; limb < D_801601F0[walker->limbs[0].unk23].unkC; limb = (limb + 1) & 0xFF) {
 						if (walker->limbs[limb + 1].unk23 != 2) {
 							var_fp = 0;
 						}
 					}
 					if (var_fp != 0) {
-						func_800F375C_10270C((s8)i);
+						func_800F375C_10270C(i);
 					}
+					break;
 				}
 
 				walker->unk16A = walker->unk16A + walker->unk16C;
+				continue;
 			} else {
-				Unk801601F0 *animData;
-				u8 lerp;
-				s16 frame;
-				s16 frame2x;
-
-				animData = &D_801601F0[walker->limbs[0].unk23];
-				lerp = animData->unk12;
+				lerp = D_801601F0[walker->limbs[0].unk23].unk12;
 
 				if (walker->limbs[0].unk1E == 0) {
-					s32 x;
-					s32 z;
 
-					x = *(s32 *)&walker->limbs[0].unk8;
-					z = *(s32 *)&walker->limbs[0].unkC;
-					*(s32 *)&walker->limbs[0].unk0 = x;
-					*(s32 *)&walker->limbs[0].unk10 = x;
-					*(s32 *)&walker->limbs[0].unk4 = z;
-					*(s32 *)&walker->limbs[0].unk14 = z;
-
-					limbCount = animData->unkC;
-					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+					walker->limbs[0].words[0] = walker->limbs[0].words[2];
+					walker->limbs[0].words[4] = walker->limbs[0].words[2];
+					walker->limbs[0].words[1] = walker->limbs[0].words[3];
+					walker->limbs[0].words[5] = walker->limbs[0].words[3];
+					for (limb = 0; limb < D_801601F0[walker->limbs[0].unk23].unkC; limb = (limb + 1) & 0xFF) {
 						if (walker->limbs[limb + 1].unk23 == 0) {
 							walker->limbs[limb + 1].unk14 = walker->limbs[limb + 1].unk1A;
 							walker->limbs[limb + 1].unk18 = walker->limbs[limb + 1].unk1C;
@@ -1459,26 +1424,17 @@ void func_800F4DB0_103D60(void) {
 
 					func_800F2980_101930(walker);
 					if (walker->limbs[0].unk18 == walker->limbs[0].unk1A) {
-						s16 d;
 
-						d = walker->limbs[0].unk1C;
-						if (d < 0) {
-							d = -d;
-						}
-						if ((d < 0xC) && (walker->limbs[0].unk22 != 0x10)) {
+						if ((BH_ABS(walker->limbs[0].unk1C) < 0xC) && (walker->limbs[0].unk22 != 0x10)) {
 							walker->limbs[0].unk22 = 0;
 						}
 					}
 				}
 
-				frame = walker->limbs[0].unk1E;
-				frame2x = lerp * 2;
-				if ((frame2x == frame) || (lerp == frame)) {
-					animData = &D_801601F0[walker->limbs[0].unk23];
-					limbCount = animData->unkC;
-					for (limb = 0; limb < limbCount; limb = (limb + 1) & 0xFF) {
+				if (((lerp * 2) == walker->limbs[0].unk1E) || (lerp == walker->limbs[0].unk1E)) {
+					for (limb = 0; limb < D_801601F0[walker->limbs[0].unk23].unkC; limb = (limb + 1) & 0xFF) {
 						if (walker->limbs[limb + 1].unk23 == 0) {
-							if ((frame2x == walker->limbs[0].unk1E) && ((limb % 2) == 1)) {
+							if (((lerp * 2) == walker->limbs[0].unk1E) && ((limb % 2) == 1)) {
 								walker->limbs[limb + 1].unk0 = walker->limbs[limb + 1].unk6;
 								walker->limbs[limb + 1].unk4 = walker->limbs[limb + 1].unk8;
 							}
@@ -1490,18 +1446,16 @@ void func_800F4DB0_103D60(void) {
 					}
 				}
 
-				*(s32 *)&walker->limbs[0].unk10 = func_800F41E0_103190(*(s32 *)&walker->limbs[0].unk0, *(s32 *)&walker->limbs[0].unk8, walker->limbs[0].unk1E, frame2x);
-				*(s32 *)&walker->limbs[0].unk14 = func_800F41E0_103190(*(s32 *)&walker->limbs[0].unk4, *(s32 *)&walker->limbs[0].unkC, walker->limbs[0].unk1E, frame2x);
+				walker->limbs[0].words[4] = func_800F41E0_103190(walker->limbs[0].words[0], walker->limbs[0].words[2], walker->limbs[0].unk1E, (lerp * 2));
+				walker->limbs[0].words[5] = func_800F41E0_103190(walker->limbs[0].words[1], walker->limbs[0].words[3], walker->limbs[0].unk1E, (lerp * 2));
 				func_800F49A4_103954(walker);
 
-				walker->limbs[0].unk1E = (walker->limbs[0].unk1E + 1) % (frame2x + 1);
+				walker->limbs[0].unk1E = (walker->limbs[0].unk1E + 1) % ((lerp * 2) + 1);
 				if (!(walker->limbs[0].unk22 & 0x80)) {
 					walker->limbs[0].unk1A = walker->limbs[0].unk18;
 				}
 			}
 		}
-
-		i = (i + 1) & 0xFF;
 	}
 }
 #else
