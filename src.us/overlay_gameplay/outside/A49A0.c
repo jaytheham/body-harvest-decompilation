@@ -943,27 +943,21 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 // draw 3d adam on map
-// CURRENT(1388)
-#ifdef NON_MATCHING
 void func_80097994_A6944(void) {
-	Gfx *dl;
-	s32 sp60;
-	s32 sp64;
-	s32 color;
-	Unk80052B40 mapPos;
-	Unk80052B40 scale;
-	s32 segAddr;
+	s32 translation[3];
+	s16 mapPos[3];
+	u16 scale[3];
 
 	func_8000C790_D390(&D_80157600, (s16 *)D_8013D1B0_14C160, 0x10);
 
-	color = 0;
-	sp64 = 0;
-	mapPos.unk0 = D_80157600.unk2 << 3;
-	mapPos.unk2 = D_80157600.unk4 << 3;
-	mapPos.unk4 = D_80157600.unk0 << 3;
-	sp60 = (s32)(D_80157600.unkC * 65536.0f);
+	translation[0] = 0;
+	translation[2] = 0;
+	translation[1] = (s32)(D_80157600.unkC * 65536.0f);
+	mapPos[0] = D_80157600.unk2 << 3;
+	mapPos[1] = D_80157600.unk4 << 3;
+	mapPos[2] = D_80157600.unk0 << 3;
 
-	func_8000C81C_D41C(&color, &mapPos.unk0, NULL, D_8005BB38);
+	func_8000C81C_D41C(translation, mapPos, NULL, (s32 *)D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(&D_1001B50));
@@ -971,19 +965,22 @@ void func_80097994_A6944(void) {
 
 	func_8000CC3C_D83C(&D_80157600, 0x10);
 
-	scale.unk2 = scale.unk0 = scale.unk4 = 0x100;
-	segAddr = D_8005BB38;
-	D_8005BB38 = segAddr + 0x40;
+	{
+		Mtx *matrix;
+		scale[2] = 0x100;
+		scale[1] = scale[2] & 0xFFFF;
+		scale[0] = scale[2];
+		matrix = D_8005BB38;
+		D_8005BB38++;
 
-	func_800039D0_45D0(NULL, NULL, &scale, segAddr);
+		func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)scale, (s32)matrix);
+	}
 
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_10031E0));
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097994_A6944.s")
-#endif
+
 
 // related to drawing 3d vehicles
 void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
