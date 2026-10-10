@@ -1,211 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-const u32 jtbl_80145710_1546C0[] = {
-	0x801374F4,
-	0x80137530,
-	0x8013756C,
-	0x80139004,
-	0x80139004,
-	0x801375A8,
-	0x801375E4,
-	0x8013773C,
-	0x80137778,
-	0x801377B4,
-	0x801377F0,
-	0x8013785C,
-	0x80137898,
-	0x8013792C,
-	0x801379C0,
-	0x80137A54,
-	0x80137AE8,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80137B84,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80137BCC,
-	0x80137C08,
-	0x80137C44,
-	0x80137C8C,
-	0x80137CD4,
-	0x80137D3C,
-	0x80137D84,
-	0x80137DCC,
-	0x80137E24,
-	0x80137E50,
-	0x80139004,
-	0x80139004,
-	0x80137658,
-	0x00000000,
-};
-
-const f64 D_801457A8_154758[1] = {0.68899999999999994582};
-const f64 D_801457B0_154760[1] = {0.80000000000000004441};
-const f64 D_801457B8_154768[1] = {0.68899999999999994582};
-const f64 D_801457C0_154770[1] = {1.3999999999999999112};
-const f64 D_801457C8_154778[1] = {0.48899999999999999023};
-const f64 D_801457D0_154780[1] = {0.80000000000000004441};
-const f64 D_801457D8_154788[1] = {1000.0};
-const f64 D_801457E0_154790[1] = {0.69999999999999995559};
-const f64 D_801457E8_154798[1] = {1000.0};
-const f64 D_801457F0_1547A0[1] = {0.55000000000000004441};
-const f64 D_801457F8_1547A8[1] = {1000.0};
-const f64 D_80145800_1547B0[1] = {0.4000000000000000222};
-const f64 D_80145808_1547B8[1] = {1000.0};
-const f64 D_80145810_1547C0[1] = {0.2000000000000000111};
-const f64 D_80145818_1547C8[1] = {1000.0};
-
-const f32 D_80145820_1547D0[1] = {0.60000002384185791016f};
-
-const f64 D_80145828_1547D8[1] = {952.0};
-
-const u32 jtbl_80145830_1547E0[] = {
-	0x80137EC4,
-	0x80137F00,
-	0x80137F48,
-	0x80137FB0,
-	0x80139004,
-	0x80137FEC,
-	0x80138028,
-	0x00000000,
-};
-
-const f64 D_80145850_154800[1] = {952.0};
-
-const u32 jtbl_80145858_154808[] = {
-	0x80139004,
-	0x80139004,
-	0x80138098,
-	0x801380E0,
-	0x8013811C,
-	0x80139004,
-	0x80138158,
-	0x80138194,
-	0x80139004,
-	0x80138284,
-	0x80139004,
-	0x80139004,
-	0x801382CC,
-	0x80138314,
-};
-
-const f64 D_80145890_154840[1] = {7.499999999999999343e-05};
-
-const f64 D_80145898_154848[1] = {0.10000000000000000555};
-
-const u32 jtbl_801458A0_154850[] = {
-	0x80138384,
-	0x801383CC,
-	0x80138490,
-	0x801384CC,
-	0x80138534,
-	0x80139004,
-	0x80139004,
-	0x801385CC,
-	0x80138614,
-	0x80138650,
-	0x80139004,
-	0x8013868C,
-	0x801386C8,
-	0x80138710,
-	0x80138758,
-	0x801387A0,
-	0x801387E8,
-	0x80139004,
-	0x80139004,
-};
-
-const f32 D_801458EC_15489C[1] = {0.10000000149011611938f};
-
-const f64 D_801458F0_1548A0[1] = {0.17999999999999999334};
-
-const f64 D_801458F8_1548A8[1] = {300.0};
-
-const f64 D_80145900_1548B0[1] = {0.10000000000000000555};
-
-const f32 D_80145908_1548B8[1] = {1900.0f};
-
-const f64 D_80145910_1548C0[1] = {1000.0};
-
-const f64 D_80145918_1548C8[1] = {0.10000000000000000555};
-
-const f32 D_80145920_1548D0[1] = {0.30000001192092895508f};
-
-const u32 jtbl_80145924_1548D4[] = {
-	0x8013885C,
-	0x801388A4,
-	0x801388EC,
-	0x80138954,
-	0x80139004,
-	0x80138990,
-	0x801389CC,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80138A08,
-	0x80138A50,
-	0x00000000,
-};
-
-const f64 D_80145958_154908[1] = {952.0};
-
-const u32 jtbl_80145960_154910[] = {
-	0x80138B18,
-	0x80138B54,
-	0x80138BB8,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80138C00,
-	0x80138C48,
-	0x80138C90,
-	0x80138D7C,
-	0x80139004,
-	0x80138DB8,
-	0x80138DB8,
-	0x80138DB8,
-	0x80138EE0,
-	0x80138E24,
-	0x80138E24,
-	0x80138E98,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80139004,
-	0x80138F28,
-	0x80138D08,
-};
-
-const f32 D_801459D4_154984[1] = {0.79000002145767211914f};
-
-const f64 D_801459D8_154988[1] = {1000.0};
-
-const f64 D_801459E0_154990[1] = {1000.0};
-
-const f64 D_801459E8_154998[1] = {0.4000000000000000222};
-
-const f64 D_801459F0_1549A0[1] = {0.69999999999999995559};
-
-const f64 D_801459F8_1549A8[1] = {0.10000000000000000555};
-
-const f32 D_80145A00_1549B0[1] = {0.30000001192092895508f};
-
-const f64 D_80145A08_1549B8[1] = {1000.0};
-
-const f64 D_80145A10_1549C0[1] = {0.2000000000000000111};
-
-const f64 D_80145A18_1549C8[1] = {1.6000000000000000888};
-
-const f64 D_80145A20_1549D0[1] = {0.2000000000000000111};
-
 Struct_80140D00 D_80140D00_14FCB0 = {{
 	0x015E, 0x00D6, 0x017D, 0x00AA, 0x00D7, -1, 0x00EB, 0x0061,
 }};
@@ -367,7 +162,6 @@ void func_80137368_146318(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 }
 
 // Play alien sounds?
-#ifdef NON_MATCHING
 void func_80137468_146418(s32 arg0, s32 arg1) {
 	s32 temp_v1;
 	s32 temp_v2;
@@ -402,17 +196,17 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 			case 0x7:
 				alien = &alienInstances[arg0];
 				pitch = (f32) (((f32) alien->unk2 / 1200.0f) * 0.68899999999999994582 * 0.80000000000000004441);
-				func_801371B8_146168((s32)alien, 0x151, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0x151, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x25:
 				alien = &alienInstances[arg0];
 				pitch = (f32) (((f32) alien->unk2 / 1200.0f) * 0.68899999999999994582 * 1.3999999999999999112);
-				func_801371B8_146168((s32)alien, 0x151, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0x151, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x275:
 				alien = &alienInstances[arg0];
 				pitch = (f32) (((f32) alien->unk2 / 1200.0f) * 0.48899999999999999023 * 0.80000000000000004441);
-				func_801371B8_146168((s32)alien, 0x151, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0x151, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x8:
 				alien = &alienInstances[arg0];
@@ -428,7 +222,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0xB:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)&alienInstances[arg0], (s16)(D_80140D2C_ReadPair[0] % 2) + 0xAC, alien->unk0,
+				func_801371B8_146168(&alienInstances[arg0], (s16)(D_80140D2C_ReadPair[0] % 2) + 0xAC, alien->unk0,
 					alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0xC:
@@ -466,7 +260,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0x15:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xF2, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0xF2, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x19:
 				alien = &alienInstances[arg0];
@@ -478,25 +272,25 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0x1B:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x17F, alien->unk0, alien->unk2, alien->unk4,
+				func_801371B8_146168(alien, 0x17F, alien->unk0, alien->unk2, alien->unk4,
 					0.60000002384185791016f);
 				return;
 			case 0x1C:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x1D, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0x1D, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x1D:
 				alien = &alienInstances[arg0];
 				pitch = (f32) (((f32) alien->unk2 / 952.0) * 0.75);
-				func_801371B8_146168((s32)alien, 0xAE, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0xAE, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x1E:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x10, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0x10, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x1F:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xB8, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0xB8, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x20:
 				alien = &alienInstances[arg0];
@@ -505,7 +299,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0x21:
 				alien = &alienInstances[arg0];
-				func_80014A3C_1563C((s32)&alienInstances[33], 0xB7, 0, 0, -1.0f);
+				func_80014A3C_1563C(&alienInstances[33], 0xB7, 0, 0, -1.0f);
 				return;
 			case 0x22:
 				alien = &alienInstances[arg0];
@@ -523,12 +317,12 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0x65:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xB5, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0xB5, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x66:
 				alien = &alienInstances[arg0];
 				pitch = (f32) (((f32) alien->unk2 / 952.0) * 0.75);
-				func_801371B8_146168((s32)alien, 0xAE, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0xAE, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x67:
 				alien = &alienInstances[arg0];
@@ -554,7 +348,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0xCB:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x36, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0x36, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0xCC:
 				alien = &alienInstances[arg0];
@@ -570,25 +364,26 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0xD0:
 				alien = &alienInstances[arg0];
-				temp_v0 = func_80012778_13378((s32)alien);
+				temp_v0 = func_80012778_13378(alien);
 				if (temp_v0 != 0) {
-					
+					alien = &alienInstances[arg0];
 					pitch = (f32) (((f32) (((alien->unk4 - temp_v0->unk16) * (alien->unk4 - temp_v0->unk16)) + ((alien->unk0 - temp_v0->unk12) * (alien->unk0 - temp_v0->unk12))) * 7.499999999999999343e-05) + 0.10000000000000000555);
-					func_801371B8_146168((s32)alien, 0x26, alien->unk0, (s32)alien->unk2, alien->unk4, pitch);
+					func_801371B8_146168(alien, 0x26, alien->unk0, alien->unk2, alien->unk4, pitch);
 					temp_v0->unk12 = alien->unk0;
 					temp_v0->unk14 = alien->unk2;
 					temp_v0->unk16 = alien->unk4;
 				} else {
-					func_801371B8_146168((s32)alien, 0x26, alien->unk0, (s32)alien->unk2, alien->unk4, -1.0);
+					alien = &alienInstances[arg0];
+					func_801371B8_146168(alien, 0x26, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				}
 				return;
 			case 0xD2:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xB9, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0xB9, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0xD5:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xB9, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0xB9, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0xD6:
 				alien = &alienInstances[arg0];
@@ -603,22 +398,22 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 			switch (arg1) {
 			case 0x12D:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xAF, alien->unk0, alien->unk2, alien->unk4, 0.10000000149011611938f);
+				func_801371B8_146168(alien, 0xAF, alien->unk0, alien->unk2, alien->unk4, 0.10000000149011611938f);
 				return;
 			case 0x12E:
 				alien = &alienInstances[arg0];
 				pitch = (f32) ((f32)(0x12C - ((-alien->unk48 < alien->unk48) ? alien->unk48 : -alien->unk48) < 0 ? 0 : 0x12C - ((-alien->unk48 < alien->unk48) ? alien->unk48 : -alien->unk48)) * 0.18 / 300.0);
 				pitch += 0.10000000000000000555;
-				func_801371B8_146168((s32)alien, 0xAF, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0xAF, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x12F:
 				alien = &alienInstances[arg0];
-				func_80137130_1460E0((s32)alien, 0xB0, alien->unk0, alien->unk2, alien->unk4);
+				func_80137130_1460E0(alien, 0xB0, alien->unk0, alien->unk2, alien->unk4);
 				return;
 			case 0x130:
 				alien = &alienInstances[arg0];
 				pitch = (f32) (((f32) alien->unk2 / 1900.0f) * 0.5);
-				func_801371B8_146168((s32)alien, 0x10, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0x10, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			case 0x131:
 				alien = &alienInstances[arg0];
@@ -643,19 +438,19 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				return;
 			case 0x139:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x10, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0x10, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x13A:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x7E, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0x7E, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x13B:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0x7F, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0x7F, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x13C:
 				alien = &alienInstances[arg0];
-				func_801371B8_146168((s32)alien, 0xB7, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+				func_801371B8_146168(alien, 0xB7, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 				return;
 			case 0x13D:
 				alien = &alienInstances[arg0];
@@ -673,7 +468,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				switch (arg1) {
 					case 0x191:
 						alien = &alienInstances[arg0];
-						func_801371B8_146168((s32)alien, 0x10, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+						func_801371B8_146168(alien, 0x10, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 						return;
 					case 0x192:
 						alien = &alienInstances[arg0];
@@ -682,7 +477,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 					case 0x193:
 						alien = &alienInstances[arg0];
 						pitch = (f32) (((f64) (f32) alien->unk2 / 952.0) * 0.75);
-						func_801371B8_146168((s32)alien, 0xAE, alien->unk0, alien->unk2, alien->unk4, pitch);
+						func_801371B8_146168(alien, 0xAE, alien->unk0, alien->unk2, alien->unk4, pitch);
 						return;
 					case 0x194:
 						alien = &alienInstances[arg0];
@@ -698,7 +493,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 						return;
 					case 0x19B:
 						alien = &alienInstances[arg0];
-						func_801371B8_146168((s32)alien, 0xAF, alien->unk0, alien->unk2, alien->unk4, -1.0f);
+						func_801371B8_146168(alien, 0xAF, alien->unk0, alien->unk2, alien->unk4, -1.0f);
 						return;
 					case 0x19C:
 						alien = &alienInstances[arg0];
@@ -731,11 +526,11 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 					return;
 				case 0x261:
 					alien = &alienInstances[arg0];
-					func_801371B8_146168((s32)alien, 0xB9, alien->unk0, alien->unk2, alien->unk4, 1.0f);
+					func_801371B8_146168(alien, 0xB9, alien->unk0, alien->unk2, alien->unk4, 1.0f);
 					return;
 				case 0x262:
 					alien = &alienInstances[arg0];
-					func_801371B8_146168((s32)alien, 0x184, alien->unk0, alien->unk2, alien->unk4, 1.0f);
+					func_801371B8_146168(alien, 0x184, alien->unk0, alien->unk2, alien->unk4, 1.0f);
 					return;
 				case 0x263:
 					alien = &alienInstances[arg0];
@@ -756,13 +551,13 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 				case 0x268:
 					alien = &alienInstances[arg0];
 					pitch = (f32) (((f32) alien->unk12 / 1280.0f) + 0.5);
-					func_801371B8_146168((s32)alien, 0x187, alien->unk0, alien->unk2, alien->unk4, pitch);
+					func_801371B8_146168(alien, 0x187, alien->unk0, alien->unk2, alien->unk4, pitch);
 					return;
 				case 0x26A:
 				case 0x26B:
 					alien = &alienInstances[arg0];
 					pitch = (f32) (((f64) ((f32) alien->unk12 / 1280.0f) * 0.69999999999999995559) + 0.10000000000000000555);
-					func_801371B8_146168((s32)alien, 0x184, alien->unk0, alien->unk2, alien->unk4, pitch);
+					func_801371B8_146168(alien, 0x184, alien->unk0, alien->unk2, alien->unk4, pitch);
 					return;
 				case 0x26C:
 					alien = &alienInstances[arg0];
@@ -770,7 +565,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 					return;
 				case 0x269:
 					alien = &alienInstances[arg0];
-					func_801371B8_146168((s32)alien, 0x32, alien->unk0, alien->unk2, alien->unk4, 0.3f);
+					func_801371B8_146168(alien, 0x32, alien->unk0, alien->unk2, alien->unk4, 0.3f);
 					return;
 								case 0x273:
 					alien = &alienInstances[arg0];
@@ -780,7 +575,7 @@ void func_80137468_146418(s32 arg0, s32 arg1) {
 case 0x1FB:
 				alien = &alienInstances[arg0];
 				pitch = (f32) ((((f32) alien->unk12 / 1280.0f) * 1.6000000000000000888) + 0.2000000000000000111);
-				func_801371B8_146168((s32)alien, 0x10, alien->unk0, alien->unk2, alien->unk4, pitch);
+				func_801371B8_146168(alien, 0x10, alien->unk0, alien->unk2, alien->unk4, pitch);
 				return;
 			
 			default:
@@ -789,9 +584,6 @@ case 0x1FB:
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/145D70/func_80137468_146418.s")
-#endif
 
 void func_80139018_147FC8(s32 arg0) {
 
