@@ -38,3 +38,16 @@ if ((ptr->unk1A == 0) && ((flags = ptr->unk20, (flags & 0x1000)) || ...))
 // Correct — direct access puts pointer in v0, CSE puts field value in v1 (score 0):
 if ((ptr->unk1A == 0) && ((ptr->unk20 & 0x1000) || ...))
 ```
+
+### Inline coordinate differences before compound range tests
+
+In `func_802D7CD4_2BA104`, named X/Z deltas made IDO defer the squared-distance calculation until after the vehicle flags and type tests. Repeating the typed coordinate differences directly in the two products, with a named accumulator, produced the target's unconditional multiplication and sum before those tests:
+
+```c
+dist = (D_80052B34->unk0 - alienInstances[arg0].unk0) *
+       (D_80052B34->unk0 - alienInstances[arg0].unk0);
+dist += (D_80052B34->unk4 - alienInstances[arg0].unk4) *
+        (D_80052B34->unk4 - alienInstances[arg0].unk4);
+```
+
+Keep each compound test in flag/type/distance order. The final register swap for the initial joint lookups was resolved by assigning the child (`unkC`) before the sibling (`unkD`), even though the scheduler loads the sibling first. The complete instruction/register/stack diff and whole-ROM checksum then matched.

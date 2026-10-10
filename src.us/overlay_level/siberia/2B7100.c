@@ -1944,7 +1944,6 @@ void func_802D7BCC_2B9FFC(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 }
 
 // CURRENT(2290)
-#ifdef NON_MATCHING
 void func_802D7CD4_2BA104(u8 arg0) {
 	s16 sp46;
 	s16 sp44;
@@ -1955,10 +1954,11 @@ void func_802D7CD4_2BA104(u8 arg0) {
 	s16 sp3A;
 	s16 sp38;
 	s16 sp36;
+	s32 dist;
 
-	sp46 = D_8014DD50[*(s16*)&alienInstances[arg0].unkC].unkC;
-	sp40 = D_8014DD50[sp46].unkD;
+	sp46 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 	sp44 = D_8014DD50[sp46].unkC;
+	sp40 = D_8014DD50[sp46].unkD;
 	sp3E = D_8014DD50[sp40].unkC;
 	sp3C = D_8014DD50[sp3E].unkC;
 	sp3A = D_8014DD50[sp40].unkD;
@@ -1984,16 +1984,16 @@ void func_802D7CD4_2BA104(u8 arg0) {
 	}
 	func_800877E8_96798(arg0, 0xC8, 0xFA);
 	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD))) {
-		s32 temp_v1 = D_80052B34->unk0 - alienInstances[arg0].unk0;
-		s32 temp_a0 = D_80052B34->unk4 - alienInstances[arg0].unk4;
-		if ((temp_v1 * temp_v1 + temp_a0 * temp_a0 < 0x186A0 && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && D_80052B34->unk1A == 0) || (temp_v1 * temp_v1 + temp_a0 * temp_a0 < 0x493E0 && D_80052B34->unk1A != 0)) {
+		dist = (D_80052B34->unk0 - alienInstances[arg0].unk0) * (D_80052B34->unk0 - alienInstances[arg0].unk0);
+		dist += (D_80052B34->unk4 - alienInstances[arg0].unk4) * (D_80052B34->unk4 - alienInstances[arg0].unk4);
+		if ((!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && D_80052B34->unk1A == 0 && dist < 0x186A0) || (D_80052B34->unk1A != 0 && dist < 0x493E0)) {
 			if (alienInstances[arg0].unk2A < alienInstances[arg0].unkE) {
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
 			} else {
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF;
 			}
 			alienInstances[arg0].unk36 = 0;
-		} else if (temp_v1 * temp_v1 + temp_a0 * temp_a0 >= 0x30D40) {
+		} else if (dist >= 0x30D40) {
 			if ((func_800038E0_44E0() & 7) == 0) {
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
 				func_80137468_146418(arg0, 0x10);
@@ -2015,9 +2015,7 @@ void func_802D7CD4_2BA104(u8 arg0) {
 		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7CD4_2BA104.s")
-#endif
+
 
 void func_802D806C_2BA49C(u8 arg0, s16 arg1, s16 arg2) {
 	s16 sp2C[2];
