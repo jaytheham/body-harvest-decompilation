@@ -12239,14 +12239,14 @@ void func_800E64B4_F5464(void) {
 #ifdef NON_MATCHING
 void func_800E6A38_F59E8(void) {
 	s32 slotCount = 4;
+	s16 angle;
 	Unk800E614CFxSlot *slot;
 	Unk800E614CFxEntry *entry;
-	s32 remain;
 	s16 baseX;
 	s16 baseY;
 	s16 baseZ;
-	s16 angle;
-	s32 radius;
+	s32 remain;
+	s16 radius;
 	s16 xOff;
 	s16 zOff;
 	s16 yTop;
@@ -12294,13 +12294,12 @@ void func_800E6A38_F59E8(void) {
 	gDPTileSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
 
-	while (slotCount--) {
+	for (; slotCount--; ) {
 		slot = &D_80153300[slotCount];
 		remain = slot->unk1E6;
 		if (remain != 0) {
-			if (remain--) {
+			for (; remain--; ) {
 			entry = &slot->entries[remain];
-			do {
 
 
 				baseX = (s16)((s32)entry->unk0 >> 8);
@@ -12319,10 +12318,9 @@ void func_800E6A38_F59E8(void) {
 
 				radius = (s16)(radius * 20);
 				xOff = (s16)(((f32)coss((u16)-angle) / 32768.0) * (radius + 20));
-				zOff = (s16)((((f32)sins((u16)-angle) / 32768.0) * (radius + 20)));
+				zOff = (s16)(((f32)sins((u16)-angle) / 32768.0) * (radius + 20));
 
-				yTop = baseY + 0x14;
-				vtx0 = D_8005BB34;
+				vtx0 = (vtx3 = D_8005BB34);
 				D_8005BB34->v.ob[0] = baseX;
 				D_8005BB34++;
 				vtx0->v.ob[1] = baseY;
@@ -12330,21 +12328,25 @@ void func_800E6A38_F59E8(void) {
 				vtx0->v.tc[0] = 0x1000;
 				vtx0->v.tc[1] = 0x0800;
 
-				vtx1 = D_8005BB34;
+				yTop = baseY + 0x14;
+				vtx3 = D_8005BB34;
+				vtx1 = vtx3;
 				D_8005BB34->v.ob[0] = baseX;
 				D_8005BB34++;
-				vtx1->v.ob[1] = yTop;
-				vtx1->v.ob[2] = baseZ;
-				vtx1->v.tc[0] = 0x1000;
-				vtx1->v.tc[1] = 0;
+				vtx3->v.ob[1] = yTop;
+				vtx3->v.ob[2] = baseZ;
+				vtx3->v.tc[0] = 0x1000;
+				vtx3->v.tc[1] = 0;
 
-				vtx2 = D_8005BB34;
+				vtx3 = D_8005BB34;
+				vtx2 = vtx3;
 				D_8005BB34->v.ob[0] = baseX + xOff;
 				D_8005BB34++;
-				vtx2->v.ob[1] = yTop;
-				vtx2->v.ob[2] = baseZ + zOff;
-				vtx2->v.tc[0] = 0;
-				vtx2->v.tc[1] = 0x0800;
+				vtx3->v.ob[1] = yTop;
+				vtx3->v.tc[0] = 0;
+				vtx3->v.tc[1] = 0x0800;
+
+				vtx3->v.ob[2] = baseZ + zOff;
 
 				vtx3 = D_8005BB34;
 				D_8005BB34->v.ob[0] = baseX - xOff;
@@ -12354,12 +12356,11 @@ void func_800E6A38_F59E8(void) {
 				vtx3->v.tc[0] = 0x1000;
 				vtx3->v.tc[1] = 0;
 
-				entry--;
 				vtx4 = D_8005BB34;
-				D_8005BB34->v.ob[0] = baseX + (entry[1].unkC >> 7);
+				D_8005BB34->v.ob[0] = baseX + (entry->unkC >> 7);
 				D_8005BB34++;
-				vtx4->v.ob[1] = baseY + (entry[1].unk10 >> 7) + 0x14;
-				vtx4->v.ob[2] = baseZ + (entry[1].unk14 >> 7);
+				vtx4->v.ob[1] = baseY + (entry->unk10 >> 7) + 0x14;
+				vtx4->v.ob[2] = baseZ + (entry->unk14 >> 7);
 				vtx4->v.tc[0] = 0;
 				vtx4->v.tc[1] = 0x0800;
 
@@ -12395,7 +12396,6 @@ void func_800E6A38_F59E8(void) {
 				gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
 				gSP1Triangle(D_8005BB2C++, 2, 3, 5, 0);
 
-			} while (remain--);
 			}
 		}
 	}
