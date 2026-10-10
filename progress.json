@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-09T20:43:20Z",
-  "commit": "21764525",
-  "commit_timestamp": "2026-10-10T09:42:31+13:00",
+  "generated": "2026-10-10T02:53:53Z",
+  "commit": "0f6ba237",
+  "commit_timestamp": "2026-10-10T15:53:03+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 2401,
-    "non_matching": 656,
+    "matched": 2409,
+    "non_matching": 648,
     "asm_stubs": 0,
-    "matched_pct": 78.54,
+    "matched_pct": 78.8,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1122,
-      "non_matching": 326,
+      "matched": 1130,
+      "non_matching": 318,
       "asm_stubs": 0,
       "total": 1448,
-      "matched_pct": 77.5,
+      "matched_pct": 78.0,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -2226,32 +2226,32 @@
     {
       "path": "overlay_gameplay/outside/145D70.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 13,
-      "non_matching": 1,
+      "matched": 14,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 14,
-      "matched_pct": 92.9,
-      "contributor": "jaytheham"
+      "matched_pct": 100.0,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/148000.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 31,
-      "non_matching": 1,
+      "matched": 32,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 32,
-      "matched_pct": 96.9,
-      "contributor": "jaytheham"
+      "matched_pct": 100.0,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/7F220.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 15,
-      "non_matching": 1,
+      "matched": 16,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 16,
-      "matched_pct": 93.8,
-      "contributor": "jaytheham"
+      "matched_pct": 100.0,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/857E0.c",
@@ -2271,7 +2271,7 @@
       "asm_stubs": 0,
       "total": 174,
       "matched_pct": 86.8,
-      "contributor": "jaytheham"
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/9BFF0.c",
@@ -2286,12 +2286,12 @@
     {
       "path": "overlay_gameplay/outside/A40B0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 2,
-      "non_matching": 2,
+      "matched": 3,
+      "non_matching": 1,
       "asm_stubs": 0,
       "total": 4,
-      "matched_pct": 50.0,
-      "contributor": "jaytheham"
+      "matched_pct": 75.0,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/A49A0.c",
@@ -2316,12 +2316,12 @@
     {
       "path": "overlay_gameplay/outside/B2CB0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 6,
-      "non_matching": 4,
+      "matched": 10,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 10,
-      "matched_pct": 60.0,
-      "contributor": "goliath2526"
+      "matched_pct": 100.0,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/B49C0.c",
@@ -2491,7 +2491,7 @@
       "asm_stubs": 0,
       "total": 74,
       "matched_pct": 68.9,
-      "contributor": "jaytheham"
+      "contributor": "Jay"
     },
     {
       "path": "overlay_level/america/alien_types.c",
@@ -2571,7 +2571,7 @@
       "asm_stubs": 0,
       "total": 95,
       "matched_pct": 57.9,
-      "contributor": "lunarlaurus"
+      "contributor": "Jay"
     },
     {
       "path": "overlay_level/siberia/alien_types.c",
@@ -2587,30 +2587,30 @@
   "contributors": [
     {
       "name": "lunarlaurus",
-      "files": 20,
-      "matched": 1116,
-      "non_matching": 435,
-      "asm_stubs": 0
-    },
-    {
-      "name": "jaytheham",
-      "files": 77,
-      "matched": 916,
-      "non_matching": 217,
+      "files": 19,
+      "matched": 1061,
+      "non_matching": 395,
       "asm_stubs": 0
     },
     {
       "name": "Jay",
-      "files": 148,
-      "matched": 335,
-      "non_matching": 0,
+      "files": 156,
+      "matched": 667,
+      "non_matching": 87,
+      "asm_stubs": 0
+    },
+    {
+      "name": "jaytheham",
+      "files": 71,
+      "matched": 653,
+      "non_matching": 166,
       "asm_stubs": 0
     },
     {
       "name": "goliath2526",
-      "files": 2,
-      "matched": 32,
-      "non_matching": 4,
+      "files": 1,
+      "matched": 26,
+      "non_matching": 0,
       "asm_stubs": 0
     },
     {
@@ -2869,9 +2869,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "64df99b",
-      "matched": 2401,
-      "non_matching": 656,
+      "commit": "db15761",
+      "matched": 2409,
+      "non_matching": 648,
       "total": 3057
     }
   ]
