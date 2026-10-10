@@ -5697,11 +5697,8 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, sp40);
 
 	{
-	Gfx *gfx;
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL((G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW), 16, 8) | _SHIFTL(sizeof(Mtx), 0, 16); gfx->words.w1 = (unsigned int)(((u32)sp40 & 0x1FFFFFFF));
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_DL, 24, 8); gfx->words.w1 = (unsigned int)(type->modelDL);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(sp40), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPDisplayList(D_8005BB2C++, type->modelDL);
 	}
 
 	entry = &D_8013FDA8_14ED58[i];
@@ -5710,12 +5707,10 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 			func_800FE910_10D8C0(i);
 
 			if (entry->flags & 1) {
-				gfx = D_8005BB2C++;
-				gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL((G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW), 16, 8) | _SHIFTL(sizeof(Mtx), 0, 16); gfx->words.w1 = (unsigned int)(((u32)D_8005BB38++ & 0x1FFFFFFF));
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				count++;
 			} else {
-				gfx = D_8005BB2C++;
-				gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL((G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW), 16, 8) | _SHIFTL(sizeof(Mtx), 0, 16); gfx->words.w1 = (unsigned int)(((u32)D_8005BB38++ & 0x1FFFFFFF));
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			}
 
 			if ((u8 *)entry->displayList != D_50312E8) {
@@ -5725,26 +5720,21 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 					func_802D4CD0_18D7E0(0x18, 0);
 				} else {
 					if (entry->flags & 0x20) {
-						gfx = D_8005BB2C++;
-						gfx->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8); gfx->words.w1 = (unsigned int)(G_CULL_BOTH);
+						gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
 						D_80052B50.unk0 = -0x100;
 						D_80052B50.unk2 = 0x100;
 						D_80052B50.unk4 = 0x100;
 						func_800039D0_45D0(0, 0, &D_80052B50, D_8005BB38);
 
-						gfx = D_8005BB2C++;
-						gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL((G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW), 16, 8) | _SHIFTL(sizeof(Mtx), 0, 16); gfx->words.w1 = (unsigned int)(((u32)D_8005BB38++ & 0x1FFFFFFF));
+						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 					} else {
-						gfx = D_8005BB2C++;
-						gfx->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8); gfx->words.w1 = (unsigned int)(G_CULL_FRONT);
-						gfx = D_8005BB2C++;
-						gfx->words.w0 = _SHIFTL(G_SETGEOMETRYMODE, 24, 8); gfx->words.w1 = (unsigned int)(G_CULL_BACK);
+						gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
+						gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 					}
 
 					if (((u8 *)entry->displayList != D_50445A0) && ((u8 *)entry->displayList != D_9043D50)) {
-						gfx = D_8005BB2C++;
-						gfx->words.w0 = _SHIFTL(G_DL, 24, 8); gfx->words.w1 = (unsigned int)(entry->displayList);
+						gSPDisplayList(D_8005BB2C++, *(u32 *)&entry->displayList);
 					}
 				}
 			}
@@ -5754,17 +5744,13 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 			entry++;
 
 			if (temp & 2) {
-				gfx = D_8005BB2C++;
-				gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8); gfx->words.w1 = (unsigned int)(G_MTX_MODELVIEW);
-				count--;
+				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 
 	}
 
 	while (count--) {
-		Gfx *gfx;
-		gfx = D_8005BB2C++;
-		gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8); gfx->words.w1 = (unsigned int)(G_MTX_MODELVIEW);
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	}
 }
 #else
