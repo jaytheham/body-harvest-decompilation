@@ -1700,8 +1700,7 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	osSyncPrintf(&D_801434C0_152470);
 }
 
-// CURRENT(2033)
-#ifdef NON_MATCHING
+// CURRENT(0)
 void func_800C3E2C_D2DDC(void) {
 	Unk80154318Entry *entry;
 	EffectFirePayload *entrySub;
@@ -1713,6 +1712,7 @@ void func_800C3E2C_D2DDC(void) {
 	s32 randA;
 	s32 randB;
 	s32 temp;
+	s32 linkedIndex;
 	u8 color;
 
 	idx = D_8015428E;
@@ -1724,24 +1724,25 @@ void func_800C3E2C_D2DDC(void) {
 	if ((idx != -5) && (idx != -6)) {
 		do {
 			entry = &D_80154318[idx];
-			entrySub = (EffectFirePayload *)&entry->unk8;
-			linkedEntry = &D_80154318[entry->unk4];
-			linkedEntry->firePayload.control.phase++;
-			if (linkedEntry->firePayload.control.phase == 0x10) {
-				linkedEntry->firePayload.control.phase = 0;
+			entrySub = &entry->firePayload;
+			linkedIndex = entry->unk4;
+			linkedEntry = &D_80154318[linkedIndex];
+			linkedSub = &linkedEntry->firePayload;
+			linkedSub->control.phase++;
+			if (linkedSub->control.phase == 0x10) {
+				linkedSub->control.phase = 0;
 			}
-			linkedSub = (EffectFirePayload *)&linkedEntry->unk8;
 
-			if ((func_800038E0_44E0() % 8) == 0) {
+			if ((u32)(func_800038E0_44E0() % 8) < 1U) {
 				randA = func_800038E0_44E0() & 0xFFFF;
 				randB = func_800038E0_44E0() & 0xFFFF;
 				temp = func_800038E0_44E0();
-				sizeQuarter = entry->unk2 / 4;
+				sizeQuarter = D_80154318[idx].unk2 / 4;
 
 				color = func_800DDB60_ECB10(
-					(s16)(entrySub->visual.position[0] + ((randA % entry->unk2) / 2) - sizeQuarter),
-					(s16)((randB % (entry->unk2 / 2)) + entrySub->visual.position[1]),
-					(s16)(entrySub->visual.position[2] + ((temp % entry->unk2) / 2) - sizeQuarter),
+					(s16)(((randA % D_80154318[idx].unk2) / 2) + entrySub->visual.position[0] - sizeQuarter),
+					(s16)(entrySub->visual.position[1] + (randB % (D_80154318[idx].unk2 / 2))),
+					(s16)(((temp % D_80154318[idx].unk2) / 2) + entrySub->visual.position[2] - sizeQuarter),
 					0xC,
 					sizeQuarter);
 
@@ -1759,7 +1760,7 @@ void func_800C3E2C_D2DDC(void) {
 
 			if (linkedSub->control.life != 0xFFFF) {
 				if (linkedSub->control.growthFrames > 0) {
-					entry->unk2 += linkedSub->control.sizeDelta / 8;
+					D_80154318[idx].unk2 += linkedSub->control.sizeDelta / 8;
 					entrySub->visual.position[1] += linkedSub->control.sizeDelta / 16;
 					linkedSub->control.growthFrames--;
 					(linkedSub->control.life)--;
@@ -1772,7 +1773,7 @@ void func_800C3E2C_D2DDC(void) {
 					func_800C1E24_D0DD4(idx, 0xC, 1);
 					idx = next;
 				} else {
-					entry->unk2 -= linkedSub->control.sizeDelta / 8;
+					D_80154318[idx].unk2 -= linkedSub->control.sizeDelta / 8;
 					entrySub->visual.position[1] -= linkedSub->control.sizeDelta / 16;
 					(linkedSub->control.life)--;
 					idx = linkedEntry->unk4;
@@ -1783,9 +1784,6 @@ void func_800C3E2C_D2DDC(void) {
 		} while ((idx != -5) && (idx != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3E2C_D2DDC.s")
-#endif
 
 void func_800C4274_D3224(void) {
 	Vec3f spAC;
@@ -2147,7 +2145,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #endif
 
 
-// CURRENT(477)
+// CURRENT(110)
 // spawn radial particle effect?
 #ifdef NON_MATCHING
 void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
@@ -10386,6 +10384,7 @@ void func_800DFA98_EEA48(s8 arg0[][3]) {
 }
 
 // large explosion effect with smaller random explosions
+// CURRENT(5): only generated 0.6f rodata address differs; retain wrapper without a new late-rodata file.
 #ifdef NON_MATCHING
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	u8 unused; /* Preserve the original local stack layout. */
