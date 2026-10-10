@@ -174,7 +174,6 @@ def mark(rows, insert_at):
             by_stub.setdefault(c, []).append((na_rom, p, size, na_name))
 
     marker = "// --- PAL differs from NTSC here ---"
-    per_fn = re.compile(r"//\s+0x[0-9A-Fa-f]{6}\s+0x")
     # Clear every existing marker block first, not just the stubs we are about
     # to rewrite, or a block left by an earlier run survives in a file that is
     # no longer in the map.
@@ -182,8 +181,17 @@ def mark(rows, insert_at):
         text = c.read_text(encoding="utf-8", errors="replace")
         if marker not in text:
             continue
-        kept = [l for l in text.splitlines()
-                if marker not in l and not per_fn.match(l)]
+        # Drop the whole marker block: from the marker line through the
+        # contiguous run of comment lines that follows it.
+        kept, skipping = [], False
+        for l in text.splitlines():
+            if marker in l:
+                skipping = True
+                continue
+            if skipping and l.lstrip().startswith("//"):
+                continue
+            skipping = False
+            kept.append(l)
         c.write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
 
     touched = 0

@@ -40,18 +40,6 @@
 //   0x009EB8  0x009EE8   3168  func_800092B8_9EB8
 //   0x00AB18  0x00AB48    268  func_80009F18_AB18
 //   0x00AC24  0x00AC54    316  func_8000A024_AC24
-// These functions are rewritten in PAL. Do NOT copy the NTSC body;
-// they need their own decomp. Regenerate with:
-//     python tools/pal_na_diff.py --mark
-// NTSC rom / PAL rom / bytes / name
-// These functions are rewritten in PAL. Do NOT copy the NTSC body;
-// they need their own decomp. Regenerate with:
-//     python tools/pal_na_diff.py --mark
-// NTSC rom / PAL rom / bytes / name
-// These functions are rewritten in PAL. Do NOT copy the NTSC body;
-// they need their own decomp. Regenerate with:
-//     python tools/pal_na_diff.py --mark
-// NTSC rom / PAL rom / bytes / name
 
 
 #pragma GLOBAL_ASM("asm.eu/nonmatchings/core/53F0/func_800047F0_53F0.s")
