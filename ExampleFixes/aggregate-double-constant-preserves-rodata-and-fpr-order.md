@@ -39,3 +39,11 @@ Reuse absStickX for the second controller absolute-value if/else; a separate wor
 Keep a word gap after maxSteer and another after sp2A, followed by a halfword gap before trig. This preserves sp2C at sp+0x2c, sp2A at sp+0x2a, and trig at sp+0x20. The four existing constants 0.9, 300, and the two separate 0.0833333333 values use ShadowGeometryConstant.value to preserve rodata addresses and FPR order. The two 0.97 constants remain arrays and share a block-local damping variable.
 
 Inside the negative-velocity clamp, read the flags through a volatile VehicleInstance view before clearing velocity. This retains the target redundant halfword reload, and the optimizer still uses the original s0 pointer. Only that second flag read needs volatility. The first read remains ordinary typed access. Full ROM verified OK.
+
+## Cached collision geometry and interleaved corner assignments
+
+`func_8010C4EC_11B49C` matches all 339 instructions and the full ROM checksum. Assign the cached vehicle-type pointer before the cached vehicle pointer; this retains the target reload of the type pointer. Read the radius branch vehicle index from the argument rather than the cached vehicle global. Negate the signed dimension before shifting without narrowing it back to s16.
+
+Write positive X/Z corner assignments first (indices 0 and 1), followed by the negated X/Z assignments (indices 2 and 3). Initialize the four slope globals with one chained zero assignment afterward. IDO schedules the resulting stores in the target order; writing the C statements in assembly store order produces substantially different scheduling.
+
+Represent the existing 1.2 constant with `ShadowGeometryConstant.value`. This fixes the multiply operand order and the floating-register cycle through the later slope calculations while preserving all rodata bytes. Keep one unused word after the spilled float, removing the second unused word: the helper result then occupies sp+0x1e and its low byte is read at sp+0x1f. Use `(u8)sp1E` rather than byte-pointer arithmetic. No new file is needed.

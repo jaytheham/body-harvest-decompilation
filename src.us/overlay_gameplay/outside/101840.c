@@ -230,7 +230,7 @@ const u32 jtbl_80144CE0_153C90[] = {
 	0x00000000,
 };
 
-const f64 D_80144CF8_153CA8[1] = {1.2};
+const ShadowGeometryConstant D_80144CF8_153CA8 = {1.2};
 
 const f64 D_80144D00_153CB0[1] = {1.2};
 
@@ -8805,12 +8805,9 @@ void func_8010C454_11B404(void) {
 	}
 }
 
-// CURRENT(4649)
-#ifdef NON_MATCHING
 void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 	f32 sp24;
-	s16 pad;
-	s32 pad2;
+	s32 pad;
 	s16 sp1E;
 	s16 v0;
 	s16 a0;
@@ -8820,13 +8817,13 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 
 	sp1E = func_800FAE60_109E10(arg0);
 	if (arg0 != D_80159D5C) {
-		D_80159D5C = arg0;
 		D_80159D64 = &vehicleTypes[arg0->unk1A];
+		D_80159D5C = arg0;
 		if (D_80159D64->unk16 == 1) {
 		D_80159D34 = (f32)(D_80159D64->unk36 >> 1);
 		D_80159D38 = 0.0f;
 		D_80159D3C = 0.0f;
-		D_80159D40 = (f32)((s16)-D_80159D64->unk34 >> 1);
+		D_80159D40 = (f32)(-D_80159D64->unk34 >> 1);
 		} else {
 		D_80159D34 = (f32)(((f32)coss(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk36 >> 1));
 		D_80159D38 = (f32)(((f32)sins(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk36 >> 1));
@@ -8835,29 +8832,26 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 		}
 
 	D_80159D78[0] = D_80159D34 + D_80159D3C;
-	neg34 = -D_80159D34;
-	D_80159D78[2] = neg34 - D_80159D3C;
 	D_80159D98[0] = D_80159D38 + D_80159D40;
 	D_80159D78[1] = D_80159D34 - D_80159D3C;
-	D_80159D20 = 0.0f;
+	D_80159D98[1] = D_80159D38 - D_80159D40;
+	neg34 = -D_80159D34;
+	D_80159D78[2] = neg34 - D_80159D3C;
 	neg38 = -D_80159D38;
 	D_80159D98[2] = neg38 - D_80159D40;
-	D_80159D98[1] = D_80159D38 - D_80159D40;
 	D_80159D78[3] = neg34 + D_80159D3C;
-	D_80159D1C = D_80159D20;
 	D_80159D98[3] = neg38 + D_80159D40;
-	D_80159D18 = D_80159D1C;
-	D_80159D14 = D_80159D18;
+	D_80159D14 = D_80159D18 = D_80159D1C = D_80159D20 = 0.0f;
 
-		if ((func_800E60CC_F507C(2, ((u8 *)&sp1E)[1]) != 0) || (D_80159D64->unk16 == 1)) {
+		if ((func_800E60CC_F507C(2, (u8)sp1E) != 0) || (D_80159D64->unk16 == 1)) {
 		D_80159D6C = 2;
-		temp_v0 = D_80159D5C->unk1A;
+		temp_v0 = arg0->unk1A;
 		if (temp_v0 == 0) {
 			D_80159D54 = 14.0f;
 		} else if (D_80159D64->unk16 == 1) {
 			D_80159D54 = vehicleTypes[temp_v0].unkC;
 		} else {
-			D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * D_80144CF8_153CA8);
+			D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * D_80144CF8_153CA8.value);
 		}
 		D_80159D54 *= D_80159D54;
 		return;
@@ -8884,9 +8878,6 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 		D_80159D6C = 3;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010C4EC_11B49C.s")
-#endif
 
 // CURRENT(4213)
 #ifdef NON_MATCHING
