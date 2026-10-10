@@ -1051,19 +1051,18 @@ void func_802D5058_2B7488(void) {
 // CURRENT(830)
 #ifdef NON_MATCHING
 void func_802D5754_2B7B84(void) {
-	s32 sp34;
 	s32 temp;
+	s32 sp34;
 	VehicleInstance *vehicle;
 
 	vehicle = D_80052B34;
 	sp34 = func_800B84D0_C7480(vehicle->unk0, vehicle->unk4);
-	temp = ((sp34 >> 8) - D_80222A70) >> 2;
-	if (temp < 11) {
-		temp = 10;
-	}
-	func_800E2720_F16D0(temp);
+	sp34 = (sp34 >> 8) - D_80222A70;
+	temp = sp34 >> 2;
+	sp34 = temp >= 11 ? temp : 10;
+	func_800E2720_F16D0(sp34);
 	if (D_80047F94 != 0) {
-		D_800313F8 = (s16)((s32)((f64)(200 - D_80154300) * D_802E2F98_2C53C8 + D_802E2FA0_2C53D0));
+		D_800313F8 = (s16)((s32)((f64)(200 - D_80154300) * ((f64 *)D_802E2F98_2C53C8)[0] + ((f64 *)D_802E2FA0_2C53D0)[0]));
 	}
 	if (D_80047F94 == 2) {
 		D_80222A70 = 0x400;
@@ -1186,36 +1185,36 @@ void func_802D5B58_2B7F88(void)
 // CURRENT(1108)
 #ifdef NON_MATCHING
 void func_802D5C24_2B8054(void) {
+	s32 rand4;
 	s32 rand1;
 	s16 temp;
-	u16 rand2, rand3;
-	s32 doFinal;
+	u16 random[3];
 
 	if (vehicleInstances[30].unk1C <= 0) {
 		func_80124118_1330C8(&vehicleInstances[54], (s16)(vehicleInstances[54].unk1C * 2));
 		func_800074BC_80BC(func_802D5C24_2B8054);
 		func_800076D4_82D4(2);
 	}
-	func_80014508_15108(&vehicleInstances[30], 1, 2);
+	func_80014508_15108(&D_8004E798, 1, 2);
 	if (((u32)D_80052A8C % 12U) == 0 && D_8014D17C < 5) {
 		D_8014D17C++;
 	}
-	func_80102A0C_1119BC(&vehicleInstances[30], vehicleInstances[30].unk6, 0, 2.5f);
+	func_80102A0C_1119BC(&D_8004E798, vehicleInstances[30].unk6, 0, 2.5f);
 	rand1 = func_800038E0_44E0();
 	if (((u32)D_80052A8C % ((rand1 & 7) + 4)) == 0 && vehicleInstances[54].unk1C > 0) {
-		rand2 = func_800038E0_44E0();
-		rand3 = func_800038E0_44E0();
+		random[1] = func_800038E0_44E0();
+		random[2] = func_800038E0_44E0();
+		rand4 = func_800038E0_44E0();
 		func_800DEA08_ED9B8(
-			(s16)((rand2 % 25) + vehicleInstances[54].unk0 + 0x50),
-			(s16)((rand3 % 25) + vehicleInstances[54].unk2 + 0x64),
-			(s16)((func_800038E0_44E0() % 25) + vehicleInstances[54].unk4 + 0x14),
+			(s16)((random[1] % 25) + vehicleInstances[54].unk0 + 0x50),
+			(s16)((random[2] % 25) + vehicleInstances[54].unk2 + 0x64),
+			(s16)((rand4 % 25) + vehicleInstances[54].unk4 + 0x14),
 			0x50, 8, 0xE, 0x28, 0xF0, 0x2F, 0x7B, 0x2E
 		);
 	}
 	temp = vehicleInstances[30].unk0;
-	doFinal = temp < 0x1C60;
 	if (temp < 0x1940) {
-		func_80124118_1330C8(&vehicleInstances[30], (s16)(vehicleInstances[30].unk1C * 2));
+		func_80124118_1330C8(&D_8004E798, (s16)(vehicleInstances[30].unk1C * 2));
 		func_800072CC_7ECC(0xC);
 		func_800AE1EC_BD19C();
 		func_800DEA08_ED9B8(
@@ -1224,20 +1223,21 @@ void func_802D5C24_2B8054(void) {
 			vehicleInstances[54].unk4,
 			0x190, 8, 1, 0xC8, 0xFF, 0x2F, 0x7B, 0x2E
 		);
-		doFinal = vehicleInstances[30].unk0 < 0x1C60;
+		temp = D_8004E798.unk0;
 	}
-	if (doFinal) {
+	if (temp < 0x1C60) {
 		if (D_802E30EC == 0) {
 			func_800EFEB4_FEE64(0, 0x1B, 0);
 			D_802E30EC = 1;
 		}
 	}
 }
+
+// CURRENT(93)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5C24_2B8054.s")
 #endif
 
-// CURRENT(93)
 #ifdef NON_MATCHING
 void func_802D5F28_2B8358(void) {
 	s32 alienId;
@@ -1570,13 +1570,13 @@ void func_802D6A70_2B8EA0(void) {
 #endif
 
 // oil rig rescue mission
-#ifdef NON_MATCHING
 void func_802D6CA0_2B90D0(void) {
-	s16 temp;
 	s32 buildingType;
+	s32 gridX, gridZ;
 	s32 dx, dz;
+	s32 rotatedX;
 	s32 angle;
-	s16 cosVal, sinVal;
+	s16 temp, sinVal, pad, cosVal;
 
 	temp = 0x69 - D_8004D1B2; // timer 1:45
 	if (temp < 0xC8) {
@@ -1587,22 +1587,22 @@ void func_802D6CA0_2B90D0(void) {
 			D_802E309C = func_800FAE60_109E10(D_80052B34);
 		}
 		{
-			s32 t5 = D_80052B34->unk0 >> 8;
-			s32 t7 = D_80052B34->unk4 >> 8;
-			buildingType = func_8011D260_12C210((s8)t5, (s8)t7);
+			gridX = D_80052B34->unk0 >> 8;
+			gridZ = D_80052B34->unk4 >> 8;
+			buildingType = func_8011D260_12C210((s8)gridX, (s8)gridZ);
 		}
 		if (buildingType == 0x45 || buildingType == 0x50 || buildingType == 0x41 || buildingType == 0x56) {
 			if (buildingInstances[buildingType].unk7 != 0) {
 				dx = D_80052B34->unk0 - buildingInstances[buildingType].xCoord;
 				dz = D_80052B34->unk4 - buildingInstances[buildingType].zCoord;
-				angle = (buildingInstances[buildingType].unk8 << 14) & 0xFFFF;
+				angle = (buildingInstances[buildingType].unk8 & 3) << 14;
 				cosVal = coss(angle);
 				sinVal = sins(angle);
-				temp = (s32)((f64)dx * ((f64)(f32)cosVal / 32768.0) - ((f64)(f32)sinVal / 32768.0) * (f64)dz);
-				sinVal = sins(angle);
-				cosVal = coss(angle);
-				if (temp < 0) {
-					if ((s32)((f64)dz * ((f64)(f32)cosVal / 32768.0) + (f64)dx * ((f64)(f32)sinVal / 32768.0)) > 0) {
+				rotatedX = (s32)((f64)dx * ((f64)(f32)cosVal / 32768.0) - ((f64)(f32)sinVal / 32768.0) * (f64)dz);
+				cosVal = sins(angle);
+				sinVal = coss(angle);
+				if (rotatedX < 0) {
+					if ((s32)(((f64)(f32)sinVal / 32768.0) * (f64)dz + (f64)dx * ((f64)(f32)cosVal / 32768.0)) > 0) {
 						D_802E30F8 = buildingType;
 						D_802E30FC = D_80052B34 - vehicleInstances;
 						func_80007410_8010(func_802D6A70_2B8EA0);
@@ -1616,9 +1616,7 @@ void func_802D6CA0_2B90D0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6CA0_2B90D0.s")
-#endif
+
 
 // CURRENT(200)
 void func_802D6F4C_2B937C(void) {

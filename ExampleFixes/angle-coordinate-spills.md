@@ -24,3 +24,7 @@ In Siberia func_802D81C0_2BA5F0, using separate s32 result variables for the two
 
 
 In Siberia func_802DA4CC_2BC8FC, extracting chained node indices into separate locals fixes the initial register sequence. The first index remains s8, while the next two use s32 and precede the three s16 node/result locals. Those promoted indices replace two unused s32 padding declarations, retaining the exact stack slots and frame size; narrowing all three indices to s8 changes stack packing and the cached alien pointer slot.
+
+## Mask rotation bits before shifting
+
+In func_802D6CA0_2B90D0, (buildingInstances[buildingType].unk8 & 3) << 14 produces the same shift and final mask instructions as (buildingInstances[buildingType].unk8 << 14) & 0xFFFF, but assigns the raw building word to t1 instead of v1. This resolved the last two register differences. Keep the rotated coordinate as s32: narrowing it to s16 adds an mfc1/sh sequence instead of spilling the floating conversion directly with swc1. Reusing the same s16 trig local for the first cosine and second sine also preserves their shared stack slot.
