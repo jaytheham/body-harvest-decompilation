@@ -1,3 +1,16 @@
+#ifdef LIBULTRA_REFERENCE
+#ifndef LIBULTRA_VARIABLES_US_H
+#define LIBULTRA_VARIABLES_US_H
+#include "structs.us.h"
+extern OSTime osClockRate;
+extern s32 osViClock;
+extern OSPiHandle __Dom1SpeedParam;
+extern OSPiHandle __Dom2SpeedParam;
+extern u32 __osFinalrom;
+extern __osExceptionVector __osExceptionPreamble[];
+extern __osExceptionVector __ptExceptionPreamble[];
+#endif
+#else
 #ifndef VARIABLES_US_H
 #define VARIABLES_US_H
 
@@ -1905,7 +1918,7 @@ extern u8 D_8013D768_14C718;
 extern s32 D_8013D76C_14C71C;
 extern s32 D_8013D770_14C720;
 extern s32 D_8013D774_14C724;
-extern s16 D_8013D786_14C736[];
+extern s16 D_8013D786_14C736[][8];
 extern u8 D_8013D894_14C844; // Beacon warp destination
 extern s32 D_8013D8C0_14C870[];
 extern Unk_8013D91C D_8013D91C[6];
@@ -1973,8 +1986,8 @@ extern u8 D_80140D2C_ReadPair[];
 extern u8 D_80140D2C_ReadTriple[];
 extern u8 D_80140D30_14FCE0[16];
 extern s16 D_80140D40_14FCF0[];
-extern u8 D_80140D68_14FD18[];
-extern u8 D_80140D74_14FD24[];
+extern u8 D_80140D68_14FD18[][3];
+extern u8 D_80140D74_14FD24[][3];
 extern u8 D_80140DA8[];
 extern u8 D_80140DC0[];
 extern char D_80140DD8[];
@@ -2244,7 +2257,7 @@ extern LookAt D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
 extern Unk8014DD5C D_8014DD5C[];
 extern Unk8014DD50 D_8014E4D0[];
-extern s16 D_8014E4D6[];
+extern s16 D_8014E4D6[][8];
 extern s8 D_8014EC50[];
 extern s32 D_8014ECC8;
 extern s32 D_8014ECC8_W;
@@ -4077,3 +4090,5 @@ extern const f64 D_80144028_152FD8[1];
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
+
+#endif /* LIBULTRA_REFERENCE */

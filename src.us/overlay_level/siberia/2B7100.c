@@ -3199,7 +3199,7 @@ void func_802DAEBC_2BD2EC(u8 arg0) {
 		sp38 = 0xC8;
 	}
 
-	func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, sp38, 4), 0x3D4CCCCD, (u8)sp4F);
+	func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, sp38, 4), 0.05f, (u8)sp4F);
 
 	if (alien->unk3C != 0) {
 		alien->unk3C--;

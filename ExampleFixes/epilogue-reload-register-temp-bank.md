@@ -22,7 +22,23 @@ before the epilogue is identical.
 - A one-element array holding the timestamp makes the reload land in the target's `$t0`, **but** shifts
   the gameplay-mode load and the millisecond-arithmetic temps down one -> **60**.
 
-**Conclusion.** The register is chosen from cfe's temp free-stack, so the lever is whichever C shape
-changes *which temp the final reload allocates* without disturbing the earlier temps - not the
-declaration list. The near-match (array variant) proves the target register is reachable; the work
-left is holding the earlier temps still. Do not re-tread declaration permutations on this family.
+**Matched resolution (`func_800702C0_7F270`).** Declare the one-element reference array first,
+calculate the unsigned 32-bit difference, then overwrite the array with the current timestamp
+before calling the 64-bit helpers. Reuse the difference local for the helper result. The array's
+cached value gives the final reload its `$t0` destination and preserves the spill at `sp+0x1C`.
+
+Naming the difference removes the expression temporary that the original inline subtraction
+allocated. Restore the temporary allocation phase by applying three `arg0 &= 0xFFFF;` operations
+to the signed 16-bit parameter **before** `osGetCount()`. These leave the parameter unchanged.
+IDO's assembler removes their instructions while their intermediate allocations remain effective.
+One or two masks still shift the later registers; three produce the exact 60-instruction target.
+Keep a short comment beside these deliberately redundant operations.
+
+Inspect a diagnostic `cc -S` listing when the final object hides these effects. The scalar version
+reloads into an uncoloured scratch register; the reused array reloads into its cached `$t0`.
+The named difference uses `$v0`, whereas the inline subtraction draws `$t8` before its destination
+is folded into `$a1`. Widening and narrowing the difference to restore that draw also allocates
+an extra register pair and shifts the millisecond arithmetic, so it is not an equivalent fix.
+
+Validation: full ROM build `build/bh.us.z64: OK`, function diff score **0**. Do not re-tread scalar
+declaration permutations on this family; both cached storage and temporary allocation matter.

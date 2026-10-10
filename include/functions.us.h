@@ -1,3 +1,12 @@
+#ifdef LIBULTRA_REFERENCE
+#ifndef LIBULTRA_FUNCTIONS_US_H
+#define LIBULTRA_FUNCTIONS_US_H
+/* Older controller-pak status packets query all controllers. */
+void __osPfsRequestData(u8 cmd);
+void __osPfsGetInitData(u8* pattern, OSContStatus* data);
+s32 __osPfsGetStatus(OSMesgQueue* queue, int channel);
+#endif
+#else
 #ifndef FUNCTIONS_US_H
 #define FUNCTIONS_US_H
 
@@ -681,7 +690,7 @@ void func_800A41B0_B3160(u8 arg0);
 void func_800A4C28_B3BD8(u8 arg0);
 void func_800A53C0_B4370(u8, s16, s16);
 void func_800A57E4_B4794(u8);
-void func_800A5554_B4504(u8 arg0, s32 arg1, s32 arg2, s16 arg3);
+void func_800A5554_B4504(u8 arg0, s32 arg1, f32 arg2, s16 arg3);
 void func_800A5BD0_B4B80(s32 arg0);
 void func_800A5D3C_B4CEC(void);
 void func_800A5EE8_B4E98(u8);
@@ -1545,6 +1554,7 @@ void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2);
 extern void (*__printfunc)(s32, s32);
 void func_8000EFB8_FBB8(void *);
 void func_80095100_A40B0(s16, s16);
+void func_80095530_A44E0(s16);
 void func_800047D0_53D0(s32, s32);
 void func_8000F6B0_102B0(s32);
 void func_8000FE50_10A50(void *);
@@ -1708,3 +1718,5 @@ s32 func_80083060_92010(s32 arg0, s32 arg1, s32 arg2, u8 *arg3);
 #endif
 
 void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4);
+
+#endif /* LIBULTRA_REFERENCE */

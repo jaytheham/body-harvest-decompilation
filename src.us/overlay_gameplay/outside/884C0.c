@@ -7530,7 +7530,7 @@ void func_8008C0F8_9B0A8(u8 arg0)
 	{
 		return;
 	}
-	func_800A5554_B4504(arg0, 0x190, 0x3CA3D70A, (s16)typeEntry);
+	func_800A5554_B4504(arg0, 0x190, 0.02f, (s16)typeEntry);
 	alienInstances[arg0].unkA += 0x96;
 	alienInstances[arg0].unk10 += 0x20;
 	if (alienInstances[arg0].unk38 != 0)

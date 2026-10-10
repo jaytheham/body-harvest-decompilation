@@ -1,3 +1,15 @@
+#ifdef LIBULTRA_REFERENCE
+#ifndef LIBULTRA_STRUCTS_US_H
+#define LIBULTRA_STRUCTS_US_H
+/* Reference: reference/ultralib/src/os/initialize.c. */
+typedef struct {
+    u32 inst1;
+    u32 inst2;
+    u32 inst3;
+    u32 inst4;
+} __osExceptionVector;
+#endif
+#else
 #ifndef STRUCTS_US_H
 #define STRUCTS_US_H
 
@@ -3128,9 +3140,22 @@ typedef struct {
 	/* 0x00 */ s32 unk0; // Pointer to label string
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
-	/* 0x0C */ u8 pad0C[0xC];
+	/* 0x0C */ s32 minimum;
+	/* 0x10 */ s32 maximum;
+	/* 0x14 */ s16 shift;
+	/* 0x16 */ u16 pad16;
 	/* 0x18 */ u32 type;
 } DebugPropEntry; /* stride = 0x1C */
+
+typedef union {
+	u8 byte;
+	s8 signedByte;
+	s16 halfword;
+	s32 word;
+	f32 real;
+	s8 bytePair[2];
+	s16 halfwordPair[3];
+} DebugPropertyValue;
 
 typedef struct {
 	/* 0x00 */ u8 pad00[0x8];
@@ -3739,3 +3764,5 @@ typedef struct {
 	f32 x, y, z;
 	f32 rightX, rightY, rightZ;
 } CameraBasis;
+
+#endif /* LIBULTRA_REFERENCE */

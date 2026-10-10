@@ -1506,7 +1506,7 @@ void func_802D6684_255DC4(u8 arg0)
 		}
 		sp24 = 0x190;
 	}
-	func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, sp24, 4), 0x3D4CCCCD, sp36);
+	func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, sp24, 4), 0.05f, sp36);
 	if (alien->unk26 != 0)
 	{
 		alien->unk26--;
@@ -2464,7 +2464,7 @@ void func_802D9510_258C50(u8 arg0) {
 			alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKF);
 		}
 	}
-	func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, a3, 4), 0x3D4CCCCD, sp46);
+	func_800A5554_B4504(arg0, func_8008E524_9D4D4(arg0, a3, 4), 0.05f, sp46);
 	if (alienInstances[arg0].unk3C != 0) {
 		alienInstances[arg0].unk3C--;
 	}
