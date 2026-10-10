@@ -2837,7 +2837,6 @@ void func_802DA6D4_31E824(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DA6D4_31E824.s")
 #endif
 
-#ifdef NON_MATCHING
 s32 func_802DA9C0_31EB10(u8 arg0, s16 arg1) {
 	s16 s0;
 	s16 buf[5];
@@ -2850,12 +2849,12 @@ s32 func_802DA9C0_31EB10(u8 arg0, s16 arg1) {
 		buf[0] = arg1;
 		buf[1] = D_8014DD50[arg1].unkC;
 		buf[3] = alienInstances[arg0].unkC;
-		buf[2] = D_8014DD50[D_8014DD50[arg1].unkC].unkC;
-		buf[4] = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		buf[2] = D_8014DD50[buf[1]].unkC;
+		buf[4] = D_8014DD50[buf[3]].unkC;
 		temp_v0 = func_80081F18_90EC8(arg0, 5, 3, buf, &D_802E5234_329384);
 		if (temp_v0 == 2) {
-			alienInstances[arg0].unk1E = 0;
 			for (s0 = 0; s0 < 6; s0++) {
+				alienInstances[arg0].unk1E = 0;
 				func_80137468_146418(arg0, 0x134);
 				if (func_80084FE8_93F98(arg0, 0x800)) {
 					if (func_800871CC_9617C(arg0, 1, s0 * 0x28)) {
@@ -2875,9 +2874,7 @@ s32 func_802DA9C0_31EB10(u8 arg0, s16 arg1) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DA9C0_31EB10.s")
-#endif
+
 
 void func_802DAC0C_31ED5C(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s32 arg5) {
 	s16 buf[2];
