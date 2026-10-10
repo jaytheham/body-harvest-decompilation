@@ -73,33 +73,34 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 /* Rotate the projection coordinates and attenuate them by the distortion angle. */
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-    s32 x;
-    s32 y;
-    s32 radiusSquared;
-    s32 screenRadiusSquared;
-    s32 angle;
-    s32 rotatedX;
-    f32 scale;
-    s32 pad38;
-    s16 trig;
-    s16 cosine;
+	s32 x;
+	s32 y;
+	s32 radiusSquared;
+	s32 screenRadiusSquared;
+	s32 angle;
+	s32 rotatedX;
+	f32 scale;
+	s32 pad38;
+	s16 trig;
+	s16 cosine;
 
-    x = D_80059CD2;
-    y = D_80059CD4;
-    screenRadiusSquared = (D_8005BAEC * D_8005BAEC + D_8005BAF0 * D_8005BAF0) / 4;
-    radiusSquared = x * x + y * y;
-    angle = (D_80059CD0 * 2 * (screenRadiusSquared - radiusSquared) + D_80059CD0 * radiusSquared) / 1296;
+	x = D_80059CD2;
+	y = D_80059CD4;
+	screenRadiusSquared = (D_8005BAEC * D_8005BAEC + D_8005BAF0 * D_8005BAF0) / 4;
+	radiusSquared = x * x + y * y;
+	angle = (D_80059CD0 * 2 * (screenRadiusSquared - radiusSquared) + D_80059CD0 * radiusSquared) / 1296;
 
-    trig = coss(angle);
-    rotatedX = ((f32) sins(angle) / 32768.0) * y + ((f32) trig / 32768.0) * x;
-    trig = sins(angle);
-    cosine = coss(angle);
-    if (angle >= 0x8000) {
-        angle = 0x7FFF;
-    }
-    scale = (32767.0 - (f32) angle) / 32767.0;
-    D_80059CD2 = rotatedX * scale;
-    D_80059CD4 = (s32) (((f32) cosine / 32768.0) * y + -((f32) trig / 32768.0) * x) * scale;
+	trig = coss(angle);
+	rotatedX = ((f32)sins(angle) / 32768.0) * y + ((f32)trig / 32768.0) * x;
+	trig = sins(angle);
+	cosine = coss(angle);
+	if (angle >= 0x8000)
+	{
+		angle = 0x7FFF;
+	}
+	scale = (32767.0 - (f32)angle) / 32767.0;
+	D_80059CD2 = rotatedX * scale;
+	D_80059CD4 = (s32)(((f32)cosine / 32768.0) * y + -((f32)trig / 32768.0) * x) * scale;
 }
 
 // https://decomp.me/scratch/5eScw
