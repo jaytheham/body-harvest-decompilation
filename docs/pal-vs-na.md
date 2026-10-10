@@ -65,15 +65,42 @@ The 8 bytes after the pad are identical in both ROMs (`00 00 10 25`,
 addresses inside differ. So the frontend overlay's first function is the same
 *shape* in both versions and differs only in immediates.
 
-**Not yet applied.** The ROM matches with the config as it stands, so this is a
-file-attribution fix rather than a correctness one, and splat resists it:
+**Not applied.** The ROM matches with the config as it stands, so this is a
+file-attribution fix rather than a correctness one. What was established by
+experiment, in order:
 
-- Starting the segment at `0x40788` (so `0x40780`-`0x40788` stays core's) makes
-  splat stop core at `0x40782`, dropping the 6 pad bytes.
-- Giving the pad to `bin` inside the overlay adds 16 bytes of padding, because
-  the segment is `overlay: true`.
-- Moving the pad into core's own subsegment list is impossible: core's
-  subsegments are ordered, and its last one ends where the overlay begins.
+| Attempt | Change | Result |
+|---|---|---|
+| 1 | frontend start `0x40780`, C attribution there | asm_processor rejects two one-instruction functions |
+| 2 | pad as `bin` inside the overlay | `bin` in an `overlay: true` segment adds 16 bytes of padding |
+| 3 | frontend start `0x40788`, pad left to core | nothing emits the 8-byte gap; 6 bytes dropped |
+| 4 | pad as `bin` mid-list in core | core's subsegments must stay ordered |
+| 5 | pad as `bin` appended to core, frontend `0x40788` | `bin` lands in `.data`, before `.rodata` |
+| 6 | pad as `rodata` instead | pad emitted correctly at `0x40780`, but the linker adds alignment fill |
+
+Attempt 6 identified the real mechanism. `__romPos` advances by
+`SIZEOF(.core)`, which is the **VMA** size, and then `ALIGN(__romPos, 16)`.
+Because `0x40788` is 8-mod-16 and every boundary in the script is forced to 16,
+the linker inserts fill where the reference has the overlay's first instruction
+immediately at `0x40788`.
+
+**Per-segment alignment does resolve that part.** `align` and `subalign` are
+read per segment (`linker_entry.py`, `parse_segment_subalign`), so setting
+`align: 8` / `subalign: 8` on `core` and `overlay_gameplay_frontend` — not
+globally — produces `SUBALIGN(8)` and `ALIGN(__romPos, 8)`, emits the pad at
+`0x40780`, and starts the frontend at `0x40788` with no alignment fill. The first
+mismatch moves from `0x4078A` past the seam to `0x407AF`.
+
+That configuration still fails the acceptance criteria, and the remaining cause
+is a different layer:
+
+- **Size:** the ROM is 16 bytes larger. `__romPos` advances by
+  `SIZEOF(.overlay_gameplay_frontend)`, which couples ROM accounting to the
+  overlay's VMA size rather than its ROM span.
+- **Relocations:** single-byte differences at `0x407AF`, `0x46AFB`, `0x46B4B`,
+  `0x46C5B`, spaced about `0x100` apart, each a `jal` whose encoded target is 8
+  bytes off. The overlay's internal subsegment boundaries (`0x4E450`, `0x52E50`,
+  `0x61620`) are NTSC-derived and also need remapping.
 
 Net effect today: 0x38 bytes of PAL core code at `0x40750`-`0x40788` are
 attributed to the frontend overlay's first C file. Cosmetic; the ROM is correct.
