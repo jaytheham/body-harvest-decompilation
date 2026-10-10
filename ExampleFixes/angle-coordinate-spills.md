@@ -11,3 +11,8 @@ Matched `func_800A57E4_B4794` with IDO 5.3. Keeping the X and Z differences as s
 Declare the two coordinate locals before the two `s16` angle locals. This placed the saved angle difference at `sp+0x2E`, even though both coordinate locals stayed in registers. Declaring the angle difference first placed its spill at `sp+0x36`, with all other instructions matching.
 
 Replace the two explicit `const f64` arrays containing `600.0` with inline double literals. IDO generated the required rodata, multiplication operand order, and floating-point register allocation. Full ROM verification returned `build/bh.us.z64: OK`.
+
+
+### Opposite-facing angle helper
+
+Siberia func_802DD408_2BF838 matches using the shared func_80084FE8_93F98 declaration layout and a ternary. Express the negative candidate as -(angle - alien->unk6 + 0x8000). Writing -0x8000 - (angle - alien->unk6) makes IDO reverse the inner subtraction and add the constant, changing instructions and temporary registers. Keep an unused s16 before the saved first angle to place it at sp+0x30. The threshold parameter is u16. Full ROM checksum verified OK.

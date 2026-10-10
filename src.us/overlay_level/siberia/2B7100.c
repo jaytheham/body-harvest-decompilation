@@ -835,7 +835,7 @@ void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 void func_802D6A70_2B8EA0(void);
 void func_802DB8D8_2BDD08(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, f32 arg8);
 void func_802DD240_2BF670(s32 arg0);
-s32 func_802DD408_2BF838(u8 arg0, u32 arg1);
+s32 func_802DD408_2BF838(u8 arg0, u16 arg1);
 void func_802DD514_2BF944(s32 arg0);
 s32 func_802DCC50_2BF080(u8 arg0);
 void func_802DCA14_2BEE44(u8 arg0);
@@ -3875,41 +3875,26 @@ void func_802DD240_2BF670(s32 arg0) {
 #endif
 
 // CURRENT(99)
-#ifdef NON_MATCHING
-s32 func_802DD408_2BF838(u8 arg0, u32 arg1) {
-	s32 diff_x;
-	s32 diff_z;
-	s32 result_heading;
-	s32 sp30_heading;
-	s16 sp30;
+s32 func_802DD408_2BF838(u8 arg0, u16 arg1) {
+    s32 diffX;
+    s32 diffZ;
+    s32 heading;
+    s16 pad;
+    s16 firstHeading;
+    AlienInstance *alien;
 
-	diff_x = D_80052B34->unk0 - alienInstances[arg0].unk0;
-	diff_z = D_80052B34->unk4 - alienInstances[arg0].unk4;
-
-	sp30 = func_80003824_4424((f32)diff_x, (f32)diff_z);
-	result_heading = func_80003824_4424((f32)diff_x, (f32)diff_z);
-
-	sp30_heading = sp30 - alienInstances[arg0].unk6;
-	result_heading = result_heading - alienInstances[arg0].unk6;
-
-	if ((-0x8000 - result_heading) < (sp30_heading + 0x8000)) {
-		result_heading = func_80003824_4424((f32)diff_x, (f32)diff_z);
-		result_heading = result_heading - alienInstances[arg0].unk6;
-		result_heading = result_heading + 0x8000;
-	} else {
-		result_heading = func_80003824_4424((f32)diff_x, (f32)diff_z);
-		result_heading = result_heading - alienInstances[arg0].unk6;
-		result_heading = -0x8000 - result_heading;
-	}
-
-	if (result_heading < (s32)(((((u16)arg1 & 0xFFFFu) & 0xFFFFu) & 0xFFFFu) & 0xFFFFu)) {
-		return 1;
-	}
-	return 0;
+    alien = &alienInstances[arg0];
+    diffX = D_80052B34->unk0 - alien->unk0;
+    diffZ = D_80052B34->unk4 - alien->unk4;
+    firstHeading = func_80003824_4424((f32)diffX, (f32)diffZ);
+    heading = (-(func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000)) < (firstHeading - alien->unk6 + 0x8000)
+        ? func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000
+        : -(func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000);
+    if (heading < arg1) {
+        return 1;
+    }
+    return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD408_2BF838.s")
-#endif
 
 // CURRENT(277)
 #ifdef NON_MATCHING
