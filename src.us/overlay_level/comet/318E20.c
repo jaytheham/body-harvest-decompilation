@@ -930,35 +930,33 @@ const f64 D_802E7BC8_32BD18[] = { 270.176968244 };
 
 const f64 D_802E7BD0_32BD20[] = { 270.176968244 };
 
-#ifdef NON_MATCHING
-void func_802D4CD0_318E20(s32 arg0, void *arg1) {
+void func_802D4CD0_318E20(s32 arg0, s32 arg1) {
+	arg1 = arg0;
 	if (arg0 < 0x14) {
-		((void (*)(s32))D_802E4E84_328FD4[arg0])(arg0);
+		D_802E4E84_328FD4[arg0]();
 		return;
 	}
 
-	switch (arg0) {
+	switch (arg1) {
 	case 0x16:
-		func_802DFE68_323FB8(arg1, arg0);
+		func_802DFE68_323FB8();
 		return;
 	case 0x15:
-		osSyncPrintf(D_802E7A30_32BB80);
+		osSyncPrintf(D_802E7A30_32BB80, arg0);
 		func_800EFEB4_FEE64((void *)&func_802D67A8_31A8F8, 0x24, 0);
 		return;
 	case 0x45:
-		func_802D7548_31B698(arg1, arg0);
+		func_802D7548_31B698();
 		return;
 	case 0x44:
 		func_80007690_8290();
 		return;
 	default:
-		osSyncPrintf(D_802E7A40_32BB90);
+		osSyncPrintf(D_802E7A40_32BB90, arg0);
 		return;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D4CD0_318E20.s")
-#endif
+
 
 #ifdef NON_MATCHING
 // CURRENT(75) - 16-bit store to Unk80154318Entry.unk14 (u8 field, sh in ROM): 641 -> 75
