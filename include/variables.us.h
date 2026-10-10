@@ -359,6 +359,7 @@ extern NameRef D_800344B4_350B4[]; // English string table
 extern NameRef D_80034C44_35844[]; // French string table
 extern NameRef D_80034D0C_3590C[]; // German string table
 extern s32 D_80034574_35174[];
+extern MessageEntry D_800344B0_350B0[];
 extern u64 D_80035610_36210;
 extern OSViMode D_800356D0_362D0;
 extern OSViMode D_80035B30_36730;
@@ -482,15 +483,6 @@ extern const f32 D_80037578_38178[];
 extern const f64 D_80037580_38180[];
 extern const f64 D_80037600_38200[];
 extern const f64 D_80037610_38210[];
-extern const f64 D_80037620_38220[];
-extern const f64 D_80037628_38228[];
-extern const f64 D_80037630_38230[];
-extern const f64 D_80037638_38238[];
-extern const f64 D_80037640_38240[];
-extern const f64 D_80037648_38248[];
-extern const f32 D_80037650_38250[];
-extern const f32 D_80037654_38254[];
-extern const f32 D_80037658_38258[];
 extern const char D_80037660_38260[]; /* osSyncPrintf format string */
 extern const char D_8003767C_3827C[]; /* osSyncPrintf format string */
 extern const char D_80037694_38294[]; /* osSyncPrintf format string */
@@ -800,6 +792,8 @@ extern OSMesg D_800433C0;
 extern OSThread D_800433C8;
 extern Unk80047578 D_80047578;
 extern s32 D_80047584;
+extern s8 D_8004758A;
+extern s8 D_8004758B;
 extern OSContPad currentControllerStates[4]; // 0x80047588
 extern OSContPad D_800475A0[4]; // When button is held these values sometimes reset to 0 next frame?
 extern OSContPad D_800475B8[4];
@@ -1077,19 +1071,47 @@ extern s32 D_8005BB3C;
 extern s32 D_8005BB40;
 extern s32 D_8005BB48[]; // ptr to framebuffer A
 extern s32 D_8005BB4C[]; // ptr to framebuffer B
-extern s32 D_8005BB50;
+#ifdef CORE_FD80_BSS
+u64 D_8005BB50;
+#else
+extern u64 D_8005BB50;
+#endif
 extern s32 D_8005BB54;
-extern s32 D_8005BF58;
+#ifdef CORE_FD80_BSS
+u64 D_8005BF58;
+#else
+extern u64 D_8005BF58;
+#endif
 extern s32 D_8005BF5C;
-extern void *D_8005C760;
+#ifdef CORE_FD80_BSS
+u64 D_8005C760;
+#else
+extern u64 D_8005C760;
+#endif
 extern s32 D_8005C764;
-extern u8 D_8005CF68[];
+#ifdef CORE_FD80_BSS
+u64 D_8005CF68;
+#else
+extern u64 D_8005CF68;
+#endif
 extern s32 D_8005CF6C;
-extern u8 D_80064F70[];
+#ifdef CORE_FD80_BSS
+u64 D_80064F70;
+#else
+extern u64 D_80064F70;
+#endif
 extern s32 D_80064F74;
-extern s32 D_80065F78;
+#ifdef CORE_FD80_BSS
+u64 D_80065F78;
+#else
+extern u64 D_80065F78;
+#endif
 extern s32 D_80065F7C;
-extern u8 D_80066780[];
+#ifdef CORE_FD80_BSS
+u64 D_80066780;
+#else
+extern u64 D_80066780;
+#endif
 extern s32 D_80066784;
 extern OSThread D_80067388;
 extern OSThread D_80067388;
@@ -1124,7 +1146,11 @@ extern f32 D_80068094;
 extern f32 D_80068098;
 extern s32 D_8006809C;
 extern OSSched D_800680A0;
-extern s32 D_80068328;
+#ifdef CORE_FD80_BSS
+u64 D_80068328;
+#else
+extern u64 D_80068328;
+#endif
 extern s32 D_8006832C;
 extern OSIoMesg D_8006A330[];
 extern OSMesg D_8006A7E0[];
@@ -1451,6 +1477,7 @@ extern char *D_800A428C_18C34C[];
 extern char *D_800A42C8_18C388[];
 extern char *D_800A4304_18C3C4[];
 extern s32 D_800A4340_18C400;
+extern s32 D_800A4340_18C400_W;
 extern s8 D_800A4343_18C403;
 extern s32 D_800A4344_18C404;
 extern s16 D_800A4348_18C408;
@@ -1458,6 +1485,7 @@ extern Unk800A4354 D_800A4354_18C414;
 extern Unk800A4354 D_800A435C_18C41C;
 extern Unk800A4354 D_800A4364_18C424;
 extern u16 D_800A436C_18C42C;
+extern u16 D_800A436C_18C42C_W;
 extern s16 D_800A4370_18C430;
 extern f64 D_800A4F28_18CFE8;
 extern f64 D_800A4F30_18CFF0;
@@ -2511,11 +2539,15 @@ extern s16 D_8015758A;
 extern s16 D_8015758C;
 extern s16 D_8015758E;
 extern s16 D_80157590; // outside camera status
+#ifdef OUTSIDE_F7870_BSS
+s32 D_801575A0;
+void *D_801575A4;
+#else
 extern s32 D_801575A0;
 extern void *D_801575A4;
+#endif
 extern Gfx* D_801575A8;
 extern Gfx* D_801575AC;
-extern s32 D_801575B0;
 extern s16 D_801575C0;
 extern s16 D_801575C2;
 extern f32 D_801575C4;
@@ -4037,14 +4069,6 @@ extern const f32 D_80037578_38178_R;
 extern const f64 D_80037580_38180_R;
 extern const f64 D_80037600_38200_R;
 extern const f64 D_80037610_38210_R;
-extern const f64 D_80037628_38228_R;
-extern const f64 D_80037630_38230_R;
-extern const f64 D_80037638_38238_R;
-extern const f64 D_80037640_38240_R;
-extern const f64 D_80037648_38248_R;
-extern const f32 D_80037650_38250_R;
-extern const f32 D_80037654_38254_R;
-extern const f32 D_80037658_38258_R;
 extern const f32 D_800382F0_38EF0_R;
 extern const f64 D_800382F8_38EF8_R;
 extern const f32 D_80038300_38F00_R;
@@ -4091,5 +4115,25 @@ extern const f64 D_80144028_152FD8[1];
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
+
+
+extern s32 D_800A4340_Menu1;
+extern s32 D_800A4340_Menu2;
+extern s32 D_800A4340_Menu3;
+extern s32 D_800A4340_Menu4;
+extern s16 D_800FCA92_W;
+extern s32 D_800A4344_18C404_W;
+
+extern s32 D_800A4340_Nav1;
+extern s32 D_800A4340_Nav2;
+extern s32 D_800A4340_Nav3;
+
+
+extern s16 D_800FCA92_Lang0;
+extern s16 D_800FCA92_Lang1;
+extern s16 D_800FCA92_Lang2;
+
+extern s32 D_800A4340_DrawCompare;
+extern s32 D_800A4340_DrawAfterCall;
 
 #endif /* LIBULTRA_REFERENCE */

@@ -1,3 +1,4 @@
+#define OUTSIDE_F7870_BSS
 #include <ultra64.h>
 #include "common.h"
 
@@ -10,62 +11,49 @@ const char D_801442C4_153274[] = ".OK\n"; // ".OK\n"
 const f32 D_801442CC_15327C[1] = {10000.0f};
 const f64 D_801442D0_153280[2] = {0.55, 0.0};
 
-#ifdef NON_MATCHING
 // StripModelToBones
 Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
+	ShadowModelCommand temp;
 	Gfx* src;
-	Gfx* dst;
-	Gfx* result;
-	Gfx temp;
 	s8 opcode;
+	Gfx* result;
+	static Gfx* dst;
+	static Gfx* start;
+	static s32 count;
 
 	src = (Gfx*)func_80012000_12C00(arg0);
-
 	switch (arg1) {
 	case 0:
-		dst = D_801575A8;
-		arg1 = D_801575B0;
 		break;
 	case 1:
 		dst = D_802C9480;
-		D_801575AC = D_802C9480;
-		arg1 = 0;
+		start = dst;
+		count = 0;
 		break;
 	case 2:
 		dst = D_802C9EA8;
-		D_801575AC = D_802C9EA8;
-		arg1 = 0;
+		start = dst;
+		count = 0;
 		break;
 	default:
-		dst = D_801575A8;
-		arg1 = D_801575B0;
 		break;
 	}
-
 	result = dst;
-
 	do {
-		temp = *src++;
-		opcode = *(s8*)&temp;
+		temp.words = src->words;
+		src++;
+		opcode = temp.bytes[0];
 		if (opcode == -0x41 || opcode == -0x4F || opcode == -0x48 || opcode == 4) {
-			*dst++ = temp;
-			arg1++;
+			dst->words = temp.words;
+			dst++;
+			count++;
 		}
 	} while (opcode != -0x48);
-
-	D_801575A8 = dst;
-	D_801575B0 = arg1;
-
-	if (arg1 >= 0x145) {
-		D_801575B0 = arg1;
-		osSyncPrintf(D_80144260_153210, arg1, 0x145);
+	if (count >= 0x145) {
+		osSyncPrintf(D_80144260_153210, count, 0x145);
 	}
-
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E88C0_F7870.s")
-#endif
 
 // CURRENT(16124)
 #ifdef NON_MATCHING
@@ -262,72 +250,75 @@ void func_800E94B8_F8468(void) {
 	D_801575A0 = 0;
 }
 
-// CURRENT(2000)
-#ifdef NON_MATCHING
 // AI - Line-of-sight ground raycast: steps from the camera toward a target point checking terrain height
 s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
-	s32 pad[4];
-	s32 step[3];
-	s32 baseX;
-	s32 baseY;
-	s32 baseZ;
+	s32 pad[4]; /* Preserves the original unused stack space. */
+	s32 stepX;
+	s32 stepY;
+	s32 stepZ;
+	Vec3i base;
 	s32 deltaX;
+	s32 negativeX;
 	s32 deltaZ;
+	s32 negativeZ;
 	s32 absDeltaX;
 	s32 absDeltaZ;
-	s32 stepSign;
+	s32 scratch;
+	s32 nSteps;
 
-	baseX = (s32)D_80052B2C->unk0 << 8;
-	baseY = (s32)D_80052B2C->unk4 << 8;
-	baseZ = (s32)D_80052B2C->unk8 << 8;
+	base.x = (s32)D_80052B2C->unk0 << 8;
+	base.y = (s32)D_80052B2C->unk4 << 8;
+	base.z = (s32)D_80052B2C->unk8 << 8;
 
-	deltaX = (arg0 << 8) - baseX;
-	absDeltaX = (-deltaX < deltaX) ? deltaX : -deltaX;
+	deltaX = (arg0 << 8) - base.x;
+	negativeX = -deltaX;
+	absDeltaX = (negativeX < deltaX) ? deltaX : negativeX;
 
-	deltaZ = (arg2 << 8) - baseZ;
-	absDeltaZ = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
+	deltaZ = (arg2 << 8) - base.z;
+	negativeZ = -deltaZ;
+	if (negativeZ < deltaZ) {
+		absDeltaZ = deltaZ;
+	} else {
+		absDeltaZ = negativeZ;
+	}
 
 	if (absDeltaZ < absDeltaX) {
-		arg2 = ((-deltaX < deltaX) ? deltaX : -deltaX) >> 8;
-		if (arg2 != 0) {
-			if (deltaX < 0) {
-				stepSign = -0x100;
-			} else {
-				stepSign = 0x100;
-			}
+		if (negativeX < deltaX) {
+			scratch = deltaX;
+		} else {
+			scratch = negativeX;
+		}
+		nSteps = scratch >> 8;
+		if (nSteps != 0) {
+			scratch = (deltaX < 0) ? -0x100 : 0x100;
 
-			step[0] = stepSign << 8;
-			step[1] = (((arg1 << 8) - baseY) << 8) / arg2;
-			step[2] = (deltaZ << 8) / arg2;
+			stepX = scratch << 8;
+			stepY = (((arg1 << 8) - base.y) << 8) / nSteps;
+			stepZ = (deltaZ << 8) / nSteps;
 		}
 	} else {
-		arg2 = ((-deltaZ < deltaZ) ? deltaZ : -deltaZ) >> 8;
-		if (arg2 != 0) {
-			step[0] = (deltaX << 8) / arg2;
-			step[1] = (((arg1 << 8) - baseY) << 8) / arg2;
-			step[2] = ((deltaZ < 0) ? -0x100 : 0x100) << 8;
+		nSteps = ((negativeZ < deltaZ) ? deltaZ : negativeZ) >> 8;
+		if (nSteps != 0) {
+			stepX = (deltaX << 8) / nSteps;
+			stepY = (((arg1 << 8) - base.y) << 8) / nSteps;
+			scratch = (deltaZ < 0) ? -0x100 : 0x100;
+			stepZ = scratch << 8;
 		}
 	}
 
-	arg2 = arg2 >> 8;
-	if (arg2 != 0) {
-		arg2--;
-		do {
-			baseZ += step[2];
-			baseX += step[0];
-			baseY += step[1];
+	nSteps = nSteps >> 8;
+	while (nSteps--) {
+		base.z += stepZ;
+		base.x += stepX;
+		base.y += stepY;
 
-			if (baseY < func_800B84D0_C7480((s16)(baseX >> 8), (s16)(baseZ >> 8))) {
-				return 1;
-			}
-		} while (arg2--);
+		if (base.y < func_800B84D0_C7480(base.x >> 8, base.z >> 8)) {
+			return 1;
+		}
 	}
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E95BC_F856C.s")
-#endif
 
 s16 func_800E9868_F8818(s32 arg0, s32 arg1) {
 	return (s16) ((D_801493D8 * 4) + 0x310);
