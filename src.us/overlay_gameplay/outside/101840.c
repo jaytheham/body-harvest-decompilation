@@ -9268,46 +9268,42 @@ s32 func_8010DC00_11CBB0(s32 arg0, s32 arg1, s32 arg2) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(702): corrected four-corner range; entry scheduling and trig slot remain.
 s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 	VehicleInstance *vehicle;
-	f32 dx;
-	f32 dz;
-	f32 *xOffsets;
-	f32 *zOffsets;
+	s32 i;
 	s32 xDelta;
 	s32 zDelta;
 	s32 negX;
 	s32 absZ;
+	s32 pad;
+	s32 pad2;
 	s16 trig[2];
 
-
-
 	if (D_80159D70 == 2) {
+		f32 dx;
+		f32 dz;
 		vehicle = D_80159D60;
 		dx = (f32)(vehicle->unk0 - arg0);
 		dz = (f32)(vehicle->unk4 - arg1);
 		return sqrtf((dx * dx) + (dz * dz)) <= (f32)(D_80159D68->unkC + arg2);
 	}
 
-	xOffsets = &D_80159D78[7];
-	zOffsets = &D_80159D98[8];
+	i = 8;
 	if (1) {
-	while (zOffsets-- >= &D_80159D98[5]) {
-		xDelta = ((s32)xOffsets[0] + D_80159D60->unk0) - arg0;
-		zDelta = ((s32)zOffsets[0] + D_80159D60->unk4) - arg1;
-		xOffsets--;
+		while (i-- >= 5) {
+			negX = D_80159D60->unk0;
+			xDelta = ((s32)D_80159D78[i] + negX) - arg0;
+			zDelta = ((s32)D_80159D98[i] + D_80159D60->unk4) - arg1;
 
-		negX = -xDelta;
-		if (arg2 >= (negX < xDelta ? xDelta : negX)) {
-			absZ = -zDelta < zDelta ? zDelta : -zDelta;
+			negX = -xDelta;
+			if (arg2 >= (negX < xDelta ? xDelta : negX)) {
+				absZ = -zDelta < zDelta ? zDelta : -zDelta;
 
-			if ((arg2 >= absZ) && (((xDelta * xDelta) + (zDelta * zDelta)) < (arg2 * arg2))) {
-				return 1;
+				if ((arg2 >= absZ) && (((xDelta * xDelta) + (zDelta * zDelta)) < (arg2 * arg2))) {
+					return 1;
+				}
 			}
 		}
-	}
 	}
 
 	trig[0] = coss(D_80159D60->unk6);
@@ -9336,9 +9332,6 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010E040_11CFF0.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2120): corrected zero-index iteration and building-to-vehicle fallthrough.
