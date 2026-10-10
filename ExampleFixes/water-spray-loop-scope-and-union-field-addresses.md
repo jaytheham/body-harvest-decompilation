@@ -12,3 +12,9 @@
 The position array added to `EffectInterpolationState` overlaps its existing 14-byte payload and leaves the entry stride unchanged.
 
 A zero function score must still be followed by full-ROM verification. A whole-file experiment replacement can accidentally change an already matched function. Restrict edits to the selected function; if the checksum differs, locate the differing ROM bytes and map them back to the assembly symbols.
+
+## Partial chain simulation: test the cursor before decrementing
+
+func_80103308_1122B8 remains NON_MATCHING after 20 source variants. Its carried position starts at cursor[1], while the current position and velocity belong to cursor[0]. The midpoint reads cursor[-1]. A do loop with the unsigned condition on cursor-- includes the final point below the lower-bound symbol, as the target does: the branch tests the original cursor before decrementing. Moving the decrement earlier and updating cursor[0] instead writes the wrong element.
+
+The retained candidate corrects those accesses and uses the existing double constants. Its score is 8828; the target spills loop midpoint values and uses different floating registers. Separate scalar groups, arrays, vector fields, literal constants, and conditional scopes did not resolve that layout. The wrapped full ROM passes verification.

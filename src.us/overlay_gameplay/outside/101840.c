@@ -5728,7 +5728,7 @@ void func_80101C14_110BC4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80101C14_110BC4.s")
 #endif
 
-// CURRENT(5378): typed flags and display lists; frame matches, scheduling and allocation remain.
+// CURRENT(5248): typed flags and display lists; frame matches, scheduling and allocation remain.
 #ifdef NON_MATCHING
 void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	Unk8013FDA8Entry *entry;
@@ -6119,7 +6119,7 @@ s32 func_80102FA4_111F54(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(8943)
+// CURRENT(8828): corrected carried point and countdown cursor; floating temporaries remain.
 void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 	UnkF9230Func80102FA4Point *point;
 	f32 midX;
@@ -6147,22 +6147,21 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 	D_801593F0[11].pos.y = (f32)(arg0->unk2 + 0x26);
 	D_801593F0[11].pos.z = (f32)arg0->unk4;
 
-	chainX = D_801594E0[0].pos.x;
-	chainY = D_801594E0[0].pos.y;
-	chainZ = D_801594E0[0].pos.z;
+	chainX = D_801594E0[1].pos.x;
+	chainY = D_801594E0[1].pos.y;
+	chainZ = D_801594E0[1].pos.z;
 	spring = D_80144AA8_153A58[0];
 
 	point = D_801594E0;
-	while ((u32)point >= (u32)D_80159420) {
+	do {
 		posX = point->pos.x;
 		posY = point->pos.y;
 		posZ = point->pos.z;
 
-		point--;
 
-		midX = (f32)(chainX - ((chainX - point->pos.x) * 0.5));
-		midY = (f32)(chainY - ((chainY - point->pos.y) * 0.5));
-		midZ = (f32)(chainZ - ((chainZ - point->pos.z) * 0.5));
+		midX = (f32)(chainX - ((chainX - point[-1].pos.x) * 0.5));
+		midY = (f32)(chainY - ((chainY - point[-1].pos.y) * 0.5));
+		midZ = (f32)(chainZ - ((chainZ - point[-1].pos.z) * 0.5));
 
 		point->vel.x = (f32)((point->vel.x * damping) + (midX - posX));
 		point->vel.y = (f32)(((point->vel.y * damping) + (midY - posY)) - 4.0);
@@ -6174,7 +6173,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 		point->pos.y = chainY;
 		chainZ = (f32)(posZ + (point->vel.z * spring));
 		point->pos.z = chainZ;
-	}
+	} while ((u32)point-- >= (u32)D_80159420);
 
 	midX = (f32)(D_801593F0[1].pos.x - ((D_801593F0[1].pos.x - (f32)arg1->unk0) * 0.5));
 	midY = (f32)(D_801593F0[1].pos.y - ((D_801593F0[1].pos.y - (f32)arg1->unk2) * 0.5));
