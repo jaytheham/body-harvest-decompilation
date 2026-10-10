@@ -56,9 +56,11 @@ UnkPos16_8012B26C D_802E0E9C_2C32CC[5] = {
 	{ 0x0320, 0x01F4, 0x0000 },
 };
 
-s32 D_802E0EBC_2C32EC[8] = {
-	0x00003688, 0x0000615A, 0x00003919, 0x000063F7,
-	0x00003BCD, 0x0000603D, 0x00000000, 0x00000000,
+s32 D_802E0EBC_2C32EC[4][2] = {
+	{ 0x00003688, 0x0000615A },
+	{ 0x00003919, 0x000063F7 },
+	{ 0x00003BCD, 0x0000603D },
+	{ 0x00000000, 0x00000000 },
 };
 
 u32 D_802E0EDC_2C330C = 0x00000BB8;
@@ -1828,7 +1830,6 @@ void func_802D7680_2B9AB0(s32 arg0) {
 }
 
 // CURRENT(3500)
-#ifdef NON_MATCHING
 void func_802D769C_2B9ACC(void) {
 	s32 alienId;
 	s32 i;
@@ -1838,12 +1839,12 @@ void func_802D769C_2B9ACC(void) {
 	for (i = 0; i < 3; i++) {
 		alienId = func_8007956C_8851C(9);
 		if (alienId != 0xFF) {
-			D_802E3100 = D_802E3100 + 1;
-			alienInstances[alienId].unk0 = D_802E0EBC_2C32EC[i * 2];
-			alienInstances[alienId].unk4 = D_802E0EBC_2C32EC[i * 2 + 1];
+			D_802E3100++;
+			alienInstances[alienId].unk0 = D_802E0EBC_2C32EC[i][0];
+			alienInstances[alienId].unk4 = D_802E0EBC_2C32EC[i][1];
+			alienInstances[alienId].unk20 &= ~ALIEN_FLAG_PLAYER;
 			alienInstances[alienId].unk14 = buildingInstances[0x96].xCoord;
 			alienInstances[alienId].unk18 = buildingInstances[0x96].zCoord;
-			alienInstances[alienId].unk20 &= ~ALIEN_FLAG_PLAYER;
 			sp48.unkC = func_802D7680_2B9AB0;
 			sp48.unk0 = 3;
 			sp48.unk8 = alienId;
@@ -1851,9 +1852,6 @@ void func_802D769C_2B9ACC(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D769C_2B9ACC.s")
-#endif
 
 // CURRENT(60)
 void func_802D77BC_2B9BEC(void) {
