@@ -247,7 +247,10 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 pad[0xC];
 	/* 0x0C */ s16 unkC;
-} Unk8010ED84Data; /* size = 0x0E */
+	/* 0x0E */ u8 padE[0x26];
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+} Unk8010ED84Data; /* size = 0x38 */
 typedef struct {
 	/* 0x00 */ u8 pad0[0x34];
 	/* 0x34 */ s16 unk34;

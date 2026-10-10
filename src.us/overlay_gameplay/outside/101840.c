@@ -9077,51 +9077,49 @@ s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1) {
 	return count == 2;
 }
 
-// CURRENT(12945)
-#ifdef NON_MATCHING
 s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
-	Unk8010ED84Pos *pos;
-	Unk8010D234Data *data;
+	Unk8010ED84Pos *vehicle;
+	Unk8010ED84Data *type;
 	f32 dx;
 	f32 dz;
 	f32 temp;
+	f32 absX;
 	s32 count;
 
-	pos = D_80159D60;
-	dx = arg0 - pos->unk0;
-	dz = arg1 - pos->unk4;
+	vehicle = D_80159D60;
+	dx = arg0 - vehicle->unk0;
+	dz = arg1 - vehicle->unk4;
 	count = 0;
 
 	switch (D_80159D70) {
-		case 0:
-			temp = -dx;
-			if (dx < temp) {
-				temp = dx;
+		case 3:
+			temp = (-D_80159D24 * dx) + dz;
+			if (((D_80159D2C <= temp) && (temp <= -D_80159D2C)) || ((temp <= D_80159D2C) && (-D_80159D2C <= temp))) {
+				count = 1;
 			}
-			data = (Unk8010D234Data *)D_80159D68;
-			if (temp <= (data->unk34 >> 1)) {
-				temp = -dz;
-				if (dz < temp) {
-					temp = dz;
-				}
-				if (temp <= (data->unk36 >> 1)) {
+
+			temp = (-D_80159D28 * dx) + dz;
+			if (((D_80159D30 <= temp) && (temp <= -D_80159D30)) || ((temp <= D_80159D30) && (-D_80159D30 <= temp))) {
+				count++;
+			}
+			break;
+		case 0:
+			absX = -dx < dx ? dx : -dx;
+			type = D_80159D68;
+			if (absX <= (type->unk34 >> 1)) {
+				temp = -dz < dz ? dz : -dz;
+				if (temp <= (type->unk36 >> 1)) {
 					count = 2;
 				}
 			}
 			break;
 
 		case 1:
-			temp = -dx;
-			if (dx < temp) {
-				temp = dx;
-			}
-			data = (Unk8010D234Data *)D_80159D68;
-			if (temp <= (data->unk36 >> 1)) {
-				temp = -dz;
-				if (dz < temp) {
-					temp = dz;
-				}
-				if (temp <= (data->unk34 >> 1)) {
+			absX = -dx < dx ? dx : -dx;
+			type = D_80159D68;
+			if (absX <= (type->unk36 >> 1)) {
+				temp = -dz < dz ? dz : -dz;
+				if (temp <= (type->unk34 >> 1)) {
 					count = 2;
 				}
 			}
@@ -9133,24 +9131,11 @@ s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
 			}
 			break;
 
-		case 3:
-			temp = (-D_80159D24 * dx) + dz;
-			if ((-D_80159D2C <= temp) && (temp <= D_80159D2C)) {
-				count = 1;
-			}
-
-			temp = (-D_80159D28 * dx) + dz;
-			if ((-D_80159D30 <= temp) && (temp <= D_80159D30)) {
-				count++;
-			}
-			break;
 	}
 
 	return count == 2;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010D234_11C1E4.s")
-#endif
+
 
 // CURRENT(32922)
 #ifdef NON_MATCHING
