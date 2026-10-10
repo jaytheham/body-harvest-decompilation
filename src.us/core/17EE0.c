@@ -552,20 +552,9 @@ s16 func_80017CA4_188A4(void) {
 		gSPTexture((*dl)++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 		gDPSetCombineMode((*dl)++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 		gDPSetTextureLUT((*dl)++, G_TT_IA16);
-		gDPSetTextureImage((*dl)++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_801FEA10);
+		gDPLoadTLUT_pal16((*dl)++, 0, D_801FEA10);
 		gDPTileSync((*dl)++);
-		gDPSetTile((*dl)++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync((*dl)++);
-		gDPLoadTLUTCmd((*dl)++, G_TX_LOADTILE, 15);
-		gDPPipeSync((*dl)++);
-		gDPTileSync((*dl)++);
-		gDPSetTextureImage((*dl)++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, D_801FE810);
-		gDPSetTile((*dl)++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync((*dl)++);
-		gDPLoadBlock((*dl)++, G_TX_LOADTILE, 0, 0, 63, 2048);
-		gDPPipeSync((*dl)++);
-		gDPSetTile((*dl)++, G_IM_FMT_CI, G_IM_SIZ_4b, 1, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize((*dl)++, G_TX_RENDERTILE, 0, 0, 15 << 2, 15 << 2);
+		gDPLoadTextureBlock_4b((*dl)++, D_801FE810, G_IM_FMT_CI, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		if (sp20 == 0xFF) {
 			var_t4 = (D_80068084 - 0x2D) * 4;
 		} else {
@@ -786,27 +775,10 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, texture + 0x1400);
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, texture);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 63 << 2, 31 << 2);
+	gDPLoadTLUT_pal256(D_8005BB2C++, texture + 0x1400);
+	gDPLoadTextureBlock(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPTextureRectangle(D_8005BB2C++, arg0 << 2, arg1 << 2, (arg0 + 0x40) << 2, (arg1 + 0x20) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, texture + 0x800);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 63 << 2, 31 << 2);
+	gDPLoadTextureBlock(D_8005BB2C++, texture + 0x800, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPTextureRectangle(D_8005BB2C++, arg0 << 2, (arg1 + 0x20) << 2, (arg0 + 0x40) << 2, (arg1 + 0x40) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
 	if ((entry->unk0 != 0) && (entry->unk2 != 0) && (arg3 != 0)) {
@@ -827,26 +799,14 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 		if (arg4 == 1) {
 			sp12C = sp2C + arg0;
 			sp128 = sp28 + arg1;
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 64, texture);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadTile(D_8005BB2C++, G_TX_LOADTILE, 32 << 2, 64 << 2, 48 << 2, 80 << 2);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 32 << 2, 64 << 2, 48 << 2, 80 << 2);
+			gDPLoadTextureTile(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 80, 32, 64, 48, 80, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gSPTextureRectangle(D_8005BB2C++, sp12C << 2, sp128 << 2, (sp12C + 0x10) << 2, (sp128 + 0x10) << 2, G_TX_RENDERTILE, 32 << 5, 64 << 5, 1 << 10, 1 << 10);
 			return;
 		}
 		if (arg4 == 2) {
 			sp12C = sp2C + arg0;
 			sp128 = sp28 + arg1;
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 64, texture);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadTile(D_8005BB2C++, G_TX_LOADTILE, 48 << 2, 64 << 2, 64 << 2, 80 << 2);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 48 << 2, 64 << 2, 64 << 2, 80 << 2);
+			gDPLoadTextureTile(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 80, 48, 64, 64, 80, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gSPTextureRectangle(D_8005BB2C++, sp12C << 2, sp128 << 2, (sp12C + 0x10) << 2, (sp128 + 0x10) << 2, G_TX_RENDERTILE, 48 << 5, 64 << 5, 1 << 10, 1 << 10);
 		}
 	}
