@@ -3238,17 +3238,14 @@ void func_802DBDD0_31FF20(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBDD0_31FF20.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2) {
 	s16 params[2];
 	s32 pad0;
-	u32 result;
 
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) {
 		params[0] = arg1;
 		params[1] = arg2;
-		result = func_80081F18_90EC8(arg0, 2, 0xD, params, D_802E566C_3297BC) & 0xFF;
-		switch (result) {
+		switch (func_80081F18_90EC8(arg0, 2, 0xD, params, D_802E566C_3297BC) & 0xFF) {
 		case 4:
 		case 7:
 		case 0xA:
@@ -3263,9 +3260,7 @@ void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2) {
 
 
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBEA4_31FFF4.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_802DBF88_3200D8(u8 arg0) {
