@@ -1799,7 +1799,7 @@ void func_802D7540_2B9970(void) {
 }
 
 void func_802D7598_2B99C8(void) {
-	*(u16 *)&buildingInstances[150].state &= 0xF03F;
+	buildingInstances[150].stateAndRotation &= 0xF03F;
 	osSyncPrintf(D_802E2F3C_2C536C);
 	D_8014D17C = 0;
 	func_80007410_8010(func_802D7540_2B9970);
@@ -1856,21 +1856,15 @@ void func_802D769C_2B9ACC(void) {
 #endif
 
 // CURRENT(60)
-#ifdef NON_MATCHING
 void func_802D77BC_2B9BEC(void) {
-	u16 temp;
 
 	func_80013468_14068(0xC);
-	temp = *(u16 *)&buildingInstances[150].state;
 	buildingInstances[150].door1InteriorId = 0x6E;
-	*(u16 *)&buildingInstances[150].state = (temp & 0xF03F) | 0x400;
+	buildingInstances[150].stateAndRotation = (buildingInstances[150].stateAndRotation & 0xF03F) | 0x400;
 	D_8014D17C = 0;
 	func_80007410_8010(&func_802D75E4_2B9A14);
 	func_802D769C_2B9ACC();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D77BC_2B9BEC.s")
-#endif
 
 // CURRENT(40)
 s32 func_802D7818_2B9C48(u8 arg0, s16 arg1) {

@@ -45,3 +45,8 @@ void func(void) {
 - A local temp variable for the loaded value helps register allocation
 - The `(val >> shift)` subexpression appears twice - the compiler CSEs it into one `srl`
 - Neither `|= 0x20000` nor bitfield struct definitions produce matching assembly
+
+
+### Twenty-bit building status field
+
+In Siberia func_802D6F4C_2B937C, the existing BuildingInstance statusFlags : 20 overlay does reproduce this pattern. Four sequential statusFlags |= 0x10000 statements match the complete function, including interleaved loads and stores. The field width and its position above the twelve low bits matter; a full-word OR does not generate the same sequence. Full ROM checksum verified OK.

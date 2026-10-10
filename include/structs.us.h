@@ -1562,6 +1562,7 @@ typedef struct {
             };
 		};
 		/* 0x08 */ u32 unk8;
+		struct { u8 padState[2]; u16 stateAndRotation; };
 		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
 	};
 	/* 0x0C */ u8 unkC;
