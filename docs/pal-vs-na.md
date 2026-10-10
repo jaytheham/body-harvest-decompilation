@@ -92,15 +92,28 @@ globally — produces `SUBALIGN(8)` and `ALIGN(__romPos, 8)`, emits the pad at
 mismatch moves from `0x4078A` past the seam to `0x407AF`.
 
 That configuration still fails the acceptance criteria, and the remaining cause
-is a different layer:
+is a different layer. Measured against the baseline with
+`tools/eu_rom_diff.py` and the two linker maps:
 
-- **Size:** the ROM is 16 bytes larger. `__romPos` advances by
-  `SIZEOF(.overlay_gameplay_frontend)`, which couples ROM accounting to the
-  overlay's VMA size rather than its ROM span.
-- **Relocations:** single-byte differences at `0x407AF`, `0x46AFB`, `0x46B4B`,
-  `0x46C5B`, spaced about `0x100` apart, each a `jal` whose encoded target is 8
-  bytes off. The overlay's internal subsegment boundaries (`0x4E450`, `0x52E50`,
-  `0x61620`) are NTSC-derived and also need remapping.
+- The seam itself is **fixed**: `_coreSegmentRomEnd` and
+  `_overlay_gameplay_frontendSegmentRomStart` both move to `0x40788`, exactly
+  right, with no alignment fill.
+- `40750.c.o .text` is **`0xDCD0`** but its ROM region `0x40788`–`0x4E450` is
+  **`0xDCC8`**. The 8 byte difference is two zero words emitted at `0x4E450`.
+  Since `0xDCC8 % 16 == 8` and `0xDCD0 % 16 == 0`, the excess is **16-byte
+  `.text` alignment padding**. In the baseline the region was `0xDD00`, already
+  16-aligned, so no padding was needed and the object was exact.
+- Everything downstream follows from that one object: `4E450.c.o` starts at
+  `0x8007DF70` instead of `0x8007DF68`, the `jal` at `0x407AC` that targets
+  that boundary resolves 8 bytes high, and the frontend ends at `0x7FD88`
+  instead of `0x7FD80`, shifting every later overlay (`outside` and everything
+  after it, `+16` in total).
+
+So the seam fix is blocked by a **toolchain alignment constraint, not by splat
+configuration**: the frontend's first C object cannot emit `0xDCC8` bytes
+because its `.text` is aligned to 16, and the PAL ROM has no padding there.
+Resolving it needs either a change to that alignment, or an internal frontend
+boundary that makes the first region 16-aligned without moving real functions.
 
 Net effect today: 0x38 bytes of PAL core code at `0x40750`-`0x40788` are
 attributed to the frontend overlay's first C file. Cosmetic; the ROM is correct.
