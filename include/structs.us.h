@@ -2244,9 +2244,10 @@ typedef struct {
 } Unk80052B48; /* size = 0x06 */
 
 typedef struct {
-	/* 0x00 */ u8 unk0[8];
+	/* 0x00 */ u32 displayList;
+	/* 0x04 */ u32 transform;
 	/* 0x08 */ Unk80052B40 unk8;
-	/* 0x0E */ u8 pad0[2];
+	/* 0x0E */ s16 flags;
 } Unk8013FDA8Entry; /* size = 0x10 */
 
 typedef struct {
