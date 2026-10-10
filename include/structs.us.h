@@ -2235,6 +2235,11 @@ typedef struct {
 	/* 0x04 */ s16 unk4;
 } Unk80052B40; /* size = 0x06 - Often seems to actually be Vtx */
 
+typedef union {
+	Unk80052B40 position;
+	s32 command[2];
+} MapMarkerScratch; /* size = 0x08 */
+
 typedef struct {
 	Unk80052B40 values[3];
 } AlienRenderScales;

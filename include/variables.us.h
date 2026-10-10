@@ -4136,4 +4136,19 @@ extern s16 D_800FCA92_Lang2;
 extern s32 D_800A4340_DrawCompare;
 extern s32 D_800A4340_DrawAfterCall;
 
+
+/* Map rendering constants. */
+extern const f32 D_801424A8_151458[1];
+extern const f64 D_801424B0_151460[1];
+extern const f64 D_801424B8_151468[1];
+extern const f64 D_801424C0_151470[1];
+extern const f64 D_801424C8_151478[1];
+extern const f64 D_801424D0_151480[1];
+extern const f64 D_801424D8_151488[1];
+extern const f32 D_801424E0_151490[1];
+extern const f64 D_801424E8_151498[1];
+extern const f64 D_801424F0_1514A0[1];
+extern const f64 D_801424F8_1514A8[1];
+extern const f64 D_80142500_1514B0[1];
+extern const f64 D_80142508_1514B8[1];
 #endif /* LIBULTRA_REFERENCE */

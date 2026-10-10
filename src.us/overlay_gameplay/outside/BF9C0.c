@@ -323,7 +323,7 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 }
 
 // CURRENT(175)
-s16 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
+s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
     Unk8014FD30Type *base;
     Unk8014FD30Type *cur;
     s32 idx;

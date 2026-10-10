@@ -770,7 +770,7 @@ void func_8001593C_1653C(void *);
 s32 func_80076208_851B8(s32 arg0);
 void func_80015C94_16894(s8, s8);
 void func_80018D14_19914();
-s16 func_800B0F20_BFED0(s32, s32);
+s32 func_800B0F20_BFED0(s32, s32);
 void func_800078E4_84E4(s32 arg0, s32 *arg1);
 void func_800B165C_C060C(s32);
 void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2);
@@ -1529,7 +1529,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 void func_80137234_1461E4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 unused);
 s16 func_800F9C50_108C00(s16 arg0, s16 arg1);
 Unk8006AA80Node *func_80012778_13378(s32 arg0);
-void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, s32 arg4);
+void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4);
 void func_80095F08_A4EB8(void);
 void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4);
 void func_80096BC4_A5B74(s16 arg0, s16 arg1);
