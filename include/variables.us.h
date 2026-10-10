@@ -338,8 +338,8 @@ extern u8 D_80034453_35053[];
 extern s32 D_8003445C_3505C;
 extern u8 *D_80034460_35060;
 extern u8 *D_80034464_35064;
-extern s32 D_80034468_35068;
-extern s32 D_8003446C_3506C;
+extern u8 *D_80034468_35068;
+extern u8 *D_8003446C_3506C;
 extern s32 D_80034470_35070;
 extern s32 D_80034474_35074;
 extern s32 D_80034478_35078;
@@ -1239,7 +1239,7 @@ extern f32 D_8008DE04_175EC4;
 // AI - Interior lighting/room transition table
 extern s32 D_8008DE08_175EC8[];
 // AI - Interior lighting data block (contains ambient/light entries D_8008DE58, D_8008DE68, D_8008DE78)
-extern u8 D_8008DE50_175F10[];
+extern InteriorLightData D_8008DE50_175F10;
 // AI - Ambient light color (overlaps D_8008DE50_175F10)
 extern u8 D_8008DE58_175F18;
 // AI - Light list (overlaps D_8008DE50_175F10)
@@ -1261,10 +1261,8 @@ extern unsigned long D_800938A0_63D50_u32[0x40];
 extern u8 D_80093DA0_64250[0x400];
 extern unsigned long D_80093DA0_64250_u32[0x36];
 extern u8 D_80094278_64728[0x28];
-extern Ambient D_800942A0_64750;
-extern Light D_800942A8_64758;
-extern u16 D_800942B8_64768[];
-extern u16 D_800942C0_64770[];
+extern Lights1 D_800942A0_64750;
+extern Lights1 D_800942B8_64768;
 extern Gfx *D_800942D0_64780;
 extern u32 D_800942D4_64784;
 extern Gfx* D_800942D8_64788;
@@ -1951,10 +1949,8 @@ extern s16 D_8013D786_14C736[][8];
 extern u8 D_8013D894_14C844; // Beacon warp destination
 extern s32 D_8013D8C0_14C870[];
 extern Unk_8013D91C D_8013D91C[6];
-extern Ambient D_8013D958_14C908;
-extern Light D_8013D960_14C910;
-extern Ambient D_8013D970_14C920;
-extern Light D_8013D978_14C928;
+extern Lights1 D_8013D958_14C908;
+extern Lights1 D_8013D970_14C920;
 extern u8 D_8013D9AC_14C95C; // used as a timer during human meter game over sequence, maybe lighting related
 extern u8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
@@ -1994,6 +1990,7 @@ extern u8 D_80140AA8_14FA58[8];
 extern AlienInstance *D_80140AB0_14FA60[];
 extern s32 D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
+extern Lights1 D_80140C30_14FBE0;
 extern u8 D_80140C70[4];
 extern u8 D_80140C74[4];
 extern s32 D_80140C78;
@@ -2764,8 +2761,7 @@ extern f32 D_80159294;
 extern f32 D_80159298;
 extern s16 D_8015929C;
 extern s16 D_8015929E;
-extern u8 D_801592A0;
-extern u8 D_801592B0;
+extern LookAt D_801592A0;
 extern Mtx D_801592C0;
 extern s32 D_80159300;
 extern s16 D_80159304;
@@ -3023,8 +3019,8 @@ extern u8 D_8025F780;
 extern u8 D_80260500[];
 extern u8 D_80260700[128][128]; // Landscape colors
 extern TerrainPaletteColor D_80264700[256]; // Landscape palettes
-extern u8 D_80264B00[];
-extern u8 D_80265880[];
+extern u8 D_80264B00[6][24][24];
+extern u16 D_80265880[256];
 extern u8 D_80265A80[];
 extern u8 D_80266E80[];
 extern s16 D_80267080[];

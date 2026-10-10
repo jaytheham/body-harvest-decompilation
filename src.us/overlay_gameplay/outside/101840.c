@@ -2495,16 +2495,13 @@ void func_800F8B24_107AD4(s32 arg0) {
 		|| (walker->limbs[0].unk22 == 8)) {
 		if (anim->unk14 != 0) {
 			gDPPipeSync(D_8005BB2C++);
-			guLookAtReflect(&spA8, (LookAt *)&walker->pad145[0x148 - 0x145], 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
-			gSPLookAtX(D_8005BB2C++, (Light *)&walker->pad145[0x148 - 0x145]);
-			gSPLookAtY(D_8005BB2C++, (Light *)&walker->pad145[0x158 - 0x145]);
+			guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
+			gSPLookAt(D_8005BB2C++, &walker->lookAt);
 			gDPPipeSync(D_8005BB2C++);
 		}
 
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
+		gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
+		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
 
 		state = walker->limbs[0].unk22;
 		updateState = 0;
@@ -2826,15 +2823,7 @@ void func_800F98C0_108870(void) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C0, 0x7C0);
 	gSPTexture(D_8005BB2C++, 0x07C0, 0, 0, G_TX_RENDERTILE, G_ON);
 	textureAddr = K0_TO_PHYS(D_5047470);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, textureAddr);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-		   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 31, 256);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0x0000, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-		   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0);
+	gDPLoadTextureBlock(D_8005BB2C++, textureAddr, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 1, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);
 
@@ -5268,7 +5257,7 @@ void func_8010065C_10F60C(s32 arg0) {
 			i--;
 		}
 		D_801593EA = 0;
-		guLookAtReflect(D_8005BB38, (LookAt *)&D_801592A0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f,
+		guLookAtReflect(D_8005BB38, &D_801592A0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f,
 						0.0f);
 	}
 
@@ -5359,12 +5348,9 @@ void func_8010065C_10F60C(s32 arg0) {
 				continue;
 			}
 
-			gSPLookAtX(D_8005BB2C++, (Light *)&D_801592A0);
-			gSPLookAtY(D_8005BB2C++, (Light *)&D_801592B0);
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0xFFFFFFFF);
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, 0xFFFFFFFF);
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_2, 0x808080FF);
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_2, 0x808080FF);
+			gSPLookAt(D_8005BB2C++, &D_801592A0);
+			gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
+			gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
 
 			if ((vehicle->unk20 & 0x2000) && !((index + D_80052A8C) & 3)) {
 				func_800710D4_80084(0xFF, 0xFF, 0xFF);
@@ -6458,6 +6444,7 @@ void func_80103E54_112E04(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103E54_112E04.s")
 #endif
 
+// Helicopter (and plane?) controls.
 void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 	VehicleType *type;
 	WeaponSpecEntry *tableEntry;
