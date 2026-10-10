@@ -9905,7 +9905,7 @@ void func_8010FAC8_11EA78(u8 arg0, s32 arg1) {
 	D_80158F98[idx].unk4 = arg1;
 }
 
-// CURRENT(8988)
+// CURRENT(40)
 #ifdef NON_MATCHING
 s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 	Unk80158F98 *entry;
@@ -9916,58 +9916,50 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 	f64 half;
 	VehicleType *vtype;
 	AlienType *atype;
+	s32 speed;
 
 	entry = D_80158F98;
 	i = D_80158FDC;
 	ret = 0;
-	if (i != 0) {
-		i--;
+	if (i--) {
 		half = 0.5;
 		twenty = 20.0;
-		scale = D_80144D18_153CC8;
+		scale = 3000.0;
 		atype = alienTypes;
 		vtype = vehicleTypes;
 
 		do {
 			switch (entry->unk0) {
 				case 1: {
-					VehicleInstance *other;
-
-					other = (VehicleInstance *)entry->unk4;
-					if (other != NULL) {
-						func_8010F93C_11E8EC(arg0, (Unk80052B40 *)other);
+					speed = entry->unk4;
+					if (speed != 0) {
+						func_8010F93C_11E8EC(arg0, (Unk80052B40 *)speed);
 					}
-					continue;
+					break;
 				}
 
 				case 2: {
-					VehicleInstance *other;
-
-					other = (VehicleInstance *)entry->unk4;
-					if (other != NULL) {
-						func_8010F834_11E7E4(arg0, other->unk0, other->unk2, other->unk4);
+					speed = entry->unk4;
+					if (speed != 0) {
+						func_8010F834_11E7E4(arg0, ((EntityInstance *)speed)->unk0, ((EntityInstance *)speed)->unk2, ((EntityInstance *)speed)->unk4);
 					}
-					continue;
+					break;
 				}
 
 				case 3: {
-					VehicleInstance *other;
-
-					other = (VehicleInstance *)entry->unk4;
-					if (other != NULL) {
-						func_8010F96C_11E91C(arg0, (Unk80052B40_fp *)other);
+					speed = entry->unk4;
+					if (speed != 0) {
+						func_8010F96C_11E91C(arg0, (Unk80052B40_fp *)speed);
 					}
-					continue;
+					break;
 				}
 
 				case 4: {
-					VehicleInstance *other;
-
-					other = (VehicleInstance *)entry->unk4;
-					if (other != NULL) {
-						func_8010F9B4_11E964(arg0, (s32)other);
+					speed = entry->unk4;
+					if (speed != 0) {
+						func_8010F9B4_11E964(arg0, speed);
 					}
-					continue;
+					break;
 				}
 
 				case 5:
@@ -9986,14 +9978,14 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 						arg0->unk34 = 0.0f;
 					}
 					if (currentLevel != 4) {
-						continue;
+						break;
 					}
 					if (arg0->unk1A != 0xE) {
-						continue;
+						break;
 					}
 					func_800FDB58_10CB08(arg0);
 					ret = 1;
-					continue;
+					break;
 
 				case 8:
 					arg0->unk20 &= ~VEHICLE_FLAG_ON_BRIDGE;
@@ -10004,59 +9996,64 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					func_800FB468_10A418(arg0, (f32)entry->unk4);
 					arg0->unk34 = 0.0f;
 					if (currentLevel != 4) {
-						continue;
+						break;
 					}
 					if (arg0->unk1A != 0xE) {
-						continue;
+						break;
 					}
 					func_800FDB58_10CB08(arg0);
 					ret = 1;
-					continue;
+					break;
 
 				case 10: {
-					VehicleInstance *other;
-					s32 speed;
-					s16 value;
+					AlienInstance *other;
+					s32 weight;
 					f32 speedF;
 
-					speed = 0x1770;
-					if (vtype[arg0->unk1A].unk32 >= 0x1771) {
-						speed = vtype[arg0->unk1A].unk32;
+					{
+						s32 weight;
+						speedF = func_800FB11C_10A0CC(arg0);
+						if (vtype[arg0->unk1A].unk32 >= 0x1771) {
+							weight = vtype[arg0->unk1A].unk32;
+						} else {
+							weight = 0x1770;
+						}
+
+						other = (AlienInstance *)entry->unk4;
+						weight = (s32)(((f64)((f32)weight * speedF)) / scale);
+						speed = weight;
 					}
 
-					other = (VehicleInstance *)entry->unk4;
-					speedF = func_800FB11C_10A0CC(arg0);
-					value = (s16)(s32)(((f64)((f32)speed * speedF)) / scale);
-
-					if ((twenty < (f64)func_800FB11C_10A0CC(arg0)) && (atype[other->unk1A].unk32 < 0x7D1)) {
-						func_80088154_97104((VehicleInstance *)entry->unk4, value, func_800FB160_10A110(arg0));
+					if ((twenty < (f64)func_800FB11C_10A0CC(arg0)) && (atype[other->typeIndex].unk32 < 0x7D1)) {
+						func_80088154_97104((EntityInstance *)entry->unk4, speed, func_800FB160_10A110(arg0));
 					}
 
-					func_80083EF4_92EA4((AlienInstance *)other, arg0, (s16)(vtype[arg0->unk1A].unk32 * arg0->unk12), arg0->unkE);
+					func_80083EF4_92EA4(other, arg0, (s16)(vtype[arg0->unk1A].unk32 * arg0->unk12), arg0->unkE);
 					if (D_800475F0 >= 0x33) {
-						func_80083EF4_92EA4((AlienInstance *)entry->unk4, arg0, -0x63C0, (s16)-other->unkE);
+						func_80083EF4_92EA4((AlienInstance *)entry->unk4, arg0, -0x63C0, (s16)-((AlienInstance *)entry->unk4)->unkE);
 					}
 
-					if (other->unk1A >= 3) {
+					if (((AlienInstance *)entry->unk4)->typeIndex >= 3) {
 						func_800FB430_10A3E0(arg0, (f32)((f64)arg0->unk58 * half));
 						func_800FB11C_10A0CC(arg0);
-						if (atype[other->unk1A].unk32 >= 0x1771) {
-							continue;
+						weight = atype[other->typeIndex].unk32;
+						if (weight >= 0x1771) {
+							break;
 						}
 					}
-					continue;
+					break;
 				}
 
 				case 11:
 					break;
 
 				case 12:
-					func_80088154_97104((VehicleInstance *)entry->unk4, 0x7FFE, arg0->unk6);
+					func_80088154_97104((EntityInstance *)entry->unk4, 0x7FFE, arg0->unk6);
 					break;
 			}
 
 			entry++;
-		} while (i-- != 0);
+		} while (i--);
 	}
 
 	return ret;
