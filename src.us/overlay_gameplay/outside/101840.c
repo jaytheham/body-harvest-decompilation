@@ -6445,8 +6445,6 @@ void func_80103E54_112E04(VehicleInstance *arg0, OSContPad *arg1) {
 #endif
 
 // Helicopter (and plane?) controls.
-// CURRENT(5016)
-#ifdef NON_MATCHING
 void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 	VehicleType *type;
 	WeaponSpecEntry *tableEntry;
