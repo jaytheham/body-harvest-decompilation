@@ -1,23 +1,23 @@
 {
-  "generated": "2026-10-10T20:21:29Z",
-  "commit": "50633467",
-  "commit_timestamp": "2026-10-11T09:20:38+13:00",
+  "generated": "2026-10-10T22:32:27Z",
+  "commit": "6924b8c2",
+  "commit_timestamp": "2026-10-11T11:31:33+13:00",
   "overall": {
     "total_functions": 3056,
-    "matched": 2473,
-    "non_matching": 583,
+    "matched": 2474,
+    "non_matching": 582,
     "asm_stubs": 0,
-    "matched_pct": 80.92,
+    "matched_pct": 80.96,
     "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 310,
-      "non_matching": 45,
+      "matched": 311,
+      "non_matching": 44,
       "asm_stubs": 0,
       "total": 355,
-      "matched_pct": 87.3,
+      "matched_pct": 87.6,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
@@ -136,11 +136,11 @@
     {
       "path": "core/17EE0.c",
       "segment": "core",
-      "matched": 24,
-      "non_matching": 4,
+      "matched": 25,
+      "non_matching": 3,
       "asm_stubs": 0,
       "total": 28,
-      "matched_pct": 85.7,
+      "matched_pct": 89.3,
       "contributor": "jaytheham"
     },
     {
@@ -211,7 +211,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 84.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "core/AD60.c",
@@ -1921,7 +1921,7 @@
       "asm_stubs": 0,
       "total": 113,
       "matched_pct": 68.1,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/52690.c",
@@ -1931,7 +1931,7 @@
       "asm_stubs": 0,
       "total": 105,
       "matched_pct": 66.7,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/frontend/data_60E60.c",
@@ -2131,7 +2131,7 @@
       "asm_stubs": 0,
       "total": 95,
       "matched_pct": 69.5,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/inside/1648A0.c",
@@ -2161,7 +2161,7 @@
       "asm_stubs": 0,
       "total": 78,
       "matched_pct": 70.5,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/inside/173B60.c",
@@ -2181,7 +2181,7 @@
       "asm_stubs": 0,
       "total": 219,
       "matched_pct": 80.8,
-      "contributor": "Jay"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/1312D0.c",
@@ -2231,7 +2231,7 @@
       "asm_stubs": 0,
       "total": 32,
       "matched_pct": 100.0,
-      "contributor": "Jay"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/7F220.c",
@@ -2261,7 +2261,7 @@
       "asm_stubs": 0,
       "total": 174,
       "matched_pct": 86.8,
-      "contributor": "Jay"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/9BFF0.c",
@@ -2301,7 +2301,7 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 64.1,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/B2CB0.c",
@@ -2411,7 +2411,7 @@
       "asm_stubs": 0,
       "total": 106,
       "matched_pct": 67.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/cheats.c",
@@ -2576,24 +2576,24 @@
   ],
   "contributors": [
     {
+      "name": "jaytheham",
+      "files": 84,
+      "matched": 1539,
+      "non_matching": 418,
+      "asm_stubs": 0
+    },
+    {
       "name": "Jay",
-      "files": 156,
-      "matched": 939,
-      "non_matching": 136,
+      "files": 153,
+      "matched": 579,
+      "non_matching": 71,
       "asm_stubs": 0
     },
     {
       "name": "lunarlaurus",
-      "files": 15,
-      "matched": 755,
-      "non_matching": 277,
-      "asm_stubs": 0
-    },
-    {
-      "name": "jaytheham",
-      "files": 74,
-      "matched": 751,
-      "non_matching": 170,
+      "files": 8,
+      "matched": 328,
+      "non_matching": 93,
       "asm_stubs": 0
     },
     {
