@@ -10187,43 +10187,35 @@ void func_801103B4_11F364(VehicleInstance *arg0, VehicleType *arg1) {
 	}
 }
 
-// CURRENT(4651)
+// CURRENT(510): probes, countdown loops, and stack match; final return path remains.
 #ifdef NON_MATCHING
 s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
-	VehicleInstance *var_s7;
-	VehicleType *var_s2;
-	s32 var_fp;
-	s32 var_s6;
-	s16 minY;
-	s16 maxY;
-	s32 outY;
-	s32 flagsAccum;
-	s32 checkFlags;
 	s32 sp8C;
-	s32 xPos;
-	s32 zPos;
+	s32 checkFlags;
+	s32 var_s6;
+	s16 maxY;
+	s16 minY;
 	s32 xMax;
 	s32 zMax;
 	s32 xMin;
 	s32 zMin;
-	s32 yCenter;
-	s32 yExtent;
+	Unk8015FAD0 *entry;
+	int flagsAccum;
+	s32 outY;
 
 	flagsAccum = 0;
 	outY = 0;
+	maxY = arg0->unk2 + arg1->unk38;
 	minY = arg0->unk2;
-	maxY = minY + arg1->unk38;
-	var_s2 = arg1;
-	var_s7 = arg0;
-	var_fp = arg2;
 
-	for (var_s6 = 3; var_s6 >= 0; var_s6--) {
-		checkFlags = func_8012DDA8_13CD58((s16) (s32) (D_80159D98[var_s6] + var_s7->unk4C), (s16) (s32) var_s7->unk50,
-			(s16) (s32) (D_80159D78[var_s6] + var_s7->unk54), var_s2->unk38, var_s7, var_fp, &outY);
+	var_s6 = 4;
+	while (var_s6--) {
+		checkFlags = func_8012DDA8_13CD58((s16) (s32) (D_80159D78[var_s6] + arg0->unk4C), (s16) (s32) arg0->unk50,
+			(s16) (s32) (D_80159D98[var_s6] + arg0->unk54), arg1->unk38, arg0, arg2, &outY);
 		if (checkFlags & 1) {
-			if ((var_s7->unk20 & VEHICLE_FLAG_AIRBORNE) != 0) {
-				if (var_fp == 0) {
-					if (!(checkFlags & 4) && (var_fp == 0)) {
+			if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) != 0) {
+				if (arg2 == 0) {
+					if (!(checkFlags & 4) && (arg2 == 0)) {
 						func_8010FAC8_11EA78(0xB, sp8C);
 					}
 					return 9;
@@ -10236,41 +10228,39 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 		}
 
 		if (checkFlags & 2) {
-			if (var_fp == 0) {
+			if (arg2 == 0) {
 				func_8010FAC8_11EA78(6, outY);
 			}
 		}
 	}
 
-	for (var_s6 = 0x18; var_s6 >= 0; var_s6--) {
-		if (D_8015FAD0[var_s6].unk2C >= 4) {
-			yCenter = D_8015FAD0[var_s6].unk4 >> 0x10;
-			yExtent = D_8015FAD0[var_s6].unk1C;
-			if ((yCenter + yExtent) >= minY) {
-				if (maxY >= (yCenter - yExtent)) {
-					xPos = D_8015FAD0[var_s6].unk0 >> 0x10;
-					zPos = D_8015FAD0[var_s6].unk8 >> 0x10;
-					xMax = xPos + D_8015FAD0[var_s6].unk18;
-					zMax = zPos + D_8015FAD0[var_s6].unk1A;
-					xMin = xPos - D_8015FAD0[var_s6].unk18;
-					zMin = zPos - D_8015FAD0[var_s6].unk1A;
+	var_s6 = 25;
+	while (var_s6--) {
+		entry = &D_8015FAD0[var_s6];
+		if (entry->unk2C >= 4) {
+			if (((entry->unk4 >> 16) + entry->unk1C) >= minY) {
+				if (maxY >= ((entry->unk4 >> 16) - entry->unk1C)) {
+					xMax = (entry->unk0 >> 16) + entry->unk18;
+					zMax = (entry->unk8 >> 16) + entry->unk1A;
+					xMin = (entry->unk0 >> 16) - entry->unk18;
+					zMin = (entry->unk8 >> 16) - entry->unk1A;
 
 					if (func_8010CF7C_11BF2C((s16) xMax, (s16) zMax) || func_8010CF7C_11BF2C((s16) xMax, (s16) zMin) ||
 						func_8010CF7C_11BF2C((s16) xMin, (s16) zMax) || func_8010CF7C_11BF2C((s16) xMin, (s16) zMin)) {
-						checkFlags = func_8012DF90_13CF40(&D_8015FAD0[var_s6], var_s7, var_fp);
+						checkFlags = func_8012DF90_13CF40(entry, arg0, arg2);
 						if (checkFlags & 1) {
-							if ((var_s7->unk20 & VEHICLE_FLAG_AIRBORNE) != 0) {
-								if (var_fp == 0) {
+							if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) != 0) {
+								if (arg2 == 0) {
 									if (!(checkFlags & 4)) {
-										func_8010FAC8_11EA78(0xB, (s32) &D_8015FAD0[var_s6]);
+										func_8010FAC8_11EA78(0xB, (s32) entry);
 									}
 								}
 							}
 							flagsAccum |= checkFlags;
 						}
 
-						if ((checkFlags & 2) && (var_fp == 0)) {
-							func_8010FAC8_11EA78(6, yCenter + yExtent);
+						if ((checkFlags & 2) && (arg2 == 0)) {
+							func_8010FAC8_11EA78(6, (entry->unk4 >> 16) + entry->unk1C);
 						}
 					}
 				}
@@ -10279,7 +10269,7 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	}
 
 	if (flagsAccum & 1) {
-		if ((var_s7->unk20 & VEHICLE_FLAG_AIRBORNE) || (flagsAccum & 8)) {
+		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) || (flagsAccum & 8)) {
 			return 9;
 		}
 		return 6;
