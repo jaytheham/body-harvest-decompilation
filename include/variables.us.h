@@ -2978,7 +2978,7 @@ extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
 extern BuildingType buildingTypes[0x20]; // 0x80259090
 extern u8 D_80259470[];
-extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
+extern Unk80259490 D_80259490[128]; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
 extern Unk80259D90 D_80259D90[0x97];
 extern u8 D_8025CCC0[];
@@ -4100,5 +4100,8 @@ extern const ShadowGeometryConstant D_80144A08_1539B8;
 extern const ShadowGeometryConstant D_80144A10_1539C0;
 extern const ShadowGeometryConstant D_80144A18_1539C8;
 extern const f32 D_801449E8_153998[1];
+
+extern const ShadowGeometryConstant D_80144A80_153A30;
+
 
 #endif /* LIBULTRA_REFERENCE */

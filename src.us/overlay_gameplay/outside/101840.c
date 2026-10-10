@@ -65,7 +65,7 @@ const f64 D_80144A70_153A20[1] = {2000};
 
 const f64 D_80144A78_153A28[1] = {0.01};
 
-const f64 D_80144A80_153A30[1] = {0.01};
+const ShadowGeometryConstant D_80144A80_153A30 = {0.01};
 
 const f64 D_80144A88_153A38[1] = {1.414213562};
 
@@ -1240,33 +1240,34 @@ void func_800F4748_1036F8(UnkF9230ShadowWalker *arg0, u8 arg1, u8 arg2)
 	}
 }
 
-// CURRENT(327)
+// CURRENT(15): instructions match; three literal-pool addresses remain.
 #ifdef NON_MATCHING
 void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	UnkF9230ShadowLimb *entry;
 	s16 spB2;
-	s16 spA8;
-	s16 spA6;
-	s16 posX;
-	s16 posZ;
 	s16 animFrame;
 	s16 footX;
 	s16 footZ;
+	s16 rootY;
+	s16 spA8;
+	s16 spA6;
 	s16 currX;
 	s16 currZ;
-	s16 rootY;
 	s16 yawDeg;
+	s16 posX;
+	s16 posZ;
 	s16 distA;
-	s16 distB;
-	s16 legRadius;
 	u8 limbCount;
 	u8 animLerp;
+	s16 distB;
+	s16 legRadius;
 	u8 parentAlien;
 	s32 i;
 
-	parentAlien = ((UnkF9230Arg0 *)walker)->unk144;
-	posX = (s16)*(s32 *)&walker->limbs[0].unk10;
-	posZ = (s16)*(s32 *)&walker->limbs[0].unk14;
+
+	parentAlien = walker->alienIdx;
+	posX = (s16)walker->limbs[0].words[4];
+	posZ = (s16)walker->limbs[0].words[5];
 
 	limbCount = D_801601F0[walker->limbs[0].unk23].unkC;
 	animLerp = D_801601F0[walker->limbs[0].unk23].unk12;
@@ -1286,7 +1287,7 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		if (walker->limbs[0].unk22 == 0x10) {
 			entry->unk16 = walker->unk16A;
 		} else {
-			entry->unk16 = D_8014DD50[alienInstances[parentAlien].unkC].unk2 + alienInstances[parentAlien].unk2;
+			entry->unk16 = alienInstances[parentAlien].unk2 + D_8014DD50[alienInstances[parentAlien].unkC].unk2;
 		}
 
 		spB2 = entry->unk16;
@@ -4343,18 +4344,18 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	D_8004DCB8 = (f32)D_80052B34->unk4;
 }
 
-// CURRENT(7084)
+// CURRENT(395): corrected percentage scaling and spawn array; search-loop scheduling remains.
+
 #ifdef NON_MATCHING
 void func_800FD858_10C808(s16 arg0) {
-	s16 i;
-	s16 yRotation;
-	s32 buildingIndex;
 	VehicleInstance *vehicle;
 	Unk80259490 *spawnData;
+	s32 i;
+	s16 yRotation;
+	s32 buildingIndex;
 
-	if (D_80158FD8 != 0) {
-		i = D_80158FD8 - 1;
-		do {
+	i = D_80158FD8;
+	while (i--) {
 			if (arg0 == D_80158E80[i]) {
 				vehicle = &vehicleInstances[arg0];
 				if (vehicle->unk3C == 0) {
@@ -4365,13 +4366,12 @@ void func_800FD858_10C808(s16 arg0) {
 				}
 				return;
 			}
-		} while (i-- != 0);
 	}
 
 	vehicle = &vehicleInstances[arg0];
 	vehicle->unk20 |= (0x8000 | VEHICLE_FLAG_UNK1);
 	func_800FAD10_109CC0();
-	spawnData = &((Unk80259490 *)&D_80259490)[arg0];
+	spawnData = &D_80259490[arg0];
 	vehicle->unk1C = vehicleTypes[vehicle->unk1A].hitPoints;
 	func_800FB44C_10A3FC(vehicle, (spawnData->unk0 << 8) + 0x80);
 	func_800FB484_10A434(vehicle, (spawnData->unk2 << 8) + 0x80);
@@ -4380,10 +4380,10 @@ void func_800FD858_10C808(s16 arg0) {
 	if (buildingIndex != -1) {
 		vehicle->unk20 |= VEHICLE_FLAG_ON_BRIDGE;
 	}
-	vehicle->unkE = 0x4000 - spawnData->unk8;
+	vehicle->unkE = 0x4000U - spawnData->unk8;
 	vehicle->unk6 = 0x4000 - spawnData->unk8;
+	vehicle->unk3C = (s16)((f32)spawnData->unkA * D_80144A80_153A30.value * (f32)(vehicleTypes[spawnData->unk6].unk61 << 8));
 	vehicle->unk1C = vehicleTypes[vehicle->unk1A].hitPoints;
-	vehicle->unk3C = (s16)((f64)spawnData->unkA * 0.017453292519943295 * (vehicleTypes[spawnData->unk6].unk61 << 8));
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD858_10C808.s")
@@ -5084,12 +5084,11 @@ void func_800FFCB8_10EC68(s32 arg0) {
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
 }
 
-// CURRENT(1890)
+// CURRENT(20): two clock-load registers remain.
 #ifdef NON_MATCHING
 // AI - Builds the vehicle's model-view matrix from its position/rotation and draws it
 void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 	VehicleType *typePtr;
-	s16 temp;
 	s16 yOffset;
 
 	typePtr = &vehicleTypes[arg0->unk1A];
@@ -5107,15 +5106,12 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 	D_80052B48.unk4 = arg0->unkA;
 
 	if ((D_80222A70 == arg0->unk2) && !(typePtr->unk4C & 0x100)) {
-		D_80052B48.unk2 += (s16)(s32)(((f64)(f32)sins((u16)(D_80052A8E << 11)) / 32768.0) * 512.0);
-		D_80052B48.unk4 += (s16)(s32)(((f64)(f32)coss((u16)(D_80052A8E << 11)) / 32768.0) * 512.0);
+		D_80052B48.unk2 = (s16)(s32)(((f64)(f32)sins((D_80052A8E << 11) & 0xFFFF) / 32768.0) * 512.0) + D_80052B48.unk2;
+		D_80052B48.unk4 = (s16)(s32)(((f64)(f32)coss((D_80052A8E << 11) & 0xFFFF) / 32768.0) * 512.0) + D_80052B48.unk4;
 	}
 
 	if (typePtr->unk55 != 0) {
-		WeaponSpecEntry *tableEntry;
-
-		tableEntry = &D_80140768_14F718[typePtr->unk55];
-		D_80052B40.unk2 += tableEntry->unk0;
+		D_80052B40.unk2 += D_80140768_14F718[typePtr->unk55].unk0;
 	}
 
 	if ((arg0->unk1A == 2) && (currentLevel == 3)) {
@@ -5134,9 +5130,8 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 	}
 
 	if (arg0 == D_80052B34) {
-		temp = D_801591C6;
+		D_80052B40.unk2 += D_801591C6;
 		D_801591C6 = 0;
-		D_80052B40.unk2 += temp;
 	}
 
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
@@ -5172,16 +5167,11 @@ void func_80100114_10F0C4(VehicleInstance *arg0) {
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, (s32)&D_801592C0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2650)
 void func_801001B4_10F164(void) {
-	s16 *xPtr;
-	s16 *yPtr;
-	s16 *zPtr;
-	s16 x;
-	s16 y;
-	s16 z;
-	s16 i;
+	s32 x;
+	s32 y;
+	s32 z;
+	int i;
 
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -5191,14 +5181,11 @@ void func_801001B4_10F164(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	xPtr = &D_80159328[31];
-	yPtr = &D_80159368[31];
-	zPtr = &D_801593A8[31];
-	i = 31;
-	do {
-		x = *xPtr;
-		y = *yPtr;
-		z = *zPtr;
+	i = 32;
+	while (i--) {
+		x = D_80159328[i];
+		y = D_80159368[i];
+		z = D_801593A8[i];
 
 		if ((x != 0) || (y != 0) || (z != 0)) {
 			D_8005BB34->v.ob[0] = x;
@@ -5252,33 +5239,21 @@ void func_801001B4_10F164(void) {
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 		}
 
-		xPtr--;
-		yPtr--;
-		zPtr--;
-	} while (i-- != 0);
+	}
 
 	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 	gDPPipeSync(D_8005BB2C++);
 
-	xPtr = &D_80159328[31];
-	yPtr = &D_80159368[31];
-	zPtr = &D_801593A8[31];
-	i = 31;
-	do {
-		*xPtr = 0;
-		*yPtr = 0;
-		*zPtr = 0;
-		xPtr--;
-		yPtr--;
-		zPtr--;
-	} while (i-- != 0);
+	i = 32;
+	while (i--) {
+		D_80159328[i] = 0;
+		D_80159368[i] = 0;
+		D_801593A8[i] = 0;
+	}
 
 	D_801593E8 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_801001B4_10F164.s")
-#endif
 
 void func_801005CC_10F57C(s32 arg0, s32 arg1) {
 	VehicleInstance *sp1C;
@@ -10974,7 +10949,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 	s16 yRotation;
 
 	if (arg2 == 0) {
-		Unk80259490 *spawnData = &((Unk80259490 *)&D_80259490)[127];
+		Unk80259490 *spawnData = &D_80259490[127];
 		VehicleInstance *vehicle = &vehicleInstances[127];
 
 		do {
@@ -11007,7 +10982,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 
 			spawnData--;
 			vehicle--;
-		} while (spawnData >= &((Unk80259490 *)&D_80259490)[2]);
+		} while (spawnData >= &D_80259490[2]);
 	} else {
 		s16 i;
 		u8 *entry;
@@ -11022,7 +10997,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 					s32 range = arg2 >> 2;
 
 					if (func_80112A64_121A14(arg0, arg1, vehicle->unk0, vehicle->unk4) < (range * range)) {
-						Unk80259490 *spawnData = &((Unk80259490 *)&D_80259490)[vehicle->unk46 & 0x3F];
+						Unk80259490 *spawnData = &D_80259490[vehicle->unk46 & 0x3F];
 						s16 x = (s16)((spawnData->unk0 << 8) + 0x80);
 						s16 z = (s16)((spawnData->unk2 << 8) + 0x80);
 

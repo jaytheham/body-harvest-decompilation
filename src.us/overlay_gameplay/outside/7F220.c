@@ -111,9 +111,9 @@ void func_80070440_7F3F0(void)
 	D_801493A4 = -0x6F;
 	D_8014939C = 0x6F;
 	D_80052B2C = &D_80052AE8;
-	D_80259490.unk0 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk0;
-	D_80259490.unk2 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk2;
-	D_80259490.unk8 = temp_t5;
+	D_80259490[0].unk0 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk0;
+	D_80259490[0].unk2 = D_8003E000_3EC00[currentLevel - 1][D_80047F9C].unk2;
+	D_80259490[0].unk8 = temp_t5;
 	D_80052AD0 = 1;
 	D_80052A8C = 0;
 	D_80052B2C->unk30 = 0;
