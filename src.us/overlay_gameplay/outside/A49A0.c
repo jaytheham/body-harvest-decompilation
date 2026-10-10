@@ -1022,10 +1022,9 @@ void func_80097CB4_A6C64(OrbitCam *arg0, OrbitCam *arg1, OrbitCam *arg2, f32 arg
 	arg2->targetZ = arg0->targetZ + ((arg1->targetZ - arg0->targetZ) * arg3);
 }
 
-// CURRENT(1739)
-#ifdef NON_MATCHING
 void func_80097E1C_A6DCC(OrbitCam *cam) {
-	u16 sp66;
+	u16 perspNorm;
+	Gfx *normalize, *projection0, *projection1, *view0, *view1, *model0, *model1;
 	s16 temp;
 
 	temp = coss(cam->yaw);
@@ -1036,21 +1035,17 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 
 	D_8014ED14 = (f32)((((f32)coss(cam->pitch) / 32768.0) * cam->distance));
 
-	guPerspective((Mtx *)D_8005BB38, &sp66, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
-	gSPPerspNormalize(D_8005BB2C++, &sp66);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB30++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	guPerspective(D_8005BB38, &perspNorm, (f32)D_80149404, 1.0f, 25.0f, 2000.0f, 1.0f);
+	normalize = D_8005BB2C++; normalize->words.w0 = 0xBC00000E; normalize->words.w1 = (u32)&perspNorm;
+	projection0 = D_8005BB2C++; projection0->words.w0 = 0x01030040; projection0->words.w1 = K0_TO_PHYS(D_8005BB38);
+	projection1 = D_8005BB30++; projection1->words.w0 = 0x01030040; projection1->words.w1 = K0_TO_PHYS(D_8005BB38++);
 
-	guLookAt((Mtx *)D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, cam->targetX, cam->targetY, cam->targetZ, 0.0f, 0.0f, 1.0f);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	gSPMatrix(D_8005BB30++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-	gSPMatrix(D_8005BB30++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+	guLookAt(D_8005BB38, D_8014ED0C, D_8014ED10, D_8014ED14, cam->targetX, cam->targetY, cam->targetZ, 0.0f, 0.0f, 1.0f);
+	view0 = D_8005BB2C++; view0->words.w0 = 0x01010040; view0->words.w1 = K0_TO_PHYS(D_8005BB38);
+	view1 = D_8005BB30++; view1->words.w0 = 0x01010040; view1->words.w1 = K0_TO_PHYS(D_8005BB38++);
+	model0 = D_8005BB2C++; model0->words.w0 = 0x01020040; model0->words.w1 = K0_TO_PHYS(&D_80031160);
+	model1 = D_8005BB30++; model1->words.w0 = 0x01020040; model1->words.w1 = K0_TO_PHYS(&D_80031160);
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097E1C_A6DCC.s")
-#endif
 
 // CURRENT(42713)
 #ifdef NON_MATCHING
