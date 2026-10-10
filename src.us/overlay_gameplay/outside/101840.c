@@ -9534,7 +9534,7 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1834): inline deltas remove assignment spills; parameter reloads and floating allocation remain.
+// CURRENT(1464): inline deltas remove assignment spills; parameter reloads and floating allocation remain.
 int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9) {
     f32 slope;
     f32 coordinate;
@@ -9562,7 +9562,7 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
         }
         slope = (arg7 - arg5) / (arg6 - arg4);
         *arg8 = arg0;
-        coordinate = slope * arg0 + (arg5 - slope * arg4);
+        coordinate = (arg5 - slope * arg4) + slope * arg0;
         *arg9 = coordinate;
         return (arg1 <= coordinate) && (coordinate <= arg3);
     }
