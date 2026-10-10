@@ -9534,38 +9534,36 @@ s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
 	return 0;
 }
 
-// CURRENT(7430)
+// CURRENT(7074): structured edge tests; argument preservation and local storage remain.
 #ifdef NON_MATCHING
 s32 func_8010EA54_11DA04(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4) {
-	f32 sp64;
-	f32 sp60;
+	s16 camX;
+	s16 camY;
+	int temp;
+	f32 hit[2];
 	f32 sp54;
 	f32 sp48;
 	f32 sp44;
 	f32 sp40;
-	s16 camX;
-	s16 camY;
-	s32 temp;
 	s32 absX;
 	s32 absY;
 
 	camX = D_80159D5C->unk0;
 	temp = (s16)(((arg0 - arg2) >> 1) + arg0) - camX;
-	if (temp < 0) {
-		absX = -temp;
-	} else {
+	if (temp >= 0) {
 		absX = temp;
+	} else {
+		absX = -temp;
 	}
 
 	camY = D_80159D5C->unk4;
 	temp = (s16)(((arg1 - arg3) >> 1) + arg1) - camY;
-	if (temp < 0) {
-		absY = -temp;
-	} else {
+	absY = -temp;
+	if (temp >= 0) {
 		absY = temp;
 	}
 
-	if ((absX + absY) >= ((D_80159D64->unkC * 2) + 0x200)) {
+	if ((absY + absX) >= ((D_80159D64->unkC * 2) + 0x200)) {
 		return 0;
 	}
 
@@ -9573,34 +9571,30 @@ s32 func_8010EA54_11DA04(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4) {
 	sp48 = arg1;
 	sp44 = arg2;
 	sp40 = arg3;
-	if (func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[0] + camX, D_80159D98[0] + camY, D_80159D78[1] + camX,
-						 D_80159D98[1] + camY, &sp64, &sp60) != 0) {
-		goto found;
+	temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[0] + camX, D_80159D98[0] + camY, D_80159D78[1] + camX,
+						 D_80159D98[1] + camY, &hit[1], &hit[0]);
+	if (temp == 0) {
+		camX = D_80159D5C->unk0;
+		camY = D_80159D5C->unk4;
+		temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[1] + camX, D_80159D98[1] + camY, D_80159D78[2] + camX,
+						 D_80159D98[2] + camY, &hit[1], &hit[0]);
 	}
-
-	camX = D_80159D5C->unk0;
-	camY = D_80159D5C->unk4;
-	if (func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[1] + camX, D_80159D98[1] + camY, D_80159D78[2] + camX,
-						 D_80159D98[2] + camY, &sp64, &sp60) != 0) {
-		goto found;
+	if (temp == 0) {
+		camX = D_80159D5C->unk0;
+		camY = D_80159D5C->unk4;
+		temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[2] + camX, D_80159D98[2] + camY, D_80159D78[3] + camX,
+						 D_80159D98[3] + camY, &hit[1], &hit[0]);
 	}
-
-	camX = D_80159D5C->unk0;
-	camY = D_80159D5C->unk4;
-	if (func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[2] + camX, D_80159D98[2] + camY, D_80159D78[3] + camX,
-						 D_80159D98[3] + camY, &sp64, &sp60) != 0) {
-		goto found;
+	if (temp == 0) {
+		camX = D_80159D5C->unk0;
+		camY = D_80159D5C->unk4;
+		temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[3] + camX, D_80159D98[3] + camY, D_80159D78[0] + camX,
+						 D_80159D98[0] + camY, &hit[1], &hit[0]);
 	}
-
-	camX = D_80159D5C->unk0;
-	camY = D_80159D5C->unk4;
-	if (func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[3] + camX, D_80159D98[3] + camY, D_80159D78[0] + camX,
-						 D_80159D98[0] + camY, &sp64, &sp60) != 0) {
-	found:
-		*arg4 = func_800F9D24_108CD4((s16)(s32)sp64, (s16)(s32)sp60);
+	if (temp != 0) {
+		*arg4 = func_800F9D24_108CD4((s16)(s32)hit[1], (s16)(s32)hit[0]);
 		return 1;
 	}
-
 	*arg4 = 0;
 	return 0;
 }
