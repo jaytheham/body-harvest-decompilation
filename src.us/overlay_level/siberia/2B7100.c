@@ -3003,40 +3003,38 @@ void func_802DACA0_2BD0D0(u8 arg0) {
 }
 
 // CURRENT(321)
-#ifdef NON_MATCHING
 // AI - Moves an alien toward its next waypoint node along the Siberia path graph
 void func_802DAD00_2BD130(u8 arg0) {
-	AlienInstance *alien;
-	s16 sp4A;
-	Unk8014DD50 *node;
 	s16 sp4E;
-	s32 sp44, sp40, sp3C;
+	s16 pad;
+	s16 sp4A;
+	SignedWord sp44, sp40, sp3C;
 	s16 sp3A;
+	s16 rootJoint;
 
-	alien = &alienInstances[arg0];
-	sp3A = alien->unk25;
-	node = &D_8014DD50[alien->unkC];
-	sp4A = node->unkC;
+	sp3A = alienInstances[arg0].unk25;
+	rootJoint = alienInstances[arg0].unkC;
+	sp4A = D_8014DD50[rootJoint].unkC;
 
-	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
-		alien->unk2C = 0x3C;
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
+		alienInstances[arg0].unk2C = 0x3C;
 
-		func_80128428_1373D8(alien, D_8014DD50[sp4A].unk0, D_8014DD50[sp4A].unk2,
-							 D_8014DD50[sp4A].unk4, &sp44, &sp40, &sp3C);
+		func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp4A].unk0, D_8014DD50[sp4A].unk2,
+							 D_8014DD50[sp4A].unk4, &sp44.word, &sp40.word, &sp3C.word);
 
-		func_800DF848_EE7F8(((s16 *)&sp44)[1], ((s16 *)&sp40)[1], ((s16 *)&sp3C)[1],
-							alienTypes[alien->typeIndex].unkC, 0);
+		func_800DF848_EE7F8(sp44.halves.low, sp40.halves.low, sp3C.halves.low,
+							alienTypes[alienInstances[arg0].typeIndex].unkC, 0);
 		func_80088E10_97DC0(sp4A);
-		alien->unk12 >>= 3;
+		alienInstances[arg0].unk12 >>= 3;
 	} else {
-		func_8011E6FC_12D6AC(alien->unk0, alien->unk4, &sp4E);
-		alien->unk2 -= 2;
-		alien->unkA += 0xDC;
-		alien->unk8 += 0x8C;
+		func_8011E6FC_12D6AC(alienInstances[arg0].unk0, alienInstances[arg0].unk4, &sp4E);
+		alienInstances[arg0].unk2 -= 2;
+		alienInstances[arg0].unkA += 0xDC;
+		alienInstances[arg0].unk8 += 0x8C;
 
-		if (alien->unk2C == 1) {
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4,
-								alienTypes[alien->typeIndex].unkC, 0);
+		if (alienInstances[arg0].unk2C == 1) {
+			func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4,
+								alienTypes[alienInstances[arg0].typeIndex].unkC, 0);
 
 			if (sp3A != 0xFF) {
 				if (alienInstances[sp3A].typeIndex == 0x1A) {
@@ -3046,9 +3044,6 @@ void func_802DAD00_2BD130(u8 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DAD00_2BD130.s")
-#endif
 
 // CURRENT(13157)
 #ifdef NON_MATCHING
