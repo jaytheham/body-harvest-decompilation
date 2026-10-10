@@ -9334,7 +9334,7 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(755): indexed vehicle reload restores shift/add stride; loop-exit layout remains.
+// CURRENT(745): indexed vehicle reload restores shift/add stride; loop-exit layout remains.
 s32 func_8010E480_11D430(void) {
     BuildingInstance *building;
     VehicleInstance *vehicle;
@@ -9347,7 +9347,7 @@ s32 func_8010E480_11D430(void) {
     while (i--) {
         index = D_80152CA0[i].unk0;
         vehicle = &vehicleInstances[index];
-        if (D_80159D5C != vehicle) {
+        if (vehicle != D_80159D5C) {
             switch (D_80152CA0[i].unk1) {
             case 1:
                 building = &buildingInstances[index];
