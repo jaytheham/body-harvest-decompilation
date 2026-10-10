@@ -2538,11 +2538,15 @@ extern s16 D_8015758A;
 extern s16 D_8015758C;
 extern s16 D_8015758E;
 extern s16 D_80157590; // outside camera status
+#ifdef OUTSIDE_F7870_BSS
+s32 D_801575A0;
+void *D_801575A4;
+#else
 extern s32 D_801575A0;
 extern void *D_801575A4;
+#endif
 extern Gfx* D_801575A8;
 extern Gfx* D_801575AC;
-extern s32 D_801575B0;
 extern s16 D_801575C0;
 extern s16 D_801575C2;
 extern f32 D_801575C4;

@@ -15,6 +15,11 @@ typedef struct {
 
 #include <PR/sched.h>
 
+typedef union ShadowModelCommand {
+    Gwords words;
+    s8 bytes[8];
+} ShadowModelCommand;
+
 typedef struct MissionCommand {
     u8 opcode;
     u8 args[2];

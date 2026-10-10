@@ -1,3 +1,4 @@
+#define OUTSIDE_F7870_BSS
 #include <ultra64.h>
 #include "common.h"
 
@@ -10,62 +11,49 @@ const char D_801442C4_153274[] = ".OK\n"; // ".OK\n"
 const f32 D_801442CC_15327C[1] = {10000.0f};
 const f64 D_801442D0_153280[2] = {0.55, 0.0};
 
-#ifdef NON_MATCHING
 // StripModelToBones
 Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
+	ShadowModelCommand temp;
 	Gfx* src;
-	Gfx* dst;
-	Gfx* result;
-	Gfx temp;
 	s8 opcode;
+	Gfx* result;
+	static Gfx* dst;
+	static Gfx* start;
+	static s32 count;
 
 	src = (Gfx*)func_80012000_12C00(arg0);
-
 	switch (arg1) {
 	case 0:
-		dst = D_801575A8;
-		arg1 = D_801575B0;
 		break;
 	case 1:
 		dst = D_802C9480;
-		D_801575AC = D_802C9480;
-		arg1 = 0;
+		start = dst;
+		count = 0;
 		break;
 	case 2:
 		dst = D_802C9EA8;
-		D_801575AC = D_802C9EA8;
-		arg1 = 0;
+		start = dst;
+		count = 0;
 		break;
 	default:
-		dst = D_801575A8;
-		arg1 = D_801575B0;
 		break;
 	}
-
 	result = dst;
-
 	do {
-		temp = *src++;
-		opcode = *(s8*)&temp;
+		temp.words = src->words;
+		src++;
+		opcode = temp.bytes[0];
 		if (opcode == -0x41 || opcode == -0x4F || opcode == -0x48 || opcode == 4) {
-			*dst++ = temp;
-			arg1++;
+			dst->words = temp.words;
+			dst++;
+			count++;
 		}
 	} while (opcode != -0x48);
-
-	D_801575A8 = dst;
-	D_801575B0 = arg1;
-
-	if (arg1 >= 0x145) {
-		D_801575B0 = arg1;
-		osSyncPrintf(D_80144260_153210, arg1, 0x145);
+	if (count >= 0x145) {
+		osSyncPrintf(D_80144260_153210, count, 0x145);
 	}
-
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E88C0_F7870.s")
-#endif
 
 // CURRENT(16124)
 #ifdef NON_MATCHING
