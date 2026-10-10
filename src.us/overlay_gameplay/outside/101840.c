@@ -9334,7 +9334,7 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(2120): corrected zero-index iteration and building-to-vehicle fallthrough.
+// CURRENT(755): indexed vehicle reload restores shift/add stride; loop-exit layout remains.
 s32 func_8010E480_11D430(void) {
     BuildingInstance *building;
     VehicleInstance *vehicle;
@@ -9358,7 +9358,8 @@ s32 func_8010E480_11D430(void) {
                 if (func_8010DC00_11CBB0(x, z, 0x12) != 0) {
                     break;
                 }
-                vehicle = &vehicleInstances[D_80152CA0[i].unk0];
+                index = D_80152CA0[i].unk0;
+                vehicle = &vehicleInstances[index];
             case 2:
                 x = vehicle->unk0;
                 z = vehicle->unk4;
