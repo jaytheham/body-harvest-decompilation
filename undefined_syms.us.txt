@@ -6948,3 +6948,4 @@ D_8003638C_36F8C = __osPiTable;
 func_8001D5A0_1E1A0 = osEepromLongRead;
 
 rspbootTextEnd = 0x8002DEE0;
+D_800A436C_18C42C_W = D_800A436C_18C42C;

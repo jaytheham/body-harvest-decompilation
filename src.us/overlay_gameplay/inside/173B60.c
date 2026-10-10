@@ -365,11 +365,11 @@ u8 pad_18C49C[0x8] = {
 };
 // padding before D_800A4354 (2 bytes auto-aligned)
 
-Unk800A4354 D_800A4354_18C414 = { 0x01100028, 0xFFFF };
+Unk800A4354 D_800A4354_18C414 = { 0x0110, 0x0028, 0xFFFF };
 
-Unk800A4354 D_800A435C_18C41C = { 0x00000000, 0x0000 };
+Unk800A4354 D_800A435C_18C41C = { 0, 0, 0 };
 
-Unk800A4354 D_800A4364_18C424 = { 0x00000000, 0x0000 };
+Unk800A4354 D_800A4364_18C424 = { 0, 0, 0 };
 
 u16 D_800A436C_18C42C = 0x0000;
 
@@ -1148,22 +1148,20 @@ void func_8008CF2C_174FEC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
+// Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
 void func_8008D900_1759C0(void) {
-	s32 sp58_unk0;
-	u16 sp58_unk4;
-	s32 sp50_unk0;
-	u16 sp50_unk4;
-	s32 sp48_unk0;
-	u16 sp48_unk4;
-	sp58_unk0 = D_800A4354_18C414.unk0;
-	sp58_unk4 = D_800A4354_18C414.unk4;
-	sp50_unk0 = D_800A435C_18C41C.unk0;
-	sp50_unk4 = D_800A435C_18C41C.unk4;
-	sp48_unk0 = D_800A4364_18C424.unk0;
-	sp48_unk4 = D_800A4364_18C424.unk4;
-	D_800A436C_18C42C += 1;
+	/* Retain the original stack homes around the three six-byte copies. */
+	s32 pad64;
+	s32 pad60;
+	Unk800A4354 sp58;
+	Unk800A4354 sp50;
+	Unk800A4354 sp48;
+	s32 pad40;
+	s32 pad3C;
+	sp58 = D_800A4354_18C414;
+	sp50 = D_800A435C_18C41C;
+	sp48 = D_800A4364_18C424;
+	D_800A436C_18C42C_W = D_800A436C_18C42C + 1;
 	func_8001A130_1AD30(0x4A - D_800FCF26, D_80068088 - 0x50);
 	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START) == 0) {
 		D_800FCA80 = 0;
@@ -1188,7 +1186,7 @@ void func_8008D900_1759C0(void) {
 	osWritebackDCacheAll();
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
 	gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
-	gSPMatrix(D_8005BB2C++, &D_800FCAD8, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_800FCAD8), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	func_8008C8A4_174964();
@@ -1216,9 +1214,6 @@ void func_8008D900_1759C0(void) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008D900_1759C0.s")
-#endif
 
 // AI - Play a sound effect for a given slot index (language-dependent lookup)
 void func_8008DC44_175D04(s32 arg0) {

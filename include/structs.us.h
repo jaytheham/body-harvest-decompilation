@@ -262,9 +262,10 @@ typedef union {
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
-	s32 unk0;
-	u16 unk4;
-} Unk800A4354; /* stride 0x6 or 0x8 */
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ u16 unk4;
+} Unk800A4354; /* size = 0x06 */
 
 typedef struct {
 	/* 0x06 */ u8 unk6;
