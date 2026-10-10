@@ -956,8 +956,8 @@ void func_8008C8A4_174964(void) {
 #endif
 
 // doPauseMenu ?
+// Render and handle the pause menu: 3x3 icon grid, analog stick navigation
 #ifdef NON_MATCHING
-// AI - Render and handle the pause menu: 3x3 icon grid, analog stick navigation
 void func_8008CF2C_174FEC(void) {
 	u8 slots[9];
 	u8 slotValue;
@@ -965,8 +965,8 @@ void func_8008CF2C_174FEC(void) {
 	s32 x;
 	s32 y;
 	s32 texIndex;
-	s8 stickX;
-	s8 stickY;
+	s32 stickX;
+	s32 stickY;
 	s16 fade;
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
@@ -985,7 +985,7 @@ void func_8008CF2C_174FEC(void) {
 	i = 8;
 	do {
 		slots[i] = 0xF;
-	} while (i-- != 0);
+	} while (i--);
 
 	if (D_800FCA90 != 0) {
 		slots[4] = 0xE;
@@ -999,68 +999,72 @@ void func_8008CF2C_174FEC(void) {
 		}
 	}
 
-	stickX = currentControllerStates[CONTROLLER_TWO].stick_x;
-	if ((ABS(stickX) < 0x14) && (ABS(currentControllerStates[CONTROLLER_TWO].stick_y) < 0x14)) {
+	stickX = D_8004758A;
+	if (((stickX >= 0 ? stickX : -stickX) < 0x14) && ((D_8004758B >= 0 ? D_8004758B : -D_8004758B) < 0x14)) {
 		D_800FCF20 = 1;
 	}
 
 	if (D_800FCF20 == 1) {
-		if ((stickX < -0x1E) && (D_800A4340_18C400 >= 4) && (slots[D_800A4340_18C400 - 1] != 0xF)) {
-			D_800A4340_18C400--;
+		if ((stickX < -0x1E) && (D_800A4340_Menu1 >= 4) && (slots[D_800A4340_Menu1 - 1] != 0xF)) {
+			D_800A4340_18C400_W = D_800A4340_Menu1 - 1;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
-			stickX = currentControllerStates[CONTROLLER_TWO].stick_x;
+			stickX = D_8004758A;
 		}
 
-		if ((stickX >= 0x1F) && (D_800A4340_18C400 < 5) && (slots[D_800A4340_18C400 + 1] != 0xF) && (D_800A4348_18C408 == 0)) {
-			D_800A4340_18C400++;
+		if ((stickX >= 0x1F) && (D_800A4340_Nav1 < 5) && (slots[D_800A4340_Nav1 + 1] != 0xF) && (D_800A4348_18C408 == 0)) {
+			D_800A4340_18C400_W = D_800A4340_Nav1 + 1;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
 		}
 
-		stickY = currentControllerStates[CONTROLLER_TWO].stick_y;
-		if ((stickY >= 0x1F) && (D_800A4340_18C400 >= 2) && (slots[D_800A4340_18C400 - 3] != 0xF)) {
-			D_800A4340_18C400 -= 3;
+		stickY = D_8004758B;
+		if ((stickY >= 0x1F) && (D_800A4340_Nav2 >= 2) && (slots[D_800A4340_Nav2 - 3] != 0xF)) {
+			D_800A4340_18C400_W = D_800A4340_Nav2 - 3;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
-			stickY = currentControllerStates[CONTROLLER_TWO].stick_y;
+			stickY = D_8004758B;
 		}
 
-		if ((stickY < -0x1E) && (D_800A4340_18C400 < 7) && (slots[D_800A4340_18C400 + 3] != 0xF)) {
-			D_800A4340_18C400 += 3;
+		if ((stickY < -0x1E) && (D_800A4340_Nav3 < 7) && (slots[D_800A4340_Nav3 + 3] != 0xF)) {
+			D_800A4340_18C400_W = D_800A4340_Nav3 + 3;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
 		}
 	}
 
 	fade = D_800FCA92;
-	slotValue = slots[D_800A4340_18C400];
+	slotValue = slots[D_800A4340_Menu2];
 	if (fade != 0xFF) {
-		D_800A4344_18C404 = -1;
-		func_8001A54C_1B14C(D_800A56EC_18D7AC, -1);
-		D_800FCA92 -= 0x20;
-		fade = D_800FCA92;
+		D_800A4344_18C404_W = -1;
+		func_8001A54C_Menu(D_800A56EC_18D7AC, -1);
+		fade = (D_800FCA92_W = D_800FCA92 - 0x20);
 	} else {
 		if (D_800A4344_18C404 != slotValue) {
-			D_800A4344_18C404 = slotValue;
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				func_8001A54C_1B14C(D_800A428C_18C34C[slotValue], slotValue);
-				break;
-			case 1:
-				func_8001A54C_1B14C(D_800A42C8_18C388[slotValue], slotValue);
+				D_800A4344_18C404_W = slotValue;
+				func_8001A54C_Menu((u8 *) D_800A428C_18C34C[slotValue], slotValue);
+				fade = D_800FCA92_Lang0;
 				break;
 			case 2:
-				func_8001A54C_1B14C(D_800A4304_18C3C4[slotValue], slotValue);
+				D_800A4344_18C404_W = slotValue;
+				func_8001A54C_Menu((u8 *) D_800A4304_18C3C4[slotValue], slotValue);
+				fade = D_800FCA92_Lang1;
+				break;
+			case 1:
+				D_800A4344_18C404_W = slotValue;
+				func_8001A54C_Menu((u8 *) D_800A42C8_18C388[slotValue], slotValue);
+				fade = D_800FCA92_Lang2;
 				break;
 			}
 		}
-		D_800FCF4C = -1;
+		D_800FCF4C = 0xFFFFFFFFU;
 	}
 
-	if (D_800FCF4C != -1) {
-		D_800A4340_18C400 = D_800FCF4C;
+	if (D_800FCF4C != 0xFFFFFFFFU) {
+		D_800A4340_18C400_W = D_800FCF4C;
 	}
 
 	if (fade < 0xFF) {
@@ -1069,24 +1073,25 @@ void func_8008CF2C_174FEC(void) {
 		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 	}
 
-	for (i = 8; i >= 0; i--) {
+	i = 8;
+	do {
 		slotValue = slots[i];
 		if (slotValue != 0xF) {
-			x = ((i % 3) << 5) + (D_80068084 / 2) - 0x2C;
-			y = ((i / 3) * 0x1E) + 0x38;
+			x = ((i % 3) << 5) + (D_80068084 / 2);
+			x = (s16)(x - 0x2C);
 			texIndex = D_800A427C_18C33C[slotValue];
 
-			if (i == D_800A4340_18C400) {
-				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0xC8, 0xFF, fade & 0xFF);
-				if (D_800A4340_18C400 != D_800FCB1E) {
+			if (i == D_800A4340_Menu3) {
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0xC8, 0xFF, D_800FCA92 & 0xFF);
+				if (D_800A4340_DrawCompare != D_800FCB1E) {
 					func_80013810_14410(D_800A4343_18C403);
-					D_800FCB1E = D_800A4340_18C400;
+					D_800FCB1E = D_800A4340_DrawAfterCall;
 				}
 			} else {
-				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0x64, 0x7F, fade & 0xFF);
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0x64, 0x7F, D_800FCA92 & 0xFF);
 			}
 
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, D_8025CCC0 + (texIndex * 0x240));
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)));
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
@@ -1095,9 +1100,11 @@ void func_8008CF2C_174FEC(void) {
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 3, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, ((24 - 1) << G_TEXTURE_IMAGE_FRAC), ((24 - 1) << G_TEXTURE_IMAGE_FRAC));
-			gSPTextureRectangle(D_8005BB2C++, x * 4, y * 4, (x + 24) * 4, (y + 24) * 4, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
+			y = (i / 3) * 0x1E;
+			y += 0x38;
+			gSPTextureRectangle(D_8005BB2C++, x << 2, y << 2, (x + 24) << 2, (y + 24) << 2, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
 		}
-	}
+	} while (i--);
 
 	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_A) != 0) && (D_800FCA92 == 0xFF) && (D_800FCA84 == 0)) {
 		D_800FCA80 = 1;
@@ -1106,7 +1113,7 @@ void func_8008CF2C_174FEC(void) {
 		}
 
 		func_8001A54C_1B14C(D_800A56F0_18D7B0);
-		slotValue = slots[D_800A4340_18C400];
+		slotValue = slots[D_800A4340_Menu4];
 
 		switch (slotValue) {
 		case 6:
@@ -1129,24 +1136,26 @@ void func_8008CF2C_174FEC(void) {
 			D_800E65A8 |= 0x80000;
 			return;
 		default:
-			if (((D_80052B34->unk1A != 0) || (D_800A4340_18C400 != 3)) && (slotValue != 0xF) && (slotValue != 8)) {
+			if (((D_80052B34->unk1A != 0) || (D_800A4340_Menu4 != 3)) && (slotValue != 0xF) && (slotValue != 8)) {
 				D_80050AD4 = slotValue;
 			}
 			D_800E65A8 &= ~2;
-			D_800FCA92--;
-			D_800FCF4C = D_800A4340_18C400;
+			D_800FCA92_W = D_800FCA92 - 1;
+			D_800FCF4C = D_800A4340_Menu4;
 			break;
 		}
 	}
 
 	if (D_800FCA92 < 0x21) {
-		D_800A4340_18C400 = 4;
+		D_800A4340_18C400_W = 4;
 	}
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")
 #endif
+
+
 
 // Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
 void func_8008D900_1759C0(void) {

@@ -792,6 +792,8 @@ extern OSMesg D_800433C0;
 extern OSThread D_800433C8;
 extern Unk80047578 D_80047578;
 extern s32 D_80047584;
+extern s8 D_8004758A;
+extern s8 D_8004758B;
 extern OSContPad currentControllerStates[4]; // 0x80047588
 extern OSContPad D_800475A0[4]; // When button is held these values sometimes reset to 0 next frame?
 extern OSContPad D_800475B8[4];
@@ -1474,6 +1476,7 @@ extern char *D_800A428C_18C34C[];
 extern char *D_800A42C8_18C388[];
 extern char *D_800A4304_18C3C4[];
 extern s32 D_800A4340_18C400;
+extern s32 D_800A4340_18C400_W;
 extern s8 D_800A4343_18C403;
 extern s32 D_800A4344_18C404;
 extern s16 D_800A4348_18C408;
@@ -4107,5 +4110,25 @@ extern const f64 D_80144028_152FD8[1];
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
+
+
+extern s32 D_800A4340_Menu1;
+extern s32 D_800A4340_Menu2;
+extern s32 D_800A4340_Menu3;
+extern s32 D_800A4340_Menu4;
+extern s16 D_800FCA92_W;
+extern s32 D_800A4344_18C404_W;
+
+extern s32 D_800A4340_Nav1;
+extern s32 D_800A4340_Nav2;
+extern s32 D_800A4340_Nav3;
+
+
+extern s16 D_800FCA92_Lang0;
+extern s16 D_800FCA92_Lang1;
+extern s16 D_800FCA92_Lang2;
+
+extern s32 D_800A4340_DrawCompare;
+extern s32 D_800A4340_DrawAfterCall;
 
 #endif /* LIBULTRA_REFERENCE */
