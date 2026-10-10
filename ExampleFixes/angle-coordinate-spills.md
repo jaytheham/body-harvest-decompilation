@@ -16,3 +16,8 @@ Replace the two explicit `const f64` arrays containing `600.0` with inline doubl
 ### Opposite-facing angle helper
 
 Siberia func_802DD408_2BF838 matches using the shared func_80084FE8_93F98 declaration layout and a ternary. Express the negative candidate as -(angle - alien->unk6 + 0x8000). Writing -0x8000 - (angle - alien->unk6) makes IDO reverse the inner subtraction and add the constant, changing instructions and temporary registers. Keep an unused s16 before the saved first angle to place it at sp+0x30. The threshold parameter is u16. Full ROM checksum verified OK.
+
+
+## Repeated absolute-distance comparisons
+
+In Siberia func_802D81C0_2BA5F0, using separate s32 result variables for the two identical max(-angle, angle) if/else blocks makes IDO keep the shared negation in v0 and each comparison result in v1. Reusing one result variable swaps v0/v1 even though instruction order is identical. The two result declarations precede the float local, preserving its target stack slot. Removing explicit masks from sins/coss arguments also preserves the argument normalization emitted for their u16 parameters.
