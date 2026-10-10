@@ -91,3 +91,8 @@ address calculation. Removing that pointer lets IDO load the four halfword
 arguments before the stores, matching the reference `func_800891F8_596A8`.
 Raw byte accesses can still be replaced by the entry's existing `payload` array
 without changing those instructions. Full ROM checksum and diff score 0 pass.
+
+
+### Siberia respawn helper
+
+func_802DD514_2BF944 matches with u8 arg0 and direct alienInstances[arg0] accesses. A named AlienInstance pointer adds eight bytes to the frame and puts its spill at sp+0x1C instead of the target sp+0x18. Direct accesses let IDO cache and spill the array element address itself. The target's initial sw/lbu argument sequence does not require byte pointer arithmetic on an s32 parameter. Full ROM checksum verified OK.

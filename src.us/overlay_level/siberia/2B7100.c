@@ -836,7 +836,7 @@ void func_802D6A70_2B8EA0(void);
 void func_802DB8D8_2BDD08(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, f32 arg8);
 void func_802DD240_2BF670(s32 arg0);
 s32 func_802DD408_2BF838(u8 arg0, u16 arg1);
-void func_802DD514_2BF944(s32 arg0);
+void func_802DD514_2BF944(u8 arg0);
 s32 func_802DCC50_2BF080(u8 arg0);
 void func_802DCA14_2BEE44(u8 arg0);
 extern s16 D_802E278C_2C4BBC;
@@ -3897,14 +3897,11 @@ s32 func_802DD408_2BF838(u8 arg0, u16 arg1) {
 }
 
 // CURRENT(277)
-#ifdef NON_MATCHING
-void func_802DD514_2BF944(s32 arg0) {
+void func_802DD514_2BF944(u8 arg0) {
 	u8 newAlienIdx;
 	s32 typeIndex;
-	AlienInstance *alien;
 
-	alien = &alienInstances[*((u8 *)&arg0 + 3)];
-	typeIndex = alien->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 	newAlienIdx = func_8007956C_8851C(typeIndex);
 
 	alienInstances[newAlienIdx].unk2E = -0xC8;
@@ -3914,7 +3911,7 @@ void func_802DD514_2BF944(s32 arg0) {
 	alienInstances[newAlienIdx].unk18 = 0x4A03;
 	alienInstances[newAlienIdx].unk0 = alienInstances[newAlienIdx].unk2E;
 	alienInstances[newAlienIdx].unk4 = alienInstances[newAlienIdx].unk32;
-	alienInstances[newAlienIdx].hitPoints = alien->hitPoints;
+	alienInstances[newAlienIdx].hitPoints = alienInstances[arg0].hitPoints;
 	alienInstances[newAlienIdx].unk48 = -0x20;
 
 	alienInstances[newAlienIdx].unk2 = func_800B84D0_C7480(-0xC8, 0x4A03) >> (alienTypes[typeIndex].unk58 + 8);
@@ -3922,12 +3919,9 @@ void func_802DD514_2BF944(s32 arg0) {
 	alienInstances[newAlienIdx].unk20 &= ~ALIEN_FLAG_PLAYER;
 	alienTypes[typeIndex].unk54 |= 0xC;
 
-	func_80079910_888C0(*((u8 *)&arg0 + 3));
+	func_80079910_888C0(arg0);
 	func_8007A2A0_89250(newAlienIdx);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DD514_2BF944.s")
-#endif
 
 // "Snowbeast" (lab spider monster) behavior/updates specs.unk48
 #ifdef NON_MATCHING
