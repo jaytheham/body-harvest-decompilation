@@ -3136,8 +3136,14 @@ typedef struct {
 	} unkC;
 } UnkProjectileCtrl_8012B26C;
 
+/* Message entries store an unused word before the string pointer. */
 typedef struct {
-	/* 0x00 */ s32 unk0; // Pointer to label string
+	/* 0x00 */ s32 pad;
+	/* 0x04 */ u8 *name;
+} MessageEntry; /* stride = 0x08 */
+
+typedef struct {
+	/* 0x00 */ const char *unk0; // Pointer to label string
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s32 minimum;

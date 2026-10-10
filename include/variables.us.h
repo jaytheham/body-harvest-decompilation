@@ -359,6 +359,7 @@ extern NameRef D_800344B4_350B4[]; // English string table
 extern NameRef D_80034C44_35844[]; // French string table
 extern NameRef D_80034D0C_3590C[]; // German string table
 extern s32 D_80034574_35174[];
+extern MessageEntry D_800344B0_350B0[];
 extern u64 D_80035610_36210;
 extern OSViMode D_800356D0_362D0;
 extern OSViMode D_80035B30_36730;
