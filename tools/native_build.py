@@ -381,7 +381,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("setup", "extract", "build"))
     parser.add_argument("--version", choices=("us", "eu"), default="us")
-    parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 8))
+    parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4))
     parser.add_argument("--non-matching", action="store_true")
     parser.add_argument("--rebuild", action="store_true")
     parser.add_argument("--quiet", action="store_true")
