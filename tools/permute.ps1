@@ -4,13 +4,13 @@
 #   .\permute.ps1 <c_file> <asm_file_or_func_name> [permuter options]
 #
 # Examples:
-#   .\permute.ps1 src.us/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j6 --best-only
-#   .\permute.ps1 src.us/core/1000.c asm/nonmatchings/core/1000/func_80000400_400.s -j6 --best-only
-#   .\permute.ps1 src.us/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j6 --best-only
+#   .\permute.ps1 src.na/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j6 --best-only
+#   .\permute.ps1 src.na/core/1000.c asm.na/nonmatchings/core/1000/func_80000400_400.s -j6 --best-only
+#   .\permute.ps1 src.na/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j6 --best-only
 #
 # The function directory is created under nonmatchings/<func_name>/ in the repository.
 # Run tools/setup.ps1 first. Native import expands preserved macros using TinyCC.
-# All arguments after the asm/func argument are forwarded directly to permuter.py.
+# All arguments after the asm.na/func argument are forwarded directly to permuter.py.
 #
 # Common permuter options:
 #   -j <N>   Use N parallel threads        (e.g. -j4)

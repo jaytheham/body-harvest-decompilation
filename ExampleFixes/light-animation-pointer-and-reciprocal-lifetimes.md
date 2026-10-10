@@ -6,4 +6,4 @@ Initializing the keyframe pointer from the track and using an empty `if (keyfram
 
 The last mismatch was green interpolation using the named factor in f0 instead of the original reciprocal result in f2. Repeating `1.0f / (f32)(total - elapsed)` in the green expression lets IDO reuse its common subexpression in f2. Blue still uses the named factor in f0. An additional factor local emitted another move and did not match.
 
-Verified with diff score 0 and `build/bh.us.z64: OK`.
+Verified with diff score 0 and `build.na/bh.na.z64: OK`.

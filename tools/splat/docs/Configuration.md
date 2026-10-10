@@ -143,7 +143,7 @@ Path to output split asset files.
 #### Usage
 
 ```yaml
-asset_path: path/to/assets/folder
+asset_path: path/to/assets.na/folder
 ```
 
 #### Default
@@ -176,7 +176,7 @@ Path that built files will be found. Used for generation of the linker script.
 
 #### Usage
 ```yaml
-build_path: path/to/build/folder
+build_path: path/to/build.na/folder
 ```
 
 #### Default
@@ -200,7 +200,7 @@ Path to output split assembly files.
 
 #### Usage
 ```yaml
-asm_path: path/to/asm/folder
+asm_path: path/to/asm.na/folder
 ```
 
 #### Default
@@ -585,7 +585,7 @@ Determines whether functions inside c files should have named registers
 
 ### add_set_gp_64
 
-Determines whether to add ".set gp=64" to asm/hasm files
+Determines whether to add ".set gp=64" to asm.na/hasm files
 
 ### create_asm_dependencies
 

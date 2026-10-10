@@ -36,4 +36,4 @@ s32 temp_v0;              // second → sp+0x20 (phantom)
 u8 sp1F;                  // third/last → sp+0x1F (actual spill)
 ```
 
-**Source example:** `func_800CD1F8_DC1A8` in `src.us/overlay_gameplay/outside/CFE30.c`
+**Source example:** `func_800CD1F8_DC1A8` in `src.na/overlay_gameplay/outside/CFE30.c`

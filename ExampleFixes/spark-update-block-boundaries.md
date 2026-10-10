@@ -8,4 +8,4 @@ Compare the byte lifetime directly with zero after decrement. The redundant `& 0
 
 Four nested `if (1)` blocks around the width check preserve the target codegen. Without the blocks, IDO folds the width load into the entry base and repeats the payload-pointer addition in the first random call's delay slot. One to three blocks fix those instructions but swap the initial -5/-6 constants between v0 and v1. Four blocks also fix that swap. The mask comparison with 1 is present in the target even though a 0x80 mask cannot equal 1; preserve it.
 
-Validation: function diff score 0 and full ROM checksum `build/bh.us.z64: OK`.
+Validation: function diff score 0 and full ROM checksum `build.na/bh.na.z64: OK`.

@@ -6,4 +6,4 @@ Both particle paths require a fourth random call. Its signed return supplies `% 
 
 Use an s32 subtype local for byte loads that are only compared. A u8 local made IDO preserve an extra promoted copy. After the explosion helper, reload the subtype from the instance inside the helper-call branch. Retaining the pre-call value introduced a stack spill and changed the frame from 0x50 to 0x58.
 
-The final particle condition combines the subtype test and frame-bit test in one if, followed by the alternative explosion test. The nested version omitted that alternative path when the subtype matched but the frame bits did not. Full ROM verification reports `build/bh.us.z64: OK`.
+The final particle condition combines the subtype test and frame-bit test in one if, followed by the alternative explosion test. The nested version omitted that alternative path when the subtype matched but the frame bits did not. Full ROM verification reports `build.na/bh.na.z64: OK`.

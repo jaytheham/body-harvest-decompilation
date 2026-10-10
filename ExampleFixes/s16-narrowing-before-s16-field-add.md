@@ -1,6 +1,6 @@
 # Narrow a Truncated Integer Before Adding to an s16 Field
 
-Function: `func_8007DC80_165D40` (`src.us/overlay_gameplay/inside/1648A0.c`).
+Function: `func_8007DC80_165D40` (`src.na/overlay_gameplay/inside/1648A0.c`).
 
 ## Problem
 

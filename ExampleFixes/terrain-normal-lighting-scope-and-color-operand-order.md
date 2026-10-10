@@ -8,4 +8,4 @@ Index the tint tables directly with `currentLevel - 1`. Naming an intermediate l
 
 The output multiplication must be `colorFactors[i] * (f32)rgb[i]`. Reversing these C operands changes floating-point allocation throughout the unsigned conversion sequences. Retain the `(u32)` conversion before storing each byte: the target includes the complete unsigned conversion sequence.
 
-Verified with the function diff at zero and `tools/make.ps1` reporting `build/bh.us.z64: OK`, including all four matched scrolling callers.
+Verified with the function diff at zero and `tools/make.ps1` reporting `build.na/bh.na.z64: OK`, including all four matched scrolling callers.

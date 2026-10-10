@@ -34,4 +34,4 @@ After the logic matched, the ground-height local was at 0x4C instead of 0x48. Tw
 
 The original call name `func_8008EB20_5EFD0` belongs to the frontend overlay and has seven parameters. Use the gameplay implementation `func_8008EB20_9DAD0`, which has the required three parameters and the same RAM address. Overlay symbol annotations can select the wrong ROM-suffixed name; check the actual implementation and prototype rather than adding spurious call arguments.
 
-Use the existing `u8` parameter declaration and remove repeated `& 0xFF` masks. Final function diff was zero and the cleaned source reported `build/bh.us.z64: OK`.
+Use the existing `u8` parameter declaration and remove repeated `& 0xFF` masks. Final function diff was zero and the cleaned source reported `build.na/bh.na.z64: OK`.

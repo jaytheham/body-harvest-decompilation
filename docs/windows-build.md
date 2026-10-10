@@ -15,7 +15,7 @@ The original Linux Makefile remains unchanged. The Windows driver reads object i
 
 ## Validation
 
-Use a clean source copy with `baserom.us.z64`, without `asm`, `assets`, `build`, or `tools/windows`:
+Use a clean source copy with `baserom.na.z64`, without `asm`, `assets`, `build`, or `tools/windows`:
 
 ```powershell
 .\tools\extract.ps1
@@ -23,7 +23,7 @@ Use a clean source copy with `baserom.us.z64`, without `asm`, `assets`, `build`,
 .\tools\make.ps1
 ```
 
-Both builds must print `build/bh.us.z64: OK`. Repeat from another working directory, using an absolute script path, and with spaces in the checkout path. Change a C source and confirm only affected objects are rebuilt; change a header and confirm C objects are rebuilt. A configuration fingerprint forces recompilation after tool/flag changes and is invalidated before rebuilding, including when a configuration change fails partway through compilation.
+Both builds must print `build.na/bh.na.z64: OK`. Repeat from another working directory, using an absolute script path, and with spaces in the checkout path. Change a C source and confirm only affected objects are rebuilt; change a header and confirm C objects are rebuilt. A configuration fingerprint forces recompilation after tool/flag changes and is invalidated before rebuilding, including when a configuration change fails partway through compilation.
 
 Native EU support is not implemented: the existing EU tree lacks several required symbol/header inputs and has not been validated. The Docker/Linux route remains available. Development helpers that still invoke Docker are outside the extraction/build driver.
 

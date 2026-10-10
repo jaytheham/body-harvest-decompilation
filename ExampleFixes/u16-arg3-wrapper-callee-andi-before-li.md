@@ -12,7 +12,7 @@ With `u16 arg3` in both declaration sites, IDO treats the zero-extension of a3 a
 
 **Example** (wrapper with `u16 arg3`, 3 u8 args, last arg = constant 1):
 ```c
-// Declaration in functions.us.h:
+// Declaration in functions.na.h:
 void func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7);
 
 // Implementation:

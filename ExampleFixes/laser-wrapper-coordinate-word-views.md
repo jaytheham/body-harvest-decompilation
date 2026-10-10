@@ -6,4 +6,4 @@ The matrix helper receives a whole `Unk80052B40` position. Three independent hal
 
 The remaining stack layout follows declaration order: position vector, unused word, three color bytes, unused word, six coordinate words. It places the position at sp+0x80, colors at sp+0x7B through 0x79, and coordinate words at sp+0x70 through 0x5C in the target 0x88 frame.
 
-Verified with `tools/make.ps1`: `build/bh.us.z64: OK`.
+Verified with `tools/make.ps1`: `build.na/bh.na.z64: OK`.

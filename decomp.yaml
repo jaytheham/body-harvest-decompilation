@@ -6,10 +6,10 @@ versions:
     fullname: US
     sha1: bbb6666f5014a473747ee4145f036d9fb25d7348
     paths:
-      target: "baserom.us.z64"
+      target: "baserom.na.z64"
       build_dir: "build"
-      map: "build/bh.us.map"
-      compiled_target: "build/bh.us.z64"
-      elf: "build/bh.us.elf"
+      map: "build.na/bh.na.map"
+      compiled_target: "build.na/bh.na.z64"
+      elf: "build.na/bh.na.elf"
       asm: "asm"
-      nonmatchings: "asm/nonmatchings"
+      nonmatchings: "asm.na/nonmatchings"

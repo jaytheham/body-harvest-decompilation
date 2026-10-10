@@ -20,4 +20,4 @@ Direct `alienInstances[arg0].field` access throughout the function also lets IDO
 
 `sins` already accepts `u16`. Removing the explicit `& 0xFFFF` from `sins(D_80052A8C * 10000)` preserves the target `andi` and fixes the last multiply shift plus temporary-register allocation throughout the following code. Casting the sine result to `f32` before double arithmetic retains `cvt.s.w` followed by `cvt.d.s`. Inline `500.0` and remove the obsolete external constant placeholder to match the double-add operand order and rodata.
 
-The function diff was zero and the whole-ROM checksum reported `build/bh.us.z64: OK` after cleanup.
+The function diff was zero and the whole-ROM checksum reported `build.na/bh.na.z64: OK` after cleanup.

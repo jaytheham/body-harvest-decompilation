@@ -12,7 +12,7 @@ The target shares one `lui` for the peeled byte stores, and one for each
 64-bit store pair, with the low word stored first. Local tentative definitions
 give IDO enough information about the objects to reproduce these patterns.
 `CORE_53F0_BSS`, defined before including the headers in `53F0.c`, enables
-these definitions in `include/variables.us.h`:
+these definitions in `include/variables.na.h`:
 
 ```c
 BitFlags64 D_8004DC48;
@@ -39,7 +39,7 @@ three bits. Use `D_8004DC5C++` for the first set bit, rather than assigning
 `1`. IDO folds that increment into `li; sb`, but its temporary allocation
 differs from the direct constant assignment and matches the target.
 
-Verification: function diff score 0 and `build/bh.us.z64: OK`.
+Verification: function diff score 0 and `build.na/bh.na.z64: OK`.
 
 The same issue occurs with three floating-point component stores in
 `func_800CF174_DE124`. An external `Vec3f` encourages a retained base

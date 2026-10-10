@@ -1,6 +1,6 @@
 # Mission System — Data Format & Control Values
 
-Derived from `src.us/overlay_gameplay/outside/missions.c`.
+Derived from `src.na/overlay_gameplay/outside/missions.c`.
 
 ---
 

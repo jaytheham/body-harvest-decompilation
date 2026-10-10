@@ -4,7 +4,7 @@
 
 It is the spiritual successor to [n64split](https://github.com/queueRAM/sm64tools/blob/master/n64split.c), originally written to handle N64 ROMs, it now has limited support for PSX and PS2 binaries.
 
-MIPS code disassembly is handled via [spimdisasm](https://github.com/Decompollaborate/spimdisasm/).
+MIPS code disassembly is handled via [spimdisasm](https://github.com/Decompollaborate/spimdisasm.na/).
 
 There are a number of asset types built-in (e.g. various image formats, N64 Vtx data, etc), and it is designed to be simple to extend by writing your own custom types that can do anything you want as part of the **splat** pipeline.
 

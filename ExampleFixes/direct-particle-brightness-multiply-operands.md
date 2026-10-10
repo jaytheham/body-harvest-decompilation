@@ -6,4 +6,4 @@ Keep the `s32 brightness` local for the active-entry test, but read `D_80152B80[
 
 The named `s32` brightness also retains the target stack placement: changing it to `u8` moved the color buffer from `sp+0x40` to `sp+0x44`.
 
-Verified with `build/bh.us.z64: OK` and `CURRENT (0)`.
+Verified with `build.na/bh.na.z64: OK` and `CURRENT (0)`.

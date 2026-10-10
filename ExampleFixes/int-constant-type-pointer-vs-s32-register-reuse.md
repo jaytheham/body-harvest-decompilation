@@ -36,12 +36,12 @@ constants have different implicit types IDO allocates separate registers.
 
 If the global variable is used as a pointer in most places but the compiler
 needs to assign an integer constant here, declare the variable as `s32` in
-`variables.us.h`.  The matched functions that read/write it as a pointer will
+`variables.na.h`.  The matched functions that read/write it as a pointer will
 still generate identical assembly because pointer ↔ integer conversions are
 no-ops on 32-bit MIPS.
 
 ```c
-// variables.us.h: change from
+// variables.na.h: change from
 extern OSThread *__osActiveQueue2;
 // to
 extern s32 __osActiveQueue2;
@@ -56,4 +56,4 @@ __osActiveQueue2 = 1;   // same signed-integer constant → register reused
 
 ## Occurred in
 
-`func_80001424_2024` (ROM 0x2024) – `src.us/core/1050.c`
+`func_80001424_2024` (ROM 0x2024) – `src.na/core/1050.c`

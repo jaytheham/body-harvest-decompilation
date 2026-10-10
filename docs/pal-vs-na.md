@@ -1,6 +1,6 @@
 # PAL (EU) versus NA (US) ROM differences
 
-Decomp reference. Everything here is measured against `baserom.us.z64` and
+Decomp reference. Everything here is measured against `baserom.na.z64` and
 `baserom.eu.z64` in this repository, either by hash, by direct comparison, or by
 `tools/pal_na_diff.py`. Anything not verified is listed as open at the end.
 

@@ -29,13 +29,13 @@ def main():
     parser.add_argument("--disassemble", metavar="SOURCE", help="Show a source's complete text comparison")
     args = parser.parse_args()
     root = Path(__file__).resolve().parent.parent
-    target = (root / "baserom.us.z64").read_bytes()
-    current = (root / "build/bh.us.z64").read_bytes()
-    config = (root / "bh.us.yaml").read_text()
-    link_map = (root / "build/bh.us.map").read_text()
+    target = (root / "baserom.na.z64").read_bytes()
+    current = (root / "build.na/bh.na.z64").read_bytes()
+    config = (root / "bh.na.yaml").read_text()
+    link_map = (root / "build.na/bh.na.map").read_text()
     entries = [(int(m[1], 16), m[2], m[3]) for m in re.finditer(
         r"\[(0x[0-9A-Fa-f]+), ([.\w]+)(?:, ([^\]\n]+))?\]", config)]
-    sources = json.loads((root / "src.us/libultra/sources.json").read_text())
+    sources = json.loads((root / "src.na/libultra/sources.json").read_text())
     matched = 0
     for i, (start, kind, path) in enumerate(entries):
         if kind != "c" or not path or not path.startswith("libultra/"):
@@ -47,7 +47,7 @@ def main():
             continue
         end = entries[i + 1][0]
         match = re.search(r"^ \.text\s+(0x[0-9a-f]+)\s+(0x[0-9a-f]+) "
-                          + re.escape(f"build/src.us/{path}.c.o") + r"$", link_map, re.M)
+                          + re.escape(f"build.na/src.na/{path}.c.o") + r"$", link_map, re.M)
         if not match:
             print(f"{name}: MISSING")
             continue
@@ -55,7 +55,7 @@ def main():
         offset = address - 0x7FFFF400
         expected = bytearray(target[start:end])
         actual = bytearray(current[offset:offset + size])
-        relocated = dict(text_relocations(root / f"build/src.us/{path}.c.o"))
+        relocated = dict(text_relocations(root / f"build.na/src.na/{path}.c.o"))
         if args.disassemble:
             import rabbitizer
             for at in range(0, max(len(expected), len(actual)), 4):
@@ -75,7 +75,7 @@ def main():
                 mark = " " if left == right else "!"
                 print(f"{start+at:06X} {mark} {sides[0]:48} | {sides[1]}")
         if args.structural:
-            for at, kind in text_relocations(root / f"build/src.us/{path}.c.o"):
+            for at, kind in text_relocations(root / f"build.na/src.na/{path}.c.o"):
                 if at + 4 > min(len(expected), len(actual)):
                     continue
                 mask = 0xFC000000 if kind == 4 else 0xFFFF0000

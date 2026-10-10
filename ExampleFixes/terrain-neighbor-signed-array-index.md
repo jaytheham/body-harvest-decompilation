@@ -22,5 +22,5 @@ Anchor fixed offsets after the dynamic row or cell index, for example
 offset into the dynamic row expression can change code generation.
 
 These replacements were verified with `tools/make.ps1`, producing
-`build/bh.us.z64: OK`. Edits inside NON_MATCHING implementations still use
+`build.na/bh.na.z64: OK`. Edits inside NON_MATCHING implementations still use
 their assembly fallback and are not validated as matching C by that check.

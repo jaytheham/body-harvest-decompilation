@@ -29,4 +29,4 @@ divisor in `v0`. A separate `s16` local for the final difference placed it in
 difference retained it in `a3`.
 
 The cleaned implementation passed the full ROM checksum with
-`tools/make.ps1`: `build/bh.us.z64: OK`.
+`tools/make.ps1`: `build.na/bh.na.z64: OK`.

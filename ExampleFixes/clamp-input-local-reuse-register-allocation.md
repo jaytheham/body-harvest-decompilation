@@ -38,4 +38,4 @@ global already has type `s32`. Removing that cast reverses the operands of
 instance of the cast-sensitive operand ordering described in
 `assignment-reordering-commutative-order.md`.
 
-The final complete ROM build reported `build/bh.us.z64: OK`.
+The final complete ROM build reported `build.na/bh.na.z64: OK`.

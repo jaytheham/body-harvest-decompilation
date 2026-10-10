@@ -1,5 +1,5 @@
 BASENAME  = bh
-VERSION  := us
+VERSION  := na
 .DEFAULT_GOAL := default
 
 # Colors
@@ -26,20 +26,26 @@ BIN_DIRS  = assets.eu \
 			assets.eu/overlay_level/siberia \
 			assets.eu/overlay_level/comet
 else
-BUILD_DIR = build
-ASM_DIRS  = asm \
-			asm/libultra \
-			asm/core \
-			asm/overlay_gameplay/frontend asm/overlay_gameplay/outside asm/overlay_gameplay/inside \
-			asm/overlay_level/greece \
-			asm/overlay_level/java \
-			asm/overlay_level/america \
-			asm/overlay_level/siberia \
-			asm/overlay_level/comet \
-			asm/data \
-			asm/data/rsp \
-			asm/data/overlay_gameplay/outside
-BIN_DIRS  = assets
+BUILD_DIR = build.na
+ASM_DIRS  = asm.na \
+			asm.na/libultra \
+			asm.na/core \
+			asm.na/overlay_gameplay/frontend asm.na/overlay_gameplay/outside asm.na/overlay_gameplay/inside \
+			asm.na/overlay_level/greece \
+			asm.na/overlay_level/java \
+			asm.na/overlay_level/america \
+			asm.na/overlay_level/siberia \
+			asm.na/overlay_level/comet \
+			asm.na/data \
+			asm.na/data/rsp \
+			asm.na/data/overlay_gameplay/outside
+BIN_DIRS  = assets.na \
+			assets.na/core \
+			assets.na/overlay_level/greece \
+			assets.na/overlay_level/java \
+			assets.na/overlay_level/america \
+			assets.na/overlay_level/siberia \
+			assets.na/overlay_level/comet
 endif
 SRC_DIR   = src.$(VERSION)
 
@@ -195,8 +201,8 @@ GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).
 
 DEFINES := -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG
 
-ifeq ($(VERSION),us)
-DEFINES += -DVERSION_US
+ifeq ($(VERSION),na)
+DEFINES += -DVERSION_NA
 endif
 ifeq ($(VERSION),eu)
 DEFINES += -DVERSION_EU
@@ -228,12 +234,12 @@ GCC_FLAGS += -mdivide-breaks -fno-stack-protector -fno-common -fno-zero-initiali
 GCC_FLAGS += -Wall -Wextra -Wno-missing-braces
 
 TARGET     = $(BUILD_DIR)/$(BASENAME).$(VERSION)
-LD_SCRIPT  = $(BASENAME).ld
+LD_SCRIPT  = $(BASENAME).$(VERSION).ld
 
-LD_FLAGS   = -T $(LD_SCRIPT) -T undefined_syms.$(VERSION).txt -T undefined_syms_auto.txt
+LD_FLAGS   = -T $(LD_SCRIPT) -T undefined_syms.$(VERSION).txt -T undefined_syms_auto.$(VERSION).txt
 LD_FLAGS  += -Map $(TARGET).map --no-check-sections
 
-ifeq ($(VERSION),us)
+ifeq ($(VERSION),na)
 LD_FLAGS_EXTRA  = -Lbuild/lib -lultra_rom
 LD_FLAGS_EXTRA += $(foreach sym,$(UNDEFINED_SYMS),-u $(sym))
 else
@@ -289,7 +295,7 @@ distclean: clean
 	rm -rf asm asm.eu
 	rm -rf assets assets.eu
 	rm -f *auto.txt
-	rm -f src.us/data/inc/*
+	rm -f src.na/data/inc/*
 
 
 ### Recipes

@@ -69,7 +69,7 @@ def read_rom(version):
 
 def read_build(version):
     """(rom, elf, map) paths for a built version, if they exist."""
-    build_dir = ROOT / ("build.eu" if version == "eu" else "build")
+    build_dir = ROOT / ("build.eu" if version == "eu" else "build.na")
     return (build_dir / f"bh.{version}.z64",
             build_dir / f"bh.{version}.elf",
             build_dir / f"bh.{version}.map")
@@ -113,10 +113,10 @@ class Function:
 
 
 def c_file_from_object(obj):
-    """``build/src.us/core/1050.c.o`` -> ``src.us/core/1050.c``.
+    """``build.na/src.na/core/1050.c.o`` -> ``src.na/core/1050.c``.
 
     Archive members (``build/lib/libultra_rom.a(sqrtf.o)``) and asm stubs
-    (``build/asm/...``) have no C file of their own and return None.
+    (``build.na/asm.na/...``) have no C file of their own and return None.
     """
     if not obj or "(" in obj:
         return None
@@ -130,7 +130,7 @@ def parse_listing(path):
     Returns ``(label, [(vram, word, mnemonic, operands)], call_targets)`` for
     the first function in the file, plus the local labels. Splitting files by
     function is the layout splat uses for matchings/nonmatchings, but the
-    segment listings (``asm/core/1000.s``) hold several, so this returns only
+    segment listings (``asm.na/core/1000.s``) hold several, so this returns only
     the first and callers use ``iter_listing`` instead.
     """
     for label, instrs, calls, locals_ in iter_listing(path):
@@ -193,7 +193,7 @@ OUT_SECTION = re.compile(
     r"^(?P<name>\.\S+)?\s+0x(?P<vram>[0-9a-f]+)\s+0x(?P<size>[0-9a-f]+)"
     r"\s+load address 0x(?P<rom>[0-9a-f]+)"
 )
-#: `` .text          0x80000450     0x4380 build/src.us/core/1050.c.o``
+#: `` .text          0x80000450     0x4380 build.na/src.na/core/1050.c.o``
 IN_SECTION = re.compile(
     r"^\s+\.(?P<sec>\S+)\s+0x(?P<vram>[0-9a-f]+)\s+0x(?P<size>[0-9a-f]+)\s+"
     r"(?P<obj>\S+)"

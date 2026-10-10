@@ -22,7 +22,7 @@ The fold (`0x10 → 0xF`) shifts when the counter is processed relative to the l
 
 **Also key**: without an explicit `return` in the found arm (just `break`), the compiler does NOT emit `move v0, zero` at function exit. The return value in the `break` (found) path is whatever osSyncPrintf left in `v0`; in the not-found path `v0` naturally holds `0` from the last `move v0, a1` (when `a1==0`).
 
-**Matched function**: `func_80008C44_9844` in `src.us/core/53F0.c`
+**Matched function**: `func_80008C44_9844` in `src.na/core/53F0.c`
 
 ```c
 s32 func_80008C44_9844(s32 arg0) {

@@ -352,10 +352,10 @@ To use the MM project, run the following to *just* build the transient assembly 
 cd mm
 make distclean
 make setup
-make asm/disasm.dep
+make asm.na/disasm.dep
 ```
 
-The repository should be setup correctly if there are `asm/code`, `asm/boot`, and `asm/overlays` folders with `.asm` files, but there *should not* be an `asm/non_matchings` folder.
+The repository should be setup correctly if there are `asm.na/code`, `asm.na/boot`, and `asm.na/overlays` folders with `.asm` files, but there *should not* be an `asm.na/non_matchings` folder.
 
 ### Coverage
 

@@ -20,4 +20,4 @@ D_800FB6F8[result].unk2 = arg0;
 - Struct array access lets the compiler handle the field offset natively rather than via manual pointer arithmetic, which can fix register allocation or instruction ordering differences
 
 ## Example
-See `func_80084C18_16CCD8` in `src.us/overlay_gameplay/inside/16AF30.c`.
+See `func_80084C18_16CCD8` in `src.na/overlay_gameplay/inside/16AF30.c`.

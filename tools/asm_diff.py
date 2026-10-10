@@ -184,7 +184,7 @@ def nonmatching_names(version):
 
 
 def load_map(version):
-    build = ROOT / ("build.eu/bh.eu.map" if version == "eu" else "build/bh.us.map")
+    build = ROOT / ("build.eu/bh.eu.map" if version == "eu" else "build.na/bh.na.map")
     functions, _segments = dc.parse_map(build, version)
     return functions
 
@@ -197,7 +197,7 @@ def main():
     ap.add_argument("--show", action="store_true", help="print every differing row")
     ap.add_argument("--batch", action="store_true",
                     help="classify every nonmatching function")
-    ap.add_argument("--version", choices=("us", "eu"), default="eu")
+    ap.add_argument("--version", choices=("na", "eu"), default="eu")
     ap.add_argument("--limit", type=int, default=0)
     ap.add_argument("--summary", action="store_true",
                     help="batch mode: totals only, skip the worst-function table")

@@ -102,7 +102,7 @@ def test_init():
             "basename": "basic_app",
             "base_path": ".",
             "build_path": "build",
-            "target_path": "build/main.bin",
+            "target_path": "build.na/main.bin",
             "asm_path": "split/asm",
             "src_path": "split/src",
             "ld_script_path": "split/basic_app.ld",

@@ -1,6 +1,6 @@
 # Pointer assignment result in printf preserves CFE temporaries
 
-`loadLevelCode` in `src.us/core/loader.c` matched with a `0x38` frame by passing
+`loadLevelCode` in `src.na/core/loader.c` matched with a `0x38` frame by passing
 the converted result of a pointer assignment directly to `osSyncPrintf`:
 
 ```c
@@ -29,5 +29,5 @@ allocation but left the spills four bytes too low. Adding padding grew the
 frame again. Prefer the assignment-result expression when this combination
 of differences appears.
 
-Verified with `tools/make.ps1`: `build/bh.us.z64: OK`, and no differences from
+Verified with `tools/make.ps1`: `build.na/bh.na.z64: OK`, and no differences from
 `tools/diff.ps1 loadLevelCode func_800117D8_123D8`.

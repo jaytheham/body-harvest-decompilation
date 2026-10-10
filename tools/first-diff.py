@@ -13,7 +13,7 @@ versionGroup.add_argument(
     "--us",
     help="use United States version",
     action="store_const",
-    const="us",
+    const="na",
     dest="version",
 )
 versionGroup.add_argument(
@@ -46,11 +46,11 @@ diff_count = args.count
 version = args.version
 
 if version is None:
-    version = "us"
+    version = "na"
     best = 0
-    for ver in ["us", "eu"]:
+    for ver in ["na", "eu"]:
         try:
-            mtime = os.path.getmtime(f"build/sssv.{version}.z64")
+            mtime = os.path.getmtime(f"build.na/sssv.{version}.z64")
             if mtime > best:
                 best = mtime
                 version = ver
@@ -64,8 +64,8 @@ if args.make:
 baseimg = f"baserom.{version}.z64"
 basemap = f"sssv.{version}.map"
 
-myimg = f"build/sssv.{version}.z64"
-mymap = f"build/{basemap}"
+myimg = f"build.na/sssv.{version}.z64"
+mymap = f"build.na/{basemap}"
 
 if os.path.isfile("expected/" + mymap):
     basemap = "expected/" + mymap

@@ -30,7 +30,7 @@ budget.
 ## How to confirm cheaply
 
 ```bash
-head -3 asm/nonmatchings/<module>/<file>/<func>.s           # look for "/* Handwritten function */"
+head -3 asm.na/nonmatchings/<module>/<file>/<func>.s           # look for "/* Handwritten function */"
 grep -nE '\b(add|addi|sub|subi)\b ' <func>.s | head          # trap variants the C cannot emit
 ins_diff.py <func> <module/file> -noregs                     # a large +delta that starts at instruction 0
 ```

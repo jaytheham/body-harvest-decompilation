@@ -3,7 +3,7 @@
 Search for functions containing the same normalized ASM instruction sequence.
 
 Given a ROM offset and instruction count, finds all functions across both
-asm/matchings/ and asm/nonmatchings/ that have the exact same instruction
+asm.na/matchings/ and asm.na/nonmatchings/ that have the exact same instruction
 pattern (ignoring register names and literal values).
 
 Usage:

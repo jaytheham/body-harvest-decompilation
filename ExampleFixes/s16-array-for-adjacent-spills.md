@@ -39,7 +39,7 @@ s16 randB;` produced otherwise identical assembly, but placed `randA` at
 Replacing the two scalar declarations with `s16 rand[2];` after
 `typeEntry` placed the elements at `sp+0x28` and `sp+0x2A`, keeping the
 frame size and all instruction scheduling unchanged. The full ROM
-checksum then matched (`build/bh.us.z64: OK`).
+checksum then matched (`build.na/bh.na.z64: OK`).
 
 Keep the signed remainder expression `(s32)(u16)rand[i] % 128` when the
 target has `lhu` followed by signed-remainder correction branches.

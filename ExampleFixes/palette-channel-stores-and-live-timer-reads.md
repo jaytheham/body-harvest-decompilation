@@ -10,7 +10,7 @@ Declare the three `u8` RGB outputs before the `s16` loop index to reproduce thei
 
 The palette is a `u16[256]` array. Correcting its declaration permits indexed access without byte pointer arithmetic. Explicit `(s32)` casts on the byte color values and lighting values were redundant and were removed; the full ROM still matched.
 
-Validation: `tools/make.ps1` reported `build/bh.us.z64: OK`; the function diff reported `CURRENT (0)`.
+Validation: `tools/make.ps1` reported `build.na/bh.na.z64: OK`; the function diff reported `CURRENT (0)`.
 
 ### Siberia palette initialization
 

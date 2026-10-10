@@ -18,4 +18,4 @@ Keep both branch-local assignments. Reassigning the pointer once immediately aft
 
 The n64-decomp-workbench scheduler guidance helped identify memory disambiguation as the relevant mechanism. A diagnostic full project build with IDO `-K -Wa,-R` showed `.alias $16,$sp` after the lookup in the failing version. The scheduler consequently gave the coordinate loads dependencies on outgoing stack stores. Token-identical source-line regrouping did not change the result. The branch-local indexed-array assignments resolved the scheduling differences in the normal project build.
 
-Verified with function diff score 0 and `build/bh.us.z64: OK`. Diagnostic compiler flags were removed before verification.
+Verified with function diff score 0 and `build.na/bh.na.z64: OK`. Diagnostic compiler flags were removed before verification.

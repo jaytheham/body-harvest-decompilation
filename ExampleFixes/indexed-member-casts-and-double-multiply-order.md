@@ -34,7 +34,7 @@ but introduced double temporary homes and enlarged the frame to `0x98`.
 
 This agrees with the indexed-versus-member weighting described in the
 workbench's IDO 5.3 compiler law L92. The exact cast spelling above was verified
-with a zero function diff and a full-ROM `build/bh.us.z64: OK`.
+with a zero function diff and a full-ROM `build.na/bh.na.z64: OK`.
 
 Other useful details in this function:
 

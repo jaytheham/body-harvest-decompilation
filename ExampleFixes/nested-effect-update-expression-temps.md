@@ -10,4 +10,4 @@ A nested motion struct permits a cached pointer to the six consecutive position/
 
 The countdown declaration must precede the other locals to place its spill at `sp+0x64`. Removing unused work locals was safe, but eight bytes of explicit stack padding were necessary for the target 0x68 frame. A compound angle update (`angle += randomBits - bias`) matched operand registers that an equivalent expanded assignment swapped.
 
-Verified: diff score 0 and `build/bh.us.z64: OK`.
+Verified: diff score 0 and `build.na/bh.na.z64: OK`.

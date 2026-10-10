@@ -1,6 +1,6 @@
 # Preserve a constant floating multiply with a late conditional fold
 
-Matched `func_8007F188_4F638` in `src.us/overlay_gameplay/frontend/40720.c` with IDO 5.3, -O2 -mips2 -32.
+Matched `func_8007F188_4F638` in `src.na/overlay_gameplay/frontend/40720.c` with IDO 5.3, -O2 -mips2 -32.
 
 The final mismatch was the operand order of `mul.s f4,f12,f2`: the target multiplies one by the Z sine. Writing `1.0f * sine` removes the multiply too early. Writing `sine / 1.0f` preserves a multiply after reciprocal lowering, but places the sine first.
 

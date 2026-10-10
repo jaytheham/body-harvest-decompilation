@@ -43,4 +43,4 @@ mask, IDO generates `addiu t7, ...; andi a0, t7, 0xffff` (wrong order). Without
 it, IDO generates the correct `addiu a0, a0, offset; andi t7, a0, 0xffff; ... jal`.
 See also: `sins-coss-int-expr-no-0xffff.md`.
 
-From `func_80006654_7254` in `src.us/core/53F0.c` (score went 30 → 8 → 0).
+From `func_80006654_7254` in `src.na/core/53F0.c` (score went 30 → 8 → 0).

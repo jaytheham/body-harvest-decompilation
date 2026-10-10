@@ -4,4 +4,4 @@ In `func_800DBA9C_EAA4C`, four texture-coordinate expressions differed only in `
 
 The nearby matched renderer `func_800DB714_EA6C4` reads the same dimensions through unsigned byte lvalues. Direct value casts give the same instructions without pointer reinterpretation.
 
-Verified with `CURRENT (0)` and `build/bh.us.z64: OK`.
+Verified with `CURRENT (0)` and `build.na/bh.na.z64: OK`.

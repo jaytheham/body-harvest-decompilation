@@ -10,4 +10,4 @@ The target frame is 0x40 with ra at 0x1C and the effect byte at 0x25. `s32 paddi
 
 Define typed visual and emitter views in the effect entry union, then address their members directly. This removes byte-pointer arithmetic and payload casts while preserving every instruction. The visual view contains position, RGB, and three shadow-color bytes; the emitter view contains signed velocity, size, kind, intensity, age, and alpha. Both views are 0x0C bytes and preserve the effect entry stride.
 
-Validation: function diff score 0 and full ROM checksum `build/bh.us.z64: OK`, including after typed-view cleanup and addition of the s16(u8,s32) declaration for the called allocator.
+Validation: function diff score 0 and full ROM checksum `build.na/bh.na.z64: OK`, including after typed-view cleanup and addition of the s16(u8,s32) declaration for the called allocator.

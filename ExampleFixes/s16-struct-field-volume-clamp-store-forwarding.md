@@ -1,6 +1,6 @@
 # Use an s16 struct field as the intermediate for a volume clamp
 
-Matched `func_80015210_15E10` in `src.us/core/12C80.c`.
+Matched `func_80015210_15E10` in `src.na/core/12C80.c`.
 
 The target truncates a float calculation, sign-extends its low 16 bits,
 compares against `0x2FFF`, then stores either the sum or `0x7FFF` into a
@@ -24,4 +24,4 @@ IDO forwards the first field assignment into the comparison and eliminates
 its store. The field type supplies the initial signed narrowing, while the
 final halfword stores need no additional narrowing instructions. This produced
 the exact target registers, scheduling, and `0x88` stack frame. Verified with
-`tools/make.ps1`: `build/bh.us.z64: OK`.
+`tools/make.ps1`: `build.na/bh.na.z64: OK`.

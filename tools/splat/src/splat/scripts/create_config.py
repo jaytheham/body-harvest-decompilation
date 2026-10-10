@@ -42,7 +42,7 @@ sha1: {rom.sha1}
 options:
   basename: {basename}
   target_path: {rom_path.with_suffix(".z64")}
-  elf_path: build/{basename}.elf
+  elf_path: build.na/{basename}.elf
   base_path: .
   platform: n64
   compiler: {rom.compiler}

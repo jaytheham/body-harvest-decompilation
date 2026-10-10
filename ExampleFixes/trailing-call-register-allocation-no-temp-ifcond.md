@@ -7,4 +7,4 @@ Fix:
 
 - Use direct array subscript D_array[arg0].field instead of a local Type \*ptr
 - Write if (func(arg0, x)) instead of if (func(arg0, x) != 0)
-- Ensure called functions are properly declared in functions.us.h (implicit declarations can affect register allocation)
+- Ensure called functions are properly declared in functions.na.h (implicit declarations can affect register allocation)

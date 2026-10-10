@@ -10,4 +10,4 @@ Store the units digit into an s16 local before packing it with the tens digit. T
 
 The target tests the already reduced number against 1000 when choosing its color, and uses that same reduced value for rise speed. Preserve this behavior even though comparing the original number might appear more useful. Inline the camera-heading global in the visibility call rather than caching it in a named short.
 
-Validation: function diff score 0 and full ROM checksum `build/bh.us.z64: OK`.
+Validation: function diff score 0 and full ROM checksum `build.na/bh.na.z64: OK`.

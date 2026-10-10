@@ -1,6 +1,6 @@
 # Frontend menu constant scheduling and saved registers
 
-Matched `func_8007B618_4BAC8` in `src.us/overlay_gameplay/frontend/40720.c` using IDO 5.3, `-O2 -mips2 -32`. The final full ROM build reports `build/bh.us.z64: OK`.
+Matched `func_8007B618_4BAC8` in `src.na/overlay_gameplay/frontend/40720.c` using IDO 5.3, `-O2 -mips2 -32`. The final full ROM build reports `build.na/bh.na.z64: OK`.
 
 The target initializes a cached integer one in s4 immediately before loading the initial oscillation byte into s3. A plain `one = 1` reverses those two instructions. Native `int` and a late-folding expression retain the target order:
 

@@ -1,6 +1,6 @@
 ### `||`/`&&` condition on a global + store of that global: named snapshot local fixes `move` + enables `beql`
 
-**Symptom** (`func_8001A828_1B428` in `src.us/core/1B100.c`, score 620 → 0): An `if` whose condition is
+**Symptom** (`func_8001A828_1B428` in `src.na/core/1B100.c`, score 620 → 0): An `if` whose condition is
 `(G == 0) || ((G >= 9) && (G < 0x12) && (X != Y))` where `G` is a global, followed by a body that starts with
 `W = G;` (storing that same global). Writing `G` directly everywhere gave:
 - an extra `move v0,v1` (IDO copied the loaded global value from `v1` into `v0` to feed the `slti` comparison temps),

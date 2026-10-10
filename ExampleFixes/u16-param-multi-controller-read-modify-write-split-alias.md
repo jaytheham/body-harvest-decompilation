@@ -25,7 +25,7 @@ symbols use separate lui+offset pairs for load and store (no CSE).
 3. For controller 0's button (currentControllerStates[0].button = D_80047588):
    Use the split read/write alias pattern from `read-compare-write-extern-cse-split-symbol.md`:
    - Declare `extern u16 D_80047588;` (read) AND `extern u16 D_80047588_W;` (write alias)
-   - In undefined_syms.us.txt add both: `D_80047588 = 0x80047588;` and `D_80047588_W = 0x80047588;`
+   - In undefined_syms.na.txt add both: `D_80047588 = 0x80047588;` and `D_80047588_W = 0x80047588;`
    - Use: `D_80047588_W = D_80047588 & ~arg0;` instead of `currentControllerStates[0].button &= ~arg0`
 
 **Best achieved score:** 495 (residual diffs: instruction scheduling for D_800475F8 `addiu v0` vs

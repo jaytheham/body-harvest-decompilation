@@ -1,6 +1,6 @@
 # Explicit float temporaries to match angle-call evaluation order
 
-Function: `func_8007D548_165608` (`src.us/overlay_gameplay/inside/1648A0.c`).
+Function: `func_8007D548_165608` (`src.na/overlay_gameplay/inside/1648A0.c`).
 
 When an angle helper receives two expressions that each subtract an integer coordinate (converted to `f32`) from a stored float, IDO may evaluate the second argument first. If the target computes the first coordinate conversion and subtraction before the second, split both expressions into `f32` locals in source order and pass those locals to the helper:
 

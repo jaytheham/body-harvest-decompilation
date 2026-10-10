@@ -42,7 +42,7 @@ PROBE_YAML = """sha1: BBB6666F5014A473747EE4145F036D9FB25D7348
 options:
   platform: n64
   basename: bh
-  target_path: baserom.us.z64
+  target_path: baserom.na.z64
   base_path: .
   disassemble_all: yes
   asm_path: .tmp_na_probe/asm
@@ -220,7 +220,7 @@ def classify_all():
     function is one PAL rewrote, so its name often differs from NTSC's and a
     name join would miss it.
     """
-    na = (ROOT / "baserom.us.z64").read_bytes()
+    na = (ROOT / "baserom.na.z64").read_bytes()
     pal = (ROOT / "baserom.eu.z64").read_bytes()
     run_probe()
     insert_at = find_insert_point(na, pal)
@@ -251,7 +251,7 @@ def main():
                     help="annotate PAL c stubs for the differing functions")
     args = ap.parse_args()
 
-    na = (ROOT / "baserom.us.z64").read_bytes()
+    na = (ROOT / "baserom.na.z64").read_bytes()
     pal = (ROOT / "baserom.eu.z64").read_bytes()
     run_probe()
     insert_at = find_insert_point(na, pal)
@@ -277,9 +277,12 @@ def main():
     diff = sorted([r for r in rows if r[3] == "DIFF"], key=lambda r: -r[2])
     lines += ["", f"=== {len(diff)} functions that genuinely differ "
                   f"(NTSC decomp NOT reusable) ==="]
-    for rom, name, size, _, palname in diff:
+    for rom, name, size, _cls, pal_rom, _palname in diff:
         p = rom + SHIFT if rom >= insert_at else rom
         lines.append(f"  NTSC 0x{rom:06X}  PAL 0x{p:06X}  {size:6d}B  {name}")
+        if pal_rom != p:
+            lines.append(f"{'':>52s}^ splat boundary at 0x{pal_rom:06X} "
+                         f"differs; matched by overlap")
     lines += ["", f"differing bytes: {sum(r[2] for r in diff)}"]
 
     report = "\n".join(lines)

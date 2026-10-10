@@ -5,9 +5,9 @@
 #   ./permute.sh <c_file> <asm_file_or_func_name> [permuter options]
 #
 # Examples:
-#   ./permute.sh src.us/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j4
-#   ./permute.sh src.us/core/1000.c asm/nonmatchings/core/1000/func_80000400_400.s -j4
-#   ./permute.sh src.us/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j4 -s0
+#   ./permute.sh src.na/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j4
+#   ./permute.sh src.na/core/1000.c asm.na/nonmatchings/core/1000/func_80000400_400.s -j4
+#   ./permute.sh src.na/overlay_gameplay/outside/145D70.c func_801372B4_146264 -j4 -s0
 #
 # Common permuter options:
 #   -j <N>   Use N parallel threads        (e.g. -j4)

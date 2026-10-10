@@ -2,7 +2,7 @@
 .SYNOPSIS
     Searches the reference index for blocks of assembly similar to a given ROM range.
 .DESCRIPTION
-    Given a ROM file offset and byte size in Body Harvest's baserom.us.z64,
+    Given a ROM file offset and byte size in Body Harvest's baserom.na.z64,
     delegates to the Python search tool (tools/search_asm.py) to find matching
     patterns from reference repos. Registered-agnostic matching.
 .PARAMETER Offset
@@ -10,7 +10,7 @@
 .PARAMETER Size
     Number of bytes to search in hex (e.g., 0x7C).
 .PARAMETER RomPath
-    Path to Body Harvest baserom.z64 (default: baserom.us.z64 in workspace root).
+    Path to Body Harvest baserom.z64 (default: baserom.na.z64 in workspace root).
 .PARAMETER IndexPath
     Path to reference index JSON (default: reference_index.json in workspace root).
 .PARAMETER Threshold
@@ -27,7 +27,7 @@ param(
     [string]$Offset,
     [Parameter(Mandatory = $true)]
     [string]$Size,
-    [string]$RomPath = (Join-Path (Join-Path $PSScriptRoot "..") "baserom.us.z64"),
+    [string]$RomPath = (Join-Path (Join-Path $PSScriptRoot "..") "baserom.na.z64"),
     [string]$IndexPath = (Join-Path (Join-Path $PSScriptRoot "..") "reference_index.json"),
     [double]$Threshold = 0.3,
     [int]$MaxResults = 4

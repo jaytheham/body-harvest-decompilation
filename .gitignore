@@ -1,13 +1,14 @@
 # directories
 
 __pycache__/
-asm/
+asm.na/
 asm.eu/
-assets/
+assets.na/
 assets.eu/
 bin/
-build/
+build.na/
 build.eu/
+build/lib/
 nonmatchings/
 reference/
 

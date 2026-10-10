@@ -2,7 +2,7 @@
 
 Matched `func_8007290C_15A9CC`, the interior game loop. Its initial loader call passes `currentLevel` with `lw`, but the already matched `func_80011858_12458` stores its argument and reads its low byte with `lbu`. A modern `u8` prototype changes the caller to `lbu`, leaving one incorrect instruction.
 
-Use a C89 identifier-list definition for the loader and its promoted argument type in `include/functions.us.h`:
+Use a C89 identifier-list definition for the loader and its promoted argument type in `include/functions.na.h`:
 
 ```c
 /* Header */

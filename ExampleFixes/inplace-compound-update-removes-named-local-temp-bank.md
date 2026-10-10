@@ -1,6 +1,6 @@
 # In-place compound update removes the named local that shifts the temp bank
 
-Matched `func_802D62A0_1EEFB0` (`src.us/overlay_level/java/1ED9E0.c`, 38 instructions) with an
+Matched `func_802D62A0_1EEFB0` (`src.na/overlay_level/java/1ED9E0.c`, 38 instructions) with an
 asm-differ score of 145 -> 0.
 
 The function reads a counter, conditionally increments it, then subtracts it from a struct field and

@@ -1,7 +1,7 @@
 # Terrain object flags: byte stores followed by a halfword store
 
 Matched `func_800B31FC_C21AC` with IDO 5.3 -O2 -mips2 -32.
-The first candidate produced `build/bh.us.z64: OK`.
+The first candidate produced `build.na/bh.na.z64: OK`.
 
 The target updates bits 15, 11, and 10 with three separate `sb` instructions,
 then sets bits 9..6 to 12 with `lhu`, `andi 0xFC3F`, `ori 0x300`, and `sh`.

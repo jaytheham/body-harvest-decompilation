@@ -22,4 +22,4 @@ This produces the target's `s1` multiply, current-limb base in `v0`, and next-li
 
 Both details matter. Keeping independent `walker->limbs[i + 1]` call accesses generated a second offset computation. Keeping only the current-limb pointer made that pointer survive the call instead, removing the target's `addiu s0,v0,0x24` and changing the argument load order.
 
-The final typed array accesses reproduce the entire function exactly, with full ROM verification reporting `build/bh.us.z64: OK`.
+The final typed array accesses reproduce the entire function exactly, with full ROM verification reporting `build.na/bh.na.z64: OK`.

@@ -23,6 +23,6 @@ for (; idx < 6; idx++) {
 }
 ```
 
-All integer locals here are `s32`. Making the stride unsigned caused additional address calculations and substantially changed scheduling. The serialized record layout is already described by `SaveAreaStat` and `SaveSlotData` in `include/structs.us.h`.
+All integer locals here are `s32`. Making the stride unsigned caused additional address calculations and substantially changed scheduling. The serialized record layout is already described by `SaveAreaStat` and `SaveSlotData` in `include/structs.na.h`.
 
-Verified with the required project build: `build/bh.us.z64: OK`, with no function diff differences.
+Verified with the required project build: `build.na/bh.na.z64: OK`, with no function diff differences.

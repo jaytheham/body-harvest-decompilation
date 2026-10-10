@@ -1,6 +1,6 @@
 # Convert an effect array base before indexing
 
-Matched `func_800CD0B0_DC060` in `src.us/overlay_gameplay/outside/CFE30.c`.
+Matched `func_800CD0B0_DC060` in `src.na/overlay_gameplay/outside/CFE30.c`.
 
 The target uses one multiplication for the new unit index but two additions
 for its addresses: an anonymous entry address for the lifetime store and a
@@ -33,4 +33,4 @@ it to the inner 0x0C union would move the following fields and enlarge the
 entry stride. Direct member-address substitutions for the converted payload
 views changed the frame and scheduling, so retain the conversions.
 
-Verified assembly diff score 0 and full ROM checksum `build/bh.us.z64: OK`.
+Verified assembly diff score 0 and full ROM checksum `build.na/bh.na.z64: OK`.

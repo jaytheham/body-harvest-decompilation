@@ -22,4 +22,4 @@ if (temp) {
 
 Keep the newly spawned alien ID in its own local. Reusing that local for case 7 changed its earlier allocation from `a0` to `a1` and introduced a move before the spawn initialization call. Also keep the initial pre-switch ID check as a direct global access: assigning it to the timer temporary changed otherwise matching registers in that block.
 
-The final source, including removal of unused state/counter pointers and redundant argument casts, passed the full ROM verification: `build/bh.us.z64: OK`.
+The final source, including removal of unused state/counter pointers and redundant argument casts, passed the full ROM verification: `build.na/bh.na.z64: OK`.

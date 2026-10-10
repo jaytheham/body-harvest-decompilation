@@ -1,0 +1,1073 @@
+sha1: bbb6666f5014a473747ee4145f036d9fb25d7348
+options:
+  platform: n64
+  basename: bh
+  target_path: baserom.na.z64
+  base_path: .
+  disassemble_all: yes
+  matchings_path: matchings
+  symbol_addrs_path: symbol_addrs.na.txt
+  reloc_addrs_path: reloc_addrs.na.txt
+  ld_symbol_header_path: include/ld_symbols.na.h
+  generated_c_preamble: |
+    #include <ultra64.h>
+    #include "common.h"
+  src_path: src.na
+  asm_path: asm.na
+  asset_path: assets.na
+  build_path: build.na
+  ld_script_path: bh.na.ld
+  undefined_syms_auto_path: undefined_syms_auto.na.txt
+  extensions_path: tools/splat_ext
+  lib_path: build/lib
+  migrate_rodata_to_functions: no
+  # workaround regex issue
+  create_undefined_funcs_auto: no
+  symbol_name_format: $VRAM_$ROM
+  asm_jtbl_label_macro: jlabel
+  asm_data_macro: dlabel
+  image_type_in_extension: yes
+  segment_symbols_style: makerom
+segments:
+  - name: header
+    type: header
+    start: 0x0
+
+  - name: boot
+    type: bin
+    start: 0x40
+
+  - name: core
+    type: code
+    start: 0x1000
+    vram: 0x80000400
+    subsegments:
+      - [0x1000, asm, core/1000]
+      - [0x1050, c, core/1050] # Save data
+      - [0x53D0, c, core/53D0]
+      - [0x53F0, c, core/53F0] # Objectives
+      - [0xAD60, c, core/AD60] # Text rendering?
+      - [0xE830, c, core/E830]
+      - [0xFB00, c, core/FD80] # Boot and scheduler share epilogue alignment.
+      - [0x10A50, c, core/10A20]
+      - [0x10BC0, c, core/loader] # original src filename
+      - [0x12C80, c, core/12C80] # Sounds, Dialogue
+      - [0x17EE0, c, core/17EE0] # Dialogue
+      - [0x1B060, c, core/1B060]
+      - [0x1B100, c, core/1B100]
+      - [0x1B7E0, c, libultra/aisetfreq]
+      - [0x1B940, c, libultra/sl]
+      - [0x1BA00, c, libultra/heapalloc]
+      - [0x1BA60, c, libultra/createmesgqueue]
+      - [0x1BA90, c, libultra/createthread]
+      - [0x1BBE0, c, libultra/startthread]
+      - [0x1BD30, c, libultra/sched]
+      - [0x1C670, c, libultra/recvmesg]
+      - [0x1C7B0, c, libultra/virtualtophysical]
+      - [0x1C830, c, libultra/aisetnextbuf]
+      - [0x1C8E0, c, libultra/aigetlen]
+      - [0x1C8F0, c, libultra/synthesizer]
+      - [0x1CFD0, c, libultra/sendmesg]
+      - [0x1D120, c, libultra/pidma]
+      - [0x1D230, c, libultra/motor]
+      - [0x1D850, c, libultra/syncprintf]
+      - [0x1D890, c, libultra/seteventmesg]
+      - [0x1D900, c, libultra/controller]
+      - [0x1DCC0, c, libultra/conteepprobe]
+      - [0x1DD30, c, libultra/contsetch]
+      - [0x1DDA0, c, libultra/ll]
+      - [0x1E060, c, libultra/conteeplongwrite]
+      - [0x1E1A0, c, libultra/conteeplongread]
+      - [0x1E2E0, c, libultra/contreaddata]
+      - [0x1E540, lib, libultra_rom, sqrtf]
+      - [0x1E550, c, libultra/coss]
+      - [0x1E580, c, libultra/sins]
+      - [0x1E5F0, c, libultra/ortho]
+      - [0x1E7B0, c, libultra/lookat]
+      - [0x1EAE0, c, libultra/rotate]
+      - [0x1ECD0, c, libultra/initialize]
+      - [0x1EF60, c, libultra/perspective]
+      - [0x1F1F0, c, libultra/sinf]
+      - [0x1F3B0, c, libultra/cosf]
+      - [0x1F520, lib, libultra_rom, bzero]
+      - [0x1F5C0, c, libultra/vimgr]
+      - [0x1F920, asm, libultra/parameters] # Reference parameters.s: 0x60 bytes of text padding
+      - [0x1F980, c, libultra/visetmode]
+      - [0x1F9F0, c, libultra/viswapbuf]
+      - [0x1FA40, c, libultra/pimgr]
+      - [0x1FBD0, c, libultra/setthreadpri]
+      - [0x1FCB0, c, libultra/stopthread]
+      - [0x1FD70, c, libultra/destroythread]
+      - [0x1FE70, c, libultra/visetevent]
+      - [0x1FEE0, lib, libultra_rom, writebackdcacheall]
+      - [0x1FF10, c, libultra/visetspecial]
+      - [0x200D0, c, libultra/viblack]
+      - [0x20140, lib, libultra_rom, getcount]
+      - [0x20150, c, libultra/visetyscale]
+      - [0x201B0, c, libultra/visetxscale]
+      - [0x202E0, c, libultra/pigetstat]
+      - [0x202F0, lib, libultra_rom, invalicache]
+      - [0x20370, lib, libultra_rom, invaldcache]
+      - [0x20420, c, libultra/sndpsetsound]
+      - [0x20440, c, libultra/sndpgetstate]
+      - [0x20460, c, libultra/heapinit]
+      - [0x204A0, c, libultra/bnkf]
+      - [0x206F0, c, libultra/csplayer]
+      - [0x21920, c, libultra/sndplayer]
+      - [0x22030, c, libultra/seqpsetbank]
+      - [0x22070, c, libultra/cseq]
+      - [0x22B30, c, libultra/seqpsetseq]
+      - [0x22B70, c, libultra/seqpsetvol]
+      - [0x22BB0, c, libultra/seqpplay]
+      - [0x22BE0, c, libultra/sndpallocate]
+      - [0x22C80, c, libultra/sndpsetpriority]
+      - [0x22CB0, c, libultra/sndpsetfxmix]
+      - [0x22D10, c, libultra/sndpsetpitch]
+      - [0x22D70, c, libultra/sndpsetvol]
+      - [0x22DD0, c, libultra/sndpsetpan]
+      - [0x22E30, c, libultra/sndpplay]
+      - [0x22EA0, c, libultra/seqpstop]
+      - [0x22ED0, c, libultra/sndpdeallocate]
+      - [0x22F20, c, libultra/sndpstop]
+      - [0x22F70, c, libultra/seqpsetchlvol]
+      - [0x22FD0, c, libultra/lookatref]
+      - [0x23490, c, libultra/align]
+      - [0x236A0, c, libultra/translate]
+      - [0x23740, c, libultra/scale]
+      - [0x237E0, c, libultra/rotateRPY]
+      - [0x23980, c, libultra/mtxcatf]
+      - [0x23B90, c, libultra/mtxcatl] # guMtxXFML + guMtxCatL
+      - [0x23C50, c, libultra/syndelete]
+      - [0x23C60, c, libultra/thread]
+      - [0x23CA0, asm, libultra/exceptasm] # __osExceptionPreamble, __osException (hand-written, differs from 2.0I)
+      - [0x245B0, lib, libultra_rom, interrupt]
+      - [0x245F0, lib, libultra_rom, setintmask]
+      - [0x24690, c, libultra/sptaskyielded]
+      - [0x24710, c, libultra/vigetcurrframebuf]
+      - [0x24750, c, libultra/vigetnextframebuf]
+      - [0x24790, c, libultra/sptask]
+      - [0x24A80, c, libultra/dpsetnextbuf]
+      - [0x24B30, c, libultra/sptaskyield]
+      - [0x24B50, lib, libultra_rom, probetlb]
+      - [0x24C10, c, libultra/ai]
+      - [0x24C40, c, libultra/drvrNew]
+      - [0x253E0, c, libultra/synallocfx]
+      - [0x25480, c, libultra/mainbus]
+      - [0x255D0, c, libultra/load]
+      - [0x26120, c, libultra/resample]
+      - [0x26420, c, libultra/env]
+      - [0x27080, c, libultra/auxbus]
+      - [0x27190, c, libultra/save]
+      - [0x27250, c, libultra/jammesg]
+      - [0x273A0, c, libultra/pigetcmdq]
+      - [0x273D0, c, libultra/pfsisplug]
+      - [0x27740, c, libultra/siacs]
+      - [0x27800, c, libultra/sirawdma]
+      - [0x278B0, c, libultra/crc]
+      - [0x27A30, c, libultra/contram]
+      - [0x28140, c, libultra/gettime]
+      - [0x281D0, c, libultra/settimer]
+      - [0x282B0, c, libultra/conteepwrite]
+      - [0x28790, c, libultra/conteepread]
+      - [0x28A90, c, libultra/mtxutil]
+      - [0x28D00, c, libultra/normalize]
+      - [0x28D90, lib, libultra_rom, setsr]
+      - [0x28DA0, lib, libultra_rom, getsr]
+      - [0x28DB0, lib, libultra_rom, setfpccsr]
+      - [0x28DC0, c, libultra/sirawread]
+      - [0x28E10, c, libultra/sirawwrite]
+      - [0x28E60, lib, libultra_rom, writebackdcache]
+      - [0x28EE0, lib, libultra_rom, maptlbrdb]
+      - [0x28F40, c, libultra/pirawread]
+      - [0x28FA0, c, libultra/timerintr]
+      - [0x293A0, c, libultra/getthreadpri]
+      - [0x293C0, c, libultra/vi]
+      - [0x29500, c, libultra/vigetcurrcontext]
+      - [0x29510, c, libultra/viswapcontext]
+      - [0x29870, asm] # custom SP task DMA func
+      - [0x29960, asm] # custom SP task DMA func
+      - [0x29A60, c, libultra/piacs]
+      - [0x29B20, c, libultra/pirawdma]
+      - [0x29C00, c, libultra/epirawdma]
+      - [0x29E30, c, libultra/devmgr]
+      - [0x2A2C0, c, libultra/seqplayer]
+      - [0x2BC00, c, libultra/event]
+      - [0x2BF40, c, libultra/synaddplayer]
+      - [0x2BF90, c, libultra/synstopvoice]
+      - [0x2C010, c, libultra/synfreevoice]
+      - [0x2C0C0, c, libultra/synsetvol]
+      - [0x2C160, c, libultra/synsetpitch]
+      - [0x2C1F0, c, libultra/synallocvoice]
+      - [0x2C420, c, libultra/cents2ratio]
+      - [0x2C470, c, libultra/synstartvoiceparam]
+      - [0x2C560, c, libultra/synsetpan]
+      - [0x2C5F0, c, libultra/synsetfxmix]
+      - [0x2C690, c, libultra/synstartvoice]
+      - [0x2C720, c, libultra/leointerrupt]
+      - [0x2CFA0, c, libultra/spgetstat]
+      - [0x2CFB0, lib, libultra_rom, bcopy]
+      - [0x2D2C0, c, libultra/spsetstat]
+      - [0x2D2D0, c, libultra/spsetpc]
+      - [0x2D310, c, libultra/sprawdma]
+      - [0x2D3A0, c, libultra/sp]
+      - [0x2D3D0, c, libultra/dp]
+      - [0x2D400, c, libultra/filter]
+      - [0x2D420, c, libultra/reverb]
+      - [0x2E070, c, libultra/copy]
+      - [0x2E0F0, c, libultra/si]
+      - [0x2E120, c, libultra/pfsgetstatus] # __osPfsGetStatus (2.0G)
+      - [0x2E230, lib, libultra_rom, setcompare]
+      - [0x2E240, c, libultra/resetglobalintmask]
+      - [0x2E2A0, c, libultra/epirawwrite]
+      - [0x2E2F0, c, libultra/epirawread]
+      - [0x2E340, c, libultra/setglobalintmask]
+      - [0x2E390, c, libultra/yieldthread]
+      - [0x2E3E0, c, libultra/seq]
+      - [0x2EA00, c, libultra/synsetpriority]
+      # RSP microcode blobs (binary). Their CPU-side pointers live in core/1050.c and core/FD80.c.
+      - [0x2EA10, databin, rsp/rspboot]    # RSP boot ucode: rspbootTextStart, 0xD0 bytes
+      - [0x2EAE0, databin, rsp/gfxucode]   # M_GFXTASK ucode: D_8002DEE0_2EAE0, 0x1430 bytes (game loads ucode_size 0x1000)
+      - [0x2FF10, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
+      - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
+      - [0x31FD0, .data, core/53F0]
+      - [0x32000, .data, core/32000]
+      - [0x32050, .data, core/32050]
+      - [0x320D0, .data, core/320D0]
+      - [0x32250, .data, core/AD60]
+      - [0x32680, .data, core/E830]
+      - [0x32750, .data, core/10A20]
+      - [0x32760, .data, core/FD80]
+      - [0x32790, .data, core/loader]
+      - [0x328A0, .data, core/12C80]
+      - [0x348C0, .data, core/17EE0]
+      - [0x350B0, .data, core/1B100]
+      - [0x359D0, .data, libultra/sl]
+      - [0x359E0, .data, libultra/sched]
+      - [0x359F0, .data, libultra/aisetnextbuf]
+      - [0x35A00, .data, libultra/controller]
+      - [0x35A10, .data, libultra/sins]
+      - [0x36210, .data, libultra/parameters_data]
+      - [0x36220, .data, libultra/globalintmask_data]
+      - [0x36230, .data, libultra/vidata]
+      - [0x36F50, .data, libultra/vimgr]
+      - [0x36F70, .data, libultra/pimgr]
+      - [0x36FA0, .data, libultra/thread_data]
+      - [0x36FC0, .data, libultra/exceptasm_data]
+      - [0x36FE0, .data, libultra/drvrNew]
+      - [0x37170, .data, libultra/env]
+      - [0x372B0, .data, libultra/siacs]
+      - [0x372C0, .data, libultra/timerintr]
+      - [0x372D0, .data, libultra/vi]
+      - [0x37340, .data, libultra/piacs]
+      - [0x37350, .data, libultra/vimodepallan1]
+      - [0x373A0, .data, libultra/vimodempallan1]
+      - [0x373F0, .data, libultra/vimodentsclan1]
+      - [0x37440, .rodata, core/1050]
+      - [0x378B0, .rodata, core/53F0]
+      - [0x38060, .rodata, core/AD60]
+      - [0x38220, .rodata, core/E830]
+      - [0x38260, .rodata, core/FD80]
+      - [0x38380, .rodata, core/loader]
+      - [0x38DC0, .rodata, core/12C80]
+      - [0x38FB0, .rodata, core/17EE0]
+      - [0x392D0, .rodata, core/1B100]
+      - [0x3A440, .rodata, libultra/sched]
+      - [0x3A460, .rodata, libultra/synthesizer]
+      - [0x3A470, .rodata, libultra/rotate]
+      - [0x3A480, .rodata, libultra/perspective]
+      - [0x3A490, .rodata, libultra/sinf]
+      - [0x3A4E0, .rodata, libultra/cosf]
+      - [0x3A530, .rodata, libultra/csplayer]
+      - [0x3A770, .rodata, libultra/sndplayer]
+      - [0x3A7B0, .rodata, libultra/cseq]
+      - [0x3A7C0, .rodata, libultra/lookatref]
+      - [0x3A7D0, .rodata, libultra/align]
+      - [0x3A7E0, .rodata, libultra/rotateRPY]
+      - [0x3A7F0, .rodata, libultra/exceptasm_data]
+      - [0x3A8C0, .rodata, libultra/drvrNew]
+      - [0x3A8E0, .rodata, libultra/resample]
+      - [0x3A920, .rodata, libultra/env]
+      - [0x3A980, .rodata, libultra/libm_qnan_rodata]
+      - [0x3A990, .rodata, libultra/devmgr]
+      - [0x3A9B0, .rodata, libultra/seqplayer]
+      - [0x3ABF0, .rodata, libultra/cents2ratio]
+      - [0x3AC00, .rodata, libultra/reverb]
+      - [0x3AC30, .rodata, libultra/seq]
+      - [0x3AC40, .rodata, core/alien_parts]
+      - [0x3C8C0, .rodata, core/alien_waves]
+      - [0x3DC00, .rodata, core/trig_tables]
+      - [0x3EC00, .rodata, core/world_tables]
+      - [0x3EE90, .rodata, core/surface_properties]
+      - [0x3F060, .rodata, core/terrain_lookup]
+      - [0x3F420, .rodata, core/camera_curve]
+      - [0x3F460, .rodata, core/rsp_data]
+
+      # Anchor private reference storage; PI handles occupy the gap before piacs.
+      - {start: 0x40720, type: .fixed_bss, name: libultra/rotate, vram: 0x8006CA50}
+      - {start: 0x40720, type: .fixed_bss, name: libultra/piacs, vram: 0x8006F0A0}
+
+  - name: overlay_gameplay_frontend
+    type: code
+    start: 0x40720
+    vram: 0x80070270
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - [0x40720, c, overlay_gameplay/frontend/40720]
+      - [0x52690, c, overlay_gameplay/frontend/52690]
+      - [0x60E60, .data, overlay_gameplay/frontend/data_60E60]
+      - [0x61D50, .data, overlay_gameplay/frontend/data_61D50]
+      - [0x62550, .data, overlay_gameplay/frontend/data_62550]
+      - [0x62650, .data, overlay_gameplay/frontend/data_62650]
+      - [0x62E50, .data, overlay_gameplay/frontend/data_62650]
+      - [0x62F50, .data, overlay_gameplay/frontend/data_62650]
+      - [0x63750, .data, overlay_gameplay/frontend/data_62650]
+      - [0x63850, .data, overlay_gameplay/frontend/data_63850]
+      - [0x63D50, .data, overlay_gameplay/frontend/data_63850]
+      - [0x64250, .data, overlay_gameplay/frontend/data_63850]
+      - [0x64750, .data, overlay_gameplay/frontend/data_64750]
+      - [0x64B90, .data, overlay_gameplay/frontend/data_64B90]
+      - [0x64D10, .data, overlay_gameplay/frontend/data_64D10]
+      - [0x64E00, .data, overlay_gameplay/frontend/data_64E00]
+      - [0x64F70, .data, overlay_gameplay/frontend/data_64F70]
+      - [0x650C0, .data, overlay_gameplay/frontend/data_650C0]
+      - [0x65350, .data, overlay_gameplay/frontend/data_65350]
+      - [0x65530, .data, overlay_gameplay/frontend/data_65530]
+      - [0x65570, .data, overlay_gameplay/frontend/data_65570]
+      - [0x65DC0, .data, overlay_gameplay/frontend/data_65DC0]
+      - [0x66260, .data, overlay_gameplay/frontend/data_66260]
+      - [0x66820, .data, overlay_gameplay/frontend/data_66820]
+      - [0x66AA0, .data, overlay_gameplay/frontend/data_66AA0]
+      - [0x68FA0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x796F0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x79EF0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7A6F0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7A8F0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7AAF0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7C598, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7CDA0, .data, overlay_gameplay/frontend/data_68FA0]
+      - [0x7D5A0, .rodata, overlay_gameplay/frontend/40720]
+      - [0x7F0F0, .rodata, overlay_gameplay/frontend/52690]
+
+  - name: overlay_gameplay_outside
+    type: code
+    start: 0x7F220
+    vram: 0x80070270
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - [0x7F220, c, overlay_gameplay/outside/7F220] # Core outside gameplay
+      - [0x82160, c, overlay_gameplay/outside/cheats]
+      - [0x82D70, c, overlay_gameplay/outside/missions]
+      - [0x857E0, c, overlay_gameplay/outside/857E0] # Trees
+      - [0x884C0, c, overlay_gameplay/outside/884C0] # Aliens, humans
+      - [0x9BFF0, c, overlay_gameplay/outside/9BFF0] # Aliens, humans
+      - [0xA40B0, c, overlay_gameplay/outside/A40B0] # Debug
+      - [0xA49A0, c, overlay_gameplay/outside/A49A0] # Map
+      - [0xAAA70, c, overlay_gameplay/outside/AAA70] # HUD
+      - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Aliens
+      - [0xB49C0, c, overlay_gameplay/outside/B49C0] # Beacons, Powerups
+      - [0xB8290, c, overlay_gameplay/outside/B8290] # Aliens
+      - [0xBD270, c, overlay_gameplay/outside/trigger]
+      - [0xBF9C0, c, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
+      - [0xCFE30, c, overlay_gameplay/outside/CFE30] # Special effects
+      - [0xF6A50, c, overlay_gameplay/outside/F6A50] # Camera
+      - [0xF7870, c, overlay_gameplay/outside/F7870_empty]
+      - [0xF7870, c, overlay_gameplay/outside/F7870] # Shadows
+      - [0xF9230, c, overlay_gameplay/outside/F9230] # Animation
+      - [0xFEC70, c, overlay_gameplay/outside/FEC70] # cutscenes
+      - [0x101840, c, overlay_gameplay/outside/101840] # Adam/vehicle control
+      - [0x124ED0, c, overlay_gameplay/outside/buildings]
+      - [0x1312D0, c, overlay_gameplay/outside/1312D0] #  shooting
+      - [0x13DA70, c, overlay_gameplay/outside/13DA70] # End of stage/level UI
+      - [0x1416E0, c, overlay_gameplay/outside/1416E0] # Adam & vehicle Camera, signposts
+      - [0x145D70, c, overlay_gameplay/outside/145D70] # Alien sound effects
+      - [0x148000, c, overlay_gameplay/outside/148000] # Weapons / HUD / Vehicle weapons
+      - [0x14A8A0, .data, overlay_gameplay/outside/F6A50]
+      - [0x14A8F0, .data, overlay_gameplay/outside/cheats]
+      - [0x14AA40, .data, overlay_gameplay/outside/missions]
+      - [0x14AAC0, .data, overlay_gameplay/outside/857E0]
+      - [0x14AB20, .data, overlay_gameplay/outside/884C0]
+      - [0x14B5C0, .data, overlay_gameplay/outside/9BFF0]
+      - [0x14BB20, .data, overlay_gameplay/outside/A40B0]
+      - [0x14C160, .data, overlay_gameplay/outside/A49A0]
+      - [0x14C4F0, .data, overlay_gameplay/outside/AAA70]
+      - [0x14C730, .data, overlay_gameplay/outside/B2CB0]
+      - [0x14C840, .data, overlay_gameplay/outside/B49C0]
+      - [0x14C870, .data, overlay_gameplay/outside/B8290]
+      - [0x14C8F0, .data, overlay_gameplay/outside/BF9C0]
+      - [0x14CAC0, .data, overlay_gameplay/outside/CFE30]
+      - [0x14D3C0, .data, overlay_gameplay/outside/1416E0]
+      - [0x14D3E0, .data, overlay_gameplay/outside/F7870_empty]
+      - [0x14D400, .data, overlay_gameplay/outside/F9230]
+      - [0x14EC70, .data, overlay_gameplay/outside/FEC70]
+      - [0x14EC80, .data, overlay_gameplay/outside/101840]
+      - [0x14F9B0, .data, overlay_gameplay/outside/buildings]
+      - [0x14FA60, .data, overlay_gameplay/outside/1312D0]
+      - [0x14FB50, .data, overlay_gameplay/outside/13DA70]
+      - [0x14FCA0, .data, overlay_gameplay/outside/mutableData]
+      - [0x14FCB0, .data, overlay_gameplay/outside/145D70]
+      - [0x14FCF0, .data, overlay_gameplay/outside/148000]
+      - [0x14FD40, .rodata, overlay_gameplay/outside/7F220]
+      - [0x1501A0, .rodata, overlay_gameplay/outside/missions]
+      - [0x150650, .rodata, overlay_gameplay/outside/857E0]
+      - [0x150760, .rodata, overlay_gameplay/outside/884C0]
+      - [0x150E30, .rodata, overlay_gameplay/outside/9BFF0]
+      - [0x150EE0, .rodata, overlay_gameplay/outside/A40B0]
+      - [0x151360, .rodata, overlay_gameplay/outside/A49A0]
+      - [0x1514C0, .rodata, overlay_gameplay/outside/AAA70]
+      - [0x1516F0, .rodata, overlay_gameplay/outside/B2CB0]
+      - [0x151740, .rodata, overlay_gameplay/outside/B49C0]
+      - [0x1518B0, .rodata, overlay_gameplay/outside/B8290]
+      - [0x151A60, .rodata, overlay_gameplay/outside/trigger]
+      - [0x151CC0, .rodata, overlay_gameplay/outside/BF9C0]
+      - [0x151E50, .rodata, overlay_gameplay/outside/CFE30]
+      - [0x1531A0, .rodata, overlay_gameplay/outside/F6A50]
+      - [0x153210, .rodata, overlay_gameplay/outside/F7870]
+      - [0x153290, .rodata, overlay_gameplay/outside/F9230]
+      - [0x1534A0, .rodata, overlay_gameplay/outside/FEC70]
+      - [0x153650, .rodata, overlay_gameplay/outside/101840]
+      - [0x153D70, .rodata, overlay_gameplay/outside/buildings]
+      - [0x153FD0, .rodata, overlay_gameplay/outside/1312D0]
+      - [0x154370, .rodata, overlay_gameplay/outside/13DA70]
+      - [0x154600, .rodata, overlay_gameplay/outside/1416E0]
+      - [0x1546C0, .rodata, overlay_gameplay/outside/145D70]
+      - [0x1549E0, .rodata, overlay_gameplay/outside/148000]
+      - [0x154B90, .rodata, overlay_gameplay/outside/constData]
+      - [0x156EF0, .rodata, overlay_gameplay/outside/constData2]
+
+      # Shadow state includes the private StripModelToBones pointers and count.
+      - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/F7870, vram: 0x801575A0}
+
+  - name: overlay_gameplay_inside
+    type: code
+    start: 0x158330
+    vram: 0x80070270
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - [0x158330, c, overlay_gameplay/inside/158330] # Rendering, object/char spawning
+      - [0x1648A0, c, overlay_gameplay/inside/1648A0] # Player, animations, NPCs
+      - [0x167C90, c, overlay_gameplay/inside/167C90] # Camera
+      - [0x16AF30, c, overlay_gameplay/inside/16AF30] # Effects
+      - [0x173B60, c, overlay_gameplay/inside/173B60] # UI & pause menu
+      - [0x175EB0, .data, overlay_gameplay/inside/167C90] # Camera
+      - [0x175EC0, .data, overlay_gameplay/inside/158330] # Lighting, room data & level tables
+      - [0x184F20, .data, overlay_gameplay/inside/1648A0] # Player rendering data (texture, char tables, NPC data, routes, camera)
+      - [0x18A6E0, .data, overlay_gameplay/inside/16AF30] # Effects - sprite & lens flare data
+      - [0x18A770, .data, overlay_gameplay/inside/173B60] # UI & pause menu - sound/text tables
+      - [0x18C440, .rodata, overlay_gameplay/inside/158330]
+      - [0x18CC70, .rodata, overlay_gameplay/inside/1648A0]
+      - [0x18CE80, .rodata, overlay_gameplay/inside/167C90]
+      - [0x18D030, .rodata, overlay_gameplay/inside/16AF30]
+      - [0x18D5A0, .rodata, overlay_gameplay/inside/173B60]
+
+  - name: overlay_level_greece
+    type: code
+    start: 0x18D7E0
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x18D7E0, c, overlay_level/greece/18D7E0]
+      - [0x195C80, .data, overlay_level/greece/18D7E0]
+      - [0x196DE0, .rodata, overlay_level/greece/18D7E0]
+
+  - name: overlay_level_greece_data
+    type: bin
+    start: 0x196F70
+    subsegments:
+      - [0x196F70, bin, overlay_level/greece/height_map] #mio0
+      - [0x1AC280, bin, overlay_level/greece/texture_map] #mio0
+      - [0x1AC660, bin, overlay_level/greece/landscape_colours] #mio0
+      - [0x1AEC34, bin, overlay_level/greece/landscape_palette] #mio0
+      - [0x1AEE5C, bin, overlay_level/greece/terrain_objects] #mio0
+      - [0x1AF470, bin, overlay_level/greece/terrain_object_groups] #mio0
+      - [0x1AF830, bin, overlay_level/greece/terrain_object_model_pointers]
+      - [0x1AF870, bin, overlay_level/greece/water_table_height] # 4 bytes padding post
+      - [0x1AF878, bin, overlay_level/greece/building_types] # 32 x 32 bytes
+      - [0x1AFC78, bin, overlay_level/greece/building_instances] # 255 * 24 bytes
+      - [0x1B1460, bin, overlay_level/greece/trigger_array] # 192 * 16 bytes ?
+      - [0x1B2060, bin, overlay_level/greece/next_trigger] # First 4 bytes are trigger_array padding? 4 bytes padding at end as well?
+      - [0x1B206C, bin, overlay_level/greece/alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x1B2F6C, bin, overlay_level/greece/vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x1B386C, bin, overlay_level/greece/missions]
+      - [0x1B4070, bin, overlay_level/greece/terrain_textures] #mio0
+      - [0x1DDF8C, bin, overlay_level/greece/terrain_palettes] #mio0
+      - [0x1DF290, bin, overlay_level/greece/sky_texture] #mio0
+      - [0x1E40A4, bin, overlay_level/greece/sky_palette] #mio0
+
+  - name: overlay_level_greece_alien_types
+    type: code
+    start: 0x1E42E0
+    vram: 0x8032B7D0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x1E42E0, .data, overlay_level/greece/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_greece_data_tail
+    type: bin
+    start: 0x1E5660
+    subsegments:
+      - [0x1E5660, bin, overlay_level/greece/vehicle_types] # 21 * 112 bytes
+      - [0x1E5F90, bin, overlay_level/greece/signposts]
+      - [0x1E5FF0, bin, overlay_level/greece/english_sign_strings]
+      - [0x1E6BF0, bin, overlay_level/greece/english_sign_string_offsets]
+      - [0x1E6CF0, bin, overlay_level/greece/french_sign_strings]
+      - [0x1E78F0, bin, overlay_level/greece/french_sign_string_offsets]
+      - [0x1E79F0, bin, overlay_level/greece/german_sign_strings]
+      - [0x1E85F0, bin, overlay_level/greece/german_sign_string_offsets]
+      - [0x1E86F0, bin, overlay_level/greece/english_comms_strings]
+      - [0x1E9EF0, bin, overlay_level/greece/english_comms_strings_offsets]
+      - [0x1E9FF0, bin, overlay_level/greece/french_comms_strings]
+      - [0x1EB7F0, bin, overlay_level/greece/french_comms_strings_offsets]
+      - [0x1EB8F0, bin, overlay_level/greece/german_comms_strings]
+      - [0x1ED0F0, bin, overlay_level/greece/german_comms_strings_offsets]
+      - [0x1ED1F0, bin, overlay_level/greece/comms_sentence_info] # 0x40 bytes -> D_8006C410, per-sentence portrait index table (see func_80017CA4_188A4/func_800190D4_19CD4)
+      - [0x1ED230, bin, overlay_level/greece/doors] # 0x280 bytes -> D_800522C0, 32 x Unk800522C0 (0x14 bytes). Building type id at +0xC (see func_8011694C_1258FC)
+      - [0x1ED4B0, bin, overlay_level/greece/bc_points] # Building Collision? 0x528 bytes -> D_80052560, 110 x Unk80052560Entry (12 bytes), grouped by building type id (see 101840.c)
+      - [0x1ED9D8, bin, Padding_0x1ED9D8]
+
+  - name: overlay_level_java
+    type: code
+    start: 0x1ED9E0
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x1ED9E0, c, overlay_level/java/1ED9E0]
+      - [0x1F91B0, .data, overlay_level/java/1ED9E0]
+      - [0x1F9A60, .rodata, overlay_level/java/1ED9E0]
+
+  - name: overlay_level_java_data
+    type: bin
+    start: 0x1F9CC0
+    subsegments:
+      - [0x1F9CC0, bin, overlay_level/java/java_height_map] #mio0
+      - [0x211454, bin, overlay_level/java/java_texture_map] #mio0
+      - [0x2117EC, bin, overlay_level/java/java_landscape_colours] #mio0
+      - [0x213434, bin, overlay_level/java/java_landscape_palette] #mio0
+      - [0x2136F8, bin, overlay_level/java/java_terrain_objects] #mio0
+      - [0x213C98, bin, overlay_level/java/java_terrain_object_groups] #mio0
+      - [0x21404C, bin, overlay_level/java/java_terrain_object_model_pointers]
+      - [0x21408C, bin, overlay_level/java/java_water_table_height]
+      - [0x214094, bin, overlay_level/java/java_building_types] # 32 x 32 bytes
+      - [0x214494, bin, overlay_level/java/java_building_instances] # 255 * 24 bytes
+      - [0x215C7C, bin, overlay_level/java/java_trigger_array] # 192 * 16 bytes ?
+      - [0x21687C, bin, overlay_level/java/java_next_trigger] # 0xC bytes (4 pad + trigger + 4 pad)
+      - [0x216888, bin, overlay_level/java/java_alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x217788, bin, overlay_level/java/java_vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x218088, bin, overlay_level/java/java_missions] # 0x808 bytes, starts with A8 01
+      - [0x218890, bin, overlay_level/java/java_terrain_textures] #mio0
+      - [0x244680, bin, overlay_level/java/java_terrain_palettes] #mio0
+      - [0x245A40, bin, overlay_level/java/java_sky_texture] #mio0
+      - [0x24AC38, bin, overlay_level/java/java_sky_palette] #mio0
+
+  - name: overlay_level_java_alien_types
+    type: code
+    start: 0x24AD10
+    vram: 0x80332000
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x24AD10, .data, overlay_level/java/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_java_data_tail
+    type: bin
+    start: 0x24C090
+    subsegments:
+      - [0x24C090, bin, overlay_level/java/java_vehicle_types] # 21 * 112 bytes
+      - [0x24C9C0, bin, overlay_level/java/java_signposts]
+      - [0x24CA20, bin, overlay_level/java/java_english_sign_strings]
+      - [0x24D620, bin, overlay_level/java/java_english_sign_string_offsets]
+      - [0x24D720, bin, overlay_level/java/java_french_sign_strings]
+      - [0x24E320, bin, overlay_level/java/java_french_sign_string_offsets]
+      - [0x24E420, bin, overlay_level/java/java_german_sign_strings]
+      - [0x24F020, bin, overlay_level/java/java_german_sign_string_offsets]
+      - [0x24F120, bin, overlay_level/java/java_english_comms_strings]
+      - [0x250920, bin, overlay_level/java/java_english_comms_strings_offsets]
+      - [0x250A20, bin, overlay_level/java/java_french_comms_strings]
+      - [0x252220, bin, overlay_level/java/java_french_comms_strings_offsets]
+      - [0x252320, bin, overlay_level/java/java_german_comms_strings]
+      - [0x253B20, bin, overlay_level/java/java_german_comms_strings_offsets]
+      - [0x253C20, bin, overlay_level/java/java_comms_sentence_info] # 0x40 bytes -> per-sentence portrait index table
+      - [0x253C60, bin, overlay_level/java/java_doors] # 0x280 bytes -> 32 x 0x14 bytes. Building type id at +0xC
+      - [0x253EE0, bin, overlay_level/java/java_bc_points] # 0x528 bytes -> 110 x 12 bytes, grouped by building type id
+      - [0x254408, bin, Padding_0x254408]
+
+  - name: overlay_level_america
+    type: code
+    start: 0x254410
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x254410, c, overlay_level/america/254410]
+      - [0x25EA90, .data, overlay_level/america/254410]
+      - [0x260430, .rodata, overlay_level/america/254410]
+
+  - name: overlay_level_america_data
+    type: bin
+    start: 0x260570
+    subsegments:
+      - [0x260570, bin, overlay_level/america/america_height_map] #mio0
+      - [0x275DE8, bin, overlay_level/america/america_texture_map] #mio0
+      - [0x2760DC, bin, overlay_level/america/america_landscape_colours] #mio0
+      - [0x278910, bin, overlay_level/america/america_landscape_palette] #mio0
+      - [0x278A7C, bin, overlay_level/america/america_terrain_objects] #mio0
+      - [0x279028, bin, overlay_level/america/america_terrain_object_groups] #mio0
+      - [0x2793E8, bin, overlay_level/america/america_terrain_object_model_pointers]
+      - [0x279428, bin, overlay_level/america/america_water_table_height]
+      - [0x279430, bin, overlay_level/america/america_building_types] # 32 x 32 bytes
+      - [0x279830, bin, overlay_level/america/america_building_instances] # 255 * 24 bytes
+      - [0x27B018, bin, overlay_level/america/america_trigger_array] # 192 * 16 bytes ?
+      - [0x27BC18, bin, overlay_level/america/america_next_trigger] # 0xC bytes (4 pad + trigger + 4 pad)
+      - [0x27BC24, bin, overlay_level/america/america_alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x27CB24, bin, overlay_level/america/america_vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x27D424, bin, overlay_level/america/america_missions] # 0x800 data + 0xC align
+      - [0x27DC30, bin, overlay_level/america/america_terrain_textures] #mio0
+      - [0x2A99E4, bin, overlay_level/america/america_terrain_palettes] #mio0
+      - [0x2AACA0, bin, overlay_level/america/america_sky_texture] #mio0
+      - [0x2AD894, bin, overlay_level/america/america_sky_palette] #mio0
+
+  - name: overlay_level_america_alien_types
+    type: code
+    start: 0x2ADA00
+    vram: 0x8032B7D0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x2ADA00, .data, overlay_level/america/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_america_data_tail
+    type: bin
+    start: 0x2AED80
+    subsegments:
+      - [0x2AED80, bin, overlay_level/america/america_vehicle_types] # 21 * 112 bytes
+      - [0x2AF6B0, bin, overlay_level/america/america_signposts]
+      - [0x2AF710, bin, overlay_level/america/america_english_sign_strings]
+      - [0x2B0310, bin, overlay_level/america/america_english_sign_string_offsets]
+      - [0x2B0410, bin, overlay_level/america/america_french_sign_strings]
+      - [0x2B1010, bin, overlay_level/america/america_french_sign_string_offsets]
+      - [0x2B1110, bin, overlay_level/america/america_german_sign_strings]
+      - [0x2B1D10, bin, overlay_level/america/america_german_sign_string_offsets]
+      - [0x2B1E10, bin, overlay_level/america/america_english_comms_strings]
+      - [0x2B3610, bin, overlay_level/america/america_english_comms_strings_offsets]
+      - [0x2B3710, bin, overlay_level/america/america_french_comms_strings]
+      - [0x2B4F10, bin, overlay_level/america/america_french_comms_strings_offsets]
+      - [0x2B5010, bin, overlay_level/america/america_german_comms_strings]
+      - [0x2B6810, bin, overlay_level/america/america_german_comms_strings_offsets]
+      - [0x2B6910, bin, overlay_level/america/america_comms_sentence_info] # 0x40 bytes -> per-sentence portrait index table
+      - [0x2B6950, bin, overlay_level/america/america_doors] # 0x280 bytes -> 32 x 0x14 bytes. Building type id at +0xC
+      - [0x2B6BD0, bin, overlay_level/america/america_bc_points] # 0x528 bytes -> 110 x 12 bytes, grouped by building type id
+      - [0x2B70F8, bin, Padding_0x2B70F8]
+
+  - name: overlay_level_siberia
+    type: code
+    start: 0x2B7100
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x2B7100, c, overlay_level/siberia/2B7100]
+      - [0x2C3220, .data, overlay_level/siberia/2B7100]
+      - [0x2C52C0, .rodata, overlay_level/siberia/2B7100]
+
+  - name: overlay_level_siberia_data
+    type: bin
+    start: 0x2C54C0
+    subsegments:
+      - [0x2C54C0, bin, overlay_level/siberia/height_map] #mio0
+      - [0x2D69A0, bin, overlay_level/siberia/texture_map] #mio0
+      - [0x2D6D8C, bin, overlay_level/siberia/landscape_colours] #mio0
+      - [0x2D8950, bin, overlay_level/siberia/landscape_palette] #mio0
+      - [0x2D8CBC, bin, overlay_level/siberia/terrain_objects] #mio0
+      - [0x2D9094, bin, overlay_level/siberia/terrain_object_groups] #mio0
+      - [0x2D93FC, bin, overlay_level/siberia/terrain_object_model_pointers]
+      - [0x2D943C, bin, overlay_level/siberia/water_table_height]
+      - [0x2D9444, bin, overlay_level/siberia/building_types] # 32 x 32 bytes
+      - [0x2D9844, bin, overlay_level/siberia/building_instances] # 255 * 24 bytes
+      - [0x2DB02C, bin, overlay_level/siberia/trigger_array] # 192 * 16 bytes ?
+      - [0x2DBC2C, bin, overlay_level/siberia/next_trigger] # 0xC bytes (4 pad + value + 4 pad)
+      - [0x2DBC38, bin, overlay_level/siberia/alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x2DCB38, bin, overlay_level/siberia/vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x2DD438, bin, overlay_level/siberia/missions] # 0x800 data + 0x8 align, starts with A8 01
+      - [0x2DDC40, bin, overlay_level/siberia/terrain_textures] #mio0
+      - [0x30A638, bin, overlay_level/siberia/terrain_palettes] #mio0, 4 bytes padding post
+      - [0x30B880, bin, overlay_level/siberia/sky_texture] #mio0
+      - [0x30F678, bin, overlay_level/siberia/sky_palette] #mio0, 4 bytes padding post
+
+  - name: overlay_level_siberia_alien_types
+    type: code
+    start: 0x30F720
+    vram: 0x8032B7D0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x30F720, .data, overlay_level/siberia/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_siberia_data_tail
+    type: bin
+    start: 0x310AA0
+    subsegments:
+      - [0x310AA0, bin, overlay_level/siberia/vehicle_types] # 21 * 112 bytes
+      - [0x3113D0, bin, overlay_level/siberia/signposts]
+      - [0x311430, bin, overlay_level/siberia/english_sign_strings]
+      - [0x312030, bin, overlay_level/siberia/english_sign_string_offsets]
+      - [0x312130, bin, overlay_level/siberia/french_sign_strings]
+      - [0x312D30, bin, overlay_level/siberia/french_sign_string_offsets]
+      - [0x312E30, bin, overlay_level/siberia/german_sign_strings]
+      - [0x313A30, bin, overlay_level/siberia/german_sign_string_offsets]
+      - [0x313B30, bin, overlay_level/siberia/english_comms_strings]
+      - [0x315330, bin, overlay_level/siberia/english_comms_string_offsets]
+      - [0x315430, bin, overlay_level/siberia/french_comms_strings]
+      - [0x316C30, bin, overlay_level/siberia/french_comms_string_offsets]
+      - [0x316D30, bin, overlay_level/siberia/german_comms_strings]
+      - [0x318530, bin, overlay_level/siberia/german_comms_string_offsets]
+      - [0x318630, bin, overlay_level/siberia/comms_sentence_info] # 0x40 bytes -> per-sentence portrait index table
+      - [0x318670, bin, overlay_level/siberia/doors] # 0x280 bytes -> 32 x 0x14 bytes. Building type id at +0xC
+      - [0x3188F0, bin, overlay_level/siberia/bc_points] # 0x528 bytes -> 110 x 12 bytes, grouped by building type id
+      - [0x318E18, bin, Padding_0x318E18] # 8 bytes
+
+  - name: overlay_level_comet
+    type: code
+    start: 0x318E20
+    vram: 0x802D4CD0
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x318E20, c, overlay_level/comet/318E20]
+      - [0x328FD0, .data, overlay_level/comet/318E20]
+      - [0x32BB80, .rodata, overlay_level/comet/318E20]
+
+  - name: overlay_level_comet_data
+    type: bin
+    start: 0x32BD80
+    subsegments:
+      - [0x32BD80, bin, overlay_level/comet/comet_height_map] #mio0
+      - [0x33CC00, bin, overlay_level/comet/comet_texture_map] #mio0
+      - [0x33CFD0, bin, overlay_level/comet/comet_landscape_colours] #mio0
+      - [0x33DE1C, bin, overlay_level/comet/comet_landscape_palette] #mio0
+      - [0x33E0A4, bin, overlay_level/comet/comet_terrain_objects] #mio0
+      - [0x33E488, bin, overlay_level/comet/comet_terrain_object_groups] #mio0
+      - [0x33E808, bin, overlay_level/comet/comet_terrain_object_model_pointers]
+      - [0x33E848, bin, overlay_level/comet/comet_water_table_height]
+      - [0x33E850, bin, overlay_level/comet/comet_building_types] # 32 x 32 bytes
+      - [0x33EC50, bin, overlay_level/comet/comet_building_instances] # 255 * 24 bytes
+      - [0x340438, bin, overlay_level/comet/comet_trigger_array] # 192 * 16 bytes ?
+      - [0x341038, bin, overlay_level/comet/comet_next_trigger] # 0xC bytes (4 pad + value + 4 pad)
+      - [0x341044, bin, overlay_level/comet/comet_alien_waves] # 192 * 20 bytes. 0x0 is wave type; 0x2 & 0x4 are spawn coords
+      - [0x341F44, bin, overlay_level/comet/comet_vehicle_instances] # 128 * 18 bytes. 0x0 and 0x2 are coords, 0x7 is type
+      - [0x342844, bin, overlay_level/comet/comet_missions] # 0x800 data + 0xC align, starts with A8 01
+      - [0x343050, bin, overlay_level/comet/comet_terrain_textures] #mio0
+      - [0x3684BC, bin, overlay_level/comet/comet_terrain_palettes] #mio0
+      - [0x369710, bin, overlay_level/comet/comet_sky_texture] #mio0
+      - [0x36D000, bin, overlay_level/comet/comet_sky_palette] #mio0
+
+  - name: overlay_level_comet_alien_types
+    type: code
+    start: 0x36D0C0
+    vram: 0x80328F70
+    exclusive_ram_id: 802D4CD0
+    overlay: true
+    subsegments:
+      - [0x36D0C0, .data, overlay_level/comet/alien_types] # 48 * 104 bytes
+
+  - name: overlay_level_comet_data_tail
+    type: bin
+    start: 0x36E440
+    subsegments:
+      - [0x36E440, bin, overlay_level/comet/comet_vehicle_types] # 21 * 112 bytes
+      - [0x36ED70, bin, overlay_level/comet/comet_signposts]
+      - [0x36EDD0, bin, overlay_level/comet/comet_english_sign_strings]
+      - [0x36F9D0, bin, overlay_level/comet/comet_english_sign_string_offsets]
+      - [0x36FAD0, bin, overlay_level/comet/comet_french_sign_strings]
+      - [0x3706D0, bin, overlay_level/comet/comet_french_sign_string_offsets]
+      - [0x3707D0, bin, overlay_level/comet/comet_german_sign_strings]
+      - [0x3713D0, bin, overlay_level/comet/comet_german_sign_string_offsets]
+      - [0x3714D0, bin, overlay_level/comet/comet_english_comms_strings]
+      - [0x372CD0, bin, overlay_level/comet/comet_english_comms_string_offsets]
+      - [0x372DD0, bin, overlay_level/comet/comet_french_comms_strings]
+      - [0x3745D0, bin, overlay_level/comet/comet_french_comms_string_offsets]
+      - [0x3746D0, bin, overlay_level/comet/comet_german_comms_strings]
+      - [0x375ED0, bin, overlay_level/comet/comet_german_comms_string_offsets]
+      - [0x375FD0, bin, overlay_level/comet/comet_comms_sentence_info] # 0x40 bytes -> per-sentence portrait index table
+      - [0x376010, bin, overlay_level/comet/comet_doors] # 0x280 bytes -> 32 x 0x14 bytes. Building type id at +0xC
+      - [0x376290, bin, overlay_level/comet/comet_bc_points] # 0x528 bytes -> 110 x 12 bytes, grouped by building type id
+      - [0x3767B8, bin, Padding_0x3767B8]
+
+  - name: unknown
+    type: bin
+    start: 0x3767C0
+    subsegments:
+      - [0x3767C0, bin, icons] # MIO0 HuD icons, weapons, pause menu
+      - [0x379554, bin, icons_palette] # MIO0
+      - [0x379690, bin, japanese_and_english_font] # MIO0
+      - [0x37EB8C, bin, japanese_and_english_font_palette] # MIO0
+      - [0x37EBD0, bin, message_alert_icons] # MIO0 "E" in circle - multiple frames
+      - [0x37F5E4, bin, message_alert_icons_palette] # MIO0
+      - [0x37F840, bin, greece_inside_layouts] #  0x100 in size each.
+      # Position reflects door number from building instances
+      #  0x100 in size each
+#  Position reflects door number from building instances
+
+# 0x30 Object IDs 1 byte each (Up to 16)
+# 0x40 Object X coords 1 byte each (Up to 16)
+# 0x50 Object Z coords 1 byte each (Up to 16)
+
+# 0x63 Changes which room door 1 takes you to
+
+# 0x67 Changes which room door 2 takes you to
+
+# 0x80 Tiles 1 byte each (starting with bottom right)
+
+# 0xE4 Room width in tiles (?)
+# 0xE5 Room height in tiles (?)
+
+# 0xE9 Door 1 room ID
+# 0xEA Door 1 room spawn point
+# 0xEB Door 2 room Id
+# 0xEC Door 2 room spawn point
+      - [0x38F640, bin, Padding_0x38F640]
+      - [0x38F644, bin, greece_inside_text_english]
+      - [0x392F44, bin, greece_inside_text_french_and_german]
+      - [0x39A250, bin, greece_bridge_man_portrait] # MIO0
+      - [0x39B320, bin, greece_bridge_man_palette] # MIO0
+      - [0x39B570, bin, greece_apocalypse_portrait] # MIO0
+      - [0x39C214, bin, greece_apocalypse_palette] # MIO0
+      - [0x39C470, bin, greece_fireman_portrait] # MIO0
+      - [0x39D280, bin, greece_fireman_palette] # MIO0
+      - [0x39D4E0, bin, greece_general_portrait] # MIO0
+      - [0x39E3A8, bin, greece_general_palette] # MIO0
+      - [0x39E600, bin, greece_hooded_man_portrait] # MIO0
+      - [0x39F418, bin, greece_hooded_man_palette] # MIO0
+      - [0x39F670, bin, greece_soldier_portrait] # MIO0
+      - [0x3A0560, bin, greece_soldier_palette] # MIO0
+      - [0x3A07C0, bin, greece_miller_portrait] # MIO0
+      - [0x3A191C, bin, greece_miller_palette] # MIO0
+      - [0x3A1B70, bin, greece_gatekeeper_portrait] # MIO0
+      - [0x3A2B10, bin, greece_gatekeeper_palette] # MIO0
+      - [0x3A2D70, bin, greece_archaeologist_portrait] # MIO0
+      - [0x3A3E5C, bin, greece_archaeologist_palette] # MIO0
+      - [0x3A40B0, bin, greece_boat_man_portrait] # MIO0
+      - [0x3A51F0, bin, greece_boat_man_palette] # MIO0
+      - [0x3A5450, bin, greece_pilot_portrait] # MIO0
+      - [0x3A6634, bin, greece_pilot_palette] # MIO0
+      - [0x3A6880, bin, greece_priest_portrait] # MIO0
+      - [0x3A7784, bin, greece_priest_palette] # MIO0
+      - [0x3A79D8, bin, Padding_0x3A79D8]
+      - [0x3A79E0, bin, java_inside_layouts]
+      - [0x3B77E0, bin, UNKNOWN_0x3B77E0]
+      - [0x3C23F0, bin, java_tribesman_portrait] # MIO0
+      - [0x3C3414, bin, java_tribesman_palette] # MIO0
+      - [0x3C3670, bin, java_balding_man_portrait]
+      - [0x3C4528, bin, java_balding_man_palette] # MIO0
+      - [0x3C4780, bin, java_helmet_soldier_portrait] # MIO0
+      - [0x3C56D4, bin, java_helmet_soldier_palette] # MIO0
+      - [0x3C5930, bin, java_glasses_soldier_portrait] # MIO0
+      - [0x3C681C, bin, java_glasses_soldier_palette] # MIO0
+      - [0x3C6A70, bin, java_young_woman_portrait] # MIO0
+      - [0x3C799C, bin, java_young_woman_palette] # MIO0
+      - [0x3C7BF0, bin, java_old_man_portrait] # MIO0
+      - [0x3C8AD8, bin, java_old_man_palette] # MIO0
+      - [0x3C8D30, bin, java_boat_captain_portrait] # MIO0
+      - [0x3C99FC, bin, java_boat_captain_palette] # MIO0
+      - [0x3C9C50, bin, java_sick_man_portrait] # MIO0
+      - [0x3CAD10, bin, java_sick_man_palette] # MIO0
+      - [0x3CAF70, bin, java_medicine_lady_portrait] # MIO0
+      - [0x3CBEB4, bin, java_medicine_lady_palette] # MIO0
+      - [0x3CC110, bin, java_battleship_captain_portrait] # MIO0
+      - [0x3CCE7C, bin, java_battleship_captain_palette] # MIO0
+      - [0x3CD0D0, bin, java_soldier_portrait] # MIO0
+      - [0x3CDC6C, bin, java_soldier_palette] # MIO0
+      - [0x3CDEC0, bin, java_witch_doctor_portrait] # MIO0
+      - [0x3CEE54, bin, java_witch_doctor_palette] # MIO0
+      - [0x3CF0A8, bin, UNKNOWN_0x3CF0A8]
+      - [0x3CF0B0, bin, america_inside_layouts]
+      - [0x3DEEB0, bin, UNKNOWN_0x3DEEB0]
+      - [0x3E9AC0, bin, america_lad_portrait] # MIO0
+      - [0x3EAADC, bin, america_lad_palette] # MIO0
+      - [0x3EAD30, bin, america_man_portrait] # MIO0
+      - [0x3EBDF8, bin, america_man_palette] # MIO0
+      - [0x3EC050, bin, america_yellow_hat_man_portrait] # MIO0
+      - [0x3ECF20, bin, america_yellow_hat_man_palette] # MIO0
+      - [0x3ED180, bin, america_long_hair_man_portrait] # MIO0
+      - [0x3EE13C, bin, america_long_hair_man_palette] # MIO0
+      - [0x3EE390, bin, america_hillbilly_portrait] # MIO0
+      - [0x3EF4B0, bin, america_hillbilly_palette] # MIO0
+      - [0x3EF710, bin, america_man_in_black_portrait] # MIO0
+      - [0x3F0244, bin, america_man_in_black_palette] # MIO0
+      - [0x3F04A0, bin, america_scientist_portrait] # MIO0
+      - [0x3F1074, bin, america_scientist_palette] # MIO0
+      - [0x3F12D0, bin, america_alien_portrait] # MIO0
+      - [0x3F2154, bin, america_alien_palette] # MIO0
+      - [0x3F2390, bin, america_white_helmet_man_portrait] # MIO0
+      - [0x3F32EC, bin, america_white_helmet_man_palette] # MIO0
+      - [0x3F3540, bin, america_sneering_man_portrait] # MIO0
+      - [0x3F4490, bin, america_sneering_man_palette] # MIO0
+      - [0x3F46F0, bin, america_hippy_woman_portrait] # MIO0
+      - [0x3F5594, bin, america_hippy_woman_palette] # MIO0
+      - [0x3F57F0, bin, america_nurse_portrait] # MIO0
+      - [0x3F6688, bin, america_nurse_palette] # MIO0
+      - [0x3F68DC, bin, UNKNOWN_0x3F68DC]
+      - [0x4112F0, bin, siberia_fat_man_1_portrait] # MIO0
+      - [0x4120CC, bin, siberia_fat_man_1_palette] # MIO0
+      - [0x412320, bin, siberia_zombie_man_portrait] # MIO0
+      - [0x412E64, bin, siberia_zombie_man_palette] # MIO0
+      - [0x4130C0, bin, siberia_old_scientist_portrait] # MIO0
+      - [0x4140A8, bin, siberia_old_scientist_palette] # MIO0
+      - [0x414300, bin, siberia_blue_uniform_portrait] # MIO0
+      - [0x415068, bin, siberia_blue_uniform_palette] # MIO0
+      - [0x4152C0, bin, siberia_white_hat_portrait] # MIO0
+      - [0x4161CC, bin, siberia_white_hat_palette] # MIO0
+      - [0x416420, bin, siberia_injured_white_hat_portrait] # MIO0
+      - [0x417498, bin, siberia_injured_white_hat_palette] # MIO0
+      - [0x4176F0, bin, siberia_fat_man_2_portrait] # MIO0
+      - [0x4186A4, bin, siberia_fat_man_2_palette] # MIO0
+      - [0x418900, bin, siberia_ginger_portrait] # MIO0
+      - [0x4198E0, bin, siberia_ginger_palette] # MIO0
+      - [0x419B40, bin, siberia_young_scientist_portrait] # MIO0
+      - [0x41AAC8, bin, siberia_young_scientist_palette] # MIO0
+      - [0x41AD20, bin, siberia_mutant_portrait] # MIO0
+      - [0x41BC18, bin, siberia_mutant_palette] # MIO0
+      - [0x41BE70, bin, siberia_placeholder_portrait] # MIO0
+      - [0x41C13C, bin, siberia_placeholder_palette] # MIO0
+      - [0x41C390, bin, siberia_bearded_man_portrait] # MIO0
+      - [0x41D174, bin, siberia_bearded_man_palette] # MIO0
+      - [0x41D3C8, bin, comet_interiors]
+      - [0x42D1C8, bin, UNKNOWN_0x42D1C8] # Comet NPC speech
+      - [0x437DE0, bin, alien_hivemind_portrait] # MIO0
+      - [0x438D34, bin, alien_hivemind_palette] # MIO0
+      - [0x438F80, bin, tortured_daisy_portrait] # MIO0
+      - [0x43A0EC, bin, tortured_daisy_palette] # MIO0
+      - [0x43A340, bin, intro_models] # This might actually be multiple chunks?
+      - [0x4EBF80, bin, detailed_adam_model] # and more?
+      - [0x500A00, bin, general_gameplay_models]
+#        - [0x500A00, 0x501900, "bin", "textures"]
+#        - [0x501900, 0x504100, "bin", "alpha_one"]
+      - [0x501380, ci4, models/alpha_one/tex_501380, 64, 16]
+      - [0x501580, palette, models/alpha_one/tex_501380]
+      - [0x5015A0, bin]
+#        - [0x504110, 0x504858, "bin", "human_01"] # Each is used as a frame of animation!
+#        - [0x504858, 0x504FA0, "bin", "human_02"]
+#        - [0x504FA0, 0x5056E8, "bin", "human_03"]
+#        - [0x5056E8, 0x505E30, "bin", "human_04"]
+#        - [0x505E30, 0x506578, "bin", "human_05"]
+#        - [0x506578, 0x506CC0, "bin", "human_06"]
+#        - [0x506CC0, 0x507408, "bin", "human_07"]
+#        - [0x507408, 0x507B50, "bin", "human_08"]
+#        - [0x507B50, 0x5080C8, "bin", "human_09"]
+#        - [0x5080C8, 0x508600, "bin", "human_10"]
+#        - [0x508600, 0x508B68, "bin", "human_11"]
+#        - [0x508B68, 0x5090D8, "bin", "human_12"]
+#        - [0x5090D8, 0x509640, "bin", "human_13"]
+#        - [0x509640, 0x509BA8, "bin", "human_14"]
+#        - [0x509BA8, 0x50A118, "bin", "human_15"]
+# 514xxx prototype human running animation ?
+# 52EB10 HUD compass icon
+# 532BA0 HUD waypoint, harvester, shield generator icons
+# 0x541980 Adam driving model
+# 0x54CA20 signpost
+# 0x552E40 Alpha 1 hovercraft
+
+      - [0x55B0A0, bin, item_models] # item textures, then models
+#        - [0x5610A0, 0x5612E0, "bin", "weapon_crystal"] // 0F006140
+#        - [0x, 0x, "bin", "alien_artifact"] // 0F006758?
+#        - [0x, 0x, "bin", "alien_artifact_2"] // 0F006E78?
+#        - [0x, 0x, "bin", "totem_part_a"] // 0F007F50
+#        - [0x, 0x, "bin", "totem_part_man"] // 0F009198
+#        - [0x, 0x, "bin", "totem_part_bird"] // 0F00A998
+#        - [0x, 0x, "bin", "headset"] // 0F00BD58
+#        - [0x, 0x, "bin", "page_of_binary"] // 0F00C148
+#        - [0x, 0x, "bin", "orange_key_card"] // 0F00C6F0 red
+#        - [0x, 0x, "bin", "gold_key_card"] // not actually real? is the red one
+#        - [0x, 0x, "bin", "key_card"] // 0F00CA28 green
+#        - [0x, 0x, "bin", "kris_knife"]
+#        - [0x, 0x, "bin", "medicine_bottle"] // 0F00D590
+#        - [0x, 0x, "bin", "howitzer_shell"] // ROM=569058 0F00DF98
+#        - [0x, 0x, "bin", "airboat_part"] // ROM=569778? 0F00E6B0
+#        - [0x, 0x, "bin", "grenade"] // ROM=56A140? // 0F00F068
+#        - [0x, 0x, "bin", "greece_puzzle_piece"] // 0F00F700
+#        - [0x, 0x, "bin", "gold_key_1a"] // 0F010EA8
+#        - [0x, 0x, "bin", "gold_key_1b"] // another not really a model entry?
+#        - [0x, 0x, "bin", "gold_key_2"] // 0F011B10
+#        - [0x, 0x, "bin", "silver_key_1"] // 0F013000
+#        - [0x, 0x, "bin", "silver_key_2"]
+#        - [0x, 0x, "bin", "gold_key_3"] // 0F013920? // 0F013D38
+#        - [0x, 0x, "bin", "nitro_icon"] # beta? 0F014748
+#        - [0x, 0x, "bin", "dynamite"] # unused? 0F015128
+#        - [0x, 0x, "bin", "rocket_launcher"] # unused? 0F015988
+#        - [0x, 0x, "bin", "scoped_pistol"] # unused? 0F016940
+#        - [0x, 0x, "bin", "machinegun"] # unused? 0F017B98
+#        - [0x, 0x, "bin", "shotgun"] # unused? 0F018490
+#        - [0x, 0x, "bin", "hunting_rifle"] # unused? 0F019538
+#        - [0x, 0x, "bin", "deflect_icon"] # beta? 0F019C40 (guessed offset)
+#        - [0x, 0x, "bin", "fuel_can"] // 0F01A6C8
+#        - [0x, 0x, "bin", "nitro_fuel_can"] // 0F01B130
+#        - [0x, 0x, "bin", "wrench"] # beta? 0F01BBF0 (guessed offset)
+#        - [0x, 0x, "bin", "ankh"] # beta? 0F01C670 (guessed offset)
+#        - [0x, 0x, "bin", "windmill_cog"] // 0F01D7E0 80310668?
+#        - [0x, 0x, "bin", "atlantis_crank"] // 0F01DCC0
+#        - [0x, 0x, "bin", "train_starting_handle"] // 0F01DF50
+#        - [0x, 0x, "bin", "kris_blade"] // 0F01E1C8
+#        - [0x, 0x, "bin", "kris_hilt"] // 0F01E358
+#        - [0x, 0x, "bin", "kris_handle"] // 0F01E588
+#        - [0x5796B0, 0x579D48, "rua_rua_idol"] // 80311500 0F01EA70
+      - [0x579D50, bin, greece_models]
+#        - [0x579D50, 0x5838F0, "bin", "textures"] // I4 format
+#        - [0x5838F0, 0x584210, "bin", "watergate_structure"]
+#        - [0x584210, 0x584480, "bin", "watergate_gate_a"]
+#        - [0x584480, 0x5846F0, "bin", "watergate_gate_b"]
+#        - [0x5846F0, 0x584CB0, "bin", "mine_entrance"]
+#        - [0x584CB0, 0x585CE8, "bin", "boat_shed"]
+#        - [0x585CE8, 0x587098, "bin", "small_church"]
+#        - [0x587098, 0x5882E8, "bin", "monastery"]
+#        - [0x5882E8, 0x5895E8, "bin", "temple_ruins"]
+#        - [0x5895E8, 0x589C60, "bin", "fountain"]
+#        - [0x589C60, 0x58AB10, "bin", "porch_and_flagpole_house"]
+#        - [0x58AB10, 0x58AF98, "bin", "wooden_dock"]
+#        - [0x58AF98, 0x58BA40, "bin", "brick_hanger"]
+#        - [0x58BA40, 0x58C148, "bin", "red_roof_white_house"]
+#        - [0x58C148, 0x58CAB0, "bin", "house_with_hedge"]
+#        - [0x58CAB0, 0x58CD20, "bin", "rectangle_of_vegetation"] # used anywhere?
+#        - [0x58CD20, 0x58D9A8, "bin", "house_with_upstairs_greenery"]
+#        - [0x58D9A8, 0x58E8A8, "bin", "bridge_master_house"]
+#        - [0x58E8A8, 0x58F3F0, "bin", "blue_and_yellow_house"] # beta
+#        - [0x58F3F0, 0x5903C0, "bin", "atlantis_temple"]
+#        - [0x5903C0, 0x5911B0, "bin", "atlantis_statue"]
+#        - [0x5911B0, 0x5913D0, "bin", "atlantis_statue_arm"]
+#        - [0x5913D0, 0x592848, "bin", "torch_bearing_statue"]
+#        - [0x592848, 0x593438, "bin", "windmill"]
+#        - [0x593438, 0x593778, "bin", "windmill_blades"]
+#        - [0x593778, 0x594708, "bin", "fire_station"]
+#        - [0x594708, 0x595848, "bin", "house_two_blue_roofs"]
+#        - [0x595848, 0x596100, "bin", "broken_column"]
+#        - [0x596100, 0x597350, "bin", "bridge_end"] # Strange. Includes own texture
+      - [0x5DCBB0, bin, UNMAPPED_0x5DCBB0]
+#    5dcbb0                Java model bank
+#        63d1b0                Start of Kubelwagon display-list
+#        63e3e0                Start of landing craft display-list
+#    64edf0                America model bank
+#    6bfbb0                Siberia model bank
+#    72fda0                Comet model bank
+#    770c70                Boss monsters model bank
+      - [0x791C20, bin, misc_interior_models]
+      - [0x7A4400, bin, greece_interior_models]
+      - [0x7E6E50, bin, greece_interior_textures] # MIO0
+      - [0x7F9530, bin, java_interior_models]
+      - [0x83B9B0, bin, java_interior_textures] # MIO0
+      - [0x8463D0, bin, america_interior_models]
+      - [0x88BE20, bin, america_interior_textures] # MIO0
+      - [0x898450, bin, siberia_interior_models]
+      - [0x8D9D80, bin, siberia_interior_textures] # MIO0
+      - [0x8E4084, bin, comet_interior_models]
+      - [0x8F3850, bin, comet_interior_textures] # MIO0
+# 94e500 Daisy portrait (not compressed)
+# 94fb00 Black Adam portrait (not compressed)
+# 951100 Robot Helper portrait (not compressed)
+# 952700 Tortured Daisy portrait (not compressed)
+# 953D00 Greece Pilot portrait dupe ? (not compressed)
+#  953000                music data begins around hereish check usf files for more precision
+      - [0x8F4958, bin, UNKNOWN_0x8F4958]
+  - [0xC00000]

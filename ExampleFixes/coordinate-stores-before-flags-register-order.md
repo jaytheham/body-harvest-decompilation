@@ -50,7 +50,7 @@ IDO still schedules the Y store last. The earlier source assignment puts its
 load in `t9`, the flags load in `t3`, and the masked flags in `t4`. Moving
 the Y assignment after the speed store instead changed branch scheduling
 and shortened the function. Verification: full ROM build reported
-`build/bh.us.z64: OK`, and the function diff had no differences.
+`build.na/bh.na.z64: OK`, and the function diff had no differences.
 
 ### Flag operations before a coordinate store can also match a later store order
 

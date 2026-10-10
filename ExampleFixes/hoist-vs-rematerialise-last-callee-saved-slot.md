@@ -1,6 +1,6 @@
 # Hoist-vs-rematerialise: which value wins the last callee-saved slot
 
-Observed while attempting `func_80000730_1330` (`src.us/core/1050.c`, 123 instructions, marker
+Observed while attempting `func_80000730_1330` (`src.na/core/1050.c`, 123 instructions, marker
 `CURRENT(1172)`), 2026-10-07 worker 1. **Not matched**; this is the triage rule and the two negative
 results for the family.
 
@@ -32,7 +32,7 @@ which is why `ins_diff` reports delta +0 and the differ table is dominated by `r
 ## How to tell this family from a real diff
 
 1. `ins_diff.py <func> <module/file> -noregs` -> delta +0 and no structural block.
-2. `mips-linux-gnu-objdump -d --no-show-raw-insn build/src.us/<rel>.c.o`, take the prologue, and
+2. `mips-linux-gnu-objdump -d --no-show-raw-insn build.na/src.na/<rel>.c.o`, take the prologue, and
    compare the **save list and home offsets** against the target `.s`. If the offsets match row for
    row and the register *count* matches, the residual is one hoisting decision, not a frame problem.
 3. Then compare the *in-loop* materialisation of the disputed value: hoisted (one instruction per

@@ -13,11 +13,11 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 ## Project Structure
 
-- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
-- `src.us/`: C source files.
+- `asm.na/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm.na/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
+- `src.na/`: C source files.
 - `include/`: Header files for variables, functions, and structs.
-- `build/`: Readonly - compiled object files and the final ROM image.
+- `build.na/`: Readonly - compiled object files and the final ROM image.
 
 ## Tools
 
@@ -50,20 +50,20 @@ If you don't know one of the values, you can use `12345678` as a placeholder for
 # Decompilation Workflow
 ## Step 1: Generate cleaned C implementation
 
-Run pwsh: `.\tools\run-m2c.ps1 asm/nonmatchings/overlay_gameplay/outside/884C0/func_80093AE4_A2A9.s` to generate an initial C implementation from the target assembly.
+Run pwsh: `.\tools\run-m2c.ps1 asm.na/nonmatchings/overlay_gameplay/outside/884C0/func_80093AE4_A2A9.s` to generate an initial C implementation from the target assembly.
 
 Clean up the generated C code:
 
-- Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
-- Add or update declarations for any called functions in `include/functions.us.h`.
+- Add any missing declarations of data symbols used by the function to `include/variables.na.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.na.h`.
+- Add or update declarations for any called functions in `include/functions.na.h`.
 - Replace all pointer arithmetic with struct/array access.
 - All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
 - Unusual constructions like `(arg0 < 0x9C) ^ 1` should be converted into a more human readable form `arg0 >= 0x9C`.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Replace if-do-while and do-while loops with for(;;) or while() loops.
-- Search in `/asm/` for any `jal` references to the target function to determine correct parameter and return types.
+- Search in `/asm.na/` for any `jal` references to the target function to determine correct parameter and return types.
 
 Identify and fix all these issues in the generated C code before proceeding to the next step.
 
@@ -77,13 +77,13 @@ Build the ROM: `.\tools\make.ps1` Important: This is the only correct way to bui
 
 Fix any build errors that occur.
 
-If build completes with `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, proceed to the next steps for analysis and iteration.
+If build completes with `build.na/bh.na.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, proceed to the next steps for analysis and iteration.
 
 ## Step 4: Compare with target and find similar functions
 
 - At this point always read the whole file `DecompHints.md` for general matching advice.
 - Use `.\tools\diff.ps1` to compare the target and current assembly to identify differences: note instruction order, registers, immediates, branch conditions.
-- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x50 -Threshold 0.5` where Offset is the Body Havest baserom.us.z64 file offset, and Size is the number of bytes to search for. Always try to use this tool it's good! Best to use it for a smaller range of assembly that includes the differences you are trying to fix, rather than the whole function, to get more relevant results.
+- Find matched C code from other decomp projects with specific assembly patterns using `.\tools\Search-AsmMatch.ps1 -Offset 0x16AF30 -Size 0x50 -Threshold 0.5` where Offset is the Body Havest baserom.na.z64 file offset, and Size is the number of bytes to search for. Always try to use this tool it's good! Best to use it for a smaller range of assembly that includes the differences you are trying to fix, rather than the whole function, to get more relevant results.
 - Check for any structurally similar functions using `.\tools\find-similar.ps1 <current func name>` e.g. `.\tools\find-similar.ps1 func_800AFA98_BEA48`
 
 ## Step 5+: Iterate Until Match
@@ -96,17 +96,17 @@ An arg being `&& 0xFF` or `&& 0xFFFF` repeatedly suggests that the original code
 Think about how a person would have originally written the code in C to produce the assembly you see rather than writing the C to match the assembly exactly. Search for patterns in the target assembly and see how other functions were written to achieve similar assembly output.
 `ExampleFixes` folder contains md files with examples of fixes that have been applied previously to solve specific patterns, search in here for stubborn cases.
 
-**Every** time you make changes, rebuild the project and compare the current assembly to the target, if it doesn't match repeat this step. Only once the build returns `build/bh.us.z64: OK` proceed to Finalize, or if the function contains a switch statement and the only remaining differences are in the jump table addresses, you can proceed to Finalize without a perfect match, as we will fix jump tables in a later pass.
+**Every** time you make changes, rebuild the project and compare the current assembly to the target, if it doesn't match repeat this step. Only once the build returns `build.na/bh.na.z64: OK` proceed to Finalize, or if the function contains a switch statement and the only remaining differences are in the jump table addresses, you can proceed to Finalize without a perfect match, as we will fix jump tables in a later pass.
 
 ## Finalize
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated case notes to help future decomp. Only for matched functions.
-Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
+Move any newly declared variables or functions from the C source file to `include/variables.na.h` and `include/functions.na.h`.
 
 ## Troubleshooting
 
 | Issue                             | Solution                                                    |
 | --------------------------------- | ----------------------------------------------------------- |
-| `undeclared identifier`           | Add `extern` to `include/variables.us.h`                    |
+| `undeclared identifier`           | Add `extern` to `include/variables.na.h`                    |
 | Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
 Jump table problems - ignore problems with jump tables target addresses for now, we will fix these in a later pass once all functions are matched, as they require special handling.

@@ -22,7 +22,7 @@ void func_8000B044_BC44(void) {
     // ...calls to both helpers...
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
+#pragma GLOBAL_ASM("asm.na/nonmatchings/core/AD60/func_8000B044_BC44.s")
 #endif
 
 // CORRECT: no explicit declarations; helpers defined earlier in #ifdef NON_MATCHING blocks
@@ -31,7 +31,7 @@ void func_8000B044_BC44(void) {
     // ...calls to both helpers — they are visible because they're compiled from C above...
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
+#pragma GLOBAL_ASM("asm.na/nonmatchings/core/AD60/func_8000B044_BC44.s")
 #endif
 ```
 

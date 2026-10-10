@@ -47,8 +47,8 @@ which shifted another local of the same function from `0x50($sp)` to `0x4C($sp)`
 not free either. A suffix alone does not work: `(u32)1`, `1U + 0` and `1U` all still merged.
 
 **The gate cannot see a header change.** The Makefile tracks no header dependencies, so editing a
-prototype rebuilds no caller: the stale (and correct) objects stay in `build/` and the ROM keeps
-matching. After touching a shared header, delete the affected `.o` files (or `build/`) before trusting
+prototype rebuilds no caller: the stale (and correct) objects stay in `build.na/` and the ROM keeps
+matching. After touching a shared header, delete the affected `.o` files (or `build.na/`) before trusting
 `check` or `gate` - a one- or two-instruction ROM diff in a function that scores clean is the
 signature.
 
@@ -64,7 +64,7 @@ The same lever has a reverse form, and there it is blocked. `func_8007290C_15A9C
 except **one row**: its call `func_80011858_12458(currentLevel, D_800A5720)` loads the argument with
 `lbu` (the low byte of the 4-byte `Level` enum, `lbu a0,3(a0)`), where the ROM passes the whole word
 (`lw a0,%lo(currentLevel)(a0)`). The prototype is `void func_80011858_12458(u8 arg0, s32 arg1);`
-(`include/functions.us.h:146`), so IDO only needs the low byte and narrows the load.
+(`include/functions.na.h:146`), so IDO only needs the low byte and narrows the load.
 
 Measured: retyping the prototype to `s32 arg0` takes the *caller* to **score 0** - it is otherwise
 exact. But the callee definition (`core/loader.c:697`) is a matched body whose first two instructions

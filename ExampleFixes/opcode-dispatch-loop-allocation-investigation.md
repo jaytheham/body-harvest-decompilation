@@ -8,7 +8,7 @@ An experimental switch with active case 0x9C and grouped no-op cases 0x9D, 0x9E,
 
 Variations that did not recover the target allocation: while versus guarded do/while versus for; reversed if/else; an opcode continue guard; typed command cursor versus byte cursor with typed accesses; named opcode/index locals; native int, s32, u32 countdown; byte/halfword/word state flags; separate current/next pointers; local vehicle base and pointer; signed local bitmask; explicit counter storage arrays; volatile cursor spills. Avoid repeating these alone without new evidence.
 
-The source retains the straightforward typed command scan and the cleanup wrapper is removed. The two subsequent functions, func_8007643C_853EC and func_800765C4_85574, are verified matches. A temporary assembly fallback for cleanup yielded `build/bh.us.z64: OK` after the latest header and formatting changes, then the fallback was removed again.
+The source retains the straightforward typed command scan and the cleanup wrapper is removed. The two subsequent functions, func_8007643C_853EC and func_800765C4_85574, are verified matches. A temporary assembly fallback for cleanup yielded `build.na/bh.na.z64: OK` after the latest header and formatting changes, then the fallback was removed again.
 
 A length difference in cleanup shifts later symbols. Name-based diff output can consequently start the target comparison at a shifted address for later functions. Do not interpret that artifact as a regression without checking the function's actual target start or isolating the preceding unmatched function.
 Additional unsuccessful variants: flattening the opcode and vehicle predicates into an if/else-if duplicates the opcode and vehicle offset tests; nested one-case switches retain the hot-loop allocation; a closed range test (opcode >= 0x9C && opcode <= 0x9C) retains two range branches; native long 1L constants and assigning the vehicle pointer inside the condition do not recover target allocation. Moving grouped no-op switch cases before the active case also retains extra comparisons.
@@ -37,7 +37,7 @@ Other unsuccessful final-guard variants: unsigned state < 1U (including consiste
 
 ## Matched: empty condition preserves the true constant
 
-Cleanup now matches (diff score 0 and full build/bh.us.z64: OK). Keep the final scan as:
+Cleanup now matches (diff score 0 and full build.na/bh.na.z64: OK). Keep the final scan as:
 
     if (val == 0x83) {
         if (has83After82 == 1) {

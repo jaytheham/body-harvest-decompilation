@@ -14,4 +14,4 @@ func_800FDC30_10CBE0 uses a switch on currentLevel with a nested switch on the v
 
 ## Boolean and mask types
 
-func_8010F72C_11E6DC needs an `int` return type for the target boolean epilogue. The flag test `(u8)(building->unk8 & 1)` produces the same instructions as the uncast mask, but changes IDO's temporary-register numbering to match the target. Update the declaration in functions.us.h alongside the definition.
+func_8010F72C_11E6DC needs an `int` return type for the target boolean epilogue. The flag test `(u8)(building->unk8 & 1)` produces the same instructions as the uncast mask, but changes IDO's temporary-register numbering to match the target. Update the declaration in functions.na.h alongside the definition.

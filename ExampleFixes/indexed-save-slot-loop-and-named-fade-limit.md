@@ -8,4 +8,4 @@ The target retains an initial postdecrement guard even though the count is three
 
 For the final fade loop, a literal `fade != -8` generates `bne fade, limit`. A named signed word limit compared as `terminal != fade` generates the required reversed operands. Initialize `fade = 160` before `terminal = -8`, then use a for loop with an empty initializer, to preserve the target constant load order.
 
-Keep the selected slot in a separate local from the descending loop count. Its declaration and the filename buffer position also affect the stack layout. Verify against a fresh full ROM build; the final result was `build/bh.us.z64: OK`.
+Keep the selected slot in a separate local from the descending loop count. Its declaration and the filename buffer position also affect the stack layout. Verify against a fresh full ROM build; the final result was `build.na/bh.na.z64: OK`.

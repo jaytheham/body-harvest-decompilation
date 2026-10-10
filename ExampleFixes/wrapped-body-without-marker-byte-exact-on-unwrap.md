@@ -22,7 +22,7 @@ Sweep the unmeasured tier before declaring a tier exhausted:
 
 ```bash
 BH_TREE_WSL=/home/builder/<tree> python3 <skill>/scripts/sweep_wrapped_bodies.py \
-    --cap 600 --limit 70 src.us/overlay_gameplay/<area> [more areas]
+    --cap 600 --limit 70 src.na/overlay_gameplay/<area> [more areas]
 ```
 
 It unwraps each body, runs the ordinary `check`, and restores the file from git after every
@@ -41,10 +41,10 @@ body - the entire fix was removing the guard.
 
 The guard-removal path is exactly where a phantom `0` can appear, so:
 
-1. `rm build/<rel>.c.o` and rebuild (`check`'s own make only rebuilds when the `.c` mtime moved).
+1. `rm build.na/<rel>.c.o` and rebuild (`check`'s own make only rebuilds when the `.c` mtime moved).
 2. `check` must print `MATCHED (score 0)` with **no** "still wrapped" warning, and
-   `nm build/<rel>.c.o` must show `T <func>`.
-3. `gate` must print `build/bh.us.z64: OK`.
+   `nm build.na/<rel>.c.o` must show `T <func>`.
+3. `gate` must print `build.na/bh.na.z64: OK`.
 4. **Control:** change one literal in the body, rebuild, and confirm the ROM sha1 moves
-   (`build/bh.us.z64: FAILED`). A body that is genuinely byte-exact fails the gate the moment a
+   (`build.na/bh.na.z64: FAILED`). A body that is genuinely byte-exact fails the gate the moment a
    value changes; a stale object would not.

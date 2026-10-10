@@ -8,4 +8,4 @@ Keep a typed `TrailParticleState` pointer for position and color, and a byte-arr
 
 The initial source position uses the entry's `spatialVectors` union member, which preserves the separate addition of 8 required before the second and third halfword loads.
 
-Validation: function diff score 0 and full ROM checksum `build/bh.us.z64: OK`.
+Validation: function diff score 0 and full ROM checksum `build.na/bh.na.z64: OK`.

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    Builds an index of normalized MIPS instructions from asm/matchings/ and asm/nonmatchings/.
+    Builds an index of normalized MIPS instructions from asm.na/matchings/ and asm.na/nonmatchings/.
 .DESCRIPTION
     Parses all .s files in the matchings and nonmatchings directories, normalizes each
     instruction to be register/value agnostic, and outputs asm_pattern_index.json.

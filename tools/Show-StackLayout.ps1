@@ -9,14 +9,14 @@
 .PARAMETER FunctionName
     The function name, e.g. "func_80084980_16CA40".
 .PARAMETER SourceFile
-    Optional path to the C source file, e.g. "src.us/overlay_gameplay/inside/16AF30.c".
+    Optional path to the C source file, e.g. "src.na/overlay_gameplay/inside/16AF30.c".
     If omitted, the tool searches for the function in the C source tree.
 .PARAMETER ForceCompile
     Force recompilation of the C code even if the function is already in the ELF.
     Useful when you've changed the C code and want to see the new layout.
 .EXAMPLE
     .\tools\Show-StackLayout.ps1 func_80084980_16CA40
-    .\tools\Show-StackLayout.ps1 func_80084980_16CA40 -SourceFile src.us/overlay_gameplay/inside/16AF30.c
+    .\tools\Show-StackLayout.ps1 func_80084980_16CA40 -SourceFile src.na/overlay_gameplay/inside/16AF30.c
     .\tools\Show-StackLayout.ps1 func_8000091C_151C
 #>
 
@@ -67,7 +67,7 @@ function Format-HexOffset {
 if (-not $SourceFile -or -not (Test-Path $SourceFile)) {
     # Search for the function name in all .c files
     $found = $null
-    $searchRoots = @("src.us")
+    $searchRoots = @("src.na")
     foreach ($root in $searchRoots) {
         $files = Get-ChildItem -Path $root -Recurse -Filter "*.c" -File | Select-Object -ExpandProperty FullName
         $matches = Select-String -Path $files -Pattern "\b$FunctionName\s*\(" -SimpleMatch:$false
@@ -102,7 +102,7 @@ if ($normPath.StartsWith($normRoot)) {
 
 # Clean up SourceFile for display (show relative path)
 # Show clean relative source path
-$displaySource = $SourceFile -replace '^.*[/\\]src\.(us|eu)[/\\]', 'src.$1/'
+$displaySource = $SourceFile -replace '^.*[/\\]src\.(na|eu)[/\\]', 'src.$1/'
 Write-Host "Source: $displaySource"
 
 # ── Step 2: Determine if function is NON_MATCHING ─────────────────────
@@ -128,25 +128,25 @@ $gccFlags = @(
     "-nostdinc",
     "-I.", "-Iinclude", "-Iinclude/2.0I", "-Iinclude/libc",
     "-Iassets",
-    "-Isrc.us", "-Isrc.us/libultra/audio",
-    "-D_LANGUAGE_C", "-D_FINALROM", "-DF3DEX_GBI", "-DWIN32", "-DSSSV", "-DNDEBUG", "-DVERSION_US"
+    "-Isrc.na", "-Isrc.na/libultra/audio",
+    "-D_LANGUAGE_C", "-D_FINALROM", "-DF3DEX_GBI", "-DWIN32", "-DSSSV", "-DNDEBUG", "-DVERSION_NA"
 )
 
-$elfPath = "build/bh.us.elf"
+$elfPath = "build.na/bh.na.elf"
 $compiledObj = "/tmp/${FunctionName}_compiled.o"
 
 if ((-not $isNonMatching) -and (-not $ForceCompile)) {
     # ── Function is in the ELF, disassemble directly ────────────────
     ColorWrite '  Layout from: ' 'Gray'
-    Write-Host 'compiled ELF (build/bh.us.elf)'
+    Write-Host 'compiled ELF (build.na/bh.na.elf)'
     Write-Host ''
 
-    $getDisasm = "mips-linux-gnu-objdump -d --start-address=0x80000000 --stop-address=0x80000001 build/bh.us.elf 2>/dev/null; " +
-                 "mips-linux-gnu-objdump -t build/bh.us.elf | grep ' $FunctionName$' | head -1"
+    $getDisasm = "mips-linux-gnu-objdump -d --start-address=0x80000000 --stop-address=0x80000001 build.na/bh.na.elf 2>/dev/null; " +
+                 "mips-linux-gnu-objdump -t build.na/bh.na.elf | grep ' $FunctionName$' | head -1"
     $symInfo = docker exec $container bash -c "cd /bh && $getDisasm 2>&1"
     
     # Get the function address and size from the ELF symbol table
-    $symCmd = "mips-linux-gnu-objdump -t build/bh.us.elf | grep ' $FunctionName$' | head -1"
+    $symCmd = "mips-linux-gnu-objdump -t build.na/bh.na.elf | grep ' $FunctionName$' | head -1"
     $symLine = docker exec $container bash -c "cd /bh && $symCmd 2>&1"
     
     if (-not $symLine) {
@@ -167,7 +167,7 @@ if ((-not $isNonMatching) -and (-not $ForceCompile)) {
     $startAddr = "0x" + $funcAddr.ToString('X8')
     $endAddr = "0x" + ($funcAddr + $funcSize).ToString('X8')
     
-    $disasmCmd = "mips-linux-gnu-objdump -d --start-address=$startAddr --stop-address=$endAddr build/bh.us.elf 2>&1"
+    $disasmCmd = "mips-linux-gnu-objdump -d --start-address=$startAddr --stop-address=$endAddr build.na/bh.na.elf 2>&1"
     $disasmOutput = docker exec $container bash -c "cd /bh && $disasmCmd"
     
 } else {
@@ -193,7 +193,7 @@ if ((-not $isNonMatching) -and (-not $ForceCompile)) {
     if ($LASTEXITCODE -ne 0) {
         Write-Host "Compilation failed. Trying IDO recompiler..." -ForegroundColor Yellow
         
-        $idoFlags = "-c -O2 -G0 -I . -I include -I include/2.0I -I include/libc -I assets -I src.us -I src.us/libultra/audio -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_US"
+        $idoFlags = "-c -O2 -G0 -I . -I include -I include/2.0I -I include/libc -I assets -I src.na -I src.na/libultra/audio -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_NA"
         $idoCmd = "cd /bh && tools/ido5.3_recomp/cc $idoFlags -o /tmp/${FunctionName}_compiled.o /tmp/${FunctionName}_wrap.c"
         $idoResult = docker exec $container bash -c "$idoCmd 2>&1"
         

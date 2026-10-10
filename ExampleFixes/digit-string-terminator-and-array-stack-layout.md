@@ -6,4 +6,4 @@ This is a two-byte string: the digit followed by a null terminator. Use `u8 ch[2
 
 Replacing the scalar with the array initially grew the frame from `0x68` to `0x70`, moving the buffer to `sp+0x50` and the saved text width to `sp+0x4C`. Removing one obsolete unused byte local before the buffer restored the original frame and offsets. The matching declaration order retains one unused `s32` and two unused `s8` locals before the buffer.
 
-The cleaned implementation uses a `while` loop for counting digits and passes the global character arrays directly. Full ROM verification reports `build/bh.us.z64: OK`.
+The cleaned implementation uses a `while` loop for counting digits and passes the global character arrays directly. Full ROM verification reports `build.na/bh.na.z64: OK`.

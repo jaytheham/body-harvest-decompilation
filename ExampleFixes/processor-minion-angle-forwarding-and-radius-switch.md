@@ -46,4 +46,4 @@ this declaration order place `randA` at `sp+0x64` and the spills at the
 target offsets without changing the `0x98` frame.
 
 Verification: function comparison score 0 and full ROM build
-`build/bh.us.z64: OK`.
+`build.na/bh.na.z64: OK`.

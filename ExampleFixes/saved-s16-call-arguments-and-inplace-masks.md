@@ -1,6 +1,6 @@
 # Saved s16 call arguments and in-place masks control later conversion order
 
-Function: `func_80082B30_91AE0`, in `src.us/overlay_gameplay/outside/884C0.c`.
+Function: `func_80082B30_91AE0`, in `src.na/overlay_gameplay/outside/884C0.c`.
 Compiler: IDO 5.3, `-O2 -mips2 -32`.
 
 Two saved `s16` coordinates survive a terrain lookup and are then masked to

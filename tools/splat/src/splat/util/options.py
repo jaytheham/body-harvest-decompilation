@@ -93,7 +93,7 @@ class SplatOpts:
     # Determines the default subalign value to be specified in the generated linker script
     subalign: Optional[int]
     # The following option determines whether to automatically configure the linker script to link against
-    # specified sections for all "base" (asm/c) files when the yaml doesn't have manual configurations
+    # specified sections for all "base" (asm.na/c) files when the yaml doesn't have manual configurations
     # for these sections.
     auto_all_sections: List[str]
     # Determines the desired path to the linker script that splat will generate
@@ -200,7 +200,7 @@ class SplatOpts:
     mips_abi_float_regs: str
     # Determines whether functions inside c files should have named registers
     named_regs_for_c_funcs: bool
-    # Determines whether to add ".set gp=64" to asm/hasm files
+    # Determines whether to add ".set gp=64" to asm.na/hasm files
     add_set_gp_64: bool
     # Generate .asmproc.d dependency files for each C file which still reference functions in assembly files
     create_asm_dependencies: bool

@@ -8,4 +8,4 @@ For the `u16` fade counter, use `fadeCounter--`. Combining subtraction with an e
 
 The two row calculations use `(line + 0) + i`. Plain `line + i` reversed the source registers in three `addu` instructions; the arithmetic identity restores their order without adding instructions. This follows the pattern in `assignment-reordering-commutative-order.md`.
 
-Verified with diff score 0 and `build/bh.us.z64: OK`.
+Verified with diff score 0 and `build.na/bh.na.z64: OK`.

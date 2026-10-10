@@ -13,7 +13,7 @@ IDO places case handler code in the ORDER cases appear in the source. The origin
 
 ```python
 import struct
-with open('build/bh.us.z64', 'rb') as f:
+with open('build.na/bh.na.z64', 'rb') as f:
     f.seek(jtbl_ROM_offset)
     entries = struct.unpack('>NI', f.read(N*4))
 # Sort by ROM address to get source order
@@ -53,11 +53,11 @@ When replacing an assembly function that used an absolute-addressed jump table (
 
 3. Update `bh.ld`: replace the single asset entry with:
    ```ld
-   build/assets/FILE_1.bin.o(.data);
-   build/src.us/FILE.c.o(.rodata);
-   build/assets/FILE_2.bin.o(.data);
+   build.na/assets.na/FILE_1.bin.o(.data);
+   build.na/src.na/FILE.c.o(.rodata);
+   build.na/assets.na/FILE_2.bin.o(.data);
    ```
 
-4. Remove `build/src.us/FILE.c.o(.rodata)` from the rodata section of the linker script.
+4. Remove `build.na/src.na/FILE.c.o(.rodata)` from the rodata section of the linker script.
 
 This ensures the C compiler's jump table lands at exactly the right ROM address.

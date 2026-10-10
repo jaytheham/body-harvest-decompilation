@@ -1,6 +1,6 @@
 # Integer clamp comparisons and register allocation
 
-Matched example: `func_801095BC_11856C` in `src.us/overlay_gameplay/outside/101840.c`.
+Matched example: `func_801095BC_11856C` in `src.na/overlay_gameplay/outside/101840.c`.
 
 A correction is truncated from a double expression to `s32`, then clamped against float limits. Explicitly assigning the correction to an existing float temporary before each comparison produced the right instructions, floating-point registers, and stack slots, but kept the integer correction in `v1` instead of the target `v0`.
 

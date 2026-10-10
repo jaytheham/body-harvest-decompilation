@@ -4,7 +4,7 @@ Matched `func_8000F6B0_102B0` with IDO 5.3 -O2 -mips2 -32.
 
 The stack guard is one `u64` containing `0xCEC`, rather than two independent
 word globals. Assign and compare the complete guard. Tentative definitions
-selected by `CORE_FD80_BSS` in `include/variables.us.h` reproduce the shared
+selected by `CORE_FD80_BSS` in `include/variables.na.h` reproduce the shared
 address load and low-word-first initialization stores. External declarations
 alone emit an extra `lui` and store the high word first. See also
 [the earlier tentative-definition fix](tentative-bss-definitions-u64-stores-and-folded-increment.md).
@@ -34,4 +34,4 @@ instead of byte-pointer arithmetic. The thread entry has an unused `void *`
 argument, consistent with `osCreateThread`.
 
 Verified: function diff score 0, including the epilogue through `0x10A50`, and
-full-ROM checksum `build/bh.us.z64: OK`.
+full-ROM checksum `build.na/bh.na.z64: OK`.

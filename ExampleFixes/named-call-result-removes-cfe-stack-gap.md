@@ -35,7 +35,7 @@ the named result was necessary to remove the compiler temporary.
 
 ## Sparkle creator: replace the payload pointer home with the named result
 
-`func_800CC7B0_DB760` in `src.us/overlay_gameplay/outside/CFE30.c` had identical instructions and registers, but its entry pointer spilled at `sp+0x50` instead of `sp+0x54`, and its cached half-width spilled at `sp+0x48` instead of `sp+0x4C`. The frame and live scalar offsets already matched.
+`func_800CC7B0_DB760` in `src.na/overlay_gameplay/outside/CFE30.c` had identical instructions and registers, but its entry pointer spilled at `sp+0x50` instead of `sp+0x54`, and its cached half-width spilled at `sp+0x48` instead of `sp+0x4C`. The frame and live scalar offsets already matched.
 
 Remove the named `EffectSparkState *spark` and access the payload through the typed converted array expression:
 
@@ -50,7 +50,7 @@ The integer conversion in the typed payload expression preserves the separate en
 
 ## Counter-instance: the same removal costs the frame when the pointer is not the cached base
 
-`func_80085984_16DA44` (`src.us/overlay_gameplay/inside/16AF30.c`, 204 instr) is the mirror case and behaves with the opposite sign. Declaring the tail pointer
+`func_80085984_16DA44` (`src.na/overlay_gameplay/inside/16AF30.c`, 204 instr) is the mirror case and behaves with the opposite sign. Declaring the tail pointer
 
 ```c
 UnkScatterEffectTail *entry;

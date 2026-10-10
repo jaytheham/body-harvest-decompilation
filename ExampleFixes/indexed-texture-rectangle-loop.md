@@ -8,7 +8,7 @@ The native macro also schedules the display-list pointer store one instruction l
 
 Assigning the height shift in every scale-selection branch, including the first branch, retains the target redundant constant loads. Initializing the height shift before the branches caused IDO to remove those loads and changed register allocation.
 
-Validation: function diff score 0 and `build/bh.us.z64: OK`.
+Validation: function diff score 0 and `build.na/bh.na.z64: OK`.
 
 ## Constant scaling and negative texture frames
 

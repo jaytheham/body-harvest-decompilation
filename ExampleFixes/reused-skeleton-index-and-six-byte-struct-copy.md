@@ -17,7 +17,7 @@ This lets IDO use v0 for the halfword load, v1 for the signed-byte node load, th
 
 For the target's six-byte constant copy through `$at`, use a six-byte struct such as Vec3s and a struct assignment or initializer. Manually copying a word and a halfword instead uses normal temporary registers and changes scheduling. If replacing an eight-byte padded data representation, verify subsequent symbol alignment remains correct.
 
-The complete function matched with diff score 0 and `build/bh.us.z64: OK`.
+The complete function matched with diff score 0 and `build.na/bh.na.z64: OK`.
 
 For stack placement, declare the signed-byte node in the outer function scope before the two limb indices. Move the child-ID byte locals from the initialization block into the existing padding above the copied vector, reducing the s16 padding array from four elements to three. This removes their former lower stack reservation without moving the vector or coordinate array.
 

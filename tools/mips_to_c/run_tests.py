@@ -185,7 +185,7 @@ def find_tests_mm(asm_dir: Path) -> Iterator[List[Path]]:
 
         # Find .data/.rodata/.bss files in their data directory
         data_path = Path(
-            str(asm_file).replace("/asm/overlays/", "/data/").replace("/asm/", "/data/")
+            str(asm_file).replace("/asm.na/overlays/", "/data/").replace("/asm.na/", "/data/")
         ).parent
         for f in data_path.glob("*.s"):
             path_list.append(f)

@@ -5,7 +5,7 @@
 Normalise + diff:
 
     norm() { sed -E 's@/\*.*\*/@@; s@\.L[0-9A-F_]+@LBL@g; s/^\s+//' "$1" | grep -v '^$'; }
-    diff <(norm asm/matchings/<mod>/<donor>.s) <(norm asm/nonmatchings/<mod>/<target>.s)
+    diff <(norm asm.na/matchings/<mod>/<donor>.s) <(norm asm.na/nonmatchings/<mod>/<target>.s)
 
 Use this sed diff, **not** the board's `diff` column: the board's column comes from `asm_chunks.py`'s normaliser, which collapses `%hi(...)`/`%lo(...)` operands to a placeholder and is therefore **blind to data-symbol differences**, while the sed form above keeps them.
 
@@ -27,7 +27,7 @@ Mechanical-rebuild notes:
 - Generate the body by script from the donor's source (extract the donor's definition block to its closing `}`), not by retyping - 363 instructions of C is where typos come from.
 - Take the donor's **parameter types** with the body. The donor was `u8 arg0`; the java overlay's own header declared the target `(s32 arg0)` while every neighbouring declaration was `u8` - the header had to be corrected or the TU fails with `conflicting types`.
 - The donor's stale `CURRENT(n)` marker line above the target's block must be deleted.
-- `include/common.us.h` includes every overlay header, so an overlay-`.h` retype looks like a tree-wide header edit. Only the two TUs that name the function need a rebuild (`1ED9E0.c` + the overlay's `alien_types.c` table); `touch` those, then gate.
+- `include/common.na.h` includes every overlay header, so an overlay-`.h` retype looks like a tree-wide header edit. Only the two TUs that name the function need a rebuild (`1ED9E0.c` + the overlay's `alien_types.c` table); `touch` those, then gate.
 
 ## A cross-overlay donor outside the level overlays
 
@@ -51,7 +51,7 @@ Two things decided both matches:
 1. **The existing guess's pointer local was the only real error.** Both targets were wrapped with a body using `AlienInstance *alien = &alienInstances[arg0];` and a cached `flags`; the matched donor reads `alienInstances[arg0].xxx` directly at every use. Take the donor's direct-access form (same family as `global-address-and-constant-materialisation.md`). The java guess was *also* missing the `if (alienInstances[arg0].unk20 & 0x40000000)` guard entirely.
 2. **Copy the donor's shape, then read the target's own `.s` for the level's extras.** The three overlays' handlers are NOT identical: greece/java call only `func_800DF848_EE7F8` (+ the `func_800DEA08_ED9B8` / `func_8008AAFC_99AAC` tail), while comet additionally calls `func_80137468_146418(arg0, 0xF)` (after the inner `func_800DF848` block, before the `return`) and `func_80137468_146418(arg0, 0x66)` (the `else` arm of the range test). A verbatim greece copy would have failed comet; the differences are exactly what the target `.s` shows.
 
-Finding the twins: `grep -n "unk5C" src.us/overlay_level/*/alien_types.c` and compare the handler named at the same table row across overlays. America's counterpart (`func_8008C0F8_9B0A8`) was already matched and siberia's row is `NULL`, so no further sibling exists for this handler. The same grep works for any other `void (*)(u8)` slot in `AlienType` (e.g. `unk48`).
+Finding the twins: `grep -n "unk5C" src.na/overlay_level/*/alien_types.c` and compare the handler named at the same table row across overlays. America's counterpart (`func_8008C0F8_9B0A8`) was already matched and siberia's row is `NULL`, so no further sibling exists for this handler. The same grep works for any other `void (*)(u8)` slot in `AlienType` (e.g. `unk48`).
 
 ## Same-file twin: the residual is expression *spelling*
 
@@ -66,7 +66,7 @@ Recipe: rank the target's own file for a matched twin with `asm_chunks.py <targe
 
 ## The CFE30 `.c` <-> 52690 `.c` pair is its own clone family
 
-`src.us/overlay_gameplay/outside/CFE30.c` and `src.us/overlay_gameplay/frontend/52690.c` carry the *same
+`src.na/overlay_gameplay/outside/CFE30.c` and `src.na/overlay_gameplay/frontend/52690.c` carry the *same
 logical functions*, so a match in one is a donor for the other in **either** direction. The
 `func_800C8C7C_D7C2C` (CFE30) <- `func_800891F8_596A8` (52690) graft above is one direction; the reverse
 landed `func_800870AC_5755C` (52690, 510 instr) from `func_800C6558_D5508` (CFE30, 522 instr) - raw
@@ -95,7 +95,7 @@ The three levers, each measured (13428 -> 200 -> 0):
    calls `func_80083F8C_5443C(idx, 0x95)`. Both come straight off the target's own `.s`.
 
 `EffectInterpolationState` (`union { u16 size; u8 bytes[14]; }`) is a **shared** type in
-`include/structs.us.h`, so both overlays' records can be viewed through it: the donor uses it directly, the
+`include/structs.na.h`, so both overlays' records can be viewed through it: the donor uses it directly, the
 target casts `(EffectInterpolationState *)&D_800DE840[i].unk8`. That keeps the byte arithmetic typed and
 avoids `*(u16 *)` casts at every site.
 
@@ -121,12 +121,12 @@ Three rules from it:
 2. **A transplanted body can name a data symbol the tree never declared.** The guess's `D_800AA688`
    exists nowhere in `include/` - the target's own `.s` is the authority for both the name
    (`addiu $t7,$t7,%lo(D_800AA688_7AB38)`) and the width (its `lbu` proves `u8`, so
-   `extern u8 D_800AA688_7AB38[];` next to its address neighbours in `include/variables.us.h`). Grep the
+   `extern u8 D_800AA688_7AB38[];` next to its address neighbours in `include/variables.na.h`). Grep the
    symbol as written in the `.s` before assuming a declaration in the file names the same object.
-3. **`include/variables.us.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
+3. **`include/variables.na.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
    (minutes at `--jobs=8`, not seconds). Start `make --jobs=8` in the background first and only then run
    `check`, which is then a differ-only run; a foreground `check` straight after a header edit times out.
-   `nm build/<path>.c.o` showing `T <func>` plus `check` 0 is the compiled-C proof - a sha1 match alone
+   `nm build.na/<path>.c.o` showing `T <func>` plus `check` 0 is the compiled-C proof - a sha1 match alone
    would also be produced by a stale object.
 
 `Match func_8008EDB4_5F264` (75 instructions, `check` 0, gate PASSED).

@@ -16,4 +16,4 @@ IDO loads the timer table. Assign the type constant after the six position
 fields. IDO schedules its store earlier, but creates the constant after the
 six argument loads, matching the target temporary registers.
 
-Verified with function diff score 0 and `build/bh.us.z64: OK`.
+Verified with function diff score 0 and `build.na/bh.na.z64: OK`.

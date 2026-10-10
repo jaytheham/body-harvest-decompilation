@@ -137,21 +137,21 @@ def setup():
 
 
 def layout(version):
-    # US keeps the original directory names; every other version is suffixed so
-    # extractions can coexist.  Each version also gets its own linker script,
-    # since splat derives the name from the basename that they all share.
-    suffix = "" if version == "us" else f".{version}"
+    # Both versions are suffixed, so an extraction of one can never touch the
+    # other's tree, link inputs or build products. NA is not special: the reason
+    # US used to be unsuffixed was history, not a requirement, and the clobbering
+    # bugs that followed all came from splat deriving shared names from basename.
     return {
-        "build": f"build{suffix}",
-        "asm": f"asm{suffix}",
-        "assets": f"assets{suffix}",
+        "build": f"build.{version}",
+        "asm": f"asm.{version}",
+        "assets": f"assets.{version}",
         "src": f"src.{version}",
         "undefined": f"undefined_syms.{version}.txt",
-        # splat derives these names from the basename that every version shares,
-        # so give each non-US version its own.  Otherwise extracting one version
-        # clobbers the other version's linker inputs.
-        "ld": "bh.ld" if version == "us" else f"bh.{version}.ld",
-        "undefined_auto": "undefined_syms_auto.txt" if version == "us" else f"undefined_syms_auto.{version}.txt",
+        "reloc": f"reloc_addrs.{version}.txt",
+        "ld": f"bh.{version}.ld",
+        "symbol_addrs": f"symbol_addrs.{version}.txt",
+        "ld_symbols": f"include/ld_symbols.{version}.h",
+        "undefined_auto": f"undefined_syms_auto.{version}.txt",
     }
 
 
@@ -244,11 +244,11 @@ def build(args):
                                   paths["assets"], paths["src"], f'{paths["src"]}/libultra/audio')]
     libultra_sources = {}
     libultra_includes = []
-    if args.version == "us":
-        sources_file = ROOT / "src.us/libultra/sources.json"
+    if args.version == "na":
+        sources_file = ROOT / "src.na/libultra/sources.json"
         if sources_file.exists():
             libultra_sources = json.loads(sources_file.read_text(encoding="utf-8"))
-            libultra_includes = ["-Isrc.us/libultra/include", "-Isrc.us/libultra/include/PR", "-Isrc.us/libultra"]
+            libultra_includes = ["-Isrc.na/libultra/include", "-Isrc.na/libultra/include/PR", "-Isrc.na/libultra"]
     if args.non_matching:
         cflags.append("-DNON_MATCHING")
     env = compiler_env()
@@ -298,7 +298,7 @@ def build(args):
             if source.suffix == ".s":
                 run([assembler, *asflags, "-o", target, source], quiet=args.quiet)
             elif source.suffix == ".c":
-                libultra_config = libultra_sources.get(source.stem, {}) if source.parent.as_posix() == "src.us/libultra" else {}
+                libultra_config = libultra_sources.get(source.stem, {}) if source.parent.as_posix() == "src.na/libultra" else {}
                 optimization = libultra_config.get("optimization", "-O2")
                 source_cflags = [*libultra_includes, *cflags] if libultra_config else cflags
                 if libultra_config.get("signed_char") is False:
@@ -358,7 +358,7 @@ def build(args):
     elf = f'{paths["build"]}/bh.{args.version}.elf'
     ldflags = ["-T", paths["ld"], "-T", paths["undefined"], "-T", paths["undefined_auto"],
                "-Map", f'{paths["build"]}/bh.{args.version}.map', "--no-check-sections", "build/lib/libultra_rom.a"]
-    if args.version == "us":
+    if args.version == "na":
         for symbol in ("osViGetCurrentLine", "osAiGetLength", "osPiGetStatus", "__osLeoInterrupt", "guTranslate"):
             ldflags += ["-u", symbol]
     ldflags += ["-o", elf]
@@ -380,7 +380,7 @@ def build(args):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("action", choices=("setup", "extract", "build"))
-    parser.add_argument("--version", choices=("us", "eu"), default="us")
+    parser.add_argument("--version", choices=("na", "eu"), default="na")
     parser.add_argument("--jobs", type=int, default=min(os.cpu_count() or 1, 4))
     parser.add_argument("--non-matching", action="store_true")
     parser.add_argument("--rebuild", action="store_true")

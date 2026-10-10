@@ -6,4 +6,4 @@ The body then matched, but the -5 and -6 constants used the opposite `a3`/`t0` r
 
 A typed union payload exposes the unsigned halfword size and byte interpolation data. Put the original payload, radius, and trailing padding together in the alternate anonymous struct; including the radius alone rounds that view up and changes the entry stride. The entry must stay 0x1C bytes.
 
-Verified with score 0 and `tools/make.ps1`: `build/bh.us.z64: OK`.
+Verified with score 0 and `tools/make.ps1`: `build.na/bh.na.z64: OK`.
