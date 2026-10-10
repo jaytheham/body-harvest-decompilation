@@ -254,3 +254,9 @@ Eleven more intersection-helper builds retain 1464. Reusing slope for the coordi
 
 
 Seven parameter-carrier trials retain intersection score 1464. Replace the coordinate local separately in the vertical/horizontal paths with parameters whose original values are no longer needed: arg2/arg3 scores 3355; arg6/arg7 scores 5992; slope/arg3 scores 3520; arg2/slope scores 2781; arg4/arg5 scores 5972; arg5/arg6 scores 5992; arg7/arg4 scores 5972. The original ranges still use their required unchanged bounds, and the overwritten input values have completed their lifetimes in each path. None removes the spill while preserving the target allocation. Restored the retained NON_MATCHING candidate and verified the ROM. The workbench compiler-law notes distinguish declared homes from expression temporaries and record conflicting measured frame rules, so frame size must be checked directly rather than inferred from declaration count alone: https://github.com/akratch/n64-decomp-workbench/blob/main/docs/compiler-laws/ido-5.3.md .
+
+### Terrain slope query: direct indexed accesses resolve the register swap
+
+`func_800FAA08_1099B8` now matches exactly. Removing the named cell-pointer local and expressing each height read directly through `D_80052A94[row].cells[column + offset].height` lets IDO share the address expression while keeping the signed delta as a named local. The shared cell address moves from a2 to the target a3, and the delta moves from a3 to the target a2. All 101 target instructions match, with no stack frame. This resolves the score-145 candidate described in the earlier terrain-slope trial notes.
+
+The direct indexed candidate was the first successful trial in this final revisit. Removing redundant `+ 0` indices and wrapping long subtraction expressions are verified separately by rebuilding. Keep the signed halfword casts on shifted coordinates; they preserve the target narrowing instructions. No new files or terrain layout changes are needed.

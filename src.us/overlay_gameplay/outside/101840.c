@@ -3090,13 +3090,10 @@ s16 func_800FA7F0_1097A0(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	return func_80003824_4424((f32)((f64)arg2 * 1.5), (f32)(h1 - h2));
 }
 
-#ifdef NON_MATCHING
-// CURRENT(145): all instructions match except the cell pointer and delta registers.
 s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 	s16 temp_v1;
 	s16 var_a0;
 	s16 var_v0;
-	TerrainCell *var_a3;
 	s16 diff;
 	s32 ret;
 	s32 temp_v0;
@@ -3104,11 +3101,11 @@ s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 	temp_v1 = arg0 & 0xFF;
 	temp_v0 = 0xFF - (s16)(arg1 & 0xFF);
 	if (temp_v0 < temp_v1) {
-		var_a3 = &D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8)];
-		diff = var_a3[0x100].height - var_a3[0x101].height;
+		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x100].height
+		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x101].height;
 	} else {
-		var_a3 = &D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8)];
-		diff = var_a3[0].height - var_a3[1].height;
+		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8)].height
+		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 1].height;
 	}
 	if (diff >= 0) {
 		var_a0 = diff;
@@ -3116,9 +3113,11 @@ s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 		var_a0 = -diff;
 	}
 	if (temp_v0 < temp_v1) {
-		diff = var_a3[1].height - var_a3[0x101].height;
+		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 1].height
+		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x101].height;
 	} else {
-		diff = var_a3[0].height - var_a3[0x100].height;
+		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8)].height
+		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x100].height;
 	}
 	if (diff >= 0) {
 		var_v0 = diff;
@@ -3132,10 +3131,6 @@ s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 	}
 	return ret;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FAA08_1099B8.s")
-#endif
 
 s16 func_800FAB9C_109B4C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 sp1C;
