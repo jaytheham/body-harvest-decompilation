@@ -10848,8 +10848,8 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 		spawnData = &D_80259490[127];
 
 		do {
-			x = (s16)((spawnData->unk0 << 8) + 0x80);
-			z = (s16)((spawnData->unk2 << 8) + 0x80);
+			x = ((spawnData->unk0 << 8) + 0x80);
+			z = ((spawnData->unk2 << 8) + 0x80);
 
 			if (spawnData->unk6 == 0) {
 				vehicle->unk20 &= 0xFFFF7FFF;
@@ -10867,9 +10867,9 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 
 				vehicle->unkE = -spawnData->unk8 + 0x4000;
 				vehicle->unk6 = -spawnData->unk8 + 0x4000;
-				vehicle->unk3C = (s16)((f64)(f32)(vehicleTypes[spawnData->unk6].unk61 << 8) * ((f64)(f32)spawnData->unkA / 100.0));
+				vehicle->unk3C = ((f32)(vehicleTypes[spawnData->unk6].unk61 << 8) * ((f32)spawnData->unkA / 100.0));
 
-				vehicle->unk1C = (s16)((f64)(f32)(u32)vehicleTypes[vehicle->unk1A].hitPoints * ((f64)(f32)spawnData->unk10 / 100.0));
+				vehicle->unk1C = ((f32)(u32)vehicleTypes[vehicle->unk1A].hitPoints * ((f32)spawnData->unk10 / 100.0));
 			}
 
 			vehicle--;
@@ -10887,8 +10887,8 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 
 					if (func_80112A64_121A14(arg0, arg1, vehicle->unk0, vehicle->unk4) < (range * range)) {
 						spawnData = &D_80259490[vehicle->unk46 & 0x3F];
-						x = (s16)((spawnData->unk0 << 8) + 0x80);
-						z = (s16)((spawnData->unk2 << 8) + 0x80);
+						x = ((spawnData->unk0 << 8) + 0x80);
+						z = ((spawnData->unk2 << 8) + 0x80);
 
 						if (spawnData->unk6 == 0) {
 							vehicle->unk20 &= 0xFFFF7FFF;
@@ -10907,9 +10907,9 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 
 							vehicle->unkE = -spawnData->unk8 + 0x4000;
 							vehicle->unk6 = -spawnData->unk8 + 0x4000;
-							vehicle->unk3C = (s16)((f64)(f32)(vehicleTypes[spawnData->unk6].unk61 << 8) * ((f64)(f32)spawnData->unkA / 100.0));
+							vehicle->unk3C = ((f32)(vehicleTypes[spawnData->unk6].unk61 << 8) * ((f32)spawnData->unkA / 100.0));
 
-							vehicle->unk1C = (s16)((f64)(f32)(u32)vehicleTypes[vehicleByI->unk1A].hitPoints * ((f64)(f32)spawnData->unk10 / 100.0));
+							vehicle->unk1C = ((f32)(u32)vehicleTypes[vehicleByI->unk1A].hitPoints * ((f32)spawnData->unk10 / 100.0));
 						}
 					}
 				}
