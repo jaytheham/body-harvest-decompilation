@@ -1,12 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-/* Message entries store an unused word before the string pointer. */
-typedef struct {
-	s32 pad;
-	u8 *name;
-} MessageEntry;
-
 extern const char D_800386D0_392D0[];
 extern const char D_800386E4_392E4[];
 extern const char D_80038700_39300[];

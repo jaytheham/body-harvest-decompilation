@@ -13,13 +13,11 @@ s32 func_80070270_7F220(s32 arg0) {
 	return 0;
 }
 
-// https://decomp.me/scratch/bBdJM
 void func_800702C0_7F270(s16 arg0) {
 	u32 referenceTick[1];
 	u32 currentTick;
 	u32 elapsedMicro;
 
-	/* Preserve IDO temporary allocation; these masks emit no instructions. */
 	arg0 &= 0xFFFF;
 	arg0 &= 0xFFFF;
 	arg0 &= 0xFFFF;

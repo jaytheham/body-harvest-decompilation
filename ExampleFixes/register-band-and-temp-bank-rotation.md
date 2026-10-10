@@ -323,3 +323,57 @@ move one or the other but never both - the 12-byte middle fixes the temp to `0x2
 at `0x58` and scores *worse* (78), and `s32 spPad[4]` overshoots to `0x60`. A body with an
 unverifiable marker (the committed `CURRENT(1550)` was unreproducible - the body did not compile) must
 be made to build before the marker means anything.
+
+
+## Map display-list pointer names and copied array values
+
+Further iterations on `func_800970C0_A6070` reduced the 160 register-only
+residual. Name the texture-image packet (`dl = D_8005BB2C++;` followed by
+`gDPSetTextureImage(dl, ...)`) while keeping the other SDK macros on
+`D_8005BB2C++`: **160 -> 90**. This assigns the column counter to `s0` and
+the vertex-buffer global address to `t5`, matching both target roles. Reuse
+that same `dl` for the following load-tile command: **90 -> 80**. The first
+two vertex pointers then match `a1` and `a2`, but the counter and buffer
+address revert to `t5` and `t4`. Distinct packet-pointer locals add stack
+pressure instead of combining the improvements. These are still unmatched
+drafts, with identical instruction order and stack homes.
+
+For `func_80097994_A6944`, with the translation/map-position/scale arrays
+and the matrix pointer declared in the inner block, replace
+`scale[0] = scale[1] = scale[2] = 0x100;` with:
+
+```c
+scale[2] = 0x100;
+scale[1] = scale[2];
+scale[0] = scale[2];
+```
+
+This changes **320 -> 130** and matches every instruction before the scale
+transform. All three target stack-store offsets also match. The remaining
+rows are register choices for the scale constant, matrix advance and final
+three graphics commands. Independent constant stores produce three loads
+of the same literal and score 915-923; copies through a vector struct also
+produce worse code. The array read/copy form influences temp allocation
+earlier in the function even though the writes themselves are near its end.
+
+Additional renderer variants did not improve 130: moving the matrix load
+and increment among the three scale stores yields 130 or 325; assigning
+a named scalar to all three scale elements produces three literal loads
+(score 923). Combining the two copy stores into one chained assignment
+scores 320-324, and partial chains combining one literal store and one
+copy score at best 130. A comma expression is neutral. Keep the separate
+array copies until a source form also fixes the constant register.
+
+Compiling the 80 map setup and 130 renderer drafts together leaves both
+scores unchanged. For the 80 map setup, s0 appears only in its save/restore
+pair: the counter has been assigned to t5 while the vertex global root is
+t4. Separate image/tile pointer locals add stack pressure even in disjoint
+blocks (1608); shadowing the same name is equivalent. Replacing either or
+both named SDK commands with raw word stores scores 1093 (w0 first) or
+worse. Reusing one pointer with both SDK macros remains the better draft.
+
+The renderer residual above is now closed: a single `& 0xFFFF` on either
+scale copy changes 130 -> 0 without an extra instruction. See
+[the verified mask note](halfword-mask-scale-vector-and-temp-registers.md).
+The earlier 130 discussion records the unsuccessful variants, not the
+current match status.

@@ -18,6 +18,10 @@ When a function computes two absolute values using separate `negu`+`slt`+`beqz` 
 
 m2c had transcribed the guard as `if (vehicleInstances[49].unk1C > 0)` where the ROM's condition is `<= 0`; flipping the operator emitted `bgtzl` and took **200 -> 0**, gate PASSED. **Rule:** when the sole differing row in a function's own range is a branch whose *condition* is inverted (`bgtz`/`blez`, `beq`/`bne`, `bltz`/`bgez` at the same address, same operands), an m2c-derived guess is the likely cause (m2c guesses sign/equality direction from the branch layout and is wrong about as often as it is right); flip the operator rather than hunting a register lever - and verify with `gate`, since a flipped condition is a real behaviour change.
 
+`func_800E95BC_F856C` is now fully matched. Its remaining scalar-step,
+scratch-variable, and loop-shape fixes are documented in
+[raycast-step-scratch-and-postdecrement-loop.md](raycast-step-scratch-and-postdecrement-loop.md).
+
 Full working pattern (`func_800AB730_BA6E0`):
 
 ```c

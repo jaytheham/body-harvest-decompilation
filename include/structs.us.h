@@ -15,6 +15,11 @@ typedef struct {
 
 #include <PR/sched.h>
 
+typedef union ShadowModelCommand {
+    Gwords words;
+    s8 bytes[8];
+} ShadowModelCommand;
+
 typedef struct MissionCommand {
     u8 opcode;
     u8 args[2];
@@ -266,9 +271,10 @@ typedef union {
 } Flags2x32; /* size = 0x08 */
 
 typedef struct {
-	s32 unk0;
-	u16 unk4;
-} Unk800A4354; /* stride 0x6 or 0x8 */
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ u16 unk4;
+} Unk800A4354; /* size = 0x06 */
 
 typedef struct {
 	/* 0x06 */ u8 unk6;
@@ -320,7 +326,7 @@ typedef struct {
 } Unk8004773C; /* size = 0x04 */
 
 typedef struct {
-	/* 0x00 */ void (*unk0)(s32, s32, s32, s32);
+	/* 0x00 */ void (*unk0)(s16, s16, s16, s16);
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ u8 pad6[2];
 	/* 0x08 */ f32 unk8;
@@ -2236,6 +2242,11 @@ typedef struct {
 	/* 0x04 */ s16 unk4;
 } Unk80052B40; /* size = 0x06 - Often seems to actually be Vtx */
 
+typedef union {
+	Unk80052B40 position;
+	s32 command[2];
+} MapMarkerScratch; /* size = 0x08 */
+
 typedef struct {
 	Unk80052B40 values[3];
 } AlienRenderScales;
@@ -3151,8 +3162,14 @@ typedef struct {
 	} unkC;
 } UnkProjectileCtrl_8012B26C;
 
+/* Message entries store an unused word before the string pointer. */
 typedef struct {
-	/* 0x00 */ s32 unk0; // Pointer to label string
+	/* 0x00 */ s32 pad;
+	/* 0x04 */ u8 *name;
+} MessageEntry; /* stride = 0x08 */
+
+typedef struct {
+	/* 0x00 */ const char *unk0; // Pointer to label string
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s32 minimum;
@@ -3318,6 +3335,12 @@ typedef struct {
 	/* 0x0E */ u8 padE[2];
 	/* 0x10 */ s32 secondsTaken;
 } SaveSummary; /* size = 0x14 */
+
+typedef struct BhGfxBuffer {
+	/* 0x00000 */ u8 header[0x280];
+	/* 0x00280 */ Gfx displayList[0x1C20];
+	/* 0x0E380 */ u8 remaining[0x14780];
+} BhGfxBuffer; /* size = 0x22B00 */
 
 typedef struct BhGfxTask_s {
 	/* 0x00 */ struct BhGfxTask_s *next;
