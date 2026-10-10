@@ -29,3 +29,13 @@ Declare the spilled Z difference between the two other float locals to place it 
 Assign maxSteer directly from `vehicleTypes[arg0->unk1A].unk48` before assigning the type pointer. IDO then stores the pointer before the float conversion and uses the controller-pointer move to fill its latency, eliminating an extra nop. Write negative stick scaling as `-arg1->stick_x * 80` or `* 40`; multiplication by -80/-40 uses AT for negation and shifts the subsequent temporary-register cycle. Keep the original stick and its absolute value in separate word locals.
 
 Three unused word declarations after type, maxSteer, and sp2C preserve their stack slots. Declare stickX, an unused halfword, trig, then absStickX to place the trig spill at sp+0x20. Negate the double cosine ratio before multiplying by sp2C to retain neg.d before mul.d. Cast the unsigned vehicle byte through u32 before float conversion to retain the target unsigned-conversion adjustment. Reuse a block-local double for the two damping constants and three velocity stores.
+
+## Companion airborne controller: paired lookups and flag reload
+
+`func_801047C8_113778` matches all 398 instructions without new files. Keep type and weapon-table pointer assignments first, then read maxSteer through `vehicleTypes[arg0->unk1A].unk48`, rather than `type->unk48`. IDO shares the vehicle lookup but schedules the halfword load early and assigns it t3, while the weapon index starts at t9. Reading maxSteer before both pointers also hoists the load, but changes the register cycle and pointer-store order.
+
+Reuse absStickX for the second controller absolute-value if/else; a separate word local selects v0 instead of a0. The explicit else preserves the redundant branch. Apply velocity acceleration before setting the airborne flag to interleave the weapon-table reload, flag read, short-to-float conversion, and flag store.
+
+Keep a word gap after maxSteer and another after sp2A, followed by a halfword gap before trig. This preserves sp2C at sp+0x2c, sp2A at sp+0x2a, and trig at sp+0x20. The four existing constants 0.9, 300, and the two separate 0.0833333333 values use ShadowGeometryConstant.value to preserve rodata addresses and FPR order. The two 0.97 constants remain arrays and share a block-local damping variable.
+
+Inside the negative-velocity clamp, read the flags through a volatile VehicleInstance view before clearing velocity. This retains the target redundant halfword reload, and the optimizer still uses the original s0 pointer. Only that second flag read needs volatility. The first read remains ordinary typed access. Full ROM verified OK.
