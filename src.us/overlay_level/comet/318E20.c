@@ -1372,14 +1372,11 @@ void func_802D60B8_31A208(void) {
 	func_800072CC_7ECC(0x2E);
 }
 
-// CURRENT(2000)
-#ifdef NON_MATCHING
 s32 func_802D6100_31A250(void) {
-	s32 sp20;
-	s32 levelIdx;
-	s16 sp24;
+	EffectRgb sp24;
+	SignedWord sp20;
 
-	sp24 = *(s16 *)((u8 *)&D_802E4F78_3290C8 + 2);
+	sp24 = D_802E4F78_3290C8;
 	sp20 = D_802E4F7C_3290CC;
 	switch (D_80157F8C) {
 	case 0:
@@ -1388,7 +1385,7 @@ s32 func_802D6100_31A250(void) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 1:
 		if (D_80157F8E == 1) {
 			func_800D6ADC_E5A8C(-0x3BF6, (s16)(func_800B84D0_C7480(-0x3BF6, 0x3840) >> 8), 0x3840, 0xC);
@@ -1398,17 +1395,14 @@ s32 func_802D6100_31A250(void) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 2:
-		levelIdx = currentLevel - 1;
-		D_800313FC = *(s16 *)((u8 *)D_80031636 + levelIdx * 4);
+		D_800313FC = D_80031634_32234[((currentLevel - 1) << 1) + 1];
 		return 1;
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D6100_31A250.s")
-#endif
+
 
 void func_802D624C_31A39C(void) {
 	if (func_8000726C_7E6C(0x2D) == 0) {
