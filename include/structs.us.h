@@ -2930,7 +2930,8 @@ typedef union {
 typedef struct {
 	/* 0x000 */ UnkF9230ShadowLimb limbs[9];
 	/* 0x144 */ u8 alienIdx;
-	/* 0x145 */ u8 pad145[0x23];
+	/* 0x145 */ u8 pad145[3];
+	/* 0x148 */ LookAt lookAt;
 	/* 0x168 */ u8 unk168;
 	/* 0x169 */ u8 pad169;
 	/* 0x16A */ s16 unk16A;
@@ -3525,6 +3526,11 @@ typedef struct {
 	/* 0xE9 */ InteriorRoomExit exitTable[3];
 	/* 0xEF */ u8 padEF[0x11];
 } InteriorRoomData; /* size = 0x100 */
+
+typedef union {
+    u8 bytes[0x80];
+    Lights2 lights;
+} InteriorLightData;
 
 // AI - Interior lighting/color data (D_8008DE78_175F38): 8 s16 color/brightness components
 typedef struct {

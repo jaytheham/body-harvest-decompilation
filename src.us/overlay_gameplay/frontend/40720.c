@@ -955,9 +955,7 @@ void func_800722A4_42754(void) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_800942A8_64758, 1);
-	gSPLight(D_8005BB2C++, &D_800942A0_64750, 2);
+	gSPSetLights1(D_8005BB2C++, D_800942A0_64750);
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
 }
@@ -1778,10 +1776,7 @@ void func_80075D58_46208(s32 arg0) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 4);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 4);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0xFFFC);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0xFFFC);
+	gSPClipRatio(D_8005BB2C++, FRUSTRATIO_4);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
@@ -1809,8 +1804,7 @@ void func_80075D58_46208(s32 arg0) {
 	guLookAtReflect(D_8005BB38, &D_800D78E0[D_80031B84_32784], 0.0f, 300.0f, 370.0f,
 								(float)D_80052B40.unk0, (float)D_80052B40.unk2, (float)D_80052B40.unk4,
 								0.0f, 1.0f, 0.0f);
-	gSPLookAtX(D_8005BB2C++, &D_800D78E0[D_80031B84_32784].l[0]);
-	gSPLookAtY(D_8005BB2C++, &D_800D78E0[D_80031B84_32784].l[1]);
+	gSPLookAt(D_8005BB2C++, &D_800D78E0[D_80031B84_32784]);
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, D_4050010);
@@ -1828,8 +1822,7 @@ void func_80075D58_46208(s32 arg0) {
 	guLookAtReflect((Mtx *)D_8005BB38, &D_800D7920[D_80031B84_32784], 0.0f, 300.0f, 370.0f,
 								(float)D_80052B40.unk0, (float)D_80052B40.unk2, (float)D_80052B40.unk4,
 								0.0f, 1.0f, 0.0f);
-	gSPLookAtX(D_8005BB2C++, &D_800D7920[D_80031B84_32784].l[0]);
-	gSPLookAtY(D_8005BB2C++, &D_800D7920[D_80031B84_32784].l[1]);
+	gSPLookAt(D_8005BB2C++, &D_800D7920[D_80031B84_32784]);
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, D_40519B0);
@@ -3928,7 +3921,6 @@ void func_8007A038_4A4E8(void) {
 	s32 step;
 	s16 intensity;
 	s16 blend;
-	Light *lookAtLights[2];
 
 	*(DListPtrsCopy *)dlistPtrs = *(DListPtrsCopy *)D_800948C0_64D70;
 
@@ -3948,8 +3940,6 @@ void func_8007A038_4A4E8(void) {
 	timer = 0x1F3;
 	step = 0x1F4;
 
-	lookAtLights[0] = &lookAt.l[0];
-	lookAtLights[1] = &lookAt.l[1];
 
 	if (step != 0) {
 		for (;;) {
@@ -3983,8 +3973,7 @@ void func_8007A038_4A4E8(void) {
 		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
 
 		guLookAtReflect((Mtx *)D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-		gSPLookAtX(D_8005BB2C++, lookAtLights[0]);
-		gSPLookAtY(D_8005BB2C++, lookAtLights[1]);
+		gSPLookAt(D_8005BB2C++, &lookAt);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
@@ -4181,10 +4170,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 4);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 4);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0xFFFC);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0xFFFC);
+	gSPClipRatio(D_8005BB2C++, FRUSTRATIO_4);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
@@ -4194,9 +4180,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	gDPPipeSync(D_8005BB2C++);
 	gDPPipeSync(D_8005BB2C++);
-	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_800942C0_64770, 1);
-	gSPLight(D_8005BB2C++, &D_800942B8_64768, 2);
+	gSPSetLights1(D_8005BB2C++, D_800942B8_64768);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
 
@@ -5349,8 +5333,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 			if ((flags & 4) != 0) {
 				guLookAtReflect((Mtx *)D_8005BB38, &D_800D7978[lookAtIndex], D_800D7A18[4], D_800D7A18[5], *(f32*)&D_800D7A18[6],
 						D_800D7A1C[i].unkC, D_800D7A1C[i].unkE, D_800D7A1C[i].unk10, 0.0f, 1.0f, 0.0f);
-				gSPLookAtX(D_8005BB2C++, &D_800D7978[lookAtIndex].l[0]);
-				gSPLookAtY(D_8005BB2C++, &D_800D7978[lookAtIndex].l[1]);
+				gSPLookAt(D_8005BB2C++, &D_800D7978[lookAtIndex]);
 				flags = D_800D7A1C[i].unk20;
 				lookAtIndex = (lookAtIndex + 1) & 0xFF;
 			}

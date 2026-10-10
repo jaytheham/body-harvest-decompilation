@@ -842,7 +842,8 @@ s32 arg1;
 		D_8006C56C = (D_8006C56C + 1) % 6; break;
 	}
 	cnt++; gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_80264B00[D_8006C56C]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPLoadTileGeneric(D_8005BB2C++, G_TEXRECT, G_TX_RENDERTILE, (arg0 + 0x12) << 2, (arg1 + 0x12) << 2, arg0 * 4, arg1 * 4); D_800344A8_350A8 = cnt; gImmp1(D_8005BB2C++, G_RDPHALF_1, 0); gImmp1(D_8005BB2C++, G_RDPHALF_2, 0x05550555);
+	gSPTextureRectangle(D_8005BB2C++, (arg0 + 0x12) << 2, (arg1 + 0x12) << 2, arg0 * 4, arg1 * 4, G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
+	D_800344A8_350A8 = cnt;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
