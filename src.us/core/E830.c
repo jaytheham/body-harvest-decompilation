@@ -2,10 +2,6 @@
 #include <ultra64.h>
 #include "common.h"
 
-/* Read-only strings, numeric constants, and switch targets. */
-const f64 D_80037620_38220[] = {32767.0};
-
-void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3);
 
@@ -74,42 +70,37 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 	while (new_var != (1 * 0));
 }
 
-#ifdef NON_MATCHING
+/* Rotate the projection coordinates and attenuate them by the distortion angle. */
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-  s32 sp54;
-  s32 sp50;
-  s32 temp_a1;
-  s32 temp_t1;
-  s32 var_s1;
-  s32 sp40;
-  f32 temp_f12;
-  s32 pad38;
-  s16 sp36;
-  s16 temp_v0;
-  sp54 = D_80059CD2;
-  sp50 = D_80059CD4;
-  temp_t1 = ((D_8005BAEC * D_8005BAEC) + (D_8005BAF0 * D_8005BAF0)) / 4;
-  temp_a1 = (sp54 * sp54) + (sp50 * sp50);
-  var_s1 = (((D_80059CD0 * 2) * (temp_t1 - temp_a1)) + (D_80059CD0 * temp_a1)) / 1296;
-  
-  sp36 = coss(var_s1);
+    s32 x;
+    s32 y;
+    s32 radiusSquared;
+    s32 screenRadiusSquared;
+    s32 angle;
+    s32 rotatedX;
+    f32 scale;
+    s32 pad38;
+    s16 trig;
+    s16 cosine;
 
+    x = D_80059CD2;
+    y = D_80059CD4;
+    screenRadiusSquared = (D_8005BAEC * D_8005BAEC + D_8005BAF0 * D_8005BAF0) / 4;
+    radiusSquared = x * x + y * y;
+    angle = (D_80059CD0 * 2 * (screenRadiusSquared - radiusSquared) + D_80059CD0 * radiusSquared) / 1296;
 
-  sp40 = ((((f32) sins(var_s1) / 32768.0) * sp50) + ((((f32) sp36) / 32768.0) * sp54));
-  sp36 = sins(var_s1);
-  temp_v0 = coss(var_s1);
-  if (var_s1 >= 0x8000)
-  {
-	var_s1 = 0x7FFF;
-  }
-  temp_f12 = (32767.0 - (f32) var_s1) / 32767.0;
-  D_80059CD2 = ((((f32) sp40) * temp_f12));
-  D_80059CD4 = (((((s32) (((((f32) temp_v0) / 32768.0) * sp50) + (-(((f32) sp36) / 32768.0) * sp54)))) * temp_f12));
+    trig = coss(angle);
+    rotatedX = ((f32) sins(angle) / 32768.0) * y + ((f32) trig / 32768.0) * x;
+    trig = sins(angle);
+    cosine = coss(angle);
+    if (angle >= 0x8000) {
+        angle = 0x7FFF;
+    }
+    scale = (32767.0 - (f32) angle) / 32767.0;
+    D_80059CD2 = rotatedX * scale;
+    D_80059CD4 = (s32) (((f32) cosine / 32768.0) * y + -((f32) trig / 32768.0) * x) * scale;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000DCCC_E8CC.s")
-#endif
 
 // https://decomp.me/scratch/5eScw
 /* Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate. */

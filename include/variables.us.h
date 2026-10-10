@@ -483,7 +483,6 @@ extern const f32 D_80037578_38178[];
 extern const f64 D_80037580_38180[];
 extern const f64 D_80037600_38200[];
 extern const f64 D_80037610_38210[];
-extern const f64 D_80037620_38220[];
 extern const char D_80037660_38260[]; /* osSyncPrintf format string */
 extern const char D_8003767C_3827C[]; /* osSyncPrintf format string */
 extern const char D_80037694_38294[]; /* osSyncPrintf format string */
