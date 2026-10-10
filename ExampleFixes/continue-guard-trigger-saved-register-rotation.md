@@ -34,3 +34,18 @@ Stack layout required declaring `u8 i` before the 16-byte trigger copy, and decl
 Also verify switch case numbers against the original jump table. Incorrect numbers can leave the function instruction diff unchanged while the ROM still differs in rodata. Here the existing cases needed remapping, and the placeholder jump table was removed when enabling C compilation.
 
 Validation: `tools/make.ps1` reported `build/bh.us.z64: OK`; `tools/diff.ps1 func_800AE6CC_BD67C func_800AEBC4_BDB74 --show-score` reported zero.
+
+## Dead-vehicle renderer: guarded residual after follow-up
+
+`func_80101C14_110BC4` remains NON_MATCHING at its existing score 110 after 39 additional valid builds. All 184 instructions and the 0x48 frame agree in shape and order. The remaining bijection is scale constant 256 (target s5, current s7), countdown (target s6, current s5), and byte-array cursor (target s7, current s6). Every other register agrees.
+
+Individually replacing each of the nine continue guards with an inverted positive conditional body leaves this bijection unchanged. Fully nesting the guards scores 120, with an additional temporary difference. Signed/unsigned/int/long/register counter declarations, a word pad, a scoped counter, for syntax, unsigned-halfword or long scale literals, removal of scale casts, same-line scale stores, and a scale local declared inside the loop do not improve allocation. A function-scope scale local changes the stride calculation and most saved registers (2965); unsigned scale arithmetic scores 695. A do/while counter or guarded do/while scores 305 by moving the initial counter setup. Explicit nonnegative countdowns, predecrement indexing, and a perpetual loop with break change the instruction structure substantially. if(1) around the whole initialized loop is inert; placing it between initialization and the loop scores 900. Removing the helper radius cast changes its unsigned load to a signed load and scores 310. Keep the unsigned radius cast.
+
+One attempted for-body variant placed a decrement before block declarations and failed C89 compilation; it was excluded from the valid-build count and no stale diff was used. Restored the existing guarded candidate after this follow-up; the full ROM reports OK and no files were created.
+
+
+### Renderer scale lifetime follow-up
+
+Twenty more compiled variants of `func_80101C14_110BC4` retain the best score 110. A named scale initialized to 256 at function entry or loop entry scores 2965 for signed/unsigned halfwords and const-qualified signed word/halfword locals. Declaring a signed halfword, unsigned halfword, or signed word scale in the loop and assigning it immediately before `func_800FFD28_10ECD8` also scores 2965; assigning it immediately after that call returns to 110. The lifetime across the call, rather than scale storage width, is the distinguishing factor.
+
+Renaming the countdown, enclosing the scale/draw tail in a block, and moving vehicle/type locals to function scope in three declaration orders leave 110 unchanged. Spelling each scale expression as `0x100 - (s32)(vehicle->unk1E * 2)` also leaves 110. No candidate resolves the scale/countdown/cursor saved-register rotation, and none is retained over the simpler baseline. Restored its NON_MATCHING wrapper and verified `build/bh.us.z64: OK`; no files were created.

@@ -241,7 +241,8 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-} Unk8010ED84Pos; /* size = 0x06 */
+	/* 0x06 */ u16 unk6;
+} Unk8010ED84Pos; /* size = 0x08 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -252,7 +253,10 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 pad[0xC];
 	/* 0x0C */ s16 unkC;
-} Unk8010ED84Data; /* size = 0x0E */
+	/* 0x0E */ u8 padE[0x26];
+	/* 0x34 */ s16 unk34;
+	/* 0x36 */ s16 unk36;
+} Unk8010ED84Data; /* size = 0x38 */
 typedef struct {
 	/* 0x00 */ u8 pad0[0x34];
 	/* 0x34 */ s16 unk34;
@@ -1525,7 +1529,9 @@ typedef struct {
 	/* 0x60 */ u8 unk60;
 	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
 	/* 0x62 */ u8 unk62;
-	/* 0x63 */ u8 pad63[0x7];
+	/* 0x63 */ u8 pad63[3];
+	/* 0x66 */ s16 unk66;
+	/* 0x68 */ u8 pad68[2];
 	/* 0x6A */ s16 unk6A;
 	/* 0x6C */ u8 pad6C[0x4];
 } VehicleType; /* size = 0x70 */
@@ -1543,7 +1549,8 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ u8 pad04[4];
+	/* 0x04 */ s16 unk4;
+	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 } WeaponSpecEntry; /* size = 0xA */
 
@@ -2251,9 +2258,10 @@ typedef struct {
 } Unk80052B48; /* size = 0x06 */
 
 typedef struct {
-	/* 0x00 */ u8 unk0[8];
+	/* 0x00 */ u32 displayList;
+	/* 0x04 */ u32 transform;
 	/* 0x08 */ Unk80052B40 unk8;
-	/* 0x0E */ u8 pad0[2];
+	/* 0x0E */ s16 flags;
 } Unk8013FDA8Entry; /* size = 0x10 */
 
 typedef struct {
@@ -2924,6 +2932,12 @@ typedef union {
 		/* 0x22 */ u8 unk22;
 		/* 0x23 */ u8 unk23;
 	};
+	struct {
+		/* 0x00 */ s32 x;
+		/* 0x04 */ s32 z;
+		/* 0x08 */ s32 anchorX;
+		/* 0x0C */ s32 anchorZ;
+	} position;
 	s32 words[9];
 } UnkF9230ShadowLimb; /* size = 0x24 */
 
@@ -3794,5 +3808,9 @@ typedef struct {
 	f32 x, y, z;
 	f32 rightX, rightY, rightZ;
 } CameraBasis;
+
+typedef struct {
+	f64 value;
+} ShadowGeometryConstant;
 
 #endif /* LIBULTRA_REFERENCE */
