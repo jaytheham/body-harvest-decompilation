@@ -3023,8 +3023,8 @@ extern u8 D_8025F780;
 extern u8 D_80260500[];
 extern u8 D_80260700[128][128]; // Landscape colors
 extern TerrainPaletteColor D_80264700[256]; // Landscape palettes
-extern u8 D_80264B00[];
-extern u8 D_80265880[];
+extern u8 D_80264B00[6][24][24];
+extern u16 D_80265880[256];
 extern u8 D_80265A80[];
 extern u8 D_80266E80[];
 extern s16 D_80267080[];
