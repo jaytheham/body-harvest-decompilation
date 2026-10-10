@@ -823,22 +823,21 @@ void func_800970C0_A6070(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
 #endif
 
-// CURRENT(11232)
-#ifdef NON_MATCHING
 void func_80097444_A63F4(s16 arg0, s16 arg1) {
 	Vtx_t *vtx0;
 	Vtx_t *vtx1;
 	Vtx_t *vtx2;
 	Vtx_t *vtx3;
-	u32 addrMask;
-	Unk80052B40 base;
-	Unk80052B40 pos;
+
+	s32 col;
 	u32 row;
-	u32 col;
 	s32 loopLimit;
-	s32 stepAbs;
+
 	s32 xStep;
-	s16 y;
+	s32 y;
+	Unk80052B40 pos;
+	Unk80052B40 base;
+	s32 stepAbs;
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
@@ -862,59 +861,52 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 			loopLimit = 1;
 			stepAbs = 5;
 		}
-		xStep = -stepAbs;
 
 		y = ((4 - row) << 8) + 0x80;
-		for (col = 0; col < loopLimit; col++) {
+		for (xStep = -stepAbs, col = 0; col < loopLimit; col++) {
 			pos.unk0 = (xStep << 8) + 0x80;
 			pos.unk2 = y;
 			pos.unk4 = 0x32;
 
-			func_800039D0_45D0(&pos, &base, NULL, D_8005BB38);
+			func_800039D0_45D0(&pos, &base, NULL, (s32)D_8005BB38);
 
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			vtx0 = D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx0 + 1);
-			vtx1 = D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx1 + 1);
-			vtx2 = D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx2 + 1);
-			vtx3 = D_8005BB34;
-			D_8005BB34 = (Vtx *) (vtx3 + 1);
-			D_8005BB38 += 0x40;
+			vtx0 = &D_8005BB34->v;
+			D_8005BB34++;
+			vtx1 = &D_8005BB34->v;
+			D_8005BB34++;
+			vtx2 = &D_8005BB34->v;
+			D_8005BB34++;
+			vtx3 = &D_8005BB34->v;
+			D_8005BB34++;
 
-			vtx0->unk0 = -0x40;
-			vtx0->unk2 = -0x40;
-			vtx0->unk4 = 0;
-			vtx1->unk0 = 0x40;
-			vtx1->unk2 = -0x40;
-			vtx1->unk4 = 0;
-			vtx2->unk0 = -0x40;
-			vtx2->unk2 = 0x40;
-			vtx2->unk4 = 0;
-			vtx3->unk0 = 0x40;
-			vtx3->unk2 = 0x40;
-			vtx3->unk4 = 0;
+			vtx0->ob[0] = -0x40;
+			vtx0->ob[1] = -0x40;
+			vtx0->ob[2] = 0;
+			vtx1->ob[0] = 0x40;
+			vtx1->ob[1] = -0x40;
+			vtx1->ob[2] = 0;
+			vtx2->ob[0] = -0x40;
+			vtx2->ob[1] = 0x40;
+			vtx2->ob[2] = 0;
+			vtx3->ob[0] = 0x40;
+			vtx3->ob[1] = 0x40;
+			vtx3->ob[2] = 0;
 
-			vtx0->unk8 = -0x20;
-			vtx0->unkA = 0x07E0;
-			vtx2->unk8 = -0x20;
-			vtx2->unkA = -0x20;
-			vtx3->unk8 = 0x07E0;
-			vtx3->unkA = -0x20;
-			vtx1->unk8 = 0x07E0;
-			vtx1->unkA = 0x07E0;
+			vtx0->tc[0] = -0x20;
+			vtx0->tc[1] = 0x07E0;
+			vtx2->tc[0] = -0x20;
+			vtx2->tc[1] = -0x20;
+			vtx3->tc[0] = 0x07E0;
+			vtx3->tc[1] = -0x20;
+			vtx1->tc[0] = 0x07E0;
+			vtx1->tc[1] = 0x07E0;
 
 			if (row == 0) {
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
 								   K0_TO_PHYS(((u32 *) D_8013D4CC_14C47C)[col]));
-			} else {
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
-								   K0_TO_PHYS(((u32 *) D_8013D4E8_14C498)[row]));
-			}
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPLoadSync(D_8005BB2C++);
@@ -924,6 +916,20 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+			} else {
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1,
+								   K0_TO_PHYS(((u32 *) D_8013D4E8_14C498)[row]));
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+			}
 
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
 			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
@@ -936,10 +942,6 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80097444_A63F4.s")
-#endif
-
 // draw 3d adam on map
 // CURRENT(1388)
 #ifdef NON_MATCHING
