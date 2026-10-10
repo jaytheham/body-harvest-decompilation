@@ -263,7 +263,7 @@ const f64 D_80144D60_153D10[1] = {0.33};
 
 const f64 D_80144D68_153D18[1] = {1.1};
 
-const f64 D_80144D70_153D20[1] = {0.73};
+const ShadowGeometryConstant D_80144D70_153D20 = {0.73};
 
 const f64 D_80144D78_153D28[1] = {0.9};
 
@@ -11193,12 +11193,10 @@ void func_80113310_1222C0(VehicleInstance *arg0) {
 	}
 }
 
-// CURRENT(2944)
-#ifdef NON_MATCHING
 s32 func_80113808_1227B8(VehicleInstance *arg0) {
 	f32 temp_f0;
-	f32 temp_f2;
 	f32 sp28;
+	f32 temp_f2;
 	s32 var_a2;
 
 	var_a2 = 0;
@@ -11228,16 +11226,16 @@ s32 func_80113808_1227B8(VehicleInstance *arg0) {
 				}
 			} else {
 				temp_f0 = D_80159194;
-				sp28 = arg0->unk54 - D_80159198;
 				temp_f2 = arg0->unk4C - temp_f0;
+				sp28 = arg0->unk54 - D_80159198;
 				if ((var_a2 == 5) || (var_a2 == 6) || (var_a2 == 8) || (var_a2 == 9)) {
 					if (arg0 == D_80052B34) {
-						func_800FB44C_10A3FC(arg0, (temp_f2 / 2.0f) + temp_f0);
+						func_800FB44C_10A3FC(arg0, (temp_f2 / 2) + temp_f0);
 						func_800FB484_10A434(arg0, D_80159198);
 						var_a2 = func_80110FB4_11FF64(arg0, 1);
 						if (var_a2 != 0) {
 							func_800FB44C_10A3FC(arg0, D_80159194);
-							func_800FB484_10A434(arg0, (sp28 / 2.0f) + D_80159198);
+							func_800FB484_10A434(arg0, (sp28 / 2) + D_80159198);
 							var_a2 = func_80110FB4_11FF64(arg0, 1);
 						}
 					}
@@ -11259,7 +11257,7 @@ s32 func_80113808_1227B8(VehicleInstance *arg0) {
 					if (temp_f0 > 8.0f) {
 						D_80158C52 = (s16)(s32)((f32)D_80158C52 + (temp_f0 * 121.0f));
 					} else {
-						func_800FB430_10A3E0(arg0, (f32)((f64)temp_f0 * D_80144D70_153D20));
+						func_800FB430_10A3E0(arg0, (f32)((f64)temp_f0 * D_80144D70_153D20.value));
 					}
 				}
 			}
@@ -11281,19 +11279,23 @@ s32 func_80113808_1227B8(VehicleInstance *arg0) {
 
 		switch (var_a2) {
 			case 2:
-				func_800FB430_10A3E0(arg0, (f32)(-((s16)arg0->unk12 >> 4)));
+				func_800FB430_10A3E0(arg0, (f32)(-(arg0->unk12 >> 4)));
 				arg0->unk30 = (f32)((f64)arg0->unk30 * 0.9375);
 				arg0->unk34 = (f32)((f64)arg0->unk34 * 0.9375);
 				arg0->unk38 = (f32)((f64)arg0->unk38 * 0.9375);
 				break;
 
-			case 3:
-				func_800FB430_10A3E0(arg0, (f32)((f64)arg0->unk12 * D_80144D78_153D28));
-				arg0->unk30 = (f32)((f64)arg0->unk30 * D_80144D80_153D30);
-				arg0->unk34 = (f32)((f64)arg0->unk34 * D_80144D80_153D30);
-				arg0->unk38 = (f32)((f64)arg0->unk38 * D_80144D80_153D30);
+			case 3: {
+				f64 damping;
+				damping = D_80144D78_153D28[0];
+				func_800FB430_10A3E0(arg0, (f32)((f64)arg0->unk12 * damping));
+				damping = D_80144D80_153D30[0];
+				arg0->unk30 = (f32)((f64)arg0->unk30 * damping);
+				arg0->unk34 = (f32)((f64)arg0->unk34 * damping);
+				arg0->unk38 = (f32)((f64)arg0->unk38 * damping);
 				break;
 
+			}
 			case 10:
 				break;
 
@@ -11312,9 +11314,6 @@ s32 func_80113808_1227B8(VehicleInstance *arg0) {
 	return 0;
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80113808_1227B8.s")
-#endif
 
 // CURRENT(40782)
 #ifdef NON_MATCHING
