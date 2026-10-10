@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-10T08:17:59Z",
-  "commit": "2a16ebb2",
-  "commit_timestamp": "2026-10-10T21:06:48+13:00",
+  "generated": "2026-10-10T09:33:06Z",
+  "commit": "c7bedee5",
+  "commit_timestamp": "2026-10-10T22:32:16+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 2429,
-    "non_matching": 628,
+    "matched": 2444,
+    "non_matching": 613,
     "asm_stubs": 0,
-    "matched_pct": 79.46,
+    "matched_pct": 79.95,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -85,11 +85,11 @@
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
-      "matched": 83,
-      "non_matching": 39,
+      "matched": 98,
+      "non_matching": 24,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 68.0,
+      "matched_pct": 80.3,
       "decompiled_pct": 100.0
     },
     "libultra": {
@@ -2506,12 +2506,12 @@
     {
       "path": "overlay_level/comet/318E20.c",
       "segment": "overlay_level/comet",
-      "matched": 83,
-      "non_matching": 39,
+      "matched": 98,
+      "non_matching": 24,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 68.0,
-      "contributor": "lunarlaurus"
+      "matched_pct": 80.3,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_level/comet/alien_types.c",
@@ -2587,16 +2587,16 @@
   "contributors": [
     {
       "name": "lunarlaurus",
-      "files": 19,
-      "matched": 1061,
-      "non_matching": 395,
+      "files": 18,
+      "matched": 978,
+      "non_matching": 356,
       "asm_stubs": 0
     },
     {
       "name": "Jay",
-      "files": 156,
-      "matched": 683,
-      "non_matching": 71,
+      "files": 157,
+      "matched": 781,
+      "non_matching": 95,
       "asm_stubs": 0
     },
     {
@@ -2869,9 +2869,9 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "91dde92",
-      "matched": 2429,
-      "non_matching": 628,
+      "commit": "e2ecf6f",
+      "matched": 2444,
+      "non_matching": 613,
       "total": 3057
     }
   ]
