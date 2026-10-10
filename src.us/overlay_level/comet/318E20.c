@@ -4538,42 +4538,39 @@ void func_802E0104_324254(VehicleInstance *vehicle) {
 
 void func_802E015C_3242AC(Unk80222A78 *vehicle);
 
-// CURRENT(22) - residual is the frame alone (ours 0x38, target 0x30) and the
-// alien spill home it sets (0x1C vs 0x18); every other instruction matches
-// register-for-register. See NOTES.md - the bank and the frame are one lever.
-#ifdef NON_MATCHING
 void func_802E015C_3242AC(Unk80222A78 *vehicle) {
-	s32 u, v;
-	s32 du, dv;
 	AlienInstance *alien;
-	u8 typeIndex;
+	s32 pad;
+	s32 u, v;
 
-	typeIndex = vehicle->unk8;
-	alien = &alienInstances[typeIndex];
+	{
+		u8 typeIndex;
+		typeIndex = vehicle->unk8;
+		alien = &alienInstances[typeIndex];
+	}
 
 	u = (vehicle->unk1 << 8) + 0x80;
 	v = (vehicle->unk2 << 8) + 0x80;
 
 	alien->unk0 = u;
 	alien->unk4 = v;
-	alien->unk2 = (s16)(alien->unk2 + 0x8000);
-	alien->unk20 = (s32)(alien->unk20 | ALIEN_FLAG_UNKO);
+	alien->unk2 = alien->unk2 + 0x8000;
+	alien->unk20 = alien->unk20 | ALIEN_FLAG_UNKO;
 
-	vehicle->unk4 = (s32)(vehicle->unk4 + 9);
+	vehicle->unk4 = vehicle->unk4 + 9;
 	vehicle->unkC = (void (*)(void *))func_802E0104_324254;
 
 	func_800AE454_BD404(vehicle);
 
-	du = D_80052B34->unk0 - alien->unk0;
-	dv = D_80052B34->unk4 - alien->unk4;
+	u = D_80052B34->unk0 - alien->unk0;
+	v = D_80052B34->unk4 - alien->unk4;
 
-	alien->unkE = func_80003824_4424((f32)du, (f32)dv);
+	u = func_80003824_4424((f32)u, (f32)v);
+	alien->unkE = u;
 
 	alien->unk3A = 0xFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E015C_3242AC.s")
-#endif
+
 
 // CURRENT(5588)
 #ifdef NON_MATCHING
