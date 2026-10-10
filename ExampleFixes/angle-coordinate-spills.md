@@ -28,3 +28,7 @@ In Siberia func_802DA4CC_2BC8FC, extracting chained node indices into separate l
 ## Mask rotation bits before shifting
 
 In func_802D6CA0_2B90D0, (buildingInstances[buildingType].unk8 & 3) << 14 produces the same shift and final mask instructions as (buildingInstances[buildingType].unk8 << 14) & 0xFFFF, but assigns the raw building word to t1 instead of v1. This resolved the last two register differences. Keep the rotated coordinate as s32: narrowing it to s16 adds an mfc1/sh sequence instead of spilling the floating conversion directly with swc1. Reusing the same s16 trig local for the first cosine and second sine also preserves their shared stack slot.
+
+## Separate heading deltas from later distance
+
+In func_802D9BFC_2BC02C, use a dedicated s32 distance for the result of func_80084E54_93E04 and its later comparisons. Reusing the heading delta changes the spill slot. Promote the first chained node index to a named s32, as in matched func_802DFF84_3240D4. Let IDO spill ground height and distance across calls instead of assigning manual backup temporaries. Removing the explicit 0xFFFF mask on the sins argument allows the multiplication's final shift to reuse its working register; the u16 parameter still produces the target mask.
