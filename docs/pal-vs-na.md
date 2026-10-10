@@ -22,16 +22,19 @@ Same shape: identical segment order, the same overlays. The main code region is
 **0x30 bytes (12 words) longer** in PAL, so everything after it moves up by that
 amount in RAM.
 
-That shift is a single insertion, not cumulative drift. `tools/pal_na_diff.py`
-derives the insert point from the ROMs (currently NTSC `0x7E04`) and compares
-word by word:
+That shift is a single insertion, not cumulative drift. Measured agreement per
+1 KiB window across core:
 
-- Before the insert, PAL holds the NTSC bytes at the same offset.
-- At or after it, PAL holds them 0x30 later. Every NTSC subsegment boundary at
-  or after `0xAD60` shifts by +0x30; all 254 were remapped that way and the
-  result builds matching.
-- The region just before the insert, roughly NTSC `0x79DC`–`0x7E04`, is where
-  the rewrite lives: there PAL differs at both offsets.
+| NTSC range | mapping |
+|---|---|
+| `0x001000`–`0x007800` | same offsets (85% word identical; the rest are data addresses) |
+| `0x007C00`–`0x00AC00` | **reorganised** — neither offset matches (agreement drops to under 10%) |
+| `0x00AC00` onward | NTSC + 0x30 |
+
+So PAL rewrote roughly 12 KiB at NTSC `0x7C00`–`0xAC00`, which is both where the
+0x30 comes from and where the differing functions are. Every NTSC subsegment
+boundary at or after `0xAD60` shifts by +0x30; all 254 were remapped that way
+and the result builds matching.
 
 RAM-side windows in `bh.eu.yaml` already agree with this shift: the gameplay
 overlay window is `0x800702A0` (NTSC `0x80070270`, +0x30) and the level window is
@@ -78,7 +81,10 @@ listed in `docs/pal-na-diff.txt`; the largest are:
 
 `func_80006DDC_79DC` is the known rewrite: 143 of its 144 words differ, starting
 at its very first instruction, so it is different code and not a recompilation
-of the same source. The remaining differences cluster in NTSC `0x7ECC`–`0x9EE8`.
+of the same source. All 35 `DIFF` functions fall inside the reorganised band
+(`0x7ECC`–`0x9EE8`, plus `0xAC24`); nothing differs anywhere else in core. That
+band is confirmed to be code and not data misread: the functions begin with real
+prologues (`addiu $sp,$sp,-0x1F0`) and carry 6–21% branch density.
 
 Separately, the differing libultra/libgcc pieces `_timeToSamples`,
 `alAudioFrame`, `guPerspectiveF` and `sinf` are **intentional regional
