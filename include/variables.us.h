@@ -1077,19 +1077,47 @@ extern s32 D_8005BB3C;
 extern s32 D_8005BB40;
 extern s32 D_8005BB48[]; // ptr to framebuffer A
 extern s32 D_8005BB4C[]; // ptr to framebuffer B
-extern s32 D_8005BB50;
+#ifdef CORE_FD80_BSS
+u64 D_8005BB50;
+#else
+extern u64 D_8005BB50;
+#endif
 extern s32 D_8005BB54;
-extern s32 D_8005BF58;
+#ifdef CORE_FD80_BSS
+u64 D_8005BF58;
+#else
+extern u64 D_8005BF58;
+#endif
 extern s32 D_8005BF5C;
-extern void *D_8005C760;
+#ifdef CORE_FD80_BSS
+u64 D_8005C760;
+#else
+extern u64 D_8005C760;
+#endif
 extern s32 D_8005C764;
-extern u8 D_8005CF68[];
+#ifdef CORE_FD80_BSS
+u64 D_8005CF68;
+#else
+extern u64 D_8005CF68;
+#endif
 extern s32 D_8005CF6C;
-extern u8 D_80064F70[];
+#ifdef CORE_FD80_BSS
+u64 D_80064F70;
+#else
+extern u64 D_80064F70;
+#endif
 extern s32 D_80064F74;
-extern s32 D_80065F78;
+#ifdef CORE_FD80_BSS
+u64 D_80065F78;
+#else
+extern u64 D_80065F78;
+#endif
 extern s32 D_80065F7C;
-extern u8 D_80066780[];
+#ifdef CORE_FD80_BSS
+u64 D_80066780;
+#else
+extern u64 D_80066780;
+#endif
 extern s32 D_80066784;
 extern OSThread D_80067388;
 extern OSThread D_80067388;
@@ -1124,7 +1152,11 @@ extern f32 D_80068094;
 extern f32 D_80068098;
 extern s32 D_8006809C;
 extern OSSched D_800680A0;
-extern s32 D_80068328;
+#ifdef CORE_FD80_BSS
+u64 D_80068328;
+#else
+extern u64 D_80068328;
+#endif
 extern s32 D_8006832C;
 extern OSIoMesg D_8006A330[];
 extern OSMesg D_8006A7E0[];

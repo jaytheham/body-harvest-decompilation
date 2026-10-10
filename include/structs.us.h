@@ -3310,6 +3310,12 @@ typedef struct {
 	/* 0x10 */ s32 secondsTaken;
 } SaveSummary; /* size = 0x14 */
 
+typedef struct BhGfxBuffer {
+	/* 0x00000 */ u8 header[0x280];
+	/* 0x00280 */ Gfx displayList[0x1C20];
+	/* 0x0E380 */ u8 remaining[0x14780];
+} BhGfxBuffer; /* size = 0x22B00 */
+
 typedef struct BhGfxTask_s {
 	/* 0x00 */ struct BhGfxTask_s *next;
 	/* 0x04 */ u32 state;

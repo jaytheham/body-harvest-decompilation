@@ -1,5 +1,10 @@
 ### s16* 8-byte stride do-while strip-mining and double-epilogue interaction
 
+The function now matches in `core/FD80.c`. For the later scheduler's related
+unreachable-tail alignment issue, see
+[translation-unit alignment](scheduler-stack-guards-and-translation-unit-alignment.md).
+The observations below describe the earlier investigation.
+
 **Problem:** A do-while loop iterating over an s16* with step 4 (8 bytes per iteration) and 4 halfword stores per iteration triggers IDO strip-mining (score 7000+). The `continue;` trick (or `ptr++; ptr--;`) prevents strip-mining but introduces a SECOND unreachable function epilogue when the function also has a `for(;;)` infinite loop after the do-while.
 
 **Strip-mining pattern (wrong, score 7000+):**

@@ -43,9 +43,8 @@ segments:
       - [0x53F0, c, core/53F0] # Objectives
       - [0xAD60, c, core/AD60] # Text rendering?
       - [0xE830, c, core/E830]
-      - [0xFB00, c, core/FB00]
-      - [0xFD80, c, core/FD80]
-      - [0x10A20, c, core/10A20]
+      - [0xFB00, c, core/FD80] # Boot and scheduler share epilogue alignment.
+      - [0x10A50, c, core/10A20]
       - [0x10BC0, c, core/loader] # original src filename
       - [0x12C80, c, core/12C80] # Sounds, Dialogue
       - [0x17EE0, c, core/17EE0] # Dialogue
