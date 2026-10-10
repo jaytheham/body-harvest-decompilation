@@ -7550,7 +7550,7 @@ void func_8010895C_11790C(VehicleInstance *arg0)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(215): update store order corrected; middle register allocation remains.
+// CURRENT(205): update store and angle load order improved; register allocation remains.
 void func_80108B48_117AF8(VehicleInstance *arg0) {
 	s16 temp_a1;
 	s16 temp;
@@ -7574,7 +7574,7 @@ void func_80108B48_117AF8(VehicleInstance *arg0) {
 	arg0->unk24 = arg0->unk24 - (arg0->unk24 >> 4);
 	arg0->unk8 = temp_a1 + arg0->unk24;
 	temp = arg0->unk22;
-	arg0->unkA = arg0->unkA + arg0->unk26;
+	arg0->unkA = arg0->unk26 + arg0->unkA;
 	arg0->unk6 = arg0->unk6 + temp + arg0->unk16;
 	arg0->unk16 = arg0->unk16 >> 1;
 	if (D_80052A8C & 1) {
