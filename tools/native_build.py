@@ -138,8 +138,8 @@ def setup():
 
 def layout(version):
     # US keeps the original directory names; every other version is suffixed so
-    # extractions can coexist. The linker script is always bh.ld because splat
-    # derives it from the basename, so only one version may be extracted at once.
+    # extractions can coexist.  Each version also gets its own linker script,
+    # since splat derives the name from the basename that they all share.
     suffix = "" if version == "us" else f".{version}"
     return {
         "build": f"build{suffix}",
@@ -147,6 +147,11 @@ def layout(version):
         "assets": f"assets{suffix}",
         "src": f"src.{version}",
         "undefined": f"undefined_syms.{version}.txt",
+        # splat derives these names from the basename that every version shares,
+        # so give each non-US version its own.  Otherwise extracting one version
+        # clobbers the other version's linker inputs.
+        "ld": "bh.ld" if version == "us" else f"bh.{version}.ld",
+        "undefined_auto": "undefined_syms_auto.txt" if version == "us" else f"undefined_syms_auto.{version}.txt",
     }
 
 
@@ -179,8 +184,10 @@ def extract(version):
         if normalized != text:
             assembly.write_text(normalized, encoding="utf-8", newline="\n")
     # GNU ld treats backslashes as escapes, not Windows directory separators.
-    script = ROOT / "bh.ld"
-    script.write_text(script.read_text(encoding="utf-8").replace("\\", "/"), encoding="utf-8", newline="\n")
+    script = ROOT / paths["ld"]
+    if script.exists():
+        script.write_text(script.read_text(encoding="utf-8").replace("\\", "/"),
+                          encoding="utf-8", newline="\n")
     # splat writes generated c stubs and the linker symbol header with native
     # Windows separators and CRLF endings. Normalise both so the tree matches the
     # LF/forward-slash output produced on Linux and stays portable.
@@ -216,10 +223,11 @@ def compiler_env():
 
 def build(args):
     paths = layout(args.version)
-    if not (ROOT / "bh.ld").exists() or not (ROOT / paths["assets"] / "boot.bin").exists():
+    if not (ROOT / paths["ld"]).exists() or not (ROOT / paths["assets"] / "boot.bin").exists():
         raise RuntimeError("Run .\\tools\\extract.ps1 before building.")
-    script = (ROOT / "bh.ld").read_text(encoding="utf-8").replace("\\", "/")
-    (ROOT / "bh.ld").write_text(script, encoding="utf-8", newline="\n")
+    ld = ROOT / paths["ld"]
+    script = ld.read_text(encoding="utf-8").replace("\\", "/")
+    ld.write_text(script, encoding="utf-8", newline="\n")
     # Splat's script is the source of truth for the link inputs; no duplicated
     # source-directory or asset-format lists are needed here.
     prefix = paths["build"] + "/"
@@ -248,7 +256,8 @@ def build(args):
     # a different NON_MATCHING configuration on the first native build.
     marker = build_dir / ".native-config"
     tool_sources = (Path(__file__), ROOT / "tools/asm-processor/asm_processor.py",
-                    ROOT / "tools/image_converter.py", ROOT / "tools/rnc_propack_source/main.c")
+                    ROOT / "tools/asm-processor/prelude.inc", ROOT / "tools/image_converter.py",
+                    ROOT / "tools/rnc_propack_source/main.c")
     config = json.dumps([cflags, libultra_sources, ARCHIVES, [digest(p) for p in tool_sources]], sort_keys=True)
     force = args.rebuild or not marker.exists() or marker.read_text() != config
     if force:
@@ -347,7 +356,7 @@ def build(args):
     shutil.copyfile(ROOT / "lib/libultra_rom.a", library)
     run([sys.executable, "tools/set_o32abi_bit.py", "--quiet", library], quiet=args.quiet)
     elf = f'{paths["build"]}/bh.{args.version}.elf'
-    ldflags = ["-T", "bh.ld", "-T", paths["undefined"], "-T", "undefined_syms_auto.txt",
+    ldflags = ["-T", paths["ld"], "-T", paths["undefined"], "-T", paths["undefined_auto"],
                "-Map", f'{paths["build"]}/bh.{args.version}.map', "--no-check-sections", "build/lib/libultra_rom.a"]
     if args.version == "us":
         for symbol in ("osViGetCurrentLine", "osAiGetLength", "osPiGetStatus", "__osLeoInterrupt", "guTranslate"):
