@@ -2779,9 +2779,9 @@ extern f32 D_80159D50;
 extern f32 D_80159D54;
 extern f32 D_80159D58;
 extern VehicleInstance *D_80159D5C;
-extern Unk8010ED84Pos *D_80159D60;
+extern VehicleInstance *D_80159D60;
 extern VehicleType *D_80159D64;
-extern Unk8010ED84Data *D_80159D68;
+extern VehicleType *D_80159D68;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern f32 D_80159D78[8]; // X corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
@@ -4110,6 +4110,7 @@ extern const ShadowGeometryConstant D_80144B40_153AF0;
 extern const ShadowGeometryConstant D_80144B58_153B08;
 extern const ShadowGeometryConstant D_80144BA8_153B58;
 extern const ShadowGeometryConstant D_80144CF8_153CA8;
+extern const ShadowGeometryConstant D_80144D00_153CB0;
 
 
 #endif /* LIBULTRA_REFERENCE */

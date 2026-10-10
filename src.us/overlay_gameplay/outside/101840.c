@@ -232,7 +232,7 @@ const u32 jtbl_80144CE0_153C90[] = {
 
 const ShadowGeometryConstant D_80144CF8_153CA8 = {1.2};
 
-const f64 D_80144D00_153CB0[1] = {1.2};
+const ShadowGeometryConstant D_80144D00_153CB0 = {1.2};
 
 const f64 D_80144D08_153CB8[1] = {32767};
 
@@ -8820,53 +8820,53 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 		D_80159D64 = &vehicleTypes[arg0->unk1A];
 		D_80159D5C = arg0;
 		if (D_80159D64->unk16 == 1) {
-		D_80159D34 = (f32)(D_80159D64->unk36 >> 1);
-		D_80159D38 = 0.0f;
-		D_80159D3C = 0.0f;
-		D_80159D40 = (f32)(-D_80159D64->unk34 >> 1);
+			D_80159D34 = (f32)(D_80159D64->unk36 >> 1);
+			D_80159D38 = 0.0f;
+			D_80159D3C = 0.0f;
+			D_80159D40 = (f32)(-D_80159D64->unk34 >> 1);
 		} else {
-		D_80159D34 = (f32)(((f32)coss(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk36 >> 1));
-		D_80159D38 = (f32)(((f32)sins(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk36 >> 1));
-		D_80159D3C = (f32)(((f32)sins(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk34 >> 1));
-		D_80159D40 = (f32)(-((f32)coss(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk34 >> 1));
+			D_80159D34 = (f32)(((f32)coss(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk36 >> 1));
+			D_80159D38 = (f32)(((f32)sins(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk36 >> 1));
+			D_80159D3C = (f32)(((f32)sins(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk34 >> 1));
+			D_80159D40 = (f32)(-((f32)coss(D_80159D5C->unk6) / 32768.0) * (D_80159D64->unk34 >> 1));
 		}
 
-	D_80159D78[0] = D_80159D34 + D_80159D3C;
-	D_80159D98[0] = D_80159D38 + D_80159D40;
-	D_80159D78[1] = D_80159D34 - D_80159D3C;
-	D_80159D98[1] = D_80159D38 - D_80159D40;
-	neg34 = -D_80159D34;
-	D_80159D78[2] = neg34 - D_80159D3C;
-	neg38 = -D_80159D38;
-	D_80159D98[2] = neg38 - D_80159D40;
-	D_80159D78[3] = neg34 + D_80159D3C;
-	D_80159D98[3] = neg38 + D_80159D40;
-	D_80159D14 = D_80159D18 = D_80159D1C = D_80159D20 = 0.0f;
+		D_80159D78[0] = D_80159D34 + D_80159D3C;
+		D_80159D98[0] = D_80159D38 + D_80159D40;
+		D_80159D78[1] = D_80159D34 - D_80159D3C;
+		D_80159D98[1] = D_80159D38 - D_80159D40;
+		neg34 = -D_80159D34;
+		D_80159D78[2] = neg34 - D_80159D3C;
+		neg38 = -D_80159D38;
+		D_80159D98[2] = neg38 - D_80159D40;
+		D_80159D78[3] = neg34 + D_80159D3C;
+		D_80159D98[3] = neg38 + D_80159D40;
+		D_80159D14 = D_80159D18 = D_80159D1C = D_80159D20 = 0.0f;
 
 		if ((func_800E60CC_F507C(2, (u8)sp1E) != 0) || (D_80159D64->unk16 == 1)) {
-		D_80159D6C = 2;
-		temp_v0 = arg0->unk1A;
-		if (temp_v0 == 0) {
-			D_80159D54 = 14.0f;
-		} else if (D_80159D64->unk16 == 1) {
-			D_80159D54 = vehicleTypes[temp_v0].unkC;
-		} else {
-			D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * D_80144CF8_153CA8.value);
-		}
-		D_80159D54 *= D_80159D54;
-		return;
+			D_80159D6C = 2;
+			temp_v0 = arg0->unk1A;
+			if (temp_v0 == 0) {
+				D_80159D54 = 14.0f;
+			} else if (D_80159D64->unk16 == 1) {
+				D_80159D54 = vehicleTypes[temp_v0].unkC;
+			} else {
+				D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * D_80144CF8_153CA8.value);
+			}
+			D_80159D54 *= D_80159D54;
+			return;
 		}
 
 		v0 = D_80159D5C->unk6;
 		if (((v0 < 100) && (v0 >= -99)) || (((a0 = v0 - 0x8000), (a0 < 100)) && (a0 >= -99))) {
-		D_80159D6C = 1;
-		return;
+			D_80159D6C = 1;
+			return;
 		}
 
 		a0 = v0 - 0x4000;
 		if (((a0 < 100) && (a0 >= -99)) || (((s16)(v0 + 0x4000) < 100) && ((s16)(v0 + 0x4000) >= -99))) {
-		D_80159D6C = 0;
-		return;
+			D_80159D6C = 0;
+			return;
 		}
 
 		D_80159D14 = D_80159D40 / D_80159D3C;
@@ -8879,90 +8879,80 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 	}
 }
 
-// CURRENT(4213)
-#ifdef NON_MATCHING
 void func_8010CA38_11B9E8(VehicleInstance *arg0) {
 	f32 sp24;
 	s32 pad;
-	s32 pad2;
 	s16 sp1E;
 	s16 v0;
 	s16 a0;
 	u8 temp_v0;
-	f32 neg44;
-	f32 neg48;
+	f32 neg34;
+	f32 neg38;
 
 	sp1E = func_800FAE60_109E10(arg0);
-	if ((void *)arg0 == (void *)D_80159D60) {
+	if (arg0 == D_80159D60) {
 		return;
 	}
-
-	D_80159D60 = (Unk8010ED84Pos *)arg0;
-	D_80159D68 = (Unk8010ED84Data *)&vehicleTypes[((VehicleInstance *)D_80159D60)->unk1A];
-	if (((VehicleInstance *)D_80159D60)->unk1A == 0) {
-		D_80159D44 = (f32)(((Unk8010D234Data *)D_80159D68)->unk36 >> 1);
+	D_80159D60 = arg0;
+	D_80159D68 = &vehicleTypes[arg0->unk1A];
+	if (arg0->unk1A == 0) {
+		D_80159D44 = (f32)(D_80159D68->unk36 >> 1);
 		D_80159D48 = 0.0f;
 		D_80159D4C = 0.0f;
-		D_80159D50 = (f32)((s16)-((Unk8010D234Data *)D_80159D68)->unk34 >> 1);
+		D_80159D50 = (f32)(-D_80159D68->unk34 >> 1);
 	} else {
-		D_80159D44 = (f32)(((f32)coss(((VehicleInstance *)D_80159D60)->unk6) / 32768.0) * (D_80159D68->unk36 >> 1));
-		D_80159D48 = (f32)(((f32)sins(((VehicleInstance *)D_80159D60)->unk6) / 32768.0) * (D_80159D68->unk36 >> 1));
-		D_80159D4C = (f32)(((f32)sins(((VehicleInstance *)D_80159D60)->unk6) / 32768.0) * (D_80159D68->unk34 >> 1));
-		D_80159D50 = (f32)(-((f32)coss(((VehicleInstance *)D_80159D60)->unk6) / 32768.0) * (D_80159D68->unk34 >> 1));
+		D_80159D44 = (f32)(((f32)coss(D_80159D60->unk6) / 32768.0) * (D_80159D68->unk36 >> 1));
+		D_80159D48 = (f32)(((f32)sins(D_80159D60->unk6) / 32768.0) * (D_80159D68->unk36 >> 1));
+		D_80159D4C = (f32)(((f32)sins(D_80159D60->unk6) / 32768.0) * (D_80159D68->unk34 >> 1));
+		D_80159D50 = (f32)(-((f32)coss(D_80159D60->unk6) / 32768.0) * (D_80159D68->unk34 >> 1));
 	}
 
 	D_80159D78[4] = D_80159D44 + D_80159D4C;
-	neg44 = -D_80159D44;
-	D_80159D78[6] = neg44 - D_80159D4C;
 	D_80159D98[4] = D_80159D48 + D_80159D50;
 	D_80159D78[5] = D_80159D44 - D_80159D4C;
-	D_80159D30 = 0.0f;
-	neg48 = -D_80159D48;
-	D_80159D98[6] = neg48 - D_80159D50;
 	D_80159D98[5] = D_80159D48 - D_80159D50;
-	D_80159D78[7] = neg44 + D_80159D4C;
-	D_80159D2C = D_80159D30;
-	D_80159D98[7] = neg48 + D_80159D50;
-	D_80159D28 = D_80159D2C;
-	D_80159D24 = D_80159D28;
+	neg34 = -D_80159D44;
+	D_80159D78[6] = neg34 - D_80159D4C;
+	neg38 = -D_80159D48;
+	D_80159D98[6] = neg38 - D_80159D50;
+	D_80159D78[7] = neg34 + D_80159D4C;
+	D_80159D98[7] = neg38 + D_80159D50;
+	D_80159D24 = D_80159D28 = D_80159D2C = D_80159D30 = 0.0f;
 
-	if ((func_800E60CC_F507C(2, ((u8 *)&sp1E)[1]) != 0) || (((VehicleType *)D_80159D68)->unk16 == 1)) {
+	if ((func_800E60CC_F507C(2, (u8)sp1E) != 0) || (D_80159D68->unk16 == 1)) {
 		D_80159D70 = 2;
-		temp_v0 = ((VehicleInstance *)D_80159D60)->unk1A;
+		temp_v0 = arg0->unk1A;
 		if (temp_v0 == 0) {
 			D_80159D58 = 14.0f;
-		} else if (((VehicleType *)D_80159D68)->unk16 == 1) {
+		} else if (D_80159D68->unk16 == 1) {
 			D_80159D58 = vehicleTypes[temp_v0].unkC;
 		} else {
-			D_80159D58 = (f32)(vehicleTypes[temp_v0].unkC * D_80144D00_153CB0);
+			D_80159D58 = (f32)(vehicleTypes[temp_v0].unkC * D_80144D00_153CB0.value);
 		}
 		D_80159D58 *= D_80159D58;
 		return;
 	}
 
-	v0 = ((VehicleInstance *)D_80159D60)->unk6;
-	if ((((v0 < 100) && (v0 >= -99))) || (((a0 = v0 - 0x8000), (a0 < 100)) && (a0 >= -99))) {
+	v0 = D_80159D60->unk6;
+	if (((v0 < 100) && (v0 >= -99)) || (((a0 = v0 - 0x8000), (a0 < 100)) && (a0 >= -99))) {
 		D_80159D70 = 1;
 		return;
 	}
 
 	a0 = v0 - 0x4000;
-	if ((((a0 < 100) && (a0 >= -99))) || ((((s16)(v0 + 0x4000)) < 100) && (((s16)(v0 + 0x4000)) >= -99))) {
+	if (((a0 < 100) && (a0 >= -99)) || (((s16)(v0 + 0x4000) < 100) && ((s16)(v0 + 0x4000) >= -99))) {
 		D_80159D70 = 0;
 		return;
 	}
 
 	D_80159D24 = D_80159D50 / D_80159D4C;
 	D_80159D28 = D_80159D48 / D_80159D44;
-	sp24 = (f32)(((Unk8010D234Data *)D_80159D68)->unk36 >> 1);
-	D_80159D2C = sp24 / (f32)((f32)sins(((VehicleInstance *)D_80159D60)->unk6) / 32768.0);
-	sp24 = (f32)(((Unk8010D234Data *)D_80159D68)->unk34 >> 1);
-	D_80159D30 = sp24 / (f32)((f32)coss(((VehicleInstance *)D_80159D60)->unk6) / 32768.0);
+	sp24 = (f32)(D_80159D68->unk36 >> 1);
+	D_80159D2C = sp24 / (f32)((f32)sins(D_80159D60->unk6) / 32768.0);
+	sp24 = (f32)(D_80159D68->unk34 >> 1);
+	D_80159D30 = sp24 / (f32)((f32)coss(D_80159D60->unk6) / 32768.0);
 	D_80159D70 = 3;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010CA38_11B9E8.s")
-#endif
 
 s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1) {
 	VehicleInstance *vehicle;
@@ -9024,8 +9014,8 @@ s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1) {
 }
 
 s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
-	Unk8010ED84Pos *vehicle;
-	Unk8010ED84Data *type;
+	VehicleInstance *vehicle;
+	VehicleType *type;
 	f32 dx;
 	f32 dz;
 	f32 temp;
@@ -9339,7 +9329,7 @@ s32 func_8010DC00_11CBB0(s32 arg0, s32 arg1, s32 arg2) {
 #ifdef NON_MATCHING
 // CURRENT(702): corrected four-corner range; entry scheduling and trig slot remain.
 s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
-	Unk8010ED84Pos *vehicle;
+	VehicleInstance *vehicle;
 	f32 dx;
 	f32 dz;
 	f32 *xOffsets;
