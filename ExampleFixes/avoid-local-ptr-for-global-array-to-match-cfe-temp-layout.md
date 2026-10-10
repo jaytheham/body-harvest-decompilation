@@ -91,3 +91,12 @@ address calculation. Removing that pointer lets IDO load the four halfword
 arguments before the stores, matching the reference `func_800891F8_596A8`.
 Raw byte accesses can still be replaced by the entry's existing `payload` array
 without changing those instructions. Full ROM checksum and diff score 0 pass.
+
+
+### Siberia respawn helper
+
+func_802DD514_2BF944 matches with u8 arg0 and direct alienInstances[arg0] accesses. A named AlienInstance pointer adds eight bytes to the frame and puts its spill at sp+0x1C instead of the target sp+0x18. Direct accesses let IDO cache and spill the array element address itself. The target's initial sw/lbu argument sequence does not require byte pointer arithmetic on an s32 parameter. Full ROM checksum verified OK.
+
+### Source store order can steer hoisted temporary registers
+
+In Siberia func_802DAA20_2BCE50, the proximity branch matched instruction order but allocated its flag and timer expressions to the wrong temporary registers. Moving the byte flag update (unk47 |= 1) before the word flag and timer updates made IDO allocate the byte load/OR to t7/t8 and the hoisted word OR/timer constant to t1/t2. Instruction scheduling still emitted the word and timer stores before the byte store, exactly matching the target. Check source assignment order even when the scheduled stores already appear in the correct order.

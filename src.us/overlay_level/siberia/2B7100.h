@@ -44,7 +44,6 @@ void func_802DC4A0_2BE8D0(u8 arg0);
 void func_802DC4D0_2BE900(u8 arg0);
 void func_802DD668_2BFA98(u8 arg0);
 void func_802DDE3C_2C026C(s32 arg0);
-void func_802DDFF0_2C0420(u8 arg0);
 void func_802DEB5C_2C0F8C(u8 arg0);
 void func_802DEDE4_2C1214(u8 arg0);
 void func_802DF4C8_2C18F8(u8 arg0);

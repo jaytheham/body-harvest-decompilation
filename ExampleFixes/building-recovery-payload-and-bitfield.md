@@ -26,3 +26,8 @@ payload array suffices; an intermediate integer cast is unnecessary.
 
 Validation: function diff score 0 and full ROM `build/bh.us.z64: OK` after moving
 the payload type into `include/structs.us.h` and cleaning the function.
+
+
+### State and rotation halfword
+
+Siberia func_802D77BC_2B9BEC uses BuildingInstance.stateAndRotation at offset 0xA. Store door1InteriorId first, then assign stateAndRotation = (stateAndRotation & 0xF03F) | 0x400. IDO schedules the halfword load before the door byte store and uses the target temporary registers. A named u16 copy instead puts the value in v0 and the building base in v1. Full ROM checksum verified OK.

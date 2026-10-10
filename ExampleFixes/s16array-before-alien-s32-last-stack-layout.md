@@ -100,3 +100,8 @@ void func_802D7FC0_190AD0(u8 arg0) {
     }
 }
 ```
+
+
+### Siberia falling alien helper
+
+func_802DAD00_2BD130 matches with direct alienInstances accesses and declarations in this order: s16 height; s16 pad; s16 childJoint; SignedWord x, y, z; s16 parentId; s16 rootJoint. Assign rootJoint from the alien joint index before looking up childJoint. A leading s32 rootJoint leaves all accesses correct but makes the frame eight bytes too large; trailing s16 rootJoint fixes both frame and local offsets. SignedWord.word and .halves.low replace word-address/halfword pointer casts without changing code. Full ROM checksum verified OK.
