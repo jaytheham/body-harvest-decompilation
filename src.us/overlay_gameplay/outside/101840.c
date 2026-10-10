@@ -7550,7 +7550,7 @@ void func_8010895C_11790C(VehicleInstance *arg0)
 }
 
 #ifdef NON_MATCHING
-// CURRENT(425): remaining middle-update scheduling and temporary registers.
+// CURRENT(215): update store order corrected; middle register allocation remains.
 void func_80108B48_117AF8(VehicleInstance *arg0) {
 	s16 temp_a1;
 	s16 temp;
@@ -7572,8 +7572,8 @@ void func_80108B48_117AF8(VehicleInstance *arg0) {
 	arg0->unk24 = arg0->unk24 + temp_v0;
 	arg0->unk22 = arg0->unk22 + 0x28;
 	arg0->unk24 = arg0->unk24 - (arg0->unk24 >> 4);
-	temp = arg0->unk22;
 	arg0->unk8 = temp_a1 + arg0->unk24;
+	temp = arg0->unk22;
 	arg0->unkA = arg0->unkA + arg0->unk26;
 	arg0->unk6 = arg0->unk6 + temp + arg0->unk16;
 	arg0->unk16 = arg0->unk16 >> 1;
