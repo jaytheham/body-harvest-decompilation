@@ -95,3 +95,11 @@ regardless of type (ascending vs descending is the only thing that moves them). 
 register-allocated (removing `alienIndex` outright and inlining its one `alien - alienInstances` use measured 165),
 so the extra 8 bytes are not a declared-local that can be dropped. Parked at 73: source order lands the ordering but
 cannot shed the frame, which is the residual cfe frame reservation.
+
+### Partial paired-trig collision response: inline calls and promoted arguments
+
+func_801073FC_1163AC remains NON_MATCHING after 22 variants; score 274, reduced from 3463. Inline both coss calls in the X velocity difference and both sins calls in the Z difference. A named first s16 result stores at sp+0x3E, while the compiler-generated return temporary uses the target sp+0x3A. Replace the two named word-angle locals with repeated (u32) casts of the existing u16 angles in the trig calls. These casts retain the two argument saves at sp+0x34/sp+0x30 while removing eight bytes from the frame. Keep one unused word after the two input-speed floats to preserve the target gap before the velocity differences.
+
+Use integer 2 for the final impulse multiplications; 2.0f becomes addition to itself. Return 1 inside the first collision-class branch, then continue with the other class below it. This restores the target return layout.
+
+Assign the scaled speed to its named float, but repeat the literal scaling expression for the final impulse. IDO then preserves the product in both the named slot and the expired argument temporary at sp+0x30, as the target does. Reading an aggregate constant again cannot share that product across helper calls; a named double also enlarges the frame. The retained literal candidate differs in one constant-pool address and the scheduling of the angle-helper float loads. Existing rodata placeholders remain, no new file was created, and the wrapped ROM passes verification.

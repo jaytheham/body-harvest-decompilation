@@ -7135,7 +7135,7 @@ void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3)
 	arg0->unk22 = ((f32) arg0->unk22) + impulse;
 }
 
-// CURRENT(3443)
+// CURRENT(274): frame and instruction count match; float-load scheduling and one literal address remain.
 #ifdef NON_MATCHING
 s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2, s32 arg3) {
 	VehicleType *sp6C;
@@ -7144,16 +7144,13 @@ s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2,
 	u16 sp64;
 	f32 sp60;
 	f32 sp5C;
+	s32 pad;
 	f32 sp54;
 	f32 sp50;
 	f32 sp4C;
 	s16 sp4A;
 	f32 sp44;
 	f32 sp40;
-	s32 sp34;
-	s32 sp30;
-	s16 temp_s0;
-	s16 temp_s1;
 
 	sp6C = &vehicleTypes[arg0->unk1A];
 	sp68 = &vehicleTypes[arg1->unk1A];
@@ -7180,29 +7177,23 @@ s32 func_801073FC_1163AC(VehicleInstance *arg0, VehicleInstance *arg1, s32 arg2,
 	sp64 = func_800FB160_10A110(arg1);
 	sp60 = func_800FB11C_10A0CC(arg0);
 	sp5C = func_800FB11C_10A0CC(arg1);
-	sp34 = sp66;
-	temp_s0 = coss((u16)sp34);
-	sp4A = temp_s0;
-	sp30 = sp64;
-	temp_s1 = coss((u16)sp30);
-	sp54 = (f32)((((f64)(f32)temp_s0 / 32768.0) * (f64)sp60) - (((f64)(f32)temp_s1 / 32768.0) * (f64)sp5C));
-	temp_s0 = sins((u16)sp34);
-	sp4A = temp_s0;
-	temp_s1 = sins((u16)sp30);
-	sp50 = (f32)((((f64)(f32)temp_s0 / 32768.0) * (f64)sp60) - (((f64)(f32)temp_s1 / 32768.0) * (f64)sp5C));
+	sp54 = (f32)((((f32)coss((u32)sp66) / 32768.0) * sp60) - (((f32)coss((u32)sp64) / 32768.0) * sp5C));
+	sp50 = (f32)((((f32)sins((u32)sp66) / 32768.0) * sp60) - (((f32)sins((u32)sp64) / 32768.0) * sp5C));
 	sp4C = sqrtf((sp54 * sp54) + (sp50 * sp50));
 	sp40 = (f32)sp6C->unk32 / (f32)(sp6C->unk32 + sp68->unk32);
 	if ((sp6C->unk16 == 1) || (sp68->unk16 == 1)) {
 		sp4A = func_80003824_4424((f32)(arg1->unk0 - arg0->unk0), (f32)(arg1->unk4 - arg0->unk4));
-		func_80102DDC_111D8C(arg0, sp4A, 0, (f32)-((f64)((1.0f - sp40) * sp4C) * 1.5));
-		func_80102DDC_111D8C(arg1, sp4A, 0, (f32)((f64)(sp4C * sp40) * 1.5));
-	} else {
+		func_80102DDC_111D8C(arg0, sp4A, 0, -((f64)((1.0f - sp40) * sp4C) * 1.5));
+		func_80102DDC_111D8C(arg1, sp4A, 0, ((f64)(sp4C * sp40) * 1.5));
+		return 1;
+	}
+	{
 		sp4A = func_80003824_4424(sp54, sp50);
-		sp44 = (f32)((f64)sp4C * D_80144BA0_153B50[0]);
-		func_80102DDC_111D8C(arg0, sp4A, 0, (f32)-((f64)((1.0f - sp40) * sp4C) * 1.5));
-		func_80102DDC_111D8C(arg1, sp4A, 0, (f32)((f64)(sp4C * sp40) * 1.5));
-		func_80107184_116134(arg0, arg2, arg3, (1.0f - sp40) * sp44 * 2.0f);
-		func_80107184_116134(arg1, (arg0->unk0 + arg2) - arg1->unk0, (arg0->unk4 + arg3) - arg1->unk4, sp44 * sp40 * 2.0f);
+		sp44 = (f32)((f64)sp4C * 0.001);
+		func_80102DDC_111D8C(arg0, sp4A, 0, -((f64)((1.0f - sp40) * sp4C) * 1.5));
+		func_80102DDC_111D8C(arg1, sp4A, 0, ((f64)(sp4C * sp40) * 1.5));
+		func_80107184_116134(arg0, arg2, arg3, (1.0f - sp40) * sp44 * 2);
+		func_80107184_116134(arg1, (arg0->unk0 + arg2) - arg1->unk0, (arg0->unk4 + arg3) - arg1->unk4, (f32)((f64)sp4C * 0.001) * sp40 * 2);
 	}
 	return 1;
 }
