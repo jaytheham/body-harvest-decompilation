@@ -964,19 +964,18 @@ s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F384C_1027FC.s")
 #endif
 
-// CURRENT(4269): corrected limb fields and repeated angles; initialization and local storage remain.
+// CURRENT(1716): corrected radii, slot spill and dual counters; allocation and local homes remain.
 #ifdef NON_MATCHING
 s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	UnkF9230ShadowWalker *walker;
-	s32 slot;
+	s16 angleStep;
+	u8 slot;
+	s32 resultSlot;
 	u8 alienIdx;
-	u8 typeIdx[1];
-	f64 f22;
-	f64 f24;
-	f64 f26;
-	f64 f28;
-	s32 temp;
-	s16 spBA;
+	s16 innerRadius;
+	s16 outerRadius;
+	s32 i;
+	s32 pad3;
 	s16 baseAngle;
 	s16 alienX;
 	s16 alienZ;
@@ -985,7 +984,6 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	AlienInstance *inst;
 
 	alienIdx = arg0;
-	typeIdx[0] = arg1;
 	inst = &alienInstances[alienIdx];
 	alienX = inst->unk0;
 	alienZ = inst->unk4;
@@ -1002,12 +1000,13 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 			break;
 		}
 
-		slot = (slot + 1) & 0xFF;
+		slot++;
 		if (slot >= 8) {
 			break;
 		}
 	}
 
+	resultSlot = slot;
 	D_80157FF8 = D_80157FF8 + 1;
 	osSyncPrintf(D_80144934_1538E4, slot, D_80157FF8);
 
@@ -1026,39 +1025,36 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	walker->limbs[0].words[2] = alienX;
 	walker->limbs[0].words[3] = alienZ;
 	walker->limbs[0].unk1E = 0;
-	walker->limbs[0].unk23 = typeIdx[0];
+	walker->limbs[0].unk23 = arg1;
 
-	baseAngle = D_801601F0[typeIdx[0]].unkE;
-	spBA = D_801601F0[typeIdx[0]].unk10;
-	halfCount = D_801601F0[typeIdx[0]].unkC / 2;
+	baseAngle = D_801601F0[arg1].unkE;
+	angleStep = D_801601F0[arg1].unk10;
+	outerRadius = D_801601F0[arg1].unk6;
+	innerRadius = D_801601F0[arg1].unk4;
+	i = 0;
+	halfCount = D_801601F0[arg1].unkC / 2;
 
 	if (halfCount > 0) {
-		s32 i;
+		s32 index;
 
-		f22 = (f64)D_801601F0[typeIdx[0]].unk4;
-		f24 = (f64)alienX;
-		f26 = (f64)alienZ;
-		f28 = (f64)D_801601F0[typeIdx[0]].unk6;
-
-		i = 0;
-		temp = halfCount * 0x24;
-		while (i < halfCount) {
+		index = 0;
+		do {
 			UnkF9230ShadowLimb *a;
 			UnkF9230ShadowLimb *an;
 			UnkF9230ShadowLimb *b;
 			UnkF9230ShadowLimb *bn;
 			s16 y;
 
-			a = &walker->limbs[i + 1];
+			a = &walker->limbs[index + 1];
 			a->unk23 = 0;
-			an = &walker->limbs[i + 1];
+			an = &walker->limbs[index + 1];
 
-			an->unk14 = (s16)(s32)((((f64)(f32)coss((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * f22) + f24);
-			an->unk18 = (s16)(s32)((((f64)(f32)sins((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * f22) + f26);
+			an->unk14 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienX);
+			an->unk18 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienZ);
 			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
 			an->unk16 = y;
-			an->unk0 = (s16)(s32)((((f64)(f32)coss((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * f28) + f24);
-			an->unk4 = (s16)(s32)((((f64)(f32)sins((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * f28) + f26);
+			an->unk0 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienX);
+			an->unk4 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienZ);
 			an->unk2 = func_800F384C_1027FC((UnkF9230Arg0 *)walker, an->unk16, an->unk0, an->unk4);
 			an->unkA = an->unk0;
 			an->unkC = an->unk4;
@@ -1067,24 +1063,26 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 			b->unk23 = 0;
 			bn = &walker->limbs[i + 1 + halfCount];
 
-			bn->unk14 = (s16)(s32)((((f64)(f32)coss((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * f22) + f24);
-			bn->unk18 = (s16)(s32)((((f64)(f32)sins((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * f22) + f26);
+			bn->unk14 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienX);
+			bn->unk18 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienZ);
 			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
 			bn->unk16 = y;
-			bn->unk0 = (s16)(s32)((((f64)(f32)coss((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * f28) + f24);
-			bn->unk4 = (s16)(s32)((((f64)(f32)sins((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * f28) + f26);
+			bn->unk0 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienX);
+			bn->unk4 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienZ);
 			bn->unk2 = func_800F384C_1027FC((UnkF9230Arg0 *)walker, bn->unk16, bn->unk0, bn->unk4);
 			bn->unkA = bn->unk0;
 			bn->unkC = bn->unk4;
 
-			i = (i + 1) & 0xFF;
-			baseAngle += spBA;
-		}
+			index++;
+			i = index & 0xFF;
+			index = i;
+			baseAngle += angleStep;
+		} while (i < halfCount);
 	}
 
 	func_800F2980_101930(walker);
 	func_800F49A4_103954(walker);
-	return slot;
+	return resultSlot;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
