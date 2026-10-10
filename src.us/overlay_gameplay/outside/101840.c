@@ -5032,8 +5032,6 @@ void func_800FFCB8_10EC68(s32 arg0) {
 	func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
 }
 
-// CURRENT(20): two clock-load registers remain.
-#ifdef NON_MATCHING
 // AI - Builds the vehicle's model-view matrix from its position/rotation and draws it
 void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 	VehicleType *typePtr;
@@ -5054,8 +5052,8 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 	D_80052B48.unk4 = arg0->unkA;
 
 	if ((D_80222A70 == arg0->unk2) && !(typePtr->unk4C & 0x100)) {
-		D_80052B48.unk2 = (s16)(s32)(((f64)(f32)sins((D_80052A8E << 11) & 0xFFFF) / 32768.0) * 512.0) + D_80052B48.unk2;
-		D_80052B48.unk4 = (s16)(s32)(((f64)(f32)coss((D_80052A8E << 11) & 0xFFFF) / 32768.0) * 512.0) + D_80052B48.unk4;
+		D_80052B48.unk2 = (s16)(s32)(((f32)sins((D_80052A8E & 0x1F) << 11) / 32768.0) * 512.0) + D_80052B48.unk2;
+		D_80052B48.unk4 = (s16)(s32)(((f32)coss((D_80052A8E & 0x1F) << 11) / 32768.0) * 512.0) + D_80052B48.unk4;
 	}
 
 	if (typePtr->unk55 != 0) {
@@ -5101,9 +5099,6 @@ void func_800FFD28_10ECD8(VehicleInstance *arg0) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FFD28_10ECD8.s")
-#endif
 
 void func_80100114_10F0C4(VehicleInstance *arg0) {
 	D_80052B40.unk0 = (s16)(s32)arg0->unk4C;
