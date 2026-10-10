@@ -128,47 +128,57 @@ void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 }
 
 /* Apply distance-based lens distortion around the selected screen quadrant. */
-void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-    s32 x;
-    s32 y;
-    s32 distortion;
-    f32 scale;
+void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+{
+	s32 x;
+	s32 y;
+	s32 distortion;
+	f32 scale;
 
-    if (arg0 >= 5) {
-        if (arg1 >= 4) {
-            x = arg0 + arg2 - 4;
-            y = arg1 + arg3 - 1;
-            distortion = x * x + y * y;
-            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
-            scale = (32767.0 - (f32) distortion) / 32767.0;
-            D_80059CD4 = (D_80059CD4 + 768) * scale - 768.0f;
-        } else {
-            x = arg0 + arg2 - 4;
-            y = arg1 + arg3 - 7;
-            distortion = x * x + y * y;
-            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
-            scale = (32767.0 - (f32) distortion) / 32767.0;
-            D_80059CD4 = (D_80059CD4 - 768) * scale + 768.0f;
-        }
-        D_80059CD2 = (D_80059CD2 - 1152) * scale + 1152.0f;
-    } else {
-        if (arg1 >= 4) {
-            x = arg0 + arg2 - 6;
-            y = arg1 + arg3 - 1;
-            distortion = x * x + y * y;
-            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
-            scale = (32767.0 - (f32) distortion) / 32767.0;
-            D_80059CD4 = (D_80059CD4 + 768) * scale - 768.0f;
-        } else {
-            x = arg0 + arg2 - 6;
-            y = arg1 + arg3 - 7;
-            distortion = x * x + y * y;
-            distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
-            scale = (32767.0 - (f32) distortion) / 32767.0;
-            D_80059CD4 = (D_80059CD4 - 768) * scale + 768.0f;
-        }
-        D_80059CD2 = (D_80059CD2 + 1152) * scale - 1152.0f;
-    }
+	if (arg0 >= 5)
+	{
+		if (arg1 >= 4)
+		{
+			x = arg0 + arg2 - 4;
+			y = arg1 + arg3 - 1;
+			distortion = x * x + y * y;
+			distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+			scale = (32767.0 - (f32)distortion) / 32767.0;
+			D_80059CD4 = (D_80059CD4 + 768) * scale - 768.0f;
+		}
+		else
+		{
+			x = arg0 + arg2 - 4;
+			y = arg1 + arg3 - 7;
+			distortion = x * x + y * y;
+			distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+			scale = (32767.0 - (f32)distortion) / 32767.0;
+			D_80059CD4 = (D_80059CD4 - 768) * scale + 768.0f;
+		}
+		D_80059CD2 = (D_80059CD2 - 1152) * scale + 1152.0f;
+	}
+	else
+	{
+		if (arg1 >= 4)
+		{
+			x = arg0 + arg2 - 6;
+			y = arg1 + arg3 - 1;
+			distortion = x * x + y * y;
+			distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+			scale = (32767.0 - (f32)distortion) / 32767.0;
+			D_80059CD4 = (D_80059CD4 + 768) * scale - 768.0f;
+		}
+		else
+		{
+			x = arg0 + arg2 - 6;
+			y = arg1 + arg3 - 7;
+			distortion = x * x + y * y;
+			distortion = D_80059CD0 * 2 * (25 - distortion) + D_80059CD0 * distortion;
+			scale = (32767.0 - (f32)distortion) / 32767.0;
+			D_80059CD4 = (D_80059CD4 - 768) * scale + 768.0f;
+		}
+		D_80059CD2 = (D_80059CD2 + 1152) * scale - 1152.0f;
+	}
 }
 
 /* Update projection coordinates from struct fields and screen-space offsets. */
