@@ -100,3 +100,5 @@ func_802DD514_2BF944 matches with u8 arg0 and direct alienInstances[arg0] access
 ### Source store order can steer hoisted temporary registers
 
 In Siberia func_802DAA20_2BCE50, the proximity branch matched instruction order but allocated its flag and timer expressions to the wrong temporary registers. Moving the byte flag update (unk47 |= 1) before the word flag and timer updates made IDO allocate the byte load/OR to t7/t8 and the hoisted word OR/timer constant to t1/t2. Instruction scheduling still emitted the word and timer stores before the byte store, exactly matching the target. Check source assignment order even when the scheduled stores already appear in the correct order.
+
+Comet func_802D4F4C_31909C has the analogous global-pointer form. Assign D_80157FA4 directly from the building array and write its yCoord through that global. An intermediate BuildingInstance pointer moved the result into v1 and used a single absolute global store. Direct global access instead caches the address of D_80157FA4 in v1, computes the building pointer into t5, and reproduces the target's extra addiu plus store through the cached global address.

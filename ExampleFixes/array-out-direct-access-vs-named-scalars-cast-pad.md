@@ -68,3 +68,7 @@ cfe temp pointer (`&D_8014DD50[unkC]`), which must land at `sp+0x34` with a
 4-byte hole below it at `sp+0x30`. Final layout → frame `0x60`:
 `0x30 gap, 0x34 cfe, 0x38/0x3C gap, 0x40 sp40, 0x44 gap, 0x48 sp48,
 0x4E gap, 0x50 sp50, 0x5C sp5C, 0x5E gap`.
+
+Comet func_802DDB08_321C58 matches with s16 input[3], s32 output[3], one s16 joint index, then a word child index. Keeping separate joint and copy locals placed the live joint at sp+0x30; reusing one local moved it to target sp+0x32. The output array is passed directly through all three transforms, and implicit s16 call parameters produce the target low-halfword stack loads. No explicit narrowing casts are required.
+
+In func_802DA9C0_31EB10, using the already assigned buf[1] and buf[3] for child joint lookups (rather than repeating their source expressions) corrected the table base register and lookup scheduling. Moving the reset into the loop also restored the pointer register and branch delay slot.

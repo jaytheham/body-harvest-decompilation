@@ -75,3 +75,7 @@ signature.
 Related: `inplace-compound-update-removes-named-local-temp-bank.md` (removing a local moves the bank
 the other way), `struct-field-u8-vs-s16-same-offset-register-shift.md` (load width vs struct type
 when the struct cannot be retyped).
+
+## Resolution: reuse the scratch locals and pad the pointer spill
+
+Reusing the same s32 u/v locals for both initial coordinates and later azimuth differences reduces the frame from 0x38 to 0x30 while preserving all instruction ordering and registers. The remaining pointer spill is at 0x1C rather than 0x18. An unused s32 pad declared immediately after the alien pointer moves that spill to 0x18 without growing the rounded frame. Keeping the u8 index in its own block yields a complete match, verified by tools/make.ps1 reporting build/bh.us.z64: OK and diff score 0.
