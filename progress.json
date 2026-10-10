@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-10T19:07:22Z",
-  "commit": "1b896614",
-  "commit_timestamp": "2026-10-11T08:06:33+13:00",
+  "generated": "2026-10-10T20:21:29Z",
+  "commit": "50633467",
+  "commit_timestamp": "2026-10-11T09:20:38+13:00",
   "overall": {
     "total_functions": 3056,
-    "matched": 2458,
-    "non_matching": 598,
+    "matched": 2473,
+    "non_matching": 583,
     "asm_stubs": 0,
-    "matched_pct": 80.43,
+    "matched_pct": 80.92,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1140,
-      "non_matching": 308,
+      "matched": 1155,
+      "non_matching": 293,
       "asm_stubs": 0,
       "total": 1448,
-      "matched_pct": 78.7,
+      "matched_pct": 79.8,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -2176,12 +2176,12 @@
     {
       "path": "overlay_gameplay/outside/101840.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 162,
-      "non_matching": 57,
+      "matched": 177,
+      "non_matching": 42,
       "asm_stubs": 0,
       "total": 219,
-      "matched_pct": 74.0,
-      "contributor": "lunarlaurus"
+      "matched_pct": 80.8,
+      "contributor": "Jay"
     },
     {
       "path": "overlay_gameplay/outside/1312D0.c",
@@ -2576,17 +2576,17 @@
   ],
   "contributors": [
     {
-      "name": "lunarlaurus",
-      "files": 16,
-      "matched": 917,
-      "non_matching": 334,
+      "name": "Jay",
+      "files": 156,
+      "matched": 939,
+      "non_matching": 136,
       "asm_stubs": 0
     },
     {
-      "name": "Jay",
-      "files": 155,
-      "matched": 762,
-      "non_matching": 94,
+      "name": "lunarlaurus",
+      "files": 15,
+      "matched": 755,
+      "non_matching": 277,
       "asm_stubs": 0
     },
     {
