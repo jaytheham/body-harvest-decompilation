@@ -135,10 +135,79 @@ def classify(na, pal, start, size, insert_at):
     return "EXACT" if exact else "SHAPE"
 
 
+def mark(rows, insert_at):
+    """Annotate the PAL c stubs for DIFF functions so NTSC decomp is not reused.
+
+    The stubs are only regenerated when absent, so these comments are durable
+    and are the guard that stops a decompiler copying the NTSC body verbatim
+    into a function PAL actually rewrote.
+    """
+    diff = [r for r in rows if r[3] == "DIFF"]
+
+    # Map PAL rom -> the c subsegment that covers it, from bh.eu.yaml. Matching
+    # by function name does not work in the reorganised band: PAL's function
+    # boundaries there differ, so the NTSC function often has no PAL name.
+    subs = []
+    for line in (ROOT / "bh.eu.yaml").read_text(encoding="utf-8").splitlines():
+        m = re.match(r"\s*- \[0x([0-9A-Fa-f]+), c, (.+?)\]\s*(?:#.*)?$", line)
+        if m:
+            subs.append((int(m.group(1), 16), m.group(2).strip()))
+    subs.sort()
+
+    def covering(rom):
+        best = None
+        for start, name in subs:
+            if start <= rom:
+                best = (start, name)
+            else:
+                break
+        return best[1] if best else None
+
+    by_stub = {}
+    for na_rom, na_name, size, _cls, _pal in diff:
+        p = na_rom + SHIFT if na_rom >= insert_at else na_rom
+        sub = covering(p)
+        if not sub:
+            continue
+        c = ROOT / "src.eu" / f"{sub}.c"
+        if c.exists():
+            by_stub.setdefault(c, []).append((na_rom, p, size, na_name))
+
+    marker = "// --- PAL differs from NTSC here ---"
+    per_fn = re.compile(r"//\s+0x[0-9A-Fa-f]{6}\s+0x")
+    # Clear every existing marker block first, not just the stubs we are about
+    # to rewrite, or a block left by an earlier run survives in a file that is
+    # no longer in the map.
+    for c in (ROOT / "src.eu").rglob("*.c"):
+        text = c.read_text(encoding="utf-8", errors="replace")
+        if marker not in text:
+            continue
+        kept = [l for l in text.splitlines()
+                if marker not in l and not per_fn.match(l)]
+        c.write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
+
+    touched = 0
+    for c, entries in sorted(by_stub.items()):
+        lines = c.read_text(encoding="utf-8", errors="replace").splitlines()
+        block = [marker,
+                 "// These functions are rewritten in PAL. Do NOT copy the NTSC body;",
+                 "// they need their own decomp. Regenerate with:",
+                 "//     python tools/pal_na_diff.py --mark",
+                 "// NTSC rom / PAL rom / bytes / name"]
+        for na_rom, p, size, na_name in sorted(entries):
+            block.append(f"//   0x{na_rom:06X}  0x{p:06X}  {size:5d}  {na_name}")
+        lines[2:2] = block
+        c.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
+        touched += 1
+    return touched, sum(len(v) for v in by_stub.values())
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--write", action="store_true",
                     help="write docs/pal-na-diff.txt")
+    ap.add_argument("--mark", action="store_true",
+                    help="annotate PAL c stubs for the differing functions")
     args = ap.parse_args()
 
     na = (ROOT / "baserom.us.z64").read_bytes()
@@ -189,6 +258,9 @@ def main():
         out = ROOT / "docs/pal-na-diff.txt"
         out.write_text(report + "\n", encoding="utf-8", newline="\n")
         print(f"\nwrote {out.relative_to(ROOT)}")
+    if args.mark:
+        files, n = mark(rows, insert_at)
+        print(f"\nmarked {n} differing functions across {files} c stubs")
 
 
 if __name__ == "__main__":
