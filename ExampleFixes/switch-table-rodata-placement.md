@@ -217,3 +217,5 @@ reachable by source shape: the table lands at **0x4BB0** where the target's is a
 in the same TU are still unmatched; deleting this function's own placeholder made it worse (225).
 Do not re-tread the case-extent or the selector spelling - they are settled; the file needs its
 remaining switch owners matched together.
+
+Partial func_8010C14C_11B0FC: after 20 variants the retained candidate scores 7444. Remove a redundant explicit state-range guard because the switch emits its own range check. In case 2, the target tests the old counter against 10 while storing counter + 1 in the branch delay slot: use if (counter++ >= 10), not an increment followed by comparison. In case 1, reread the counter after the angle helper, which may modify it. Direct global counter update improves allocation over carrying the input temporary past that call. Saved global addresses and generated jump-table placement remain unresolved; restored the placeholder and NON_MATCHING wrapper, preserving the ROM checksum without new files.

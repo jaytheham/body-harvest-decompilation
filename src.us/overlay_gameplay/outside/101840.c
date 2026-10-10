@@ -8713,21 +8713,15 @@ void func_8010BA04_11A9B4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010BA04_11A9B4.s")
 #endif
 
+// CURRENT(7444): corrected postincrement threshold; global address allocation and rodata remain.
 #ifdef NON_MATCHING
 void func_8010C14C_11B0FC(void) {
-	s32 state;
 	s32 temp;
 	s32 sp3C;
 	s32 sp38;
 	s32 sp34;
-	VehicleInstance *vehicle;
 
-	state = D_801409F8_14F9A8;
-	if ((u32)state >= 5U) {
-		return;
-	}
-
-	switch (state) {
+	switch (D_801409F8_14F9A8) {
 		case 0:
 			D_80159312 = 0;
 			func_8001A650_1B250(8);
@@ -8740,9 +8734,8 @@ void func_8010C14C_11B0FC(void) {
 		case 1:
 			temp = D_80159D10;
 			D_80159308 = func_800065A4_71A4(0, -0x1B58, temp);
-			temp += 0x2C8;
-			D_80159D10 = temp;
-			if (temp >= 0x10000) {
+			D_80159D10 += 0x2C8;
+			if (D_80159D10 >= 0x10000) {
 				func_800156C8_162C8(0xD0);
 				func_800153D8_15FD8(0xD1);
 				D_801409F8_14F9A8++;
@@ -8751,9 +8744,7 @@ void func_8010C14C_11B0FC(void) {
 			break;
 
 		case 2:
-			temp = D_80159D10 + 1;
-			D_80159D10 = temp;
-			if (temp >= 10) {
+			if (D_80159D10++ >= 10) {
 				func_800153D8_15FD8(0x63);
 				D_801409F8_14F9A8++;
 				D_80159D10 = 0;
@@ -8773,8 +8764,7 @@ void func_8010C14C_11B0FC(void) {
 			break;
 
 		case 4:
-			vehicle = &vehicleInstances[D_80159316];
-			vehicle->unk20 |= VEHICLE_FLAG_UNK5;
+			vehicleInstances[D_80159316].unk20 |= VEHICLE_FLAG_UNK5;
 			D_80158E64 = &vehicleInstances[63];
 			vehicleInstances[63].unk1A = 0xE;
 			func_800FAE84_109E34(D_80158E64);
