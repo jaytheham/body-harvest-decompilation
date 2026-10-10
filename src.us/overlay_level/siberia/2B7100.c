@@ -2779,13 +2779,12 @@ void func_802D9FE4_2BC414(u8 arg0) {
 #endif
 
 // CURRENT(385)
-#ifdef NON_MATCHING
 void func_802DA4CC_2BC8FC(u8 arg0) {
 	AlienInstance *alien;
 	s32 squaredDist;
 	s32 dx, dz;
-	s32 pad1;
-	s32 pad2;
+	s32 index2;
+	s32 index3;
 	s16 sp26;
 	s16 temp_a1;
 	s16 sp22;
@@ -2794,8 +2793,10 @@ void func_802DA4CC_2BC8FC(u8 arg0) {
 	alien = &alienInstances[arg0];
 
 	index1 = D_8014DD50[alien->unkC].unkC;
-	sp26 = D_8014DD50[D_8014DD50[index1].unkD].unkC;
-	sp22 = D_8014DD50[D_8014DD50[D_8014DD50[index1].unkD].unkD].unkC;
+	index2 = D_8014DD50[index1].unkD;
+	sp26 = D_8014DD50[index2].unkC;
+	index3 = D_8014DD50[index2].unkD;
+	sp22 = D_8014DD50[index3].unkC;
 
 	func_8008064C_8F5FC(arg0);
 	func_80080A54_8FA04(arg0, D_80052B34->unk0, D_80052B34->unk4);
@@ -2806,7 +2807,7 @@ void func_802DA4CC_2BC8FC(u8 arg0) {
 	if (alien->unk20 & ALIEN_FLAG_UNKD) {
 		alien->unk2C--;
 		squaredDist = dx * dx + dz * dz;
-		if (((f64)squaredDist > D_802E3040_2C5470) || !func_80084FE8_93F98(arg0, 0x1000)) {
+		if (((f64)squaredDist > D_802E3040_2C5470[0]) || !func_80084FE8_93F98(arg0, 0x1000)) {
 			alien->unk20 &= ~ALIEN_FLAG_UNKD;
 		} else if (alien->unk2C == 0) {
 			alien->unk20 ^= ALIEN_FLAG_UNKH;
@@ -2850,9 +2851,6 @@ void func_802DA4CC_2BC8FC(u8 arg0) {
 		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DA4CC_2BC8FC.s")
-#endif
 
 void func_802DA7CC_2BCBFC(u8 arg0) {
 	u8 typeIndex = alienInstances[arg0].typeIndex;

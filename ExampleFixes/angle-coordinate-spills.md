@@ -21,3 +21,6 @@ Siberia func_802DD408_2BF838 matches using the shared func_80084FE8_93F98 declar
 ## Repeated absolute-distance comparisons
 
 In Siberia func_802D81C0_2BA5F0, using separate s32 result variables for the two identical max(-angle, angle) if/else blocks makes IDO keep the shared negation in v0 and each comparison result in v1. Reusing one result variable swaps v0/v1 even though instruction order is identical. The two result declarations precede the float local, preserving its target stack slot. Removing explicit masks from sins/coss arguments also preserves the argument normalization emitted for their u16 parameters.
+
+
+In Siberia func_802DA4CC_2BC8FC, extracting chained node indices into separate locals fixes the initial register sequence. The first index remains s8, while the next two use s32 and precede the three s16 node/result locals. Those promoted indices replace two unused s32 padding declarations, retaining the exact stack slots and frame size; narrowing all three indices to s8 changes stack packing and the cached alien pointer slot.
