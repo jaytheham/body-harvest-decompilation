@@ -112,6 +112,28 @@ def collect_eu_names() -> set[str]:
     return names
 
 
+_ABS_PIN_RE = re.compile(r"^([A-Za-z_]\w*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;\s*$")
+
+
+def collect_eu_base_pins() -> dict[str, int]:
+    """Absolute ``name = 0x...;`` placements in the hand-maintained eu block.
+
+    A shared-C symbol the EU linker places at an address *other* than the one
+    encoded in its (NA) name is one that the EU port moved.  When such a
+    referenced-only name also has an EU asm label of the same name at the old
+    address, the label shadows the placement and the C binds to the wrong
+    address, so the label must be tagged eu_ too.
+    """
+    pins: dict[str, int] = {}
+    for line in UNDEF_SYMS_EU.read_text(encoding="utf-8").splitlines():
+        if _starts_eu_block(line):
+            break
+        m = _ABS_PIN_RE.match(line.strip())
+        if m:
+            pins[m.group(1)] = int(m.group(2), 16)
+    return pins
+
+
 def collect_na_aliases() -> dict[str, str]:
     aliases: dict[str, str] = {}
     for line in UNDEF_SYMS_NA.read_text(encoding="utf-8").splitlines():
@@ -200,12 +222,22 @@ def main() -> int:
         (n for n in aliases if n in undefined), key=lambda n: aliases[n]
     )
 
-    # Only names the shared C actually *defines* (so an EU asm label of the same
-    # name shadows a real, differently-placed definition), plus NA offset-aliases
-    # (array-interior labels the C means relative to a base).  Names the C merely
-    # references and that NA defines as plain absolutes (bss/hardware) are left
-    # alone: the EU asm label *is* their definition.
-    rename_set = defined | set(aliases)
+    # Names the shared C *defines* (so an EU asm label of the same name shadows a
+    # real, differently-placed definition), plus NA offset-aliases (array-interior
+    # labels the C means relative to a base).  A name the C merely references is
+    # normally left alone -- the EU asm label *is* its storage -- but when the EU
+    # symbol table moves it away from the address its NA name encodes (a
+    # base-block pin different from that address), the same shadowing applies and
+    # it must be tagged eu_ as well.
+    base_pins = collect_eu_base_pins()
+    moved_undefined = {
+        n
+        for n in undefined
+        if base_pins.get(n) is not None
+        and vram_of(n) is not None
+        and base_pins[n] != vram_of(n)
+    }
+    rename_set = defined | moved_undefined | set(aliases)
     collisions = sorted(n for n in rename_set & eu_names if vram_of(n) is not None)
     if not RENAME_FUNCTIONS:
         # splat names function GLOBAL_ASM stub files after the symbol, so

@@ -82,7 +82,7 @@
 
 #pragma GLOBAL_ASM("asm.eu/nonmatchings/core/12C80/func_800137DC_143DC.s")
 
-#pragma GLOBAL_ASM("asm.eu/nonmatchings/core/12C80/func_80013818_14418.s")
+#pragma GLOBAL_ASM("asm.eu/nonmatchings/core/12C80/EU_func_80013818_14418.s")
 
 #pragma GLOBAL_ASM("asm.eu/nonmatchings/core/12C80/func_80013820_14420.s")
 

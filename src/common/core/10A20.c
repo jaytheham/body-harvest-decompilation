@@ -5,7 +5,11 @@
 
 s16 D_80031B50_32750 = 0;
 s32 __osSiAccessQueueEnabled = 0;
+#ifdef VERSION_EU
+u8 D_80031B58_32758 = 1;
+#else
 u8 D_80031B58_32758 = 0;
+#endif
 
 void func_8000FE50_10A50(void *arg0) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
