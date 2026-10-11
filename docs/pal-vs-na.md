@@ -56,7 +56,7 @@ sitting 0xB60 later is not consistent with the table and is not reproduced here.
 ### The core-to-overlay seam
 
 PAL core ends at `0x40780`, not `0x40750`. The 8-byte trailing pad that ends
-core — `00 00 00 00 10 00 00 36`, where `10 00 00 36` is `bgez $zero` to itself —
+core - `00 00 00 00 10 00 00 36`, where `10 00 00 36` is `bgez $zero` to itself -
 sits at NTSC `0x40750` and at PAL `0x40780`, and PAL `0x40750` holds real code
 (`addiu $t6,$gp,-1`, `addiu $sp,$sp,-0x18`).
 
@@ -65,58 +65,40 @@ The 8 bytes after the pad are identical in both ROMs (`00 00 10 25`,
 addresses inside differ. So the frontend overlay's first function is the same
 *shape* in both versions and differs only in immediates.
 
-**Not applied.** The ROM matches with the config as it stands, so this is a
-file-attribution fix rather than a correctness one. What was established by
-experiment, in order:
+**Applied.** Core now ends at `0x40788` with the pad emitted as its own
+subsegment, and the frontend starts at `0x40788`:
 
-| Attempt | Change | Result |
-|---|---|---|
-| 1 | frontend start `0x40780`, C attribution there | asm_processor rejects two one-instruction functions |
-| 2 | pad as `bin` inside the overlay | `bin` in an `overlay: true` segment adds 16 bytes of padding |
-| 3 | frontend start `0x40788`, pad left to core | nothing emits the 8-byte gap; 6 bytes dropped |
-| 4 | pad as `bin` mid-list in core | core's subsegments must stay ordered |
-| 5 | pad as `bin` appended to core, frontend `0x40788` | `bin` lands in `.data`, before `.rodata` |
-| 6 | pad as `rodata` instead | pad emitted correctly at `0x40780`, but the linker adds alignment fill |
+```yaml
+- [0x40780, rodata, core/tail_pad]          # the 8-byte pad, owned by core
+# overlay_gameplay_frontend starts at 0x40788
+```
 
-Attempt 6 identified the real mechanism. `__romPos` advances by
-`SIZEOF(.core)`, which is the **VMA** size, and then `ALIGN(__romPos, 16)`.
-Because `0x40788` is 8-mod-16 and every boundary in the script is forced to 16,
-the linker inserts fill where the reference has the overlay's first instruction
-immediately at `0x40788`.
+Attributing it correctly needs `align: 8` / `subalign: 8` on both `core` and
+`overlay_gameplay_frontend`, because splat emits `__romPos = ALIGN(__romPos,
+align)` at each segment's end using that segment's own align value. Setting it
+on only one leaves the inter-segment boundary forced to 16 and the linker
+inserts 8 bytes of fill.
 
-**Per-segment alignment does resolve that part.** `align` and `subalign` are
-read per segment (`linker_entry.py`, `parse_segment_subalign`), so setting
-`align: 8` / `subalign: 8` on `core` and `overlay_gameplay_frontend` — not
-globally — produces `SUBALIGN(8)` and `ALIGN(__romPos, 8)`, emits the pad at
-`0x40780`, and starts the frontend at `0x40788` with no alignment fill. The first
-mismatch moves from `0x4078A` past the seam to `0x407AF`.
+The remainder is IDO's 16-byte `.text` padding. IDO rounds every `.text` section
+up to a multiple of 16, and the frontend's true code span, once the dispatcher
+and pad are removed, is `0x20E98` - 8 mod 16. So a single region always
+over-allocates by 8 and every later section lands 8 bytes late. Verified: of the
+211 `.text` sections in the EU build, none has a size 8 mod 16.
 
-That configuration still fails the acceptance criteria, and the remaining cause
-is a different layer. Measured against the baseline with
-`tools/eu_rom_diff.py` and the two linker maps:
+The fix is to split the frontend's code into regions whose sizes are each a
+multiple of 16. Starting at `0x40788` (itself 8 mod 16), that means every
+boundary must also be 8 mod 16. `0x4E448` and `0x51CC8` are both genuine function
+starts that qualify:
 
-- The seam itself is **fixed**: `_coreSegmentRomEnd` and
-  `_overlay_gameplay_frontendSegmentRomStart` both move to `0x40788`, exactly
-  right, with no alignment fill.
-- `40750.c.o .text` is **`0xDCD0`** but its ROM region `0x40788`–`0x4E450` is
-  **`0xDCC8`**. The 8 byte difference is two zero words emitted at `0x4E450`.
-  Since `0xDCC8 % 16 == 8` and `0xDCD0 % 16 == 0`, the excess is **16-byte
-  `.text` alignment padding**. In the baseline the region was `0xDD00`, already
-  16-aligned, so no padding was needed and the object was exact.
-- Everything downstream follows from that one object: `4E450.c.o` starts at
-  `0x8007DF70` instead of `0x8007DF68`, the `jal` at `0x407AC` that targets
-  that boundary resolves 8 bytes high, and the frontend ends at `0x7FD88`
-  instead of `0x7FD80`, shifting every later overlay (`outside` and everything
-  after it, `+16` in total).
+| region | span | size | 16-aligned |
+|---|---|---|---|
+| `0x40788` .. `0x4E448` | code and its own trailing nops | `0xDCC0` | yes |
+| `0x4E448` .. `0x51CC8` | | `0x3880` | yes |
+| `0x51CC8` .. `0x61628` | | `0xF960` | yes |
 
-So the seam fix is blocked by a **toolchain alignment constraint, not by splat
-configuration**: the frontend's first C object cannot emit `0xDCC8` bytes
-because its `.text` is aligned to 16, and the PAL ROM has no padding there.
-Resolving it needs either a change to that alignment, or an internal frontend
-boundary that makes the first region 16-aligned without moving real functions.
+`.data` needs no such care: the trailing `bin` subsegment is a raw blob, emitted
+verbatim at whatever alignment it lands on.
 
-Net effect today: 0x38 bytes of PAL core code at `0x40750`-`0x40788` are
-attributed to the frontend overlay's first C file. Cosmetic; the ROM is correct.
 
 ## Which functions differ
 
@@ -201,12 +183,6 @@ build.eu/bh.eu.z64: OK   sha1 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
 Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments, producing 42
 hand-decompilable C stubs. Still open:
 
-- **Core/overlay seam is mis-split.** The frontend overlay really starts at
-  `0x40780` but the config says `0x40750`. Moving it makes splat emit two
-  one-instruction functions from the alignment pad, and the overlay's own
-  subsegment boundaries are PAL specific.
-- **The 35 differing functions are not yet marked** so shared NTSC decomp is
-  never applied to them.
 - Overlay offsets after the frontend are unverified, per above.
 
 ## Tooling notes

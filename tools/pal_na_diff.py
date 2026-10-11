@@ -164,7 +164,7 @@ def mark(rows, insert_at):
         return best[1] if best else None
 
     by_stub = {}
-    for na_rom, na_name, size, _cls, _pal in diff:
+    for na_rom, na_name, size, _cls, _pal_rom, _pal in diff:
         p = na_rom + SHIFT if na_rom >= insert_at else na_rom
         sub = covering(p)
         if not sub:
