@@ -142,10 +142,76 @@ expects to change, with a different projection constant in `guPerspectiveF`.
 These fall in the `SHAPE` bucket (constants differ, code does not), but they
 still must not be given a verbatim NTSC C body.
 
+## Sharing C source between the two trees
+
+The reason to bother: for a `SHAPE` function the opcodes match and only the
+immediates differ, which is ordinary relocation, and relocation lives in
+`bh.<version>.ld` rather than in the C. So one C body plus each version's own
+linker should produce version-correct output for both. Only the 35 `DIFF`
+functions genuinely need a PAL-specific body.
+
+### The mechanism works
+
+`splat` resolves a `c` subsegment as `src_path / name`, where `name` is the
+third yaml element verbatim, so a traversing name reaches across trees. Tested
+in `bh.eu.yaml`:
+
+```yaml
+- [0x1050, c, ../src.na/core/1050]     # resolves to src.na/core/1050.c
+```
+
+The extract and compile both resolve the file correctly. Nothing in splat needs
+patching for this, though at scale a per-subsegment source root in `out_path()`
+would be tidier than `..` paths in the config.
+
+### What blocks it: symbol declarations, not the C
+
+`10A20.c` is the smallest fully-decompiled shared file (41 lines, no stubs) and
+it still fails to compile for EU:
+
+```
+cfe: Error: src.na/core/10A20.c, line 27: '__osSiAccessQueue' undefined
+cfe: Error: src.na/core/10A20.c, line 27: 'siacs_bss_0000' undefined
+cfe: Error: src.na/core/10A20.c, line 40: 'D_80068038' undefined
+```
+
+All three are declared in `symbol_addrs.na.txt` and none is in the EU symbol
+files. `10A20.c` is a libultra caller, and EU carries libultra as handwritten
+asm rather than C, so EU's build never needed those symbols. **The porting work
+is making the EU symbol tables carry everything a shared NA body references** —
+not the C itself.
+
+### Which files can share today
+
+Of the 23 NA core C files, 16 contain no `#pragma GLOBAL_ASM` and are
+shareable now; 7 still carry stubs. A stub cannot cross versions, because
+`GLOBAL_ASM` bytes are baked with that version's relocations, so a shared file
+is only safe with zero asm dependencies.
+
+`core/1050` is the representative blocker: NA has 13 stubs and 116 decompiled
+functions; EU's stub file for the same range has 58 pragmas, of which only 11
+basenames match NA's. So EU needs pragmas for *more* functions than NA does,
+not just the same ones repointed.
+
+### Generating the non-shareable files
+
+For a file with stubs, generate the EU copy rather than sharing it:
+
+- for each function in the range, if NA has a C body, use it verbatim
+- otherwise emit a `GLOBAL_ASM` pragma pointing at that function's EU asm
+
+The EU asm file name is not NA's name: it embeds EU's address, so a function
+past the `0x7E04` insert point is named for its EU offset. `tools/pal_na_diff.py`
+already computes exactly this NA-to-EU mapping by overlap, which is what the
+`DIFF` marker block in `src.eu/core/53F0.c` is derived from. The generation has
+to be a tool rather than hand-copied, or the trees drift as NA decompiles more.
+
+The corresponding asm does exist on both sides for the 11 matched basenames in
+`1050`; the 2 NA-only ones and the 47 EU-only ones are the part that needs the
+name mapping.
+
 ## Open, not verified
 
-- **Applying the seam fix** (`0x40750` → `0x40780`), for the splat reasons
-  listed above.
 - **The gameplay overlays.** The table at `0x032848` covers the five level
   overlays and their data segments only. `frontend`, `outside` and `inside` are
   absent from it, so their ROM offsets are still inferred rather than read. Their
@@ -181,9 +247,11 @@ build.eu/bh.eu.z64: OK   sha1 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
 ```
 
 Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments, producing 42
-hand-decompilable C stubs. Still open:
+hand-decompilable C stubs, all of them still stubs — no EU source is decompiled
+yet. Still open:
 
 - Overlay offsets after the frontend are unverified, per above.
+- Sharing NA source with EU, per the section above.
 
 ## Tooling notes
 
