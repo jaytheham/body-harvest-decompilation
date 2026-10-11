@@ -2255,8 +2255,14 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
+	/* 0x02 */ union {
+		s16 unk2;
+		u16 unk2Unsigned;
+	};
+	/* 0x04 */ union {
+		s16 unk4;
+		u16 unk4Unsigned;
+	};
 } Unk80052B48; /* size = 0x06 */
 
 typedef struct {

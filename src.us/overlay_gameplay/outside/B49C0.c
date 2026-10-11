@@ -15,7 +15,6 @@ const u32 jtbl_8014283C_1517EC[] = {
 	0x800A6934, 0x800A693C, 0x800A695C, 0x800A6A48,
 	0x800A6ED8, 0x800A6F60, 0x800A6FA0,
 };
-const f64 D_80142858_151808[] = {1.2};
 
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
@@ -518,63 +517,48 @@ void func_800A6FD4_B5F84(void)
 	D_80048025 |= 1 << sp1F;
 }
 
-// CURRENT(44622)
-#ifdef NON_MATCHING
 // displayBeacons
 // AI - Render all beacons in 3D world
 void func_800A70B8_B6068(void) {
 	s16 i;
-	s32 groundY;
-	s16 mapX;
-	s16 mapZ;
-	s16 beaconType;
-	s16 beaconAge;
-	s32 v;
-	s32 brightness;
-	s16 rot;
 	s16 j;
-	Gfx* beaconBaseDl;
-	Gfx* beaconRingDl;
-	Gfx* beaconCoreDl;
+	Gfx *gfx;
+	u32 beaconBaseDl;
+	u32 beaconRingDl;
+	u32 beaconCoreDl;
 
 	if ((currentLevel == LEVEL_COMET) || (D_80052ACA == 2)) {
 		return;
 	}
 
-	gDPPipeSync(D_8005BB2C++);
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8); gfx->words.w1 = 0xFFFFFFFF;
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	for (i = 0; i < 6; i++) {
-		beaconType = D_8003154C[currentLevel - 1][i].state;
-
-		if (beaconType == 3) {
+		if (D_8003154C[currentLevel - 1][i].state == 3) {
 			D_8014F80A = D_8013D898_14C848.levels[currentLevel - 1].x;
 			D_8014F80C = D_8013D898_14C848.levels[currentLevel - 1].z;
-			beaconBaseDl = (Gfx*)0x05046250;
-			beaconRingDl = (Gfx*)0x05046470;
-			groundY = func_800B84D0_C7480(D_8014F80A, D_8014F80C);
+			beaconBaseDl = (u32)D_5046250;
+			beaconRingDl = (u32)D_5046470;
+			j = func_800B84D0_C7480(D_8014F80A, D_8014F80C) >> 8;
 
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
 
-			v = 0x5E - D_8003154C[currentLevel - 1][i].timer;
-			D_8014F810 = v * v;
-			v = (D_8014F810 * 6) / 10;
-			D_8014F810 = v;
-			v = D_8014F810 + 0x5A;
-			D_8014F810 = v;
-			v = (groundY >> 8) + D_8014F810;
-			D_8014F810 = v;
+			D_8014F810 = 0x5E - D_8003154C[currentLevel - 1][i].timer;
+			D_8014F810 = D_8014F810 * D_8014F810 * 6;
+			D_8014F810 /= 10;
+			D_8014F810 += 0x5A;
+			D_8014F810 = j + D_8014F810;
 			D_80052B40.unk2 = D_8014F810 >> 2;
-
-			D_80052B48.unk0 = 0;
-			D_80052B48.unk2 = 0x8000;
-			D_80052B48.unk4 = 0;
-
+			D_80052B48.unk0 = D_80052B48.unk4Unsigned = 0;
+			D_80052B48.unk2Unsigned = 0x8000;
 			D_80052B50.unk4 = 0x14;
 			D_80052B50.unk2 = D_80052B50.unk4;
 			D_80052B50.unk0 = D_80052B50.unk4;
@@ -585,7 +569,7 @@ void func_800A70B8_B6068(void) {
 
 			for (j = 0; j < 8; j++) {
 				D_80052B48.unk0 = j << 0xD;
-				D_80052B48.unk2 = 0x8000;
+				D_80052B48.unk2Unsigned = 0x8000;
 				D_80052B48.unk4 = 0;
 				func_800039D0_45D0(0, &D_80052B48, 0, D_8005BB38);
 
@@ -599,42 +583,37 @@ void func_800A70B8_B6068(void) {
 				gSPDisplayList(D_8005BB2C++, beaconRingDl);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
-		} else if (beaconType >= 4) {
+		} else if (D_8003154C[currentLevel - 1][i].state >= 4) {
 			D_8014F80A = D_8003154C[currentLevel - 1][i].x << 8;
 			D_8014F80C = D_8003154C[currentLevel - 1][i].z << 8;
 
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
 
-			if ((func_800B9228_C81D8(D_8014F80A, D_8014F80C, (s16)(s32)D_80052B2C->unk0, (s16)(s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) && (D_80157590 == 0)) {
-				beaconBaseDl = (Gfx*)0x05046250;
-				beaconCoreDl = (Gfx*)0x050468F0;
-				beaconRingDl = (Gfx*)0x05046470;
-				groundY = func_800B84D0_C7480(D_8014F80A, D_8014F80C);
-				if (groundY < 0) {
-					groundY += 0xFF;
-				}
-
-				D_8014F810 = (groundY >> 8) + 0x18;
+			if ((func_800B9228_C81D8(D_8014F80A, D_8014F80C, D_80052B2C->unk0, D_80052B2C->unk8, 0x4000 - D_80047950) != 0) && (D_80157590 == 0)) {
+				beaconBaseDl = (u32)D_5046250;
+				beaconCoreDl = (u32)D_50468F0;
+				beaconRingDl = (u32)D_5046470;
+				D_8014F810 = func_800B84D0_C7480(D_8014F80A, D_8014F80C) / 256 + 0x18;
 				if ((currentLevel == LEVEL_AMERICA) && (i == 0)) {
 					D_8014F810 = 0x7D0;
 				}
 
-				if (beaconType == 4) {
+				if (D_8003154C[currentLevel - 1][i].state == 4) {
 					D_8014F810 += D_8003154C[currentLevel - 1][i].timer * 0x50;
 				}
 
+				D_80052B40.unk2 = D_8014F810 >> 2;
 				D_80052B50.unk4 = 0x18;
 				D_80052B50.unk2 = D_80052B50.unk4;
 				D_80052B50.unk0 = D_80052B50.unk4;
-				D_80052B40.unk2 = D_8014F810 >> 2;
 				func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				gSPDisplayList(D_8005BB2C++, beaconBaseDl);
 
 				D_80052B40.unk0 = 0;
-				switch (beaconType) {
+				switch (D_8003154C[currentLevel - 1][i].state) {
 				case 9:
 					D_80052B40.unk2 = D_8003154C[currentLevel - 1][i].timer * 0x14 + 0xE;
 					break;
@@ -649,7 +628,6 @@ void func_800A70B8_B6068(void) {
 
 				default:
 					D_80052B40.unk2 = 0x78;
-					break;
 				}
 
 				D_80052B40.unk4 = 0;
@@ -658,12 +636,10 @@ void func_800A70B8_B6068(void) {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
-				if (beaconType == 8) {
-					brightness = (0xFF - (D_8003154C[currentLevel - 1][i].timer * 10)) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
-				} else if (beaconType == 10) {
-					brightness = (D_8003154C[currentLevel - 1][i].timer * 0x32) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
+				if (D_8003154C[currentLevel - 1][i].state == 8) {
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF - D_8003154C[currentLevel - 1][i].timer * 10, 0xFF - D_8003154C[currentLevel - 1][i].timer * 10, 0xFF - D_8003154C[currentLevel - 1][i].timer * 10, 0xFF);
+				} else if (D_8003154C[currentLevel - 1][i].state == 10) {
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_8003154C[currentLevel - 1][i].timer * 0x32, D_8003154C[currentLevel - 1][i].timer * 0x32, D_8003154C[currentLevel - 1][i].timer * 0x32, 0xFF);
 				} else {
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF);
 				}
@@ -682,16 +658,15 @@ void func_800A70B8_B6068(void) {
 					D_80052B40.unk2 = 0xC9;
 					D_80052B40.unk4 = 0;
 
-					beaconAge = D_8003154C[currentLevel - 1][i].timer;
-					if (beaconType == 6) {
-						rot = (s16) (s32) (((((0x32 - beaconAge) * 0.017453292519943295) / 50.0) * 16384.0));
-					} else if ((beaconType == 4) || (beaconType == 5)) {
-						rot = 0;
+					D_80052B48.unk0 = 0;
+					if (D_8003154C[currentLevel - 1][i].state == 6) {
+						D_80052B48.unk2Unsigned = ((0x32 - D_8003154C[currentLevel - 1][i].timer) * 1.2 / 50.0) * 16384.0;
+					} else if ((D_8003154C[currentLevel - 1][i].state == 4) || (D_8003154C[currentLevel - 1][i].state == 5)) {
+						D_80052B48.unk2Unsigned = 0;
 					} else {
-						rot = 0x4CCC;
+						D_80052B48.unk2Unsigned = 0x4CCC;
 					}
 
-					D_80052B48.unk2 = rot;
 					func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
 					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -702,9 +677,6 @@ void func_800A70B8_B6068(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A70B8_B6068.s")
-#endif
 
 // https://decomp.me/scratch/nzLpq
 // ?? and destroy vehicle hit by beacon
