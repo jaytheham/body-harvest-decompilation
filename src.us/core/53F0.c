@@ -1414,86 +1414,74 @@ next:
 	return 1;
 }
 
-// CURRENT(4924)
-#ifdef NON_MATCHING
 void guess_checkMissions(void) {
-	s32 sp5C;
-	s32 var_s0;
-	u8 *item;
-	u8 *entry;
-	s32 sp4C;
-	u8 *cur;
+    s32 index;
+    s32 count;
+    MissionGameCondition *item;
+    MissionCondEntry *entry;
+    u32 pending;
 
-	entry = (u8 *)D_8004D1C8;
-	sp4C = 0;
-
-	if (D_8004DC60 == 0) {
-		sp5C = 0x3F;
-		do {
-			if (!((s32)((1 << sp5C) >> 31) & D_8004DC50.unk0) && !((1 << sp5C) & D_8004DC50.unk4) && entry[0] != 0 && (s32)entry[1] >= 0x46) {
-				item = D_8004D348[entry[2]];
-				var_s0 = entry[3] - 1;
-				if (entry[3] != 0) {
-				loop_7:
-					cur = item;
-					item += 9;
-					if (func_800081D4_8DD4(cur) != 0) {
-						if (var_s0 == 0) {
-							if (D_8004DC40 == -1) {
-								sp4C = 1;
-								osSyncPrintf(D_80037070_37C70, entry[4] + 1, entry[5]);
-								var_s0 = entry[3] - 1;
-								item = D_8004D348[entry[2]];
-								if (entry[3] != 0) {
-									do {
-										cur = item;
-										item += 9;
-										func_80007A20_8620(cur);
-										if (var_s0 != 0) {
-											if (var_s0 == 1) {
-												osSyncPrintf(D_800370A8_37CA8);
-											} else {
-												osSyncPrintf(D_800370B4_37CB4);
-											}
-										} else {
-											osSyncPrintf(D_800370B0_37CB0);
-										}
-										var_s0 -= 1;
-									} while (var_s0 != 0);
-								}
-								D_8004DC40 = entry[5] * 0x1E;
-							} else if (D_8004DC40 == 0) {
-								osSyncPrintf(D_800370B8_37CB8, entry[4] + 1);
-								func_80018D7C_1997C(entry[4]);
-								D_8004D350[entry[2] * 9] = 0xB2;
-								D_8004DC40 = -1;
-								entry[0] = 0;
-								D_8004DC50.unk0 = (s32)(D_8004DC50.unk0 | (s32)((1 << sp5C) >> 31));
-								D_8004DC50.unk4 = (s32)(D_8004DC50.unk4 | (1 << sp5C));
-							} else {
-								sp4C = 1;
-								D_8004DC40 = D_8004DC40 - 1;
-							}
-						}
-						var_s0 -= 1;
-						if (var_s0 != 0) {
-							goto loop_7;
-						}
-					}
-				}
-			}
-			entry += 6;
-			sp5C -= 1;
-		} while (sp5C != 0);
-		if (D_8004DC40 != -1 && sp4C == 0) {
-			osSyncPrintf(D_800370D4_37CD4);
-			D_8004DC40 = -1;
-		}
-	}
+    entry = D_8004D1C8;
+    pending = 0;
+    if (D_8004DC60 == 0) {
+        index = 0x40;
+        while (index--) {
+            if (!((1 << index) & D_8004DC50.flags) && entry->unk0 != 0 && entry->unk1 >= 0x46) {
+                count = entry->unk3;
+                item = &D_8004D348[entry->unk2];
+                if (count--) {
+                    do {
+                        if (func_800081D4_8DD4(*item++) == 0) {
+                            break;
+                        }
+                        if (count == 0) {
+                            switch (D_8004DC40) {
+                            case -1:
+                                osSyncPrintf(D_80037070_37C70, entry->unk4 + 1, entry->unk5);
+                                pending = 1;
+                                count = entry->unk3;
+                                item = &D_8004D348[entry->unk2];
+                                if (count--) {
+                                    do {
+                                        func_80007A20_8620(*item++);
+                                        switch (count) {
+                                        case 1:
+                                            osSyncPrintf(D_800370A8_37CA8);
+                                            break;
+                                        case 0:
+                                            osSyncPrintf(D_800370B0_37CB0);
+                                            break;
+                                        default:
+                                            osSyncPrintf(D_800370B4_37CB4);
+                                            break;
+                                        }
+                                    } while (count--);
+                                }
+                                D_8004DC40 = entry->unk5 * 0x1E;
+                                continue;
+                            case 0:
+                                osSyncPrintf(D_800370B8_37CB8, entry->unk4 + 1);
+                                func_80018D7C_1997C(entry->unk4);
+                                D_8004D350[entry->unk2 * 9] = 0xB2;
+                                D_8004DC40 = -1;
+                                entry->unk0 = 0;
+                                D_8004DC50.flags |= (1 << index);
+                                continue;
+                            }
+                            pending = 1;
+                            D_8004DC40--;
+                        }
+                    } while (count--);
+                }
+            }
+            entry++;
+        }
+        if (D_8004DC40 != -1 && pending == 0) {
+            osSyncPrintf(D_800370D4_37CD4);
+            D_8004DC40 = -1;
+        }
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
-#endif
 
 void debug_drawTimingGraphBars(void)
 {
