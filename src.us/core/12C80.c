@@ -2361,7 +2361,6 @@ s32 func_800164C4_170C4(void) {
 	return var_s1;
 }
 
-// https://decomp.me/scratch/CQbLj
 // Picks an available slot, activating or releasing slots as needed.
 s8 func_800165EC_171EC(void)
 {
