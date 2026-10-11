@@ -968,48 +968,51 @@ void func_800A7C6C_B6C1C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A7C6C_B6C1C.s")
 #endif
 
-// CURRENT(2696)
-#ifdef NON_MATCHING
 // Update PowerupItems
 void func_800A854C_B74FC(void)
 {
   u8 alpha;
-  s16 accel;
   f32 deltaX;
-  f32 deltaZ;
+  s16 accel;
   s16 sp8C;
   s16 sp8A;
-  s16 sp88;f32 distCopy;s16 sp78;f32 dist;
+  s16 sp88;
+  f32 deltaZ;
+  PowerupItem *entry;
+  f32 distCopy;
   s16 yLimit;
-  s32 i;
+  s16 sp78;
+  f32 dist;
+  s32 i = 16;
   s32 lod;
-  s32 *groundLevel = &D_80222A70; // current water height used as floor for pickups to float on
-  
-  for (i = 0x10; i--;) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
+
+  while (i--) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
   {
+    if (i) {} // IDO eliminates this test, but it preserves the loop register allocation.
+    entry = &D_8014F6D0[i];
 	if (D_8014F6D0[i].unkC != -1)
 	{
 	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6; //apply xyz velocities to xyz position
-	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
 	  D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
+	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
 	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
 	  yLimit = (sp88 < sp8C) ? sp8C : sp88;
 	  
-	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
+	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < D_80222A70) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
 	  {
-		yLimit = *groundLevel;
+		yLimit = D_80222A70;
 	  }
-	  if (D_8014F6D0[i].unk2 < yLimit) 
+	  if (entry->unk2 < yLimit)
 	  {
-		D_8014F6D0[i].unk8 = 0;
-		D_8014F6D0[i].unk2 = yLimit;
+		entry->unk2 = yLimit;
+		entry->unk8 = 0;
 		
-		if (*groundLevel < D_8014F6D0[i].unk2)
+		if (D_80222A70 < yLimit)
 		{
 		  if (sp8C < sp88)
 		  {
-			D_8014F6D0[i].unk6 = ((D_8014F6D0[i].unk6 + (func_800038E0_44E0() & 0xF)) - 8);
-			D_8014F6D0[i].unkA = ((D_8014F6D0[i].unkA + (func_800038E0_44E0() & 0xF)) - 8);
+			D_8014F6D0[i].unk6 += (func_800038E0_44E0() & 0xF) - 8;
+			D_8014F6D0[i].unkA += (func_800038E0_44E0() & 0xF) - 8;
 		  }
 		  else
 		  {
@@ -1040,7 +1043,7 @@ void func_800A854C_B74FC(void)
 	  // horizontal damping - bugged? positive velocities keep drifting, negative velocities reach 0 and pickup stops moving
 	  {
 		D_8014F6D0[i].unk6 -= (D_8014F6D0[i].unk6 >> 2);
-		if (*groundLevel < D_8014F6D0[i].unk2)
+		if (D_80222A70 < D_8014F6D0[i].unk2)
 		{
 		  D_8014F6D0[i].unk8 -= 3;
 		}
@@ -1092,9 +1095,6 @@ void func_800A854C_B74FC(void)
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A854C_B74FC.s")
-#endif
 
 /* Spawn PowerupItem
 	arg3:
