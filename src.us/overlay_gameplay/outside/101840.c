@@ -127,161 +127,8 @@ const f64 D_80144B68_153B18[1] = {0.97};
 
 const f64 D_80144B70_153B20[1] = {0.97};
 
-const f64 D_80144B78_153B28[1] = {0.1666666667};
+const ShadowGeometryConstant D_80144B78_153B28 = {0.1666666667};
 
-const u32 jtbl_80144B80_153B30[] = {
-	0x80106498,
-	0x80106498,
-	0x80106498,
-	0x80106574,
-	0x801065A0,
-	0x801065A0,
-	0x801065D8,
-	0x00000000,
-};
-
-const f64 D_80144BA0_153B50[1] = {0.001};
-
-const ShadowGeometryConstant D_80144BA8_153B58 = {0.7};
-
-const f64 D_80144BB0_153B60[1] = {221920};
-
-const f64 D_80144BB8_153B68[1] = {221920};
-
-const f64 D_80144BC0_153B70[1] = {0.9};
-
-const f64 D_80144BC8_153B78[1] = {0.7};
-
-const f64 D_80144BD0_153B80[1] = {1.9500000000000001};
-
-const f64 D_80144BD8_153B88[1] = {255};
-
-const f64 D_80144BE0_153B90[1] = {10000};
-
-const f64 D_80144BE8_153B98[1] = {0.05};
-
-const f32 D_80144BF0_153BA0[1] = {0.05};
-
-const f64 D_80144BF8_153BA8[1] = {-0.05};
-
-const f32 D_80144C00_153BB0[1] = {-0.05};
-
-const f64 D_80144C08_153BB8[1] = {0.9};
-
-const f64 D_80144C10_153BC0[1] = {0.33};
-
-const f64 D_80144C18_153BC8[1] = {255};
-
-const f32 D_80144C20_153BD0[1] = {0.98};
-
-const f64 D_80144C28_153BD8[1] = {0.78};
-
-const f32 D_80144C30_153BE0[1] = {6384.0f};
-const f32 D_80144C34_153BE4[1] = {10000.0f};
-
-const f64 D_80144C38_153BE8[1] = {0.96};
-
-const f64 D_80144C40_153BF0[1] = {0.31};
-
-const f32 D_80144C48_153BF8[1] = {0.93};
-
-const f64 D_80144C50_153C00[1] = {255};
-
-const f32 D_80144C58_153C08[1] = {0.98};
-
-const f64 D_80144C60_153C10[1] = {0.2};
-
-const f64 D_80144C68_153C18[1] = {0.1};
-
-const f64 D_80144C70_153C20[1] = {0.1};
-
-const f32 D_80144C78_153C28[1] = {0.3};
-
-const f64 D_80144C80_153C30[1] = {0.001};
-
-const f32 D_80144C88_153C38[1] = {0.3};
-
-const f64 D_80144C90_153C40[1] = {0.001};
-
-const f64 D_80144C98_153C48[1] = {0.001};
-
-const f64 D_80144CA0_153C50[1] = {0.001};
-
-const f64 D_80144CA8_153C58[1] = {10000};
-
-const f64 D_80144CB0_153C60[1] = {0.70710678};
-
-const f32 D_80144CB8_153C68[1] = {-737};
-
-const f64 D_80144CC0_153C70[1] = {-1400};
-
-const f64 D_80144CC8_153C78[1] = {255};
-
-const f64 D_80144CD0_153C80[1] = {0.0003};
-
-const f64 D_80144CD8_153C88[1] = {0.845};
-
-const u32 jtbl_80144CE0_153C90[] = {
-	0x8010C180,
-	0x8010C1C8,
-	0x8010C23C,
-	0x8010C2D0,
-	0x8010C31C,
-	0x00000000,
-};
-
-const ShadowGeometryConstant D_80144CF8_153CA8 = {1.2};
-
-const ShadowGeometryConstant D_80144D00_153CB0 = {1.2};
-
-const f64 D_80144D08_153CB8[1] = {32767};
-
-const f64 D_80144D10_153CC0[1] = {32767};
-
-const f64 D_80144D18_153CC8[1] = {3000};
-
-const u32 jtbl_80144D20_153CD0[] = {
-	0x8010FBBC,
-	0x8010FC44,
-	0x8010FC5C,
-	0x8010FC70,
-	0x8010FCF4,
-	0x8010FD1C,
-	0x8010FD78,
-	0x8010FF30,
-	0x8010FF20,
-	0x8010FBDC,
-	0x8010FC04,
-	0x8010FC24,
-};
-
-const f64 D_80144D50_153D00[1] = {0.33};
-
-const f64 D_80144D58_153D08[1] = {0.33};
-
-const f64 D_80144D60_153D10[1] = {0.33};
-
-const f64 D_80144D68_153D18[1] = {1.1};
-
-const ShadowGeometryConstant D_80144D70_153D20 = {0.73};
-
-const f64 D_80144D78_153D28[1] = {0.9};
-
-const f64 D_80144D80_153D30[1] = {0.9};
-
-const f64 D_80144D88_153D38[1] = {1000};
-
-const f32 D_80144D90_153D40[1] = {-0.05};
-
-const f64 D_80144D98_153D48[1] = {0.95};
-
-const f64 D_80144DA0_153D50[1] = {0.69};
-
-const f64 D_80144DA8_153D58[1] = {0.6};
-
-const f64 D_80144DB0_153D60[1] = {0.6};
-
-const f64 D_80144DB8_153D68[1] = {0};
 
 s32 D_8013FCD0_14EC80 = 0;
 u8 D_8013FCD4_14EC84[0x9C] = {
@@ -524,9 +371,9 @@ f32 D_801408B4_14F864[7][11] = {
 	{1000.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 9999.0f, 2.0f, 0.8f, 0.7f}
 };
 s32 D_801409E8_14F998 = 0;
-s32 D_801409EC_14F99C = 0;
-s32 D_801409F0_14F9A0 = 0;
-s32 D_801409F4_14F9A4 = 0;
+s16 D_801409EC_14F99C = 0;
+s16 D_801409F0_14F9A0 = 0;
+u8 D_801409F4_14F9A4[4] = {0};
 s32 D_801409F8_14F9A8 = 0;
 
 void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
@@ -6662,61 +6509,259 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 	}
 }
 
-// The button press check is Z to shoot the gun.
-// Skiping this call stops adam responding to input
-#ifdef NON_MATCHING
-// CURRENT(198379)
+/* Handle player vehicle controls, weapons, steering, and gear changes. */
 void func_801052E8_114298(Unk80052B2C *arg0, OSContPad *arg1) {
-	VehicleInstance *vehicle;
+	f32 threshold;
 	VehicleType *type;
-	s32 typeMode;
-	u16 buttons;
+	VehicleInstance *vehicle;
+	s32 align;
+	s16 angle;
+	s32 weaponIndex;
+	s16 recoil;
+	s16 maxSpeed;
+	s16 gear;
+	s16 delay;
+	f32 speed;
+	f32 *gears;
+	f32 steering;
+	s32 worldX;
+	s32 worldY;
+	s32 worldZ;
 
 	vehicle = arg0->unk38;
 	type = &vehicleTypes[vehicle->unk1A];
-	typeMode = (s32) type->unk4C;
-	buttons = arg1->button;
-
-	if ((D_801591AC == 0) && (D_8015930E == 0) && (D_801493E2 != 0)) {
-		D_80158E58 = 0.0f;
-		D_80158E5C = 0.0f;
-
-		if ((typeMode < 0) && ((vehicle->unk20 & VEHICLE_FLAG_AIRBORNE) == 0) && ((buttons & 0x8000) != 0) && ((D_80159320 << 13) >= 0)) {
+	if (D_801591AC != 0 || D_8015930E != 0 || D_801493E2 == 0) {
+		return;
+	}
+	D_80158E58 = 0.0f;
+	D_80158E5C = 0.0f;
+	if ((type->unk4C & 0x100000) && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE) &&
+		((&arg1)[0]->button & 0x8000) && !(D_80159320 & 0x40000)) {
+		vehicle->unk20 |= VEHICLE_FLAG_AIRBORNE;
+		vehicle->unk2E++;
+		func_800FB3E8_10A398(vehicle, 1.0f);
+	}
+	if (type->weapon1 != 0x41 &&
+		(((vehicle->unk20 & VEHICLE_FLAG_AIRBORNE) && (type->unk4C & 0x20000000)) ||
+		 (D_80222A70 >= vehicle->unk2 && (type->unk4C & 0x10000000)) ||
+		 (D_80222A70 < vehicle->unk2 && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE) && (type->unk4C & 0x20)) ||
+		 (D_80222A70 - vehicle->unk2 < (type->unk38 >> 1) && (type->unk4C & 0x20)))) {
+		if (vehicle->unk1A != 0) {
+			if (type->unk4C & 0x100000) {
+				if (vehicle->unk2 < D_80222A70) {
+					func_80104E00_113DB0(arg0->unk38, arg1);
+				} else {
+					func_801047C8_113778(arg0->unk38, arg1);
+				}
+			} else {
+				func_80103E54_112E04(arg0->unk38, arg1);
+			}
+		} else if (!(D_80159320 & 0x200000)) {
+			func_800EC484_FB434(arg0->unk38, arg1);
+		}
+		if (vehicle->unk1A == 0 && D_80222A70 >= vehicle->unk2 && !(D_80157A28 & 8)) {
 			vehicle->unk20 |= VEHICLE_FLAG_AIRBORNE;
-			vehicle->unk2E++;
-			func_800FB3E8_10A398(vehicle, 1.0f);
+			if (currentControllerStates[0].button & 0x4000) vehicle->unk2E += 10;
+			if (currentControllerStates[0].button & 0x8000) vehicle->unk2E -= 10;
+		}
+		if ((type->unk4C & 0x20000000) && D_8015926C < vehicle->unk2E) {
+			vehicle->unk2E = D_8015926C;
 		}
 	}
-
-	if (typeMode == 0) {
-		if ((vehicle->unk1A == 5) && ((buttons & 0x2000) != 0)) {
-			D_801409F4_14F9A4 = 0;
-			D_8015927C = 1;
+	if ((type->unk4C & 0x08000000) && vehicle->unk1E == 0) {
+		if (D_80050AD4 == 0) {
+			type->gun1X = -type->gun1X;
+			weaponIndex = type->unk63;
+			if (weaponIndex != 0) {
+				D_8013FDA8_14ED58[weaponIndex].unk8.unk0 = -D_8013FDA8_14ED58[weaponIndex].unk8.unk0;
+			}
+		} else {
+			type->gun2X = -type->gun2X;
+			weaponIndex = type->unk64;
+			if (weaponIndex != 0) {
+				D_8013FDA8_14ED58[weaponIndex].unk8.unk0 = -D_8013FDA8_14ED58[weaponIndex].unk8.unk0;
+			}
 		}
-	} else if ((typeMode == 2) || (typeMode == 3) || (typeMode == 4)) {
-		return;
 	}
-
-	if ((vehicle->unk1A == 0xD) && (D_80050AD4 == 0) && ((buttons & 0x2000) != 0)) {
-		D_801591AC = 2;
-		D_80159316 = D_80149440;
-		return;
+	if (currentLevel == 1 && vehicle->unk1A == 8 && (D_80050AD4 == 0 || D_80050AD4 == 1)) {
+		if (D_80052B2C->unk36 < 0) D_80050AD4 = 0;
+		else D_80050AD4 = 1;
 	}
-
-	if ((vehicle->unk1A == 0xE) && ((buttons & 0x2000) != 0)) {
-		if (vehicle->unk1E == 0) {
-			vehicle->unk1E = 0x14;
+	if (D_80050AD4 == 0 && type->weapon1 == 0x41) D_80050AD4 = 1;
+	if (D_80050AD4 == 1 && type->weapon2 == 0) D_80050AD4 = 0;
+	do {
+		switch (currentLevel) {
+		case 1:
+			if (vehicle->unk1A == 5 && (currentControllerStates[0].button & 0x2000)) {
+				angle = vehicle->unk6 - D_80052B2C->unk36;
+				func_80128504_1374B4((AlienInstance *)vehicle, 0, &worldX, &worldY, &worldZ);
+				if (D_801409F4_14F9A4[0] == 0) {
+					D_8015927C = func_800CE040_DCFF0(worldX, worldY, worldZ,
+						((f32)coss(angle) / 32768.0) * 60.0, 30, ((f32)sins(angle) / 32768.0) * 60.0);
+					D_801409F4_14F9A4[0] = 1;
+				} else {
+					if (func_800CE100_DD0B0(D_8015927C, worldX, worldY, worldZ,
+						((f32)coss(angle) / 32768.0) * 60.0, 30, ((f32)sins(angle) / 32768.0) * 60.0) == -13) D_801409F4_14F9A4[0] = 0;
+				}
+				continue;
+			} else D_801409F4_14F9A4[0] = 0;
+			break;
+		case 2: break;
+		case 3:
+			if (vehicle->unk1A == 3) continue;
+			break;
+		case 4:
+			if (vehicle->unk1A == 13 && D_80050AD4 == 0 && func_8000726C_7E6C(5)) {
+				func_8000345C_405C(0x2000);
+				if (arg1->button & 0x2000) {
+					if (!(vehicle->unk20 & 0x10)) {
+						D_801591AC = 2;
+						D_80159316 = D_80149440;
+					} else func_8001A650_1B250(10);
+				}
+				continue;
+			} else if (vehicle->unk1A == 14 && (currentControllerStates[0].button & 0x2000) && vehicle->unk3C != 0) {
+				vehicle->unk3C = 0;
+				D_80258062 = 0;
+				continue;
+			} else if (vehicle->unk1A == 5 && isButtonNewlyPressed(0, 0x2000) && vehicle->unk1E == 0) {
+				if (D_80158F8C != 0) { func_800FDE00_10CDB0(); continue; }
+				if (func_800FC1CC_10B17C()) vehicle->unk1E = 20;
+				continue;
+			}
+			break;
 		}
-		return;
+		{
+			if (!(D_80159320 & 0x10000)) {
+				if ((type->unk4C & 0x800000) && (currentControllerStates[0].button & 0x10)) {
+					D_80159320 |= 0x80000;
+					if (vehicle->unk1E == 0 && (currentControllerStates[0].button & 0x2000)) {
+						D_80159236 = type->weapon2;
+						recoil = D_80145BE0_154B90[D_80159236].unk6 / ((type->unk32 >> 7) + 1);
+						func_80102DDC_111D8C(vehicle, (s16)(vehicle->unk6 - D_80052B2C->unk36 - 0x8000), 0, recoil);
+						vehicle->unk26 += -((f32)coss(D_80052B2C->unk36) / 32768.0) * (recoil << 4);
+						vehicle->unk24 += ((f32)sins(-D_80052B2C->unk36) / 32768.0) * (recoil << 4);
+						func_8012B150_13A100((s32)vehicle, 1, (InputStruct_8012B150 *)D_80158FF4, D_80158FEC != NULL ? (s32)D_80158FEC : (s32)D_80158FF4);
+					}
+				} else D_80159320 &= ~0x80000;
+			} else D_80159320 &= ~0x80000;
+			if (!(D_80159320 & 0x10000) && (arg1->button & 0x2000) && D_80050AD4 < 2 && D_80031414 == 0 && vehicle->unk1E == 0 && vehicle->unk1A != 0) {
+				if (D_80050AD4 == 0) D_80159236 = type->weapon1;
+				else D_80159236 = type->weapon2;
+				recoil = D_80145BE0_154B90[D_80159236].unk6 / ((type->unk32 >> 7) + 1);
+				func_80102DDC_111D8C(vehicle, (s16)(vehicle->unk6 - D_80052B2C->unk36 - 0x8000), 0, recoil);
+				vehicle->unk26 += -((f32)coss(D_80052B2C->unk36) / 32768.0) * (recoil << 4);
+				vehicle->unk24 += ((f32)sins(-D_80052B2C->unk36) / 32768.0) * (recoil << 4);
+				func_8012B150_13A100((s32)vehicle, (D_80050AD4 == 0 ? 0 : 1), (InputStruct_8012B150 *)D_80158FF4, D_80158FEC != NULL ? (s32)D_80158FEC : (s32)D_80158FF4);
+			}
+		}
+		break;
+	} while (0);
+	if (vehicle->unk20 & 0x400) return;
+	if (vehicle == D_80052B34 && (D_80159320 & 0x4000000)) {
+		vehicle->unk22 = D_80158E5C * 1.5;
+		speed = func_800FB11C_10A0CC(vehicle);
+		if (speed < 16.0f) vehicle->unk22 *= speed * 0.0625;
+	} else if (type->unk66 != 0) {
+		speed = D_80158E5C * D_80144B78_153B28.value;
+		vehicle->unk22 = func_80003824_4424(type->unk66 + ((f64)vehicle->unk58 + (f64)vehicle->unk58), speed);
+		if (vehicle->unk58 >= 0.0f) speed = vehicle->unk58;
+		else speed = -vehicle->unk58;
+		if (speed < 16.0f) vehicle->unk22 *= speed * 0.0625;
+		if (vehicle->unk58 < 0.0f) vehicle->unk22 = -vehicle->unk22;
+	} else if (vehicle->unk1A != 0) vehicle->unk22 = D_80158E5C;
+	if (vehicle->unk1A != 0 && D_8004DCBC == 0 && currentControllerStates[0].stick_x < 30 && currentControllerStates[0].stick_x >= -29 && !(vehicle->unk20 & 2) && !(type->unk4C & 0x400000) && (vehicle != D_80052B34 || !(D_80159320 & 0x4000000))) {
+		if (D_80052A94[vehicle->unk4 >> 8].objects[vehicle->unk0 >> 8].terrainObject && !D_80052A94[vehicle->unk4 >> 8].objects[vehicle->unk0 >> 8].flag10) {
+			switch (D_80052A94[vehicle->unk4 >> 8].objects[vehicle->unk0 >> 8].terrainType) {
+			case 14:
+				if (vehicle->unk12 >= 17) {
+					align = (s16)((vehicle->unk6 & 0x3FFF) - 0x2000);
+					if (align & 7) align = (s16)(align | 8);
+					vehicle->unk22 -= align >> 4;
+					vehicle->unkE += func_800F9C50_108C00(vehicle->unk6, vehicle->unkE) >> 4;
+				}
+				break;
+			case 10: case 11: case 15:
+				if (vehicle->unk12 >= 17) {
+					align = (s16)(((vehicle->unk6 + 0x2000) & 0x3FFF) - 0x2000);
+					if (align & 7) align = (s16)(align | 8);
+					vehicle->unk22 -= align >> 4;
+					vehicle->unkE += func_800F9C50_108C00(vehicle->unk6, vehicle->unkE) >> 4;
+				}
+				break;
+			}
+		}
 	}
-
-	if ((currentLevel == 1) && (vehicle->unk1A == 8) && (D_80159260 == 0) && (D_80050AD4 == 0)) {
-		D_801591AC = 2;
+	steering = ((D_801591EC * D_80158E58 * ((f32)(u32)type->unk3E * D_801591F0)) * (f32)((u32)type->unk3E + 40.0)) / ((vehicle->unk12 >= 0 ? vehicle->unk12 : -vehicle->unk12) + 30.0);
+	if (!(type->unk4C & 0x400000)) {
+		if (D_80159320 & 0x4000000) func_80102DDC_111D8C(vehicle, vehicle->unk6, 0, steering);
+		else func_800FB3A0_10A350(vehicle, steering);
+	} else func_80102DDC_111D8C(vehicle, vehicle->unk6, 0, steering);
+	maxSpeed = type->unk40;
+	if (vehicle->unk12 < type->unk42) func_800FB430_10A3E0(vehicle, type->unk42);
+	if (maxSpeed < vehicle->unk12) func_800FB430_10A3E0(vehicle, maxSpeed);
+	delay = D_801409F0_Read;
+	vehicle->unk20 |= 1;
+	if (delay != 0) delay--;
+	gears = D_801408B4_14F864[type->unk62];
+	D_8004DCC4 = vehicle->unk58 * 16.0f;
+	D_8004DCC8 = maxSpeed;
+	D_801409F0_Begin = delay;
+	switch (type->unk62) {
+	case 0: case 1: case 2:
+		gear = D_801409EC_Read;
+		D_8004DCC0 = D_8004DCC4 / gears[gear];
+		/* Separate address uses preserve IDO's engine register-cache order.
+		 * The empty comparisons emit no instructions. */
+		if (gears != &D_8004DCC4) { }
+		if (gears != &D_8004DCC4) { }
+		if (gears != &D_8004DCC4) { }
+		if (gears != &D_8004DCC4) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (gears != &D_8004DCC0) { }
+		if (D_8004DCC0 < gears[9] && gear > 0 && delay == 0) {
+			gear--;
+			delay = 10;
+		}
+		threshold = gears[8];
+		D_801409EC_14F99C = gear;
+		D_801409F0_14F9A0 = delay;
+		if (threshold < D_8004DCC0) {
+			D_801409EC_Update = gear;
+			D_801409F0_Update = delay;
+			if (gear < 7) {
+				D_801409EC_Shift = gear;
+				D_801409F0_Shift = delay;
+				if (delay == 0) {
+					gear++;
+					D_801409EC_Next = gear;
+					/* Keep the reset in the delay update chain before IDO folds % 1. */
+					D_801409F0_Next = delay = (delay % 1) + 10;
+				}
+			}
+		}
+		if (threshold < D_8004DCC0) D_8004DCC0 = threshold;
+		break;
+	case 3: gear = D_801409EC_Read;
+		D_8004DCC0 = D_8004DCC4 / gears[gear]; break;
+	case 4: case 5: gear = D_801409EC_Read;
+		D_8004DCC0 = D_8015930C / gears[gear]; break;
+	case 6: D_8004DCC0 = 0.0f; break;
 	}
+	D_8004DCC0 = D_8004DCC0 > gears[10] ? D_8004DCC0 : gears[10];
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_801052E8_114298.s")
-#endif
 
 // CURRENT(17202)
 #ifdef NON_MATCHING

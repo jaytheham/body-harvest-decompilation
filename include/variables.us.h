@@ -4168,4 +4168,86 @@ extern const f64 D_801424F0_1514A0[1];
 extern const f64 D_801424F8_1514A8[1];
 extern const f64 D_80142500_1514B0[1];
 extern const f64 D_80142508_1514B8[1];
+extern s16 D_80258062;
+extern f32 D_8004DCC4;
+extern f32 D_8004DCC8;
+
+/* Distinct views preserve IDO's gear-state loads and stores at branch joins. */
+extern s16 D_801409EC_Read;
+extern s16 D_801409F0_Read;
+
+extern s16 D_801409EC_Update;
+extern s16 D_801409F0_Update;
+
+extern s16 D_801409EC_Shift;
+extern s16 D_801409F0_Shift;
+
+extern s16 D_801409EC_Next;
+extern s16 D_801409F0_Next;
+
+extern s16 D_801409F0_Begin;
+
+extern const f64 D_80144BA0_153B50[1];
+extern const ShadowGeometryConstant D_80144BA8_153B58;
+extern const f64 D_80144BB0_153B60[1];
+extern const f64 D_80144BB8_153B68[1];
+extern const f64 D_80144BC0_153B70[1];
+extern const f64 D_80144BC8_153B78[1];
+extern const f64 D_80144BD0_153B80[1];
+extern const f64 D_80144BD8_153B88[1];
+extern const f64 D_80144BE0_153B90[1];
+extern const f64 D_80144BE8_153B98[1];
+extern const f32 D_80144BF0_153BA0[1];
+extern const f64 D_80144BF8_153BA8[1];
+extern const f32 D_80144C00_153BB0[1];
+extern const f64 D_80144C08_153BB8[1];
+extern const f64 D_80144C10_153BC0[1];
+extern const f64 D_80144C18_153BC8[1];
+extern const f32 D_80144C20_153BD0[1];
+extern const f64 D_80144C28_153BD8[1];
+extern const f32 D_80144C30_153BE0[1];
+extern const f32 D_80144C34_153BE4[1];
+extern const f64 D_80144C38_153BE8[1];
+extern const f64 D_80144C40_153BF0[1];
+extern const f32 D_80144C48_153BF8[1];
+extern const f64 D_80144C50_153C00[1];
+extern const f32 D_80144C58_153C08[1];
+extern const f64 D_80144C60_153C10[1];
+extern const f64 D_80144C68_153C18[1];
+extern const f64 D_80144C70_153C20[1];
+extern const f32 D_80144C78_153C28[1];
+extern const f64 D_80144C80_153C30[1];
+extern const f32 D_80144C88_153C38[1];
+extern const f64 D_80144C90_153C40[1];
+extern const f64 D_80144C98_153C48[1];
+extern const f64 D_80144CA0_153C50[1];
+extern const f64 D_80144CA8_153C58[1];
+extern const f64 D_80144CB0_153C60[1];
+extern const f32 D_80144CB8_153C68[1];
+extern const f64 D_80144CC0_153C70[1];
+extern const f64 D_80144CC8_153C78[1];
+extern const f64 D_80144CD0_153C80[1];
+extern const f64 D_80144CD8_153C88[1];
+extern const u32 jtbl_80144CE0_153C90[];
+extern const ShadowGeometryConstant D_80144CF8_153CA8;
+extern const ShadowGeometryConstant D_80144D00_153CB0;
+extern const f64 D_80144D08_153CB8[1];
+extern const f64 D_80144D10_153CC0[1];
+extern const f64 D_80144D18_153CC8[1];
+extern const u32 jtbl_80144D20_153CD0[];
+extern const f64 D_80144D50_153D00[1];
+extern const f64 D_80144D58_153D08[1];
+extern const f64 D_80144D60_153D10[1];
+extern const f64 D_80144D68_153D18[1];
+extern const ShadowGeometryConstant D_80144D70_153D20;
+extern const f64 D_80144D78_153D28[1];
+extern const f64 D_80144D80_153D30[1];
+extern const f64 D_80144D88_153D38[1];
+extern const f32 D_80144D90_153D40[1];
+extern const f64 D_80144D98_153D48[1];
+extern const f64 D_80144DA0_153D50[1];
+extern const f64 D_80144DA8_153D58[1];
+extern const f64 D_80144DB0_153D60[1];
+extern const f64 D_80144DB8_153D68[1];
+
 #endif /* LIBULTRA_REFERENCE */
