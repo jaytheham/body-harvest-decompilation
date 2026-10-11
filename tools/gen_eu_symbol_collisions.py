@@ -61,6 +61,13 @@ EU_BLOCK_HEADER = (
     "// address encoded in the label name instead of the shared-C symbol."
 )
 
+# undefined_syms.eu.txt is consumed directly by `ld -T`, which has no `//`
+# comment syntax, so its block marker must use a C block comment.
+EU_BLOCK_HEADER_LD = (
+    "/* EU auto-labels that collide with a name used by the shared "
+    "(version-independent) C source. */"
+)
+
 
 def vram_of(name: str) -> int | None:
     m = NAME_RE.match(name)
@@ -114,27 +121,51 @@ def collect_na_aliases() -> dict[str, str]:
     return aliases
 
 
+_PIN_RE = re.compile(r"^eu_[A-Za-z0-9_]+\s*=")
+
+# A prior-generation block header whose leading lines were already dropped, so
+# only this orphan continuation comment survives in the file.
+_ORPHAN_HEADER_FRAGMENT = "// and pinned to the EU VRAM"
+
 _BLOCK_HEADER_MARKERS = (
     "// EU auto-labels that collide",
-    "// Region-only EU data symbols",
+    "/* EU auto-labels that collide",
 )
+
+
+def _starts_eu_block(line: str) -> bool:
+    """True if `line` starts or continues a generated eu_ block."""
+    return (
+        any(line.startswith(m) for m in _BLOCK_HEADER_MARKERS)
+        or line.startswith(_ORPHAN_HEADER_FRAGMENT)
+        or _PIN_RE.match(line) is not None
+    )
 
 
 def strip_eu_block(path: Path) -> list[str]:
     """Read a linker input file, dropping any previously appended eu_ block.
 
     The block is always written at the end of the file, so truncate from the
-    first block-header comment rather than filtering individual lines (which
-    would leave the alias lines behind).
+    first line that belongs to it -- a block header, a leftover header fragment,
+    or an ``eu_<name> = <addr>;`` pin -- rather than filtering individual lines
+    (which would leave the alias lines behind).
     """
     kept: list[str] = []
     for line in path.read_text(encoding="utf-8").splitlines():
-        if any(line.startswith(m) for m in _BLOCK_HEADER_MARKERS):
+        if _starts_eu_block(line):
             break
         kept.append(line)
     while kept and not kept[-1].strip():
         kept.pop()
     return kept
+
+
+def has_residual_eu_block(path: Path) -> bool:
+    """True if `path` still carries a generated eu_ header, pin, or fragment."""
+    return any(
+        _starts_eu_block(line)
+        for line in path.read_text(encoding="utf-8").splitlines()
+    )
 
 
 def main() -> int:
@@ -152,6 +183,11 @@ def main() -> int:
         for path in (SYMBOL_ADDRS_EU, UNDEF_SYMS_EU):
             kept = strip_eu_block(path)
             path.write_text("\n".join(kept) + "\n", encoding="utf-8")
+            if has_residual_eu_block(path):
+                print(
+                    f"ERROR: residual eu_ block in {path.name}", file=sys.stderr
+                )
+                return 1
             print(f"cleaned {path.name}")
         return 0
 
@@ -193,16 +229,19 @@ def main() -> int:
         print("\n--write not given; nothing changed.")
         return 0
 
+    # undefined_syms.eu.txt is consumed directly by ld (-T), which has no //
+    # comment syntax, so it gets a /* */ marker instead of the splat-side
+    # header (only symbol_addrs.eu.txt, read by splat, uses // there).
+    headers = {
+        SYMBOL_ADDRS_EU: EU_BLOCK_HEADER,
+        UNDEF_SYMS_EU: EU_BLOCK_HEADER_LD,
+    }
     for path, extra in (
         (SYMBOL_ADDRS_EU, []),
         (UNDEF_SYMS_EU, [aliases[n] for n in needed_aliases]),
     ):
         kept = strip_eu_block(path)
-        body = kept + [""]
-        # undefined_syms.eu.txt is consumed directly by ld (-T), which has no
-        # // comment syntax -- only symbol_addrs.eu.txt (read by splat) does.
-        if path is SYMBOL_ADDRS_EU:
-            body += [EU_BLOCK_HEADER]
+        body = kept + ["", headers[path]]
         body += pinned
         if extra:
             if path is SYMBOL_ADDRS_EU:
