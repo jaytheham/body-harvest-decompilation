@@ -678,7 +678,6 @@ void func_800A70B8_B6068(void) {
 	}
 }
 
-// https://decomp.me/scratch/nzLpq
 // ?? and destroy vehicle hit by beacon
 void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
 {
@@ -714,7 +713,7 @@ void func_800A7C6C_B6C1C(void) {
 	s16 levelZ;
 	s16 terrainY;
 	u8 j;
-	s32 padWords[3]; /* Preserve IDO stack homes for the addressed locals. */
+	s32 padWords[3];
 	s32 absX;
 	s32 absZ;
 
@@ -730,7 +729,6 @@ void func_800A7C6C_B6C1C(void) {
 	}
 
 	for (i = 0; i < 6; i++) {
-
 		switch (D_8003154C[currentLevel - 1][i].state) {
 			case 1:
 				if (D_8003154C[currentLevel - 1][i].timer == 0x19) {
@@ -875,6 +873,7 @@ void func_800A7C6C_B6C1C(void) {
 		D_8003154C[currentLevel - 1][i].timer--;
 	}
 }
+
 // Update PowerupItems
 void func_800A854C_B74FC(void)
 {
@@ -895,11 +894,11 @@ void func_800A854C_B74FC(void)
 
   while (i--) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
   {
-    if (i) {} // IDO eliminates this test, but it preserves the loop register allocation.
-    entry = &D_8014F6D0[i];
+	if (i) {}
+	entry = &D_8014F6D0[i];
 	if (D_8014F6D0[i].unkC != -1)
 	{
-	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6; //apply xyz velocities to xyz position
+	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6;
 	  D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
 	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
 	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
