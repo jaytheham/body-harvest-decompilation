@@ -451,9 +451,6 @@ const f32 D_80038340_38F40[] = {3000.0f};
 const f64 D_80038348_38F48[] = {0.8};
 const f32 D_80038350_38F50[] = {6000.0f};
 const f64 D_80038358_38F58[] = {0.1};
-const u32 jtbl_80038360_38F60[] = {
-	0x80015CFC, 0x80015D88, 0x80015E18, 0x80016058, 0x800160DC, 0x80016010, 0x80016160, 0x800164B4, 0x800161A8, 0x80016238, 0x800162C8, 0x80015F80, 0x80016358, 0x800163A0, 0x800164B4, 0x80016430, 0x80016478
-};
 
 void func_80012080_12C80(s32 arg0)
 {
@@ -2131,8 +2128,6 @@ void func_80015C58_16858(u8 arg0) {
 	}
 }
 
-// Matching - but needs the jump table rodata linked first
-#ifdef NON_MATCHING
 void func_80015C94_16894(s8 arg0, s8 arg1) {
 	s8 sp1F;
 
@@ -2154,7 +2149,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 1:
@@ -2168,7 +2163,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 2:
@@ -2180,7 +2175,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 				func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 				func_80016B38_17738(arg0, sp1F);
 			} else {
-				func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+				func_80016B38_17738(arg0, func_800165EC_171EC());
 			}
 		} else {
 			if (D_80031B58_32758 == 1) {
@@ -2214,7 +2209,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 5:
@@ -2224,7 +2219,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 5;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 3:
 		if (D_80031CA4_328A4 == 3) {
@@ -2236,7 +2231,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 4:
@@ -2249,7 +2244,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 6:
@@ -2259,7 +2254,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 6;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 8:
 		D_80031CD4_328D4 = -1;
@@ -2272,7 +2267,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 9:
@@ -2286,7 +2281,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 10:
@@ -2300,7 +2295,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 12:
@@ -2310,7 +2305,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 12;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 13:
 		D_80031CD4_328D4 = -1;
@@ -2323,7 +2318,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 15:
@@ -2333,7 +2328,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 15;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 16:
 		D_80031CD4_328D4 = -1;
@@ -2342,16 +2337,13 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 16;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 7:
 	case 14:
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015C94_16894.s")
-#endif
 
 s32 func_800164C4_170C4(void) {
 	s32 var_s1;
