@@ -32,9 +32,9 @@ export function renderFilesTable(files) {
         <select id="segFilter"><option value="">All segments</option>${segmentOptions}</select>
         <select id="sortCol">
           <option value="path">Sort: Name</option>
-          <option value="matched_pct" selected>Sort: Matched %</option>
+          <option value="matched_pct">Sort: Matched %</option>
           <option value="matched">Sort: Matched count</option>
-		  <option value="non_matching">Sort: Not matched count</option>
+		  <option value="non_matching" selected>Sort: Not matched count</option>
           <option value="total">Sort: Total functions</option>
           <option value="asm_stubs">Sort: ASM remaining</option>
         </select>
@@ -55,7 +55,7 @@ export function renderFilesTable(files) {
 }
 
 export function initFilesTable(files) {
-  let sortDir = -1;
+  let sortDir = 1;
 
   function renderRows() {
     const search = document.getElementById('fileSearch').value.toLowerCase();
