@@ -103,9 +103,7 @@ const u32 jtbl_800371A0_37DA0[] = {
 const u32 jtbl_80037200_37E00[] = {
 	0x80007A80, 0x80007AA8, 0x80007C64, 0x80007AD0, 0x80007AEC, 0x80007B24, 0x80007B40, 0x80007C64, 0x80007B5C, 0x80007B80, 0x80007C64, 0x80007C64, 0x80007BA4, 0x80007BBC, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C04, 0x80007C20, 0x80007C64, 0x80007C64, 0x80007BD4, 0x80007BEC, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007B08, 0x80007A6C, 0x80007A58, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C64, 0x80007C3C, 0x80007C54
 };
-const u32 jtbl_800372C8_37EC8[] = {
-	0x80007E14, 0x80007E90, 0x80007E44, 0x80007ECC, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F40
-};
+
 
 
 f32 func_800047F0_53F0(f32 arg0) {
@@ -1188,36 +1186,33 @@ s32 func_80007D44_8944(u8 *arg0) {
 	return (sp1E - sp1A) * (sp1E - sp1A) + (sp1C - sp18) * (sp1C - sp18);
 }
 
-// MATCHED - needs rodata
-#ifdef NON_MATCHING
 s32 func_80007DE0_89E0(u8 *arg0) {
-loop:
-	switch (arg0[0]) {
-	case 0x98:
-		return D_80052B34->unk1C < *(u16 *)&vehicleTypes[D_80052B34->unk1A].hitPoints;
-	case 0x9A: {
-		VehicleInstance *vi = vehicleInstances + arg0[1];
-		return vi->unk1C < *(u16 *)&vehicleTypes[vi->unk1A].hitPoints;
-	}
-	case 0x99: {
-		BuildingInstance *bi = buildingInstances + arg0[1];
-		return (s8)bi->hitPoints < buildingTypes[bi->buildingType].unk19;
-	}
-	case 0x9B: {
-		AlienInstance *alien = alienInstances + D_8004D161[arg0[1] * 2];
-		if (alien->unk20 & ALIEN_FLAG_UNKL) {
-			return 1;
+	while (1) {
+		switch (arg0[0]) {
+		case 0x98:
+			return D_80052B34->unk1C < vehicleTypes[D_80052B34->unk1A].hitPoints;
+		case 0x9A: {
+			VehicleInstance *vi = &vehicleInstances[arg0[1]];
+			return vi->unk1C < vehicleTypes[vi->unk1A].hitPoints;
 		}
-		return alien->hitPoints < alienTypes[alien->typeIndex].unk3A;
-	}
-	case 0xAF:
-		arg0 = &D_8004D180[arg0[1]].opcode;
-		goto loop;
+		case 0x99: {
+			BuildingInstance *bi = &buildingInstances[arg0[1]];
+			return bi->hitPoints < buildingTypes[bi->buildingType].unk19;
+		}
+		case 0x9B: {
+			AlienInstance *alien = &alienInstances[D_8004D161[arg0[1] * 2]];
+			if (alien->unk20 & ALIEN_FLAG_UNKL) {
+				return 1;
+			}
+			return alien->hitPoints < alienTypes[alien->typeIndex].unk3A;
+		}
+		case 0xAF:
+			arg0 = &D_8004D180[arg0[1]].opcode;
+			continue;
+		}
+		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
-#endif
 
 s32 func_80007F60_8B60(u8 *arg0) {
 	while (1) {
