@@ -492,9 +492,6 @@ Unk8006AA80Node *func_80012128_12D28() {
 	return *entry;
 }
 
-// https://decomp.me/scratch/XY5gv
-// CURRENT(420)
-#ifdef NON_MATCHING
 s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2)
 {
 	Unk8006AA80Node *node;
@@ -503,6 +500,7 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	s16 *counter;
 	s16 savedIndex;
 	s32 diff;
+	s16 value;
 
 	if (D_8006AB88 == 0)
 	{
@@ -528,14 +526,10 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	{
 		s16 id;
 
-		id = *counter + 1;
-		/* Temporary codegen probe: retains the saved index through this expression. */
-		if (savedIndex)
-		{
-		}
+		value = *counter;
 		node->unk34 = NULL;
 		node->unk30 = NULL;
-		node->unk10 = id;
+		node->unk10 = id = ++value;
 		*arg2 = (Unk8006AA84Node *)node;
 		*arg1 = node;
 		*counter = id;
@@ -544,7 +538,8 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	prev = NULL;
 	while (src != NULL)
 	{
-		diff = src->unk2 - node->unk2;
+		value = node->unk2;
+		diff = src->unk2 - value;
 		if (diff < 0)
 		{
 			prev = src;
@@ -556,12 +551,12 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 			{
 				s16 id;
 
-				id = *counter + 1;
+				value = *counter;
 				src->unk30->unk34 = node;
 				node->unk34 = src;
 				node->unk30 = src->unk30;
 				src->unk30 = node;
-				node->unk10 = id;
+				node->unk10 = id = ++value;
 				*counter = id;
 				return id;
 			}
@@ -569,11 +564,11 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 			{
 				s16 id;
 
-				id = *counter + 1;
+				value = *counter;
 				node->unk34 = src;
 				node->unk30 = NULL;
 				src->unk30 = node;
-				node->unk10 = id;
+				node->unk10 = id = ++value;
 				*arg1 = node;
 				*counter = id;
 				return id;
@@ -583,19 +578,16 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	{
 		s16 id;
 
-		id = *counter + 1;
+		value = *counter;
 		prev->unk34 = node;
 		node->unk34 = NULL;
 		node->unk30 = prev;
-		node->unk10 = id;
+		node->unk10 = id = ++value;
 		*arg2 = (Unk8006AA84Node *)node;
 		*counter = id;
 		return id;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
-#endif
 
 void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
 	if (D_8006AB88 != 0 && arg0 != NULL) {
