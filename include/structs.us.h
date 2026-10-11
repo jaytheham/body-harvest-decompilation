@@ -3815,4 +3815,20 @@ typedef struct {
 	f64 value;
 } ShadowGeometryConstant;
 
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 z;
+} BeaconLevelCoord; /* 4 bytes */
+
+typedef struct {
+	/* 0x00 */ BeaconLevelCoord levels[5]; /* 20 bytes - per-level beacon coords */
+	/* 0x14 */ u8 ids[4];                  /* 4 bytes - per-level sound IDs */
+} LevelBeaconData; /* 0x18 = 24 bytes */
+
+typedef struct {
+	/* 0x00 */ u8 r;
+	/* 0x01 */ u8 g;
+	/* 0x02 */ u8 b;
+} BeaconColor; /* 3 bytes */
+
 #endif /* LIBULTRA_REFERENCE */

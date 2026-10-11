@@ -2370,6 +2370,7 @@ extern PowerupItem D_8014F6D0[0x10]; // pool with 16 slots for pickup items like
 extern PowerupItem D_8014F7DE; // False symbol - end of D_8014F6D0. Replace with D_8014F6D0
 extern s32 D_8014F7F0;
 extern s32 D_8014F7F4;
+extern Unk80052B40 D_8014F7F8;
 extern s16 D_8014F7FA;
 extern u8 D_8014F7FE;
 extern s32 D_8014F800;
@@ -4249,5 +4250,8 @@ extern const f64 D_80144DA0_153D50[1];
 extern const f64 D_80144DA8_153D58[1];
 extern const f64 D_80144DB0_153D60[1];
 extern const f64 D_80144DB8_153D68[1];
+
+extern LevelBeaconData D_8013D898_14C848;
+extern BeaconColor D_8013D8B0_14C860;
 
 #endif /* LIBULTRA_REFERENCE */

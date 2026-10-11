@@ -16,28 +16,6 @@ const u32 jtbl_8014283C_1517EC[] = {
 	0x800A6ED8, 0x800A6F60, 0x800A6FA0,
 };
 const f64 D_80142858_151808[] = {1.2};
-const u32 jtbl_80142860_151810[] = {
-	0x800A7D58, 0x800A7E7C, 0x800A7F74, 0x800A7FD4,
-	0x800A829C, 0x800A8344, 0x800A838C, 0x800A83AC,
-	0x800A83CC, 0x800A84D4,
-};
-const f32 D_80142888_151838[] = {0.3f};
-
-typedef struct {
-	/* 0x00 */ s16 x;
-	/* 0x02 */ s16 z;
-} BeaconLevelCoord; /* 4 bytes */
-
-typedef struct {
-	/* 0x00 */ BeaconLevelCoord levels[5]; /* 20 bytes - per-level beacon coords */
-	/* 0x14 */ u8 ids[4];                  /* 4 bytes - per-level sound IDs */
-} LevelBeaconData; /* 0x18 = 24 bytes */
-
-typedef struct {
-	/* 0x00 */ u8 r;
-	/* 0x01 */ u8 g;
-	/* 0x02 */ u8 b;
-} BeaconColor; /* 3 bytes */
 
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
@@ -750,31 +728,23 @@ void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
 	return;
 }
 
-// CURRENT(28813)
-#ifdef NON_MATCHING
-// AI - Update beacon state machine lifecycle
+// Update beacon state machine lifecycle
 void func_800A7C6C_B6C1C(void) {
-	BeaconColor spA4;
-	s32 pad[4];
-	s16 spAA;
-	s16 spA8;
 	s16 i;
-	BeaconEntry *beacon;
-	s16 tempX;
-	s16 tempZ;
+	s16 pad;
+	Vec2_S16 position;
+	BeaconColor spA4;
+	VehicleInstance *vehicle;
+	s32 range;
+	s32 tempX;
+	s32 tempZ;
 	s16 levelX;
 	s16 levelZ;
 	s16 terrainY;
-	s16 j;
-	s16 vehicleCount;
-	u8 vehicleIndex;
-	VehicleInstance* vehicle;
-	s16 range;
-	s16 deltaX;
-	s16 deltaZ;
-	s16 absX;
-	s16 absZ;
-	s32 distSq;
+	u8 j;
+	s32 padWords[3]; /* Preserve IDO stack homes for the addressed locals. */
+	s32 absX;
+	s32 absZ;
 
 	spA4 = D_8013D8B0_14C860;
 
@@ -788,11 +758,10 @@ void func_800A7C6C_B6C1C(void) {
 	}
 
 	for (i = 0; i < 6; i++) {
-		beacon = &D_8003154C[currentLevel - 1][i];
 
-		switch (beacon->state) {
+		switch (D_8003154C[currentLevel - 1][i].state) {
 			case 1:
-				if (beacon->timer == 0x19) {
+				if (D_8003154C[currentLevel - 1][i].timer == 0x19) {
 					if ((func_8000726C_7E6C(0x14) != 0) && (currentLevel == 4)) {
 						func_80018D7C_1997C(0xDE);
 					} else if ((currentLevel == 4) && (D_80047F94 == 2)) {
@@ -802,91 +771,67 @@ void func_800A7C6C_B6C1C(void) {
 						func_80018D7C_1997C(0xD4);
 						func_80013324_13F24();
 					}
-
-					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 
-				if (beacon->timer == 0) {
-					beacon->state = 2;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 2;
 				}
 
-				if (beacon->timer == 0xA) {
+				if (D_8003154C[currentLevel - 1][i].timer == 0xA) {
 					func_800EFEB4_FEE64(NULL, D_8013D898_14C848.ids[currentLevel - 1], 0);
-					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
 
 			case 2:
-				tempX = beacon->x << 8;
-				tempZ = beacon->z << 8;
-				D_8014F7FA = func_800B84D0_C7480(tempX, tempZ) >> 8;
+				D_8014F7F8.unk0 = D_8003154C[currentLevel - 1][i].x << 8;
+				D_8014F7F8.unk4 = D_8003154C[currentLevel - 1][i].z << 8;
+				D_8014F7FA = func_800B84D0_C7480(D_8014F7F8.unk0, D_8014F7F8.unk4) >> 8;
 
-				beacon = &D_8003154C[currentLevel - 1][i];
+				D_8003154C[currentLevel - 1][i].state = 3;
+				D_8003154C[currentLevel - 1][i].timer = 0x64;
 
-				beacon->state = 3;
-				beacon->timer = 0x64;
-
-				levelX = D_8013D898_14C848.levels[currentLevel].x;
-				levelZ = D_8013D898_14C848.levels[currentLevel].z;
+				levelX = D_8013D898_14C848.levels[currentLevel - 1].x;
+				levelZ = D_8013D898_14C848.levels[currentLevel - 1].z;
 				terrainY = (func_800B84D0_C7480(levelX, levelZ) >> 8) + 0x8C;
 
-				func_800DF038_EDFE8(levelX, terrainY, levelZ, 0x46, 0, NULL);
+				func_800DF038_EDFE8(D_8013D898_14C848.levels[currentLevel - 1].x, terrainY, D_8013D898_14C848.levels[currentLevel - 1].z, 0x46, 0, NULL);
 				D_8014F7FE = func_800C21F0_D11A0(D_8014F80A, 0x2710, D_8014F80C, 0);
-
-				beacon = &D_8003154C[currentLevel - 1][i];
 				break;
 
 			case 3:
 				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
-
-				beacon = &D_8003154C[currentLevel - 1][i];
-				if (beacon->timer == 0) {
-					beacon->state = 4;
-					beacon->timer = 0x3C;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 4;
+					D_8003154C[currentLevel - 1][i].timer = 0x3C;
 				}
 				break;
 
 			case 4:
 				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
 
-				vehicleCount = D_80158FD8;
-				for (j = 0; j < vehicleCount; j++) {
-					vehicleIndex = D_80158E80[j];
-					vehicle = &vehicleInstances[vehicleIndex];
+				for (j = 0; j < D_80158FD8; j++) {
 
-					beacon = &D_8003154C[currentLevel - 1][i];
+					vehicle = &vehicleInstances[D_80158E80[j]];
 
-					range = *(s16 *)((u8 *)vehicleTypes + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
-					deltaX = (beacon->x << 8) - vehicle->unk0;
-					deltaZ = (beacon->z << 8) - vehicle->unk4;
-					absX = deltaX;
-					absZ = deltaZ;
-					if (absX < 0) {
-						absX = -absX;
+					range = vehicleTypes[vehicle->unk1A].unkC + 0x50;
+					absX = BH_ABS((D_8003154C[currentLevel - 1][i].x << 8) - vehicle->unk0);
+					absZ = BH_ABS((D_8003154C[currentLevel - 1][i].z << 8) - vehicle->unk4);
+
+					if (absX > range || absZ > range) {
+						continue;
 					}
-					if (absZ < 0) {
-						absZ = -absZ;
-					}
-
-					if ((absX <= range) && (absZ <= range)) {
-						distSq = (absX * absX) + (absZ * absZ);
-						if ((s16) sqrtf((f32) distSq) < range) {
-							func_80102DDC_111D8C(vehicle, func_80003824_4424((f32) absX, (f32) absZ), 0, 6.0f);
-						}
+					if ((s32) sqrtf((f32) (u32) ((absX * absX) + (absZ * absZ))) < range) {
+						func_80102DDC_111D8C(vehicle, func_80003824_4424((f32) absX, (f32) absZ), 0, 6.0f);
 					}
 				}
-
-				beacon = &D_8003154C[currentLevel - 1][i];
-				if (beacon->timer == 0) {
-					beacon->state = 5;
-					beacon->timer = 0x28;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 5;
+					D_8003154C[currentLevel - 1][i].timer = 0x28;
 					D_8014F800 = 0;
 					func_800A5BD0_B4B80(i);
 
-					beacon = &D_8003154C[currentLevel - 1][i];
-
-					tempX = beacon->x << 8;
-					tempZ = beacon->z << 8;
+					tempX = D_8003154C[currentLevel - 1][i].x << 8;
+					tempZ = D_8003154C[currentLevel - 1][i].z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x181, tempX, terrainY, tempZ, 0.5f);
 					func_800A7B84_B6B34(tempX, tempZ);
@@ -897,23 +842,21 @@ void func_800A7C6C_B6C1C(void) {
 				break;
 
 			case 5:
-				if (beacon->timer == 0) {
-					beacon->state = 6;
-					beacon->timer = 0x32;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 6;
+					D_8003154C[currentLevel - 1][i].timer = 0x32;
 
-					tempX = beacon->x << 8;
-					tempZ = beacon->z << 8;
+					tempX = D_8003154C[currentLevel - 1][i].x << 8;
+					tempZ = D_8003154C[currentLevel - 1][i].z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x17C, tempX, terrainY, tempZ, 0.25f);
-
-					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
 
 			case 6:
-				if (beacon->timer == 0) {
-					beacon->state = 7;
-					beacon->timer = 0x14;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 7;
+					D_8003154C[currentLevel - 1][i].timer = 0x14;
 					if ((D_8014F800 == 0) && (D_8014F804 == -1)) {
 						D_8014F804 = i;
 					}
@@ -921,53 +864,45 @@ void func_800A7C6C_B6C1C(void) {
 				break;
 
 			case 7:
-				if (beacon->timer == 0) {
-					beacon->state = 9;
-					beacon->timer = 5;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 9;
+					D_8003154C[currentLevel - 1][i].timer = 5;
 				}
 				break;
 
 			case 8:
-				if (beacon->timer == 0) {
-					beacon->state = 9;
-					beacon->timer = 5;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 9;
+					D_8003154C[currentLevel - 1][i].timer = 5;
 				}
 				break;
 
 			case 9:
-				if (beacon->timer == 0) {
-					tempX = beacon->x << 8;
-					tempZ = beacon->z << 8;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					tempX = D_8003154C[currentLevel - 1][i].x << 8;
+					tempZ = D_8003154C[currentLevel - 1][i].z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
-					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, D_80142888_151838[0]);
+					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, 0.3f);
 
-					beacon = &D_8003154C[currentLevel - 1][i];
-
-					spA8 = beacon->x << 8;
-					spAA = beacon->z << 8;
-					func_800B99A8_C8958((Unk80152B80*) &spA8, 0x1E, 0x1F4, 0xFF, (u8*) &spA4, 0x50, 0xA, 0);
-
-					beacon = &D_8003154C[currentLevel - 1][i];
-					beacon->state = 0xA;
-					beacon->timer = 5;
+					position.x = D_8003154C[currentLevel - 1][i].x << 8;
+					position.z = D_8003154C[currentLevel - 1][i].z << 8;
+					func_800B99A8_C8958(&position, 0x1E, 0x1F4, 0xFF, &spA4.r, 0x50, 0xA, 0);
+					D_8003154C[currentLevel - 1][i].state = 0xA;
+					D_8003154C[currentLevel - 1][i].timer = 5;
 				}
 				break;
 
 			case 10:
-				if (beacon->timer == 0) {
-					beacon->state = 8;
-					beacon->timer = 0x19;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 8;
+					D_8003154C[currentLevel - 1][i].timer = 0x19;
 				}
 				break;
 		}
 
-		beacon->timer--;
+		D_8003154C[currentLevel - 1][i].timer--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A7C6C_B6C1C.s")
-#endif
-
 // Update PowerupItems
 void func_800A854C_B74FC(void)
 {
