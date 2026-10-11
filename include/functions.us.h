@@ -1731,4 +1731,7 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4);
 
 void func_802DDFF0_2C0420(u8 arg0);
 
+u8 func_800CE040_DCFF0(s16, s16, s16, s16, s16, s16);
+s32 func_800CE100_DD0B0(u8, s16, s16, s16, s16, s16, s16);
+
 #endif /* LIBULTRA_REFERENCE */
