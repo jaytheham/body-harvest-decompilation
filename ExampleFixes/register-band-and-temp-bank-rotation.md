@@ -377,3 +377,11 @@ scale copy changes 130 -> 0 without an extra instruction. See
 [the verified mask note](halfword-mask-scale-vector-and-temp-registers.md).
 The earlier 130 discussion records the unsuccessful variants, not the
 current match status.
+
+## E5044 current-file follow-up (2026-10-11)
+
+Native build remeasures the existing body at 365. An explicit scoped Gfx packet for the render-mode command, assigning w1 before w0 with both assignments on the same source line, reaches 335. The words may use the original G_RM constants and _SHIFTL command expression; hexadecimal literals are unnecessary. Splitting this identical block across source lines restores score 365. Restoring the shared line reproduces 335. Putting end and entry initializations on a shared line reaches 330, verified by a fresh native build. The source line grouping affects IDO scheduling and must be preserved.
+
+Twenty-four systematic variants tested signed/unsigned command words and both store orders, the equivalent texture-off command, unsigned type comparisons, a direct array-end comparison, argument-local widths, and statement grouping. Direct array-end comparison scores 1150, all-short arguments 530, texture store-order reversal 375. Other local widths and unsigned comparisons are neutral. Flattening the whole function scores 382. The 330 candidate remains guarded; temporary bank rotation and the type-one/end saved-register exchange remain. This is partial progress, not a match.
+
+E5044 further follow-up: replacing the cached array end with the adjacent global D_80153300 address is neutral at 330 when both pointer assignments share a line, regardless of assignment order; separate lines score 335 or 350. Eight explicit texture-off packet variants score 330, 340, 580, 345, 350, 360, 600, and 365, respectively; none improves the shared-line baseline. Eight named type-one/type-two constant variants, changing initialization order and placement relative to pointer initialization, all remain 330. Retain the guarded candidate. Search-AsmPattern F4030 count 8 provides matched C4CB8 and E32C4 texture-command donors; their source was inspected. No new files or header edits.
