@@ -11,3 +11,11 @@ The retained candidate has the target's frame size and instruction count. Remain
 Named scale and heading values did not improve this. Additional blocks around the visibility check, int/long expression forms, volatile float or heading reads, negated equivalent heading expressions, and integer scale coefficients also failed to improve 429. Volatile heading reads and negated heading expressions made the sequence substantially worse.
 
 Retain the guarded candidate until these differences and the full ROM checksum are resolved.
+
+## Outside vehicle detail renderer: partial result
+
+func_80101EF4_110EA4 remains NON_MATCHING. The detail table uses two 32-bit address words, a position vector at offset 8, and signed 16-bit flags at offset 0xE. Replacing the byte-array initializer with these fields preserves every data byte and enables the target halfword flag loads.
+
+Sharing one Gfx temporary within each of three separate scopes (initial commands, detail loop, and cleanup loop) reduces the original 0x90 frame to the target 0x50 frame. Placing the two command-word stores on one source line also improves scheduling. The retained score is 5248; setup scheduling and saved-register allocation still differ. The wrapped candidate passes the full ROM checksum.
+
+Comparing an address word as a pointer against the existing display-list array symbols prevents unwanted constant hoisting seen with integer comparisons. Keep matrix advancement as typed Mtx pointer arithmetic.

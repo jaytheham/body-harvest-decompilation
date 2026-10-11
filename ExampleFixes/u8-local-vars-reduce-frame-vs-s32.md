@@ -73,3 +73,29 @@ growing the caller by eight bytes and shifting later sections. Passing
 `func_800847D0_93780(arg0)` restored the target's single `andi` in the call
 delay slot. The target and caller both scored zero, and the full ROM
 verification returned `build.na/bh.na.z64: OK`.
+
+#### Drone Hunter: eliminate locals while preserving argument promotion
+
+In func_80091470_A0420, removing the AlienInstance *alien local and
+using direct array access reduced compiler spill offsets by four bytes. Removing
+the s32 new_var local reduced the frame from 0x48 to the required 0x40.
+Passing (s32)found retained the extra byte mask required at the call to
+func_80080B44_8FAF4; passing found directly removed it. Together these
+changes matched the function and full ROM. A low-byte field read can use
+(u8)alienInstances[index].unk38 instead of casting the field address.
+
+#### Hybrid boss: typed node locals and word outputs
+
+func_80091220_A01D0 matched with three separate s16 node locals,
+a s16 mask, a saved s16 root node, and three SignedWord outputs in
+that declaration order. The output pointers use .word, and particle
+coordinates use .halves.low. This replaces negative array indexing.
+Compute the first named node with two nested array accesses, then name
+each following node separately. Set unk20 before unk34 to reproduce
+the scheduled flag store before the counter store.
+
+## Drone King: named byte node chain and pointer home
+
+`func_80090D0C_9FCBC` matches all 325 instructions and the full ROM. Decrement the parent counter directly and test the parent fields directly, rather than retaining counter and flag word temporaries. Combine the two left shifts into one shift by 15: the folded nested expression consumes a temporary register number despite emitting the same shift instruction. Remove the 64-bit cast from the flag mask; it also changes temporary register numbering without changing the final instruction sequence.
+
+Name all three byte indices in the final node chain. This assigns them v0, v1, and a0, keeps the table base in a1, and retains the parent pointer in t0. Reusing the earlier path-result local changes its call-result spill and adds narrowing instructions. Read the final angle difference directly without an extra short angle local. Keep two unused word homes immediately before the parent pointer declaration: these preserve the upper locals and the pointer spill at sp+0x44. Placing those words at the end gives the right frame but moves the pointer spill to sp+0x4c. No new file was required.

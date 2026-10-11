@@ -484,7 +484,7 @@ void loadLevelData(u8 arg0)
 	var_s0 = func_800101F0_10DF0(&D_80223780, var_s0, 0xF00);
 	osSyncPrintf(D_80037BC0_387C0, 0xF00, (D_8006AA60 == 0xF00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(D_80037BD4_387D4);
-	var_s0 = func_800101F0_10DF0(&D_80259490, var_s0, 0x900);
+	var_s0 = func_800101F0_10DF0(D_80259490, var_s0, 0x900);
 	osSyncPrintf(D_80037C08_38808, 0x900, (D_8006AA60 == 0x900) ? ((void *)(&sp44)) : ((void *)(&sp34)));
 	osSyncPrintf(D_80037C1C_3881C);
 	var_s0 = func_800101F0_10DF0(&D_80224680, var_s0, 0x800);

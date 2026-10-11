@@ -18,3 +18,9 @@ if (value < signedForce) {
 ```
 
 The usual arithmetic conversions generate the same integer-to-float conversions as the explicit temporary assignments. IDO 5.3 changes the allocation of the integer value, producing the exact target assembly. Removing those redundant float assignments resolved the last eight register differences without changing the frame or instruction order.
+
+## Vehicle landing particles: implicit byte conversions
+
+`func_80107970_116920` matches all 339 instructions and passes the full ROM checksum. Pass the float results from `func_800FB014` and `func_800FB098` directly to the particle helper's s8 arguments. An explicit `(s8)(s32)` adds sign-extension instructions. Pass `sqrtf((f32)(sp62 + sp60)) / 3` directly to its u8 argument: this preserves the unsigned conversion sequence using FCSR and the 2^31 correction. Casting through s32 incorrectly replaces it with signed truncation. Integer divisors 2 and 3 preserve div.s; the float literals permit reciprocal multiplication.
+
+Correct both terrain toggle conditions to vehicle type zero OR a negative signed `(flags << 2)`. The previous conditions inverted the flag test. Read the vehicle table directly instead of preserving its pointer across the effect call. Reuse sp62 and sp60 for the clamped angle thresholds instead of adding separate short variables. Keep the word temporary and absolute-value result in one nested block; reuse the absolute result for both explicit if/else branches. Two unused word declarations after sp5E place the float and random short spills correctly. Inline `sp5E >> 1` in both particle coordinates. Use the one-member aggregate for the existing 0.9 constant to preserve its address and FPR order.

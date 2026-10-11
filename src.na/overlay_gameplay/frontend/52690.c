@@ -56,17 +56,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	fade = 0;
 	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, entry->unk8);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 2047, 256);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 0x0000, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 63 << 2, 63 << 2);
+	gDPLoadTextureBlock(D_8005BB2C++, entry->unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
@@ -86,17 +76,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	spA8.unk4 = (fade * 8) - 0x76C;
 	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, entry->unkC);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 2047, 256);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 8, 0x0000, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 63 << 2, 63 << 2);
+	gDPLoadTextureBlock(D_8005BB2C++, entry->unkC, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
@@ -1924,17 +1904,7 @@ void func_800878A4_57D54(void) {
 			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 			gDPPipeSync(D_8005BB2C++);
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_800A9240_796F0);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0x0000, G_TX_RENDERTILE, 0,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-					   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+			gDPLoadTextureBlock(D_8005BB2C++, D_800A9240_796F0, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, TEXEL0, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, TEXEL0, PRIMITIVE, 0, TEXEL0, 0);
 			gDPPipeSync(D_8005BB2C++);
 		} else {
@@ -2473,17 +2443,7 @@ void func_80089764_59C14(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E080), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 	D_800DE12D = 0x20;
 	D_800DE12E = 0x20;
@@ -2560,17 +2520,7 @@ void func_80089B38_59FE8(void) {
 	s16 one;
 
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_100E080);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, D_100E080, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 	oneF = 1.0f;
 	one = (s16)oneF;
@@ -2938,17 +2888,7 @@ void func_8008A928_5ADD8(s32 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0,
 						 PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_100D700);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0x0000, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << 2, 15 << 2);
+	gDPLoadTextureBlock(D_8005BB2C++, D_100D700, G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 
 	if ((idx == -6) || (idx == -5)) {
@@ -3202,17 +3142,7 @@ void func_8008B534_5B9E4(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-		   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E080), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 	D_800DE12D = 0x20;
 	D_800DE12E = 0x20;
@@ -3438,19 +3368,7 @@ void func_8008BC00_5C0B0(u8 arg0) {
 					texFrame = rand4 & 0xFF;
 				}
 
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100B4F0[texFrame << 9])));
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPLoadSync(D_8005BB2C++);
-				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-
-				gDPPipeSync(D_8005BB2C++);
-
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-						   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << 2, 31 << 2);
+				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100B4F0[texFrame << 9])), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 				gDPPipeSync(D_8005BB2C++);
 
@@ -4257,113 +4175,25 @@ void func_8008E158_5E608(void) {
 					if ((type != 0xFF) || ((u8)entry->unkE != 0xFF)) {
 						typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
 						if (typeCfg->unk5 == 0) {
-							s32 lineWords;
-							s32 lineWordsClamped;
-							s32 lineSize;
-							s32 dxt;
 							u32 texAddr;
 
 							gDPPipeSync(D_8005BB2C++);
 							gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 
 							texAddr = (u32)(D_800AA76C[type] + (((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6) / 2));
-							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(texAddr));
-
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPLoadSync(D_8005BB2C++);
-
-							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 3) >> 2) - 1;
-							lineWordsClamped = 0x7FF;
-							if (lineWords < 0x7FF) {
-								lineWordsClamped = lineWords;
-							}
-
-							lineSize = typeCfg->unk6 / 16;
-							if (lineSize <= 0) {
-								lineSize = 1;
-							}
-
-							dxt = (lineSize + 0x7FF) / lineSize;
-							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, lineWordsClamped, dxt);
-
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, (((typeCfg->unk6 >> 1) + 7) >> 3), 0x0000, G_TX_RENDERTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (typeCfg->unk6 - 1) << 2, (typeCfg->unk7 - 1) << 2);
+							gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(texAddr), G_IM_FMT_I, typeCfg->unk6, typeCfg->unk7, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 						} else if (typeCfg->unk5 == 1) {
-							s32 lineWords;
-							s32 lineWordsClamped;
-							s32 lineSize;
-							s32 dxt;
 							u32 texAddr;
 
 							gDPPipeSync(D_8005BB2C++);
 							gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
 
 							texAddr = (u32)(D_800AA76C[type] + ((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6));
-							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(texAddr));
-
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPLoadSync(D_8005BB2C++);
-
-							lineWords = (((typeCfg->unk7 * typeCfg->unk6) + 1) >> 1) - 1;
-							lineWordsClamped = 0x7FF;
-							if (lineWords < 0x7FF) {
-								lineWordsClamped = lineWords;
-							}
-
-							lineSize = typeCfg->unk6 / 8;
-							if (lineSize <= 0) {
-								lineSize = 1;
-							}
-
-							dxt = (lineSize + 0x7FF) / lineSize;
-							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, lineWordsClamped, dxt);
-
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, ((typeCfg->unk6 + 7) >> 3), 0x0000, G_TX_RENDERTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (typeCfg->unk6 - 1) << 2, (typeCfg->unk7 - 1) << 2);
+							gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(texAddr), G_IM_FMT_IA, G_IM_SIZ_8b, typeCfg->unk6, typeCfg->unk7, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 						} else if (typeCfg->unk5 == 2) {
-							s32 lineWords;
-							s32 lineWordsClamped;
-							s32 lineSize;
-							s32 dxt;
-
 							gDPPipeSync(D_8005BB2C++);
 							gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_800AA76C[type]));
-
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPLoadSync(D_8005BB2C++);
-
-							lineWords = (typeCfg->unk7 * typeCfg->unk6) - 1;
-							lineWordsClamped = 0x7FF;
-							if (lineWords < 0x7FF) {
-								lineWordsClamped = lineWords;
-							}
-
-							lineSize = (typeCfg->unk6 * 2) / 8;
-							if (lineSize <= 0) {
-								lineSize = 1;
-							}
-
-							dxt = (lineSize + 0x7FF) / lineSize;
-							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, lineWordsClamped, dxt);
-
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, (((typeCfg->unk6 * 2) + 7) >> 3), 0x0000, G_TX_RENDERTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (typeCfg->unk6 - 1) << 2, (typeCfg->unk7 - 1) << 2);
+							gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_800AA76C[type]), G_IM_FMT_RGBA, G_IM_SIZ_16b, typeCfg->unk6, typeCfg->unk7, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 						}
 
 						D_800DE12D = typeCfg->unk6;
@@ -4795,17 +4625,7 @@ void func_8008FBD4_60084(void) {
 	struct { u8 unk0; u8 unk1; u8 unk2; } sp44;
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(&D_100DC00));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 
 	D_800DE12D = 0x20;

@@ -339,8 +339,8 @@ extern u8 D_80034453_35053[];
 extern s32 D_8003445C_3505C;
 extern u8 *D_80034460_35060;
 extern u8 *D_80034464_35064;
-extern s32 D_80034468_35068;
-extern s32 D_8003446C_3506C;
+extern u8 *D_80034468_35068;
+extern u8 *D_8003446C_3506C;
 extern s32 D_80034470_35070;
 extern s32 D_80034474_35074;
 extern s32 D_80034478_35078;
@@ -1240,7 +1240,7 @@ extern f32 D_8008DE04_175EC4;
 // AI - Interior lighting/room transition table
 extern s32 D_8008DE08_175EC8[];
 // AI - Interior lighting data block (contains ambient/light entries D_8008DE58, D_8008DE68, D_8008DE78)
-extern u8 D_8008DE50_175F10[];
+extern InteriorLightData D_8008DE50_175F10;
 // AI - Ambient light color (overlaps D_8008DE50_175F10)
 extern u8 D_8008DE58_175F18;
 // AI - Light list (overlaps D_8008DE50_175F10)
@@ -1262,10 +1262,8 @@ extern unsigned long D_800938A0_63D50_u32[0x40];
 extern u8 D_80093DA0_64250[0x400];
 extern unsigned long D_80093DA0_64250_u32[0x36];
 extern u8 D_80094278_64728[0x28];
-extern Ambient D_800942A0_64750;
-extern Light D_800942A8_64758;
-extern u16 D_800942B8_64768[];
-extern u16 D_800942C0_64770[];
+extern Lights1 D_800942A0_64750;
+extern Lights1 D_800942B8_64768;
 extern Gfx *D_800942D0_64780;
 extern u32 D_800942D4_64784;
 extern Gfx* D_800942D8_64788;
@@ -1952,10 +1950,8 @@ extern s16 D_8013D786_14C736[][8];
 extern u8 D_8013D894_14C844; // Beacon warp destination
 extern s32 D_8013D8C0_14C870[];
 extern Unk_8013D91C D_8013D91C[6];
-extern Ambient D_8013D958_14C908;
-extern Light D_8013D960_14C910;
-extern Ambient D_8013D970_14C920;
-extern Light D_8013D978_14C928;
+extern Lights1 D_8013D958_14C908;
+extern Lights1 D_8013D970_14C920;
 extern u8 D_8013D9AC_14C95C; // used as a timer during human meter game over sequence, maybe lighting related
 extern u8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
@@ -1995,6 +1991,7 @@ extern u8 D_80140AA8_14FA58[8];
 extern AlienInstance *D_80140AB0_14FA60[];
 extern s32 D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
+extern Lights1 D_80140C30_14FBE0;
 extern u8 D_80140C70[4];
 extern u8 D_80140C74[4];
 extern s32 D_80140C78;
@@ -2765,8 +2762,7 @@ extern f32 D_80159294;
 extern f32 D_80159298;
 extern s16 D_8015929C;
 extern s16 D_8015929E;
-extern u8 D_801592A0;
-extern u8 D_801592B0;
+extern LookAt D_801592A0;
 extern Mtx D_801592C0;
 extern s32 D_80159300;
 extern s16 D_80159304;
@@ -2812,9 +2808,9 @@ extern f32 D_80159D50;
 extern f32 D_80159D54;
 extern f32 D_80159D58;
 extern VehicleInstance *D_80159D5C;
-extern Unk8010ED84Pos *D_80159D60;
+extern VehicleInstance *D_80159D60;
 extern VehicleType *D_80159D64;
-extern Unk8010ED84Data *D_80159D68;
+extern VehicleType *D_80159D68;
 extern s32 D_80159D6C;
 extern s32 D_80159D70;
 extern f32 D_80159D78[8]; // X corner offsets (vehicle 1: 0-3, vehicle 2: 4-7)
@@ -3011,7 +3007,7 @@ extern s32 D_80258390; // English sign strings
 extern s32 D_80258F90; // English sign string offsets (accessed as u16[] via D_8006C550)
 extern BuildingType buildingTypes[0x20]; // 0x80259090
 extern u8 D_80259470[];
-extern Unk80259490 D_80259490; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
+extern Unk80259490 D_80259490[128]; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
 extern Unk80259D90 D_80259D90[0x97];
 extern u8 D_8025CCC0[];
@@ -3024,8 +3020,8 @@ extern u8 D_8025F780;
 extern u8 D_80260500[];
 extern u8 D_80260700[128][128]; // Landscape colors
 extern TerrainPaletteColor D_80264700[256]; // Landscape palettes
-extern u8 D_80264B00[];
-extern u8 D_80265880[];
+extern u8 D_80264B00[6][24][24];
+extern u16 D_80265880[256];
 extern u8 D_80265A80[];
 extern u8 D_80266E80[];
 extern s16 D_80267080[];
@@ -4116,6 +4112,27 @@ extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
 
+extern const ShadowGeometryConstant D_801449E0_153990;
+extern const ShadowGeometryConstant D_801449F0_1539A0;
+extern const ShadowGeometryConstant D_801449F8_1539A8;
+extern const ShadowGeometryConstant D_80144A00_1539B0;
+extern const ShadowGeometryConstant D_80144A08_1539B8;
+extern const ShadowGeometryConstant D_80144A10_1539C0;
+extern const ShadowGeometryConstant D_80144A18_1539C8;
+extern const f32 D_801449E8_153998[1];
+
+extern const ShadowGeometryConstant D_80144A80_153A30;
+extern const ShadowGeometryConstant D_80144D70_153D20;
+extern const ShadowGeometryConstant D_80144B28_153AD8;
+extern const ShadowGeometryConstant D_80144B30_153AE0;
+extern const ShadowGeometryConstant D_80144B38_153AE8;
+extern const ShadowGeometryConstant D_80144B40_153AF0;
+extern const ShadowGeometryConstant D_80144B58_153B08;
+extern const ShadowGeometryConstant D_80144BA8_153B58;
+extern const ShadowGeometryConstant D_80144CF8_153CA8;
+extern const ShadowGeometryConstant D_80144D00_153CB0;
+
+
 
 extern s32 D_800A4340_Menu1;
 extern s32 D_800A4340_Menu2;
@@ -4135,6 +4152,103 @@ extern s16 D_800FCA92_Lang2;
 
 extern s32 D_800A4340_DrawCompare;
 extern s32 D_800A4340_DrawAfterCall;
+
+
+/* Map rendering constants. */
+extern const f32 D_801424A8_151458[1];
+extern const f64 D_801424B0_151460[1];
+extern const f64 D_801424B8_151468[1];
+extern const f64 D_801424C0_151470[1];
+extern const f64 D_801424C8_151478[1];
+extern const f64 D_801424D0_151480[1];
+extern const f64 D_801424D8_151488[1];
+extern const f32 D_801424E0_151490[1];
+extern const f64 D_801424E8_151498[1];
+extern const f64 D_801424F0_1514A0[1];
+extern const f64 D_801424F8_1514A8[1];
+extern const f64 D_80142500_1514B0[1];
+extern const f64 D_80142508_1514B8[1];
+extern s16 D_80258062;
+extern f32 D_8004DCC4;
+extern f32 D_8004DCC8;
+
+/* Distinct views preserve IDO's gear-state loads and stores at branch joins. */
+extern s16 D_801409EC_Read;
+extern s16 D_801409F0_Read;
+
+extern s16 D_801409EC_Update;
+extern s16 D_801409F0_Update;
+
+extern s16 D_801409EC_Shift;
+extern s16 D_801409F0_Shift;
+
+extern s16 D_801409EC_Next;
+extern s16 D_801409F0_Next;
+
+extern s16 D_801409F0_Begin;
+
+extern const f64 D_80144BA0_153B50[1];
+extern const ShadowGeometryConstant D_80144BA8_153B58;
+extern const f64 D_80144BB0_153B60[1];
+extern const f64 D_80144BB8_153B68[1];
+extern const f64 D_80144BC0_153B70[1];
+extern const f64 D_80144BC8_153B78[1];
+extern const f64 D_80144BD0_153B80[1];
+extern const f64 D_80144BD8_153B88[1];
+extern const f64 D_80144BE0_153B90[1];
+extern const f64 D_80144BE8_153B98[1];
+extern const f32 D_80144BF0_153BA0[1];
+extern const f64 D_80144BF8_153BA8[1];
+extern const f32 D_80144C00_153BB0[1];
+extern const f64 D_80144C08_153BB8[1];
+extern const f64 D_80144C10_153BC0[1];
+extern const f64 D_80144C18_153BC8[1];
+extern const f32 D_80144C20_153BD0[1];
+extern const f64 D_80144C28_153BD8[1];
+extern const f32 D_80144C30_153BE0[1];
+extern const f32 D_80144C34_153BE4[1];
+extern const f64 D_80144C38_153BE8[1];
+extern const f64 D_80144C40_153BF0[1];
+extern const f32 D_80144C48_153BF8[1];
+extern const f64 D_80144C50_153C00[1];
+extern const f32 D_80144C58_153C08[1];
+extern const f64 D_80144C60_153C10[1];
+extern const f64 D_80144C68_153C18[1];
+extern const f64 D_80144C70_153C20[1];
+extern const f32 D_80144C78_153C28[1];
+extern const f64 D_80144C80_153C30[1];
+extern const f32 D_80144C88_153C38[1];
+extern const f64 D_80144C90_153C40[1];
+extern const f64 D_80144C98_153C48[1];
+extern const f64 D_80144CA0_153C50[1];
+extern const f64 D_80144CA8_153C58[1];
+extern const f64 D_80144CB0_153C60[1];
+extern const f32 D_80144CB8_153C68[1];
+extern const f64 D_80144CC0_153C70[1];
+extern const f64 D_80144CC8_153C78[1];
+extern const f64 D_80144CD0_153C80[1];
+extern const f64 D_80144CD8_153C88[1];
+extern const u32 jtbl_80144CE0_153C90[];
+extern const ShadowGeometryConstant D_80144CF8_153CA8;
+extern const ShadowGeometryConstant D_80144D00_153CB0;
+extern const f64 D_80144D08_153CB8[1];
+extern const f64 D_80144D10_153CC0[1];
+extern const f64 D_80144D18_153CC8[1];
+extern const u32 jtbl_80144D20_153CD0[];
+extern const f64 D_80144D50_153D00[1];
+extern const f64 D_80144D58_153D08[1];
+extern const f64 D_80144D60_153D10[1];
+extern const f64 D_80144D68_153D18[1];
+extern const ShadowGeometryConstant D_80144D70_153D20;
+extern const f64 D_80144D78_153D28[1];
+extern const f64 D_80144D80_153D30[1];
+extern const f64 D_80144D88_153D38[1];
+extern const f32 D_80144D90_153D40[1];
+extern const f64 D_80144D98_153D48[1];
+extern const f64 D_80144DA0_153D50[1];
+extern const f64 D_80144DA8_153D58[1];
+extern const f64 D_80144DB0_153D60[1];
+extern const f64 D_80144DB8_153D68[1];
 
 #endif /* LIBULTRA_REFERENCE */
 

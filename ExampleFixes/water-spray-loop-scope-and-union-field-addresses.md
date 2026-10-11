@@ -12,3 +12,13 @@
 The position array added to `EffectInterpolationState` overlaps its existing 14-byte payload and leaves the entry stride unchanged.
 
 A zero function score must still be followed by full-ROM verification. A whole-file experiment replacement can accidentally change an already matched function. Restrict edits to the selected function; if the checksum differs, locate the differing ROM bytes and map them back to the assembly symbols.
+
+## Partial chain simulation: test the cursor before decrementing
+
+func_80103308_1122B8 remains NON_MATCHING after 20 source variants. Its carried position starts at cursor[1], while the current position and velocity belong to cursor[0]. The midpoint reads cursor[-1]. A do loop with the unsigned condition on cursor-- includes the final point below the lower-bound symbol, as the target does: the branch tests the original cursor before decrementing. Moving the decrement earlier and updating cursor[0] instead writes the wrong element.
+
+The retained candidate corrects those accesses and uses the existing double constants. Its score is 8828; the target spills loop midpoint values and uses different floating registers. Separate scalar groups, arrays, vector fields, literal constants, and conditional scopes did not resolve that layout. The wrapped full ROM passes verification.
+
+### Partial companion chain updater
+
+func_80102FA4_111F54 remains NON_MATCHING after 20 compiled variants; retained score 9396. Like func_80103308, the cursor points at the point being updated: read the neighbor from cursor[-1], update cursor[0] velocity and position, carry the new position, and compare the old cursor against the lower boundary before decrementing. A reverse-order three-float carry array preserves the three stack stores and reloads absent from scalar versions. Reusing the midpoint scalars for the new position improves allocation over three separate output scalars. The final terrain loop returns the current index when terrain height is below point Y, otherwise continues through index zero and clears the global high bit. Original code inverted that test and returned early. Read point Y after the helper call, and reuse the same cursor in both loops. Constant placement and floating register allocation remain unresolved; no new file was created.

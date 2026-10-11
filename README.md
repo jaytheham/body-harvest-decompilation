@@ -12,7 +12,7 @@ A decompilation to C of the N64 game Body Harvest.
 
 ## Windows (without Docker)
 
-Install **64-bit [Python 3.12](https://www.python.org/downloads/windows/)** with the Python launcher enabled. This is the only build dependency you need to install yourself; use Git to clone the repository, or download its source ZIP. Windows 10/11 and the included PowerShell and `tar.exe` are required.
+Install **64-bit [Python 3.12](https://www.python.org/downloads/windows/)** (3.11.4 to 3.12 works; some pinned libraries have no Windows wheels for 3.13 or newer) with the Python launcher enabled. This is the only build dependency you need to install yourself; use Git to clone the repository, or download its source ZIP. Windows 10/11 and the included PowerShell and `tar.exe` are required.
 
 ```powershell
 git clone https://github.com/jaytheham/body-harvest-decompilation.git

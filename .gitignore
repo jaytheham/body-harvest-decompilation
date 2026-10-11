@@ -11,6 +11,9 @@ build.eu/
 build/lib/
 nonmatchings/
 reference/
+tools/windows/
+.vscode/
+.decomp-workbench-tool/
 
 # symlinks
 
@@ -34,7 +37,5 @@ ctx.c.m2c
 reference_index.json
 asm_pattern_index.json
 pah.conf
-tools/windows/
-.vscode/
 .tmp_na_probe/
 function-inventory.json
