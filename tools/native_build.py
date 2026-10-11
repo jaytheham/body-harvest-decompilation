@@ -248,7 +248,16 @@ def build(args):
         target.parent.mkdir(parents=True, exist_ok=True)
         try:
             if source.suffix == ".s":
-                run([assembler, *asflags, "-o", target, source], quiet=args.quiet)
+                assembly = source.read_text(encoding="utf-8")
+                normalized = re.sub(r'(\.(?:incbin|include)\s+"[^"]+")',
+                                    lambda match: match.group().replace("\\", "/"), assembly)
+                if normalized != assembly:
+                    with tempfile.TemporaryDirectory() as temporary:
+                        portable_source = Path(temporary) / source.name
+                        portable_source.write_text(normalized, encoding="utf-8")
+                        run([assembler, *asflags, "-o", target, portable_source], quiet=args.quiet)
+                else:
+                    run([assembler, *asflags, "-o", target, source], quiet=args.quiet)
             elif source.suffix == ".c":
                 libultra_config = libultra_sources.get(source.stem, {}) if source.parent.as_posix() == "src.us/libultra" else {}
                 optimization = libultra_config.get("optimization", "-O2")
