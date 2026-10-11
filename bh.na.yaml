@@ -44,17 +44,17 @@ segments:
     subsegments:
       - [0x1000, asm, core/1000]
       - [0x1050, c, core/1050] # Save data
-      - [0x53D0, c, core/53D0]
+      - [0x53D0, c, ../src/common/core/53D0]
       - [0x53F0, c, core/53F0] # Objectives
       - [0xAD60, c, core/AD60] # Text rendering?
       - [0xE830, c, core/E830]
-      - [0xFB00, c, core/FD80] # Boot and scheduler share epilogue alignment.
-      - [0x10A50, c, core/10A20]
+      - [0xFB00, c, ../src/common/core/FD80] # Boot and scheduler share epilogue alignment.
+      - [0x10A50, c, ../src/common/core/10A20]
       - [0x10BC0, c, core/loader] # original src filename
       - [0x12C80, c, core/12C80] # Sounds, Dialogue
       - [0x17EE0, c, core/17EE0] # Dialogue
       - [0x1B060, c, core/1B060]
-      - [0x1B100, c, core/1B100]
+      - [0x1B100, c, ../src/common/core/1B100]
       - [0x1B7E0, c, libultra/aisetfreq]
       - [0x1B940, c, libultra/sl]
       - [0x1BA00, c, libultra/heapalloc]
@@ -230,17 +230,17 @@ segments:
       - [0x2FF10, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
       - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
       - [0x31FD0, .data, core/53F0]
-      - [0x32000, .data, core/32000]
-      - [0x32050, .data, core/32050]
-      - [0x320D0, .data, core/320D0]
+      - [0x32000, .data, ../src/common/core/32000]
+      - [0x32050, .data, ../src/common/core/32050]
+      - [0x320D0, .data, ../src/common/core/320D0]
       - [0x32250, .data, core/AD60]
       - [0x32680, .data, core/E830]
-      - [0x32750, .data, core/10A20]
-      - [0x32760, .data, core/FD80]
+      - [0x32750, .data, ../src/common/core/10A20]
+      - [0x32760, .data, ../src/common/core/FD80]
       - [0x32790, .data, core/loader]
       - [0x328A0, .data, core/12C80]
       - [0x348C0, .data, core/17EE0]
-      - [0x350B0, .data, core/1B100]
+      - [0x350B0, .data, ../src/common/core/1B100]
       - [0x359D0, .data, libultra/sl]
       - [0x359E0, .data, libultra/sched]
       - [0x359F0, .data, libultra/aisetnextbuf]
@@ -266,11 +266,11 @@ segments:
       - [0x378B0, .rodata, core/53F0]
       - [0x38060, .rodata, core/AD60]
       - [0x38220, .rodata, core/E830]
-      - [0x38260, .rodata, core/FD80]
+      - [0x38260, .rodata, ../src/common/core/FD80]
       - [0x38380, .rodata, core/loader]
       - [0x38DC0, .rodata, core/12C80]
       - [0x38FB0, .rodata, core/17EE0]
-      - [0x392D0, .rodata, core/1B100]
+      - [0x392D0, .rodata, ../src/common/core/1B100]
       - [0x3A440, .rodata, libultra/sched]
       - [0x3A460, .rodata, libultra/synthesizer]
       - [0x3A470, .rodata, libultra/rotate]
@@ -293,14 +293,14 @@ segments:
       - [0x3ABF0, .rodata, libultra/cents2ratio]
       - [0x3AC00, .rodata, libultra/reverb]
       - [0x3AC30, .rodata, libultra/seq]
-      - [0x3AC40, .rodata, core/alien_parts]
-      - [0x3C8C0, .rodata, core/alien_waves]
-      - [0x3DC00, .rodata, core/trig_tables]
-      - [0x3EC00, .rodata, core/world_tables]
-      - [0x3EE90, .rodata, core/surface_properties]
-      - [0x3F060, .rodata, core/terrain_lookup]
-      - [0x3F420, .rodata, core/camera_curve]
-      - [0x3F460, .rodata, core/rsp_data]
+      - [0x3AC40, .rodata, ../src/common/core/alien_parts]
+      - [0x3C8C0, .rodata, ../src/common/core/alien_waves]
+      - [0x3DC00, .rodata, ../src/common/core/trig_tables]
+      - [0x3EC00, .rodata, ../src/common/core/world_tables]
+      - [0x3EE90, .rodata, ../src/common/core/surface_properties]
+      - [0x3F060, .rodata, ../src/common/core/terrain_lookup]
+      - [0x3F420, .rodata, ../src/common/core/camera_curve]
+      - [0x3F460, .rodata, ../src/common/core/rsp_data]
 
       # Anchor private reference storage; PI handles occupy the gap before piacs.
       - {start: 0x40720, type: .fixed_bss, name: libultra/rotate, vram: 0x8006CA50}

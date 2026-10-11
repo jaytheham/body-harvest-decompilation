@@ -266,3 +266,4 @@ alSeqTicksToSec = 0x8002DC2C; // type:func
 __alSeqNextDelta = 0x8002DC80; // type:func
 alSeqNew = 0x8002DD58; // type:func
 alSynSetPriority = 0x8002DE30; // type:func
+// and pinned to the EU VRAM encoded in the label name.
