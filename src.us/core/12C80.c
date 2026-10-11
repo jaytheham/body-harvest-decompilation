@@ -252,7 +252,7 @@ f32 D_80032A78_33678[] = {
 };
 
 /* Vehicle audio settings, 21 entries per level. */
-WeaponLevelSpec D_800330B0_33CB0[5][21] = {
+VehicleAudioSpec D_800330B0_33CB0[5][21] = {
 	{
 		{-1, -1, {255, 255, 0, 0}, 0.21875f, 0.175f, {0, 100, 0, 50}, 3.5f},
 		{19, -1, {255, 255, 0, 0}, 0.21875f, 0.875f, {0, 100, 0, 50}, 0.4375f},
@@ -438,19 +438,6 @@ const char D_800382C8_38EC8[] = "Error: GetFreeSeqPlayer2 - Tell Ciaran\n";
 const f32 D_800382F0_38EF0[] = {171000.0f};
 const f64 D_800382F8_38EF8[] = {0.1};
 const f32 D_80038300_38F00[] = {1100.0f};
-const u32 jtbl_80038304_38F04[] = {
-	0x8001470C, 0x80014738, 0x800147E8, 0x80014764, 0x800147E8, 0x800147BC, 0x800147E8, 0x80014790
-};
-const f32 D_80038324_38F24[] = {24382.0f};
-const f32 D_80038328_38F28[] = {9753.0f};
-const f32 D_8003832C_38F2C[] = {4500.0f};
-const f64 D_80038330_38F30[] = {0.1};
-const f32 D_80038338_38F38[] = {0.10000000149011612f};
-const f32 D_8003833C_38F3C[] = {6000.0f};
-const f32 D_80038340_38F40[] = {3000.0f};
-const f64 D_80038348_38F48[] = {0.8};
-const f32 D_80038350_38F50[] = {6000.0f};
-const f64 D_80038358_38F58[] = {0.1};
 
 void func_80012080_12C80(s32 arg0)
 {
@@ -1560,15 +1547,14 @@ s32 func_800143C4_14FC4(s16 arg0)
 }
 
 // https://decomp.me/scratch/qeywv
-// Matching, but rodata
-#ifdef NON_MATCHING
+
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
 {
   f32 temp_f14;
   VehicleType *type;
-  WeaponLevelSpec *levelSpec;
   f32 temp_f12;
   f32 temp_f2;
+  const f32 pitchScale = 9753.0f;
   type = &vehicleTypes[arg0->unk1A];
   if (!D_8006AB88)
   {
@@ -1578,11 +1564,11 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   {
 	return;
   }
-  if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == (-1))
+  if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == (-1))
   {
 	return;
   }
-  if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == 0x27)
+  if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == 0x27)
   {
 	if (arg0->unk12 < 0x14)
 	{
@@ -1606,48 +1592,45 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   }
   if (arg1 != 0)
   {
-	  // Need to figure out how to use D_800330B0_33CB0[currentLevel - 1][arg0->unk1A] instead
-	// levelSpec = &D_800330B0_33CB0[currentLevel - 1][arg0->unk1A];
-	  
-	levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
 	switch (type->unk58)
 	{
 	  case 0:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / ((f32) 1));
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / ((f32) 1));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	  case 1:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / D_80038324_38F24_R);
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / 24382.0f);
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	  case 3:
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
-		temp_f14 = ((temp_f2 - temp_f12) * (((f32) arg2) / D_80038328_38F28_R));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		/* The direct minPitch read preserves IDO's intermediate product register. */
+		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / pitchScale);
 		temp_f14 += temp_f12;
 		break;
 
 	  case 7:
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
-		temp_f14 = ((temp_f2 - temp_f12) * (((f32) arg2) / D_8003832C_38F2C_R));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 4500.0f);
 		temp_f14 += temp_f12;
 		break;
 
 	  case 5:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / 25.0f);
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / 25.0f);
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	  default:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / ((f32) 1));
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / ((f32) 1));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	}
@@ -1657,25 +1640,24 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   {
 	if (((s32) (type->unk4C << 9)) >= 0)
 	{
-	  levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
 	  if ((type->unk58 == 3) || (type->unk58 == 7))
 	  {
-		temp_f2 = (levelSpec - 21)->unkC;
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
 		temp_f14 = temp_f2;
 	  }
 	  else
 	  {
-		temp_f14 = (levelSpec - 21)->unk14 * D_8004DCC0;
-		temp_f2 = (levelSpec - 21)->unkC;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * D_8004DCC0;
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
 	  }
-	  temp_f12 = (levelSpec - 21)->unk8;
+	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 	}
 	else
 	{
 	  f32 spd = func_8001D940((arg0->unk30 * arg0->unk30) + (arg0->unk38 * arg0->unk38));
 	  temp_f14 = (f32) (((f64) spd) / 60.0);
-	  temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
-	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+	  temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 	}
   }
   if (temp_f2 < temp_f14)
@@ -1686,18 +1668,15 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   {
 	temp_f14 = temp_f12;
   }
-  if (((f64) temp_f14) < D_80038330_38F30_R)
+  if (((f64) temp_f14) < 0.1)
   {
-	temp_f14 = D_80038338_38F38_R;
+	temp_f14 = 0.1f;
   }
   {
 	f32 dist = func_8001D940(((((((f32) arg0->unk0) / 4) - D_80047954) * ((((f32) arg0->unk0) / 4) - D_80047954)) + (((((f32) arg0->unk2) / 4) - D_80047958) * ((((f32) arg0->unk2) / 4) - D_80047958))) + (((((f32) arg0->unk4) / 4) - D_8004795C) * ((((f32) arg0->unk4) / 4) - D_8004795C)));
-	func_80014A3C_1563C((s32) (&vehicleTypes[arg0->unk1A]), D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0, dist, 0, temp_f14);
+	func_80014A3C_1563C((s32) (&vehicleTypes[arg0->unk1A]), D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId, dist, 0, temp_f14);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
-#endif
 
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 {
@@ -1729,16 +1708,16 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 		{
 			if ((D_80052ACA == 2) || (currentLevel == 5))
 			{
-				D_80032430_33030[0xB3] = D_8003833C_38F3C_R;
+				D_80032430_33030[0xB3] = 6000.0f;
 				D_80031F04_32B04[0xB3] = 0x7FFF;
 			}
 			else
 			{
-				D_80032430_33030[0xB3] = D_80038340_38F40_R;
+				D_80032430_33030[0xB3] = 3000.0f;
 				D_80031F04_32B04[0xB3] = 0x5FFF;
 			}
 		}
-		if ((arg1 == 0xE8) && (((f64)arg4) <= D_80038348_38F48_R))
+		if ((arg1 == 0xE8) && (((f64)arg4) <= 0.8))
 		{
 			D_80032310_32F10 = 0x7D;
 			D_80031F04_32B04[0xE8] = 0x7FFF;
@@ -1756,7 +1735,7 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 			}
 			else
 			{
-				D_80032430_33030[0x17F] = D_80038350_38F50_R;
+				D_80032430_33030[0x17F] = 6000.0f;
 			}
 		}
 		if (arg2 < D_80032430_33030[arg1])
@@ -1816,7 +1795,7 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 							}
 							if (arg4 != node->unk24)
 							{
-								if ((((f64)D_80038358_38F58_R) < ((f64)arg4)) && (((f64)arg4) < 2.0))
+								if ((((f64)0.1) < ((f64)arg4)) && (((f64)arg4) < 2.0))
 								{
 									alSndpSetPitch(D_8006AB10, arg4);
 									node->unk24 = arg4;

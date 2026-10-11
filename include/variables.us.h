@@ -309,8 +309,8 @@ extern f32 D_800323BC_32FBC[];
 extern f32 D_80032430_33030[];
 extern f32 D_80032A78_33678[];
 extern f32 D_80032D88_33988; // alias of D_80032A78_33678[0xC4]
-extern WeaponLevelSpec D_80032EB8_33AB8[][21]; // base one level before vehicle audio settings
-extern WeaponLevelSpec D_800330B0_33CB0[][21];
+extern VehicleAudioSpec D_80032EB8_33AB8[][21]; // base one level before vehicle audio settings
+extern VehicleAudioSpec D_800330B0_33CB0[][21];
 extern s16 D_80033A68_34668[][16];
 extern s16 D_80033A74_34674[];
 extern s16 D_80033A88_34688[][16];
@@ -604,16 +604,6 @@ extern const char D_800382C8_38EC8[]; /* osSyncPrintf format string */
 extern const f32 D_800382F0_38EF0[];
 extern const f64 D_800382F8_38EF8[];
 extern const f32 D_80038300_38F00[];
-extern const f32 D_80038324_38F24[];
-extern const f32 D_80038328_38F28[];
-extern const f32 D_8003832C_38F2C[];
-extern const f64 D_80038330_38F30[];
-extern const f32 D_80038338_38F38[];
-extern const f32 D_8003833C_38F3C[];
-extern const f32 D_80038340_38F40[];
-extern const f64 D_80038348_38F48[];
-extern const f32 D_80038350_38F50[];
-extern const f64 D_80038358_38F58[];
 extern const char D_800383B0_38FB0[];
 extern const char D_800383BC_38FBC[];
 extern const char D_800383C8_38FC8[];
@@ -4072,16 +4062,6 @@ extern const f64 D_80037610_38210_R;
 extern const f32 D_800382F0_38EF0_R;
 extern const f64 D_800382F8_38EF8_R;
 extern const f32 D_80038300_38F00_R;
-extern const f32 D_80038324_38F24_R;
-extern const f32 D_80038328_38F28_R;
-extern const f32 D_8003832C_38F2C_R;
-extern const f64 D_80038330_38F30_R;
-extern const f32 D_80038338_38F38_R;
-extern const f32 D_8003833C_38F3C_R;
-extern const f32 D_80038340_38F40_R;
-extern const f64 D_80038348_38F48_R;
-extern const f32 D_80038350_38F50_R;
-extern const f64 D_80038358_38F58_R;
 extern const f32 D_80039830_3A430_R;
 
 extern s16 D_8013DAFC_14CAAC[2];

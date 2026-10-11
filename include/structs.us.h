@@ -1539,14 +1539,14 @@ typedef struct {
 } VehicleType; /* size = 0x70 */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
+	/* 0x00 */ s16 soundId;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 pad04[4];
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
+	/* 0x08 */ f32 minPitch;
+	/* 0x0C */ f32 maxPitch;
 	/* 0x10 */ u8 pad10[4];
-	/* 0x14 */ f32 unk14;
-} WeaponLevelSpec; /* size = 0x18 */
+	/* 0x14 */ f32 pitchFactor;
+} VehicleAudioSpec; /* size = 0x18 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
