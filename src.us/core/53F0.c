@@ -109,11 +109,6 @@ const u32 jtbl_800372C8_37EC8[] = {
 const u32 jtbl_80037328_37F28[] = {
 	0x80007F94, 0x80008030, 0x80007FAC, 0x80007FDC, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x8000805C
 };
-const u32 jtbl_80037388_37F88[] = {
-	0x80008218, 0x80008240, 0x80008468, 0x8000826C, 0x8000827C, 0x80008304, 0x80008314, 0x80008468, 0x80008328, 0x8000833C, 0x80008468, 0x80008468, 0x80008354, 0x80008370, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x800083B4, 0x800083F8, 0x80008468, 0x80008468, 0x8000838C, 0x800083A0, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x80008468, 0x800082C0, 0x80008210, 0x80008208, 0x80008468, 0x80008290, 0x80008468, 0x80008468, 0x80008468, 0x80008440, 0x80008454
-};
-const f32 D_80037450_38050[] = {-10000.0f};
-const f32 D_80037454_38054[] = {10000.0f};
 
 f32 func_800047F0_53F0(f32 arg0) {
 	return arg0 * arg0;
@@ -1180,14 +1175,14 @@ void func_80007C78_8878(u8 *arg0) {
 	osSyncPrintf(D_80036FFC_37BFC);
 }
 
-s32 func_80007D44_8944(s32 arg0) {
+s32 func_80007D44_8944(u8 *arg0) {
 	s16 sp1E;
 	s16 sp1C;
 	s16 sp1A;
 	s16 sp18;
 
 	func_80007728_8328(arg0, &sp1E, &sp1C);
-	func_80007728_8328(arg0 + 3, &sp1A, &sp18);
+	func_80007728_8328(&arg0[3], &sp1A, &sp18);
 	sp1E = (s16)(sp1E >> 8);
 	sp1C = (s16)(sp1C >> 8);
 	sp1A = (s16)(sp1A >> 8);
@@ -1292,38 +1287,32 @@ s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 #endif
 
-// CURRENT(10) - need rodata
-#ifdef NON_MATCHING
-s32 func_800081D4_8DD4(u8 *arg0) {
+int func_800081D4_8DD4(u8 *arg0) {
 	switch (arg0[8]) {
 	case 0xB3:
 		return 1;
 	case 0xB2:
 		return 0;
 	case 0x89:
-		return func_80007D44_8944((s32)arg0) < arg0[6] * arg0[6] * 2;
+		return func_80007D44_8944(arg0) < arg0[6] * arg0[6] * 2;
 	case 0x8A:
-		return func_80007D44_8944((s32)arg0) >= arg0[6] * arg0[6] * 2;
+		return func_80007D44_8944(arg0) >= arg0[6] * arg0[6] * 2;
 	case 0x8C:
 		return func_80007DE0_89E0(arg0);
 	case 0x8D:
 		return func_80007DE0_89E0(arg0) == 0;
-	case 0xB5: {
-		u32 v = buildingInstances[arg0[1]].unk8;
-		return ((v >> 12) & 0x10) == 0x10;
-	}
-	case 0xB1: {
-		u32 v = buildingInstances[arg0[1]].unk8;
-		return ((v >> 12) & 0x10) == 0 || ((v >> 12) & 1) == 0;
-	}
+	case 0xB5:
+		return (buildingInstances[arg0[1]].statusFlags & 0x10) == 0x10;
+	case 0xB1:
+		return (buildingInstances[arg0[1]].statusFlags & 0x10) != 0x10 || (buildingInstances[arg0[1]].statusFlags & 1) != 1;
 	case 0x8E:
 		return func_80007F60_8B60(arg0);
 	case 0x8F:
 		return func_80007F60_8B60(arg0) == 0;
 	case 0x91:
-		return func_8000807C_8C7C(arg0, arg0 + 3);
+		return func_8000807C_8C7C(arg0, &arg0[3]);
 	case 0x92:
-		return func_8000807C_8C7C(arg0, arg0 + 3) == 0;
+		return func_8000807C_8C7C(arg0, &arg0[3]) == 0;
 	case 0x95:
 		return func_800078B8_84B8(arg0[6], &D_8004D154) != 0;
 	case 0x96:
@@ -1348,9 +1337,6 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 		return func_8000726C_7E6C(arg0[6]) == 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
-#endif
 
 s32 func_80008478_9078(void) {
 	if ((currentLevel == LEVEL_GREECE) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
@@ -1581,7 +1567,7 @@ void func_80008CA8_98A8(s32 arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
+#pragma GLOBAL_ASM("src.us/core/53F0_projection_late_rodata.s")
 #endif
 
 void func_800092B8_9EB8(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u8 arg4) {
