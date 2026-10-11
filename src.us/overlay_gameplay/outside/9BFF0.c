@@ -1104,9 +1104,7 @@ s32 func_8008E478_9D428(u8 arg0)
 	return 0;
 }
 
-// CURRENT(2352)
 // AI - Height-adjustment calculation for slopes
-#ifdef NON_MATCHING
 s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 {
 	s16 sp8E;
@@ -1124,17 +1122,17 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 
 	found = 0;
 	inst = &alienInstances[arg0];
-	typeIndex = inst->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 
-	if (inst->unk12 == 0)
+	if (alienInstances[arg0].unk12 == 0)
 	{
 		return arg1;
 	}
 
-	f26 = (f32)(((f32)sins((u16)(inst->unk6 - 0x4000)) / 32768.0) * 256.0);
-	f24 = (f32)(((f32)coss((u16)(inst->unk6 - 0x4000)) / 32768.0) * -256.0);
+	f26 = (f32)(((f32)sins((u16)(alienInstances[arg0].unk6 - 0x4000)) / 32768.0) * 256.0);
+	f24 = (f32)(((f32)coss((u16)(alienInstances[arg0].unk6 - 0x4000)) / 32768.0) * -256.0);
 
-	if (inst->unk12 < 0)
+	if (alienInstances[arg0].unk12 < 0)
 	{
 		f26 = -f26;
 		f24 = -f24;
@@ -1143,20 +1141,21 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 	switch ((s16)(D_80052A8C % 3U))
 	{
 	case 0:
-		i = sins(inst->unk6);
-		heading = inst->unk6;
+		i = sins(alienInstances[arg0].unk6);
+		heading = alienInstances[arg0].unk6;
 		sp78 = (((f32)i / 32768.0) * alienTypes[typeIndex].unk34 * 2 +
 						  inst->unk0);
 		sp76 = (inst->unk4 - (((f32)coss(heading) / 32768.0) * alienTypes[typeIndex].unk34 * 2));
 		break;
 
 	case 1:
-		{ sp78 = inst->unk0; sp76 = inst->unk4; }
+		sp78 = alienInstances[arg0].unk0;
+		sp76 = alienInstances[arg0].unk4;
 		break;
 
 	case 2:
-		i = sins(inst->unk6);
-		heading = inst->unk6;
+		i = sins(alienInstances[arg0].unk6);
+		heading = alienInstances[arg0].unk6;
 		sp78 = (inst->unk0 - (((f32)i / 32768.0) * alienTypes[typeIndex].unk34 * 2));
 		sp76 = (((f32)coss(heading) / 32768.0) * alienTypes[typeIndex].unk34 * 2 +
 						  inst->unk4);
@@ -1181,7 +1180,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 			sp8C = D_80052B34->unk2;
 		}
 
-		if (inst->unk2 < (sp8C + arg1))
+		if (alienInstances[arg0].unk2 < (sp8C + arg1))
 		{
 			found = 1;
 			sp8A = sp8C;
@@ -1195,9 +1194,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 
 	return (sp8C - sp8E) + arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E524_9D4D4.s")
-#endif
+
 
 // AI - Vertical velocity/gravity update
 void func_8008E978_9D928(u8 arg0, s32 arg1)
@@ -2083,7 +2080,7 @@ void func_8009012C_9F0DC(u32 arg0)
 				target = D_8014DD50[dz].unkC;
 				pathNodes[0] = dz;
 				pathNodes[1] = target;
-				//pathNodes[2] = D_8014DD50[target].unkD;
+				pathNodes[2] = D_8014DD50[target].unkD;
 				pathResult = func_80081F18_90EC8(arg0, 3, 8, pathNodes, &D_8013C9D0_14B980);
 			}
 
@@ -2145,6 +2142,7 @@ void func_8009012C_9F0DC(u32 arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009012C_9F0DC.s")
 #endif
+
 // AI - Decrement parent death timer or run standard AI
 void func_800908C4_9F874(u8 arg0)
 {

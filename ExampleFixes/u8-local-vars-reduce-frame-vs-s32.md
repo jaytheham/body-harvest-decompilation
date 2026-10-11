@@ -39,7 +39,7 @@ void func(s32 arg0, s32 arg1, u8* arg2) {
     // ... (function body)
 }
 ```
-Produces: `addiu sp, sp, -0x18` (frame = 24 bytes) â€” matching the target!
+Produces: `addiu sp, sp, -0x18` (frame = 24 bytes) — matching the target!
 
 #### Why it works
 
