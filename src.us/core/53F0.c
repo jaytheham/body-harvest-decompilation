@@ -106,9 +106,7 @@ const u32 jtbl_80037200_37E00[] = {
 const u32 jtbl_800372C8_37EC8[] = {
 	0x80007E14, 0x80007E90, 0x80007E44, 0x80007ECC, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F58, 0x80007F40
 };
-const u32 jtbl_80037328_37F28[] = {
-	0x80007F94, 0x80008030, 0x80007FAC, 0x80007FDC, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x80008074, 0x8000805C
-};
+
 
 f32 func_800047F0_53F0(f32 arg0) {
 	return arg0 * arg0;
@@ -1221,33 +1219,29 @@ loop:
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 #endif
 
-// https://decomp.me/scratch/LWEl5
-// CURRENT(0)
-#ifdef NON_MATCHING
 s32 func_80007F60_8B60(u8 *arg0) {
-loop:
-	switch (arg0[0]) {
-	case 0x98:
-		return D_80052B34->unk1C < 1;
-	case 0x9A:
-		return vehicleInstances[arg0[1]].unk1C < 1;
-	case 0x9B:
-		if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & ALIEN_FLAG_UNKL) {
-			return 1;
+	while (1) {
+		switch (arg0[0]) {
+		case 0x98:
+			return D_80052B34->unk1C < 1;
+		case 0x9A:
+			return vehicleInstances[arg0[1]].unk1C < 1;
+		case 0x9B:
+			if (alienInstances[D_8004D161[arg0[1] * 2]].unk20 & ALIEN_FLAG_UNKL) {
+				return 1;
+			}
+			return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;
+		case 0x99: {
+			BuildingInstance *bi = &buildingInstances[arg0[1]];
+			return (s8)bi->hitPoints < 1;
 		}
-		return alienInstances[D_8004D161[arg0[1] * 2]].hitPoints < 1;
-	case 0x99: {
-		BuildingInstance *bi = buildingInstances + arg0[1];
-		return (s8)bi->hitPoints < 1;
-	}
-	case 0xAF:
-		arg0 = &D_8004D180[arg0[1]].opcode;
-		goto loop;
+		case 0xAF:
+			arg0 = &D_8004D180[arg0[1]].opcode;
+			continue;
+		}
+		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
-#endif
 
 int func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
     s32 opcode;

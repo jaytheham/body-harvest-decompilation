@@ -20,3 +20,5 @@ Keep inner selectors as ordinary `arg1[0]` reads. Reusing the outer local for in
 The volatile access is a code-generation constraint on this one read, not a claim that the command table is hardware memory. No whole-table or pointer declaration needs volatile qualification. The missing-value return on unrecognized opcodes preserves the target's unspecified return behavior.
 
 Verified score zero and `build/bh.us.z64: OK` after formatting cleanup.
+
+The neighboring `func_80007F60_8B60` already had an instruction-matching body. Enable it by removing its placeholder `jtbl_80037328_37F28`, then replace the restart label/goto with `while (1)` and `continue`, followed by a loop break for unrecognized opcodes. Unlike the two-operand checker, it needs no volatile read. Using `&buildingInstances[arg0[1]]` instead of pointer addition preserves the match. Its generated table and the existing late-data wrapper produce a full-ROM OK.
