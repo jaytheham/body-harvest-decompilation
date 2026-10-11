@@ -170,7 +170,7 @@ void func_80007A20_8620(u8 *arg0);
 void func_80007C78_8878(u8 *arg0);
 s32 func_80007DE0_89E0(u8 *arg0);
 s32 func_80007F60_8B60(u8 *arg0);
-s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1);
+int func_8000807C_8C7C(u8 *arg0, u8 *arg1);
 int func_800081D4_8DD4(u8 *arg0);
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1);
 s16 func_8000A43C_B03C(s8 *arg0);
