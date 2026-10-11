@@ -2238,11 +2238,12 @@ typedef struct {
 	/* 0x07 */ s8 pad7;
 } Unk800B753CEntry; /* size = 0x08 */
 
+typedef Unk800311A0 Unk80052B40; /* size = 0x06 */
+
 typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-} Unk80052B40; /* size = 0x06 - Often seems to actually be Vtx */
+	/* 0x00 */ Unk80052B40 scale;
+	/* 0x06 */ s16 pad6;
+} TextAnimationScale; /* size = 0x08 */
 
 typedef union {
 	Unk80052B40 position;

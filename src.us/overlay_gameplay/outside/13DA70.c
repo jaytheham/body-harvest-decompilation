@@ -81,7 +81,7 @@ u32 D_80140C48_14FBF8[] = {
 	0x0501E0E8, 0x0501D9A0, 0x0501D258, 0x0501CB10,
 };
 
-u16 D_80140C68_14FC18[] = { 0x0033, 0x0033, 0x0033, 0x0000 };
+TextAnimationScale D_80140C68_14FC18 = { { 0x33, 0x33, 0x33 }, 0 };
 u8 D_80140C70_14FC20[] = { 0xD7, 0xD7, 0xFF, 0x00 };
 u8 D_80140C74_14FC24[] = { 0xFF, 0x00, 0x00, 0x00 };
 u32 D_80140C78_14FC28 = 0;
@@ -263,7 +263,7 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 
 // CURRENT(1100)
 #ifdef NON_MATCHING
-void func_8012F2DC_13E28C(s32 src, s32 dst, s32 increment)
+void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 {
 	f32 cosVal;
 	u8 i;
@@ -278,7 +278,7 @@ void func_8012F2DC_13E28C(s32 src, s32 dst, s32 increment)
 	}
 
 	for (i = 0; i < 3; i++) {
-		((u8 *)dst)[i] = (u8)((u32)((0xFF - ((u8 *)src)[i]) * cosVal) + ((u8 *)src)[i]);
+		dst[i] = (u8)((u32)((0xFF - src[i]) * cosVal) + src[i]);
 	}
 
 	D_80140C78_14FC28 += increment;
@@ -344,7 +344,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 	}
 
 	if ((arg7 & 0x20) != 0) {
-		func_8012F2DC_13E28C((s32) arg4, (s32) pulseColor, 5);
+		func_8012F2DC_13E28C(arg4, pulseColor, 5);
 	}
 
 	textLen = 0;
@@ -1115,32 +1115,34 @@ void func_80131280_140230(u8 *arg0)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131280_140230.s")
 #endif
-// CURRENT(17802)
+
 #ifdef NON_MATCHING
 s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5) {
-s32 renderX;
+s32 charIndex;
 s32 charScreenX;
 u8 *loopText;
-s32 animTimer;
-s32 charIndex;
-s32 currentSway;
-s32 charTimer;
-s32 halfCharWidth;
+s32 renderX;
+s32 temp_v0;
 Unk80052B40 pos;
 Unk80052B40 result;
-f32 sinVal;
+s32 *screenWidth = &D_80068084;
+s32 currentSway;
+volatile s32 swayOffset;
 s32 renderWidth;
-s32 temp_v0;
+u32 lry;
+u32 uly;
+s32 *animationCounter = &D_80140CE0_14FC90;
 u8 currentChar;
-u8 colorData[3];
 s16 charCount;
-s32 swayOffset;
+u8 colorData[3];
+s32 curX;
+u32 six = 6;
 
-gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, D_80068084 - 0x21, D_80068088);
+gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, *screenWidth - 0x21, D_80068088);
 charCount = 0;
 renderWidth = 0;
-if (text[0] != 0) {
-	currentChar = *text;
+currentChar = *text;
+if (currentChar != 0) {
 	do {
 		renderWidth = renderWidth + charWidth + 2;
 		if (currentChar == 0x31) {
@@ -1151,20 +1153,19 @@ if (text[0] != 0) {
 	} while (currentChar != 0);
 }
 
-halfCharWidth = charWidth >> 1;
 if (arg5 != 0) {
-	D_80140CE0_14FC90 = 0;
+	(*animationCounter) = 0;
 }
 if (arg4 == 0) {
-	D_80140CE0_14FC90 = 0xFFFF;
+	(*animationCounter) = 0xFFFF;
 }
 
 {
-	renderX = (D_80068084 - (D_80140CE0_14FC90 * 6)) + 0x168;
-	func_8012F2DC_13E28C((s32) D_80140C74_14FC24, (s32) colorData, 5);
-	if (D_80140CE0_14FC90 >= 0x3D) {
-		if ((renderX >= 0) && (D_80068084 >= renderX)) {
-		if (D_80140CE0_14FC90 == 0x46) {
+	renderX = (*screenWidth - ((*animationCounter) * six)) + 0x168;
+	func_8012F2DC_13E28C(D_80140C74_14FC24, colorData, 5);
+	if ((*animationCounter) >= 0x3D) {
+		if ((renderX >= 0) && (renderX <= *screenWidth)) {
+		if ((*animationCounter) == 0x46) {
 			func_800153D8_15FD8(0x185);
 		}
 
@@ -1193,47 +1194,42 @@ if (arg4 == 0) {
 		gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 		gDPPipeSync(D_8005BB2C++);
 
-		temp_v0 = (s16) ((D_80140CE0_14FC90 & 0xE) >> 1);
+		temp_v0 = (s16) (((*animationCounter) & 0xE) >> 1);
 		pos.unk0 = renderX;
 		pos.unk4 = 0;
 		pos.unk2 = yPos + 0x1E;
 		result.unk0 = 0;
 		result.unk2 = 0;
 		result.unk4 = 0;
-		func_800039D0_45D0(&pos, &result, (Unk80052B40 *) D_80140C68_14FC18, D_8005BB38);
+		func_800039D0_45D0(&pos, &result, &D_80140C68_14FC18.scale, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-		guRotateRPY((Mtx *) D_8005BB38, 0.0f, 90.0f, 180.0f);
+		guRotateRPY(D_8005BB38, 0.0f, 90.0f, 180.0f);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[(s16) temp_v0]);
+	gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[temp_v0]);
 		}
 	}
 }
 
-renderX = ((D_80068084 / 2) - (renderWidth >> 1)) + halfCharWidth;
-if ((D_80140CE0_14FC90 >= 0x60) && (D_80140CE0_14FC90 < 0xBE)) {
-	temp_v0 = D_80140CE0_14FC90 - 0x5F;
-	if ((temp_v0 % 6) == 0) {
-		func_800153D8_15FD8((s16) (((temp_v0 % 12) / 6) + 0xAC));
+renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + (charWidth >> 1);
+if (((*animationCounter) >= 0x60) && ((*animationCounter) < 0xBE)) {
+	if ((((*animationCounter) - 0x5F) % (s32)six) == 0) {
+		func_800153D8_15FD8((s16) (((((*animationCounter) - 0x5F) % 12) / (s32)six) + 0xAC));
 	}
 }
 
 charIndex = 0;
-animTimer = 0x5A;
-charTimer = 0;
 loopText = text;
+if (charCount > 0) {
 currentSway = swayOffset;
-	for (; charIndex < charCount;
-		animTimer += 0xA, loopText = &loopText[1], charTimer += 0xA,
-		charIndex += 1, renderX += charWidth, renderX += 2) {
-		charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charTimer) * 6)) + 0x21C;
+	do {
+		charScreenX = (D_80068084 - (((*animationCounter) - charIndex * 10) * 6)) + 0x21C;
 		if (*loopText == 0x31) {
-			renderX -= halfCharWidth;
+			renderX -= (charWidth >> 1);
 		}
 
-		if ((animTimer < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX)) {
-			sinVal = (f32) sins((u16) ((((D_80140CE0_14FC90 + charIndex) % 8) << 13) & 0xFFFF));
-			swayOffset = (s32) ((f32) ((sinVal / 32768.0) * 32.0) / 2.0f);
+		if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (charScreenX >= 0) && (D_80068084 >= charScreenX)) {
+			swayOffset = (s32) ((f32) (((f32)sins((u16) (((((*animationCounter) + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
 			gDPPipeSync(D_8005BB2C++);
 			gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
 			gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1245,14 +1241,14 @@ currentSway = swayOffset;
 			pos.unk0 = charScreenX;
 			pos.unk2 = yPos + 0x1E;
 			pos.unk4 = 0;
-			gSPLightColor(D_8005BB2C++, LIGHT_1, 0x80E580FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (currentSway = swayOffset, 0x80E580FF));
 			gSPLightColor(D_8005BB2C++, LIGHT_2, 0x407F40FF);
 
-			currentSway = swayOffset;
-			D_800311A0.unk2 += currentSway;
 			result.unk0 = D_800311A0.unk0;
 			result.unk2 = D_800311A0.unk2;
 			result.unk4 = D_800311A0.unk4;
+			D_800311A0.unk2 += currentSway;
 			D_800311A0.unk0 -= currentSway / 2;
 			D_800311A0.unk4 -= currentSway / 2;
 			D_800311A0.unk0 = (s16) (D_800311A0.unk0 * 2.5);
@@ -1264,7 +1260,7 @@ currentSway = swayOffset;
 
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 			guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gDPPipeSync(D_8005BB2C++);
 			gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
 
@@ -1273,22 +1269,19 @@ currentSway = swayOffset;
 			D_800311A0.unk4 = result.unk4;
 		}
 
-		if ((animTimer < D_80140CE0_14FC90) && (D_80068084 >= charScreenX)) {
+		if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (D_80068084 >= charScreenX)) {
 			if (func_8012EC3C_13DBEC(*loopText) != 0) {
-					s32 baseY = yPos - (charHeight >> 1);
-				s16 curX = renderX;
-					s32 lry;
-					s32 uly;
+				curX = renderX;
+
 				if (charScreenX < renderX) {
-					uly = (baseY * 4) & 0xFFF;
-					lry = ((baseY + charHeight) * 4) & 0xFFF;
+					uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFFU;
+					lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFFU;
 					currentSway = 0;
 				} else {
-					s32 offsetBaseY = baseY - (currentSway >> 1);
-					lry = ((offsetBaseY + charHeight) * 4) & 0xFFF;
-					uly = (offsetBaseY * 4) & 0xFFF;
+					lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFFU;
+					uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFFU;
 					if (*loopText == 0x31) {
-						curX = charScreenX - halfCharWidth;
+						curX = charScreenX - (charWidth >> 1);
 					} else {
 						curX = charScreenX;
 					}
@@ -1311,20 +1304,24 @@ currentSway = swayOffset;
 					0, 0, 0,
 					(s32)((1.0f / ((f32) charWidth / 32)) * 1024.0f),
 					(s32)((1.0f / ((f32) charHeight / 32)) * 1024.0f));
+				}
 			}
 		}
 
+		renderX += charWidth;
 		if ((charCount == charIndex + 1) && (charScreenX <= 0)) {
-			D_80140CE0_14FC90 = 0;
+			(*animationCounter) = 0;
 			return 1;
 		}
 
-
-	}
+		loopText = &loopText[1];
+		charIndex += 1;
+	} while ((renderX += 2, charIndex) != charCount);
 	swayOffset = currentSway;
+}
 
-	if (D_80140CE0_14FC90 < 0xFFFF) {
-		D_80140CE0_14FC90 += 1;
+	if ((*animationCounter) < 0xFFFF) {
+		(*animationCounter) += 1;
 	}
 
 	gDPPipeSync(D_8005BB2C++);

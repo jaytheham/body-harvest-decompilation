@@ -1981,6 +1981,7 @@ extern AlienInstance *D_80140AB0_14FA60[];
 extern s32 D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
 extern Lights1 D_80140C30_14FBE0;
+extern TextAnimationScale D_80140C68_14FC18;
 extern u8 D_80140C70[4];
 extern u8 D_80140C74[4];
 extern s32 D_80140C78;

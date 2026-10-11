@@ -1777,7 +1777,7 @@ f32 func_8000393C_453C(f32 arg0, s32 arg1)
 
 // CURRENT(8365)
 #ifdef NON_MATCHING
-void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2, s32 arg3) {
+void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2, Mtx *arg3) {
 	s32 sp3C;
 	s32 sp38;
 	s32 sp34;
