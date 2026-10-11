@@ -1,4 +1,4 @@
-"""Native Windows counterpart of the ROM Makefile (Python 3.12 x64)."""
+"""Native Windows counterpart of the ROM Makefile (Python 3.11.4+ x64)."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import ctypes
@@ -78,8 +78,8 @@ def download(name):
 
 
 def setup():
-    if os.name != "nt" or sys.version_info[:2] != (3, 12) or ctypes.sizeof(ctypes.c_void_p) != 8:
-        raise RuntimeError("Native builds require 64-bit Python 3.12 on Windows.")
+    if os.name != "nt" or sys.version_info < (3, 11, 4) or ctypes.sizeof(ctypes.c_void_p) != 8:
+        raise RuntimeError("Native builds require 64-bit Python 3.11.4 or newer on Windows.")
     CACHE.mkdir(parents=True, exist_ok=True)
     if not PYTHON.exists():
         print("Creating local Python environment...", flush=True)
