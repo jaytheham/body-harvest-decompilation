@@ -2435,16 +2435,12 @@ void func_80091220_A01D0(u8 arg0)
 #endif
 // CURRENT(18)
 // AI - Building targeting / Drone Hunter AI
-#ifdef NON_MATCHING
 void func_80091470_A0420(u8 arg0)
 {
-	AlienInstance *alien;
-	s32 new_var;
 	u8 parentIdx;
 	u8 found;
 	u8 buildingIdx;
 	parentIdx = alienInstances[arg0].unk25;
-	alien = &alienInstances[arg0];
 	alienInstances[arg0].unk3A = 0xFF;
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
 	{
@@ -2455,7 +2451,7 @@ void func_80091470_A0420(u8 arg0)
 		u8 buildingType;
 		u8 target;
 
-		buildingIdx = ((u8 *)&alienInstances[arg0].unk38)[1];
+		buildingIdx = (u8)alienInstances[arg0].unk38;
 		buildingType = buildingInstances[buildingIdx].unk11;
 		target = func_8011C338_12B2E8((s8 *)(&D_80146688_155638[currentLevel - 1][buildingType]), buildingIdx);
 		func_80080B44_8FAF4(arg0, target);
@@ -2465,15 +2461,14 @@ void func_80091470_A0420(u8 arg0)
 	if (alienInstances[parentIdx].unk20 & ALIEN_FLAG_UNKF)
 	{
 		func_80081BB0_90B60(arg0);
-		buildingIdx = ((u8 *)&alienInstances[parentIdx].unk38)[1];
+		buildingIdx = (u8)alienInstances[parentIdx].unk38;
 		if (buildingInstances[buildingIdx].hitPoints < (buildingTypes[buildingInstances[buildingIdx].buildingType].unk19 / 2))
 		{
 			osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
 			found = (u8)func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 20, 1, 0x100C);
 			if (found != 0xFF)
 			{
-				new_var = found;
-				func_80080B44_8FAF4(arg0, new_var);
+				func_80080B44_8FAF4(arg0, (s32)found);
 				alienInstances[arg0].unk16 += buildingTypes[buildingInstances[found].buildingType].unk14 + 0xC8;
 				return;
 			}
@@ -2488,7 +2483,7 @@ void func_80091470_A0420(u8 arg0)
 		else
 		{
 			func_80080B44_8FAF4(arg0, buildingIdx);
-			alien->unk16 += buildingTypes[buildingInstances[buildingIdx].buildingType].unk14 + 0xC8;
+			alienInstances[arg0].unk16 += buildingTypes[buildingInstances[buildingIdx].buildingType].unk14 + 0xC8;
 		}
 	}
 	else
@@ -2497,9 +2492,6 @@ void func_80091470_A0420(u8 arg0)
 		return;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80091470_A0420.s")
-#endif
 
 // AI - Parent targeting helper
 void func_8009170C_A06BC(u8 arg0)

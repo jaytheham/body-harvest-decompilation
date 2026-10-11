@@ -73,3 +73,13 @@ growing the caller by eight bytes and shifting later sections. Passing
 `func_800847D0_93780(arg0)` restored the target's single `andi` in the call
 delay slot. The target and caller both scored zero, and the full ROM
 verification returned `build/bh.us.z64: OK`.
+
+#### Drone Hunter: eliminate locals while preserving argument promotion
+
+In unc_80091470_A0420, removing the AlienInstance *alien local and
+using direct array access reduced compiler spill offsets by four bytes. Removing
+the s32 new_var local reduced the frame from 0x48 to the required 0x40.
+Passing (s32)found retained the extra byte mask required at the call to
+unc_80080B44_8FAF4; passing ound directly removed it. Together these
+changes matched the function and full ROM. A low-byte field read can use
+(u8)alienInstances[index].unk38 instead of casting the field address.
