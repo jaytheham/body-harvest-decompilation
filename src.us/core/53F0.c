@@ -1471,13 +1471,13 @@ s32 func_80008C44_9844(s32 arg0) {
 	}
 }
 
-// CURRENT(1885)
-#ifdef NON_MATCHING
-void func_80008CA8_98A8(s32 arg0) {
+void func_80008CA8_98A8(int arg0) {
 	Unk80052B40 sp;
-	s32 frame;
+	int frame;
+	u16 nextFrame;
+	Gfx *primitive;
 
-	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037450_38050_R, D_80037454_38054_R, 1.0f);
+	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, -10000.0f, 10000.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	sp.unk0 = 0xA0;
 	sp.unk2 = 0x78;
@@ -1489,33 +1489,39 @@ void func_80008CA8_98A8(s32 arg0) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-	frame = D_80031648_32248;
-	gDPSetEnvColor(D_8005BB2C++, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x1E, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x19, (0x14 - ((frame / 10) % 20) >= 0 ? 0x14 - ((frame / 10) % 20) : -(0x14 - ((frame / 10) % 20))) + 0x14, 0xFF);
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w0 = 0xFB000000;
+		frame = D_80031648_32248;
+		packet->words.w1 = _SHIFTL(((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x1E, 24, 8) | _SHIFTL(((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x19, 16, 8) | _SHIFTL((0x14 - ((frame / 10) % 20) >= 0 ? 0x14 - ((frame / 10) % 20) : -(0x14 - ((frame / 10) % 20))) + 0x14, 8, 8) | 0xFF;
+	}
 	if (!arg0) {
-		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x28, 0xFF);
+		primitive = D_8005BB2C++;
+		primitive->words.w0 = 0xFA00FFFF;
+		primitive->words.w1 = _SHIFTL(((0x1E - ((frame / 4) % 60)) >= 0 ? (0x1E - ((frame / 4) % 60)) : -(0x1E - ((frame / 4) % 60))) + 0x23, 24, 8) | _SHIFTL((0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 16, 8) | _SHIFTL(((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x28, 8, 8) | 0xFF;
 	} else {
-		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, ((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, (0x1E - ((frame / 4) % 60) >= 0 ? 0x1E - ((frame / 4) % 60) : -(0x1E - ((frame / 4) % 60))) + 0x23, (0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 0xFF);
+		primitive = D_8005BB2C++;
+		primitive->words.w0 = 0xFA00FFFF;
+		primitive->words.w1 = _SHIFTL(((0x32 - ((frame / 5) % 100)) >= 0 ? (0x32 - ((frame / 5) % 100)) : -(0x32 - ((frame / 5) % 100))) + 0x8C, 24, 8) | _SHIFTL((0x1E - ((frame / 4) % 60) >= 0 ? 0x1E - ((frame / 4) % 60) : -(0x1E - ((frame / 4) % 60))) + 0x23, 16, 8) | _SHIFTL((0x14 - ((frame / 4) % 40) >= 0 ? 0x14 - ((frame / 4) % 40) : -(0x14 - ((frame / 4) % 40))) + 0x1E, 8, 8) | 0xFF;
 	}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_BLENDPE, G_CC_BLENDPE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-	gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_1003990[((frame / 5) % 8) * 256]), G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_1003990[((frame / 5) % 8) * 16]), G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 	D_800313E4_31FE4 += 1;
 	if (D_800313E4_31FE4 == 0x400) {
 		D_800313E4_31FE4 = 0;
 	}
 	func_80005110_5D10(0x140, 0xF0, 0xFF, 0xFF, 0xFF);
-	D_80031648_32248 = (D_80031648_32248 + 1) & 0xFFFF;
-	if (D_80031648_32248 >= 0xFA1) {
-		D_80031648_32248 = 0;
+	nextFrame = D_80031648_32248 + 1;
+	D_80031648_32248_W = nextFrame;
+	if (nextFrame >= 0xFA1) {
+		D_80031648_32248_Reset = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("src.us/core/53F0_projection_late_rodata.s")
-#endif
 
 void func_800092B8_9EB8(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u8 arg4) {
 	u8 *texture;

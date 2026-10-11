@@ -1585,7 +1585,7 @@ void func_8000577C_637C(void);
 void func_800071D8_7DD8(void);
 void func_80008C18_9818(void);
 s32 func_80008C44_9844(s32 arg0);
-void func_80008CA8_98A8(s32 arg0);
+void func_80008CA8_98A8(int arg0);
 void playMapMusic(void);
 void playInventoryMusic(void);
 s32 guess_displayInventory(void);
