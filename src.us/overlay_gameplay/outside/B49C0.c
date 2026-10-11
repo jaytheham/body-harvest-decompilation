@@ -316,19 +316,16 @@ void func_800A6020_B4FD0(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A6020_B4FD0.s")
 #endif
 
-// CURRENT(14213)
-#ifdef NON_MATCHING
 // AI - Warp teleport state machine
+#ifdef NON_MATCHING
 void func_800A68CC_B587C(void) {
 	s16 sp2E;
 	s16 sp2C;
+	s16 temp;
 	s16 sp28;
 	s16 sp26;
-	f32 sp20;
-	f32 sp1C;
-	s16 temp;
-	u8 temp2;
-
+	u8 timer;
+		u8 *const warpTimer = &D_8014F808;
 	if (func_8000726C_7E6C(0x27ULL) != 0) {
 		func_800A5F24_B4ED4(-1);
 		func_800073B8_7FB8(0x27ULL);
@@ -365,34 +362,24 @@ void func_800A68CC_B587C(void) {
 			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 2.0f);
 		}
 
-		temp = D_80157A3C;
-		if (temp < 0) {
-			temp += 3;
-		}
-		func_800A6020_B4FD0(temp >> 2);
-		D_8014F808 = 0;
+		func_800A6020_B4FD0(D_80157A3C / 4);
+		*warpTimer = 0;
 		break;
 
 	case 3:
+		do { timer = *warpTimer; } while (0);
 		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
-		temp2 = D_8014F808 + 1;
-		D_8014F808 = temp2;
+		timer++;
+		*warpTimer = timer;
 
-		if (temp2 < 0xB) {
-			temp = D_80157A3C;
-			if (temp < 0) {
-				temp += 3;
-			}
-			func_800A6020_B4FD0((temp >> 2) - temp2);
+		if (timer < 0xB) {
+			func_800A6020_B4FD0((D_80157A3C / 4) - timer);
 		} else {
-			temp = D_80157A3C;
-			if (temp < 0) {
-				temp += 3;
-			}
-			func_800A6020_B4FD0((temp >> 2) + temp2 - 0x14);
+			func_800A6020_B4FD0((D_80157A3C / 4) + timer - 0x14);
 		}
 
-		if (D_8014F808 == 0xA) {
+		timer = *warpTimer;
+		if (timer == 0xA) {
 			sp2E = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk0 << 8;
 			sp2C = (D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk2 + 1) << 8;
 			sp28 = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk6;
@@ -405,12 +392,10 @@ void func_800A68CC_B587C(void) {
 
 			func_800B0C80_BFC30();
 
-			sp20 = sp2E;
-			func_800FB44C_10A3FC(D_80052B34, sp20);
-			sp1C = sp2C;
-			func_800FB484_10A434(D_80052B34, sp1C);
+			func_800FB44C_10A3FC(D_80052B34, sp2E);
+			func_800FB484_10A434(D_80052B34, sp2C);
 
-			temp = (s16)(func_800B84D0_C7480(sp2E, sp2C) >> 8);
+			temp = func_800B84D0_C7480(sp2E, sp2C) >> 8;
 			if ((currentLevel == 3) && (D_8013D894_14C844 == 1)) {
 				temp = 0x7D0;
 			}
@@ -421,13 +406,13 @@ void func_800A68CC_B587C(void) {
 			D_80149398 = 0x6F;
 			D_801493A4 = -0x6F;
 			D_8014939C = 0x6F;
-			func_800B4050_C3000((u8)((sp2E >> 8) + 0x77), (u8)((sp2C >> 8) + 0x77), (u8 *)D_801FEA30, 0);
+			func_800B4050_C3000((sp2E >> 8) + 0x77, (sp2C >> 8) + 0x77, D_801FEA30, 0);
 
-			D_80052AE8.unk0 = sp20;
+			D_80052AE8.unk0 = sp2E;
 			D_80052AE8.unk4 = 4000.0f;
-			D_80052AE8.unkC = sp20;
-			D_80052AE8.unk8 = sp1C;
-			D_80052AE8.unk14 = sp1C;
+			D_80052AE8.unkC = sp2E;
+			D_80052AE8.unk8 = sp2C;
+			D_80052AE8.unk14 = sp2C;
 			D_80052AE8.unk10 = 1000.0f;
 			D_80052AE8.unk18 = sp2E;
 			D_80052AE8.unk1A = sp2C;
@@ -436,21 +421,25 @@ void func_800A68CC_B587C(void) {
 			D_80052B34->unk6 = sp28;
 
 			sp26 = coss(D_80052B2C->unk1E);
-			D_80052B2C->unk0 = (((f64)(f32)coss(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unkC;
-			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * D_80052B2C->unk1C) + D_80052B34->unk2;
-			D_80052B2C->unk8 = (((f64)(f32)sins(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unk14;
+			D_80052B2C->unk0 = (((f32)coss(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unkC;
+			D_80052B2C->unk4 = (((f32)sins(D_80052B2C->unk1E) / 32768.0) * D_80052B2C->unk1C) + D_80052B34->unk2;
+			sp26 = coss(D_80052B2C->unk1E);
+			D_80052B2C->unk8 = (((f32)sins(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unk14;
 			func_800153D8_15FD8(0xD7);
 		}
 
-		if (D_8014F808 == 0x12) {
+		timer = *warpTimer;
+		if (timer == 0x12) {
 			func_800E35E0_F2590(0x50);
 		}
 
-		if (D_8014F808 == 0x13) {
+		timer = *warpTimer;
+		if (timer == 0x13) {
 			func_800E35E0_F2590(0xA0);
 		}
 
-		if (D_8014F808 >= 0x14) {
+		timer = *warpTimer;
+		if (timer >= 0x14) {
 			func_800E35E0_F2590(0xFF);
 			D_8013D890_14C840 = 4;
 			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 5.0f);
@@ -464,31 +453,26 @@ void func_800A68CC_B587C(void) {
 		if (D_80157A3C >= 0x40) {
 			D_80157A3C = 0x40;
 			D_8013D890_14C840 = 5;
-			D_8014F808 = 0;
+			*warpTimer = 0;
 		}
 
-		temp = D_80157A3C;
-		if (temp < 0) {
-			temp += 3;
-		}
-		func_800A6020_B4FD0(temp >> 2);
+		func_800A6020_B4FD0(D_80157A3C / 4);
 		break;
 
 	case 5:
-		func_800A6020_B4FD0(D_8014F808 + 0x10);
-		if (D_8014F808 == 0xA) {
+		func_800A6020_B4FD0(*warpTimer + 0x10);
+		if ((*warpTimer) == 0xA) {
 			D_8013D890_14C840 = 6;
 		}
 
-		D_8014F808++;
+		*warpTimer = (*warpTimer) + 1;
+	case 6:
 		func_800EC468_FB418();
 		func_800FAC90_109C40();
 		D_8013D890_14C840 = 0;
 		D_801493E2 = 1;
 		break;
 
-	case 6:
-		break;
 
 	default:
 		break;
@@ -497,6 +481,7 @@ void func_800A68CC_B587C(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A68CC_B587C.s")
 #endif
+
 
 // https://decomp.me/scratch/j8WAR
 // Launch beacon
