@@ -83,3 +83,13 @@ Passing (s32)found retained the extra byte mask required at the call to
 unc_80080B44_8FAF4; passing ound directly removed it. Together these
 changes matched the function and full ROM. A low-byte field read can use
 (u8)alienInstances[index].unk38 instead of casting the field address.
+
+#### Hybrid boss: typed node locals and word outputs
+
+unc_80091220_A01D0 matched with three separate s16 node locals,
+a s16 mask, a saved s16 root node, and three SignedWord outputs in
+that declaration order. The output pointers use .word, and particle
+coordinates use .halves.low. This replaces negative array indexing.
+Compute the first named node with two nested array accesses, then name
+each following node separately. Set unk20 before unk34 to reproduce
+the scheduled flag store before the counter store.
