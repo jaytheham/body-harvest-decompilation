@@ -1199,7 +1199,6 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E524_9D4D4.s")
 #endif
 
-
 // AI - Vertical velocity/gravity update
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
@@ -1369,7 +1368,6 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	s32 sp48;
 	AlienInstance *sp30;
 	AlienType *sp2C;
-	AlienInstance *sp20;
 	s32 var_t1;
 	s16 var_t3;
 	s8 otherType;
@@ -1380,6 +1378,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	s32 distZ;
 	s32 negZ;
 	s32 absZ;
+	s32 distance;
 	Unk80146688 *zone;
 
 	sp30 = &alienInstances[arg0];
@@ -1407,12 +1406,13 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 			sp5F = (u8)func_8011B6C0_12A670(sp30->unk0, sp30->unk4, (s16)(alienTypes[sp30->typeIndex].unk51 / 15), 1, 0x100C);
 			if (sp5F != 0xFF)
 			{
+				AlienInstance *sp20;
 				sp20 = &alienInstances[sp30->unk25];
 				otherType = sp20->unk3D;
 				if ((otherType == -1) || (otherType == (s8)buildingInstances[sp5F].unk11))
 				{
 					sp5E = sp30->unk25;
-					if (sp5F != sp30->unk38)
+					if (sp30->unk38 != sp5F)
 					{
 						func_800ACF9C_BBF4C(sp5F);
 					}
@@ -1450,10 +1450,13 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 			}
 
 			negZ = -distZ;
-			absZ = negZ;
 			if (negZ < distZ)
 			{
 				absZ = distZ;
+			}
+			else
+			{
+				absZ = negZ;
 			}
 
 			if (absZ < absX)
@@ -1466,7 +1469,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 				{
 					absX = negX;
 				}
-				distX = absX;
+				distance = absX;
 			}
 			else
 			{
@@ -1478,14 +1481,14 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 				{
 					negX = negZ;
 				}
-				distX = negX;
+				distance = negX;
 			}
 
-			if (distX < 0x23A)
+			if (distance < 0x23A)
 			{
 				sp5A = -0x180;
 			}
-			else if (distX >= 0x259)
+			else if (distance >= 0x259)
 			{
 				sp5A = 0x180;
 			}
@@ -1494,16 +1497,16 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 				sp5A = 0;
 			}
 
-			func_80087720_966D0(arg0, distX);
+			func_80087720_966D0(arg0, distance);
 			var_t3 = sp5A;
+			var_t1 = sp30->unk20;
 		}
 		else
 		{
 			func_8009170C_A06BC(arg0);
 			var_t3 = 0x180;
+			var_t1 = sp30->unk20;
 		}
-
-		var_t1 = sp30->unk20;
 	}
 
 	if ((var_t1 & 0x800) && (arg1 != 0) && (sp30->unk3D != -1))
@@ -1524,10 +1527,13 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 		}
 
 		negZ = -distZ;
-		absZ = negZ;
 		if (negZ < distZ)
 		{
 			absZ = distZ;
+		}
+		else
+		{
+			absZ = negZ;
 		}
 
 		if (absZ < absX)
@@ -1540,7 +1546,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 			{
 				absX = negX;
 			}
-			distX = absX;
+			distance = absX;
 		}
 		else
 		{
@@ -1552,14 +1558,17 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 			{
 				negX = negZ;
 			}
-			distX = negX;
+			distance = negX;
 		}
 
-		if ((zone->unk2 + 6) < distX)
+		if ((zone->unk2 + 6) < distance)
 		{
-			sp30->unk20 = var_t1 | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
-			var_t1 = sp30->unk20 & ~ALIEN_FLAG_UNKC;
-			sp30->unk20 = var_t1;
+			if (1)
+			{
+				sp30->unk20 = var_t1 | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
+			}
+			sp30->unk20 &= ~ALIEN_FLAG_UNKC;
+			var_t1 = sp30->unk20;
 			sp30->unk38 = sp30->unk25;
 		}
 	}
@@ -1584,10 +1593,13 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 		}
 
 		negZ = -distZ;
-		absZ = negZ;
 		if (negZ < distZ)
 		{
 			absZ = distZ;
+		}
+		else
+		{
+			absZ = negZ;
 		}
 
 		if (absZ < absX)
@@ -1600,7 +1612,7 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 			{
 				absX = negX;
 			}
-			distX = absX;
+			distance = absX;
 		}
 		else
 		{
@@ -1612,13 +1624,13 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 			{
 				negX = negZ;
 			}
-			distX = negX;
+			distance = negX;
 		}
 
-		if (distX < 2)
+		if (distance < 2)
 		{
-			var_t1 &= ~0x2020;
-			sp30->unk20 = var_t1;
+			sp30->unk20 = var_t1 & ~0x2020;
+			var_t1 = sp30->unk20;
 			sp30->unk38 = sp5E;
 		}
 	}
@@ -1647,11 +1659,13 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 		sp30->unk12 -= (s16)(sp2C->unk3E * sp48);
 	}
 }
+
+
+// AI - Set follow-target for companion aliens
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F0BC_9E06C.s")
 #endif
 
-// AI - Set follow-target for companion aliens
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior/targeting
 void func_8008F6C0_9E670(u8 arg0)
 {
@@ -1903,9 +1917,7 @@ s32 func_8008FE18_9EDC8(u8 arg0)
 	return 0;
 }
 
-// CURRENT(1067)
 // AI - Calculate spawn offset from path node
-#ifdef NON_MATCHING
 void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 {
 	s16 root;
@@ -1914,8 +1926,6 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 	s32 x;
 	s32 y;
 	s32 z;
-	s16 pad;
-	s16 trig;
 
 	root = alienInstances[arg0].unkC;
 	child = D_8014DD50[root].unkC;
@@ -1924,17 +1934,13 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 	z = D_8014DD50[root].unk4 + D_8014DD50[child].unk4;
 	angle = D_8014DD50[child].unkA;
 
-	trig = sins(angle);
-	y = (s32)(y + ((-50.0 * ((f32)coss(angle) / 32768.0)) - (D_80141EF8_150EA8[0] * ((f32)trig / 32768.0))));
+	y += ((-50.0 * ((f32)coss(angle) / 32768.0)) - (D_80141EF8_150EA8[0] * ((f32)sins(angle) / 32768.0)));
 
-	trig = coss(angle);
-	z = (s32)(z + ((D_80141F00_150EB0[0] * ((f32)trig / 32768.0)) + (-50.0 * ((f32)sins(angle) / 32768.0))));
+	z += ((-50.0 * ((f32)sins(angle) / 32768.0)) + (D_80141F00_150EB0[0] * ((f32)coss(angle) / 32768.0)));
 
 	func_80128428_1373D8(&alienInstances[arg0], (s16)x, (s16)y, (s16)z, arg1, arg2, arg3);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008FF54_9EF04.s")
-#endif
+
 
 // CURRENT(2327)
 // AI - AI state machine for carried humans/companions
