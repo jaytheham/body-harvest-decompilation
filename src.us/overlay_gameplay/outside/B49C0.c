@@ -15,29 +15,6 @@ const u32 jtbl_8014283C_1517EC[] = {
 	0x800A6934, 0x800A693C, 0x800A695C, 0x800A6A48,
 	0x800A6ED8, 0x800A6F60, 0x800A6FA0,
 };
-const f64 D_80142858_151808[] = {1.2};
-const u32 jtbl_80142860_151810[] = {
-	0x800A7D58, 0x800A7E7C, 0x800A7F74, 0x800A7FD4,
-	0x800A829C, 0x800A8344, 0x800A838C, 0x800A83AC,
-	0x800A83CC, 0x800A84D4,
-};
-const f32 D_80142888_151838[] = {0.3f};
-
-typedef struct {
-	/* 0x00 */ s16 x;
-	/* 0x02 */ s16 z;
-} BeaconLevelCoord; /* 4 bytes */
-
-typedef struct {
-	/* 0x00 */ BeaconLevelCoord levels[5]; /* 20 bytes - per-level beacon coords */
-	/* 0x14 */ u8 ids[4];                  /* 4 bytes - per-level sound IDs */
-} LevelBeaconData; /* 0x18 = 24 bytes */
-
-typedef struct {
-	/* 0x00 */ u8 r;
-	/* 0x01 */ u8 g;
-	/* 0x02 */ u8 b;
-} BeaconColor; /* 3 bytes */
 
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
@@ -339,19 +316,16 @@ void func_800A6020_B4FD0(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A6020_B4FD0.s")
 #endif
 
-// CURRENT(14213)
-#ifdef NON_MATCHING
 // AI - Warp teleport state machine
+#ifdef NON_MATCHING
 void func_800A68CC_B587C(void) {
 	s16 sp2E;
 	s16 sp2C;
+	s16 temp;
 	s16 sp28;
 	s16 sp26;
-	f32 sp20;
-	f32 sp1C;
-	s16 temp;
-	u8 temp2;
-
+	u8 timer;
+		u8 *const warpTimer = &D_8014F808;
 	if (func_8000726C_7E6C(0x27ULL) != 0) {
 		func_800A5F24_B4ED4(-1);
 		func_800073B8_7FB8(0x27ULL);
@@ -388,34 +362,24 @@ void func_800A68CC_B587C(void) {
 			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 2.0f);
 		}
 
-		temp = D_80157A3C;
-		if (temp < 0) {
-			temp += 3;
-		}
-		func_800A6020_B4FD0(temp >> 2);
-		D_8014F808 = 0;
+		func_800A6020_B4FD0(D_80157A3C / 4);
+		*warpTimer = 0;
 		break;
 
 	case 3:
+		do { timer = *warpTimer; } while (0);
 		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
-		temp2 = D_8014F808 + 1;
-		D_8014F808 = temp2;
+		timer++;
+		*warpTimer = timer;
 
-		if (temp2 < 0xB) {
-			temp = D_80157A3C;
-			if (temp < 0) {
-				temp += 3;
-			}
-			func_800A6020_B4FD0((temp >> 2) - temp2);
+		if (timer < 0xB) {
+			func_800A6020_B4FD0((D_80157A3C / 4) - timer);
 		} else {
-			temp = D_80157A3C;
-			if (temp < 0) {
-				temp += 3;
-			}
-			func_800A6020_B4FD0((temp >> 2) + temp2 - 0x14);
+			func_800A6020_B4FD0((D_80157A3C / 4) + timer - 0x14);
 		}
 
-		if (D_8014F808 == 0xA) {
+		timer = *warpTimer;
+		if (timer == 0xA) {
 			sp2E = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk0 << 8;
 			sp2C = (D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk2 + 1) << 8;
 			sp28 = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk6;
@@ -428,12 +392,10 @@ void func_800A68CC_B587C(void) {
 
 			func_800B0C80_BFC30();
 
-			sp20 = sp2E;
-			func_800FB44C_10A3FC(D_80052B34, sp20);
-			sp1C = sp2C;
-			func_800FB484_10A434(D_80052B34, sp1C);
+			func_800FB44C_10A3FC(D_80052B34, sp2E);
+			func_800FB484_10A434(D_80052B34, sp2C);
 
-			temp = (s16)(func_800B84D0_C7480(sp2E, sp2C) >> 8);
+			temp = func_800B84D0_C7480(sp2E, sp2C) >> 8;
 			if ((currentLevel == 3) && (D_8013D894_14C844 == 1)) {
 				temp = 0x7D0;
 			}
@@ -444,13 +406,13 @@ void func_800A68CC_B587C(void) {
 			D_80149398 = 0x6F;
 			D_801493A4 = -0x6F;
 			D_8014939C = 0x6F;
-			func_800B4050_C3000((u8)((sp2E >> 8) + 0x77), (u8)((sp2C >> 8) + 0x77), (u8 *)D_801FEA30, 0);
+			func_800B4050_C3000((sp2E >> 8) + 0x77, (sp2C >> 8) + 0x77, D_801FEA30, 0);
 
-			D_80052AE8.unk0 = sp20;
+			D_80052AE8.unk0 = sp2E;
 			D_80052AE8.unk4 = 4000.0f;
-			D_80052AE8.unkC = sp20;
-			D_80052AE8.unk8 = sp1C;
-			D_80052AE8.unk14 = sp1C;
+			D_80052AE8.unkC = sp2E;
+			D_80052AE8.unk8 = sp2C;
+			D_80052AE8.unk14 = sp2C;
 			D_80052AE8.unk10 = 1000.0f;
 			D_80052AE8.unk18 = sp2E;
 			D_80052AE8.unk1A = sp2C;
@@ -459,21 +421,25 @@ void func_800A68CC_B587C(void) {
 			D_80052B34->unk6 = sp28;
 
 			sp26 = coss(D_80052B2C->unk1E);
-			D_80052B2C->unk0 = (((f64)(f32)coss(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unkC;
-			D_80052B2C->unk4 = (((f64)(f32)sins(D_80052B2C->unk1E) / 32768.0) * D_80052B2C->unk1C) + D_80052B34->unk2;
-			D_80052B2C->unk8 = (((f64)(f32)sins(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unk14;
+			D_80052B2C->unk0 = (((f32)coss(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unkC;
+			D_80052B2C->unk4 = (((f32)sins(D_80052B2C->unk1E) / 32768.0) * D_80052B2C->unk1C) + D_80052B34->unk2;
+			sp26 = coss(D_80052B2C->unk1E);
+			D_80052B2C->unk8 = (((f32)sins(0xFA0) / 32768.0) * D_80052B2C->unk1C * ((f32)sp26 / 32768.0)) + D_80052B2C->unk14;
 			func_800153D8_15FD8(0xD7);
 		}
 
-		if (D_8014F808 == 0x12) {
+		timer = *warpTimer;
+		if (timer == 0x12) {
 			func_800E35E0_F2590(0x50);
 		}
 
-		if (D_8014F808 == 0x13) {
+		timer = *warpTimer;
+		if (timer == 0x13) {
 			func_800E35E0_F2590(0xA0);
 		}
 
-		if (D_8014F808 >= 0x14) {
+		timer = *warpTimer;
+		if (timer >= 0x14) {
 			func_800E35E0_F2590(0xFF);
 			D_8013D890_14C840 = 4;
 			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 5.0f);
@@ -487,31 +453,26 @@ void func_800A68CC_B587C(void) {
 		if (D_80157A3C >= 0x40) {
 			D_80157A3C = 0x40;
 			D_8013D890_14C840 = 5;
-			D_8014F808 = 0;
+			*warpTimer = 0;
 		}
 
-		temp = D_80157A3C;
-		if (temp < 0) {
-			temp += 3;
-		}
-		func_800A6020_B4FD0(temp >> 2);
+		func_800A6020_B4FD0(D_80157A3C / 4);
 		break;
 
 	case 5:
-		func_800A6020_B4FD0(D_8014F808 + 0x10);
-		if (D_8014F808 == 0xA) {
+		func_800A6020_B4FD0(*warpTimer + 0x10);
+		if ((*warpTimer) == 0xA) {
 			D_8013D890_14C840 = 6;
 		}
 
-		D_8014F808++;
+		*warpTimer = (*warpTimer) + 1;
+	case 6:
 		func_800EC468_FB418();
 		func_800FAC90_109C40();
 		D_8013D890_14C840 = 0;
 		D_801493E2 = 1;
 		break;
 
-	case 6:
-		break;
 
 	default:
 		break;
@@ -520,6 +481,7 @@ void func_800A68CC_B587C(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A68CC_B587C.s")
 #endif
+
 
 // https://decomp.me/scratch/j8WAR
 // Launch beacon
@@ -540,63 +502,48 @@ void func_800A6FD4_B5F84(void)
 	D_80048025 |= 1 << sp1F;
 }
 
-// CURRENT(44622)
-#ifdef NON_MATCHING
 // displayBeacons
 // AI - Render all beacons in 3D world
 void func_800A70B8_B6068(void) {
 	s16 i;
-	s32 groundY;
-	s16 mapX;
-	s16 mapZ;
-	s16 beaconType;
-	s16 beaconAge;
-	s32 v;
-	s32 brightness;
-	s16 rot;
 	s16 j;
-	Gfx* beaconBaseDl;
-	Gfx* beaconRingDl;
-	Gfx* beaconCoreDl;
+	Gfx *gfx;
+	u32 beaconBaseDl;
+	u32 beaconRingDl;
+	u32 beaconCoreDl;
 
 	if ((currentLevel == LEVEL_COMET) || (D_80052ACA == 2)) {
 		return;
 	}
 
-	gDPPipeSync(D_8005BB2C++);
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_TEXTURE_ENABLE | G_SHADE | G_CULL_BOTH | G_FOG | G_LIGHTING | G_TEXTURE_GEN | G_TEXTURE_GEN_LINEAR | G_LOD | G_SHADING_SMOOTH | G_CLIPPING | 0xFF60CDF8);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8); gfx->words.w1 = 0xFFFFFFFF;
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_CULL_BACK | G_FOG | G_LIGHTING | G_SHADING_SMOOTH);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	for (i = 0; i < 6; i++) {
-		beaconType = D_8003154C[currentLevel - 1][i].state;
-
-		if (beaconType == 3) {
+		if (D_8003154C[currentLevel - 1][i].state == 3) {
 			D_8014F80A = D_8013D898_14C848.levels[currentLevel - 1].x;
 			D_8014F80C = D_8013D898_14C848.levels[currentLevel - 1].z;
-			beaconBaseDl = (Gfx*)0x05046250;
-			beaconRingDl = (Gfx*)0x05046470;
-			groundY = func_800B84D0_C7480(D_8014F80A, D_8014F80C);
+			beaconBaseDl = (u32)D_5046250;
+			beaconRingDl = (u32)D_5046470;
+			j = func_800B84D0_C7480(D_8014F80A, D_8014F80C) >> 8;
 
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
 
-			v = 0x5E - D_8003154C[currentLevel - 1][i].timer;
-			D_8014F810 = v * v;
-			v = (D_8014F810 * 6) / 10;
-			D_8014F810 = v;
-			v = D_8014F810 + 0x5A;
-			D_8014F810 = v;
-			v = (groundY >> 8) + D_8014F810;
-			D_8014F810 = v;
+			D_8014F810 = 0x5E - D_8003154C[currentLevel - 1][i].timer;
+			D_8014F810 = D_8014F810 * D_8014F810 * 6;
+			D_8014F810 /= 10;
+			D_8014F810 += 0x5A;
+			D_8014F810 = j + D_8014F810;
 			D_80052B40.unk2 = D_8014F810 >> 2;
-
-			D_80052B48.unk0 = 0;
-			D_80052B48.unk2 = 0x8000;
-			D_80052B48.unk4 = 0;
-
+			D_80052B48.unk0 = D_80052B48.unk4Unsigned = 0;
+			D_80052B48.unk2Unsigned = 0x8000;
 			D_80052B50.unk4 = 0x14;
 			D_80052B50.unk2 = D_80052B50.unk4;
 			D_80052B50.unk0 = D_80052B50.unk4;
@@ -607,7 +554,7 @@ void func_800A70B8_B6068(void) {
 
 			for (j = 0; j < 8; j++) {
 				D_80052B48.unk0 = j << 0xD;
-				D_80052B48.unk2 = 0x8000;
+				D_80052B48.unk2Unsigned = 0x8000;
 				D_80052B48.unk4 = 0;
 				func_800039D0_45D0(0, &D_80052B48, 0, D_8005BB38);
 
@@ -621,42 +568,37 @@ void func_800A70B8_B6068(void) {
 				gSPDisplayList(D_8005BB2C++, beaconRingDl);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
-		} else if (beaconType >= 4) {
+		} else if (D_8003154C[currentLevel - 1][i].state >= 4) {
 			D_8014F80A = D_8003154C[currentLevel - 1][i].x << 8;
 			D_8014F80C = D_8003154C[currentLevel - 1][i].z << 8;
 
 			D_80052B40.unk0 = D_8014F80A >> 2;
 			D_80052B40.unk4 = D_8014F80C >> 2;
 
-			if ((func_800B9228_C81D8(D_8014F80A, D_8014F80C, (s16)(s32)D_80052B2C->unk0, (s16)(s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) && (D_80157590 == 0)) {
-				beaconBaseDl = (Gfx*)0x05046250;
-				beaconCoreDl = (Gfx*)0x050468F0;
-				beaconRingDl = (Gfx*)0x05046470;
-				groundY = func_800B84D0_C7480(D_8014F80A, D_8014F80C);
-				if (groundY < 0) {
-					groundY += 0xFF;
-				}
-
-				D_8014F810 = (groundY >> 8) + 0x18;
+			if ((func_800B9228_C81D8(D_8014F80A, D_8014F80C, D_80052B2C->unk0, D_80052B2C->unk8, 0x4000 - D_80047950) != 0) && (D_80157590 == 0)) {
+				beaconBaseDl = (u32)D_5046250;
+				beaconCoreDl = (u32)D_50468F0;
+				beaconRingDl = (u32)D_5046470;
+				D_8014F810 = func_800B84D0_C7480(D_8014F80A, D_8014F80C) / 256 + 0x18;
 				if ((currentLevel == LEVEL_AMERICA) && (i == 0)) {
 					D_8014F810 = 0x7D0;
 				}
 
-				if (beaconType == 4) {
+				if (D_8003154C[currentLevel - 1][i].state == 4) {
 					D_8014F810 += D_8003154C[currentLevel - 1][i].timer * 0x50;
 				}
 
+				D_80052B40.unk2 = D_8014F810 >> 2;
 				D_80052B50.unk4 = 0x18;
 				D_80052B50.unk2 = D_80052B50.unk4;
 				D_80052B50.unk0 = D_80052B50.unk4;
-				D_80052B40.unk2 = D_8014F810 >> 2;
 				func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				gSPDisplayList(D_8005BB2C++, beaconBaseDl);
 
 				D_80052B40.unk0 = 0;
-				switch (beaconType) {
+				switch (D_8003154C[currentLevel - 1][i].state) {
 				case 9:
 					D_80052B40.unk2 = D_8003154C[currentLevel - 1][i].timer * 0x14 + 0xE;
 					break;
@@ -671,7 +613,6 @@ void func_800A70B8_B6068(void) {
 
 				default:
 					D_80052B40.unk2 = 0x78;
-					break;
 				}
 
 				D_80052B40.unk4 = 0;
@@ -680,12 +621,10 @@ void func_800A70B8_B6068(void) {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
-				if (beaconType == 8) {
-					brightness = (0xFF - (D_8003154C[currentLevel - 1][i].timer * 10)) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
-				} else if (beaconType == 10) {
-					brightness = (D_8003154C[currentLevel - 1][i].timer * 0x32) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, brightness, brightness, brightness, 0xFF);
+				if (D_8003154C[currentLevel - 1][i].state == 8) {
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF - D_8003154C[currentLevel - 1][i].timer * 10, 0xFF - D_8003154C[currentLevel - 1][i].timer * 10, 0xFF - D_8003154C[currentLevel - 1][i].timer * 10, 0xFF);
+				} else if (D_8003154C[currentLevel - 1][i].state == 10) {
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_8003154C[currentLevel - 1][i].timer * 0x32, D_8003154C[currentLevel - 1][i].timer * 0x32, D_8003154C[currentLevel - 1][i].timer * 0x32, 0xFF);
 				} else {
 					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF);
 				}
@@ -704,16 +643,15 @@ void func_800A70B8_B6068(void) {
 					D_80052B40.unk2 = 0xC9;
 					D_80052B40.unk4 = 0;
 
-					beaconAge = D_8003154C[currentLevel - 1][i].timer;
-					if (beaconType == 6) {
-						rot = (s16) (s32) (((((0x32 - beaconAge) * 0.017453292519943295) / 50.0) * 16384.0));
-					} else if ((beaconType == 4) || (beaconType == 5)) {
-						rot = 0;
+					D_80052B48.unk0 = 0;
+					if (D_8003154C[currentLevel - 1][i].state == 6) {
+						D_80052B48.unk2Unsigned = ((0x32 - D_8003154C[currentLevel - 1][i].timer) * 1.2 / 50.0) * 16384.0;
+					} else if ((D_8003154C[currentLevel - 1][i].state == 4) || (D_8003154C[currentLevel - 1][i].state == 5)) {
+						D_80052B48.unk2Unsigned = 0;
 					} else {
-						rot = 0x4CCC;
+						D_80052B48.unk2Unsigned = 0x4CCC;
 					}
 
-					D_80052B48.unk2 = rot;
 					func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
 					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -724,11 +662,7 @@ void func_800A70B8_B6068(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A70B8_B6068.s")
-#endif
 
-// https://decomp.me/scratch/nzLpq
 // ?? and destroy vehicle hit by beacon
 void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
 {
@@ -750,31 +684,23 @@ void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ)
 	return;
 }
 
-// CURRENT(28813)
-#ifdef NON_MATCHING
-// AI - Update beacon state machine lifecycle
+// Update beacon state machine lifecycle
 void func_800A7C6C_B6C1C(void) {
-	BeaconColor spA4;
-	s32 pad[4];
-	s16 spAA;
-	s16 spA8;
 	s16 i;
-	BeaconEntry *beacon;
-	s16 tempX;
-	s16 tempZ;
+	s16 pad;
+	Vec2_S16 position;
+	BeaconColor spA4;
+	VehicleInstance *vehicle;
+	s32 range;
+	s32 tempX;
+	s32 tempZ;
 	s16 levelX;
 	s16 levelZ;
 	s16 terrainY;
-	s16 j;
-	s16 vehicleCount;
-	u8 vehicleIndex;
-	VehicleInstance* vehicle;
-	s16 range;
-	s16 deltaX;
-	s16 deltaZ;
-	s16 absX;
-	s16 absZ;
-	s32 distSq;
+	u8 j;
+	s32 padWords[3];
+	s32 absX;
+	s32 absZ;
 
 	spA4 = D_8013D8B0_14C860;
 
@@ -788,11 +714,9 @@ void func_800A7C6C_B6C1C(void) {
 	}
 
 	for (i = 0; i < 6; i++) {
-		beacon = &D_8003154C[currentLevel - 1][i];
-
-		switch (beacon->state) {
+		switch (D_8003154C[currentLevel - 1][i].state) {
 			case 1:
-				if (beacon->timer == 0x19) {
+				if (D_8003154C[currentLevel - 1][i].timer == 0x19) {
 					if ((func_8000726C_7E6C(0x14) != 0) && (currentLevel == 4)) {
 						func_80018D7C_1997C(0xDE);
 					} else if ((currentLevel == 4) && (D_80047F94 == 2)) {
@@ -802,91 +726,67 @@ void func_800A7C6C_B6C1C(void) {
 						func_80018D7C_1997C(0xD4);
 						func_80013324_13F24();
 					}
-
-					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 
-				if (beacon->timer == 0) {
-					beacon->state = 2;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 2;
 				}
 
-				if (beacon->timer == 0xA) {
+				if (D_8003154C[currentLevel - 1][i].timer == 0xA) {
 					func_800EFEB4_FEE64(NULL, D_8013D898_14C848.ids[currentLevel - 1], 0);
-					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
 
 			case 2:
-				tempX = beacon->x << 8;
-				tempZ = beacon->z << 8;
-				D_8014F7FA = func_800B84D0_C7480(tempX, tempZ) >> 8;
+				D_8014F7F8.unk0 = D_8003154C[currentLevel - 1][i].x << 8;
+				D_8014F7F8.unk4 = D_8003154C[currentLevel - 1][i].z << 8;
+				D_8014F7FA = func_800B84D0_C7480(D_8014F7F8.unk0, D_8014F7F8.unk4) >> 8;
 
-				beacon = &D_8003154C[currentLevel - 1][i];
+				D_8003154C[currentLevel - 1][i].state = 3;
+				D_8003154C[currentLevel - 1][i].timer = 0x64;
 
-				beacon->state = 3;
-				beacon->timer = 0x64;
-
-				levelX = D_8013D898_14C848.levels[currentLevel].x;
-				levelZ = D_8013D898_14C848.levels[currentLevel].z;
+				levelX = D_8013D898_14C848.levels[currentLevel - 1].x;
+				levelZ = D_8013D898_14C848.levels[currentLevel - 1].z;
 				terrainY = (func_800B84D0_C7480(levelX, levelZ) >> 8) + 0x8C;
 
-				func_800DF038_EDFE8(levelX, terrainY, levelZ, 0x46, 0, NULL);
+				func_800DF038_EDFE8(D_8013D898_14C848.levels[currentLevel - 1].x, terrainY, D_8013D898_14C848.levels[currentLevel - 1].z, 0x46, 0, NULL);
 				D_8014F7FE = func_800C21F0_D11A0(D_8014F80A, 0x2710, D_8014F80C, 0);
-
-				beacon = &D_8003154C[currentLevel - 1][i];
 				break;
 
 			case 3:
 				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
-
-				beacon = &D_8003154C[currentLevel - 1][i];
-				if (beacon->timer == 0) {
-					beacon->state = 4;
-					beacon->timer = 0x3C;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 4;
+					D_8003154C[currentLevel - 1][i].timer = 0x3C;
 				}
 				break;
 
 			case 4:
 				func_800C1ECC_D0E7C(D_8014F80A, D_8014F812, D_8014F80C, D_8014F7FE, 0);
 
-				vehicleCount = D_80158FD8;
-				for (j = 0; j < vehicleCount; j++) {
-					vehicleIndex = D_80158E80[j];
-					vehicle = &vehicleInstances[vehicleIndex];
+				for (j = 0; j < D_80158FD8; j++) {
 
-					beacon = &D_8003154C[currentLevel - 1][i];
+					vehicle = &vehicleInstances[D_80158E80[j]];
 
-					range = *(s16 *)((u8 *)vehicleTypes + 0x0C + vehicle->unk1A * 0x5C) + 0x50;
-					deltaX = (beacon->x << 8) - vehicle->unk0;
-					deltaZ = (beacon->z << 8) - vehicle->unk4;
-					absX = deltaX;
-					absZ = deltaZ;
-					if (absX < 0) {
-						absX = -absX;
+					range = vehicleTypes[vehicle->unk1A].unkC + 0x50;
+					absX = BH_ABS((D_8003154C[currentLevel - 1][i].x << 8) - vehicle->unk0);
+					absZ = BH_ABS((D_8003154C[currentLevel - 1][i].z << 8) - vehicle->unk4);
+
+					if (absX > range || absZ > range) {
+						continue;
 					}
-					if (absZ < 0) {
-						absZ = -absZ;
-					}
-
-					if ((absX <= range) && (absZ <= range)) {
-						distSq = (absX * absX) + (absZ * absZ);
-						if ((s16) sqrtf((f32) distSq) < range) {
-							func_80102DDC_111D8C(vehicle, func_80003824_4424((f32) absX, (f32) absZ), 0, 6.0f);
-						}
+					if ((s32) sqrtf((f32) (u32) ((absX * absX) + (absZ * absZ))) < range) {
+						func_80102DDC_111D8C(vehicle, func_80003824_4424((f32) absX, (f32) absZ), 0, 6.0f);
 					}
 				}
-
-				beacon = &D_8003154C[currentLevel - 1][i];
-				if (beacon->timer == 0) {
-					beacon->state = 5;
-					beacon->timer = 0x28;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 5;
+					D_8003154C[currentLevel - 1][i].timer = 0x28;
 					D_8014F800 = 0;
 					func_800A5BD0_B4B80(i);
 
-					beacon = &D_8003154C[currentLevel - 1][i];
-
-					tempX = beacon->x << 8;
-					tempZ = beacon->z << 8;
+					tempX = D_8003154C[currentLevel - 1][i].x << 8;
+					tempZ = D_8003154C[currentLevel - 1][i].z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x181, tempX, terrainY, tempZ, 0.5f);
 					func_800A7B84_B6B34(tempX, tempZ);
@@ -897,23 +797,21 @@ void func_800A7C6C_B6C1C(void) {
 				break;
 
 			case 5:
-				if (beacon->timer == 0) {
-					beacon->state = 6;
-					beacon->timer = 0x32;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 6;
+					D_8003154C[currentLevel - 1][i].timer = 0x32;
 
-					tempX = beacon->x << 8;
-					tempZ = beacon->z << 8;
+					tempX = D_8003154C[currentLevel - 1][i].x << 8;
+					tempZ = D_8003154C[currentLevel - 1][i].z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
 					func_801371B8_146168(0, 0x17C, tempX, terrainY, tempZ, 0.25f);
-
-					beacon = &D_8003154C[currentLevel - 1][i];
 				}
 				break;
 
 			case 6:
-				if (beacon->timer == 0) {
-					beacon->state = 7;
-					beacon->timer = 0x14;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 7;
+					D_8003154C[currentLevel - 1][i].timer = 0x14;
 					if ((D_8014F800 == 0) && (D_8014F804 == -1)) {
 						D_8014F804 = i;
 					}
@@ -921,95 +819,91 @@ void func_800A7C6C_B6C1C(void) {
 				break;
 
 			case 7:
-				if (beacon->timer == 0) {
-					beacon->state = 9;
-					beacon->timer = 5;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 9;
+					D_8003154C[currentLevel - 1][i].timer = 5;
 				}
 				break;
 
 			case 8:
-				if (beacon->timer == 0) {
-					beacon->state = 9;
-					beacon->timer = 5;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 9;
+					D_8003154C[currentLevel - 1][i].timer = 5;
 				}
 				break;
 
 			case 9:
-				if (beacon->timer == 0) {
-					tempX = beacon->x << 8;
-					tempZ = beacon->z << 8;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					tempX = D_8003154C[currentLevel - 1][i].x << 8;
+					tempZ = D_8003154C[currentLevel - 1][i].z << 8;
 					terrainY = func_800B84D0_C7480(tempX, tempZ) >> 8;
-					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, D_80142888_151838[0]);
+					func_801371B8_146168(0, 0x17D, tempX, terrainY, tempZ, 0.3f);
 
-					beacon = &D_8003154C[currentLevel - 1][i];
-
-					spA8 = beacon->x << 8;
-					spAA = beacon->z << 8;
-					func_800B99A8_C8958((Unk80152B80*) &spA8, 0x1E, 0x1F4, 0xFF, (u8*) &spA4, 0x50, 0xA, 0);
-
-					beacon = &D_8003154C[currentLevel - 1][i];
-					beacon->state = 0xA;
-					beacon->timer = 5;
+					position.x = D_8003154C[currentLevel - 1][i].x << 8;
+					position.z = D_8003154C[currentLevel - 1][i].z << 8;
+					func_800B99A8_C8958(&position, 0x1E, 0x1F4, 0xFF, &spA4.r, 0x50, 0xA, 0);
+					D_8003154C[currentLevel - 1][i].state = 0xA;
+					D_8003154C[currentLevel - 1][i].timer = 5;
 				}
 				break;
 
 			case 10:
-				if (beacon->timer == 0) {
-					beacon->state = 8;
-					beacon->timer = 0x19;
+				if (D_8003154C[currentLevel - 1][i].timer == 0) {
+					D_8003154C[currentLevel - 1][i].state = 8;
+					D_8003154C[currentLevel - 1][i].timer = 0x19;
 				}
 				break;
 		}
 
-		beacon->timer--;
+		D_8003154C[currentLevel - 1][i].timer--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A7C6C_B6C1C.s")
-#endif
 
-// CURRENT(2696)
-#ifdef NON_MATCHING
 // Update PowerupItems
 void func_800A854C_B74FC(void)
 {
   u8 alpha;
-  s16 accel;
   f32 deltaX;
-  f32 deltaZ;
+  s16 accel;
   s16 sp8C;
   s16 sp8A;
-  s16 sp88;f32 distCopy;s16 sp78;f32 dist;
+  s16 sp88;
+  f32 deltaZ;
+  PowerupItem *entry;
+  f32 distCopy;
   s16 yLimit;
-  s32 i;
+  s16 sp78;
+  f32 dist;
+  s32 i = 16;
   s32 lod;
-  s32 *groundLevel = &D_80222A70; // current water height used as floor for pickups to float on
-  
-  for (i = 0x10; i--;) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
+
+  while (i--) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
   {
+	if (i) {}
+	entry = &D_8014F6D0[i];
 	if (D_8014F6D0[i].unkC != -1)
 	{
-	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6; //apply xyz velocities to xyz position
-	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
+	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6;
 	  D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
+	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
 	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
 	  yLimit = (sp88 < sp8C) ? sp8C : sp88;
 	  
-	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < *groundLevel) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
+	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < D_80222A70) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
 	  {
-		yLimit = *groundLevel;
+		yLimit = D_80222A70;
 	  }
-	  if (D_8014F6D0[i].unk2 < yLimit) 
+	  if (entry->unk2 < yLimit)
 	  {
-		D_8014F6D0[i].unk8 = 0;
-		D_8014F6D0[i].unk2 = yLimit;
+		entry->unk2 = yLimit;
+		entry->unk8 = 0;
 		
-		if (*groundLevel < D_8014F6D0[i].unk2)
+		if (D_80222A70 < yLimit)
 		{
 		  if (sp8C < sp88)
 		  {
-			D_8014F6D0[i].unk6 = ((D_8014F6D0[i].unk6 + (func_800038E0_44E0() & 0xF)) - 8);
-			D_8014F6D0[i].unkA = ((D_8014F6D0[i].unkA + (func_800038E0_44E0() & 0xF)) - 8);
+			D_8014F6D0[i].unk6 += (func_800038E0_44E0() & 0xF) - 8;
+			D_8014F6D0[i].unkA += (func_800038E0_44E0() & 0xF) - 8;
 		  }
 		  else
 		  {
@@ -1040,7 +934,7 @@ void func_800A854C_B74FC(void)
 	  // horizontal damping - bugged? positive velocities keep drifting, negative velocities reach 0 and pickup stops moving
 	  {
 		D_8014F6D0[i].unk6 -= (D_8014F6D0[i].unk6 >> 2);
-		if (*groundLevel < D_8014F6D0[i].unk2)
+		if (D_80222A70 < D_8014F6D0[i].unk2)
 		{
 		  D_8014F6D0[i].unk8 -= 3;
 		}
@@ -1092,9 +986,6 @@ void func_800A854C_B74FC(void)
 	}
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A854C_B74FC.s")
-#endif
 
 /* Spawn PowerupItem
 	arg3:

@@ -1539,14 +1539,14 @@ typedef struct {
 } VehicleType; /* size = 0x70 */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
+	/* 0x00 */ s16 soundId;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 pad04[4];
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
+	/* 0x08 */ f32 minPitch;
+	/* 0x0C */ f32 maxPitch;
 	/* 0x10 */ u8 pad10[4];
-	/* 0x14 */ f32 unk14;
-} WeaponLevelSpec; /* size = 0x18 */
+	/* 0x14 */ f32 pitchFactor;
+} VehicleAudioSpec; /* size = 0x18 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2255,8 +2255,14 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
+	/* 0x02 */ union {
+		s16 unk2;
+		u16 unk2Unsigned;
+	};
+	/* 0x04 */ union {
+		s16 unk4;
+		u16 unk4Unsigned;
+	};
 } Unk80052B48; /* size = 0x06 */
 
 typedef struct {
@@ -3814,5 +3820,21 @@ typedef struct {
 typedef struct {
 	f64 value;
 } ShadowGeometryConstant;
+
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 z;
+} BeaconLevelCoord; /* 4 bytes */
+
+typedef struct {
+	/* 0x00 */ BeaconLevelCoord levels[5]; /* 20 bytes - per-level beacon coords */
+	/* 0x14 */ u8 ids[4];                  /* 4 bytes - per-level sound IDs */
+} LevelBeaconData; /* 0x18 = 24 bytes */
+
+typedef struct {
+	/* 0x00 */ u8 r;
+	/* 0x01 */ u8 g;
+	/* 0x02 */ u8 b;
+} BeaconColor; /* 3 bytes */
 
 #endif /* LIBULTRA_REFERENCE */

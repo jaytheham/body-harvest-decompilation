@@ -1,5 +1,37 @@
 # Negative array index to access previous row of 2D array
 
+## Prefer direct accesses through the same table first
+
+Negative assembly displacements do not require negative indices in the C source.
+In `func_80014508_15108`, direct accesses through
+`D_800330B0_33CB0[currentLevel - 1][vehicle]` produce the target address calculations
+when the sound-ID guards and pitch reads all use that same table expression.
+
+The previous guards used a linker alias positioned one row before the table,
+while pitch reads used the real table. Replacing only the pitch pointer with
+direct accesses caused repeated address calculations. Replacing the guards with
+the real table too let IDO share the address expressions and fold the row
+subtraction into load displacements. Keeping an explicit entry pointer instead
+retained two extra address adjustments.
+
+For this function, the direct-access form clears the structural diff and matches
+integer registers and offsets. The remaining float allocation issue was resolved
+with the interpolation expression described in
+[Direct bound read preserves the interpolation product](float-interpolation-direct-bound-read.md).
+The final function and full ROM match exactly.
+
+```c
+if (settings[currentLevel - 1][vehicle].soundId == -1) {
+    return;
+}
+/* Later reads use the same array root and index expressions. */
+maxPitch = settings[currentLevel - 1][vehicle].maxPitch;
+minPitch = settings[currentLevel - 1][vehicle].minPitch;
+```
+
+Try this form before the pointer workaround below, especially when earlier
+guards use a different symbol aliased into the same table.
+
 When a function accesses `array[currentLevel-1][stage]`, the compiler may use one of two
 patterns:
 
