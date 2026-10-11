@@ -94,9 +94,7 @@ const f32 D_80037128_37D28[] = {-10000.0f};
 const f32 D_8003712C_37D2C[] = {10000.0f};
 const f32 D_80037130_37D30[] = {319.0f};
 const f64 D_80037138_37D38[] = {65535.0};
-const u32 jtbl_80037140_37D40[] = {
-	0x8000775C, 0x80007820, 0x80007780, 0x800077C0, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007894, 0x80007860, 0x80007894, 0x8000787C
-};
+
 
 
 
@@ -973,40 +971,36 @@ void func_800076D4_82D4(s32 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/E3Lvj
-// CURRENT(0)
-#ifdef NON_MATCHING
 void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
-loop:
-	switch (arg0[0]) {
-	case 0x98:
-		*arg1 = D_80052B34->unk0;
-		*arg2 = D_80052B34->unk4;
-		return;
-	case 0x9A:
-		*arg1 = vehicleInstances[arg0[1]].unk0;
-		*arg2 = vehicleInstances[arg0[1]].unk4;
-		return;
-	case 0x9B:
-		*arg1 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk0;
-		*arg2 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk4;
-		return;
-	case 0x99:
-		*arg1 = buildingInstances[arg0[1]].xCoord;
-		*arg2 = buildingInstances[arg0[1]].zCoord;
-		return;
-	case 0xAD:
-		*arg1 = arg0[1] << 8;
-		*arg2 = arg0[2] << 8;
-		return;
-	case 0xAF:
-		arg0 = &D_8004D180[arg0[1]].opcode;
-		goto loop;
+	while (1) {
+		switch (arg0[0]) {
+		case 0x98:
+			*arg1 = D_80052B34->unk0;
+			*arg2 = D_80052B34->unk4;
+			return;
+		case 0x9A:
+			*arg1 = vehicleInstances[arg0[1]].unk0;
+			*arg2 = vehicleInstances[arg0[1]].unk4;
+			return;
+		case 0x9B:
+			*arg1 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk0;
+			*arg2 = alienInstances[D_8004D160[arg0[1] * 2 + 1]].unk4;
+			return;
+		case 0x99:
+			*arg1 = buildingInstances[arg0[1]].xCoord;
+			*arg2 = buildingInstances[arg0[1]].zCoord;
+			return;
+		case 0xAD:
+			*arg1 = arg0[1] << 8;
+			*arg2 = arg0[2] << 8;
+			return;
+		case 0xAF:
+			arg0 = &D_8004D180[arg0[1]].opcode;
+			continue;
+		}
+		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
-#endif
 
 u8 func_8000789C_849C(s32 arg0)
 {
