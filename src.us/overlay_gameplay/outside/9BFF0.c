@@ -2224,6 +2224,7 @@ void func_80090C14_9FBC4(u8 arg0)
 	alienInstances[arg0].unk2A = targetAngle;
 }
 
+// Harvester/"Drone King" behavior and attacks
 void func_80090D0C_9FCBC(u8 arg0)
 {
 	u8 typeIdx;
