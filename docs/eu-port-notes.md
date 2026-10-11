@@ -9,13 +9,14 @@ without regressing the NA build.
 
 ## Current state
 
-The EU build links cleanly and produces a ROM of exactly `0xC00000` bytes
-(the earlier `0x20` size deficit is closed; see the drift section). NA remains
-byte-exact. **381 bytes still differ**, all in the core segment, first at ROM
-`0xFB53`, last around `0x32788`. Every remaining difference is an instruction
-*address operand* (`lui`/`addiu` of `%hi`/`%lo`), not code or data content: the
-shared C still references NA-named symbols that pin to NA addresses instead of
-the EU (`+0x30`) addresses. Fixing those is the eu_ collision workstream below.
+The EU build links cleanly, produces a ROM of exactly `0xC00000` bytes (the
+earlier `0x20` size deficit is closed; see the drift section), and is now
+**byte-exact**: `build.eu/bh.eu.z64` == `baserom.eu.z64` (SHA1
+`67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`). NA remains byte-exact:
+`build.na/bh.na.z64` == `baserom.na.z64` (SHA1
+`BBB6666F5014A473747EE4145F036D9FB25D7348`). The final 381 differing bytes
+(first at ROM `0xFB53`), all address operands from the eu_ collision
+workstream, are closed; see the log entry below.
 
 Tools in play:
 
@@ -119,3 +120,26 @@ NA must remain byte-exact: `build.na/bh.na.z64` == `baserom.na.z64`, SHA1
   builds to exactly `0xC00000`; NA still byte-exact. Remaining: 381 differing
   bytes in `core` (`0xFB53`-`0x32788`), all address operands from the eu_
   symbol-collision workstream.
+- 2026-10-11: **EU byte-exact.** Closed the final 381 differing bytes (all core,
+  first at ROM `0xFB53`). Symptom: address operands (`lui`+`addiu`/`ori`/`lw`/
+  `sw`) and a pointer table whose low 16 bits differed by `-0x30` -- the shared C
+  bound NA addresses while the EU ROM uses the `+0x30` EU addresses; plus one
+  data word at ROM `0x32788`. Root cause: `undefined_syms.eu.txt`'s
+  hand-maintained "base shared-symbols block" pinned a set of shared symbols to
+  their NA addresses even though the EU image moved them (typically `+0x30`);
+  the fixes corrected those pins to the EU addresses and added the missing
+  interior pins. `symbol_addrs.eu.txt` gained a small `NA->EU func rename` block
+  plus extra `eu_` pins. `tools/gen_eu_symbol_collisions.py` gained
+  `collect_eu_base_pins()`: it now also tags (as `eu_`) shared-C names that the C
+  merely *references* but which the EU symbol table relocated away from the
+  address encoded in their NA name -- because an EU asm label of the same name
+  would otherwise shadow the relocated placement and bind the C to the wrong
+  address. One EU-only function sits at the NA address of a shared function
+  (`0x80013818`); it was renamed to `EU_func_80013818_14418` in
+  `symbol_addrs.eu.txt` and the `src.eu/core/12C80.c` `GLOBAL_ASM` pragma
+  updated to match. Note the deliberate `EU_` (not `eu_`) prefix so the
+  rename-generator's `^eu_` stripper leaves it alone across pipeline re-runs.
+  Also note the gotcha: splat parses the `GLOBAL_ASM` pragma filename, so the C
+  stub name must equal the splat symbol name or the function is misclassified as
+  matched. `src/common/core/10A20.c`: `D_80031B58_32758` has a region-specific
+  initial value (`1` in EU, `0` in NA) via `#ifdef VERSION_EU`.
