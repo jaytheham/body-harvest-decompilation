@@ -109,7 +109,7 @@ u32 D_80140CCC_14FC7C = 0;
 u32 D_80140CD0_14FC80 = 0;
 u32 D_80140CD4_14FC84 = 0;
 u32 D_80140CD8_14FC88 = 0;
-u32 D_80140CDC_14FC8C = 0x82;
+s32 D_80140CDC_14FC8C = 0x82;
 s32 D_80140CE0_14FC90 = 0;
 
 void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
@@ -1003,8 +1003,6 @@ void func_80130BA0_13FB50(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80130BA0_13FB50.s")
 #endif
 
-// CURRENT(3070)
-#ifdef NON_MATCHING
 void func_80131280_140230(u8 *arg0)
 {
 	u8 scoreText[0x18];
@@ -1024,8 +1022,11 @@ void func_80131280_140230(u8 *arg0)
 		D_80140CDC_W_RESET = 0x82;
 	}
 
-	if ((D_80140CDC_14FC8C >= 0x6F) && (D_80140CC0_14FC70 != 0)) {
-		D_80140CDC_W_DEC = D_80140CDC_14FC8C - 2;
+	{
+		s32 *countdown = &D_80140CDC_14FC8C;
+		if ((*countdown >= 0x6F) && (D_80140CC0_14FC70 != 0)) {
+			D_80140CDC_W_DEC = *countdown - 2;
+		}
 	}
 
 	func_8012EAC0_13DA70(func_8012FFB0_13EF60(), scoreText);
@@ -1065,8 +1066,10 @@ void func_80131280_140230(u8 *arg0)
 		D_80140CD4_14FC84 = func_80131858_140808(scoreText, 0x14, 0x1E, 0xA0, D_80140CD4_14FC84 == 0, D_80140CD8_14FC88 == 0);
 		D_80140CD8_14FC88 = 1;
 	} else {
-		if (D_80140CC0_14FC70 == 0) {
-			D_80140CC0_14FC70 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x28, D_80140C70_14FC20, D_80140CC0_14FC70 == 0, D_80140CBC_14FC6C == 0, 8);
+		u32 *textDone = &D_80140CC0_14FC70;
+
+		if (!*textDone) {
+			D_80140CC0_14FC70 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x28, D_80140C70_14FC20, *textDone == 0, D_80140CBC_14FC6C == 0, 8);
 			D_80140CBC_14FC6C = 1;
 
 			switch (D_800313D0_31FD0) {
@@ -1088,7 +1091,7 @@ void func_80131280_140230(u8 *arg0)
 		}
 	}
 
-	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_Z | BUTTON_A) != 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_B | BUTTON_A) != 0) {
 		if ((D_80140CC0_14FC70 == 0) || (D_80140CC8_14FC78 == 0) || (D_80140CDC_14FC8C >= 0x6F) || (D_80140CD4_14FC84 == 0)) {
 			D_80140CC0_14FC70 = 1;
 			D_80140CBC_14FC6C = 0;
@@ -1112,9 +1115,6 @@ void func_80131280_140230(u8 *arg0)
 		D_8015FF80 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131280_140230.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5) {

@@ -1994,6 +1994,22 @@ extern s32 D_80140C94;
 extern s32 D_80140C98;
 extern s32 D_80140C9C;
 extern s32 D_80140CA0;
+extern u32 D_80140CC0_14FC70;
+extern s32 D_80140CDC_14FC8C;
+
+/* Distinct write views preserve folded state stores in func_80131280_140230. */
+extern s32 D_80140CB4_W;
+extern s32 D_80140CB8_W;
+extern s32 D_80140CBC_W;
+extern s32 D_80140CC0_W;
+extern s32 D_80140CC4_W;
+extern s32 D_80140CC8_W;
+extern s32 D_80140CC8_W_BUTTON;
+extern s32 D_80140CCC_W;
+extern s32 D_80140CD0_W;
+extern s32 D_80140CD4_W_BUTTON;
+extern s32 D_80140CDC_W_DEC;
+extern s32 D_80140CDC_W_RESET;
 extern Struct_80140D00 D_80140D00_14FCB0;
 extern Struct_80140D10 D_80140D10_14FCC0;
 extern u8 D_80140D17_14FCC7[];
