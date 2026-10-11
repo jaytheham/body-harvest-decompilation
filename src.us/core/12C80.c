@@ -2370,21 +2370,20 @@ s32 func_800164C4_170C4(void) {
 }
 
 // https://decomp.me/scratch/CQbLj
-// CURRENT(25)
-#ifdef NON_MATCHING
-// AI - Picks an available controller slot index, activating/releasing slots as needed
+// Picks an available slot, activating or releasing slots as needed.
 s8 func_800165EC_171EC(void)
 {
-	s8 var_s3;
-	s8 var_s6;
-	s16 var_s5;
 	s8 i;
-	int new_var;
-	s32 sp48;
-	s32 sp44;
-	var_s6 = -1;
-	var_s3 = 0;
-	var_s5 = 0x7FFF;
+	s16 score;
+	s32 age;
+	s32 maximumAge;
+	s16 minimumScore;
+	s8 selectedSlot;
+	s8 unavailableCount;
+
+	selectedSlot = -1;
+	unavailableCount = 0;
+	minimumScore = 0x7FFF;
 	if (D_80031CA4_328A4 != 2)
 	{
 		for (i = 0; i < 2; i++)
@@ -2411,10 +2410,10 @@ s8 func_800165EC_171EC(void)
 			func_80016ABC_176BC(i);
 			return i;
 		}
-		var_s3++;
+		unavailableCount++;
 	}
 
-	if (var_s3 == 2)
+	if (unavailableCount == 2)
 	{
 		for (i = 0; i < 2; i++)
 		{
@@ -2434,58 +2433,57 @@ s8 func_800165EC_171EC(void)
 			}
 		}
 
-		new_var = 0x7FFFFFFF;
 		for (i = 0; i < 2; i++)
 		{
-			s16 score;
 			if ((D_80031CE4_328E4[i] == 1) && (func_80012E88_13A88(i) == 1U))
 			{
 				if (D_80031D28_32928[i] == 1)
 				{
-					score = (s16)(((D_80031D3C_3293C[i] * ((f32)D_80031D74_32974[D_80031D1C_3291C[i]])) + ((D_80031D44_32944[i] * (((f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D2C_3292C[i])) / D_80031D34_32934[i])) * D_80031D64_32964);
+					score = (((D_80031D3C_3293C[i] * (D_80031D74_32974[D_80031D1C_3291C[i]])) + ((D_80031D44_32944[i] * ((D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D2C_3292C[i])) / D_80031D34_32934[i])) * D_80031D64_32964);
 				}
 				else
 				{
-					score = (s16)(((f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D64_32964);
+					score = ((D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D64_32964);
 				}
-				if (score < var_s5)
+				if (score < minimumScore)
 				{
-					var_s5 = score;
-					var_s6 = i;
+					minimumScore = score;
+					selectedSlot = i;
 				}
 			}
 		}
 
-		if (var_s6 != (-1))
+		if (selectedSlot != (-1))
 		{
-			func_80013E64_14A64(var_s6);
-			return var_s6;
+			func_80013E64_14A64(selectedSlot);
+			return selectedSlot;
 		}
 		for (i = 0; i < 2; i++)
 		{
+			age = 0x7FFFFFFF;
 			if (D_8006AB18[0]->unk1C >= D_80031D20_32920[i])
 			{
-				sp48 = D_8006AB18[0]->unk1C - D_80031D20_32920[i];
+				age = D_8006AB18[0]->unk1C - D_80031D20_32920[i];
 			}
 			else if (D_8006AB18[0]->unk1C >= 0)
 			{
-				sp48 = (D_8006AB18[0]->unk1C + new_var) - D_80031D20_32920[i];
+				age = (D_8006AB18[0]->unk1C + age) - D_80031D20_32920[i];
 			}
 			else
 			{
-				sp48 = (new_var - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
+				age = (age - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
 			}
-			while (sp44 < sp48)
+			while (maximumAge < age)
 			{
-				sp44 = sp48;
-				var_s6 = i;
+				maximumAge = age;
+				selectedSlot = i;
 			}
 		}
 
-		if (var_s6 != (-1))
+		if (selectedSlot != (-1))
 		{
-			func_80013E64_14A64(var_s6);
-			return var_s6;
+			func_80013E64_14A64(selectedSlot);
+			return selectedSlot;
 		}
 		osSyncPrintf(D_800382A0_38EA0);
 	}
@@ -2494,9 +2492,6 @@ s8 func_800165EC_171EC(void)
 		osSyncPrintf(D_800382C8_38EC8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800165EC_171EC.s")
-#endif
 
 void func_80016ABC_176BC(s8 arg0) {
 	D_80031CD0_328D0[arg0] = -1;
