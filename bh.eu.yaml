@@ -52,7 +52,7 @@ segments:
       - [0xE860, c, core/E830]
       - [0xFB30, c, core/FB00]
       - [0xFDB0, c, core/FD80]
-      - [0x10A50, c, ../src.na/core/10A20]
+      - [0x10A50, c, core/10A20]
       - [0x10BF0, c, core/loader] # original src filename
       - [0x12CB0, c, core/12C80] # Sounds, Dialogue
       - [0x17F10, c, core/17EE0] # Dialogue
