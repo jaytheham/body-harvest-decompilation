@@ -7,7 +7,7 @@ const char D_80141E94_150E44[] = "nearest human %d @ %d,%d\n";				   // "nearest
 const char D_80141EB0_150E60[] = "Drone Hunter stops targeting building %d\n"; // "Drone Hunter stops targeting building %d\n"
 const f64 D_80141EE0_150E90[] = {0.9};
 const f64 D_80141EE8_150E98[] = {0.9};
-const f64 D_80141EF0_150EA0[] = {0.9};
+const ShadowGeometryConstant D_80141EF0_150EA0 = {0.9};
 const f64 D_80141EF8_150EA8[] = {65.0};
 const f64 D_80141F00_150EB0[] = {65.0};
 const f32 D_80141F08_150EB8[] = {12000.0f};
@@ -1105,24 +1105,25 @@ s32 func_8008E478_9D428(u8 arg0)
 }
 
 // CURRENT(2352)
-#ifdef NON_MATCHING
 // AI - Height-adjustment calculation for slopes
+#ifdef NON_MATCHING
 s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 {
-	AlienInstance *inst;
 	s16 sp8E;
 	s16 sp8C;
 	s16 sp8A;
-	f32 f24;
 	f32 f26;
+	f32 f24;
+	AlienInstance *inst;
+	u16 heading;
 	s16 sp78;
 	s16 sp76;
 	s16 i;
 	u8 typeIndex;
-	s32 found;
+	s16 found;
 
-	inst = &alienInstances[arg0];
 	found = 0;
+	inst = &alienInstances[arg0];
 	typeIndex = inst->typeIndex;
 
 	if (inst->unk12 == 0)
@@ -1142,30 +1143,29 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 	switch ((s16)(D_80052A8C % 3U))
 	{
 	case 0:
-		sp78 = (s16)(s32)(alienTypes[typeIndex].unk34 *
-							  ((f32)sins((u16)inst->unk6) / 32768.0) * 2 +
+		i = sins(inst->unk6);
+		heading = inst->unk6;
+		sp78 = (((f32)i / 32768.0) * alienTypes[typeIndex].unk34 * 2 +
 						  inst->unk0);
-		sp76 = (s16)(s32)(inst->unk4 - (alienTypes[typeIndex].unk34 *
-										((f32)coss((u16)inst->unk6) / 32768.0) * 2));
+		sp76 = (inst->unk4 - (((f32)coss(heading) / 32768.0) * alienTypes[typeIndex].unk34 * 2));
 		break;
 
 	case 1:
-		sp78 = inst->unk0;
-		sp76 = inst->unk4;
+		{ sp78 = inst->unk0; sp76 = inst->unk4; }
 		break;
 
 	case 2:
-		sp78 = (s16)(s32)(inst->unk0 - (alienTypes[typeIndex].unk34 *
-										((f32)sins((u16)inst->unk6) / 32768.0) * 2));
-		sp76 = (s16)(s32)(alienTypes[typeIndex].unk34 *
-							  ((f32)coss((u16)inst->unk6) / 32768.0) * 2 +
+		i = sins(inst->unk6);
+		heading = inst->unk6;
+		sp78 = (inst->unk0 - (((f32)i / 32768.0) * alienTypes[typeIndex].unk34 * 2));
+		sp76 = (((f32)coss(heading) / 32768.0) * alienTypes[typeIndex].unk34 * 2 +
 						  inst->unk4);
 		break;
 	}
 
 	for (i = (s16)arg2; i >= 0; i--)
 	{
-		func_8011E6FC_12D6AC((s16)(s32)(sp78 - (f26 * i)), (s16)(s32)(sp76 - (f24 * i)), &sp8C);
+		func_8011E6FC_12D6AC((sp78 - (f26 * i)), (sp76 - (f24 * i)), &sp8C);
 		if (sp8C < D_80222A70)
 		{
 			sp8C = (s16)D_80222A70;
@@ -1198,6 +1198,7 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008E524_9D4D4.s")
 #endif
+
 
 // AI - Vertical velocity/gravity update
 void func_8008E978_9D928(u8 arg0, s32 arg1)
@@ -1732,14 +1733,20 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 }
 
 // Current(817)
-#ifdef NON_MATCHING
 // AI - Harvester/drone AI update
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk48
+#ifdef NON_MATCHING
 void func_8008F9E4_9E994(u8 arg0)
 {
+	s8 node1;
+	s8 node2;
+	s8 node3;
+	s8 node4;
+	s16 tmpA;
+	s32 tmpB;
+	s16 sp36;
 	s32 moved = 0;
 	s32 sp24;
-	s16 sp36;
 
 	if (((alienInstances[arg0].unk0 >> 8) != (alienInstances[arg0].unk2E >> 8)) || ((alienInstances[arg0].unk4 >> 8) != (alienInstances[arg0].unk32 >> 8)))
 	{
@@ -1750,18 +1757,11 @@ void func_8008F9E4_9E994(u8 arg0)
 
 	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
 	{
-		char tmpA;
-		s32 tmpB;
-		s8 node1;
-		s8 node2;
-		s8 node3;
-		s8 node4;
-
 		node1 = D_8014DD50[alienInstances[arg0].unkC].unkC;
-		tmpA = alienInstances[arg0].unkA;
 		node2 = D_8014DD50[node1].unkD;
-		tmpB = (s16)tmpA;
+		tmpA = alienInstances[arg0].unkA;
 		node3 = D_8014DD50[node2].unkD;
+		tmpB = tmpA;
 		node4 = D_8014DD50[node3].unkD;
 		sp36 = D_8014DD50[node4].unkD;
 
@@ -1774,7 +1774,7 @@ void func_8008F9E4_9E994(u8 arg0)
 			sp24 = alienTypes[alienInstances[arg0].typeIndex].unk58;
 		}
 
-		if ((tmpB < alienInstances[arg0].unkA) || (alienInstances[arg0].unk47 & 1))
+		if ((tmpB >= alienInstances[arg0].unkA) || (alienInstances[arg0].unk47 & 1))
 		{
 			if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG))
 			{
@@ -1807,7 +1807,7 @@ void func_8008F9E4_9E994(u8 arg0)
 	}
 
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unk8);
-	alienInstances[arg0].unk8 = (s16)(s32)(alienInstances[arg0].unk8 * D_80141EF0_150EA0[0]);
+	alienInstances[arg0].unk8 = (s16)(s32)(alienInstances[arg0].unk8 * D_80141EF0_150EA0.value);
 	alienInstances[arg0].unkE += alienInstances[arg0].unk8 / 8;
 	func_8008E978_9D928(arg0, func_8008E524_9D4D4(arg0, sp24, 2));
 	func_8008EF1C_9DECC(arg0);
@@ -1906,21 +1906,23 @@ s32 func_8008FE18_9EDC8(u8 arg0)
 // CURRENT(1067)
 // AI - Calculate spawn offset from path node
 #ifdef NON_MATCHING
-s32 func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
+void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 {
-	s32 padA;
-	s32 padB;
+	s16 root;
+	s16 child;
+	s32 angle;
 	s32 x;
 	s32 y;
 	s32 z;
-	s16 angle;
+	s16 pad;
 	s16 trig;
 
-	x = D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk0 + D_8014DD50[alienInstances[arg0].unkC].unk0;
-	y = D_8014DD50[alienInstances[arg0].unkC].unk2 + D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk2;
-	z = D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unk4 + D_8014DD50[alienInstances[arg0].unkC].unk4;
-
-	angle = (u16)D_8014DD50[D_8014DD50[alienInstances[arg0].unkC].unkC].unkA;
+	root = alienInstances[arg0].unkC;
+	child = D_8014DD50[root].unkC;
+	x = D_8014DD50[root].unk0 + D_8014DD50[child].unk0;
+	y = D_8014DD50[root].unk2 + D_8014DD50[child].unk2;
+	z = D_8014DD50[root].unk4 + D_8014DD50[child].unk4;
+	angle = D_8014DD50[child].unkA;
 
 	trig = sins(angle);
 	y = (s32)(y + ((-50.0 * ((f32)coss(angle) / 32768.0)) - (D_80141EF8_150EA8[0] * ((f32)trig / 32768.0))));
@@ -2218,10 +2220,6 @@ void func_80090C14_9FBC4(u8 arg0)
 	alienInstances[arg0].unk2A = targetAngle;
 }
 
-// CURRENT(1434)
-#ifdef NON_MATCHING
-// AI - Boss/Drone King AI state machine
-// Harvester/"Drone King" behavior and attacks
 void func_80090D0C_9FCBC(u8 arg0)
 {
 	u8 typeIdx;
@@ -2234,12 +2232,13 @@ void func_80090D0C_9FCBC(u8 arg0)
 	s32 pos1;
 	s32 pos0;
 	s16 tmp;
-	s32 parentFlags;
-	s32 parentTimer;
+	s32 pad1;
+	s32 pad2;
 	AlienInstance *parent;
 	Unk8014DD50 *route;
-	s16 new_var;
-	s8 new_var2;
+	s8 node0;
+	s8 node1;
+	s8 node2;
 
 	inst = &alienInstances[arg0];
 	typeIdx = inst->typeIndex;
@@ -2248,13 +2247,11 @@ void func_80090D0C_9FCBC(u8 arg0)
 
 	parent = &alienInstances[inst->unk25];
 	inst->unk20 |= ALIEN_FLAG_TARGET_PT | (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKG);
-	parentTimer = parent->unk10_word - 1;
-	parentFlags = parent->unk20;
-	parent->unk10_word = parentTimer;
+	parent->unk10_word--;
 
-	if (((parentFlags << 11) << 4) < 0)
+	if ((parent->unk20 << 15) < 0)
 	{
-		if (parentTimer == 0)
+		if (parent->unk10_word == 0)
 		{
 			parent->unk10_word = 1;
 		}
@@ -2278,7 +2275,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 		return;
 	}
 
-	else if ((parentFlags << 0xE) < 0)
+	else if ((parent->unk20 << 0xE) < 0)
 	{
 		if (parent->unk10_word == 0)
 		{
@@ -2319,17 +2316,19 @@ void func_80090D0C_9FCBC(u8 arg0)
 
 	if ((parent->unk10_word <= 0) || ((&alienInstances[arg0])->unk47 & 1))
 	{
-		(&alienInstances[arg0])->unk20 &= ~(((ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKG) | ((long long)ALIEN_FLAG_TARGET_PT)) | ALIEN_FLAG_AWAY);
+		(&alienInstances[arg0])->unk20 &= ~(((ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKG) | ALIEN_FLAG_TARGET_PT) | ALIEN_FLAG_AWAY);
 		parent->unk10_word = 0;
-	D_8014DD50[D_8014DD50[new_var2 = D_8014DD50[D_8014DD50[typeSlot].unkC].unkD].unkD].unk2 = -4;
+	node0 = D_8014DD50[typeSlot].unkC;
+		node1 = D_8014DD50[node0].unkD;
+		node2 = D_8014DD50[node1].unkD;
+		D_8014DD50[node2].unk2 = -4;
 		return;
 	}
 
 	//if player is close enough, choose lightning attack or green poop attack based on orientation?
 	if (func_80084E54_93E04(inst, D_80052B34) < 0x2EE)
 	{
-		new_var = inst->unkE;
-		tmp = new_var - inst->unk2A;
+		tmp = inst->unkE - inst->unk2A;
 		if (tmp >= 0)
 		{
 			pad0 = tmp;
@@ -2354,9 +2353,7 @@ void func_80090D0C_9FCBC(u8 arg0)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80090D0C_9FCBC.s")
-#endif
+
 // AI - Hybrid boss/companion AI update
 // Harvester/"Drone King" behavior func - alienspecs unk48
 void func_80091220_A01D0(u8 arg0)
