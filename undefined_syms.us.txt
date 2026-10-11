@@ -6828,7 +6828,6 @@ D_80033A74_34674 = D_800330B0_33CB0 + 0x9C4;
 /* Write aliases of C sound variation counters. */
 D_80033C6C_3486C_W = D_80033C6C_3486C;
 D_80033C80_34880_W = D_80033C80_34880;
-D_80033C88_34888_W = D_80033C88_34888;
 
 /* Aliases into the portrait table and dialogue animation counter. */
 D_80034453_35053 = D_8003429C_34E9C + 0x1B7;

@@ -297,6 +297,8 @@ segments:
       - [0x3F420, .rodata, core/camera_curve]
       - [0x3F460, .rodata, core/rsp_data]
 
+      - {start: 0x40720, type: .fixed_bss, name: core/12C80, vram: 0x8006AB10}
+
       # Anchor private reference storage; PI handles occupy the gap before piacs.
       - {start: 0x40720, type: .fixed_bss, name: libultra/rotate, vram: 0x8006CA50}
       - {start: 0x40720, type: .fixed_bss, name: libultra/piacs, vram: 0x8006F0A0}

@@ -324,10 +324,7 @@ extern s8 D_80033C70_34870[];
 extern u8 D_80033C80_34880;
 extern u8 D_80033C80_34880_W; // write alias preserving the matching compiler access pattern
 extern s8 D_80033C84_34884[];
-extern u8 D_80033C88_34888;
-extern u8 D_80033C88_34888_W; // write alias preserving the matching compiler access pattern
 extern s16 D_80033C90_34890;
-extern s16 D_80033C94_34894;
 extern Float4 D_80033C9C_3489C;
 extern f32 D_80033CAC_348AC[];
 extern u8 D_80033CC0_348C0[6][250];

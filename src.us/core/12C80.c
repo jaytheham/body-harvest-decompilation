@@ -414,16 +414,6 @@ u8 D_80033C6C_3486C = 0;
 s8 D_80033C70_34870[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 u8 D_80033C80_34880 = 0;
 s8 D_80033C84_34884[] = {0, 1, 2, 3};
-u8 D_80033C88_34888 = 0;
-s32 D_80033C8C_3488C = 0;
-s16 D_80033C90_34890 = 0;
-s16 D_80033C94_34894 = -1;
-s32 D_80033C98_34898 = 0;
-
-Float4 D_80033C9C_3489C = {0.0f, 0.4f, 0.55f, 0.75f};
-f32 D_80033CAC_348AC[] = {0.0f, 0.333f, 0.666f, 1.0f};
-s32 D_80033CBC_348BC = 0;
-
 /* Read-only strings, numeric constants, and switch targets. */
 const char D_800381C0_38DC0[] = "Sounds playing";
 const char D_800381D0_38DD0[] = " ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d\n";
@@ -1150,24 +1140,24 @@ void func_800136F0_142F0(void) {
 	}
 }
 
-// CURRENT(20)
-#ifdef NON_MATCHING
-// AI - Rotates a message-queue index and prints/queues the next notification string
+/* Cycle the house music variation. The index is function-private data. */
 void func_80013720_14320(void)
 {
-  s8 sp1F;
-  if (D_8006AB88 != 0)
-  {
-	sp1F = D_80033C88_34888 % 4;
-	D_80033C88_34888_W = D_80033C88_34888 + 1;
-	osSyncPrintf(D_8003828C_38E8C, sp1F);
-	sp1F = D_80033C84_34884[sp1F] + 0x1F;
-	func_80015C94_16894(sp1F, 6);
-  }
+    static u8 D_80033C88_34888 = 0;
+    s8 index;
+
+    if (D_8006AB88 != 0) {
+        index = D_80033C88_34888 % 4;
+        D_80033C88_34888++;
+        osSyncPrintf(D_8003828C_38E8C, index);
+        index = D_80033C84_34884[index] + 0x1F;
+        func_80015C94_16894(index, 6);
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013720_14320.s")
-#endif
+
+/* Keep these definitions after the private index to preserve data order. */
+s32 D_80033C8C_3488C = 0;
+s16 D_80033C90_34890 = 0;
 
 void func_800137AC_143AC(void) {
 	func_80015C94_16894(0x24, 0xF);
@@ -1194,97 +1184,84 @@ void func_800137F0_143F0(s32 arg0) {
 void func_80013810_14410(s8 arg0) {
 }
 
-// https://decomp.me/scratch/6mw74
-// CURRENT(0) Needs bss?
-#ifdef NON_MATCHING
+/* Advance audio fades and timers, then process queued sounds. */
 void func_80013818_14418(void)
 {
-	static s16 D_8006AB14;
-  s16 var_s0;
-  f32 sp28;
-  f32 temp_f0;
-  f32 temp_f14;
-  f32 temp_f2;
-  if (D_8006AB88 == 0)
-  {
-	  return;
-  }
-	func_80017224_17E24();
-	for (var_s0 = 0; var_s0 < 2; var_s0++)
-	{
-	  if (D_80031D28_32928[var_s0] != 0)
-	  {
-		func_80016CD8_178D8((s8) var_s0);
-	  }
-	}
+    /* Reserve D_8006AB10 before the private count at D_8006AB14. */
+    static s32 soundPlayerSlot;
+    static s16 D_8006AB14;
+    static s16 D_80033C94_34894 = -1;
+    s16 slot;
+    f32 pitch;
+    f32 dx;
+    f32 dz;
+    f32 dy;
 
-	if (D_80031D4C_3294C != 0)
-	{
-	  func_80016E54_17A54();
-	}
-	if (D_80031CD4_328D4 != -1)
-	{
-	  D_80031CD4_328D4 -= 1;
-	  if (D_80031CD4_328D4 == -1)
-	  {
-		func_80013324_13F24();
-	  }
-	}
-	if ((((D_80052ACA == 0) || (D_80052ACA == 1)) || (D_80052ACA == 2)) && (gameplayMode == 1))
-	{
-	  {
-		if (D_80033C94_34894 > 0)
-		{
-		  D_80033C94_34894--;
-		}
+    if (D_8006AB88 == 0) {
+        return;
+    }
+    func_80017224_17E24();
+    for (slot = 0; slot < 2; slot++) {
+        if (D_80031D28_32928[slot] != 0) {
+            func_80016CD8_178D8(slot);
+        }
+    }
 
-		if (D_80033C94_34894 == 0)
-		{
-		  D_80033C94_34894 = -1;
-		  sp28 = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
-		  temp_f0 = (((f32) D_80052B34->unk0) / 4) - D_80047954;
-		  temp_f2 = (((f32) D_80052B34->unk2) / 4) - D_80047958;
-		  temp_f14 = (((f32) D_80052B34->unk4) / 4) - D_8004795C;
-		  func_80014A3C_1563C((s32) D_80052B34, 0x97, sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) + (temp_f14 * temp_f14)), 0, sp28);
-		}
-	  }
-	  if (((((currentLevel == 3) && (gameplayMode == 1)) && (D_80052ACA != 3)) && (D_80052B34->unk1A == 3)) && (currentControllerStates[0].button & 0x2000))
-	  {
-		func_80014A3C_1563C((s32) D_80052B34, 0x35, 0.0f, 0, -1.0f);
-	  }
-	}
-	if (D_80031CD4_328D4 != -1)
-	{
-	  D_80031CD4_328D4 -= 1;
-	  if (D_80031CD4_328D4 == -1)
-	  {
-		func_80013324_13F24();
-	  }
-	}
-	func_80013FC4_14BC4(D_8006AB10);
-	D_8006AB14 = func_80013F64_14B64();
+    if (D_80031D4C_3294C != 0) {
+        func_80016E54_17A54();
+    }
+    if (D_80031CD4_328D4 != -1U) {
+        D_80031CD4_328D4 -= 1;
+        if (D_80031CD4_328D4 == -1U) {
+            func_80013324_13F24();
+        }
+    }
+    if ((D_80052ACA == 0 || D_80052ACA == 1 || D_80052ACA == 2) && gameplayMode == 1) {
+        if (D_80033C94_34894 > 0) {
+            D_80033C94_34894--;
+        }
+        if (D_80033C94_34894 == 0) {
+            D_80033C94_34894 = -1;
+            pitch = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
+            dx = (f32)D_80052B34->unk0 / 4 - D_80047954;
+            dy = (f32)D_80052B34->unk2 / 4 - D_80047958;
+            dz = (f32)D_80052B34->unk4 / 4 - D_8004795C;
+            func_80014A3C_1563C((s32)D_80052B34, 0x97, sqrtf(dx * dx + dy * dy + dz * dz), 0, pitch);
+        }
+        if (currentLevel == 3 && gameplayMode == 1 && D_80052ACA != 3 && D_80052B34->unk1A == 3 && (currentControllerStates[0].button & 0x2000)) {
+            func_80014A3C_1563C((s32)D_80052B34, 0x35, 0.0f, 0, -1.0f);
+        }
+    }
+    if (D_80031CD4_328D4 != -1U) {
+        D_80031CD4_328D4 -= 1;
+        if (D_80031CD4_328D4 == -1U) {
+            func_80013324_13F24();
+        }
+    }
+    func_80013FC4_14BC4(D_8006AB10);
+    D_8006AB14 = func_80013F64_14B64();
 
-	if (D_8006AB14 > 0)
-	{
-	  Unk8006AA80Node *ptr;
-	  for (var_s0 = 0; var_s0 < D_8006AB14; var_s0++)
-	  {
-		ptr = func_80012720_13320();
-		if (ptr == NULL)
-		{
-		  break;
-		}
-		if ((func_80013B48_14748(ptr, D_80033C90_34890) != (-1)) && (ptr->unk0 == 0x96))
-		{
-		  D_80033C94_34894 = 1;
-		}
-	  }
+    if (D_8006AB14 > 0) {
+        Unk8006AA80Node *node;
 
-	}
+        for (slot = 0; slot < D_8006AB14; slot++) {
+            node = func_80012720_13320();
+            if (node == NULL) {
+                break;
+            }
+            if (func_80013B48_14748(node, D_80033C90_34890) != -1U && node->unk0 == 0x96) {
+                D_80033C94_34894 = 1;
+            }
+        }
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013818_14418.s")
-#endif
+
+/* These follow the function-private countdown in the data section. */
+s32 D_80033C98_34898 = 0;
+
+Float4 D_80033C9C_3489C = {0.0f, 0.4f, 0.55f, 0.75f};
+f32 D_80033CAC_348AC[] = {0.0f, 0.333f, 0.666f, 1.0f};
+s32 D_80033CBC_348BC = 0;
 
 s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1)
 {
