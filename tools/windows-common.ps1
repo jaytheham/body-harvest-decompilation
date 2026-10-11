@@ -15,7 +15,7 @@ function Get-NativePython {
             $python = (Get-Command python).Source
         }
         if (-not $python) {
-            throw 'Install 64-bit Python 3.12 (3.11.4 or newer also works) from https://www.python.org/downloads/windows/ (enable the Python launcher), then retry.'
+            throw 'Install 64-bit Python 3.12 (3.11.4 to 3.12 works) from https://www.python.org/downloads/windows/ (enable the Python launcher), then retry.'
         }
     }
     return $python
