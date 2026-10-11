@@ -56,11 +56,9 @@ SignedWord D_8013D94C_14C8FC = { 0xFF000000 };
 SignedWord D_8013D950_14C900 = { 0xFF000000 };
 SignedWord D_8013D954_14C904 = { 0xFF000000 };
 /* Ambient and directional light for indoor/no-lighting mode */
-Ambient D_8013D958_14C908 = { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } };
-Light D_8013D960_14C910 = { { { 0xFF, 0xFF, 0xFF }, 0x00, { 0xFF, 0xFF, 0xFF }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } };
+Lights1 D_8013D958_14C908 = { { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } }, { { { { 0xFF, 0xFF, 0xFF }, 0x00, { 0xFF, 0xFF, 0xFF }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } } } };
 /* Ambient and directional light for outdoor/lighting mode */
-Ambient D_8013D970_14C920 = { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } };
-Light D_8013D978_14C928 = { { { 0x80, 0x80, 0xC0 }, 0x00, { 0x80, 0x80, 0xC0 }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } };
+Lights1 D_8013D970_14C920 = { { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } }, { { { { 0x80, 0x80, 0xC0 }, 0x00, { 0x80, 0x80, 0xC0 }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } } } };
 /* Lookup table for terrain color/tile mapping */
 u8 D_8013D988_14C938[0x20] = {
 	0x32, 0x64, 0xFF, 0x64, 0xFA, 0xFF, 0x63, 0x48,
@@ -2093,17 +2091,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				continue;
 			}
 
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((arg6 * 8) + bucket) << 11)]);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
+			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
@@ -2165,17 +2153,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				continue;
 			}
 
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((arg6 * 8) + bucket) << 11)]);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
+			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
@@ -2233,17 +2211,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				continue;
 			}
 
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((arg6 * 8) + bucket) << 11)]);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
+			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
@@ -2301,17 +2269,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				continue;
 			}
 
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, &D_80224E80[(((arg6 * 8) + bucket) << 11)]);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
+			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			for (i = 0; i <= count; i++) {
 				u16 tile = (u16)sp12C.tiles[bucket][i];
@@ -2353,14 +2311,7 @@ void func_800B753C_C64EC(void) {
 		}
 	}
 
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80254E80 + 0x200);
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
-		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
-	gDPPipeSync(D_8005BB2C++);
+	gDPLoadTLUT_pal256(D_8005BB2C++, D_80254E80 + 0x200);
 	gDPLoadSync(D_8005BB2C++);
 
 	{
@@ -2384,17 +2335,7 @@ void func_800B753C_C64EC(void) {
 			continue;
 		}
 
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, D_80224E80 + (group << 11) + 0x4000);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
+		gDPLoadTextureBlock(D_8005BB2C++, D_80224E80 + (group << 11) + 0x4000, G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 		while (lineCount > 0) {
 			s16 run = lineCount;
@@ -2447,14 +2388,7 @@ void func_800B753C_C64EC(void) {
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80254E80);
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x100, G_TX_LOADTILE, 0,
-		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
-	gDPPipeSync(D_8005BB2C++);
+	gDPLoadTLUT_pal256(D_8005BB2C++, D_80254E80);
 	gDPLoadSync(D_8005BB2C++);
 
 	s16 *count = sp11C.counts;
@@ -2483,17 +2417,7 @@ void func_800B753C_C64EC(void) {
 			continue;
 		}
 
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, D_80224E80 + (group << 11));
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << G_TEXTURE_IMAGE_FRAC), (63 << G_TEXTURE_IMAGE_FRAC));
+		gDPLoadTextureBlock(D_8005BB2C++, D_80224E80 + (group << 11), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 		while (lineCount > 0) {
 			s16 run = lineCount;
@@ -3187,15 +3111,11 @@ void func_800B9DB8_C8D68(u8 arg0)
   tileSize = 4;
   if (D_801493CC != 0)
   {
-	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_8013D978_14C928, 1);
-	gSPLight(D_8005BB2C++, &D_8013D970_14C920, 2);
+	gSPSetLights1(D_8005BB2C++, D_8013D970_14C920);
   }
   else
   {
-	gSPNumLights(D_8005BB2C++, 1);
-	gSPLight(D_8005BB2C++, &D_8013D960_14C910, 1);
-	gSPLight(D_8005BB2C++, &D_8013D958_14C908, 2);
+	gSPSetLights1(D_8005BB2C++, D_8013D958_14C908);
   }
 
   firstTile[1] = map[0] / 4;
@@ -3663,17 +3583,7 @@ void func_800BB5E0_CA590(void) {
 	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0x62, 0xEF, 0xFF, 0xC8);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 1, G_ON);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, D_1003990);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-		G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0,
-		G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+	gDPLoadTextureBlock(D_8005BB2C++, D_1003990, G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_BLENDPE, G_CC_BLENDPE);
 

@@ -10,7 +10,7 @@ s32 D_8008DE08_175EC8[] = {
 };
 // AI - Interior lighting data block (contains ambient/light entries D_8008DE58, D_8008DE68, D_8008DE78)
 // plus trailing unnamed data up to 0x175F90
-u8 D_8008DE50_175F10[] = {
+InteriorLightData D_8008DE50_175F10 = { {
 	0x1E, 0x1E, 0x1E, 0x00, 0x1E, 0x1E, 0x1E, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 	0x1E, 0x0F, 0x14, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -27,7 +27,7 @@ u8 D_8008DE50_175F10[] = {
 	0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF,
 	0x00, 0x01, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00,
 	0x08, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00, 0xFF,
-};
+} };
 
 // AI - Interior special-effect entries (effect display list + enabled flag)
 Unk8008DED0Entry D_8008DED0_175F90[] = {
@@ -6575,7 +6575,7 @@ void func_80071304_1593C4(void)
 
 			D_800E661C = -D_800E661C;
 		}
-		ptr = D_8008DE50_175F10;
+		ptr = D_8008DE50_175F10.bytes;
 		ptr[8] = (s8)D_800E6618;
 		ptr[9] = 0;
 		ptr[10] = 0;
@@ -6612,7 +6612,7 @@ void func_80071304_1593C4(void)
 			var_a0_2 = 0xFF;
 		}
 	}
-	ptr = D_8008DE50_175F10;
+	ptr = D_8008DE50_175F10.bytes;
 	ptr[8] = (s8)var_a0_2;
 	ptr[9] = (s8)var_a0_2;
 	ptr[10] = (s8)var_a0_2;
@@ -6778,10 +6778,7 @@ void func_80071854_159914(void) {
 
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNX, 6);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RNY, 6);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPX, 0xFFFA);
-	gMoveWd(D_8005BB2C++, G_MW_CLIP, G_MWO_CLIP_RPY, 0xFFFA);
+	gSPClipRatio(D_8005BB2C++, FRUSTRATIO_6);
 
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
@@ -6795,11 +6792,7 @@ void func_80071854_159914(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 	gDPPipeSync(D_8005BB2C++);
-	gSPNumLights(D_8005BB2C++, 2);
-
-	gSPLight(D_8005BB2C++, (Light *)&D_8008DE58_175F18, 1);
-	gSPLight(D_8005BB2C++, (Light *)D_8008DE68_175F28, 2);
-	gSPLight(D_8005BB2C++, (Light *)D_8008DE50_175F10, 3);
+	gSPSetLights2(D_8005BB2C++, D_8008DE50_175F10.lights);
 
 	gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
@@ -8550,11 +8543,7 @@ void func_8007568C_15D74C(void) {
 				(s32)(D_800E6650.y * 65536.0f), (s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, i, 1, 0x40);
 		}
 
-		gSPNumLights(D_8005BB2C++, 2);
-
-		gSPLight(D_8005BB2C++, (Light *)&D_8008DE58_175F18, 1);
-		gSPLight(D_8005BB2C++, (Light *)D_8008DE68_175F28, 2);
-		gSPLight(D_8005BB2C++, (Light *)D_8008DE50_175F10, 3);
+		gSPSetLights2(D_8005BB2C++, D_8008DE50_175F10.lights);
 	}
 }
 #else
