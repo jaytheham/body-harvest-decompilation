@@ -1596,59 +1596,52 @@ void func_80008CA8_98A8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 #endif
 
-// CURRENT(10134)
-#ifdef NON_MATCHING
-void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
+void func_800092B8_9EB8(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u8 arg4) {
 	u8 *texture;
-	s32 spanY;
 	s32 textureSpanX;
 	s32 textureSpanY;
+	u8 *overlayTexture;
+	s16 midX;
+	s16 midY;
 	s32 stepX;
 	s32 stepY;
 
+	midX = (arg0 + arg2) >> 1;
+	midY = (arg1 + arg3) >> 1;
 	switch (arg4) {
 	case 0:
 		texture = D_1011C80;
 		textureSpanX = (arg2 - arg0) * 4;
-		spanY = arg3 - arg1;
-		textureSpanY = spanY * 4;
-		stepX = 0x400;
-		stepY = 0x400;
+		textureSpanY = (arg3 - arg1) * 4;
+		stepX = stepY = 0x400;
 		break;
 
 	case 1:
 		texture = D_1010C80;
 		textureSpanX = (arg2 - arg0) * 4;
-		spanY = arg3 - arg1;
-		textureSpanY = spanY * 4;
-		stepX = 0x400;
-		stepY = 0x400;
+		textureSpanY = (arg3 - arg1) * 4;
+		stepX = stepY = 0x400;
 		break;
 
 	case 2:
 		texture = D_1010C80;
 		textureSpanX = (arg2 - arg0) * 4;
-		spanY = arg3 - arg1;
-		textureSpanY = spanY * 4;
-		stepX = 0x400;
-		stepY = 0x400;
+		textureSpanY = (arg3 - arg1) * 4;
+		stepX = stepY = 0x400;
 		break;
 
 	case 3:
 		texture = D_1011C80;
 		textureSpanX = (arg2 - arg0) * 8;
-		spanY = arg3 - arg1;
-		textureSpanY = spanY * 8;
-		stepX = 0x800;
-		stepY = 0x800;
+		textureSpanY = (arg3 - arg1) * 8;
+		stepX = stepY = 0x800;
 		break;
 
 	default:
 		texture = D_1011C80;
-		spanY = arg3 - arg1;
 	}
 
-	if (spanY >= 0x24U) {
+	if ((arg3 - arg1) >= 0x24U) {
 		texture = D_1011C80;
 	}
 
@@ -1657,22 +1650,21 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
 	gDPLoadTextureBlock(D_8005BB2C++, texture, G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, arg0, arg1, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, arg0, arg1, stepX, stepY);
-	gDPLoadTextureBlock(D_8005BB2C++, texture + 0x400, G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), arg1, arg2, ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, textureSpanX, 0, -stepX, stepY);
-	gDPLoadTextureBlock(D_8005BB2C++, texture + 0x800, G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, arg0, ((u32)(arg1 + arg3) >> 1), ((u32)(arg0 + arg2) >> 1), arg3, G_TX_RENDERTILE, 0, textureSpanY, stepX, -stepY);
-	gDPLoadTextureBlock(D_8005BB2C++, texture + 0xC00, G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), arg2, arg3, G_TX_RENDERTILE, textureSpanX, textureSpanY, -stepX, -stepY);
+	gSPTextureRectangle(D_8005BB2C++, arg0, arg1, midX, midY, G_TX_RENDERTILE, 0, 0, stepX, stepY);
+	gDPLoadTextureBlock(D_8005BB2C++, &texture[0x400], G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gSPTextureRectangle(D_8005BB2C++, midX, arg1, arg2, midY, G_TX_RENDERTILE, textureSpanX, 0, -stepX, stepY);
+	gDPLoadTextureBlock(D_8005BB2C++, &texture[0x800], G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gSPTextureRectangle(D_8005BB2C++, arg0, midY, midX, arg3, G_TX_RENDERTILE, 0, textureSpanY, stepX, -stepY);
+	gDPLoadTextureBlock(D_8005BB2C++, &texture[0xC00], G_IM_FMT_RGBA, G_IM_SIZ_32b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gSPTextureRectangle(D_8005BB2C++, midX, midY, arg2, arg3, G_TX_RENDERTILE, textureSpanX, textureSpanY, -stepX, -stepY);
 	gDPPipeSync(D_8005BB2C++);
 
 	if ((arg4 == 2) || (arg4 == 0) || (arg4 == 3)) {
-		u8 *overlayTexture;
 
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 
-		if ((arg4 == 0) || (spanY >= 0x24U)) {
+		if ((arg4 == 0) || ((arg3 - arg1) >= 0x24U)) {
 			overlayTexture = D_1013080;
 		} else {
 			overlayTexture = D_1012C80;
@@ -1680,19 +1672,19 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		gDPLoadTextureBlock(D_8005BB2C++, overlayTexture, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gSPTextureRectangle(D_8005BB2C++, arg0, arg1, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, arg0, arg1, stepX, stepY);
-		gDPLoadTextureBlock(D_8005BB2C++, overlayTexture + 0x100, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), arg1, arg2, ((u32)(arg1 + arg3) >> 1), G_TX_RENDERTILE, textureSpanX, 0, -stepX, stepY);
-		gDPLoadTextureBlock(D_8005BB2C++, overlayTexture + 0x200, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gSPTextureRectangle(D_8005BB2C++, arg0, ((u32)(arg1 + arg3) >> 1), ((u32)(arg0 + arg2) >> 1), arg3, G_TX_RENDERTILE, 0, textureSpanY, stepX, -stepY);
-		gDPLoadTextureBlock(D_8005BB2C++, overlayTexture + 0x300, G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gSPTextureRectangle(D_8005BB2C++, ((u32)(arg0 + arg2) >> 1), ((u32)(arg1 + arg3) >> 1), arg2, arg3, G_TX_RENDERTILE, textureSpanX, textureSpanY, -stepX, -stepY);
+		gSPTextureRectangle(D_8005BB2C++, arg0, arg1, midX, midY, G_TX_RENDERTILE, 0, 0, stepX, stepY);
+		gDPLoadTextureBlock(D_8005BB2C++, &overlayTexture[0x100], G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gSPTextureRectangle(D_8005BB2C++, midX, arg1, arg2, midY, G_TX_RENDERTILE, textureSpanX, 0, -stepX, stepY);
+		gDPLoadTextureBlock(D_8005BB2C++, &overlayTexture[0x200], G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gSPTextureRectangle(D_8005BB2C++, arg0, midY, midX, arg3, G_TX_RENDERTILE, 0, textureSpanY, stepX, -stepY);
+		gDPLoadTextureBlock(D_8005BB2C++, &overlayTexture[0x300], G_IM_FMT_I, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gSPTextureRectangle(D_8005BB2C++, midX, midY, arg2, arg3, G_TX_RENDERTILE, textureSpanX, textureSpanY, -stepX, -stepY);
 		gDPPipeSync(D_8005BB2C++);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800092B8_9EB8.s")
-#endif
+
+
+
 s32 func_80009F18_AB18(s32 arg0) {
 	s32 sp1C;
 
