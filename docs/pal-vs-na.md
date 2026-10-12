@@ -19,18 +19,22 @@ are, and both builds reproduce their baserom's SHA1 exactly.
 ## Layout
 
 Same shape: identical segment order, the same overlays. The main code region is
-**0x30 bytes (12 words) longer** in PAL. Core lines up with NTSC as follows
-(word by word, ignoring address immediates):
+**0x30 bytes (12 words) longer** in PAL. Core lines up with NTSC as follows (the
+shift map `tools/pal_us_diff.py` derives; see `docs/pal-na-diff.txt`):
 
 | NTSC range | PAL offset |
 |---|---|
 | `0x001000`-`0x0079DC` | same offsets |
-| `0x0079DC`-`0x007DD8` | `func_80006DDC_79DC`, rewritten; 0x38 bytes longer in PAL |
-| `0x007DD8`-`0x00AD58` | NTSC + 0x38 |
-| `0x00AD58` onward | NTSC + 0x30 (the end of the `core/53F0` unit carries 8 bytes less nop padding in PAL) |
+| `0x0079DC`-`0x007DD8` | `func_80006DDC_79DC`, rewritten: 1020 bytes in NTSC, 1076 in PAL |
+| `0x007DD8`-`0x00AD54` | NTSC + 0x38 |
+| `0x00AD54`-`0x00AD60` | nop padding at the end of the `core/53F0` unit: 12 bytes in NTSC, 4 in PAL |
+| `0x00AD60` onward | NTSC + 0x30 |
 
-Every NTSC subsegment boundary at or after `0xAD60` shifts by +0x30; all 254
-were remapped that way and the result builds matching.
+Of the 253 core subsegment starts at or after `0xAD90` in `bh.eu.yaml`, 252 are
+the `bh.us.yaml` start plus 0x30. The exception is FD80's `.rodata`, which
+`bh.eu.yaml` starts at `0x38280`, where the object's rodata begins in the EU
+map (vram `0x80037680`); `bh.us.yaml` names `0x38260`, although the NTSC map
+places that object's rodata at vram `0x80037650` (ROM `0x38250`).
 
 RAM-side windows in `bh.eu.yaml` already agree with this shift: the gameplay
 overlay window is `0x800702A0` (NTSC `0x80070270`, +0x30) and the level window is
