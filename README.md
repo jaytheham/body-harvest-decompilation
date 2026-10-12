@@ -132,7 +132,8 @@ build/           ; build folder (not checked in)
 include/
   2.0I/          ; libultra 2.0I headers
 lib/libultra.a   ; libultra 2.0I static library
-src.{us|eu}/
+src.{us|eu}/      ; version-specific C source
+src/common/       ; C source shared by both versions
 tools/
   ido5.3_recomp/ ; static recompilation of IDO 5.3 compiler
   splat_ext      ; custom splat extensions

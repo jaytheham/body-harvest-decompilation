@@ -4,7 +4,7 @@
 
 A region port (EU) builds to the **correct size** but dozens or thousands of
 `.text` bytes differ. Every differing byte is a 32-bit **address operand**
-(`lui`+`addiu`/`ori`/`lw`/`sw`) or a **pointer-table entry** — never an
+(`lui`+`addiu`/`ori`/`lw`/`sw`) or a **pointer-table entry**, never an
 instruction opcode. The operands usually differ by a constant delta (`+/-0x30`
 for a segment that shifted between regions). Here the EU image moved a set of
 shared symbols `+0x30` relative to NA, so the shared C emitted NA targets while
@@ -39,7 +39,7 @@ an `ld -T` input and can **never** rename anything.
 Tag `eu_` any shared-C name the C **defines** OR **references** whose EU
 placement differs from the address encoded in its NA name. Port NA
 offset-aliases too. Interior labels need their own pins. `func_*` renames must be
-avoided by the generator — splat names `GLOBAL_ASM` stub files after the symbol,
+avoided by the generator: splat names `GLOBAL_ASM` stub files after the symbol,
 so do region-only function renames **by hand** and keep the C `GLOBAL_ASM`
 pragma in sync: splat parses the pragma filename, and a stub whose name differs
 from the splat symbol is misclassified as matched. A deliberate `EU_` (not `eu_`)
