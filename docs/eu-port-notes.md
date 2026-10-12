@@ -3,7 +3,7 @@
 Objective: build a byte-exact EU ROM (`baserom.eu.z64`, size `0xC00000`, SHA1
 `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`), reusing the NA source tree and
 keeping code shared between regions under `src/common/`. NA-only code lives
-under `src.na/`; EU region-specific assembly/data sits under `asm.eu/`. The port
+under `src.us/`; EU region-specific assembly/data sits under `asm.eu/`. The port
 is done when `build.eu/bh.eu.z64` reproduces `baserom.eu.z64` byte for byte,
 without regressing the NA build.
 
@@ -13,7 +13,7 @@ The EU build links cleanly, produces a ROM of exactly `0xC00000` bytes (the
 earlier `0x20` size deficit is closed; see the drift section), and is now
 **byte-exact**: `build.eu/bh.eu.z64` == `baserom.eu.z64` (SHA1
 `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`). NA remains byte-exact:
-`build.na/bh.na.z64` == `baserom.na.z64` (SHA1
+`build/bh.us.z64` == `baserom.us.z64` (SHA1
 `BBB6666F5014A473747EE4145F036D9FB25D7348`). The final 381 differing bytes
 (first at ROM `0xFB53`), all address operands from the eu_ collision
 workstream, are closed; see the log entry below.
@@ -59,7 +59,7 @@ exactly `0xC00000`.
 `45bb8000 3e860a92 3e860a92 00000000` (`6000.0f`, `0.26179939f`,
 `0.26179939f`, `0.0f`) emitted at the start of FD80's `.rodata`. EU gets these
 bytes from E830's rodata asm instead, so they must not be compiled for EU.
-Fix: wrap the three consts in `#ifdef VERSION_NA`.
+Fix: wrap the three consts in `#ifdef VERSION_US`.
 
 **(b) `core/rsp_data` `.rodata` at ROM `0x3F490` (-0x30 too small).** Cause:
 `src/common/core/rsp_data.c:72` `D_8003F060_3FC60[344]` needs 6 more `u64`
@@ -76,7 +76,7 @@ render as the raw ROM bytes `248effff27bdffe8...`).
 The two regions obtain the same four floats from different places, so the consts
 must not be compiled into the shared object for both.
 
-NA layout: `bh.na.yaml` lists `[0x38220, .rodata, core/E830]` then
+NA layout: `bh.us.yaml` lists `[0x38220, .rodata, core/E830]` then
 `[0x38260, .rodata, ../src/common/core/FD80]`. In the NA link map,
 `E830.c.o .rodata` sits at vram `0x80037620` size `0x30` (six `double
 32767.0`/`2.8` compiler literals from E830's code), and `FD80.c.o .rodata` sits
@@ -92,17 +92,17 @@ Therefore the three consts in the shared `src/common/core/FD80.c` are NA-only:
 EU gets the same bytes from E830's asm, and their presence in the shared file
 makes the EU `FD80.o .rodata` `0x10` too large.
 
-Fix (implemented): the consts are wrapped in `#ifdef VERSION_NA` inside the
-shared `FD80.c`, rather than moved to `src.na/core/E830.c`. Moving them was
+Fix (implemented): the consts are wrapped in `#ifdef VERSION_US` inside the
+shared `FD80.c`, rather than moved to `src.us/core/E830.c`. Moving them was
 tried and rejected: IDO emits all explicit global-const initializers *before*
 compiler-generated function double literals regardless of source placement, so
 `E830.c` would produce `[floats][doubles]` instead of NA's required
-`[doubles][floats]`, breaking NA. `VERSION_NA`/`VERSION_EU` are supplied by
+`[doubles][floats]`, breaking NA. `VERSION_US`/`VERSION_EU` are supplied by
 `tools/native_build.py:242` (`-DVERSION_{version}`).
 
 ## Verification
 
-NA must remain byte-exact: `build.na/bh.na.z64` == `baserom.na.z64`, SHA1
+NA must remain byte-exact: `build/bh.us.z64` == `baserom.us.z64`, SHA1
 `BBB6666F5014A473747EE4145F036D9FB25D7348`. EU byte-exact target:
 `build.eu/bh.eu.z64` == `baserom.eu.z64`. Verify with `tools/make.ps1`,
 `tools/diff.ps1`, and `tools/eu_layout_audit.py`.
@@ -116,7 +116,7 @@ NA must remain byte-exact: `build.na/bh.na.z64` == `baserom.na.z64`, SHA1
   file.
 - 2026-10-11: Fixed the `eu_` rename pipeline tool (symmetric idempotent clean +
   correct per-file block headers). Fixed the size drift: FD80 consts guarded by
-  `#ifdef VERSION_NA`, rsp_data gains 6 `u64` under `#ifdef VERSION_EU`. EU now
+  `#ifdef VERSION_US`, rsp_data gains 6 `u64` under `#ifdef VERSION_EU`. EU now
   builds to exactly `0xC00000`; NA still byte-exact. Remaining: 381 differing
   bytes in `core` (`0xFB53`-`0x32788`), all address operands from the eu_
   symbol-collision workstream.

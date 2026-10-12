@@ -29,11 +29,11 @@ The observed `or $a0,...` is that assignment, and because the destination is a *
 
 - **Do not try to reproduce this with a no-op that keeps the parameter live.** An `if (!arg0) {}` inside the body makes the counters take `$a0` and the score goes to 95; what is wanted is not `arg0` staying live, it is an **assignment to** `arg0`, which puts the copy in `arg0`'s own register.
 - **A good recorded marker does not rule the donor out.** The seam rule "a good marker means the guess already beats the donor's body" is about transplanting the donor's *whole body*; when the donor is a near-copy differing only in literals and element width, copying its **statement shape** can still convert - here 0.74 points/instruction looked "already closer". Diff the two `.s` files and read the donor's C before believing the marker.
-- Returning the parameters to `s32` and casting to the pointer type inside the body is free when the prototype is unprototyped (`include/functions.na.h` declares `void func_80076FE0_47490();`), so the donor's C can be adopted literally without touching any header.
+- Returning the parameters to `s32` and casting to the pointer type inside the body is free when the prototype is unprototyped (`include/functions.us.h` declares `void func_80076FE0_47490();`), so the donor's C can be adopted literally without touching any header.
 
 ## A named entry pointer can rotate the whole saved-register band; direct array access fixes it
 
-`func_80088B9C_170C5C` (`src.na/overlay_gameplay/inside/16AF30.c`, 152 instructions, marker `CURRENT(3176)`, re-measured **3176**). `check` reported 3176 with the **entire** instruction table carrying the `r` marker - same mnemonics, same order, same immediates, same frame (`0x40`) and the same save set (`s0..s8, ra`), but four callee-saved registers permuted in a ring:
+`func_80088B9C_170C5C` (`src.us/overlay_gameplay/inside/16AF30.c`, 152 instructions, marker `CURRENT(3176)`, re-measured **3176**). `check` reported 3176 with the **entire** instruction table carrying the `r` marker - same mnemonics, same order, same immediates, same frame (`0x40`) and the same save set (`s0..s8, ra`), but four callee-saved registers permuted in a ring:
 
 | role | target | ours |
 |---|---|---|
@@ -78,7 +78,7 @@ The whole t-band is shifted by one (`t8` where the target has `t9`), and the `a`
 
 ### Sibling variant: a base-address register choice cascades into the parameter home (delta *negative*, not +0)
 
-`func_800D8000_E6FB0` (`src.na/overlay_gameplay/outside/CFE30.c:8265`, 45 target instructions, `// CURRENT(604)` re-measured **655**), a same-file clone of the matched `func_800D76F4_E66A4`. The target holds `&D_80154318[arg3]` in **`$a0`** - the register the first argument arrived in - so it must `sw a0,0x18(sp)` at entry, `lh t9,0x1A(sp)` to recover `(s16)arg0` afterwards, and `addiu v1,a0,0xE` (the `+0xE` pointer can no longer fold into the base's own addressing once `v1` is the pointer rather than the base). Ours keeps the base in **`$v1`** and folds the `+0xE` stores: 42 instructions, delta **-3**, every opcode and home otherwise identical. Not source-shape-driven - three spellings all measured **655 / 42 instructions**: (i) the committed `u8 *temp_a0` local; (ii) a struct-pointer local (`Unk80154318Entry *entry = &D_80154318[arg3];` then `&entry->unk8` / `&entry->unkE`); (iii) direct array/union access with no base local (`D_80154318[arg3].coordinates`, `&D_80154318[arg3].unkE`). The lever must change which live value the allocator colours onto `$a0` (an empty-condition lifetime extension is the untried one).
+`func_800D8000_E6FB0` (`src.us/overlay_gameplay/outside/CFE30.c:8265`, 45 target instructions, `// CURRENT(604)` re-measured **655**), a same-file clone of the matched `func_800D76F4_E66A4`. The target holds `&D_80154318[arg3]` in **`$a0`** - the register the first argument arrived in - so it must `sw a0,0x18(sp)` at entry, `lh t9,0x1A(sp)` to recover `(s16)arg0` afterwards, and `addiu v1,a0,0xE` (the `+0xE` pointer can no longer fold into the base's own addressing once `v1` is the pointer rather than the base). Ours keeps the base in **`$v1`** and folds the `+0xE` stores: 42 instructions, delta **-3**, every opcode and home otherwise identical. Not source-shape-driven - three spellings all measured **655 / 42 instructions**: (i) the committed `u8 *temp_a0` local; (ii) a struct-pointer local (`Unk80154318Entry *entry = &D_80154318[arg3];` then `&entry->unk8` / `&entry->unkE`); (iii) direct array/union access with no base local (`D_80154318[arg3].coordinates`, `&D_80154318[arg3].unkE`). The lever must change which live value the allocator colours onto `$a0` (an empty-condition lifetime extension is the untried one).
 
 ### A partial permutation: three saved-register pointers rotated, seven rows
 
@@ -96,7 +96,7 @@ See also `hoist-vs-rematerialise-last-callee-saved-slot.md` for the sibling case
 
 ### A single caller-saved temp on a CSE'd RDP opcode constant (4 rows, score 20)
 
-`func_80081058_51508` (`src.na/overlay_gameplay/frontend/40720.c`, 142 instr, wrapped `#ifdef
+`func_80081058_51508` (`src.us/overlay_gameplay/frontend/40720.c`, 142 instr, wrapped `#ifdef
 NON_MATCHING` body with no `// CURRENT(n)` marker of its own). Unwrapped it re-measures **20**, and the
 two columns are identical for **138 of 142** rows. The four differing rows all rename ONE live value:
 the `G_LINE3D` opcode word `0xB5000000`, materialised once (`lui`) by cfe CSE across the three
@@ -115,7 +115,7 @@ swapped `vtx`/`buffer` declarations 20; `~0` for the `gSPClearGeometryMode` `-1`
 
 ## The same rotation happens in the FP bank, and there it is shape-proof
 
-`func_8007C1DC_16429C` (`src.na/overlay_gameplay/inside/158330.c`, 61 instructions, marker
+`func_8007C1DC_16429C` (`src.us/overlay_gameplay/inside/158330.c`, 61 instructions, marker
 `CURRENT(215)` stale - re-measured **265**) is a small line/segment intersection test whose
 `ins_diff -noregs` is **delta +0** with every block an encoding alias, i.e. the whole residual is
 allocation. Unlike the integer cases above, the rotation is in the **floating-point** registers, and
@@ -135,7 +135,7 @@ match the roles, do not permute the source; park as allocation.
 
 ## A per-case mask temp rotated from the switch dispatch delay slots (78 instr, score 130)
 
-`func_8007899C_160A5C` (`src.na/overlay_gameplay/inside/158330.c`, 78 instructions) is a four-case
+`func_8007899C_160A5C` (`src.us/overlay_gameplay/inside/158330.c`, 78 instructions) is a four-case
 `switch` over `D_800E66A8[arg1].unk8` that permutes the bits of `arg0` differently per case. It is a
 fresh, measured body (no `// CURRENT(n)` marker) and unwraps to **130** with `ins_diff -noregs`
 **78 = 78, delta +0** - the entire residual is register allocation. Reading the two listings
@@ -165,9 +165,9 @@ masks 210 / 1185 / 210; inline `if (arg0 & 4)` in all three cases 210; swapping 
 
 ## A named pointer is not always the lever, and a low marker is not evidence
 
-`func_802D7B68_1F0878` (`src.na/overlay_level/java/1ED9E0.c`, 209 instructions, marker
+`func_802D7B68_1F0878` (`src.us/overlay_level/java/1ED9E0.c`, 209 instructions, marker
 `CURRENT(1291)`, re-measured **1306**) and `func_802D5F28_2B8358`
-(`src.na/overlay_level/siberia/2B7100.c`, 190 instructions, marker `CURRENT(93)`, re-measured
+(`src.us/overlay_level/siberia/2B7100.c`, 190 instructions, marker `CURRENT(93)`, re-measured
 **985**) are both `ins_diff -noregs` **delta +0** with an identical instruction count, identical
 frame and identical stack homes, so both are this family. Measured levers on the java one (one
 compile each, file restored afterwards):
@@ -195,7 +195,7 @@ compile each, file restored afterwards):
 
 ## A named *intermediate* pointer is the lever when declaration order is not (482 -> 321)
 
-`func_802DAD00_2BD130` (`src.na/overlay_level/siberia/2B7100.c`, 111 instructions, marker
+`func_802DAD00_2BD130` (`src.us/overlay_level/siberia/2B7100.c`, 111 instructions, marker
 `CURRENT(674)`, re-measured **482** - the marker was stale). `ins_diff -noregs` reports 111 = 111,
 delta **+0**, and every block it lists is encoding-level (`li` vs `addiu`, `move` vs `or`,
 `jal LBL` vs `jal <addr>`). Two levers, both measured:
@@ -225,7 +225,7 @@ homes above.
 
 ## A wrapped body that does not compile has an unverifiable marker
 
-`func_802DC4D0_2BE900` (`src.na/overlay_level/siberia/2B7100.c`, 337 instructions, marker
+`func_802DC4D0_2BE900` (`src.us/overlay_level/siberia/2B7100.c`, 337 instructions, marker
 `CURRENT(4162)`) could not compile at all, so nothing could confirm its marker. The build failed on
 `func_802DB8D8_2BDD08(..., D_802E3054_2C5484)` - the parameter is `f32` and the TU declares the symbol
 `const f32[]`; the target asm reads it as `lwc1 %lo(D_802E3054_2C5484)($at)`, so the source form is
@@ -241,7 +241,7 @@ order here.
 
 ## A leading run of Gfx macro blocks rotates the whole t-band (one lever, 380 -> 360)
 
-`func_800E5044_F3FF4` (`src.na/overlay_gameplay/outside/CFE30.c`, 114 instructions, committed
+`func_800E5044_F3FF4` (`src.us/overlay_gameplay/outside/CFE30.c`, 114 instructions, committed
 wrapped at `// CURRENT(380)` - **re-measured 380**, so the marker is accurate). `ins_diff -noregs`
 reports 114 = 114, delta **+0**, and every block it lists is encoding-level (`li` vs `addiu`,
 `%hi/%lo` vs the resolved address, `jal <name>` vs `jal <addr>`), so nothing structural is left.
@@ -273,7 +273,7 @@ rows, not the band. Park as the cfe temp-bank family; the permuter is the only l
 
 ## A hoisted global-address register steals the loop counter saved register (160 floor)
 
-`func_800970C0_A6070` (`src.na/overlay_gameplay/outside/A49A0.c`, 225 instructions, no reproducible
+`func_800970C0_A6070` (`src.us/overlay_gameplay/outside/A49A0.c`, 225 instructions, no reproducible
 marker) unwraps and compiles: `allblocks -noregs` reports 225 = 225, delta **+0**, and *every* block it
 prints is encoding-level (`li` vs `addiu`, `move` vs `or`, `%hi/%lo` vs the resolved address), so the
 score of **160** is register allocation only. The two rows that set it are the hoisted base pointer and

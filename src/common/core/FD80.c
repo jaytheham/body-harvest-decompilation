@@ -13,7 +13,7 @@ s32 D_80031B84_32784 = 0;
 /* NA gets these four floats from here, immediately before the strings; the EU
    E830 rodata asm already supplies the same bytes, so EU must not emit them.
    Keep the final zero so the stack-overflow strings retain their addresses. */
-#ifdef VERSION_NA
+#ifdef VERSION_US
 const f32 D_80037650_38250[] = {6000.0f};
 const f32 D_80037654_38254[] = {0.2617993950843811f};
 const f32 D_80037658_38258[] = {0.2617993950843811f, 0.0f};

@@ -20,4 +20,4 @@ Inline both `1000.0` literals and remove their two obsolete external constant pl
 
 After these changes only stack offsets differed. An unused leading `s32 pad5C` before the spawn byte puts that byte at 0x5B, the output words at 0x54/0x50/0x4C, the normalized heading spill at 0x34, and the child-pointer spill at 0x38, with a 0x60 frame.
 
-The function diff was zero and `build.na/bh.na.z64: OK` remained true after removing redundant coordinate casts and renaming the locals.
+The function diff was zero and `build/bh.us.z64: OK` remained true after removing redundant coordinate casts and renaming the locals.

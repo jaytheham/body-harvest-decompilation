@@ -4,7 +4,7 @@ In func_800BC2F8_CB2A8, all instructions matched except the vehicle pointer imme
 
 The spawn wrapper was declared void, but a Java-level caller consumes its return value as a particle index. The wrapper calls the s32-returning particle allocator func_800DF038_EDFE8, clears its mode flag, and returns without overwriting v0. Its real return type is s32.
 
-Correct the declaration in functions.na.h and explicitly return the allocator result from the already matched wrapper:
+Correct the declaration in functions.us.h and explicitly return the allocator result from the already matched wrapper:
 
 ```c
 s32 result;

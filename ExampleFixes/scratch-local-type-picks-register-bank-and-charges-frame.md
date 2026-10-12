@@ -1,6 +1,6 @@
 # A scratch local's declared type picks the register bank, and each named local can charge 8 bytes of frame
 
-Worked on `func_802E015C_3242AC` (`src.na/overlay_level/comet/318E20.c`, 54 instructions).
+Worked on `func_802E015C_3242AC` (`src.us/overlay_level/comet/318E20.c`, 54 instructions).
 Best measured: **1800 -> 1120 -> 1055 -> 22**, where the residual 22 is only the stack frame
 (ours `addiu sp,sp,-0x38`, target `-0x30`); every instruction otherwise matches register for
 register. The two levers below are what got it there; the frame trade-off is what is left.
@@ -19,7 +19,7 @@ The guess declared `void f(VehicleInstance *vehicle)` and read `vehicle->unk1A` 
 | 0x8 | `lbu` | `*(u8 *)((u8 *)trigger + 8)` |
 | 0xC | pointer store | `*(void **)((u8 *)trigger + 12)` |
 
-That is exactly `Unk80222A78` (`structs.na.h`), the trigger struct the caller casts to before
+That is exactly `Unk80222A78` (`structs.us.h`), the trigger struct the caller casts to before
 calling `func_800AE454_BD404`. Retyping the parameter and moving to `trigger->unk8 / unk1 / unk2 /
 unk4 / unkC`: **1800 -> 1120**.
 
@@ -78,4 +78,4 @@ when the struct cannot be retyped).
 
 ## Resolution: reuse the scratch locals and pad the pointer spill
 
-Reusing the same s32 u/v locals for both initial coordinates and later azimuth differences reduces the frame from 0x38 to 0x30 while preserving all instruction ordering and registers. The remaining pointer spill is at 0x1C rather than 0x18. An unused s32 pad declared immediately after the alien pointer moves that spill to 0x18 without growing the rounded frame. Keeping the u8 index in its own block yields a complete match, verified by tools/make.ps1 reporting build.na/bh.na.z64: OK and diff score 0.
+Reusing the same s32 u/v locals for both initial coordinates and later azimuth differences reduces the frame from 0x38 to 0x30 while preserving all instruction ordering and registers. The remaining pointer spill is at 0x1C rather than 0x18. An unused s32 pad declared immediately after the alien pointer moves that spill to 0x18 without growing the rounded frame. Keeping the u8 index in its own block yields a complete match, verified by tools/make.ps1 reporting build/bh.us.z64: OK and diff score 0.

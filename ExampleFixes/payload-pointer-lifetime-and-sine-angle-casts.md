@@ -4,4 +4,4 @@
 
 The last differences were temporary registers around `sins`. Replacing `(angle << 12) & 0xFFFF` with `(u16)(angle << 12)` preserved the mask instruction but changed the compiler's temporary values and restored the target registers throughout the rest of the function.
 
-The unused twelve-byte constant snapshot can use the existing `Vec3i` type instead of a local three-word struct. Direct access to `entry->coordinates` also preserves the target code. Full ROM verification returned `build.na/bh.na.z64: OK`.
+The unused twelve-byte constant snapshot can use the existing `Vec3i` type instead of a local three-word struct. Direct access to `entry->coordinates` also preserves the target code. Full ROM verification returned `build/bh.us.z64: OK`.

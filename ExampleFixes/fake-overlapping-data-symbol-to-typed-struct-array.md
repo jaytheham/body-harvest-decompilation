@@ -42,7 +42,7 @@ byte blob compile; it does not exist as its own object in the ROM.
 Replace the two `u8` blobs with one typed array and index it as a struct:
 
 ```c
-/* includes/structs.na.h already had: typedef Unk8009E4C8 Unk8009E4C8_Row[0xD]; */
+/* includes/structs.us.h already had: typedef Unk8009E4C8 Unk8009E4C8_Row[0xD]; */
 Unk8009E4C8_Row D_8009E4C8_186588[5] = {
 	/* category 0 */
 	{
@@ -77,7 +77,7 @@ undefined reference to `D_8009E4D4_186594'
 ```
 
 Keep it alive as an absolute address symbol next to the other "overlap" symbols in
-`undefined_syms.na.txt`:
+`undefined_syms.us.txt`:
 
 ```
 /* Symbols within overlay_gameplay/inside 1648A0.c data section (addresses aliased into D_8009E4C8_186588) */
@@ -92,6 +92,6 @@ so `%hi`/`%lo` resolve to exactly the same addresses as before.
 ## Verification
 
 The whole-ROM build is the check: `.\tools\make.ps1` must still print
-`build.na/bh.na.z64: OK`. Also re-run the byte extraction over the new initializer and compare
+`build/bh.us.z64: OK`. Also re-run the byte extraction over the new initializer and compare
 the 16-byte groups against the original blob - the struct field order must reproduce the
 original byte order (`u32`, pointer, `s32`, `u8`, 3 pad bytes).

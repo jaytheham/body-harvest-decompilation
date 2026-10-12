@@ -34,6 +34,6 @@ Other necessary details:
 - Negate the divided sine before multiplying by 10.0 in the closing phase; negating the product reverses `neg.d` and `mul.d`.
 - Let the `u16` trig parameters truncate their arguments implicitly. Retain the conversion of each trig result to `f32` before the double division.
 
-After removing redundant double and animation-index casts, the function diff remained zero and the whole-ROM checksum reported `build.na/bh.na.z64: OK`.
+After removing redundant double and animation-index casts, the function diff remained zero and the whole-ROM checksum reported `build/bh.us.z64: OK`.
 
 Comet func_802DDFFC_32214C also matches this signed remainder form after masking the animation result to a byte. Reuse the now-consumed s16 arg1 parameter for the raw return and subsequent u8 conversion, and preserve a separate u8 result across the attack call. A named s32 result matched all registers but added eight bytes to the frame and shifted the coordinate array, byte spill and alien pointer. Reusing arg1 restored the exact 0x30 frame and all offsets.

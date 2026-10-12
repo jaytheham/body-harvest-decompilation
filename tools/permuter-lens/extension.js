@@ -337,7 +337,7 @@ function activate(context) {
                 const relPath = path
                     .relative(workspaceFolder.uri.fsPath, uri.fsPath)
                     .replace(/\\/g, '/');
-                // Strip first component (e.g. 'src.na/') and .c extension
+                // Strip first component (e.g. 'src.us/') and .c extension
                 const parts = relPath.split('/');
                 parts.shift();
                 const fileBase = parts.join('/').replace(/\.c$/, '');

@@ -18,4 +18,4 @@ parameter directly throughout produces an extra stack store before
 Use `&task->unk68` for the completion message instead of byte-pointer offset
 arithmetic. All other temporary values can be removed.
 
-Verified with `tools/make.ps1`: `build.na/bh.na.z64: OK`, and an exact function diff.
+Verified with `tools/make.ps1`: `build/bh.us.z64: OK`, and an exact function diff.

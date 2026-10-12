@@ -2,7 +2,7 @@
 
 Matched `func_80080B80_51030` in `frontend/40720.c` with a full ROM checksum of OK.
 
-The translation belongs at matrix offsets 0x30, 0x34, and 0x38, not the third rotation row at 0x20, 0x24, and 0x28. Declare the output parameter as a word pointer, consistent with its matrix-buffer callers, and move scratch-data declarations into `variables.na.h`.
+The translation belongs at matrix offsets 0x30, 0x34, and 0x38, not the third rotation row at 0x20, 0x24, and 0x28. Declare the output parameter as a word pointer, consistent with its matrix-buffer callers, and move scratch-data declarations into `variables.us.h`.
 
 Scale each row in two phases: multiply all three entries first, then shift all three right by eight. Interleaving multiplication and shifting or caching the products in extra locals causes IDO to forward stores, discard intermediate stores, and omit the target reloads.
 

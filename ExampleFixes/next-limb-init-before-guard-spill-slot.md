@@ -37,4 +37,4 @@ locals, so initialization placement was the decisive change.
 
 The walker and limb array use the existing `UnkF9230ShadowWalker` and
 `UnkF9230ShadowLimb` definitions; no raw pointer arithmetic is needed. The full
-ROM verification returned `build.na/bh.na.z64: OK`.
+ROM verification returned `build/bh.us.z64: OK`.

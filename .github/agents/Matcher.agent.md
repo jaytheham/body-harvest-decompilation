@@ -15,11 +15,11 @@ C89 code, compiler IDO 5.3 -O2 -mips2 -32.
 
 ## Project Structure
 
-- `asm.na/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm.na/matchings`: Readonly - target assembly of matched functions.
-- `src.na/`: C source files.
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of matched functions.
+- `src.us/`: C source files.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
-- `build.na/`: Readonly - compiled object files and ROM image.
+- `build/`: Readonly - compiled object files and ROM image.
 
 ## Powershell Tools
 
@@ -48,9 +48,9 @@ If a function has a switch statement and there is an associated jump table const
 
 Ignore git history, the current state is the best version of the code found so far.
 
-- Declarations of global symbols must go in `include/variables.na.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.na.h`.
-- Add or update declarations for any called functions in `include/functions.na.h`.
+- Declarations of global symbols must go in `include/variables.us.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
+- Add or update declarations for any called functions in `include/functions.us.h`.
 - Important: Replace all pointer arithmetic with struct/array access!
 - Remove unnecessary casts.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
@@ -59,7 +59,7 @@ Ignore git history, the current state is the best version of the code found so f
 
 `/ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases.
 
-If build returns `build.na/bh.na.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
+If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
 ## Finalize
 

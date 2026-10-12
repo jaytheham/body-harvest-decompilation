@@ -18,4 +18,4 @@ IDO commons the early read with the later tests. Removing the named local frees 
 
 Use an outer `if/else` for the successful collision and fallback paths, with a shared final zero return. Keep the two timeout cases under one success return. Separate early returns produced extra branches and a branch-likely halfword load.
 
-Verified with `tools/make.ps1`: `build.na/bh.na.z64: OK`.
+Verified with `tools/make.ps1`: `build/bh.us.z64: OK`.

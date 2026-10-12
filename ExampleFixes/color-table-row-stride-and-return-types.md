@@ -6,4 +6,4 @@ Use `u8 colors[4][3]` for the output to retain separate source and destination r
 
 Both this wrapper and `func_800DF038_EDFE8` return a signed short effect identifier. Correcting the callee declaration allowed an explicit return with no extra sign-extension instructions. Treating the wrapper as void changed already-matched callers; full ROM verification caught that despite the wrapper itself having a zero diff score.
 
-Full ROM verification returned `build.na/bh.na.z64: OK`.
+Full ROM verification returned `build/bh.us.z64: OK`.

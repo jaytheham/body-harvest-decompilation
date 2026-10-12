@@ -1,6 +1,6 @@
 # Preserve a constant floating multiply with a late conditional fold
 
-Matched `func_8007F188_4F638` in `src.na/overlay_gameplay/frontend/40720.c` with IDO 5.3, -O2 -mips2 -32.
+Matched `func_8007F188_4F638` in `src.us/overlay_gameplay/frontend/40720.c` with IDO 5.3, -O2 -mips2 -32.
 
 The final mismatch was the operand order of `mul.s f4,f12,f2`: the target multiplies one by the Z sine. Writing `1.0f * sine` removes the multiply too early. Writing `sine / 1.0f` preserves a multiply after reciprocal lowering, but places the sine first.
 
@@ -44,4 +44,4 @@ Vehicle-reset follow-up trials 33..41 did not improve 860. Moving the vehicle de
 
 Eleven additional compiled variants, plus a baseline build, leave `func_80112A98_121A48` at score 860. Reusing the unused first-path X parameter for X scores 2155, the Z parameter for Z scores 2116, and both score 3341. Explicitly caching the end cursor address in the first-path-unused word index, X parameter, or Z parameter leaves 860 unchanged. A native typed-pointer cursor comparison scores 880, so retain the existing unsigned comparison.
 
-The following cleanups individually and together retain score 860: remove explicit f64 casts of already float-converted operands (the double divisor or other double operand supplies promotion), remove explicit s16 casts on floating results assigned to short fields, and remove explicit s16 casts on coordinates assigned to short locals. Keep the f32 conversions and the unsigned hit-point conversion; those produce target instructions. Only these safe cast cleanups are retained under NON_MATCHING. A preliminary parameter-reuse edit accidentally changed a local declaration to duplicate a parameter and failed compilation; it was corrected, excluded from the valid-build count, and no stale diff was used. The final wrapped ROM verifies `build/bh.na.z64: OK`.
+The following cleanups individually and together retain score 860: remove explicit f64 casts of already float-converted operands (the double divisor or other double operand supplies promotion), remove explicit s16 casts on floating results assigned to short fields, and remove explicit s16 casts on coordinates assigned to short locals. Keep the f32 conversions and the unsigned hit-point conversion; those produce target instructions. Only these safe cast cleanups are retained under NON_MATCHING. A preliminary parameter-reuse edit accidentally changed a local declaration to duplicate a parameter and failed compilation; it was corrected, excluded from the valid-build count, and no stale diff was used. The final wrapped ROM verifies `build/bh.us.z64: OK`.

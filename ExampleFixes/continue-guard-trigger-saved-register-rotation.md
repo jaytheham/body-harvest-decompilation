@@ -1,6 +1,6 @@
 # Continue guard fixes saved-register rotation after a switch
 
-Matched `func_800AE6CC_BD67C` in `src.na/overlay_gameplay/outside/trigger.c` with IDO 5.3 -O2 after 27 attempts.
+Matched `func_800AE6CC_BD67C` in `src.us/overlay_gameplay/outside/trigger.c` with IDO 5.3 -O2 after 27 attempts.
 
 The trigger loop had identical instructions, branch layout, and stack offsets, but three loop-invariant saved registers were rotated:
 
@@ -33,7 +33,7 @@ Stack layout required declaring `u8 i` before the 16-byte trigger copy, and decl
 
 Also verify switch case numbers against the original jump table. Incorrect numbers can leave the function instruction diff unchanged while the ROM still differs in rodata. Here the existing cases needed remapping, and the placeholder jump table was removed when enabling C compilation.
 
-Validation: `tools/make.ps1` reported `build.na/bh.na.z64: OK`; `tools/diff.ps1 func_800AE6CC_BD67C func_800AEBC4_BDB74 --show-score` reported zero.
+Validation: `tools/make.ps1` reported `build/bh.us.z64: OK`; `tools/diff.ps1 func_800AE6CC_BD67C func_800AEBC4_BDB74 --show-score` reported zero.
 
 ## Dead-vehicle renderer: guarded residual after follow-up
 
@@ -48,4 +48,4 @@ One attempted for-body variant placed a decrement before block declarations and 
 
 Twenty more compiled variants of `func_80101C14_110BC4` retain the best score 110. A named scale initialized to 256 at function entry or loop entry scores 2965 for signed/unsigned halfwords and const-qualified signed word/halfword locals. Declaring a signed halfword, unsigned halfword, or signed word scale in the loop and assigning it immediately before `func_800FFD28_10ECD8` also scores 2965; assigning it immediately after that call returns to 110. The lifetime across the call, rather than scale storage width, is the distinguishing factor.
 
-Renaming the countdown, enclosing the scale/draw tail in a block, and moving vehicle/type locals to function scope in three declaration orders leave 110 unchanged. Spelling each scale expression as `0x100 - (s32)(vehicle->unk1E * 2)` also leaves 110. No candidate resolves the scale/countdown/cursor saved-register rotation, and none is retained over the simpler baseline. Restored its NON_MATCHING wrapper and verified `build.na/bh.na.z64: OK`; no files were created.
+Renaming the countdown, enclosing the scale/draw tail in a block, and moving vehicle/type locals to function scope in three declaration orders leave 110 unchanged. Spelling each scale expression as `0x100 - (s32)(vehicle->unk1E * 2)` also leaves 110. No candidate resolves the scale/countdown/cursor saved-register rotation, and none is retained over the simpler baseline. Restored its NON_MATCHING wrapper and verified `build/bh.us.z64: OK`; no files were created.

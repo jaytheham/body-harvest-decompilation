@@ -13,7 +13,7 @@ three = 3;
 ... (D_80048026 & (1 << (currentLevel * three + var_v0 + 0x1D)))
 ```
 
-`u32 three` builds the exponent as an unsigned node that does not unify with the signed `currentLevel * 3` index, so the multiply survives as `multu`. Measured on `src.na/overlay_gameplay/inside/158330.c`:
+`u32 three` builds the exponent as an unsigned node that does not unify with the signed `currentLevel * 3` index, so the multiply survives as `multu`. Measured on `src.us/overlay_gameplay/inside/158330.c`:
 
 | function | `s32 three` | `u32 three` |
 |---|---|---|
@@ -55,7 +55,7 @@ but that expansion **is** what IDO emits for `var_s2 / 4`; it is not a shape the
 var_s0 = var_s2 / 4;          /* -> bgez / sra(delay) / addiu at,src,3 / sra */
 ```
 
-Measured on `func_8009EE30_ADDE0` (`src.na/overlay_gameplay/outside/AAA70.c`, 192 instr): **823 -> 13 in one edit**. Closing the 3-instruction count deficit also realigns the whole TU tail, so the score falls far more than the instruction count suggests. How to spot it: `grep -nE ">> [0-9]+;" <file>.c` next to an `if (x < 0)` whose body shifts `(x + k)` by the same amount, with `k == (1 << shift) - 1`; the target's own `.s` confirms it (the positive-case `sra` appears in the branch's **delay slot**). Related forms seen in this repo (same class, check the target before rewriting): `/ 2` -> `sra` + `addiu 1`; `/ 8` -> `addiu 7`. Also applies to unsigned cases (`srl`), where the fixup block should be **absent** - if the target has no fixup, the operand is unsigned. Do not re-tread the residual: once the division was fixed here the residual was only 2 rows (a single `f32` local home, ours `0x80` vs the target's `0x78`); declaration permutations measured worse - swapping the two `f32` declarations **18**, `s16` first **18**, a phantom pad first **36**, last **44**, mid **44**, floats moved last **26** (baseline 13).
+Measured on `func_8009EE30_ADDE0` (`src.us/overlay_gameplay/outside/AAA70.c`, 192 instr): **823 -> 13 in one edit**. Closing the 3-instruction count deficit also realigns the whole TU tail, so the score falls far more than the instruction count suggests. How to spot it: `grep -nE ">> [0-9]+;" <file>.c` next to an `if (x < 0)` whose body shifts `(x + k)` by the same amount, with `k == (1 << shift) - 1`; the target's own `.s` confirms it (the positive-case `sra` appears in the branch's **delay slot**). Related forms seen in this repo (same class, check the target before rewriting): `/ 2` -> `sra` + `addiu 1`; `/ 8` -> `addiu 7`. Also applies to unsigned cases (`srl`), where the fixup block should be **absent** - if the target has no fixup, the operand is unsigned. Do not re-tread the residual: once the division was fixed here the residual was only 2 rows (a single `f32` local home, ours `0x80` vs the target's `0x78`); declaration permutations measured worse - swapping the two `f32` declarations **18**, `s16` first **18**, a phantom pad first **36**, last **44**, mid **44**, floats moved last **26** (baseline 13).
 
 ## Union member signedness controls CSE: store/read through the other member to kill a reload
 
@@ -85,7 +85,7 @@ D_8014DD50[sp5C].unk6 = -D_8014DD50[sp5E].unk6Unsigned;
 
 Symptom: two builds agree instruction-for-instruction (same count, delta +0, every home and register equal) apart from a handful of rows where the target reads a byte with `lbu` and ours reads it with `lb`. The score looks disproportionate to a one-opcode difference because `asm-differ` charges those rows plus the whole rest of the table.
 
-Measured case: `func_800DBA9C_EAA4C` (`overlay_gameplay/outside/CFE30.c`, 225 instructions). Re-measured baseline **800** - the recorded `/* CURRENT(2775) */` was stale in our favour. `ins_diff -noregs` gave **225 vs 225, delta +0**, and the only real rows were four `lbu` vs `lb`. The four reads were the `tc[]` texture-coordinate fields, spelled in the guess as `(s16)(D_80153BCD << 6)` / `(s16)(D_80153BCE << 6)`. Both globals are declared **`s8`** (`include/variables.na.h:2403-2404`), so `X << 6` loads **signed** (`lb`); the ROM loads them unsigned (`lbu`, then `sll ...,6`). Two options:
+Measured case: `func_800DBA9C_EAA4C` (`overlay_gameplay/outside/CFE30.c`, 225 instructions). Re-measured baseline **800** - the recorded `/* CURRENT(2775) */` was stale in our favour. `ins_diff -noregs` gave **225 vs 225, delta +0**, and the only real rows were four `lbu` vs `lb`. The four reads were the `tc[]` texture-coordinate fields, spelled in the guess as `(s16)(D_80153BCD << 6)` / `(s16)(D_80153BCE << 6)`. Both globals are declared **`s8`** (`include/variables.us.h:2403-2404`), so `X << 6` loads **signed** (`lb`); the ROM loads them unsigned (`lbu`, then `sll ...,6`). Two options:
 
 - retype the globals to `u8` - **do not**: they are shared, and the sibling `func_800DB714_EA6C4` (and this function's own colour reads) already depend on the current declaration;
 - **cast at the use site** - the spelling the already-matched same-shape twin uses: `(*(u8 *)&D_80153BCD) << 6`. Four one-line edits measured **800 -> 0**.
@@ -108,6 +108,6 @@ which IDO lowers to `negu $at,$t8` plus a shift-add chain accumulating in `$t9`.
 D_80052B48.unk4 = (s16)(-arg0->unkD * 0x154);
 ```
 
-took the score **265 -> 0** in one edit (gate PASSED, `build.na/bh.na.z64: OK`). Variants measured on that line (base 265): dropping the `(s32)` cast 265, operand flip `-0x154 * arg0->unkD` 265, `(s16)`-cast operand 265, `* -340` 265, a named `s32 t = arg0->unkD;` local 275; the cast-preserving form `(s16)(-(s32)arg0->unkD * 0x154)` also reaches **0**, so the lever is the sign's position, not the cast.
+took the score **265 -> 0** in one edit (gate PASSED, `build/bh.us.z64: OK`). Variants measured on that line (base 265): dropping the `(s32)` cast 265, operand flip `-0x154 * arg0->unkD` 265, `(s16)`-cast operand 265, `* -340` 265, a named `s32 t = arg0->unkD;` local 275; the cast-preserving form `(s16)(-(s32)arg0->unkD * 0x154)` also reaches **0**, so the lever is the sign's position, not the cast.
 
 **Rule:** when the entire residual is a temp-bank rotation and one operand of a multiply is a negative constant, move the sign onto the variable (`-x * k`) rather than the constant (`x * -k`). `$at` used as an expression destination is the signature; declaration permutations do not move it.

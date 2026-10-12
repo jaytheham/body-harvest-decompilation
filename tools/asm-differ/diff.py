@@ -530,7 +530,7 @@ def create_project_settings(settings: Dict[str, Any]) -> ProjectSettings:
         map_address_offset=settings.get(
             "map_address_offset", settings.get("ms_map_address_offset", 0)
         ),
-        build_dir=settings.get("build_dir", settings.get("mw_build_dir", "build.na/")),
+        build_dir=settings.get("build_dir", settings.get("mw_build_dir", "build/")),
         show_line_numbers_default=settings.get("show_line_numbers_default", True),
         disassemble_all=settings.get("disassemble_all", False),
         reg_categories=settings.get("reg_categories", {}),

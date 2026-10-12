@@ -1,6 +1,6 @@
 # Reuse an angle local for an earlier angle parameter
 
-Matched Siberia `func_802DF98C_2C1DBC` with IDO 5.3 `-O2 -mips2 -32`; the exact diff score was 0 and the full ROM reported `build.na/bh.na.z64: OK`.
+Matched Siberia `func_802DF98C_2C1DBC` with IDO 5.3 `-O2 -mips2 -32`; the exact diff score was 0 and the full ROM reported `build/bh.us.z64: OK`.
 
 The closest version already had the correct instructions, instruction order, stack frame and spill slots. It differed only in register allocation: the joint angle loaded into `a2` instead of `a1`, and the X coordinate loaded into `a1` instead of `a2`. A later type pointer and X coordinate also used opposite registers.
 

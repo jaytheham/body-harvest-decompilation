@@ -80,4 +80,4 @@ in `a0`/`a1`/`a3`/`t0`, matching the target exactly.
 
 ## Example
 
-`func_800F375C_10270C` in `src.na/overlay_gameplay/outside/F9230.c`
+`func_800F375C_10270C` in `src.us/overlay_gameplay/outside/F9230.c`

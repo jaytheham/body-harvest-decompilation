@@ -1,6 +1,6 @@
 # Shared array entry and branch scheduling
 
-Matched example: `func_80095530_A44E0` in `src.na/overlay_gameplay/outside/A40B0.c`.
+Matched example: `func_80095530_A44E0` in `src.us/overlay_gameplay/outside/A40B0.c`.
 
 When several branches use the same array entry, compute the entry pointer once before the conditional chain:
 

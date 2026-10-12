@@ -24,8 +24,8 @@ payload base in v1 and unsigned byte load into a0. A `u8` age temporary swapped
 those registers and changed call scheduling. The pointer-only cast from the
 payload array suffices; an intermediate integer cast is unnecessary.
 
-Validation: function diff score 0 and full ROM `build.na/bh.na.z64: OK` after moving
-the payload type into `include/structs.na.h` and cleaning the function.
+Validation: function diff score 0 and full ROM `build/bh.us.z64: OK` after moving
+the payload type into `include/structs.us.h` and cleaning the function.
 
 
 ### State and rotation halfword

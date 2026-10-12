@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [na]
+        version: [us]
 
     steps:
       - name: Checkout repository
@@ -47,7 +47,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: build
-          key: ${{ runner.os }}-${{ matrix.version }}-${{ hashFiles('src.na/**', 'asm.na/**', 'assets.na/**', 'Makefile') }}
+          key: ${{ runner.os }}-${{ matrix.version }}-${{ hashFiles('src.us/**', 'asm/**', 'assets/**', 'Makefile') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.version }}-
 
@@ -61,5 +61,5 @@ jobs:
         with:
           name: debug-build-${{ matrix.version }}
           path: |
-            build.na/bh.${{ matrix.version }}.map
-            build.na/undefined_syms.txt
+            build/bh.${{ matrix.version }}.map
+            build/undefined_syms.txt

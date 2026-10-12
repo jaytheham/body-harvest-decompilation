@@ -22,7 +22,7 @@ if (D_arr[i].unkHalf + (D_arr[i].unkCenter >> 16) < a1) continue;
 ```
 IDO determines `addu` operand order by CSE live-range length. The CSE for `center` (sra result, first in the subtraction expression) is extracted first by the optimizer and gets the *longer* live range, so it appears as the first (rs) operand in `addu`. Writing `half + center` in the upper-bound check makes the subtraction's left-to-right ordering of the first condition determine extraction order → `addu t6, t4, t0` (center first) matches target.
 
-**Full template** (see `func_8012E114_13D0C4` in `src.na/overlay_gameplay/outside/buildings.c`):
+**Full template** (see `func_8012E114_13D0C4` in `src.us/overlay_gameplay/outside/buildings.c`):
 ```c
 s32 func(s16 arg0, s16 arg1, s16 arg2) {
     s32 i;

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Build an index of normalized MIPS instructions from asm.na/matchings/ and asm.na/nonmatchings/.
+Build an index of normalized MIPS instructions from asm/matchings/ and asm/nonmatchings/.
 
 Output: asm_pattern_index.json — used by search_asm_pattern.py to find functions
 containing the same instruction sequence (ignoring registers and literal values).
@@ -115,7 +115,7 @@ def parse_asm_file(filepath: str, fname: str, category: str):
 
 
 def build_index():
-    """Walk asm.na/matchings/ and asm.na/nonmatchings/, build and save the index."""
+    """Walk asm/matchings/ and asm/nonmatchings/, build and save the index."""
     workspace_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
     matchings_dir = os.path.join(workspace_root, 'asm', 'matchings')
     nonmatchings_dir = os.path.join(workspace_root, 'asm', 'nonmatchings')

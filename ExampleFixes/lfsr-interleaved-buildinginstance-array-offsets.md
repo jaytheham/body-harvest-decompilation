@@ -4,7 +4,7 @@
 Decompiling a function that performs an identical bit-manipulation (LFSR/Xorshift) operation on multiple values within a large struct array, where the operations are interleaved in the assembly for MIPS pipeline scheduling.
 
 ## Context
-`func_802D6F4C_2B937C` in `src.na/overlay_level/siberia/2B7100.c`
+`func_802D6F4C_2B937C` in `src.us/overlay_level/siberia/2B7100.c`
 
 ## Pattern
 The transformation applied to each value `x`:

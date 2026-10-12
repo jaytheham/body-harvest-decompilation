@@ -1,6 +1,6 @@
 # Random u16 array layout and coordinate operand order
 
-Matched `func_80089200_981B0` in `src.na/overlay_gameplay/outside/884C0.c`.
+Matched `func_80089200_981B0` in `src.us/overlay_gameplay/outside/884C0.c`.
 
 Three random values survive a fourth random call. The target stores them at
 `sp+0x38`, `sp+0x3A`, and `sp+0x3C` in a `0x40` frame. Three separate `u16`
@@ -25,4 +25,4 @@ Keep the `(s32)arg1` cast on the random modulo in the initial condition:
 the target uses unsigned division for the global-plus-index side and signed
 division for the random side.
 
-Verification: `tools/make.ps1` reported `build.na/bh.na.z64: OK`.
+Verification: `tools/make.ps1` reported `build/bh.us.z64: OK`.

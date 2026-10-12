@@ -38,10 +38,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 NM = ROOT / "tools" / "windows" / "binutils" / "mips-ps2-decompals-nm.exe"
-SHARED_OBJ_DIR = ROOT / "build.na" / "src" / "common"
+SHARED_OBJ_DIR = ROOT / "build" / "src" / "common"
 SYMBOL_ADDRS_EU = ROOT / "symbol_addrs.eu.txt"
 UNDEF_SYMS_EU = ROOT / "undefined_syms.eu.txt"
-UNDEF_SYMS_NA = ROOT / "undefined_syms.na.txt"
+UNDEF_SYMS_US = ROOT / "undefined_syms.us.txt"
 ASM_EU = ROOT / "asm.eu"
 SRC_EU = ROOT / "src.eu"
 
@@ -136,7 +136,7 @@ def collect_eu_base_pins() -> dict[str, int]:
 
 def collect_na_aliases() -> dict[str, str]:
     aliases: dict[str, str] = {}
-    for line in UNDEF_SYMS_NA.read_text(encoding="utf-8").splitlines():
+    for line in UNDEF_SYMS_US.read_text(encoding="utf-8").splitlines():
         m = ALIAS_RE.match(line.strip())
         if m:
             aliases[m.group(1)] = f"{m.group(1)} = {m.group(2)} + {m.group(3)};"

@@ -1,6 +1,6 @@
 # Array-index induction reuses the header address register
 
-`validateSaveVersionAndChecksum` in `src.na/core/1050.c` initially had the correct
+`validateSaveVersionAndChecksum` in `src.us/core/1050.c` initially had the correct
 instructions but used `a2` for the header address and `a3` for the version and
 stored checksum. The target uses `v0` for both header and payload traversal,
 and `a2` for the version and stored checksum.
@@ -33,5 +33,5 @@ these operands reverses the target's `beq a0,a2` operand order for these types.
 Moving the pointer increment into the `for` update expression also changes
 loop instruction scheduling, so keep `arg0++` inside the body.
 
-Verified with `tools/make.ps1`: `build.na/bh.na.z64: OK`, and no differences from
+Verified with `tools/make.ps1`: `build/bh.us.z64: OK`, and no differences from
 `tools/diff.ps1 validateSaveVersionAndChecksum func_800016D8_22D8`.

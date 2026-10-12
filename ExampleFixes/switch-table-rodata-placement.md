@@ -17,13 +17,13 @@ IDO emits a compiled function's generated jump table after **all** declared roda
 
 So the `lw t8,%lo(jtbl)(at)` immediate can only match once the *other* rodata after it in the target is also compiler-generated - i.e. the still-unmatched function owning `jtbl_800A54AC` and the owner of the `1.2` double must be matched too. Deleting this function's placeholder does not help (still 5); it just removes 36 declared bytes. Treat a mid-rodata switch table as a batch dependency and check the ROM bytes before sinking attempts into the body.
 
-Two body fixes are required to reach the 5 at all (both cost instructions otherwise): the struct field is `unk0`, not `pad0` (`UnkFB6F8Entry`, `structs.na.h`), and the five `handler(i & 0xFF)` calls must read `handler((u8)i)` so IDO emits a single `andi a0,s0,0xFF` in the jal delay slot; `i & 0xFF` makes IDO build the mask in a fresh temp plus two `move`s for cases 1, 2 and 8 (+6 instructions). `func_80089834_1718F4` also needs a prototype in `functions.na.h` because it is defined later in the same TU.
+Two body fixes are required to reach the 5 at all (both cost instructions otherwise): the struct field is `unk0`, not `pad0` (`UnkFB6F8Entry`, `structs.us.h`), and the five `handler(i & 0xFF)` calls must read `handler((u8)i)` so IDO emits a single `andi a0,s0,0xFF` in the jal delay slot; `i & 0xFF` makes IDO build the mask in a fresh temp plus two `move`s for cases 1, 2 and 8 (+6 instructions). `func_80089834_1718F4` also needs a prototype in `functions.us.h` because it is defined later in the same TU.
 
 ## Matching instructions can still hide incorrect case labels
 
 For `func_802D4F74_18DA84`, enabling the C implementation and removing the placeholder table produced an exact instruction match, but the full ROM checksum still failed. The source assigned labels 0 through 8 to physically ordered handler blocks. The original table instead mapped those blocks to cases `0, 1, 2, 8, 3, 4, 5, 6, 7`.
 
-Relabeling the cases while preserving the order of their bodies fixed the compiler-generated table and yielded `build.na/bh.na.z64: OK`. Read the original jump table before trusting the case labels in unmatched C. Function instruction diffs compare dispatch code and handler bodies, but do not validate the table entries in rodata; the full ROM build catches this difference.
+Relabeling the cases while preserving the order of their bodies fixed the compiler-generated table and yielded `build/bh.us.z64: OK`. Read the original jump table before trusting the case labels in unmatched C. Function instruction diffs compare dispatch code and handler bodies, but do not validate the table entries in rodata; the full ROM build catches this difference.
 
 ## Second instance: a 14-case frontend dispatcher table shifted 0x760
 
@@ -51,7 +51,7 @@ second row diverged. The target-vs-ours delta (0x4C on siberia, 0x38 on 158330) 
 declared rodata block sitting between the two table addresses (the placeholder plus the doubles/floats
 that follow it), which is the positive evidence for the batch diagnosis: the generated table can only
 land at the target address once every datum between is itself compiler-generated. Confirm by summing
-the declared items in `asm.na/data/<module>/<file>.rodata.s` over that address span before spending a
+the declared items in `asm/data/<module>/<file>.rodata.s` over that address span before spending a
 body attempt. Do **not** re-tread placeholder deletion on these two.
 
 ## Fifth instance (worker B, seam run 38): the delta equals the declared block, exactly
@@ -73,7 +73,7 @@ first and appends every generated table after **all** of it, so the table's posi
 where the switch's function sits in the file. The only lever that moves it is a co-tenant datum being
 compiler-generated rather than declared, i.e. the batch dependency.
 
-Check the class **before** spending attempts: `grep -l "jtbl_" asm.na/nonmatchings/<module>/<file>/*.s`
+Check the class **before** spending attempts: `grep -l "jtbl_" asm/nonmatchings/<module>/<file>/*.s`
 lists the file's switch owners, and `CURRENT(5)` plus `diff` of the ROM bytes around the two table
 addresses over that span is the whole diagnosis. See also the same-file test: if the delta equals the
 declared items in the span, stop and batch the file's switch owners together.
@@ -125,12 +125,12 @@ The overlay linker script lays a file's sections out **consecutively** inside th
 
 ```
 _overlay_gameplay_insideSegmentTextStart = .;
-build.na/src.na/overlay_gameplay/inside/16AF30.c.o(.text);
+build/src.us/overlay_gameplay/inside/16AF30.c.o(.text);
 . = ALIGN(., 16);
 _overlay_gameplay_insideSegmentTextEnd = .;
 _overlay_gameplay_insideSegmentDataStart = .;
 overlay_gameplay_inside_16AF30_c = .;
-build.na/src.na/overlay_gameplay/inside/16AF30.c.o(.data);
+build/src.us/overlay_gameplay/inside/16AF30.c.o(.data);
 ...
 ```
 
@@ -152,8 +152,8 @@ The ROM's `0x18d030` is the string `"ieNormVecF3()  {0,0,0} -> {0,0,0}\n"`; with
 - Rebuild and compare the two builds' sections when a data-immediate row appears for no obvious reason:
 
 ```sh
-mips-linux-gnu-objdump -h build.na/src.na/<path>.c.o | grep -E 'text|rodata|data'
-python3 -c "b=open('baserom.na.z64','rb').read(); u=open('build.na/bh.na.z64','rb').read(); print(b==u, b[o:o+16].hex(), u[o:o+16].hex())"
+mips-linux-gnu-objdump -h build/src.us/<path>.c.o | grep -E 'text|rodata|data'
+python3 -c "b=open('baserom.us.z64','rb').read(); u=open('build/bh.us.z64','rb').read(); print(b==u, b[o:o+16].hex(), u[o:o+16].hex())"
 ```
 ### The residual is one duplicated load, not a source shape
 
@@ -195,7 +195,7 @@ body edits), and each confirming the arithmetic rule above:
 Both are batch dependencies - the declared items after the table address must be compiler-generated
 before the table can land (six `f64` doubles plus the next `jtbl` placeholder follow `0x800A4F08` on
 167C90; strings/doubles/floats follow `0x800A4A88` on 158330). Add both to their file's switch-owner
-batch list. Cheap triage before any body attempt: `grep -l "jtbl_" asm.na/nonmatchings/overlay_gameplay/inside/<file>/*.s`.
+batch list. Cheap triage before any body attempt: `grep -l "jtbl_" asm/nonmatchings/overlay_gameplay/inside/<file>/*.s`.
 
 ## The case count sets the table extent - empty cases are not optional
 
@@ -207,7 +207,7 @@ empty cases 5-8 (`case 5: case 6: case 7: case 8: break;`) switched IDO to the t
 score **2435 -> 210** in one edit; nothing else in that edit moved it.
 
 Two further levers on the same function: the selector must be the **struct field**
-(`switch (D_800E65BC[arg1].unkC)`, `Unk80070F7CObj`, `structs.na.h`) rather than the raw
+(`switch (D_800E65BC[arg1].unkC)`, `Unk80070F7CObj`, `structs.us.h`) rather than the raw
 `*(s16 *)((u8 *)&D_800E65BC[arg1] + 0xC)` - the typed read fixes the head's temp assignment
 (`$t6` global / `$t7` index) and took **210 -> 170**.
 

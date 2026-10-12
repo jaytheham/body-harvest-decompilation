@@ -8,4 +8,4 @@ Initialize fields in ascending memory order: both position coordinates first, th
 
 Use `for (i = allocatorIndex; i < 15; i++)` with a `u8 i`, breaking when an unused entry is found. An infinite loop with explicit masking generates a different byte-wrap schedule.
 
-Full ROM verification: `build.na/bh.na.z64: OK`; function diff: `CURRENT (0)`.
+Full ROM verification: `build/bh.us.z64: OK`; function diff: `CURRENT (0)`.

@@ -6,7 +6,7 @@ When a symbol (e.g. `func_80070270`) is used as **both** a cache-invaliation bas
 
 **Root cause:** IDO CSEs the address of a function-typed symbol across the two usages (`osInvalICache` and `func_800101F0_10DF0`), because both take the same underlying address. Declaring it as a function causes IDO to treat the derived address as a reusable value (not a rematerializable integer constant), which it spills across the intervening `jal` calls.
 
-**Fix:** Redeclare the symbol as `extern u8 func_80070270[]` in `variables.na.h` (remove the function declaration from `functions.na.h`). Then use `func_80070270` (no `&` needed — array decays to `u8*`) directly as arguments:
+**Fix:** Redeclare the symbol as `extern u8 func_80070270[]` in `variables.us.h` (remove the function declaration from `functions.us.h`). Then use `func_80070270` (no `&` needed — array decays to `u8*`) directly as arguments:
 
 ```c
 // Wrong (function pointer form — CSE spills to stack, frame 0x20):

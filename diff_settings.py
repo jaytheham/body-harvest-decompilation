@@ -2,12 +2,12 @@ import os
 
 def apply(config, args):
     basename = 'bh'
-    if os.path.exists(f'build.na/{basename}.na.z64'):
-        version = 'na'
-    elif os.path.exists(f'build.na/{basename}.eu.z64'):
+    if os.path.exists(f'build/{basename}.us.z64'):
+        version = 'us'
+    elif os.path.exists(f'build/{basename}.eu.z64'):
         version = 'eu'
     else:
-        version = 'na'
+        version = 'us'
 
     if os.name == 'nt':
         objdump = os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -16,7 +16,7 @@ def apply(config, args):
         if os.path.isfile(objdump):
             config['objdump_executable'] = objdump
 
-    # EU builds into build.eu/, US into build.na/ (native_build.py per-version
+    # EU builds into build.eu/, US into build/ (native_build.py per-version
     # layout). Without this the EU map lookup silently fails.
     build_dir = 'build.eu' if version == 'eu' else 'build'
     if not os.path.exists(f'{build_dir}/{basename}.{version}.map'):

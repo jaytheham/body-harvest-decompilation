@@ -25,4 +25,4 @@ Its useful word-sized alignment local precedes the halfword angle, preserving
 the existing coordinate and angle homes. Explicit s16 truncation on alignment
 updates preserves the original sign-extension instructions.
 
-The official full ROM build reports `build/bh.na.z64: OK`; all ROM bytes match.
+The official full ROM build reports `build/bh.us.z64: OK`; all ROM bytes match.

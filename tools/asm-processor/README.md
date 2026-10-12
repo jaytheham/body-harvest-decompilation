@@ -100,7 +100,7 @@ Tests need the environment variable `MIPS_CC` set to point to the IDO 7.1 compil
 For example if asm-processor is cloned in the same directory as [ido static recomp](https://github.com/decompals/ido-static-recomp) and the working directory is asm-processor, tests can be run using:
 
 ```sh
-MIPS_CC=../ido-static-recomp/build.na/7.1/out/cc ./run-tests.sh
+MIPS_CC=../ido-static-recomp/build/7.1/out/cc ./run-tests.sh
 ```
 
 Or using [qemu-irix](https://github.com/zeldaret/oot/releases/tag/0.1q) (don't forget `chmod u+x qemu-irix`) to emulate IDO:

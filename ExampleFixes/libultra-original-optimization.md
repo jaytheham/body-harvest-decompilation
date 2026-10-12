@@ -78,6 +78,6 @@ Keep include options joined (`-Ipath`) in both the global Makefile and
 the generated libultra overrides, matching the native Windows builder.
 With the full generated command, separated include arguments and
 `-Xfullwarn` reproduced a Linux `uld` crash while opening the final
-include directory (`src.na/libultra/audio`). The joined arguments and
+include directory (`src.us/libultra/audio`). The joined arguments and
 the reference's supported `-fullwarn` compiled the same probe successfully.
 The header enum warning is independent of this driver failure.

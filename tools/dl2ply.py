@@ -7,11 +7,11 @@ import argparse
 # Examples:
 #
 # displaylist with included vtxs
-#  python3 tools/dl2ply.py src.na/data/126F70.c out.ply
+#  python3 tools/dl2ply.py src.us/data/126F70.c out.ply
 # displaylist with external vtxs
 #  python3 tools/dl2ply.py src/data/6972D0.c out.ply --vtx src/data/D_802EEED0.inc.c
 # displaylist with raw vtxs
-#  python3 tools/dl2ply.py 51370.c out.ply --vtx assets.na/50FB0.bin --raw
+#  python3 tools/dl2ply.py 51370.c out.ply --vtx assets/50FB0.bin --raw
 
 
 # Formats info:

@@ -35,5 +35,5 @@ if ((mode = gameplayMode) != D_80047698) {
 
 The assignment expression preserves the required load scheduling while giving
 the gameplay value the required position in the equality branch. The complete
-ROM verified `build.na/bh.na.z64: OK` after removing redundant casts and unused
+ROM verified `build/bh.us.z64: OK` after removing redundant casts and unused
 locals.

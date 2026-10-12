@@ -1,6 +1,6 @@
 # Separate increments can change IDO register priority without changing arithmetic
 
-Matched function: `func_80017490_18090` in `src.na/core/17EE0.c`, IDO 5.3 `-O2 -mips2 -32`.
+Matched function: `func_80017490_18090` in `src.us/core/17EE0.c`, IDO 5.3 `-O2 -mips2 -32`.
 
 The candidate had the correct 391 instructions and 0xA0 frame, but two pairs of saved registers were reversed. The text cursor and word-buffer pointer used s3/s2 rather than s2/s3; the text offset and word length used s5/s4 rather than s4/s5.
 
@@ -49,4 +49,4 @@ drawText(format, word); wordLength = 0; finished = 1;
 
 IDO can schedule the local flag store before the call and the length reset in its delay slot. Splitting these statements across source lines changed the schedule in this function. Preserve the grouping of the matching implementation.
 
-Validation: the normal `tools/make.ps1` reported `build/bh.na.z64: OK`, and `tools/diff.ps1 func_80017490_18090 func_80017AAC_186AC --show-score` reported zero after descriptive variable renaming and indentation cleanup. Diagnostic compiler modifications were restored before this verification.
+Validation: the normal `tools/make.ps1` reported `build/bh.us.z64: OK`, and `tools/diff.ps1 func_80017490_18090 func_80017AAC_186AC --show-score` reported zero after descriptive variable renaming and indentation cleanup. Diagnostic compiler modifications were restored before this verification.

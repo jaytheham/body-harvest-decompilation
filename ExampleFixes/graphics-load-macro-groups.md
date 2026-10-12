@@ -16,7 +16,7 @@ gDPLoadBlock already clamps the load count. Explicit equivalent count-clamping a
 
 Leave custom sequences expanded when they omit synchronization, load through a different tile, use a different image width, or have line/size fields inconsistent with the helper. Do not correct those fields as part of a macro refactor.
 
-In this refactor, 128 load groups across 16 C files were replaced, including runtime dimensions and tile subregions. The standard matching build still reported `build/bh.na.z64: OK`. NON_MATCHING wrappers were retained; changes inside those wrappers were checked against the macro definitions rather than claimed to match the target assembly.
+In this refactor, 128 load groups across 16 C files were replaced, including runtime dimensions and tile subregions. The standard matching build still reported `build/bh.us.z64: OK`. NON_MATCHING wrappers were retained; changes inside those wrappers were checked against the macro definitions rather than claimed to match the target assembly.
 
 ## Other composite graphics macros
 
@@ -25,7 +25,7 @@ A subsequent pass replaced 40 more groups: seven gSPClipRatio, eighteen gSPLight
 - gSPClipRatio takes a token such as FRUSTRATIO_4, because it concatenates that token with FR_NEG_ and FR_POS_.
 - gSPLightColor similarly takes LIGHT_1 or LIGHT_2 rather than a numeric light index.
 - gSPLookAt expects two consecutive 16-byte Light entries. Recover LookAt fields in structs instead of retaining offsets into padding.
-- gSPSetLightsN expects an 8-byte Ambient followed by N 16-byte Light entries. Adjacent standalone data definitions can be combined into LightsN without changing their bytes. Preserve aliases in undefined_syms.na.txt for removed member symbols still referenced by NON_MATCHING assembly.
+- gSPSetLightsN expects an 8-byte Ambient followed by N 16-byte Light entries. Adjacent standalone data definitions can be combined into LightsN without changing their bytes. Preserve aliases in undefined_syms.us.txt for removed member symbols still referenced by NON_MATCHING assembly.
 - For an existing blob containing lighting and trailing data, a union of its original byte array and LightsN provides typed access without changing the initializer or storage size.
 
 The remaining LookAtX/LookAtY pair in outside/884C0 uses addresses 0x8013BD40 and 0x8013BD38, respectively. This is not the layout expected by gSPLookAt; leave it unchanged. The frontend light-loading loop also uses a runtime count and 16-byte array slots, so it cannot directly use the fixed-count LightsN helpers.

@@ -18,4 +18,4 @@ This change also fixed scheduling earlier in the function: the initial table byt
 
 Stack placement: declaring the table pointer before the three coordinate output words, instead of inside the effect block after those words, moved the outputs to 0x64/0x60/0x5C and the normalized sine to 0x58. Unused halfword padding and a word retained the 0x98 frame and array at 0x84. The signed-byte velocity spills as a word at 0x4C because it is passed repeatedly as a promoted argument.
 
-Verification: normal tools/make.ps1 reported build.na/bh.na.z64: OK, including after removing redundant conversion casts and consolidating unused halfword locals into padding.
+Verification: normal tools/make.ps1 reported build/bh.us.z64: OK, including after removing redundant conversion casts and consolidating unused halfword locals into padding.

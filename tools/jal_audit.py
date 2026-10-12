@@ -45,7 +45,7 @@ ROOT = dc.ROOT
 
 def listing_extents(version, functions):
     """``{name: size}`` from the listings, exact per function."""
-    asm_root = ROOT / ("asm.eu" if version == "eu" else "asm.na")
+    asm_root = ROOT / ("asm.eu" if version == "eu" else "asm")
     out = {}
     for sub in ("matchings", "nonmatchings"):
         base = asm_root / sub
@@ -64,7 +64,7 @@ def call_table(version):
     ``callee_name`` is ``None`` when the target carries no symbol. ``exact`` is
     True when the extent came from a listing rather than the map.
     """
-    build = ROOT / ("build.eu/bh.eu.map" if version == "eu" else "build.na/bh.na.map")
+    build = ROOT / ("build.eu/bh.eu.map" if version == "eu" else "build/bh.us.map")
     functions, segments = dc.parse_map(build, version)
     rom = dc.read_rom(version)
     seg_table = {name: (rom_start, size, vram_start)
@@ -117,7 +117,7 @@ def ntsc_name_of(rom, functions):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--version", choices=("na", "eu", "both"), default="both")
+    ap.add_argument("--version", choices=("us", "eu", "both"), default="both")
     ap.add_argument("--unresolved", action="store_true",
                     help="list every jal target that has no symbol")
     ap.add_argument("--cross", action="store_true",
@@ -126,7 +126,7 @@ def main():
     ap.add_argument("--write", metavar="PATH", help="write the report here")
     args = ap.parse_args()
 
-    versions = ("na", "eu") if args.version == "both" else (args.version,)
+    versions = ("us", "eu") if args.version == "both" else (args.version,)
     tables = {v: call_table(v) for v in versions}
 
     lines = ["# Call audit", ""]
@@ -181,7 +181,7 @@ def main():
             lines.append("")
 
     if args.cross:
-        if "na" not in tables or "eu" not in tables:
+        if "us" not in tables or "eu" not in tables:
             ap.error("--cross needs both versions, so do not pass --version")
 
         # Restricted to core, where the shift is a documented single insertion
@@ -199,8 +199,8 @@ def main():
                 return None
             return eu_rom - SHIFT if eu_rom >= INSERT else eu_rom
 
-        ntsc_functions, ntsc_segments = dc.parse_map(ROOT / "build.na/bh.na.map", "na")
-        ntsc_by_rom = {f.rom: f.name for f in ntsc_functions.values()
+        us_functions, us_segments = dc.parse_map(ROOT / "build/bh.us.map", "us")
+        ntsc_by_rom = {f.rom: f.name for f in us_functions.values()
                        if f.segment == "core"}
         eu_functions, eu_segments = dc.parse_map(ROOT / "build.eu/bh.eu.map", "eu")
 
@@ -211,7 +211,7 @@ def main():
                 continue
             ntsc_rom = to_ntsc_rom(eu_rom)
             ntsc_name = ntsc_by_rom.get(ntsc_rom)
-            if not ntsc_name or ntsc_name not in tables["na"]:
+            if not ntsc_name or ntsc_name not in tables["us"]:
                 continue
             compared += 1
 
@@ -229,12 +229,12 @@ def main():
             # shifted offset within it looks like - is not reported as a
             # different callee.
             def names_of(roms):
-                return {ntsc_name_of(r, ntsc_functions) for r in roms}
+                return {ntsc_name_of(r, us_functions) for r in roms}
 
             euc = names_of({to_ntsc_rom(r) for r in callee_roms(
                 tables["eu"], eu_name, eu_segments)
                 if to_ntsc_rom(r) is not None})
-            ntc = names_of(callee_roms(tables["na"], ntsc_name, ntsc_segments))
+            ntc = names_of(callee_roms(tables["us"], ntsc_name, us_segments))
             only_eu = sorted(euc - ntc)
             only_ntsc = sorted(ntc - euc)
             if only_eu or only_ntsc:

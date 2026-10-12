@@ -1,6 +1,6 @@
 # Alien gravity: absolute speed and narrowing before negation
 
-Matched `func_8008E978_9D928` in `src.na/overlay_gameplay/outside/9BFF0.c` with an exact assembly diff and `build.na/bh.na.z64: OK` using IDO 5.3 `-O2 -mips2 -32`.
+Matched `func_8008E978_9D928` in `src.us/overlay_gameplay/outside/9BFF0.c` with an exact assembly diff and `build/bh.us.z64: OK` using IDO 5.3 `-O2 -mips2 -32`.
 
 The speed amplitude is the larger of the signed speed and its negation, followed by an independent minimum clamp:
 
@@ -51,4 +51,4 @@ slot but moves the two halfwords and airborne up four bytes. Keeping the
 named `f64 factor` also preserves floating-point operand/register ordering;
 inlining the clamp ternaries into the multiplication changed that ordering.
 
-Verified with an exact function diff and `build.na/bh.na.z64: OK`.
+Verified with an exact function diff and `build/bh.us.z64: OK`.

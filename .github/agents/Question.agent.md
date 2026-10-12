@@ -14,11 +14,11 @@ The compiler used is IDO 5.3 -O2 -mips2 -32.
 
 ## Project Structure
 
-- `asm.na/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm.na/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
-- `src.na/`: C source files.
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
+- `src.us/`: C source files.
 - `include/`: Header files for variables, functions, and structs.
-- `build.na/`: Readonly - compiled object files and the final ROM image.
+- `build/`: Readonly - compiled object files and the final ROM image.
 
 File `DecompHints.md` contains general information about IDO decompilation patterns.
 

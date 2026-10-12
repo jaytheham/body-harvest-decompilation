@@ -1,8 +1,8 @@
 # PAL (EU) versus NA (US) ROM differences
 
-Decomp reference. Everything here is measured against `baserom.na.z64` and
+Decomp reference. Everything here is measured against `baserom.us.z64` and
 `baserom.eu.z64` in this repository, either by hash, by direct comparison, or by
-`tools/pal_na_diff.py`. Anything not verified is listed as open at the end.
+`tools/pal_us_diff.py`. Anything not verified is listed as open at the end.
 
 ## Identity
 
@@ -102,7 +102,7 @@ verbatim at whatever alignment it lands on.
 
 ## Which functions differ
 
-`python tools/pal_na_diff.py` splits the NTSC ROM with splat to enumerate its
+`python tools/pal_us_diff.py` splits the NTSC ROM with splat to enumerate its
 functions, then compares each against PAL. Current result over 682 NTSC core
 functions:
 
@@ -157,7 +157,7 @@ third yaml element verbatim, so a traversing name reaches across trees. Tested
 in `bh.eu.yaml`:
 
 ```yaml
-- [0x1050, c, ../src.na/core/1050]     # resolves to src.na/core/1050.c
+- [0x1050, c, ../src.us/core/1050]     # resolves to src.us/core/1050.c
 ```
 
 The extract and compile both resolve the file correctly. Nothing in splat needs
@@ -170,12 +170,12 @@ would be tidier than `..` paths in the config.
 it still fails to compile for EU:
 
 ```
-cfe: Error: src.na/core/10A20.c, line 27: '__osSiAccessQueue' undefined
-cfe: Error: src.na/core/10A20.c, line 27: 'siacs_bss_0000' undefined
-cfe: Error: src.na/core/10A20.c, line 40: 'D_80068038' undefined
+cfe: Error: src.us/core/10A20.c, line 27: '__osSiAccessQueue' undefined
+cfe: Error: src.us/core/10A20.c, line 27: 'siacs_bss_0000' undefined
+cfe: Error: src.us/core/10A20.c, line 40: 'D_80068038' undefined
 ```
 
-All three are declared in `symbol_addrs.na.txt` and none is in the EU symbol
+All three are declared in `symbol_addrs.us.txt` and none is in the EU symbol
 files. `10A20.c` is a libultra caller, and EU carries libultra as handwritten
 asm rather than C, so EU's build never needed those symbols. **The porting work
 is making the EU symbol tables carry everything a shared NA body references** —
@@ -201,7 +201,7 @@ For a file with stubs, generate the EU copy rather than sharing it:
 - otherwise emit a `GLOBAL_ASM` pragma pointing at that function's EU asm
 
 The EU asm file name is not NA's name: it embeds EU's address, so a function
-past the `0x7E04` insert point is named for its EU offset. `tools/pal_na_diff.py`
+past the `0x7E04` insert point is named for its EU offset. `tools/pal_us_diff.py`
 already computes exactly this NA-to-EU mapping by overlap, which is what the
 `DIFF` marker block in `src.eu/core/53F0.c` is derived from. The generation has
 to be a tool rather than hand-copied, or the trees drift as NA decompiles more.
@@ -258,7 +258,7 @@ yet. Still open:
 - Function comparisons must not be keyed on `symbol_addrs`. Its `type:func`
   entries number about 267 and none fall in the game-code region, so a
   symbol-keyed comparison reports "nothing differs" while missing every real
-  difference. Use splat's detection instead, as `tools/pal_na_diff.py` does.
+  difference. Use splat's detection instead, as `tools/pal_us_diff.py` does.
 - splat derives `bh.ld` and `undefined_syms_auto.txt` from the shared
   `basename`, so they are configured per version (`ld_script_path`,
   `undefined_syms_auto_path`) in `bh.eu.yaml`. Without this, extracting EU

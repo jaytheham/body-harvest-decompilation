@@ -1,6 +1,6 @@
 # Two-case switch and named selector fix register rotation and stack layout
 
-Matched `func_80018D7C_1997C` in `src.na/core/12C80.c` with IDO 5.3 -O2.
+Matched `func_80018D7C_1997C` in `src.us/core/12C80.c` with IDO 5.3 -O2.
 
 Nested `if (character != 0x25) { if (character == 0x26) { ... } } else { ... }`
 produced the correct instruction sequence and stack layout, but later temporary
@@ -24,4 +24,4 @@ Keep subsequent parsing calls assigned directly to the global result. Reusing
 `character` for their return values moved `li v1,1` before the result store,
 creating an instruction-order mismatch.
 
-Final assembly diff score: 0. Full ROM verification: `build.na/bh.na.z64: OK`.
+Final assembly diff score: 0. Full ROM verification: `build/bh.us.z64: OK`.

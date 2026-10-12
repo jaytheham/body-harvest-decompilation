@@ -2,7 +2,7 @@
 """
 progress.py — Body Harvest decompilation progress tracker.
 
-Walks src.na/**/*.c, counts matched / NON_MATCHING / GLOBAL_ASM functions
+Walks src.us/**/*.c, counts matched / NON_MATCHING / GLOBAL_ASM functions
 per file and segment, reads git log for history, and emits progress.json.
 
 Usage:
@@ -41,7 +41,7 @@ def parse_args():
     p.add_argument(
         "--verify-with-asm",
         action="store_true",
-        help="Compare counted totals with asm.na/matchings + asm.na/nonmatchings .s totals per file",
+        help="Compare counted totals with asm/matchings + asm/nonmatchings .s totals per file",
     )
     return p.parse_args()
 
@@ -289,11 +289,11 @@ def build_history(cwd: str, src_dir: Path) -> list:
 def main():
     args = parse_args()
     repo_root = os.path.abspath(args.repo_root)
-    src_dir = Path(repo_root) / "src.na"
+    src_dir = Path(repo_root) / "src.us"
     verify_mode = args.verify_with_asm
 
     if not src_dir.is_dir():
-        print(f"ERROR: src.na not found at {src_dir}", file=sys.stderr)
+        print(f"ERROR: src.us not found at {src_dir}", file=sys.stderr)
         sys.exit(1)
 
     print("Scanning source files...", file=sys.stderr)
@@ -326,7 +326,7 @@ def main():
 
         total_f = counts["total"]
         files_data.append({
-            "path": rel.replace("src.na/", ""),
+            "path": rel.replace("src.us/", ""),
             "segment": seg,
             "matched": counts["matched"],
             "non_matching": counts["non_matching"],

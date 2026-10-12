@@ -1,6 +1,6 @@
 # Named trig and call results remove phantom stack temporaries
 
-Matched `func_802DDF50_25D690` in `src.na/overlay_level/america/254410.c`, diff score 0 and full ROM checksum OK.
+Matched `func_802DDF50_25D690` in `src.us/overlay_level/america/254410.c`, diff score 0 and full ROM checksum OK.
 
 The initial C already reproduced the instruction sequence. Reorder its declarations to put the first s16 at the frame top, the distance-result word at 0x74, two padding words before the two floats, and the player pointer before the type-index s16. Inline the repeated coordinate differences in the squared-distance expression; IDO still computes them once in v0/v1.
 

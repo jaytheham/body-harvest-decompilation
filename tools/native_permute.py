@@ -39,8 +39,8 @@ def import_function(args):
     def commands(root_dir, c_file, make_flags, build_system):
         if make_flags:
             raise ValueError("Native import does not accept Make flags")
-        flags = "-c -G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_NA -woff 649,838 -O2 -mips2 -32".split()
-        flags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc", "assets", "src.na", "src.na/libultra/audio")]
+        flags = "-c -G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_US -woff 649,838 -O2 -mips2 -32".split()
+        flags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc", "assets", "src.us", "src.us/libultra/audio")]
         return ([ (native_build.CACHE / "ido/cc.exe").as_posix(), *flags ],
                 [(native_build.CACHE / "binutils/mips-ps2-decompals-as.exe").as_posix(),
                  "-EB", "-mtune=vr4300", "-march=vr4300", "-mabi=32", "-I", "include"])

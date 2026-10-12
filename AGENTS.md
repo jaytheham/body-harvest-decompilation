@@ -5,11 +5,11 @@ You will be tasked with an existing C function to modify iteratively until it pr
 
 ## Project Structure
 
-- `asm.na/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm.na/matchings`: Readonly - target assembly of matched functions.
-- `src.na/`: C source files.
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of matched functions.
+- `src.us/`: C source files.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
-- `build.na/`: Readonly - compiled object files and the built ROM image.
+- `build/`: Readonly - compiled object files and the built ROM image.
 
 ## Powershell Tools
 
@@ -43,9 +43,9 @@ The unmatched code in local master is the best known state, there are no other b
 
 If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are placeholders that make the rodata build correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 
-- Declarations of data symbols must go in `include/variables.na.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.na.h`.
-- Add or update declarations for any called functions in `include/functions.na.h`.
+- Declarations of data symbols must go in `include/variables.us.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
+- Add or update declarations for any called functions in `include/functions.us.h`.
 - Important: Replace all pointer math with struct/array access!
 - Remove unnecessary casts.
 - Remove excessive temporary variables.
@@ -55,7 +55,7 @@ If a function has a switch statement and there is an associated jump table const
 `ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases. Also `DecompHints.md`
 
 If working on multiple functions, make at least 20 attempts to match the current function before moving on.
-If build returns `build.na/bh.na.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
+If build returns `build/bh.us.z64: OK` the function is matched and you can stop work. If you see `FAILED` the current assembly does not match the target, continue iterating.
 
 Be careful when you make changes not to accidently apply those changes to other parts of the file.
 

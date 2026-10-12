@@ -40,4 +40,4 @@ The node's raw offset stores can be represented by `s16 unk18` at
 `0x18`, two padding bytes at `0x1A`, and `f32 unk1C` at `0x1C`, keeping
 the node size `0x38` and allowing typed field access.
 
-Verified with the full ROM build: `build.na/bh.na.z64: OK`.
+Verified with the full ROM build: `build/bh.us.z64: OK`.

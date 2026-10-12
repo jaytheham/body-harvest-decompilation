@@ -275,7 +275,7 @@ def main():
     parser = argparse.ArgumentParser(description='Search for similar assembly in reference N64 repos')
     parser.add_argument('--offset', required=True, help='ROM file offset in hex (e.g., 0x16B0D4)')
     parser.add_argument('--size', required=True, help='Byte count in hex (e.g., 0x7C)')
-    parser.add_argument('--rom', default=None, help='Path to BH baserom.z64 (default: baserom.na.z64)')
+    parser.add_argument('--rom', default=None, help='Path to BH baserom.z64 (default: baserom.us.z64)')
     parser.add_argument('--index', default=None, help='Path to reference index JSON')
     parser.add_argument('--threshold', type=float, default=0.8, help='Minimum similarity (0.0-1.0)')
     parser.add_argument('--max-results', type=int, default=4, help='Max results to show')
@@ -291,7 +291,7 @@ def main():
     workspace_root = os.path.abspath(os.path.join(script_dir, '..'))
 
     index_path = args.index or os.path.join(workspace_root, 'reference_index.json')
-    rom_path = args.rom or os.path.join(workspace_root, 'baserom.na.z64')
+    rom_path = args.rom or os.path.join(workspace_root, 'baserom.us.z64')
 
     if not os.path.exists(rom_path):
         print(f"Error: ROM not found at {rom_path}")

@@ -4,4 +4,4 @@ In frontend func_80076FE0_47490, four do/while loops copied the correct framebuf
 
 Changing all loops to the same form was unnecessary. Test each nested loop independently when the instruction sequence already matches. Explicit array accesses (dst[0] = src[0], followed by advancing each pointer with &array[1]) preserved the exact copy instructions. A typed function declaration also preserved the full ROM checksum.
 
-Verified with diff score 0 and uild/bh.na.z64: OK.
+Verified with diff score 0 and uild/bh.us.z64: OK.

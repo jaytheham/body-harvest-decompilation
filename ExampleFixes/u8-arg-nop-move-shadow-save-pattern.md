@@ -37,4 +37,4 @@ parameters arg2 and arg3 are color components (r, g) stored to `Vtx.v.cn[0]` and
 - `gSPVertex` with physical address: use `(Vtx *)((s32)D_8005BB34 + 0x80000000)` (addition)
   to get `addu` instruction matching target; OR (`| 0x80000000`) generates `or` instruction.
 - `u8 alpha = 0xFF` as local variable causes IDO to precompute `li t4, 0xff` once and reuse.
-- `extern s16 D_800313E4_31FE4;` needed in `include/variables.na.h`.
+- `extern s16 D_800313E4_31FE4;` needed in `include/variables.us.h`.

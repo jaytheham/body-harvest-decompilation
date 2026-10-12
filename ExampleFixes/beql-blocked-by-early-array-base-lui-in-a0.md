@@ -24,7 +24,7 @@ In the target, `at` is used for the array base (`lui at + addu at + lb a0, offse
 
 ```c
 // undefined_syms_auto.txt: D_80033C6C_W = 0x80033C6C;
-// variables.na.h: extern u8 D_80033C6C_W;
+// variables.us.h: extern u8 D_80033C6C_W;
 
 if (D_80031CA4 != 3) {
     s8 temp_a0 = D_80033C5C_3485C[(s8)(D_80033C6C_3486C % 15)];

@@ -3,7 +3,7 @@
 // --- PAL differs from NTSC here ---
 // These functions are rewritten in PAL. Do NOT copy the NTSC body;
 // they need their own decomp. Regenerate with:
-//     python tools/pal_na_diff.py --mark
+//     python tools/pal_us_diff.py --mark
 // NTSC rom / PAL rom / bytes / name
 //   0x0079DC  0x0079DC   1020  func_80006DDC_79DC
 //   0x007DD8  0x007DD8    148  func_800071D8_7DD8

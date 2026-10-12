@@ -12,7 +12,7 @@ Symptom: `bh.sh check` reports a score in the thousands while `ins_diff.py -nore
 
 Count it directly, no differ needed:
 
-    mips-linux-gnu-objdump -d --no-show-raw-insn build.na/src.na/<rel>.c.o \
+    mips-linux-gnu-objdump -d --no-show-raw-insn build/src.us/<rel>.c.o \
       | awk '/<func>:/{f=1;next} f&&/^$/{exit} f' | grep -c 'lui\s*at,0x0'
 
 Measured case: `func_800A2260_B1210` (`overlay_gameplay/outside/AAA70.c`, target 522 instr / ours 552, delta **+30**, asm-differ **9730**). Ours emits **31** `lui $at,0x0` and the base register `$a1` is dead after instruction 161; the target builds `&D_8014F618` once into `$v1` and keeps it for all ~31 accesses. The +30 is exactly those extra `lui`s - not a logic or frame difference (frame `0x70` agrees). **What did not work (measured):** spelling the same accesses as an f32 pointer index (`f32 *hp = (f32 *)&D_8014F618; hp[0] ... hp[8]`) measured **9760** (up from 9730) and still **31** `lui $at` - the access spelling is not the lever; cfe folds the constant address either way.
@@ -61,7 +61,7 @@ Measured on `func_802D8D68_1F1A78` (java `1ED9E0.c`, 315 instructions, 1F1A78):
 The C read the **literal** `4000.0`; IDO emits a float/double literal as a literal-pool entry and places it wherever the translation unit's rodata lands (`0x802E0FA8` here - beside `D_802E0FA0_1F9CB0`). The original source instead read the file's **own declared constant**:
 
 ```c
-const f64 D_802E0F58_1F9C68[] = { 4000.0 };   /* 1ED9E0.c:341, extern in variables.na.h */
+const f64 D_802E0F58_1F9C68[] = { 4000.0 };   /* 1ED9E0.c:341, extern in variables.us.h */
 ```
 
 so the target's instruction names that symbol and lands on its mapped address. Writing `D_802E0F58_1F9C68[0]` in place of the literal moved the score **5 -> 0** (one edit, gate PASSED). **Rule.** When a small score is exactly one `%lo(...)` difference inside an otherwise identical function, and the translation unit declares a constant holding that same value, replace the literal with a read of the declared symbol (`X[0]` for the `f64[]` / array form used here). Do **not** try to move the pool entry: the pool address is a function of the whole TU's rodata layout, and the declared symbol already sits at the ROM's address. Where it comes from: a sibling-overlay donor body uses a literal where the target overlay reads its own constant, so a mechanical transplant carries this one row with it (here the greece donor's slot is `D_802DE400_196F10`, the java target's is `D_802E0F58_1F9C68`); substituting the *name* is not enough when the donor spells the value as a literal, because then there is no name in the donor's C to substitute.

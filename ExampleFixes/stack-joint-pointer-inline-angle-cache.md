@@ -12,4 +12,4 @@ sum = (u32)(firstAngle = savedFirst[0]->unk6Unsigned)
 type_val = alienTypes[typeIndex].unk42;
 ```
 
-The unsigned cast changed ADDU operand order without adding an instruction. The inline assignment placed the first-pointer copy between LUI and ADDIU for the second joint's base address. A separate firstAngle assignment placed that copy before LUI. Both forms had identical logic and instruction counts, but only the inline assignment matched byte for byte. Full ROM checksum verified `build.na/bh.na.z64: OK`.
+The unsigned cast changed ADDU operand order without adding an instruction. The inline assignment placed the first-pointer copy between LUI and ADDIU for the second joint's base address. A separate firstAngle assignment placed that copy before LUI. Both forms had identical logic and instruction counts, but only the inline assignment matched byte for byte. Full ROM checksum verified `build/bh.us.z64: OK`.

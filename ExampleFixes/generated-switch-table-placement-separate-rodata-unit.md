@@ -10,15 +10,15 @@ the function did not change this: IDO still emitted the named constant data
 before its generated switch table.
 
 The working layout separates the later constants into
-`src.na/overlay_gameplay/outside/101840_rodata.c` and gives that unit a rodata
-segment at 0x153B50 in `bh.na.yaml`. Their declarations remain in
+`src.us/overlay_gameplay/outside/101840_rodata.c` and gives that unit a rodata
+segment at 0x153B50 in `bh.us.yaml`. Their declarations remain in
 `include/variables.h`. The original unit emits the preceding constants,
 the generated table, and its alignment padding; the new unit supplies the
 following constants at their existing addresses.
 
 This reproduces every target rodata byte and preserves the surrounding ROM.
 After the independent register fixes, the final full ROM build reports
-`build/bh.na.z64: OK` with zero differing bytes.
+`build/bh.us.z64: OK` with zero differing bytes.
 
 Regenerating linker metadata must scan all symbol references. Using only the
 linker mode emptied needed automatic undefined-symbol aliases in this project.

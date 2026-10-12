@@ -70,7 +70,7 @@ aggregate padding, local reuse, and byte argument variants did not finish the
 match.
 
 With both experimental functions guarded, the full ROM build reports
-`build.na/bh.na.z64: OK`. The corrected headers therefore preserve the matching
+`build/bh.us.z64: OK`. The corrected headers therefore preserve the matching
 baseline. Complete pre-experiment file contents are preserved in
 `.match-work-preserved.json`; the D702C experiment sources are collected in
 `.match-d702c-experiments.json`.

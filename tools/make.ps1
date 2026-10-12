@@ -1,5 +1,5 @@
 param(
-    [ValidateSet('na','eu')][string]$Version = 'na',
+    [ValidateSet('us','eu')][string]$Version = 'us',
     [ValidateRange(1,256)][int]$Jobs = [Math]::Min([Environment]::ProcessorCount, 8),
     [switch]$NonMatching,
     [switch]$Rebuild,

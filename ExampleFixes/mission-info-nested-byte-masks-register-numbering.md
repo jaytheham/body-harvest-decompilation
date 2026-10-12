@@ -13,4 +13,4 @@ The first mask is optimized out when setting bit 7, but affects temporary number
 
 The nested `& 0xFF & 0x7F` emits a single `andi 0x7F`, while shifting the merge temporaries to the target `t2` through `t6`. Plain `& 0x7F` leaves them one register earlier. Casting the global halfword to `u8` instead changes the load to `lbu` at offset 1 and does not match the target `lh`.
 
-The entry is a four-byte `MissionInfo` structure with a flags byte followed by a three-byte command. Struct indexing reproduces the original four-byte stride without manual pointer arithmetic. The complete ROM verified `build.na/bh.na.z64: OK`.
+The entry is a four-byte `MissionInfo` structure with a flags byte followed by a three-byte command. Struct indexing reproduces the original four-byte stride without manual pointer arithmetic. The complete ROM verified `build/bh.us.z64: OK`.

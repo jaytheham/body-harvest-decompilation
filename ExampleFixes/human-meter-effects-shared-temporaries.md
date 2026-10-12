@@ -14,4 +14,4 @@ When terrain height is used once immediately in an explosion call, put the heigh
 
 The `(u8)` conversion of `D_800314C4` remains necessary because that global is declared `s8`. Removing it changed signed loads and comparisons. The timer is already `u8`, so its redundant casts were removed.
 
-Validation: full ROM `build.na/bh.na.z64: OK` and function diff `CURRENT (0)`.
+Validation: full ROM `build/bh.us.z64: OK` and function diff `CURRENT (0)`.

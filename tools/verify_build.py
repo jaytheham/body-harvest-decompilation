@@ -24,7 +24,7 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import decomp_common as dc
 
 ROOT = dc.ROOT
-BUILDERS = {"na": ROOT / "build.na/bh.na.z64", "eu": ROOT / "build.eu/bh.eu.z64"}
+BUILDERS = {"us": ROOT / "build/bh.us.z64", "eu": ROOT / "build.eu/bh.eu.z64"}
 
 
 def baserom(version):
@@ -103,12 +103,12 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--rebuild", action="store_true",
                     help="clean and rebuild both versions before verifying")
-    ap.add_argument("--version", choices=("na", "eu"), default=None,
+    ap.add_argument("--version", choices=("us", "eu"), default=None,
                     help="only this version (default: both)")
     ap.add_argument("--jobs", type=int, default=min(__import__("os").cpu_count() or 1, 4))
     args = ap.parse_args()
 
-    order = ("na", "eu") if args.version is None else (args.version,)
+    order = ("us", "eu") if args.version is None else (args.version,)
     failures = 0
 
     # Rebuild everything before checking anything: `clean()` wipes both build

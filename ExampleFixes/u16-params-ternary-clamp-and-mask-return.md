@@ -12,7 +12,7 @@ When a small leaf function takes 5-bit/6-bit color values and clamps them, the t
 1. **Declare params as `u16`** (not `s32`) — this generates `andi ..., 0xFFFF` zero-extension
 2. **Use ternary with `<`** — `x = x < N ? x : N` generates `slti; beqz; b; andi` pattern (branch to clamp when >= N, keep-value as fall-through + jump)
 3. **Explicit `& N` on return** — even if clamping makes it redundant, add `(blue & 0x3F)` and `& 0xFFFF` on the final expression to generate the exact masking instructions
-4. **Update `functions.na.h`** — the declaration must also use `u16` for parameters, or IDO may spill and reload with wrong instructions
+4. **Update `functions.us.h`** — the declaration must also use `u16` for parameters, or IDO may spill and reload with wrong instructions
 
 **Before (score 5350):**
 ```c
@@ -34,7 +34,7 @@ s32 func(u16 red, u16 green, u16 blue) {
 }
 ```
 
-Also update `functions.na.h`:
+Also update `functions.us.h`:
 ```c
 s32 func(u16 arg0, u16 arg1, u16 arg2);
 ```

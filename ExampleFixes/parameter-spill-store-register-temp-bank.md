@@ -1,6 +1,6 @@
 ### Parameter-spill store register is a cfe temp-bank choice, not a source shape
 
-**Function:** `func_80086E90_16EF50` (`src.na/overlay_gameplay/inside/16AF30.c`, `overlay_gameplay` area),
+**Function:** `func_80086E90_16EF50` (`src.us/overlay_gameplay/inside/16AF30.c`, `overlay_gameplay` area),
 37 instructions, marker `// CURRENT(15)`.
 
 **Measured score 5** (re-measured after `make extract`), and the entire 5 is **one row** — the

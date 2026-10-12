@@ -27,4 +27,4 @@ must be checked against generated instruction order.
 searches of the initialization and color blocks returned no matches.
 
 Validation after header and comment cleanup: function diff score 0 and
-`build.na/bh.na.z64: OK`.
+`build/bh.us.z64: OK`.

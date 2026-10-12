@@ -30,7 +30,7 @@ local places the cooldown at `sp+0x34`. With the unsigned field accesses,
 the complete stack frame is the target's `0x60` bytes.
 
 Validation: the function diff has no differences and the full ROM build
-reports `build.na/bh.na.z64: OK`.
+reports `build/bh.us.z64: OK`.
 
 ## Floating-point angle assignment and stack layout
 
@@ -55,7 +55,7 @@ slots at 0x43/0x42, and spill slots at 0x34/0x30/0x2C. An `s32` in the same
 position aligned the coordinate bytes correctly but left spills four bytes
 too low.
 
-Validation: no function diff differences; `build.na/bh.na.z64: OK`.
+Validation: no function diff differences; `build/bh.us.z64: OK`.
 
 ## Unsigned joint transfer and explicit index local
 
@@ -81,4 +81,4 @@ temporary register, restoring register allocation through the following
 instructions. Read the alien's `unk47` directly in the later condition;
 a named byte temporary allocates `v1` where the target uses `t2`.
 
-Validation: zero function differences and `build.na/bh.na.z64: OK`.
+Validation: zero function differences and `build/bh.us.z64: OK`.

@@ -642,7 +642,7 @@ The `enable_ld_alignment_hack` option and corresponding behavior has been remove
 * A new linker script section is now automatically created when the .bss section begins, using NOLOAD as opposed to the previous hacky rom rewinding we were previously doing. Additionally, `ld_section_labels` now includes `.rodata` by default.
 
 ### 0.9.3
-* Added `add_set_gp_64` option (true by default), which allows controlling whether to add ".set gp=64" to asm.na/hasm files
+* Added `add_set_gp_64` option (true by default), which allows controlling whether to add ".set gp=64" to asm/hasm files
 
 ### 0.9.2
 * Added "palette" argument to ci4/ci8 segments so that segments' palettes can be manually specified
@@ -688,7 +688,7 @@ The default values for these options are as follows
 The appropriate prefix string will still automatically be applied depending on the type of the symbol: `D_` for data, `jtbl_` for jump tables, and `func_` for functions. This functionality may be customizable in the future.
 
 ----
-The `auto_all_sections` option now should be a list of section names (`[".data", ".rodata", ".bss"]` by default) indicating the sections that should be linked from .o files built from source files (.c or asm.na/hasm .s files), when no subsegment explicitly indicates linking this type of section.
+The `auto_all_sections` option now should be a list of section names (`[".data", ".rodata", ".bss"]` by default) indicating the sections that should be linked from .o files built from source files (.c or asm/hasm .s files), when no subsegment explicitly indicates linking this type of section.
 
 For example, if any subsegment of a code segment is of segment type `data` or `.data`, the `.data` section from all `c`/`asm`/`hasm` subsegments will not be linked unless explicitly indicated with a relevant `.data` subsegment.
 

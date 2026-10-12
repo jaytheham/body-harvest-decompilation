@@ -81,7 +81,7 @@ a complete match.
 
 
 A full byte comparison of the retained score-20 build against
-`baserom.na.z64` found equal ROM sizes (12,582,912 bytes) and exactly six
+`baserom.us.z64` found equal ROM sizes (12,582,912 bytes) and exactly six
 different bytes: `0x101475..0x101477` and `0x101479..0x10147B`. They are
 entirely within the two swapped `lui` instructions. No other bytes,
 including generated readonly data, differed in that build.

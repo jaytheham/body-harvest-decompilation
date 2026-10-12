@@ -1,4 +1,4 @@
-# via https://raw.githubusercontent.com/pmret/papermario/master/tools/build.na/img/build.py
+# via https://raw.githubusercontent.com/pmret/papermario/master/tools/build/img/build.py
 
 import sys
 import argparse

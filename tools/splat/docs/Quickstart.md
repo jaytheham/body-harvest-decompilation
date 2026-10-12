@@ -54,7 +54,7 @@ sha1: 9bef1128717f958171a4afac3ed78ee2bb4e86ce
 options:
   basename: supermario64
   target_path: baserom.z64
-  elf_path: build.na/supermario64.elf
+  elf_path: build/supermario64.elf
   base_path: .
   platform: n64
   compiler: IDO

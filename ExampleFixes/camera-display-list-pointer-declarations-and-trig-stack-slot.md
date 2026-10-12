@@ -18,5 +18,5 @@ two commands load `D_80031160` into modelview; they do not consume another
 matrix-buffer entry. The normalization command encodes the address of its
 halfword, as shown by the target's `addiu` and word store.
 
-Verified with the normal `tools/make.ps1` build (`build/bh.na.z64: OK`) and
+Verified with the normal `tools/make.ps1` build (`build/bh.us.z64: OK`) and
 an exact function diff.

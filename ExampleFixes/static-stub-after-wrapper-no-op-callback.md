@@ -41,7 +41,7 @@ The `base + 0xN` reference above is a *good detector*, not a precondition. Measu
 `func_800787E8_1608A8` (`overlay_gameplay/inside/158330.c`, 109 instr, marker `CURRENT(240)`,
 re-measured **465**): the target ends with the shared epilogue then a bare `jr $ra; nop` at
 `0x80078994` = wrapper + `0x1AC` (107 instructions). **Nothing in the tree references
-`0x80078994`** - not the source, not any `.data` word (`grep -rn 78994 src.na/ include/ asm.na/` finds
+`0x80078994`** - not the source, not any `.data` word (`grep -rn 78994 src.us/ include/ asm/` finds
 only the instruction itself). The next named function `func_8007899C_160A5C` sits at `0x8007899C`,
 so the 8-byte no-op occupies the tail of the *preceding* symbol's range precisely because the stub
 has no name.

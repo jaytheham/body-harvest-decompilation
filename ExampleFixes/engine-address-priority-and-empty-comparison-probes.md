@@ -34,5 +34,5 @@ in `self-update-remainder-and-store-scheduling.md`. A local `gear++` obtains the
 target t6 temporary, while the correctly preserved delay update avoids consuming
 an extra scratch register and preserves the later case-3/case-4 register queue.
 
-The official full ROM build reports `build/bh.na.z64: OK`; these comparisons
+The official full ROM build reports `build/bh.us.z64: OK`; these comparisons
 add no runtime instructions.

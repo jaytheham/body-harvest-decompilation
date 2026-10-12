@@ -21,4 +21,4 @@ and the pointer increment in that branch's delay slot, exactly as in the target.
 Keep the terminator tests before `--arg1`: this preserves short-circuit behavior
 for a terminator and the special meaning of an initial zero limit.
 
-Validated with the required full ROM build: `build.na/bh.na.z64: OK`.
+Validated with the required full ROM build: `build/bh.us.z64: OK`.

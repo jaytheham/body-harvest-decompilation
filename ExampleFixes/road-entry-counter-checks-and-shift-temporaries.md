@@ -15,4 +15,4 @@ if (backIndex == ++frontIndex) { /* warning */ }
 
 The first form stores the vertex pointer before loading the other counter and gives the target temporary reuse. Predecrement inside that comparison hoists the other counter load before the pointer store, even with the comparison operands reversed. Separate decrement followed by `backIndex == frontIndex` also misses that order. The second form matches with preincrement inside the comparison.
 
-Verified with `build.na/bh.na.z64: OK` and `CURRENT (0)`.
+Verified with `build/bh.us.z64: OK` and `CURRENT (0)`.

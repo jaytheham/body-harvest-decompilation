@@ -9,5 +9,5 @@ mkdir -p ${BASE}/../../levels
 
 for level in ${LEVELS[@]}; do
   echo "level2json: ${level}"
-  python3 ${BASE}/l2j.py "${BASE}/../../assets.na/levels/${level}.bin" ${BASE}/../../levels/
+  python3 ${BASE}/l2j.py "${BASE}/../../assets/levels/${level}.bin" ${BASE}/../../levels/
 done

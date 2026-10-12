@@ -6,7 +6,7 @@ body may since have become byte-exact. In the other direction it may no longer e
 
 **Symptom.** The only lever left is deleting the guard.
 
-`func_8011EFBC_12DF6C` (`src.na/overlay_gameplay/outside/buildings.c`, 58 instructions) carried
+`func_8011EFBC_12DF6C` (`src.us/overlay_gameplay/outside/buildings.c`, 58 instructions) carried
 `// CURRENT(170)`. Unwrapped, it measures **0** on the first `check`; a fresh-object build gates with
 the ROM sha1 unchanged; moving one body literal (`objIndex == 0x4F` -> `0x50`) moves the sha1
 (`bbb6666f...` -> `f16b1aac...`), which is the control that separates a real match from a phantom `0`.

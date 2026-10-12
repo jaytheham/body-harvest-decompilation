@@ -2,7 +2,7 @@
 
 ## Symptom
 
-A large `- [0xADDR, databin]` section in `bh.na.yaml` that contains more than one
+A large `- [0xADDR, databin]` section in `bh.us.yaml` that contains more than one
 object's data, e.g. the core `0x2EA10` databin which held:
 
 * libultra RSP microcode blobs (`rspbootTextStart`, `D_8002DEE0_2EAE0`,
@@ -19,7 +19,7 @@ object's data, e.g. the core `0x2EA10` databin which held:
      (an identity matrix starts `00 01 00 00 00 00 00 00 00 00 00 01 ...`).
 2. The RAM addresses of the known data symbols pin the split exactly:
    `D_80031120_31D20` = RAM `0x80031120` = ROM `0x31D20`.
-3. Reference the data symbols from `include/variables.na.h` / `src.na/**` to
+3. Reference the data symbols from `include/variables.us.h` / `src.us/**` to
    find which C file owns them (the first C file that references the section is
    a safe owner if the real owner is unknown).
 
@@ -71,11 +71,11 @@ etc.), not a naive diagonal.
   Note the build is `F3DEX_GBI` (not `_GBI_2`), so `G_SETOTHERMODE_H/L = 0xBA/0xB9`,
   `G_SETGEOMETRYMODE = 0xB7`, `G_CLEARGEOMETRYMODE = 0xB6`.
 * **Nested `databin` names need a Makefile entry.** A databin named `rsp/rspboot`
-  is emitted to `asm.na/data/rsp/rspboot.s`, but the Makefile only builds `.s` files
+  is emitted to `asm/data/rsp/rspboot.s`, but the Makefile only builds `.s` files
   that are direct children of a directory listed in `ASM_DIRS`
   (`S_FILES = $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))`), so add
-  `asm.na/data/rsp \` to `ASM_DIRS` or the link fails with
-  `cannot find build.na/asm.na/data/rsp/rspboot.s.o`.
+  `asm/data/rsp \` to `ASM_DIRS` or the link fails with
+  `cannot find build/asm/data/rsp/rspboot.s.o`.
 * **Trailing zero padding must be represented explicitly.** The linker script
   only has `. = ALIGN(., 16)` at the *end* of the whole data output section (and
   per-segment end), not between the data subsegments of one segment, and IDO does
@@ -91,10 +91,10 @@ etc.), not a naive diagonal.
   as `%lo(...)` immediates changing all over the segment's `GLOBAL_ASM` functions.
 * Symbols the C code uses but that no `ASM` file references disappear from
   `undefined_syms_auto.txt` when the section becomes a `.data` C section. Add the
-  alias back to `undefined_syms.na.txt` (e.g. `D_80031260_31E60 = 0x80031260;`)
+  alias back to `undefined_syms.us.txt` (e.g. `D_80031260_31E60 = 0x80031260;`)
   for the name the code actually uses, and remove the manual entries for names
   that are now real C definitions.
-* Update the `extern` type in `variables.na.h` to match the C definition
+* Update the `extern` type in `variables.us.h` to match the C definition
   (`u8 D_80031160` -> `Mtx D_80031160`) - it is only used by address
   (`gSPMatrix(&D_80031160, ...)`, `gSPSegment(..., &D_80031160)`), so a scalar
   `u8` stops the 64-byte definition from being expressible.
@@ -102,5 +102,5 @@ etc.), not a naive diagonal.
   `0xB900031D`, ...). Some editor lint/intellisense setups report
   "integer conversion resulted in truncation" for these, but **IDO and the
   project's host `gcc` check emit no such warning** - verify with
-  `docker exec bh-container bash -c "rm -f build.na/src.na/core/FILE.c.o; make QUIET=0 build.na/src.na/core/FILE.c.o"`
+  `docker exec bh-container bash -c "rm -f build/src.us/core/FILE.c.o; make QUIET=0 build/src.us/core/FILE.c.o"`
   before chasing it.

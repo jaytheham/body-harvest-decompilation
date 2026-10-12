@@ -1,6 +1,6 @@
 # Mission dispatcher: indexed cursor and jump-table verification
 
-Matched `func_80073DC0_82D70` in `missions.c`, verified with `build.na/bh.na.z64: OK`.
+Matched `func_80073DC0_82D70` in `missions.c`, verified with `build/bh.us.z64: OK`.
 
 A named advancing pointer and current-record pointer let IDO coalesce the initial cursor into `s0`, dropping the target's `move s0,s2`. Separating the initial increment into the guarded loop restored the instruction but left the initial cursor in `v1`. An indexed traversal lets IDO eliminate the integer induction variable and retain both target pointers:
 

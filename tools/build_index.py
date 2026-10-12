@@ -589,7 +589,7 @@ def build_repo_index(repo_path: str, repo_name: str, window_size: int,
 
     # Find ROM
     rom_path = None
-    for name in ('baserom.z64', 'baserom.na.z64', 'baserom.na.rev1.uncompressed.z64'):
+    for name in ('baserom.z64', 'baserom.us.z64', 'baserom.us.rev1.uncompressed.z64'):
         rp = os.path.join(repo_path, name)
         if os.path.exists(rp):
             rom_path = rp

@@ -1,6 +1,6 @@
 # Trig stack spills: unused declarations and double alignment
 
-Matched `func_800868A4_95854` in `src.na/overlay_gameplay/outside/884C0.c`.
+Matched `func_800868A4_95854` in `src.us/overlay_gameplay/outside/884C0.c`.
 The initial C generated the exact instruction sequence and registers, but
 the Z coordinate spilled at `sp+0x44` instead of `sp+0x48`, and the angle
 spilled at `sp+0x2C` instead of `sp+0x28`. The frame already had the correct
@@ -31,4 +31,4 @@ IDO reserves slots for unused declarations before used locals. Double
 alignment can make a four-byte declaration change move later slots by
 eight bytes. Check actual spills after each change instead of assuming a
 uniform shift. Verification: `tools/make.ps1` reported
-`build.na/bh.na.z64: OK` with the C function enabled.
+`build/bh.us.z64: OK` with the C function enabled.

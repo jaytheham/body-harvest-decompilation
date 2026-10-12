@@ -40,5 +40,5 @@ The named difference uses `$v0`, whereas the inline subtraction draws `$t8` befo
 is folded into `$a1`. Widening and narrowing the difference to restore that draw also allocates
 an extra register pair and shifts the millisecond arithmetic, so it is not an equivalent fix.
 
-Validation: full ROM build `build.na/bh.na.z64: OK`, function diff score **0**. Do not re-tread scalar
+Validation: full ROM build `build/bh.us.z64: OK`, function diff score **0**. Do not re-tread scalar
 declaration permutations on this family; both cached storage and temporary allocation matter.

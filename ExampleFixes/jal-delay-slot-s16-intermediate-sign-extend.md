@@ -42,4 +42,4 @@ if ((s32)D_800DE840[var_s0].unk18 > 0) {
 
 **Why it works:** Without the named pointer, the compiler uses a uopt temp (`v1`) for `&D_800DE840[var_s0]`. Freed from saving the pointer across the call, the scheduler fills the instruction latency window (between `multu` and `mflo`) with the argument setup (`sll/sra/or a0`, `li a1,0x92`). The `var_s1` load has no dependency on the jal result, so the scheduler moves it into the jal's delay slot. The subsequent `var_s0 = var_s1` (s16 ← s16, different registers) triggers the `sll/sra/move` sign-extension sequence.
 
-**Reference:** `func_8008C7E4_5CC94` in `src.na/overlay_gameplay/frontend/52690.c`
+**Reference:** `func_8008C7E4_5CC94` in `src.us/overlay_gameplay/frontend/52690.c`

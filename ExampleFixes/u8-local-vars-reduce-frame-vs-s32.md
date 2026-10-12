@@ -72,7 +72,7 @@ When changing the header from `void func_800847D0_93780()` to the correct
 growing the caller by eight bytes and shifting later sections. Passing
 `func_800847D0_93780(arg0)` restored the target's single `andi` in the call
 delay slot. The target and caller both scored zero, and the full ROM
-verification returned `build.na/bh.na.z64: OK`.
+verification returned `build/bh.us.z64: OK`.
 
 #### Drone Hunter: eliminate locals while preserving argument promotion
 

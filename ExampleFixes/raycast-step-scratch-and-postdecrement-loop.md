@@ -31,5 +31,5 @@ the target's 0x48-byte frame; removing it produces a 0x38-byte frame even
 when the executable instruction sequence otherwise matches. It is
 documented in the C source rather than replaced with extra calculations.
 
-After cleanup, `tools/make.ps1` reports `build.na/bh.na.z64: OK`, and the
+After cleanup, `tools/make.ps1` reports `build/bh.us.z64: OK`, and the
 function's assembly diff score is zero.

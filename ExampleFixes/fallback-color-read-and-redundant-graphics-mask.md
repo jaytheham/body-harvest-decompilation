@@ -1,6 +1,6 @@
 # Fallback color reads and a redundant graphics mask
 
-Matched `func_800C5D14_D4CC4` with IDO 5.3 `-O2 -mips2 -32`; the function diff is zero and the complete ROM reports `build.na/bh.na.z64: OK`.
+Matched `func_800C5D14_D4CC4` with IDO 5.3 `-O2 -mips2 -32`; the function diff is zero and the complete ROM reports `build/bh.us.z64: OK`.
 
 The target tests the first root color with `lbu v0`, then assigns the byte draw color with `andi t2,v0,0xff` in the branch delay slot. Reading that color into the draw-color local before the condition removes the mask, changes the branch to likely, and rotates all three color registers. Test all three root colors directly and copy red, green, blue only in the fallback `else`. The random-color branch overwrites all three, so an earlier copy is unnecessary. This reduced the diff from 649 to 137.
 

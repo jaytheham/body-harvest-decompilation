@@ -21,4 +21,4 @@ A body with `if (...) break` instead allows IDO to fold the initial pointer to a
 
 The two special message bytes (`0x64` and `0x6E`) need a switch with a default callback. An if/else chain changes branch layout. Access the existing `[mission][chunk][50]` array with chunk 1 or 2, rather than indexing past chunk zero.
 
-Both functions verified with `tools/make.ps1` returning `build.na/bh.na.z64: OK` and no differences from `tools/diff.ps1`.
+Both functions verified with `tools/make.ps1` returning `build/bh.us.z64: OK` and no differences from `tools/diff.ps1`.

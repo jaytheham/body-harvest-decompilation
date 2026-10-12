@@ -2,7 +2,7 @@
 
 In `func_80070294_158354`, a literal `180.0` generated an extra constant after the explicit rodata placeholders. Accessing the existing one-element double array preserved its address but made IDO evaluate the memory operand first and changed floating register allocation.
 
-Representing the same eight bytes as a const struct with one `f64 value` member preserved the explicit rodata position and produced the same expression evaluation and registers as the literal. A scalar const double moved to a different rodata location. The struct type belongs in structs.na.h and its extern declaration in variables.na.h. The complete ROM verified OK.
+Representing the same eight bytes as a const struct with one `f64 value` member preserved the explicit rodata position and produced the same expression evaluation and registers as the literal. A scalar const double moved to a different rodata location. The struct type belongs in structs.us.h and its extern declaration in variables.us.h. The complete ROM verified OK.
 
 ## Several constants in an angle-fitting function
 
@@ -12,7 +12,7 @@ With scalar angle locals, IDO cached the converted angle sum across `cosf` and `
 
 For the first cosine argument, reuse the no-longer-needed `s32 dx` for the raw angle result, assign it to `angle[1]`, and convert `(s16)dx` directly. Read `angle[1]` for the sine argument. This preserves the raw v1 value for the halfword store and uses t4 for sign extension. A separate raw-angle local produces the same instructions but enlarges the frame; reusing the distance float instead changes FPR allocation.
 
-Verified with a zero function diff and `build.na/bh.na.z64: OK`.
+Verified with a zero function diff and `build/bh.us.z64: OK`.
 
 ## Collision response: aggregate constant and reused double local
 

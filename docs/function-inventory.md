@@ -15,12 +15,12 @@
 | overlay_gameplay_frontend | 416 | 416 |
 | overlay_gameplay_inside | 235 | 234 |
 
-PAL/NTSC class, from `tools/pal_na_diff.py` (core only):
+PAL/NTSC class, from `tools/pal_us_diff.py` (core only):
 
 | class | meaning | functions |
 |---|---|---:|
 | DIFF | PAL rewrote it; NTSC body must not be reused | 34 |
-| SHAPE | opcodes match, immediates differ (relocation) | 536 |
+| SHAPE | opcodes match, immediates differ (relocation) | 1448 |
 | EXACT | byte identical; NTSC body reusable verbatim | 105 |
 
 ## Work queue - 2451 nonmatching functions
@@ -69,14 +69,14 @@ PAL/NTSC class, from `tools/pal_na_diff.py` (core only):
 | 40 | `func_8000B074_BC74` | SHAPE | core | 5676 | 1419 | 30 | 2 | src.eu/core/AD60.c |
 | 41 | `func_8000A4D4_B0D4` | SHAPE | core | 2872 | 718 | 26 | 2 | src.eu/core/AD60.c |
 | 42 | `func_8000B00C_BC0C` | SHAPE | core | 104 | 26 | 23 | 0 | src.eu/core/AD60.c |
-| 43 | `func_80014A6C_1566C` | SHAPE | core | 2004 | 501 | 20 | 10 | src.eu/core/12C80.c |
+| 43 | `func_80014A6C_1566C` | SHAPE | core | 2004 | 501 | 22 | 10 | src.eu/core/12C80.c |
 | 44 | `func_8001A680_1B280` | SHAPE | core | 336 | 84 | 19 | 3 | src.eu/core/1B100.c |
 | 45 | `func_80010220_10E20` | SHAPE | core | 56 | 14 | 19 | 1 | src.eu/core/loader.c |
 | 46 | `func_80015CC4_168C4` | SHAPE | core | 2096 | 524 | 18 | 5 | src.eu/core/12C80.c |
 | 47 | `alLink` | SHAPE | core | 36 | 9 | 17 | 0 | src.eu/libultra/sl.c |
-| 48 | `func_80005B30_6730` | SHAPE | core | 84 | 21 | 15 | 0 | src.eu/core/53F0.c |
-| 49 | `func_80005AEC_66EC` | SHAPE | core | 68 | 17 | 13 | 0 | src.eu/core/53F0.c |
-| 50 | `func_80018DAC_199AC` | SHAPE | core | 856 | 214 | 12 | 7 | src.eu/core/17EE0.c |
+| 48 | `func_80018DAC_199AC` | SHAPE | core | 856 | 214 | 15 | 7 | src.eu/core/17EE0.c |
+| 49 | `func_80005B30_6730` | SHAPE | core | 84 | 21 | 15 | 0 | src.eu/core/53F0.c |
+| 50 | `func_80005AEC_66EC` | SHAPE | core | 68 | 17 | 13 | 0 | src.eu/core/53F0.c |
 | 51 | `func_80005B84_6784` | SHAPE | core | 216 | 54 | 12 | 2 | src.eu/core/53F0.c |
 | 52 | `func_800050C4_5CC4` | SHAPE | core | 76 | 19 | 12 | 4 | src.eu/core/53F0.c |
 | 53 | `func_80006DAC_79AC` | SHAPE | core | 48 | 12 | 11 | 0 | src.eu/core/53F0.c |
@@ -356,7 +356,7 @@ PAL/NTSC class, from `tools/pal_na_diff.py` (core only):
 | 327 | `func_80001418_2018` | SHAPE | core | 12 | 3 | 0 | 0 | src.eu/core/1050.c |
 | 328 | `func_8000D29C_DE9C` | SHAPE | core | 12 | 3 | 0 | 0 | src.eu/core/AD60.c |
 | 329 | `func_80014230_14E30` | SHAPE | core | 8 | 2 | 0 | 0 | src.eu/core/12C80.c |
-| 330 | `func_80003824_4424` | EXACT | core | 176 | 44 | 89 | 1 | src.eu/core/1050.c |
+| 330 | `func_80003824_4424` | EXACT | core | 176 | 44 | 94 | 1 | src.eu/core/1050.c |
 | 331 | `alUnlink` | EXACT | core | 48 | 12 | 14 | 0 | src.eu/libultra/sl.c |
 | 332 | `func_800056A8_62A8` | EXACT | core | 40 | 10 | 11 | 1 | src.eu/core/53F0.c |
 | 333 | `func_800047FC_53FC` | EXACT | core | 28 | 7 | 7 | 0 | src.eu/core/53F0.c |
@@ -364,21 +364,21 @@ PAL/NTSC class, from `tools/pal_na_diff.py` (core only):
 | 335 | `func_8000CD84_D984` | EXACT | core | 168 | 42 | 3 | 0 | src.eu/core/AD60.c |
 | 336 | `func_8000C794_D394` | EXACT | core | 44 | 11 | 3 | 0 | src.eu/core/AD60.c |
 | 337 | `func_8000C6E8_D2E8` | EXACT | core | 12 | 3 | 3 | 0 | src.eu/core/AD60.c |
-| 338 | `func_80004498_5098` | EXACT | core | 60 | 15 | 2 | 0 | src.eu/core/1050.c |
-| 339 | `func_80004254_4E54` | EXACT | core | 580 | 145 | 1 | 0 | src.eu/core/1050.c |
-| 340 | `func_8000D3B4_DFB4` | EXACT | core | 516 | 129 | 1 | 0 | src.eu/core/AD60.c |
-| 341 | `func_8001A490_1B090` | EXACT | core | 160 | 40 | 1 | 0 | src.eu/core/1B060.c |
-| 342 | `func_8000DC60_E860` | EXACT | core | 108 | 27 | 1 | 0 | src.eu/core/E830.c |
-| 343 | `func_8000A46C_B06C` | EXACT | core | 104 | 26 | 1 | 0 | src.eu/core/AD60.c |
-| 344 | `func_8000A40C_B00C` | EXACT | core | 96 | 24 | 1 | 0 | src.eu/core/AD60.c |
-| 345 | `alInit` | EXACT | core | 52 | 13 | 1 | 1 | src.eu/libultra/sl.c |
-| 346 | `func_80003910_4510` | EXACT | core | 44 | 11 | 1 | 0 | src.eu/core/1050.c |
-| 347 | `func_800047D0_53D0` | EXACT | core | 12 | 3 | 1 | 0 | src.eu/core/53D0.c |
-| 348 | `func_80004214_4E14` | EXACT | core | 64 | 16 | 0 | 1 | src.eu/core/1050.c |
+| 338 | `func_80004214_4E14` | EXACT | core | 64 | 16 | 2 | 1 | src.eu/core/1050.c |
+| 339 | `func_80004498_5098` | EXACT | core | 60 | 15 | 2 | 0 | src.eu/core/1050.c |
+| 340 | `func_80004254_4E54` | EXACT | core | 580 | 145 | 1 | 0 | src.eu/core/1050.c |
+| 341 | `func_8000D3B4_DFB4` | EXACT | core | 516 | 129 | 1 | 0 | src.eu/core/AD60.c |
+| 342 | `func_8001A490_1B090` | EXACT | core | 160 | 40 | 1 | 0 | src.eu/core/1B060.c |
+| 343 | `func_8000DC60_E860` | EXACT | core | 108 | 27 | 1 | 0 | src.eu/core/E830.c |
+| 344 | `func_8000A46C_B06C` | EXACT | core | 104 | 26 | 1 | 0 | src.eu/core/AD60.c |
+| 345 | `func_8000A40C_B00C` | EXACT | core | 96 | 24 | 1 | 0 | src.eu/core/AD60.c |
+| 346 | `alInit` | EXACT | core | 52 | 13 | 1 | 1 | src.eu/libultra/sl.c |
+| 347 | `func_80003910_4510` | EXACT | core | 44 | 11 | 1 | 0 | src.eu/core/1050.c |
+| 348 | `func_800047D0_53D0` | EXACT | core | 12 | 3 | 1 | 0 | src.eu/core/53D0.c |
 | 349 | `func_8001A478_1B078` | EXACT | core | 24 | 6 | 0 | 0 | src.eu/core/17EE0.c |
 | 350 | `func_800047DC_53DC` | EXACT | core | 20 | 5 | 0 | 0 | src.eu/core/53D0.c |
 | 351 | `func_800047F0_53F0` | EXACT | core | 12 | 3 | 0 | 0 | src.eu/core/53F0.c |
-| 352 | `func_800B8500_C7FE0` | - | overlay_gameplay_outside | 252 | 63 | 78 | 0 | src.eu/overlay_gameplay/outside/C0520.c |
+| 352 | `func_800B8500_C7FE0` | - | overlay_gameplay_outside | 252 | 63 | 83 | 0 | src.eu/overlay_gameplay/outside/C0520.c |
 | 353 | `func_800C1448_D0F28` | - | overlay_gameplay_outside | 188 | 47 | 37 | 2 | src.eu/overlay_gameplay/outside/D0990.c |
 | 354 | `func_800FB460_10AF40` | - | overlay_gameplay_outside | 28 | 7 | 33 | 0 | src.eu/overlay_gameplay/outside/F9D90.c |
 | 355 | `func_800C17E4_D12C4` | - | overlay_gameplay_outside | 284 | 71 | 31 | 2 | src.eu/overlay_gameplay/outside/D0990.c |

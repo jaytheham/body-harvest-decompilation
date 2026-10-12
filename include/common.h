@@ -22,8 +22,8 @@
 
 typedef u8 Addr[];
 
-#ifdef VERSION_NA
-#include "common.na.h"
+#ifdef VERSION_US
+#include "common.us.h"
 #endif
 
 #ifdef VERSION_EU

@@ -12,7 +12,7 @@ if (arg0 == 0) {
 }
 ```
 
-Declare the alias in `include/variables.na.h` and resolve it in `undefined_syms.na.txt` using a relocatable expression:
+Declare the alias in `include/variables.us.h` and resolve it in `undefined_syms.us.txt` using a relocatable expression:
 
 ```ld
 D_80094860_64D10_W = D_80094860_64D10;

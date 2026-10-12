@@ -27,7 +27,7 @@ This:
 - `1d950` = **coss** (NOT sins!)
 - `1d980` = **sins**
 
-(Confirmed via checking `asm.na/nonmatchings/.../func_800772EC_8629C.s` which labels the jals)
+(Confirmed via checking `asm/nonmatchings/.../func_800772EC_8629C.s` which labels the jals)
 
 The pattern is: **the function whose result is stored to a temp var is called FIRST** (and gets `move a0,s1` in the delay slot - no masking). The one called inline gets `andi a0,s1,0xffff`.
 
@@ -50,4 +50,4 @@ The s16 `pad3` creates a 2-byte "bump" to push `sp34` from `0x36` to `0x34`.
 
 ## Final Result
 
-Score: 0 (perfect match), `build.na/bh.na.z64: OK`
+Score: 0 (perfect match), `build/bh.us.z64: OK`

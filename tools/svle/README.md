@@ -8,7 +8,7 @@ Not all level-data segments are understood, these are simply extracted as '.bin'
 
 ```sh
 # extract SMASHING_START to /tmp
-python3 l2j.py ../../assets.na/levels/SMASHING_START.bin /tmp
+python3 l2j.py ../../assets/levels/SMASHING_START.bin /tmp
 ```
 
 ## json-2-level (j2l)

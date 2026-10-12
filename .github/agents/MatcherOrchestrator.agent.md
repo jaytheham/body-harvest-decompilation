@@ -22,18 +22,18 @@ You will be given a C file to target, follow this process:
 4. After a subagent finishes, undo any changes outside of:
  - `/ExampleFixes`
  - `/include`
- - `/src.na`
- - `symbol_addrs.na.txt`
- - `undefined_syms.na.txt`
-5. Move any variables, structs, or function definitions the subagent added to a C file in `src.na/` into the appropriate header file in `include/` (e.g. variables to `variables.na.h`, structs to `structs.na.h`, and function prototypes to `functions.na.h`).
-6. Make sure the function is not wrapped with `NON_MATCHING`, then build, if build returns `build.na/bh.na.z64: OK` then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
+ - `/src.us`
+ - `symbol_addrs.us.txt`
+ - `undefined_syms.us.txt`
+5. Move any variables, structs, or function definitions the subagent added to a C file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
+6. Make sure the function is not wrapped with `NON_MATCHING`, then build, if build returns `build/bh.us.z64: OK` then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
 7. If the build returns `FAILED`, check the function's CURRENT difference value with `diff.ps1`. If the difference value is lower than the original value that's good, restore the `NON_MATCHING` wrapper, update the comment above the wrapper with the new value `CURRENT(X)`, and commit the changes. If the difference value is the same or higher, undo all changes - including the removal of `NON_MATCHING` and check the build is OK before moving on to the next function.
 
 Tell the subagents to resolve the differences in assembly as much as possible, they should keep going after they make a positive improvement, and only stop when they can no longer find any changes that reduce the number of assembly differences.
 
 Ask each subagent to target a single function.
 
-Subagents are not to commit any changes. After they finish you will check the current changes, then add NON_MATCHING if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build.na/bh.na.z64: OK` before committing. Make sure the function has a comment with the current difference value before committing. Only commit when the build is OK.
+Subagents are not to commit any changes. After they finish you will check the current changes, then add NON_MATCHING if needed, fix any errors, revert any unintended changes, and fix whatever else is necessary to return the build to `build/bh.us.z64: OK` before committing. Make sure the function has a comment with the current difference value before committing. Only commit when the build is OK.
 
 Keep going automatically until all NON_MATCHING functions in the file have been processed by subagents. Skip NON_MATCHING functions with switch statements, don't attempt to match them.
 
@@ -41,11 +41,11 @@ Retain any existing comments.
 
 ## Project Structure
 
-- `asm.na/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm.na/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
-- `build.na/`: Readonly - compiled object files and the final ROM image.
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
+- `build/`: Readonly - compiled object files and the final ROM image.
 - `tools/`: Readonly - tools for other tasks.
-- `src.na/`: C source files.
+- `src.us/`: C source files.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 

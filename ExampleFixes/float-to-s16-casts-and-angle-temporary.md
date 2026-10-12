@@ -1,6 +1,6 @@
 # Float coordinate narrowing and angle temporary types
 
-Matched `func_80136ECC_145E7C` in `src.na/overlay_gameplay/outside/145D70.c` with a zero diff and `build.na/bh.na.z64: OK`.
+Matched `func_80136ECC_145E7C` in `src.us/overlay_gameplay/outside/145D70.c` with a zero diff and `build/bh.us.z64: OK`.
 
 Use the same float delta locals in both sides of a camera-selection branch. Separate locals for each branch produced different floating-point register allocation and spill locations. Sharing the source delta pair and sharing the camera direction pair restored the target's floating-point registers and scheduling. Declaration order placed the source X delta at `sp+0x28` and the direction X delta at `sp+0x44`; unused intervening declarations preserve those slots.
 

@@ -4,7 +4,7 @@ on:
   push:
     branches: [master]
     paths:
-      - 'src.na/**'
+      - 'src.us/**'
       - 'tools/progress.py'
       - 'docs/index.html'
   schedule:

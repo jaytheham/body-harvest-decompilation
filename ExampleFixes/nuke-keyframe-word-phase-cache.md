@@ -10,4 +10,4 @@ Write the duration comparison as `data->duration == entry->unk14`. IDO emits the
 
 Unsigned halfword angle fields still promote to signed int for division, so the target uses `div`, not `divu`. Keep position and scale divisions as direct compound assignments, with a fresh duration read for each; their complete instruction sequence already matches.
 
-Validation: function diff score 0 and full ROM checksum `build.na/bh.na.z64: OK`.
+Validation: function diff score 0 and full ROM checksum `build/bh.us.z64: OK`.

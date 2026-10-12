@@ -22,7 +22,7 @@ foreach ($file in $topFiles) {
     $escapedAsmPath = [regex]::Escape($asmPath)
     $pragmaPattern = "^\s*#pragma\s+GLOBAL_ASM\(`"$escapedAsmPath`"\)\s*$"
 
-    $matches = Get-ChildItem -Path ".\src.na" -Recurse -File -Include *.c |
+    $matches = Get-ChildItem -Path ".\src.us" -Recurse -File -Include *.c |
         Select-String -Pattern $pragmaPattern -SimpleMatch:$false
 
     foreach ($match in $matches) {

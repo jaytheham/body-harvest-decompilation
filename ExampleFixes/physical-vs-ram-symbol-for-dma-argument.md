@@ -10,7 +10,7 @@ small odd score (13 here) with the pointer's `%lo` and every other row already a
 Measured on `func_80071854_159914` (`overlay_gameplay/inside/158330.c`, 336 instr). The C passed the
 RAM symbol `D_800314D0_320D0` (declared `extern Vp D_800314D0_320D0[];`, **defined with an
 initialiser** in `core/320D0.c`, i.e. it really does live at `0x800314D0`). The ROM instead names a
-symbol at the *physical* address: `asm.na/nonmatchings/.../158330/func_80071854_159914.s` reads
+symbol at the *physical* address: `asm/nonmatchings/.../158330/func_80071854_159914.s` reads
 `%hi(D_314D0)`, and `undefined_syms_auto.txt` defines `D_314D0 = 0x314D0`. Referencing
 `extern Vp D_314D0[];` emits `lui a0,0x3; addiu a0,a0,0x14D0` - the target exactly.
 
@@ -20,7 +20,7 @@ referenced the segment/physical spelling of the datum, not the KSEG0 one. Do **n
 ori $at,$at,0xffff; and t7,t6,at` sequence and measured **1963** (the ROM has no mask here - proof
 the original baked the physical address into the symbol). This mirrors the existing repo idiom
 `extern Gfx D_13E440[];` (`F7870.c:113`) and `(u32)D_140A80` (`buildings.c:3276`): declare the
-physical symbol in `include/variables.na.h` and let `undefined_syms_auto.txt` give it its value.
+physical symbol in `include/variables.us.h` and let `undefined_syms_auto.txt` give it its value.
 Tells: the target `.s` names a symbol *without* the `800` prefix and its `%hi` is small (< 0x100).
 
 ## Companion: one phantom 4-byte local moves a spilled temp slot within an unchanged frame

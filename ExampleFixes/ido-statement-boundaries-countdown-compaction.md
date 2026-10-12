@@ -12,4 +12,4 @@ for (j = i, count = D_80152C96 - 1; j < count; j++)
 
 Separate initializer statements placed the index sign extension before the loop comparison. The combined header recovers the target order. Joining the statements on one physical line also worked, but the combined header is clearer.
 
-Verified through `tools/make.ps1`: `build.na/bh.na.z64: OK`. No compiler flags or rodata changes were needed.
+Verified through `tools/make.ps1`: `build/bh.us.z64: OK`. No compiler flags or rodata changes were needed.

@@ -1,13 +1,13 @@
 param(
     [Parameter(Mandatory=$false)]
-    [ValidateSet('na','eu', IgnoreCase=$true)]
-    [string]$Version = 'na',
+    [ValidateSet('us','eu', IgnoreCase=$true)]
+    [string]$Version = 'us',
     [switch]$Docker
 )
 
 $ErrorActionPreference = 'Stop'
 if ($Docker) {
-    & docker exec bh-container test -f /bh/bh.na.yaml
+    & docker exec bh-container test -f /bh/bh.$($Version.ToLower()).yaml
     if ($LASTEXITCODE -ne 0) { throw 'bh-container is not mounted at the repository root. Restart it using StartContainer.ps1.' }
     & docker exec bh-container make extract "VERSION=$($Version.ToLower())"
     if ($LASTEXITCODE -ne 0) { throw "Docker extraction failed (exit $LASTEXITCODE)." }

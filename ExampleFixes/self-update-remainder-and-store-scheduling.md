@@ -26,5 +26,5 @@ Putting the local update inside the global assignment is also necessary.
 Separating the assignments emits `li a3,10` before the global address's `lui`.
 The chained assignment permits the target order, `lui at` followed by `li a3`.
 
-The final full ROM build reports `build/bh.na.z64: OK`, with zero differing
+The final full ROM build reports `build/bh.us.z64: OK`, with zero differing
 bytes. No forced-register compiler settings are retained.

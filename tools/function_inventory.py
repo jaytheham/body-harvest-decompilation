@@ -9,7 +9,7 @@ The linker map is the source of truth for *where* a function is: it records ever
 symbol's VRAM address, the segment it sits in, and which object file it came
 from, which is what ties a function to a C file. Listings are the source of
 truth for *whether* it is decompiled: splat writes one ``.s`` per function into
-``asm.na/matchings`` or ``asm.na/nonmatchings``, so a function with a nonmatching
+``asm/matchings`` or ``asm/nonmatchings``, so a function with a nonmatching
 listing is one that still needs work.
 
 A function with no listing at all is matched. That is not obvious: splat only
@@ -33,7 +33,7 @@ import decomp_common as dc
 ROOT = dc.ROOT
 
 #: How a function's object file decides whether it is decompilable C.
-#:   ``build.na/src.na/core/1050.c.o``  -> C, decompilable
+#:   ``build/src.us/core/1050.c.o``  -> C, decompilable
 #:   ``build/lib/libultra_rom.a(x.o)`` -> prebuilt archive, not decompilable
 #:   ``build.eu/asm.eu/aisetfreq.s.o`` -> handwritten asm, not decompilable
 ARCHIVE_OBJ = re.compile(r"\([^)]+\)$")
@@ -113,11 +113,11 @@ def pal_classes(eu_functions):
     most of a EU function's bytes is the one PAL rewrote.
     """
     try:
-        import pal_na_diff
+        import pal_us_diff
     except ImportError:
         return {}
     classes = {}
-    for _rom, _name, _size, cls, _p, _pn in pal_na_diff.classify_all():
+    for _rom, _name, _size, cls, _p, _pn in pal_us_diff.classify_all():
         classes[_rom] = (cls, _size)
     if not classes:
         return {}
@@ -145,10 +145,10 @@ def build(version, cross=None):
     ``cross`` optionally supplies ``{name: class}`` from the other ROM, which
     is what turns the EU work queue into a reuse plan.
     """
-    build_dir = ROOT / ("build.eu" if version == "eu" else "build.na")
+    build_dir = ROOT / ("build.eu" if version == "eu" else "build")
     functions, segments = dc.parse_map(build_dir / f"bh.{version}.map", version)
     rom = dc.read_rom(version)
-    asm_root = ROOT / ("asm.eu" if version == "eu" else "asm.na")
+    asm_root = ROOT / ("asm.eu" if version == "eu" else "asm")
     listings = listing_index(asm_root)
 
     seg_table = {name: (rom_start, size, vram_start)
@@ -227,7 +227,7 @@ def report(rows, segments, version):
     lines.append("")
 
     if any(r.get("pal_class") for r in rows):
-        lines.append("PAL/NTSC class, from `tools/pal_na_diff.py` (core only):")
+        lines.append("PAL/NTSC class, from `tools/pal_us_diff.py` (core only):")
         lines.append("")
         lines.append("| class | meaning | functions |")
         lines.append("|---|---|---:|")
@@ -256,7 +256,7 @@ def report(rows, segments, version):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--version", choices=("na", "eu", "both"), default="both")
+    ap.add_argument("--version", choices=("us", "eu", "both"), default="both")
     ap.add_argument("--write", metavar="PATH", help="write the JSON inventory here")
     ap.add_argument("--report", metavar="PATH", help="write the markdown report here")
     ap.add_argument("--segment", action="append", default=[],
@@ -266,7 +266,7 @@ def main():
     ap.add_argument("--json", action="store_true", help="print JSON to stdout")
     args = ap.parse_args()
 
-    versions = ("na", "eu") if args.version == "both" else (args.version,)
+    versions = ("us", "eu") if args.version == "both" else (args.version,)
     eu_functions = None
     if "eu" in versions:
         eu_functions, _ = dc.parse_map(ROOT / "build.eu/bh.eu.map", "eu")

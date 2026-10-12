@@ -1,6 +1,6 @@
 # Height bounds: copy before updating the sampled height
 
-Matched `func_80082EB4_91E64` in `src.na/overlay_gameplay/outside/884C0.c` with an exact assembly diff and `build.na/bh.na.z64: OK`.
+Matched `func_80082EB4_91E64` in `src.us/overlay_gameplay/outside/884C0.c` with an exact assembly diff and `build/bh.us.z64: OK`.
 
 The target reuses the address-taken sampled height as the upper bound. Keeping a separate upper-bound local changed the alien-instance pointer from `a3` to `v1` and changed other register allocation throughout the function.
 

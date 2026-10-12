@@ -37,4 +37,4 @@ return temp_s16;
 
 **Key insight**: The assembly compares `v0` (the raw s32 return) with `-3` before the conversion is finalized. Declaring separate `s32` and `s16` variables and comparing the `s32` version produces matching assembly.
 
-**Example**: `func_800DA6F0_E96A0` in [CFE30.c](src.na/overlay_gameplay/outside/CFE30.c)
+**Example**: `func_800DA6F0_E96A0` in [CFE30.c](src.us/overlay_gameplay/outside/CFE30.c)

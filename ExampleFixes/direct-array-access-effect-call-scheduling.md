@@ -25,7 +25,7 @@ Other necessary changes:
 - Compare the selected instance against `&alienInstances[arg0]` to get
   the target operand order, rather than comparing against the local pointer.
 
-Verification: `tools/make.ps1` reported `build.na/bh.na.z64: OK` and
+Verification: `tools/make.ps1` reported `build/bh.us.z64: OK` and
 `tools/diff.ps1 func_800ADB4C_BCAFC func_800ADFC0_BCF70 --show-score`
 reported zero differences.
 

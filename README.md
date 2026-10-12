@@ -19,7 +19,7 @@ git clone https://github.com/jaytheham/body-harvest-decompilation.git
 cd body-harvest-decompilation
 ```
 
-Place your **US** ROM at `baserom.na.z64` in the repository root, then run:
+Place your **US** ROM at `baserom.us.z64` in the repository root, then run:
 
 ```powershell
 .\tools\extract.ps1
@@ -28,7 +28,7 @@ Place your **US** ROM at `baserom.na.z64` in the repository root, then run:
 
 The first command automatically downloads pinned, SHA256-checked Windows tools and installs the extraction libraries in `tools/windows/venv`. Nothing is installed globally and no environment activation is needed. Initial setup needs internet access; subsequent extractions and builds work offline. You can also run `.\tools\setup.ps1` separately to prepare the tools before supplying the ROM.
 
-A successful matching build prints `build.na/bh.na.z64: OK`. Builds are incremental and use up to eight workers. Options:
+A successful matching build prints `build/bh.us.z64: OK`. Builds are incremental and use up to eight workers. Options:
 
 ```powershell
 .\tools\make.ps1 -Jobs 4
@@ -64,7 +64,7 @@ Navigate into the freshly cloned repo
 cd body-harvest-decompilation
 ```
 
-Place the **US** Body Harvest ROM in the root of this repository, name it `baserom.na.z64`, and then run the first `make` command to extract the ROM:
+Place the **US** Body Harvest ROM in the root of this repository, name it `baserom.us.z64`, and then run the first `make` command to extract the ROM:
 
 ```sh
 make extract
@@ -79,7 +79,7 @@ make --jobs
 If you did everything correctly, you'll be greeted with the following:
 
 ```sh
-build.na/bh.na.z64: OK
+build/bh.us.z64: OK
 ```
 
 Note: Currently need to change the references to func_802D4CD0 in loader.s to func_802D4CD0_18D7E0
@@ -87,7 +87,7 @@ Not sure why this one file is problematic. Should be done automatically during e
 
 ## Docker
 
-Clone this repository, place the `baserom.na.z64` at its root, and then build the Docker image:
+Clone this repository, place the `baserom.us.z64` at its root, and then build the Docker image:
 
 ```sh
 docker build --no-cache -t bh-local .
@@ -107,7 +107,7 @@ Place `baserom.eu.z64` in the root of the repository, and suffix each `make` com
 
 ## Building `NON_MATCHING` Version
 
-Functions that are not yet a byte-perfect match are wrapped with NON_MATCHING to exclude from the build. In order to build.na/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
+Functions that are not yet a byte-perfect match are wrapped with NON_MATCHING to exclude from the build. In order to build/test the non-matching, pass `NON_MATCHING=1` to the `make` commands.
 These functions range from actually matched - but require rodata to be configured - through to nowhere close to matching, and may not be functionally equivalent to the target ASM yet.
 
 # ROM Versions
@@ -124,9 +124,9 @@ Only US and EU versions were released to the public. If you are in possession of
 # Repo layout
 
 ```
-asm.na/             ; assembly files split by splat (not checked in)
-assets.na/          ; binary files split by splat (not checked in)
-build.na/           ; build folder (not checked in)
+asm/             ; assembly files split by splat (not checked in)
+assets/          ; binary files split by splat (not checked in)
+build/           ; build folder (not checked in)
 include/
   2.0I/          ; libultra 2.0I headers
 lib/libultra.a   ; libultra 2.0I static library

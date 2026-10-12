@@ -8,11 +8,11 @@ model: DeepSeek V4 Flash (deepseek)
 
 ## Project Structure
 
-- `asm.na/nonmatchings`: Readonly - target assembly of unmatched functions.
-- `asm.na/matchings`: Readonly - target assembly of matched functions, search here for specific assembly patterns.
-- `src.na/`: C source files.
+- `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
+- `asm/matchings`: Readonly - target assembly of matched functions, search here for specific assembly patterns.
+- `src.us/`: C source files.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
-- `build.na/`: Readonly - compiled object files and the built ROM image.
+- `build/`: Readonly - compiled object files and the built ROM image.
 
 # Your Job
 1. Remove any unnecessary casts.

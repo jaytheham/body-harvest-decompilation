@@ -1,14 +1,13 @@
 # directories
 
 __pycache__/
-asm.na/
+asm/
 asm.eu/
-assets.na/
+assets/
 assets.eu/
 bin/
-build.na/
+build/
 build.eu/
-build/lib/
 nonmatchings/
 reference/
 tools/windows/
@@ -37,5 +36,5 @@ ctx.c.m2c
 reference_index.json
 asm_pattern_index.json
 pah.conf
-.tmp_na_probe/
+.tmp_us_probe/
 function-inventory.json

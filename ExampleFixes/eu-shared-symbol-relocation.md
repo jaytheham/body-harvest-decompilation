@@ -48,7 +48,7 @@ across pipeline re-runs.
 
 ## Verification
 
-Rebuild **both** regions: NA must stay byte-exact (`build.na/bh.na.z64` ==
-`baserom.na.z64`) and the port must become byte-exact (`build.eu/bh.eu.z64` ==
+Rebuild **both** regions: NA must stay byte-exact (`build/bh.us.z64` ==
+`baserom.us.z64`) and the port must become byte-exact (`build.eu/bh.eu.z64` ==
 `baserom.eu.z64`). Diff the ROM bytes and confirm zero. DRAM address operands
 (`%hi`/`%lo` of a global) are the tell.

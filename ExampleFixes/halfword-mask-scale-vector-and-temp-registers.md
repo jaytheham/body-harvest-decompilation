@@ -27,7 +27,7 @@ all three elements also emits three LI instructions. Moving the matrix
 allocation among the scale writes and changing local scopes did not close
 this residual.
 
-Validation: tools/make.ps1 reported build/bh.na.z64: OK, and tools/diff.ps1
+Validation: tools/make.ps1 reported build/bh.us.z64: OK, and tools/diff.ps1
 reported CURRENT (0) against func_80097B74_A6B24. Other unfinished functions
 used their assembly for this full-ROM check. This is a measured source
 lever for this function, not a general assertion about every folded mask.

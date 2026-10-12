@@ -36,4 +36,4 @@ The copy produces no extra machine instruction.
 When a named local fixes one register mismatch but shifts allocation across
 the function, inspect whether that local could have been reused earlier.
 An explicit copy can affect IDO allocation even when the generated move is
-eliminated. This exact form produced diff score 0 and `build.na/bh.na.z64: OK`.
+eliminated. This exact form produced diff score 0 and `build/bh.us.z64: OK`.
