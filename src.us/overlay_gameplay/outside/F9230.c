@@ -27,7 +27,7 @@ const u32 jtbl_80144420_1533D0[] = {
 	0x800EB5F0, 0x800EB5F0, 0x800EB624, 0x800EB624, 0x800EB5F8, 0x800EB600, 0x800EB608, 0x800EB610, 0x800EB618, 0x800EB620, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB5F0,
 };
 const f64 D_80144468_153418[1] = {3.141592654};
-const f64 D_80144470_153420[1] = {180.0};
+const struct { f64 value; } D_80144470_153420 = {180.0};
 const f64 D_80144478_153428[1] = {70.0};
 const f64 D_80144480_153430[1] = {180.0};
 const f64 D_80144488_153438[1] = {180.0};
@@ -1057,17 +1057,18 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 #endif
 
 // CURRENT(378)
-#ifdef NON_MATCHING
 void func_800EC0D0_FB080(s32 arg0) {
+	s32 pad0[2];
 	s16 sp46;
 	s16 sp44;
 	s16 sp42;
 	s16 sp40;
-	f64 sp3C;
+	f32 sp3C;
 	s16 sp3A;
+	f32 pad;
+	s32 temp_f6;
 	f32 sp2C;
 	f32 sp28;
-	s32 temp_f6;
 	UnkBuildingProp_80118774 *temp_v1;
 
 	D_80048188 = 1;
@@ -1075,7 +1076,7 @@ void func_800EC0D0_FB080(s32 arg0) {
 	D_801575E0.unk4 = 0;
 	D_801575E0.unk2 = 2;
 	if (D_80157F68 <= 0) {
-		temp_v1 = &D_80148390_157340[((u8 *)func_801164C4_125474(D_80052542, D_80052546))[8]];
+		temp_v1 = &D_80148390_157340[func_801164C4_125474(D_80052542, D_80052546)->pad8[0]];
 		if (temp_v1->unk0 == 0) {
 			if (D_80157F68 <= 0) {
 				gameplayMode = 6;
@@ -1088,8 +1089,8 @@ void func_800EC0D0_FB080(s32 arg0) {
 				D_801575E0.unk16 = 0x36;
 			}
 			func_801165FC_1255AC(D_80052543, D_80052547, &sp46, &sp44, &sp42, &sp40);
-			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420) / 32768.0);
-			switch (temp_f6) {
+			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420.value) / 32768.0);
+			switch ((s32)(((f64)(f32)sp40 * D_80144470_153420.value) / 32768.0)) {
 				case 0:
 				case 0x168:
 					sp3A = 0x4000;
@@ -1111,6 +1112,7 @@ void func_800EC0D0_FB080(s32 arg0) {
 					sp28 = 0.0f;
 					break;
 
+
 				case -0xB4:
 				case 0xB4:
 					sp3A = -0x4000;
@@ -1122,20 +1124,19 @@ void func_800EC0D0_FB080(s32 arg0) {
 					osSyncPrintf(D_80144354_153304, temp_f6);
 					break;
 			}
-			D_801575E0.unk6 = (s16)(sp46 + (s32)sp2C);
-			D_801575E0.unkE = (s16)(sp42 + (s32)sp28);
+			temp_f6 = sp44;
+			D_801575E0.unk6 = sp46 + (s32)sp2C;
+			D_801575E0.unkA = temp_f6;
+			D_801575E0.unkE = sp42 + (s32)sp28;
 			D_801575E0.unk8 = 0x7FFF;
 			D_801575E0.unkC = 0x7FFF;
 			D_801575E0.unk10 = 0x7FFF;
-			D_801575E0.unkA = sp44;
 			D_801575E0.unk12 = sp3A;
 		}
 	}
 	(void)arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC0D0_FB080.s")
-#endif
+
 
 void func_800EC330_FB2E0(void) {
 	Unk800522C0 *temp_v0;
