@@ -308,7 +308,8 @@ $(TARGET).elf: $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_F
 	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 ifndef PERMUTER
-$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h
+$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.h include/variables.h include/structs.h \
+		include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h
 	$(call RUN,$(CC_CHECK) $<)
 	$(PRINT) "[$(YELLOW) syntax $(NO_COL)] $<\n"
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
