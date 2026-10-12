@@ -41,8 +41,6 @@ segments:
     type: code
     start: 0x1000
     vram: 0x80000400
-    align: 8
-    subalign: 8
     subsegments:
       - [0x1000, asm, core/1000]
       - [0x1050, c, core/1050] # Save data
@@ -302,21 +300,18 @@ segments:
       - [0x3F090, .rodata, ../src/common/core/terrain_lookup]
       - [0x3F450, .rodata, ../src/common/core/camera_curve]
       - [0x3F490, .rodata, ../src/common/core/rsp_data]
-      - [0x40780, rodata, core/tail_pad]
 
   - name: overlay_gameplay_frontend
     type: code
-    start: 0x40788
-    vram: 0x800702A8
+    start: 0x40750
+    vram: 0x800702A0
     exclusive_ram_id: 800702A0
     overlay: true
-    align: 8
-    subalign: 8
     subsegments:
-      - [0x40788, c, overlay_gameplay/frontend/40788]
-      - [0x4E448, c, overlay_gameplay/frontend/4E448]
-      - [0x51CC8, c, overlay_gameplay/frontend/51CC8]
-      - [0x61628, bin]
+      - [0x40750, c, overlay_gameplay/frontend/40750]
+      - [0x4E450, c, overlay_gameplay/frontend/4E450]
+      - [0x52E50, c, overlay_gameplay/frontend/52E50]
+      - [0x61620, bin]
 
   - name: overlay_gameplay_outside
     type: code
