@@ -1,6 +1,32 @@
 #include <ultra64.h>
 #include "common.h"
 
+/* Preserve the boot unit's alignment origin for unreachable thread epilogues. */
+#pragma GLOBAL_ASM(
+glabel func_80000400_1000
+    /* 1000 80000400 3C088004 */  lui        $t0, %hi(D_8003FB20)
+    /* 1004 80000404 3C090003 */  lui        $t1, (0x30750 >> 16)
+    /* 1008 80000408 2508FB20 */  addiu      $t0, $t0, %lo(D_8003FB20)
+    /* 100C 8000040C 35290750 */  ori        $t1, $t1, (0x30750 & 0xFFFF)
+  .L80000410_1010:
+    /* 1010 80000410 2129FFF8 */  addi       $t1, $t1, -0x8 /* handwritten instruction */
+    /* 1014 80000414 AD000000 */  sw         $zero, 0x0($t0)
+    /* 1018 80000418 AD000004 */  sw         $zero, 0x4($t0)
+    /* 101C 8000041C 1520FFFC */  bnez       $t1, .L80000410_1010
+    /* 1020 80000420 21080008 */   addi      $t0, $t0, 0x8 /* handwritten instruction */
+    /* 1024 80000424 3C0A8001 */  lui        $t2, %hi(func_8000EF10_FB10)
+    /* 1028 80000428 3C1D8006 */  lui        $sp, %hi(D_8005BF58)
+    /* 102C 8000042C 254AEF10 */  addiu      $t2, $t2, %lo(func_8000EF10_FB10)
+    /* 1030 80000430 01400008 */  jr         $t2
+    /* 1034 80000434 27BDBF58 */   addiu     $sp, $sp, %lo(D_8005BF58)
+    /* 1038 80000438 00000000 */  nop
+    /* 103C 8000043C 00000000 */  nop
+    /* 1040 80000440 00000000 */  nop
+    /* 1044 80000444 00000000 */  nop
+    /* 1048 80000448 00000000 */  nop
+    /* 104C 8000044C 00000000 */  nop
+)
+
 /* Shared graphics state (ROM 0x31D20 - 0x31EF0) */
 
 Mtx D_80031120_31D20 = { {
@@ -450,8 +476,7 @@ void checkForRumblePak(void) {
 	D_80047698 = gameplayMode;
 }
 
-// CURRENT(835)
-#ifdef NON_MATCHING
+// Matched: thread epilogue alignment shares the boot translation unit.
 void func_80000ED4_1AD4(void) {
 	s32 pad0;
 	Unk80047578 *sp58;
@@ -461,36 +486,33 @@ void func_80000ED4_1AD4(void) {
 
 	while (1) {
 		osRecvMesg(&D_800433A8, (OSMesg *)&sp58, 1);
-		if (D_80047678 != 1) {
-			continue;
+		if (D_80047678 == 1) {
+			func_8000FF40_10B40();
+			cmd = sp58->unk0;
+			idx = sp58->unk4;
+			switch (cmd) {
+			case 1:
+				if (osMotorStart(&(&D_80047610)[idx]) != 0) {
+					D_80047678 = 0;
+				}
+				break;
+			case 0:
+				if (osMotorStop(&(&D_80047610)[idx]) != 0) {
+					D_80047678 = 0;
+				}
+				break;
+			case 2:
+				pfs = &(&D_80047610)[idx];
+				if (osMotorInit(&D_80043388, pfs, 0) == 0) {
+					D_80047678 = 1;
+				}
+				osMotorStop(pfs);
+			}
+			func_8000FF88_10B88();
 		}
-		func_8000FF40_10B40();
-		cmd = sp58->unk0;
-		idx = sp58->unk4;
-		switch (cmd) {
-		case 1:
-			if (osMotorStart(&D_80047610 + idx) != 0) {
-				D_80047678 = 0;
-			}
-			break;
-		case 0:
-			if (osMotorStop(&D_80047610 + idx) != 0) {
-				D_80047678 = 0;
-			}
-			break;
-		case 2:
-			pfs = &D_80047610 + idx;
-			if (osMotorInit(&D_80043388, pfs, 0) == 0) {
-				D_80047678 = 1;
-			}
-			osMotorStop(pfs);
-		}
-		func_8000FF88_10B88();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000ED4_1AD4.s")
-#endif
+
 
 void func_80001050_1C50(s32 arg0) {
 	D_80047578.unk4 = arg0;
@@ -750,30 +772,35 @@ void func_80001984_2584(void) {
     }
 }
 
-// CURRENT (7171)
+// CURRENT (4796)
 #ifdef NON_MATCHING
 void guess_prepareToSaveGame(s32 arg0) {
 	Unk80052A98 *stats;
 	u8 *dest;
 	s32 i;
+	s32 cached;
 
-	dest = (u8 *)&D_800431C0 + arg0 * 0x7A + 0x53;
+	dest = &D_800431C0[arg0 * 0x7A + 0x53];
 
 	stats = D_80052A98;
 	do {
 		osSyncPrintf(D_80036884_37484, stats->score);
+		cached = stats->score;
 		dest += 4;
-		dest[-3] = (u8)(stats->score >> 8);
-		dest[-2] = (u8)(stats->score >> 16);
-		dest[-1] = (u8)(stats->score >> 24);
-		osSyncPrintf(D_80036894_37494, (u16)stats->humansKilled), dest[-4] = (u8)stats->score;
+		dest[-3] = (u8)(cached >> 8);
+		dest[-2] = (u8)(cached >> 16);
+		dest[-1] = (u8)(cached >> 24);
+		dest[-4] = cached;
+		osSyncPrintf(D_80036894_37494, stats->humansKilled);
 		dest += 1;
-		osSyncPrintf(D_800368A0_374A0, stats->secondsElapsed), dest[-1] = (u8)(u16)stats->humansKilled;
-		dest[1] = (u8)((s32)stats->secondsElapsed >> 8);
-		dest[2] = (u8)((s32)stats->secondsElapsed >> 16);
+		dest[-1] = stats->humansKilled;
+		osSyncPrintf(D_800368A0_374A0, stats->secondsElapsed);
+		cached = stats->secondsElapsed;
+		dest[1] = (u8)(cached >> 8);
+		dest[2] = (u8)(cached >> 16);
 		dest += 3;
 		stats++;
-		dest[-3] = (u8)stats[-1].secondsElapsed;
+		dest[-3] = cached;
 	} while (stats < (Unk80052A98 *)&D_80052AC8);
 
 	osSyncPrintf(D_800368AC_374AC);
@@ -837,7 +864,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x28);
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x30);
 		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x38);
-		osSyncPrintf(D_80036938_37538, ((Flags2x32 *)&D_8004DC48)->unk4, ((Flags2x32 *)&D_8004DC48)->unk0);
+		osSyncPrintf(D_80036938_37538, *(u64 *)&D_8004DC48);
 	}
 
 	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
@@ -867,14 +894,14 @@ void guess_prepareToSaveGame(s32 arg0) {
 
 		flags2 = *(u64 *)&D_8004DC50;
 		*dest++ = (s8)flags2;
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 8);
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x10);
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x18);
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x20);
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x28);
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x30);
-		*dest++ = (s8)(u32)__ull_rshift(flags2, 0x38);
-		osSyncPrintf(D_80036984_37584, D_8004DC50.unk4, D_8004DC50.unk0);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 8);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x10);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x18);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x20);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x28);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x30);
+		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x38);
+		osSyncPrintf(D_80036984_37584, *(u64 *)&D_8004DC50);
 	}
 
 	{
@@ -1623,7 +1650,7 @@ void func_800035D8_41D8(s16 arg0)
 		} else {
 			D_800475B8[i].stick_x = 0;
 		}
-		
+
 		if (arg0 < D_800475B8[i].stick_y) {
 			D_800475B8[i].stick_y -= arg0;
 		} else if (D_800475B8[i].stick_y < (-arg0)) {
@@ -1700,7 +1727,7 @@ s32 func_800038E0_44E0(void)
 f32 func_80003910_4510(f32 arg0, s32 arg1)
 {
 	f32 result;
-	
+
 	result = 1.0f;
 	while (arg1--) {
 		result *= arg0;
@@ -1840,14 +1867,17 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 	} while (src != (s32 *)&D_80047708);
 }
 
-// CURRENT(9223)
+// CURRENT(365)
 #ifdef NON_MATCHING
 void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
-	s32 sp3C, sp38, sp34, sp30, sp2C;
+	s32 sp3C[1];
+	s32 sp38;
+	s32 sp34;
+	s32 sp30;
+	s32 sp2C;
 	s32 temp1, temp2;
-	s32 i;
-	s32 *var_v0;
-	s32 *var_a0;
+	u32 mask;
+	s32 *src;
 
 	D_800476C8[0].unkC = 0;
 	D_800476C8[0].unk1C = 0;
@@ -1865,29 +1895,36 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg1 != NULL) {
-		sp3C = coss(arg1[0]);
+		sp3C[0] = coss(arg1[0]);
 		sp38 = sins(arg1[0]);
 		sp34 = coss(arg1[2]);
 		sp30 = sins(arg1[2]);
 		sp2C = coss(arg1[1]);
 		temp1 = sins(arg1[1]);
-		D_800476C8[0].unk8 = sp38 * -2;
-		D_800476C8[0].unk0 = ((sp3C * sp2C) >> 15) * 2;
-		D_800476C8[0].unk4 = ((sp3C * temp1) >> 15) * 2;
+		D_800476C8[0].unk8 = (-sp38) * 2;
+		D_800476C8[0].unk0 = ((sp3C[0] * sp2C) >> 15) * 2;
+		D_800476C8[0].unk4 = ((sp3C[0] * temp1) >> 15) * 2;
 		temp2 = (sp38 * sp30) >> 15;
+
 		D_800476C8[0].unk10 = (((-sp34 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+
 		D_800476C8[0].unk14 = (((sp34 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
-		D_800476C8[0].unk18 = ((sp30 * sp3C) >> 15) * 2;
+		D_800476C8[0].unk18 = ((sp30 * sp3C[0]) >> 15) * 2;
 		temp2 = (sp38 * sp34) >> 15;
 		D_800476C8[1].unk0 = (((sp30 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+
 		D_800476C8[1].unk4 = (((-sp30 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
-		D_800476C8[1].unk8 = ((sp3C * sp34) >> 15) * 2;
+
+		if (sp3C[0] * 0) {}
+		D_800476C8[1].unk8 = ((sp3C[0] * sp34) >> 15) * 2;
 	} else {
 		D_800476C8[0].unk0 = 0x10000;
+
 		D_800476C8[0].unk10 = 0;
 		D_800476C8[1].unk0 = 0;
 		D_800476C8[0].unk4 = 0;
 		D_800476C8[0].unk14 = 0x10000;
+
 		D_800476C8[1].unk4 = 0;
 		D_800476C8[0].unk8 = 0;
 		D_800476C8[0].unk18 = 0;
@@ -1895,31 +1932,38 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg2 != NULL) {
-		D_800476C8[0].unk0 = (D_800476C8[0].unk0 * arg2[0]) >> 8;
-		D_800476C8[0].unk4 = (D_800476C8[0].unk4 * arg2[0]) >> 8;
-		D_800476C8[0].unk8 = (D_800476C8[0].unk8 * arg2[0]) >> 8;
-		D_800476C8[0].unk10 = (D_800476C8[0].unk10 * arg2[1]) >> 8;
-		D_800476C8[0].unk14 = (D_800476C8[0].unk14 * arg2[1]) >> 8;
-		D_800476C8[0].unk18 = (D_800476C8[0].unk18 * arg2[1]) >> 8;
-		D_800476C8[1].unk0 = (D_800476C8[1].unk0 * arg2[2]) >> 8;
-		D_800476C8[1].unk4 = (D_800476C8[1].unk4 * arg2[2]) >> 8;
-		D_800476C8[1].unk8 = (D_800476C8[1].unk8 * arg2[2]) >> 8;
+		D_800476C8[0].unk0 *= arg2[0];
+		D_800476C8[0].unk4 *= arg2[0];
+		D_800476C8[0].unk8 *= arg2[0];
+		D_800476C8[0].unk0 >>= 8;
+		D_800476C8[0].unk4 >>= 8;
+		D_800476C8[0].unk8 >>= 8;
+		D_800476C8[0].unk10 *= arg2[1];
+		D_800476C8[0].unk14 *= arg2[1];
+		D_800476C8[0].unk18 *= arg2[1];
+		D_800476C8[0].unk10 >>= 8;
+		D_800476C8[0].unk14 >>= 8;
+		D_800476C8[0].unk18 >>= 8;
+		D_800476C8[1].unk0 *= arg2[2];
+		D_800476C8[1].unk4 *= arg2[2];
+		D_800476C8[1].unk8 *= arg2[2];
+		D_800476C8[1].unk0 >>= 8;
+		D_800476C8[1].unk4 >>= 8;
+		D_800476C8[1].unk8 >>= 8;
 	}
 
-	var_v0 = (s32 *)D_800476C8;
-	var_a0 = arg3;
-	do {
-		var_a0[0] = ((var_v0[1] & 0xFFFF0000) >> 16) + (var_v0[0] & 0xFFFF0000);
-		var_a0 += 4;
-		var_a0[4] = (var_v0[0] << 16) + (var_v0[1] & 0xFFFF);
-		var_a0[-3] = ((var_v0[3] & 0xFFFF0000) >> 16) + (var_v0[2] & 0xFFFF0000);
-		var_a0[5] = (var_v0[2] << 16) + (var_v0[3] & 0xFFFF);
-		var_a0[-2] = ((var_v0[5] & 0xFFFF0000) >> 16) + (var_v0[4] & 0xFFFF0000);
-		var_a0[6] = (var_v0[4] << 16) + (var_v0[5] & 0xFFFF);
-		var_a0[-1] = ((var_v0[7] & 0xFFFF0000) >> 16) + (var_v0[6] & 0xFFFF0000);
-		var_a0[7] = (var_v0[6] << 16) + (var_v0[7] & 0xFFFF);
-		var_v0 += 8;
-	} while (var_v0 != (s32 *)&D_80047708);
+	/* Keep this setup together to preserve the address scheduling. */
+	mask = 0xFFFF0000; arg0 = (Unk80052B40 *)arg3; src = D_800476C8_words; do { ((s32 *)arg0)[0] = (src[0] & mask) + ((src[1] & mask) >> 0x10);
+		arg0 = (Unk80052B40 *)&((s32 *)arg0)[4];
+		((s32 *)arg0)[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
+		((s32 *)arg0)[-3] = (src[2] & mask) + ((src[3] & mask) >> 0x10);
+		((s32 *)arg0)[5] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
+		((s32 *)arg0)[-2] = (src[4] & mask) + ((src[5] & mask) >> 0x10);
+		((s32 *)arg0)[6] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
+		((s32 *)arg0)[-1] = (src[6] & mask) + ((src[7] & mask) >> 0x10);
+		((s32 *)arg0)[7] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
+		src = &src[8];
+	} while (src != (s32 *)&D_80047708);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003DE8_49E8.s")
