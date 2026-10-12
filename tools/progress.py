@@ -100,21 +100,27 @@ VERSION_MACROS = frozenset({"VERSION_US", "VERSION_EU", "NON_MATCHING"})
 RE_DEFINED_COND = re.compile(r'(!?)\s*defined\s*(?:\(\s*(\w+)\s*\)|\s(\w+))')
 RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 
-# Shown by the EU page. The overlay figure was measured on 2026-10-12 with a scratch script (not committed):
-# every NTSC overlay function was compared with its EU counterpart, word by word in the two ROMs, with the
-# jump targets and the halves of address loads masked. 2346 of the 2354 functions in the eight overlays matched.
+# Shown by the EU page. The overlay figures were measured on 2026-10-12 with a scratch script (not committed):
+# every NTSC overlay function was compared with its EU counterpart, word by word in the two ROMs. 2216 of the 2354
+# functions in the eight overlays (108 byte-identical, 2108 differing only in jump targets and in address loads, a
+# lui and the instruction using its low half, with every address in RAM) pass that strict relocation test. Another
+# 130 have the same opcode and registers in every word but failed it (an immediate differed with no lui to resolve
+# it, or a low half did not resolve to a RAM address); the 16-bit differences of those immediates also occur among the
+# verified relocations, so they are probably relocations too, which was not verified. 2346 is the two groups together.
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
-    "(src/common/core), and the stubs under src.eu for the three gameplay overlays and a few libultra files. "
-    "Not counted: the five level overlays and most of libultra have no tracked EU source, so they cannot be "
-    "counted from the repository.\n"
+    "(src/common/core), and the stubs under src.eu for the three gameplay overlays and the one libultra file there "
+    "(sl.c). Not counted: the five level overlays and the rest of libultra have no tracked EU source, so they cannot "
+    "be counted from the repository.\n"
     "The core figures are the same functions as on the US page, so the two pages must not be summed. "
     "Matching a function in a shared core file counts for both versions.\n"
     "The EU overlays are not shared with NTSC yet, so their functions are still assembly stubs here, apart from "
     "empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU "
-    "counterpart while masking jump targets and the halves of address loads, 99.66 percent (2346 of 2354) of the "
-    "functions in the eight overlays, gameplay and level, are identical to NTSC apart from relocations, so sharing "
-    "the overlays would lift these figures a great deal."
+    "counterpart: of the 2354 functions in the eight overlays, gameplay and level, 2216 (94.14 percent) are identical "
+    "to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 "
+    "failed that check, but their differing immediates match relocation differences seen elsewhere, so they are "
+    "probably relocations too; counting them, 2346 (99.66 percent) are identical or probably identical to NTSC "
+    "apart from relocations. Sharing the overlays would lift these figures a great deal."
 )
 
 
