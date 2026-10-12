@@ -3682,76 +3682,70 @@ void func_802DDA64_1F6774(u8 arg0, u8 arg1, u8 arg2) {
 void func_802DDE04_1F6B14(u8 arg0) {
 	AlienInstance *alien1;
 	AlienInstance *alien2;
-	Unk8014DD50 *lookup_table;
-	Unk8014DD50 *weapon_struct;
+	Unk8014DD50 *table;
 	s16 temp_value;
+	s8 type_id1;
 	s32 weapon_dmg;
 	s32 dmg_threshold;
-	s8 type_id1;
 	s8 type_id2;
 	s8 type_id3;
 	s8 type_id4;
 	s8 type_id5;
-	s16 value40;
-	s16 value42;
-	s16 value44;
-	s16 value46;
-	s16 value48;
+	s8 type_id6;
+	s16 joints[5];
+	s32 parentId;
+	Unk8014DD50 *weapon;
 
 	alien1 = &alienInstances[arg0];
-	alien2 = &alienInstances[alien1->unk25];
+	parentId = alien1->unk25;
+	alien2 = &alienInstances[parentId];
 
 	if (!(alien2->unk20 & (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKF)) && ((alien1->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) != (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) && (alien1->unk1E == 0) && (alien1->unk2C != 0)) {
 		if (func_80084FE8_93F98(arg0, 0x800) != 0) {
-			alien2->unk20 = (s32) (alien2->unk20 | ALIEN_FLAG_UNKE);
+			alien2->unk20 = (alien2->unk20 | ALIEN_FLAG_UNKE);
 			alien1->unk36 = 0;
 			alien1->unk2C = (s16) (alien1->unk2C - 1);
 		}
 	} else {
+		table = D_8014DD50;
+		type_id1 = table[alien1->unkC].unkC;
 		temp_value = alien1->unk2C;
-		lookup_table = &D_8014DD50[alien1->unkC];
-		type_id1 = lookup_table->unkC;
-		value40 = (s16) type_id1;
+		joints[0] = type_id1;
 
-		lookup_table = &D_8014DD50[type_id1];
-		type_id2 = lookup_table->unkC;
-		value42 = (s16) type_id2;
-
-		lookup_table = &D_8014DD50[type_id2];
-		type_id3 = lookup_table->unkC;
-		value44 = (s16) type_id3;
-
-		lookup_table = &D_8014DD50[type_id3];
-		type_id4 = lookup_table->unkC;
-		value46 = (s16) type_id4;
-
-		lookup_table = &D_8014DD50[type_id4];
-		type_id5 = lookup_table->unkC;
-		value48 = (s16) type_id5;
+		type_id2 = table[joints[0]].unkC;
+		joints[1] = type_id2;
+		type_id3 = table[type_id2].unkC;
+		joints[2] = type_id3;
+		type_id4 = table[type_id3].unkC;
+		joints[3] = type_id4;
+		type_id5 = table[type_id4].unkC;
+		joints[4] = type_id5;
+		type_id6 = table[type_id5].unkC;
 
 		if (alien2->unk20 & ALIEN_FLAG_UNKE) {
 			dmg_threshold = 0x2710;
+		} else if ((alien1->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) == (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) {
+			dmg_threshold = 0x1D4C;
 		} else {
 			dmg_threshold = 0;
-			if ((alien1->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) == (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) {
-				dmg_threshold = 0x1D4C;
-			}
 		}
 
 		if (temp_value < dmg_threshold) {
-			alien1->unk2C = (s16) (temp_value + 0x64);
+			alien1->unk2C = temp_value + 0x64;
+			temp_value = alien1->unk2C;
 		} else if (dmg_threshold < temp_value) {
-			alien1->unk2C = (s16) (temp_value - 0x64);
+			alien1->unk2C = temp_value - 0x64;
+			temp_value = alien1->unk2C;
 		}
 
-		weapon_struct = &D_8014DD50[type_id5];
-		weapon_struct->unk8 = (u16) (weapon_struct->unk8 + alien1->unk2C);
+		weapon = &table[type_id6];
+		weapon->unk8Unsigned += temp_value;
 
 		func_80137468_146418(arg0, 0x261);
 
 		if ((alien1->unk2C >= 0x26AD) && ((alien2->unk20 & ALIEN_FLAG_UNKE) != 0)) {
-			alien2->unk20 = (s32) (alien2->unk20 | ALIEN_FLAG_UNKD);
-			weapon_dmg = func_80081F18_90EC8(arg0, 5, 4, &value40, &D_802E0B08);
+			alien2->unk20 = (alien2->unk20 | ALIEN_FLAG_UNKD);
+			weapon_dmg = func_80081F18_90EC8(arg0, 5, 4, &joints[0], &D_802E0B08_1F9818);
 
 			if (weapon_dmg == 2) {
 				func_80087188_96138(arg0, 0, 0);
@@ -3764,12 +3758,13 @@ void func_802DDE04_1F6B14(u8 arg0) {
 					}
 					alien1->unk1E = (s16) ((func_800038E0_44E0() % 100) + 0x32);
 				}
-			} else if (weapon_dmg == 4) {
-				alien2->unk20 = (s32) (alien2->unk20 & ~(ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD));
+			} else if ((s8)weapon_dmg == 4) {
+				alien2->unk20 = (alien2->unk20 & ~(ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD));
 			}
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDE04_1F6B14.s")
 #endif
