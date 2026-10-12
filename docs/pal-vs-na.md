@@ -153,45 +153,37 @@ functions genuinely need a PAL-specific body.
 ### The mechanism works
 
 `splat` resolves a `c` subsegment as `src_path / name`, where `name` is the
-third yaml element verbatim, so a traversing name reaches across trees. Tested
-in `bh.eu.yaml`:
+third yaml element verbatim, so a traversing name reaches across trees. It is
+used throughout `bh.eu.yaml`, for example:
 
 ```yaml
-- [0x1050, c, ../src.us/core/1050]     # resolves to src.us/core/1050.c
+- [0x53D0, c, ../src/common/core/53D0]     # resolves to src/common/core/53D0.c
 ```
 
 The extract and compile both resolve the file correctly. Nothing in splat needs
 patching for this, though at scale a per-subsegment source root in `out_path()`
 would be tidier than `..` paths in the config.
 
-### What blocks it: symbol declarations, not the C
+### Symbol declarations, not the C
 
-`10A20.c` is the smallest fully-decompiled shared file (41 lines, no stubs) and
-it still fails to compile for EU:
-
-```
-cfe: Error: src.us/core/10A20.c, line 27: '__osSiAccessQueue' undefined
-cfe: Error: src.us/core/10A20.c, line 27: 'siacs_bss_0000' undefined
-cfe: Error: src.us/core/10A20.c, line 40: 'D_80068038' undefined
-```
-
-All three are declared in `symbol_addrs.us.txt` and none is in the EU symbol
-files. `10A20.c` is a libultra caller, and EU carries libultra as handwritten
-asm rather than C, so EU's build never needed those symbols. **The porting work
-is making the EU symbol tables carry everything a shared NA body references** —
-not the C itself.
+Sharing a file needs the EU symbol tables to carry every symbol a shared NA body
+references. `10A20.c` first failed for EU on `__osSiAccessQueue`,
+`siacs_bss_0000` and `D_80068038`, which only the NA symbol files declared;
+the `eu_` pins and base block described in `docs/eu-port-notes.md` supply them
+now, and the file is shared.
 
 ### Which files can share today
 
-Of the 23 NA core C files, 16 contain no `#pragma GLOBAL_ASM` and are
-shareable now; 7 still carry stubs. A stub cannot cross versions, because
+Of the 23 NA core C files, 17 contained no `#pragma GLOBAL_ASM`. 15 of them
+are shared from `src/common/core/`; `12C80.c` and `loader.c` are not, and EU
+has its own stub files for them. The other 6 still carry stubs. A stub cannot
+cross versions, because
 `GLOBAL_ASM` bytes are baked with that version's relocations, so a shared file
 is only safe with zero asm dependencies.
 
-`core/1050` is the representative blocker: NA has 13 stubs and 116 decompiled
-functions; EU's stub file for the same range has 58 pragmas, of which only 11
-basenames match NA's. So EU needs pragmas for *more* functions than NA does,
-not just the same ones repointed.
+`core/1050` is the representative blocker: its 58 NA functions include 13 that
+are still `NON_MATCHING` with a `GLOBAL_ASM` fallback, so the file cannot be
+shared; EU's `src.eu/core/1050.c` is 58 `GLOBAL_ASM` stubs, one per function.
 
 ### Generating the non-shareable files
 
@@ -206,9 +198,8 @@ already computes exactly this NA-to-EU mapping by overlap, which is what the
 `DIFF` marker block in `src.eu/core/53F0.c` is derived from. The generation has
 to be a tool rather than hand-copied, or the trees drift as NA decompiles more.
 
-The corresponding asm does exist on both sides for the 11 matched basenames in
-`1050`; the 2 NA-only ones and the 47 EU-only ones are the part that needs the
-name mapping.
+In `1050` every function sits at the same address in both ROMs, so the EU stub
+names equal NA's except where NA has given a function a real name (12 of 58).
 
 ## Open, not verified
 
