@@ -354,15 +354,16 @@ def build(args):
     print(f"Building {len(objects)} objects ({args.jobs} workers)...", flush=True)
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         list(pool.map(compile_object, objects))
-    # The splat script always names build/lib/libultra_rom.a, even for EU.
-    library = ROOT / "build/lib/libultra_rom.a"
-    library.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(ROOT / "lib/libultra_rom.a", library)
-    run([sys.executable, "tools/set_o32abi_bit.py", "--quiet", library], quiet=args.quiet)
     elf = f'{paths["build"]}/bh.{args.version}.elf'
     ldflags = ["-T", paths["ld"], "-T", paths["undefined"], "-T", paths["undefined_auto"],
-               "-Map", f'{paths["build"]}/bh.{args.version}.map', "--no-check-sections", "build/lib/libultra_rom.a"]
+               "-Map", f'{paths["build"]}/bh.{args.version}.map', "--no-check-sections"]
     if args.version == "us":
+        # Only bh.ld selects sections from libultra_rom.a; bh.eu.ld links libultra from extracted asm.
+        library = ROOT / "build/lib/libultra_rom.a"
+        library.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(ROOT / "lib/libultra_rom.a", library)
+        run([sys.executable, "tools/set_o32abi_bit.py", "--quiet", library], quiet=args.quiet)
+        ldflags.append("build/lib/libultra_rom.a")
         for symbol in ("osViGetCurrentLine", "osAiGetLength", "osPiGetStatus", "__osLeoInterrupt", "guTranslate"):
             ldflags += ["-u", symbol]
     ldflags += ["-o", elf]
