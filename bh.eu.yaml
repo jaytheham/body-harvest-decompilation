@@ -267,7 +267,7 @@ segments:
       - [0x378E0, rodata, core/53F0]
       - [0x38090, rodata, core/AD60]
       - [0x38250, rodata, core/E830]
-      - [0x38290, .rodata, ../src/common/core/FD80]
+      - [0x38280, .rodata, ../src/common/core/FD80]
       - [0x383B0, rodata, core/loader]
       - [0x38DF0, rodata, core/12C80]
       - [0x38FE0, rodata, core/17EE0]
