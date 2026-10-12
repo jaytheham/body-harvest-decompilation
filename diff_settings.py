@@ -1,13 +1,26 @@
 import os
 
+
+def add_custom_arguments(parser):
+    parser.add_argument(
+        "--version",
+        dest="bh_version",
+        choices=("us", "eu"),
+        default=None,
+        help="ROM version to diff (default: $BH_VERSION, else whichever is built, US first)",
+    )
+
+
 def apply(config, args):
     basename = 'bh'
-    if os.path.exists(f'build/{basename}.us.z64'):
-        version = 'us'
-    elif os.path.exists(f'build/{basename}.eu.z64'):
-        version = 'eu'
-    else:
-        version = 'us'
+    version = getattr(args, 'bh_version', None) or os.environ.get('BH_VERSION')
+    if version not in ('us', 'eu'):
+        if os.path.exists(f'build/{basename}.us.z64'):
+            version = 'us'
+        elif os.path.exists(f'build.eu/{basename}.eu.z64'):
+            version = 'eu'
+        else:
+            version = 'us'
 
     if os.name == 'nt':
         objdump = os.path.join(os.path.dirname(os.path.abspath(__file__)),

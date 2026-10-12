@@ -83,9 +83,14 @@ def differ_python():
     return sys.executable
 
 
-def run_differ(function, end_addr=None, base_asm=None):
-    """The differ's `plain` output as a list of lines."""
-    cmd = [differ_python(), str(DIFFER), "--no-pager", "--format=plain"]
+def run_differ(function, end_addr=None, base_asm=None, version="us"):
+    """The differ's `plain` output as a list of lines.
+
+    ``--version`` is defined by the repository's ``diff_settings.py``, which
+    picks the base ROM, built ROM and map for that version.
+    """
+    cmd = [differ_python(), str(DIFFER), "--no-pager", "--format=plain",
+           "--version", version]
     if base_asm:
         cmd += ["--base-asm", str(base_asm)]
     cmd.append(function)
@@ -151,9 +156,9 @@ def classify(marker, base_text, current_text):
     return "BRANCH" if mnem in BRANCH_MNEMONICS else "IMMEDIATE"
 
 
-def diff_function(function, end_addr=None, base_asm=None):
+def diff_function(function, end_addr=None, base_asm=None, version="us"):
     """``(tally, rows)`` for one function."""
-    lines = run_differ(function, end_addr, base_asm)
+    lines = run_differ(function, end_addr, base_asm, version)
     tally = collections.Counter()
     rows = []
     for marker, base, current in parse_rows(lines):
@@ -211,12 +216,12 @@ def main():
             names = names[:args.limit]
 
         totals = collections.Counter()
-        per_function = {}
+        per_function = collections.Counter()
         failures = []
         for i, name in enumerate(names, 1):
             try:
                 tally, _rows = diff_function(
-                    name, function_end(functions, name), args.base_asm)
+                    name, function_end(functions, name), args.base_asm, args.version)
             except SystemExit as e:
                 failures.append(name)
                 print(f"[{i}/{len(names)}] {name}: {e}", file=sys.stderr)
@@ -257,7 +262,7 @@ def main():
     functions = load_map(args.version)
     tally, rows = diff_function(args.function,
                                function_end(functions, args.function),
-                               args.base_asm)
+                               args.base_asm, args.version)
     if args.show:
         for cls, base, current in rows:
             print(f"{cls:<17} {base or '(absent)':<44} | {current or '(absent)'}")
