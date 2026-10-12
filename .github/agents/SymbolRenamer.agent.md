@@ -10,10 +10,11 @@ You will be given a function/symbol name and a new name to change it to. Your ta
 The existing name will be in the format func\_<RAM address>\_<ROM address> e.g. func_800038D4_44D4 or D\_<RAM address> e.g. D_80052ACC.
 To complete the renaming you need to:
 
-1. Search for instances of the existing name in .c and .h files in the src.us/ and include/ directories, replace them with the new name. Leave the name unchanged when it is being used to reference a .s file e.g. in `#pragma GLOBAL_ASM` lines.
+1. Search for instances of the existing name in .c and .h files in the src.us/, src/common/, src.eu/ and include/ directories, replace them with the new name. Leave the name unchanged when it is being used to reference a .s file e.g. in `#pragma GLOBAL_ASM` lines.
 2. Add a single-line comment above the definition (.c files) or beside the definition (.h files) of the symbol with just the original name.
 3. If the name is declared in symbol_addrs.us.txt, update the declaration there as well. If the name is not declared in symbol_addrs.us.txt, add a new declaration for it with the RAM address of the original name. E.g. for func_800038D4_44D4: `newName = 0x800038D4;`
 4. If there is a reference to the old name in undefined_syms.us.txt or undefined_syms_auto.txt remove them. If you are renaming a function the existing name in these files may be missing the `_ROM` suffix e.g. `func_800038D4`.
+   If the old name also appears in `symbol_addrs.eu.txt` or `undefined_syms.eu.txt` (names used by the shared C in `src/common/`), rename it there too and keep its EU address.
 5. Run powershell command `.\tools\extract.ps1` to regenerate the assembly files with the new name.
 6. Run powershell command `.\tools\make.ps1` to rebuild the project and ensure there are no errors from the renaming.
 

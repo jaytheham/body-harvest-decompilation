@@ -17,7 +17,8 @@ C89 code, compiler IDO 5.3 -O2 -mips2 -32.
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of matched functions.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src/common/`: C source files compiled into both the US and the EU build.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and ROM image.
 
@@ -48,9 +49,10 @@ If a function has a switch statement and there is an associated jump table const
 
 Ignore git history, the current state is the best version of the code found so far.
 
-- Declarations of global symbols must go in `include/variables.us.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
-- Add or update declarations for any called functions in `include/functions.us.h`.
+- Declarations of global symbols must go in `include/variables.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.h`.
+- Add or update declarations for any called functions in `include/functions.h`.
+- These three headers are shared by the US and EU builds. A declaration that exists only in the US ROM goes in the US-only `include/variables.us.h`, `include/structs.us.h` or `include/functions.us.h` (EU-only ones in the `.eu.h` files); all six are empty today.
 - Important: Replace all pointer arithmetic with struct/array access!
 - Remove unnecessary casts.
 - Replace goto-based control flow with structured control flow (if/else, for, while).

@@ -15,7 +15,8 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src/common/`: C source files compiled into both the US and the EU build.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly - compiled object files and the final ROM image.
 
@@ -54,9 +55,10 @@ Run pwsh: `.\tools\run-m2c.ps1 asm/nonmatchings/overlay_gameplay/outside/884C0/f
 
 Clean up the generated C code:
 
-- Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
-- Add or update declarations for any called functions in `include/functions.us.h`.
+- Add any missing declarations of data symbols used by the function to `include/variables.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.h`.
+- Add or update declarations for any called functions in `include/functions.h`.
+- These three headers are shared by the US and EU builds. A declaration that exists only in the US ROM goes in the US-only `include/variables.us.h`, `include/structs.us.h` or `include/functions.us.h` (EU-only ones in the `.eu.h` files); all six are empty today.
 - Replace all pointer arithmetic with struct/array access.
 - All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
@@ -101,12 +103,12 @@ Think about how a person would have originally written the code in C to produce 
 ## Finalize
 
 Only if you matched the function (without using NON_MATCHING) think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated case notes to help future decomp. Only for matched functions.
-Move any newly declared variables or functions from the C source file to `include/variables.us.h` and `include/functions.us.h`.
+Move any newly declared variables or functions from the C source file to `include/variables.h` and `include/functions.h`.
 
 ## Troubleshooting
 
 | Issue                             | Solution                                                    |
 | --------------------------------- | ----------------------------------------------------------- |
-| `undeclared identifier`           | Add `extern` to `include/variables.us.h`                    |
+| `undeclared identifier`           | Add `extern` to `include/variables.h`                       |
 | Link error (missing symbol)       | Ensure symbol is declared with `extern` in a header         |
 Jump table problems - ignore problems with jump tables target addresses for now, we will fix these in a later pass once all functions are matched, as they require special handling.

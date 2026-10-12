@@ -23,9 +23,10 @@ You will be given a C file to target, follow this process:
  - `/ExampleFixes`
  - `/include`
  - `/src.us`
+ - `/src/common`
  - `symbol_addrs.us.txt`
  - `undefined_syms.us.txt`
-5. Move any variables, structs, or function definitions the subagent added to a C file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
+5. Move any variables, structs, or function definitions the subagent added to a C file in `src.us/` or `src/common/` into the appropriate header file in `include/` (e.g. variables to `variables.h`, structs to `structs.h`, and function prototypes to `functions.h`).
 6. Make sure the function is not wrapped with `NON_MATCHING`, then build, if build returns `build/bh.us.z64: OK` then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
 7. If the build returns `FAILED`, check the function's CURRENT difference value with `diff.ps1`. If the difference value is lower than the original value that's good, restore the `NON_MATCHING` wrapper, update the comment above the wrapper with the new value `CURRENT(X)`, and commit the changes. If the difference value is the same or higher, undo all changes - including the removal of `NON_MATCHING` and check the build is OK before moving on to the next function.
 
@@ -45,7 +46,8 @@ Retain any existing comments.
 - `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
 - `build/`: Readonly - compiled object files and the final ROM image.
 - `tools/`: Readonly - tools for other tasks.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src/common/`: C source files compiled into both the US and the EU build.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 

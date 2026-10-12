@@ -16,7 +16,8 @@ The compiler used is IDO 5.3 -O2 -mips2 -32.
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src/common/`: C source files compiled into both the US and the EU build.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly - compiled object files and the final ROM image.
 
