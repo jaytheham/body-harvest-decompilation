@@ -2115,9 +2115,6 @@ block_211:
 
 // https://decomp.me/scratch/ShNcq
 // CURRENT(268)
-// Residual is cfe temp-bank allocation: the &buf address, the -0x48 compare constant and
-// the buf.w0 load rotate through $v0/$a2/$a3/$t9 (target: address->v0, const->a2, w0->t9).
-// 13 declaration/init/type variants all floor at 268; not a source-shape question.
 #ifdef NON_MATCHING
 // Is first weapon model valid
 // AI - Checks whether the alien type's first weapon model slot is a valid, non-empty entry
