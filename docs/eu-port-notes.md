@@ -99,18 +99,33 @@ file is named.
 - The NTSC to PAL shift is piecewise constant in core: 0 up to
   `func_80006DDC_79DC`, then +0x38, then +0x30 (`docs/pal-vs-na.md`,
   `tools/pal_us_diff.py`).
-- Core has 682 functions: 139 exact, 542 identical apart from relocations and 1
-  genuinely different (`func_80006DDC_79DC`).
+- Core has 682 functions: 139 byte-identical, 542 with the same opcode in every
+  word and different immediates (mostly relocations; relocation-only was not
+  checked for these) and 1 genuinely different (`func_80006DDC_79DC`). Source:
+  `tools/pal_us_diff.py` (its `EXACT`, `SHAPE` and `DIFF` classes), as written to
+  `docs/pal-na-diff.txt` and summarised in `docs/pal-vs-na.md`.
 - All 38 unmatched shared core functions have the same instruction stream in the
   NTSC and EU `.s` files; only label and symbol names differ.
-- The overlays are 99.66 percent identical apart from relocations at function
-  level: 2346 of 2354 functions. This came from a scratch script that is not
+- At function level, 2216 of the 2354 overlay functions (94.14 percent) are
+  identical apart from relocations, and 2346 (99.66 percent) if 130 weaker
+  matches are counted too. This came from a scratch script that is not
   committed. It compared each NTSC overlay function with its EU counterpart (the
   gameplay overlays by aligning the two function lists in order on
   opcode-and-register templates, the level overlays by applying the NTSC
-  function boundaries to the EU ROM with a per-function shift) and called a
-  pair identical when only jump targets, `lui` immediates and the low half of a
-  `lui` pair differed.
+  function boundaries to the EU ROM with a per-function shift). The 2216 are
+  108 byte-identical functions and 2108 where only jump targets, `lui`
+  immediates and the low half of a `lui` pair differed, with branch offsets
+  equal and every resolved address in RAM. The 130 have the same opcode and
+  registers in every word but failed that test: in 124 of them an immediate
+  differs with no `lui` to resolve it (183 words), and in 9 a low half does not
+  resolve to a RAM address (13 words); 3 functions have both. They were counted
+  because the 16-bit difference of each of those immediates also occurs among
+  the verified relocations, so they are probably relocations too, but that is
+  not verified. The other 8 functions are not counted: 3 have no counterpart
+  with the same opcodes and registers but a similar one (at least 85 percent of
+  words), 3 have no similar counterpart, and 2 have the same opcodes and
+  registers with an immediate difference that is not among the verified
+  relocations.
 
 The idea: derive the EU symbols and addresses from the NTSC ones through the
 shift map instead of pinning each symbol, and share the overlays the way core
