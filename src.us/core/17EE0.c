@@ -896,7 +896,7 @@ void func_8001A024_1AC24(void) {
 }
 
 void func_8001A068_1AC68(void) {
-	if ((func_80017B78_18778() == 0xFFFF) && ((gameplayMode == GAMEPLAY_MODE_UNK1) || (gameplayMode == GAMEPLAY_MODE_UNK6)) && (func_80017B78_18778() != 1)) {
+	if ((func_80017B78_18778() == 0xFFFF) && ((gameplayMode == GAMEPLAY_MODE_NORMAL) || (gameplayMode == GAMEPLAY_MODE_INSIDE)) && (func_80017B78_18778() != 1)) {
 		if (D_80034478_35078 != 0) {
 			func_80019F80_1AB80();
 			D_80034484_35084 = 1;

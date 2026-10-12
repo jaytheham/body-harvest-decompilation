@@ -1717,7 +1717,7 @@ s32 func_80009F18_AB18(s32 arg0) {
 	setGameplayResolution();
 	func_80011674_12274();
 	func_80011D6C_1296C(D_80047F93);
-	gameplayMode = GAMEPLAY_MODE_UNK1;
+	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_800050C4_5CC4();
 	return sp1C;
 }
@@ -1747,7 +1747,7 @@ s32 guess_displayInventory(void) {
 	} else {
 		func_80011D6C_1296C(D_80047F93);
 	}
-	gameplayMode = GAMEPLAY_MODE_UNK1;
+	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_800050C4_5CC4();
 	func_80013324_13F24();
 	return sp1C;

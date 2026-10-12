@@ -711,7 +711,7 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	u8 result_slot;
 	s32 temp;
 
-	if ((gameplayMode == GAMEPLAY_MODE_UNK2) || (gameplayMode == GAMEPLAY_MODE_UNK9)) {
+	if ((gameplayMode == GAMEPLAY_MODE_PAUSE_MENU) || (gameplayMode == GAMEPLAY_MODE_DIALOGUE)) {
 		osSyncPrintf(&D_80142F44_151EF4);
 	}
 
