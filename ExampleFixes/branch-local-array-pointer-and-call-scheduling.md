@@ -19,3 +19,7 @@ Keep both branch-local assignments. Reassigning the pointer once immediately aft
 The n64-decomp-workbench scheduler guidance helped identify memory disambiguation as the relevant mechanism. A diagnostic full project build with IDO `-K -Wa,-R` showed `.alias $16,$sp` after the lookup in the failing version. The scheduler consequently gave the coordinate loads dependencies on outgoing stack stores. Token-identical source-line regrouping did not change the result. The branch-local indexed-array assignments resolved the scheduling differences in the normal project build.
 
 Verified with function diff score 0 and `build/bh.us.z64: OK`. Diagnostic compiler flags were removed before verification.
+
+### HUD state reloads and local register lifetime
+
+In func_800A1A18_B09C8, reloading the state separately inside both final update branches preserves the target's two loads and branch delay-slot scheduling. A shared reload after the branches lets IDO merge the loads and removes four instructions. Earlier state checks must also use the same explicit s16 local, reloaded after the sound call, to allocate v1 rather than an anonymous a1 temporary. Verified with diff score 0 and the full ROM checksum OK.

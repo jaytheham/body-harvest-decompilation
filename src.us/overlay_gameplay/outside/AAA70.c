@@ -238,12 +238,12 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 
 #ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
-	s32 sp1C;
-	s32 var_a3;
+	u8 var_a3;
 	u8 sp47;
 
-	sp47 = arg0 / 60;
-	arg0 = arg0 % 60;
+	sp47 = (u8)(arg0 / 60);
+	arg0 = (u16)(arg0 % 60);
+
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -261,17 +261,21 @@ void func_8009BF64_AAF14(u16 arg0) {
 	}
 
 	if ((s32)arg0 < 0xA) {
-		sp1C = arg0;
 		func_8009BDB8_AAD68(0x32, 0);
-		var_a3 = (sp1C % 10) & 0xFF;
+		var_a3 = (u8)(arg0 % 10);
 	} else {
-		var_a3 = (arg0 % 10) & 0xFF;
-		sp1C = (arg0 - var_a3) / 10;
-		func_8009BDB8_AAD68(0x32, sp1C);
+		var_a3 = (u8)(arg0 % 10);
+		func_8009BDB8_AAD68(0x32, (arg0 - var_a3) / 10);
 	}
 
-	func_8009BDB8_AAD68(0x41, var_a3 & 0xFF);
+	func_8009BDB8_AAD68(0x41, (u8)var_a3);
 }
+
+
+
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BF64_AAF14.s")
 #endif
@@ -1801,75 +1805,57 @@ void func_800A13E8_B0398(void) {
 // CURRENT(5565)
 #ifdef NON_MATCHING
 void func_800A140C_B03BC(void) {
-	s32 iter;
+	s32 i;
+	s32 j;
 	s32 lry;
 	s32 uly;
-	s32 newIdx;
-	union { struct { s32 hi; u32 lo; } h; unsigned long long ull; } acc;
-	s32 *rowPtr;
-	s16 *shiftPtr;
+	u64 sum;
+	s32 color;
+	s32 c0;
+	s32 c1;
+	s32 c2;
 
 	if (D_80047720 != 0) {
 		debug_drawTimingGraphBars();
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, 3 << 20);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
-
-		iter = 0x1F;
 		lry = 0xD3;
 		uly = 0xCF;
-		rowPtr = D_8014F5F0;
-		shiftPtr = ((s16 *)&D_80047720) + 1;
-		do {
-			s32 j;
-			acc.h.lo = 0;
-			acc.h.hi = 0;
-			j = 7;
-			do {
-				u32 carry = 0;
-				u32 new_lo = (u32)rowPtr[j] + acc.h.lo;
-				carry = carry + (u32)(new_lo < acc.h.lo);
-				acc.h.hi = acc.h.hi + carry;
-				acc.h.lo = new_lo;
-			} while (j--);
-			acc.ull = __ull_rshift(acc.ull, (long long)*shiftPtr);
-			if (acc.h.hi != 0 || acc.h.lo >= 0xC9U) {
-				acc.h.hi = 0;
-				acc.h.lo = 0xC8;
+		i = 0x20;
+		while (i--) {
+			sum = 0;
+			j = 8;
+			while (j--) {
+				sum += D_8014F210[i][j];
 			}
-			{
-				s32 c0 = (iter & 2) ? 0x3C0 : 0;
-				s32 c1 = (iter & 1) ? 0x1E : 0;
-				s32 c2 = (iter & 4) ? 0x7800 : 0;
-				s32 color = c2 + c1 + c0;
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetFillColor(D_8005BB2C++, ((u32)color << 16) | (u32)color);
-				gDPFillRectangle(D_8005BB2C++, 0x20, uly, acc.h.lo + 0x20, lry);
+			sum >>= D_80047722;
+			if (sum > 200) {
+				sum = 200;
 			}
-			rowPtr -= 8;
+			c0 = (i & 2) ? 0x3C0 : 0;
+			c1 = (i & 1) ? 0x1E : 0;
+			c2 = (i & 4) ? 0x7800 : 0;
+			color = c2 + c1 + c0;
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetFillColor(D_8005BB2C++, (color << 16) | color);
+			gDPFillRectangle(D_8005BB2C++, 0x20, uly, sum + 0x20, lry);
 			lry -= 6;
 			uly -= 6;
-		} while (iter--);
-		iter = 0x1F;
-
+		}
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, 0);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
-
-		((s32 *)D_8014F210)[D_8014F610] = D_8013D764_14C714 - D_8013D760_14C710;
-		newIdx = D_8014F610 + 1;
-		D_8014F610 = newIdx;
-		if ((u32)newIdx >= 8U) {
+		D_8014F210[0][D_8014F610] = D_8013D764_14C714 - D_8013D760_14C710;
+		D_8014F610++;
+		if (D_8014F610 >= 8U) {
 			D_8014F610 = 0;
-			newIdx = 0;
 		}
-		rowPtr = D_8014F5F0 + newIdx;
-		do {
-			*rowPtr = 0;
-			rowPtr -= 8;
-		} while (iter--);
-
+		i = 0x20;
+		while (i--) {
+			D_8014F210[i][D_8014F610] = 0;
+		}
 		D_8014F20C = 1;
 	}
 }
@@ -1915,40 +1901,25 @@ void func_800A17EC_B079C(void) {
 
 // CURRENT(793)
 #ifdef NON_MATCHING
-s32 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
-	s32 a0;
-	s32 a1;
-	s32 a2;
-	s32 a3;
-
-	a0 = arg0;
-	a1 = arg1;
-	a2 = arg2;
-
-	if (a1 < a0) {
-		a3 = a2;
-		if ((a0 < a2) || ((a0 - a1) < a2)) {
-			return a1 & 0xFF;
+u8 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
+	if (arg1 < arg0) {
+		if ((arg0 < arg2) || ((arg0 - arg1) < arg2)) {
+			return arg1;
 		}
-		a0 = a0 - a3;
-		return a0 & 0xFF;
+		arg0 -= arg2;
+		return arg0;
 	}
-
-	if (a0 < a1) {
-		a3 = a2;
-		if (((0xFF - a2) < a0) || ((a1 - a0) < a2)) {
-			return a1 & 0xFF;
+	if (arg0 < arg1) {
+		if (((0xFF - arg2) < arg0) || ((arg1 - arg0) < arg2)) {
+			return arg1;
 		}
-		a0 = a0 + a3;
-		a0 &= 0xFF;
+		arg0 += arg2;
 	}
-
-	return a0;
+	return arg0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1828_B07D8.s")
 #endif
-
 s32 func_800A18CC_B087C(void) {
 	s16 index = (s16)(D_80158FE8 - buildingInstances);
 	return (D_8014D1B8[index >> 5] & (1 << (index & 0x1F))) != 0;
@@ -1976,7 +1947,6 @@ void func_800A1924_B08D4(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800A1A18_B09C8(void) {
 	s16 var_v0;
 	s16 var_v1;
@@ -2017,7 +1987,8 @@ void func_800A1A18_B09C8(void) {
 	}
 
 	if (((D_80158FEC != 0) || ((D_80158FE8 != 0) && (func_800A18CC_B087C() != 0)) || (D_801591B4 == 0xE)) && (D_8013D5B4_14C564 == 3)) {
-		if (D_8013D5BC_14C56C == 0) {
+		var_v1 = D_8013D5BC_14C56C;
+		if (var_v1 == 0) {
 			D_8013D5BC_14C56C = 1;
 			D_8013D5C0_14C570[0] = 0xA;
 			D_8014F698 = func_800143C4_14FC4(0x154);
@@ -2034,9 +2005,10 @@ void func_800A1A18_B09C8(void) {
 			D_8014F618.unk7B = 0xA;
 			D_8014F618.unk7C = 0x28;
 			D_8014F618.unk6C = 0xDC;
+			var_v1 = D_8013D5BC_14C56C;
 		}
 
-		if (D_8013D5BC_14C56C == 1) {
+		if (var_v1 == 1) {
 			D_8013D5C0_14C570[0] -= 1;
 			if (D_8013D5C0_14C570[0] == 0) {
 				D_8013D5BC_14C56C = 2;
@@ -2073,21 +2045,18 @@ void func_800A1A18_B09C8(void) {
 	} else {
 		if (var_v1 == 2) {
 			D_8014F618.unk6D = func_800A1828_B07D8(D_8014F618.unk6D, D_8014F618.unk6E, 0x14);
+			var_v1 = D_8013D5BC_14C56C;
 		} else {
 			D_8014F618.unk71 = func_800A1828_B07D8(D_8014F618.unk71, D_8014F618.unk74, 0x14);
 			D_8014F618.unk72 = func_800A1828_B07D8(D_8014F618.unk72, D_8014F618.unk75, 0x14);
 			D_8014F618.unk73 = func_800A1828_B07D8(D_8014F618.unk73, D_8014F618.unk76, 0x14);
 			D_8014F618.unk6D += 2;
+			var_v1 = D_8013D5BC_14C56C;
 		}
-		var_v1 = D_8013D5BC_14C56C;
 	}
 
 	D_8013D768_14C718 = var_v1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1A18_B09C8.s")
-#endif
-
 // CURRENT(3131)
 #ifdef NON_MATCHING
 void func_800A1DD8_B0D88(s32 arg0) {
