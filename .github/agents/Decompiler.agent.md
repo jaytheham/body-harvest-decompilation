@@ -73,6 +73,8 @@ Identify and fix all these issues in the generated C code before proceeding to t
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1. Do not add a NON_MATCHING wrapper, that will prevent the C code from being compiled instead of the assembly.
 
+In a file under `src/common/` (shared by the NA and EU builds), an unmatched function has one pragma per version, under `#elif defined(VERSION_US)` and `#elif defined(VERSION_EU)`. Once the C matches, replace the whole `#ifdef NON_MATCHING` ... `#endif` block with the C, and build and verify both versions (`python tools/verify_build.py --rebuild`).
+
 ## Step 3: Build ROM
 
 Build the ROM: `.\tools\make.ps1` Important: This is the only correct way to build your C code, it ensures all symbols are correctly linked and produces a true comparison of the current vs the target.
