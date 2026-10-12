@@ -41,3 +41,9 @@ func_80136B50_145B00 improved from 405 to 379. A leading unused word aligns the 
 func_80135F0C_144EBC reached score 0 and ROM OK. Direct global expressions removed redundant floating-point moves caused by reusing locals across unrelated lifetimes. The zeroing statements D_80160178 -= D_80160178 and D_8016016C -= D_8016016C compile to stores of the shared zero constant, while retaining address promotion that assignment to a zero local did not produce. This also corrected the integer address-register allocation throughout the function. Compound addition preserved the target operand order.
 
 The 0.4 double was the final explicit rodata placeholder in 1416E0.c. Removing that placeholder and using the literal let IDO emit the same bytes at the original address. This required no file split. Removing a placeholder from the middle of the constant block does not offer the same guarantee.
+
+## Matched camera yaw collision: signed remainder and stack homes
+
+func_80136214_1451C4 reached function score 0. Keep the negative-angle test as (temp_s1 < 0) && (temp_s1 % 16384). Adding an explicit != 0 lets IDO simplify the signed remainder to a mask, removing the target's correction branch and subtraction. Using 0x4000U for the second initial angle subtraction keeps the two separate quarter-turn immediate loads; signed constants were merged into one load, shifting the temporary-register sequence throughout the function.
+
+Inline &arg0->lookAt at both vector-helper calls rather than retaining a named vector pointer. IDO still spills and reloads the common address at sp+0x30, while dropping the unnecessary source-local stack home. One unused s16 between the two angle declarations then places them at sp+0x66 and sp+0x62, with vectors at sp+0x54 and sp+0x48 and integer coordinates at sp+0x44, sp+0x40, and sp+0x3C. The camera field at offset 0x66 is a halfword, so use arg0->unk66 rather than casting the padding bytes.

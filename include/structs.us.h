@@ -2325,7 +2325,7 @@ typedef struct {
 	/* 0x60 */ s16 unk60;
 	/* 0x62 */ u8 pad62[0x2];
 	/* 0x64 */ s16 unk64;
-	/* 0x66 */ u8 pad66[0x2];
+	/* 0x66 */ union { s16 unk66; u8 pad66[0x2]; };
 	/* 0x68 */ s32 unk68;
 	/* 0x6C */ u8 unk6C;
 } Unk80160080; /* size = 0x70 */

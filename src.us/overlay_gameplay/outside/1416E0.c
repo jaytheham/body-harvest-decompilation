@@ -305,34 +305,32 @@ void func_80133288_142238(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// CURRENT(2155)
-#ifdef NON_MATCHING
+// CURRENT(967)
 // AI - On-foot camera orbit/recenter
+#ifdef NON_MATCHING
 void func_801333D0_142380(Unk80160080 *arg0) {
 	Vec3f sp3C;
 	s32 temp_v0;
+ u8 one = 1;
 	VehicleInstance *vehicle;
 	f32 temp_f20;
 
 	vehicle = D_80052B34;
 	if (D_801600F0 == 0) {
-		f32 lodColor;
-
-		lodColor = D_80145698_154648[0];
 
 		D_8016011C = 0.0f;
 		D_80160120 = 0.0f;
 		D_80160124 = 0.0f;
 		D_80160128 = 0.0f;
-		D_8016012C = lodColor;
-		D_80160130 = lodColor;
-		D_80160134 = lodColor;
-		D_80160138 = lodColor;
+		D_8016012C = 0.1f;
+		D_80160130 = 0.1f;
+		D_80160134 = 0.1f;
+		D_80160138 = 0.1f;
 		arg0->unk58 = vehicle->unkE;
 	}
 
 	if (currentControllerStates[0].button & 4) {
-		D_80160190 = 1;
+		D_80160190 = one;
 		D_80140CF8_14FCA8 = 0;
 	}
 
@@ -345,11 +343,11 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 			arg0->unk58 = (s16)(arg0->unk58 + (temp_v0 / 8));
 		}
 
-		if (((-temp_v0 < temp_v0) ? -temp_v0 : temp_v0) >= 1001) {
-			D_80140CF8_14FCA8 = 1;
+		if (((-temp_v0 < temp_v0) ? temp_v0 : -temp_v0) >= 1001) {
+			D_80140CF8_14FCA8 = one;
 		}
 
-		if ((((-temp_v0 < temp_v0) ? -temp_v0 : temp_v0) < 200) && (D_80140CF8_14FCA8 == 1)) {
+		if ((((-temp_v0 < temp_v0) ? temp_v0 : -temp_v0) < 200) && (D_80140CF8_14FCA8 == 1)) {
 			arg0->unk58 = D_80052B34->unkE;
 			D_80160190 = 0;
 			D_80140CF8_14FCA8 = 0;
@@ -1438,7 +1436,6 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80135D44_144CF4.s")
 #endif
 
-// CURRENT(1630)
 // AI - Update and decay camera shake effects
 void func_80135F0C_144EBC(void) {
 	f32 temp_f14;
@@ -1517,32 +1514,31 @@ s16 func_801361A4_145154(Unk80160080 *arg0)
   return ret;
 }
 
-// CURRENT(1599)
-#ifdef NON_MATCHING
 // AI - Camera collision avoidance against terrain
 void func_80136214_1451C4(Unk80160080 *arg0) {
 	s16 sp66;
+	s16 unused;
 	s16 sp62;
 	Vec3f sp54;
 	Vec3f sp48;
 	s32 sp44;
 	s32 sp40;
 	s32 sp3C;
-	Vec3f *sp30;
+
 	s16 temp_s1;
 	s32 var_v0;
 
 	temp_s1 = 0x4000 - arg0->unk5E;
-	sp66 = 0x4000 - D_80160146;
+	sp66 = 0x4000U - D_80160146;
 	if (temp_s1 != sp66) {
 		sp44 = (s32) arg0->unk30;
 		sp40 = (s32) arg0->unk34;
 		sp3C = (s32) arg0->unk38;
-		sp30 = (Vec3f *) &arg0->unkC;
-		func_80133C9C_142C4C(&sp54, sp30, &sp48, sp66, arg0->unk4A, arg0->unk4C, arg0->unk4E);
+
+		func_80133C9C_142C4C(&sp54, &arg0->lookAt, &sp48, sp66, arg0->unk4A, arg0->unk4C, arg0->unk4E);
 		if (func_80126268_135218((s16) sp54.x, (s16) sp54.y, (s16) sp54.z, &sp44, &sp40, &sp3C, 0, 4) == 3) {
 			if (func_80132730_1416E0(sp66, temp_s1) < 0) {
-				if ((temp_s1 < 0) && ((temp_s1 % 16384) != 0)) {
+				if ((temp_s1 < 0) && (temp_s1 % 16384)) {
 					sp62 = (temp_s1 / 16384) << 0xE;
 				} else {
 					sp62 = ((temp_s1 / 16384) << 0xE) + 0x4000;
@@ -1569,7 +1565,7 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 				sp44 = (s32) arg0->unk30;
 				sp40 = (s32) arg0->unk34;
 				sp3C = (s32) arg0->unk38;
-				func_80133C9C_142C4C(&sp54, sp30, &sp48, sp62, arg0->unk4A, arg0->unk4C, arg0->unk4E);
+				func_80133C9C_142C4C(&sp54, &arg0->lookAt, &sp48, sp62, arg0->unk4A, arg0->unk4C, arg0->unk4E);
 				if (func_80126268_135218((s16) sp54.x, (s16) sp54.y, (s16) sp54.z, &sp44, &sp40, &sp3C, 0, 4) == 3) {
 					D_80160146 = arg0->unk5E;
 					return;
@@ -1579,7 +1575,7 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 					arg0->unk68 = 1;
 					D_8016015F = 0;
 					arg0->unk64 = 0x64;
-					*(s16 *)arg0->pad66 = 0x64;
+					arg0->unk66 = 0x64;
 				}
 			} else {
 				D_80160146 = arg0->unk5E;
@@ -1587,9 +1583,7 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80136214_1451C4.s")
-#endif
+
 
 // AI - Switch to billboard rendering mode
 void func_80136570_145520(void) {
