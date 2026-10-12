@@ -292,6 +292,9 @@ func_8001A828_1B428 = 0x8001A858;
 EU_func_80013818_14418 = 0x80013818; // type:func
 // END func renames
 
+// The TV type word the EU link needs (libultra defines it; the EU native and make links do not take it from the archive).
+osTvType = 0x80000300;
+
 // EU auto-labels that collide with a name used by the shared
 // (version-independent) C source.  Tagged eu_ so each binds to the EU
 // address encoded in the label name instead of the shared-C symbol.
@@ -420,4 +423,3 @@ eu_D_80068060 = 0x80068060;
 eu_D_80068090 = 0x80068090;
 eu_D_8006A920 = 0x8006A920;
 eu_D_8006C580 = 0x8006C580;
-osTvType = 0x80000300;
