@@ -3,16 +3,15 @@
     python tools/verify_build.py            # check the current builds
     python tools/verify_build.py --rebuild  # clean and rebuild both, then check
 
-Why this exists: `tools/native_build.py build --version eu` already checks the
-SHA1 of the version it just built, so a single-version check is covered. What is
-not covered is building one version after the other. The EU YAML derives
-`bh.ld` and `undefined_syms_auto.txt` from a shared `basename`, so before they
-were split per version, extracting EU silently overwrote the US link inputs and
-the next US build failed or drifted. A clean rebuild of both, in sequence, is
-the check that catches that class of regression.
+Without --rebuild the script only compares the existing build/bh.us.z64 and
+build.eu/bh.eu.z64 with the baseroms and bh.<version>.sha1; that part runs anywhere.
+--rebuild deletes the objects and ROMs of the selected versions and rebuilds them
+with tools/native_build.py, so it is Windows-only, like the native build itself.
 
-The rebuild order matters and is deliberate: EU is built after US because EU is
-the one whose extract writes the shared files.
+It does not extract. It shows that the current extractions of the selected versions
+build byte-exact from clean objects, one after the other. It does not show that
+extracting one version leaves the other's link inputs alone: to check that, run
+both extractions first (US, then EU) and then this script with --rebuild.
 """
 import argparse
 import hashlib
@@ -85,14 +84,16 @@ def rebuild(version, jobs):
     return False, detail
 
 
-def clean():
-    """Remove both versions' build artifacts, forcing a full relink.
+def clean(versions):
+    """Remove the build artifacts of the given versions, forcing a full relink.
 
     One clean for the whole verification pass, never per version.
     """
-    for d in (ROOT / "build", ROOT / "build.eu"):
+    for d in (BUILDERS[version].parent for version in versions):
         if not d.exists():
             continue
+        if d.is_symlink() or d.resolve() != d:
+            raise RuntimeError(f"Refusing to clean redirected directory: {d}")
         for p in sorted(d.rglob("*.o")) + sorted(d.glob("*.z64")) + \
                 sorted(d.glob("*.elf")) + sorted(d.glob("*.map")) + \
                 sorted(d.glob("*.bin")):
@@ -111,11 +112,11 @@ def main():
     order = ("us", "eu") if args.version is None else (args.version,)
     failures = 0
 
-    # Rebuild everything before checking anything: `clean()` wipes both build
-    # dirs, so building EU after checking US would delete the artifacts the US
-    # check had just validated.
+    # Rebuild everything before checking anything: `clean()` wipes the build
+    # dirs of every selected version, so cleaning between checks would delete
+    # artifacts an earlier check had just validated.
     if args.rebuild:
-        clean()
+        clean(order)
         for version in order:
             ok, detail = rebuild(version, args.jobs)
             if not ok:
