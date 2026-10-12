@@ -319,6 +319,7 @@ void func_80017490_18090(u8 *text) {
 	}
 }
 
+
 void func_80017AAC_186AC(void) {
 	D_8006C55C = 0;
 	D_8006C558 = -1;
