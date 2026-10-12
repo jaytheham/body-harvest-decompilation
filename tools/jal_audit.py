@@ -9,8 +9,10 @@ Two checks, both read off the ROM and the listings.
 a function that was never declared. Those are what surface as undefined symbols
 at link time, or as a function that never gets a name.
 
-**Callee-set divergence.** For every EU function the NTSC function covering the
-same bytes is found by maximum overlap, and the two callee sets are compared. A
+**Callee-set divergence.** For every EU core function the NTSC function at the
+same code is found through the per-function shift map of `tools/pal_us_diff.py`
+(which needs both baseroms and splat's packages), and the two callee sets are
+compared. A
 EU function calling something its NTSC counterpart does not is evidence the code
 was really rewritten, which is what separates `DIFF` from `SHAPE` below the level
 of a byte comparison: two functions can be byte-identical except for immediates
@@ -185,20 +187,17 @@ def main():
         if "us" not in tables or "eu" not in tables:
             ap.error("--cross needs both versions, so do not pass --version")
 
-        # Restricted to core, where the shift is a documented single insertion
-        # of 0x30 bytes (docs/pal-vs-na.md), so a EU offset converts to its NTSC
-        # one exactly. Outside core there is no such rule: the overlays are
-        # version specific, and libultra differs in both layout and content
-        # (PAL runs at 50Hz), so an overlap join there pairs the wrong functions
-        # and reports divergence for code that never changed.
-        CORE_END = 0x40750
-        INSERT = 0x7E04
-        SHIFT = 0x30
+        # Restricted to core text, where pal_us_diff derives the NTSC-to-PAL
+        # shift per function. Outside core there is no such map: the overlays
+        # are version specific, so an overlap join there pairs the wrong
+        # functions and reports divergence for code that never changed.
+        import pal_us_diff
+        runs = pal_us_diff.shift_runs(pal_us_diff.classify_all())
+        core_end = {"us": pal_us_diff.core_text_end("us"),
+                    "eu": pal_us_diff.core_text_end("eu")}
 
         def to_ntsc_rom(eu_rom):
-            if eu_rom >= CORE_END:
-                return None
-            return eu_rom - SHIFT if eu_rom >= INSERT else eu_rom
+            return pal_us_diff.pal_to_ntsc(eu_rom, runs)
 
         us_functions, us_segments = dc.parse_map(ROOT / "build/bh.us.map", "us")
         ntsc_by_rom = {f.rom: f.name for f in us_functions.values()
@@ -207,21 +206,23 @@ def main():
 
         diverged = []
         compared = 0
+        unpaired = 0
         for eu_name, (exact, eu_rom, eu_size, _calls) in tables["eu"].items():
             if not exact or eu_functions[eu_name].segment != "core":
                 continue
             ntsc_rom = to_ntsc_rom(eu_rom)
             ntsc_name = ntsc_by_rom.get(ntsc_rom)
             if not ntsc_name or ntsc_name not in tables["us"]:
+                unpaired += 1
                 continue
             compared += 1
 
-            def callee_roms(table, name, segments):
+            def callee_roms(table, name, segments, end):
                 out = set()
                 for target, callee in table[name][3]:
                     if callee:
                         rom = dc.rom_for_vram(target, segments)
-                        if rom is not None and rom < CORE_END:
+                        if rom is not None and rom < end:
                             out.add(rom)
                 return out
 
@@ -233,9 +234,10 @@ def main():
                 return {ntsc_name_of(r, us_functions) for r in roms}
 
             euc = names_of({to_ntsc_rom(r) for r in callee_roms(
-                tables["eu"], eu_name, eu_segments)
+                tables["eu"], eu_name, eu_segments, core_end["eu"])
                 if to_ntsc_rom(r) is not None})
-            ntc = names_of(callee_roms(tables["us"], ntsc_name, us_segments))
+            ntc = names_of(callee_roms(tables["us"], ntsc_name, us_segments,
+                                       core_end["us"]))
             only_eu = sorted(euc - ntc)
             only_ntsc = sorted(ntc - euc)
             if only_eu or only_ntsc:
@@ -246,7 +248,9 @@ def main():
             "",
             f"{compared} core functions compared, {len(diverged)} with a callee "
             f"set that differs once EU offsets are converted to NTSC and each "
-            f"callee is resolved to the function containing it.",
+            f"callee is resolved to the function containing it. {unpaired} EU "
+            f"core functions with an exact extent had no NTSC function at the "
+            f"converted offset and were not compared.",
             "",
             "| EU function | calls that NTSC does not | called by NTSC, not EU |",
             "|---|---|---|",
