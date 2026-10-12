@@ -68,8 +68,9 @@ SEGMENT_DISPLAY = {
 }
 SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
-# C source roots of the NTSC build. src/common holds the files both versions compile;
-# src.eu is not counted (its files are GLOBAL_ASM stubs over the same functions).
+# C source roots of the NTSC build. src/common holds the files both versions compile; src.eu is
+# not counted here. It holds the PAL build's own gameplay-overlay and libultra files, which are
+# GLOBAL_ASM stubs (those overlays are not shared with NTSC yet).
 SOURCE_ROOTS = ("src.us", "src/common")
 
 
