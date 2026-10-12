@@ -25,15 +25,16 @@ Tools in play:
 - `tools/eu_layout_audit.py` -- per-subsegment size/alignment audit that
   localises size errors by comparing built objects against the target layout.
 - `tools/gen_eu_symbol_collisions.py` -- emits `eu_` symbol pins (see below).
-- `tools/eu_symbol_pairs.py` and `tools/share_core_file.py` -- list the EU
-  symbol-table lines a core file needs and convert its per-version copies into
-  one shared file; see "Converting a file, and retiring a block" in
-  `docs/pal-vs-na.md`.
 - `tools/progress.py --version eu` -- counts the PAL build (`src.eu` plus the
   shared `src/common`, each file read as the EU build compiles it) into
   `docs/progress.eu.json`, which `docs/eu.html` shows. The default run is the
   NTSC count behind `docs/index.html` and is unchanged.
   `tests/progress_eu_check.sh` checks both.
+
+Two tools, `eu_symbol_pairs.py` and `share_core_file.py`, did the mechanical
+part of converting the per-version core files into shared ones. They were
+removed once the last core file was converted and are in the history at commit
+3b5ea2e2d; see "Converting a file, and retiring a block" in `docs/pal-vs-na.md`.
 
 ## Symbol renames (eu_ collisions)
 
@@ -208,9 +209,9 @@ NTSC recompiles identically for the EU shape.
   + 0x38 in `53F0.c`). `53F0.c` also holds `func_80006DDC_79DC`, the one
   function that really differs in PAL: the NA C under `VERSION_US`, the EU
   assembly under `VERSION_EU` (a 39th pragma, also named `asm/...`). The
-  pairing and the conversion are now two tools, `tools/eu_symbol_pairs.py` and
-  `tools/share_core_file.py`, and `tools/progress.py` counts a shared file's
-  pragmas once.
+  pairing and the conversion were done by two tools, `eu_symbol_pairs.py` and
+  `share_core_file.py` (removed afterwards, see the last entry), and
+  `tools/progress.py` counts a shared file's pragmas once.
 - 2026-10-12: The review of the version-neutral pragma found that `--asm-root`
   matched only the literal prefix `asm/`, so `./asm/...`, a Windows backslash or
   case spelling, an absolute path or `asm/../asm/...` would have read the NA
@@ -233,3 +234,8 @@ NTSC recompiles identically for the EU shape.
   most of libultra have no tracked EU source and are not in the totals. The core
   figures are the NTSC page's, so the two pages must not be summed. The NTSC
   count and `docs/index.html` are unchanged.
+- 2026-10-12: Removed `eu_symbol_pairs.py` and `share_core_file.py` with their
+  tests, `eu_symbol_pairs_check.sh` and `share_core_file_check.sh`. Every core
+  file is converted, so the tools have nothing left to run on and the tests, which
+  need an unconverted file, fail at the head. They are in the history at commit
+  3b5ea2e2d.

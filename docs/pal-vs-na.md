@@ -250,39 +250,42 @@ ROMs and has a single initialiser.
 
 ### Converting a file, and retiring a block
 
-Two tools did the mechanical work of sharing the last four files. Both run on a
-core file that still exists once per version (an NA source under `src.us/` and
-an EU stub under `src.eu/`, each in a `core` directory); none is left, so they
-are the record of the method, and their tests (`tests/eu_symbol_pairs_check.sh`,
-`tests/share_core_file_check.sh`) need a checkout from before the conversions.
-Each tool's docstring is the reference.
+Two tools, `eu_symbol_pairs.py` and `share_core_file.py`, did the mechanical
+part of sharing the last four files. They ran on a core file that existed once
+per version (an NA source under `src.us/` and an EU stub under `src.eu/`, each
+in a `core` directory). They were removed, with their tests
+(`eu_symbol_pairs_check.sh` and `share_core_file_check.sh`), once the last core
+file was converted: none is left to run them on, and the tests could only run
+on an unconverted file. They are in the history at commit 3b5ea2e2d, in the
+tools and tests directories; check that commit out to run them. What they did,
+as the record of the method:
 
-- `tools/eu_symbol_pairs.py <File>` pairs the NA and EU functions of the
-  unconverted file and prints the symbol-table lines sharing needs: `NAME` (for
+- `eu_symbol_pairs.py <File>` paired the NA and EU functions of the unconverted
+  file and printed the symbol-table lines sharing needs: `NAME` (for
   `symbol_addrs.eu.txt`) gives a function or hand-written jump table its NA name
   at its EU address, `PIN` (for `undefined_syms.eu.txt`) pins an extern the
   shared C names at its EU address, `DROP` marks an existing hand-written entry
-  that the shared file now supersedes, and `PROBLEM` marks anything it cannot
-  place and makes it exit 1. Addresses are read off the instruction words of
-  both versions, not off EU's names. A pair whose instruction counts differ is a
-  `PROBLEM`; that is how `func_80006DDC_79DC` shows up.
-- `tools/share_core_file.py <File> [--jtbl-shift SHIFT] [--pal-only FUNCTION]`
-  does the mechanical conversion: `git mv` to `src/common/core/`, `git rm` of the
-  EU stub, each pragma renamed to the shared `asm/src/common/core/<File>/` path
-  (no `#if` is added), and the `c`, `.data` and
-  `.rodata` entries of both yamls pointed at `../src/common/core/<File>` (EU's
-  `data` and `rodata` become `.data` and `.rodata`). `--jtbl-shift` writes the
-  per-version jump table initialisers after checking every word against both
-  baseroms; `--pal-only` keeps one function's NA body under `VERSION_US` and
-  gives `VERSION_EU` its pragma (the same `asm/` path, mapped by the EU
-  build). It edits no symbol table and does not build, and a refusal leaves
-  the tree as it was.
-- After a conversion: add the `NAME`, `PIN` and `DROP` lines (hand-written
-  lines go above the block that `tools/eu_collisions_build.py` generates, or the
-  generator deletes them), extract both versions, rebuild the US version, and
-  only then run `tools/eu_collisions_build.py`, which reads the US objects
-  under `build/src/common/`; on a stale US tree it binds EU references to the
-  wrong address without an error.
+  that the shared file now supersedes, and `PROBLEM` marks anything it could not
+  place. Addresses were read off the instruction words of both versions, not off
+  EU's names. A pair whose instruction counts differ was a `PROBLEM`; that is
+  how `func_80006DDC_79DC` showed up.
+- `share_core_file.py <File> [--jtbl-shift SHIFT] [--pal-only FUNCTION]` did the
+  mechanical conversion: `git mv` to `src/common/core/`, `git rm` of the EU
+  stub, each pragma renamed to the shared `asm/src/common/core/<File>/` path (no
+  `#if` is added), and the `c`, `.data` and `.rodata` entries of both yamls
+  pointed at `../src/common/core/<File>` (EU's `data` and `rodata` became
+  `.data` and `.rodata`). `--jtbl-shift` wrote the per-version jump table
+  initialisers after checking every word against both baseroms; `--pal-only`
+  kept one function's NA body under `VERSION_US` and gave `VERSION_EU` its
+  pragma (the same `asm/` path, mapped by the EU build). It edited no symbol
+  table and did not build.
+- After a conversion the `NAME`, `PIN` and `DROP` lines were added to the symbol
+  tables by hand (hand-written lines go above the block that
+  `tools/eu_collisions_build.py` generates, or the generator deletes them), both
+  versions were extracted, the US version was rebuilt, and only then was
+  `tools/eu_collisions_build.py` run, which reads the US objects under
+  `build/src/common/`; on a stale US tree it binds EU references to the wrong
+  address without an error.
 
 When a function in a shared file is later matched, keep the C body once and
 delete the rest of its block: the `#ifdef NON_MATCHING` line and everything from
