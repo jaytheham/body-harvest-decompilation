@@ -182,7 +182,7 @@ B7 ... non-B9-form dialogue header bytes ... dialogueId:u8 game-conditions ...
 
 This function uses fixed counts of consumed bytes around the markers, rather than a general length field. For the `B9` form it consumes `B7`, `B9`, one-byte dialogue ID, and one more byte; if the next byte is `94`, it consumes three bytes, stores the next byte as `unk5`, then consumes one more byte. Otherwise `unk5` is set to 3. For the non-`B9` form it consumes five bytes after the first post-`B7` byte, then reads the dialogue ID byte. It then reads game conditions using the same game-condition parser.
 
-After the condition expressions, the parser consumes two bytes, reads one byte, and stores that byte minus one as `unk4`. It repeats if the next byte is `B7`. Dialogue records live in a separate 64-entry runtime array (`D_8004D1C8`) and runtime polling is implemented by `guess_checkMissions` in `src.us/core/53F0.c`: it filters type-4 records and dialogue IDs in the observed `0x46..0x47` range, checks the associated game conditions, and uses `unk4`/`unk5` in its timer/output handling. The fixed header bytes' full semantic names are not recoverable from this parser alone; preserve them exactly when decoding.
+After the condition expressions, the parser consumes two bytes, reads one byte, and stores that byte minus one as `unk4`. It repeats if the next byte is `B7`. Dialogue records live in a separate 64-entry runtime array (`D_8004D1C8`) and runtime polling is implemented by `guess_checkMissions` in `src/common/core/53F0.c`: it filters type-4 records and dialogue IDs in the observed `0x46..0x47` range, checks the associated game conditions, and uses `unk4`/`unk5` in its timer/output handling. The fixed header bytes' full semantic names are not recoverable from this parser alone; preserve them exactly when decoding.
 
 After dialogue parsing, the top-level parser consumes one byte unconditionally. The expected file layout uses this as the separator before the final section.
 
@@ -255,7 +255,7 @@ A safe standalone decoder should:
 - Map data: `func_80074970_83920`.
 - Mission info and conditions: `func_80074B2C_83ADC`, `func_80074FA8_83F58`, `func_80074CA0_83C50`.
 - Command linkage/execution: `func_80075148_840F8`, `func_80075210_841C0`, `func_800752D8_84288`, `func_80073DC0_82D70`.
-- Runtime condition checks: `func_80075AA4_84A54`; dialogue polling: `guess_checkMissions` in `src.us/core/53F0.c`.
+- Runtime condition checks: `func_80075AA4_84A54`; dialogue polling: `guess_checkMissions` in `src/common/core/53F0.c`.
 
 ## Concrete interpretation: the supplied Greece entry
 
