@@ -47,7 +47,8 @@ def listing_extents(version, functions):
     """``{name: size}`` from the listings, exact per function."""
     asm_root = ROOT / ("asm.eu" if version == "eu" else "asm")
     out = {}
-    for sub in ("matchings", "nonmatchings"):
+    # Shared src/common files get their listings under <asm>/src/.
+    for sub in ("matchings", "nonmatchings", "src"):
         base = asm_root / sub
         if not base.exists():
             continue

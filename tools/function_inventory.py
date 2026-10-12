@@ -78,7 +78,26 @@ def listing_index(asm_root):
                 prev = out.get(label)
                 if prev is None or category == "nonmatching":
                     out[label] = (category, len(instrs))
+    # Shared sources (src/common) get their listings under <asm>/src/, with
+    # no matchings/nonmatchings split; a GLOBAL_ASM pragma marks nonmatching.
+    shared = asm_root / "src"
+    if shared.exists():
+        pragmas = global_asm_labels()
+        for path in shared.rglob("*.s"):
+            for label, instrs, _calls, _locals in dc.iter_listing(path):
+                if label not in out:
+                    cat = "nonmatching" if label in pragmas else "matching"
+                    out[label] = (cat, len(instrs))
     return out
+
+
+def global_asm_labels():
+    """Function names named by a ``GLOBAL_ASM`` pragma in ``src/common``."""
+    names = set()
+    for c in (ROOT / "src" / "common").rglob("*.c"):
+        text = c.read_text(encoding="utf-8", errors="replace")
+        names.update(re.findall(r'GLOBAL_ASM\("[^"]*?([\w.-]+)\.s"\)', text))
+    return names
 
 
 def decode_calls(rom, fn, vram_index, segments):
