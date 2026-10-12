@@ -115,12 +115,15 @@ class Function:
 def c_file_from_object(obj):
     """``build/src.us/core/1050.c.o`` -> ``src.us/core/1050.c``.
 
-    Archive members (``build/lib/libultra_rom.a(sqrtf.o)``) and asm stubs
+    Shared sources compile to ``build/src/common/core/53D0.c.o`` (US) or
+    ``build.eu/src/common/core/53D0.c.o`` (EU) and map to
+    ``src/common/core/53D0.c``. Archive members
+    (``build/lib/libultra_rom.a(sqrtf.o)``) and asm stubs
     (``build/asm/...``) have no C file of their own and return None.
     """
     if not obj or "(" in obj:
         return None
-    m = re.search(r"(src\.[^/]+/[^ ]+)\.c\.o$", obj)
+    m = re.search(r"(src(?:\.[^/]+)?/[^ ]+)\.c\.o$", obj)
     return m.group(1) + ".c" if m else None
 
 
@@ -184,7 +187,10 @@ def call_targets_from_instrs(instrs):
     for vram, word, mnemonic, _operands in instrs:
         if mnemonic == "jal" and (word >> 26) == 3:
             out.append((vram, decode_jal(word, vram)))
-    return out# --------------------------------------------------------------------------
+    return out
+
+
+# --------------------------------------------------------------------------
 # Linker maps
 # --------------------------------------------------------------------------
 
