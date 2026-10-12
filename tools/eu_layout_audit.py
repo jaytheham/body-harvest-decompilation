@@ -18,10 +18,15 @@ import argparse
 import pathlib
 import sys
 
-import yaml
+try:
+    import yaml
+except ImportError:
+    sys.exit("PyYAML is required: run with tools/windows/venv's python after "
+             "`python tools/native_build.py setup`, or `pip install pyyaml`.")
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 SHIFTS = (0, 0x10, 0x20, 0x30, -0x10, -0x20)
+BUILD_DIRS = {"us": "build", "eu": "build.eu"}
 
 
 def load_segments(version: str):
@@ -61,17 +66,23 @@ def best_shift(built: bytes, ref: bytes, start: int, size: int):
             continue
         m = sum(1 for k in range(size) if window[k] == ref[base + k])
         results.append((m, sh))
-    return max(results) if results else None
+    # Prefer shift 0 on a tie, so zero-filled or repetitive data that matches
+    # at several shifts is not reported as displaced.
+    return max(results, key=lambda r: (r[0], r[1] == 0)) if results else None
 
 
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--version", default="eu")
+    ap.add_argument("--version", choices=tuple(BUILD_DIRS), default="eu")
     ap.add_argument("--segment", default=None, help="only this segment")
     ap.add_argument("--min-size", type=lambda v: int(v, 0), default=0x20)
     args = ap.parse_args()
 
-    built = (ROOT / f"build.{args.version}/bh.{args.version}.z64").read_bytes()
+    built_path = ROOT / BUILD_DIRS[args.version] / f"bh.{args.version}.z64"
+    if not built_path.exists():
+        sys.exit(f"{built_path.relative_to(ROOT)} not found: run "
+                 f"`python tools/native_build.py build --version {args.version}` first")
+    built = built_path.read_bytes()
     ref = (ROOT / f"baserom.{args.version}.z64").read_bytes()
 
     print(f"built {len(built):#x}  ref {len(ref):#x}  "
