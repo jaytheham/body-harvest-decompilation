@@ -2999,6 +2999,18 @@ typedef struct {
 } UnkF9230Func800ED55CArg0; /* size = 0x10 */
 
 typedef struct {
+	s32 values[9];
+} AnimationDirectionTable;
+
+typedef struct {
+	f32 values[10];
+} AnimationScaleTable;
+
+typedef struct {
+	u16 values[5];
+} PlayerRenderSettings;
+
+typedef struct {
 	/* 0x00 */ Vec3f pos;
 	/* 0x0C */ Vec3f vel;
 } UnkF9230Func80102FA4Point; /* size = 0x18 */
