@@ -150,8 +150,8 @@ still must not be given a verbatim NTSC C body.
 The reason to bother: for a `SHAPE` function the opcodes match and only the
 immediates differ, which is ordinary relocation, and relocation lives in
 `bh.<version>.ld` rather than in the C. So one C body plus each version's own
-linker should produce version-correct output for both. Only the 35 `DIFF`
-functions genuinely need a PAL-specific body.
+linker should produce version-correct output for both. Only
+`func_80006DDC_79DC` genuinely needs a PAL-specific body.
 
 ### The mechanism works
 
@@ -196,10 +196,10 @@ For a file with stubs, generate the EU copy rather than sharing it:
 - otherwise emit a `GLOBAL_ASM` pragma pointing at that function's EU asm
 
 The EU asm file name is not NA's name: it embeds EU's address, so a function
-past the `0x7E04` insert point is named for its EU offset. `tools/pal_us_diff.py`
-already computes exactly this NA-to-EU mapping by overlap, which is what the
-`DIFF` marker block in `src.eu/core/53F0.c` is derived from. The generation has
-to be a tool rather than hand-copied, or the trees drift as NA decompiles more.
+after NTSC `0x79DC` is named for its EU offset (NTSC + 0x38 up to `0xAD54`,
+NTSC + 0x30 from `0xAD60`). `tools/pal_us_diff.py` derives this NA-to-EU shift
+map. The generation has to be a tool rather than hand-copied, or the trees
+drift as NA decompiles more.
 
 In `1050` every function sits at the same address in both ROMs, so the EU stub
 names equal NA's except where NA has given a function a real name (12 of 58).
