@@ -212,14 +212,9 @@ name mapping.
 
 ## Open, not verified
 
-- **The gameplay overlays.** The table at `0x032848` covers the five level
-  overlays and their data segments only. `frontend`, `outside` and `inside` are
-  absent from it, so their ROM offsets are still inferred rather than read. Their
-  entry code is version specific (each PAL overlay's first bytes match neither
-  NTSC nor NTSC+0x30).
 - **Header/boot and per-overlay identity percentages.** A previous comparison
   reported header and boot 99.4% identical and the non-frontend overlays
-  91.8–98.8% identical word-for-word. Not recomputed in this pass; the tool
+  91.8-98.8% identical word-for-word. Not recomputed in this pass; the tool
   covers core only.
 - **`func_80006DDC_79DC` is auto-named on both sides**, so the "largely
   rewritten" attribution rests on byte comparison rather than a name match.
