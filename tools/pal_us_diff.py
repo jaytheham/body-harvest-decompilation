@@ -2,27 +2,32 @@
 
     python tools/pal_us_diff.py            # print report
     python tools/pal_us_diff.py --write    # also write docs/pal-na-diff.txt
+    python tools/pal_us_diff.py --mark     # annotate the EU C stubs of DIFF functions
+    python tools/pal_us_diff.py --check    # exit 1 if the shift map disagrees with the yamls
 
 Needs both baseroms and splat's Python packages (``tools/native_build.py setup``
 installs them into ``tools/windows/venv``; on Linux ``pip install -r
-requirements.txt``). No build is needed. The splat probe and its cache live in
-``build/pal_us_probe/``.
+requirements.txt``). No build is needed.
 
 Why this exists: the NTSC symbol table only carries ~267 `type:func` entries and
 none of them are in the game-code region, so any comparison keyed on it
 silently reports "nothing differs". Function boundaries are therefore taken from
-splat's own detection, which finds all of them.
+splat's own detection over the NTSC core text.
 
-Offset mapping (measured, see docs/pal-vs-na.md): PAL core equals NTSC core with
-a 0x30 byte insert, so words at or after the insert sit 0x30 later. The insert
-point is derived here rather than assumed, and applied per word so a function
-that straddles it still compares correctly.
+Offset mapping: PAL core text is NTSC core text moved by a shift that changes
+in a few places (one function PAL rewrote at a different length, and alignment
+padding between objects). The shift is derived per function: each function is
+compared at the shift of the function before it, and only when that fails is a
+window of shifts searched. The resulting shift map is printed with the report
+and cross-checked against the object boundaries in ``bh.us.yaml`` and
+``bh.eu.yaml``.
 
 Classes:
-  EXACT  byte identical
+  EXACT  byte identical at the derived shift
   SHAPE  same instruction opcode at every position, different immediates.
          Includes ordinary address relocation, so most core lands here.
-  DIFF   genuinely different code. NTSC decomp cannot be reused for these.
+  DIFF   no shift in the search window gives the same opcodes. NTSC decomp
+         cannot be reused for these.
 """
 
 import argparse
@@ -39,12 +44,13 @@ from typing import NamedTuple
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORE_START = 0x1000
 CORE_VRAM = 0x80000400
-SHIFT = 0x30
+#: Shifts tried when the previous function's shift does not fit, in bytes.
+SEARCH_WINDOW = 0x100
 
+JR_RA = bytes.fromhex("03E00008")
 GLAB = re.compile(r"^glabel\s+(\S+)")
 ROMC = re.compile(r"/\*\s*([0-9A-Fa-f]+)\s+([0-9A-Fa-f]+)\s+[0-9A-Fa-f]+\s*\*/")
 SUBSEG = re.compile(r"^\s*- \[0x([0-9A-Fa-f]+),\s*([\w.]+)(?:,\s*([^\],]+))?")
-#: Subsegment types that hold code. Core text ends at the first other type.
 TEXT_TYPES = ("asm", "hasm", "c", "textbin", "lib")
 
 PROBE_DIR = ROOT / "build" / "pal_us_probe"
@@ -91,11 +97,9 @@ def probe_yaml(text_end):
     """Splat config that lists NTSC core text only, with every output in PROBE_DIR.
 
     Each core text subsegment of bh.us.yaml becomes one ``asm`` subsegment, so
-    splat starts a function at every object boundary and never disassembles
-    data. Every output path points into PROBE_DIR; in particular splat must not
-    write undefined_syms_auto.txt at the repository root, which is the US
-    build's linker input.
+    splat starts a function at every object boundary.
     """
+    p = "build/pal_us_probe"
     subs = "\n".join(f"      - [0x{rom:X}, asm, core/{rom:X}]"
                      for rom, typ, _n in core_subsegments("us")
                      if typ in TEXT_TYPES and rom < text_end)
@@ -103,21 +107,21 @@ def probe_yaml(text_end):
 options:
   platform: n64
   basename: bh
-  target_path: baserom.us.z64
   base_path: ../..
+  target_path: baserom.us.z64
   disassemble_all: yes
-  asm_path: build/pal_us_probe/asm
-  build_path: build/pal_us_probe/build
-  src_path: build/pal_us_probe/src
-  asset_path: build/pal_us_probe/assets
-  ld_script_path: build/pal_us_probe/bh.probe.ld
-  symbol_addrs_path: build/pal_us_probe/symbol_addrs.txt
-  reloc_addrs_path: build/pal_us_probe/reloc_addrs.txt
-  undefined_funcs_auto_path: build/pal_us_probe/undefined_funcs_auto.txt
-  undefined_syms_auto_path: build/pal_us_probe/undefined_syms_auto.txt
-  migrate_rodata_to_functions: no
+  asm_path: {p}/asm
+  build_path: {p}/build
+  src_path: {p}/src
+  asset_path: {p}/assets
+  ld_script_path: {p}/bh.probe.ld
+  symbol_addrs_path: {p}/symbol_addrs.txt
+  reloc_addrs_path: {p}/reloc_addrs.txt
   create_undefined_funcs_auto: no
   create_undefined_syms_auto: no
+  undefined_funcs_auto_path: {p}/undefined_funcs_auto.txt
+  undefined_syms_auto_path: {p}/undefined_syms_auto.txt
+  migrate_rodata_to_functions: no
   symbol_name_format: $VRAM_$ROM
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
@@ -153,11 +157,7 @@ def splat_python():
 
 
 def run_probe(text_end):
-    """Split the NTSC ROM so splat enumerates its functions; cached in PROBE_DIR.
-
-    The cache is reused only while the probe config and the NTSC ROM are the
-    ones it was made from.
-    """
+    """Split the NTSC ROM so splat enumerates its functions; cached in PROBE_DIR."""
     yaml_text = probe_yaml(text_end)
     rom = (ROOT / "baserom.us.z64").read_bytes()
     stamp = hashlib.sha1(yaml_text.encode() + rom).hexdigest()
@@ -176,7 +176,7 @@ def run_probe(text_end):
     PROBE_STAMP.write_text(stamp + "\n", encoding="utf-8", newline="\n")
 
 
-def parse_functions(path, root):
+def parse_functions(path, bounds):
     """Return [(rom, name, size)] for every glabel in a splat .s listing.
 
     ``size`` runs to the next label, so it includes any alignment padding.
@@ -198,47 +198,126 @@ def parse_functions(path, root):
             cur, count, rom = g.group(1), 0, None
     if cur is not None and rom is not None:
         out.append((rom, cur, count * 4))
-    return [f for f in out if root[0] <= f[0] < root[1]]
+    return [f for f in out if bounds[0] <= f[0] < bounds[1]]
 
 
-def find_insert_point(na, pal):
-    """First NTSC offset at or after which PAL sits 0x30 later."""
-    probe = 0x7E00                      # inside the known divergent band
-    for off in range(probe, core_text_end("us"), 4):
-        word = na[off:off + 4]
-        if word == pal[off + SHIFT:off + SHIFT + 4]:
-            return off
-    sys.exit("could not locate the 0x30 insert point")
-
-
-def classify(na, pal, start, size, insert_at):
-    exact = shape = True
+def trim_padding(na, start, size):
+    """Size up to the delay slot of the last ``jr $ra``, dropping alignment nops."""
+    last = None
     for i in range(0, size - 3, 4):
-        a_off = start + i
-        p_off = a_off + SHIFT if a_off >= insert_at else a_off
-        if p_off + 4 > len(pal):
-            return "MISSING"
-        a, b = na[a_off:a_off + 4], pal[p_off:p_off + 4]
-        if a != b:
-            exact = False
-            if int.from_bytes(a, "big") >> 26 != int.from_bytes(b, "big") >> 26:
-                return "DIFF"
-            shape = shape and True
-    return "EXACT" if exact else "SHAPE"
+        if na[start + i:start + i + 4] == JR_RA:
+            last = i
+    return last + 8 if last is not None and last + 8 <= size else size
 
 
-def mark(rows, insert_at):
+def compare(na, pal, start, size, shift):
+    """``(exact_words, opcode_words)`` for the NTSC range at ``shift``."""
+    exact = same_op = 0
+    for i in range(0, size - 3, 4):
+        a = na[start + i:start + i + 4]
+        b = pal[start + shift + i:start + shift + i + 4]
+        if a == b:
+            exact += 1
+            same_op += 1
+        elif len(b) == 4 and a[0] >> 2 == b[0] >> 2:
+            same_op += 1
+    return exact, same_op
+
+
+def classify_all(window=SEARCH_WINDOW):
+    """Run the comparison and return a list of :class:`Row`.
+
+    ``pal_rom`` is the PAL ROM offset of the NTSC function at its derived
+    shift, which is the key the inventory and the call audit join on.
+    """
+    na = (ROOT / "baserom.us.z64").read_bytes()
+    pal = (ROOT / "baserom.eu.z64").read_bytes()
+    us_end, eu_end = core_text_end("us"), core_text_end("eu")
+    run_probe(us_end)
+
+    pal_names = {}
+    for f in (ROOT / "asm.eu").rglob("*.s"):
+        for rom, name, _ in parse_functions(f, (CORE_START, eu_end)):
+            pal_names.setdefault(rom, name)
+
+    rows, prev = [], 0
+    found = []
+    for f in sorted(PROBE_ASM.glob("*.s")):
+        found += parse_functions(f, (CORE_START, us_end))
+    for rom, name, size in sorted(found):
+        size = trim_padding(na, rom, size)
+        words = size // 4
+        shift = prev
+        exact, same_op = compare(na, pal, rom, size, shift)
+        if same_op != words:
+            scored = [(compare(na, pal, rom, size, s), s)
+                      for s in range(-window, window + 4, 4)]
+            (exact, same_op), shift = max(
+                scored, key=lambda t: (t[0][1], t[0][0], -abs(t[1] - prev)))
+        cls = "EXACT" if exact == words else "SHAPE" if same_op == words else "DIFF"
+        if cls == "DIFF":
+            shift = prev  # report the PAL offset where the function sits
+        else:
+            prev = shift
+        p = rom + shift
+        rows.append(Row(rom, name, size, cls, p, pal_names.get(p, ""), shift))
+    return rows
+
+
+def shift_runs(rows):
+    """``[(ntsc_lo, ntsc_hi, shift)]`` over the non-DIFF functions."""
+    runs = []
+    for r in rows:
+        if r.cls == "DIFF":
+            continue
+        if runs and runs[-1][2] == r.shift:
+            runs[-1][1] = r.ntsc_rom + r.size
+        else:
+            runs.append([r.ntsc_rom, r.ntsc_rom + r.size, r.shift])
+    return [tuple(x) for x in runs]
+
+
+def ntsc_to_pal(rom, runs):
+    """PAL offset of an NTSC core offset, or None outside every run."""
+    for lo, hi, s in runs:
+        if lo <= rom < hi:
+            return rom + s
+    return None
+
+
+def pal_to_ntsc(rom, runs):
+    """NTSC offset of a PAL core offset, or None outside every run."""
+    for lo, hi, s in runs:
+        if lo + s <= rom < hi + s:
+            return rom - s
+    return None
+
+
+def yaml_mismatches(rows):
+    """Text objects whose yaml start shift disagrees with the derived shift."""
+    eu = {name: rom for rom, typ, name in core_subsegments("eu")
+          if typ in TEXT_TYPES and name}
+    bad = []
+    for rom, typ, name in core_subsegments("us"):
+        if typ not in TEXT_TYPES or not name or name not in eu:
+            continue
+        first = next((r for r in rows if r.ntsc_rom >= rom and r.cls != "DIFF"), None)
+        if first is not None and first.ntsc_rom == rom and eu[name] - rom != first.shift:
+            bad.append((name, rom, eu[name], first.shift))
+    return bad
+
+
+def diff_classes():
+    """``{ntsc_name: class}`` from :func:`classify_all`, keyed by NTSC name."""
+    return {r.name: r.cls for r in classify_all()}
+
+
+def mark(rows):
     """Annotate the PAL c stubs for DIFF functions so NTSC decomp is not reused.
 
-    The stubs are only regenerated when absent, so these comments are durable
-    and are the guard that stops a decompiler copying the NTSC body verbatim
-    into a function PAL actually rewrote.
+    Every existing marker block is removed first, so a function that stops
+    being DIFF loses its marker on the next run.
     """
-    diff = [r for r in rows if r.cls == "DIFF"]
-
-    # Map PAL rom -> the c subsegment that covers it, from bh.eu.yaml. Matching
-    # by function name does not work in the reorganised band: PAL's function
-    # boundaries there differ, so the NTSC function often has no PAL name.
     subs = []
     for line in (ROOT / "bh.eu.yaml").read_text(encoding="utf-8").splitlines():
         m = re.match(r"\s*- \[0x([0-9A-Fa-f]+), c, (.+?)\]\s*(?:#.*)?$", line)
@@ -256,37 +335,30 @@ def mark(rows, insert_at):
         return best[1] if best else None
 
     by_stub = {}
-    for r in diff:
-        na_rom, na_name, size, p = r.ntsc_rom, r.name, r.size, r.pal_rom
-        sub = covering(p)
-        if not sub:
+    for r in rows:
+        if r.cls != "DIFF":
             continue
-        c = ROOT / "src.eu" / f"{sub}.c"
-        if c.exists():
-            by_stub.setdefault(c, []).append((na_rom, p, size, na_name))
+        sub = covering(r.pal_rom)
+        c = ROOT / "src.eu" / f"{sub}.c" if sub else None
+        if c is not None and c.exists():
+            by_stub.setdefault(c, []).append(r)
 
     marker = "// --- PAL differs from NTSC here ---"
-    # Clear every existing marker block first, not just the stubs we are about
-    # to rewrite, or a block left by an earlier run survives in a file that is
-    # no longer in the map.
     for c in (ROOT / "src.eu").rglob("*.c"):
         text = c.read_text(encoding="utf-8", errors="replace")
         if marker not in text:
             continue
-        # Drop the whole marker block: from the marker line through the
-        # contiguous run of comment lines that follows it.
         kept, skipping = [], False
-        for l in text.splitlines():
-            if marker in l:
+        for line in text.splitlines():
+            if marker in line:
                 skipping = True
                 continue
-            if skipping and l.lstrip().startswith("//"):
+            if skipping and line.lstrip().startswith("//"):
                 continue
             skipping = False
-            kept.append(l)
+            kept.append(line)
         c.write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
 
-    touched = 0
     for c, entries in sorted(by_stub.items()):
         lines = c.read_text(encoding="utf-8", errors="replace").splitlines()
         block = [marker,
@@ -294,72 +366,39 @@ def mark(rows, insert_at):
                  "// they need their own decomp. Regenerate with:",
                  "//     python tools/pal_us_diff.py --mark",
                  "// NTSC rom / PAL rom / bytes / name"]
-        for na_rom, p, size, na_name in sorted(entries):
-            block.append(f"//   0x{na_rom:06X}  0x{p:06X}  {size:5d}  {na_name}")
+        for r in sorted(entries):
+            block.append(f"//   0x{r.ntsc_rom:06X}  0x{r.pal_rom:06X}  {r.size:5d}  {r.name}")
         lines[2:2] = block
         c.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
-        touched += 1
-    return touched, sum(len(v) for v in by_stub.values())
-
-
-def classify_all():
-    """Run the comparison and return a list of :class:`Row`.
-
-    One row per NTSC core text function; ``cls`` is ``EXACT``, ``SHAPE``,
-    ``DIFF`` or ``MISSING``. ``pal_rom`` is the ROM offset of the PAL function at the
-    corresponding address, which is the key the inventory joins on: a ``DIFF``
-    function is one PAL rewrote, so its name often differs from NTSC's and a
-    name join would miss it.
-    """
-    na = (ROOT / "baserom.us.z64").read_bytes()
-    pal = (ROOT / "baserom.eu.z64").read_bytes()
-    us_end, eu_end = core_text_end("us"), core_text_end("eu")
-    run_probe(us_end)
-    insert_at = find_insert_point(na, pal)
-
-    pal_names = {}
-    for f in (ROOT / "asm.eu").rglob("*.s"):
-        for rom, name, _ in parse_functions(f, (CORE_START, eu_end)):
-            pal_names.setdefault(rom, name)
-
-    found = []
-    for f in sorted(PROBE_ASM.glob("*.s")):
-        found += parse_functions(f, (CORE_START, us_end))
-    rows = []
-    for rom, name, size in sorted(found):
-        cls = classify(na, pal, rom, size, insert_at)
-        shift = SHIFT if rom >= insert_at else 0
-        rows.append(Row(rom, name, size, cls, rom + shift,
-                        pal_names.get(rom + shift, ""), shift))
-    return rows
-
-
-def diff_classes():
-    """``{ntsc_name: class}`` from :func:`classify_all`, keyed by NTSC name."""
-    return {r.name: r.cls for r in classify_all()}
+    return len(by_stub), sum(len(v) for v in by_stub.values())
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--write", action="store_true",
-                    help="write docs/pal-na-diff.txt")
+    ap.add_argument("--write", action="store_true", help="write docs/pal-na-diff.txt")
     ap.add_argument("--mark", action="store_true",
                     help="annotate PAL c stubs for the differing functions")
+    ap.add_argument("--check", action="store_true",
+                    help="exit 1 if the derived shifts disagree with the yamls")
+    ap.add_argument("--window", type=lambda v: int(v, 0), default=SEARCH_WINDOW,
+                    help="shift search window in bytes (default 0x100)")
     args = ap.parse_args()
 
-    rows = classify_all()
-    na = (ROOT / "baserom.us.z64").read_bytes()
-    pal = (ROOT / "baserom.eu.z64").read_bytes()
-    insert_at = find_insert_point(na, pal)
+    rows = classify_all(args.window)
     tally = collections.Counter(r.cls for r in rows)
     total = sum(r.size for r in rows)
     lines = [
         "NTSC vs PAL (EU) core function comparison",
-        f"insert point: NTSC 0x{insert_at:06X} -> PAL +0x{SHIFT:X}",
-        f"NTSC core functions: {len(rows)}",
+        f"NTSC core text: 0x{CORE_START:X}-0x{core_text_end('us'):X}; "
+        f"PAL core text: 0x{CORE_START:X}-0x{core_text_end('eu'):X}",
+        f"NTSC core functions: {len(rows)} ({total} bytes, alignment padding excluded)",
         "",
+        "shift map (NTSC range -> PAL = NTSC + shift):",
     ]
-    for k in ("EXACT", "SHAPE", "DIFF", "MISSING"):
+    for lo, hi, s in shift_runs(rows):
+        lines.append(f"  NTSC 0x{lo:06X}-0x{hi:06X}  {s:+#x}")
+    lines.append("")
+    for k in ("EXACT", "SHAPE", "DIFF"):
         n = tally[k]
         if n:
             b = sum(r.size for r in rows if r.cls == k)
@@ -375,6 +414,12 @@ def main():
         lines.append(f"  NTSC 0x{r.ntsc_rom:06X}  PAL 0x{r.pal_rom:06X}  {r.size:6d}B  {r.name}")
     lines += ["", f"differing bytes: {sum(r.size for r in diff)}"]
 
+    bad = yaml_mismatches(rows)
+    if bad:
+        lines += ["", "WARNING: derived shift disagrees with the yaml object starts:"]
+        lines += [f"  {n}: US 0x{u:X} EU 0x{e:X} (yaml {e - u:+#x}, derived {s:+#x})"
+                  for n, u, e, s in bad]
+
     report = "\n".join(lines)
     print(report)
     if args.write:
@@ -382,8 +427,10 @@ def main():
         out.write_text(report + "\n", encoding="utf-8", newline="\n")
         print(f"\nwrote {out.relative_to(ROOT)}")
     if args.mark:
-        files, n = mark(rows, insert_at)
+        files, n = mark(rows)
         print(f"\nmarked {n} differing functions across {files} c stubs")
+    if args.check and bad:
+        sys.exit(1)
 
 
 if __name__ == "__main__":
