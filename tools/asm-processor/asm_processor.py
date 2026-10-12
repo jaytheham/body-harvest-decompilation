@@ -1004,13 +1004,6 @@ def parse_source(f, opts, out_dependencies, print_source=None):
         elif ((line.startswith('GLOBAL_ASM("') or line.startswith('#pragma GLOBAL_ASM("'))
                 and line.endswith('")')):
             fname = map_asm_path(line[line.index('(') + 2 : -2], opts.asm_roots)
-            if not os.path.exists(fname):
-                # Local change (bh-decomp): source shared between ROM versions selects each version's pragma
-                # with #if, so the other version's .s may not have been extracted. asm-processor runs before
-                # the preprocessor and cannot tell an inactive pragma from an active one, so emit a line that
-                # is a hard IDO syntax error if it is compiled and vanishes if the #if drops it.
-                output_lines[-1] = 'GLOBAL_ASM file not found: "' + fname + '";'
-                continue
             out_dependencies.append(fname)
             global_asm = GlobalAsmBlock(fname)
             with open(fname, encoding=opts.input_enc) as f:
