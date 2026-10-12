@@ -108,11 +108,10 @@ tools/eu_rom_diff.py` lists the differing bytes.
   merely *references* but which the EU symbol table relocated away from the
   address encoded in their NA name -- because an EU asm label of the same name
   would otherwise shadow the relocated placement and bind the C to the wrong
-  address. One EU-only function sits at the NA address of a shared function
-  (`0x80013818`); it was renamed to `EU_func_80013818_14418` in
-  `symbol_addrs.eu.txt` and the `src.eu/core/12C80.c` `GLOBAL_ASM` pragma
-  updated to match. Note the deliberate `EU_` (not `eu_`) prefix so the
-  rename-generator's `^eu_` stripper leaves it alone across pipeline re-runs.
+  address. One EU function sits at the NA address of a shared function
+  (`0x80013818`). That was first worked around with an `EU_func_80013818_14418` rename (the deliberate `EU_`, not `eu_`,
+  prefix kept the rename-generator's `^eu_` stripper away from it). The workaround is gone: EU `0x80013818` is NA's
+  `n_alSynFreeFX`, which `12C80.c` now defines once in `src/common/core/`, and `symbol_addrs.eu.txt` names it at its EU address.
   Also note the gotcha: splat parses the `GLOBAL_ASM` pragma filename, so the C
   stub name must equal the splat symbol name or the function is misclassified as
   matched. `src/common/core/10A20.c`: `D_80031B58_32758` has a region-specific
