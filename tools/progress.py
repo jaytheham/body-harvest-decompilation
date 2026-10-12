@@ -2,7 +2,8 @@
 """
 progress.py — Body Harvest decompilation progress tracker.
 
-Walks src.us/**/*.c, counts matched / NON_MATCHING / GLOBAL_ASM functions
+Walks the NTSC build's C sources (src.us/**/*.c and the version-independent
+src/common/**/*.c), counts matched / NON_MATCHING / GLOBAL_ASM functions
 per file and segment, reads git log for history, and emits progress.json.
 
 Usage:
@@ -64,6 +65,10 @@ SEGMENT_DISPLAY = {
 }
 SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
+# C source roots of the NTSC build. src/common holds the files both versions compile;
+# src.eu is not counted (its files are GLOBAL_ASM stubs over the same functions).
+SOURCE_ROOTS = ("src.us", "src/common")
+
 
 def analyse_file(path: Path) -> dict:
     try:
@@ -115,20 +120,24 @@ def get_c_parser():
     return ts_get_parser("c")
 
 
-def file_to_segment(rel_path: str) -> str:
-    parts = Path(rel_path).parts
-    if len(parts) >= 4:
-        return f"{parts[1]}/{parts[2]}"
-    elif len(parts) >= 3:
-        return parts[1]
+def file_to_segment(sub_path: str) -> str:
+    """Segment of a path relative to its source root, e.g. core or overlay_gameplay/frontend."""
+    parts = Path(sub_path).parts
+    if len(parts) >= 3:
+        return f"{parts[0]}/{parts[1]}"
+    elif len(parts) >= 2:
+        return parts[0]
     return "unknown"
 
 
 def count_asm_functions_for_source(repo_root: Path, src_dir: Path, source_file: Path) -> int:
     rel_no_ext = source_file.relative_to(src_dir).with_suffix("")
+    # splat writes the reference asm of a file named ../src/common/... in the yaml to
+    # asm/src/common/<path>/ rather than asm/matchings or asm/nonmatchings.
     asm_dirs = [
         repo_root / "asm" / "matchings" / rel_no_ext,
         repo_root / "asm" / "nonmatchings" / rel_no_ext,
+        repo_root / "asm" / src_dir.relative_to(repo_root) / rel_no_ext,
     ]
     total = 0
     for d in asm_dirs:
@@ -151,9 +160,9 @@ def get_commit_info(cwd: str) -> tuple:
     return sha, ts
 
 
-def get_contributors(cwd: str, src_dir: Path) -> dict:
+def get_contributors(cwd: str, src_dirs: list) -> dict:
     contributors = {}
-    for f in src_dir.rglob("*.c"):
+    for f in (c for d in src_dirs for c in d.rglob("*.c")):
         rel = str(f.relative_to(Path(cwd)))
         out = git_run(["log", "-1", "--format=%an|%ae", "--", rel], cwd)
         if "|" in out:
@@ -183,11 +192,11 @@ def build_history_item(date_str: str, commit_sha: str, totals: dict) -> dict:
     }
 
 
-def get_totals_at_commit(cwd: str, src_rel: str, commit_sha: str, totals_cache: dict) -> dict | None:
+def get_totals_at_commit(cwd: str, src_rels: list, commit_sha: str, totals_cache: dict) -> dict | None:
     if commit_sha in totals_cache:
         return totals_cache[commit_sha]
 
-    tree_out = git_run(["ls-tree", "-r", "--name-only", commit_sha, src_rel], cwd)
+    tree_out = git_run(["ls-tree", "-r", "--name-only", commit_sha, *src_rels], cwd)
     if not tree_out:
         totals_cache[commit_sha] = None
         return None
@@ -211,8 +220,8 @@ def get_totals_at_commit(cwd: str, src_rel: str, commit_sha: str, totals_cache: 
     return totals
 
 
-def build_history(cwd: str, src_dir: Path) -> list:
-    src_rel = str(src_dir.relative_to(Path(cwd)))
+def build_history(cwd: str, src_dirs: list) -> list:
+    src_rels = [d.relative_to(Path(cwd)).as_posix() for d in src_dirs]
     start_date = datetime.strptime("2026-02-01", "%Y-%m-%d").date()
     today = datetime.now(timezone.utc).date()
 
@@ -226,7 +235,7 @@ def build_history(cwd: str, src_dir: Path) -> list:
             "--date=short",
             "--since=2026-02-01",
             "--",
-            src_rel,
+            *src_rels,
         ],
         cwd
     )
@@ -253,11 +262,11 @@ def build_history(cwd: str, src_dir: Path) -> list:
     previous_item = None
 
     baseline_sha = git_run(
-        ["log", "-1", "--format=%H", "--before=2026-02-01T00:00:00", "--", src_rel],
+        ["log", "-1", "--format=%H", "--before=2026-02-01T00:00:00", "--", *src_rels],
         cwd,
     )
     if baseline_sha:
-        baseline_totals = get_totals_at_commit(cwd, src_rel, baseline_sha, totals_cache)
+        baseline_totals = get_totals_at_commit(cwd, src_rels, baseline_sha, totals_cache)
         if baseline_totals:
             previous_item = build_history_item(start_date.strftime("%Y-%m-%d"), baseline_sha, baseline_totals)
 
@@ -268,7 +277,7 @@ def build_history(cwd: str, src_dir: Path) -> list:
         week_sha = weekly_commits.get(week_start)
 
         if week_sha:
-            week_totals = get_totals_at_commit(cwd, src_rel, week_sha, totals_cache)
+            week_totals = get_totals_at_commit(cwd, src_rels, week_sha, totals_cache)
             if week_totals:
                 previous_item = build_history_item(date_str, week_sha, week_totals)
                 history.append(previous_item)
@@ -289,16 +298,18 @@ def build_history(cwd: str, src_dir: Path) -> list:
 def main():
     args = parse_args()
     repo_root = os.path.abspath(args.repo_root)
-    src_dir = Path(repo_root) / "src.us"
+    src_dirs = [Path(repo_root) / r for r in SOURCE_ROOTS]
     verify_mode = args.verify_with_asm
 
-    if not src_dir.is_dir():
-        print(f"ERROR: src.us not found at {src_dir}", file=sys.stderr)
+    if not src_dirs[0].is_dir():
+        print(f"ERROR: src.us not found at {src_dirs[0]}", file=sys.stderr)
         sys.exit(1)
+    src_dirs = [d for d in src_dirs if d.is_dir()]
 
     print("Scanning source files...", file=sys.stderr)
-    c_files = sorted(src_dir.rglob("*.c"))
-    contributors = {} if verify_mode else get_contributors(repo_root, src_dir)
+    c_files = sorted(((d, f) for d in src_dirs for f in d.rglob("*.c")),
+                     key=lambda pair: pair[1].relative_to(pair[0]).as_posix())
+    contributors = {} if verify_mode else get_contributors(repo_root, src_dirs)
 
     files_data = []
     asm_mismatches = []
@@ -306,9 +317,10 @@ def main():
     overall = {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
     contributor_stats = defaultdict(lambda: {"files": 0, "matched": 0, "non_matching": 0, "asm_stubs": 0})
 
-    for f in c_files:
+    for src_dir, f in c_files:
         rel = str(f.relative_to(Path(repo_root)))
-        seg = file_to_segment(rel)
+        sub_path = f.relative_to(src_dir).as_posix()
+        seg = file_to_segment(sub_path)
         counts = analyse_file(f)
         if args.verify_with_asm:
             asm_total = count_asm_functions_for_source(Path(repo_root), src_dir, f)
@@ -326,7 +338,7 @@ def main():
 
         total_f = counts["total"]
         files_data.append({
-            "path": rel.replace("src.us/", ""),
+            "path": sub_path,
             "segment": seg,
             "matched": counts["matched"],
             "non_matching": counts["non_matching"],
@@ -400,7 +412,7 @@ def main():
     history = []
     if not verify_mode:
         print("Building history graph (this may take a moment)...", file=sys.stderr)
-        history = build_history(repo_root, src_dir)
+        history = build_history(repo_root, src_dirs)
     else:
         print("Verify mode: skipping git history and contributor scan for speed.", file=sys.stderr)
 
