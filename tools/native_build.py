@@ -315,6 +315,9 @@ def build(args):
                     with compiled.open("wb") as out:
                         run(processor, output=out, quiet=args.quiet)
                 run([CACHE / "ido/cc.exe", "-c", *source_cflags, optimization, libultra_config.get("isa", "-mips2"), "-32", "-o", name, compiled], env=env, quiet=args.quiet)
+                # Under load IDO can exit 0 without writing its object (seen at 4 workers); fail here, not at link time.
+                if not target.exists() or target.stat().st_size == 0:
+                    raise RuntimeError(f"IDO reported success but wrote no object: {name}")
                 if libultra_config.get("isa") == "-mips3":
                     # IDO's -mips3 -32 output omits EF_MIPS_ABI_O32. The
                     # reference build sets this bit before modern GNU linking.
