@@ -50,7 +50,7 @@ segments:
       - [0xFB30, c, ../src/common/core/FD80] # Boot and scheduler share epilogue alignment.
       - [0x10A80, c, ../src/common/core/10A20]
       - [0x10BF0, c, core/loader] # original src filename
-      - [0x12CB0, c, core/12C80] # Sounds, Dialogue
+      - [0x12CB0, c, ../src/common/core/12C80] # Sounds, Dialogue
       - [0x17F10, c, core/17EE0] # Dialogue
       - [0x1B090, c, core/1B060]
       - [0x1B130, c, ../src/common/core/1B100]
@@ -237,7 +237,7 @@ segments:
       - [0x32780, .data, ../src/common/core/10A20]
       - [0x32790, .data, ../src/common/core/FD80]
       - [0x327C0, data, core/loader]
-      - [0x328D0, data, core/12C80]
+      - [0x328D0, .data, ../src/common/core/12C80]
       - [0x348F0, data, core/17EE0]
       - [0x350E0, .data, ../src/common/core/1B100]
       - [0x35A00, data, libultra/sl]
@@ -266,7 +266,7 @@ segments:
       - [0x38250, rodata, core/E830]
       - [0x38280, .rodata, ../src/common/core/FD80]
       - [0x383B0, rodata, core/loader]
-      - [0x38DF0, rodata, core/12C80]
+      - [0x38DF0, .rodata, ../src/common/core/12C80]
       - [0x38FE0, rodata, core/17EE0]
       - [0x39300, .rodata, ../src/common/core/1B100]
       - [0x3A470, rodata, libultra/sched_data]
@@ -299,6 +299,8 @@ segments:
       - [0x3F090, .rodata, ../src/common/core/terrain_lookup]
       - [0x3F450, .rodata, ../src/common/core/camera_curve]
       - [0x3F490, .rodata, ../src/common/core/rsp_data]
+
+      - {start: 0x40750, type: .fixed_bss, name: ../src/common/core/12C80, vram: 0x8006AB40}
 
   - name: overlay_gameplay_frontend
     type: code

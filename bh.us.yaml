@@ -46,7 +46,7 @@ segments:
       - [0xFB00, c, ../src/common/core/FD80] # Boot and scheduler share epilogue alignment.
       - [0x10A50, c, ../src/common/core/10A20]
       - [0x10BC0, c, core/loader] # original src filename
-      - [0x12C80, c, core/12C80] # Sounds, Dialogue
+      - [0x12C80, c, ../src/common/core/12C80] # Sounds, Dialogue
       - [0x17EE0, c, core/17EE0] # Dialogue
       - [0x1B060, c, core/1B060]
       - [0x1B100, c, ../src/common/core/1B100]
@@ -233,7 +233,7 @@ segments:
       - [0x32750, .data, ../src/common/core/10A20]
       - [0x32760, .data, ../src/common/core/FD80]
       - [0x32790, .data, core/loader]
-      - [0x328A0, .data, core/12C80]
+      - [0x328A0, .data, ../src/common/core/12C80]
       - [0x348C0, .data, core/17EE0]
       - [0x350B0, .data, ../src/common/core/1B100]
       - [0x359D0, .data, libultra/sl]
@@ -263,7 +263,7 @@ segments:
       - [0x38220, .rodata, core/E830]
       - [0x38260, .rodata, ../src/common/core/FD80]
       - [0x38380, .rodata, core/loader]
-      - [0x38DC0, .rodata, core/12C80]
+      - [0x38DC0, .rodata, ../src/common/core/12C80]
       - [0x38FB0, .rodata, core/17EE0]
       - [0x392D0, .rodata, ../src/common/core/1B100]
       - [0x3A440, .rodata, libultra/sched]
@@ -297,7 +297,7 @@ segments:
       - [0x3F420, .rodata, ../src/common/core/camera_curve]
       - [0x3F460, .rodata, ../src/common/core/rsp_data]
 
-      - {start: 0x40720, type: .fixed_bss, name: core/12C80, vram: 0x8006AB10}
+      - {start: 0x40720, type: .fixed_bss, name: ../src/common/core/12C80, vram: 0x8006AB10}
 
       # Anchor private reference storage; PI handles occupy the gap before piacs.
       - {start: 0x40720, type: .fixed_bss, name: libultra/rotate, vram: 0x8006CA50}
