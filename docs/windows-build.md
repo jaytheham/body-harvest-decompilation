@@ -29,6 +29,8 @@ The NTSC builds must print `build/bh.us.z64: OK` and the EU build must print `bu
 
 Both ROMs are supported natively. `.\tools\extract.ps1 -Version eu` and `.\tools\make.ps1 -Version eu` operate on the `.eu`-suffixed tree (`asm.eu`, `assets.eu`, `build.eu`, `bh.eu.ld`, `undefined_syms_auto.eu.txt`) while the default `us` version uses the bare NTSC paths, so extracting one version cannot overwrite the other's link inputs. `python tools/verify_build.py --rebuild` cleans and rebuilds both versions in sequence and checks each against its baserom; it does not extract, so run both extractions first when checking that one does not disturb the other. The Makefile also builds both versions (`make extract VERSION=eu`, `make --jobs VERSION=eu`); that route, which `tools/make.ps1 -Docker` runs inside `bh-container`, was checked on Ubuntu 22.04 and 24.04.
 
+A failed build leaves the previous ROM in place. When the compile or the link fails, `tools/native_build.py` exits non-zero and `make` stops before `sha1sum`, but the `build/bh.us.z64` or `build.eu/bh.eu.z64` of an earlier successful build is still on disk (the ROM is only rewritten after a successful link). Judge a build by its exit status and its `OK` line, not by the ROM file existing. `python tools/verify_build.py` without `--rebuild` only compares the files on disk, so it can pass on that stale ROM; `--rebuild` deletes the ROMs first and reports `BUILD FAILED`.
+
 ## Local changes to vendored tools
 
 - `tools/splat/src/splat/segtypes/common/c.py`: `C_GLOBAL_ASM_IDO_RE` accepts `.` and `-` in path components, so `GLOBAL_ASM` pragmas under `asm.eu/` are recognised. Re-apply it after updating splat; without it the EU build fails.
@@ -37,6 +39,11 @@ Both ROMs are supported natively. `.\tools\extract.ps1 -Version eu` and `.\tools
   opened or recorded as a dependency, and refuses a DESTINATION directory that does not exist. Source shared between the
   ROM versions names the NA extraction (`asm/`) once; `tools/native_build.py --version eu` and the Makefile for `VERSION=eu`
   pass `--asm-root asm=asm.eu` on both asm-processor invocations of an object (the source pass and `--post-process`), and
-  the US build passes nothing, so each build needs only its own extraction. Re-apply it after updating asm-processor.
+  the US build passes nothing, so each build needs only its own extraction. The path is canonicalised like `open()` reads it
+  before it is matched (`./asm/x.s`, `asm//x.s` and `asm/../asm/x.s` map like `asm/x.s`; a backslash and the case of `ASM/`
+  count on a Windows host only), and a path that resolves under SOURCE without being spelled that way (an absolute path, or
+  one that leaves the repository and comes back) stops asm-processor with an error naming the source file, the line and the
+  pragma, so a stray spelling cannot read the NA assembly into an EU object. `tests/asm_root_check.sh` covers it. Re-apply it
+  after updating asm-processor.
 
 When upgrading a tool, update its version URL and SHA256 in `ARCHIVES`, remove its local cached installation, and repeat the clean extraction and SHA1 verification. Do not remove the hash checks or disable TLS verification to work around download failures.

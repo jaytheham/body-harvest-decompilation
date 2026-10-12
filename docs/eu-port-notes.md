@@ -146,3 +146,13 @@ tools/eu_rom_diff.py` lists the differing bytes.
   pairing and the conversion are now two tools, `tools/eu_symbol_pairs.py` and
   `tools/share_core_file.py`, and `tools/progress.py` counts a shared file's
   pragmas once.
+- 2026-10-12: The review of the version-neutral pragma found that `--asm-root`
+  matched only the literal prefix `asm/`, so `./asm/...`, a Windows backslash or
+  case spelling, an absolute path or `asm/../asm/...` would have read the NA
+  extraction in an EU build (none exists; the link or the SHA1 check would have
+  stopped the result). asm-processor now canonicalises the path before mapping it
+  and refuses, naming the file, line and pragma, a path that still resolves under
+  `asm/` without being spelled that way (`tests/asm_root_check.sh`). The Makefile
+  now rebuilds the GLOBAL_ASM objects when the asm-processor command line or
+  `asm_processor.py` changes. See "Sharing a file that still has GLOBAL_ASM" in
+  `docs/pal-vs-na.md`.

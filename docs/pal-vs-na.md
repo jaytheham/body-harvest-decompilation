@@ -190,6 +190,26 @@ assembly of the version it is building:
   destination directory that does not exist. Both invocations of asm-processor
   per object (the source pass and `--post-process`) must carry it; without it
   the EU link fails with undefined references to NA symbol names.
+- The mapping reads the path the way `open()` does: it folds `.`, `..` and
+  repeated separators first, so `./asm/x.s`, `asm//x.s` and `asm/../asm/x.s`
+  map like `asm/x.s`; a backslash is a separator, and `ASM/` matches `asm/`,
+  on a Windows host only (on a case-sensitive host those paths name nothing
+  and the open fails; on another case-insensitive filesystem `ASM/` gets the
+  refusal below). A path that is not spelled `asm/...` but still resolves to a
+  file under `asm/` (an absolute path, or one that leaves the repository and
+  comes back) cannot be mapped, so asm-processor stops with an error naming
+  the source file, the line and the pragma, instead of reading the NA assembly
+  into an EU object. Paths outside `asm/` (`asm.eu/...`, `asmx/...`,
+  `src/asm/...`) are left as written. `tests/asm_root_check.sh` covers every
+  spelling and runs anywhere, with no extraction or baserom.
+- A build that omitted `--asm-root` fails at the link (undefined references) and
+  never reaches the SHA1 check, but its objects stay on disk. The Makefile
+  therefore makes every GLOBAL_ASM object depend on a stamp of the
+  asm-processor command line (`build.eu/.asm_processor.stamp`) and on
+  `asm_processor.py`, so putting the flag back, or changing the processor,
+  rebuilds them instead of re-linking objects made from the NA assembly.
+  `tools/native_build.py` gets the same effect from its configuration
+  fingerprint, which digests `native_build.py` and `asm_processor.py`.
 - The asm path follows from the yaml name: for a subsegment named
   `../src/common/core/E830`, splat writes the functions to
   `asm*/nonmatchings/../src/common/core/E830/`, that is `asm*/src/common/core/E830/`.
