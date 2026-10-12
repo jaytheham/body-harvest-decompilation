@@ -16,11 +16,10 @@ def apply(config, args):
         if os.path.isfile(objdump):
             config['objdump_executable'] = objdump
 
-    # EU builds into build.eu/, US into build/ (native_build.py per-version
-    # layout). Without this the EU map lookup silently fails.
+    # EU builds into build.eu/, US into build/ (the per-version layout of the
+    # Makefile and native_build.py). There is no fallback: a missing map should
+    # be reported under the path that was actually expected.
     build_dir = 'build.eu' if version == 'eu' else 'build'
-    if not os.path.exists(f'{build_dir}/{basename}.{version}.map'):
-        build_dir = 'build'
 
     config['baseimg'] = f'baserom.{version}.z64'
     config['myimg'] = f'{build_dir}/{basename}.{version}.z64'
