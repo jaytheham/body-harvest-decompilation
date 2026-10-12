@@ -380,6 +380,8 @@ def build(args):
         expected = (ROOT / f"bh.{args.version}.sha1").read_text().split()[0].lower()
         actual = hashlib.sha1(rom.read_bytes()).hexdigest()
         print(f'{paths["build"]}/bh.{args.version}.z64: {"OK" if actual == expected else "FAILED"}', flush=True)
+        if actual != expected:
+            raise RuntimeError(f"bh.{args.version}.z64 does not match bh.{args.version}.sha1 (built {actual}, expected {expected})")
 
 
 def main():
