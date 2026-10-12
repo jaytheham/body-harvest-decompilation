@@ -46,7 +46,7 @@ segments:
       - [0x53D0, c, ../src/common/core/53D0]
       - [0x53F0, c, core/53F0] # Objectives
       - [0xAD90, c, core/AD60] # Text rendering?
-      - [0xE860, c, core/E830]
+      - [0xE860, c, ../src/common/core/E830]
       - [0xFB30, c, ../src/common/core/FD80] # Boot and scheduler share epilogue alignment.
       - [0x10A80, c, ../src/common/core/10A20]
       - [0x10BF0, c, ../src/common/core/loader] # original src filename
@@ -233,7 +233,7 @@ segments:
       - [0x32080, .data, ../src/common/core/32050]
       - [0x32100, .data, ../src/common/core/320D0]
       - [0x32280, data, core/AD60]
-      - [0x326B0, data, core/E830]
+      - [0x326B0, .data, ../src/common/core/E830]
       - [0x32780, .data, ../src/common/core/10A20]
       - [0x32790, .data, ../src/common/core/FD80]
       - [0x327C0, .data, ../src/common/core/loader]
@@ -263,7 +263,7 @@ segments:
       - [0x37470, rodata, core/1050]
       - [0x378E0, rodata, core/53F0]
       - [0x38090, rodata, core/AD60]
-      - [0x38250, rodata, core/E830]
+      - [0x38250, .rodata, ../src/common/core/E830]
       - [0x38280, .rodata, ../src/common/core/FD80]
       - [0x383B0, .rodata, ../src/common/core/loader]
       - [0x38DF0, .rodata, ../src/common/core/12C80]

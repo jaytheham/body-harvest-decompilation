@@ -501,6 +501,19 @@ buildingTypes = 0x802590C0;
 func_8001F6E0_202E0 = 0x8001F710;
 func_802D4CD0_18D7E0 = 0x802D4D10;
 
+/* core/E830 (shared C): NA-named externs at their EU addresses, from the NA and EU disassembly of the same
+   instructions. D_80267080 is pinned above. */
+D_80059CD0 = 0x80059D00;
+D_80059CD2 = 0x80059D02;
+D_80059CD4 = 0x80059D04;
+D_80059CD6 = 0x80059D06;
+D_80059CD8 = 0x80059D08;
+D_80059CDC = 0x80059D0C;
+D_80059CE0 = 0x80059D10;
+D_8005BAE8 = 0x8005BB18;
+D_8005BAEC = 0x8005BB1C;
+D_8005BAF0 = 0x8005BB20;
+
 /* EU auto-labels that collide with a name used by the shared (version-independent) C source. */
 eu_D_80031408 = 0x80031408;
 eu_D_8003140C = 0x8003140C;
