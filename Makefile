@@ -17,7 +17,13 @@ CYAN    := \033[0;36m
 
 ifeq ($(VERSION),eu)
 BUILD_DIR = build.eu
-ASM_DIRS  = asm.eu
+ASM_DIRS  = asm.eu \
+			asm.eu/libultra \
+			asm.eu/core \
+			asm.eu/data \
+			asm.eu/data/core \
+			asm.eu/data/libultra \
+			asm.eu/data/rsp
 BIN_DIRS  = assets.eu \
 			assets.eu/core \
 			assets.eu/overlay_level/greece \
@@ -26,6 +32,7 @@ BIN_DIRS  = assets.eu \
 			assets.eu/overlay_level/siberia \
 			assets.eu/overlay_level/comet
 LD_SCRIPT = bh.eu.ld
+ASSET_DIR = assets.eu
 UNDEFINED_SYMS_AUTO = undefined_syms_auto.eu.txt
 else
 BUILD_DIR = build
@@ -43,6 +50,7 @@ ASM_DIRS  = asm \
 			asm/data/overlay_gameplay/outside
 BIN_DIRS  = assets
 LD_SCRIPT = bh.ld
+ASSET_DIR = assets
 UNDEFINED_SYMS_AUTO = undefined_syms_auto.txt
 endif
 SRC_DIR   = src.$(VERSION)
@@ -283,7 +291,7 @@ splat: $(SPLAT)
 
 extract: splat tools
 	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
-	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py
+	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py $(ASSET_DIR)
 
 decompress: $(ALL_RNC_EXTRACTED)
 
@@ -303,7 +311,7 @@ distclean: clean
 
 ### Recipes
 
-$(TARGET).elf: $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES) $(RNC_O_FILES)
+$(TARGET).elf: $(LD_SCRIPT) $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES) $(RNC_O_FILES)
 	@$(LD) $(LD_FLAGS) $(LD_FLAGS_EXTRA) -o $@
 	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
