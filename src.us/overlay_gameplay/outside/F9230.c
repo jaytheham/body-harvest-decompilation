@@ -985,21 +985,21 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 
 // CURRENT(4219)
 #ifdef NON_MATCHING
+// CURRENT(2843)
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	VehicleInstance *vehicle;
-	f64 temp_f20;
 	s16 xOff;
 	s16 yOff;
 	s16 zOff;
-	s16 x;
-	s16 z;
+	s16 rotatedX;
+	s32 x;
+	s32 z;
 	f32 temp_f0;
 	f32 xOffF;
 	f32 zOffF;
 
 	D_80048188 = 1;
 	D_8004818C = 1;
-	temp_f20 = D_80144468_153418;
 
 	vehicle = &vehicleInstances[arg1];
 
@@ -1010,24 +1010,29 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	yOff = (s8)vehicleTypes[vehicle->unk1A].unk5F;
 	zOff = (s8)vehicleTypes[vehicle->unk1A].unk60;
 
-	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
+	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0));
 
 	xOffF = (f32) xOff;
 	zOffF = (f32) zOff;
-	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF));
+	rotatedX = (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0)) * zOffF));
 
-	temp_f0 = sinf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
-	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF) + (xOffF * temp_f0));
+	temp_f0 = sinf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0));
+	z = vehicle->unk4 + (s32) ((cosf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0)) * zOffF) + (xOffF * temp_f0));
 
+	x = vehicle->unk0 + rotatedX;
 	D_801575E0.unk6 = x;
 	D_801575E0.unkA = vehicle->unk2 + yOff;
 	D_801575E0.unkE = z;
-	D_801575E0.unk12 = func_80003824_4424((f32) (s16) (arg3->unk0 - x), (f32) (s16) (arg3->unk4 - z)) + 0x8000;
+	x = (s16)(arg3->unk0 - x);
+	z = (s16)(arg3->unk4 - z);
+	D_801575E0.unk12 = func_80003824_4424(x, z) + 0x8000;
 
 	D_80157E80 = arg0;
 	D_80157E82 = arg1;
 	D_80157E84 = arg2;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
@@ -2233,13 +2238,11 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 
 // CURRENT(491)
 // Black Adam animations controller? called by his behavior function
-#ifdef NON_MATCHING
 s32 func_800EF650_FE600(AlienInstance *arg0) {
-	s32 pad;
-	s32 pad2;
+	s32 pad3[2];
 	s32 sp34;
-	s32 pad3;
 	f32 sp2C;
+
 
 	sp34 = arg0->unk12 >> 5;
 	if (sp34 < 2) {
@@ -2251,8 +2254,8 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 	func_800EBA54_FAA04((Unk80052B40 *) arg0, D_80157A48.unk40C, &D_80157A48);
 
-	{
-			if (((temp & 0x40000000) == 0) && (D_80157E70 == 0)) {
+	if ((arg0->unk20 & 0x80000000) && (D_80157E78 == 0)) {
+			if (((arg0->unk20 & 0x40000000) == 0) && (D_80157E70 == 0)) {
 				osSyncPrintf(D_801443BC_15336C);
 				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
 			}
@@ -2265,12 +2268,12 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 	if ((arg0->unk20 & ALIEN_FLAG_UNKD) && ((D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) == 0)) {
 		arg0->unk12 = 0;
-		func_800EB534_FA4E4(&D_80157A48, ((Unk8013E45C *)D_8013E45C_14D40C)[D_80157E7C].unk08, 0, 0);
+		func_800EB534_FA4E4(&D_80157A48, D_8013E45C_14D40C[D_80157E7C].unk08, 0, 0);
 	}
 
 	if (D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x80) {
 		if (func_800EB9C4_FA974(D_80157E7C, &D_80157A48) != 0) {
-			func_80087188_96138((((s32) arg0 - (s32) alienInstances) / 0x50) & 0xFF, 0, 0x18);
+			func_80087188_96138((u8)(arg0 - alienInstances), 0, 0x18);
 		}
 
 		if ((((Unk8007F878_404 *) D_80157A48.unk404)->unkE50 == 0) && ((arg0->unk20 & ALIEN_FLAG_UNKD) == 0)) {
@@ -2304,7 +2307,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 			D_80157A48.unk410
 		);
 	} else {
-		func_8000CF4C_DB4C(D_80157A48.unk404, &D_80157A48, 0x10, *(s32 *) &D_80157A48.unk410);
+		func_8000CF4C_DB4C(D_80157A48.unk404, &D_80157A48, 0x10, *(s32 *)&D_80157A48.unk410);
 	}
 
 	if (D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) {
@@ -2315,9 +2318,6 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
-#endif
 
 // CURRENT(34)
 // AI - Builds the model-view matrix stack for an alien and draws its animated model
