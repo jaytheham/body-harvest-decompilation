@@ -32,5 +32,11 @@ Both ROMs are supported natively. `.\tools\extract.ps1 -Version eu` and `.\tools
 ## Local changes to vendored tools
 
 - `tools/splat/src/splat/segtypes/common/c.py`: `C_GLOBAL_ASM_IDO_RE` accepts `.` and `-` in path components, so `GLOBAL_ASM` pragmas under `asm.eu/` are recognised. Re-apply it after updating splat; without it the EU build fails.
+- `tools/asm-processor/asm_processor.py`: a `#pragma GLOBAL_ASM` whose `.s` file does not exist is replaced by a line that is
+  a C syntax error, instead of aborting. Source shared between the ROM versions picks each version's pragma with
+  `#if defined(VERSION_US)` / `#elif defined(VERSION_EU)`, and asm-processor runs before the preprocessor, so it reads both
+  pragmas. Without the change a US build needs `asm.eu/` extracted (and so the EU ROM), and the reverse. If the missing
+  pragma is the active one, IDO stops with `Syntax Error` on `GLOBAL_ASM file not found: "<path>";`. Re-apply it after
+  updating asm-processor.
 
 When upgrading a tool, update its version URL and SHA256 in `ARCHIVES`, remove its local cached installation, and repeat the clean extraction and SHA1 verification. Do not remove the hash checks or disable TLS verification to work around download failures.
