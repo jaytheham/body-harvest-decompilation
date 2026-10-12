@@ -3,8 +3,8 @@
 
 const char D_80145650_154600[] = "-------- GAME CAMERA INITIALISED --------\n";
 const f32 D_8014567C_15462C[1] = {0.1f};
-const f64 D_80145680_154630[1] = {500.0};
-const f64 D_80145688_154638[1] = {500.0};
+const CameraFadeScale D_80145680_154630 = {500.0};
+const CameraFadeScale D_80145688_154638 = {500.0};
 const f32 D_80145690_154640[1] = {0.05f};
 const f32 D_80145694_154644[1] = {0.1f};
 const f32 D_80145698_154648[1] = {0.1f};
@@ -20,8 +20,8 @@ const f32 D_801456D8_154688[1] = {0.1f};
 const f32 D_801456DC_15468C[1] = {0.1f};
 const f32 D_801456E0_154690[1] = {0.1f};
 const f32 D_801456E4_154694[1] = {0.1f};
-const f64 D_801456E8_154698[1] = {500.0};
-const f64 D_801456F0_1546A0[1] = {500.0};
+const CameraFadeScale D_801456E8_154698 = {500.0};
+const CameraFadeScale D_801456F0_1546A0 = {500.0};
 const f32 D_801456F8_1546A8[1] = {50000.0f};
 
 s16 D_8013E410_14D3C0[] = {
@@ -109,8 +109,7 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80132740_1416F0.s")
 #endif
 
-// CURRENT(2335)
-#ifdef NON_MATCHING
+
 // AI - Main camera update
 void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	f32 sp3C;
@@ -121,12 +120,12 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 
 	D_80149404 = 0x2D;
 	if ((gameplayMode != 2) && (gameplayMode != 9) && (gameplayMode != 0xA)) {
-		if ((D_80160158 != 0) && ((u8)D_8016015E == 0)) {
+		if ((D_80160158 != 0) && (D_8016015E == 0)) {
 			D_8016015E = 1;
 			if (arg0->unk6C == 1) {
-				func_80014208_14E08(D_8016015C, (s16)((1.0 - D_80160128) * D_80145680_154630[0]), 0x40);
+				func_80014208_14E08(D_8016015C, (s16)((1.0 - D_80160128) * D_80145680_154630.value), 0x40);
 			} else if (arg0->unk6C == 2) {
-				func_80014208_14E08(D_8016015C, (s16)(D_80160128 * D_80145688_154638[0]), 0x40);
+				func_80014208_14E08(D_8016015C, (s16)(D_80160128 * D_80145688_154638.value), 0x40);
 			}
 		}
 
@@ -138,8 +137,9 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 			sp3C = sqrtf((sp38 * sp38) + (sp30 * sp30));
 			arg0->unk48 = func_80003824_4424(sp30, sp38);
 			arg0->unk4A = func_80003824_4424(sp3C, -sp34);
-			arg0->unk4E = (s16)sqrtf((sp3C * sp3C) + (sp34 * sp34));
+			sp38 = sqrtf((sp3C * sp3C) + (sp34 * sp34));
 			sp3C = D_80145690_154640[0];
+			arg0->unk4E = (s16)sp38;
 			arg0->unk4E = (s16)(arg0->unk4E * 4.0);
 			arg0->unkC = (f32)((f32)D_80157586 * 4.0);
 			arg0->unk10 = (f32)((f32)D_80157588 * 4.0);
@@ -201,7 +201,7 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 
 	func_80135F0C_144EBC();
 	D_80149404 = (s16)((f32)D_80149404 + D_8016016C);
-	func_80133C9C_142C4C((Vec3f *)arg0, (Vec3f *)&arg0->unkC, (Vec3f *)&arg0->unk18, arg0->unk48, arg0->unk4A, arg0->unk4C,
+	func_80133C9C_142C4C(&arg0->position, &arg0->lookAt, &arg0->up, arg0->unk48, arg0->unk4A, arg0->unk4C,
 					arg0->unk4E);
 	func_8013493C_1438EC(arg0, arg1);
 	func_80134CCC_143C7C(arg0, arg1);
@@ -229,19 +229,11 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 
 	D_8016014C = currentControllerStates[0].button & 0x2000;
 	D_801600F0 = D_801493D0;
-	*(s32*)&D_801600F8.x = *(s32*)&arg0->unk30;
-	*(s32*)&D_801600F8.y = *(s32*)&arg0->unk34;
-	*(s32*)&D_801600F8.z = *(s32*)&arg0->unk38;
+	D_801600F8 = arg0->vehiclePosition;
 	D_80160104 = (s16)D_80052B34->unk1A;
 	D_80160154 = D_801591BC;
 	D_80160180 = D_8016017C;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80132980_141930.s")
-#endif
-
-// Setup camera for drawing gameplay frame?
-// AI - Setup projection and view matrices
 void func_801330E4_142094(Unk80160080 *arg0) {
 	u16 sp46;
 
@@ -380,62 +372,61 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801333D0_142380.s")
 #endif
 
-// CURRENT(3158)
-#ifdef NON_MATCHING
+// CURRENT(275)
 // AI - Compute camera position from target
+#ifdef NON_MATCHING
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
-	f32 sp44;
 	f32 sp20;
 	f32 temp_f0;
 	f32 temp_f12;
 	f32 temp_f2;
+	f32 sp44;
 	f32 temp_f14;
 	f32 temp_f16;
 	s16 temp_s0;
 	s32 temp_a0;
 	s32 temp_v0;
 	s32 var_v1;
-	VehicleInstance *temp_v1;
 
-	temp_v1 = D_80159020;
-	temp_f16 = (f32) temp_v1->unk2;
-	temp_f14 = (f32) temp_v1->unk0;
-	temp_f2 = (f32) temp_v1->unk4 - arg1->z;
-	sp44 = temp_f16 - arg1->y;
+	temp_f14 = (f32) D_80159020->unk0;
+	temp_f16 = (f32) D_80159020->unk2;
+	sp20 = (f32) D_80159020->unk4;
 	temp_f0 = temp_f14 - arg1->x;
+	sp44 = temp_f16 - arg1->y;
+	temp_f2 = sp20 - arg1->z;
 	temp_f12 = sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
-	if ((D_801600F0 == 0) || (D_80140CFC_14FCAC != 0)) {
-		s16 temp_v1_2;
-
-		temp_v1_2 = D_80140CFC_14FCAC;
-		arg0->unk5C = (s16) -func_80003824_4424(temp_f12, sp44);
-		arg0->unk5A = (s16) D_80159318;
-		if (temp_v1_2 != 0) {
-			D_80140CFC_14FCAC = temp_v1_2 - 1;
+	if ((D_801600F0 == 0) || ((var_v1 = D_80140CFC_14FCAC) != 0)) {
+		temp_v0 = func_80003824_4424(temp_f12, sp44);
+		var_v1 = D_80140CFC_14FCAC;
+		arg0->unk5C = -temp_v0;
+		arg0->unk5A = D_80159318;
+		if (var_v1 != 0) {
+			D_80140CFC_Decrement = var_v1 - 1;
 		} else {
-			D_80140CFC_14FCAC = 1;
+			var_v1 = 1;
+			D_80140CFC_Reset = var_v1;
 		}
 	}
 	temp_v0 = (s16) func_80132730_1416E0(D_80159318, arg0->unk5A);
 	if (temp_v0 < -0xE38) {
 		temp_a0 = -0xE38 - temp_v0;
-		if (temp_a0 < 0x16D) {
-			var_v1 = temp_a0;
-		} else {
+		if (temp_a0 >= 0x16D) {
 			var_v1 = 0x16C;
+		} else {
+			var_v1 = temp_a0;
 		}
-		arg0->unk5A = (s16) (arg0->unk5A + var_v1);
-		arg0->unk5C = (s16) (arg0->unk5C - var_v1);
+		arg0->unk5A += var_v1;
+		arg0->unk5C -= var_v1;
 	}
 	if (temp_v0 >= 0xE39) {
 		temp_a0 = temp_v0 - 0xE38;
-		if (temp_a0 < 0x16D) {
-			var_v1 = temp_a0;
-		} else {
+		if (temp_a0 >= 0x16D) {
 			var_v1 = 0x16C;
+		} else {
+			var_v1 = temp_a0;
 		}
-		arg0->unk5A = (s16) (arg0->unk5A - var_v1);
-		arg0->unk5C = (s16) (arg0->unk5C + var_v1);
+		arg0->unk5A -= var_v1;
+		arg0->unk5C += var_v1;
 	}
 	temp_s0 = arg0->unk58;
 	arg0->unk54 = 0;
@@ -479,49 +470,52 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// CURRENT(2152)
-#ifdef NON_MATCHING
+// CURRENT(5): only generated interpolation constant address differs
 // AI - Vehicle camera orbit/recenter
+#ifdef NON_MATCHING
 void func_80133A54_142A04(Unk80160080 *arg0) {
-	f32 sp40;
 	Vec3f sp44;
-	VehicleInstance *vehicle = D_80052B34;
+	f32 sp40;
 	s32 temp_v0;
+	s32 step;
+	VehicleInstance *vehicle;
+
+	vehicle = D_80052B34;
 
 	if (D_801600F0 == 0) {
 		D_8016011C = 0.0f;
 		D_80160120 = 0.0f;
 		D_80160124 = 0.0f;
 		D_80160128 = 0.0f;
-		D_8016012C = D_8014569C_15464C[0];
-		D_80160130 = D_8014569C_15464C[0];
-		D_80160134 = D_8014569C_15464C[0];
-		D_80160138 = D_8014569C_15464C[0];
-		arg0->unk58 = vehicle->unkE;
-		vehicle = D_80052B34;
+		D_8016012C = 0.1f;
+		D_80160130 = 0.1f;
+		D_80160134 = 0.1f;
+		D_80160138 = 0.1f;
+		arg0->unk58 = D_80052B34->unk6;
 	}
 
-	temp_v0 = func_80132730_1416E0(vehicle->unk6 - D_80052B2C->unk36, arg0->unk58);
+	temp_v0 = func_80132730_1416E0(D_80052B34->unk6 - D_80052B2C->unk36, arg0->unk58);
 	if (temp_v0 >= 0xE39) {
-		s32 temp_a1 = temp_v0 - 0xE38;
-		arg0->unk58 = (s16)(arg0->unk58 - ((temp_a1 < D_8015929C) ? temp_a1 : D_8015929C));
+		step = ((temp_v0 - 0xE38 < D_8015929C) ? temp_v0 - 0xE38 : D_8015929C);
+		arg0->unk58 -= step;
 	}
 	if (temp_v0 < -0xE38) {
-		s32 temp_a1 = -0xE38 - temp_v0;
-		arg0->unk58 = (s16)(arg0->unk58 + ((temp_a1 < D_8015929C) ? temp_a1 : D_8015929C));
+		step = ((-0xE38 - temp_v0 < D_8015929C) ? -0xE38 - temp_v0 : D_8015929C);
+		arg0->unk58 += step;
 	}
 
 	arg0->unk56 = 0x73;
 	sp40 = (f32)(vehicleTypes[D_80052B34->unk1A].unkC * 2);
-	sp44.x = (f32)(D_80052B34->unk0 - (((f32)coss((u16)arg0->unk58) / 32768.0) * sp40));
-	sp44.y = (f32)(vehicleTypes[D_80052B34->unk1A].unk38 + D_80052B34->unk2 + 0x32);
-	sp44.z = (f32)(D_80052B34->unk4 - (((f32)sins((u16)arg0->unk58) / 32768.0) * sp40));
+	sp44.x = (f32)(vehicle->unk0 - (((f32)coss(arg0->unk58) / 32768.0) * sp40));
+	sp44.y = (f32)(vehicleTypes[D_80052B34->unk1A].unk38 + vehicle->unk2 + 0x32);
+	sp44.z = (f32)(vehicle->unk4 - (((f32)sins((u16)arg0->unk58) / 32768.0) * sp40));
 
 	func_801336CC_14267C(arg0, &sp44);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133A54_142A04.s")
 #endif
+
 
 
 // AI - Apply yaw/pitch rotation to look-at vector
@@ -947,24 +941,19 @@ void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	arg1->unk20 = D_80149404;
 }
 
-// CURRENT(3145)
+// CURRENT(925)
 #ifdef NON_MATCHING
 // AI - Smooth camera position/angle interpolation
 void func_80134D44_143CF4(Unk80160080 *arg0) {
 	f64 temp_f2;
 	f64 temp_f12;
 	f64 temp_f14;
-	f64 temp_f2_2;
-	f64 temp_f12_2;
-	f64 temp_f14_2;
 	f64 var_f16;
 	s32 var_v0;
 	s32 var_v1;
 
 	if (D_8016011C == 0.0f) {
-		*(u32 *)&D_80160108.x = *(u32 *)&arg0->unkC;
-		*(u32 *)&D_80160108.y = *(u32 *)&arg0->unk10;
-		*(u32 *)&D_80160108.z = *(u32 *)&arg0->unk14;
+		D_80160108 = arg0->lookAt;
 	}
 	if (D_80160120 == 0.0f) {
 		D_80160114 = arg0->unk48;
@@ -976,18 +965,16 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 		D_8016011A = arg0->unk4E;
 	}
 
-	if ((f64)D_8016011C < 1.0) {
+	if (D_8016011C < 1.0) {
 		arg0->unkC = ((arg0->unk24 - D_80160108.x) * D_8016011C) + D_80160108.x;
 		arg0->unk10 = ((arg0->unk28 - D_80160108.y) * D_8016011C) + D_80160108.y;
 		arg0->unk14 = ((arg0->unk2C - D_80160108.z) * D_8016011C) + D_80160108.z;
 		D_8016011C += D_8016012C;
 	} else {
-		*(u32 *)&arg0->unkC = *(u32 *)&arg0->unk24;
-		*(u32 *)&arg0->unk10 = *(u32 *)&arg0->unk28;
-		*(u32 *)&arg0->unk14 = *(u32 *)&arg0->unk2C;
+		arg0->lookAt = arg0->desiredLookAt;
 		D_8016011C = 1.0f;
 	}
-	if ((f64)D_80160120 < 1.0) {
+	if (D_80160120 < 1.0) {
 		var_v0 = D_80160114;
 		var_v1 = arg0->unk50 - var_v0;
 		if (var_v1 >= 0x8001) {
@@ -999,7 +986,7 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 			var_v0 = D_80160114;
 			var_v1 = arg0->unk50 - var_v0;
 		}
-		arg0->unk48 = (s16)(s32)((f32)var_v0 + (D_80160120 * (f32)var_v1));
+		arg0->unk48 = (s32)(var_v0 + (D_80160120 * var_v1));
 		D_80160120 += D_80160130;
 	} else {
 		arg0->unk48 = arg0->unk50;
@@ -1007,22 +994,22 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 	}
 
 	if (D_80160124 < 1.0) {
-		arg0->unk4A = (s16)(s32)((f32)D_80160118 + (D_80160124 * (f32)(arg0->unk52 - D_80160118)));
+		arg0->unk4A = (s32)(D_80160118 + (D_80160124 * (arg0->unk52 - D_80160118)));
 		if (D_80160140 != 0) {
 			temp_f2 = D_80160124;
 			if (D_801456B0_154660[0] < temp_f2) {
 				temp_f12 = (1.0 - temp_f2) * 0.25;
-				temp_f14 = D_80160134;
-				if (temp_f12 < temp_f14) {
-					D_80160134 = (f32)temp_f12;
+				if (temp_f12 < (f64)D_80160134) {
+					D_80160134 = temp_f12;
 				} else {
-					D_80160134 = (f32)temp_f14;
+					D_80160134 = (f64)D_80160134;
 				}
 				temp_f14 = D_80160134;
-				if (temp_f14 < D_801456B8_154668[0]) {
-					D_80160134 = (f32)D_801456B8_154668[0];
+				var_f16 = D_801456B8_154668[0];
+				if (temp_f14 < var_f16) {
+					D_80160134 = var_f16;
 				} else {
-					D_80160134 = (f32)temp_f14;
+					D_80160134 = temp_f14;
 				}
 			}
 		}
@@ -1035,23 +1022,23 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 		var_f16 = D_801456C8_154678[0];
 	}
 
-	if ((f64)D_80160128 < 1.0) {
-		arg0->unk4E = (s16)(s32)((f32)D_8016011A + (D_80160128 * (f32)(arg0->unk56 - D_8016011A)));
+	if (D_80160128 < 1.0) {
+		arg0->unk4E = (s32)(D_8016011A + (D_80160128 * (arg0->unk56 - D_8016011A)));
 		if (D_8016013C != 0) {
-			temp_f2_2 = (f64)D_80160128;
-			if (D_801456D0_154680[0] < temp_f2_2) {
-				temp_f12_2 = (1.0 - temp_f2_2) * 0.25;
-				temp_f14_2 = (f64)D_80160138;
-				if (temp_f12_2 < temp_f14_2) {
-					D_80160138 = (f32)temp_f12_2;
+			temp_f2 = D_80160128;
+			if (D_801456D0_154680[0] < temp_f2) {
+				temp_f12 = (1.0 - temp_f2) * 0.25;
+				temp_f14 = D_80160138;
+				if (temp_f12 < temp_f14) {
+					D_80160138 = temp_f12;
 				} else {
-					D_80160138 = (f32)temp_f14_2;
+					D_80160138 = temp_f14;
 				}
-				temp_f14_2 = (f64)D_80160138;
-				if (temp_f14_2 < var_f16) {
-					D_80160138 = (f32)var_f16;
+				temp_f14 = D_80160138;
+				if (temp_f14 < var_f16) {
+					D_80160138 = var_f16;
 				} else {
-					D_80160138 = (f32)temp_f14_2;
+					D_80160138 = temp_f14;
 				}
 			}
 		}
@@ -1068,8 +1055,6 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80134D44_143CF4.s")
 #endif
 
-// adamCameraControls ?
-// AI - On-foot camera rotation input handler
 void func_801351DC_14418C(Unk80160080 *arg0)
 {
   s32 temp_t5;
@@ -1268,12 +1253,13 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 }
 
 // toggleCameraNearFarMode?
-// CURRENT(680)
+// CURRENT(65)
 #ifdef NON_MATCHING
 // AI - Toggle near/far camera mode
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	f32 var_f14;
-	u8 temp_v0;
+	f32 temp_f0;
+	s16 temp_s0;
 
 	if ((currentLevel == 4) && (D_80052B34->unk1A == 0xF)) {
 		arg0->unk6C = 1;
@@ -1284,17 +1270,17 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 
 	func_800033D4_3FD4(8, 0);
 	if (currentControllerStates[CONTROLLER_ONE].button & 8) {
-		temp_v0 = arg0->unk6C;
-		if (temp_v0 != 0) {
-			if (temp_v0 == 1) {
+		if (arg0->unk6C != 0) {
+			if (arg0->unk6C == 1) {
 				func_800B33BC_C236C(0x44);
 				arg0->unk6C = 2;
 			} else {
 				arg0->unk6C = 1;
 			}
 
-			if (D_80160128 >= 1.0) {
-				if (*(u8*)&D_8016015E == 0) {
+			temp_f0 = D_80160128;
+			if (temp_f0 >= 1.0) {
+				if (D_8016015E == 0) {
 					func_800153D8_15FD8(0xC3);
 				}
 				var_f14 = D_801456E0_154690[0];
@@ -1304,8 +1290,6 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				D_80160128 = 0.0f;
 				D_8016013C = 1;
 			} else {
-				f32 temp_f0 = D_80160128;
-				s16 temp_s0;
 
 				D_80160128 = 0.0f;
 				temp_s0 = (s16)(s32)(temp_f0 / D_80160138);
@@ -1314,14 +1298,13 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 			}
 
 			{
-				f32 temp_f0 = D_80160124;
+				temp_f0 = D_80160124;
 
 				if (temp_f0 == 1.0) {
 					D_80160124 = 0.0f;
 					D_80160134 = var_f14;
 					D_80160140 = 1;
 				} else {
-					s16 temp_s0;
 
 					D_80160124 = 0.0f;
 					temp_s0 = (s16)(s32)(temp_f0 / D_80160134);
@@ -1330,14 +1313,15 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 			}
 
 			{
-				f32 temp_f0 = D_8016011C;
+				temp_f0 = D_8016011C;
 
 				if (temp_f0 == 1.0) {
 					D_8016011C = 0.0f;
 					D_8016012C = var_f14;
 				} else {
 					D_8016011C = 0.0f;
-					D_8016012C = (f32)(1.0 / (s16)(s32)(temp_f0 / D_8016012C));
+					temp_s0 = (s16)(s32)(temp_f0 / D_8016012C);
+					D_8016012C = (f32)(1.0 / temp_s0);
 				}
 			}
 
@@ -1363,20 +1347,17 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				func_800B33BC_C236C(0x38);
 			}
 		} else {
-			temp_v0 = arg0->unk6C;
-			if (temp_v0 == 1) {
-				func_80014208_14E08(D_8016015C, (s16)(s32)((1.0 - temp_f0_2) * D_801456E8_154698[0]), 0x40);
-			} else if (temp_v0 == 2) {
-				func_80014208_14E08(D_8016015C, (s16)(s32)(temp_f0_2 * D_801456F0_1546A0[0]), 0x40);
+			if (arg0->unk6C == 1) {
+				func_80014208_14E08(D_8016015C, (s16)(s32)((1.0 - temp_f0_2) * D_801456E8_154698.value), 0x40);
+			} else if (arg0->unk6C == 2) {
+				func_80014208_14E08(D_8016015C, (s16)(s32)(temp_f0_2 * D_801456F0_1546A0.value), 0x40);
 			}
 		}
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801358E8_144898.s")
 #endif
-
 
 // AI - Initialize camera shake parameters
 void func_80135CB8_144C68(void) {
@@ -1597,9 +1578,10 @@ void func_80136570_145520(void) {
 }
 
 // CURRENT(4071)
-#ifdef NON_MATCHING
 // displaySignposts
 // AI - Render signpost sprites in 3D world
+// CURRENT(2231)
+#ifdef NON_MATCHING
 void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
@@ -1609,8 +1591,9 @@ void func_801365E0_145590(void) {
 	s16 var_fp;
 	s16 var_s0;
 	s16 var_s1;
-	s32 width;
-	s32 height;
+	s16 width;
+	s16 height;
+	SignpostData *signpost;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
@@ -1627,10 +1610,12 @@ void func_801365E0_145590(void) {
 
 	var_fp = 0;
 	while (var_fp < 0x20) {
-		var_s0 = D_80258330[var_fp].unk0;
-		if ((var_s0 != 0) || (D_80258330[var_fp].unk1 != 0)) {
-			var_s0 = ((s16)var_s0 << 8) + 0x80;
-			var_s1 = ((s16)D_80258330[var_fp].unk1 << 8) + 0x80;
+		signpost = &D_80258330[var_fp];
+		var_s0 = signpost->unk0;
+		if ((var_s0 != 0) || (signpost->unk1 != 0)) {
+			var_s0 = (var_s0 << 24) >> 16;
+			var_s0 += 0x80;
+			var_s1 = (signpost->unk1 << 8) + 0x80;
 			func_8011E6FC_12D6AC(var_s0, var_s1, &spCC);
 			if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
 				(D_801493B4 >= var_s1) &&
@@ -1639,7 +1624,7 @@ void func_801365E0_145590(void) {
 				spE0.unk0 = var_s0 >> 2;
 				spE0.unk2 = spCC >> 2;
 				spE0.unk4 = var_s1 >> 2;
-				spD8.unk0 = (((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) << 0xE;
+				spD8.unk0 = (((u32)signpost->unk2 << 0x1D) >> 0x1E) << 0xE;
 				spD8.unk2 = 0;
 				spD8.unk4 = 0;
 				spD0.unk0 = 0x20;
@@ -1650,7 +1635,7 @@ void func_801365E0_145590(void) {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				gDPPipeSync(D_8005BB2C++);
 				gSPDisplayList(D_8005BB2C++, D_504D1D0);
-				if ((((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) & 1) {
+				if ((((u32)signpost->unk2 << 0x1D) >> 0x1E) & 1) {
 					width = 0x10;
 					height = 0x13;
 				} else {
@@ -1659,7 +1644,7 @@ void func_801365E0_145590(void) {
 				}
 				func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
 					func_8012E1F8_13D1A8);
-				switch (((u32)D_80258330[var_fp].unk2 << 0x1D) >> 0x1E) {
+				switch (((u32)signpost->unk2 << 0x1D) >> 0x1E) {
 					case 0:
 						var_s1 += 0x18;
 						break;
@@ -1688,7 +1673,7 @@ void func_801365E0_145590(void) {
 #endif
 
 // https://decomp.me/scratch/NQ4OJ
-// CURRENT(379)
+// CURRENT(375)
 // Check if player is reading signpost
 // AI - Handle signpost interaction on button press
 #ifdef NON_MATCHING
@@ -1697,8 +1682,8 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	s32 unused;
 	s16 sp32;
 	s16 sp30;
-	s16 sp28;
 	SignpostData *sp1C;
+	s16 sp28;
 	s16 temp_v0;
 	u8 temp_t6;
 	temp_v0 = D_8015FAD0[arg1].unk1E - 0x2000;

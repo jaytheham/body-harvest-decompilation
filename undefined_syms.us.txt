@@ -7010,3 +7010,7 @@ D_8016006D_W = 0x8016006D;
 
 
 D_800476C8_words = D_800476C8;
+
+/* Camera counter aliases share the mutable counter storage. */
+D_80140CFC_Reset = D_80140CFC_14FCAC;
+D_80140CFC_Decrement = D_80140CFC_14FCAC;

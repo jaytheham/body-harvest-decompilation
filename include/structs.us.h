@@ -2277,9 +2277,14 @@ typedef struct {
 } ShadowPartEntry;
 
 typedef struct {
-	/* 0x00 */ f32 unk0;
-	/* 0x04 */ f32 unk4;
-	/* 0x08 */ f32 unk8;
+	union {
+		struct {
+			/* 0x00 */ f32 unk0;
+			/* 0x04 */ f32 unk4;
+			/* 0x08 */ f32 unk8;
+		};
+		Vec3f position;
+	};
 	union {
 		struct {
 			/* 0x0C */ f32 unkC;
@@ -2288,9 +2293,14 @@ typedef struct {
 		};
 		Vec3f lookAt;
 	};
-	/* 0x18 */ f32 unk18;
-	/* 0x1C */ f32 unk1C;
-	/* 0x20 */ f32 unk20;
+	union {
+		struct {
+			/* 0x18 */ f32 unk18;
+			/* 0x1C */ f32 unk1C;
+			/* 0x20 */ f32 unk20;
+		};
+		Vec3f up;
+	};
 	union {
 		struct {
 			/* 0x24 */ f32 unk24;
@@ -3848,5 +3858,9 @@ typedef struct {
 	/* 0x01 */ u8 g;
 	/* 0x02 */ u8 b;
 } BeaconColor; /* 3 bytes */
+
+typedef struct {
+	f64 value;
+} CameraFadeScale;
 
 #endif /* LIBULTRA_REFERENCE */
