@@ -2195,13 +2195,9 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
-	/* 0x30 */ u8 pad30[0x30];
-	/* 0x60 */ u8 unk60;
-	/* 0x61 */ u8 unk61;
-	/* 0x62 */ u8 unk62;
-	/* 0x63 */ u8 unk63;
-	/* 0x64 */ u8 unk64;
-	/* 0x65 */ u8 unk65;
+	/* 0x30 */ Vec3f positions[4];
+	/* 0x60 */ u16 unk60;
+	/* 0x62 */ u8 textureIndices[4];
 	/* 0x66 */ u8 unk66;
 	/* 0x67 */ u8 unk67;
 	/* 0x68 */ u8 unk68;

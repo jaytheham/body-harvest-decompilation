@@ -15,3 +15,7 @@ func_800FDC30_10CBE0 uses a switch on currentLevel with a nested switch on the v
 ## Boolean and mask types
 
 func_8010F72C_11E6DC needs an `int` return type for the target boolean epilogue. The flag test `(u8)(building->unk8 & 1)` produces the same instructions as the uncast mask, but changes IDO's temporary-register numbering to match the target. Update the declaration in functions.us.h alongside the definition.
+
+## HUD quad: direct position fields and declaration order
+
+func_800A1DD8_B0D88 matches with direct D_8014F618.positions[arg0] fields. A named position pointer makes IDO cache the E7000000 pipe-sync constant across the function, shifting the general registers and removing a constant load. Direct indexed fields restore both constant loads and all registers. Declare the spilled right-Z component fourth among the seven float locals: this reserves a 16-byte frame and places that component at sp+0. Declaring it first makes the frame eight bytes; declaring it last makes the frame 32 bytes. The unsigned scale conversion needs a u32 cast before double multiplication, preserving the target's unsigned conversion correction. Typed positions, texture indices, scale, and camera basis remove raw pointer arithmetic. Verified by diff score 0 and full ROM checksum OK.
