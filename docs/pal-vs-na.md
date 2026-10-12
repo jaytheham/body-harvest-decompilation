@@ -252,9 +252,11 @@ yet. Still open:
   `basename`, so they are configured per version (`ld_script_path`,
   `undefined_syms_auto_path`) in `bh.eu.yaml`. Without this, extracting EU
   silently overwrites the US link inputs and breaks the US build.
-- `jlabel` in `tools/asm-processor/prelude.inc` emits `.global`. It is the only
-  macro that needed it: jump-table targets must resolve across object files once
-  core rodata is split into separate segments. NTSC keeps its jump tables in C
-  and never hit this.
+- `jlabel` in `tools/asm-processor/prelude.inc` emits `.global` only when the
+  assembler defines `GLOBAL_JLABELS`, which only the EU build does
+  (`--defsym GLOBAL_JLABELS=1` in `tools/native_build.py` and the Makefile).
+  EU needs it because its jump tables sit in separate rodata objects, so their
+  targets must resolve across object files. NTSC keeps its jump tables in C, so
+  its jump-table labels stay local and add no FUNC symbols to `build/bh.us.elf`.
 - asm-processor's minimum function size is **2 instructions** for `-O2` without
   `-framepointer`, not 5. Only one-instruction GLOBAL_ASM blocks are rejected.
