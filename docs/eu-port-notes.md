@@ -3,7 +3,8 @@
 Objective: build a byte-exact EU ROM (`baserom.eu.z64`, size `0xC00000`, SHA1
 `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`), reusing the NA source tree and
 keeping code shared between regions under `src/common/`. NA-only code lives
-under `src.us/`; EU region-specific assembly/data sits under `asm.eu/`. The port
+under `src.us/`; EU-only C stubs live under `src.eu/` and EU assembly and data
+under `asm.eu/`. The port
 is done when `build.eu/bh.eu.z64` reproduces `baserom.eu.z64` byte for byte,
 without regressing the NA build.
 
@@ -36,7 +37,8 @@ Fix: emit `eu_<name> = 0x<vram>;` pins. Splat renames **by address**, and reads
 renames **only** from `symbol_addrs.eu.txt` (`bh.eu.yaml` -> `symbol_addrs_path`;
 rename lookup at `tools/splat/src/splat/util/options.py:400`, applied in
 `symbols.py:310` and `symbols.py:477`). `undefined_syms.eu.txt` is only a linker
-`-T` input (`tools/native_build.py:359`) and can never rename anything.
+`-T` input (the `ldflags` list in `tools/native_build.py`) and can never rename
+anything.
 
 **BUG found.** The pins were being written to `undefined_syms.eu.txt`, while
 `symbol_addrs.eu.txt` had 0 pins, so the renames had no effect on the ROM.
