@@ -204,6 +204,8 @@ DEFINES += -DVERSION_US
 endif
 ifeq ($(VERSION),eu)
 DEFINES += -DVERSION_EU
+# EU links core rodata as asm whose jump tables reference jlabels in other objects.
+ASFLAGS += --defsym GLOBAL_JLABELS=1
 endif
 
 VERIFY = verify

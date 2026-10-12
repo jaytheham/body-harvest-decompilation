@@ -239,6 +239,9 @@ def build(args):
     assembler = binutils / "mips-ps2-decompals-as.exe"
     linker = binutils / "mips-ps2-decompals-ld.exe"
     asflags = ["-EB", "-mtune=vr4300", "-march=vr4300", "-mabi=32", "-I", "include"]
+    if args.version == "eu":
+        # EU links core rodata as asm whose jump tables reference jlabels in other objects.
+        asflags += ["--defsym", "GLOBAL_JLABELS=1"]
     cflags = f"-G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_{args.version.upper()} -woff 649,838".split()
     cflags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc",
                                   paths["assets"], paths["src"], f'{paths["src"]}/libultra/audio')]

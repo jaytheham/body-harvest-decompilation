@@ -13,7 +13,9 @@
 .endm
 
 .macro jlabel label
+    .ifdef GLOBAL_JLABELS
     .global \label
+    .endif
     \label:
 .endm
 
