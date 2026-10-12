@@ -5,10 +5,12 @@
 
 s16 D_80031B50_32750 = 0;
 s32 __osSiAccessQueueEnabled = 0;
-#ifdef VERSION_EU
+#if defined(VERSION_US)
+u8 D_80031B58_32758 = 0;
+#elif defined(VERSION_EU)
 u8 D_80031B58_32758 = 1;
 #else
-u8 D_80031B58_32758 = 0;
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 void func_8000FE50_10A50(void *arg0) {
