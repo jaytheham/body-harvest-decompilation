@@ -3,7 +3,12 @@
     python tools/function_inventory.py [--version us|eu|both]
                                        [--write PATH] [--report PATH]
                                        [--segment NAME] [--status STATUS]
-                                       [--limit N] [--pal-diff] [--json]
+                                       [--limit N] [--json]
+
+``--report`` takes ``{version}`` in the path when ``--version both`` is used,
+for example ``--report build/reports/function-inventory.{version}.md``. EU core
+rows carry a PAL class from ``tools/pal_us_diff.py``, which needs both
+baseroms and splat's Python packages.
 
 The linker map is the source of truth for *where* a function is: it records every
 symbol's VRAM address, the segment it sits in, and which object file it came
@@ -107,20 +112,13 @@ def pal_classes(eu_functions):
     ``DIFF`` means PAL rewrote it and the NTSC body must not be reused. Only
     core is compared; overlays are not covered.
 
-    Matched by byte overlap, not by address or name. In the reorganised band
-    (NTSC ``0x7C00``-``0xAC00``) PAL moved function boundaries, so neither the
-    shifted address nor the name lines up; the NTSC function that covers the
-    most of a EU function's bytes is the one PAL rewrote.
+    Each NTSC function is placed at its PAL offset, from the per-function
+    shift that ``pal_us_diff`` derives, and the EU function that covers at
+    least half of it takes its class. Names cannot be used: EU names encode
+    EU addresses.
     """
-    try:
-        import pal_us_diff
-    except ImportError:
-        return {}
-    classes = {}
-    for _rom, _name, _size, cls, _p, _pn in pal_us_diff.classify_all():
-        classes[_rom] = (cls, _size)
-    if not classes:
-        return {}
+    import pal_us_diff
+    classes = {r.pal_rom: (r.cls, r.size) for r in pal_us_diff.classify_all()}
 
     ntsc = sorted(classes)
     out = {}
@@ -291,7 +289,9 @@ def main():
         print(text)
 
         if args.report:
-            out = pathlib.Path(args.report)
+            if len(versions) > 1 and "{version}" not in args.report:
+                ap.error("--version both writes two reports; put {version} in --report")
+            out = pathlib.Path(args.report.format(version=version))
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(text, encoding="utf-8", newline="\n")
             print(f"wrote {out}")
