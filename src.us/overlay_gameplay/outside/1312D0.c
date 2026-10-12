@@ -436,7 +436,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	}
 }
 
-// CURRENT(378)
+// CURRENT(23): frame size and generated jump-table placement remain.
 #ifdef NON_MATCHING
 void func_801238DC_13288C(s16 arg0) {
 	Projectile *entry;
@@ -451,7 +451,7 @@ void func_801238DC_13288C(s16 arg0) {
 	entry = &D_8015EB90[arg0];
 	linkIndex = entry->unk2A;
 	if (linkIndex != -1) {
-		D_8015F790[linkIndex].unk1F |= 1;
+		D_8015F790[linkIndex].trailEnded = 1;
 	}
 
 	buildingIndex = entry->unk20;
@@ -490,9 +490,10 @@ void func_801238DC_13288C(s16 arg0) {
 	}
 
 	*entry = D_8015EB90[--D_8015F9E4];
-	linkIndex = entry->unk2A;
-	D_8015F790[linkIndex].unk20 = entry;
+	D_8015F790[entry->unk2A].unk20 = entry;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801238DC_13288C.s")
 #endif
@@ -2255,127 +2256,94 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s")
 #endif
 
-// CURRENT(4381)
-#ifdef NON_MATCHING
-Projectile *func_80129354_138304(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	AlienInstance *alien;
-	Projectile *result;
-	const WeaponEntry_80129864 *entry;
-	s16 *ammo;
+Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	union { EntityType *entity; const WeaponEntry_80129864 *weapon; } data;
 	s16 weaponType;
 	s32 x;
 	s32 y;
 	s32 z;
 	s32 dx;
 	s32 dy;
-	s32 dz;
+	union { s32 spreadZ; Projectile *projectile; } value;
 	s32 distance;
 	s32 halfDistance;
 	s32 i;
-	s32 quarterDistance;
-	s32 val;
 	s32 power;
-	EntityType *temp;
 
-	alien = (AlienInstance *)arg0;
-	temp = (EntityType *)func_800FAFB8_109F68((VehicleInstance *)alien);
-	if ((alien->unk1E > 0) && (D_801591A8 == 0)) {
+	data.entity = func_800FAFB8_109F68((VehicleInstance *)arg0);
+	if ((arg0->unk1E > 0) && (D_801591A8 == 0)) {
 		return NULL;
 	}
 
 	if (arg1 == 0) {
-		weaponType = temp->weapon1B;
+		weaponType = data.entity->weapon1B;
 	} else {
-		weaponType = temp->weapon2B;
+		weaponType = data.entity->weapon2B;
 	}
 
-	if ((arg0 == (s32)D_80052B34) && (D_801591A8 == 0)) {
-		ammo = &D_80048140[weaponSlots[D_8004794A]];
-		if (*ammo > 0) {
-			*ammo -= 1;
-		} else if (*ammo != -0x8000) {
+	if ((arg0 == (EntityInstance *)D_80052B34) && (D_801591A8 == 0)) {
+		if (D_80048140[weaponSlots[D_8004794A]] > 0) {
+			D_80048140[weaponSlots[D_8004794A]] -= 1;
+		} else if (D_80048140[weaponSlots[D_8004794A]] != -0x8000) {
 			return NULL;
 		}
 	}
 
-	entry = &D_80145BE0_154B90[weaponType];
+	data.weapon = &D_80145BE0_154B90[weaponType];
 	if (((weaponType == 2) || (weaponType == 0x6A)) && (D_801591A8 == 0)) {
-		power = entry->unk2 * 4;
+		power = data.weapon->unk2 * 4;
 
-		func_80128504_1374B4(alien, arg1, &x, &y, &z);
+		func_80128504_1374B4((AlienInstance *)arg0, arg1, &x, &y, &z);
 		x = arg2 - x;
 		y = arg3 - y;
 		z = arg4 - z;
-		distance = (s32)sqrtf((f32)((x * x) + (y * y) + (z * z)));
-		distance = (s16)distance;
+		distance = (s16)sqrtf((f32)((x * x) + (y * y) + (z * z)));
 		distance /= 5;
 
-		i = (entry == &D_80145C10_154BC0) ? 5 : 9;
-
-		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].unk8 = (((((D_80145BE0_154B90[2].unk8 >> 8) & 0xFFFDFFFF) ^
-				((u32)D_80145BE0_154B90[2].unk8 >> 8)) << 8) ^ D_80145BE0_154B90[2].unk8);
-
-		if (i != 0) {
-			halfDistance = distance / 2;
-			quarterDistance = distance / 4;
-			i--;
-			do {
-				dx = (func_800038E0_44E0() % distance) - halfDistance;
-				dy = (func_800038E0_44E0() % halfDistance) - quarterDistance;
-				dz = (func_800038E0_44E0() % distance) - halfDistance;
-
-				alien->unk1E = 0;
-				func_80129864_138814((s32)alien, arg1, arg2 + dx, arg3 + dy, arg4 + dz);
-			} while (i--);
+		if (data.weapon == &D_80145C10_154BC0) {
+			i = 5;
+		} else {
+			i = 9;
 		}
 
-		alien->unk1E = 0;
-		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].unk8 = (((((D_80145BE0_154B90[2].unk8 >> 8) | 0x20000) ^
-				((u32)D_80145BE0_154B90[2].unk8 >> 8)) << 8) ^ D_80145BE0_154B90[2].unk8);
-		result = func_80129864_138814((s32)alien, arg1, arg2, arg3, arg4);
+		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].weaponFlags &= ~0x20000;
+
+		while (i--) {
+			halfDistance = distance / 2;
+
+			dx = (func_800038E0_44E0() % distance) - halfDistance;
+			dy = (func_800038E0_44E0() % halfDistance) - (distance / 4);
+			value.spreadZ = (func_800038E0_44E0() % distance) - halfDistance;
+
+			arg0->unk1E = 0;
+			func_80129864_138814((s32)arg0, arg1, arg2 + dx, arg3 + dy, arg4 + value.spreadZ);
+
+		}
+
+		arg0->unk1E = 0;
+		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].weaponFlags |= 0x20000;
+		value.projectile = func_80129864_138814((s32)arg0, arg1, arg2, arg3, arg4);
 	} else {
-		power = entry->unk2;
-		result = func_80129864_138814((s32)alien, arg1, arg2, arg3, arg4);
+		power = data.weapon->unk2;
+		value.projectile = func_80129864_138814((s32)arg0, arg1, arg2, arg3, arg4);
 	}
 
-	if ((D_801591A8 == 0) && (arg0 == (s32)D_80052B34)) {
+	if ((D_801591A8 == 0) && (arg0 == (EntityInstance *)D_80052B34)) {
 		if (D_80052B34->unk1A != 0) {
 			power /= 2;
 		}
 
-		if (entry == &D_801465B8_155568) {
-			val = (power * 3) / 4;
-			if (val > 0xC8) {
-				val = 0xC8;
-			}
-
-			i = power / 16;
-			if (i > 0x50) {
-				i = 0x50;
-			}
-
-			func_80001144_1D44(val & 0xFF, 5, (0x64 - i) & 0xFF);
+		if (data.weapon == &D_801465B8_155568) {
+			func_80001144_1D44((u8)((power * 3) / 4 < 0xC8 ? (power * 3) / 4 : 0xC8), 5, (u8)(0x64 - (power / 16 > 0x50 ? 0x50 : power / 16)));
 			osSyncPrintf(D_801450EC_15409C);
 		} else {
-			val = power * 3;
-			if (val > 0xC8) {
-				val = 0xC8;
-			}
-
-			i = power / 4;
-			if (i > 0x50) {
-				i = 0x50;
-			}
-
-			func_80001144_1D44(val & 0xFF, 5, (0x64 - i) & 0xFF);
+			func_80001144_1D44((u8)(power * 3 < 0xC8 ? power * 3 : 0xC8), 5, (u8)(0x64 - (power / 4 > 0x50 ? 0x50 : power / 4)));
 		}
 	}
 
-	return result;
+	return value.projectile;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80129354_138304.s")
-#endif
+
 
 #ifdef NON_MATCHING
 Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
