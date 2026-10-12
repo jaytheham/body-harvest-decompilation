@@ -12,7 +12,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: [us]
+        version: [us, eu]
+
+    env:
+      # US keeps the bare build directory; every other version builds into build.<version> (see the Makefile).
+      BUILD_DIR: ${{ matrix.version == 'us' && 'build' || format('build.{0}', matrix.version) }}
 
     steps:
       - name: Checkout repository
@@ -27,7 +31,7 @@ jobs:
             cp rom-assets/baserom.${{ matrix.version }}.z64 baserom.${{ matrix.version }}.z64
             echo "ROM_AVAILABLE=true" >> $GITHUB_ENV
           else
-            echo "::warning::BH_ROM_ASSETS_PAT not set — skipping ROM fetch and build verification"
+            echo "::warning::BH_ROM_ASSETS_PAT not set - skipping ROM fetch and build verification (pull requests from forks never receive it)"
             echo "ROM_AVAILABLE=false" >> $GITHUB_ENV
           fi
 
@@ -46,8 +50,8 @@ jobs:
       - name: Cache build artifacts
         uses: actions/cache@v4
         with:
-          path: build
-          key: ${{ runner.os }}-${{ matrix.version }}-${{ hashFiles('src.us/**', 'asm/**', 'assets/**', 'Makefile') }}
+          path: ${{ env.BUILD_DIR }}
+          key: ${{ runner.os }}-${{ matrix.version }}-${{ hashFiles('src/**', 'src.*/**', 'include/**', 'asm/**', 'asm.*/**', 'assets/**', 'assets.*/**', 'Makefile') }}
           restore-keys: |
             ${{ runner.os }}-${{ matrix.version }}-
 
@@ -61,5 +65,5 @@ jobs:
         with:
           name: debug-build-${{ matrix.version }}
           path: |
-            build/bh.${{ matrix.version }}.map
-            build/undefined_syms.txt
+            ${{ env.BUILD_DIR }}/bh.${{ matrix.version }}.map
+            undefined_syms_auto*.txt
