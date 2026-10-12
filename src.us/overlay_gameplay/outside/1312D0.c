@@ -497,11 +497,6 @@ void func_801238DC_13288C(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801238DC_13288C.s")
 #endif
 
-// https://decomp.me/scratch/lb79O
-// Matching, but due to the 1000.0 const needs all rodata after this to be matched first
-// Currently the 1000.0f const gets put in the wrong place
-// CURRENT(0)
-#ifdef NON_MATCHING
 // on Vehicle death
 void func_80123AC4_132A74(VehicleInstance *arg0)
 {
@@ -545,10 +540,14 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
   else if (arg0->unk20 & VEHICLE_FLAG_UNKB) // if NPC vehicle...
   {
 	func_800AE190_BD140(2); // ... add 2 to global humans killed count
+	x = 0.25;
+	/* Keep the offset's setup before the divisor load. */
+	if (x) {}
+	div = D_80145160_154110[0];
 	for (i = 0; i < 2; i++)
 	{
 		// Play sound effect at vehicle position
-	  func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, 0.25 + ((f32) (func_800038E0_44E0() % 100) / 1000.0));
+	  func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, x + ((f32) (func_800038E0_44E0() % 100) / div));
 	  // Spawn particle effect at vehicle position
 	  func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleTypes[arg0->unk1A].unk36 * 2, slot, 1);
 	}
@@ -584,9 +583,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	D_8015F9EC = 0xA;
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80123AC4_132A74.s")
-#endif
+
 
 // Deal damage to vehicle. Reduces damage to Adam by 40% in easy
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
