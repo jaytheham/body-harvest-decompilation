@@ -11,8 +11,8 @@ const char D_80144370_153320[32] = "Animate player stop swimming\n"; // "Animate
 const char D_80144390_153340[20] = "PLAYER IS DYING\n"; // "PLAYER IS DYING\n"
 const char D_801443A4_153354[24] = "Selecting weapon:%d\n"; // "Selecting weapon:%d\n"
 const char D_801443BC_15336C[20] = "play shot anim\n"; // "play shot anim\n"
-const f64 D_801443D0_153380[1] = {180.0};
-const f64 D_801443D8_153388[1] = {180.0};
+const struct { f64 value; } D_801443D0_153380 = {180.0};
+const struct { f64 value; } D_801443D8_153388 = {180.0};
 const f64 D_801443E0_153390[1] = {180.0};
 const f64 D_801443E8_153398[1] = {3.141592654};
 const f64 D_801443F0_1533A0[1] = {3.141592654};
@@ -294,61 +294,27 @@ void func_800EA5B8_F9568(void) {
 }
 
 // CURRENT(3950)
-#ifdef NON_MATCHING
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	f32 diffX;
 	s32 pad0;
 	f32 diffY;
 	f32 diffZ;
 	f32 result;
-	f32 absDiffY;
-	s32 xPart;
-	s32 yPart;
-	s32 zPart;
 	s32 angle;
 
-	if (arg0[0] < 0) {
-		xPart = (arg0[0] + 3) >> 2;
-	} else {
-		xPart = arg0[0] >> 2;
-	}
-	diffX = arg1->x - xPart;
-
-	if (arg0[1] < 0) {
-		yPart = (arg0[1] + 3) >> 2;
-	} else {
-		yPart = arg0[1] >> 2;
-	}
-	diffY = arg1->y - (yPart + 0xE);
-
-	if (arg0[2] < 0) {
-		zPart = (arg0[2] + 3) >> 2;
-	} else {
-		zPart = arg0[2] >> 2;
-	}
-	diffZ = arg1->z - zPart;
-	angle = func_80003824_4424(sqrtf((diffX * diffX) + (diffZ * diffZ)), (diffY >= 0.0f) ? diffY : -diffY);
-
+	diffX = arg1->x - arg0[0] / 4;
+	diffY = arg1->y - (arg0[1] / 4 + 14);
+	diffZ = arg1->z - arg0[2] / 4;
+	angle = func_80003824_4424(sqrtf(diffX * diffX + diffZ * diffZ), (diffY >= 0.0f) ? diffY : -diffY);
 	if (diffY < 0.0f) {
-		absDiffY = (f32)(((f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0);
-		absDiffY = (f32)( absDiffY / 40.0);
-		result = (f32)(( absDiffY * 0.5) + 0.5);
+		result = (f32)((f32)((f32)(((f32)(angle & 0xFFFF) * D_801443D0_153380.value) / 32768.0) / 40.0) * 0.5 + 0.5);
 	} else {
-		result = (f32)(0.5 - ((((f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
+		result = (f32)(0.5 - (f32)((f32)(((f32)(angle & 0xFFFF) * D_801443D8_153388.value) / 32768.0) / 40.0) * 0.5);
 	}
-
-	if (result < 0.0f) {
-		result = 0.0f;
-	}
-	if (result > 1.0f) {
-		result = 1.0f;
-	}
-
+	if (result < 0.0f) result = 0.0f;
+	if (result > 1.0f) result = 1.0f;
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA604_F95B4.s")
-#endif
 
 // CURRENT(400)
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
