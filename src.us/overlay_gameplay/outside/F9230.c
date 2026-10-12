@@ -2114,23 +2114,22 @@ block_211:
 
 // https://decomp.me/scratch/ShNcq
 // CURRENT(268)
-#ifdef NON_MATCHING
 // Is first weapon model valid
 // AI - Checks whether the alien type's first weapon model slot is a valid, non-empty entry
 s32 func_800EF0B0_FE060(s32 arg0)
 {
-  Gwords buf;
-  Gwords *ptr;
+  ShadowModelCommand buf;
+  ShadowModelCommand *ptr;
   s32 count;
   s32 sum;
-  ptr = (s32 *) func_80012000_12C00(arg0);
+  ptr = (ShadowModelCommand *) func_80012000_12C00(arg0);
   count = 0;
   sum = 0;
  do {
 	buf = *ptr++;
 	count++;
-	sum += (s8)buf.w0;
-} while ((s8)buf.w0 != -0x48 || count >= 0x39);
+	sum += buf.command.opcode;
+} while (buf.command.opcode != -0x48 || count >= 0x39);
 	
   if (currentControllerStates[1].button & 0x2000)
   {
@@ -2142,9 +2141,7 @@ s32 func_800EF0B0_FE060(s32 arg0)
   }
   return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF0B0_FE060.s")
-#endif
+
 
 // CURRENT(6578)
 #ifdef NON_MATCHING

@@ -18,6 +18,10 @@ typedef struct {
 typedef union ShadowModelCommand {
     Gwords words;
     s8 bytes[8];
+    struct {
+        s8 opcode;
+        s8 args[7];
+    } command;
 } ShadowModelCommand;
 
 typedef struct MissionCommand {
