@@ -343,6 +343,8 @@ const f64 D_802E0F60_1F9C70[] = { 188.0 };
 const f64 D_802E0F68_1F9C78[] = { -166.0 };
 const f64 D_802E0F70_1F9C80[] = { -166.0 };
 const f32 D_802E0F78_1F9C88[] = { 5000.0f };
+
+
 const f64 D_802E0F80_1F9C90[] = { 70.0 };
 const f32 D_802E0F88_1F9C98[] = { 549.31640625f };
 const f32 D_802E0F8C_1F9C9C[] = { 2250000.0f };
@@ -3562,26 +3564,29 @@ void func_802DD5CC_1F62DC(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(187) - buildable: D_802E0F80_1F9C90[0], AlienInstance.typeIndex, use-site u8 cast on the D_8014DD50 idx; residual is the a2/a3 base band + float-temp bank
+// CURRENT(5): all instructions/registers match; literal 70.0 lands at 0xfa8 instead of 0xf80. Retained after 20 builds without a new file.
 void func_802DD8E8_1F65F8(u8 arg0) {
-	s16 sp28;
 	s32 temp_v0;
+	u8 firstChild;
 	u8 temp_a1;
+	s16 sp28;
 	u8 temp_a2;
 	AlienInstance *alien;
+	const f64 radius = 70.0;
 
 	alien = &alienInstances[arg0];
 	temp_v0 = alien->unk20;
 	if (temp_v0 & 0x600) {
 		if (!(temp_v0 & 0x100000)) {
 			sp28 = sins(alien->unk6);
-			func_800DF848_EE7F8((s16) (s32) ((f64) alien->unk0 - (((f64) (f32) sp28 / 32768.0) * D_802E0F80_1F9C90[0])), alien->unk2, (s16) (s32) ((((f64) (f32) coss(alien->unk6) / 32768.0) * D_802E0F80_1F9C90[0]) + (f64) alien->unk4), alienTypes[alien->typeIndex].unkC, 2);
-			temp_a1 = (&D_8014DD50[(*(u8 *) &(&D_8014DD50[alien->unkC])->unkC)])->unkC;
-			temp_a2 = (&D_8014DD50[temp_a1])->unkD;
+			func_800DF848_EE7F8((alien->unk0 - (((f32)sp28 / 32768.0) * radius)), alien->unk2, ((((f32)coss(alien->unk6) / 32768.0) * radius) + alien->unk4), alienTypes[alien->typeIndex].unkC, 2);
+			firstChild = D_8014DD50[alien->unkC].unkC;
+			temp_a1 = D_8014DD50[firstChild].unkC;
+			temp_a2 = D_8014DD50[temp_a1].unkD;
 			func_80088E10_97DC0((s16) temp_a2);
 		}
 		func_802DD140_1F5E50(arg0, 4);
-		alien->unk8 = (s16) (alien->unk8 - 0x12C);
+		alien->unk8 -= 0x12C;
 	}
 }
 #else
