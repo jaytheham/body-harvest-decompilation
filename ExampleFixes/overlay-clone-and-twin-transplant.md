@@ -123,7 +123,7 @@ Three rules from it:
    (`addiu $t7,$t7,%lo(D_800AA688_7AB38)`) and the width (its `lbu` proves `u8`, so
    `extern u8 D_800AA688_7AB38[];` next to its address neighbours in `include/variables.h`). Grep the
    symbol as written in the `.s` before assuming a declaration in the file names the same object.
-3. **`include/variables.us.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
+3. **`include/variables.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
    (minutes at `--jobs=8`, not seconds). Start `make --jobs=8` in the background first and only then run
    `check`, which is then a differ-only run; a foreground `check` straight after a header edit times out.
    `nm build/<path>.c.o` showing `T <func>` plus `check` 0 is the compiled-C proof - a sha1 match alone

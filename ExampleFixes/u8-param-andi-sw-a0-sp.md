@@ -38,7 +38,7 @@ Two mechanical points when the rest of the body is already right:
 
 - The prototype must change with the definition (`include/functions.h`,
   `void func_80089BCC_171C8C(u8 arg0);`); `s32` vs `u8` is `conflicting types`.
-- `include/functions.us.h` is a make prerequisite, so one prototype line forces a
+- `include/functions.h` is a make prerequisite, so one prototype line forces a
   **full** rebuild - start `make --jobs=8` in the background, never a foreground
   `check`. The prototype retype also recompiles the caller TU (the sole caller
   passes `i & 0xFF`, which stayed ROM-neutral here); trust the sha1 `gate`, not
