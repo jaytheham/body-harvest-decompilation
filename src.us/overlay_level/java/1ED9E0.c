@@ -2529,19 +2529,18 @@ void func_802DAF5C_1F3C6C(u8 arg0) {
 	func_80089EB4_98E64(arg0, 0x3C, 0, 6, 3);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(195)
 void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
 	s32 pad;
 	s16 sp48[2];
 	s8 sp47;
 	s8 tmp;
-	s32 pad2[3];
+	s32 pad2[1];
 	AlienInstance *temp_s0;
 	AlienType *temp_v0_3;
+	u8 typeIndex;
 
 	sp48[0] = arg1;
-	tmp = D_8014DD50[arg1].unkC;
+	tmp = D_8014DD5C[arg1].unk0;
 	sp48[1] = tmp;
 	sp47 = func_80082084_91034(arg0, 2, 0xA, sp48, &D_802E0870_1F9580);
 
@@ -2552,7 +2551,8 @@ void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
 	temp_s0 = &alienInstances[arg0];
 
 	if (temp_s0->unk4B == 2 || temp_s0->unk4B == 5 || temp_s0->unk4B == 8) {
-		temp_v0_3 = &alienTypes[temp_s0->typeIndex];
+		typeIndex = temp_s0->typeIndex;
+		temp_v0_3 = &alienTypes[typeIndex];
 		temp_v0_3->unk20 = 0;
 		temp_v0_3->unk22 = -0x14;
 		temp_v0_3->unk24 = 0x3C;
@@ -2569,9 +2569,6 @@ void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
 		temp_s0->unk4B = 0xFF;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DAFD0_1F3CE0.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_802DB14C_1F3E5C(u8 arg0) {
