@@ -28,7 +28,7 @@ Place your **US** ROM at `baserom.us.z64` in the repository root, then run:
 
 The first command automatically downloads pinned, SHA256-checked Windows tools and installs the extraction libraries in `tools/windows/venv`. Nothing is installed globally and no environment activation is needed. Initial setup needs internet access; subsequent extractions and builds work offline. You can also run `.\tools\setup.ps1` separately to prepare the tools before supplying the ROM.
 
-A successful matching build prints `build/bh.us.z64: OK`. Builds are incremental and use up to eight workers. Options:
+A successful matching build prints `build/bh.us.z64: OK`. Builds are incremental and use up to four workers. Options:
 
 ```powershell
 .\tools\make.ps1 -Jobs 4
