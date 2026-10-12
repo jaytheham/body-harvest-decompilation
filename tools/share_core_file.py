@@ -23,18 +23,32 @@ Two options handle what a plain pragma rewrite cannot:
 
 * ``--jtbl-shift SHIFT`` (e.g. ``0x30``) is for hand-written jump tables, ``const u32 jtbl_<vram>_<rom>[] = {...};``,
   whose entries are NTSC code addresses.  Each initialiser becomes a ``VERSION_US`` / ``VERSION_EU`` / ``#error``
-  chain: the NTSC values stay as written and the EU values are the NTSC values plus SHIFT.  Before anything is
-  written, every value is checked against both ROMs: the NTSC word at the table's ROM offset (the ``<rom>`` in its
+  chain: the NTSC values stay as written and the EU values are the NTSC values plus SHIFT (SHIFT may be negative, or
+  0 when both ROMs hold the same values; a table is then only checked and its text is left alone).  Before anything
+  is written, every value is checked against both ROMs: the NTSC word at the table's ROM offset (the ``<rom>`` in its
   name) must equal the NTSC value, and the EU word at that offset plus the file's read-only-data shift (the EU
   ``rodata`` entry's start minus the US ``.rodata`` entry's start in the two yamls) must equal the NTSC value plus
   SHIFT.  A mismatch refuses the conversion and names the table.  Needs ``baserom.us.z64`` and ``baserom.eu.z64``.
+  Without the option a file that holds such tables is still checked, as if SHIFT were 0: it converts only when the
+  EU ROM holds the same values, and otherwise it is refused with the shift that the first entry suggests, so a file
+  whose tables carry NTSC addresses can never be shared without per-version values.
 * ``--pal-only FUNCTION`` is for one function that really differs in PAL.  Its NTSC C definition stays under
   ``VERSION_US``, ``VERSION_EU`` takes the pragma for the EU assembly of the same name, and any other version is an
-  ``#error``.  The function must be a plain definition in the NTSC file and an assembly stub in the EU file.
+  ``#error``.  The function must be a plain definition in the NTSC file, and the EU stub must carry a pragma for
+  ``asm.eu/nonmatchings/core/<File>/FUNCTION.s``: FUNCTION is the NTSC name, so this works only where EU names the
+  function identically (a function at the same address in both versions, such as the one in 53F0).  A function that
+  EU names differently is refused with a "no assembly stub" message.
 
 It prints how many pragmas it rewrote, how many yaml lines it changed, and what the options did.  It does not touch
 the symbol tables and does not build.  Everything is computed before anything is changed, so a refusal leaves the
-tree as it was.  The moved file is staged as a rename by git; the edits to it and to the yamls are left unstaged.
+tree as it was.  The two git operations come first and in an order that keeps that true: ``git rm`` of the EU stub
+(which refuses when the stub has local modifications) runs before ``git mv``, and a failing ``git mv`` puts the stub
+back.  Only a failure to write a file after both succeeded (a full disk) can leave a half-converted tree.  The moved
+file is staged as a rename by git; the edits to it and to the yamls are left unstaged.
+
+After a conversion: add the NAME, PIN and DROP lines that ``tools/eu_symbol_pairs.py`` printed for the unconverted
+file, extract both versions, rebuild the US version, and only then run ``tools/eu_collisions_build.py``, which reads
+``build/src/common/**/*.o``; run on a stale US tree it binds EU references to the wrong address without an error.
 
 Exit status is 0 on success and 1 when the conversion is refused (with the reason on stderr).
 """
@@ -63,6 +77,8 @@ JUMP_TABLE = re.compile(
     re.MULTILINE,
 )
 ADDRESS_WORD = re.compile(r"0x[0-9A-Fa-f]{8}\b")
+# Any definition of a jump table array, in whatever form: used to refuse a form JUMP_TABLE does not read.
+JUMP_TABLE_DEFINITION = re.compile(r"^[A-Za-z_][\w \t*]*\b(?P<name>jtbl_\w+)\s*\[[^\]]*\]\s*=", re.MULTILINE)
 
 # Source files are read and written byte-exactly, whatever their encoding and line endings.
 ENCODING = {"encoding": "utf-8", "errors": "surrogateescape", "newline": ""}
@@ -78,6 +94,11 @@ class YamlResult:
 
     text: str
     changed: int
+
+
+def shift_text(shift: int) -> str:
+    """Return ``+ 0x30`` or ``- 0x30`` for a signed shift, so that a negative one never prints as ``0x-30``."""
+    return f"{'-' if shift < 0 else '+'} 0x{abs(shift):X}"
 
 
 def read_text(path: Path) -> str:
@@ -242,7 +263,8 @@ def verify_jump_table(name: str, ntsc_offset: int, values: Sequence[int], shift:
         if eu_word != value + shift:
             raise ConversionRefused(
                 f"{name}[{index}]: the EU ROM holds 0x{eu_word:08X} at 0x{eu_offset + step:X}, expected "
-                f"0x{value:08X} + 0x{shift:X} = 0x{value + shift:08X}"
+                f"0x{value:08X} {shift_text(shift)} = 0x{value + shift:08X}; this entry differs from the NTSC value "
+                f"by {shift_text(eu_word - value)}, so if every entry does, use --jtbl-shift {eu_word - value:#x}"
             )
 
 
@@ -250,13 +272,22 @@ def wrap_jump_tables(text: str, shift: int, roms: RomPair) -> JumpTableResult:
     """Give every hand-written ``const u32 jtbl_<vram>_<rom>[]`` of ``text`` a per-version initialiser.
 
     The NTSC initialiser stays as written under ``VERSION_US``; under ``VERSION_EU`` every 32-bit address in it is
-    raised by ``shift``, keeping the layout of the lines; any other version is an ``#error``.  Each table is checked
-    against ``roms`` first (see ``verify_jump_table``).  Refuses when ``text`` has no such table.
+    raised by ``shift``, keeping the layout of the lines; any other version is an ``#error``.  With a ``shift`` of 0
+    the values are the same in both versions, so the text is returned as it is after the check.  Each table is
+    checked against ``roms`` first (see ``verify_jump_table``).  Refuses when ``text`` has no such table, or defines a
+    jump table array in a form this function does not read (it would be left with NTSC addresses).
     """
     pieces: list[str] = []
     cursor = 0
     tables = 0
     total = 0
+    read = {match["name"] for match in JUMP_TABLE.finditer(text)}
+    unread = {match["name"] for match in JUMP_TABLE_DEFINITION.finditer(text)} - read
+    if unread:
+        raise ConversionRefused(
+            f"{', '.join(sorted(unread))}: a jump table in a form this tool does not read (it expects "
+            "'const u32 jtbl_<vram>_<rom>[] = {' with only 0x........ words); convert it by hand"
+        )
     for match in JUMP_TABLE.finditer(text):
         name = match["name"]
         body = match["body"]
@@ -266,6 +297,10 @@ def wrap_jump_tables(text: str, shift: int, roms: RomPair) -> JumpTableResult:
         if not values:
             raise ConversionRefused(f"{name}: the initialiser is empty")
         verify_jump_table(name, int(match["rom"], 16), values, shift, roms)
+        tables += 1
+        total += len(values)
+        if shift == 0:
+            continue
         eol = match["eol"]
         eu_body = ADDRESS_WORD.sub(lambda word: f"0x{int(word.group(), 16) + shift:08X}", body)
         pieces.append(text[cursor:match.start()])
@@ -276,8 +311,6 @@ def wrap_jump_tables(text: str, shift: int, roms: RomPair) -> JumpTableResult:
             + "#else" + eol + UNKNOWN_VERSION_ERROR + eol + "#endif" + eol
         )
         cursor = match.start("tail")
-        tables += 1
-        total += len(values)
     if tables == 0:
         raise ConversionRefused("--jtbl-shift was given but the file has no 'const u32 jtbl_<vram>_<rom>[] = {' table")
     pieces.append(text[cursor:])
@@ -359,6 +392,7 @@ class ShareReport:
     eu_yaml_lines: int
     jump_tables: int
     jump_values: int
+    jump_shift: int | None
 
 
 def share(root: Path, module: str, jtbl_shift: int | None = None, pal_only: str | None = None) -> ShareReport:
@@ -379,23 +413,47 @@ def share(root: Path, module: str, jtbl_shift: int | None = None, pal_only: str 
     yaml_texts = {version: read_text(root / f"bh.{version}.yaml") for version in ("us", "eu")}
     new_source, pragmas = share_pragmas(read_text(source), module)
     jump_tables = JumpTableResult(new_source, 0, 0)
-    if jtbl_shift is not None:
+    jump_shift = jtbl_shift
+    if jump_shift is None and JUMP_TABLE_DEFINITION.search(new_source):
+        jump_shift = 0
+    if jump_shift is not None:
         roms = load_roms(root, module, yaml_texts["us"], yaml_texts["eu"])
-        jump_tables = wrap_jump_tables(new_source, jtbl_shift, roms)
+        try:
+            jump_tables = wrap_jump_tables(new_source, jump_shift, roms)
+        except ConversionRefused as refusal:
+            if jtbl_shift is not None:
+                raise
+            raise ConversionRefused(
+                f"src.us/core/{module}.c holds hand-written jump tables of NTSC addresses; without --jtbl-shift "
+                f"they must read the same in the EU ROM, and they do not: {refusal}"
+            ) from refusal
         new_source = jump_tables.text
     if pal_only is not None:
-        eu_pragma = f'#pragma GLOBAL_ASM("asm.eu/nonmatchings/core/{module}/{pal_only}.s")'
-        if eu_pragma not in read_text(eu_stub):
-            raise ConversionRefused(f"--pal-only {pal_only}: src.eu/core/{module}.c has no assembly stub for it")
+        eu_asm = f"asm.eu/nonmatchings/core/{module}/{pal_only}.s"
+        if f'#pragma GLOBAL_ASM("{eu_asm}")' not in read_text(eu_stub):
+            raise ConversionRefused(
+                f"--pal-only {pal_only}: src.eu/core/{module}.c has no assembly stub for it under that name "
+                f"({eu_asm} is expected). --pal-only works only where EU names the function as NTSC does"
+            )
         new_source = wrap_pal_only(new_source, module, pal_only)
     yamls = {version: rewrite_yaml(text, module, version) for version, text in yaml_texts.items()}
 
-    run_git(root, "mv", source.relative_to(root).as_posix(), target.relative_to(root).as_posix())
-    run_git(root, "rm", "-q", eu_stub.relative_to(root).as_posix())
+    source_path = source.relative_to(root).as_posix()
+    stub_path = eu_stub.relative_to(root).as_posix()
+    # git rm refuses a stub with local modifications and then changes nothing, so it goes first; if git mv fails
+    # after it, the stub is put back and the tree is as it was.
+    run_git(root, "rm", "-q", stub_path)
+    try:
+        run_git(root, "mv", source_path, target.relative_to(root).as_posix())
+    except ConversionRefused:
+        run_git(root, "restore", "--staged", "--worktree", "--source=HEAD", "--", stub_path)
+        raise
     write_text(target, new_source)
     for version, result in yamls.items():
         write_text(root / f"bh.{version}.yaml", result.text)
-    return ShareReport(pragmas, yamls["us"].changed, yamls["eu"].changed, jump_tables.tables, jump_tables.values)
+    return ShareReport(
+        pragmas, yamls["us"].changed, yamls["eu"].changed, jump_tables.tables, jump_tables.values, jump_shift
+    )
 
 
 def parse_integer(text: str) -> int:
@@ -425,10 +483,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         print(f"share_core_file: {refusal}", file=sys.stderr)
         return 1
     print(f"{args.module}: {report.pragmas} pragma(s) rewritten in src/common/core/{args.module}.c")
-    if args.jtbl_shift is not None:
+    if report.jump_shift == 0:
         print(
-            f"{report.jump_tables} jump table(s), {report.jump_values} value(s): EU = NTSC + 0x{args.jtbl_shift:X}, "
-            "each checked against both ROMs"
+            f"{report.jump_tables} jump table(s), {report.jump_values} value(s): the same in both ROMs, each "
+            "checked, text left as written"
+        )
+    elif report.jump_shift is not None:
+        print(
+            f"{report.jump_tables} jump table(s), {report.jump_values} value(s): EU = NTSC "
+            f"{shift_text(report.jump_shift)}, each checked against both ROMs"
         )
     if args.pal_only is not None:
         print(f"{args.pal_only}: NTSC C under VERSION_US, EU assembly under VERSION_EU")
