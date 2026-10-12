@@ -49,7 +49,10 @@ def parse_args():
 
 # Regex patterns
 RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')
-RE_ENDIF_LINE = re.compile(r'^\s*#endif\b')
+RE_ENDIF_LINE = re.compile(r'^\s*#\s*endif\b')
+RE_PP_IF = re.compile(r'^\s*#\s*(if|ifdef|ifndef)\b(.*)$')
+RE_PP_ELIF = re.compile(r'^\s*#\s*elif\b(.*)$')
+RE_PP_ELSE = re.compile(r'^\s*#\s*else\b')
 RE_NON_MATCHING = re.compile(r'#ifdef\s+NON_MATCHING')
 
 SEGMENT_DISPLAY = {
@@ -84,15 +87,36 @@ def analyse_file(path: Path) -> dict:
 
 
 def count_global_asm_stubs(text: str) -> int:
-    lines = text.splitlines()
+    """Count the GLOBAL_ASM pragmas the NTSC build compiles in place of a C body.
+
+    A pragma in the #else/#elif chain of an `#ifdef NON_MATCHING` group is that C body's fallback,
+    which RE_NON_MATCHING already counts. A pragma in a `defined(VERSION_EU)` branch is the PAL
+    build's copy of a function shared from src/common, which NTSC does not compile.
+    """
     count = 0
-    for i, line in enumerate(lines):
-        if not RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
-            continue
-        next_line = lines[i + 1].strip() if i + 1 < len(lines) else ""
-        if RE_ENDIF_LINE.match(next_line):
-            continue
-        count += 1
+    groups = []  # one [first condition, current branch condition] per open #if group
+    for line in text.splitlines():
+        opened = RE_PP_IF.match(line)
+        elif_branch = RE_PP_ELIF.match(line)
+        if opened:
+            kind, cond = opened.group(1), opened.group(2).strip()
+            first = cond if kind == "ifdef" else f"{kind} {cond}"
+            groups.append([first, first])
+        elif elif_branch:
+            if groups:
+                groups[-1][1] = elif_branch.group(1).strip()
+        elif RE_PP_ELSE.match(line):
+            if groups:
+                groups[-1][1] = "else"
+        elif RE_ENDIF_LINE.match(line):
+            if groups:
+                groups.pop()
+        elif RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+            if any(first == "NON_MATCHING" and branch != first for first, branch in groups):
+                continue
+            if any("VERSION_EU" in branch for _, branch in groups):
+                continue
+            count += 1
     return count
 
 
