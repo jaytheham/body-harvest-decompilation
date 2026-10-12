@@ -122,16 +122,20 @@ file is named.
   108 byte-identical functions and 2108 where only jump targets, `lui`
   immediates and the low half of a `lui` pair differed, with branch offsets
   equal and every resolved address in RAM. The 130 have the same opcode and
-  registers in every word but failed that test: in 124 of them an immediate
-  differs with no `lui` to resolve it (183 words), and in 9 a low half does not
-  resolve to a RAM address (13 words); 3 functions have both. They were counted
-  because the 16-bit difference of each of those immediates also occurs among
-  the verified relocations, so they are probably relocations too, but that is
-  not verified. The other 8 functions are not counted: 3 have no counterpart
-  with the same opcodes and registers but a similar one (at least 85 percent of
-  words), 3 have no similar counterpart, and 2 have the same opcodes and
-  registers with an immediate difference that is not among the verified
-  relocations.
+  registers in every word but failed that test, because an immediate differs
+  and could not be resolved to a RAM address: either no `lui` precedes it in
+  the function, or the low half of a `lui` pair does not land in RAM. The
+  scratch script counted 124 functions of the first kind (183 words) and 9 of
+  the second (13 words), 3 of them in both. That division depends on how the
+  script tracks `lui` pairs: a second script, written independently, found the
+  same 130 but divided them slightly differently, so only the total of 130 is
+  reliable. The 130 were counted because the 16-bit difference of each of those
+  immediates also occurs among the verified relocations, so they are probably
+  relocations too, but that is not verified. The other 8 functions are not
+  counted: 3 have no counterpart with the same opcodes and registers but a
+  similar one (at least 85 percent of words), 3 have no similar counterpart,
+  and 2 have the same opcodes and registers with an immediate difference that
+  is not among the verified relocations.
 
 The idea: derive the EU symbols and addresses from the NTSC ones through the
 shift map instead of pinning each symbol, and share the overlays the way core
