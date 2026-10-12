@@ -38,7 +38,7 @@ import decomp_common as dc
 ROOT = dc.ROOT
 
 #: How a function's object file decides whether it is decompilable C.
-#:   ``build/src.us/core/1050.c.o``  -> C, decompilable
+#:   ``build/src/common/core/1050.c.o``  -> C, decompilable
 #:   ``build/lib/libultra_rom.a(x.o)`` -> prebuilt archive, not decompilable
 #:   ``build.eu/asm.eu/aisetfreq.s.o`` -> handwritten asm, not decompilable
 ARCHIVE_OBJ = re.compile(r"\([^)]+\)$")

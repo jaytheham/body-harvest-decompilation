@@ -198,6 +198,11 @@ function's asm per version, and writes the matched C once:
 - A macro cannot choose the path: asm-processor only recognises the literal
   `#pragma GLOBAL_ASM("...")` form, and IDO silently ignores the unexpanded
   pragma, which leaves the function out of the object.
+- The `#else` branch is an `#error`, so a compile that defines neither
+  `VERSION_US` nor `VERSION_EU` stops at the preprocessor. IDO only warns on
+  `#error` and still writes the object, so `tools/native_build.py` instead fails
+  unless its C flags define exactly its own version macro; the GCC `make` build
+  fails on the `#error` itself.
 
 Six files use these blocks: `1050.c` (13 functions), `53F0.c` (12), `AD60.c`
 (8), `17EE0.c` (3), `1B060.c` (1) and `E830.c` (1). That is 38 pragmas for NA and

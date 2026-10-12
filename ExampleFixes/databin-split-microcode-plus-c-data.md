@@ -29,11 +29,11 @@ Name every constituent blob so the yaml shows what each is, and convert the C
 part to a `.data` section owned by the C file that references it:
 
 ```yaml
-      # RSP microcode blobs (binary). Their CPU-side pointers live in core/1050.c and core/FD80.c.
+      # RSP microcode blobs (binary). Their CPU-side pointers live in src/common/core/1050.c and src/common/core/FD80.c.
       - [0x2EA10, databin, rsp/rspboot]    # RSP boot ucode: rspbootTextStart, 0xD0 bytes
       - [0x2EAE0, databin, rsp/gfxucode]   # M_GFXTASK ucode: D_8002DEE0_2EAE0, 0x1430 bytes (game loads ucode_size 0x1000)
       - [0x2FF10, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
-      - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
+      - [0x31D20, .data, ../src/common/core/1050]  # shared identity/scale Mtx + 5 static display lists
 ```
 
 The blob boundaries come from the CPU-side pointers the code actually uses
