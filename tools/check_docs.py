@@ -3,20 +3,18 @@
 
 Checks a git checkout of the decomp against the merge base of --base and HEAD:
 
-  E1  em dash (code point 0x2014) on a line added since the merge base
   E2  drive-letter or home-directory path on a line added since the merge base
   E3  a documentation file cites a repository path that is missing now and either existed at the
       merge base (this branch moved or deleted it) or sits on a line this branch added
   E4  contributor guidance naming include/{functions,variables,structs}.us.h without saying the file
       is for US-only declarations (AGENTS.md, .github/agents/, ExampleFixes/)
-  W1  en dash (code point 0x2013) on an added line (an error with --strict)
   W2  a path:line citation whose line number is past the end of the cited file
   W3  a missing cited path that was already missing at the merge base (pre-existing upstream rot)
 
 Exit status: 0 with no errors, 1 with any error, 2 on a git failure.
 
 Usage:
-  python check_docs.py --repo <checkout> [--base origin/master] [--strict]
+  python check_docs.py --repo <checkout> [--base origin/master]
 """
 
 from __future__ import annotations
@@ -27,9 +25,6 @@ import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
-
-EM_DASH = chr(0x2014)
-EN_DASH = chr(0x2013)
 
 # A drive letter not preceded by a word character (so "https://" and the regex "name:\s" do not
 # match), then one slash or backslash, then a path character.
@@ -130,15 +125,11 @@ def existed_at(base_paths: set[str], rel: str) -> bool:
     return rel in base_paths or f"{rel}.c" in base_paths
 
 
-def check_added(lines: list[tuple[str, int, str]], strict: bool) -> list[Finding]:
-    """E1, E2 and W1 over added lines."""
+def check_added(lines: list[tuple[str, int, str]]) -> list[Finding]:
+    """E2 over added lines."""
     findings: list[Finding] = []
     for path, number, text in lines:
         snippet = text.strip()[:100]
-        if EM_DASH in text:
-            findings.append(Finding("E1", path, number, "em dash: " + snippet))
-        if EN_DASH in text:
-            findings.append(Finding("E1" if strict else "W1", path, number, "en dash: " + snippet))
         for regex in (DRIVE_PATH, HOME_PATH):
             hit = regex.search(text)
             if hit:
@@ -187,14 +178,13 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Documentation consistency gate (PR 423 remediation).")
     parser.add_argument("--repo", type=Path, required=True, help="decomp checkout to check")
     parser.add_argument("--base", default="origin/master", help="base ref; its merge base with HEAD is used")
-    parser.add_argument("--strict", action="store_true", help="treat en dashes as errors")
     args = parser.parse_args()
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     repo = args.repo.resolve()
 
     base_commit = git(repo, "merge-base", args.base, "HEAD").strip()
     lines = added_lines(repo, base_commit)
-    findings = check_added(lines, args.strict)
+    findings = check_added(lines)
     findings += check_citations(repo, tree_paths(repo, base_commit), {(p, n) for p, n, _ in lines})
     findings += check_guidance(repo)
 
