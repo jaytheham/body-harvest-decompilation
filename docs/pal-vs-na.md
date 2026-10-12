@@ -19,22 +19,18 @@ are, and both builds reproduce their baserom's SHA1 exactly.
 ## Layout
 
 Same shape: identical segment order, the same overlays. The main code region is
-**0x30 bytes (12 words) longer** in PAL, so everything after it moves up by that
-amount in RAM.
+**0x30 bytes (12 words) longer** in PAL. Core lines up with NTSC as follows
+(word by word, ignoring address immediates):
 
-That shift is a single insertion, not cumulative drift. Measured agreement per
-1 KiB window across core:
-
-| NTSC range | mapping |
+| NTSC range | PAL offset |
 |---|---|
-| `0x001000`–`0x007800` | same offsets (85% word identical; the rest are data addresses) |
-| `0x007C00`–`0x00AC00` | **reorganised** — neither offset matches (agreement drops to under 10%) |
-| `0x00AC00` onward | NTSC + 0x30 |
+| `0x001000`-`0x0079DC` | same offsets |
+| `0x0079DC`-`0x007DD8` | `func_80006DDC_79DC`, rewritten; 0x38 bytes longer in PAL |
+| `0x007DD8`-`0x00AD58` | NTSC + 0x38 |
+| `0x00AD58` onward | NTSC + 0x30 (the end of the `core/53F0` unit carries 8 bytes less nop padding in PAL) |
 
-So PAL rewrote roughly 12 KiB at NTSC `0x7C00`–`0xAC00`, which is both where the
-0x30 comes from and where the differing functions are. Every NTSC subsegment
-boundary at or after `0xAD60` shifts by +0x30; all 254 were remapped that way
-and the result builds matching.
+Every NTSC subsegment boundary at or after `0xAD60` shifts by +0x30; all 254
+were remapped that way and the result builds matching.
 
 RAM-side windows in `bh.eu.yaml` already agree with this shift: the gameplay
 overlay window is `0x800702A0` (NTSC `0x80070270`, +0x30) and the level window is
@@ -42,16 +38,23 @@ overlay window is `0x800702A0` (NTSC `0x80070270`, +0x30) and the level window i
 
 ### Overlay offsets
 
-PAL carries an **overlay start table at ROM `0x032848`** with ten entries:
-`0x18E340, 0x1EE540, 0x254F70, 0x2B7C60, 0x319980` (level overlays) and
-`0x197AD0, 0x1FA820, 0x2610D0, 0x2C6020, 0x32C8E0` (their data segments). These
-are exactly the offsets `bh.eu.yaml` already uses. NTSC has no such table, so the
-config's overlay offsets came from PAL and are **correct**.
+Both ROMs carry an **overlay start table** with ten entries, NTSC at ROM
+`0x032818` and PAL at `0x032848`: the five level overlays and their data
+segments. NTSC: `0x18D7E0, 0x1ED9E0, 0x254410, 0x2B7100, 0x318E20` and
+`0x196F70, 0x1F9CC0, 0x260570, 0x2C54C0, 0x32BD80`; PAL: `0x18E340, 0x1EE540,
+0x254F70, 0x2B7C60, 0x319980` and `0x197AD0, 0x1FA820, 0x2610D0, 0x2C6020,
+0x32C8E0`. Each table matches its version's yaml, and every PAL entry is the
+NTSC entry plus 0xB60.
 
-That settles the growth question. The level overlays are **not** shifted, so
-nothing downstream of core moved: core is +0x30 and the frontend overlay absorbs
-it. The earlier report of the frontend growing 0xB30 with everything after it
-sitting 0xB60 later is not consistent with the table and is not reproduced here.
+The 0xB60 is core's 0x30 plus 0xB30 of frontend growth: the PAL frontend runs
+from `0x40750` to `0x7FD80` (0x3F630 bytes) against NTSC `0x40720` to `0x7F220`
+(0x3EB00 bytes). Everything from the outside overlay on sits 0xB60 later.
+
+The gameplay overlays are not in that table, but their starts are confirmed by
+their code: each PAL overlay begins with the same instructions as its NTSC
+counterpart (16 of the first 16 words have the same opcode; 13 or 14 are
+identical), at NTSC + 0x30 for `frontend` (`0x40750`) and NTSC + 0xB60 for
+`outside` (`0x7FD80`) and `inside` (`0x158E90`).
 
 ### The core-to-overlay seam
 
