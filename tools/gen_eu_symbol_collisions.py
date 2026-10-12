@@ -31,13 +31,17 @@ Usage
 from __future__ import annotations
 
 import argparse
+import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-NM = ROOT / "tools" / "windows" / "binutils" / "mips-ps2-decompals-nm.exe"
+WINDOWS_NM = ROOT / "tools" / "windows" / "binutils" / "mips-ps2-decompals-nm.exe"
+#: nm names tried on PATH; the first is the Makefile's CROSS prefix.
+NM_NAMES = ("mips-linux-gnu-nm", "mips64-linux-gnu-nm", "mips-ps2-decompals-nm")
 SHARED_OBJ_DIR = ROOT / "build" / "src" / "common"
 SYMBOL_ADDRS_EU = ROOT / "symbol_addrs.eu.txt"
 UNDEF_SYMS_EU = ROOT / "undefined_syms.eu.txt"
@@ -77,6 +81,18 @@ def vram_of(name: str) -> int | None:
     return val if val >= 0x100000 else None
 
 
+def find_nm() -> str:
+    """Path of a MIPS ``nm``: the native Windows toolchain, else one on PATH."""
+    if os.name == "nt" and WINDOWS_NM.exists():
+        return str(WINDOWS_NM)
+    for name in NM_NAMES:
+        found = shutil.which(name)
+        if found:
+            return found
+    sys.exit("no MIPS nm found: run tools/native_build.py setup (Windows) or "
+             f"install binutils providing one of {', '.join(NM_NAMES)}")
+
+
 def collect_shared_symbols() -> tuple[set[str], set[str]]:
     """Return (defined, undefined) global names across the shared-C objects."""
     defined: set[str] = set()
@@ -84,9 +100,10 @@ def collect_shared_symbols() -> tuple[set[str], set[str]]:
     objs = sorted(SHARED_OBJ_DIR.rglob("*.o"))
     if not objs:
         sys.exit(f"no shared objects under {SHARED_OBJ_DIR} (build NA first)")
+    nm = find_nm()
     for obj in objs:
         out = subprocess.run(
-            [str(NM), str(obj)], capture_output=True, text=True, check=True
+            [nm, str(obj)], capture_output=True, text=True, check=True
         ).stdout
         for line in out.splitlines():
             parts = line.split()
@@ -204,7 +221,7 @@ def main() -> int:
     if args.clean:
         for path in (SYMBOL_ADDRS_EU, UNDEF_SYMS_EU):
             kept = strip_eu_block(path)
-            path.write_text("\n".join(kept) + "\n", encoding="utf-8")
+            path.write_text("\n".join(kept) + "\n", encoding="utf-8", newline="\n")
             if has_residual_eu_block(path):
                 print(
                     f"ERROR: residual eu_ block in {path.name}", file=sys.stderr
@@ -216,6 +233,15 @@ def main() -> int:
     defined, undefined = collect_shared_symbols()
     shared = defined | undefined
     eu_names = collect_eu_names()
+    tagged = sorted(n for n in eu_names if n.startswith("eu_"))
+    if args.write and tagged:
+        # The scan must see pristine auto-labels. An extraction that already
+        # applied the eu_ tags hides every collision, and writing then would
+        # delete the existing block.
+        print(f"ERROR: asm.eu already has {len(tagged)} eu_ labels (e.g. {tagged[0]}); "
+              "run tools/eu_collisions_build.py, or --clean and re-extract EU first",
+              file=sys.stderr)
+        return 1
 
     aliases = collect_na_aliases()
     needed_aliases = sorted(
@@ -279,7 +305,7 @@ def main() -> int:
             if path is SYMBOL_ADDRS_EU:
                 body += ["", "// NA offset-aliases the shared C references."]
             body += extra
-        path.write_text("\n".join(body) + "\n", encoding="utf-8")
+        path.write_text("\n".join(body) + "\n", encoding="utf-8", newline="\n")
         print(f"wrote {path.name} ({len(pinned)} pinned, {len(extra)} aliases)")
 
     return 0
