@@ -305,7 +305,7 @@ clean:
 distclean: clean
 	rm -rf asm asm.eu
 	rm -rf assets assets.eu
-	rm -f *auto.txt
+	rm -f *auto.txt undefined_syms_auto.*.txt
 	rm -f src.us/data/inc/*
 
 

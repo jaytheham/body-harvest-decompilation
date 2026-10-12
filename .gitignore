@@ -21,6 +21,7 @@ tools/windows/
 
 *.ld
 *auto.txt
+undefined_syms_auto.*.txt
 *.o
 *.ok
 .splat_cache
