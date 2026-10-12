@@ -90,9 +90,9 @@ s16 D_8013D5B4_14C564 = 0;
 s16 D_8013D5B8_14C568 = 0;
 s16 D_8013D5BC_14C56C = 0;
 s16 D_8013D5C0_14C570[8] = { 0, 0, 0, 1, 0, 0x1388, -1, -100 };
-s16 D_8013D5D0_14C580 = 0;
-s16 D_8013D5D4_14C584 = 0;
-s16 D_8013D5D8_14C588 = 0;
+SignedWord D_8013D5D0_14C580 = { 0 };
+SignedWord D_8013D5D4_14C584 = { 0 };
+SignedWord D_8013D5D8_14C588 = { 0 };
 s32 D_8013D5DC_14C58C = 0;
 s32 D_8013D5E0_14C590 = 0;
 u8 D_8013D5E4_14C594[4] = { 0x00, 0x00, 0x00, 0x00 };
@@ -2304,20 +2304,19 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
+// CURRENT(45)
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
-  s32 pad0;
-  f32 posX;
   s32 flatDistI;
+  f32 posX;
   f32 posZ;
   f32 posY;
-  int new_var;
   f32 distScale;
   s16 new_var2;
   s32 pulse;
   (void) arg3;
-  posX = (f32) arg0;
+  posX = arg0;
   new_var2 = arg1;
   posY = (f32) new_var2;
   posZ = (f32) arg2;
@@ -2339,8 +2338,7 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   gDPPipeSync(D_8005BB2C++);
   if (D_8014F618.unk70 == 1)
   {
-    flatDistI = 0xF;
-    D_8014F618.unk6F += flatDistI;
+    D_8014F618.unk6F += 0xF;
     pulse = D_8014F618.unk6F;
   }
   else
@@ -2374,25 +2372,24 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   }
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, ((0, D_8014F618)).unk78, D_8014F618.unk79, D_8014F618.unk69);
-  distScale = D_80052B34->unk4 - arg2;
-  sqrtf(((((f32) (D_80052B34->unk0 - arg0)) * ((f32) (D_80052B34->unk0 - arg0))) + (((f32) (D_80052B34->unk2 - new_var2)) * ((f32) (D_80052B34->unk2 - new_var2)))) + (((f32) (D_80052B34->unk4 - arg2)) * ((f32) distScale)));
+  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, ((0, D_8014F618)).unk79, D_8014F618.unk69);
+  sqrtf(((((f32) (D_80052B34->unk0 - arg0)) * ((f32) (D_80052B34->unk0 - arg0))) + (((f32) (D_80052B34->unk2 - new_var2)) * ((f32) (D_80052B34->unk2 - new_var2)))) + (((f32) (D_80052B34->unk4 - arg2)) * (f32) (D_80052B34->unk4 - arg2)));
   distScale = sqrtf(((((D_80047954 * 4.0f) - posX) * ((D_80047954 * 4.0f) - posX)) + (((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY))) + (((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ)));
-  *((u16 *) (&D_8014F618.unk60)) = (u16) distScale;
+  D_8014F618.unk60 = (u16) distScale;
   distScale /= 6.0f;
-  D_8014F618.head.unkC = distScale * ((f32 *) (&D_80153AB8))[0];
-  D_8014F618.head.unk10 = distScale * ((f32 *) (&D_80153AB8))[1];
-  D_8014F618.head.unk14 = distScale * ((f32 *) (&D_80153AB8))[2];
-  D_8014F618.head.unk18 = distScale * ((f32 *) (&D_80153AB8))[3];
-  D_8014F618.head.unk1C = distScale * ((f32 *) (&D_80153AB8))[4];
-  D_8014F618.head.unk20 = distScale * ((f32 *) (&D_80153AB8))[5];
+  D_8014F618.head.unkC = distScale * D_80153AB8.x;
+  D_8014F618.head.unk10 = distScale * D_80153AB8.y;
+  D_8014F618.head.unk14 = distScale * D_80153AB8.z;
+  D_8014F618.head.unk18 = distScale * D_80153AB8.rightX;
+  D_8014F618.head.unk1C = distScale * D_80153AB8.rightY;
+  D_8014F618.head.unk20 = distScale * D_80153AB8.rightZ;
   D_8014F618.head.unk24 = D_8014F618.head.unk0 + D_8014F618.head.unk18;
   D_8014F618.head.unk28 = D_8014F618.head.unk4 + D_8014F618.head.unk1C;
   D_8014F618.head.unk2C = D_8014F618.head.unk8 + D_8014F618.head.unk20;
   func_800A2260_B1210();
   gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, (0, D_8014F618.unk73), D_8014F618.unk6B);
-  new_var = (s32) ((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX));
-  flatDistI = (s32) (((f32) new_var) + ((D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ)));
+  flatDistI = (s32) ((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX));
+  flatDistI = (s32) (((f32) flatDistI) + ((D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ)));
   flatDistI = (s32) sqrtf((f32) flatDistI);
   D_80052B40.unk0 = arg0;
   if (arg2)
@@ -2409,11 +2406,10 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
 #endif
-
-// CURRENT(7663)
+// CURRENT(6203)
 #ifdef NON_MATCHING
 void func_800A3490_B2440(VehicleInstance *arg0) {
-	u8 *sp6C;
+	VehicleType *sp6C;
 	s16 sp62;
 	s16 sp60;
 	u8 sp56;
@@ -2424,7 +2420,7 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 	s32 temp_v1;
 	s32 temp_ra;
 	s32 var_t0;
-	s32 alpha;
+	s16 alpha;
 
 	sp6C = func_800FAFB8_109F68(arg0);
 	sp56 = (u8)D_8013D5B8_14C568;
@@ -2461,9 +2457,9 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 			D_8013D76C_14C71C = temp_v1 - 1;
 		}
 
-		*(s32 *)&D_8013D5D0_14C580 = arg0->unk0;
-		*(s32 *)&D_8013D5D4_14C584 = arg0->unk2;
-		*(s32 *)&D_8013D5D8_14C588 = arg0->unk4;
+		D_8013D5D0_14C580.word = arg0->unk0;
+		D_8013D5D4_14C584.word = arg0->unk2;
+		D_8013D5D8_14C588.word = arg0->unk4;
 
 		sp62 = (s16)(s32)(D_80052B2C->unk0 - (f32)arg0->unk0);
 		sp60 = (s16)(s32)(D_80052B2C->unk8 - (f32)arg0->unk4);
@@ -2497,9 +2493,9 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 				alpha = 0xFF - ((0x587 - temp_ra) / 12);
 			}
 
-			func_800A2D98_B1D48(((s16 *)&D_8013D5D0_14C580)[1], ((s16 *)&D_8013D5D4_14C584)[1], ((s16 *)&D_8013D5D8_14C588)[1], (s16)alpha);
+			func_800A2D98_B1D48(D_8013D5D0_14C580.halves.low, D_8013D5D4_14C584.halves.low, D_8013D5D8_14C588.halves.low, (s16)alpha);
 
-			if (sp6C[0x55] != 0) {
+			if (sp6C->unk55 != 0) {
 				var_t0--;
 			} else {
 				var_t0 = 1;
