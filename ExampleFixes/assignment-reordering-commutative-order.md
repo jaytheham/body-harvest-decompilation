@@ -61,3 +61,10 @@ In func_802DB7A4_1F44B4, keep the named AlienInstance pointer for flags and coun
 ### Floating zero terms in the Java effect callback
 
 func_802DC738_1F5448 retains the target floating multiply and divide chain with an integer zero coefficient: ((f64)(f32)sins(angle) / 32768.0) * 0. Spelling the coefficient 0.0 folds the entire term away. For the Z expression, putting (jointZ + coefficient * sineRatio) on the left and cosineRatio * 0 on the right makes IDO evaluate the cosine term first, matching the target arithmetic and floating registers. Plain s32 input coordinates with s16 argument casts produce the target halfword reloads and cached word spills; making input coordinates SignedWord unions introduces extra alias-driven reloads. SignedWord remains appropriate for output coordinates passed by address. This candidate is still NON_MATCHING (847), with only register and stack differences after more than 20 builds.
+
+
+### Java skeleton controller: reuse the preceding joint store
+
+func_802D7B68_1F0878 matches all instructions and the full ROM checksum. Search-AsmPattern found the same skeleton update in matched func_80094DE0_A3D90 and func_802D738C_18FE9C. Write the root angle through unk6Unsigned, assign the child angle from its negated stored value, and then call func_80086164_95114. Negating the alien field directly keeps a second halfword load because the preceding skeleton store may alias it. Using the stored skeleton value retains one load and both target stores.
+
+Use direct alienInstances[arg0] accesses, as in the reference: IDO still caches the address in s0, but an explicit AlienInstance pointer declaration adds a stack slot and enlarges the frame. Declare the two-element joint array before an unused halfword and the saved delay halfword to put them at sp+0x38 and sp+0x34. Place unk1E = 6 after both flag updates in C; this colors the constant in t3 while the target scheduling still emits the halfword store before the flags. Redundant narrowing casts can be removed without changing the checksum.
