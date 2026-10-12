@@ -115,6 +115,7 @@ def main():
     # dirs, so building EU after checking US would delete the artifacts the US
     # check had just validated.
     if args.rebuild:
+        clean()
         for version in order:
             ok, detail = rebuild(version, args.jobs)
             if not ok:
