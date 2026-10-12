@@ -349,10 +349,6 @@ s32 func_8000E53C_F13C(void) {
 	}
 	return 0;
 }
-#elif defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
-#elif defined(VERSION_EU)
-#pragma GLOBAL_ASM("asm.eu/src/common/core/E830/func_8000E53C_F13C.s")
 #else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
 #endif
