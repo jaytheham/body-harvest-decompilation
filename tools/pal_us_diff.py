@@ -277,7 +277,7 @@ def main():
     diff = sorted([r for r in rows if r[3] == "DIFF"], key=lambda r: -r[2])
     lines += ["", f"=== {len(diff)} functions that genuinely differ "
                   f"(NTSC decomp NOT reusable) ==="]
-    for rom, name, size, _, palname in diff:
+    for rom, name, size, _, _p, palname in diff:
         p = rom + SHIFT if rom >= insert_at else rom
         lines.append(f"  NTSC 0x{rom:06X}  PAL 0x{p:06X}  {size:6d}B  {name}")
     lines += ["", f"differing bytes: {sum(r[2] for r in diff)}"]
