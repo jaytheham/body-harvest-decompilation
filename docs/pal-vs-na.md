@@ -105,41 +105,34 @@ verbatim at whatever alignment it lands on.
 
 ## Which functions differ
 
-`python tools/pal_us_diff.py` splits the NTSC ROM with splat to enumerate its
-functions, then compares each against PAL. Current result over 682 NTSC core
-functions:
+`python tools/pal_us_diff.py` enumerates the NTSC core functions with splat and
+compares each against PAL at the shift that applies to it, deriving the shift
+function by function (the map in the Layout section). Result over the 682 NTSC
+core functions (185624 bytes, alignment padding excluded), as written to
+`docs/pal-na-diff.txt`:
 
 | class | functions | share of functions | share of core code bytes |
 |---|---|---|---|
-| `EXACT` byte identical | 135 | 19.8% | 5.38% |
-| `SHAPE` same opcode everywhere, different immediates | 512 | 75.1% | 89.55% |
-| `DIFF` genuinely different code | 35 | 5.1% | 5.07% |
+| `EXACT` byte identical | 139 | 20.4% | 7.32% |
+| `SHAPE` same opcode everywhere, different immediates | 542 | 79.5% | 92.13% |
+| `DIFF` different code | 1 | 0.1% | 0.55% |
 
-**94.93% of core code bytes are reusable from NTSC.** The `SHAPE` bucket is
+**99.45% of core code bytes are reusable from NTSC.** The `SHAPE` bucket is
 dominated by ordinary address relocation, not by logic changes.
 
-The 35 `DIFF` functions are the ones that must not share NTSC decomp. They are
-listed in `docs/pal-na-diff.txt`; the largest are:
+The one `DIFF` function is `func_80006DDC_79DC`, at `0x79DC` in both ROMs. It is
+1020 bytes in NTSC and 1076 in PAL, and 236 of its 255 NTSC words differ at the
+same offset, starting with its first instruction (the stack frame size), so it
+is different code and not a recompilation of the same source. Its extra 0x38
+bytes are why the code from NTSC `0x7DD8` to `0xAD54` sits at NTSC + 0x38.
 
-| NTSC | PAL | bytes | name |
-|---|---|---|---|
-| `0x009EB8` | `0x009EE8` | 3168 | `func_800092B8_9EB8` |
-| `0x0098A8` | `0x0098D8` | 1552 | `func_80008CA8_98A8` |
-| `0x0079DC` | `0x0079DC` | 1020 | `func_80006DDC_79DC` |
-| `0x009538` | `0x009568` | 736 | `func_80008938_9538` |
-| `0x009274` | `0x0092A4` | 708 | `func_80008674_9274` |
-| `0x008DD4` | `0x008E04` | 676 | `func_800081D4_8DD4` |
+An earlier version of this report compared functions only at +0x0 and +0x30 and
+so listed 35 `DIFF` functions. The other 34 are the same code at NTSC + 0x38;
+for example 791 of the 792 words of `func_800092B8_9EB8` are identical there.
 
-`func_80006DDC_79DC` is the known rewrite: 143 of its 144 words differ, starting
-at its very first instruction, so it is different code and not a recompilation
-of the same source. All 35 `DIFF` functions fall inside the reorganised band
-(`0x7ECC`–`0x9EE8`, plus `0xAC24`); nothing differs anywhere else in core. That
-band is confirmed to be code and not data misread: the functions begin with real
-prologues (`addiu $sp,$sp,-0x1F0`) and carry 6–21% branch density.
-
-Separately, the differing libultra/libgcc pieces `_timeToSamples`,
-`alAudioFrame`, `guPerspectiveF` and `sinf` are **intentional regional
-behaviour, not drift**: PAL runs at 50 Hz against NTSC's 60 Hz, so a
+Not re-verified in the 2026-10 review: the differing libultra/libgcc pieces
+`_timeToSamples`, `alAudioFrame`, `guPerspectiveF` and `sinf` are **intentional
+regional behaviour, not drift**: PAL runs at 50 Hz against NTSC's 60 Hz, so a
 sampling-rate constant and the sin/cos argument scale are exactly what one
 expects to change, with a different projection constant in `guPerspectiveF`.
 These fall in the `SHAPE` bucket (constants differ, code does not), but they
