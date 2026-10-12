@@ -252,7 +252,7 @@ f32 D_80032A78_33678[] = {
 };
 
 /* Vehicle audio settings, 21 entries per level. */
-WeaponLevelSpec D_800330B0_33CB0[5][21] = {
+VehicleAudioSpec D_800330B0_33CB0[5][21] = {
 	{
 		{-1, -1, {255, 255, 0, 0}, 0.21875f, 0.175f, {0, 100, 0, 50}, 3.5f},
 		{19, -1, {255, 255, 0, 0}, 0.21875f, 0.875f, {0, 100, 0, 50}, 0.4375f},
@@ -414,16 +414,6 @@ u8 D_80033C6C_3486C = 0;
 s8 D_80033C70_34870[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 u8 D_80033C80_34880 = 0;
 s8 D_80033C84_34884[] = {0, 1, 2, 3};
-u8 D_80033C88_34888 = 0;
-s32 D_80033C8C_3488C = 0;
-s16 D_80033C90_34890 = 0;
-s16 D_80033C94_34894 = -1;
-s32 D_80033C98_34898 = 0;
-
-Float4 D_80033C9C_3489C = {0.0f, 0.4f, 0.55f, 0.75f};
-f32 D_80033CAC_348AC[] = {0.0f, 0.333f, 0.666f, 1.0f};
-s32 D_80033CBC_348BC = 0;
-
 /* Read-only strings, numeric constants, and switch targets. */
 const char D_800381C0_38DC0[] = "Sounds playing";
 const char D_800381D0_38DD0[] = " ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d\n";
@@ -438,22 +428,6 @@ const char D_800382C8_38EC8[] = "Error: GetFreeSeqPlayer2 - Tell Ciaran\n";
 const f32 D_800382F0_38EF0[] = {171000.0f};
 const f64 D_800382F8_38EF8[] = {0.1};
 const f32 D_80038300_38F00[] = {1100.0f};
-const u32 jtbl_80038304_38F04[] = {
-	0x8001470C, 0x80014738, 0x800147E8, 0x80014764, 0x800147E8, 0x800147BC, 0x800147E8, 0x80014790
-};
-const f32 D_80038324_38F24[] = {24382.0f};
-const f32 D_80038328_38F28[] = {9753.0f};
-const f32 D_8003832C_38F2C[] = {4500.0f};
-const f64 D_80038330_38F30[] = {0.1};
-const f32 D_80038338_38F38[] = {0.10000000149011612f};
-const f32 D_8003833C_38F3C[] = {6000.0f};
-const f32 D_80038340_38F40[] = {3000.0f};
-const f64 D_80038348_38F48[] = {0.8};
-const f32 D_80038350_38F50[] = {6000.0f};
-const f64 D_80038358_38F58[] = {0.1};
-const u32 jtbl_80038360_38F60[] = {
-	0x80015CFC, 0x80015D88, 0x80015E18, 0x80016058, 0x800160DC, 0x80016010, 0x80016160, 0x800164B4, 0x800161A8, 0x80016238, 0x800162C8, 0x80015F80, 0x80016358, 0x800163A0, 0x800164B4, 0x80016430, 0x80016478
-};
 
 void func_80012080_12C80(s32 arg0)
 {
@@ -508,9 +482,6 @@ Unk8006AA80Node *func_80012128_12D28() {
 	return *entry;
 }
 
-// https://decomp.me/scratch/XY5gv
-// CURRENT(420)
-#ifdef NON_MATCHING
 s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA84Node **arg2)
 {
 	Unk8006AA80Node *node;
@@ -519,6 +490,7 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	s16 *counter;
 	s16 savedIndex;
 	s32 diff;
+	s16 value;
 
 	if (D_8006AB88 == 0)
 	{
@@ -544,14 +516,10 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	{
 		s16 id;
 
-		id = *counter + 1;
-		/* Temporary codegen probe: retains the saved index through this expression. */
-		if (savedIndex)
-		{
-		}
+		value = *counter;
 		node->unk34 = NULL;
 		node->unk30 = NULL;
-		node->unk10 = id;
+		node->unk10 = id = ++value;
 		*arg2 = (Unk8006AA84Node *)node;
 		*arg1 = node;
 		*counter = id;
@@ -560,7 +528,8 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	prev = NULL;
 	while (src != NULL)
 	{
-		diff = src->unk2 - node->unk2;
+		value = node->unk2;
+		diff = src->unk2 - value;
 		if (diff < 0)
 		{
 			prev = src;
@@ -572,12 +541,12 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 			{
 				s16 id;
 
-				id = *counter + 1;
+				value = *counter;
 				src->unk30->unk34 = node;
 				node->unk34 = src;
 				node->unk30 = src->unk30;
 				src->unk30 = node;
-				node->unk10 = id;
+				node->unk10 = id = ++value;
 				*counter = id;
 				return id;
 			}
@@ -585,11 +554,11 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 			{
 				s16 id;
 
-				id = *counter + 1;
+				value = *counter;
 				node->unk34 = src;
 				node->unk30 = NULL;
 				src->unk30 = node;
-				node->unk10 = id;
+				node->unk10 = id = ++value;
 				*arg1 = node;
 				*counter = id;
 				return id;
@@ -599,19 +568,16 @@ s32 func_800121B4_12DB4(Unk8006AA80Node arg0, Unk8006AA80Node **arg1, Unk8006AA8
 	{
 		s16 id;
 
-		id = *counter + 1;
+		value = *counter;
 		prev->unk34 = node;
 		node->unk34 = NULL;
 		node->unk30 = prev;
-		node->unk10 = id;
+		node->unk10 = id = ++value;
 		*arg2 = (Unk8006AA84Node *)node;
 		*counter = id;
 		return id;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800121B4_12DB4.s")
-#endif
 
 void func_800123A4_12FA4(Unk8006AA80Node *arg0, Unk8006AA80Node **arg1, Unk8006AA80Node **arg2) {
 	if (D_8006AB88 != 0 && arg0 != NULL) {
@@ -1174,24 +1140,24 @@ void func_800136F0_142F0(void) {
 	}
 }
 
-// CURRENT(20)
-#ifdef NON_MATCHING
-// AI - Rotates a message-queue index and prints/queues the next notification string
+/* Cycle the house music variation. The index is function-private data. */
 void func_80013720_14320(void)
 {
-  s8 sp1F;
-  if (D_8006AB88 != 0)
-  {
-	sp1F = D_80033C88_34888 % 4;
-	D_80033C88_34888_W = D_80033C88_34888 + 1;
-	osSyncPrintf(D_8003828C_38E8C, sp1F);
-	sp1F = D_80033C84_34884[sp1F] + 0x1F;
-	func_80015C94_16894(sp1F, 6);
-  }
+    static u8 D_80033C88_34888 = 0;
+    s8 index;
+
+    if (D_8006AB88 != 0) {
+        index = D_80033C88_34888 % 4;
+        D_80033C88_34888++;
+        osSyncPrintf(D_8003828C_38E8C, index);
+        index = D_80033C84_34884[index] + 0x1F;
+        func_80015C94_16894(index, 6);
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013720_14320.s")
-#endif
+
+/* Keep these definitions after the private index to preserve data order. */
+s32 D_80033C8C_3488C = 0;
+s16 D_80033C90_34890 = 0;
 
 void func_800137AC_143AC(void) {
 	func_80015C94_16894(0x24, 0xF);
@@ -1218,97 +1184,84 @@ void func_800137F0_143F0(s32 arg0) {
 void func_80013810_14410(s8 arg0) {
 }
 
-// https://decomp.me/scratch/6mw74
-// CURRENT(0) Needs bss?
-#ifdef NON_MATCHING
+/* Advance audio fades and timers, then process queued sounds. */
 void func_80013818_14418(void)
 {
-	static s16 D_8006AB14;
-  s16 var_s0;
-  f32 sp28;
-  f32 temp_f0;
-  f32 temp_f14;
-  f32 temp_f2;
-  if (D_8006AB88 == 0)
-  {
-	  return;
-  }
-	func_80017224_17E24();
-	for (var_s0 = 0; var_s0 < 2; var_s0++)
-	{
-	  if (D_80031D28_32928[var_s0] != 0)
-	  {
-		func_80016CD8_178D8((s8) var_s0);
-	  }
-	}
+    /* Reserve D_8006AB10 before the private count at D_8006AB14. */
+    static s32 soundPlayerSlot;
+    static s16 D_8006AB14;
+    static s16 D_80033C94_34894 = -1;
+    s16 slot;
+    f32 pitch;
+    f32 dx;
+    f32 dz;
+    f32 dy;
 
-	if (D_80031D4C_3294C != 0)
-	{
-	  func_80016E54_17A54();
-	}
-	if (D_80031CD4_328D4 != -1)
-	{
-	  D_80031CD4_328D4 -= 1;
-	  if (D_80031CD4_328D4 == -1)
-	  {
-		func_80013324_13F24();
-	  }
-	}
-	if ((((D_80052ACA == 0) || (D_80052ACA == 1)) || (D_80052ACA == 2)) && (gameplayMode == 1))
-	{
-	  {
-		if (D_80033C94_34894 > 0)
-		{
-		  D_80033C94_34894--;
-		}
+    if (D_8006AB88 == 0) {
+        return;
+    }
+    func_80017224_17E24();
+    for (slot = 0; slot < 2; slot++) {
+        if (D_80031D28_32928[slot] != 0) {
+            func_80016CD8_178D8(slot);
+        }
+    }
 
-		if (D_80033C94_34894 == 0)
-		{
-		  D_80033C94_34894 = -1;
-		  sp28 = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
-		  temp_f0 = (((f32) D_80052B34->unk0) / 4) - D_80047954;
-		  temp_f2 = (((f32) D_80052B34->unk2) / 4) - D_80047958;
-		  temp_f14 = (((f32) D_80052B34->unk4) / 4) - D_8004795C;
-		  func_80014A3C_1563C((s32) D_80052B34, 0x97, sqrtf(((temp_f0 * temp_f0) + (temp_f2 * temp_f2)) + (temp_f14 * temp_f14)), 0, sp28);
-		}
-	  }
-	  if (((((currentLevel == 3) && (gameplayMode == 1)) && (D_80052ACA != 3)) && (D_80052B34->unk1A == 3)) && (currentControllerStates[0].button & 0x2000))
-	  {
-		func_80014A3C_1563C((s32) D_80052B34, 0x35, 0.0f, 0, -1.0f);
-	  }
-	}
-	if (D_80031CD4_328D4 != -1)
-	{
-	  D_80031CD4_328D4 -= 1;
-	  if (D_80031CD4_328D4 == -1)
-	  {
-		func_80013324_13F24();
-	  }
-	}
-	func_80013FC4_14BC4(D_8006AB10);
-	D_8006AB14 = func_80013F64_14B64();
+    if (D_80031D4C_3294C != 0) {
+        func_80016E54_17A54();
+    }
+    if (D_80031CD4_328D4 != -1U) {
+        D_80031CD4_328D4 -= 1;
+        if (D_80031CD4_328D4 == -1U) {
+            func_80013324_13F24();
+        }
+    }
+    if ((D_80052ACA == 0 || D_80052ACA == 1 || D_80052ACA == 2) && gameplayMode == 1) {
+        if (D_80033C94_34894 > 0) {
+            D_80033C94_34894--;
+        }
+        if (D_80033C94_34894 == 0) {
+            D_80033C94_34894 = -1;
+            pitch = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
+            dx = (f32)D_80052B34->unk0 / 4 - D_80047954;
+            dy = (f32)D_80052B34->unk2 / 4 - D_80047958;
+            dz = (f32)D_80052B34->unk4 / 4 - D_8004795C;
+            func_80014A3C_1563C((s32)D_80052B34, 0x97, sqrtf(dx * dx + dy * dy + dz * dz), 0, pitch);
+        }
+        if (currentLevel == 3 && gameplayMode == 1 && D_80052ACA != 3 && D_80052B34->unk1A == 3 && (currentControllerStates[0].button & 0x2000)) {
+            func_80014A3C_1563C((s32)D_80052B34, 0x35, 0.0f, 0, -1.0f);
+        }
+    }
+    if (D_80031CD4_328D4 != -1U) {
+        D_80031CD4_328D4 -= 1;
+        if (D_80031CD4_328D4 == -1U) {
+            func_80013324_13F24();
+        }
+    }
+    func_80013FC4_14BC4(D_8006AB10);
+    D_8006AB14 = func_80013F64_14B64();
 
-	if (D_8006AB14 > 0)
-	{
-	  Unk8006AA80Node *ptr;
-	  for (var_s0 = 0; var_s0 < D_8006AB14; var_s0++)
-	  {
-		ptr = func_80012720_13320();
-		if (ptr == NULL)
-		{
-		  break;
-		}
-		if ((func_80013B48_14748(ptr, D_80033C90_34890) != (-1)) && (ptr->unk0 == 0x96))
-		{
-		  D_80033C94_34894 = 1;
-		}
-	  }
+    if (D_8006AB14 > 0) {
+        Unk8006AA80Node *node;
 
-	}
+        for (slot = 0; slot < D_8006AB14; slot++) {
+            node = func_80012720_13320();
+            if (node == NULL) {
+                break;
+            }
+            if (func_80013B48_14748(node, D_80033C90_34890) != -1U && node->unk0 == 0x96) {
+                D_80033C94_34894 = 1;
+            }
+        }
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80013818_14418.s")
-#endif
+
+/* These follow the function-private countdown in the data section. */
+s32 D_80033C98_34898 = 0;
+
+Float4 D_80033C9C_3489C = {0.0f, 0.4f, 0.55f, 0.75f};
+f32 D_80033CAC_348AC[] = {0.0f, 0.333f, 0.666f, 1.0f};
+s32 D_80033CBC_348BC = 0;
 
 s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1)
 {
@@ -1563,15 +1516,14 @@ s32 func_800143C4_14FC4(s16 arg0)
 }
 
 // https://decomp.me/scratch/qeywv
-// Matching, but rodata
-#ifdef NON_MATCHING
+
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
 {
   f32 temp_f14;
   VehicleType *type;
-  WeaponLevelSpec *levelSpec;
   f32 temp_f12;
   f32 temp_f2;
+  const f32 pitchScale = 9753.0f;
   type = &vehicleTypes[arg0->unk1A];
   if (!D_8006AB88)
   {
@@ -1581,11 +1533,11 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   {
 	return;
   }
-  if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == (-1))
+  if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == (-1))
   {
 	return;
   }
-  if (D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0 == 0x27)
+  if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == 0x27)
   {
 	if (arg0->unk12 < 0x14)
 	{
@@ -1609,48 +1561,45 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   }
   if (arg1 != 0)
   {
-	  // Need to figure out how to use D_800330B0_33CB0[currentLevel - 1][arg0->unk1A] instead
-	// levelSpec = &D_800330B0_33CB0[currentLevel - 1][arg0->unk1A];
-	  
-	levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
 	switch (type->unk58)
 	{
 	  case 0:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / ((f32) 1));
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / ((f32) 1));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	  case 1:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / D_80038324_38F24_R);
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / 24382.0f);
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	  case 3:
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
-		temp_f14 = ((temp_f2 - temp_f12) * (((f32) arg2) / D_80038328_38F28_R));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		/* The direct minPitch read preserves IDO's intermediate product register. */
+		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / pitchScale);
 		temp_f14 += temp_f12;
 		break;
 
 	  case 7:
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
-		temp_f14 = ((temp_f2 - temp_f12) * (((f32) arg2) / D_8003832C_38F2C_R));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 4500.0f);
 		temp_f14 += temp_f12;
 		break;
 
 	  case 5:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / 25.0f);
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / 25.0f);
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	  default:
-		temp_f14 = (levelSpec - 21)->unk14 * (((f32) arg2) / ((f32) 1));
-		temp_f2 = (levelSpec - 21)->unkC;
-		temp_f12 = (levelSpec - 21)->unk8;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / ((f32) 1));
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		break;
 
 	}
@@ -1660,25 +1609,24 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   {
 	if (((s32) (type->unk4C << 9)) >= 0)
 	{
-	  levelSpec = &D_800330B0_33CB0[currentLevel][arg0->unk1A];
 	  if ((type->unk58 == 3) || (type->unk58 == 7))
 	  {
-		temp_f2 = (levelSpec - 21)->unkC;
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
 		temp_f14 = temp_f2;
 	  }
 	  else
 	  {
-		temp_f14 = (levelSpec - 21)->unk14 * D_8004DCC0;
-		temp_f2 = (levelSpec - 21)->unkC;
+		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * D_8004DCC0;
+		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
 	  }
-	  temp_f12 = (levelSpec - 21)->unk8;
+	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 	}
 	else
 	{
 	  f32 spd = func_8001D940((arg0->unk30 * arg0->unk30) + (arg0->unk38 * arg0->unk38));
 	  temp_f14 = (f32) (((f64) spd) / 60.0);
-	  temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unkC;
-	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].unk8;
+	  temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 	}
   }
   if (temp_f2 < temp_f14)
@@ -1689,18 +1637,15 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   {
 	temp_f14 = temp_f12;
   }
-  if (((f64) temp_f14) < D_80038330_38F30_R)
+  if (((f64) temp_f14) < 0.1)
   {
-	temp_f14 = D_80038338_38F38_R;
+	temp_f14 = 0.1f;
   }
   {
 	f32 dist = func_8001D940(((((((f32) arg0->unk0) / 4) - D_80047954) * ((((f32) arg0->unk0) / 4) - D_80047954)) + (((((f32) arg0->unk2) / 4) - D_80047958) * ((((f32) arg0->unk2) / 4) - D_80047958))) + (((((f32) arg0->unk4) / 4) - D_8004795C) * ((((f32) arg0->unk4) / 4) - D_8004795C)));
-	func_80014A3C_1563C((s32) (&vehicleTypes[arg0->unk1A]), D_80032EB8_33AB8[currentLevel][arg0->unk1A].unk0, dist, 0, temp_f14);
+	func_80014A3C_1563C((s32) (&vehicleTypes[arg0->unk1A]), D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId, dist, 0, temp_f14);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80014508_15108.s")
-#endif
 
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 {
@@ -1732,16 +1677,16 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 		{
 			if ((D_80052ACA == 2) || (currentLevel == 5))
 			{
-				D_80032430_33030[0xB3] = D_8003833C_38F3C_R;
+				D_80032430_33030[0xB3] = 6000.0f;
 				D_80031F04_32B04[0xB3] = 0x7FFF;
 			}
 			else
 			{
-				D_80032430_33030[0xB3] = D_80038340_38F40_R;
+				D_80032430_33030[0xB3] = 3000.0f;
 				D_80031F04_32B04[0xB3] = 0x5FFF;
 			}
 		}
-		if ((arg1 == 0xE8) && (((f64)arg4) <= D_80038348_38F48_R))
+		if ((arg1 == 0xE8) && (((f64)arg4) <= 0.8))
 		{
 			D_80032310_32F10 = 0x7D;
 			D_80031F04_32B04[0xE8] = 0x7FFF;
@@ -1759,7 +1704,7 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 			}
 			else
 			{
-				D_80032430_33030[0x17F] = D_80038350_38F50_R;
+				D_80032430_33030[0x17F] = 6000.0f;
 			}
 		}
 		if (arg2 < D_80032430_33030[arg1])
@@ -1819,7 +1764,7 @@ void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)
 							}
 							if (arg4 != node->unk24)
 							{
-								if ((((f64)D_80038358_38F58_R) < ((f64)arg4)) && (((f64)arg4) < 2.0))
+								if ((((f64)0.1) < ((f64)arg4)) && (((f64)arg4) < 2.0))
 								{
 									alSndpSetPitch(D_8006AB10, arg4);
 									node->unk24 = arg4;
@@ -2131,8 +2076,6 @@ void func_80015C58_16858(u8 arg0) {
 	}
 }
 
-// Matching - but needs the jump table rodata linked first
-#ifdef NON_MATCHING
 void func_80015C94_16894(s8 arg0, s8 arg1) {
 	s8 sp1F;
 
@@ -2154,7 +2097,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 1:
@@ -2168,7 +2111,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 2:
@@ -2180,7 +2123,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 				func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 				func_80016B38_17738(arg0, sp1F);
 			} else {
-				func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+				func_80016B38_17738(arg0, func_800165EC_171EC());
 			}
 		} else {
 			if (D_80031B58_32758 == 1) {
@@ -2214,7 +2157,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 5:
@@ -2224,7 +2167,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 5;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 3:
 		if (D_80031CA4_328A4 == 3) {
@@ -2236,7 +2179,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 4:
@@ -2249,7 +2192,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 6:
@@ -2259,7 +2202,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 6;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 8:
 		D_80031CD4_328D4 = -1;
@@ -2272,7 +2215,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 9:
@@ -2286,7 +2229,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 10:
@@ -2300,7 +2243,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 12:
@@ -2310,7 +2253,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 12;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 13:
 		D_80031CD4_328D4 = -1;
@@ -2323,7 +2266,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 			func_80016C14_17814(sp1F, 60.0f, 0.0f, 20.0f);
 			func_80016B38_17738(arg0, sp1F);
 		} else {
-			func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+			func_80016B38_17738(arg0, func_800165EC_171EC());
 		}
 		break;
 	case 15:
@@ -2333,7 +2276,7 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 15;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 16:
 		D_80031CD4_328D4 = -1;
@@ -2342,16 +2285,13 @@ void func_80015C94_16894(s8 arg0, s8 arg1) {
 		}
 		D_80031CA4_328A4 = 16;
 		func_800164C4_170C4();
-		func_80016B38_17738(arg0, (s8)func_800165EC_171EC());
+		func_80016B38_17738(arg0, func_800165EC_171EC());
 		break;
 	case 7:
 	case 14:
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_80015C94_16894.s")
-#endif
 
 s32 func_800164C4_170C4(void) {
 	s32 var_s1;
@@ -2369,22 +2309,20 @@ s32 func_800164C4_170C4(void) {
 	return var_s1;
 }
 
-// https://decomp.me/scratch/CQbLj
-// CURRENT(25)
-#ifdef NON_MATCHING
-// AI - Picks an available controller slot index, activating/releasing slots as needed
+// Picks an available slot, activating or releasing slots as needed.
 s8 func_800165EC_171EC(void)
 {
-	s8 var_s3;
-	s8 var_s6;
-	s16 var_s5;
 	s8 i;
-	int new_var;
-	s32 sp48;
-	s32 sp44;
-	var_s6 = -1;
-	var_s3 = 0;
-	var_s5 = 0x7FFF;
+	s16 score;
+	s32 age;
+	s32 maximumAge;
+	s16 minimumScore;
+	s8 selectedSlot;
+	s8 unavailableCount;
+
+	selectedSlot = -1;
+	unavailableCount = 0;
+	minimumScore = 0x7FFF;
 	if (D_80031CA4_328A4 != 2)
 	{
 		for (i = 0; i < 2; i++)
@@ -2411,10 +2349,10 @@ s8 func_800165EC_171EC(void)
 			func_80016ABC_176BC(i);
 			return i;
 		}
-		var_s3++;
+		unavailableCount++;
 	}
 
-	if (var_s3 == 2)
+	if (unavailableCount == 2)
 	{
 		for (i = 0; i < 2; i++)
 		{
@@ -2434,58 +2372,57 @@ s8 func_800165EC_171EC(void)
 			}
 		}
 
-		new_var = 0x7FFFFFFF;
 		for (i = 0; i < 2; i++)
 		{
-			s16 score;
 			if ((D_80031CE4_328E4[i] == 1) && (func_80012E88_13A88(i) == 1U))
 			{
 				if (D_80031D28_32928[i] == 1)
 				{
-					score = (s16)(((D_80031D3C_3293C[i] * ((f32)D_80031D74_32974[D_80031D1C_3291C[i]])) + ((D_80031D44_32944[i] * (((f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D2C_3292C[i])) / D_80031D34_32934[i])) * D_80031D64_32964);
+					score = (((D_80031D3C_3293C[i] * (D_80031D74_32974[D_80031D1C_3291C[i]])) + ((D_80031D44_32944[i] * ((D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D2C_3292C[i])) / D_80031D34_32934[i])) * D_80031D64_32964);
 				}
 				else
 				{
-					score = (s16)(((f32)D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D64_32964);
+					score = ((D_80031D74_32974[D_80031D1C_3291C[i]]) * D_80031D64_32964);
 				}
-				if (score < var_s5)
+				if (score < minimumScore)
 				{
-					var_s5 = score;
-					var_s6 = i;
+					minimumScore = score;
+					selectedSlot = i;
 				}
 			}
 		}
 
-		if (var_s6 != (-1))
+		if (selectedSlot != (-1))
 		{
-			func_80013E64_14A64(var_s6);
-			return var_s6;
+			func_80013E64_14A64(selectedSlot);
+			return selectedSlot;
 		}
 		for (i = 0; i < 2; i++)
 		{
+			age = 0x7FFFFFFF;
 			if (D_8006AB18[0]->unk1C >= D_80031D20_32920[i])
 			{
-				sp48 = D_8006AB18[0]->unk1C - D_80031D20_32920[i];
+				age = D_8006AB18[0]->unk1C - D_80031D20_32920[i];
 			}
 			else if (D_8006AB18[0]->unk1C >= 0)
 			{
-				sp48 = (D_8006AB18[0]->unk1C + new_var) - D_80031D20_32920[i];
+				age = (D_8006AB18[0]->unk1C + age) - D_80031D20_32920[i];
 			}
 			else
 			{
-				sp48 = (new_var - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
+				age = (age - D_80031D20_32920[i]) - D_8006AB18[0]->unk1C;
 			}
-			while (sp44 < sp48)
+			while (maximumAge < age)
 			{
-				sp44 = sp48;
-				var_s6 = i;
+				maximumAge = age;
+				selectedSlot = i;
 			}
 		}
 
-		if (var_s6 != (-1))
+		if (selectedSlot != (-1))
 		{
-			func_80013E64_14A64(var_s6);
-			return var_s6;
+			func_80013E64_14A64(selectedSlot);
+			return selectedSlot;
 		}
 		osSyncPrintf(D_800382A0_38EA0);
 	}
@@ -2494,9 +2431,6 @@ s8 func_800165EC_171EC(void)
 		osSyncPrintf(D_800382C8_38EC8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/12C80/func_800165EC_171EC.s")
-#endif
 
 void func_80016ABC_176BC(s8 arg0) {
 	D_80031CD0_328D0[arg0] = -1;

@@ -141,6 +141,9 @@ extern u8 D_5041480[];
 extern u8 D_5041680[];
 extern u8 D_5041880[];
 extern u8 D_50445A0[];
+extern Gfx D_5046250[];
+extern Gfx D_5046470[];
+extern Gfx D_50468F0[];
 extern u8 D_5047470[];
 extern u8 D_50474F0[];
 extern u8 D_50494F0[];
@@ -307,8 +310,8 @@ extern f32 D_800323BC_32FBC[];
 extern f32 D_80032430_33030[];
 extern f32 D_80032A78_33678[];
 extern f32 D_80032D88_33988; // alias of D_80032A78_33678[0xC4]
-extern WeaponLevelSpec D_80032EB8_33AB8[][21]; // base one level before vehicle audio settings
-extern WeaponLevelSpec D_800330B0_33CB0[][21];
+extern VehicleAudioSpec D_80032EB8_33AB8[][21]; // base one level before vehicle audio settings
+extern VehicleAudioSpec D_800330B0_33CB0[][21];
 extern s16 D_80033A68_34668[][16];
 extern s16 D_80033A74_34674[];
 extern s16 D_80033A88_34688[][16];
@@ -322,10 +325,7 @@ extern s8 D_80033C70_34870[];
 extern u8 D_80033C80_34880;
 extern u8 D_80033C80_34880_W; // write alias preserving the matching compiler access pattern
 extern s8 D_80033C84_34884[];
-extern u8 D_80033C88_34888;
-extern u8 D_80033C88_34888_W; // write alias preserving the matching compiler access pattern
 extern s16 D_80033C90_34890;
-extern s16 D_80033C94_34894;
 extern Float4 D_80033C9C_3489C;
 extern f32 D_80033CAC_348AC[];
 extern u8 D_80033CC0_348C0[6][250];
@@ -602,16 +602,6 @@ extern const char D_800382C8_38EC8[]; /* osSyncPrintf format string */
 extern const f32 D_800382F0_38EF0[];
 extern const f64 D_800382F8_38EF8[];
 extern const f32 D_80038300_38F00[];
-extern const f32 D_80038324_38F24[];
-extern const f32 D_80038328_38F28[];
-extern const f32 D_8003832C_38F2C[];
-extern const f64 D_80038330_38F30[];
-extern const f32 D_80038338_38F38[];
-extern const f32 D_8003833C_38F3C[];
-extern const f32 D_80038340_38F40[];
-extern const f64 D_80038348_38F48[];
-extern const f32 D_80038350_38F50[];
-extern const f64 D_80038358_38F58[];
 extern const char D_800383B0_38FB0[];
 extern const char D_800383BC_38FBC[];
 extern const char D_800383C8_38FC8[];
@@ -2371,6 +2361,7 @@ extern PowerupItem D_8014F6D0[0x10]; // pool with 16 slots for pickup items like
 extern PowerupItem D_8014F7DE; // False symbol - end of D_8014F6D0. Replace with D_8014F6D0
 extern s32 D_8014F7F0;
 extern s32 D_8014F7F4;
+extern Unk80052B40 D_8014F7F8;
 extern s16 D_8014F7FA;
 extern u8 D_8014F7FE;
 extern s32 D_8014F800;
@@ -4068,16 +4059,6 @@ extern const f64 D_80037610_38210_R;
 extern const f32 D_800382F0_38EF0_R;
 extern const f64 D_800382F8_38EF8_R;
 extern const f32 D_80038300_38F00_R;
-extern const f32 D_80038324_38F24_R;
-extern const f32 D_80038328_38F28_R;
-extern const f32 D_8003832C_38F2C_R;
-extern const f64 D_80038330_38F30_R;
-extern const f32 D_80038338_38F38_R;
-extern const f32 D_8003833C_38F3C_R;
-extern const f32 D_80038340_38F40_R;
-extern const f64 D_80038348_38F48_R;
-extern const f32 D_80038350_38F50_R;
-extern const f64 D_80038358_38F58_R;
 extern const f32 D_80039830_3A430_R;
 
 extern s16 D_8013DAFC_14CAAC[2];
@@ -4249,6 +4230,9 @@ extern const f64 D_80144DA0_153D50[1];
 extern const f64 D_80144DA8_153D58[1];
 extern const f64 D_80144DB0_153D60[1];
 extern const f64 D_80144DB8_153D68[1];
+
+extern LevelBeaconData D_8013D898_14C848;
+extern BeaconColor D_8013D8B0_14C860;
 
 #endif /* LIBULTRA_REFERENCE */
 
