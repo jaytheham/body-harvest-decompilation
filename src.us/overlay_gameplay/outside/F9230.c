@@ -351,7 +351,6 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 #endif
 
 // CURRENT(400)
-#ifdef NON_MATCHING
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
 	s32 temp_v1;
 	s32 var_a0;
@@ -377,20 +376,21 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 	} else {
 		var_v0_2 = -var_a0;
 	}
-	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390)) {
+	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390[0])) {
 		return 0;
 	}
-	if ((var_a0 >= 0) && (arg0 >= -4)) {
-		return 2;
-	}
-	if ((var_a0 < 0) && (arg0 < 5)) {
-		return 1;
+	if (var_a0 >= 0) {
+		if (arg0 >= -4) {
+			return 2;
+		}
+	} else {
+		if ((var_a0 < 0) && (arg0 < 5)) {
+			return 1;
+		}
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
-#endif
+
 
 // CURRENT(2645)
 #ifdef NON_MATCHING
