@@ -25,6 +25,10 @@ Tools in play:
 - `tools/eu_layout_audit.py` -- per-subsegment size/alignment audit that
   localises size errors by comparing built objects against the target layout.
 - `tools/gen_eu_symbol_collisions.py` -- emits `eu_` symbol pins (see below).
+- `tools/asm-processor/asm_processor.py --asm-root asm=asm.eu` -- passed by the
+  EU build only, so that the one version-neutral `GLOBAL_ASM` pragma of a shared
+  file reads the EU extraction; `tests/asm_root_check.sh` checks it. See
+  "Sharing a file that still has GLOBAL_ASM" in `docs/pal-vs-na.md`.
 - `tools/progress.py --version eu` -- counts the PAL build (`src.eu` plus the
   shared `src/common`, each file read as the EU build compiles it) into
   `docs/progress.eu.json`, which `docs/eu.html` shows. The default run is the
@@ -227,12 +231,13 @@ NTSC recompiles identically for the EU shape.
   `docs/progress.eu.json` from `tools/progress.py --version eu`. The tool reads
   `src.eu` and `src/common` as the EU build compiles them (`VERSION_US`,
   `VERSION_EU` and `NON_MATCHING` conditions evaluated, `NON_MATCHING` off).
-  Result at `32aaef7ad`: 318 of 2257 functions matched (14.09 percent). Core is
-  316 of 355 (38 `NON_MATCHING` in both versions, and `func_80006DDC_79DC`,
-  which is C in NTSC and assembly in PAL); the three gameplay overlays are 2 of
-  1898 (two empty functions, the rest `GLOBAL_ASM` stubs because the overlays are
-  not shared with NTSC); `src.eu/libultra` adds 4 stubs. The level overlays and
-  most of libultra have no tracked EU source and are not in the totals. The core
+  Result, the same at `32aaef7ad` and with the version-neutral pragma: 318 of
+  2257 functions matched (14.09 percent). Core is 316 of 355 (38
+  `NON_MATCHING` in both versions, and `func_80006DDC_79DC`, which is C in NTSC
+  and assembly in PAL); the three gameplay overlays are 2 of 1898 (two empty
+  functions, the rest `GLOBAL_ASM` stubs because the overlays are not shared
+  with NTSC); `src.eu/libultra` adds 4 stubs. The level overlays and most of
+  libultra have no tracked EU source and are not in the totals. The core
   figures are the NTSC page's, so the two pages must not be summed. The NTSC
   count and `docs/index.html` are unchanged.
 - 2026-10-12: Removed `eu_symbol_pairs.py` and `share_core_file.py` with their
