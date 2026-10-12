@@ -25,6 +25,10 @@ Tools in play:
 - `tools/eu_layout_audit.py` -- per-subsegment size/alignment audit that
   localises size errors by comparing built objects against the target layout.
 - `tools/gen_eu_symbol_collisions.py` -- emits `eu_` symbol pins (see below).
+- `tools/eu_symbol_pairs.py` and `tools/share_core_file.py` -- list the EU
+  symbol-table lines a core file needs and convert its per-version copies into
+  one shared file; see "Converting a file, and retiring a block" in
+  `docs/pal-vs-na.md`.
 
 ## Symbol renames (eu_ collisions)
 
@@ -130,3 +134,14 @@ tools/eu_rom_diff.py` lists the differing bytes.
   failed with `FileNotFoundError` on the `asm.eu/` file whenever EU was not
   extracted; a local asm-processor change turns a missing `.s` into a C syntax
   error that only fires if the pragma is compiled.
+- 2026-10-12: The last four mixed files, `17EE0.c`, `AD60.c`, `1050.c` and
+  `53F0.c`, are shared: all 23 core C files are compiled once from
+  `src/common/core/`, and no core C file is left under `src.us/` or `src.eu/`.
+  Six files carry per-version pragma blocks (38 NA pragmas, 39 EU). `AD60.c`
+  and `53F0.c` hold hand-written jump tables of NA code addresses, so each table
+  has a `VERSION_US` / `VERSION_EU` initialiser (EU is NA + 0x30 in `AD60.c`,
+  + 0x38 in `53F0.c`). `53F0.c` also holds `func_80006DDC_79DC`, the one
+  function that really differs in PAL: the NA C under `VERSION_US`, the EU
+  assembly under `VERSION_EU`. The pairing and the conversion are now two
+  tools, `tools/eu_symbol_pairs.py` and `tools/share_core_file.py`, and
+  `tools/progress.py` counts a shared file's two pragmas once.

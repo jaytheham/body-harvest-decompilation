@@ -102,5 +102,5 @@ etc.), not a naive diagonal.
   `0xB900031D`, ...). Some editor lint/intellisense setups report
   "integer conversion resulted in truncation" for these, but **IDO and the
   project's host `gcc` check emit no such warning** - verify with
-  `docker exec bh-container bash -c "rm -f build/src.us/core/FILE.c.o; make QUIET=0 build/src.us/core/FILE.c.o"`
+  `docker exec bh-container bash -c "rm -f build/src/common/core/FILE.c.o; make QUIET=0 build/src/common/core/FILE.c.o"`
   before chasing it.

@@ -152,12 +152,17 @@ now, and the file is shared.
 
 ### Which files can share today
 
-Of the 23 NA core C files, 19 are shared from `src/common/core/`: the 17 that
-contain no `#pragma GLOBAL_ASM`, plus `1B060.c` and `E830.c`. `12C80.c` needed
-no `#ifdef`; `loader.c` keeps its ten tables of ROM offsets and overlay
-addresses under `VERSION_US` / `VERSION_EU`, because EU moves the level data and
-overlays. Sharing a file also means pointing its EU `.data`/`.rodata` (and any
-`.bss`) at the C, naming its functions with their NA names at EU addresses in
+All 23 NA core C files are shared: each is compiled once, from
+`src/common/core/`. No core C file is left under `src.us/` or `src.eu/`, and
+`bh.us.yaml` and `bh.eu.yaml` name the same 23 files. Seventeen contain no
+`#pragma GLOBAL_ASM`, and fifteen of those no per-version text at all
+(`12C80.c` needed no `#ifdef`). `loader.c` keeps its ten tables of ROM offsets
+and overlay addresses under `VERSION_US` / `VERSION_EU`, because EU moves the
+level data and overlays, and `10A20.c` does the same for `D_80031B58_32758`,
+which starts as `0` in NA and `1` in EU. The other six files mix matched C with
+unmatched functions and choose their assembly per version (next section).
+Sharing a file also means pointing its EU `.data`/`.rodata` (and any `.bss`) at
+the C, naming its functions with their NA names at EU addresses in
 `symbol_addrs.eu.txt`, and pinning the externs it references at their EU
 addresses in `undefined_syms.eu.txt`.
 
@@ -187,18 +192,73 @@ function's asm per version, and writes the matched C once:
   the EU name must equal the EU symbol name.
 - asm-processor runs before the preprocessor and reads both pragmas. The
   inactive one is dropped by the preprocessor and skipped by asm-processor's
-  post-processing. A local change lets the inactive version's `.s` be missing
-  (see `docs/windows-build.md`), so one version builds without the other
-  extracted.
+  post-processing. A local change to `tools/asm-processor/asm_processor.py` lets
+  the inactive version's `.s` be missing (see `docs/windows-build.md`), so one
+  version builds without the other extracted.
 - A macro cannot choose the path: asm-processor only recognises the literal
   `#pragma GLOBAL_ASM("...")` form, and IDO silently ignores the unexpanded
   pragma, which leaves the function out of the object.
 
-`1050.c` (13 `GLOBAL_ASM`), `53F0.c` (12), `AD60.c` (8) and `17EE0.c` (3) still
-exist once per version. EU's copies are one stub per function (58, 75, 26 and
-28 stubs).
-In `1050` every function sits at the same address in both ROMs; the others
-move by the shift map at the top of `docs/pal-na-diff.txt`.
+Six files use these blocks: `1050.c` (13 functions), `53F0.c` (12), `AD60.c`
+(8), `17EE0.c` (3), `1B060.c` (1) and `E830.c` (1). That is 38 pragmas for NA and
+39 for EU, each NA pragma paired with an EU pragma of the same file name. The
+extra EU pragma is `func_80006DDC_79DC` in `53F0.c`, the one function that really
+differs in PAL: its NA C body sits under `#if defined(VERSION_US)` and the EU
+assembly under `#elif defined(VERSION_EU)`, so NA compiles it from C and EU
+from assembly. In `1050` every function sits at the same address in both ROMs;
+the others move by the shift map at the top of `docs/pal-na-diff.txt`.
+
+`AD60.c` (5 tables) and `53F0.c` (6) also hold hand-written jump tables,
+`const u32 jtbl_<vram>_<rom>[]`, whose entries are code addresses. Each has a
+`VERSION_US` / `VERSION_EU` / `#error` initialiser: the EU entries are the NA
+entries plus 0x30 in `AD60.c` and plus 0x38 in `53F0.c`, the shift of the code
+they point into. The one table in `1050.c` holds the same addresses in both
+ROMs and has a single initialiser.
+
+### Converting a file, and retiring a block
+
+Two tools did the mechanical work of sharing the last four files. Both run on a
+core file that still exists once per version (an NA source under `src.us/` and
+an EU stub under `src.eu/`, each in a `core` directory); none is left, so they
+are the record of the method, and their tests (`tests/eu_symbol_pairs_check.sh`,
+`tests/share_core_file_check.sh`) need a checkout from before the conversions.
+Each tool's docstring is the reference.
+
+- `tools/eu_symbol_pairs.py <File>` pairs the NA and EU functions of the
+  unconverted file and prints the symbol-table lines sharing needs: `NAME` (for
+  `symbol_addrs.eu.txt`) gives a function or hand-written jump table its NA name
+  at its EU address, `PIN` (for `undefined_syms.eu.txt`) pins an extern the
+  shared C names at its EU address, `DROP` marks an existing hand-written entry
+  that the shared file now supersedes, and `PROBLEM` marks anything it cannot
+  place and makes it exit 1. Addresses are read off the instruction words of
+  both versions, not off EU's names. A pair whose instruction counts differ is a
+  `PROBLEM`; that is how `func_80006DDC_79DC` shows up.
+- `tools/share_core_file.py <File> [--jtbl-shift SHIFT] [--pal-only FUNCTION]`
+  does the mechanical conversion: `git mv` to `src/common/core/`, `git rm` of the
+  EU stub, each pragma rewritten as the block above, and the `c`, `.data` and
+  `.rodata` entries of both yamls pointed at `../src/common/core/<File>` (EU's
+  `data` and `rodata` become `.data` and `.rodata`). `--jtbl-shift` writes the
+  per-version jump table initialisers after checking every word against both
+  baseroms; `--pal-only` keeps one function's NA body under `VERSION_US` and
+  gives `VERSION_EU` the EU assembly. It edits no symbol table and does not
+  build, and a refusal leaves the tree as it was.
+- After a conversion: add the `NAME`, `PIN` and `DROP` lines (hand-written
+  lines go above the block that `tools/eu_collisions_build.py` generates, or the
+  generator deletes them), extract both versions, rebuild the US version, and
+  only then run `tools/eu_collisions_build.py`, which reads the US objects
+  under `build/src/common/`; on a stale US tree it binds EU references to the
+  wrong address without an error.
+
+When a function in a shared file is later matched, keep the C body once and
+delete the rest of its block: the `#ifdef NON_MATCHING` line and everything from
+`#elif defined(VERSION_US)` through `#endif`. Replacing only the NA pragma would
+leave EU on the assembly. Then run `python tools/verify_build.py --rebuild`: the
+C is compiled once and linked at each version's addresses, so every name the
+body uses must already stand at its EU address in `symbol_addrs.eu.txt` or
+`undefined_syms.eu.txt`; a name that does not either fails to link or binds to
+the wrong address (see "Symbol renames (eu_ collisions)" in
+`docs/eu-port-notes.md`). The one block that cannot be collapsed this way is
+`func_80006DDC_79DC`, whose NA body and EU assembly are different code.
 
 ## Open, not verified
 
@@ -232,9 +292,10 @@ build.eu/bh.eu.z64: OK   sha1 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
 ```
 
 Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments. The EU tree
-has 37 C files of its own under `src.eu/`, all of them `GLOBAL_ASM` stubs; the
-decompiled C in the EU build comes from the shared files in `src/common/core/`
-(see "Which files can share today" above).
+has 29 C files of its own under `src.eu/` (libultra and the three gameplay
+overlays, none for core), made of `GLOBAL_ASM` stubs and two empty functions;
+every core C file in the EU build is a shared file in `src/common/core/` (see
+"Which files can share today" above).
 
 ## Tooling notes
 
