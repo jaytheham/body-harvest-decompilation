@@ -402,38 +402,26 @@ void func_802D4E34_1EDB44(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_802D4E6C_1EDB7C(void) {
 	s16 var_v1;
-	s32 temp_v0;
-	u16 temp_t9;
-	u32 temp_v1;
 
 	func_800FB468_10A418(&vehicleInstances[8], 675.0f); // Gryphon plane on aircraft carrier spawns at height 675 - is later moved higher so it falls cleanly onto roof/not clipped into building
 	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
 	if (func_8000726C_7E6C((u64) 0x1E) != 0) {
 		func_800E2720_F16D0(0);
-		var_v1 = 0;
-		do {
-			temp_v0 = var_v1 * 2;
-			temp_t9 = ((u16 *)&D_802D48D0)[var_v1];
-			var_v1 += 1;
-			((u16 *)&D_802D4AD0)[var_v1] = temp_t9;
-		} while (var_v1 < 0x100);
+		for (var_v1 = 0; var_v1 < 0x100; var_v1++) {
+			D_802D4AD0[var_v1] = D_802D48D0[var_v1];
+		}
 	} else {
 		func_802D4CD0_1ED9E0(0xC, 0);
 	}
-	temp_v1 = buildingInstances[38].unk8 >> 0xC; // buildinginstance 38 is the hut villagers run out of to Old Freighter in Java 3
-	buildingInstances[38].unk8 = (u32) ((((temp_v1 | 0x10000) ^ temp_v1) << 0xC) ^ buildingInstances[38].unk8);
+	buildingInstances[38].statusFlags |= 0x10000;
 	if (func_8000726C_7E6C((u64) 0x11) != 0) {
 		func_8011C080_12B030(0x31);
 		func_8011C080_12B030(0x32);
 	}
 	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_UNK8);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D4E6C_1EDB7C.s")
-#endif
 
 void func_802D4F70_1EDC80(s32 arg0) {
 	func_800072CC_7ECC((u64)0x2C);
