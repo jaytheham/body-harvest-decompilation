@@ -122,3 +122,11 @@ tools/eu_rom_diff.py` lists the differing bytes.
   FD80 floats, the `[350]` `rsp_data.c` array and its six EU words are gone;
   `docs/pal-na-diff.txt` is regenerated with the per-function shift (one DIFF
   function).
+- 2026-10-12: `1B060.c` and `E830.c` are shared too (19 of 23 core files). Each
+  unmatched function keeps one `GLOBAL_ASM` pragma per version under
+  `#elif defined(VERSION_US)` / `#elif defined(VERSION_EU)`, both with the NA
+  name; see "Sharing a file that still has GLOBAL_ASM" in `docs/pal-vs-na.md`.
+  asm-processor reads every pragma before the preprocessor runs, so a US build
+  failed with `FileNotFoundError` on the `asm.eu/` file whenever EU was not
+  extracted; a local asm-processor change turns a missing `.s` into a C syntax
+  error that only fires if the pragma is compiled.

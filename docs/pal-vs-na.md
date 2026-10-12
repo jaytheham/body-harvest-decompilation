@@ -152,39 +152,53 @@ now, and the file is shared.
 
 ### Which files can share today
 
-Of the 23 NA core C files, 17 contain no `#pragma GLOBAL_ASM`, and all 17 are
-shared from `src/common/core/`. `12C80.c` needed no `#ifdef`; `loader.c` keeps
-its ten tables of ROM offsets and overlay addresses under `VERSION_US` /
-`VERSION_EU`, because EU moves the level data and overlays. Sharing a file
-also means pointing its EU `.data`/`.rodata` (and any `.bss`) at the C, naming
-its functions with their NA names at EU addresses in `symbol_addrs.eu.txt`,
-and pinning the externs it references at their EU addresses in
-`undefined_syms.eu.txt`.
+Of the 23 NA core C files, 19 are shared from `src/common/core/`: the 17 that
+contain no `#pragma GLOBAL_ASM`, plus `1B060.c` and `E830.c`. `12C80.c` needed
+no `#ifdef`; `loader.c` keeps its ten tables of ROM offsets and overlay
+addresses under `VERSION_US` / `VERSION_EU`, because EU moves the level data and
+overlays. Sharing a file also means pointing its EU `.data`/`.rodata` (and any
+`.bss`) at the C, naming its functions with their NA names at EU addresses in
+`symbol_addrs.eu.txt`, and pinning the externs it references at their EU
+addresses in `undefined_syms.eu.txt`.
 
-The other 6 still carry stubs: `1050.c` (13 `GLOBAL_ASM`), `53F0.c` (12),
-`AD60.c` (8), `17EE0.c` (3), `1B060.c` (1) and `E830.c` (1). A stub cannot
-cross versions, because `GLOBAL_ASM` bytes are baked with that version's
-relocations, so a shared file is only safe with zero asm dependencies.
+### Sharing a file that still has GLOBAL_ASM
 
-`core/1050` is the representative blocker: its 58 NA functions include 13 that
-are still `NON_MATCHING` with a `GLOBAL_ASM` fallback, so the file cannot be
-shared; EU's `src.eu/core/1050.c` is 58 `GLOBAL_ASM` stubs, one per function.
+A `GLOBAL_ASM` stub cannot cross versions, because its bytes are baked with
+that version's relocations. A shared file therefore picks each unmatched
+function's asm per version, and writes the matched C once:
 
-### Generating the non-shareable files
+```c
+#ifdef NON_MATCHING
+/* C body */
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/E830/func_8000E53C_F13C.s")
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
+```
 
-For a file with stubs, generate the EU copy rather than sharing it:
+- The asm path follows from the yaml name: for a subsegment named
+  `../src/common/core/E830`, splat writes the functions to
+  `asm*/nonmatchings/../src/common/core/E830/`, that is `asm*/src/common/core/E830/`.
+- Both pragmas carry the NA name, because `symbol_addrs.eu.txt` names the EU
+  function after NA. splat classifies a function by the pragma's file name, so
+  the EU name must equal the EU symbol name.
+- asm-processor runs before the preprocessor and reads both pragmas. The
+  inactive one is dropped by the preprocessor and skipped by asm-processor's
+  post-processing. A local change lets the inactive version's `.s` be missing
+  (see `docs/windows-build.md`), so one version builds without the other
+  extracted.
+- A macro cannot choose the path: asm-processor only recognises the literal
+  `#pragma GLOBAL_ASM("...")` form, and IDO silently ignores the unexpanded
+  pragma, which leaves the function out of the object.
 
-- for each function in the range, if NA has a C body, use it verbatim
-- otherwise emit a `GLOBAL_ASM` pragma pointing at that function's EU asm
-
-The EU asm file name is not NA's name: it embeds EU's address, so a function
-after NTSC `0x79DC` is named for its EU offset (NTSC + 0x38 up to `0xAD54`,
-NTSC + 0x30 from `0xAD60`). `tools/pal_us_diff.py` derives this NA-to-EU shift
-map. The generation has to be a tool rather than hand-copied, or the trees
-drift as NA decompiles more.
-
-In `1050` every function sits at the same address in both ROMs, so the EU stub
-names equal NA's except where NA has given a function a real name (12 of 58).
+`1050.c` (13 `GLOBAL_ASM`), `53F0.c` (12), `AD60.c` (8) and `17EE0.c` (3) still
+exist once per version. EU's copies are one stub per function (58, 75, 26 and
+28 stubs).
+In `1050` every function sits at the same address in both ROMs; the others
+move by the shift map at the top of `docs/pal-na-diff.txt`.
 
 ## Open, not verified
 
