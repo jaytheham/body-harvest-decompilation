@@ -5,7 +5,7 @@
 s32 func_802D51F8_1EDF08(void);
 void func_802D5508_1EE218(void);
 void func_802D5590_1EE2A0(void);
-void func_802D57F4_1EE504(void);
+
 void func_802D5ADC_1EE7EC(void);
 void func_802D5E98_1EEBA8(void);
 void func_802D5FE4_1EECF4(void);

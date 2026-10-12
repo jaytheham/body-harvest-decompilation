@@ -1735,3 +1735,5 @@ u8 func_800CE040_DCFF0(s16, s16, s16, s16, s16, s16);
 s32 func_800CE100_DD0B0(u8, s16, s16, s16, s16, s16, s16);
 
 #endif /* LIBULTRA_REFERENCE */
+
+int func_802D57F4_1EE504(void);
