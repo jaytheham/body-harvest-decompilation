@@ -91,7 +91,8 @@ BLOCK_COMMENT = re.compile(r"/\*.*?\*/", re.DOTALL)
 IDENTIFIER = re.compile(r"[A-Za-z_]\w*")
 MAP_INPUT_SECTION = re.compile(r"^ (\.\w+)\s+0x([0-9a-f]+)\s+0x[0-9a-f]+\s+(\S+)\s*$")
 LINKER_OBJECT = re.compile(r"^\s*build\.eu/(\S+?)\.o\(", re.MULTILINE)
-EU_GLOBAL_ASM = re.compile(r'^[ \t]*#[ \t]*pragma[ \t]+GLOBAL_ASM\("(asm\.eu/[^"]+)"\)', re.MULTILINE)
+# A pragma of a source shared with NTSC names asm/...; the EU build maps asm/ to asm.eu/ (asm_processor.py --asm-root).
+EU_GLOBAL_ASM = re.compile(r'^[ \t]*#[ \t]*pragma[ \t]+GLOBAL_ASM\("(asm(?:\.eu)?/[^"]+)"\)', re.MULTILINE)
 HI_LO = re.compile(r"%(hi|lo)\(([^)]+)\)")
 ADDR_NAME = re.compile(r"^(?:eu_)?(?:D|func|jtbl)_([0-9A-Fa-f]{8})(?:_[0-9A-Fa-f]+)?$")
 ASSIGN = re.compile(r"^\s*([A-Za-z_.][\w.]*)\s*=\s*(0x[0-9A-Fa-f]+)\s*;")
@@ -597,7 +598,8 @@ def surviving_eu_asm(root: Path, module: str, own_data: Sequence[Path], kept: Se
             files[relative] = source
         elif relative.endswith(".c") and relative != stub and source.is_file():
             for referenced in EU_GLOBAL_ASM.findall(source.read_text(encoding="utf-8")):
-                files[referenced] = root / referenced
+                eu_path = "asm.eu/" + referenced[len("asm/"):] if referenced.startswith("asm/") else referenced
+                files[eu_path] = root / eu_path
     for path in kept:
         files[path.relative_to(root).as_posix()] = path
     return [path for relative, path in sorted(files.items()) if relative not in dropped and path.is_file()]

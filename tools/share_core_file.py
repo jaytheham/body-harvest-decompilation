@@ -11,10 +11,10 @@ EU symbol tables name every function and extern at its EU address (``tools/eu_sy
 one file serves both versions.  This tool performs the mechanical part of that conversion:
 
 * ``git mv src.us/core/<File>.c src/common/core/<File>.c`` and ``git rm src.eu/core/<File>.c``;
-* each ``#pragma GLOBAL_ASM("asm/nonmatchings/core/<File>/<Name>.s")`` becomes a per-version choice of the two
-  assembly files splat writes for a ``../src/common`` subsegment, with ``#error`` for an unknown version.  A pragma
-  that is the whole ``#else`` body of an ``#ifdef NON_MATCHING`` is folded into that conditional as an ``#elif``
-  chain; a pragma anywhere else gets a self-contained ``#if``/``#endif`` block;
+* each ``#pragma GLOBAL_ASM("asm/nonmatchings/core/<File>/<Name>.s")`` is renamed to the path splat writes for a
+  ``../src/common`` subsegment, ``asm/src/common/core/<File>/<Name>.s``, and nothing else about it changes.  The
+  pragma stays version-neutral: both builds name the same ``asm/`` path and the EU build maps it to ``asm.eu/``
+  (``--asm-root asm=asm.eu``, see tools/asm-processor/asm_processor.py), so no ``#if`` is needed;
 * in ``bh.us.yaml`` and ``bh.eu.yaml`` the ``c`` entry (and the ``.data`` and ``.rodata`` entries; EU's ``data``
   and ``rodata`` become ``.data`` and ``.rodata``) now point at ``../src/common/core/<File>``.  Trailing yaml
   comments are kept.
@@ -33,8 +33,9 @@ Two options handle what a plain pragma rewrite cannot:
   EU ROM holds the same values, and otherwise it is refused with the shift that the first entry suggests, so a file
   whose tables carry NTSC addresses can never be shared without per-version values.
 * ``--pal-only FUNCTION`` is for one function that really differs in PAL.  Its NTSC C definition stays under
-  ``VERSION_US``, ``VERSION_EU`` takes the pragma for the EU assembly of the same name, and any other version is an
-  ``#error``.  The function must be a plain definition in the NTSC file, and the EU stub must carry a pragma for
+  ``VERSION_US``, ``VERSION_EU`` takes the pragma for the EU assembly of the same name (the same neutral ``asm/``
+  path, mapped to ``asm.eu/`` by the EU build), and any other version is an ``#error``.  The function must be a
+  plain definition in the NTSC file, and the EU stub must carry a pragma for
   ``asm.eu/nonmatchings/core/<File>/FUNCTION.s``: FUNCTION is the NTSC name, so this works only where EU names the
   function identically (a function at the same address in both versions, such as the one in 53F0).  A function that
   EU names differently is refused with a "no assembly stub" message.
@@ -65,8 +66,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 # Splat names a ../src/common/core/<File> subsegment's asm after the source path, so both versions share a layout.
-US_ASM_ROOT = "asm/src/common/core"
-EU_ASM_ROOT = "asm.eu/src/common/core"
+# The pragma always names the NTSC directory; the EU build maps asm/ to asm.eu/ (asm_processor.py --asm-root).
+ASM_ROOT = "asm/src/common/core"
 UNKNOWN_VERSION_ERROR = '#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"'
 SHARED_YAML_PATH = "../src/common/core"
 
@@ -125,38 +126,21 @@ def split_eol(line: str) -> tuple[str, str]:
 
 
 def share_pragmas(text: str, module: str) -> tuple[str, int]:
-    """Rewrite every per-version pragma of ``module`` in ``text`` and return the new text and the pragma count.
+    """Rename every pragma of ``module`` in ``text`` to the shared path and return the new text and the pragma count.
 
-    A pragma that is the entire ``#else`` body (``#else`` before it, ``#endif`` after it) turns that ``#else`` into
-    ``#elif defined(VERSION_US)`` and ends the chain with ``#else`` and ``#error``.  Any other pragma becomes a
-    self-contained ``#if defined(VERSION_US)`` ... ``#endif`` block.
+    The pragma keeps its place and its ``#ifdef NON_MATCHING`` / ``#else`` / ``#endif`` surroundings; only its
+    directory changes, from ``asm/nonmatchings/core/<module>`` to ``asm/src/common/core/<module>``.
     """
     pattern = pragma_pattern(module)
-    lines = text.splitlines(keepends=True)
     out: list[str] = []
     count = 0
-    for index, line in enumerate(lines):
+    for line in text.splitlines(keepends=True):
         body, eol = split_eol(line)
         match = pattern.match(body)
         if match is None:
             out.append(line)
             continue
-        eol = eol or "\n"
-        name = match.group(1)
-        previous = split_eol(out[-1])[0] if out else ""
-        following = split_eol(lines[index + 1])[0] if index + 1 < len(lines) else ""
-        folds_into_else = previous.strip() == "#else" and following.strip() == "#endif"
-        if folds_into_else:
-            out[-1] = "#elif defined(VERSION_US)" + split_eol(out[-1])[1]
-        else:
-            out.append("#if defined(VERSION_US)" + eol)
-        out.append(f'#pragma GLOBAL_ASM("{US_ASM_ROOT}/{module}/{name}.s")' + eol)
-        out.append("#elif defined(VERSION_EU)" + eol)
-        out.append(f'#pragma GLOBAL_ASM("{EU_ASM_ROOT}/{module}/{name}.s")' + eol)
-        out.append("#else" + eol)
-        out.append(UNKNOWN_VERSION_ERROR + eol)
-        if not folds_into_else:
-            out.append("#endif" + eol)
+        out.append(f'#pragma GLOBAL_ASM("{ASM_ROOT}/{module}/{match.group(1)}.s")' + (eol or "\n"))
         count += 1
     new_text = "".join(out)
     leftover = [n for n, row in enumerate(new_text.splitlines(), 1) if f"asm/nonmatchings/core/{module}/" in row]
@@ -351,7 +335,8 @@ def wrap_pal_only(text: str, module: str, name: str) -> str:
     """Wrap the NTSC definition of ``name`` in ``text`` as a ``VERSION_US`` / ``VERSION_EU`` / ``#error`` chain.
 
     The whole definition, signature and braces, is kept under ``VERSION_US``; ``VERSION_EU`` takes the pragma for the
-    EU assembly splat writes for ``name``.  Refuses unless ``name`` is defined exactly once.
+    assembly splat writes for ``name``: the neutral ``asm/`` path, which the EU build maps to the EU extraction.
+    Refuses unless ``name`` is defined exactly once.
     """
     definition = re.compile(rf"^[A-Za-z_][\w \t*]*\b{re.escape(name)}\s*\([^;{{}}]*\)\s*\{{", re.MULTILINE)
     found = list(definition.finditer(text))
@@ -370,7 +355,8 @@ def wrap_pal_only(text: str, module: str, name: str) -> str:
     block = (
         "#if defined(VERSION_US)" + eol + function
         + "#elif defined(VERSION_EU)" + eol
-        + f'#pragma GLOBAL_ASM("{EU_ASM_ROOT}/{module}/{name}.s")' + eol
+        + "/* asm/ is mapped to asm.eu/ in an EU build (--asm-root), so this names the EU assembly. */" + eol
+        + f'#pragma GLOBAL_ASM("{ASM_ROOT}/{module}/{name}.s")' + eol
         + "#else" + eol + UNKNOWN_VERSION_ERROR + eol + "#endif" + eol
     )
     return text[:start] + block + text[line_end:]
