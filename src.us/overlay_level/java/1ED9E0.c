@@ -3245,22 +3245,19 @@ void func_802DD244_1F5F54(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
+/* CURRENT 10: one floating multiply has reversed operands after 34 compiled variants. */
 void func_802DD294_1F5FA4(u8 arg0) {
 	AlienInstance *alien;
 	AlienType *type;
-	s32 var_a2;
-	s16 var_a0;
-	s16 var_v0;
+	s32 var_a0;
+	s32 var_v0;
 	s32 temp_f10;
-	s16 temp_a0;
-	s16 temp_a0_2;
-	s16 temp_a0_3;
-	s16 temp_v0_2;
-	s16 temp_v0_3;
-	s16 temp_v0_4;
+	s32 var_a2;
+	s16 typeIndex;
 
 	alien = &alienInstances[arg0];
 	var_v0 = alien->unk12;
+	typeIndex = alien->typeIndex;
 	var_a2 = var_v0 - alien->unk48;
 
 	if (var_a2 > 0) {
@@ -3272,26 +3269,25 @@ void func_802DD294_1F5FA4(u8 arg0) {
 		func_80137468_146418(arg0, 0xD1);
 	}
 
-	type = &alienTypes[alien->typeIndex];
-	temp_a0 = type->unk40;
-	temp_f10 = (s32)(((f32)var_a2 / (f32)temp_a0) * D_802E0F78 * 2.0f);
+	type = &alienTypes[typeIndex];
+	var_a0 = type->unk40;
+	temp_f10 = (s32)(((f32)var_a2 / (f32)var_a0) * D_802E0F78_1F9C88[0] * 2);
 
-	if ((temp_f10 == 0) || (alien->unk12 >= (temp_a0 - (type->unk3E * 2)))) {
-		temp_v0_2 = alien->unkA;
-		temp_a0_2 = temp_v0_2 - 0x80;
-		if (temp_v0_2 > 0) {
-			if (temp_a0_2 < 0) {
+	if ((temp_f10 == 0) || (alien->unk12 >= (var_a0 - (type->unk3E * 2)))) {
+		var_a0 = alien->unkA - 0x80;
+		if (alien->unkA > 0) {
+			if (var_a0 < 0) {
 				alien->unkA = 0;
 			} else {
-				alien->unkA = temp_a0_2;
+				alien->unkA = var_a0;
 			}
 		}
-		temp_a0_3 = alien->unkA + 0x80;
+		var_a0 = alien->unkA + 0x80;
 		if (alien->unkA < 0) {
-			if (temp_a0_3 > 0) {
+			if (var_a0 > 0) {
 				alien->unkA = 0;
 			} else {
-				alien->unkA = temp_a0_3;
+				alien->unkA = var_a0;
 			}
 		}
 	} else {
@@ -3299,20 +3295,19 @@ void func_802DD294_1F5FA4(u8 arg0) {
 	}
 
 	if (alien->unkA >= -0x1387) {
-		var_v0 = alien->unkA;
+		alien->unkA = alien->unkA;
 	} else {
 		alien->unkA = -0x1388;
 	}
 
-	temp_v0_3 = alien->unkA;
-	if (temp_v0_3 < 0x1388) {
-		var_v0 = temp_v0_3;
+	if (alien->unkA < 0x1388) {
+		alien->unkA = alien->unkA;
 	} else {
 		alien->unkA = 0x1388;
 	}
 
 	alien->unk48 = alien->unk12;
-	func_8008751C_964CC(arg0, 0x400, 0x320);
+	func_8008751C_964CC(arg0, 0x1F4, 0x320);
 
 	if (func_80084FE8_93F98(arg0, 0x400) == 0) {
 		alien->unk20 = (s32)(alien->unk20 & ~ALIEN_FLAG_UNKD);
@@ -3340,9 +3335,8 @@ void func_802DD294_1F5FA4(u8 arg0) {
 		}
 	}
 
-	temp_v0_4 = alien->unk1E;
-	if (temp_v0_4 != 0) {
-		alien->unk1E = (s16)(temp_v0_4 - 1);
+	if (alien->unk1E != 0) {
+		alien->unk1E--;
 	}
 
 	func_800E24B8_F1468(arg0);
