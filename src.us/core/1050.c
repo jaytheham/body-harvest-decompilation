@@ -1927,16 +1927,12 @@ void func_80004214_4E14(s16 arg0, s32 arg1) {
 	func_800039D0_45D0(0, 0, &v, arg1);
 }
 
-// CURRENT(28530)
-#ifdef NON_MATCHING
 s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	s32 exponent;
 	s32 mantissa;
 	u32 frac;
 	s32 temp;
-	u16 i;
-	s32 rem;
-	s32 temp_lo;
+	s32 i;
 
 	exponent = ((u32)(*(s32 *)&arg0 << 1) >> 24) - 0x7F;
 	mantissa = *(s32 *)&arg0 & 0x7FFFFF;
@@ -1963,47 +1959,14 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 		}
 	}
 
-	i = 0;
-	if (arg1 > 0) {
-		rem = arg1 & 3;
-		if (rem) {
-			do {
-				i++;
-				frac = (frac & 0x7FFFFF) * 10;
-				temp_lo = *arg3 * 10;
-				*arg3 = temp_lo;
-				*arg3 = temp_lo + (frac >> 23) % 10;
-			} while (rem != i);
-			if (i == arg1) {
-				return 1;
-			}
-		}
-		frac &= 0x7FFFFF;
-		do {
-			frac = (frac & 0x7FFFFF) * 10;
-			i += 4;
-			temp_lo = *arg3 * 10;
-			*arg3 = temp_lo;
-			*arg3 = temp_lo + (frac >> 23) % 10;
-			frac = (frac & 0x7FFFFF) * 10;
-			temp_lo = *arg3 * 10;
-			*arg3 = temp_lo;
-			*arg3 = temp_lo + (frac >> 23) % 10;
-			frac = (frac & 0x7FFFFF) * 10;
-			temp_lo = *arg3 * 10;
-			*arg3 = temp_lo;
-			*arg3 = temp_lo + (frac >> 23) % 10;
-			frac = (frac & 0x7FFFFF) * 10;
-			temp_lo = *arg3 * 10;
-			*arg3 = temp_lo;
-			*arg3 = temp_lo + (frac >> 23) % 10;
-		} while (i != arg1);
-	}
-	return 1;
+    for (i = 0; i < arg1; i++) {
+        frac &= 0x7FFFFF;
+        frac *= 10;
+        *arg3 *= 10U;
+        *arg3 += (frac >> 23) % 10;
+    }
+    return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004254_4E54.s")
-#endif
 
 // https://decomp.me/scratch/X3gxG
 s32 func_80004498_5098(f32 arg0)
