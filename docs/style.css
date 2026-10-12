@@ -178,6 +178,8 @@ header .subtitle { color: var(--text-muted); font-size: 12px; letter-spacing: 1p
   border-radius: 4px;
   padding: 20px;
 }
+/* The "note" of a progress file (the EU page): paragraphs are separated by newlines in the text */
+.note { margin-bottom: 24px; color: var(--text-muted); font-size: 13px; white-space: pre-line; }
 
 /* Segment bars */
 .seg-row { margin-bottom: 14px; }
