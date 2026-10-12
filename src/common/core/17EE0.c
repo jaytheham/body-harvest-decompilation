@@ -576,8 +576,12 @@ s16 func_80017CA4_188A4(void) {
 	D_800344A0_350A0 += 0xFA0;
 	return (s16)D_8006C55E;
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/17EE0/func_80017CA4_188A4.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/17EE0/func_80017CA4_188A4.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_80017CA4_188A4.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 s32 func_80018A58_19658(void) {
@@ -811,8 +815,12 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 		}
 	}
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/17EE0/func_800190D4_19CD4.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/17EE0/func_800190D4_19CD4.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_800190D4_19CD4.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 // CURRENT(969)
@@ -847,8 +855,12 @@ s32 arg1;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/17EE0/func_80019ABC_1A6BC.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/17EE0/func_80019ABC_1A6BC.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_80019ABC_1A6BC.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 void func_80019EA8_1AAA8(u8 arg0) {
