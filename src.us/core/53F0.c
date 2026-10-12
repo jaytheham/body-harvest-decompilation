@@ -1201,38 +1201,47 @@ s32 func_80007F60_8B60(u8 *arg0) {
 	}
 }
 
-int func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
-    s32 opcode;
+#ifdef NON_MATCHING
+int func_8000807C_8C7C(u8 *arg0, u8 *arg1)
+{
+	s32 opcode;
 
-    while (1) {
-        /* Preserve the selector reload when either command follows a link. */
-        opcode = ((volatile u8 *)arg0)[0];
-        switch (opcode) {
-        case 0x98:
-            switch (arg1[0]) {
-            case 0x9A:
-                return D_80052B34 == &vehicleInstances[arg1[1]];
-            case 0xAF:
-                arg1 = &D_8004D180[arg1[1]].opcode;
-                continue;
-            case 0x99:
-                return D_80052540 == arg1[1];
-            }
-        case 0x9B:
-            switch (arg1[0]) {
-            case 0x99:
-                return arg0[1] == ((buildingInstances[arg1[1]].unk8 << 26) >> 28);
-            case 0xAF:
-                arg1 = &D_8004D180[arg1[1]].opcode;
-                continue;
-            }
-        case 0xAF:
-            arg0 = &D_8004D180[arg0[1]].opcode;
-            continue;
-        }
-        return;
-    }
+	while (1)
+	{
+		/* Preserve the selector reload when either command follows a link. */
+		opcode = ((volatile u8 *)arg0)[0];
+		switch (opcode)
+		{
+		case 0x98:
+			switch (arg1[0])
+			{
+			case 0x9A:
+				return D_80052B34 == &vehicleInstances[arg1[1]];
+			case 0xAF:
+				arg1 = &D_8004D180[arg1[1]].opcode;
+				continue;
+			case 0x99:
+				return D_80052540 == arg1[1];
+			}
+		case 0x9B:
+			switch (arg1[0])
+			{
+			case 0x99:
+				return arg0[1] == ((buildingInstances[arg1[1]].unk8 << 26) >> 28);
+			case 0xAF:
+				arg1 = &D_8004D180[arg1[1]].opcode;
+				continue;
+			}
+		case 0xAF:
+			arg0 = &D_8004D180[arg0[1]].opcode;
+			continue;
+		}
+		return opcode;
+	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
+#endif
 
 int func_800081D4_8DD4(u8 *arg0) {
 	switch (arg0[8]) {
@@ -1348,72 +1357,72 @@ next:
 }
 
 void guess_checkMissions(void) {
-    s32 index;
-    s32 count;
-    MissionGameCondition *item;
-    MissionCondEntry *entry;
-    u32 pending;
+	s32 index;
+	s32 count;
+	MissionGameCondition *item;
+	MissionCondEntry *entry;
+	u32 pending;
 
-    entry = D_8004D1C8;
-    pending = 0;
-    if (D_8004DC60 == 0) {
-        index = 0x40;
-        while (index--) {
-            if (!((1 << index) & D_8004DC50.flags) && entry->unk0 != 0 && entry->unk1 >= 0x46) {
-                count = entry->unk3;
-                item = &D_8004D348[entry->unk2];
-                if (count--) {
-                    do {
-                        if (func_800081D4_8DD4(*item++) == 0) {
-                            break;
-                        }
-                        if (count == 0) {
-                            switch (D_8004DC40) {
-                            case -1:
-                                osSyncPrintf(D_80037070_37C70, entry->unk4 + 1, entry->unk5);
-                                pending = 1;
-                                count = entry->unk3;
-                                item = &D_8004D348[entry->unk2];
-                                if (count--) {
-                                    do {
-                                        func_80007A20_8620(*item++);
-                                        switch (count) {
-                                        case 1:
-                                            osSyncPrintf(D_800370A8_37CA8);
-                                            break;
-                                        case 0:
-                                            osSyncPrintf(D_800370B0_37CB0);
-                                            break;
-                                        default:
-                                            osSyncPrintf(D_800370B4_37CB4);
-                                            break;
-                                        }
-                                    } while (count--);
-                                }
-                                D_8004DC40 = entry->unk5 * 0x1E;
-                                continue;
-                            case 0:
-                                osSyncPrintf(D_800370B8_37CB8, entry->unk4 + 1);
-                                func_80018D7C_1997C(entry->unk4);
-                                D_8004D350[entry->unk2 * 9] = 0xB2;
-                                D_8004DC40 = -1;
-                                entry->unk0 = 0;
-                                D_8004DC50.flags |= (1 << index);
-                                continue;
-                            }
-                            pending = 1;
-                            D_8004DC40--;
-                        }
-                    } while (count--);
-                }
-            }
-            entry++;
-        }
-        if (D_8004DC40 != -1 && pending == 0) {
-            osSyncPrintf(D_800370D4_37CD4);
-            D_8004DC40 = -1;
-        }
-    }
+	entry = D_8004D1C8;
+	pending = 0;
+	if (D_8004DC60 == 0) {
+		index = 0x40;
+		while (index--) {
+			if (!((1 << index) & D_8004DC50.flags) && entry->unk0 != 0 && entry->unk1 >= 0x46) {
+				count = entry->unk3;
+				item = &D_8004D348[entry->unk2];
+				if (count--) {
+					do {
+						if (func_800081D4_8DD4(*item++) == 0) {
+							break;
+						}
+						if (count == 0) {
+							switch (D_8004DC40) {
+							case -1:
+								osSyncPrintf(D_80037070_37C70, entry->unk4 + 1, entry->unk5);
+								pending = 1;
+								count = entry->unk3;
+								item = &D_8004D348[entry->unk2];
+								if (count--) {
+									do {
+										func_80007A20_8620(*item++);
+										switch (count) {
+										case 1:
+											osSyncPrintf(D_800370A8_37CA8);
+											break;
+										case 0:
+											osSyncPrintf(D_800370B0_37CB0);
+											break;
+										default:
+											osSyncPrintf(D_800370B4_37CB4);
+											break;
+										}
+									} while (count--);
+								}
+								D_8004DC40 = entry->unk5 * 0x1E;
+								continue;
+							case 0:
+								osSyncPrintf(D_800370B8_37CB8, entry->unk4 + 1);
+								func_80018D7C_1997C(entry->unk4);
+								D_8004D350[entry->unk2 * 9] = 0xB2;
+								D_8004DC40 = -1;
+								entry->unk0 = 0;
+								D_8004DC50.flags |= (1 << index);
+								continue;
+							}
+							pending = 1;
+							D_8004DC40--;
+						}
+					} while (count--);
+				}
+			}
+			entry++;
+		}
+		if (D_8004DC40 != -1 && pending == 0) {
+			osSyncPrintf(D_800370D4_37CD4);
+			D_8004DC40 = -1;
+		}
+	}
 }
 
 void debug_drawTimingGraphBars(void)
