@@ -235,12 +235,10 @@ The EU ROM builds and matches byte-for-byte on Windows:
 build.eu/bh.eu.z64: OK   sha1 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
 ```
 
-Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments, producing 42
-hand-decompilable C stubs, all of them still stubs — no EU source is decompiled
-yet. Still open:
-
-- Overlay offsets after the frontend are unverified, per above.
-- Sharing NA source with EU, per the section above.
+Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments. The EU tree
+has 37 C files of its own under `src.eu/`, all of them `GLOBAL_ASM` stubs; the
+decompiled C in the EU build comes from the shared files in `src/common/core/`
+(see "Which files can share today" above).
 
 ## Tooling notes
 
