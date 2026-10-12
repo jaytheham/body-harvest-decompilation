@@ -2280,18 +2280,33 @@ typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
-	/* 0x10 */ f32 unk10;
-	/* 0x14 */ f32 unk14;
+	union {
+		struct {
+			/* 0x0C */ f32 unkC;
+			/* 0x10 */ f32 unk10;
+			/* 0x14 */ f32 unk14;
+		};
+		Vec3f lookAt;
+	};
 	/* 0x18 */ f32 unk18;
 	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ f32 unk20;
-	/* 0x24 */ f32 unk24;
-	/* 0x28 */ f32 unk28;
-	/* 0x2C */ f32 unk2C;
-	/* 0x30 */ f32 unk30;
-	/* 0x34 */ f32 unk34;
-	/* 0x38 */ f32 unk38;
+	union {
+		struct {
+			/* 0x24 */ f32 unk24;
+			/* 0x28 */ f32 unk28;
+			/* 0x2C */ f32 unk2C;
+		};
+		Vec3f desiredLookAt;
+	};
+	union {
+		struct {
+			/* 0x30 */ f32 unk30;
+			/* 0x34 */ f32 unk34;
+			/* 0x38 */ f32 unk38;
+		};
+		Vec3f vehiclePosition;
+	};
 	/* 0x3C */ f32 unk3C;
 	/* 0x40 */ f32 unk40;
 	/* 0x44 */ f32 unk44;

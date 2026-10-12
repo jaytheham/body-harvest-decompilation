@@ -23,3 +23,21 @@ func_800A1DD8_B0D88 matches with direct D_8014F618.positions[arg0] fields. A nam
 ## Reticle geometry: automatic extent spill and local order
 
 func_800A2260_B1210 matches after repeating head.unk20 in the two Z midpoint/difference expressions instead of caching it in a named float. IDO then emits the target's early field loads, automatic extent spill at sp+8, and saved s0 texture-coordinate constant. Keep the six geometry floats declared in descending target slot order (6C, 68, 64, 60, 5C, 58) and remove the unused leading word: this yields the exact 0x70 frame. Empty conditions and a global self-assignment were unnecessary and removed. Direct float-to-vertex-field assignments preserve the target truncations without nested s16/s32 casts. Verified with diff score 0 and the full ROM checksum OK.
+
+## Camera shake coordinate negation reuse (partial)
+
+func_80135D44_144CF4 improved from score 405 to 185 after removing the unnecessary X-coordinate float cache and correcting the out-of-range amplitude to 0.0f. Reusing the later attenuation float for the negated coordinate differences, and initializing the scale float to zero for the entry comparison, improved the measured score to 125. The instruction sequence and branch layout match; floating-point register allocation remains different. Separate negation locals, comma expressions, reversed comparisons, literal denominators, and a floating return signature did not close the residual. Retain the rodata placeholder and NON_MATCHING wrapper until the register allocation is resolved.
+
+## Camera initialization vector copies and literal constant (partial)
+
+func_80132740_1416F0 improved from 890 to 85 after replacing the individual word-cast copies with desiredLookAt = lookAt and D_801600F8 = vehiclePosition. Add Vec3f views as anonymous unions in the existing camera struct, preserving the legacy scalar fields and offsets. These typed copies reproduce the target's at-register word copies, load/store scheduling and instruction count. Replacing the interpolation placeholder read with 0.1f resolves the last floating-register swap and leaves score 5: only the generated literal address differs (0x80145708 versus 0x8014567C). Moving the remaining explicit constants below the function does not fix their emission order. Retain the placeholder and NON_MATCHING wrapper under a no-new-files constraint; the retained C has exact operations and registers but needs rodata placement resolved. The camera-shake function's combined literal/lifetime sweep did not improve its score 125.
+
+## Signpost callback stack slots and packed-byte carrier (partial)
+
+func_80136B50_145B00 improved from 405 to 379. A leading unused word aligns the coordinate spills at sp+0x32 and sp+0x30. Keep the signpost index signed-short: a word index causes a word spill and enlarges the frame. Store the raw orientation byte in a u8 local and shift it only in the switch expression; naming the decoded selector instead costs extra register differences. The retained sequence and control flow match, but the index spill remains at sp+0x26 rather than sp+0x28 and the integer registers differ. Moving the packed-byte read before the vehicle guard, using a named vehicle pointer, reusing the unused argument, or adding identity operations to the index did not improve this candidate. The stack-layout helper requires Docker here, so the verified linked disassembly is the stack evidence.
+
+## Matched camera shake update: self-subtraction and trailing constants
+
+func_80135F0C_144EBC reached score 0 and ROM OK. Direct global expressions removed redundant floating-point moves caused by reusing locals across unrelated lifetimes. The zeroing statements D_80160178 -= D_80160178 and D_8016016C -= D_8016016C compile to stores of the shared zero constant, while retaining address promotion that assignment to a zero local did not produce. This also corrected the integer address-register allocation throughout the function. Compound addition preserved the target operand order.
+
+The 0.4 double was the final explicit rodata placeholder in 1416E0.c. Removing that placeholder and using the literal let IDO emit the same bytes at the original address. This required no file split. Removing a placeholder from the middle of the constant block does not offer the same guarantee.
