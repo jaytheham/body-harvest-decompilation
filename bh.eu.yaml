@@ -52,7 +52,7 @@ segments:
       - [0x10BF0, c, ../src/common/core/loader] # original src filename
       - [0x12CB0, c, ../src/common/core/12C80] # Sounds, Dialogue
       - [0x17F10, c, core/17EE0] # Dialogue
-      - [0x1B090, c, core/1B060]
+      - [0x1B090, c, ../src/common/core/1B060]
       - [0x1B130, c, ../src/common/core/1B100]
       - [0x1B810, asm, aisetfreq]
       - [0x1B970, c, libultra/sl]

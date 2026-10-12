@@ -48,7 +48,7 @@ segments:
       - [0x10BC0, c, ../src/common/core/loader] # original src filename
       - [0x12C80, c, ../src/common/core/12C80] # Sounds, Dialogue
       - [0x17EE0, c, core/17EE0] # Dialogue
-      - [0x1B060, c, core/1B060]
+      - [0x1B060, c, ../src/common/core/1B060]
       - [0x1B100, c, ../src/common/core/1B100]
       - [0x1B7E0, c, libultra/aisetfreq]
       - [0x1B940, c, libultra/sl]

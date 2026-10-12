@@ -31,6 +31,10 @@ void func_8001A460_1B060(LzssHeader *data, u8 *out) {
 		bits--;
 	} while (out != end);
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/1B060/func_8001A460_1B060.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/1B060/func_8001A460_1B060.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1B060/func_8001A460_1B060.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif

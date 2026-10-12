@@ -419,6 +419,8 @@ loadFrontendData = 0x80011624;
 loadLevel = 0x800107E4;
 loadLevelCode = 0x8001170C;
 loadLevelData = 0x80010900;
+// core/1B060 (shared from src/common/core/1B060.c): NA names at EU addresses (NA + 0x30).
+func_8001A460_1B060 = 0x8001A490;
 // END func renames
 
 // The TV type word the EU link needs (libultra defines it; the EU native and make links do not take it from the archive).
