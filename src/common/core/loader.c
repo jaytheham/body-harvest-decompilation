@@ -1,7 +1,9 @@
 #include <ultra64.h>
 #include "common.h"
 
-/* ROM offsets and RAM destinations used by the loader. */
+/* ROM offsets and RAM destinations used by the loader. EU moves the level data and the
+ * level overlays, so the values are per version. */
+#if defined(VERSION_US)
 s32 D_80031B90_32790[] = {
 	0x0043A340, 0x00579D50, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
 };
@@ -42,6 +44,50 @@ u8 *D_80031C40_32840[] = {
 u8 *D_80031C50_32850[] = {
 	(u8 *)0x802D4CD0, (u8 *)0x802DE470, (u8 *)0x802E0FC0, (u8 *)0x802E0E50, (u8 *)0x802E3110, (u8 *)0x802E7C70,
 };
+#elif defined(VERSION_EU)
+s32 D_80031B90_32790[] = {
+	0x0043AEA0, 0x00576CB0, 0x005D9B10, 0x0064BD50, 0x006BCB10, 0x0072CD00, 0x0076DBD0,
+};
+
+s32 D_80031BAC_327AC[] = {
+	0x004E8EE0, 0x005D9B10, 0x0064BD50, 0x006BCB10, 0x0072CD00, 0x0076DBD0,
+};
+
+s32 D_80031BC4_327C4[] = {
+	0x0078EB80, 0x00197AD0, 0x001FA820, 0x002610D0, 0x002C6020, 0x0032C8E0,
+};
+
+s32 D_80031BDC_327DC[] = {
+	0x007A1360, 0x007F6490, 0x00843330, 0x008953B0, 0x008E0FF0,
+};
+
+s32 D_80031BF0_327F0[] = {
+	0x007E3DB0, 0x00838910, 0x00888D80, 0x008D6CE0, 0x008F07B0,
+};
+
+s32 D_80031C04_32804[] = {
+	0x007E3DB0, 0x00838910, 0x00888D80, 0x008D6CE0, 0x008F07B0,
+};
+
+s32 D_80031C18_32818[] = {
+	0x0018E340, 0x001EE540, 0x00254F70, 0x002B7C60, 0x00319980,
+};
+
+s32 D_80031C2C_3282C[] = {
+	0x00197AD0, 0x001FA820, 0x002610D0, 0x002C6020, 0x0032C8E0,
+};
+
+/* The fifth start address is also the first entry of the following table. */
+u8 *D_80031C40_32840[] = {
+	(u8 *)0x802D4D10, (u8 *)0x802D4D10, (u8 *)0x802D4D10, (u8 *)0x802D4D10,
+};
+
+u8 *D_80031C50_32850[] = {
+	(u8 *)0x802D4D10, (u8 *)0x802DE4B0, (u8 *)0x802E1000, (u8 *)0x802E0E90, (u8 *)0x802E3150, (u8 *)0x802E7CB0,
+};
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 
 s32 D_80031C68_32868[] = {
 	0x00000004, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C, 0x0000000D, 0x0000000E,

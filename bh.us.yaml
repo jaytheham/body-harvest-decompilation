@@ -45,7 +45,7 @@ segments:
       - [0xE830, c, core/E830]
       - [0xFB00, c, ../src/common/core/FD80] # Boot and scheduler share epilogue alignment.
       - [0x10A50, c, ../src/common/core/10A20]
-      - [0x10BC0, c, core/loader] # original src filename
+      - [0x10BC0, c, ../src/common/core/loader] # original src filename
       - [0x12C80, c, ../src/common/core/12C80] # Sounds, Dialogue
       - [0x17EE0, c, core/17EE0] # Dialogue
       - [0x1B060, c, core/1B060]
@@ -232,7 +232,7 @@ segments:
       - [0x32680, .data, core/E830]
       - [0x32750, .data, ../src/common/core/10A20]
       - [0x32760, .data, ../src/common/core/FD80]
-      - [0x32790, .data, core/loader]
+      - [0x32790, .data, ../src/common/core/loader]
       - [0x328A0, .data, ../src/common/core/12C80]
       - [0x348C0, .data, core/17EE0]
       - [0x350B0, .data, ../src/common/core/1B100]
@@ -262,7 +262,7 @@ segments:
       - [0x38060, .rodata, core/AD60]
       - [0x38220, .rodata, core/E830]
       - [0x38260, .rodata, ../src/common/core/FD80]
-      - [0x38380, .rodata, core/loader]
+      - [0x38380, .rodata, ../src/common/core/loader]
       - [0x38DC0, .rodata, ../src/common/core/12C80]
       - [0x38FB0, .rodata, core/17EE0]
       - [0x392D0, .rodata, ../src/common/core/1B100]
