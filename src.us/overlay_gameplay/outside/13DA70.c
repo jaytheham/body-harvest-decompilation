@@ -72,8 +72,8 @@ u32 D_80140BC8_14FB78[] = {
 };
 
 Lights1 D_80140C30_14FBE0 = {
-    { { { 0x7F, 0x7F, 0x7F }, 0, { 0x7F, 0x7F, 0x7F }, 0 } },
-    { { { { 0xFF, 0xFF, 0xFF }, 0, { 0xFF, 0xFF, 0xFF }, 0, { 40, 100, 20 }, 0 } } }
+	{ { { 0x7F, 0x7F, 0x7F }, 0, { 0x7F, 0x7F, 0x7F }, 0 } },
+	{ { { { 0xFF, 0xFF, 0xFF }, 0, { 0xFF, 0xFF, 0xFF }, 0, { 40, 100, 20 }, 0 } } }
 };
 
 u32 D_80140C48_14FBF8[] = {
@@ -830,66 +830,74 @@ void func_801306C4_13F674(u8 *arg0)
 	D_8015FF80 = 4;
   }
 }
-// CURRENT(8845)
+
 #ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
 	s32 baseScore;
-	u8 scoreText[0x10];
+	s32 bonusScore;
+	s32 stageScore; u8 scoreText[8]; s32 width;
+	union { s32 score; Unk80052B2C *player; } work;
 
 	if (D_80140CA4_14FC54 != 0) {
-		if (1) { D_80140CA8_14FC58 = 0; }
-		if (1) { D_8016006C = 0; }
-		if (1) { D_80160058 = 0; }
-		if (1) { D_80140CA4_14FC54 = 0; }
-		if (1) { baseScore = D_80052B2C->unk30; }
-		if (1) { D_80160070 = baseScore; }
-		if (1) { D_80140CAC_14FC5C = 0; }
-		if (1) { D_80140CB0_14FC60 = 0; }
-		if (1) { D_8016006D = 0; }
+		D_80140CA8_14FC58 = 0;
+		D_8016006C_RESET = 0;
+		D_80160058_W = 0;
+		D_80140CA4_14FC54 = 0;
+		D_80160070_INIT = bonusScore = D_80052B2C->unk30;
+		D_80140CAC_14FC5C = 0;
+		D_80140CB0_W_BUTTON = 0;
+		D_8016006D_W = 0;
 		// if no humans killed, give 5000 bonus to score
-		if (1) { if (D_80048170 == 0) {
+		stageScore = bonusScore;
+		baseScore = bonusScore;
+		work.score = bonusScore;
+		if (D_80048170 == 0) {
 			D_8016005C = baseScore;
-			baseScore += 0x1388;
+			bonusScore = stageScore += 0x1388;
 		} else {
-			D_8016005C = baseScore;
-		} }
+			D_8016005C = work.score;
+			bonusScore = stageScore = work.score;
+		}
 		// if no humans harvested, give 5000 bonus to score
-		if (1) { if (D_8004816E == 0) {
-			D_80160060 = baseScore;
-			D_80160064 = baseScore + 0x1388;
+		work.score = stageScore + 0x1388;
+		if (D_8004816E == 0) {
+			D_80160060 = stageScore;
+			D_80160064 = work.score;
 		} else {
-			D_80160060 = baseScore;
-			D_80160064 = baseScore;
-		} }
-	}
-
-	if ((D_80160070 == D_80052B2C->unk30) && (D_8016006C == 0x1E)) {
-		D_8016006C = 0;
-		D_8016006D = 0;
-		if (D_80160058 + 1 < 4) {
-			D_80160058 = D_80160058 + 1;
-		} else {
-			D_80160058 = 4;
+			D_80160060 = stageScore;
+			D_80160064 = stageScore;
 		}
 	}
 
-	baseScore = D_80052B2C->unk30;
-	if (D_80160070 == baseScore) {
-		baseScore = D_8016006C + 1;
-		if (baseScore < 0x1E) {
-			D_8016006C = baseScore;
+	work.player = D_80052B2C;
+	bonusScore = work.player->unk30;
+	if ((D_80160070_FIRST == work.player->unk30) && (D_8016006C == 0x1E)) {
+		D_8016006C_RESET = 0;
+		D_8016006D_W = 0;
+		if (D_80160058 + 1 < 4) {
+			D_80160058_W = D_80160058 + 1;
 		} else {
-			D_8016006C = 0x1E;
+			D_80160058_W = 4;
+		}
+	}
+
+	if (D_80160070 == bonusScore) {
+		bonusScore = D_8016006C + 1;
+		if (bonusScore < 0x1E) {
+			D_8016006C_W = bonusScore;
+		} else {
+			D_8016006C_W = 0x1E;
 		}
 	} else {
-		if (D_80160070 < baseScore + 0x64) {
-			D_80052B2C->unk30 = D_80160070;
+		stageScore = bonusScore + 0x64;
+		if (D_80160070_LIMIT < stageScore) {
+			work.player->unk30 = D_80160070_LIMIT;
 		} else {
-			D_80052B2C->unk30 = baseScore + 0x64;
+			work.player->unk30 = stageScore;
 		}
 		func_800153D8_15FD8(0xCD);
-		D_8016006C = 0;
+		D_8016006C_RESET = 0;
 	}
 
 	drawText(D_801454F0_1544A0, 0x400, 0x400);
@@ -898,14 +906,16 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 > 0) {
 		if (D_80160058 == 1) {
 			func_8000577C_637C();
-			D_80160070 = D_80160060;
-			if (D_8016006D < 0x15) {
-				drawText(D_80145500_1544B0, D_8016006D * 12, ++D_8016006D);
+			stageScore = D_80160060;
+			D_80160070 = stageScore;
+			baseScore = D_8016006D;
+			if (baseScore < 0x15) {
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145500_1544B0, width, baseScore);
 			} else {
-				drawText(D_80145504_1544B4, 0xFF, D_8016006D);
+				drawText(D_80145504_1544B4, 0xFF, baseScore);
 			}
 		}
-		switch (D_800313D0_31FD0) {
+		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 		case 0:
 		default:
 			drawText(D_80145508_1544B8, 2, 2);
@@ -927,14 +937,16 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 >= 2) {
 		if (D_80160058 == 2) {
 			func_8000577C_637C();
-			D_80160070 = D_80160064;
-			if (D_8016006D < 0x15) {
-				drawText(D_80145550_154500, D_8016006D * 12, ++D_8016006D);
+			work.score = D_80160064;
+			D_80160070 = work.score;
+			baseScore = D_8016006D;
+			if (baseScore < 0x15) {
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145550_154500, width, baseScore);
 			} else {
-				drawText(D_80145554_154504, 0xFF, D_8016006D);
+				drawText(D_80145554_154504, 0xFF, baseScore);
 			}
 		}
-		switch (D_800313D0_31FD0) {
+		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 		case 0:
 		default:
 			drawText(D_80145558_154508, 2, 3);
@@ -965,7 +977,7 @@ void func_80130BA0_13FB50(void)
 
 	func_8012EAC0_13DA70(func_8012FFB0_13EF60(), scoreText);
 
-	switch (D_800313D0_31FD0) {
+	bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 	case 0:
 	default:
 		func_8012F4E0_13E490(D_801455C0_154570, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
@@ -981,16 +993,17 @@ void func_80130BA0_13FB50(void)
 	func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, 0, 0, 0x20);
 
 	if (isButtonNewlyPressed(0, 0xD000) != 0) {
-		if ((D_80140CB0_14FC60 != 0) && (D_80160058 >= 3)) {
-			D_80140CA8_14FC58 = 1;
-			D_80140CB0_14FC60 = 0;
-			D_80160058 = 3;
-		} else {
-			D_80140CB0_14FC60 = 1;
+		if ((D_80140CB0_14FC60 == 0) || (D_80160058 < 3)) {
+			work.score = D_80160064;
+			D_80140CB0_W_BUTTON = 1;
 			D_80140CAC_14FC5C = 0;
-			D_80160058 = 3;
-			D_80160070 = D_80160064;
-			D_80052B2C->unk30 = D_80160064;
+			D_80160058_W = 3;
+			D_80160070 = work.score;
+			D_80052B2C->unk30 = work.score;
+		} else {
+			D_80140CA8_14FC58 = 1;
+			D_80140CB0_W_BUTTON = 0;
+			D_80160058_W = 3;
 		}
 	}
 
@@ -1002,6 +1015,7 @@ void func_80130BA0_13FB50(void)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80130BA0_13FB50.s")
 #endif
+
 
 void func_80131280_140230(u8 *arg0)
 {
@@ -1299,12 +1313,11 @@ currentSway = swayOffset;
 				}
 
 				gSPTextureRectangle(D_8005BB2C++,
-					(curX - halfCharWidth) * 4, uly,
-					(halfCharWidth + curX) * 4, lry,
+					(curX - (charWidth >> 1)) * 4, uly,
+					((charWidth >> 1) + curX) * 4, lry,
 					0, 0, 0,
 					(s32)((1.0f / ((f32) charWidth / 32)) * 1024.0f),
 					(s32)((1.0f / ((f32) charHeight / 32)) * 1024.0f));
-				}
 			}
 		}
 

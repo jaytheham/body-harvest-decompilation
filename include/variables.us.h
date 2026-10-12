@@ -4251,4 +4251,14 @@ extern const f64 D_80144DB8_153D68[1];
 extern LevelBeaconData D_8013D898_14C848;
 extern BeaconColor D_8013D8B0_14C860;
 
+extern u8 D_80160058_W;
+extern u8 D_8016006C_W;
+extern s32 D_80160070_INIT;
+extern u32 D_80140CB0_W_BUTTON;
+extern u8 D_8016006C_RESET;
+extern s32 D_80160070_FIRST;
+extern s32 D_80160070_LIMIT;
+extern u8 D_8016006D_W;
+
+
 #endif /* LIBULTRA_REFERENCE */
