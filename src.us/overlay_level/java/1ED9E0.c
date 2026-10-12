@@ -614,7 +614,7 @@ void func_802D5560_1EE270(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(430)
+// CURRENT(430): corrected scale offset to 0.25; double setup remains after 20 compiled variants.
 void func_802D5590_1EE2A0(void) {
 	f64 temp_f20;
 	s16 temp_s6;
@@ -645,7 +645,7 @@ void func_802D5590_1EE2A0(void) {
 			temp_f20 = D_802E0EA8_1F9BB8[0];
 			do {
 				if (var_s1 < 4) {
-					func_801371B8_146168(0, 0x185, vehicleInstances[80].unk0, vehicleInstances[80].unk2, (s32) vehicleInstances[80].unk4, (f32) (((f64) (f32) (func_800038E0_44E0() % 100) / temp_f20) + 1.625));
+					func_801371B8_146168(0, 0x185, vehicleInstances[80].unk0, vehicleInstances[80].unk2, (s32) vehicleInstances[80].unk4, (f32) (((f64) (f32) (func_800038E0_44E0() % 100) / temp_f20) + 0.25));
 				}
 				func_800C7924_D68D4(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0x10, (s32) temp_s6, vehicleTypes[vehicleInstances[80].unk1A].unk36 * 2, &D_502D390, 1);
 				var_s1 += 1;
