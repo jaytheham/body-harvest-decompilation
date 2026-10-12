@@ -263,6 +263,10 @@ ifeq ($(VERSION),eu)
 # Source shared with NA names its GLOBAL_ASM files under asm/; the EU build reads the EU extraction instead.
 ASM_PROCESSOR     += --asm-root asm=asm.eu
 endif
+# The asm-processor command line decides which version's .s files an object is built from. A stamp that is rewritten
+# only when that command line changes makes every GLOBAL_ASM object rebuild after a change of it (dropping --asm-root by
+# mistake, then restoring it), instead of keeping objects built from the other version's assembly.
+ASM_PROCESSOR_STAMP := $(BUILD_DIR)/.asm_processor.stamp
 
 ### Optimisation Overrides
 # $(BUILD_DIR)/$(SRC_DIR)/main_1050.c.o: OPT_FLAGS := -O1
@@ -320,8 +324,13 @@ $(TARGET).elf: $(LD_SCRIPT) $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FIL
 	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 ifndef PERMUTER
+$(ASM_PROCESSOR_STAMP): FORCE
+	@mkdir -p $(dir $@)
+	@echo '$(ASM_PROCESSOR)' | cmp -s - $@ || echo '$(ASM_PROCESSOR)' > $@
+
 $(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.h include/variables.h include/structs.h \
-		include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h
+		include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h \
+		$(ASM_PROCESSOR_STAMP) $(ASM_PROCESSOR_DIR)/asm_processor.py
 	$(call RUN,$(CC_CHECK) $<)
 	$(PRINT) "[$(YELLOW) syntax $(NO_COL)] $<\n"
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
@@ -481,5 +490,5 @@ baserom.$(VERSION).z64:
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default
+.PHONY: all clean default FORCE
 SHELL = /bin/bash -e -o pipefail
