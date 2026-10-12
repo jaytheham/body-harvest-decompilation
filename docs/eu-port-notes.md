@@ -29,6 +29,11 @@ Tools in play:
   symbol-table lines a core file needs and convert its per-version copies into
   one shared file; see "Converting a file, and retiring a block" in
   `docs/pal-vs-na.md`.
+- `tools/progress.py --version eu` -- counts the PAL build (`src.eu` plus the
+  shared `src/common`, each file read as the EU build compiles it) into
+  `docs/progress.eu.json`, which `docs/eu.html` shows. The default run is the
+  NTSC count behind `docs/index.html` and is unchanged.
+  `tests/progress_eu_check.sh` checks both.
 
 ## Symbol renames (eu_ collisions)
 
@@ -84,6 +89,51 @@ NA must remain byte-exact: `build/bh.us.z64` == `baserom.us.z64`, SHA1
 EU mismatch, `python tools/eu_layout_audit.py` finds, per subsegment, the shift
 at which the built bytes best match the original, and `python
 tools/eu_rom_diff.py` lists the differing bytes.
+
+## Long-term idea: a shifted build
+
+An idea, not a plan: no promises and no dates. It is written down with the
+measurements behind it so they are not lost. Measured on 2026-10-12 unless a
+file is named.
+
+- The NTSC to PAL shift is piecewise constant in core: 0 up to
+  `func_80006DDC_79DC`, then +0x38, then +0x30 (`docs/pal-vs-na.md`,
+  `tools/pal_us_diff.py`).
+- Core has 682 functions: 139 exact, 542 identical apart from relocations and 1
+  genuinely different (`func_80006DDC_79DC`).
+- All 38 unmatched shared core functions have the same instruction stream in the
+  NTSC and EU `.s` files; only label and symbol names differ.
+- The overlays are 99.66 percent identical apart from relocations at function
+  level: 2346 of 2354 functions. This came from a scratch script that is not
+  committed. It compared each NTSC overlay function with its EU counterpart (the
+  gameplay overlays by aligning the two function lists in order on
+  opcode-and-register templates, the level overlays by applying the NTSC
+  function boundaries to the EU ROM with a per-function shift) and called a
+  pair identical when only jump targets, `lui` immediates and the low half of a
+  `lui` pair differed.
+
+The idea: derive the EU symbols and addresses from the NTSC ones through the
+shift map instead of pinning each symbol, and share the overlays the way core
+was shared. A function would then be decompiled once, and EU support would be
+the shift map plus a handful of overrides (the maintainer called this
+"shiftable").
+
+Why not now:
+
+- `asm/` and `asm.eu/` are generated and untracked, so the duplication costs
+  nothing in the repository.
+- Sharing one asm copy would make an EU build depend on the US ROM, and it would
+  need a complete NTSC-to-EU symbol table. Only the names the C references are
+  pinned today.
+- The EU extract is still needed for per-version data, libultra and the
+  genuinely different functions.
+- The overlays' yaml C-file splits would first have to be aligned between the
+  versions: frontend has 2 `c` splits in `bh.us.yaml` and 3 in `bh.eu.yaml`,
+  outside 27 and 20, and the EU level overlays are `bin` segments. Per-version
+  data would need handling as well.
+
+Not yet measured: the layout of data and rodata, and whether the C that matched
+NTSC recompiles identically for the EU shape.
 
 ## Log
 
@@ -156,3 +206,15 @@ tools/eu_rom_diff.py` lists the differing bytes.
   now rebuilds the GLOBAL_ASM objects when the asm-processor command line or
   `asm_processor.py` changes. See "Sharing a file that still has GLOBAL_ASM" in
   `docs/pal-vs-na.md`.
+- 2026-10-12: A separate EU progress page, `docs/eu.html`, fed by
+  `docs/progress.eu.json` from `tools/progress.py --version eu`. The tool reads
+  `src.eu` and `src/common` as the EU build compiles them (`VERSION_US`,
+  `VERSION_EU` and `NON_MATCHING` conditions evaluated, `NON_MATCHING` off).
+  Result at `32aaef7ad`: 318 of 2257 functions matched (14.09 percent). Core is
+  316 of 355 (38 `NON_MATCHING` in both versions, and `func_80006DDC_79DC`,
+  which is C in NTSC and assembly in PAL); the three gameplay overlays are 2 of
+  1898 (two empty functions, the rest `GLOBAL_ASM` stubs because the overlays are
+  not shared with NTSC); `src.eu/libultra` adds 4 stubs. The level overlays and
+  most of libultra have no tracked EU source and are not in the totals. The core
+  figures are the NTSC page's, so the two pages must not be summed. The NTSC
+  count and `docs/index.html` are unchanged.
