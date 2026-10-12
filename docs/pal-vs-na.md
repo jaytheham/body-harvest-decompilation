@@ -80,10 +80,10 @@ on only one leaves the inter-segment boundary forced to 16 and the linker
 inserts 8 bytes of fill.
 
 The remainder is IDO's 16-byte `.text` padding. IDO rounds every `.text` section
-up to a multiple of 16, and the frontend's true code span, once the dispatcher
-and pad are removed, is `0x20E98` - 8 mod 16. So a single region always
-over-allocates by 8 and every later section lands 8 bytes late. Verified: of the
-211 `.text` sections in the EU build, none has a size 8 mod 16.
+up to a multiple of 16. The frontend's code runs from its entry dispatcher at
+`0x40750` to the data at `0x61620`, a span of `0x20ED0`, which is 0 mod 16 (the
+built ELF's frontend `.text` runs from `0x800702A0` to `0x80091170`). An earlier
+version of this section measured from `0x40788` and gave `0x20E98`.
 
 The fix is to split the frontend's code into regions whose sizes are each a
 multiple of 16. Starting at `0x40788` (itself 8 mod 16), that means every
