@@ -492,48 +492,24 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 #endif
 
 // CURRENT(5156)
-#ifdef NON_MATCHING
 void func_800EABE0_F9B90(VehicleInstance *arg0) {
-	Vec3f sp2C;
-	u16 sp2A;
-	s32 temp;
-	s16 temp_v0;
-	UnkF9230TypeView *type;
-	f32 temp_f2;
+    Vec3f sp2C;
+    s16 sp2A;
+    s16 temp_v0;
+    f32 temp_f2;
+    UnkF9230TypeView *type;
 
-	temp = D_80159020->unk0;
-	if (temp < 0) {
-		temp += 3;
-	}
-	sp2C.x = (f32)(temp >> 2);
-
-	temp = D_80159020->unk2;
-	if (temp < 0) {
-		temp += 3;
-	}
-	sp2C.y = (f32)(temp >> 2);
-
-	temp = D_80159020->unk4;
-	if (temp < 0) {
-		temp += 3;
-	}
-	sp2C.z = (f32)(temp >> 2);
-
-	temp_f2 = func_800EA604_F95B4((s16 *)arg0, &sp2C);
-	{
-		Unk8013E45C *weaponEntry = &((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC];
-		temp_v0 = weaponEntry->unk1E;
-		sp2A = (u16)(s16)(s32)(((f32)temp_v0 * (1.0f - temp_f2)) + ((f32)-temp_v0 * temp_f2));
-
-		type = func_800FAFB8_109F68(arg0);
-		type->unk20 = weaponEntry->unk18;
-		type->unk22 = (s16)(s32)((weaponEntry->unk1C * ((f32)sins(sp2A) / 32768.0)) + (((f32)weaponEntry->unk1A * 64.0) / (f64)(f32)D_80157A3C));
-		type->unk24 = (s16)(s32)(((f32)coss(sp2A) / 32768.0) * weaponEntry->unk1C);
-	}
+    sp2C.x = D_80159020->unk0 / 4;
+    sp2C.y = D_80159020->unk2 / 4;
+    sp2C.z = D_80159020->unk4 / 4;
+    temp_f2 = func_800EA604_F95B4(&arg0->unk0, &sp2C);
+    temp_v0 = D_8013E45C_14D40C[D_801575DC].unk1E;
+    sp2A = (s16)(temp_v0 * (1.0f - temp_f2) + -temp_v0 * temp_f2);
+    type = func_800FAFB8_109F68(arg0);
+    type->unk20 = D_8013E45C_14D40C[D_801575DC].unk18;
+    type->unk22 = ((f32)D_8013E45C_14D40C[D_801575DC].unk1A * 64.0) / (f32)D_80157A3C + ((f32)sins(sp2A) / 32768.0) * D_8013E45C_14D40C[D_801575DC].unk1C;
+    type->unk24 = D_8013E45C_14D40C[D_801575DC].unk1C * ((f32)coss(sp2A) / 32768.0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
-#endif
 
 void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 	s32 flags;
