@@ -10,8 +10,7 @@ without regressing the NA build.
 
 ## Current state
 
-The EU build links cleanly, produces a ROM of exactly `0xC00000` bytes (the
-earlier `0x20` size deficit is closed; see the drift section), and is now
+The EU build links cleanly, produces a ROM of exactly `0xC00000` bytes, and is now
 **byte-exact**: `build.eu/bh.eu.z64` == `baserom.eu.z64` (SHA1
 `67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`). NA remains byte-exact:
 `build/bh.us.z64` == `baserom.us.z64` (SHA1
@@ -49,65 +48,38 @@ therefore accumulated triplicated stale pins that nothing ever stripped. Two
 syntax constraints also apply and differ per target: splat requires one `;` per
 line and accepts only `//` comments; `ld -T` accepts only `/* */`.
 
-## ROM size drift (0x20) -- FIXED
+## Core layout notes
 
-The per-subsegment audit localised two `.rodata` size errors, both in the core
-segment, netting `-0x10 + 0x30 = -0x20`. Both are now fixed and the EU ROM is
-exactly `0xC00000`.
+- The EU core tail, ROM `0x3F490`-`0x40750`, is byte-identical to NA
+  `0x3F460`-`0x40720` (0 of 4800 bytes differ), so the shared
+  `src/common/core/rsp_data.c` uses the same `[344]` array for both versions.
+- E830's rodata and FD80's rodata are byte-identical between the versions
+  (EU `0x38250`-`0x383C0` against NA `0x38220`-`0x38390`). E830's rodata is
+  `0x30` bytes in both maps, and FD80's starts at EU `0x38280` (NA `0x38250`) with
+  the three `const f32` arrays, so the shared `FD80.c` emits them for both
+  versions. The EU asm's labels for those floats are aliased to the shared
+  names in `undefined_syms.eu.txt` (`D_80037680_38280 = D_80037650_38250;` and
+  the two that follow it).
+- The frontend overlay starts at EU `0x40750`, vram `0x800702A0`; see
+  `docs/pal-vs-na.md`.
+- An earlier version of the port started FD80's rodata at `0x38290` and the
+  frontend at `0x40788`, and compensated with two workarounds (the FD80 floats
+  compiled for NA only, and six extra `u64` words appended to `rsp_data.c` for
+  EU, which were the frontend dispatcher's first instructions). Both boundaries
+  are corrected and both workarounds removed; see the log.
 
-**(a) `core/FD80` `.rodata` at ROM `0x38290` (+0x10 too big).** Cause:
-`src/common/core/FD80.c:15-17` define three `const f32` arrays
-(`D_80037650_38250`, `D_80037654_38254`, `D_80037658_38258`) = `0x10` bytes of
-`45bb8000 3e860a92 3e860a92 00000000` (`6000.0f`, `0.26179939f`,
-`0.26179939f`, `0.0f`) emitted at the start of FD80's `.rodata`. EU gets these
-bytes from E830's rodata asm instead, so they must not be compiled for EU.
-Fix: wrap the three consts in `#ifdef VERSION_US`.
-
-**(b) `core/rsp_data` `.rodata` at ROM `0x3F490` (-0x30 too small).** Cause:
-`src/common/core/rsp_data.c:72` `D_8003F060_3FC60[344]` needs 6 more `u64`
-values in EU. Fix: `#ifdef VERSION_EU` selects `[350]` and appends the 6 values.
-
-Note on byte order: the ROM is big-endian (`.z64`), so `u64` initializers are
-written as the plain big-endian integer value, e.g. the six extra words are
-`0x248EFFFF27BDFFE8ULL, 0x2DC1000E1020003FULL, 0xAFBF0014000E7080ULL,
-0x3C01800B002E0821ULL, 0x8C2EF04401C00008ULL, 0x000000000C01E2F6ULL` (these
-render as the raw ROM bytes `248effff27bdffe8...`).
-
-## Why the FD80 constants duplicate E830
-
-The two regions obtain the same four floats from different places, so the consts
-must not be compiled into the shared object for both.
-
-NA layout: `bh.us.yaml` lists `[0x38220, .rodata, core/E830]` then
-`[0x38260, .rodata, ../src/common/core/FD80]`. In the NA link map,
-`E830.c.o .rodata` sits at vram `0x80037620` size `0x30` (six `double
-32767.0`/`2.8` compiler literals from E830's code), and `FD80.c.o .rodata` sits
-at vram `0x80037650` size `0x130`, starting with the three consts then the
-"Schedule Stack Overflow" strings.
-
-EU layout: `bh.eu.yaml` lists `[0x38250, rodata, core/E830]` (asm) then
-`[0x38290, .rodata, ../src/common/core/FD80]`. The EU E830 asm
-(`asm.eu/data/core/E830.rodata.s`) already contains those same 4 floats at
-`0x38280`-`0x38290` (labels `D_80037680_38280`-`D_8003768C_3828C`).
-
-Therefore the three consts in the shared `src/common/core/FD80.c` are NA-only:
-EU gets the same bytes from E830's asm, and their presence in the shared file
-makes the EU `FD80.o .rodata` `0x10` too large.
-
-Fix (implemented): the consts are wrapped in `#ifdef VERSION_US` inside the
-shared `FD80.c`, rather than moved to `src.us/core/E830.c`. Moving them was
-tried and rejected: IDO emits all explicit global-const initializers *before*
-compiler-generated function double literals regardless of source placement, so
-`E830.c` would produce `[floats][doubles]` instead of NA's required
-`[doubles][floats]`, breaking NA. `VERSION_US`/`VERSION_EU` are supplied by
-`tools/native_build.py:242` (`-DVERSION_{version}`).
+`VERSION_US`/`VERSION_EU` come from the `-DVERSION_` flag in
+`tools/native_build.py` and from the Makefile.
 
 ## Verification
 
 NA must remain byte-exact: `build/bh.us.z64` == `baserom.us.z64`, SHA1
 `BBB6666F5014A473747EE4145F036D9FB25D7348`. EU byte-exact target:
-`build.eu/bh.eu.z64` == `baserom.eu.z64`. Verify with `tools/make.ps1`,
-`tools/diff.ps1`, and `tools/eu_layout_audit.py`.
+`build.eu/bh.eu.z64` == `baserom.eu.z64`. Verify both with
+`python tools/verify_build.py --rebuild` (Windows native build). To localise an
+EU mismatch, `python tools/eu_layout_audit.py` finds, per subsegment, the shift
+at which the built bytes best match the original, and `python
+tools/eu_rom_diff.py` lists the differing bytes.
 
 ## Log
 
@@ -145,3 +117,9 @@ NA must remain byte-exact: `build/bh.us.z64` == `baserom.us.z64`, SHA1
   stub name must equal the splat symbol name or the function is misclassified as
   matched. `src/common/core/10A20.c`: `D_80031B58_32758` has a region-specific
   initial value (`1` in EU, `0` in NA) via `#ifdef VERSION_EU`.
+- 2026-10-12: The review of pull request 423 found the frontend start, the FD80
+  rodata boundary and the DIFF classification wrong. The frontend now starts at
+  `0x40750` and FD80's rodata at `0x38280`; the `#ifdef VERSION_US` around the
+  FD80 floats, the `[350]` `rsp_data.c` array and its six EU words are gone;
+  `docs/pal-na-diff.txt` is regenerated with the per-function shift (one DIFF
+  function).
