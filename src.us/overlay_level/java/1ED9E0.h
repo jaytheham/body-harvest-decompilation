@@ -10,7 +10,6 @@ void func_802D5ADC_1EE7EC(void);
 void func_802D5E98_1EEBA8(void);
 void func_802D5FE4_1EECF4(void);
 void func_802D6338_1EF048(void);
-void func_802D68F4_1EF604(void);
 void func_802D6E70_1EFB80();
 void func_802D7EAC_1F0BBC(u8);
 void func_802DA844_1F3554(u8);
