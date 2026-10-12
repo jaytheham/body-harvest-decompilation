@@ -888,7 +888,37 @@ float_regexpr = re.compile(r"[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?f")
 def repl_float_hex(m):
     return str(struct.unpack(">I", struct.pack(">f", float(m.group(0).strip().rstrip("f"))))[0])
 
-Opts = namedtuple('Opts', ['opt', 'framepointer', 'mips1', 'kpic', 'pascal', 'input_enc', 'output_enc', 'enable_cutscene_data_float_encoding'])
+Opts = namedtuple('Opts', ['opt', 'framepointer', 'mips1', 'kpic', 'pascal', 'input_enc', 'output_enc', 'enable_cutscene_data_float_encoding', 'asm_roots'], defaults=[()])
+
+def map_asm_path(path, asm_roots):
+    """Local change (bh-decomp): rewrite the leading directory of a GLOBAL_ASM path.
+
+    asm_roots is a sequence of (source, destination) pairs from --asm-root SOURCE=DESTINATION. A path whose first
+    component is SOURCE has it replaced by DESTINATION ("asm/src/a/b.s" with asm=asm.eu becomes "asm.eu/src/a/b.s");
+    any other path is returned unchanged, and so is any path when no root is given. Source shared between ROM
+    versions names one directory (asm/) and the build of another version maps it to that version's extraction.
+    """
+    for source, destination in asm_roots:
+        if path == source or path.startswith(source + '/'):
+            return destination + path[len(source):]
+    return path
+
+def parse_asm_roots(specs):
+    """Turn the --asm-root SOURCE=DESTINATION arguments into (source, destination) pairs, refusing a missing DESTINATION.
+
+    A destination directory that does not exist means the version it names has not been extracted: stopping here
+    names the cause, where the first GLOBAL_ASM file to be opened would only report a missing file.
+    """
+    roots = []
+    for spec in specs or []:
+        source, separator, destination = spec.partition('=')
+        source, destination = source.strip('/'), destination.strip('/')
+        if not separator or not source or not destination:
+            raise Failure("--asm-root expects SOURCE=DESTINATION, got " + repr(spec))
+        if not os.path.isdir(destination):
+            raise Failure("--asm-root " + spec + ": directory " + repr(destination) + " does not exist (extract that ROM version first)")
+        roots.append((source, destination))
+    return tuple(roots)
 
 def parse_source(f, opts, out_dependencies, print_source=None):
     if opts.opt in ['O1', 'O2']:
@@ -973,7 +1003,7 @@ def parse_source(f, opts, out_dependencies, print_source=None):
             start_index = len(output_lines)
         elif ((line.startswith('GLOBAL_ASM("') or line.startswith('#pragma GLOBAL_ASM("'))
                 and line.endswith('")')):
-            fname = line[line.index('(') + 2 : -2]
+            fname = map_asm_path(line[line.index('(') + 2 : -2], opts.asm_roots)
             if not os.path.exists(fname):
                 # Local change (bh-decomp): source shared between ROM versions selects each version's pragma
                 # with #if, so the other version's .s may not have been extracted. asm-processor runs before
@@ -1474,6 +1504,7 @@ def run_wrapped(argv, outfile, functions):
     parser.add_argument('--output-enc', default='latin1', help="output encoding (default: %(default)s)")
     parser.add_argument('--drop-mdebug-gptab', dest='drop_mdebug_gptab', action='store_true', help="drop mdebug and gptab sections")
     parser.add_argument('--convert-statics', dest='convert_statics', choices=["no", "local", "global", "global-with-filename"], default="local", help="change static symbol visibility (default: %(default)s)")
+    parser.add_argument('--asm-root', dest='asm_roots', action='append', metavar='SOURCE=DESTINATION', help="read GLOBAL_ASM files named under directory SOURCE from directory DESTINATION instead (repeatable)")
     parser.add_argument('--force', dest='force', action='store_true', help="force processing of files without GLOBAL_ASM blocks")
     parser.add_argument('--encode-cutscene-data-floats', dest='enable_cutscene_data_float_encoding', action='store_true', default=False, help="Replace floats with their encoded hexadecimal representation in CutsceneData data")
     parser.add_argument('-framepointer', dest='framepointer', action='store_true')
@@ -1496,7 +1527,7 @@ def run_wrapped(argv, outfile, functions):
         raise Failure("-mips1 is only supported together with -O1 or -O2")
     if pascal and opt not in ('O1', 'O2', 'g3'):
         raise Failure("Pascal is only supported together with -O1, -O2 or -O2 -g3")
-    opts = Opts(opt, args.framepointer, args.mips1, args.kpic, pascal, args.input_enc, args.output_enc, args.enable_cutscene_data_float_encoding)
+    opts = Opts(opt, args.framepointer, args.mips1, args.kpic, pascal, args.input_enc, args.output_enc, args.enable_cutscene_data_float_encoding, parse_asm_roots(args.asm_roots))
 
     if args.objfile is None:
         with open(args.filename, encoding=args.input_enc) as f:

@@ -259,6 +259,10 @@ endif
 
 ASM_PROCESSOR_DIR := $(TOOLS_DIR)/asm-processor
 ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
+ifeq ($(VERSION),eu)
+# Source shared with NA names its GLOBAL_ASM files under asm/; the EU build reads the EU extraction instead.
+ASM_PROCESSOR     += --asm-root asm=asm.eu
+endif
 
 ### Optimisation Overrides
 # $(BUILD_DIR)/$(SRC_DIR)/main_1050.c.o: OPT_FLAGS := -O1

@@ -315,6 +315,9 @@ def build(args):
                 global_asm = "GLOBAL_ASM" in source.read_text(encoding="utf-8")
                 compiled = source
                 processor = [sys.executable, "tools/asm-processor/asm_processor.py", optimization, source]
+                if args.version == "eu":
+                    # Source shared with NA names its GLOBAL_ASM files under asm/; the EU build reads the EU extraction.
+                    processor += ["--asm-root", "asm=asm.eu"]
                 if global_asm:
                     compiled = rel_build / source
                     with compiled.open("wb") as out:
