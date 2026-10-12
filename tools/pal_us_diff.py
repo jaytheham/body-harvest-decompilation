@@ -34,23 +34,72 @@ import pathlib
 import re
 import subprocess
 import sys
+from typing import NamedTuple
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORE_START = 0x1000
-CORE_END_NA = 0x40720          # NTSC core ends where the frontend overlay starts (bh.us.yaml)
-CORE_END_PAL = 0x40750         # PAL core ends 0x30 later (bh.eu.yaml)
+CORE_VRAM = 0x80000400
 SHIFT = 0x30
 
-GLAB = re.compile(r"^(?:glabel|jlabel)\s+(\S+)")
+GLAB = re.compile(r"^glabel\s+(\S+)")
 ROMC = re.compile(r"/\*\s*([0-9A-Fa-f]+)\s+([0-9A-Fa-f]+)\s+[0-9A-Fa-f]+\s*\*/")
+SUBSEG = re.compile(r"^\s*- \[0x([0-9A-Fa-f]+),\s*([\w.]+)(?:,\s*([^\],]+))?")
+#: Subsegment types that hold code. Core text ends at the first other type.
+TEXT_TYPES = ("asm", "hasm", "c", "textbin", "lib")
 
 PROBE_DIR = ROOT / "build" / "pal_us_probe"
-PROBE_ASM = PROBE_DIR / "asm" / "core" / "1000.s"
+PROBE_ASM = PROBE_DIR / "asm" / "core"
 PROBE_STAMP = PROBE_DIR / "stamp.txt"
-#: Every splat output path points into PROBE_DIR. In particular splat must not
-#: write undefined_syms_auto.txt at the repository root: that is the US build's
-#: linker input, and the probe's version breaks the next US link.
-PROBE_YAML = """sha1: BBB6666F5014A473747EE4145F036D9FB25D7348
+
+
+class Row(NamedTuple):
+    """One NTSC core function and its PAL counterpart."""
+
+    ntsc_rom: int
+    name: str
+    size: int
+    cls: str
+    pal_rom: int
+    pal_name: str
+    shift: int
+
+
+def core_subsegments(version):
+    """``[(rom, type, name)]`` for the core segment of ``bh.<version>.yaml``."""
+    out, in_core = [], False
+    for line in (ROOT / f"bh.{version}.yaml").read_text(encoding="utf-8").splitlines():
+        if re.match(r"^\s*- name:\s*core\s*$", line):
+            in_core = True
+            continue
+        if in_core and re.match(r"^\s*- name:", line):
+            break
+        m = SUBSEG.match(line) if in_core else None
+        if m:
+            out.append((int(m.group(1), 16), m.group(2), (m.group(3) or "").strip()))
+    return out
+
+
+def core_text_end(version):
+    """ROM offset of the first non-code subsegment of core."""
+    for rom, typ, _name in core_subsegments(version):
+        if typ not in TEXT_TYPES:
+            return rom
+    sys.exit(f"bh.{version}.yaml: no data subsegment found in core")
+
+
+def probe_yaml(text_end):
+    """Splat config that lists NTSC core text only, with every output in PROBE_DIR.
+
+    Each core text subsegment of bh.us.yaml becomes one ``asm`` subsegment, so
+    splat starts a function at every object boundary and never disassembles
+    data. Every output path points into PROBE_DIR; in particular splat must not
+    write undefined_syms_auto.txt at the repository root, which is the US
+    build's linker input.
+    """
+    subs = "\n".join(f"      - [0x{rom:X}, asm, core/{rom:X}]"
+                     for rom, typ, _n in core_subsegments("us")
+                     if typ in TEXT_TYPES and rom < text_end)
+    return f"""sha1: BBB6666F5014A473747EE4145F036D9FB25D7348
 options:
   platform: n64
   basename: bh
@@ -83,10 +132,10 @@ segments:
   - name: core
     type: code
     start: 0x1000
-    vram: 0x80000400
+    vram: 0x{CORE_VRAM:08X}
     subsegments:
-      - [0x1000, asm, core/1000]
-  - [0x40750, bin]
+{subs}
+  - [0x{text_end:X}, bin]
 """
 
 
@@ -103,31 +152,38 @@ def splat_python():
              "`pip install -r requirements.txt`, then retry.")
 
 
-def run_probe():
+def run_probe(text_end):
     """Split the NTSC ROM so splat enumerates its functions; cached in PROBE_DIR.
 
     The cache is reused only while the probe config and the NTSC ROM are the
     ones it was made from.
     """
+    yaml_text = probe_yaml(text_end)
     rom = (ROOT / "baserom.us.z64").read_bytes()
-    stamp = hashlib.sha1(PROBE_YAML.encode() + rom).hexdigest()
+    stamp = hashlib.sha1(yaml_text.encode() + rom).hexdigest()
     if PROBE_ASM.exists() and PROBE_STAMP.exists() and \
             PROBE_STAMP.read_text(encoding="utf-8").strip() == stamp:
         return
     PROBE_DIR.mkdir(parents=True, exist_ok=True)
     yaml_path = PROBE_DIR / "probe.us.yaml"
-    yaml_path.write_text(PROBE_YAML, encoding="utf-8", newline="\n")
+    yaml_path.write_text(yaml_text, encoding="utf-8", newline="\n")
     r = subprocess.run([splat_python(), "tools/splat/split.py", str(yaml_path)],
                        cwd=ROOT, capture_output=True, text=True)
     if r.returncode != 0:
         sys.exit(f"splat failed on the NTSC ROM:\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}")
-    if not PROBE_ASM.exists():
+    if not any(PROBE_ASM.glob("*.s")):
         sys.exit("splat produced no NTSC function listing")
     PROBE_STAMP.write_text(stamp + "\n", encoding="utf-8", newline="\n")
 
 
 def parse_functions(path, root):
-    """Return [(rom, name, size)] for every glabel in a splat .s listing."""
+    """Return [(rom, name, size)] for every glabel in a splat .s listing.
+
+    ``size`` runs to the next label, so it includes any alignment padding.
+    Only ``glabel`` starts an entry; jump-table ``jlabel`` targets do not. A
+    ``D_...`` glabel inside core text is code splat reached only through a data
+    reference (the hand-written exception handler, for example), so it is kept.
+    """
     out, cur, count, rom = [], None, 0, None
     for ln in path.read_text(encoding="utf-8", errors="replace").splitlines():
         m = ROMC.search(ln)
@@ -148,7 +204,7 @@ def parse_functions(path, root):
 def find_insert_point(na, pal):
     """First NTSC offset at or after which PAL sits 0x30 later."""
     probe = 0x7E00                      # inside the known divergent band
-    for off in range(probe, CORE_END_NA, 4):
+    for off in range(probe, core_text_end("us"), 4):
         word = na[off:off + 4]
         if word == pal[off + SHIFT:off + SHIFT + 4]:
             return off
@@ -178,7 +234,7 @@ def mark(rows, insert_at):
     and are the guard that stops a decompiler copying the NTSC body verbatim
     into a function PAL actually rewrote.
     """
-    diff = [r for r in rows if r[3] == "DIFF"]
+    diff = [r for r in rows if r.cls == "DIFF"]
 
     # Map PAL rom -> the c subsegment that covers it, from bh.eu.yaml. Matching
     # by function name does not work in the reorganised band: PAL's function
@@ -200,8 +256,8 @@ def mark(rows, insert_at):
         return best[1] if best else None
 
     by_stub = {}
-    for na_rom, na_name, size, _cls, _pal_rom, _pal in diff:
-        p = na_rom + SHIFT if na_rom >= insert_at else na_rom
+    for r in diff:
+        na_rom, na_name, size, p = r.ntsc_rom, r.name, r.size, r.pal_rom
         sub = covering(p)
         if not sub:
             continue
@@ -247,36 +303,40 @@ def mark(rows, insert_at):
 
 
 def classify_all():
-    """Run the comparison and return its rows.
+    """Run the comparison and return a list of :class:`Row`.
 
-    Returns ``[(ntsc_rom, ntsc_name, size, class, pal_rom, pal_name)]`` for every
-    NTSC core function, where ``class`` is ``EXACT``, ``SHAPE``, ``DIFF`` or
-    ``MISSING``. ``pal_rom`` is the ROM offset of the PAL function at the
+    One row per NTSC core text function; ``cls`` is ``EXACT``, ``SHAPE``,
+    ``DIFF`` or ``MISSING``. ``pal_rom`` is the ROM offset of the PAL function at the
     corresponding address, which is the key the inventory joins on: a ``DIFF``
     function is one PAL rewrote, so its name often differs from NTSC's and a
     name join would miss it.
     """
     na = (ROOT / "baserom.us.z64").read_bytes()
     pal = (ROOT / "baserom.eu.z64").read_bytes()
-    run_probe()
+    us_end, eu_end = core_text_end("us"), core_text_end("eu")
+    run_probe(us_end)
     insert_at = find_insert_point(na, pal)
 
     pal_names = {}
     for f in (ROOT / "asm.eu").rglob("*.s"):
-        for rom, name, _ in parse_functions(f, (CORE_START, CORE_END_PAL)):
+        for rom, name, _ in parse_functions(f, (CORE_START, eu_end)):
             pal_names.setdefault(rom, name)
 
+    found = []
+    for f in sorted(PROBE_ASM.glob("*.s")):
+        found += parse_functions(f, (CORE_START, us_end))
     rows = []
-    for rom, name, size in parse_functions(PROBE_ASM, (CORE_START, CORE_END_NA)):
+    for rom, name, size in sorted(found):
         cls = classify(na, pal, rom, size, insert_at)
-        p = rom + SHIFT if rom >= insert_at else rom
-        rows.append((rom, name, size, cls, p, pal_names.get(p, "")))
+        shift = SHIFT if rom >= insert_at else 0
+        rows.append(Row(rom, name, size, cls, rom + shift,
+                        pal_names.get(rom + shift, ""), shift))
     return rows
 
 
 def diff_classes():
     """``{ntsc_name: class}`` from :func:`classify_all`, keyed by NTSC name."""
-    return {name: cls for _rom, name, _size, cls, _p, _pn in classify_all()}
+    return {r.name: r.cls for r in classify_all()}
 
 
 def main():
@@ -291,8 +351,8 @@ def main():
     na = (ROOT / "baserom.us.z64").read_bytes()
     pal = (ROOT / "baserom.eu.z64").read_bytes()
     insert_at = find_insert_point(na, pal)
-    tally = collections.Counter(r[3] for r in rows)
-    total = sum(r[2] for r in rows)
+    tally = collections.Counter(r.cls for r in rows)
+    total = sum(r.size for r in rows)
     lines = [
         "NTSC vs PAL (EU) core function comparison",
         f"insert point: NTSC 0x{insert_at:06X} -> PAL +0x{SHIFT:X}",
@@ -302,19 +362,18 @@ def main():
     for k in ("EXACT", "SHAPE", "DIFF", "MISSING"):
         n = tally[k]
         if n:
-            b = sum(r[2] for r in rows if r[3] == k)
+            b = sum(r.size for r in rows if r.cls == k)
             lines.append(f"  {k:<8} {n:5d} fn  {100*n/len(rows):5.1f}%   "
                          f"{b:7d}B  {100*b/total:5.2f}% of core code")
-    reuse = sum(r[2] for r in rows if r[3] in ("EXACT", "SHAPE"))
+    reuse = sum(r.size for r in rows if r.cls in ("EXACT", "SHAPE"))
     lines.append(f"  reusable (EXACT+SHAPE): {100*reuse/total:.2f}% of core code bytes")
 
-    diff = sorted([r for r in rows if r[3] == "DIFF"], key=lambda r: -r[2])
+    diff = sorted((r for r in rows if r.cls == "DIFF"), key=lambda r: -r.size)
     lines += ["", f"=== {len(diff)} functions that genuinely differ "
                   f"(NTSC decomp NOT reusable) ==="]
-    for rom, name, size, _, _p, palname in diff:
-        p = rom + SHIFT if rom >= insert_at else rom
-        lines.append(f"  NTSC 0x{rom:06X}  PAL 0x{p:06X}  {size:6d}B  {name}")
-    lines += ["", f"differing bytes: {sum(r[2] for r in diff)}"]
+    for r in diff:
+        lines.append(f"  NTSC 0x{r.ntsc_rom:06X}  PAL 0x{r.pal_rom:06X}  {r.size:6d}B  {r.name}")
+    lines += ["", f"differing bytes: {sum(r.size for r in diff)}"]
 
     report = "\n".join(lines)
     print(report)
