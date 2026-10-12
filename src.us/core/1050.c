@@ -2,6 +2,7 @@
 #include "common.h"
 
 /* Preserve the boot unit's alignment origin for unreachable thread epilogues. */
+#ifndef __clang__
 #pragma GLOBAL_ASM(
 glabel func_80000400_1000
     /* 1000 80000400 3C088004 */  lui        $t0, %hi(D_8003FB20)
@@ -26,6 +27,7 @@ glabel func_80000400_1000
     /* 1048 80000448 00000000 */  nop
     /* 104C 8000044C 00000000 */  nop
 )
+#endif
 
 /* Shared graphics state (ROM 0x31D20 - 0x31EF0) */
 
