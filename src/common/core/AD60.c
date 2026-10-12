@@ -81,21 +81,51 @@ s8 D_80031720_32320[] = {
 
 /* Read-only strings, numeric constants, and switch targets. */
 const u32 jtbl_80037460_38060[] = {
+#if defined(VERSION_US)
 	0x8000A3A8, 0x8000A3B0, 0x8000A3A0, 0x8000A3A8, 0x8000A3B8, 0x8000A3A8
+#elif defined(VERSION_EU)
+	0x8000A3D8, 0x8000A3E0, 0x8000A3D0, 0x8000A3D8, 0x8000A3E8, 0x8000A3D8
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 };
 const u32 jtbl_80037478_38078[] = {
+#if defined(VERSION_US)
 	0x8000A560, 0x8000A570, 0x8000A580, 0x8000A590, 0x8000A5A0, 0x8000A5B0
+#elif defined(VERSION_EU)
+	0x8000A590, 0x8000A5A0, 0x8000A5B0, 0x8000A5C0, 0x8000A5D0, 0x8000A5E0
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 };
 const u32 jtbl_80037490_38090[] = {
+#if defined(VERSION_US)
 	0x8000ACAC, 0x8000AF7C, 0x8000AF7C, 0x8000AD98, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AEFC, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF3C, 0x8000AE00, 0x8000AE64, 0x8000AEB0, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000ADDC, 0x8000AF7C, 0x8000A69C, 0x8000A6B8, 0x8000AF7C, 0x8000A878, 0x8000AF7C, 0x8000AF7C, 0x8000ABC0, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000ABD0, 0x8000ABE0
+#elif defined(VERSION_EU)
+	0x8000ACDC, 0x8000AFAC, 0x8000AFAC, 0x8000ADC8, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AF2C, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AF6C, 0x8000AE30, 0x8000AE94, 0x8000AEE0, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AE0C, 0x8000AFAC, 0x8000A6CC, 0x8000A6E8, 0x8000AFAC, 0x8000A8A8, 0x8000AFAC, 0x8000AFAC, 0x8000ABF0, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AC00, 0x8000AC10
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 };
 const u32 jtbl_80037560_38160[] = {
+#if defined(VERSION_US)
 	0x8000AC34, 0x8000AC40, 0x8000AC4C, 0x8000AC58, 0x8000AC64, 0x8000AC70
+#elif defined(VERSION_EU)
+	0x8000AC64, 0x8000AC70, 0x8000AC7C, 0x8000AC88, 0x8000AC94, 0x8000ACA0
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 };
 const f32 D_80037578_38178[] = {0.009999999776482582f};
 const f64 D_80037580_38180[] = {0.01};
 const u32 jtbl_80037588_38188[] = {
+#if defined(VERSION_US)
 	0x8000BC4C, 0x8000BC80, 0x8000BCB4, 0x8000BCE8, 0x8000BD1C, 0x8000BD50, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000B9F8, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000BC40, 0x8000BD80, 0x8000BBB8, 0x8000C1BC, 0x8000C258, 0x8000C448, 0x8000C2D4, 0x8000C408, 0x8000BABC, 0x8000C488, 0x8000C4FC, 0x8000BB48
+#elif defined(VERSION_EU)
+	0x8000BC7C, 0x8000BCB0, 0x8000BCE4, 0x8000BD18, 0x8000BD4C, 0x8000BD80, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000BA28, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000BC70, 0x8000BDB0, 0x8000BBE8, 0x8000C1EC, 0x8000C288, 0x8000C478, 0x8000C304, 0x8000C438, 0x8000BAEC, 0x8000C4B8, 0x8000C52C, 0x8000BB78
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 };
 const f64 D_80037600_38200[] = {255.0};
 const f64 D_80037608_38208[] = {0.0};
@@ -177,8 +207,12 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 	return result;
 }
 
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000A2B8_AEB8.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000A2B8_AEB8.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 // CURRENT(145)
@@ -209,8 +243,12 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1)
   arg1++;
   *((u8 *) arg1) = var_v0;
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000A3DC_AFDC.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000A3DC_AFDC.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 s16 func_8000A43C_B03C(s8 *arg0)
@@ -634,8 +672,12 @@ void drawText(void *arg0, ...) {
 	*s0 = '\0';
 	D_80053BE0 = (s16)((s8 *)s0 - (s8 *)D_80052BE0);
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/drawText.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/drawText.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 void func_8000AFDC_BBDC(void)
@@ -983,8 +1025,12 @@ epilogue:
 
 	D_80053BE0 = 0;
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000B044_BC44.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000B044_BC44.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 s32 func_8000C670_D270(s16 arg0) {
@@ -1175,8 +1221,12 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 		src += 8;
 	} while (src != (u32 *)&D_80059CD0);
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000C81C_D41C.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000C81C_D41C.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
@@ -1344,8 +1394,12 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 		} while (arg2 != var_s0);
 	}
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000CF4C_DB4C.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000CF4C_DB4C.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
@@ -1445,8 +1499,12 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 	arg2->unk3A = (s16)arg2->unkC;
 	arg2->unk3C = (s16)arg2->unk10;
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000D588_E188.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000D588_E188.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 // https://decomp.me/scratch/KhfAB
@@ -1546,8 +1604,12 @@ void func_8000D8DC_E4DC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 		} while (arg3 != var_s0);
 	}
 }
+#elif defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000D8DC_E4DC.s")
+#elif defined(VERSION_EU)
+#pragma GLOBAL_ASM("asm.eu/src/common/core/AD60/func_8000D8DC_E4DC.s")
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D8DC_E4DC.s")
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5)
