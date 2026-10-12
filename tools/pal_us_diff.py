@@ -3,6 +3,11 @@
     python tools/pal_us_diff.py            # print report
     python tools/pal_us_diff.py --write    # also write docs/pal-na-diff.txt
 
+Needs both baseroms and splat's Python packages (``tools/native_build.py setup``
+installs them into ``tools/windows/venv``; on Linux ``pip install -r
+requirements.txt``). No build is needed. The splat probe and its cache live in
+``build/pal_us_probe/``.
+
 Why this exists: the NTSC symbol table only carries ~267 `type:func` entries and
 none of them are in the game-code region, so any comparison keyed on it
 silently reports "nothing differs". Function boundaries are therefore taken from
@@ -22,6 +27,9 @@ Classes:
 
 import argparse
 import collections
+import hashlib
+import importlib.util
+import os
 import pathlib
 import re
 import subprocess
@@ -36,20 +44,31 @@ SHIFT = 0x30
 GLAB = re.compile(r"^(?:glabel|jlabel)\s+(\S+)")
 ROMC = re.compile(r"/\*\s*([0-9A-Fa-f]+)\s+([0-9A-Fa-f]+)\s+[0-9A-Fa-f]+\s*\*/")
 
-PROBE_DIR = ROOT / ".tmp_us_probe"
+PROBE_DIR = ROOT / "build" / "pal_us_probe"
 PROBE_ASM = PROBE_DIR / "asm" / "core" / "1000.s"
+PROBE_STAMP = PROBE_DIR / "stamp.txt"
+#: Every splat output path points into PROBE_DIR. In particular splat must not
+#: write undefined_syms_auto.txt at the repository root: that is the US build's
+#: linker input, and the probe's version breaks the next US link.
 PROBE_YAML = """sha1: BBB6666F5014A473747EE4145F036D9FB25D7348
 options:
   platform: n64
   basename: bh
   target_path: baserom.us.z64
-  base_path: .
+  base_path: ../..
   disassemble_all: yes
-  asm_path: .tmp_us_probe/asm
-  build_path: .tmp_us_probe/build
-  ld_script_path: .tmp_us_probe/bh.probe.ld
+  asm_path: build/pal_us_probe/asm
+  build_path: build/pal_us_probe/build
+  src_path: build/pal_us_probe/src
+  asset_path: build/pal_us_probe/assets
+  ld_script_path: build/pal_us_probe/bh.probe.ld
+  symbol_addrs_path: build/pal_us_probe/symbol_addrs.txt
+  reloc_addrs_path: build/pal_us_probe/reloc_addrs.txt
+  undefined_funcs_auto_path: build/pal_us_probe/undefined_funcs_auto.txt
+  undefined_syms_auto_path: build/pal_us_probe/undefined_syms_auto.txt
   migrate_rodata_to_functions: no
   create_undefined_funcs_auto: no
+  create_undefined_syms_auto: no
   symbol_name_format: $VRAM_$ROM
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
@@ -71,23 +90,40 @@ segments:
 """
 
 
+def splat_python():
+    """An interpreter that can import splat's dependencies."""
+    if all(importlib.util.find_spec(m) for m in ("spimdisasm", "rabbitizer")):
+        return sys.executable
+    venv = ROOT / "tools/windows/venv"
+    cand = venv / ("Scripts/python.exe" if os.name == "nt" else "bin/python")
+    if cand.exists():
+        return str(cand)
+    sys.exit("splat's packages (spimdisasm, rabbitizer) are not importable. Run "
+             "`python tools/native_build.py setup` (Windows) or "
+             "`pip install -r requirements.txt`, then retry.")
+
+
 def run_probe():
-    """Split the NTSC ROM so splat enumerates its functions."""
-    if PROBE_ASM.exists():
+    """Split the NTSC ROM so splat enumerates its functions; cached in PROBE_DIR.
+
+    The cache is reused only while the probe config and the NTSC ROM are the
+    ones it was made from.
+    """
+    rom = (ROOT / "baserom.us.z64").read_bytes()
+    stamp = hashlib.sha1(PROBE_YAML.encode() + rom).hexdigest()
+    if PROBE_ASM.exists() and PROBE_STAMP.exists() and \
+            PROBE_STAMP.read_text(encoding="utf-8").strip() == stamp:
         return
-    yaml_path = ROOT / "probe.us.yaml"
+    PROBE_DIR.mkdir(parents=True, exist_ok=True)
+    yaml_path = PROBE_DIR / "probe.us.yaml"
     yaml_path.write_text(PROBE_YAML, encoding="utf-8", newline="\n")
-    try:
-        r = subprocess.run(
-            [str(ROOT / "tools/windows/venv/Scripts/python.exe"),
-             "tools/splat/split.py", yaml_path.name],
-            cwd=ROOT, capture_output=True, text=True)
-        if r.returncode != 0:
-            sys.exit(f"splat failed on the NTSC ROM:\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}")
-    finally:
-        yaml_path.unlink(missing_ok=True)
+    r = subprocess.run([splat_python(), "tools/splat/split.py", str(yaml_path)],
+                       cwd=ROOT, capture_output=True, text=True)
+    if r.returncode != 0:
+        sys.exit(f"splat failed on the NTSC ROM:\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}")
     if not PROBE_ASM.exists():
         sys.exit("splat produced no NTSC function listing")
+    PROBE_STAMP.write_text(stamp + "\n", encoding="utf-8", newline="\n")
 
 
 def parse_functions(path, root):
@@ -251,12 +287,10 @@ def main():
                     help="annotate PAL c stubs for the differing functions")
     args = ap.parse_args()
 
+    rows = classify_all()
     na = (ROOT / "baserom.us.z64").read_bytes()
     pal = (ROOT / "baserom.eu.z64").read_bytes()
-    run_probe()
     insert_at = find_insert_point(na, pal)
-
-    rows = classify_all()
     tally = collections.Counter(r[3] for r in rows)
     total = sum(r[2] for r in rows)
     lines = [
