@@ -106,7 +106,8 @@ file is named.
   `tools/pal_us_diff.py` (its `EXACT`, `SHAPE` and `DIFF` classes), as written to
   `docs/pal-na-diff.txt` and summarised in `docs/pal-vs-na.md`.
 - All 38 unmatched shared core functions have the same instruction stream in the
-  NTSC and EU `.s` files; only label and symbol names differ.
+  NTSC and EU `.s` files, compared with symbol names, labels, `%hi`/`%lo` halves
+  and `jal`/`j` targets masked; only label and symbol names differ.
 - At function level, 2216 of the 2354 overlay functions (94.14 percent) are
   identical apart from relocations, and 2346 (99.66 percent) if 130 weaker
   matches are counted too. This came from a scratch script that is not
