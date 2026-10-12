@@ -1,6 +1,6 @@
 # Pointer assignment result in printf preserves CFE temporaries
 
-`loadLevelCode` in `src.us/core/loader.c` matched with a `0x38` frame by passing
+`loadLevelCode` in `src/common/core/loader.c` matched with a `0x38` frame by passing
 the converted result of a pointer assignment directly to `osSyncPrintf`:
 
 ```c

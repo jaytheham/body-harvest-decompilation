@@ -1,6 +1,6 @@
 # Frame-only mismatch: reuse a constant local and hoist a halfword score
 
-Matched function: `func_800165EC_171EC` in `src.us/core/12C80.c`.
+Matched function: `func_800165EC_171EC` in `src/common/core/12C80.c`.
 Compiler: IDO 5.3, `-O2 -mips2 -32`.
 
 The starting C produced every target instruction, register, branch, and stack offset, except the frame was `0x58` instead of `0x50`. Removing the separate `int new_var` wraparound constant reduced the frame, but substituting a literal also reordered arithmetic in the positive wraparound branch.

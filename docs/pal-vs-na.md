@@ -152,12 +152,19 @@ now, and the file is shared.
 
 ### Which files can share today
 
-Of the 23 NA core C files, 17 contained no `#pragma GLOBAL_ASM`. 15 of them
-are shared from `src/common/core/`; `12C80.c` and `loader.c` are not, and EU
-has its own stub files for them. The other 6 still carry stubs. A stub cannot
-cross versions, because
-`GLOBAL_ASM` bytes are baked with that version's relocations, so a shared file
-is only safe with zero asm dependencies.
+Of the 23 NA core C files, 17 contain no `#pragma GLOBAL_ASM`, and all 17 are
+shared from `src/common/core/`. `12C80.c` needed no `#ifdef`; `loader.c` keeps
+its ten tables of ROM offsets and overlay addresses under `VERSION_US` /
+`VERSION_EU`, because EU moves the level data and overlays. Sharing a file
+also means pointing its EU `.data`/`.rodata` (and any `.bss`) at the C, naming
+its functions with their NA names at EU addresses in `symbol_addrs.eu.txt`,
+and pinning the externs it references at their EU addresses in
+`undefined_syms.eu.txt`.
+
+The other 6 still carry stubs: `1050.c` (13 `GLOBAL_ASM`), `53F0.c` (12),
+`AD60.c` (8), `17EE0.c` (3), `1B060.c` (1) and `E830.c` (1). A stub cannot
+cross versions, because `GLOBAL_ASM` bytes are baked with that version's
+relocations, so a shared file is only safe with zero asm dependencies.
 
 `core/1050` is the representative blocker: its 58 NA functions include 13 that
 are still `NON_MATCHING` with a `GLOBAL_ASM` fallback, so the file cannot be

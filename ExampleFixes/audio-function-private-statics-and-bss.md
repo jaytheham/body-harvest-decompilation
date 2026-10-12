@@ -1,7 +1,7 @@
 # Audio function-private statics and BSS placement
 
 Both `func_80013720_14320` and `func_80013818_14418` in
-`src.us/core/12C80.c` match with function-local static state.
+`src/common/core/12C80.c` match with function-local static state.
 
 ## Replace a write alias with the original storage scope
 
