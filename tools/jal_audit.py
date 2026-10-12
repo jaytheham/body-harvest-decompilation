@@ -190,7 +190,7 @@ def main():
         # version specific, and libultra differs in both layout and content
         # (PAL runs at 50Hz), so an overlap join there pairs the wrong functions
         # and reports divergence for code that never changed.
-        CORE_END = 0x40780
+        CORE_END = 0x40750
         INSERT = 0x7E04
         SHIFT = 0x30
 

@@ -29,8 +29,8 @@ import sys
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 CORE_START = 0x1000
-CORE_END_NA = 0x40750          # NTSC core ends here (measured from the trailing pad)
-CORE_END_PAL = 0x40780         # PAL core ends 0x30 later
+CORE_END_NA = 0x40720          # NTSC core ends where the frontend overlay starts (bh.us.yaml)
+CORE_END_PAL = 0x40750         # PAL core ends 0x30 later (bh.eu.yaml)
 SHIFT = 0x30
 
 GLAB = re.compile(r"^(?:glabel|jlabel)\s+(\S+)")
