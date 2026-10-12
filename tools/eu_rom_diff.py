@@ -1,6 +1,6 @@
 """Compare a built EU ROM against the reference and explain every difference.
 
-    python tools/eu_rom_diff.py [--tag NAME] [--save]
+    python tools/eu_rom_diff.py [--tag NAME] [--save] [--out DIR]
 
 Reports, per the seam investigation:
   * size delta and SHA-1
@@ -22,24 +22,25 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 import decomp_common as dc
 
-REF_SHA = "67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355"
-OUT = pathlib.Path("G:/Temp/opencode/eu_seam")
+REF_SHA = (dc.ROOT / "bh.eu.sha1").read_text(encoding="utf-8").split()[0].upper()
 
 
-def save_artifacts(tag):
-    OUT.mkdir(parents=True, exist_ok=True)
+def save_artifacts(tag, out):
+    out.mkdir(parents=True, exist_ok=True)
     for name, src in (("bh.eu.ld", dc.ROOT / "bh.eu.ld"),
                       ("bh.eu.map", dc.ROOT / "build.eu/bh.eu.map"),
                       ("bh.eu.yaml", dc.ROOT / "bh.eu.yaml")):
         if src.exists():
-            (OUT / f"{tag}.{name}").write_bytes(src.read_bytes())
+            (out / f"{tag}.{name}").write_bytes(src.read_bytes())
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--tag", default="run")
     ap.add_argument("--save", action="store_true",
-                    help="copy ld/map/yaml into the experiment folder")
+                    help="copy ld/map/yaml and the report into --out")
+    ap.add_argument("--out", type=pathlib.Path, default=dc.ROOT / "build.eu" / "rom_diff",
+                    help="folder for --save (default build.eu/rom_diff)")
     args = ap.parse_args()
 
     built = dc.ROOT / "build.eu/bh.eu.z64"
@@ -71,9 +72,9 @@ def main():
         report = "\n".join(lines)
         print(report)
         if args.save:
-            save_artifacts(args.tag)
-            (OUT / f"{args.tag}.txt").write_text(report + "\n", encoding="utf-8", newline="\n")
-            print(f"saved artifacts to {OUT}")
+            save_artifacts(args.tag, args.out)
+            (args.out / f"{args.tag}.txt").write_text(report + "\n", encoding="utf-8", newline="\n")
+            print(f"saved artifacts to {args.out}")
         return
 
     lines.append(f"first difference : 0x{diffs[0]:06X} ({dc.which_segment_rom(diffs[0], segments)})")
@@ -99,10 +100,7 @@ def main():
                  f"{'ref target':>12} {'built target':>12} {'delta':>7}")
     jrows = 0
     by_region = {}
-    for off in diffs:
-        base = off & ~3
-        if base not in diffs and base + 1 not in diffs and base + 2 not in diffs and base + 3 not in diffs:
-            continue
+    for base in sorted({off & ~3 for off in diffs}):
         if base + 4 > n:
             continue
         rw = int.from_bytes(r[base:base + 4], "big")
@@ -132,9 +130,9 @@ def main():
     report = "\n".join(lines)
     print(report)
     if args.save:
-        save_artifacts(args.tag)
-        (OUT / f"{args.tag}.txt").write_text(report + "\n", encoding="utf-8", newline="\n")
-        print(f"\nsaved artifacts to {OUT}")
+        save_artifacts(args.tag, args.out)
+        (args.out / f"{args.tag}.txt").write_text(report + "\n", encoding="utf-8", newline="\n")
+        print(f"\nsaved artifacts to {args.out}")
 
 
 if __name__ == "__main__":
