@@ -7,7 +7,6 @@ options:
   disassemble_all: yes
   matchings_path: matchings
   symbol_addrs_path: symbol_addrs.eu.txt
-  reloc_addrs_path: reloc_addrs.eu.txt
   ld_symbol_header_path: include/ld_symbols.eu.h
   ld_script_path: bh.eu.ld
   undefined_syms_auto_path: undefined_syms_auto.eu.txt
