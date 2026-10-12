@@ -160,7 +160,8 @@ All 23 NA core C files are shared: each is compiled once, from
 and overlay addresses under `VERSION_US` / `VERSION_EU`, because EU moves the
 level data and overlays, and `10A20.c` does the same for `D_80031B58_32758`,
 which starts as `0` in NA and `1` in EU. The other six files mix matched C with
-unmatched functions and choose their assembly per version (next section).
+unmatched functions, which name their assembly once, as in the NA-only source
+(next section).
 Sharing a file also means pointing its EU `.data`/`.rodata` (and any `.bss`) at
 the C, naming its functions with their NA names at EU addresses in
 `symbol_addrs.eu.txt`, and pinning the externs it references at their EU
@@ -169,49 +170,56 @@ addresses in `undefined_syms.eu.txt`.
 ### Sharing a file that still has GLOBAL_ASM
 
 A `GLOBAL_ASM` stub cannot cross versions, because its bytes are baked with
-that version's relocations. A shared file therefore picks each unmatched
-function's asm per version, and writes the matched C once:
+that version's relocations. The source still names each unmatched function's
+assembly once, in the form the NA-only source had, and the build reads the
+assembly of the version it is building:
 
 ```c
 #ifdef NON_MATCHING
 /* C body */
-#elif defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
-#elif defined(VERSION_EU)
-#pragma GLOBAL_ASM("asm.eu/src/common/core/E830/func_8000E53C_F13C.s")
 #else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
 #endif
 ```
 
+- The pragma names the NA extraction (`asm/`). The EU build passes
+  `--asm-root asm=asm.eu` to `tools/asm-processor/asm_processor.py` (in
+  `tools/native_build.py` for `--version eu` and in the Makefile for
+  `VERSION=eu`), which replaces a leading `asm/` of every pragma path with
+  `asm.eu/` before it opens the file. US passes nothing. The option refuses a
+  destination directory that does not exist. Both invocations of asm-processor
+  per object (the source pass and `--post-process`) must carry it; without it
+  the EU link fails with undefined references to NA symbol names.
 - The asm path follows from the yaml name: for a subsegment named
   `../src/common/core/E830`, splat writes the functions to
   `asm*/nonmatchings/../src/common/core/E830/`, that is `asm*/src/common/core/E830/`.
-- Both pragmas carry the NA name, because `symbol_addrs.eu.txt` names the EU
-  function after NA. splat classifies a function by the pragma's file name, so
-  the EU name must equal the EU symbol name.
-- asm-processor runs before the preprocessor and reads both pragmas. The
-  inactive one is dropped by the preprocessor and skipped by asm-processor's
-  post-processing. A local change to `tools/asm-processor/asm_processor.py` lets
-  the inactive version's `.s` be missing (see `docs/windows-build.md`), so one
-  version builds without the other extracted.
+- The function has the NA name in both extractions, because `symbol_addrs.eu.txt`
+  names the EU function after NA. splat classifies a function by the pragma's
+  file name and ignores its directory (`C_GLOBAL_ASM_IDO_RE`), so one pragma
+  classifies the function for both extractions.
 - A macro cannot choose the path: asm-processor only recognises the literal
   `#pragma GLOBAL_ASM("...")` form, and IDO silently ignores the unexpanded
-  pragma, which leaves the function out of the object.
-- The `#else` branch is an `#error`, so a compile that defines neither
-  `VERSION_US` nor `VERSION_EU` stops at the preprocessor. IDO only warns on
-  `#error` and still writes the object, so `tools/native_build.py` instead fails
-  unless its C flags define exactly its own version macro; the GCC `make` build
-  fails on the `#error` itself.
+  pragma, which leaves the function out of the object. That is why the
+  directory is mapped by the build and not by the preprocessor.
+- Every pragma names a directory of the version being built, so a build needs
+  only its own extraction: US works without `asm.eu/`, EU without `asm/`.
+- The blocks that are still version-specific (hand-written jump tables, the
+  data tables of `loader.c` and `10A20.c`, and `func_80006DDC_79DC` below) end
+  in an `#error`, so a compile that defines neither `VERSION_US` nor
+  `VERSION_EU` stops at the preprocessor. IDO only warns on `#error` and still
+  writes the object, so `tools/native_build.py` instead fails unless its C flags
+  define exactly its own version macro; the GCC `make` build fails on the
+  `#error` itself.
 
-Six files use these blocks: `1050.c` (13 functions), `53F0.c` (12), `AD60.c`
-(8), `17EE0.c` (3), `1B060.c` (1) and `E830.c` (1). That is 38 pragmas for NA and
-39 for EU, each NA pragma paired with an EU pragma of the same file name. The
-extra EU pragma is `func_80006DDC_79DC` in `53F0.c`, the one function that really
-differs in PAL: its NA C body sits under `#if defined(VERSION_US)` and the EU
-assembly under `#elif defined(VERSION_EU)`, so NA compiles it from C and EU
-from assembly. In `1050` every function sits at the same address in both ROMs;
-the others move by the shift map at the top of `docs/pal-na-diff.txt`.
+Six files hold unmatched functions: `1050.c` (13 functions), `53F0.c` (12),
+`AD60.c` (8), `17EE0.c` (3), `1B060.c` (1) and `E830.c` (1), 38 pragmas in all,
+each named once. One more pragma sits in `53F0.c`: `func_80006DDC_79DC` is the
+one function that really differs in PAL, so its NA C body sits under
+`#if defined(VERSION_US)` and its pragma under `#elif defined(VERSION_EU)`; NA
+compiles it from C and EU from assembly. That pragma also names `asm/`, which
+the EU build maps to `asm.eu/`. In `1050` every function sits at the same
+address in both ROMs; the others move by the shift map at the top of
+`docs/pal-na-diff.txt`.
 
 `AD60.c` (5 tables) and `53F0.c` (6) also hold hand-written jump tables,
 `const u32 jtbl_<vram>_<rom>[]`, whose entries are code addresses. Each has a
@@ -240,13 +248,15 @@ Each tool's docstring is the reference.
   `PROBLEM`; that is how `func_80006DDC_79DC` shows up.
 - `tools/share_core_file.py <File> [--jtbl-shift SHIFT] [--pal-only FUNCTION]`
   does the mechanical conversion: `git mv` to `src/common/core/`, `git rm` of the
-  EU stub, each pragma rewritten as the block above, and the `c`, `.data` and
+  EU stub, each pragma renamed to the shared `asm/src/common/core/<File>/` path
+  (no `#if` is added), and the `c`, `.data` and
   `.rodata` entries of both yamls pointed at `../src/common/core/<File>` (EU's
   `data` and `rodata` become `.data` and `.rodata`). `--jtbl-shift` writes the
   per-version jump table initialisers after checking every word against both
   baseroms; `--pal-only` keeps one function's NA body under `VERSION_US` and
-  gives `VERSION_EU` the EU assembly. It edits no symbol table and does not
-  build, and a refusal leaves the tree as it was.
+  gives `VERSION_EU` its pragma (the same `asm/` path, mapped by the EU
+  build). It edits no symbol table and does not build, and a refusal leaves
+  the tree as it was.
 - After a conversion: add the `NAME`, `PIN` and `DROP` lines (hand-written
   lines go above the block that `tools/eu_collisions_build.py` generates, or the
   generator deletes them), extract both versions, rebuild the US version, and
@@ -256,8 +266,9 @@ Each tool's docstring is the reference.
 
 When a function in a shared file is later matched, keep the C body once and
 delete the rest of its block: the `#ifdef NON_MATCHING` line and everything from
-`#elif defined(VERSION_US)` through `#endif`. Replacing only the NA pragma would
-leave EU on the assembly. Then run `python tools/verify_build.py --rebuild`: the
+`#else` through `#endif`, exactly as in an NA-only source. The single pragma
+served both versions, so it leaves both on the C. Then run
+`python tools/verify_build.py --rebuild`: the
 C is compiled once and linked at each version's addresses, so every name the
 body uses must already stand at its EU address in `symbol_addrs.eu.txt` or
 `undefined_syms.eu.txt`; a name that does not either fails to link or binds to

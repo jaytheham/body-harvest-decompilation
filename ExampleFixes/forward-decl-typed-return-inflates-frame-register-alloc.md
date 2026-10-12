@@ -35,7 +35,7 @@ void func_8000B044_BC44(void) {
 #endif
 ```
 
-**In the shared file:** `AD60.c` now lives in `src/common/core/`, so the `#else` branch above is a per-version chain: `#elif defined(VERSION_US)` with `#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000B044_BC44.s")`, `#elif defined(VERSION_EU)` with the `asm.eu/` file of the same name, then `#else` / `#error` and `#endif`. The rule is unchanged: the helpers keep their `#ifdef NON_MATCHING` wrappers and no forward declarations are added.
+**In the shared file:** `AD60.c` now lives in `src/common/core/`, where the `#else` branch above is `#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000B044_BC44.s")`; the EU build reads the `asm.eu/` file of the same name. The rule is unchanged: the helpers keep their `#ifdef NON_MATCHING` wrappers and no forward declarations are added.
 
 **Key insight:** The `#ifdef NON_MATCHING` wrapper on the calling function relies on all required helper declarations being provided implicitly by the same-file C implementations of those helpers, which are only active during `NON_MATCHING=1` builds. This is the correct pattern — don't break it by adding extra forward declarations.
 
