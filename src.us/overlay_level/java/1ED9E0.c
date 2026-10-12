@@ -3351,136 +3351,104 @@ void func_802DD5A0_1F62B0(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
+// CURRENT(2568): corrected skeleton chain, transforms, type outputs and signed remainder; retained after 24 compiled variants.
 void func_802DD5CC_1F62DC(u8 arg0) {
-	AlienInstance *alien_instance;
-	Unk8014DD50 *lookup_entry;
 	s16 temp_t1;
 	s16 temp_v1;
-	s16 temp_a3;
+	s32 selectedJoint;
+	s16 joints[2];
 	s16 sp5A;
 	s16 sp58;
+	s32 flagsScratch;
 	s16 sp52;
-	s16 sp5C;
-	s16 sp5E;
-	s16 sp48;
-	s16 sp4A;
-	s16 sp4C;
-	s8 sp65;
-	s8 sp67;
-	s32 sp3C;
-	s32 sp40;
-	s32 sp44;
-	u8 temp_t2;
-	u8 temp_t6;
-	s32 temp_a0;
-	s32 temp_t9;
-	s32 temp_v0;
-	s32 var_a0;
-	s8 temp_v0_2;
 	s8 var_v1;
+	s8 pad50;
+	s16 pad4E;
+	s16 coords[3];
+	s32 output[3];
+	s32 var_a0;
+	int temp_v0;
+	AlienInstance *alien_instance;
+	u8 *id;
 
-	/* Extract alien index and get alien instance pointer */
-	temp_t6 = arg0 & 0xFF;
-	alien_instance = &alienInstances[temp_t6];
+	id = &arg0;
+	alien_instance = &alienInstances[arg0];
 
-	/* Load alien instance unkC field and use as lookup index */
 	temp_t1 = alien_instance->unkC;
-	lookup_entry = &D_8014DD50[temp_t1];
-	temp_v1 = lookup_entry->unkC;
+	temp_v1 = D_8014DD50[temp_t1].unkC;
 
-	/* Chain lookup in D_8014DD50 array */
-	lookup_entry = &D_8014DD50[temp_v1];
-	temp_a3 = lookup_entry->unkD;
+	temp_v0 = D_8014DD50[temp_v1].unkC;
+	sp52 = alien_instance->typeIndex;
+	sp5A = D_8014DD50[temp_v0].unkD;
 
-	/* Store intermediate values to locals for later use */
-	sp5A = temp_a3;
-	sp58 = D_8014DD50[temp_a3].unkD;
-	sp52 = alien_instance->unk1A;
-	sp5C = temp_a3;
-	sp5E = sp58;
-	sp65 = arg0;
-	sp67 = arg0;
+	sp58 = D_8014DD50[sp5A].unkD;
 
-	/* Call first state machine function */
-	func_8008751C_964CC(temp_t6, 0x2BC, 0x384);
+	func_8008751C_964CC(*id, 0x2BC, 0x384);
 
-	/* Call second function and check return value */
-	temp_v0 = func_80086230_951E0(arg0, (s16)temp_v1, 0xFFFF);
+	temp_v0 = func_80086230_951E0(*id, (s16)temp_v1, 0xFFFF);
 
-	/* Check if 0x2000 flag is set in alien state flags */
 	var_a0 = alien_instance->unk20;
 	if (var_a0 & 0x2000) {
-		s16 a1_lookup;
-		a1_lookup = sp5A;
+		selectedJoint = sp5A;
 		if (var_a0 & 0x04000000) {
-			a1_lookup = sp58;
+			selectedJoint = sp58;
 		}
-		lookup_entry = &D_8014DD50[a1_lookup];
-		temp_t9 = var_a0 & ~0x2000;
-		lookup_entry->unk4 = (s16)(lookup_entry->unk4 + 0x19);
-		alien_instance->unk20 = temp_t9;
-		var_a0 = temp_t9;
+		flagsScratch = var_a0 & ~ALIEN_FLAG_UNKE;
+		D_8014DD50[selectedJoint].unk4 += 0x19;
+		alien_instance->unk20 = flagsScratch;
+		var_a0 = flagsScratch;
 	}
 
-	/* Check if 0x1000 flag is set (animation playing) */
 	if (var_a0 & 0x1000) {
-		temp_v0_2 = func_80081F18_90EC8(arg0, 2, 7, &sp5C, &D_802E09C0);
-		var_v1 = temp_v0_2;
-		if (temp_v0_2 == 1) {
-			sp65 = 1;
-			func_80137468_146418(arg0, 0xCF);
-			var_v1 = sp65;
+		joints[0] = sp5A;
+		joints[1] = sp58;
+		temp_v0 = func_80081F18_90EC8(*id, 2, 7, joints, &D_802E09C0_1F96D0);
+		var_v1 = temp_v0;
+		if (temp_v0 == 1) {
+			func_80137468_146418(*id, 0xCF);
 		}
 		if (var_v1 == 7) {
 			alien_instance->unk20 = (s32)(alien_instance->unk20 & ~ALIEN_FLAG_UNKD);
 		}
 	} else if (temp_v0 == 0) {
-		/* Handle movement direction based on 0x04000000 bit */
-		if (var_a0 & 0x04000000) {
-			sp48 = 0x4A;
+			if (var_a0 & 0x04000000) {
+			coords[0] = 0x4A;
 		} else {
-			sp48 = -0x4A;
+			coords[0] = -0x4A;
 		}
-		sp4A = -0x13;
-		sp4C = 0xA5;
+		coords[1] = -0x13;
+		coords[2] = 0xA5;
 
-		/* Call movement calculation function twice with different values */
-		func_800A931C_B82CC(sp65, &sp48, &sp3C);
-		sp48 = (s16)sp3C;
-		sp4A = (s16)sp40;
-		sp4C = (s16)sp44;
-		func_800A931C_B82CC(sp67, &sp48, &sp3C);
+			func_800A931C_B82CC(temp_v1, coords, output);
+		coords[0] = (s16)output[0];
+		coords[1] = (s16)output[1];
+		coords[2] = (s16)output[2];
+		func_800A931C_B82CC(temp_t1, coords, output);
 
-		/* Store movement values to alien type structure */
-		AlienType *type = &alienTypes[sp52];
-		type->unk20 = (s16)sp3C;
-		type->unk28 = (s16)sp40;
-		type->unk30 = (s16)sp44;
+			alienTypes[sp52].unk20 = (s16)output[0];
+		alienTypes[sp52].unk22 = (s16)output[1];
+		alienTypes[sp52].unk24 = (s16)output[2];
 
-		/* Check if animation trigger was successful */
-		if (func_800871CC_9617C(arg0, 0, 0x32) != 0) {
-			s16 a1_lookup_2;
-			temp_a0 = alien_instance->unk20;
-			a1_lookup_2 = sp5A;
-			if (temp_a0 & 0x04000000) {
-				a1_lookup_2 = sp58;
+			if (func_800871CC_9617C(*id, 0, 0x32) != 0) {
+			var_a0 = alien_instance->unk20;
+			selectedJoint = sp5A;
+			if (var_a0 & 0x04000000) {
+				selectedJoint = sp58;
 			}
-			lookup_entry = &D_8014DD50[a1_lookup_2];
-			alien_instance->unk20 = (s32)(temp_a0 | ALIEN_FLAG_UNKE);
-			lookup_entry->unk4 = (s16)(lookup_entry->unk4 - 0xF);
-			alien_instance->unk2 = (s16)(D_80222A70 + 4);
+			alien_instance->unk20 = (s32)(var_a0 | ALIEN_FLAG_UNKE);
+			D_8014DD50[selectedJoint].unk4 -= 0xF;
+			selectedJoint = D_80222A70;
+			alien_instance->unk2 = selectedJoint + 4;
 
-			/* Check alignment and possibly trigger callback */
-			if (((s32)alien_instance->unk26 % 4) == 0) {
-				func_800DEF2C_EDEDC(alien_instance->unk0, (s16)D_80222A70, alien_instance->unk4, 0xB4, 1);
+					if (((int)alien_instance->unk26 % -4) == 0) {
+				func_800DEF2C_EDEDC(alien_instance->unk0, (s16)selectedJoint, alien_instance->unk4, 0xB4, 1);
 			}
 
-			/* Increment animation counter */
-			temp_t2 = alien_instance->unk26 + 1;
+					temp_v0 = (u8)(alien_instance->unk26 + 1);
 			alien_instance->unk1E = 5;
-			alien_instance->unk26 = temp_t2;
+			alien_instance->unk26 = temp_v0;
 
-			if ((temp_t2 & 0xFF) >= 0x11) {
+			if ((temp_v0 & 0xFF) >= 0x11) {
 				alien_instance->unk36 = 0;
 				alien_instance->unk26 = 0;
 				alien_instance->unk20 = (s32)(alien_instance->unk20 | ALIEN_FLAG_UNKD);
@@ -3489,13 +3457,11 @@ void func_802DD5CC_1F62DC(u8 arg0) {
 		}
 	}
 
-	/* Final state machine callback */
-	func_800E24B8_F1468(arg0);
+	func_800E24B8_F1468(*id);
 
-	/* Decrement animation counter if nonzero */
-	s16 anim_counter = alien_instance->unk1E;
-	if (anim_counter != 0) {
-		alien_instance->unk1E = (s16)(anim_counter - 1);
+	temp_v0 = alien_instance->unk1E;
+	if (temp_v0 != 0) {
+		alien_instance->unk1E = (s16)(temp_v0 - 1);
 	}
 }
 #else
