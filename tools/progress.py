@@ -1,15 +1,19 @@
 #!/usr/bin/env python3
 """
-progress.py — Body Harvest decompilation progress tracker.
+progress.py - Body Harvest decompilation progress tracker.
 
 Walks the NTSC build's C sources (src.us/**/*.c and the version-independent
 src/common/**/*.c), counts matched / NON_MATCHING / GLOBAL_ASM functions
 per file and segment, reads git log for history, and emits progress.json.
 
-Usage:
-  python3 tools/progress.py [--output path/to/progress.json] [--repo-root DIR]
+With --version eu it walks the PAL build instead (src.eu/**/*.c and the same
+src/common/**/*.c, keeping only the branches the EU build compiles) and emits
+progress.eu.json. The default, --version us, is the NTSC count described above.
 
-Output: progress.json consumed by docs/index.html
+Usage:
+  python3 tools/progress.py [--version {us,eu}] [--output path/to/progress.json] [--repo-root DIR]
+
+Output: progress.json consumed by docs/index.html, progress.eu.json consumed by docs/eu.html
 """
 
 import argparse
@@ -19,6 +23,7 @@ import re
 import subprocess
 import sys
 from collections import defaultdict
+from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from pathlib import Path
@@ -37,14 +42,29 @@ except ImportError as exc:
 
 def parse_args():
     p = argparse.ArgumentParser(description="Generate Body Harvest decomp progress data.")
-    p.add_argument("--output", default="docs/progress.json", help="Output JSON path")
+    p.add_argument(
+        "--version",
+        choices=("us", "eu"),
+        default="us",
+        help="Which build to count: us (NTSC, the default) or eu (PAL)",
+    )
+    p.add_argument(
+        "--output",
+        default=None,
+        help="Output JSON path (default: docs/progress.json, or docs/progress.eu.json with --version eu)",
+    )
     p.add_argument("--repo-root", default=".", help="Repository root directory")
     p.add_argument(
         "--verify-with-asm",
         action="store_true",
-        help="Compare counted totals with asm/matchings + asm/nonmatchings .s totals per file",
+        help="Compare counted totals with asm/matchings + asm/nonmatchings .s totals per file (NTSC only)",
     )
-    return p.parse_args()
+    args = p.parse_args()
+    if args.version == "eu" and args.verify_with_asm:
+        p.error("--verify-with-asm checks the NTSC asm tree and cannot be combined with --version eu")
+    if args.output is None:
+        args.output = "docs/progress.eu.json" if args.version == "eu" else "docs/progress.json"
+    return args
 
 
 # Regex patterns
@@ -70,8 +90,32 @@ SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
 # C source roots of the NTSC build. src/common holds the files both versions compile; src.eu is
 # not counted here. It holds the PAL build's own gameplay-overlay and libultra files, which are
-# GLOBAL_ASM stubs (those overlays are not shared with NTSC yet).
+# GLOBAL_ASM stubs (those overlays are not shared with NTSC yet); --version eu counts them.
 SOURCE_ROOTS = ("src.us", "src/common")
+# C source roots of the PAL build, and the version macro its preprocessor defines.
+EU_SOURCE_ROOTS = ("src.eu", "src/common")
+EU_DEFINES = frozenset({"VERSION_EU"})
+# The conditions the PAL count evaluates. NON_MATCHING is never defined by a normal build.
+VERSION_MACROS = frozenset({"VERSION_US", "VERSION_EU", "NON_MATCHING"})
+RE_DEFINED_COND = re.compile(r'(!?)\s*defined\s*(?:\(\s*(\w+)\s*\)|\s(\w+))')
+RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
+
+# Shown by the EU page. The overlay figure was measured on 2026-10-12 with a scratch script (not committed):
+# every NTSC overlay function was compared with its EU counterpart, word by word in the two ROMs, with the
+# jump targets and the halves of address loads masked. 2346 of the 2354 functions in the eight overlays matched.
+EU_NOTE = (
+    "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
+    "(src/common/core), and the stubs under src.eu for the three gameplay overlays and a few libultra files. "
+    "Not counted: the five level overlays and most of libultra have no tracked EU source, so they cannot be "
+    "counted from the repository.\n"
+    "The core figures are the same functions as on the US page, so the two pages must not be summed. "
+    "Matching a function in a shared core file counts for both versions.\n"
+    "The EU overlays are not shared with NTSC yet, so their functions are still assembly stubs here, apart from "
+    "empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU "
+    "counterpart while masking jump targets and the halves of address loads, 99.66 percent (2346 of 2354) of the "
+    "functions in the eight overlays, gameplay and level, are identical to NTSC apart from relocations, so sharing "
+    "the overlays would lift these figures a great deal."
+)
 
 
 def analyse_file(path: Path) -> dict:
@@ -207,6 +251,107 @@ def analyse_blob(blob: str) -> dict:
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
 
 
+@dataclass
+class _Branch:
+    """One open #if group while scanning a file for the PAL count."""
+
+    parent_live: bool  # the text around the group is compiled
+    version: bool  # the group tests VERSION_US, VERSION_EU or NON_MATCHING; any other group is left alone
+    taken: bool  # a branch of a version group has been chosen already
+    live: bool  # the current branch is compiled
+    non_matching: bool  # the group was opened by `#ifdef NON_MATCHING`
+    fallback: bool  # the current branch is an #elif or #else
+
+
+def version_condition(kind: str, cond: str, defines: frozenset) -> bool | None:
+    """Value of a condition on VERSION_US, VERSION_EU or NON_MATCHING, or None for any other condition.
+
+    kind is the directive (if, ifdef, ifndef) and cond the text after it. Understood: `ifdef NAME`,
+    `ifndef NAME` and `if [!]defined(NAME)`, with a trailing comment allowed. A macro is defined if it is in `defines`.
+    """
+    cond = RE_PP_COMMENT.sub("", cond).strip()
+    if kind in ("ifdef", "ifndef"):
+        words = cond.split()
+        if len(words) != 1:
+            return None
+        name, negate = words[0], kind == "ifndef"
+    else:
+        m = RE_DEFINED_COND.fullmatch(cond)
+        if not m:
+            return None
+        name, negate = m.group(2) or m.group(3), bool(m.group(1))
+    if name not in VERSION_MACROS:
+        return None
+    return (name in defines) != negate
+
+
+def scan_active_branches(text: str, defines: frozenset) -> tuple:
+    """Read `text` as a build defining `defines` does: (compiled text, NON_MATCHING groups, GLOBAL_ASM stubs).
+
+    The compiled text keeps the line numbers: a line in a branch the build does not compile, and every directive
+    of a version group, is blanked. Only #if groups on VERSION_US, VERSION_EU and NON_MATCHING are evaluated;
+    NON_MATCHING is off, and any other #if group is left as written. A GLOBAL_ASM pragma in the #elif/#else chain of
+    an `#ifdef NON_MATCHING` group is that group's fallback, which the group count already holds, so it is no stub.
+    """
+    out, groups = [], []
+    non_matching = asm_stubs = 0
+    for line in text.splitlines():
+        outer_live = groups[-1].live if groups else True
+        opened, elif_branch = RE_PP_IF.match(line), RE_PP_ELIF.match(line)
+        if opened:
+            want = version_condition(opened.group(1), opened.group(2), defines)
+            group = _Branch(outer_live, want is not None, bool(want), outer_live and want is not False,
+                            bool(RE_NON_MATCHING.search(line)), False)
+            non_matching += int(group.non_matching and outer_live)
+            groups.append(group)
+        elif elif_branch and groups:
+            group = groups[-1]
+            if group.version:
+                want = version_condition("if", elif_branch.group(1), defines)
+                group.live = group.parent_live and not group.taken and want is not False
+                group.taken = group.taken or want is not False
+            else:
+                group.live = group.parent_live
+            group.fallback = True
+        elif RE_PP_ELSE.match(line) and groups:
+            group = groups[-1]
+            group.live = group.parent_live and not (group.version and group.taken)
+            group.taken = True
+            group.fallback = True
+        elif RE_ENDIF_LINE.match(line) and groups:
+            group = groups.pop()
+        else:
+            live = groups[-1].live if groups else True
+            out.append(line if live else "")
+            in_fallback = any(g.non_matching and g.fallback for g in groups)
+            if live and not in_fallback and RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+                asm_stubs += 1
+            continue
+        # A directive line: blanked if it belongs to a version group, else kept where its own group is compiled.
+        out.append(line if not group.version and group.parent_live else "")
+    return "\n".join(out), non_matching, asm_stubs
+
+
+def analyse_text_eu(text: str) -> dict:
+    """Function counts of one source file as the PAL build compiles it.
+
+    matched: C definitions that survive the version conditions. non_matching: `#ifdef NON_MATCHING` groups, whose
+    GLOBAL_ASM fallback is what the build compiles. asm_stubs: the other GLOBAL_ASM functions.
+    """
+    live, non_matching, asm_stubs = scan_active_branches(text, EU_DEFINES)
+    matched = count_function_defs(live)
+    return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs,
+            "total": matched + non_matching + asm_stubs}
+
+
+def analyse_file_eu(path: Path) -> dict:
+    """analyse_text_eu of a file; an unreadable file counts as empty, as in analyse_file."""
+    try:
+        return analyse_text_eu(path.read_text(encoding="utf-8", errors="replace"))
+    except OSError:
+        return {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
+
+
 def build_history_item(date_str: str, commit_sha: str, totals: dict) -> dict:
     return {
         "date": date_str,
@@ -217,7 +362,8 @@ def build_history_item(date_str: str, commit_sha: str, totals: dict) -> dict:
     }
 
 
-def get_totals_at_commit(cwd: str, src_rels: list, commit_sha: str, totals_cache: dict) -> dict | None:
+def get_totals_at_commit(cwd: str, src_rels: list, commit_sha: str, totals_cache: dict,
+                         analyse=analyse_blob) -> dict | None:
     if commit_sha in totals_cache:
         return totals_cache[commit_sha]
 
@@ -233,7 +379,7 @@ def get_totals_at_commit(cwd: str, src_rels: list, commit_sha: str, totals_cache
         blob = git_run(["show", f"{commit_sha}:{rel_path}"], cwd)
         if not blob:
             continue
-        counts = analyse_blob(blob)
+        counts = analyse(blob)
         for key in totals:
             totals[key] += counts[key]
 
@@ -245,20 +391,14 @@ def get_totals_at_commit(cwd: str, src_rels: list, commit_sha: str, totals_cache
     return totals
 
 
-def build_history(cwd: str, src_dirs: list) -> list:
-    src_rels = [d.relative_to(Path(cwd)).as_posix() for d in src_dirs]
-    start_date = datetime.strptime("2026-02-01", "%Y-%m-%d").date()
-    today = datetime.now(timezone.utc).date()
-
-    if start_date > today:
-        return []
-
+def get_weekly_commits(cwd: str, src_rels: list, start_date) -> dict:
+    """Newest commit under src_rels in each week since start_date, keyed by the date the week starts."""
     log_out = git_run(
         [
             "log",
             "--format=%H|%ad",
             "--date=short",
-            "--since=2026-02-01",
+            f"--since={start_date.isoformat()}",
             "--",
             *src_rels,
         ],
@@ -282,6 +422,18 @@ def build_history(cwd: str, src_dirs: list) -> list:
             week_start = start_date + timedelta(days=week_index * 7)
             if week_start not in weekly_commits:
                 weekly_commits[week_start] = sha
+    return weekly_commits
+
+
+def build_history(cwd: str, src_dirs: list) -> list:
+    src_rels = [d.relative_to(Path(cwd)).as_posix() for d in src_dirs]
+    start_date = datetime.strptime("2026-02-01", "%Y-%m-%d").date()
+    today = datetime.now(timezone.utc).date()
+
+    if start_date > today:
+        return []
+
+    weekly_commits = get_weekly_commits(cwd, src_rels, start_date)
 
     totals_cache: dict = {}
     previous_item = None
@@ -320,21 +472,61 @@ def build_history(cwd: str, src_dirs: list) -> list:
     return history
 
 
+def build_history_eu(cwd: str, src_dirs: list) -> list:
+    """Weekly PAL series, as build_history makes the NTSC one, but only from the point where core was shared.
+
+    The series starts at the first week whose commit holds a C file under src/common/core: before that the PAL
+    sources were per-version trees, which this count does not read. Fewer than two points make no history.
+    """
+    src_rels = [d.relative_to(Path(cwd)).as_posix() for d in src_dirs]
+    start_date = datetime.strptime("2026-02-01", "%Y-%m-%d").date()
+    today = datetime.now(timezone.utc).date()
+    weekly_commits = get_weekly_commits(cwd, src_rels, start_date)
+
+    def shares_core(sha: str) -> bool:
+        tree = git_run(["ls-tree", "-r", "--name-only", sha, "src/common/core"], cwd)
+        return any(path.endswith(".c") for path in tree.splitlines())
+
+    first_week = next((week for week, sha in sorted(weekly_commits.items()) if shares_core(sha)), None)
+    if first_week is None:
+        return []
+
+    totals_cache: dict = {}
+    history = []
+    previous_item = None
+    week_start = first_week
+    while week_start <= today:
+        date_str = week_start.strftime("%Y-%m-%d")
+        week_sha = weekly_commits.get(week_start)
+        week_totals = get_totals_at_commit(cwd, src_rels, week_sha, totals_cache, analyse_text_eu) if week_sha else None
+        if week_totals:
+            previous_item = build_history_item(date_str, week_sha, week_totals)
+            history.append(previous_item)
+        elif previous_item:
+            history.append({**previous_item, "date": date_str})
+        week_start += timedelta(days=7)
+
+    return history if len(history) >= 2 else []
+
+
 def main():
     args = parse_args()
     repo_root = os.path.abspath(args.repo_root)
-    src_dirs = [Path(repo_root) / r for r in SOURCE_ROOTS]
+    eu_mode = args.version == "eu"
+    roots = EU_SOURCE_ROOTS if eu_mode else SOURCE_ROOTS
+    src_dirs = [Path(repo_root) / r for r in roots]
     verify_mode = args.verify_with_asm
 
     if not src_dirs[0].is_dir():
-        print(f"ERROR: src.us not found at {src_dirs[0]}", file=sys.stderr)
+        print(f"ERROR: {roots[0]} not found at {src_dirs[0]}", file=sys.stderr)
         sys.exit(1)
     src_dirs = [d for d in src_dirs if d.is_dir()]
 
     print("Scanning source files...", file=sys.stderr)
     c_files = sorted(((d, f) for d in src_dirs for f in d.rglob("*.c")),
                      key=lambda pair: pair[1].relative_to(pair[0]).as_posix())
-    contributors = {} if verify_mode else get_contributors(repo_root, src_dirs)
+    # The PAL view has no per-contributor figures: its core is the shared NTSC work, not the PAL port's.
+    contributors = {} if verify_mode or eu_mode else get_contributors(repo_root, src_dirs)
 
     files_data = []
     asm_mismatches = []
@@ -346,7 +538,7 @@ def main():
         rel = str(f.relative_to(Path(repo_root)))
         sub_path = f.relative_to(src_dir).as_posix()
         seg = file_to_segment(sub_path)
-        counts = analyse_file(f)
+        counts = analyse_file_eu(f) if eu_mode else analyse_file(f)
         if args.verify_with_asm:
             asm_total = count_asm_functions_for_source(Path(repo_root), src_dir, f)
             if asm_total != counts["total"]:
@@ -437,7 +629,7 @@ def main():
     history = []
     if not verify_mode:
         print("Building history graph (this may take a moment)...", file=sys.stderr)
-        history = build_history(repo_root, src_dirs)
+        history = build_history_eu(repo_root, src_dirs) if eu_mode else build_history(repo_root, src_dirs)
     else:
         print("Verify mode: skipping git history and contributor scan for speed.", file=sys.stderr)
 
@@ -445,12 +637,17 @@ def main():
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "commit": sha,
         "commit_timestamp": ts,
+    }
+    if eu_mode:
+        output["version"] = "eu"
+        output["note"] = EU_NOTE
+    output.update({
         "overall": overall_out,
         "segments": segments_out,
         "files": files_data,
         "contributors": contributors_out,
         "history": history,
-    }
+    })
 
     if args.verify_with_asm:
         output["asm_verification"] = {
@@ -463,7 +660,7 @@ def main():
     out_path.write_text(json.dumps(output, indent=2))
     print(f"Written to {out_path}", file=sys.stderr)
     print(
-        f"Overall: {overall_out['matched']}/{total} matched "
+        f"Overall{' (EU)' if eu_mode else ''}: {overall_out['matched']}/{total} matched "
         f"({overall_out['matched_pct']}%), {overall_out['decompiled_pct']}% decompiled",
         file=sys.stderr,
     )
