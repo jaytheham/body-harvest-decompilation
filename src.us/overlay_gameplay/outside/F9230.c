@@ -2346,13 +2346,12 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 #endif
 
 // CURRENT(34)
-#ifdef NON_MATCHING
 // AI - Builds the model-view matrix stack for an alien and draws its animated model
 void func_800EF9F0_FE9A0(s16 arg0)
 {
 	s32 modelDisplayList;
-	AlienInstance *alien;
 	Unk80052B40 sp5C;
+	AlienInstance *alien;
 	s32 spPad[2];
 	Unk80052B40 sp48;
 	s32 spBot;
@@ -2379,9 +2378,7 @@ void func_800EF9F0_FE9A0(s16 arg0)
 	func_8000CC3C_D83C((AnimChannelState *)(&D_80157A48), 0x10);
 	gSPDisplayList(D_8005BB2C++, modelDisplayList);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF9F0_FE9A0.s")
-#endif
+
 
 void func_800EFC28_FEBD8(u8 arg0) {
 	s16 idx;
