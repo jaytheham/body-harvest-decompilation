@@ -177,46 +177,37 @@ void func_80122524_1314D4(EntityInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-// https://decomp.me/scratch/Qqt5n
-// CURRENT(175)
-#ifdef NON_MATCHING
 s16 func_801225C4_131574(Projectile *arg0)
 {
-  s32 var_v1;
-  s32 var_a1;
-  Unk8015F790 *var_a2;
-  if ((D_8015F9E8 >= 0x10) || (!((D_80145BE8_154B98[arg0->unk20][0] >> 8) & 0x10)))
-  {
-	return -1;
-  }
-  D_8015F9E8++;
-  for (var_v1 = 16; var_v1--;)
-  {
-	if ((D_8015F790[var_v1].unk1C << 30) < 0)
-	{
-	  continue;
+	s32 i;
+	s32 index;
+	Unk8015F790 *trail;
+
+	if ((D_8015F9E8 >= 0x10) || (!((D_80145BE8_154B98[arg0->unk20][0] >> 8) & 0x10))) {
+		return -1;
 	}
-	var_a1 = var_v1;
-	break;
-  }
-  
-  var_a2 = &D_8015F790[var_a1];
-	for( var_v1 = 5;var_v1--;)
-	{
-	var_a2->posX[var_v1 - 1] = (s16) arg0->unk0;
-	var_a2->posY[var_v1 - 1] = (s16) arg0->unk4;
-	var_a2->posZ[var_v1 - 1] = (s16) arg0->unk8;
-  }
-  
-  var_a2->unk1E = (var_a2->unk1E & 3) | 0x14;
-  var_a2->unk1F = var_a2->unk1F | 2;
-  var_a2->unk1F &= 0xFE;
-  var_a2->unk20 = arg0;
-  return (s16) var_a1;
+	D_8015F9E8++;
+	for (i = 16; i--;) {
+		if (D_8015F790[i].trailActive != 0) {
+			continue;
+		}
+		index = i;
+		break;
+	}
+
+	trail = &D_8015F790[index];
+	for (i = 5; i--;) {
+		trail->historyX[i] = arg0->unk0;
+		trail->historyY[i] = arg0->unk4;
+		trail->historyZ[i] = arg0->unk8;
+	}
+
+	trail->trailCount = 5;
+	trail->trailActive = 1;
+	trail->trailEnded = 0;
+	trail->unk20 = arg0;
+	return index;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801225C4_131574.s")
-#endif
 
 // CURRENT(24833)
 #ifdef NON_MATCHING

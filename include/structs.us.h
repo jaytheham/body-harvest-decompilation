@@ -1669,24 +1669,43 @@ typedef struct {
 } Projectile; /* size = 0x30 */
 
 typedef struct {
-	/* 0x00 */ s16 curX;
-	/* 0x02 */ s16 posX[4];
-	/* 0x0A */ s16 curY;
-	/* 0x0C */ s16 posY[4];
-	/* 0x14 */ s16 curZ;
-	/* 0x16 */ s16 posZ[3];
 	union {
 		struct {
-			/* 0x1C */ s16 posZ3;
+			/* 0x00 */ s16 curX;
+			/* 0x02 */ s16 posX[4];
+			/* 0x0A */ s16 curY;
+			/* 0x0C */ s16 posY[4];
+			/* 0x14 */ s16 curZ;
+			/* 0x16 */ s16 posZ[3];
 			union {
-				/* 0x1E */ u16 unk1E;
 				struct {
-					/* 0x1E */ u8 pad1E;
-					/* 0x1F */ u8 unk1F; /* bitfield: bit 0 = ?, bit 1 = in-use */
+					/* 0x1C */ s16 posZ3;
+					union {
+						/* 0x1E */ u16 unk1E;
+						struct {
+							u16 trailCount : 14;
+							u16 trailState : 2;
+						};
+						struct {
+							/* 0x1E */ u8 pad1E;
+							/* 0x1F */ u8 unk1F;
+						};
+					};
+				};
+				/* 0x1C */ s32 unk1C;
+				struct {
+					u32 trailPad : 30;
+					u32 trailActive : 1;
+					u32 trailEnded : 1;
 				};
 			};
 		};
-		/* 0x1C */ s32 unk1C;
+		struct {
+			/* 0x00 */ s16 historyX[5];
+			/* 0x0A */ s16 historyY[5];
+			/* 0x14 */ s16 historyZ[5];
+			/* 0x1E */ u16 historyFlags;
+		};
 	};
 	/* 0x20 */ void *unk20; // Owning Projectile pointer
 } Unk8015F790; /* size = 0x24 */

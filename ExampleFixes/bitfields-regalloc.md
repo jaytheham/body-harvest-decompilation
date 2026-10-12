@@ -41,3 +41,9 @@ The underlying type of the bitfield cannot easily be determined from the asm (ID
 ## Narrowing a multiplied call argument
 
 In `func_800DA7CC_E977C`, passing `(u8)(D_80154318[arg0].unkC * 3)` matched the target's reused multiplication temporary and final `andi` in the call delay slot. The equivalent expression with `& 0xFF` introduced a second multiplication-result temporary and shifted subsequent register allocation. Loading a named value first instead allocated the input to v0 rather than a1. Keep the field access inline and express the byte conversion as a u8 cast when the target exhibits this pattern. Full ROM checksum verified OK.
+
+## Projectile trail flags and overlapping history arrays
+
+In func_801225C4_131574, unsigned word bitfields for the two low flags reproduce the target word-load/left-shift/sign-branch test and the later byte flag writes. A signed field leaves an LB where the target has LBU. Explicit byte masks preserve logic but shift temporary-register allocation. A fourteen-bit unsigned halfword count preserves the low two flags when assigned 5. The original 0x24-byte layout is unchanged.
+
+The initializer writes five coordinates per axis. Overlay five-element history arrays with the existing current-coordinate and four-history-slot fields, rather than indexing the history arrays at -1. The final Z slot overlaps the upper halfword of the flag word. Zero function diff and full ROM checksum OK verify the result.
