@@ -1,6 +1,6 @@
 # Array-index induction reuses the header address register
 
-`validateSaveVersionAndChecksum` in `src.us/core/1050.c` initially had the correct
+`validateSaveVersionAndChecksum` in `src/common/core/1050.c` initially had the correct
 instructions but used `a2` for the header address and `a3` for the version and
 stored checksum. The target uses `v0` for both header and payload traversal,
 and `a2` for the version and stored checksum.

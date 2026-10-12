@@ -56,4 +56,4 @@ __osActiveQueue2 = 1;   // same signed-integer constant → register reused
 
 ## Occurred in
 
-`func_80001424_2024` (ROM 0x2024) – `src.us/core/1050.c`
+`func_80001424_2024` (ROM 0x2024) – `src/common/core/1050.c`

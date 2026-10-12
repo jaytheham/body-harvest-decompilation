@@ -1,6 +1,6 @@
 # Hoist-vs-rematerialise: which value wins the last callee-saved slot
 
-Observed while attempting `func_80000730_1330` (`src.us/core/1050.c`, 123 instructions, marker
+Observed while attempting `func_80000730_1330` (`src/common/core/1050.c`, 123 instructions, marker
 `CURRENT(1172)`), 2026-10-07 worker 1. **Not matched**; this is the triage rule and the two negative
 results for the family.
 

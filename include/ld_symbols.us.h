@@ -5,6 +5,7 @@
 
 extern Addr _29870_s;
 extern Addr _29960_s;
+extern Addr ___src_common_core_1050_c;
 extern Addr ___src_common_core_10A20_c;
 extern Addr ___src_common_core_12C80_c;
 extern Addr ___src_common_core_17EE0_c;
@@ -299,7 +300,6 @@ extern Addr _unknownSegmentRomStart;
 extern Addr _unknownSegmentStart;
 extern Addr boot_bin;
 extern Addr core_1000_s;
-extern Addr core_1050_c;
 extern Addr core_53F0_c;
 extern Addr header_s;
 extern Addr libultra_ai_c;
