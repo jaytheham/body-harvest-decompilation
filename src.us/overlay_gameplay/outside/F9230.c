@@ -1148,7 +1148,6 @@ void func_800EC330_FB2E0(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800EC3A0_FB350(s16 arg0) {
 	switch (arg0) {
 		case 4:
@@ -1160,7 +1159,6 @@ void func_800EC3A0_FB350(s16 arg0) {
 				D_801575E0.unk6 = 0x7FFF;
 				D_801575E0.unkA = 0x7FFF;
 				D_801575E0.unkE = 0x7FFF;
-				return;
 			}
 			return;
 
@@ -1170,9 +1168,10 @@ void func_800EC3A0_FB350(s16 arg0) {
 			return;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC3A0_FB350.s")
-#endif
+
+
+static void func_800EC448_stub(void) {
+}
 
 void func_800EC450_FB400(void) { D_80157A28 |= PLAYER_STATE_FLAG_WARPING; }
 
