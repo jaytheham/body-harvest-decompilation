@@ -28,6 +28,11 @@ target is control flow.
 
 Running the differ as a subprocess rather than importing it keeps this tool
 free of the vendored tool's dependency set and its import-time side effects.
+
+The differ compares the base ROM with the built ROM. A default build assembles
+every nonmatching function from its original ``.s``, so it matches by
+construction and a batch finds no differences; diff C bodies with a
+``--non-matching`` build.
 """
 import argparse
 import collections
@@ -53,9 +58,12 @@ MNEMONIC = re.compile(r"^\s*[0-9A-Fa-f]+:\s+([A-Za-z0-9.]+)")
 
 #: Instructions whose immediate slot is a control-flow destination rather than
 #: a value, so a differing one is a change in control flow.
+#: ``jal`` is not here: its differing immediate is a relocated symbol.
 BRANCH_MNEMONICS = frozenset({"beq", "bne", "beqz", "bnez", "blez", "bgtz",
-                              "bltz", "bgez", "bltzl", "bgezl", "bc", "bcl",
-                              "bltzal", "bgezal", "b", "bal", "j", "jal"})
+                              "bltz", "bgez", "b", "bal", "bltzal", "bgezal",
+                              "beql", "bnel", "beqzl", "bnezl", "blezl", "bgtzl",
+                              "bltzl", "bgezl", "bltzall", "bgezall",
+                              "bc1t", "bc1f", "bc1tl", "bc1fl", "j"})
 
 MARKER_NAMES = {
     "i": "IMMEDIATE",
@@ -237,6 +245,11 @@ def main():
             lines += [f"{len(failures)} functions could not be diffed:", ""]
             lines += [f"- `{n}`" for n in failures[:20]]
             lines.append("")
+        if not totals and not failures:
+            lines += ["No differences: the build assembles every nonmatching "
+                      "function from its original .s, so it matches by "
+                      "construction. Diff C bodies with a --non-matching build.",
+                      ""]
         lines += ["| class | differing instructions |", "|---|---:|"]
         order = ("BRANCH", "OPCODE", "IMMEDIATE", "STACK", "REGISTER",
                  "REGISTER_CATEGORY", "REMOVED", "ADDED")
