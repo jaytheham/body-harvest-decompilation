@@ -720,51 +720,35 @@ void func_80001830_2430(void) {
 	func_800015B4_21B4(4, 0x47);
 }
 
-// CURRENT(4990)
-#ifdef NON_MATCHING
 void func_80001984_2584(void) {
-	SaveSummary *dst, *end;
-	u8 *src;
+    s32 i;
+    s32 j;
+    s32 offset;
 
-retry:
-	if (validateSaveVersionAndChecksum(4, 0x47) == 0) goto fail;
-
-	D_800313D0_31FD0 = D_800431C8;
-	src = &D_800431C0[9];
-	dst = D_80047FB8;
-	end = &D_8004801C;
-	do {
-		dst->name[0] = *src++;
-		dst->name[1] = *src++;
-		dst->name[3] = *src++;
-		dst->name[4] = *src++;
-		dst->name[5] = *src++;
-		dst->name[2] = *src++;
-
-		dst->score = *src;
-		dst->score += src[1] << 8;
-		dst->score += src[2] << 16;
-		dst->score += src[3] << 24;
-		src += 4;
-
-		dst->humansKilled = *src++;
-
-		dst->secondsTaken = *src;
-		dst->secondsTaken += src[1] << 8;
-		dst->secondsTaken += src[2] << 16;
-		src += 3;
-
-		dst++;
-	} while (dst != end);
-	return;
-
-fail:
-	func_80001830_2430();
-	goto retry;
+    while (1) {
+    if (validateSaveVersionAndChecksum(4, 0x47) != 0) {
+    D_800313D0_31FD0 = D_800431C8;
+    offset = 9;
+    for (i = 0; i < 5; i++) {
+        for (j = 0; j < 6; j++) {
+            D_80047FB8[i].name[j] = D_800431C0[offset++];
+        }
+        D_80047FB8[i].score = D_800431C0[offset++];
+        D_80047FB8[i].score += D_800431C0[offset++] << 8;
+        D_80047FB8[i].score += D_800431C0[offset++] << 16;
+        D_80047FB8[i].score += D_800431C0[offset++] << 24;
+        D_80047FB8[i].humansKilled = D_800431C0[offset++];
+        D_80047FB8[i].secondsTaken = D_800431C0[offset++];
+        D_80047FB8[i].secondsTaken += D_800431C0[offset++] << 8;
+        D_80047FB8[i].pad[0] = 0;
+        D_80047FB8[i].secondsTaken += D_800431C0[offset++] << 16;
+    }
+    return;
+    } else {
+        func_80001830_2430();
+    }
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
-#endif
 
 // CURRENT (7171)
 #ifdef NON_MATCHING
