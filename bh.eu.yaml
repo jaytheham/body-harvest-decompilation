@@ -24,6 +24,7 @@ options:
   symbol_name_format: $VRAM_$ROM
   asm_jtbl_label_macro: jlabel
   asm_data_macro: dlabel
+  asm_end_label: endlabel
   image_type_in_extension: yes
   segment_symbols_style: makerom
 segments:
