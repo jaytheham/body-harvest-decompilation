@@ -211,7 +211,7 @@ SYMBOL = re.compile(r"^\s+0x(?P<vram>[0-9a-f]{8})\s+(?P<name>[A-Za-z_]\w*)\s*$")
 #: ``_coreSegmentTextStart = .`` ... ``_coreSegmentTextEnd = .``, then the same
 #: for Data, RoData and Bss. Text is the only region that holds functions.
 TEXT_START = re.compile(r"^\s+0x[0-9a-f]{8}\s+_\S+SegmentTextStart\s*=\s*\.")
-TEXT_END = re.compile(r"^\s+0x[0-9a-f]{8}\s+_\S+SegmentTextEnd\s*=\s*\.")
+TEXT_END = re.compile(r"^\s+0x(?P<vram>[0-9a-f]{8})\s+_\S+SegmentTextEnd\s*=\s*\.")
 
 #: ``  - name: overlay_gameplay_outside`` / ``    start: 0x7f220``
 YAML_NAME = re.compile(r"^\s*-\s*name:\s*(\S+)")
@@ -325,6 +325,7 @@ def parse_map(map_path, version=None):
         if version else set()
     segments = []
     functions = {}
+    text_ends = {}
     section = None
     obj = None
     prev_line = ""
@@ -335,10 +336,17 @@ def parse_map(map_path, version=None):
 
         m = OUT_SECTION.match(line)
         if m:
-            loaded = "noload" not in line and "noload" not in prev_line
             rom_start = int(m.group("rom"), 16)
+            # GNU ld puts a long section name on the line before its address
+            # line. The map's own name is authoritative; the yaml lookup by ROM
+            # start is only a fallback, because a bss section shares its ROM
+            # start with the next segment and would inherit that name.
             raw = (m.group("name") or "").lstrip(".")
-            name = names.get(rom_start, raw or f"@0x{rom_start:06X}")
+            if not raw and prev_line.strip().startswith("."):
+                raw = prev_line.strip().split()[0].lstrip(".")
+            loaded = ("noload" not in line and "noload" not in prev_line
+                      and not raw.endswith("_bss"))
+            name = raw or names.get(rom_start, f"@0x{rom_start:06X}")
             section = (rom_start,
                        int(m.group("size"), 16),
                        int(m.group("vram"), 16),
@@ -359,8 +367,11 @@ def parse_map(map_path, version=None):
             in_text = True
             prev_line = line
             continue
-        if TEXT_END.match(line):
+        m = TEXT_END.match(line)
+        if m:
             in_text = False
+            if section is not None:
+                text_ends[section[3]] = int(m.group("vram"), 16)
             prev_line = line
             continue
 
@@ -376,12 +387,17 @@ def parse_map(map_path, version=None):
                         sym, vram, rom, 0, name, obj, "asm")
         prev_line = line
 
-    _apply_sizes(functions, segments)
+    _apply_sizes(functions, segments, text_ends)
     return functions, segments
 
 
-def _apply_sizes(functions, segments):
-    """Fill in each function's size from the gap to the next function."""
+def _apply_sizes(functions, segments, text_ends=None):
+    """Fill in each function's size from the gap to the next function.
+
+    The last function of a segment ends at the segment's text end marker, not
+    at the end of the output section, which also holds data and rodata.
+    """
+    text_ends = text_ends or {}
     by_segment = {}
     for fn in functions.values():
         by_segment.setdefault(fn.segment, []).append(fn)
@@ -389,6 +405,8 @@ def _apply_sizes(functions, segments):
         group.sort(key=lambda f: f.vram)
         for i, fn in enumerate(group):
             end = group[i + 1].vram if i + 1 < len(group) else None
+            if end is None:
+                end = text_ends.get(fn.segment)
             if end is None:
                 for _rom, size, vram_start, name in segments:
                     if name == fn.segment:
