@@ -1,4 +1,4 @@
-"""Native Windows counterpart of the ROM Makefile (Python 3.11/3.12 x64)."""
+"""Native Windows counterpart of the ROM Makefile (Python 3.11.4 to 3.12 x64)."""
 import argparse
 from concurrent.futures import ThreadPoolExecutor
 import ctypes
@@ -78,10 +78,11 @@ def download(name):
 
 
 def setup():
+    # 3.11.4 is the floor: tarfile.extractall(filter=), used for the IDO archive below, first exists there.
     # 3.13 is excluded: pygfxd/crunch64 only publish wheels up to cp312 and
     # their source builds fail on 3.13.
-    if os.name != "nt" or sys.version_info[:2] not in ((3, 11), (3, 12)) or ctypes.sizeof(ctypes.c_void_p) != 8:
-        raise RuntimeError("Native builds require 64-bit Python 3.11 or 3.12 on Windows.")
+    if os.name != "nt" or not (3, 11, 4) <= sys.version_info[:3] < (3, 13) or ctypes.sizeof(ctypes.c_void_p) != 8:
+        raise RuntimeError("Native builds require 64-bit Python 3.11.4 to 3.12 on Windows.")
     CACHE.mkdir(parents=True, exist_ok=True)
     if not PYTHON.exists():
         print("Creating local Python environment...", flush=True)

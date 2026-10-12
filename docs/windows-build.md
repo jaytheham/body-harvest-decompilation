@@ -1,6 +1,6 @@
 # Native Windows build maintenance
 
-`tools/extract.ps1` and `tools/make.ps1` launch `tools/native_build.py`. A standard 64-bit Python 3.11 or 3.12 installation supplies `venv` and `pip`; all other tools and libraries live under the ignored `tools/windows` directory. The 3.11/3.12 range is intentional: the pinned extraction libraries have Windows wheels for these interpreters (3.13 is excluded because `pygfxd`/`crunch64` only publish wheels up to cp312), so installation does not need a compiler or Rust toolchain.
+`tools/extract.ps1` and `tools/make.ps1` launch `tools/native_build.py`. A standard 64-bit Python 3.11.4 to 3.12 installation supplies `venv` and `pip`; all other tools and libraries live under the ignored `tools/windows` directory. The range is intentional: setup unpacks IDO with `tarfile.extractall(filter=...)`, which first exists in 3.11.4, and the pinned extraction libraries have Windows wheels only up to 3.12 (`pygfxd`/`crunch64` publish nothing for 3.13), so installation does not need a compiler or Rust toolchain.
 
 The original Linux Makefile remains unchanged. The Windows driver reads object inputs from splat's generated linker script and uses the Makefile's IDO and assembler flags. It omits the separate host syntax checker to avoid another compiler dependency; IDO still diagnoses C compilation errors. It builds the same RNC C source with portable Tiny C and pads compressed output to 16 bytes. The final SHA1 check is mandatory unless `-NonMatching` was requested.
 
