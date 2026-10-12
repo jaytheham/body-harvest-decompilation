@@ -56,3 +56,8 @@ flat `f32 *` form - the winning form is per-function, so try the matched twin's 
 ### Java death effects: direct array call coordinates
 
 In func_802DB7A4_1F44B4, keep the named AlienInstance pointer for flags and counters, but pass alienInstances[arg0].unk0, .unk2, and .unk4 to the effect calls. Pointer-only arguments scheduled coordinate loads before constant stack arguments and the final radius calculation; direct indexed arguments produced the target ordering without extra address instructions. A separate u8 typeIndex and s16 storedType[2], assigning storedType[1], preserve the initial byte in v1 and its signed-halfword spill at sp+0x4E for the last call. Test the clear FALL case first when assigning 0x4B versus 1: the target uses bltzl with the set-case store in its delay slot. Diff score 0 and full ROM checksum OK.
+
+
+### Floating zero terms in the Java effect callback
+
+func_802DC738_1F5448 retains the target floating multiply and divide chain with an integer zero coefficient: ((f64)(f32)sins(angle) / 32768.0) * 0. Spelling the coefficient 0.0 folds the entire term away. For the Z expression, putting (jointZ + coefficient * sineRatio) on the left and cosineRatio * 0 on the right makes IDO evaluate the cosine term first, matching the target arithmetic and floating registers. Plain s32 input coordinates with s16 argument casts produce the target halfword reloads and cached word spills; making input coordinates SignedWord unions introduces extra alias-driven reloads. SignedWord remains appropriate for output coordinates passed by address. This candidate is still NON_MATCHING (847), with only register and stack differences after more than 20 builds.

@@ -3010,78 +3010,65 @@ void func_802DC4A8_1F51B8(u8 idx) {
 #endif
 
 #ifdef NON_MATCHING
+// CURRENT(847): instruction sequence matches; register and frame differences remain.
 void func_802DC738_1F5448(u8 arg0) {
 	AlienInstance *alien;
-	AlienType *type_base;
-	s16 sp48;
-	s32 sp40;
-	s32 sp38;
-	s32 sp34;
-	s32 sp6C;
-	s32 sp68;
-	s32 sp64;
-	s32 sp60, sp5C, sp58;
-	s32 sp54, sp50, sp4C;
-	s16 sp62, sp5E, sp5A, sp56;
-	u8 sp77;
-	s8 sp75;
+	u8 animation;
+	u8 pad;
+	u8 child;
+	union { s8 signedValue; u8 unsignedValue; } jointId;
+	s32 state;
 	s32 angle;
-	s32 param;
-	f32 cos_val;
+	s32 x;
+	s32 y;
+	s32 z;
+	SignedWord x1;
+	SignedWord y1;
+	SignedWord z1;
+	SignedWord x2;
+	s32 y2;
+	s32 z2;
+	Unk8014DD50 *joint;
+	s16 cosine;
 
-	/* Get alien instance and initial state */
 	alien = &alienInstances[arg0];
-	sp77 = alien->unk36;
-	type_base = &D_8014DD50[alien->unkC * 0x10];
-	sp75 = type_base[type_base->unkC * 0x10].unkD;
-	sp40 = sp77 & 0xFF;
-
-	if ((sp77 & 0xFF) < 4) {
-		type_base = &D_8014DD50[(sp75 & 0xFF) * 0x10];
-		angle = type_base->unk0;
-		sp6C = angle + 0x17;
-		param = type_base->unkA & 0xFFFF;
-		sp38 = param;
-
-		sp48 = coss(param);
-
-		/* Compute y position offset using trig value */
-		sp68 = (s32)(((f64)type_base->unk2 + D_802E0F68 * ((f64)(f32)sp48 / 32768.0)));
-
-		sp48 = sins(type_base->unkA);
-		cos_val = (f32)coss(type_base->unkA);
-		sp64 = (s32)((f64)type_base->unk4 + D_802E0F70 * (((f64)(f32)sp48 / 32768.0)));
-
-		sp34 = sp64;
-
-		/* Call animation update with computed parameters */
-		func_80128428_1373D8(alien, type_base->unkA, (s16)sp38, (s16)sp64, &sp60, &sp5C, &sp58);
-		func_80128428_1373D8(alien, (s16)(sp6C * -1), (s16)sp38, (s16)sp64, &sp54, &sp50, &sp4C);
-		func_800D16BC_E066C((s16)sp62, (s16)sp5E, (s16)sp5A, (s16)sp56, sp50, sp4C, 1);
+	child = (u8)D_8014DD50[alien->unkC].unkC;
+	animation = alien->unk36;
+	jointId.signedValue = D_8014DD50[child].unkD;
+	state = animation & 0xFF;
+	if (state < 4) {
+		joint = &D_8014DD50[jointId.unsignedValue];
+		angle = joint->unkA & 0xFFFF;
+		x = joint->unk0 + 23;
+		cosine = coss(angle);
+		y = (s32)((f64)joint->unk2 + D_802E0F68_1F9C78[0] * ((f64)(f32)cosine / 32768.0) - ((f64)(f32)sins(angle) / 32768.0) * 0);
+		cosine = sins(angle);
+		z = (s32)(((f64)joint->unk4 + D_802E0F70_1F9C80[0] * ((f64)(f32)cosine / 32768.0)) + ((f64)(f32)coss(angle) / 32768.0) * 0);
+		func_80128428_1373D8(alien, (s16)x, (s16)y, (s16)z, &x1.word, &y1.word, &z1.word);
+		func_80128428_1373D8(alien, -x, (s16)y, (s16)z, &x2.word, &y2, &z2);
+		func_800D16BC_E066C(x1.halves.low, y1.halves.low, z1.halves.low, x2.halves.low, y2, z2, 1);
 	}
-
-	/* Check state condition */
-	if (D_8014DD50[(sp75 & 0xFF) * 0x10].unkE == 0) {
-		if (sp40 == 3) {
-			type_base = &alienTypes[alien->unk1A];
-			type_base->unk20 = 0;
+	if (D_8014DD50[jointId.unsignedValue].unkE == 0) {
+		if (state == 3) {
+			AlienType *type;
+			child = alien->typeIndex;
+			type = &alienTypes[child];
+			type->unk20 = 0;
 			alien->unk1E = 0;
-			type_base->unk22 = (s16)sp68;
-			type_base->unk24 = (s16)sp64;
+			type->unk22 = (s16)y;
+			type->unk24 = (s16)z;
 			func_80087188_96138(arg0, 0, 0x20);
 		}
-
-		if (sp40 < 5) {
-			func_80081C84_90C34((u8)sp75, (void *)(&D_802E0890[sp77 * 0x10]));
+		if (state < 5) {
+			func_80081C84_90C34(jointId.unsignedValue, &D_802E0890_1F95A0[animation]);
 		} else {
-			alien->unk20 = alien->unk20 & ~(ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKE);
+			alien->unk20 &= ~(ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKE);
 		}
-
-		alien->unk36 = (u8)(alien->unk36 + 1);
+		alien->unk36++;
 	}
-
-	func_80081E5C_90E0C((u8)sp75);
+	func_80081E5C_90E0C(jointId.unsignedValue);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC738_1F5448.s")
 #endif
