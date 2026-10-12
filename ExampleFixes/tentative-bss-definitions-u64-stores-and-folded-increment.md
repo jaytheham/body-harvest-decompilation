@@ -12,7 +12,7 @@ The target shares one `lui` for the peeled byte stores, and one for each
 64-bit store pair, with the low word stored first. Local tentative definitions
 give IDO enough information about the objects to reproduce these patterns.
 `CORE_53F0_BSS`, defined before including the headers in `53F0.c`, enables
-these definitions in `include/variables.us.h`:
+these definitions in `include/variables.h`:
 
 ```c
 BitFlags64 D_8004DC48;

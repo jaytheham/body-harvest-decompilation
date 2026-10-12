@@ -19,7 +19,7 @@ The guess declared `void f(VehicleInstance *vehicle)` and read `vehicle->unk1A` 
 | 0x8 | `lbu` | `*(u8 *)((u8 *)trigger + 8)` |
 | 0xC | pointer store | `*(void **)((u8 *)trigger + 12)` |
 
-That is exactly `Unk80222A78` (`structs.us.h`), the trigger struct the caller casts to before
+That is exactly `Unk80222A78` (`structs.h`), the trigger struct the caller casts to before
 calling `func_800AE454_BD404`. Retyping the parameter and moving to `trigger->unk8 / unk1 / unk2 /
 unk4 / unkC`: **1800 -> 1120**.
 

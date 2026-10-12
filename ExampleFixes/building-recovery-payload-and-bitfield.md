@@ -25,7 +25,7 @@ those registers and changed call scheduling. The pointer-only cast from the
 payload array suffices; an intermediate integer cast is unnecessary.
 
 Validation: function diff score 0 and full ROM `build/bh.us.z64: OK` after moving
-the payload type into `include/structs.us.h` and cleaning the function.
+the payload type into `include/structs.h` and cleaning the function.
 
 
 ### State and rotation halfword

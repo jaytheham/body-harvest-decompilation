@@ -6,7 +6,7 @@ The opening `lw at; sw at; lhu at; sh at` sequences are six-byte struct assignme
 
 Declare two unused word locals before the three copied structs and two after them. This retains the 0x68 stack frame and copies at 0x58, 0x50, and 0x48. Keep the later graphics commands as normal GBI macros.
 
-The counter update otherwise shares a full address in `v0`. Use a separate write alias, `D_800A436C_18C42C_W = D_800A436C_18C42C + 1`, with its declaration in `variables.us.h` and relocatable linker definition in `undefined_syms.us.txt`. This produces the target folded `lhu` and independent `lui at; sh` without allocating additional data. Changing `+= 1` to postincrement did not fix the address sharing and altered stack homes.
+The counter update otherwise shares a full address in `v0`. Use a separate write alias, `D_800A436C_18C42C_W = D_800A436C_18C42C + 1`, with its declaration in `variables.h` and relocatable linker definition in `undefined_syms.us.txt`. This produces the target folded `lhu` and independent `lui at; sh` without allocating additional data. Changing `+= 1` to postincrement did not fix the address sharing and altered stack homes.
 
 Pass the projection matrix through `K0_TO_PHYS(&D_800FCAD8)` to reproduce the target 0x1FFFFFFF address mask. All remaining control flow and display-list commands matched the existing C reconstruction.
 

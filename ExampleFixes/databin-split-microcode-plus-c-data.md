@@ -19,7 +19,7 @@ object's data, e.g. the core `0x2EA10` databin which held:
      (an identity matrix starts `00 01 00 00 00 00 00 00 00 00 00 01 ...`).
 2. The RAM addresses of the known data symbols pin the split exactly:
    `D_80031120_31D20` = RAM `0x80031120` = ROM `0x31D20`.
-3. Reference the data symbols from `include/variables.us.h` / `src.us/**` to
+3. Reference the data symbols from `include/variables.h` / `src.us/**` to
    find which C file owns them (the first C file that references the section is
    a safe owner if the real owner is unknown).
 
@@ -94,7 +94,7 @@ etc.), not a naive diagonal.
   alias back to `undefined_syms.us.txt` (e.g. `D_80031260_31E60 = 0x80031260;`)
   for the name the code actually uses, and remove the manual entries for names
   that are now real C definitions.
-* Update the `extern` type in `variables.us.h` to match the C definition
+* Update the `extern` type in `variables.h` to match the C definition
   (`u8 D_80031160` -> `Mtx D_80031160`) - it is only used by address
   (`gSPMatrix(&D_80031160, ...)`, `gSPSegment(..., &D_80031160)`), so a scalar
   `u8` stops the 64-byte definition from being expressible.

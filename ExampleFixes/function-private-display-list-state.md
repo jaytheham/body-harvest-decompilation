@@ -21,7 +21,7 @@ the first command byte to be read without pointer casts or bitfields.
 Anonymous static relocations need actual input-section placement, rather
 than absolute aliases for their old symbol names. The translation unit
 first supplies its existing `D_801575A0` and `D_801575A4` globals through
-`OUTSIDE_F7870_BSS` in `variables.us.h`. The existing `.fixed_bss` Splat
+`OUTSIDE_F7870_BSS` in `variables.h`. The existing `.fixed_bss` Splat
 extension anchors that unit at 0x801575A0. Its private destination, start,
 and count then occupy 0x801575A8, 0x801575AC, and 0x801575B0 respectively.
 

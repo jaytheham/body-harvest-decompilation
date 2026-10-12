@@ -17,7 +17,7 @@ IDO emits a compiled function's generated jump table after **all** declared roda
 
 So the `lw t8,%lo(jtbl)(at)` immediate can only match once the *other* rodata after it in the target is also compiler-generated - i.e. the still-unmatched function owning `jtbl_800A54AC` and the owner of the `1.2` double must be matched too. Deleting this function's placeholder does not help (still 5); it just removes 36 declared bytes. Treat a mid-rodata switch table as a batch dependency and check the ROM bytes before sinking attempts into the body.
 
-Two body fixes are required to reach the 5 at all (both cost instructions otherwise): the struct field is `unk0`, not `pad0` (`UnkFB6F8Entry`, `structs.us.h`), and the five `handler(i & 0xFF)` calls must read `handler((u8)i)` so IDO emits a single `andi a0,s0,0xFF` in the jal delay slot; `i & 0xFF` makes IDO build the mask in a fresh temp plus two `move`s for cases 1, 2 and 8 (+6 instructions). `func_80089834_1718F4` also needs a prototype in `functions.us.h` because it is defined later in the same TU.
+Two body fixes are required to reach the 5 at all (both cost instructions otherwise): the struct field is `unk0`, not `pad0` (`UnkFB6F8Entry`, `structs.h`), and the five `handler(i & 0xFF)` calls must read `handler((u8)i)` so IDO emits a single `andi a0,s0,0xFF` in the jal delay slot; `i & 0xFF` makes IDO build the mask in a fresh temp plus two `move`s for cases 1, 2 and 8 (+6 instructions). `func_80089834_1718F4` also needs a prototype in `functions.h` because it is defined later in the same TU.
 
 ## Matching instructions can still hide incorrect case labels
 
@@ -207,7 +207,7 @@ empty cases 5-8 (`case 5: case 6: case 7: case 8: break;`) switched IDO to the t
 score **2435 -> 210** in one edit; nothing else in that edit moved it.
 
 Two further levers on the same function: the selector must be the **struct field**
-(`switch (D_800E65BC[arg1].unkC)`, `Unk80070F7CObj`, `structs.us.h`) rather than the raw
+(`switch (D_800E65BC[arg1].unkC)`, `Unk80070F7CObj`, `structs.h`) rather than the raw
 `*(s16 *)((u8 *)&D_800E65BC[arg1] + 0xC)` - the typed read fixes the head's temp assignment
 (`$t6` global / `$t7` index) and took **210 -> 170**.
 

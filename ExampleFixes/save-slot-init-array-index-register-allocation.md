@@ -16,6 +16,6 @@ With a named pointer, IDO used a temporary register for the initial payload offs
 
 Using the offset as the induction variable let IDO strength-reduce the array accesses to the same pointer walk while placing the initial offset in `a1`, the stride in `a2`, and the array base in `t6`. This also restored the target's instruction scheduling and constant registers.
 
-Retain the original explicit stores and loop bounds. In this function the small clearing loops compile without unrolling; rewriting their structure can change that behavior. The serialized records are described by `SaveAreaStat` and `SaveSlotData` in `include/structs.us.h`.
+Retain the original explicit stores and loop bounds. In this function the small clearing loops compile without unrolling; rewriting their structure can change that behavior. The serialized records are described by `SaveAreaStat` and `SaveSlotData` in `include/structs.h`.
 
 Verified with `tools/make.ps1`: `build/bh.us.z64: OK`, and no differences from `tools/diff.ps1 func_800021CC_2DCC func_80002378_2F78`.

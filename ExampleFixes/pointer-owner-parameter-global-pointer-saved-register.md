@@ -4,7 +4,7 @@ Matched `func_800EBA54_FAA04` in `src.us/overlay_gameplay/outside/F9230.c` with 
 
 The logic and instruction order already matched, but every access to `D_80052B34` used `v1` instead of target `s0`. This also omitted the saved-register store/load and reduced the stack frame from `0x28` to `0x20`.
 
-The positional sound helper `func_801371B8_146168` had an integer first parameter despite callers passing vehicle and alien pointers as sound owners. Changing that parameter from `s32` to `void *` in both `include/functions.us.h` and the helper definition fixed the target caller without any named vehicle pointer or register-allocation expressions:
+The positional sound helper `func_801371B8_146168` had an integer first parameter despite callers passing vehicle and alien pointers as sound owners. Changing that parameter from `s32` to `void *` in both `include/functions.h` and the helper definition fixed the target caller without any named vehicle pointer or register-allocation expressions:
 
 ```c
 func_801371B8_146168(D_80052B34, 0x8D,
