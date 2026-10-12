@@ -817,6 +817,8 @@ extern s32 D_800476AC;
 extern s32 D_800476B0;
 extern s32 D_800476C0;
 extern Unk800476C8 D_800476C8[2];
+extern s32 D_800476C8_words[16]; // Word view of the same matrix scratch buffer.
+extern s32 D_800476F0; // Scratch matrix entry at byte offset 0x28.
 extern Unk800476C8 D_80047708;
 extern s16 D_80047710;
 extern s16 D_80047712;

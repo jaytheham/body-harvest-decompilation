@@ -15,3 +15,7 @@ Packing uses an unsigned high mask. Write the high-half expression as `(src[0] &
 Keep the packing setup on one source line in the order mask, output cursor, source cursor, do-loop header, first store. This reproduces the target address scheduling: end-address low addition, output-pointer load, source-address low addition. Other assignment orders or spreading the setup across lines reverse these instructions.
 
 Descriptive local names, array access for cursor advancement, and removing redundant unsigned-short casts from the trigonometry calls all retained the full ROM match.
+
+### Core transform (func_800039D0_45D0)
+
+The matched frontend function is a direct donor for the core transform. Keep its four cached products, +0 wrappers, zero-product lifetime test, row-wide multiply-then-shift scaling, and packing setup on one line. Core translation inputs are signed halfwords shifted left sixteen; keep the existing typed vector parameters and reuse arg0 through a word-array view for packing. Add D_800476C8_words = D_800476C8 in the existing undefined_syms.us.txt and declare its sixteen words plus D_800476F0 in variables.us.h. No translation-unit splitting or new files are needed. Verified full ROM OK and diff zero on 2026-10-12.
