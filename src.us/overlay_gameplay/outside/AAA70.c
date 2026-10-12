@@ -236,12 +236,6 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(3123) - Run A20: the 2713 marker was stale; re-measured 3267 with the body
-// unwrapped. The residual is ONE home - var_a3 sits at 0x44 (target 0x18), which grows the
-// frame 0x50 vs the target 0x48 and shifts every stack-touching row; plus 4 extra `or`/move
-// copies (161 instructions vs the target 157, opcode-frequency count: only `or` differs,
-// +4). Best of five declaration orders (this one) - 3267 -> 3123. Do not re-tread the
-// call-site `& 0xFF` (dropping it reaches 2742 only by deleting an `andi` the target HAS).
 #ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
 	s32 sp1C;
@@ -1058,16 +1052,6 @@ void func_8009D96C_AC91C(void)
 #endif
 
 // drawAlienHealth
-// CURRENT(8863) - Run A37: three measured levers on the 10501 body (all inside the guard).
-// (1) The two `0.0f` guards and the `interp = 0.0f` reset mix with this file's `const f64[1]`
-// scalars, so the literals must be DOUBLE (`0.0`, no `f`): the target emits `cvt.d.s` + `c.lt.d`
-// where the f32 spelling emits `c.lt.s`. 10501 -> 9017, objdump 184 -> 190 of the target's 191 -
-// the missing double conversions were six of the seven-instruction deficit.
-// (2) `s32 width` -> `s16 width` and (3) `s16 width;` declared FIRST (IDO homes top-down):
-// 9017 -> 8863 at 192 instructions.
-// Residual: the head's argument homes - the target stores the raw `s16 arg3` in its arg-save
-// slot and re-reads it with `lh` at a 0x30 frame, ours materialises it (`sll`/`sra`) into a
-// local at 0x34/0x4E with a 0x40 frame - plus the whole-function register band.
 #ifdef NON_MATCHING
 void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 	s16 width;
@@ -1576,16 +1560,6 @@ void func_8009FB58_AEB08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
 #endif
 
-// CURRENT(15011) - qu016/qu102 spelled as literals (0xFFFF/0x8000/0x7C) so the body compiles;
-// the guess's s32 pad[66] deleted (0x290 -> 0x188) and the two declared-but-unused locals
-// (s32 idx, Gfx *dl) deleted (frame 0x188 -> 0x180 = the target's; 15082 -> 15011).
-// Remaining: 972 instructions vs the target's 986 (-14), and the struct homes sit +8
-// (sp168@0x170 / sp160@0x168 where the target has 0x168 / 0x160).
-// The 0x40 shift of EVERY AAA70-owned data symbol (D_8013D744_14C6F4 at 0x8013D704, target
-// 0x8013D744) is NOT a data-layout batch item: the segment's text is 0xcb640 where the ROM's is
-// 0xcb680, i.e. exactly this body's 14-instruction deficit after ALIGN(16) -
-// `overlay_gameplay_outside_AAA70_c` (the data block start) moves with the text end. Close the
-// deficit and the data addresses snap back; do not chase the data layout.
 #ifdef NON_MATCHING
 // DisplayScanner
 void func_800A03FC_AF3AC(void) {
@@ -2002,12 +1976,6 @@ void func_800A1924_B08D4(void) {
 	}
 }
 
-// CURRENT(700) - 1160 -> 700 by dropping the local held across the jal: both comparisons read
-// D_8013D5BC_14C56C directly. That deletes the `sh a1,0x26(sp)`/`lh a1,0x26(sp)` spill pair and the
-// redundant sll/sra sign-extension IDO emitted for the s16 local. Residual: ours compiles to 238
-// instructions against the target 240 (the target reloads the state word twice, once per tail path;
-// ours shares one reload), so the whole-file data anchor still sits 0x10 low, plus the register band.
-// Duplicating the reload inside the `== 2` branch measured neutral (IDO CSEs it).
 #ifdef NON_MATCHING
 void func_800A1A18_B09C8(void) {
 	s16 var_v0;
@@ -2204,22 +2172,6 @@ void func_800A1DD8_B0D88(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
 #endif
 
-// CURRENT(850) - NOT a matched body: the whole residual is the register class IDO picks for the
-// repeated `0x800` texture coordinate. The target materialises it once into CALLEE-SAVED $s0
-// (`addiu $s0,$zero,0x800` at index 85, reused by six `sh $s0,...`) and pays the save/restore pair
-// (`sw $s0,0x4($sp)` / `lw $s0,0x4($sp)`); ours materialises the constant at the same index into a
-// caller-saved temp. Superseded body (936) kept in git history.
-//
-// Run A32: permuter warm-started from the 936 body (13 385 iterations, -j4 --stack-diffs
-// --stop-on-zero, 52 outputs); EVERY output spliced verbatim and measured on the tree. The mapping
-// permuter->tree is monotone with a ~+15 offset here (835->850, 843->858, 855->870, 889->904,
-// 909->924, 921->936), so the permuter's best is the tree's best. Winner: an empty
-// `if ((!D_8014F618.head.unkC) && (!D_8014F618.head.unkC)) { }` between the `v.tc[0] = 0` and
-// `v.tc[1] = 0` stores of the second vertex block - a dead-code liveness probe (the ROM has no such
-// load), so this body cannot itself reach 0; it is the closest verified state.
-// Levers refuted earlier, do not re-tread: declaration-order permutations (1326..1522), empty-`if`
-// lifetime extensions on the float locals, `(s16)/(u16)0x800`, named local for the constant (5
-// spellings), dropping both pads (1292), pad1 after sp8 (944), the A31 self-assignment probe (936).
 #ifdef NON_MATCHING
 void func_800A2260_B1210()
 {
@@ -2409,81 +2361,6 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// Previous: CURRENT(349) - A27: a fresh permuter run warm-started from the 407 body (7.1k iters, -j3
-// --stack-diffs, PRIMITIVE/TEXEL0 base.c enum) found three constructs A25/A26 had not, each measured
-// individually then stacked (base 407): (1) `flatDistI = 0xF; D_8014F618.unk6F += flatDistI;` in the
-// unk70==1 branch -> 362; (2) an empty `if (!D_8004795C) { }` just before the `pulse = (s16)...`
-// clamp -> 402 (the A22 live-range class); (3) `f32 posY;` moved from before `s32 flatDistI;` to after
-// `f32 posZ;` -> 399. Stacked: 1+2 = 357, 1+3 = 354, 1+2+3 = 349. Refuted on top of the winner:
-// chaining the flatDistI product into `flatDistI` instead of `new_var` (352 alone, 404 stacked),
-// `posZ = (f32)new_var2; posY = posZ;` (neutral 407/349), flatDistI/pad0/distScale/pulse-first and
-// new_var-first declaration orders (365/357/413/373/365). Count-exact 446 = 446 (objdump); residual
-// 349 is still allocation (the +8 frame, posX $f16 vs $f0, packed-colour byte order, pulse clamp band).
-// Previous: CURRENT(407) - A26: the declaration-position lever still had room. `int new_var;` (A24's named
-// first product) moves from FIRST in the frame to directly after `f32 posZ;` - 415 -> 407. Its
-// neighbours were re-swept this run (after pad0 415, after posX 415, after posY 415, after flatDistI
-// 407, after distScale 415, after new_var2 415, after pulse 415, first 415), so the gain is the move
-// itself. The +8 frame is NOT the lever: dropping `new_var2` restores the target's 0x90 frame but
-// measures 466, and dropping both new_var and new_var2 measures 852 (frame 0x90). `swap_mul` (table
-// first on the six distScale products), deleting the dead `pad0`, dropping the empty `if (arg2)`
-// (1484) and holding unk6D in pad0 are all neutral or worse. Residual 407 = the +8 frame (ours 0x98
-// vs 0x90) plus whole-function allocation (posX in $f16 vs $f0, the packed-colour byte load order,
-// $v0/$v1 on the pulse clamp).
-// Previous: CURRENT(415) - A25: a fresh warm-started permuter run (from the 447 body, -j3 --stack-diffs) topped
-// out at 392 in the permuter's own metric, but only ONE of its constructs is real. The permuter's
-// score is not asm-differ's: splicing its best outputs back measured 2900 (the `flatDistI = ...;
-// new_var = flatDistI;` split) and 2868 (that plus the `unk6F = unk6F - 0xF` rewrite), while the one
-// declaration move measured 447 -> 415. `s32 flatDistI;` moves from after `s16 new_var2;` to directly
-// after `f32 posY;`. Its neighbours were all swept in the same run: after posZ 447, after distScale
-// 439, after pad0 does not build, with new_var2 before it 431 and pulse before it 423. The residual
-// 415 is still the frame (+8: ours 0x98 vs the target's 0x90) plus whole-function allocation (posX in
-// $f16 vs the target's $f0, the packed-colour byte load order, the argument-evaluation order).
-// Previous: CURRENT(447) - A24: a warm-started permuter run (8331 iterations, --stack-diffs) found two more
-// no-cost live-range constructs on top of the 860 body: (1) hoist the first product of the
-// flatDistI expression into a named `int new_var;` declared FIRST in the frame (860 -> 490), and
-// (2) name `arg1` in a `s16 new_var2;` used by posY and by the sqrtf argument (490 -> 447). Both
-// add no instruction - objdump counts 446 = 446. Holding unk6D in the dead `pad0` (a third
-// permuter find) measured 652, so it is NOT in the body.
-// Earlier: CURRENT(860) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
-// if (arg2) inserted between the D_80052B40.unk0 and .unk2 stores - it extends arg2's live
-// range, which shifts IDO's whole register allocation toward the target. 1860 -> 885.
-// NOTE: the empty if DOES cost one instruction - the permuter's "446 = 446" was ins_diff's
-// miscount (ins_diff is unreliable on this function); objdump reports 447. A23: hold the three
-// equal D_80052B50 halves in the existing `pulse` local instead of reading D_80052B50.unk4 back
-// twice - that removes the redundant `lh v1,4(a2)` reload, restores the exact 446 = 446 count,
-// and measures 885 -> 860 (asm-differ). The store order is the target's (unk4, unk2, unk0).
-// Previous: CURRENT(1860) - two fixes took this from 8685. (1) The `(s16)distScale` store must be spelled
-// UNSIGNED: `*(u16 *)&D_8014F618.unk60 = (u16)distScale;` makes IDO emit its full unsigned
-// float->int sequence (cfc1/ctc1 round-to-zero, cvt.w.s, the 0x4F000000 overflow check, the
-// 0x80000000 fixup, `sh`). The `(s16)` form compiled to a bare `trunc.w.s` and was the whole
-// 25-instruction deficit (421 vs 446) that A8 recorded - close that deficit and the whole TU tail
-// realigns. (2) `func_800A2260_B1210()` takes no arguments (prototype `void ...()`); the guess's
-// `(NULL, NULL, NULL, NULL)` emitted four `move aN,zero`. Structure is now 446 = 446 with every
-// opcode in place; the residual 1860 is register allocation (posX in $f16 vs the target's $f0, the
-// float temp band, and the packed-colour byte load order).
-// Earlier finding: spelling the head as a real member of the global (Unk8014F618.head, no cast,
-// no pointer local) makes every head access a constant-address expression and IDO then assigns the
-// two hoisted bases the way the target does ($s0=&D_8014F618, $s1=&D_8005BB2C); the cast form gave
-// the reverse. One declared-but-unused s32 first in the frame restores the target's posZ home at
-// 0x20 (it lands at 0x24 without it).
-// CURRENT(234) - A29: permuter warm-started from the 244 body (prep on par2, ~19k iters, -j3
-// --stack-diffs, PRIMITIVE/TEXEL0 base.c C-enum) found ONE transferable construct: the second colour
-// argument of the first gDPSetPrimColor written as a comma form on the GLOBAL, `((0, D_8014F618)).unk78`
-// (a sequence expression that re-materialises the base) - 244 -> 234. Same family as A28s
-// `(0, D_8014F618.unk73)`. Measured refutations: the same wrap on unk77 = 406, unk79 = 386, unk69 =
-// 1011, all four = 1147; the runs other output (splitting the unk2 store off the one-line block) = 244
-// alone, 234 stacked - neutral. Count 446 = 446 (objdump). Residual 234 = the +8 frame, posX $f16 vs
-// $f0, the packed-colour byte order and the pulse-clamp band.
-// Previous: CURRENT(244) - A28: permuter warm-started from the 349 body (7k iters, -j2 --stack-diffs,
-// PRIMITIVE/TEXEL0 base.c C-enum). Three measured constructs, each spliced and re-measured:
-// (1) writing the D_80052B48.unk2/unk4 + empty-if + pulse block as ONE line (349 -> 289) - it
-// reschedules one store (`sh t6,4(a1)`) across two `addiu r,r,0` rows; (2) `distScale =
-// D_80052B34->unk4 - arg2;` hoisted before the first sqrtf, third term read back from distScale
-// (289 -> 274); (3) `(0, D_8014F618.unk73)` comma form on the second gDPSetPrimColor (289 -> 259).
-// Stacked: 1+2 = 274, 1+3 = 259, 1+2+3 = 244. Refuted on top: merging the pulse assignment into
-// the unk2 store (254), deleting the empty `if (!D_8004795C) { }` (309, it is a live-range lever).
-// Count-exact 446 = 446 (objdump). Residual 244 = the +8 frame, posX $f16 vs $f0, the packed-colour
-// byte order and the pulse-clamp band.
 #ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
