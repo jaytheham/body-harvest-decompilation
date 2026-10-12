@@ -15,9 +15,17 @@
 #     view), ignoring generated, commit, commit_timestamp and the newest history entry's commit hash
 # The NTSC comparison walks the git history twice (in parallel) and takes a few minutes; QUICK=1 compares the
 # --verify-with-asm output instead (no history, no contributors), which takes seconds.
+# BASE must name a commit that exists in the clone, in QUICK mode too, because the old progress.py is read with
+# git show. 32aaef7ad is a local integration commit: once the pull request has been rebased or squashed upstream it
+# no longer exists, and BASE must then be set to the last commit whose tools/progress.py has no --version option.
 set -u
 : "${PY:?set PY to the Python 3.12 interpreter}"
 base="${BASE:-32aaef7ad}"
+if ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
+    echo "FAIL BASE '$base' is not a commit in this clone; set BASE to the last commit before the EU view" \
+        "(the one whose tools/progress.py has no --version option)"
+    exit 1
+fi
 failures=0
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
