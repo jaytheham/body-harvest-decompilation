@@ -46,6 +46,8 @@ LD_SCRIPT = bh.ld
 UNDEFINED_SYMS_AUTO = undefined_syms_auto.txt
 endif
 SRC_DIR   = src.$(VERSION)
+# Translation units shared by every version (bh.<version>.yaml names them as ../src/common/...).
+COMMON_SRC_DIR = src/common
 
 SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/core \
@@ -59,7 +61,9 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/overlay_level/siberia \
 			$(SRC_DIR)/overlay_level/comet \
 			$(SRC_DIR)/data \
-			$(SRC_DIR)/bss
+			$(SRC_DIR)/bss \
+			$(COMMON_SRC_DIR) \
+			$(COMMON_SRC_DIR)/core
 
 TOOLS_DIR = tools
 
@@ -193,7 +197,7 @@ ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
 
 # Files requiring pre/post-processing
-GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) </dev/null 2>/dev/null)
+GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(COMMON_SRC_DIR) </dev/null 2>/dev/null)
 GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
 
 
