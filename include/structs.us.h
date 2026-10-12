@@ -1,5 +1,5 @@
-#ifndef STRUCTS_NA_H
-#define STRUCTS_NA_H
+#ifndef STRUCTS_US_H
+#define STRUCTS_US_H
 
 /* Declarations that appear in the NTSC (NA) ROM and not the other one.
  *
@@ -9,4 +9,4 @@
  * declarations here. This file is the home for anything that genuinely exists
  * in only one release. */
 
-#endif /* STRUCTS_NA_H */
+#endif /* STRUCTS_US_H */

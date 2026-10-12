@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_NA_H
-#define FUNCTIONS_NA_H
+#ifndef FUNCTIONS_US_H
+#define FUNCTIONS_US_H
 
 /* Declarations that appear in the NTSC (NA) ROM and not the other one.
  *
@@ -9,4 +9,4 @@
  * declarations here. This file is the home for anything that genuinely exists
  * in only one release. */
 
-#endif /* FUNCTIONS_NA_H */
+#endif /* FUNCTIONS_US_H */
