@@ -64,7 +64,21 @@ J_OP = (2, 3)  # j, jal
 
 
 def read_rom(version):
-    return (ROOT / f"baserom.{version}.z64").read_bytes()
+    """The base ROM for a version, or exit with what to do if it is missing."""
+    path = ROOT / f"baserom.{version}.z64"
+    if not path.exists():
+        raise SystemExit(f"{path.name} not found: copy your ROM to the repository root")
+    return path.read_bytes()
+
+
+def require_build(path, version=None):
+    """Exit with what to run when a build product such as a map is missing."""
+    if not pathlib.Path(path).exists():
+        v = version or "us|eu"
+        raise SystemExit(f"{path} not found: run `python tools/native_build.py extract "
+                         f"--version {v}` and `python tools/native_build.py build "
+                         f"--version {v}` first")
+    return path
 
 
 def read_build(version):
@@ -320,6 +334,7 @@ def parse_map(map_path, version=None):
     manufacture thousands of bogus call edges. The linker script's own
     ``_<seg>SegmentTextStart`` / ``...TextEnd`` markers delimit the region.
     """
+    require_build(map_path, version)
     names = dict(yaml_segment_starts(version)) if version else {}
     data = {n for _r, n, _t in yaml_segments(version) if is_data_segment(n)} \
         if version else set()
