@@ -244,6 +244,11 @@ def build(args):
         # EU links core rodata as asm whose jump tables reference jlabels in other objects.
         asflags += ["--defsym", "GLOBAL_JLABELS=1"]
     cflags = f"-G0 -Xfullwarn -Xcpluscomm -signed -nostdinc -non_shared -Wab,-r4300_mul -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG -DVERSION_{args.version.upper()} -woff 649,838".split()
+    # IDO treats an #error as a warning (it exits 0 and writes the object), so the unknown-version #error in shared source cannot stop this
+    # build. Check here, where the flags are made, that exactly one version macro is defined and that it is this build's.
+    version_macros = [f for f in cflags if f in ("-DVERSION_US", "-DVERSION_EU")]
+    if version_macros != [f"-DVERSION_{args.version.upper()}"]:
+        raise RuntimeError(f"Expected exactly -DVERSION_{args.version.upper()} in the C flags, found {version_macros}")
     cflags += ["-I" + p for p in (".", "include", "include/2.0I", "include/libc",
                                   paths["assets"], paths["src"], f'{paths["src"]}/libultra/audio')]
     libultra_sources = {}
