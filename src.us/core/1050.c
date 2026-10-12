@@ -980,42 +980,22 @@ void guess_prepareToSaveGame(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 #endif
 
-// CURRENT(1868)
-#ifdef NON_MATCHING
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
-	u8 *dst;
-	u8 *src;
+    s32 src;
+    s32 dst;
+    s32 i;
 
-	arg0 = arg0 * 0x7A + 0x53;
-	arg1 = arg1 * 0x7A + 0x53;
-	
-	(&D_800431C0)[arg1] = (&D_800431C0)[arg0];
-	
-	dst = (u8 *)&D_800431C0 + arg1 + 2;
-	src = (u8 *)&D_800431C0 + arg0 + 2;
-	
-	(&D_800431C0)[arg1 + 1] = (&D_800431C0)[arg0 + 1];
-	
-	arg0 = 2;
-	for (; arg0 != 0x76; arg0 += 4) {
-		dst[0] = src[0];
-		dst[1] = src[1];
-		src += 4;
-		dst[2] = src[2];
-		dst[3] = src[3];
-		dst += 4;
-	}
-
-	arg0 = arg1 - 0x53;
-	func_800015B4_21B4(arg0 + 0x4F, 0x76);
-	func_800015B4_21B4(0, 0x1B9);
-	if (D_80047608 != 0) {
-		osEepromLongWrite(&D_80043388, 0, &D_800431C0, 0x1BD);
-	}
+    src = arg0 * 0x7A + 0x53;
+    dst = arg1 * 0x7A + 0x53;
+    for (i = 0; i < 0x76; i++) {
+        D_800431C0[dst++] = D_800431C0[src++];
+    }
+    func_800015B4_21B4(arg1 * 0x7A + 0x4F, 0x76);
+    func_800015B4_21B4(0, 0x1B9);
+    if (D_80047608 != 0) {
+        osEepromLongWrite(&D_80043388, 0, D_800431C0, 0x1BD);
+    }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
-#endif
 
 // Initialize an empty save slot and update its checksum.
 void func_800021CC_2DCC(s32 arg0)
@@ -1614,7 +1594,7 @@ void func_8000345C_405C(u16 arg0)
 	{
 	  currentControllerStates[0].button &= ~arg0;
 	}
-	D_800475F8 = (temp_v1 = ~arg0);
+	temp_v1 = ~arg0;
 	if ((new_var[1] & arg0) && (previousControllerButtonStates[1] & arg0))
 	{
 	  currentControllerStates[1].button &= temp_v1;
@@ -1627,6 +1607,7 @@ void func_8000345C_405C(u16 arg0)
 	{
 	  currentControllerStates[3].button &= temp_v1;
 	}
+    D_800475F8 &= temp_v1;
   }
 }
 #else
