@@ -56,51 +56,29 @@ counterpart (16 of the first 16 words have the same opcode; 13 or 14 are
 identical), at NTSC + 0x30 for `frontend` (`0x40750`) and NTSC + 0xB60 for
 `outside` (`0x7FD80`) and `inside` (`0x158E90`).
 
-### The core-to-overlay seam
+### The core-to-frontend boundary
 
-PAL core ends at `0x40780`, not `0x40750`. The 8-byte trailing pad that ends
-core - `00 00 00 00 10 00 00 36`, where `10 00 00 36` is `bgez $zero` to itself -
-sits at NTSC `0x40750` and at PAL `0x40780`, and PAL `0x40750` holds real code
-(`addiu $t6,$gp,-1`, `addiu $sp,$sp,-0x18`).
+PAL core ends at `0x40750` (NTSC `0x40720`), and the frontend overlay starts
+there, at vram `0x800702A0` (NTSC `0x80070270`). The overlay's first function is
+its entry dispatcher, the same instruction sequence in both ROMs
+(`addiu $t6,$a0,-1`, `addiu $sp,$sp,-24`, `sltiu $at,$t6,0xe`, ...). Of its
+first 14 words only two differ: the jump-table load and the `jal` target
+(`jal 0x800789E4` in NTSC, `jal 0x80078BD8` in PAL). The word `10000036` after
+the `jal` and its delay slot is `beq $zero,$zero`, a branch to the function's
+epilogue, not padding.
 
-The 8 bytes after the pad are identical in both ROMs (`00 00 10 25`,
-`lui $at,0x8004`, `lui $a1,0x8005`, `lw $a1,0x2b5c($a1)`); only the data
-addresses inside differ. So the frontend overlay's first function is the same
-*shape* in both versions and differs only in immediates.
+`bh.eu.yaml` splits the frontend's code into three `c` subsegments, each
+starting at a function prologue, followed by the overlay's data:
 
-**Applied.** Core now ends at `0x40788` with the pad emitted as its own
-subsegment, and the frontend starts at `0x40788`:
+| region | size |
+|---|---|
+| `0x40750` .. `0x4E450` | `0xDD00` |
+| `0x4E450` .. `0x52E50` | `0x4A00` |
+| `0x52E50` .. `0x61620` | `0xE7D0` |
+| `0x61620` onward | data (`bin`) |
 
-```yaml
-- [0x40780, rodata, core/tail_pad]          # the 8-byte pad, owned by core
-# overlay_gameplay_frontend starts at 0x40788
-```
-
-Attributing it correctly needs `align: 8` / `subalign: 8` on both `core` and
-`overlay_gameplay_frontend`, because splat emits `__romPos = ALIGN(__romPos,
-align)` at each segment's end using that segment's own align value. Setting it
-on only one leaves the inter-segment boundary forced to 16 and the linker
-inserts 8 bytes of fill.
-
-The remainder is IDO's 16-byte `.text` padding. IDO rounds every `.text` section
-up to a multiple of 16. The frontend's code runs from its entry dispatcher at
-`0x40750` to the data at `0x61620`, a span of `0x20ED0`, which is 0 mod 16 (the
-built ELF's frontend `.text` runs from `0x800702A0` to `0x80091170`). An earlier
-version of this section measured from `0x40788` and gave `0x20E98`.
-
-The fix is to split the frontend's code into regions whose sizes are each a
-multiple of 16. Starting at `0x40788` (itself 8 mod 16), that means every
-boundary must also be 8 mod 16. `0x4E448` and `0x51CC8` are both genuine function
-starts that qualify:
-
-| region | span | size | 16-aligned |
-|---|---|---|---|
-| `0x40788` .. `0x4E448` | code and its own trailing nops | `0xDCC0` | yes |
-| `0x4E448` .. `0x51CC8` | | `0x3880` | yes |
-| `0x51CC8` .. `0x61628` | | `0xF960` | yes |
-
-`.data` needs no such care: the trailing `bin` subsegment is a raw blob, emitted
-verbatim at whatever alignment it lands on.
+All three sizes are multiples of 16, the size IDO rounds each `.text` section
+up to, and the EU build is byte-exact with this split.
 
 
 ## Which functions differ
