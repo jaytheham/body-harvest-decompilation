@@ -999,8 +999,8 @@ extern s16 D_80052B1C;
 extern VehicleInstance* D_80052B20;
 extern Unk80052B2C* D_80052B2C;
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
-extern s32 D_80052B38;
-extern s32 D_80052B3C;
+extern s32 D_80052B38; // CPU frame preparation time: elapsed time from the scheduler starting a frame until the gameplay thread signals that its work is complete, before graphics-task submission.
+extern s32 D_80052B3C; // Graphics-task completion latency: elapsed time from just after graphics-task submission until the scheduler receives its completion message.
 extern Unk80052B40 D_80052B40;
 extern s16 D_80052B44;
 extern Unk80052B48 D_80052B48;
