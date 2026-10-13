@@ -176,3 +176,12 @@ index after +/-1 or +/-256: that changes boundary wrap behavior; the
 original narrows the center before adding a signed offset. Removing
 unused mode is neutral. Preserve valid neighbor indexing and the signed
 row/halfword-base candidate under NON_MATCHING; wrapped ROM is OK.
+
+Terrain-color storage trials retain 5608. EffectRgb input or both RGB
+buffers score 11831; output-only RGB is neutral. Explicit short cosine
+result or expired word i reuse is neutral; a word cosine result scores
+5774, none reduces the 0xC0 frame. Reversed arrays first score 6040
+with neighbors/output/input at 0xB8/0xB4/0xB0 versus target AC/A8/A0.
+Neighbors first score 5806 (B8/94/98); neighbors before RGB score 5826
+(9C/94/98). A transient lock on generated build source cleared on retry.
+Restored the best chained-zero coordinate candidate; wrapped ROM OK.
