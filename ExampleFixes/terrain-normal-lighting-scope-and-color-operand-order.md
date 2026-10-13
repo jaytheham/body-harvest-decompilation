@@ -138,3 +138,11 @@ scores 3973, right/bottom reads 3215, halfword tileSize 3233. Casting
 origin coordinates to u8 scores 2843 but is not retained because it
 removes the target signed-division checks. Preserve signed origins with
 byte tileZ under NON_MATCHING; wrapped full ROM verifies OK.
+
+Ground candidate improves 3165 to 3115 with firstTile[1] ^= 0 after
+its X-origin division. This emits no additional instruction but changes
+allocation. Y-origin XOR is neutral alone; both XORs also score 3115,
+so retain X only. Explicit s16 origin casts and putting worldZ assignment
+on the same line as inner for are neutral. A named word draw index
+scores 3346; word tileX with XOR scores 6352. Signed division checks
+remain intact; candidate stays NON_MATCHING and wrapped ROM is OK.
