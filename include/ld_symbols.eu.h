@@ -193,7 +193,6 @@ extern Addr boot_bin;
 extern Addr bzero_s;
 extern Addr contsetch_s;
 extern Addr copy_s;
-extern Addr core_1000_s;
 extern Addr coss_s;
 extern Addr crc_s;
 extern Addr createmesgqueue_s;

@@ -80,19 +80,17 @@ u32 D_8013D540_14C4F0[16] = {
 s32 D_8013D580_14C530 = 0;
 u8 D_8013D584_14C534[4] = { 0x03, 0x02, 0x03, 0x03 };
 Unk80052B40 D_8013D588_14C538 = { 0x0080, 0x0080, 0x0080 };
-u32 D_8013D590_14C540 = 0x000067C1;
-u32 D_8013D594_14C544 = 0xFB013401;
-u8 D_8013D598_14C548[0x1C] = {
-	0x81, 0x81, 0xFF, 0xFF, 0x66, 0x66, 0x77, 0x77, 0x88, 0x88, 0x99, 0x99, 0xAA, 0xAA, 0xBB, 0xBB,
-	0xCC, 0xCC, 0xDD, 0xDD, 0xEE, 0xEE, 0xFF, 0xFF, 0x00, 0x01, 0x00, 0x00,
-};
+ScannerPalette D_8013D590_14C540 = { {
+	0x000067C1, 0xFB013401, 0x8181FFFF, 0x66667777, 0x88889999,
+	0xAAAABBBB, 0xCCCCDDDD, 0xEEEEFFFF, 0x00010000
+} };
 s16 D_8013D5B4_14C564 = 0;
 s16 D_8013D5B8_14C568 = 0;
 s16 D_8013D5BC_14C56C = 0;
 s16 D_8013D5C0_14C570[8] = { 0, 0, 0, 1, 0, 0x1388, -1, -100 };
-s16 D_8013D5D0_14C580 = 0;
-s16 D_8013D5D4_14C584 = 0;
-s16 D_8013D5D8_14C588 = 0;
+SignedWord D_8013D5D0_14C580 = { 0 };
+SignedWord D_8013D5D4_14C584 = { 0 };
+SignedWord D_8013D5D8_14C588 = { 0 };
 s32 D_8013D5DC_14C58C = 0;
 s32 D_8013D5E0_14C590 = 0;
 u8 D_8013D5E4_14C594[4] = { 0x00, 0x00, 0x00, 0x00 };
@@ -140,9 +138,6 @@ s32 D_8013D75C_14C70C = 0;
 s32 D_8013D760_14C710 = 0;
 s32 D_8013D764_14C714 = 0;
 u8 D_8013D768_14C718 = 0;
-s32 D_8013D76C_14C71C = 0;
-s32 D_8013D770_14C720 = 10;
-s32 D_8013D774_14C724 = 0;
 
 void func_8009BAC0_AAA70(void)
 {
@@ -211,7 +206,7 @@ s32 func_8009BCC0_AAC70(s32 arg0, s32 arg1, u8 arg2) {
 			if (D_8014EDD8 != 0) {
 				return 1;
 			}
-			ptr = &D_8014EDE0[(arg1 << 4) + arg0 / 2];
+			ptr = &D_8014EDE0.bytes[(arg1 << 4) + arg0 / 2];
 			*ptr &= 0xF0;
 			*ptr |= arg2;
 			return 1;
@@ -219,7 +214,7 @@ s32 func_8009BCC0_AAC70(s32 arg0, s32 arg1, u8 arg2) {
 		if (D_8014EDD8 != 0) {
 			return 1;
 		}
-		ptr = &D_8014EDE0[(arg1 << 4) + arg0 / 2];
+		ptr = &D_8014EDE0.bytes[(arg1 << 4) + arg0 / 2];
 		*ptr &= 0xF;
 		*ptr |= (arg2 << 4);
 		return 1;
@@ -236,20 +231,14 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(3123) - Run A20: the 2713 marker was stale; re-measured 3267 with the body
-// unwrapped. The residual is ONE home - var_a3 sits at 0x44 (target 0x18), which grows the
-// frame 0x50 vs the target 0x48 and shifts every stack-touching row; plus 4 extra `or`/move
-// copies (161 instructions vs the target 157, opcode-frequency count: only `or` differs,
-// +4). Best of five declaration orders (this one) - 3267 -> 3123. Do not re-tread the
-// call-site `& 0xFF` (dropping it reaches 2742 only by deleting an `andi` the target HAS).
 #ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
-	s32 sp1C;
-	s32 var_a3;
+	u8 var_a3;
 	u8 sp47;
 
-	sp47 = arg0 / 60;
-	arg0 = arg0 % 60;
+	sp47 = (u8)(arg0 / 60);
+	arg0 = (u16)(arg0 % 60);
+
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -267,17 +256,21 @@ void func_8009BF64_AAF14(u16 arg0) {
 	}
 
 	if ((s32)arg0 < 0xA) {
-		sp1C = arg0;
 		func_8009BDB8_AAD68(0x32, 0);
-		var_a3 = (sp1C % 10) & 0xFF;
+		var_a3 = (u8)(arg0 % 10);
 	} else {
-		var_a3 = (arg0 % 10) & 0xFF;
-		sp1C = (arg0 - var_a3) / 10;
-		func_8009BDB8_AAD68(0x32, sp1C);
+		var_a3 = (u8)(arg0 % 10);
+		func_8009BDB8_AAD68(0x32, (arg0 - var_a3) / 10);
 	}
 
-	func_8009BDB8_AAD68(0x41, var_a3 & 0xFF);
+	func_8009BDB8_AAD68(0x41, (u8)var_a3);
 }
+
+
+
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BF64_AAF14.s")
 #endif
@@ -736,318 +729,318 @@ void func_8009D96C_AC91C(void)
   gSPMatrix(D_8005BB2C++, ((u32) (D_8005BB38++)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
   if (D_8014F1F6 != 0)
   {
-    varV0 = D_8014F1F4 + D_8014F1F6;
-    D_8014F1F4 = varV0;
-    if (varV0 >= 0x81)
-    {
-      D_8014F1F4 = 0x80;
-      D_8014F1F6 = 0;
-      varV0 = D_8014F1F4;
-    }
-    if (varV0 < 0)
-    {
-      D_8014F1F4 = 0;
-      D_8014F1F6 = 0;
-    }
+	varV0 = D_8014F1F4 + D_8014F1F6;
+	D_8014F1F4 = varV0;
+	if (varV0 >= 0x81)
+	{
+	  D_8014F1F4 = 0x80;
+	  D_8014F1F6 = 0;
+	  varV0 = D_8014F1F4;
+	}
+	if (varV0 < 0)
+	{
+	  D_8014F1F4 = 0;
+	  D_8014F1F6 = 0;
+	}
   }
   if (D_8014F1F8 != 0)
   {
-    varV0 = D_8014F1FA + D_8014F1F8;
-    D_8014F1FA = varV0;
-    if (varV0 >= 0x81)
-    {
-      D_8014F1FA = 0x80;
-      D_8014F1F8 = 0;
-      varV0 = D_8014F1FA;
-    }
-    if (varV0 < 0)
-    {
-      D_8014F1FA = 0;
-      D_8014F1F8 = 0;
-    }
+	varV0 = D_8014F1FA + D_8014F1F8;
+	D_8014F1FA = varV0;
+	if (varV0 >= 0x81)
+	{
+	  D_8014F1FA = 0x80;
+	  D_8014F1F8 = 0;
+	  varV0 = D_8014F1FA;
+	}
+	if (varV0 < 0)
+	{
+	  D_8014F1FA = 0;
+	  D_8014F1F8 = 0;
+	}
   }
   D_8014F202 = 0;
   if (gameplayMode != 0xC)
   {
-    if (alien != 0)
-    {
-      if (alien->typeIndex != 0)
-      {
-        u16 tempU16;
-        if (alien->unk20 & ALIEN_FLAG_UNKL)
-        {
-          sp98 = 0.0f;
-        }
-        else
-        {
-          sp98 = (f32) (((f64) ((f32) alien->hitPoints)) / 100.0);
-        }
-        tempU16 = alienTypes[alien->typeIndex].unk3A;
-        sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
-        func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
-        tempU16 = alienTypes[alien->typeIndex].unk3A;
-        D_8014F202 = 3;
-        sp8C = (s32) (&D_8025EC40);
-        sp7C = (s32) alien;
-        sp82 = D_8014ED44;
-        sp84 = ((f32) alien->hitPoints) / ((f32) tempU16);
-        if (D_80158FF0 != 0)
-        {
-          D_8014F202 = 4;
-        }
-      }
-    }
-    else
-    {
-      new_var = &building;
-      if (currentControllerStates[0].button & 0x10)
-      {
-        if (D_80158FE4 != 0)
-        {
-          u16 tempU16;
-          vehicle = D_80158FE4;
-          if ((currentLevel != 1) || (vehicle->unk1A != 0x12))
-          {
-            sp98 = (f32) (((f64) ((f32) vehicle->unk1C)) / 100.0);
-            tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
-            sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
-            func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
-            tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
-            new_var2 = &D_8025EE80;
-            sp8C = (s32) new_var2;
-            D_8014F202 = 2;
-            sp7C = (s32) vehicle;
-            sp84 = ((f32) vehicle->unk1C) / ((f32) tempU16);
-            sp82 = D_8014ED4A;
-          }
-        }
-        else
-          if (D_80158FE8 != 0)
-        {
-          s8 tempA3;
-          s8 varV1_2;
-          building = D_80158FE8;
-          varV1_2 = *((s8 *) (&building->hitPoints));
-          tempA3 = buildingTypes[(*new_var)->buildingType].unk19;
-          if (currentLevel == (new_var3 = 5))
-          {
-            varV1_2 = (s8) (((s16) varV1_2) / 3);
-          }
-          sp98 = (f32) (((f64) ((f32) varV1_2)) * 0.0625);
-          sp8A = (s16) ((((f64) ((f32) tempA3)) / 100.0) * 312.5);
-          func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
-          D_8014F202 = 1;
-          sp8C = (s32) (&D_8025F0C0);
-          sp82 = D_8014ED48;
-          sp7C = (s32) building;
-          sp84 = ((f32) varV1_2) / ((f32) tempA3);
-        }
-      }
-    }
+	if (alien != 0)
+	{
+	  if (alien->typeIndex != 0)
+	  {
+		u16 tempU16;
+		if (alien->unk20 & ALIEN_FLAG_UNKL)
+		{
+		  sp98 = 0.0f;
+		}
+		else
+		{
+		  sp98 = (f32) (((f64) ((f32) alien->hitPoints)) / 100.0);
+		}
+		tempU16 = alienTypes[alien->typeIndex].unk3A;
+		sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
+		func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+		tempU16 = alienTypes[alien->typeIndex].unk3A;
+		D_8014F202 = 3;
+		sp8C = (s32) (&D_8025EC40);
+		sp7C = (s32) alien;
+		sp82 = D_8014ED44;
+		sp84 = ((f32) alien->hitPoints) / ((f32) tempU16);
+		if (D_80158FF0 != 0)
+		{
+		  D_8014F202 = 4;
+		}
+	  }
+	}
+	else
+	{
+	  new_var = &building;
+	  if (currentControllerStates[0].button & 0x10)
+	  {
+		if (D_80158FE4 != 0)
+		{
+		  u16 tempU16;
+		  vehicle = D_80158FE4;
+		  if ((currentLevel != 1) || (vehicle->unk1A != 0x12))
+		  {
+			sp98 = (f32) (((f64) ((f32) vehicle->unk1C)) / 100.0);
+			tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
+			sp8A = (s16) ((((f64) tempU16) / 100.0) * 50.0);
+			func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+			tempU16 = vehicleTypes[vehicle->unk1A].hitPoints;
+			new_var2 = &D_8025EE80;
+			sp8C = (s32) new_var2;
+			D_8014F202 = 2;
+			sp7C = (s32) vehicle;
+			sp84 = ((f32) vehicle->unk1C) / ((f32) tempU16);
+			sp82 = D_8014ED4A;
+		  }
+		}
+		else
+		  if (D_80158FE8 != 0)
+		{
+		  s8 tempA3;
+		  s8 varV1_2;
+		  building = D_80158FE8;
+		  varV1_2 = *((s8 *) (&building->hitPoints));
+		  tempA3 = buildingTypes[(*new_var)->buildingType].unk19;
+		  if (currentLevel == (new_var3 = 5))
+		  {
+			varV1_2 = (s8) (((s16) varV1_2) / 3);
+		  }
+		  sp98 = (f32) (((f64) ((f32) varV1_2)) * 0.0625);
+		  sp8A = (s16) ((((f64) ((f32) tempA3)) / 100.0) * 312.5);
+		  func_8009D900_AC8B0(&sp8A, &sp98, 0xB4);
+		  D_8014F202 = 1;
+		  sp8C = (s32) (&D_8025F0C0);
+		  sp82 = D_8014ED48;
+		  sp7C = (s32) building;
+		  sp84 = ((f32) varV1_2) / ((f32) tempA3);
+		}
+	  }
+	}
   }
   if (((u8) D_8014F202) == 0)
   {
-    sp82 = 0;
-    sp8A = 0;
-    sp7C = 0;
-    sp84 = 0.0f;
-    sp8C = D_8013D5E0_14C590;
+	sp82 = 0;
+	sp8A = 0;
+	sp7C = 0;
+	sp84 = 0.0f;
+	sp8C = D_8013D5E0_14C590;
   }
   D_8013D5E0_14C590 = sp8C;
   func_8009E994_AD944(sp84, sp8C, sp82, sp8A, sp7C);
   D_8014F203 = D_8014F202;
   if (D_8014F1FA != 0x80)
   {
-    s16 tempA0;
-    s32 varT1;
-    tempA0 = 5 - (D_8015931A / 200);
-    if (currentLevel == 5)
-    {
-      varT1 = 0;
-    }
-    else
-    {
-      varT1 = -0x14;
-    }
-    if ((D_80052B34->unk1C > 0) && (tempA0 != 0))
-    {
-      varV0 = 7 - ((D_80052A8C / ((u32) tempA0)) & 7);
-      if (varV0 >= 5)
-      {
-        varV0 -= 4;
-      }
-      if (D_8015931A == 0)
-      {
-        varV0 = 0;
-      }
-      if ((D_8015931A > 0) && (D_8015931A < 0xC9))
-      {
-        D_8014ED4C = D_8014ED42;
-        func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), ((f32) (0xC8 - D_8015931A)) / 200.0f, 0, (s32) (&D_8025F540), 4, varV0, D_8014ED4C, 0x30);
-      }
-      else
-      {
-        u16 tempU16;
-        tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-        if (vehicleInstances[0].unk1C >= (((s32) tempU16) >> 2))
-        {
-          D_8014ED4C = D_8014ED42;
-        }
-        func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), ((f32) vehicleInstances[0].unk1C) / ((f32) tempU16), 0, (s32) (&D_8025F540), 1, varV0, D_8014ED4C, 0x30);
-      }
-    }
-    else
-    {
-      func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), 0.0f, 0, (s32) (&D_8025F540), 0, 0, 0, 0x30);
-    }
-    if (currentLevel < 5)
-    {
-      if ((D_8014F204 != D_8004816A) && ((((u8) D_800314C4) - 3) >= D_8004816A))
-      {
-        D_8014ED52 = 8;
-      }
-      if (((s32) ((u8) D_800314C4)) < D_8004816A)
-      {
-        D_8014F204 = (u8) D_800314C4;
-      }
-      else
-      {
-        D_8014F204 = D_8004816A;
-      }
-      func_8009C6CC_AB67C(0x50, (s16) (D_80068088 - 0x1E), ((f32) D_8014F204) / ((f32) D_800314C4), 0, (s32) (&D_8025F780), 3, 0, D_8014ED52, 0x30);
-      D_8014F204 = D_8004816A;
-      if ((D_80052A8C % 10) == 0)
-      {
-        D_8013D5DC_14C58C = func_800880B8_97068();
-      }
-    }
+	s16 tempA0;
+	s32 varT1;
+	tempA0 = 5 - (D_8015931A / 200);
+	if (currentLevel == 5)
+	{
+	  varT1 = 0;
+	}
+	else
+	{
+	  varT1 = -0x14;
+	}
+	if ((D_80052B34->unk1C > 0) && (tempA0 != 0))
+	{
+	  varV0 = 7 - ((D_80052A8C / ((u32) tempA0)) & 7);
+	  if (varV0 >= 5)
+	  {
+		varV0 -= 4;
+	  }
+	  if (D_8015931A == 0)
+	  {
+		varV0 = 0;
+	  }
+	  if ((D_8015931A > 0) && (D_8015931A < 0xC9))
+	  {
+		D_8014ED4C = D_8014ED42;
+		func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), ((f32) (0xC8 - D_8015931A)) / 200.0f, 0, (s32) (&D_8025F540), 4, varV0, D_8014ED4C, 0x30);
+	  }
+	  else
+	  {
+		u16 tempU16;
+		tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
+		if (vehicleInstances[0].unk1C >= (((s32) tempU16) >> 2))
+		{
+		  D_8014ED4C = D_8014ED42;
+		}
+		func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), ((f32) vehicleInstances[0].unk1C) / ((f32) tempU16), 0, (s32) (&D_8025F540), 1, varV0, D_8014ED4C, 0x30);
+	  }
+	}
+	else
+	{
+	  func_8009C6CC_AB67C(0x50, (s16) ((D_80068088 + varT1) - 0x1E), 0.0f, 0, (s32) (&D_8025F540), 0, 0, 0, 0x30);
+	}
+	if (currentLevel < 5)
+	{
+	  if ((D_8014F204 != D_8004816A) && ((((u8) D_800314C4) - 3) >= D_8004816A))
+	  {
+		D_8014ED52 = 8;
+	  }
+	  if (((s32) ((u8) D_800314C4)) < D_8004816A)
+	  {
+		D_8014F204 = (u8) D_800314C4;
+	  }
+	  else
+	  {
+		D_8014F204 = D_8004816A;
+	  }
+	  func_8009C6CC_AB67C(0x50, (s16) (D_80068088 - 0x1E), ((f32) D_8014F204) / ((f32) D_800314C4), 0, (s32) (&D_8025F780), 3, 0, D_8014ED52, 0x30);
+	  D_8014F204 = D_8004816A;
+	  if ((D_80052A8C % 10) == 0)
+	  {
+		D_8013D5DC_14C58C = func_800880B8_97068();
+	  }
+	}
   }
   if (D_8014F1F4 != 0x80)
   {
-    s8 varV1_2;
-    u16 tempU16;
-    vehicle = D_80052B34;
-    varV1_2 = vehicle->unk1A;
-    if (varV1_2 != 0)
-    {
-      if (D_80052AC8 != 2)
-      {
-        func_8009C4B0_AB460();
-        vehicle = D_80052B34;
-        varV1_2 = vehicle->unk1A;
-      }
-      sp76 = vehicle->unk3C;
-      D_8014F69C = sp76;
-      sp74 = vehicle->unk1C;
-      tempU16 = vehicleTypes[varV1_2].hitPoints;
-      sp72 = (s16) tempU16;
-      D_8014F69E = sp74;
-      D_8014F6A0 = sp72;
-    }
-    else
-    {
-      func_8009C4A0_AB450();
-      sp76 = D_8014F69C;
-      sp74 = D_8014F69E;
-      sp72 = D_8014F6A0;
-    }
-    sp98 = (f32) (((f64) ((f32) sp74)) / 100.0);
-    sp8A = (s16) ((((f64) ((f32) sp72)) / 100.0) * 48.0);
-    func_8009D900_AC8B0(&sp8A, &sp98, 0x30);
-    if (sp74 >= (sp72 >> 2))
-    {
-      D_8014ED4E = D_8014ED46;
-    }
-    func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), ((f32) sp74) / ((f32) sp72), 1, (s32) new_var2, 1, 0, D_8014ED4E, sp8A);
-    if (D_80052B34->unk1A != 0x13)
-    {
-      func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x32), (f32) (((f64) ((f32) sp76)) / 100.0), 1, (s32) (&D_8025D800), 1, 0, D_8014ED50, 0x30);
-    }
+	s8 varV1_2;
+	u16 tempU16;
+	vehicle = D_80052B34;
+	varV1_2 = vehicle->unk1A;
+	if (varV1_2 != 0)
+	{
+	  if (D_80052AC8 != 2)
+	  {
+		func_8009C4B0_AB460();
+		vehicle = D_80052B34;
+		varV1_2 = vehicle->unk1A;
+	  }
+	  sp76 = vehicle->unk3C;
+	  D_8014F69C = sp76;
+	  sp74 = vehicle->unk1C;
+	  tempU16 = vehicleTypes[varV1_2].hitPoints;
+	  sp72 = (s16) tempU16;
+	  D_8014F69E = sp74;
+	  D_8014F6A0 = sp72;
+	}
+	else
+	{
+	  func_8009C4A0_AB450();
+	  sp76 = D_8014F69C;
+	  sp74 = D_8014F69E;
+	  sp72 = D_8014F6A0;
+	}
+	sp98 = (f32) (((f64) ((f32) sp74)) / 100.0);
+	sp8A = (s16) ((((f64) ((f32) sp72)) / 100.0) * 48.0);
+	func_8009D900_AC8B0(&sp8A, &sp98, 0x30);
+	if (sp74 >= (sp72 >> 2))
+	{
+	  D_8014ED4E = D_8014ED46;
+	}
+	func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x1E), ((f32) sp74) / ((f32) sp72), 1, (s32) new_var2, 1, 0, D_8014ED4E, sp8A);
+	if (D_80052B34->unk1A != 0x13)
+	{
+	  func_8009C6CC_AB67C((s16) (D_80068084 - 0x20), (s16) (D_80068088 - 0x32), (f32) (((f64) ((f32) sp76)) / 100.0), 1, (s32) (&D_8025D800), 1, 0, D_8014ED50, 0x30);
+	}
   }
   if (D_8014ED42 > 0)
   {
-    D_8014ED42--;
+	D_8014ED42--;
   }
   if (D_8014ED46 > 0)
   {
-    D_8014ED46--;
+	D_8014ED46--;
   }
   if (D_8014ED44 > 0)
   {
-    D_8014ED44--;
+	D_8014ED44--;
   }
   if (D_8014ED4A > 0)
   {
-    D_8014ED4A--;
+	D_8014ED4A--;
   }
   new_var4 = 2;
   if (D_8014ED48 > 0)
   {
-    D_8014ED48--;
+	D_8014ED48--;
   }
   if (sp76 < 0x13C1)
   {
-    D_8014ED50 = 8 - (D_80052A8C & 7);
+	D_8014ED50 = 8 - (D_80052A8C & 7);
   }
   else
   {
-    D_8014ED50 = 0;
+	D_8014ED50 = 0;
   }
   if ((((u8) D_800314C4) - 3) < D_8004816A)
   {
-    D_8014ED52 = 8 - (D_80052A8C & 7);
+	D_8014ED52 = 8 - (D_80052A8C & 7);
   }
   else
   {
-    D_8014ED52 = 0;
+	D_8014ED52 = 0;
   }
   {
-    u16 tempU16;
-    tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-    if (vehicleInstances[0].unk1C < (((s32) tempU16) >> new_var4))
-    {
-      D_8014ED4C = 8 - (D_80052A8C & 7);
-    }
-    else
-    {
-      D_8014ED4C = 0;
-    }
+	u16 tempU16;
+	tempU16 = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
+	if (vehicleInstances[0].unk1C < (((s32) tempU16) >> new_var4))
+	{
+	  D_8014ED4C = 8 - (D_80052A8C & 7);
+	}
+	else
+	{
+	  D_8014ED4C = 0;
+	}
   }
   if (sp74 < (sp72 >> new_var4))
   {
-    D_8014ED4E = 8 - (D_80052A8C & 7);
+	D_8014ED4E = 8 - (D_80052A8C & 7);
   }
   else
   {
-    D_8014ED4E = 0;
+	D_8014ED4E = 0;
   }
   if (D_8013D5DC_14C58C != 0)
   {
-    D_8014ED52 = 8 - (D_80052A8C & 7);
+	D_8014ED52 = 8 - (D_80052A8C & 7);
   }
   else
-    if (D_8014ED52 > 0)
+	if (D_8014ED52 > 0)
   {
-    D_8014ED52--;
+	D_8014ED52--;
   }
   drawText(&D_80142510_1514C0, 0, 0xFF);
   if ((D_8006C6C6 > 0) && (func_80018AC8_196C8() == 0))
   {
-    s16 varT2;
-    if ((D_8006C6C4 - 8) < D_8006C6C6)
-    {
-      varT2 = D_8006C6C4 - D_8006C6C6;
-    }
-    else
-    {
-      varT2 = 8;
-      if (D_8006C6C6 < 8)
-      {
-        varT2 = D_8006C6C6;
-      }
-    }
-    gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
-    func_800092B8_9EB8(new_var4 * (new_var4 * ((D_80068084 >> 1) - 0x2A)), ((0x30 - (varT2 * 6)) + 0xAF) * 4, ((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
+	s16 varT2;
+	if ((D_8006C6C4 - 8) < D_8006C6C6)
+	{
+	  varT2 = D_8006C6C4 - D_8006C6C6;
+	}
+	else
+	{
+	  varT2 = 8;
+	  if (D_8006C6C6 < 8)
+	  {
+		varT2 = D_8006C6C6;
+	  }
+	}
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
+	func_800092B8_9EB8(new_var4 * (new_var4 * ((D_80068084 >> 1) - 0x2A)), ((0x30 - (varT2 * 6)) + 0xAF) * 4, ((D_80068084 >> 1) + 0x2C) * 4, ((0x30 - (varT2 * 6)) + 0xD2) * 4, 0);
   }
   gDPPipeSync(D_8005BB2C++);
   gDPTileSync(D_8005BB2C++);
@@ -1058,87 +1051,71 @@ void func_8009D96C_AC91C(void)
 #endif
 
 // drawAlienHealth
-// CURRENT(8863) - Run A37: three measured levers on the 10501 body (all inside the guard).
-// (1) The two `0.0f` guards and the `interp = 0.0f` reset mix with this file's `const f64[1]`
-// scalars, so the literals must be DOUBLE (`0.0`, no `f`): the target emits `cvt.d.s` + `c.lt.d`
-// where the f32 spelling emits `c.lt.s`. 10501 -> 9017, objdump 184 -> 190 of the target's 191 -
-// the missing double conversions were six of the seven-instruction deficit.
-// (2) `s32 width` -> `s16 width` and (3) `s16 width;` declared FIRST (IDO homes top-down):
-// 9017 -> 8863 at 192 instructions.
-// Residual: the head's argument homes - the target stores the raw `s16 arg3` in its arg-save
-// slot and re-reads it with `lh` at a 0x30 frame, ours materialises it (`sll`/`sra`) into a
-// local at 0x34/0x4E with a 0x40 frame - plus the whole-function register band.
 #ifdef NON_MATCHING
 void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
-	s16 width;
-	f32 alpha;
 	f32 interp;
+	f64 zero;
 	s32 state;
 	s32 mode;
 
-	alpha = arg0;
-	width = arg3;
 
-	if ((width != 0) && (func_80018AA0_196A0() == 0) && (func_8013B8C8_14A878() == 0)) {
-		goto block_5c;
-	}
+	if ((arg3 == 0) || (func_80018AA0_196A0() != 0) || (func_8013B8C8_14A878() != 0)) {
+		interp = D_8013D668_14C618;
+		zero = 0.0;
 
-	interp = D_8013D668_14C618;
-	if (interp > 0.0) {
-		if (interp < D_80142728_1516D8[0]) {
-			interp = 0.0;
-		} else {
-			interp = (f32)(interp - D_80142728_1516D8[0]);
+		if (interp > zero) {
+			if (interp < D_80142728_1516D8[0]) {
+				interp = zero;
+			} else {
+				interp = (f32)(interp - D_80142728_1516D8[0]);
+			}
 		}
-	}
 
-	if (arg1 != 0) {
-		width = D_8014F6C0;
-		alpha = D_8014F6C4;
-	} else {
-		alpha = 1.0f;
-		width = 1;
-	}
-	goto store_results;
-
-block_5c:
-	state = (u8)D_8014F202;
-	if ((state == 4) && (D_80052A8C & 4)) {
-		return;
-	}
-
-	mode = (u8)D_8014F203;
-	if ((state != mode) || (D_8014F6B4 != arg4)) {
-		if (mode == 0) {
-			D_8014F6A4 = 0.0f;
-			D_8014F6A8 = 0;
-			D_8013D668_14C618 = 0.0f;
+		if (arg1 != 0) {
+			arg3 = D_8014F6C0;
+			arg0 = D_8014F6C4;
 		} else {
-			D_8014F6A4 = D_8014F6B0;
-			D_8014F6A8 = D_8014F6AC;
-			D_8013D668_14C618 = 0.0f;
+			arg0 = 1.0f;
+			arg3 = 1;
 		}
-	}
-
-	interp = D_8013D668_14C618;
-	if (interp < 1.0) {
-		D_8014F6B0 = ((alpha - D_8014F6A4) * interp) + D_8014F6A4;
-		interp = (f32)(interp + D_80142730_1516E0[0]);
-		D_8014F6AC = D_8014F6A8 + (s16)(interp * (width - D_8014F6A8));
 	} else {
-		interp = 1.0f;
-		D_8014F6B0 = alpha;
-		D_8014F6AC = width;
-	}
+		state = (u8)D_8014F202;
+		if ((state == 4) && (D_80052A8C & 4)) {
+			return;
+		}
 
-store_results:
-	D_8014F6C4 = alpha;
-	D_8014F6C0 = width;
+		mode = (u8)D_8014F203;
+		if ((state != mode) || (D_8014F6B4 != arg4)) {
+			if (mode == 0) {
+				D_8014F6A4 = 0.0f;
+				D_8014F6A8 = 0;
+				D_8013D668_14C618 = 0.0f;
+			} else {
+				D_8014F6A4 = D_8014F6B0;
+				D_8014F6A8 = D_8014F6AC;
+				D_8013D668_14C618 = 0.0f;
+			}
+		}
+
+		interp = D_8013D668_14C618;
+		if (interp < 1.0) {
+			D_8014F6B0 = ((arg0 - D_8014F6A4) * interp) + D_8014F6A4; D_8014F6AC = (interp * (arg3 - D_8014F6A8)) + D_8014F6A8; interp += D_80142730_1516E0[0];
+		} else {
+			interp = 1.0f;
+			D_8014F6B0 = arg0;
+			D_8014F6AC = arg3;
+		}
+
+		zero = 0.0;
+	}
+	D_8014F6C4 = arg0;
+	D_8014F6C0 = arg3;
+
 	D_8013D668_14C618 = interp;
-
-	if (interp >= 0.0) {
-		if (((u8)D_8014F202 != 0) || (interp < 1.0)) {
-			func_8009C6CC_AB67C((s16)((interp * 64.0f) - 32.0f), 0x8B, alpha, 0, arg1, 2, 0, (s16)arg2, width);
+	if (interp >= zero) {
+		if (((u8)D_8014F202 != 0) || (!(D_8013D668_14C618 = interp, interp >= 1.0))) {
+			D_8013D668_14C618 = interp;
+			func_8009C6CC_AB67C((s16)(((interp * 32.0f) * 2) + -32.0f), 0x8B, arg0, 0, arg1, 2, 0, (s16)arg2, arg3);
 		}
 	}
 
@@ -1576,19 +1553,12 @@ void func_8009FB58_AEB08(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
 #endif
 
-// CURRENT(15011) - qu016/qu102 spelled as literals (0xFFFF/0x8000/0x7C) so the body compiles;
-// the guess's s32 pad[66] deleted (0x290 -> 0x188) and the two declared-but-unused locals
-// (s32 idx, Gfx *dl) deleted (frame 0x188 -> 0x180 = the target's; 15082 -> 15011).
-// Remaining: 972 instructions vs the target's 986 (-14), and the struct homes sit +8
-// (sp168@0x170 / sp160@0x168 where the target has 0x168 / 0x160).
-// The 0x40 shift of EVERY AAA70-owned data symbol (D_8013D744_14C6F4 at 0x8013D704, target
-// 0x8013D744) is NOT a data-layout batch item: the segment's text is 0xcb640 where the ROM's is
-// 0xcb680, i.e. exactly this body's 14-instruction deficit after ALIGN(16) -
-// `overlay_gameplay_outside_AAA70_c` (the data block start) moves with the text end. Close the
-// deficit and the data addresses snap back; do not chase the data layout.
 #ifdef NON_MATCHING
 // DisplayScanner
 void func_800A03FC_AF3AC(void) {
+	static u16 D_8013D754_14C704 = 0;
+	u32 *clearWords;
+	s32 count;
 	Unk80052B40 sp170;
 	Unk80052B40 sp168;
 	Unk80052B40 sp160;
@@ -1596,16 +1566,14 @@ void func_800A03FC_AF3AC(void) {
 	VehicleInstance *vehicle;
 	s16 mapX;
 	s16 mapZ;
-	s16 tempA0;
 	s32 i;
-	s32 temp;
-	s32 tempMatrixColor;
+	s16 temp;
+	s16 tempMatrixColor;
 
+	clearWords = D_8014EDE0.words;
 	sp168 = D_8013D744_14C6F4;
 	sp160 = D_8013D74C_14C6FC;
-	D_8013D754_14C704++;
-
-	temp = (D_8013D754_14C704 % 8) / 2;
+	temp = (++D_8013D754_14C704 % 8) / 2;
 	sp170.unk0 = D_80068084 - 0x2C;
 	sp170.unk2 = 0x2C;
 	sp170.unk4 = -1;
@@ -1617,25 +1585,31 @@ void func_800A03FC_AF3AC(void) {
 			func_8009C470_AB420();
 		}
 
-		D_8013D592_14C542 = (((temp * 8) + 0x19) << 8 & 0xF800) | ((((temp * 0x19) + 0x64) * 8) & 0x7C0) | (((temp * 2 + 0xA) >> 2) & 0x3E) | 1;
-		D_8013D596_14C546 = (((temp * 4) + 0xC) << 8 & 0xF800) | ((((temp * 0xC) + 0x32) * 8) & 0x7C0) | (((temp + 5) >> 2) & 0x3E) | 1;
+		D_8013D590_14C540.colors[1] = (((temp * 8) + 0x19) << 8 & 0xF800) | ((((temp * 0x19) + 0x64) << 3) & 0x7C0) | (((temp * 2 + 0xA) >> 2) & 0x3E) | 1;
+		D_8013D590_14C540.colors[3] = (((temp * 4) + 0xC) << 8 & 0xF800) | ((((temp * 0xC) + 0x32) << 3) & 0x7C0) | (((temp + 5) >> 2) & 0x3E) | 1;
 
-		i = 0xFF;
+		count = 0xFF;
 		do {
-			((u32 *)D_8014EDE0)[i] = 0;
-		} while (i--);
+			clearWords[0] = 0;
+			clearWords = &clearWords[1];
+		} while (count--);
 
 		i = 0;
 		while (i < 0xFF) {
 			alien = &alienInstances[i];
 
 			if ((alien->typeIndex >= 3) || ((alien->typeIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0xF) || (alien->unk24 == 0x10)))) {
-				mapX = ((alien->unk0 - D_80052B34->unk0) + 0x1000) >> 8;
-				mapZ = ((alien->unk4 - D_80052B34->unk4) + 0x1000) >> 8;
+				vehicle = D_80052B34;
+				mapX = alien->unk0;
+				mapZ = alien->unk4;
+				mapX -= vehicle->unk0;
+				mapZ -= vehicle->unk4;
+				mapX = (mapX + 0x1000) >> 8;
+				mapZ = (mapZ + 0x1000) >> 8;
 
 				if (func_8009BC48_AABF8(mapX, mapZ, 1) != 0) {
 					if (alien->typeIndex == 1) {
-						if (func_800038E0_44E0(alien->typeIndex) < 0x64) {
+						if (func_800038E0_44E0() < 0x64) {
 							func_800153D8_15FD8(0xF3);
 						}
 					} else {
@@ -1657,14 +1631,17 @@ void func_800A03FC_AF3AC(void) {
 			i = (s16)(i + 1);
 		}
 
-		tempA0 = D_80158FD8;
 		i = 0;
-		while (i < tempA0) {
+		while (i < D_80158FD8) {
 			vehicle = &vehicleInstances[D_80158E80[i]];
 
 			if ((D_80052B34 != vehicle) && ((currentLevel != 1) || (vehicle->unk1A != 0x12))) {
-				mapX = ((vehicle->unk0 - D_80052B34->unk0) + 0x1000) >> 8;
-				mapZ = ((vehicle->unk4 - D_80052B34->unk4) + 0x1000) >> 8;
+				mapX = vehicle->unk0;
+				mapZ = vehicle->unk4;
+				mapX -= D_80052B34->unk0;
+				mapZ -= D_80052B34->unk4;
+				mapX = (mapX + 0x1000) >> 8;
+				mapZ = (mapZ + 0x1000) >> 8;
 
 				func_8009BCC0_AAC70(mapX, mapZ, 1);
 				func_8009BCC0_AAC70(mapX, mapZ + 1, 3);
@@ -1680,14 +1657,14 @@ void func_800A03FC_AF3AC(void) {
 
 		gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
 		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
-		gSPMatrix(D_8005BB2C++, &D_8014ED98, G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_8014ED98), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 
-		tempMatrixColor = ((D_8014F1FA * -0x100) + 0x8000) >> 7;
-		D_80052B50.unk0 = tempMatrixColor;
-		D_80052B50.unk2 = tempMatrixColor;
+		tempMatrixColor = ((-D_8014F1FA * 0x100) + 0x8000) >> 7;
 		D_80052B50.unk4 = tempMatrixColor;
+		D_80052B50.unk2 = tempMatrixColor;
+		D_80052B50.unk0 = tempMatrixColor;
 		func_800039D0_45D0(&sp170, NULL, &D_80052B50, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -1696,8 +1673,8 @@ void func_800A03FC_AF3AC(void) {
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 
 		if (D_8014EDD8 == 0) {
-			sp160.unk2 = D_80052B2C->unk36 + 0x8000;
-			sp168.unk2 = D_80047950 + 0x8000;
+			sp160.unk2 = D_80052B2C->unk36 + 0x8000U;
+			sp168.unk2 = D_80047950 + 0x8000U;
 		} else {
 			sp160.unk2 = 0;
 			sp168.unk2 = 0;
@@ -1705,7 +1682,7 @@ void func_800A03FC_AF3AC(void) {
 		}
 
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-		gDPLoadTextureBlock(D_8005BB2C++, D_502E110, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_502E110), G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
@@ -1714,27 +1691,27 @@ void func_800A03FC_AF3AC(void) {
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-		gSPVertex(D_8005BB2C++, &D_8013D5E8_14C598, 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8013D5E8_14C598), 4, 0);
 		gSP1Quadrangle(D_8005BB2C++, 1, 0, 2, 3, 0);
 
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 
-		gDPLoadTLUT_pal16(D_8005BB2C++, 0, &D_8013D590_14C540);
+		gDPLoadTLUT_pal16(D_8005BB2C++, 0, K0_TO_PHYS(D_8013D590_14C540.colors));
 
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 
-		gDPLoadTextureBlock_4b(D_8005BB2C++, &D_8014EDE0, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gSPVertex(D_8005BB2C++, &D_8013D5E8_14C598, 4, 0);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_8014EDE0.bytes), G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8013D5E8_14C598), 4, 0);
 		gSP1Quadrangle(D_8005BB2C++, 1, 0, 2, 3, 0);
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-		tempMatrixColor = ((D_8014F1FA * -0x116) + 0x8B00) >> 7;
-		D_80052B50.unk0 = tempMatrixColor;
-		D_80052B50.unk2 = tempMatrixColor;
+		tempMatrixColor = ((-D_8014F1FA * 0x116) + 0x8B00) >> 7;
 		D_80052B50.unk4 = tempMatrixColor;
+		D_80052B50.unk2 = tempMatrixColor;
+		D_80052B50.unk0 = tempMatrixColor;
 		func_800039D0_45D0(&sp170, &sp168, &D_80052B50, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -1745,8 +1722,8 @@ void func_800A03FC_AF3AC(void) {
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 		gSPTexture(D_8005BB2C++, 0xFFFF, 0xFFFF, 0, G_TX_RENDERTILE, G_ON);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-		gDPLoadTextureBlock(D_8005BB2C++, D_503C8B0, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD);
-		gSPVertex(D_8005BB2C++, &D_8013D628_14C5D8, 4, 0);
+		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_503C8B0), G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_MIRROR | G_TX_WRAP, G_TX_MIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8013D628_14C5D8), 4, 0);
 		gDPPipeSync(D_8005BB2C++);
 		gSP1Quadrangle(D_8005BB2C++, 1, 0, 2, 3, 0);
 		gDPPipeSync(D_8005BB2C++);
@@ -1824,84 +1801,59 @@ void func_800A13E8_B0398(void) {
 }
 
 // drawDebugTimingGraphs
-// CURRENT(5565)
-#ifdef NON_MATCHING
 void func_800A140C_B03BC(void) {
-	s32 iter;
+	s32 i;
+	s32 j;
 	s32 lry;
 	s32 uly;
-	s32 newIdx;
-	union { struct { s32 hi; u32 lo; } h; unsigned long long ull; } acc;
-	s32 *rowPtr;
-	s16 *shiftPtr;
+	u64 sum;
+	s32 color;
+	s32 green;
+	s32 blue;
 
 	if (D_80047720 != 0) {
 		debug_drawTimingGraphBars();
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, 3 << 20);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
-
-		iter = 0x1F;
-		lry = 0xD3;
-		uly = 0xCF;
-		rowPtr = D_8014F5F0;
-		shiftPtr = ((s16 *)&D_80047720) + 1;
-		do {
-			s32 j;
-			acc.h.lo = 0;
-			acc.h.hi = 0;
-			j = 7;
-			do {
-				u32 carry = 0;
-				u32 new_lo = (u32)rowPtr[j] + acc.h.lo;
-				carry = carry + (u32)(new_lo < acc.h.lo);
-				acc.h.hi = acc.h.hi + carry;
-				acc.h.lo = new_lo;
-			} while (j--);
-			acc.ull = __ull_rshift(acc.ull, (long long)*shiftPtr);
-			if (acc.h.hi != 0 || acc.h.lo >= 0xC9U) {
-				acc.h.hi = 0;
-				acc.h.lo = 0xC8;
-			}
-			{
-				s32 c0 = (iter & 2) ? 0x3C0 : 0;
-				s32 c1 = (iter & 1) ? 0x1E : 0;
-				s32 c2 = (iter & 4) ? 0x7800 : 0;
-				s32 color = c2 + c1 + c0;
+		i = 0x20;
+		if (i) {
+			while (i--) {
+				sum = 0;
+				j = 8;
+				while (j--) {
+					sum += D_8014F210[i][j];
+				}
+				sum >>= D_80047722;
+				if (sum > 200) {
+					sum = 200;
+				}
+				green = (i & 2) ? 0x3C0 : 0;
+				blue = (i & 1) ? 0x1E : 0;
+				color = ((i & 4) ? 0x7800 : 0) + blue + green;
 				gDPPipeSync(D_8005BB2C++);
-				gDPSetFillColor(D_8005BB2C++, ((u32)color << 16) | (u32)color);
-				gDPFillRectangle(D_8005BB2C++, 0x20, uly, acc.h.lo + 0x20, lry);
+				gDPSetFillColor(D_8005BB2C++, (color << 16) | color);
+				lry = i * 6 + 0x19;
+				uly = i * 6 + 0x15;
+				gDPFillRectangle(D_8005BB2C++, 0x20, uly, sum + 0x20, lry);
 			}
-			rowPtr -= 8;
-			lry -= 6;
-			uly -= 6;
-		} while (iter--);
-		iter = 0x1F;
-
+		}
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, 0);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
-
-		((s32 *)D_8014F210)[D_8014F610] = D_8013D764_14C714 - D_8013D760_14C710;
-		newIdx = D_8014F610 + 1;
-		D_8014F610 = newIdx;
-		if ((u32)newIdx >= 8U) {
+		D_8014F210[0][D_8014F610] = D_8013D764_14C714 - D_8013D760_14C710;
+		D_8014F610++;
+		if (D_8014F610 >= 8U) {
 			D_8014F610 = 0;
-			newIdx = 0;
 		}
-		rowPtr = D_8014F5F0 + newIdx;
-		do {
-			*rowPtr = 0;
-			rowPtr -= 8;
-		} while (iter--);
-
+		i = 0x20;
+		while (i--) {
+			D_8014F210[i][D_8014F610] = 0;
+		}
 		D_8014F20C = 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A140C_B03BC.s")
-#endif
 
 void func_800A1764_B0714(void) {
 	D_8014F618.unk69 = 0;
@@ -1939,41 +1891,23 @@ void func_800A17EC_B079C(void) {
 	func_800A1764_B0714();
 }
 
-// CURRENT(793)
-#ifdef NON_MATCHING
-s32 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
-	s32 a0;
-	s32 a1;
-	s32 a2;
-	s32 a3;
-
-	a0 = arg0;
-	a1 = arg1;
-	a2 = arg2;
-
-	if (a1 < a0) {
-		a3 = a2;
-		if ((a0 < a2) || ((a0 - a1) < a2)) {
-			return a1 & 0xFF;
+// Approach an unsigned-byte target by a bounded step.
+u8 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
+	if (arg1 < arg0) {
+		if ((arg0 < arg2) || ((arg0 - arg1) < arg2)) {
+			arg0 = arg1;
+		} else {
+			arg0 -= arg2;
 		}
-		a0 = a0 - a3;
-		return a0 & 0xFF;
-	}
-
-	if (a0 < a1) {
-		a3 = a2;
-		if (((0xFF - a2) < a0) || ((a1 - a0) < a2)) {
-			return a1 & 0xFF;
+	} else if (arg0 < arg1) {
+		if (((0xFF - arg2) < arg0) || ((arg1 - arg0) < arg2)) {
+			arg0 = arg1;
+		} else {
+			arg0 += arg2;
 		}
-		a0 = a0 + a3;
-		a0 &= 0xFF;
 	}
-
-	return a0;
+	return arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1828_B07D8.s")
-#endif
 
 s32 func_800A18CC_B087C(void) {
 	s16 index = (s16)(D_80158FE8 - buildingInstances);
@@ -2002,13 +1936,6 @@ void func_800A1924_B08D4(void) {
 	}
 }
 
-// CURRENT(700) - 1160 -> 700 by dropping the local held across the jal: both comparisons read
-// D_8013D5BC_14C56C directly. That deletes the `sh a1,0x26(sp)`/`lh a1,0x26(sp)` spill pair and the
-// redundant sll/sra sign-extension IDO emitted for the s16 local. Residual: ours compiles to 238
-// instructions against the target 240 (the target reloads the state word twice, once per tail path;
-// ours shares one reload), so the whole-file data anchor still sits 0x10 low, plus the register band.
-// Duplicating the reload inside the `== 2` branch measured neutral (IDO CSEs it).
-#ifdef NON_MATCHING
 void func_800A1A18_B09C8(void) {
 	s16 var_v0;
 	s16 var_v1;
@@ -2049,7 +1976,8 @@ void func_800A1A18_B09C8(void) {
 	}
 
 	if (((D_80158FEC != 0) || ((D_80158FE8 != 0) && (func_800A18CC_B087C() != 0)) || (D_801591B4 == 0xE)) && (D_8013D5B4_14C564 == 3)) {
-		if (D_8013D5BC_14C56C == 0) {
+		var_v1 = D_8013D5BC_14C56C;
+		if (var_v1 == 0) {
 			D_8013D5BC_14C56C = 1;
 			D_8013D5C0_14C570[0] = 0xA;
 			D_8014F698 = func_800143C4_14FC4(0x154);
@@ -2066,9 +1994,10 @@ void func_800A1A18_B09C8(void) {
 			D_8014F618.unk7B = 0xA;
 			D_8014F618.unk7C = 0x28;
 			D_8014F618.unk6C = 0xDC;
+			var_v1 = D_8013D5BC_14C56C;
 		}
 
-		if (D_8013D5BC_14C56C == 1) {
+		if (var_v1 == 1) {
 			D_8013D5C0_14C570[0] -= 1;
 			if (D_8013D5C0_14C570[0] == 0) {
 				D_8013D5BC_14C56C = 2;
@@ -2105,52 +2034,44 @@ void func_800A1A18_B09C8(void) {
 	} else {
 		if (var_v1 == 2) {
 			D_8014F618.unk6D = func_800A1828_B07D8(D_8014F618.unk6D, D_8014F618.unk6E, 0x14);
+			var_v1 = D_8013D5BC_14C56C;
 		} else {
 			D_8014F618.unk71 = func_800A1828_B07D8(D_8014F618.unk71, D_8014F618.unk74, 0x14);
 			D_8014F618.unk72 = func_800A1828_B07D8(D_8014F618.unk72, D_8014F618.unk75, 0x14);
 			D_8014F618.unk73 = func_800A1828_B07D8(D_8014F618.unk73, D_8014F618.unk76, 0x14);
 			D_8014F618.unk6D += 2;
+			var_v1 = D_8013D5BC_14C56C;
 		}
-		var_v1 = D_8013D5BC_14C56C;
 	}
 
 	D_8013D768_14C718 = var_v1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1A18_B09C8.s")
-#endif
-
 // CURRENT(3131)
-#ifdef NON_MATCHING
-void func_800A1DD8_B0D88(s32 arg0) {
-	Gfx *dl;
+void func_800A1DD8_B0D88(u8 arg0) {
 	f32 tempF0;
 	f32 tempF2;
 	f32 tempF12;
+	f32 tempF10;
 	f32 tempF14;
 	f32 tempF16;
 	f32 tempF18;
-	f32 tempF10;
-	f32 *basePos;
 
-	arg0 &= 0xFF;
 
-	tempF0 = (f32)((*(u16*)(((u8*)&D_8014F618) + 0x60)) * 0.03125);
+	tempF0 = (f32)((u32)D_8014F618.unk60 * 0.03125);
 	tempF2 = tempF0 * D_80153AB8.x;
 	tempF12 = tempF0 * D_80153AB8.y;
 	tempF14 = tempF0 * D_80153AB8.z;
-	tempF16 = tempF0 * ((f32*)&D_80153AB8)[3];
-	tempF18 = tempF0 * ((f32*)&D_80153AB8)[4];
-	tempF10 = tempF0 * ((f32*)&D_80153AB8)[5];
+	tempF16 = tempF0 * D_80153AB8.rightX;
+	tempF18 = tempF0 * D_80153AB8.rightY;
+	tempF10 = tempF0 * D_80153AB8.rightZ;
 
-	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS((u32)(D_1009C70 + ((((u8*)&D_8014F618)[0x62 + arg0]) << 7))), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_1009C70[D_8014F618.textureIndices[arg0] << 7]), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 
-	basePos = (f32*)(((u8*)&D_8014F618) + (arg0 * 0xC) + 0x30);
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(basePos[0] + tempF2);
-	D_8005BB34->v.ob[1] = (s16)(s32)(basePos[1] + tempF12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(basePos[2] + tempF14);
+	D_8005BB34->v.ob[0] = (D_8014F618.positions[arg0].x + tempF2);
+	D_8005BB34->v.ob[1] = (D_8014F618.positions[arg0].y + tempF12);
+	D_8005BB34->v.ob[2] = (D_8014F618.positions[arg0].z + tempF14);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2160,9 +2081,9 @@ void func_800A1DD8_B0D88(s32 arg0) {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(basePos[0] + tempF16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(basePos[1] + tempF18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(basePos[2] + tempF10);
+	D_8005BB34->v.ob[0] = (D_8014F618.positions[arg0].x + tempF16);
+	D_8005BB34->v.ob[1] = (D_8014F618.positions[arg0].y + tempF18);
+	D_8005BB34->v.ob[2] = (D_8014F618.positions[arg0].z + tempF10);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0;
@@ -2172,9 +2093,9 @@ void func_800A1DD8_B0D88(s32 arg0) {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(basePos[0] - tempF2);
-	D_8005BB34->v.ob[1] = (s16)(s32)(basePos[1] - tempF12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(basePos[2] - tempF14);
+	D_8005BB34->v.ob[0] = (D_8014F618.positions[arg0].x - tempF2);
+	D_8005BB34->v.ob[1] = (D_8014F618.positions[arg0].y - tempF12);
+	D_8005BB34->v.ob[2] = (D_8014F618.positions[arg0].z - tempF14);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x400;
@@ -2184,9 +2105,9 @@ void func_800A1DD8_B0D88(s32 arg0) {
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(basePos[0] - tempF16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(basePos[1] - tempF18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(basePos[2] - tempF10);
+	D_8005BB34->v.ob[0] = (D_8014F618.positions[arg0].x - tempF16);
+	D_8005BB34->v.ob[1] = (D_8014F618.positions[arg0].y - tempF18);
+	D_8005BB34->v.ob[2] = (D_8014F618.positions[arg0].z - tempF10);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x400;
@@ -2200,159 +2121,128 @@ void func_800A1DD8_B0D88(s32 arg0) {
 	gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1DD8_B0D88.s")
-#endif
-
-// CURRENT(850) - NOT a matched body: the whole residual is the register class IDO picks for the
-// repeated `0x800` texture coordinate. The target materialises it once into CALLEE-SAVED $s0
-// (`addiu $s0,$zero,0x800` at index 85, reused by six `sh $s0,...`) and pays the save/restore pair
-// (`sw $s0,0x4($sp)` / `lw $s0,0x4($sp)`); ours materialises the constant at the same index into a
-// caller-saved temp. Superseded body (936) kept in git history.
-//
-// Run A32: permuter warm-started from the 936 body (13 385 iterations, -j4 --stack-diffs
-// --stop-on-zero, 52 outputs); EVERY output spliced verbatim and measured on the tree. The mapping
-// permuter->tree is monotone with a ~+15 offset here (835->850, 843->858, 855->870, 889->904,
-// 909->924, 921->936), so the permuter's best is the tree's best. Winner: an empty
-// `if ((!D_8014F618.head.unkC) && (!D_8014F618.head.unkC)) { }` between the `v.tc[0] = 0` and
-// `v.tc[1] = 0` stores of the second vertex block - a dead-code liveness probe (the ROM has no such
-// load), so this body cannot itself reach 0; it is the closest verified state.
-// Levers refuted earlier, do not re-tread: declaration-order permutations (1326..1522), empty-`if`
-// lifetime extensions on the float locals, `(s16)/(u16)0x800`, named local for the constant (5
-// spellings), dropping both pads (1292), pad1 after sp8 (944), the A31 self-assignment probe (936).
-#ifdef NON_MATCHING
-void func_800A2260_B1210()
+void func_800A2260_B1210(void)
 {
-  s32 pad0;
-  f32 sp6C;
-  f32 sp64;
-  f32 sp68;
-  f32 sp60;
-  f32 sp5C;
-  f32 sp58;
-  f32 sp8;
-  gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_1009A70) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
-  gDPPipeSync(D_8005BB2C++);
-  sp8 = D_8014F618.head.unk20;
-  sp64 = (f32) (((f64) (D_8014F618.head.unkC + D_8014F618.head.unk18)) * 0.5);
-  sp68 = (f32) (((f64) (D_8014F618.head.unk10 + D_8014F618.head.unk1C)) * 0.5);
-  sp6C = (f32) (((f64) (D_8014F618.head.unk14 + sp8)) * 0.5);
-  sp58 = (f32) (((f64) (D_8014F618.head.unkC - D_8014F618.head.unk18)) * 0.5);
-  sp5C = (f32) (((f64) (D_8014F618.head.unk10 - D_8014F618.head.unk1C)) * 0.5);
-  sp60 = (f32) (((f64) (D_8014F618.head.unk14 - sp8)) * 0.5);
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + D_8014F618.head.unkC));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + D_8014F618.head.unk10));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + D_8014F618.head.unk14));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + sp64));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + sp68));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + sp6C));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x800;
-  D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + D_8014F618.head.unk18));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + D_8014F618.head.unk1C));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + D_8014F618.head.unk20));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 + sp58));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 + sp5C));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 + sp60));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x800;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) D_8014F618.head.unk0);
-  D_8005BB34->v.ob[1] = (s16) ((s32) D_8014F618.head.unk4);
-  D_8005BB34->v.ob[2] = (s16) ((s32) D_8014F618.head.unk8);
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x800;
-  D_8005BB34->v.tc[1] = 0x800;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - sp58));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - sp5C));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - sp60));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x800;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - D_8014F618.head.unk18));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - D_8014F618.head.unk1C));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - D_8014F618.head.unk20));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0;
-  if ((!D_8014F618.head.unkC) && (!D_8014F618.head.unkC))
-  {
-  }
-  D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - sp64));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - sp68));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - sp6C));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x800;
-  D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  D_8005BB34->v.ob[0] = (s16) ((s32) (D_8014F618.head.unk0 - D_8014F618.head.unkC));
-  D_8005BB34->v.ob[1] = (s16) ((s32) (D_8014F618.head.unk4 - D_8014F618.head.unk10));
-  D_8005BB34->v.ob[2] = (s16) ((s32) (D_8014F618.head.unk8 - D_8014F618.head.unk14));
-  D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = 0;
-  D_8005BB34->v.cn[1] = 0;
-  D_8005BB34->v.cn[2] = 0;
-  D_8005BB34->v.cn[3] = 0;
-  D_8005BB34++;
-  gSPVertex(D_8005BB2C++, ((u32) (D_8005BB34 - 9)) & 0x1FFFFFFF, 9, 0);
-  gSP1Quadrangle(D_8005BB2C++, 0, 1, 4, 3, 0);
-  gSP2Triangles(D_8005BB2C++, 2, 5, 1, 0, 5, 4, 1, 0);
-  gSP2Triangles(D_8005BB2C++, 7, 3, 4, 0, 6, 3, 7, 0);
-  gSP2Triangles(D_8005BB2C++, 8, 4, 5, 0, 7, 4, 8, 0);
-  gDPPipeSync(D_8005BB2C++);
-  D_8014F618.head.unkC = D_8014F618.head.unkC;
+	f32 sp6C;
+	f32 sp68;
+	f32 sp64;
+	f32 sp60;
+	f32 sp5C;
+	f32 sp58;
+	gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_1009A70) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
+	gDPPipeSync(D_8005BB2C++);
+	sp64 = (f32) (((f64) (D_8014F618.head.unkC + D_8014F618.head.unk18)) * 0.5);
+	sp68 = (f32) (((f64) (D_8014F618.head.unk10 + D_8014F618.head.unk1C)) * 0.5);
+	sp6C = (f32) (((f64) (D_8014F618.head.unk14 + D_8014F618.head.unk20)) * 0.5);
+	sp58 = (f32) (((f64) (D_8014F618.head.unkC - D_8014F618.head.unk18)) * 0.5);
+	sp5C = (f32) (((f64) (D_8014F618.head.unk10 - D_8014F618.head.unk1C)) * 0.5);
+	sp60 = (f32) (((f64) (D_8014F618.head.unk14 - D_8014F618.head.unk20)) * 0.5);
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 + D_8014F618.head.unkC;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 + D_8014F618.head.unk10;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 + D_8014F618.head.unk14;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 + sp64;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 + sp68;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 + sp6C;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 + D_8014F618.head.unk18;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 + D_8014F618.head.unk1C;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 + D_8014F618.head.unk20;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 + sp58;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 + sp5C;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 + sp60;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = (s16) ((s32) D_8014F618.head.unk0);
+	D_8005BB34->v.ob[1] = (s16) ((s32) D_8014F618.head.unk4);
+	D_8005BB34->v.ob[2] = (s16) ((s32) D_8014F618.head.unk8);
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 - sp58;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 - sp5C;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 - sp60;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0x800;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 - D_8014F618.head.unk18;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 - D_8014F618.head.unk1C;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 - D_8014F618.head.unk20;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 - sp64;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 - sp68;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 - sp6C;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0x800;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	D_8005BB34->v.ob[0] = D_8014F618.head.unk0 - D_8014F618.head.unkC;
+	D_8005BB34->v.ob[1] = D_8014F618.head.unk4 - D_8014F618.head.unk10;
+	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 - D_8014F618.head.unk14;
+	D_8005BB34->v.flag = 0;
+	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.cn[0] = 0;
+	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[2] = 0;
+	D_8005BB34->v.cn[3] = 0;
+	D_8005BB34++;
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-9]), 9, 0);
+	gSP1Quadrangle(D_8005BB2C++, 0, 1, 4, 3, 0);
+	gSP2Triangles(D_8005BB2C++, 2, 5, 1, 0, 5, 4, 1, 0);
+	gSP2Triangles(D_8005BB2C++, 7, 3, 4, 0, 6, 3, 7, 0);
+	gSP2Triangles(D_8005BB2C++, 8, 4, 5, 0, 7, 4, 8, 0);
+	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2260_B1210.s")
-#endif
 s32 func_800A2A88_B1A38(void) {
 	s32 temp_v0;
 
@@ -2409,102 +2299,23 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// Previous: CURRENT(349) - A27: a fresh permuter run warm-started from the 407 body (7.1k iters, -j3
-// --stack-diffs, PRIMITIVE/TEXEL0 base.c enum) found three constructs A25/A26 had not, each measured
-// individually then stacked (base 407): (1) `flatDistI = 0xF; D_8014F618.unk6F += flatDistI;` in the
-// unk70==1 branch -> 362; (2) an empty `if (!D_8004795C) { }` just before the `pulse = (s16)...`
-// clamp -> 402 (the A22 live-range class); (3) `f32 posY;` moved from before `s32 flatDistI;` to after
-// `f32 posZ;` -> 399. Stacked: 1+2 = 357, 1+3 = 354, 1+2+3 = 349. Refuted on top of the winner:
-// chaining the flatDistI product into `flatDistI` instead of `new_var` (352 alone, 404 stacked),
-// `posZ = (f32)new_var2; posY = posZ;` (neutral 407/349), flatDistI/pad0/distScale/pulse-first and
-// new_var-first declaration orders (365/357/413/373/365). Count-exact 446 = 446 (objdump); residual
-// 349 is still allocation (the +8 frame, posX $f16 vs $f0, packed-colour byte order, pulse clamp band).
-// Previous: CURRENT(407) - A26: the declaration-position lever still had room. `int new_var;` (A24's named
-// first product) moves from FIRST in the frame to directly after `f32 posZ;` - 415 -> 407. Its
-// neighbours were re-swept this run (after pad0 415, after posX 415, after posY 415, after flatDistI
-// 407, after distScale 415, after new_var2 415, after pulse 415, first 415), so the gain is the move
-// itself. The +8 frame is NOT the lever: dropping `new_var2` restores the target's 0x90 frame but
-// measures 466, and dropping both new_var and new_var2 measures 852 (frame 0x90). `swap_mul` (table
-// first on the six distScale products), deleting the dead `pad0`, dropping the empty `if (arg2)`
-// (1484) and holding unk6D in pad0 are all neutral or worse. Residual 407 = the +8 frame (ours 0x98
-// vs 0x90) plus whole-function allocation (posX in $f16 vs $f0, the packed-colour byte load order,
-// $v0/$v1 on the pulse clamp).
-// Previous: CURRENT(415) - A25: a fresh warm-started permuter run (from the 447 body, -j3 --stack-diffs) topped
-// out at 392 in the permuter's own metric, but only ONE of its constructs is real. The permuter's
-// score is not asm-differ's: splicing its best outputs back measured 2900 (the `flatDistI = ...;
-// new_var = flatDistI;` split) and 2868 (that plus the `unk6F = unk6F - 0xF` rewrite), while the one
-// declaration move measured 447 -> 415. `s32 flatDistI;` moves from after `s16 new_var2;` to directly
-// after `f32 posY;`. Its neighbours were all swept in the same run: after posZ 447, after distScale
-// 439, after pad0 does not build, with new_var2 before it 431 and pulse before it 423. The residual
-// 415 is still the frame (+8: ours 0x98 vs the target's 0x90) plus whole-function allocation (posX in
-// $f16 vs the target's $f0, the packed-colour byte load order, the argument-evaluation order).
-// Previous: CURRENT(447) - A24: a warm-started permuter run (8331 iterations, --stack-diffs) found two more
-// no-cost live-range constructs on top of the 860 body: (1) hoist the first product of the
-// flatDistI expression into a named `int new_var;` declared FIRST in the frame (860 -> 490), and
-// (2) name `arg1` in a `s16 new_var2;` used by posY and by the sqrtf argument (490 -> 447). Both
-// add no instruction - objdump counts 446 = 446. Holding unk6D in the dead `pad0` (a third
-// permuter find) measured 652, so it is NOT in the body.
-// Earlier: CURRENT(860) - the permuter (7995 iterations, --stack-diffs) found ONE lever: an empty
-// if (arg2) inserted between the D_80052B40.unk0 and .unk2 stores - it extends arg2's live
-// range, which shifts IDO's whole register allocation toward the target. 1860 -> 885.
-// NOTE: the empty if DOES cost one instruction - the permuter's "446 = 446" was ins_diff's
-// miscount (ins_diff is unreliable on this function); objdump reports 447. A23: hold the three
-// equal D_80052B50 halves in the existing `pulse` local instead of reading D_80052B50.unk4 back
-// twice - that removes the redundant `lh v1,4(a2)` reload, restores the exact 446 = 446 count,
-// and measures 885 -> 860 (asm-differ). The store order is the target's (unk4, unk2, unk0).
-// Previous: CURRENT(1860) - two fixes took this from 8685. (1) The `(s16)distScale` store must be spelled
-// UNSIGNED: `*(u16 *)&D_8014F618.unk60 = (u16)distScale;` makes IDO emit its full unsigned
-// float->int sequence (cfc1/ctc1 round-to-zero, cvt.w.s, the 0x4F000000 overflow check, the
-// 0x80000000 fixup, `sh`). The `(s16)` form compiled to a bare `trunc.w.s` and was the whole
-// 25-instruction deficit (421 vs 446) that A8 recorded - close that deficit and the whole TU tail
-// realigns. (2) `func_800A2260_B1210()` takes no arguments (prototype `void ...()`); the guess's
-// `(NULL, NULL, NULL, NULL)` emitted four `move aN,zero`. Structure is now 446 = 446 with every
-// opcode in place; the residual 1860 is register allocation (posX in $f16 vs the target's $f0, the
-// float temp band, and the packed-colour byte load order).
-// Earlier finding: spelling the head as a real member of the global (Unk8014F618.head, no cast,
-// no pointer local) makes every head access a constant-address expression and IDO then assigns the
-// two hoisted bases the way the target does ($s0=&D_8014F618, $s1=&D_8005BB2C); the cast form gave
-// the reverse. One declared-but-unused s32 first in the frame restores the target's posZ home at
-// 0x20 (it lands at 0x24 without it).
-// CURRENT(234) - A29: permuter warm-started from the 244 body (prep on par2, ~19k iters, -j3
-// --stack-diffs, PRIMITIVE/TEXEL0 base.c C-enum) found ONE transferable construct: the second colour
-// argument of the first gDPSetPrimColor written as a comma form on the GLOBAL, `((0, D_8014F618)).unk78`
-// (a sequence expression that re-materialises the base) - 244 -> 234. Same family as A28s
-// `(0, D_8014F618.unk73)`. Measured refutations: the same wrap on unk77 = 406, unk79 = 386, unk69 =
-// 1011, all four = 1147; the runs other output (splitting the unk2 store off the one-line block) = 244
-// alone, 234 stacked - neutral. Count 446 = 446 (objdump). Residual 234 = the +8 frame, posX $f16 vs
-// $f0, the packed-colour byte order and the pulse-clamp band.
-// Previous: CURRENT(244) - A28: permuter warm-started from the 349 body (7k iters, -j2 --stack-diffs,
-// PRIMITIVE/TEXEL0 base.c C-enum). Three measured constructs, each spliced and re-measured:
-// (1) writing the D_80052B48.unk2/unk4 + empty-if + pulse block as ONE line (349 -> 289) - it
-// reschedules one store (`sh t6,4(a1)`) across two `addiu r,r,0` rows; (2) `distScale =
-// D_80052B34->unk4 - arg2;` hoisted before the first sqrtf, third term read back from distScale
-// (289 -> 274); (3) `(0, D_8014F618.unk73)` comma form on the second gDPSetPrimColor (289 -> 259).
-// Stacked: 1+2 = 274, 1+3 = 259, 1+2+3 = 244. Refuted on top: merging the pulse assignment into
-// the unk2 store (254), deleting the empty `if (!D_8004795C) { }` (309, it is a live-range lever).
-// Count-exact 446 = 446 (objdump). Residual 244 = the +8 frame, posX $f16 vs $f0, the packed-colour
-// byte order and the pulse-clamp band.
-#ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
-  s32 pad0;
-  f32 posX;
   s32 flatDistI;
-  f32 posZ;
-  f32 posY;
-  int new_var;
+  f32 dx;
+  f32 dz;
+  f32 dy;
   f32 distScale;
-  s16 new_var2;
+  s16 pointY;
   s32 pulse;
-  (void) arg3;
-  posX = (f32) arg0;
-  new_var2 = arg1;
-  posY = (f32) new_var2;
-  posZ = (f32) arg2;
+  dx = arg0;
+  pointY = arg1;
+  dy = pointY;
+  dz = arg2;
   D_8014F618.unk66 = 1;
-  D_8014F618.head.unk0 = posX;
-  D_8014F618.head.unk4 = posY;
-  D_8014F618.head.unk8 = posZ;
+  D_8014F618.head.unk0 = dx;
+  D_8014F618.head.unk4 = dy;
+  D_8014F618.head.unk8 = dz;
   gSPMatrix(D_8005BB2C++, ((u32) (&D_80031160)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
   gDPPipeSync(D_8005BB2C++);
   gSPClearGeometryMode(D_8005BB2C++, ((0x00000001 | 0x00002000) | 0x00010000) | 0x00020000);
@@ -2519,180 +2330,173 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   gDPPipeSync(D_8005BB2C++);
   if (D_8014F618.unk70 == 1)
   {
-    flatDistI = 0xF;
-    D_8014F618.unk6F += flatDistI;
-    pulse = D_8014F618.unk6F;
+	D_8014F618.unk6F += 0xF;
+	pulse = D_8014F618.unk6F;
   }
   else
-    if (D_8014F618.unk70 == 2)
+	if (D_8014F618.unk70 == 2)
   {
-    D_8014F618.unk6F -= 0xF;
-    pulse = D_8014F618.unk6F;
+	D_8014F618.unk6F -= 0xF;
+	pulse = D_8014F618.unk6F;
   }
   else
   {
-    pulse = D_8014F618.unk6F;
-    if (pulse < 0xA)
-    {
-      D_8014F618.unk6F = pulse + 0xA;
-      pulse = D_8014F618.unk6F;
-    }
-    else
-      if (pulse >= 0x15)
-    {
-      D_8014F618.unk6F = pulse - 0xA;
-      pulse = D_8014F618.unk6F;
-    }
+	pulse = D_8014F618.unk6F;
+	if (pulse < 0xA)
+	{
+	  D_8014F618.unk6F = pulse + 0xA;
+	  pulse = D_8014F618.unk6F;
+	}
+	else
+	  if (pulse >= 0x15)
+	{
+	  D_8014F618.unk6F = pulse - 0xA;
+	  pulse = D_8014F618.unk6F;
+	}
   }
   if ((pulse >= 0x79) && (D_8014F618.unk70 == 1))
   {
-    D_8014F618.unk70 = 2;
+	D_8014F618.unk70 = 2;
   }
   if ((pulse < 0xF) && (D_8014F618.unk70 == 2))
   {
-    D_8014F618.unk70 = 1;
+	D_8014F618.unk70 = 1;
   }
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, ((0, D_8014F618)).unk78, D_8014F618.unk79, D_8014F618.unk69);
-  distScale = D_80052B34->unk4 - arg2;
-  sqrtf(((((f32) (D_80052B34->unk0 - arg0)) * ((f32) (D_80052B34->unk0 - arg0))) + (((f32) (D_80052B34->unk2 - new_var2)) * ((f32) (D_80052B34->unk2 - new_var2)))) + (((f32) (D_80052B34->unk4 - arg2)) * ((f32) distScale)));
-  distScale = sqrtf(((((D_80047954 * 4.0f) - posX) * ((D_80047954 * 4.0f) - posX)) + (((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY))) + (((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ)));
-  *((u16 *) (&D_8014F618.unk60)) = (u16) distScale;
+  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, ((0, D_8014F618)).unk79, D_8014F618.unk69);
+  dx = D_80052B34->unk0 - arg0;
+  dy = D_80052B34->unk2 - pointY;
+  dz = D_80052B34->unk4 - arg2;
+  sqrtf((((dx) * (dx)) + ((dy) * (dy))) + ((dz) * dz));
+  dx = ((D_80047954 * 4.0f) - arg0);
+  dy = ((D_80047958 * 4.0f) - pointY);
+  dz = ((D_8004795C * 4.0f) - arg2);
+  distScale = sqrtf(((dx * dx) + (dy * dy)) + (dz * dz));
+  D_8014F618.unk60 = distScale;
   distScale /= 6.0f;
-  D_8014F618.head.unkC = distScale * ((f32 *) (&D_80153AB8))[0];
-  D_8014F618.head.unk10 = distScale * ((f32 *) (&D_80153AB8))[1];
-  D_8014F618.head.unk14 = distScale * ((f32 *) (&D_80153AB8))[2];
-  D_8014F618.head.unk18 = distScale * ((f32 *) (&D_80153AB8))[3];
-  D_8014F618.head.unk1C = distScale * ((f32 *) (&D_80153AB8))[4];
-  D_8014F618.head.unk20 = distScale * ((f32 *) (&D_80153AB8))[5];
+  D_8014F618.head.unkC = distScale * D_80153AB8.x;
+  D_8014F618.head.unk10 = distScale * D_80153AB8.y;
+  D_8014F618.head.unk14 = distScale * D_80153AB8.z;
+  D_8014F618.head.unk18 = distScale * D_80153AB8.rightX;
+  D_8014F618.head.unk1C = distScale * D_80153AB8.rightY;
+  D_8014F618.head.unk20 = distScale * D_80153AB8.rightZ;
   D_8014F618.head.unk24 = D_8014F618.head.unk0 + D_8014F618.head.unk18;
   D_8014F618.head.unk28 = D_8014F618.head.unk4 + D_8014F618.head.unk1C;
   D_8014F618.head.unk2C = D_8014F618.head.unk8 + D_8014F618.head.unk20;
   func_800A2260_B1210();
   gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, (0, D_8014F618.unk73), D_8014F618.unk6B);
-  new_var = (s32) ((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX));
-  flatDistI = (s32) (((f32) new_var) + ((D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ)));
-  flatDistI = (s32) sqrtf((f32) flatDistI);
+  flatDistI = ((D_80052B2C->unk0 - arg0) * (D_80052B2C->unk0 - arg0));
+  flatDistI = ((flatDistI) + ((D_80052B2C->unk8 - arg2) * (D_80052B2C->unk8 - arg2)));
+  flatDistI = sqrtf(flatDistI);
   D_80052B40.unk0 = arg0;
-  if (arg2)
-  {
-  }
   D_80052B40.unk2 = arg1;
   D_80052B40.unk4 = arg2;
   D_80052B48.unk0 = func_80003824_4424(D_80052B2C->unk14 - D_80052B2C->unk8, D_80052B2C->unkC - D_80052B2C->unk0);
- D_80052B48.unk2 = D_8014F618.unk6D << 8; D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32) flatDistI); if (!D_8004795C) { } pulse = (s16) ((s32) (((f32) D_8014F618.unk6F) + distScale)); D_80052B50.unk4 = pulse; D_80052B50.unk2 = pulse; D_80052B50.unk0 = pulse;
+ D_80052B48.unk2 = D_8014F618.unk6D << 8; D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - pointY, flatDistI); if (!D_8004795C) { } pulse = (s16) (((f32) D_8014F618.unk6F) + distScale); D_80052B50.unk4 = pulse; D_80052B50.unk2 = pulse; D_80052B50.unk0 = pulse;
   func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
   gSPMatrix(D_8005BB2C++, ((u32) (D_8005BB38++)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
   gSPDisplayList(D_8005BB2C++, (u32) D_100ACB0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
-#endif
 
-// CURRENT(7663)
-#ifdef NON_MATCHING
 void func_800A3490_B2440(VehicleInstance *arg0) {
-	u8 *sp6C;
-	s16 sp62;
-	s16 sp60;
-	u8 sp56;
-	u8 var_t5;
-	u8 var_t4;
-	u8 var_a3;
-	s32 temp_v0;
-	s32 temp_v1;
-	s32 temp_ra;
-	s32 var_t0;
-	s32 alpha;
+	static s32 D_8013D76C_14C71C = 0;
+	static s32 D_8013D770_14C720 = 10;
+	static s32 D_8013D774_14C724 = 0;
+	VehicleType *type;
+	s32 distance;
+	s32 marker;
+	s16 dx;
+	s16 dz;
+	s32 value;
+	s16 alpha;
+	u8 red;
+	u8 green;
+	u8 blue;
+	u8 fade;
+	u8 pulse;
 
-	sp6C = func_800FAFB8_109F68(arg0);
-	sp56 = (u8)D_8013D5B8_14C568;
-	var_a3 = 0x2D;
-	var_t4 = 0x2E;
-	var_t5 = 0x91;
+	type = func_800FAFB8_109F68(arg0);
+	fade = D_8013D5B8_14C568;
+	red = 0x2D;
+	green = 0x2E;
+	blue = 0x91;
 	D_8014F67E = 0;
 
 	if (func_800A2A88_B1A38() != 0) {
 		if ((D_80158FE8 != NULL) && (func_800A18CC_B087C() != 0)) {
-			temp_v0 = 1;
+			value = 1;
 		} else {
-			temp_v0 = 0;
+			value = 0;
 		}
 
-		if (!((temp_v0 == 0) && (D_801591B4 != 7) && (D_801591B4 != 8))) {
-			var_a3 = 0xFF;
-			var_t4 = 0;
-			var_t5 = 0;
+		if ((value != 0) || (D_801591B4 == 7) || (D_801591B4 == 8)) {
+			red = 0xFF;
+			green = 0;
+			blue = 0;
 		}
 
-		temp_v1 = D_8013D770_14C720;
-		if (temp_v1 < 0) {
-			temp_v1 = 0;
+		D_8013D770_14C720 = MAX(0, D_8013D770_14C720);
+		if (D_8013D770_14C720 > 30) {
+			D_8013D770_14C720 = 30;
 		}
-		D_8013D770_14C720 = temp_v1;
-		if (temp_v1 >= 0x1F) {
-			temp_v1 = 0x1E;
-			D_8013D770_14C720 = temp_v1;
+		if (D_8013D76C_14C71C > 0) {
+			D_8013D76C_14C71C--;
 		}
+		D_8013D5D0_14C580.word = arg0->unk0;
+		D_8013D5D4_14C584.word = arg0->unk2;
+		D_8013D5D8_14C588.word = arg0->unk4;
 
-		temp_v1 = D_8013D76C_14C71C;
-		if (temp_v1 > 0) {
-			D_8013D76C_14C71C = temp_v1 - 1;
-		}
+		dx = D_80052B2C->unk0 - arg0->unk0;
+		dz = D_80052B2C->unk8 - arg0->unk4;
+		distance = sqrtf(func_800047FC_53FC(D_80052B2C->unk4 - arg0->unk2) + (dx * dx) + (dz * dz));
+		value = D_8013D774_14C724;
+		distance = ((distance - value) / 2) + value;
+		D_8013D774_14C724 = distance;
 
-		*(s32 *)&D_8013D5D0_14C580 = arg0->unk0;
-		*(s32 *)&D_8013D5D4_14C584 = arg0->unk2;
-		*(s32 *)&D_8013D5D8_14C588 = arg0->unk4;
-
-		sp62 = (s16)(s32)(D_80052B2C->unk0 - (f32)arg0->unk0);
-		sp60 = (s16)(s32)(D_80052B2C->unk8 - (f32)arg0->unk4);
-		temp_ra = (((s32)sqrtf((f32)(func_800047FC_53FC((s16)(s32)(D_80052B2C->unk4 - (f32)arg0->unk2)) + (sp62 * sp62) + (sp60 * sp60))) - D_8013D774_14C724) / 2) + D_8013D774_14C724;
-		D_8013D774_14C724 = temp_ra;
-
+		marker = 4;
 		switch (D_8013D5B4_14C564) {
 			case 3:
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, 0xFF);
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, red, green, blue, 0xFF);
 				break;
 			case 1:
-				if (sp56 < 0x8C) {
-					alpha = ((sp56 * 0xFF) / 140) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, alpha, alpha, alpha, alpha);
+				if (fade < 0x8C) {
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, (fade * 0xFF) / 140, (fade * 0xFF) / 140, (fade * 0xFF) / 140, (fade * 0xFF) / 140);
 				} else {
-					var_a3 = (u8)((f32)var_a3 + ((f32)(0xFF - var_a3) * ((f32)(0xFF - sp56) / 115.0f)));
-					var_t4 = (u8)((f32)var_t4 + ((f32)(0xFF - var_t4) * ((f32)(0xFF - sp56) / 115.0f)));
-					var_t5 = (u8)((f32)var_t5 + ((f32)(0xFF - var_t5) * ((f32)(0xFF - sp56) / 115.0f)));
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, 0xFF);
+					red = (f32)red + ((0xFF - red) * ((0xFF - fade) / 115.0f));
+					green = (f32)green + ((0xFF - green) * ((0xFF - fade) / 115.0f));
+					blue = (f32)blue + ((0xFF - blue) * ((0xFF - fade) / 115.0f));
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, red, green, blue, 0xFF);
 				}
 				break;
 			case 2:
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, sp56);
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, red, green, blue, fade);
 				break;
 		}
 
-		for (var_t0 = 4; var_t0 >= 2;) {
-			if ((D_8013D5B4_14C564 == 1) && (sp56 < 0x8D)) {
-				alpha = (sp56 * 2) - ((0x587 - temp_ra) / 12);
+		value = (0x587 - distance) / 12;
+		while (marker >= 2) {
+			if ((D_8013D5B4_14C564 != 1) || (fade >= 0x8D)) {
+				alpha = 0xFF - value;
 			} else {
-				alpha = 0xFF - ((0x587 - temp_ra) / 12);
+				alpha = (fade * 2) - value;
 			}
 
-			func_800A2D98_B1D48(((s16 *)&D_8013D5D0_14C580)[1], ((s16 *)&D_8013D5D4_14C584)[1], ((s16 *)&D_8013D5D8_14C588)[1], (s16)alpha);
+			func_800A2D98_B1D48(D_8013D5D0_14C580.halves.low, D_8013D5D4_14C584.halves.low, D_8013D5D8_14C588.halves.low, alpha);
 
-			if (sp6C[0x55] != 0) {
-				var_t0--;
+			if (type->unk55 != 0) {
+				marker--;
 			} else {
-				var_t0 = 1;
+				marker = 1;
 			}
 		}
 
 		if (((D_80158FEC != NULL) || (D_80158FE4 != NULL) || (D_80158FE8 != NULL)) && (D_8013D5B4_14C564 == 3)) {
 			if (D_8013D5BC_14C56C != 2) {
-				alpha = (0xFF - (D_8013D5C0_14C570[0] * 0xC)) & 0xFF;
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, alpha);
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, (u32)(0xFF - (D_8013D5C0_14C570[0] * 0xC)));
 			} else {
-				alpha = (D_80052A8C & 7) * 0x10;
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, (alpha * 2) + 0x32, alpha + 0x32, 0xFF);
+				pulse = (D_80052A8C & 7) * 0x10;
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, (pulse * 2) + 0x32, pulse + 0x32, 0xFF);
 			}
 		}
 
@@ -2703,9 +2507,6 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
-#endif
 
 s32 func_800A3CD0_B2C80(void) {
 	if (D_8014F1FA == 0) {

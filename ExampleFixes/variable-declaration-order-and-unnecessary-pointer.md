@@ -25,3 +25,11 @@ s32 sp34;      // declared last  → lowest offset (0x34)
 Declaring a local pointer variable like `AlienInstance *inst = &alienInstances[arg0]` can increase the frame size by 8 bytes (0x48 vs 0x40 in this case), even though the compiler keeps the pointer in a register (`$s0`). 
 
 Using `alienInstances[arg0]` directly (without an explicit pointer variable) produces the same register-based access but with a smaller stack frame. The compiler is smart enough to compute the address once and keep it in `$s0` regardless.
+
+### Frontend sprite allocator: pointer elimination and remaining stack difference
+
+`func_8008DC34_5E0E4` remains NON_MATCHING at score 82. Recover the parameters as three signed 16-bit coordinates, an unsigned byte effect ID, and an unsigned 16-bit lifetime. Replace the local slot pointer with direct `D_800E1980[D_800E1D69]` field accesses. Besides eliminating a pointer home, this restores the target coordinate promotion and register allocation. Access the configuration and color tables through eight-byte and four-byte array rows.
+
+Assign the randomized phase directly to the indexed slot, then capture the free-slot index separately for the return value and the search loop. Capturing it before the random-number call creates extra values live across the call. A named random-result local also adds stack space; the direct assignment avoids that home.
+
+The retained version matches every non-stack instruction, including both byte masks. Its frame is still 0x28 instead of 0x20, while the configuration pointer spills at the correct sp+0x18. Declaration permutations, packed byte locals, nested scopes, register qualifiers, and a wider return type did not remove the excess frame. Reusing coordinate/effect parameters for the two byte locals changed the instruction sequence substantially. Treat this as an unresolved frame difference, not an achieved match.

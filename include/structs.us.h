@@ -18,6 +18,10 @@ typedef struct {
 typedef union ShadowModelCommand {
     Gwords words;
     s8 bytes[8];
+    struct {
+        s8 opcode;
+        s8 args[7];
+    } command;
 } ShadowModelCommand;
 
 typedef struct MissionCommand {
@@ -277,11 +281,10 @@ typedef struct {
 } Unk800A4354; /* size = 0x06 */
 
 typedef struct {
-	/* 0x06 */ u8 unk6;
-	/* 0x07 */ u8 unk7;
-	s32 unk4;
-	void* unk8;
-	void* unkC;
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ void *unk8;
+	/* 0x0C */ void *unkC;
 } Frontend52690Entry;
 
 typedef struct {
@@ -302,6 +305,20 @@ typedef struct {
 	/* 0x09 */ u8 unk9;
 	/* 0x0A */ u8 unkA;
 } Frontend52690Unk8Motion;
+
+typedef struct {
+	/* 0x00 */ u8 active;
+	/* 0x01 */ u8 flags;
+	/* 0x02 */ s16 lifetime;
+	/* 0x04 */ s16 next;
+	/* 0x06 */ s16 previous;
+	/* 0x08 */ s16 position[3];
+	/* 0x0E */ s16 velocity[3];
+	/* 0x14 */ s16 duration;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ u8 unk18;
+	/* 0x19 */ u8 pad19[3];
+} Frontend52690InterpolationParticle; /* size = 0x1C */
 
 typedef struct {
 	/* 0x00 */ s32 unk0;
@@ -1628,6 +1645,9 @@ typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
+	union {
+		f32 motion[4];
+		struct {
 	/* 0x0C */ f32 unkC;
 	union {
 		/* 0x10 */ f32 unk10;
@@ -1643,6 +1663,8 @@ typedef struct {
 	union {
 		/* 0x18 */ s32 unk18;
 		/* 0x18 */ f32 unk18F32;
+	};
+		};
 	};
 	union {
 		struct {
@@ -1665,24 +1687,43 @@ typedef struct {
 } Projectile; /* size = 0x30 */
 
 typedef struct {
-	/* 0x00 */ s16 curX;
-	/* 0x02 */ s16 posX[4];
-	/* 0x0A */ s16 curY;
-	/* 0x0C */ s16 posY[4];
-	/* 0x14 */ s16 curZ;
-	/* 0x16 */ s16 posZ[3];
 	union {
 		struct {
-			/* 0x1C */ s16 posZ3;
+			/* 0x00 */ s16 curX;
+			/* 0x02 */ s16 posX[4];
+			/* 0x0A */ s16 curY;
+			/* 0x0C */ s16 posY[4];
+			/* 0x14 */ s16 curZ;
+			/* 0x16 */ s16 posZ[3];
 			union {
-				/* 0x1E */ u16 unk1E;
 				struct {
-					/* 0x1E */ u8 pad1E;
-					/* 0x1F */ u8 unk1F; /* bitfield: bit 0 = ?, bit 1 = in-use */
+					/* 0x1C */ s16 posZ3;
+					union {
+						/* 0x1E */ u16 unk1E;
+						struct {
+							u16 trailCount : 14;
+							u16 trailState : 2;
+						};
+						struct {
+							/* 0x1E */ u8 pad1E;
+							/* 0x1F */ u8 unk1F;
+						};
+					};
+				};
+				/* 0x1C */ s32 unk1C;
+				struct {
+					u32 trailPad : 30;
+					u32 trailActive : 1;
+					u32 trailEnded : 1;
 				};
 			};
 		};
-		/* 0x1C */ s32 unk1C;
+		struct {
+			/* 0x00 */ s16 historyX[5];
+			/* 0x0A */ s16 historyY[5];
+			/* 0x14 */ s16 historyZ[5];
+			/* 0x1E */ u16 historyFlags;
+		};
 	};
 	/* 0x20 */ void *unk20; // Owning Projectile pointer
 } Unk8015F790; /* size = 0x24 */
@@ -1761,9 +1802,14 @@ typedef struct {
 } SaveData;
 
 typedef struct {
+	union {
+		s16 position[3];
+		struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
+		};
+	};
 	/* 0x06 */ u8 pad6[0x2];
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s32 unkC;
@@ -2195,13 +2241,9 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
-	/* 0x30 */ u8 pad30[0x30];
-	/* 0x60 */ u8 unk60;
-	/* 0x61 */ u8 unk61;
-	/* 0x62 */ u8 unk62;
-	/* 0x63 */ u8 unk63;
-	/* 0x64 */ u8 unk64;
-	/* 0x65 */ u8 unk65;
+	/* 0x30 */ Vec3f positions[4];
+	/* 0x60 */ u16 unk60;
+	/* 0x62 */ u8 textureIndices[4];
 	/* 0x66 */ u8 unk66;
 	/* 0x67 */ u8 unk67;
 	/* 0x68 */ u8 unk68;
@@ -2238,16 +2280,27 @@ typedef struct {
 	/* 0x07 */ s8 pad7;
 } Unk800B753CEntry; /* size = 0x08 */
 
+typedef Unk800311A0 Unk80052B40; /* size = 0x06 */
+
 typedef struct {
-	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
-} Unk80052B40; /* size = 0x06 - Often seems to actually be Vtx */
+	/* 0x00 */ Unk80052B40 scale;
+	/* 0x06 */ s16 pad6;
+} TextAnimationScale; /* size = 0x08 */
 
 typedef union {
 	Unk80052B40 position;
 	s32 command[2];
 } MapMarkerScratch; /* size = 0x08 */
+
+typedef union {
+	u8 bytes[0x400];
+	u32 words[0x100];
+} ScannerTexture; /* size = 0x400 */
+
+typedef union {
+	u32 words[9];
+	u16 colors[18];
+} ScannerPalette; /* size = 0x24 */
 
 typedef struct {
 	Unk80052B40 values[3];
@@ -2280,21 +2333,46 @@ typedef struct {
 } ShadowPartEntry;
 
 typedef struct {
-	/* 0x00 */ f32 unk0;
-	/* 0x04 */ f32 unk4;
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
-	/* 0x10 */ f32 unk10;
-	/* 0x14 */ f32 unk14;
-	/* 0x18 */ f32 unk18;
-	/* 0x1C */ f32 unk1C;
-	/* 0x20 */ f32 unk20;
-	/* 0x24 */ f32 unk24;
-	/* 0x28 */ f32 unk28;
-	/* 0x2C */ f32 unk2C;
-	/* 0x30 */ f32 unk30;
-	/* 0x34 */ f32 unk34;
-	/* 0x38 */ f32 unk38;
+	union {
+		struct {
+			/* 0x00 */ f32 unk0;
+			/* 0x04 */ f32 unk4;
+			/* 0x08 */ f32 unk8;
+		};
+		Vec3f position;
+	};
+	union {
+		struct {
+			/* 0x0C */ f32 unkC;
+			/* 0x10 */ f32 unk10;
+			/* 0x14 */ f32 unk14;
+		};
+		Vec3f lookAt;
+	};
+	union {
+		struct {
+			/* 0x18 */ f32 unk18;
+			/* 0x1C */ f32 unk1C;
+			/* 0x20 */ f32 unk20;
+		};
+		Vec3f up;
+	};
+	union {
+		struct {
+			/* 0x24 */ f32 unk24;
+			/* 0x28 */ f32 unk28;
+			/* 0x2C */ f32 unk2C;
+		};
+		Vec3f desiredLookAt;
+	};
+	union {
+		struct {
+			/* 0x30 */ f32 unk30;
+			/* 0x34 */ f32 unk34;
+			/* 0x38 */ f32 unk38;
+		};
+		Vec3f vehiclePosition;
+	};
 	/* 0x3C */ f32 unk3C;
 	/* 0x40 */ f32 unk40;
 	/* 0x44 */ f32 unk44;
@@ -2313,7 +2391,7 @@ typedef struct {
 	/* 0x60 */ s16 unk60;
 	/* 0x62 */ u8 pad62[0x2];
 	/* 0x64 */ s16 unk64;
-	/* 0x66 */ u8 pad66[0x2];
+	/* 0x66 */ union { s16 unk66; u8 pad66[0x2]; };
 	/* 0x68 */ s32 unk68;
 	/* 0x6C */ u8 unk6C;
 } Unk80160080; /* size = 0x70 */
@@ -2973,6 +3051,18 @@ typedef struct {
 } UnkF9230Func800ED55CArg0; /* size = 0x10 */
 
 typedef struct {
+	s32 values[9];
+} AnimationDirectionTable;
+
+typedef struct {
+	f32 values[10];
+} AnimationScaleTable;
+
+typedef struct {
+	u16 values[5];
+} PlayerRenderSettings;
+
+typedef struct {
 	/* 0x00 */ Vec3f pos;
 	/* 0x0C */ Vec3f vel;
 } UnkF9230Func80102FA4Point; /* size = 0x18 */
@@ -3294,6 +3384,10 @@ typedef struct {
 	s16 unk6;
 	union {
 		/* 0x08 */ s32 unk8;
+		struct {
+			s32 weaponFlags : 24;
+			u32 weaponFlagsLow : 8;
+		};
 		struct {
 			/* 0x08 */ u8 pad8;
 			/* 0x09 */ u8 pad9;
@@ -3836,5 +3930,9 @@ typedef struct {
 	/* 0x01 */ u8 g;
 	/* 0x02 */ u8 b;
 } BeaconColor; /* 3 bytes */
+
+typedef struct {
+	f64 value;
+} CameraFadeScale;
 
 #endif /* LIBULTRA_REFERENCE */

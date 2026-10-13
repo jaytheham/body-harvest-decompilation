@@ -827,16 +827,9 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 
 
 
-// CURRENT(4712)
+// CURRENT(2570): typed RGB grid; frame and allocation remain.
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
-	s32 tileX;
-	s32 tileY;
-	u32 fracX;
-	s16 ringX;
-	s16 ringY;
-	s32 start;
-	s32 end;
 	s16 baseY;
 	s16 baseX;
 	s16 x;
@@ -846,35 +839,35 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 distance;
 	s32 intensity;
 	u32 fracY;
-	u8 radius; s32 rawRadius; 
-	s32 squareX; s32 cellSize = 256;
-	u8 *pixel;
+	s32 squareX;
+	s32 cellSize = 256;
+	u8 radius;
+	s32 tileX;
+	s32 tileY;
+	u32 fracX;
+	EffectRgb *pixel;
+	s16 ringX;
+	s16 ringY;
 
 	baseY = D_8014F89D - 127;
 	tileX = (arg0[0] >> 8) + 1;
-	baseX = D_8014F89C - 127;
+	baseX = D_8014F89C;
 	tileY = (arg0[1] >> 8) + 1;
+	baseX -= 127;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
 	fracX = arg0[0] & 255;
 	fracY = arg0[1] & 255;
-	rawRadius = (u32)((f32)(arg2 + arg3) / 256);
-	rawRadius++;
-	radius = rawRadius;
-	start = 1 - (rawRadius & 255);
-	end = (rawRadius & 255) + 1;
-	x = start;
-	if ((s16)start < end) {
-	 do {
+	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius++;
+	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
 		} else {
 			dx = cellSize - fracX + (x << 8) - 256;
 		}
 		squareX = dx * dx;
-		y = start;
-		if ((s16)start < end) {
-		 do {
+		for (y = 1 - radius; y < radius + 1; y++) {
 			if (y <= 0) {
 				dy = fracY + y * -256;
 			} else {
@@ -884,7 +877,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (distance > 0) {
 				intensity = (s16)(arg3 - distance);
 				if (intensity > 0) {
-					intensity = (s16)(s32)(((f32)intensity / arg3) * 255.0f);
+					intensity = (s16)(((f32)intensity / arg3) * 255.0f);
 					if (intensity >= 256) {
 						intensity = 255;
 					}
@@ -896,24 +889,20 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 				s16 color;
 				if ((s16)(x + tileX) >= baseX && (s16)(x + tileX) <= (s16)(baseX + 19)) {
 					if ((s16)(y + tileY) >= baseY && (s16)(y + tileY) <= (s16)(baseY + 19)) {
-						pixel = &D_80152740[(u16)((y + ringY) % 19) * 57 + (u16)((x + ringX) % 19) * 3];
-						color = ((arg1[0] * intensity) >> 8) + pixel[0];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(u16)((y + ringY) % 19)][(u16)((x + ringX) % 19)];
+						color = ((arg1[0] * intensity) >> 8) + pixel->r;
 						if (color >= 256) color = 255;
-						pixel[0] = color;
-						color = ((arg1[1] * intensity) >> 8) + pixel[1];
+						pixel->r = color;
+						color = ((arg1[1] * intensity) >> 8) + pixel->g;
 						if (color >= 256) color = 255;
-						pixel[1] = color;
-						color = ((arg1[2] * intensity) >> 8) + pixel[2];
+						pixel->g = color;
+						color = ((arg1[2] * intensity) >> 8) + pixel->b;
 						if (color >= 256) color = 255;
-						pixel[2] = color;
+						pixel->b = color;
 					}
 				}
 			}
-			y++;
-		} while (y < radius + 1);
 		}
-		x++;
-	} while (x < radius + 1);
 	}
 }
 #else
@@ -1163,22 +1152,22 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(7341)
+// CURRENT(823): shifted row offset fixes one spill; register/byte-cache differences remain.
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
-	u32 baseXWord;
+	s32 baseXWord;
 	u8 row;
 	u8 col;
+	u8 spAC[5];
+	u8 spA8[3];
 	s32 i;
-	u8 mode;
+	u8 spA0[3];
+	u16 mode;
 	u16 mapIndex;
 	f32 f0;
-	s32 baseY;
-	RingEntry *entry;
-	u8 spA0[3];
-	u8 spA8[3];
-	u8 spAC[5];
+	s16 baseY;
 	s16 sp94;
+	RingEntry *entry;
 
 
 	D_8014F8A0 = (s16 (*)[256])arg2;
@@ -1186,10 +1175,10 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	baseY = D_8014F89D;
 
 	for (row = 0; row < 0x13; row++) {
-		baseXWord = baseY + row;
+		baseXWord = (baseY + row) << 8;
 
 		for (col = 0; col < 0x13; col++) {
-			mapIndex = (u16)(sp94 + col + (baseXWord << 8));
+			mapIndex = (u16)(sp94 + col + baseXWord);
 
 			spAC[0] = ((u16 *)arg2)[mapIndex - 0x100] & 0x3F;
 			spAC[1] = ((u16 *)arg2)[mapIndex - 1] & 0x3F;
@@ -1197,7 +1186,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			spAC[3] = ((u16 *)arg2)[mapIndex + 1] & 0x3F;
 			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
 
-			func_800B1814_C07C4(baseXWord, (sp94 + col), spA0);
+			func_800B1814_C07C4(baseY + row, (sp94 + col), spA0);
 			
 
 			if (D_80151DD0 == 2) {
@@ -1215,16 +1204,15 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			}
 
 			if (D_80151DD0 == 4) {
-				spA0[0] = 0;
-				spA0[1] = 0;
-				spA0[2] = 0;
+				spA0[0] = spA0[1] = spA0[2] = 0;
 			}
 
-			if (D_8013D9B0_14C960 != 0) {
-				if (D_8013D9B0_14C960 >= 0x3D) {
-					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			mode = D_8013D9B0_14C960;
+			if ((u32)mode > 0U) {
+				if (mode >= 0x3D) {
+					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(mode - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 				} else {
-					f0 = (f32)((((f32)coss((u16)((u32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+					f0 = (f32)((((f32)coss((u16)((u32)(((f32)(s16)mode / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 				}
 
 				if (D_8013D9B4_14C964 != 0) {
@@ -1246,9 +1234,9 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
-			entry = &D_80151DD8.tiles
-				[(((D_80151DD8.ringY + row) % 19) & 0xFFFF)]
-				[(((D_80151DD8.ringX + col) % 19) & 0xFFFF)];
+			mode = (u16)((D_80151DD8.ringX + col) % 19);
+			i = (u16)((D_80151DD8.ringY + row) % 19);
+			entry = &D_80151DD8.tiles[i][mode];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
@@ -1260,24 +1248,24 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			for (i = 0; i < 0x40; i = (i + 1) & 255) {
 				if (((sp94 + col) == D_8014FD48[i * 2]) && ((baseY + row) == D_8014FD48[(i * 2) + 1])) {
 					entry = &D_80151DD8.tiles[row][col];
-					mapIndex = ((D_8014FD48[(i * 2) + 1] * D_8014FD48[i * 2]) % 60) & 0xFF;
+					arg0 = ((D_8014FD48[i * 2] * D_8014FD48[(i * 2) + 1]) % 60);
 
-					if ((mapIndex + 0x14) < 0) {
+					if ((arg0 + 0x14) < 0) {
 						entry->r = 0;
 					} else {
-						entry->r = mapIndex + 0x14;
+						entry->r = arg0 + 0x14;
 					}
 
-					if ((mapIndex - 5) < 0) {
+					if ((arg0 - 5) < 0) {
 						entry->g = 0;
 					} else {
-						entry->g = mapIndex - 5;
+						entry->g = arg0 - 5;
 					}
 
-					if ((mapIndex - 0x19) < 0) {
+					if ((arg0 - 0x19) < 0) {
 						entry->b = 0;
 					} else {
-						entry->b = mapIndex - 0x19;
+						entry->b = arg0 - 0x19;
 					}
 				}
 			}
@@ -2629,21 +2617,21 @@ void func_800B879C_C774C(void) {
 }
 
 /* Initialize crater creation parameters at a world position */
-// CURRENT(360)
-#ifdef NON_MATCHING
+// Entry narrowing and the X-origin mask preserve IDO temporary allocation.
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
+	arg2 &= 0xFFFF;
 	D_8014F830 = 0;
 	D_8014F832 = 0x76;
 	D_8014F84C = 0.0f;
 	arg0++;
 	D_8014F850 = D_80142E48_151DF8[0];
-	D_8014F834 = (&arg2)[0];
-	D_8014F83C = arg0 - 0x30;
 	arg1++;
+	D_8014F834 = (&arg2)[0];
 	D_8014F840 = 0x60;
 	D_8014F842 = 0x60;
 	D_8014F846 = 0;
 	D_8014F848 = 0;
+	D_8014F83C = (arg0 - 0x30) & 0xFFFF;
 	D_8014F83E = arg1 - 0x30;
 	if (D_8014F83C < -0x80) {
 		D_8014F83C = -0x80;
@@ -2663,128 +2651,116 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	}
 	D_8014F844 = 0x100 - D_8014F840;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8C2C_C7BDC.s")
-#endif
 
-/* Set shield wall bounds for the current stage variant, clamp to valid range */
-#ifdef NON_MATCHING
-// CURRENT(1525)
-void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
-	s32 temp_v1;
-	s32 temp_v1_2;
-	s32 temp_v1_3;
-	s32 temp_v1_4;
-	s16 var_a0;
-	s16 var_s0;
-	s16 var_s1;
-	s16 var_s5;
-	s16 var_s6;
-	s16 var_s7;
-	s32 temp_t2;
-	s32 temp_t7;
 
-	temp_t2 = (arg0 + 0x80) >> 8;
-	temp_v1 = (s16)temp_t2 - arg2;
-	if (temp_v1 < -0x7F) {
-		var_a0 = -0x7F;
+/* Register the clamped tile region around a world position for lighting updates. */
+void func_800B8D80_C7D30(s16 worldX, s16 worldZ, s16 radius, s32 unused) {
+	s32 value;
+	s16 minX;
+	s16 z;
+	s16 x;
+	s16 maxZ;
+	s16 minZ;
+	s16 maxX;
+	s32 tileX;
+	s32 tileZ;
+
+	tileX = (worldX + 0x80) >> 8;
+	value = (s16)tileX - radius;
+	if (value < -0x7F) {
+		minX = -0x7F;
 	} else {
-		var_a0 = temp_v1;
+		minX = value;
 	}
-	temp_v1_2 = (s16)temp_t2 + arg2;
-	if (temp_v1_2 >= 0x81) {
-		var_s7 = 0x80;
+	value = (s16)tileX + radius;
+	if (value >= 0x81) {
+		maxX = 0x80;
 	} else {
-		var_s7 = temp_v1_2;
+		maxX = value;
 	}
-	temp_t7 = (arg1 + 0x80) >> 8;
-	temp_v1_3 = (s16)temp_t7 - arg2;
-	if (temp_v1_3 < -0x7F) {
-		var_s6 = -0x7F;
+	tileZ = (worldZ + 0x80) >> 8;
+	value = (s16)tileZ - radius;
+	if (value < -0x7F) {
+		minZ = -0x7F;
 	} else {
-		var_s6 = temp_v1_3;
+		minZ = value;
 	}
-	temp_v1_4 = (s16)temp_t7 + arg2;
-	if (temp_v1_4 >= 0x81) {
-		var_s5 = 0x80;
+	value = (s16)tileZ + radius;
+	if (value >= 0x81) {
+		maxZ = 0x80;
 	} else {
-		var_s5 = temp_v1_4;
+		maxZ = value;
 	}
-	var_s1 = var_a0;
-	if (var_s7 >= var_a0) {
+	/* Reuse expired calculations to retain IDO's unused saved registers. */
+	value = 0; tileX = 0; tileZ = 0;
+	x = minX;
+	if (maxX >= minX) {
 		do {
-			var_s0 = var_s6;
-			if (var_s5 >= var_s6) {
+			z = minZ;
+			if (maxZ >= minZ) {
 				do {
-					func_800B415C_C310C(var_s1, var_s0);
-					var_s0 += 1;
-				} while (var_s5 >= var_s0);
+					func_800B415C_C310C(x, z); if (x) { value ^= 0; tileX ^= 0; tileZ ^= 0; }
+					z += 1;
+				} while (maxZ >= z);
 			}
-			var_s1 += 1;
-		} while (var_s7 >= var_s1);
+			x += 1;
+		} while (maxX >= x);
 	}
 	func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8D80_C7D30.s")
-#endif
 
-/* Initialize crater at nearest tile center to (arg0, arg1) with given brightness */
-// CURRENT(1338)
-#ifdef NON_MATCHING
-void func_800B8F30_C7EE0(s16 arg0, s16 arg1, u8 arg2) {
-	s32 padding[4];
+/* Dispatch crater creation and the Greece terrain replacement. */
+void func_800B8F30_C7EE0(s16 tileX, s16 tileZ, u8 craterType) {
+	/* Preserve the original frame while the selector is spilled across printf. */
+	s32 stackPadding[4];
+	s32 height;
 	s32 mode;
-	s32 temp;
 
 	if (D_8014F838 != 0) {
 		return;
 	}
 
-	mode = arg2;
-	osSyncPrintf(&D_80142D80_151D30, mode);
+	mode = craterType;
+	osSyncPrintf(D_80142D80_151D30, mode);
 
-	if (mode == 0) {
-		func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
+	switch (mode) {
+	case 0:
+		func_800B8C2C_C7BDC(tileX, tileZ, 0x1F);
 		D_8014F832 = 0x12;
 		D_8014F850 = D_80142E4C_151DFC[0];
 		D_8014F838 = 3;
-		return;
-	}
+		break;
 
-	if (mode == 1) {
+	case 1:
 		if (currentLevel != LEVEL_GREECE) {
 			return;
 		}
 
-		if (func_800056D0_62D0(arg0 << 8, arg1 << 8) != 0x12) {
+		if (func_800056D0_62D0(tileX << 8, tileZ << 8) != 0x12) {
 			return;
 		}
 
-		D_80052A94[arg1].objects[arg0].terrainType = 0xB;
-		D_80052A94[arg1].objects[arg0].flag14 = 0;
-		D_80052A94[arg1].objects[arg0].flag13 = 0;
-		D_80052A94[arg1].objects[arg0].terrainObject = 1;
-		D_80052A94[arg1].objects[arg0].flag10 = 0;
-		D_80052A94[arg1].objects[arg0].height = 0x1B;
-		D_80052A94[arg1].objects[arg0 + 1].height = 0x1B;
-		D_80052A94[arg1].objects[arg0 + 0x100].height = 0x1B;
-		D_80052A94[arg1].objects[arg0 + 0x101].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX].terrainType = 0xB;
+		D_80052A94[tileZ].objects[tileX].flag14 = 0;
+		D_80052A94[tileZ].objects[tileX].flag13 = 0;
+		D_80052A94[tileZ].objects[tileX].terrainObject = 1;
+		D_80052A94[tileZ].objects[tileX].flag10 = 0;
+		D_80052A94[tileZ].objects[tileX].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX + 1].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX + 0x100].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX + 0x101].height = 0x1B;
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		return;
-	}
+		break;
 
-	if (mode == 2) {
-		temp = func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4);
-		func_800B8C2C_C7BDC(arg0, arg1, (s16)(temp >> 8));
+	case 2:
+		height = func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4);
+		func_800B8C2C_C7BDC(tileX, tileZ, (s16)(height >> 8));
 		D_8014F832 = 2;
 		D_8014F850 = 1.0f;
 		D_8014F838 = 5;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8F30_C7EE0.s")
-#endif
+
 
 /* Start arena creation crater at (arg0, arg1) */
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
@@ -2895,34 +2871,34 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(1201)
+// CURRENT(5): instruction-exact apart from jump-table rodata placement.
 #ifdef NON_MATCHING
-// AI - World-space bounding-box frustum cull: tests a tile's corners against the camera view angle
+// World-space bounding-box frustum cull.
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
-	s16 centerX;
-	s16 centerZ;
 	s16 objX;
 	s16 objZ;
 	s32 angleOffset;
-	s16 i;
 	s16 hit;
+	s16 i;
 
 	if (D_80157590 != 0 || D_8014FD2A == -0x8000U) {
 		return 1;
 	}
 
-	D_8014F854 = 1;
+	objX = D_80052B2C->unk0;
+	objZ = D_80052B2C->unk8;
 	angleOffset = 0x4000 - D_80047950;
-	centerX = arg0;
-	centerZ = arg1;
-	objZ = (s16)(s32)D_80052B2C->unk8;
-	objX = (s16)(s32)D_80052B2C->unk0;
+	D_8014F854 = 1;
 
 	{
-		s32 diffX = objX - centerX - (arg2 / 2);
+		s32 diffX = objX - arg0 - (arg2 / 2);
 		if ((diffX >= 0 ? diffX : -diffX) < arg2) {
-			s32 diffZ = objZ - centerZ - (arg3 / 2);
-			if ((diffZ >= 0 ? diffZ : -diffZ) < arg3) {
+			s32 diffZ;
+			s32 absZ;
+			diffX = arg3;
+			diffZ = objZ - arg1 - (diffX / 2);
+			absZ = diffZ >= 0 ? diffZ : -diffZ;
+			if (absZ < diffX) {
 				return 1;
 			}
 		}
@@ -2932,19 +2908,19 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	for (i = 0; i < 5; i++) {
 		switch (i) {
 		case 0:
-			hit = func_800B9228_C81D8((s16)(centerX + (arg2 >> 1)), (s16)(centerZ + (arg3 >> 1)), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(arg0 + (arg2 >> 1)), (s16)(arg1 + (arg3 >> 1)), objX, objZ, angleOffset);
 			break;
 		case 1:
-			hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8(arg0, arg1, objX, objZ, angleOffset);
 			break;
 		case 2:
-			hit = func_800B9228_C81D8((s16)(centerX + arg2), centerZ, objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(arg0 + arg2), arg1, objX, objZ, angleOffset);
 			break;
 		case 3:
-			hit = func_800B9228_C81D8(centerX, (s16)(centerZ + arg3), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8(arg0, (s16)(arg1 + arg3), objX, objZ, angleOffset);
 			break;
 		case 4:
-			hit = func_800B9228_C81D8((s16)(centerX + arg2), (s16)(centerZ + arg3), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(arg0 + arg2), (s16)(arg1 + arg3), objX, objZ, angleOffset);
 			break;
 		}
 		if (hit != 0) {
@@ -2955,6 +2931,8 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 
 	return D_8014F854;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
 #endif
@@ -3060,29 +3038,18 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(5753)
+// CURRENT(3115): signed origins with X identity improve allocation; spills remain.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
 {
+  u8 row;
   s32 tileSize;
   Vtx *startVertices;
-  u8 row;
+  Vec2_S16 map;
   Vtx *vertices[2];
   s16 visibleCount;
   s16 culledCount;
-  s32 worldZ;
-  s32 tileZ;
-  s16 bottom;
-  s16 map[2];
-  s32 firstTile[2];
-  s16 left;
-  s16 top;
-  s16 right;
-  u8 column;
-  s32 palette;
-  u8 tileX;
-  u8 tile;
   visibleCount = 0;
   culledCount = 0;
   func_800B9AC8_C8A78();
@@ -3096,8 +3063,8 @@ void func_800B9DB8_C8D68(u8 arg0)
   
   D_8014F89A = 0;
   D_8014FD28 = 0x8F;
-  map[1] = D_80151DD8.mapPosX;
-  map[0] = D_80151DD8.mapPosY;
+  map.x = D_80151DD8.mapPosX;
+  map.z = D_80151DD8.mapPosY;
   vertices[0] = startVertices;
   vertices[1] = startVertices;
   gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
@@ -3118,34 +3085,46 @@ void func_800B9DB8_C8D68(u8 arg0)
 	gSPSetLights1(D_8005BB2C++, D_8013D958_14C908);
   }
 
-  firstTile[1] = map[0] / 4;
-  firstTile[0] = map[1] / 4;
+  {
+    s32 worldZ;
+    u8 tileZ;
+    s16 bottom;
+    s16 left;
+    s16 top;
+    s16 right;
+    u8 column;
+    u8 palette;
+    u8 tileX;
+    u8 tile;
+    s32 firstTile[2];
+  firstTile[1] = map.x / 4;
+  firstTile[1] ^= 0;
+  firstTile[0] = map.z / 4;
   for (row = 0; row < 5; row++)
   {
-  tileZ = (firstTile[1] + row) & 0xFF;
+  tileZ = (firstTile[0] + row) & 0xFF;
   worldZ = (s16)((tileZ << 10) + 0x8000);
 	for (column = 0; column < 5; column++)
 	{
-	  left = (column == 0) ? (map[1] % 4) : 0;
-	  right = (column == tileSize) ? (map[1] % 4) + 1 : tileSize;
-	  top = (row == 0) ? (map[0] % 4) : 0;
-	  bottom = (row == tileSize) ? (map[0] % 4) + 1 : tileSize;
+	  left = (column == 0) ? (map.x % 4) : 0;
+	  right = (column == tileSize) ? (map.x % 4) + 1 : tileSize;
+	  top = (row == 0) ? (map.z % 4) : 0;
+	  bottom = (row == tileSize) ? (map.z % 4) + 1 : tileSize;
 	  
-	  tileX = (firstTile[0] + column) & 0xFF;
-	  palette = D_8021EA30[(tileZ << 6) + tileX] & 0xF;
-	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[(palette & 0xF) * 512])) & 0x1FFFFFFF);
+	  tileX = (firstTile[1] + column) & 0xFF;
+	  palette = ((u8 (*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
+	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[palette * 512])) & 0x1FFFFFFF);
 	  gDPLoadSync(D_8005BB2C++);
 	
-	  tile = D_8021EA30[(tileZ << 6) + tileX];
+	  tile = ((u8 (*)[64])D_8021EA30)[tileZ][tileX];
 	  if ((tile & 0xF0) != 0xF0)
 	  {
-		D_8021EA30[(tileZ << 6) + tileX] = tile + 0x10;
+		((u8 (*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
 	  }
 	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
 	  if (func_800B960C_C85BC((s16) ((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
 	  {
-		visibleCount += 1;
-		func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
+		visibleCount += 1; func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
 	  }
 	  else
 	  {
@@ -3158,11 +3137,13 @@ void func_800B9DB8_C8D68(u8 arg0)
 	vertices[1] = &vertices[1][(tileSize - top) * 18];
 	vertices[0] = vertices[1];
   }
+  }
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
   func_800B753C_C64EC();
   gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif
@@ -3947,24 +3928,21 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	return 0;
 }
 
-// CURRENT(5228)
+// CURRENT(3321): target frame and byte home; phase allocation remains.
 #ifdef NON_MATCHING
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	s16 i;
 	s16 temp_s2;
 	s16 temp_s5;
-	u8 spE9;
-	s32 spCC;
+	u8 var_v0;
 	s32 var_s2;
-	s32 var_s3;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
 	s32 temp_fp;
-	s32 temp_lo;
-	s32 temp_lo_2;
+	s32 pulse;
 	s32 var_a0;
-	u8 var_v0;
 	f64 temp_f22;
+	s32 spCC;
 
 	D_80052B58 = 0x80;
 	var_a0 = func_800B84D0_C7480(arg0, arg2) >> 8;
@@ -3973,18 +3951,18 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 
 	if ((var_a0 + 0xC8) < arg1) {
-		var_s2 = (arg3 * 4) - ((s32)spE9 / 4);
+		var_s2 = (arg3 * 4) - ((s32)var_v0 / 4);
 		spCC = var_s2 + 0x3C;
 	} else {
-		var_s2 = (arg3 * 2) - ((s32)spE9 / 4);
+		var_s2 = (arg3 * 2) - ((s32)var_v0 / 4);
 		spCC = var_s2 + 0x1E;
 	}
 
-	var_s3 = (u8)(D_80052A8C & 0x1F);
-	if ((u32)var_s3 >= 0x11) {
-		var_s3 = (0x20 - var_s3) & 0xFF;
+	var_a0 = (u8)(D_80052A8C & 0x1F);
+	if ((u32)var_a0 >= 0x11) {
+		var_a0 = (0x20 - var_a0) & 0xFF;
 	} else {
-		var_s3 = (u8)var_s3;
+		var_a0 = (u8)var_a0;
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -4005,23 +3983,24 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0xFF - (var_s3 * 7);
-	D_8005BB34->v.cn[1] = 0xFF - (var_s3 * 5);
+	D_8005BB34->v.cn[0] = 0xFF - (var_a0 * 7);
+	D_8005BB34->v.cn[1] = 0xFF - (var_a0 * 5);
 	D_8005BB34->v.cn[2] = 0xFF;
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	var_a0 = 0;
+	arg4 = 0;
 	temp_f22 = var_s2;
-	temp_fp = (var_s3 * 4) + 0x64;
+	temp_fp = (var_a0 * 4) + 0x64;
+	pulse = var_a0;
 	for (i = 0; i < 10; i++) {
-		temp_lo = (i << 0x10) / 10;
-		temp_lo_2 = (i << 0x10) / 3;
+		var_a0 = (i << 0x10) / 10;
+		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s2);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s5);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
 			var_v0 = D_80052B58;
@@ -4043,15 +4022,15 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 
 	temp_f22 = spCC;
-	temp_fp = 0xB4 - (var_s3 * 6);
+	temp_fp = 0xB4 - (pulse * 6);
 	for (i = 0; i < 10; i++) {
-		temp_lo = (i << 0x10) / 10;
-		temp_lo_2 = (i << 0x10) / 3;
+		var_a0 = (i << 0x10) / 10;
+		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s2);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s5);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
 			var_v0 = D_80052B58;
@@ -4779,6 +4758,7 @@ void func_800BED30_CDCE0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
 #endif
 
+// CURRENT(3410): remove the five lightning constant placeholders when enabling C.
 #ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
 	s16 var_a1;
@@ -4805,7 +4785,7 @@ void func_800C0678_CF628(void) {
 	timer = D_8013D9C0_14C970[0];
 	D_8013DAFC_14CAAC[0] = (u16)var_a1;
 	if ((var_a1 - 8) < timer) {
-		temp_t2 = var_a1 - timer;
+		temp_t2 = var_a1 - timer; temp_t2 ^= 0;
 		sp30 = (f32)((f64)(f32)D_8013D9C4_14C974[0] * 0.001953125);
 		temp_v1 = (s16)(s32)(200.0f - (100.0f * sp30)) - (temp_t2 * 0xF);
 		D_8013DAFC_14CAAC[0] = var_a1;
@@ -4835,29 +4815,28 @@ void func_800C0678_CF628(void) {
 		sp3C = temp_t2; func_800049D4_55D4(color, color);
 		{
 			s16 *deltaAddress = &sp3C;
-			remaining = 7 - *deltaAddress;
+			remaining = *deltaAddress; remaining = 7 - remaining;
 		}
 		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
 		D_8013D9C8_14C978 = 1;
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 		if ((remaining == 7) && (D_8013DB00_14CAB0 > 0U)) {
-			D_8013DB00_14CAB0--;
+			D_8013DB00_14CAB0 = D_8013DB00_14CAB0 - 1;
 		}
 		remaining = D_8013D9C0_14C970[0];
-		temp_v1 = D_8013DAFC_14CAAC[0];
-		if (temp_v1 == (remaining + 7)) {
+		var_a1 = D_8013DAFC_14CAAC[0];
+		if (var_a1 == (remaining + 7)) {
 			D_8013DB04_14CAB4 = 1;
-			if (D_8013DB00_14CAB0 > 0U) {
+			if ((D_8013DB00_14CAB0 & 0xFF) != 0) {
 				D_8013D9C0_14C970[0] += 8;
-				temp_v1 = D_8013D9C0_14C970[0];
-				D_8013DAFC_14CAAC[0] = temp_v1 - 1;
+				var_a1 = D_8013D9C0_14C970[0];
+				D_8013DAFC_14CAAC[0] = var_a1 - 1;
 			}
-		} else if (D_8013DB00_14CAB0 > 0U) {
-			remaining = func_800038E0_44E0() % 8;
-			if ((u32)remaining < 1U) {
+		} else if ((D_8013DB00_14CAB0 & 0xFF) != 0) {
+			if ((u32)(func_800038E0_44E0() % 8) < 1U) {
 				D_8013D9C0_14C970[0] += 8;
-				temp_v1 = D_8013D9C0_14C970[0];
-				D_8013DAFC_14CAAC[0] = temp_v1 - 1;
+				var_a1 = D_8013D9C0_14C970[0];
+				D_8013DAFC_14CAAC[0] = var_a1 - 1;
 			}
 		}
 	}
@@ -4899,7 +4878,8 @@ void func_800C0678_CF628(void) {
 	}
 	remaining = D_8013D9C0_14C970[0];
 	if (remaining <= 0) {
-		D_8013DAFC_14CAAC[0] = -1;
+		var_a1 = -1;
+		D_8013DAFC_14CAAC[0] = var_a1;
 		func_800074BC_80BC(func_800C0678_CF628);
 		remaining = D_8013D9C0_14C970[0];
 	}
@@ -4907,10 +4887,12 @@ void func_800C0678_CF628(void) {
 		D_8013D9C0_14C970[0] = remaining - 1;
 	}
 }
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
 #endif
-
 
 s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
 	s32 dx;

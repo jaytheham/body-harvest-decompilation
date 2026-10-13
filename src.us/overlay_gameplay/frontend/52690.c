@@ -30,18 +30,23 @@ void func_800823C0_52870(void) {
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
-// CURRENT(356)
-#ifdef NON_MATCHING
+// CURRENT(200)
 // AI - Renders a frontend menu entry with two textures and fade-in/out animation
+#ifdef NON_MATCHING
 void func_800823D8_52888(s32 arg0, s32 arg1) {
-	Unk80052B40 spA8 = D_80094A6C_64F1C;
-	Unk80052B40 spA0 = D_80094A74_64F24;
-	Unk80052B40 sp98 = D_80094A7C_64F2C;
-	Frontend52690Entry *entry = (Frontend52690Entry *)D_80094A1C_64ECC + arg1;
-	s32 span;
-	s32 entryUnk0 = entry->unk0;
-	s32 entryUnk4Plus1 = entry->unk4 + 1;
-	s16 fade = 0;
+	Unk80052B40 spA8;
+	Unk80052B40 spA0;
+	Unk80052B40 sp98;
+	s32 entryUnk0;
+	s32 entryUnk4Plus1;
+	s16 fade;
+
+	spA8 = D_80094A6C_64F1C;
+	spA0 = D_80094A74_64F24;
+	sp98 = D_80094A7C_64F2C;
+	entryUnk0 = ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk0;
+	entryUnk4Plus1 = ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk4 + 1;
+	fade = 0;
 
 	if (arg0 < 0x80) {
 		fade = 0x7F - arg0;
@@ -56,14 +61,13 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	fade = 0;
 	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gDPLoadTextureBlock(D_8005BB2C++, entry->unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
 	spA0.unk0 = 0;
-	span = (entryUnk4Plus1 - entryUnk0) * 10;
-	if ((span - 0x76) < arg0) {
-		fade = (arg0 - span) + 0x76;
+	if ((((entryUnk4Plus1 - entryUnk0) * 10) - 0x76) < arg0) {
+		fade = (arg0 - ((entryUnk4Plus1 - entryUnk0) * 10)) + 0x76;
 		if (fade >= 0x80) {
 			fade = 0x7F;
 		}
@@ -76,7 +80,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	spA8.unk4 = (fade * 8) - 0x76C;
 	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gDPLoadTextureBlock(D_8005BB2C++, entry->unkC, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unkC, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
@@ -105,9 +109,9 @@ void func_80082868_52D18(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, D_4002250);
 }
 
-#ifdef NON_MATCHING
 // CURRENT(4374)
 // AI - Decomposes a number into digits and loads 4 digit textures from atlas into TMEM
+#ifdef NON_MATCHING
 void func_800829E4_52E94(s32 arg0) {
 	s32 pad0;
 	s32 pad1;
@@ -121,6 +125,8 @@ void func_800829E4_52E94(s32 arg0) {
 	s32 divisor;
 	s32 quotient;
 	s32 divisorStep;
+	divisor = 1000;
+	divisorStep = 10;
 	digitPtr = digits;
 	digitEnd = digits + 4;
 	quotient = 0;
@@ -133,7 +139,7 @@ void func_800829E4_52E94(s32 arg0) {
 
 	gDPTileSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[3] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, G_TX_LOADTILE, 0,
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -141,7 +147,7 @@ void func_800829E4_52E94(s32 arg0) {
 
 	gDPTileSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[2] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0x0080, G_TX_LOADTILE, 0,
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0x0080, G_TX_LOADTILE, 0,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -149,7 +155,7 @@ void func_800829E4_52E94(s32 arg0) {
 
 	gDPTileSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[1] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0x0100, G_TX_LOADTILE, 0,
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0x0100, G_TX_LOADTILE, 0,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -157,7 +163,7 @@ void func_800829E4_52E94(s32 arg0) {
 
 	gDPTileSync(D_8005BB2C++);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[0] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0x0180, G_TX_LOADTILE, 0,
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0x0180, G_TX_LOADTILE, 0,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
@@ -644,62 +650,73 @@ s16 func_80083D50_54200(u8 arg0) {
 	return result;
 }
 
-#ifdef NON_MATCHING
 // CURRENT(1785)
 // AI - Frees a D_800DE840 linked-list entry from its parent chain, updating neighbor links
+#ifdef NON_MATCHING
 void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 	Unk800DE840 *temp_v0;
+	Unk800DE130 *parent;
 	s32 temp_a3;
 	s16 temp_v1;
 	Unk800DE840 *temp_a1;
 	s16 temp_idx;
-	s16 temp_count;
-	s16 temp_min;
+	u32 head;
+	u32 tail;
 
 	temp_v0 = &D_800DE840[arg0];
 	if (temp_v0->unk0 == 0) {
 		return;
 	}
 
-	temp_a3 = D_800DE130[arg1].unk4;
 	temp_v1 = -6;
+	parent = &D_800DE130[arg1];
+	temp_a3 = parent->unk4;
 	switch (temp_a3) {
 		case 0:
-			D_800DE130[arg1].unk6 = temp_v1;
-			D_800DE130[arg1].unk8 = temp_v1;
+			parent->unk6 = temp_v1;
+			parent->unk8 = temp_v1;
 			return;
 
 		case 1:
-			D_800DE130[arg1].unk6 = temp_v1;
-			D_800DE130[arg1].unk8 = temp_v1;
+			parent->unk6 = temp_v1;
+			parent->unk8 = temp_v1;
+			temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
 			break;
 
 		case 2:
+			head = -4;
+			tail = -5;
 			temp_v1 = temp_v0->unk6;
-			if (temp_v1 == -4) {
-				D_800DE130[arg1].unk6 = temp_v0->unk4;
-				temp_a1 = &D_800DE840[D_800DE130[arg1].unk6];
-				temp_a1->unk6 = -4;
-				temp_a1->unk4 = -5;
-			} else if (temp_v0->unk4 == -5) {
-				D_800DE130[arg1].unk8 = temp_v1;
-				temp_a1 = &D_800DE840[D_800DE130[arg1].unk6];
-				temp_a1->unk6 = -4;
-				temp_a1->unk4 = -5;
+			if (temp_v1 == head) {
+				temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
+				parent->unk6 = temp_v0->unk4;
+				temp_a1 = &D_800DE840[parent->unk6];
+				temp_a1->unk6 = head;
+				temp_a1->unk4 = tail;
+			} else if (temp_v0->unk4 == tail) {
+				parent->unk8 = temp_v1;
+				temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
+				temp_a1 = &D_800DE840[parent->unk6];
+				temp_a1->unk6 = head;
+				temp_a1->unk4 = tail;
 			}
 			break;
 
 		default:
+			head = -4;
+			tail = -5;
 			temp_v1 = temp_v0->unk6;
-			if (temp_v1 == -4) {
+			if (temp_v1 == head) {
 				temp_idx = temp_v0->unk4;
-				D_800DE130[arg1].unk6 = temp_idx;
-				D_800DE840[temp_idx].unk6 = -4;
+				parent->unk6 = temp_idx;
+				D_800DE840[temp_idx].unk6 = head;
+				temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
 			} else {
 				temp_idx = temp_v0->unk4;
-				if (temp_idx == -5) {
-					D_800DE130[arg1].unk8 = temp_v1;
-					D_800DE840[temp_v1].unk4 = -5;
+				if (temp_idx == tail) {
+					parent->unk8 = temp_v1;
+					D_800DE840[temp_v1].unk4 = tail;
+					temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
 				} else {
 					D_800DE840[temp_idx].unk6 = temp_v1;
 					D_800DE840[temp_v0->unk6].unk4 = temp_v0->unk4;
@@ -708,8 +725,8 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 			break;
 		}
 
-	temp_v0->unk0 = 0;
-	D_800DE130[arg1].unk4 = temp_a3 - 1;
+	D_800DE840[arg0].unk0 = 0;
+	parent->unk4 = temp_a3 - 1;
 	D_800E1978 = D_800E1978 - 1;
 	if (arg0 < D_800E197A) {
 		D_800E197A = arg0;
@@ -788,9 +805,9 @@ void func_8008412C_545DC(u8 arg0, u8 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 // CURRENT(2707)
 // AI - Sets up an interpolated motion effect with start/end positions, duration, and child particles
+#ifdef NON_MATCHING
 u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 pad0;
 	s16 pad1;
@@ -798,38 +815,37 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 	s16 temp_v0_2;
 	u8 temp_s2;
 	s32 temp_v0;
-	s32 temp_t1;
-	s32 var_s0;
-	s16 *temp_v1;
+	u8 temp_a1;
+	u8 var_s0;
+	Frontend52690InterpolationParticle *temp_v1;
 
-	temp_v0 = func_80083A58_53F08(0);
-	if (temp_v0 != 0xFB) {
-		temp_s2 = temp_v0 & 0xFF;
-		temp_v0_2 = func_80083B7C_5402C(temp_s2 & 0xFF);
+	temp_s2 = func_80083A58_53F08(0);
+	if (temp_s2 != 0xFB) {
+		temp_v0_2 = func_80083B7C_5402C(temp_s2);
 		sp2A = temp_v0_2;
 		if (temp_v0_2 == -3) {
-			func_80083B14_53FC4(temp_s2 & 0xFF);
+			func_80083B14_53FC4(temp_s2);
 		} else {
-			temp_v1 = (s16 *) &D_800DE840[temp_v0_2].unk8;
-			D_800DE130[temp_s2].unkA = temp_v0_2;
-			temp_v1[0] = arg0;
-			temp_v1[3] = (arg3 - arg0) / arg6;
-			temp_v1[4] = (arg4 - arg1) / arg6;
-			temp_v1[5] = (arg5 - arg2) / arg6;
+			temp_v1 = (Frontend52690InterpolationParticle *)&D_800DE840[temp_v0_2];
+			temp_v1->position[0] = arg0;
+D_800DE130[temp_s2].unkA = temp_v0_2;
+			temp_v1->velocity[0] = (arg3 - arg0) / arg6;
+			temp_v1->velocity[1] = (arg4 - arg1) / arg6;
+			temp_v1->velocity[2] = (arg5 - arg2) / arg6;
 			var_s0 = 0;
-			temp_v1[6] = arg6;
-			temp_v1[1] = arg1;
-			temp_v1[2] = arg2;
-			D_800DE840[temp_v0_2].unk2 = arg7;
+			temp_v1->duration = arg6;
+			temp_v1->position[1] = arg1;
+			temp_v1->position[2] = arg2;
+			temp_v1->lifetime = arg7;
 			do {
-				func_8008412C_545DC(temp_s2 & 0xFF, (func_800038E0_44E0() % 230) & 0xFF);
-				temp_t1 = (var_s0 + 1) & 0xFF;
-				var_s0 = temp_t1;
-			} while (temp_t1 < 8);
+				temp_a1 = func_800038E0_44E0() % 230;
+				func_8008412C_545DC(temp_s2, temp_a1);
+				var_s0++;
+			} while (var_s0 < 8);
 		}
 	}
 
-	return ((u8 *) &sp2A)[1];
+	return (u8)sp2A;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084324_547D4.s")
@@ -1214,7 +1230,7 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 #ifdef NON_MATCHING
 // CURRENT(11541)
 // AI - Spawns a child particle with random position offset and velocity from a template
-void func_800857D4_55C84(u8 arg0, f32 *arg1, s32 arg2, s32 arg3) {
+void func_800857D4_55C84(u8 arg0, f32 *arg1, u8 arg2, u8 arg3) {
 	extern f64 D_800AEC40_7F0F0;
 	extern f64 D_800AEC48_7F0F8;
 	extern f64 D_800AEC50_7F100;
@@ -1301,30 +1317,31 @@ s32 func_80085CB8_56168(s16 arg0) {
 	return arg0;
 }
 
-#ifdef NON_MATCHING
 // CURRENT(4055)
 // AI - Creates a particle system: allocates a parent entry and spawns multiple child particles
+#ifdef NON_MATCHING
 void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, s16 arg8,
 					 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
-	f32 sp34;
-	f32 sp38;
-	f32 sp3C;
 	u8 temp_s5;
 	s16 temp_v0;
-	s16 temp_s1;
+	s32 temp_s1;
 	u8 i;
+	f32 direction[3];
 
 	temp_s5 = func_80083A58_53F08(1);
 	if (temp_s5 == 0xFB) {
 		return;
 	}
 
-	temp_v0 = func_80083B7C_5402C(temp_s5);
+	temp_v0 = ((s32 (*)(u8))func_80083B7C_5402C)(temp_s5);
 	if (temp_v0 == -3) {
 		func_80083B14_53FC4(temp_s5);
 		return;
 	}
 
+	direction[0] = arg3;
+	direction[1] = arg4;
+	direction[2] = arg5;
 	D_800DE130[temp_s5].unkA = temp_v0;
 	D_800DE840[temp_v0].unk8 = arg0;
 	D_800DE840[temp_v0].unkA = arg1;
@@ -1333,18 +1350,17 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	D_800DE840[temp_v0].unkE = arg10;
 	D_800DE840[temp_v0].unkF = arg11;
 	D_800DE840[temp_v0].unk10 = arg12;
-	D_800DE840[temp_v0].unk12 = arg13;
+	((u8 *)&D_800DE840[temp_v0].unk12)[0] = arg13;
 
-	sp34 = arg3;
-	sp38 = arg4;
-	sp3C = arg5;
-	func_800837B4_53C64(&sp34, &sp34);
+	func_800837B4_53C64(direction, direction);
 
-	temp_s1 = func_80085CB8_56168(arg8);
+	temp_s1 = arg8;
 	i = 0;
-	while (i < temp_s1) {
-		func_800857D4_55C84(temp_s5, (s32)&sp34, arg6, arg7);
-		i++;
+	if ((temp_s1 = func_80085CB8_56168((s16)temp_s1)) > 0) {
+		do {
+			func_800857D4_55C84(temp_s5, direction, arg6, arg7);
+			i++;
+		} while (i < (s16)temp_s1);
 	}
 }
 #else
@@ -3977,51 +3993,43 @@ void func_8008DBEC_5E09C(void) {
 	D_800E1D69 = 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(7230)
+// CURRENT(82) - instruction match apart from the eight-byte excess stack frame
 // AI - Allocates a sprite/texture slot in the 2D sprite system
-u8 func_8008DC34_5E0E4(s16 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4) {
+#ifdef NON_MATCHING
+u8 func_8008DC34_5E0E4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
 	u8 var_v1;
 	u8 temp_t3;
-	Unk800E1980 *temp_a0;
 	s8 *temp_t2;
-	u8 *temp_a2;
 
 	if (D_800E1D68 >= 0x32) {
 		return 0xFF;
 	}
 
-	temp_a0 = &D_800E1980[D_800E1D69];
-	s8* frame;
-	u8* dir;
-	frame = (s8*)&D_800E1D6B;
-	temp_f2 = D_800AA7C0_7AC70[*frame];
-	temp_t2 = &D_800AA694[(u8) arg3 * 8];
-	temp_a0->unkC = (u8) arg3;
-	temp_a0->unkA = (u16) arg4;
-	temp_a0->unk2 = arg1;
-	temp_a0->unk4 = arg2;
-	temp_a0->unkF = 0;
-	temp_a0->unk10 = temp_t2[1];
-	temp_a0->unk11 = temp_t2[2];
-	temp_a0->unk12 = temp_t2[3];
+	D_800E1980[D_800E1D69].unk0 = arg0;
+	temp_t2 = ((s8 (*)[8])D_800AA694)[arg3];
+	D_800E1980[D_800E1D69].unkC = arg3;
+	D_800E1980[D_800E1D69].unkA = arg4;
+	D_800E1980[D_800E1D69].unk2 = arg1;
+	D_800E1980[D_800E1D69].unk4 = arg2;
+	D_800E1980[D_800E1D69].unkF = 0;
+	D_800E1980[D_800E1D69].unk10 = temp_t2[1];
+	D_800E1980[D_800E1D69].unk11 = temp_t2[2];
+	D_800E1980[D_800E1D69].unk12 = temp_t2[3];
 
+	D_800E1980[D_800E1D69].unkE = func_800038E0_44E0() % temp_t2[0];
+	temp_t3 = D_800E1D69;
 	var_v1 = D_800E1D69;
-	temp_t3 = var_v1;
-	temp_a0 = &D_800E1980[D_800E1D69];
-	temp_a2 = &D_800AA724[(u8) arg3 * 4];
-	temp_a0->unkE = func_800038E0_44E0() % temp_t2[0];
-	temp_a0->unkD = temp_a2[3];
-	temp_a0->unk6 = temp_a2[0];
-	temp_a0->unk7 = temp_a2[1];
-	temp_a0->unk8 = temp_a2[2];
+	D_800E1980[D_800E1D69].unkD = ((u8 (*)[4])D_800AA724)[arg3][3];
+	D_800E1980[D_800E1D69].unk6 = ((u8 (*)[4])D_800AA724)[arg3][0];
+	D_800E1980[D_800E1D69].unk7 = ((u8 (*)[4])D_800AA724)[arg3][1];
+	D_800E1980[D_800E1D69].unk8 = ((u8 (*)[4])D_800AA724)[arg3][2];
 
 	while (var_v1 < 0x32) {
 		if (D_800E1980[var_v1].unkA == 0) {
 			D_800E1D69 = var_v1;
 			var_v1 = 0x32;
 		}
-		var_v1 = (var_v1 + 1) & 0xFF;
+		var_v1++;
 	}
 
 	D_800E1D68++;
@@ -4379,14 +4387,15 @@ void func_8008EEC4_5F374(void) {
 }
 
 // https://decomp.me/scratch/fAy3j
-// CURRENT(0)
-#ifdef NON_MATCHING
+// CURRENT(10) - instruction match apart from compiler-generated constant addresses
 // AI - Creates orbiting particle effects for cinematic lighting mode
+#ifdef NON_MATCHING
 void func_8008F1E0_5F690(void)
 {
   s16 temp_a0;
   u8 var_s1;
   f32 sp90[3];
+  f32 trigAngle;
   if (D_800DE0B7 == 1)
   {
 	var_s1 = 0;
@@ -4406,8 +4415,9 @@ void func_8008F1E0_5F690(void)
 	  }
 	  else if (temp_a0 < 0x5A)
 	  {
-		sp90[1] = cosf((((f32) temp_a0 * 3.14159265358979323846) / 180.0)) * 500.0f;
-		sp90[0] = sinf((((f32) temp_a0 * 3.14159265358979323846) / 180.0)) * 500.0f;
+		trigAngle = (((f32) temp_a0 * 6.2831853070000001) / 360.0);
+		sp90[1] = cosf(trigAngle) * 500.0f;
+		sp90[0] = sinf(trigAngle) * 500.0f;
 	  }
 		else if (temp_a0 == 0x5A)
 	  {
@@ -4416,8 +4426,9 @@ void func_8008F1E0_5F690(void)
 	  }
 		else if (temp_a0 < 0xB4)
 	  {
-		sp90[1] = cosf((((f32) (0xB4 - temp_a0) * 3.14159265358979323846) / 180.0)) * (-500.0f);
-		sp90[0] = sinf((((f32) (0xB4 - temp_a0) * 3.14159265358979323846) / 180.0)) * 500.0f;
+		trigAngle = (((f32) (0xB4 - temp_a0) * 6.2831853070000001) / 360.0);
+		sp90[1] = cosf(trigAngle) * (-500.0f);
+		sp90[0] = sinf(trigAngle) * 500.0f;
 	  }
 		else if (temp_a0 == 0xB4)
 	  {
@@ -4426,8 +4437,9 @@ void func_8008F1E0_5F690(void)
 	  }
 		else if (temp_a0 < 0x10E)
 	  {
-		sp90[1] = cosf((((f32) (temp_a0 - 0xB4) * 3.14159265358979323846) / 180.0)) * (-500.0f);
-		sp90[0] = sinf((((f32) (temp_a0 - 0xB4) * 3.14159265358979323846) / 180.0)) * (-500.0f);
+		trigAngle = (((f32) (temp_a0 - 0xB4) * 6.2831853070000001) / 360.0);
+		sp90[1] = cosf(trigAngle) * (-500.0f);
+		sp90[0] = sinf(trigAngle) * (-500.0f);
 	  }
 		else if (temp_a0 == 0x10E)
 	  {
@@ -4436,8 +4448,9 @@ void func_8008F1E0_5F690(void)
 	  }
 		else if (temp_a0 < 0x168)
 	  {
-		sp90[1] = cosf((((f32) (0x168 - temp_a0) * 3.14159265358979323846) / 180.0)) * 500.0f;
-		sp90[0] = sinf((((f32) (0x168 - temp_a0) * 3.14159265358979323846) / 180.0)) * (-500.0f);
+		trigAngle = (((f32) (0x168 - temp_a0) * 6.2831853070000001) / 360.0);
+		sp90[1] = cosf(trigAngle) * 500.0f;
+		sp90[0] = sinf(trigAngle) * (-500.0f);
 	  }
 	  func_800837B4_53C64(sp90, sp90);
 	  func_800838B8_53D68(250.0f, sp90, sp90);
@@ -4460,19 +4473,20 @@ void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
 	D_800DE130[arg1].unk8 = -6;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(726)
+// CURRENT(20) - two adjacent constant loads remain reversed
 // AI - Resets the entire particle system: clears all slots, sets default global state
+#ifdef NON_MATCHING
 void func_8008F574_5FA24(void) {
-	u8 var_s0;
-	s32 i;
+	int var_s0;
+	u8 i;
+	u16 j;
 	u8 *var_a0;
 	Unk800311A0 *var_v0;
 
 	D_800DE0EB = 0;
 	var_a0 = D_800DE0E8;
 	var_v0 = &D_800DE0B0;
-	var_s0 = 0xFF;
+	var_s0 = (int)(var_v0->unk0 * 0) + 0xFF;
 	var_v0->unk0 = 0x78;
 	var_v0->unk2 = -0x26C;
 	var_v0->unk4 = -0xDFC;
@@ -4484,12 +4498,12 @@ void func_8008F574_5FA24(void) {
 	var_a0[2] = 0x28;
 	func_8008DBEC_5E09C();
 
-	for (i = 0; i < 0x96; i = (i + 1) & 0xFF) {
+	for (i = 0; i < 0x96; i++) {
 		D_800DE130[i].unk0 = 0xFA;
 	}
 
-	for (i = 0; i < 0x1C2; i = (i + 1) & 0xFFFF) {
-		D_800DE840[i].unk0 = 0;
+	for (j = 0; j < 0x1C2; j++) {
+		D_800DE840[j].unk0 = 0;
 	}
 
 	D_800E197A = 0;
@@ -4499,15 +4513,15 @@ void func_8008F574_5FA24(void) {
 	func_8008F534_5F9E4(5, 0x93);
 	func_8008F534_5F9E4(0xA, 0x92);
 
+	D_800DE0BE = var_s0;
 	D_800DE0BF = var_s0;
-	D_800DE0BE = D_800DE0BF;
 	D_800DE0B6 = 0;
 	D_800DE0B7 = 0;
 	D_800DE0B8 = 0;
 	D_800DE0B9 = 0;
 	D_800DE0BD = 0;
 	D_800DE0BA = 0;
-	D_800DE0BB = D_800DE0BF;
+	D_800DE0BB = var_s0;
 	D_800DE839 = 0;
 	D_800DE838 = 4;
 	D_800E1D6B = 0;

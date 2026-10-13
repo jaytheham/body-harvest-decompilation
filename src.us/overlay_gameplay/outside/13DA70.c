@@ -72,8 +72,8 @@ u32 D_80140BC8_14FB78[] = {
 };
 
 Lights1 D_80140C30_14FBE0 = {
-    { { { 0x7F, 0x7F, 0x7F }, 0, { 0x7F, 0x7F, 0x7F }, 0 } },
-    { { { { 0xFF, 0xFF, 0xFF }, 0, { 0xFF, 0xFF, 0xFF }, 0, { 40, 100, 20 }, 0 } } }
+	{ { { 0x7F, 0x7F, 0x7F }, 0, { 0x7F, 0x7F, 0x7F }, 0 } },
+	{ { { { 0xFF, 0xFF, 0xFF }, 0, { 0xFF, 0xFF, 0xFF }, 0, { 40, 100, 20 }, 0 } } }
 };
 
 u32 D_80140C48_14FBF8[] = {
@@ -81,7 +81,7 @@ u32 D_80140C48_14FBF8[] = {
 	0x0501E0E8, 0x0501D9A0, 0x0501D258, 0x0501CB10,
 };
 
-u16 D_80140C68_14FC18[] = { 0x0033, 0x0033, 0x0033, 0x0000 };
+TextAnimationScale D_80140C68_14FC18 = { { 0x33, 0x33, 0x33 }, 0 };
 u8 D_80140C70_14FC20[] = { 0xD7, 0xD7, 0xFF, 0x00 };
 u8 D_80140C74_14FC24[] = { 0xFF, 0x00, 0x00, 0x00 };
 u32 D_80140C78_14FC28 = 0;
@@ -109,7 +109,7 @@ u32 D_80140CCC_14FC7C = 0;
 u32 D_80140CD0_14FC80 = 0;
 u32 D_80140CD4_14FC84 = 0;
 u32 D_80140CD8_14FC88 = 0;
-u32 D_80140CDC_14FC8C = 0x82;
+s32 D_80140CDC_14FC8C = 0x82;
 s32 D_80140CE0_14FC90 = 0;
 
 void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
@@ -263,7 +263,7 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 
 // CURRENT(1100)
 #ifdef NON_MATCHING
-void func_8012F2DC_13E28C(s32 src, s32 dst, s32 increment)
+void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 {
 	f32 cosVal;
 	u8 i;
@@ -278,7 +278,7 @@ void func_8012F2DC_13E28C(s32 src, s32 dst, s32 increment)
 	}
 
 	for (i = 0; i < 3; i++) {
-		((u8 *)dst)[i] = (u8)((u32)((0xFF - ((u8 *)src)[i]) * cosVal) + ((u8 *)src)[i]);
+		dst[i] = (u8)((u32)((0xFF - src[i]) * cosVal) + src[i]);
 	}
 
 	D_80140C78_14FC28 += increment;
@@ -344,7 +344,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 	}
 
 	if ((arg7 & 0x20) != 0) {
-		func_8012F2DC_13E28C((s32) arg4, (s32) pulseColor, 5);
+		func_8012F2DC_13E28C(arg4, pulseColor, 5);
 	}
 
 	textLen = 0;
@@ -830,66 +830,74 @@ void func_801306C4_13F674(u8 *arg0)
 	D_8015FF80 = 4;
   }
 }
-// CURRENT(8845)
+
 #ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
 	s32 baseScore;
-	u8 scoreText[0x10];
+	s32 bonusScore;
+	s32 stageScore; u8 scoreText[8]; s32 width;
+	union { s32 score; Unk80052B2C *player; } work;
 
 	if (D_80140CA4_14FC54 != 0) {
-		if (1) { D_80140CA8_14FC58 = 0; }
-		if (1) { D_8016006C = 0; }
-		if (1) { D_80160058 = 0; }
-		if (1) { D_80140CA4_14FC54 = 0; }
-		if (1) { baseScore = D_80052B2C->unk30; }
-		if (1) { D_80160070 = baseScore; }
-		if (1) { D_80140CAC_14FC5C = 0; }
-		if (1) { D_80140CB0_14FC60 = 0; }
-		if (1) { D_8016006D = 0; }
+		D_80140CA8_14FC58 = 0;
+		D_8016006C_RESET = 0;
+		D_80160058_W = 0;
+		D_80140CA4_14FC54 = 0;
+		D_80160070_INIT = bonusScore = D_80052B2C->unk30;
+		D_80140CAC_14FC5C = 0;
+		D_80140CB0_W_BUTTON = 0;
+		D_8016006D_W = 0;
 		// if no humans killed, give 5000 bonus to score
-		if (1) { if (D_80048170 == 0) {
+		stageScore = bonusScore;
+		baseScore = bonusScore;
+		work.score = bonusScore;
+		if (D_80048170 == 0) {
 			D_8016005C = baseScore;
-			baseScore += 0x1388;
+			bonusScore = stageScore += 0x1388;
 		} else {
-			D_8016005C = baseScore;
-		} }
+			D_8016005C = work.score;
+			bonusScore = stageScore = work.score;
+		}
 		// if no humans harvested, give 5000 bonus to score
-		if (1) { if (D_8004816E == 0) {
-			D_80160060 = baseScore;
-			D_80160064 = baseScore + 0x1388;
+		work.score = stageScore + 0x1388;
+		if (D_8004816E == 0) {
+			D_80160060 = stageScore;
+			D_80160064 = work.score;
 		} else {
-			D_80160060 = baseScore;
-			D_80160064 = baseScore;
-		} }
-	}
-
-	if ((D_80160070 == D_80052B2C->unk30) && (D_8016006C == 0x1E)) {
-		D_8016006C = 0;
-		D_8016006D = 0;
-		if (D_80160058 + 1 < 4) {
-			D_80160058 = D_80160058 + 1;
-		} else {
-			D_80160058 = 4;
+			D_80160060 = stageScore;
+			D_80160064 = stageScore;
 		}
 	}
 
-	baseScore = D_80052B2C->unk30;
-	if (D_80160070 == baseScore) {
-		baseScore = D_8016006C + 1;
-		if (baseScore < 0x1E) {
-			D_8016006C = baseScore;
+	work.player = D_80052B2C;
+	bonusScore = work.player->unk30;
+	if ((D_80160070_FIRST == work.player->unk30) && (D_8016006C == 0x1E)) {
+		D_8016006C_RESET = 0;
+		D_8016006D_W = 0;
+		if (D_80160058 + 1 < 4) {
+			D_80160058_W = D_80160058 + 1;
 		} else {
-			D_8016006C = 0x1E;
+			D_80160058_W = 4;
+		}
+	}
+
+	if (D_80160070 == bonusScore) {
+		bonusScore = D_8016006C + 1;
+		if (bonusScore < 0x1E) {
+			D_8016006C_W = bonusScore;
+		} else {
+			D_8016006C_W = 0x1E;
 		}
 	} else {
-		if (D_80160070 < baseScore + 0x64) {
-			D_80052B2C->unk30 = D_80160070;
+		stageScore = bonusScore + 0x64;
+		if (D_80160070_LIMIT < stageScore) {
+			work.player->unk30 = D_80160070_LIMIT;
 		} else {
-			D_80052B2C->unk30 = baseScore + 0x64;
+			work.player->unk30 = stageScore;
 		}
 		func_800153D8_15FD8(0xCD);
-		D_8016006C = 0;
+		D_8016006C_RESET = 0;
 	}
 
 	drawText(D_801454F0_1544A0, 0x400, 0x400);
@@ -898,14 +906,16 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 > 0) {
 		if (D_80160058 == 1) {
 			func_8000577C_637C();
-			D_80160070 = D_80160060;
-			if (D_8016006D < 0x15) {
-				drawText(D_80145500_1544B0, D_8016006D * 12, ++D_8016006D);
+			stageScore = D_80160060;
+			D_80160070 = stageScore;
+			baseScore = D_8016006D;
+			if (baseScore < 0x15) {
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145500_1544B0, width, baseScore);
 			} else {
-				drawText(D_80145504_1544B4, 0xFF, D_8016006D);
+				drawText(D_80145504_1544B4, 0xFF, baseScore);
 			}
 		}
-		switch (D_800313D0_31FD0) {
+		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 		case 0:
 		default:
 			drawText(D_80145508_1544B8, 2, 2);
@@ -927,14 +937,16 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 >= 2) {
 		if (D_80160058 == 2) {
 			func_8000577C_637C();
-			D_80160070 = D_80160064;
-			if (D_8016006D < 0x15) {
-				drawText(D_80145550_154500, D_8016006D * 12, ++D_8016006D);
+			work.score = D_80160064;
+			D_80160070 = work.score;
+			baseScore = D_8016006D;
+			if (baseScore < 0x15) {
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145550_154500, width, baseScore);
 			} else {
-				drawText(D_80145554_154504, 0xFF, D_8016006D);
+				drawText(D_80145554_154504, 0xFF, baseScore);
 			}
 		}
-		switch (D_800313D0_31FD0) {
+		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 		case 0:
 		default:
 			drawText(D_80145558_154508, 2, 3);
@@ -965,7 +977,7 @@ void func_80130BA0_13FB50(void)
 
 	func_8012EAC0_13DA70(func_8012FFB0_13EF60(), scoreText);
 
-	switch (D_800313D0_31FD0) {
+	bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 	case 0:
 	default:
 		func_8012F4E0_13E490(D_801455C0_154570, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
@@ -981,16 +993,17 @@ void func_80130BA0_13FB50(void)
 	func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, 0, 0, 0x20);
 
 	if (isButtonNewlyPressed(0, 0xD000) != 0) {
-		if ((D_80140CB0_14FC60 != 0) && (D_80160058 >= 3)) {
-			D_80140CA8_14FC58 = 1;
-			D_80140CB0_14FC60 = 0;
-			D_80160058 = 3;
-		} else {
-			D_80140CB0_14FC60 = 1;
+		if ((D_80140CB0_14FC60 == 0) || (D_80160058 < 3)) {
+			work.score = D_80160064;
+			D_80140CB0_W_BUTTON = 1;
 			D_80140CAC_14FC5C = 0;
-			D_80160058 = 3;
-			D_80160070 = D_80160064;
-			D_80052B2C->unk30 = D_80160064;
+			D_80160058_W = 3;
+			D_80160070 = work.score;
+			D_80052B2C->unk30 = work.score;
+		} else {
+			D_80140CA8_14FC58 = 1;
+			D_80140CB0_W_BUTTON = 0;
+			D_80160058_W = 3;
 		}
 	}
 
@@ -1003,8 +1016,7 @@ void func_80130BA0_13FB50(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80130BA0_13FB50.s")
 #endif
 
-// CURRENT(3070)
-#ifdef NON_MATCHING
+
 void func_80131280_140230(u8 *arg0)
 {
 	u8 scoreText[0x18];
@@ -1024,8 +1036,11 @@ void func_80131280_140230(u8 *arg0)
 		D_80140CDC_W_RESET = 0x82;
 	}
 
-	if ((D_80140CDC_14FC8C >= 0x6F) && (D_80140CC0_14FC70 != 0)) {
-		D_80140CDC_W_DEC = D_80140CDC_14FC8C - 2;
+	{
+		s32 *countdown = &D_80140CDC_14FC8C;
+		if ((*countdown >= 0x6F) && (D_80140CC0_14FC70 != 0)) {
+			D_80140CDC_W_DEC = *countdown - 2;
+		}
 	}
 
 	func_8012EAC0_13DA70(func_8012FFB0_13EF60(), scoreText);
@@ -1065,8 +1080,10 @@ void func_80131280_140230(u8 *arg0)
 		D_80140CD4_14FC84 = func_80131858_140808(scoreText, 0x14, 0x1E, 0xA0, D_80140CD4_14FC84 == 0, D_80140CD8_14FC88 == 0);
 		D_80140CD8_14FC88 = 1;
 	} else {
-		if (D_80140CC0_14FC70 == 0) {
-			D_80140CC0_14FC70 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x28, D_80140C70_14FC20, D_80140CC0_14FC70 == 0, D_80140CBC_14FC6C == 0, 8);
+		u32 *textDone = &D_80140CC0_14FC70;
+
+		if (!*textDone) {
+			D_80140CC0_14FC70 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x28, D_80140C70_14FC20, *textDone == 0, D_80140CBC_14FC6C == 0, 8);
 			D_80140CBC_14FC6C = 1;
 
 			switch (D_800313D0_31FD0) {
@@ -1088,7 +1105,7 @@ void func_80131280_140230(u8 *arg0)
 		}
 	}
 
-	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_Z | BUTTON_A) != 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_B | BUTTON_A) != 0) {
 		if ((D_80140CC0_14FC70 == 0) || (D_80140CC8_14FC78 == 0) || (D_80140CDC_14FC8C >= 0x6F) || (D_80140CD4_14FC84 == 0)) {
 			D_80140CC0_14FC70 = 1;
 			D_80140CBC_14FC6C = 0;
@@ -1112,35 +1129,34 @@ void func_80131280_140230(u8 *arg0)
 		D_8015FF80 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131280_140230.s")
-#endif
-// CURRENT(17802)
+
 #ifdef NON_MATCHING
 s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5) {
-s32 renderX;
+s32 charIndex;
 s32 charScreenX;
 u8 *loopText;
-s32 animTimer;
-s32 charIndex;
-s32 currentSway;
-s32 charTimer;
-s32 halfCharWidth;
+s32 renderX;
+s32 temp_v0;
 Unk80052B40 pos;
 Unk80052B40 result;
-f32 sinVal;
+s32 *screenWidth = &D_80068084;
+s32 currentSway;
+volatile s32 swayOffset;
 s32 renderWidth;
-s32 temp_v0;
+u32 lry;
+u32 uly;
+s32 *animationCounter = &D_80140CE0_14FC90;
 u8 currentChar;
-u8 colorData[3];
 s16 charCount;
-s32 swayOffset;
+u8 colorData[3];
+s32 curX;
+u32 six = 6;
 
-gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, D_80068084 - 0x21, D_80068088);
+gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, *screenWidth - 0x21, D_80068088);
 charCount = 0;
 renderWidth = 0;
-if (text[0] != 0) {
-	currentChar = *text;
+currentChar = *text;
+if (currentChar != 0) {
 	do {
 		renderWidth = renderWidth + charWidth + 2;
 		if (currentChar == 0x31) {
@@ -1151,20 +1167,19 @@ if (text[0] != 0) {
 	} while (currentChar != 0);
 }
 
-halfCharWidth = charWidth >> 1;
 if (arg5 != 0) {
-	D_80140CE0_14FC90 = 0;
+	(*animationCounter) = 0;
 }
 if (arg4 == 0) {
-	D_80140CE0_14FC90 = 0xFFFF;
+	(*animationCounter) = 0xFFFF;
 }
 
 {
-	renderX = (D_80068084 - (D_80140CE0_14FC90 * 6)) + 0x168;
-	func_8012F2DC_13E28C((s32) D_80140C74_14FC24, (s32) colorData, 5);
-	if (D_80140CE0_14FC90 >= 0x3D) {
-		if ((renderX >= 0) && (D_80068084 >= renderX)) {
-		if (D_80140CE0_14FC90 == 0x46) {
+	renderX = (*screenWidth - ((*animationCounter) * six)) + 0x168;
+	func_8012F2DC_13E28C(D_80140C74_14FC24, colorData, 5);
+	if ((*animationCounter) >= 0x3D) {
+		if ((renderX >= 0) && (renderX <= *screenWidth)) {
+		if ((*animationCounter) == 0x46) {
 			func_800153D8_15FD8(0x185);
 		}
 
@@ -1193,47 +1208,42 @@ if (arg4 == 0) {
 		gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 		gDPPipeSync(D_8005BB2C++);
 
-		temp_v0 = (s16) ((D_80140CE0_14FC90 & 0xE) >> 1);
+		temp_v0 = (s16) (((*animationCounter) & 0xE) >> 1);
 		pos.unk0 = renderX;
 		pos.unk4 = 0;
 		pos.unk2 = yPos + 0x1E;
 		result.unk0 = 0;
 		result.unk2 = 0;
 		result.unk4 = 0;
-		func_800039D0_45D0(&pos, &result, (Unk80052B40 *) D_80140C68_14FC18, D_8005BB38);
+		func_800039D0_45D0(&pos, &result, &D_80140C68_14FC18.scale, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-		guRotateRPY((Mtx *) D_8005BB38, 0.0f, 90.0f, 180.0f);
+		guRotateRPY(D_8005BB38, 0.0f, 90.0f, 180.0f);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[(s16) temp_v0]);
+	gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[temp_v0]);
 		}
 	}
 }
 
-renderX = ((D_80068084 / 2) - (renderWidth >> 1)) + halfCharWidth;
-if ((D_80140CE0_14FC90 >= 0x60) && (D_80140CE0_14FC90 < 0xBE)) {
-	temp_v0 = D_80140CE0_14FC90 - 0x5F;
-	if ((temp_v0 % 6) == 0) {
-		func_800153D8_15FD8((s16) (((temp_v0 % 12) / 6) + 0xAC));
+renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + (charWidth >> 1);
+if (((*animationCounter) >= 0x60) && ((*animationCounter) < 0xBE)) {
+	if ((((*animationCounter) - 0x5F) % (s32)six) == 0) {
+		func_800153D8_15FD8((s16) (((((*animationCounter) - 0x5F) % 12) / (s32)six) + 0xAC));
 	}
 }
 
 charIndex = 0;
-animTimer = 0x5A;
-charTimer = 0;
 loopText = text;
+if (charCount > 0) {
 currentSway = swayOffset;
-	for (; charIndex < charCount;
-		animTimer += 0xA, loopText = &loopText[1], charTimer += 0xA,
-		charIndex += 1, renderX += charWidth, renderX += 2) {
-		charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charTimer) * 6)) + 0x21C;
+	do {
+		charScreenX = (D_80068084 - (((*animationCounter) - charIndex * 10) * 6)) + 0x21C;
 		if (*loopText == 0x31) {
-			renderX -= halfCharWidth;
+			renderX -= (charWidth >> 1);
 		}
 
-		if ((animTimer < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX)) {
-			sinVal = (f32) sins((u16) ((((D_80140CE0_14FC90 + charIndex) % 8) << 13) & 0xFFFF));
-			swayOffset = (s32) ((f32) ((sinVal / 32768.0) * 32.0) / 2.0f);
+		if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (charScreenX >= 0) && (D_80068084 >= charScreenX)) {
+			swayOffset = (s32) ((f32) (((f32)sins((u16) (((((*animationCounter) + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
 			gDPPipeSync(D_8005BB2C++);
 			gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
 			gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1245,14 +1255,14 @@ currentSway = swayOffset;
 			pos.unk0 = charScreenX;
 			pos.unk2 = yPos + 0x1E;
 			pos.unk4 = 0;
-			gSPLightColor(D_8005BB2C++, LIGHT_1, 0x80E580FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (currentSway = swayOffset, 0x80E580FF));
 			gSPLightColor(D_8005BB2C++, LIGHT_2, 0x407F40FF);
 
-			currentSway = swayOffset;
-			D_800311A0.unk2 += currentSway;
 			result.unk0 = D_800311A0.unk0;
 			result.unk2 = D_800311A0.unk2;
 			result.unk4 = D_800311A0.unk4;
+			D_800311A0.unk2 += currentSway;
 			D_800311A0.unk0 -= currentSway / 2;
 			D_800311A0.unk4 -= currentSway / 2;
 			D_800311A0.unk0 = (s16) (D_800311A0.unk0 * 2.5);
@@ -1264,7 +1274,7 @@ currentSway = swayOffset;
 
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 			guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gDPPipeSync(D_8005BB2C++);
 			gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
 
@@ -1273,22 +1283,19 @@ currentSway = swayOffset;
 			D_800311A0.unk4 = result.unk4;
 		}
 
-		if ((animTimer < D_80140CE0_14FC90) && (D_80068084 >= charScreenX)) {
+		if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (D_80068084 >= charScreenX)) {
 			if (func_8012EC3C_13DBEC(*loopText) != 0) {
-					s32 baseY = yPos - (charHeight >> 1);
-				s16 curX = renderX;
-					s32 lry;
-					s32 uly;
+				curX = renderX;
+
 				if (charScreenX < renderX) {
-					uly = (baseY * 4) & 0xFFF;
-					lry = ((baseY + charHeight) * 4) & 0xFFF;
+					uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFFU;
+					lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFFU;
 					currentSway = 0;
 				} else {
-					s32 offsetBaseY = baseY - (currentSway >> 1);
-					lry = ((offsetBaseY + charHeight) * 4) & 0xFFF;
-					uly = (offsetBaseY * 4) & 0xFFF;
+					lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFFU;
+					uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFFU;
 					if (*loopText == 0x31) {
-						curX = charScreenX - halfCharWidth;
+						curX = charScreenX - (charWidth >> 1);
 					} else {
 						curX = charScreenX;
 					}
@@ -1306,25 +1313,28 @@ currentSway = swayOffset;
 				}
 
 				gSPTextureRectangle(D_8005BB2C++,
-					(curX - halfCharWidth) * 4, uly,
-					(halfCharWidth + curX) * 4, lry,
+					(curX - (charWidth >> 1)) * 4, uly,
+					((charWidth >> 1) + curX) * 4, lry,
 					0, 0, 0,
 					(s32)((1.0f / ((f32) charWidth / 32)) * 1024.0f),
 					(s32)((1.0f / ((f32) charHeight / 32)) * 1024.0f));
 			}
 		}
 
+		renderX += charWidth;
 		if ((charCount == charIndex + 1) && (charScreenX <= 0)) {
-			D_80140CE0_14FC90 = 0;
+			(*animationCounter) = 0;
 			return 1;
 		}
 
-
-	}
+		loopText = &loopText[1];
+		charIndex += 1;
+	} while ((renderX += 2, charIndex) != charCount);
 	swayOffset = currentSway;
+}
 
-	if (D_80140CE0_14FC90 < 0xFFFF) {
-		D_80140CE0_14FC90 += 1;
+	if ((*animationCounter) < 0xFFFF) {
+		(*animationCounter) += 1;
 	}
 
 	gDPPipeSync(D_8005BB2C++);

@@ -26,3 +26,7 @@ for (; idx < 6; idx++) {
 All integer locals here are `s32`. Making the stride unsigned caused additional address calculations and substantially changed scheduling. The serialized record layout is already described by `SaveAreaStat` and `SaveSlotData` in `include/structs.us.h`.
 
 Verified with the required project build: `build/bh.us.z64: OK`, with no function diff differences.
+
+### High-score restore (func_80001984_2584)
+
+Use nested indexed loops for the six name bytes and five records; IDO generates three parallel destination pointers without explicit pointer arithmetic. Sequential offset++ byte reads and incremental score/time additions reproduce the intermediate stores. The target retries checksum failure at the bottom: while (1) { if (validate(...)) { restore; return; } else { initialize(); } } matches, whereas a leading while (!validate(...)) duplicates the validation call. Clear pad[0] before the final secondsTaken addition to place the zero-byte store before the loop branch. Full ROM verified on 2026-10-12.

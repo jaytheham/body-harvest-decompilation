@@ -52,3 +52,40 @@ flat `f32 *` form - the winning form is per-function, so try the matched twin's 
 ### Slope samples: mix direct array access with the coordinate pointer
 
 `func_8008E524_9D4D4` matched with direct `alienInstances[arg0]` accesses for the entry checks, heading, type index, center-sample case, and final height comparison. Keep the named instance pointer only for the X/Z coordinate fields in the two calculated sample cases. Using the pointer everywhere leaves case 1 as LH X, SH X, LH Z instead of LH X, LH Z, SH X. Using direct array access everywhere fixes that ordering but changes floating operand ordering and register allocation, with an extra NOP in case 2. The mixed access form matches every instruction and the full ROM checksum. Constant-condition wrappers did not fix the store ordering and additionally swapped saved registers. Keep the original short locals and frame layout; no new file is needed.
+
+### Java death effects: direct array call coordinates
+
+In func_802DB7A4_1F44B4, keep the named AlienInstance pointer for flags and counters, but pass alienInstances[arg0].unk0, .unk2, and .unk4 to the effect calls. Pointer-only arguments scheduled coordinate loads before constant stack arguments and the final radius calculation; direct indexed arguments produced the target ordering without extra address instructions. A separate u8 typeIndex and s16 storedType[2], assigning storedType[1], preserve the initial byte in v1 and its signed-halfword spill at sp+0x4E for the last call. Test the clear FALL case first when assigning 0x4B versus 1: the target uses bltzl with the set-case store in its delay slot. Diff score 0 and full ROM checksum OK.
+
+
+### Floating zero terms in the Java effect callback
+
+func_802DC738_1F5448 retains the target floating multiply and divide chain with an integer zero coefficient: ((f64)(f32)sins(angle) / 32768.0) * 0. Spelling the coefficient 0.0 folds the entire term away. For the Z expression, putting (jointZ + coefficient * sineRatio) on the left and cosineRatio * 0 on the right makes IDO evaluate the cosine term first, matching the target arithmetic and floating registers. Plain s32 input coordinates with s16 argument casts produce the target halfword reloads and cached word spills; making input coordinates SignedWord unions introduces extra alias-driven reloads. SignedWord remains appropriate for output coordinates passed by address. This candidate is still NON_MATCHING (847), with only register and stack differences after more than 20 builds.
+
+
+### Java skeleton controller: reuse the preceding joint store
+
+func_802D7B68_1F0878 matches all instructions and the full ROM checksum. Search-AsmPattern found the same skeleton update in matched func_80094DE0_A3D90 and func_802D738C_18FE9C. Write the root angle through unk6Unsigned, assign the child angle from its negated stored value, and then call func_80086164_95114. Negating the alien field directly keeps a second halfword load because the preceding skeleton store may alias it. Using the stored skeleton value retains one load and both target stores.
+
+Use direct alienInstances[arg0] accesses, as in the reference: IDO still caches the address in s0, but an explicit AlienInstance pointer declaration adds a stack slot and enlarges the frame. Declare the two-element joint array before an unused halfword and the saved delay halfword to put them at sp+0x38 and sp+0x34. Place unk1E = 6 after both flag updates in C; this colors the constant in t3 while the target scheduling still emits the halfword store before the flags. Redundant narrowing casts can be removed without changing the checksum.
+
+
+### Java death animation: corrected chain and promoted coordinates
+
+func_802D9CB8_1F29C8 remains NON_MATCHING at 1187 after 20 compiled variants. Replace double-scaled skeleton indices with ordinary D_8014DD50 array access, and retain exactly five signed children rather than reading a sixth child for the last animation call. Use the s16 joint locals directly: byte aliases cause IDO to spill and reload bytes instead of the target halfwords. Initialize the alien pointer after func_80089EB4_98E64 to match the target load order.
+
+The periodic effect radius is an unsigned conversion directly from the double product of the alien type radius and 0.75. An intermediate f32 and signed cast remove the required unsigned conversion sequence. Explicitly narrow the saved coordinates into s32 locals before the terrain call; IDO caches words and emits the target redundant short argument conversions. Put the five joint halfwords first, followed by the terrain word and float, to obtain the target frame 0xA0 and float slot 0x8C. Word angle locals without an explicit mask improve the addition registers; sins and coss already narrow their arguments. Remaining differences are call-load scheduling and temporary registers. Separate coordinate temporaries, comma operands, argument casts, source-line splitting, and signed/unsigned angle alternatives did not resolve these. Rewrapping restores the full ROM checksum.
+
+
+### Java turn controller: integer float multiplier and short type-index home
+
+func_802DD294_1F5FA4 is retained NON_MATCHING at score 10 after 34 compiled variants. Capture its s16 type index between the current-health read and damage subtraction, before either sound call. This gives the target opening temporary registers. Declare the s32 damage difference after the other word locals and immediately before the type index: its home is sp+0x20 and the type index is sp+0x1E in the target 0x38 frame. Reuse the angle-adjustment word, but read unkA and the final unk1E directly rather than reusing the damage variable; that removes extra moves and permits hoisting the final 0x320 argument into a2 during floating setup.
+
+Use an integer 2 as the second floating multiplier. Spelling it 2.0f causes IDO to replace the multiply with an add and changes the floating register sequence. Keep both explicit clamp stores, including the unchanged-value cases. The turn-speed call takes 0x1F4 rather than 0x400. Remove the decompiler halfword aliases and use word temporaries for arithmetic. Every instruction now matches except one swapped floating multiply operand pair. Changing the existing array constant into a scalar resolves the operand order, but IDO places that scalar in .data at 0x802E0D4C, breaking its required .rodata address; restore both its definition and header. Named floating intermediates, casts, pointer dereferences, comma expressions, and arithmetic identities did not resolve the last pair. Rewrapping restores the full ROM checksum.
+
+
+### Java two-joint controller: negative remainder divisor
+
+func_802DD5CC_1F62DC remains NON_MATCHING at 2568 after 24 compiled variants. Matched func_80094DE0_A3D90 and func_802D738C_18FE9C confirm the root / unkC / unkC / unkD / unkD skeleton chain. The coordinate transforms take the saved first child and root, not the alien ID; capture their three word outputs into the short input array between calls and write the final outputs to alienTypes fields unk20, unk22 and unk24. Passing the address of D_802E09C0_1F96D0 supplies the animation table pointer correctly. Reusing padding for a selected-joint word removes two scoped halfword homes and restores the target 0x68 frame.
+
+IDO simplifies a byte counter modulo positive 4 to ANDI and a branch, even through a named signed temporary. Using modulo -4 instead retains the target BGEZ / ANDI / BEQZ / ADDIU -4 sequence. For this zero test the divisors are mathematically equivalent. An explicit s16 counter introduces unwanted sign-extension shifts; a direct int cast of the byte field avoids these. Cache the terrain height as a word before assigning the alien height and passing its signed low halfword to the effect callback, otherwise IDO reloads the global with LH. Remaining differences are register coloring and instruction scheduling. Rewrapping restores the full ROM checksum.
