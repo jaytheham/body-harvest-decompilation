@@ -2629,21 +2629,21 @@ void func_800B879C_C774C(void) {
 }
 
 /* Initialize crater creation parameters at a world position */
-// CURRENT(180): instruction order matches; temporary registers remain.
-#ifdef NON_MATCHING
+// Entry narrowing and the X-origin mask preserve IDO temporary allocation.
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
+	arg2 &= 0xFFFF;
 	D_8014F830 = 0;
 	D_8014F832 = 0x76;
 	D_8014F84C = 0.0f;
 	arg0++;
 	D_8014F850 = D_80142E48_151DF8[0];
+	arg1++;
 	D_8014F834 = (&arg2)[0];
 	D_8014F840 = 0x60;
 	D_8014F842 = 0x60;
 	D_8014F846 = 0;
 	D_8014F848 = 0;
-	D_8014F83C = arg0 - 0x30;
-	arg1++;
+	D_8014F83C = (arg0 - 0x30) & 0xFFFF;
 	D_8014F83E = arg1 - 0x30;
 	if (D_8014F83C < -0x80) {
 		D_8014F83C = -0x80;
@@ -2663,9 +2663,7 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	}
 	D_8014F844 = 0x100 - D_8014F840;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8C2C_C7BDC.s")
-#endif
+
 
 /* Register the clamped tile region around a world position for lighting updates. */
 void func_800B8D80_C7D30(s16 worldX, s16 worldZ, s16 radius, s32 unused) {

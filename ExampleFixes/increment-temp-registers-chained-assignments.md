@@ -22,3 +22,7 @@ func_800B8D80_C7D30 is byte-exact and the full ROM checksum is OK. Its target sa
 Unconditional updates in the outer loop leave the upper Z bound in s2 instead of s5 (score 30). Unconditional inner-loop updates displace the outer index (score 50). Guarding the inner-loop identities by the outer index gives score 0. Reusing the original shared clamp value and two tile-coordinate calculations removes all three added reservation locals without changing a byte. Keep the call and conditional identities on the same physical source line, and document their compiler purpose.
 
 Empty conditions, dead zero assignments, unused register declarations, and unused incremented counters do not reproduce these reservations. Native int versus s32, shared clamp temporaries, equivalent ternaries, and equivalent for loops are neutral before adding the reservation pattern.
+
+## Crater initializer: verified closure
+
+func_800B8C2C_C7BDC now matches exactly and the complete ROM is OK. Keep the s32 brightness interface: a u16 parameter can match the body but removes the caller's signed halfword conversion. Narrow arg2 with &= 0xFFFF at entry, increment arg1 before the brightness store, and mask the X-origin subtraction with & 0xFFFF. All three changes together close the temporary allocation differences without adding an instruction. Preserve the addressed arg2 read, which retains the target parameter-home store. A mask only on the brightness store plus the X mask reaches score 30 but leaves six early temporary-register rows.
