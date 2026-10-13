@@ -82,3 +82,13 @@ origins 7197, swapped origin indices 4542, word tileX 7558. Retain the
 2D view and original word origin array. Edge coordinate casts remain
 neutral; masking origins scores 5220 in the earlier 5210 candidate.
 Frame and spills still differ; wrapped ROM is OK.
+
+Ground renderer now retains 4458 with target frame 0x118. Reuse the
+expired u8 render-mode parameter as row after the vertex builder call
+(4460), then swap map array indices consistently (4458). Row byte home
+is now the argument at 0x11B rather than target 0x117, so more work remains.
+Reusing the parameter for column/tile/tileX scores 4746/6284/5035.
+Pointer addition or += vertex advancement and postfix counters are
+neutral; shifts in draw-index calculation score 5009. Vec2_S16 map
+scores 4467; map after vertices 4512; counts before map 4488.
+The candidate remains NON_MATCHING and the restored ROM is OK.
