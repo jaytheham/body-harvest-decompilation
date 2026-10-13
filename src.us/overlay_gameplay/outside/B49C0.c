@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 const char D_80142790_151740[] = "Activate beacon %d\n"; // "Activate beacon %d\n"
 const char D_801427A4_151754[] = "Beacons:"; // "Beacons:"
@@ -12,8 +13,8 @@ const char D_80142800_1517B0[] = "state+1:%d\n"; // "state+1:%d\n"
 const char D_8014280C_1517BC[] = "Launch beacon %d\n"; // "Launch beacon %d\n"
 const char D_80142820_1517D0[] = "Giving delayed powerup %d\n"; // "Giving delayed powerup %d\n"
 const u32 jtbl_8014283C_1517EC[] = {
-	0x800A6934, 0x800A693C, 0x800A695C, 0x800A6A48,
-	0x800A6ED8, 0x800A6F60, 0x800A6FA0,
+	OVERLAY_PTR(0x800A6934), OVERLAY_PTR(0x800A693C), OVERLAY_PTR(0x800A695C), OVERLAY_PTR(0x800A6A48),
+	OVERLAY_PTR(0x800A6ED8), OVERLAY_PTR(0x800A6F60), OVERLAY_PTR(0x800A6FA0),
 };
 
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp

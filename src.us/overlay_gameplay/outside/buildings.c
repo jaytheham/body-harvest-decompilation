@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "version_shift.h"
 
 const char D_80144DC0_153D70[] = "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"; // "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"
 const char D_80144E20_153DD0[] = "Yaw != -1"; // "Yaw != -1"
@@ -27,13 +28,13 @@ const f32 D_80144F34_153EE4[1] = {0.949999988079071};
 const f64 D_80144F38_153EE8[1] = {20000.0};
 
 const u32 jtbl_80144F40_153EF0[] = {
-	0x801195E8,
-	0x8011965C,
-	0x80119714,
-	0x80119770,
-	0x80119630,
-	0x80119610,
-	0x801196B8,
+	OVERLAY_PTR(0x801195E8),
+	OVERLAY_PTR(0x8011965C),
+	OVERLAY_PTR(0x80119714),
+	OVERLAY_PTR(0x80119770),
+	OVERLAY_PTR(0x80119630),
+	OVERLAY_PTR(0x80119610),
+	OVERLAY_PTR(0x801196B8),
 	0x00000000,
 };
 

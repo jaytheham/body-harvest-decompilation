@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 Cheat cheatData[21] = {
 	{ "annul", func_800731B0_82160 },

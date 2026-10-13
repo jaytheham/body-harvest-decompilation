@@ -40,8 +40,9 @@ print("list_only", sorted(set(listed) - named))
 for f in listed:
     kinds = {sub[1] for seg in eu["segments"] if isinstance(seg, dict) for sub in (seg.get("subsegments") or [])
              if isinstance(sub, list) and len(sub) > 2 and sub[2] == "../src.us/" + f[:-2]}
-    if "c" not in kinds:
-        print("no_c_entry", f)
+    # A file is code (a c entry) or data only (constData.c: .data and .rodata entries and no c entry).
+    if not kinds & {"c", ".data", ".rodata", "data", "rodata"}:
+        print("no_entry", f)
 
 import native_build, progress, decomp_common
 print("native_build", sorted(native_build.SHARED_OVERLAY_FILES) == sorted(listed))
@@ -55,7 +56,7 @@ check "every listed file exists in src.us" bash -c '[[ "$0" == *"missing []"* ]]
 check "no file is listed twice" bash -c '[[ "$0" == *"duplicates []"* ]]' "$report"
 check "bh.eu.yaml names no shared file that the list lacks" bash -c '[[ "$0" == *"yaml_only []"* ]]' "$report"
 check "every listed file is named in bh.eu.yaml" bash -c '[[ "$0" == *"list_only []"* ]]' "$report"
-check "every listed file has a c entry in bh.eu.yaml" bash -c '[[ "$0" != *"no_c_entry"* ]]' "$report"
+check "every listed file has a c, .data or .rodata entry in bh.eu.yaml" bash -c '[[ "$0" != *"no_entry"* ]]' "$report"
 check "native_build.py reads the same list" bash -c '[[ "$0" == *"native_build True"* ]]' "$report"
 check "progress.py counts the same files" bash -c '[[ "$0" == *"progress True"* ]]' "$report"
 check "decomp_common reads the same list" bash -c '[[ "$0" == *"decomp_common True"* ]]' "$report"
