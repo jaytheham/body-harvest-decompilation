@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(5753)
+// CURRENT(5536): word origins and reordered coordinate/pointer arrays.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3047,13 +3047,13 @@ void func_800B9DB8_C8D68(u8 arg0)
   s32 tileSize;
   Vtx *startVertices;
   u8 row;
-  Vtx *vertices[2];
   s16 visibleCount;
   s16 culledCount;
   s32 worldZ;
   s32 tileZ;
   s16 bottom;
   s16 map[2];
+  Vtx *vertices[2];
   s32 firstTile[2];
   s16 left;
   s16 top;
@@ -3075,8 +3075,8 @@ void func_800B9DB8_C8D68(u8 arg0)
   
   D_8014F89A = 0;
   D_8014FD28 = 0x8F;
-  map[1] = D_80151DD8.mapPosX;
-  map[0] = D_80151DD8.mapPosY;
+  map[0] = D_80151DD8.mapPosX;
+  map[1] = D_80151DD8.mapPosY;
   vertices[0] = startVertices;
   vertices[1] = startVertices;
   gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
@@ -3101,16 +3101,16 @@ void func_800B9DB8_C8D68(u8 arg0)
   firstTile[0] = map[1] / 4;
   for (row = 0; row < 5; row++)
   {
-  tileZ = (firstTile[1] + row) & 0xFF;
+  tileZ = (firstTile[0] + row) & 0xFF;
   worldZ = (s16)((tileZ << 10) + 0x8000);
 	for (column = 0; column < 5; column++)
 	{
-	  left = (column == 0) ? (map[1] % 4) : 0;
-	  right = (column == tileSize) ? (map[1] % 4) + 1 : tileSize;
-	  top = (row == 0) ? (map[0] % 4) : 0;
-	  bottom = (row == tileSize) ? (map[0] % 4) + 1 : tileSize;
+	  left = (column == 0) ? (map[0] % 4) : 0;
+	  right = (column == tileSize) ? (map[0] % 4) + 1 : tileSize;
+	  top = (row == 0) ? (map[1] % 4) : 0;
+	  bottom = (row == tileSize) ? (map[1] % 4) + 1 : tileSize;
 	  
-	  tileX = (firstTile[0] + column) & 0xFF;
+	  tileX = (firstTile[1] + column) & 0xFF;
 	  palette = D_8021EA30[(tileZ << 6) + tileX] & 0xF;
 	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[(palette & 0xF) * 512])) & 0x1FFFFFFF);
 	  gDPLoadSync(D_8005BB2C++);
@@ -3142,6 +3142,7 @@ void func_800B9DB8_C8D68(u8 arg0)
   func_800B753C_C64EC();
   gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif

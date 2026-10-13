@@ -17,3 +17,18 @@ func_800B2354_C1304 improves from 4712 to 2570 but remains NON_MATCHING. Use a b
 Interpret the 19x19 buffer as EffectRgb cells using typed grid indexing and r/g/b field accesses. This improves allocation without changing buffer layout; the raw-byte pointer and typed-grid forms otherwise generate the same address arithmetic. Keep the integer truncation before subtracting arg2 from sqrtf. Removing the redundant outer s32 cast from the falloff's float-to-s16 conversion is neutral, as is using compound subtraction for baseX.
 
 Cached raw coordinate locals, raw ring-word intermediates, a named floating extent, signed/byte fraction changes, a short intensity local, native int permutations, reuse of the distance as the RGB accumulator, and an integer return type did not close the residual. Search-AsmPattern finds only the other NON_MATCHING radial-light function for the setup fragments; its C is not a matched donor. The retained candidate still has setup scheduling differences and the distance/intensity/pixel register permutation. Wrapped ROM verification is OK.
+
+## Ground tile renderer checkpoint (not matched)
+
+BF9C0 func_800B9DB8_C8D68 retains score 5536 from baseline 5753. Move
+the vertices[2] declaration after map[2], reverse the origin assignments
+(X before Y), and consistently swap firstTile array indices and map
+array indices. These source-shape changes preserve the logical X/Y use
+and restore the target light-command store order. Separate word origins
+score 6678 and grow the frame to 0x128; keep word array origins.
+Moving the tileSize assignment around the TLUT load/sync or initializing
+it in its declaration is neutral. Halfword origins score 5487 but are
+not retained because SH/LH replace the target SW/LW. Word map coordinates
+score 6579; halfword worldZ scores 5550. Remaining frame is 0x120 versus
+target 0x118, map and vertex homes differ, and loop origin spills and
+coordinate reload/scheduling need work. The restored wrapped ROM is OK.
