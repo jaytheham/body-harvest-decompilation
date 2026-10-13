@@ -1,12 +1,14 @@
 # EU (PAL) port -- working notes
 
 Objective: build a byte-exact EU ROM (`baserom.eu.z64`, size `0xC00000`, SHA1
-`67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`), reusing the NA source tree and
-keeping code shared between regions under `src/common/`. NA-only code lives
-under `src.us/`; EU-only C stubs live under `src.eu/` and EU assembly and data
-under `asm.eu/`. The port
-is done when `build.eu/bh.eu.z64` reproduces `baserom.eu.z64` byte for byte,
-without regressing the NA build.
+`67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355`), reusing the NA source tree: the C
+under `src.us/core/` is shared between regions (the EU build compiles it with
+`-DVERSION_EU`), and the rest of `src.us/` is NA-only. EU-only C stubs live under
+`src.eu/` and EU assembly and data under `asm.eu/`. The maintainer's stated end
+state is one source tree whose few version differences are switched by `#ifdef`;
+`src.us` is expected to be renamed `src` later (that has not happened) and is
+treated as that tree until then. The port is done when `build.eu/bh.eu.z64`
+reproduces `baserom.eu.z64` byte for byte, without regressing the NA build.
 
 ## Current state
 
@@ -25,12 +27,13 @@ Tools in play:
 - `tools/eu_layout_audit.py` -- per-subsegment size/alignment audit that
   localises size errors by comparing built objects against the target layout.
 - `tools/gen_eu_symbol_collisions.py` -- emits `eu_` symbol pins (see below).
-- `tools/asm-processor/asm_processor.py --asm-root asm=asm.eu` -- passed by the
-  EU build only, so that the one version-neutral `GLOBAL_ASM` pragma of a shared
-  file reads the EU extraction; `tests/asm_root_check.sh` checks it. See
+- `tools/asm-processor/asm_processor.py --asm-root
+  asm/nonmatchings/core=asm.eu/src.us/core` -- passed by the EU build only, so
+  that the one version-neutral `GLOBAL_ASM` pragma of a shared file reads the EU
+  extraction; `tests/asm_root_check.sh` checks it. See
   "Sharing a file that still has GLOBAL_ASM" in `docs/pal-vs-na.md`.
 - `tools/progress.py --version eu` -- counts the PAL build (`src.eu` plus the
-  shared `src/common`, each file read as the EU build compiles it) into
+  shared `src.us/core`, each file read as the EU build compiles it) into
   `docs/progress.eu.json`, which `docs/eu.html` shows. The default run is the
   NTSC count behind `docs/index.html` and is unchanged.
   `tests/progress_eu_check.sh` checks both.
@@ -42,7 +45,7 @@ removed once the last core file was converted and are in the history at commit
 
 ## Symbol renames (eu_ collisions)
 
-Shared C in `src/common/` keeps NA symbol names (`D_<vram>_<rom>`). EU
+Shared C in `src.us/core/` keeps NA symbol names (`D_<vram>_<rom>`). EU
 auto-labels collide with those names whenever the same name maps to a different
 address in the EU image, so a reference silently binds to the wrong address.
 
@@ -66,7 +69,7 @@ line and accepts only `//` comments; `ld -T` accepts only `/* */`.
 
 - The EU core tail, ROM `0x3F490`-`0x40750`, is byte-identical to NA
   `0x3F460`-`0x40720` (0 of 4800 bytes differ), so the shared
-  `src/common/core/rsp_data.c` uses the same `[344]` array for both versions.
+  `src.us/core/rsp_data.c` uses the same `[344]` array for both versions.
 - E830's rodata and FD80's rodata are byte-identical between the versions
   (EU `0x38250`-`0x383C0` against NA `0x38220`-`0x38390`). E830's rodata is
   `0x30` bytes in both maps, and FD80's starts at EU `0x38280` (NA `0x38250`) with
@@ -201,10 +204,10 @@ NTSC recompiles identically for the EU shape.
   address. One EU function sits at the NA address of a shared function
   (`0x80013818`). That was first worked around with an `EU_func_80013818_14418` rename (the deliberate `EU_`, not `eu_`,
   prefix kept the rename-generator's `^eu_` stripper away from it). The workaround is gone: EU `0x80013818` is NA's
-  `n_alSynFreeFX`, which `12C80.c` now defines once in `src/common/core/`, and `symbol_addrs.eu.txt` names it at its EU address.
+  `n_alSynFreeFX`, which `12C80.c` now defines once in `src.us/core/`, and `symbol_addrs.eu.txt` names it at its EU address.
   Also note the gotcha: splat parses the `GLOBAL_ASM` pragma filename, so the C
   stub name must equal the splat symbol name or the function is misclassified as
-  matched. `src/common/core/10A20.c`: `D_80031B58_32758` has a region-specific
+  matched. `src.us/core/10A20.c`: `D_80031B58_32758` has a region-specific
   initial value (`1` in EU, `0` in NA) via `#ifdef VERSION_EU`.
 - 2026-10-12: The review of pull request 423 found the frontend start, the FD80
   rodata boundary and the DIFF classification wrong. The frontend now starts at
@@ -214,15 +217,16 @@ NTSC recompiles identically for the EU shape.
   function).
 - 2026-10-12: `1B060.c` and `E830.c` are shared too (19 of 23 core files). Each
   unmatched function keeps the one `GLOBAL_ASM` pragma it had in the NA-only
-  source, renamed to `asm/src/common/core/<File>/<name>.s`; the EU build passes
-  `--asm-root asm=asm.eu` to asm-processor, which reads `asm.eu/` in its place.
+  source, `asm/nonmatchings/core/<File>/<name>.s`; the EU build passes
+  `--asm-root asm/nonmatchings/core=asm.eu/src.us/core` to asm-processor, which
+  reads the EU extraction in its place.
   See "Sharing a file that still has GLOBAL_ASM" in `docs/pal-vs-na.md`.
   asm-processor opens every pragma's file before the preprocessor runs, which
   is why the directory is mapped by the build and not by an `#if` in the source;
   each build then needs only its own extraction.
 - 2026-10-12: The last four mixed files, `17EE0.c`, `AD60.c`, `1050.c` and
-  `53F0.c`, are shared: all 23 core C files are compiled once from
-  `src/common/core/`, and no core C file is left under `src.us/` or `src.eu/`.
+  `53F0.c`, are shared: all 23 core C files exist once, in `src.us/core/`, and
+  the EU build compiles them from there; no core C file is left under `src.eu/`.
   Six files hold unmatched functions (38 pragmas, each named once). `AD60.c`
   and `53F0.c` hold hand-written jump tables of NA code addresses, so each table
   has a `VERSION_US` / `VERSION_EU` initialiser (EU is NA + 0x30 in `AD60.c`,
@@ -233,18 +237,19 @@ NTSC recompiles identically for the EU shape.
   `share_core_file.py` (removed afterwards, see the last entry), and
   `tools/progress.py` counts a shared file's pragmas once.
 - 2026-10-12: The review of the version-neutral pragma found that `--asm-root`
-  matched only the literal prefix `asm/`, so `./asm/...`, a Windows backslash or
-  case spelling, an absolute path or `asm/../asm/...` would have read the NA
-  extraction in an EU build (none exists; the link or the SHA1 check would have
-  stopped the result). asm-processor now canonicalises the path before mapping it
-  and refuses, naming the file, line and pragma, a path that still resolves under
-  `asm/` without being spelled that way (`tests/asm_root_check.sh`). The Makefile
+  matched only the literal prefix of the source directory, so `./asm/...`, a
+  Windows backslash or case spelling, an absolute path or `asm/../asm/...` would
+  have read the NA extraction in an EU build (none exists; the link or the SHA1
+  check would have stopped the result). asm-processor now canonicalises the path
+  before mapping it and refuses, naming the file, line and pragma, a path that
+  still resolves under the source directory without being spelled that way
+  (`tests/asm_root_check.sh`). The Makefile
   now rebuilds the GLOBAL_ASM objects when the asm-processor command line or
   `asm_processor.py` changes. See "Sharing a file that still has GLOBAL_ASM" in
   `docs/pal-vs-na.md`.
 - 2026-10-12: A separate EU progress page, `docs/eu.html`, fed by
   `docs/progress.eu.json` from `tools/progress.py --version eu`. The tool reads
-  `src.eu` and `src/common` as the EU build compiles them (`VERSION_US`,
+  `src.eu` and `src.us/core` as the EU build compiles them (`VERSION_US`,
   `VERSION_EU` and `NON_MATCHING` conditions evaluated, `NON_MATCHING` off).
   Result, the same at `32aaef7ad` and with the version-neutral pragma: 318 of
   2257 functions matched (14.09 percent). Core is 316 of 355 (38

@@ -19,7 +19,7 @@ object's data, e.g. the core `0x2EA10` databin which held:
      (an identity matrix starts `00 01 00 00 00 00 00 00 00 00 00 01 ...`).
 2. The RAM addresses of the known data symbols pin the split exactly:
    `D_80031120_31D20` = RAM `0x80031120` = ROM `0x31D20`.
-3. Reference the data symbols from `include/variables.h` / `src.us/**` to
+3. Reference the data symbols from `include/variables.us.h` / `src.us/**` to
    find which C file owns them (the first C file that references the section is
    a safe owner if the real owner is unknown).
 
@@ -29,11 +29,11 @@ Name every constituent blob so the yaml shows what each is, and convert the C
 part to a `.data` section owned by the C file that references it:
 
 ```yaml
-      # RSP microcode blobs (binary). Their CPU-side pointers live in src/common/core/1050.c and src/common/core/FD80.c.
+      # RSP microcode blobs (binary). Their CPU-side pointers live in core/1050.c and core/FD80.c.
       - [0x2EA10, databin, rsp/rspboot]    # RSP boot ucode: rspbootTextStart, 0xD0 bytes
       - [0x2EAE0, databin, rsp/gfxucode]   # M_GFXTASK ucode: D_8002DEE0_2EAE0, 0x1430 bytes (game loads ucode_size 0x1000)
       - [0x2FF10, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
-      - [0x31D20, .data, ../src/common/core/1050]  # shared identity/scale Mtx + 5 static display lists
+      - [0x31D20, .data, core/1050]        # shared identity/scale Mtx + 5 static display lists
 ```
 
 The blob boundaries come from the CPU-side pointers the code actually uses
@@ -94,7 +94,7 @@ etc.), not a naive diagonal.
   alias back to `undefined_syms.us.txt` (e.g. `D_80031260_31E60 = 0x80031260;`)
   for the name the code actually uses, and remove the manual entries for names
   that are now real C definitions.
-* Update the `extern` type in `variables.h` to match the C definition
+* Update the `extern` type in `variables.us.h` to match the C definition
   (`u8 D_80031160` -> `Mtx D_80031160`) - it is only used by address
   (`gSPMatrix(&D_80031160, ...)`, `gSPSegment(..., &D_80031160)`), so a scalar
   `u8` stops the 64-byte definition from being expressible.
@@ -102,5 +102,5 @@ etc.), not a naive diagonal.
   `0xB900031D`, ...). Some editor lint/intellisense setups report
   "integer conversion resulted in truncation" for these, but **IDO and the
   project's host `gcc` check emit no such warning** - verify with
-  `docker exec bh-container bash -c "rm -f build/src/common/core/FILE.c.o; make QUIET=0 build/src/common/core/FILE.c.o"`
+  `docker exec bh-container bash -c "rm -f build/src.us/core/FILE.c.o; make QUIET=0 build/src.us/core/FILE.c.o"`
   before chasing it.

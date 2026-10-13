@@ -20,7 +20,7 @@ referenced the segment/physical spelling of the datum, not the KSEG0 one. Do **n
 ori $at,$at,0xffff; and t7,t6,at` sequence and measured **1963** (the ROM has no mask here - proof
 the original baked the physical address into the symbol). This mirrors the existing repo idiom
 `extern Gfx D_13E440[];` (`F7870.c:113`) and `(u32)D_140A80` (`buildings.c:3276`): declare the
-physical symbol in `include/variables.h` and let `undefined_syms_auto.txt` give it its value.
+physical symbol in `include/variables.us.h` and let `undefined_syms_auto.txt` give it its value.
 Tells: the target `.s` names a symbol *without* the `800` prefix and its `%hi` is small (< 0x100).
 
 ## Companion: one phantom 4-byte local moves a spilled temp slot within an unchanged frame

@@ -40,7 +40,7 @@ field read as a signed halfword (`lh $t9,%lo(D_80154318+0x14)`, and the value ca
 `func_800CF070_DE020` (`if (D_80154318[var_s0].unk14 < 8)`) and `func_800D3C88_E2C38`
 (`D_80154318[slot].unk14 = 0;`) both re-check to **score 0** with the field declared `u8`.
 
-So a `u8 -> s16` retype in `include/structs.h` *looks* like the honest fix and is fatal: it turns
+So a `u8 -> s16` retype in `include/structs.us.h` *looks* like the honest fix and is fatal: it turns
 those `sb`/`lbu` into `sh`/`lh` and loses the outside matches. Keep the header at the width its
 matched users prove and put `*(s16 *)&D_80154318[arg0].unk14` at the comet use site (precedent already
 in `CFE30.c:2218`).

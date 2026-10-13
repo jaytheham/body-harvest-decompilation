@@ -1,6 +1,6 @@
 # Two-case switch and named selector fix register rotation and stack layout
 
-Matched `func_80018D7C_1997C` in `src/common/core/12C80.c` with IDO 5.3 -O2.
+Matched `func_80018D7C_1997C` in `src.us/core/12C80.c` with IDO 5.3 -O2.
 
 Nested `if (character != 0x25) { if (character == 0x26) { ... } } else { ... }`
 produced the correct instruction sequence and stack layout, but later temporary

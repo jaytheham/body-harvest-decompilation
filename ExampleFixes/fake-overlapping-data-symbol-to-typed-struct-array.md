@@ -42,7 +42,7 @@ byte blob compile; it does not exist as its own object in the ROM.
 Replace the two `u8` blobs with one typed array and index it as a struct:
 
 ```c
-/* includes/structs.h already had: typedef Unk8009E4C8 Unk8009E4C8_Row[0xD]; */
+/* includes/structs.us.h already had: typedef Unk8009E4C8 Unk8009E4C8_Row[0xD]; */
 Unk8009E4C8_Row D_8009E4C8_186588[5] = {
 	/* category 0 */
 	{

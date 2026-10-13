@@ -1,6 +1,6 @@
 ### String-copy loop with `beqzl`/`bnel` + `slti` delay slots: dead `temp=0` init fixes v1/a2 register allocation
 
-**Pattern** (`func_8001A598_1B198` in `src/common/core/1B100.c`, score 80 → 0): A char-copy loop into a ring-buffer slot with a `(c & 0x80) && language == 3` special-case THEN block and a max-length `count < 0x28` guard.
+**Pattern** (`func_8001A598_1B198` in `src.us/core/1B100.c`, score 80 → 0): A char-copy loop into a ring-buffer slot with a `(c & 0x80) && language == 3` special-case THEN block and a max-length `count < 0x28` guard.
 
 **Target assembly** (structurally matched already, only regalloc wrong):
 ```

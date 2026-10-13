@@ -18,10 +18,9 @@ You will be given a list of functions to decompile, follow this process:
 - `/ExampleFixes`
 - `/include`
 - `/src.us`
-- `/src/common`
 - `symbol_addrs.us.txt`
 - `undefined_syms.us.txt`
-4. Move any variables, structs, or function definitions the subagent added from the C file into the appropriate header file in `include/` (e.g. variables to `variables.h`, structs to `structs.h`, and function prototypes to `functions.h`).
+4. Move any variables, structs, or function definitions the subagent added from the C file into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
 5. Then build the ROM, if it returns `build/bh.us.z64: OK` in the terminal output then the decompilation is successful, commit the remaining changes with a message like `Decompile func_80092ADC_A1A8C` and then return to step 2 and process the next function.
 If the build fails, add or update a comment above the non-matching function showing the current score like `CURRENT(500)`, add the NON_MATCHING wrapper, then git commit with a message like `Non-matching decomp of func_80092ADC_A1A8C` before moving on to the next function.
 
@@ -32,7 +31,7 @@ If the build fails, add or update a comment above the non-matching function show
 - `build/`: Readonly - compiled object files and the final ROM image.
 - `tools/`: Readonly - tools for other tasks.
 - `src.us/`: C source files of the NTSC (US) build.
-- `src/common/`: C source files compiled into both the US and the EU build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 

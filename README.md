@@ -105,7 +105,7 @@ From here you can run the `make extract` and `make --jobs` commands.
 
 ## Building `EU` Version
 
-Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu` (`make extract VERSION=eu`, then `make --jobs VERSION=eu`). The EU build uses its own `asm.eu`, `assets.eu` and `build.eu` directories, so both versions can be extracted side by side; a matching build prints `build.eu/bh.eu.z64: OK`. Code shared by both versions lives in `src/common`.
+Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu` (`make extract VERSION=eu`, then `make --jobs VERSION=eu`). The EU build uses its own `asm.eu`, `assets.eu` and `build.eu` directories, so both versions can be extracted side by side; a matching build prints `build.eu/bh.eu.z64: OK`. The EU build also compiles the C files in `src.us/core` (with `-DVERSION_EU`), so that code is shared by both versions; `src.eu` holds only the C files that exist in the EU build alone.
 
 ## Building `NON_MATCHING` Version
 
@@ -132,8 +132,8 @@ build/           ; build folder (not checked in)
 include/
   2.0I/          ; libultra 2.0I headers
 lib/libultra.a   ; libultra 2.0I static library
-src.{us|eu}/      ; version-specific C source
-src/common/       ; C source shared by both versions
+src.us/          ; C source of the US build; src.us/core is also compiled into the EU build
+src.eu/          ; C source that exists in the EU build only
 tools/
   ido5.3_recomp/ ; static recompilation of IDO 5.3 compiler
   splat_ext      ; custom splat extensions

@@ -95,7 +95,7 @@ The three levers, each measured (13428 -> 200 -> 0):
    calls `func_80083F8C_5443C(idx, 0x95)`. Both come straight off the target's own `.s`.
 
 `EffectInterpolationState` (`union { u16 size; u8 bytes[14]; }`) is a **shared** type in
-`include/structs.h`, so both overlays' records can be viewed through it: the donor uses it directly, the
+`include/structs.us.h`, so both overlays' records can be viewed through it: the donor uses it directly, the
 target casts `(EffectInterpolationState *)&D_800DE840[i].unk8`. That keeps the byte arithmetic typed and
 avoids `*(u16 *)` casts at every site.
 
@@ -121,9 +121,9 @@ Three rules from it:
 2. **A transplanted body can name a data symbol the tree never declared.** The guess's `D_800AA688`
    exists nowhere in `include/` - the target's own `.s` is the authority for both the name
    (`addiu $t7,$t7,%lo(D_800AA688_7AB38)`) and the width (its `lbu` proves `u8`, so
-   `extern u8 D_800AA688_7AB38[];` next to its address neighbours in `include/variables.h`). Grep the
+   `extern u8 D_800AA688_7AB38[];` next to its address neighbours in `include/variables.us.h`). Grep the
    symbol as written in the `.s` before assuming a declaration in the file names the same object.
-3. **`include/variables.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
+3. **`include/variables.us.h` is a make prerequisite, so one declaration line forces a *full* rebuild**
    (minutes at `--jobs=8`, not seconds). Start `make --jobs=8` in the background first and only then run
    `check`, which is then a differ-only run; a foreground `check` straight after a header edit times out.
    `nm build/<path>.c.o` showing `T <func>` plus `check` 0 is the compiled-C proof - a sha1 match alone

@@ -8,7 +8,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of matched functions.
 - `src.us/`: C source files of the NTSC (US) build.
-- `src/common/`: C source files compiled into both the US and the EU build. An edit here changes both ROMs.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
 - `src.eu/`: EU-only C files (`GLOBAL_ASM` stubs).
 - `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and the built ROM image.
@@ -45,10 +45,10 @@ The unmatched code in local master is the best known state, there are no other b
 
 If a function has a switch statement and there is an associated jump table const defined at the start of the C file, delete that const before you begin. The consts are placeholders that make the rodata build correctly while the functions are NON_MATCHING and the .s file is being used instead, when the C code is being included in the build it will generate its own jump table replacing the need for the const version. 
 
-- Declarations of data symbols must go in `include/variables.h`.
-- Identify structs accessed by the function and add or update definitions in `include/structs.h`.
-- Add or update declarations for any called functions in `include/functions.h`.
-- These three headers are shared by the US and EU builds. A declaration that exists only in the US ROM goes in the US-only `include/variables.us.h`, `include/structs.us.h` or `include/functions.us.h` (EU-only ones in the `.eu.h` files); all six are empty today.
+- Declarations of data symbols must go in `include/variables.us.h`.
+- Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
+- Add or update declarations for any called functions in `include/functions.us.h`.
+- The EU build includes these three US headers too (through `include/common.eu.h`), so a declaration added there also serves the shared files in `src.us/core/`. The `.eu.h` headers are for declarations that exist in the PAL release only (none yet).
 - Important: Replace all pointer math with struct/array access!
 - Remove unnecessary casts.
 - Remove excessive temporary variables.

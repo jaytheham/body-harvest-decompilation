@@ -37,15 +37,16 @@ A failed build leaves the previous ROM in place. When the compile or the link fa
 
 - `tools/splat/src/splat/segtypes/common/c.py`: `C_GLOBAL_ASM_IDO_RE` accepts `.` and `-` in path components, so `GLOBAL_ASM` pragmas under `asm.eu/` are recognised. Re-apply it after updating splat; without it the EU build fails.
 - `tools/asm-processor/asm_processor.py`: the option `--asm-root SOURCE=DESTINATION` rewrites the leading directory of every
-  `#pragma GLOBAL_ASM` path (`asm/src/...` becomes `asm.eu/src/...` for `--asm-root asm=asm.eu`) before the file is
-  opened or recorded as a dependency, and refuses a DESTINATION directory that does not exist. Source shared between the
-  ROM versions names the NA extraction (`asm/`) once; `tools/native_build.py --version eu` and the Makefile for `VERSION=eu`
-  pass `--asm-root asm=asm.eu` on both asm-processor invocations of an object (the source pass and `--post-process`), and
-  the US build passes nothing, so each build needs only its own extraction. The path is canonicalised like `open()` reads it
-  before it is matched (`./asm/x.s`, `asm//x.s` and `asm/../asm/x.s` map like `asm/x.s`; a backslash and the case of `ASM/`
-  count on a Windows host only), and a path that resolves under SOURCE without being spelled that way (an absolute path, or
-  one that leaves the repository and comes back) stops asm-processor with an error naming the source file, the line and the
-  pragma, so a stray spelling cannot read the NA assembly into an EU object. `tests/asm_root_check.sh` covers it. Re-apply it
-  after updating asm-processor.
+  `#pragma GLOBAL_ASM` path (`asm/nonmatchings/core/...` becomes `asm.eu/src.us/core/...` for
+  `--asm-root asm/nonmatchings/core=asm.eu/src.us/core`) before the file is opened or recorded as a dependency, and refuses
+  a DESTINATION directory that does not exist. The shared C in `src.us/core` names the NA extraction
+  (`asm/nonmatchings/core/<File>/`) once; `tools/native_build.py --version eu` and the Makefile for `VERSION=eu` pass
+  `--asm-root asm/nonmatchings/core=asm.eu/src.us/core` on both asm-processor invocations of an object (the source pass and
+  `--post-process`), and the US build passes nothing, so each build needs only its own extraction. The path is canonicalised
+  like `open()` reads it before it is matched (`./asm/nonmatchings/core/x.s` and `asm/nonmatchings//core/x.s` map like
+  `asm/nonmatchings/core/x.s`; a backslash and the case of `ASM/` count on a Windows host only), and a path that resolves
+  under SOURCE without being spelled that way (an absolute path, or one that leaves the repository and comes back) stops
+  asm-processor with an error naming the source file, the line and the pragma, so a stray spelling cannot read the NA assembly
+  into an EU object. `tests/asm_root_check.sh` covers it. Re-apply it after updating asm-processor.
 
 When upgrading a tool, update its version URL and SHA256 in `ARCHIVES`, remove its local cached installation, and repeat the clean extraction and SHA1 verification. Do not remove the hash checks or disable TLS verification to work around download failures.

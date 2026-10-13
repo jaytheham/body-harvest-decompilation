@@ -11,7 +11,7 @@ model: DeepSeek V4 Flash (deepseek)
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of matched functions, search here for specific assembly patterns.
 - `src.us/`: C source files of the NTSC (US) build.
-- `src/common/`: C source files compiled into both the US and the EU build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and the built ROM image.
 

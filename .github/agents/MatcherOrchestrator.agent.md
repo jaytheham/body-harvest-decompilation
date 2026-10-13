@@ -15,7 +15,7 @@ You will be given a C file to target, follow this process:
 1. Begin by creating a new git branch named with this format: `matcher-YYYY-mm-dd-HH-MM-SS`, include the date and time.
 2. Scan the C file for all functions with a NON_MATCHING wrapper, these functions have been decompiled but do not yet match the original assembly when compiled.
 3. Orchestrate processing of these NON_MATCHING functions one at a time. For each function, you will:
-  - Remove the `NON_MATCHING` wrapper around the target function so the C code is included in the build instead of the assembly .s file. A file under `src/common/` is compiled for both ROMs, so verify both with `python tools/verify_build.py --rebuild` (see `docs/pal-vs-na.md`).
+  - Remove the `NON_MATCHING` wrapper around the target function so the C code is included in the build instead of the assembly .s file. A file under `src.us/core/` is compiled for both ROMs, so verify both with `python tools/verify_build.py --rebuild` (see `docs/pal-vs-na.md`).
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT difference value. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - After building check the current difference value with the diff tool, a lower value is better, `CURRENT(0)` is a match. Update the comment above the function with the new value, e.g. `CURRENT(1234)`.
   - Create a subagent, agentName `BH Matcher`, and tell the subagent to target the function.
@@ -23,10 +23,9 @@ You will be given a C file to target, follow this process:
  - `/ExampleFixes`
  - `/include`
  - `/src.us`
- - `/src/common`
  - `symbol_addrs.us.txt`
  - `undefined_syms.us.txt`
-5. Move any variables, structs, or function definitions the subagent added to a C file in `src.us/` or `src/common/` into the appropriate header file in `include/` (e.g. variables to `variables.h`, structs to `structs.h`, and function prototypes to `functions.h`).
+5. Move any variables, structs, or function definitions the subagent added to a C file in `src.us/` into the appropriate header file in `include/` (e.g. variables to `variables.us.h`, structs to `structs.us.h`, and function prototypes to `functions.us.h`).
 6. Make sure the function is not wrapped with `NON_MATCHING`, then build, if build returns `build/bh.us.z64: OK` then the decompilation is matching, commit the remaining changes with a message like `Matched func_80092ADC_A1A8C` and then return to step 3 and process the next function.
 7. If the build returns `FAILED`, check the function's CURRENT difference value with `diff.ps1`. If the difference value is lower than the original value that's good, restore the `NON_MATCHING` wrapper, update the comment above the wrapper with the new value `CURRENT(X)`, and commit the changes. If the difference value is the same or higher, undo all changes - including the removal of `NON_MATCHING` and check the build is OK before moving on to the next function.
 
@@ -47,7 +46,7 @@ Retain any existing comments.
 - `build/`: Readonly - compiled object files and the final ROM image.
 - `tools/`: Readonly - tools for other tasks.
 - `src.us/`: C source files of the NTSC (US) build.
-- `src/common/`: C source files compiled into both the US and the EU build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 

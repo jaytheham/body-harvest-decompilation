@@ -1,6 +1,6 @@
 # Separate increments can change IDO register priority without changing arithmetic
 
-Matched function: `func_80017490_18090` in `src/common/core/17EE0.c`, IDO 5.3 `-O2 -mips2 -32`.
+Matched function: `func_80017490_18090` in `src.us/core/17EE0.c`, IDO 5.3 `-O2 -mips2 -32`.
 
 The candidate had the correct 391 instructions and 0xA0 frame, but two pairs of saved registers were reversed. The text cursor and word-buffer pointer used s3/s2 rather than s2/s3; the text offset and word length used s5/s4 rather than s4/s5.
 

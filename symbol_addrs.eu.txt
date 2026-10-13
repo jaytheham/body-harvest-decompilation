@@ -288,7 +288,7 @@ func_8001A598_1B198 = 0x8001A5C8;
 func_8001A650_1B250 = 0x8001A680;
 func_8001A7A0_1B3A0 = 0x8001A7D0;
 func_8001A828_1B428 = 0x8001A858;
-// core/12C80 (shared from src/common/core/12C80.c): NA names at EU addresses (NA + 0x30).
+// core/12C80 (shared from src.us/core/12C80.c): NA names at EU addresses (NA + 0x30).
 __dummy = 0x80013488;
 func_80012080_12C80 = 0x800120B0;
 func_80012128_12D28 = 0x80012158;
@@ -379,7 +379,7 @@ n_alSynFreeFX = 0x80013818;
 osBbUsbDevGetHandle = 0x80014230;
 playInventoryMusic = 0x80013624;
 playMapMusic = 0x800135DC;
-// core/loader (shared from src/common/core/loader.c): NA names at EU addresses (NA + 0x30).
+// core/loader (shared from src.us/core/loader.c): NA names at EU addresses (NA + 0x30).
 __osInitialize_emu = 0x80011914;
 debug_printModelSegmentEnd = 0x80011C9C;
 debug_printModelSegmentStart = 0x80011C64;
@@ -419,9 +419,9 @@ loadFrontendData = 0x80011624;
 loadLevel = 0x800107E4;
 loadLevelCode = 0x8001170C;
 loadLevelData = 0x80010900;
-// core/1B060 (shared from src/common/core/1B060.c): NA names at EU addresses (NA + 0x30).
+// core/1B060 (shared from src.us/core/1B060.c): NA names at EU addresses (NA + 0x30).
 func_8001A460_1B060 = 0x8001A490;
-// core/E830 (shared from src/common/core/E830.c): NA names at EU addresses (NA + 0x30).
+// core/E830 (shared from src.us/core/E830.c): NA names at EU addresses (NA + 0x30).
 func_8000DC30_E830 = 0x8000DC60;
 func_8000DC9C_E89C = 0x8000DCCC;
 func_8000DCCC_E8CC = 0x8000DCFC;
@@ -432,7 +432,7 @@ osSetTime = 0x8000E4E0;
 func_8000E4C4_F0C4 = 0x8000E4F4;
 func_8000E52C_F12C = 0x8000E55C;
 func_8000E53C_F13C = 0x8000E56C;
-// core/17EE0 (shared from src/common/core/17EE0.c): NA names at EU addresses (NA + 0x30).
+// core/17EE0 (shared from src.us/core/17EE0.c): NA names at EU addresses (NA + 0x30).
 func_800172E0_17EE0 = 0x80017310;
 func_80017394_17F94 = 0x800173C4;
 func_80017490_18090 = 0x800174C0;
@@ -461,7 +461,7 @@ func_8001A130_1AD30 = 0x8001A160;
 func_8001A160_1AD60 = 0x8001A190;
 func_8001A37C_1AF7C = 0x8001A3AC;
 myfree = 0x8001A478;
-// core/AD60 (shared from src/common/core/AD60.c): NA names at EU addresses (NA + 0x30).
+// core/AD60 (shared from src.us/core/AD60.c): NA names at EU addresses (NA + 0x30).
 func_8000A160_AD60 = 0x8000A190;
 func_8000A2B8_AEB8 = 0x8000A2E8;
 func_8000A3DC_AFDC = 0x8000A40C;
@@ -495,7 +495,7 @@ jtbl_80037478_38078 = 0x800374A8;
 jtbl_80037490_38090 = 0x800374C0;
 jtbl_80037560_38160 = 0x80037590;
 jtbl_80037588_38188 = 0x800375B8;
-// core/1050 (shared from src/common/core/1050.c): NA names at EU addresses (the code sits at the same
+// core/1050 (shared from src.us/core/1050.c): NA names at EU addresses (the code sits at the same
 // address in both versions, so these are the addresses the NA names already carry).
 func_80000450_1050 = 0x80000450;
 func_80000730_1330 = 0x80000730;
@@ -557,7 +557,7 @@ func_80004498_5098 = 0x80004498;
 func_800044D4_50D4 = 0x800044D4;
 // core/1050 hand-written jump table at its EU address (NA + 0x30).
 jtbl_80036C8C_3788C = 0x80036CBC;
-// core/53F0 (shared from src/common/core/53F0.c): NA names at EU addresses (the same address up to and including
+// core/53F0 (shared from src.us/core/53F0.c): NA names at EU addresses (the same address up to and including
 // func_80006DDC_79DC, which is 0x38 bytes longer in EU; NA + 0x38 after it).
 func_800047F0_53F0 = 0x800047F0;
 func_800047FC_53FC = 0x800047FC;

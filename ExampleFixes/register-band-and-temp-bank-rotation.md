@@ -29,7 +29,7 @@ The observed `or $a0,...` is that assignment, and because the destination is a *
 
 - **Do not try to reproduce this with a no-op that keeps the parameter live.** An `if (!arg0) {}` inside the body makes the counters take `$a0` and the score goes to 95; what is wanted is not `arg0` staying live, it is an **assignment to** `arg0`, which puts the copy in `arg0`'s own register.
 - **A good recorded marker does not rule the donor out.** The seam rule "a good marker means the guess already beats the donor's body" is about transplanting the donor's *whole body*; when the donor is a near-copy differing only in literals and element width, copying its **statement shape** can still convert - here 0.74 points/instruction looked "already closer". Diff the two `.s` files and read the donor's C before believing the marker.
-- Returning the parameters to `s32` and casting to the pointer type inside the body is free when the prototype is unprototyped (`include/functions.h` declares `void func_80076FE0_47490();`), so the donor's C can be adopted literally without touching any header.
+- Returning the parameters to `s32` and casting to the pointer type inside the body is free when the prototype is unprototyped (`include/functions.us.h` declares `void func_80076FE0_47490();`), so the donor's C can be adopted literally without touching any header.
 
 ## A named entry pointer can rotate the whole saved-register band; direct array access fixes it
 

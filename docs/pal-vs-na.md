@@ -128,14 +128,22 @@ immediates differ, which is ordinary relocation, and relocation lives in
 linker should produce version-correct output for both. Only
 `func_80006DDC_79DC` genuinely needs a PAL-specific body.
 
+The end state the maintainer has stated is one source tree in which the few
+differences between the versions are switched by `#ifdef`. `src.us` is expected
+to be renamed `src` later; that has not happened, and until it does `src.us` is
+treated as that tree: the C under `src.us/core` is compiled for both versions,
+and `src.eu` holds only what exists in the PAL release alone.
+
 ### The mechanism works
 
 `splat` resolves a `c` subsegment as `src_path / name`, where `name` is the
-third yaml element verbatim, so a traversing name reaches across trees. It is
-used throughout `bh.eu.yaml`, for example:
+third yaml element verbatim, so a traversing name reaches across trees. `bh.eu.yaml`
+has `src_path: src.eu` and names every shared core segment that way, while
+`bh.us.yaml` names the same segments `core/<File>`, for example:
 
 ```yaml
-- [0x53D0, c, ../src/common/core/53D0]     # resolves to src/common/core/53D0.c
+- [0x53D0, c, ../src.us/core/53D0]     # bh.eu.yaml: resolves to src.us/core/53D0.c
+- [0x53D0, c, core/53D0]               # bh.us.yaml: resolves to src.us/core/53D0.c
 ```
 
 The extract and compile both resolve the file correctly. Nothing in splat needs
@@ -152,9 +160,10 @@ now, and the file is shared.
 
 ### Which files can share today
 
-All 23 NA core C files are shared: each is compiled once, from
-`src/common/core/`. No core C file is left under `src.us/` or `src.eu/`, and
-`bh.us.yaml` and `bh.eu.yaml` name the same 23 files. Seventeen contain no
+All 23 NA core C files are shared: each exists once, in `src.us/core/`, and
+the EU build compiles that same file with `-DVERSION_EU`. `src.eu` holds no
+core C file, and `bh.us.yaml` (as `core/<File>`) and `bh.eu.yaml` (as
+`../src.us/core/<File>`) name the same 23 files. Seventeen contain no
 `#pragma GLOBAL_ASM`, and fifteen of those no per-version text at all
 (`12C80.c` needed no `#ifdef`). `loader.c` keeps its ten tables of ROM offsets
 and overlay addresses under `VERSION_US` / `VERSION_EU`, because EU moves the
@@ -178,31 +187,37 @@ assembly of the version it is building:
 #ifdef NON_MATCHING
 /* C body */
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E53C_F13C.s")
 #endif
 ```
 
-- The pragma names the NA extraction (`asm/`). The EU build passes
-  `--asm-root asm=asm.eu` to `tools/asm-processor/asm_processor.py` (in
-  `tools/native_build.py` for `--version eu` and in the Makefile for
-  `VERSION=eu`), which replaces a leading `asm/` of every pragma path with
-  `asm.eu/` before it opens the file. US passes nothing. The option refuses a
-  destination directory that does not exist. Both invocations of asm-processor
-  per object (the source pass and `--post-process`) must carry it; without it
-  the EU link fails with undefined references to NA symbol names.
+- The pragma names the NA extraction (`asm/nonmatchings/core/<File>/`). The EU
+  build passes `--asm-root asm/nonmatchings/core=asm.eu/src.us/core` to
+  `tools/asm-processor/asm_processor.py` (in `tools/native_build.py` for
+  `--version eu` and in the Makefile for `VERSION=eu`), which replaces the
+  leading `asm/nonmatchings/core` of every pragma path with `asm.eu/src.us/core`
+  before it opens the file. The option takes a `SOURCE=DESTINATION` pair, and
+  SOURCE may have several components, so the shared C keeps the pragma form it
+  has always had. US passes nothing. The option refuses a destination directory
+  that does not exist. Both invocations of asm-processor per object (the source
+  pass and `--post-process`) must carry it; without it the EU link fails with
+  undefined references to NA symbol names.
 - The mapping reads the path the way `open()` does: it folds `.`, `..` and
-  repeated separators first, so `./asm/x.s`, `asm//x.s` and `asm/../asm/x.s`
-  map like `asm/x.s`; a backslash is a separator, and `ASM/` matches `asm/`,
-  on a Windows host only (on a case-sensitive host those paths name nothing
-  and the open fails; on another case-insensitive filesystem `ASM/` gets the
-  refusal below). A path that is not spelled `asm/...` but still resolves to a
-  file under `asm/` (an absolute path, one that leaves the repository and
-  comes back, or one through a symbolic link to `asm/`) cannot be mapped, so
+  repeated separators first, so `./asm/nonmatchings/core/x.s` and
+  `asm/nonmatchings//core/x.s` map like `asm/nonmatchings/core/x.s`; a
+  backslash is a separator, and `ASM/` matches `asm/`, on a Windows host only
+  (on a case-sensitive host those paths name nothing and the open fails; on
+  another case-insensitive filesystem `ASM/` gets the refusal below). A path
+  that is not spelled `asm/nonmatchings/core/...` but still resolves to a file
+  under that directory (an absolute path, one that leaves the repository and
+  comes back, or one through a symbolic link into it) cannot be mapped, so
   asm-processor stops with an error naming the source file, the line and the
   pragma, instead of reading the NA assembly into an EU object. Paths outside
-  `asm/` (`asm.eu/...`, `asmx/...`, `src/asm/...`) are left as written.
-  `tests/asm_root_check.sh` covers these spellings, with no extraction or
-  baserom. It runs on any host, except that the symbolic link cases need a
+  `asm/nonmatchings/core` (`asm.eu/...`, `asm/nonmatchings/libultra/...`,
+  `src/asm/...`) are left as written.
+  `tests/asm_root_check.sh` covers these spellings (with the one-component
+  SOURCE `asm=asm.eu`) and the longer form the EU build passes, with no
+  extraction or baserom. It runs on any host, except that the symbolic link cases need a
   host that can make a real link and print SKIP elsewhere (a default Git Bash
   on Windows makes a copy of the directory instead of a link).
 - A build that omitted `--asm-root` fails at the link (undefined references) and
@@ -221,9 +236,13 @@ assembly of the version it is building:
   the stamp too, and the next real `make` then rebuilds the objects.
   `tools/native_build.py` gets the same effect from its configuration
   fingerprint, which digests `native_build.py` and `asm_processor.py`.
-- The asm path follows from the yaml name: for a subsegment named
-  `../src/common/core/E830`, splat writes the functions to
-  `asm*/nonmatchings/../src/common/core/E830/`, that is `asm*/src/common/core/E830/`.
+- The asm path follows from the yaml name. `bh.us.yaml` names the subsegment
+  `core/E830`, so splat writes its functions to `asm/nonmatchings/core/E830/`,
+  the directory the pragma names. `bh.eu.yaml` names it `../src.us/core/E830`,
+  so splat writes the EU functions to `asm.eu/src.us/core/E830/` (the `..` is
+  dropped, and the directory is not under `nonmatchings` or `matchings`). That
+  difference is what `--asm-root asm/nonmatchings/core=asm.eu/src.us/core`
+  bridges.
 - The function has the NA name in both extractions, because `symbol_addrs.eu.txt`
   names the EU function after NA. splat classifies a function by the pragma's
   file name and ignores its directory (`C_GLOBAL_ASM_IDO_RE`), so one pragma
@@ -232,8 +251,9 @@ assembly of the version it is building:
   `#pragma GLOBAL_ASM("...")` form, and IDO silently ignores the unexpanded
   pragma, which leaves the function out of the object. That is why the
   directory is mapped by the build and not by the preprocessor.
-- Every pragma names a directory of the version being built, so a build needs
-  only its own extraction: US works without `asm.eu/`, EU without `asm/`.
+- The build of each version reads the extraction of its own version (the EU
+  build through the mapping above), so a build needs only its own extraction:
+  US works without `asm.eu/`, EU without `asm/`.
 - The blocks that are still version-specific (hand-written jump tables, the
   data tables of `loader.c` and `10A20.c`, and `func_80006DDC_79DC` below) end
   in an `#error`, so a compile that defines neither `VERSION_US` nor
@@ -247,8 +267,8 @@ Six files hold unmatched functions: `1050.c` (13 functions), `53F0.c` (12),
 each named once. One more pragma sits in `53F0.c`: `func_80006DDC_79DC` is the
 one function that really differs in PAL, so its NA C body sits under
 `#if defined(VERSION_US)` and its pragma under `#elif defined(VERSION_EU)`; NA
-compiles it from C and EU from assembly. That pragma also names `asm/`, which
-the EU build maps to `asm.eu/`. In `1050` every function sits at the same
+compiles it from C and EU from assembly. That pragma also names `asm/nonmatchings/core/`, which
+the EU build maps to `asm.eu/src.us/core/`. In `1050` every function sits at the same
 address in both ROMs; the others move by the shift map at the top of
 `docs/pal-na-diff.txt`.
 
@@ -289,21 +309,23 @@ method:
   EU's names. A pair whose instruction counts differ was a `PROBLEM`; that is
   how `func_80006DDC_79DC` showed up.
 - `share_core_file.py <File> [--jtbl-shift SHIFT] [--pal-only FUNCTION]` did the
-  mechanical conversion: `git mv` to `src/common/core/`, `git rm` of the EU
-  stub, each pragma renamed to the shared `asm/src/common/core/<File>/` path (no
-  `#if` is added), and the `c`, `.data` and `.rodata` entries of both yamls
-  pointed at `../src/common/core/<File>` (EU's `data` and `rodata` became
-  `.data` and `.rodata`). `--jtbl-shift` wrote the per-version jump table
-  initialisers after checking every word against both baseroms; `--pal-only`
-  kept one function's NA body under `VERSION_US` and gave `VERSION_EU` its
-  pragma (the same `asm/` path, mapped by the EU build). It edited no symbol
-  table and did not build.
+  mechanical conversion. With the NA source staying in `src.us/core/` and every
+  pragma keeping its `asm/nonmatchings/core/<File>/` form (no `#if` is added),
+  what remains is the `git rm` of the EU stub and the `c`, `.data` and `.rodata`
+  entries of `bh.eu.yaml` pointed at `../src.us/core/<File>` (EU's `data` and
+  `rodata` became `.data` and `.rodata`). The version of the tool in the history
+  also moved the file into a separate shared directory and renamed its pragmas to
+  match; neither step applies to this tree. `--jtbl-shift` wrote the per-version
+  jump table initialisers after checking every word against both baseroms;
+  `--pal-only` kept one function's NA body under `VERSION_US` and gave
+  `VERSION_EU` its pragma (the same `asm/nonmatchings/core/` path, mapped by the
+  EU build). It edited no symbol table and did not build.
 - After a conversion the `NAME`, `PIN` and `DROP` lines were added to the symbol
   tables by hand (hand-written lines go above the block that
   `tools/eu_collisions_build.py` generates, or the generator deletes them), both
   versions were extracted, the US version was rebuilt, and only then was
   `tools/eu_collisions_build.py` run, which reads the US objects under
-  `build/src/common/`; on a stale US tree it binds EU references to the wrong
+  `build/src.us/core/`; on a stale US tree it binds EU references to the wrong
   address without an error.
 
 When a function in a shared file is later matched, keep the C body once and
@@ -352,7 +374,7 @@ build.eu/bh.eu.z64: OK   sha1 67750E2E7AB46FEDF65A271AB7F4C7AAD92AE355
 Core is split into per-file `c`/`data`/`rodata`/`asm` subsegments. The EU tree
 has 29 C files of its own under `src.eu/` (libultra and the three gameplay
 overlays, none for core), made of `GLOBAL_ASM` stubs and two empty functions;
-every core C file in the EU build is a shared file in `src/common/core/` (see
+every core C file in the EU build is a shared file in `src.us/core/` (see
 "Which files can share today" above).
 
 ## Tooling notes

@@ -64,7 +64,7 @@ The same lever has a reverse form, and there it is blocked. `func_8007290C_15A9C
 except **one row**: its call `func_80011858_12458(currentLevel, D_800A5720)` loads the argument with
 `lbu` (the low byte of the 4-byte `Level` enum, `lbu a0,3(a0)`), where the ROM passes the whole word
 (`lw a0,%lo(currentLevel)(a0)`). The prototype is `void func_80011858_12458(u8 arg0, s32 arg1);`
-(`include/functions.h`), so IDO only needs the low byte and narrows the load.
+(`include/functions.us.h:146`), so IDO only needs the low byte and narrows the load.
 
 Measured: retyping the prototype to `s32 arg0` takes the *caller* to **score 0** - it is otherwise
 exact. But the callee definition (`core/loader.c:697`) is a matched body whose first two instructions

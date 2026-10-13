@@ -8,18 +8,18 @@ osInvalICache(func_80070270, (u8 *)&D_8008DDF0 - func_80070270);
 func_800101F0_10DF0(func_80070270, D_158330, D_18D7E0 - D_158330);
 ```
 
-Declaring it as a function in variables.h (or functions.h without a guard) and changing loader.c's pointer arithmetic to `(u8*)func_80070270` breaks the assembly output of those loader functions (causes stack spilling instead of rematerialisation).
+Declaring it as a function in variables.us.h (or functions.us.h without a guard) and changing loader.c's pointer arithmetic to `(u8*)func_80070270` breaks the assembly output of those loader functions (causes stack spilling instead of rematerialisation).
 
 ## Solution: Per-TU Macro Guard
 
-In `variables.h`:
+In `variables.us.h`:
 ```c
 #ifndef OVERLAY_ENTRY_AS_FUNC
 extern u8 func_80070270[];
 #endif
 ```
 
-In `functions.h`:
+In `functions.us.h`:
 ```c
 #ifdef OVERLAY_ENTRY_AS_FUNC
 s32 func_80070270(s32 arg0);
@@ -43,8 +43,8 @@ In loader.c and other .c files that use `func_80070270` as a data address: **no 
 
 ## Status (applied)
 This guard is now fully applied in-tree:
-- `include/variables.h`: `#ifndef OVERLAY_ENTRY_AS_FUNC extern u8 func_80070270[]; #endif`
-- `include/functions.h`: `#ifdef OVERLAY_ENTRY_AS_FUNC s32 func_80070270(s32 arg0); #endif`
+- `include/variables.us.h`: `#ifndef OVERLAY_ENTRY_AS_FUNC extern u8 func_80070270[]; #endif`
+- `include/functions.us.h`: `#ifdef OVERLAY_ENTRY_AS_FUNC s32 func_80070270(s32 arg0); #endif`
 - Callers `10A20.c` and `53F0.c` define `OVERLAY_ENTRY_AS_FUNC` at the top.
 
 It fixes `loadFrontendData` (was: 0x20 frame, CSE of the address into `a3` + `sw a3,0x1c(sp)` spill; now: 0x18 frame, independent `lui`/`addiu` per use). The sibling loader functions `func_80011674_12274` and `func_800117D8_123D8` use the same pattern and should already rematerialise correctly.

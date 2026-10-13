@@ -1,6 +1,6 @@
 # Lens distortion: reuse the integer distance before converting to float
 
-Matched `func_8000E048_EC48` in `src/common/core/E830.c`.
+Matched `func_8000E048_EC48` in `src.us/core/E830.c`.
 
 Use three integer locals for X, Y, and distortion, followed by the float scale. First assign the squared distance to `distortion`, then overwrite it with the weighted distortion expression. This produces the target radius in `t2`, distortion sum in `t0`, and the global strength in `t1`. Separate strength and distortion locals changed the integer allocation despite identical arithmetic. Keeping the integer sum inside the float expression also allocated the double constant differently.
 

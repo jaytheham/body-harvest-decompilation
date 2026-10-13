@@ -1,6 +1,6 @@
 # Use an s16 struct field as the intermediate for a volume clamp
 
-Matched `func_80015210_15E10` in `src/common/core/12C80.c`.
+Matched `func_80015210_15E10` in `src.us/core/12C80.c`.
 
 The target truncates a float calculation, sign-extends its low 16 bits,
 compares against `0x2FFF`, then stores either the sum or `0x7FFF` into a

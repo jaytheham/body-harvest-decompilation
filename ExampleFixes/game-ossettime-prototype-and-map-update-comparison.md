@@ -1,6 +1,6 @@
 # Game osSetTime declaration and map-update comparison range
 
-The game function named `osSetTime` in `src/common/core/E830.c` takes two
+The game function named `osSetTime` in `src.us/core/E830.c` takes two
 `s32` arguments and stores projection dimensions; it is not the usual
 libultra timer implementation. The existing project guard is:
 

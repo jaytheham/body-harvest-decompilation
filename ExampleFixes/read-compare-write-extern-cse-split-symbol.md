@@ -13,7 +13,7 @@ This also prevents the compiler from filling branch delay slots with useful `lui
 // D_8013E3F4_14D3A4 = 0x8013E3F4;
 // D_8013E3F4_W = 0x8013E3F4;
 
-// variables.h:
+// variables.us.h:
 // extern s16 D_8013E3F4_14D3A4;
 // extern s16 D_8013E3F4_W;
 

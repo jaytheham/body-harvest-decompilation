@@ -58,5 +58,5 @@ This generates the correct register allocation:
 1. Use `u8 arg0` parameter type (not `s32` with `arg0 &= 0xFF`) to generate the `sw a0, 0x18(sp)` home save and `move a0, t6` instruction.
 2. Access `u8` globals **directly** without local variables to let the compiler use `t` registers (temporaries) instead of `v`/`a` registers.
 3. The `D_800FB7AC = D_800FB7AC - 1` form (load-modify-store) keeps the loaded value in a `t` register because the compiler treats it as an ephemeral temporary, not a named variable.
-4. Update the function declaration in `functions.h` to match (`u8 arg0` instead of `s32 arg0`).
+4. Update the function declaration in `functions.us.h` to match (`u8 arg0` instead of `s32 arg0`).
 5. Use proper symbols (`&D_800A4FD8_18D098`) instead of computed addresses to get `addiu` instead of `ori`.

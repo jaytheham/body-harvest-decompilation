@@ -1,6 +1,6 @@
 ### `s8` vs `u8` extern declaration determines `lb` vs `lbu` load instruction
 
-When a byte-sized global variable is declared in `variables.h` with the wrong signedness, the compiler emits the wrong load instruction:
+When a byte-sized global variable is declared in `variables.us.h` with the wrong signedness, the compiler emits the wrong load instruction:
 - `extern s8 D_80052ACC;` → generates `lb` (signed byte load)
 - `extern u8 D_80052ACC;` → generates `lbu` (unsigned byte load)
 

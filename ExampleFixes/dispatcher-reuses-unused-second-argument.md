@@ -16,7 +16,7 @@ jump table. Remove the placeholder jump-table const when enabling C.
 All callbacks in this array take no arguments. Declaring the table as
 `void (*D_802DDBF4_196704[])(void)` allows a direct indexed call without
 a function-pointer cast and preserves the exact assembly. Update the
-extern declaration in `include/variables.h` at the same time.
+extern declaration in `include/variables.us.h` at the same time.
 
 Verification: `tools/make.ps1` reported `build/bh.us.z64: OK` both before
 and after correcting the callback table type; the function diff had no

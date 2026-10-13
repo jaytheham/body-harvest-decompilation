@@ -12,7 +12,7 @@ before its generated switch table.
 The working layout separates the later constants into
 `src.us/overlay_gameplay/outside/101840_rodata.c` and gives that unit a rodata
 segment at 0x153B50 in `bh.us.yaml`. Their declarations remain in
-`include/variables.h`. The original unit emits the preceding constants,
+`include/variables.us.h`. The original unit emits the preceding constants,
 the generated table, and its alignment padding; the new unit supplies the
 following constants at their existing addresses.
 

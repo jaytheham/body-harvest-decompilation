@@ -29,7 +29,7 @@ Removing the two integer radius temporaries did not fix that frame difference.
 Reusing a pointer whose position/matrix work had finished restored `0x30`.
 
 The final draft expresses those two views with `MapMarkerScratch`, defined in
-`include/structs.h`:
+`include/structs.us.h`:
 
 ```c
 typedef union {

@@ -13,7 +13,7 @@ data word also differed at `0x32788`.
 
 ## Cause
 
-Version-independent C in `src/common/` keeps NA symbol names
+Version-independent C in `src.us/core/` keeps NA symbol names
 (`D_<vram>_<rom>`). When the target region places that symbol at a different
 VRAM, the C reference silently binds to the **wrong** address. Two failure
 modes:

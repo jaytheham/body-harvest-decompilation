@@ -23,7 +23,7 @@ used the second.
 
 ## The useful part: it is not a symbol or type property
 
-`func_800119F4_125F4` in `src/common/core/loader.c` is **matched** and contains the same statement
+`func_800119F4_125F4` in `src.us/core/loader.c` is **matched** and contains the same statement
 (`D_8006AA6C = arg0;`) - and it **materialises** (`lui $v0,%hi / addiu $v0,$v0,%lo / sw $a0,0($v0)`).
 So the same global-store idiom can produce either form depending on what else the function does. Do
 not "fix" it by retyping the symbol or by moving the declaration.

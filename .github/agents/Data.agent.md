@@ -16,7 +16,7 @@ You will be tasked with updating the yaml and C files so `.data` and `.rodata` s
 - `asm/nonmatchings`: Readonly, git-ignored - target assembly of unmatched functions.
 - `asm/matchings`: Readonly, git-ignored - target assembly of functions with a matching C implementation, for reference.
 - `src.us/`: C source files of the NTSC (US) build.
-- `src/common/`: C source files compiled into both the US and the EU build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly, git-ignored - compiled object files and the final ROM image.
 - `bh.ld`: Readonly, git-ignored - Linker script defining the layout of the ROM, including the .data and .rodata sections.
@@ -36,7 +36,7 @@ These powershell tools exist to assist you:
 3. Search for references to these variables in .c and .s files to determine which C file this data belongs to. Note that some of the original C files may currently be combined into a single file, so you may need to split an existing C file into multiple files to match the original layout of the ROM.
 Not all functions in C are decompiled yet so you may need to search for variable references in the .s assembly files in `asm/nonmatchings` to determine the correct C file.
 4. Update the yaml file to define the target section e.g. `- [0x14A8A0, .data, overlay_gameplay/outside/F6A50]`, the third argument of the section must be the path of the c section this data belongs to. If the target `bin` section appears to contain data for multiple C files split it into multiple sections - leaving a un-named `bin` section for the remaining data - and focus on just the data from the first section. Note that data sections are always aligned to 0x10 bytes.
-5. Add definitions for these variables in the appropriate existing C file, make sure to use the correct types as determined by definitions in `variables.h` and load/store instructions in `.s` files, order, and initial values as in the original ROM. Define the variables before the first function in the C file.
+5. Add definitions for these variables in the appropriate existing C file, make sure to use the correct types as determined by definitions in `variables.us.h` and load/store instructions in `.s` files, order, and initial values as in the original ROM. Define the variables before the first function in the C file.
 6. Run the extract script to rebuild the linker script from the changed yaml file, then run the build script to compile the ROM. You must run extract any time the yaml file is changed, and build after making code changes.
 7. Compare the built ROM against the original ROM and identify any differences in the output for the data section. You can also look at the linker script to see which order it is putting the sections into, but you cannot change the order of sections in the linker script as it is auto-generated, you must change the yaml and C code to match the original ROM.
 
