@@ -801,16 +801,14 @@ void func_8008412C_545DC(u8 arg0, u8 arg1) {
 	}
 }
 
-// CURRENT(2707)
 // AI - Sets up an interpolated motion effect with start/end positions, duration, and child particles
-#ifdef NON_MATCHING
 u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 pad0;
 	s16 pad1;
 	s16 sp2A;
 	s16 temp_v0_2;
 	u8 temp_s2;
-	s32 temp_v0;
+	s32 colorCount;
 	u8 temp_a1;
 	u8 var_s0;
 	Frontend52690InterpolationParticle *temp_v1;
@@ -822,31 +820,27 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 		if (temp_v0_2 == -3) {
 			func_80083B14_53FC4(temp_s2);
 		} else {
+			D_800DE130[temp_s2].unkA = temp_v0_2;
 			temp_v1 = (Frontend52690InterpolationParticle *)&D_800DE840[temp_v0_2];
+			temp_v1->lifetime = arg7;
 			temp_v1->position[0] = arg0;
-D_800DE130[temp_s2].unkA = temp_v0_2;
+
 			temp_v1->velocity[0] = (arg3 - arg0) / arg6;
 			temp_v1->velocity[1] = (arg4 - arg1) / arg6;
 			temp_v1->velocity[2] = (arg5 - arg2) / arg6;
-			var_s0 = 0;
+			colorCount = 230;
 			temp_v1->duration = arg6;
 			temp_v1->position[1] = arg1;
 			temp_v1->position[2] = arg2;
-			temp_v1->lifetime = arg7;
-			do {
-				temp_a1 = func_800038E0_44E0() % 230;
+			for (var_s0 = 0; var_s0 < 8; var_s0++) {
+				temp_a1 = func_800038E0_44E0() % colorCount;
 				func_8008412C_545DC(temp_s2, temp_a1);
-				var_s0++;
-			} while (var_s0 < 8);
+			}
 		}
 	}
 
 	return (u8)sp2A;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084324_547D4.s")
-#endif
-
 // AI - Updates particle state each frame: animates frames, handles velocity, updates alpha
 void func_80084508_549B8(u8 arg0) {
 	s16 cur;
