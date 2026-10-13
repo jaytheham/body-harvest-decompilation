@@ -45,6 +45,3 @@ registers, but retains NEG and SUB instructions. Division of the product by
 accepted fixes. Avoid treating a register improvement with these extra
 instructions as a match. The clean version remains at diff score 30 with
 all 288 instructions structurally matching.
-### Interior torch spawning: scalar locals and reversed height sum
-
-Matched func_80074D98_15CE58 with the full ROM checksum. Remove the object pointer local and use D_800E66A8[arg0] directly. Inline the four X/Z plus/minus call expressions instead of keeping separate narrowed coordinates; this restores the 0x60 frame. Declare the three word locals in X, Y, Z order to put Z at sp+0x54 and X at sp+0x5C. Spell the height addition as (f32)(entryHeight - 0x60) + animatedHeight + 165.0f: reversing these first two commutative terms makes the field load use f4, the integer conversion f6/f8, and the final truncation f6. A union with four word handles and the existing halfword view replaces raw s32 pointer casts without moving data.
