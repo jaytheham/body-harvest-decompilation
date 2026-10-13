@@ -193,7 +193,7 @@ instructions. Word subtraction/cache 6213, halfword timer 6093, word
 XOR cache neutral at 5608; explicit implicit-angle variants are neutral.
 Before output-ring lookup, compute row remainder first into expired i,
 then column remainder into u16 mapIndex, and use [(u16)i][mapIndex].
-This restores target row-before-column division (2584). Opposite reused
+This changes ring-index allocation (2584), but not into the final target order. Opposite reused
 types score 2974, new named word indices 2704. Special-color pass using
 mode as byte seed scores 2669, new word seed 2742, scoped output pointer
 2822. Keep the two reused ring indices; frame and array/spill homes still
@@ -208,5 +208,20 @@ Word timer remainder scores 3272; expired row-coordinate reuse 2514.
 Halfword i scores 3439 unsigned/3744 signed; word mapIndex 3895.
 Explicit row assignment narrowing scores 2754, word mode with it 3307.
 Assigning divisor 19 to unused arg0/arg1 is neutral; swapped remainder
-roles score 2704. Division still starts with X rather than target Y;
+roles score 2704. That checkpoint was misread: ringX is at 0x961 and the target starts with X;
 fixed frame and buffer homes do not imply full matching. Wrapped ROM OK.
+
+Terrain color now retains 831. Correction: TileRing.ringX is offset 0x961,
+ringY 0x960. Target divides COLUMN first, then ROW; earlier row-first
+notes misinterpreted these offsets. Compute mode=(u16)X-remainder first,
+i=(u16)Y-remainder second, and index tiles[i][mode]. Explicit row
+narrowing retains the target extra remainder MOVE. Place sp94 before
+entry to match its 0x94 home. For the special-color seed, reuse unused
+u8 arg0 and remove explicit &0xFF: byte assignment supplies the target
+single ANDI. This drops 1856 to 841. Reverse seed multiply source operands
+to match MULTU a1,a0 (831). Frame, buffers and instruction structure now
+match. Remaining row-coordinate spills are 0x78/0x7C versus 0x7C/0x80;
+timer in-place V1 narrowing, divisor A1 allocation and temporary registers
+still differ. Word timer caching scores 1661, in-place/short narrowing
+1631; word/unsigned/short mode 1617/1817/2266. Compact 831 candidate is
+NON_MATCHING and wrapped full ROM verifies OK.

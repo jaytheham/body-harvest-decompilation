@@ -1152,7 +1152,7 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(2324): exact frame/buffer homes; division ordering and allocation remain.
+// CURRENT(831): instruction structure matches; register and spill differences remain.
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 baseXWord;
@@ -1166,8 +1166,8 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	u16 mapIndex;
 	f32 f0;
 	s16 baseY;
-	RingEntry *entry;
 	s16 sp94;
+	RingEntry *entry;
 
 
 	D_8014F8A0 = (s16 (*)[256])arg2;
@@ -1234,9 +1234,9 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
-			i = (D_80151DD8.ringY + row) % 19;
 			mode = (u16)((D_80151DD8.ringX + col) % 19);
-			entry = &D_80151DD8.tiles[(u16)i][mode];
+			i = (u16)((D_80151DD8.ringY + row) % 19);
+			entry = &D_80151DD8.tiles[i][mode];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
@@ -1248,24 +1248,24 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			for (i = 0; i < 0x40; i = (i + 1) & 255) {
 				if (((sp94 + col) == D_8014FD48[i * 2]) && ((baseY + row) == D_8014FD48[(i * 2) + 1])) {
 					entry = &D_80151DD8.tiles[row][col];
-					mapIndex = ((D_8014FD48[(i * 2) + 1] * D_8014FD48[i * 2]) % 60) & 0xFF;
+					arg0 = ((D_8014FD48[i * 2] * D_8014FD48[(i * 2) + 1]) % 60);
 
-					if ((mapIndex + 0x14) < 0) {
+					if ((arg0 + 0x14) < 0) {
 						entry->r = 0;
 					} else {
-						entry->r = mapIndex + 0x14;
+						entry->r = arg0 + 0x14;
 					}
 
-					if ((mapIndex - 5) < 0) {
+					if ((arg0 - 5) < 0) {
 						entry->g = 0;
 					} else {
-						entry->g = mapIndex - 5;
+						entry->g = arg0 - 5;
 					}
 
-					if ((mapIndex - 0x19) < 0) {
+					if ((arg0 - 0x19) < 0) {
 						entry->b = 0;
 					} else {
-						entry->b = mapIndex - 0x19;
+						entry->b = arg0 - 0x19;
 					}
 				}
 			}
