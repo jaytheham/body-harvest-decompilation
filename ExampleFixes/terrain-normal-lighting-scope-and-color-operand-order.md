@@ -146,3 +146,10 @@ so retain X only. Explicit s16 origin casts and putting worldZ assignment
 on the same line as inner for are neutral. A named word draw index
 scores 3346; word tileX with XOR scores 6352. Signed division checks
 remain intact; candidate stays NON_MATCHING and wrapped ROM is OK.
+
+Ground origin/scope trials retain 3115. Moving origins to outer scope
+scores 3415, column first in the loop scope 3305, map after counts 3267.
+Split one-element origin arrays are neutral. An if(1) around loop locals
+or lighting, or a plain scope around render setup, is neutral. Explicit
+byte-masked row increment scores 3970. Keep ordinary u8 row++ and the
+existing scopes; restored wrapped ROM is OK.
