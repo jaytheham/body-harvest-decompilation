@@ -26,4 +26,10 @@
 #define OVERLAY_PTR_B3(x) ((OVERLAY_PTR(x) >> 24) & 0xFF)
 #define OVERLAY_PTR_B2(x) ((OVERLAY_PTR(x) >> 16) & 0xFF)
 
+/* And as four bytes (0x80, 0x0A, 0x54, 0xE0): the low two bytes are B1 and B0. */
+#define LEVEL_PTR_B1(x) ((LEVEL_PTR(x) >> 8) & 0xFF)
+#define LEVEL_PTR_B0(x) (LEVEL_PTR(x) & 0xFF)
+#define OVERLAY_PTR_B1(x) ((OVERLAY_PTR(x) >> 8) & 0xFF)
+#define OVERLAY_PTR_B0(x) (OVERLAY_PTR(x) & 0xFF)
+
 #endif

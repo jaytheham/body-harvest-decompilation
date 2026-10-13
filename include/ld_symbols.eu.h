@@ -4,7 +4,6 @@
 #include "common.h"
 
 extern Addr _14B400_bin;
-extern Addr _176A10_bin;
 extern Addr _298A0_s;
 extern Addr _29990_s;
 extern Addr _2E150_s;
@@ -25,6 +24,11 @@ extern Addr ___src_us_core_E830_c;
 extern Addr ___src_us_core_FD80_c;
 extern Addr ___src_us_core_loader_c;
 extern Addr ___src_us_overlay_gameplay_frontend_52690_c;
+extern Addr ___src_us_overlay_gameplay_inside_158330_c;
+extern Addr ___src_us_overlay_gameplay_inside_1648A0_c;
+extern Addr ___src_us_overlay_gameplay_inside_167C90_c;
+extern Addr ___src_us_overlay_gameplay_inside_16AF30_c;
+extern Addr ___src_us_overlay_gameplay_inside_173B60_c;
 extern Addr ___src_us_overlay_level_america_254410_c;
 extern Addr ___src_us_overlay_level_comet_318E20_c;
 extern Addr ___src_us_overlay_level_greece_18D7E0_c;
@@ -345,11 +349,6 @@ extern Addr normalize_s;
 extern Addr ortho_s;
 extern Addr overlay_gameplay_frontend_40750_c;
 extern Addr overlay_gameplay_frontend_4E450_c;
-extern Addr overlay_gameplay_inside_158E90_c;
-extern Addr overlay_gameplay_inside_165400_c;
-extern Addr overlay_gameplay_inside_1687F0_c;
-extern Addr overlay_gameplay_inside_16BA90_c;
-extern Addr overlay_gameplay_inside_1746C0_c;
 extern Addr overlay_gameplay_outside_125A30_c;
 extern Addr overlay_gameplay_outside_13E5D0_c;
 extern Addr overlay_gameplay_outside_142240_c;

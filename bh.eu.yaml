@@ -350,12 +350,21 @@ segments:
     exclusive_ram_id: 800702A0
     overlay: true
     subsegments:
-      - [0x158E90, c, overlay_gameplay/inside/158E90]
-      - [0x165400, c, overlay_gameplay/inside/165400]
-      - [0x1687F0, c, overlay_gameplay/inside/1687F0]
-      - [0x16BA90, c, overlay_gameplay/inside/16BA90]
-      - [0x1746C0, c, overlay_gameplay/inside/1746C0]
-      - [0x176A10, bin]
+      - [0x158E90, c, ../src.us/overlay_gameplay/inside/158330]
+      - [0x165400, c, ../src.us/overlay_gameplay/inside/1648A0]
+      - [0x1687F0, c, ../src.us/overlay_gameplay/inside/167C90]
+      - [0x16BA90, c, ../src.us/overlay_gameplay/inside/16AF30]
+      - [0x1746C0, c, ../src.us/overlay_gameplay/inside/173B60]
+      - [0x176A10, .data, ../src.us/overlay_gameplay/inside/167C90]
+      - [0x176A20, .data, ../src.us/overlay_gameplay/inside/158330]
+      - [0x185A80, .data, ../src.us/overlay_gameplay/inside/1648A0]
+      - [0x18B240, .data, ../src.us/overlay_gameplay/inside/16AF30]
+      - [0x18B2D0, .data, ../src.us/overlay_gameplay/inside/173B60]
+      - [0x18CFA0, .rodata, ../src.us/overlay_gameplay/inside/158330]
+      - [0x18D7D0, .rodata, ../src.us/overlay_gameplay/inside/1648A0]
+      - [0x18D9E0, .rodata, ../src.us/overlay_gameplay/inside/167C90]
+      - [0x18DB90, .rodata, ../src.us/overlay_gameplay/inside/16AF30]
+      - [0x18E100, .rodata, ../src.us/overlay_gameplay/inside/173B60]
 
   - name: overlay_level_greece
     type: code

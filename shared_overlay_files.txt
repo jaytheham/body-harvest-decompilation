@@ -7,3 +7,8 @@ overlay_level/java/1ED9E0.c
 overlay_level/america/254410.c
 overlay_level/siberia/2B7100.c
 overlay_level/comet/318E20.c
+overlay_gameplay/inside/158330.c
+overlay_gameplay/inside/1648A0.c
+overlay_gameplay/inside/167C90.c
+overlay_gameplay/inside/16AF30.c
+overlay_gameplay/inside/173B60.c
