@@ -566,10 +566,6 @@ D_80037640_38240 = 0x80037640;
 /* core/1050 (shared C): NA-named externs at their EU addresses, from the NA and EU disassembly of the same
    instructions. */
 func_8001BCE0_1C8E0 = 0x8001BD10;
-osMotorStop = 0x8001C660;
-osMotorStart = 0x8001C7C8;
-osMotorInit = 0x8001CAB0;
-osEepromLongWrite = 0x8001D490;
 func_8001D5A0_1E1A0 = 0x8001D5D0;
 D_8002F310_2FF10 = 0x8002F340;
 D_800313CC = 0x800313FC;
