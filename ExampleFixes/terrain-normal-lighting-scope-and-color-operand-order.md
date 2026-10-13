@@ -62,3 +62,13 @@ and division by named tileSize are neutral. Literal tile size scores
 before row scores 5260. Volatile map scores 8772 and introduces an extra
 saved coordinate-address register, so it is not a useful reload remedy.
 Restored the best scoped for-loop candidate; wrapped full ROM is OK.
+
+The ground renderer now retains 5210 by placing visibleCount and
+culledCount after vertices[2]. Splitting origins into X/Y one-element
+arrays is neutral (reverse declaration order 5232); same-line origin
+assignments are neutral. Moving row after vertices scores 5338, map
+first 5300, vertices first 5392. Current count homes are 0x106/0x104,
+vertex homes 0x108/0x10C, map homes 0x110/0x112; target count homes are
+0xF4/0xF2, vertices 0xF8/0xFC, map 0x10C/0x10A. Show-StackLayout picks
+the caller file 7F220.c and cannot connect to Docker here; use the
+compiled assembly's direct stack operands as evidence. Wrapped ROM OK.

@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(5228): loop-scoped origins and tile locals; spills remain.
+// CURRENT(5210): scoped tile locals and reordered counters; spills remain.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3047,10 +3047,10 @@ void func_800B9DB8_C8D68(u8 arg0)
   s32 tileSize;
   Vtx *startVertices;
   u8 row;
-  s16 visibleCount;
-  s16 culledCount;
   s16 map[2];
   Vtx *vertices[2];
+  s16 visibleCount;
+  s16 culledCount;
   visibleCount = 0;
   culledCount = 0;
   func_800B9AC8_C8A78();
