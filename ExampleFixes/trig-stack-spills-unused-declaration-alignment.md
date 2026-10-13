@@ -32,3 +32,17 @@ alignment can make a four-byte declaration change move later slots by
 eight bytes. Check actual spills after each change instead of assuming a
 uniform shift. Verification: `tools/make.ps1` reported
 `build/bh.us.z64: OK` with the C function enabled.
+
+## Gate renderer checkpoint (not matched)
+
+In BF9C0.c func_800BC760_CB710, removing explicit angle masks before
+unsigned-halfword coss/sins calls reduced the score from 5228 to 3673.
+The implicit parameter conversion restores the target ADDU, ANDI, MOVE
+argument sequence; introducing a separate angle local instead made the
+allocation much worse. Saving the pulse separately and reusing its word
+local for the primary loop angle reduced the score to 3533. Moving the
+outer radius declaration last and reusing the expired inner radius for
+the secondary loop angle reduced it to 3350 and the frame from 0x100
+to 0xF8 (target 0xF0). This remains NON_MATCHING: initial phase allocation,
+spill slots, and a few instruction orders still differ. The uninitialized
+byte read in the radius calculation is present in target assembly too.

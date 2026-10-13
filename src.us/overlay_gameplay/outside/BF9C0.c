@@ -3926,24 +3926,23 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	return 0;
 }
 
-// CURRENT(5228)
+// CURRENT(3350): implicit trig narrowing and reused radius/angle locals.
 #ifdef NON_MATCHING
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	s16 i;
 	s16 temp_s2;
 	s16 temp_s5;
 	u8 spE9;
-	s32 spCC;
 	s32 var_s2;
 	s32 var_s3;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
 	s32 temp_fp;
-	s32 temp_lo;
-	s32 temp_lo_2;
+	s32 pulse;
 	s32 var_a0;
 	u8 var_v0;
 	f64 temp_f22;
+	s32 spCC;
 
 	D_80052B58 = 0x80;
 	var_a0 = func_800B84D0_C7480(arg0, arg2) >> 8;
@@ -3993,14 +3992,15 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	var_a0 = 0;
 	temp_f22 = var_s2;
 	temp_fp = (var_s3 * 4) + 0x64;
+	pulse = var_s3;
 	for (i = 0; i < 10; i++) {
-		temp_lo = (i << 0x10) / 10;
-		temp_lo_2 = (i << 0x10) / 3;
+		var_s3 = (i << 0x10) / 10;
+		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 14.0) + (f64)temp_s2);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s5);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
 			var_v0 = D_80052B58;
@@ -4022,15 +4022,15 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 
 	temp_f22 = spCC;
-	temp_fp = 0xB4 - (var_s3 * 6);
+	temp_fp = 0xB4 - (pulse * 6);
 	for (i = 0; i < 10; i++) {
-		temp_lo = (i << 0x10) / 10;
-		temp_lo_2 = (i << 0x10) / 3;
+		var_s3 = (i << 0x10) / 10;
+		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s5 = (s16)(s32)((((f32)coss((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + temp_lo) & 0xFFFF) / 32768.0) * temp_f22) + var_a0);
-		temp_s2 = (s16)(s32)((((f32)sins((temp_lo_2 + (D_80052A8C * 0x708)) & 0xFFFF) / 32768.0) * 7.0) + (f64)temp_s2);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s5);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
 			var_v0 = D_80052B58;
