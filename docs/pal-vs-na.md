@@ -266,9 +266,10 @@ exit with status 1. They need a tree where the file still exists once per
 version; at 87f42bd4d (the PR 423 head before these six were shared) six core
 files do (`1050`, `17EE0`, `1B060`, `53F0`, `AD60` and `E830`), and the headers
 of the two tests name a worktree at that commit. The tools hard-code the
-core layout (`src.us/core`, `src.eu/core`, `asm/nonmatchings/core` and the `core/`
-entries of both yamls), so using them on an overlay file would mean changing
-them. What they did, as the record of the method:
+core layout (the `core` directories under `src.us/` and `src.eu/`,
+`asm/nonmatchings/core` and the `core/` entries of both yamls), so using them on
+an overlay file would mean changing them. What they did, as the record of the
+method:
 
 - `eu_symbol_pairs.py <File>` paired the NA and EU functions of the unconverted
   file and printed the symbol-table lines sharing needs: `NAME` (for
