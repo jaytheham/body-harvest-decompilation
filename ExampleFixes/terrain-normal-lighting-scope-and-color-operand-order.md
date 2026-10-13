@@ -44,3 +44,12 @@ if/else edge assignments are neutral; copying map coordinates to right
 and top before modulo scores 6313, all four edges 7563. Explicit word
 casts in origin division are neutral. Preserve the scoped array version
 under NON_MATCHING; wrapped ROM checksum remains OK.
+
+Further ground-loop trials retain 5228. Word tileX scores 7576, byte
+tileZ 5324, word tile 5358, and word bottom 6803. A halfword worldZ
+with implicit destination narrowing is neutral, as are halfword/byte
+tileSize, unsigned palette, and native-int word origins. A named tile
+entry pointer for palette load, byte reload and saturating tile update
+scores 7911 and grows the frame to 0x128. The target update pattern at
+C92D0 has no matched donor from Search-AsmPattern. Restored the scoped
+array candidate under NON_MATCHING and verified the full ROM OK.
