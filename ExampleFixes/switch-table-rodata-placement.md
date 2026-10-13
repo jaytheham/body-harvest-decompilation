@@ -223,3 +223,10 @@ Partial func_8010C14C_11B0FC: after 20 variants the retained candidate scores 74
 ## Final table in core/12C80.c
 
 `func_80015C94_16894` already had matching C behind NON_MATCHING. Its placeholder `jtbl_80038360_38F60` was the last declared rodata in the file, so removing the placeholder and enabling the C let IDO generate the table at the correct address without moving other constants. The complete ROM verified `build/bh.us.z64: OK`. Redundant casts of the s8 return from `func_800165EC_171EC` can also be removed without affecting codegen.
+
+
+## Interior special-room dispatcher closed with a late-rodata anchor
+
+func_80072E88_15AF48 now matches with a full ROM checksum. The ROM table selects the first handler for case 2, the second for case 4, and the unconditional success for case 5; cases 1 and 3 are empty. The earlier case labels produced an identical instruction diff but incorrect generated table entries.
+
+Delete its own 24-byte placeholder. Transfer the later constants from D_800A4AA0_18CB60 through jtbl_800A4B9C_18CC5C into the existing GLOBAL_ASM block for func_80077A5C_15FB1C, using .late_rodata and .late_rodata_alignment 8, followed by that function's unchanged target text. Declare their symbols in variables.us.h. This preserves all later bytes while letting the compiler's five-entry table and alignment padding occupy 0x800A4A88. No new file or edits to extracted assembly are needed.

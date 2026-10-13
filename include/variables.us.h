@@ -4108,6 +4108,22 @@ extern const f32 D_80144024_152FD4[1];
 extern const f64 D_80144028_152FD8[1];
 
 extern const InteriorAngleScale D_800A4A00_18CAC0;
+extern const f64 D_800A4AA0_18CB60[1];
+extern const f64 D_800A4AA8_18CB68[1];
+extern const f64 D_800A4AB0_18CB70[1];
+extern const f32 D_800A4AB8_18CB78[1];
+extern const f64 D_800A4AC0_18CB80[1];
+extern const u32 jtbl_800A4AC8_18CB88[];
+extern const u32 jtbl_800A4AE8_18CBA8[];
+extern const u32 jtbl_800A4B08_18CBC8[];
+extern const f32 D_800A4B54_18CC14[1];
+extern const f32 D_800A4B58_18CC18[1];
+extern const u32 jtbl_800A4B5C_18CC1C[];
+extern const f64 D_800A4B70_18CC30[1];
+extern const u32 jtbl_800A4B78_18CC38[];
+extern const f64 D_800A4B90_18CC50[1];
+extern const f32 D_800A4B98_18CC58[1];
+extern const u32 jtbl_800A4B9C_18CC5C[];
 
 extern const f64 D_801441E8_153198[1];
 
