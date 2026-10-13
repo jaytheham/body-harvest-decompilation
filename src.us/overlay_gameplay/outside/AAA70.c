@@ -140,9 +140,6 @@ s32 D_8013D75C_14C70C = 0;
 s32 D_8013D760_14C710 = 0;
 s32 D_8013D764_14C714 = 0;
 u8 D_8013D768_14C718 = 0;
-s32 D_8013D76C_14C71C = 0;
-s32 D_8013D770_14C720 = 10;
-s32 D_8013D774_14C724 = 0;
 
 void func_8009BAC0_AAA70(void)
 {
@@ -2406,109 +2403,104 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
 #endif
-// CURRENT(6203)
-#ifdef NON_MATCHING
 void func_800A3490_B2440(VehicleInstance *arg0) {
-	VehicleType *sp6C;
-	s16 sp62;
-	s16 sp60;
-	u8 sp56;
-	u8 var_t5;
-	u8 var_t4;
-	u8 var_a3;
-	s32 temp_v0;
-	s32 temp_v1;
-	s32 temp_ra;
-	s32 var_t0;
+	static s32 D_8013D76C_14C71C = 0;
+	static s32 D_8013D770_14C720 = 10;
+	static s32 D_8013D774_14C724 = 0;
+	VehicleType *type;
+	s32 distance;
+	s32 marker;
+	s16 dx;
+	s16 dz;
+	s32 value;
 	s16 alpha;
+	u8 red;
+	u8 green;
+	u8 blue;
+	u8 fade;
+	u8 pulse;
 
-	sp6C = func_800FAFB8_109F68(arg0);
-	sp56 = (u8)D_8013D5B8_14C568;
-	var_a3 = 0x2D;
-	var_t4 = 0x2E;
-	var_t5 = 0x91;
+	type = func_800FAFB8_109F68(arg0);
+	fade = D_8013D5B8_14C568;
+	red = 0x2D;
+	green = 0x2E;
+	blue = 0x91;
 	D_8014F67E = 0;
 
 	if (func_800A2A88_B1A38() != 0) {
 		if ((D_80158FE8 != NULL) && (func_800A18CC_B087C() != 0)) {
-			temp_v0 = 1;
+			value = 1;
 		} else {
-			temp_v0 = 0;
+			value = 0;
 		}
 
-		if (!((temp_v0 == 0) && (D_801591B4 != 7) && (D_801591B4 != 8))) {
-			var_a3 = 0xFF;
-			var_t4 = 0;
-			var_t5 = 0;
+		if ((value != 0) || (D_801591B4 == 7) || (D_801591B4 == 8)) {
+			red = 0xFF;
+			green = 0;
+			blue = 0;
 		}
 
-		temp_v1 = D_8013D770_14C720;
-		if (temp_v1 < 0) {
-			temp_v1 = 0;
+		D_8013D770_14C720 = MAX(0, D_8013D770_14C720);
+		if (D_8013D770_14C720 > 30) {
+			D_8013D770_14C720 = 30;
 		}
-		D_8013D770_14C720 = temp_v1;
-		if (temp_v1 >= 0x1F) {
-			temp_v1 = 0x1E;
-			D_8013D770_14C720 = temp_v1;
+		if (D_8013D76C_14C71C > 0) {
+			D_8013D76C_14C71C--;
 		}
-
-		temp_v1 = D_8013D76C_14C71C;
-		if (temp_v1 > 0) {
-			D_8013D76C_14C71C = temp_v1 - 1;
-		}
-
 		D_8013D5D0_14C580.word = arg0->unk0;
 		D_8013D5D4_14C584.word = arg0->unk2;
 		D_8013D5D8_14C588.word = arg0->unk4;
 
-		sp62 = (s16)(s32)(D_80052B2C->unk0 - (f32)arg0->unk0);
-		sp60 = (s16)(s32)(D_80052B2C->unk8 - (f32)arg0->unk4);
-		temp_ra = (((s32)sqrtf((f32)(func_800047FC_53FC((s16)(s32)(D_80052B2C->unk4 - (f32)arg0->unk2)) + (sp62 * sp62) + (sp60 * sp60))) - D_8013D774_14C724) / 2) + D_8013D774_14C724;
-		D_8013D774_14C724 = temp_ra;
+		dx = D_80052B2C->unk0 - arg0->unk0;
+		dz = D_80052B2C->unk8 - arg0->unk4;
+		distance = sqrtf(func_800047FC_53FC(D_80052B2C->unk4 - arg0->unk2) + (dx * dx) + (dz * dz));
+		value = D_8013D774_14C724;
+		distance = ((distance - value) / 2) + value;
+		D_8013D774_14C724 = distance;
 
+		marker = 4;
 		switch (D_8013D5B4_14C564) {
 			case 3:
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, 0xFF);
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, red, green, blue, 0xFF);
 				break;
 			case 1:
-				if (sp56 < 0x8C) {
-					alpha = ((sp56 * 0xFF) / 140) & 0xFF;
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, alpha, alpha, alpha, alpha);
+				if (fade < 0x8C) {
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, (fade * 0xFF) / 140, (fade * 0xFF) / 140, (fade * 0xFF) / 140, (fade * 0xFF) / 140);
 				} else {
-					var_a3 = (u8)((f32)var_a3 + ((f32)(0xFF - var_a3) * ((f32)(0xFF - sp56) / 115.0f)));
-					var_t4 = (u8)((f32)var_t4 + ((f32)(0xFF - var_t4) * ((f32)(0xFF - sp56) / 115.0f)));
-					var_t5 = (u8)((f32)var_t5 + ((f32)(0xFF - var_t5) * ((f32)(0xFF - sp56) / 115.0f)));
-					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, 0xFF);
+					red = (f32)red + ((0xFF - red) * ((0xFF - fade) / 115.0f));
+					green = (f32)green + ((0xFF - green) * ((0xFF - fade) / 115.0f));
+					blue = (f32)blue + ((0xFF - blue) * ((0xFF - fade) / 115.0f));
+					gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, red, green, blue, 0xFF);
 				}
 				break;
 			case 2:
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, var_a3, var_t4, var_t5, sp56);
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, red, green, blue, fade);
 				break;
 		}
 
-		for (var_t0 = 4; var_t0 >= 2;) {
-			if ((D_8013D5B4_14C564 == 1) && (sp56 < 0x8D)) {
-				alpha = (sp56 * 2) - ((0x587 - temp_ra) / 12);
+		value = (0x587 - distance) / 12;
+		while (marker >= 2) {
+			if ((D_8013D5B4_14C564 != 1) || (fade >= 0x8D)) {
+				alpha = 0xFF - value;
 			} else {
-				alpha = 0xFF - ((0x587 - temp_ra) / 12);
+				alpha = (fade * 2) - value;
 			}
 
-			func_800A2D98_B1D48(D_8013D5D0_14C580.halves.low, D_8013D5D4_14C584.halves.low, D_8013D5D8_14C588.halves.low, (s16)alpha);
+			func_800A2D98_B1D48(D_8013D5D0_14C580.halves.low, D_8013D5D4_14C584.halves.low, D_8013D5D8_14C588.halves.low, alpha);
 
-			if (sp6C->unk55 != 0) {
-				var_t0--;
+			if (type->unk55 != 0) {
+				marker--;
 			} else {
-				var_t0 = 1;
+				marker = 1;
 			}
 		}
 
 		if (((D_80158FEC != NULL) || (D_80158FE4 != NULL) || (D_80158FE8 != NULL)) && (D_8013D5B4_14C564 == 3)) {
 			if (D_8013D5BC_14C56C != 2) {
-				alpha = (0xFF - (D_8013D5C0_14C570[0] * 0xC)) & 0xFF;
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, alpha);
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, (u32)(0xFF - (D_8013D5C0_14C570[0] * 0xC)));
 			} else {
-				alpha = (D_80052A8C & 7) * 0x10;
-				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, (alpha * 2) + 0x32, alpha + 0x32, 0xFF);
+				pulse = (D_80052A8C & 7) * 0x10;
+				gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, (pulse * 2) + 0x32, pulse + 0x32, 0xFF);
 			}
 		}
 
@@ -2519,9 +2511,6 @@ void func_800A3490_B2440(VehicleInstance *arg0) {
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A3490_B2440.s")
-#endif
 
 s32 func_800A3CD0_B2C80(void) {
 	if (D_8014F1FA == 0) {

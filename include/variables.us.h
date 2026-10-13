@@ -1930,9 +1930,6 @@ extern s32 D_8013D75C_14C70C;
 extern s32 D_8013D760_14C710;
 extern s32 D_8013D764_14C714;
 extern u8 D_8013D768_14C718;
-extern s32 D_8013D76C_14C71C;
-extern s32 D_8013D770_14C720;
-extern s32 D_8013D774_14C724;
 extern s16 D_8013D786_14C736[][8];
 extern u8 D_8013D894_14C844; // Beacon warp destination
 extern s32 D_8013D8C0_14C870[];
