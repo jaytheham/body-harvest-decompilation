@@ -107,6 +107,9 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 # 130 have the same opcode and registers in every word but failed it (an immediate differed with no lui to resolve
 # it, or a low half did not resolve to a RAM address); the 16-bit differences of those immediates also occur among the
 # verified relocations, so they are probably relocations too, which was not verified. 2346 is the two groups together.
+# The split between the two groups depends on the rule used to resolve immediates: a later measurement with two other
+# rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as 2188 and 160
+# (docs/eu-port-notes.md), so the 94.14 percent is the result of one rule.
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
     "(src/common/core), and the stubs under src.eu for the three gameplay overlays and the one libultra file there "
@@ -120,7 +123,10 @@ EU_NOTE = (
     "to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 "
     "failed that check, but their differing immediates match relocation differences seen elsewhere, so they are "
     "probably relocations too; counting them, 2346 (99.66 percent) are identical or probably identical to NTSC "
-    "apart from relocations. Sharing the overlays would lift these figures a great deal."
+    "apart from relocations. The split between those two groups depends on the rule used to resolve immediates: two "
+    "other rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as "
+    "2188 and 160, so read 94.14 percent as the result of one rule, not as a fixed property of the ROMs. "
+    "Sharing the overlays would lift these figures a great deal."
 )
 
 
