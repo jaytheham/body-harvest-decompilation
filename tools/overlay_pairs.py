@@ -25,7 +25,9 @@ Output, one item per line:
     PIN <ntsc name> = 0x<PAL address>;              a name the NTSC object leaves undefined: add to undefined_syms.eu.txt
 
 A pair is a DIFF when the opcodes differ at any position, the instruction counts differ, or the operands differ
-beyond symbol names and branch labels (a constant that changed in PAL).  A DIFF function contributes no references;
+beyond symbol names, branch labels and address shifts (a constant that changed in PAL).  A number that differs by one
+of the address shifts that the file's own symbol operands show (0x30, 0x7C0 ...), also as the low 16 bits, is taken
+for a relocation written as a number, as in ``lw $t6, 0x1420($t6)``.  A DIFF function contributes no references;
 for the shared file it must keep a PAL-only definition.  The PAL address of every NTSC address the file refers to is
 read from the operands of the paired instructions (``%hi``/``%lo`` and ``jal``/``j``); two different answers for one
 address are a CONFLICT.  A PIN is printed for each undefined symbol of ``--us-obj`` (read with ``nm``) that the
@@ -136,15 +138,35 @@ def operand_shape(instruction: tuple[int, str, str]) -> str:
     return SYMBOL_OPERAND.sub("SYM", LOCAL_LABEL.sub("LBL", text))
 
 
-def compare(us: list, eu: list) -> str | None:
-    """None when the two functions have the same shape and constants; otherwise why not."""
+NUMBER = re.compile(r"-?0x[0-9A-Fa-f]+|-?[0-9]+")
+
+
+def explained(a: str, b: str, shifts: set[int]) -> bool:
+    """Whether two operand texts differ only in numbers that an address shift accounts for."""
+    na, nb = NUMBER.findall(a), NUMBER.findall(b)
+    if len(na) != len(nb) or NUMBER.sub("N", a) != NUMBER.sub("N", b):
+        return False
+    for x, y in zip(na, nb):
+        d = int(y, 0) - int(x, 0)
+        if d and not any(d == s or (d & 0xFFFF) == (s & 0xFFFF) for s in shifts):
+            return False
+    return True
+
+
+def compare(us: list, eu: list, shifts: set[int] | None = None) -> str | None:
+    """None when the two functions have the same shape and constants; otherwise why not.
+
+    With ``shifts`` None only the shape is compared (the first pass, which finds the shifts)."""
     if len(us) != len(eu):
         return f"instruction count {len(us)} against {len(eu)}"
     for k, (x, y) in enumerate(zip(us, eu)):
         if x[1] != y[1]:
             return f"opcode {x[1]} against {y[1]} at +0x{4 * k:X}"
+    if shifts is None:
+        return None
     for k, (x, y) in enumerate(zip(us, eu)):
-        if operand_shape(x) != operand_shape(y):
+        a, b = operand_shape(x), operand_shape(y)
+        if a != b and not explained(a, b, shifts):
             return f"operand '{x[2]}' against '{y[2]}' at +0x{4 * k:X}"
     return None
 
@@ -213,8 +235,16 @@ def main() -> int:
     mapping: dict[int, dict[int, int]] = {}
     differing = []
     names: list[tuple[str, int]] = []
+    shifts: set[int] = set()
+    for i, j in pairs:  # first pass: the address shifts that the symbol operands of same-shape pairs show
+        if compare(us_code[i], eu_code[j]) is None:
+            for x, y in zip(us_code[i], eu_code[j]):
+                for (n1, o1), (n2, o2) in zip(symbol_tokens(x[1], x[2]), symbol_tokens(y[1], y[2])):
+                    a, b = address_of(n1, us_symbols), address_of(n2, eu_symbols)
+                    if a is not None and b is not None and b + o2 != a + o1:
+                        shifts.add((b + o2) - (a + o1))
     for i, j in pairs:
-        why = compare(us_code[i], eu_code[j])
+        why = compare(us_code[i], eu_code[j], shifts)
         if why:
             differing.append((us_files[i][1].name, eu_files[j][1].name, why, us_files[i][1].name in matched))
             continue
