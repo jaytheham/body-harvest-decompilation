@@ -1152,21 +1152,21 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(2584): unsigned byte timer guard and row-first ring indices; spills remain.
+// CURRENT(2324): exact frame/buffer homes; division ordering and allocation remain.
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 baseXWord;
 	u8 row;
 	u8 col;
+	u8 spAC[5];
+	u8 spA8[3];
 	s32 i;
-	u8 mode;
+	u8 spA0[3];
+	u16 mode;
 	u16 mapIndex;
 	f32 f0;
 	s16 baseY;
 	RingEntry *entry;
-	u8 spA0[3];
-	u8 spA8[3];
-	u8 spAC[5];
 	s16 sp94;
 
 
@@ -1235,8 +1235,8 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
 			i = (D_80151DD8.ringY + row) % 19;
-			mapIndex = (u16)((D_80151DD8.ringX + col) % 19);
-			entry = &D_80151DD8.tiles[(u16)i][mapIndex];
+			mode = (u16)((D_80151DD8.ringX + col) % 19);
+			entry = &D_80151DD8.tiles[(u16)i][mode];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];

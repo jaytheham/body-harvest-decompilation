@@ -198,3 +198,15 @@ types score 2974, new named word indices 2704. Special-color pass using
 mode as byte seed scores 2669, new word seed 2742, scoped output pointer
 2822. Keep the two reused ring indices; frame and array/spill homes still
 differ. Candidate remains NON_MATCHING; wrapped ROM checksum OK.
+
+Terrain color now retains 2324 with exact frame 0xB8 and buffers AC/A8/A0.
+Declare neighbors and output RGB after row/col, then word i, then input
+RGB. Moving arrays before i scores 2519 and fixes frame plus two buffers;
+putting i between output and input scores 2389 and fixes the final buffer.
+Use u16 mode for cached timer and subsequent column remainder (2324).
+Word timer remainder scores 3272; expired row-coordinate reuse 2514.
+Halfword i scores 3439 unsigned/3744 signed; word mapIndex 3895.
+Explicit row assignment narrowing scores 2754, word mode with it 3307.
+Assigning divisor 19 to unused arg0/arg1 is neutral; swapped remainder
+roles score 2704. Division still starts with X rather than target Y;
+fixed frame and buffer homes do not imply full matching. Wrapped ROM OK.
