@@ -42,18 +42,18 @@ segments:
     vram: 0x80000400
     subsegments:
       - [0x1000, asm, core/1000]
-      - [0x1050, c, ../src/common/core/1050] # Save data
-      - [0x53D0, c, ../src/common/core/53D0]
-      - [0x53F0, c, ../src/common/core/53F0] # Objectives
-      - [0xAD90, c, ../src/common/core/AD60] # Text rendering?
-      - [0xE860, c, ../src/common/core/E830]
-      - [0xFB30, c, ../src/common/core/FD80] # Boot and scheduler share epilogue alignment.
-      - [0x10A80, c, ../src/common/core/10A20]
-      - [0x10BF0, c, ../src/common/core/loader] # original src filename
-      - [0x12CB0, c, ../src/common/core/12C80] # Sounds, Dialogue
-      - [0x17F10, c, ../src/common/core/17EE0] # Dialogue
-      - [0x1B090, c, ../src/common/core/1B060]
-      - [0x1B130, c, ../src/common/core/1B100]
+      - [0x1050, c, ../src.us/core/1050] # Save data
+      - [0x53D0, c, ../src.us/core/53D0]
+      - [0x53F0, c, ../src.us/core/53F0] # Objectives
+      - [0xAD90, c, ../src.us/core/AD60] # Text rendering?
+      - [0xE860, c, ../src.us/core/E830]
+      - [0xFB30, c, ../src.us/core/FD80] # Boot and scheduler share epilogue alignment.
+      - [0x10A80, c, ../src.us/core/10A20]
+      - [0x10BF0, c, ../src.us/core/loader] # original src filename
+      - [0x12CB0, c, ../src.us/core/12C80] # Sounds, Dialogue
+      - [0x17F10, c, ../src.us/core/17EE0] # Dialogue
+      - [0x1B090, c, ../src.us/core/1B060]
+      - [0x1B130, c, ../src.us/core/1B100]
       - [0x1B810, asm, aisetfreq]
       - [0x1B970, c, libultra/sl]
       - [0x1BA30, asm, heapalloc]
@@ -227,19 +227,19 @@ segments:
       - [0x2EA40, databin, rsp/rspboot]    # RSP boot ucode: rspbootTextStart, 0xD0 bytes
       - [0x2EB10, databin, rsp/gfxucode]   # M_GFXTASK ucode: D_8002DEE0_2EAE0, 0x1430 bytes (game loads ucode_size 0x1000)
       - [0x2FF40, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
-      - [0x31D50, .data, ../src/common/core/1050]        # shared identity/scale Mtx + 5 static display lists
-      - [0x32000, .data, ../src/common/core/53F0]
-      - [0x32030, .data, ../src/common/core/32000]
-      - [0x32080, .data, ../src/common/core/32050]
-      - [0x32100, .data, ../src/common/core/320D0]
-      - [0x32280, .data, ../src/common/core/AD60]
-      - [0x326B0, .data, ../src/common/core/E830]
-      - [0x32780, .data, ../src/common/core/10A20]
-      - [0x32790, .data, ../src/common/core/FD80]
-      - [0x327C0, .data, ../src/common/core/loader]
-      - [0x328D0, .data, ../src/common/core/12C80]
-      - [0x348F0, .data, ../src/common/core/17EE0]
-      - [0x350E0, .data, ../src/common/core/1B100]
+      - [0x31D50, .data, ../src.us/core/1050]        # shared identity/scale Mtx + 5 static display lists
+      - [0x32000, .data, ../src.us/core/53F0]
+      - [0x32030, .data, ../src.us/core/32000]
+      - [0x32080, .data, ../src.us/core/32050]
+      - [0x32100, .data, ../src.us/core/320D0]
+      - [0x32280, .data, ../src.us/core/AD60]
+      - [0x326B0, .data, ../src.us/core/E830]
+      - [0x32780, .data, ../src.us/core/10A20]
+      - [0x32790, .data, ../src.us/core/FD80]
+      - [0x327C0, .data, ../src.us/core/loader]
+      - [0x328D0, .data, ../src.us/core/12C80]
+      - [0x348F0, .data, ../src.us/core/17EE0]
+      - [0x350E0, .data, ../src.us/core/1B100]
       - [0x35A00, data, libultra/sl]
       - [0x35A10, data, libultra/sched_data]
       - [0x35A20, data, libultra/aisetnextbuf_data]
@@ -260,15 +260,15 @@ segments:
       - [0x37380, data, libultra/vimodepallan1]
       - [0x373D0, data, libultra/vimodempallan1]
       - [0x37420, data, libultra/vimodentsclan1]
-      - [0x37470, .rodata, ../src/common/core/1050]
-      - [0x378E0, .rodata, ../src/common/core/53F0]
-      - [0x38090, .rodata, ../src/common/core/AD60]
-      - [0x38250, .rodata, ../src/common/core/E830]
-      - [0x38280, .rodata, ../src/common/core/FD80]
-      - [0x383B0, .rodata, ../src/common/core/loader]
-      - [0x38DF0, .rodata, ../src/common/core/12C80]
-      - [0x38FE0, .rodata, ../src/common/core/17EE0]
-      - [0x39300, .rodata, ../src/common/core/1B100]
+      - [0x37470, .rodata, ../src.us/core/1050]
+      - [0x378E0, .rodata, ../src.us/core/53F0]
+      - [0x38090, .rodata, ../src.us/core/AD60]
+      - [0x38250, .rodata, ../src.us/core/E830]
+      - [0x38280, .rodata, ../src.us/core/FD80]
+      - [0x383B0, .rodata, ../src.us/core/loader]
+      - [0x38DF0, .rodata, ../src.us/core/12C80]
+      - [0x38FE0, .rodata, ../src.us/core/17EE0]
+      - [0x39300, .rodata, ../src.us/core/1B100]
       - [0x3A470, rodata, libultra/sched_data]
       - [0x3A490, rodata, libultra/synthesizer_rodata]
       - [0x3A4A0, rodata, libultra/rotate_rodata]
@@ -291,16 +291,16 @@ segments:
       - [0x3AC20, rodata, libultra/cents2ratio_rodata]
       - [0x3AC30, rodata, libultra/reverb_rodata]
       - [0x3AC60, rodata, libultra/seq_rodata]
-      - [0x3AC70, .rodata, ../src/common/core/alien_parts]
-      - [0x3C8F0, .rodata, ../src/common/core/alien_waves]
-      - [0x3DC30, .rodata, ../src/common/core/trig_tables]
-      - [0x3EC30, .rodata, ../src/common/core/world_tables]
-      - [0x3EEC0, .rodata, ../src/common/core/surface_properties]
-      - [0x3F090, .rodata, ../src/common/core/terrain_lookup]
-      - [0x3F450, .rodata, ../src/common/core/camera_curve]
-      - [0x3F490, .rodata, ../src/common/core/rsp_data]
+      - [0x3AC70, .rodata, ../src.us/core/alien_parts]
+      - [0x3C8F0, .rodata, ../src.us/core/alien_waves]
+      - [0x3DC30, .rodata, ../src.us/core/trig_tables]
+      - [0x3EC30, .rodata, ../src.us/core/world_tables]
+      - [0x3EEC0, .rodata, ../src.us/core/surface_properties]
+      - [0x3F090, .rodata, ../src.us/core/terrain_lookup]
+      - [0x3F450, .rodata, ../src.us/core/camera_curve]
+      - [0x3F490, .rodata, ../src.us/core/rsp_data]
 
-      - {start: 0x40750, type: .fixed_bss, name: ../src/common/core/12C80, vram: 0x8006AB40}
+      - {start: 0x40750, type: .fixed_bss, name: ../src.us/core/12C80, vram: 0x8006AB40}
 
   - name: overlay_gameplay_frontend
     type: code

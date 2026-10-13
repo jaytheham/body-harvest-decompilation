@@ -5,7 +5,7 @@
 #include "PR/os_internal.h"
 #include "PRinternal/controller.h"
 #include "PRinternal/siint.h"
-#include "functions.h"
+#include "functions.us.h"
 
 s32 __osPfsGetStatus(OSMesgQueue* queue, int channel) {
     s32 ret = 0;

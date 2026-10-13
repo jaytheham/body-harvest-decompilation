@@ -7,7 +7,7 @@
 #include "PR/os_version.h"
 #include "PRinternal/piint.h"
 
-#include "variables.h"
+#include "variables.us.h"
 
 OSTime osClockRate;
 s32 osViClock;

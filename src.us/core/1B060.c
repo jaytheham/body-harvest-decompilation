@@ -32,5 +32,5 @@ void func_8001A460_1B060(LzssHeader *data, u8 *out) {
 	} while (out != end);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1B060/func_8001A460_1B060.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1B060/func_8001A460_1B060.s")
 #endif

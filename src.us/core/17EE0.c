@@ -577,7 +577,7 @@ s16 func_80017CA4_188A4(void) {
 	return (s16)D_8006C55E;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/17EE0/func_80017CA4_188A4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_80017CA4_188A4.s")
 #endif
 
 s32 func_80018A58_19658(void) {
@@ -812,7 +812,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/17EE0/func_800190D4_19CD4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_800190D4_19CD4.s")
 #endif
 
 // CURRENT(969)
@@ -848,7 +848,7 @@ s32 arg1;
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/17EE0/func_80019ABC_1A6BC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_80019ABC_1A6BC.s")
 #endif
 
 void func_80019EA8_1AAA8(u8 arg0) {

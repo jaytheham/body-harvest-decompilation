@@ -54,8 +54,9 @@ ASSET_DIR = assets
 UNDEFINED_SYMS_AUTO = undefined_syms_auto.txt
 endif
 SRC_DIR   = src.$(VERSION)
-# Translation units shared by every version (bh.<version>.yaml names them as ../src/common/...).
-COMMON_SRC_DIR = src/common
+# Translation units shared by every version. Until the source tree loses its version suffix these are the ones in
+# src.us (bh.eu.yaml names them as ../src.us/...), so only a build of another version has to add them.
+COMMON_SRC_DIR = src.us
 
 SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/core \
@@ -69,9 +70,10 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/overlay_level/siberia \
 			$(SRC_DIR)/overlay_level/comet \
 			$(SRC_DIR)/data \
-			$(SRC_DIR)/bss \
-			$(COMMON_SRC_DIR) \
-			$(COMMON_SRC_DIR)/core
+			$(SRC_DIR)/bss
+ifneq ($(VERSION),us)
+SRC_DIRS += $(COMMON_SRC_DIR)/core
+endif
 
 TOOLS_DIR = tools
 
@@ -200,12 +202,16 @@ MIPSISET       = -mips2 -32
 
 INCLUDE_CFLAGS = -I. -Iinclude -Iinclude/2.0I -Iinclude/libc -Iassets \
 				 -Isrc.$(VERSION) -Isrc.$(VERSION)/libultra/audio
+# The shared translation units include headers that live beside them in src.us (overlay_level/..., libultra/audio).
+ifneq ($(VERSION),us)
+INCLUDE_CFLAGS += -I$(COMMON_SRC_DIR) -I$(COMMON_SRC_DIR)/libultra/audio
+endif
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
 
 # Files requiring pre/post-processing
-GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(COMMON_SRC_DIR) </dev/null 2>/dev/null)
+GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(if $(filter-out us,$(VERSION)),$(COMMON_SRC_DIR)/core) </dev/null 2>/dev/null)
 GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
 
 
@@ -260,8 +266,9 @@ endif
 ASM_PROCESSOR_DIR := $(TOOLS_DIR)/asm-processor
 ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 ifeq ($(VERSION),eu)
-# Source shared with NA names its GLOBAL_ASM files under asm/; the EU build reads the EU extraction instead.
-ASM_PROCESSOR     += --asm-root asm=asm.eu
+# The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU extraction of
+# those segments under asm.eu/src.us/core, so the EU build reads them from there.
+ASM_PROCESSOR     += --asm-root asm/nonmatchings/core=asm.eu/src.us/core
 endif
 # The asm-processor command line decides which version's .s files an object is built from. A stamp that is rewritten
 # only when that command line changes makes every GLOBAL_ASM object rebuild after a change of it (dropping --asm-root by

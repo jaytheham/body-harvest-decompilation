@@ -350,5 +350,5 @@ s32 func_8000E53C_F13C(void) {
 	return 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/E830/func_8000E53C_F13C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E53C_F13C.s")
 #endif

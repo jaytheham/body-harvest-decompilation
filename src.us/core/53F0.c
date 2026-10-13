@@ -473,7 +473,7 @@ void func_8000577C_637C(void)
   drawText(D_80036D70_37970, D_800315D4_W - 0x32, 0x96, 0x1C2 - D_800315D4_W);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_8000577C_637C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
 #endif
 
 void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
@@ -634,7 +634,7 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80005C5C_685C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80005C5C_685C.s")
 #endif
 
 s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2) {
@@ -860,8 +860,8 @@ void func_80006DDC_79DC(void) {
 	D_80068080 = 4;
 }
 #elif defined(VERSION_EU)
-/* asm/ is mapped to asm.eu/ in an EU build (--asm-root), so this names the EU assembly. */
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80006DDC_79DC.s")
+/* asm/nonmatchings/core is mapped to asm.eu/src.us/core in an EU build (--asm-root), so this names the EU assembly. */
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
 #else
 #error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
@@ -1061,7 +1061,7 @@ loop:
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80007728_8328.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007728_8328.s")
 #endif
 
 u8 func_8000789C_849C(s32 arg0)
@@ -1115,7 +1115,7 @@ void func_80007900_8500(u8 *arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80007900_8500.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007900_8500.s")
 #endif
 
 // MATCHED - Needs rodata
@@ -1197,7 +1197,7 @@ void func_80007A20_8620(u8 *arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80007A20_8620.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007A20_8620.s")
 #endif
 
 void func_80007C78_8878(u8 *arg0) {
@@ -1266,7 +1266,7 @@ loop:
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80007DE0_89E0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007DE0_89E0.s")
 #endif
 
 // https://decomp.me/scratch/LWEl5
@@ -1294,7 +1294,7 @@ loop:
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80007F60_8B60.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80007F60_8B60.s")
 #endif
 
 // https://decomp.me/scratch/fln37
@@ -1332,7 +1332,7 @@ s32 func_8000807C_8C7C(u8 *arg0, u8 *arg1) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_8000807C_8C7C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
 #endif
 
 // CURRENT(10) - need rodata
@@ -1392,7 +1392,7 @@ s32 func_800081D4_8DD4(u8 *arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_800081D4_8DD4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800081D4_8DD4.s")
 #endif
 
 s32 func_80008478_9078(void) {
@@ -1535,7 +1535,7 @@ void guess_checkMissions(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/guess_checkMissions.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/guess_checkMissions.s")
 #endif
 
 void debug_drawTimingGraphBars(void)
@@ -1636,7 +1636,7 @@ void func_80008CA8_98A8(s32 arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_80008CA8_98A8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80008CA8_98A8.s")
 #endif
 
 // CURRENT(10134)
@@ -1734,7 +1734,7 @@ void func_800092B8_9EB8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, u8 arg4) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/53F0/func_800092B8_9EB8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_800092B8_9EB8.s")
 #endif
 s32 func_80009F18_AB18(s32 arg0) {
 	s32 sp1C;

@@ -5,7 +5,7 @@
 #include "PR/rcp.h"
 #include "PR/ultraerror.h"
 #include "PRinternal/osint.h"
-#include "variables.h"
+#include "variables.us.h"
 
 // TODO: this comes from a header
 #ident "$Revision: 1.17 $"

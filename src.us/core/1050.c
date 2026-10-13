@@ -258,7 +258,7 @@ void func_80000730_1330(s32 arg0) {
 	alClose(&D_8003FD58);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80000730_1330.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000730_1330.s")
 #endif
 
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
@@ -368,7 +368,7 @@ s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
 	return osVirtualToPhysical(var_s0->unk10) + temp_s1;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80000B14_1714.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000B14_1714.s")
 #endif
 
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
@@ -489,7 +489,7 @@ void func_80000ED4_1AD4(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80000ED4_1AD4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000ED4_1AD4.s")
 #endif
 
 void func_80001050_1C50(s32 arg0) {
@@ -763,7 +763,7 @@ fail:
 	goto retry;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80001984_2584.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80001984_2584.s")
 #endif
 
 // CURRENT (7171)
@@ -977,7 +977,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 	osSyncPrintf(D_80036A6C_3766C);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/guess_prepareToSaveGame.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
 #endif
 
 // CURRENT(1868)
@@ -1014,7 +1014,7 @@ void func_800020E0_2CE0(s32 arg0, s32 arg1) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_800020E0_2CE0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800020E0_2CE0.s")
 #endif
 
 // Initialize an empty save slot and update its checksum.
@@ -1293,7 +1293,7 @@ void guess_loadSavedGame(s32 arg0) {
 	currentSaveFileIndex = arg0;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/guess_loadSavedGame.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
 #endif
 
 s32 func_80002A88_3688(s32 arg0) {
@@ -1461,7 +1461,7 @@ void func_80002EF8_3AF8(void *arg0)
 
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80002EF8_3AF8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002EF8_3AF8.s")
 #endif
 
 // CURRENT(590)
@@ -1574,7 +1574,7 @@ void func_80003064_3C64(void)
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80003064_3C64.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003064_3C64.s")
 #endif
 
 // https://decomp.me/scratch/66U7q
@@ -1630,7 +1630,7 @@ void func_8000345C_405C(u16 arg0)
   }
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_8000345C_405C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
 #endif
 
 s32 isButtonNewlyPressed(s32 controllerNum, u16 buttonMask)
@@ -1866,7 +1866,7 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 	} while (var_v0 != (s32 *)&D_80047708);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_800039D0_45D0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_800039D0_45D0.s")
 #endif
 
 // CURRENT(9223)
@@ -1951,7 +1951,7 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	} while (var_v0 != (s32 *)&D_80047708);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80003DE8_49E8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003DE8_49E8.s")
 #endif
 
 void func_80004214_4E14(s16 arg0, s32 arg1) {
@@ -2037,7 +2037,7 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
 	return 1;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/1050/func_80004254_4E54.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80004254_4E54.s")
 #endif
 
 // https://decomp.me/scratch/X3gxG

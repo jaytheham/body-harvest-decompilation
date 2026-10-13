@@ -208,7 +208,7 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 }
 
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000A2B8_AEB8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
 #endif
 
 // CURRENT(145)
@@ -240,7 +240,7 @@ void func_8000A3DC_AFDC(s16 arg0, s8 *arg1)
   *((u8 *) arg1) = var_v0;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000A3DC_AFDC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
 #endif
 
 s16 func_8000A43C_B03C(s8 *arg0)
@@ -665,7 +665,7 @@ void drawText(void *arg0, ...) {
 	D_80053BE0 = (s16)((s8 *)s0 - (s8 *)D_80052BE0);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/drawText.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
 #endif
 
 void func_8000AFDC_BBDC(void)
@@ -1014,7 +1014,7 @@ epilogue:
 	D_80053BE0 = 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000B044_BC44.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
 #endif
 
 s32 func_8000C670_D270(s16 arg0) {
@@ -1206,7 +1206,7 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	} while (src != (u32 *)&D_80059CD0);
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000C81C_D41C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
 #endif
 
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
@@ -1375,7 +1375,7 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000CF4C_DB4C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
 #endif
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
@@ -1476,7 +1476,7 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 	arg2->unk3C = (s16)arg2->unk10;
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000D588_E188.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
 #endif
 
 // https://decomp.me/scratch/KhfAB
@@ -1577,7 +1577,7 @@ void func_8000D8DC_E4DC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/src/common/core/AD60/func_8000D8DC_E4DC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D8DC_E4DC.s")
 #endif
 
 void func_8000DAFC_E6FC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, f32 arg5)
