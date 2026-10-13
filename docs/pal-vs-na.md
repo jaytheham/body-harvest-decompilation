@@ -195,7 +195,9 @@ The steps, for a file that exists once as C in `src.us` and once as a stub file 
    (`--align auto` pairs by opcode sequence when the PAL stub has a function more or less). It prints NAME lines (the file's
    functions at their PAL addresses), PIN lines (the NTSC names that the object leaves undefined, at their PAL addresses),
    and a DIFF for each pair that cannot share the C: another instruction count, another opcode, or a constant that changed
-   (a difference that equals one of the file's own address shifts is not a DIFF). A DIFF function needs a PAL-only
+   (a difference that equals one of the file's own address shifts is not a DIFF; the target of a `jal` or `j` is not compared
+   by name, because PAL has a libultra or core function that NTSC names under its `func_<address>` label, and the address
+   that the call reaches is checked by DELTAS and CONFLICT). A DIFF function needs a PAL-only
    definition; none of the six files has one.
 2. `bh.eu.yaml`: the stub's `c` entry becomes `../src.us/<file>`, with `.data` and `.rodata` entries at the PAL offsets where
    `bh.us.yaml` has them; delete the stub file under `src.eu`; add the file to `shared_overlay_files.txt`. The Makefile and
@@ -227,7 +229,8 @@ What went wrong the first time, so that it is not repeated:
   (0x8008EB50 and 0x8008F2E0), and a pin for one overrides the definition of the other (the frontend's calls went to the wrong
   function). The level file gets a name of its own for PAL, `#define func_8008EB20_5EFD0 func_8008EB20_5EFD0_LEVEL` before the
   includes, and that name is pinned. `tools/overlay_pairs.py` prints a CLASH line when a pin names a function that another
-  shared file defines.
+  shared file defines at another PAL address than the one this file's code reaches (a level function that the outside
+  overlay calls is at the same PAL address whichever file names it, and is not a clash).
 - The PAL stub of an empty function is extracted under `asm.eu/matchings`, not `nonmatchings`; anything that lists the PAL stubs
   reads both.
 - A native build makes its own build directories and a `make` does not: run a full `make` on a fresh checkout (`git archive`)

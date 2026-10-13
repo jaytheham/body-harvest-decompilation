@@ -76,6 +76,29 @@ check "equal counts and no difference exit 0 with four pairs" \
     bash -c '[[ "$0" == *"PAIRS 4 (NTSC 4"* && "$0" != *"DIFF"* ]]' "$clean"
 check "the clean run exits 0" test "$clean_rc" -eq 0
 
+# A call to a function that NTSC names and PAL still has under its func_ label (a libultra or core function) is the same call.
+listing "$scratch/asm/matchings/ov/c/func_80000500_500.s" $((0x80000500)) 'jal sourceTaggedPrintF' 'nop' 'jr $ra'
+listing "$scratch/asm.eu/nonmatchings/ov/d/func_80000540_540.s" $((0x80000540)) 'jal func_80000F70_F70' 'nop' 'jr $ra'
+named=$(cd "$scratch" && "$PY" "$root/tools/overlay_pairs.py" --root "$here" --us-dir ov/c --eu-dir ov/d 2>&1); named_rc=$?
+check "a call to a named NTSC function against its PAL func_ label is not a DIFF" \
+    bash -c '[[ "$0" == *"PAIRS 1 (NTSC 1"* && "$0" != *"DIFF"* && "$0" == *"NAME func_80000500_500 = 0x80000540;"* ]]' "$named"
+check "that run exits 0" test "$named_rc" -eq 0
+
+# A pin clashes with another shared file's definition only when the PAL ELF has the name at some other address.
+clash=$("$PY" -c "
+import sys
+sys.path.insert(0, 'tools')
+import overlay_pairs as o
+others = {'f': 'overlay_level/greece/18D7E0.c'}
+print(o.clashes('f', others, {0x802D4D10: 1}, {'f': 0x802D4D10}) is False and
+      o.clashes('f', others, {0x802D4D10: 1}, {'f': 0x802D4D20}) is True and
+      o.clashes('f', others, None, {'f': 0x802D4D10}) is True and
+      o.clashes('f', others, {1: 1, 2: 1}, {'f': 1}) is True and
+      o.clashes('g', others, {1: 1}, {}) is False)
+")
+check "a name another shared file defines clashes unless the PAL ELF has it at the address this file reaches" \
+    test "$clash" = True
+
 if [ "$failures" -eq 0 ]; then
     echo "all overlay_pairs checks passed"
 fi

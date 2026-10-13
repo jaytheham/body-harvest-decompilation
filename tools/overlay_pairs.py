@@ -31,8 +31,9 @@ for a relocation written as a number, as in ``lw $t6, 0x1420($t6)``.  A DIFF fun
 for the shared file it must keep a PAL-only definition.  The PAL address of every NTSC address the file refers to is
 read from the operands of the paired instructions (``%hi``/``%lo`` and ``jal``/``j``); two different answers for one
 address are a CONFLICT.  A CLASH is a name that the file leaves undefined and that another shared file (the list in
-``shared_overlay_files.txt``) defines: the overlays share a vram range, so the NTSC decomp can use one name for a function of
-each, and a pin for the name would override the definition in the other file.  A PIN is printed for each undefined symbol of ``--us-obj`` (read with ``nm``) that the
+``shared_overlay_files.txt``) defines, unless the PAL ELF already has it at the one address that the paired instructions reach: the
+overlays share a vram range, so the NTSC decomp can use one name for a function of each, and a pin for the name would override
+the definition in the other file.  A PIN is printed for each undefined symbol of ``--us-obj`` (read with ``nm``) that the
 PAL ELF does not already define at that address.
 
 Exit status is 0 when everything pairs and nothing is unresolved, 1 otherwise.
@@ -57,6 +58,16 @@ SYMBOL = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*)\s*(?:([+-])\s*(0x[0-9A-Fa-f]+|\d
 ADDRESS_IN_NAME = re.compile(r"(?:D|func|jtbl|jlabel)_?([0-9A-F]{8})")
 LOCAL_LABEL = re.compile(r"\.L[0-9A-Fa-f]{8}(?:_[0-9A-Fa-f]+)?")
 SYMBOL_OPERAND = re.compile(r"%(?:hi|lo)\([^)]*\)|(?<![\w.])(?:D|func|jtbl|jlabel)_[0-9A-Za-z_]+")
+
+
+def clashes(name: str, others: dict[str, str], hit: dict[int, int] | None, eu_symbols: dict[str, int]) -> bool:
+    """Whether a pin for ``name`` would override the definition that another shared file gives it.
+
+    It would not when the PAL ELF already has the name at the one address that this file's paired instructions reach:
+    a level function that an overlay of another kind calls is at the same PAL address, whichever file names it."""
+    if name not in others:
+        return False
+    return not (hit and len(hit) == 1 and eu_symbols.get(name) == next(iter(hit)))
 
 
 def read_symbols(path: Path) -> dict[str, int]:
@@ -134,9 +145,15 @@ def address_of(name: str, table: dict[str, int]) -> int | None:
     return int(m.group(1), 16) if m else None
 
 
+JUMP_TARGET = re.compile(r"^(jal|j)\s+(?!\.L)\S+")
+
+
 def operand_shape(instruction: tuple[int, str, str]) -> str:
-    """The instruction with its symbol names and branch labels blanked, so a changed constant stands out."""
-    text = f"{instruction[1]} {instruction[2]}"
+    """The instruction with its symbol names, call targets and branch labels blanked, so a changed constant stands out.
+
+    A call target is blanked whatever it is called: NTSC names a libultra or core function that PAL still has under its
+    ``func_<address>`` label, and the address that the call reaches is checked separately (DELTAS, CONFLICT)."""
+    text = JUMP_TARGET.sub(r"\1 SYM", f"{instruction[1]} {instruction[2]}")
     return SYMBOL_OPERAND.sub("SYM", LOCAL_LABEL.sub("LBL", text))
 
 
@@ -300,13 +317,15 @@ def main() -> int:
     if args.us_obj:
         others = defined_by_other_shared_objects(root, root / args.us_obj)
         for name in undefined_names(root / args.us_obj):
-            if name in others:
+            a = address_of(name, us_symbols)
+            hit = mapping.get(a) if a is not None else None
+            if clashes(name, others, hit, eu_symbols):
                 print(f"CLASH {name} is defined by the shared file {others[name]}: a pin would override that definition; "
                       "the file needs a name of its own for PAL")
                 problems += 1
                 continue
-            a = address_of(name, us_symbols)
-            hit = mapping.get(a) if a is not None else None
+            if name in others:
+                continue  # the PAL ELF has it at the address that this file reaches already
             if a is None:
                 print(f"PROBLEM {name}: no NTSC address")
                 problems += 1
