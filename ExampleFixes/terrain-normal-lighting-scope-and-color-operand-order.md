@@ -92,3 +92,12 @@ Pointer addition or += vertex advancement and postfix counters are
 neutral; shifts in draw-index calculation score 5009. Vec2_S16 map
 scores 4467; map after vertices 4512; counts before map 4488.
 The candidate remains NON_MATCHING and the restored ROM is OK.
+
+Ground candidate improves 4458 to 4437 by keeping visibleCount += 1
+and func_800B604C on the same physical source line. The count addiu
+returns to target position; argument normalization still starts with
+a1 rather than a2. A named draw-index word scores 4648. Explicit u16
+or u16/s16 index narrowing is neutral; signed-word argument casts are
+neutral, an unsigned-halfword left argument scores 4808, prefix count
+increment is neutral. The C932C argument-normalization pattern has no
+matched donor. Preserve the same-line call under NON_MATCHING; ROM OK.

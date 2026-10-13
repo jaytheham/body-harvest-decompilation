@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(4458): target frame, 2D tile grid, reused row parameter; spills remain.
+// CURRENT(4437): same-line count/draw scheduling; frame correct, spills remain.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3123,8 +3123,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
 	  if (func_800B960C_C85BC((s16) ((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
 	  {
-		visibleCount += 1;
-		func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
+		visibleCount += 1; func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
 	  }
 	  else
 	  {
