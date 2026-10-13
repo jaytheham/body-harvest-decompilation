@@ -140,8 +140,7 @@ file is named.
 The idea: derive the EU symbols and addresses from the NTSC ones through the
 shift map instead of pinning each symbol, and share the overlays the way core
 was shared. A function would then be decompiled once, and EU support would be
-the shift map plus a handful of overrides (the maintainer called this
-"shiftable").
+the shift map plus a handful of overrides.
 
 Why not now:
 
