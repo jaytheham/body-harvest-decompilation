@@ -114,12 +114,14 @@ file is named.
   and `jal`/`j` targets masked; only label and symbol names differ.
 - At function level, 2216 of the 2354 overlay functions (94.14 percent) are
   identical apart from relocations, and 2346 (99.66 percent) if 130 weaker
-  matches are counted too. This came from a scratch script that is not
-  committed. It compared each NTSC overlay function with its EU counterpart (the
-  gameplay overlays by aligning the two function lists in order on
-  opcode-and-register templates, the level overlays by applying the NTSC
-  function boundaries to the EU ROM with a per-function shift). The 2216 are
-  108 byte-identical functions and 2108 where only jump targets, `lui`
+  matches are counted too. The 94.14 percent depends on the rule used to
+  resolve immediates (see the end of this item); read it as the result of one
+  rule, not as a fixed property of the ROMs. The figures came from a scratch
+  script that is not committed. It compared each NTSC overlay function with its
+  EU counterpart (the gameplay overlays by aligning the two function lists in
+  order on opcode-and-register templates, the level overlays by applying the
+  NTSC function boundaries to the EU ROM with a per-function shift). The 2216
+  are 108 byte-identical functions and 2108 where only jump targets, `lui`
   immediates and the low half of a `lui` pair differed, with branch offsets
   equal and every resolved address in RAM. The 130 have the same opcode and
   registers in every word but failed that test, because an immediate differs
@@ -128,14 +130,24 @@ file is named.
   scratch script counted 124 functions of the first kind (183 words) and 9 of
   the second (13 words), 3 of them in both. That division depends on how the
   script tracks `lui` pairs: a second script, written independently, found the
-  same 130 but divided them slightly differently, so only the total of 130 is
-  reliable. The 130 were counted because the 16-bit difference of each of those
-  immediates also occurs among the verified relocations, so they are probably
-  relocations too, but that is not verified. The other 8 functions are not
-  counted: 3 have no counterpart with the same opcodes and registers but a
-  similar one (at least 85 percent of words), 3 have no similar counterpart,
-  and 2 have the same opcodes and registers with an immediate difference that
-  is not among the verified relocations.
+  same 130 but divided them slightly differently. A third, independent
+  measurement (2026-10-13) used its own rules for resolving immediates. It
+  found 108 byte-identical functions, and 2348 of the 2354 overlay functions
+  with an EU counterpart that has the same opcode and registers in every word
+  (the 2216 and the 130 above, and 2 of the 8 not counted, described below),
+  with 6 having none. It split the 2348 into strictly relocation-only and
+  weaker matches as 2333 and 15 under a lenient `lui`-tracking rule, and as
+  2188 and 160 under a dataflow rule; neither reproduces 2216 and 130. So the
+  split, and with it the 94.14 percent, depends on the rule used to resolve
+  immediates. What held in every measurement is the 2348 with the same opcode
+  and registers, the 108 byte-identical and the 6 without a counterpart. The
+  130 were counted because the 16-bit difference of each of those immediates
+  also occurs among the verified relocations, so they are probably relocations
+  too, but that is not verified. The other 8 functions are not counted: 3 have
+  no counterpart with the same opcodes and registers but a similar one (at
+  least 85 percent of words), 3 have no similar counterpart, and 2 have the
+  same opcodes and registers with an immediate difference that is not among
+  the verified relocations.
 
 The idea: derive the EU symbols and addresses from the NTSC ones through the
 shift map instead of pinning each symbol, and share the overlays the way core
