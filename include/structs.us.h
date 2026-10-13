@@ -3648,16 +3648,19 @@ typedef union {
     Lights2 lights;
 } InteriorLightData;
 
-// AI - Interior lighting/color data (D_8008DE78_175F38): 8 s16 color/brightness components
-typedef struct {
-	s16 unk0;
-	s16 unk2;
-	s16 unk4;
-	s16 unk6;
-	s16 unk8;
-	s16 unkA;
-	s16 unkC;
-	s16 unkE;
+// Interior light-data storage reused for four torch effect handles.
+typedef union {
+	s32 handles[4];
+	struct {
+		s16 unk0;
+		s16 unk2;
+		s16 unk4;
+		s16 unk6;
+		s16 unk8;
+		s16 unkA;
+		s16 unkC;
+		s16 unkE;
+	} halves;
 } Unk8008DE78;
 
 typedef struct {
