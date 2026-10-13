@@ -121,3 +121,10 @@ the vector fields scores 3420 with parameter row, 3446 with local row.
 Map before startVertices scores 3488; delaying counter declarations and
 initialization until the loop scope scores 4384 and loses target initial
 stores. Preserve the local-row typed-map version; wrapped ROM OK.
+
+Typed-map origin trials retain 3420. Vec3i or scalar origins score 6717;
+origins declared first in the loop scope 3492; Y-first assignments 3555.
+The generic gDPLoadTLUT with count/tmem 256 is neutral. Expanding the
+initial, loop, or both pal256 helpers into their six SDK commands is
+also neutral, so outer helper scope does not account for origin spills.
+Restored the compact SDK helper version; wrapped ROM remains OK.
