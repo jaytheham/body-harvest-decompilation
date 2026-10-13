@@ -1123,35 +1123,31 @@ void func_800847E4_54C94(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800847E4_54C94.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2122)
 // AI - Renders a colored ring quad texture around a point in 3D space
-void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
+void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
+	f32 temp_f4;
 	f32 temp_f0;
-	f32 temp_f2;
 	f32 temp_f12;
 	f32 temp_f14;
 	f32 temp_f16;
 	f32 temp_f18;
-	f32 temp_f4;
 
-	temp_f2 = (f32)(u16)arg3;
-	temp_f0 = D_800DE0C0[0];
-	temp_f0 *= temp_f2;
-	temp_f12 = D_800DE0C0[1];
-	temp_f12 *= temp_f2;
-	temp_f14 = D_800DE0C0[2];
-	temp_f14 *= temp_f2;
-	temp_f16 = D_800DE0C0[3];
-	temp_f16 *= temp_f2;
-	temp_f18 = D_800DE0C0[4];
-	temp_f18 *= temp_f2;
-	temp_f4 = D_800DE0C0[5];
-	temp_f4 *= temp_f2;
+	temp_f0 = arg3;
+	temp_f0 *= D_800DE0C0[0];
+	temp_f12 = arg3;
+	temp_f12 *= D_800DE0C0[1];
+	temp_f14 = arg3;
+	temp_f14 *= D_800DE0C0[2];
+	temp_f16 = arg3;
+	temp_f16 *= D_800DE0C0[3];
+	temp_f18 = arg3;
+	temp_f18 *= D_800DE0C0[4];
+	temp_f4 = arg3;
+	temp_f4 *= D_800DE0C0[5];
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + temp_f14);
+	D_8005BB34->v.ob[0] = (s32)(arg0->x + temp_f0);
+	D_8005BB34->v.ob[1] = (s32)(arg0->y + temp_f12);
+	D_8005BB34->v.ob[2] = (s32)(arg0->z + temp_f14);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -1161,9 +1157,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + temp_f4);
+	D_8005BB34->v.ob[0] = (s32)(arg0->x + temp_f16);
+	D_8005BB34->v.ob[1] = (s32)(arg0->y + temp_f18);
+	D_8005BB34->v.ob[2] = (s32)(arg0->z + temp_f4);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0;
@@ -1173,9 +1169,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - temp_f14);
+	D_8005BB34->v.ob[0] = (s32)(arg0->x - temp_f0);
+	D_8005BB34->v.ob[1] = (s32)(arg0->y - temp_f12);
+	D_8005BB34->v.ob[2] = (s32)(arg0->z - temp_f14);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -1185,9 +1181,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - temp_f4);
+	D_8005BB34->v.ob[0] = (s32)(arg0->x - temp_f16);
+	D_8005BB34->v.ob[1] = (s32)(arg0->y - temp_f18);
+	D_8005BB34->v.ob[2] = (s32)(arg0->z - temp_f4);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -1197,9 +1193,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)arg0->x;
-	D_8005BB34->v.ob[1] = (s16)(s32)arg0->y;
-	D_8005BB34->v.ob[2] = (s16)(s32)arg0->z;
+	D_8005BB34->v.ob[0] = (s32)arg0->x;
+	D_8005BB34->v.ob[1] = (s32)arg0->y;
+	D_8005BB34->v.ob[2] = (s32)arg0->z;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x400;
@@ -1209,14 +1205,10 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 4, 0, 4, 1, 2, 0);
 	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800853A8_55858.s")
-#endif
-
 #ifdef NON_MATCHING
 // CURRENT(11541)
 // AI - Spawns a child particle with random position offset and velocity from a template
