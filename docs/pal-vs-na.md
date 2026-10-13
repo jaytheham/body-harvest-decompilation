@@ -208,7 +208,8 @@ The steps, for a file that exists once as C in `src.us` and once as a stub file 
 4. An address held as a number in the C needs a value per version. A jump table placeholder becomes a `VERSION_US` /
    `VERSION_EU` / `#error` chain. A pointer in a data initialiser is written `LEVEL_PTR(0x802D531C)` or `OVERLAY_PTR(...)`;
    where the C writes a pointer as two halfwords (`0x802E, 0x4F94`) it is `LEVEL_PTR_HI(0x802E4F94), LEVEL_PTR_LO(0x802E4F94)`,
-   and as two bytes and a halfword (`0x80, 0x2E, 0x4F94`) it is `LEVEL_PTR_B3(...), LEVEL_PTR_B2(...), LEVEL_PTR_LO(...)`
+   as two bytes and a halfword (`0x80, 0x2E, 0x4F94`) it is `LEVEL_PTR_B3(...), LEVEL_PTR_B2(...), LEVEL_PTR_LO(...)`, and
+   as four bytes (`0x80, 0x0A, 0x54, 0xE0`, inside a `u8` array) it is `OVERLAY_PTR_B3(...)` to `OVERLAY_PTR_B0(...)`
    (macros in `include/version_shift.h`, the identity for NTSC). Wrap only the numbers that the two ROMs show shifted, by exact
    value and not by range: some numbers that look like addresses are constants (`0x8019003C`).
 5. `python tools/eu_collisions_build.py` extracts, tags the colliding labels, builds and verifies; a ROM that differs is

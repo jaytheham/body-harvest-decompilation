@@ -326,3 +326,11 @@ NTSC recompiles identically for the EU shape.
   of every shared file, and `tools/overlay_pairs.py` reports a CLASH when a pin would override another shared file's
   function (the america level calls the outside overlay's `func_8008EB20_5EFD0`, which the frontend file defines under the
   same name at another PAL address). `docs/pal-vs-na.md`, "Sharing an overlay file", has the steps and the pitfalls.
+- 2026-10-13: The inside gameplay overlay is shared with PAL as well (branch `pal-share-overlays`): its five C files, 235 functions,
+  160 of them matched C, pair one to one with the PAL stubs, which already had the same five splits. The overlay is the same size
+  in both ROMs and uniformly 0xB60 after in the ROM and 0x30 after in memory, so `bh.eu.yaml` mirrors the NTSC segment (15
+  entries) shifted, replacing the five stubs and the single `bin` tail. Its 285 differing data words are all +0x30, which
+  `OVERLAY_PTR` covers; a fourth way of writing a pointer turned up (four bytes in a `u8` array, 12 of them). NAME lines are
+  written only for the 75 functions that are `GLOBAL_ASM` on the NTSC side: a name at the PAL address of a matched function
+  made splat misfile an unrelated outside-overlay stub function that sits at the same address.
+  The PAL progress page reads 929 of 2720 functions matched (34.15 percent).
