@@ -334,3 +334,9 @@ NTSC recompiles identically for the EU shape.
   written only for the 75 functions that are `GLOBAL_ASM` on the NTSC side: a name at the PAL address of a matched function
   made splat misfile an unrelated outside-overlay stub function that sits at the same address.
   The PAL progress page reads 929 of 2720 functions matched (34.15 percent).
+- 2026-10-13: Twelve libultra functions are named in `symbol_addrs.eu.txt` at their PAL addresses (`osAiGetLength`,
+  `osMotorStop`, `osMotorStart`, `osMotorInit`, `osEepromLongWrite`, `osEepromLongRead`, `osPiGetStatus`, `__osContRamWrite`,
+  `__osContRamRead`, `__osPiGetAccess`, `__osPiRelAccess`, `__osPfsGetStatus`). Each is the NTSC function 0x30 further on in
+  memory, equal to it under the relocation mask. They were `func_<vram>_<rom>` before, so a recompiler that leaves the NTSC
+  functions of these names to its runtime compiled the PAL copies as game code (a raw read of `AI_LEN_REG` then ran off the
+  guest region). The names change no matched-function count; the PAL build is byte-exact with them.

@@ -641,6 +641,21 @@ jtbl_80037200_37E00 = 0x80037230;
 jtbl_800372C8_37EC8 = 0x800372F8;
 jtbl_80037328_37F28 = 0x80037358;
 jtbl_80037388_37F88 = 0x800373B8;
+// libultra functions that a recompiler leaves to its runtime, named at their PAL addresses. Each is the NTSC function
+// 0x30 further on in memory, equal to it under the relocation mask (compare_roms.py); without the names a recompiler that
+// ignores these functions by name compiles them as game code.
+osAiGetLength = 0x8001BD10; // type:func
+osMotorStop = 0x8001C660; // type:func
+osMotorStart = 0x8001C7C8; // type:func
+osMotorInit = 0x8001CAB0; // type:func
+osEepromLongWrite = 0x8001D490; // type:func
+osEepromLongRead = 0x8001D5D0; // type:func
+osPiGetStatus = 0x8001F710; // type:func
+__osContRamWrite = 0x80026E60; // type:func
+__osContRamRead = 0x800271E0; // type:func
+__osPiGetAccess = 0x80028EE0; // type:func
+__osPiRelAccess = 0x80028F24; // type:func
+__osPfsGetStatus = 0x8002D550; // type:func
 // overlay_gameplay/frontend/52690 (shared from src.us/overlay_gameplay/frontend/52690.c): NTSC function names at their PAL
 // addresses (the PAL code of this file is 0x7C0 after the NTSC code).
 func_800821E0_52690 = 0x800829A0; // type:func rom:0x52E50
