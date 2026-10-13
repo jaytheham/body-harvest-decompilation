@@ -298,3 +298,16 @@ NTSC recompiles identically for the EU shape.
   frontend overlay at 71 of 218. The first half of the overlay (`40720.c`) is not shared: its PAL read-only data
   differs from the NTSC data from offset 0xB40 on (PAL-only strings), and the PAL stubs hold 112 functions against
   113.
+- 2026-10-13: `tools/overlay_pairs.py` (test: `tests/overlay_pairs_check.sh`) pairs the NTSC functions of an overlay C
+  file with the PAL stubs that cover it, compares them instruction by instruction and prints the NAME lines for
+  `symbol_addrs.eu.txt` and the PIN lines for `undefined_syms.eu.txt` that sharing the file needs. It reads the
+  extracted assembly of both versions and the two ELFs, before the file is shared. `--align auto` pairs by opcode
+  sequence when the PAL file has a function more or less. It is how the lines for `52690.c` were derived.
+- 2026-10-13: `40720.c` (the first half of the frontend overlay) is not shared yet. Measured with the tool and
+  `--align auto`: of the 113 NTSC functions, 106 pair with identical shape and constants and 7 do not (instruction
+  counts 2394 against 2398, 495 against 494, 162 against 170, 131 against 126, 496 against 871, one constant
+  0x18 against 0x74, and one alignment artefact of 2 against 103); 4 of the 7 are matched C, so each would need a
+  PAL-only definition. Its PAL read-only data also differs from the NTSC data from offset 0xB40 on (PAL-only
+  strings), and the PAL stubs hold 112 functions in two files where NTSC has 113 in one. That is at most about 73
+  more matched functions for PAL. The level overlays pair one to one with their stubs and hold 362 matched
+  functions, so they come first.
