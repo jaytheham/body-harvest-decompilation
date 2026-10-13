@@ -25,3 +25,12 @@ Keep subsequent parsing calls assigned directly to the global result. Reusing
 creating an instruction-order mismatch.
 
 Final assembly diff score: 0. Full ROM verification: `build/bh.us.z64: OK`.
+
+
+## Three-case crater dispatch
+
+func_800B8F30_C7EE0 in BF9C0.c matches using switch (mode) with cases 0, 1, 2 in that order. Separate if statements put each comparison immediately before its body; the target compares all three cases before any body. There is no jump table for this small switch.
+
+Declare the unused four-word padding first, the named height result second, and the word selector mode last. This puts the selector spill at sp+0x20 instead of sp+0x24 while preserving the 0x40 frame and saved s0/ra slots. The byte argument is widened into mode before osSyncPrintf; retain the named selector across that call. Use the string array directly instead of its array address.
+
+Validated with function diff score 0 and build/bh.us.z64: OK. No rodata split or new file was needed.

@@ -2723,62 +2723,58 @@ void func_800B8D80_C7D30(s16 worldX, s16 worldZ, s16 radius, s32 unused) {
 	func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 }
 
-/* Initialize crater at nearest tile center to (arg0, arg1) with given brightness */
-// CURRENT(1338)
-#ifdef NON_MATCHING
-void func_800B8F30_C7EE0(s16 arg0, s16 arg1, u8 arg2) {
-	s32 padding[4];
+/* Dispatch crater creation and the Greece terrain replacement. */
+void func_800B8F30_C7EE0(s16 tileX, s16 tileZ, u8 craterType) {
+	/* Preserve the original frame while the selector is spilled across printf. */
+	s32 stackPadding[4];
+	s32 height;
 	s32 mode;
-	s32 temp;
 
 	if (D_8014F838 != 0) {
 		return;
 	}
 
-	mode = arg2;
-	osSyncPrintf(&D_80142D80_151D30, mode);
+	mode = craterType;
+	osSyncPrintf(D_80142D80_151D30, mode);
 
-	if (mode == 0) {
-		func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
+	switch (mode) {
+	case 0:
+		func_800B8C2C_C7BDC(tileX, tileZ, 0x1F);
 		D_8014F832 = 0x12;
 		D_8014F850 = D_80142E4C_151DFC[0];
 		D_8014F838 = 3;
-		return;
-	}
+		break;
 
-	if (mode == 1) {
+	case 1:
 		if (currentLevel != LEVEL_GREECE) {
 			return;
 		}
 
-		if (func_800056D0_62D0(arg0 << 8, arg1 << 8) != 0x12) {
+		if (func_800056D0_62D0(tileX << 8, tileZ << 8) != 0x12) {
 			return;
 		}
 
-		D_80052A94[arg1].objects[arg0].terrainType = 0xB;
-		D_80052A94[arg1].objects[arg0].flag14 = 0;
-		D_80052A94[arg1].objects[arg0].flag13 = 0;
-		D_80052A94[arg1].objects[arg0].terrainObject = 1;
-		D_80052A94[arg1].objects[arg0].flag10 = 0;
-		D_80052A94[arg1].objects[arg0].height = 0x1B;
-		D_80052A94[arg1].objects[arg0 + 1].height = 0x1B;
-		D_80052A94[arg1].objects[arg0 + 0x100].height = 0x1B;
-		D_80052A94[arg1].objects[arg0 + 0x101].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX].terrainType = 0xB;
+		D_80052A94[tileZ].objects[tileX].flag14 = 0;
+		D_80052A94[tileZ].objects[tileX].flag13 = 0;
+		D_80052A94[tileZ].objects[tileX].terrainObject = 1;
+		D_80052A94[tileZ].objects[tileX].flag10 = 0;
+		D_80052A94[tileZ].objects[tileX].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX + 1].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX + 0x100].height = 0x1B;
+		D_80052A94[tileZ].objects[tileX + 0x101].height = 0x1B;
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		return;
-	}
+		break;
 
-	if (mode == 2) {
-		temp = func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4);
-		func_800B8C2C_C7BDC(arg0, arg1, (s16)(temp >> 8));
+	case 2:
+		height = func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4);
+		func_800B8C2C_C7BDC(tileX, tileZ, (s16)(height >> 8));
 		D_8014F832 = 2;
 		D_8014F850 = 1.0f;
 		D_8014F838 = 5;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8F30_C7EE0.s")
-#endif
+
 
 /* Start arena creation crater at (arg0, arg1) */
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
