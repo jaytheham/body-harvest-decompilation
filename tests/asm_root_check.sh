@@ -3,10 +3,12 @@
 # that holds an asm/ (the NA extraction) and an asm.eu/ (the EU extraction), each with an x.s that tells them apart.
 # Checks the --asm-root mapping of tools/asm-processor/asm_processor.py: every spelling of the asm/ directory that the
 # mapper can canonicalise maps to asm.eu/, every spelling it cannot (an absolute path, a path that leaves the repository
-# and comes back) is refused instead of reading the NA extraction, and unrelated paths stay untouched.
+# and comes back, a path through a symbolic link) is refused instead of reading the NA extraction, and unrelated paths
+# stay untouched. The symbolic link cases need a host that can create a real link; elsewhere they print SKIP.
 set -u
 : "${PY:?set PY to the Python 3.12 interpreter}"
 failures=0
+skipped=0
 root=$(pwd -W 2>/dev/null || pwd)
 scratch=$(mktemp -d)
 trap 'rm -rf "$scratch"' EXIT
@@ -169,5 +171,32 @@ check "CLI: without --asm-root, an absolute path under asm/ reads the NA file" r
 run_cli asm/x.s --asm-root asm=asm.nowhere
 check "CLI: a missing destination directory is refused" bash -c '[ "$0" -eq 1 ] && [[ "$1" == *"does not exist"* ]]' "$rc" "$out"
 
-[ "$failures" -eq 0 ] && echo "all asm-root checks passed"
+# A symbolic link to asm/ is one more spelling the mapper cannot canonicalise by name: the file is the NA one however
+# the path reads. Only a real link tests that. Git Bash on Windows makes a copy of the directory unless it may create
+# native links, and a copy is not under asm/, so the cases are skipped there: a SKIP line, neither an ok nor a failure.
+symlink_usable=0
+if ln -s asm "$scratch/link" 2>/dev/null && [ -L "$scratch/link" ]; then
+    symlink_usable=1
+    # On a Windows host the link must also be one that the native interpreter sees as a link (an MSYS-only link is not).
+    if [ "$windows" -eq 1 ]; then
+        "$PY" -c 'import os, sys; sys.exit(0 if os.path.islink(sys.argv[1]) else 1)' "$here/link" || symlink_usable=0
+    fi
+fi
+if [ "$symlink_usable" -eq 1 ]; then
+    check "a path through a symlink to asm/ is refused" rejected link/x.s
+    check "the refusal for a path through a symlink names the path" rejection_names link/x.s link/x.s
+    run_cli link/x.s --asm-root asm=asm.eu
+    check "CLI: a path through a symlink to asm/ is refused, naming the file and line" refused_naming "link/x.s"
+    run_cli link/x.s
+    check "CLI: without --asm-root, a path through a symlink to asm/ reads the NA file" read_na
+else
+    echo "SKIP the symlink cases (4 checks): this host cannot create a symlink that the interpreter sees as one"
+    skipped=$((skipped + 1))
+fi
+
+if [ "$failures" -eq 0 ] && [ "$skipped" -eq 0 ]; then
+    echo "all asm-root checks passed"
+elif [ "$failures" -eq 0 ]; then
+    echo "all asm-root checks that ran passed ($skipped group skipped, see SKIP above)"
+fi
 exit "$failures"
