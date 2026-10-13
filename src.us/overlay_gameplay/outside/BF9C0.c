@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(5210): scoped tile locals and reordered counters; spills remain.
+// CURRENT(4538): two-dimensional tile grid restores shared pointer; spills remain.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3112,14 +3112,14 @@ void func_800B9DB8_C8D68(u8 arg0)
 	  bottom = (row == tileSize) ? (map[1] % 4) + 1 : tileSize;
 	  
 	  tileX = (firstTile[1] + column) & 0xFF;
-	  palette = D_8021EA30[(tileZ << 6) + tileX] & 0xF;
+	  palette = ((u8 (*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
 	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[(palette & 0xF) * 512])) & 0x1FFFFFFF);
 	  gDPLoadSync(D_8005BB2C++);
 	
-	  tile = D_8021EA30[(tileZ << 6) + tileX];
+	  tile = ((u8 (*)[64])D_8021EA30)[tileZ][tileX];
 	  if ((tile & 0xF0) != 0xF0)
 	  {
-		D_8021EA30[(tileZ << 6) + tileX] = tile + 0x10;
+		((u8 (*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
 	  }
 	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
 	  if (func_800B960C_C85BC((s16) ((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)

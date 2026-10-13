@@ -72,3 +72,13 @@ vertex homes 0x108/0x10C, map homes 0x110/0x112; target count homes are
 0xF4/0xF2, vertices 0xF8/0xFC, map 0x10C/0x10A. Show-StackLayout picks
 the caller file 7F220.c and cannot connect to Docker here; use the
 compiled assembly's direct stack operands as evidence. Wrapped ROM OK.
+
+Ground renderer improves 5210 to 4538 by expressing each tile-byte access
+as ((u8 (*)[64])D_8021EA30)[tileZ][tileX]. This restores the shared tile
+address in t2 for the palette read, post-command byte reload, and update.
+Multiplying row by 64 is neutral; unsigned row shift scores 5485; named
+linear index 8267. With the 2D view, Y-first origins score 4703, scalar
+origins 7197, swapped origin indices 4542, word tileX 7558. Retain the
+2D view and original word origin array. Edge coordinate casts remain
+neutral; masking origins scores 5220 in the earlier 5210 candidate.
+Frame and spills still differ; wrapped ROM is OK.
