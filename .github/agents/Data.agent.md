@@ -17,6 +17,7 @@ You will be tasked with updating the yaml and C files so `.data` and `.rodata` s
 - `asm/matchings`: Readonly, git-ignored - target assembly of functions with a matching C implementation, for reference.
 - `src.us/`: C source files of the NTSC (US) build.
 - `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
+- `src.us/overlay_gameplay/frontend/52690.c`: this one overlay file is also compiled into the EU build, so an edit to it changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly, git-ignored - compiled object files and the final ROM image.
 - `bh.ld`: Readonly, git-ignored - Linker script defining the layout of the ROM, including the .data and .rodata sections.

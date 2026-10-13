@@ -1,16 +1,16 @@
 {
-  "generated": "2026-10-13T20:38:33Z",
-  "commit": "1a76ae538",
-  "commit_timestamp": "2026-10-13T20:53:19+01:00",
+  "generated": "2026-10-13T21:04:45Z",
+  "commit": "77ee59a9c",
+  "commit_timestamp": "2026-10-13T21:42:00+01:00",
   "version": "eu",
-  "note": "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page (src.us/core), and the stubs under src.eu for the three gameplay overlays, the five level overlays and the one libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, so it cannot be counted from the repository.\nThe core figures are the same functions as on the US page, so the two pages must not be summed. Matching a function in a shared core file counts for both versions.\nThe EU overlays are not shared with NTSC yet, so their functions are still assembly stubs here, apart from empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU counterpart: of the 2354 functions in the eight overlays, gameplay and level, 2216 (94.14 percent) are identical to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 failed that check, but their differing immediates match relocation differences seen elsewhere, so they are probably relocations too; counting them, 2346 (99.66 percent) are identical or probably identical to NTSC apart from relocations. The split between those two groups depends on the rule used to resolve immediates: two other rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as 2188 and 160, so read 94.14 percent as the result of one rule, not as a fixed property of the ROMs. Sharing the overlays would lift these figures a great deal.",
+  "note": "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page (src.us/core), the second half of the frontend overlay (src.us/overlay_gameplay/frontend/52690.c, also shared), and the stubs under src.eu for the rest of the three gameplay overlays, the five level overlays and the one libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, so it cannot be counted from the repository.\nThe core figures are the same functions as on the US page, so the two pages must not be summed. Matching a function in a shared core file counts for both versions.\nThe other EU overlay files are not shared with NTSC yet, so their functions are still assembly stubs here, apart from empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU counterpart: of the 2354 functions in the eight overlays, gameplay and level, 2216 (94.14 percent) are identical to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 failed that check, but their differing immediates match relocation differences seen elsewhere, so they are probably relocations too; counting them, 2346 (99.66 percent) are identical or probably identical to NTSC apart from relocations. The split between those two groups depends on the rule used to resolve immediates: two other rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as 2188 and 160, so read 94.14 percent as the result of one rule, not as a fixed property of the ROMs. Sharing the overlays would lift these figures a great deal.",
   "overall": {
-    "total_functions": 2714,
-    "matched": 334,
-    "non_matching": 23,
-    "asm_stubs": 2357,
-    "matched_pct": 12.31,
-    "decompiled_pct": 13.15
+    "total_functions": 2715,
+    "matched": 404,
+    "non_matching": 58,
+    "asm_stubs": 2253,
+    "matched_pct": 14.88,
+    "decompiled_pct": 17.02
   },
   "segments": {
     "core": {
@@ -24,12 +24,12 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 1,
-      "non_matching": 0,
-      "asm_stubs": 216,
-      "total": 217,
-      "matched_pct": 0.5,
-      "decompiled_pct": 0.5
+      "matched": 71,
+      "non_matching": 35,
+      "asm_stubs": 112,
+      "total": 218,
+      "matched_pct": 32.6,
+      "decompiled_pct": 48.6
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
@@ -366,13 +366,13 @@
       "contributor": ""
     },
     {
-      "path": "overlay_gameplay/frontend/52E50.c",
+      "path": "overlay_gameplay/frontend/52690.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 104,
-      "total": 104,
-      "matched_pct": 0.0,
+      "matched": 70,
+      "non_matching": 35,
+      "asm_stubs": 0,
+      "total": 105,
+      "matched_pct": 66.7,
       "contributor": ""
     },
     {

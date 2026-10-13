@@ -331,7 +331,8 @@ def build(args):
                 if args.version == "eu":
                     # The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU
                     # extraction of those segments under asm.eu/src.us/core, so the EU build reads them from there.
-                    processor += ["--asm-root", "asm/nonmatchings/core=asm.eu/src.us/core"]
+                    processor += ["--asm-root", "asm/nonmatchings/core=asm.eu/src.us/core",
+                                "--asm-root", "asm/nonmatchings/overlay_gameplay/frontend=asm.eu/src.us/overlay_gameplay/frontend"]
                 if global_asm:
                     compiled = rel_build / source
                     with compiled.open("wb") as out:

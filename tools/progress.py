@@ -93,7 +93,8 @@ SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 # GLOBAL_ASM stubs (those overlays are not shared with NTSC yet); --version eu counts them.
 SOURCE_ROOTS = ("src.us",)
 # C source roots of the PAL build, and the version macro its preprocessor defines.
-EU_SOURCE_ROOTS = ("src.eu", "src.us/core")
+# A root that names a single .c file is a file of the NTSC tree that the PAL build compiles too.
+EU_SOURCE_ROOTS = ("src.eu", "src.us/core", "src.us/overlay_gameplay/frontend/52690.c")
 EU_DEFINES = frozenset({"VERSION_EU"})
 # The conditions the PAL count evaluates. NON_MATCHING is never defined by a normal build.
 VERSION_MACROS = frozenset({"VERSION_US", "VERSION_EU", "NON_MATCHING"})
@@ -112,12 +113,13 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 # (docs/eu-port-notes.md), so the 94.14 percent is the result of one rule.
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
-    "(src.us/core), and the stubs under src.eu for the three gameplay overlays, the five level overlays and the one "
+    "(src.us/core), the second half of the frontend overlay (src.us/overlay_gameplay/frontend/52690.c, also shared), and "
+    "the stubs under src.eu for the rest of the three gameplay overlays, the five level overlays and the one "
     "libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, so it cannot be counted "
     "from the repository.\n"
     "The core figures are the same functions as on the US page, so the two pages must not be summed. "
     "Matching a function in a shared core file counts for both versions.\n"
-    "The EU overlays are not shared with NTSC yet, so their functions are still assembly stubs here, apart from "
+    "The other EU overlay files are not shared with NTSC yet, so their functions are still assembly stubs here, apart from "
     "empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU "
     "counterpart: of the 2354 functions in the eight overlays, gameplay and level, 2216 (94.14 percent) are identical "
     "to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 "
@@ -214,6 +216,16 @@ def file_to_segment(sub_path: str) -> str:
 def tree_prefix(repo_root: Path, src_dir: Path) -> Path:
     """Where a source root sits inside its version tree: src.us/core -> core, src.eu and src.us -> nothing."""
     return Path(*src_dir.relative_to(repo_root).parts[1:])
+
+
+def root_files(root: Path) -> list:
+    """The C files of one source root: the root itself when it names a single file."""
+    return [root] if root.is_file() else sorted(root.rglob("*.c"))
+
+
+def root_base(repo_root: Path, root: Path) -> Path:
+    """The directory that a root's files are reported relative to: the version tree for a single-file root."""
+    return repo_root / root.relative_to(repo_root).parts[0] if root.is_file() else root
 
 
 def count_asm_functions_for_source(repo_root: Path, src_dir: Path, source_file: Path) -> int:
@@ -501,6 +513,10 @@ def build_history_eu(cwd: str, src_dirs: list) -> list:
     def shares_core(sha: str) -> bool:
         return "../src.us/core/" in git_run(["show", f"{sha}:bh.eu.yaml"], cwd)
 
+    def shares_file(sha: str, rel: str) -> bool:
+        """A single shared file counts only from the commits whose bh.eu.yaml names it."""
+        return "../src.us/" + rel[len("src.us/"):-len(".c")] in git_run(["show", f"{sha}:bh.eu.yaml"], cwd)
+
     first_week = next((week for week, sha in sorted(weekly_commits.items()) if shares_core(sha)), None)
     if first_week is None:
         return []
@@ -512,7 +528,8 @@ def build_history_eu(cwd: str, src_dirs: list) -> list:
     while week_start <= today:
         date_str = week_start.strftime("%Y-%m-%d")
         week_sha = weekly_commits.get(week_start)
-        week_totals = get_totals_at_commit(cwd, src_rels, week_sha, totals_cache, analyse_text_eu) if week_sha else None
+        rels = [r for r in src_rels if not r.endswith(".c") or shares_file(week_sha, r)] if week_sha else src_rels
+        week_totals = get_totals_at_commit(cwd, rels, week_sha, totals_cache, analyse_text_eu) if week_sha else None
         if week_totals:
             previous_item = build_history_item(date_str, week_sha, week_totals)
             history.append(previous_item)
@@ -534,11 +551,12 @@ def main():
     if not src_dirs[0].is_dir():
         print(f"ERROR: {roots[0]} not found at {src_dirs[0]}", file=sys.stderr)
         sys.exit(1)
-    src_dirs = [d for d in src_dirs if d.is_dir()]
+    src_dirs = [d for d in src_dirs if d.exists()]
 
     print("Scanning source files...", file=sys.stderr)
-    prefixes = {d: tree_prefix(Path(repo_root), d) for d in src_dirs}
-    c_files = sorted(((d, f) for d in src_dirs for f in d.rglob("*.c")),
+    bases = {d: root_base(Path(repo_root), d) for d in src_dirs}
+    prefixes = {b: tree_prefix(Path(repo_root), b) for b in bases.values()}
+    c_files = sorted(((bases[d], f) for d in src_dirs for f in root_files(d)),
                      key=lambda pair: (prefixes[pair[0]] / pair[1].relative_to(pair[0])).as_posix())
     # The PAL view has no per-contributor figures: its core is the shared NTSC work, not the PAL port's.
     contributors = {} if verify_mode or eu_mode else get_contributors(repo_root, src_dirs)

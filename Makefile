@@ -71,6 +71,8 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/overlay_level/comet \
 			$(SRC_DIR)/data \
 			$(SRC_DIR)/bss
+# Single files of src.us that a build of another version compiles too (the rest of their directory is not shared).
+SHARED_C_FILES = $(COMMON_SRC_DIR)/overlay_gameplay/frontend/52690.c
 ifneq ($(VERSION),us)
 SRC_DIRS += $(COMMON_SRC_DIR)/core
 endif
@@ -80,7 +82,7 @@ TOOLS_DIR = tools
 # Files
 
 S_FILES         = $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
-C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c)) $(if $(filter-out us,$(VERSION)),$(SHARED_C_FILES))
 # H_FILES       = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
 BIN_FILES       = $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.bin))
 
@@ -211,7 +213,7 @@ ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
 
 # Files requiring pre/post-processing
-GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(if $(filter-out us,$(VERSION)),$(COMMON_SRC_DIR)/core) </dev/null 2>/dev/null)
+GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(if $(filter-out us,$(VERSION)),$(COMMON_SRC_DIR)/core $(SHARED_C_FILES)) </dev/null 2>/dev/null)
 GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
 
 
@@ -268,7 +270,8 @@ ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 ifeq ($(VERSION),eu)
 # The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU extraction of
 # those segments under asm.eu/src.us/core, so the EU build reads them from there.
-ASM_PROCESSOR     += --asm-root asm/nonmatchings/core=asm.eu/src.us/core
+ASM_PROCESSOR     += --asm-root asm/nonmatchings/core=asm.eu/src.us/core \
+					  --asm-root asm/nonmatchings/overlay_gameplay/frontend=asm.eu/src.us/overlay_gameplay/frontend
 endif
 # The asm-processor command line decides which version's .s files an object is built from. A stamp that is rewritten
 # only when that command line changes makes every GLOBAL_ASM object rebuild after a change of it (dropping --asm-root by

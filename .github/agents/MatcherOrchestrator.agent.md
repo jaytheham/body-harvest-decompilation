@@ -15,7 +15,7 @@ You will be given a C file to target, follow this process:
 1. Begin by creating a new git branch named with this format: `matcher-YYYY-mm-dd-HH-MM-SS`, include the date and time.
 2. Scan the C file for all functions with a NON_MATCHING wrapper, these functions have been decompiled but do not yet match the original assembly when compiled.
 3. Orchestrate processing of these NON_MATCHING functions one at a time. For each function, you will:
-  - Remove the `NON_MATCHING` wrapper around the target function so the C code is included in the build instead of the assembly .s file. A file under `src.us/core/` is compiled for both ROMs, so verify both with `python tools/verify_build.py --rebuild` (see `docs/pal-vs-na.md`).
+  - Remove the `NON_MATCHING` wrapper around the target function so the C code is included in the build instead of the assembly .s file. A file under `src.us/core/`, and `src.us/overlay_gameplay/frontend/52690.c`, is compiled for both ROMs, so verify both with `python tools/verify_build.py --rebuild` (see `docs/pal-vs-na.md`).
   - Build the ROM so the diff tool can calculate the C implementation's CURRENT difference value. It is normal that the build will return `FAILED` at this stage because the function does not yet match.
   - After building check the current difference value with the diff tool, a lower value is better, `CURRENT(0)` is a match. Update the comment above the function with the new value, e.g. `CURRENT(1234)`.
   - Create a subagent, agentName `BH Matcher`, and tell the subagent to target the function.
@@ -47,6 +47,7 @@ Retain any existing comments.
 - `tools/`: Readonly - tools for other tasks.
 - `src.us/`: C source files of the NTSC (US) build.
 - `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
+- `src.us/overlay_gameplay/frontend/52690.c`: this one overlay file is also compiled into the EU build, so an edit to it changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 

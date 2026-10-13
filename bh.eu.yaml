@@ -310,8 +310,9 @@ segments:
     subsegments:
       - [0x40750, c, overlay_gameplay/frontend/40750]
       - [0x4E450, c, overlay_gameplay/frontend/4E450]
-      - [0x52E50, c, overlay_gameplay/frontend/52E50]
+      - [0x52E50, c, ../src.us/overlay_gameplay/frontend/52690]
       - [0x61620, bin]
+      - [0x7FC50, .rodata, ../src.us/overlay_gameplay/frontend/52690]
 
   - name: overlay_gameplay_outside
     type: code

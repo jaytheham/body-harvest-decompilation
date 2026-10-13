@@ -19,6 +19,7 @@ C89 code, compiler IDO 5.3 -O2 -mips2 -32.
 - `asm/matchings`: Readonly - target assembly of matched functions.
 - `src.us/`: C source files of the NTSC (US) build.
 - `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
+- `src.us/overlay_gameplay/frontend/52690.c`: this one overlay file is also compiled into the EU build, so an edit to it changes both ROMs.
 - `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and ROM image.
 
@@ -35,7 +36,7 @@ C89 code, compiler IDO 5.3 -O2 -mips2 -32.
 - Important: Rather than blindly making changes when dealing with incorrect or out-of-order instructions, first check for other functions with sections of assembly that are the same as the target assembly section you are focussed on using `.\tools\Search-AsmPattern.ps1 -Offset <ROM offset> -Count <number of instructions to match>` e.g. `.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 8` look up the C implementation of any functions it returns as reference for your own implementation - if they're not wrapped in NON_MATCHING then they are already matched and can be used as a reference for how to implement the same logic in your function.
 
 # Your Workflow
-1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build. A file under `src.us/core/` is compiled for both ROMs, so verify both with `python tools/verify_build.py --rebuild` (see `docs/pal-vs-na.md`).
+1. Remove the `#ifdef NON_MATCHING` wrapper around the function so the C code will be included in the build. A file under `src.us/core/`, and `src.us/overlay_gameplay/frontend/52690.c`, is compiled for both ROMs, so verify both with `python tools/verify_build.py --rebuild` (see `docs/pal-vs-na.md`).
 2. Read `DecompHints.md` for general matching advice.
 3. Read the closest already matched functions before and after the target one, IDO codegen is very dependant on code style, so nearby matched functions will help guide your implementation. Ignore NON_MATCHING wrapped functions as their logic may be wrong.
 4. Build, compare with target, identify differences.
@@ -52,7 +53,7 @@ Ignore git history, the current state is the best version of the code found so f
 - Declarations of global symbols must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
-- The EU build includes these three US headers too (through `include/common.eu.h`), so a declaration added there also serves the shared files in `src.us/core/`. The `.eu.h` headers are for declarations that exist in the PAL release only (none yet).
+- The EU build includes these three US headers too (through `include/common.eu.h`), so a declaration added there also serves the shared files (`src.us/core/` and `src.us/overlay_gameplay/frontend/52690.c`). The `.eu.h` headers are for declarations that exist in the PAL release only (none yet).
 - Important: Replace all pointer arithmetic with struct/array access!
 - Remove unnecessary casts.
 - Replace goto-based control flow with structured control flow (if/else, for, while).

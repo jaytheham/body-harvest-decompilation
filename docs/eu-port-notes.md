@@ -279,3 +279,22 @@ NTSC recompiles identically for the EU shape.
   function symbols in every level section. The progress page counts them: 334 of 2714 functions matched
   (12.31 percent). The share falls from 14.75 percent because 456 level stubs entered the total; nothing
   matched became less matched.
+- 2026-10-13: `src.us/overlay_gameplay/frontend/52690.c`, the second half of the frontend overlay, is shared with PAL
+  as the core files are. Its 104 functions (69 plain C, 35 `NON_MATCHING` with a `GLOBAL_ASM` fallback) pair one to
+  one with the 104 PAL stubs of `52E50`, with the same opcode in every instruction. Inside this overlay the PAL
+  shift is not one number: the PAL code before this file is 0x790 bytes longer, so the file's code is 0x7C0 after
+  the NTSC code, its read-only data 0xB60 after (PAL 0x7FC50 against NTSC 0x7F0F0), and what it reads from core
+  0x30 after. `bh.eu.yaml` names the file `../src.us/overlay_gameplay/frontend/52690` with a `.rodata` entry at
+  0x7FC50 and the stub is gone; the Makefile and `native_build.py` pass a second `--asm-root`, mapping that
+  directory's `asm/nonmatchings` pragmas to `asm.eu/src.us/overlay_gameplay/frontend`, and the Makefile lists the
+  file in `SHARED_C_FILES` because only this one file of its directory is shared. The three jump tables carry NTSC
+  and PAL values (PAL = NTSC + 0x7C0, checked against both ROMs); the strings and doubles are the same in both ROMs.
+  `symbol_addrs.eu.txt` names the 104 functions at their PAL addresses, qualified with `rom:` because the overlays
+  share one vram range (without it splat keeps the PAL auto-names). `undefined_syms.eu.txt` gives 107 of the 162
+  undefined NTSC names the object uses their PAL addresses (the other 55 were already provided), read from the
+  operands of the paired instructions, and pins the 15 PAL labels of the file's own read-only data and one
+  function label that the assembly of its `GLOBAL_ASM` functions still names. Both ROMs verify byte-exact with
+  `tools/verify_build.py`. The progress page counts the file: 404 of 2715 functions matched (14.88 percent), the
+  frontend overlay at 71 of 218. The first half of the overlay (`40720.c`) is not shared: its PAL read-only data
+  differs from the NTSC data from offset 0xB40 on (PAL-only strings), and the PAL stubs hold 112 functions against
+  113.

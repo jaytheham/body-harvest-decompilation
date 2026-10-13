@@ -6,8 +6,9 @@
 #   - total = matched + non_matching + asm_stubs for every file, every segment and overall; segments and overall are
 #     the sums of their files
 #   - the EU core segment has the NTSC core segment's total and no more matched functions
-#   - the EU overlay segments hold no matched function except empty C stubs (they are not shared with NTSC yet; when
-#     one is shared or decompiled for PAL this check is the one to revise)
+#   - the EU overlay segments hold no matched function except empty C stubs and the functions of the files that
+#     NTSC shares with PAL (the src.us files named in EU_SOURCE_ROOTS: a stub file under src.eu is checked against
+#     its empty functions, a shared file is not)
 #   - the history is empty or a weekly series of at least two points
 #   - the preprocessor evaluation of ifdef / ifndef / [!]defined() on VERSION_US, VERSION_EU and NON_MATCHING gives
 #     the PAL build's reading of small synthetic files
@@ -162,11 +163,15 @@ empty_function = re.compile(r"^\w[^\n;{}]*\)\s*\{\s*\}", re.MULTILINE)
 for seg_name, seg in eu["segments"].items():
     if not seg_name.startswith("overlay_"):
         continue
-    stubs = 0
+    stubs = shared_matched = 0
     for f in (f for f in eu["files"] if f["segment"] == seg_name):
-        source = next((p for p in (repo / "src.eu" / f["path"], repo / "src.us" / f["path"]) if p.is_file()))
-        stubs += len(empty_function.findall(source.read_text(encoding="utf-8", errors="replace")))
-    check(seg["matched"] <= stubs, f"{seg_name}: matched ({seg['matched']}) is at most its empty C stubs ({stubs})")
+        stub_file = repo / "src.eu" / f["path"]
+        if stub_file.is_file():
+            stubs += len(empty_function.findall(stub_file.read_text(encoding="utf-8", errors="replace")))
+        else:
+            shared_matched += f["matched"]  # a file of the NTSC tree that the PAL build compiles too
+    check(seg["matched"] - shared_matched <= stubs,
+          f"{seg_name}: matched ({seg['matched']}, {shared_matched} of them in shared files) is at most its empty C stubs ({stubs}) plus the shared files")
 
 # The PAL reading of small files: (description, source, matched, non_matching, asm_stubs).
 sys.path.insert(0, str(repo / "tools"))
