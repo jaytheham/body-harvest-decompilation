@@ -2301,26 +2301,23 @@ void func_800A2B58_B1B08(void)
 	func_800A2260_B1210();
 }
 
-// CURRENT(45)
-#ifdef NON_MATCHING
 void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
   s32 flatDistI;
-  f32 posX;
-  f32 posZ;
-  f32 posY;
+  f32 dx;
+  f32 dz;
+  f32 dy;
   f32 distScale;
-  s16 new_var2;
+  s16 pointY;
   s32 pulse;
-  (void) arg3;
-  posX = arg0;
-  new_var2 = arg1;
-  posY = (f32) new_var2;
-  posZ = (f32) arg2;
+  dx = arg0;
+  pointY = arg1;
+  dy = pointY;
+  dz = arg2;
   D_8014F618.unk66 = 1;
-  D_8014F618.head.unk0 = posX;
-  D_8014F618.head.unk4 = posY;
-  D_8014F618.head.unk8 = posZ;
+  D_8014F618.head.unk0 = dx;
+  D_8014F618.head.unk4 = dy;
+  D_8014F618.head.unk8 = dz;
   gSPMatrix(D_8005BB2C++, ((u32) (&D_80031160)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
   gDPPipeSync(D_8005BB2C++);
   gSPClearGeometryMode(D_8005BB2C++, ((0x00000001 | 0x00002000) | 0x00010000) | 0x00020000);
@@ -2370,9 +2367,15 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
   gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk77, D_8014F618.unk78, ((0, D_8014F618)).unk79, D_8014F618.unk69);
-  sqrtf(((((f32) (D_80052B34->unk0 - arg0)) * ((f32) (D_80052B34->unk0 - arg0))) + (((f32) (D_80052B34->unk2 - new_var2)) * ((f32) (D_80052B34->unk2 - new_var2)))) + (((f32) (D_80052B34->unk4 - arg2)) * (f32) (D_80052B34->unk4 - arg2)));
-  distScale = sqrtf(((((D_80047954 * 4.0f) - posX) * ((D_80047954 * 4.0f) - posX)) + (((D_80047958 * 4.0f) - posY) * ((D_80047958 * 4.0f) - posY))) + (((D_8004795C * 4.0f) - posZ) * ((D_8004795C * 4.0f) - posZ)));
-  D_8014F618.unk60 = (u16) distScale;
+  dx = D_80052B34->unk0 - arg0;
+  dy = D_80052B34->unk2 - pointY;
+  dz = D_80052B34->unk4 - arg2;
+  sqrtf((((dx) * (dx)) + ((dy) * (dy))) + ((dz) * dz));
+  dx = ((D_80047954 * 4.0f) - arg0);
+  dy = ((D_80047958 * 4.0f) - pointY);
+  dz = ((D_8004795C * 4.0f) - arg2);
+  distScale = sqrtf(((dx * dx) + (dy * dy)) + (dz * dz));
+  D_8014F618.unk60 = distScale;
   distScale /= 6.0f;
   D_8014F618.head.unkC = distScale * D_80153AB8.x;
   D_8014F618.head.unk10 = distScale * D_80153AB8.y;
@@ -2385,24 +2388,19 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   D_8014F618.head.unk2C = D_8014F618.head.unk8 + D_8014F618.head.unk20;
   func_800A2260_B1210();
   gDPSetPrimColor(D_8005BB2C++, 0, 0, D_8014F618.unk71, D_8014F618.unk72, (0, D_8014F618.unk73), D_8014F618.unk6B);
-  flatDistI = (s32) ((D_80052B2C->unk0 - posX) * (D_80052B2C->unk0 - posX));
-  flatDistI = (s32) (((f32) flatDistI) + ((D_80052B2C->unk8 - posZ) * (D_80052B2C->unk8 - posZ)));
-  flatDistI = (s32) sqrtf((f32) flatDistI);
+  flatDistI = ((D_80052B2C->unk0 - arg0) * (D_80052B2C->unk0 - arg0));
+  flatDistI = ((flatDistI) + ((D_80052B2C->unk8 - arg2) * (D_80052B2C->unk8 - arg2)));
+  flatDistI = sqrtf(flatDistI);
   D_80052B40.unk0 = arg0;
-  if (arg2)
-  {
-  }
   D_80052B40.unk2 = arg1;
   D_80052B40.unk4 = arg2;
   D_80052B48.unk0 = func_80003824_4424(D_80052B2C->unk14 - D_80052B2C->unk8, D_80052B2C->unkC - D_80052B2C->unk0);
- D_80052B48.unk2 = D_8014F618.unk6D << 8; D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - posY, (f32) flatDistI); if (!D_8004795C) { } pulse = (s16) ((s32) (((f32) D_8014F618.unk6F) + distScale)); D_80052B50.unk4 = pulse; D_80052B50.unk2 = pulse; D_80052B50.unk0 = pulse;
+ D_80052B48.unk2 = D_8014F618.unk6D << 8; D_80052B48.unk4 = 0x4000 - func_80003824_4424(D_80052B2C->unk4 - pointY, flatDistI); if (!D_8004795C) { } pulse = (s16) (((f32) D_8014F618.unk6F) + distScale); D_80052B50.unk4 = pulse; D_80052B50.unk2 = pulse; D_80052B50.unk0 = pulse;
   func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
   gSPMatrix(D_8005BB2C++, ((u32) (D_8005BB38++)) & 0x1FFFFFFF, (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
   gSPDisplayList(D_8005BB2C++, (u32) D_100ACB0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A2D98_B1D48.s")
-#endif
+
 void func_800A3490_B2440(VehicleInstance *arg0) {
 	static s32 D_8013D76C_14C71C = 0;
 	static s32 D_8013D770_14C720 = 10;
