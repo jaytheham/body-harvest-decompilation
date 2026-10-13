@@ -168,8 +168,9 @@ Why not now:
   genuinely different functions.
 - The overlays' yaml C-file splits would first have to be aligned between the
   versions: frontend has 2 `c` splits in `bh.us.yaml` and 3 in `bh.eu.yaml`,
-  outside 27 and 20, and the EU level overlays are `bin` segments. Per-version
-  data would need handling as well.
+  outside 27 and 20. The EU level overlays have one `c` split each (stubs, as
+  the EU gameplay overlays have) and a `bin` tail, where `bh.us.yaml` has `c`,
+  `.data` and `.rodata` splits. Per-version data would need handling as well.
 
 Not yet measured: the layout of data and rodata, and whether the C that matched
 NTSC recompiles identically for the EU shape.
@@ -265,3 +266,16 @@ NTSC recompiles identically for the EU shape.
   file is converted, so the tools have nothing left to run on and the tests, which
   need an unconverted file, fail at the head. They are in the history at commit
   3b5ea2e2d.
+- 2026-10-13: The shared core went back to `src.us/core`, and the US headers and `bh.us.yaml` to their upstream
+  state, which is the maintainer's one-tree end state (see "Sharing a file that still has GLOBAL_ASM" in
+  `docs/pal-vs-na.md`). Master was merged in. The functions it matched in `1050.c` and `53F0.c` now compile for
+  EU, which needed EU addresses for the names they use, four names that splat's auto file had bound at the NA
+  address (pinned so `tools/eu_collisions_build.py` tags the EU labels that shadow them), and the boot assembly
+  that master folded into `1050.c` (`bh.eu.yaml` has the same single `c` segment at 0x1000). Both ROMs verify
+  byte-exact with `tools/verify_build.py`.
+- 2026-10-13: The five EU level overlays are `c` stub splits with a `bin` tail, as the EU gameplay overlays are,
+  where they were one `bin` blob each: 64, 101, 74, 94 and 122 stub functions (greece, java, america, siberia,
+  comet), laid out as the NTSC levels shifted by 0xB60 in the ROM. The build stays byte-exact and the EU ELF has
+  function symbols in every level section. The progress page counts them: 334 of 2714 functions matched
+  (12.31 percent). The share falls from 14.75 percent because 456 level stubs entered the total; nothing
+  matched became less matched.

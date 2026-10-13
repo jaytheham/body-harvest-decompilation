@@ -363,7 +363,8 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x18E340, bin, overlay_level/greece/18E340]
+      - [0x18E340, c, overlay_level/greece/18E340]
+      - [0x1967E0, bin]
 
   - name: overlay_level_greece_data
     type: bin
@@ -378,7 +379,8 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x1EE540, bin, overlay_level/java/1EE540]
+      - [0x1EE540, c, overlay_level/java/1EE540]
+      - [0x1F9D10, bin]
 
   - name: overlay_level_java_data
     type: bin
@@ -393,7 +395,8 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x254F70, bin, overlay_level/america/254F70]
+      - [0x254F70, c, overlay_level/america/254F70]
+      - [0x25F5F0, bin]
 
   - name: overlay_level_america_data
     type: bin
@@ -406,7 +409,8 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x2B7C60, bin, overlay_level/siberia/2B7C60]
+      - [0x2B7C60, c, overlay_level/siberia/2B7C60]
+      - [0x2C3D80, bin]
 
   - name: overlay_level_siberia_data
     type: bin
@@ -419,7 +423,8 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x319980, bin, overlay_level/comet/319980]
+      - [0x319980, c, overlay_level/comet/319980]
+      - [0x329B30, bin]
 
   - name: overlay_level_comet_data
     type: bin

@@ -112,9 +112,9 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 # (docs/eu-port-notes.md), so the 94.14 percent is the result of one rule.
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
-    "(src.us/core), and the stubs under src.eu for the three gameplay overlays and the one libultra file there "
-    "(sl.c). Not counted: the five level overlays and the rest of libultra have no tracked EU source, so they cannot "
-    "be counted from the repository.\n"
+    "(src.us/core), and the stubs under src.eu for the three gameplay overlays, the five level overlays and the one "
+    "libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, so it cannot be counted "
+    "from the repository.\n"
     "The core figures are the same functions as on the US page, so the two pages must not be summed. "
     "Matching a function in a shared core file counts for both versions.\n"
     "The EU overlays are not shared with NTSC yet, so their functions are still assembly stubs here, apart from "
