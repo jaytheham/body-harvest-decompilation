@@ -71,8 +71,11 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/overlay_level/comet \
 			$(SRC_DIR)/data \
 			$(SRC_DIR)/bss
-# Single files of src.us that a build of another version compiles too (the rest of their directory is not shared).
-SHARED_C_FILES = $(COMMON_SRC_DIR)/overlay_gameplay/frontend/52690.c
+# Single files of src.us (outside core) that a build of another version compiles too: the rest of their directory is not shared.
+SHARED_OVERLAY_FILES = overlay_gameplay/frontend/52690.c
+SHARED_C_FILES = $(addprefix $(COMMON_SRC_DIR)/,$(SHARED_OVERLAY_FILES))
+# The directories of src.us whose GLOBAL_ASM pragmas name asm/nonmatchings/<dir>, which a PAL build reads from asm.eu/src.us/<dir>.
+SHARED_ASM_DIRS = core $(patsubst %/,%,$(sort $(dir $(SHARED_OVERLAY_FILES))))
 ifneq ($(VERSION),us)
 SRC_DIRS += $(COMMON_SRC_DIR)/core
 endif
@@ -270,8 +273,7 @@ ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
 ifeq ($(VERSION),eu)
 # The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU extraction of
 # those segments under asm.eu/src.us/core, so the EU build reads them from there.
-ASM_PROCESSOR     += --asm-root asm/nonmatchings/core=asm.eu/src.us/core \
-					  --asm-root asm/nonmatchings/overlay_gameplay/frontend=asm.eu/src.us/overlay_gameplay/frontend
+ASM_PROCESSOR     += $(foreach d,$(SHARED_ASM_DIRS),--asm-root asm/nonmatchings/$(d)=asm.eu/src.us/$(d))
 endif
 # The asm-processor command line decides which version's .s files an object is built from. A stamp that is rewritten
 # only when that command line changes makes every GLOBAL_ASM object rebuild after a change of it (dropping --asm-root by
