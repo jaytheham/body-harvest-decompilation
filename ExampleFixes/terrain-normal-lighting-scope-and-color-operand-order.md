@@ -53,3 +53,12 @@ entry pointer for palette load, byte reload and saturating tile update
 scores 7911 and grows the frame to 0x128. The target update pattern at
 C92D0 has no matched donor from Search-AsmPattern. Restored the scoped
 array candidate under NON_MATCHING and verified the full ROM OK.
+
+Ground loop-shape trials also retain 5228. Early row initialization scores
+6198. While/do outer loops score 5657, inner loops 6251, both do loops
+6680. A word row with explicit byte mask scores 6671. Unsigned origins
+and division by named tileSize are neutral. Literal tile size scores
+5312; declaring origins first in the loop scope scores 5304; moving map
+before row scores 5260. Volatile map scores 8772 and introduces an extra
+saved coordinate-address register, so it is not a useful reload remedy.
+Restored the best scoped for-loop candidate; wrapped full ROM is OK.
