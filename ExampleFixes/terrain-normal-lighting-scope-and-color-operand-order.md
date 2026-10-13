@@ -32,3 +32,15 @@ not retained because SH/LH replace the target SW/LW. Word map coordinates
 score 6579; halfword worldZ scores 5550. Remaining frame is 0x120 versus
 target 0x118, map and vertex homes differ, and loop origin spills and
 coordinate reload/scheduling need work. The restored wrapped ROM is OK.
+
+The ground renderer now retains 5228. Declare the word origin array in
+a new scope after the lighting commands (5260), and move worldZ, tileZ,
+bottom, left, top, right, column, palette, tileX and tile into that scope
+(5228). Origin homes move from the original high region to 0x98/0x9C;
+the target uses 0x6C/0x68. Named scoped origins score 6270. Fully inline
+map divisions score 7529: they remain inside loops rather than producing
+the target pre-loop stores, despite the frame becoming correct. Plain
+if/else edge assignments are neutral; copying map coordinates to right
+and top before modulo scores 6313, all four edges 7563. Explicit word
+casts in origin division are neutral. Preserve the scoped array version
+under NON_MATCHING; wrapped ROM checksum remains OK.

@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(5536): word origins and reordered coordinate/pointer arrays.
+// CURRENT(5228): loop-scoped origins and tile locals; spills remain.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3049,19 +3049,8 @@ void func_800B9DB8_C8D68(u8 arg0)
   u8 row;
   s16 visibleCount;
   s16 culledCount;
-  s32 worldZ;
-  s32 tileZ;
-  s16 bottom;
   s16 map[2];
   Vtx *vertices[2];
-  s32 firstTile[2];
-  s16 left;
-  s16 top;
-  s16 right;
-  u8 column;
-  s32 palette;
-  u8 tileX;
-  u8 tile;
   visibleCount = 0;
   culledCount = 0;
   func_800B9AC8_C8A78();
@@ -3097,6 +3086,18 @@ void func_800B9DB8_C8D68(u8 arg0)
 	gSPSetLights1(D_8005BB2C++, D_8013D958_14C908);
   }
 
+  {
+    s32 worldZ;
+    s32 tileZ;
+    s16 bottom;
+    s16 left;
+    s16 top;
+    s16 right;
+    u8 column;
+    s32 palette;
+    u8 tileX;
+    u8 tile;
+    s32 firstTile[2];
   firstTile[1] = map[0] / 4;
   firstTile[0] = map[1] / 4;
   for (row = 0; row < 5; row++)
@@ -3136,6 +3137,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	
 	vertices[1] = &vertices[1][(tileSize - top) * 18];
 	vertices[0] = vertices[1];
+  }
   }
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
   gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
