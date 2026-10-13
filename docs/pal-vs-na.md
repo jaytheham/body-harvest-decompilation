@@ -213,8 +213,8 @@ assembly of the version it is building:
   date" and `make -q build.eu/bh.eu.z64` exits 0, and no GLOBAL_ASM object is
   listed. That holds for the ROM targets only: the default goal still prints
   its `sha1sum --check` line under `make -n`, and `make -q` exits 1 for it,
-  because `verify` and `dirs` have recipes and no file of that name (the stamp
-  does not cause this). A dry run that finds a changed command line rewrites
+  because `verify` has a recipe and no file of that name (the stamp does not
+  cause this). A dry run that finds a changed command line rewrites
   the stamp too, and the next real `make` then rebuilds the objects.
   `tools/native_build.py` gets the same effect from its configuration
   fingerprint, which digests `native_build.py` and `asm_processor.py`.
