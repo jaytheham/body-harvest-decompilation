@@ -1152,7 +1152,7 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(831): instruction structure matches; register and spill differences remain.
+// CURRENT(823): shifted row offset fixes one spill; register/byte-cache differences remain.
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 baseXWord;
@@ -1175,10 +1175,10 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	baseY = D_8014F89D;
 
 	for (row = 0; row < 0x13; row++) {
-		baseXWord = baseY + row;
+		baseXWord = (baseY + row) << 8;
 
 		for (col = 0; col < 0x13; col++) {
-			mapIndex = (u16)(sp94 + col + (baseXWord << 8));
+			mapIndex = (u16)(sp94 + col + baseXWord);
 
 			spAC[0] = ((u16 *)arg2)[mapIndex - 0x100] & 0x3F;
 			spAC[1] = ((u16 *)arg2)[mapIndex - 1] & 0x3F;
@@ -1186,7 +1186,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			spAC[3] = ((u16 *)arg2)[mapIndex + 1] & 0x3F;
 			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
 
-			func_800B1814_C07C4(baseXWord, (sp94 + col), spA0);
+			func_800B1814_C07C4(baseY + row, (sp94 + col), spA0);
 			
 
 			if (D_80151DD0 == 2) {

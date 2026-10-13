@@ -225,3 +225,14 @@ timer in-place V1 narrowing, divisor A1 allocation and temporary registers
 still differ. Word timer caching scores 1661, in-place/short narrowing
 1631; word/unsigned/short mode 1617/1817/2266. Compact 831 candidate is
 NON_MATCHING and wrapped full ROM verifies OK.
+
+Terrain-color candidate improves 831 to 823 by storing shifted row
+offset explicitly: baseXWord=(baseY+row)<<8, add it directly to the
+center index, and pass baseY+row to the lighting helper. The shift spill
+is now exact at 0x80; normalized row-byte spill remains 0x78 versus 0x7C.
+Same-line outer assignment/inner for is neutral. Inlining only helper
+row arithmetic scores 1036. Earlier i/mapIndex helper-argument reuse
+and register hints are neutral. Twenty-four permutations of scalar
+declaration order yield no improvement while preserving instruction
+structure. Entry before f0 scores 843, word baseY 1233, i after RGB 961,
+word mapIndex 1231. Retain the shifted-row candidate; wrapped ROM OK.
