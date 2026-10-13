@@ -82,7 +82,7 @@ If you did everything correctly, you'll be greeted with the following:
 build/bh.us.z64: OK
 ```
 
-On Ubuntu 24.04, or wherever `clang` 16 or newer is on the PATH, the Makefile's syntax check rejects code that IDO accepts. Use gcc for that check instead: `make --jobs HOSTCC=gcc HOSTCC_CHECK_FLAGS=-m32`.
+On Ubuntu 24.04, or wherever `clang` 16 or newer is on the PATH, the Makefile's syntax check rejects code that IDO accepts. Use gcc for that check instead: `make --jobs HOSTCC=gcc "HOSTCC_CHECK_FLAGS=-m32 -D__clang__"`. The `-D__clang__` makes gcc skip the boot assembly block in `src.us/core/1050.c`, which is guarded with `#ifndef __clang__` for IDO alone to read; without it gcc stops there.
 
 Note: Currently need to change the references to func_802D4CD0 in loader.s to func_802D4CD0_18D7E0
 Not sure why this one file is problematic. Should be done automatically during extract.
