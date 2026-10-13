@@ -300,7 +300,7 @@ default: all
 all: dirs $(VERIFY)
 
 dirs:
-	$(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS) $(if $(filter-out us,$(VERSION)),$(dir $(SHARED_C_FILES))),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 tools: $(RNC64) $(LIBRNCU)
 
