@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(4437): same-line count/draw scheduling; frame correct, spills remain.
+// CURRENT(3964): byte palette and single mask fix saved-register allocation.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3093,7 +3093,7 @@ void func_800B9DB8_C8D68(u8 arg0)
     s16 top;
     s16 right;
     u8 column;
-    s32 palette;
+    u8 palette;
     u8 tileX;
     u8 tile;
     s32 firstTile[2];
@@ -3112,7 +3112,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	  
 	  tileX = (firstTile[1] + column) & 0xFF;
 	  palette = ((u8 (*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
-	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[(palette & 0xF) * 512])) & 0x1FFFFFFF);
+	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[palette * 512])) & 0x1FFFFFFF);
 	  gDPLoadSync(D_8005BB2C++);
 	
 	  tile = ((u8 (*)[64])D_8021EA30)[tileZ][tileX];

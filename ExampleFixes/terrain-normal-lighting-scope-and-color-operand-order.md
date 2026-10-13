@@ -101,3 +101,13 @@ or u16/s16 index narrowing is neutral; signed-word argument casts are
 neutral, an unsigned-halfword left argument scores 4808, prefix count
 increment is neutral. The C932C argument-normalization pattern has no
 matched donor. Preserve the same-line call under NON_MATCHING; ROM OK.
+
+Ground renderer improves 4437 to 3964 by declaring palette u8 and
+removing its redundant & 0xF from the TLUT index (the load assignment
+already masks to 15). Together these restore palette s1, tileX s2,
+and bottom s3. Either alone is worse: byte palette 4754, no second
+mask 4757. Halfword palette 4673, halfword without second mask 4753,
+separate load/mask 4692. Word left/top/right/all edges score
+5490/5287/5715/6514; copying bottom before modulo scores 5448.
+The retained byte/single-mask candidate still differs in coordinate
+reloads, spills and scheduling; wrapped full ROM remains OK.
