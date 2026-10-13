@@ -30,9 +30,7 @@ void func_800823C0_52870(void) {
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
-// CURRENT(200)
 // AI - Renders a frontend menu entry with two textures and fade-in/out animation
-#ifdef NON_MATCHING
 void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
@@ -58,8 +56,8 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	sp98.unk4 = (fade * 3) + 0x80;
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, fade * 2);
-	fade = 0;
-	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
+	/* The zero index retains the target's fade register reset before the call. */
+	func_800039D0_45D0(&spA8, &spA0, &sp98, &D_8005BB38[fade = 0]);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gDPLoadTextureBlock(D_8005BB2C++, ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
@@ -85,9 +83,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800823D8_52888.s")
-#endif
+
 
 // AI - Loads a 16x16 texture tile from atlas into TMEM for digit rendering
 void func_80082868_52D18(s32 arg0) {
