@@ -1890,27 +1890,24 @@ void func_800A17EC_B079C(void) {
 	func_800A1764_B0714();
 }
 
-// CURRENT(793)
-#ifdef NON_MATCHING
+// Approach an unsigned-byte target by a bounded step.
 u8 func_800A1828_B07D8(u8 arg0, u8 arg1, u8 arg2) {
 	if (arg1 < arg0) {
 		if ((arg0 < arg2) || ((arg0 - arg1) < arg2)) {
-			return arg1;
+			arg0 = arg1;
+		} else {
+			arg0 -= arg2;
 		}
-		arg0 -= arg2;
-		return arg0;
-	}
-	if (arg0 < arg1) {
+	} else if (arg0 < arg1) {
 		if (((0xFF - arg2) < arg0) || ((arg1 - arg0) < arg2)) {
-			return arg1;
+			arg0 = arg1;
+		} else {
+			arg0 += arg2;
 		}
-		arg0 += arg2;
 	}
 	return arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A1828_B07D8.s")
-#endif
+
 s32 func_800A18CC_B087C(void) {
 	s16 index = (s16)(D_80158FE8 - buildingInstances);
 	return (D_8014D1B8[index >> 5] & (1 << (index & 0x1F))) != 0;
