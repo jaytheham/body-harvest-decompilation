@@ -185,3 +185,16 @@ with neighbors/output/input at 0xB8/0xB4/0xB0 versus target AC/A8/A0.
 Neighbors first score 5806 (B8/94/98); neighbors before RGB score 5826
 (9C/94/98). A transient lock on generated build source cleared on retry.
 Restored the best chained-zero coordinate candidate; wrapped ROM OK.
+
+Terrain color improves 5608 to 2584. Cache the flash timer into existing
+u8 mode and guard with (u32)mode > 0U. The unsigned guard alone scores
+4934; combined with byte cache 4918, restoring the target flash branch
+instructions. Word subtraction/cache 6213, halfword timer 6093, word
+XOR cache neutral at 5608; explicit implicit-angle variants are neutral.
+Before output-ring lookup, compute row remainder first into expired i,
+then column remainder into u16 mapIndex, and use [(u16)i][mapIndex].
+This restores target row-before-column division (2584). Opposite reused
+types score 2974, new named word indices 2704. Special-color pass using
+mode as byte seed scores 2669, new word seed 2742, scoped output pointer
+2822. Keep the two reused ring indices; frame and array/spill homes still
+differ. Candidate remains NON_MATCHING; wrapped ROM checksum OK.

@@ -1152,7 +1152,7 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(5608): signed row offset and halfword base Y; frame and spills remain.
+// CURRENT(2584): unsigned byte timer guard and row-first ring indices; spills remain.
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 baseXWord;
@@ -1207,11 +1207,12 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 				spA0[0] = spA0[1] = spA0[2] = 0;
 			}
 
-			if (D_8013D9B0_14C960 != 0) {
-				if (D_8013D9B0_14C960 >= 0x3D) {
-					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			mode = D_8013D9B0_14C960;
+			if ((u32)mode > 0U) {
+				if (mode >= 0x3D) {
+					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(mode - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 				} else {
-					f0 = (f32)((((f32)coss((u16)((u32)(((f32)(s16)D_8013D9B0_14C960 / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+					f0 = (f32)((((f32)coss((u16)((u32)(((f32)(s16)mode / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 				}
 
 				if (D_8013D9B4_14C964 != 0) {
@@ -1233,9 +1234,9 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
-			entry = &D_80151DD8.tiles
-				[(((D_80151DD8.ringY + row) % 19) & 0xFFFF)]
-				[(((D_80151DD8.ringX + col) % 19) & 0xFFFF)];
+			i = (D_80151DD8.ringY + row) % 19;
+			mapIndex = (u16)((D_80151DD8.ringX + col) % 19);
+			entry = &D_80151DD8.tiles[(u16)i][mapIndex];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
