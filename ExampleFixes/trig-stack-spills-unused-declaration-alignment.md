@@ -70,3 +70,12 @@ implicit destination narrowing is neutral. Moving radius before alpha
 or pulse scores 3374/3362; pulse last scores 3346. Phase still uses s2
 instead of s3, radius/pulse spills are wrong, and the extra phase MOVE
 and loop-entry instruction order remain unresolved.
+
+The frame-correct candidate's phase-in-pulse variant scores 3392; swapping
+the two word variable names and a one-element pulse array are neutral.
+A conditional with a common outer u8 conversion scores 2561, but is not
+retained: its mask sinks past the pose call and the folded branch loses
+target instructions, despite the improved register-weighted total. Casts
+or masks on each ternary arm restore 3321 and the target-style branch.
+Reversing the condition scores 3571; a shared mask after if scores 4096.
+Continue prioritizing instruction structure over the numerical score.
