@@ -46,3 +46,13 @@ the secondary loop angle reduced it to 3350 and the frame from 0x100
 to 0xF8 (target 0xF0). This remains NON_MATCHING: initial phase allocation,
 spill slots, and a few instruction orders still differ. The uninitialized
 byte read in the radius calculation is present in target assembly too.
+
+Further phase-lifetime trials retain 3350. Unsigned primary-angle storage
+scores 3845; byte/halfword saved pulse 3469; computing the phase directly
+in pulse 3466. XOR-zero, an explicit u8 fold cast, an else-copy through
+pulse, and separate frame load/mask are neutral; signed comparison scores
+3545. Reusing pulse for the initial radius scores 5294. Reusing the ground
+word for alpha with literal double zero scores 14134; a named double zero
+scores 6559. Moving pulse last scores 3453; computing the pre-loop phase
+in the existing uninitialized byte scores 3394 and grows the frame.
+Restored the 3350 candidate and verified the wrapped full ROM OK.
