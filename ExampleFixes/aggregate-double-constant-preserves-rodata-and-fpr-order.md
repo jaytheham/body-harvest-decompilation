@@ -56,3 +56,9 @@ func_802DD8E8_1F65F8 remains NON_MATCHING after 20 compiled variants. A literal 
 
 
 func_802D5FE4_1EECF4 remains NON_MATCHING after 20 compiled variants. Correct the second scale from zero to 1.5 and read the existing 1.7 constant as an array element when testing its address. A literal 1.7 restores the target f20/f22 order, but its generated constant lands at 0xfa8 instead of 0xeb0. The existing aggregate type retains the address but does not fix the hoisting or floating register order in this loop. Preserve the literal-based closest implementation under NON_MATCHING when additional files are excluded.
+
+## Frontend orbit particles: retained constant-address limitation
+
+`func_8008F1E0_5F690` remains NON_MATCHING. Use the target's rounded `6.2831853070000001` multiplied by the float angle and divided by `360.0`; full-precision pi divided by 180 is not the same instruction sequence. Cache each quadrant's argument in one `f32 trigAngle` shared by cosf and sinf. Declare that local after the three-float direction array: the array then starts at sp+0x90 and the frame remains 0xA0.
+
+This produces every target instruction, register, and stack offset except the two constant addresses (diff score 10). The existing trailing jump-table and float placeholders put the generated doubles at different addresses. Array reads, aggregate reads, scalar linker aliases, and explicit double caches were tested; the caches change the frame, constant hoisting, or floating-register order. Keep the literal-based C wrapped when new translation units are excluded.

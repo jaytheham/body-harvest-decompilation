@@ -277,11 +277,10 @@ typedef struct {
 } Unk800A4354; /* size = 0x06 */
 
 typedef struct {
-	/* 0x06 */ u8 unk6;
-	/* 0x07 */ u8 unk7;
-	s32 unk4;
-	void* unk8;
-	void* unkC;
+	/* 0x00 */ s32 unk0;
+	/* 0x04 */ s32 unk4;
+	/* 0x08 */ void *unk8;
+	/* 0x0C */ void *unkC;
 } Frontend52690Entry;
 
 typedef struct {
@@ -302,6 +301,20 @@ typedef struct {
 	/* 0x09 */ u8 unk9;
 	/* 0x0A */ u8 unkA;
 } Frontend52690Unk8Motion;
+
+typedef struct {
+	/* 0x00 */ u8 active;
+	/* 0x01 */ u8 flags;
+	/* 0x02 */ s16 lifetime;
+	/* 0x04 */ s16 next;
+	/* 0x06 */ s16 previous;
+	/* 0x08 */ s16 position[3];
+	/* 0x0E */ s16 velocity[3];
+	/* 0x14 */ s16 duration;
+	/* 0x16 */ s16 unk16;
+	/* 0x18 */ u8 unk18;
+	/* 0x19 */ u8 pad19[3];
+} Frontend52690InterpolationParticle; /* size = 0x1C */
 
 typedef struct {
 	/* 0x00 */ s32 unk0;
