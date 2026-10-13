@@ -3039,7 +3039,7 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(3420): typed map and first-declared row; target frame, spills remain.
+// CURRENT(3165): byte tile-Z removes extra spill; signed origins retained.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
@@ -3088,7 +3088,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 
   {
     s32 worldZ;
-    s32 tileZ;
+    u8 tileZ;
     s16 bottom;
     s16 left;
     s16 top;

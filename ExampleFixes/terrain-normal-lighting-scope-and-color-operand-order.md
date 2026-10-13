@@ -128,3 +128,13 @@ The generic gDPLoadTLUT with count/tmem 256 is neutral. Expanding the
 initial, loop, or both pal256 helpers into their six SDK commands is
 also neutral, so outer helper scope does not account for origin spills.
 Restored the compact SDK helper version; wrapped ROM remains OK.
+
+Typed-map candidate improves 3420 to 3165 with u8 tileZ; the assignment
+already masks to 255, and a redundant word spill disappears while frame
+stays 0x118. Halfword worldZ is neutral, word palette scores 4519, bottom
+in outer scope 3388. Individual right/bottom coordinate copies are neutral
+in this candidate, swapped map fields 3167. Scoped volatile right read
+scores 3973, right/bottom reads 3215, halfword tileSize 3233. Casting
+origin coordinates to u8 scores 2843 but is not retained because it
+removes the target signed-division checks. Preserve signed origins with
+byte tileZ under NON_MATCHING; wrapped full ROM verifies OK.
