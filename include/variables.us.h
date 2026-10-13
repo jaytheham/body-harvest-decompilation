@@ -813,6 +813,8 @@ extern s32 D_800476AC;
 extern s32 D_800476B0;
 extern s32 D_800476C0;
 extern Unk800476C8 D_800476C8[2];
+extern s32 D_800476C8_words[16]; // Word view of the same matrix scratch buffer.
+extern s32 D_800476F0; // Scratch matrix entry at byte offset 0x28.
 extern Unk800476C8 D_80047708;
 extern s16 D_80047710;
 extern s16 D_80047712;
@@ -993,8 +995,8 @@ extern s16 D_80052B1C;
 extern VehicleInstance* D_80052B20;
 extern Unk80052B2C* D_80052B2C;
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
-extern s32 D_80052B38;
-extern s32 D_80052B3C;
+extern s32 D_80052B38; // CPU frame preparation time: elapsed time from the scheduler starting a frame until the gameplay thread signals that its work is complete, before graphics-task submission.
+extern s32 D_80052B3C; // Graphics-task completion latency: elapsed time from just after graphics-task submission until the scheduler receives its completion message.
 extern Unk80052B40 D_80052B40;
 extern s16 D_80052B44;
 extern Unk80052B48 D_80052B48;
@@ -1905,9 +1907,9 @@ extern s16 D_8013D5B4_14C564;
 extern s16 D_8013D5B8_14C568;
 extern s16 D_8013D5BC_14C56C;
 extern s16 D_8013D5C0_14C570[];
-extern s16 D_8013D5D0_14C580;
-extern s16 D_8013D5D4_14C584;
-extern s16 D_8013D5D8_14C588;
+extern SignedWord D_8013D5D0_14C580;
+extern SignedWord D_8013D5D4_14C584;
+extern SignedWord D_8013D5D8_14C588;
 extern s32 D_8013D5DC_14C58C;
 extern s32 D_8013D5E0_14C590;
 extern Vtx D_8013D5E8[4];
@@ -1977,6 +1979,7 @@ extern AlienInstance *D_80140AB0_14FA60[];
 extern s32 D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
 extern Lights1 D_80140C30_14FBE0;
+extern TextAnimationScale D_80140C68_14FC18;
 extern u8 D_80140C70[4];
 extern u8 D_80140C74[4];
 extern s32 D_80140C78;
@@ -1989,6 +1992,22 @@ extern s32 D_80140C94;
 extern s32 D_80140C98;
 extern s32 D_80140C9C;
 extern s32 D_80140CA0;
+extern u32 D_80140CC0_14FC70;
+extern s32 D_80140CDC_14FC8C;
+
+/* Distinct write views preserve folded state stores in func_80131280_140230. */
+extern s32 D_80140CB4_W;
+extern s32 D_80140CB8_W;
+extern s32 D_80140CBC_W;
+extern s32 D_80140CC0_W;
+extern s32 D_80140CC4_W;
+extern s32 D_80140CC8_W;
+extern s32 D_80140CC8_W_BUTTON;
+extern s32 D_80140CCC_W;
+extern s32 D_80140CD0_W;
+extern s32 D_80140CD4_W_BUTTON;
+extern s32 D_80140CDC_W_DEC;
+extern s32 D_80140CDC_W_RESET;
 extern Struct_80140D00 D_80140D00_14FCB0;
 extern Struct_80140D10 D_80140D10_14FCC0;
 extern u8 D_80140D17_14FCC7[];
@@ -2335,8 +2354,8 @@ extern s8 D_8014F203;
 extern s32 D_8014F204;
 extern s32 D_8014F208;
 extern u32 D_8014F20C;
-extern s32 D_8014F210[0x20][8];
-extern s32 D_8014F5F0[8];
+extern u32 D_8014F210[0x20][8];
+extern u32 D_8014F5F0[8];
 extern s32 D_8014F610;
 extern Unk8014F618 D_8014F618;
 extern s8 D_8014F67E;
@@ -2541,6 +2560,12 @@ extern s32 D_801575D0;
 extern s32 D_801575D4;
 extern s32 D_801575D8;
 extern s32 D_801575DC;
+extern s32 D_8013FC14_14EBC4[9];
+extern s32 D_8013FC38_14EBE8[9];
+extern s32 D_8013FC5C_14EC0C[9];
+extern f32 D_8013FC80_14EC30[10];
+extern PlayerRenderSettings D_8013FCA8_14EC58;
+extern u16 D_8013FCB4_14EC64;
 extern Unk801575E0 D_801575E0;
 extern s16 D_801575E4;
 extern s32 D_801575F8;
@@ -2873,7 +2898,7 @@ extern s32 D_8015F9EC;
 extern s16 D_8015F9F0;
 extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FA38;
-extern Unk8015FA40Entry D_8015FA40[];
+extern Unk8015FA40Entry D_8015FA40[24];
 extern Unk8015FAD0 D_8015FAD0[0x19];
 extern Unk8015FAD0 D_8015FF50;
 extern s16 D_8015FAEE;
@@ -2917,8 +2942,16 @@ extern s32 D_8016014C;
 extern s32 D_80160154;
 extern s32 D_80160158;
 extern s16 D_8016015C;
-extern s8 D_8016015E;
+extern u8 D_8016015E;
+extern const CameraFadeScale D_80145680_154630;
+extern const CameraFadeScale D_80145688_154638;
+extern const CameraFadeScale D_801456E8_154698;
+extern const CameraFadeScale D_801456F0_1546A0;
 extern s8 D_8016015F;
+extern u8 D_80140CF8_14FCA8;
+extern s16 D_80140CFC_14FCAC;
+extern s16 D_80140CFC_Reset;
+extern s16 D_80140CFC_Decrement;
 extern s32 D_80160160;
 extern s16 D_80160164;
 extern s16 D_80160166;
@@ -2996,6 +3029,7 @@ extern u8 D_80259470[];
 extern Unk80259490 D_80259490[128]; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
 extern Unk80259D90 D_80259D90[0x97];
+extern s16 D_8013BB14_14AAC4[46];
 extern u8 D_8025CCC0[];
 extern u8 D_8025D800;
 extern u8 D_8025EC40;
@@ -4083,6 +4117,8 @@ extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
 
+extern const f64 D_801451B8_154168[1];
+extern const ShadowGeometryConstant D_801451C0_154170;
 extern const ShadowGeometryConstant D_801449E0_153990;
 extern const ShadowGeometryConstant D_801449F0_1539A0;
 extern const ShadowGeometryConstant D_801449F8_1539A8;
@@ -4223,5 +4259,15 @@ extern const f64 D_80144DB8_153D68[1];
 
 extern LevelBeaconData D_8013D898_14C848;
 extern BeaconColor D_8013D8B0_14C860;
+
+extern u8 D_80160058_W;
+extern u8 D_8016006C_W;
+extern s32 D_80160070_INIT;
+extern u32 D_80140CB0_W_BUTTON;
+extern u8 D_8016006C_RESET;
+extern s32 D_80160070_FIRST;
+extern s32 D_80160070_LIMIT;
+extern u8 D_8016006D_W;
+
 
 #endif /* LIBULTRA_REFERENCE */

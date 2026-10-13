@@ -78,3 +78,7 @@ Call-site workarounds all fail and were measured: `*(u32 *)&currentLevel` (200 -
 `lbu`), `*(volatile s32 *)&currentLevel` (1760), the function-pointer cast
 `((void (*)(s32, s32))func_80011858_12458)(...)` (1420), and an `s32` local copy (495 - the extra home
 changes the frame). Do not re-tread them.
+
+### Decimal extraction (func_80004254_4E54)
+
+A simple s32 for-loop produces the target's peeled four-way unrolling. When an unsigned fraction and signed output are both multiplied by ten, use *arg3 *= 10U to share the unsigned constant with frac *= 10; signed 10 creates a second live constant and shifts the temp-register bank. Write frac &= 0x7FFFFF; frac *= 10 as separate statements to retain the mask in the fraction register. Verified zero diff and full ROM OK on 2026-10-12.

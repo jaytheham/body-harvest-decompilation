@@ -23,3 +23,9 @@ return 1;
 The integer cast inside the ternary preserves separate integer paths; without it, float promotion changes the conversion and branch sequence. Reusing absZ produces the target move of zero into v0 after the second multiply. The inverted final guard matches the target branch-delay return value.
 
 Declaration order matters for the stack: two unused leading s32 locals, clipping distance, angle, raw X delta, raw Z delta, X magnitude, Z magnitude. This gives the 0x50 frame, distance at 0x44, angle at 0x40, raw spills at 0x2C/0x28, converted spills at 0x24/0x20, and shared double at 0x18. Both the function diff and complete ROM verified exact.
+
+## Bounding-box frustum cull: source-exact, rodata unresolved
+
+func_800B960C_C85BC reaches score 5: every instruction and stack slot matches except the generated jump-table address (80142E7C instead of 80142E50). Keep the best body under NON_MATCHING when new split files are forbidden. Remove its placeholder table when enabling C. Moving the later explicit constants below the function in this C file does not fix IDO's rodata emission order.
+
+Use arg0/arg1 directly rather than separate center-coordinate copies. Load camera X, load camera Z, calculate the angle offset, then set the global visible flag. Declare the hit halfword before the loop index to retain stack offset 0x46. In the second proximity test, naming the absolute Z result gives the target height/delta/magnitude registers v1/v0/a0; an inline ternary leaves a 50-point register permutation. The first absolute X result remains inline.

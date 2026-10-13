@@ -11,8 +11,8 @@ const char D_80144370_153320[32] = "Animate player stop swimming\n"; // "Animate
 const char D_80144390_153340[20] = "PLAYER IS DYING\n"; // "PLAYER IS DYING\n"
 const char D_801443A4_153354[24] = "Selecting weapon:%d\n"; // "Selecting weapon:%d\n"
 const char D_801443BC_15336C[20] = "play shot anim\n"; // "play shot anim\n"
-const f64 D_801443D0_153380[1] = {180.0};
-const f64 D_801443D8_153388[1] = {180.0};
+const struct { f64 value; } D_801443D0_153380 = {180.0};
+const struct { f64 value; } D_801443D8_153388 = {180.0};
 const f64 D_801443E0_153390[1] = {180.0};
 const f64 D_801443E8_153398[1] = {3.141592654};
 const f64 D_801443F0_1533A0[1] = {3.141592654};
@@ -27,7 +27,7 @@ const u32 jtbl_80144420_1533D0[] = {
 	0x800EB5F0, 0x800EB5F0, 0x800EB624, 0x800EB624, 0x800EB5F8, 0x800EB600, 0x800EB608, 0x800EB610, 0x800EB618, 0x800EB620, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB624, 0x800EB5F0,
 };
 const f64 D_80144468_153418[1] = {3.141592654};
-const f64 D_80144470_153420[1] = {180.0};
+const struct { f64 value; } D_80144470_153420 = {180.0};
 const f64 D_80144478_153428[1] = {70.0};
 const f64 D_80144480_153430[1] = {180.0};
 const f64 D_80144488_153438[1] = {180.0};
@@ -191,8 +191,8 @@ s32 D_8013FC14_14EBC4[9] = {0x640, 0x1F40, 0, 0xDAC0, 0xBB80, 0x9C40, 0x7D00, 0x
 s32 D_8013FC38_14EBE8[9] = {0x1A, 0x1F, 0x1B, 0x20, 0x19, 0x1E, 0x1C, 0x1D, 0x1B};
 s32 D_8013FC5C_14EC0C[9] = {0x12, 0x12, 0x15, 0x14, 0x14, 0x14, 0x13, 0x12, 0x15};
 f32 D_8013FC80_14EC30[10] = {0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.0f, 0.4f, 0.5f, 0.6f, 0.7f};
-s32 D_8013FCA8_14EC58[3] = {75, -1761607786, 1677721600};
-u32 D_8013FCB4_14EC64[1] = {0};
+PlayerRenderSettings D_8013FCA8_14EC58 = {{0, 75, 0x96FF, 0xFF96, 0x6400}};
+u16 D_8013FCB4_14EC64 = 0;
 
 void func_800EA280_F9230(void) { D_80047948 = 0; D_80157E7C = 4; }
 
@@ -294,64 +294,29 @@ void func_800EA5B8_F9568(void) {
 }
 
 // CURRENT(3950)
-#ifdef NON_MATCHING
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	f32 diffX;
 	s32 pad0;
 	f32 diffY;
 	f32 diffZ;
 	f32 result;
-	f32 absDiffY;
-	s32 xPart;
-	s32 yPart;
-	s32 zPart;
 	s32 angle;
 
-	if (arg0[0] < 0) {
-		xPart = (arg0[0] + 3) >> 2;
-	} else {
-		xPart = arg0[0] >> 2;
-	}
-	diffX = arg1->x - xPart;
-
-	if (arg0[1] < 0) {
-		yPart = (arg0[1] + 3) >> 2;
-	} else {
-		yPart = arg0[1] >> 2;
-	}
-	diffY = arg1->y - (yPart + 0xE);
-
-	if (arg0[2] < 0) {
-		zPart = (arg0[2] + 3) >> 2;
-	} else {
-		zPart = arg0[2] >> 2;
-	}
-	diffZ = arg1->z - zPart;
-	angle = func_80003824_4424(sqrtf((diffX * diffX) + (diffZ * diffZ)), (diffY >= 0.0f) ? diffY : -diffY);
-
+	diffX = arg1->x - arg0[0] / 4;
+	diffY = arg1->y - (arg0[1] / 4 + 14);
+	diffZ = arg1->z - arg0[2] / 4;
+	angle = func_80003824_4424(sqrtf(diffX * diffX + diffZ * diffZ), (diffY >= 0.0f) ? diffY : -diffY);
 	if (diffY < 0.0f) {
-		absDiffY = (f32)(((f32) (angle & 0xFFFF) * D_801443D0_153380) / 32768.0);
-		absDiffY = (f32)( absDiffY / 40.0);
-		result = (f32)(( absDiffY * 0.5) + 0.5);
+		result = (f32)((f32)((f32)(((f32)(angle & 0xFFFF) * D_801443D0_153380.value) / 32768.0) / 40.0) * 0.5 + 0.5);
 	} else {
-		result = (f32)(0.5 - ((((f32) (angle & 0xFFFF) * D_801443D8_153388) / 32768.0 / 40.0) * 0.5));
+		result = (f32)(0.5 - (f32)((f32)(((f32)(angle & 0xFFFF) * D_801443D8_153388.value) / 32768.0) / 40.0) * 0.5);
 	}
-
-	if (result < 0.0f) {
-		result = 0.0f;
-	}
-	if (result > 1.0f) {
-		result = 1.0f;
-	}
-
+	if (result < 0.0f) result = 0.0f;
+	if (result > 1.0f) result = 1.0f;
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA604_F95B4.s")
-#endif
 
 // CURRENT(400)
-#ifdef NON_MATCHING
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
 	s32 temp_v1;
 	s32 var_a0;
@@ -377,31 +342,27 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 	} else {
 		var_v0_2 = -var_a0;
 	}
-	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390)) {
+	if (var_v0_2 < (s16) (s32) ((f64) ((arg4 / 2) * 32768.0f) / D_801443E0_153390[0])) {
 		return 0;
 	}
-	if ((var_a0 >= 0) && (arg0 >= -4)) {
-		return 2;
-	}
-	if ((var_a0 < 0) && (arg0 < 5)) {
-		return 1;
+	if (var_a0 >= 0) {
+		if (arg0 >= -4) {
+			return 2;
+		}
+	} else {
+		if ((var_a0 < 0) && (arg0 < 5)) {
+			return 1;
+		}
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA7DC_F978C.s")
-#endif
+
 
 // CURRENT(2645)
-#ifdef NON_MATCHING
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s32 abs_diff;
 	s32 v1;
-	s32 level;
 	s32 step;
-	s32 offset;
-	s32 entry_flags;
-	s32 entry_val;
 	s32 neg_step;
 
 	D_8015757C = 0;
@@ -420,57 +381,44 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	}
 
 	if ((v1 < -0x4000) && (D_80157A0C != 0xE) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
-		level = D_80157A0C;
-		offset = level * 0x34;
-		entry_flags = D_8013E5AC_14D55C[level].unk4;
 
-		if (entry_flags & 0x20) {
+		if (D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x20) {
 			D_8013E5AC_14D55C[14].unk4 |= 0x20;
 		} else {
 			D_8013E5AC_14D55C[14].unk4 &= ~0x20;
 		}
 
-		if (!(entry_flags & 0x100)) {
-			D_8013E5AC_14D55C[14].unk8 = level;
+		if (!(D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x100)) {
+			D_8013E5AC_14D55C[14].unk8 = D_80157A0C;
 		} else {
-			entry_val = D_8013E5AC_14D55C[level].unk8;
-			D_8013E5AC_14D55C[14].unk8 = entry_val;
+			D_8013E5AC_14D55C[14].unk8 = D_8013E5AC_14D55C[D_80157A0C].unk8;
 		}
 
 		func_800EB534_FA4E4(&D_80157600, ANIM_TURN_RIGHT, 0, 0);
 
-		step = (s16)(arg1 - arg0->unkE) / 7;
-		D_801575D4 = step;
+		D_801575D4 = (s16)(arg1 - arg0->unkE) / 7;
 		v1 = (s16)(arg0->unkE - arg1);
 	} else if ((v1 >= 0x4001) && (D_80157A0C != 0xF) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
-		level = D_80157A0C;
-		offset = level * 0x34;
-		entry_flags = D_8013E5AC_14D55C[level].unk4;
 
-		if (entry_flags & 0x20) {
+		if (D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x20) {
 			D_8013E5AC_14D55C[15].unk4 |= 0x20;
 		} else {
 			D_8013E5AC_14D55C[15].unk4 &= ~0x20;
 		}
 
-		if (!(entry_flags & 0x100)) {
-			D_8013E5AC_14D55C[15].unk8 = level;
+		if (!(D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x100)) {
+			D_8013E5AC_14D55C[15].unk8 = D_80157A0C;
 		} else {
-			entry_val = D_8013E5AC_14D55C[level].unk8;
-			D_8013E5AC_14D55C[15].unk8 = entry_val;
+			D_8013E5AC_14D55C[15].unk8 = D_8013E5AC_14D55C[D_80157A0C].unk8;
 		}
 
 		func_800EB534_FA4E4(&D_80157600, ANIM_TURN_LEFT, 0, 0);
 
-		step = (s16)(arg0->unkE - arg1) / 7;
-		D_801575D4 = step;
+		D_801575D4 = (s16)(arg0->unkE - arg1) / 7;
 		v1 = (s16)(arg0->unkE - arg1);
 	} else {
-		level = D_80157A0C;
-		offset = level * 0x34;
-		entry_flags = D_8013E5AC_14D55C[level].unk4;
 
-		if (!(entry_flags & 0x100)) {
+		if (!(D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x100)) {
 			D_801575D4 = 0x5DC;
 			v1 = (s16)(arg0->unkE - arg1);
 		}
@@ -487,53 +435,26 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 		arg0->unkE = arg1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EA8F8_F98A8.s")
-#endif
 
 // CURRENT(5156)
-#ifdef NON_MATCHING
 void func_800EABE0_F9B90(VehicleInstance *arg0) {
-	Vec3f sp2C;
-	u16 sp2A;
-	s32 temp;
-	s16 temp_v0;
-	UnkF9230TypeView *type;
-	f32 temp_f2;
+    Vec3f sp2C;
+    s16 sp2A;
+    s16 temp_v0;
+    f32 temp_f2;
+    UnkF9230TypeView *type;
 
-	temp = D_80159020->unk0;
-	if (temp < 0) {
-		temp += 3;
-	}
-	sp2C.x = (f32)(temp >> 2);
-
-	temp = D_80159020->unk2;
-	if (temp < 0) {
-		temp += 3;
-	}
-	sp2C.y = (f32)(temp >> 2);
-
-	temp = D_80159020->unk4;
-	if (temp < 0) {
-		temp += 3;
-	}
-	sp2C.z = (f32)(temp >> 2);
-
-	temp_f2 = func_800EA604_F95B4((s16 *)arg0, &sp2C);
-	{
-		Unk8013E45C *weaponEntry = &((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC];
-		temp_v0 = weaponEntry->unk1E;
-		sp2A = (u16)(s16)(s32)(((f32)temp_v0 * (1.0f - temp_f2)) + ((f32)-temp_v0 * temp_f2));
-
-		type = func_800FAFB8_109F68(arg0);
-		type->unk20 = weaponEntry->unk18;
-		type->unk22 = (s16)(s32)((weaponEntry->unk1C * ((f32)sins(sp2A) / 32768.0)) + (((f32)weaponEntry->unk1A * 64.0) / (f64)(f32)D_80157A3C));
-		type->unk24 = (s16)(s32)(((f32)coss(sp2A) / 32768.0) * weaponEntry->unk1C);
-	}
+    sp2C.x = D_80159020->unk0 / 4;
+    sp2C.y = D_80159020->unk2 / 4;
+    sp2C.z = D_80159020->unk4 / 4;
+    temp_f2 = func_800EA604_F95B4(&arg0->unk0, &sp2C);
+    temp_v0 = D_8013E45C_14D40C[D_801575DC].unk1E;
+    sp2A = (s16)(temp_v0 * (1.0f - temp_f2) + -temp_v0 * temp_f2);
+    type = func_800FAFB8_109F68(arg0);
+    type->unk20 = D_8013E45C_14D40C[D_801575DC].unk18;
+    type->unk22 = ((f32)D_8013E45C_14D40C[D_801575DC].unk1A * 64.0) / (f32)D_80157A3C + ((f32)sins(sp2A) / 32768.0) * D_8013E45C_14D40C[D_801575DC].unk1C;
+    type->unk24 = D_8013E45C_14D40C[D_801575DC].unk1C * ((f32)coss(sp2A) / 32768.0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EABE0_F9B90.s")
-#endif
 
 void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {
 	s32 flags;
@@ -736,12 +657,10 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
 
-// CURRENT(1351)
+// CURRENT(10)
 #ifdef NON_MATCHING
 // Do (player?) animation
-void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
-	Unk80157600 *player = arg0;
-	s32 state;
+void func_800EB534_FA4E4(Unk80157600 *player, s32 arg1, s32 arg2, f32 arg3) {
 	s32 shouldAnimate = 0;
 	s32 turnOffset = 0;
 
@@ -749,37 +668,32 @@ void func_800EB534_FA4E4(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 		osSyncPrintf(D_80144320_1532D0);
 	}
 
-	state = player->unk40C;
-
-	if (state >= 0x5C) {
-		if (state == 0x5C) {
-			shouldAnimate = 1;
-		}
-	} else if (state >= 0x29) {
-		if (state == 0x5B) {
-			shouldAnimate = 1;
-		}
-	} else {
-		switch (state) {
-		case 0x17:
-			turnOffset = 0x4000;
-			break;
-		case 0x18:
-			turnOffset = -0x4000;
-			break;
-		case 0x19:
-			turnOffset = -0x6000;
-			break;
-		case 0x1A:
-			turnOffset = -0x2000;
-			break;
-		case 0x1B:
-			turnOffset = 0x6000;
-			break;
-		case 0x1C:
-			turnOffset = 0x2000;
-			break;
-		}
+	switch (player->unk40C) {
+	case 0x17:
+	case 0x18:
+	case 0x28:
+	case 0x5B:
+	case 0x5C:
+		shouldAnimate = 1;
+		break;
+	case 0x1B:
+		turnOffset = 0x4000;
+		break;
+	case 0x1C:
+		turnOffset = -0x4000;
+		break;
+	case 0x1D:
+		turnOffset = -0x6000;
+		break;
+	case 0x1E:
+		turnOffset = -0x2000;
+		break;
+	case 0x1F:
+		turnOffset = 0x6000;
+		break;
+	case 0x20:
+		turnOffset = 0x2000;
+		break;
 	}
 
 	if (turnOffset != 0) {
@@ -1009,21 +923,21 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 
 // CURRENT(4219)
 #ifdef NON_MATCHING
+// CURRENT(2843)
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	VehicleInstance *vehicle;
-	f64 temp_f20;
 	s16 xOff;
 	s16 yOff;
 	s16 zOff;
-	s16 x;
-	s16 z;
+	s16 rotatedX;
+	s32 x;
+	s32 z;
 	f32 temp_f0;
 	f32 xOffF;
 	f32 zOffF;
 
 	D_80048188 = 1;
 	D_8004818C = 1;
-	temp_f20 = D_80144468_153418;
 
 	vehicle = &vehicleInstances[arg1];
 
@@ -1034,40 +948,46 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	yOff = (s8)vehicleTypes[vehicle->unk1A].unk5F;
 	zOff = (s8)vehicleTypes[vehicle->unk1A].unk60;
 
-	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
+	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0));
 
 	xOffF = (f32) xOff;
 	zOffF = (f32) zOff;
-	x = vehicle->unk0 + (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF));
+	rotatedX = (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0)) * zOffF));
 
-	temp_f0 = sinf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0));
-	z = vehicle->unk4 + (s16) (s32) ((cosf((f32) (( (f32) vehicle->unk6 * temp_f20) / 32768.0)) * zOffF) + (xOffF * temp_f0));
+	temp_f0 = sinf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0));
+	z = vehicle->unk4 + (s32) ((cosf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0)) * zOffF) + (xOffF * temp_f0));
 
+	x = vehicle->unk0 + rotatedX;
 	D_801575E0.unk6 = x;
 	D_801575E0.unkA = vehicle->unk2 + yOff;
 	D_801575E0.unkE = z;
-	D_801575E0.unk12 = func_80003824_4424((f32) (s16) (arg3->unk0 - x), (f32) (s16) (arg3->unk4 - z)) + 0x8000;
+	x = (s16)(arg3->unk0 - x);
+	z = (s16)(arg3->unk4 - z);
+	D_801575E0.unk12 = func_80003824_4424(x, z) + 0x8000;
 
 	D_80157E80 = arg0;
 	D_80157E82 = arg1;
 	D_80157E84 = arg2;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
 
 // CURRENT(378)
-#ifdef NON_MATCHING
 void func_800EC0D0_FB080(s32 arg0) {
+	s32 pad0[2];
 	s16 sp46;
 	s16 sp44;
 	s16 sp42;
 	s16 sp40;
-	f64 sp3C;
+	f32 sp3C;
 	s16 sp3A;
+	f32 pad;
+	s32 temp_f6;
 	f32 sp2C;
 	f32 sp28;
-	s32 temp_f6;
 	UnkBuildingProp_80118774 *temp_v1;
 
 	D_80048188 = 1;
@@ -1075,7 +995,7 @@ void func_800EC0D0_FB080(s32 arg0) {
 	D_801575E0.unk4 = 0;
 	D_801575E0.unk2 = 2;
 	if (D_80157F68 <= 0) {
-		temp_v1 = &D_80148390_157340[((u8 *)func_801164C4_125474(D_80052542, D_80052546))[8]];
+		temp_v1 = &D_80148390_157340[func_801164C4_125474(D_80052542, D_80052546)->pad8[0]];
 		if (temp_v1->unk0 == 0) {
 			if (D_80157F68 <= 0) {
 				gameplayMode = 6;
@@ -1088,8 +1008,8 @@ void func_800EC0D0_FB080(s32 arg0) {
 				D_801575E0.unk16 = 0x36;
 			}
 			func_801165FC_1255AC(D_80052543, D_80052547, &sp46, &sp44, &sp42, &sp40);
-			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420) / 32768.0);
-			switch (temp_f6) {
+			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420.value) / 32768.0);
+			switch ((s32)(((f64)(f32)sp40 * D_80144470_153420.value) / 32768.0)) {
 				case 0:
 				case 0x168:
 					sp3A = 0x4000;
@@ -1111,6 +1031,7 @@ void func_800EC0D0_FB080(s32 arg0) {
 					sp28 = 0.0f;
 					break;
 
+
 				case -0xB4:
 				case 0xB4:
 					sp3A = -0x4000;
@@ -1122,20 +1043,19 @@ void func_800EC0D0_FB080(s32 arg0) {
 					osSyncPrintf(D_80144354_153304, temp_f6);
 					break;
 			}
-			D_801575E0.unk6 = (s16)(sp46 + (s32)sp2C);
-			D_801575E0.unkE = (s16)(sp42 + (s32)sp28);
+			temp_f6 = sp44;
+			D_801575E0.unk6 = sp46 + (s32)sp2C;
+			D_801575E0.unkA = temp_f6;
+			D_801575E0.unkE = sp42 + (s32)sp28;
 			D_801575E0.unk8 = 0x7FFF;
 			D_801575E0.unkC = 0x7FFF;
 			D_801575E0.unk10 = 0x7FFF;
-			D_801575E0.unkA = sp44;
 			D_801575E0.unk12 = sp3A;
 		}
 	}
 	(void)arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC0D0_FB080.s")
-#endif
+
 
 void func_800EC330_FB2E0(void) {
 	Unk800522C0 *temp_v0;
@@ -1148,7 +1068,6 @@ void func_800EC330_FB2E0(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800EC3A0_FB350(s16 arg0) {
 	switch (arg0) {
 		case 4:
@@ -1160,7 +1079,6 @@ void func_800EC3A0_FB350(s16 arg0) {
 				D_801575E0.unk6 = 0x7FFF;
 				D_801575E0.unkA = 0x7FFF;
 				D_801575E0.unkE = 0x7FFF;
-				return;
 			}
 			return;
 
@@ -1170,9 +1088,10 @@ void func_800EC3A0_FB350(s16 arg0) {
 			return;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC3A0_FB350.s")
-#endif
+
+
+static void func_800EC448_stub(void) {
+}
 
 void func_800EC450_FB400(void) { D_80157A28 |= PLAYER_STATE_FLAG_WARPING; }
 
@@ -1478,78 +1397,33 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s")
 #endif
 
-// CURRENT(4925)
-#ifdef NON_MATCHING
-s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
+s32 func_800ED55C_FC50C(VehicleInstance *arg0, s32 arg1) {
 	s32 compareAngle;
 	s32 bestDiff;
 	s32 bestResult;
 	s32 angleDiff;
-	s16 i;
+	s32 i;
 	s32 localThresholds[9];
 	s32 localHighResults[9];
 	s32 localLowResults[9];
-	s32 *src;
-	s32 *dst;
+	s32 pad0;
 	s32 playerAngle;
 
-	playerAngle = (s16)arg0->unkE;
+	*(AnimationDirectionTable *)localThresholds = *(AnimationDirectionTable *)D_8013FC14_14EBC4;
+	*(AnimationDirectionTable *)localHighResults = *(AnimationDirectionTable *)D_8013FC38_14EBE8;
+	*(AnimationDirectionTable *)localLowResults = *(AnimationDirectionTable *)D_8013FC5C_14EC0C;
 
-	src = D_8013FC14_14EBC4;
-	dst = localThresholds;
-	while (src != (D_8013FC14_14EBC4 + 9)) {
-		dst[0] = src[0];
-		dst[1] = src[1];
-		dst[2] = src[2];
-		src += 3;
-		dst += 3;
-	}
-
-	src = D_8013FC38_14EBE8;
-	dst = localHighResults;
-	while (src != (D_8013FC38_14EBE8 + 9)) {
-		dst[0] = src[0];
-		dst[1] = src[1];
-		dst[2] = src[2];
-		src += 3;
-		dst += 3;
-	}
-
-	src = D_8013FC5C_14EC0C;
-	dst = localLowResults;
-	while (src != (D_8013FC5C_14EC0C + 9)) {
-		dst[0] = src[0];
-		dst[1] = src[1];
-		dst[2] = src[2];
-		src += 3;
-		dst += 3;
-	}
-
-	compareAngle = (playerAngle + 0x10000) % 0x10000;
-	compareAngle = ((arg1 + 0x18000) % 0x10000) - compareAngle;
-	compareAngle = (compareAngle + 0x14000) % 0x10000;
-	angleDiff = localThresholds[0] - compareAngle;
-	if (angleDiff < 0) {
-		angleDiff = -angleDiff;
-	}
-
+	playerAngle = (arg0->unkE + 0x10000) % 0x10000;
 	bestDiff = 0xFA00;
 	bestResult = 0x1A;
-
-	if (angleDiff < 0xFA00) {
-		bestDiff = angleDiff;
-		bestResult = localLowResults[0];
-		if (D_80157A3E >= 0x46) {
-			bestResult = localHighResults[0];
+	compareAngle = ((arg1 + 0x18000) % 0x10000) - playerAngle;
+	compareAngle = (compareAngle + 0x14000) % 0x10000;
+	for (i = 0; i < 9; i++) {
+		if (localThresholds[i] - compareAngle >= 0) {
+			angleDiff = localThresholds[i] - compareAngle;
+		} else {
+			angleDiff = -(localThresholds[i] - compareAngle);
 		}
-	}
-
-	for (i = 1; i < 9; i += 2) {
-		angleDiff = localThresholds[i] - compareAngle;
-		if (angleDiff < 0) {
-			angleDiff = -angleDiff;
-		}
-
 		if (angleDiff < bestDiff) {
 			bestDiff = angleDiff;
 			if (D_80157A3E >= 0x46) {
@@ -1558,30 +1432,9 @@ s32 func_800ED55C_FC50C(UnkF9230Func800ED55CArg0 *arg0, s32 arg1) {
 				bestResult = localLowResults[i];
 			}
 		}
-
-		angleDiff = localThresholds[i + 1] - compareAngle;
-		if (angleDiff < 0) {
-			angleDiff = -angleDiff;
-		}
-
-		if (angleDiff < bestDiff) {
-			bestDiff = angleDiff;
-			if (D_80157A3E >= 0x46) {
-				bestResult = localHighResults[i + 1];
-			} else {
-				bestResult = localLowResults[i + 1];
-			}
-		}
-
-		i++;
-		i--;
 	}
-
 	return bestResult;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED55C_FC50C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
@@ -2115,26 +1968,22 @@ block_211:
 
 // https://decomp.me/scratch/ShNcq
 // CURRENT(268)
-// Residual is cfe temp-bank allocation: the &buf address, the -0x48 compare constant and
-// the buf.w0 load rotate through $v0/$a2/$a3/$t9 (target: address->v0, const->a2, w0->t9).
-// 13 declaration/init/type variants all floor at 268; not a source-shape question.
-#ifdef NON_MATCHING
 // Is first weapon model valid
 // AI - Checks whether the alien type's first weapon model slot is a valid, non-empty entry
 s32 func_800EF0B0_FE060(s32 arg0)
 {
-  Gwords buf;
-  Gwords *ptr;
+  ShadowModelCommand buf;
+  ShadowModelCommand *ptr;
   s32 count;
   s32 sum;
-  ptr = (s32 *) func_80012000_12C00(arg0);
+  ptr = (ShadowModelCommand *) func_80012000_12C00(arg0);
   count = 0;
   sum = 0;
  do {
 	buf = *ptr++;
 	count++;
-	sum += (s8)buf.w0;
-} while ((s8)buf.w0 != -0x48 || count >= 0x39);
+	sum += buf.command.opcode;
+} while (buf.command.opcode != -0x48 || count >= 0x39);
 	
   if (currentControllerStates[1].button & 0x2000)
   {
@@ -2146,39 +1995,31 @@ s32 func_800EF0B0_FE060(s32 arg0)
   }
   return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF0B0_FE060.s")
-#endif
 
-// CURRENT(6578)
+
+// CURRENT(6091)
 #ifdef NON_MATCHING
 // This checks the player modifier and writes values that cause either
 // normal or black adam to be rendered
 void func_800EF14C_FE0FC(VehicleInstance *arg0) {
+	s32 count;
+	s32 timer;
+	Mtx *matrix;
 	struct {
 		s32 unk0;
 		s32 unk4;
 		s32 unk8;
 	} spAC;
-	Unk80052B40 spA8;
-	Unk80052B40 spA4;
-	Unk80052B40 sp9C;
+	s16 spA8[3];
+	s16 sp9C[3];
+	s16 spA4[3];
 	f32 sp6C[10];
-	struct {
-		s32 unk0;
-		s32 unk4;
-		u16 unk8;
-	} sp60;
-	s32 i;
-	u16 timer;
+	PlayerRenderSettings sp60;
 
-	for (i = 0; i < 10; i++) {
-		((s32 *)sp6C)[i] = ((s32 *)D_8013FC80_14EC30)[i];
-	}
 
-	sp60.unk0 = D_8013FCA8_14EC58[0];
-	sp60.unk4 = D_8013FCA8_14EC58[1];
-	sp60.unk8 = ((u16 *)D_8013FCA8_14EC58)[4];
+
+	*(AnimationScaleTable *)sp6C = *(AnimationScaleTable *)D_8013FC80_14EC30;
+	sp60 = D_8013FCA8_14EC58;
 
 	if (D_80157A3C != 0) {
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -2187,66 +2028,66 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 		func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-		spA8.unk0 = ((s16 *)arg0)[0];
-		spA8.unk2 = ((s16 *)arg0)[1];
-		spA8.unk4 = ((s16 *)arg0)[2];
-		spA4.unk2 = 0;
-		spA4.unk4 = 0;
-		spA4.unk0 = 0x4000 - ((s16 *)arg0)[7];
-		sp9C.unk2 = (s16)(0x1000 / (D_80157A3C + 1));
-		sp9C.unk0 = D_80157A3C;
-		sp9C.unk4 = D_80157A3C;
+		spA8[0] = arg0->unk0;
+		spA8[1] = arg0->unk2;
+		spA8[2] = arg0->unk4;
+		spA4[1] = 0;
+		spA4[2] = 0;
+		spA4[0] = 0x4000 - arg0->unkE;
+		sp9C[1] = (s16)(0x1000 / (D_80157A3C + 1));
+		sp9C[0] = D_80157A3C;
+		sp9C[2] = D_80157A3C;
 
-		func_800039D0_45D0(&spA8, &spA4, &sp9C, D_8005BB38);
+		func_800039D0_45D0((Unk80052B40 *)spA8, (Unk80052B40 *)spA4, (Unk80052B40 *)sp9C, D_8005BB38);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 		spAC.unk0 = 0;
 		spAC.unk8 = 0;
-		spA4.unk0 = D_80157600.unk2 << 3;
-		spA4.unk2 = D_80157600.unk4 << 3;
-		spA4.unk4 = D_80157600.unk0 << 3;
+		spA4[0] = D_80157600.unk2 << 3;
+		spA4[1] = D_80157600.unk4 << 3;
+		spA4[2] = D_80157600.unk0 << 3;
 		spAC.unk4 = (s32)(D_80157600.unkC * 65536.0f);
 
-		func_8000C81C_D41C(&spAC.unk0, &spA4, NULL, (s32 *)D_8005BB38);
+		func_8000C81C_D41C(&spAC.unk0, (Unk80052B40 *)spA4, NULL, (s32 *)D_8005BB38);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 		gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
-		gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(*(s32 *)((u8 *)D_8013E45C_14D40C + 0x14 + (D_801575DC << 5))));
+		gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(*(s32 *)D_8013E45C_14D40C[D_801575DC].pad14));
 
 		func_8000CC3C_D83C(&D_80157600, 0x10);
 
-		sp9C.unk2 = 0x100;
-		sp9C.unk0 = 0x100;
-		sp9C.unk4 = 0x100;
+		sp9C[1] = sp9C[0] = sp9C[2] = 0x100;
 		if ((D_80157600.unk40C == 0x38) && (func_800EB9B4_FA964(&D_80157600) == 3)) {
-			if (((u16 *)D_8013FCB4_14EC64)[0] == 0) {
+			count = D_8013FCB4_14EC64;
+			if (count == 0) {
 				func_800D0614_DF5C4(D_80052B34->unk0, D_80052B34->unk2 + 0x36, D_80052B34->unk4, 0x55, 0xFA, 0xA0, 0x50,
 								 0);
 				func_80001144_1D44(0x14, 0, 5);
 				func_801371B8_146168(0, 0x16A, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 1.0f);
-				((u16 *)D_8013FCB4_14EC64)[0] = 5;
+				count = 5; D_8013FCB4_14EC64 = count;
 			}
 
-			sp9C.unk2 = (s16)(sp6C[(s32)func_800EB9BC_FA96C(&D_80157600)] * 256.0f);
-			sp9C.unk0 = sp9C.unk2;
-			sp9C.unk4 = sp9C.unk2;
+			sp9C[1] = (s16)(sp6C[(s32)func_800EB9BC_FA96C(&D_80157600)] * 256.0f);
+			sp9C[0] = sp9C[1];
+			sp9C[2] = sp9C[1];
 		}
 
-		i = D_8005BB38;
-		D_8005BB38 += 0x40;
-		func_800039D0_45D0(NULL, NULL, &sp9C, i);
+		matrix = D_8005BB38;
+		D_8005BB38++;
+		func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)sp9C, matrix);
 
-		timer = (u16)D_8013FCB4_14EC64[0];
-		if (timer > 0) {
-			((u16 *)D_8013FCB4_14EC64)[0] = timer;
+		count = D_8013FCB4_14EC64;
+		timer = count;
+		if (count > 0) {
+			D_8013FCB4_14EC64 = count;
 			if (gameplayMode == 1) {
-				timer = timer - 1;
-				((u16 *)D_8013FCB4_14EC64)[0] = timer;
+				count--;
+				D_8013FCB4_14EC64 = timer = (u16)count;
 			}
 		}
 
 		if (timer >= 6) {
-			((u16 *)D_8013FCB4_14EC64)[0] = 5;
+			count = 5; D_8013FCB4_14EC64 = count;
 		}
 
 		if (D_80052ACD & D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL) {
@@ -2263,13 +2104,11 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 
 // CURRENT(491)
 // Black Adam animations controller? called by his behavior function
-#ifdef NON_MATCHING
 s32 func_800EF650_FE600(AlienInstance *arg0) {
-	s32 pad;
-	s32 pad2;
+	s32 pad3[2];
 	s32 sp34;
-	s32 pad3;
 	f32 sp2C;
+
 
 	sp34 = arg0->unk12 >> 5;
 	if (sp34 < 2) {
@@ -2281,8 +2120,8 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 	func_800EBA54_FAA04((Unk80052B40 *) arg0, D_80157A48.unk40C, &D_80157A48);
 
-	{
-			if (((temp & 0x40000000) == 0) && (D_80157E70 == 0)) {
+	if ((arg0->unk20 & 0x80000000) && (D_80157E78 == 0)) {
+			if (((arg0->unk20 & 0x40000000) == 0) && (D_80157E70 == 0)) {
 				osSyncPrintf(D_801443BC_15336C);
 				func_800EB534_FA4E4(&D_80157A48, (D_80157E74 >> 0xE) + 0x14, 0, 0);
 			}
@@ -2295,12 +2134,12 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 
 	if ((arg0->unk20 & ALIEN_FLAG_UNKD) && ((D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) == 0)) {
 		arg0->unk12 = 0;
-		func_800EB534_FA4E4(&D_80157A48, ((Unk8013E45C *)D_8013E45C_14D40C)[D_80157E7C].unk08, 0, 0);
+		func_800EB534_FA4E4(&D_80157A48, D_8013E45C_14D40C[D_80157E7C].unk08, 0, 0);
 	}
 
 	if (D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x80) {
 		if (func_800EB9C4_FA974(D_80157E7C, &D_80157A48) != 0) {
-			func_80087188_96138((((s32) arg0 - (s32) alienInstances) / 0x50) & 0xFF, 0, 0x18);
+			func_80087188_96138((u8)(arg0 - alienInstances), 0, 0x18);
 		}
 
 		if ((((Unk8007F878_404 *) D_80157A48.unk404)->unkE50 == 0) && ((arg0->unk20 & ALIEN_FLAG_UNKD) == 0)) {
@@ -2334,7 +2173,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 			D_80157A48.unk410
 		);
 	} else {
-		func_8000CF4C_DB4C(D_80157A48.unk404, &D_80157A48, 0x10, *(s32 *) &D_80157A48.unk410);
+		func_8000CF4C_DB4C(D_80157A48.unk404, &D_80157A48, 0x10, *(s32 *)&D_80157A48.unk410);
 	}
 
 	if (D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) {
@@ -2345,18 +2184,14 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF650_FE600.s")
-#endif
 
 // CURRENT(34)
-#ifdef NON_MATCHING
 // AI - Builds the model-view matrix stack for an alien and draws its animated model
 void func_800EF9F0_FE9A0(s16 arg0)
 {
 	s32 modelDisplayList;
-	AlienInstance *alien;
 	Unk80052B40 sp5C;
+	AlienInstance *alien;
 	s32 spPad[2];
 	Unk80052B40 sp48;
 	s32 spBot;
@@ -2383,9 +2218,7 @@ void func_800EF9F0_FE9A0(s16 arg0)
 	func_8000CC3C_D83C((AnimChannelState *)(&D_80157A48), 0x10);
 	gSPDisplayList(D_8005BB2C++, modelDisplayList);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF9F0_FE9A0.s")
-#endif
+
 
 void func_800EFC28_FEBD8(u8 arg0) {
 	s16 idx;
