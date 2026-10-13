@@ -2629,7 +2629,7 @@ void func_800B879C_C774C(void) {
 }
 
 /* Initialize crater creation parameters at a world position */
-// CURRENT(360)
+// CURRENT(180): instruction order matches; temporary registers remain.
 #ifdef NON_MATCHING
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F830 = 0;
@@ -2638,12 +2638,12 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	arg0++;
 	D_8014F850 = D_80142E48_151DF8[0];
 	D_8014F834 = (&arg2)[0];
-	D_8014F83C = arg0 - 0x30;
-	arg1++;
 	D_8014F840 = 0x60;
 	D_8014F842 = 0x60;
 	D_8014F846 = 0;
 	D_8014F848 = 0;
+	D_8014F83C = arg0 - 0x30;
+	arg1++;
 	D_8014F83E = arg1 - 0x30;
 	if (D_8014F83C < -0x80) {
 		D_8014F83C = -0x80;
@@ -2667,67 +2667,61 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8C2C_C7BDC.s")
 #endif
 
-/* Set shield wall bounds for the current stage variant, clamp to valid range */
-#ifdef NON_MATCHING
-// CURRENT(1525)
-void func_800B8D80_C7D30(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
-	s32 temp_v1;
-	s32 temp_v1_2;
-	s32 temp_v1_3;
-	s32 temp_v1_4;
-	s16 var_a0;
-	s16 var_s0;
-	s16 var_s1;
-	s16 var_s5;
-	s16 var_s6;
-	s16 var_s7;
-	s32 temp_t2;
-	s32 temp_t7;
+/* Register the clamped tile region around a world position for lighting updates. */
+void func_800B8D80_C7D30(s16 worldX, s16 worldZ, s16 radius, s32 unused) {
+	s32 value;
+	s16 minX;
+	s16 z;
+	s16 x;
+	s16 maxZ;
+	s16 minZ;
+	s16 maxX;
+	s32 tileX;
+	s32 tileZ;
 
-	temp_t2 = (arg0 + 0x80) >> 8;
-	temp_v1 = (s16)temp_t2 - arg2;
-	if (temp_v1 < -0x7F) {
-		var_a0 = -0x7F;
+	tileX = (worldX + 0x80) >> 8;
+	value = (s16)tileX - radius;
+	if (value < -0x7F) {
+		minX = -0x7F;
 	} else {
-		var_a0 = temp_v1;
+		minX = value;
 	}
-	temp_v1_2 = (s16)temp_t2 + arg2;
-	if (temp_v1_2 >= 0x81) {
-		var_s7 = 0x80;
+	value = (s16)tileX + radius;
+	if (value >= 0x81) {
+		maxX = 0x80;
 	} else {
-		var_s7 = temp_v1_2;
+		maxX = value;
 	}
-	temp_t7 = (arg1 + 0x80) >> 8;
-	temp_v1_3 = (s16)temp_t7 - arg2;
-	if (temp_v1_3 < -0x7F) {
-		var_s6 = -0x7F;
+	tileZ = (worldZ + 0x80) >> 8;
+	value = (s16)tileZ - radius;
+	if (value < -0x7F) {
+		minZ = -0x7F;
 	} else {
-		var_s6 = temp_v1_3;
+		minZ = value;
 	}
-	temp_v1_4 = (s16)temp_t7 + arg2;
-	if (temp_v1_4 >= 0x81) {
-		var_s5 = 0x80;
+	value = (s16)tileZ + radius;
+	if (value >= 0x81) {
+		maxZ = 0x80;
 	} else {
-		var_s5 = temp_v1_4;
+		maxZ = value;
 	}
-	var_s1 = var_a0;
-	if (var_s7 >= var_a0) {
+	/* Reuse expired calculations to retain IDO's unused saved registers. */
+	value = 0; tileX = 0; tileZ = 0;
+	x = minX;
+	if (maxX >= minX) {
 		do {
-			var_s0 = var_s6;
-			if (var_s5 >= var_s6) {
+			z = minZ;
+			if (maxZ >= minZ) {
 				do {
-					func_800B415C_C310C(var_s1, var_s0);
-					var_s0 += 1;
-				} while (var_s5 >= var_s0);
+					func_800B415C_C310C(x, z); if (x) { value ^= 0; tileX ^= 0; tileZ ^= 0; }
+					z += 1;
+				} while (maxZ >= z);
 			}
-			var_s1 += 1;
-		} while (var_s7 >= var_s1);
+			x += 1;
+		} while (maxX >= x);
 	}
 	func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B8D80_C7D30.s")
-#endif
 
 /* Initialize crater at nearest tile center to (arg0, arg1) with given brightness */
 // CURRENT(1338)
