@@ -3926,21 +3926,19 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	return 0;
 }
 
-// CURRENT(3350): implicit trig narrowing and reused radius/angle locals.
+// CURRENT(3321): target frame and byte home; phase allocation remains.
 #ifdef NON_MATCHING
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	s16 i;
 	s16 temp_s2;
 	s16 temp_s5;
-	u8 spE9;
+	u8 var_v0;
 	s32 var_s2;
-	s32 var_s3;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
 	s32 temp_fp;
 	s32 pulse;
 	s32 var_a0;
-	u8 var_v0;
 	f64 temp_f22;
 	s32 spCC;
 
@@ -3951,18 +3949,18 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 
 	if ((var_a0 + 0xC8) < arg1) {
-		var_s2 = (arg3 * 4) - ((s32)spE9 / 4);
+		var_s2 = (arg3 * 4) - ((s32)var_v0 / 4);
 		spCC = var_s2 + 0x3C;
 	} else {
-		var_s2 = (arg3 * 2) - ((s32)spE9 / 4);
+		var_s2 = (arg3 * 2) - ((s32)var_v0 / 4);
 		spCC = var_s2 + 0x1E;
 	}
 
-	var_s3 = (u8)(D_80052A8C & 0x1F);
-	if ((u32)var_s3 >= 0x11) {
-		var_s3 = (0x20 - var_s3) & 0xFF;
+	var_a0 = (u8)(D_80052A8C & 0x1F);
+	if ((u32)var_a0 >= 0x11) {
+		var_a0 = (0x20 - var_a0) & 0xFF;
 	} else {
-		var_s3 = (u8)var_s3;
+		var_a0 = (u8)var_a0;
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -3983,23 +3981,23 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0xFF - (var_s3 * 7);
-	D_8005BB34->v.cn[1] = 0xFF - (var_s3 * 5);
+	D_8005BB34->v.cn[0] = 0xFF - (var_a0 * 7);
+	D_8005BB34->v.cn[1] = 0xFF - (var_a0 * 5);
 	D_8005BB34->v.cn[2] = 0xFF;
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	var_a0 = 0;
+	arg4 = 0;
 	temp_f22 = var_s2;
-	temp_fp = (var_s3 * 4) + 0x64;
-	pulse = var_s3;
+	temp_fp = (var_a0 * 4) + 0x64;
+	pulse = var_a0;
 	for (i = 0; i < 10; i++) {
-		var_s3 = (i << 0x10) / 10;
+		var_a0 = (i << 0x10) / 10;
 		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
 		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
 		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
@@ -4024,12 +4022,12 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	temp_f22 = spCC;
 	temp_fp = 0xB4 - (pulse * 6);
 	for (i = 0; i < 10; i++) {
-		var_s3 = (i << 0x10) / 10;
+		var_a0 = (i << 0x10) / 10;
 		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
 		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_s3)) / 32768.0) * temp_f22) + var_a0);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
 		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {

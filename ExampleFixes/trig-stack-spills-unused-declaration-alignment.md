@@ -56,3 +56,17 @@ word for alpha with literal double zero scores 14134; a named double zero
 scores 6559. Moving pulse last scores 3453; computing the pre-loop phase
 in the existing uninitialized byte scores 3394 and grows the frame.
 Restored the 3350 candidate and verified the wrapped full ROM OK.
+
+Gate checkpoint now retains 3321 with the exact 0xF0 frame and initial
+byte read at 0xE9. Reuse var_v0 for both the initial uninitialized byte
+and later alpha, declaring it after the coordinate shorts. This alone
+scores 3290 but retains frame 0xF8. Reuse the expired height word for
+phase/primary angle and set expired arg4 to zero for the double offset:
+this removes the remaining word home and yields 3321 with frame 0xF0.
+Keep that frame-correct candidate despite the small score increase.
+Separate explicit trig-result locals grow the frame and score 3457
+(short) or 3453 (word); expired arg0 reuse is neutral. Direct short or
+implicit destination narrowing is neutral. Moving radius before alpha
+or pulse scores 3374/3362; pulse last scores 3346. Phase still uses s2
+instead of s3, radius/pulse spills are wrong, and the extra phase MOVE
+and loop-entry instruction order remain unresolved.
