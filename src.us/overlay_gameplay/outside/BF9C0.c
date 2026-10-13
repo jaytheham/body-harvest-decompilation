@@ -1152,17 +1152,17 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(5653): chained zero colors restore RGB allocation; frame and spills remain.
+// CURRENT(5608): signed row offset and halfword base Y; frame and spills remain.
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
-	u32 baseXWord;
+	s32 baseXWord;
 	u8 row;
 	u8 col;
 	s32 i;
 	u8 mode;
 	u16 mapIndex;
 	f32 f0;
-	s32 baseY;
+	s16 baseY;
 	RingEntry *entry;
 	u8 spA0[3];
 	u8 spA8[3];

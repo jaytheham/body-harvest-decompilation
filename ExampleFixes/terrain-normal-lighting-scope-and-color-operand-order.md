@@ -167,3 +167,12 @@ existing word i is neutral. Zero-color target pattern has no matching
 donor. Current frame 0xC0 versus target 0xB8; flash timer allocation,
 neighbor/output array homes and later instruction scheduling remain.
 Retained chained assignment under NON_MATCHING; full wrapped ROM OK.
+
+Terrain color candidate improves 5653 to 5608 with signed-word row
+offset (5613) and halfword baseY (5608). Byte final-loop i scores 5754,
+scoping i to its final-loop block 5719, word mapIndex with narrowing
+only before neighbor offsets 6319. Do not narrow the entire neighbor
+index after +/-1 or +/-256: that changes boundary wrap behavior; the
+original narrows the center before adding a signed offset. Removing
+unused mode is neutral. Preserve valid neighbor indexing and the signed
+row/halfword-base candidate under NON_MATCHING; wrapped ROM is OK.
