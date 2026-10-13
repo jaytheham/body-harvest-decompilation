@@ -6121,10 +6121,6 @@ const f64 D_800A4B90_18CC50[1] = {180.0};
 
 const f32 D_800A4B98_18CC58[1] = {0.4000000059604645f};
 
-const u32 jtbl_800A4B9C_18CC5C[] = {
-	0x8007B3A8, 0x8007B3E4, 0x8007B350, 0x8007B410, 0x8007B470,
-};
-
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -10717,70 +10713,54 @@ void func_8007B1E0_1632A0(s32 arg0)
 	D_800E6638 = 0;
 }
 
-// jtbl_800A4B9C_18CC5C
-// CURRENT(465)
 // AI - Handles mission-related room events
-#ifdef NON_MATCHING
 s32 func_8007B2F0_1633B0(s32 arg0) {
 	s32 roomId;
-	s16 *interiorFlagsPtr;
-	u32 ret;
+	s32 unused; /* Keeps the result's original stack home at sp+0x24. */
+	s32 ret;
 	s32 switchValue;
 
 	ret = 1;
-	switchValue = D_800E66A8[arg0].unk2C & 0xE0;
-	switchValue >>= 5;
 	roomId = ((D_800E66A8[arg0].unk2C & 0x1C) >> 2) + 0x38;
+	switchValue = (D_800E66A8[arg0].unk2C & 0xE0) >> 5;
 
 	switch (switchValue) {
-		case 0:
+		case 2:
 			if (func_8000726C_7E6C(roomId) != 0) {
 				func_800073B8_7FB8(roomId);
 			} else {
 				func_800072CC_7ECC(roomId);
 			}
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			break;
+
+		case 0:
+			func_800072CC_7ECC(roomId);
+			ret = func_8007B51C_1635DC(roomId);
 			break;
 
 		case 1:
-			func_800072CC_7ECC(roomId);
-			ret = func_8007B51C_1635DC(roomId);
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			break;
-
-		case 2:
 			func_800073B8_7FB8(roomId);
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			break;
 
 		case 3:
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
+			if (!(D_80047970[buildingInteriorToLoadId] & (1 << D_800E662C))) {
 				func_800072CC_7ECC(roomId);
-				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			}
 			break;
 
 		case 4:
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
+			if (!(D_80047970[buildingInteriorToLoadId] & (1 << D_800E662C))) {
 				func_800073B8_7FB8(roomId);
-				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			}
 			break;
 
 		default:
 			osSyncPrintf(D_800A49EC_18CAAC);
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			break;
 	}
 
-	*interiorFlagsPtr = *interiorFlagsPtr | (1 << arg0);
+	D_80047970[buildingInteriorToLoadId] |= 1 << arg0;
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B2F0_1633B0.s")
-#endif
 
 // AI - Handles special mission logic for Level 4 building 0x20
 s32 func_8007B51C_1635DC(s32 arg0) {
