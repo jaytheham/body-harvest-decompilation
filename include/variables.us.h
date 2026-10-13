@@ -2902,7 +2902,7 @@ extern s32 D_8015F9EC;
 extern s16 D_8015F9F0;
 extern s16 D_8015F9F8[8][4];
 extern s16 D_8015FA38;
-extern Unk8015FA40Entry D_8015FA40[];
+extern Unk8015FA40Entry D_8015FA40[24];
 extern Unk8015FAD0 D_8015FAD0[0x19];
 extern Unk8015FAD0 D_8015FF50;
 extern s16 D_8015FAEE;
@@ -3033,6 +3033,7 @@ extern u8 D_80259470[];
 extern Unk80259490 D_80259490[128]; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
 extern Unk80259D90 D_80259D90[0x97];
+extern s16 D_8013BB14_14AAC4[46];
 extern u8 D_8025CCC0[];
 extern u8 D_8025D800;
 extern u8 D_8025EC40;
@@ -4126,6 +4127,8 @@ extern const InteriorAngleScale D_800A4A00_18CAC0;
 
 extern const f64 D_801441E8_153198[1];
 
+extern const f64 D_801451B8_154168[1];
+extern const ShadowGeometryConstant D_801451C0_154170;
 extern const ShadowGeometryConstant D_801449E0_153990;
 extern const ShadowGeometryConstant D_801449F0_1539A0;
 extern const ShadowGeometryConstant D_801449F8_1539A8;

@@ -53,3 +53,9 @@ The companion `func_8010CA38_11B9E8` matches all 337 instructions with the same 
 ## Vehicle death: cache the existing divisor and retain the offset lifetime
 
 func_80123AC4_132A74 matches without splitting rodata. Cache D_80145160_154110[0] in the existing double divisor before the two-iteration loop. Inline reads reload it across helper calls and lose the saved f20 register, changing the frame. Assign 0.25 to the existing offset double and place an empty if (offset) {} immediately before caching the divisor. The check is optimized away, but it orders the offset's LUI/MTC1 setup before the divisor's LUI/LDC1, reproducing the target interleave. Without that check the entire residual is this five-instruction setup order (score 280). The original one-element constant array remains byte-for-byte at its original address; an aggregate is unnecessary, and a scalar const moves into data. Zero function diff and full-ROM checksum OK confirm the match.
+
+## Beam renderer partial checkpoint
+
+In func_80128E48_137DF8, the ROM's middle-point factor is the existing 0.7 constant, rather than the initial reconstruction's 0.5. Changing its one-element double array to ShadowGeometryConstant and reading .value keeps the eight-byte placeholder and restores the target's late ldc1 and computed-value-first mul.d. No new translation unit is needed.
+
+Repeat the half-distance expressions in sqrtf and the three direction conversions instead of declaring three integer carriers: IDO shares the expressions across sqrtf, generates exactly three word saves, and retains the normalized directions. Multiply sqrtf's result by integer 2; 2.0f becomes add.s, and 2.0 introduces double arithmetic. The retained candidate is still NON_MATCHING; endpoint parameter stores and frame/register allocation remain.

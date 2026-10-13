@@ -31,7 +31,7 @@ const u32 jtbl_80145168_154118[20] = {
 };
 
 const f64 D_801451B8_154168[1] = {0.05};
-const f64 D_801451C0_154170[1] = {0.7};
+const ShadowGeometryConstant D_801451C0_154170 = {0.7};
 const f32 D_801451C8_154178[1] = {3000.0f};
 
 const u32 jtbl_801451CC_15417C[13] = {
@@ -653,17 +653,25 @@ void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
 	}
 }
 
-// CURRENT(13067)
-#ifdef NON_MATCHING
-void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, VehicleInstance *arg5) {
-	s32 radiusSq;
+void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, void *arg5) {
+	u32 dist;
+	f32 pushScale;
+	s32 dx, dy, dz;
+	u32 distSq;
+	VehicleType *vehType;
+	s32 unused; /* Preserve the original private-local stack layout. */
+	s32 limit = 0x10001;
+	s32 damage;
+	s32 result;
 	s32 count;
 	f32 scale;
-	VehicleInstance *vehicle;
-	AlienInstance *alien;
-	BuildingInstance *building;
-
-
+	union {
+		VehicleInstance *vehicle;
+		AlienInstance *alien;
+		BuildingInstance *building;
+	} entity;
+	s32 hitObj;
+	s32 radiusSq;
 	arg4 = arg4 >> 2;
 	if (arg4 == 0) {
 		return;
@@ -673,58 +681,44 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, Vehi
 	scale = (f32)arg3 / (f32)radiusSq;
 
 	count = D_80158FD8;
-	if (count != 0) {
-		u8 *activeList;
-		s32 dx;
-		s32 dy;
-		s32 dz;
-		u32 distSq;
-		u32 dist;
-		s32 damage;
-		s32 result;
-		f32 pushScale;
-		s32 hitObj;
-		count--;
-		activeList = &D_80158E80[count];
-do {
-vehicle = &vehicleInstances[*activeList];
+	if (count--) {
+		do {
+			entity.vehicle = &vehicleInstances[D_80158E80[count]];
 
-			if (((vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (vehicle != arg5)) {
+			if (((entity.vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (entity.vehicle != arg5)) {
 
-				VehicleType *vehType;
-
-				vehType = &vehicleTypes[vehicle->unk1A];
-				dx = (arg0 - vehicle->unk0) >> 2;
-				dy = (arg1 - vehicle->unk2) >> 2;
-				dz = (arg2 - vehicle->unk4) >> 2;
+				vehType = &vehicleTypes[entity.vehicle->unk1A];
+				dx = (arg0 - entity.vehicle->unk0) >> 2;
+				dy = (arg1 - entity.vehicle->unk2) >> 2;
+				dz = (arg2 - entity.vehicle->unk4) >> 2;
 				distSq = (dx * dx) + (dy * dy) + (dz * dz);
 				if ((u32)radiusSq >= distSq) {
 					dist = (u32)sqrtf((f32)distSq);
 					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 					if (damage != 0) {
-result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->unk2 + vehType->unk38, vehicle->unk4, &hitObj);
+						result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, entity.vehicle->unk0, entity.vehicle->unk2 + vehType->unk38, entity.vehicle->unk4, &hitObj);
 						if (result == 3) {
 							damage >>= 2;
-						} else if ((VehicleInstance *)hitObj != vehicle) {
+						} else if ((VehicleInstance *)hitObj != entity.vehicle) {
 							damage >>= 1;
 						}
 
 						if (result != 8) {
-							if ((arg3 == 0x2711) && (vehicle->unk1A == 0x12) && (currentLevel == 1)) {
+							if ((arg3 == 0x2711) && (entity.vehicle->unk1A == 0x12) && (currentLevel == 1)) {
 								D_8015FA38 = 1;
 							} else {
 								D_8015FA38 = 0;
 							}
 
-							if ((vehicle != D_80052B34) || (D_8015F9EC == 0)) {
+							if ((entity.vehicle != D_80052B34) || (D_8015F9EC == 0)) {
 								if (damage >= 0x8000) {
 									damage = 0x7FFF;
 								}
-								func_80122524_1314D4(vehicle, (s16)damage, arg0, arg2);
+								func_80122524_1314D4(entity.vehicle, (s16)damage, arg0, arg2);
 							}
-							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2.0f) / (f32)vehicleTypes[vehicle->unk1A].unk32;
-							if (vehicle->unk1A == 0) {
-								func_80102D00_111CB0(vehicle, (f32)(((f32)dx * pushScale) / 100.0), (f32)((f64)-pushScale / 10.0), (f32)((f64)((f32)dz * pushScale) / 100.0));
+							pushScale = -(((f32)(damage << 5) / (f32)(dist + 1)) * 2) / (f32)vehicleTypes[entity.vehicle->unk1A].unk32;
+							if (entity.vehicle->unk1A == 0) {
+								func_80102D00_111CB0(entity.vehicle, (f32)(((f32)dx * pushScale) / 100.0), (f32)(-pushScale / 10.0), (f32)(((f32)dz * pushScale) / 100.0));
 								D_80052B34->unkA = 0x7FFF;
 								D_80052B34->unk8 = 0;
 								D_80052B34->unk22 = 0;
@@ -735,43 +729,33 @@ result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, vehicle->unk0, vehicle->un
 								D_80052B34->unk20 |= VEHICLE_FLAG_AIRBORNE;
 								func_800FB3E8_10A398(D_80052B34, 1.0f);
 							} else {
-								func_80102D00_111CB0(vehicle, (f32)(((f32)dx * pushScale) / 10.0), (f32)((f32)dy * pushScale), (f32)((f64)((f32)dz * pushScale) / 10.0));
+								func_80102D00_111CB0(entity.vehicle, (f32)(((f32)dx * pushScale) / 10.0), (f32)((f32)dy * pushScale), (f32)(((f32)dz * pushScale) / 10.0));
 							}
 						}
 					}
 				}
 			}
-			activeList--;
 		} while (count--);
 	}
 
-	alien = &alienInstances[0xFE];
-	for (count = 0xFE; count != 0; count--) {
-		s32 dx;
-		s32 dy;
-		s32 dz;
-		u32 distSq;
-		u32 dist;
-		s32 damage;
-		s32 result;
+	entity.alien = &alienInstances[0xFE];
+	count = 0xFE;
+	do {
 
-		if ((arg5 != (VehicleInstance *)alien) && ((currentLevel == 5) || (alien->typeIndex != 0x12)) && ((alien->unk1B == 0xFF) || (D_80047F94 == alien->unk1B)) && (alien->typeIndex != 0)) {
-			AlienType *alienType;
-			s32 hitObj;
+		if (((u32)arg5 != (u32)entity.alien) && ((currentLevel == 5) || (entity.alien->typeIndex != 0x12)) && ((entity.alien->unk1B == 0xFF) || (D_80047F94 == entity.alien->unk1B)) && (entity.alien->typeIndex != 0)) {
 
-			type = &alienTypes[alien->typeIndex];
-			dx = (arg0 - alien->unk0) >> 2;
-			dy = (arg1 - alien->unk2) >> 2;
-			dz = (arg2 - alien->unk4) >> 2;
+			dx = (arg0 - entity.alien->unk0) >> 2;
+			dy = (arg1 - entity.alien->unk2) >> 2;
+			dz = (arg2 - entity.alien->unk4) >> 2;
 			distSq = (dx * dx) + (dy * dy) + (dz * dz);
 			if ((u32)radiusSq >= distSq) {
 				dist = (u32)sqrtf((f32)distSq);
 				damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist));
 				if (damage != 0) {
-result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienType->unk38 + alien->unk2, alien->unk4, &hitObj);
+					result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, entity.alien->unk0, alienTypes[entity.alien->typeIndex].unk38 + entity.alien->unk2, entity.alien->unk4, &hitObj);
 					if (result == 3) {
 						damage >>= 2;
-					} else if ((AlienInstance *)hitObj != alien) {
+					} else if ((AlienInstance *)hitObj != entity.alien) {
 						damage >>= 1;
 					}
 
@@ -779,48 +763,29 @@ result = func_80127C08_136BB8(arg5, arg0, arg1, arg2, alien->unk0, alienType->un
 						if (damage >= 0x8000) {
 							damage = 0x7FFF;
 						}
-						func_80124C40_133BF0(alien, (s16)damage, arg0, arg2);
+						func_80124C40_133BF0(entity.alien, damage, arg0, arg2);
 					}
 				}
 			}
 		}
-		alien--;
-	}
+		entity.alien--;
+	} while (count--);
 
-	building = &buildingInstances[0xFE];
-	for (count = 0xFE; count != 0; count--) {
-		s32 dx;
-		s32 dy;
-		s32 dz;
-		u32 distSq;
-
-		if ((s8)building->hitPoints > 0) {
-			dx = (arg0 - building->xCoord) >> 2;
-			dy = (arg1 - building->yCoord) >> 2;
-			dz = (arg2 - building->zCoord) >> 2;
-			distSq = (dx * dx) + (dy * dy) + (dz * dz);
-			if ((u32)radiusSq >= distSq) {
-				if (arg3 >= 0x10001) {
-					func_8011C080_12B030(count & 0xFF);
+	/* Keep setup and the threshold comparison on one line for IDO scheduling. */
+	entity.building = &buildingInstances[0xFE]; count = 0xFE; do { if ((s8)entity.building->hitPoints > 0) { dx = (arg0 - entity.building->xCoord) >> 2; dy = (arg1 - entity.building->yCoord) >> 2; dz = (arg2 - entity.building->zCoord) >> 2; distSq = (dx * dx) + (dy * dy) + (dz * dz); if ((u32)radiusSq >= distSq) { if (arg3 >= limit) {
+					func_8011C080_12B030((u8)count);
 				} else {
-					s32 damage;
-					u32 dist;
-
 					dist = (u32)sqrtf((f32)distSq);
 					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist)) >> 7;
-					if ((damage != 0) && (func_8011BEA0_12AE50(count & 0xFF, damage) != 0) && (building == D_80158FE8)) {
+					if ((damage != 0) && (func_8011BEA0_12AE50(count & 0xFF, damage) != 0) && (entity.building == D_80158FE8)) {
 						D_8014ED48 = 8;
 					}
 				}
 			}
 		}
-
-		building--;
-	}
+		entity.building--;
+	} while (count--);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124170_133120.s")
-#endif
 
 void func_80124B5C_133B0C(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4) {
 	func_80124170_133120(arg0, arg1, arg2, arg3, arg4, 0);
@@ -1165,22 +1130,18 @@ void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 		func_80003824_4424(sqrtf((f32) ((sp2C * (0,sp2C)) + (sp28 * sp28))), (f32) -(arg4 - arg1)),	1);
 }
 
+// CURRENT(1523): upper-bound control flow and stack allocation remain.
 #ifdef NON_MATCHING
 Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, f32 *arg6) {
-	extern Cheat cheatData[];
-	Unk80259D90 *temp_s0;
+
 	Unk80259D90 *spD0;
 	s16 i;
 	s16 temp_a0;
-	s16 temp_s1_3;
 	s16 temp_v0;
 	s16 temp_v1;
-	s16 temp_v1_2;
-	s16 var_s1;
-	s16 var_v0_2;
+	s32 var_v0_2;
 	s32 found;
 	s32 temp_s1;
-	s32 temp_s1_2;
 	s16 *temp_s2;
 	s32 var_s4;
 	s32 var_s5;
@@ -1191,9 +1152,7 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 	f32 temp_f0_3;
 	f32 temp_f2;
 	f32 temp_f20;
-	f32 temp_f20_2;
 	f32 temp_f22;
-	f32 temp_f22_2;
 	f32 var_f2;
 	f32 var_f30;
 
@@ -1204,8 +1163,10 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 	temp_s1 = func_800047FC_53FC((s16)(arg0 - var_s4));
 	var_f30 = sqrtf((f32)(func_800047FC_53FC((s16)(arg2 - var_s5)) + temp_s1));
 
-	for (i = 0x95; i != 0; i--) {
-		temp_s0 = &D_80259D90[i];
+	i = 0x96;
+	if (i) {}
+	while (i--) {
+		Unk80259D90 *temp_s0 = &D_80259D90[i];
 		if (temp_s0->unk0 >= 0xE) {
 			spD0 = temp_s0;
 			temp_f20 = (f32)arg0;
@@ -1213,31 +1174,31 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 
 			if (func_8010EF40_11DEF0((f32)temp_s0->unk10, (f32)temp_s0->unk14, (f32)temp_s0->unk30, (f32)temp_s0->unk34,
 				temp_f20, temp_f22, (f32)var_s4, (f32)var_s5, &spCC, &spC4) != 0) {
-				temp_s1_2 = func_800047FC_53FC((s16)(s32)(temp_f20 - spCC));
-				temp_f0 = sqrtf((f32)(func_800047FC_53FC((s16)(s32)(temp_f22 - spC4)) + temp_s1_2));
+				temp_s1 = func_800047FC_53FC((s16)(s32)(temp_f20 - spCC));
+				temp_f0 = sqrtf((f32)(func_800047FC_53FC((s16)(s32)(temp_f22 - spC4)) + temp_s1));
 
 				if (temp_f0 < var_f30) {
 					temp_f2 = temp_f0 / var_f30;
 					*arg6 = temp_f2;
-					temp_v1 = temp_s0->unk42;
-					temp_a0 = temp_s0->unk22;
-					var_v0_2 = temp_v1;
-					temp_f22_2 = (temp_f2 * (f32)(*arg4 - arg1)) + (f32)arg1;
 
-					if (temp_a0 < temp_v1) {
-						var_v0_2 = temp_a0;
+
+					temp_f22 = (temp_f2 * (f32)(*arg4 - arg1)) + (f32)arg1;
+
+					if (temp_s0->unk22 < temp_s0->unk42) {
+						var_v0_2 = temp_s0->unk22;
+					} else {
+						var_v0_2 = temp_s0->unk42;
 					}
 
-					if ((f32)var_v0_2 <= temp_f22_2) {
+					if ((f32)var_v0_2 <= temp_f22) {
 						temp_v0 = temp_s0->unk32;
-						temp_v1_2 = temp_s0->unk12;
-						var_s1 = temp_v0;
-
-						if (temp_v0 < temp_v1_2) {
-							var_s1 = temp_v1_2;
+						temp_v1 = temp_s0->unk12;
+						temp_s1 = temp_v0;
+						if (temp_v0 < temp_v1) {
+							temp_s1 = temp_v1;
 						}
 
-						if (temp_f22_2 <= (f32)var_s1) {
+						if (temp_f22 <= (f32)temp_s1) {
 							temp_s2 = (s16 *)func_80011F90_12B90(temp_s0->unk8);
 
 							if (temp_s0->unk10 == temp_s0->unk30) {
@@ -1247,18 +1208,18 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 							}
 
 							temp_f0_2 = (f32)((f64)var_f2 * 0.00390625);
-							temp_s1_3 = temp_s0->unk22 - temp_s0->unk12;
-							temp_f20_2 = (f32)((f64)*(s16 *)&cheatData[17].cheatPattern[10 + ((currentLevel * 0xC + temp_s0->unk0 * 6) * 2)]
-								* ((f64)-((temp_f0_2 - (f32)(s32)temp_f0_2) * 32.0)));
-							temp_f0_3 = (f32)(((f64)(temp_f22_2 - (f32)(func_800B84D0_C7480((s16)(s32)spCC, (s16)(s32)spC4) >> 8))
-								* (32.0 / (f64)temp_s1_3)) + 31.0);
+
+							temp_f20 = (f32)((f64)D_8013BB14_14AAC4[currentLevel * 12 + temp_s0->unk0 * 6 - 93]
+								* (-(temp_f0_2 - (f32)(s32)temp_f0_2) * 32.0));
+							temp_s1 = (s16)(temp_s0->unk22 - temp_s0->unk12);
+							temp_f0_3 = (f32)(((f64)(temp_f22 - (f32)(func_800B84D0_C7480((s16)(s32)spCC, (s16)(s32)spC4) >> 8))
+								* (32.0 / (f64)temp_s1)) + 31.0);
 
 							if (((temp_f0_3 >= 0.0f) || ((f64)temp_f0_3 <= 31.0))
-								&& (temp_s2[(s16)((((s32)temp_f0_3 << 5) - ((s32)temp_f20_2 & 0x1F)) + 0x1F)] & 1)) {
+								&& (temp_s2[(s16)((((s32)temp_f0_3 << 5) - ((s32)temp_f20 & 0x1F)) + 0x1F)] & 1)) {
 								var_f30 = temp_f0;
-								found = 1;
 								var_s4 = (s32)spCC;
-								var_s5 = (s32)spC4;
+								var_s5 = (s32)spC4; found = found * 0 + 1;
 							}
 						}
 					}
@@ -1279,31 +1240,33 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80125D70_134D20.s")
 #endif
 
-// CURRENT(7311)
+// CURRENT(1335): collision-store scheduling and stack slots remain.
 #ifdef NON_MATCHING
 s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, s32 arg6, s32 arg7) {
 	s32 xFixed;
 	s32 yFixed;
 	s32 zFixed;
 	s32 stepCount;
-	s32 stepX;
-	s32 stepY;
-	s32 stepZ;
+
+
+
 	s32 dx;
-	s32 dy;
+	s32 dy; s32 stepX; s32 stepY; s32 stepZ;
 	s32 dz;
-	s32 buildingIdx;
-	s32 mapY;
+
+	s32 mapY; s16 groundY;
 	s32 tileX;
-	s32 tileZ;
-	s32 surfaceType;
-	s32 absDx;
-	s8 pad;
+	s32 tileZ; s32 buildingIdx;
+	Unk80259D90 *surface;
+
+	 s8 pad;
 	s16 prevTileX;
 	s16 prevTileZ;
 	s16 maxBuildingY;
 	f32 hitScale;
-	s32 absDz;
+
+
+
 	BuildingInstance *building;
 
 	xFixed = arg0 << 8;
@@ -1319,9 +1282,9 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 	dz = *arg5 - arg2;
 
 	if ((arg6 & 2) == 0) {
-		surfaceType = func_80125D70_134D20(arg0, arg1, arg2, arg3, arg4, arg5, &hitScale);
-		if (surfaceType != 0) {
-			D_8015F9DC = surfaceType;
+		surface = func_80125D70_134D20(arg0, arg1, arg2, arg3, arg4, arg5, &hitScale);
+		if (surface != NULL) {
+			D_8015F9DC = (s32)surface;
 			dx = (s32) ((f32) dx * hitScale);
 			*arg3 = arg0 + dx;
 			dy = (s32) ((f32) dy * hitScale);
@@ -1333,53 +1296,24 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 
 
 	if ((dx == 0) && (dz == 0)) {
-		absDx = -dy;
-		if (absDx < dy) {
-			stepCount = dy;
-		} else {
-			stepCount = absDx;
-		}
-		stepCount >>= arg7;
-		stepX = 0;
-		stepY = (absDx > 0 ? -0x100 : 0x100) << arg7;
-		stepZ = 0;
-	} else {
-		absDx = -dx;
-		absDz = -dz;
-		if (absDx < dx) {
-			absDx = dx;
-		}
-		if (absDz < dz) {
-			absDz = dz;
-		}
 
-		if (absDz < absDx) {
-			if (absDx < dx) {
-				stepCount = dx;
-			} else {
-				stepCount = absDx;
-			}
-			stepCount >>= arg7;
-			if (stepCount != 0) {
-				stepX = (absDx > 0 ? -0x100 : 0x100) << arg7;
+		stepCount = (-dy < dy ? dy : -dy) >> arg7;
+		stepX = 0; stepZ = 0; stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
+	} else {
+
+
+
+if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
+			if ((stepCount = ((-dx) < dx ? dx : (-dx)) >> arg7) != 0) {
+				stepX = ((-dx) > 0 ? -0x100 : 0x100) << arg7;
 				stepY = (dy << 8) / stepCount;
 				stepZ = (dz << 8) / stepCount;
 			}
 		} else {
-			if (absDz < dz) {
-				stepCount = dz;
-			} else {
-				stepCount = absDz;
-			}
-			stepCount >>= arg7;
-			if (stepCount != 0) {
+			if ((stepCount = ((-dz) < dz ? dz : (-dz)) >> arg7) != 0) {
 				stepX = (dx << 8) / stepCount;
 				stepY = (dy << 8) / stepCount;
-				stepZ = 0x100;
-				if (absDz > 0) {
-					stepZ = -0x100;
-				}
-				stepZ <<= arg7;
+				stepZ = ((-dz) > 0 ? -0x100 : 0x100) << arg7;
 			}
 		}
 	}
@@ -1396,11 +1330,11 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 
 		tileX = xFixed >> 8;
 		tileZ = zFixed >> 8;
-		mapY = func_800B84D0_C7480((s16) tileX, (s16) tileZ) >> 8;
+		mapY = func_800B84D0_C7480((s16) tileX, (s16) tileZ) >> 8; groundY = mapY;
 
 		if ((yFixed >> 8) < (s16) mapY) {
 			*arg3 = tileX;
-			*arg4 = (s16) mapY;
+			*arg4 = groundY;
 			*arg5 = tileZ;
 			D_8015F9D8 = 1;
 			return 1;
@@ -1409,13 +1343,13 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		if ((arg6 & 4) == 0) {
 			s32 collisionIdx = func_8012E114_13D0C4((s16) tileX, (s16) (yFixed >> 8), (s16) tileZ);
 			if (collisionIdx != -1) {
-				D_8015F9D0.unk0 = tileX;
-				*arg3 = D_8015F9D0.unk0;
-				D_8015F9D0.unk2 = yFixed >> 8;
-				*arg4 = D_8015F9D0.unk2;
-				D_8015F9D0.unk4 = tileZ;
-				*arg5 = D_8015F9D0.unk4;
-				if (D_8015FAD0[collisionIdx].unk20 == (s32 (*)()) func_8012E1F8_13D1A8) {
+				D_8015F9D0.position[0] = tileX;
+				*arg3 = D_8015F9D0.position[0];
+				D_8015F9D0.position[1] = yFixed >> 8;
+				*arg4 = D_8015F9D0.position[1];
+				D_8015F9D0.position[2] = tileZ;
+				*arg5 = D_8015F9D0.position[2];
+				if (D_8015FAD0[collisionIdx].unk24 == (void (*)(s32, s16))func_8012E1F8_13D1A8) {
 					D_8015F9D0.unk8 = 6;
 				} else {
 					D_8015F9D0.unk8 = 0xE;
@@ -1431,7 +1365,7 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 				func_8011DE6C_12CE1C((s16) tileX, (s16) tileZ, &maxBuildingY, (s16) buildingIdx);
 			}
 		} else {
-			prevTileZ = tileZ >> 8;
+
 			buildingIdx = func_8011E6FC_12D6AC((s16) tileX, (s16) tileZ, &maxBuildingY);
 			if (buildingIdx != -1) {
 				building = &buildingInstances[buildingIdx];
@@ -1439,6 +1373,7 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 				building = NULL;
 			}
 			prevTileX = tileX >> 8;
+prevTileZ = tileZ >> 8;
 		}
 		func_8011DE60_12CE10(0);
 
@@ -1446,12 +1381,12 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 			if (D_801591A8 != 0) {
 				D_80158FE8 = building;
 			}
-			D_8015F9D0.unk0 = tileX;
-			*arg3 = D_8015F9D0.unk0;
-			D_8015F9D0.unk2 = yFixed >> 8;
-			*arg4 = D_8015F9D0.unk2;
-			D_8015F9D0.unk4 = tileZ;
-			*arg5 = D_8015F9D0.unk4;
+			D_8015F9D0.position[0] = tileX;
+			*arg3 = D_8015F9D0.position[0];
+			D_8015F9D0.position[1] = yFixed >> 8;
+			*arg4 = D_8015F9D0.position[1];
+			D_8015F9D0.position[2] = tileZ;
+			*arg5 = D_8015F9D0.position[2];
 			D_8015F9D0.unk8 = 3;
 			D_8015F9D0.unkC = buildingIdx;
 			return 3;
@@ -1467,15 +1402,18 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 	}
 
 	if (D_8015F9D0.unkC != 0) {
-		D_8015F9D0.unk0 = *arg3;
-		D_8015F9D0.unk2 = *arg4;
+		D_8015F9D0.position[0] = *arg3;
+		D_8015F9D0.position[1] = *arg4;
 		D_8015F9D0.unk8 = 0xD;
-		D_8015F9D0.unk4 = *arg5;
+		D_8015F9D0.position[2] = *arg5;
 		return 5;
 	}
 
 	return 0;
 }
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80126268_135218.s")
 #endif
@@ -2000,45 +1938,45 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 	func_80128428_1373D8(arg0, (s16)(s32)x, (s16)(s32)y, (s16)(s32)z, arg2, arg3, arg4);
 }
 
-// CURRENT(13117)
+// CURRENT(9299): collision exits, invariant allocation, and stack slots remain.
 #ifdef NON_MATCHING
 void func_80128650_137600(Projectile *arg0, s32 arg1) {
-	const WeaponEntry_80129864 *building;
-	VehicleInstance *vehicle;
-	AlienInstance *alien;
-	AlienType *alienType;
+	s32 absX; const WeaponEntry_80129864 *building;
+	union { VehicleInstance *vehicle; AlienInstance *alien; BuildingInstance *building; } entity;
+	union {AlienType *alienType; u8 *activeList;} data;
 	s16 floorY;
 	s32 i;
 	s32 instId;
 	s32 absY;
-	s32 absX;
-	s32 y;
 
-building = &D_80145BE0_154B90[arg0->unk20];
+	s32 y; s32 iteration; f32 *motion; f64 increment;
 
-	for (i = 0x17; i >= 0; i--) {
-		D_8015FA40[i].unk4 = 0x7FFF;
-	}
+building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
+
+	i = 0x17; do {
+		absX = i; D_8015FA40[i].unk0 = 0x7FFF; i -= 1;
+	} while (absX != 0);
 
 	D_80159320 |= 0x40;
 	D_80158FEC = NULL;
 	D_80158FE8 = NULL;
 	D_80158FE4 = NULL;
-	for (i = 0;; i++) {
-		if (arg0->unkC < 0.0) {
-			arg0->unkC += D_801451B8_154168;
+	motion = arg0->motion; increment = D_801451B8_154168[0];
+	for (;; iteration++) {
+		if (arg0->unkC < 1.0) {
+			motion[0] += increment;
 		}
 
-		if ((i >> 1) < 0x18) {
-			D_8015FA40[i >> 1].unk0 = (s16)(s32)arg0->unk0;
-			D_8015FA40[i >> 1].unk2 = (s16)(s32)arg0->unk4;
-			D_8015FA40[i >> 1].unk4 = (s16)(s32)arg0->unk8;
+		if ((iteration >> 1) < 0x18) {
+			D_8015FA40[iteration >> 1].unk0 = (s16)(s32)arg0->unk0;
+			D_8015FA40[iteration >> 1].unk2 = (s16)(s32)arg0->unk4;
+			D_8015FA40[iteration >> 1].unk4 = (s16)(s32)arg0->unk8;
 		}
 
-		arg0->unk0 += arg0->unk10 * arg0->unkC;
-		arg0->unk4 += arg0->unk14 * arg0->unkC;
+		arg0->unk0 += motion[1] * motion[0];
+		arg0->unk4 += motion[2] * motion[0];
+		arg0->unk8 += motion[3] * motion[0];
 		arg0->unk14 -= 3.0f;
-		arg0->unk8 += arg0->unk18 * arg0->unkC;
 		if (arg0->unk14 > 100.0f) {
 			arg0->unk14 = 100.0f;
 		}
@@ -2069,7 +2007,7 @@ building = &D_80145BE0_154B90[arg0->unk20];
 
 		instId = func_8012E114_13D0C4((s16)(s32)arg0->unk0, (s16)(s32)arg0->unk4, (s16)(s32)arg0->unk8);
 		if (instId != -1) {
-			if ((void *)D_8015FAD0[instId].unk20 == (void *)func_8012E1F8_13D1A8) {
+			if (D_8015FAD0[instId].unk24 == (void (*)(s32, s16))func_8012E1F8_13D1A8) {
 				D_8015F9D0.unk8 = 6;
 			} else {
 				D_8015F9D0.unk8 = 0xE;
@@ -2078,132 +2016,117 @@ building = &D_80145BE0_154B90[arg0->unk20];
 			break;
 		}
 
-		if (D_80158FD8 != 0) {
-			i = D_80158FD8 - 1;
-			while (1) {
-				vehicle = &vehicleInstances[D_80158E80[i]];
-				absY = func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk2 - arg0->unk4));
-				absX = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)D_80145BE0_154B90[arg2].unk4 - arg0->unk8)) + absX + absY) < vehicleTypes[vehicle->unk1A].unk8) {
-					if ((s32)vehicle != arg0->unk24) {
+		 i = D_80158FD8; absX = i; i -= 1;
+		if (absX != 0) {
+			data.activeList = &D_80158E80[i];
+			do {
+				entity.vehicle = &vehicleInstances[*data.activeList];
+				absY = func_800047FC_53FC((s16)(s32)((f32)entity.vehicle->unk2 - arg0->unk4));
+				absX = func_800047FC_53FC((s16)(s32)((f32)entity.vehicle->unk0 - arg0->unk0));
+				if ((func_800047FC_53FC((s16)(s32)((f32)entity.vehicle->unk4 - arg0->unk8)) + absX + absY) < vehicleTypes[entity.vehicle->unk1A].unk8) {
+					if ((s32)entity.vehicle != arg0->unk24) {
 						D_8015F9D0.unk8 = 5;
-						D_80158FE4 = vehicle;
+						D_80158FE4 = entity.vehicle;
 						break;
 					}
 				}
-
-				if (i == 0) {
-					break;
-				}
-				i--;
-			}
-		}
-
-		if (D_8015F9D0.unk8 == 5) {
-			break;
+				data.activeList--; absX = i; i -= 1;
+			} while (absX != 0);
+			if (i >= 0) { break; }
 		}
 
 		instId = func_8011E6FC_12D6AC((s16)(s32)arg0->unk0, (s16)(s32)arg0->unk8, &floorY);
 		if (instId != -1) {
-			y = (s32)arg0->unk4;
-			if ((buildingInstances[instId].yCoord < y) && (y < floorY)) {
+			entity.building = &buildingInstances[instId]; y = (s32)arg0->unk4;
+			if ((entity.building->yCoord < y) && (y < floorY)) {
 				if (D_801591A8 != 0) {
-					D_80158FE8 = &buildingInstances[instId];
+					D_80158FE8 = entity.building;
 				}
 				D_8015F9D0.unk8 = 3;
 				break;
 			}
 		}
-		for (instId = 0xFE; instId != 0; instId--) {
-			alien = &alienInstances[instId];
-			if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
-				alienType = &alienTypes[alien->typeIndex];
-				absY = func_800047FC_53FC((s16)(s32)((f32)alien->unk2 - arg0->unk4));
-				absX = func_800047FC_53FC((s16)(s32)((f32)alien->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)alien->unk4 - arg0->unk8)) + absX + absY) < alienType->unk8) {
-					if (((s32)alien != arg0->unk24) && ((f32)alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(alien->unk2 + alienType->unk38))) {
+		 entity.alien = &alienInstances[0xFE]; i = 0xFE; do {
+			if (func_8012235C_13130C((Unk8004D0F8 *)entity.alien) != 0) {
+				data.alienType = &alienTypes[entity.alien->typeIndex];
+				absY = func_800047FC_53FC((s16)(s32)((f32)entity.alien->unk2 - arg0->unk4));
+				absX = func_800047FC_53FC((s16)(s32)((f32)entity.alien->unk0 - arg0->unk0));
+				if ((func_800047FC_53FC((s16)(s32)((f32)entity.alien->unk4 - arg0->unk8)) + absX + absY) < data.alienType->unk8) {
+					if (((s32)entity.alien != arg0->unk24) && ((f32)entity.alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(entity.alien->unk2 + data.alienType->unk38))) {
 						D_8015F9D0.unk8 = 7;
-						D_80158FEC = alien;
+						D_80158FEC = entity.alien;
 						break;
 					}
 				}
 			}
-		}
+			absX = i; entity.alien--; i -= 1;
+		} while (absX != 0);
 
-		if (D_8015F9D0.unk8 == 7) {
+		if (i >= 0) {
 			break;
 		}
 	}
 
-	D_8015F9D0.unk0 = (s16)(s32)arg0->unk0;
-	D_8015F9D0.unk2 = (s16)(s32)arg0->unk4;
-	D_8015F9D0.unk4 = (s16)(s32)arg0->unk8;
+	D_8015F9D0.position[0] = (s16)(s32)arg0->unk0;
+	D_8015F9D0.position[1] = (s16)(s32)arg0->unk4;
+	D_8015F9D0.position[2] = (s16)(s32)arg0->unk8;
 
 	if (arg1 != 0) {
 		D_80159220[0] = (s16)(s32)arg0->unk0;
 		D_80159220[1] = (s16)(s32)arg0->unk4;
 		D_80159220[2] = (s16)(s32)arg0->unk8;
-		D_80159226 = (s16)i;
+		D_80159226 = (s16)iteration;
 	}
 
-	for (i = 0; i < 0x40; i++) {
-		if (&D_8015EB90[i] == arg0) {
-			break;
-		}
-	}
-	func_801238DC_13288C((s16)i);
+	func_801238DC_13288C((s16)(arg0 - D_8015EB90));
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128650_137600.s")
 #endif
 
-// CURRENT(17973)
+// CURRENT(2539): endpoint parameter stores and frame/register allocation remain.
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-	s32 halfX;
-	s32 halfY;
-	s32 halfZ;
+	s32 color;
+	s32 midX;
+	s32 midY;
+	s32 midZ;
 	f32 length;
 	f32 dirX;
 	f32 dirY;
 	f32 dirZ;
 	s32 startStep;
-	f32 startStepF;
-	s32 midX;
-	s32 midY;
-	s32 midZ;
 	s32 endStep;
-	f32 endStepF;
-	f32 midStepF;
+	f32 startStepF;
 
-	halfX = (arg3 - arg0) >> 1;
-	halfY = (arg4 - arg1) >> 1;
-	halfZ = (arg5 - arg2) >> 1;
 
-	length = sqrtf((f32)((halfX * halfX) + (halfY * halfY) + (halfZ * halfZ))) * 2.0f;
+
+	length = sqrtf((f32)((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1)))) * 2;
 	if (length == 0.0f) {
 		return;
 	}
 
-	dirX = (f32)halfX / length;
-	dirY = (f32)halfY / length;
-	dirZ = (f32)halfZ / length;
+	dirX = (f32)((arg3 - arg0) >> 1) / length;
+	dirY = (f32)((arg4 - arg1) >> 1) / length;
+	dirZ = (f32)((arg5 - arg2) >> 1) / length;
 
-	startStep = (func_800038E0_44E0(length) % 30);
+	startStep = (func_800038E0_44E0() % 30);
 	startStep = (s32)(((f32)startStep * length) / 100.0f);
 	startStepF = (f32)startStep;
 
-	midX = (s32)((f32)arg0 + (dirX * startStepF));
-	midY = (s32)((f32)arg1 + (dirY * startStepF));
-	midZ = (s32)((f32)arg2 + (dirZ * startStepF));
+	midX = arg0 = (s32)((f32)arg0 + (dirX * startStepF));
+	midY = arg1 = (s32)((f32)arg1 + (dirY * startStepF));
+	midZ = arg2 = (s32)((f32)arg2 + (dirZ * startStepF));
 
-	endStep = (func_800038E0_44E0(length) % 30);
+	endStep = (func_800038E0_44E0() % 30); color = 255; if (color) {}
 	endStep = (s32)(((f32)endStep * length) / 100.0f);
-	endStepF = (f32)endStep;
+	startStepF = (f32)endStep;
 
-	arg3 = (s32)((f32)arg3 - (dirX * endStepF));
-	arg4 = (s32)((f32)arg4 - (dirY * endStepF));
-	arg5 = (s32)((f32)arg5 - (dirZ * endStepF));
+	arg3 = (s32)((f32)arg3 - (dirX * startStepF));
+	arg4 = (s32)((f32)arg4 - (dirY * startStepF));
+	arg5 = (s32)((f32)arg5 - (dirZ * startStepF));
+
 
 	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
@@ -2222,15 +2145,15 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	midStepF = (f32)(s32)((f64)((length - (f32)startStep) - endStepF) * 0.5);
-	D_8005BB34->v.ob[0] = (s16)(s32)((f32)midX + (dirX * midStepF));
-	D_8005BB34->v.ob[1] = (s16)(s32)((f32)midY + (dirY * midStepF));
-	D_8005BB34->v.ob[2] = (s16)(s32)((f32)midZ + (dirZ * midStepF));
+	startStepF = (f32)(s32)((f64)((length - (f32)startStep) - startStepF) * D_801451C0_154170.value);
+	D_8005BB34->v.ob[0] = (s16)(s32)((f32)midX + (dirX * startStepF));
+	D_8005BB34->v.ob[1] = (s16)(s32)((f32)midY + (dirY * startStepF));
+	D_8005BB34->v.ob[2] = (s16)(s32)((f32)midZ + (dirZ * startStepF));
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0xFF;
-	D_8005BB34->v.cn[1] = 0xFF;
+	D_8005BB34->v.cn[0] = color;
+	D_8005BB34->v.cn[1] = color;
 	D_8005BB34->v.cn[2] = 0;
 	D_8005BB34->v.cn[3] = 0x96;
 	D_8005BB34++;
@@ -3649,7 +3572,7 @@ void func_8012D84C_13C7FC()
 	}
 }
 
-// CURRENT(28705)
+// CURRENT(435): initial matrix packet registers and pointer-increment scheduling remain.
 // DisplayForces - Debug draw interaction boxes
 #ifdef NON_MATCHING
 void func_8012D884_13C834(void) {
@@ -3658,26 +3581,20 @@ void func_8012D884_13C834(void) {
 	s16 temp_s2;
 	s16 temp_t7;
 	s16 temp_s4;
-	s32 temp_t8;
-	s32 temp_t9;
-	s32 var_v1;
+	s16 temp_t8;
+	s16 temp_t9;
+	Gfx *matrix;
 	s32 var_s5;
 
 	var_s3 = D_8015FAD0;
 	if (D_80047710 == -0x63) {
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-		var_v1 = 0x19;
-		var_s5 = 0x18;
-		if (var_v1 != 0) {
-			do {
+		matrix = D_8005BB2C; D_8005BB2C = &matrix[1]; gSPMatrix(matrix, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW); var_s5 = 25; if (var_s5) {}
+
+
+		if (var_s5) {} {
+			for (; var_s5--; ) {
 				if (var_s3->unk2C != 0) {
-					temp_t9 = var_s3->unk0 >> 0x10;
-					temp_t7 = var_s3->unk18;
-					temp_t8 = var_s3->unk4 >> 0x10;
-					temp_s2 = var_s3->unk8 >> 0x10;
-					temp_a3 = var_s3->unk1C;
-					temp_s4 = var_s3->unk1A;
-					D_8005BB34->v.ob[0] = temp_t9 + temp_t7;
+					temp_t9 = var_s3->unk0 >> 16; temp_t8 = var_s3->unk4 >> 16; temp_s2 = var_s3->unk8 >> 16; temp_t7 = var_s3->unk18; temp_s4 = var_s3->unk1A; temp_a3 = var_s3->unk1C; D_8005BB34->v.ob[0] = temp_t9 + temp_t7;
 					D_8005BB34->v.ob[1] = temp_t8 + temp_a3;
 					D_8005BB34->v.ob[2] = temp_s2 + temp_s4;
 					D_8005BB34->v.flag = 0;
@@ -3774,13 +3691,16 @@ void func_8012D884_13C834(void) {
 
 					D_8005BB34 += 8;
 				}
-				var_v1 = var_s5;
+
 
 				var_s3++;
-			} while (var_s5--);
+			}
 		}
 	}
 }
+
+
+
 
 
 #else

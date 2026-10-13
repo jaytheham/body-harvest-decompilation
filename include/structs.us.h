@@ -1632,6 +1632,9 @@ typedef struct {
 	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
+	union {
+		f32 motion[4];
+		struct {
 	/* 0x0C */ f32 unkC;
 	union {
 		/* 0x10 */ f32 unk10;
@@ -1647,6 +1650,8 @@ typedef struct {
 	union {
 		/* 0x18 */ s32 unk18;
 		/* 0x18 */ f32 unk18F32;
+	};
+		};
 	};
 	union {
 		struct {
@@ -1784,9 +1789,14 @@ typedef struct {
 } SaveData;
 
 typedef struct {
+	union {
+		s16 position[3];
+		struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
+		};
+	};
 	/* 0x06 */ u8 pad6[0x2];
 	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s32 unkC;
