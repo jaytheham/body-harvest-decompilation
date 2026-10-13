@@ -196,12 +196,15 @@ assembly of the version it is building:
   on a Windows host only (on a case-sensitive host those paths name nothing
   and the open fails; on another case-insensitive filesystem `ASM/` gets the
   refusal below). A path that is not spelled `asm/...` but still resolves to a
-  file under `asm/` (an absolute path, or one that leaves the repository and
-  comes back) cannot be mapped, so asm-processor stops with an error naming
-  the source file, the line and the pragma, instead of reading the NA assembly
-  into an EU object. Paths outside `asm/` (`asm.eu/...`, `asmx/...`,
-  `src/asm/...`) are left as written. `tests/asm_root_check.sh` covers every
-  spelling and runs anywhere, with no extraction or baserom.
+  file under `asm/` (an absolute path, one that leaves the repository and
+  comes back, or one through a symbolic link to `asm/`) cannot be mapped, so
+  asm-processor stops with an error naming the source file, the line and the
+  pragma, instead of reading the NA assembly into an EU object. Paths outside
+  `asm/` (`asm.eu/...`, `asmx/...`, `src/asm/...`) are left as written.
+  `tests/asm_root_check.sh` covers these spellings, with no extraction or
+  baserom. It runs on any host, except that the symbolic link cases need a
+  host that can make a real link and print SKIP elsewhere (a default Git Bash
+  on Windows makes a copy of the directory instead of a link).
 - A build that omitted `--asm-root` fails at the link (undefined references) and
   never reaches the SHA1 check, but its objects stay on disk. The Makefile
   therefore makes every GLOBAL_ASM object depend on a stamp of the
