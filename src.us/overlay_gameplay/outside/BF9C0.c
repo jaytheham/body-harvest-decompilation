@@ -827,16 +827,9 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 
 
 
-// CURRENT(4712)
+// CURRENT(2570): typed RGB grid; frame and allocation remain.
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
-	s32 tileX;
-	s32 tileY;
-	u32 fracX;
-	s16 ringX;
-	s16 ringY;
-	s32 start;
-	s32 end;
 	s16 baseY;
 	s16 baseX;
 	s16 x;
@@ -846,35 +839,35 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 distance;
 	s32 intensity;
 	u32 fracY;
-	u8 radius; s32 rawRadius; 
-	s32 squareX; s32 cellSize = 256;
-	u8 *pixel;
+	s32 squareX;
+	s32 cellSize = 256;
+	u8 radius;
+	s32 tileX;
+	s32 tileY;
+	u32 fracX;
+	EffectRgb *pixel;
+	s16 ringX;
+	s16 ringY;
 
 	baseY = D_8014F89D - 127;
 	tileX = (arg0[0] >> 8) + 1;
-	baseX = D_8014F89C - 127;
+	baseX = D_8014F89C;
 	tileY = (arg0[1] >> 8) + 1;
+	baseX -= 127;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
 	fracX = arg0[0] & 255;
 	fracY = arg0[1] & 255;
-	rawRadius = (u32)((f32)(arg2 + arg3) / 256);
-	rawRadius++;
-	radius = rawRadius;
-	start = 1 - (rawRadius & 255);
-	end = (rawRadius & 255) + 1;
-	x = start;
-	if ((s16)start < end) {
-	 do {
+	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius++;
+	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
 		} else {
 			dx = cellSize - fracX + (x << 8) - 256;
 		}
 		squareX = dx * dx;
-		y = start;
-		if ((s16)start < end) {
-		 do {
+		for (y = 1 - radius; y < radius + 1; y++) {
 			if (y <= 0) {
 				dy = fracY + y * -256;
 			} else {
@@ -884,7 +877,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (distance > 0) {
 				intensity = (s16)(arg3 - distance);
 				if (intensity > 0) {
-					intensity = (s16)(s32)(((f32)intensity / arg3) * 255.0f);
+					intensity = (s16)(((f32)intensity / arg3) * 255.0f);
 					if (intensity >= 256) {
 						intensity = 255;
 					}
@@ -896,24 +889,20 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 				s16 color;
 				if ((s16)(x + tileX) >= baseX && (s16)(x + tileX) <= (s16)(baseX + 19)) {
 					if ((s16)(y + tileY) >= baseY && (s16)(y + tileY) <= (s16)(baseY + 19)) {
-						pixel = &D_80152740[(u16)((y + ringY) % 19) * 57 + (u16)((x + ringX) % 19) * 3];
-						color = ((arg1[0] * intensity) >> 8) + pixel[0];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(u16)((y + ringY) % 19)][(u16)((x + ringX) % 19)];
+						color = ((arg1[0] * intensity) >> 8) + pixel->r;
 						if (color >= 256) color = 255;
-						pixel[0] = color;
-						color = ((arg1[1] * intensity) >> 8) + pixel[1];
+						pixel->r = color;
+						color = ((arg1[1] * intensity) >> 8) + pixel->g;
 						if (color >= 256) color = 255;
-						pixel[1] = color;
-						color = ((arg1[2] * intensity) >> 8) + pixel[2];
+						pixel->g = color;
+						color = ((arg1[2] * intensity) >> 8) + pixel->b;
 						if (color >= 256) color = 255;
-						pixel[2] = color;
+						pixel->b = color;
 					}
 				}
 			}
-			y++;
-		} while (y < radius + 1);
 		}
-		x++;
-	} while (x < radius + 1);
 	}
 }
 #else
@@ -2883,34 +2872,34 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(1201)
+// CURRENT(5): instruction-exact apart from jump-table rodata placement.
 #ifdef NON_MATCHING
-// AI - World-space bounding-box frustum cull: tests a tile's corners against the camera view angle
+// World-space bounding-box frustum cull.
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
-	s16 centerX;
-	s16 centerZ;
 	s16 objX;
 	s16 objZ;
 	s32 angleOffset;
-	s16 i;
 	s16 hit;
+	s16 i;
 
 	if (D_80157590 != 0 || D_8014FD2A == -0x8000U) {
 		return 1;
 	}
 
-	D_8014F854 = 1;
+	objX = D_80052B2C->unk0;
+	objZ = D_80052B2C->unk8;
 	angleOffset = 0x4000 - D_80047950;
-	centerX = arg0;
-	centerZ = arg1;
-	objZ = (s16)(s32)D_80052B2C->unk8;
-	objX = (s16)(s32)D_80052B2C->unk0;
+	D_8014F854 = 1;
 
 	{
-		s32 diffX = objX - centerX - (arg2 / 2);
+		s32 diffX = objX - arg0 - (arg2 / 2);
 		if ((diffX >= 0 ? diffX : -diffX) < arg2) {
-			s32 diffZ = objZ - centerZ - (arg3 / 2);
-			if ((diffZ >= 0 ? diffZ : -diffZ) < arg3) {
+			s32 diffZ;
+			s32 absZ;
+			diffX = arg3;
+			diffZ = objZ - arg1 - (diffX / 2);
+			absZ = diffZ >= 0 ? diffZ : -diffZ;
+			if (absZ < diffX) {
 				return 1;
 			}
 		}
@@ -2920,19 +2909,19 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	for (i = 0; i < 5; i++) {
 		switch (i) {
 		case 0:
-			hit = func_800B9228_C81D8((s16)(centerX + (arg2 >> 1)), (s16)(centerZ + (arg3 >> 1)), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(arg0 + (arg2 >> 1)), (s16)(arg1 + (arg3 >> 1)), objX, objZ, angleOffset);
 			break;
 		case 1:
-			hit = func_800B9228_C81D8(centerX, centerZ, objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8(arg0, arg1, objX, objZ, angleOffset);
 			break;
 		case 2:
-			hit = func_800B9228_C81D8((s16)(centerX + arg2), centerZ, objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(arg0 + arg2), arg1, objX, objZ, angleOffset);
 			break;
 		case 3:
-			hit = func_800B9228_C81D8(centerX, (s16)(centerZ + arg3), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8(arg0, (s16)(arg1 + arg3), objX, objZ, angleOffset);
 			break;
 		case 4:
-			hit = func_800B9228_C81D8((s16)(centerX + arg2), (s16)(centerZ + arg3), objX, objZ, angleOffset);
+			hit = func_800B9228_C81D8((s16)(arg0 + arg2), (s16)(arg1 + arg3), objX, objZ, angleOffset);
 			break;
 		}
 		if (hit != 0) {
@@ -2943,6 +2932,8 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 
 	return D_8014F854;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
 #endif
@@ -4767,6 +4758,7 @@ void func_800BED30_CDCE0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
 #endif
 
+// CURRENT(3410): remove the five lightning constant placeholders when enabling C.
 #ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
 	s16 var_a1;
@@ -4793,7 +4785,7 @@ void func_800C0678_CF628(void) {
 	timer = D_8013D9C0_14C970[0];
 	D_8013DAFC_14CAAC[0] = (u16)var_a1;
 	if ((var_a1 - 8) < timer) {
-		temp_t2 = var_a1 - timer;
+		temp_t2 = var_a1 - timer; temp_t2 ^= 0;
 		sp30 = (f32)((f64)(f32)D_8013D9C4_14C974[0] * 0.001953125);
 		temp_v1 = (s16)(s32)(200.0f - (100.0f * sp30)) - (temp_t2 * 0xF);
 		D_8013DAFC_14CAAC[0] = var_a1;
@@ -4823,7 +4815,7 @@ void func_800C0678_CF628(void) {
 		sp3C = temp_t2; func_800049D4_55D4(color, color);
 		{
 			s16 *deltaAddress = &sp3C;
-			remaining = 7 - *deltaAddress;
+			remaining = *deltaAddress; remaining = 7 - remaining;
 		}
 		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
 		D_8013D9C8_14C978 = 1;
@@ -4835,14 +4827,13 @@ void func_800C0678_CF628(void) {
 		var_a1 = D_8013DAFC_14CAAC[0];
 		if (var_a1 == (remaining + 7)) {
 			D_8013DB04_14CAB4 = 1;
-			if (D_8013DB00_14CAB0 > 0U) {
+			if ((D_8013DB00_14CAB0 & 0xFF) != 0) {
 				D_8013D9C0_14C970[0] += 8;
 				var_a1 = D_8013D9C0_14C970[0];
 				D_8013DAFC_14CAAC[0] = var_a1 - 1;
 			}
-		} else if ((D_8013DB00_14CAB0 & 0xFF) > 0U) {
-			remaining = func_800038E0_44E0() % 8;
-			if ((u32)remaining < 1U) {
+		} else if ((D_8013DB00_14CAB0 & 0xFF) != 0) {
+			if ((u32)(func_800038E0_44E0() % 8) < 1U) {
 				D_8013D9C0_14C970[0] += 8;
 				var_a1 = D_8013D9C0_14C970[0];
 				D_8013DAFC_14CAAC[0] = var_a1 - 1;
@@ -4856,10 +4847,10 @@ void func_800C0678_CF628(void) {
 		if (D_80047F94 == 3) {
 			if (D_8013D9CC_14C97C != 0) {
 				func_80014A3C_1563C(0, 0xE8, 0.0f, temp_t2,
-					(f32)(D_80142E78_151E28[0] + (D_80142E70_151E20[0] - ((f64)sp30 * D_80142E70_151E20[0]))));
+					(f32)(0.1 + (0.2 - ((f64)sp30 * 0.2))));
 			} else {
 				func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2,
-					(f32)(D_80142E88_151E38[0] + (D_80142E80_151E30[0] - ((f64)sp30 * D_80142E80_151E30[0]))));
+					(f32)(0.1 + (0.2 - ((f64)sp30 * 0.2))));
 			}
 		} else {
 			func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2, 0.1f);
@@ -4896,10 +4887,12 @@ void func_800C0678_CF628(void) {
 		D_8013D9C0_14C970[0] = remaining - 1;
 	}
 }
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
 #endif
-
 
 s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
 	s32 dx;
