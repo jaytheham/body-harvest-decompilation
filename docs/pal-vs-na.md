@@ -171,10 +171,66 @@ level data and overlays, and `10A20.c` does the same for `D_80031B58_32758`,
 which starts as `0` in NA and `1` in EU. The other six files mix matched C with
 unmatched functions, which name their assembly once, as in the NA-only source
 (next section).
+Six overlay files are shared as well (next section).
 Sharing a file also means pointing its EU `.data`/`.rodata` (and any `.bss`) at
 the C, naming its functions with their NA names at EU addresses in
 `symbol_addrs.eu.txt`, and pinning the externs it references at their EU
 addresses in `undefined_syms.eu.txt`.
+
+### Sharing an overlay file
+
+The files that PAL shares outside core are listed in `shared_overlay_files.txt`, the one list that the Makefile,
+`tools/native_build.py` and the tools read: the second half of the frontend overlay (`52690.c`) and the one C file of each
+of the five level overlays. `tests/shared_files_check.sh` checks that the list agrees with `bh.eu.yaml`, which names each of
+them as `../src.us/<file>`, and with the other places that use it.
+
+Inside an overlay the PAL shift is not one number, so the PAL address of every name is read from the paired instructions
+and not added to the NTSC one. The code of `52690.c` is 0x7C0 after the NTSC code and its read-only data 0xB60 after. A level
+overlay is 0xB60 after in the ROM and 0x40 after in memory; the pointers in its data are +0x40 into the level and +0x30 into the
+first part of the gameplay overlays, and what it reads from core is +0x30.
+
+The steps, for a file that exists once as C in `src.us` and once as a stub file in `src.eu` (one stub function per NTSC function):
+
+1. `python tools/overlay_pairs.py --us-dir <dir> --eu-dir <stub dir> --us-obj <object>` pairs the functions and compares them
+   (`--align auto` pairs by opcode sequence when the PAL stub has a function more or less). It prints NAME lines (the file's
+   functions at their PAL addresses), PIN lines (the NTSC names that the object leaves undefined, at their PAL addresses),
+   and a DIFF for each pair that cannot share the C: another instruction count, another opcode, or a constant that changed
+   (a difference that equals one of the file's own address shifts is not a DIFF). A DIFF function needs a PAL-only
+   definition; none of the six files has one.
+2. `bh.eu.yaml`: the stub's `c` entry becomes `../src.us/<file>`, with `.data` and `.rodata` entries at the PAL offsets where
+   `bh.us.yaml` has them; delete the stub file under `src.eu`; add the file to `shared_overlay_files.txt`. The Makefile and
+   `tools/native_build.py` derive the C file list, the build directory and the `--asm-root` directory from that list.
+3. `symbol_addrs.eu.txt`: the NAME lines, each with `// type:func rom:0x<PAL ROM offset>`. The `rom:` is needed because the
+   overlays share one vram range; without it splat does not apply the name, the PAL assembly of a `GLOBAL_ASM` function keeps
+   its auto-name, and the pragma finds no file. `undefined_syms.eu.txt`: the PIN lines, and a pin to its own address for every
+   PAL label of the file's own data and read-only data that the PAL assembly of its `GLOBAL_ASM` functions still names (the
+   link lists them as undefined once the C object owns that data).
+4. An address held as a number in the C needs a value per version. A jump table placeholder becomes a `VERSION_US` /
+   `VERSION_EU` / `#error` chain. A pointer in a data initialiser is written `LEVEL_PTR(0x802D531C)` or `OVERLAY_PTR(...)`;
+   where the C writes a pointer as two halfwords (`0x802E, 0x4F94`) it is `LEVEL_PTR_HI(0x802E4F94), LEVEL_PTR_LO(0x802E4F94)`,
+   and as two bytes and a halfword (`0x80, 0x2E, 0x4F94`) it is `LEVEL_PTR_B3(...), LEVEL_PTR_B2(...), LEVEL_PTR_LO(...)`
+   (macros in `include/version_shift.h`, the identity for NTSC). Wrap only the numbers that the two ROMs show shifted, by exact
+   value and not by range: some numbers that look like addresses are constants (`0x8019003C`).
+5. `python tools/eu_collisions_build.py` extracts, tags the colliding labels, builds and verifies; a ROM that differs is
+   found with `python tools/eu_rom_diff.py`.
+
+What went wrong the first time, so that it is not repeated:
+
+- A PAL label can shadow an NTSC name. splat's `undefined_syms_auto.eu.txt` defines every name that the PAL assembly refers to
+  and does not define, at the address the name encodes, and it is linked after `undefined_syms.eu.txt`, so it wins. A shared
+  file that uses the NTSC name `D_80157F94` then reads the PAL variable at 0x80157F94, not the one at 0x80157FC4.
+  `tools/gen_eu_symbol_collisions.py` tags the colliding PAL labels `eu_`. It must read the objects of every shared file; it
+  read only `src.us/core` at first, and the level file read core variables at their NTSC addresses until it read them all.
+- One NTSC name for two functions. The overlays share a vram range, so the NTSC decomp can use one name for a function of each:
+  the america level calls `func_8008EB20_5EFD0`, and the frontend file defines it. In PAL they are at different addresses
+  (0x8008EB50 and 0x8008F2E0), and a pin for one overrides the definition of the other (the frontend's calls went to the wrong
+  function). The level file gets a name of its own for PAL, `#define func_8008EB20_5EFD0 func_8008EB20_5EFD0_LEVEL` before the
+  includes, and that name is pinned. `tools/overlay_pairs.py` prints a CLASH line when a pin names a function that another
+  shared file defines.
+- The PAL stub of an empty function is extracted under `asm.eu/matchings`, not `nonmatchings`; anything that lists the PAL stubs
+  reads both.
+- A native build makes its own build directories and a `make` does not: run a full `make` on a fresh checkout (`git archive`)
+  before pushing.
 
 ### Sharing a file that still has GLOBAL_ASM
 
@@ -296,7 +352,7 @@ files do (`1050`, `17EE0`, `1B060`, `53F0`, `AD60` and `E830`), and the headers
 of the two tests name a worktree at that commit. The tools hard-code the
 core layout (the `core` directories under `src.us/` and `src.eu/`,
 `asm/nonmatchings/core` and the `core/` entries of both yamls), so using them on
-an overlay file would mean changing them. What they did, as the record of the
+an overlay file would mean changing them; `tools/overlay_pairs.py` is the tool for the overlay files (previous section). What they did, as the record of the
 method:
 
 - `eu_symbol_pairs.py <File>` paired the NA and EU functions of the unconverted
@@ -393,5 +449,11 @@ every core C file in the EU build is a shared file in `src.us/core/` (see
   EU needs it because its jump tables sit in separate rodata objects, so their
   targets must resolve across object files. NTSC keeps its jump tables in C, so
   its jump-table labels stay local and add no FUNC symbols to `build/bh.us.elf`.
+- `shared_overlay_files.txt` is the single list of the overlay files that PAL shares. Do not copy it into another file:
+  the Makefile (`grep`), `tools/native_build.py`, `tools/decomp_common.py` (`shared_overlay_files()`), `tools/progress.py`
+  (`eu_source_roots()`), `tools/function_inventory.py` and `tools/gen_eu_symbol_collisions.py` read it, and
+  `tests/shared_files_check.sh` fails when it disagrees with `bh.eu.yaml`.
+- `tools/overlay_pairs.py` has `tests/overlay_pairs_check.sh`; `tests/asm_root_check.sh` covers the `--asm-root` mapping,
+  including the sub-directory form that the shared files use; `tests/progress_eu_check.sh` covers the PAL progress count.
 - asm-processor's minimum function size is **2 instructions** for `-O2` without
   `-framepointer`, not 5. Only one-instruction GLOBAL_ASM blocks are rejected.

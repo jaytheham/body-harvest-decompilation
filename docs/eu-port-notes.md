@@ -311,3 +311,18 @@ NTSC recompiles identically for the EU shape.
   strings), and the PAL stubs hold 112 functions in two files where NTSC has 113 in one. That is at most about 73
   more matched functions for PAL. The level overlays pair one to one with their stubs and hold 362 matched
   functions, so they come first.
+- 2026-10-13: The five level overlays are shared with PAL (on branch `pal-share-overlays`, not in pull request 423): greece (64
+  functions), java (103), america (74), siberia (95) and comet (122), 362 matched C functions and 94 `NON_MATCHING` ones with
+  their `GLOBAL_ASM` fallback. Each pairs one to one with its PAL stub with no differing function. The PAL level is 0xB60 after
+  the NTSC one in the ROM and 0x40 after in memory; its data and read-only data differ from the NTSC data only in pointer words,
+  +0x40 into the level and +0x30 into the first part of the gameplay overlays. The C writes 587 of those words as numbers, as a
+  word, as two halfwords or as two bytes and a halfword, and `include/version_shift.h` gives each version its value
+  (`LEVEL_PTR` and friends; wrapped by exact value, because 7 of the 358 distinct address-like numbers in the level files are
+  constants). Both ROMs verify byte-exact; the PAL progress page reads 767 of 2717 functions matched (28.23 percent).
+- 2026-10-13: The list of shared overlay files is `shared_overlay_files.txt`, the one list that the Makefile,
+  `tools/native_build.py` and the tools read (it was four copies, and a copy that was missing from the Makefile broke
+  `make VERSION=eu` while the native build passed). `tests/shared_files_check.sh` checks it against `bh.eu.yaml`.
+  `tools/gen_eu_symbol_collisions.py` now reads the objects of every shared file, `tools/function_inventory.py` the pragmas
+  of every shared file, and `tools/overlay_pairs.py` reports a CLASH when a pin would override another shared file's
+  function (the america level calls the outside overlay's `func_8008EB20_5EFD0`, which the frontend file defines under the
+  same name at another PAL address). `docs/pal-vs-na.md`, "Sharing an overlay file", has the steps and the pitfalls.
