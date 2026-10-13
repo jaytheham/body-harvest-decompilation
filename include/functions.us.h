@@ -1636,7 +1636,7 @@ s16 func_800C3BD8_D2B88(s16, s16, s16, u16, u16, u8, u8, u8);
 void func_800C3D88_D2D38(s16, s16, s16, s16);
 void func_801095BC_11856C(VehicleInstance *arg0);
 void func_8010B60C_11A5BC(VehicleInstance *arg0, VehicleInstance *arg1);
-Projectile *func_801226F8_1316A8(s16 *arg0, BuildingInstance *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7);
+Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7);
 void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5);
 void func_800E0E9C_EFE4C(s16, s16, u16);
 void func_800E0F4C_EFEFC(s16, s16, s16, s32);
