@@ -6075,6 +6075,56 @@ const u32 jtbl_800A4A08_18CAC8[] = {
 	0x80072530, 0x80072550, 0x80072570, 0x80072590, 0x8007260C, 0x80072628, 0x80072648, 0x80072668, 
 };
 
+const u32 jtbl_800A4A88_18CB48[] = {
+	0x80072FA8, 0x80072EB4, 0x80072FA8, 0x80072F04, 0x80072FA0, 0x00000000,
+};
+
+const f64 D_800A4AA0_18CB60[1] = {180.0};
+
+const f64 D_800A4AA8_18CB68[1] = {180.0};
+
+const f64 D_800A4AB0_18CB70[1] = {180.0};
+
+const f32 D_800A4AB8_18CB78[1] = {315.0f};
+
+const f64 D_800A4AC0_18CB80[1] = {180.0};
+
+const u32 jtbl_800A4AC8_18CB88[] = {
+	0x80077874, 0x800778C8, 0x80077930, 0x80077A48, 0x80077A48, 0x800778FC, 0x800779A4, 0x80077A04, 
+};
+
+const u32 jtbl_800A4AE8_18CBA8[] = {
+	0x80077AA8, 0x80077ACC, 0x80077AF0, 0x80077B30, 0x80077B30, 0x80077ACC, 0x80077B14, 0x80077B14, 
+};
+
+const u32 jtbl_800A4B08_18CBC8[] = {
+	0x800785C4, 0x8007862C, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786A8, 0x800786A8, 0x800786FC, 
+	0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 
+	0x800786A8, 0x800786A8, 0x800786A8,
+};
+
+const f32 D_800A4B54_18CC14[1] = {0.10000000149011612f};
+
+const f32 D_800A4B58_18CC18[1] = {0.20000000298023224f};
+
+const u32 jtbl_800A4B5C_18CC1C[] = {
+	0x80078B04, 0x80078B20, 0x80078BCC, 0x80078BE8, 0x80078CD4,
+};
+
+const f64 D_800A4B70_18CC30[1] = {180.0};
+
+const u32 jtbl_800A4B78_18CC38[] = {
+	0x80079448, 0x80079458, 0x80079468, 0x80079478, 0x80079488, 0x80079498,
+};
+
+const f64 D_800A4B90_18CC50[1] = {180.0};
+
+const f32 D_800A4B98_18CC58[1] = {0.4000000059604645f};
+
+const u32 jtbl_800A4B9C_18CC5C[] = {
+	0x8007B3A8, 0x8007B3E4, 0x8007B350, 0x8007B410, 0x8007B470,
+};
+
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -7242,7 +7292,7 @@ void func_8007290C_15A9CC(void)
 	D_80068080 = 7;
 }
 
-
+#ifdef NON_MATCHING
 // Checks whether the current interior has a special vehicle-spawn room.
 s32 func_80072E88_15AF48(void) {
 	switch (currentLevel) {
@@ -7280,6 +7330,9 @@ s32 func_80072E88_15AF48(void) {
 
 	return 0;
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072E88_15AF48.s")
+#endif
 
 // AI - Per-frame secondary update: missions, fades, room rendering, lighting
 void func_80072FB4_15B074(void) {
@@ -9114,108 +9167,7 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 	}
 }
 #else
-/* Keep following constants after the generated special-room dispatch table. */
-#pragma GLOBAL_ASM(
-.late_rodata
-.late_rodata_alignment 8
-glabel D_800A4AA0_18CB60
-.word 0x40668000, 0x00000000
-glabel D_800A4AA8_18CB68
-.word 0x40668000, 0x00000000
-glabel D_800A4AB0_18CB70
-.word 0x40668000, 0x00000000
-glabel D_800A4AB8_18CB78
-.word 0x439D8000, 0x00000000
-glabel D_800A4AC0_18CB80
-.word 0x40668000, 0x00000000
-glabel jtbl_800A4AC8_18CB88
-.word 0x80077874, 0x800778C8, 0x80077930, 0x80077A48, 0x80077A48, 0x800778FC, 0x800779A4, 0x80077A04
-glabel jtbl_800A4AE8_18CBA8
-.word 0x80077AA8, 0x80077ACC, 0x80077AF0, 0x80077B30, 0x80077B30, 0x80077ACC, 0x80077B14, 0x80077B14
-glabel jtbl_800A4B08_18CBC8
-.word 0x800785C4, 0x8007862C, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786A8, 0x800786A8, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786FC, 0x800786A8, 0x800786A8, 0x800786A8
-glabel D_800A4B54_18CC14
-.word 0x3DCCCCCD
-glabel D_800A4B58_18CC18
-.word 0x3E4CCCCD
-glabel jtbl_800A4B5C_18CC1C
-.word 0x80078B04, 0x80078B20, 0x80078BCC, 0x80078BE8, 0x80078CD4
-glabel D_800A4B70_18CC30
-.word 0x40668000, 0x00000000
-glabel jtbl_800A4B78_18CC38
-.word 0x80079448, 0x80079458, 0x80079468, 0x80079478, 0x80079488, 0x80079498
-glabel D_800A4B90_18CC50
-.word 0x40668000, 0x00000000
-glabel D_800A4B98_18CC58
-.word 0x3ECCCCCD
-glabel jtbl_800A4B9C_18CC5C
-.word 0x8007B3A8, 0x8007B3E4, 0x8007B350, 0x8007B410, 0x8007B470
-.text
-glabel func_80077A5C_15FB1C
-    /* 15FB1C 80077A5C 3C0E800E */  lui        $t6, %hi(D_800E65BC)
-    /* 15FB20 80077A60 8DCE65BC */  lw         $t6, %lo(D_800E65BC)($t6)
-    /* 15FB24 80077A64 000578C0 */  sll        $t7, $a1, 3
-    /* 15FB28 80077A68 01E57821 */  addu       $t7, $t7, $a1
-    /* 15FB2C 80077A6C 27BDFFE8 */  addiu      $sp, $sp, -0x18
-    /* 15FB30 80077A70 000F78C0 */  sll        $t7, $t7, 3
-    /* 15FB34 80077A74 AFBF0014 */  sw         $ra, 0x14($sp)
-    /* 15FB38 80077A78 01CFC021 */  addu       $t8, $t6, $t7
-    /* 15FB3C 80077A7C 8702000C */  lh         $v0, 0xC($t8)
-    /* 15FB40 80077A80 00803025 */  or         $a2, $a0, $zero
-    /* 15FB44 80077A84 2459FFFF */  addiu      $t9, $v0, -0x1
-    /* 15FB48 80077A88 2F210008 */  sltiu      $at, $t9, 0x8
-    /* 15FB4C 80077A8C 10200028 */  beqz       $at, .L80077B30_15FBF0
-    /* 15FB50 80077A90 0019C880 */   sll       $t9, $t9, 2
-    /* 15FB54 80077A94 3C01800A */  lui        $at, %hi(jtbl_800A4AE8_18CBA8)
-    /* 15FB58 80077A98 00390821 */  addu       $at, $at, $t9
-    /* 15FB5C 80077A9C 8C394AE8 */  lw         $t9, %lo(jtbl_800A4AE8_18CBA8)($at)
-    /* 15FB60 80077AA0 03200008 */  jr         $t9
-    /* 15FB64 80077AA4 00000000 */   nop
-  jlabel .L80077AA8_15FB68
-    /* 15FB68 80077AA8 00064080 */  sll        $t0, $a2, 2
-    /* 15FB6C 80077AAC 01064023 */  subu       $t0, $t0, $a2
-    /* 15FB70 80077AB0 00084100 */  sll        $t0, $t0, 4
-    /* 15FB74 80077AB4 3C04800E */  lui        $a0, %hi(D_800E66B3)
-    /* 15FB78 80077AB8 00882021 */  addu       $a0, $a0, $t0
-    /* 15FB7C 80077ABC 0C021BA4 */  jal        func_80086E90_16EF50
-    /* 15FB80 80077AC0 908466B3 */   lbu       $a0, %lo(D_800E66B3)($a0)
-    /* 15FB84 80077AC4 1000001B */  b          .L80077B34_15FBF4
-    /* 15FB88 80077AC8 8FBF0014 */   lw        $ra, 0x14($sp)
-  jlabel .L80077ACC_15FB8C
-    /* 15FB8C 80077ACC 00064880 */  sll        $t1, $a2, 2
-    /* 15FB90 80077AD0 01264823 */  subu       $t1, $t1, $a2
-    /* 15FB94 80077AD4 00094900 */  sll        $t1, $t1, 4
-    /* 15FB98 80077AD8 3C04800E */  lui        $a0, %hi(D_800E66B2)
-    /* 15FB9C 80077ADC 00892021 */  addu       $a0, $a0, $t1
-    /* 15FBA0 80077AE0 0C021BD6 */  jal        func_80086F58_16F018
-    /* 15FBA4 80077AE4 848466B2 */   lh        $a0, %lo(D_800E66B2)($a0)
-    /* 15FBA8 80077AE8 10000012 */  b          .L80077B34_15FBF4
-    /* 15FBAC 80077AEC 8FBF0014 */   lw        $ra, 0x14($sp)
-  jlabel .L80077AF0_15FBB0
-    /* 15FBB0 80077AF0 00065080 */  sll        $t2, $a2, 2
-    /* 15FBB4 80077AF4 01465023 */  subu       $t2, $t2, $a2
-    /* 15FBB8 80077AF8 000A5100 */  sll        $t2, $t2, 4
-    /* 15FBBC 80077AFC 3C04800E */  lui        $a0, %hi(D_800E66B2)
-    /* 15FBC0 80077B00 008A2021 */  addu       $a0, $a0, $t2
-    /* 15FBC4 80077B04 0C021BC9 */  jal        func_80086F24_16EFE4
-    /* 15FBC8 80077B08 848466B2 */   lh        $a0, %lo(D_800E66B2)($a0)
-    /* 15FBCC 80077B0C 10000009 */  b          .L80077B34_15FBF4
-    /* 15FBD0 80077B10 8FBF0014 */   lw        $ra, 0x14($sp)
-  jlabel .L80077B14_15FBD4
-    /* 15FBD4 80077B14 00065880 */  sll        $t3, $a2, 2
-    /* 15FBD8 80077B18 01665823 */  subu       $t3, $t3, $a2
-    /* 15FBDC 80077B1C 000B5900 */  sll        $t3, $t3, 4
-    /* 15FBE0 80077B20 3C04800E */  lui        $a0, %hi(D_800E66B3)
-    /* 15FBE4 80077B24 008B2021 */  addu       $a0, $a0, $t3
-    /* 15FBE8 80077B28 0C0225E5 */  jal        func_80089794_171854
-    /* 15FBEC 80077B2C 908466B3 */   lbu       $a0, %lo(D_800E66B3)($a0)
-  jlabel .L80077B30_15FBF0
-    /* 15FBF0 80077B30 8FBF0014 */  lw         $ra, 0x14($sp)
-  .L80077B34_15FBF4:
-    /* 15FBF4 80077B34 27BD0018 */  addiu      $sp, $sp, 0x18
-    /* 15FBF8 80077B38 03E00008 */  jr         $ra
-    /* 15FBFC 80077B3C 00000000 */   nop
-)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077A5C_15FB1C.s")
 #endif
 
 // AI - Spawns or despawns room objects based on visit flag
