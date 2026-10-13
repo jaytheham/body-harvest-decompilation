@@ -153,3 +153,17 @@ Split one-element origin arrays are neutral. An if(1) around loop locals
 or lighting, or a plain scope around render setup, is neutral. Explicit
 byte-masked row increment scores 3970. Keep ordinary u8 row++ and the
 existing scopes; restored wrapped ROM is OK.
+
+## Terrain color renderer checkpoint (not matched)
+
+func_800B345C_C240C improves 7341 to 5653 by chaining its level-4 zero
+colors as spA0[0] = spA0[1] = spA0[2] = 0. This reproduces ANDI s7,zero,
+255 and ANDI s6,zero,255 before the byte stores, and also restores RGB
+saved-register allocation across the earlier helper calls. Reverse
+chain scores 6629, G/R/B chain 5675; byte final index 7480; removing
+unused mode is neutral. Array declarations first/reverse/both score
+6409/5987/6085; word X coordinate 6257. Caching the flash timer in the
+existing word i is neutral. Zero-color target pattern has no matching
+donor. Current frame 0xC0 versus target 0xB8; flash timer allocation,
+neighbor/output array homes and later instruction scheduling remain.
+Retained chained assignment under NON_MATCHING; full wrapped ROM OK.
