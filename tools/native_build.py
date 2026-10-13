@@ -137,12 +137,11 @@ def setup():
             run([CACHE / "tcc/tcc/tcc.exe", *extra, source, "-o", target])
 
 
-# Files of src.us outside core that a PAL build compiles too (keep in step with SHARED_OVERLAY_FILES in the Makefile), and the
+# Files of src.us outside core that a PAL build compiles too (shared_overlay_files.txt, which the Makefile reads as well), and the
 # directories whose GLOBAL_ASM pragmas name asm/nonmatchings/<dir>, which a PAL build reads from asm.eu/src.us/<dir>.
-SHARED_OVERLAY_FILES = (
-    "overlay_gameplay/frontend/52690.c",
-    "overlay_level/greece/18D7E0.c",
-)
+SHARED_OVERLAY_FILES = tuple(
+    line.strip() for line in (ROOT / "shared_overlay_files.txt").read_text(encoding="utf-8").splitlines()
+    if line.strip() and not line.startswith("#"))
 SHARED_ASM_DIRS = ("core", *sorted({os.path.dirname(f) for f in SHARED_OVERLAY_FILES}))
 
 

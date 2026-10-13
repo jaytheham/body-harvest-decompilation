@@ -98,11 +98,11 @@ def collect_shared_symbols() -> tuple[set[str], set[str]]:
     defined: set[str] = set()
     undefined: set[str] = set()
     objs = sorted(SHARED_OBJ_DIR.rglob("*.o"))
-    # The shared files of src.us outside core: their NTSC objects are build/src.us/<file>.o
+    # The shared files of src.us outside core (shared_overlay_files.txt): their NTSC objects are build/src.us/<file>.o
     sys.path.insert(0, str(ROOT / "tools"))
-    from native_build import SHARED_OVERLAY_FILES
+    from decomp_common import shared_overlay_files
 
-    objs += [ROOT / "build" / "src.us" / (f + ".o") for f in SHARED_OVERLAY_FILES if (ROOT / "build" / "src.us" / (f + ".o")).is_file()]
+    objs += [ROOT / "build" / (f + ".o") for f in shared_overlay_files() if (ROOT / "build" / (f + ".o")).is_file()]
     if not objs:
         sys.exit(f"no shared objects under {SHARED_OBJ_DIR} (build NA first)")
     nm = find_nm()

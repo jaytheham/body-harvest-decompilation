@@ -20,7 +20,7 @@ pairs the rest; the unpaired ones are listed.
 
 Output, one item per line:
 
-    PAIRS / UNPAIRED / DIFF / CONFLICT / PROBLEM    what was found; a DIFF is a pair that cannot share the C
+    PAIRS / UNPAIRED / DIFF / CONFLICT / CLASH / PROBLEM    what was found; a DIFF is a pair that cannot share the C
     NAME <ntsc name> = 0x<PAL address>;             a function: add to symbol_addrs.eu.txt with ``// type:func rom:0x..``
     PIN <ntsc name> = 0x<PAL address>;              a name the NTSC object leaves undefined: add to undefined_syms.eu.txt
 
@@ -30,7 +30,9 @@ of the address shifts that the file's own symbol operands show (0x30, 0x7C0 ...)
 for a relocation written as a number, as in ``lw $t6, 0x1420($t6)``.  A DIFF function contributes no references;
 for the shared file it must keep a PAL-only definition.  The PAL address of every NTSC address the file refers to is
 read from the operands of the paired instructions (``%hi``/``%lo`` and ``jal``/``j``); two different answers for one
-address are a CONFLICT.  A PIN is printed for each undefined symbol of ``--us-obj`` (read with ``nm``) that the
+address are a CONFLICT.  A CLASH is a name that the file leaves undefined and that another shared file (the list in
+``shared_overlay_files.txt``) defines: the overlays share a vram range, so the NTSC decomp can use one name for a function of
+each, and a pin for the name would override the definition in the other file.  A PIN is printed for each undefined symbol of ``--us-obj`` (read with ``nm``) that the
 PAL ELF does not already define at that address.
 
 Exit status is 0 when everything pairs and nothing is unresolved, 1 otherwise.
@@ -190,15 +192,41 @@ def align(us_files: list, eu_files: list, us_code: list, eu_code: list, mode: st
     return pairs, us_left, eu_left
 
 
-def undefined_names(obj: Path) -> list[str]:
-    """The undefined global symbols of an object file, read with whatever ``nm`` is at hand."""
+def find_nm() -> str:
+    """Whatever ``nm`` is at hand: the native build's, else a mips one on the PATH."""
     candidates = ["mips-linux-gnu-nm", "mips64-linux-gnu-nm", "mips-ps2-decompals-nm"]
     local = ROOT / "tools" / "windows" / "binutils" / "mips-ps2-decompals-nm.exe"
     nm = str(local) if local.is_file() else next((shutil.which(c) for c in candidates if shutil.which(c)), None)
     if not nm:
         sys.exit("no nm found (install binutils-mips-linux-gnu or run the native build once)")
+    return nm
+
+
+def undefined_names(obj: Path) -> list[str]:
+    """The undefined global symbols of an object file, read with whatever ``nm`` is at hand."""
+    nm = find_nm()
     out = subprocess.run([nm, str(obj)], capture_output=True, text=True, check=True).stdout
     return sorted({ln.split()[-1] for ln in out.splitlines() if len(ln.split()) >= 2 and ln.split()[-2] == "U"})
+
+
+def defined_by_other_shared_objects(root: Path, own: Path | None) -> dict[str, str]:
+    """Name -> object of every global symbol that a shared overlay file's NTSC object defines (``own`` excluded)."""
+    listing = root / "shared_overlay_files.txt"
+    if not listing.is_file():
+        return {}
+    shared = [ln.strip() for ln in listing.read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")]
+    nm = find_nm()
+    found: dict[str, str] = {}
+    for entry in shared:
+        obj = root / "build" / "src.us" / (entry + ".o")
+        if not obj.is_file() or (own is not None and obj.resolve() == own.resolve()):
+            continue
+        out = subprocess.run([nm, str(obj)], capture_output=True, text=True, check=True).stdout
+        for ln in out.splitlines():
+            parts = ln.split()
+            if len(parts) >= 3 and parts[-2] in "TDBRGSVW":
+                found.setdefault(parts[-1], entry)
+    return found
 
 
 def main() -> int:
@@ -270,7 +298,13 @@ def main() -> int:
     for us_name, address in names:
         print(f"NAME {us_name} = 0x{address:08X};")
     if args.us_obj:
+        others = defined_by_other_shared_objects(root, root / args.us_obj)
         for name in undefined_names(root / args.us_obj):
+            if name in others:
+                print(f"CLASH {name} is defined by the shared file {others[name]}: a pin would override that definition; "
+                      "the file needs a name of its own for PAL")
+                problems += 1
+                continue
             a = address_of(name, us_symbols)
             hit = mapping.get(a) if a is not None else None
             if a is None:

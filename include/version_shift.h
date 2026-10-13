@@ -14,4 +14,16 @@
 #error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 
+/* The same pointers written as two halfwords: LEVEL_PTR_HI(0x802E4F94), LEVEL_PTR_LO(0x802E4F94). */
+#define LEVEL_PTR_HI(x) ((LEVEL_PTR(x) >> 16) & 0xFFFF)
+#define LEVEL_PTR_LO(x) (LEVEL_PTR(x) & 0xFFFF)
+#define OVERLAY_PTR_HI(x) ((OVERLAY_PTR(x) >> 16) & 0xFFFF)
+#define OVERLAY_PTR_LO(x) (OVERLAY_PTR(x) & 0xFFFF)
+
+/* And as two bytes and a halfword (0x80, 0x2E, 0x4F94): LEVEL_PTR_B3 and LEVEL_PTR_B2 are the top two bytes. */
+#define LEVEL_PTR_B3(x) ((LEVEL_PTR(x) >> 24) & 0xFF)
+#define LEVEL_PTR_B2(x) ((LEVEL_PTR(x) >> 16) & 0xFF)
+#define OVERLAY_PTR_B3(x) ((OVERLAY_PTR(x) >> 24) & 0xFF)
+#define OVERLAY_PTR_B2(x) ((OVERLAY_PTR(x) >> 16) & 0xFF)
+
 #endif

@@ -381,8 +381,9 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x1EE540, c, overlay_level/java/1EE540]
-      - [0x1F9D10, bin]
+      - [0x1EE540, c, ../src.us/overlay_level/java/1ED9E0]
+      - [0x1F9D10, .data, ../src.us/overlay_level/java/1ED9E0]
+      - [0x1FA5C0, .rodata, ../src.us/overlay_level/java/1ED9E0]
 
   - name: overlay_level_java_data
     type: bin
@@ -397,8 +398,9 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x254F70, c, overlay_level/america/254F70]
-      - [0x25F5F0, bin]
+      - [0x254F70, c, ../src.us/overlay_level/america/254410]
+      - [0x25F5F0, .data, ../src.us/overlay_level/america/254410]
+      - [0x260F90, .rodata, ../src.us/overlay_level/america/254410]
 
   - name: overlay_level_america_data
     type: bin
@@ -411,8 +413,9 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x2B7C60, c, overlay_level/siberia/2B7C60]
-      - [0x2C3D80, bin]
+      - [0x2B7C60, c, ../src.us/overlay_level/siberia/2B7100]
+      - [0x2C3D80, .data, ../src.us/overlay_level/siberia/2B7100]
+      - [0x2C5E20, .rodata, ../src.us/overlay_level/siberia/2B7100]
 
   - name: overlay_level_siberia_data
     type: bin
@@ -425,8 +428,9 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x319980, c, overlay_level/comet/319980]
-      - [0x329B30, bin]
+      - [0x319980, c, ../src.us/overlay_level/comet/318E20]
+      - [0x329B30, .data, ../src.us/overlay_level/comet/318E20]
+      - [0x32C6E0, .rodata, ../src.us/overlay_level/comet/318E20]
 
   - name: overlay_level_comet_data
     type: bin

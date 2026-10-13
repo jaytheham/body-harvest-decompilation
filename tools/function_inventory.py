@@ -92,9 +92,10 @@ def listing_index(asm_root):
 
 
 def global_asm_labels():
-    """Function names named by a ``GLOBAL_ASM`` pragma in ``src.us/core``."""
+    """Function names named by a ``GLOBAL_ASM`` pragma in the files that PAL shares with NTSC (``src.us/core`` and the
+    overlay files of ``shared_overlay_files.txt``)."""
     names = set()
-    for c in (ROOT / "src.us" / "core").rglob("*.c"):
+    for c in [*(ROOT / "src.us" / "core").rglob("*.c"), *(ROOT / f for f in dc.shared_overlay_files())]:
         text = c.read_text(encoding="utf-8", errors="replace")
         names.update(re.findall(r'GLOBAL_ASM\("[^"]*?([\w.-]+)\.s"\)', text))
     return names

@@ -126,6 +126,15 @@ class Function:
                 f"size={self.size} {self.c_file}>")
 
 
+def shared_overlay_files():
+    """The files of src.us outside core that the PAL build compiles too, as paths from the root (``src.us/...``).
+
+    The list is ``shared_overlay_files.txt``, the one place that the Makefile, native_build.py and the tools read.
+    """
+    lines = (ROOT / "shared_overlay_files.txt").read_text(encoding="utf-8").splitlines()
+    return ["src.us/" + ln.strip() for ln in lines if ln.strip() and not ln.startswith("#")]
+
+
 def c_file_from_object(obj):
     """``build/src.us/core/1050.c.o`` -> ``src.us/core/1050.c``.
 

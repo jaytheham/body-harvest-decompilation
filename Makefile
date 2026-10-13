@@ -72,7 +72,12 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/data \
 			$(SRC_DIR)/bss
 # Single files of src.us (outside core) that a build of another version compiles too: the rest of their directory is not shared.
-SHARED_OVERLAY_FILES = overlay_gameplay/frontend/52690.c \
+# The list is shared_overlay_files.txt, which tools/native_build.py and the tools read as well.
+SHARED_OVERLAY_FILES = $(shell grep -v '^\#' shared_overlay_files.txt)
+		overlay_level/comet/318E20.c
+		overlay_level/siberia/2B7100.c
+		overlay_level/america/254410.c
+		overlay_level/java/1ED9E0.c
 		overlay_level/greece/18D7E0.c
 SHARED_C_FILES = $(addprefix $(COMMON_SRC_DIR)/,$(SHARED_OVERLAY_FILES))
 # The directories of src.us whose GLOBAL_ASM pragmas name asm/nonmatchings/<dir>, which a PAL build reads from asm.eu/src.us/<dir>.
