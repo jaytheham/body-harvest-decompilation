@@ -206,78 +206,63 @@ void func_80070514_409C4(s16 arg0)
 	}
 }
 
-// CURRENT(5015)
-#ifdef NON_MATCHING
-MissionData* func_800706E8_40B98(s32 arg0) {
+// Allocates a transient frontend mission entry from its template.
+MissionData* func_800706E8_40B98(s16 arg0) {
 	s32 index;
+	MissionData* entry;
+	MissionData* newSource;
+	MissionData* source;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		while (index != 0) {
-			if (D_800D6DC0[--index].unk16 == 0) {
-				break;
-			}
-		}
+		do {} while (index-- && D_800D6DC0[index].unk16);
 	}
-
+	newSource = &D_800909B0[arg0];
 	if (index == -1) {
 		osSyncPrintf(D_800AD7CC_7DC7C);
 		return NULL;
 	}
-
-	{
-		MissionData* entry = &D_800D6DC0[index];
-		MissionData* source = &D_800909B0[(s16)arg0];
-		u8 temp_v0;
-
-		entry->unk0 = source->unk0 * 4;
-		entry->unk2 = source->unk2 * 4;
-		entry->unk4 = source->unk4 * 4;
-		entry->unk6 = source->unk6 * 4;
-		entry->unk8 = source->unk8;
-		entry->unkA = source->unkA * 4;
-		entry->unkC = source->unkC * 4;
-		entry->unkE = source->unkE * 4;
-		entry->unk12 = 0xFFFF;
-		entry->unk14 = 0;
-		entry->unk10 = source->unk10 * 4;
-		entry->unk16 = source->unk16;
-
-		if ((temp_v0 = source->unk1C) == 3) {
-			source->unk1C = 0;
-			entry->unk1C = 0;
-		} else {
-			entry->unk1C = temp_v0;
-		}
-
-		entry->unk26 = (s16)arg0;
-		entry->unk28 = source->unk28;
-
-		switch (D_800313D0_31FD0) {
-		case 0:
-		default:
-			entry->unk1E = source->unk1E;
-			break;
-		case 1:
-			entry->unk1E = source->unk1A;
-			break;
-		case 2:
-			entry->unk1E = source->unk18;
-			break;
-		}
-
-		entry->unk20 = source->unk20;
-		if ((s16)arg0 == D_800D74A4) {
-			func_800704DC_4098C();
-			entry->unk1C = 1;
-		}
-
-		return entry;
+	entry = &D_800D6DC0[index];
+	source = newSource;
+	entry->unk0 = source->unk0 * 4;
+	entry->unk2 = source->unk2 * 4;
+	entry->unk4 = source->unk4 * 4;
+	entry->unk6 = source->unk6 * 4;
+	entry->unk8 = source->unk8;
+	entry->unkA = source->unkA * 4;
+	entry->unkC = source->unkC * 4;
+	entry->unkE = source->unkE * 4;
+	entry->unk10 = source->unk10 * 4;
+	entry->unk12 = 0xFFFF;
+	entry->unk14 = 0;
+	entry->unk16 = source->unk16;
+	if (source->unk1C == 3) {
+		source->unk1C = 0;
+		entry->unk1C = 0;
+	} else {
+		entry->unk1C = source->unk1C;
 	}
+	entry->unk26 = arg0;
+	entry->unk28 = source->unk28;
+	switch (D_800313D0_31FD0) {
+	case 0:
+	default:
+		entry->unk1E = source->unk1E;
+		break;
+	case 2:
+		entry->unk1E = source->unk18;
+		break;
+	case 1:
+		entry->unk1E = source->unk1A;
+		break;
+	}
+	entry->unk20 = source->unk20;
+	if (arg0 == D_800D74A4) {
+		func_800704DC_4098C();
+		entry->unk1C = 1;
+	}
+	return entry;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800706E8_40B98.s")
-#endif
 
 /**
  * @brief Finds a mission entry by id, clamps `unk12` to 0x4000, and sets `unk14` to -0x400.
