@@ -61,6 +61,16 @@ check "progress.py counts the same files" bash -c '[[ "$0" == *"progress True"* 
 check "decomp_common reads the same list" bash -c '[[ "$0" == *"decomp_common True"* ]]' "$report"
 check "the asm-root directories are core and the directories of the listed files" bash -c '[[ "$0" == *"asm_dirs True"* ]]' "$report"
 check "the Makefile reads shared_overlay_files.txt" grep -q 'shared_overlay_files.txt' Makefile
+# A Makefile that does not parse stops make with "Makefile:<line>: *** ..." before it looks at any file, so this needs no
+# extraction. (A missing prerequisite is "make: *** No rule ...", without a line number, and is not what this looks for.)
+if command -v make > /dev/null 2>&1; then
+    for version in us eu; do
+        parse=$(make -n VERSION=$version 2>&1 | grep -E '^Makefile:[0-9]+: \*\*\*' | head -3)
+        check "the Makefile parses for VERSION=$version${parse:+ ($parse)}" test -z "$parse"
+    done
+else
+    echo "SKIP the Makefile parse checks (no make on this host)"
+fi
 
 if [ "$failures" -eq 0 ]; then
     echo "all shared-file checks passed"
