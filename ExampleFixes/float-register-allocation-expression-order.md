@@ -45,6 +45,3 @@ registers, but retains NEG and SUB instructions. Division of the product by
 accepted fixes. Avoid treating a register improvement with these extra
 instructions as a match. The clean version remains at diff score 30 with
 all 288 instructions structurally matching.
-## Frontend ring scale conversion and spilled-float declaration
-
-func_800853A8_55858 matches all 267 instructions and the full ROM checksum. The scale argument is u16, as its caller and target ANDI/home store show. Remove the separate named scale float: initialize each extent from the scale argument, then multiply that same extent by its orientation-array entry with *=. IDO shares the six conversions in f2, leaves the first extent in f0, and emits the target scale-first multiplication operands. A named scale float swaps f0/f2; loading the orientation into each extent first also keeps f20 live and adds a saved floating register. Put the final extent, which spills, first in the declaration list. This eliminates the five dead register-local homes, reducing the frame from 0x18 to 8 and moving the spill from sp+0 to the required sp+4. No rodata changes are needed.
