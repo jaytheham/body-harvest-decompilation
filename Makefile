@@ -266,7 +266,15 @@ endif
 # The asm-processor command line decides which version's .s files an object is built from. A stamp that is rewritten
 # only when that command line changes makes every GLOBAL_ASM object rebuild after a change of it (dropping --asm-root by
 # mistake, then restoring it), instead of keeping objects built from the other version's assembly.
+# The stamp is brought up to date while the Makefile is read, not by a rule: a rule that always runs (a FORCE
+# prerequisite) makes make -n list every GLOBAL_ASM object, and make -q report them out of date, on an idle tree.
+# A dry run (make -n) therefore also rewrites the stamp when the command line changed; the objects are then older
+# than the stamp, so the next real make rebuilds them.
 ASM_PROCESSOR_STAMP := $(BUILD_DIR)/.asm_processor.stamp
+ifndef PERMUTER
+ASM_PROCESSOR_STAMP_UPDATE := $(shell mkdir -p $(BUILD_DIR) && \
+	{ echo '$(ASM_PROCESSOR)' | cmp -s - $(ASM_PROCESSOR_STAMP) || echo '$(ASM_PROCESSOR)' > $(ASM_PROCESSOR_STAMP); })
+endif
 
 ### Optimisation Overrides
 # $(BUILD_DIR)/$(SRC_DIR)/main_1050.c.o: OPT_FLAGS := -O1
@@ -324,10 +332,6 @@ $(TARGET).elf: $(LD_SCRIPT) $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FIL
 	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 ifndef PERMUTER
-$(ASM_PROCESSOR_STAMP): FORCE
-	@mkdir -p $(dir $@)
-	@echo '$(ASM_PROCESSOR)' | cmp -s - $@ || echo '$(ASM_PROCESSOR)' > $@
-
 $(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.h include/variables.h include/structs.h \
 		include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h \
 		$(ASM_PROCESSOR_STAMP) $(ASM_PROCESSOR_DIR)/asm_processor.py
@@ -490,5 +494,5 @@ baserom.$(VERSION).z64:
 
 ### Settings
 .SECONDARY:
-.PHONY: all clean default FORCE
+.PHONY: all clean default
 SHELL = /bin/bash -e -o pipefail

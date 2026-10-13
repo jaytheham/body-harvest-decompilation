@@ -207,8 +207,11 @@ assembly of the version it is building:
   therefore makes every GLOBAL_ASM object depend on a stamp of the
   asm-processor command line (`build.eu/.asm_processor.stamp`) and on
   `asm_processor.py`, so putting the flag back, or changing the processor,
-  rebuilds them instead of re-linking objects made from the NA assembly.
-  `tools/native_build.py` gets the same effect from its configuration
+  rebuilds them instead of re-linking objects made from the NA assembly. The
+  stamp is rewritten, only when the command line changed, while make reads the
+  Makefile, so `make -n` and `make -q` report nothing to do on an idle tree. A
+  dry run that finds a changed command line rewrites the stamp too, and the next
+  real `make` then rebuilds the objects. `tools/native_build.py` gets the same effect from its configuration
   fingerprint, which digests `native_build.py` and `asm_processor.py`.
 - The asm path follows from the yaml name: for a subsegment named
   `../src/common/core/E830`, splat writes the functions to
