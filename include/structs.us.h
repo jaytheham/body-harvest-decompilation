@@ -2292,6 +2292,16 @@ typedef union {
 	s32 command[2];
 } MapMarkerScratch; /* size = 0x08 */
 
+typedef union {
+	u8 bytes[0x400];
+	u32 words[0x100];
+} ScannerTexture; /* size = 0x400 */
+
+typedef union {
+	u32 words[9];
+	u16 colors[18];
+} ScannerPalette; /* size = 0x24 */
+
 typedef struct {
 	Unk80052B40 values[3];
 } AlienRenderScales;
