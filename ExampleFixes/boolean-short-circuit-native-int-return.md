@@ -15,3 +15,9 @@ if (type == 0x13) {
 The project defines `s32` as `long`. With an `s32` return, IDO evaluates these native-int comparisons through `v1` and then moves their result into `v0`; the target uses `v0` directly and shares the final return. Changing both the definition and `include/functions.us.h` declaration to `int` removes those moves and reproduces the target's branches and return delay slots. Changing only a named result local to `int` was insufficient.
 
 Verified with the prescribed ROM build and a zero-score function diff. The ROM still fails verification while the separate HUD renderer remains unmatched.
+
+`func_800081D4_8DD4` in `src.us/core/53F0.c` confirms the same distinction in
+a switch handler. A building-flag logical OR returned through `s32` introduced
+a result MOVE and changed its short-circuit branch. Native `int` in the definition
+and header reproduces the target directly. See
+`mission-predicate-native-int-and-late-data.md` for the associated table layout.

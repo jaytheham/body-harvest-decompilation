@@ -41,3 +41,7 @@ The underlying type of the bitfield cannot easily be determined from the asm (ID
 ## Narrowing a multiplied call argument
 
 In `func_800DA7CC_E977C`, passing `(u8)(D_80154318[arg0].unkC * 3)` matched the target's reused multiplication temporary and final `andi` in the call delay slot. The equivalent expression with `& 0xFF` introduced a second multiplication-result temporary and shifted subsequent register allocation. Loading a named value first instead allocated the input to v0 rather than a1. Keep the field access inline and express the byte conversion as a u8 cast when the target exhibits this pattern. Full ROM checksum verified OK.
+
+### Building status field update
+
+func_802D4E6C_1EDB7C matched by replacing a manually expanded shift/xor update with buildingInstances[38].statusFlags |= 0x10000. The existing 20-bit field makes IDO emit the target update and register allocation. A for loop for the palette copy also places the increment conversion and comparison correctly; the do/while version reordered three instructions. Full ROM checksum verified OK.
