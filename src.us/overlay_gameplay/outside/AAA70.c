@@ -1793,8 +1793,6 @@ void func_800A13E8_B0398(void) {
 }
 
 // drawDebugTimingGraphs
-// CURRENT(5565)
-#ifdef NON_MATCHING
 void func_800A140C_B03BC(void) {
 	s32 i;
 	s32 j;
@@ -1802,37 +1800,35 @@ void func_800A140C_B03BC(void) {
 	s32 uly;
 	u64 sum;
 	s32 color;
-	s32 c0;
-	s32 c1;
-	s32 c2;
+	s32 green;
+	s32 blue;
 
 	if (D_80047720 != 0) {
 		debug_drawTimingGraphBars();
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
-		lry = 0xD3;
-		uly = 0xCF;
 		i = 0x20;
-		while (i--) {
-			sum = 0;
-			j = 8;
-			while (j--) {
-				sum += D_8014F210[i][j];
+		if (i) {
+			while (i--) {
+				sum = 0;
+				j = 8;
+				while (j--) {
+					sum += D_8014F210[i][j];
+				}
+				sum >>= D_80047722;
+				if (sum > 200) {
+					sum = 200;
+				}
+				green = (i & 2) ? 0x3C0 : 0;
+				blue = (i & 1) ? 0x1E : 0;
+				color = ((i & 4) ? 0x7800 : 0) + blue + green;
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetFillColor(D_8005BB2C++, (color << 16) | color);
+				lry = i * 6 + 0x19;
+				uly = i * 6 + 0x15;
+				gDPFillRectangle(D_8005BB2C++, 0x20, uly, sum + 0x20, lry);
 			}
-			sum >>= D_80047722;
-			if (sum > 200) {
-				sum = 200;
-			}
-			c0 = (i & 2) ? 0x3C0 : 0;
-			c1 = (i & 1) ? 0x1E : 0;
-			c2 = (i & 4) ? 0x7800 : 0;
-			color = c2 + c1 + c0;
-			gDPPipeSync(D_8005BB2C++);
-			gDPSetFillColor(D_8005BB2C++, (color << 16) | color);
-			gDPFillRectangle(D_8005BB2C++, 0x20, uly, sum + 0x20, lry);
-			lry -= 6;
-			uly -= 6;
 		}
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -1850,9 +1846,6 @@ void func_800A140C_B03BC(void) {
 		D_8014F20C = 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A140C_B03BC.s")
-#endif
 
 void func_800A1764_B0714(void) {
 	D_8014F618.unk69 = 0;
