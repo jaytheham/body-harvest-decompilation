@@ -340,3 +340,17 @@ NTSC recompiles identically for the EU shape.
   memory, equal to it under the relocation mask. They were `func_<vram>_<rom>` before, so a recompiler that leaves the NTSC
   functions of these names to its runtime compiled the PAL copies as game code (a raw read of `AI_LEN_REG` then ran off the
   guest region). The names change no matched-function count; the PAL build is byte-exact with them.
+- 2026-10-14: The outside gameplay overlay is shared with PAL (branch `pal-share-overlays`): 27 C files and four data-only C files
+  (`constData`, `constData2`, `mutableData`, `101840_rodata`, which hold the overlay's data and read-only data and have no `c`
+  entry in the yaml; they are in `shared_overlay_files.txt` as well, and `tests/shared_files_check.sh` accepts a listed file with
+  only `.data` or `.rodata` entries). 1446 PAL stubs pair with the 1445 NTSC functions. Three things were new. A call to a
+  function that NTSC names and PAL has as `func_<address>` (`sourceTaggedPrintF`, `guMtxXFML`) was a DIFF in
+  `tools/overlay_pairs.py` and no longer is; a CLASH is reported only when the PAL ELF has the name at another address than the
+  one the file reaches. `D_80153BB8` is defined by `CFE30.c` in its `.bss` while the NTSC link script
+  (`undefined_syms_auto.txt`) moves it to its real address, so PAL needs the same pin (`D_80153BB8 = 0x80153BE8`); the pairing
+  tool lists only names that the object leaves undefined, so a name that it defines and a script moves has to be found by
+  comparing the object's definitions with the NTSC script files. A pointer written `(s32)0x8013E120U` is a fifth literal form;
+  it is `(s32)OVERLAY_PTR(0x8013E120U)`. The PAL progress page reads 2124 of 2722 functions matched (78.03 percent).
+- 2026-10-14: `osMotorStop`, `osMotorStart`, `osMotorInit` and `osEepromLongWrite` were assigned in `undefined_syms.eu.txt` (the
+  `core/1050` block) as well as named in `symbol_addrs.eu.txt`; the link script assignment turned them into absolute symbols,
+  which a recompiler that reads function symbols does not recompile or recognise as functions. The four assignments are gone.

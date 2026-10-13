@@ -181,7 +181,8 @@ addresses in `undefined_syms.eu.txt`.
 
 The files that PAL shares outside core are listed in `shared_overlay_files.txt`, the one list that the Makefile,
 `tools/native_build.py` and the tools read: the second half of the frontend overlay (`52690.c`) and the one C file of each
-of the five level overlays. `tests/shared_files_check.sh` checks that the list agrees with `bh.eu.yaml`, which names each of
+of the five level overlays, and every file of the inside and the outside overlay (the outside one has four data-only files).
+`tests/shared_files_check.sh` checks that the list agrees with `bh.eu.yaml`, which names each of
 them as `../src.us/<file>`, and with the other places that use it.
 
 Inside an overlay the PAL shift is not one number, so the PAL address of every name is read from the paired instructions
@@ -216,6 +217,10 @@ The steps, for a file that exists once as C in `src.us` and once as a stub file 
    value and not by range: some numbers that look like addresses are constants (`0x8019003C`).
 5. `python tools/eu_collisions_build.py` extracts, tags the colliding labels, builds and verifies; a ROM that differs is
    found with `python tools/eu_rom_diff.py`.
+6. A name that the shared C object defines and that the NTSC link script (`undefined_syms.txt`, `undefined_syms_auto.txt`)
+   moves to another address needs the same move for PAL (`D_80153BB8`). `overlay_pairs.py` lists only the names an object
+   leaves undefined, so compare the object's definitions (`nm`) with the names the NTSC script files assign. A data-only C file
+   (`constData.c`) is a shared file like the others: list it and wrap its pointers.
 
 What went wrong the first time, so that it is not repeated:
 
