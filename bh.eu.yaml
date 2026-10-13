@@ -364,8 +364,9 @@ segments:
     exclusive_ram_id: 802D4D10
     overlay: true
     subsegments:
-      - [0x18E340, c, overlay_level/greece/18E340]
-      - [0x1967E0, bin]
+      - [0x18E340, c, ../src.us/overlay_level/greece/18D7E0]
+      - [0x1967E0, .data, ../src.us/overlay_level/greece/18D7E0]
+      - [0x197940, .rodata, ../src.us/overlay_level/greece/18D7E0]
 
   - name: overlay_level_greece_data
     type: bin

@@ -5,7 +5,6 @@
 
 extern Addr _14B400_bin;
 extern Addr _176A10_bin;
-extern Addr _1967E0_bin;
 extern Addr _1F9D10_bin;
 extern Addr _25F5F0_bin;
 extern Addr _298A0_s;
@@ -30,6 +29,7 @@ extern Addr ___src_us_core_E830_c;
 extern Addr ___src_us_core_FD80_c;
 extern Addr ___src_us_core_loader_c;
 extern Addr ___src_us_overlay_gameplay_frontend_52690_c;
+extern Addr ___src_us_overlay_level_greece_18D7E0_c;
 extern Addr _bootSegmentDataEnd;
 extern Addr _bootSegmentDataSize;
 extern Addr _bootSegmentDataStart;
@@ -374,7 +374,6 @@ extern Addr overlay_level_america_254F70_c;
 extern Addr overlay_level_america_data_bin;
 extern Addr overlay_level_comet_319980_c;
 extern Addr overlay_level_comet_data_bin;
-extern Addr overlay_level_greece_18E340_c;
 extern Addr overlay_level_greece_data_bin;
 extern Addr overlay_level_java_1EE540_c;
 extern Addr overlay_level_java_data_bin;

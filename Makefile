@@ -72,7 +72,8 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/data \
 			$(SRC_DIR)/bss
 # Single files of src.us (outside core) that a build of another version compiles too: the rest of their directory is not shared.
-SHARED_OVERLAY_FILES = overlay_gameplay/frontend/52690.c
+SHARED_OVERLAY_FILES = overlay_gameplay/frontend/52690.c \
+		overlay_level/greece/18D7E0.c
 SHARED_C_FILES = $(addprefix $(COMMON_SRC_DIR)/,$(SHARED_OVERLAY_FILES))
 # The directories of src.us whose GLOBAL_ASM pragmas name asm/nonmatchings/<dir>, which a PAL build reads from asm.eu/src.us/<dir>.
 SHARED_ASM_DIRS = core $(patsubst %/,%,$(sort $(dir $(SHARED_OVERLAY_FILES))))
