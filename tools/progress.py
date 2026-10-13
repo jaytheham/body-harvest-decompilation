@@ -2,12 +2,12 @@
 """
 progress.py - Body Harvest decompilation progress tracker.
 
-Walks the NTSC build's C sources (src.us/**/*.c and the version-independent
-src/common/**/*.c), counts matched / NON_MATCHING / GLOBAL_ASM functions
+Walks the NTSC build's C sources (src.us/**/*.c, which includes the core that
+the PAL build compiles too), counts matched / NON_MATCHING / GLOBAL_ASM functions
 per file and segment, reads git log for history, and emits progress.json.
 
-With --version eu it walks the PAL build instead (src.eu/**/*.c and the same
-src/common/**/*.c, keeping only the branches the EU build compiles) and emits
+With --version eu it walks the PAL build instead (src.eu/**/*.c and the shared
+src.us/core/**/*.c, keeping only the branches the EU build compiles) and emits
 progress.eu.json. The default, --version us, is the NTSC count described above.
 
 Usage:
@@ -88,12 +88,12 @@ SEGMENT_DISPLAY = {
 }
 SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
-# C source roots of the NTSC build. src/common holds the files both versions compile; src.eu is
+# C source roots of the NTSC build. src.us/core holds the files both versions compile; src.eu is
 # not counted here. It holds the PAL build's own gameplay-overlay and libultra files, which are
 # GLOBAL_ASM stubs (those overlays are not shared with NTSC yet); --version eu counts them.
-SOURCE_ROOTS = ("src.us", "src/common")
+SOURCE_ROOTS = ("src.us",)
 # C source roots of the PAL build, and the version macro its preprocessor defines.
-EU_SOURCE_ROOTS = ("src.eu", "src/common")
+EU_SOURCE_ROOTS = ("src.eu", "src.us/core")
 EU_DEFINES = frozenset({"VERSION_EU"})
 # The conditions the PAL count evaluates. NON_MATCHING is never defined by a normal build.
 VERSION_MACROS = frozenset({"VERSION_US", "VERSION_EU", "NON_MATCHING"})
@@ -112,7 +112,7 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 # (docs/eu-port-notes.md), so the 94.14 percent is the result of one rule.
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
-    "(src/common/core), and the stubs under src.eu for the three gameplay overlays and the one libultra file there "
+    "(src.us/core), and the stubs under src.eu for the three gameplay overlays and the one libultra file there "
     "(sl.c). Not counted: the five level overlays and the rest of libultra have no tracked EU source, so they cannot "
     "be counted from the repository.\n"
     "The core figures are the same functions as on the US page, so the two pages must not be summed. "
@@ -148,7 +148,7 @@ def count_global_asm_stubs(text: str) -> int:
 
     A pragma in the #else/#elif chain of an `#ifdef NON_MATCHING` group is that C body's fallback,
     which RE_NON_MATCHING already counts. A pragma in a `defined(VERSION_EU)` branch is the PAL
-    build's copy of a function shared from src/common, which NTSC does not compile.
+    build's copy of a function shared from src.us/core, which NTSC does not compile.
     """
     count = 0
     groups = []  # one [first condition, current branch condition] per open #if group
@@ -211,14 +211,16 @@ def file_to_segment(sub_path: str) -> str:
     return "unknown"
 
 
+def tree_prefix(repo_root: Path, src_dir: Path) -> Path:
+    """Where a source root sits inside its version tree: src.us/core -> core, src.eu and src.us -> nothing."""
+    return Path(*src_dir.relative_to(repo_root).parts[1:])
+
+
 def count_asm_functions_for_source(repo_root: Path, src_dir: Path, source_file: Path) -> int:
-    rel_no_ext = source_file.relative_to(src_dir).with_suffix("")
-    # splat writes the reference asm of a file named ../src/common/... in the yaml to
-    # asm/src/common/<path>/ rather than asm/matchings or asm/nonmatchings.
+    rel_no_ext = (tree_prefix(repo_root, src_dir) / source_file.relative_to(src_dir)).with_suffix("")
     asm_dirs = [
         repo_root / "asm" / "matchings" / rel_no_ext,
         repo_root / "asm" / "nonmatchings" / rel_no_ext,
-        repo_root / "asm" / src_dir.relative_to(repo_root) / rel_no_ext,
     ]
     total = 0
     for d in asm_dirs:
@@ -487,8 +489,9 @@ def build_history(cwd: str, src_dirs: list) -> list:
 def build_history_eu(cwd: str, src_dirs: list) -> list:
     """Weekly PAL series, as build_history makes the NTSC one, but only from the point where core was shared.
 
-    The series starts at the first week whose commit holds a C file under src/common/core: before that the PAL
-    sources were per-version trees, which this count does not read. Fewer than two points make no history.
+    The series starts at the first week whose commit has a bh.eu.yaml that names the shared core (../src.us/core):
+    before that the PAL sources were per-version trees, which this count does not read. Fewer than two points make
+    no history.
     """
     src_rels = [d.relative_to(Path(cwd)).as_posix() for d in src_dirs]
     start_date = datetime.strptime("2026-02-01", "%Y-%m-%d").date()
@@ -496,8 +499,7 @@ def build_history_eu(cwd: str, src_dirs: list) -> list:
     weekly_commits = get_weekly_commits(cwd, src_rels, start_date)
 
     def shares_core(sha: str) -> bool:
-        tree = git_run(["ls-tree", "-r", "--name-only", sha, "src/common/core"], cwd)
-        return any(path.endswith(".c") for path in tree.splitlines())
+        return "../src.us/core/" in git_run(["show", f"{sha}:bh.eu.yaml"], cwd)
 
     first_week = next((week for week, sha in sorted(weekly_commits.items()) if shares_core(sha)), None)
     if first_week is None:
@@ -535,8 +537,9 @@ def main():
     src_dirs = [d for d in src_dirs if d.is_dir()]
 
     print("Scanning source files...", file=sys.stderr)
+    prefixes = {d: tree_prefix(Path(repo_root), d) for d in src_dirs}
     c_files = sorted(((d, f) for d in src_dirs for f in d.rglob("*.c")),
-                     key=lambda pair: pair[1].relative_to(pair[0]).as_posix())
+                     key=lambda pair: (prefixes[pair[0]] / pair[1].relative_to(pair[0])).as_posix())
     # The PAL view has no per-contributor figures: its core is the shared NTSC work, not the PAL port's.
     contributors = {} if verify_mode or eu_mode else get_contributors(repo_root, src_dirs)
 
@@ -548,7 +551,7 @@ def main():
 
     for src_dir, f in c_files:
         rel = str(f.relative_to(Path(repo_root)))
-        sub_path = f.relative_to(src_dir).as_posix()
+        sub_path = (prefixes[src_dir] / f.relative_to(src_dir)).as_posix()
         seg = file_to_segment(sub_path)
         counts = analyse_file_eu(f) if eu_mode else analyse_file(f)
         if args.verify_with_asm:

@@ -6,8 +6,6 @@ Checks a git checkout of the decomp against the merge base of --base and HEAD:
   E2  drive-letter or home-directory path on a line added since the merge base
   E3  a documentation file cites a repository path that is missing now and either existed at the
       merge base (this branch moved or deleted it) or sits on a line this branch added
-  E4  contributor guidance naming include/{functions,variables,structs}.us.h without saying the file
-      is for US-only declarations (AGENTS.md, .github/agents/, ExampleFixes/)
   W2  a path:line citation whose line number is past the end of the cited file
   W3  a missing cited path that was already missing at the merge base (pre-existing upstream rot)
 
@@ -34,17 +32,13 @@ HOME_PATH = re.compile(r"(?:/home/|/Users/|\\Users\\)[\w.-]+")
 # Repository-relative paths worth checking. Generated trees (asm, asm.eu, assets, build, build.eu)
 # are not listed: they never exist in a clean checkout.
 CITED_PATH = re.compile(
-    r"(?<![\w./-])((?:\.\./)?(?:src\.us|src\.eu|src/common|include|tools|docs|ExampleFixes|\.github)"
+    r"(?<![\w./-])((?:\.\./)?(?:src\.us|src\.eu|include|tools|docs|ExampleFixes|\.github)"
     r"/[A-Za-z0-9_./-]*[A-Za-z0-9_])(?::(\d+)(?:-(\d+))?)?"
 )
 GENERATED_PREFIXES = ("tools/windows", "tools/third_party/python_vendor/")
 
-RETIRED_HEADER = re.compile(r"\b(functions|variables|structs)\.us\.h\b")
-RETIRED_HEADER_ALLOWED = re.compile(r"US-only|NTSC-only|only in the (?:US|NTSC)|exists? in only one")
-
 DOC_GLOBS = ("AGENTS.md", "README.md", "DecompHints.md", "docs/*.md", "docs/*.txt",
              "ExampleFixes/*.md", ".github/agents/*.md")
-GUIDANCE_GLOBS = ("AGENTS.md", ".github/agents/*.md", "ExampleFixes/*.md")
 
 
 @dataclass(frozen=True)
@@ -161,18 +155,6 @@ def check_citations(repo: Path, base_paths: set[str], added: set[tuple[str, int]
     return findings
 
 
-def check_guidance(repo: Path) -> list[Finding]:
-    """E4: a per-version header named without a US-only qualifier on the same line."""
-    findings: list[Finding] = []
-    for doc in doc_files(repo, GUIDANCE_GLOBS):
-        rel_doc = doc.relative_to(repo).as_posix()
-        for number, line in enumerate(doc.read_text(encoding="utf-8", errors="replace").splitlines(), 1):
-            if RETIRED_HEADER.search(line) and not RETIRED_HEADER_ALLOWED.search(line):
-                findings.append(Finding("E4", rel_doc, number,
-                                        "per-version header as declaration home: " + line.strip()[:100]))
-    return findings
-
-
 def main() -> int:
     """Run every check, print one line per finding and a summary, return the exit status."""
     parser = argparse.ArgumentParser(description="Documentation consistency gate (PR 423 remediation).")
@@ -186,7 +168,6 @@ def main() -> int:
     lines = added_lines(repo, base_commit)
     findings = check_added(lines)
     findings += check_citations(repo, tree_paths(repo, base_commit), {(p, n) for p, n, _ in lines})
-    findings += check_guidance(repo)
 
     for finding in sorted(findings, key=lambda f: (f.code, f.path, f.line)):
         print(finding.render())

@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run from the root of a checkout (src.us, src.eu and src/common present, git history available), with PY set.
+# Run from the root of a checkout (src.us and src.eu present, git history available), with PY set.
 # Checks tools/progress.py --version eu and that the default NTSC run still writes what it wrote before the EU view
 # existed. It asserts invariants, not the numbers of the day:
 #   - the EU json has the keys of the NTSC json plus "version": "eu" and a "note", and the same shapes below them
@@ -164,7 +164,7 @@ for seg_name, seg in eu["segments"].items():
         continue
     stubs = 0
     for f in (f for f in eu["files"] if f["segment"] == seg_name):
-        source = next((p for p in (repo / "src.eu" / f["path"], repo / "src" / "common" / f["path"]) if p.is_file()))
+        source = next((p for p in (repo / "src.eu" / f["path"], repo / "src.us" / f["path"]) if p.is_file()))
         stubs += len(empty_function.findall(source.read_text(encoding="utf-8", errors="replace")))
     check(seg["matched"] <= stubs, f"{seg_name}: matched ({seg['matched']}) is at most its empty C stubs ({stubs})")
 

@@ -38,7 +38,7 @@ import decomp_common as dc
 ROOT = dc.ROOT
 
 #: How a function's object file decides whether it is decompilable C.
-#:   ``build/src/common/core/1050.c.o``  -> C, decompilable
+#:   ``build/src.us/core/1050.c.o``     -> C, decompilable
 #:   ``build/lib/libultra_rom.a(x.o)`` -> prebuilt archive, not decompilable
 #:   ``build.eu/asm.eu/aisetfreq.s.o`` -> handwritten asm, not decompilable
 ARCHIVE_OBJ = re.compile(r"\([^)]+\)$")
@@ -78,9 +78,9 @@ def listing_index(asm_root):
                 prev = out.get(label)
                 if prev is None or category == "nonmatching":
                     out[label] = (category, len(instrs))
-    # Shared sources (src/common) get their listings under <asm>/src/, with
-    # no matchings/nonmatchings split; a GLOBAL_ASM pragma marks nonmatching.
-    shared = asm_root / "src"
+    # The PAL extraction of the sources shared with NTSC (src.us/core) is listed under <asm>/src.us/,
+    # with no matchings/nonmatchings split; a GLOBAL_ASM pragma marks nonmatching.
+    shared = asm_root / "src.us"
     if shared.exists():
         pragmas = global_asm_labels()
         for path in shared.rglob("*.s"):
@@ -92,9 +92,9 @@ def listing_index(asm_root):
 
 
 def global_asm_labels():
-    """Function names named by a ``GLOBAL_ASM`` pragma in ``src/common``."""
+    """Function names named by a ``GLOBAL_ASM`` pragma in ``src.us/core``."""
     names = set()
-    for c in (ROOT / "src" / "common").rglob("*.c"):
+    for c in (ROOT / "src.us" / "core").rglob("*.c"):
         text = c.read_text(encoding="utf-8", errors="replace")
         names.update(re.findall(r'GLOBAL_ASM\("[^"]*?([\w.-]+)\.s"\)', text))
     return names

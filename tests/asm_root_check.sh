@@ -194,6 +194,23 @@ else
     skipped=$((skipped + 1))
 fi
 
+# The form the EU build uses: the source directory is a sub-directory of asm/, the destination a sub-directory of asm.eu/
+# (the shared core's GLOBAL_ASM files are named under asm/nonmatchings/core and extracted for EU under asm.eu/src.us/core).
+mkdir -p "$scratch/asm/nonmatchings/core/f" "$scratch/asm.eu/src.us/core/f"
+cp "$scratch/asm/x.s" "$scratch/asm/nonmatchings/core/f/g.s"
+cp "$scratch/asm.eu/x.s" "$scratch/asm.eu/src.us/core/f/g.s"
+CORE_ROOT=asm/nonmatchings/core=asm.eu/src.us/core
+run_cli asm/nonmatchings/core/f/g.s --asm-root "$CORE_ROOT"
+check "CLI: a path under the source directory of a sub-directory mapping reads the EU file" read_eu
+run_cli asm/nonmatchings/core/f/g.s
+check "CLI: without --asm-root the same path reads the NA file" read_na
+run_cli asm/x.s --asm-root "$CORE_ROOT"
+check "CLI: a path beside the mapped sub-directory is not mapped" read_na
+mkdir -p "$scratch/asm/nonmatchings/coreX"
+cp "$scratch/asm/x.s" "$scratch/asm/nonmatchings/coreX/g.s"
+run_cli asm/nonmatchings/coreX/g.s --asm-root "$CORE_ROOT"
+check "CLI: a sibling whose name only starts like the mapped directory is not mapped" read_na
+
 if [ "$failures" -eq 0 ] && [ "$skipped" -eq 0 ]; then
     echo "all asm-root checks passed"
 elif [ "$failures" -eq 0 ]; then

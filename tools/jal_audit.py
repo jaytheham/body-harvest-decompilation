@@ -49,8 +49,8 @@ def listing_extents(version, functions):
     """``{name: size}`` from the listings, exact per function."""
     asm_root = ROOT / ("asm.eu" if version == "eu" else "asm")
     out = {}
-    # Shared src/common files get their listings under <asm>/src/.
-    for sub in ("matchings", "nonmatchings", "src"):
+    # The PAL extraction of the files shared with NTSC (src.us/core) is listed under <asm>/src.us/.
+    for sub in ("matchings", "nonmatchings", "src.us"):
         base = asm_root / sub
         if not base.exists():
             continue

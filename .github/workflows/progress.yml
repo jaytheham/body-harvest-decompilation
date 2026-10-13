@@ -6,7 +6,6 @@ on:
     paths:
       - 'src.us/**'
       - 'src.eu/**'
-      - 'src/common/**'
       - 'tools/progress.py'
       - 'docs/index.html'
       - 'docs/*.html'

@@ -3,7 +3,7 @@
 
 Background
 ----------
-`src/common/` holds C shared by the NA and EU builds.  Its symbols keep their
+`src.us/core/` holds C shared by the NA and EU builds.  Its symbols keep their
 NA names (e.g. ``D_80031450_32050``) but are *placed* at EU-specific addresses
 (the EU core is NA + 0x30, and the name encodes the NA address, not the EU one).
 EU asm auto-labels use the same address-encoded naming scheme, so whenever an EU
@@ -42,7 +42,7 @@ ROOT = Path(__file__).resolve().parent.parent
 WINDOWS_NM = ROOT / "tools" / "windows" / "binutils" / "mips-ps2-decompals-nm.exe"
 #: nm names tried on PATH; the first is the Makefile's CROSS prefix.
 NM_NAMES = ("mips-linux-gnu-nm", "mips64-linux-gnu-nm", "mips-ps2-decompals-nm")
-SHARED_OBJ_DIR = ROOT / "build" / "src" / "common"
+SHARED_OBJ_DIR = ROOT / "build" / "src.us" / "core"
 SYMBOL_ADDRS_EU = ROOT / "symbol_addrs.eu.txt"
 UNDEF_SYMS_EU = ROOT / "undefined_syms.eu.txt"
 UNDEF_SYMS_US = ROOT / "undefined_syms.us.txt"

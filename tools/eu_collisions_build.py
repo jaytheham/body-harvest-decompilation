@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """End-to-end EU build that resolves symbol collisions with the shared C source.
 
-The EU port shares matched C with NA in ``src/common/``.  Those C symbols keep
+The EU port shares matched C with NA in ``src.us/core/``.  Those C symbols keep
 their NA names but are *placed* at EU addresses, so EU asm auto-labels can shadow
 them, making EU references silently bind to the wrong address.  Resolving that
 requires a fixed, order-sensitive sequence:

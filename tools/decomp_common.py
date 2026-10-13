@@ -127,12 +127,12 @@ class Function:
 
 
 def c_file_from_object(obj):
-    """``build/src/common/core/1050.c.o`` -> ``src/common/core/1050.c``.
+    """``build/src.us/core/1050.c.o`` -> ``src.us/core/1050.c``.
 
-    Shared sources compile to ``build/src/common/core/53F0.c.o`` (US) or
-    ``build.eu/src/common/core/53F0.c.o`` (EU) and map to
-    ``src/common/core/53F0.c``; per-version sources (the overlays) map the
-    same way under ``src.us/`` or ``src.eu/``. Archive members
+    Shared sources compile to ``build/src.us/core/53F0.c.o`` (US) or
+    ``build.eu/src.us/core/53F0.c.o`` (EU) and map to ``src.us/core/53F0.c``;
+    per-version sources (the PAL overlay stubs) map the same way under
+    ``src.eu/``. Archive members
     (``build/lib/libultra_rom.a(sqrtf.o)``) and asm stubs
     (``build/asm/...``) have no C file of their own and return None.
     """
@@ -214,7 +214,7 @@ OUT_SECTION = re.compile(
     r"^(?P<name>\.\S+)?\s+0x(?P<vram>[0-9a-f]+)\s+0x(?P<size>[0-9a-f]+)"
     r"\s+load address 0x(?P<rom>[0-9a-f]+)"
 )
-#: `` .text          0x80000450     0x4380 build/src/common/core/1050.c.o``
+#: `` .text          0x80000450     0x4380 build/src.us/core/1050.c.o``
 IN_SECTION = re.compile(
     r"^\s+\.(?P<sec>\S+)\s+0x(?P<vram>[0-9a-f]+)\s+0x(?P<size>[0-9a-f]+)\s+"
     r"(?P<obj>\S+)"
