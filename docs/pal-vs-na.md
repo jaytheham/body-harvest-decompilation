@@ -256,9 +256,16 @@ per version (an NA source under `src.us/` and an EU stub under `src.eu/`, each
 in a `core` directory). They were removed, with their tests
 (`eu_symbol_pairs_check.sh` and `share_core_file_check.sh`), once the last core
 file was converted: none is left to run them on, and the tests could only run
-on an unconverted file. They are in the history at commit 3b5ea2e2d, in the
-tools and tests directories; check that commit out to run them. What they did,
-as the record of the method:
+on an unconverted file. Their last version is in the history at commit
+3b5ea2e2d, in the tools and tests directories. Checking that commit out does not
+make them runnable: every core file is already converted there, so both tools
+exit with status 1. They need a tree where the file still exists once per
+version; at 87f42bd4d (the PR 423 head before these six were shared) six core
+files do (`1050`, `17EE0`, `1B060`, `53F0`, `AD60` and `E830`), and the headers
+of the two tests name a worktree at that commit. The tools hard-code the
+core layout (`src.us/core`, `src.eu/core`, `asm/nonmatchings/core` and the `core/`
+entries of both yamls), so using them on an overlay file would mean changing
+them. What they did, as the record of the method:
 
 - `eu_symbol_pairs.py <File>` paired the NA and EU functions of the unconverted
   file and printed the symbol-table lines sharing needs: `NAME` (for
