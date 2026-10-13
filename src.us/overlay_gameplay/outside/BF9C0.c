@@ -3039,14 +3039,15 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(3964): byte palette and single mask fix saved-register allocation.
+// CURRENT(3420): typed map and first-declared row; target frame, spills remain.
 #ifdef NON_MATCHING
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
 void func_800B9DB8_C8D68(u8 arg0)
 {
+  u8 row;
   s32 tileSize;
   Vtx *startVertices;
-  s16 map[2];
+  Vec2_S16 map;
   Vtx *vertices[2];
   s16 visibleCount;
   s16 culledCount;
@@ -3063,8 +3064,8 @@ void func_800B9DB8_C8D68(u8 arg0)
   
   D_8014F89A = 0;
   D_8014FD28 = 0x8F;
-  map[1] = D_80151DD8.mapPosX;
-  map[0] = D_80151DD8.mapPosY;
+  map.x = D_80151DD8.mapPosX;
+  map.z = D_80151DD8.mapPosY;
   vertices[0] = startVertices;
   vertices[1] = startVertices;
   gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
@@ -3097,18 +3098,18 @@ void func_800B9DB8_C8D68(u8 arg0)
     u8 tileX;
     u8 tile;
     s32 firstTile[2];
-  firstTile[1] = map[1] / 4;
-  firstTile[0] = map[0] / 4;
-  for (arg0 = 0; arg0 < 5; arg0++)
+  firstTile[1] = map.x / 4;
+  firstTile[0] = map.z / 4;
+  for (row = 0; row < 5; row++)
   {
-  tileZ = (firstTile[0] + arg0) & 0xFF;
+  tileZ = (firstTile[0] + row) & 0xFF;
   worldZ = (s16)((tileZ << 10) + 0x8000);
 	for (column = 0; column < 5; column++)
 	{
-	  left = (column == 0) ? (map[1] % 4) : 0;
-	  right = (column == tileSize) ? (map[1] % 4) + 1 : tileSize;
-	  top = (arg0 == 0) ? (map[0] % 4) : 0;
-	  bottom = (arg0 == tileSize) ? (map[0] % 4) + 1 : tileSize;
+	  left = (column == 0) ? (map.x % 4) : 0;
+	  right = (column == tileSize) ? (map.x % 4) + 1 : tileSize;
+	  top = (row == 0) ? (map.z % 4) : 0;
+	  bottom = (row == tileSize) ? (map.z % 4) + 1 : tileSize;
 	  
 	  tileX = (firstTile[1] + column) & 0xFF;
 	  palette = ((u8 (*)[64])D_8021EA30)[tileZ][tileX] & 0xF;

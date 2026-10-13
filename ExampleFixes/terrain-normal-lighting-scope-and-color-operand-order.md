@@ -111,3 +111,13 @@ separate load/mask 4692. Word left/top/right/all edges score
 5490/5287/5715/6514; copying bottom before modulo scores 5448.
 The retained byte/single-mask candidate still differs in coordinate
 reloads, spills and scheduling; wrapped full ROM remains OK.
+
+Ground candidate now retains 3420. Use existing Vec2_S16 map with x
+for mapPosX and z for mapPosY instead of the halfword array. This
+scores 3418 with the reused argument row, but shrinks frame to 0x110.
+Restore a local u8 row (3444, target frame 0x118) and declare row first
+(3420). This also restores coordinate reloads in edge branches. Swapping
+the vector fields scores 3420 with parameter row, 3446 with local row.
+Map before startVertices scores 3488; delaying counter declarations and
+initialization until the loop scope scores 4384 and loses target initial
+stores. Preserve the local-row typed-map version; wrapped ROM OK.
