@@ -2400,7 +2400,7 @@ typedef struct {
 	/* 0x5C */ s16 unk5C;
 	/* 0x5E */ s16 unk5E;
 	/* 0x60 */ s16 unk60;
-	/* 0x62 */ u8 pad62[0x2];
+	/* 0x62 */ union { s16 unk62; u8 pad62[0x2]; };
 	/* 0x64 */ s16 unk64;
 	/* 0x66 */ union { s16 unk66; u8 pad66[0x2]; };
 	/* 0x68 */ s32 unk68;
