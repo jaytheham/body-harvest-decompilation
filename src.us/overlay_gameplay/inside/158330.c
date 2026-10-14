@@ -8653,8 +8653,6 @@ void func_80076678_15E738(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076678_15E738.s")
 #endif
 
-#ifdef NON_MATCHING
-/* CURRENT(2112) */
 // AI - Renders selection highlight for interactive room objects
 void func_800768B8_15E978(s32 arg0) {
 	s32 sp34;
@@ -8665,49 +8663,47 @@ void func_800768B8_15E978(s32 arg0) {
 	s16 temp_t1;
 	u16 temp_a3;
 	Unk80070F7CObj *temp_v0;
-	Unk800E66A8 *temp_v1;
+	s32 objIdx;
 
-	temp_v1 = &D_800E66A8[arg0];
-	temp_v0 = &((Unk80070F7CObj *) D_800E65BC)[temp_v1->unk0];
+	objIdx = D_800E66A8[arg0].unk0;
+	temp_v0 = &((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx];
 	temp_a3 = temp_v0->unk1A;
 	temp_t0 = temp_v0->unk32;
 	temp_t1 = temp_v0->unk34;
 
-	switch (temp_v1->unk8) {
+	switch (D_800E66A8[arg0].unk8) {
 		case 0:
+			sp34 = D_800E66A8[arg0].unk2 + temp_t0;
+			sp30 = D_800E66A8[arg0].unk6 + ((s32) temp_a3 / 2) + 0xF;
 			sp2C = temp_t1;
-			sp34 = temp_v1->unk2 + temp_t0;
-			sp30 = temp_v1->unk6 + ((s32) temp_a3 / 2) + 0xF;
 			sp28 = 0xF;
 			break;
 
 		case 1:
+			sp30 = D_800E66A8[arg0].unk6 - temp_t0;
+			sp34 = D_800E66A8[arg0].unk2 + ((s32) temp_a3 / 2) + 0xF;
 			sp2C = 0xF;
 			sp28 = temp_t1;
-			sp30 = temp_v1->unk6 - temp_t0;
-			sp34 = temp_v1->unk2 + ((s32) temp_a3 / 2) + 0xF;
 			break;
 
 		case 2:
+			sp34 = D_800E66A8[arg0].unk2 - temp_t0;
 			sp2C = temp_t1;
+			sp30 = (D_800E66A8[arg0].unk6 - ((s32) temp_a3 / 2)) - 0xF;
 			sp28 = 0xF;
-			sp34 = temp_v1->unk2 - temp_t0;
-			sp30 = (temp_v1->unk6 - ((s32) temp_a3 / 2)) - 0xF;
 			break;
 
 		case 3:
+			sp30 = D_800E66A8[arg0].unk6 + temp_t0;
+			sp34 = (D_800E66A8[arg0].unk2 - ((s32) temp_a3 / 2)) - 0xF;
 			sp2C = 0xF;
 			sp28 = temp_t1;
-			sp30 = temp_v1->unk6 + temp_t0;
-			sp34 = (temp_v1->unk2 - ((s32) temp_a3 / 2)) - 0xF;
 			break;
 	}
 
 	func_80073714_15B7D4(sp2C, sp28, sp34 - 0x60, 5, sp30 - 0x60, 0xFA, 0, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800768B8_15E978.s")
-#endif
+
 
 // CURRENT(1928)
 #ifdef NON_MATCHING
