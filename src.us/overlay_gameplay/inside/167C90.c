@@ -845,7 +845,6 @@ void func_80081AA8_169B68(void) {
 	func_80080190_168250(&D_800E7410, &D_800E73F0, D_800E73E0, D_800E73E4, D_800E73E8);
 }
 
-#ifdef NON_MATCHING
 // AI - Smoothly interpolate camera between two saved states (cutscene transition)
 void func_80081B58_169C18(void) {
 	s32 temp;
@@ -867,7 +866,7 @@ void func_80081B58_169C18(void) {
 		D_800E73E4 = (s16) (s32) ((f32) D_800E7470 + ((f32) (D_800E7468 - D_800E7470) * D_800E7474));
 		D_800E73E8 = (f32) D_800E7472 + ((f32) (D_800E746A - D_800E7472) * D_800E7474);
 		D_800E7474 += D_800E7478;
-	} else if ((f64) D_800E7478 == 0.0) {
+	} else if ((f64) D_800E7478 == 1.0) {
 		D_800E73F0 = D_800E7458;
 		D_800E73E0 = (s16) D_800E7464;
 		D_800E73E4 = D_800E7468;
@@ -883,9 +882,7 @@ void func_80081B58_169C18(void) {
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081B58_169C18.s")
-#endif
+
 
 // AI - Load a camera waypoint entry from the waypoint table
 void func_80081E08_169EC8(s16 arg0) {
