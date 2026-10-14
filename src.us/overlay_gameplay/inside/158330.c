@@ -6121,7 +6121,6 @@ const f64 D_800A4B90_18CC50[1] = {180.0};
 
 const f32 D_800A4B98_18CC58[1] = {0.4000000059604645f};
 
-
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -10763,10 +10762,10 @@ s32 func_8007B51C_1635DC(s32 arg0) {
 				func_800072CC_7ECC(2);
 				func_800073B8_7FB8(1);
 				D_800E6628 &= ~8;
-				func_80086F24_16EFE4(D_8008DE78_175F38.unk2);
-				func_80086F24_16EFE4(D_8008DE78_175F38.unk6);
-				func_80086F24_16EFE4(D_8008DE78_175F38.unkA);
-				func_80086F24_16EFE4(D_8008DE78_175F38.unkE);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unk2);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unk6);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unkA);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unkE);
 			}
 		}
 		return 0;
