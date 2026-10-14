@@ -54,9 +54,9 @@ const u8 D_800A4F30_18CFF0_bytes[8] = { 0x40, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00
 
 const f64 D_800A4F38_18CFF8[1] = {91.02222222222223};
 
-const f64 D_800A4F40_18D000[1] = {182.04444444444445};
+const ShadowGeometryConstant D_800A4F40_18D000 = {182.04444444444445};
 
-const f64 D_800A4F48_18D008[1] = {22.5};
+const ShadowGeometryConstant D_800A4F48_18D008 = {22.5};
 
 const u32 jtbl_800A4F50_18D010[] = {
 	0x800829E8, 0x80082618, 0x80082704, 0x800827F0, 0x800828EC, 0x00000000, 0x00000000, 0x00000000, 
@@ -291,57 +291,40 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s")
 #endif
 
-// CURRENT(9407)
-#ifdef NON_MATCHING
 // AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
 void func_800804E0_1685A0(void) {
-	f32 sp0;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f2;
-	f32 temp_f4;
-	f64 temp_f10;
-	f64 temp_f6;
-	s32 temp_t1;
-	s32 temp_t6;
-	u16 temp_t2;
-	u16 temp_t3;
+	f64 scale = 96.0;
+	f32 cameraX;
+	f32 cameraY;
+	f32 cameraZ;
+	CameraInterpolationStep previousCoord;
 
-	temp_t6 = D_800E7394->anchorCellX;
-	temp_f6 = (f64) temp_t6;
-	temp_t1 = D_800E7394->anchorCellZ;
-	temp_f12 = ((D_800E7394->anchorHeight >> 1) & 0x7F) + 50;
-	temp_f2 = (f32) ((temp_f6 - 0.5) * 96.0);
-	temp_f10 = (f64) temp_t1;
-	temp_f14 = (f32) ((temp_f10 - 0.5) * 96.0);
+	/* Integer address conversion preserves the shared anchor base without a pointer home. */
+	cameraX = ((u32) ((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->cellX - 0.5) * scale;
+	cameraY = ((((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->height >> 1) & 0x7F) + 50;
+	cameraZ = ((u32) ((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->cellZ - 0.5) * scale;
 
 	if ((f64) D_800E73B0 < 1.0) {
-		D_8008DDF4_175EB4 = ((temp_f2 - D_800E73B8.x) * D_800E73B0) + D_800E73B8.x;
-		sp0 = D_800E73B8.y;
-		D_8008DDF8_175EB8 = ((temp_f12 - sp0) * D_800E73B0) + sp0;
-		sp0 = D_800E73B8.z;
-		D_8008DDFC_175EBC = ((temp_f14 - sp0) * D_800E73B0) + sp0;
+		D_8008DDF4_175EB4 = ((cameraX - D_800E73B8.x) * D_800E73B0) + D_800E73B8.x;
+		previousCoord.value = D_800E73B8.y;
+		previousCoord.value = previousCoord.reload;
+		D_8008DDF8_175EB8 = ((cameraY - previousCoord.value) * D_800E73B0) + previousCoord.value;
+		previousCoord.value = D_800E73B8.z;
+		previousCoord.value = previousCoord.reload;
+		D_8008DDFC_175EBC = ((cameraZ - previousCoord.value) * D_800E73B0) + previousCoord.value;
 		D_800E73B0 += D_800A0974_188A34;
 	} else {
-		D_8008DDF4_175EB4 = temp_f2;
-		D_8008DDF8_175EB8 = temp_f12;
-		D_8008DDFC_175EBC = temp_f14;
+		D_8008DDF4_175EB4 = cameraX;
+		D_8008DDF8_175EB8 = cameraY;
+		D_8008DDFC_175EBC = cameraZ;
 		D_800E73B0 = 1.0f;
 	}
 
-	temp_t2 = (u16) D_800E73D8;
-	temp_t3 = (u16) D_800E73DA;
-	temp_f4 = (f32) temp_t3;
-	D_800E659C = (f32) ((((f64) ((f32) temp_t2 + D_800E6A78.unk4C)) * 0.5) - 96.0);
+	D_800E659C = (((f32) (u32) D_800E73D8 + D_800E6A78.unk4C) * (f64)0.5f) - scale;
 	D_800E65A0 = 50.0f;
-	if (temp_t3 < 0) {
-		temp_f4 += 4294967296.0f;
-	}
-	D_800E65A4 = (f32) ((((f64) (temp_f4 + D_800E6A78.unk54)) * 0.5) - 96.0);
+	D_800E65A4 = (((f32) (u32) D_800E73DA + D_800E6A78.unk54) * (f64)0.5f) - scale;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800804E0_1685A0.s")
-#endif
+
 
 // AI - Entering/exiting view: set a fixed camera position relative to the player
 void func_800806F8_1687B8(void) {
@@ -511,7 +494,6 @@ s32 func_80080DA8_168E68(s32 arg0, s32 arg1) {
 	return v1;
 }
 
-#ifdef NON_MATCHING
 // AI - Auto-center camera yaw toward player's facing direction when idle
 void func_80080E28_168EE8(void) {
 	s16 sp1E;
@@ -521,27 +503,27 @@ void func_80080E28_168EE8(void) {
 	D_800E7486 = 1;
 	if (D_800A0964_188A24 == 0 && currentControllerStates[0].stick_x == 0 && currentControllerStates[0].stick_y == 0) {
 		sp1E = 0x4000 - D_800E6A86;
-		D_800E7486 = func_800813B4_169474(D_800E73E0, sp1E, *(s32 *) &D_800E73E8);
-		if (D_800E7486 & 0xFF) {
+		D_800E7486 = func_800813B4_169474(D_800E73E0, sp1E, D_800E73E8);
+		if (D_800E7486 != 0) {
 			delta = func_80080DA8_168E68(sp1E, D_800E73E0);
-			if (delta < 0) {
-				var_v1 = -delta;
-			} else {
+			if (delta >= 0) {
 				var_v1 = delta;
+			} else {
+				var_v1 = -delta;
 			}
-			if (D_800A4F38 < (f64) var_v1) {
+			if (D_800A4F38_18CFF8[0] < (f64) var_v1) {
 				if (D_800E7486 == 1) {
-					if (delta < 0) {
-						var_v1 = -delta;
-					} else {
+					if (delta >= 0) {
 						var_v1 = delta;
+					} else {
+						var_v1 = -delta;
 					}
 					sp1E = (s16) (s32) ((f64) var_v1 / 24.0 + (f64) D_800E73E0);
 				} else {
-					if (delta < 0) {
-						var_v1 = -delta;
-					} else {
+					if (delta >= 0) {
 						var_v1 = delta;
+					} else {
+						var_v1 = -delta;
 					}
 					sp1E = (s16) (s32) ((f64) D_800E73E0 - (f64) var_v1 / 24.0);
 				}
@@ -550,9 +532,7 @@ void func_80080E28_168EE8(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080E28_168EE8.s")
-#endif
+
 
 #ifdef NON_MATCHING
 // AI - Camera-wall collision check: prevent camera from clipping through walls
@@ -603,35 +583,28 @@ s16 func_80080FD8_169098(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080FD8_169098.s")
 #endif
 
-// CURRENT(1620)
-#ifdef NON_MATCHING
 // AI - Map yaw angle to a compass-direction marker index for the debug map
-u8 func_800811DC_16929C(s16 arg0, s32 arg1) {
-	f32 temp_f2;
-	s32 var_v1;
+s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
+    f32 angle = 0.0f;
+    f32 base;
+    u32 result;
 
-	temp_f2 = (f32) ((f64) arg0 / D_800A4F40_18D000[0]);
-	if (arg1 != 0) {
-		temp_f2 += 15.0f;
-		if (temp_f2 < 0.0f) {
-			temp_f2 += 360.0f;
-		}
-		var_v1 = (u32) (temp_f2 / 30.0f);
-		var_v1 &= 0xFF;
-		return var_v1;
-	}
-
-	temp_f2 = (f32) ((f64) temp_f2 + D_800A4F48_18D008[0]);
-	if (temp_f2 < 0.0f) {
-		temp_f2 += 360.0f;
-	}
-	var_v1 = (u32) (temp_f2 / 45.0f);
-	var_v1 &= 0xFF;
-	return var_v1;
+    base = arg0 / D_800A4F40_18D000.value;
+    if (arg1 != 0) {
+        base = angle = base + 15.0f;
+        if (angle < 0.0f) {
+            angle += 360.0f;
+        }
+        result = (u8) (angle / 30.0f);
+    } else {
+        angle = base + D_800A4F48_18D008.value;
+        if (angle < 0.0f) {
+            angle += 360.0f;
+        }
+        result = (u8) (angle / 45.0f);
+    }
+    return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800811DC_16929C.s")
-#endif
 
 #ifdef NON_MATCHING
 // AI - Check if camera yaw direction is clear by scanning collision-map markers
@@ -750,37 +723,33 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s")
 #endif
 
-// CURRENT(2495)
-#ifdef NON_MATCHING
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation
 void func_80081764_169824(void) {
-	u16 buttons;
-	f32 one;
+    s32 buttons;
 
 	buttons = currentControllerStates[CONTROLLER_TWO].button;
-	one = 1.0f;
 
 	if (buttons & 0x2000) {
 		if (buttons & 0x800) {
-			D_800E73F0.z += one;
+			D_800E73F0.z++;
 		}
 		if (buttons & 0x400) {
-			D_800E73F0.z -= one;
+			D_800E73F0.z--;
 		}
 	} else {
 		if (buttons & 0x800) {
-			D_800E73F0.y += one;
+			D_800E73F0.y++;
 		}
 		if (buttons & 0x400) {
-			D_800E73F0.y -= one;
+			D_800E73F0.y--;
 		}
 	}
 
 	if (buttons & 0x200) {
-		D_800E73F0.x += one;
+		D_800E73F0.x++;
 	}
 	if (buttons & 0x100) {
-		D_800E73F0.x -= one;
+		D_800E73F0.x--;
 	}
 
 	if (buttons & 2) {
@@ -798,16 +767,15 @@ void func_80081764_169824(void) {
 	}
 
 	if (buttons & 0x8000) {
-		D_800E73E8 += one;
+		D_800E73E8++;
 	}
 	if (buttons & 0x4000) {
-		D_800E73E8 -= one;
+		D_800E73E8--;
 	}
 
 	func_800033D4_3FD4(0x20, 1);
 
-	buttons = currentControllerStates[CONTROLLER_TWO].button;
-	if (buttons & 0x20) {
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x20) {
 		osSyncPrintf(&D_800A4DDC_18CE9C);
 		osSyncPrintf(&D_800A4DE0_18CEA0);
 		osSyncPrintf(&D_800A4E14_18CED4, (f64) D_800E73F0.x, (f64) D_800E73F0.y, (f64) D_800E73F0.z, D_800E73E0, D_800E73E4, (f64) D_800E73E8);
@@ -816,16 +784,14 @@ void func_80081764_169824(void) {
 
 	func_80080190_168250(&D_800E7410, &D_800E73F0, D_800E73E0, D_800E73E4, D_800E73E8);
 	D_8008DDF4_175EB4 = D_800E7410.x;
-	D_8008DDF8_175EB8 = D_800E7410.y * 2.0f;
+	D_8008DDF8_175EB8 = D_800E7410.y * 2;
 	D_8008DDFC_175EBC = D_800E7410.z;
 
 	D_800E659C = D_800E73F0.x;
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081764_169824.s")
-#endif
+
 
 // AI - Store pointer to camera waypoint table
 void func_80081A18_169AD8(s32 arg0) {
@@ -852,7 +818,6 @@ void func_80081AA8_169B68(void) {
 	func_80080190_168250(&D_800E7410, &D_800E73F0, D_800E73E0, D_800E73E4, D_800E73E8);
 }
 
-#ifdef NON_MATCHING
 // AI - Smoothly interpolate camera between two saved states (cutscene transition)
 void func_80081B58_169C18(void) {
 	s32 temp;
@@ -874,7 +839,7 @@ void func_80081B58_169C18(void) {
 		D_800E73E4 = (s16) (s32) ((f32) D_800E7470 + ((f32) (D_800E7468 - D_800E7470) * D_800E7474));
 		D_800E73E8 = (f32) D_800E7472 + ((f32) (D_800E746A - D_800E7472) * D_800E7474);
 		D_800E7474 += D_800E7478;
-	} else if ((f64) D_800E7478 == 0.0) {
+	} else if ((f64) D_800E7478 == 1.0) {
 		D_800E73F0 = D_800E7458;
 		D_800E73E0 = (s16) D_800E7464;
 		D_800E73E4 = D_800E7468;
@@ -890,9 +855,7 @@ void func_80081B58_169C18(void) {
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081B58_169C18.s")
-#endif
+
 
 // AI - Load a camera waypoint entry from the waypoint table
 void func_80081E08_169EC8(s16 arg0) {
