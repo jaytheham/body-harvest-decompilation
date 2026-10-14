@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-14T07:21:07Z",
-  "commit": "3d691133",
-  "commit_timestamp": "2026-10-14T18:20:00+13:00",
+  "generated": "2026-10-14T18:34:57Z",
+  "commit": "fa7b0cc6",
+  "commit_timestamp": "2026-10-15T07:34:03+13:00",
   "overall": {
     "total_functions": 3058,
     "matched": 2558,
@@ -121,7 +121,7 @@
       "asm_stubs": 0,
       "total": 4,
       "matched_pct": 100.0,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/12C80.c",
@@ -211,7 +211,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 97.3,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/AD60.c",
@@ -221,7 +221,7 @@
       "asm_stubs": 0,
       "total": 26,
       "matched_pct": 69.2,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/E830.c",
@@ -281,7 +281,7 @@
       "asm_stubs": 0,
       "total": 39,
       "matched_pct": 100.0,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/rsp_data.c",
@@ -2587,9 +2587,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 88,
-      "matched": 1768,
-      "non_matching": 380,
+      "files": 84,
+      "matched": 1634,
+      "non_matching": 370,
       "asm_stubs": 1
     },
     {
@@ -2601,9 +2601,9 @@
     },
     {
       "name": "lunarlaurus",
-      "files": 3,
-      "matched": 34,
-      "non_matching": 20,
+      "files": 7,
+      "matched": 168,
+      "non_matching": 30,
       "asm_stubs": 0
     },
     {
@@ -2648,210 +2648,210 @@
       "commit": "0efa11a",
       "matched": 479,
       "non_matching": 153,
-      "total": 3037
+      "total": 3038
     },
     {
       "date": "2026-03-01",
       "commit": "effdd6f",
       "matched": 598,
       "non_matching": 218,
-      "total": 2700
+      "total": 2701
     },
     {
       "date": "2026-03-08",
       "commit": "536824e",
       "matched": 679,
       "non_matching": 271,
-      "total": 2700
+      "total": 2701
     },
     {
       "date": "2026-03-15",
       "commit": "98103e7",
       "matched": 841,
       "non_matching": 280,
-      "total": 2700
+      "total": 2701
     },
     {
       "date": "2026-03-22",
       "commit": "d71ea4e",
       "matched": 976,
       "non_matching": 298,
-      "total": 2700
+      "total": 2701
     },
     {
       "date": "2026-03-29",
       "commit": "670c36d",
       "matched": 1181,
       "non_matching": 344,
-      "total": 2706
+      "total": 2707
     },
     {
       "date": "2026-04-05",
       "commit": "44a03dd",
       "matched": 1239,
       "non_matching": 384,
-      "total": 2706
+      "total": 2707
     },
     {
       "date": "2026-04-12",
       "commit": "c343c0d",
       "matched": 1285,
       "non_matching": 452,
-      "total": 2705
+      "total": 2706
     },
     {
       "date": "2026-04-19",
       "commit": "5e8d27d",
       "matched": 1326,
       "non_matching": 626,
-      "total": 2708
+      "total": 2716
     },
     {
       "date": "2026-04-26",
       "commit": "4d7e83d",
       "matched": 1327,
       "non_matching": 625,
-      "total": 2708
+      "total": 2716
     },
     {
       "date": "2026-05-03",
       "commit": "970f57c",
       "matched": 1339,
       "non_matching": 680,
-      "total": 2707
+      "total": 2715
     },
     {
       "date": "2026-05-10",
       "commit": "873dd5b",
       "matched": 1364,
       "non_matching": 888,
-      "total": 2707
+      "total": 2715
     },
     {
       "date": "2026-05-17",
       "commit": "5108678",
       "matched": 1379,
       "non_matching": 943,
-      "total": 2706
+      "total": 2714
     },
     {
       "date": "2026-05-24",
       "commit": "54d4241",
       "matched": 1385,
       "non_matching": 1058,
-      "total": 2705
+      "total": 2712
     },
     {
       "date": "2026-05-31",
       "commit": "3365ed1",
       "matched": 1407,
       "non_matching": 1062,
-      "total": 2705
+      "total": 2712
     },
     {
       "date": "2026-06-07",
       "commit": "da91528",
       "matched": 1451,
       "non_matching": 1124,
-      "total": 2706
+      "total": 2715
     },
     {
       "date": "2026-06-14",
       "commit": "7df316c",
       "matched": 1493,
       "non_matching": 1083,
-      "total": 2707
+      "total": 2710
     },
     {
       "date": "2026-06-21",
       "commit": "59250dc",
       "matched": 1495,
       "non_matching": 1081,
-      "total": 2707
+      "total": 2710
     },
     {
       "date": "2026-06-28",
       "commit": "3986b2f",
       "matched": 1495,
       "non_matching": 1081,
-      "total": 2707
+      "total": 2710
     },
     {
       "date": "2026-07-05",
       "commit": "f238beb",
       "matched": 1523,
       "non_matching": 1108,
-      "total": 2707
+      "total": 2710
     },
     {
       "date": "2026-07-12",
       "commit": "38714cb",
       "matched": 1569,
       "non_matching": 1144,
-      "total": 2713
+      "total": 2716
     },
     {
       "date": "2026-07-19",
       "commit": "01cfda3",
       "matched": 1606,
       "non_matching": 1108,
-      "total": 2714
+      "total": 2717
     },
     {
       "date": "2026-07-26",
       "commit": "e936c55",
       "matched": 1619,
       "non_matching": 1095,
-      "total": 2714
+      "total": 2716
     },
     {
       "date": "2026-08-02",
       "commit": "91dbfd3",
       "matched": 1640,
       "non_matching": 1074,
-      "total": 2714
+      "total": 2716
     },
     {
       "date": "2026-08-09",
       "commit": "81eabbe",
       "matched": 1643,
       "non_matching": 1071,
-      "total": 2714
+      "total": 2716
     },
     {
       "date": "2026-08-16",
       "commit": "64e707d",
       "matched": 1650,
       "non_matching": 1063,
-      "total": 2713
+      "total": 2715
     },
     {
       "date": "2026-08-23",
       "commit": "da030ab",
       "matched": 1656,
       "non_matching": 1057,
-      "total": 2713
+      "total": 2715
     },
     {
       "date": "2026-08-30",
       "commit": "eb553fd",
       "matched": 1666,
       "non_matching": 1048,
-      "total": 2714
+      "total": 2716
     },
     {
       "date": "2026-09-06",
       "commit": "8471af1",
       "matched": 1680,
       "non_matching": 1034,
-      "total": 2714
+      "total": 2716
     },
     {
       "date": "2026-09-13",
       "commit": "cfa973e",
       "matched": 1684,
       "non_matching": 1030,
-      "total": 2714
+      "total": 2716
     },
     {
       "date": "2026-09-20",
@@ -2869,14 +2869,14 @@
     },
     {
       "date": "2026-10-04",
-      "commit": "a95cfae",
-      "matched": 2424,
-      "non_matching": 632,
-      "total": 3056
+      "commit": "e0df296",
+      "matched": 1787,
+      "non_matching": 928,
+      "total": 2715
     },
     {
       "date": "2026-10-11",
-      "commit": "3d69113",
+      "commit": "fa7b0cc",
       "matched": 2558,
       "non_matching": 499,
       "total": 3058
