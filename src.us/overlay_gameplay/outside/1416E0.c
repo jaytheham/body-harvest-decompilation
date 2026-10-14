@@ -37,17 +37,17 @@ s16 func_80132730_1416E0(s32 arg0, s32 arg1) { return (s16)(arg1 - arg0); }
 s16 func_801361A4_145154(Unk80160080 *arg0);
 void func_80136214_1451C4(Unk80160080 *arg0);
 
-// CURRENT(5): instruction-identical except generated 0.1f rodata address
 // AI - Camera initialization
-#ifdef NON_MATCHING
 void func_80132740_1416F0(Unk80160080 *arg0) {
 	VehicleInstance *sp1C;
+	 f32 zero;
 
+	zero = 0.0f;
 	sp1C = D_80052B34;
 	osSyncPrintf(&D_80145650_154600, arg0);
-	arg0->unkC = 0.0f;
-	arg0->unk10 = 0.0f;
-	arg0->unk14 = 0.0f;
+	arg0->unkC = zero;
+	arg0->unk10 = zero;
+	arg0->unk14 = zero;
 	arg0->unk48 = 0;
 	arg0->unk50 = 0;
 	arg0->unk4A = 0x71C;
@@ -56,16 +56,18 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	arg0->unk54 = 0;
 	arg0->unk4E = 0x12C;
 	arg0->unk56 = 0x12C;
-	arg0->unk0 = 0.0f;
-	arg0->unk4 = 0.0f;
-	arg0->unk8 = 0.0f;
-	arg0->unk18 = 0.0f;
-	arg0->unk20 = 0.0f;
+	arg0->unk0 = zero;
+	arg0->unk4 = zero;
+	arg0->unk8 = zero;
+	arg0->unk18 = zero;
+	arg0->unk20 = zero;
 	arg0->unk1C = 1.0f;
 	arg0->desiredLookAt = arg0->lookAt;
 	arg0->unk5E = (s16) D_80052B34->unkE;
 	{
-		f32 lodColor = 0.1f;
+		f32 lodColor;
+		if (zero) {} 
+		lodColor = D_8014567C_15462C[0];
 		arg0->unk64 = 0x64;
 		arg0->unk68 = 0;
 		D_8016011C = 1.0f;
@@ -89,9 +91,9 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	D_8016014C = 0;
 	D_80160154 = 0;
 	D_80160144 = 0;
-	arg0->unk3C = 0.0f;
-	arg0->unk40 = 0.0f;
-	arg0->unk44 = 0.0f;
+	arg0->unk3C = zero;
+	arg0->unk40 = zero;
+	arg0->unk44 = zero;
 	D_80160146 = D_80052B34->unkE;
 	D_8016014A = 0;
 	D_80160158 = 0;
@@ -105,9 +107,7 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	D_8016018C = 0;
 	D_80160190 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80132740_1416F0.s")
-#endif
+
 
 
 // AI - Main camera update
