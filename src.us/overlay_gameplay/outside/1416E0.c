@@ -11,11 +11,11 @@ const f32 D_80145698_154648[1] = {0.1f};
 const f32 D_8014569C_15464C[1] = {0.1f};
 const f64 D_801456A0_154650[1] = {91.02222222222223};
 const f32 D_801456A8_154658[1] = {30719.0f};
-const f64 D_801456B0_154660[1] = {0.7};
-const f64 D_801456B8_154668[1] = {0.02};
-const f64 D_801456C0_154670[1] = {0.02};
-const f64 D_801456C8_154678[1] = {0.02};
-const f64 D_801456D0_154680[1] = {0.7};
+const CameraFadeScale D_801456B0_154660 = {0.7};
+const CameraFadeScale D_801456B8_154668 = {0.02};
+const CameraFadeScale D_801456C0_154670 = {0.02};
+const CameraFadeScale D_801456C8_154678 = {0.02};
+const CameraFadeScale D_801456D0_154680 = {0.7};
 const f32 D_801456D8_154688[1] = {0.1f};
 const f32 D_801456DC_15468C[1] = {0.1f};
 const f32 D_801456E0_154690[1] = {0.1f};
@@ -76,8 +76,8 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 		D_80160128 = 1.0f;
 		D_8016012C = lodColor;
 		D_80160130 = lodColor;
-		D_80160134 = lodColor;
-		D_80160138 = lodColor;
+		D_80160134.value = lodColor;
+		D_80160138.value = lodColor;
 	}
 	arg0->unk6C = 1;
 	arg0->unk30 = (f32) sp1C->unk0;
@@ -147,9 +147,9 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 			D_80160120 = 0.0f;
 			D_80160130 = sp3C;
 			D_80160124 = 0.0f;
-			D_80160134 = sp3C;
+			D_80160134.value = sp3C;
 			D_80160128 = 0.0f;
-			D_80160138 = sp3C;
+			D_80160138.value = sp3C;
 			D_8016011C = 0.0f;
 			D_8016012C = sp3C;
 		}
@@ -181,8 +181,8 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 			D_80160128 = 0.0f;
 			D_8016012C = sp3C;
 			D_80160130 = sp3C;
-			D_80160134 = sp3C;
-			D_80160138 = sp3C;
+			D_80160134.value = sp3C;
+			D_80160138.value = sp3C;
 			D_80160148 = 0;
 			D_8016014A = 0;
 			vehicleType = D_80052B34->unk1A;
@@ -316,8 +316,8 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 		D_80160128 = 0.0f;
 		D_8016012C = 0.1f;
 		D_80160130 = 0.1f;
-		D_80160134 = 0.1f;
-		D_80160138 = 0.1f;
+		D_80160134.value = 0.1f;
+		D_80160138.value = 0.1f;
 		arg0->unk58 = vehicle->unkE;
 	}
 
@@ -484,8 +484,8 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 		D_80160128 = 0.0f;
 		D_8016012C = 0.1f;
 		D_80160130 = 0.1f;
-		D_80160134 = 0.1f;
-		D_80160138 = 0.1f;
+		D_80160134.value = 0.1f;
+		D_80160138.value = 0.1f;
 		arg0->unk58 = D_80052B34->unk6;
 	}
 
@@ -928,9 +928,9 @@ void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	arg1->unk20 = D_80149404;
 }
 
-// CURRENT(925)
-#ifdef NON_MATCHING
+// CURRENT(485)
 // AI - Smooth camera position/angle interpolation
+#ifdef NON_MATCHING
 void func_80134D44_143CF4(Unk80160080 *arg0) {
 	f64 temp_f2;
 	f64 temp_f12;
@@ -984,52 +984,52 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 		arg0->unk4A = (s32)(D_80160118 + (D_80160124 * (arg0->unk52 - D_80160118)));
 		if (D_80160140 != 0) {
 			temp_f2 = D_80160124;
-			if (D_801456B0_154660[0] < temp_f2) {
+			if (D_801456B0_154660.value < temp_f2) {
 				temp_f12 = (1.0 - temp_f2) * 0.25;
-				if (temp_f12 < (f64)D_80160134) {
-					D_80160134 = temp_f12;
+				if (temp_f12 < (f64)D_80160134.value) {
+					D_80160134.reload = temp_f12;
 				} else {
-					D_80160134 = (f64)D_80160134;
+					D_80160134.reload = (f64)D_80160134.value;
 				}
-				temp_f14 = D_80160134;
-				var_f16 = D_801456B8_154668[0];
+				temp_f14 = D_80160134.value;
+				var_f16 = D_801456B8_154668.value;
 				if (temp_f14 < var_f16) {
-					D_80160134 = var_f16;
+					D_80160134.value = var_f16;
 				} else {
-					D_80160134 = temp_f14;
+					D_80160134.value = temp_f14;
 				}
 			}
 		}
-		var_f16 = D_801456C0_154670[0];
-		D_80160124 += D_80160134;
+		var_f16 = D_801456C0_154670.value;
+		D_80160124 += D_80160134.value;
 	} else {
 		arg0->unk4A = arg0->unk52;
 		D_80160124 = 1.0f;
 		D_80160140 = 0;
-		var_f16 = D_801456C8_154678[0];
+		var_f16 = D_801456C8_154678.value;
 	}
 
 	if (D_80160128 < 1.0) {
 		arg0->unk4E = (s32)(D_8016011A + (D_80160128 * (arg0->unk56 - D_8016011A)));
 		if (D_8016013C != 0) {
 			temp_f2 = D_80160128;
-			if (D_801456D0_154680[0] < temp_f2) {
+			if (D_801456D0_154680.value < temp_f2) {
 				temp_f12 = (1.0 - temp_f2) * 0.25;
-				temp_f14 = D_80160138;
+				temp_f14 = D_80160138.value;
 				if (temp_f12 < temp_f14) {
-					D_80160138 = temp_f12;
+					D_80160138.reload = temp_f12;
 				} else {
-					D_80160138 = temp_f14;
+					D_80160138.reload = temp_f14;
 				}
-				temp_f14 = D_80160138;
+				temp_f14 = D_80160138.value;
 				if (temp_f14 < var_f16) {
-					D_80160138 = var_f16;
+					D_80160138.value = var_f16;
 				} else {
-					D_80160138 = temp_f14;
+					D_80160138.reload = temp_f14;
 				}
 			}
 		}
-		D_80160128 += D_80160138;
+		D_80160128 += D_80160138.value;
 	} else {
 		arg0->unk4E = arg0->unk56;
 		D_80160128 = 1.0f;
@@ -1223,11 +1223,11 @@ void func_801356F4_1446A4(Unk80160080 *arg0) {
 void func_801357EC_14479C(Unk80160080 *arg0) {
 	if (D_80160154 == 0 && D_801591BC != 0) {
 		D_80160124 = 0.0f;
-		D_80160134 = D_801456D8_154688[0];
+		D_80160134.value = D_801456D8_154688[0];
 	}
 	if (D_80160154 != 0 && D_801591BC == 0) {
 		D_80160124 = 0.0f;
-		D_80160134 = D_801456DC_15468C[0];
+		D_80160134.value = D_801456DC_15468C[0];
 		if (arg0->unk6C == 1) {
 			arg0->unk56 = (s16)(vehicleTypes[D_80052B34->unk1A].unk5C * 0x10);
 		} else {
@@ -1273,14 +1273,14 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				var_f14 = D_801456E0_154690[0];
 				D_8016015E = 1;
 				D_80160158 = 1;
-				D_80160138 = var_f14;
+				D_80160138.value = var_f14;
 				D_80160128 = 0.0f;
 				D_8016013C = 1;
 			} else {
 
 				D_80160128 = 0.0f;
-				temp_s0 = (s16)(s32)(temp_f0 / D_80160138);
-				D_80160138 = (f32)(1.0 / temp_s0);
+				temp_s0 = (s16)(s32)(temp_f0 / D_80160138.value);
+				D_80160138.value = (f32)(1.0 / temp_s0);
 				var_f14 = D_801456E4_154694[0];
 			}
 
@@ -1289,13 +1289,13 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 
 				if (temp_f0 == 1.0) {
 					D_80160124 = 0.0f;
-					D_80160134 = var_f14;
+					D_80160134.value = var_f14;
 					D_80160140 = 1;
 				} else {
 
 					D_80160124 = 0.0f;
-					temp_s0 = (s16)(s32)(temp_f0 / D_80160134);
-					D_80160134 = (f32)(1.0 / temp_s0);
+					temp_s0 = (s16)(s32)(temp_f0 / D_80160134.value);
+					D_80160134.value = (f32)(1.0 / temp_s0);
 				}
 			}
 

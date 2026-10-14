@@ -3954,6 +3954,11 @@ typedef struct {
 	f64 value;
 } CameraFadeScale;
 
+typedef union {
+	f32 value;
+	volatile f32 reload;
+} CameraInterpolationStep;
+
 typedef struct {
 	f32 x0;
 	f32 y0;
