@@ -372,9 +372,7 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801333D0_142380.s")
 #endif
 
-// CURRENT(275)
 // AI - Compute camera position from target
-#ifdef NON_MATCHING
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 	f32 sp20;
 	f32 temp_f0;
@@ -401,13 +399,13 @@ void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 		arg0->unk5C = -temp_v0;
 		arg0->unk5A = D_80159318;
 		if (var_v1 != 0) {
-			D_80140CFC_Decrement = var_v1 - 1;
+			D_80140CFC_Decrement = (u16)var_v1 - 1; /* Preserve IDO temporary allocation for the halfword store. */
 		} else {
-			var_v1 = 1;
+			var_v1 = var_v1 * 0 + 1; /* Fold the reset after the counter register is assigned. */
 			D_80140CFC_Reset = var_v1;
 		}
 	}
-	temp_v0 = (s16) func_80132730_1416E0(D_80159318, arg0->unk5A);
+	temp_v0 = func_80132730_1416E0(D_80159318, arg0->unk5A);
 	if (temp_v0 < -0xE38) {
 		temp_a0 = -0xE38 - temp_v0;
 		if (temp_a0 >= 0x16D) {
@@ -430,16 +428,13 @@ void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 	}
 	temp_s0 = arg0->unk58;
 	arg0->unk54 = 0;
-	arg0->unk50 = (s16) (0x4000 - temp_s0);
-	arg0->unk52 = (s16) arg0->unk5C;
+	arg0->unk50 = 0x4000 - temp_s0;
+	arg0->unk52 = arg0->unk5C;
 	sp20 = 100.0f;
 	arg0->unk24 = (f32) ((((f32) coss((u16) temp_s0) / 32768.0) * sp20) + arg1->x);
 	arg0->unk28 = (f32) ((((f32) sins((u16) -arg0->unk5C) / 32768.0) * sp20) + arg1->y);
 	arg0->unk2C = (f32) ((((f32) sins((u16) arg0->unk58) / 32768.0) * sp20) + arg1->z);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801336CC_14267C.s")
-#endif
 
 // AI - Vehicle camera update
 void func_80133934_1428E4(Unk80160080 *arg0) {
@@ -515,7 +510,6 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133A54_142A04.s")
 #endif
-
 
 
 // AI - Apply yaw/pitch rotation to look-at vector
@@ -1251,8 +1245,8 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 
 // toggleCameraNearFarMode?
 // CURRENT(65)
-#ifdef NON_MATCHING
 // AI - Toggle near/far camera mode
+#ifdef NON_MATCHING
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	f32 var_f14;
 	f32 temp_f0;
@@ -1378,7 +1372,7 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 // https://decomp.me/scratch/AXqIF
-// CURRENT(65)
+// CURRENT(55)
 // AI - Calculate camera shake from impact distance
 #ifdef NON_MATCHING
 void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
@@ -1397,19 +1391,32 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 	{
 		distance = (arg0 / 4) - D_80047954;
 		negative = -distance;
-		x = (negative < ((arg0 / 4) - D_80047954)) ? ((arg0 / 4) - D_80047954) : (negative);
+		if (negative < ((arg0 / 4) - D_80047954)) {
+			x = ((arg0 / 4) - D_80047954);
+		} else {
+			x = negative;
+		}
 		distance = (arg1 / 4) - D_80047958;
 		negative = -distance;
-		y = (negative < ((arg1 / 4) - D_80047958)) ? ((arg1 / 4) - D_80047958) : (negative);
+		if (negative < ((arg1 / 4) - D_80047958)) {
+			y = ((arg1 / 4) - D_80047958);
+		} else {
+			y = negative;
+		}
 		distance = (arg2 / 4) - D_8004795C;
 		negative = -distance;
-		z = (negative < ((arg2 / 4) - D_8004795C)) ? ((arg2 / 4) - D_8004795C) : (negative);
-		zero = D_801456F8_1546A8[0];
-		attenuation = (((x * x) + (y * y)) + (z * z)) / zero;
+		if (negative < ((arg2 / 4) - D_8004795C)) {
+			z = ((arg2 / 4) - D_8004795C);
+		} else {
+			z = negative;
+		}
+		distance = ((x * x) + (y * y)) + (z * z);
+		attenuation = distance / D_801456F8_1546A8[0];
 		amplitude = arg3 - attenuation;
+		if (distance) {} /* Retain the numerator lifetime for IDO. */
 		if (arg3 < attenuation)
 		{
-			amplitude = 0.0f;
+			amplitude = zero;
 		}
 		else if (amplitude < 1.0)
 		{
