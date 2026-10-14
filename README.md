@@ -28,7 +28,7 @@ Place your **US** ROM at `baserom.us.z64` in the repository root, then run:
 
 The first command automatically downloads pinned, SHA256-checked Windows tools and installs the extraction libraries in `tools/windows/venv`. Nothing is installed globally and no environment activation is needed. Initial setup needs internet access; subsequent extractions and builds work offline. You can also run `.\tools\setup.ps1` separately to prepare the tools before supplying the ROM.
 
-A successful matching build prints `build/bh.us.z64: OK`. Builds are incremental and use up to eight workers. Options:
+A successful matching build prints `build/bh.us.z64: OK`. Builds are incremental and use up to four workers. Options:
 
 ```powershell
 .\tools\make.ps1 -Jobs 4
@@ -41,7 +41,7 @@ Some existing `NON_MATCHING` source does not compile; that option reports its so
 
 The scripts locate the repository relative to themselves, so they also work when launched from another directory or from a checkout with spaces in its name. If PowerShell blocks scripts, invoke them with `powershell -ExecutionPolicy Bypass -File .\tools\extract.ps1` (and similarly for `make.ps1`); this applies only to that process.
 
-Native builds currently support the US version. The existing Linux/Docker workflow remains available, including `.\tools\extract.ps1 -Docker` and `.\tools\make.ps1 -Docker` for an already running `bh-container`. Other development scripts such as `diff.ps1` still use Docker.
+Native builds support both versions; pass `-Version eu` to both scripts for the EU ROM, which builds into `build.eu/`. The existing Linux/Docker workflow remains available, including `.\tools\extract.ps1 -Docker` and `.\tools\make.ps1 -Docker` for an already running `bh-container`. Other development scripts such as `diff.ps1` still use Docker.
 
 The local tool cache is ignored by Git. To reset setup, remove `tools/windows` and run the commands again. The compiler is [IDO 5.3 v1.2](https://github.com/decompals/ido-static-recomp/releases/tag/v1.2), with [Windows binutils v0.10](https://github.com/decompals/binutils-mips-ps2-decompals/releases/tag/v0.10). A standalone [MSYS runtime](https://repo.msys2.org/msys/x86_64/) DLL supports IDO, and portable [Tiny C](https://download.savannah.gnu.org/releases/tinycc/) builds the repository's RNC tools; no MSYS installation, Bash, Make, WSL, Docker, Visual Studio, or system C compiler is needed.
 
@@ -82,6 +82,8 @@ If you did everything correctly, you'll be greeted with the following:
 build/bh.us.z64: OK
 ```
 
+On Ubuntu 24.04, or wherever `clang` 16 or newer is on the PATH, the Makefile's syntax check rejects code that IDO accepts. Use gcc for that check instead: `make --jobs HOSTCC=gcc "HOSTCC_CHECK_FLAGS=-m32 -D__clang__"`. The `-D__clang__` makes gcc skip the boot assembly block in `src.us/core/1050.c`, which is guarded with `#ifndef __clang__` for IDO alone to read; without it gcc stops there.
+
 Note: Currently need to change the references to func_802D4CD0 in loader.s to func_802D4CD0_18D7E0
 Not sure why this one file is problematic. Should be done automatically during extract.
 
@@ -103,7 +105,7 @@ From here you can run the `make extract` and `make --jobs` commands.
 
 ## Building `EU` Version
 
-Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu`. Note that whilst this will build the EU ROM, no effort has been made to decompile this version yet.
+Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu` (`make extract VERSION=eu`, then `make --jobs VERSION=eu`). The EU build uses its own `asm.eu`, `assets.eu` and `build.eu` directories, so both versions can be extracted side by side; a matching build prints `build.eu/bh.eu.z64: OK`. The EU build also compiles the C files in `src.us/core` and `src.us/overlay_gameplay/frontend/52690.c` (with `-DVERSION_EU`), so that code is shared by both versions; `src.eu` holds only the C files that exist in the EU build alone.
 
 ## Building `NON_MATCHING` Version
 
@@ -130,7 +132,8 @@ build/           ; build folder (not checked in)
 include/
   2.0I/          ; libultra 2.0I headers
 lib/libultra.a   ; libultra 2.0I static library
-src.{us|eu}/
+src.us/          ; C source of the US build; src.us/core and src.us/overlay_gameplay/frontend/52690.c are also compiled into the EU build
+src.eu/          ; C source that exists in the EU build only
 tools/
   ido5.3_recomp/ ; static recompilation of IDO 5.3 compiler
   splat_ext      ; custom splat extensions

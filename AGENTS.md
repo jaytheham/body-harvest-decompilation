@@ -7,7 +7,10 @@ You will be tasked with an existing C function to modify iteratively until it pr
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of matched functions.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
+- `src.us/overlay_gameplay/frontend/52690.c`: this one overlay file is also compiled into the EU build, so an edit to it changes both ROMs.
+- `src.eu/`: EU-only C files (`GLOBAL_ASM` stubs).
 - `include/`: Headers for variables, functions, structs, library types, and macros.
 - `build/`: Readonly - compiled object files and the built ROM image.
 
@@ -46,6 +49,7 @@ If a function has a switch statement and there is an associated jump table const
 - Declarations of data symbols must go in `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
+- The EU build includes these three US headers too (through `include/common.eu.h`), so a declaration added there also serves the shared files (`src.us/core/` and `src.us/overlay_gameplay/frontend/52690.c`). The `.eu.h` headers are for declarations that exist in the PAL release only (none yet).
 - Important: Replace all pointer math with struct/array access!
 - Remove unnecessary casts.
 - Remove excessive temporary variables.

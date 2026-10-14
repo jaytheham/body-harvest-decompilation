@@ -15,6 +15,26 @@ CYAN    := \033[0;36m
 
 # Directories
 
+ifeq ($(VERSION),eu)
+BUILD_DIR = build.eu
+ASM_DIRS  = asm.eu \
+			asm.eu/libultra \
+			asm.eu/core \
+			asm.eu/data \
+			asm.eu/data/core \
+			asm.eu/data/libultra \
+			asm.eu/data/rsp
+BIN_DIRS  = assets.eu \
+			assets.eu/core \
+			assets.eu/overlay_level/greece \
+			assets.eu/overlay_level/java \
+			assets.eu/overlay_level/america \
+			assets.eu/overlay_level/siberia \
+			assets.eu/overlay_level/comet
+LD_SCRIPT = bh.eu.ld
+ASSET_DIR = assets.eu
+UNDEFINED_SYMS_AUTO = undefined_syms_auto.eu.txt
+else
 BUILD_DIR = build
 ASM_DIRS  = asm \
 			asm/libultra \
@@ -29,7 +49,14 @@ ASM_DIRS  = asm \
 			asm/data/rsp \
 			asm/data/overlay_gameplay/outside
 BIN_DIRS  = assets
+LD_SCRIPT = bh.ld
+ASSET_DIR = assets
+UNDEFINED_SYMS_AUTO = undefined_syms_auto.txt
+endif
 SRC_DIR   = src.$(VERSION)
+# Translation units shared by every version. Until the source tree loses its version suffix these are the ones in
+# src.us (bh.eu.yaml names them as ../src.us/...), so only a build of another version has to add them.
+COMMON_SRC_DIR = src.us
 
 SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/core \
@@ -44,13 +71,18 @@ SRC_DIRS  = $(SRC_DIR) \
 			$(SRC_DIR)/overlay_level/comet \
 			$(SRC_DIR)/data \
 			$(SRC_DIR)/bss
+# Single files of src.us that a build of another version compiles too (the rest of their directory is not shared).
+SHARED_C_FILES = $(COMMON_SRC_DIR)/overlay_gameplay/frontend/52690.c
+ifneq ($(VERSION),us)
+SRC_DIRS += $(COMMON_SRC_DIR)/core
+endif
 
 TOOLS_DIR = tools
 
 # Files
 
 S_FILES         = $(foreach dir,$(ASM_DIRS),$(wildcard $(dir)/*.s))
-C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c))
+C_FILES         = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.c)) $(if $(filter-out us,$(VERSION)),$(SHARED_C_FILES))
 # H_FILES       = $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.h))
 BIN_FILES       = $(foreach dir,$(BIN_DIRS),$(wildcard $(dir)/*.bin))
 
@@ -172,12 +204,16 @@ MIPSISET       = -mips2 -32
 
 INCLUDE_CFLAGS = -I. -Iinclude -Iinclude/2.0I -Iinclude/libc -Iassets \
 				 -Isrc.$(VERSION) -Isrc.$(VERSION)/libultra/audio
+# The shared translation units include headers that live beside them in src.us (overlay_level/..., libultra/audio).
+ifneq ($(VERSION),us)
+INCLUDE_CFLAGS += -I$(COMMON_SRC_DIR) -I$(COMMON_SRC_DIR)/libultra/audio
+endif
 
 ASFLAGS        = -EB -mtune=vr4300 -march=vr4300 -mabi=32 -I include
 OBJCOPYFLAGS   = -O binary
 
 # Files requiring pre/post-processing
-GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) </dev/null 2>/dev/null)
+GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(if $(filter-out us,$(VERSION)),$(COMMON_SRC_DIR)/core $(SHARED_C_FILES)) </dev/null 2>/dev/null)
 GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
 
 
@@ -188,6 +224,8 @@ DEFINES += -DVERSION_US
 endif
 ifeq ($(VERSION),eu)
 DEFINES += -DVERSION_EU
+# EU links core rodata as asm whose jump tables reference jlabels in other objects.
+ASFLAGS += --defsym GLOBAL_JLABELS=1
 endif
 
 VERIFY = verify
@@ -216,9 +254,8 @@ GCC_FLAGS += -mdivide-breaks -fno-stack-protector -fno-common -fno-zero-initiali
 GCC_FLAGS += -Wall -Wextra -Wno-missing-braces
 
 TARGET     = $(BUILD_DIR)/$(BASENAME).$(VERSION)
-LD_SCRIPT  = $(BASENAME).ld
 
-LD_FLAGS   = -T $(LD_SCRIPT) -T undefined_syms.$(VERSION).txt -T undefined_syms_auto.txt
+LD_FLAGS   = -T $(LD_SCRIPT) -T undefined_syms.$(VERSION).txt -T $(UNDEFINED_SYMS_AUTO)
 LD_FLAGS  += -Map $(TARGET).map --no-check-sections
 
 ifeq ($(VERSION),us)
@@ -230,6 +267,24 @@ endif
 
 ASM_PROCESSOR_DIR := $(TOOLS_DIR)/asm-processor
 ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
+ifeq ($(VERSION),eu)
+# The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU extraction of
+# those segments under asm.eu/src.us/core, so the EU build reads them from there.
+ASM_PROCESSOR     += --asm-root asm/nonmatchings/core=asm.eu/src.us/core \
+					  --asm-root asm/nonmatchings/overlay_gameplay/frontend=asm.eu/src.us/overlay_gameplay/frontend
+endif
+# The asm-processor command line decides which version's .s files an object is built from. A stamp that is rewritten
+# only when that command line changes makes every GLOBAL_ASM object rebuild after a change of it (dropping --asm-root by
+# mistake, then restoring it), instead of keeping objects built from the other version's assembly.
+# The stamp is brought up to date while the Makefile is read, not by a rule: a rule that always runs (a FORCE
+# prerequisite) makes make -n list every GLOBAL_ASM object, and make -q report them out of date, on an idle tree.
+# A dry run (make -n) therefore also rewrites the stamp when the command line changed; the objects are then older
+# than the stamp, so the next real make rebuilds them.
+ASM_PROCESSOR_STAMP := $(BUILD_DIR)/.asm_processor.stamp
+ifndef PERMUTER
+ASM_PROCESSOR_STAMP_UPDATE := $(shell mkdir -p $(BUILD_DIR) && \
+	{ echo '$(ASM_PROCESSOR)' | cmp -s - $(ASM_PROCESSOR_STAMP) || echo '$(ASM_PROCESSOR)' > $(ASM_PROCESSOR_STAMP); })
+endif
 
 ### Optimisation Overrides
 # $(BUILD_DIR)/$(SRC_DIR)/main_1050.c.o: OPT_FLAGS := -O1
@@ -245,7 +300,7 @@ default: all
 all: dirs $(VERIFY)
 
 dirs:
-	$(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
+	$(foreach dir,$(SRC_DIRS) $(ASM_DIRS) $(BIN_DIRS) $(if $(filter-out us,$(VERSION)),$(dir $(SHARED_C_FILES))),$(shell mkdir -p $(BUILD_DIR)/$(dir)))
 
 tools: $(RNC64) $(LIBRNCU)
 
@@ -262,7 +317,7 @@ splat: $(SPLAT)
 
 extract: splat tools
 	$(PYTHON) $(SPLAT) $(BASENAME).$(VERSION).yaml
-	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py
+	$(PYTHON) $(TOOLS_DIR)/fixup_tlut.py $(ASSET_DIR)
 
 decompress: $(ALL_RNC_EXTRACTED)
 
@@ -271,23 +326,25 @@ compress: dirs $(ALL_RNC_COMPRESSED)
 	#cp $(BUILD_DIR)/assets/rnc*.bin assets/
 
 clean:
-	rm -rf build
+	rm -rf $(BUILD_DIR)
 
 distclean: clean
-	rm -rf asm
-	rm -rf assets
-	rm -f *auto.txt
+	rm -rf asm asm.eu
+	rm -rf assets assets.eu
+	rm -f *auto.txt undefined_syms_auto.*.txt
 	rm -f src.us/data/inc/*
 
 
 ### Recipes
 
-$(TARGET).elf: $(BASENAME).ld $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES) $(RNC_O_FILES)
+$(TARGET).elf: $(LD_SCRIPT) $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FILES) $(IMAGE_O_FILES) $(RNC_O_FILES)
 	@$(LD) $(LD_FLAGS) $(LD_FLAGS_EXTRA) -o $@
 	$(PRINT) "[$(PINK) linker $(NO_COL)]  $<\n"
 
 ifndef PERMUTER
-$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h
+$(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.h include/variables.h include/structs.h \
+		include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h \
+		$(ASM_PROCESSOR_STAMP) $(ASM_PROCESSOR_DIR)/asm_processor.py
 	$(call RUN,$(CC_CHECK) $<)
 	$(PRINT) "[$(YELLOW) syntax $(NO_COL)] $<\n"
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<

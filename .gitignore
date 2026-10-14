@@ -21,6 +21,7 @@ tools/windows/
 
 *.ld
 *auto.txt
+undefined_syms_auto.*.txt
 *.o
 *.ok
 .splat_cache
@@ -36,3 +37,5 @@ ctx.c.m2c
 reference_index.json
 asm_pattern_index.json
 pah.conf
+.tmp_us_probe/
+function-inventory.json

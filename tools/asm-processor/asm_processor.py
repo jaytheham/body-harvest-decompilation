@@ -888,7 +888,74 @@ float_regexpr = re.compile(r"[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?f")
 def repl_float_hex(m):
     return str(struct.unpack(">I", struct.pack(">f", float(m.group(0).strip().rstrip("f"))))[0])
 
-Opts = namedtuple('Opts', ['opt', 'framepointer', 'mips1', 'kpic', 'pascal', 'input_enc', 'output_enc', 'enable_cutscene_data_float_encoding'])
+Opts = namedtuple('Opts', ['opt', 'framepointer', 'mips1', 'kpic', 'pascal', 'input_enc', 'output_enc', 'enable_cutscene_data_float_encoding', 'asm_roots'], defaults=[()])
+
+def is_inside_directory(path, directory):
+    """Local change (bh-decomp): whether the file that path names lies in directory (or is it), as the filesystem sees it.
+
+    Every ancestor of the resolved path is compared with directory by identity, so an absolute path, a path that
+    leaves the working directory and comes back, a symbolic link and a spelling in another case on a case-insensitive
+    filesystem are all recognised. A directory that does not exist contains nothing.
+    """
+    if not os.path.isdir(directory):
+        return False
+    current = os.path.realpath(path)
+    while True:
+        if os.path.isdir(current) and os.path.samefile(current, directory):
+            return True
+        parent = os.path.dirname(current)
+        if parent == current:
+            return False
+        current = parent
+
+def map_asm_path(path, asm_roots):
+    """Local change (bh-decomp): rewrite the leading directory of a GLOBAL_ASM path.
+
+    asm_roots is a sequence of (source, destination) pairs from --asm-root SOURCE=DESTINATION. The path is first
+    canonicalised the way the host's open() reads it (os.path.normpath: "." and ".." components and repeated
+    separators are folded, and a backslash is a separator on Windows only), then a path whose leading components are
+    SOURCE has them replaced by DESTINATION ("asm/src/a/b.s", "./asm/src/a/b.s" and "asm/./src//a/b.s" with
+    asm=asm.eu all become "asm.eu/src/a/b.s"). SOURCE is matched without regard to case where the host's paths are
+    (Windows). Any other path is returned unchanged, and so is any path when no root is given. Source shared
+    between ROM versions names one directory (asm/) and the build of another version maps it to that version's
+    extraction.
+
+    A path that is not spelled as SOURCE but still names a file under it (an absolute path, one that leaves the
+    working directory and comes back) would silently read the wrong version's assembly, so it is refused with a
+    Failure instead.
+    """
+    if not asm_roots:
+        return path
+    parts = os.path.normpath(path).replace(os.sep, '/').split('/')
+    for source, destination in asm_roots:
+        source_parts = source.split('/')
+        if [os.path.normcase(part) for part in parts[:len(source_parts)]] == [os.path.normcase(part) for part in source_parts]:
+            return '/'.join([destination] + parts[len(source_parts):])
+    for source, destination in asm_roots:
+        if is_inside_directory(path, source):
+            raise Failure('GLOBAL_ASM("' + path + '") resolves to a file under ' + source + '/ but is not spelled relative to it, so --asm-root ' +
+                          source + '=' + destination + ' cannot map it to ' + destination + "/ and the other ROM version's " +
+                          'assembly would be read; spell it ' + source + '/<path>')
+    return path
+
+def parse_asm_roots(specs):
+    """Turn the --asm-root SOURCE=DESTINATION arguments into (source, destination) pairs, refusing a missing DESTINATION.
+
+    A destination directory that does not exist means the version it names has not been extracted: stopping here
+    names the cause, where the first GLOBAL_ASM file to be opened would only report a missing file.
+    """
+    roots = []
+    for spec in specs or []:
+        source, separator, destination = spec.partition('=')
+        source, destination = source.strip('/'), destination.strip('/')
+        if source:
+            source = os.path.normpath(source).replace(os.sep, '/')
+        if not separator or not source or not destination:
+            raise Failure("--asm-root expects SOURCE=DESTINATION, got " + repr(spec))
+        if not os.path.isdir(destination):
+            raise Failure("--asm-root " + spec + ": directory " + repr(destination) + " does not exist (extract that ROM version first)")
+        roots.append((source, destination))
+    return tuple(roots)
 
 def parse_source(f, opts, out_dependencies, print_source=None):
     if opts.opt in ['O1', 'O2']:
@@ -940,6 +1007,7 @@ def parse_source(f, opts, out_dependencies, print_source=None):
     import hashlib as _hashlib
     state.namectr = int(_hashlib.md5(f.name.encode()).hexdigest(), 16) % (10 ** 6) * 1000
     output_enc = opts.output_enc
+    source_name = f.name
 
     global_asm = None
     asm_functions = []
@@ -973,7 +1041,11 @@ def parse_source(f, opts, out_dependencies, print_source=None):
             start_index = len(output_lines)
         elif ((line.startswith('GLOBAL_ASM("') or line.startswith('#pragma GLOBAL_ASM("'))
                 and line.endswith('")')):
-            fname = line[line.index('(') + 2 : -2]
+            pragma_path = line[line.index('(') + 2 : -2]
+            try:
+                fname = map_asm_path(pragma_path, opts.asm_roots)
+            except Failure as failure:
+                raise Failure(source_name + ':' + str(line_no) + ': ' + str(failure))
             out_dependencies.append(fname)
             global_asm = GlobalAsmBlock(fname)
             with open(fname, encoding=opts.input_enc) as f:
@@ -1467,6 +1539,7 @@ def run_wrapped(argv, outfile, functions):
     parser.add_argument('--output-enc', default='latin1', help="output encoding (default: %(default)s)")
     parser.add_argument('--drop-mdebug-gptab', dest='drop_mdebug_gptab', action='store_true', help="drop mdebug and gptab sections")
     parser.add_argument('--convert-statics', dest='convert_statics', choices=["no", "local", "global", "global-with-filename"], default="local", help="change static symbol visibility (default: %(default)s)")
+    parser.add_argument('--asm-root', dest='asm_roots', action='append', metavar='SOURCE=DESTINATION', help="read GLOBAL_ASM files named under directory SOURCE from directory DESTINATION instead (repeatable)")
     parser.add_argument('--force', dest='force', action='store_true', help="force processing of files without GLOBAL_ASM blocks")
     parser.add_argument('--encode-cutscene-data-floats', dest='enable_cutscene_data_float_encoding', action='store_true', default=False, help="Replace floats with their encoded hexadecimal representation in CutsceneData data")
     parser.add_argument('-framepointer', dest='framepointer', action='store_true')
@@ -1489,7 +1562,7 @@ def run_wrapped(argv, outfile, functions):
         raise Failure("-mips1 is only supported together with -O1 or -O2")
     if pascal and opt not in ('O1', 'O2', 'g3'):
         raise Failure("Pascal is only supported together with -O1, -O2 or -O2 -g3")
-    opts = Opts(opt, args.framepointer, args.mips1, args.kpic, pascal, args.input_enc, args.output_enc, args.enable_cutscene_data_float_encoding)
+    opts = Opts(opt, args.framepointer, args.mips1, args.kpic, pascal, args.input_enc, args.output_enc, args.enable_cutscene_data_float_encoding, parse_asm_roots(args.asm_roots))
 
     if args.objfile is None:
         with open(args.filename, encoding=args.input_enc) as f:

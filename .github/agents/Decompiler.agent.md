@@ -15,7 +15,9 @@ You will convert the named N64 assembly function to C89 code, compile it (IDO 5.
 
 - `asm/nonmatchings`: Readonly - target assembly of unmatched functions.
 - `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
+- `src.us/overlay_gameplay/frontend/52690.c`: this one overlay file is also compiled into the EU build, so an edit to it changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `build/`: Readonly - compiled object files and the final ROM image.
 
@@ -57,6 +59,7 @@ Clean up the generated C code:
 - Add any missing declarations of data symbols used by the function to `include/variables.us.h`.
 - Identify structs accessed by the function and add or update definitions in `include/structs.us.h`.
 - Add or update declarations for any called functions in `include/functions.us.h`.
+- The EU build includes these three US headers too (through `include/common.eu.h`), so a declaration added there also serves the shared files (`src.us/core/` and `src.us/overlay_gameplay/frontend/52690.c`). The `.eu.h` headers are for declarations that exist in the PAL release only (none yet).
 - Replace all pointer arithmetic with struct/array access.
 - All struct field accesses should use `.` or `->` operators.
 - Update void\* parameters that should be typed.
@@ -70,6 +73,8 @@ Identify and fix all these issues in the generated C code before proceeding to t
 ## Step 2: Insert C into Project
 
 Find the `#pragma GLOBAL_ASM(...` line in the C source file that includes the target assembly. Replace that line with the cleaned up C code from Step 1. Do not add a NON_MATCHING wrapper, that will prevent the C code from being compiled instead of the assembly.
+
+A file under `src.us/core/`, and `src.us/overlay_gameplay/frontend/52690.c`, is compiled for both the NA and the EU build, so once the C matches, build and verify both versions (`python tools/verify_build.py --rebuild`).
 
 ## Step 3: Build ROM
 

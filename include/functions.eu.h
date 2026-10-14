@@ -1,5 +1,5 @@
-#ifndef FUNCTIONS_US_H
-#define FUNCTIONS_US_H
+#ifndef FUNCTIONS_EU_H
+#define FUNCTIONS_EU_H
 
 #include "functions.h"
 

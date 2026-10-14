@@ -35,6 +35,8 @@ void func_8000B044_BC44(void) {
 #endif
 ```
 
+**In the shared file:** `AD60.c` is in `src.us/core/`, where the `#else` branch above is `#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")`; the EU build reads the file of the same name from `asm.eu/src.us/core/AD60/`. The rule is unchanged: the helpers keep their `#ifdef NON_MATCHING` wrappers and no forward declarations are added.
+
 **Key insight:** The `#ifdef NON_MATCHING` wrapper on the calling function relies on all required helper declarations being provided implicitly by the same-file C implementations of those helpers, which are only active during `NON_MATCHING=1` builds. This is the correct pattern — don't break it by adding extra forward declarations.
 
 **Contrast with** `void-forward-declaration-v0-vs-v1-regalloc.md`: that case adds a `void` declaration to fix a `v0/v1` issue. The present case is the opposite: adding non-void typed declarations causes damage. Both effects come from IDO's sensitivity to declared return types when scheduling registers around call sites.

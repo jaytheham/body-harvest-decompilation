@@ -5,8 +5,11 @@ on:
     branches: [master]
     paths:
       - 'src.us/**'
+      - 'src.eu/**'
       - 'tools/progress.py'
       - 'docs/index.html'
+      - 'docs/*.html'
+      - 'docs/*.js'
   schedule:
     - cron: '0 2 * * *'
   workflow_dispatch:
@@ -25,6 +28,9 @@ jobs:
 
       - name: Generate progress data
         run: python3 tools/progress.py --output docs/progress.json
+
+      - name: Generate EU progress data
+        run: python3 tools/progress.py --version eu --output docs/progress.eu.json
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4

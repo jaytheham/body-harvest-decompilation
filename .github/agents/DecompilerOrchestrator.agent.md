@@ -30,7 +30,9 @@ If the build fails, add or update a comment above the non-matching function show
 - `asm/matchings`: Readonly - target assembly of functions with a matching C implementation, for reference.
 - `build/`: Readonly - compiled object files and the final ROM image.
 - `tools/`: Readonly - tools for other tasks.
-- `src.us/`: C source files.
+- `src.us/`: C source files of the NTSC (US) build.
+- `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
+- `src.us/overlay_gameplay/frontend/52690.c`: this one overlay file is also compiled into the EU build, so an edit to it changes both ROMs.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 

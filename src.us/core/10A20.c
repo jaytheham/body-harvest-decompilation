@@ -5,7 +5,13 @@
 
 s16 D_80031B50_32750 = 0;
 s32 __osSiAccessQueueEnabled = 0;
+#if defined(VERSION_US)
 u8 D_80031B58_32758 = 0;
+#elif defined(VERSION_EU)
+u8 D_80031B58_32758 = 1;
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 
 void func_8000FE50_10A50(void *arg0) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, 1);

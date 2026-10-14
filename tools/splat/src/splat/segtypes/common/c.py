@@ -23,7 +23,10 @@ C_FUNC_RE = re.compile(
     r"^(?:static\s+)?[^\s]+\s+([^\s(]+)\(([^;)]*)\)[^;]+?{", re.MULTILINE
 )
 
-C_GLOBAL_ASM_IDO_RE = re.compile(r"GLOBAL_ASM\(\"(\w+\/)*(\w+)\.s\"\)", re.MULTILINE)
+# Local change to vendored splat 0.24.7: allow '.' and '-' in GLOBAL_ASM path components, so pragmas under
+# asm.eu/ are recognised (upstream matched only \w). Without it every EU GLOBAL_ASM function is written to
+# asm.eu/matchings and make VERSION=eu fails. Re-apply after any splat update; see docs/windows-build.md.
+C_GLOBAL_ASM_IDO_RE = re.compile(r"GLOBAL_ASM\(\"([\w.-]+\/)*([\w.-]+)\.s\"\)", re.MULTILINE)
 
 
 class CommonSegC(CommonSegCodeSubsegment):

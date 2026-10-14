@@ -1,0 +1,18 @@
+NTSC vs PAL (EU) core function comparison
+NTSC core text: 0x1000-0x2EA10; PAL core text: 0x1000-0x2EA40
+NTSC core functions: 682 (185624 bytes, alignment padding excluded)
+
+shift map (NTSC range -> PAL = NTSC + shift):
+  NTSC 0x001000-0x0079DC  +0x0
+  NTSC 0x007DD8-0x00AD54  +0x38
+  NTSC 0x00AD60-0x02EA10  +0x30
+
+  EXACT      139 fn   20.4%     13580B   7.32% of core code
+  SHAPE      542 fn   79.5%    171024B  92.13% of core code
+  DIFF         1 fn    0.1%      1020B   0.55% of core code
+  reusable (EXACT+SHAPE): 99.45% of core code bytes
+
+=== 1 functions that genuinely differ (NTSC decomp NOT reusable) ===
+  NTSC 0x0079DC  PAL 0x0079DC    1020B  func_80006DDC_79DC
+
+differing bytes: 1020
