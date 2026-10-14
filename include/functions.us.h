@@ -1419,7 +1419,7 @@ void func_80080A84_50F34(FrontendStreamSlot* arg0);
 void func_80080F8C_5143C(AnimChannelState* arg0, s16* arg1, s32 arg2);
 void func_8008FE98_60348(u8 arg0);
 void func_8007EBB0_4F060(void);
-void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4);
+void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4);
 s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007C1DC *arg4);
 void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment);
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1);
