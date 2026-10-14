@@ -291,57 +291,40 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s")
 #endif
 
-// CURRENT(9407)
-#ifdef NON_MATCHING
 // AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
 void func_800804E0_1685A0(void) {
-	f32 sp0;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f2;
-	f32 temp_f4;
-	f64 temp_f10;
-	f64 temp_f6;
-	s32 temp_t1;
-	s32 temp_t6;
-	u16 temp_t2;
-	u16 temp_t3;
+	f64 scale = 96.0;
+	f32 cameraX;
+	f32 cameraY;
+	f32 cameraZ;
+	CameraInterpolationStep previousCoord;
 
-	temp_t6 = D_800E7394->anchorCellX;
-	temp_f6 = (f64) temp_t6;
-	temp_t1 = D_800E7394->anchorCellZ;
-	temp_f12 = ((D_800E7394->anchorHeight >> 1) & 0x7F) + 50;
-	temp_f2 = (f32) ((temp_f6 - 0.5) * 96.0);
-	temp_f10 = (f64) temp_t1;
-	temp_f14 = (f32) ((temp_f10 - 0.5) * 96.0);
+	/* Integer address conversion preserves the shared anchor base without a pointer home. */
+	cameraX = ((u32) ((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->cellX - 0.5) * scale;
+	cameraY = ((((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->height >> 1) & 0x7F) + 50;
+	cameraZ = ((u32) ((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->cellZ - 0.5) * scale;
 
 	if ((f64) D_800E73B0 < 1.0) {
-		D_8008DDF4_175EB4 = ((temp_f2 - D_800E73B8.x) * D_800E73B0) + D_800E73B8.x;
-		sp0 = D_800E73B8.y;
-		D_8008DDF8_175EB8 = ((temp_f12 - sp0) * D_800E73B0) + sp0;
-		sp0 = D_800E73B8.z;
-		D_8008DDFC_175EBC = ((temp_f14 - sp0) * D_800E73B0) + sp0;
+		D_8008DDF4_175EB4 = ((cameraX - D_800E73B8.x) * D_800E73B0) + D_800E73B8.x;
+		previousCoord.value = D_800E73B8.y;
+		previousCoord.value = previousCoord.reload;
+		D_8008DDF8_175EB8 = ((cameraY - previousCoord.value) * D_800E73B0) + previousCoord.value;
+		previousCoord.value = D_800E73B8.z;
+		previousCoord.value = previousCoord.reload;
+		D_8008DDFC_175EBC = ((cameraZ - previousCoord.value) * D_800E73B0) + previousCoord.value;
 		D_800E73B0 += D_800A0974_188A34;
 	} else {
-		D_8008DDF4_175EB4 = temp_f2;
-		D_8008DDF8_175EB8 = temp_f12;
-		D_8008DDFC_175EBC = temp_f14;
+		D_8008DDF4_175EB4 = cameraX;
+		D_8008DDF8_175EB8 = cameraY;
+		D_8008DDFC_175EBC = cameraZ;
 		D_800E73B0 = 1.0f;
 	}
 
-	temp_t2 = (u16) D_800E73D8;
-	temp_t3 = (u16) D_800E73DA;
-	temp_f4 = (f32) temp_t3;
-	D_800E659C = (f32) ((((f64) ((f32) temp_t2 + D_800E6A78.unk4C)) * 0.5) - 96.0);
+	D_800E659C = (((f32) (u32) D_800E73D8 + D_800E6A78.unk4C) * (f64)0.5f) - scale;
 	D_800E65A0 = 50.0f;
-	if (temp_t3 < 0) {
-		temp_f4 += 4294967296.0f;
-	}
-	D_800E65A4 = (f32) ((((f64) (temp_f4 + D_800E6A78.unk54)) * 0.5) - 96.0);
+	D_800E65A4 = (((f32) (u32) D_800E73DA + D_800E6A78.unk54) * (f64)0.5f) - scale;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800804E0_1685A0.s")
-#endif
+
 
 // AI - Entering/exiting view: set a fixed camera position relative to the player
 void func_800806F8_1687B8(void) {

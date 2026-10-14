@@ -3626,19 +3626,21 @@ typedef struct {
 	/* 0x1 */ u8 objectIndex; // entry object index into D_800E66A8 (-> D_800E65EC)
 } InteriorRoomExit; /* size = 0x2 */
 
+// Camera anchor stored in an interior room record.
+typedef struct {
+	/* 0x00 */ u8 cellX;      // world X = (cellX - 0.5) * 96
+	/* 0x01 */ u8 cellZ;      // world Z = (cellZ - 0.5) * 96
+	/* 0x02 */ u8 unk2[4];
+	/* 0x06 */ u8 height;     // world Y = ((height >> 1) & 0x7F) + 50
+	/* 0x07 */ u8 unk7;
+} InteriorRoomAnchor; /* size = 0x8 */
+
 // AI - Building-interior layout record. D_800D6460 holds the current level's interior
 // asset (0xFE00 bytes = 254 records); the live record is
 // D_800D6460 + buildingInteriorToLoadId * sizeof(InteriorRoomData) (pointed to by D_800E65E8).
 typedef struct {
 	/* 0x00 */ u8 unk00[0x28];        // unreferenced by code
-	/* 0x28 */ u8 anchorCellX;        // world X = (v - 0.5) * 96
-	/* 0x29 */ u8 anchorCellZ;        // world Z = (v - 0.5) * 96
-	/* 0x2A */ u8 unk2A;
-	/* 0x2B */ u8 unk2B;
-	/* 0x2C */ u8 unk2C;
-	/* 0x2D */ u8 unk2D;
-	/* 0x2E */ u8 anchorHeight;       // world Y = ((v >> 1) & 0x7F) + 50
-	/* 0x2F */ u8 unk2F;
+	/* 0x28 */ InteriorRoomAnchor anchor;
 	/* 0x30 */ u8 objectType[16];     // bits 0-4 catalogue id, bits 5-6 orientation, bit 7 flag
 	/* 0x40 */ u8 objectCellX[16];
 	/* 0x50 */ u8 objectCellY[16];

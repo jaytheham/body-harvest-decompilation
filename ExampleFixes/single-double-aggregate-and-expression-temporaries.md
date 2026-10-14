@@ -32,3 +32,13 @@ allocation beyond the expression in which they first appear.
 These changes were verified with the normal full-ROM build and function diff.
 The final complete function passes the normal full-ROM checksum with these
 expression forms retained.
+
+## Interior NPC camera: anchor base and reused scratch slot
+
+func_800804E0_1685A0 matches without source splitting. Represent the eight-byte room camera anchor as InteriorRoomAnchor within InteriorRoomData, and declare the two stored NPC coordinates u16. Cast the coordinate loads through u32 before float/double conversion to preserve the unsigned adjustment branches.
+
+Use a leading f64 scale initialized to 96.0 and spell the final half-scale factors as (f64)0.5f. Ordinary 0.5 literals let GVN keep the initial and final half-scale in one register, forcing saved floating registers; the float-to-double form rematerializes the final half-scale in f2. An empty scale check perturbs the setup order and must be omitted.
+
+A named anchor pointer reproduces the base +0x28 instruction but reserves a four-byte home, growing the frame from 0x18 to 0x20 and moving the scratch slot from zero to four. Direct nested struct accesses fold that base increment away. Inline typed accesses through (InteriorRoomAnchor *)(s32)&room->anchor retain the compiler-generated base and avoid the pointer home.
+
+Reuse the existing CameraInterpolationStep union for the previous Y/Z coordinate: assign value from the source field, then value = reload before interpolation. This produces one stack store and one reload per coordinate, while ordinary value reads share the reloaded register. A volatile scalar causes repeated reads; copying it to separate scalar locals adds stores or saved registers. The union gives the exact sp+0 accesses, registers, and 0x18 frame. Full ROM checksum OK verifies the result.
