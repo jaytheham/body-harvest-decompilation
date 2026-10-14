@@ -1,16 +1,16 @@
 {
-  "generated": "2026-10-13T23:23:06Z",
-  "commit": "88d721f1e",
-  "commit_timestamp": "2026-10-13T23:55:47+01:00",
+  "generated": "2026-10-14T00:52:47Z",
+  "commit": "2b574e97f",
+  "commit_timestamp": "2026-10-14T01:17:38+01:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page (src.us/core), the files of the overlays that are also shared (the second half of the frontend overlay and the five level overlays, listed in shared_overlay_files.txt), and the stubs under src.eu for the rest of the three gameplay overlays and the one libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, so it cannot be counted from the repository.\nThe core figures are the same functions as on the US page, so the two pages must not be summed. Matching a function in a shared core file counts for both versions.\nThe other EU overlay files are not shared with NTSC yet, so their functions are still assembly stubs here, apart from empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU counterpart: of the 2354 functions in the eight overlays, gameplay and level, 2216 (94.14 percent) are identical to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 failed that check, but their differing immediates match relocation differences seen elsewhere, so they are probably relocations too; counting them, 2346 (99.66 percent) are identical or probably identical to NTSC apart from relocations. The split between those two groups depends on the rule used to resolve immediates: two other rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as 2188 and 160, so read 94.14 percent as the result of one rule, not as a fixed property of the ROMs. Sharing the overlays would lift these figures a great deal.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2124,
-    "non_matching": 480,
-    "asm_stubs": 118,
-    "matched_pct": 78.03,
-    "decompiled_pct": 95.66
+    "matched": 2197,
+    "non_matching": 516,
+    "asm_stubs": 9,
+    "matched_pct": 80.71,
+    "decompiled_pct": 99.67
   },
   "segments": {
     "core": {
@@ -24,12 +24,12 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 71,
-      "non_matching": 35,
-      "asm_stubs": 112,
+      "matched": 144,
+      "non_matching": 71,
+      "asm_stubs": 3,
       "total": 218,
-      "matched_pct": 32.6,
-      "decompiled_pct": 48.6
+      "matched_pct": 66.1,
+      "decompiled_pct": 98.6
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
@@ -346,23 +346,13 @@
       "contributor": ""
     },
     {
-      "path": "overlay_gameplay/frontend/40750.c",
+      "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 75,
-      "total": 75,
-      "matched_pct": 0.0,
-      "contributor": ""
-    },
-    {
-      "path": "overlay_gameplay/frontend/4E450.c",
-      "segment": "overlay_gameplay/frontend",
-      "matched": 1,
-      "non_matching": 0,
-      "asm_stubs": 37,
-      "total": 38,
-      "matched_pct": 2.6,
+      "matched": 74,
+      "non_matching": 36,
+      "asm_stubs": 3,
+      "total": 113,
+      "matched_pct": 65.5,
       "contributor": ""
     },
     {

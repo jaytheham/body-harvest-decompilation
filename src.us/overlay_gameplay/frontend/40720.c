@@ -2133,9 +2133,13 @@ s16 func_80076C98_47148(void) {
 	return result;
 }
 
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FD8_47488.s")
+#else
 s32 func_80076FD8_47488(void) {
 	return 3;
 }
+#endif
 
 /**
  * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
@@ -2771,6 +2775,9 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 	return 0;
 }
 
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077E88_48338.s")
+#else
 s32 func_80077E88_48338(void)
 {
   s32 selectedSlot;
@@ -2855,6 +2862,7 @@ s32 func_80077E88_48338(void)
   func_800709F0_40EA0();
   return state;
 }
+#endif
 
 #ifdef NON_MATCHING
 // CURRENT(3239)
@@ -4360,6 +4368,9 @@ void func_8007B618_4BAC8(void) {
 }
 
 // displayCopyright
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B900_4BDB0.s")
+#else
 void func_8007B900_4BDB0(void) {
 	s32 counter;
 
@@ -4394,8 +4405,15 @@ void func_8007B900_4BDB0(void) {
 		func_8000505C_5C5C();
 	} while (func_80005B30_6730() == 0);
 }
+#endif
 
 // displayPublisherLogo
+// The four values that place the publisher logo; PAL's picture is taller.
+#ifdef VERSION_EU
+#define PUBLISHER_LOGO_RECT 116, 58, 96, 128
+#else
+#define PUBLISHER_LOGO_RECT 24, 80, 288, 96
+#endif
 void func_8007BB0C_4BFBC(void) {
 	s32 counter;
 
@@ -4408,7 +4426,7 @@ void func_8007BB0C_4BFBC(void) {
 	do {
 		func_800791A0_49650(1);
 		gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-		func_80005C5C_685C(D_040AAE40, 2, 1, 8, 24, 80, 288, 96, 1.0f, 1.0f, D_040B1A40);
+		func_80005C5C_685C(D_040AAE40, 2, 1, 8, PUBLISHER_LOGO_RECT, 1.0f, 1.0f, D_040B1A40);
 
 		if (counter == 0) {
 			func_80005AEC_66EC(0, 0, 0, 64);
@@ -6978,6 +6996,7 @@ void func_80082074_52524(void) {
 #endif
 
 /* ===== Frontend .rodata (ROM 0x7D5A0 - 0x7F0F0) ===== */
+#ifndef VERSION_EU
 const char D_800AD0F0_7D5A0[] = "";
 const char D_800AD0F4_7D5A4[] = "Credits";
 const char D_800AD0FC_7D5AC[] = "";
@@ -7527,3 +7546,4 @@ const char D_800AEC24_7F0D4[] = "%@%s";
 const char D_800AEC2C_7F0DC[] = "%@%s";
 const char D_800AEC34_7F0E4[] = "%@%s";
 const f32 D_800AEC3C_7F0EC[1] = { 20000.0f };
+#endif

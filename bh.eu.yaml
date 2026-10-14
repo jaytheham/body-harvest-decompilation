@@ -308,10 +308,10 @@ segments:
     exclusive_ram_id: 800702A0
     overlay: true
     subsegments:
-      - [0x40750, c, overlay_gameplay/frontend/40750]
-      - [0x4E450, c, overlay_gameplay/frontend/4E450]
+      - [0x40750, c, ../src.us/overlay_gameplay/frontend/40720]
       - [0x52E50, c, ../src.us/overlay_gameplay/frontend/52690]
       - [0x61620, bin]
+      - [0x7DD60, rodata, overlay_gameplay/frontend/rodata_7DD60]
       - [0x7FC50, .rodata, ../src.us/overlay_gameplay/frontend/52690]
 
   - name: overlay_gameplay_outside
