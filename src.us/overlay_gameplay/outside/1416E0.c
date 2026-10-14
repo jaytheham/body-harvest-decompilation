@@ -728,9 +728,9 @@ void func_80133F28_142ED8(Unk80160080 *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133F28_142ED8.s")
 #endif
 
-// CURRENT(599)
-#ifdef NON_MATCHING
+// CURRENT(45)
 // AI - Camera pitch/zoom and terrain collision avoidance
+#ifdef NON_MATCHING
 void func_801343D8_143388(Unk80160080 *arg0) {
 	s16 currentPitch;
 	s16 var_s1;
@@ -756,9 +756,9 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	if (((func_80126268_135218((s32)sp6C.x, (s32)sp6C.y, (s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
 		 ((sp6C.y - temp_s0) < 50.0f)) &&
 		(var_s1 != 0x3C71)) {
-		while (1) {
-			var_s1 += 0x71C;
+		do {
 			D_80160144 = 5;
+			var_s1 += 0x71C;
 			if (var_s1 >= 0x3C72) {
 				var_s1 = 0x3C71;
 			}
@@ -770,12 +770,8 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 			temp_s0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
 			temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
 			temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
-			if (!(((func_80126268_135218((s32)sp6C.x, (s32)sp6C.y, (s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
-				   ((sp6C.y - temp_s0) < 50.0f)) &&
-				  (var_s1 != 0x3C71))) {
-				break;
-			}
-		}
+		} while (((func_80126268_135218((s32)sp6C.x, (s32)sp6C.y, (s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
+			((sp6C.y - temp_s0) < 50.0f)) && (var_s1 != 0x3C71));
 	}
 
 	if (D_80160144 != 0) {
@@ -819,7 +815,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	if (var_v1 <= D_801456A0_154650[0]) {
 		arg0->unk52 = var_s1;
 	} else {
-		arg0->unk52 = currentPitch + (s32)(temp_v0 / 12.0);
+		arg0->unk52 = currentPitch + (u16)(s32)(temp_v0 / 12.0);
 	}
 }
 #else
