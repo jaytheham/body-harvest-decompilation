@@ -1927,7 +1927,7 @@ void func_800A1924_B08D4(void) {
 		D_801591B0 = D_801591AC;
 		D_80052AE0 = gameplayMode;
 		D_801591AC = 3;
-		gameplayMode = GAMEPLAY_MODE_UNK2;
+		gameplayMode = GAMEPLAY_MODE_PAUSE_MENU;
 		D_8014ED56 = 0xFF;
 		D_8014ED54 = 0;
 		D_80050AD0 = D_80050AD4;

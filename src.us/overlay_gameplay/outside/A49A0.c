@@ -1958,7 +1958,7 @@ void func_8009811C_A70CC(void) {
 	}
 	func_800050C4_5CC4();
 	D_80052ACC = 0;
-	gameplayMode = GAMEPLAY_MODE_UNK1;
+	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_80013324_13F24();
 }
 #else

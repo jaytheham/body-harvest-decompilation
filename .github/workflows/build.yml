@@ -59,6 +59,10 @@ jobs:
         if: env.ROM_AVAILABLE == 'true'
         run: make --jobs VERSION=${{ matrix.version }}
 
+      - name: Check function symbol sizes
+        if: env.ROM_AVAILABLE == 'true'
+        run: python3 tools/check_elf_symbols.py build/bh.${{ matrix.version }}.elf
+
       - name: Upload build artifacts on failure
         if: failure()
         uses: actions/upload-artifact@v4

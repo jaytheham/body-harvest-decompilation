@@ -3769,7 +3769,7 @@ void func_8011E9F4_12D9A4(s32 arg0, s16 arg1) {
 }
 
 void func_8011EA44_12D9F4(s16 *arg0) {
-	if (gameplayMode == GAMEPLAY_MODE_UNK1) {
+	if (gameplayMode == GAMEPLAY_MODE_NORMAL) {
 		func_800E0D28_EFCD8(arg0[0] + D_80159DC8, arg0[1] + D_80159DCA, arg0[2] + D_80159DCC);
 	}
 }
@@ -4529,7 +4529,7 @@ void func_80121128_1300D8(BuildingInstance *arg0) {
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
 
-	if (gameplayMode != GAMEPLAY_MODE_UNK1) {
+	if (gameplayMode != GAMEPLAY_MODE_NORMAL) {
 		return;
 	}
 
@@ -4752,7 +4752,7 @@ void func_80122244_1311F4(BuildingInstance *arg0) {
 		func_800B99A8_C8958(&position, 30, 500, 255, &color.r, 80, 10, 0);
 	}
 
-	if (gameplayMode == GAMEPLAY_MODE_UNK1) {
+	if (gameplayMode == GAMEPLAY_MODE_NORMAL) {
 		func_800D16BC_E066C(arg0->xCoord, arg0->yCoord + 0x14E, arg0->zCoord, arg0->xCoord, arg0->yCoord + 0x7D0, arg0->zCoord, 1);
 	}
 }
