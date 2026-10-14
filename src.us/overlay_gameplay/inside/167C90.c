@@ -54,9 +54,9 @@ const u8 D_800A4F30_18CFF0_bytes[8] = { 0x40, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00
 
 const f64 D_800A4F38_18CFF8[1] = {91.02222222222223};
 
-const f64 D_800A4F40_18D000[1] = {182.04444444444445};
+const ShadowGeometryConstant D_800A4F40_18D000 = {182.04444444444445};
 
-const f64 D_800A4F48_18D008[1] = {22.5};
+const ShadowGeometryConstant D_800A4F48_18D008 = {22.5};
 
 const u32 jtbl_800A4F50_18D010[] = {
 	0x800829E8, 0x80082618, 0x80082704, 0x800827F0, 0x800828EC, 0x00000000, 0x00000000, 0x00000000, 
@@ -603,35 +603,28 @@ s16 func_80080FD8_169098(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080FD8_169098.s")
 #endif
 
-// CURRENT(1620)
-#ifdef NON_MATCHING
 // AI - Map yaw angle to a compass-direction marker index for the debug map
-u8 func_800811DC_16929C(s16 arg0, s32 arg1) {
-	f32 temp_f2;
-	s32 var_v1;
+s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
+    f32 angle = 0.0f;
+    f32 base;
+    u32 result;
 
-	temp_f2 = (f32) ((f64) arg0 / D_800A4F40_18D000[0]);
-	if (arg1 != 0) {
-		temp_f2 += 15.0f;
-		if (temp_f2 < 0.0f) {
-			temp_f2 += 360.0f;
-		}
-		var_v1 = (u32) (temp_f2 / 30.0f);
-		var_v1 &= 0xFF;
-		return var_v1;
-	}
-
-	temp_f2 = (f32) ((f64) temp_f2 + D_800A4F48_18D008[0]);
-	if (temp_f2 < 0.0f) {
-		temp_f2 += 360.0f;
-	}
-	var_v1 = (u32) (temp_f2 / 45.0f);
-	var_v1 &= 0xFF;
-	return var_v1;
+    base = arg0 / D_800A4F40_18D000.value;
+    if (arg1 != 0) {
+        base = angle = base + 15.0f;
+        if (angle < 0.0f) {
+            angle += 360.0f;
+        }
+        result = (u8) (angle / 30.0f);
+    } else {
+        angle = base + D_800A4F48_18D008.value;
+        if (angle < 0.0f) {
+            angle += 360.0f;
+        }
+        result = (u8) (angle / 45.0f);
+    }
+    return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800811DC_16929C.s")
-#endif
 
 #ifdef NON_MATCHING
 // AI - Check if camera yaw direction is clear by scanning collision-map markers
