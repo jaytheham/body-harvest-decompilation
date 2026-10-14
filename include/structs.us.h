@@ -3646,6 +3646,11 @@ typedef struct {
 typedef union {
     u8 bytes[0x80];
     Lights2 lights;
+    struct {
+        Lights2 lights;
+        s32 torchHandles[4];
+        u8 padding[0x48];
+    } room;
 } InteriorLightData;
 
 // AI - Interior lighting/color data (D_8008DE78_175F38): 8 s16 color/brightness components
