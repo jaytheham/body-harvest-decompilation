@@ -1684,19 +1684,19 @@ void func_801365E0_145590(void) {
 #endif
 
 // https://decomp.me/scratch/NQ4OJ
-// CURRENT(275)
+// CURRENT(110)
 // Check if player is reading signpost
 // AI - Handle signpost interaction on button press
 #ifdef NON_MATCHING
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
-	s32 unused;
+	s32 heading;
 	s16 sp32;
 	s16 sp30;
 	SignpostData *sp1C;
 	s16 sp28;
 	s16 temp_v0;
-	u8 temp_t6;
+	VehicleInstance *player;
 	temp_v0 = D_8015FAD0[arg1].unk1E - 0x2000;
 	sp1C = &D_80258330[temp_v0];
 	sp32 = (s16)(sp1C->unk0 << 8) + 0x80;
@@ -1706,47 +1706,48 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	{
 		return;
 	}
-	if (D_80052B34->unk1A != 0)
+	player = D_80052B34;
+	if (player->unk1A != 0)
 	{
 		return;
 	}
-	temp_t6 = sp1C->unk2;
-	switch (((u32)temp_t6 << 29) >> 30)
+	switch (sp1C->direction)
 	{
 		case 0:
-		  if (sp30 < D_80052B34->unk4 &&
-			  (D_80052B34->unk0 >= (sp32 - 0x13)) &&
-			  ((sp32 - -0x13) >= D_80052B34->unk0) &&
-			  (D_80052B34->unkE >= (-0x6000)) &&
-			  (D_80052B34->unkE < (-0x1FFF))) { }
+		  if (sp30 < player->unk4 &&
+			  (player->unk0 >= (sp32 - 0x13)) &&
+			  ((sp32 - -0x13) >= player->unk0) &&
+			  (player->unkE >= (-0x6000)) &&
+			  (player->unkE < (-0x1FFF))) { }
 		  break;
 		
 		case 1:
-		  if (sp32 < D_80052B34->unk0 &&
-			  (D_80052B34->unk4 >= (sp30 - 0x13)) &&
-			  ((sp30 + 0x13) >= D_80052B34->unk4) &&
-			  (D_80052B34->unkE >= (-0x5FFF)) &&
-			  (D_80052B34->unkE >= 0x6000)) { }
+		  if (sp32 < player->unk0 &&
+			  (player->unk4 >= (sp30 - 0x13)) &&
+			  ((sp30 + 0x13) >= player->unk4) &&
+			  (player->unkE >= (-0x5FFF)) &&
+			  (player->unkE >= 0x6000)) { }
 		  break;
 		
 		case 2:
-		  if (D_80052B34->unk4 < sp30 &&
-			  (D_80052B34->unk0 >= (sp32 - 0x13)) &&
-			  ((sp32 + 0x13) >= D_80052B34->unk0) &&
-			  (D_80052B34->unkE < 0x6001) &&
-			  (D_80052B34->unkE >= 0x2000))
+		  if (player->unk4 < sp30 &&
+			  (player->unk0 >= (sp32 - 0x13)) &&
+			  ((sp32 + 0x13) >= player->unk0) &&
+			  (player->unkE < 0x6001) &&
+			  (player->unkE >= 0x2000))
 		  { }
 		  break;
 		
 		case 3:
-		  if (D_80052B34->unk0 < sp32 &&
-			  (D_80052B34->unk4 >= (sp30 - 0x13)) &&
-			  ((sp30 + 0x13) >= D_80052B34->unk4) &&
-			  D_80052B34->unkE >= 0)
-		  { }
+		  if (player->unk0 < sp32 &&
+			  (player->unk4 >= (sp30 - 0x13)) &&
+			  ((sp30 + 0x13) >= player->unk4)) {
+			  heading = player->unkE;
+			  if (heading >= 0) {} 
+		  }
 		  break;
 		  default:
-			if ((D_80052B34->unk4 == 1) && (1 == D_80052B34->unk4)) { }
+			if ((player->unk4 == 1) && (1 == player->unk4)) { }
 		  break;
 	}
 	
