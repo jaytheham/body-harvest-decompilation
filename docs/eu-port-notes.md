@@ -354,3 +354,11 @@ NTSC recompiles identically for the EU shape.
 - 2026-10-14: `osMotorStop`, `osMotorStart`, `osMotorInit` and `osEepromLongWrite` were assigned in `undefined_syms.eu.txt` (the
   `core/1050` block) as well as named in `symbol_addrs.eu.txt`; the link script assignment turned them into absolute symbols,
   which a recompiler that reads function symbols does not recompile or recognise as functions. The four assignments are gone.
+- 2026-10-14: The first half of the frontend overlay (`40720.c`) is shared with PAL (branch `pal-share-overlays`). Of its 113 NTSC
+  functions 106 pair identically; three matched ones that differ in PAL take their PAL assembly under `#ifdef VERSION_EU` (`func_80076FD8_47488`:
+  NTSC returns 3 in two instructions, PAL has 103; `func_80077E88_48338`: 162 against 170; `func_8007B900_4BDB0`: 131 against 126), and
+  `func_8007BB0C_4BFBC` differs in four arguments (one macro). PAL's read-only data is its own rodata object: it differs from NTSC from offset
+  0xB40 on (build date, the Gremlin publisher notice, and the end-screen text in English, French and German where NTSC has one). The footprint on
+  the maintainer's files is that one file, +22 -2. The PAL progress page reads 2197 of 2722 functions matched (80.71 percent), from 2124.
+  `docs/pal-vs-na.md`, "A shared file whose PAL code or data differs", has the method and the traps (an asm-processor change turned out to be
+  unnecessary; the three pragmas resolve through `asm/nonmatchings` once both versions are extracted again).

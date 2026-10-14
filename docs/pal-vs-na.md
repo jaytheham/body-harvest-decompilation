@@ -241,6 +241,47 @@ What went wrong the first time, so that it is not repeated:
 - A native build makes its own build directories and a `make` does not: run a full `make` on a fresh checkout (`git archive`)
   before pushing.
 
+### A shared file whose PAL code or data differs
+
+The frontend's first half (`src.us/overlay_gameplay/frontend/40720.c`) is shared although PAL differs from NTSC in four functions
+and in its read-only data (the build date and version string, the publisher notice, and the end-screen text in three languages).
+What it needed beyond the steps above, all inside version conditionals so that the NTSC build is unchanged:
+
+- **A matched function that differs in PAL** keeps its C for NTSC and names the PAL assembly for PAL:
+
+  ```c
+  #ifdef VERSION_EU
+  #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077E88_48338.s")
+  #else
+  /* the NTSC C body */
+  #endif
+  ```
+
+  asm-processor reads every pragma before the preprocessor runs, so the path must exist in both builds, and it does: splat
+  extracts a function that the C file names in a pragma to `asm/nonmatchings` even inside an `#ifdef`. Add the pragma, then
+  extract both versions again and rebuild US before running `tools/eu_collisions_build.py` (it reads the US objects; a stale US
+  tree hides the collisions). No change to asm-processor is needed, and none should be made: the PR once carried a missing-file
+  tolerance and dropped it on purpose (`af1e3b11a`). The function needs a `NAME` line (`name = <PAL address>; // type:func rom:0x..`)
+  so that its PAL assembly file has the NTSC name.
+- **A function that differs only in a few constants** stays shared C with the constants behind a macro
+  (`PUBLISHER_LOGO_RECT`: PAL `116, 58, 96, 128`, NTSC `24, 80, 288, 96`). `tools/overlay_pairs.py` reports only the first
+  differing operand of a pair; `diff` the two assembly files to see them all.
+- **Read-only data that differs** is not taken from the C. The NTSC arrays are written `#ifndef VERSION_EU`, and `bh.eu.yaml`
+  gives PAL's read-only data its own entry of type `rodata` (no dot), which splat extracts to `asm.eu/data/...` and links as an
+  assembly object. A `.rodata` entry would link the C object's read-only data instead and needs a C file.
+- **Pins for the names the PAL object no longer defines.** The NTSC array names the shared code uses are undefined in the PAL
+  object once the arrays are gone. Pin each from the pairing's mapping (`python tools/overlay_pairs.py ... --mapping-out m.json`):
+  an NTSC address that the paired instructions reached maps to one PAL address. Map only a name that is a real NTSC symbol (it is in
+  `build/bh.us.elf`). A name that merely encodes an address is a PAL label, and mapping it pins the label to the wrong address
+  (two jump-table labels were first pinned that way and linked to 0xB64 past their place).
+- **A PAL function whose auto-name equals the NTSC name of another function** (`func_80070970_40E20` is the PAL name of the
+  function that NTSC calls `func_80070940_40DF0`) must be given its NTSC name with a `NAME` line. Otherwise the pin for the NTSC
+  meaning wins silently and a `jal` lands 0x30 away. `tools/gen_eu_symbol_collisions.py` leaves functions alone on purpose.
+- **A label tag in the overlay range needs `// rom:0x...`** or splat does not apply it (the generator writes it now); without it a
+  PAL label and a shared-C symbol of the same name are both defined (`multiple definition`).
+- **An NTSC offset-alias (`X = Y + off`) that the generator ports needs `Y` pinned**, even when nothing else uses `Y`, or the link
+  stops with `undefined symbol ... referenced in expression`.
+
 ### Sharing a file that still has GLOBAL_ASM
 
 A `GLOBAL_ASM` stub cannot cross versions, because its bytes are baked with
