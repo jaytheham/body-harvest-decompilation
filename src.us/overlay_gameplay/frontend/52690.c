@@ -515,10 +515,10 @@ void func_800838E0_53D90(Mtx *arg0) {
 	sp24[0] = -0.5f;
 	sp24[1] = 0.5f;
 	sp24[2] = 0.0f;
-	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0C0);
+	func_80083610_53AC0((f32 *)sp34, sp24, &D_800DE0C0.x);
 	sp24[0] = -sp24[0];
 	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0CC);
-	func_800836A4_53B54(D_800DE0C0, D_800DE0CC, D_800DE0D8);
+	func_800836A4_53B54(&D_800DE0C0.x, D_800DE0CC, D_800DE0D8);
 	func_800837B4_53C64(D_800DE0D8, D_800DE0D8);
 }
 
@@ -1017,7 +1017,7 @@ void func_800847E4_54C94(u8 arg0) {
 			entry840 = &D_800DE840[entry840->unk4];
 				scale = (f32)(distBias * ((f64)*(s16 *)((u8 *)entry840 + 0xE) * 0.00390625));
 
-				func_800838B8_53D68(scale, D_800DE0C0, (f32 *)&vecA);
+				func_800838B8_53D68(scale, &D_800DE0C0.x, (f32 *)&vecA);
 				func_800838B8_53D68(scale, D_800DE0CC, (f32 *)&vecB);
 
 			view = (u8 *)entry840 + 8;
@@ -1136,12 +1136,12 @@ void func_800847E4_54C94(u8 arg0) {
 void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	FrontendRingOffsets offsets;
 
-	offsets.x0 = D_800DE0C0[0] * ((void)0, (f32)arg3);
-	offsets.y0 = D_800DE0C0[1] * ((void)0, (f32)arg3);
-	offsets.z0 = D_800DE0C0[2] * ((void)0, (f32)arg3);
-	offsets.x1 = D_800DE0C0[3] * ((void)0, (f32)arg3);
-	offsets.y1 = D_800DE0C0[4] * ((void)0, (f32)arg3);
-	offsets.z1 = D_800DE0C0[5] * ((void)0, (f32)arg3);
+	offsets.x0 = D_800DE0C0.x * ((void)0, (f32)arg3);
+	offsets.y0 = D_800DE0C0.y * ((void)0, (f32)arg3);
+	offsets.z0 = D_800DE0C0.z * ((void)0, (f32)arg3);
+	offsets.x1 = D_800DE0C0.rightX * ((void)0, (f32)arg3);
+	offsets.y1 = D_800DE0C0.rightY * ((void)0, (f32)arg3);
+	offsets.z1 = D_800DE0C0.rightZ * ((void)0, (f32)arg3);
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + offsets.x0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + offsets.y0);
@@ -2905,12 +2905,12 @@ void func_8008A928_5ADD8(s32 arg0) {
 		x = cur->unk8;
 		y = cur->unkA;
 		z = cur->unkC;
-		dx0 = scale * D_800DE0C0[0];
-		dy0 = scale * D_800DE0C0[1];
-		dz0 = scale * D_800DE0C0[2];
-		dx1 = scale * D_800DE0C0[3];
-		dy1 = scale * D_800DE0C0[4];
-		dz1 = scale * D_800DE0C0[5];
+		dx0 = scale * D_800DE0C0.x;
+		dy0 = scale * D_800DE0C0.y;
+		dz0 = scale * D_800DE0C0.z;
+		dx1 = scale * D_800DE0C0.rightX;
+		dy1 = scale * D_800DE0C0.rightY;
+		dz1 = scale * D_800DE0C0.rightZ;
 
 		D_8005BB34->v.ob[0] = (s16)(s32)(x + dx0);
 		D_8005BB34->v.ob[1] = (s16)(s32)(y + dy0);
@@ -3733,17 +3733,17 @@ void func_8008D14C_5D5FC(void) {
 	f32 temp_f18;
 
 	temp_f0 = D_800DE128;
-	temp_f0 *= D_800DE0C0[0];
+	temp_f0 *= D_800DE0C0.x;
 	temp_f12 = D_800DE128;
-	temp_f12 *= D_800DE0C0[1];
+	temp_f12 *= D_800DE0C0.y;
 	temp_f14 = D_800DE128;
-	temp_f14 *= D_800DE0C0[2];
+	temp_f14 *= D_800DE0C0.z;
 	temp_f16 = D_800DE128;
-	temp_f16 *= D_800DE0C0[3];
+	temp_f16 *= D_800DE0C0.rightX;
 	temp_f18 = D_800DE128;
-	temp_f18 *= D_800DE0C0[4];
+	temp_f18 *= D_800DE0C0.rightY;
 	temp_f8 = D_800DE128;
-	temp_f8 *= D_800DE0C0[5];
+	temp_f8 *= D_800DE0C0.rightZ;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f12);
@@ -3797,33 +3797,23 @@ void func_8008D14C_5D5FC(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(3245)
-// AI - Renders a pulsing/oscillating billboard quad with animated scale
 void func_8008D510_5D9C0(void) {
-	f32 temp_f0;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f2;
-	f32 temp_f4;
-	f32 temp_f4_2;
-	f32 temp_f8;
-	f32 temp_f8_2;
+	FrontendRingOffsets offsets;
+	f32 width;
+	f32 height;
 
-	temp_f2 = D_800AA7C0_7AC70[D_800E1D6B];
-	temp_f0 = temp_f2 + D_800DE128;
-	temp_f14 = D_800DE128 - temp_f2;
-	temp_f16 = temp_f0 * D_800DE0C0[0];
-	temp_f18 = temp_f0 * D_800DE0C0[1];
-	temp_f4 = temp_f0 * D_800DE0C0[2];
-	temp_f8 = temp_f14 * D_800DE0C0[3];
-	temp_f4_2 = temp_f14 * D_800DE0C0[4];
-	temp_f8_2 = temp_f14 * D_800DE0C0[5];
+	width = (f32)D_800AA7C0_7AC70[D_800E1D6B] + D_800DE128;
+	height = D_800DE128 - (f32)D_800AA7C0_7AC70[D_800E1D6B];
+	offsets.x0 = width * D_800DE0C0.x;
+	offsets.y0 = width * D_800DE0C0.y;
+	offsets.z0 = width * D_800DE0C0.z;
+	offsets.x1 = height * D_800DE0C0.rightX;
+	offsets.y1 = height * D_800DE0C0.rightY;
+	offsets.z1 = height * D_800DE0C0.rightZ;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + temp_f4);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + offsets.x0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + offsets.y0);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + offsets.z0);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -3833,9 +3823,9 @@ void func_8008D510_5D9C0(void) {
 	D_8005BB34->v.cn[3] = D_800DE12C;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f8);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f4_2);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + temp_f8_2);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + offsets.x1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + offsets.y1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + offsets.z1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = D_800DE12D << 6;
 	D_8005BB34->v.tc[1] = 0;
@@ -3845,9 +3835,9 @@ void func_8008D510_5D9C0(void) {
 	D_8005BB34->v.cn[3] = D_800DE12C;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - temp_f4);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - offsets.x0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - offsets.y0);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - offsets.z0);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = D_800DE12D << 6;
 	D_8005BB34->v.tc[1] = D_800DE12E << 6;
@@ -3857,9 +3847,9 @@ void func_8008D510_5D9C0(void) {
 	D_8005BB34->v.cn[3] = D_800DE12C;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - temp_f8);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - temp_f4_2);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - temp_f8_2);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - offsets.x1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - offsets.y1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - offsets.z1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = D_800DE12E << 6;
@@ -3884,9 +3874,6 @@ void func_8008D510_5D9C0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D510_5D9C0.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2095)
