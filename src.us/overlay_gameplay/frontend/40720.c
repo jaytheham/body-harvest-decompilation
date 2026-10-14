@@ -6982,37 +6982,41 @@ void func_80081FF0_524A0(void) {
 	D_800D8528 = -D_800D8528;
 }
 
-#ifdef NON_MATCHING
-/* Unsigned fade interpolation; allocation remains unresolved after 25 candidates. */
+/* Keep the branch assignments on separate lines for IDO scheduling. */
 void func_80082074_52524(void) {
- f32 step;
- f32 t;
- f32 startF;
- f32 endF;
- f64 next;
- f64 limit;
- u32 start;
- u32 end;
- u8 alpha;
- f32 *ptr;
- ptr = &D_80094950_64E00;
- if (D_8009494C_64DFC == 1) {
-  start = 0; end = 255; step = D_800AEA70_7EF20[0];
- } else {
-  start = 255; end = 0; step = D_800AEA74_7EF24[0];
- }
- limit = 1.0;
- t = *ptr;
- startF = start;
- endF = end;
- alpha = (u32)(startF * (1.0f - t) + t * endF);
- next = t + step;
- *ptr = limit < next ? limit : next;
- D_800D7A1C[26].unk24 = alpha;
+	f32 step;
+	u32 start;
+	u32 end;
+
+	f32 t;
+	f64 limit;
+	f64 next;
+	u32 alpha;
+	f32 *ptr;
+	if (D_8009494C_64DFC == 1) {
+		start = 0;
+		end = 255;
+		step = D_800AEA70_7EF20[0];
+	} else {
+		start = 255;
+		end = 0;
+		step = D_800AEA74_7EF24[0];
+	}
+	limit = 1.0;
+	t = D_80094950[0];
+	if (limit < t) {}
+	alpha = (u8)(u32)((f32)start * (1.0f - t) + t * (f32)end);
+	ptr = D_80094950;
+	ptr = &ptr[alpha & 0];
+	if (alpha) {}
+	next = t + step;
+	if (limit < next) {
+		*ptr = limit;
+	} else {
+		*ptr = next;
+	}
+	D_800D7A1C[26].unk24 = alpha;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80082074_52524.s")
-#endif
 
 /* ===== Frontend .rodata (ROM 0x7D5A0 - 0x7F0F0) ===== */
 const char D_800AD0F0_7D5A0[] = "";
