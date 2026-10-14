@@ -511,7 +511,6 @@ s32 func_80080DA8_168E68(s32 arg0, s32 arg1) {
 	return v1;
 }
 
-#ifdef NON_MATCHING
 // AI - Auto-center camera yaw toward player's facing direction when idle
 void func_80080E28_168EE8(void) {
 	s16 sp1E;
@@ -521,27 +520,27 @@ void func_80080E28_168EE8(void) {
 	D_800E7486 = 1;
 	if (D_800A0964_188A24 == 0 && currentControllerStates[0].stick_x == 0 && currentControllerStates[0].stick_y == 0) {
 		sp1E = 0x4000 - D_800E6A86;
-		D_800E7486 = func_800813B4_169474(D_800E73E0, sp1E, *(s32 *) &D_800E73E8);
-		if (D_800E7486 & 0xFF) {
+		D_800E7486 = func_800813B4_169474(D_800E73E0, sp1E, D_800E73E8);
+		if (D_800E7486 != 0) {
 			delta = func_80080DA8_168E68(sp1E, D_800E73E0);
-			if (delta < 0) {
-				var_v1 = -delta;
-			} else {
+			if (delta >= 0) {
 				var_v1 = delta;
+			} else {
+				var_v1 = -delta;
 			}
-			if (D_800A4F38 < (f64) var_v1) {
+			if (D_800A4F38_18CFF8[0] < (f64) var_v1) {
 				if (D_800E7486 == 1) {
-					if (delta < 0) {
-						var_v1 = -delta;
-					} else {
+					if (delta >= 0) {
 						var_v1 = delta;
+					} else {
+						var_v1 = -delta;
 					}
 					sp1E = (s16) (s32) ((f64) var_v1 / 24.0 + (f64) D_800E73E0);
 				} else {
-					if (delta < 0) {
-						var_v1 = -delta;
-					} else {
+					if (delta >= 0) {
 						var_v1 = delta;
+					} else {
+						var_v1 = -delta;
 					}
 					sp1E = (s16) (s32) ((f64) D_800E73E0 - (f64) var_v1 / 24.0);
 				}
@@ -550,9 +549,7 @@ void func_80080E28_168EE8(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080E28_168EE8.s")
-#endif
+
 
 #ifdef NON_MATCHING
 // AI - Camera-wall collision check: prevent camera from clipping through walls

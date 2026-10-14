@@ -17,3 +17,7 @@ extern u8 D_80052ACC;
 This gave a ~190-point score improvement in `func_8000F6B0_102B0` (FD80 segment).
 
 **Key rule:** Always check whether the target assembly uses `lb` or `lbu` for byte loads and match the declaration signedness accordingly. The `lb` vs `lbu` distinction is purely determined by the C type (`s8` vs `u8`).
+
+## Redundant byte mask changes temporary registers
+
+func_80080E28_168EE8 matches when its u8 camera flag is tested directly with != 0 after assignment from the helper. An explicit & 0xFF adds a CFE temporary even though the machine-level mask is identical, shifting several subsequent temporary registers. Use the existing double-array threshold, pass camera distance as f32 rather than converting its integer bit pattern, and write all three absolute values with the nonnegative arm first. Full ROM checksum OK confirms all instructions and registers.
