@@ -17,6 +17,7 @@ func_8001F6E0_202E0
 func_800235E4_241E4
 func_80070270
 func_80078994_stub
+func_800EC448_stub
 func_802D5DDC_stub
 func_802D60FC_stub
 sinf
