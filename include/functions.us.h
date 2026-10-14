@@ -1106,6 +1106,8 @@ s32 func_8010DC00_11CBB0(s32, s32, s32);
 s32 func_800B0A00_BF9B0(void);
 s32 func_800B0A10_BF9C0(s32, s32, s16, s16);
 s16 func_80132730_1416E0(s32 arg0, s32 arg1);
+s16 func_801361A4_145154(Unk80160080 *arg0);
+void func_80136214_1451C4(Unk80160080 *arg0);
 void func_800808AC_16896C(void);
 void func_800808BC_16897C(void);
 s16 func_80003680_4280(f32 arg0);

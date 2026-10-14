@@ -2400,7 +2400,7 @@ typedef struct {
 	/* 0x5C */ s16 unk5C;
 	/* 0x5E */ s16 unk5E;
 	/* 0x60 */ s16 unk60;
-	/* 0x62 */ u8 pad62[0x2];
+	/* 0x62 */ union { s16 unk62; u8 pad62[0x2]; };
 	/* 0x64 */ s16 unk64;
 	/* 0x66 */ union { s16 unk66; u8 pad66[0x2]; };
 	/* 0x68 */ s32 unk68;
@@ -3769,7 +3769,14 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s8 unk0;
 	/* 0x01 */ s8 unk1;
-	/* 0x02 */ u8 unk2;
+	/* 0x02 */ union {
+		u8 unk2;
+		struct {
+			u8 highFlags : 5;
+			u8 direction : 2;
+			u8 lowFlags : 1;
+		};
+	};
 } SignpostData; /* size = 0x03 */
 
 typedef struct {
@@ -3953,6 +3960,11 @@ typedef struct {
 typedef struct {
 	f64 value;
 } CameraFadeScale;
+
+typedef union {
+	f32 value;
+	volatile f32 reload;
+} CameraInterpolationStep;
 
 typedef struct {
 	f32 x0;
