@@ -34,7 +34,9 @@ address are a CONFLICT.  A CLASH is a name that the file leaves undefined and th
 ``shared_overlay_files.txt``) defines, unless the PAL ELF already has it at the one address that the paired instructions reach: the
 overlays share a vram range, so the NTSC decomp can use one name for a function of each, and a pin for the name would override
 the definition in the other file.  A PIN is printed for each undefined symbol of ``--us-obj`` (read with ``nm``) that the
-PAL ELF does not already define at that address.
+PAL ELF does not already define at that address.  ``--mapping-out`` writes every NTSC address that the paired instructions
+refer to with the PAL addresses they were paired with (JSON), for the names that a PAL object leaves undefined but the NTSC
+object defines (data that PAL takes from assembly).
 
 Exit status is 0 when everything pairs and nothing is unresolved, 1 otherwise.
 """
@@ -42,6 +44,7 @@ from __future__ import annotations
 
 import argparse
 import difflib
+import json
 import re
 import shutil
 import struct
@@ -255,6 +258,7 @@ def main() -> int:
     parser.add_argument("--us-elf", default="build/bh.us.elf")
     parser.add_argument("--eu-elf", default="build.eu/bh.eu.elf")
     parser.add_argument("--align", choices=("order", "auto"), default="order")
+    parser.add_argument("--mapping-out", type=Path, help="write the NTSC address -> PAL address mapping of the paired instructions as JSON")
     args = parser.parse_args()
     root = args.root
 
@@ -302,6 +306,9 @@ def main() -> int:
                     mapping[a + o1][b + o2] += 1
     for us_name, eu_name, why, is_matched in differing:
         print(f"DIFF {us_name} ({'matched C' if is_matched else 'GLOBAL_ASM'}) against {eu_name}: {why}")
+    if args.mapping_out:
+        args.mapping_out.write_text(json.dumps({f"0x{a:08X}": {f"0x{b:08X}": n for b, n in sorted(t.items())}
+                                                for a, t in sorted(mapping.items())}, indent=1), encoding="utf-8")
     conflicts = {a: b for a, b in mapping.items() if len(b) > 1}
     for a, b in sorted(conflicts.items()):
         print(f"CONFLICT 0x{a:08X} -> {', '.join('0x%08X' % x for x in b)}")

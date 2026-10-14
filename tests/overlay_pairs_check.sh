@@ -76,6 +76,10 @@ check "equal counts and no difference exit 0 with four pairs" \
     bash -c '[[ "$0" == *"PAIRS 4 (NTSC 4"* && "$0" != *"DIFF"* ]]' "$clean"
 check "the clean run exits 0" test "$clean_rc" -eq 0
 
+# --mapping-out writes the NTSC address -> PAL address pairs that the paired instructions showed, as JSON.
+mapped=$(cd "$scratch" && "$PY" "$root/tools/overlay_pairs.py" --root "$here" --us-dir ov/a --eu-dir ov/b --align order     --mapping-out "$here/mapping.json" > /dev/null 2>&1; cat "$scratch/mapping.json" 2> /dev/null)
+check "--mapping-out writes the address pairs that the paired instructions showed"     bash -c '[[ "$0" == *"0x80001000"*"0x80001040"* ]]' "$mapped"
+
 # A call to a function that NTSC names and PAL still has under its func_ label (a libultra or core function) is the same call.
 listing "$scratch/asm/matchings/ov/c/func_80000500_500.s" $((0x80000500)) 'jal sourceTaggedPrintF' 'nop' 'jr $ra'
 listing "$scratch/asm.eu/nonmatchings/ov/d/func_80000540_540.s" $((0x80000540)) 'jal func_80000F70_F70' 'nop' 'jr $ra'
