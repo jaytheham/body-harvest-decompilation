@@ -722,13 +722,9 @@ void func_80133F28_142ED8(Unk80160080 *arg0) {
 }
 
 
-// CURRENT(45)
+// Matched: camera pitch and terrain collision avoidance
 // AI - Camera pitch/zoom and terrain collision avoidance
-#ifdef NON_MATCHING
 void func_801343D8_143388(Unk80160080 *arg0) {
-	s16 currentPitch;
-	s16 var_s1;
-	s16 temp_v1;
 	Vec3f sp6C;
 	Vec3f sp60;
 	s32 temp_s0;
@@ -736,7 +732,8 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	s32 sp54;
 	s32 sp50;
 	s32 sp4C;
-	s32 var_v1;
+	s16 var_s1;
+	s16 temp_v1;
 
 	var_s1 = arg0->unk52;
 
@@ -744,11 +741,11 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	sp50 = (s32)arg0->unk34;
 	sp4C = (s32)arg0->unk38;
 	func_80133C9C_142C4C(&sp6C, &arg0->lookAt, &sp60, arg0->unk48, var_s1, arg0->unk4C, arg0->unk4E);
-	temp_s0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
-	temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
-	temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
+	temp_v0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
+	temp_s0 = vehicleTypes[D_80052B34->unk1A].unk38;
+	temp_v0 = (temp_s0 - (temp_s0 >> 2)) + (temp_v0 >> 8);
 	if (((func_80126268_135218((s32)sp6C.x, (s32)sp6C.y, (s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
-		 ((sp6C.y - temp_s0) < 50.0f)) &&
+		 ((sp6C.y - temp_v0) < 50.0f)) &&
 		(var_s1 != 0x3C71)) {
 		do {
 			D_80160144 = 5;
@@ -761,11 +758,11 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 			sp50 = (s32)arg0->unk34;
 			sp4C = (s32)arg0->unk38;
 			func_80133C9C_142C4C(&sp6C, &arg0->lookAt, &sp60, arg0->unk48, var_s1, arg0->unk4C, arg0->unk4E);
-			temp_s0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
-			temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
-			temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
+			temp_v0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
+			temp_s0 = vehicleTypes[D_80052B34->unk1A].unk38;
+			temp_v0 = (temp_s0 - (temp_s0 >> 2)) + (temp_v0 >> 8);
 		} while (((func_80126268_135218((s32)sp6C.x, (s32)sp6C.y, (s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
-			((sp6C.y - temp_s0) < 50.0f)) && (var_s1 != 0x3C71));
+			((sp6C.y - temp_v0) < 50.0f)) && (var_s1 != 0x3C71));
 	}
 
 	if (D_80160144 != 0) {
@@ -788,33 +785,31 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 		sp54 = (s32)arg0->unk30;
 		sp50 = (s32)arg0->unk34;
 		sp4C = (s32)arg0->unk38;
-		temp_s0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
-		temp_v1 = vehicleTypes[D_80052B34->unk1A].unk38;
-		temp_s0 = (temp_v1 - (temp_v1 >> 2)) + (temp_s0 >> 8);
+		temp_v0 = func_800B84D0_C7480((s32)sp6C.x, (s32)sp6C.z);
+		temp_s0 = vehicleTypes[D_80052B34->unk1A].unk38;
+		temp_v0 = (temp_s0 - (temp_s0 >> 2)) + (temp_v0 >> 8);
 		if ((func_80126268_135218((s32)sp6C.x, (s32)sp6C.y, (s32)sp6C.z, &sp54, &sp50, &sp4C, 0, 6) == 1) ||
-			((sp6C.y - temp_s0) < 50.0f)) {
+			((sp6C.y - temp_v0) < 50.0f)) {
 			D_80160144 = 5;
 			var_s1 = arg0->unk52;
 		}
 	}
 
-	currentPitch = arg0->unk52;
-	temp_v0 = var_s1 - currentPitch;
-	var_v1 = -temp_v0;
+	temp_v1 = arg0->unk52;
+	temp_v0 = var_s1 - temp_v1;
+	temp_s0 = -temp_v0;
 	if (temp_v0 >= 0) {
-		var_v1 = temp_v0;
+		temp_s0 = temp_v0;
 	} else {
-		var_v1 = -temp_v0;
+		temp_s0 = -temp_v0;
 	}
-	if (var_v1 <= D_801456A0_154650[0]) {
+	if (temp_s0 <= D_801456A0_154650[0]) {
 		arg0->unk52 = var_s1;
 	} else {
-		arg0->unk52 = currentPitch + (u16)(s32)(temp_v0 / 12.0);
+		arg0->unk52 = temp_v1 + (u16)(s32)(temp_v0 / 12.0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801343D8_143388.s")
-#endif
+
 
 // CURRENT(2820)
 #ifdef NON_MATCHING
