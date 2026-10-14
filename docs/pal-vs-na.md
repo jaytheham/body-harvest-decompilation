@@ -282,6 +282,24 @@ What it needed beyond the steps above, all inside version conditionals so that t
 - **An NTSC offset-alias (`X = Y + off`) that the generator ports needs `Y` pinned**, even when nothing else uses `Y`, or the link
   stops with `undefined symbol ... referenced in expression`.
 
+### When upstream matches more of a shared file
+
+A function matched in a shared file turns every NTSC name it reads from assembly-only text into compiled code, and the PAL link
+then needs that name. Three things follow.
+
+- **The linker stops after about 20 undefined references**, so rebuilding to find the next ones is slow. List them all instead: take
+  `nm` of every object in `build.eu`, subtract what other objects define and what `undefined_syms.eu.txt`, `undefined_syms_auto.eu.txt`
+  and `bh.eu.ld` assign. Each name left needs a pin. The address is usually the NTSC one plus the delta of the nearest neighbouring
+  pins (`+0x7C0` in the frontend data, `+0xB60` in its read-only data and RAM); a constant in a region where the delta changes is
+  found by value in the PAL ROM. The ROM check is the proof, so read the delta, pin, build and compare.
+- **Data that upstream moves into C** (PR 431 moved the frontend data at ROM 0x64E00 into `40720.c`) cannot be guarded out of the PAL
+  build when a matched function has a `static` among it: IDO generates different code for an `extern` than for the `static`, and the
+  ROM stops matching. Link the same object's `.data` instead: split the `bin` that holds PAL's copy in `bh.eu.yaml` and give the
+  range a `.data` entry for the shared file. Check first that the PAL bytes are the NTSC bytes at the vram delta, apart from
+  pointers; those pointers are the names to pin.
+- **`tools/verify_build.py` does not extract.** After a merge, or any change to a yaml or symbol file, run
+  `python tools/native_build.py extract --version us` and `--version eu` before it, or it checks the old extraction.
+
 ### Sharing a file that still has GLOBAL_ASM
 
 A `GLOBAL_ASM` stub cannot cross versions, because its bytes are baked with

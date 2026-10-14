@@ -6,7 +6,7 @@
 # reads the PAL address of a symbol operand from the paired instruction (DELTAS), and exits 1 whenever it found anything
 # that stops a file from being shared.
 set -u
-: "${PY:?set PY to the Python 3.12 interpreter}"
+: "${PY:?set PY to a Python 3.10 or 3.12 interpreter with PyYAML (no 3.11: the vendored tree-sitter has no build for it)}"
 failures=0
 root=$(pwd -W 2>/dev/null || pwd)
 scratch=$(mktemp -d)

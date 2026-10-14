@@ -6,7 +6,7 @@
 # and comes back, a path through a symbolic link) is refused instead of reading the NA extraction, and unrelated paths
 # stay untouched. The symbolic link cases need a host that can create a real link; elsewhere they print SKIP.
 set -u
-: "${PY:?set PY to the Python 3.12 interpreter}"
+: "${PY:?set PY to a Python 3.10 or 3.12 interpreter with PyYAML (no 3.11: the vendored tree-sitter has no build for it)}"
 failures=0
 skipped=0
 root=$(pwd -W 2>/dev/null || pwd)
