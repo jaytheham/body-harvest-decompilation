@@ -56,7 +56,6 @@
 
 .macro endlabel label
     .size \label, . - \label
-    .end \label
 .endm
 
 .macro nonmatching label, size=1

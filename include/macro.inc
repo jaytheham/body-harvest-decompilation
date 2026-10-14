@@ -19,3 +19,7 @@
     .global \label
     \label:
 .endm
+
+.macro endlabel label
+    .size \label, . - \label
+.endm

@@ -250,10 +250,10 @@ void func_800F0094_FF044(void) {
 	D_80157F68 = -1;
 	D_80068080 = 0;
 	if (D_80052550 != 0) {
-		gameplayMode = GAMEPLAY_MODE_UNK6;
+		gameplayMode = GAMEPLAY_MODE_INSIDE;
 		D_80047968 = 1;
 	} else {
-		gameplayMode = GAMEPLAY_MODE_UNK1;
+		gameplayMode = GAMEPLAY_MODE_NORMAL;
 		D_80157590 = 0;
 		D_8004DC60 = 0;
 	}

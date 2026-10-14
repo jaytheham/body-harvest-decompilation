@@ -1,0 +1,22 @@
+# STT_FUNC symbols with st_size == 0 in build/bh.us.elf at the time this check was added.
+# A new size-0 FUNC fails tools/check_elf_symbols.py; delete a name here once its symbol is sized.
+_blkclr
+bcopy
+blkclr
+bzero
+cosf
+fcos
+fsin
+func_80002AB4
+func_8000A160
+func_8001A54C_Menu
+func_8001BCE0_1C8E0
+func_8001D5A0_1E1A0
+func_8001D940
+func_8001F6E0_202E0
+func_800235E4_241E4
+func_80070270
+func_80078994_stub
+func_802D5DDC_stub
+func_802D60FC_stub
+sinf

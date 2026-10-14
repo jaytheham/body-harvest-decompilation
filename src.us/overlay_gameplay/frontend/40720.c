@@ -3190,7 +3190,7 @@ void func_800789E4_48E94(void) {
   s32* frontendFlags;
 
   D_80052ACA = 3;
-  gameplayMode = GAMEPLAY_MODE_UNKD;
+  gameplayMode = GAMEPLAY_MODE_FRONTEND;
   osSetTime(D_80068084, D_80068088);
   func_80071738_41BE8();
   D_800D6D88 = 0x30;
