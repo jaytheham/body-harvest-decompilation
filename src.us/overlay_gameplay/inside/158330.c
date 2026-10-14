@@ -8578,80 +8578,65 @@ void func_80076538_15E5F8(s32 arg0) {
 	func_80073714_15B7D4(5, 5, var_v1 - 0x60, 2, var_t0 - 0x60, 0xFA, 0xFA, 0);
 }
 
-// CURRENT(1438)
-#ifdef NON_MATCHING
 // AI - Renders door/room transition rectangles
 void func_80076678_15E738(s32 arg0) {
-	s16 temp_t0;
-	s16 temp_t1;
-	s32 var_v1;
+	s32 temp_t0;
+	s32 temp_t1;
 	s32 sp4C;
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
 	s32 sp3C;
 	s32 sp38;
+	s32 objIdx;
 
+	objIdx = D_800E66A8[arg0].unk0;
 	temp_t0 = D_800E66A8[arg0].unk2;
 	temp_t1 = D_800E66A8[arg0].unk6;
 
-	if (D_800E66A8[arg0].unk8 == 0) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk18;
-		sp48 = temp_v1->unk1A;
-		sp44 = temp_v1->unk36;
-		sp40 = temp_v1->unk38;
-		sp3C = temp_v1->unk3A;
-		sp38 = temp_v1->unk3B;
-	} else if (D_800E66A8[arg0].unk8 == 1) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk1A;
-		sp48 = temp_v1->unk18;
-		sp44 = temp_v1->unk38;
-		sp40 = -temp_v1->unk36;
-		sp3C = temp_v1->unk3B;
-		sp38 = temp_v1->unk3A;
-	} else if (D_800E66A8[arg0].unk8 == 2) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk18;
-		sp48 = temp_v1->unk1A;
-		sp44 = -temp_v1->unk36;
-		sp40 = -temp_v1->unk38;
-		sp3C = temp_v1->unk3A;
-		sp38 = temp_v1->unk3B;
-	} else if (D_800E66A8[arg0].unk8 == 3) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk1A;
-		sp48 = temp_v1->unk18;
-		sp44 = -temp_v1->unk38;
-		sp40 = temp_v1->unk36;
-		sp3C = temp_v1->unk3B;
-		sp38 = temp_v1->unk3A;
-	} else {
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
+	switch (D_800E66A8[arg0].unk8) {
+		case 0:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp44 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp40 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			break;
+		case 1:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp44 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp40 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			break;
+		case 2:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp44 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp40 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			break;
+		case 3:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp44 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp40 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			break;
+		default:
+			break;
 	}
 
 	func_80073714_15B7D4(sp4C, sp48, temp_t0 - 0x60, 7, temp_t1 - 0x60, 0, 0xFA, 0);
 
-	if (((Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1))->unk40 & 0x400000) {
+	if (D_800E65BC[objIdx].unk40 & 0x400000) {
 		func_80073714_15B7D4(sp3C, sp38, (temp_t0 + sp44) - 0x60, 0xA, (temp_t1 + sp40) - 0x60, 0, 0, 0xFA);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076678_15E738.s")
-#endif
 
 // AI - Renders selection highlight for interactive room objects
 void func_800768B8_15E978(s32 arg0) {
