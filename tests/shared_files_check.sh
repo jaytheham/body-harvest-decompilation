@@ -44,6 +44,19 @@ for f in listed:
     if not kinds & {"c", ".data", ".rodata", "data", "rodata"}:
         print("no_entry", f)
 
+# A data or rodata entry of bh.eu.yaml that is not named after a shared C file is extracted to asm.eu/data/<its directory> and
+# built from the assembly. The native build walks the tree, but the Makefile builds only the directories of its EU ASM_DIRS,
+# so a directory that is missing there passes the native build and fails `make VERSION=eu` at the link (cannot find ...s.o).
+needed = set()
+for seg in eu["segments"]:
+    for sub in (seg.get("subsegments") or []) if isinstance(seg, dict) else []:
+        if isinstance(sub, list) and len(sub) > 2 and sub[1] in ("data", "rodata") and isinstance(sub[2], str) and not sub[2].startswith("../"):
+            needed.add(("asm.eu/data/" + sub[2].rsplit("/", 1)[0]) if "/" in sub[2] else "asm.eu/data")
+makefile = (root / "Makefile").read_text(encoding="utf-8")
+eu_block = makefile.split("ifeq ($(VERSION),eu)", 1)[1].split("else", 1)[0]
+have = set(re.findall(r"asm\.eu(?:/[A-Za-z0-9_]+)*", eu_block))
+print("asm_dirs_missing", sorted(needed - have))
+
 import native_build, progress, decomp_common
 print("native_build", sorted(native_build.SHARED_OVERLAY_FILES) == sorted(listed))
 print("progress", sorted(progress.eu_source_roots(str(root))[2:]) == sorted("src.us/" + f for f in listed))
@@ -57,6 +70,7 @@ check "no file is listed twice" bash -c '[[ "$0" == *"duplicates []"* ]]' "$repo
 check "bh.eu.yaml names no shared file that the list lacks" bash -c '[[ "$0" == *"yaml_only []"* ]]' "$report"
 check "every listed file is named in bh.eu.yaml" bash -c '[[ "$0" == *"list_only []"* ]]' "$report"
 check "every listed file has a c, .data or .rodata entry in bh.eu.yaml" bash -c '[[ "$0" != *"no_entry"* ]]' "$report"
+check "the Makefile's EU ASM_DIRS name every directory that bh.eu.yaml's data and rodata entries extract to" bash -c '[[ "$0" == *"asm_dirs_missing []"* ]]' "$report"
 check "native_build.py reads the same list" bash -c '[[ "$0" == *"native_build True"* ]]' "$report"
 check "progress.py counts the same files" bash -c '[[ "$0" == *"progress True"* ]]' "$report"
 check "decomp_common reads the same list" bash -c '[[ "$0" == *"decomp_common True"* ]]' "$report"

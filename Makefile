@@ -23,6 +23,7 @@ ASM_DIRS  = asm.eu \
 			asm.eu/data \
 			asm.eu/data/core \
 			asm.eu/data/libultra \
+			asm.eu/data/overlay_gameplay/frontend \
 			asm.eu/data/rsp
 BIN_DIRS  = assets.eu \
 			assets.eu/core \
