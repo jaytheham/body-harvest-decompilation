@@ -11,3 +11,5 @@ if (arg1 == 0xFB) {
 Do not add an explicit `arg1 &= 0xFF` or compare `(arg1 & 0xFF)`. The explicit mask either moves the value to a different temporary register or creates a redundant second `andi`, shifting the following branch and preventing an exact match. Letting the `u8` parameter type express the truncation gives IDO the single target mask and correct delay-slot argument setup.
 
 The surrounding source order also matters for this function: form the parent position pointer before loading the spread. That keeps the parent pointer in `$t2` and the spread in `$t3`, matching the target while preserving the `0x38`-byte frame and the local slots at `sp+0x30` and `sp+0x2E`.
+
+Inside func_8007899C_160A5C matches after deleting mask2/mask3 byte copies and redundant (ret | value) & 0xFF expressions. A u8 ret already narrows on assignment; explicit masks create extra UGEN temporaries and rotate the temporary register sequence even when instruction logic and lengths agree. Keep the first compound OR assignment in each case; use ret = ret | value for subsequent bits. Full ROM checksum verified OK.

@@ -206,78 +206,63 @@ void func_80070514_409C4(s16 arg0)
 	}
 }
 
-// CURRENT(5015)
-#ifdef NON_MATCHING
-MissionData* func_800706E8_40B98(s32 arg0) {
+// Allocates a transient frontend mission entry from its template.
+MissionData* func_800706E8_40B98(s16 arg0) {
 	s32 index;
+	MissionData* entry;
+	MissionData* newSource;
+	MissionData* source;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		while (index != 0) {
-			if (D_800D6DC0[--index].unk16 == 0) {
-				break;
-			}
-		}
+		do {} while (index-- && D_800D6DC0[index].unk16);
 	}
-
+	newSource = &D_800909B0[arg0];
 	if (index == -1) {
 		osSyncPrintf(D_800AD7CC_7DC7C);
 		return NULL;
 	}
-
-	{
-		MissionData* entry = &D_800D6DC0[index];
-		MissionData* source = &D_800909B0[(s16)arg0];
-		u8 temp_v0;
-
-		entry->unk0 = source->unk0 * 4;
-		entry->unk2 = source->unk2 * 4;
-		entry->unk4 = source->unk4 * 4;
-		entry->unk6 = source->unk6 * 4;
-		entry->unk8 = source->unk8;
-		entry->unkA = source->unkA * 4;
-		entry->unkC = source->unkC * 4;
-		entry->unkE = source->unkE * 4;
-		entry->unk12 = 0xFFFF;
-		entry->unk14 = 0;
-		entry->unk10 = source->unk10 * 4;
-		entry->unk16 = source->unk16;
-
-		if ((temp_v0 = source->unk1C) == 3) {
-			source->unk1C = 0;
-			entry->unk1C = 0;
-		} else {
-			entry->unk1C = temp_v0;
-		}
-
-		entry->unk26 = (s16)arg0;
-		entry->unk28 = source->unk28;
-
-		switch (D_800313D0_31FD0) {
-		case 0:
-		default:
-			entry->unk1E = source->unk1E;
-			break;
-		case 1:
-			entry->unk1E = source->unk1A;
-			break;
-		case 2:
-			entry->unk1E = source->unk18;
-			break;
-		}
-
-		entry->unk20 = source->unk20;
-		if ((s16)arg0 == D_800D74A4) {
-			func_800704DC_4098C();
-			entry->unk1C = 1;
-		}
-
-		return entry;
+	entry = &D_800D6DC0[index];
+	source = newSource;
+	entry->unk0 = source->unk0 * 4;
+	entry->unk2 = source->unk2 * 4;
+	entry->unk4 = source->unk4 * 4;
+	entry->unk6 = source->unk6 * 4;
+	entry->unk8 = source->unk8;
+	entry->unkA = source->unkA * 4;
+	entry->unkC = source->unkC * 4;
+	entry->unkE = source->unkE * 4;
+	entry->unk10 = source->unk10 * 4;
+	entry->unk12 = 0xFFFF;
+	entry->unk14 = 0;
+	entry->unk16 = source->unk16;
+	if (source->unk1C == 3) {
+		source->unk1C = 0;
+		entry->unk1C = 0;
+	} else {
+		entry->unk1C = source->unk1C;
 	}
+	entry->unk26 = arg0;
+	entry->unk28 = source->unk28;
+	switch (D_800313D0_31FD0) {
+	case 0:
+	default:
+		entry->unk1E = source->unk1E;
+		break;
+	case 2:
+		entry->unk1E = source->unk18;
+		break;
+	case 1:
+		entry->unk1E = source->unk1A;
+		break;
+	}
+	entry->unk20 = source->unk20;
+	if (arg0 == D_800D74A4) {
+		func_800704DC_4098C();
+		entry->unk1C = 1;
+	}
+	return entry;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800706E8_40B98.s")
-#endif
 
 /**
  * @brief Finds a mission entry by id, clamps `unk12` to 0x4000, and sets `unk14` to -0x400.
@@ -888,7 +873,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
 
 	{
-		f32 scale;
+		s32 unused8;
 
 		scale = 2.0f;
 		arg2 = arg2 * scale;
@@ -973,7 +958,7 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 sp9C;
 	s32 xPos;
 	s32 scaleInt;
-	f32 scale;
+	s32 unused8;
 	s16 i;
 	s32 unused0;
 	s32 unused1;
@@ -1050,26 +1035,30 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
 #endif
 
-// CURRENT(1396)
-#ifdef NON_MATCHING
-void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
+// Renders the twelve artifact slots around the rotating inventory display.
+void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+	s32 unused3;
+	s32 unused4;
+	s32 unused5;
+	s32 unused6;
+	s32 unused7;
 	Unk80052B40 spA4;
 	Unk80052B40 sp9C;
 	Unk80052B40 sp94;
 	s32 unused0;
 	s32 unused1;
 	s32 unused2;
+	s32 unused8;
 	s32 temp;
 	s32 varS3;
 	s32 varS4;
 	s16 varS5;
-	u32 mask;
+	u32 mask = 0x1FFFFFFF;
 	Gfx* tempS6;
 
-	temp = (s32) ((f32) ((f64) arg3 * D_800AE518_7E9C8[0]) * 256.0f);
+	temp = (s32) ((0, 256.0f) * (f32) (arg3 * D_800AE518_7E9C8.value));
 	varS3 = 0;
 	varS4 = D_8004DC5E;
-	varS5 = 0;
 	spA4.unk0 = arg0;
 	spA4.unk2 = arg1;
 	spA4.unk4 = arg2;
@@ -1077,7 +1066,7 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	sp9C.unk2 = (s16) temp;
 	sp9C.unk4 = (s16) temp;
 
-	do {
+	for (varS5 = 0; varS5 < 12; varS5++) {
 		tempS6 = D_800942D0_64780;
 		if ((varS4 != 0) && (tempS6 != NULL)) {
 			gDPPipeSync(D_8005BB2C++);
@@ -1093,22 +1082,19 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 		sp94.unk0 = 0;
+		sp94.unk2 = (D_80094848_64CF8 & 0xFFFF) + varS3;
 		sp94.unk4 = 0x2000;
-		sp94.unk2 = D_80094848_64CF8 + varS3;
 		func_800039D0_45D0(&spA4, &sp94, &sp9C, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)tempS6 & mask));
-		varS5++;
 		varS3 += 0x1555;
 		gDPPipeSync(D_8005BB2C++);
-	} while (varS5 < 0xC);
+	}
 
 	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800728F4_42DA4.s")
-#endif
+
 
 // Checks if selected inventory item is 0xb (weapon crystals)
 #ifdef NON_MATCHING
@@ -5859,50 +5845,36 @@ void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 	arg0->unk10 = 0;
 }
 
-/* Direction basis snapshots preserve the target zero/one products. Allocation remains unresolved. */
-#ifdef NON_MATCHING
+/* Integer basis factors preserve the original zero/one products. */
 void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
-	Vec3f direction;
-	f32 *vector;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
+	/* Preserve IDO's local homes and trigonometric spill placement. */
+	s32 pad0[7];
 	f32 cosY;
 	f32 sinY;
+	s32 pad1;
 	f32 sinX;
 	f32 cosX;
-	f32 zero;
+	s32 pad2;
 	f32 scale;
-	f32 one;
+	s32 pad3;
 	f32 z;
 	f64 radians;
 	f64 degrees;
 
 	radians = D_800AEA40_7EEF0[0];
 	degrees = D_800AEA48_7EEF8[0];
-	sinY = sinf((f32)((f64)(f32)arg0->unk12 * radians / degrees));
-	cosY = cosf((f32)((f64)(f32)arg0->unk12 * radians / degrees));
-	sinX = sinf((f32)((f64)(f32)arg0->unk10 * radians / degrees));
-	cosX = cosf((f32)((f64)(f32)arg0->unk10 * radians / degrees));
-	vector = &direction.x;
-	vector[0] = 0.0f;
-	vector[1] = 0.0f;
-	zero = vector[0];
+	sinY = sinf((f32)((f32)arg0->unk12 * radians / degrees));
+	cosY = cosf((f32)((f32)arg0->unk12 * radians / degrees));
+	sinX = sinf((f32)((f32)arg0->unk10 * radians / degrees));
+	cosX = cosf((f32)((f32)arg0->unk10 * radians / degrees));
+
 	scale = 100.0f;
-	vector[2] = 1.0f;
-	 one = vector[2];
-	z = zero * sinX + one * cosX;
-	arg1->l.dir[0] = (s32)(-(z * sinY + zero * cosY) * scale);
-	arg1->l.dir[1] = (s32)(-(zero * cosX - one * sinX) * scale);
-	arg1->l.dir[2] = (s32)(-(z * cosY - zero * sinY) * scale);
+
+	z = 0 * sinX + 1 * cosX;
+	arg1->l.dir[0] = (-(z * sinY + 0 * cosY) * scale);
+	arg1->l.dir[1] = (-(0 * cosX - 1 * sinX) * scale);
+	arg1->l.dir[2] = (-(z * cosY - 0 * sinY) * scale);
 }
-
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3F8_4F8A8.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(4355)
@@ -6893,11 +6865,37 @@ void func_80081A50_51F00(FrontendTextureInfo *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081A50_51F00.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2500)
+f32 D_80094950_64E00 = 0.0f;
+f32 D_80094954_64E04 = 0.0f;
+
+Mtx D_80094958_64E08 = { {
+    { 0x00010000, 0x00000000, 0x00000001, 0x00000000 },
+    { 0x00000000, 0x00010000, 0x00000000, 0x00000001 },
+    { 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+    { 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+} };
+
+s32 D_80094998_64E48 = 0;
+
+// Note: the unk20 field (0x64E6C) is aliased by D_800949BC_64E6C
+FrontendAnimState D_8009499C_64E4C = {
+    { 0x04, 0x07, 0x39, 0x90, 0x00, 0x00, 0x00, 0x00 },
+    0.0f,
+    0.25f,
+    0x0000,
+    0x0008,
+    { 0x20, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02 },
+    0x00000000
+};
+
+Unk80052B40 D_800949C0_64E70 = { 0x0100, 0x0100, 0x0100 };
+Unk80052B40 D_800949C8_64E78 = { 0x0100, 0x0100, 0x0100 };
+
 void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3) {
+	s32 pad;
 	Gfx *dl;
-	s32 texS;
+	static s32 D_800949D0_64E80 = 0;
+
 
 	(void)arg0;
 	(void)arg1;
@@ -6915,25 +6913,49 @@ void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3) {
 	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
 	gDPPipeSync(D_8005BB2C++);
 
-	texS = D_800949D0_64E80;
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, 5, G_TX_NOLOD);
+
+
+	if (D_800949D0_64E80) {}
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (31 << 2), (31 << 2));
 
-	gSPTextureRectangle(D_8005BB2C++, 0, 0, 0x500, 0x3C0, G_TX_RENDERTILE, texS, 0,
+	gSPTextureRectangle(D_8005BB2C++, 0, 0, 0x500, 0x3C0, G_TX_RENDERTILE, D_800949D0_64E80, 0,
 		(s32)(((f32)(32.0 / (f64)(f32)arg2)) * 1024.0f),
 		(s32)(((f32)(32.0 / (f64)(f32)arg3)) * 1024.0f));
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-	D_800949D0_64E80 = texS - 6;
+	D_800949D0_64E80 -= 6;
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081CAC_5215C.s")
-#endif
+u8 D_800949D4_64E84 = 0;
+
+s32 D_800949D8_64E88[5] = { 0, 0, (s32)D_800AEA80_7EF30, (s32)D_800AEA8C_7EF3C, (s32)D_800AEA9C_7EF4C };
+s32 D_800949EC_64E9C[5] = { (s32)D_800AEAAC_7EF5C, 0, (s32)D_800AEAC0_7EF70, (s32)D_800AEACC_7EF7C, (s32)D_800AEAD8_7EF88 };
+s32 D_80094A00_64EB0[7] = {
+    (s32)D_800AEAE8_7EF98, 0, (s32)D_800AEAF4_7EFA4, (s32)D_800AEB00_7EFB0, (s32)D_800AEB10_7EFC0, (s32)D_800AEB20_7EFD0, 0,
+};
+s32 D_80094A1C_64ECC[20] = {
+    0x0000077C, 0x00000795, 0x040073A0, 0x040083A0,
+    0x00000795, 0x000007AE, 0x040083A0, 0x040093A0,
+    0x000007AE, 0x000007C7, 0x040093A0, 0x0400A3A0,
+    0x000007C7, 0x000007E0, 0x0400A3A0, 0x0400B3A0,
+    0x00000000, 0x00000000, 0x00000000, 0x00000000,
+};
+
+Unk80052B40 D_80094A6C_64F1C = { 0, 0, 0x076C };
+Unk80052B40 D_80094A74_64F24 = { 0x8000, 0, 0 };
+Unk80052B40 D_80094A7C_64F2C = { 0x0100, 0x0100, 0x0100 };
+Unk80052B40 D_80094A84_64F34 = { 0, 0, 0x00A0 };
+Unk80052B40 D_80094A8C_64F3C = { 0, 0, 0xFF6A };
+Unk80052B40 D_80094A94_64F44 = { 0x8000, 0, 0 };
+Unk80052B40 D_80094A9C_64F4C = { 0x8000, 0, 0 };
+Unk80052B40 D_80094AA4_64F54 = { 0, 0, 0xFF9C };
+Unk80052B40 D_80094AAC_64F5C = { 0xD8F0, 0xE0C0, 0xFF9C };
+u32 D_80094AB4_64F64 = 0;
+u32 D_80094AB8_64F68 = 0;
+u32 D_80094ABC_64F6C = 0;
 
 void func_80081F9C_5244C(void) {
 	s32 index;
@@ -6963,37 +6985,41 @@ void func_80081FF0_524A0(void) {
 	D_800D8528 = -D_800D8528;
 }
 
-#ifdef NON_MATCHING
-/* Unsigned fade interpolation; allocation remains unresolved after 25 candidates. */
+/* Keep the branch assignments on separate lines for IDO scheduling. */
 void func_80082074_52524(void) {
- f32 step;
- f32 t;
- f32 startF;
- f32 endF;
- f64 next;
- f64 limit;
- u32 start;
- u32 end;
- u8 alpha;
- f32 *ptr;
- ptr = &D_80094950_64E00;
- if (D_8009494C_64DFC == 1) {
-  start = 0; end = 255; step = D_800AEA70_7EF20[0];
- } else {
-  start = 255; end = 0; step = D_800AEA74_7EF24[0];
- }
- limit = 1.0;
- t = *ptr;
- startF = start;
- endF = end;
- alpha = (u32)(startF * (1.0f - t) + t * endF);
- next = t + step;
- *ptr = limit < next ? limit : next;
- D_800D7A1C[26].unk24 = alpha;
+	f32 step;
+	u32 start;
+	u32 end;
+
+	f32 t;
+	f64 limit;
+	f64 next;
+	u32 alpha;
+	f32 *ptr;
+	if (D_8009494C_64DFC == 1) {
+		start = 0;
+		end = 255;
+		step = D_800AEA70_7EF20[0];
+	} else {
+		start = 255;
+		end = 0;
+		step = D_800AEA74_7EF24[0];
+	}
+	limit = 1.0;
+	t = D_80094950[0];
+	if (limit < t) {}
+	alpha = (u8)(u32)((f32)start * (1.0f - t) + t * (f32)end);
+	ptr = D_80094950;
+	ptr = &ptr[alpha & 0];
+	if (alpha) {}
+	next = t + step;
+	if (limit < next) {
+		*ptr = limit;
+	} else {
+		*ptr = next;
+	}
+	D_800D7A1C[26].unk24 = alpha;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80082074_52524.s")
-#endif
 
 /* ===== Frontend .rodata (ROM 0x7D5A0 - 0x7F0F0) ===== */
 #ifndef VERSION_EU
@@ -7396,7 +7422,7 @@ const u32 jtbl_800AE4E0_7E990[14] = {
 	0x8007033C, 0x8007037C, 0x8007035C, 0x8007036C,
 	0x8007032C, 0x8007034C,
 };
-const f64 D_800AE518_7E9C8[1] = { 0.69999999999999996 };
+const ShadowGeometryConstant D_800AE518_7E9C8 = { 0.69999999999999996 };
 const f64 D_800AE520_7E9D0[1] = { 35 };
 const u32 jtbl_800AE528_7E9D8[91] = {
 	0x800739B4, 0x800739D8, 0x800739FC, 0x80073A20,

@@ -30,9 +30,7 @@ void func_800823C0_52870(void) {
 void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
 }
 
-// CURRENT(200)
 // AI - Renders a frontend menu entry with two textures and fade-in/out animation
-#ifdef NON_MATCHING
 void func_800823D8_52888(s32 arg0, s32 arg1) {
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
@@ -58,8 +56,8 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	sp98.unk4 = (fade * 3) + 0x80;
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, fade * 2);
-	fade = 0;
-	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
+	/* The zero index retains the target's fade register reset before the call. */
+	func_800039D0_45D0(&spA8, &spA0, &sp98, &D_8005BB38[fade = 0]);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gDPLoadTextureBlock(D_8005BB2C++, ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
@@ -85,9 +83,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800823D8_52888.s")
-#endif
+
 
 // AI - Loads a 16x16 texture tile from atlas into TMEM for digit rendering
 void func_80082868_52D18(s32 arg0) {
@@ -515,10 +511,10 @@ void func_800838E0_53D90(Mtx *arg0) {
 	sp24[0] = -0.5f;
 	sp24[1] = 0.5f;
 	sp24[2] = 0.0f;
-	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0C0);
+	func_80083610_53AC0((f32 *)sp34, sp24, &D_800DE0C0.x);
 	sp24[0] = -sp24[0];
 	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0CC);
-	func_800836A4_53B54(D_800DE0C0, D_800DE0CC, D_800DE0D8);
+	func_800836A4_53B54(&D_800DE0C0.x, D_800DE0CC, D_800DE0D8);
 	func_800837B4_53C64(D_800DE0D8, D_800DE0D8);
 }
 
@@ -805,16 +801,14 @@ void func_8008412C_545DC(u8 arg0, u8 arg1) {
 	}
 }
 
-// CURRENT(2707)
 // AI - Sets up an interpolated motion effect with start/end positions, duration, and child particles
-#ifdef NON_MATCHING
 u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 pad0;
 	s16 pad1;
 	s16 sp2A;
 	s16 temp_v0_2;
 	u8 temp_s2;
-	s32 temp_v0;
+	s32 colorCount;
 	u8 temp_a1;
 	u8 var_s0;
 	Frontend52690InterpolationParticle *temp_v1;
@@ -826,31 +820,27 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 		if (temp_v0_2 == -3) {
 			func_80083B14_53FC4(temp_s2);
 		} else {
+			D_800DE130[temp_s2].unkA = temp_v0_2;
 			temp_v1 = (Frontend52690InterpolationParticle *)&D_800DE840[temp_v0_2];
+			temp_v1->lifetime = arg7;
 			temp_v1->position[0] = arg0;
-D_800DE130[temp_s2].unkA = temp_v0_2;
+
 			temp_v1->velocity[0] = (arg3 - arg0) / arg6;
 			temp_v1->velocity[1] = (arg4 - arg1) / arg6;
 			temp_v1->velocity[2] = (arg5 - arg2) / arg6;
-			var_s0 = 0;
+			colorCount = 230;
 			temp_v1->duration = arg6;
 			temp_v1->position[1] = arg1;
 			temp_v1->position[2] = arg2;
-			temp_v1->lifetime = arg7;
-			do {
-				temp_a1 = func_800038E0_44E0() % 230;
+			for (var_s0 = 0; var_s0 < 8; var_s0++) {
+				temp_a1 = func_800038E0_44E0() % colorCount;
 				func_8008412C_545DC(temp_s2, temp_a1);
-				var_s0++;
-			} while (var_s0 < 8);
+			}
 		}
 	}
 
 	return (u8)sp2A;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80084324_547D4.s")
-#endif
-
 // AI - Updates particle state each frame: animates frames, handles velocity, updates alpha
 void func_80084508_549B8(u8 arg0) {
 	s16 cur;
@@ -1017,7 +1007,7 @@ void func_800847E4_54C94(u8 arg0) {
 			entry840 = &D_800DE840[entry840->unk4];
 				scale = (f32)(distBias * ((f64)*(s16 *)((u8 *)entry840 + 0xE) * 0.00390625));
 
-				func_800838B8_53D68(scale, D_800DE0C0, (f32 *)&vecA);
+				func_800838B8_53D68(scale, &D_800DE0C0.x, (f32 *)&vecA);
 				func_800838B8_53D68(scale, D_800DE0CC, (f32 *)&vecB);
 
 			view = (u8 *)entry840 + 8;
@@ -1133,35 +1123,19 @@ void func_800847E4_54C94(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800847E4_54C94.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2122)
-// AI - Renders a colored ring quad texture around a point in 3D space
-void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
-	f32 temp_f0;
-	f32 temp_f2;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f4;
+void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
+	FrontendRingOffsets offsets;
 
-	temp_f2 = (f32)(u16)arg3;
-	temp_f0 = D_800DE0C0[0];
-	temp_f0 *= temp_f2;
-	temp_f12 = D_800DE0C0[1];
-	temp_f12 *= temp_f2;
-	temp_f14 = D_800DE0C0[2];
-	temp_f14 *= temp_f2;
-	temp_f16 = D_800DE0C0[3];
-	temp_f16 *= temp_f2;
-	temp_f18 = D_800DE0C0[4];
-	temp_f18 *= temp_f2;
-	temp_f4 = D_800DE0C0[5];
-	temp_f4 *= temp_f2;
+	offsets.x0 = D_800DE0C0.x * ((void)0, (f32)arg3);
+	offsets.y0 = D_800DE0C0.y * ((void)0, (f32)arg3);
+	offsets.z0 = D_800DE0C0.z * ((void)0, (f32)arg3);
+	offsets.x1 = D_800DE0C0.rightX * ((void)0, (f32)arg3);
+	offsets.y1 = D_800DE0C0.rightY * ((void)0, (f32)arg3);
+	offsets.z1 = D_800DE0C0.rightZ * ((void)0, (f32)arg3);
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + temp_f14);
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + offsets.x0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + offsets.y0);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + offsets.z0);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -1171,9 +1145,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + temp_f4);
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + offsets.x1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + offsets.y1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z + offsets.z1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0;
@@ -1183,9 +1157,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - temp_f14);
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - offsets.x0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - offsets.y0);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - offsets.z0);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -1195,9 +1169,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - temp_f4);
+	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x - offsets.x1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y - offsets.y1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(arg0->z - offsets.z1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x800;
@@ -1207,9 +1181,9 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)arg0->x;
-	D_8005BB34->v.ob[1] = (s16)(s32)arg0->y;
-	D_8005BB34->v.ob[2] = (s16)(s32)arg0->z;
+	D_8005BB34->v.ob[0] = (s32)arg0->x;
+	D_8005BB34->v.ob[1] = (s32)arg0->y;
+	D_8005BB34->v.ob[2] = (s32)arg0->z;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x400;
@@ -1219,13 +1193,10 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, s32 arg3, u8 arg4) {
 	D_8005BB34->v.cn[3] = arg4;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 4, 0, 4, 1, 2, 0);
 	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800853A8_55858.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(11541)
@@ -2924,12 +2895,12 @@ void func_8008A928_5ADD8(s32 arg0) {
 		x = cur->unk8;
 		y = cur->unkA;
 		z = cur->unkC;
-		dx0 = scale * D_800DE0C0[0];
-		dy0 = scale * D_800DE0C0[1];
-		dz0 = scale * D_800DE0C0[2];
-		dx1 = scale * D_800DE0C0[3];
-		dy1 = scale * D_800DE0C0[4];
-		dz1 = scale * D_800DE0C0[5];
+		dx0 = scale * D_800DE0C0.x;
+		dy0 = scale * D_800DE0C0.y;
+		dz0 = scale * D_800DE0C0.z;
+		dx1 = scale * D_800DE0C0.rightX;
+		dy1 = scale * D_800DE0C0.rightY;
+		dz1 = scale * D_800DE0C0.rightZ;
 
 		D_8005BB34->v.ob[0] = (s16)(s32)(x + dx0);
 		D_8005BB34->v.ob[1] = (s16)(s32)(y + dy0);
@@ -2993,48 +2964,32 @@ void func_8008A928_5ADD8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A928_5ADD8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2027)
-// AI - Spawns a type-7 child particle, copying position from parent with random velocity offsets
-void func_8008AEC8_5B378(s32 arg0) {
+void func_8008AEC8_5B378(u8 arg0) {
 	s16 srcIdx;
+	s32 pad;
 	s16 dstIdx;
-	u8 id;
-	u8 *s0;
-	u8 *s1;
-	s8 sx;
-	s8 sy;
-	s8 sz;
+	Unk8008B264NodeSub *destination;
+	Frontend52690Unk8Motion *source;
 
-	id = arg0 & 0xFF;
-	srcIdx = D_800DE130[id].unk6;
-	dstIdx = func_80083B7C_5402C(id);
+	srcIdx = D_800DE130[arg0].unk6;
+	dstIdx = func_80083B7C_5402C(arg0);
 	if (dstIdx != -3) {
-		s0 = (u8 *)&D_800DE840[dstIdx].unk8;
-		*(s16 *)(s0 - 6) = (func_800038E0_44E0() % 0x1C) + 0x1C;
-
-		s1 = (u8 *)&D_800DE840[srcIdx].unk8;
-		s0[6] = D_800AA640[s1[0xA] * 3];
-		s0[7] = D_800AA640[(s1[0xA] * 3) + 1];
-		s0[8] = D_800AA640[(s1[0xA] * 3) + 2];
-		s0[9] = 0x8C;
-
-		*(s16 *)&s0[0] = *(s16 *)&s1[0];
-		*(s16 *)&s0[2] = *(s16 *)&s1[2];
-		*(s16 *)&s0[4] = *(s16 *)&s1[4];
-		sx = (s8)s1[6];
-		sy = (s8)s1[7];
-		sz = (s8)s1[8];
-
-		s0[0xA] = (func_800038E0_44E0() % 4) + sx - 2;
-		s0[0xB] = (func_800038E0_44E0() % 4) + sy - 2;
-		s0[0xC] = (func_800038E0_44E0() % 4) + sz - 2;
-		s0[0xD] = 0;
+		destination = (Unk8008B264NodeSub *)(s32)&D_800DE840[dstIdx].unk8;
+		D_800DE840[dstIdx].unk2 = (func_800038E0_44E0() % 0x1C) + 0x1C;
+		source = (Frontend52690Unk8Motion *)(s32)&D_800DE840[srcIdx].unk8;
+		destination->unk6 = D_800AA640[source->unkA * 3];
+		destination->unk7 = D_800AA640[source->unkA * 3 + 1];
+		destination->unk8 = D_800AA640[source->unkA * 3 + 2];
+		destination->unk9 = 0x8C;
+		destination->unk0 = source->unk0;
+		destination->unk2 = source->unk2;
+		destination->unk4 = source->unk4;
+		destination->unkA = (func_800038E0_44E0() % 4) + source->unk6 - 2;
+		destination->unkB = (func_800038E0_44E0() % 4) + source->unk7 - 2;
+		destination->unkC = (func_800038E0_44E0() % 4) + source->unk8 - 2;
+		destination->unkD = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008AEC8_5B378.s")
-#endif
 
 /* Allocate entry with given params; returns allocId or 0xFB on failure */
 // AI - Allocates a type-7 particle entry with position, color, and size
@@ -3094,40 +3049,40 @@ void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2739)
-// AI - Updates type-7 particles: ages children, updates velocity/size, spawns new particles periodically
 void func_8008B264_5B714(u8 arg0) {
+	u8 id;
 	s16 idx;
 	s16 nextIdx;
 	Unk800DE130 *entry;
 	Unk800DE840 *node;
 	Unk8008B264NodeSub *nodeSub;
 
-	entry = &D_800DE130[arg0 & 0xFF];
-	idx = D_800DE840[entry->unk6].unk4;
+	id = arg0;
+	entry = &D_800DE130[id];
+	idx = entry->unk6;
+	idx = D_800DE840[idx].unk4;
 
 	while ((idx != -5) && (idx != -6)) {
 		node = &D_800DE840[idx];
-		nodeSub = (Unk8008B264NodeSub *) &node->unk8;
+		nodeSub = (Unk8008B264NodeSub *)&node->unk8;
 
 		if (node->unk11 < 0xB) {
 			if ((entry->unk4 < 3) && (D_800DE840[entry->unk6].unk11 == 0)) {
-				func_800840C4_54574(arg0 & 0xFF);
-				func_80083B14_53FC4(arg0 & 0xFF);
+				func_800840C4_54574(id);
+				func_80083B14_53FC4(id);
 				return;
 			}
 
 			nextIdx = node->unk4;
-			func_80083DBC_5426C(idx, arg0 & 0xFF);
+			func_80083DBC_5426C(idx, id);
 			idx = nextIdx;
 		} else {
 			if (nodeSub->unkD == 0) {
 				nodeSub->unk9 = (nodeSub->unk9 - (func_800038E0_44E0() % 5)) - 5;
-				node->unk2 = node->unk2 + (func_800038E0_44E0() % 3) + 3;
+				node->unk2 += (func_800038E0_44E0() % 3) + 3;
 			} else {
 				nodeSub->unk9 = (nodeSub->unk9 - (func_800038E0_44E0() % 5)) - 5;
-				node->unk2 = node->unk2 + (func_800038E0_44E0() % 5) + 5;
+				node->unk2 += (func_800038E0_44E0() % 5) + 5;
 			}
 
 			nodeSub->unk0 += nodeSub->unkA;
@@ -3136,17 +3091,14 @@ void func_8008B264_5B714(u8 arg0) {
 			nodeSub->unk6--;
 			nodeSub->unk7--;
 			nodeSub->unk8--;
-			idx = node->unk4;
+			idx = D_800DE840[idx].unk4;
 		}
 	}
 
 	if (D_800DE840[entry->unk6].unk11 == 1) {
-		func_8008AEC8_5B378(arg0 & 0xFF);
+		func_8008AEC8_5B378(id);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
-#endif
 
 // AI - Renders type-4 particles as billboarded sprites with loaded texture
 void func_8008B534_5B9E4(u8 arg0) {
@@ -3175,31 +3127,26 @@ void func_8008B534_5B9E4(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1910)
-// AI - Creates a line particle effect, spawning particles evenly between two 3D points
 u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	s32 pad0;
+	s32 pad1;
+	Vec3s delta;
+	Vec3s step;
 	u8 effectId;
-	u32 stepCountU32;
-	s16 deltaX;
-	s16 deltaY;
-	s16 deltaZ;
-	s16 stepX;
-	s16 stepY;
-	s16 stepZ;
+	u8 initialCount;
 	s16 idx;
-	s32 stepCount;
+	u8 stepCount;
 	u8 i;
-	Unk800DE840* entry;
+	Frontend52690LineParticle *entry;
 
 	effectId = func_80083A58_53F08(9);
 	if (effectId != 0xFB) {
-		deltaX = arg3 - arg0;
-		deltaY = arg4 - arg1;
-		deltaZ = arg5 - arg2;
+		delta.x = arg3 - arg0;
+		delta.y = arg4 - arg1;
+		delta.z = arg5 - arg2;
 
-		stepCountU32 = sqrtf((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ)) / 100.0f;
-		stepCount = stepCountU32 & 0xFF;
+		initialCount = sqrtf((delta.x * delta.x) + (delta.y * delta.y) + (delta.z * delta.z)) / 100.0f;
+		stepCount = initialCount;
 
 		if (stepCount < 2) {
 			stepCount = 2;
@@ -3211,35 +3158,30 @@ u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 			stepCount = 1;
 		}
 
-		stepX = deltaX / stepCount;
-		stepY = deltaY / stepCount;
-		stepZ = deltaZ / stepCount;
+		step.x = delta.x / stepCount;
+		step.y = delta.y / stepCount;
+		step.z = delta.z / stepCount;
 
-		if (stepCount >= 0) {
-			i = 0;
-			while (i <= stepCount) {
-				idx = func_80083B7C_5402C(effectId);
-				if (idx == -3) {
-					func_800840C4_54574(effectId);
-					func_80083B14_53FC4(effectId);
-					return 0xFB;
-				}
-
-				entry = &D_800DE840[idx];
-				*(s16*)&entry->unkE = arg6;
-				entry->unk8 = arg0 + (stepX * i);
-				entry->unkA = arg1 + (stepY * i);
-				entry->unkC = arg2 + (stepZ * i);
-				i = (i + 1) & 0xFF;
+		for (i = 0; i <= stepCount; i++) {
+			idx = func_80083B7C_5402C(effectId);
+			if (idx == -3) {
+				func_800840C4_54574(effectId);
+				func_80083B14_53FC4(effectId);
+				return 0xFB;
 			}
+
+			entry = (Frontend52690LineParticle *)&D_800DE840[idx];
+			/* Keep the node-base and stride register priorities; IDO removes this read. */
+			if (D_800DE840[idx].unk0) {}
+			entry->duration = arg6;
+			entry->position[0] = arg0 + (step.x * i);
+			entry->position[1] = arg1 + (step.y * i);
+			entry->position[2] = arg2 + (step.z * i);
 		}
 	}
 
 	return effectId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
-#endif
 
 // AI - Frees a type-9 particle effect
 void func_8008BAD8_5BF88(u8 arg0) {
@@ -3752,17 +3694,17 @@ void func_8008D14C_5D5FC(void) {
 	f32 temp_f18;
 
 	temp_f0 = D_800DE128;
-	temp_f0 *= D_800DE0C0[0];
+	temp_f0 *= D_800DE0C0.x;
 	temp_f12 = D_800DE128;
-	temp_f12 *= D_800DE0C0[1];
+	temp_f12 *= D_800DE0C0.y;
 	temp_f14 = D_800DE128;
-	temp_f14 *= D_800DE0C0[2];
+	temp_f14 *= D_800DE0C0.z;
 	temp_f16 = D_800DE128;
-	temp_f16 *= D_800DE0C0[3];
+	temp_f16 *= D_800DE0C0.rightX;
 	temp_f18 = D_800DE128;
-	temp_f18 *= D_800DE0C0[4];
+	temp_f18 *= D_800DE0C0.rightY;
 	temp_f8 = D_800DE128;
-	temp_f8 *= D_800DE0C0[5];
+	temp_f8 *= D_800DE0C0.rightZ;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f12);
@@ -3816,33 +3758,23 @@ void func_8008D14C_5D5FC(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(3245)
-// AI - Renders a pulsing/oscillating billboard quad with animated scale
 void func_8008D510_5D9C0(void) {
-	f32 temp_f0;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f2;
-	f32 temp_f4;
-	f32 temp_f4_2;
-	f32 temp_f8;
-	f32 temp_f8_2;
+	FrontendRingOffsets offsets;
+	f32 width;
+	f32 height;
 
-	temp_f2 = D_800AA7C0_7AC70[D_800E1D6B];
-	temp_f0 = temp_f2 + D_800DE128;
-	temp_f14 = D_800DE128 - temp_f2;
-	temp_f16 = temp_f0 * D_800DE0C0[0];
-	temp_f18 = temp_f0 * D_800DE0C0[1];
-	temp_f4 = temp_f0 * D_800DE0C0[2];
-	temp_f8 = temp_f14 * D_800DE0C0[3];
-	temp_f4_2 = temp_f14 * D_800DE0C0[4];
-	temp_f8_2 = temp_f14 * D_800DE0C0[5];
+	width = (f32)D_800AA7C0_7AC70[D_800E1D6B] + D_800DE128;
+	height = D_800DE128 - (f32)D_800AA7C0_7AC70[D_800E1D6B];
+	offsets.x0 = width * D_800DE0C0.x;
+	offsets.y0 = width * D_800DE0C0.y;
+	offsets.z0 = width * D_800DE0C0.z;
+	offsets.x1 = height * D_800DE0C0.rightX;
+	offsets.y1 = height * D_800DE0C0.rightY;
+	offsets.z1 = height * D_800DE0C0.rightZ;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + temp_f4);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + offsets.x0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + offsets.y0);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + offsets.z0);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -3852,9 +3784,9 @@ void func_8008D510_5D9C0(void) {
 	D_8005BB34->v.cn[3] = D_800DE12C;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f8);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f4_2);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + temp_f8_2);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + offsets.x1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + offsets.y1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z + offsets.z1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = D_800DE12D << 6;
 	D_8005BB34->v.tc[1] = 0;
@@ -3864,9 +3796,9 @@ void func_8008D510_5D9C0(void) {
 	D_8005BB34->v.cn[3] = D_800DE12C;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - temp_f4);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - offsets.x0);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - offsets.y0);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - offsets.z0);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = D_800DE12D << 6;
 	D_8005BB34->v.tc[1] = D_800DE12E << 6;
@@ -3876,9 +3808,9 @@ void func_8008D510_5D9C0(void) {
 	D_8005BB34->v.cn[3] = D_800DE12C;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - temp_f8);
-	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - temp_f4_2);
-	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - temp_f8_2);
+	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x - offsets.x1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y - offsets.y1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(D_800DE118.z - offsets.z1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = D_800DE12E << 6;
@@ -3903,9 +3835,6 @@ void func_8008D510_5D9C0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D510_5D9C0.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(2095)
