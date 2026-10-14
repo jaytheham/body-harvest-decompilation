@@ -1635,7 +1635,7 @@ void func_801365E0_145590(void) {
 				spE0.unk0 = var_s0 >> 2;
 				spE0.unk2 = spCC >> 2;
 				spE0.unk4 = var_s1 >> 2;
-				spD8.unk0 = (((u32)signpost->unk2 << 0x1D) >> 0x1E) << 0xE;
+				spD8.unk0 = signpost->direction << 0xE;
 				spD8.unk2 = 0;
 				spD8.unk4 = 0;
 				spD0.unk0 = 0x20;
@@ -1646,7 +1646,7 @@ void func_801365E0_145590(void) {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				gDPPipeSync(D_8005BB2C++);
 				gSPDisplayList(D_8005BB2C++, D_504D1D0);
-				if ((((u32)signpost->unk2 << 0x1D) >> 0x1E) & 1) {
+				if (signpost->direction & 1) {
 					width = 0x10;
 					height = 0x13;
 				} else {
@@ -1655,7 +1655,7 @@ void func_801365E0_145590(void) {
 				}
 				func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
 					func_8012E1F8_13D1A8);
-				switch (((u32)signpost->unk2 << 0x1D) >> 0x1E) {
+				switch (signpost->direction) {
 					case 0:
 						var_s1 += 0x18;
 						break;
