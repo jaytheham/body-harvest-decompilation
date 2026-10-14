@@ -6121,10 +6121,6 @@ const f64 D_800A4B90_18CC50[1] = {180.0};
 
 const f32 D_800A4B98_18CC58[1] = {0.4000000059604645f};
 
-const u32 jtbl_800A4B9C_18CC5C[] = {
-	0x8007B3A8, 0x8007B3E4, 0x8007B350, 0x8007B410, 0x8007B470,
-};
-
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -8146,25 +8142,17 @@ void func_80074D18_15CDD8(void) {
 	}
 }
 
-// CURRENT(218)
-#ifdef NON_MATCHING
 // AI - Spawns torches for a specific building interior (Level 4, building 0x20)
 void func_80074D98_15CE58(s32 arg0) {
-	Unk800E66A8 *entry;
-	s16 xPlus;
-	s16 xMinus;
-	s16 zPlus;
-	s16 zMinus;
 	s32 tempX;
-	s32 tempZ;
 	s32 y;
+	s32 tempZ;
 
 	if (currentLevel != 4) {
 		return;
 	}
 
-	entry = &D_800E66A8[arg0];
-	if ((entry->unk0 != 0x18) || (buildingInteriorToLoadId != 0x20)) {
+	if ((D_800E66A8[arg0].unk0 != 0x18) || (buildingInteriorToLoadId != 0x20)) {
 		return;
 	}
 
@@ -8172,22 +8160,16 @@ void func_80074D98_15CE58(s32 arg0) {
 		return;
 	}
 
-	tempX = entry->unk2 - 0x60;
-	tempZ = entry->unk6 - 0x60;
-	y = (s32) (((Unk8007C698Npc *) entry)->unk24 + (f32) (entry->unk4 - 0x60) + 165.0f);
-	xPlus = tempX + 0x14;
-	zPlus = tempZ + 0x14;
-	xMinus = tempX - 0x14;
-	zMinus = tempZ - 0x14;
+	tempX = D_800E66A8[arg0].unk2 - 0x60;
+	tempZ = D_800E66A8[arg0].unk6 - 0x60;
+	y = (s32) ((f32) (D_800E66A8[arg0].unk4 - 0x60) + D_800E66A8[arg0].unk24 + 165.0f);
 
-	((s32 *) &D_8008DE78_175F38)[0] = func_80084EEC_16CFAC(xPlus, y, zPlus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
-	((s32 *) &D_8008DE78_175F38)[1] = func_80084EEC_16CFAC(xMinus, y, zMinus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
-	((s32 *) &D_8008DE78_175F38)[2] = func_80084EEC_16CFAC(xPlus, y, zMinus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
-	((s32 *) &D_8008DE78_175F38)[3] = func_80084EEC_16CFAC(xMinus, y, zPlus, 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	D_8008DE50_175F10.room.torchHandles[0] = func_80084EEC_16CFAC((s16) (tempX + 0x14), y, (s16) (tempZ + 0x14), 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	D_8008DE50_175F10.room.torchHandles[1] = func_80084EEC_16CFAC((s16) (tempX - 0x14), y, (s16) (tempZ - 0x14), 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	D_8008DE50_175F10.room.torchHandles[2] = func_80084EEC_16CFAC((s16) (tempX + 0x14), y, (s16) (tempZ - 0x14), 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
+	D_8008DE50_175F10.room.torchHandles[3] = func_80084EEC_16CFAC((s16) (tempX - 0x14), y, (s16) (tempZ + 0x14), 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074D98_15CE58.s")
-#endif
+
 
 #ifdef NON_MATCHING
 // AI - Renders 3D room objects with visibility culling and texture offsets
@@ -8595,83 +8577,66 @@ void func_80076538_15E5F8(s32 arg0) {
 	func_80073714_15B7D4(5, 5, var_v1 - 0x60, 2, var_t0 - 0x60, 0xFA, 0xFA, 0);
 }
 
-// CURRENT(1438)
-#ifdef NON_MATCHING
 // AI - Renders door/room transition rectangles
 void func_80076678_15E738(s32 arg0) {
-	s16 temp_t0;
-	s16 temp_t1;
-	s32 var_v1;
+	s32 temp_t0;
+	s32 temp_t1;
 	s32 sp4C;
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
 	s32 sp3C;
 	s32 sp38;
+	s32 objIdx;
 
+	objIdx = D_800E66A8[arg0].unk0;
 	temp_t0 = D_800E66A8[arg0].unk2;
 	temp_t1 = D_800E66A8[arg0].unk6;
 
-	if (D_800E66A8[arg0].unk8 == 0) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk18;
-		sp48 = temp_v1->unk1A;
-		sp44 = temp_v1->unk36;
-		sp40 = temp_v1->unk38;
-		sp3C = temp_v1->unk3A;
-		sp38 = temp_v1->unk3B;
-	} else if (D_800E66A8[arg0].unk8 == 1) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk1A;
-		sp48 = temp_v1->unk18;
-		sp44 = temp_v1->unk38;
-		sp40 = -temp_v1->unk36;
-		sp3C = temp_v1->unk3B;
-		sp38 = temp_v1->unk3A;
-	} else if (D_800E66A8[arg0].unk8 == 2) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk18;
-		sp48 = temp_v1->unk1A;
-		sp44 = -temp_v1->unk36;
-		sp40 = -temp_v1->unk38;
-		sp3C = temp_v1->unk3A;
-		sp38 = temp_v1->unk3B;
-	} else if (D_800E66A8[arg0].unk8 == 3) {
-		Unk80070F7CObj *temp_v1;
-
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
-		temp_v1 = (Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1);
-		sp4C = temp_v1->unk1A;
-		sp48 = temp_v1->unk18;
-		sp44 = -temp_v1->unk38;
-		sp40 = temp_v1->unk36;
-		sp3C = temp_v1->unk3B;
-		sp38 = temp_v1->unk3A;
-	} else {
-		var_v1 = D_800E66A8[arg0].unk0 * 0x48;
+	switch (D_800E66A8[arg0].unk8) {
+		case 0:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp44 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp40 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			break;
+		case 1:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp44 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp40 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			break;
+		case 2:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp44 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp40 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			break;
+		case 3:
+			sp4C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk1A;
+			sp48 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk18;
+			sp44 = -((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk38;
+			sp40 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk36;
+			sp3C = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3B;
+			sp38 = ((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx].unk3A;
+			break;
+		default:
+			break;
 	}
 
 	func_80073714_15B7D4(sp4C, sp48, temp_t0 - 0x60, 7, temp_t1 - 0x60, 0, 0xFA, 0);
 
-	if (((Unk80070F7CObj *)((u8 *)D_800E65BC + var_v1))->unk40 & 0x400000) {
+	if (D_800E65BC[objIdx].unk40 & 0x400000) {
 		func_80073714_15B7D4(sp3C, sp38, (temp_t0 + sp44) - 0x60, 0xA, (temp_t1 + sp40) - 0x60, 0, 0, 0xFA);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076678_15E738.s")
-#endif
 
-#ifdef NON_MATCHING
-/* CURRENT(2112) */
 // AI - Renders selection highlight for interactive room objects
 void func_800768B8_15E978(s32 arg0) {
 	s32 sp34;
@@ -8682,49 +8647,47 @@ void func_800768B8_15E978(s32 arg0) {
 	s16 temp_t1;
 	u16 temp_a3;
 	Unk80070F7CObj *temp_v0;
-	Unk800E66A8 *temp_v1;
+	s32 objIdx;
 
-	temp_v1 = &D_800E66A8[arg0];
-	temp_v0 = &((Unk80070F7CObj *) D_800E65BC)[temp_v1->unk0];
+	objIdx = D_800E66A8[arg0].unk0;
+	temp_v0 = &((Unk80070F7CObj *)(s32)D_800E65BC)[objIdx];
 	temp_a3 = temp_v0->unk1A;
 	temp_t0 = temp_v0->unk32;
 	temp_t1 = temp_v0->unk34;
 
-	switch (temp_v1->unk8) {
+	switch (D_800E66A8[arg0].unk8) {
 		case 0:
+			sp34 = D_800E66A8[arg0].unk2 + temp_t0;
+			sp30 = D_800E66A8[arg0].unk6 + ((s32) temp_a3 / 2) + 0xF;
 			sp2C = temp_t1;
-			sp34 = temp_v1->unk2 + temp_t0;
-			sp30 = temp_v1->unk6 + ((s32) temp_a3 / 2) + 0xF;
 			sp28 = 0xF;
 			break;
 
 		case 1:
+			sp30 = D_800E66A8[arg0].unk6 - temp_t0;
+			sp34 = D_800E66A8[arg0].unk2 + ((s32) temp_a3 / 2) + 0xF;
 			sp2C = 0xF;
 			sp28 = temp_t1;
-			sp30 = temp_v1->unk6 - temp_t0;
-			sp34 = temp_v1->unk2 + ((s32) temp_a3 / 2) + 0xF;
 			break;
 
 		case 2:
+			sp34 = D_800E66A8[arg0].unk2 - temp_t0;
 			sp2C = temp_t1;
+			sp30 = (D_800E66A8[arg0].unk6 - ((s32) temp_a3 / 2)) - 0xF;
 			sp28 = 0xF;
-			sp34 = temp_v1->unk2 - temp_t0;
-			sp30 = (temp_v1->unk6 - ((s32) temp_a3 / 2)) - 0xF;
 			break;
 
 		case 3:
+			sp30 = D_800E66A8[arg0].unk6 + temp_t0;
+			sp34 = (D_800E66A8[arg0].unk2 - ((s32) temp_a3 / 2)) - 0xF;
 			sp2C = 0xF;
 			sp28 = temp_t1;
-			sp30 = temp_v1->unk6 + temp_t0;
-			sp34 = (temp_v1->unk2 - ((s32) temp_a3 / 2)) - 0xF;
 			break;
 	}
 
 	func_80073714_15B7D4(sp2C, sp28, sp34 - 0x60, 5, sp30 - 0x60, 0xFA, 0, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800768B8_15E978.s")
-#endif
+
 
 // CURRENT(1928)
 #ifdef NON_MATCHING
@@ -9598,9 +9561,7 @@ void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 }
 
 static void func_80078994_stub(void) {}
-// CURRENT(140)
 // AI - Remaps button directions based on room orientation
-#ifdef NON_MATCHING
 u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 	u8 ret;
 
@@ -9613,40 +9574,32 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 			ret |= 2;
 		}
 		if (arg0 & 8) {
-			ret = (ret | 1) & 0xFF;
+			ret = ret | 1;
 		}
 		if (arg0 & 1) {
-			ret = (ret | 4) & 0xFF;
+			ret = ret | 4;
 		}
 		if (arg0 & 2) {
-			ret = (ret | 8) & 0xFF;
+			ret = ret | 8;
 		}
 		break;
 	case 2: {
-		u8 mask2;
-
-		mask2 = arg0;
-		mask2 &= 4;
-		if (mask2) {
+		if (arg0 & 4) {
 			ret |= 8;
 		}
 		if (arg0 & 8) {
-			ret = (ret | 4) & 0xFF;
+			ret = ret | 4;
 		}
 		if (arg0 & 1) {
-			ret = (ret | 2) & 0xFF;
+			ret = ret | 2;
 		}
 		if (arg0 & 2) {
-			ret = (ret | 1) & 0xFF;
+			ret = ret | 1;
 		}
 		break;
 	}
 	case 3: {
-		u8 mask3;
-
-		mask3 = arg0;
-		mask3 &= 4;
-		if (mask3) {
+		if (arg0 & 4) {
 			ret |= 1;
 		}
 		if (arg0 & 8) {
@@ -9664,9 +9617,7 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007899C_160A5C.s")
-#endif
+
 
 // jtbl_800A4B5C_18CC1C
 #ifdef NON_MATCHING
@@ -10744,69 +10695,55 @@ void func_8007B1E0_1632A0(s32 arg0)
 }
 
 // jtbl_800A4B9C_18CC5C
-// CURRENT(465)
 // AI - Handles mission-related room events
-#ifdef NON_MATCHING
 s32 func_8007B2F0_1633B0(s32 arg0) {
 	s32 roomId;
-	s16 *interiorFlagsPtr;
-	u32 ret;
 	s32 switchValue;
+	u32 ret;
 
 	ret = 1;
-	switchValue = D_800E66A8[arg0].unk2C & 0xE0;
-	switchValue >>= 5;
 	roomId = ((D_800E66A8[arg0].unk2C & 0x1C) >> 2) + 0x38;
+	switchValue = (D_800E66A8[arg0].unk2C & 0xE0) >> 5;
 
 	switch (switchValue) {
-		case 0:
+		case 2:
 			if (func_8000726C_7E6C(roomId) != 0) {
 				func_800073B8_7FB8(roomId);
 			} else {
 				func_800072CC_7ECC(roomId);
 			}
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
+			break;
+
+		case 0:
+			func_800072CC_7ECC(roomId);
+			ret = func_8007B51C_1635DC(roomId); 
 			break;
 
 		case 1:
-			func_800072CC_7ECC(roomId);
-			ret = func_8007B51C_1635DC(roomId);
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			break;
-
-		case 2:
 			func_800073B8_7FB8(roomId);
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			break;
 
 		case 3:
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
+			if (!(D_80047970[buildingInteriorToLoadId] & (1 << D_800E662C))) {
 				func_800072CC_7ECC(roomId);
-				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			}
 			break;
 
 		case 4:
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
-			if (!(*interiorFlagsPtr & (1 << D_800E662C))) {
+			if (!(D_80047970[buildingInteriorToLoadId] & (1 << D_800E662C))) {
 				func_800073B8_7FB8(roomId);
-				interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			}
 			break;
 
 		default:
 			osSyncPrintf(D_800A49EC_18CAAC);
-			interiorFlagsPtr = &D_80047970[buildingInteriorToLoadId];
 			break;
 	}
 
-	*interiorFlagsPtr = *interiorFlagsPtr | (1 << arg0);
+	D_80047970[buildingInteriorToLoadId] = D_80047970[buildingInteriorToLoadId] | (1 << arg0);
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B2F0_1633B0.s")
-#endif
+
 
 // AI - Handles special mission logic for Level 4 building 0x20
 s32 func_8007B51C_1635DC(s32 arg0) {
@@ -10825,10 +10762,10 @@ s32 func_8007B51C_1635DC(s32 arg0) {
 				func_800072CC_7ECC(2);
 				func_800073B8_7FB8(1);
 				D_800E6628 &= ~8;
-				func_80086F24_16EFE4(D_8008DE78_175F38.unk2);
-				func_80086F24_16EFE4(D_8008DE78_175F38.unk6);
-				func_80086F24_16EFE4(D_8008DE78_175F38.unkA);
-				func_80086F24_16EFE4(D_8008DE78_175F38.unkE);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unk2);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unk6);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unkA);
+				func_80086F24_16EFE4(D_8008DE78_175F38.halves.unkE);
 			}
 		}
 		return 0;

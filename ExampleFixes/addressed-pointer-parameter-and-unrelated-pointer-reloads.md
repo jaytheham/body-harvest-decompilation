@@ -24,3 +24,11 @@ the complete translation unit with the normal build: an addressed parameter
 can change register allocation and pointer caching far from its first use.
 The final complete function passes the normal full-ROM checksum with this
 addressed-parameter access retained.
+
+## Source and destination aliases across an error branch
+
+`func_800706E8_40B98` matches with a signed halfword mission parameter and an empty `do` loop whose condition is `index-- && D_800D6DC0[index].unk16`. Capture the source template pointer before the no-slot error branch, then assign a second source pointer from that capture after the branch. Derive the destination directly from its named array after the branch.
+
+The reverse arrangement (destination captured before the branch, source indexed after it) reproduces all preceding instructions but leaves three final instructions in the wrong order. The correct arrangement permits the parameter-home halfword load before the final destination store, while keeping the selected-mission global load after the store. It also preserves serial source-load/destination-store field copies; deriving both pointers only after the branch batches those loads instead.
+
+The source pointer alias is intentional compiler shaping. Removing it, changing which pointer crosses the error branch, or changing the parameter to a word changes the assembly. Keep field `unk10` assigned before `unk12` and `unk14`, and keep switch arms ordered default, 2, 1. Verified with the complete translation unit and `build/bh.us.z64: OK`.
