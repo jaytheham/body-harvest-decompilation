@@ -1378,37 +1378,48 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 }
 
 // https://decomp.me/scratch/AXqIF
-// CURRENT(125)
+// CURRENT(65)
 // AI - Calculate camera shake from impact distance
 #ifdef NON_MATCHING
-void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-    f32 amplitude;
-    f32 scale;
-    s32 x;
-    s32 y;
-    s32 z;
-    f32 attenuation;
+void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
+{
+	f32 zero;
+	f32 amplitude;
 
-    scale = 0.0f;
-    if (arg3 != scale) {
-        attenuation = -((arg0 / 4) - D_80047954);
-        x = attenuation < ((arg0 / 4) - D_80047954) ? ((arg0 / 4) - D_80047954) : attenuation;
-        attenuation = -((arg1 / 4) - D_80047958);
-        y = attenuation < ((arg1 / 4) - D_80047958) ? ((arg1 / 4) - D_80047958) : attenuation;
-        attenuation = -((arg2 / 4) - D_8004795C);
-        z = attenuation < ((arg2 / 4) - D_8004795C) ? ((arg2 / 4) - D_8004795C) : attenuation;
-        scale = D_801456F8_1546A8[0];
-        attenuation = (x * x + y * y + z * z) / scale;
-        amplitude = arg3 - attenuation;
-        if (arg3 < attenuation) {
-            amplitude = 0.0f;
-        } else if (amplitude < 1.0) {
-            amplitude = 1.0f;
-        }
-        if (D_80160174 < amplitude) {
-            D_80160174 = amplitude;
-        }
-    }
+	f32 attenuation;
+	f32 distance;
+	f32 negative;
+	s32 x;
+	s32 y;
+	s32 z;
+	zero = 0.0f;
+	if (arg3 != zero)
+	{
+		distance = (arg0 / 4) - D_80047954;
+		negative = -distance;
+		x = (negative < ((arg0 / 4) - D_80047954)) ? ((arg0 / 4) - D_80047954) : (negative);
+		distance = (arg1 / 4) - D_80047958;
+		negative = -distance;
+		y = (negative < ((arg1 / 4) - D_80047958)) ? ((arg1 / 4) - D_80047958) : (negative);
+		distance = (arg2 / 4) - D_8004795C;
+		negative = -distance;
+		z = (negative < ((arg2 / 4) - D_8004795C)) ? ((arg2 / 4) - D_8004795C) : (negative);
+		zero = D_801456F8_1546A8[0];
+		attenuation = (((x * x) + (y * y)) + (z * z)) / zero;
+		amplitude = arg3 - attenuation;
+		if (arg3 < attenuation)
+		{
+			amplitude = 0.0f;
+		}
+		else if (amplitude < 1.0)
+		{
+			amplitude = 1.0f;
+		}
+		if (D_80160174 < amplitude)
+		{
+			D_80160174 = amplitude;
+		}
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80135D44_144CF4.s")
