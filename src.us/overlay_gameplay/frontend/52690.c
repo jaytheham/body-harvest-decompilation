@@ -3137,31 +3137,26 @@ void func_8008B534_5B9E4(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1910)
-// AI - Creates a line particle effect, spawning particles evenly between two 3D points
 u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
+	s32 pad0;
+	s32 pad1;
+	Vec3s delta;
+	Vec3s step;
 	u8 effectId;
-	u32 stepCountU32;
-	s16 deltaX;
-	s16 deltaY;
-	s16 deltaZ;
-	s16 stepX;
-	s16 stepY;
-	s16 stepZ;
+	u8 initialCount;
 	s16 idx;
-	s32 stepCount;
+	u8 stepCount;
 	u8 i;
-	Unk800DE840* entry;
+	Frontend52690LineParticle *entry;
 
 	effectId = func_80083A58_53F08(9);
 	if (effectId != 0xFB) {
-		deltaX = arg3 - arg0;
-		deltaY = arg4 - arg1;
-		deltaZ = arg5 - arg2;
+		delta.x = arg3 - arg0;
+		delta.y = arg4 - arg1;
+		delta.z = arg5 - arg2;
 
-		stepCountU32 = sqrtf((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ)) / 100.0f;
-		stepCount = stepCountU32 & 0xFF;
+		initialCount = sqrtf((delta.x * delta.x) + (delta.y * delta.y) + (delta.z * delta.z)) / 100.0f;
+		stepCount = initialCount;
 
 		if (stepCount < 2) {
 			stepCount = 2;
@@ -3173,35 +3168,30 @@ u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 			stepCount = 1;
 		}
 
-		stepX = deltaX / stepCount;
-		stepY = deltaY / stepCount;
-		stepZ = deltaZ / stepCount;
+		step.x = delta.x / stepCount;
+		step.y = delta.y / stepCount;
+		step.z = delta.z / stepCount;
 
-		if (stepCount >= 0) {
-			i = 0;
-			while (i <= stepCount) {
-				idx = func_80083B7C_5402C(effectId);
-				if (idx == -3) {
-					func_800840C4_54574(effectId);
-					func_80083B14_53FC4(effectId);
-					return 0xFB;
-				}
-
-				entry = &D_800DE840[idx];
-				*(s16*)&entry->unkE = arg6;
-				entry->unk8 = arg0 + (stepX * i);
-				entry->unkA = arg1 + (stepY * i);
-				entry->unkC = arg2 + (stepZ * i);
-				i = (i + 1) & 0xFF;
+		for (i = 0; i <= stepCount; i++) {
+			idx = func_80083B7C_5402C(effectId);
+			if (idx == -3) {
+				func_800840C4_54574(effectId);
+				func_80083B14_53FC4(effectId);
+				return 0xFB;
 			}
+
+			entry = (Frontend52690LineParticle *)&D_800DE840[idx];
+			/* Keep the node-base and stride register priorities; IDO removes this read. */
+			if (D_800DE840[idx].unk0) {}
+			entry->duration = arg6;
+			entry->position[0] = arg0 + (step.x * i);
+			entry->position[1] = arg1 + (step.y * i);
+			entry->position[2] = arg2 + (step.z * i);
 		}
 	}
 
 	return effectId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B7BC_5BC6C.s")
-#endif
 
 // AI - Frees a type-9 particle effect
 void func_8008BAD8_5BF88(u8 arg0) {

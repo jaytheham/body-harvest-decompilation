@@ -321,6 +321,17 @@ typedef struct {
 } Frontend52690InterpolationParticle; /* size = 0x1C */
 
 typedef struct {
+	/* 0x00 */ u8 active;
+	/* 0x01 */ u8 flags;
+	/* 0x02 */ s16 size;
+	/* 0x04 */ s16 next;
+	/* 0x06 */ s16 previous;
+	/* 0x08 */ s16 position[3];
+	/* 0x0E */ s16 duration;
+	/* 0x10 */ u8 pad10[0xC];
+} Frontend52690LineParticle; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ s32 unk0;
 	/* 0x04 */ s32 unk4;
 	/* 0x08 */ s32 outputSize;
