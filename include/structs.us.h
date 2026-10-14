@@ -3646,6 +3646,11 @@ typedef struct {
 typedef union {
     u8 bytes[0x80];
     Lights2 lights;
+    struct {
+        Lights2 lights;
+        s32 torchHandles[4];
+        u8 padding[0x48];
+    } room;
 } InteriorLightData;
 
 // Interior light-data storage reused for four torch effect handles.
