@@ -888,7 +888,7 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
 
 	{
-		f32 scale;
+		s32 unused8;
 
 		scale = 2.0f;
 		arg2 = arg2 * scale;
@@ -973,7 +973,7 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 sp9C;
 	s32 xPos;
 	s32 scaleInt;
-	f32 scale;
+	s32 unused8;
 	s16 i;
 	s32 unused0;
 	s32 unused1;
@@ -1050,26 +1050,30 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
 #endif
 
-// CURRENT(1396)
-#ifdef NON_MATCHING
-void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
+// Renders the twelve artifact slots around the rotating inventory display.
+void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+	s32 unused3;
+	s32 unused4;
+	s32 unused5;
+	s32 unused6;
+	s32 unused7;
 	Unk80052B40 spA4;
 	Unk80052B40 sp9C;
 	Unk80052B40 sp94;
 	s32 unused0;
 	s32 unused1;
 	s32 unused2;
+	s32 unused8;
 	s32 temp;
 	s32 varS3;
 	s32 varS4;
 	s16 varS5;
-	u32 mask;
+	u32 mask = 0x1FFFFFFF;
 	Gfx* tempS6;
 
-	temp = (s32) ((f32) ((f64) arg3 * D_800AE518_7E9C8[0]) * 256.0f);
+	temp = (s32) ((0, 256.0f) * (f32) (arg3 * D_800AE518_7E9C8.value));
 	varS3 = 0;
 	varS4 = D_8004DC5E;
-	varS5 = 0;
 	spA4.unk0 = arg0;
 	spA4.unk2 = arg1;
 	spA4.unk4 = arg2;
@@ -1077,7 +1081,7 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 	sp9C.unk2 = (s16) temp;
 	sp9C.unk4 = (s16) temp;
 
-	do {
+	for (varS5 = 0; varS5 < 12; varS5++) {
 		tempS6 = D_800942D0_64780;
 		if ((varS4 != 0) && (tempS6 != NULL)) {
 			gDPPipeSync(D_8005BB2C++);
@@ -1093,22 +1097,19 @@ void func_800728F4_42DA4(s16 arg0, s16 arg1, s16 arg2, f32 arg3) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 		sp94.unk0 = 0;
+		sp94.unk2 = (D_80094848_64CF8 & 0xFFFF) + varS3;
 		sp94.unk4 = 0x2000;
-		sp94.unk2 = D_80094848_64CF8 + varS3;
 		func_800039D0_45D0(&spA4, &sp94, &sp9C, D_8005BB38);
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)tempS6 & mask));
-		varS5++;
 		varS3 += 0x1555;
 		gDPPipeSync(D_8005BB2C++);
-	} while (varS5 < 0xC);
+	}
 
 	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800728F4_42DA4.s")
-#endif
+
 
 // Checks if selected inventory item is 0xb (weapon crystals)
 #ifdef NON_MATCHING
@@ -5855,7 +5856,7 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
 	f32 sinX;
 	f32 cosX;
 	f32 zero;
-	f32 scale;
+	s32 unused8;
 	f32 one;
 	f32 z;
 	f64 radians;
@@ -7377,7 +7378,7 @@ const u32 jtbl_800AE4E0_7E990[14] = {
 	0x8007033C, 0x8007037C, 0x8007035C, 0x8007036C,
 	0x8007032C, 0x8007034C,
 };
-const f64 D_800AE518_7E9C8[1] = { 0.69999999999999996 };
+const ShadowGeometryConstant D_800AE518_7E9C8 = { 0.69999999999999996 };
 const f64 D_800AE520_7E9D0[1] = { 35 };
 const u32 jtbl_800AE528_7E9D8[91] = {
 	0x800739B4, 0x800739D8, 0x800739FC, 0x80073A20,

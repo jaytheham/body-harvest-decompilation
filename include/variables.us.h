@@ -3955,7 +3955,7 @@ extern const char D_800AE468_7E918[];
 extern const char D_800AE49C_7E94C[];
 extern const char D_800AE4C8_7E978[];
 extern const u32 jtbl_800AE4E0_7E990[];
-extern const f64 D_800AE518_7E9C8[];
+extern const ShadowGeometryConstant D_800AE518_7E9C8;
 extern const f64 D_800AE520_7E9D0[];
 extern const u32 jtbl_800AE528_7E9D8[];
 extern const u32 jtbl_800AE694_7EB44[];
