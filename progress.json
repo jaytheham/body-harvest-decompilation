@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-14T18:34:57Z",
-  "commit": "fa7b0cc6",
-  "commit_timestamp": "2026-10-15T07:34:03+13:00",
+  "generated": "2026-10-14T18:48:06Z",
+  "commit": "2fab79ea",
+  "commit_timestamp": "2026-10-15T07:47:10+13:00",
   "overall": {
     "total_functions": 3058,
     "matched": 2558,
@@ -141,7 +141,7 @@
       "asm_stubs": 0,
       "total": 28,
       "matched_pct": 89.3,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/1B060.c",
@@ -211,7 +211,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 97.3,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "core/AD60.c",
@@ -2301,7 +2301,7 @@
       "asm_stubs": 0,
       "total": 14,
       "matched_pct": 57.1,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/AAA70.c",
@@ -2361,7 +2361,7 @@
       "asm_stubs": 0,
       "total": 282,
       "matched_pct": 79.1,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/F6A50.c",
@@ -2411,7 +2411,7 @@
       "asm_stubs": 0,
       "total": 15,
       "matched_pct": 60.0,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/buildings.c",
@@ -2421,7 +2421,7 @@
       "asm_stubs": 0,
       "total": 106,
       "matched_pct": 67.0,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/cheats.c",
@@ -2587,9 +2587,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 84,
-      "matched": 1634,
-      "non_matching": 370,
+      "files": 80,
+      "matched": 1371,
+      "non_matching": 263,
       "asm_stubs": 1
     },
     {
@@ -2601,9 +2601,9 @@
     },
     {
       "name": "lunarlaurus",
-      "files": 7,
-      "matched": 168,
-      "non_matching": 30,
+      "files": 11,
+      "matched": 431,
+      "non_matching": 137,
       "asm_stubs": 0
     },
     {
@@ -2876,7 +2876,7 @@
     },
     {
       "date": "2026-10-11",
-      "commit": "fa7b0cc",
+      "commit": "2fab79e",
       "matched": 2558,
       "non_matching": 499,
       "total": 3058
