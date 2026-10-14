@@ -5842,50 +5842,36 @@ void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 	arg0->unk10 = 0;
 }
 
-/* Direction basis snapshots preserve the target zero/one products. Allocation remains unresolved. */
-#ifdef NON_MATCHING
+/* Integer basis factors preserve the original zero/one products. */
 void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
-	Vec3f direction;
-	f32 *vector;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
+	/* Preserve IDO's local homes and trigonometric spill placement. */
+	s32 pad0[7];
 	f32 cosY;
 	f32 sinY;
+	s32 pad1;
 	f32 sinX;
 	f32 cosX;
-	f32 zero;
-	s32 unused8;
-	f32 one;
+	s32 pad2;
+	f32 scale;
+	s32 pad3;
 	f32 z;
 	f64 radians;
 	f64 degrees;
 
 	radians = D_800AEA40_7EEF0[0];
 	degrees = D_800AEA48_7EEF8[0];
-	sinY = sinf((f32)((f64)(f32)arg0->unk12 * radians / degrees));
-	cosY = cosf((f32)((f64)(f32)arg0->unk12 * radians / degrees));
-	sinX = sinf((f32)((f64)(f32)arg0->unk10 * radians / degrees));
-	cosX = cosf((f32)((f64)(f32)arg0->unk10 * radians / degrees));
-	vector = &direction.x;
-	vector[0] = 0.0f;
-	vector[1] = 0.0f;
-	zero = vector[0];
+	sinY = sinf((f32)((f32)arg0->unk12 * radians / degrees));
+	cosY = cosf((f32)((f32)arg0->unk12 * radians / degrees));
+	sinX = sinf((f32)((f32)arg0->unk10 * radians / degrees));
+	cosX = cosf((f32)((f32)arg0->unk10 * radians / degrees));
+
 	scale = 100.0f;
-	vector[2] = 1.0f;
-	 one = vector[2];
-	z = zero * sinX + one * cosX;
-	arg1->l.dir[0] = (s32)(-(z * sinY + zero * cosY) * scale);
-	arg1->l.dir[1] = (s32)(-(zero * cosX - one * sinX) * scale);
-	arg1->l.dir[2] = (s32)(-(z * cosY - zero * sinY) * scale);
+
+	z = 0 * sinX + 1 * cosX;
+	arg1->l.dir[0] = (-(z * sinY + 0 * cosY) * scale);
+	arg1->l.dir[1] = (-(0 * cosX - 1 * sinX) * scale);
+	arg1->l.dir[2] = (-(z * cosY - 0 * sinY) * scale);
 }
-
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F3F8_4F8A8.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(4355)
