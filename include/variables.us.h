@@ -2943,6 +2943,8 @@ extern const CameraFadeScale D_801456E8_154698;
 extern const CameraFadeScale D_801456F0_1546A0;
 extern s8 D_8016015F;
 extern u8 D_80140CF8_14FCA8;
+extern u8 D_80140CF8_Set;
+extern u8 D_80140CF8_Reset;
 extern s16 D_80140CFC_14FCAC;
 extern s16 D_80140CFC_Reset;
 extern s16 D_80140CFC_Decrement;

@@ -297,33 +297,35 @@ void func_80133288_142238(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// CURRENT(967)
+// Matched: on-foot orbit and recenter camera
 // AI - On-foot camera orbit/recenter
-#ifdef NON_MATCHING
 void func_801333D0_142380(Unk80160080 *arg0) {
 	Vec3f sp3C;
 	s32 temp_v0;
- u8 one = 1;
 	VehicleInstance *vehicle;
 	f32 temp_f20;
 
 	vehicle = D_80052B34;
 	if (D_801600F0 == 0) {
+		if (D_80145698_154648[0]) {} /* Three eliminated reads retain IDO's constant and zero registers. */
+		if (D_80145698_154648[0]) {}
+		if (D_80145698_154648[0]) {}
+
 
 		D_8016011C = 0.0f;
 		D_80160120 = 0.0f;
 		D_80160124 = 0.0f;
 		D_80160128 = 0.0f;
-		D_8016012C = 0.1f;
-		D_80160130 = 0.1f;
-		D_80160134.value = 0.1f;
-		D_80160138.value = 0.1f;
-		arg0->unk58 = vehicle->unkE;
+		D_8016012C = D_80145698_154648[0];
+		D_80160130 = D_80145698_154648[0];
+		D_80160134.value = D_80145698_154648[0];
+		D_80160138.value = D_80145698_154648[0];
+		arg0->unk58 = D_80052B34->unkE;
 	}
 
 	if (currentControllerStates[0].button & 4) {
-		D_80160190 = one;
-		D_80140CF8_14FCA8 = 0;
+		D_80160190 = 1;
+		D_80140CF8_Reset = 0;
 	}
 
 	if (D_80160190 == 1) {
@@ -336,13 +338,13 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 		}
 
 		if (((-temp_v0 < temp_v0) ? temp_v0 : -temp_v0) >= 1001) {
-			D_80140CF8_14FCA8 = one;
+			D_80140CF8_Set = 1;
 		}
 
 		if ((((-temp_v0 < temp_v0) ? temp_v0 : -temp_v0) < 200) && (D_80140CF8_14FCA8 == 1)) {
 			arg0->unk58 = D_80052B34->unkE;
 			D_80160190 = 0;
-			D_80140CF8_14FCA8 = 0;
+			D_80140CF8_Reset = 0;
 		}
 	}
 
@@ -368,9 +370,7 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 	sp3C.z = (f32)(vehicle->unk4 - (((f32)sins((u16)arg0->unk58) / 32768.0) * temp_f20));
 	func_801336CC_14267C(arg0, &sp3C);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801333D0_142380.s")
-#endif
+
 
 // AI - Compute camera position from target
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
