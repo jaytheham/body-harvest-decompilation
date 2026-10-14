@@ -1684,7 +1684,7 @@ void func_801365E0_145590(void) {
 #endif
 
 // https://decomp.me/scratch/NQ4OJ
-// CURRENT(375)
+// CURRENT(275)
 // Check if player is reading signpost
 // AI - Handle signpost interaction on button press
 #ifdef NON_MATCHING
@@ -1699,8 +1699,8 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	u8 temp_t6;
 	temp_v0 = D_8015FAD0[arg1].unk1E - 0x2000;
 	sp1C = &D_80258330[temp_v0];
-	sp32 = (sp1C->unk0 << 8) + 0x80;
-	sp30 = (sp1C->unk1 << 8) + 0x80;
+	sp32 = (s16)(sp1C->unk0 << 8) + 0x80;
+	sp30 = (s16)(sp1C->unk1 << 8) + 0x80;
 	sp28 = temp_v0;
 	if (!isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A))
 	{
