@@ -20,3 +20,6 @@ spills at sp+0x34/sp+0x38 while leaving the X sine at sp+0x2C. Keep the total
 padding unchanged for the 0x58 frame. Removing redundant output-word casts and
 explicit widening before multiplication by the cached double is byte-neutral.
 The complete 98-instruction function has diff score zero and the full ROM is OK.
+## Interior debug camera increments
+
+func_80081764_169824 matches with a word-sized button cache, a fresh direct button test after the helper call, and camera height multiplied by integer 2. Use postfix ++ and -- for the one-unit floating coordinate and distance changes. Replacing these with += one or -= one makes IDO rematerialize global store addresses through AT; increment/decrement retains the target shared vector base in s0 and distance address in v1. Pointer locals, array representations, and volatile accesses do not fix the full function. Integer-address casts recover many stores but disturb alias analysis, button registers, and printf scheduling. The ordinary Vec3f representation and direct increments avoid those casts. Full ROM checksum OK verifies the match.

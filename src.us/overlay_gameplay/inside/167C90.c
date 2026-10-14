@@ -743,37 +743,33 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s")
 #endif
 
-// CURRENT(2495)
-#ifdef NON_MATCHING
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation
 void func_80081764_169824(void) {
-	u16 buttons;
-	f32 one;
+    s32 buttons;
 
 	buttons = currentControllerStates[CONTROLLER_TWO].button;
-	one = 1.0f;
 
 	if (buttons & 0x2000) {
 		if (buttons & 0x800) {
-			D_800E73F0.z += one;
+			D_800E73F0.z++;
 		}
 		if (buttons & 0x400) {
-			D_800E73F0.z -= one;
+			D_800E73F0.z--;
 		}
 	} else {
 		if (buttons & 0x800) {
-			D_800E73F0.y += one;
+			D_800E73F0.y++;
 		}
 		if (buttons & 0x400) {
-			D_800E73F0.y -= one;
+			D_800E73F0.y--;
 		}
 	}
 
 	if (buttons & 0x200) {
-		D_800E73F0.x += one;
+		D_800E73F0.x++;
 	}
 	if (buttons & 0x100) {
-		D_800E73F0.x -= one;
+		D_800E73F0.x--;
 	}
 
 	if (buttons & 2) {
@@ -791,16 +787,15 @@ void func_80081764_169824(void) {
 	}
 
 	if (buttons & 0x8000) {
-		D_800E73E8 += one;
+		D_800E73E8++;
 	}
 	if (buttons & 0x4000) {
-		D_800E73E8 -= one;
+		D_800E73E8--;
 	}
 
 	func_800033D4_3FD4(0x20, 1);
 
-	buttons = currentControllerStates[CONTROLLER_TWO].button;
-	if (buttons & 0x20) {
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x20) {
 		osSyncPrintf(&D_800A4DDC_18CE9C);
 		osSyncPrintf(&D_800A4DE0_18CEA0);
 		osSyncPrintf(&D_800A4E14_18CED4, (f64) D_800E73F0.x, (f64) D_800E73F0.y, (f64) D_800E73F0.z, D_800E73E0, D_800E73E4, (f64) D_800E73E8);
@@ -809,16 +804,14 @@ void func_80081764_169824(void) {
 
 	func_80080190_168250(&D_800E7410, &D_800E73F0, D_800E73E0, D_800E73E4, D_800E73E8);
 	D_8008DDF4_175EB4 = D_800E7410.x;
-	D_8008DDF8_175EB8 = D_800E7410.y * 2.0f;
+	D_8008DDF8_175EB8 = D_800E7410.y * 2;
 	D_8008DDFC_175EBC = D_800E7410.z;
 
 	D_800E659C = D_800E73F0.x;
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081764_169824.s")
-#endif
+
 
 // AI - Store pointer to camera waypoint table
 void func_80081A18_169AD8(s32 arg0) {
