@@ -2974,48 +2974,32 @@ void func_8008A928_5ADD8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A928_5ADD8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2027)
-// AI - Spawns a type-7 child particle, copying position from parent with random velocity offsets
-void func_8008AEC8_5B378(s32 arg0) {
+void func_8008AEC8_5B378(u8 arg0) {
 	s16 srcIdx;
+	s32 pad;
 	s16 dstIdx;
-	u8 id;
-	u8 *s0;
-	u8 *s1;
-	s8 sx;
-	s8 sy;
-	s8 sz;
+	Unk8008B264NodeSub *destination;
+	Frontend52690Unk8Motion *source;
 
-	id = arg0 & 0xFF;
-	srcIdx = D_800DE130[id].unk6;
-	dstIdx = func_80083B7C_5402C(id);
+	srcIdx = D_800DE130[arg0].unk6;
+	dstIdx = func_80083B7C_5402C(arg0);
 	if (dstIdx != -3) {
-		s0 = (u8 *)&D_800DE840[dstIdx].unk8;
-		*(s16 *)(s0 - 6) = (func_800038E0_44E0() % 0x1C) + 0x1C;
-
-		s1 = (u8 *)&D_800DE840[srcIdx].unk8;
-		s0[6] = D_800AA640[s1[0xA] * 3];
-		s0[7] = D_800AA640[(s1[0xA] * 3) + 1];
-		s0[8] = D_800AA640[(s1[0xA] * 3) + 2];
-		s0[9] = 0x8C;
-
-		*(s16 *)&s0[0] = *(s16 *)&s1[0];
-		*(s16 *)&s0[2] = *(s16 *)&s1[2];
-		*(s16 *)&s0[4] = *(s16 *)&s1[4];
-		sx = (s8)s1[6];
-		sy = (s8)s1[7];
-		sz = (s8)s1[8];
-
-		s0[0xA] = (func_800038E0_44E0() % 4) + sx - 2;
-		s0[0xB] = (func_800038E0_44E0() % 4) + sy - 2;
-		s0[0xC] = (func_800038E0_44E0() % 4) + sz - 2;
-		s0[0xD] = 0;
+		destination = (Unk8008B264NodeSub *)(s32)&D_800DE840[dstIdx].unk8;
+		D_800DE840[dstIdx].unk2 = (func_800038E0_44E0() % 0x1C) + 0x1C;
+		source = (Frontend52690Unk8Motion *)(s32)&D_800DE840[srcIdx].unk8;
+		destination->unk6 = D_800AA640[source->unkA * 3];
+		destination->unk7 = D_800AA640[source->unkA * 3 + 1];
+		destination->unk8 = D_800AA640[source->unkA * 3 + 2];
+		destination->unk9 = 0x8C;
+		destination->unk0 = source->unk0;
+		destination->unk2 = source->unk2;
+		destination->unk4 = source->unk4;
+		destination->unkA = (func_800038E0_44E0() % 4) + source->unk6 - 2;
+		destination->unkB = (func_800038E0_44E0() % 4) + source->unk7 - 2;
+		destination->unkC = (func_800038E0_44E0() % 4) + source->unk8 - 2;
+		destination->unkD = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008AEC8_5B378.s")
-#endif
 
 /* Allocate entry with given params; returns allocId or 0xFB on failure */
 // AI - Allocates a type-7 particle entry with position, color, and size
