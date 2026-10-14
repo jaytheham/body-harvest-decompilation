@@ -3059,40 +3059,40 @@ void func_8008B19C_5B64C(u8 arg0, u8 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2739)
-// AI - Updates type-7 particles: ages children, updates velocity/size, spawns new particles periodically
 void func_8008B264_5B714(u8 arg0) {
+	u8 id;
 	s16 idx;
 	s16 nextIdx;
 	Unk800DE130 *entry;
 	Unk800DE840 *node;
 	Unk8008B264NodeSub *nodeSub;
 
-	entry = &D_800DE130[arg0 & 0xFF];
-	idx = D_800DE840[entry->unk6].unk4;
+	id = arg0;
+	entry = &D_800DE130[id];
+	idx = entry->unk6;
+	idx = D_800DE840[idx].unk4;
 
 	while ((idx != -5) && (idx != -6)) {
 		node = &D_800DE840[idx];
-		nodeSub = (Unk8008B264NodeSub *) &node->unk8;
+		nodeSub = (Unk8008B264NodeSub *)&node->unk8;
 
 		if (node->unk11 < 0xB) {
 			if ((entry->unk4 < 3) && (D_800DE840[entry->unk6].unk11 == 0)) {
-				func_800840C4_54574(arg0 & 0xFF);
-				func_80083B14_53FC4(arg0 & 0xFF);
+				func_800840C4_54574(id);
+				func_80083B14_53FC4(id);
 				return;
 			}
 
 			nextIdx = node->unk4;
-			func_80083DBC_5426C(idx, arg0 & 0xFF);
+			func_80083DBC_5426C(idx, id);
 			idx = nextIdx;
 		} else {
 			if (nodeSub->unkD == 0) {
 				nodeSub->unk9 = (nodeSub->unk9 - (func_800038E0_44E0() % 5)) - 5;
-				node->unk2 = node->unk2 + (func_800038E0_44E0() % 3) + 3;
+				node->unk2 += (func_800038E0_44E0() % 3) + 3;
 			} else {
 				nodeSub->unk9 = (nodeSub->unk9 - (func_800038E0_44E0() % 5)) - 5;
-				node->unk2 = node->unk2 + (func_800038E0_44E0() % 5) + 5;
+				node->unk2 += (func_800038E0_44E0() % 5) + 5;
 			}
 
 			nodeSub->unk0 += nodeSub->unkA;
@@ -3101,17 +3101,14 @@ void func_8008B264_5B714(u8 arg0) {
 			nodeSub->unk6--;
 			nodeSub->unk7--;
 			nodeSub->unk8--;
-			idx = node->unk4;
+			idx = D_800DE840[idx].unk4;
 		}
 	}
 
 	if (D_800DE840[entry->unk6].unk11 == 1) {
-		func_8008AEC8_5B378(arg0 & 0xFF);
+		func_8008AEC8_5B378(id);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008B264_5B714.s")
-#endif
 
 // AI - Renders type-4 particles as billboarded sprites with loaded texture
 void func_8008B534_5B9E4(u8 arg0) {
