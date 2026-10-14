@@ -52,3 +52,20 @@ reproduces the `0x70` frame and the target's coordinate and color homes.
 The successful candidate was checked against the next function
 `func_800A3CD0_B2C80`: diff score zero and `tools/make.ps1` reported
 `build/bh.us.z64: OK`.
+
+## Frontend texture scroll state
+
+`func_80081CAC_5215C` has the same private-storage pattern for its initialized
+scroll word. A named local produced an extra spill or a saved `s0`; reading an
+external word directly caused reloads around display-list writes. Function-local
+static storage allows the original `t4` load, in-place decrement, and final store.
+An empty `if (D_800949D0_64E80) {}` before the render-tile macro keeps the read at
+the original point while emitting no branch. One unused word before the Gfx
+pointer reserves the target 0x30 frame.
+
+The existing initialized data block was transferred from `data_64E00.c` into
+`40720.c`, with its declarations before and after the private word in their
+original order. The YAML .data owner at 0x64E00 becomes `40720`; all initialized
+data bytes and addresses remain unchanged, as does the rodata layout. The old
+external declaration for the now-private word is removed. Diff score zero and
+`tools/make.ps1` reporting `build/bh.us.z64: OK` validate the complete layout.
