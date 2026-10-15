@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-15T06:20:12Z",
-  "commit": "b5365fa2",
-  "commit_timestamp": "2026-10-15T19:19:40+13:00",
+  "generated": "2026-10-15T06:26:33Z",
+  "commit": "760a2c4a",
+  "commit_timestamp": "2026-10-15T19:25:42+13:00",
   "overall": {
     "total_functions": 3058,
     "matched": 2568,
@@ -2351,7 +2351,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 80.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
@@ -2587,16 +2587,16 @@
   "contributors": [
     {
       "name": "lunarlaurus",
-      "files": 44,
-      "matched": 1861,
-      "non_matching": 435,
+      "files": 43,
+      "matched": 1801,
+      "non_matching": 420,
       "asm_stubs": 0
     },
     {
       "name": "jaytheham",
-      "files": 55,
-      "matched": 370,
-      "non_matching": 54,
+      "files": 56,
+      "matched": 430,
+      "non_matching": 69,
       "asm_stubs": 1
     },
     {
@@ -2869,7 +2869,7 @@
     },
     {
       "date": "2026-10-11",
-      "commit": "b5365fa",
+      "commit": "760a2c4",
       "matched": 2568,
       "non_matching": 489,
       "total": 3058
