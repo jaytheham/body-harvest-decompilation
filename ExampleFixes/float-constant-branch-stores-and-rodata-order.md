@@ -26,3 +26,48 @@ if (currentLevel == LEVEL_GREECE) {
 if (temp) {
 }
 ```
+
+## An otherwise exact function can still depend on source-line order
+
+The last mismatch in `func_800F1DDC_100D8C` was two independent instructions:
+
+```asm
+/* 101474 */ lui a3, 0x4000     /* effect size 2.0f */
+/* 101478 */ lui at, 0x8015     /* D_80157FE4_Write store address */
+```
+
+The candidate emitted these in the opposite order. Every other instruction,
+register, stack offset, and literal-pool address already matched. Reordering
+assignments, introducing float temporaries, changing literal forms, comma
+expressions, and grouping physical source lines did not fix it.
+
+IDO also uses preprocessor source-line attribution when scheduling. Attributing
+the effect call to an earlier line than the preceding zero store fixes this
+last swap without adding an instruction:
+
+```c
+D_80157FE4_Write = 0.0f;
+#line 1
+func_80135D44_144CF4(x, level, z, 2.0f);
+#line 1073
+```
+
+The second directive restores the physical line number of the following source
+line; update that number if lines above this block change. The significant
+ordering is that the call is attributed before the reset store. A macro wrapper
+and putting the statements on one physical line did not reproduce it.
+
+Use this only when the remaining differences concern instruction order; it does
+not repair incorrect control flow or register allocation.
+The complete US ROM verifies `build/bh.us.z64: OK` and the function diff score is
+zero. See the decomp workbench `docs/START_HERE.md` source-line attribution
+probe guidance for the same class of compiler behavior.
+
+The shared EU build also needs the existing US aliases in its linker input:
+
+```c
+D_80157FE4_Write = D_80157FE4;
+D_80157F9F = D_80157F9E + 1;
+```
+
+Both full ROMs verify OK, including `build.eu/bh.eu.z64`.
