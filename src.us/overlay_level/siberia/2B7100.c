@@ -1161,7 +1161,7 @@ void func_802D5980_2B7DB0(void)
 	}
 	if (func_8000726C_7E6C(0x1C) != 0)
 	{
-		*((u16 *)(((u8 *)vehicleInstances) + 0xD10)) |= VEHICLE_FLAG_UNK5;
+		*((u16 *)(((u8 *)vehicleInstances) + 0xD10)) |= VEHICLE_FLAG_SCUD_LAUNCHED;
 	}
 }
 

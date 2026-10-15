@@ -735,7 +735,7 @@ void func_802D5578_18E088(void) {
 		func_800074BC_80BC(func_802D5578_18E088);
 	}
 	if ((vehicleInstances[84].unk0 < 0x1000) && (vehicleInstances[84].unk4 < -0x6B00)) {
-		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & ~VEHICLE_FLAG_UNKB);
+		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & ~VEHICLE_FLAG_PATH_GUIDED);
 		func_800074BC_80BC(func_802D5578_18E088);
 	}
 	D_802DE466 = D_802DE466 + 1;

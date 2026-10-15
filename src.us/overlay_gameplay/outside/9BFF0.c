@@ -780,7 +780,7 @@ void func_8008D71C_9C6CC(u32 arg0)
 			}
 		}
 	}
-	else if ((alienInstances[target].typeIndex == 0x19) && (!(alienInstances[target].unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKG))))
+	else if ((alienInstances[target].typeIndex == 0x19) && (!(alienInstances[target].unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKG))))
 	{
 		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF;
 		alienInstances[target].unk20 |= ALIEN_FLAG_UNKG;
@@ -800,7 +800,7 @@ s32 func_8008D978_9C928(u8 arg0)
 	u8 unk25 = inst->unk25;
 	if (unk25 != 0xFF)
 	{
-		if (alienInstances[unk25].unk20 & (ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKM))
+		if (alienInstances[unk25].unk20 & (ALIEN_FLAG_UNKL | ALIEN_FLAG_DESPAWNING))
 		{
 			if ((*(inst = &alienInstances[alienInstances[unk25].unk25])).unk20 & ALIEN_FLAG_UNKE)
 			{
@@ -943,7 +943,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	{
 		var_t0 = 4;
 	}
-	if (alienInstances[arg0].unk25 == 0xFF || (alienInstances[arg0].unk25 != 0xFF && alienInstances[alienInstances[arg0].unk25].unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL)))
+	if (alienInstances[arg0].unk25 == 0xFF || (alienInstances[arg0].unk25 != 0xFF && alienInstances[alienInstances[arg0].unk25].unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)))
 	{
 		func_80088760_97710(&alienInstances[arg0]);
 	}

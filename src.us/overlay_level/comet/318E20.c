@@ -3592,7 +3592,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 		}
 		if (D_80052A8C % 3 == 0) { func_800CA5EC_D959C(temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, -1, 0, 0, 0x2D, 5, 8, 0x80, 0xFF, 0, 0, 0); }
 		if (temp_s0->hitPoints < 0xB) {
-			if (!(temp_s0->unk20 & ALIEN_FLAG_UNKM)) { func_80018D7C_1997C(0xDA); }
+			if (!(temp_s0->unk20 & ALIEN_FLAG_DESPAWNING)) { func_80018D7C_1997C(0xDA); }
 			func_80087AAC_96A5C(arg0);
 		}
 	}

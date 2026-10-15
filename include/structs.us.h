@@ -64,14 +64,14 @@ typedef enum Level {
 } Level;
 
 typedef enum GameStateFlags {
-	GAME_STATE_FLAG_UNK1 = 1,
-	GAME_STATE_FLAG_BLACK_ADAM = 2,
-	GAME_STATE_FLAG_UNK3 = 4,
-	GAME_STATE_FLAG_UNK4 = 8,
-	GAME_STATE_FLAG_UNK5 = 0x10,
-	GAME_STATE_FLAG_UNK6 = 0x20,
-	GAME_STATE_FLAG_EASY_MODE = 0x40,
-	GAME_STATE_FLAG_UNK8 = 0x80
+	GAME_STATE_FLAG_UNK1 = 1, // AI - D_80031420 is the saved options word, not a set of independent flags: bits 0-1 blood setting (0, 1 or 3 stored; a nonzero value shows blood, 3 shows full gore), bit 2 aim option, bits 3-4 music volume 0-3, bits 5-6 sound effect volume 0-3; read from the code (the options menu in 40720.c and the audio setters in 12C80.c)
+	GAME_STATE_FLAG_BLACK_ADAM = 2, // AI - bit 1 is the upper bit of the blood setting (mask 3); no separate reader of it was found
+	GAME_STATE_FLAG_UNK3 = 4, // AI - the aim option: flips the sign the stick is added to the aim yaw with (101840.c); read from the code
+	GAME_STATE_FLAG_UNK4 = 8, // AI - low bit of the music volume (mask 0x18, shift 3)
+	GAME_STATE_FLAG_UNK5 = 0x10, // AI - high bit of the music volume (mask 0x18, shift 3)
+	GAME_STATE_FLAG_UNK6 = 0x20, // AI - low bit of the sound effect volume (mask 0x60, shift 5)
+	GAME_STATE_FLAG_EASY_MODE = 0x40, // AI - bit 6 is the upper bit of the sound effect volume (mask 0x60); no difficulty reader was found
+	GAME_STATE_FLAG_UNK8 = 0x80 // AI - no use found; clear in the default 0x7B
 } GameStateFlags;
 
 typedef enum PlayerStateFlags {
@@ -203,7 +203,7 @@ typedef enum
 } AnimationType;
 
 typedef enum {
-	ALIEN_WAVE_TYPE_UNK1F = 0x1F, // Stage Processor?
+	ALIEN_WAVE_TYPE_PROCESSOR = 0x1F, // Stage Processor (AI - confirmed: row 31 of the wave table is a single type 0x1A alien, and trigger.c queues a trigger on its death that removes the stage's other waves and queues the stage end; read from the code)
 } AlienWaveType;
 
 typedef enum {
@@ -1002,22 +1002,22 @@ typedef struct {
 } VehicleSpawnOffset; /* size = 0x04 */
 
 typedef enum VehicleFlags {
-	VEHICLE_FLAG_UNK1 = 1, // vehicle was moved this frame and still needs physics/collision
+	VEHICLE_FLAG_UNK1 = 1, // vehicle was moved this frame and still needs physics/collision (AI - set whenever the vehicle is moved or pushed and cleared once it is grounded with every velocity zero; the collision resolver func_80110FB4_11FF64 runs only while it is set; read from the code)
 	VEHICLE_FLAG_AIRBORNE = 2,
 	VEHICLE_FLAG_HALF_ON_BRIDGE = 4,
 	VEHICLE_FLAG_UNDER_BRIDGE = 8,
-	VEHICLE_FLAG_UNK5 = 0x10, // SCUD nuke launched
-	VEHICLE_FLAG_UNK6 = 0x20,
-	VEHICLE_FLAG_UNK7 = 0x40, // Is inside current shield wall bounds
+	VEHICLE_FLAG_SCUD_LAUNCHED = 0x10, // SCUD nuke launched (AI - confirmed: blocks a second SCUD launch, and the death handler creates the nuke only while it is clear; read from the code)
+	VEHICLE_FLAG_UNK6 = 0x20, // AI - no use on a vehicle instance found; the instance flags start as a copy of the type word unk4C, so it may only be inherited from there
+	VEHICLE_FLAG_INSIDE_PLAY_BOUNDS = 0x40, // Is inside current shield wall bounds (AI - confirmed, and the main vehicle update and the radius scans process only vehicles with it set, so vehicles outside the wall are frozen; func_800FAC90_109C40 sets it from func_800B0D10_BFCC0; read from the code)
 	VEHICLE_FLAG_SHIELDED = 0x80, // Shielded - blocks damage (AI - measured: the invincibility cheat's shield sets it on the player, flags 0x8161 to 0x81E1 in the high half of the word at +0x20, and drowning still took the hit points from 600 to 0 in 19 s with it set, so it does not stop that damage)
-	VEHICLE_FLAG_UNK9 = 0x100,
-	VEHICLE_FLAG_UNKA = 0x200,
-	VEHICLE_FLAG_UNKB = 0x400, // Is autonomous grid-guided vehicle (turret / road-follower)
+	VEHICLE_FLAG_UNK9 = 0x100, // AI - no use on a vehicle instance found; bit 0x100 of the type word unk4C is tested next to water-level comparisons, so it may only be inherited from there
+	VEHICLE_FLAG_UNKA = 0x200, // AI - no use found on a vehicle instance or its type word
+	VEHICLE_FLAG_PATH_GUIDED = 0x400, // Is autonomous grid-guided vehicle (turret / road-follower) (AI - confirmed: set only by func_800FC90C_10B8BC, which stores the grid-cell targets; the driver input step returns early for it and the death handler counts it as an NPC vehicle; read from the code)
 	VEHICLE_FLAG_ON_BRIDGE = 0x800,
-	VEHICLE_FLAG_UNKD = 0x1000, // Is player being grabbed / in interaction
+	VEHICLE_FLAG_CAPTURED_BY_ALIEN = 0x1000, // Is player being grabbed / in interaction (AI - confirmed: set on the player vehicle while a Human Capture Unit holds the on-foot player (func_8008D634_9C5E4, which refuses while SHIELDED); read from the code)
 	VEHICLE_FLAG_DAMAGE_FLASH = 0x2000, // Draw damage flash this frame (AI - seen: set with each hit-point loss while drowning, cleared at death; the draw code tests it with the frame counter, so it flickers)
-	VEHICLE_FLAG_UNKF = 0x4000,
-	VEHICLE_FLAG_UNK = 0x8000 // Is active, gates physics/render/death
+	VEHICLE_FLAG_UNKF = 0x4000, // AI - no use found on a vehicle instance
+	VEHICLE_FLAG_ACTIVE = 0x8000 // Is active, gates physics/render/death (AI - confirmed: the active-vehicle list is built from it and the death handler returns at once when it is clear; read from the code)
 } VehicleFlags;
 
 typedef struct {
@@ -1145,38 +1145,38 @@ typedef struct {
 typedef struct {s16 x; s16 z;} Vec2_S16;
 
 typedef enum AlienFlags {
-	ALIEN_FLAG_UNK1 = 1, // walker slot index (bit 1)?
+	ALIEN_FLAG_UNK1 = 1, // walker slot index (bit 1)? (AI - the low three bits together are the walker slot index 0-7, meaningful while UNKK is set; read from the code)
 	ALIEN_FLAG_UNK2 = 2, // walker slot index (bit 2)?
 	ALIEN_FLAG_UNK3 = 4, // walker slot index (bit 3)?
-	ALIEN_FLAG_UNK4 = 8,
-	ALIEN_FLAG_UNK5 = 0x10, // close-range attack / attack-timer active
+	ALIEN_FLAG_UNK4 = 8, // AI - no use found in the C sources
+	ALIEN_FLAG_UNK5 = 0x10, // close-range attack / attack-timer active (AI - while set the alien does not turn toward its desired heading; cleared when the attack countdown reaches 0; read from the code)
 	ALIEN_FLAG_TARGET_OBJ = 0x20,
 	ALIEN_FLAG_AWAY = 0x40, // in motion toward/away from a target (engagement)?
 	ALIEN_FLAG_TARGET_VEHICLE = 0x80,
 	ALIEN_FLAG_TARGET_PT = 0x100, // Set when targeting a building? targeting a point (pathing waypoint)?
-	ALIEN_FLAG_UNKA = 0x200, // walker/simple body (uses leg-walker, throttled updates)
-	ALIEN_FLAG_UNKB = 0x400, // active object has a physical body / participates in updates
-	ALIEN_FLAG_UNKC = 0x800, // approaching the target
-	ALIEN_FLAG_UNKD = 0x1000, // has a movement/attack target
-	ALIEN_FLAG_UNKE = 0x2000, // is attacking. Harvester uses this for isSubDrone #1 alive?
-	ALIEN_FLAG_UNKF = 0x4000, // timed attack/dive state. Harvester uses this for isSubDrone #2 alive?
-	ALIEN_FLAG_UNKG = 0x8000, // attacking / firing (specific attack anim). Processor=use skeleton model? Harvester uses this for isSubDrone #3 alive?
-	ALIEN_FLAG_UNKH = 0x10000, // In attach range of target. Harvester uses this for isSubDrone #4 alive?
-	ALIEN_FLAG_UNKI = 0x20000,
-	ALIEN_FLAG_UNKJ = 0x40000, // Knocked back. Harvester uses to block drone spawn?
-	ALIEN_FLAG_UNKK = 0x80000, // has walker body, see bits 0-2. Harvester uses for drone spawn is in progress.
-	ALIEN_FLAG_UNKL = 0x100000, // is alive / active
-	ALIEN_FLAG_UNKM = 0x200000, // enraged / alerted (low-HP berserk) ?
+	ALIEN_FLAG_UNKA = 0x200, // walker/simple body (uses leg-walker, throttled updates) (AI - correction, not a walker (that is UNKK): set when the alien is added to the active list, cleared on its first update, which runs on a frame divisible by 4; read from the code)
+	ALIEN_FLAG_UNKB = 0x400, // active object has a physical body / participates in updates (AI - set when the alien is added to the active-object list D_8014D510 (at most 0x40) and cleared when it is removed; read from the code)
+	ALIEN_FLAG_UNKC = 0x800, // approaching the target (AI - correction: the heading code makes the alien circle its target, perpendicular to the direction to it, with UNKH picking the side; read from the code)
+	ALIEN_FLAG_UNKD = 0x1000, // has a movement/attack target (AI - not supported by the code read: it marks an action in progress that differs by alien type, e.g. a hop, a scripted attack animation or heading back to a parent)
+	ALIEN_FLAG_UNKE = 0x2000, // is attacking. Harvester uses this for isSubDrone #1 alive? (AI - holds for the Siberia, Java and Greece monsters; for the flea alien it means armed to explode, for the HCU holding a captured human; the sub-drone note was not found in the code read)
+	ALIEN_FLAG_UNKF = 0x4000, // timed attack/dive state. Harvester uses this for isSubDrone #2 alive? (AI - fits only the Siberia charger; for humans it means zombie or down, for the HCU docked at a Harvester; the sub-drone note was not found in the code read)
+	ALIEN_FLAG_UNKG = 0x8000, // attacking / firing (specific attack anim). Processor=use skeleton model? Harvester uses this for isSubDrone #3 alive? (AI - in most monsters a scripted animation is running, cleared when its keyframe table ends (func_800A3D00_B2CB0); on a Java turret child it means aimed at the target; the sub-drone note was not found in the code read)
+	ALIEN_FLAG_UNKH = 0x10000, // In attach range of target. Harvester uses this for isSubDrone #4 alive? (AI - overloaded: in the generic heading code it picks the side of the UNKC circling; several bosses reuse it for unrelated state; the attach-range and sub-drone claims were not found in the code read)
+	ALIEN_FLAG_UNKI = 0x20000, // AI - a follower slot: the alien target point is offset by its slot (unk27) so followers of one target spread out, and unk38 is the target; read from the code
+	ALIEN_FLAG_UNKJ = 0x40000, // Knocked back. Harvester uses to block drone spawn? (AI - also stops the facing (unk6) following the travel heading; set for knockback and circling, and permanently for types with type flag 0x2000; read from the code)
+	ALIEN_FLAG_UNKK = 0x80000, // has walker body, see bits 0-2. Harvester uses for drone spawn is in progress. (AI - confirmed: set with the walker slot in bits 0-2 at spawn and cleared when the slot is released)
+	ALIEN_FLAG_UNKL = 0x100000, // is alive / active (AI - correction: this is DEAD, not alive. Set at the end of the kill routine func_80088760_97710, which returns early if it is already set, and script opcode 0x9B reads it as is destroyed; read from the code)
+	ALIEN_FLAG_DESPAWNING = 0x200000, // enraged / alerted (low-HP berserk) ? (AI - correction: a removal countdown. func_80087AAC_96A5C sets it with a timer of about 2 seconds, the alien is then removed and drops no item; read from the code)
 	ALIEN_FLAG_INVINCIBLE = 0x400000,
 	ALIEN_FLAG_W = 0x800000,
 	ALIEN_FLAG_X = 0x1000000, // Is boss/special? Disables alien/alien collision?
 	ALIEN_FLAG_Y = 0x2000000, // Has a target building?
 	ALIEN_FLAG_Z = 0x4000000, // Left/right side leg, flyer aim point flip?
 	ALIEN_FLAG_PLAYER = 0x8000000, // Player detected / in range
-	ALIEN_FLAG_UNKN = 0x10000000, // is on-screen / in camera frustum
-	ALIEN_FLAG_UNKO = 0x20000000, // externally-positioned / special movement state ?
+	ALIEN_FLAG_IN_VIEW = 0x10000000, // is on-screen / in camera frustum (AI - set by the render visibility test each frame)
+	ALIEN_FLAG_UNKO = 0x20000000, // externally-positioned / special movement state ? (AI - while set the alien height is not snapped to the terrain; used for teleports and underground states; read from the code)
 	ALIEN_FLAG_FALL = 0x40000000, // Falling / in air
-	ALIEN_FLAG_UNKP = 0x80000000 // was just hit / damage flash
+	ALIEN_FLAG_UNKP = 0x80000000 // was just hit / damage flash (AI - set in the damage routine and cleared for every alien after drawing, so it lasts one frame)
 } AlienFlags;
 
 typedef struct {
