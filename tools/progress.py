@@ -89,8 +89,8 @@ SEGMENT_DISPLAY = {
 SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
 # C source roots of the NTSC build. src.us/core holds the files both versions compile; src.eu is
-# not counted here. It holds the PAL build's own gameplay-overlay and libultra files, which are
-# GLOBAL_ASM stubs (those overlays are not shared with NTSC yet); --version eu counts them.
+# not counted here. It holds the PAL build's own libultra file (sl.c), a GLOBAL_ASM stub; --version eu
+# counts it. Every gameplay and level overlay is shared with NTSC (shared_overlay_files.txt).
 SOURCE_ROOTS = ("src.us",)
 # C source roots of the PAL build, and the version macro its preprocessor defines.
 # The PAL build also compiles the files of shared_overlay_files.txt (see eu_source_roots); a root that names a single .c file is
@@ -109,35 +109,14 @@ VERSION_MACROS = frozenset({"VERSION_US", "VERSION_EU", "NON_MATCHING"})
 RE_DEFINED_COND = re.compile(r'(!?)\s*defined\s*(?:\(\s*(\w+)\s*\)|\s(\w+))')
 RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 
-# Shown by the EU page. The overlay figures were measured on 2026-10-12 with a scratch script (not committed):
-# every NTSC overlay function was compared with its EU counterpart, word by word in the two ROMs. 2216 of the 2354
-# functions in the eight overlays (108 byte-identical, 2108 differing only in jump targets and in address loads, a
-# lui and the instruction using its low half, with every address in RAM) pass that strict relocation test. Another
-# 130 have the same opcode and registers in every word but failed it (an immediate differed with no lui to resolve
-# it, or a low half did not resolve to a RAM address); the 16-bit differences of those immediates also occur among the
-# verified relocations, so they are probably relocations too, which was not verified. 2346 is the two groups together.
-# The split between the two groups depends on the rule used to resolve immediates: a later measurement with two other
-# rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as 2188 and 160
-# (docs/eu-port-notes.md), so the 94.14 percent is the result of one rule.
+# Shown by the EU page: what it counts, and the two ways its figures are misread.
 EU_NOTE = (
-    "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
-    "(src.us/core), the files of the overlays that are also shared (the second half of the frontend overlay and the "
-    "five level overlays, listed in shared_overlay_files.txt), and the stubs under src.eu for the rest of the three "
-    "gameplay overlays and the one libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, "
-    "so it cannot be counted "
-    "from the repository.\n"
-    "The core figures are the same functions as on the US page, so the two pages must not be summed. "
-    "Matching a function in a shared core file counts for both versions.\n"
-    "The other EU overlay files are not shared with NTSC yet, so their functions are still assembly stubs here, apart from "
-    "empty ones. Measured on 2026-10-12, by comparing the ROM words of every NTSC overlay function with its EU "
-    "counterpart: of the 2354 functions in the eight overlays, gameplay and level, 2216 (94.14 percent) are identical "
-    "to NTSC apart from relocations, checked by masking jump targets and the halves of address loads. Another 130 "
-    "failed that check, but their differing immediates match relocation differences seen elsewhere, so they are "
-    "probably relocations too; counting them, 2346 (99.66 percent) are identical or probably identical to NTSC "
-    "apart from relocations. The split between those two groups depends on the rule used to resolve immediates: two "
-    "other rules divided the 2348 functions with the same opcode and registers in every word as 2333 and 15, and as "
-    "2188 and 160, so read 94.14 percent as the result of one rule, not as a fixed property of the ROMs. "
-    "Sharing the overlays would lift these figures a great deal."
+    "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in "
+    "shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and "
+    "must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has "
+    "no tracked EU source.\n"
+    "Where PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is "
+    "matched on the US page and an ASM stub here until the difference is expressed in C."
 )
 
 
