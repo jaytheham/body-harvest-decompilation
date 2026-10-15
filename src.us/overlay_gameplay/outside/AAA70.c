@@ -1918,7 +1918,7 @@ s32 func_800A18CC_B087C(void) {
 // checkIfShouldOpenPauseMenu
 void func_800A1924_B08D4(void) {
 	if ((currentControllerStates[CONTROLLER_ONE].button & BUTTON_START) &&
-		(gameplayMode != GAMEPLAY_MODE_UNK3) &&
+		(gameplayMode != GAMEPLAY_MODE_LEVEL_START_CUTSCENE) &&
 		(gameplayMode != GAMEPLAY_MODE_UNKB) &&
 		(D_8004794C == 0) &&
 		(func_80018A58_19658() == 0) &&
@@ -2260,7 +2260,7 @@ s32 func_800A2A88_B1A38(void) {
 	if (D_80159320 & 0x10000) {
 		return 0;
 	}
-	if (gameplayMode == GAMEPLAY_MODE_UNK3) {
+	if (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE) {
 		return 0;
 	}
 	if (gameplayMode == GAMEPLAY_MODE_UNKB) {

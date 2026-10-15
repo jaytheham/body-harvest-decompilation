@@ -3099,7 +3099,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	waterX = water->unk3C;
 	waterZ = water->unk3E;
 	hiddenCount = 0;
-	if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_UNK3)) {
+	if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 		waterX = D_80157F44;
 		waterZ = D_80157F46;
 	}
@@ -3218,7 +3218,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 			}
 
 			worldXf = (f32)worldX;
-			if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_UNK3)) {
+			if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 				viewOrigin = &D_80157F08;
 			} else {
 				viewOrigin = D_80052B2C;

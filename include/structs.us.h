@@ -38,19 +38,19 @@ typedef enum GameplayMode {
 	GAMEPLAY_MODE_LEVEL_MAP = 0, // Actually something else?
 	GAMEPLAY_MODE_NORMAL = 1, // Normal gameplay
 	GAMEPLAY_MODE_PAUSE_MENU = 2, // pause menu
-	GAMEPLAY_MODE_UNK3 = 3, // Cutscene mode? Or Map?
+	GAMEPLAY_MODE_LEVEL_START_CUTSCENE = 3, // AI - the cutscene that opens a level: func_800EFEB4_FEE64 enters this mode when called with arg2 != 0 (seen at the Greece start and again after a respawn)
 	GAMEPLAY_MODE_UNK4 = 4, // Beacon UI
 	GAMEPLAY_MODE_UNK5 = 5,
 	GAMEPLAY_MODE_INSIDE = 6, // AI - inside a building, held from entry to exit
-	GAMEPLAY_MODE_UNK7 = 7, // loading level?
+	GAMEPLAY_MODE_LOADING_LEVEL = 7, // AI - set by func_80006DDC_79DC while the level loads (seen between FRONTEND and LEVEL_START_CUTSCENE)
 	GAMEPLAY_MODE_UNK8 = 8, // Clue screen? Does nothing?
 	GAMEPLAY_MODE_DIALOGUE = 9, // Talking to NPC/Signpost/Daisy
 	GAMEPLAY_MODE_END_OF_LEVEL = 0xA, // Show score screens
 	GAMEPLAY_MODE_UNKB = 0xB, // Beacon launch cutscene/Shield gen destroyed cutscene
-	GAMEPLAY_MODE_UNKC = 0xC, // When killed/quitting/boss killed
+	GAMEPLAY_MODE_LEVEL_ENDING = 0xC, // AI - the level-ending sequence, about 300 frames: entered a few frames after the player hit points reach 0 (seen when drowning, in two runs), and when the attract demo ends; then LEVEL_ENDED. A boss kill or a quit may share it (not checked)
 	GAMEPLAY_MODE_FRONTEND = 0xD, // AI - the whole frontend sequence (intro to file select)
 	GAMEPLAY_MODE_UNKE = 0xE,
-	GAMEPLAY_MODE_UNKF = 0xF, // When quitting/changing level after 0xC
+	GAMEPLAY_MODE_LEVEL_ENDED = 0xF, // AI - set when the main loop has ended; followed LEVEL_ENDING in both observed deaths, then the level reloads
 	GAMEPLAY_MODE_INVENTORY = 0x10
 } GameplayMode;
 
@@ -1014,7 +1014,7 @@ typedef enum VehicleFlags {
 	VEHICLE_FLAG_UNKB = 0x400, // Is autonomous grid-guided vehicle (turret / road-follower)
 	VEHICLE_FLAG_ON_BRIDGE = 0x800,
 	VEHICLE_FLAG_UNKD = 0x1000, // Is player being grabbed / in interaction
-	VEHICLE_FLAG_UNKE = 0x2000, // Draw damage flash this frame
+	VEHICLE_FLAG_DAMAGE_FLASH = 0x2000, // Draw damage flash this frame (AI - seen: set with each hit-point loss while drowning, cleared at death; the draw code tests it with the frame counter, so it flickers)
 	VEHICLE_FLAG_UNKF = 0x4000,
 	VEHICLE_FLAG_UNK = 0x8000 // Is active, gates physics/render/death
 } VehicleFlags;
