@@ -8,8 +8,7 @@ locals used incorrect stack offsets: pathA at 0xA2 instead of 0xA0, pathB at
 
 Moving the unused s16 padding declaration immediately after the parent pointer
 and widening the three intermediate path-node locals from s8 to s16 corrected
-those offsets. The source fields remain signed bytes; widening these locals did
-not change their load instructions.
+those offsets.
 
 This also moved later locals and compiler temporaries down four bytes. Removing
 the early dx declaration corrected the layout, but reusing the animation phase

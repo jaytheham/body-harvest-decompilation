@@ -4,7 +4,7 @@
 
 Reuse the signed halfword number parameter while extracting thousands and hundreds. A separate mutable remainder local lets IDO reload the initial value after calls and loses the target s0 allocation. Retaining both a cached initial number and the mutable parameter introduces a halfword spill and expands the stack frame from 0x28 to 0x30. Using only the parameter reproduces the 0x28 frame and the target's repeated short truncations.
 
-Write the lifetime store as `entry->unk2 = arg3 / 50 + 25`. A reusable quotient local delayed the first `mflo` and the division by 1000 until after entry-index calculations. Inlining the lifetime expression gives the target early `div` / `mflo` / second `div` sequence. Keep the decimal divisors as literals; named constant locals did not change this codegen.
+Write the lifetime store as `entry->unk2 = arg3 / 50 + 25`. A reusable quotient local delayed the first `mflo` and the division by 1000 until after entry-index calculations. Inlining the lifetime expression gives the target early `div` / `mflo` / second `div` sequence.
 
 Store the units digit into an s16 local before packing it with the tens digit. This emits the required sign-extension pair for the units value. Use a typed `FloatingNumberState` payload for RGB, packed digits, rise speed, and alpha, replacing raw byte offsets.
 

@@ -1,8 +1,6 @@
 # Nested MAX and branch-likely copies
 
 Observed in the zone-distance block of `func_8009811C_A70CC`.
-The full function remains unmatched, but the structural diff for the
-repeated max comparisons now disappears.
 
 The target computes a square-distance metric using:
 

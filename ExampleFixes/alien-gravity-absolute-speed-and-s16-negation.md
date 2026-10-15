@@ -23,7 +23,7 @@ alienInstances[arg0].unk10 = -((s16)(
     ((f32)sins(alienInstances[arg0].unkA) / 32768.0) * sp2C));
 ```
 
-Using `(s32)` instead emitted the same instructions, but the final conversion and negation used `t3/t4` instead of the target's `t5/t6`. Casting to `s16` after the negation did not fix those registers. IDO eliminates the narrowing instructions when storing a halfword, while its compiler temporaries still affect register allocation. Preserve the double-precision `32768.0` divisor and the conversion of the sine return value to `f32`.
+Using `(s32)` instead emitted the same instructions, but the final conversion and negation used `t3/t4` instead of the target's `t5/t6`. IDO eliminates the narrowing instructions when storing a halfword, while its compiler temporaries still affect register allocation. Preserve the double-precision `32768.0` divisor and the conversion of the sine return value to `f32`.
 
 ## Type-driven gravity and the pointer spill slot
 

@@ -42,13 +42,4 @@ jal  func_80082990_91940
 sra  a1,t0,16
 ```
 
-Both source changes matter. With struct fields still passed to the terrain
-lookup, in-place masks changed register allocation and introduced extra moves.
-Keep the helper's ordinary `s16, s16` parameter declaration: experimenting with
-promoted old-style parameters could change the shift order, but also disturbed
-already matched neighboring callers. The saved-local call plus in-place masks
-matched the whole ROM with the original helper and neighboring functions.
-
-This is a useful candidate when only conversion scheduling differs: preserve
-the relationship between a saved narrow local and its earlier call argument,
-instead of replacing that argument with an equivalent field access.
+The saved-local call plus in-place masks matched the whole ROM with the helper's original `s16, s16` parameter declaration and neighboring functions unchanged.

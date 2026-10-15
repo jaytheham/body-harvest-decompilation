@@ -21,7 +21,6 @@ self-assignment, it emits that store in the no-owner block at ROM
 `0x15CE4`, and the owner path branches over it at `0x15CDC`. This also
 defers the lookup argument's `sll/sra/move` sequence from the volume
 calculation into the pan calculation, matching the target scheduling.
-Nested owner and node tests alone did not fix the differences.
 
 The volume expression also needs the integer volume table on the left
 of multiplication and the distance ratio on the right:

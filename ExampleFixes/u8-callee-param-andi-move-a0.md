@@ -21,8 +21,6 @@ s32 func_8008199C_9094C(u8 arg0) {
 }
 ```
 
-
-
 `u8* ptr = &D_xxx[index];`
 `u8 value = *ptr;`
 `D_index = index + 1;`

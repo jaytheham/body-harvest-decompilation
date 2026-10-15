@@ -39,6 +39,3 @@ declaration is a single 4-byte local that consumes the slack at `0x20`, not a fr
 check the *number* of 4-byte locals, not the frame. This is the temp-pool-base sibling of
 `phantom-s32-frame-inflation-gfx-timing-bars.md` (there the pad inflates the frame; here it does
 not) and of `epilogue-reload-register-temp-bank.md`.
-
-**Do not re-tread:** naming the pointer (`Vp *vp = D_314D0;`, `void *vp`, `u32 vp = (u32)D_314D0`)
-all measured 1325-3035 - the named local is charged a home and breaks the map.

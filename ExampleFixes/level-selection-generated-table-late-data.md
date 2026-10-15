@@ -1,6 +1,6 @@
 # Level-selection table and later assembly data
 
-`func_800E1D48_F0CF8` has a matching instruction stream when enabled. Remove its twelve-entry placeholder jump table. The later beam table and shield scale constant must follow the new generated table; leaving their C const placeholders ahead of it moves the generated table from 0x80144194 to 0x801441B8. Moving those C declarations later in the file did not change emission order.
+`func_800E1D48_F0CF8` has a matching instruction stream when enabled. Remove its twelve-entry placeholder jump table. The later beam table and shield scale constant must follow the new generated table; leaving their C const placeholders ahead of it moves the generated table from 0x80144194 to 0x801441B8.
 
 Use the asm processor late-rodata mechanism on the still assembly-backed beam renderer. `CFE30_beam_late_rodata.s` prefixes the untouched target instruction stream with the seven beam jump-table words and the double 1.7. This preserves data order without editing `asm/nonmatchings`. When enabling the beam or shield renderer later, account for these late-data placeholders as well as generated constants.
 

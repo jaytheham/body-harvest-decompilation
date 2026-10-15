@@ -31,7 +31,7 @@ void func(u8 arg0) {
     u8 specIndex;        // declared FIRST
     s32 mult;            // declared SECOND
     s16 speedLimit;      // declared THIRD
-    
+
     specIndex = alienInstances[arg0].specIndex;  // direct array access
     // ...
     if (alienInstances[arg0].unk4B == 0) { ... }  // direct array access
@@ -57,7 +57,7 @@ See also: `func_802DA910_2BCD40` for a nearly identical pattern.
 
 ### Direct indexed accesses can fix scheduling without changing registers or frame size
 
-In `func_802E2390_3264E0`, a named `AlienInstance *alien` left a diff score of 180. The frame size and registers already matched, but the parent-pointer reload occurred after the cooldown store instead of between `div` and `mfhi`, and the invincibility constant loaded too early. Removing the local pointer and replacing **every** `alien->field` access with `alienInstances[arg0].field` matched the whole function (score 0 and `build/bh.us.z64: OK`). Replacing only the cooldown field access did not fix it. Test removal across the entire function even when the remaining differences are confined to one block.
+In `func_802E2390_3264E0`, a named `AlienInstance *alien` left a diff score of 180. The frame size and registers already matched, but the parent-pointer reload occurred after the cooldown store instead of between `div` and `mfhi`, and the invincibility constant loaded too early. Removing the local pointer and replacing **every** `alien->field` access with `alienInstances[arg0].field` matched the whole function (score 0 and `build/bh.us.z64: OK`).
 
 ### Direct indexed field accesses can preserve the array base across a branch
 
@@ -91,7 +91,6 @@ address calculation. Removing that pointer lets IDO load the four halfword
 arguments before the stores, matching the reference `func_800891F8_596A8`.
 Raw byte accesses can still be replaced by the entry's existing `payload` array
 without changing those instructions. Full ROM checksum and diff score 0 pass.
-
 
 ### Siberia respawn helper
 

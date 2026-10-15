@@ -17,7 +17,6 @@ was sufficient:
 The incoming parameter already has a home at `sp+0x94`. This access reproduced
 the target's vehicle-type reloads and its initial `lw a0,0x4C(type)` register
 assignment. An empty `if (&arg1) {}` and `arg1 = (&arg1)[0]` gave the same result.
-By contrast, `(void)&arg1` was discarded and did not preserve the effect.
 
 This is a compiler-shaping technique, not a gameplay requirement. Verify it in
 the complete translation unit with the normal build: an addressed parameter

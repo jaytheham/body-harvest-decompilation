@@ -5,9 +5,7 @@ ROM 0x153B30, immediately after the double at 0x153B28. Existing constants
 starting at 0x153B50 originally shared the same C translation unit.
 
 Deleting the placeholder jump table and compiling the C switch put the generated
-table after those later constants, at 0x153D50. Moving their definitions below
-the function did not change this: IDO still emitted the named constant data
-before its generated switch table.
+table after those later constants, at 0x153D50.
 
 The working layout separates the later constants into
 `src.us/overlay_gameplay/outside/101840_rodata.c` and gives that unit a rodata

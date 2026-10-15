@@ -1,50 +1,9 @@
-### beqz delay slot: `lw v1, spill` vs `lh t0, arg_area` — two-register arg0 pattern
-
-**Context:** A function with `s16 arg0`, an early jal call to check for duplicates, then struct-by-value
-initialization using `arg0` in two roles:
- 1. As **raw s16** (stored via sw, used for unk0 and unsigned index via `& 0xFFFF`)
- 2. As **fresh signed** load (separately, for D_80031F04 s16 array indexing via `sll ×1`)
-
-**Target assembly pattern (two-register, after successful beqz):**
-```
-beqz    v0, SUCCESS
- lw     v1, 0x4c(sp)       ← delay slot: reload ARG0 from compiler spill
-SUCCESS:
-lh      t2, 0x92(sp)       ← first instruction: fresh signed load
-andi    t8, v1, 0xffff     ← second: unsigned index from spill value
-```
-
-**Current code pattern (one-register, score ~845):**
-```
-lw      v1, 0x4c(sp)       ← EXTRA (eager) instruction before beqz
-beqz    v0, SUCCESS
- lh     t0, 0x92(sp)       ← delay slot: fresh load (only one arg0 path)
-SUCCESS:
-andi    v0, t0, 0xffff     ← v0 = t0 & 0xffff (t0 serves dual purpose)
-```
-
-**Root cause:**
-
-The target function had an explicit `s32 sp4C = arg0` variable that the compiler treats as
-DISTINCT from directly reloading arg0 from the parameter home area (sp+0x92). With sp4C as a
-separate value, IDO creates two live ranges:
-- v1 (from spill at 0x4C) — reloaded in beqz delay slot, used for unk0 and unsigned arrays
-- t2 (fresh lh from 0x92) — used only for D_80031F04 signed index multiplication
-
-Without the explicit sp4C, IDO uses a single loaded register (t0 from lh in the delay slot) for
-all arg0 uses, producing a single-path pattern that doesn't match.
-
-**The challenge:** IDO's dead-store elimination removes `sw v1, sp4C_addr` if sp4C's value can
-always be reloaded from the parameter home area (which it can, since `sw a0, 0x90(sp)` is in
-the prologue). Any attempt to make sp4C an explicit 4th declared variable causes IDO to either:
-- Generate `lhu a0` directly (skipping v1 entirely), or
-- Store `arg0 & 0xFFFF` (pre-anded) instead of raw arg0
+# Two unused words place the argument spill
 
 **What works (score ~845):**
 Two phantom `s32` variables (sp54, sp50) in declaration order AFTER the big struct ensure the
 correct frame size (0x90) and place the compiler's AUTO-GENERATED spill at sp+0x4C. The
-pre-jal `sw v1, 0x4c(sp)` IS generated correctly. The ONLY remaining issue is the beqz delay
-slot scheduling choice.
+pre-jal `sw v1, 0x4c(sp)` IS generated correctly.
 
 **Stack layout with two-phantom approach (frame 0x90):**
 - sp+0x00..0x3F: outgoing call region

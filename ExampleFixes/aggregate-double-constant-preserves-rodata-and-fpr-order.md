@@ -54,24 +54,6 @@ The companion `func_8010CA38_11B9E8` matches all 337 instructions with the same 
 
 func_80123AC4_132A74 matches without splitting rodata. Cache D_80145160_154110[0] in the existing double divisor before the two-iteration loop. Inline reads reload it across helper calls and lose the saved f20 register, changing the frame. Assign 0.25 to the existing offset double and place an empty if (offset) {} immediately before caching the divisor. The check is optimized away, but it orders the offset's LUI/MTC1 setup before the divisor's LUI/LDC1, reproducing the target interleave. Without that check the entire residual is this five-instruction setup order (score 280). The original one-element constant array remains byte-for-byte at its original address; an aggregate is unnecessary, and a scalar const moves into data. Zero function diff and full-ROM checksum OK confirm the match.
 
-## Beam renderer partial checkpoint
-
-In func_80128E48_137DF8, the ROM's middle-point factor is the existing 0.7 constant, rather than the initial reconstruction's 0.5. Changing its one-element double array to ShadowGeometryConstant and reading .value keeps the eight-byte placeholder and restores the target's late ldc1 and computed-value-first mul.d. No new translation unit is needed.
-
-Repeat the half-distance expressions in sqrtf and the three direction conversions instead of declaring three integer carriers: IDO shares the expressions across sqrtf, generates exactly three word saves, and retains the normalized directions. Multiply sqrtf's result by integer 2; 2.0f becomes add.s, and 2.0 introduces double arithmetic. The retained candidate is still NON_MATCHING; endpoint parameter stores and frame/register allocation remain.
-## Java death effect: retained rodata limitation
-
-func_802DD8E8_1F65F8 remains NON_MATCHING after 20 compiled variants. A literal 70.0 (or an automatic const double declared last) matches every instruction, register and stack offset, but IDO places it at 0xfa8 instead of 0xf80 with the existing placeholders. Moving the following global constant definitions after the function still puts them before the generated literal. Array, struct-member and scalar alias reads preserve the address but swap f0/f2. Do not create another file when the task excludes that option. A named u8 firstChild fixes the skeleton byte chain; declaring the sine halfword after the flags and first two byte locals places it at sp+0x28 without an artificial padding array. The wrapped full ROM verifies OK.
-
-
-func_802D5FE4_1EECF4 remains NON_MATCHING after 20 compiled variants. Correct the second scale from zero to 1.5 and read the existing 1.7 constant as an array element when testing its address. A literal 1.7 restores the target f20/f22 order, but its generated constant lands at 0xfa8 instead of 0xeb0. The existing aggregate type retains the address but does not fix the hoisting or floating register order in this loop. Preserve the literal-based closest implementation under NON_MATCHING when additional files are excluded.
-
-## Frontend orbit particles: retained constant-address limitation
-
-`func_8008F1E0_5F690` remains NON_MATCHING. Use the target's rounded `6.2831853070000001` multiplied by the float angle and divided by `360.0`; full-precision pi divided by 180 is not the same instruction sequence. Cache each quadrant's argument in one `f32 trigAngle` shared by cosf and sinf. Declare that local after the three-float direction array: the array then starts at sp+0x90 and the frame remains 0xA0.
-
-This produces every target instruction, register, and stack offset except the two constant addresses (diff score 10). The existing trailing jump-table and float placeholders put the generated doubles at different addresses. Array reads, aggregate reads, scalar linker aliases, and explicit double caches were tested; the caches change the frame, constant hoisting, or floating-register order. Keep the literal-based C wrapped when new translation units are excluded.
-
 ## Frontend artifact renderer
 
 func_800728F4_42DA4 matches with the existing 0.7 constant represented by ShadowGeometryConstant. A comma expression (0, 256.0f) on the left of the nested single-precision multiply preserves the target operand order and floating-register sequence. Use a for loop for the twelve slots to reproduce initialization and latch scheduling. Mask the global angle before adding the per-slot angle: (D_80094848_64CF8 & 0xFFFF) + angle. Masking the sum also eliminates the mask instruction, but coalesces the global address and loaded value into t4 instead of the target t4/t5 pair. Preserve the declaration gaps for the three vector locals. Zero function diff and full ROM checksum OK verify the match.

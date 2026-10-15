@@ -24,13 +24,7 @@ remaining arguments. The global's address computation claims v0 first; then
 `&D_43A340` for a1 uses v1 (v0 already in use). Score drops to 30.
 
 **Stack slot for size**: use no declared local variable so size becomes a cfe-temp
-at sp+0x1C (frame-4). A declared `s32 size` local would go to sp+0x18 (frame-8). 
-
-**Residual 30-point difference**: `sw a0, 0(v0)` and `sw a2, 0x1c(sp)` are
-swapped around the jal delay slot. The target (correct) has the global store
-before the jal and size save in the delay slot; the above C form has them reversed
-due to LIFO instruction scheduling priority for the CSE spill instruction.
-The permuter also could not improve beyond score 30 from this basis.
+at sp+0x1C (frame-4). A declared `s32 size` local would go to sp+0x18 (frame-8).
 
 **Pattern context**: applies to a family of identical loader functions that each:
 1. Compute `size = &ROM_end - &ROM_start` (byte delta between ROM segment boundaries)

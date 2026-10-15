@@ -17,6 +17,6 @@ The pointer added no instructions or stack space. Keep the countdown signed to o
 
 The later text-completion flag had the same scalar-cache issue. A branch-local `u32 *textDone` restored its target temporary register. However, using `if (*textDone == 0)` and passing `*textDone == 0` to the drawing helper caused IDO to share the boolean expression: it moved `sltiu` ahead of the branch and branched on the boolean. Spelling the guard `if (!*textDone)` while retaining `*textDone == 0` in the call produced the target direct `bnez` and the later `sltiu`.
 
-Direct scalar access, one-element global arrays, global struct members, signedness changes, nested conditions, and equivalent countdown arithmetic did not fix the cached-load register. The scoped pointer was the decisive difference. The complete function retained a 0x50 frame.
+The scoped pointer was the decisive difference. The complete function retained a 0x50 frame.
 
 The existing guarded body also needed its missing write-alias declarations and linker definitions, and its button mask corrected from Start/Z/A (0xB000) to Start/B/A (0xD000). Write aliases are declared in `include/variables.us.h` and linked to the canonical symbols in `undefined_syms.us.txt`.

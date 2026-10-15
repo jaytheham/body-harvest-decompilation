@@ -65,6 +65,6 @@ Be careful when you make changes not to accidently apply those changes to other 
 
 ## Finalize
 
-Whenever you match a function or a particularly tricky bit of asm think about whether there is some detectable pattern or insight in the changes you made, and if so update `ExampleFixes` with new or updated notes to help future decomp.
+Whenever you match a function or a particularly tricky bit of asm if there is a detectable pattern or insight in the changes you made update `ExampleFixes` with a specific example of that change and what it fixed.
 
 After matching a function commit the changes to the current branch.

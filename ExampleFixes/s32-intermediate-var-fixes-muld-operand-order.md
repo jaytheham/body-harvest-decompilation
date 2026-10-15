@@ -27,11 +27,3 @@ void func_80122524_1314D4(VehicleInstance *arg0, s16 arg1, s16 arg2, s16 arg3) {
     }
 }
 ```
-
-**Remaining unresolved difference (score 534):** The target has an extra `lh $a3, 0x1E($sp)` instruction very early in the prologue (before `sw $ra`), which causes:
-- IDO's scheduler to save `$a1` before `$ra` (unusual)
-- The post-jal reload of s16(arg1) to go into `$a3` instead of a t-register
-- All sign-extend/branch registers to shift accordingly
-- The function to be exactly 1 instruction longer
-
-This specific behavior appears to be a scheduler quirk that cannot easily be reproduced with a different C expression form. Declaring the called function with `(VehicleInstance*, s16, s16, s16)` is correct (confirmed by post-jal use of a0 as pointer in callee).

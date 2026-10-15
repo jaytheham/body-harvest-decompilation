@@ -2,9 +2,9 @@
 
 Matched Java `func_802E01A0_1F8EB0` with an exact assembly diff and full ROM checksum `OK`.
 
-Two inline sine/cosine calls created separate implicit halfword temporaries. Declaring one `s16 trigResult` and reusing it for both calls reduced the hidden stack extent by one halfword. The frame stayed at 0x78, but the compiler's cached narrowed X/Z values moved from sp+0x40/0x3C to the target sp+0x44/0x40. Separate named sine and cosine locals did not fix the offsets.
+Two inline sine/cosine calls created separate implicit halfword temporaries. Declaring one `s16 trigResult` and reusing it for both calls reduced the hidden stack extent by one halfword. The frame stayed at 0x78, but the compiler's cached narrowed X/Z values moved from sp+0x40/0x3C to the target sp+0x44/0x40.
 
-For the final Z offset, both orders of signed addition generated `addu t7,t5,t6`; swapping the C operands did not help. Promoting the base coordinate to unsigned produced the target `addu t7,t6,t5` without changing other instructions:
+Promoting the base coordinate to unsigned produced the target `addu t7,t6,t5` without changing other instructions:
 
 ```c
 (u32)sp6C + (s32)(-((f32)trigResult / 32768.0) * (f64)sp68)

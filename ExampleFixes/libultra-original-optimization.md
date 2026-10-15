@@ -56,28 +56,3 @@ for the cartridge/disk PI handles whose text is absent from this ROM.
 `tools/splat_ext/fixed_bss.py` emits an absolute location-counter assignment
 inside the NOLOAD output section. It skips disassembly because C supplies
 this storage and the remaining game BSS is represented by absolute symbols.
-
-Keep flags synchronized between the native Windows build and GNU Make by
-running `tools/generate_libultra_flags.py` after editing `sources.json`.
-Use `tools/compare_libultra.py --structural` to ignore linked symbol
-addresses while matching instructions; the unmasked comparison and final
-`tools/make.ps1` ROM SHA1 check remain the definitive validation.
-
-## Host syntax-check type definitions
-
-The reference `PR/ultratypes.h` defines `size_t` only for
-`_MIPS_SZLONG == 32` or `64`. IDO supplies this macro, but host GCC/Clang
-syntax checks do not. Pass `-D_MIPS_SZLONG=32` in the generated libultra
-`CC_CHECK` overrides, matching the reference makefile's CPP flags.
-Without it, the header sets its size-type guards without defining the
-actual type, and `xstdio.h` reports an unknown `size_t`.
-
-## Recompiled Linux IDO driver arguments
-
-Keep include options joined (`-Ipath`) in both the global Makefile and
-the generated libultra overrides, matching the native Windows builder.
-With the full generated command, separated include arguments and
-`-Xfullwarn` reproduced a Linux `uld` crash while opening the final
-include directory (`src.us/libultra/audio`). The joined arguments and
-the reference's supported `-fullwarn` compiled the same probe successfully.
-The header enum warning is independent of this driver failure.

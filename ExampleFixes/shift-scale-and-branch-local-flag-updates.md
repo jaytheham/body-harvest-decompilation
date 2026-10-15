@@ -1,8 +1,5 @@
 # Shift scaling and branch-local flag updates
 
-Observed in the still-unmatched `func_8009811C_A70CC` in `A49A0.c`.
-These changes matched individual instruction sequences, not the full function.
-
 ## Subtract before scaling
 
 For `(frame - 16) * 16`, IDO distributed the multiplication and emitted

@@ -6,8 +6,7 @@ following color argument load. Writing `D_80154318[sp1A].unk2 = arg2`
 preserved the same computed address and registers while allowing IDO to place
 the color load before that store, matching the target.
 
-Explicit radius/color temporaries and an integer cast of the entry pointer
-did not produce that ordering. Try direct global array access when a local
+Try direct global array access when a local
 entry pointer generates the right address but a nearby load is scheduled late.
 
 The same function needed a leading unused `s32` local to place its saved

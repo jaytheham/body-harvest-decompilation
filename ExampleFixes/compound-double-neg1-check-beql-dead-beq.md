@@ -39,5 +39,3 @@ IDO generates:
 - Float array index `[arg0 & 0xFFFF]` generates `andi tX,s0,0xffff` zero-extension
 - 4 unused `s32` pad variables before the struct declaration increase frame size by 16 bytes (0x10)
 - The `Unk8006AA80Node` struct passed **by value** generates a copy-loop + load a0-a3 + jal pattern
-
-**Remaining known non-matching difference:** IDO allocates `t9` for the `andi` result in target but `t2` in current. This causes a cascade of register number differences in the body. Could not reproduce the `t9` allocation through C code changes.

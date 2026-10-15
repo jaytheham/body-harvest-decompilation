@@ -12,8 +12,7 @@ the counter, then print and select the track. This emits separate fused
 `lui`. The `_W` linker alias and both external byte declarations are unnecessary.
 
 File-scope `static` does not reproduce this behavior: IDO shares a materialized
-address, adding `addiu` and changing scheduling. Array, struct, and pointer-cast
-access variants also retain that shared address. Check function-private storage
+address, adding `addiu` and changing scheduling. Check function-private storage
 before adding read/write aliases for a counter used by only one function.
 
 Likewise, move `D_80033C94_34894`, initialized to -1, into

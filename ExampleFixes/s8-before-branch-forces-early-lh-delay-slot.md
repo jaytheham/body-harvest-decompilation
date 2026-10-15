@@ -7,6 +7,4 @@ When a function reads a `s8` value from a double-indirect struct lookup (`D_8014
 
 Without the named variable (inlining all 4 occurrences of `D_8014DD50[inst->unkC].unkC`), IDO loads `inst->unk20` first (needed for the branch) and the scheduler does NOT hoist the `D_8014DD50` chain before the branch.
 
-**Trade-off**: The named `s8 specEntry` creates a phantom home slot (+8 bytes frame, +4 bytes for inst save offset). Score with named variable: 34 (only sp-offset differences). Score without: 1420 (wrong prologue ordering).
-
 Use: `s8 specEntry; AlienInstance *inst;` (declaration order may not matter) + compute specEntry before the if check.

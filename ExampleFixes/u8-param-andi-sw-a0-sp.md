@@ -34,29 +34,12 @@ The mechanism is not limited to leaf functions. `func_80089BCC_171C8C`
 `sw $a0, 0x40($sp)` argument home. Retyping the parameter to `u8 arg0` (dropping
 the `& 0xFF`) reproduced the home and `check` went to **0**.
 
-Two mechanical points when the rest of the body is already right:
-
-- The prototype must change with the definition (`include/functions.us.h`,
-  `void func_80089BCC_171C8C(u8 arg0);`); `s32` vs `u8` is `conflicting types`.
-- `include/functions.us.h` is a make prerequisite, so one prototype line forces a
-  **full** rebuild - start `make --jobs=8` in the background, never a foreground
-  `check`. The prototype retype also recompiles the caller TU (the sole caller
-  passes `i & 0xFF`, which stayed ROM-neutral here); trust the sha1 `gate`, not
-  `check` 0 alone.
 The same transplant and the same lever landed the sibling `func_8008B534_5B9E4`
 (`overlay_gameplay/frontend/52690.c`, 166 instr) off the same donor - the
 `while ((index != -5) && (index != -6))` loop restored from the donor (the guess
 used a `do/while` with early `return`s and a pointer local) plus the `u8 arg0`
 retype; `check` 0, gate PASSED. This file has no header prototype, so only the
 definition changed.
-
-### A hoisted global address above the entry `andi` is the same defect (func_80087A40_16FB00, 2026-10-08)
-
-`func_80087A40_16FB00` (`overlay_gameplay/inside/16AF30.c`, 158 instr) is the fourth and last
-member of the `func_800CD7FC_DC7AC` (`CFE30.c`) clone family, and here the `u8` retype moves
-more than the argument home. With the donor-shaped body committed (`while` loop, direct
-`D_800FB6F8[arg0].unk6` / `D_800FB7B0[...]` access) it measured **295** at `objdump` 157
-against the target\s
 
 ### A hoisted global address above the entry `andi` is the same defect (func_80087A40_16FB00, 2026-10-08)
 

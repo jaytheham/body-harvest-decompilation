@@ -20,8 +20,7 @@ temporary registers. Reading the destination reproduced the complete body.
 ### Assignment inside a comparison controls operands and load scheduling
 
 The opening comparison needed `beql v0,t6`, with the previous-mode load before
-the gameplay-mode load. Reversing the direct global operands or adding signed
-casts did not fix it. A separate `mode = gameplayMode;` statement fixed the
+the gameplay-mode load. A separate `mode = gameplayMode;` statement fixed the
 branch operands but reversed the loads. The matching form was:
 
 ```c

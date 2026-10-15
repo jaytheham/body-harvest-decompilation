@@ -6,10 +6,8 @@ Matched `func_800ADB4C_BCAFC` in `B8290.c` by consistently using
 
 With `alien->field` throughout, the particle call to
 `func_800CA5EC_D959C` loaded X and Z early, delayed constants 6 and 8,
-and reordered the outgoing zero argument stores. Replacing just that
-call's accesses with array accesses did not help. Replacing field accesses
-throughout the function produced the target schedule and a verified ROM.
-The emitted address still uses the same saved register. This is a codegen
+and reordered the outgoing zero argument stores. Replacing field accesses
+throughout the function produced the target schedule and a verified ROM. The emitted address still uses the same saved register. This is a codegen
 effect of the surrounding expressions, rather than a change in logic.
 
 Other necessary changes:

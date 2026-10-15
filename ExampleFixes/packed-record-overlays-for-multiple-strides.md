@@ -13,5 +13,3 @@ typedef union {
 ```
 
 Use the view over the same record pointer. This lets IDO compile `points[index][axis]` with a `0x0C` row stride, `headings[index]` with a `4`-byte stride from offset `0x14`, and `frames[index]` with a `4`-byte stride from offset `0x20`, without changing the serialized record size or initializer layout.
-
-Confirm each view against the target's actual data words and indexed load instructions. A union view is appropriate only when the accesses intentionally overlap the same bytes; it should not be used to paper over an unknown record layout.

@@ -16,8 +16,7 @@ pitch += minPitch;
 
 The target uses `$f14` for both the product and the final sum. The candidate used
 a scratch register for the product, shifted subsequent scratch registers, and
-assigned the main pitch variable to `$f16`. Splitting the arithmetic into more
-assignments did not fix it.
+assigned the main pitch variable to `$f16`.
 
 Read the lower bound directly in the product, while retaining the cached lower
 bound for the addition:

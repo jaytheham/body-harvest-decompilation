@@ -12,16 +12,6 @@ asm-differ scores this **10** (two rows x 5). It is *not* a liveness or declarat
 the value is spilled to the correct home (`0x1C($sp)`) at the correct point and every register
 before the epilogue is identical.
 
-**Measured on `func_800702C0_7F270` (`overlay_gameplay/outside/7F220.c`, 60 instr, marker 10):**
-
-- `pattern_probe.py` learned transforms all neutral (`pad1`/`pad2`/`swap-last-decls`/`cast-u8-consts`/
-  `cast-s16-consts` -> 10).
-- Declaration order, scalar signedness, chaining the initial assignments, reusing the other local for
-  the final store, and local scopes: **all 10** (also recorded by the previous author in the function's
-  own comment).
-- A one-element array holding the timestamp makes the reload land in the target's `$t0`, **but** shifts
-  the gameplay-mode load and the millisecond-arithmetic temps down one -> **60**.
-
 **Matched resolution (`func_800702C0_7F270`).** Declare the one-element reference array first,
 calculate the unsigned 32-bit difference, then overwrite the array with the current timestamp
 before calling the 64-bit helpers. Reuse the difference local for the helper result. The array's
@@ -40,5 +30,4 @@ The named difference uses `$v0`, whereas the inline subtraction draws `$t8` befo
 is folded into `$a1`. Widening and narrowing the difference to restore that draw also allocates
 an extra register pair and shifts the millisecond arithmetic, so it is not an equivalent fix.
 
-Validation: full ROM build `build/bh.us.z64: OK`, function diff score **0**. Do not re-tread scalar
-declaration permutations on this family; both cached storage and temporary allocation matter.
+Validation: full ROM build `build/bh.us.z64: OK`, function diff score **0**.

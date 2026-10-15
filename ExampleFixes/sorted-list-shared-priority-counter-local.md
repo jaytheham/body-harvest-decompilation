@@ -6,4 +6,4 @@ Load `value = node->unk2` inside the traversal loop immediately before `diff = s
 
 In each insertion path, load `value = *counter` before changing the links, then use `node->unk10 = id = ++value` after the links. Finally write `*counter = id` and return `id`. Computing `id = *counter + 1` before the link writes schedules the signed narrowing too early in the middle and head insertion paths. Moving the increment into the chained assignment fixes that scheduling; sharing the priority local fixes the remaining counter allocation.
 
-The saved pool index is preserved around a whole-struct assignment. No empty conditional probes are needed. Verified with the full project build: `build/bh.us.z64: OK` and function diff score 0.
+The saved pool index is preserved around a whole-struct assignment.  Verified with the full project build: `build/bh.us.z64: OK` and function diff score 0.

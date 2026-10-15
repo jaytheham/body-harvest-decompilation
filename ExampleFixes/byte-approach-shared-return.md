@@ -19,8 +19,6 @@ if (arg1 < arg0) {
 return arg0;
 ```
 
-Early returns produced different assembly despite equivalent logic. Direct `return arg1` omitted two target `andi` masks. Casting those early return expressions to `u32` recovered the masks, but left the final `move v0,a0` before `jr ra` rather than in its delay slot (score 65). The stock compiler listing showed a separate exit label between that move and `jr`, so folding source lines did not resolve it.
+Early returns produced different assembly despite equivalent logic. Direct `return arg1` omitted two target `andi` masks. Casting those early return expressions to `u32` recovered the masks, but left the final `move v0,a0` before `jr ra` rather than in its delay slot (score 65).
 
 Replacing the early returns with byte assignments and sharing the final return recovers every instruction and register without the casts. IDO still emits the target's separate machine-code returns, including `jr; andi v0,a1,0xFF` for saturation and `jr; move v0,a0` at the final exit. Full ROM checksum verified.
-
-When generating source variants, normalize indentation or assert each replacement changes the source; otherwise a space-based edit against tab-indented code can silently leave an experiment unchanged.

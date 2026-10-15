@@ -23,9 +23,7 @@ The second angle remains in `v0` without a sign-extension sequence.
 
 Assigning the difference to the existing `s32 diffX` local before the
 comparison produced identical instructions but put the ternary result in
-`v0`, leaving three register mismatches. A separate absolute-value local,
-or an explicit if/else around that named difference, did not fix them.
-Reusing the coordinate locals for the absolute value also changed earlier
+`v0`, leaving three register mismatches. Reusing the coordinate locals for the absolute value also changed earlier
 register allocation and sometimes the stack frame.
 
 When only the result register differs, check the promotion of the original

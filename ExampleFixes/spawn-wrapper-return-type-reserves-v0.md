@@ -1,6 +1,6 @@
 # A spawn wrapper's return type can reserve v0 in its caller
 
-In func_800BC2F8_CB2A8, all instructions matched except the vehicle pointer immediately after calling func_800DF9C8_EE978: the target used v1, while the C build used v0. Changing condition expressions and local types did not fix it.
+In func_800BC2F8_CB2A8, all instructions matched except the vehicle pointer immediately after calling func_800DF9C8_EE978: the target used v1, while the C build used v0.
 
 The spawn wrapper was declared void, but a Java-level caller consumes its return value as a particle index. The wrapper calls the s32-returning particle allocator func_800DF038_EDFE8, clears its mode flag, and returns without overwriting v0. Its real return type is s32.
 

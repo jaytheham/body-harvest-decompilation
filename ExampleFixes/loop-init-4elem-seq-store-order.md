@@ -37,12 +37,3 @@ sw zero,-0x10(v1)  ← delay slot (zeroes index 0 after v1 advance)
 3. **Loop limit literal**: Use `0x10` directly in the while condition instead of a separate `n` variable. This puts `li a1,0x10` before the loop and generates the same result, but avoids an extra declaration.
 
 4. **Register assignment**: With declarations `s32 *v0; s32 *v1;` at function scope, IDO assigns `$v0` to C-var `v0` and `$v1` to C-var `v1`. Swapping their initialization order in C would swap register assignments.
-
-**Remaining mismatch (score 170, not 0):**
-- The `addiu v1,v1,...` and `addiu v0,v0,...` init instructions are in reversed order compared to target — this is a pure IDO scheduling artifact that cannot be controlled from C.
-- Store order in the loop body: current generates ASCENDING (4,8,C) while target has DESCENDING (C,8,4) order between the three index-1/2/3 stores. Using comma operators (`v0[1]=..., v0[2]=..., ...`) produces descending order but then the diff score is HIGHER (310 vs 170), so semicolons are better.
-- Increment `addiu a0,a0,4` position: target puts it between `sw a0,0(v0)` and the index-1/2/3 stores, IDO always schedules it at the end.
-
-**Observed behavior (function `func_80012080_12C80`):**
-- ALL instruction variants tried (comma operators, block-scoped temps, reversed [3,2,1,0] store order, moving increment earlier) either produced worse scores or broke the loop structure (loop peeling / extra basic blocks).
-- Score 170 is achievable by: `[1,2,3,0]` store order + semicolons + `arg0++/--` trick.

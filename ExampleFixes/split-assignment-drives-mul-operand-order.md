@@ -11,10 +11,6 @@ OURS:    mul.s $f0, $f4, $f2
 
 For a commutative operation the value is the same, but the encoding is not, so the sha1 still fails.
 
-**What does NOT work.** Swapping the operands inside the expression (`a * b` -> `b * a`) changed
-nothing: IDO emitted the same instruction either way. The lever is the *statement*, not the operand
-text.
-
 **What works.** Write the product as a split assignment, with the scalar as the accumulator:
 
 ```c
@@ -40,10 +36,7 @@ and be ready to try both forms.
 **Second instance (the scalar is a conversion, not a global).** `func_80089148_171208`
 (`overlay_gameplay/inside/16AF30.c`, 176 instructions, `// CURRENT(60)`, seam2 2026-10-08) sat at **60**
 with six `mul.s` operand pairs reversed - `temp_f0 = D_800FB6A8[i] * (f32)arg2;` emitted
-`mul.s $f0,$f8,$f2` where the target has `mul.s $f0,$f2,$f8`. Six measured negatives, none moved it:
-swapping the C operands, a redundant `(f32)` cast on either operand, dropping the cast
-(`arg2 * arr[i]`), a cached array-element local, a `f32 *p = D_800FB6A8;` pointer local, and pointer
-arithmetic (`*(D_800FB6A8 + i)`) all scored 60; a `scale * arr[i]` named local scored 98. The split form
+`mul.s $f0,$f8,$f2` where the target has `mul.s $f0,$f2,$f8`. The split form
 
 ```c
 temp_f0 = (f32)arg2;

@@ -1,10 +1,9 @@
 # Framebuffer byte-index negation
 
 In the still-unmatched `func_8009811C_A70CC`, the second framebuffer address
-is read backward from `D_8005BB4C`, an alias of the second table entry.
-The target shifts the framebuffer index by two, then negates that byte
+is read backward from `D_8005BB4C`, an alias of the second table entry. The target shifts the framebuffer index by two, then negates that byte
 offset. Direct word indexing `D_8005BB4C[-index]` instead negates first
-and shifts afterward. Casting the index to unsigned did not change this.
+and shifts afterward.
 
 The matched functions `func_80009F18_AB18` and `guess_displayInventory`
 use a byte offset `-(index * 4)` for the same call. Preserve that expression
