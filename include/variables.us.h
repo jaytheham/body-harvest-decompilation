@@ -204,7 +204,7 @@ extern s32 D_80031410;
 extern s32 D_80031414;
 extern f32 D_80031418;
 extern f32 D_8003141C;
-extern s32 D_80031420; // "game state"
+extern s32 D_80031420; // "game state" (AI - really the saved options word: bits 0-1 blood setting, bit 2 aim option, bits 3-4 music volume, bits 5-6 sound effect volume; see GameStateFlags; read from the code)
 extern s32 D_80031420_32020;
 extern s32 D_80031424[];
 extern s32 D_80031450_32050;
@@ -735,7 +735,7 @@ extern const Unk8014DD50 D_8003B850_3C450[14];
 extern const Unk8014DD50 D_8003B930_3C530[9];
 extern const Unk8014DD50 D_8003B9C0_3C5C0[18];
 extern const Unk8014DD50 D_8003BAE0_3C6E0[30];
-extern const AlienWaveEntry D_8003BCC0_3C8C0[48][12];
+extern const AlienWaveEntry D_8003BCC0_3C8C0[48][12]; // AI - the wave table; wave 0x1F holds a single type 0x1A alien, the Processor (see ALIEN_WAVE_TYPE_PROCESSOR; read from the code)
 extern const AlienSpawnEntry D_8003CEC0_3DAC0[8]; // Boss alien parts spawn points?
 extern const u16 D_8003D000_3DC00[];
 extern const u16 D_8003D800_3E400[];
@@ -2277,16 +2277,16 @@ extern u8 D_8014D507;
 extern u8 D_8014D508;
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
-extern u8 D_8014D510[];
+extern u8 D_8014D510[]; // AI - the active-object list: indices of the aliens with ALIEN_FLAG_UNKB set, at most 0x40, D_8014ECCC of them in use (read from the code)
 extern LookAt D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
 extern Unk8014DD5C D_8014DD5C[];
 extern Unk8014DD50 D_8014E4D0[];
 extern s16 D_8014E4D6[][8];
 extern s8 D_8014EC50[];
-extern s32 D_8014ECC8;
+extern s32 D_8014ECC8; // AI - decremented each time func_80079910_888C0 removes an alien (read from the code)
 extern s32 D_8014ECC8_W;
-extern u32 D_8014ECCC;
+extern u32 D_8014ECCC; // AI - number of entries in use in D_8014D510 (read from the code)
 extern s32 D_8014ECD0;
 extern s32 D_8014ECD4;
 extern s32 D_8014ECD8;
@@ -3003,7 +3003,7 @@ extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
 extern u32 D_80222A30[]; // terrain object model pointers
 extern s32 D_80222A70; // current water height (AI - waterLevel: 448 in Greece; a swimming player's Y stays at it (measured))
 extern s16 D_80222A72;
-extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
+extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?) (AI - a kind 3 entry fires its callback once alienInstances[unk8] has ALIEN_FLAG_UNKL or ALIEN_FLAG_DESPAWNING set, i.e. the alien is dead or dying; see trigger.c; read from the code)
 extern s32 D_80223778;
 extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern u8 D_80224680; // missions?
