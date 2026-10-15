@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-15T09:11:41Z",
-  "commit": "57ae6762",
-  "commit_timestamp": "2026-10-15T22:10:50+13:00",
+  "generated": "2026-10-15T19:01:31Z",
+  "commit": "d6fb03ad",
+  "commit_timestamp": "2026-10-16T08:00:48+13:00",
   "overall": {
     "total_functions": 3058,
     "matched": 2568,
@@ -211,7 +211,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 97.3,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/AD60.c",
@@ -2351,7 +2351,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 80.0,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
@@ -2587,17 +2587,10 @@
   "contributors": [
     {
       "name": "lunarlaurus",
-      "files": 43,
-      "matched": 1801,
-      "non_matching": 420,
+      "files": 45,
+      "matched": 1934,
+      "non_matching": 437,
       "asm_stubs": 0
-    },
-    {
-      "name": "jaytheham",
-      "files": 56,
-      "matched": 430,
-      "non_matching": 69,
-      "asm_stubs": 1
     },
     {
       "name": "Jay",
@@ -2605,6 +2598,13 @@
       "matched": 335,
       "non_matching": 0,
       "asm_stubs": 0
+    },
+    {
+      "name": "jaytheham",
+      "files": 54,
+      "matched": 297,
+      "non_matching": 52,
+      "asm_stubs": 1
     },
     {
       "name": "Meridian Lex",
@@ -2869,7 +2869,7 @@
     },
     {
       "date": "2026-10-11",
-      "commit": "760a2c4",
+      "commit": "c54c18b",
       "matched": 2568,
       "non_matching": 489,
       "total": 3058
