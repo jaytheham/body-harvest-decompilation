@@ -2146,7 +2146,7 @@ void func_802D91F8_1F1F08(u8 arg0) {
 			spAF = var_v0_2;
 
 			if ((var_v0_2 == 2) || (temp_s0->unk36 == 2)) {
-				sp9C = (s32) (((f64) (f32) sins(D_8014DD50[spB2].unk6)) / 32768.0) * 120.0);
+				sp9C = (s32) ((((f64) (f32) sins(D_8014DD50[spB2].unk6)) / 32768.0) * 120.0);
 				temp_f4 = (f64) (f32) coss(D_8014DD50[spB2].unk6) / 32768.0;
 				temp_v1 = D_8014DD50[spB0].unk6;
 				temp_a0 = temp_v1 & 0xFFFF;
