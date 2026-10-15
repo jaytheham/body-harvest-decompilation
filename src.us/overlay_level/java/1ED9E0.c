@@ -3055,98 +3055,82 @@ void func_802DC738_1F5448(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC738_1F5448.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DCA54_1F5764(u8 arg0) {
-	s8 sp7E;
-	s32 sp6C;
-	s16 sp6A;
-	s16 sp66;
-	f32 temp_f0;
-	f32 temp_f20;
-	f32 temp_f22;
-	s16 temp_v0_5;
-	s16 temp_v1_2;
-	s16 var_s0;
-	s16 var_s2;
-	s16 var_v0;
-	s32 temp_t1;
-	s32 temp_v0;
-	s32 temp_v0_2;
-	s32 temp_v0_3;
-	s32 temp_v1;
-	s32 var_s7;
-	u8 temp_v0_4;
-	AlienInstance *temp_s1;
+	u8 needsLift;
+	u8 child;
+	AlienInstance *alien;
+	s32 xDelta;
+	s32 zDelta;
+	s32 clearance;
+	s16 groundY;
+	s16 step;
+	s16 maxHeight;
+	s16 sampleHeight;
+	s16 sampleX;
+	s16 sampleZ;
+	f32 scale;
+	f32 xStep;
+	f32 zStep;
 
-	temp_s1 = &alienInstances[arg0];
-	sp6C = 0x1C2;
-	sp66 = 0; /* TODO: initialize from stack */
-	temp_v0 = temp_s1->x - temp_s1->unk14;
-	temp_v1 = temp_s1->y - temp_s1->unk18;
-	var_s7 = 0;
-	sp7E = D_8014DD50[temp_s1->unkC].unkC;
-	if (((temp_v0 * temp_v0) + (temp_v1 * temp_v1)) < 0x57E40) {
-		temp_v0_2 = temp_s1->flags;
-		temp_t1 = temp_v0_2 | 0x10;
-		if (!(temp_v0_2 & 0x10)) {
-			temp_s1->flags = temp_t1;
-			temp_s1->flags = (s32) (temp_t1 | 0x2000);
-			temp_s1->state = 0x96U;
-			temp_s1->unk1E = 0;
+	alien = &alienInstances[arg0];
+	clearance = 0x1C2;
+	needsLift = 0;
+	child = D_8014DD50[alien->unkC].unkC;
+	xDelta = alien->unk0 - alien->unk14;
+	zDelta = alien->unk4 - alien->unk18;
+	if (((xDelta * xDelta) + (zDelta * zDelta)) < 0x57E40) {
+		if (!(alien->unk20 & ALIEN_FLAG_UNK5)) {
+			alien->unk20 |= ALIEN_FLAG_UNK5;
+			alien->unk20 |= ALIEN_FLAG_UNKE;
+			alien->unk26 = 0x96U;
+			alien->unk1E = 0;
 		}
 	}
-	temp_v0_3 = temp_s1->flags;
-	if (temp_v0_3 & 0x2000) {
-		if (temp_v0_3 & 0x8000) {
+	if (alien->unk20 & ALIEN_FLAG_UNKE) {
+		if (alien->unk20 & ALIEN_FLAG_UNKG) {
 			func_802DC738_1F5448(arg0);
 		} else if (func_800850DC_9408C(arg0, 0x1000) != 0) {
-			temp_s1->unk36 = 0;
-			temp_s1->flags = (s32) (temp_s1->flags | 0x8000);
+			alien->unk36 = 0;
+			alien->unk20 = alien->unk20 | ALIEN_FLAG_UNKG;
 		}
-		sp6C = 0x190;
+		clearance = 0x190;
 	}
-	temp_f20 = (f32) (((f64) (f32) sins((temp_s1->angle - 0x4000) & 0xFFFF) / 32768.0) * 256.0);
-	var_s0 = 3;
-	var_s2 = sp66;
-	temp_f22 = (f32) (((f64) (f32) coss((temp_s1->angle - 0x4000) & 0xFFFF) / 32768.0) * -256.0);
-	do {
-		temp_f0 = (f32) var_s0;
-		func_8011E6FC_12D6AC((s16) (s32) ((f32) temp_s1->x - (temp_f20 * temp_f0)), (s16) (s32) ((f32) temp_s1->y - (temp_f22 * temp_f0)), &sp6A);
-		if (sp6A < D_80222A70) {
-			sp6A = (s16) D_80222A70;
+	xStep = (f32) (((f64) (f32) sins((u16) (alien->unk6 - 0x4000)) / 32768.0) * 256.0);
+	zStep = (f32) (((f64) (f32) coss((u16) (alien->unk6 - 0x4000)) / 32768.0) * -256.0);
+	for (step = 3; step >= 0; step--) {
+		scale = (f32) step;
+		sampleX = (s16) (s32) ((f32) alien->unk0 - (xStep * scale));
+		sampleZ = (s16) (s32) ((f32) alien->unk4 - (zStep * scale));
+		func_8011E6FC_12D6AC(sampleX, sampleZ, &groundY);
+		if (groundY < D_80222A70) {
+			groundY = (s16) D_80222A70;
 		}
-		var_v0 = sp6A;
-		temp_v1_2 = D_80052B34->unk2;
-		var_s0 -= 1;
-		if (sp6A < temp_v1_2) {
-			var_v0 = temp_v1_2;
+		if (groundY < D_80052B34->unk2) {
+			sampleHeight = D_80052B34->unk2;
+		} else {
+			sampleHeight = groundY;
 		}
-		if (temp_s1->health < (alienTypes[temp_s1->type].unk58 + var_v0)) {
-			var_s7 = 1;
-			if (var_s2 < var_v0) {
-				var_s2 = var_v0;
+		if (alien->unk2 < (alienTypes[alien->typeIndex].unk58 + sampleHeight)) {
+			needsLift = 1;
+			if (maxHeight < sampleHeight) {
+				maxHeight = sampleHeight;
 			}
 		}
-	} while (var_s0 >= 0);
-	if (var_s7 != 0) {
-		func_800A5554_B4504(arg0, (var_s2 - sp6A) + sp6C, 0.05f, (u8) sp7E);
-	} else {
-		func_800A5554_B4504(arg0, (var_v0 - sp6A) + sp6C, 0.05f, (u8) sp7E);
 	}
-	temp_v0_4 = temp_s1->state;
-	if (temp_v0_4 != 0) {
-		temp_s1->state = (u8) (temp_v0_4 - 1);
+	if (needsLift != 0) {
+		func_800A5554_B4504(arg0, (maxHeight - groundY) + clearance, 0.05f, child);
 	} else {
-		temp_s1->flags = (s32) (temp_s1->flags & ~0x10);
+		func_800A5554_B4504(arg0, (sampleHeight - groundY) + clearance, 0.05f, child);
 	}
-	temp_v0_5 = temp_s1->unk1E;
-	if (temp_v0_5 != 0) {
-		temp_s1->unk1E = (s16) (temp_v0_5 - 1);
+	if (alien->unk26 != 0) {
+		alien->unk26--;
+	} else {
+		alien->unk20 = alien->unk20 & ~ALIEN_FLAG_UNK5;
+	}
+	if (alien->unk1E != 0) {
+		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCA54_1F5764.s")
-#endif
 
 void func_802DCDD4_1F5AE4(u8 arg0) {
 	AlienInstance *alien;
