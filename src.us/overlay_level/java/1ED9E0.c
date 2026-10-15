@@ -348,9 +348,6 @@ const f32 D_802E0F78_1F9C88[] = { 5000.0f };
 const f64 D_802E0F80_1F9C90[] = { 70.0 };
 const f32 D_802E0F88_1F9C98[] = { 549.31640625f };
 const f32 D_802E0F8C_1F9C9C[] = { 2250000.0f };
-const f64 D_802E0F90_1F9CA0[] = { 3000.0 };
-const f64 D_802E0F98_1F9CA8[] = { 65535.0 };
-const f64 D_802E0FA0_1F9CB0[] = { 3000.0 };
 
 void func_802D6DF8_1EFB08(void);
 
@@ -3934,19 +3931,17 @@ void func_802DE594_1F72A4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE594_1F72A4.s")
 #endif
 
-// CURRENT(1815)
-#ifdef NON_MATCHING
 void func_802DE9B8_1F76C8(u8 arg0) {
 	Vec3s sp90;
 	Vec3s sp88;
-	s32 sp7C[3];
-	s32 sp70[3];
+	Vec3i sp7C;
+	Vec3i sp70;
 	s32 pad1;
 	s32 pad2;
 	s32 pad3;
 	s32 pad4;
-	s32 flags;
-	u8 *id;
+	s32 pad5;
+	Unk8014DD50 *entry2;
 	u8 typeIndex;
 	AlienInstance *alien;
 	AlienInstance *parentAlien;
@@ -3956,65 +3951,57 @@ void func_802DE9B8_1F76C8(u8 arg0) {
 	s16 entryIdx3;
 	u8 parentId;
 	AlienInstance *grandparentAlien;
-	Unk8014DD50 *entry2;
 
-	id = &arg0;
 	sp90 = D_802E0CB4_1F99C4;
 	sp88 = D_802E0CBC_1F99CC;
 
 	alien = &alienInstances[arg0];
 	typeIndex = alien->typeIndex;
 	parentId = alien->unk25;
-	func_800A93A4_B8354(*id, 0, -1, 0xC6);
+	func_800A93A4_B8354(arg0, 0, -1, 0xC6);
 
 	parentAlien = &alienInstances[parentId];
-	{
-		s16 modelIndex;
-		modelIndex = alien->unkC;
-		grandparentAlien = &alienInstances[parentAlien->unk25];
-		entryIdx = D_8014DD50[modelIndex].unkC;
-	}
+	grandparentAlien = &alienInstances[parentAlien->unk25];
+	entryIdx = D_8014DD50[alien->unkC].unkC;
 	entry2 = &D_8014DD50[entryIdx];
 	secondIdx = entry2->unkD;
 	entry3 = &D_8014DD50[secondIdx];
 	entryIdx3 = entry3->unkD;
 
-	func_80086230_951E0(*id, entryIdx, 0x2000);
+	func_80086230_951E0(arg0, entryIdx, 0x2000);
 
-	flags = parentAlien->unk20;
-	if (flags & 0x8000) {
-		entry3->unk6Unsigned = (u16)(65535.0 - ((((float)coss((D_80052A8C * 2000) & 0xFFFF) / 32768.0) + 1.0) * 3000.0));
-		D_8014DD50[entryIdx3].unk6Unsigned = (u16)((((float)coss((D_80052A8C * 2000) & 0xFFFF) / 32768.0) + 1.0) * 3000.0);
-		flags = parentAlien->unk20;
+	if (parentAlien->unk20 & 0x8000) {
+		entry3->unk6Unsigned = (65535.0 - ((((float)coss(D_80052A8C * 2000) / 32768.0) + 1.0) * 3000.0));
+		D_8014DD50[entryIdx3].unk6Unsigned = ((((float)coss(D_80052A8C * 2000) / 32768.0) + 1.0) * 3000.0);
 	}
 
-	if ((flags & 0x6000) == 0x6000 && !(grandparentAlien->unk20 & ALIEN_FLAG_UNKD)) {
-		if (alien->unk1E != 0) {
-			alien->unk1E--;
-			return;
-		}
-		if (func_800851C8_94178(*id, entryIdx, 0x800) && !(grandparentAlien->unk20 & ALIEN_FLAG_UNKE)) {
-
-			func_800A931C_B82CC(entryIdx, &sp90.x, sp7C);
-			func_800A931C_B82CC(entryIdx, &sp88.x, sp70);
-
-			alienTypes[typeIndex].unk20 = sp7C[0];
-			alienTypes[typeIndex].unk22 = sp7C[1];
-			alienTypes[typeIndex].unk24 = sp7C[2];
-			alienTypes[typeIndex].unk2C = sp70[0];
-			alienTypes[typeIndex].unk2E = sp70[1];
-			alienTypes[typeIndex].unk30 = sp70[2];
-
-			func_80086D70_95D20(*id, 0, func_800870D8_96088(0x200, 0x10) - entry2->unk6Unsigned);
-			alien->unk1E = 0;
-			func_80086D70_95D20(*id, 1, func_800870D8_96088(0x200, 0x10) - entry2->unk6Unsigned);
-			alien->unk1E = 1;
-		}
+	if ((parentAlien->unk20 & 0x6000) != 0x6000 || (grandparentAlien->unk20 & ALIEN_FLAG_UNKD)) {
+		return;
 	}
+
+	if (alien->unk1E != 0) {
+		alien->unk1E--;
+		return;
+	}
+	if (func_800851C8_94178(arg0, entryIdx, 0x800) && !(grandparentAlien->unk20 & ALIEN_FLAG_UNKE)) {
+
+		func_800A931C_B82CC(entryIdx, &sp90.x, &sp7C.x);
+		func_800A931C_B82CC(entryIdx, &sp88.x, &sp70.x);
+
+		alienTypes[typeIndex].unk20 = sp7C.x;
+		alienTypes[typeIndex].unk22 = sp7C.y;
+		alienTypes[typeIndex].unk24 = sp7C.z;
+		alienTypes[typeIndex].unk2C = sp70.x;
+		alienTypes[typeIndex].unk2E = sp70.y;
+		alienTypes[typeIndex].unk30 = sp70.z;
+
+		func_80086D70_95D20(arg0, 0, func_800870D8_96088(0x200, 0x10) - entry2->unk6Unsigned);
+		alien->unk1E = 0;
+		func_80086D70_95D20(arg0, 1, func_800870D8_96088(0x200, 0x10) - entry2->unk6Unsigned);
+		alien->unk1E = 1;
+	}
+
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DE9B8_1F76C8.s")
-#endif
 
 void func_802DEE18_1F7B28(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0, -1, 0xC6);
