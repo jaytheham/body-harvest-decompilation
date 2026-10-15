@@ -1739,6 +1739,10 @@ void func_802DDFF0_2C0420(u8 arg0);
 u8 func_800CE040_DCFF0(s16, s16, s16, s16, s16, s16);
 s32 func_800CE100_DD0B0(u8, s16, s16, s16, s16, s16, s16);
 
+void func_802DDA64_1F6774(u8 arg0, u8 arg1, u8 arg2);
+void func_802DDE04_1F6B14(u8 arg0);
+void func_802DE0C8_1F6DD8(u8 arg0);
+
 #endif /* LIBULTRA_REFERENCE */
 
 int func_802D57F4_1EE504(void);
