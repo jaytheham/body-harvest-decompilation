@@ -47,7 +47,7 @@ Retain any existing comments.
 - `tools/`: Readonly - tools for other tasks.
 - `src.us/`: C source files of the NTSC (US) build.
 - `src.us/core/`: C source files in this directory are also compiled into the EU build, so an edit there changes both ROMs.
-- The overlay files in `shared_overlay_files.txt` (the second half of the frontend overlay and the C file of each level overlay) are also compiled into the EU build, so an edit to one changes both ROMs. An address of a level overlay or of the gameplay overlays written as a number in a shared file goes through the macros of `include/version_shift.h` (`LEVEL_PTR(0x802D531C)`), or the EU ROM stops matching.
+- The overlay files in `shared_overlay_files.txt` (every file of the frontend, inside and outside overlays, the data-only ones included, and the C file of each level overlay) are also compiled into the EU build, so an edit to one changes both ROMs. An address of a level overlay or of the gameplay overlays written as a number in a shared file goes through the macros of `include/version_shift.h` (`LEVEL_PTR(0x802D531C)`), or the EU ROM stops matching.
 - `include/`: Header files for variables, functions, and structs.
 - `ExampleFixes/`: Hints for decompilation.
 
