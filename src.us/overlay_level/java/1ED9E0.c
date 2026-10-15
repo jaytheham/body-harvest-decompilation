@@ -340,8 +340,6 @@ const u32 jtbl_802E0F20_1F9C30[] = {
 
 const f64 D_802E0F58_1F9C68[] = { 4000.0 };
 const f64 D_802E0F60_1F9C70[] = { 188.0 };
-const f64 D_802E0F68_1F9C78[] = { -166.0 };
-const f64 D_802E0F70_1F9C80[] = { -166.0 };
 
 
 
@@ -2991,69 +2989,57 @@ void func_802DC4A8_1F51B8(u8 idx) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC4A8_1F51B8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(847): instruction sequence matches; register and frame differences remain.
 void func_802DC738_1F5448(u8 arg0) {
-	AlienInstance *alien;
 	u8 animation;
-	u8 pad;
 	u8 child;
-	union { s8 signedValue; u8 unsignedValue; } jointId;
-	s32 state;
-	s32 angle;
+	u8 jointId;
+	u8 typeIndex;
+	AlienInstance *alien;
 	s32 x;
 	s32 y;
 	s32 z;
-	SignedWord x1;
-	SignedWord y1;
-	SignedWord z1;
-	SignedWord x2;
-	s32 y2;
-	s32 z2;
-	Unk8014DD50 *joint;
-	s16 cosine;
 
 	alien = &alienInstances[arg0];
-	child = (u8)D_8014DD50[alien->unkC].unkC;
+	child = D_8014DD50[alien->unkC].unkC;
+	jointId = D_8014DD50[child].unkD;
 	animation = alien->unk36;
-	jointId.signedValue = D_8014DD50[child].unkD;
-	state = animation & 0xFF;
-	if (state < 4) {
-		joint = &D_8014DD50[jointId.unsignedValue];
-		angle = joint->unkA & 0xFFFF;
-		x = joint->unk0 + 23;
+	if (animation < 4) {
+		s32 x1;
+		s32 y1;
+		s32 z1;
+		s32 x2;
+		s32 y2;
+		s32 z2;
+		s16 angle;
+		s16 cosine;
+		angle = D_8014DD50[jointId].unkA;
+		x = D_8014DD50[jointId].unk0 + 23;
 		cosine = coss(angle);
-		y = (s32)((f64)joint->unk2 + D_802E0F68_1F9C78[0] * ((f64)(f32)cosine / 32768.0) - ((f64)(f32)sins(angle) / 32768.0) * 0);
+		y = (s32)((f64)D_8014DD50[jointId].unk2 + -166.0 * ((f64)(f32)cosine / 32768.0) - ((f64)(f32)sins(angle) / 32768.0) * 0);
 		cosine = sins(angle);
-		z = (s32)(((f64)joint->unk4 + D_802E0F70_1F9C80[0] * ((f64)(f32)cosine / 32768.0)) + ((f64)(f32)coss(angle) / 32768.0) * 0);
-		func_80128428_1373D8(alien, (s16)x, (s16)y, (s16)z, &x1.word, &y1.word, &z1.word);
-		func_80128428_1373D8(alien, -x, (s16)y, (s16)z, &x2.word, &y2, &z2);
-		func_800D16BC_E066C(x1.halves.low, y1.halves.low, z1.halves.low, x2.halves.low, y2, z2, 1);
+		z = (s32)(((f64)D_8014DD50[jointId].unk4 + -166.0 * ((f64)(f32)cosine / 32768.0)) + ((f64)(f32)coss(angle) / 32768.0) * 0);
+		func_80128428_1373D8(alien, x, y, z, &x1, &y1, &z1);
+		func_80128428_1373D8(alien, -x, y, z, &x2, &y2, &z2);
+		func_800D16BC_E066C(x1, y1, z1, x2, y2, z2, 1);
 	}
-	if (D_8014DD50[jointId.unsignedValue].unkE == 0) {
-		if (state == 3) {
-			AlienType *type;
-			child = alien->typeIndex;
-			type = &alienTypes[child];
-			type->unk20 = 0;
+	if (D_8014DD50[jointId].unkE == 0) {
+		if (animation == 3) {
+			typeIndex = alien->typeIndex;
+			alienTypes[typeIndex].unk20 = 0;
 			alien->unk1E = 0;
-			type->unk22 = (s16)y;
-			type->unk24 = (s16)z;
+			alienTypes[typeIndex].unk22 = y;
+			alienTypes[typeIndex].unk24 = z;
 			func_80087188_96138(arg0, 0, 0x20);
 		}
-		if (state < 5) {
-			func_80081C84_90C34(jointId.unsignedValue, &D_802E0890_1F95A0[animation]);
+		if (animation < 5) {
+			func_80081C84_90C34(jointId, &D_802E0890_1F95A0[animation]);
 		} else {
 			alien->unk20 &= ~(ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKE);
 		}
 		alien->unk36++;
 	}
-	func_80081E5C_90E0C(jointId.unsignedValue);
+	func_80081E5C_90E0C(jointId);
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC738_1F5448.s")
-#endif
 
 void func_802DCA54_1F5764(u8 arg0) {
 	u8 needsLift;

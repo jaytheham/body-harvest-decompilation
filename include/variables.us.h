@@ -3274,8 +3274,6 @@ extern const f64 D_802E0F18_1F9C28[];
 extern const u32 jtbl_802E0F20_1F9C30[];
 extern const f64 D_802E0F58_1F9C68[];
 extern const f64 D_802E0F60_1F9C70[];
-extern const f64 D_802E0F68_1F9C78[];
-extern const f64 D_802E0F70_1F9C80[];
 extern const f32 D_802E0F88_1F9C98[];
 extern const f32 D_802E0F8C_1F9C9C[];
 extern s16 D_802E0FB0;
