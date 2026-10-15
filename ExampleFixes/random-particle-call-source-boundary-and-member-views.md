@@ -60,3 +60,11 @@ This is another instance of the pattern in `angle-coordinate-spills.md`.
 Redundant argument casts can be removed once these forms are in place;
 the existing helper prototype supplies the required signed/unsigned
 halfword conversions. The vertical acceleration can use `unk10 += 24.0`.
+
+## Joint emission calls use the same source-boundary rule
+
+Java `func_802D9CB8_1F29C8` also matches with a comma expression joining the terrain-height result assignment and the effect call. Separate statements moved the X/Z spill reloads before the radius multiply; sharing one expression puts them after the multiply, with the unsigned conversion setup in the target order. An extra explicit `u32` cast on the radius was byte-identical and unnecessary.
+
+For its three `func_80088E40_97DF0` calls, use direct `D_8014DD50[jointIndex].unk0/unk2/unk4` coordinate reads. Reading through cached node pointers hoisted X/Y loads before the constant stack arguments. The indexed reads reproduce the target ordering while IDO still reuses the existing cached joint addresses. This removed all other scheduling differences without adding instructions.
+
+Verified by the complete ROM checksum and function diff score 0.

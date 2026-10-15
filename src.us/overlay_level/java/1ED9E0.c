@@ -2198,8 +2198,6 @@ void func_802D91F8_1F1F08(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D91F8_1F1F08.s")
 #endif
 
-#ifdef NON_MATCHING
-/* CURRENT 1187: corrected skeleton chain, radius conversion, and stack layout; call scheduling remains after 20 compiled variants. */
 void func_802D9CB8_1F29C8(u8 alienIdx) {
 	s16 sp9E;
 	s16 sp9C;
@@ -2239,7 +2237,7 @@ void func_802D9CB8_1F29C8(u8 alienIdx) {
 	if ((alien->unk2C % 25 == 0) && (alien->unk2C >= 0x19)) {
 		posX = (s16)alien->unk0;
 		posZ = (s16)alien->unk4;
-		tmp32 = func_800B84D0_C7480(posX, posZ) >> 8;
+		tmp32 = func_800B84D0_C7480(posX, posZ) >> 8,
 		func_800DF848_EE7F8(posX, (s16)tmp32, posZ, (u16)(alienTypes[alien->typeIndex].unkC * 0.75), 2);
 	}
 
@@ -2250,25 +2248,22 @@ void func_802D9CB8_1F29C8(u8 alienIdx) {
 		s32 sinVal;
 		s32 cosVal;
 
-		func_80088E40_97DF0(alienIdx, sp9E, ptr1->unk0, ptr1->unk2, ptr1->unk4, 0, 4, 0);
+		func_80088E40_97DF0(alienIdx, sp9E, D_8014DD50[sp9E].unk0, D_8014DD50[sp9E].unk2, D_8014DD50[sp9E].unk4, 0, 4, 0);
 
 		angle1 = (alien->unk6 + 0x2000);
 		sinVal = sins(angle1);
 		fltVal = (f32)(((f64)(f32)sinVal / 32768.0) * 15.0);
 		cosVal = coss(angle1);
-		func_80088E40_97DF0(alienIdx, sp9C, ptr2->unk0, ptr2->unk2, ptr2->unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
+		func_80088E40_97DF0(alienIdx, sp9C, D_8014DD50[sp9C].unk0, D_8014DD50[sp9C].unk2, D_8014DD50[sp9C].unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
 
 		angle2 = (alien->unk6 + 0x6000);
 		sinVal = sins(angle2);
 		fltVal = (f32)(((f64)(f32)sinVal / 32768.0) * 15.0);
 		cosVal = coss(angle2);
-		func_80088E40_97DF0(alienIdx, sp9A, ptr3->unk0, ptr3->unk2, ptr3->unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
+		func_80088E40_97DF0(alienIdx, sp9A, D_8014DD50[sp9A].unk0, D_8014DD50[sp9A].unk2, D_8014DD50[sp9A].unk4, (s32)fltVal, 0, (s32)(f32)(((f64)(f32)cosVal / 32768.0) * -15.0));
 	}
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D9CB8_1F29C8.s")
-#endif
 
 void func_802DA18C_1F2E9C(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | ALIEN_FLAG_UNKD;
