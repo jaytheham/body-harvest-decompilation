@@ -950,7 +950,7 @@ void func_802D62A0_1EEFB0(void)
  * D_80157F8E: frame counter within state
  * After cases 0-5, calls building position display funcs if state < 4
  * NOTE: C body matches ROM only when compiled with NON_MATCHING=1 flag.
- * IDO produces different code without that flag — do not strip this wrapper. */
+ * IDO produces different code without that flag â€” do not strip this wrapper. */
 s32 func_802D6338_1EF048(void) {
 	s16 temp_s1;
 
@@ -3605,96 +3605,69 @@ void func_802DDA64_1F6774(u8 arg0, u8 arg1, u8 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDA64_1F6774.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DDE04_1F6B14(u8 arg0) {
-	AlienInstance *alien1;
-	AlienInstance *alien2;
-	Unk8014DD50 *table;
-	s16 temp_value;
-	s8 type_id1;
-	s32 weapon_dmg;
-	s32 dmg_threshold;
-	s8 type_id2;
-	s8 type_id3;
-	s8 type_id4;
-	s8 type_id5;
-	s8 type_id6;
-	s16 joints[5];
 	s32 parentId;
-	Unk8014DD50 *weapon;
+	s16 joints[5];
+	AlienInstance *parentAlien;
+	s8 animationResult;
+	s16 targetSpinSpeed;
+	s8 weaponNode;
 
-	alien1 = &alienInstances[arg0];
-	parentId = alien1->unk25;
-	alien2 = &alienInstances[parentId];
+	parentId = alienInstances[arg0].unk25;
+	parentAlien = &alienInstances[parentId];
 
-	if (!(alien2->unk20 & (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKF)) && ((alien1->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) != (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) && (alien1->unk1E == 0) && (alien1->unk2C != 0)) {
+	if (!(parentAlien->unk20 & (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKF)) && ((alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) != (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) && (alienInstances[arg0].unk1E == 0) && (alienInstances[arg0].unk2C != 0)) {
 		if (func_80084FE8_93F98(arg0, 0x800) != 0) {
-			alien2->unk20 = (alien2->unk20 | ALIEN_FLAG_UNKE);
-			alien1->unk36 = 0;
-			alien1->unk2C = (s16) (alien1->unk2C - 1);
+			parentAlien->unk20 = (parentAlien->unk20 | ALIEN_FLAG_UNKE);
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk2C = alienInstances[arg0].unk2C - 1;
 		}
 	} else {
-		table = D_8014DD50;
-		type_id1 = table[alien1->unkC].unkC;
-		temp_value = alien1->unk2C;
-		joints[0] = type_id1;
+		joints[0] = D_8014DD50[alienInstances[arg0].unkC].unkC;
+		joints[1] = D_8014DD50[joints[0]].unkC;
+		joints[2] = D_8014DD50[joints[1]].unkC;
+		joints[3] = D_8014DD50[joints[2]].unkC;
+		joints[4] = D_8014DD50[joints[3]].unkC;
+		weaponNode = D_8014DD50[joints[4]].unkC;
 
-		type_id2 = table[joints[0]].unkC;
-		joints[1] = type_id2;
-		type_id3 = table[type_id2].unkC;
-		joints[2] = type_id3;
-		type_id4 = table[type_id3].unkC;
-		joints[3] = type_id4;
-		type_id5 = table[type_id4].unkC;
-		joints[4] = type_id5;
-		type_id6 = table[type_id5].unkC;
-
-		if (alien2->unk20 & ALIEN_FLAG_UNKE) {
-			dmg_threshold = 0x2710;
-		} else if ((alien1->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) == (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) {
-			dmg_threshold = 0x1D4C;
+		if (parentAlien->unk20 & ALIEN_FLAG_UNKE) {
+			targetSpinSpeed = 0x2710;
+		} else if ((alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) == (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) {
+			targetSpinSpeed = 0x1D4C;
 		} else {
-			dmg_threshold = 0;
+			targetSpinSpeed = 0;
 		}
 
-		if (temp_value < dmg_threshold) {
-			alien1->unk2C = temp_value + 0x64;
-			temp_value = alien1->unk2C;
-		} else if (dmg_threshold < temp_value) {
-			alien1->unk2C = temp_value - 0x64;
-			temp_value = alien1->unk2C;
+		if (alienInstances[arg0].unk2C < targetSpinSpeed) {
+			alienInstances[arg0].unk2C = alienInstances[arg0].unk2C + 0x64;
+		} else if (targetSpinSpeed < alienInstances[arg0].unk2C) {
+			alienInstances[arg0].unk2C = alienInstances[arg0].unk2C - 0x64;
 		}
 
-		weapon = &table[type_id6];
-		weapon->unk8Unsigned += temp_value;
+		D_8014DD50[weaponNode].unk8Unsigned += alienInstances[arg0].unk2C;
 
 		func_80137468_146418(arg0, 0x261);
 
-		if ((alien1->unk2C >= 0x26AD) && ((alien2->unk20 & ALIEN_FLAG_UNKE) != 0)) {
-			alien2->unk20 = (alien2->unk20 | ALIEN_FLAG_UNKD);
-			weapon_dmg = func_80081F18_90EC8(arg0, 5, 4, &joints[0], &D_802E0B08_1F9818);
+		if ((alienInstances[arg0].unk2C >= 0x26AD) && ((parentAlien->unk20 & ALIEN_FLAG_UNKE) != 0)) {
+			parentAlien->unk20 = (parentAlien->unk20 | ALIEN_FLAG_UNKD);
+			animationResult = func_80081F18_90EC8(arg0, 5, 4, joints, &D_802E0B08_1F9818);
 
-			if (weapon_dmg == 2) {
+			if (animationResult == 2) {
 				func_80087188_96138(arg0, 0, 0);
-				weapon_dmg = alien1->unk20;
 
-				if ((weapon_dmg & 0xF000) != 0xF000) {
-					if (weapon_dmg & 0x6000) {
-						alien1->unk1E = (s16) ((func_800038E0_44E0() % 70) + 0x1E);
+				if ((alienInstances[arg0].unk20 & 0xF000) != 0xF000) {
+					if (alienInstances[arg0].unk20 & 0x6000) {
+						alienInstances[arg0].unk1E = (func_800038E0_44E0() % 70) + 0x1E;
 						return;
 					}
-					alien1->unk1E = (s16) ((func_800038E0_44E0() % 100) + 0x32);
+					alienInstances[arg0].unk1E = (func_800038E0_44E0() % 100) + 0x32;
 				}
-			} else if ((s8)weapon_dmg == 4) {
-				alien2->unk20 = (alien2->unk20 & ~(ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD));
+			} else if (animationResult == 4) {
+				parentAlien->unk20 = (parentAlien->unk20 & ~(ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD));
 			}
 		}
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDE04_1F6B14.s")
-#endif
 
 void func_802DE0C8_1F6DD8(u8 arg0) {
 	AlienInstance *parentAlien;
