@@ -43,6 +43,7 @@ typedef enum GameplayMode {
 	GAMEPLAY_MODE_UNK5 = 5,
 	GAMEPLAY_MODE_INSIDE = 6, // AI - inside a building, held from entry to exit
 	GAMEPLAY_MODE_LOADING_LEVEL = 7, // AI - set by func_80006DDC_79DC while the level loads (seen between FRONTEND and LEVEL_START_CUTSCENE)
+	// AI - set by the gameplay loop (101840.c) when D_80050AD4 is 0xC, as it sets LEVEL_MAP for 3 and INVENTORY for 0xD (pause-menu items). No store of 0xC was found, so this may be unreachable. Read from the code, not seen running.
 	GAMEPLAY_MODE_UNK8 = 8, // Clue screen? Does nothing?
 	GAMEPLAY_MODE_DIALOGUE = 9, // Talking to NPC/Signpost/Daisy
 	GAMEPLAY_MODE_END_OF_LEVEL = 0xA, // Show score screens
@@ -1008,7 +1009,7 @@ typedef enum VehicleFlags {
 	VEHICLE_FLAG_UNK5 = 0x10, // SCUD nuke launched
 	VEHICLE_FLAG_UNK6 = 0x20,
 	VEHICLE_FLAG_UNK7 = 0x40, // Is inside current shield wall bounds
-	VEHICLE_FLAG_UNK8 = 0x80, // Shielded - blocks damage
+	VEHICLE_FLAG_SHIELDED = 0x80, // Shielded - blocks damage (AI - measured: the invincibility cheat's shield sets it on the player, flags 0x8161 to 0x81E1 in the high half of the word at +0x20, and drowning still took the hit points from 600 to 0 in 19 s with it set, so it does not stop that damage)
 	VEHICLE_FLAG_UNK9 = 0x100,
 	VEHICLE_FLAG_UNKA = 0x200,
 	VEHICLE_FLAG_UNKB = 0x400, // Is autonomous grid-guided vehicle (turret / road-follower)

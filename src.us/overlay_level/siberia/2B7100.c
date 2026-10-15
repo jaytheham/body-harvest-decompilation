@@ -1110,13 +1110,13 @@ void func_802D5980_2B7DB0(void)
 	func_800072CC_7ECC(0x18);
 	if (func_8000726C_7E6C(0x0B) == 0)
 	{
-		*((u16 *)(((u8 *)vehicleInstances) + 0xA8C)) |= VEHICLE_FLAG_UNK8;
+		*((u16 *)(((u8 *)vehicleInstances) + 0xA8C)) |= VEHICLE_FLAG_SHIELDED;
 	}
 	else
 	{
 		func_8011C080_12B030(0x67);
 	}
-	*((u16 *)(((u8 *)vehicleInstances) + 0xAE8)) |= VEHICLE_FLAG_UNK8;
+	*((u16 *)(((u8 *)vehicleInstances) + 0xAE8)) |= VEHICLE_FLAG_SHIELDED;
 	D_80157FA8 = 0;
 	D_801591C4 = 0;
 	osSyncPrintf(D_802E2EB0_2C52E0);
@@ -1169,7 +1169,7 @@ void func_802D5B58_2B7F88(void)
 {
 	u8 new_var;
 	s32 i;
-	vehicleInstances[29].unk20 &= ~VEHICLE_FLAG_UNK8;
+	vehicleInstances[29].unk20 &= ~VEHICLE_FLAG_SHIELDED;
 	osSyncPrintf(D_802E2EC8_2C52F8);
 	for (i = 0; i < D_8014D507; i++)
 	{
@@ -1327,7 +1327,7 @@ afterFirstBlock:
 void func_802D6220_2B8650(void) {
 	D_802E30F4--;
 	if (D_802E30F4 == 0) {
-		vehicleInstances[30].unk20 &= ~VEHICLE_FLAG_UNK8;
+		vehicleInstances[30].unk20 &= ~VEHICLE_FLAG_SHIELDED;
 		D_801493E0 = 0;
 		D_802E3094 = 0;
 		func_8012D808_13C7B8(D_802E3098);

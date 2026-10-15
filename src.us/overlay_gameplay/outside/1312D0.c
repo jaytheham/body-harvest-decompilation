@@ -626,7 +626,7 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 }
 
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
-	if ((arg0->unk20 & VEHICLE_FLAG_UNK8) == 0) {
+	if ((arg0->unk20 & VEHICLE_FLAG_SHIELDED) == 0) {
 		if ((arg0 != D_80052B34) || (D_801493E0 != 0)) {
 			func_80123E90_132E40(arg0, arg1);
 		}

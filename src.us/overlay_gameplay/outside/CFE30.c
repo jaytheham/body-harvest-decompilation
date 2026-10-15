@@ -11623,7 +11623,7 @@ void func_800E5B78_F4B28(void)
 		{
 			if (entry->unk1 == 2)
 			{
-				vehicleInstances[entry->unk0].unk20 &= ~VEHICLE_FLAG_UNK8;
+				vehicleInstances[entry->unk0].unk20 &= ~VEHICLE_FLAG_SHIELDED;
 			}
 			else if (one == entry->unk1)
 			{
@@ -11644,7 +11644,7 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	Unk80152CA0Entry *entry;
 	s16 count;
 
-	if (arg0 == 2 && (vehicleInstances[arg1].unk20 & VEHICLE_FLAG_UNK8)) {
+	if (arg0 == 2 && (vehicleInstances[arg1].unk20 & VEHICLE_FLAG_SHIELDED)) {
 		return;
 	}
 	if (arg0 == 1 && ((buildingInstances[arg1].unk8 >> 12) & 0x1000)) {

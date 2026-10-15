@@ -423,7 +423,7 @@ void func_802D4E6C_1EDB7C(void) {
 		func_8011C080_12B030(0x31);
 		func_8011C080_12B030(0x32);
 	}
-	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_UNK8);
+	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_SHIELDED);
 }
 
 void func_802D4F70_1EDC80(s32 arg0) {

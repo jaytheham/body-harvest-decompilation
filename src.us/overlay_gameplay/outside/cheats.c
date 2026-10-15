@@ -196,7 +196,7 @@ void func_800737A4_82754() {
 
 // Cheat ZDefender - Add or remove player shield
 void func_800737BC_8276C(void) {
-	if (!(D_80052B34->unk20 & VEHICLE_FLAG_UNK8)) {
+	if (!(D_80052B34->unk20 & VEHICLE_FLAG_SHIELDED)) {
 		func_800E5CF4_F4CA4(2, D_80149441);
 		return;
 	}

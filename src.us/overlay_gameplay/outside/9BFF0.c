@@ -701,7 +701,7 @@ void func_8008D4A0_9C450(unsigned int arg0)
 // HCU - player capture
 void func_8008D634_9C5E4(u8 arg0)
 {
-	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & VEHICLE_FLAG_UNK8) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
+	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & VEHICLE_FLAG_SHIELDED) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
 	{
 		if (D_80048180 == 1)
 		{

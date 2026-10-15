@@ -951,7 +951,7 @@ extern f32 D_8004DCC0;
 extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
 extern VehicleInstance D_8004E798;
 extern s32 D_80050AD0;
-extern s32 D_80050AD4;
+extern s32 D_80050AD4; // AI - the pause menu's chosen item, also used as the selected weapon slot (stored in AAA70.c and 173B60.c); 101840.c turns 3, 0xD and 0xC into modes 0, 0x10 and 8 (read from the code)
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
 extern u32 D_80051458;
 extern u32 D_800521F0;
@@ -2227,7 +2227,7 @@ extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149470; // AI - Mission counter (incremented per mission parsed)
 extern s16 D_80149474; // AI - Current mission ID (set by flag-clear command, 0xFF = none)
-extern s32 D_80149478[16]; // AI - Mission callback function pointers (max 16)
+extern s32 D_80149478[16]; // AI - Mission callback function pointers (max 16); the game runs every non-zero entry each frame (measured: writing 0x800734AC, the fly cheat's function, into a free slot made the left stick fly Adam, and Z cleared the slot again)
 extern s32 D_801494B4; // AI - Mission callback active flag / callback count
 extern u8* D_801494B8; // AI - Mission data stream pointer
 extern u8 D_801494BC; // AI - Current byte from mission data stream
@@ -2425,8 +2425,8 @@ extern u8 D_80152740[];
 extern s16 D_80152B7C;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern s16 D_80152C90;
-extern s16 D_80152C96;
-extern Unk80152CA0Entry D_80152CA0[];
+extern s16 D_80152C96; // AI - number of entries in D_80152CA0 (measured: 0, then 1 after the invincibility cheat's shield was added)
+extern Unk80152CA0Entry D_80152CA0[]; // AI - the shield list, 3 bytes per entry; the invincibility cheat adds one and sets VEHICLE_FLAG_SHIELDED on the player
 extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
 extern Unk800E614CFxSlot D_80153300[4];
 extern Unk800E614CFxSlot D_801538C4;
