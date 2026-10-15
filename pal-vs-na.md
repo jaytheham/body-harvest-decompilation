@@ -180,7 +180,7 @@ addresses in `undefined_syms.eu.txt`.
 ### Sharing an overlay file
 
 The files that PAL shares outside core are listed in `shared_overlay_files.txt`, the one list that the Makefile,
-`tools/native_build.py` and the tools read: the second half of the frontend overlay (`52690.c`) and the one C file of each
+`tools/native_build.py` and the tools read: both halves of the frontend overlay (`40720.c` and `52690.c`) and the one C file of each
 of the five level overlays, and every file of the inside and the outside overlay (the outside one has four data-only files).
 `tests/shared_files_check.sh` checks that the list agrees with `bh.eu.yaml`, which names each of
 them as `../src.us/<file>`, and with the other places that use it.
