@@ -3493,117 +3493,81 @@ void func_802DD8E8_1F65F8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD8E8_1F65F8.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802DDA64_1F6774(u8 arg0, u8 arg1, u8 arg2) {
-	AlienInstance *alien_ptr;
-	AlienInstance *alien1;
-	AlienInstance *alien2;
-	AlienInstance *alien3;
-	Unk8014DD50 *node_ptr;
-	Unk8014DD50 *node_ptr2;
-	s16 sp5C;
-	s16 sp5E;
-	s16 sp60;
-	s16 sp62;
-	s32 sp68;
-	s32 sp6C;
-	s32 sp70;
-	AlienInstance *sp74;
-	AlienInstance *sp48;
-	Unk8014DD50 *sp44;
-	Unk8014DD50 *sp3C;
-	s32 flags;
-	s32 flags2;
-	s16 counter;
-	u16 value_u16;
-	s8 node_id;
-	s8 next_node;
-	s8 spawn_id;
+	AlienInstance *parentAlien;
+	s32 x;
+	s32 y;
+	s32 z;
+	s8 firstNode;
+	s16 secondNode;
+	s16 thirdNode;
+	s16 coords[3];
+	s32 transformed[3];
 
-	alien_ptr = &alienInstances[arg0 & 0xFF];
-	spawn_id = (&D_8014DD50[alien_ptr->unkC])->unkC;
-	next_node = (&D_8014DD50[spawn_id])->unkD;
-	alien1 = &alienInstances[arg2 & 0xFF];
-	sp48 = &alienInstances[arg1 & 0xFF];
-	node_ptr = &D_8014DD50[next_node];
-	flags = alien1->unk20 & ALIEN_FLAG_UNKD;
-	spawn_id = node_ptr->unkD;
+	parentAlien = &alienInstances[alienInstances[arg0].unk25];
+	firstNode = D_8014DD50[alienInstances[arg1].unkC].unkC;
+	secondNode = D_8014DD50[firstNode].unkD;
+	thirdNode = D_8014DD50[secondNode].unkD;
 
-	if ((flags == 0) && (alien1->unk2C < 0x960)) {
-		if (func_80084FE8_93F98(arg0 & 0xFF, 0x400) != 0) {
-			alien1->unk20 = alien1->unk20 | ALIEN_FLAG_UNKD;
+	if (!(alienInstances[arg2].unk20 & ALIEN_FLAG_UNKD) && (alienInstances[arg2].unk2C < 0x960)) {
+		if (func_80084FE8_93F98(arg0, 0x400) != 0) {
+			alienInstances[arg2].unk20 = alienInstances[arg2].unk20 | ALIEN_FLAG_UNKD;
 		}
 	} else {
-		if (flags != 0) {
-			node_ptr2 = &D_8014DD50[spawn_id];
-			counter = ((D_80052A8C & 1) * 0x258) - 0x258;
-			node_ptr->unkA = counter;
-			node_ptr2->unkA = counter;
-			node_ptr->unk6 = (u16)(node_ptr->unk6 - 0x78);
-			node_ptr2->unk6 = (u16)(node_ptr2->unk6 + 0x78);
-			sp5C = 0x6E;
-			sp5E = -0xA;
-			sp60 = 0x1B8;
-			sp3C = node_ptr2;
-			sp44 = node_ptr;
-			sp62 = spawn_id;
-			func_800A931C_B82CC(next_node, &sp5C, &sp68);
-			func_80128428_1373D8(alien_ptr, sp5C, sp5E, sp60, &sp70, &sp6C, &sp68);
-			func_800D16BC_E066C(sp70, sp6C, sp68, alien1->unk0, (s32)alien1->unk2, (s32)alien1->unk4, 1);
-			sp5C = -0x50;
-			sp5E = -0x19;
-			sp60 = 0x1B8;
-			func_800A931C_B82CC((sp62 >> 24) & 0xFF, &sp5C, &sp68);
-			func_80128428_1373D8(alien_ptr, sp5C, sp5E, sp60, &sp70, &sp6C, &sp68);
-			func_800D16BC_E066C(sp70, sp6C, sp68, alien1->unk0, (s32)alien1->unk2, (s32)alien1->unk4, 1);
-			sp3C = node_ptr2;
-			sp44 = node_ptr;
+		if (alienInstances[arg2].unk20 & ALIEN_FLAG_UNKD) {
+			D_8014DD50[secondNode].unkA = ((D_80052A8C & 1) * 0x258) - 0x258;
+			D_8014DD50[thirdNode].unkA = ((D_80052A8C & 1) * 0x258) - 0x258;
+			D_8014DD50[secondNode].unk6Unsigned -= 0x78;
+			D_8014DD50[thirdNode].unk6Unsigned += 0x78;
+			coords[0] = 0x6E;
+			coords[1] = -0xA;
+			coords[2] = 0x1B8;
+			func_800A931C_B82CC(secondNode, coords, transformed);
+			func_80128428_1373D8(&alienInstances[arg0], transformed[0], transformed[1], transformed[2], &x, &y, &z);
+			func_800D16BC_E066C(x, y, z, alienInstances[arg2].unk0, alienInstances[arg2].unk2, alienInstances[arg2].unk4, 1);
+			coords[0] = -0x50;
+			coords[1] = -0x19;
+			coords[2] = 0x1B8;
+			func_800A931C_B82CC(thirdNode, coords, transformed);
+			func_80128428_1373D8(&alienInstances[arg0], transformed[0], transformed[1], transformed[2], &x, &y, &z);
+			func_800D16BC_E066C(x, y, z, alienInstances[arg2].unk0, alienInstances[arg2].unk2, alienInstances[arg2].unk4, 1);
 		} else {
-			value_u16 = node_ptr->unk6;
-			node_ptr2 = &D_8014DD50[spawn_id];
-			value_u16 = value_u16 + 0x3E8;
-			if (node_ptr->unk6 != 0) {
-				node_ptr->unk6 = value_u16;
-				if ((value_u16 & 0xFFFF) < 0x3E8) {
-					node_ptr->unk6 = 0;
+			if (D_8014DD50[secondNode].unk6Unsigned != 0) {
+				D_8014DD50[secondNode].unk6Unsigned += 0x3E8;
+				if (D_8014DD50[secondNode].unk6Unsigned < 0x3E8) {
+					D_8014DD50[secondNode].unk6Unsigned = 0;
 				}
 			}
-			flags2 = node_ptr2->unk6 - 0x3E8;
-			if (flags2 < 0) {
-				node_ptr2->unk6 = 0;
+			if (D_8014DD50[thirdNode].unk6Unsigned - 0x3E8 < 0) {
+				D_8014DD50[thirdNode].unk6Unsigned = 0;
 			} else {
-				node_ptr2->unk6 = (u16)flags2;
+				D_8014DD50[thirdNode].unk6Unsigned = D_8014DD50[thirdNode].unk6Unsigned - 0x3E8;
 			}
 		}
 
-		flags2 = sp48->unk20;
-		if (flags2 & 0x1000) {
-			counter = alien_ptr->unk2C;
-			if (counter != 0) {
-				alien_ptr->unk2C = counter - 1;
-				if (alien_ptr->unk2C < 0xF) {
-					sp74->unk20 = sp74->unk20 | ALIEN_FLAG_UNKD;
+		if (alienInstances[arg1].unk20 & 0x1000) {
+			if (alienInstances[arg0].unk2C != 0) {
+				alienInstances[arg0].unk2C--;
+				if (alienInstances[arg0].unk2C < 0xF) {
+					parentAlien->unk20 = parentAlien->unk20 | ALIEN_FLAG_UNKD;
 				}
 			} else {
-				sp48->unk20 = flags2 & ~ALIEN_FLAG_UNKD;
-				alien1->unk20 = alien1->unk20 & ~ALIEN_FLAG_UNKD;
-				sp74->unk20 = sp74->unk20 & ~ALIEN_FLAG_UNKD;
-				node_ptr->unkA = 0;
-				alien1->unk20 = alien1->unk20 | ALIEN_FLAG_UNKE;
-				node_ptr2->unkA = 0;
-				alien1->unk26 = 4;
-				alien1->unk36 = 4;
-				func_800D05A8_DF558(alien1->unk0, alien1->unk2, alien1->unk4, 0x1F4, 0xFF, 0xFF, 0xFF);
+				alienInstances[arg1].unk20 = alienInstances[arg1].unk20 & ~ALIEN_FLAG_UNKD;
+				alienInstances[arg2].unk20 = alienInstances[arg2].unk20 & ~ALIEN_FLAG_UNKD;
+				parentAlien->unk20 = parentAlien->unk20 & ~ALIEN_FLAG_UNKD;
+				D_8014DD50[secondNode].unkA = 0;
+				alienInstances[arg2].unk20 = alienInstances[arg2].unk20 | ALIEN_FLAG_UNKE;
+				D_8014DD50[thirdNode].unkA = 0;
+				alienInstances[arg2].unk26 = 4;
+				alienInstances[arg2].unk36 = 4;
+				func_800D05A8_DF558(alienInstances[arg2].unk0, alienInstances[arg2].unk2, alienInstances[arg2].unk4, 0x1F4, 0xFF, 0xFF, 0xFF);
 			}
-		} else if (alien1->unk2C >= 0x7D1) {
-			sp48->unk20 = flags2 | ALIEN_FLAG_UNKD;
-			alien_ptr->unk2C = 0x32;
+		} else if (alienInstances[arg2].unk2C >= 0x7D1) {
+			alienInstances[arg1].unk20 = alienInstances[arg1].unk20 | ALIEN_FLAG_UNKD;
+			alienInstances[arg0].unk2C = 0x32;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DDA64_1F6774.s")
-#endif
 
 void func_802DDE04_1F6B14(u8 arg0) {
 	s32 parentId;
