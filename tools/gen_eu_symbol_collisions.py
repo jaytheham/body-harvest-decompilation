@@ -81,6 +81,24 @@ def vram_of(name: str) -> int | None:
     return val if val >= 0x100000 else None
 
 
+#: The overlays share one vram range from here up, so splat applies a symbol there only when it also names the ROM offset.
+OVERLAY_VRAM = 0x80070000
+
+
+def splat_tag(name: str) -> str:
+    """The ``symbol_addrs.eu.txt`` line that tags EU label ``name`` as ``eu_<name>``.
+
+    A label in the overlay range gets ``// rom:0x<offset>`` (the offset is the suffix of its own name), because splat
+    does not apply a symbol that lacks it there and the label would keep colliding."""
+    vram = vram_of(name)
+    assert vram is not None
+    line = f"eu_{name} = 0x{vram:08X};"
+    m = re.match(r"^D_[0-9A-Fa-f]{8}_([0-9A-Fa-f]+)$", name)
+    if vram >= OVERLAY_VRAM and m:
+        line += f" // rom:0x{m.group(1).upper()}"
+    return line
+
+
 def find_nm() -> str:
     """Path of a MIPS ``nm``: the native Windows toolchain, else one on PATH."""
     if os.name == "nt" and WINDOWS_NM.exists():
@@ -98,6 +116,11 @@ def collect_shared_symbols() -> tuple[set[str], set[str]]:
     defined: set[str] = set()
     undefined: set[str] = set()
     objs = sorted(SHARED_OBJ_DIR.rglob("*.o"))
+    # The shared files of src.us outside core (shared_overlay_files.txt): their NTSC objects are build/src.us/<file>.o
+    sys.path.insert(0, str(ROOT / "tools"))
+    from decomp_common import shared_overlay_files
+
+    objs += [ROOT / "build" / (f + ".o") for f in shared_overlay_files() if (ROOT / "build" / (f + ".o")).is_file()]
     if not objs:
         sys.exit(f"no shared objects under {SHARED_OBJ_DIR} (build NA first)")
     nm = find_nm()
@@ -273,6 +296,7 @@ def main() -> int:
         collisions = [n for n in collisions if not n.startswith("func_")]
 
     pinned: list[str] = [f"eu_{n} = 0x{vram_of(n):08X};" for n in collisions]
+    tagged_lines = [splat_tag(n) for n in collisions]
 
     print(f"shared-C symbols:           {len(shared)} ({len(defined)} defined)")
     print(f"EU names referenced:        {len(eu_names)}")
@@ -300,7 +324,7 @@ def main() -> int:
     ):
         kept = strip_eu_block(path)
         body = kept + ["", headers[path]]
-        body += pinned
+        body += tagged_lines if path is SYMBOL_ADDRS_EU else pinned
         if extra:
             if path is SYMBOL_ADDRS_EU:
                 body += ["", "// NA offset-aliases the shared C references."]

@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "version_shift.h"
 
 extern s16 D_80140CF0_14FCA0 = 0x64;
 extern u32 D_80140CF4_14FCA4 = 0;

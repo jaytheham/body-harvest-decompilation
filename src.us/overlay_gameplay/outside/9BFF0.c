@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 #include "884C0.h"
 
 const char D_80141E80_150E30[] = "%s says I'm busy\n";						   // "%s says I'm busy\n"
@@ -16,7 +17,7 @@ const f64 D_80141F18_150EC8[] = {1500.0};
 const f64 D_80141F20_150ED0[] = {9.424777962};
 const f64 D_80141F28_150ED8[] = {0.0};
 
-Unk8014DD50 *D_8013C610_14B5C0[] = {(Unk8014DD50 *)0x8013C5E0, (Unk8014DD50 *)0x8013C5B0};
+Unk8014DD50 *D_8013C610_14B5C0[] = {(Unk8014DD50 *)OVERLAY_PTR(0x8013C5E0), (Unk8014DD50 *)OVERLAY_PTR(0x8013C5B0)};
 
 u8 D_8013C618_14B5C8[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
@@ -249,10 +250,10 @@ u32 D_8013C6E0_14B690[] = {
 	0x0001000A,
 };
 
-Unk8014DD50 *D_8013C738_14B6E8 = (Unk8014DD50 *)0x8013C6D8;
+Unk8014DD50 *D_8013C738_14B6E8 = (Unk8014DD50 *)OVERLAY_PTR(0x8013C6D8);
 
 u32 D_8013C73C_14B6EC[] = {
-	0x8013C708,
+	OVERLAY_PTR(0x8013C708),
 	0x0000FFE2,
 	0x00000000,
 	0x0000F060,
@@ -280,8 +281,8 @@ u32 D_8013C73C_14B6EC[] = {
 };
 
 u32 D_8013C7A0_14B750[] = {
-	0x8013C740,
-	0x8013C770,
+	OVERLAY_PTR(0x8013C740),
+	OVERLAY_PTR(0x8013C770),
 	0x0000001E,
 	0x00000000,
 	0x00000FA0,
@@ -325,8 +326,8 @@ u32 D_8013C7A0_14B750[] = {
 };
 
 u32 D_8013C848_14B7F8[] = {
-	0x8013C7A8,
-	0x8013C7F8,
+	OVERLAY_PTR(0x8013C7A8),
+	OVERLAY_PTR(0x8013C7F8),
 	0x00000000,
 	0x00000000,
 	0x00000000,
@@ -425,7 +426,7 @@ u32 D_8013C848_14B7F8[] = {
 	0x0001000C,
 };
 
-u32 D_8013C9D0_14B980[3] = {0x8013C850, 0x8013C950, 0x8013C8D0};
+u32 D_8013C9D0_14B980[3] = {OVERLAY_PTR(0x8013C850), OVERLAY_PTR(0x8013C950), OVERLAY_PTR(0x8013C8D0)};
 
 Unk8014DD50 D_8013C9DC_14B98C = {0, 0, 0, 0, 0, 0, 0, 1, 7};
 Unk8014DD50 D_8013C9EC_14B99C = {0, 0, 0, 0, 0, 0, 0, 1, 6};
@@ -524,9 +525,9 @@ u32 D_8013CA24_14B9D4[] = {
 	0x01000006,
 };
 
-u32 D_8013CAE4_14BA94[2] = {0x8013CA44, 0x8013CAC4};
-u32 D_8013CAEC_14BA9C = 0x8013CA64;
-u32 D_8013CAF0_14BAA0[3] = {0x8013CA84, 0x8013CAA4, 0x8013CAC4};
+u32 D_8013CAE4_14BA94[2] = {OVERLAY_PTR(0x8013CA44), OVERLAY_PTR(0x8013CAC4)};
+u32 D_8013CAEC_14BA9C = OVERLAY_PTR(0x8013CA64);
+u32 D_8013CAF0_14BAA0[3] = {OVERLAY_PTR(0x8013CA84), OVERLAY_PTR(0x8013CAA4), OVERLAY_PTR(0x8013CAC4)};
 
 Unk80154082 D_8013CAFC_14BAAC = {0x00, 0x00, 0x00};
 u32 D_8013CB00_14BAB0[] = {
@@ -550,8 +551,8 @@ u32 D_8013CB20_14BAD0[] = {
 	0x00010007,
 };
 
-Unk8014DD50 *D_8013CB40_14BAF0 = (Unk8014DD50 *)0x8013CB00;
-u32 D_8013CB44_14BAF4 = 0x8013CB20;
+Unk8014DD50 *D_8013CB40_14BAF0 = (Unk8014DD50 *)OVERLAY_PTR(0x8013CB00);
+u32 D_8013CB44_14BAF4 = OVERLAY_PTR(0x8013CB20);
 Unk80154082 D_8013CB48_14BAF8 = {0xFF, 0xFF, 0xFF};
 u32 D_8013CB4C_14BAFC = 0x00000000;
 u32 D_8013CB50_14BB00[] = {
@@ -700,7 +701,7 @@ void func_8008D4A0_9C450(unsigned int arg0)
 // HCU - player capture
 void func_8008D634_9C5E4(u8 arg0)
 {
-	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & VEHICLE_FLAG_UNK8) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
+	if (!(D_8004DCA8 & 2) && !(D_80052B34->unk20 & VEHICLE_FLAG_SHIELDED) && (D_80052B34->unk1A == 0) && (D_80159300 == 0))
 	{
 		if (D_80048180 == 1)
 		{
@@ -779,7 +780,7 @@ void func_8008D71C_9C6CC(u32 arg0)
 			}
 		}
 	}
-	else if ((alienInstances[target].typeIndex == 0x19) && (!(alienInstances[target].unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKG))))
+	else if ((alienInstances[target].typeIndex == 0x19) && (!(alienInstances[target].unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKG))))
 	{
 		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF;
 		alienInstances[target].unk20 |= ALIEN_FLAG_UNKG;
@@ -799,7 +800,7 @@ s32 func_8008D978_9C928(u8 arg0)
 	u8 unk25 = inst->unk25;
 	if (unk25 != 0xFF)
 	{
-		if (alienInstances[unk25].unk20 & (ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKM))
+		if (alienInstances[unk25].unk20 & (ALIEN_FLAG_UNKL | ALIEN_FLAG_DESPAWNING))
 		{
 			if ((*(inst = &alienInstances[alienInstances[unk25].unk25])).unk20 & ALIEN_FLAG_UNKE)
 			{
@@ -942,7 +943,7 @@ void func_8008DEF4_9CEA4(u8 arg0)
 	{
 		var_t0 = 4;
 	}
-	if (alienInstances[arg0].unk25 == 0xFF || (alienInstances[arg0].unk25 != 0xFF && alienInstances[alienInstances[arg0].unk25].unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL)))
+	if (alienInstances[arg0].unk25 == 0xFF || (alienInstances[arg0].unk25 != 0xFF && alienInstances[alienInstances[arg0].unk25].unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)))
 	{
 		func_80088760_97710(&alienInstances[arg0]);
 	}

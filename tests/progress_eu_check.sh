@@ -20,7 +20,7 @@
 # git show. 32aaef7ad is a local integration commit: once the pull request has been rebased or squashed upstream it
 # no longer exists, and BASE must then be set to the last commit whose tools/progress.py has no --version option.
 set -u
-: "${PY:?set PY to the Python 3.12 interpreter}"
+: "${PY:?set PY to a Python 3.10 or 3.12 interpreter with PyYAML (no 3.11: the vendored tree-sitter has no build for it)}"
 base="${BASE:-32aaef7ad}"
 if ! git cat-file -e "${base}^{commit}" 2>/dev/null; then
     echo "FAIL BASE '$base' is not a commit in this clone; set BASE to the last commit before the EU view" \

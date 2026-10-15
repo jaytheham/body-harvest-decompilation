@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 const char D_80145650_154600[] = "-------- GAME CAMERA INITIALISED --------\n";
 const f32 D_8014567C_15462C[1] = {0.1f};

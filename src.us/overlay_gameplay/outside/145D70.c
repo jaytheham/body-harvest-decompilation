@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 Struct_80140D00 D_80140D00_14FCB0 = {{
 	0x015E, 0x00D6, 0x017D, 0x00AA, 0x00D7, -1, 0x00EB, 0x0061,

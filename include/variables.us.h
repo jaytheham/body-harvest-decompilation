@@ -204,7 +204,7 @@ extern s32 D_80031410;
 extern s32 D_80031414;
 extern f32 D_80031418;
 extern f32 D_8003141C;
-extern s32 D_80031420; // "game state"
+extern s32 D_80031420; // AI - the saved options word: bits 0-1 blood setting, bit 2 aim option, bits 3-4 music volume, bits 5-6 sound effect volume; see GameStateFlags (read)
 extern s32 D_80031420_32020;
 extern s32 D_80031424[];
 extern s32 D_80031450_32050;
@@ -735,7 +735,7 @@ extern const Unk8014DD50 D_8003B850_3C450[14];
 extern const Unk8014DD50 D_8003B930_3C530[9];
 extern const Unk8014DD50 D_8003B9C0_3C5C0[18];
 extern const Unk8014DD50 D_8003BAE0_3C6E0[30];
-extern const AlienWaveEntry D_8003BCC0_3C8C0[48][12];
+extern const AlienWaveEntry D_8003BCC0_3C8C0[48][12]; // AI - the wave table; wave 0x1F holds a single type 0x1A alien, the Processor (see ALIEN_WAVE_TYPE_PROCESSOR; read from the code)
 extern const AlienSpawnEntry D_8003CEC0_3DAC0[8]; // Boss alien parts spawn points?
 extern const u16 D_8003D000_3DC00[];
 extern const u16 D_8003D800_3E400[];
@@ -782,7 +782,7 @@ extern s8 D_8004758A;
 extern s8 D_8004758B;
 extern OSContPad currentControllerStates[4]; // 0x80047588
 extern OSContPad D_800475A0[4]; // When button is held these values sometimes reset to 0 next frame?
-extern OSContPad D_800475B8[4];
+extern OSContPad D_800475B8[4]; // AI - rawPadBuffer: the pad the SI thread filled last, buttons in the high halfword then stick X and Y (measured)
 extern OSContPad D_800475D0;
 extern u16 D_800475D8[4]; // Controller button states
 extern u16 previousControllerButtonStates[4]; // 0x800475E0
@@ -842,7 +842,7 @@ extern s16 D_80047948; // Current selected weapon slot?
 extern s16 D_8004794A;
 extern u8 D_8004794C;
 extern s16 D_8004794E;
-extern s16 D_80047950;
+extern s16 D_80047950; // AI - cameraViewYaw: the direction the camera looks in, read by the terrain and object culls (measured)
 extern f32 D_80047954;
 extern f32 D_80047958;
 extern f32 D_8004795C;
@@ -932,7 +932,7 @@ extern s8 D_8004D342; // AI - Dialogue condition counter (initialized to 0)
 extern MissionGameCondition D_8004D348[]; // AI - Game condition entries (9 bytes each, max 255)
 extern u8 D_8004D350[]; // AI - Overlaps D_8004D348, game condition data
 extern s32 D_8004DC40; // AI - Mission state (-1 = uninitialized)
-extern BitFlags64 D_8004DC48; // "keys"
+extern BitFlags64 D_8004DC48; // AI - missionFlags: bit n is set once the mission it names is done (measured)
 extern Flags2x32 D_8004DC50;
 extern u32 D_8004DC54; // same address as D_8004DC50.unk4
 extern s16 D_8004DC58; // counter used for some events like Greece suburbs fire and plane training
@@ -951,7 +951,7 @@ extern f32 D_8004DCC0;
 extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
 extern VehicleInstance D_8004E798;
 extern s32 D_80050AD0;
-extern s32 D_80050AD4;
+extern s32 D_80050AD4; // AI - the pause menu's chosen item, also used as the selected weapon slot (stored in AAA70.c and 173B60.c); 101840.c turns 3, 0xD and 0xC into modes 0, 0x10 and 8 (read from the code)
 extern BuildingInstance buildingInstances[0xFF]; // 0x80050AD8
 extern u32 D_80051458;
 extern u32 D_800521F0;
@@ -1462,7 +1462,7 @@ extern u8 D_800A427C_18C33C[];
 extern char *D_800A428C_18C34C[];
 extern char *D_800A42C8_18C388[];
 extern char *D_800A4304_18C3C4[];
-extern s32 D_800A4340_18C400;
+extern s32 D_800A4340_18C400; // AI - interiorMenuCursor: index into the interior menu's slot table (read)
 extern s32 D_800A4340_18C400_W;
 extern s8 D_800A4343_18C403;
 extern s32 D_800A4344_18C404;
@@ -1636,7 +1636,7 @@ extern f32 D_800E659C;
 extern f32 D_800E65A0;
 extern f32 D_800E65A4;
 // AI - Interior state flags / mode bits (building entered, loading, etc.)
-extern s32 D_800E65A8;
+extern s32 D_800E65A8; // AI - interiorStateFlags: bit 2 is the START menu open, 0x40000 the communicator pose (measured)
 extern s32 D_800E65AC;
 extern s32 D_800E65B0;
 extern s32 D_800E65B4;
@@ -1823,9 +1823,9 @@ extern s16 D_800FCA7A;
 extern s16 D_800FCA7C;
 extern s16 D_800FCA7E;
 extern s32 D_800FCA80;
-extern s32 D_800FCA84;
+extern s32 D_800FCA84; // AI - interiorMenuJustOpened: 1 on the tick the menu opens, so the opening START press is not also a choice (read)
 extern s16 D_800FCA90;
-extern s16 D_800FCA92;
+extern s16 D_800FCA92; // AI - interiorMenuPhase: 0xFF when the interior menu opens, counting down to 0x1E as it closes (measured)
 extern u8 D_800FCAD8;
 extern u16 D_800FCB1E;
 extern s16 D_800FCF20;
@@ -2213,8 +2213,8 @@ extern s32 D_80149408;
 extern s16 D_8014940E;
 extern s16 D_80149430;
 extern s16 D_80149432;
-extern s16 D_80149434;
-extern s16 D_80149436;
+extern s16 D_80149434; // AI - loadWindowCenterX: centre X of the 19x19 terrain window, copied each frame from the camera record +0x3C (measured)
+extern s16 D_80149436; // AI - loadWindowCenterZ: centre Z of the same window, copied from the camera record +0x3E (measured)
 extern s16 D_80149440;
 extern u8 D_80149441;
 extern u32 D_80149444;
@@ -2227,7 +2227,7 @@ extern s32 D_8014945C;
 extern s32 isCheatingEnabled; // 80149460
 extern s32 D_80149470; // AI - Mission counter (incremented per mission parsed)
 extern s16 D_80149474; // AI - Current mission ID (set by flag-clear command, 0xFF = none)
-extern s32 D_80149478[16]; // AI - Mission callback function pointers (max 16)
+extern s32 D_80149478[16]; // AI - Mission callback function pointers (max 16); the game runs every non-zero entry each frame (measured: writing 0x800734AC, the fly cheat's function, into a free slot made the left stick fly Adam, and Z cleared the slot again)
 extern s32 D_801494B4; // AI - Mission callback active flag / callback count
 extern u8* D_801494B8; // AI - Mission data stream pointer
 extern u8 D_801494BC; // AI - Current byte from mission data stream
@@ -2277,16 +2277,16 @@ extern u8 D_8014D507;
 extern u8 D_8014D508;
 extern u8 D_8014D509;
 extern u8 D_8014D50A;
-extern u8 D_8014D510[];
+extern u8 D_8014D510[]; // AI - the active-object list: indices of the aliens with ALIEN_FLAG_UNKB set, at most 0x40, D_8014ECCC of them in use (read from the code)
 extern LookAt D_8014D550[];
 extern Unk8014DD50 D_8014DD50[];
 extern Unk8014DD5C D_8014DD5C[];
 extern Unk8014DD50 D_8014E4D0[];
 extern s16 D_8014E4D6[][8];
 extern s8 D_8014EC50[];
-extern s32 D_8014ECC8;
+extern s32 D_8014ECC8; // AI - decremented each time func_80079910_888C0 removes an alien (read from the code)
 extern s32 D_8014ECC8_W;
-extern u32 D_8014ECCC;
+extern u32 D_8014ECCC; // AI - number of entries in use in D_8014D510 (read from the code)
 extern s32 D_8014ECD0;
 extern s32 D_8014ECD4;
 extern s32 D_8014ECD8;
@@ -2404,7 +2404,7 @@ extern s16 D_8014F848;
 extern f32 D_8014F84C;
 extern f32 D_8014F850;
 extern s32 D_8014F854;
-extern u8 D_8014F857;
+extern u8 D_8014F857; // AI - tileCullEnabled: the per-tile terrain cull runs only when this is 1 (read)
 extern s8 D_8014F898;
 extern s8 D_8014F899;
 extern u16 D_8014F89A;
@@ -2413,7 +2413,7 @@ extern u8 D_8014F89D;
 extern s16 (*D_8014F8A0)[256]; /* pointer to world tile data (256x256 s16 array) */
 extern Unk800B753CEntry D_8014F8A8[];
 extern u16 D_8014FD28;
-extern u16 D_8014FD2A;
+extern u16 D_8014FD2A; // AI - cullConeAngle: the full horizontal angle of the cull view cone, 0x10000 to a turn (measured)
 extern Unk8014FD30Type D_8014FD30; // Current stage shield wall bounds (3 bounding boxes: 1 main + 2 sub-regions)
 extern u8 D_8014FD48[];
 extern u16 D_8014FDC8;
@@ -2425,8 +2425,8 @@ extern u8 D_80152740[];
 extern s16 D_80152B7C;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
 extern s16 D_80152C90;
-extern s16 D_80152C96;
-extern Unk80152CA0Entry D_80152CA0[];
+extern s16 D_80152C96; // AI - number of entries in D_80152CA0 (measured: 0, then 1 after the invincibility cheat's shield was added)
+extern Unk80152CA0Entry D_80152CA0[]; // AI - the shield list, 3 bytes per entry; the invincibility cheat adds one and sets VEHICLE_FLAG_SHIELDED on the player
 extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
 extern Unk800E614CFxSlot D_80153300[4];
 extern Unk800E614CFxSlot D_801538C4;
@@ -2535,7 +2535,7 @@ extern s16 D_80157588;
 extern s16 D_8015758A;
 extern s16 D_8015758C;
 extern s16 D_8015758E;
-extern s16 D_80157590; // outside camera status
+extern s16 D_80157590; // AI - cullDisabled: non-zero makes the culls report everything visible (read in func_800B960C_C85BC); it held 3 during the Greece opening cutscene and 0 after, so it is not a boolean (measured)
 #ifdef OUTSIDE_F7870_BSS
 s32 D_801575A0;
 void *D_801575A4;
@@ -2657,7 +2657,7 @@ extern u8 D_80157FF8;
 extern UnkF9230ShadowWalker D_80158000[];
 extern UnkF9230Func8010065CEntry D_80158B90[];
 extern s16 D_80158BC8[];
-extern u8 D_80158BD0[];
+extern u8 D_80158BD0[]; // AI - vehicleLockCategory: one byte per vehicle slot; 0 always enterable, 2 never, the rest wait on a mission flag (measured)
 extern u8 D_80158C42;
 extern s8 D_80158C43;
 extern s8 D_80158C49;
@@ -2930,8 +2930,8 @@ extern s32 D_8016013C;
 extern s32 D_80160140;
 extern s16 D_80160144;
 extern s16 D_80160146;
-extern s16 D_80160148;
-extern s8 D_8016014A; // Vehicle camera rotation amount (0-7)
+extern s16 D_80160148; // AI - cameraRotationVelocity: on-foot camera turn from C-LEFT and C-RIGHT, ramps 320 to 1024 (measured)
+extern s8 D_8016014A; // AI - vehicleCameraViewIndex 0-7: one C-LEFT or C-RIGHT tap is one step (measured)
 extern s32 D_8016014C;
 extern s32 D_80160154;
 extern s32 D_80160158;
@@ -2962,10 +2962,10 @@ extern s16 D_80160184;
 extern s32 D_80160188;
 extern s32 D_8016018C;
 extern s32 D_80160190;
-extern f32 D_80160194;
+extern f32 D_80160194; // AI - viewEyeQuarterUnits: the eye in quarter world units, what guLookAt is given (read)
 extern f32 D_80160198;
 extern f32 D_8016019C;
-extern f32 D_801601A0;
+extern f32 D_801601A0; // AI - viewTargetQuarterUnits: the look-at point in quarter world units (read)
 extern f32 D_801601A4;
 extern f32 D_801601A8;
 extern HudWeaponItem hudWeaponItems[7]; // 0x801601B0
@@ -3001,9 +3001,9 @@ extern u8 D_8021F250[];
 extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
 extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
 extern u32 D_80222A30[]; // terrain object model pointers
-extern s32 D_80222A70; // current water height
+extern s32 D_80222A70; // AI - waterLevel: 448 in Greece; a swimming player's Y stays at it (measured)
 extern s16 D_80222A72;
-extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?)
+extern Unk80222A78 D_80222A78[0xD0]; // AI - trigger array (does it start at 70 or 74?): a kind 3 entry fires its callback once alienInstances[unk8] has ALIEN_FLAG_UNKL or ALIEN_FLAG_DESPAWNING set, i.e. the alien is dead or dying; see trigger.c (read)
 extern s32 D_80223778;
 extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern u8 D_80224680; // missions?

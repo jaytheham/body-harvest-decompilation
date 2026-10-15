@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 void func_800AE2C0_BD270(void) {
 	u8 i;
@@ -395,7 +396,7 @@ u8 func_800AEE5C_BDE0C(s16 arg0, s16 arg1, u8 waveType, u8 arg3)
 				return 0;
 			}
 			leaderGroup = &alienInstances[alienInstances[leaderId].unk25];
-			if (waveType == ALIEN_WAVE_TYPE_UNK1F) {
+			if (waveType == ALIEN_WAVE_TYPE_PROCESSOR) {
 				sp68.unk0 = 3;
 				sp68.unk8 = leaderId;
 				sp68.unkC = func_800AEC34_BDBE4;

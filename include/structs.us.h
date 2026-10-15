@@ -38,19 +38,19 @@ typedef enum GameplayMode {
 	GAMEPLAY_MODE_LEVEL_MAP = 0, // Actually something else?
 	GAMEPLAY_MODE_NORMAL = 1, // Normal gameplay
 	GAMEPLAY_MODE_PAUSE_MENU = 2, // pause menu
-	GAMEPLAY_MODE_UNK3 = 3, // Cutscene mode? Or Map?
+	GAMEPLAY_MODE_LEVEL_START_CUTSCENE = 3, // AI - the cutscene that opens a level: func_800EFEB4_FEE64 enters this mode when called with arg2 != 0 (seen at the Greece start and again after a respawn)
 	GAMEPLAY_MODE_UNK4 = 4, // Beacon UI
 	GAMEPLAY_MODE_UNK5 = 5,
 	GAMEPLAY_MODE_INSIDE = 6, // AI - inside a building, held from entry to exit
-	GAMEPLAY_MODE_UNK7 = 7, // loading level?
-	GAMEPLAY_MODE_UNK8 = 8, // Clue screen? Does nothing?
+	GAMEPLAY_MODE_LOADING_LEVEL = 7, // AI - set by func_80006DDC_79DC while the level loads (seen between FRONTEND and LEVEL_START_CUTSCENE)
+	GAMEPLAY_MODE_UNK8 = 8, // AI - set by the gameplay loop (101840.c) when D_80050AD4 is 0xC, as it sets LEVEL_MAP for 3 and INVENTORY for 0xD (pause-menu items); no store of 0xC was found, so this may be unreachable (read)
 	GAMEPLAY_MODE_DIALOGUE = 9, // Talking to NPC/Signpost/Daisy
 	GAMEPLAY_MODE_END_OF_LEVEL = 0xA, // Show score screens
 	GAMEPLAY_MODE_UNKB = 0xB, // Beacon launch cutscene/Shield gen destroyed cutscene
-	GAMEPLAY_MODE_UNKC = 0xC, // When killed/quitting/boss killed
+	GAMEPLAY_MODE_LEVEL_ENDING = 0xC, // AI - the level-ending sequence, about 300 frames: entered a few frames after the player hit points reach 0 (seen when drowning, in two runs), and when the attract demo ends; then LEVEL_ENDED. A boss kill or a quit may share it (not checked)
 	GAMEPLAY_MODE_FRONTEND = 0xD, // AI - the whole frontend sequence (intro to file select)
 	GAMEPLAY_MODE_UNKE = 0xE,
-	GAMEPLAY_MODE_UNKF = 0xF, // When quitting/changing level after 0xC
+	GAMEPLAY_MODE_LEVEL_ENDED = 0xF, // AI - set when the main loop has ended; followed LEVEL_ENDING in both observed deaths, then the level reloads
 	GAMEPLAY_MODE_INVENTORY = 0x10
 } GameplayMode;
 
@@ -63,14 +63,14 @@ typedef enum Level {
 } Level;
 
 typedef enum GameStateFlags {
-	GAME_STATE_FLAG_UNK1 = 1,
-	GAME_STATE_FLAG_BLACK_ADAM = 2,
-	GAME_STATE_FLAG_UNK3 = 4,
-	GAME_STATE_FLAG_UNK4 = 8,
-	GAME_STATE_FLAG_UNK5 = 0x10,
-	GAME_STATE_FLAG_UNK6 = 0x20,
-	GAME_STATE_FLAG_EASY_MODE = 0x40,
-	GAME_STATE_FLAG_UNK8 = 0x80
+	GAME_STATE_FLAG_UNK1 = 1, // AI - D_80031420 is the saved options word, not a set of independent flags: bits 0-1 blood setting (0, 1 or 3 stored; a nonzero value shows blood, 3 shows full gore), bit 2 aim option, bits 3-4 music volume 0-3, bits 5-6 sound effect volume 0-3; read from the code (the options menu in 40720.c and the audio setters in 12C80.c)
+	GAME_STATE_FLAG_BLACK_ADAM = 2, // AI - bit 1 is the upper bit of the blood setting (mask 3); no separate reader of it was found
+	GAME_STATE_FLAG_UNK3 = 4, // AI - the aim option: flips the sign the stick is added to the aim yaw with (101840.c); read from the code
+	GAME_STATE_FLAG_UNK4 = 8, // AI - low bit of the music volume (mask 0x18, shift 3)
+	GAME_STATE_FLAG_UNK5 = 0x10, // AI - high bit of the music volume (mask 0x18, shift 3)
+	GAME_STATE_FLAG_UNK6 = 0x20, // AI - low bit of the sound effect volume (mask 0x60, shift 5)
+	GAME_STATE_FLAG_EASY_MODE = 0x40, // AI - bit 6 is the upper bit of the sound effect volume (mask 0x60); no difficulty reader was found
+	GAME_STATE_FLAG_UNK8 = 0x80 // AI - no use found; clear in the default 0x7B
 } GameStateFlags;
 
 typedef enum PlayerStateFlags {
@@ -202,7 +202,7 @@ typedef enum
 } AnimationType;
 
 typedef enum {
-	ALIEN_WAVE_TYPE_UNK1F = 0x1F, // Stage Processor?
+	ALIEN_WAVE_TYPE_PROCESSOR = 0x1F, // AI - Stage Processor: row 31 of the wave table is a single type 0x1A alien, and trigger.c queues a trigger on its death that removes the stage's other waves and queues the stage end (read)
 } AlienWaveType;
 
 typedef enum {
@@ -387,7 +387,10 @@ typedef struct {
 } Vec3i; /* size = 0x0C */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
+	/* 0x00 */ union {
+		s16 unk0;
+		u16 unk0Unsigned;
+	};
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 } Unk800311A0; /* size = 0x06 */
@@ -998,22 +1001,22 @@ typedef struct {
 } VehicleSpawnOffset; /* size = 0x04 */
 
 typedef enum VehicleFlags {
-	VEHICLE_FLAG_UNK1 = 1, // vehicle was moved this frame and still needs physics/collision
+	VEHICLE_FLAG_UNK1 = 1, // AI - set whenever the vehicle is moved or pushed (it still needs physics/collision) and cleared once it is grounded with every velocity zero; the collision resolver func_80110FB4_11FF64 runs only while it is set (read)
 	VEHICLE_FLAG_AIRBORNE = 2,
 	VEHICLE_FLAG_HALF_ON_BRIDGE = 4,
 	VEHICLE_FLAG_UNDER_BRIDGE = 8,
-	VEHICLE_FLAG_UNK5 = 0x10, // SCUD nuke launched
-	VEHICLE_FLAG_UNK6 = 0x20,
-	VEHICLE_FLAG_UNK7 = 0x40, // Is inside current shield wall bounds
-	VEHICLE_FLAG_UNK8 = 0x80, // Shielded - blocks damage
-	VEHICLE_FLAG_UNK9 = 0x100,
-	VEHICLE_FLAG_UNKA = 0x200,
-	VEHICLE_FLAG_UNKB = 0x400, // Is autonomous grid-guided vehicle (turret / road-follower)
+	VEHICLE_FLAG_SCUD_LAUNCHED = 0x10, // AI - SCUD nuke launched: blocks a second launch, and the death handler creates the nuke only while it is clear (read)
+	VEHICLE_FLAG_UNK6 = 0x20, // AI - a copy of bit 0x20 of the vehicle type word unk4C, set at spawn: on every instance of types 0, 1, 2, 5 to 11 and 13 to 15 and on neither type 4 nor 16 (measured)
+	VEHICLE_FLAG_INSIDE_PLAY_BOUNDS = 0x40, // AI - inside the current shield wall bounds (func_800FAC90_109C40 sets it from func_800B0D10_BFCC0); the main vehicle update and the radius scans process only vehicles with it set, so vehicles outside the wall are frozen (read)
+	VEHICLE_FLAG_SHIELDED = 0x80, // AI - shielded: the invincibility cheat's shield sets it on the player (flags 0x8161 to 0x81E1 in the word at +0x20), but drowning still took the hit points from 600 to 0 in 19 s with it set, so it does not block that damage (measured); func_8008D634_9C5E4 refuses a Human Capture Unit grab while it is set (read)
+	VEHICLE_FLAG_UNK9 = 0x100, // AI - a copy of bit 0x100 of the vehicle type word unk4C, set at spawn: on every instance of the same types as UNK6, and also on type 18, which lacks UNK6 (measured)
+	VEHICLE_FLAG_UNKA = 0x200, // AI - no use found on a vehicle instance or its type word
+	VEHICLE_FLAG_PATH_GUIDED = 0x400, // AI - driven by the grid path follower, not the player's driving physics: set only by func_800FC90C_10B8BC, which stores the grid-cell targets; the driver input step returns early for it and the death handler counts it as an NPC vehicle (read)
 	VEHICLE_FLAG_ON_BRIDGE = 0x800,
-	VEHICLE_FLAG_UNKD = 0x1000, // Is player being grabbed / in interaction
-	VEHICLE_FLAG_UNKE = 0x2000, // Draw damage flash this frame
-	VEHICLE_FLAG_UNKF = 0x4000,
-	VEHICLE_FLAG_UNK = 0x8000 // Is active, gates physics/render/death
+	VEHICLE_FLAG_CAPTURED_BY_ALIEN = 0x1000, // AI - set on the player vehicle while a Human Capture Unit holds the on-foot player (func_8008D634_9C5E4) (read)
+	VEHICLE_FLAG_DAMAGE_FLASH = 0x2000, // AI - draw damage flash this frame: set with each hit-point loss while drowning and cleared at death; the draw code tests it with the frame counter, so it flickers (measured)
+	VEHICLE_FLAG_UNKF = 0x4000, // AI - no use found on a vehicle instance
+	VEHICLE_FLAG_ACTIVE = 0x8000 // AI - the vehicle slot is live: the active-vehicle list is built from it, the death handler returns at once when it is clear, and the main update requires it (read); the on-foot entity loses it while the player drives another vehicle (measured)
 } VehicleFlags;
 
 typedef struct {
@@ -1030,11 +1033,11 @@ typedef struct {
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
 	/* 0x18 */ s16 unk18;
-	/* 0x1A */ u8 unk1A; // typeIndex
+	/* 0x1A */ u8 unk1A; // AI - typeIndex: the index into vehicleTypes, 0 for Adam on foot (measured)
 	/* 0x1B */ u8 unk1B;
-	/* 0x1C */ s16 unk1C; // hitPoints
+	/* 0x1C */ s16 unk1C; // AI - hitPoints: 600 (0x258) for Adam at full health; GAMEPLAY_MODE_LEVEL_ENDING began a few frames after it reached 0, seen when drowning (measured)
 	/* 0x1E */ s16 unk1E;
-	/* 0x20 */ u16 unk20; // Bit flags
+	/* 0x20 */ u16 unk20; // AI - bit flags: 0x8000 active, 0x0002 airborne, 0x2000 damage flash, 0x0001 moved this frame (measured)
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
@@ -1141,46 +1144,46 @@ typedef struct {
 typedef struct {s16 x; s16 z;} Vec2_S16;
 
 typedef enum AlienFlags {
-	ALIEN_FLAG_UNK1 = 1, // walker slot index (bit 1)?
+	ALIEN_FLAG_UNK1 = 1, // AI - the low three bits together are the walker slot index 0-7, meaningful while UNKK is set (read)
 	ALIEN_FLAG_UNK2 = 2, // walker slot index (bit 2)?
 	ALIEN_FLAG_UNK3 = 4, // walker slot index (bit 3)?
-	ALIEN_FLAG_UNK4 = 8,
-	ALIEN_FLAG_UNK5 = 0x10, // close-range attack / attack-timer active
+	ALIEN_FLAG_UNK4 = 8, // AI - no use found in the C sources
+	ALIEN_FLAG_UNK5 = 0x10, // AI - an attack countdown is running and the alien does not turn toward its desired heading; cleared when the countdown reaches 0 (read)
 	ALIEN_FLAG_TARGET_OBJ = 0x20,
 	ALIEN_FLAG_AWAY = 0x40, // in motion toward/away from a target (engagement)?
 	ALIEN_FLAG_TARGET_VEHICLE = 0x80,
 	ALIEN_FLAG_TARGET_PT = 0x100, // Set when targeting a building? targeting a point (pathing waypoint)?
-	ALIEN_FLAG_UNKA = 0x200, // walker/simple body (uses leg-walker, throttled updates)
-	ALIEN_FLAG_UNKB = 0x400, // active object has a physical body / participates in updates
-	ALIEN_FLAG_UNKC = 0x800, // approaching the target
-	ALIEN_FLAG_UNKD = 0x1000, // has a movement/attack target
-	ALIEN_FLAG_UNKE = 0x2000, // is attacking. Harvester uses this for isSubDrone #1 alive?
-	ALIEN_FLAG_UNKF = 0x4000, // timed attack/dive state. Harvester uses this for isSubDrone #2 alive?
-	ALIEN_FLAG_UNKG = 0x8000, // attacking / firing (specific attack anim). Processor=use skeleton model? Harvester uses this for isSubDrone #3 alive?
-	ALIEN_FLAG_UNKH = 0x10000, // In attach range of target. Harvester uses this for isSubDrone #4 alive?
-	ALIEN_FLAG_UNKI = 0x20000,
-	ALIEN_FLAG_UNKJ = 0x40000, // Knocked back. Harvester uses to block drone spawn?
-	ALIEN_FLAG_UNKK = 0x80000, // has walker body, see bits 0-2. Harvester uses for drone spawn is in progress.
-	ALIEN_FLAG_UNKL = 0x100000, // is alive / active
-	ALIEN_FLAG_UNKM = 0x200000, // enraged / alerted (low-HP berserk) ?
+	ALIEN_FLAG_UNKA = 0x200, // AI - just added to the active list: cleared on its first update, which runs on a frame divisible by 4 (read)
+	ALIEN_FLAG_UNKB = 0x400, // AI - in the active-object list D_8014D510 (at most 0x40): set when the alien is added, cleared when it is removed (read)
+	ALIEN_FLAG_UNKC = 0x800, // AI - circling: the heading code steers perpendicular to the direction to the target, with UNKH picking the side (read)
+	ALIEN_FLAG_UNKD = 0x1000, // AI - an action in progress that differs by alien type, e.g. a hop, a scripted attack animation or heading back to a parent; set with UNKL when a Processor is killed and cleared about 2.4 to 3.4 s later (measured)
+	ALIEN_FLAG_UNKE = 0x2000, // AI - an attack in progress for the Siberia, Java and Greece monsters; armed to explode for the flea alien, holding a captured human for the HCU; set on a killed Processor about 2.4 to 3.4 s after the kill (measured)
+	ALIEN_FLAG_UNKF = 0x4000, // AI - timed state of the Siberia charger; zombie or down for humans, docked at a Harvester for the HCU (read)
+	ALIEN_FLAG_UNKG = 0x8000, // AI - in most monsters a scripted animation is running, cleared when its keyframe table ends (func_800A3D00_B2CB0); aimed at the target on a Java turret child; the Processor uses it to select its skeleton model, and it is set about 4.8 to 6.2 s after a Processor is killed (measured)
+	ALIEN_FLAG_UNKH = 0x10000, // AI - in the generic heading code it picks the side of the UNKC circling; several bosses reuse it for unrelated state (read)
+	ALIEN_FLAG_UNKI = 0x20000, // AI - a follower slot: the alien target point is offset by its slot (unk27) so followers of one target spread out, and unk38 is the target; read from the code
+	ALIEN_FLAG_UNKJ = 0x40000, // AI - the facing (unk6) does not follow the travel heading: set for knockback and circling, and permanently for types with type flag 0x2000 (read)
+	ALIEN_FLAG_UNKK = 0x80000, // AI - has a leg-walker slot, whose index is in bits 0-2: set at spawn, cleared when the slot is released (read)
+	ALIEN_FLAG_UNKL = 0x100000, // AI - dead: set by the kill routine func_80088760_97710, which returns early if it is already set, and read as destroyed by script opcode 0x9B; the hit points do not change with it (measured: set within 20 to 140 ms of the kill cheat in six aliens of three types, hit points unchanged)
+	ALIEN_FLAG_DESPAWNING = 0x200000, // AI - a removal countdown of about 2 seconds is running (func_80087AAC_96A5C); the alien is then removed and drops no item (read)
 	ALIEN_FLAG_INVINCIBLE = 0x400000,
 	ALIEN_FLAG_W = 0x800000,
 	ALIEN_FLAG_X = 0x1000000, // Is boss/special? Disables alien/alien collision?
 	ALIEN_FLAG_Y = 0x2000000, // Has a target building?
 	ALIEN_FLAG_Z = 0x4000000, // Left/right side leg, flyer aim point flip?
 	ALIEN_FLAG_PLAYER = 0x8000000, // Player detected / in range
-	ALIEN_FLAG_UNKN = 0x10000000, // is on-screen / in camera frustum
-	ALIEN_FLAG_UNKO = 0x20000000, // externally-positioned / special movement state ?
+	ALIEN_FLAG_IN_VIEW = 0x10000000, // AI - on screen: set or cleared each frame by the render visibility test (read)
+	ALIEN_FLAG_UNKO = 0x20000000, // AI - the alien's height is not snapped to the terrain: used for teleports and underground states (read)
 	ALIEN_FLAG_FALL = 0x40000000, // Falling / in air
-	ALIEN_FLAG_UNKP = 0x80000000 // was just hit / damage flash
+	ALIEN_FLAG_UNKP = 0x80000000 // AI - hit this frame: set by the damage routine and cleared for every alien after drawing, so it lasts one frame (read)
 } AlienFlags;
 
 typedef struct {
 	  union {
 	struct {
-	/* 0x00 */ s16 unk0; // X position
-	/* 0x02 */ s16 unk2; // Y position
-	/* 0x04 */ s16 unk4; // Z position
+	/* 0x00 */ s16 unk0; // AI - X position in quarter units, world X times 4 (measured: raw -24704 for a world X of -6176; a vehicle's s16 position is in world units)
+	/* 0x02 */ s16 unk2; // AI - Y position; not simply the world Y times 4 (measured: a Processor on ground at world Y about 608 reads raw 1120)
+	/* 0x04 */ s16 unk4; // AI - Z position in quarter units (measured: raw -1664 for a world Z of -416)
 	/* 0x06 */ s16 unk6; // X orientation
 		};
 	u8 alienIds[8];
@@ -1416,16 +1419,16 @@ typedef struct {
 } AlienWaveInstance; /* size = 0x14 */
 
 typedef struct {
-	/* 0x00 */ f32 unk0;
+	/* 0x00 */ f32 unk0; // AI - eyeX: the camera's eye X in world units, Y at +0x4 and Z at +0x8 (measured)
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
+	/* 0x0C */ f32 unkC; // AI - targetX: X of the point the camera looks at, Y at +0x10 and Z at +0x14 (measured)
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ f32 unk14;
-	/* 0x18 */ s16 unk18;
-	/* 0x1A */ s16 unk1A;
-	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ u16 unk1E;
+	/* 0x18 */ s16 unk18; // AI - targetXInt: the target X truncated to an integer, stored by func_80134CCC_143C7C (read)
+	/* 0x1A */ s16 unk1A; // AI - targetZInt: the target Z truncated to an integer (read)
+	/* 0x1C */ s16 unk1C; // AI - radius: the orbit radius, copied from Unk80160080.unk4E (read)
+	/* 0x1E */ u16 unk1E; // AI - pitch: copied from Unk80160080.unk4A (read)
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ u8 pad22[0xE];
 	/* 0x30 */ s32 unk30;
@@ -2387,14 +2390,14 @@ typedef struct {
 	/* 0x3C */ f32 unk3C;
 	/* 0x40 */ f32 unk40;
 	/* 0x44 */ f32 unk44;
-	/* 0x48 */ s16 unk48;
-	/* 0x4A */ s16 unk4A;
+	/* 0x48 */ s16 unk48; // AI - yaw: the camera's current yaw, eased toward unk50 every frame (measured)
+	/* 0x4A */ s16 unk4A; // AI - pitch: the camera's current pitch (measured)
 	/* 0x4C */ s16 unk4C;
-	/* 0x4E */ s16 unk4E;
-	/* 0x50 */ s16 unk50;
-	/* 0x52 */ s16 unk52;
+	/* 0x4E */ s16 unk4E; // AI - radius: the orbit radius, 300 at the game's own distance (measured)
+	/* 0x50 */ s16 unk50; // AI - yawTarget: the yaw the camera is heading for; func_80133F28_142ED8 eases unk48 toward it (read)
+	/* 0x52 */ s16 unk52; // AI - pitchTarget: eased toward by func_80134D44_143CF4 (read)
 	/* 0x54 */ s16 unk54;
-	/* 0x56 */ s16 unk56;
+	/* 0x56 */ s16 unk56; // AI - radiusTarget: the radius being eased toward (read)
 	/* 0x58 */ s16 unk58;
 	/* 0x5A */ s16 unk5A;
 	/* 0x5C */ s16 unk5C;
@@ -2404,7 +2407,7 @@ typedef struct {
 	/* 0x64 */ s16 unk64;
 	/* 0x66 */ union { s16 unk66; u8 pad66[0x2]; };
 	/* 0x68 */ s32 unk68;
-	/* 0x6C */ u8 unk6C;
+	/* 0x6C */ u8 unk6C; // AI - nearFarMode: 1 or 2, flipped by C-UP in func_801358E8_144898 (read)
 } Unk80160080; /* size = 0x70 */
 
 typedef struct {
@@ -3799,9 +3802,10 @@ typedef struct {
 	 pad:      unused padding byte */
 typedef struct {
 	/* 0x00 */ u16 tileType;
-	/* 0x02 */ u8 r;
-	/* 0x03 */ u8 g;
-	/* 0x04 */ u8 b;
+	/* 0x02 */ union {
+		struct { u8 r; u8 g; u8 b; };
+		u8 color[3];
+	};
 	/* 0x05 */ u8 pad;
 } RingEntry; /* size = 0x06 */
 

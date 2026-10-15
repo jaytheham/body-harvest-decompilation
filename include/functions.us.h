@@ -513,7 +513,7 @@ s32 func_80078BC8_87B78(s16 arg0, s16 arg1);
 s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2);
 s32 func_800792E0_88290(u8 *arg0, s32 arg1);
 s32 func_8007956C_8851C(u8);
-void func_80079910_888C0(s32);
+void func_80079910_888C0(s32); // AI - removes an alien: leaves its wave, drops an item only if ALIEN_FLAG_UNKL is set and DESPAWNING is not, clears typeIndex and decrements D_8014ECC8 (read from the code)
 s32 func_8007A4F8_894A8(s32 arg0);
 s16 func_80079B74_88B24(Unk8014DD50 *arg0);
 s32 func_80079C8C_88C3C(s32 arg0);
@@ -637,10 +637,10 @@ void func_800ADAF8_BCAA8(u8 arg0);
 void func_800ADB4C_BCAFC(u8 arg0);
 void func_800ADFE8_BCF98(u8 arg0);
 void func_800847D0_93780(u8 arg0);
-void func_80087AFC_96AAC(u8 arg0);
-void func_80087AAC_96A5C(u8);
+void func_80087AFC_96AAC(u8 arg0); // AI - the per-frame part of that countdown: counts unk2C down and spawns explosion effects (read from the code)
+void func_80087AAC_96A5C(u8); // AI - starts the alien removal countdown (about 2 seconds) by setting ALIEN_FLAG_DESPAWNING; no item drops (read from the code)
 s32 func_80087E30_96DE0(void);
-void func_80088760_97710(AlienInstance*);
+void func_80088760_97710(AlienInstance*); // AI - kills an alien: sets ALIEN_FLAG_UNKL last and returns early if the alien is already dead or despawning (read from the code)
 void func_8008E978_9D928(u8, s32);
 void func_8008EB20_9DAD0(u8, s32, s32);
 s32 func_80085900_948B0(u8, s32);
@@ -763,7 +763,7 @@ s32 func_800B0C4C_BFBFC(s32, s32);
 void func_800D6084_E5034(u8 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6);
 void func_800D6140_E50F0(u8 arg0);
 void func_800B0C80_BFC30(void);
-s32 func_800B0D10_BFCC0(s32, s32, s32);
+s32 func_800B0D10_BFCC0(s32, s32, s32); // AI - nonzero when the point is outside the current stage shield wall bounds or overlaps one of its two sub-regions, always 0 when D_80052ACA is 2 (read from the code)
 s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *vehicle);
 s16 func_800B0DF4_BFDA4(s32, s32, s32, s32);
 void func_80005654_6254(u8, u8, u8);
@@ -886,7 +886,7 @@ s16 func_800F9FAC_108F5C(s16 arg0, s16 arg1);
 void func_800F4DB0_103D60(void);
 s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2);
 s16 func_800FAA08_1099B8(s16 arg0, s16 arg1);
-void func_800FAC90_109C40(void);
+void func_800FAC90_109C40(void); // AI - sets or clears VEHICLE_FLAG_INSIDE_PLAY_BOUNDS on every vehicle from func_800B0D10_BFCC0 (read from the code)
 void func_800FAD10_109CC0(void);
 void func_800FAE84_109E34(VehicleInstance *);
 void func_800FB3C4_10A374(VehicleInstance *, f32);
@@ -1454,7 +1454,7 @@ void func_800D80B4_E7064(void);
 void func_800D90A4_E8054(void);
 void func_800D9B54_E8B04(void);
 void func_800E2668_F1618(void);
-void func_800731B0_82160(void);
+void func_800731B0_82160(void); // AI - the kill-nearby cheat, run each frame from the callback table with D-LEFT held: kills aliens of type 2 and above (and zombie humans) whose raw position is within 0xA00 of the player's, but it subtracts the alien's quarter-unit position from the player's world-unit one, so it reaches an alien only where the two coincide (measured: it killed a Processor with the player at world coordinates equal to its raw ones, and not from 10 units away)
 void func_800732C8_82278(void);
 void func_800732E0_82290(void);
 void func_80073428_823D8(void);

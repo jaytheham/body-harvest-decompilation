@@ -311,3 +311,55 @@ NTSC recompiles identically for the EU shape.
   strings), and the PAL stubs hold 112 functions in two files where NTSC has 113 in one. That is at most about 73
   more matched functions for PAL. The level overlays pair one to one with their stubs and hold 362 matched
   functions, so they come first.
+- 2026-10-13: The five level overlays are shared with PAL (on branch `pal-share-overlays`, not in pull request 423): greece (64
+  functions), java (103), america (74), siberia (95) and comet (122), 362 matched C functions and 94 `NON_MATCHING` ones with
+  their `GLOBAL_ASM` fallback. Each pairs one to one with its PAL stub with no differing function. The PAL level is 0xB60 after
+  the NTSC one in the ROM and 0x40 after in memory; its data and read-only data differ from the NTSC data only in pointer words,
+  +0x40 into the level and +0x30 into the first part of the gameplay overlays. The C writes 587 of those words as numbers, as a
+  word, as two halfwords or as two bytes and a halfword, and `include/version_shift.h` gives each version its value
+  (`LEVEL_PTR` and friends; wrapped by exact value, because 7 of the 358 distinct address-like numbers in the level files are
+  constants). Both ROMs verify byte-exact; the PAL progress page reads 767 of 2717 functions matched (28.23 percent).
+- 2026-10-13: The list of shared overlay files is `shared_overlay_files.txt`, the one list that the Makefile,
+  `tools/native_build.py` and the tools read (it was four copies, and a copy that was missing from the Makefile broke
+  `make VERSION=eu` while the native build passed). `tests/shared_files_check.sh` checks it against `bh.eu.yaml`.
+  `tools/gen_eu_symbol_collisions.py` now reads the objects of every shared file, `tools/function_inventory.py` the pragmas
+  of every shared file, and `tools/overlay_pairs.py` reports a CLASH when a pin would override another shared file's
+  function (the america level calls the outside overlay's `func_8008EB20_5EFD0`, which the frontend file defines under the
+  same name at another PAL address). `docs/pal-vs-na.md`, "Sharing an overlay file", has the steps and the pitfalls.
+- 2026-10-13: The inside gameplay overlay is shared with PAL as well (branch `pal-share-overlays`): its five C files, 235 functions,
+  160 of them matched C, pair one to one with the PAL stubs, which already had the same five splits. The overlay is the same size
+  in both ROMs and uniformly 0xB60 after in the ROM and 0x30 after in memory, so `bh.eu.yaml` mirrors the NTSC segment (15
+  entries) shifted, replacing the five stubs and the single `bin` tail. Its 285 differing data words are all +0x30, which
+  `OVERLAY_PTR` covers; a fourth way of writing a pointer turned up (four bytes in a `u8` array, 12 of them). NAME lines are
+  written only for the 75 functions that are `GLOBAL_ASM` on the NTSC side: a name at the PAL address of a matched function
+  made splat misfile an unrelated outside-overlay stub function that sits at the same address.
+  The PAL progress page reads 929 of 2720 functions matched (34.15 percent).
+- 2026-10-13: Twelve libultra functions are named in `symbol_addrs.eu.txt` at their PAL addresses (`osAiGetLength`,
+  `osMotorStop`, `osMotorStart`, `osMotorInit`, `osEepromLongWrite`, `osEepromLongRead`, `osPiGetStatus`, `__osContRamWrite`,
+  `__osContRamRead`, `__osPiGetAccess`, `__osPiRelAccess`, `__osPfsGetStatus`). Each is the NTSC function 0x30 further on in
+  memory, equal to it under the relocation mask. They were `func_<vram>_<rom>` before, so a recompiler that leaves the NTSC
+  functions of these names to its runtime compiled the PAL copies as game code (a raw read of `AI_LEN_REG` then ran off the
+  guest region). The names change no matched-function count; the PAL build is byte-exact with them.
+- 2026-10-14: The outside gameplay overlay is shared with PAL (branch `pal-share-overlays`): 27 C files and four data-only C files
+  (`constData`, `constData2`, `mutableData`, `101840_rodata`, which hold the overlay's data and read-only data and have no `c`
+  entry in the yaml; they are in `shared_overlay_files.txt` as well, and `tests/shared_files_check.sh` accepts a listed file with
+  only `.data` or `.rodata` entries). 1446 PAL stubs pair with the 1445 NTSC functions. Three things were new. A call to a
+  function that NTSC names and PAL has as `func_<address>` (`sourceTaggedPrintF`, `guMtxXFML`) was a DIFF in
+  `tools/overlay_pairs.py` and no longer is; a CLASH is reported only when the PAL ELF has the name at another address than the
+  one the file reaches. `D_80153BB8` is defined by `CFE30.c` in its `.bss` while the NTSC link script
+  (`undefined_syms_auto.txt`) moves it to its real address, so PAL needs the same pin (`D_80153BB8 = 0x80153BE8`); the pairing
+  tool lists only names that the object leaves undefined, so a name that it defines and a script moves has to be found by
+  comparing the object's definitions with the NTSC script files. A pointer written `(s32)0x8013E120U` is a fifth literal form;
+  it is `(s32)OVERLAY_PTR(0x8013E120U)`. The PAL progress page reads 2124 of 2722 functions matched (78.03 percent).
+- 2026-10-14: `osMotorStop`, `osMotorStart`, `osMotorInit` and `osEepromLongWrite` were assigned in `undefined_syms.eu.txt` (the
+  `core/1050` block) as well as named in `symbol_addrs.eu.txt`; the link script assignment turned them into absolute symbols,
+  which a recompiler that reads function symbols does not recompile or recognise as functions. The four assignments are gone.
+- 2026-10-14: The first half of the frontend overlay (`40720.c`) is shared with PAL (branch `pal-share-overlays`). Of its 113 NTSC
+  functions 106 pair identically; three matched ones that differ in PAL take their PAL assembly under `#ifdef VERSION_EU` (`func_80076FD8_47488`:
+  NTSC returns 3 in two instructions, PAL has 103; `func_80077E88_48338`: 162 against 170; `func_8007B900_4BDB0`: 131 against 126), and
+  `func_8007BB0C_4BFBC` differs in four arguments (one macro). PAL's read-only data is its own rodata object: it differs from NTSC from offset
+  0xB40 on (build date, the Gremlin publisher notice, and the end-screen text in English, French and German where NTSC has one). The footprint on
+  the maintainer's files is that one file, +22 -2. The PAL progress page reads 2197 of 2722 functions matched (80.71 percent), from 2124.
+  `docs/pal-vs-na.md`, "A shared file whose PAL code or data differs", has the method and the traps (an asm-processor change turned out to be
+  unnecessary; the three pragmas resolve through `asm/nonmatchings` once both versions are extracted again).
+- 2026-10-15: With #434 and #435 merged every gameplay and level overlay file is shared with PAL (`shared_overlay_files.txt`, 46 entries); `src.eu` holds only `libultra/sl.c`, a `GLOBAL_ASM` stub with nothing to share. The PAL progress page reads 2224 of 2722 functions matched (81.7 percent, 99.67 percent decompiled) with `tools/progress.py --version eu`; the US page reads 2568 of 3058 (83.98 percent); both measured on `b5365fa2`. The PAL history chart is empty until a second weekly point shares core, because the series starts at the first week whose `bh.eu.yaml` names `../src.us/core`. The PAL page note was cut to what it counts; the 2026-10-12 relocation measurement above stays here.

@@ -697,7 +697,7 @@ void func_80006DDC_79DC(void) {
 	loadLevelCallback = (void (*)(void *)) loadLevel;
 	D_80052ACA = 5;
 	var_s3 = 0;
-	gameplayMode = GAMEPLAY_MODE_UNK7;
+	gameplayMode = GAMEPLAY_MODE_LOADING_LEVEL;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
 	func_8000F190_FD90(loadLevelCallback);

@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 const char D_80145A30_1549E0[] = "select "; // "select "
 const char D_80145A38_1549E8[] = "%d,"; // "%d,";

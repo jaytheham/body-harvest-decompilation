@@ -1,0 +1,46 @@
+# Files of src.us outside core that the PAL build compiles too, one path per line relative to src.us.
+# bh.eu.yaml names each of them as ../src.us/<path without .c>; the Makefile, tools/native_build.py and the tools read this list.
+# tests/shared_files_check.sh checks that it agrees with bh.eu.yaml.
+overlay_gameplay/frontend/52690.c
+overlay_level/greece/18D7E0.c
+overlay_level/java/1ED9E0.c
+overlay_level/america/254410.c
+overlay_level/siberia/2B7100.c
+overlay_level/comet/318E20.c
+overlay_gameplay/inside/158330.c
+overlay_gameplay/inside/1648A0.c
+overlay_gameplay/inside/167C90.c
+overlay_gameplay/inside/16AF30.c
+overlay_gameplay/inside/173B60.c
+overlay_gameplay/outside/7F220.c
+overlay_gameplay/outside/cheats.c
+overlay_gameplay/outside/missions.c
+overlay_gameplay/outside/857E0.c
+overlay_gameplay/outside/884C0.c
+overlay_gameplay/outside/9BFF0.c
+overlay_gameplay/outside/A40B0.c
+overlay_gameplay/outside/A49A0.c
+overlay_gameplay/outside/AAA70.c
+overlay_gameplay/outside/B2CB0.c
+overlay_gameplay/outside/B49C0.c
+overlay_gameplay/outside/B8290.c
+overlay_gameplay/outside/trigger.c
+overlay_gameplay/outside/BF9C0.c
+overlay_gameplay/outside/CFE30.c
+overlay_gameplay/outside/F6A50.c
+overlay_gameplay/outside/F7870_empty.c
+overlay_gameplay/outside/F7870.c
+overlay_gameplay/outside/F9230.c
+overlay_gameplay/outside/FEC70.c
+overlay_gameplay/outside/101840.c
+overlay_gameplay/outside/buildings.c
+overlay_gameplay/outside/1312D0.c
+overlay_gameplay/outside/13DA70.c
+overlay_gameplay/outside/1416E0.c
+overlay_gameplay/outside/145D70.c
+overlay_gameplay/outside/148000.c
+overlay_gameplay/outside/101840_rodata.c
+overlay_gameplay/outside/constData.c
+overlay_gameplay/outside/constData2.c
+overlay_gameplay/outside/mutableData.c
+overlay_gameplay/frontend/40720.c
