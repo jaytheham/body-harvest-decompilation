@@ -1208,16 +1208,12 @@ s32 func_80007F60_8B60(u8 *arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 int func_8000807C_8C7C(u8 *arg0, u8 *arg1)
 {
-	s32 opcode;
-
 	while (1)
 	{
 		/* Preserve the selector reload when either command follows a link. */
-		opcode = ((volatile u8 *)arg0)[0];
-		switch (opcode)
+		switch (((volatile u8 *)arg0)[0])
 		{
 		case 0x98:
 			switch (arg1[0])
@@ -1243,12 +1239,10 @@ int func_8000807C_8C7C(u8 *arg0, u8 *arg1)
 			arg0 = &D_8004D180[arg0[1]].opcode;
 			continue;
 		}
-		return opcode;
+		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000807C_8C7C.s")
-#endif
+
 
 int func_800081D4_8DD4(u8 *arg0) {
 	switch (arg0[8]) {
