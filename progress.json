@@ -1,23 +1,23 @@
 {
-  "generated": "2026-10-15T19:39:03Z",
-  "commit": "e02539e9",
-  "commit_timestamp": "2026-10-16T08:38:11+13:00",
+  "generated": "2026-10-15T21:14:46Z",
+  "commit": "ead31544",
+  "commit_timestamp": "2026-10-16T10:13:56+13:00",
   "overall": {
     "total_functions": 3058,
-    "matched": 2582,
-    "non_matching": 475,
+    "matched": 2583,
+    "non_matching": 474,
     "asm_stubs": 1,
-    "matched_pct": 84.43,
+    "matched_pct": 84.47,
     "decompiled_pct": 99.97
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 332,
-      "non_matching": 23,
+      "matched": 333,
+      "non_matching": 22,
       "asm_stubs": 1,
       "total": 356,
-      "matched_pct": 93.3,
+      "matched_pct": 93.5,
       "decompiled_pct": 99.7
     },
     "overlay_gameplay/frontend": {
@@ -206,12 +206,12 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 73,
-      "non_matching": 2,
+      "matched": 74,
+      "non_matching": 1,
       "asm_stubs": 0,
       "total": 75,
-      "matched_pct": 97.3,
-      "contributor": "lunarlaurus"
+      "matched_pct": 98.7,
+      "contributor": "jaytheham"
     },
     {
       "path": "core/AD60.c",
@@ -2587,16 +2587,16 @@
   "contributors": [
     {
       "name": "lunarlaurus",
-      "files": 44,
-      "matched": 1854,
-      "non_matching": 414,
+      "files": 43,
+      "matched": 1781,
+      "non_matching": 412,
       "asm_stubs": 0
     },
     {
       "name": "jaytheham",
-      "files": 55,
-      "matched": 391,
-      "non_matching": 61,
+      "files": 56,
+      "matched": 465,
+      "non_matching": 62,
       "asm_stubs": 1
     },
     {
@@ -2869,9 +2869,9 @@
     },
     {
       "date": "2026-10-11",
-      "commit": "509361a",
-      "matched": 2582,
-      "non_matching": 475,
+      "commit": "28633a8",
+      "matched": 2583,
+      "non_matching": 474,
       "total": 3058
     }
   ]

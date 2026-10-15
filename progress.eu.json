@@ -1,25 +1,25 @@
 {
-  "generated": "2026-10-15T19:39:05Z",
-  "commit": "e02539e9",
-  "commit_timestamp": "2026-10-16T08:38:11+13:00",
+  "generated": "2026-10-15T21:14:49Z",
+  "commit": "ead31544",
+  "commit_timestamp": "2026-10-16T10:13:56+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is matched on the US page and an ASM stub here until the difference is expressed in C.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2238,
-    "non_matching": 475,
+    "matched": 2239,
+    "non_matching": 474,
     "asm_stubs": 9,
-    "matched_pct": 82.22,
+    "matched_pct": 82.26,
     "decompiled_pct": 99.67
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 331,
-      "non_matching": 23,
+      "matched": 332,
+      "non_matching": 22,
       "asm_stubs": 2,
       "total": 356,
-      "matched_pct": 93.0,
+      "matched_pct": 93.3,
       "decompiled_pct": 99.4
     },
     "overlay_gameplay/frontend": {
@@ -208,11 +208,11 @@
     {
       "path": "core/53F0.c",
       "segment": "core",
-      "matched": 72,
-      "non_matching": 2,
+      "matched": 73,
+      "non_matching": 1,
       "asm_stubs": 1,
       "total": 75,
-      "matched_pct": 96.0,
+      "matched_pct": 97.3,
       "contributor": ""
     },
     {
