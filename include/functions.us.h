@@ -1454,7 +1454,7 @@ void func_800D80B4_E7064(void);
 void func_800D90A4_E8054(void);
 void func_800D9B54_E8B04(void);
 void func_800E2668_F1618(void);
-void func_800731B0_82160(void);
+void func_800731B0_82160(void); // AI - the kill-nearby cheat, run each frame from the callback table with D-LEFT held: kills aliens of type 2 and above (and zombie humans) whose raw position is within 0xA00 of the player's, but it subtracts the alien's quarter-unit position from the player's world-unit one, so it reaches an alien only where the two coincide (measured: it killed a Processor with the player at world coordinates equal to its raw ones, and not from 10 units away)
 void func_800732C8_82278(void);
 void func_800732E0_82290(void);
 void func_80073428_823D8(void);

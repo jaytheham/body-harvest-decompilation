@@ -1006,17 +1006,17 @@ typedef enum VehicleFlags {
 	VEHICLE_FLAG_HALF_ON_BRIDGE = 4,
 	VEHICLE_FLAG_UNDER_BRIDGE = 8,
 	VEHICLE_FLAG_SCUD_LAUNCHED = 0x10, // AI - SCUD nuke launched: blocks a second launch, and the death handler creates the nuke only while it is clear (read)
-	VEHICLE_FLAG_UNK6 = 0x20, // AI - no use on a vehicle instance found; the instance flags start as a copy of the type word unk4C, so it may only be inherited from there
+	VEHICLE_FLAG_UNK6 = 0x20, // AI - a copy of bit 0x20 of the vehicle type word unk4C, set at spawn: on every instance of types 0, 1, 2, 5 to 11 and 13 to 15 and on neither type 4 nor 16 (measured)
 	VEHICLE_FLAG_INSIDE_PLAY_BOUNDS = 0x40, // AI - inside the current shield wall bounds (func_800FAC90_109C40 sets it from func_800B0D10_BFCC0); the main vehicle update and the radius scans process only vehicles with it set, so vehicles outside the wall are frozen (read)
 	VEHICLE_FLAG_SHIELDED = 0x80, // AI - shielded: the invincibility cheat's shield sets it on the player (flags 0x8161 to 0x81E1 in the word at +0x20), but drowning still took the hit points from 600 to 0 in 19 s with it set, so it does not block that damage (measured); func_8008D634_9C5E4 refuses a Human Capture Unit grab while it is set (read)
-	VEHICLE_FLAG_UNK9 = 0x100, // AI - no use on a vehicle instance found; bit 0x100 of the type word unk4C is tested next to water-level comparisons, so it may only be inherited from there
+	VEHICLE_FLAG_UNK9 = 0x100, // AI - a copy of bit 0x100 of the vehicle type word unk4C, set at spawn: on every instance of the same types as UNK6, and also on type 18, which lacks UNK6 (measured)
 	VEHICLE_FLAG_UNKA = 0x200, // AI - no use found on a vehicle instance or its type word
 	VEHICLE_FLAG_PATH_GUIDED = 0x400, // AI - driven by the grid path follower, not the player's driving physics: set only by func_800FC90C_10B8BC, which stores the grid-cell targets; the driver input step returns early for it and the death handler counts it as an NPC vehicle (read)
 	VEHICLE_FLAG_ON_BRIDGE = 0x800,
 	VEHICLE_FLAG_CAPTURED_BY_ALIEN = 0x1000, // AI - set on the player vehicle while a Human Capture Unit holds the on-foot player (func_8008D634_9C5E4) (read)
 	VEHICLE_FLAG_DAMAGE_FLASH = 0x2000, // AI - draw damage flash this frame: set with each hit-point loss while drowning and cleared at death; the draw code tests it with the frame counter, so it flickers (measured)
 	VEHICLE_FLAG_UNKF = 0x4000, // AI - no use found on a vehicle instance
-	VEHICLE_FLAG_ACTIVE = 0x8000 // AI - the vehicle slot is live: the active-vehicle list is built from it, the death handler returns at once when it is clear, and the main update requires it (read)
+	VEHICLE_FLAG_ACTIVE = 0x8000 // AI - the vehicle slot is live: the active-vehicle list is built from it, the death handler returns at once when it is clear, and the main update requires it (read); the on-foot entity loses it while the player drives another vehicle (measured)
 } VehicleFlags;
 
 typedef struct {
@@ -1156,15 +1156,15 @@ typedef enum AlienFlags {
 	ALIEN_FLAG_UNKA = 0x200, // AI - just added to the active list: cleared on its first update, which runs on a frame divisible by 4 (read)
 	ALIEN_FLAG_UNKB = 0x400, // AI - in the active-object list D_8014D510 (at most 0x40): set when the alien is added, cleared when it is removed (read)
 	ALIEN_FLAG_UNKC = 0x800, // AI - circling: the heading code steers perpendicular to the direction to the target, with UNKH picking the side (read)
-	ALIEN_FLAG_UNKD = 0x1000, // AI - an action in progress that differs by alien type, e.g. a hop, a scripted attack animation or heading back to a parent (read)
-	ALIEN_FLAG_UNKE = 0x2000, // AI - an attack in progress for the Siberia, Java and Greece monsters; armed to explode for the flea alien, holding a captured human for the HCU (read)
+	ALIEN_FLAG_UNKD = 0x1000, // AI - an action in progress that differs by alien type, e.g. a hop, a scripted attack animation or heading back to a parent; set with UNKL when a Processor is killed and cleared about 2.4 to 3.4 s later (measured)
+	ALIEN_FLAG_UNKE = 0x2000, // AI - an attack in progress for the Siberia, Java and Greece monsters; armed to explode for the flea alien, holding a captured human for the HCU; set on a killed Processor about 2.4 to 3.4 s after the kill (measured)
 	ALIEN_FLAG_UNKF = 0x4000, // AI - timed state of the Siberia charger; zombie or down for humans, docked at a Harvester for the HCU (read)
-	ALIEN_FLAG_UNKG = 0x8000, // AI - in most monsters a scripted animation is running, cleared when its keyframe table ends (func_800A3D00_B2CB0); aimed at the target on a Java turret child; the Processor uses it to select its skeleton model (read)
+	ALIEN_FLAG_UNKG = 0x8000, // AI - in most monsters a scripted animation is running, cleared when its keyframe table ends (func_800A3D00_B2CB0); aimed at the target on a Java turret child; the Processor uses it to select its skeleton model, and it is set about 4.8 to 6.2 s after a Processor is killed (measured)
 	ALIEN_FLAG_UNKH = 0x10000, // AI - in the generic heading code it picks the side of the UNKC circling; several bosses reuse it for unrelated state (read)
 	ALIEN_FLAG_UNKI = 0x20000, // AI - a follower slot: the alien target point is offset by its slot (unk27) so followers of one target spread out, and unk38 is the target; read from the code
 	ALIEN_FLAG_UNKJ = 0x40000, // AI - the facing (unk6) does not follow the travel heading: set for knockback and circling, and permanently for types with type flag 0x2000 (read)
 	ALIEN_FLAG_UNKK = 0x80000, // AI - has a leg-walker slot, whose index is in bits 0-2: set at spawn, cleared when the slot is released (read)
-	ALIEN_FLAG_UNKL = 0x100000, // AI - dead: set at the end of the kill routine func_80088760_97710, which returns early if it is already set; script opcode 0x9B reads it as destroyed (read)
+	ALIEN_FLAG_UNKL = 0x100000, // AI - dead: set by the kill routine func_80088760_97710, which returns early if it is already set, and read as destroyed by script opcode 0x9B; the hit points do not change with it (measured: set within 20 to 140 ms of the kill cheat in six aliens of three types, hit points unchanged)
 	ALIEN_FLAG_DESPAWNING = 0x200000, // AI - a removal countdown of about 2 seconds is running (func_80087AAC_96A5C); the alien is then removed and drops no item (read)
 	ALIEN_FLAG_INVINCIBLE = 0x400000,
 	ALIEN_FLAG_W = 0x800000,
@@ -1181,9 +1181,9 @@ typedef enum AlienFlags {
 typedef struct {
 	  union {
 	struct {
-	/* 0x00 */ s16 unk0; // X position
-	/* 0x02 */ s16 unk2; // Y position
-	/* 0x04 */ s16 unk4; // Z position
+	/* 0x00 */ s16 unk0; // AI - X position in quarter units, world X times 4 (measured: raw -24704 for a world X of -6176; a vehicle's s16 position is in world units)
+	/* 0x02 */ s16 unk2; // AI - Y position; not simply the world Y times 4 (measured: a Processor on ground at world Y about 608 reads raw 1120)
+	/* 0x04 */ s16 unk4; // AI - Z position in quarter units (measured: raw -1664 for a world Z of -416)
 	/* 0x06 */ s16 unk6; // X orientation
 		};
 	u8 alienIds[8];
