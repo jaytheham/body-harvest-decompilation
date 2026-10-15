@@ -191,9 +191,6 @@ f32 D_8013FC10_14EBC0 = 0.0f;
 s32 D_8013FC14_14EBC4[9] = {0x640, 0x1F40, 0, 0xDAC0, 0xBB80, 0x9C40, 0x7D00, 0x5DC0, 0xFA00};
 s32 D_8013FC38_14EBE8[9] = {0x1A, 0x1F, 0x1B, 0x20, 0x19, 0x1E, 0x1C, 0x1D, 0x1B};
 s32 D_8013FC5C_14EC0C[9] = {0x12, 0x12, 0x15, 0x14, 0x14, 0x14, 0x13, 0x12, 0x15};
-f32 D_8013FC80_14EC30[10] = {0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.0f, 0.4f, 0.5f, 0.6f, 0.7f};
-PlayerRenderSettings D_8013FCA8_14EC58 = {{0, 75, 0x96FF, 0xFF96, 0x6400}};
-u16 D_8013FCB4_14EC64 = 0;
 
 void func_800EA280_F9230(void) { D_80047948 = 0; D_80157E7C = 4; }
 
@@ -1998,99 +1995,82 @@ s32 func_800EF0B0_FE060(s32 arg0)
 }
 
 
-// CURRENT(6091)
-#ifdef NON_MATCHING
 // This checks the player modifier and writes values that cause either
 // normal or black adam to be rendered
 void func_800EF14C_FE0FC(VehicleInstance *arg0) {
-	s32 count;
-	s32 timer;
-	Mtx *matrix;
-	struct {
-		s32 unk0;
-		s32 unk4;
-		s32 unk8;
-	} spAC;
-	s16 spA8[3];
+	Unk80052B40_fp spAC;
+	Unk80052B40 spA8;
 	s16 sp9C[3];
-	s16 spA4[3];
-	f32 sp6C[10];
-	PlayerRenderSettings sp60;
-
-
-
-	*(AnimationScaleTable *)sp6C = *(AnimationScaleTable *)D_8013FC80_14EC30;
-	sp60 = D_8013FCA8_14EC58;
+	Unk80052B40 spA4;
+	f32 sp6C[10] = {0.8f, 0.7f, 0.6f, 0.5f, 0.4f, 0.0f, 0.4f, 0.5f, 0.6f, 0.7f};
+	PlayerRenderSettings sp60 = {{0, 75, 0x96FF, 0xFF96, 0x6400}};
+	static u16 powerupTimer = 0;
 
 	if (D_80157A3C != 0) {
-		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+		/* Keep these phases separate so IDO rematerializes the global bases. */
+		if (1) {
+			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-		func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-		spA8[0] = arg0->unk0;
-		spA8[1] = arg0->unk2;
-		spA8[2] = arg0->unk4;
-		spA4[1] = 0;
-		spA4[2] = 0;
-		spA4[0] = 0x4000 - arg0->unkE;
-		sp9C[1] = (s16)(0x1000 / (D_80157A3C + 1));
-		sp9C[0] = D_80157A3C;
-		sp9C[2] = D_80157A3C;
+			spA8.unk0 = arg0->unk0;
+			spA8.unk2 = arg0->unk2;
+			spA8.unk4 = arg0->unk4;
+			spA4.unk0 = 0x4000 - arg0->unkE;
+			spA4.unk2 = 0;
+			spA4.unk4 = 0;
+			sp9C[0] = D_80157A3C;
+			sp9C[1] = 0x1000 / (D_80157A3C + 1);
+			sp9C[2] = D_80157A3C;
 
-		func_800039D0_45D0((Unk80052B40 *)spA8, (Unk80052B40 *)spA4, (Unk80052B40 *)sp9C, D_8005BB38);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			func_800039D0_45D0(&spA8, &spA4, (Unk80052B40 *)sp9C, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-		spAC.unk0 = 0;
-		spAC.unk8 = 0;
-		spA4[0] = D_80157600.unk2 << 3;
-		spA4[1] = D_80157600.unk4 << 3;
-		spA4[2] = D_80157600.unk0 << 3;
-		spAC.unk4 = (s32)(D_80157600.unkC * 65536.0f);
+			spAC.unk0 = 0;
+			spAC.unk8 = 0;
+			spAC.unk4 = D_80157600.unkC * 65536.0f;
+			spA4.unk0 = D_80157600.unk2 * 8;
+			spA4.unk2 = D_80157600.unk4 * 8;
+			spA4.unk4 = D_80157600.unk0 * 8;
 
-		func_8000C81C_D41C(&spAC.unk0, (Unk80052B40 *)spA4, NULL, (s32 *)D_8005BB38);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			func_8000C81C_D41C(&spAC.unk0, (s16 *)&spA4, NULL, (s32 *)D_8005BB38);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-		gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
-		gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(*(s32 *)D_8013E45C_14D40C[D_801575DC].pad14));
+			gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
+			gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(D_8013E45C_14D40C[D_801575DC].modelDisplayList));
 
-		func_8000CC3C_D83C(&D_80157600, 0x10);
+			func_8000CC3C_D83C(&D_80157600, 0x10);
+		}
+		if (1) {
+			sp9C[2] = 0x100;
+			sp9C[0] = sp9C[1] = sp9C[2];
+			if ((D_80157600.unk40C == 0x38) && (func_800EB9B4_FA964(&D_80157600) == 3)) {
+				if (powerupTimer == 0) {
+					func_800D0614_DF5C4(D_80052B34->unk0, D_80052B34->unk2 + 0x36, D_80052B34->unk4, 0x55, 0xFA, 0xA0, 0x50,
+						0);
+					func_80001144_1D44(0x14, 0, 5);
+					func_801371B8_146168(0, 0x16A, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 1.0f);
+					powerupTimer = 5;
+				}
 
-		sp9C[1] = sp9C[0] = sp9C[2] = 0x100;
-		if ((D_80157600.unk40C == 0x38) && (func_800EB9B4_FA964(&D_80157600) == 3)) {
-			count = D_8013FCB4_14EC64;
-			if (count == 0) {
-				func_800D0614_DF5C4(D_80052B34->unk0, D_80052B34->unk2 + 0x36, D_80052B34->unk4, 0x55, 0xFA, 0xA0, 0x50,
-								 0);
-				func_80001144_1D44(0x14, 0, 5);
-				func_801371B8_146168(0, 0x16A, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 1.0f);
-				count = 5; D_8013FCB4_14EC64 = count;
+				sp9C[2] = sp6C[(s32)func_800EB9BC_FA96C(&D_80157600)] * 256.0f;
+				sp9C[0] = sp9C[1] = sp9C[2];
 			}
 
-			sp9C[1] = (s16)(sp6C[(s32)func_800EB9BC_FA96C(&D_80157600)] * 256.0f);
-			sp9C[0] = sp9C[1];
-			sp9C[2] = sp9C[1];
-		}
+			func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)sp9C, D_8005BB38++);
 
-		matrix = D_8005BB38;
-		D_8005BB38++;
-		func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)sp9C, matrix);
-
-		count = D_8013FCB4_14EC64;
-		timer = count;
-		if (count > 0) {
-			D_8013FCB4_14EC64 = count;
-			if (gameplayMode == 1) {
-				count--;
-				D_8013FCB4_14EC64 = timer = (u16)count;
+			if (powerupTimer > 0) {
+				powerupTimer = powerupTimer; /* Retain the original unchanged-value store. */
+				if (gameplayMode == 1) {
+					powerupTimer--;
+				}
+			}
+			if (powerupTimer >= 6) {
+				powerupTimer = 5;
 			}
 		}
-
-		if (timer >= 6) {
-			count = 5; D_8013FCB4_14EC64 = count;
-		}
-
 		if (D_80052ACD & D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL) {
 			gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_50408F0));
 			return;
@@ -2099,9 +2079,6 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 		gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(&D_10031E0));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EF14C_FE0FC.s")
-#endif
 
 // CURRENT(491)
 // Black Adam animations controller? called by his behavior function
