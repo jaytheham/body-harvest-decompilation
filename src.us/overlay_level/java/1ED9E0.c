@@ -3344,68 +3344,60 @@ void func_802DD5A0_1F62B0(u8 arg0) {
 	func_802DD140_1F5E50(arg0, 4);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2568): corrected skeleton chain, transforms, type outputs and signed remainder; retained after 24 compiled variants.
 void func_802DD5CC_1F62DC(u8 arg0) {
-	s16 temp_t1;
-	s16 temp_v1;
-	s32 selectedJoint;
+	s16 rootNode;
+	s16 firstNode;
+	s16 selectedNode;
 	s16 joints[2];
-	s16 sp5A;
-	s16 sp58;
-	s32 flagsScratch;
-	s16 sp52;
-	s8 var_v1;
-	s8 pad50;
-	s16 pad4E;
+	s16 secondNode;
+	s16 thirdNode;
+	s32 flags;
+	s16 typeIndex;
+	s8 animationResult;
 	s16 coords[3];
 	s32 output[3];
-	s32 var_a0;
-	int temp_v0;
-	AlienInstance *alien_instance;
-	u8 *id;
+	s32 value;
+	AlienInstance *alien;
 
-	id = &arg0;
-	alien_instance = &alienInstances[arg0];
+	alien = &alienInstances[arg0];
 
-	temp_t1 = alien_instance->unkC;
-	temp_v1 = D_8014DD50[temp_t1].unkC;
+	rootNode = alien->unkC;
+	firstNode = D_8014DD50[rootNode].unkC;
 
-	temp_v0 = D_8014DD50[temp_v1].unkC;
-	sp52 = alien_instance->typeIndex;
-	sp5A = D_8014DD50[temp_v0].unkD;
+	value = D_8014DD50[firstNode].unkC;
+	secondNode = D_8014DD50[value].unkD;
 
-	sp58 = D_8014DD50[sp5A].unkD;
+	thirdNode = D_8014DD50[secondNode].unkD;
+	typeIndex = alien->typeIndex;
 
-	func_8008751C_964CC(*id, 0x2BC, 0x384);
+	func_8008751C_964CC(arg0, 0x2BC, 0x384);
 
-	temp_v0 = func_80086230_951E0(*id, (s16)temp_v1, 0xFFFF);
+	value = func_80086230_951E0(arg0, firstNode, 0xFFFF);
 
-	var_a0 = alien_instance->unk20;
-	if (var_a0 & 0x2000) {
-		selectedJoint = sp5A;
-		if (var_a0 & 0x04000000) {
-			selectedJoint = sp58;
+	flags = alien->unk20;
+	if (flags & ALIEN_FLAG_UNKE) {
+		selectedNode = secondNode;
+		if (flags & ALIEN_FLAG_Z) {
+			selectedNode = thirdNode;
 		}
-		flagsScratch = var_a0 & ~ALIEN_FLAG_UNKE;
-		D_8014DD50[selectedJoint].unk4 += 0x19;
-		alien_instance->unk20 = flagsScratch;
-		var_a0 = flagsScratch;
+		D_8014DD50[selectedNode].unk4 += 0x19;
+		alien->unk20 = flags & ~ALIEN_FLAG_UNKE;
 	}
 
-	if (var_a0 & 0x1000) {
-		joints[0] = sp5A;
-		joints[1] = sp58;
-		temp_v0 = func_80081F18_90EC8(*id, 2, 7, joints, &D_802E09C0_1F96D0);
-		var_v1 = temp_v0;
-		if (temp_v0 == 1) {
-			func_80137468_146418(*id, 0xCF);
+	flags = alien->unk20;
+	if (flags & ALIEN_FLAG_UNKD) {
+		joints[0] = secondNode;
+		joints[1] = thirdNode;
+		value = func_80081F18_90EC8(arg0, 2, 7, joints, &D_802E09C0_1F96D0);
+		animationResult = value;
+		if (value == 1) {
+			func_80137468_146418(arg0, 0xCF);
 		}
-		if (var_v1 == 7) {
-			alien_instance->unk20 = (s32)(alien_instance->unk20 & ~ALIEN_FLAG_UNKD);
+		if (animationResult == 7) {
+			alien->unk20 &= ~ALIEN_FLAG_UNKD;
 		}
-	} else if (temp_v0 == 0) {
-			if (var_a0 & 0x04000000) {
+	} else if (value == 0) {
+		if (flags & ALIEN_FLAG_Z) {
 			coords[0] = 0x4A;
 		} else {
 			coords[0] = -0x4A;
@@ -3413,54 +3405,51 @@ void func_802DD5CC_1F62DC(u8 arg0) {
 		coords[1] = -0x13;
 		coords[2] = 0xA5;
 
-			func_800A931C_B82CC(temp_v1, coords, output);
-		coords[0] = (s16)output[0];
-		coords[1] = (s16)output[1];
-		coords[2] = (s16)output[2];
-		func_800A931C_B82CC(temp_t1, coords, output);
+		func_800A931C_B82CC(firstNode, coords, output);
+		coords[0] = output[0];
+		coords[1] = output[1];
+		coords[2] = output[2];
+		func_800A931C_B82CC(rootNode, coords, output);
 
-			alienTypes[sp52].unk20 = (s16)output[0];
-		alienTypes[sp52].unk22 = (s16)output[1];
-		alienTypes[sp52].unk24 = (s16)output[2];
+		alienTypes[typeIndex].unk20 = output[0];
+		alienTypes[typeIndex].unk22 = output[1];
+		alienTypes[typeIndex].unk24 = output[2];
 
-			if (func_800871CC_9617C(*id, 0, 0x32) != 0) {
-			var_a0 = alien_instance->unk20;
-			selectedJoint = sp5A;
-			if (var_a0 & 0x04000000) {
-				selectedJoint = sp58;
+		if (func_800871CC_9617C(arg0, 0, 0x32) != 0) {
+			flags = alien->unk20;
+			selectedNode = secondNode;
+			if (flags & ALIEN_FLAG_Z) {
+				selectedNode = thirdNode;
 			}
-			alien_instance->unk20 = (s32)(var_a0 | ALIEN_FLAG_UNKE);
-			D_8014DD50[selectedJoint].unk4 -= 0xF;
-			selectedJoint = D_80222A70;
-			alien_instance->unk2 = selectedJoint + 4;
+			D_8014DD50[selectedNode].unk4 -= 0xF;
+			alien->unk20 = flags | ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk2 = D_80222A70 + 4;
 
-					if (((int)alien_instance->unk26 % -4) == 0) {
-				func_800DEF2C_EDEDC(alien_instance->unk0, (s16)selectedJoint, alien_instance->unk4, 0xB4, 1);
+			value = alien->unk26;
+			if ((value % -4) == 0) {
+				func_800DEF2C_EDEDC(alien->unk0, D_80222A70, alien->unk4, 0xB4, 1);
+				value = alien->unk26;
 			}
 
-					temp_v0 = (u8)(alien_instance->unk26 + 1);
-			alien_instance->unk1E = 5;
-			alien_instance->unk26 = temp_v0;
+			alien->unk1E = 5;
+			alien->unk26 = value + 1;
 
-			if ((temp_v0 & 0xFF) >= 0x11) {
-				alien_instance->unk36 = 0;
-				alien_instance->unk26 = 0;
-				alien_instance->unk20 = (s32)(alien_instance->unk20 | ALIEN_FLAG_UNKD);
+			if (alien->unk26 >= 0x11) {
+				alien->unk36 = 0;
+				alien->unk26 = 0;
+				alien->unk20 |= ALIEN_FLAG_UNKD;
 			}
-			alien_instance->unk20 = (s32)(alien_instance->unk20 ^ ALIEN_FLAG_Z);
+			alien->unk20 ^= ALIEN_FLAG_Z;
 		}
 	}
 
-	func_800E24B8_F1468(*id);
+	func_800E24B8_F1468(arg0);
 
-	temp_v0 = alien_instance->unk1E;
-	if (temp_v0 != 0) {
-		alien_instance->unk1E = (s16)(temp_v0 - 1);
+	value = alien->unk1E;
+	if (value != 0) {
+		alien->unk1E = value - 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DD5CC_1F62DC.s")
-#endif
 
 void func_802DD8E8_1F65F8(u8 arg0) {
 	s32 flags;
