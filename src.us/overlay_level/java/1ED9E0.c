@@ -139,9 +139,11 @@ s8 D_802E0878_1F9588[] = {
 	0x00, 0x50, 0x14, 0x00,
 };
 
-u8 D_802E0884_1F9594[] = {
-	0x50, 0xC8, 0xF5, 0xC8, 0x00, 0xFF, 0xFF, 0x14,
-	0x6F, 0x1E, 0xF0, 0x8C,
+EffectRgb D_802E0884_1F9594[] = {
+	{ 0x50, 0xC8, 0xF5 },
+	{ 0xC8, 0x00, 0xFF },
+	{ 0xFF, 0x14, 0x6F },
+	{ 0x1E, 0xF0, 0x8C },
 };
 
 Unk8014DD50 D_802E0890_1F95A0[] = {
@@ -2929,65 +2931,46 @@ void func_802DC230_1F4F40(u8 arg0) {
 	if (alien->unk20 & ALIEN_FLAG_UNKP) {
 		temp = func_800038E0_44E0();
 		temp = temp % 4;
-		func_800CA5EC_D959C(alien->unk0, (s16)(alien->unk2 + 0x80), alien->unk4, 0, 0x7F, 0, 0x5A, 0xC, 0xA, 0xFF, D_802E0884_1F9594[temp * 3], D_802E0884_1F9594[temp * 3 + 1], D_802E0884_1F9594[temp * 3 + 2], 0x96);
+		func_800CA5EC_D959C(alien->unk0, (s16)(alien->unk2 + 0x80), alien->unk4, 0, 0x7F, 0, 0x5A, 0xC, 0xA, 0xFF, D_802E0884_1F9594[temp].r, D_802E0884_1F9594[temp].g, D_802E0884_1F9594[temp].b, 0x96);
 	}
 	func_80137468_146418(arg0, 0xCB);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(40): instructions and registers match; frame and halfword homes remain after 20+ builds.
 void func_802DC4A8_1F51B8(u8 idx) {
-	AlienInstance *alien;
-	alien = &alienInstances[idx];
+	u16 size;
+	s16 colorIndex;
+	s16 x;
+	s16 y;
+	s16 z;
+
 	if (!(alienInstances[idx].unk20 & ALIEN_FLAG_UNKL) && (alienInstances[idx].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))) {
 		alienInstances[idx].unk2C = 0x50;
-		func_800D05A8_DF558(alienInstances[idx].unk0, alienInstances[idx].unk2, alienInstances[idx].unk4, 0x7D0, D_802E0884_1F9594[0], D_802E0884_1F9594[1], D_802E0884_1F9594[2]);
+		func_800D05A8_DF558(alienInstances[idx].unk0, alienInstances[idx].unk2, alienInstances[idx].unk4, 0x7D0, D_802E0884_1F9594[0].r, D_802E0884_1F9594[0].g, D_802E0884_1F9594[0].b);
 		return;
 	}
-	{
-		s32 random_val;
-		random_val = func_800038E0_44E0();
-		random_val = (random_val % 10) + 4;
-		if ((alienInstances[idx].unk2C % random_val) == 0) {
-			s16 sp5C;
-			s16 sp5A;
-			s16 sp58;
-			s16 sp56;
-			u8 *color_ptr;
+	if ((alienInstances[idx].unk2C % ((func_800038E0_44E0() % 10) + 4)) == 0) {
 
-			random_val = func_800038E0_44E0();
-			sp5C = random_val % 4;
+		colorIndex = func_800038E0_44E0() % 4;
 
-			random_val = func_800038E0_44E0();
+		x = ((func_800038E0_44E0() % 90) + ((const AlienInstance *)&alienInstances[idx])->unk0) - 0x2D;
 
-			sp5A = ((random_val % 90) + alien->unk0) - 0x2D;
+		y = (func_800038E0_44E0() % 160) + ((const AlienInstance *)&alienInstances[idx])->unk2;
 
-			random_val = func_800038E0_44E0();
+		z = ((func_800038E0_44E0() % 90) + ((const AlienInstance *)&alienInstances[idx])->unk4) - 0x2D;
+		size = (func_800038E0_44E0() % 400) + 0x64;
 
-			sp58 = (random_val % 160) + alien->unk2;
+		func_800D05A8_DF558(x, y, z, size, D_802E0884_1F9594[colorIndex].r, D_802E0884_1F9594[colorIndex].g, D_802E0884_1F9594[colorIndex].b);
 
-			random_val = func_800038E0_44E0();
-
-			sp56 = ((random_val % 90) + alien->unk4) - 0x2D;
-			random_val = func_800038E0_44E0();
-			color_ptr = &D_802E0884_1F9594[sp5C * 3];
-
-			func_800D05A8_DF558(sp5A, sp58, sp56, (u16)((random_val % 400) + 0x64), color_ptr[0], color_ptr[1], color_ptr[2]);
-
-			func_800CA5EC_D959C(sp5A, sp58, sp56, 0, 0x7F, 0, 0x64, 0xC, 0x8, 0xFF,
-				color_ptr[0], color_ptr[1], color_ptr[2], 0x96);
-		}
-
+		func_800CA5EC_D959C(x, y, z, 0, 0x7F, 0, 0x64, 0xC, 0x8, 0xFF,
+			D_802E0884_1F9594[colorIndex].r, D_802E0884_1F9594[colorIndex].g, D_802E0884_1F9594[colorIndex].b, 0x96);
 	}
+
 	if (alienInstances[idx].unk2C == 1) {
 		func_801371B8_146168(&alienInstances[idx], 0xEB, alienInstances[idx].unk0, alienInstances[idx].unk2, alienInstances[idx].unk4, -1);
 
-		func_800D05A8_DF558(alienInstances[idx].unk0, alienInstances[idx].unk2, alienInstances[idx].unk4, 0x7D0, D_802E0884_1F9594[0], D_802E0884_1F9594[1], D_802E0884_1F9594[2]);
+		func_800D05A8_DF558(alienInstances[idx].unk0, alienInstances[idx].unk2, alienInstances[idx].unk4, 0x7D0, D_802E0884_1F9594[0].r, D_802E0884_1F9594[0].g, D_802E0884_1F9594[0].b);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DC4A8_1F51B8.s")
-#endif
 
 void func_802DC738_1F5448(u8 arg0) {
 	u8 animation;
