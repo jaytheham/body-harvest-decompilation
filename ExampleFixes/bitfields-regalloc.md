@@ -37,7 +37,6 @@ Conditions like `if (glob.singleBitField)` are sometimes (but not always) emitte
 
 The underlying type of the bitfield cannot easily be determined from the asm (IDO can emit lw even for u8-based bitfields, or lbu for u32 ones, depending on which bits it needs), however, it can sometimes have an impact on regalloc.
 
-
 ## Narrowing a multiplied call argument
 
 In `func_800DA7CC_E977C`, passing `(u8)(D_80154318[arg0].unkC * 3)` matched the target's reused multiplication temporary and final `andi` in the call delay slot. The equivalent expression with `& 0xFF` introduced a second multiplication-result temporary and shifted subsequent register allocation. Loading a named value first instead allocated the input to v0 rather than a1. Keep the field access inline and express the byte conversion as a u8 cast when the target exhibits this pattern. Full ROM checksum verified OK.
@@ -50,8 +49,7 @@ The initializer writes five coordinates per axis. Overlay five-element history a
 
 The companion reset func_80124BA8_133B58 also matches with the unsigned flag fields. Use while (i--) and a pointer derived from the projectile array inside that loop; a for countdown moves the pointer decrement before the stores and changes their offsets. The trail loop uses the for countdown with direct array fields. After clearing both global word counters, empty checks of those same counters preserve their address webs without emitted tests, producing the paired LUI/ADDIU/SW sequence. Pointer locals alone fold the addresses into AT stores, and volatile pointers use the wrong register class. Both matches verify full-ROM checksum OK.
 
-Projectile removal func_801238DC_13288C retains score 23 under NON_MATCHING. Set trailEnded through the unsigned bitfield and directly index the replacement projectile's unk2A when updating its owning pointer. All instructions and registers then match; its frame is 0x40 rather than 0x38, and the generated switch table lands at 0x15431C rather than 0x1540C0. Restore the original jump-table placeholder while wrapped. Under the no-new-files constraint this is a partial result, not a fourth match. Declaration orders, word versus short trail indices, pointer constness and a named trail pointer do not close it. The wrapped ROM verifies OK.
-
+Projectile removal func_801238DC_13288C retains score 23 under NON_MATCHING. Set trailEnded through the unsigned bitfield and directly index the replacement projectile's unk2A when updating its owning pointer. All instructions and registers then match; its frame is 0x40 rather than 0x38, and the generated switch table lands at 0x15431C rather than 0x1540C0. Restore the original jump-table placeholder while wrapped. Under the no-new-files constraint this is a partial result, not a fourth match.
 
 Burst helper func_80129354_138304 matches with a signed 24-bit weaponFlags field over bits 8..31. Compound AND/OR updates reproduce the signed SRA, unsigned SRL and XOR merge, including operand order. Use while (i--) with distance halves calculated inside the body; IDO hoists them behind the loop's zero guard. Inline distance/4 and use u8 conversions for the rumble arguments: explicit & 0xFF expressions change temporary registers and scheduling.
 

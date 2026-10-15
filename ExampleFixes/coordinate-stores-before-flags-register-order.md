@@ -73,7 +73,6 @@ the OR result and `t9` for X. At this checkpoint the whole final block
 matches; four FP-register instruction differences remain near the start of
 the function, so the function and ROM are not yet fully matched.
 
-
 ### Store creation order sets the whole temp band (particle-burst init)
 
 In `func_800840F0_16C1B0` every opcode, every stack home and the frame already
@@ -90,8 +89,6 @@ the stores in address order (0x8, 0xA, 0xC, 0xE, 0xF, 0x10, 0x12, 0x2, 0x14,
 0x11). Reading assembly order back as source order gives the wrong permutation.
 
 Measured: that order **0**; the address-ordered spelling 80; every other
-permutation swept 20-1275. Levers that did not transfer: removing the no-op
-`arg5 += 0;` measured 360 (the statement is load-bearing - it keeps the count
-parameter in its home); `u8 count` 40. The halfword store into a byte-declared
+permutation swept 20-1275. The halfword store into a byte-declared
 field uses the repo's existing `*(s16 *)&entry->unk14 = ...` idiom (as in
 `overlay_level/comet/318E20.c`).

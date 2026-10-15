@@ -11,10 +11,6 @@ OURS:    mul.s $f0, $f4, $f2
 
 For a commutative operation the value is the same, but the encoding is not, so the sha1 still fails.
 
-**What does NOT work.** Swapping the operands inside the expression (`a * b` -> `b * a`) changed
-nothing: IDO emitted the same instruction either way. The lever is the *statement*, not the operand
-text.
-
 **What works.** Write the product as a split assignment, with the scalar as the accumulator:
 
 ```c

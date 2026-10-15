@@ -22,11 +22,6 @@ updates. Each calculation reads its respective alias. Relocatable linker
 expressions keep all aliases attached to the object as code size changes.
 This extends the existing separate-read/write-symbol CSE workaround.
 
-A named local pointer also restored folded loads, but indirect expressions
-changed floating-point temporary allocation and instruction scheduling.
-Volatile declarations, a single read alias, native `int`, and a struct field
-did not reproduce the complete target.
-
 Replace the three `10000.0` double placeholders with inline literals to
 reproduce the target's floating-point register sequence. Inline both format
 strings as well. Delete the unused `0.0` placeholder: leaving it defined

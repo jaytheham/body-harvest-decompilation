@@ -5,8 +5,7 @@ Matched `func_80007570_8170` with IDO 5.3 -O2 -mips2 -32.
 With only external declarations, clearing a six-byte array loop produced an
 extra `lui` between the two peeled stores. Assigning a constant to a `u64`
 also emitted separate address loads for its high and low words, storing the
-high word first. Signedness, scalar versus array declarations, explicit
-64-bit literals, and local value or pointer temporaries did not fix this.
+high word first.
 
 The target shares one `lui` for the peeled byte stores, and one for each
 64-bit store pair, with the low word stored first. Local tentative definitions

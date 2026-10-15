@@ -21,4 +21,4 @@ if (mode == 4) {
 
 The stock linked score improved from 2451 to 2338. The missing `li at,1` and `beq` appeared, but two redundant moves remained: one in the branch delay slot and one in its fallthrough body. The resulting function is eight bytes longer than the target; this does not establish a complete match.
 
-Reversing the `if` or using a ternary did not remove those moves. A structured `while` with a `break` was also identical. Pointer-zero-stride forms could reduce the overall score while still omitting the branch and losing useful setup instructions; inspect the actual instruction differences before retaining them.
+A structured `while` with a `break` was also identical. Pointer-zero-stride forms could reduce the overall score while still omitting the branch and losing useful setup instructions; inspect the actual instruction differences before retaining them.

@@ -45,4 +45,4 @@ Side effect: the named `s32 devAddr` may NOT inflate the frame if the baseline f
 
 ### Two cached tile scalars can add eight bytes
 
-In func_800BC5DC_CB58C, caching the halfword tile and its extracted terrain type in u16 and s32 locals inflated the frame from 0x38 to 0x40. All instructions otherwise matched. Removing both locals and reading *tilePtr directly in the comparisons and update kept IDO's cached lhu result and restored the exact frame. Removing only one local did not fix alignment. Keep the named map pointer: removing it changed register allocation and control flow.
+In func_800BC5DC_CB58C, caching the halfword tile and its extracted terrain type in u16 and s32 locals inflated the frame from 0x38 to 0x40. All instructions otherwise matched. Removing both locals and reading *tilePtr directly in the comparisons and update kept IDO's cached lhu result and restored the exact frame. Keep the named map pointer: removing it changed register allocation and control flow.

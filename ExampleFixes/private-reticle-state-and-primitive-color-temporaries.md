@@ -30,11 +30,9 @@ gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
                (u32)(0xFF - (D_8013D5C0_14C570[0] * 0xC)));
 ```
 
-The unsigned word cast reproduces the remaining temporary-register events.
-Replacing it with `& 0xFF` or a byte/halfword cast leaves all instruction shapes
+The unsigned word cast reproduces the remaining temporary-register events. Replacing it with `& 0xFF` or a byte/halfword cast leaves all instruction shapes
 correct but changes the integer temporary sequence from the subtraction
-through the final display-list commands. Unsigned literal suffixes on the
-subtraction or multiplication did not reproduce the cast's effect.
+through the final display-list commands.
 
 ## Keep the word and byte working values separate
 

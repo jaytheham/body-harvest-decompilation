@@ -13,7 +13,6 @@
 
 | lever | result |
 |---|---|
-| add a declared-but-unused padding local (tried `s32` first; `s16` first; `s16`+`s16` first; `s32`/`u8` last) | the scalar home moves to the target's `0x4e`, but the frame grows `0x50 -> 0x58` (score 34) |
 | **reorder the two existing declarations** (`s16 parentId;` before `AlienInstance *inst;`) | **0** - the slot lands at `0x4e`, frame stays `0x50`, no instruction changes |
 
 So when only one scalar home is off and register allocation is otherwise identical, try **declaration order of the existing locals first**; adding a *new* local to chase the slot is charged 8 bytes of frame on this shape, and a pad declared last reserves nothing at all.
@@ -49,7 +48,7 @@ With three same-typed locals the home is **not** declaration-ascending: moving t
 
 ## 4. The home is set by the declaration *position*, not the pairwise order
 
-`func_8009EE30_ADDE0` (`AAA70.c`, 192 instr, 13): the residual is one or two rows in the home of an address-taken local (`addiu s8,sp,0x80` vs the target's `0x78`), `ins_diff -noregs` delta +0, same frame. Swapping the two declarations, adding pads, and declaring the pair as an array all measured **worse**. The lever was the **position** of each declaration over the whole declaration list — the pair had to sit at positions 2 and 3 (0-based) with `sp7C` before `sp78`, with an unrelated `s32 var_s2;` declared *between* them:
+`func_8009EE30_ADDE0` (`AAA70.c`, 192 instr, 13): the residual is one or two rows in the home of an address-taken local (`addiu s8,sp,0x80` vs the target's `0x78`), `ins_diff -noregs` delta +0, same frame. The lever was the **position** of each declaration over the whole declaration list — the pair had to sit at positions 2 and 3 (0-based) with `sp7C` before `sp78`, with an unrelated `s32 var_s2;` declared *between* them:
 
     s32 var_s0;
     s32 var_s2;     /* an unrelated declaration BETWEEN the two floats: this is the lever */
@@ -59,7 +58,7 @@ With three same-typed locals the home is **not** declaration-ascending: moving t
     s32 var_v1;
     s16 var_s4;
 
-13 -> **0** on the first compile, 192 = 192 instructions, gate PASSED. 42 other placements measured 9-38; the best non-winning shape (9) was the permuter's own output, which put the two floats at positions 1 and 3. Cost of the sweep: 44 variants, each one `tools/asm-differ/diff.py -m <func>` run (~2 s) — a single tool call. Run the permuter first when the body is large: here `-j2 --stack-diffs --stop-on-zero`, 17k iterations, produced exactly one output — the first half of the answer.
+13 -> **0** on the first compile, 192 = 192 instructions, gate PASSED.
 
 ## 5. A declared-but-unused local reserves a phantom home (cheap, no instruction cost)
 
@@ -73,7 +72,7 @@ Confirmed both ways: `bh.sh check func_800FD510_10C4C0` -> 0 and `bh.sh gate` ->
 
 ### Inverse instance: a *redundant but used* temp charges a frame slot too
 
-`func_802DBCB0_1F49C0` (`src.us/overlay_level/java/1ED9E0.c`, 75 instr, no marker): everything matched register-for-register (`allblocks ... delta +0`, 75 = 75) but the score sat at **58**; target frame `-0x28`, ours `-0x30` (`sw a0,0x28(sp)` vs `0x30(sp)`, and the cfe pointer spill `0x20(sp)` vs `0x24(sp)`). Cause: a declared temp holding a sub-expression **used twice** still gets a home (`u32 temp_t5 = ((u32)buildingInstances[new_var].unk8) >> 0xC;` used in two tests). Inlining the expression at both uses restores the frame and took **58 -> 0** on the first compile. Two further levers reached the 58, both from the matched same-file twin `func_802DBDDC_1F4AEC`: (i) reading the building index through a declared `u8 new_var` rather than inlining `alienInstances[arg0].unk38` -> 163 -> 58; (ii) flipping the compare operands to `(arg0 & 0x3C) == (D_80052A8C & 0x3C)` -> 198 -> 163. Declaration-order permutations of the three locals are **neutral** (temps are not homed by declaration order).
+`func_802DBCB0_1F49C0` (`src.us/overlay_level/java/1ED9E0.c`, 75 instr, no marker): everything matched register-for-register (`allblocks ... delta +0`, 75 = 75) but the score sat at **58**; target frame `-0x28`, ours `-0x30` (`sw a0,0x28(sp)` vs `0x30(sp)`, and the cfe pointer spill `0x20(sp)` vs `0x24(sp)`). Cause: a declared temp holding a sub-expression **used twice** still gets a home (`u32 temp_t5 = ((u32)buildingInstances[new_var].unk8) >> 0xC;` used in two tests). Inlining the expression at both uses restores the frame and took **58 -> 0** on the first compile.
 
 ## 6. Phantom 2-byte slot between a 4-byte array and a scalar (sp34/sp38 pattern)
 
@@ -109,8 +108,6 @@ sp36 = alienInstances[arg0].unk6;
 D_8014DD50[sp5E].unk6 = sp36;
 D_8014DD50[sp5C].unk6 = -sp36;
 ```
-
-Seen in `func_802D738C_18FE9C` (greece/18D7E0.c) and its sibling `func_802D7B68_1F0878` (java/1ED9E0.c), both still NON_MATCHING with this exact 1-slot diff. **Caution (measured):** *using* the variable makes IDO allocate a **variable register** (`v0` where the target has the temp `t4`), which cascades ~35 register-only diffs. What did NOT work: `sp36 = <const>` used before/after a call -> frame `0x68`; using it in the cooldown (`sp34 = sp36`), the flags result, the `unk1E` tail, or an intermediate of the `unkC` chain -> frame grows and/or regalloc changes; ternary for the cooldown, `s16 sp34[1]`, `struct { s16 x; } sp34` -> frame `0x68`.
 
 ### The **unused** declaration form is the fix - no register cost
 

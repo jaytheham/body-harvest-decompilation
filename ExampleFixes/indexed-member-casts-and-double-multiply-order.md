@@ -2,7 +2,7 @@
 
 `func_800A4C28_B3BD8` reached a diff score of 20 with every instruction matching
 except two `mul.d` instructions. The target used `f16,f0`; the candidate used
-`f0,f16`. Swapping the multiplication operands in C did not change the output.
+`f0,f16`.
 
 The radius was an indexed struct member, `alienTypes[typeIndex].unk24`.
 Giving that access an explicit pointer cast changed the front-end expression

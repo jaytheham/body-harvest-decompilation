@@ -25,7 +25,7 @@ bnez  a2, loop
 move  v1, a2             ; c-copy -> v1 (loop back)
 ```
 
-**The problem**: My natural C gave `c->$v1` and `temp->$a2` (score 80, all register-only diffs). Target needs `c->$a2`, `temp->$v1`. The `temp` variable was consistently assigned `$a2` in EVERY declaration/statement/loop-structure variant tried (24 decl orders, 6 stmt orders, for/while/do-while, u8/u16/s32 types).
+**The problem**: My natural C gave `c->$v1` and `temp->$a2` (score 80, all register-only diffs). Target needs `c->$a2`, `temp->$v1`.
 
 **Root cause**: IDO's register assignment for the user locals follows the **order of first assignment in the source**, roughly mapping the 1st→`$v0`, 2nd→`$v1`, 3rd→`$a1`, 4th→`$a2`. The source order `dst=...; c=*arg0; count=1;` (then temp in the loop) assigned temp 4th → `$a2`. The target's original source must have had the order `dst, temp, count, c`.
 
@@ -46,4 +46,4 @@ This gives `dst->$v0, temp->$v1, count->$a1, c->$a2` — exactly the target — 
 **Key takeaways**:
 1. When only `c`/`temp` (a char var vs a loop-guard bool) are swapped between `$v1`/`$a2`, check the **statement order** of the top-of-function assignments, not just declarations. The first-assigned order maps to `v0, v1, a1, a2`.
 2. A **dead initialization** (value overwritten before first read, eliminated by DCE) still influences the register allocator's ordering. This is a reliable lever for v/a-register swaps.
-3. The `slti` in the `beqzl`/`bnel` delay slots is a natural IDO scheduling artifact of `temp = count < 0x28; count++; *dst++ = c; arg0++; if (!temp) break;` after an `if (... && ...)` THEN block — the `temp` must stay a named `s32` (u8 adds a truncating `andi`, and rewriting as `if (count++ < 0x28) { ... continue; }` produces a totally different, much worse instruction stream).
+3. The `slti` in the `beqzl`/`bnel` delay slots is a natural IDO scheduling artifact of `temp = count < 0x28; count++; *dst++ = c; arg0++; if (!temp) break;` after an `if (... && ...)` THEN block — the `temp` must stay a named `s32`.

@@ -56,7 +56,3 @@ Measured **2470 -> 100** on that function (3 redundant `lui` + their dependent l
 measured: loading `temp` once and testing `temp` (not re-reading the field) removes a duplicated `lw`;
 and passing `*(s32 *)&D_800E6AD8.unk410` (the field is `f32`, the prototype takes `s32`) replaces
 `lwc1` + `trunc.w.s` + `mfc1` with the target's single `lw`.
-
-**Do not re-tread:** hoisting the array element into a `Unk8009E4C8 *entry` local measured **1100**, and
-reading the two subscripts through the local pointer (`ptr->unk426`) instead of the global measured
-**1510** — both reintroduce the rematerialisation.

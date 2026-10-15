@@ -34,9 +34,7 @@ The verified declaration order is `flatDistI`, `dx`, `dz`, `dy`, `distScale`,
 the signed-halfword Y copy, and the word-sized pulse local.
 
 This changes IDO's allocation through variable reuse, without introducing
-extra operations. Declaration permutations, repeated coordinate assignments,
-casts, and independent one-use delta locals did not resolve the original
-register cycle.
+extra operations.
 
 The final source retains its primitive-color comma expressions. Its final
 rotation/scale updates retain an empty camera-Z test on their shared source

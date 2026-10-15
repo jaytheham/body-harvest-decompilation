@@ -24,9 +24,7 @@ constant. A signed array destination changed the generated constant loads.
 Writing word zero first also improved scheduling compared with word one first.
 
 The separate `renderWords` pointer also enlarged this function's stack frame
-from the target's `0x30` bytes to `0x38`, without introducing a saved `s0`.
-Removing the two integer radius temporaries did not fix that frame difference.
-Reusing a pointer whose position/matrix work had finished restored `0x30`.
+from the target's `0x30` bytes to `0x38`, without introducing a saved `s0`. Reusing a pointer whose position/matrix work had finished restored `0x30`.
 
 The final draft expresses those two views with `MapMarkerScratch`, defined in
 `include/structs.us.h`:

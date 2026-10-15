@@ -162,8 +162,7 @@ five-variant placement sweep:
 | byte stores hoisted above the GBI block, lookup at top | 3115 |
 | byte stores hoisted above the GBI block, lookup after it | 1553 |
 
-So the order is a real three-way choice between the lookup, the byte stores and the GBI block. Sweep it
-(5 variants, 74 s total) instead of reasoning about the scheduler: when a near-copy transplant is one
+So the order is a real three-way choice between the lookup, the byte stores and the GBI block. when a near-copy transplant is one
 instruction short with a whole-body REPLACE, read where the *target* completes each dependency chain and
 move the source statement to that point.
 

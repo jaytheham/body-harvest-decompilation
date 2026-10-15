@@ -52,19 +52,6 @@ swc1    $f8, 0x20(a1)
 
 The `& 0xFFFF` must be explicit to generate the `andi` instruction, and the `(u32)` cast must be explicit for IDO to emit the `bgez`/correction sequence.
 
-### Residual register mismatch from named `start_frame` + `base`
-
-When computing animation frame address as `base = arg0 + ((startFrame + currentFrame) & 0xFFFF) * 0xE`, using TWO named variables (`u16 start_frame` for the lhu result and `s32 base` for the offset) produces correct instruction types but shifts the register chain:
-
-- `start_frame` (u16) → v1: gives correct `lhu v1` ✓
-- HOWEVER: prevents the in-place `addu v1, v1, v0` pattern (named v1 can't be overwritten)
-- `base` (s32) → a3: pushed to argument register (a3 = $7) instead of t2 ($10)
-- Subsequent intermediates shift by one register: t2 instead of t0, t3 instead of t1, etc.
-
-The target's register-exact pattern (`addu v1, v1, v0` in-place → t0/t1/t2 chain) cannot be achieved with named `start_frame` due to IDO refusing to overwrite named variable registers mid-liveness.
-
-Score achievable: ~225 (correct instruction types, wrong register names).
-
 ### AnimFrameData physical vs C sizeof — array indexing stride mismatch
 
 `AnimFrameData` has `/* size = 0x0E */` (14 bytes) in the comment, but the actual C `sizeof(AnimFrameData)` is **16** in IDO C89 due to trailing padding (the last `u16 unkC` member means IDO rounds up to align the struct to its 4-byte requirement). Consequently:
@@ -104,4 +91,3 @@ arg2->unk20 = (f32)(u32)sp24.unkC;  // reads sp24.unkC from STACK → lhu $t8, 0
 This generates `lhu $t8, 0x30($sp)` (stack-direct read), then `mtc1 t8; bgez t8; cvt.s.w` WITHOUT any `andi`.
 
 However, writing `(f32)(u32)arg2->unk30` instead would reload through the arg2 pointer (`lhu $t8, 0x30($s0)`) and if reading the value AFTER masking through AnimFrameData14, may generate an `andi` before `mtc1`. Use `sp24.unkC` directly for the conversion.
-

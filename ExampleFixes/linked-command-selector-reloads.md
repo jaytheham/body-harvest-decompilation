@@ -15,7 +15,7 @@ while (1) {
 }
 ```
 
-Keep inner selectors as ordinary `arg1[0]` reads. Reusing the outer local for inner selectors changes allocation. Changing while to do/while or goto, changing the local to native int or an unsigned word, and changing the return type alone did not recover the missing reloads. The retained native-int return type describes the comparison results; it is not the fix for selector caching.
+Keep inner selectors as ordinary `arg1[0]` reads. Reusing the outer local for inner selectors changes allocation. The retained native-int return type describes the comparison results; it is not the fix for selector caching.
 
 The volatile access is a code-generation constraint on this one read, not a claim that the command table is hardware memory. No whole-table or pointer declaration needs volatile qualification. The missing-value return on unrecognized opcodes preserves the target's unspecified return behavior.
 

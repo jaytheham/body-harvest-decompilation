@@ -48,6 +48,4 @@ Generates: frame 0x20 (with s0 saved for arg2), BOTH `move t1, zero` AND `move v
 - With the doubled counters, all 16 caller-saved registers are in use simultaneously, forcing `arg2` (the source pointer that must survive to the final function call) into the callee-save register `s0`
 - This matches the target's characteristic `sw s0; or s0, a2, zero` prologue pattern
 
-**Note:** Even with the dual-variable pattern, exact register naming may still differ (e.g., `t2` vs `v1` for nextRow, `t4` vs `ra` for the global base pointer). Getting an exact match may require the permuter for the register assignment details.
-
 **Example function:** `func_800B4050_C3000` in `src.us/overlay_gameplay/outside/BF9C0.c` (score reduced from 3337 to 2775 with this pattern).

@@ -27,5 +27,3 @@ other instructions. Isolate the relevant statements rather than flattening the
 whole function. The enclosing function remains unmatched.
 
 ## Follow-up checkpoint
-
-The retained C0678 body reaches score 3410 with the five lightning-only constants expressed as literals, an identity XOR on the narrowed delta, masked byte guards in the two restart branches, and a separate saved-delta read before subtracting it from seven. Native int local permutations, volatile/signed byte counter declarations, packed high-halfword union views, and callback return-type changes did not close the residual. The callback dispatcher invokes registered callbacks with no arguments and ignores a return value; preserve the void declaration. Restore the five placeholders while using GLOBAL_ASM; delete them when enabling this C body. No new files are needed for the literal constants themselves.

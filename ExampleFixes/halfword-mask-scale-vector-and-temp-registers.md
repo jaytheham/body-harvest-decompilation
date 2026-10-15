@@ -18,14 +18,11 @@ This changes the register allocation without emitting an AND instruction:
 130 -> 0. The constant becomes t6, the matrix advance becomes t7, and the
 last display-list commands use the target register sequence. Masking only
 the other copy also matches; masking both copies scores 320. Unsigned
-0xFFFFU on one copy matches, while 0xFFFFFFFFU is neutral and 0x1FFU is
-worse. Thus an arbitrary identity expression is not an equivalent lever.
+0xFFFFU on one copy matches. Thus an arbitrary identity expression is not an equivalent lever.
 
 A vector struct instead of the array propagates all three constants and
 emits three LI instructions (scores 915-923). A named scalar assigned to
-all three elements also emits three LI instructions. Moving the matrix
-allocation among the scale writes and changing local scopes did not close
-this residual.
+all three elements also emits three LI instructions.
 
 Validation: tools/make.ps1 reported build/bh.us.z64: OK, and tools/diff.ps1
 reported CURRENT (0) against func_80097B74_A6B24. Other unfinished functions

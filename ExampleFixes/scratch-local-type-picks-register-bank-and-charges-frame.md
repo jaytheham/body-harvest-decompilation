@@ -48,34 +48,6 @@ the register bank followed the *declared type*, not the statement order.
 the wrong bank, try the scratch locals one type wider before shuffling statements: a narrower type
 lets IDO keep the value as an anonymous temp.
 
-## What is left: the frame charges 8 bytes per named local
-
-Each of the two effects above also reserves 8 bytes of stack (unwritten - the diffs are only the two
-`addiu sp,sp` immediates): `0x28` with neither, `0x30` with either one, `0x38` with both. The
-target's `0x30` therefore has the *bank* of both but the *home* of only one. Moving them out of the
-declaration list, inlining u/v (2102, 56 instructions) and the compound `+=` / `|=` forms (2102) all
-measured worse, so the remaining lever is a shape that gets the bank without a home - not another
-declaration permutation.
-
-## The frame and the du/dv bank are coupled (measured)
-
-Inlining the two azimuth locals instead -
-`alien->unkE = func_80003824_4424((f32)(D_80052B34->unk0 - alien->unk0), (f32)(D_80052B34->unk4 - alien->unk4));` -
-buys exactly the 8 bytes the target wants (frame **0x30, correct**) but then loses two other rows:
-the alien spill home moves `0x18 -> 0x1C` and the difference band after the call shifts one register
-(target computes `du`/`dv` into `$a1`/`$a2` from `lh $t0`/`lh $t9`; the inlined form uses `$t9`/`$t2`
-from `lh $t1`/`lh $t0`). Score 62. So the named azimuth locals are *required* for the bank and are
-*charged* for the frame - the two are the same lever seen from both ends, and the correct body has
-to pay for the bank some other way.
-
-**Diagnostic:** when the only remaining rows are the frame's two `addiu sp,sp` immediates, count the
-named locals against the target's unused reserved slots; an unwritten 8-byte block per local is the
-signature.
-
-Related: `inplace-compound-update-removes-named-local-temp-bank.md` (removing a local moves the bank
-the other way), `struct-field-u8-vs-s16-same-offset-register-shift.md` (load width vs struct type
-when the struct cannot be retyped).
-
 ## Resolution: reuse the scratch locals and pad the pointer spill
 
 Reusing the same s32 u/v locals for both initial coordinates and later azimuth differences reduces the frame from 0x38 to 0x30 while preserving all instruction ordering and registers. The remaining pointer spill is at 0x1C rather than 0x18. An unused s32 pad declared immediately after the alien pointer moves that spill to 0x18 without growing the rounded frame. Keeping the u8 index in its own block yields a complete match, verified by tools/make.ps1 reporting build/bh.us.z64: OK and diff score 0.

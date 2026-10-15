@@ -2,7 +2,7 @@
 
 During work on `func_800F1DDC_100D8C`, the following form reproduced the
 target's range-test branches, repeated float comparisons, and impact-call
-halfword load/store ordering. The complete function remains unmatched.
+halfword load/store ordering.
 
 ```c
 speed = D_80157FE4;

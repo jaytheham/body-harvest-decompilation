@@ -2,7 +2,7 @@
 
 `func_80008CA8_98A8` matched with a full ROM checksum of OK using IDO 5.3 `-O2 -mips2 -32`.
 
-The last mismatch was a missing `move` immediately after signed remainder by eight. Treating each 256-byte animation frame as one array element emitted the remainder followed directly by a shift. Casting the index between ordinary 32-bit integer types or assigning it to a temporary did not preserve the copy.
+The last mismatch was a missing `move` immediately after signed remainder by eight. Treating each 256-byte animation frame as one array element emitted the remainder followed directly by a shift.
 
 Represent the IA8 texture as 16-byte rows and explicitly select the first row of each 16-row frame:
 

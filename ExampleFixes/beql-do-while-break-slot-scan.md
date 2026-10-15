@@ -62,12 +62,6 @@ Unk8006AA84Node *func_80012128_12D28(void) {
 }
 ```
 
-**What was tried and failed:**
-- `while (i != 0x10) { if (*slot == -1) { i++; j+=4; slot++; } else { *slot=-1; break; } }` → generates `bne` (not `beql`)
-- `if-else-goto loop:` structures with either condition → generates `bne` or wrong block layout
-- `for (i=0; i!=0x10; i++, slot++) { if (*slot != -1) { *slot=-1; break; } }` → same `bne` issue + s16 sign extension
-- `s16 i` for loop counter → generates sll/sra sign extension pairs
-
 **Root cause of `beql`:** The `do-while` with `break` causes IDO to generate `beql` (branch equal likely) for the inner sentinel check. The "likely" branch points to the continue path, with `i++` moved from after the if-block into the beql delay slot. The original `i++` becomes dead code at its original position. The `break` path exits the do-while directly with `*slot = -1` in the b-instruction delay slot.
 
 **Why `j` (byte offset) is needed instead of `D_8006AA88[i]`:** Using `D_8006AA88[i]` with s32 `i` generates `sll i, 2; addu` (2 instructions) to compute the array index. The target uses `addu a0, j, D_8006AA88_addr` (1 instruction) because `j` is pre-accumulated as a byte offset throughout the loop. Without `j`, there is no way to avoid the extra `sll`.

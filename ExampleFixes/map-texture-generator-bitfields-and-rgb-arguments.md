@@ -1,9 +1,6 @@
 # Map texture generator: terrain fields and RGB argument expressions
 
-`func_80095F08_A4EB8` remains unmatched at **1817**. These are verified
-partial improvements; the marker of 14819 on the original wrapped draft
-was not reproducible because its return type, row member, and constant
-array references did not compile.
+For `func_80095F08_A4EB8`:
 
 The target reads terrain type from bits 6-9 and requires bit 10 for both
 the 4-11 range and type 13. Use the existing `TerrainObjectCell` view:
@@ -42,20 +39,6 @@ restores the separate subtractions and the hoisted 256 in the target.
 Use a raw post-decrement loop condition (`while (i--)`) to avoid the
 extra SLTU produced by `while (i-- != 0)`. An explicit region if/else
 for levels 32 and 6 restores the unconditional branch after level 32.
-
-Remaining differences include the constant loop-entry guard, one FCSR
-restore position, floating-point register roles, and stack homes.
-
-Further constant experiments: replacing the first five array reads with
-literals assigns all five target floating-point register roles and scores
-1802, but retains duplicate constant data while the manual tables remain.
-Scalar const globals also duplicate constants and score 1842; they do not
-combine the data layout of arrays with literal register allocation. Restore
-the array definitions and declarations for the 1817 draft. Moving the
-300.0 initialization before 220000.0 is neutral; moving the bias last
-worsens allocation. A one-element array used only for the entry guard
-restores the target branch but adds a stack store, so it is experimental.
-
 
 ## Retain the constant loop-entry branch
 

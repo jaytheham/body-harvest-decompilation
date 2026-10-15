@@ -12,7 +12,7 @@ offset = stride + 0x53;
 func_800015B4_21B4(stride + 0x4F, 0x76);
 ```
 
-With a named pointer, IDO used a temporary register for the initial payload offset and another for the array base. The extra temporary shifted every subsequent constant register by one. Naming the initial offset alone did not help because it was consumed only by pointer initialization.
+With a named pointer, IDO used a temporary register for the initial payload offset and another for the array base. The extra temporary shifted every subsequent constant register by one.
 
 Using the offset as the induction variable let IDO strength-reduce the array accesses to the same pointer walk while placing the initial offset in `a1`, the stride in `a2`, and the array base in `t6`. This also restored the target's instruction scheduling and constant registers.
 

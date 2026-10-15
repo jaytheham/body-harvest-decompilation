@@ -10,4 +10,4 @@ magnitude = sqrtf(y * y + horizontal);
 horizontal = sqrtf(horizontal);
 ```
 
-This preserves the shared squared sum spill and call order, while allocating horizontal to f20 and magnitude to f22. Merely swapping declarations or copying the incoming magnitude did not fix the registers. Three reused s16 trig locals, declared in reverse call order, reproduce the contiguous halfword spill slots. Full ROM verification passed.
+This preserves the shared squared sum spill and call order, while allocating horizontal to f20 and magnitude to f22. Three reused s16 trig locals, declared in reverse call order, reproduce the contiguous halfword spill slots. Full ROM verification passed.

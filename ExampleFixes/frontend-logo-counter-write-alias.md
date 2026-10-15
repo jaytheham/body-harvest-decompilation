@@ -18,4 +18,4 @@ Declare the alias in `include/variables.us.h` and resolve it in `undefined_syms.
 D_80094860_64D10_W = D_80094860_64D10;
 ```
 
-The alias refers to the existing object and adds no data. Pointer casts, volatile access, and arithmetic identities did not prevent this address sharing. Keep the earlier logo-counter reads on the original symbol; changing all accesses perturbs the otherwise matching rendering code.
+The alias refers to the existing object and adds no data. Keep the earlier logo-counter reads on the original symbol; changing all accesses perturbs the otherwise matching rendering code.

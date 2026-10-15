@@ -4,9 +4,9 @@
 
 Use a named byte offset inside the loop, then index the save byte array. Inlining the whole index into every byte access allowed IDO to combine the slot base and stride too early, losing an address addition and changing load scheduling.
 
-Initialize the loop counter and accumulator before calculating the slot stride. Moving counter initialization from the `for` header to before the stride calculation placed the counter in `v0`, accumulator in `v1`, and stride in `a1`. Declaration reordering alone did not change their allocation.
+Initialize the loop counter and accumulator before calculating the slot stride. Moving counter initialization from the `for` header to before the stride calculation placed the counter in `v0`, accumulator in `v1`, and stride in `a1`.
 
-The last difference was the operand order of `addu t0,a1,t9`. Reversing the operands in the single C expression did not help. Splitting the calculation did:
+The last difference was the operand order of `addu t0,a1,t9`. Splitting the calculation did:
 
 ```c
 idx = 0;

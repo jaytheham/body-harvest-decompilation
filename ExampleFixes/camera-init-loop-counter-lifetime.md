@@ -55,10 +55,7 @@ selection and comparison. This retains the target pointer load after the
 sine call and before interpolation, and its saved-register reuse afterward.
 
 Both parts matter here: changing the destination back to a scalar causes
-IDO to reload it after interpolation even with the explicit snapshot.
-The array alone also reloads it. The working pointer can share the existing
+IDO to reload it after interpolation even with the explicit snapshot. The array alone also reloads it. The working pointer can share the existing
 scratch union because its other members are dead during this block.
-The full function remains unmatched; this observation only establishes
-the pointer-load and reuse sequence in the transition block.
 
-Moving the flag store into the five-camera loop puts the first store at the target location, but leaves another store in the unrolled remainder. Guarding it with `cameraIndex == 0` disrupts unrolling. Explicitly initializing camera zero and looping over cameras one through four also changes the shape: IDO propagates the remaining indices into constant stack offsets instead of retaining the target residual-index arithmetic. Preserve the natural five-iteration loop while resolving the flag lifetime. These experiments did not produce a full match.
+Moving the flag store into the five-camera loop puts the first store at the target location, but leaves another store in the unrolled remainder. Guarding it with `cameraIndex == 0` disrupts unrolling. Explicitly initializing camera zero and looping over cameras one through four also changes the shape: IDO propagates the remaining indices into constant stack offsets instead of retaining the target residual-index arithmetic. Preserve the natural five-iteration loop while resolving the flag lifetime.

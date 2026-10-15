@@ -8,7 +8,6 @@ If `x` is an `f32`, `x = 1.0f` can also be written as `x = 1` or `x = 1.0`, usua
 
 Are treated as "really const", while `extern const`s aren't. Thus, their loads can be e.g. hoisted to the start of a function and put in saved registers. This mostly affects float literals, and is a major reason to migrate rodata early.
 
-
 ### Reused `%hi`
 
 Two variables which are both referred to via `%hi`/`%lo` and which have the same `%hi` can share the register used to keep the `lui`. In general this is tricky for the compiler to know, because it runs before the linker phase -- however, when both variables are `non-extern` and within the same 16-byte block, the compiler is able to share `%hi`s.

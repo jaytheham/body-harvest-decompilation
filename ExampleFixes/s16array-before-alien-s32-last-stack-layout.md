@@ -1,5 +1,3 @@
-# s16[2] Array First + AlienInstance* Second: Correct Stack Layout for sp34/sp3C Pattern
-
 ## Problem
 
 When a function has a conditional `jal` (inside an `else` branch) whose return value must persist on the stack across later function calls (`sp34`), plus an address-taken `s16[2]` array for passing two s16 values to a function:
@@ -100,7 +98,6 @@ void func_802D7FC0_190AD0(u8 arg0) {
     }
 }
 ```
-
 
 ### Siberia falling alien helper
 

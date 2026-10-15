@@ -11,4 +11,4 @@ gSPVertex(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB34), 10, 0);
 D_8005BB34 += 6;
 ```
 
-The final ROM comparison passed. Moving all constant color stores ahead of the other vertex stores made the result worse; the original per-vertex source order already let IDO group those stores correctly. Before adding artificial register pressure for a shared graphics constant, remove redundant aliases of global buffer pointers.
+The final ROM comparison passed.  Before adding artificial register pressure for a shared graphics constant, remove redundant aliases of global buffer pointers.

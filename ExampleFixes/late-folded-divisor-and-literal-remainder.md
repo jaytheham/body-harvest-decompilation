@@ -24,7 +24,6 @@ alpha2 = (tileGroup + 0x200) % 0x1FF;
 
 This reproduces the division, value copy, checks, first remainder read, literal load, addition, second division, and second remainder read in target order. Register allocation and other sections still differ. An overall score alone does not establish this result: inspect both division sequences after a stock build.
 
-
 ## Loop shape also affects global address allocation
 
 A later partial draft improved from 6286 to 5761 by spelling the loop as a guarded `do` and retaining an empty coordinate-pointer test at the bottom:
@@ -43,6 +42,6 @@ if (loop--) {
 }
 ```
 
-The guard alone was assembly-neutral. In combination with the empty pointer test, IDO retained the coordinate-table address in a saved register and changed the phase load inside the selected branch from a cached address plus `lh 0(base)` to the target's direct `lui` / `lh offset(base)`. The test emitted no branch or extra memory access. Moving the divisor initialization inside the guard made the result worse.
+The guard alone was assembly-neutral. In combination with the empty pointer test, IDO retained the coordinate-table address in a saved register and changed the phase load inside the selected branch from a cached address plus `lh 0(base)` to the target's direct `lui` / `lh offset(base)`. The test emitted no branch or extra memory access.
 
 This is a local code-generation observation, not a general rule. The function still lacks a target instruction and differs elsewhere, including the phase update at the end. Verify instruction sequences as well as the overall diff score.

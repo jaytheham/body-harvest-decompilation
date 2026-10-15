@@ -25,18 +25,3 @@ do {
     ptr--;
 } while (ptr != end);
 ```
-
-**Remaining issue (score 10, not 0):** The `ptr++; ptr--` trick suppresses IDO's "critical-path scheduling" heuristic that places the loop-iterator's `lui` before the end-pointer's `lui`. Without the trick, the loop matches structurally but strip-mines; with the trick, no strip-mining but the two `lui` instructions in the prologue are in reversed order:
-
-```
-TARGET:  lui v1, 0x8004; lui v0, 0x8004; addiu v0, 0x7f60; addiu v1, 0x7f40
-CURRENT: lui v0, 0x8004; lui v1, 0x8004; addiu v0, 0x7f60; addiu v1, 0x7f40
-```
-
-Everything else (addiu order, bne operands, stores) matches perfectly.
-
-**Variable ordering for correct v0/v1 assignment:**
-- Declare `end` FIRST (→ v0), `ptr` SECOND (→ v1)
-- The `end` FIRST declaration gives the correct inner-loop register assignment (v1=ptr advances, v0=end constant, `bne v1, v0`)
-
-**Observed in:** `func_800048E8_54E8_54E8` (core/53F0.c), which has structurally identical neighbours `func_800048B8_54B8` (8-byte struct, also NON_MATCHING) and `func_80004918_5518` (8-byte struct, also NON_MATCHING).

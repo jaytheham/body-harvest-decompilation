@@ -101,4 +101,4 @@ Matched `func_800C22EC_D129C` in `src.us/overlay_gameplay/outside/CFE30.c` (scor
 
 In `func_80089834_1718F4` (`src.us/overlay_gameplay/inside/16AF30.c`), a linked-record traversal used a typed pointer to the record's byte data. Declaring the pointer outside the branch was not enough: assigning it only in the `else` left IDO to load the tested byte directly from the record. Assign the sub-pointer at the top of the loop, before the threshold `if`, then use it in the `else`. This lets IDO place `addiu s0,s1,8` in the `beqzl` delay slot and perform the byte load from the sub-pointer afterward. Keep the traversal as a `for` loop when its initializer establishes the first link index and the branches update the next index themselves.
 
-For this function, using compound assignments for the signed-byte velocity updates (`velocity += random % 20 - 10`) also produced the target `lb`/`mfhi` register ordering; the algebraically equivalent explicit assignment did not. The complete function matched with `build/bh.us.z64: OK`.
+The complete function matched with `build/bh.us.z64: OK`.

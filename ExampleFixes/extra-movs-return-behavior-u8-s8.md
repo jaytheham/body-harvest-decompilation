@@ -25,6 +25,4 @@ convert the early return into an assignment and move the second return out to th
 
 Measured on `func_80083A58_53F08` (`overlay_gameplay/frontend/52690.c`, 47 instr): early-return
 form scores 380 with `ins_diff` delta +1 (the only non-alias rows are the tail), if/else form
-scores 0 in one edit. Twenty-two other variants (cast, `s16`/`s32` locals, pad local, `for(;;)`,
-`while`, reordered `j = orig`, `& 0xFF` on the copy) all stayed at 380 or worse - the guard's
-*statement form*, not the operand spelling, is the lever.
+scores 0 in one edit.

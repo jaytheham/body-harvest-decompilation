@@ -1,6 +1,5 @@
 ### Struct stride for stable index math
 
-
 If a global is really an array of fixed-size records (for example, stride `0x50`) and the asm does:
 
 - `sll idx, v0, 2`

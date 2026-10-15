@@ -20,8 +20,6 @@ three = 3;
 | `func_8007A6DC_16279C` | 1710 | **145** |
 | `func_8007A634_1626F4` | 1735 | **290** |
 
-Both then compile to the target's exact instruction count (42 = 42, delta 0); the residue is a one-slot temp-bank rotation. Variants measured neutral or worse on `func_8007A6DC_16279C` (base 145): `three = 3U` 145, `u32 three = 3;` 145, `(u32)currentLevel * three` 145; `u16 three` **1710** (folds again), making the *index* also use `three` 1375, a named `s32 base` for the index 940, splitting the `&&` into nested `if`s 1710, moving the `three = 3;` assignment inside the `if` 1710, a dummy extra use of `three` 1710. Related but distinct: `s32-index-shift-chain-vs-multu.md` (a named-variable *index* choosing shift-chain vs `multu` for array strides); this note is about the *multiplier constant*'s signedness deciding whether the multiply is CSE-folded away at all.
-
 ## Decompiled `>> 2` + negative fixup is IDO's signed `/4` idiom, spelled inside-out
 
 Symptom: a function scores in the high hundreds with `ins_diff` reporting a **small non-zero delta** (`+3` on 192 instructions) and the first real INSERT/DELETE sitting in a short division block. The differ table shows rows like:
@@ -55,7 +53,7 @@ but that expansion **is** what IDO emits for `var_s2 / 4`; it is not a shape the
 var_s0 = var_s2 / 4;          /* -> bgez / sra(delay) / addiu at,src,3 / sra */
 ```
 
-Measured on `func_8009EE30_ADDE0` (`src.us/overlay_gameplay/outside/AAA70.c`, 192 instr): **823 -> 13 in one edit**. Closing the 3-instruction count deficit also realigns the whole TU tail, so the score falls far more than the instruction count suggests. How to spot it: `grep -nE ">> [0-9]+;" <file>.c` next to an `if (x < 0)` whose body shifts `(x + k)` by the same amount, with `k == (1 << shift) - 1`; the target's own `.s` confirms it (the positive-case `sra` appears in the branch's **delay slot**). Related forms seen in this repo (same class, check the target before rewriting): `/ 2` -> `sra` + `addiu 1`; `/ 8` -> `addiu 7`. Also applies to unsigned cases (`srl`), where the fixup block should be **absent** - if the target has no fixup, the operand is unsigned. Do not re-tread the residual: once the division was fixed here the residual was only 2 rows (a single `f32` local home, ours `0x80` vs the target's `0x78`); declaration permutations measured worse - swapping the two `f32` declarations **18**, `s16` first **18**, a phantom pad first **36**, last **44**, mid **44**, floats moved last **26** (baseline 13).
+Measured on `func_8009EE30_ADDE0` (`src.us/overlay_gameplay/outside/AAA70.c`, 192 instr): **823 -> 13 in one edit**. Closing the 3-instruction count deficit also realigns the whole TU tail, so the score falls far more than the instruction count suggests. How to spot it: `grep -nE ">> [0-9]+;" <file>.c` next to an `if (x < 0)` whose body shifts `(x + k)` by the same amount, with `k == (1 << shift) - 1`; the target's own `.s` confirms it (the positive-case `sra` appears in the branch's **delay slot**). Related forms seen in this repo (same class, check the target before rewriting): `/ 2` -> `sra` + `addiu 1`; `/ 8` -> `addiu 7`. Also applies to unsigned cases (`srl`), where the fixup block should be **absent** - if the target has no fixup, the operand is unsigned.
 
 ## Union member signedness controls CSE: store/read through the other member to kill a reload
 

@@ -29,7 +29,7 @@ At the outer loop tail, capturing the old count into the existing inner-loop ind
 
 ### Area damage: hoisted wide constant and indexed entity pass
 
-`func_80124170_133120` matches with the building pointer setup, counter initialization, distance test, and `arg3 >= limit` comparison on one physical line. The literal limit is `0x10001`. Folding only the initializations did not help: the hoisted constant's source location comes from its use in the comparison. Equalizing that use with the pointer setup moves `ori s5,s5,1` ahead of the pointer's `addiu` and the counter's `li`, closing the final score from 60 to 0. The remainder of the loop can retain normal formatting.
+`func_80124170_133120` matches with the building pointer setup, counter initialization, distance test, and `arg3 >= limit` comparison on one physical line. The literal limit is `0x10001`. Equalizing that use with the pointer setup moves `ori s5,s5,1` ahead of the pointer's `addiu` and the counter's `li`, closing the final score from 60 to 0. The remainder of the loop can retain normal formatting.
 
 Index the active vehicle list with the post-decrement counter instead of declaring and manually decrementing a list pointer. IDO strength-reduces `D_80158E80[count]` into the target pointer walk, including its stack spill at 0x6C and count-first tail updates. The squared-radius spill then occupies 0x70. A shared pointer union for vehicles, aliens, and buildings and shared arithmetic scratch avoid reserving duplicate private slots across sibling scopes. Declaration order places the shared distance, vehicle type pointer, and hit-result address at 0xB4, 0x9C, and 0x7C. The remaining unused word preserves the target's 0xB8 frame.
 

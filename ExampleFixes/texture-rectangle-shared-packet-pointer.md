@@ -14,12 +14,6 @@ All stack references then match, with the frame still `0x158`: score zero
 and `build/bh.us.z64: OK`. Separate lines for the pointer assignments and
 word stores also match; no source-line packing or unused padding is needed.
 
-Adding a word of padding to the standard macro version corrected the lower
-homes but shifted the higher homes and enlarged the frame. Reusing the pointer
-for all three rectangle packets also failed to match. Check the complete
-frame and diff rather than assuming each removed declaration has a uniform
-effect on stack offsets.
-
 For this tiled loop, an early rejection with
 `right <= 0.0f || bottom <= 0.0f || 319.0f < left || 319.0f < top`
 and `continue` recovered the floating-point register allocation. Assign
