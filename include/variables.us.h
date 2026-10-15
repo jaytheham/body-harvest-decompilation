@@ -204,7 +204,7 @@ extern s32 D_80031410;
 extern s32 D_80031414;
 extern f32 D_80031418;
 extern f32 D_8003141C;
-extern s32 D_80031420; // "game state" (AI - really the saved options word: bits 0-1 blood setting, bit 2 aim option, bits 3-4 music volume, bits 5-6 sound effect volume; see GameStateFlags; read from the code)
+extern s32 D_80031420; // AI - the saved options word: bits 0-1 blood setting, bit 2 aim option, bits 3-4 music volume, bits 5-6 sound effect volume; see GameStateFlags (read)
 extern s32 D_80031420_32020;
 extern s32 D_80031424[];
 extern s32 D_80031450_32050;
@@ -932,7 +932,7 @@ extern s8 D_8004D342; // AI - Dialogue condition counter (initialized to 0)
 extern MissionGameCondition D_8004D348[]; // AI - Game condition entries (9 bytes each, max 255)
 extern u8 D_8004D350[]; // AI - Overlaps D_8004D348, game condition data
 extern s32 D_8004DC40; // AI - Mission state (-1 = uninitialized)
-extern BitFlags64 D_8004DC48; // "keys" (AI - missionFlags: bit n is set once the mission it names is done (measured))
+extern BitFlags64 D_8004DC48; // AI - missionFlags: bit n is set once the mission it names is done (measured)
 extern Flags2x32 D_8004DC50;
 extern u32 D_8004DC54; // same address as D_8004DC50.unk4
 extern s16 D_8004DC58; // counter used for some events like Greece suburbs fire and plane training
@@ -2535,7 +2535,7 @@ extern s16 D_80157588;
 extern s16 D_8015758A;
 extern s16 D_8015758C;
 extern s16 D_8015758E;
-extern s16 D_80157590; // outside camera status (AI - cullDisabled: non-zero makes the culls report everything visible (read in func_800B960C_C85BC); it held 3 during the Greece opening cutscene and 0 after (measured), so it is not a boolean)
+extern s16 D_80157590; // AI - cullDisabled: non-zero makes the culls report everything visible (read in func_800B960C_C85BC); it held 3 during the Greece opening cutscene and 0 after, so it is not a boolean (measured)
 #ifdef OUTSIDE_F7870_BSS
 s32 D_801575A0;
 void *D_801575A4;
@@ -2931,7 +2931,7 @@ extern s32 D_80160140;
 extern s16 D_80160144;
 extern s16 D_80160146;
 extern s16 D_80160148; // AI - cameraRotationVelocity: on-foot camera turn from C-LEFT and C-RIGHT, ramps 320 to 1024 (measured)
-extern s8 D_8016014A; // Vehicle camera rotation amount (0-7) (AI - vehicleCameraViewIndex: one C-LEFT or C-RIGHT tap is one step (measured))
+extern s8 D_8016014A; // AI - vehicleCameraViewIndex 0-7: one C-LEFT or C-RIGHT tap is one step (measured)
 extern s32 D_8016014C;
 extern s32 D_80160154;
 extern s32 D_80160158;
@@ -3001,9 +3001,9 @@ extern u8 D_8021F250[];
 extern u16 D_8021FA30[][0x10]; // Terrain objects 0x1f20 total size
 extern u8 D_80221A30[][0x40]; // Terrain object groups 0x1000 total size
 extern u32 D_80222A30[]; // terrain object model pointers
-extern s32 D_80222A70; // current water height (AI - waterLevel: 448 in Greece; a swimming player's Y stays at it (measured))
+extern s32 D_80222A70; // AI - waterLevel: 448 in Greece; a swimming player's Y stays at it (measured)
 extern s16 D_80222A72;
-extern Unk80222A78 D_80222A78[0xD0]; // trigger array (does this actually start at 70 or 74?) (AI - a kind 3 entry fires its callback once alienInstances[unk8] has ALIEN_FLAG_UNKL or ALIEN_FLAG_DESPAWNING set, i.e. the alien is dead or dying; see trigger.c; read from the code)
+extern Unk80222A78 D_80222A78[0xD0]; // AI - trigger array (does it start at 70 or 74?): a kind 3 entry fires its callback once alienInstances[unk8] has ALIEN_FLAG_UNKL or ALIEN_FLAG_DESPAWNING set, i.e. the alien is dead or dying; see trigger.c (read)
 extern s32 D_80223778;
 extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern u8 D_80224680; // missions?
