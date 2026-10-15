@@ -105,7 +105,7 @@ From here you can run the `make extract` and `make --jobs` commands.
 
 ## Building `EU` Version
 
-Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu` (`make extract VERSION=eu`, then `make --jobs VERSION=eu`). The EU build uses its own `asm.eu`, `assets.eu` and `build.eu` directories, so both versions can be extracted side by side; a matching build prints `build.eu/bh.eu.z64: OK`. The EU build also compiles the C files in `src.us/core` and `src.us/overlay_gameplay/frontend/52690.c` (with `-DVERSION_EU`), so that code is shared by both versions; `src.eu` holds only the C files that exist in the EU build alone.
+Place `baserom.eu.z64` in the root of the repository, and suffix each `make` command with `VERSION=eu` (`make extract VERSION=eu`, then `make --jobs VERSION=eu`). The EU build uses its own `asm.eu`, `assets.eu` and `build.eu` directories, so both versions can be extracted side by side; a matching build prints `build.eu/bh.eu.z64: OK`. The EU build also compiles the C files in `src.us/core` and the overlay files listed in `shared_overlay_files.txt` (with `-DVERSION_EU`), so that code is shared by both versions; `src.eu` holds only the C files that exist in the EU build alone.
 
 ## Building `NON_MATCHING` Version
 
@@ -132,7 +132,7 @@ build/           ; build folder (not checked in)
 include/
   2.0I/          ; libultra 2.0I headers
 lib/libultra.a   ; libultra 2.0I static library
-src.us/          ; C source of the US build; src.us/core and src.us/overlay_gameplay/frontend/52690.c are also compiled into the EU build
+src.us/          ; C source of the US build; src.us/core and the files of shared_overlay_files.txt are also compiled into the EU build
 src.eu/          ; C source that exists in the EU build only
 tools/
   ido5.3_recomp/ ; static recompilation of IDO 5.3 compiler

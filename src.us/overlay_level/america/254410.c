@@ -1,29 +1,35 @@
+#ifdef VERSION_EU
+/* NTSC has one name for two functions of the overlays that share this address: the one this level calls is not the one
+ * the frontend overlay defines under it. PAL has them apart, so the call gets a name of its own (pinned in undefined_syms.eu.txt). */
+#define func_8008EB20_5EFD0 func_8008EB20_5EFD0_LEVEL
+#endif
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 /* ====================== .data ====================== */
 
 void (*D_802DF350_25EA90[])(s32) = {
-	(void (*)(s32))0x802D4DD4,
-	(void (*)(s32))0x802D5148,
-	(void (*)(s32))0x802D516C,
-	(void (*)(s32))0x802D5190,
-	(void (*)(s32))0x802D52B0,
-	(void (*)(s32))0x802D51B8,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x802D5440,
-	(void (*)(s32))0x802D546C,
-	(void (*)(s32))0x802D5530,
-	(void (*)(s32))0x802D55A0,
-	(void (*)(s32))0x802DEED4,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x802D55E4,
+	(void (*)(s32))LEVEL_PTR(0x802D4DD4),
+	(void (*)(s32))LEVEL_PTR(0x802D5148),
+	(void (*)(s32))LEVEL_PTR(0x802D516C),
+	(void (*)(s32))LEVEL_PTR(0x802D5190),
+	(void (*)(s32))LEVEL_PTR(0x802D52B0),
+	(void (*)(s32))LEVEL_PTR(0x802D51B8),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))LEVEL_PTR(0x802D5440),
+	(void (*)(s32))LEVEL_PTR(0x802D546C),
+	(void (*)(s32))LEVEL_PTR(0x802D5530),
+	(void (*)(s32))LEVEL_PTR(0x802D55A0),
+	(void (*)(s32))LEVEL_PTR(0x802DEED4),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))LEVEL_PTR(0x802D55E4),
 	NULL,
 };
 
@@ -735,17 +741,17 @@ const char D_802E0D08_260448[] = "Kids failed to enter church\n";
 const char D_802E0D28_260468[] = "Error - problem attempting to swap rooms\n";
 
 const u32 jtbl_802E0D54_260494[] = {
-	0x802D4FAC, 0x802D4EA0, 0x802D4EC4, 0x802D4EEC,
-	0x802D4F14, 0x802D4F3C, 0x802D4F64, 0x802D4F8C,
-	0x802D4FAC,
+	LEVEL_PTR(0x802D4FAC), LEVEL_PTR(0x802D4EA0), LEVEL_PTR(0x802D4EC4), LEVEL_PTR(0x802D4EEC),
+	LEVEL_PTR(0x802D4F14), LEVEL_PTR(0x802D4F3C), LEVEL_PTR(0x802D4F64), LEVEL_PTR(0x802D4F8C),
+	LEVEL_PTR(0x802D4FAC),
 };
 
 const f64 D_802E0D78_2604B8[] = { 45.0 };
 
 const u32 jtbl_802E0D80_2604C0[] = {
-	0x802D5670, 0x802D56D0, 0x802D5728, 0x802D58CC,
-	0x802D5924, 0x802D5AE4, 0x802D5B60, 0x802D5B98,
-	0x802D5BF0, 0x802D5C1C, 0x802D5C74, 0x00000000,
+	LEVEL_PTR(0x802D5670), LEVEL_PTR(0x802D56D0), LEVEL_PTR(0x802D5728), LEVEL_PTR(0x802D58CC),
+	LEVEL_PTR(0x802D5924), LEVEL_PTR(0x802D5AE4), LEVEL_PTR(0x802D5B60), LEVEL_PTR(0x802D5B98),
+	LEVEL_PTR(0x802D5BF0), LEVEL_PTR(0x802D5C1C), LEVEL_PTR(0x802D5C74), 0x00000000,
 };
 
 const f64 D_802E0DB0_2604F0[] = { -166.0 };

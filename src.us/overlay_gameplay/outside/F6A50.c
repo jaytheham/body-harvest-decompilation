@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 
 s16 D_8013B8F0 = 0xE38;

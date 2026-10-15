@@ -1,31 +1,32 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 /* ====================== .data ====================== */
 
 u8 D_802E04A0_1F91B0 = 0xFF;
 
 void (*D_802E04A4_1F91B4[])(s32) = {
-	(void (*)(s32))0x802D50B0,
-	(void (*)(s32))0x802D5170,
-	(void (*)(s32))0x802D5560,
-	(void (*)(s32))0x802D5BF8,
-	(void (*)(s32))0x802D5A78,
-	(void (*)(s32))0x802D5BA0,
-	(void (*)(s32))0x802D5DDC,
-	(void (*)(s32))0x802D5DE4,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x802D60DC,
-	(void (*)(s32))0x802D6840,
-	(void (*)(s32))0x802D6DBC,
-	(void (*)(s32))0x802D7938,
-	(void (*)(s32))0x802D795C,
-	(void (*)(s32))0x802D5F98,
-	(void (*)(s32))0x802D5FBC,
-	(void (*)(s32))0x802D4F98,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x80076820,
-	(void (*)(s32))0x802D4E6C,
+	(void (*)(s32))LEVEL_PTR(0x802D50B0),
+	(void (*)(s32))LEVEL_PTR(0x802D5170),
+	(void (*)(s32))LEVEL_PTR(0x802D5560),
+	(void (*)(s32))LEVEL_PTR(0x802D5BF8),
+	(void (*)(s32))LEVEL_PTR(0x802D5A78),
+	(void (*)(s32))LEVEL_PTR(0x802D5BA0),
+	(void (*)(s32))LEVEL_PTR(0x802D5DDC),
+	(void (*)(s32))LEVEL_PTR(0x802D5DE4),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))LEVEL_PTR(0x802D60DC),
+	(void (*)(s32))LEVEL_PTR(0x802D6840),
+	(void (*)(s32))LEVEL_PTR(0x802D6DBC),
+	(void (*)(s32))LEVEL_PTR(0x802D7938),
+	(void (*)(s32))LEVEL_PTR(0x802D795C),
+	(void (*)(s32))LEVEL_PTR(0x802D5F98),
+	(void (*)(s32))LEVEL_PTR(0x802D5FBC),
+	(void (*)(s32))LEVEL_PTR(0x802D4F98),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))OVERLAY_PTR(0x80076820),
+	(void (*)(s32))LEVEL_PTR(0x802D4E6C),
 	NULL,
 };
 
@@ -227,12 +228,12 @@ Unk8014DD50 D_802E0B20_1F9830[] = {
 
 u32 D_802E0C90_1F99A0[] = { 0x00000000, 0x00000000, 0x00010023 };
 
-Unk8014DD50 *D_802E0C9C_1F99AC = (Unk8014DD50 *)0x802E0B1C;
-Unk8014DD50 *D_802E0CA0_1F99B0 = (Unk8014DD50 *)0x802E0B5C;
-Unk8014DD50 *D_802E0CA4_1F99B4 = (Unk8014DD50 *)0x802E0B9C;
-Unk8014DD50 *D_802E0CA8_1F99B8 = (Unk8014DD50 *)0x802E0BDC;
-Unk8014DD50 *D_802E0CAC_1F99BC = (Unk8014DD50 *)0x802E0C1C;
-Unk8014DD50 *D_802E0CB0_1F99C0 = (Unk8014DD50 *)0x802E0C5C;
+Unk8014DD50 *D_802E0C9C_1F99AC = (Unk8014DD50 *)LEVEL_PTR(0x802E0B1C);
+Unk8014DD50 *D_802E0CA0_1F99B0 = (Unk8014DD50 *)LEVEL_PTR(0x802E0B5C);
+Unk8014DD50 *D_802E0CA4_1F99B4 = (Unk8014DD50 *)LEVEL_PTR(0x802E0B9C);
+Unk8014DD50 *D_802E0CA8_1F99B8 = (Unk8014DD50 *)LEVEL_PTR(0x802E0BDC);
+Unk8014DD50 *D_802E0CAC_1F99BC = (Unk8014DD50 *)LEVEL_PTR(0x802E0C1C);
+Unk8014DD50 *D_802E0CB0_1F99C0 = (Unk8014DD50 *)LEVEL_PTR(0x802E0C5C);
 
 Vec3s D_802E0CB4_1F99C4 = { -35, 58, 80 };
 Vec3s D_802E0CBC_1F99CC = { 30, 58, 80 };
@@ -252,7 +253,7 @@ AlienType D_802E0CE4_1F99F4 = {
 	0x01F4,                         /* unk14 */
 	0x00,                           /* unk16 */
 	0x00,                           /* pad17 */
-	0x801481F8,                     /* unk18 */
+	OVERLAY_PTR(0x801481F8),                     /* unk18 */
 	0x00000056,                     /* unk1C */
 	0xFFE2,                         /* unk20 */
 	0x0024,                         /* unk22 */
@@ -272,8 +273,8 @@ AlienType D_802E0CE4_1F99F4 = {
 	0x0600,                         /* unk40 */
 	0x0800,                         /* unk42 */
 	NULL,                           /* unk44 */
-	(void (*)(u8))0x802DF99C,       /* unk48 */
-	(void *)0x802DF99C,             /* unk4C */
+	(void (*)(u8))LEVEL_PTR(0x802DF99C),       /* unk48 */
+	(void *)LEVEL_PTR(0x802DF99C),             /* unk4C */
 	0xFF,                           /* unk50 */
 	0x00,                           /* unk51 */
 	0x00,                           /* unk52 */
@@ -282,7 +283,7 @@ AlienType D_802E0CE4_1F99F4 = {
 	0x012C,                         /* unk58 */
 	0xFF,                           /* unk5A */
 	0x00,                           /* pad5B */
-	(void (*)(u8))0x802DFC28,       /* unk5C */
+	(void (*)(u8))LEVEL_PTR(0x802DFC28),       /* unk5C */
 	{ 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 };
 
@@ -307,16 +308,16 @@ const char D_802E0E74_1F9B84[] = "Damage\n";
 const char D_802E0E7C_1F9B8C[] = "CREATE LIGHTNING!\n";
 
 const u32 jtbl_802E0E90_1F9BA0[] = {
-	0x802D522C, 0x802D5278, 0x802D5320, 0x802D538C,
-	0x802D54C0, 0x802D54EC,
+	LEVEL_PTR(0x802D522C), LEVEL_PTR(0x802D5278), LEVEL_PTR(0x802D5320), LEVEL_PTR(0x802D538C),
+	LEVEL_PTR(0x802D54C0), LEVEL_PTR(0x802D54EC),
 };
 
 const f64 D_802E0EA8_1F9BB8[] = { 1000.0 };
 const f64 D_802E0EB0_1F9BC0[] = { 1.7 };
 
 const u32 jtbl_802E0EB8_1F9BC8[] = {
-	0x802D6374, 0x802D63F0, 0x802D6440, 0x802D6480,
-	0x802D6528, 0x802D66AC, 0x802D6794,
+	LEVEL_PTR(0x802D6374), LEVEL_PTR(0x802D63F0), LEVEL_PTR(0x802D6440), LEVEL_PTR(0x802D6480),
+	LEVEL_PTR(0x802D6528), LEVEL_PTR(0x802D66AC), LEVEL_PTR(0x802D6794),
 };
 
 const f64 D_802E0ED8_1F9BE8[] = { 0.325 };
@@ -332,10 +333,10 @@ const f64 D_802E0F10_1F9C20[] = { 0.325 };
 const f64 D_802E0F18_1F9C28[] = { 0.325 };
 
 const u32 jtbl_802E0F20_1F9C30[] = {
-	0x802D79B0, 0x802D79D8, 0x802D79FC, 0x802D7A24,
-	0x802D7A4C, 0x802D7A74, 0x802D7A9C, 0x802D7B58,
-	0x802D7B58, 0x802D7AC4, 0x802D7AEC, 0x802D7B14,
-	0x802D7B3C, 0x802D7B58,
+	LEVEL_PTR(0x802D79B0), LEVEL_PTR(0x802D79D8), LEVEL_PTR(0x802D79FC), LEVEL_PTR(0x802D7A24),
+	LEVEL_PTR(0x802D7A4C), LEVEL_PTR(0x802D7A74), LEVEL_PTR(0x802D7A9C), LEVEL_PTR(0x802D7B58),
+	LEVEL_PTR(0x802D7B58), LEVEL_PTR(0x802D7AC4), LEVEL_PTR(0x802D7AEC), LEVEL_PTR(0x802D7B14),
+	LEVEL_PTR(0x802D7B3C), LEVEL_PTR(0x802D7B58),
 };
 
 const f64 D_802E0F58_1F9C68[] = { 4000.0 };

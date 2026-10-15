@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 void func_800AE2C0_BD270(void) {
 	u8 i;

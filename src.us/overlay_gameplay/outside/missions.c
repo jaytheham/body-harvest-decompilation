@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 s32 D_8013BA90_14AA40[12] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0};
 

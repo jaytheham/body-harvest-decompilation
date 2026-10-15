@@ -93,8 +93,16 @@ SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 # GLOBAL_ASM stubs (those overlays are not shared with NTSC yet); --version eu counts them.
 SOURCE_ROOTS = ("src.us",)
 # C source roots of the PAL build, and the version macro its preprocessor defines.
-# A root that names a single .c file is a file of the NTSC tree that the PAL build compiles too.
-EU_SOURCE_ROOTS = ("src.eu", "src.us/core", "src.us/overlay_gameplay/frontend/52690.c")
+# The PAL build also compiles the files of shared_overlay_files.txt (see eu_source_roots); a root that names a single .c file is
+# a file of the NTSC tree that the PAL build compiles too.
+EU_SOURCE_ROOTS = ("src.eu", "src.us/core")
+
+
+def eu_source_roots(repo_root: str) -> tuple:
+    """The C source roots of the PAL build: EU_SOURCE_ROOTS and the shared overlay files named in shared_overlay_files.txt."""
+    listing = Path(repo_root) / "shared_overlay_files.txt"
+    shared = [ln.strip() for ln in listing.read_text(encoding="utf-8").splitlines() if ln.strip() and not ln.startswith("#")]
+    return EU_SOURCE_ROOTS + tuple("src.us/" + f for f in shared)
 EU_DEFINES = frozenset({"VERSION_EU"})
 # The conditions the PAL count evaluates. NON_MATCHING is never defined by a normal build.
 VERSION_MACROS = frozenset({"VERSION_US", "VERSION_EU", "NON_MATCHING"})
@@ -113,9 +121,10 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 # (docs/eu-port-notes.md), so the 94.14 percent is the result of one rule.
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core, which is the same C as on the US page "
-    "(src.us/core), the second half of the frontend overlay (src.us/overlay_gameplay/frontend/52690.c, also shared), and "
-    "the stubs under src.eu for the rest of the three gameplay overlays, the five level overlays and the one "
-    "libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, so it cannot be counted "
+    "(src.us/core), the files of the overlays that are also shared (the second half of the frontend overlay and the "
+    "five level overlays, listed in shared_overlay_files.txt), and the stubs under src.eu for the rest of the three "
+    "gameplay overlays and the one libultra file there (sl.c). Not counted: the rest of libultra has no tracked EU source, "
+    "so it cannot be counted "
     "from the repository.\n"
     "The core figures are the same functions as on the US page, so the two pages must not be summed. "
     "Matching a function in a shared core file counts for both versions.\n"
@@ -544,7 +553,7 @@ def main():
     args = parse_args()
     repo_root = os.path.abspath(args.repo_root)
     eu_mode = args.version == "eu"
-    roots = EU_SOURCE_ROOTS if eu_mode else SOURCE_ROOTS
+    roots = eu_source_roots(repo_root) if eu_mode else SOURCE_ROOTS
     src_dirs = [Path(repo_root) / r for r in roots]
     verify_mode = args.verify_with_asm
 

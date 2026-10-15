@@ -137,6 +137,14 @@ def setup():
             run([CACHE / "tcc/tcc/tcc.exe", *extra, source, "-o", target])
 
 
+# Files of src.us outside core that a PAL build compiles too (shared_overlay_files.txt, which the Makefile reads as well), and the
+# directories whose GLOBAL_ASM pragmas name asm/nonmatchings/<dir>, which a PAL build reads from asm.eu/src.us/<dir>.
+SHARED_OVERLAY_FILES = tuple(
+    line.strip() for line in (ROOT / "shared_overlay_files.txt").read_text(encoding="utf-8").splitlines()
+    if line.strip() and not line.startswith("#"))
+SHARED_ASM_DIRS = ("core", *sorted({os.path.dirname(f) for f in SHARED_OVERLAY_FILES}))
+
+
 def layout(version):
     # US keeps the original directory names; every other version is suffixed so
     # extractions can coexist.  Each version also gets its own linker script,
@@ -331,8 +339,8 @@ def build(args):
                 if args.version == "eu":
                     # The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU
                     # extraction of those segments under asm.eu/src.us/core, so the EU build reads them from there.
-                    processor += ["--asm-root", "asm/nonmatchings/core=asm.eu/src.us/core",
-                                "--asm-root", "asm/nonmatchings/overlay_gameplay/frontend=asm.eu/src.us/overlay_gameplay/frontend"]
+                    for shared in SHARED_ASM_DIRS:
+                        processor += ["--asm-root", f"asm/nonmatchings/{shared}=asm.eu/src.us/{shared}"]
                 if global_asm:
                     compiled = rel_build / source
                     with compiled.open("wb") as out:

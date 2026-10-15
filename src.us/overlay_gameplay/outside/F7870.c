@@ -1,6 +1,7 @@
 #define OUTSIDE_F7870_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 const char D_80144260_153210[] = "ERROR: StripModelToBones array overflow, size %d, max %d\n"; // "ERROR: StripModelToBones array overflow, size %d, max %d\n"
 const char D_8014429C_15324C[] = "Generating shadow for (%d), %s"; // "Generating shadow for (%d), %s"

@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 #include "constData.h"
 
 const char D_80142D10_151CC0[] = "ERROR in ClipLineToShieldWalls\n"; // "ERROR in ClipLineToShieldWalls\n"
@@ -17,11 +18,11 @@ const f32 D_80142E20_151DD0[1] = {0.5759139060974121f};
 const f32 D_80142E24_151DD4[1] = {0.5759139060974121f};
 /* Jump table for func_800B5538 */
 const u32 jtbl_80142E28_151DD8[] = {
-	0x800B58D4,
-	0x800B59C0,
-	0x800B5AC8,
-	0x800B5BB4,
-	0x800B5CA0,
+	OVERLAY_PTR(0x800B58D4),
+	OVERLAY_PTR(0x800B59C0),
+	OVERLAY_PTR(0x800B5AC8),
+	OVERLAY_PTR(0x800B5BB4),
+	OVERLAY_PTR(0x800B5CA0),
 };
 /* Growth multiplier for crater radius per frame (~1.022x) */
 const f64 D_80142E40_151DF0[1] = {1.022};
@@ -31,11 +32,11 @@ const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
 /* Jump table for func_800B960C_C85BC */
 const u32 jtbl_80142E50_151E00[] = {
-	0x800B9784,
-	0x800B97D4,
-	0x800B981C,
-	0x800B9864,
-	0x800B98AC,
+	OVERLAY_PTR(0x800B9784),
+	OVERLAY_PTR(0x800B97D4),
+	OVERLAY_PTR(0x800B981C),
+	OVERLAY_PTR(0x800B9864),
+	OVERLAY_PTR(0x800B98AC),
 };
 /* Crater radius decay thresholds */
 const f64 D_80142E68_151E18[1] = {0.4};

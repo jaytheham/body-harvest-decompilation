@@ -6,6 +6,42 @@ on:
   pull_request:
 
 jobs:
+  # Every script in tests/ on every pull request and push. They need no ROM, so a fork's pull request runs them too. The loop
+  # takes whatever is in tests/*.sh, so a new test needs no workflow change, and it keeps going after a failure so one run
+  # shows every broken script. 3.10 is the Python of ubuntu-22.04 and 3.12 the newest the vendored tree-sitter has a build
+  # for (tools/third_party/python_vendor has none for 3.11), so the two ends of what tools/progress.py can run on are both tried.
+  tests:
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.12']
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # tests/progress_eu_check.sh walks the git history
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+
+      - name: Install Python dependencies the tests use
+        run: pip install pyyaml
+
+      - name: Run every test in tests/
+        run: |
+          status=0
+          for t in tests/*.sh; do
+            echo "::group::$t"
+            PY=python bash "$t" || { echo "::error::$t failed"; status=1; }
+            echo "::endgroup::"
+          done
+          exit $status
+
   build:
     runs-on: ubuntu-22.04
 

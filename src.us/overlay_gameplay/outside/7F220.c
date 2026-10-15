@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 s32 func_80070270_7F220(s32 arg0) {
 	if (arg0 != 7) {

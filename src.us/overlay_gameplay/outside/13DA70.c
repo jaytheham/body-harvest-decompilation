@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 const char D_801453C0_154370[] = "*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n";
 const char D_80145408_1543B8[] = "%X%Y\n";
@@ -55,7 +56,7 @@ const char D_80145628_1545D8[] = "total";
 
 const f32 D_80145630_1545E0[1] = {65535.0f};
 
-const u32 jtbl_80145634_1545E4[] = {0x80130420, 0x80130430, 0x80130490, 0x801306B4, 0x801304A0, 0x801305A8, 0x80130608};
+const u32 jtbl_80145634_1545E4[] = {OVERLAY_PTR(0x80130420), OVERLAY_PTR(0x80130430), OVERLAY_PTR(0x80130490), OVERLAY_PTR(0x801306B4), OVERLAY_PTR(0x801304A0), OVERLAY_PTR(0x801305A8), OVERLAY_PTR(0x80130608)};
 
 u32 D_80140BA0_14FB50[] = {
 	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
