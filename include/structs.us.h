@@ -387,7 +387,10 @@ typedef struct {
 } Vec3i; /* size = 0x0C */
 
 typedef struct {
-	/* 0x00 */ s16 unk0;
+	/* 0x00 */ union {
+		s16 unk0;
+		u16 unk0Unsigned;
+	};
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 } Unk800311A0; /* size = 0x06 */
@@ -3799,9 +3802,10 @@ typedef struct {
 	 pad:      unused padding byte */
 typedef struct {
 	/* 0x00 */ u16 tileType;
-	/* 0x02 */ u8 r;
-	/* 0x03 */ u8 g;
-	/* 0x04 */ u8 b;
+	/* 0x02 */ union {
+		struct { u8 r; u8 g; u8 b; };
+		u8 color[3];
+	};
 	/* 0x05 */ u8 pad;
 } RingEntry; /* size = 0x06 */
 
