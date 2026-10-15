@@ -2556,34 +2556,27 @@ void func_802DAFD0_1F3CE0(u8 arg0, s16 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
-/* CURRENT 55: opening skeleton lookup register rotation only. */
 void func_802DB14C_1F3E5C(u8 arg0) {
-	s16 joints[2];
+	s16 firstJoint;
+	s16 secondJoint;
 	AlienInstance *alien;
 	Unk8014DD50 *joint;
 	s32 range;
 	s32 collision;
 	s32 dx;
-	s32 negativeX;
-	s32 absX;
 	s32 dz;
+	s32 distance;
+	s32 negativeX;
 	s32 negativeZ;
-	s32 absZ;
 
-	s8 child;
-	s8 child2;
 	u8 animation;
 	s32 animationState;
-	s32 pad[3];
 
 	alien = &alienInstances[arg0];
-	child = D_8014DD50[alien->unkC].unkC;
-	joint = &D_8014DD50[child];
-	child2 = joint->unkD;
-	joints[1] = child;
-	joints[0] = child2;
-	func_80086230_951E0(arg0, child2, 0x2000);
+	firstJoint = D_8014DD50[alien->unkC].unkC;
+	joint = &D_8014DD50[firstJoint];
+	secondJoint = joint->unkD;
+	func_80086230_951E0(arg0, secondJoint, 0x2000);
 	collision = func_802D8578_1F1288(arg0, 0x14, 0x180);
 	if (alien->unk20 & ALIEN_FLAG_FALL) {
 		range = vehicleTypes[D_80052B34->unk1A].unkC + 35;
@@ -2601,43 +2594,31 @@ void func_802DB14C_1F3E5C(u8 arg0) {
 			if (animationState < 3) {
 				if (joint->unkE == 0) {
 					if (animationState < 2) {
-						func_80081C84_90C34((u8)joints[1], &D_802E0710_1F9420[animation]);
+						func_80081C84_90C34((u8)firstJoint, &D_802E0710_1F9420[animation]);
 					}
 					alien->unk36++;
 				}
-				func_80081E5C_90E0C(joints[1]);
+				func_80081E5C_90E0C(firstJoint);
 			}
 		}
 	} else {
 		joint->unkA = 0;
 	}
 	dx = alien->unk0 - D_80052B34->unk0;
-	negativeX = -dx;
 	dz = alien->unk4 - D_80052B34->unk4;
-	absX = negativeX < dx ? dx : negativeX;
+	negativeX = -dx;
 	negativeZ = -dz;
-	absZ = negativeZ < dz ? dz : negativeZ;
-	if (absZ < absX) {
-		negativeZ = negativeX < dx ? dx : negativeX;
-		dx = negativeZ;
-	} else {
-		negativeX = negativeZ < dz ? dz : negativeZ;
-		dx = negativeX;
-	}
-	if (dx < 100 && !(alien->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF))) {
+	distance = MAX(MAX(dx, negativeX), MAX(dz, negativeZ));
+	if (distance < 100 && !(alien->unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF))) {
 		if (func_80084FE8_93F98(arg0, 0x800)) {
 			alien->unk4B = 0;
 			alien->unk20 |= ALIEN_FLAG_UNKG;
 		}
 	}
 	if (alien->unk20 & ALIEN_FLAG_UNKG) {
-		func_802DAFD0_1F3CE0(arg0, D_8014DD5C[joints[0]].unk1);
+		func_802DAFD0_1F3CE0(arg0, D_8014DD50[secondJoint].unkD);
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DB14C_1F3E5C.s")
-#endif
 
 void func_802DB428_1F4138(u8 arg0) {
 	func_80137468_146418(arg0, 0x25);
