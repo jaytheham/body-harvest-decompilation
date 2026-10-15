@@ -1033,11 +1033,11 @@ typedef struct {
 	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
 	/* 0x18 */ s16 unk18;
-	/* 0x1A */ u8 unk1A; // typeIndex
+	/* 0x1A */ u8 unk1A; // typeIndex (AI - measured: the index into vehicleTypes, 0 for Adam on foot)
 	/* 0x1B */ u8 unk1B;
-	/* 0x1C */ s16 unk1C; // hitPoints
+	/* 0x1C */ s16 unk1C; // hitPoints (AI - measured: 600 (0x258) for Adam at full health; GAMEPLAY_MODE_LEVEL_ENDING began a few frames after it reached 0, seen when drowning)
 	/* 0x1E */ s16 unk1E;
-	/* 0x20 */ u16 unk20; // Bit flags
+	/* 0x20 */ u16 unk20; // Bit flags (AI - measured: 0x8000 active, 0x0002 airborne, 0x2000 damage flash, 0x0001 moved this frame)
 	/* 0x22 */ s16 unk22;
 	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
@@ -1419,16 +1419,16 @@ typedef struct {
 } AlienWaveInstance; /* size = 0x14 */
 
 typedef struct {
-	/* 0x00 */ f32 unk0;
+	/* 0x00 */ f32 unk0; // AI - eyeX: the camera's eye X in world units, Y at +0x4 and Z at +0x8 (measured)
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
-	/* 0x0C */ f32 unkC;
+	/* 0x0C */ f32 unkC; // AI - targetX: X of the point the camera looks at, Y at +0x10 and Z at +0x14 (measured)
 	/* 0x10 */ f32 unk10;
 	/* 0x14 */ f32 unk14;
-	/* 0x18 */ s16 unk18;
-	/* 0x1A */ s16 unk1A;
-	/* 0x1C */ s16 unk1C;
-	/* 0x1E */ u16 unk1E;
+	/* 0x18 */ s16 unk18; // AI - targetXInt: the target X truncated to an integer, stored by func_80134CCC_143C7C (read)
+	/* 0x1A */ s16 unk1A; // AI - targetZInt: the target Z truncated to an integer (read)
+	/* 0x1C */ s16 unk1C; // AI - radius: the orbit radius, copied from Unk80160080.unk4E (read)
+	/* 0x1E */ u16 unk1E; // AI - pitch: copied from Unk80160080.unk4A (read)
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ u8 pad22[0xE];
 	/* 0x30 */ s32 unk30;
@@ -2390,14 +2390,14 @@ typedef struct {
 	/* 0x3C */ f32 unk3C;
 	/* 0x40 */ f32 unk40;
 	/* 0x44 */ f32 unk44;
-	/* 0x48 */ s16 unk48;
-	/* 0x4A */ s16 unk4A;
+	/* 0x48 */ s16 unk48; // AI - yaw: the camera's current yaw, eased toward unk50 every frame (measured)
+	/* 0x4A */ s16 unk4A; // AI - pitch: the camera's current pitch (measured)
 	/* 0x4C */ s16 unk4C;
-	/* 0x4E */ s16 unk4E;
-	/* 0x50 */ s16 unk50;
-	/* 0x52 */ s16 unk52;
+	/* 0x4E */ s16 unk4E; // AI - radius: the orbit radius, 300 at the game's own distance (measured)
+	/* 0x50 */ s16 unk50; // AI - yawTarget: the yaw the camera is heading for; func_80133F28_142ED8 eases unk48 toward it (read)
+	/* 0x52 */ s16 unk52; // AI - pitchTarget: eased toward by func_80134D44_143CF4 (read)
 	/* 0x54 */ s16 unk54;
-	/* 0x56 */ s16 unk56;
+	/* 0x56 */ s16 unk56; // AI - radiusTarget: the radius being eased toward (read)
 	/* 0x58 */ s16 unk58;
 	/* 0x5A */ s16 unk5A;
 	/* 0x5C */ s16 unk5C;
@@ -2407,7 +2407,7 @@ typedef struct {
 	/* 0x64 */ s16 unk64;
 	/* 0x66 */ union { s16 unk66; u8 pad66[0x2]; };
 	/* 0x68 */ s32 unk68;
-	/* 0x6C */ u8 unk6C;
+	/* 0x6C */ u8 unk6C; // AI - nearFarMode: 1 or 2, flipped by C-UP in func_801358E8_144898 (read)
 } Unk80160080; /* size = 0x70 */
 
 typedef struct {
