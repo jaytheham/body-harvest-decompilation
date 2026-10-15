@@ -888,7 +888,52 @@ float_regexpr = re.compile(r"[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)?f")
 def repl_float_hex(m):
     return str(struct.unpack(">I", struct.pack(">f", float(m.group(0).strip().rstrip("f"))))[0])
 
-Opts = namedtuple('Opts', ['opt', 'framepointer', 'mips1', 'kpic', 'pascal', 'input_enc', 'output_enc', 'enable_cutscene_data_float_encoding', 'asm_roots'], defaults=[()])
+Opts = namedtuple('Opts', ['opt', 'framepointer', 'mips1', 'kpic', 'pascal', 'input_enc', 'output_enc', 'enable_cutscene_data_float_encoding', 'asm_roots', 'version'], defaults=[(), None])
+
+
+def version_source_lines(source, version):
+    """Hide inactive version branches before opening assembly, preserving line numbers.
+
+    Other conditions (including NON_MATCHING) remain the C preprocessor's job.
+    Without --version, retain the upstream processor's behavior.
+    """
+    groups = []
+    live = True
+    for raw_line in source:
+        if version is None:
+            yield raw_line
+            continue
+        line = re.sub(r'/\*.*?\*/|//.*', '', raw_line).strip()
+        directive = re.match(r'#\s*(ifdef|ifndef|if|elif|else|endif)\b(.*)', line)
+        if directive:
+            kind, condition = directive.groups()
+            condition = condition.strip()
+            want = None
+            if kind in ('ifdef', 'ifndef') and condition in ('VERSION_US', 'VERSION_EU'):
+                want = (condition == 'VERSION_' + version.upper()) != (kind == 'ifndef')
+            elif kind in ('if', 'elif'):
+                match = re.fullmatch(r'(!\s*)?defined\s*(?:\(\s*(VERSION_US|VERSION_EU)\s*\)|(VERSION_US|VERSION_EU))', condition)
+                if match:
+                    want = ((match.group(2) or match.group(3)) == 'VERSION_' + version.upper()) != bool(match.group(1))
+            if kind in ('ifdef', 'ifndef', 'if'):
+                groups.append([live, want is not None, bool(want)])
+                live = live and want is not False
+            elif groups and kind in ('elif', 'else'):
+                parent, known, taken = groups[-1]
+                if known:
+                    if kind == 'elif' and want is None:
+                        raise Failure('Unsupported #elif in version conditional: ' + line)
+                    selected = kind == 'else' or want
+                    live = parent and not taken and selected
+                    groups[-1][2] = taken or selected
+                else:
+                    live = parent
+            elif groups and kind == 'endif':
+                live = groups.pop()[0]
+            # Keep directives so IDO still evaluates all other conditions normally.
+            yield raw_line
+        else:
+            yield raw_line if live else '\n'
 
 def is_inside_directory(path, directory):
     """Local change (bh-decomp): whether the file that path names lies in directory (or is it), as the filesystem sees it.
@@ -1018,7 +1063,7 @@ def parse_source(f, opts, out_dependencies, print_source=None):
     is_cutscene_data = False
     is_early_include = False
 
-    for line_no, raw_line in enumerate(f, 1):
+    for line_no, raw_line in enumerate(version_source_lines(f, opts.version), 1):
         raw_line = raw_line.rstrip()
         line = raw_line.lstrip()
 
@@ -1540,6 +1585,7 @@ def run_wrapped(argv, outfile, functions):
     parser.add_argument('--drop-mdebug-gptab', dest='drop_mdebug_gptab', action='store_true', help="drop mdebug and gptab sections")
     parser.add_argument('--convert-statics', dest='convert_statics', choices=["no", "local", "global", "global-with-filename"], default="local", help="change static symbol visibility (default: %(default)s)")
     parser.add_argument('--asm-root', dest='asm_roots', action='append', metavar='SOURCE=DESTINATION', help="read GLOBAL_ASM files named under directory SOURCE from directory DESTINATION instead (repeatable)")
+    parser.add_argument('--version', choices=('us', 'eu'), help="ignore assembly in inactive VERSION_US/VERSION_EU branches")
     parser.add_argument('--force', dest='force', action='store_true', help="force processing of files without GLOBAL_ASM blocks")
     parser.add_argument('--encode-cutscene-data-floats', dest='enable_cutscene_data_float_encoding', action='store_true', default=False, help="Replace floats with their encoded hexadecimal representation in CutsceneData data")
     parser.add_argument('-framepointer', dest='framepointer', action='store_true')
@@ -1562,7 +1608,7 @@ def run_wrapped(argv, outfile, functions):
         raise Failure("-mips1 is only supported together with -O1 or -O2")
     if pascal and opt not in ('O1', 'O2', 'g3'):
         raise Failure("Pascal is only supported together with -O1, -O2 or -O2 -g3")
-    opts = Opts(opt, args.framepointer, args.mips1, args.kpic, pascal, args.input_enc, args.output_enc, args.enable_cutscene_data_float_encoding, parse_asm_roots(args.asm_roots))
+    opts = Opts(opt, args.framepointer, args.mips1, args.kpic, pascal, args.input_enc, args.output_enc, args.enable_cutscene_data_float_encoding, parse_asm_roots(args.asm_roots), args.version)
 
     if args.objfile is None:
         with open(args.filename, encoding=args.input_enc) as f:

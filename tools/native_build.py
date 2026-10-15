@@ -335,7 +335,7 @@ def build(args):
                     source_cflags = [flag for flag in source_cflags if flag != "-signed"]
                 global_asm = "GLOBAL_ASM" in source.read_text(encoding="utf-8")
                 compiled = source
-                processor = [sys.executable, "tools/asm-processor/asm_processor.py", optimization, source]
+                processor = [sys.executable, "tools/asm-processor/asm_processor.py", "--version", args.version, optimization, source]
                 if args.version == "eu":
                     # The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU
                     # extraction of those segments under asm.eu/src.us/core, so the EU build reads them from there.

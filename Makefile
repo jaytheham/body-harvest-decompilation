@@ -271,7 +271,7 @@ LD_FLAGS_EXTRA  =
 endif
 
 ASM_PROCESSOR_DIR := $(TOOLS_DIR)/asm-processor
-ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py
+ASM_PROCESSOR      = $(PYTHON) $(ASM_PROCESSOR_DIR)/asm_processor.py --version $(VERSION)
 ifeq ($(VERSION),eu)
 # The shared source in src.us names its GLOBAL_ASM files under asm/nonmatchings/core; splat puts the EU extraction of
 # those segments under asm.eu/src.us/core, so the EU build reads them from there.
