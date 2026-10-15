@@ -322,44 +322,44 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 
 // CURRENT(175)
 s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
-    Unk8014FD30Type *base;
-    Unk8014FD30Type *cur;
-    s32 idx;
-    s32 subIdx;
-    s32 level;
-    s32 minX;
+	Unk8014FD30Type *base;
+	Unk8014FD30Type *cur;
+	s32 idx;
+	s32 subIdx;
+	s32 level;
+	s32 minX;
 
-    level = currentLevel - 1;
-    idx = 0; base = D_80147C30_156BE0[level]; cur = base;
-    for (; idx != 6; idx++, cur++) {
-        if (arg0 < cur->main.minX || cur->main.maxX < arg0 || cur->main.minZ >= arg1) {
-            continue;
-        }
-        if (arg1 >= cur->main.maxZ) {
-            continue;
-        }
-        for (subIdx = 0; subIdx != 2; subIdx++) {
-            if ((minX = base[idx].sub[subIdx].minX) == base[idx].sub[subIdx].maxX) {
-                return (u8)idx;
-            }
-            if (arg0 < minX || base[idx].sub[subIdx].maxX < arg0 ||
-                base[idx].sub[subIdx].minZ >= arg1 || arg1 >= base[idx].sub[subIdx].maxZ) {
-                if (subIdx == 1) {
-                    return (u8)idx;
-                }
-            } else {
-                break;
-            }
-        }
-    }
-    return 0xFF;
+	level = currentLevel - 1;
+	idx = 0; base = D_80147C30_156BE0[level]; cur = base;
+	for (; idx != 6; idx++, cur++) {
+		if (arg0 < cur->main.minX || cur->main.maxX < arg0 || cur->main.minZ >= arg1) {
+			continue;
+		}
+		if (arg1 >= cur->main.maxZ) {
+			continue;
+		}
+		for (subIdx = 0; subIdx != 2; subIdx++) {
+			if ((minX = base[idx].sub[subIdx].minX) == base[idx].sub[subIdx].maxX) {
+				return (u8)idx;
+			}
+			if (arg0 < minX || base[idx].sub[subIdx].maxX < arg0 ||
+				base[idx].sub[subIdx].minZ >= arg1 || arg1 >= base[idx].sub[subIdx].maxZ) {
+				if (subIdx == 1) {
+					return (u8)idx;
+				}
+			} else {
+				break;
+			}
+		}
+	}
+	return 0xFF;
 }
 
-// CURRENT(9462)
+// CURRENT(12101)
 #ifdef NON_MATCHING
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
-	s32 wallIndex;
+	s32 var_a2; s32 var_a3; s32 wallIndex; BoundingBox *wall;
 	f32 temp_f0;
 	f32 temp_f12;
 	f32 temp_f14;
@@ -367,12 +367,8 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	s16 temp_a0;
 	s16 temp_a1;
 	s16 temp_t7;
-	s32 temp_v0;
-	s32 temp_v0_2;
 	s32 temp_v0_3;
 	s32 temp_v0_4;
-	s32 var_a2;
-	s32 var_a3;
 	s32 var_t0;
 	s32 var_t1;
 	s32 var_t2;
@@ -383,10 +379,9 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	var_t2 = *arg4 - temp_t7;
 	var_t1 = *arg5 - arg2;
 	*arg6 = 0;
-	temp_v0 = *arg3;
 	var_t3 = 0;
 	do {
-		if (D_8014FD30.main.maxX < temp_v0) {
+		if (D_8014FD30.main.maxX < *arg3) {
 			if (var_t0 == 0) {
 				break;
 			}
@@ -398,11 +393,11 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			temp_f12 = var_t1 * temp_f2;
 			*arg4 = temp_t7 + temp_f0;
 			*arg5 = arg2 + temp_f12;
-			var_t0 = temp_f14 * temp_f2;
+			var_t0 = var_t0 * temp_f2;
 			var_t2 = temp_f0;
 			*arg6 = 1;
 			var_t1 = temp_f12;
-		} else if (temp_v0 < D_8014FD30.main.minX) {
+		} else if (*arg3 < D_8014FD30.main.minX) {
 			if (var_t0 == 0) {
 				break;
 			}
@@ -413,15 +408,14 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			temp_f0 = var_t2 * temp_f2;
 			temp_f12 = var_t1 * temp_f2;
 			*arg4 = temp_t7 + temp_f0;
-			var_t0 = temp_f14 * temp_f2;
+			var_t0 = var_t0 * temp_f2;
 			*arg5 = arg2 + temp_f12;
 			var_t2 = temp_f0;
 			*arg6 = 1;
 			var_t1 = temp_f12;
 		}
 
-		temp_v0_2 = *arg5;
-		if (D_8014FD30.main.maxZ < temp_v0_2) {
+		if (D_8014FD30.main.maxZ < *arg5) {
 			if (var_t1 == 0) {
 				break;
 			}
@@ -435,9 +429,9 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			*arg4 = temp_t7 + temp_f0;
 			var_t2 = temp_f0;
 			*arg5 = D_8014FD30.main.maxZ;
-			var_t1 = temp_f14 * temp_f2;
+			var_t1 = var_t1 * temp_f2;
 			*arg6 = 0;
-		} else if (temp_v0_2 < D_8014FD30.main.minZ) {
+		} else if (*arg5 < D_8014FD30.main.minZ) {
 			if (var_t1 == 0) {
 				break;
 			}
@@ -451,20 +445,18 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			*arg4 = temp_t7 + temp_f0;
 			var_t2 = temp_f0;
 			*arg5 = D_8014FD30.main.minZ;
-			var_t1 = temp_f14 * temp_f2;
+			var_t1 = var_t1 * temp_f2;
 
 			*arg6 = 0;
 		}
 
-		var_a3 = 0;
-		var_a2 = 0;
-		for (wallIndex = 0; wallIndex != 2; wallIndex++) {
-			temp_a0 = D_8014FD30.sub[wallIndex].minX;
-			temp_a1 = D_8014FD30.sub[wallIndex].maxX;
+		for (wall = &D_8014FD30.sub[0]; wall != &D_8014FD30.sub[2]; wall++) {
+			temp_a0 = wall->minX;
+			temp_a1 = wall->maxX;
 			if (temp_a0 == temp_a1) {
 				break;
 			}
-			if ((temp_a0 < arg0) && (arg0 < temp_a1) && (D_8014FD30.sub[wallIndex].minZ < arg2) && (arg2 < D_8014FD30.sub[wallIndex].maxZ)) {
+			if ((temp_a0 < arg0) && (arg0 < temp_a1) && (wall->minZ < arg2) && (arg2 < wall->maxZ)) {
 				*arg3 = arg0;
 				*arg4 = temp_t7;
 				*arg5 = arg2;
@@ -473,11 +465,10 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			}
 
 			if (var_t0 != 0) {
-				temp_v0_3 = *arg3;
-				temp_f14 = var_t0;
-				if (arg0 < temp_v0_3) {
+					temp_f14 = var_t0;
+				if (arg0 < *arg3) {
 					var_a2 = temp_a0;
-				} else if (temp_v0_3 < arg0) {
+				} else if (*arg3 < arg0) {
 					var_a2 = temp_a1;
 				}
 				temp_f0 = (var_a2 - arg0) / temp_f14;
@@ -486,13 +477,13 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 					temp_f12 = var_t1 * temp_f0;
 					temp_v0_4 = arg2 + temp_f12;
 					var_a3 = temp_v0_4;
-					if ((D_8014FD30.sub[wallIndex].minZ < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxZ)) {
+					if ((wall->minZ < temp_v0_4) && (temp_v0_4 < wall->maxZ)) {
 						*arg3 = var_a2;
 						var_t3 = 1;
 						temp_f0 = var_t2 * temp_f0;
 						*arg4 = temp_t7 + temp_f0;
 						*arg5 = temp_v0_4;
-						var_t0 = temp_f14 * temp_f2;
+						var_t0 = var_t0 * temp_f2;
 						var_t2 = temp_f0;
 						*arg6 = 1;
 						var_t1 = temp_f12;
@@ -501,12 +492,11 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			}
 
 			if (var_t1 != 0) {
-				temp_v0_3 = *arg5;
-				temp_f14 = var_t1;
-				if (arg2 < temp_v0_3) {
-					var_a3 = D_8014FD30.sub[wallIndex].minZ;
-				} else if (temp_v0_3 < arg2) {
-					var_a3 = D_8014FD30.sub[wallIndex].maxZ;
+					temp_f14 = var_t1;
+				if (arg2 < *arg5) {
+					var_a3 = wall->minZ;
+				} else if (*arg5 < arg2) {
+					var_a3 = wall->maxZ;
 				}
 				temp_f0 = (var_a3 - arg2) / temp_f14;
 				temp_f2 = temp_f0;
@@ -514,7 +504,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 					temp_f12 = var_t0 * temp_f0;
 					temp_v0_4 = arg0 + temp_f12;
 					var_a2 = temp_v0_4;
-					if ((D_8014FD30.sub[wallIndex].minX < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxX)) {
+					if ((wall->minX < temp_v0_4) && (temp_v0_4 < wall->maxX)) {
 						*arg3 = temp_v0_4;
 						var_t3 = 1;
 						temp_f0 = var_t2 * temp_f0;
@@ -523,7 +513,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 						var_t2 = temp_f0;
 						*arg5 = var_a3;
 						*arg6 = 0;
-						var_t1 = temp_f14 * temp_f2;
+						var_t1 = var_t1 * temp_f2;
 					}
 				}
 			}
@@ -538,7 +528,6 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	*arg6 = 0;
 	return 0;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
@@ -649,7 +638,7 @@ void func_800B19F8_C09A8(void) {
 	} while (i < 0x13);
 }
 
-// CURRENT(9662)
+// CURRENT(9405)
 #ifdef NON_MATCHING
 void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 	u8 quarterColor[3];
@@ -677,9 +666,7 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 	s32 var_t2;
 	s32 var_v0;
 	EffectRgb *pixel;
-	EffectRgb (*lights)[19];
 
-	lights = (EffectRgb (*)[19])D_80152740;
 	temp_t5 = D_8014F89C - 0x7F;
 	temp_s0 = D_8014F89D - 0x7F;
 	temp_s1 = D_8014F899 - temp_t5;
@@ -739,19 +726,19 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 				if ((s16)(temp_t5 + 0x13) >= var_a3) {
 					temp_a3 = var_t0 + 1;
 					if ((temp_v0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= temp_v0)) {
-						pixel = &lights[(s8)((temp_s2 + var_t0 - 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0 - 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
 						pixel->r = quarterColor[0] + pixel->r;
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 					if ((var_t0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= var_t0)) {
-						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
 						pixel->r = quarterColor[0] + pixel->r;
 						pixel->g = arg2->g;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 					if ((temp_a3 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= temp_a3)) {
-						pixel = &lights[(s8)((temp_s2 + var_t0 + 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0 + 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
 						pixel->r = quarterColor[0] + pixel->r;
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
@@ -784,19 +771,19 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 				if ((s16)(temp_s0 + 0x13) >= var_t0) {
 					temp_a3 = var_a3 + 1;
 					if ((temp_v0 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_a3)) {
-						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 - 1) % 0x13)];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 - 1) % 0x13)];
 						pixel->r = quarterColor[0] + pixel->r;
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 					if ((var_a3 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= var_a3)) {
-						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
 						pixel->r = quarterColor[0] + pixel->r;
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 					if ((temp_a3 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_v0)) {
-						pixel = &lights[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 + 1) % 0x13)];
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 + 1) % 0x13)];
 						pixel->r = quarterColor[0] + pixel->r;
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
@@ -817,17 +804,7 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
 #endif
 
-
-
-
-
-
-
-
-
-
-
-// CURRENT(2570): typed RGB grid; frame and allocation remain.
+// CURRENT(2570)
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 baseY;
@@ -909,125 +886,76 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(8140)
+// CURRENT(2895)
 #ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
-	// Agent - remove unnecessary temp vars
-	s32 sp70;
-	s32 sp6C;
-	s32 sp68;
-	s16 sp62;
-	s16 sp60;
-	s32 sp58;
-	s32 sp54;
-	s32 sp50;
-	s32 sp4C;
-	f32 temp_f8;
-	f32 temp_f10;
-	s16 temp_ra;
-	s16 temp_s3;
-	s16 temp_s4;
-	s32 temp_v0;
-	s16 temp_v0_3;
-	s16 temp_v0_4;
-	s32 temp_v1;
-	s16 temp_v1_3;
-	s16 var_s0;
-	s16 var_s2;
-	s16 var_t2;
-	s16 var_t3;
-	s16 var_v0;
-	s16 var_v0_2;
-	s16 var_v0_3;
-	s16 var_v0_4;
-	s16 var_v0_5;
-	s16 var_v1_2;
-	s32 temp_fp;
-	u8 temp_s5;
-	s32 temp_t5;
-	s16 temp_t7;
-	s32 temp_v0_2;
-	s32 var_a3;
-	s16 var_v1;
-	u8 *var_a0;
+	s16 baseY;
+	s16 baseX;
+	s16 x;
+	s16 y;
+	s16 dx;
+	s16 dy;
+	s16 distance;
+	s32 intensity;
+	s16 color;
+	s32 tileX;
+	s32 tileY;
+	s32 fracX;
+	u32 fracY;
+	u8 radius;
+	s32 squareX; s32 cellSize = 256;
+	s16 ringX;
+	s16 ringY;
+	EffectRgb *pixel;
 
-	temp_v0 = arg0->unk0;
-	temp_s4 = D_8014F89D - 0x7F;
-	sp70 = (temp_v0 >> 8) + 1;
-	temp_v1 = arg0->unk2;
-	temp_s3 = D_8014F89C - 0x7F;
-	sp6C = (temp_v1 >> 8) + 1;
-	var_t2 = (D_8014F899 + sp70) - temp_s3;
-	var_t3 = (D_8014F898 + sp6C) - temp_s4;
-	temp_f10 = (f32) (arg2 + arg3) / 256;
-	sp68 = temp_v0 & 0xFF;
-	temp_s5 = temp_v1 & 0xFF;
-	temp_t5 = (((u32) temp_f10) + 1) & 0xFF;
-	temp_ra = 1 - temp_t5;
-	temp_fp = temp_t5 + 1;
-	var_s2 = temp_ra;
-	sp50 = temp_fp;
-	sp54 = temp_ra;
-	sp58 = temp_ra;
-	if (temp_ra < temp_fp) {
-		var_a3 = temp_fp;
-		do {
-			var_s0 = (s16) ((u32) sp58 >> 16);
-			if (var_s2 <= 0) {
-					var_v0 = (var_s2 * -0x100);
+	baseY = D_8014F89D - 127;
+	tileX = (arg0->unk0 >> 8) + 1;
+	baseX = D_8014F89C;
+	tileY = (arg0->unk2 >> 8) + 1;
+	baseX -= 127;
+	ringX = D_8014F899 + tileX - baseX;
+	ringY = D_8014F898 + tileY - baseY;
+	fracX = arg0->unk0 & 255;
+	fracY = arg0->unk2 & 255;
+	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius++;
+	for (x = 1 - radius; x < radius + 1; x++) {
+		if (x <= 0) {
+			dx = (s16)fracX + x * -256;
+		} else {
+			dx = cellSize - fracX + (x << 8) - 256;
+		}
+		squareX = dx * dx;
+		for (y = 1 - radius; y < radius + 1; y++) {
+			if (y <= 0) {
+				dy = fracY + y * -256;
 			} else {
-				var_v0 = ((0x100 - sp68) + (var_s2 << 8)) - 0x100;
+				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			if (sp54 < sp50) {
-				do {
-					if (var_s0 <= 0) {
-						var_v0_2 = temp_s5 + (var_s0 * -0x100);
-					} else {
-						var_v0_2 = ((0x100 - temp_s5) + (var_s0 << 8)) - 0x100;
-					}
-					sp4C = var_a3;
-					sp62 = var_t2;
-					sp60 = var_t3;
-					temp_v0_2 = (s32) sqrtf((f32) ((var_v0_2 * var_v0_2) + (var_v0 * var_v0))) - arg2;
-					temp_t7 = (s16) temp_v0_2;
-					var_v1 = temp_t7;
-					if ((s16) temp_t7 < 0) {
-						var_v1 = (s16) (temp_t7 * -1);
-					}
-					temp_v1_3 = arg3 - var_v1;
-					if (temp_v1_3 > 0) {
-						temp_v0_3 = var_s2 + sp70;
-						var_v1_2 = (s16) (((f32) temp_v1_3 / (f32) arg3) * 255.0f);
-						if (var_v1_2 >= 0x100) {
-							var_v1_2 = 0xFF;
-						}
-						if (temp_v0_3 >= temp_s3) {
-							temp_v0_4 = var_s0 + sp6C;
-							if (((s16) (temp_s3 + 0x13) >= temp_v0_3) && (temp_v0_4 >= temp_s4) && ((s16) (temp_s4 + 0x13) >= temp_v0_4)) {
-								var_v0_3 = (s16) (((s32) arg1[0] * var_v1_2) >> 8);
-								if (var_v0_3 >= 0x100) {
-									var_v0_3 = 0xFF;
-								}
-								var_a0 = &D_80152740[(((u16) ((s16) ((var_s0 + var_t3) % 0x13))) * 0x39) + (((u16) ((s16) ((var_s2 + var_t2) % 0x13))) * 3)];
-								var_a0[0] = (s8) var_v0_3;
-								var_v0_4 = (s16) (((s32) arg1[1] * var_v1_2) >> 8);
-								if (var_v0_4 >= 0x100) {
-									var_v0_4 = 0xFF;
-								}
-								var_a0[1] = (s8) var_v0_4;
-								var_v0_5 = (s16) (((s32) arg1[2] * var_v1_2) >> 8);
-								if (var_v0_5 >= 0x100) {
-									var_v0_5 = 0xFF;
-								}
-								var_a0[2] = (s8) var_v0_5;
-							}
-						}
-					}
-					var_s0++;
-				} while (var_s0 < var_a3);
+			distance = (s32)sqrtf(dy * dy + squareX) - arg2;
+			if (distance < 0) {
+				distance = -distance;
 			}
-			var_s2++;
-		} while (var_s2 < var_a3);
+			intensity = arg3 - distance; intensity = (s16)intensity;
+			if (intensity > 0) {
+				intensity = (s16)(((f32)intensity / arg3) * 255.0f);
+				if (intensity >= 256) intensity = 255;
+				if ((s16)(x + tileX) >= baseX && (s16)(x + tileX) <= (s16)(baseX + 19)) {
+					if ((s16)(y + tileY) >= baseY && (s16)(y + tileY) <= (s16)(baseY + 19)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(u16)(s16)((y + ringY) % 19)][(u16)(s16)((x + ringX) % 19)];
+						color = ((s32)arg1[0] * intensity) >> 8;
+						if (color >= 256) color = 255;
+						pixel->r = color;
+						color = ((s32)arg1[1] * intensity) >> 8;
+						if (color >= 256) color = 255;
+						pixel->g = color;
+						color = ((s32)arg1[2] * intensity) >> 8;
+						if (color >= 256) color = 255;
+						pixel->b = color;
+					}
+				}
+			}
+		}
 	}
 }
 #else
@@ -1152,7 +1080,7 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-// CURRENT(823): shifted row offset fixes one spill; register/byte-cache differences remain.
+// CURRENT(68)
 #ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 baseXWord;
@@ -1168,7 +1096,7 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s16 baseY;
 	s16 sp94;
 	RingEntry *entry;
-
+	s16 timer;
 
 	D_8014F8A0 = (s16 (*)[256])arg2;
 	sp94 = D_8014F89C;
@@ -1210,9 +1138,11 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			mode = D_8013D9B0_14C960;
 			if ((u32)mode > 0U) {
 				if (mode >= 0x3D) {
-					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(mode - 0x3C) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+					timer = mode - 0x3C; timer ^= 0;
+					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 				} else {
-					f0 = (f32)((((f32)coss((u16)((u32)(((f32)(s16)mode / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+					timer = mode; timer ^= 0;
+					f0 = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 				}
 
 				if (D_8013D9B4_14C964 != 0) {
@@ -1235,8 +1165,8 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
 			mode = (u16)((D_80151DD8.ringX + col) % 19);
-			i = (u16)((D_80151DD8.ringY + row) % 19);
-			entry = &D_80151DD8.tiles[i][mode];
+			mapIndex = (u16)((D_80151DD8.ringY + row) % 19);
+			entry = &D_80151DD8.tiles[mapIndex][mode];
 			entry->r = spA8[0];
 			entry->b = spA8[2];
 			entry->g = spA8[1];
@@ -1273,7 +1203,6 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
 #endif
@@ -1634,66 +1563,54 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 }
 
 /* Build vertex buffer for the 19x19 tile ring: compute positions, heights, colors, and texture coords */
-// CURRENT(13468)
+// CURRENT(16780)
 #ifdef NON_MATCHING
 void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
-	Vtx **vtxPtr;
-	s16 tilesMinX;
-	s16 tilesMinY;
-	s8 ringX;
-	s8 ringY;
+	s32 tilesMinX;
+	s32 tilesMinY;
 	u8 rowWrap;
-	s32 col;
+	u8 col;
+	s8 ringX;
 	s16 scrollX;
 	s16 scrollY;
 	RingEntry *tileCenter;
 	RingEntry *ringRow;
-	u8 *shade;
-	u8 *shadeMix;
-	s8 edgeParityX;
-	s8 edgeParityY;
-	u8 color0;
+	EffectRgb *shade;
+	EffectRgb *shadeMix;
+	s32 edgeParityX;
+	s32 edgeParityY;
+	u8 indexByte[1];
 	u8 color1;
 	u8 color2;
-	u8 blur0;
-	u8 blur1;
-	u8 blur2;
-	s32 frameAngle;
+	u8 rgb[3];
+	s32 worldBaseY;
 	f64 ratio;
-	s16 worldBaseY;
-	s16 arg1Spill;
 
 	D_8014F89A = 0;
-	arg1Spill = arg1;
 	ringX = D_80151DD8.ringX;
-	D_8014F899 = (s8)ringX;
-	ringY = D_80151DD8.ringY;
-	D_8014F898 = (s8)ringY;
+	D_8014F899 = ringX;
+	D_8014F898 = D_80151DD8.ringY;
 	D_8014F89C = D_80151DD8.mapPosX;
 	D_8014F89D = D_80151DD8.mapPosY;
 
-	vtxPtr = arg0;
 	scrollX = D_80149434;
 	scrollY = D_80149436;
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
 
 	rowWrap = 0;
-	color0 = D_80151DD8.ringY;
+	indexByte[0] = D_80151DD8.ringY;
 	color1 = D_80151DD8.mapPosX;
 	color2 = D_80151DD8.mapPosY;
+	col = ringX;
 
 	do {
 		u8 ringCol;
 
-		ringRow = D_80151DD8.tiles[color0];
-		shade = &D_80152740[(color0 * 0x39) + (ringX * 3)];
-		worldBaseY = ((s8)color2 - 0x80) << 8;
-		edgeParityY = color2 & 1;
-		if ((s8)color2 < 0 && edgeParityY != 0) {
-			edgeParityY -= 2;
-		}
-		col = ringX;
+		ringRow = D_80151DD8.tiles[indexByte[0]];
+		shade = ((EffectRgb (*)[19])D_80152740)[indexByte[0]];
+		worldBaseY = (s16)((color2 - 0x80) << 8);
+		edgeParityY = color2 % 2;
 		ringCol = 0;
 
 		do {
@@ -1701,166 +1618,131 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			RingEntry *tileWest;
 			RingEntry *tileNorth;
 			RingEntry *tileSouth;
-			s32 c0;
-			s32 c1;
-			s32 c2;
-			s32 waveX;
-			s32 waveY;
-			s16 worldX;
-			s16 worldY;
+			u16 component;
+			u8 *tileColor;
+			s16 waveX;
+			s16 waveY;
+			s32 worldX;
 			s16 posX;
 			s16 posY;
 			s16 posZ;
 			s16 hueX;
 			s16 hueY;
-			s16 cellH;
-			s16 inA;
-			s16 inB;
-			s16 amp;
-			s16 baseHue;
+			s32 cellH;
+			s32 amp;
+			s32 baseHue;
 			s32 tileType;
 
-			worldY = worldBaseY;
 
-			tileCenter = &ringRow[col];
+			tileCenter = &ringRow[col]; posY = (color2 - 0x80) << 8; tileColor = tileCenter->color;
 
 			if (col != 0x12) {
 				tileEast = &ringRow[col + 1];
 			} else {
-				tileEast = &ringRow[0];
+				tileEast = &D_80151DD8.tiles[indexByte[0]][0];
 			}
 
-			if (col != 0) {
-				tileWest = &ringRow[col - 1];
-			} else {
-				tileWest = &ringRow[18];
-			}
-
-			if (color0 != 0x12) {
-				tileSouth = &D_80151DD8.tiles[color0 + 1][col];
+			if (indexByte[0] != 0x12) {
+				tileSouth = &D_80151DD8.tiles[indexByte[0] + 1][col];
 			} else {
 				tileSouth = &D_80151DD8.tiles[0][col];
 			}
+			if (col != 0) {
+				tileWest = &ringRow[col - 1];
+			} else {
+				tileWest = &D_80151DD8.tiles[indexByte[0]][18];
+			}
 
-			if (color0 != 0) {
-				tileNorth = &D_80151DD8.tiles[color0 - 1][col];
+			if (indexByte[0] != 0) {
+				tileNorth = &D_80151DD8.tiles[indexByte[0] - 1][col];
 			} else {
 				tileNorth = &D_80151DD8.tiles[18][col];
 			}
 
-			shadeMix = &shade[(col * 3) - (ringX * 3)];
-			c0 = shadeMix[0];
-			if (c0 != 0) {
-				c0 += tileCenter->r;
-				if (c0 > 0xFF) {
-					c0 = 0xFF;
-				}
-
-				c1 = shadeMix[1] + tileCenter->g;
-				if (c1 > 0xFF) {
-					c1 = 0xFF;
-				}
-
-				c2 = shadeMix[2] + tileCenter->b;
-				if (c2 > 0xFF) {
-					c2 = 0xFF;
-				}
+			shadeMix = &shade[col];
+			if (shadeMix->r != 0) {
+				component = shadeMix->r + tileColor[0];
+				if (component > 255) component = 255;
+				rgb[0] = component;
+				component = shadeMix->g + tileColor[1];
+				if (component > 255) component = 255;
+				rgb[1] = component;
+				component = shadeMix->b + tileColor[2];
+				if (component > 255) component = 255;
+				rgb[2] = component;
 			} else {
-				c0 = tileCenter->r;
-				c1 = tileCenter->g;
-				c2 = tileCenter->b;
+				rgb[0] = tileColor[0];
+				rgb[1] = tileColor[1];
+				rgb[2] = tileColor[2];
 			}
-			blur0 = c0;
-			blur1 = c1;
-			blur2 = c2;
 
-			edgeParityX = color1 & 1;
-			if ((s8)color1 < 0 && edgeParityX != 0) {
-				edgeParityX -= 2;
-			}
+			edgeParityX = color1 % 2;
 			if (edgeParityX == 1) {
-				hueX = D_8013DACC_14CA7C[currentLevel - 1];
+				hueX = D_8013DACC_14CA7C[0];
 			} else {
-				hueX = D_8013DAD4_14CA84[currentLevel - 1];
+				hueX = D_8013DAD4_14CA84[0];
 			}
 
+			worldX = (color1 - 0x80) << 8;
 			if (edgeParityY == 1) {
-				hueY = D_8013DAD0_14CA80[currentLevel - 1];
+				hueY = D_8013DAD0_14CA80[0];
 			} else {
-				hueY = D_8013DAD8_14CA88[currentLevel - 1];
+				hueY = D_8013DAD8_14CA88[0];
 			}
 
+			posX = worldX;
 			cellH = (tileCenter->tileType & 0x3F) << 5;
 			posZ = cellH;
 
 			if (scrollX < 0) {
-				inA = scrollX + 1;
-				inB = -scrollX - 1;
-				if (inA < inB) {
-					inB = inA;
-				}
-				waveX = 0xFF - (s8)inB;
+				waveX = 255 - (BH_ABS(scrollX + 1) % 256);
 			} else {
-				waveX = (s8)scrollX;
+				waveX = (scrollX % 256);
 			}
 
-			worldX = worldY;
-			if (tilesMinX < worldX) {
+			if (tilesMinX < (s16)worldX) {
 				posX = worldX + waveX - 0x100;
-				inA = (tileWest->tileType & 0x3F) << 5;
-				posZ = func_800B0A10_BF9C0(inA, cellH, waveX, 0x100);
+				posZ = func_800B0A10_BF9C0((tileWest->tileType & 0x3F) << 5, cellH, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = waveX;
 				} else {
 					hueX = 0xFF - waveX;
 				}
-			} else if (worldX < (scrollX - 0x901)) {
+			} else if ((s16)worldX < (scrollX - 0x901)) {
 				posX = worldX + waveX;
-				inA = (tileEast->tileType & 0x3F) << 5;
-				posZ = func_800B0A10_BF9C0(cellH, inA, waveX, 0x100);
+				posZ = func_800B0A10_BF9C0(cellH, (tileEast->tileType & 0x3F) << 5, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = 0xFF - waveX;
 				} else {
 					hueX = waveX;
 				}
-			} else {
-				posX = worldX;
-			}
+			} 
 
 			if (scrollY < 0) {
-				inA = scrollY + 1;
-				inB = -scrollY - 1;
-				if (inA < inB) {
-					inB = inA;
-				}
-				waveY = 0xFF - (s8)inB;
+				waveY = 255 - (BH_ABS(scrollY + 1) % 256);
 			} else {
-				waveY = (s8)scrollY;
+				waveY = (scrollY % 256);
 			}
 
-			if (tilesMinY < worldY) {
-				posY = worldY + waveY - 0x100;
-				inA = (tileNorth->tileType & 0x3F) << 5;
-				posZ = func_800B0A10_BF9C0(inA, posZ, waveY, 0x100);
+			if (tilesMinY < worldBaseY) {
+				posY = worldBaseY + waveY - 0x100;
+				posZ = func_800B0A10_BF9C0((tileNorth->tileType & 0x3F) << 5, posZ, waveY, 0x100);
 				if (edgeParityY == 1) {
 					hueY = waveY;
 				} else {
 					hueY = 0xFF - waveY;
 				}
-			} else if (worldY < (scrollY - 0x901)) {
-				posY = worldY + waveY;
-				inA = (tileSouth->tileType & 0x3F) << 5;
-				posZ = func_800B0A10_BF9C0(posZ, inA, waveY, 0x100);
+			} else if (worldBaseY < (scrollY - 0x901)) {
+				posY = worldBaseY + waveY;
+				posZ = func_800B0A10_BF9C0(posZ, (tileSouth->tileType & 0x3F) << 5, waveY, 0x100);
 				if (edgeParityY == 1) {
 					hueY = 0xFF - waveY;
 				} else {
 					hueY = waveY;
 				}
-			} else {
-				posY = worldY;
-			}
+			} 
 
-			baseHue = D_8013DADC_14CA8C[currentLevel - 1];
+			baseHue = D_8013DADC_14CA8C[0];
 			hueX = (hueX * 8) + baseHue;
 			hueY = (hueY * 8) + baseHue;
 
@@ -1868,70 +1750,63 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 				s16 dist;
 
 				dist = ((D_80222A70 - posZ) - 0x46) / 10;
-				frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-				ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-				posZ = (s16)(posZ - (s16)((f64)dist * ratio));
+				ratio = ((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+				posZ -= dist * ratio;
 			}
 
 			if ((D_80222A70 + 0x3C) < posZ && (D_801493CC != 0)) {
 				s16 dist2;
 
 				dist2 = ((D_80222A70 - posZ) - 0x3C) / 20;
-				frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-				ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-				posZ = (s16)(posZ - (s16)((f64)dist2 * ratio));
+				ratio = ((f64)(f32)coss((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+				posZ -= dist2 * ratio;
 			}
 
-			tileType = func_800056D0_62D0(posX, posY) & 0xFF;
+			tileType = func_800056D0_62D0(posX, posY);
 			switch (currentLevel) {
 				case 1:
-					if (tileType == 0x10) {
+					if ((u8)tileType == 0x10) {
 						amp = 0x1E;
-						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
-						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
-						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueX -= amp * ratio;
+						ratio = ((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueY -= amp * ratio;
 					}
 					break;
 				case 2:
-					if (tileType == 0x10 || tileType == 0x15) {
-						amp = (tileType == 0x10) ? 0x1E : 0x50;
-						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
-						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
-						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+					if ((u8)tileType == 0x15 || (u8)tileType == 0x10) {
+						amp = ((u8)tileType == 0x10) ? 0x1E : 0x50;
+						ratio = ((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueX -= amp * ratio;
+						ratio = ((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueY -= amp * ratio;
 					}
 					break;
 				case 3:
-					if (tileType == 0x10) {
+					if ((u8)tileType == 0x10) {
 						amp = 0x1E;
-						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
-						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
-						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueX -= amp * ratio;
+						ratio = ((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueY -= amp * ratio;
 					}
 					break;
 				case 4:
-					if (tileType == 0x10) {
+					if ((u8)tileType == 0x10) {
 						amp = 0x1E;
-						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
-						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
-						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueX -= amp * ratio;
+						ratio = ((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueY -= amp * ratio;
 					}
 					break;
 				case 5:
-					if (tileType == 0x10 || tileType == 0x14) {
+					if ((u8)tileType == 0x10 || (u8)tileType == 0x14) {
 						amp = 0x28;
-						frameAngle = (D_80052A8C * 0xE5EC + ((scrollX >> 8) + ringCol) * 0x58AC) & 0xFFFF;
-						ratio = ((f64)(f32)coss(frameAngle) / 32768.0);
-						hueX = (s16)(hueX - (s16)((f64)amp * ratio));
-						ratio = ((f64)(f32)sins(frameAngle) / 32768.0);
-						hueY = (s16)(hueY - (s16)((f64)amp * ratio));
+						ratio = ((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueX -= amp * ratio;
+						ratio = ((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0);
+						hueY -= amp * ratio;
 					}
 					break;
 			}
@@ -1940,26 +1815,28 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 				posZ += (D_8015273E * 4);
 			}
 
-			(*vtxPtr)->v.ob[0] = posX;
-			(*vtxPtr)->v.ob[1] = posZ;
-			(*vtxPtr)->v.ob[2] = posY;
-			(*vtxPtr)->v.flag = 0;
-			(*vtxPtr)->v.tc[0] = hueX;
-			(*vtxPtr)->v.tc[1] = hueY;
-			(*vtxPtr)->v.cn[0] = blur0;
-			(*vtxPtr)->v.cn[1] = blur1;
-			(*vtxPtr)->v.cn[2] = blur2;
-			(*vtxPtr)->v.cn[3] = 0xFF;
-			*vtxPtr = *vtxPtr + 1;
+			(*arg0)->v.ob[0] = posX;
+			(*arg0)->v.ob[1] = posZ;
+			(*arg0)->v.ob[2] = posY;
+			(*arg0)->v.flag = 0;
+			(*arg0)->v.tc[0] = hueX;
+			(*arg0)->v.tc[1] = hueY;
+			(*arg0)->v.cn[0] = rgb[0];
+			(*arg0)->v.cn[1] = rgb[1];
+			(*arg0)->v.cn[2] = rgb[2];
+			(*arg0)->v.cn[3] = 0xFF;
+			*arg0 = *arg0 + 1;
 
+			color1++;
 			ringCol++;
 			col = (col + 1) % 0x13;
 		} while (ringCol < 0x12);
 
-		color0 = (color0 + 1) % 0x13;
+		indexByte[0] = (indexByte[0] + 1) % 0x13;
 		color1 = D_8014F89C;
 		color2++;
 		rowWrap++;
+		col = D_8014F899;
 	} while (rowWrap < 0x12);
 }
 #else
@@ -2532,7 +2409,6 @@ s16 func_800B8688_C7638(s8 arg0, s8 arg1) {
 	return result;
 }
 
-
 /* Animate crater expansion (destroyed ground tiles with expanding bright ring) */
 void func_800B879C_C774C(void) {
 	s16 radiusLimit;
@@ -2617,7 +2493,6 @@ void func_800B879C_C774C(void) {
 }
 
 /* Initialize crater creation parameters at a world position */
-// Entry narrowing and the X-origin mask preserve IDO temporary allocation.
 void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	arg2 &= 0xFFFF;
 	D_8014F830 = 0;
@@ -2761,7 +2636,6 @@ void func_800B8F30_C7EE0(s16 tileX, s16 tileZ, u8 craterType) {
 	}
 }
 
-
 /* Start arena creation crater at (arg0, arg1) */
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	func_800B8C2C_C7BDC(arg0, arg1, 0x1F);
@@ -2770,7 +2644,6 @@ void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F838 = 1;
 }
 
-// CURRENT(20)
 s32 func_800B9228_C81D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 tempV1;
 	s16 tempT0;
@@ -2869,9 +2742,8 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 	return 1;
 }
 
-
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-// CURRENT(5): instruction-exact apart from jump-table rodata placement.
+// CURRENT(5)
 #ifdef NON_MATCHING
 // World-space bounding-box frustum cull.
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
@@ -2931,8 +2803,6 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 
 	return D_8014F854;
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
 #endif
@@ -3038,112 +2908,112 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// CURRENT(3115): signed origins with X identity improve allocation; spills remain.
-#ifdef NON_MATCHING
+// CURRENT(2923)
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
+#ifdef NON_MATCHING
 void func_800B9DB8_C8D68(u8 arg0)
 {
-  u8 row;
-  s32 tileSize;
-  Vtx *startVertices;
-  Vec2_S16 map;
-  Vtx *vertices[2];
-  s16 visibleCount;
-  s16 culledCount;
-  visibleCount = 0;
-  culledCount = 0;
-  func_800B9AC8_C8A78();
-  if (D_8014F838 != 0)
-  {
-	func_800B879C_C774C();
-  }
-  startVertices = D_8005BB34;
-  func_800B5090_C4040(&D_8005BB34, arg0 & 0xFF);
-  gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
-  
-  D_8014F89A = 0;
-  D_8014FD28 = 0x8F;
-  map.x = D_80151DD8.mapPosX;
-  map.z = D_80151DD8.mapPosY;
-  vertices[0] = startVertices;
-  vertices[1] = startVertices;
-  gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
-  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
-  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
-  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-  gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
-  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)D_80254E80 & 0x1FFFFFFF));
-  gDPLoadSync(D_8005BB2C++);
-  
-  tileSize = 4;
-  if (D_801493CC != 0)
-  {
-	gSPSetLights1(D_8005BB2C++, D_8013D970_14C920);
-  }
-  else
-  {
-	gSPSetLights1(D_8005BB2C++, D_8013D958_14C908);
-  }
-
-  {
-    s32 worldZ;
-    u8 tileZ;
-    s16 bottom;
-    s16 left;
-    s16 top;
-    s16 right;
-    u8 column;
-    u8 palette;
-    u8 tileX;
-    u8 tile;
-    s32 firstTile[2];
-  firstTile[1] = map.x / 4;
-  firstTile[1] ^= 0;
-  firstTile[0] = map.z / 4;
-  for (row = 0; row < 5; row++)
-  {
-  tileZ = (firstTile[0] + row) & 0xFF;
-  worldZ = (s16)((tileZ << 10) + 0x8000);
-	for (column = 0; column < 5; column++)
+	u8 row;
+	s32 tileSize;
+	Vtx *startVertices;
+	Gfx *gfx;
+	Vec2_S16 map;
+	Vtx *vertices[2];
+	u8 tileZ;
+	s16 visibleCount;
+	s16 culledCount;
+	visibleCount = 0;
+	culledCount = 0;
+	func_800B9AC8_C8A78();
+	if (D_8014F838 != 0)
 	{
-	  left = (column == 0) ? (map.x % 4) : 0;
-	  right = (column == tileSize) ? (map.x % 4) + 1 : tileSize;
-	  top = (row == 0) ? (map.z % 4) : 0;
-	  bottom = (row == tileSize) ? (map.z % 4) + 1 : tileSize;
-	  
-	  tileX = (firstTile[1] + column) & 0xFF;
-	  palette = ((u8 (*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
-	  gDPLoadTLUT_pal256(D_8005BB2C++, ((u32) (&D_80254E80[palette * 512])) & 0x1FFFFFFF);
-	  gDPLoadSync(D_8005BB2C++);
-	
-	  tile = ((u8 (*)[64])D_8021EA30)[tileZ][tileX];
-	  if ((tile & 0xF0) != 0xF0)
-	  {
-		((u8 (*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
-	  }
-	  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
-	  if (func_800B960C_C85BC((s16) ((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
-	  {
-		visibleCount += 1; func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
-	  }
-	  else
-	  {
-		culledCount += 1;
-	  }
-	  
-	  vertices[0] = &vertices[0][tileSize - left];
+		func_800B879C_C774C();
 	}
-	
-	vertices[1] = &vertices[1][(tileSize - top) * 18];
-	vertices[0] = vertices[1];
-  }
-  }
-  gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
-  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-  func_800B753C_C64EC();
-  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
-}
+	startVertices = D_8005BB34;
+	func_800B5090_C4040(&D_8005BB34, arg0 & 0xFF);
+	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
 
+	D_8014F89A = 0;
+	D_8014FD28 = 0x8F;
+	map.x = D_80151DD8.mapPosX;
+	map.z = D_80151DD8.mapPosY;
+	vertices[0] = startVertices;
+	vertices[1] = startVertices;
+	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
+	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
+	gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
+	gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)D_80254E80 & 0x1FFFFFFF));
+	gDPLoadSync(D_8005BB2C++);
+
+	tileSize = 4;
+	if (D_801493CC != 0)
+	{
+		gSPSetLights1(D_8005BB2C++, D_8013D970_14C920);
+	}
+	else
+	{
+		gSPSetLights1(D_8005BB2C++, D_8013D958_14C908);
+	}
+
+	{
+		s32 worldZ;
+		s16 bottom;
+		s16 left;
+		s16 top;
+		s16 right;
+		u8 column;
+		u8 palette;
+		u8 tileX;
+		u8 tile;
+		s32 firstTile[2];
+		firstTile[1] = map.z; firstTile[1] /= 4;
+		firstTile[0] = map.x; firstTile[0] /= 4;
+		for (row = 0; row < 5; row++, row ^= 0)
+		{
+			tileZ = (firstTile[1] + row) & 0xFF;
+			worldZ = (s16)((tileZ << 10) + 0x8000);
+			for (column = 0; column < 5; column++)
+			{
+				left = (column == 0) ? (map.x % 4) : 0;
+				right = (column == tileSize) ? (map.x % 4) + 1 : tileSize;
+				top = (row == 0) ? (map.z % 4) : 0;
+				bottom = (row == tileSize) ? (map.z % 4) + 1 : tileSize;
+
+				tileX = (firstTile[0] + column) & 0xFF;
+				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
+				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
+				gDPLoadSync(D_8005BB2C++);
+
+				tile = ((u8(*)[64])D_8021EA30)[tileZ][tileX];
+				if ((tile & 0xF0) != 0xF0)
+				{
+					((u8(*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
+				}
+				gfx = D_8005BB2C++; gfx->words.w1 = 0x20000; gfx->words.w0 = 0xB6000000;
+				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
+				{
+					visibleCount += 1;
+					func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
+				}
+				else
+				{
+					culledCount += 1;
+				}
+
+				vertices[0] = &vertices[0][tileSize - left];
+			}
+
+			vertices[1] = &vertices[1][(tileSize - top) * 18];
+			vertices[0] = vertices[1];
+		}
+	}
+	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
+	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
+	func_800B753C_C64EC();
+	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
+}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif
@@ -3900,8 +3770,6 @@ void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	}
 }
 
-
-// CURRENT(98)
 s32 func_800BC5DC_CB58C(s16 arg0) {
 	s16 sp36;
 	s16 sp34;
@@ -3928,41 +3796,41 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	return 0;
 }
 
-// CURRENT(3321): target frame and byte home; phase allocation remains.
+// CURRENT(24)
 #ifdef NON_MATCHING
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	s16 i;
 	s16 temp_s2;
 	s16 temp_s5;
+	u8 phase;
 	u8 var_v0;
-	s32 var_s2;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
 	s32 temp_fp;
-	s32 pulse;
-	s32 var_a0;
-	f64 temp_f22;
+	int var_s2;
 	s32 spCC;
+	int pulse;
+	f64 temp_f22;
 
 	D_80052B58 = 0x80;
-	var_a0 = func_800B84D0_C7480(arg0, arg2) >> 8;
-	if (var_a0 < D_80222A70) {
-		var_a0 = D_80222A70;
+	temp_fp = func_800B84D0_C7480(arg0, arg2) >> 8;
+	if (temp_fp < D_80222A70) {
+		temp_fp = D_80222A70;
 	}
 
-	if ((var_a0 + 0xC8) < arg1) {
-		var_s2 = (arg3 * 4) - ((s32)var_v0 / 4);
-		spCC = var_s2 + 0x3C;
+	if ((temp_fp + 0xC8) < arg1) {
+		pulse = (arg3 * 4) - ((s32)phase / 4);
+		spCC = pulse + 0x3C;
 	} else {
-		var_s2 = (arg3 * 2) - ((s32)var_v0 / 4);
-		spCC = var_s2 + 0x1E;
+		pulse = (arg3 * 2) - ((s32)phase / 4);
+		spCC = pulse + 0x1E;
 	}
 
-	var_a0 = (u8)(D_80052A8C & 0x1F);
-	if ((u32)var_a0 >= 0x11) {
-		var_a0 = (0x20 - var_a0) & 0xFF;
+	var_s2 = D_80052A8C & 0x1F;
+	if ((u32)var_s2 >= 0x11) {
+		phase = 0x20 - var_s2;
 	} else {
-		var_a0 = (u8)var_a0;
+		phase = var_s2;
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -3983,23 +3851,24 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0xFF - (var_a0 * 7);
-	D_8005BB34->v.cn[1] = 0xFF - (var_a0 * 5);
+	D_8005BB34->v.cn[0] = 0xFF - (phase * 7);
+	D_8005BB34->v.cn[1] = 0xFF - (phase * 5);
 	D_8005BB34->v.cn[2] = 0xFF;
 	D_8005BB34->v.cn[3] = 0;
-	D_8005BB34++;
+	i = 0; D_8005BB34++;
+
 
 	arg4 = 0;
-	temp_f22 = var_s2;
-	temp_fp = (var_a0 * 4) + 0x64;
-	pulse = var_a0;
-	for (i = 0; i < 10; i++) {
-		var_a0 = (i << 0x10) / 10;
+	temp_f22 = pulse;
+	temp_fp = (phase * 4) + 0x64;
+
+	for (; i < 10; i++) {
+		pulse = (i << 0x10) / 10;
 		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
 		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
 		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
@@ -4022,14 +3891,14 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 
 	temp_f22 = spCC;
-	temp_fp = 0xB4 - (pulse * 6);
+	temp_fp = 0xB4 - (phase * 6);
 	for (i = 0; i < 10; i++) {
-		var_a0 = (i << 0x10) / 10;
+		pulse = (i << 0x10) / 10;
 		var_s2 = (i << 0x10) / 3;
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
 		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + var_a0)) / 32768.0) * temp_f22) + arg4);
+		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
 		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s2);
 
 		if (D_80052B58 < temp_fp) {
@@ -4075,7 +3944,7 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	}
 	gSP2Triangles(D_8005BB2C++, 1, 10, 20, 0, 20, 11, 1, 0);
 
-	rotation.unk0 = 0x8000;
+	rotation.unk0Unsigned = 0x8000;
 	rotation.unk2 = 0;
 	rotation.unk4 = 0;
 	func_800039D0_45D0(NULL, &rotation, NULL, D_8005BB38);
@@ -4101,7 +3970,6 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC760_CB710.s")
 #endif
 
-// https://decomp.me/scratch/2g8BD
 void func_800BD20C_CC1BC(void)
 {
 	u8 beaconIndex;
@@ -4344,7 +4212,6 @@ void func_800BD8B8_CC868(void) {
 	}
 }
 
-// CURRENT(1320)
 // openCurrentStageGate
 void func_800BDAF4_CCAA4(void) {
 	u8 stage;
@@ -4758,14 +4625,13 @@ void func_800BED30_CDCE0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
 #endif
 
-// CURRENT(3410): remove the five lightning constant placeholders when enabling C.
+// CURRENT(1685)
 #ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
 	s16 var_a1;
-	s16 sp3C;
+	s16 delta[1];
 	s32 temp_v1;
 	u16 color;
-	s16 temp_t2;
 	f32 sp30;
 	s32 timer;
 	s32 clamp;
@@ -4785,9 +4651,9 @@ void func_800C0678_CF628(void) {
 	timer = D_8013D9C0_14C970[0];
 	D_8013DAFC_14CAAC[0] = (u16)var_a1;
 	if ((var_a1 - 8) < timer) {
-		temp_t2 = var_a1 - timer; temp_t2 ^= 0;
+		delta[0] = var_a1 - timer;
 		sp30 = (f32)((f64)(f32)D_8013D9C4_14C974[0] * 0.001953125);
-		temp_v1 = (s16)(s32)(200.0f - (100.0f * sp30)) - (temp_t2 * 0xF);
+		temp_v1 = (s16)(s32)(200.0f - (100.0f * sp30)) - (delta[0] * 0xF);
 		D_8013DAFC_14CAAC[0] = var_a1;
 		if (temp_v1 < 0) {
 			D_80047743 = 0;
@@ -4804,19 +4670,15 @@ void func_800C0678_CF628(void) {
 		} else {
 			D_80047745 = temp_v1;
 		}
-		temp_v1 = (s16)(s32)(28.0f - (10.0f * sp30)) - temp_t2;
+		temp_v1 = (s16)(s32)(28.0f - (10.0f * sp30)) - delta[0];
 		clamp = temp_v1 < 0 ? 0 : temp_v1;
 		color = clamp << 11;
 		clamp = temp_v1 < 0 ? 0 : temp_v1;
 		color += clamp << 6;
 		clamp = temp_v1 < 0 ? 0 : temp_v1;
 		color += clamp * 2;
-		/* Keep the copy and call together for IDO's halfword-save order. */
-		sp3C = temp_t2; func_800049D4_55D4(color, color);
-		{
-			s16 *deltaAddress = &sp3C;
-			remaining = *deltaAddress; remaining = 7 - remaining;
-		}
+		delta[0] ^= 0; func_800049D4_55D4(color, color);
+		remaining = 7 - delta[0];
 		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
 		D_8013D9C8_14C978 = 1;
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
@@ -4827,12 +4689,12 @@ void func_800C0678_CF628(void) {
 		var_a1 = D_8013DAFC_14CAAC[0];
 		if (var_a1 == (remaining + 7)) {
 			D_8013DB04_14CAB4 = 1;
-			if ((D_8013DB00_14CAB0 & 0xFF) != 0) {
+			if (D_8013DB00_14CAB0 != 0) {
 				D_8013D9C0_14C970[0] += 8;
 				var_a1 = D_8013D9C0_14C970[0];
 				D_8013DAFC_14CAAC[0] = var_a1 - 1;
 			}
-		} else if ((D_8013DB00_14CAB0 & 0xFF) != 0) {
+		} else if (D_8013DB00_14CAB0 != 0) {
 			if ((u32)(func_800038E0_44E0() % 8) < 1U) {
 				D_8013D9C0_14C970[0] += 8;
 				var_a1 = D_8013D9C0_14C970[0];
@@ -4841,19 +4703,20 @@ void func_800C0678_CF628(void) {
 		}
 	}
 	if (((D_8013D9CC_14C97C != 0) && (D_8013DB08_14CAB8 != 0)) || ((D_8013D9CC_14C97C == 0) && (D_8013D9C0_14C970[0] <= 0))) {
+		s16 angle;
 		sp30 = (f32)(((f32)D_8013D9C4_14C974[0] * 0.00390625 > 1.0) ? 1.0 : ((f32)D_8013D9C4_14C974[0] * 0.00390625));
-		temp_t2 = func_80136ECC_145E7C(-0x4000, 0, -0x8000);
+		angle = func_80136ECC_145E7C(-0x4000, 0, -0x8000);
 		D_8013DB08_14CAB8 = 0;
 		if (D_80047F94 == 3) {
 			if (D_8013D9CC_14C97C != 0) {
-				func_80014A3C_1563C(0, 0xE8, 0.0f, temp_t2,
+				func_80014A3C_1563C(0, 0xE8, 0.0f, angle,
 					(f32)(0.1 + (0.2 - ((f64)sp30 * 0.2))));
 			} else {
-				func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2,
+				func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), angle,
 					(f32)(0.1 + (0.2 - ((f64)sp30 * 0.2))));
 			}
 		} else {
-			func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), temp_t2, 0.1f);
+			func_80014A3C_1563C(0, 0xE8, (f32)(D_8013D9C4_14C974[0] * 5), angle, 0.1f);
 		}
 	}
 	if ((D_8013DB04_14CAB4 != 0) || ((remaining = D_8013D9C0_14C970[0]) <= 0)) {
@@ -4887,9 +4750,6 @@ void func_800C0678_CF628(void) {
 		D_8013D9C0_14C970[0] = remaining - 1;
 	}
 }
-
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
 #endif
