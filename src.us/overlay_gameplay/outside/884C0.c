@@ -551,7 +551,7 @@ void func_80079910_888C0(s32 arg0)
 	}
 	if (alien->unk20 & ALIEN_FLAG_UNKL)
 	{
-		if (!(alien->unk20 & ALIEN_FLAG_UNKM))
+		if (!(alien->unk20 & ALIEN_FLAG_DESPAWNING))
 		{
 			func_800797A4_88754(arg0, alienTypes[typeIndex].pad60[0]); // check enemyspec pad60 for item drop generation
 		}
@@ -1456,7 +1456,7 @@ void func_8007BEC0_8AE70(void)
 			{
 				continue;
 			}
-			if (inst->unk20 & ALIEN_FLAG_UNKN)
+			if (inst->unk20 & ALIEN_FLAG_IN_VIEW)
 			{
 				typeIndex = inst->typeIndex;
 				func_800E988C_F883C(inst, &alienTypes[typeIndex]);
@@ -1519,11 +1519,11 @@ void func_8007C044_8AFF4(void) {
 		if ((D_80052ACA != 2) &&
 			(func_800B93AC_C835C(inst->unk0, inst->unk4, (alienTypes[typeIndex].unkC + 0x100) & 0xFFFF,
 				(s16)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0)) {
-			inst->unk20 &= ~ALIEN_FLAG_UNKN;
+			inst->unk20 &= ~ALIEN_FLAG_IN_VIEW;
 			continue;
 		}
 
-		inst->unk20 |= ALIEN_FLAG_UNKN;
+		inst->unk20 |= ALIEN_FLAG_IN_VIEW;
 		if (typeNumber == 1) {
 			drewType1 = 1;
 			continue;
@@ -6035,10 +6035,10 @@ s32 func_800879A4_96954(u8 arg0, s16 arg1, u8 arg2)
 
 // set up alien for removal with ~2 second timer
 void func_80087AAC_96A5C(u8 arg0) {
-	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL))) {
+	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL))) {
 		alienInstances[arg0].unk12 = 0;
 		alienInstances[arg0].unk2C = 0x28;
-		alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKM;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_DESPAWNING;
 	}
 }
 
@@ -6296,7 +6296,7 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 			return 0;
 		}
 
-		if (!(arg0->unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL))) {
+		if (!(arg0->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL))) {
 			if (sp30->unk14 != 0) {
 				if (D_80052ACD & 0x80) {
 					D_80052B2C->unk30 = D_80052B2C->unk30 + (sp30->unk14 >> 1);
@@ -6343,7 +6343,7 @@ void func_80088760_97710(AlienInstance* alien) {
 	u8 typeIndex;
 	AlienInstance* target;
 
-	if (alien->unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL)) {
+	if (alien->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)) {
 		return;
 	}
 
@@ -6367,7 +6367,7 @@ void func_80088760_97710(AlienInstance* alien) {
 		if (alien->unk20 & ALIEN_FLAG_UNKE) {
 			if (alien->unk20 & ALIEN_FLAG_UNKF) {
 				target = &alienInstances[alien->unk25];
-				if (!(target->unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL)) && (target->typeIndex == 0x19)) {
+				if (!(target->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)) && (target->typeIndex == 0x19)) {
 					alien->hitPoints = 0xA;
 					return;
 				}
@@ -6750,7 +6750,7 @@ void func_80089A2C_989DC(u8 arg0) {
 
 			temp_v0_2 = &alienInstances[temp_a0];
 			temp_v0_2->unk26 += 1;
-			if (!(temp_v0_2->unk20 & (ALIEN_FLAG_UNKM | ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKG)) && (D_8004DCBC == 0)) {
+			if (!(temp_v0_2->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL | ALIEN_FLAG_UNKG)) && (D_8004DCBC == 0)) {
 				temp_v0_2->unk2C = 0x96;
 			}
 

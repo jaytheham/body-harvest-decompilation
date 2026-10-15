@@ -518,7 +518,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 	  return;
 	}
   }
-  else if (arg0->unk20 & VEHICLE_FLAG_UNKB) // if NPC vehicle...
+  else if (arg0->unk20 & VEHICLE_FLAG_PATH_GUIDED) // if NPC vehicle...
   {
 	func_800AE190_BD140(2); // ... add 2 to global humans killed count
 	x = 0.25;
@@ -535,7 +535,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 
   }
   // If Siberia, and target vehicle is SCUD launcher, and has not launched missile
-  if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & VEHICLE_FLAG_UNK5)))
+  if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & VEHICLE_FLAG_SCUD_LAUNCHED)))
   {
 	osSyncPrintf(D_80145088_154038);
 	// Create nuke
@@ -626,7 +626,7 @@ void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
 }
 
 void func_80124118_1330C8(VehicleInstance *arg0, s16 arg1) {
-	if ((arg0->unk20 & VEHICLE_FLAG_UNK8) == 0) {
+	if ((arg0->unk20 & VEHICLE_FLAG_SHIELDED) == 0) {
 		if ((arg0 != D_80052B34) || (D_801493E0 != 0)) {
 			func_80123E90_132E40(arg0, arg1);
 		}
@@ -665,7 +665,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, void
 		do {
 			entity.vehicle = &vehicleInstances[D_80158E80[count]];
 
-			if (((entity.vehicle->unk20 & VEHICLE_FLAG_UNK7) != 0) && (entity.vehicle != arg5)) {
+			if (((entity.vehicle->unk20 & VEHICLE_FLAG_INSIDE_PLAY_BOUNDS) != 0) && (entity.vehicle != arg5)) {
 
 				vehType = &vehicleTypes[entity.vehicle->unk1A];
 				dx = (arg0 - entity.vehicle->unk0) >> 2;
@@ -2908,7 +2908,7 @@ void func_8012B26C_13A21C(void) {
 			if (vehicleIdx >= 0) {
 				while (alive != 0) {
 					VehicleInstance *vehicle = &vehicleInstances[D_80158E80[vehicleIdx]];
-					if ((D_80145BE0_154B90[arg2].unk20 & VEHICLE_FLAG_UNK7) != 0) {
+					if ((D_80145BE0_154B90[arg2].unk20 & VEHICLE_FLAG_INSIDE_PLAY_BOUNDS) != 0) {
 						VehicleType *vehicleType = &vehicleTypes[vehicle->unk1A];
 						s32 vehicleRadius = vehicleType->unk8;
 						s32 distance = func_800047FC_53FC((s16)((s16)vehicle->unk0 - (s16)projectile->unk0));

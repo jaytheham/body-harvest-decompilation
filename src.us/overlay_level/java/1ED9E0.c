@@ -423,7 +423,7 @@ void func_802D4E6C_1EDB7C(void) {
 		func_8011C080_12B030(0x31);
 		func_8011C080_12B030(0x32);
 	}
-	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_UNK8);
+	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_SHIELDED);
 }
 
 void func_802D4F70_1EDC80(s32 arg0) {
@@ -809,7 +809,7 @@ static void func_802D5DDC_stub(void) {
 
 
 void func_802D5DE4_1EEAF4(void) {
-	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & ~VEHICLE_FLAG_UNKB);
+	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & ~VEHICLE_FLAG_PATH_GUIDED);
 }
 
 // AI - Maps arg0 tile coords to world space, samples the floor via func_800B84D0_C7480, then func_80124B5C_133B0C and func_800DF038_EDFE8.
