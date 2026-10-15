@@ -3158,61 +3158,55 @@ void func_802DCDD4_1F5AE4(u8 arg0) {
 	alien->unk6 = (s16) alien->unkE;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(368): signed coordinate casts match the floating path; remainder scheduling and frame remain.
 void func_802DCE34_1F5B44(u8 arg0) {
-	AlienInstance *alien;
-	AlienType *type;
-	s16 sp46;
-	s16 sp44;
-	s16 sp42;
-	s16 sp40;
-	s16 sp3E;
-	s16 sp3C;
+	s16 x;
+	s16 z;
+	s16 width;
+	s16 depth;
+	s16 height;
+	s16 typeIndex;
 
-	alien = &alienInstances[arg0];
-	sp3C = alien->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 
-	if (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
 		s32 result;
-		sp46 = alien->unk0;
-		sp44 = alien->unk4;
-		result = func_800B84D0_C7480(sp46, sp44);
-		type = &alienTypes[sp3C];
-		if ((type->unk58 + (result >> 8)) < alien->unk2) {
-			alien->unk10 = (s16) ((f64) alien->unk10 + 24.0);
-			alien->unk8 += (s16)(((f64)(f32)sins((D_80052A8C << 11) & 0xFFFF) / 32768.0) * 512.0);
-			alien->unkA += (s16)(((f64)(f32)coss(((D_80052A8C + 12) << 11) & 0xFFFF) / 32768.0) * 512.0);
+		s16 offset;
+		x = alienInstances[arg0].unk0;
+		z = alienInstances[arg0].unk4;
+		result = func_800B84D0_C7480(x, z);
+		if ((alienTypes[typeIndex].unk58 + (result >> 8)) < alienInstances[arg0].unk2) {
+			alienInstances[arg0].unk10 += 24.0;
+			offset = (s16)(((f32)sins((D_80052A8C & 31) << 11) / 32768.0) * 512.0);
+			alienInstances[arg0].unk8 += offset;
+			offset = (s16)(((f32)coss(((D_80052A8C + 12) & 31) << 11) / 32768.0) * 512.0);
+			alienInstances[arg0].unkA += offset;
 		} else {
-			result = func_800B84D0_C7480(sp46, sp44);
-			alien->unk2 = (s16) (type->unk58 + (result >> 8));
+			result = func_800B84D0_C7480(x, z);
+			alienInstances[arg0].unk2 = alienTypes[typeIndex].unk58 + (result >> 8);
 		}
 
 		if (!(D_80052A8C & 3)) {
-			u16 sp34;
-			u16 sp32;
-			u16 sp30;
-			sp42 = type->unk34;
-			sp40 = type->unk36;
-			sp3E = type->unk38;
-			sp30 = func_800038E0_44E0();
-			sp32 = func_800038E0_44E0();
-			sp34 = func_800038E0_44E0();
-			result = func_800038E0_44E0();
-
+			u16 randomZ;
+			u16 randomY;
+			u16 randomX;
+			width = alienTypes[typeIndex].unk34;
+			depth = alienTypes[typeIndex].unk36;
+			height = alienTypes[typeIndex].unk38;
+			randomX = func_800038E0_44E0();
+			randomY = func_800038E0_44E0();
+			randomZ = func_800038E0_44E0();
+			/* Keep the draw and emission in one expression for IDO scheduling. */
+			result = func_800038E0_44E0(),
 			func_800DF848_EE7F8(
-				(s16)(((s32)sp30 % sp42) + alien->unk0 - (sp42 >> 1)),
-				(s16)(((s32)sp32 % (sp3E >> 1)) + alien->unk2 - (sp3E >> 1)),
-				(s16) ((((s32) sp34 % sp40) + alien->unk4) - (sp40 >> 1)),
-				(u16)((result % 40) + 0x1E),
+				(randomX % width) + ((const AlienInstance *)&alienInstances[arg0])->unk0 - (width >> 1),
+				(randomY % (height >> 1)) + ((const AlienInstance *)&alienInstances[arg0])->unk2 - (height >> 1),
+				(randomZ % depth) + ((const AlienInstance *)&alienInstances[arg0])->unk4 - (depth >> 1),
+				(result % 40) + 0x1E,
 				0
 			);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802DCE34_1F5B44.s")
-#endif
 
 // AI - Alien death FX: on ALIEN_FLAG_UNKA/UNKB spawns func_800DF848_EE7F8, sets unk2C=0x50, calls func_802DCE34_1F5B44, re-emits at unk2C==1.
 void func_802DD140_1F5E50(u8 arg0, u8 arg1) {
