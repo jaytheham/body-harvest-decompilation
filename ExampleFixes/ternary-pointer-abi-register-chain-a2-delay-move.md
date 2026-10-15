@@ -25,8 +25,3 @@ s32 func(s16 arg0, s16 arg1) {
     return ((u32)*p >> 0xF) ? 0 : RESULT_TABLE[(((u32)*p << 0x16) >> 0x1C) | (((SMALL_TABLE[...] & 0xF) + level_scale - base) << 4)];
 }
 ```
-
-#### What NOT to do:
-- `u16 temp_v1 = D_struct[...].field` → pointer goes into t6 instead of v0; final lookup into v0.
-- `if (cond) return 0; return expr;` (if/else) → p becomes free before final lookup, IDO recycles v0 for the lookup instead of using fresh a2.
-- `u8` return type with ternary → generates `andi v0, a2, 0xff` in delay slot instead of `move v0, a2`.

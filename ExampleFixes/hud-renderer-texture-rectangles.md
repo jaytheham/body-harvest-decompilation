@@ -10,5 +10,3 @@ These changes to `func_8013A764_149714` produced the exact target instructions f
 - The first combine command uses `PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE` for both cycles, yielding the target's `0xFFFFF7FB` second word.
 - For the ammunition-background rectangle, preserve the signed-short casts and the correction expressions' `<< 10` followed by `>> 7`. The small digit helper uses a different correction scale (`<< 11`).
 - The upper-right `MAX` coordinates use short locals initialized to zero before the background texture macro. Replacing these locals with literal zero introduces additional zero assignments. The lower-left `MAX` coordinates still use literal zero.
-
-When restoring experimental source with PowerShell `Copy-Item`, ensure the source modification time is updated before building. Copying an older checkpoint can preserve a timestamp older than the object file and leave stale assembly in the next diff. Rewriting with `Set-Content` forces the expected rebuild.

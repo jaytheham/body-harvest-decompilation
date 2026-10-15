@@ -26,6 +26,4 @@ With `s32 jidx` as the only declared variable, IDO allocates:
 
 **Score:** 505 → 10 (only the switch jtbl load address remains wrong, unrelated to this fix).
 
-**Note on remaining jtbl mismatch:** The switch jtbl address (`lui at, 0x8003` vs `0x8004`) requires all functions in the file that generate jtbls to be compiled simultaneously (`drawText`, `func_8000B044_BC44`). Until those are matched, the compiled `.rodata` for this function lands at the wrong ROM offset.
-
 Applied in `func_8000A2B8_AEB8` (AD60.c).

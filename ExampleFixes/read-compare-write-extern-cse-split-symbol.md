@@ -6,7 +6,7 @@ When a function reads an extern `s16` global, compares it, and conditionally wri
 
 This also prevents the compiler from filling branch delay slots with useful `lui` instructions from the next basic block.
 
-**Fix:** Define a separate write-alias symbol at the same address in the tracked `undefined_syms.us.txt`, declare it as a separate `extern s16` in the header, and use the alias for the store. Do **not** add the alias to `symbol_addrs.us.txt` and do **not** rely on the generated `undefined_syms_auto.txt` (see `symbol-addrs-alias-hijacks-auto.md`):
+**Fix:** Declare a write alias at the same address and use it for the store:
 
 ```c
 // undefined_syms.us.txt:

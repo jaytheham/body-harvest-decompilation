@@ -8,9 +8,7 @@ Declare the perspective normalization halfword, seven separate `Gfx *`
 command pointers, then the signed trig halfword. Initialize each command
 pointer when its command is emitted and write its `words` fields directly.
 This preserves the SDK command encoding while placing the trig halfword at
-`sp+0x46` and normalization at `sp+0x66`. An array of command pointers has
-the correct stack slots but introduces pointer spills and does not match.
-Wrapping the trig temporary in a nested scope does not change its slot.
+`sp+0x46` and normalization at `sp+0x66`.
 
 The two view commands multiply the look-at matrix into the projection
 matrix. Advance the matrix buffer after the second view command. The final

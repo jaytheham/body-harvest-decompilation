@@ -27,7 +27,3 @@ symbols use separate lui+offset pairs for load and store (no CSE).
    - Declare `extern u16 D_80047588;` (read) AND `extern u16 D_80047588_W;` (write alias)
    - In undefined_syms.us.txt add both: `D_80047588 = 0x80047588;` and `D_80047588_W = 0x80047588;`
    - Use: `D_80047588_W = D_80047588 & ~arg0;` instead of `currentControllerStates[0].button &= ~arg0`
-
-**Remaining unfixed:** D_800475F8 final read-modify-write uses `addiu v0` (pointer cache) in target
-but current generates `lui t4` hoisted + separated load/store. This appears to be an IDO scheduler
-choice based on register availability (v0 vs t4 free at different points), with no obvious C-level fix.

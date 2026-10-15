@@ -21,9 +21,3 @@ savedDelta = delta; func_800049D4_55D4(color, color);
 The second argument's `andi` now appears at ROM `0xCF82C`, followed by the
 halfword save at `0xCF830`; the call remains at `0xCF834`. The frame and spill
 offsets remain unchanged. This reduced the diff score from 3700 to 3505.
-
-Putting the entire function on one line also fixed this save order, but worsened
-other instructions. Isolate the relevant statements rather than flattening the
-whole function. The enclosing function remains unmatched.
-
-## Follow-up checkpoint

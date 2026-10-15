@@ -1,7 +1,5 @@
 # Abs and source-shape levers that move the schedule and register allocation
 
-**Shared rule.** When the logic is identical (delta +0 or a small count difference) but the schedule/allocations differ, the lever is usually the *shape* the source is written in - ternary vs `if`/`else`, statement *position*, operand re-expression - not a semantic change. Two families: (1) the abs pattern, where the branch form (`beqz` vs `beqzl`, both arms materialised) is worth whole instructions; (2) statement/operand re-expression that shifts a value's live range.
-
 ## Abs(dx)/abs(dz) pair: register allocation, `beqz` vs `beqzl`, and the ternary form
 
 When a function computes two absolute values using separate `negu`+`slt`+`beqz` patterns, ordering rules control register allocation:
@@ -90,8 +88,6 @@ Both levers found on `func_800881C0_170280` (`overlay_gameplay/inside/16AF30.c`,
 | expression | score |
 |---|---|
 | `sp9C.x`/`.y`/`.z` all via `s1->unkN` | 987 |
-| `sp9C.x` via `(&D_800FB7B0[var_t2])->unk8` only | 792 |
-| `sp9C.y` via `(&D_800FB7B0[var_t2])->unkA` only | 792 |
 | **both x and y re-expressed** (z was already) | **452** |
 
 **2. Hoist a global load to the first statement (452 -> 40).** The target loads `D_800FB79A` at instruction 5, i.e. **in the delay slot of the preceding `lw`**, before the callee-saved register saves:
@@ -103,7 +99,7 @@ Both levers found on `func_800881C0_170280` (`overlay_gameplay/inside/16AF30.c`,
     addiu t6,v0,8
     sw   ra,0x44(sp)           # ... saves follow
 
-In the previous body the same `s16 var_t2 = D_800FB79A;` read sat *after* the four GBI setup statements, so IDO scheduled it at instruction 32 and the whole register-map/ordering fell one slot out. Moving the assignment to the **first statement of the function body** (above `gDPPipeSync`) reproduces the target's schedule: **452 -> 40**. An initialiser at the declaration (`s16 var_t2 = D_800FB79A;`) measures the **same 40**. Lever to reach for: when the target reads a global very early and ours reads it late, and the target's read sits in a load-delay slot, the *statement position* of the read is the lever - not the declaration order, not a cast. Moving only the read (leaving the GBI statements in place) is what works; moving the GBI statements after it measured **4981**.
+In the previous body the same `s16 var_t2 = D_800FB79A;` read sat *after* the four GBI setup statements, so IDO scheduled it at instruction 32 and the whole register-map/ordering fell one slot out. Moving the assignment to the **first statement of the function body** (above `gDPPipeSync`) reproduces the target's schedule: **452 -> 40**. An initialiser at the declaration (`s16 var_t2 = D_800FB79A;`) measures the **same 40**. Lever to reach for: when the target reads a global very early and ours reads it late, and the target's read sits in a load-delay slot, the *statement position* of the read is the lever - not the declaration order, not a cast.
 
 ## A negated condition spelling moves an independent store across the block (`== 0` vs `!x`)
 
@@ -123,8 +119,6 @@ In the previous body the same `s16 var_t2 = D_800FB79A;` read sat *after* the fo
 
 **Lever: write the guard negated - `if (!D_80094938)` - and nothing else changes. 110 -> 0.** The negation is not a semantic edit (both spell the same test); it changes the IR the scheduler sees, so the independent `unk34` store is no longer lifted to the block head and the `addiu` of the base lands in the `bnez` delay slot instead of before the branch.
 
-**Rule.** When the residual is flat across body permutations and `ins_diff` shows delta +0 with only register names, before parking: (1) dump the target and our `.o` **sequentially** (`cmp2.py`) - a hoisted *whole statement* is visible there while difflib's aligned block list hides it; (2) if one statement of a run sits at a different position in ours, try the **other spelling of the guard condition** (`x == 0` <-> `!x`), which reorders the scheduler's basic-block fill without changing a single opcode's meaning. Same family as the statement-position lever above, one level up: the lever is the *shape of the controlling expression*, not the statement order inside the body.
-
 ## Floating point containment checks with signed extents
 
 `func_8010CF7C_11BF2C` in `101840.c` matches all 174 instructions and verifies the full ROM. Put switch case 3 before cases 0, 1, and 2 to reproduce the target body order; the dispatcher still tests the numeric cases in order. For the axis-aligned cases, use `absX = -dx < dx ? dx : -dx` and a separate temporary for the Z magnitude. Reusing one temporary for both axes swapped f12/f14 in the X selection; separating the X result took the final score from 80 to zero.
@@ -143,7 +137,7 @@ The rotated case accepts a coordinate between an extent and its negation in eith
 
 `func_800F384C_1027FC` now matches all 81 instructions, with a 0x38-byte frame and a verified full ROM checksum. Reuse the word result for the initial alien type index and keep the height in a separate word. This fixes the initial V1/T9 lookup allocation and the floating addition operand order.
 
-Two volatile halfwords control the remaining scheduling: qualify the coordinate parameter and the local terrain-height output. The parameter prevents an early coordinate load in the clamp branch delay slot. The output preserves the final store before that coordinate load, retaining the target V1 store, branch-likely epilogue, and second coordinate load in the call delay slot. Either qualification alone leaves differences. IDO requires the parameter qualification in the header too. The terrain helper takes an ordinary `s16 *`; the explicit cast at its output argument permits the existing helper to initialize the volatile local. Removing the stale partial-match comment and adding that cast retained score zero and `build/bh.us.z64: OK`.
+Two volatile halfwords control the remaining scheduling: qualify the coordinate parameter and the local terrain-height output. The parameter prevents an early coordinate load in the clamp branch delay slot. The output preserves the final store before that coordinate load, retaining the target V1 store, branch-likely epilogue, and second coordinate load in the call delay slot. IDO requires the parameter qualification in the header too. The terrain helper takes an ordinary `s16 *`; the explicit cast at its output argument permits the existing helper to initialize the volatile local. Removing the stale partial-match comment and adding that cast retained score zero and `build/bh.us.z64: OK`.
 
 ### Partial airborne controller: unsigned conversion and double negation
 

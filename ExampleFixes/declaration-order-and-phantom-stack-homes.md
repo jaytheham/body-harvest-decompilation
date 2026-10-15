@@ -1,12 +1,5 @@
 # Declaration order and phantom stack homes (IDO homes locals top-down)
 
-**Shared rule.** IDO 5.3 homes declared locals **top-down in declaration order**: the first-declared homed local takes the highest frame offset, and the frame is `align8(fixed + L)` where `L` is the *counted* size of the declared locals (small aggregates and unused vars round up to a 4-byte slot). A stack-home residual — one stored/reloaded local sitting a slot off while `ins_diff -noregs` is delta +0 and the frame size agrees — is therefore a **declaration** question, not an allocator one. Levers, in the order to try them:
-
-1. **Re-order the existing declarations** (cheapest; usually free).
-2. **Move a declaration to a different *position*** in the whole declaration list — the position, not the pairwise order, is the lever.
-3. **Declare an extra local that is never used** — IDO reserves its layout slot but does not count its size, so a phantom 2- or 4-byte home appears without growing the frame.
-4. Adding a **used** local is charged frame (or a variable register) — reach for it last.
-
 ## 1. Re-order existing declarations; an added pad is charged
 
 `func_802D9128_31D278` (`overlay_level/comet/318E20.c`, 96 instr, score **8**): the body is instruction-identical to the target except one `sh/lh $t9/$v1,0x4e($sp)` sits at `0x4a($sp)`; frame `0x50` in both.
@@ -15,7 +8,6 @@
 |---|---|
 | **reorder the two existing declarations** (`s16 parentId;` before `AlienInstance *inst;`) | **0** - the slot lands at `0x4e`, frame stays `0x50`, no instruction changes |
 
-So when only one scalar home is off and register allocation is otherwise identical, try **declaration order of the existing locals first**; adding a *new* local to chase the slot is charged 8 bytes of frame on this shape, and a pad declared last reserves nothing at all.
 
 ## 2. Inserting the result local between the other two moves its home up a slot
 
@@ -24,10 +16,6 @@ So when only one scalar home is off and register allocation is otherwise identic
 | decl order | score |
 |---|---|
 | `sp24; sp28; sp30;` | 8 |
-| `sp30; sp24; sp28;` | 8 |
-| `sp28; sp24; sp30;` | 8 |
-| `sp24; sp28; sp30; sp2C;` (unused pad last) | 32 |
-| `sp2C; sp24; sp28; sp30;` (unused pad first) | 40 |
 | **`sp24; sp30; sp28;`** (result local moved between the other two) | **0** |
 
 With three same-typed locals the home is **not** declaration-ascending: moving the third declaration to the middle gave the target's holes/offsets. An added unused pad is placed at the **top** slot and shifts every used local *down* (frame stayed `0x38`).
@@ -38,13 +26,9 @@ With three same-typed locals the home is **not** declaration-ascending: moving t
 
 | decl block, in order | frame | `sp48` | `sp47` | score |
 |---|---|---|---|---|
-| `s32 pad[3]; s16 sp48[2]; s8 sp47;` (guess) | 0x50 | 0x40 | 0x3f | 360 |
-| `s32 pad; s16 sp48[2]; s8 sp47;` | 0x48 | 0x40 | 0x3f | 426 |
-| `s16 sp48[2]; s8 sp47; s32 pad[3];` | 0x50 | 0x4c | 0x4b | 340 |
-| `s16 sp48[2]; s8 sp47;` | 0x40 | 0x3c | 0x3b | 502 |
 | **`s32 pad; s16 sp48[2]; s8 sp47; s32 pad2[3];`** | **0x50** | **0x48** | **0x47** | **315** |
 
-(i) The first-declared local takes the top slot, so a result array reaches `0x48` (rather than the top `0x4C`) only when a 4-byte declaration precedes it — and the frame is kept at the target's `0x50` by a **second** pad below it. (ii) A single unused scalar/array pad placed first or last is eliminated and reserves nothing (426 / 502); a pad in the *middle* is kept. On top of the layout, routing the `unkC` read through a named temp local (`s8 tmp; tmp = D_8014DD50[arg1].unkC; sp48[1] = tmp;` instead of the direct assignment) changed the carrying register from `t8` to the target's `v0` and took **315 -> 195** (temp signedness matters: `s32` 306, `u8` 395, `s16`/`s8` 195).
+Declaring `s32 pad; s16 sp48[2]; s8 sp47; s32 pad2[3];` places the array and byte at the target offsets without changing the 0x50 frame. Assigning the `unkC` read first to `s8 tmp`, then `sp48[1] = tmp`, changes the carrying register from `t8` to the target `v0`. The enclosing function remains unmatched.
 
 ## 4. The home is set by the declaration *position*, not the pairwise order
 
@@ -62,7 +46,7 @@ With three same-typed locals the home is **not** declaration-ascending: moving t
 
 ## 5. A declared-but-unused local reserves a phantom home (cheap, no instruction cost)
 
-`func_800FD510_10C4C0` (`src.us/overlay_gameplay/outside/101840.c`, 210 instr): asm-differ **812** (762 on an earlier attempt). The body is instruction-identical to the target except (a) the WAS-audio flag local lands at `0x28(sp)` where the target has `0x2C(sp)` and never touches `0x28`, and (b) a register band is shifted (the target computes `&vehicleInstances[...]` in `t3/t4/t5`, ours in `a0/t3/t4`, adding one `move a0,a1`). Three fixes, all required:
+`func_800FD510_10C4C0` (`src.us/overlay_gameplay/outside/101840.c`, 210 instr): asm-differ **812**. The body is instruction-identical to the target except (a) the WAS-audio flag local lands at `0x28(sp)` where the target has `0x2C(sp)` and never touches `0x28`, and (b) a register band is shifted (the target computes `&vehicleInstances[...]` in `t3/t4/t5`, ours in `a0/t3/t4`, adding one `move a0,a1`). Three fixes, all required:
 
 1. Declare `s32 wasAudioActive;` **before** `s16 vehicleGroup;` -> 812 -> 800, and the slots agree.
 2. Keep `s16 vehicleGroup;` declared but **never used** -> reproduces the target's untouched `0x28` slot at no instruction cost; frame `0x38` in both.
@@ -86,29 +70,6 @@ sp38[2](s16)   @ 0x38   <- 4-byte aligned array
 sp34   (s16)   @ 0x34
 ```
 
-C `s16 sp3E; s16 sp38[2]; s16 sp34;` compiles to the same layout **except** `sp34` lands at `0x36` (free 2 bytes at `0x34-0x35`); the frame is right (`0x60`). Established facts:
-
-- Frame follows `frame = align8(fixed + L)`; here `fixed = 0x38`. `L = 40` -> frame `0x60`; any construct that makes the compiler count `L = 42` (or a 4-byte slot for a small var) -> frame `0x68`. So the target cannot have an extra 2 bytes of counted locals — the gap must be a *phantom* (slot reserved, size not counted).
-- Small aggregates/unused vars round up to **4-byte slots**: an unused `s16`, a `struct { s16 x; }`, and `s16 arr[1]` all pushed the frame `0x60 -> 0x68`.
-- `s16 sp38[2]` sits 4-byte aligned (packing `offset = align_down(N - size, align)`), creating the `0x3C` gap.
-
-**The mechanism that DOES produce the target layout** is a *used* `s16` between the array and the scalar whose value is **rematerializable** (loaded from memory and only stored back), so the optimizer eliminates the variable but IDO still reserves its layout slot and its size is not added to the counted `L`:
-
-```c
-s16 sp3E;
-s16 sp38[2];
-s16 sp36;      /* slot at 0x36, shifts sp34 down to 0x34; size not counted */
-s16 sp34;
-```
-
-Example use that kept frame `0x60`:
-
-```c
-sp36 = alienInstances[arg0].unk6;
-D_8014DD50[sp5E].unk6 = sp36;
-D_8014DD50[sp5C].unk6 = -sp36;
-```
-
 ### The **unused** declaration form is the fix - no register cost
 
 `func_80094DE0_A3D90` (`overlay_gameplay/outside/9BFF0.c`) reached **score 0** with exactly this layout: the `s16 sp36;` must be **declared and never referenced**. A declaration with no use costs nothing: IDO reserves the 2-byte slot at `0x36` (so `sp34` drops to `0x34`, frame stays `0x60`) and emits no instruction for it, because there is no value to allocate. Recipe:
@@ -125,7 +86,5 @@ Two levers together closed the function:
 | committed split body (run 15) | 543 |
 | spell the store/negate through the union's `unk6Unsigned` member | **4** |
 | add the unused `s16 sp36;` declaration | **0** |
-
-The sibling `func_802D7B68_1F0878` (java/1ED9E0.c) carries the same 1-slot diff and is also a `union { s16 unk6; u16 unk6Unsigned; }` user - try the same two levers.
 
 Related: `phantom-stack-gap-local-pointer.md` (4-byte pointer home), `cfe-temp-stack-gap-declared-vs-temp.md` (cfe temp vs declared gap), `s16array-before-alien-s32-last-stack-layout.md` (sibling `func_802D7FC0_190AD0` matched with an array + `s32` scalar producing a 4-byte gap).

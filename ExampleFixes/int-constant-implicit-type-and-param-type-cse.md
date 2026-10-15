@@ -20,18 +20,9 @@ otherwise instruction-for-instruction identical.
    `1` takes `$s4`. 1707 -> 448.
 2. **The parameter type of the call the constant is passed to counts too.** The
    remaining difference was `osRecvMesg(..., 1)`: the target rematerialises
-   `addiu a2,zero,1`, ours copied the switch's `$s4`. An unsigned argument
-   (`1U`) had no effect while `osRecvMesg`'s third parameter was declared `s32` —
-   the prototype coerced the constant back to a signed node and it merged with the
-   case again. Retyping the parameter `s32 -> u32` makes the flag constant share
+   `addiu a2,zero,1`, ours copied the switch's `$s4`. Retyping the parameter `s32 -> u32` makes the flag constant share
    the guard's unsigned node instead; IDO then rematerialises it in the call's
    delay slot. 448 -> 0.
-
-So before reaching for register-allocation tricks, check whether the ROM keeps one
-value in several registers: that is a constant-typing difference, and the type of
-both the literal and the parameter it is passed to are the two places to fix it.
-The prototype change is evidence-driven (the asm proves the constant is typed
-unsigned) and `gate` re-verifies the whole ROM.
 
 **Related, same function:** the *order of `case` bodies in the source* sets the
 order the blocks are emitted in. The target had `case 2`'s body before `case 1`'s

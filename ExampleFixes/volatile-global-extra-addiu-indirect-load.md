@@ -37,5 +37,5 @@ Using a volatile alias at `0x80156EDA` reproduces the indirect read/write
 without changing already matched accesses through `D_80156EDA` elsewhere.
 Declare the alias in `variables.us.h` and give it an absolute linker symbol in the
 tracked `undefined_syms.us.txt` (not in `symbol_addrs.us.txt`, and not in the
-generated `undefined_syms_auto.txt` — see `symbol-addrs-alias-hijacks-auto.md`).
+generated `undefined_syms_auto.txt`).
 Verified with function score 0 and the full ROM checksum.

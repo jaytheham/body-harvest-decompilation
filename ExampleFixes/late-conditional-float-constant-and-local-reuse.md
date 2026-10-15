@@ -19,13 +19,11 @@ The conditional disappears later while the multiply retains the constant as its 
 
 The first angle parameter is s16, consistent with its callers; reusing it for the s16 cosine result reproduces the target's store/load behavior. An explicit zero case for the distance retains the otherwise dead move in the target.
 
-The basis uses array views of its Vec3f storage. Converting the entire basis to a float array preserved the instruction sequence but changed floating register assignment. Keep representation changes separate from the late constant-fold fix and check the full ROM after cleanup.
-
 ## Partial linked-vehicle response: loop scope prevents a saved constant
 
 In `func_80103760_112710`, the following changes restored the target 0x78 frame. A late `if (1)` around the point-height do/while prevents IDO from hoisting 15 into saved f20, removing the extra floating save/restore and restoring the earlier FPR cycle. Write the two countdown tests as `while (i--)`, using a word counter, to preserve the target old-value copy and decrement delay slot. Explicit `!= 0` produces sltu instead.
 
-The mass numerator converts unsigned, but the sum converts signed. Read the unsigned mass into a word, assign the signed sum to ratio first, compute inverse distance, then divide the numerator by ratio. This removes the unwanted second unsigned-conversion adjustment. Reuse dx/dy/dz for scaled offsets; separate x1/y1/z1 locals change register lifetimes. Cache the impulse and damping doubles in block locals to preserve one constant load for each three-component calculation. Multiply the distance limit by integer 2 to retain mul.s rather than add.s. Eight unused word declarations before the first float expand the frame; putting them after the last used local or before an unspilled counter has no effect. The candidate stays wrapped and the full ROM passes.
+The mass numerator converts unsigned, but the sum converts signed. Read the unsigned mass into a word, assign the signed sum to ratio first, compute inverse distance, then divide the numerator by ratio. This removes the unwanted second unsigned-conversion adjustment. Reuse dx/dy/dz for scaled offsets; separate x1/y1/z1 locals change register lifetimes. Cache the impulse and damping doubles in block locals to preserve one constant load for each three-component calculation. Multiply the distance limit by integer 2 to retain mul.s rather than add.s.
 
 ## Vehicle spawn reset: preserved conversions and postdecrement bounds
 
@@ -34,7 +32,3 @@ The first loop tests the old spawn cursor against entry 2, then decrements it. T
 Preserve float conversion before double conversion for both percentages and the shifted fuel capacity. Read hit points inline through `(f32)(u32)` to retain unsigned conversion adjustment and the target temporary-register cycle. Reuse function-scope reset locals across both paths, remove the separate hit-point temporary, and declare the height halfword last to restore frame and output slot.
 
 Writing heading as `-spawnData->unk8 + 0x4000` retains two local LI instructions and prevents hoisting 0x4000 into a saved register. `0x4000 - spawnData->unk8` hoists it, takes the height-pointer register, and adds other scheduling differences.
-
-### Vehicle reset: safe cast cleanup and first-path parameter reuse
-
-The following cleanups individually and together retain score 860: remove explicit f64 casts of already float-converted operands (the double divisor or other double operand supplies promotion), remove explicit s16 casts on floating results assigned to short fields, and remove explicit s16 casts on coordinates assigned to short locals. Keep the f32 conversions and the unsigned hit-point conversion; those produce target instructions. Only these safe cast cleanups are retained under NON_MATCHING. The final wrapped ROM verifies `build/bh.us.z64: OK`.

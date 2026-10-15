@@ -19,5 +19,3 @@ z0++;                               /* no extra sign extension in loop ✓ */
 ```
 
 **Key rule**: If the target assembly does NOT show `sll reg, 0x10; sra reg, 0x10` after incrementing a counter/accumulator in the loop body, declare that variable as `s32` with `(s16)` initialization if the prologue uses the sign-extension pair.
-
-**Trade-off**: Changing a loop variable from `s16` to `s32` may cause IDO to allocate a 4-byte "phantom home" on the stack if the variable is initialized from a struct field expression (see "Named s32 locals cause phantom stack homes"). In practice, this inflates the frame by 8 bytes (due to 8-byte alignment) but is still better than the loop sign-extension penalty.

@@ -14,5 +14,3 @@ if (arg0 < 0x20) {
 ```
 
 Repeating the identical entry assignment in every branch generated almost the same assembly, but IDO scheduled parts of the index multiplication later in two branches. It also placed the final switch index shift after the clamps instead of in a branch delay slot, generating an extra instruction overall. Moving the common entry assignment before the conditional chain fixed all three scheduling differences and produced an exact ROM match.
-
-This is a useful source-level experiment when arithmetic and register allocation already agree but array-index shifts or switch-index shifts occupy different branch delay slots. Equivalent optimized expressions can still retain enough compiler provenance to affect scheduling elsewhere in the function.

@@ -6,4 +6,4 @@ Before this change, the function had a 0x38 frame versus target 0x30, delayed ar
 
 This resembles the matched particle trail renderer: a named cached pointer can change both stack allocation and scheduling even when the optimizer could calculate the same array address. When the target uses a persistent address computed from a global array, try direct struct/array access before adding temporary pointers.
 
-Native-build revalidation (2026-10-10): both changes are required together. The current guarded body contained an if (1) block around texture setup. Removing only the palette pointer retained a frameless body with the float conversions eliminated; removing only the scope also failed. Direct palette indexing plus removal of that scope restored all 263 instructions and the 0x30 frame, and tools/make.ps1 reported ROM OK. No rodata changes were needed.
+Native-build revalidation (2026-10-10): both changes are required together. The current guarded body contained an if (1) block around texture setup. Direct palette indexing plus removal of that scope restored all 263 instructions and the 0x30 frame, and tools/make.ps1 reported ROM OK. No rodata changes were needed.
