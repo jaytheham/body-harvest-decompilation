@@ -33,19 +33,6 @@ const u32 jtbl_80144630_1535E0[] = {
 
 const f32 D_80144658_153608[1] = {0.8f};
 
-const u32 jtbl_8014465C_15360C[] = {
-	OVERLAY_PTR(0x800F2120), OVERLAY_PTR(0x800F23EC), OVERLAY_PTR(0x800F2640), OVERLAY_PTR(0x800F26E0), OVERLAY_PTR(0x800F2720), OVERLAY_PTR(0x800F2848)
-};
-
-const f32 D_80144674_153624[1] = {15.9f};
-const f32 D_80144678_153628[1] = {13.7f};
-const f32 D_8014467C_15362C[1] = {0.0f};
-
-const f64 D_80144680_153630[1] = {0.2};
-const f64 D_80144688_153638[1] = {0.04511};
-const f64 D_80144690_153640[1] = {0.022};
-const f64 D_80144698_153648[1] = {0.0};
-
 u32 D_8013FCC4_14EC70[1] = {OVERLAY_PTR(0x8004F374)};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
 
@@ -946,7 +933,6 @@ void func_800F1134_1000E4(void) {
 #endif
 
 // Cutscene - Alpha 1 landing at start of levels 1-4 (Comet uses func_802D67A8 in Comet overlay)
-#ifdef NON_MATCHING
 int func_800F1DDC_100D8C(void) {
 	f32 speed;
 	s32 level;
@@ -1080,7 +1066,10 @@ int func_800F1DDC_100D8C(void) {
 			D_80159DE2 = 0;
 			level = buildingInstances[D_80159DDF].yCoord;
 			D_80157FE4_Write = 0.0f;
+			/* IDO schedules the argument LUI first when this call has an earlier source line. */
+#line 1
 			func_80135D44_144CF4(x, level, z, 2.0f);
+#line 1073
 		} else if (speed != 0.0f) {
 			speed -= 0.2;
 			D_80157FE4_Write = speed;
@@ -1157,7 +1146,3 @@ int func_800F1DDC_100D8C(void) {
 
 static void func_800F2888_101838(void) {
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1DDC_100D8C.s")
-#endif
