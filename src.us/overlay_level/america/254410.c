@@ -743,13 +743,6 @@ const char D_802E0CF0_260430[] = "Kids entered church\n";
 const char D_802E0D08_260448[] = "Kids failed to enter church\n";
 const char D_802E0D28_260468[] = "Error - problem attempting to swap rooms\n";
 
-const u32 jtbl_802E0D54_260494[] = {
-	LEVEL_PTR(0x802D4FAC), LEVEL_PTR(0x802D4EA0), LEVEL_PTR(0x802D4EC4), LEVEL_PTR(0x802D4EEC),
-	LEVEL_PTR(0x802D4F14), LEVEL_PTR(0x802D4F3C), LEVEL_PTR(0x802D4F64), LEVEL_PTR(0x802D4F8C),
-	LEVEL_PTR(0x802D4FAC),
-};
-
-const f64 D_802E0D78_2604B8[] = { 45.0 };
 
 
 
@@ -810,53 +803,48 @@ void func_802D4DD4_254514(void) {
 	}
 }
 
-// jtbl_802E0D54_260494
-#ifdef NON_MATCHING
 void func_802D4E70_2545B0(void) {
 	switch (D_80048030) {
-	case 0:
+	case 1:
 		if (func_8000726C_7E6C(0x2D) != 0) {
 			func_800076D4_82D4(2);
 		}
 		break;
-	case 1:
+	case 2:
 		if (func_80004818_5418(-0x37, -0x33, 3) != 0) {
 			func_800076D4_82D4(3);
 		}
 		break;
-	case 2:
+	case 3:
 		if (func_80004818_5418(0x15, -0x3E, 3) != 0) {
 			func_800076D4_82D4(4);
 		}
 		break;
-	case 3:
+	case 4:
 		if (func_80004818_5418(0x54, -0x3E, 2) != 0) {
 			func_800076D4_82D4(5);
 		}
 		break;
-	case 4:
+	case 5:
 		if (func_80004818_5418(0x56, -0x2E, 3) != 0) {
 			func_800076D4_82D4(6);
 		}
 		break;
-	case 5:
+	case 6:
 		if (func_80004818_5418(0x60, 0x25, 2) != 0) {
 			func_800076D4_82D4(7);
 		}
 		break;
-	case 6:
+	case 7:
 		if (func_80004818_5418(0x41, 0x55, 2) != 0) {
 			func_800076D4_82D4(8);
 		}
 		break;
-	case 7:
+	case 0:
 	case 8:
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D4E70_2545B0.s")
-#endif
 
 // school cutscene + get kids to church mission
 void func_802D4FBC_2546FC(void) {
@@ -929,7 +917,7 @@ void func_802D51B8_2548F8(void) {
 	}
 
 	if (func_8000726C_7E6C(4) != 0) {
-		if (D_802E0D78_2604B8[0] <= D_80052B34->unk58) {
+		if (45.0 <= D_80052B34->unk58) {
 			vehicleTypes[0xA].unk3E = 0x42;
 			vehicleTypes[0xA].unk40 = 0x82;
 			if ((u32)D_80052A8C % 12U == 0) {
