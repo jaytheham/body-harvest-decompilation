@@ -3225,7 +3225,7 @@ extern const f32 D_802E0DCC_26050C[];
 extern const f32 D_802E0DD0_260510[];
 extern const char D_802E0DE8_1F9AF8[];
 extern void (*D_802E0DF0_2C3220[])(void);
-extern const f64 D_802E0DF8_260538[];
+extern const ShadowGeometryConstant D_802E0DF8_260538;
 extern const f32 D_802E0E00_260540[];
 extern const char D_802E0E04_1F9B14[];
 extern const f32 D_802E0E04_260544[];
