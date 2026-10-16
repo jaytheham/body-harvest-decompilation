@@ -23,3 +23,11 @@ Verified with function diff score 0 and `build/bh.us.z64: OK`. Diagnostic compil
 ### HUD state reloads and local register lifetime
 
 In func_800A1A18_B09C8, reloading the state separately inside both final update branches preserves the target's two loads and branch delay-slot scheduling. A shared reload after the branches lets IDO merge the loads and removes four instructions. Earlier state checks must also use the same explicit s16 local, reloaded after the sound call, to allocate v1 rather than an anonymous a1 temporary. Verified with diff score 0 and the full ROM checksum OK.
+
+### America controller: eliminate the instance pointer for alias information
+
+In `func_802DAEDC_25A61C`, the final effect call loaded X, stored X to a stack pair, then loaded Z. The target loads both coordinates before either store and delays both halfword stores until argument setup. Copying into named scalar coordinates fixes the ordering but changes their temporary registers.
+
+Replacing the named `AlienInstance *alien` throughout the function with direct `alienInstances[arg0]` field accesses fixes the entire final effect sequence, including the outgoing zero argument. Keep an unused word in the pointer declaration's old slot to preserve stack placement. Rebinding that pointer only inside the effect branch was byte-inert. Array versus Vec2 syntax, first-member address casts, and comma expressions were also byte-inert for this problem.
+
+The alias fix reduces the function diff from 407 to 65. Combining the countdown negation and scale into one expression reduces it to 20. The final fix is a u16 angle local followed by a halfword of padding, passing angle directly to sins without another explicit mask. Keeping the mask retains the wrong negative register and shifts the temporary-register cycle. Using a word angle loses the argument-register constraint; fully inlining the calculation loses the target argument copy. The halfword assignment supplies the narrowing at the right stage. All 474 instructions match and the complete ROM checksum passes.

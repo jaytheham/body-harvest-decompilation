@@ -3136,7 +3136,7 @@ extern Unk8014DD50 D_802E0520_25FC60[];
 extern Unk8014DD50 D_802E0580_25FCC0[];
 extern Unk8014DD50 D_802E05E0_25FD20[];
 extern Unk8014DD50 *D_802E0640_25FD80[5];
-extern volatile u32 D_802E0654_25FD94;
+extern Unk80154082 D_802E0654_25FD94;
 extern Unk8014DD50 D_802E0658_25FD98[];
 extern Unk8014DD50 *D_802E0698_25FDD8[1];
 extern Unk8014DD50 D_802E069C_25FDDC[];
@@ -4257,5 +4257,10 @@ extern s32 D_80160070_FIRST;
 extern s32 D_80160070_LIMIT;
 extern u8 D_8016006D_W;
 
+
+extern const ShadowGeometryConstant D_802E0DD8_260518;
+extern const ShadowGeometryConstant D_802E0DE0_260520;
+extern const ShadowGeometryConstant D_802E0DE8_260528;
+extern const ShadowGeometryConstant D_802E0DF0_260530;
 
 #endif /* LIBULTRA_REFERENCE */
