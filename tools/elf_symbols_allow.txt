@@ -21,3 +21,17 @@ func_800EC448_stub
 func_802D5DDC_stub
 func_802D60FC_stub
 sinf
+# An empty static C function that was hidden behind #ifdef NON_MATCHING until func_800F1DDC_100D8C matched (US and EU).
+func_800F2888_101838
+# Size-0 FUNC symbols that only the EU ELF has (libultra assembly and two data-named labels typed FUNC), found when the
+# check first ran on build.eu/bh.eu.elf. `.L` assembler-local labels are skipped by the script, not listed here.
+alSeqpSetBank
+alSeqpSetSeq
+alSeqpSetVol
+alSeqpPlay
+alSeqpStop
+alSeqpSetChlVol
+guMtxXFML
+D_800230E0_23CE0
+func_80023614_24214
+D_800239D0_245D0

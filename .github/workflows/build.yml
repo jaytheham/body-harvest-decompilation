@@ -97,7 +97,7 @@ jobs:
 
       - name: Check function symbol sizes
         if: env.ROM_AVAILABLE == 'true'
-        run: python3 tools/check_elf_symbols.py build/bh.${{ matrix.version }}.elf
+        run: python3 tools/check_elf_symbols.py ${{ env.BUILD_DIR }}/bh.${{ matrix.version }}.elf
 
       - name: Upload build artifacts on failure
         if: failure()
