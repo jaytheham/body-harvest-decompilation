@@ -3467,7 +3467,6 @@ extern const f32 D_802E7B7C_32BCCC[];
 extern const f64 D_802E7B80_32BCD0[];
 extern const f32 D_802E7B88_32BCD8[];
 extern const f64 D_802E7B90_32BCE0[];
-extern const f64 D_802E7B98_32BCE8[];
 extern const f64 D_802E7BA0_32BCF0[];
 extern const f64 D_802E7BA8_32BCF8[];
 extern const f64 D_802E7BB0_32BD00[];
