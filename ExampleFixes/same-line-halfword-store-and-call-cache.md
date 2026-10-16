@@ -72,3 +72,35 @@ its function-level UGEN listing was identical to the unmodified compiler's.
 The implementation and final checksum were verified only through the normal
 project build. Redundant coordinate argument casts and float assignment casts
 were removed afterward, with the ROM checksum still passing.
+
+## Read the saved halfword after the second call
+
+`func_802DA520_259C60` matched all 214 instructions and the full ROM checksum.
+A cached first heading (`s16`) followed by a comparison against a second call
+produced the correct operations and stack homes, but reloaded the first result
+into t9 rather than v1. An empty read before the second call selected the right
+registers but introduced two redundant floating argument saves.
+
+Cache the second result in an existing, no-longer-needed word local, and put
+the discarded read after that call:
+
+```c
+savedHeading = func_80003824_4424((f32)dx, (f32)dz);
+value = func_80003824_4424((f32)dx, (f32)dz); if (savedHeading) {}
+func_80102DDC_111D8C(D_80052B34,
+    savedHeading > -value
+        ? func_80003824_4424((f32)dx, (f32)dz)
+        : -func_80003824_4424((f32)dx, (f32)dz), 0, 50.0f);
+```
+
+The second result must be a word: a halfword local adds an unnecessary sll/sra
+pair after the call. Reusing the earlier terrain-height word preserves the
+frame and the automatic floating spill slots. The discarded read gives the
+first heading its target v1 reload without adding instructions. Moving that
+read after the final knockback call has no effect on the comparison register.
+
+Keep dx/dz as named word differences and cast them directly at the heading
+calls. Separate float locals reserve unused homes and shift the spills. Direct
+alienInstances[arg0] access removes another unused pointer home, placing both
+float spills at their target offsets. Assign the alien's height before its
+vertical velocity to retain the target temporary-register cycle.
