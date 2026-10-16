@@ -1230,13 +1230,13 @@ void func_802D5CA8_2553E8(u8 arg0) {
 	func_8008064C_8F5FC(arg0);
 }
 
-// CURRENT(2650)
-#ifdef NON_MATCHING
 void func_802D5D08_255448(u8 arg0) {
-	s32 sp38;
 	s32 temp;
-	s16 sp32;
 	AlienInstance *alien;
+	s32 padTop;
+	s32 sp38;
+	s32 padHeight;
+	s16 sp32;
 
 	sp38 = 0x2BC;
 	func_80137468_146418(arg0, 0x130);
@@ -1253,9 +1253,9 @@ void func_802D5D08_255448(u8 arg0) {
 	if (!(alien->unk20 & ALIEN_FLAG_UNK5) && !(alien->unk20 & ALIEN_FLAG_UNKG)) {
 		alien->unk20 |= ALIEN_FLAG_PLAYER;
 		if (func_80084E54_93E04(alien, D_80052B34) < 0x640) {
+			alien->unk20 |= (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNK5);
 			alien->unk3C = 0x50;
 			alien->unk1E = 0;
-			alien->unk20 |= (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNK5);
 		}
 	} else if (alien->unk20 & ALIEN_FLAG_UNKE) {
 		if (func_80084FE8_93F98(arg0, 0x800) != 0) {
@@ -1286,9 +1286,9 @@ void func_802D5D08_255448(u8 arg0) {
 		} else {
 			temp = func_8008E524_9D4D4(arg0, sp38, 0xA);
 			if (sp38 < temp) {
-				func_8008EB20_5EFD0(arg0, temp, 0x640, 0, 0, 0, 0);
+				func_8008EB20_9DAD0(arg0, temp, 0x640);
 			} else {
-				func_8008EB20_5EFD0(arg0, temp, 0x320, 0, 0, 0, 0);
+				func_8008EB20_9DAD0(arg0, temp, 0x320);
 			}
 		}
 	}
@@ -1303,9 +1303,6 @@ void func_802D5D08_255448(u8 arg0) {
 		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D5D08_255448.s")
-#endif
 
 // helper function called through Torabug on-death function
 void func_802D5F88_2556C8(u8 arg0) {
