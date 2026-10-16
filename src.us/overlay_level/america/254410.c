@@ -2011,8 +2011,6 @@ s32 func_802D7D08_257448(u8 arg0, s32 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 	return 0;
 }
 
-// CURRENT(10440)
-#ifdef NON_MATCHING
 void func_802D803C_25777C(u8 arg0) {
 	s16 sp46;
 	s16 sp44;
@@ -2023,12 +2021,12 @@ void func_802D803C_25777C(u8 arg0) {
 	s16 sp3A;
 	s16 sp38;
 	s16 sp36;
+	s32 distanceSquared;
 
-	arg0 &= 0xFF;
 
 	sp46 = D_8014DD50[alienInstances[arg0].unkC].unkC;
-	sp40 = D_8014DD50[sp46].unkD;
 	sp44 = D_8014DD50[sp46].unkC;
+	sp40 = D_8014DD50[sp46].unkD;
 	sp3E = D_8014DD50[sp40].unkC;
 	sp3C = D_8014DD50[sp3E].unkC;
 	sp3A = D_8014DD50[sp40].unkD;
@@ -2064,15 +2062,18 @@ void func_802D803C_25777C(u8 arg0) {
 	func_800877E8_96798(arg0, 0xC8, 0xFA);
 
 	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD))) {
-		if (((D_80052B34->unk4 - alienInstances[arg0].unk4) * (D_80052B34->unk4 - alienInstances[arg0].unk4) + (D_80052B34->unk0 - alienInstances[arg0].unk0) * (D_80052B34->unk0 - alienInstances[arg0].unk0) < 0x186A0 && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && D_80052B34->unk1A == 0) ||
-			((D_80052B34->unk4 - alienInstances[arg0].unk4) * (D_80052B34->unk4 - alienInstances[arg0].unk4) + (D_80052B34->unk0 - alienInstances[arg0].unk0) * (D_80052B34->unk0 - alienInstances[arg0].unk0) < 0x493E0 && D_80052B34->unk1A != 0)) {
+		distanceSquared = (D_80052B34->unk0 - alienInstances[arg0].unk0) * (D_80052B34->unk0 - alienInstances[arg0].unk0);
+		distanceSquared += (D_80052B34->unk4 - alienInstances[arg0].unk4) * (D_80052B34->unk4 - alienInstances[arg0].unk4);
+		if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) &&
+			((D_80052B34->unk1A == 0 && (distanceSquared) < 0x186A0) ||
+			 (D_80052B34->unk1A != 0 && (distanceSquared) < 0x493E0))) {
 			if (alienInstances[arg0].unk2A < alienInstances[arg0].unkE) {
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKG;
 			} else {
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKF;
 			}
 			alienInstances[arg0].unk36 = 0;
-		} else if ((D_80052B34->unk4 - alienInstances[arg0].unk4) * (D_80052B34->unk4 - alienInstances[arg0].unk4) + (D_80052B34->unk0 - alienInstances[arg0].unk0) * (D_80052B34->unk0 - alienInstances[arg0].unk0) >= 0x30D40) {
+		} else if (distanceSquared >= 0x30D40) {
 			if ((func_800038E0_44E0() & 7) == 0) {
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
 				func_80137468_146418(arg0, 0x10);
@@ -2097,9 +2098,6 @@ void func_802D803C_25777C(u8 arg0) {
 		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D803C_25777C.s")
-#endif
 
 void func_802D83D0_257B10(u8 arg0) {
 	s16 sp5E;
