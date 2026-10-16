@@ -2101,21 +2101,20 @@ void func_802D803C_25777C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D803C_25777C.s")
 #endif
 
-// CURRENT(2395)
-#ifdef NON_MATCHING
 void func_802D83D0_257B10(u8 arg0) {
-	AlienInstance *alien;
 	s16 sp5E;
-	s16 sp5A;
-	s16 sp56;
-	s16 sp58;
-	s16 sp54;
 	s16 sp5C;
+	s16 sp5A;
+	s16 sp58;
+	s16 sp56;
+	s16 sp54;
+	AlienInstance *alien;
 	s32 sp4C;
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
-	s32 pad;
+	s16 chosenJoint;
+	s16 pad;
 
 	alien = &alienInstances[arg0];
 	
@@ -2172,18 +2171,16 @@ void func_802D83D0_257B10(u8 arg0) {
 	}
 	
 	if (alien->unk20 & ALIEN_FLAG_Z) {
-		func_800A3D00_B2CB0(arg0, sp58, 2, (s32)&D_802DFB38_25F278);
+		chosenJoint = sp58;
 	} else {
-		func_800A3D00_B2CB0(arg0, sp54, 2, (s32)&D_802DFB38_25F278);
+		chosenJoint = sp54;
 	}
 	
+	func_800A3D00_B2CB0(arg0, chosenJoint, 2, (s32)&D_802DFB38_25F278);
 	if (alien->unk1E != 0) {
 		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D83D0_257B10.s")
-#endif
 
 void func_802D86D8_257E18(u8 arg0) {
 	s16 joint0;
