@@ -35,7 +35,7 @@ A failed build leaves the previous ROM in place. When the compile or the link fa
 
 ## Local changes to vendored tools
 
-- `tools/splat/src/splat/segtypes/common/c.py`: `C_GLOBAL_ASM_IDO_RE` accepts `.` and `-` in path components, so `GLOBAL_ASM` pragmas under `asm.eu/` are recognised. Re-apply it after updating splat; without it the EU build fails.
+- `tools/splat/src/splat/segtypes/common/c.py`: C source reads explicitly use UTF-8, avoiding Windows cp1252 decoding failures on Unicode comments. `C_GLOBAL_ASM_IDO_RE` accepts `.` and `-` in path components, so `GLOBAL_ASM` pragmas under `asm.eu/` are recognised. Re-apply these changes after updating splat; without them extraction can fail on Windows and the EU build fails.
 - `tools/asm-processor/asm_processor.py`: the option `--asm-root SOURCE=DESTINATION` rewrites the leading directory of every
   `#pragma GLOBAL_ASM` path (`asm/nonmatchings/core/...` becomes `asm.eu/src.us/core/...` for
   `--asm-root asm/nonmatchings/core=asm.eu/src.us/core`) before the file is opened or recorded as a dependency, and refuses
