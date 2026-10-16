@@ -30,3 +30,11 @@ random-value temporary `v` there swapped v1 and a0 for its iterator and
 limit, leaving a diff score of 35. Reusing `i` gave score 0 and ROM checksum OK.
 The preceding loop uses row -41: its target displacement is -0x5200,
 whereas the six-row loop begins at row -40 (-0x5000).
+
+## Compound subtraction preserves terrain scratch allocation
+
+The four terrain updates in America `func_802D563C_254D7C` match their target instructions and registers with `cell.height -= amount`, using amounts 8 and 9. The complete function also passes the full US ROM comparison.
+
+Writing `cell.height = rawHalfword - amount` produces the same final operations but changes the scratch allocation. A manual byte mask also changes the allocation. The compound update supplies the intermediate bitfield extraction that IDO later removes, retaining the target temporary register sequence. Use the existing typed row union and bitfield instead of a separate byte-array view or integer pointer arithmetic.
+
+The same pattern matches `func_802D55E4_254D24`: subtract `0x11` from column `0x46` in anchored rows `0x38` and `0x37`, using `(&D_80052A94[-0x80])[row].cells[column].height`. The anchor keeps the target `0xFFFF0000` base and a separate global-pointer reload for each write. The full US ROM comparison passes.

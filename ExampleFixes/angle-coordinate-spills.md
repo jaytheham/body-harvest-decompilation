@@ -29,3 +29,15 @@ In func_802D6CA0_2B90D0, (buildingInstances[buildingType].unk8 & 3) << 14 produc
 ## Separate heading deltas from later distance
 
 In func_802D9BFC_2BC02C, use a dedicated s32 distance for the result of func_80084E54_93E04 and its later comparisons. Reusing the heading delta changes the spill slot. Promote the first chained node index to a named s32, as in matched func_802DFF84_3240D4. Let IDO spill ground height and distance across calls instead of assigning manual backup temporaries. Removing the explicit 0xFFFF mask on the sins argument allows the multiplication's final shift to reuse its working register; the u16 parameter still produces the target mask.
+
+## America circular impact: leave angle narrowing to the trig parameter
+
+During matching of `func_802DC244_25B984`, the angle was initially assigned with
+`angle = ((alien->unk1E % 5) * 0x3333) & 0xFFFF;`. Removing that explicit mask and
+using `angle = (alien->unk1E % 5) * 0x3333;` keeps the required `andi a0,...,0xFFFF`:
+`sins` and `coss` already take `u16`. It also restores the target temporary-register
+sequence throughout the radius calculation and the remaining effect code. The
+full-function diff score fell from 1316 to 831, with no instruction-count change.
+The final implementation also uses direct instance-array access and a typed Z-word
+view; see direct-instance-alias-region-and-halfword-result.md. The complete
+function now has zero diff and passes the full ROM checksum.

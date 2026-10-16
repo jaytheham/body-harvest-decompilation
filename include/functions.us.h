@@ -1748,3 +1748,5 @@ void func_802DE0C8_1F6DD8(u8 arg0);
 int func_802D57F4_1EE504(void);
 
 int func_802D68F4_1EF604(void);
+
+s32 func_802DCCD8_25C418(u8 arg0);

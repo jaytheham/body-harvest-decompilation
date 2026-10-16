@@ -61,3 +61,30 @@ func_800728F4_42DA4 matches with the existing 0.7 constant represented by Shadow
 ## Interior camera compass directions
 
 func_800811DC_16929C matches with the existing divisor and 22.5 constants represented by ShadowGeometryConstant. Keep a shared word result and return after the if/else; separate returns alter the unsigned-conversion fallback paths. Initialize the adjusted angle to zero before computing the base angle, then use the chained assignment base = angle = base + 15.0f in the twelve-direction branch. Assigning only angle makes IDO compute into f12 and copy to f0; assigning base first instead keeps f2. The chain reproduces add.s f0,f2,f16 and removes the copy. The eight-direction branch assigns only angle. Direct u8 conversion supplies the required unsigned conversion and mask. Full ROM checksum OK confirms the match without new files.
+
+## America motion controller
+
+In `func_802DB7B8_25AEF8`, represent the existing 0.9 damping constant `D_802E0DF8_260538` as `ShadowGeometryConstant` and access `.value`. The array form evaluates the constant first and changes floating register allocation. The aggregate preserves both its original rodata address and the target operand/register order.
+
+Use the existing unsigned angle union fields for loads, then cast to signed halfwords for comparisons. Compute the clamped terrain contribution with a ternary inside `arg1 += ...`; updating the height local with an if loses the target branch and separate result register. Compound `unk48 +=` and `-=` retain the target acceleration load order.
+
+Declare the trig-result word before the instance pointer, followed by the first and second movement words. Put the pointer in the formerly unused word before those movement values and remove its trailing declaration. This retains the explicit stack homes while lifting the compiler-generated pointer and angle spills by four bytes. The full ROM checksum passes.
+
+## Float amplitude constants preserve the entire later FPR cycle
+
+`func_802D99E4_259124` matches all 331 instructions and the full ROM checksum.
+Two explicit 6000.0f array constants forced the memory operand first in mul.s.
+The second branch also reversed the double dividend/divisor register choices,
+which rotated temporary floating registers throughout the later effect code.
+Represent both values as a const `FloatConstant` with one `f32 value` member,
+then access `.value`. This fixes both multiplication operand order and every
+later floating register without changing either constant address.
+
+The second old array also contained a zero padding float. Its replacement
+needs only the value: the following eight-byte-aligned double supplies the
+same four zero bytes of padding. The complete ROM checksum verifies all data
+and alignment, not just the function instructions.
+
+Declare the terrain-height word before the alien pointer. This gives the
+height its target sp+0x6c home while retaining the two floats at 0x64 and 0x60.
+The pointer-first order puts only the height four bytes too low.

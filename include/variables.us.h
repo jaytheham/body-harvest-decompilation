@@ -3136,7 +3136,7 @@ extern Unk8014DD50 D_802E0520_25FC60[];
 extern Unk8014DD50 D_802E0580_25FCC0[];
 extern Unk8014DD50 D_802E05E0_25FD20[];
 extern Unk8014DD50 *D_802E0640_25FD80[5];
-extern volatile u32 D_802E0654_25FD94;
+extern Unk80154082 D_802E0654_25FD94;
 extern Unk8014DD50 D_802E0658_25FD98[];
 extern Unk8014DD50 *D_802E0698_25FDD8[1];
 extern Unk8014DD50 D_802E069C_25FDDC[];
@@ -3219,18 +3219,24 @@ extern const char D_802E0D84_1F9A94[];
 extern const char D_802E0DA8_1F9AB8[];
 extern const f64 D_802E0DB0_2604F0[];
 extern const f64 D_802E0DB8_2604F8[];
+extern const f64 D_802E0DC0_260500[];
 extern const char D_802E0DC0_1F9AD0[];
 extern const f32 D_802E0DC8_260508[];
-extern const f32 D_802E0DCC_26050C[];
-extern const f32 D_802E0DD0_260510[];
+extern const FloatConstant D_802E0DCC_26050C;
+extern const FloatConstant D_802E0DD0_260510;
 extern const char D_802E0DE8_1F9AF8[];
 extern void (*D_802E0DF0_2C3220[])(void);
-extern const f64 D_802E0DF8_260538[];
+extern const ShadowGeometryConstant D_802E0DF8_260538;
 extern const f32 D_802E0E00_260540[];
 extern const char D_802E0E04_1F9B14[];
 extern const f32 D_802E0E04_260544[];
 extern const f32 D_802E0E08_260548[];
 extern const f32 D_802E0E0C_26054C[];
+extern const f32 D_802E0E10_260550[];
+extern const f32 D_802E0E14_260554[];
+extern const f32 D_802E0E18_260558[];
+extern const f32 D_802E0E1C_26055C[];
+extern const f32 D_802E0E20_260560[];
 extern const char D_802E0E10_1F9B20[];
 extern const char D_802E0E18_1F9B28[];
 extern const char D_802E0E24_1F9B34[];
@@ -3240,7 +3246,7 @@ extern s16 D_802E0E32;
 extern s16 D_802E0E34; // used for delay timer to start school cutscene in America 1 
 extern const char D_802E0E3C_1F9B4C[];
 extern u8 D_802E0E44;
-extern char D_802E0E48;
+extern s32 D_802E0E48;
 extern const char D_802E0E50_1F9B60[];
 extern const char D_802E0E58_1F9B68[];
 extern const char D_802E0E60_1F9B70[];
@@ -4257,5 +4263,10 @@ extern s32 D_80160070_FIRST;
 extern s32 D_80160070_LIMIT;
 extern u8 D_8016006D_W;
 
+
+extern const ShadowGeometryConstant D_802E0DD8_260518;
+extern const ShadowGeometryConstant D_802E0DE0_260520;
+extern const ShadowGeometryConstant D_802E0DE8_260528;
+extern const ShadowGeometryConstant D_802E0DF0_260530;
 
 #endif /* LIBULTRA_REFERENCE */

@@ -1207,7 +1207,13 @@ typedef struct {
 	};
 	/* 0x14 */ s16 unk14; // target x coord
 	/* 0x16 */ s16 unk16; // target y coord
-	/* 0x18 */ s16 unk18; // target z coord
+	union {
+		/* 0x18 */ s16 unk18; // target z coord
+		struct {
+			/* 0x18 */ u8 unk18Byte;
+			/* 0x19 */ u8 unk19Byte;
+		};
+	};
 	/* 0x1A */ u8 typeIndex; // Types are the same every level? e.g. 0x19 is harvester, 0x1B is Boss
 	/* 0x1B */ u8 unk1B; // Stage this enemy is considered active part of (0 = stage 1; 1 = stage 2; etc)
 	/* 0x1C */ s16 hitPoints;
@@ -3946,6 +3952,10 @@ typedef struct {
 typedef struct {
 	f64 value;
 } ShadowGeometryConstant;
+
+typedef struct {
+	f32 value;
+} FloatConstant;
 
 typedef struct {
 	/* 0x00 */ s16 x;

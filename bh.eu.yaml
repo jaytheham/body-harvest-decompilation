@@ -474,6 +474,7 @@ segments:
       - [0x254F70, c, ../src.us/overlay_level/america/254410]
       - [0x25F5F0, .data, ../src.us/overlay_level/america/254410]
       - [0x260F90, .rodata, ../src.us/overlay_level/america/254410]
+      - [0x261050, .rodata, ../src.us/overlay_level/america/254410_rodata]
 
   - name: overlay_level_america_data
     type: bin
