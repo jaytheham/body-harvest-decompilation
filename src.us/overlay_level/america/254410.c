@@ -3226,72 +3226,68 @@ void func_802DBD08_25B448(u8 arg0, s32 arg1, s32 arg2) {
 	alienTypes[alienInstances[arg0].typeIndex].unk36 = (s16)(s32)((f32)arg2 * scale);
 }
 
-// CURRENT(3762)
-#ifdef NON_MATCHING
 void func_802DBD84_25B4C4(u8 arg0) {
 	u8 parentUnk0;
 	u8 parentUnk1;
 	AlienInstance *parentAlien;
+	s32 value;
+	s16 position[2];
 	Unk80154082 sp54;
 	Unk80154082 sp50;
-	s16 sp5A;
-	s16 sp58;
 	s16 sp4E;
 	s32 sp48;
 	s32 sp44;
 	s32 sp40;
-	AlienInstance *alien;
-	s32 sp2C;
 	s32 temp;
 
 	sp54 = D_802E0994_2600D4;
 	sp50 = D_802E0998_2600D8;
-	alien = &alienInstances[arg0];
-	parentAlien = &alienInstances[alien->unk25];
-	parentUnk0 = ((u8 *)parentAlien)[0];
-	parentUnk1 = ((u8 *)parentAlien)[1];
+	parentAlien = &alienInstances[alienInstances[arg0].unk25];
+	parentUnk0 = parentAlien->alienIds[0];
+	parentUnk1 = parentAlien->alienIds[1];
 
-	if (alien->unk20 & ALIEN_FLAG_UNKF) {
+	if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF) {
 		if (parentAlien->unk20 & ALIEN_FLAG_UNKD) {
 			if (!(D_80052A8C & 1)) {
 				func_80014A3C_1563C((s32)D_80052B34, 0xB3, 0, 0, -1.0f);
 			}
-			if (alien->unk4B < 0x40) {
+			value = alienInstances[arg0].unk4B;
+			if (value < 0x40) {
 				temp = D_80052A8C & 3;
 				if (temp == 0) {
-					alien->unk20 |= ALIEN_FLAG_UNKP;
+					alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKP;
 				} else if (temp == 1) {
 					alienInstances[parentUnk0].unk20 |= ALIEN_FLAG_UNKP;
 				} else if (temp == 2) {
 					alienInstances[parentUnk1].unk20 |= ALIEN_FLAG_UNKP;
 				}
 
-				D_802E0E32 += 4;
+				value = alienInstances[arg0].unk4B;
+				temp = value;
 				D_802E0E30 += 4;
+				D_802E0E32 += 4;
+				sp48 = (s16)(temp << 12);
+				if (sp48) {}
+				sp4E = sp48; D_802E0E32 += 20.0 * ((f32)sins(sp48) / 32768.0);
+				D_802E0E30 += 40.0 * ((f32)sins(sp48) / 32768.0);
 
-				sp4E = (s16)((s32)alien->unk4B << 12);
-				sp2C = sp4E;
+				alienInstances[arg0].unk4B++;
 
-				D_802E0E32 = (s16)(D_802E0E32 + 20.0 * ((f32)sins(sp2C) / 32768.0));
-				D_802E0E30 = (s16)(D_802E0E30 + 40.0 * ((f32)sins(sp2C) / 32768.0));
-
-				alien->unk4B++;
-
-				sp48 = alien->unk0;
-				sp44 = alien->unk2;
-				sp40 = alien->unk4;
+				sp48 = alienInstances[arg0].unk0;
+				sp44 = alienInstances[arg0].unk2;
+				sp40 = alienInstances[arg0].unk4;
 
 				if (sp4E == -0x4000) {
-					func_800DEE5C_EDE0C((s16)sp48, (s16)((s16)sp44 + 0xC8), (s16)sp40, 0x23, 6);
-					func_800DEE5C_EDE0C((s16)sp48, (s16)sp44, (s16)sp40, 0x32, 6);
-					func_800DEE5C_EDE0C((s16)sp48, (s16)((s16)sp44 - 0xC8), (s16)sp40, 0x3C, 6);
+					func_800DEE5C_EDE0C(sp48, sp44 + 0xC8, sp40, 0x23, 6);
+					func_800DEE5C_EDE0C(sp48, sp44, sp40, 0x32, 6);
+					func_800DEE5C_EDE0C(sp48, sp44 - 0xC8, sp40, 0x3C, 6);
 				}
 
 				if (sp4E < 0) {
-					func_800C56A4_D4654((s16)sp48, (s16)sp44, (s16)sp40, 0x320, 0xF, 0xA, 0x28);
-					sp58 = alien->unk0;
-					sp5A = alien->unk4;
+					func_800C56A4_D4654(sp48, sp44, sp40, 0x320, 0xF, 0xA, 0x28);
 				}
+				position[0] = alienInstances[arg0].unk0;
+				position[1] = alienInstances[arg0].unk4;
 			} else {
 				alienInstances[parentUnk0].unk20 &= ~ALIEN_FLAG_INVINCIBLE;
 				alienInstances[parentUnk1].unk20 &= ~ALIEN_FLAG_INVINCIBLE;
@@ -3301,23 +3297,21 @@ void func_802DBD84_25B4C4(u8 arg0) {
 				func_80137468_146418(arg0, 0x13E);
 			}
 
-			D_802DF3A4_25EAE4 = (f32)(D_802E0E30 * (1.0 / 256.0));
-			D_802DF3A8_25EAE8 = (f32)(D_802E0E32 * (1.0 / 256.0));
+			D_802DF3A4_25EAE4 = D_802E0E30 * (1.0 / 256.0);
+			D_802DF3A8_25EAE8 = D_802E0E32 * (1.0 / 256.0);
 		}
 	} else {
 		D_802E0E30 = 0x100;
 		D_802DF3A4_25EAE4 = 1.0f;
 		D_802E0E32 = 0x100;
 		D_802DF3A8_25EAE8 = 1.0f;
-		alien->unk4B = 0;
+		alienInstances[arg0].unk4B = 0;
 	}
 
-	func_80004214_4E14(D_802E0E30, func_80011F90_12B90(&D_E020FB0));
-	func_80004214_4E14(D_802E0E32, func_80011F90_12B90(&D_E021030));
+	value = func_80011F90_12B90(&D_E020FB0); if (value) {} func_80004214_4E14(D_802E0E30, value);
+	value = func_80011F90_12B90(&D_E021030); if (value) {} func_80004214_4E14(D_802E0E32, value);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DBD84_25B4C4.s")
-#endif
+
 
 void func_802DC244_25B984(u8 arg0) {
 	AlienInstance *parent;
