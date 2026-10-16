@@ -31,7 +31,7 @@ void func_802DA878_259FB8(u8 arg0);
 void func_802DAAF0_25A230(u8 arg0);
 void func_802DAEDC_25A61C(u8 arg0);
 void func_802DB6B0_25ADF0(u8 arg0);
-void func_802DC880_25BFC0(s32 arg0);
+void func_802DC880_25BFC0(u8 arg0);
 void func_802DD9C8_25D108(u8 arg0);
 void func_802DDA98_25D1D8(u8 arg0);
 void func_802DDC88_25D3C8(u8 arg0);
