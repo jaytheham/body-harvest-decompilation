@@ -5,6 +5,7 @@ overlay_gameplay/frontend/52690.c
 overlay_level/greece/18D7E0.c
 overlay_level/java/1ED9E0.c
 overlay_level/america/254410.c
+overlay_level/america/254410_rodata.c
 overlay_level/siberia/2B7100.c
 overlay_level/comet/318E20.c
 overlay_gameplay/inside/158330.c

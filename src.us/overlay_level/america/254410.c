@@ -7,6 +7,9 @@
 #include "common.h"
 #include "version_shift.h"
 
+/* Earlier overlay BSS variables occupy 0x802E0E30 through 0x802E0E47. */
+static u8 americaBssPrefix[0x18];
+
 /* ====================== .data ====================== */
 
 void (*D_802DF350_25EA90[])(s32) = {
@@ -748,32 +751,6 @@ const u32 jtbl_802E0D54_260494[] = {
 
 const f64 D_802E0D78_2604B8[] = { 45.0 };
 
-const u32 jtbl_802E0D80_2604C0[] = {
-	LEVEL_PTR(0x802D5670), LEVEL_PTR(0x802D56D0), LEVEL_PTR(0x802D5728), LEVEL_PTR(0x802D58CC),
-	LEVEL_PTR(0x802D5924), LEVEL_PTR(0x802D5AE4), LEVEL_PTR(0x802D5B60), LEVEL_PTR(0x802D5B98),
-	LEVEL_PTR(0x802D5BF0), LEVEL_PTR(0x802D5C1C), LEVEL_PTR(0x802D5C74), 0x00000000,
-};
-
-const f64 D_802E0DB0_2604F0[] = { -166.0 };
-const f64 D_802E0DB8_2604F8[] = { -166.0 };
-const f64 D_802E0DC0_260500[] = { 188.0 };
-const f32 D_802E0DC8_260508[] = { 0.7f };
-const FloatConstant D_802E0DCC_26050C = { 6000.0f };
-const FloatConstant D_802E0DD0_260510 = { 6000.0f };
-const ShadowGeometryConstant D_802E0DD8_260518 = { 130.0 };
-const ShadowGeometryConstant D_802E0DE0_260520 = { 102.0 };
-const ShadowGeometryConstant D_802E0DE8_260528 = { 102.0 };
-const ShadowGeometryConstant D_802E0DF0_260530 = { 1400.0 };
-const ShadowGeometryConstant D_802E0DF8_260538 = { 0.9 };
-const f32 D_802E0E00_260540[] = { 976.5625f };
-const f32 D_802E0E04_260544[] = { 4000000.0f };
-const f32 D_802E0E08_260548[] = { 0.1f };
-const f32 D_802E0E0C_26054C[] = { 0.1f };
-const f32 D_802E0E10_260550[] = { 0.1f };
-const f32 D_802E0E14_260554[] = { 0.333f };
-const f32 D_802E0E18_260558[] = { 0.333f };
-const f32 D_802E0E1C_26055C[] = { 0.333f };
-const f32 D_802E0E20_260560[] = { 0.333f, 0.0f, 0.0f, 0.0f };
 
 
 void func_802D62A0_2559E0(u8 arg0);
@@ -1097,15 +1074,10 @@ void func_802D55E4_254D24(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D55E4_254D24.s")
 #endif
 
-// jtbl_802E0D80_2604C0
-// CURRENT(21261)
 // Vision Quest cutscene
-#ifdef NON_MATCHING
 s32 func_802D563C_254D7C(void) {
-	s16 tx;
-	s16 ty;
-	s16 tz;
-	s32 sp24;
+	static s32 actorIndex;
+
 
 	switch (D_80157F8C) {
 	case 0:
@@ -1117,81 +1089,42 @@ s32 func_802D563C_254D7C(void) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 1:
-	case 3:
-	case 7:
-	case 9:
-		if (D_80157F8E < 6) {
-			D_8013E344_14D2F4 = D_80157F8E * 40;
-		} else {
+		if (D_80157F8E >= 6) {
 			D_8013E344_14D2F4 = 0xFF;
+		} else {
+			D_8013E344_14D2F4 = D_80157F8E * 40;
 		}
 		if (D_80157F8E++ >= 0xB) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
-	case 2:
+		break;
+	case 2: {
 		if (D_80157F8E == 0x14) {
-			sp24 = func_800B84D0_C7480(0x4600, -0x4880);
-			func_800DF038_EDFE8(0x4600, (sp24 >> 8) - 0xC8, -0x4880, 0x1F4, 0, 0);
+			func_800DF038_EDFE8(0x4600, (func_800B84D0_C7480(0x4600, -0x4880) >> 8) - 0xC8, -0x4880, 0x1F4, 0, 0);
 		}
 		if (D_80157F8E == 0x19) {
-			sp24 = (s32)D_80052A94 - 0x10000;
-			*(u8 *)(sp24 + 0x708D) = ((*(u16 *)(sp24 + 0x708C) - 9) & 0x3F) | (*(u8 *)(sp24 + 0x708D) & 0xFFC0);
-			*(u8 *)(sp24 + 0x6E8D) = ((*(u16 *)(sp24 + 0x6E8C) - 8) & 0x3F) | (*(u8 *)(sp24 + 0x6E8D) & 0xFFC0);
+			(&D_80052A94[-0x80])[56].cells[0x46].height -= 9;
+			(&D_80052A94[-0x80])[55].cells[0x46].height -= 8;
 		}
 		if (D_80157F8E == 0x2D) {
-			sp24 = func_800B84D0_C7480(0x4600, -0x4880);
-			func_800DF038_EDFE8(0x4600, (sp24 >> 8) - 0xFA, -0x4880, 0x1F4, 0, 0);
+			func_800DF038_EDFE8(0x4600, (func_800B84D0_C7480(0x4600, -0x4880) >> 8) - 0xFA, -0x4880, 0x1F4, 0, 0);
 		}
 		if (D_80157F8E == 0x32) {
-			sp24 = (s32)D_80052A94 - 0x10000;
-			*(u8 *)(sp24 + 0x708D) = ((*(u16 *)(sp24 + 0x708C) - 8) & 0x3F) | (*(u8 *)(sp24 + 0x708D) & 0xFFC0);
-			*(u8 *)(sp24 + 0x6E8D) = ((*(u16 *)(sp24 + 0x6E8C) - 9) & 0x3F) | (*(u8 *)(sp24 + 0x6E8D) & 0xFFC0);
+			(&D_80052A94[-0x80])[56].cells[0x46].height -= 8;
+			(&D_80052A94[-0x80])[55].cells[0x46].height -= 9;
 		}
 		if (D_80157F8E++ >= 0x58) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
-	case 4:
-		if (D_80157F8E == 0) {
-			sp24 = func_8007956C_8851C(0x12); // spawn Black Adam
-			D_802E0E48 = sp24;
-			if (sp24 != 0xFF) {
-				alienInstances[sp24].unk20 &= ~ (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
-				alienInstances[sp24].unk0 = 0x56D2; // spawn and target coords
-				alienInstances[sp24].unk4 = -0x3180;
-				alienInstances[sp24].unk14 = 0x56D2;
-				alienInstances[sp24].unk18 = -0x2D80;
-				alienInstances[sp24].unk20 |= ALIEN_FLAG_TARGET_PT;
-				alienInstances[sp24].unk24 = 2; // running state
-				alienInstances[sp24].unkE = 0x4000;
-				alienInstances[sp24].unk2A = 0x4000;
-				func_8007A198_89148(sp24);
-				D_80157F94 = sp24;
-			}
-		}
-		if (D_80157F8E == 2) {
-			((s8 *)D_8003E0FC_3ECFC)[0xB0]++;
-			tx = *(s16 *)((s8 *)D_8003E0FC_3ECFC + currentLevel * 80 - 0x46);
-			ty = *(s16 *)((s8 *)D_8003E0FC_3ECFC + currentLevel * 80 - 0x44);
-			tz = *(s16 *)((s8 *)D_8003E0FC_3ECFC + currentLevel * 80 - 0x42);
-			func_800DEE5C_EDE0C((tx << 24) >> 16, ty, (tz << 24) >> 16, 0x64, 3);
-			func_800DEE5C_EDE0C((tx << 24) >> 16, ty, (tz << 24) >> 16, 0x32, 3);
-			func_800D05A8_DF558((tx << 24) >> 16, ty, (tz << 24) >> 16, 0x1F4, 0xC8, 0xC8, 0xFA);
-		}
-		if (D_80157F8E++ >= 0x24) {
-			D_80157F8E = 0;
-			D_80157F8C++;
-		}
-		return 0;
-	case 5:
+		break;
+	}
+	case 3:
 		if (D_80157F8E >= 6) {
 			D_8013E344_14D2F4 = 0xFF;
-			func_80079910_888C0(D_802E0E48); // despawn Black Adam
 		} else {
 			D_8013E344_14D2F4 = D_80157F8E * 40;
 		}
@@ -1199,20 +1132,89 @@ s32 func_802D563C_254D7C(void) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
-	case 6:
-		((s8 *)D_8003E0FC_3ECFC)[0xB0] = 0;
-		if (D_80157F8E++ >= 0x29) {
+		break;
+	case 4: {
+		if (D_80157F8E == 0) {
+			actorIndex = func_8007956C_8851C(0x12); // spawn Black Adam
+			if (actorIndex != 0xFF) {
+				alienInstances[actorIndex].unk0 = 0x56D2; // spawn and target coords
+				alienInstances[actorIndex].unk4 = -0x3180;
+				alienInstances[actorIndex].unk14 = 0x56D2;
+				alienInstances[actorIndex].unk18 = -0x2D80;
+				alienInstances[actorIndex].unk20 &= ~ (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+				alienInstances[actorIndex].unk20 |= ALIEN_FLAG_TARGET_PT;
+				alienInstances[actorIndex].unk24 = 2; // running state
+				alienInstances[actorIndex].unkE = 0x4000;
+				alienInstances[actorIndex].unk2A = 0x4000;
+				func_8007A198_89148(actorIndex);
+				D_80157F94 = actorIndex;
+			}
+		}
+		if (D_80157F8E == 2) {
+			s16 tx;
+			s16 ty;
+			s16 tz;
+			D_8003E0FC_3ECFC[2][1].openness++;
+			tx = D_8003E0FC_3ECFC[currentLevel - 1][1].xPosition << 8;
+			ty = D_8003E0FC_3ECFC[currentLevel - 1][1].yPosition;
+			tz = D_8003E0FC_3ECFC[currentLevel - 1][1].zPosition << 8;
+			func_800DEE5C_EDE0C(tx, ty, tz, 0x64, 3);
+			func_800DEE5C_EDE0C(tx, ty, tz, 0x32, 3);
+			func_800D05A8_DF558(tx, ty, tz, 0x1F4, 0xC8, 0xC8, 0xFA);
+		}
+		if (D_80157F8E++ >= 0x24) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
+		break;
+	}
+	case 5:
+		if (D_80157F8E >= 6) {
+			D_8013E344_14D2F4 = 0xFF;
+			func_80079910_888C0(actorIndex); // despawn Black Adam
+		} else {
+			D_8013E344_14D2F4 = D_80157F8E * 40;
+		}
+		if (D_80157F8E++ >= 0xB) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
+	case 6:
+		D_8003E0FC_3ECFC[2][1].openness = 0;
+		if (D_80157F8E++ >= 0x29) {
+			D_80157F8C++;
+			D_80157F8E = 0;
+		}
+		break;
+	case 7:
+		if (D_80157F8E >= 6) {
+			D_8013E344_14D2F4 = 0xFF;
+		} else {
+			D_8013E344_14D2F4 = D_80157F8E * 40;
+		}
+		if (D_80157F8E++ >= 0xB) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
 	case 8:
 		if (D_80157F8E++ >= 0x3D) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
+		break;
+	case 9:
+		if (D_80157F8E >= 6) {
+			D_8013E344_14D2F4 = 0xFF;
+		} else {
+			D_8013E344_14D2F4 = D_80157F8E * 40;
+		}
+		if (D_80157F8E++ >= 0xB) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
 	case 10:
 		D_8013E344_14D2F4 = 0xFF;
 		D_801493E0 = 1;
@@ -1220,9 +1222,6 @@ s32 func_802D563C_254D7C(void) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D563C_254D7C.s")
-#endif
 
 void func_802D5CA8_2553E8(u8 arg0) {
 	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNK5;
