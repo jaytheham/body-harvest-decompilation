@@ -31,3 +31,37 @@ In `func_802DAEDC_25A61C`, the final effect call loaded X, stored X to a stack p
 Replacing the named `AlienInstance *alien` throughout the function with direct `alienInstances[arg0]` field accesses fixes the entire final effect sequence, including the outgoing zero argument. Keep an unused word in the pointer declaration's old slot to preserve stack placement. Rebinding that pointer only inside the effect branch was byte-inert. Array versus Vec2 syntax, first-member address casts, and comma expressions were also byte-inert for this problem.
 
 The alias fix reduces the function diff from 407 to 65. Combining the countdown negation and scale into one expression reduces it to 20. The final fix is a u16 angle local followed by a halfword of padding, passing angle directly to sins without another explicit mask. Keeping the mask retains the wrong negative register and shifts the temporary-register cycle. Using a word angle loses the argument-register constraint; fully inlining the calculation loses the target argument copy. The halfword assignment supplies the narrowing at the right stage. All 474 instructions match and the complete ROM checksum passes.
+
+### Direct alien indexing permits floating scratch registers
+
+`func_802DA120_259860` matches all 256 instructions and the full ROM checksum.
+An `AlienInstance *alien = &alienInstances[arg0]` kept the correct integer
+instructions but inhibited promotion and delayed stores of local floating
+scratch values. It gave the first vector subtraction f10 rather than f12,
+stored it before the Z division, and completed/stored the normalized sine
+before reading the next angle. Direct `alienInstances[arg0]` access resolves
+the aliasing: all floating instructions, registers, and scheduling then match.
+No extra vector temporaries, pointer locals, or discarded checks are needed.
+
+Reuse the three normalization floats for the later sine/cosine values. Assign
+the unsigned angle local before each trig call and pass it without another
+mask. Compute the float sine ratio before calling cosine, and retain the
+double division and negation for the cosine ratio.
+
+The remaining three automatic word spills were four bytes too low. Replace
+the old alien-pointer declaration with a word `random`, in the same first
+local slot. Cache the third random result there before each effect call:
+
+```c
+rand2 = func_800038E0_44E0();
+random = func_800038E0_44E0();
+func_800DEA08_ED9B8(x, heading, z, (s16)((rand2 % 100) + 300),
+    (random % 20) + 10, /* remaining arguments */);
+```
+
+Keep `rand2` as an unsigned halfword. Inlining that call instead emits a word
+save followed by an unsigned halfword reload from its low half. Naming the
+third raw word result removes one compiler-created temporary, raising the X,
+Z, and heading spill homes by four bytes while preserving frame 0x80 and all
+explicit homes. An unused word in that first slot leaves the extra temporary;
+adding new narrowed coordinate locals enlarges the frame.

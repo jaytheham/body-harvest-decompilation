@@ -2624,10 +2624,8 @@ void func_802DA054_259794(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	}
 }
 
-// CURRENT(6215)
-#ifdef NON_MATCHING
 void func_802DA120_259860(s16 arg0, s32 arg1) {
-	AlienInstance *alien;
+	s32 random;
 	s32 x;
 	s32 heading;
 	s32 z;
@@ -2635,18 +2633,18 @@ void func_802DA120_259860(s16 arg0, s32 arg1) {
 	f32 vecY;
 	f32 vecZ;
 	s16 randVal;
+	u16 angle;
 	u16 rand2;
 
-	alien = &alienInstances[arg0];
-	if (alien->unk2 < ((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) - 0xC8)) {
+	if (alienInstances[arg0].unk2 < ((func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8) - 0xC8)) {
 		return;
 	}
-	if (alien->unk48 == 0) {
+	if (alienInstances[arg0].unk48 == 0) {
 		return;
 	}
 	func_80137468_146418(arg0, 0x12E);
-	x = alien->unk0;
-	z = alien->unk4;
+	x = alienInstances[arg0].unk0;
+	z = alienInstances[arg0].unk4;
 	vecX = (f32)(x / 4) - D_80047954;
 	vecY = 0.0f;
 	vecZ = (f32)(z / 4) - D_8004795C;
@@ -2655,28 +2653,31 @@ void func_802DA120_259860(s16 arg0, s32 arg1) {
 	vecZ *= 200.0f;
 	x = (s32)((f32)x - vecX);
 	z = (s32)((f32)z - vecZ);
-	heading = (func_800B84D0_C7480((s16)x, (s16)z) >> 8) + 0x32;
+	heading = (func_800B84D0_C7480(x, z) >> 8) + 0x32;
 	if ((D_80052A8C % 6U) == 0) {
 		randVal = func_800038E0_44E0() % 30;
 		if (arg1 != 0) {
 			rand2 = func_800038E0_44E0();
-			func_800DEA08_ED9B8((s16)x, heading, (s16)z, (s16)((rand2 % 100) + 0x12C), (func_800038E0_44E0() % 20) + 0xA, 0, 0x32, 0xC8, randVal + 0x88, randVal + 0x67, randVal + 0x11);
-			func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 3.0f);
+			random = func_800038E0_44E0();
+			func_800DEA08_ED9B8(x, heading, z, (s16)((rand2 % 100) + 0x12C), (random % 20) + 0xA, 0, 0x32, 0xC8, randVal + 0x88, randVal + 0x67, randVal + 0x11);
+			func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 3.0f);
 		} else {
 			rand2 = func_800038E0_44E0();
-			func_800DEA08_ED9B8((s16)x, heading, (s16)z, (s16)((rand2 % 100) + 0x12C), (func_800038E0_44E0() % 10) + 5, 0, 0x32, 0xB4, randVal + 0x88, randVal + 0x67, randVal + 0x11);
-			func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 2.0f);
+			random = func_800038E0_44E0();
+			func_800DEA08_ED9B8(x, heading, z, (s16)((rand2 % 100) + 0x12C), (random % 10) + 5, 0, 0x32, 0xB4, randVal + 0x88, randVal + 0x67, randVal + 0x11);
+			func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 2.0f);
 		}
 	}
 	if (!(D_80052A8C & 1) && (arg1 != 0)) {
-		func_800C541C_D43CC((s16)x, (s16)heading, (s16)z,
-			(s8)(s32)((f32)((f64)(f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 127.0f), 0x7F,
-			(s8)(s32)((f32)(-((f64)(f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0)) * 127.0f), 0x64, 0xFF, 0x50, 0x14, 0x6A, 0x53, 0);
+		angle = alienInstances[arg0].unk6 + 0x4000;
+		vecX = (f32)((f32)sins(angle) / 32768.0);
+		angle = alienInstances[arg0].unk6 + 0x4000;
+		vecZ = (f32)(-((f32)coss(angle) / 32768.0));
+		func_800C541C_D43CC(x, heading, z,
+			(s8)(s32)(vecX * 127.0f), 0x7F,
+			(s32)(vecZ * 127.0f), 0x64, 0xFF, 0x50, 0x14, 0x6A, 0x53, 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DA120_259860.s")
-#endif
 
 void func_802DA520_259C60(u8 arg0) {
 	s16 sp66;
