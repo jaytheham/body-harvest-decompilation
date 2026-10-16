@@ -506,7 +506,12 @@ $(SPLAT):
 baserom.$(VERSION).z64:
 	$(error Place the BH ROM, named '$@', in the root of this repo and try again.)
 
+# The size-0 FUNC symbol check CI runs on the built ELF. Reads the ELF of VERSION from its own build directory, so a local
+# run cannot name the wrong path; when it fails it prints the command that accepts the new symbols.
+check-symbols: $(TARGET).elf
+	$(PYTHON) tools/check_elf_symbols.py $(TARGET).elf
+
 ### Settings
 .SECONDARY:
-.PHONY: all clean default
+.PHONY: all clean default check-symbols
 SHELL = /bin/bash -e -o pipefail
