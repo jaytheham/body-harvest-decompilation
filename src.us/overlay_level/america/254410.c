@@ -758,8 +758,8 @@ const f64 D_802E0DB0_2604F0[] = { -166.0 };
 const f64 D_802E0DB8_2604F8[] = { -166.0 };
 const f64 D_802E0DC0_260500[] = { 188.0 };
 const f32 D_802E0DC8_260508[] = { 0.7f };
-const f32 D_802E0DCC_26050C[] = { 6000.0f };
-const f32 D_802E0DD0_260510[] = { 6000.0f, 0.0f };
+const FloatConstant D_802E0DCC_26050C = { 6000.0f };
+const FloatConstant D_802E0DD0_260510 = { 6000.0f };
 const ShadowGeometryConstant D_802E0DD8_260518 = { 130.0 };
 const ShadowGeometryConstant D_802E0DE0_260520 = { 102.0 };
 const ShadowGeometryConstant D_802E0DE8_260528 = { 102.0 };
@@ -2492,11 +2492,9 @@ void func_802D998C_2590CC(u8 arg0) {
 	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNK5;
 }
 
-// CURRENT(235)
-#ifdef NON_MATCHING
 void func_802D99E4_259124(u8 arg0) {
-	AlienInstance *alien = &alienInstances[arg0];
 	s32 sp6C;
+	AlienInstance *alien = &alienInstances[arg0];
 	f32 sp64;
 	f32 sp60;
 
@@ -2509,9 +2507,9 @@ void func_802D99E4_259124(u8 arg0) {
 
 		sinVal = sins((u16)(((f32)alien->unk48 / -500.0f) * 32768.0f));
 		if (alien->unk26 == 0) {
-			alien->unkA = (s16)(s32)(-(f32)((f32)sinVal / 32768.0) * D_802E0DCC_26050C[0]);
+			alien->unkA = (s32)(-(f32)((f32)sinVal / 32768.0) * D_802E0DCC_26050C.value);
 		} else {
-			alien->unkA = (s16)(s32)((f32)((f32)sinVal / 32768.0) * D_802E0DD0_260510[0]);
+			alien->unkA = (s32)((f32)((f32)sinVal / 32768.0) * D_802E0DD0_260510.value);
 		}
 	}
 
@@ -2519,18 +2517,18 @@ void func_802D99E4_259124(u8 arg0) {
 		s32 v0 = func_80084E54_93E04((EntityInstance *)alien, (EntityInstance *)D_80052B34);
 
 		if (v0 >= 0x709 || (alien->unk47 & 1)) {
-			alien->unk20 |= 0x100;
-			alien->unk20 &= ~0x840;
+			alien->unk20 |= ALIEN_FLAG_TARGET_PT;
+			alien->unk20 &= ~(ALIEN_FLAG_UNKC | ALIEN_FLAG_AWAY);
 		} else if (v0 >= 0x5DD) {
-			alien->unk20 |= 0x800;
-			alien->unk20 &= ~0x140;
+			alien->unk20 |= ALIEN_FLAG_UNKC;
+			alien->unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY);
 		} else {
-			alien->unk20 |= 0x140;
-			alien->unk20 &= ~0x800;
+			alien->unk20 |= ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY;
+			alien->unk20 &= ~ALIEN_FLAG_UNKC;
 		}
 
 		if (alien->unk3C == 0 && alien->unk2 < sp6C - 0xC8 && v0 < 0x708 && v0 >= 0x259) {
-			alien->unk26 = 2U;
+			alien->unk26 = 2;
 		}
 	}
 
@@ -2545,7 +2543,7 @@ void func_802D99E4_259124(u8 arg0) {
 	}
 
 	if (((sp6C - 0x96) >= alien->unk2 && D_80052A8C % 20U == 0) || ((sp6C - 0x96) < alien->unk2 && (D_80052A8C & 3U) == 0)) {
-		sp64 = (f32)((double)(f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
+		sp64 = (f32)((f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
 		sp60 = -((f32)coss((u16)(alien->unk6 + 0x4000)) / 32768.0);
 
 		func_800DEA08_ED9B8((s16)((f32)alien->unk0 + sp64 * 250.0f), sp6C, (s16)((f32)alien->unk4 + sp60 * 250.0f), 0x64, 0xF, 0, 0x32, 0xFF, 0xA6, 0x85, 0x2F);
@@ -2564,9 +2562,6 @@ void func_802D99E4_259124(u8 arg0) {
 		alien->unk2C--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802D99E4_259124.s")
-#endif
 
 void func_802D9F10_259650(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7) {
 	s16 sp30[7];

@@ -3954,6 +3954,10 @@ typedef struct {
 } ShadowGeometryConstant;
 
 typedef struct {
+	f32 value;
+} FloatConstant;
+
+typedef struct {
 	/* 0x00 */ s16 x;
 	/* 0x02 */ s16 z;
 } BeaconLevelCoord; /* 4 bytes */
