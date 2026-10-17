@@ -43,12 +43,6 @@ This functionality may be removed if not needed.
 Reading assembly from file is also supported, by either `GLOBAL_ASM("file.s")` or `#pragma GLOBAL_ASM("file.s")`.
 
 ### What is supported?
-Several quoted paths can form one block, for example
-GLOBAL_ASM("function.s", "function_rodata.s"). This allows a separate
-.late_rodata sidecar to supply a skipped function's constants without changing
-its assembly. Files are read in argument order, every path is a dependency, and
---asm-root remapping applies independently to each path.
-
 
 `.text`, `.data`, `.bss` and `.rodata` sections, `.word`/`.incbin`, `.ascii`/`.asciz`, and `-g`, `-g3`, `-O1`, `-O2`, `-framepointer` and `-mips1`/`-mips2` flags to the IDO compiler.
 
