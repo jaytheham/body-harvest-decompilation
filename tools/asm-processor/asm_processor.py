@@ -1085,17 +1085,17 @@ def parse_source(f, opts, out_dependencies, print_source=None):
             global_asm = GlobalAsmBlock("GLOBAL_ASM block at line " + str(line_no))
             start_index = len(output_lines)
         elif ((line.startswith('GLOBAL_ASM("') or line.startswith('#pragma GLOBAL_ASM("'))
-                 and line.endswith('")')):
+                and line.endswith('")')):
             pragma_path = line[line.index('(') + 2 : -2]
-                try:
-                    fname = map_asm_path(pragma_path, opts.asm_roots)
-                except Failure as failure:
-                    raise Failure(source_name + ':' + str(line_no) + ': ' + str(failure))
-                out_dependencies.append(fname)
+			try:
+				fname = map_asm_path(pragma_path, opts.asm_roots)
+			except Failure as failure:
+				raise Failure(source_name + ':' + str(line_no) + ': ' + str(failure))
+			out_dependencies.append(fname)
             global_asm = GlobalAsmBlock(fname)
             with open(fname, encoding=opts.input_enc) as f:
                 for line2 in f:
-                        global_asm.process_line(line2.rstrip(), output_enc)
+					global_asm.process_line(line2.rstrip(), output_enc)
             src, fn = global_asm.finish(state)
             output_lines[-1] = ''.join(src)
             asm_functions.append(fn)
