@@ -1917,6 +1917,12 @@ typedef struct {
 } Unk8014DD50; /* size = 0x10 */
 
 typedef struct {
+	union { s16 joints[18]; u16 unsignedJoints[18]; };
+	s16 child;
+	s16 root;
+} CometJointChain;
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

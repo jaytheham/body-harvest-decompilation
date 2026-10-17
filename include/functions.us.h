@@ -1277,11 +1277,7 @@ void func_800D96B4_E8664(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800D0F5C_DFF0C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800D0FE0_DFF90(s16 arg0, u16 arg1);
 void func_800D1054_E0004(s16 arg0);
-#ifdef COMET_PARTICLE_VOID_RETURN
-void func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-#else
 s32 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
-#endif
 void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4);
 void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2);
 void func_800DFA34_EE9E4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4);
@@ -1756,3 +1752,5 @@ int func_802D68F4_1EF604(void);
 s32 func_802DCCD8_25C418(u8 arg0);
 void func_802DF188_3232D8(void);
 s32 func_802E0018_324168(u8 arg0);
+
+void func_802D997C_31DACC(u8 arg0, s32 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, f32 arg8);
