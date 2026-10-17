@@ -220,6 +220,7 @@ OBJCOPYFLAGS   = -O binary
 # Files requiring pre/post-processing
 GLOBAL_ASM_C_FILES := $(shell $(GREP) GLOBAL_ASM $(SRC_DIR) $(if $(filter-out us,$(VERSION)),$(COMMON_SRC_DIR)/core $(SHARED_C_FILES)) </dev/null 2>/dev/null)
 GLOBAL_ASM_O_FILES := $(foreach file,$(GLOBAL_ASM_C_FILES),$(BUILD_DIR)/$(file).o)
+LATE_RODATA_FILES := $(wildcard asm/late_rodata/*.s)
 
 
 DEFINES := -D_LANGUAGE_C -D_FINALROM -DF3DEX_GBI -DWIN32 -DSSSV -DNDEBUG
@@ -348,7 +349,7 @@ $(TARGET).elf: $(LD_SCRIPT) $(BUILD_DIR)/$(LIBULTRA) $(O_FILES) $(LANG_RNC_O_FIL
 ifndef PERMUTER
 $(GLOBAL_ASM_O_FILES): $(BUILD_DIR)/%.c.o: %.c include/functions.h include/variables.h include/structs.h \
 		include/functions.$(VERSION).h include/variables.$(VERSION).h include/structs.$(VERSION).h \
-		$(ASM_PROCESSOR_STAMP) $(ASM_PROCESSOR_DIR)/asm_processor.py
+		$(ASM_PROCESSOR_STAMP) $(ASM_PROCESSOR_DIR)/asm_processor.py $(LATE_RODATA_FILES)
 	$(call RUN,$(CC_CHECK) $<)
 	$(PRINT) "[$(YELLOW) syntax $(NO_COL)] $<\n"
 	@$(ASM_PROCESSOR) $(OPT_FLAGS) $< > $(BUILD_DIR)/$<
