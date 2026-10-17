@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-17T06:47:20Z",
-  "commit": "e333ee7d",
-  "commit_timestamp": "2026-10-17T08:23:17+13:00",
+  "generated": "2026-10-17T10:15:45Z",
+  "commit": "18508df1",
+  "commit_timestamp": "2026-10-17T23:14:48+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is matched on the US page and an ASM stub here until the difference is expressed in C.",
   "overall": {
     "total_functions": 2723,
-    "matched": 2263,
-    "non_matching": 451,
+    "matched": 2264,
+    "non_matching": 450,
     "asm_stubs": 9,
-    "matched_pct": 83.11,
+    "matched_pct": 83.14,
     "decompiled_pct": 99.67
   },
   "segments": {
@@ -87,11 +87,11 @@
     },
     "overlay_level/comet": {
       "display_name": "Level / Comet",
-      "matched": 98,
-      "non_matching": 24,
+      "matched": 99,
+      "non_matching": 23,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 80.3,
+      "matched_pct": 81.1,
       "decompiled_pct": 100.0
     },
     "libultra": {
@@ -748,11 +748,11 @@
     {
       "path": "overlay_level/comet/318E20.c",
       "segment": "overlay_level/comet",
-      "matched": 98,
-      "non_matching": 24,
+      "matched": 99,
+      "non_matching": 23,
       "asm_stubs": 0,
       "total": 122,
-      "matched_pct": 80.3,
+      "matched_pct": 81.1,
       "contributor": ""
     },
     {
