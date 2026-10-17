@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-16T19:06:25Z",
-  "commit": "6f1a86eb",
-  "commit_timestamp": "2026-10-17T08:05:33+13:00",
+  "generated": "2026-10-17T06:47:18Z",
+  "commit": "e333ee7d",
+  "commit_timestamp": "2026-10-17T08:23:17+13:00",
   "overall": {
     "total_functions": 3058,
     "matched": 2606,

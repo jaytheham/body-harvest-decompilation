@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-16T19:06:28Z",
-  "commit": "6f1a86eb",
-  "commit_timestamp": "2026-10-17T08:05:33+13:00",
+  "generated": "2026-10-17T06:47:20Z",
+  "commit": "e333ee7d",
+  "commit_timestamp": "2026-10-17T08:23:17+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is matched on the US page and an ASM stub here until the difference is expressed in C.",
   "overall": {
