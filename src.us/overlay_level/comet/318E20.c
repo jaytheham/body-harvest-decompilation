@@ -4515,60 +4515,54 @@ void func_802E015C_3242AC(Unk80222A78 *vehicle) {
 	alien->unk3A = 0xFF;
 }
 
-
-// CURRENT(70)
-#ifdef NON_MATCHING
 s32 func_802E0234_324384(u8 arg0) {
 	AlienInstance *parent;
 	Unk80222A78 trigger;
-	s32 deltaX;
+	s32 targetX;
 	s32 height;
 	s32 targetZ;
-	AlienInstance *alien;
 	s32 deltaZ;
+	s32 deltaX;
 	s32 range;
 	s16 angle;
 	AlienType *type;
 	u8 typeIndex;
 
-	alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
-	parent = &alienInstances[alien->unk25];
+	typeIndex = alienInstances[arg0].typeIndex;
+	parent = &alienInstances[alienInstances[arg0].unk25];
 	if (parent->unk20 & (ALIEN_FLAG_UNKJ | ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKG | ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE)) {
 		return 0;
 	}
 	deltaX = alienInstances[arg0].unk0 - D_80052B34->unk0;
 	deltaZ = alienInstances[arg0].unk4 - D_80052B34->unk4;
 	angle = func_80003824_4424((f32)deltaX, (f32)deltaZ) + 0x8000;
+	/* Keep the instance address ahead of the heading in IDO's register allocation. */
+	if (alienInstances[arg0].unk0) {}
 	range = (func_800038E0_44E0() % 500) + 0x3E8;
-	deltaX = (s32)(((f64)(f32)coss((u32)angle) / 32768.0) * range + D_80052B34->unk0);
-	targetZ = (s32)(((f64)(f32)sins((u32)angle) / 32768.0) * range + D_80052B34->unk4);
-	deltaX = ((deltaX >> 8) << 8) + 0x80;
+	targetX = (f32)coss(angle) / 32768.0 * range + D_80052B34->unk0;
+	targetZ = (f32)sins(angle) / 32768.0 * range + D_80052B34->unk4;
+	targetX = ((targetX >> 8) << 8) + 0x80;
 	targetZ = ((targetZ >> 8) << 8) + 0x80;
-	if (func_802E00D0_324220(deltaX, targetZ) == 0) {
+	if (func_802E00D0_324220(targetX, targetZ) == 0) {
 		return 0;
 	}
 	parent->unk20 |= ALIEN_FLAG_UNKD;
 	alienInstances[arg0].unk12 = 0;
 	alienInstances[arg0].unk20 |= ALIEN_FLAG_INVINCIBLE;
-	height = func_800B84D0_C7480((s16)deltaX, (s16)targetZ);
+	height = func_800B84D0_C7480((s16)targetX, (s16)targetZ);
 	type = &alienTypes[typeIndex];
 	height = (height >> 8) + type->unk58;
-	trigger.unk1 = deltaX >> 8;
+	trigger.unk1 = targetX >> 8;
 	trigger.unk2 = targetZ >> 8;
+	trigger.unk8 = arg0;
 	trigger.unk0 = 2;
 	trigger.unk4 = D_8014F820 + 8;
-	trigger.unk8 = arg0;
 	trigger.unkC = (void (*)(void *))func_802E015C_3242AC;
 	func_800AE454_BD404(&trigger);
 	func_800CF80C_DE7BC(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (s16)(s32)(type->unkC * 1.5), 0xC8, 0xC8, 0xDC, 3);
-	func_800CF80C_DE7BC((s16)deltaX, (s16)height, (s16)targetZ, (s16)(s32)(type->unkC * 1.5), 0xC8, 0xC8, 0xDC, 2);
+	func_800CF80C_DE7BC((s16)targetX, (s16)height, (s16)targetZ, (s16)(s32)(type->unkC * 1.5), 0xC8, 0xC8, 0xDC, 2);
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0234_324384.s")
-#endif
-
 
 #ifdef NON_MATCHING
 void func_802E0588_3246D8(u8 arg0) {
