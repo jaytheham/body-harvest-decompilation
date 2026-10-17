@@ -1,7 +1,7 @@
 #ifndef COMET_318E20_H
 #define COMET_318E20_H
 
-/* Functions defined in the comet level overlay (318E20.c). */
+/* Functions defined in the comet level overlay. */
 void func_802D4EE4_319034(s16 arg0);
 void func_802D522C_31937C(s16 arg0);
 void func_802D5BFC_319D4C(void);
@@ -38,7 +38,7 @@ void func_802E3584_3276D4(u8 arg0, s16 arg1, s16 arg2, Unk802E71B8 *arg3);
 void func_802E43FC_32854C(u8 arg0, s16 arg1);
 void func_802E46B8_328808(u8 arg0, s32 arg1, s32 arg2);
 
-/* Alien type handlers defined in the comet level overlay (318E20.c). */
+/* Alien type handlers defined in the comet level overlay. */
 void func_802D76B0_31B800(u8 arg0);
 void func_802D7B4C_31BC9C(u8 arg0);
 void func_802D7C1C_31BD6C(u8 arg0);

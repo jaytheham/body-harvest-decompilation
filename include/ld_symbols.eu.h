@@ -60,6 +60,8 @@ extern Addr ___src_us_overlay_gameplay_outside_mutableData_c;
 extern Addr ___src_us_overlay_gameplay_outside_trigger_c;
 extern Addr ___src_us_overlay_level_america_254410_c;
 extern Addr ___src_us_overlay_level_comet_318E20_c;
+extern Addr ___src_us_overlay_level_comet_323A90_c;
+extern Addr ___src_us_overlay_level_comet_324220_c;
 extern Addr ___src_us_overlay_level_greece_18D7E0_c;
 extern Addr ___src_us_overlay_level_java_1ED9E0_c;
 extern Addr ___src_us_overlay_level_siberia_2B7100_c;

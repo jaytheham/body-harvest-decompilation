@@ -518,6 +518,8 @@ extern Addr overlay_level_america_alien_types_c;
 extern Addr overlay_level_america_data_bin;
 extern Addr overlay_level_america_data_tail_bin;
 extern Addr overlay_level_comet_318E20_c;
+extern Addr overlay_level_comet_323A90_c;
+extern Addr overlay_level_comet_324220_c;
 extern Addr overlay_level_comet_alien_types_c;
 extern Addr overlay_level_comet_data_bin;
 extern Addr overlay_level_comet_data_tail_bin;

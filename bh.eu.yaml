@@ -503,9 +503,12 @@ segments:
     overlay: true
     subsegments:
       - [0x319980, c, ../src.us/overlay_level/comet/318E20]
+      - [0x3245F0, c, ../src.us/overlay_level/comet/323A90]
+      - [0x324D80, c, ../src.us/overlay_level/comet/324220]
       - [0x329B30, .data, ../src.us/overlay_level/comet/318E20]
       - [0x32C6E0, .rodata, ../src.us/overlay_level/comet/318E20_rodata]
-      - [0x32C820, .rodata, ../src.us/overlay_level/comet/318E20]
+      - [0x32C840, .rodata, ../src.us/overlay_level/comet/323A90]
+      - [0x32C850, .rodata, ../src.us/overlay_level/comet/324220]
 
   - name: overlay_level_comet_data
     type: bin
