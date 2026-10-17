@@ -31,12 +31,6 @@ s32 D_800A269C_18A75C[1] = {
 // AI - Lens flare active flag
 u8 D_800A26A0_18A760 = 0;
 
-// AI - Lens flare animation frame counter
-u8 D_800A26A4_18A764 = 0;
-
-// AI - Unnamed padding before the UI sound tables
-u8 pad_18A768[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
 // ============================================================
 // 16AF30 rodata
 // ============================================================
@@ -83,8 +77,6 @@ const u32 jtbl_800A54AC_18D56C[] = {
 	OVERLAY_PTR(0x8008B3B0), OVERLAY_PTR(0x8008B3C0), OVERLAY_PTR(0x8008B3D0), OVERLAY_PTR(0x8008B3E0), OVERLAY_PTR(0x8008B3F0), OVERLAY_PTR(0x8008B400), OVERLAY_PTR(0x8008B438), OVERLAY_PTR(0x8008B410), 
 	OVERLAY_PTR(0x8008B420),
 };
-
-const f64 D_800A54D0_18D590[1] = {1.2};
 
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
@@ -3023,20 +3015,16 @@ void func_8008B53C_1735FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	D_800FB6A2 = arg4;
 }
 
-// CURRENT(1245)
 // AI - Render (animated billboard with texture)
-#ifdef NON_MATCHING
 void func_8008B594_173654(void) {
+	static u8 D_800A26A4_18A764 = 0;
 	s8 spA4[3];
-	s32 temp_t5;
 
-	if (D_800A26A0_18A760 != 0) {
-		D_800A26A0_18A760 = 0;
+	/* Consume the one-shot request in the condition to retain its shared address. */
+	if (D_800A26A0_18A760 && (D_800A26A0_18A760 = 0, 1)) {
 
 		D_800FB6E5 = 0x20;
 		D_800FB6E6 = 0x20;
-
-		temp_t5 = D_800A26A4_18A764;
 
 		gDPPipeSync(D_8005BB2C++);
 
@@ -3044,13 +3032,12 @@ void func_8008B594_173654(void) {
 
 		gDPPipeSync(D_8005BB2C++);
 
-		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS((temp_t5 << 9) + (u32)&D_100BF00), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100BF00[D_800A26A4_18A764 * 512]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 		gDPPipeSync(D_8005BB2C++);
 
-		temp_t5 = (temp_t5 + 1) & 0xFF;
-		D_800A26A4_18A764 = temp_t5;
-		if (temp_t5 == 4) {
+		D_800A26A4_18A764++;
+		if (D_800A26A4_18A764 == 4) {
 			D_800A26A4_18A764 = 0;
 		}
 
@@ -3065,7 +3052,7 @@ void func_8008B594_173654(void) {
 		spA4[2] = (func_800038E0_44E0() % 0x3C) + 0xC3;
 
 		D_800FB6DC = &spA4[0];
-		D_800FB6E0 = (f32)D_800FB6A0 * D_800A54D0_18D590[0];
+		D_800FB6E0 = (f32)D_800FB6A0 * 1.2;
 		D_800FB6E4 = 0xFF;
 
 		func_8008A1D8_172298();
@@ -3093,6 +3080,6 @@ void func_8008B594_173654(void) {
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B594_173654.s")
-#endif
+
+// AI - Unnamed padding before the UI sound tables
+u8 pad_18A768[8] = { 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };

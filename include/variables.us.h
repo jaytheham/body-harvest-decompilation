@@ -1450,7 +1450,6 @@ extern s8 D_800A2690_18A750[];
 extern u8 D_800A2698_18A758[];
 extern s32 D_800A269C_18A75C[];
 extern u8 D_800A26A0_18A760;
-extern u8 D_800A26A4_18A764;
 extern char D_800A26B0_18A770[];
 extern u16 D_800A2EB0_18AF70[];
 extern char D_800A2FB0_18B070[];
