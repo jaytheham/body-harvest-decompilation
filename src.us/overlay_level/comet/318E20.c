@@ -4143,7 +4143,6 @@ void func_802DF188_3232D8(void) {
 }
 
 // AI - Comet level boss-event handler; on the boss trigger (D_8014D17C==0xC7) spawns the boss via func_800B03CC_BF37C (leads to the credits).
-/* Deferred: the best C version differs from the target by 17 bytes. */
 #ifdef NON_MATCHING
 void func_802DF290_3233E0(void) {
 	s32 sp2C;
