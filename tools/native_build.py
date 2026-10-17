@@ -288,8 +288,6 @@ def build(args):
     header_folders = ("include", paths["src"]) if args.version == "us" else ("include", paths["src"], "src.us")
     headers_time = max((p.stat().st_mtime_ns for folder in header_folders for p in (ROOT / folder).rglob("*.h")), default=0)
     asm_time = max((p.stat().st_mtime_ns for p in (ROOT / paths["asm"]).rglob("*.s")), default=0)
-    # Late-rodata sidecars are shared even when the text comes from the PAL extraction.
-    asm_time = max(asm_time, max((p.stat().st_mtime_ns for p in (ROOT / "asm/late_rodata").rglob("*.s")), default=0))
 
     def binary(source, target):
         run([linker, "-r", "-b", "binary", "-o", target, source], quiet=args.quiet)
