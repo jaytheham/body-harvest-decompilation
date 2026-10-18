@@ -1006,16 +1006,14 @@ void func_802D5B58_2B7F88(void)
 	}
 }
 
-// CURRENT(1108)
-#ifdef NON_MATCHING
 void func_802D5C24_2B8054(void) {
-	s32 rand4;
+	s32 pad;
 	s32 rand1;
 	s16 temp;
 	u16 random[3];
 
 	if (vehicleInstances[30].unk1C <= 0) {
-		func_80124118_1330C8(&vehicleInstances[54], (s16)(vehicleInstances[54].unk1C * 2));
+		func_80124118_1330C8(&vehicleInstances[54], vehicleInstances[54].unk1C * 2);
 		func_800074BC_80BC(func_802D5C24_2B8054);
 		func_800076D4_82D4(2);
 	}
@@ -1028,25 +1026,19 @@ void func_802D5C24_2B8054(void) {
 	if (((u32)D_80052A8C % ((rand1 & 7) + 4)) == 0 && vehicleInstances[54].unk1C > 0) {
 		random[1] = func_800038E0_44E0();
 		random[2] = func_800038E0_44E0();
-		rand4 = func_800038E0_44E0();
 		func_800DEA08_ED9B8(
-			(s16)((random[1] % 25) + vehicleInstances[54].unk0 + 0x50),
-			(s16)((random[2] % 25) + vehicleInstances[54].unk2 + 0x64),
-			(s16)((rand4 % 25) + vehicleInstances[54].unk4 + 0x14),
+			vehicleInstances[54].unk0 + (random[1] % 25) + 0x50,
+			vehicleInstances[54].unk2 + (random[2] % 25) + 0x64,
+			vehicleInstances[54].unk4 + (func_800038E0_44E0() % 25) + 0x14,
 			0x50, 8, 0xE, 0x28, 0xF0, 0x2F, 0x7B, 0x2E
 		);
 	}
 	temp = vehicleInstances[30].unk0;
 	if (temp < 0x1940) {
-		func_80124118_1330C8(&D_8004E798, (s16)(vehicleInstances[30].unk1C * 2));
+		func_80124118_1330C8(&D_8004E798, vehicleInstances[30].unk1C * 2);
 		func_800072CC_7ECC(0xC);
 		func_800AE1EC_BD19C();
-		func_800DEA08_ED9B8(
-			(s16)(vehicleInstances[54].unk0 + D_80047710),
-			vehicleInstances[54].unk2,
-			vehicleInstances[54].unk4,
-			0x190, 8, 1, 0xC8, 0xFF, 0x2F, 0x7B, 0x2E
-		);
+		func_800DEA08_ED9B8( vehicleInstances[54].unk0 + D_80047710, vehicleInstances[54].unk2, vehicleInstances[54].unk4, 0x190, 8, 1, 0xC8, 0xFF, 0x2F, 0x7B, 0x2E );
 		temp = D_8004E798.unk0;
 	}
 	if (temp < 0x1C60) {
@@ -1056,11 +1048,6 @@ void func_802D5C24_2B8054(void) {
 		}
 	}
 }
-
-// CURRENT(93)
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5C24_2B8054.s")
-#endif
 
 void func_802D5F28_2B8358(void) {
 	static s32 actorIndex;
