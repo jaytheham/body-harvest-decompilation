@@ -1,0 +1,3 @@
+`incorrect ASM`: After enabling `func_802D4DCC_2B71FC` and removing its placeholder jump table, the dispatch used `lw t6,0x2f5c(at)` instead of `lw t6,0x2f58(at)`. The explicit `5000.0f` array occupied the four bytes before the generated table.
+-> `code changed`: Remove the standalone `D_802E2F84_2C53B4` definition and its unused extern. Replace its palette-function access with the `5000.0f` literal, allowing IDO to generate that constant after the earlier function's switch table.
+-> `correct ASM`: The dispatch uses `lw t6,0x2f58(at)`, the divisor remains at its target address after the table, both functions have zero assembly differences, and the full US ROM checksum reports `OK`.

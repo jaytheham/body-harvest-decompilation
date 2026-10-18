@@ -637,20 +637,6 @@ const char D_802E2F04_2C5334[0x10] = "little bang\n";
 const char D_802E2F14_2C5344[0x20] = "Add Person @ posn %d, %d, %d\n";
 const char D_802E2F34_2C5364[0x8] = "%d,%d\n";
 const char D_802E2F3C_2C536C[0x1C] = "Killed all three warriors\n";
-const u32 jtbl_802E2F58_2C5388[11] = {
-	LEVEL_PTR(0x802D4DFC),
-	LEVEL_PTR(0x802D4F0C),
-	LEVEL_PTR(0x802D4E20),
-	LEVEL_PTR(0x802D4E48),
-	LEVEL_PTR(0x802D4E7C),
-	LEVEL_PTR(0x802D4F0C),
-	LEVEL_PTR(0x802D4EA4),
-	LEVEL_PTR(0x802D4ECC),
-	LEVEL_PTR(0x802D4EF0),
-	LEVEL_PTR(0x802D4F0C),
-	LEVEL_PTR(0x802D4F0C)
-};
-const f32 D_802E2F84_2C53B4[] = { 5000.0f };
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -691,7 +677,6 @@ void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_802D4DCC_2B71FC(void) {
 	switch (D_80048030) {
 	case 0:
@@ -736,9 +721,6 @@ void func_802D4DCC_2B71FC(void) {
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D4DCC_2B71FC.s")
-#endif
 
 // CURRENT(3010)
 void func_802D4F1C_2B734C(void) {
@@ -781,7 +763,7 @@ void func_802D5058_2B7488(void) {
 		} else {
 			temp_v0 = D_80052B34->unk4;
 			if (temp_v0 < 0x3C00 && temp_v0 >= 0x2879) {
-				blend = (f32)(1.0 - (f64)((f32)(0x3C00 - temp_v0) / D_802E2F84_2C53B4[0]));
+				blend = (f32)(1.0 - (f64)((f32)(0x3C00 - temp_v0) / 5000.0f));
 				*state = 1;
 			} else if (temp_v0 >= 0x3C01 && *state == 0) {
 				blend = 1.0f;
