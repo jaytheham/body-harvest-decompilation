@@ -659,15 +659,6 @@ const u32 jtbl_802E2FA8_2C53D8[5] = {
 	LEVEL_PTR(0x802D61A8),
 	LEVEL_PTR(0x802D61D4)
 };
-const u32 jtbl_802E2FBC_2C53EC[7] = {
-	LEVEL_PTR(0x802D679C),
-	LEVEL_PTR(0x802D67C8),
-	LEVEL_PTR(0x802D6884),
-	LEVEL_PTR(0x802D6950),
-	LEVEL_PTR(0x802D6988),
-	LEVEL_PTR(0x802D69D0),
-	0x00000000
-};
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -1294,68 +1285,61 @@ void func_802D670C_2B8B3C(void) {
 	func_80007410_8010(&func_802D6674_2B8AA4);
 }
 
-#ifdef NON_MATCHING
 s32 func_802D6768_2B8B98(void) {
-	switch ((u32)D_80157F8C) {
+	s16 x, y, z;
+
+	switch (D_80157F8C) {
 	case 0:
-		D_80157F8E++;
-		if (D_80157F8E - 1 >= 2) {
+		if (D_80157F8E++ >= 2) {
 			D_80157F8E = 0;
-			D_80157F8C = 1;
+			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 1:
 		if (D_80157F8E == 0x3C) {
 			func_80124118_1330C8(&vehicleInstances[3], vehicleInstances[3].unk1C * 2);
 		}
 		func_802D64DC_2B890C(0x71, D_8014D17C, 0xC8, 0x18, &D_802E0E6C_2C329C, 5, 0x28, 1);
 		D_8014D17C++;
-		if (D_80157F8E >= 0xC9) {
+		if (D_80157F8E++ >= 0xC9) {
 			D_80157F8E = 0;
 			D_80157F8C++;
-		} else {
-			D_80157F8E++;
 		}
-		return 0;
+		break;
 	case 2:
 		if (D_80157F8E == 5) {
-			func_800D6ADC_E5A8C(buildingInstances[113].xCoord, (func_800B84D0_C7480(buildingInstances[113].xCoord, buildingInstances[113].zCoord) / 256) + 100, buildingInstances[113].zCoord, 7);
+			x = buildingInstances[113].xCoord;
+			z = buildingInstances[113].zCoord;
+			y = func_800B84D0_C7480(x, z) / 256;
+			func_800D6ADC_E5A8C(x, y + 100, z, 7);
 		}
 		D_8013E344_14D2F4 = D_80157F8E * 12;
-		if (D_80157F8E < 0x15) {
-			D_80157F8E++;
-		} else {
+		if (D_80157F8E++ >= 0x15) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 3:
 		D_8013E344_14D2F4 = 0xFF;
-		if ((u32)D_80157F8E < 6U) {
-			D_80157F8E++;
-		} else {
+		if (D_80157F8E++ >= 6) {
 			D_80157F8E = 0;
-			D_80157F8C = 4;
+			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 4:
-		D_8013E344_14D2F4 = 240 - D_80157F8E * 12;
-		if (D_80157F8E < 0x15) {
-			D_80157F8E++;
-		} else {
+		D_8013E344_14D2F4 = 240 + -D_80157F8E * 12;
+		if (D_80157F8E++ >= 0x15) {
 			D_80157F8E = 0;
-			D_80157F8C = 5;
+			D_80157F8C++;
 		}
-		return 0;
+		break;
 	case 5:
 		return 1;
 	default:
-		return 0;
+		break;
 	}
+	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6768_2B8B98.s")
-#endif
 
 void func_802D69EC_2B8E1C(void) {
 	func_80013468_14068(0xE);
