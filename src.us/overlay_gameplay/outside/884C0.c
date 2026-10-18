@@ -5749,62 +5749,55 @@ s32 func_80086A34_959E4(u8 arg0, s32 arg1, s16 arg2)
 }
 
 
-#ifdef NON_MATCHING
-// CURRENT(3769)
 s32 func_80086D70_95D20(u8 arg0, s32 arg1, s16 arg2)
 {
-	s32 sp60;
-	s32 sp5C;
-	s32 sp58;
-	s16 sp56;
-	s16 sp50;
-	f32 sp4C;
-	s16 sp4A;
-	s16 sp48;
 	u8 typeIndex;
-	AlienInstance* var_s0;
-	AlienType* type;
-	AlienInstance* alien;
-	s16 var_a3;
-	s16 temp_v1;
+	s32 originX;
+	s32 originY;
+	s32 originZ;
+	s16 targetX;
+	s16 targetY;
+	s16 targetZ;
+	s16 distance;
+	f32 slope;
+	s16 dx;
+	s16 dz;
+	AlienInstance* target;
+	f32 sine;
 
-	alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
-	var_s0 = (AlienInstance *)D_80052B34;
-	if (alien->unk1E != 0) {
+	typeIndex = alienInstances[arg0].typeIndex;
+	target = (AlienInstance *)D_80052B34;
+	if (alienInstances[arg0].unk1E != 0) {
 		return 0;
 	}
 
-	if (!(alien->unk20 & ALIEN_FLAG_PLAYER) && (alien->unk20 & ALIEN_FLAG_TARGET_OBJ)) {
-		if (alien->unk38 != 0x100) {
-			var_s0 = &alienInstances[alien->unk38];
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER) && (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_OBJ)) {
+		if (alienInstances[arg0].unk38 != 0x100) {
+			target = &alienInstances[alienInstances[arg0].unk38];
 		}
 	}
 
-	func_80128504_1374B4(alien, arg1, &sp60, &sp5C, &sp58);
-	type = &alienTypes[typeIndex];
-	sp4A = ((sp60 - var_s0->unk0) >> 2);
-	sp48 = ((sp58 - var_s0->unk4) >> 2);
-	sp4C = sinf((f32)(((f32)type->unk3C * D_80141E70_150E20[0]) / 32768.0));
-	sp4C = sp4C / cosf((f32)(((f64)(f32)type->unk3C * D_80141E78_150E28[0]) / (32768.0 * 1.0)));
-	sp50 = ((s32)sqrtf((f32)((sp4A * sp4A) + (sp48 * sp48))) * 4);
-	sp56 = (sp60 + ((f32)coss((alien->unk6 + arg2) & 0xFFFF) / 32768.0 * sp50));
-	temp_v1 = (sp58 + ((f32)sins((alien->unk6 + arg2) & 0xFFFF) / 32768.0 * sp50));
-	var_a3 = var_s0->unk2 + 0x14;
-	if (sp50 == 0) {
+	func_80128504_1374B4(&alienInstances[arg0], arg1, &originX, &originY, &originZ);
+	dx = ((originX - target->unk0) >> 2);
+	dz = ((originZ - target->unk4) >> 2);
+	sine = sinf((f32)((D_80141E70_150E20[0] * (f32)alienTypes[typeIndex].unk3C) / 32768.0));
+	slope = sine / cosf((f32)((D_80141E78_150E28[0] * (f64)(f32)alienTypes[typeIndex].unk3C) / (32768.0 * 1.0)));
+	distance = ((s32)sqrtf((f32)((dx * dx) + (dz * dz))) * 4);
+	targetX = (((f32)coss((u16)(alienInstances[arg0].unk6 + arg2)) / 32768.0 * distance) + originX);
+	targetZ = (((f32)sins((u16)(alienInstances[arg0].unk6 + arg2)) / 32768.0 * distance) + originZ);
+	targetY = target->unk2 + 0x14;
+	if (distance == 0) {
 		return 0;
 	}
-	if (sp4C * (f32)sp50 < (f32)(sp5C - var_a3)) {
-		var_a3 = (s16)(s32)((f32)sp5C - sp4C * (f32)sp50);
+	if ((f32)(originY - targetY) > slope * (f32)distance) {
+		targetY = (s16)(s32)((f32)originY - slope * (f32)distance);
 	}
-	if ((f32)(sp5C - var_a3) < -sp4C * (f32)sp50) {
-		var_a3 = (s16)(s32)((f32)sp5C + sp4C * (f32)sp50);
+	if ((f32)(originY - targetY) < -slope * (f32)distance) {
+		targetY = (s16)(s32)((f32)originY + slope * (f32)distance);
 	}
-	return func_800865F4_955A4(arg0, arg1, sp56, var_a3, temp_v1);
+	return func_800865F4_955A4(arg0, arg1, targetX, targetY, targetZ);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80086D70_95D20.s")
-#endif
+
 
 s32 func_800870D8_96088(s32 arg0, s32 arg1)
 {
