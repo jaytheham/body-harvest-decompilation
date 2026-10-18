@@ -840,13 +840,13 @@ void func_802D5980_2B7DB0(void)
 	func_800072CC_7ECC(0x18);
 	if (func_8000726C_7E6C(0x0B) == 0)
 	{
-		*((u16 *)(((u8 *)vehicleInstances) + 0xA8C)) |= VEHICLE_FLAG_SHIELDED;
+		vehicleInstances[29].unk20 |= VEHICLE_FLAG_SHIELDED;
 	}
 	else
 	{
 		func_8011C080_12B030(0x67);
 	}
-	*((u16 *)(((u8 *)vehicleInstances) + 0xAE8)) |= VEHICLE_FLAG_SHIELDED;
+	vehicleInstances[30].unk20 |= VEHICLE_FLAG_SHIELDED;
 	D_80157FA8 = 0;
 	D_801591C4 = 0;
 	osSyncPrintf("Add set snow thickness\n");
@@ -868,7 +868,7 @@ void func_802D5980_2B7DB0(void)
 	D_802E309C = -1;
 	for (j = 0; j < 0xFF; j++)
 	{
-		if (((BuildingInstance *)(((u8 *)buildingInstances) + (((unsigned long)j) * 0x18)))->yCoord >= 0x2711)
+		if (buildingInstances[j].yCoord >= 0x2711)
 		{
 			func_8011C080_12B030(j);
 		}
@@ -876,10 +876,10 @@ void func_802D5980_2B7DB0(void)
 
 	if (func_8000726C_7E6C(0x0D) != 0)
 	{
-		*((u8 *)(((u8 *)buildingInstances) + 0x67F)) = 0;
-		*((u8 *)(((u8 *)buildingInstances) + 0x787)) = 0;
-		*((u8 *)(((u8 *)buildingInstances) + 0x61F)) = 0;
-		*((u8 *)(((u8 *)buildingInstances) + 0x817)) = 0;
+		buildingInstances[69].unk7 = 0;
+		buildingInstances[80].unk7 = 0;
+		buildingInstances[65].unk7 = 0;
+		buildingInstances[86].unk7 = 0;
 		func_8011C080_12B030(0x45);
 		func_8011C080_12B030(0x50);
 		func_8011C080_12B030(0x41);
@@ -887,11 +887,11 @@ void func_802D5980_2B7DB0(void)
 	}
 	if (func_8000726C_7E6C(0x14) != 0)
 	{
-		*((u8 *)(((u8 *)buildingInstances) + 0xE22)) = 0x6E;
+		buildingInstances[150].door1InteriorId = 0x6E;
 	}
 	if (func_8000726C_7E6C(0x1C) != 0)
 	{
-		*((u16 *)(((u8 *)vehicleInstances) + 0xD10)) |= VEHICLE_FLAG_SCUD_LAUNCHED;
+		vehicleInstances[36].unk20 |= VEHICLE_FLAG_SCUD_LAUNCHED;
 	}
 }
 
