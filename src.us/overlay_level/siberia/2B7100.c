@@ -3384,85 +3384,78 @@ void func_802DC4A0_2BE8D0(u8 arg0) {
 	func_8008735C_9630C(arg0);
 }
 
-// CURRENT(3792)
 // Siberia Mutant on-death function
-#ifdef NON_MATCHING
-// AI - Siberia Mutant death handler: spawns death effects/drops and updates wave/score state
 void func_802DC4D0_2BE900(u8 arg0) {
-	AlienInstance *alien = &alienInstances[arg0];
-	Unk8014DD50 *v1;
-	Unk8014DD50 *t1;
-	Unk8014DD50 *v0;
-	s16 sp90;
-	s16 sp8C;
-	s16 sp88;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-	s32 sp84;
-	s32 sp80;
-	s32 sp7C;
-	f32 sp58;
-	f32 sp54;
-	s16 sp4E;
-	s32 sp44;
-	s8 a;
-	s8 b;
-	s8 t2;
+	s32 rootJoint;
+	s8 chestJoint, shoulderJoint;
+	s16 rightLimb;
+	s8 hipJoint;
+	s16 leftLimb;
+	s8 rightTip;
+	s16 rightBranch;
+	s32 worldX, worldY, worldZ;
+	AlienInstance *alien;
+	Unk8014DD50 *shoulderNode, *hipNode, *limbNode;
+	s32 limbFlags;
+	s32 scratch[3];
+	f32 velocityX, velocityZ;
+	s32 heading;
+	s16 effectIndex;
 
-	a = D_8014DD50[alien->unkC].unkC;
-	b = D_8014DD50[a].unkD;
-	v1 = &D_8014DD50[b];
-	sp8C = (s16)v1->unkC;
-	t1 = &D_8014DD50[v1->unkD];
-	sp88 = t1->unkD;
-	sp90 = t1->unkC;
-	t2 = D_8014DD50[sp88].unkD;
+	alien = &alienInstances[arg0];
+	rootJoint = alien->unkC;
+	chestJoint = D_8014DD50[rootJoint].unkC;
+	shoulderJoint = D_8014DD50[chestJoint].unkD;
+	shoulderNode = &D_8014DD50[shoulderJoint];
+	leftLimb = shoulderNode->unkC;
+	hipJoint = shoulderNode->unkD;
+	hipNode = &D_8014DD50[hipJoint];
+	rightLimb = hipNode->unkC;
+	rightBranch = hipNode->unkD;
+	rightTip = D_8014DD50[rightBranch].unkD;
 
-	if (!(alien->unk20 & ALIEN_FLAG_UNKJ)) {
-		s16 tempA0;
+	if (!(alien->unk20 & ALIEN_FLAG_UNKL)) {
 
-		v0 = &D_8014DD50[sp8C];
+		limbNode = &D_8014DD50[leftLimb];
 
-		func_80128428_1373D8(alien, (s16)(v0->unk0 + v1->unk0),
-			(s16)(v0->unk2 + v1->unk2),
-			(s16)(v0->unk4 + v1->unk4), &sp84, &sp80, &sp7C);
-		func_800DF848_EE7F8((s16)sp84, (s16)sp80, (s16)sp7C, 0x50, 0);
+		func_80128428_1373D8(alien, (s16)(limbNode->unk0 + shoulderNode->unk0),
+			(s16)(limbNode->unk2 + shoulderNode->unk2),
+			(s16)(limbNode->unk4 + shoulderNode->unk4), &worldX, &worldY, &worldZ);
+		func_800DF848_EE7F8((s16)worldX, (s16)worldY, (s16)worldZ, 0x50, 0);
 
-		tempA0 = (alien->unk6 + 0x8000) & 0xFFFF;
-		sp44 = tempA0;
-		sp58 = (f32)(((f64)(f32)sins(tempA0) / 32768.0) * 15.0);
-		sp54 = (f32)(((f64)(f32)coss(tempA0) / 32768.0) * -15.0);
-		sp4E = func_800C7924_D68D4((s16)sp84, (s16)sp80, (s16)sp7C, 0x40, -8,
-			(s32)alienTypes[alien->typeIndex].unkC,
-			func_8008916C_9811C(arg0, sp8C), 1);
-		func_800C80F0_D70A0((0x4000 - alien->unk6) & 0xFFFF, 0, 0, sp4E);
-		func_800C8184_D7134((s8)(s32)sp58, 0xF, (s8)(s32)sp54, sp4E);
-		func_80088E10_97DC0(sp8C);
+		heading = alien->unk6 + 0x8000;
+		velocityX = (f32)(((f32)sins((u16)heading) / 32768.0) * 15.0);
+		velocityZ = (f32)(((f32)coss((u16)heading) / 32768.0) * -15.0);
+		limbFlags = func_8008916C_9811C(arg0, leftLimb);
+		effectIndex = func_800C7924_D68D4((s16)worldX, (s16)worldY, (s16)worldZ, 0x40, -8,
+			alienTypes[alien->typeIndex].unkC,
+			limbFlags, 1);
+		func_800C80F0_D70A0((u16)(0x4000 - alien->unk6), 0, 0, effectIndex);
+		func_800C8184_D7134((s16)velocityX, 0xF, (s16)velocityZ, effectIndex);
+		func_80088E10_97DC0(leftLimb);
 
-		v0 = &D_8014DD50[sp90];
-		func_80128428_1373D8(alien, (s16)(v0->unk0 + t1->unk0),
-			(s16)(v0->unk2 + t1->unk2),
-			(s16)(v0->unk4 + t1->unk4), &sp84, &sp80, &sp7C);
-		func_800DF848_EE7F8((s16)sp84, (s16)sp80, (s16)sp7C, 0x50, 0);
+		limbNode = &D_8014DD50[rightLimb];
+		func_80128428_1373D8(alien, (s16)(limbNode->unk0 + hipNode->unk0),
+			(s16)(limbNode->unk2 + hipNode->unk2),
+			(s16)(limbNode->unk4 + hipNode->unk4), &worldX, &worldY, &worldZ);
+		func_800DF848_EE7F8((s16)worldX, (s16)worldY, (s16)worldZ, 0x50, 0);
 
-		tempA0 = alien->unk6 & 0xFFFF;
-		sp44 = tempA0;
-		sp58 = (f32)(((f64)(f32)sins(tempA0) / 32768.0) * 15.0);
-		sp54 = (f32)(((f64)(f32)coss(tempA0) / 32768.0) * -15.0);
-		sp4E = func_800C7924_D68D4((s16)sp84, (s16)sp80, (s16)sp7C, 0x40, -8,
-			(s32)alienTypes[alien->typeIndex].unkC,
-			func_8008916C_9811C(arg0, sp90), 1);
-		func_800C80F0_D70A0((0x4000 - alien->unk6) & 0xFFFF, 0, 0, sp4E);
-		func_800C8184_D7134((s8)(s32)sp58, 0xF, (s8)(s32)sp54, sp4E);
-		func_80088E10_97DC0(sp90);
+		heading = alien->unk6;
+		velocityX = (f32)(((f32)sins((u16)heading) / 32768.0) * 15.0);
+		velocityZ = (f32)(((f32)coss((u16)heading) / 32768.0) * -15.0);
+		limbFlags = func_8008916C_9811C(arg0, rightLimb);
+		effectIndex = func_800C7924_D68D4((s16)worldX, (s16)worldY, (s16)worldZ, 0x40, -8,
+			alienTypes[alien->typeIndex].unkC,
+			limbFlags, 1);
+		func_800C80F0_D70A0((u16)(0x4000 - alien->unk6), 0, 0, effectIndex);
+		func_800C8184_D7134((s16)velocityX, 0xF, (s16)velocityZ, effectIndex);
+		func_80088E10_97DC0(rightLimb);
 		alien->unk2C = 0x28;
 		return;
 	}
 
-	func_802DB8D8_2BDD08(arg0, 0x96, 0, sp88,
-		t2, 0x1F40, -0x1388, 0x9C4, D_802E3054_2C5484[0]);
+	func_802DB8D8_2BDD08(arg0, 0x96, 0, rightBranch,
+		rightTip, 0x1F40, -0x1388, 0x9C4, D_802E3054_2C5484[0]);
 
 	if (alien->unk2C == 1) {
 		if (alienTypes[alien->typeIndex].unk54 & 0x02000000) {
@@ -3477,10 +3470,6 @@ void func_802DC4D0_2BE900(u8 arg0) {
 			alienTypes[alien->typeIndex].unkC, 6);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DC4D0_2BE900.s")
-#endif
-
 void func_802DCA14_2BEE44(u8 arg0) {
 	s8 rootJoint, joint3, joint1, joint5, joint6, joint8, joint2, joint4;
 	AlienInstance *alien;
