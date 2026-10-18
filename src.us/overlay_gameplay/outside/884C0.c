@@ -6334,14 +6334,14 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
 #endif
 
-// CURRENT(73)
-#ifdef NON_MATCHING
-// kill alien?
 // AI - Kills an alien, handling zombie-human revival and death side effects (score, drops, HCU release)
-void func_80088760_97710(AlienInstance* alien) {
-	s32 alienIndex;
+void func_80088760_97710(AlienInstance *alien) {
 	u8 typeIndex;
-	AlienInstance* target;
+	u8 waveIndex;
+	s32 scratch;
+	u16 randomSize;
+	u16 randomZ;
+	u16 randomX;
 
 	if (alien->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)) {
 		return;
@@ -6352,7 +6352,7 @@ void func_80088760_97710(AlienInstance* alien) {
 
 	// if not human, HCU, or Mental HCU... waveIndex bookkeeping
 	if ((typeIndex >= 3) && (typeIndex != 0x20)) {
-		u8 waveIndex = alien->unk3E;
+		waveIndex = alien->unk3E;
 
 		if (waveIndex != 0xFF) {
 			D_80223780[waveIndex].unk10--;
@@ -6366,15 +6366,14 @@ void func_80088760_97710(AlienInstance* alien) {
 	if (typeIndex == 2) {
 		if (alien->unk20 & ALIEN_FLAG_UNKE) {
 			if (alien->unk20 & ALIEN_FLAG_UNKF) {
-				target = &alienInstances[alien->unk25];
-				if (!(target->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)) && (target->typeIndex == 0x19)) {
+				if (!(alienInstances[alien->unk25].unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL)) && (alienInstances[alien->unk25].typeIndex == 0x19)) {
 					alien->hitPoints = 0xA;
 					return;
 				}
 			}
 
-			alienIndex = alien - alienInstances;
-			if (alienIndex == D_80048184) {
+			scratch = alien - alienInstances;
+			if (scratch == D_80048184) {
 				D_80052B34->unk20 &= 0xEFFF;
 				alien->unk20 &= ~ALIEN_FLAG_UNKB;
 				if (func_80110FB4_11FF64(D_80052B34, 1) != 0) {
@@ -6387,26 +6386,25 @@ void func_80088760_97710(AlienInstance* alien) {
 				alien->unk20 |= ALIEN_FLAG_UNKB;
 				D_80048184 = -1;
 				D_80048180 = 0;
-				func_80102DDC_111D8C(D_80052B34, func_800038E0_44E0(), 0x3000, 20.0f);
+				scratch = func_800038E0_44E0();
+				func_80102DDC_111D8C(D_80052B34, scratch, 0x3000, 20.0f);
 			} else {
-				target = &alienInstances[alien->unk24];
-				if (target->unk24 == 0x1D) {
-					target->unk24 = 1;
+				if (alienInstances[alien->unk24].unk24 == 0x1D) {
+					alienInstances[alien->unk24].unk24 = 1;
 					alienInstances[alien->unk24].unk48 = 0x30;
-				} else if (target->unk24 == 4) {
-					target->unk24 = 0x14;
+				} else if (alienInstances[alien->unk24].unk24 == 4) {
+					alienInstances[alien->unk24].unk24 = 0x14;
 					alienInstances[alien->unk24].unk48 = 0xA0;
 				} else {
-					target->unk24 = 0;
+					alienInstances[alien->unk24].unk24 = 0;
 					alienInstances[alien->unk24].unk48 = 0x40;
 				}
 
-				target = &alienInstances[alien->unk24];
-				if (!(target->unk20 & ALIEN_FLAG_UNKL)) {
-					target->unk20 = target->unk20 | (ALIEN_FLAG_UNKJ | ALIEN_FLAG_UNKF);
-					alienInstances[alien->unk24].unkE = (s16)func_800038E0_44E0();
-					alienInstances[alien->unk24].unk12 = (s16)(func_800038E0_44E0() >> 6);
-					alienInstances[alien->unk24].unk10 = (s16)((func_800038E0_44E0() >> 8) + 0x200);
+				if (!(alienInstances[alien->unk24].unk20 & ALIEN_FLAG_UNKL)) {
+					alienInstances[alien->unk24].unk20 = alienInstances[alien->unk24].unk20 | (ALIEN_FLAG_FALL | ALIEN_FLAG_UNKF);
+					alienInstances[alien->unk24].unkE = func_800038E0_44E0();
+					alienInstances[alien->unk24].unk12 = func_800038E0_44E0() >> 6;
+					alienInstances[alien->unk24].unk10 = (func_800038E0_44E0() >> 8) + 0x200;
 					alienInstances[alien->unk24].unk2C = 0x64;
 				}
 			}
@@ -6415,30 +6413,27 @@ void func_80088760_97710(AlienInstance* alien) {
 
 	// if human is a zombie (case 1 when walking, case 0x1D when carried by HCU)
 	if ((typeIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0x1D)) && (func_8000726C_7E6C(0xB) == 0) && (func_8000726C_7E6C(0xC) == 0)) {
-		u16 r3;
-		u16 r2;
-		u16 r1;
-
-		alien->hitPoints = 0xA; // restore hitpoints to 10
 		alien->unk20 |= ALIEN_FLAG_UNKF;
+		alien->hitPoints = 0xA; // restore hitpoints to 10
 		alien->unk2C = (func_800038E0_44E0() % 0x28) + 0x3C; // random timer before stands up again
 
 		//random blood spurts?
 		if ((D_80031420 & 3) == 3) {
-			r1 = func_800038E0_44E0();
-			r2 = func_800038E0_44E0();
-			r3 = func_800038E0_44E0();
+			randomX = func_800038E0_44E0();
+			randomZ = func_800038E0_44E0();
+			randomSize = func_800038E0_44E0();
+			scratch = func_800038E0_44E0();
 			func_800CA5EC_D959C(
 				alien->unk0,
 				alien->unk2,
 				alien->unk4,
-				(r1 % 0x32) - 0x19,
+				(randomX % 0x32) - 0x19,
 				0x50,
-				(r2 % 0x32) - 0x19,
+				(randomZ % 0x32) - 0x19,
 				0x19,
 				5,
-				(r3 % 8) + 0xC,
-				(func_800038E0_44E0() % 0x23) + 0x69,
+				(randomSize % 8) + 0xC,
+				(scratch % 0x23) + 0x69,
 				0,
 				0xFF,
 				0,
@@ -6470,9 +6465,9 @@ void func_80088760_97710(AlienInstance* alien) {
 	} else {
 		if (alienTypes[typeIndex].unk5C) {
 			// This is what calls func_80089D04_98CB4 when blackadam is killed
-			alienTypes[typeIndex].unk5C((u8)(alien - alienInstances));
+			alienTypes[typeIndex].unk5C(alien - alienInstances);
 		} else {
-			func_80089EB4_98E64((u8)(alien - alienInstances), 0x28, 0, 2, 0);
+			func_80089EB4_98E64(alien - alienInstances, 0x28, 0, 2, 0);
 		}
 	}
 
@@ -6485,9 +6480,6 @@ void func_80088760_97710(AlienInstance* alien) {
 		func_800A4150_B3100(alien->unk25);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088760_97710.s")
-#endif
 
 void func_80088E10_97DC0(s16 arg0) {
 	D_8014DD50[arg0].unk2 += 0x8000;
