@@ -3481,18 +3481,16 @@ void func_802DC4D0_2BE900(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DC4D0_2BE900.s")
 #endif
 
-// CURRENT(2756)
-#ifdef NON_MATCHING
-// AI - Builds a chain of waypoint nodes ahead on the path graph and checks it for collision/attack
 void func_802DCA14_2BEE44(u8 arg0) {
-	s16 sp74;
-	s16 arr[12];
-	s32 sp58;
-	s32 sp54;
-	s32 sp50;
-	u8 sp4F;
+	s8 rootJoint, joint3, joint1, joint5, joint6, joint8, joint2, joint4;
 	AlienInstance *alien;
-	s8 v1, a1, a0, a3, t0, t2, t4, t5;
+	s32 scratch;
+	s8 joint7;
+	s16 joint9;
+	s16 joint10;
+	s16 joints[11];
+	union { s32 word; s16 half[2]; } worldX, worldY, worldZ;
+	u8 animationResult;
 
 	if ((func_800038E0_44E0() % 50) == 0) {
 		func_80137468_146418(arg0, 0x199);
@@ -3500,52 +3498,51 @@ void func_802DCA14_2BEE44(u8 arg0) {
 
 	alien = &alienInstances[arg0];
 	if (alien->unk20 & ALIEN_FLAG_UNKD) {
-		v1 = D_8014DD50[alien->unkC].unkC;
-		a1 = D_8014DD50[v1].unkD;
-		a0 = D_8014DD50[v1].unkC;
-		a3 = D_8014DD50[a1].unkD;
-		t4 = D_8014DD50[a0].unkC;
-		t0 = D_8014DD50[a3].unkC;
-		t2 = D_8014DD50[a3].unkD;
-		t5 = D_8014DD50[a1].unkC;
+		rootJoint = D_8014DD50[alien->unkC].unkC;
+		joint1 = D_8014DD50[rootJoint].unkC;
+		joint3 = D_8014DD50[rootJoint].unkD;
+		joint2 = D_8014DD50[joint1].unkC;
+		joint4 = D_8014DD50[joint3].unkC;
+		joint5 = D_8014DD50[joint3].unkD;
+		joint6 = D_8014DD50[joint5].unkC;
+		joint7 = D_8014DD50[joint6].unkC;
+		joint8 = D_8014DD50[joint5].unkD;
 
-		arr[3] = a1;
-		arr[1] = a0;
-		arr[5] = a3;
-		arr[7] = D_8014DD50[t0].unkC;
-		arr[0] = v1;
-		arr[6] = t0;
-		arr[2] = t4;
-		arr[8] = t2;
-		arr[4] = t5;
-		sp74 = D_8014DD50[t2].unkC;
-		arr[9] = sp74;
-		arr[11] = D_8014DD50[sp74].unkC;
-		arr[10] = arr[11];
+		joint9 = D_8014DD50[joint8].unkC;
+		joint10 = D_8014DD50[joint9].unkC;
 
-		sp4F = func_80081F18_90EC8(arg0, 11, 2, arr, &D_802E2408_2C4838);
+		joints[3] = joint3;
+		joints[1] = joint1;
+		joints[5] = joint5;
+		joints[7] = joint7;
+		joints[0] = rootJoint;
+		joints[6] = joint6;
+		joints[2] = joint2;
+		joints[8] = joint8;
+		joints[4] = joint4;
+		joints[9] = joint9;
+		joints[10] = joint10;
 
-		if (D_8014DD50[v1].unkE == 8) {
+		animationResult = func_80081F18_90EC8(arg0, 11, 2, joints, &D_802E2408_2C4838);
+
+		if (D_8014DD50[rootJoint].unkE == 8) {
 			if (alien->unk36 == 1) {
-				func_80128428_1373D8(alien, -60, -50, 138, &sp58, &sp54, &sp50);
+				func_80128428_1373D8(alien, -60, -50, 138, &worldX.word, &worldY.word, &worldZ.word);
 			} else if (alien->unk36 == 2) {
-				func_80128428_1373D8(alien, 60, -50, 138, &sp58, &sp54, &sp50);
+				func_80128428_1373D8(alien, 60, -50, 138, &worldX.word, &worldY.word, &worldZ.word);
 			}
 			func_800DEA08_ED9B8(
-				((s16 *)&sp58)[1],
-				((s16 *)&sp54)[1],
-				((s16 *)&sp50)[1],
+				worldX.half[1],
+				worldY.half[1],
+				worldZ.half[1],
 				200, 5, 0, 40, 200, 225, 225, 225);
 		}
 
-		if (sp4F == 2) {
+		if (animationResult == 2) {
 			alien->unk20 &= ~ALIEN_FLAG_UNKD;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DCA14_2BEE44.s")
-#endif
 
 s32 func_802DCC50_2BF080(u8 arg0) {
 	s16 rootJoint;
