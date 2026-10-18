@@ -625,18 +625,6 @@ s32 D_802E2764_2C4B94 = 0;
 Unk8014DD50 D_802E2768_2C4B98 = { 0x0000, 0x0000, 0x0000, 0x0FA0, 0x0000, 0x0000, 0x00, 0x01, 0x0004 };
 Unk8014DD50 D_802E2778_2C4BA8 = { 0x0000, 0x0000, 0x0000, 0xF060, 0x0000, 0x0000, 0x00, 0x01, 0x0004 };
 Unk8014DD50 *D_802E2788_2C4BB8[1] = { (Unk8014DD50 *)LEVEL_PTR(0x802E2768) };
-/* ====================== .rodata ====================== */
-
-const char D_802E2E90_2C52C0[0x20] = "Unwritten Siberia Function %d\n";
-const char D_802E2EB0_2C52E0[0x18] = "Add set snow thickness\n";
-const char D_802E2EC8_2C52F8[0x14] = "Train vunerable\n";
-const char D_802E2EDC_2C530C[0xC] = "cut: %d,%d\n";
-const char D_802E2EE8_2C5318[0x10] = "Add snowbeast\n";
-const char D_802E2EF8_2C5328[0xC] = "big bang\n";
-const char D_802E2F04_2C5334[0x10] = "little bang\n";
-const char D_802E2F14_2C5344[0x20] = "Add Person @ posn %d, %d, %d\n";
-const char D_802E2F34_2C5364[0x8] = "%d,%d\n";
-const char D_802E2F3C_2C536C[0x1C] = "Killed all three warriors\n";
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -672,7 +660,7 @@ void func_802D4CD0_2B7100(s32 arg0, s32 arg1) {
 		func_80007690_8290();
 		break;
 	default:
-		osSyncPrintf(D_802E2E90_2C52C0, arg0);
+		osSyncPrintf("Unwritten Siberia Function %d\n", arg0);
 		break;
 	}
 }
@@ -871,7 +859,7 @@ void func_802D5980_2B7DB0(void)
 	*((u16 *)(((u8 *)vehicleInstances) + 0xAE8)) |= VEHICLE_FLAG_SHIELDED;
 	D_80157FA8 = 0;
 	D_801591C4 = 0;
-	osSyncPrintf(D_802E2EB0_2C52E0);
+	osSyncPrintf("Add set snow thickness\n");
 	func_80007410_8010(&func_802D5754_2B7B84);
 	if (D_80047F94 == 0)
 	{
@@ -922,7 +910,7 @@ void func_802D5B58_2B7F88(void)
 	u8 new_var;
 	s32 i;
 	vehicleInstances[29].unk20 &= ~VEHICLE_FLAG_SHIELDED;
-	osSyncPrintf(D_802E2EC8_2C52F8);
+	osSyncPrintf("Train vunerable\n");
 	for (i = 0; i < D_8014D507; i++)
 	{
 		AlienInstance *alien;
@@ -992,7 +980,7 @@ void func_802D5F28_2B8358(void) {
 			}
 	}
 
-	osSyncPrintf(D_802E2EDC_2C530C, D_802E30EC, D_8014D17C);
+	osSyncPrintf("cut: %d,%d\n", D_802E30EC, D_8014D17C);
 
 	switch (D_802E30EC) {
 	case 0:
@@ -1096,7 +1084,7 @@ void func_802D6364_2B8794(void) {
 
 	temp = func_8007956C_8851C(0x13);
 	if (temp != 0xFF) {
-		osSyncPrintf(&D_802E2EE8_2C5318);
+		osSyncPrintf("Add snowbeast\n");
 		alienInstances[temp].unk0 = buildingInstances[0xA0].xCoord + 0x320;
 		alienInstances[temp].unkE = 0;
 		alienInstances[temp].unk4 = buildingInstances[0xA0].zCoord;
@@ -1138,7 +1126,7 @@ void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	}
 	if (arg2 == ((*(new_var2 = &arg1)) + 24))
 	{
-		osSyncPrintf(D_802E2EF8_2C5328);
+		osSyncPrintf("big bang\n");
 		var_s0 = 0;
 		var_s1 = arg4;
 		if (arg5 > 0)
@@ -1155,7 +1143,7 @@ void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	}
 	if ((arg1 % arg3) == 0)
 	{
-		osSyncPrintf(D_802E2F04_2C5334);
+		osSyncPrintf("little bang\n");
 		var_s1 = (func_800038E0_44E0() % arg5) * 6;
 		func_802D63E8_2B8818(arg0, (s16 *)(arg4 + var_s1));
 	}
@@ -1274,7 +1262,7 @@ void func_802D6A70_2B8EA0(void) {
 			alienInstances[sp3F].unk14 = buildingInstances[D_802E30F8].xCoord + sp38;
 			alienInstances[sp3F].unk18 = buildingInstances[D_802E30F8].zCoord + (s32)(temp_f6 * 415.0 + 130.0 * ((f64)(f32)sp26 / 32768.0));
 			func_80080510_8F4C0(sp3F);
-			osSyncPrintf(&D_802E2F14_2C5344, alienInstances[sp3F].unk0, alienInstances[sp3F].unk2, alienInstances[sp3F].unk4);
+			osSyncPrintf("Add Person @ posn %d, %d, %d\n", alienInstances[sp3F].unk0, alienInstances[sp3F].unk2, alienInstances[sp3F].unk4);
 			if (buildingInstances[D_802E30F8].unk7 == 0) {
 				func_800074BC_80BC(func_802D6A70_2B8EA0);
 				D_8014D17E++;
@@ -1430,7 +1418,7 @@ void func_802D7350_2B9780(void) {
 s32 func_802D7398_2B97C8(void) {
 
 	func_80013468_14068(0xD);
-	osSyncPrintf(D_802E2F34_2C5364, D_80157F8C, D_80157F8E);
+	osSyncPrintf("%d,%d\n", D_80157F8C, D_80157F8E);
 
 	switch (D_80157F8C) {
 	case 0:
@@ -1488,7 +1476,7 @@ void func_802D7540_2B9970(void) {
 
 void func_802D7598_2B99C8(void) {
 	buildingInstances[150].stateAndRotation &= 0xF03F;
-	osSyncPrintf(D_802E2F3C_2C536C);
+	osSyncPrintf("Killed all three warriors\n");
 	D_8014D17C = 0;
 	func_80007410_8010(func_802D7540_2B9970);
 }
