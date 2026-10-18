@@ -16,6 +16,9 @@ extern __osExceptionVector __ptExceptionPreamble[];
 
 #include "PR/sched.h"
 
+extern const s16 D_801416B0_150660[4][2];
+extern const s16 D_801416C0_150670[4][2];
+
 // Overlay entry point (shared RAM address 0x80070270 for all gameplay
 // overlays).  Declared as a data array here; TUs that genuinely call it as a
 // function (10A20.c, 53F0.c) define OVERLAY_ENTRY_AS_FUNC to get the function

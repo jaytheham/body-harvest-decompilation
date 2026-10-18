@@ -4424,204 +4424,167 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 }
 
 
-// CURRENT(40932)
-#ifdef NON_MATCHING
 s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
-	AlienInstance *alien;
-	AlienType *type;
-	f32 outA;
-	f32 outB;
-	s16 minAngle;
-	s16 maxAngle;
+	u8 ownTypeIndex;
 	s16 range;
 	s16 startX;
 	s16 startZ;
-	s16 absSpeed;
-	s32 maxDistSq;
-	s32 foundAny;
-	s32 row;
-	s32 col;
-	s32 visibleMask;
-	s32 sampleX;
+	s32 terrainHeight;
+	s16 x;
+	s16 z;
+	s16 x1;
+	s16 z1;
+	s32 dx;
+	s32 dz;
+	s32 dy;
+	s32 rangeSq;
+	f32 outA;
+	f32 outB;
 	s32 list;
+	s32 visibleMask;
+	s32 kind;
+	u32 row;
+	u32 col;
+	s16 kindRange;
 	s32 quad;
+	s32 tileX;
+	s32 tileZ;
+	s16 speed;
+	u16 bits;
+	s16 minAngle;
+	s16 maxAngle;
+	s16 spanMin;
+	s16 spanMax;
+	s32 foundAny;
+	s32 hit;
+	s32 maxDistSq;
+	s32 sampleX;
 
-	alien = &alienInstances[arg0];
-	type = &alienTypes[alien->typeIndex];
-	startX = (alien->unk0 >> 8) - 1;
-	startZ = (alien->unk4 >> 8) - 1;
-	range = type->unkC;
-	absSpeed = alien->unk12;
-	if (-absSpeed >= absSpeed) {
-		absSpeed = -absSpeed;
-	}
-	maxDistSq = type->unk32 * absSpeed;
-	foundAny = 0;
+	col = arg0;
+	ownTypeIndex = alienInstances[col].typeIndex;
+	range = alienTypes[ownTypeIndex].unkC;
+	startX = (alienInstances[arg0].unk0 >> 8) - 1;
+	startZ = (alienInstances[arg0].unk4 >> 8) - 1;
 	visibleMask = 1;
-	list = func_800826E4_91694(arg0, 0, 0);
+	speed = alienInstances[arg0].unk12;
+	maxDistSq = BH_ABS(speed) * alienTypes[ownTypeIndex].unk32;
+	foundAny = 0;
+	list = func_800826E4_91694(col, 0, 0);
 
-	for (row = 0; row < 3; row++) {
-		for (col = 0; col < 3; col++, visibleMask <<= 1) {
-			s16 tileX;
-			s16 tileZ;
-			u32 bits;
+	for (row = 0; row != 3U; row++) {
+		for (col = 0; col != 3U; col++) {
 
-			if (!(list & visibleMask)) {
-				continue;
-			}
+			if (list & visibleMask) {
 
-			tileX = startX + col;
-			tileZ = startZ + row;
-			bits = func_80078530_874E0(tileX, tileZ);
-			quad = 0;
+				tileX = startX + col;
+				tileZ = startZ + row;
+				bits = func_80078530_874E0(tileX, tileZ);
+				quad = 0;
 
-			while (bits != 0) {
-				s32 kind;
-				s32 levelIdx;
-				s32 hit;
+				while (bits) {
 
-				kind = bits & 0xF;
-				levelIdx = (currentLevel << 4) + kind;
-				hit = 0;
+					hit = 0;
+					kind = bits & 0xF;
+					kindRange = ((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][kind];
 
-				if (kind < 0xE) {
-					s16 x;
-					s16 z;
-					s32 dx;
-					s32 dz;
-					s32 dy;
-					s32 maxRange;
-					s32 limitY;
-					s16 angle;
+					if (kind < 0xE) {
 
-					x = (tileX << 8) + ((quad & 1) << 7) + 0x40;
-					z = (tileZ << 8) + (((quad >> 1) & 1) << 7) + 0x40;
-					dx = x - alien->unk0;
-					dz = z - alien->unk4;
-					dy = range + D_8013BC0C_14ABBC[levelIdx];
-					limitY = D_8013BB6C_14AB1C[levelIdx] + (func_800B84D0_C7480(x, z) >> 8);
-					maxRange = dy * dy;
-					if (((dx * dx) + (dz * dz) < maxRange) && (alien->unk2 < limitY)) {
-						if ((maxDistSq < 0x7A121) && (type->unk32 < 0x4001)) {
-							angle = func_80003824_4424((f32)dx, (f32)dz);
-							hit = 1;
-							minAngle = angle;
-							maxAngle = angle;
-						} else {
-							angle = func_80003824_4424((f32)dx, (f32)dz);
-							if (func_80078828_877D8(x, z, angle & 0xFFFF, 0) != 0) {
-								alien->unk12 = 0;
+						x = (s16)(tileX << 8) + ((quad & 1) << 7) + 0x40;
+						z = (s16)(tileZ << 8) + (((quad >> 1) & 1) << 7) + 0x40;
+						dx = x - alienInstances[arg0].unk0;
+						dz = z - alienInstances[arg0].unk4;
+						terrainHeight = (func_800B84D0_C7480(x, z) >> 8) + ((s16 (*)[16])D_8013BB6C_14AB1C)[currentLevel][kind];
+						dy = range + kindRange;
+						if (((dx * dx) + (dz * dz) < dy * dy) && (alienInstances[arg0].unk2 < terrainHeight)) {
+							if (((maxDistSq >= 0x7A121) || (alienTypes[ownTypeIndex].unk32 >= 0x4001)) &&
+								(((terrainHeight = func_80003824_4424((f32)dx, (f32)dz)), func_80078828_877D8(x, z, (u16)terrainHeight, 0)) != 0)) {
+								alienInstances[arg0].unk12 = 0;
 							} else {
-								angle = func_80003824_4424((f32)dx, (f32)dz);
+								minAngle = func_80003824_4424((f32)dx, (f32)dz);
+								maxAngle = minAngle;
 								hit = 1;
-								minAngle = angle;
-								maxAngle = angle;
 							}
 						}
-					}
-				} else {
-					s32 off = quad * 2;
-					s16 x0;
-					s16 z0;
-					s16 x1;
-					s16 z1;
-					s32 dx0;
-					s32 dz0;
-					s32 dx1;
-					s32 dz1;
-					s32 dy;
-					s32 rangeSq;
-					s32 h;
-					s16 angleA;
-					s16 angleB;
-					s32 actor;
-					s16 baseX;
-					s16 baseZ;
+					} else if (kind >= 0xE) {
 
-					baseX = tileX << 8;
-					baseZ = tileZ << 8;
-					x0 = D_801416B0_150660[off + 0] + baseX;
-					x1 = D_801416B0_150660[off + 1] + baseX;
-					z0 = D_801416C0_150670[off + 0] + baseZ;
-					z1 = D_801416C0_150670[off + 1] + baseZ;
-					dx0 = x0 - alien->unk0;
-					dz0 = z0 - alien->unk4;
-					angleA = func_80003824_4424((f32)dx0, (f32)dz0);
-					dy = range + D_8013BC0C_14ABBC[levelIdx];
-					rangeSq = dy * dy;
-					h = D_8013BB6C_14AB1C[levelIdx] + (func_800B84D0_C7480(x0, z0) >> 8);
-					if (((dx0 * dx0) + (dz0 * dz0) < rangeSq) && (alien->unk2 < h)) {
-						hit = 1;
-					}
+						x = D_801416B0_150660[quad][0] + (s16)(tileX << 8);
+						z = D_801416C0_150670[quad][0] + (s16)(tileZ << 8);
+						x1 = D_801416B0_150660[quad][1] + (s16)(tileX << 8);
 
-					dx1 = alien->unk0 - x1;
-					dz1 = alien->unk4 - z1;
-					angleB = func_80003824_4424((f32)-dx1, (f32)-dz1);
-					h = D_8013BB6C_14AB1C[levelIdx] + (func_800B84D0_C7480(x1, z1) >> 8);
-					if (alien->unk2 < h) {
-						if (((dx1 * dx1) + (dz1 * dz1)) < rangeSq) {
-							hit = 1;
-						}
-						if (func_8010EF40_11DEF0(
-								(f32)x0, (f32)z0, (f32)x1, (f32)z1, (f32)alien->unk0, (f32)alien->unk4,
-								(f32)((s32)((((f64)(f32)coss(alien->unkE)) / 32768.0) * (f64)dy) + alien->unk0),
-								(f32)((s32)((((f64)(f32)sins(alien->unkE)) / 32768.0) * (f64)dy) + alien->unk4),
-								&outA, &outB) != 0) {
+						minAngle = func_80003824_4424((z1 = D_801416C0_150670[quad][1] + (s16)(tileZ << 8), (f32)(dx = x - alienInstances[arg0].unk0)), (f32)(dz = z - alienInstances[arg0].unk4));
+						terrainHeight = (func_800B84D0_C7480(x, z) >> 8) + ((s16 (*)[16])D_8013BB6C_14AB1C)[currentLevel][kind];
+						dy = range + kindRange;
+						rangeSq = dy * dy;
+						if (((dx * dx) + (dz * dz) < rangeSq) && (alienInstances[arg0].unk2 < terrainHeight)) {
 							hit = 1;
 						}
 
-						if (hit) {
-							actor = func_80078D64_87D14(baseX, baseZ, quad);
-							if ((actor != -1) && (kind != 0xE)) {
-								u8 *entry;
+						dx = alienInstances[arg0].unk0 - x1;
+						dz = alienInstances[arg0].unk4 - z1;
+						maxAngle = func_80003824_4424((f32)-dx, (f32)-dz);
+						terrainHeight = (func_800B84D0_C7480(x1, z1) >> 8) + ((s16 (*)[16])D_8013BB6C_14AB1C)[currentLevel][kind];
+						if (alienInstances[arg0].unk2 < terrainHeight) {
+							if (((dx * dx) + (dz * dz)) < rangeSq) {
+								hit = 1;
+							}
+							dx = (s32)((((f32)coss(alienInstances[arg0].unkE)) / 32768.0) * (range + kindRange));
+							dz = (s32)((((f32)sins(alienInstances[arg0].unkE)) / 32768.0) * (range + kindRange));
+							dx += alienInstances[arg0].unk0;
+							dz += alienInstances[arg0].unk4;
+							if (func_8010EF40_11DEF0(
+									(f32)x, (f32)z, (f32)x1, (f32)z1, (f32)alienInstances[arg0].unk0, (f32)alienInstances[arg0].unk4,
+									(f32)dx,
+									(f32)dz,
+									&outA, &outB) != 0) {
+								hit = 1;
+							}
 
-								entry = (u8 *)&D_80259D90[actor];
-								if (func_80078FE0_87F90(entry, (VehicleInstance *)alien, &sampleX) != 0) {
-									hit = 0;
-									func_800792E0_88290(entry, sampleX);
+							if (hit) {
+								terrainHeight = func_80078D64_87D14((s16)(tileX << 8), (s16)(tileZ << 8), quad);
+								if ((terrainHeight != -1) && (kind != 0xE)) {
+
+									if (func_80078FE0_87F90((u8 *)&D_80259D90[terrainHeight], (VehicleInstance *)&alienInstances[arg0], &sampleX) != 0) {
+										func_800792E0_88290((u8 *)&D_80259D90[terrainHeight], sampleX);
+										hit = 0;
+									}
 								}
 							}
 						}
+
 					}
 
 					if (hit) {
-						minAngle = angleA;
-						maxAngle = angleB;
-					}
-				}
+						if (foundAny == 0) {
+							spanMin = minAngle;
+							spanMax = minAngle;
+						} else if ((s16)(minAngle - spanMin) < 0) {
+							spanMin = minAngle;
+						} else if ((s16)(minAngle - spanMax) > 0) {
+							spanMax = minAngle;
+						}
 
-				if (hit) {
-					s16 delta;
-
-					if (!foundAny) {
+						if ((s16)(maxAngle - spanMin) < 0) {
+							spanMin = maxAngle;
+						} else if ((s16)(maxAngle - spanMax) > 0) {
+							spanMax = maxAngle;
+						}
 						foundAny = 1;
-						*arg1 = minAngle;
-						*arg2 = maxAngle;
-					} else {
-						delta = minAngle - *arg1;
-						if (delta < 0) {
-							*arg1 = minAngle;
-						}
-
-						delta = maxAngle - *arg2;
-						if (delta > 0) {
-							*arg2 = maxAngle;
-						}
 					}
+					bits >>= 4;
+					quad++;
 				}
-
-				bits = (u16)(bits >> 4);
-				quad++;
 			}
+			visibleMask <<= 1;
 		}
 	}
 
-	return foundAny;
+	if (foundAny) {
+		*arg1 = spanMin;
+		*arg2 = spanMax;
+		return 1;
+	}
+	return 0;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800836D0_92680.s")
-#endif
 
 void func_80083EF4_92EA4(AlienInstance *arg0, void *arg1, s16 arg2, s16 arg3)
 {
