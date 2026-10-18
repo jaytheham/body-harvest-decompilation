@@ -1198,28 +1198,23 @@ void func_802D6364_2B8794(void) {
 	}
 }
 
-// CURRENT(4)
-#ifdef NON_MATCHING
-void func_802D63E8_2B8818(s32 arg0, s16 *arg1)
-{
-  s32 x;
-  s32 y;
-  s32 z;
-  s16 sp2A;
-  s16 sp28;
-  u16 randVal;
-  x = buildingInstances[arg0].xCoord;
-  y = buildingInstances[arg0].yCoord;
-  z = buildingInstances[arg0].zCoord;
-  sp2A = arg1[0];
-  sp28 = arg1[2];
-  func_80116554_125504((s16) (buildingInstances[arg0].unk8 & 3), &sp2A, &sp28);
-  randVal = func_800038E0_44E0();
-  func_800DF038_EDFE8(sp2A + x, arg1[1] + ((unsigned int) y), sp28 + z, (randVal % 50) + 200, func_800038E0_44E0() & 1, 0);
+void func_802D63E8_2B8818(s32 arg0, s16 *arg1) {
+	s32 x;
+	s32 y;
+	s32 z;
+	s16 offset[2];
+	u16 randVal[2];
+
+	x = buildingInstances[arg0].xCoord;
+	y = buildingInstances[arg0].yCoord;
+	z = buildingInstances[arg0].zCoord;
+	offset[1] = arg1[0];
+	offset[0] = arg1[2];
+	func_80116554_125504(buildingInstances[arg0].unk8 & 3, &offset[1], &offset[0]);
+	randVal[0] = func_800038E0_44E0();
+	arg0 = func_800038E0_44E0();
+	func_800DF038_EDFE8(offset[1] + x, arg1[1] + y, offset[0] + z, (randVal[0] % 50) + 200, arg0 & 1, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D63E8_2B8818.s")
-#endif
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7)
 {
