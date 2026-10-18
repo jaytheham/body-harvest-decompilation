@@ -653,8 +653,6 @@ const u32 jtbl_802E2F58_2C5388[11] = {
 const f32 D_802E2F84_2C53B4[] = { 5000.0f };
 const f64 D_802E2F88_2C53B8[] = { 0.29999999999999999 };
 const f64 D_802E2F90_2C53C0[] = { 920.0 };
-const f64 D_802E2F98_2C53C8[] = { 0.20000000000000001 };
-const f64 D_802E2FA0_2C53D0[] = { 940.0 };
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -872,21 +870,14 @@ void func_802D5058_2B7488(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5058_2B7488.s")
 #endif
 
-// CURRENT(830)
-#ifdef NON_MATCHING
 void func_802D5754_2B7B84(void) {
-	s32 temp;
-	s32 sp34;
-	VehicleInstance *vehicle;
+	s32 snowThickness;
 
-	vehicle = D_80052B34;
-	sp34 = func_800B84D0_C7480(vehicle->unk0, vehicle->unk4);
-	sp34 = (sp34 >> 8) - D_80222A70;
-	temp = sp34 >> 2;
-	sp34 = temp >= 11 ? temp : 10;
-	func_800E2720_F16D0(sp34);
+	snowThickness = (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8) - D_80222A70;
+	snowThickness = (snowThickness >> 2) >= 11 ? (snowThickness >> 2) : 10;
+	func_800E2720_F16D0(snowThickness);
 	if (D_80047F94 != 0) {
-		D_800313F8 = (s16)((s32)((f64)(200 - D_80154300) * ((f64 *)D_802E2F98_2C53C8)[0] + ((f64 *)D_802E2FA0_2C53D0)[0]));
+		D_800313F8 = (s32)((f64)(200 - D_80154300) * 0.2 + 940.0);
 	}
 	if (D_80047F94 == 2) {
 		D_80222A70 = 0x400;
@@ -911,8 +902,8 @@ void func_802D5754_2B7B84(void) {
 	}
 	if (D_802E3094 == 1) {
 		D_802E3098 = func_8012D700_13C6B0(5, 0xFFF,
-			(s16)(vehicleInstances[30].unk0 + 0xB4),
-			(s16)(vehicleInstances[30].unk2 + 0x4C),
+			vehicleInstances[30].unk0 + 0xB4,
+			vehicleInstances[30].unk2 + 0x4C,
 			vehicleInstances[30].unk4, 0, 0, 0, 0x1C2, 0x46, 0x55, 0, 0);
 	}
 	func_802D5058_2B7488();
@@ -920,9 +911,6 @@ void func_802D5754_2B7B84(void) {
 		func_800073B8_7FB8(0x18ULL);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5754_2B7B84.s")
-#endif
 
 void func_802D5980_2B7DB0(void)
 {
