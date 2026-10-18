@@ -7057,69 +7057,55 @@ s32 func_8008AAFC_99AAC(u8 arg0, s32 arg1, s32 arg2) {
 	return 0;
 }
 
-// CURRENT(5620)
-#ifdef NON_MATCHING
 void func_8008AC5C_99C0C(u8 arg0)
 {
 	s32 sp84;
 	s32 sp80;
 	s32 sp7C;
-	s32 sp68;
-	AlienInstance *sp60;
-	s16 temp_v0_2;
-	s32 var_s5;
-	s32 var_s6;
-	s32 temp_s1;
-	s32 var_s2;
-	s8 temp_a0;
+	s16 var_s5;
+	s16 var_s6;
+	s16 effect;
 	s8 var_s3;
-	u8 idx;
-	Unk8014DD50 *temp_s0;
+	s32 temp_s1;
+	s32 sign;
+	s32 sp68;
+	s32 var_s2;
 
-	idx = arg0;
-	sp60 = &alienInstances[idx];
-	if (sp60->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 	{
-		func_80137468_146418(idx, 0xF);
+		func_80137468_146418(arg0, 0xF);
+		var_s3 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 		sp68 = 0xF;
-		var_s3 = D_8014DD50[sp60->unkC].unkC;
-		var_s5 = (s16) ((s32) ((((f64) ((f32) coss(sp60->unk6))) / 32768.0) * 6.0));
-		var_s2 = 0;
-		var_s6 = (s16) ((s32) ((((f64) ((f32) sins(sp60->unk6))) / 32768.0) * 6.0));
+		var_s5 = (s16) ((s32) ((((f64) ((f32) coss(alienInstances[arg0].unk6))) / 32768.0) * 6.0));
+		var_s6 = (s16) ((s32) ((((f64) ((f32) sins(alienInstances[arg0].unk6))) / 32768.0) * 6.0));
 
-	loop_2:
-		temp_s1 = func_8008916C_9811C(idx, (s16) var_s3);
-		temp_s0 = &D_8014DD50[var_s3];
-		func_80128428_1373D8(sp60, temp_s0->unk0, temp_s0->unk2, temp_s0->unk4, &sp84, &sp80, &sp7C);
-		temp_v0_2 = func_800C7924_D68D4((s16) sp84, (s16) sp80, (s16) sp7C, 0x40, -8, 2, temp_s1, 1);
-		func_800C80F0_D70A0((0x4000 - (s16) sp60->unk6) & 0xFFFF, 0, 0, temp_v0_2);
-		temp_a0 = sp68 * -1;
-		sp68 *= -1;
-		func_800C820C_D71BC(temp_a0, 0, 0, temp_v0_2);
-		func_800C8184_D7134((s8) (var_s6 * -1), 1, (s8) var_s5, temp_v0_2);
-		func_80088E10_97DC0((s16) var_s3);
-		var_s3 = temp_s0->unkD;
-		if (var_s3 != -1)
-		{
-			if (var_s2 == 1)
-			{
-				var_s5 *= -1;
-				var_s6 *= -1;
+		var_s2 = 0;
+		sign = -1;
+		do {
+			temp_s1 = func_8008916C_9811C(arg0, (s16) var_s3);
+			func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[var_s3].unk0, D_8014DD50[var_s3].unk2, D_8014DD50[var_s3].unk4, &sp84, &sp80, &sp7C);
+			effect = func_800C7924_D68D4((s16) sp84, (s16) sp80, (s16) sp7C, 0x40, -8, 2, temp_s1, 1);
+			func_800C80F0_D70A0((u16)(0x4000 - alienInstances[arg0].unk6), 0, 0, effect);
+			sp68 *= (u32)sign;
+			func_800C820C_D71BC(sp68, 0, 0, effect);
+			func_800C8184_D7134((s8) (var_s6 * -1), 1, (s8) var_s5, effect);
+			func_80088E10_97DC0((s16) var_s3);
+			var_s3 = D_8014DD50[var_s3].unkD;
+			if (var_s3 == sign) {
+				break;
 			}
-			var_s2 += 1;
-			if (var_s2 != 2)
-			{
-				goto loop_2;
+			if (var_s2 == 1) {
+				var_s5 = (s16)(var_s5 * (u32)sign);
+				var_s6 = (s16)(var_s6 * (u32)sign);
 			}
-		}
-		sp60->unk2C = 0x5A;
-		sp60->unk12 = 0;
-		sp60->unk10 = 0;
+			var_s2++;
+		} while (var_s2 != 2);
+		alienInstances[arg0].unk2C = 0x5A;
+		alienInstances[arg0].unk12 = 0;
+		alienInstances[arg0].unk10 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8008AC5C_99C0C.s")
-#endif
+
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) on-death func
 void func_8008AF58_99F08(u8 arg0)
