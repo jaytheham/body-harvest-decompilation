@@ -651,8 +651,6 @@ const u32 jtbl_802E2F58_2C5388[11] = {
 	LEVEL_PTR(0x802D4F0C)
 };
 const f32 D_802E2F84_2C53B4[] = { 5000.0f };
-const f64 D_802E2F88_2C53B8[] = { 0.29999999999999999 };
-const f64 D_802E2F90_2C53C0[] = { 920.0 };
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -765,110 +763,71 @@ void func_802D4F1C_2B734C(void) {
 	leoInitUnit_atten();
 }
 
-// CURRENT(48775)
-#ifdef NON_MATCHING
 void func_802D5058_2B7488(void) {
-	f32 sp1C;
-	s32 sp18;
-	f32 var_f12;
-	s32 temp_f10;
-	s32 i;
+	f32 redAdjustment, greenAdjustment;
+	f32 blend;
+	s16 i;
 	s16 temp_v0;
-	s16 temp_a1;
-	s32 r, g, b;
-	s32 new_r, new_g, new_b;
-	f32 f0, f2;
-	f32 temp_f4;
-	s32 *e44;
-	s16 *palSrc;
-	s16 *palDst;
-	s16 *palCopy;
+	s16 lighting;
+	u8 r, g, b;
+	u32 *state;
 
-	e44 = (s32 *)&D_802E0E44;
-	var_f12 = -1.0f;
+	state = &D_802E0E44_2C3274;
+	blend = -1.0f;
 	if (D_80047F94 == 0) {
-		sp1C = -1.0f;
-		var_f12 = -1.0f;
-		sp18 = 0;
 		if (func_8000726C_7E6C(0xC)) {
-			var_f12 = 1.0f;
-			*e44 = 1;
+			blend = 1.0f;
+			*state = 1;
 		} else {
-			var_f12 = sp1C;
 			temp_v0 = D_80052B34->unk4;
 			if (temp_v0 < 0x3C00 && temp_v0 >= 0x2879) {
-				var_f12 = (f32)(1.0 - (f64)((f32)(0x3C00 - temp_v0) / D_802E2F84_2C53B4));
-				*e44 = 1;
-			} else if (temp_v0 >= 0x3C01) {
-				if (*e44 == 0) {
-					var_f12 = 1.0f;
-					*e44 = 1;
-				}
+				blend = (f32)(1.0 - (f64)((f32)(0x3C00 - temp_v0) / D_802E2F84_2C53B4[0]));
+				*state = 1;
+			} else if (temp_v0 >= 0x3C01 && *state == 0) {
+				blend = 1.0f;
+				*state = 1;
 			}
 		}
-	} else if (*e44 != 0) {
-		var_f12 = 0.0f;
-		*e44 = 0;
+	} else if (*state != 0) {
+		blend = 0.0f;
+		*state = 0;
 	}
 
-	palSrc = (s16 *)&D_802E30A0;
-	palDst = (s16 *)&D_802D48D0;
-	palCopy = (s16 *)&D_802D4AD0;
-	i = 0;
-
-	if ((f64)var_f12 != -1.0) {
-		s16 temp_s16;
-		u8 color0, color1, color2;
-		u8 *levelColors;
-		
-		temp_f10 = (s32)((f64)(200 - D_80154300) * D_802E2F88_2C53B8 + D_802E2F90_2C53C0);
-		temp_s16 = (s16)temp_f10;
-		D_800313F8 = (s16)((f32)temp_s16 + ((f32)(0x3B6 - temp_s16)) * var_f12);
-
-		levelColors = (u8 *)&D_80031620_32220[0].unk0;
-		levelColors += (currentLevel - 1) * 4;
-		color0 = levelColors[0];
-		color1 = levelColors[1];
-		color2 = levelColors[2];
-
-		D_80047743 = (s8)((f32)color0 + ((f32)(0x2F - color0)) * var_f12);
-		D_800313E8 = D_80047743;
-		D_80047744 = (s8)((f32)color1 + ((f32)(0x7B - color1)) * var_f12);
-		D_800313EC = D_80047744;
-		D_80047745 = (s8)((f32)color2 + ((f32)(0x2E - color2)) * var_f12);
-		D_800313F0 = D_80047745;
-
-		f0 = -12.0f * var_f12;
-		f2 = -3.0f * var_f12;
-
-		for (; i < 0x26; i++) {
-			temp_a1 = palSrc[i];
-			r = ((temp_a1 & 0xF800) >> 11) & 0xFF;
-			g = ((temp_a1 & 0x7C0) >> 6) & 0xFF;
-			b = ((temp_a1 & 0x3E) >> 1) & 0xFF;
-
-			new_r = (s32)((f32)r + f0);
-			new_g = (s32)((f32)g + f2);
-			new_b = (s32)((f32)b + f0);
-
-			palDst[i] = ((new_r & 0xFF) << 11);
-			palDst[i] = ((new_r & 0xFF) << 11) | ((new_g & 0xFF) << 6);
-			palDst[i] = ((new_r & 0xFF) << 11) | ((new_g & 0xFF) << 6) | ((new_b & 0xFF) << 1);
-			palCopy[i] = ((new_r & 0xFF) << 11) | ((new_g & 0xFF) << 6) | ((new_b & 0xFF) << 1);
+	if ((f64)blend != -1.0) {
+		Unk80031620 *levelColors;
+		lighting = (s32)((f64)(200 - D_80154300) * 0.3 + 920.0);
+		D_800313F8 = (s32)((f32)lighting + ((f32)(0x3B6 - lighting)) * blend);
+		levelColors = D_80031620_32220;
+		levelColors = &levelColors[currentLevel - 1];
+		r = levelColors->unk0;
+		g = levelColors->unk1;
+		b = levelColors->unk2;
+		D_800313E8 = D_80047743 = (f32)r + ((f32)(0x2F - r)) * blend;
+		D_800313EC = D_80047744 = (f32)g + ((f32)(0x7B - g)) * blend;
+		D_800313F0 = D_80047745 = (f32)b + ((f32)(0x2E - b)) * blend;
+		redAdjustment = -12.0f * blend;
+		greenAdjustment = -3.0f * blend;
+		for (i = 0; i < 0x26; i++) {
+			u8 r, g, b;
+			r = (D_802E30A0[i] & 0xF800) >> 11;
+			g = (D_802E30A0[i] & 0x7C0) >> 6;
+			b = (D_802E30A0[i] & 0x3E) >> 1;
+			r = (f32)r + redAdjustment;
+			g = (f32)g + greenAdjustment;
+			b = (f32)b + redAdjustment;
+			D_802D48D0[i] = r << 11;
+			D_802D48D0[i] += g << 6;
+			D_802D48D0[i] += b << 1;
+			D_802D4AD0[i] = D_802D48D0[i];
 		}
-
 		leoInitUnit_atten();
 		func_80004C34_5834();
 		func_80004948_5548();
 	}
-
 	if (gameplayMode == 6) {
-		*e44 = 0;
+		*state = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5058_2B7488.s")
-#endif
 
 void func_802D5754_2B7B84(void) {
 	s32 snowThickness;
