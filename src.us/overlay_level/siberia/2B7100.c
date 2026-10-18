@@ -3250,67 +3250,64 @@ void func_802DBE28_2BE258(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-// CURRENT(9826)
 // Siberia Mutant behavior/update specs.unk48
-#ifdef NON_MATCHING
 void func_802DBF54_2BE384(u8 arg0) {
-	AlienInstance *alien = &alienInstances[arg0];
-	s16 sp94;
-	s16 sp8E;
-	s16 sp92;
-	s16 sp90;
-	s16 sp8C;
-	s16 sp88;
-	s16 sp8A;
-	s16 sp5E;
-	s16 sp60;
-	s32 sp4C, sp50, sp54;
-	s16 sp58, sp5A, sp5C;
-	s32 sp64, sp68, sp6C;
-	s32 sp78;
-	s32 pad[2];
-	s32 var_t0;
-	u8 var_a2;
+	s16 skeletonRoot;
+	s16 rootJoint, joint3, joint4, joint1, joint2, joint6, joint5;
+	AlienInstance *alien;
+	s32 height;
+	u8 animationMode;
+	s32 distance;
+	s32 dx, dz;
+	s32 worldX, worldY, worldZ;
+	s16 padding;
+	s16 targetAngle, typeIndex;
+	s16 offset[3];
+	s32 localPosition[3];
 
-	sp5E = alien->typeIndex;
-	sp94 = D_8014DD50[alien->unkC].unkC;
-	sp8E = D_8014DD50[sp94].unkD;
-	sp92 = D_8014DD50[sp8E].unkD;
-	sp88 = D_8014DD50[sp92].unkD;
-	sp8A = D_8014DD50[sp88].unkD;
-	sp8C = D_8014DD50[sp8E].unkC;
-	sp90 = D_8014DD50[sp92].unkC;
+	alien = &alienInstances[arg0];
+	typeIndex = alien->typeIndex;
+	skeletonRoot = alien->unkC;
+	rootJoint = D_8014DD50[skeletonRoot].unkC;
+	joint1 = D_8014DD50[rootJoint].unkD;
+	joint2 = D_8014DD50[joint1].unkC;
+	joint3 = D_8014DD50[joint1].unkD;
+	joint4 = D_8014DD50[joint3].unkC;
+	joint5 = D_8014DD50[joint3].unkD;
+	joint6 = D_8014DD50[joint5].unkD;
 
-	sp60 = func_800860CC_9507C(alien->unk0, D_8014DD50[sp94].unk2 + alien->unk2, alien->unk4);
-	D_8014DD50[sp8E].unkA = func_80085A9C_94A4C(D_8014DD50[sp8E].unkA, sp60, 0x2000, -0x2000, 0x400);
-	D_8014DD50[sp92].unkA = func_80085A9C_94A4C(D_8014DD50[sp92].unkA, sp60, 0x2000, -0x2000, 0x400);
+	targetAngle = func_800860CC_9507C(alien->unk0, D_8014DD50[rootJoint].unk2 + alien->unk2, alien->unk4);
+	D_8014DD50[joint1].unkA = func_80085A9C_94A4C(D_8014DD50[joint1].unkA, targetAngle, 0x2000, -0x2000, 0x400);
+	D_8014DD50[joint3].unkA = func_80085A9C_94A4C(D_8014DD50[joint3].unkA, targetAngle, 0x2000, -0x2000, 0x400);
 
 	func_800A99B8_B8968(arg0);
-	func_80086164_95114(arg0, sp92);
-	func_80086164_95114(arg0, sp8E);
+	func_80086164_95114(arg0, joint3);
+	func_80086164_95114(arg0, joint1);
 
-	sp78 = sqrtf((alien->unk0 - (s16)D_80052B34->unk0) * (alien->unk0 - (s16)D_80052B34->unk0) + (alien->unk4 - (s16)D_80052B34->unk4) * (alien->unk4 - (s16)D_80052B34->unk4));
+	dx = alien->unk0 - D_80052B34->unk0;
+	dz = alien->unk4 - D_80052B34->unk4;
+	distance = sqrtf(dx * dx + dz * dz);
 
-	if (func_80084FE8_93F98(arg0, 0x1000) && sp78 < 0x7D0 && !(alien->unk20 & (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD))) {
-		if (sp78 < 0x258) {
+	if (func_80084FE8_93F98(arg0, 0x1000) && distance < 0x7D0 && !(alien->unk20 & (ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD))) {
+		if (distance < 0x258) {
 			if (func_800871CC_9617C(arg0, 1, 0x32)) {
 				alien->unk1E = 0xA;
 				alien->unk36 = 0;
 				alien->unk20 |= ALIEN_FLAG_UNKE;
 			}
 		} else {
-			sp58 = 0x64;
-			sp5A = -0x2B;
-			sp5C = 0xB9;
-			func_800A931C_B82CC((s8)sp92, &sp58, &sp4C);
+			offset[0] = 0x64;
+			offset[1] = -0x2B;
+			offset[2] = 0xB9;
+			func_800A931C_B82CC((s8)joint3, offset, localPosition);
 			if (alien->unk20 & ALIEN_FLAG_Z) {
-				alienTypes[alien->typeIndex].unk20 = (s16)(sp4C + 0xD);
-				alienTypes[alien->typeIndex].unk22 = (s16)(sp50 + 0x37);
-				alienTypes[alien->typeIndex].unk24 = (s16)(sp54 + 1);
+				alienTypes[typeIndex].unk20 = localPosition[0] + 0xD;
+				alienTypes[typeIndex].unk22 = localPosition[1] + 0x37;
+				alienTypes[typeIndex].unk24 = localPosition[2] + 1;
 			} else {
-				alienTypes[alien->typeIndex].unk20 = (s16)(sp4C - 0xD);
-				alienTypes[alien->typeIndex].unk22 = (s16)(sp50 + 0x35);
-				alienTypes[alien->typeIndex].unk24 = (s16)(sp54 + 1);
+				alienTypes[typeIndex].unk20 = localPosition[0] - 0xD;
+				alienTypes[typeIndex].unk22 = localPosition[1] + 0x35;
+				alienTypes[typeIndex].unk24 = localPosition[2] + 1;
 			}
 
 			if (func_800871CC_9617C(arg0, 0, 0x64)) {
@@ -3325,29 +3322,36 @@ void func_802DBF54_2BE384(u8 arg0) {
 		}
 	}
 
-	func_802DBE28_2BE258(arg0, sp94, sp8C, sp90);
+	func_802DBE28_2BE258(arg0, rootJoint, joint2, joint4);
 
 	if (!(D_80052A8C & 3)) {
-		if (alien->unk3C != -5) {
-			func_80128428_1373D8(alien, D_8014DD50[sp8A].unk0, D_8014DD50[sp8A].unk2, D_8014DD50[sp8A].unk4, &sp6C, &sp68, &sp64);
-			if ((func_800B84D0_C7480((s16)sp6C, (s16)sp64) >> 8) < D_80222A70) {
-				var_t0 = D_80222A70;
+		if (alien->unk3C != 0xFB) {
+			func_80128428_1373D8(alien, D_8014DD50[joint6].unk0, D_8014DD50[joint6].unk2, D_8014DD50[joint6].unk4, &worldX, &worldY, &worldZ);
+			if ((func_800B84D0_C7480((s16)worldX, (s16)worldZ) >> 8) < D_80222A70) {
+				height = D_80222A70;
 			} else {
-				var_t0 = func_800B84D0_C7480((s16)sp6C, (s16)sp64) >> 8;
+				height = func_800B84D0_C7480((s16)worldX, (s16)worldZ) >> 8;
 			}
-			sp68 = var_t0;
-			func_800CD2E8_DC298((s16)sp6C, (s16)var_t0, (s16)sp64, (u8)alien->unk3C); // jet stream effect while floating?
+			/* IDO schedules equal-priority nodes by source line; keep this store last. */
+#line 10000
+			worldY = height;
+#line 9999
+			func_800CD2E8_DC298((s16)worldX, (s16)worldY, (s16)worldZ, (u8)alien->unk3C);
+#line 10001
 		}
 
-		if (alien->unk3D != -5) {
-			func_80128428_1373D8(alien, D_8014DD50[sp88].unk0, D_8014DD50[sp88].unk2, D_8014DD50[sp88].unk4, &sp6C, &sp68, &sp64);
-			if ((func_800B84D0_C7480((s16)sp6C, (s16)sp64) >> 8) < D_80222A70) {
-				var_t0 = D_80222A70;
+		if (alien->unk3D != 0xFB) {
+			func_80128428_1373D8(alien, D_8014DD50[joint5].unk0, D_8014DD50[joint5].unk2, D_8014DD50[joint5].unk4, &worldX, &worldY, &worldZ);
+			if ((func_800B84D0_C7480((s16)worldX, (s16)worldZ) >> 8) < D_80222A70) {
+				height = D_80222A70;
 			} else {
-				var_t0 = func_800B84D0_C7480((s16)sp6C, (s16)sp64) >> 8;
+				height = func_800B84D0_C7480((s16)worldX, (s16)worldZ) >> 8;
 			}
-			sp68 = var_t0;
-			func_800CD2E8_DC298((s16)sp6C, (s16)var_t0, (s16)sp64, (u8)alien->unk3D);
+#line 10000
+			worldY = height;
+#line 9999
+			func_800CD2E8_DC298((s16)worldX, (s16)worldY, (s16)worldZ, (u8)alien->unk3D);
+#line 10001
 		}
 	}
 
@@ -3355,28 +3359,25 @@ void func_802DBF54_2BE384(u8 arg0) {
 
 	if (func_80084FE8_93F98(arg0, 0x2000)) {
 		if (alien->unk4E == 0) {
-			var_a2 = 3;
-		} else if (sp78 < 0x320) {
-			var_a2 = 2;
-		} else if (sp78 >= 0x3E9) {
-			var_a2 = 1;
+			animationMode = 3;
+		} else if (distance < 0x320) {
+			animationMode = 2;
+		} else if (distance >= 0x3E9) {
+			animationMode = 1;
 		} else {
-			var_a2 = 3;
+			animationMode = 3;
 		}
 	} else {
-		var_a2 = 0;
+		animationMode = 0;
 	}
-	alien->unk26 = var_a2;
+	alien->unk26 = animationMode;
 
-	func_802DB8D8_2BDD08(arg0, 0x12C, var_a2, sp88, sp8A, 0x1F40, -0x1388, 0x9C4, D_802E3050_2C5480);
+	func_802DB8D8_2BDD08(arg0, 0x12C, animationMode, joint5, joint6, 0x1F40, -0x1388, 0x9C4, D_802E3050_2C5480[0]);
 
 	if (alien->unk1E != 0) {
 		alien->unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DBF54_2BE384.s")
-#endif
 
 // Siberia Mutant behavior/update specs.unk4C
 void func_802DC4A0_2BE8D0(u8 arg0) {
