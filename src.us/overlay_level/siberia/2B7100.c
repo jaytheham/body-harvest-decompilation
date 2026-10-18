@@ -2,6 +2,9 @@
 #include "common.h"
 #include "version_shift.h"
 
+/* Earlier Siberia BSS variables occupy offsets 0x00 through 0x5F. */
+static u8 siberiaBssPrefix[0x60];
+
 /* ====================== .data ====================== */
 
 void (*D_802E0DF0_2C3220[])(void) = {
@@ -652,13 +655,6 @@ const f64 D_802E2F88_2C53B8[] = { 0.29999999999999999 };
 const f64 D_802E2F90_2C53C0[] = { 920.0 };
 const f64 D_802E2F98_2C53C8[] = { 0.20000000000000001 };
 const f64 D_802E2FA0_2C53D0[] = { 940.0 };
-const u32 jtbl_802E2FA8_2C53D8[5] = {
-	LEVEL_PTR(0x802D6030),
-	LEVEL_PTR(0x802D6154),
-	LEVEL_PTR(0x802D6180),
-	LEVEL_PTR(0x802D61A8),
-	LEVEL_PTR(0x802D61D4)
-};
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -1066,21 +1062,19 @@ void func_802D5C24_2B8054(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5C24_2B8054.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_802D5F28_2B8358(void) {
-	s32 alienId;
+	static s32 actorIndex;
 
 	if (D_80157F94 != 0xFF) {
 		if (alienInstances[D_80157F94].typeIndex == 0) {
 			D_80157F94 = 0xFF;
-			goto afterFirstBlock;
-		}
-		func_800800E4_8F094((u8)D_80157F94);
-		func_80080510_8F4C0(D_80157F95);
-		alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
-		alienTypes[alienInstances[D_80157F94].typeIndex].unk48((u8)D_80157F94);
+		} else {
+			func_800800E4_8F094(D_80157F94);
+			func_80080510_8F4C0(D_80157F95);
+			alienInstances[D_80157F94].unk6 = alienInstances[D_80157F94].unkE;
+			alienTypes[alienInstances[D_80157F94].typeIndex].unk48(D_80157F94);
+			}
 	}
-afterFirstBlock:
 
 	osSyncPrintf(D_802E2EDC_2C530C, D_802E30EC, D_8014D17C);
 
@@ -1093,20 +1087,19 @@ afterFirstBlock:
 		D_80157F78 = 400.0f;
 		D_80157F7C = -2.0f;
 		D_80157F80 = 100.0f;
-		alienId = func_8007956C_8851C(0x12);
-		D_802E30F0 = alienId;
-		if (alienId != 0xFF) {
-			alienInstances[alienId].unk20 &= ~ (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
-			alienInstances[alienId].unk0 = 0x6700;
-			alienInstances[alienId].unk4 = -0x6680;
-			alienInstances[alienId].unk14 = 0x6700;
-			alienInstances[alienId].unk18 = -0x6280;
-			alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_PT;
-			alienInstances[alienId].unk24 = 2;
-			alienInstances[alienId].unkE = 0x4000;
-			alienInstances[alienId].unk2A = 0x4000;
-			func_8007A198_89148(alienId);
-			D_80157F94 = (s16)D_802E30F0;
+		actorIndex = func_8007956C_8851C(0x12);
+		if (actorIndex != 0xFF) {
+			alienInstances[actorIndex].unk0 = 0x6700;
+			alienInstances[actorIndex].unk4 = -0x6680;
+			alienInstances[actorIndex].unk14 = 0x6700;
+			alienInstances[actorIndex].unk18 = -0x6280;
+			alienInstances[actorIndex].unk20 &= ~ (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[actorIndex].unk20 |= ALIEN_FLAG_TARGET_PT;
+			alienInstances[actorIndex].unk24 = 2;
+			alienInstances[actorIndex].unkE = 0x4000;
+			alienInstances[actorIndex].unk2A = 0x4000;
+			func_8007A198_89148(actorIndex);
+			D_80157F94 = actorIndex;
 		}
 		D_802E30EC++;
 		break;
@@ -1139,7 +1132,7 @@ afterFirstBlock:
 		break;
 
 	case 4:
-		func_80079910_888C0(D_802E30F0);
+		func_80079910_888C0(actorIndex);
 		func_800074BC_80BC(func_802D5F28_2B8358);
 		func_80007410_8010(func_802D5C24_2B8054);
 		D_802E30EC = 0;
@@ -1147,9 +1140,6 @@ afterFirstBlock:
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D5F28_2B8358.s")
-#endif
 
 void func_802D6220_2B8650(void) {
 	D_802E30F4--;

@@ -3371,7 +3371,6 @@ extern s32 D_802E3098;
 extern s16 D_802E309C;
 extern u16 D_802E30A0[0x26];
 extern s32 D_802E30EC;
-extern s32 D_802E30F0;
 extern s16 D_802E30F4;
 extern s32 D_802E30F8;
 extern u8 D_802E30FB;
