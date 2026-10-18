@@ -3991,4 +3991,16 @@ typedef struct {
 	f32 z1;
 } FrontendRingOffsets;
 
+typedef union {
+	s8 signedValue;
+	u8 unsignedValue;
+} JointIdByte;
+
+typedef struct {
+	s8 middle;
+	u8 padding;
+	u8 root;
+	JointIdByte child;
+} SavedJointIds;
+
 #endif /* LIBULTRA_REFERENCE */

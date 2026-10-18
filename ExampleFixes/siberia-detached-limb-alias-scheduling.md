@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_802D9FE4_2BC414`, using a named instance pointer throughout schedules the X/Z coordinate loads before the outgoing color stores in `func_800C3BD8_D2B88`, and moves the half-radius effect's outgoing argument store into the `jal` delay slot. A single masked heading shared with the saved index also adds redundant `andi` instructions.
+
+-> `code changed`: Use `alienInstances[arg0]` accesses throughout the handler, retaining the named pointer only for the `func_800C3D88_D2D38` coordinate arguments. Keep a separate signed word `heading` and pass `(u16)heading` to both trig calls. Declare the packed joint bytes, pointer locals, terrain height, and velocity locals in their matching stack order.
+
+-> `correct ASM`: X/Z loads follow the outgoing color stores, the half-radius effect stores its fifth argument before the coordinate loads and places `andi a3,t8,0xffff` in the `jal` delay slot, and the heading uses `lh v0`, `andi a0,v0,0xffff`, and one shared word spill at `sp+0x3c`. All instructions match and `tools/make.ps1` reports `build/bh.us.z64: OK`.
