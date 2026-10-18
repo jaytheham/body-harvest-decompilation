@@ -680,25 +680,6 @@ const u32 jtbl_802E2FF8_2C5428[5] = {
 	LEVEL_PTR(0x802D74EC),
 };
 
-const u32 jtbl_802E300C_2C543C[13] = {
-	LEVEL_PTR(0x802D9BAC),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BC0),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BC0),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BC0),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BEC),
-	LEVEL_PTR(0x802D9BDC),
-};
-const f64 D_802E3040_2C5470[] = { 540000.0 };
-const f64 D_802E3048_2C5478[] = { 0.90000000000000002 };
-const f32 D_802E3050_2C5480[] = { 0.100000001f };
-const f32 D_802E3054_2C5484[] = { 0.100000001f };
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
 void func_802D6A70_2B8EA0(void);
@@ -2444,7 +2425,6 @@ void func_802D923C_2BB66C(u8 arg0) {
 #endif
 
 // CURRENT(5)
-#ifdef NON_MATCHING
 void func_802D9B08_2BBF38(u8 arg0, s16 arg1, s16 arg2) {
 	s16 sp2C[2];
 	u8 temp;
@@ -2470,9 +2450,8 @@ void func_802D9B08_2BBF38(u8 arg0, s16 arg1, s16 arg2) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D9B08_2BBF38.s")
-#endif
+
+
 
 // CURRENT(1957)
 void func_802D9BFC_2BC02C(u8 arg0) {
@@ -2668,7 +2647,7 @@ void func_802DA4CC_2BC8FC(u8 arg0) {
 	if (alien->unk20 & ALIEN_FLAG_UNKD) {
 		alien->unk2C--;
 		squaredDist = dx * dx + dz * dz;
-		if (((f64)squaredDist > D_802E3040_2C5470[0]) || !func_80084FE8_93F98(arg0, 0x1000)) {
+		if (((f64)squaredDist > 540000.0) || !func_80084FE8_93F98(arg0, 0x1000)) {
 			alien->unk20 &= ~ALIEN_FLAG_UNKD;
 		} else if (alien->unk2C == 0) {
 			alien->unk20 ^= ALIEN_FLAG_UNKH;
@@ -3141,7 +3120,7 @@ void func_802DB8D8_2BDD08(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 		func_801022F4_1112A4((VehicleInstance *) alien, (s16) (alien->unk6 + 0x4000), (s16) value);
 	}
 
-	alien->unk48 *= D_802E3048_2C5478[0];
+	alien->unk48 *= 0.9;
 	alien->unk12 = (s16) (s32) ((f32) alien->unk12 * (1.0f - arg8));
 	value = func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8;
 	arg1 += value < D_80222A70 ? D_80222A70 : value;
@@ -3353,7 +3332,7 @@ void func_802DBF54_2BE384(u8 arg0) {
 	}
 	alien->unk26 = animationMode;
 
-	func_802DB8D8_2BDD08(arg0, 0x12C, animationMode, joint5, joint6, 0x1F40, -0x1388, 0x9C4, D_802E3050_2C5480[0]);
+	func_802DB8D8_2BDD08(arg0, 0x12C, animationMode, joint5, joint6, 0x1F40, -0x1388, 0x9C4, 0.1f);
 
 	if (alien->unk1E != 0) {
 		alien->unk1E--;
@@ -3437,7 +3416,7 @@ void func_802DC4D0_2BE900(u8 arg0) {
 	}
 
 	func_802DB8D8_2BDD08(arg0, 0x96, 0, rightBranch,
-		rightTip, 0x1F40, -0x1388, 0x9C4, D_802E3054_2C5484[0]);
+		rightTip, 0x1F40, -0x1388, 0x9C4, 0.1f);
 
 	if (alien->unk2C == 1) {
 		if (alienTypes[alien->typeIndex].unk54 & 0x02000000) {
