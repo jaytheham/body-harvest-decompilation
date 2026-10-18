@@ -6200,27 +6200,23 @@ s32 func_800880B8_97068(void)
   return 0;
 }
 
-// CURRENT(3783)
-#ifdef NON_MATCHING
+// AI - Applies alien damage, knockback, death effects, and boss health limits.
 // 000881d4 Multiplies Adam's weapon damage by 1.8 in easy mode
 // 800885C8 halves alien death points in easy
-s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
-	u8 sp3B;
-	AlienType *sp30;
-	s32 sp2C;
-	f64 sp20;
-	s32 temp_v0_3;
-	s32 temp_v1;
-	u8 temp_t0;
-	u8 temp_v0;
-	u8 temp_v0_2;
-	u8 temp_v0_5;
-	u8 var_a3;
+s32 func_80088154_97104(AlienInstance *arg0, s16 arg1, s16 arg2) {
+	s32 scratch;
+	s32 originalTypeIndex;
+	s32 flagsOrDivisor;
+	u8 savedTypeByte;
+	u8 childIndex;
+	s32 knockbackScale;
+	AlienType *originalType;
+	s32 savedTypeIndex;
 
-	temp_v0 = arg0->unk1B;
-	var_a3 = arg0->typeIndex;
-	temp_t0 = var_a3;
-	if ((D_80047F94 != temp_v0) && (temp_v0 != 0xFF)) {
+	scratch = arg0->typeIndex;
+	originalTypeIndex = scratch;
+	scratch |= 0; /* Preserve the original-type copy. */
+	if ((D_80047F94 != arg0->unk1B) && (arg0->unk1B != 0xFF)) {
 		return 0;
 	}
 	if ((D_8004DCBC != 0) || (currentLevel == 5)) {
@@ -6229,7 +6225,8 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 	if (D_80052ACD & D_80052ACD_FLAG_EASY_MODE) {
 		arg1 = (s16)((f32)arg1 * D_80031418);
 	}
-	if ((arg0->unk20 & ALIEN_FLAG_INVINCIBLE) || (arg0 == (AlienInstance*)D_80140AC4_14FA74)) {
+	flagsOrDivisor = arg0->unk20;
+	if ((flagsOrDivisor & ALIEN_FLAG_INVINCIBLE) || (arg0 == (AlienInstance*)D_80140AC4_14FA74)) {
 		arg1 = 0;
 	}
 	if (D_8013BD04_14ACB4 != 0) {
@@ -6238,32 +6235,36 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 	if (arg1 == 0) {
 		return 0;
 	}
-	sp2C = temp_t0;
-	if (temp_t0 == 1) {
-		temp_v0_2 = arg0->unk24;
-		if (temp_v0_2 == 0x13) {
+	savedTypeIndex = originalTypeIndex;
+	if (originalTypeIndex == 1) {
+		if (arg0->unk24 == 0x13) {
 			return 0;
 		}
-		if ((temp_v0_2 != 1) && (temp_v0_2 != 0x1D)) {
-			sp3B = temp_t0;
-			func_800E05B4_EF564(arg0->unk0, (s16)((func_800038E0_44E0() % 30) + arg0->unk2 + 0x1E), arg0->unk4, arg1);
-			temp_t0 = sp3B;
-			var_a3 = arg0->typeIndex;
+		if ((arg0->unk24 != 1) && (arg0->unk24 != 0x1D)) {
+			savedTypeByte = originalTypeIndex & 0xFF;
+			scratch = func_800038E0_44E0();
+			func_800E05B4_EF564(arg0->unk0, (s16)((scratch % 30) + arg0->unk2 + 0x1E), arg0->unk4, arg1);
+			originalTypeIndex = savedTypeByte;
+			scratch = arg0->typeIndex;
+			flagsOrDivisor = arg0->unk20;
 		}
 	}
 
-	arg0->unk20 |= ALIEN_FLAG_UNKP;
-	if (var_a3 == 0x12) {
+	flagsOrDivisor |= ALIEN_FLAG_UNKP;
+	arg0->unk20 = flagsOrDivisor;
+	if (scratch == 0x12) {
 		D_80157E74 = (arg2 - arg0->unk6) + 0x2000;
-		var_a3 = arg0->typeIndex;
+		scratch = arg0->typeIndex;
 	}
-	temp_v1 = alienTypes[var_a3].unk3A;
-	sp30 = &alienTypes[temp_t0];
-	if (!(sp30->unk54 & 0x4000) || (arg0->unk20 & ALIEN_FLAG_FALL)) {
-		temp_v0_3 = coss((arg2 - arg0->unk6) & 0xFFFF);
-		sp20 = (f64)((s32)(arg1 << 0xF) / temp_v1);
-		arg0->unk42 = (s16)((f64)arg0->unk42 + (sp20 * ((f64)(f32)temp_v0_3 / 32768.0)));
-		arg0->unk44 = (s16)((f64)arg0->unk44 + (sp20 * ((f64)(f32)sins((arg2 - arg0->unk6) & 0xFFFF) / 32768.0)));
+	flagsOrDivisor = alienTypes[scratch].unk3A;
+	originalType = &alienTypes[originalTypeIndex];
+	originalType = (&originalType)[0]; /* Preserve the declared pointer home. */
+	if (!(originalType->unk54 & 0x4000) || (arg0->unk20 & ALIEN_FLAG_FALL)) {
+		scratch = coss((u16)(arg2 - arg0->unk6));
+		knockbackScale = (s32)(arg1 << 0xF) / flagsOrDivisor;
+		arg0->unk42 = (s16)((f64)arg0->unk42 + ((f64)knockbackScale * ((f64)(f32)scratch / 32768.0)));
+		scratch = sins((u16)(arg2 - arg0->unk6));
+		arg0->unk44 = (s16)((f64)arg0->unk44 + ((f64)knockbackScale * ((f64)(f32)scratch / 32768.0)));
 		if (arg0->unk42 >= 0x1001) {
 			arg0->unk42 = 0x1000;
 		}
@@ -6280,59 +6281,57 @@ s32 func_80088154_97104(EntityInstance *arg0, s16 arg1, s16 arg2) {
 
 	if (arg0->hitPoints > 0) {
 		arg0->hitPoints = (s16)(arg0->hitPoints - arg1);
-		if (arg0->hitPoints > 0) {
-			if ((sp2C >= 2) && (arg0->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) && (arg0->unk37 == 0)) {
-				arg0->unk37 = 8;
-			}
-			return 0;
-		}
-
-		// outside Comet, don't allow Black Adam's health below 10
-		// on Comet, don't allow BAD (Black Adam Driving? the fight before Daisy rescue) health below 10
-		if (((sp2C == 0x12) && (currentLevel != 5)) || ((currentLevel == 5) && (sp2C == 0x26))) {
-			if (arg0->hitPoints < 0xA) {
-				arg0->hitPoints = 0xA;
-			}
-			return 0;
-		}
-
-		if (!(arg0->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL))) {
-			if (sp30->unk14 != 0) {
-				if (D_80052ACD & 0x80) {
-					D_80052B2C->unk30 = D_80052B2C->unk30 + (sp30->unk14 >> 1);
-					func_800CEE00_DDDB0(arg0->unk0, arg0->unk2, arg0->unk4, (s16)(sp30->unk14 >> 1));
-				} else {
-					D_80052B2C->unk30 = D_80052B2C->unk30 + sp30->unk14;
-					func_800CEE00_DDDB0(arg0->unk0, arg0->unk2, arg0->unk4, sp30->unk14);
-				}
-			}
-			if (sp2C == 1) {
-				arg0->unk26 = 0;
-			}
-			if ((sp2C == 3) || (sp2C == 6) || (sp2C == 4)) {
-				temp_v0_5 = arg0->unk25;
-				if ((temp_v0_5 != 0xFF) && (alienInstances[temp_v0_5].typeIndex == 0x19)) {
-					func_800AFF9C_BEF4C(temp_v0_5, sp2C, 0x2BC - (currentLevel * 0x46));
-				}
-			}
-			if ((sp2C == 0xD) || (sp2C == 0xE) || (sp2C == 4) || (sp2C == 0x16)) {
-				arg0->unkE = arg2;
-			}
-			if (((currentLevel == 1) && (sp2C == 9)) || ((currentLevel == 2) && (sp2C == 0x26))) {
-				arg0->unk20 |= ALIEN_FLAG_UNKF;
-			}
-			if (((sp2C == 0xE) || (sp2C == 0xD) || (sp2C == 4)) && ((s32)sp30->unk3A < arg1)) {
-				arg0->unk47 |= 0x20;
-			}
-			func_80088760_97710(arg0);
-		}
-		return 1;
+	} else {
+		return 0;
 	}
-	return 0;
+	if (arg0->hitPoints > 0) {
+		if ((savedTypeIndex >= 2) && (arg0->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) && (arg0->unk37 == 0)) {
+			arg0->unk37 = 8;
+		}
+		return 0;
+	}
+
+	// outside Comet, don't allow Black Adam's health below 10
+	// on Comet, don't allow BAD (Black Adam Driving? the fight before Daisy rescue) health below 10
+	if (((savedTypeIndex == 0x12) && (currentLevel != 5)) || ((currentLevel == 5) && (savedTypeIndex == 0x26))) {
+		if (arg0->hitPoints < 0xA) {
+			arg0->hitPoints = 0xA;
+		}
+		return 0;
+	}
+
+	if (!(arg0->unk20 & (ALIEN_FLAG_DESPAWNING | ALIEN_FLAG_UNKL))) {
+		if (originalType->unk14 != 0) {
+			if (D_80052ACD & 0x80) {
+				D_80052B2C->unk30 = D_80052B2C->unk30 + (originalType->unk14 >> 1);
+				func_800CEE00_DDDB0(arg0->unk0, arg0->unk2, arg0->unk4, (s16)(originalType->unk14 >> 1));
+			} else {
+				D_80052B2C->unk30 = D_80052B2C->unk30 + originalType->unk14;
+				func_800CEE00_DDDB0(arg0->unk0, arg0->unk2, arg0->unk4, originalType->unk14);
+			}
+		}
+		if (savedTypeIndex == 1) {
+			arg0->unk26 = 0;
+		}
+		if ((savedTypeIndex == 3) || (savedTypeIndex == 6) || (savedTypeIndex == 4)) {
+			childIndex = arg0->unk25;
+			if ((childIndex != 0xFF) && (alienInstances[childIndex].typeIndex == 0x19)) {
+				func_800AFF9C_BEF4C(childIndex, savedTypeIndex, 0x2BC - (currentLevel * 0x46));
+			}
+		}
+		if (((savedTypeIndex | 0) == 0xD) || (savedTypeIndex == 0xE) || (savedTypeIndex == 4) || (savedTypeIndex == 0x16)) {
+			arg0->unkE = arg2;
+		}
+		if (((currentLevel == 1) && (savedTypeIndex == 9)) || ((currentLevel == 2) && (savedTypeIndex == 0x26))) {
+			arg0->unk20 |= ALIEN_FLAG_UNKF;
+		}
+		if (((savedTypeIndex == 0xE) || ((savedTypeIndex | 0) == 0xD) || (savedTypeIndex == 4)) && ((s32)originalType->unk3A < arg1)) {
+			arg0->unk47 |= 0x20;
+		}
+		func_80088760_97710(arg0);
+	}
+	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80088154_97104.s")
-#endif
 
 // AI - Kills an alien, handling zombie-human revival and death side effects (score, drops, HCU release)
 void func_80088760_97710(AlienInstance *alien) {
