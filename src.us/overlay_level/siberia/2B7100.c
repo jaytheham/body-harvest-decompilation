@@ -668,10 +668,6 @@ const u32 jtbl_802E2FBC_2C53EC[7] = {
 	LEVEL_PTR(0x802D69D0),
 	0x00000000
 };
-const f64 D_802E2FD8_2C5408[] = { 415.0 };
-const f64 D_802E2FE0_2C5410[] = { -130.0 };
-const f64 D_802E2FE8_2C5418[] = { 415.0 };
-const f64 D_802E2FF0_2C5420[] = { 130.0 };
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -1373,31 +1369,27 @@ void func_802D6A4C_2B8E7C(void) {
 	func_800AE190_BD140(D_801591C4);
 }
 
-// CURRENT(1610)
-#ifdef NON_MATCHING
 void func_802D6A70_2B8EA0(void) {
 	u8 sp3F;
 	s32 sp38;
-	s16 sp26;
-	void *sp20;
 	s32 temp_s0;
 	f64 temp_f6;
+	s16 sp26;
 
 	if (!(D_80052A8C & 0x1F)) {
 		temp_s0 = func_800AD3BC_BC36C(D_802E30FB);
+		sp3F = (u8)temp_s0;
 		if (temp_s0 != 0xFF) {
-			sp3F = temp_s0 & 0xFF;
-			func_800AD814_BC7C4(sp3F, 0x1B, D_802E30FC, 0);
-			temp_s0 = (buildingInstances[D_802E30F8].unk8 << 14) & 0xFFFF;
+			func_800AD814_BC7C4((s32)sp3F, 0x1B, D_802E30FC, 0);
+			temp_s0 = (buildingInstances[D_802E30F8].unk8 & 3) << 14;
 			sp26 = coss(temp_s0);
-			sp38 = (s32)(((f64)(f32)sins(temp_s0) / 32768.0) * D_802E2FD8_2C5408 + ((f64)(f32)sp26 / 32768.0) * D_802E2FE0_2C5410);
+			sp38 = (s32)(((f64)(f32)sins(temp_s0) / 32768.0) * 415.0 + -130.0 * ((f64)(f32)sp26 / 32768.0));
 			sp26 = sins(temp_s0);
 			temp_f6 = (f64)(f32)coss(temp_s0) / 32768.0;
-			sp20 = &alienInstances[sp3F];
-			((AlienInstance *)sp20)->unk14 = buildingInstances[D_802E30F8].xCoord + sp38;
-			((AlienInstance *)sp20)->unk18 = buildingInstances[D_802E30F8].zCoord + (s32)(temp_f6 * D_802E2FE8_2C5418 + D_802E2FF0_2C5420 * ((f64)(f32)sp26 / 32768.0));
+			alienInstances[sp3F].unk14 = buildingInstances[D_802E30F8].xCoord + sp38;
+			alienInstances[sp3F].unk18 = buildingInstances[D_802E30F8].zCoord + (s32)(temp_f6 * 415.0 + 130.0 * ((f64)(f32)sp26 / 32768.0));
 			func_80080510_8F4C0(sp3F);
-			osSyncPrintf(&D_802E2F14_2C5344, ((AlienInstance *)sp20)->unk0, ((AlienInstance *)sp20)->unk2, ((AlienInstance *)sp20)->unk4);
+			osSyncPrintf(&D_802E2F14_2C5344, alienInstances[sp3F].unk0, alienInstances[sp3F].unk2, alienInstances[sp3F].unk4);
 			if (buildingInstances[D_802E30F8].unk7 == 0) {
 				func_800074BC_80BC(func_802D6A70_2B8EA0);
 				D_8014D17E++;
@@ -1406,9 +1398,7 @@ void func_802D6A70_2B8EA0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D6A70_2B8EA0.s")
-#endif
+
 
 // oil rig rescue mission
 void func_802D6CA0_2B90D0(void) {
