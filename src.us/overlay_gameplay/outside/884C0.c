@@ -4781,93 +4781,68 @@ void func_800840B0_93060(s8 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	func_800840B0_93060(arg0, arg1, arg2, arg3);
 }
 
-// CURRENT(13111)
-#ifdef NON_MATCHING
-void func_800844D0_93480(s32 arg0)
+void func_800844D0_93480(u8 arg0)
 {
-	s16 sp3C;
-	s16 sp3A;
-	u8 sp39;
-	s32 sp34;
-	s8 var_s2;
-	s16 temp_s0;
-	s16 temp_s1;
-	AlienInstance *temp_s3;
-	AlienType *temp_v0;
-	s32 temp_v1;
-	s32 temp_a3;
+	AlienInstance *alien = &alienInstances[arg0];
+	s8 tileX = (s8)(alien->unk0 >> 8);
+	s8 tileZ = (s8)(alien->unk4 >> 8);
+	s8 blockedDirections = 0;
+	s16 padding; /* Preserve the coordinate locals' stack layout. */
+	s16 targetX = tileX;
+	s16 targetZ = tileZ;
+	u8 typeIndex;
+	s32 heightLimit;
 
-	temp_a3 = arg0 & 0xFF;
-	temp_s3 = &alienInstances[temp_a3];
-	var_s2 = 0;
-	temp_s0 = temp_s3->unk0;
-	temp_s1 = temp_s3->unk4;
-	sp39 = temp_s3->typeIndex;
+	typeIndex = alien->typeIndex;
 
-	sp3C = (s16)(s8)(temp_s0 >> 8);
-	sp3A = (s16)(s8)(temp_s1 >> 8);
-
-	if (func_800B325C_C220C((s8)sp3C, (s8)sp3A, 0x800) == 0)
+	if (func_800B325C_C220C(tileX, tileZ, 0x800) == 0)
 	{
 		return;
 	}
 
-	temp_v0 = &alienTypes[sp39];
-	temp_v1 = temp_v0->unk54;
-	if ((temp_v1 & 0x10) == 0 || (temp_v1 & 1) != 0)
+	/* Keep the instance pointer in a saved register across the tile queries. */
+	if (alien) {}
+	if ((alienTypes[typeIndex].unk54 & 0x10) == 0 || (alienTypes[typeIndex].unk54 & 1) != 0)
 	{
 		return;
 	}
 
-	sp34 = temp_s3->unk2 - temp_v0->unk58 - 0x32;
+	heightLimit = alien->unk2 - alienTypes[typeIndex].unk58 - 0x32;
 
-	if (func_800B325C_C220C((s8)sp3C, (s8)(sp3A - 1), 0x800) != 0)
+	if (func_800B325C_C220C(tileX, tileZ - 1, 0x800) != 0 ||
+		heightLimit < (func_800B84D0_C7480(((tileX << 8) + 0x80), ((s16)((tileZ << 8) + 0x80) - 0x100)) >> 8))
 	{
-		var_s2 = 1;
-	}
-	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) + 0x80), (s16)((sp3A << 8) - 0x80)) >> 8))
-	{
-		var_s2 = 1;
+		blockedDirections = 1;
 	}
 
-	if (func_800B325C_C220C((s8)(sp3C + 1), (s8)sp3A, 0x800) != 0)
+	if (func_800B325C_C220C(tileX + 1, tileZ, 0x800) != 0 ||
+		heightLimit < (func_800B84D0_C7480(((s16)((tileX << 8) + 0x80) + 0x100), ((tileZ << 8) + 0x80)) >> 8))
 	{
-		var_s2 |= 2;
-	}
-	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) + 0x180), (s16)((sp3A << 8) + 0x80)) >> 8))
-	{
-		var_s2 |= 2;
+		blockedDirections |= 2;
 	}
 
-	if (func_800B325C_C220C((s8)sp3C, (s8)(sp3A + 1), 0x800) != 0)
+	if (func_800B325C_C220C(tileX, tileZ + 1, 0x800) != 0 ||
+		heightLimit < (func_800B84D0_C7480(((tileX << 8) + 0x80), ((s16)((tileZ << 8) + 0x80) + 0x100)) >> 8))
 	{
-		var_s2 |= 4;
-	}
-	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) + 0x80), (s16)((sp3A << 8) + 0x180)) >> 8))
-	{
-		var_s2 |= 4;
+		blockedDirections |= 4;
 	}
 
-	if (func_800B325C_C220C((s8)(sp3C - 1), (s8)sp3A, 0x800) != 0)
+	if (func_800B325C_C220C(tileX - 1, tileZ, 0x800) != 0 ||
+		heightLimit < (func_800B84D0_C7480(((s16)((tileX << 8) + 0x80) - 0x100), ((tileZ << 8) + 0x80)) >> 8))
 	{
-		var_s2 |= 8;
-	}
-	else if (sp34 < (func_800B84D0_C7480((s16)((sp3C << 8) - 0x80), (s16)((sp3A << 8) + 0x80)) >> 8))
-	{
-		var_s2 |= 8;
+		blockedDirections |= 8;
 	}
 
-	if (var_s2 != 0)
+	if (blockedDirections != 0)
 	{
-		func_800840B0_93060(var_s2, temp_s3->unk2A, &sp3C, &sp3A);
-		sp3C = (s16)((sp3C << 8) + 0x80);
-		sp3A = (s16)((sp3A << 8) + 0x80);
-		temp_s3->unk2A = func_80003824_4424((f32)(sp3C - temp_s0), (f32)(sp3A - temp_s1));
+		func_800840B0_93060(blockedDirections, alien->unk2A, &targetX, &targetZ);
+		targetX = (s16)(targetX << 8) + 0x80;
+		targetZ = (s16)(targetZ << 8) + 0x80;
+		alien->unk2A = func_80003824_4424(
+			(f32)(targetX - alienInstances[arg0].unk0),
+			(f32)(targetZ - alienInstances[arg0].unk4));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800844D0_93480.s")
-#endif
 
 void func_800847D0_93780(u8 arg0)
 {
