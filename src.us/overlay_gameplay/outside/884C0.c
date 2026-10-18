@@ -5498,16 +5498,17 @@ void func_80086270_95220(Projectile *arg0) {
 	arg0->unk18 = (s32) D_80052B34;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(15204)
 s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
-	AlienInstance *inst;
-	AlienType *type;
-	s32 i;
 	s32 minX;
 	s32 maxX;
 	s32 minZ;
 	s32 maxZ;
+	AlienInstance *inst;
+	s32 i;
+	s32 dx;
+	s32 dz;
+	s32 negDX;
+	s32 negDZ;
 	s32 absDeltaX;
 	s32 absDeltaZ;
 
@@ -5515,6 +5516,7 @@ s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 		return 0;
 	}
 
+	arg4 |= 0; /* Preserve the endpoint value boundary for IDO. */
 	if (arg1 < arg4) {
 		minX = arg1 - 0xC8;
 		maxX = arg4 + 0xC8;
@@ -5531,6 +5533,7 @@ s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 		maxZ = arg3 + 0xC8;
 	}
 
+	arg4 |= 0; /* Keep the loop endpoint in the target saved register. */
 	for (i = 0; i < 0xFF; i++) {
 		s32 dist;
 
@@ -5551,57 +5554,32 @@ s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 			continue;
 		}
 
-		type = &alienTypes[inst->typeIndex];
-		dist = func_801269BC_13596C(
-			arg1 >> 0x1F, arg1,
-			arg3 >> 0x1F, arg3,
-			arg4 >> 0x1F, arg4,
-			arg6 >> 0x1F, arg6,
-			inst->unk0 >> 0x1F, inst->unk0,
-			inst->unk4 >> 0x1F, inst->unk4);
+		dist = func_801269BC_13596C(arg1, arg3, arg4, arg6, inst->unk0, inst->unk4);
 
-		if (dist >= type->unk8) {
+		if (dist >= alienTypes[inst->typeIndex].unk8) {
 			continue;
 		}
 
-		absDeltaX = arg1 - arg4;
-		if (absDeltaX < 0) {
-			absDeltaX = -absDeltaX;
-		}
-
-		absDeltaZ = arg3 - arg6;
-		if (absDeltaZ < 0) {
-			absDeltaZ = -absDeltaZ;
-		}
+		dx = arg1 - arg4;
+		negDX = -dx;
+		absDeltaX = (negDX < dx) ? dx : negDX;
+		dz = arg3 - arg6;
+		negDZ = -dz;
+		absDeltaZ = (negDZ < dz) ? dz : negDZ;
 
 		if (absDeltaZ < absDeltaX) {
-			dist = func_801269BC_13596C(
-				arg1 >> 0x1F, arg1,
-				arg2 >> 0x1F, arg2,
-				arg4 >> 0x1F, arg4,
-				arg5 >> 0x1F, arg5,
-				inst->unk0 >> 0x1F, inst->unk0,
-				inst->unk2 >> 0x1F, inst->unk2);
+			dist = func_801269BC_13596C(arg1, arg2, arg4, arg5, inst->unk0, inst->unk2);
 		} else {
-			dist = func_801269BC_13596C(
-				arg3 >> 0x1F, arg3,
-				arg2 >> 0x1F, arg2,
-				arg6 >> 0x1F, arg6,
-				arg5 >> 0x1F, arg5,
-				inst->unk4 >> 0x1F, inst->unk4,
-				inst->unk2 >> 0x1F, inst->unk2);
+			dist = func_801269BC_13596C(arg3, arg2, arg6, arg5, inst->unk4, inst->unk2);
 		}
 
-		if (dist < type->unk8) {
+		if (dist < alienTypes[inst->typeIndex].unk8) {
 			return 1;
 		}
 	}
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800862B4_95264.s")
-#endif
 
 s32 func_800865F4_955A4(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	s32 originX;
