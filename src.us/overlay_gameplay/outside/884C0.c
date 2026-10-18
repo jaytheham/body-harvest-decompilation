@@ -5242,7 +5242,7 @@ void func_8008554C_944FC(u8 arg0)
 	if (func_80085524_944D4(arg0) != 0)
 	{
 		if ((func_800862B4_95264(arg0, sp4C, sp48, sp44, sp40, sp3C, sp38) != 0) ||
-			(func_80126268_135218((s16) sp4C, (s16) sp48, (s16) sp44, &sp40, &sp3C, &sp38, 0, 6) != (arg0 * 0)))
+			(func_80126268_135218((s16) sp4C, (s16) sp48, (s16) sp44, &sp40, &sp3C, &sp38, 0, 6) != 0))
 		{
 			alienInstances[arg0].unk4E = 0;
 		}
@@ -5500,7 +5500,7 @@ void func_80086270_95220(Projectile *arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(15204)
-s32 func_800862B4_95264(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
+s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6) {
 	AlienInstance *inst;
 	AlienType *type;
 	s32 i;
@@ -5603,74 +5603,68 @@ s32 func_800862B4_95264(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800862B4_95264.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(2525)
 s32 func_800865F4_955A4(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	AlienInstance *alien;
-	AlienType *type;
+	s32 originX;
+	s32 originY;
+	s32 originZ;
+	Projectile *projectile;
 	s32 typeIndex;
-	s32 sp5C;
-	s32 sp58;
-	s32 sp54;
-	s32 sp48;
-	s32 sp44;
-	s32 sp40;
-	s32 instanceFlags;
+	s32 otherX;
+	s32 otherY;
+	s32 otherZ;
 
-	alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
-	if (alien->unk1E != 0) {
+	typeIndex = alienInstances[arg0].typeIndex;
+	if (alienInstances[arg0].unk1E != 0) {
 		return 0;
 	}
 
-	type = &alienTypes[typeIndex];
-	if ((type->unk54 & 0x200) && (alien->unk20 & ALIEN_FLAG_Z)) {
-		type->unk20 = -type->unk20;
-		type->unk2C = -type->unk2C;
+	if ((alienTypes[typeIndex].unk54 & 0x200) && (alienInstances[arg0].unk20 & ALIEN_FLAG_Z)) {
+		alienTypes[typeIndex].unk20 = -alienTypes[typeIndex].unk20;
+		alienTypes[typeIndex].unk2C = -alienTypes[typeIndex].unk2C;
 	}
 
-	func_80128504_1374B4(alien, arg1, &sp5C, &sp58, &sp54);
-	if (func_800862B4_95264(arg0, sp5C, sp58, sp54, arg2, arg3, arg4) != 0) {
+	func_80128504_1374B4(&alienInstances[arg0], arg1, &originX, &originY, &originZ);
+	if (func_800862B4_95264(arg0, originX, originY, originZ, arg2, arg3, arg4) != 0) {
 		return 0;
 	}
 
-	if (type->unk54 & 0x100) {
-		func_80128428_1373D8(alien, -type->unk20, type->unk22, type->unk24, &sp48, &sp44, &sp40);
-		if (func_800862B4_95264(arg0, sp48, sp44, sp40, arg2, arg3, arg4) != 0) {
+	if (alienTypes[typeIndex].unk54 & 0x100) {
+		func_80128428_1373D8(&alienInstances[arg0], -alienTypes[typeIndex].unk20, alienTypes[typeIndex].unk22, alienTypes[typeIndex].unk24, &otherX, &otherY, &otherZ);
+		if (func_800862B4_95264(arg0, otherX, otherY, otherZ, arg2, arg3, arg4) != 0) {
 			return 0;
 		}
 	}
 
-	func_80086270_95220(func_80129354_138304((s32) alien, arg1, arg2, arg3, arg4));
+	projectile = func_80129354_138304((EntityInstance *)&alienInstances[arg0], arg1, arg2, arg3, arg4);
 
-	if (type->unk54 & 0x200) {
-		instanceFlags = alien->unk20;
-		if (instanceFlags & 0x04000000) {
-			type->unk20 = -type->unk20;
-			type->unk2C = -type->unk2C;
+	func_80086270_95220(projectile);
+
+	if (alienTypes[typeIndex].unk54 & 0x200) {
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_Z) {
+			alienTypes[typeIndex].unk20 = -alienTypes[typeIndex].unk20;
+			alienTypes[typeIndex].unk2C = -alienTypes[typeIndex].unk2C;
 		}
-		alien->unk20 = instanceFlags ^ ALIEN_FLAG_Z;
+		alienInstances[arg0].unk20 = alienInstances[arg0].unk20 ^ ALIEN_FLAG_Z;
 	}
 
-	if ((arg1 == 0) && (type->unk54 & 0x100)) {
-		alien->unk1E = 0;
-		type->unk20 = -type->unk20;
-		func_80086270_95220(func_80129354_138304((s32) alien, arg1, arg2, arg3, arg4));
-		type->unk20 = -type->unk20;
+	if ((arg1 == 0) && (alienTypes[typeIndex].unk54 & 0x100)) {
+		alienInstances[arg0].unk1E = 0;
+		alienTypes[typeIndex].unk20 = -alienTypes[typeIndex].unk20;
+		projectile = func_80129354_138304((EntityInstance *)&alienInstances[arg0], arg1, arg2, arg3, arg4);
+		func_80086270_95220(projectile);
+		alienTypes[typeIndex].unk20 = -alienTypes[typeIndex].unk20;
 	}
 
-	if ((arg1 == 1) && (type->unk54 & 0x01000000)) {
-		alien->unk1E = 0;
-		type->unk2C = -type->unk2C;
-		func_80086270_95220(func_80129354_138304((s32) alien, arg1, arg2, arg3, arg4));
-		type->unk2C = -type->unk2C;
+	if ((arg1 == 1) && (alienTypes[typeIndex].unk54 & 0x01000000)) {
+		alienInstances[arg0].unk1E = 0;
+		alienTypes[typeIndex].unk2C = -alienTypes[typeIndex].unk2C;
+		projectile = func_80129354_138304((EntityInstance *)&alienInstances[arg0], arg1, arg2, arg3, arg4);
+		func_80086270_95220(projectile);
+		alienTypes[typeIndex].unk2C = -alienTypes[typeIndex].unk2C;
 	}
 
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800865F4_955A4.s")
-#endif
 
 s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 {
