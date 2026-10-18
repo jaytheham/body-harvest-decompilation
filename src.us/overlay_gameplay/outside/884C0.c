@@ -4011,56 +4011,50 @@ s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
   return result;
 }
 
-// CURRENT(7713)
-#ifdef NON_MATCHING
 s32 func_800826E4_91694(u8 arg0, u16 arg1, u16 arg2) {
-	AlienInstance *inst;
 	s32 distSq[3][3];
+	u32 threshold;
 	s16 baseX;
 	s16 baseZ;
-	u32 threshold;
 	s32 row;
 	s32 col;
 	s32 mask;
 	s32 result;
 
-	inst = &alienInstances[arg0];
-	threshold = alienTypes[inst->typeIndex].unk8;
+	threshold = alienTypes[alienInstances[arg0].typeIndex].unk8;
 
-	distSq[0][0] = ((inst->unk0 & 0xFF) * (inst->unk0 & 0xFF)) + ((inst->unk4 & 0xFF) * (inst->unk4 & 0xFF));
-	distSq[0][1] = (inst->unk4 & 0xFF) * (inst->unk4 & 0xFF);
-	distSq[0][2] = ((~inst->unk0 & 0xFF) * (~inst->unk0 & 0xFF)) + ((inst->unk4 & 0xFF) * (inst->unk4 & 0xFF));
-	distSq[1][0] = (inst->unk0 & 0xFF) * (inst->unk0 & 0xFF);
-	distSq[1][1] = 0;
-	distSq[1][2] = (~inst->unk0 & 0xFF) * (~inst->unk0 & 0xFF);
-	distSq[2][0] = ((inst->unk0 & 0xFF) * (inst->unk0 & 0xFF)) + ((~inst->unk4 & 0xFF) * (~inst->unk4 & 0xFF));
-	distSq[2][1] = (~inst->unk4 & 0xFF) * (~inst->unk4 & 0xFF);
-	distSq[2][2] = ((~inst->unk0 & 0xFF) * (~inst->unk0 & 0xFF)) + ((~inst->unk4 & 0xFF) * (~inst->unk4 & 0xFF));
+	baseX = (alienInstances[arg0].unk0 >> 8) - 1;
+	baseZ = (alienInstances[arg0].unk4 >> 8) - 1;
 
-	baseX = (inst->unk0 >> 8) - 1;
-	baseZ = (inst->unk4 >> 8) - 1;
-
+	distSq[0][1] = (alienInstances[arg0].unk4 & 0xFF);
+	distSq[2][1] = (~alienInstances[arg0].unk4 & 0xFF);
+	distSq[1][0] = (alienInstances[arg0].unk0 & 0xFF);
+	distSq[1][2] = (~alienInstances[arg0].unk0 & 0xFF);
+	distSq[0][1] = distSq[0][1] * distSq[0][1];
+	distSq[1][2] = distSq[1][2] * distSq[1][2];
+	distSq[2][1] = distSq[2][1] * distSq[2][1];
+	distSq[1][0] = distSq[1][0] * distSq[1][0];
 	mask = 1;
 	result = 0;
+	distSq[0][0] = distSq[1][0] + distSq[0][1];
+	distSq[0][2] = distSq[0][1] + distSq[1][2];
+	distSq[2][2] = distSq[1][2] + distSq[2][1];
+	distSq[2][0] = distSq[2][1] + distSq[1][0];
+	distSq[1][1] = 0;
 
 	for (row = 0; row < 3; row++) {
-		for (col = 0; col < 3; col++, mask <<= 1) {
-			s8 x = (s8)(baseX + col);
-			s8 z = (s8)(baseZ + row);
-
+		for (col = 0; col < 3; col++) {
 			if (distSq[row][col] < threshold) {
-				if (((func_800B325C_C220C(x, z, arg1) != 0) || (arg1 == 0)) && (func_800B325C_C220C(x, z, arg2) == 0)) {
+				if (((func_800B325C_C220C((s8)(baseX + col), (s8)(baseZ + row), arg1) != 0) || (arg1 == 0)) && (func_800B325C_C220C((s8)(baseX + col), (s8)(baseZ + row), arg2) == 0)) {
 					result |= mask;
 				}
 			}
+			mask <<= 1;
 		}
 	}
 
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_800826E4_91694.s")
-#endif
 
 s32 func_800828F0_918A0(u8 arg0, u16 arg1, u16 arg2)
 {
@@ -4468,7 +4462,7 @@ s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 	speed = alienInstances[arg0].unk12;
 	maxDistSq = BH_ABS(speed) * alienTypes[ownTypeIndex].unk32;
 	foundAny = 0;
-	list = func_800826E4_91694(col, 0, 0);
+	list = func_800826E4_91694(arg0, 0, 0);
 
 	for (row = 0; row != 3U; row++) {
 		for (col = 0; col != 3U; col++) {
