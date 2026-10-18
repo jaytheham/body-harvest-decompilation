@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-17T18:45:14Z",
+  "generated": "2026-10-18T07:07:33Z",
   "commit": "5b6a05be",
   "commit_timestamp": "2026-10-18T07:44:19+13:00",
   "version": "eu",
@@ -787,5 +787,20 @@
     }
   ],
   "contributors": [],
-  "history": []
+  "history": [
+    {
+      "date": "2026-10-11",
+      "commit": "3ac1dd1",
+      "matched": 2265,
+      "non_matching": 449,
+      "total": 2723
+    },
+    {
+      "date": "2026-10-18",
+      "commit": "3ac1dd1",
+      "matched": 2265,
+      "non_matching": 449,
+      "total": 2723
+    }
+  ]
 }
