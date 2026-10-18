@@ -3062,48 +3062,41 @@ void func_802DB3F0_2BD820(u8 arg0) {
 	}
 }
 
-// CURRENT(733)
-#ifdef NON_MATCHING
 void func_802DB620_2BDA50(u8 arg0) {
-		s16 pad;
-	s16 sp5C;
-	s16 sp5A;
-	s16 sp58;
-	s16 sp56;
+	s16 padding;
+	s16 colorIndex;
+	s16 effectX;
+	s16 effectY;
+	s16 effectZ;
 	u16 size;
-	AlienInstance *alien;
 
-	alien = &alienInstances[arg0];
-	if (!(alien->unk20 & ALIEN_FLAG_UNKL) && (alien->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))) {
-		func_801371B8_146168((s32)alien, 0xEB, alien->unk0, alien->unk2, alien->unk4, -1.0f);
-		alien->unk2C = 0x50;
-		func_800D05A8_DF558(alien->unk0, alien->unk2, alien->unk4, 0x7D0,
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL) && (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))) {
+		func_801371B8_146168(&alienInstances[arg0], 0xEB, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
+		alienInstances[arg0].unk2C = 0x50;
+		func_800D05A8_DF558(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x7D0,
 						   D_802E2230_2C4660[0], D_802E2230_2C4660[1], D_802E2230_2C4660[2]);
 		return;
 	}
 
-	if ((alien->unk2C % ((func_800038E0_44E0() % 10) + 4)) == 0) {
-		sp5C = func_800038E0_44E0() % 4;
-		sp5A = (func_800038E0_44E0() % 90) + alien->unk0 - 0x2D;
-		sp58 = (func_800038E0_44E0() % 160) + alien->unk2;
-		sp56 = (func_800038E0_44E0() % 90) + alien->unk4 - 0x2D;
+	if ((alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 10) + 4)) == 0) {
+		colorIndex = func_800038E0_44E0() % 4;
+		effectX = alienInstances[arg0].unk0 + (func_800038E0_44E0() % 90) - 0x2D;
+		effectY = alienInstances[arg0].unk2 + (func_800038E0_44E0() % 160);
+		effectZ = alienInstances[arg0].unk4 + (func_800038E0_44E0() % 90) - 0x2D;
 		size = (func_800038E0_44E0() % 400) + 0x64;
-		func_800D05A8_DF558(sp5A, sp58, sp56, size,
-						   D_802E2230_2C4660[sp5C * 3], D_802E2230_2C4660[sp5C * 3 + 1], D_802E2230_2C4660[sp5C * 3 + 2]);
-		func_800CA5EC_D959C(sp5A, sp58, sp56, 0, 0x7F, 0, 0x64, 0xC, 0x8, 0xFF,
-						   D_802E2230_2C4660[sp5C * 3], D_802E2230_2C4660[sp5C * 3 + 1], D_802E2230_2C4660[sp5C * 3 + 2], 0x96);
+		func_800D05A8_DF558(effectX, effectY, effectZ, size,
+						   D_802E2230_2C4660[colorIndex * 3], D_802E2230_2C4660[colorIndex * 3 + 1], D_802E2230_2C4660[colorIndex * 3 + 2]);
+		func_800CA5EC_D959C(effectX, effectY, effectZ, 0, 0x7F, 0, 0x64, 0xC, 0x8, 0xFF,
+						   D_802E2230_2C4660[colorIndex * 3], D_802E2230_2C4660[colorIndex * 3 + 1], D_802E2230_2C4660[colorIndex * 3 + 2], 0x96);
 	}
-	if (alien->unk2C == 1) {
-		func_801371B8_146168((s32)alien, 0xEB, alien->unk0, alien->unk2, alien->unk4, -1.0f);
-		func_800D05A8_DF558(alien->unk0, alien->unk2, alien->unk4, 0x7D0,
+	if (alienInstances[arg0].unk2C == 1) {
+		func_801371B8_146168(&alienInstances[arg0], 0xEB, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
+		func_800D05A8_DF558(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x7D0,
 						   D_802E2230_2C4660[0], D_802E2230_2C4660[1], D_802E2230_2C4660[2]);
 	}
 }
 
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802DB620_2BDA50.s")
-#endif
 
 void func_802DB8D8_2BDD08(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, f32 arg8) {
 	s32 verticalSpeed;
