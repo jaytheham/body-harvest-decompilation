@@ -672,13 +672,6 @@ const f64 D_802E2FD8_2C5408[] = { 415.0 };
 const f64 D_802E2FE0_2C5410[] = { -130.0 };
 const f64 D_802E2FE8_2C5418[] = { 415.0 };
 const f64 D_802E2FF0_2C5420[] = { 130.0 };
-const u32 jtbl_802E2FF8_2C5428[5] = {
-	LEVEL_PTR(0x802D7400),
-	LEVEL_PTR(0x802D7424),
-	LEVEL_PTR(0x802D7474),
-	LEVEL_PTR(0x802D74AC),
-	LEVEL_PTR(0x802D74EC),
-};
 
 
 void func_802D64DC_2B890C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7);
@@ -1559,51 +1552,39 @@ void func_802D7350_2B9780(void) {
 	func_802D72C4_2B96F4(buildingInstances[0x3D].xCoord, buildingInstances[0x3D].zCoord, 0xF);
 }
 
-// CURRENT(955)
-#ifdef NON_MATCHING
 s32 func_802D7398_2B97C8(void) {
-	s32 temp;
 
 	func_80013468_14068(0xD);
 	osSyncPrintf(D_802E2F34_2C5364, D_80157F8C, D_80157F8E);
 
 	switch (D_80157F8C) {
 	case 0:
-		temp = D_80157F8E;
-		D_80157F8E = temp + 1;
-		if (temp >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
 		break;
 	case 1:
-		temp = D_80157F8E;
-		if (temp == 5) {
+		if (D_80157F8E == 5) {
 			func_8011C080_12B030(0x96);
-			temp = D_80157F8E;
 		}
-		D_80157F8E = temp + 1;
-		if (temp >= 0x15) {
+		if (D_80157F8E++ >= 0x15) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
 		break;
 	case 2:
-		temp = D_80157F8E;
-		D_8013E344_14D2F4 = temp * 12;
-		D_80157F8E = temp + 1;
-		if (temp >= 0x15) {
+		D_8013E344_14D2F4 = D_80157F8E * 12;
+		if (D_80157F8E++ >= 0x15) {
 			D_80157F8E = 0;
 			D_80157F8C++;
 		}
 		break;
 	case 3:
-		temp = D_80157F8E;
-		D_8013E344_14D2F4 = 0xF0 - temp * 12;
-		D_80157F8E = temp + 1;
-		if (temp >= 0x15) {
-			D_80157F8E = 0;
+		D_8013E344_14D2F4 = 0xF0 - D_80157F8E * 12;
+		if (D_80157F8E++ >= 0x15) {
 			D_80157F8C++;
+			D_80157F8E = 0;
 		}
 		break;
 	case 4:
@@ -1613,9 +1594,7 @@ s32 func_802D7398_2B97C8(void) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/siberia/2B7100/func_802D7398_2B97C8.s")
-#endif
+
 
 void func_802D7508_2B9938(void) {
 	func_800072CC_7ECC(0x33);
