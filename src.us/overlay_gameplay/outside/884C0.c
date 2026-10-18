@@ -3864,128 +3864,44 @@ void func_800822BC_9126C(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	}
 }
 
-// CURRENT(11598)
 // HCU behavior- searching for closest target to carry
-#ifdef NON_MATCHING
-s16 func_80082394_91344(s32 arg0, s32 arg1, s32 arg2) {
+s16 func_80082394_91344(s16 arg0, s16 arg1, s32 arg2) {
+	s32 i;
+	AlienInstance *alien;
+	s32 idx;
 	s16 closestAlien;
 	f32 levelScale[3];
-	s32 closestDist;
-	u8 *alienId;
-	u8 *alienIdEnd;
+	s32 distance;
 
 	closestAlien = 0xFF;
-	levelScale[0] = D_8013C2B0_14B260[0];
-	levelScale[1] = D_8013C2B0_14B260[1];
-	levelScale[2] = D_8013C2B0_14B260[2];
-	closestDist = arg2 << 8;
+	*(Vec3f *)levelScale = *(Vec3f *)D_8013C2B0_14B260;
+	arg2 = arg2 << 8;
 
-	if (D_8014D507 > 0) {
-		alienId = D_8014D408;
-		alienIdEnd = alienId + D_8014D507;
-		do {
-			u8 idx;
-			AlienInstance *alien;
-			u8 alienType;
-			s32 dx;
-			s32 dz;
-			s32 negDx;
-			s32 negDz;
-			s32 absDx;
-			s32 absDz;
-
-			idx = *alienId;
-			alienId++;
-			alien = &alienInstances[idx];
-
-			// if not a human, skip
-			if (alien->typeIndex != 1) {
-				continue;
-			}
-
-			//if human is is any of these states, ignore
-			alienType = alien->unk24;
-			if ((alienType == 3) || (alienType == 4) || (alienType == 0x1D) || (alienType == 0x13)) {
-				continue;
-			}
-
-			// Agent - try this: these should probably use ternary expressions
-			// there are similar matched functions, find them and observe their structure
-			dx = arg0 - alien->unk0;
-			negDx = -dx;
-			if (negDx < dx) {
-				absDx = dx;
-			} else {
-				absDx = negDx;
-			}
-
-			dz = arg1 - alien->unk4;
-			negDz = -dz;
-			if (negDz < dz) {
-				absDz = dz;
-			} else {
-				absDz = negDz;
-			}
-
-			if (absDz < absDx) {
-				if (negDx >= dx) {
-					dx = negDx;
+	for (i = 0; i < D_8014D507; i++) {
+		idx = D_8014D408[i];
+		alien = &alienInstances[idx];
+		if (alien->typeIndex == 1) {
+			if ((alien->unk24 != 3) && (alien->unk24 != 4) && (alien->unk24 != 0x1D) && (alien->unk24 != 0x13)) {
+				distance = MAX(BH_ABS(arg0 - alien->unk0), BH_ABS(arg1 - alien->unk4));
+				if (distance < arg2) {
+					closestAlien = idx;
+					arg2 = distance;
 				}
-			} else {
-				dx = absDz;
 			}
-
-			if (dx < closestDist) {
-				closestAlien = idx;
-				closestDist = dx;
-			}
-		} while (alienId < alienIdEnd);
+		}
 	}
 
-	// if player is not in vehicle, and is within certain radius (scaled by level?) then player is the target
-	if ((D_80052B34->unk1A == 0) && (D_80048180 == 0)) { 
-		s32 dx;
-		s32 dz;
-		s32 negDx;
-		s32 negDz;
-		s32 absDx;
-
+	if ((D_80052B34->unk1A == 0) && (D_80048180 == 0)) {
 		if (currentLevel < 4) {
-			closestDist = (s32)((f32)closestDist * levelScale[currentLevel]);
+			arg2 *= levelScale[currentLevel - 1];
 		}
-
-		dx = arg0 - D_80052B34->unk0;
-		negDx = -dx;
-		if (negDx < dx) {
-			absDx = dx;
-		} else {
-			absDx = negDx;
-		}
-
-		dz = arg1 - D_80052B34->unk4;
-		negDz = -dz;
-		if (negDz < dz) {
-			negDz = dz;
-		}
-
-		if (negDz < absDx) {
-			if (negDx >= dx) {
-				dx = negDx;
-			}
-		} else {
-			dx = negDz;
-		}
-
-		if (dx < closestDist) {
+		distance = MAX(BH_ABS(arg0 - D_80052B34->unk0), BH_ABS(arg1 - D_80052B34->unk4));
+		if (distance < arg2) {
 			return 0x100;
 		}
 	}
-
 	return closestAlien;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_80082394_91344.s")
-#endif
 
 s32 func_800825E8_91598(s16 arg0, s16 arg1, s32 *arg2)
 {
