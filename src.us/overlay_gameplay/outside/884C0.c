@@ -2965,17 +2965,13 @@ s32 func_8007FB08_8EAB8(u8 arg0, u8 arg1) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(8789)
 void func_8007FDD8_8ED88(void)
 {
-	AlienInstance *inst;
 	s32 i;
-	s32 next;
-	u32 count;
-	u8 *activeList;
 	u8 typeIdx;
-	
+	u8 index;
+	s32 finalIndex;
+
 	for (i = 0;i < 0xFF;i++)
 	{
 		typeIdx = alienInstances[i].typeIndex;
@@ -3008,85 +3004,58 @@ void func_8007FDD8_8ED88(void)
 				}
 			}
 
-			func_8007FB08_8EAB8(i & 0xFF, typeIdx);
+			func_8007FB08_8EAB8(i, typeIdx);
 		}
 	}
 
-	count = D_8014ECCC;
-	if (count != 0)
-	{
-		activeList = D_8014D510;
-		i = 0;
-		do
-		{
-			inst = &alienInstances[*activeList];
-			typeIdx = inst->typeIndex;
-			next = i + 1;
-			if (alienTypes[typeIdx].unk54 & 0x3E)
-			{
-				if ((typeIdx >= 3) || !(inst->unk20 & ALIEN_FLAG_UNKL))
-				{
-					D_8014ECD8 = -1;
-					D_8014D304 = 0;
-					func_8007F0E8_8E098(*activeList, next & 0xFF, 1);
-					count = D_8014ECCC;
-				}
-			}
-			i = next;
-			activeList++;
-		} while ((u32)next < count);
+	for (i = 0; (u32)i < D_8014ECCC; i++) {
+		index = D_8014D510[i];
+		typeIdx = alienInstances[index].typeIndex;
+		if (!(alienTypes[typeIdx].unk54 & 0x3E) || ((typeIdx < 3) && (alienInstances[index].unk20 & ALIEN_FLAG_UNKL))) {
+		} else {
+			D_8014ECD8 = -1;
+			D_8014D304 = 0;
+			func_8007F0E8_8E098(index, i + 1, 1);
+		}
 	}
 
-	inst = alienInstances;
-	while (inst < (AlienInstance *)&D_8004D148)
+	for (i = 0; i < 0xFF; i++)
 	{
-		typeIdx = inst->typeIndex;
+		typeIdx = alienInstances[i].typeIndex;
 		if ((alienTypes[typeIdx].unk54 & 0x3E) && (typeIdx != 0))
 		{
-			if (inst->unk47 & 0xE)
+			if (alienInstances[i].unk47 & 0xE)
 			{
-				inst->unk47 |= 1;
+				alienInstances[i].unk47 |= 1;
 				if (!(alienTypes[typeIdx].unk54 & 0x2000))
 				{
-					inst->unk20 &= ~ALIEN_FLAG_UNKJ;
-					inst->unkE = inst->unk6;
+					alienInstances[i].unk20 &= ~ALIEN_FLAG_UNKJ;
+					alienInstances[i].unkE = alienInstances[i].unk6;
 				}
 			}
 		}
-		inst++;
 	}
 
-	if (count != 0)
-	{
-		activeList = D_8014D510;
-		i = 0;
-		do
+	for (i = 0; (u32)i < D_8014ECCC; i++) {
+		finalIndex = D_8014D510[i];
+
+		if (alienInstances[finalIndex].unk47 & 0x80)
 		{
-			typeIdx = *activeList;
-			inst = &alienInstances[typeIdx];
-			if (inst->unk47 & 0x80)
+			func_8007A6B4_89664(finalIndex);
+			alienInstances[finalIndex].unk47 &= 0xFF7F;
+			if (func_8007A4F8_894A8(i) != 0)
 			{
-				func_8007A6B4_89664(typeIdx & 0xFF);
-				inst->unk47 &= 0x7F;
-				if (func_8007A4F8_894A8(i) != 0)
-				{
-					count = D_8014ECCC;
-					i--;
-					activeList--;
-				}
-				else
-				{
-					osSyncPrintf(D_80141D50_150D00);
-					count = D_8014ECCC;
-			i++;
-			activeList++;
-				}}
-		} while ((u32)i < count);
+				i--;
+			}
+			else
+			{
+				osSyncPrintf(&D_80141D50_150D00);
+			}
+		}
+		/* Keep the type-table base and stride live for IDO. */
+		if (alienTypes[alienInstances[finalIndex].typeIndex].unk54) { }
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007FDD8_8ED88.s")
-#endif
 
 void func_800800DC_8F08C(u8 arg0) {
 }

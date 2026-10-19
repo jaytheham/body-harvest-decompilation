@@ -911,7 +911,7 @@ extern s32 D_80048194;
 extern u8 D_800481BD[][0x50]; /* AI - alienInstances parent byte, one entry per instance */
 extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
 extern u8 D_800481CE; // 0x800481CE = alienInstances[0].unk36
-extern AlienInstance alienInstances[0xFE]; // 0x80048198
+extern AlienInstance alienInstances[0xFF]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D14C; // AI - Mission active/completion flag (set to 0x73 on complete)
 extern s32 D_8004D150; // AI - Mission completed set bitmask/pointer
