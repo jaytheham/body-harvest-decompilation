@@ -2013,50 +2013,52 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128650_137600.s")
 #endif
 
-// CURRENT(2539): endpoint parameter stores and frame/register allocation remain.
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-	s32 color;
+	Gfx *packet;
 	s32 midX;
 	s32 midY;
 	s32 midZ;
+	f64 fade;
 	f32 length;
 	f32 dirX;
 	f32 dirY;
 	f32 dirZ;
 	s32 startStep;
-	s32 endStep;
-	f32 startStepF;
+	u32 endStep;
+	s32 stepLength;
 
-
-
-	length = sqrtf((f32)((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1)))) * 2;
+	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
 	if (length == 0.0f) {
 		return;
 	}
 
-	dirX = (f32)((arg3 - arg0) >> 1) / length;
-	dirY = (f32)((arg4 - arg1) >> 1) / length;
-	dirZ = (f32)((arg5 - arg2) >> 1) / length;
+	dirX = ((arg3 - arg0) >> 1) / length;
+	dirY = ((arg4 - arg1) >> 1) / length;
+	dirZ = ((arg5 - arg2) >> 1) / length;
 
 	startStep = (func_800038E0_44E0() % 30);
-	startStep = (s32)(((f32)startStep * length) / 100.0f);
-	startStepF = (f32)startStep;
+	startStep = (startStep * length) / 100.0f;
 
-	midX = arg0 = (s32)((f32)arg0 + (dirX * startStepF));
-	midY = arg1 = (s32)((f32)arg1 + (dirY * startStepF));
-	midZ = arg2 = (s32)((f32)arg2 + (dirZ * startStepF));
+	arg0 += dirX * startStep;
+	midX = arg0;
+	arg1 += dirY * startStep;
+	midY = arg1;
+	arg2 += dirZ * startStep;
+	midZ = arg2;
 
-	endStep = (func_800038E0_44E0() % 30); color = 255; if (color) {}
-	endStep = (s32)(((f32)endStep * length) / 100.0f);
-	startStepF = (f32)endStep;
+	endStep = (func_800038E0_44E0() % 30); if (255) {}
+	packet = D_8005BB30;
+	endStep = (s32)(((s32)endStep * length) / 100.0f);
+	stepLength = endStep;
 
-	arg3 = (s32)((f32)arg3 - (dirX * startStepF));
-	arg4 = (s32)((f32)arg4 - (dirY * startStepF));
-	arg5 = (s32)((f32)arg5 - (dirZ * startStepF));
+	(&arg3)[0] = arg3 - dirX * stepLength;
+	(&arg4)[0] = arg4 - dirY * stepLength;
+	(&arg5)[0] = arg5 - dirZ * stepLength;
 
 
-	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+	D_8005BB30++;
+	gDPSetRenderMode(packet, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 	gSPClearGeometryMode(D_8005BB30++, G_FOG);
@@ -2073,15 +2075,18 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	startStepF = (f32)(s32)((f64)((length - (f32)startStep) - startStepF) * D_801451C0_154170.value);
-	D_8005BB34->v.ob[0] = (s16)(s32)((f32)midX + (dirX * startStepF));
-	D_8005BB34->v.ob[1] = (s16)(s32)((f32)midY + (dirY * startStepF));
-	D_8005BB34->v.ob[2] = (s16)(s32)((f32)midZ + (dirZ * startStepF));
+	stepLength = startStep;
+	fade = (length - stepLength) - (s32)endStep;
+	stepLength = (s32)(fade * 0.7);
+	(*(Vtx * volatile *)&D_8005BB34)->v.ob[0] = midX + dirX * stepLength;
+	if (255) {}
+	D_8005BB34->v.ob[1] = midY + dirY * stepLength;
+	D_8005BB34->v.ob[2] = midZ + dirZ * stepLength;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = color;
-	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = 255;
+	D_8005BB34->v.cn[1] = 255;
 	D_8005BB34->v.cn[2] = 0;
 	D_8005BB34->v.cn[3] = 0x96;
 	D_8005BB34++;
