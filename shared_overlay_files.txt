@@ -41,6 +41,7 @@ overlay_gameplay/outside/1416E0.c
 overlay_gameplay/outside/145D70.c
 overlay_gameplay/outside/148000.c
 overlay_gameplay/outside/101840_rodata.c
+overlay_gameplay/outside/1312D0_rodata.c
 overlay_gameplay/outside/constData.c
 overlay_gameplay/outside/constData2.c
 overlay_gameplay/outside/mutableData.c

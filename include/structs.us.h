@@ -3265,20 +3265,26 @@ typedef struct {
 	s16 y;
 	s16 z;
 	s16 radius;
-	u8 pad8[4];
+	s16 damageScale;
+	u8 padA[2];
 } Unk80147090Entry_8012B26C;
 
 typedef struct {
-	f32 unk0;
-	s16 unk4;
-	s16 unk6;
-	s16 unk8;
-	s16 unkA;
 	union {
-		f32 asFloat;
-		UnkPos16_8012B26C *asPos;
-		s32 asS32;
-	} unkC;
+		f32 motion[4];
+		struct {
+			f32 unk0;
+			s16 unk4;
+			s16 unk6;
+			s16 unk8;
+			s16 unkA;
+			union {
+				f32 asFloat;
+				UnkPos16_8012B26C *asPos;
+				s32 asS32;
+			} unkC;
+		};
+	};
 } UnkProjectileCtrl_8012B26C;
 
 /* Message entries store an unused word before the string pointer. */

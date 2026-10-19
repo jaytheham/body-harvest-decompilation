@@ -427,6 +427,7 @@ segments:
       - [0x153B50, .rodata, overlay_gameplay/outside/101840_rodata]
       - [0x153D70, .rodata, overlay_gameplay/outside/buildings]
       - [0x153FD0, .rodata, overlay_gameplay/outside/1312D0]
+      - [0x154360, .rodata, overlay_gameplay/outside/1312D0_rodata]
       - [0x154370, .rodata, overlay_gameplay/outside/13DA70]
       - [0x154600, .rodata, overlay_gameplay/outside/1416E0]
       - [0x1546C0, .rodata, overlay_gameplay/outside/145D70]
