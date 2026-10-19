@@ -135,12 +135,12 @@ const f64 D_80144D88_153D38[1] = {1000};
 
 const f32 D_80144D90_153D40[1] = {-0.05};
 
-const f64 D_80144D98_153D48[1] = {0.95};
+const ShadowGeometryConstant D_80144D98_153D48 = {0.95};
 
 const f64 D_80144DA0_153D50[1] = {0.69};
 
-const f64 D_80144DA8_153D58[1] = {0.6};
+const ShadowGeometryConstant D_80144DA8_153D58 = {0.6};
 
-const f64 D_80144DB0_153D60[1] = {0.6};
+const ShadowGeometryConstant D_80144DB0_153D60 = {0.6};
 
 const f64 D_80144DB8_153D68[1] = {0};

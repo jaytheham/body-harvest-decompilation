@@ -4024,4 +4024,16 @@ typedef struct {
 	JointIdByte child;
 } SavedJointIds;
 
+/* Pointer and raw-address views of a vehicle reference. */
+typedef union {
+    VehicleInstance *vehicle;
+    u32 address;
+} VehicleAddressValue;
+
+/* Word water height with its low signed halfword used by particle effects. */
+typedef union {
+	s32 value;
+	struct { s16 high; s16 low; } halves;
+} WaterLevelValue;
+
 #endif /* LIBULTRA_REFERENCE */
