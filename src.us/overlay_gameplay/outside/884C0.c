@@ -2650,62 +2650,53 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 // CURRENT(21299)
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
-	AlienInstance *inst;
-	AlienType *type;
-	VehicleInstance *vehicle;
-	AlienInstance *other;
-	AlienType *otherType;
 	u8 selfIndex;
-	u8 i;
-	u8 start;
 	u8 typeIndex;
-	u8 otherIndex;
+	u8 i = 0;
+	u8 soundId = 0xFF;
+	u8 vehIndex;
 	u8 otherTypeIndex;
-	u8 soundId;
 	s16 xA;
 	s16 zA;
 	s16 xB;
 	s16 zB;
+	s32 scratch;
 	s32 moved;
-	s32 collisionCheck;
 	s32 recurseFlag;
-	s32 ret;
+	AlienInstance *other;
+	s32 collisionCheck;
+	AlienType *type;
+	AlienType *otherType;
 
 	selfIndex = arg0;
-	start = arg1;
-	inst = &alienInstances[selfIndex];
-	typeIndex = inst->typeIndex;
-	soundId = 0xFF;
-	moved = 0;
-	collisionCheck = 0;
+	typeIndex = alienInstances[selfIndex].typeIndex;
 	recurseFlag = 0;
-	ret = 0;
+	collisionCheck = 0;
+	moved = 0;
 
-	if (inst->unk47 & 0x80) {
+	if (alienInstances[selfIndex].unk47 & 0x80) {
 		return 0;
 	}
 
 	D_8014D304++;
 	if (D_8014D304 >= 9) {
-		inst->unk47 |= 0x80;
+		alienInstances[selfIndex].unk47 |= 0x80;
 		osSyncPrintf(&D_80141CE4_150C94, alienTypes[typeIndex].unk18);
 	}
 
 	type = &alienTypes[typeIndex];
 
-	if ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) {
-		s32 flags;
+	if ((alienInstances[selfIndex].unk0 != alienInstances[selfIndex].unk2E) || (alienInstances[selfIndex].unk2 != alienInstances[selfIndex].unk30) || (alienInstances[selfIndex].unk4 != alienInstances[selfIndex].unk32) || (arg2 == 0)) {
 
-		flags = type->unk54;
-		if (flags & 0x20) {
+		scratch = type->unk54;
+		if (scratch & 0x20) {
 			collisionCheck = func_800836D0_92680(selfIndex, &xA, &zA);
-			flags = type->unk54;
+			scratch = type->unk54;
 		}
 
-		if (flags & 0x10) {
-			s32 absSpeed;
+		if (scratch & 0x10) {
 
-			if (flags & 0x80000001) {
+			if (scratch & 0x80000001) {
 				func_8011DE60_12CE10(1);
 			}
 
@@ -2715,14 +2706,12 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 				func_8011DE60_12CE10(0);
 			}
 
-			if (soundId != 0xFF) {
-				absSpeed = inst->unk12;
-				if (absSpeed < 0) {
-					absSpeed = -absSpeed;
-				}
+			if ((u32)soundId != 0xFF) {
+				scratch = BH_ABS(alienInstances[selfIndex].unk12);
 
-				if (soundId != 0) {
-					func_8011BEA0_12AE50(soundId, (alienTypes[inst->typeIndex].unk52 * (absSpeed + 1)) / 6400);
+				scratch = ((alienTypes[alienInstances[selfIndex].typeIndex].unk52 * (scratch + 1)) / 200) >> 5;
+				if ((u32)soundId != 0) {
+					func_8011BEA0_12AE50(soundId, scratch);
 				}
 			}
 		}
@@ -2742,129 +2731,130 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 				}
 			}
 
-			func_8007E980_8D930(inst, xA, zA);
+			func_8007E980_8D930(&alienInstances[selfIndex], xA, zA);
 
 			if (arg2 == 0) {
 				if ((currentLevel != 3) || ((typeIndex != 9) && (typeIndex != 8))) {
-					ret = 1;
-					break;
+					return 1;
 				}
 			} else {
 				func_8007ED9C_8DD4C(selfIndex);
 				recurseFlag = 1;
 			}
 
-			inst->unk47 |= 4;
-		}
-	} else if ((type->unk54 & 8) && ((inst->unk0 != inst->unk2E) || (inst->unk2 != inst->unk30) || (inst->unk4 != inst->unk32) || (arg2 == 0)) && (D_80158FD8 > 0)) {
-		for (i = 0; i < D_80158FD8; i++) {
-			u8 vehIndex;
-			s32 hitType;
-
-			vehIndex = D_80158E80[i];
-			vehicle = &vehicleInstances[vehIndex];
-			if ((D_80052B34 == vehicle) && ((D_801591AC == 6) || (D_80048180 != 0) || (inst->unk20 & ALIEN_FLAG_UNKL))) {
-				continue;
-			}
-
-			if (func_8007E608_8D5B8(inst, (AlienInstance *)vehicle) == 0) {
-				continue;
-			}
-
-			func_8010C4EC_11B49C(vehicle);
-			if (func_8010E684_11D634(vehicle, inst) == 0) {
-				continue;
-			}
-
-			if ((typeIndex < 3) || (typeIndex == 0x20)) {
-				func_80080D98_8FD48(selfIndex, vehIndex);
-				continue;
-			}
-
-			hitType = func_8007EB74_8DB24(inst, (AlienInstance *)vehicle);
-			if (arg2 == 0) {
-				if ((currentLevel != 3) || ((typeIndex != 9) && (typeIndex != 8))) {
-					ret = 1;
-					goto done;
-				}
-			} else if (D_8014ECD8 == vehIndex) {
-				osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleTypes[vehicle->unk1A].unk18].name, type->unk18, arg2);
-				inst->unk47 |= 0x80;
-			} else {
-				D_8014ECD8 = vehIndex;
-				recurseFlag = 1;
-				if (hitType != 0) {
-					func_8007ED9C_8DD4C(selfIndex);
-				}
-			}
-
-			if (D_80052B34 == vehicle) {
-				inst->unk47 |= 8;
-				if (D_800475F0 >= 0x33) {
-					func_80083EF4_92EA4(inst, D_80052B34, -0x63C0, inst->unkE);
-				}
-			}
+			alienInstances[selfIndex].unk47 |= 4;
 		}
 	}
 
-	if (!(inst->unk47 & 0x80) && (type->unk54 & 4) && (start < D_8014ECCC)) {
-		for (i = start; i < D_8014ECCC; i = (i + 1) & 0xFF) {
-			otherIndex = D_8014D510[i];
-			other = &alienInstances[otherIndex];
+	if ((type->unk54 & 8) && ((alienInstances[selfIndex].unk0 != alienInstances[selfIndex].unk2E) || (alienInstances[selfIndex].unk2 != alienInstances[selfIndex].unk30) || (alienInstances[selfIndex].unk4 != alienInstances[selfIndex].unk32) || (arg2 == 0))) {
+		while (i < D_80158FE0) {
+
+			vehIndex = D_80158F00[i];
+			if ((&vehicleInstances[vehIndex] == D_80052B34) && ((D_801591AC == 6) || (D_80048180 != 0) || (alienInstances[selfIndex].unk20 & ALIEN_FLAG_UNKL))) {
+				i++;
+				continue;
+			}
+
+			if (func_8007E608_8D5B8(&alienInstances[selfIndex], (AlienInstance *)&vehicleInstances[vehIndex]) != 0) {
+				func_8010C4EC_11B49C(&vehicleInstances[vehIndex]);
+				if (func_8010E684_11D634(&vehicleInstances[vehIndex], &alienInstances[selfIndex]) != 0) {
+					if ((typeIndex < 3) || (typeIndex == 0x20)) {
+						func_80080D98_8FD48(selfIndex, vehIndex);
+						i++;
+						continue;
+					}
+
+					scratch = func_8007EB74_8DB24(&alienInstances[selfIndex], (AlienInstance *)&vehicleInstances[vehIndex]);
+					if (arg2 == 0) {
+						if ((currentLevel != 3) || ((typeIndex != 9) && (typeIndex != 8))) {
+							return 1;
+						}
+					} else if (D_8014ECD8 == vehIndex) {
+						osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleTypes[vehicleInstances[vehIndex].unk1A].unk18].name, type->unk18);
+						alienInstances[selfIndex].unk47 |= 0x80;
+					} else {
+						D_8014ECD8 = vehIndex;
+						recurseFlag = 1;
+						if (scratch != 0) {
+							func_8007ED9C_8DD4C(selfIndex);
+						}
+					}
+
+					if (&vehicleInstances[vehIndex] == D_80052B34) {
+						alienInstances[selfIndex].unk47 |= 8;
+						if (D_800475F0 >= 0x33) {
+							func_80083EF4_92EA4(&alienInstances[selfIndex], D_80052B34, -0x63C0, alienInstances[selfIndex].unkE);
+						}
+					}
+				}
+			}
+			i++;
+		}
+	}
+
+	/* Keep the active-list counter live for IDO's parameter normalization. */
+	if (arg1) { }
+	if (!(alienInstances[selfIndex].unk47 & 0x80) && (type->unk54 & 4)) {
+		while ((u32)arg1 < D_8014ECCC) {
+			i = D_8014D510[arg1];
+			other = &alienInstances[i];
 			otherTypeIndex = other->typeIndex;
 			otherType = &alienTypes[otherTypeIndex];
 
-			if (!(otherType->unk54 & 4) || (selfIndex == otherIndex) || (other->unk47 & 0x80)) {
+			if (!(otherType->unk54 & 4) || (i == selfIndex) || (other->unk47 & 0x80)) {
+				arg1++;
 				continue;
 			}
 
-			if ((((otherTypeIndex == 0x1A) || ((otherTypeIndex >= 0x1B) && (otherTypeIndex < 0x20))) && (inst->unk20 & ALIEN_FLAG_X)) ||
-				(((typeIndex == 0x1A) || ((typeIndex >= 0x1B) && (typeIndex < 0x20))) && (other->unk20 & ALIEN_FLAG_X))) {
+			if ((((0x1A == otherTypeIndex) || ((otherTypeIndex >= 0x1B) && (otherTypeIndex < 0x20))) && (alienInstances[selfIndex].unk20 & ALIEN_FLAG_X)) ||
+				(((0x1A == typeIndex) || ((typeIndex >= 0x1B) && (typeIndex < 0x20))) && (other->unk20 & ALIEN_FLAG_X))) {
+				arg1++;
 				continue;
 			}
 
-			if (func_8007E608_8D5B8(inst, other) == 0) {
-				continue;
-			}
+			if (func_8007E608_8D5B8(&alienInstances[selfIndex], other) != 0) {
 
 			if (((typeIndex == 0x16) && (otherType->unk54 & 0xC1)) || ((otherTypeIndex == 0x16) && (otherType->unk54 & 0xC1))) {
 				if (typeIndex == 0x16) {
 					func_80088760_97710(other);
 				} else {
-					func_80088760_97710(inst);
+					func_80088760_97710(&alienInstances[selfIndex]);
 				}
-				continue;
-			}
+			} else {
 
-			func_8007EB74_8DB24(inst, other);
+			func_8007EB74_8DB24(&alienInstances[selfIndex], other);
 			if (arg2 == 0) {
-				ret = 1;
-				break;
+				return 1;
 			}
 
 			recurseFlag = 1;
 
-			if (inst->unk20 & ALIEN_FLAG_FALL) {
-				if (((inst->unk2 < other->unk2) && (inst->unk10 > 0)) || ((other->unk2 < inst->unk2) && (inst->unk10 < 0))) {
-					inst->unk10 = 0;
+			if (alienInstances[selfIndex].unk20 & ALIEN_FLAG_FALL) {
+				if (((alienInstances[selfIndex].unk2 < other->unk2) && (alienInstances[selfIndex].unk10 > 0)) || ((other->unk2 < alienInstances[selfIndex].unk2) && (alienInstances[selfIndex].unk10 < 0))) {
+					alienInstances[selfIndex].unk10 = 0;
 				}
 			}
 			func_8007ED9C_8DD4C(selfIndex);
 
 			if (other->unk20 & ALIEN_FLAG_FALL) {
-				if (((other->unk2 < inst->unk2) && (other->unk10 > 0)) || ((inst->unk2 < other->unk2) && (other->unk10 < 0))) {
+				if (((other->unk2 < alienInstances[selfIndex].unk2) && (other->unk10 > 0)) || ((alienInstances[selfIndex].unk2 < other->unk2) && (other->unk10 < 0))) {
 					other->unk10 = 0;
 				}
 			}
-			func_8007ED9C_8DD4C(otherIndex);
+			func_8007ED9C_8DD4C(i);
 
 			D_8014ECD4 = selfIndex;
-			func_8007F0E8_8E098(otherIndex, 0, arg2);
+			func_8007F0E8_8E098(i, 0, arg2);
 			D_8014ECD4 = -1;
-			if (D_8014ECD4 == otherIndex) {
+			/* Preserve IDO's reload across this index-check boundary. */
+			if (i) { }
+			if (D_8014ECD4 == i) {
 				osSyncPrintf(&D_80141D30_150CE0, otherType->unk18, type->unk18);
-				inst->unk47 |= 0x80;
+				alienInstances[selfIndex].unk47 |= 0x80;
 			}
+			}
+			}
+			arg1++;
 		}
 	}
 
@@ -2872,9 +2862,6 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 		func_8007F0E8_8E098(selfIndex, 0, arg2);
 	}
 	D_8014D304--;
-	if (ret != 0) {
-		return ret;
-	}
 	return recurseFlag;
 }
 #else
@@ -3060,7 +3047,6 @@ void func_8007FDD8_8ED88(void)
 void func_800800DC_8F08C(u8 arg0) {
 }
 
-// https://decomp.me/scratch/bZqed
 void func_800800E4_8F094(u8 arg0)
 {
 	s32 sp3C;
@@ -3112,7 +3098,6 @@ void func_8008030C_8F2BC(u8 arg0)
 	func_80080418_8F3C8(arg0, x, z);
 }
 
-// https://decomp.me/scratch/LBDX5
 s32 func_80080418_8F3C8(s32 arg0, s32 arg1, s32 arg2)
 {
 	s32 bounceResult;
@@ -3203,18 +3188,18 @@ void func_8008076C_8F71C(u8 arg0) {
 
 s32 func_80080840_8F7F0(u8 arg0, s32 arg1)
 {
-  AlienInstance *alien;
-  if ((((((&alienInstances[arg0])->unk0 < ((&alienInstances[arg0])->unk14 + arg1)) &&
-   (((&alienInstances[arg0])->unk14 - arg1) < (&alienInstances[arg0])->unk0)) &&
-	((&alienInstances[arg0])->unk4 < ((&alienInstances[arg0])->unk18 + arg1))) &&
-	 (((&alienInstances[arg0])->unk18 - arg1) < (&alienInstances[arg0])->unk4)) &&
-	  ((currentLevel != 7) ||
-	   (((&alienInstances[arg0])->unk2 < ((&alienInstances[arg0])->unk16 + arg1)) &&
-		(((&alienInstances[arg0])->unk16 - arg1) < (&alienInstances[arg0])->unk2))))
-  {
-	return 1;
-  }
-  return 0;
+	AlienInstance *alien;
+	if ((((((&alienInstances[arg0])->unk0 < ((&alienInstances[arg0])->unk14 + arg1)) &&
+		   (((&alienInstances[arg0])->unk14 - arg1) < (&alienInstances[arg0])->unk0)) &&
+		  ((&alienInstances[arg0])->unk4 < ((&alienInstances[arg0])->unk18 + arg1))) &&
+		 (((&alienInstances[arg0])->unk18 - arg1) < (&alienInstances[arg0])->unk4)) &&
+		((currentLevel != 7) ||
+		 (((&alienInstances[arg0])->unk2 < ((&alienInstances[arg0])->unk16 + arg1)) &&
+		  (((&alienInstances[arg0])->unk16 - arg1) < (&alienInstances[arg0])->unk2))))
+	{
+		return 1;
+	}
+	return 0;
 }
 
 // generic movement helper- move alien towards target?
@@ -3262,7 +3247,6 @@ s32 func_800808F0_8F8A0(u8 arg0, s16 *arg1)
 	return 1;
 }
 
-// https://decomp.me/scratch/n1AaG
 s32 func_80080A54_8FA04(u8 arg0, s16 arg1, s16 arg2)
 {
 	s32 dx;
@@ -3600,7 +3584,6 @@ s32 func_8008153C_904EC(u8 arg0, s16 *arg1)
 	return 0;
 }
 
-// https://decomp.me/scratch/cGDEr
 void func_800816B0_90660(u8 arg0, VehicleInstance *arg1)
 {
 	u8 idx = alienInstances[arg0].unk27;
@@ -4157,7 +4140,6 @@ s32 func_80082EB4_91E64(u8 arg0, s16 arg1)
 	}
 }
 
-// https://decomp.me/scratch/fQx5r
 s32 func_80083060_92010(s32 arg0, s32 arg1, s32 arg2, u8 *arg3)
 {
 	s32 sp24;
@@ -4186,7 +4168,6 @@ s32 func_80083060_92010(s32 arg0, s32 arg1, s32 arg2, u8 *arg3)
 	return 0;
 }
 
-// CURRENT(3293)
 s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 	s32 x;
 	s32 z;
@@ -4495,7 +4476,6 @@ void func_80083EF4_92EA4(AlienInstance *arg0, void *arg1, s16 arg2, s16 arg3)
 	}
 }
 
-// CURRENT(3522)
 void func_800840B0_93060(s8 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s32 minus4;
 	s32 minus8;
@@ -4623,7 +4603,7 @@ void func_800844D0_93480(u8 arg0)
 	s8 tileX = (s8)(alien->unk0 >> 8);
 	s8 tileZ = (s8)(alien->unk4 >> 8);
 	s8 blockedDirections = 0;
-	s16 padding; /* Preserve the coordinate locals' stack layout. */
+	s16 padding;
 	s16 targetX = tileX;
 	s16 targetZ = tileZ;
 	u8 typeIndex;
@@ -4636,7 +4616,6 @@ void func_800844D0_93480(u8 arg0)
 		return;
 	}
 
-	/* Keep the instance pointer in a saved register across the tile queries. */
 	if (alien) {}
 	if ((alienTypes[typeIndex].unk54 & 0x10) == 0 || (alienTypes[typeIndex].unk54 & 1) != 0)
 	{
@@ -4697,7 +4676,6 @@ void func_800847D0_93780(u8 arg0)
 	alienInstances[arg0].unk2A += (rnd < 0 ? -1 : 1) << 13;
 }
 
-// https://decomp.me/scratch/g8Awf
 void func_80084904_938B4(u8 arg0)
 {
 	s16 var_a3;
@@ -4723,7 +4701,6 @@ void func_80084904_938B4(u8 arg0)
 	alienInstances[arg0].unk2A = sp2A;
 }
 
-// https://decomp.me/scratch/JTTha
 void func_80084AE4_93A94(AlienInstance *arg0, AlienInstance *arg1)
 {
 	f32 xDif;
@@ -4893,7 +4870,6 @@ s32 func_80084F00_93EB0(EntityInstance *vehicle, EntityInstance *alien)
 	return ((s32)sqrtf((f32)(((hx * hx) + (hy * hy)) + (hz * hz)))) * 2;
 }
 
-// https://decomp.me/scratch/iDb3d
 s32 func_80084FE8_93F98(u8 arg0, u16 arg1)
 {
 	s32 diff_x;
@@ -4917,7 +4893,6 @@ s32 func_80084FE8_93F98(u8 arg0, u16 arg1)
 	return 0;
 }
 
-// https://decomp.me/scratch/UfGTS
 s32 func_800850DC_9408C(u8 arg0, u16 arg1)
 {
 	s32 sp24;
@@ -4943,8 +4918,6 @@ s32 func_800850DC_9408C(u8 arg0, u16 arg1)
 	return 0;
 }
 
-// https://decomp.me/scratch/iDb3d
-// CURRENT(356)
 s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 	Unk8014DD50 *weapon;
 	AlienInstance *alien;
@@ -4972,7 +4945,6 @@ s32 func_800851C8_94178(u8 arg0, u8 arg1, u16 arg2) {
 	}
 	return 0;
 }
-
 
 s32 func_80085340_942F0(u8 arg0, u16 arg1)
 {
@@ -5169,7 +5141,6 @@ s16 func_80085A9C_94A4C(s16 arg0, s16 arg1, s32 arg2, s32 arg3, s16 arg4)
 	return arg0;
 }
 
-// https://decomp.me/scratch/K2a1e
 s32 func_80085B14_94AC4(u8 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4)
 {
 	u8 sp47;
@@ -5217,7 +5188,6 @@ void func_80085DC8_94D78(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	func_80085B14_94AC4(arg0, arg1, 0x2000, arg2, arg4);
 }
 
-// https://decomp.me/scratch/gA9AH
 s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2)
 {
 	u8 sp47;
@@ -5239,7 +5209,6 @@ s32 func_80085E2C_94DDC(u8 arg0, s16 arg1, s32 arg2)
 	return 0;
 }
 
-// https://decomp.me/scratch/26Z9e
 s32 func_80085F68_94F18(u8 arg0, s16 arg1, s32 arg2)
 {
 	u8 typeIndex;
@@ -5327,7 +5296,7 @@ s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 		return 0;
 	}
 
-	arg4 |= 0; /* Preserve the endpoint value boundary for IDO. */
+	arg4 |= 0;
 	if (arg1 < arg4) {
 		minX = arg1 - 0xC8;
 		maxX = arg4 + 0xC8;
@@ -5344,7 +5313,7 @@ s32 func_800862B4_95264(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 		maxZ = arg3 + 0xC8;
 	}
 
-	arg4 |= 0; /* Keep the loop endpoint in the target saved register. */
+	arg4 |= 0;
 	for (i = 0; i < 0xFF; i++) {
 		s32 dist;
 
@@ -5605,7 +5574,6 @@ s32 func_80087188_96138(u8 arg0, s32 arg1, s32 arg2) {
 	func_80086A34_959E4(arg0, arg1, func_800870D8_96088(0x80, arg2));
 }
 
-// https://decomp.me/scratch/1Apcc
 s32 func_800871CC_9617C(u8 arg0, s32 arg1, s32 arg2)
 {
 	s16 dx;
@@ -5665,7 +5633,6 @@ void func_8008741C_963CC(u8 arg0, s16 arg1) {
 	}
 }
 
-// CURRENT(55)
 s32 func_8008751C_964CC(u8 arg0, s16 arg1, s16 arg2)
 {
 	AlienInstance *inst;
@@ -5722,7 +5689,6 @@ s32 func_8008751C_964CC(u8 arg0, s16 arg1, s16 arg2)
 	}
 	return 0;
 }
-
 
 void func_80087720_966D0(u8 arg0, s32 arg1)
 {
@@ -5818,7 +5784,6 @@ void func_80087AAC_96A5C(u8 arg0) {
 	}
 }
 
-// https://decomp.me/scratch/Ue9P8
 void func_80087AFC_96AAC(u8 arg0)
 {
 	u8 type_idx;
@@ -5935,7 +5900,6 @@ void func_80087F08_96EB8(void)
 	  func_80087AAC_96A5C(i);
 	}
   }
-
 }
 
 void func_80088000_96FB0(s16 arg0)
@@ -5991,7 +5955,7 @@ s32 func_80088154_97104(AlienInstance *arg0, s16 arg1, s16 arg2) {
 
 	scratch = arg0->typeIndex;
 	originalTypeIndex = scratch;
-	scratch |= 0; /* Preserve the original-type copy. */
+	scratch |= 0;
 	if ((D_80047F94 != arg0->unk1B) && (arg0->unk1B != 0xFF)) {
 		return 0;
 	}
@@ -6034,7 +5998,7 @@ s32 func_80088154_97104(AlienInstance *arg0, s16 arg1, s16 arg2) {
 	}
 	flagsOrDivisor = alienTypes[scratch].unk3A;
 	originalType = &alienTypes[originalTypeIndex];
-	originalType = (&originalType)[0]; /* Preserve the declared pointer home. */
+	originalType = (&originalType)[0];
 	if (!(originalType->unk54 & 0x4000) || (arg0->unk20 & ALIEN_FLAG_FALL)) {
 		scratch = coss((u16)(arg2 - arg0->unk6));
 		knockbackScale = (s32)(arg1 << 0xF) / flagsOrDivisor;
@@ -6374,7 +6338,6 @@ void func_800893C8_98378(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 	func_80081E5C_90E0C(arg1);
 }
 
-// CURRENT(9151)
 // human on-death function
 void func_80089574_98524(u8 arg0) {
 	u16 random[3];
@@ -6471,7 +6434,6 @@ void func_80089574_98524(u8 arg0) {
 	}
 }
 
-
 // HCU on-death function all levels
 void func_80089A2C_989DC(u8 arg0) {
 	s32 pad0;
@@ -6546,38 +6508,39 @@ void func_80089C40_98BF0(u8 arg0) {
 	}
 }
 
-void func_80089D04_98CB4(u8 arg0) // Black Adam on-death function
+// Black Adam on-death function
+void func_80089D04_98CB4(u8 arg0)
 {
-  AlienInstance *s0 = &alienInstances[arg0];
-  int new_var;
-  func_800EF650_FE600(&alienInstances[arg0]);
-  if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
-  {
-	if (currentLevel != LEVEL_COMET) // if not on comet..
+	AlienInstance *s0 = &alienInstances[arg0];
+	int new_var;
+	func_800EF650_FE600(&alienInstances[arg0]);
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
 	{
-	  alienInstances[arg0].unk2C = 1; // ... death timer 1, return, no endgame/level win triggered
-	  return;
+		if (currentLevel != LEVEL_COMET) // if not on comet..
+		{
+			alienInstances[arg0].unk2C = 1; // ... death timer 1, return, no endgame/level win triggered
+			return;
+		}
+		alienInstances[arg0].unk2C = 0x7D00; // set death timer 32000 - unnecessarily high, would last over 20 minutes if not for credits etc
+		s0->unk24 = 7;						 // falls to his knees
+		if ((alienInstances[arg0].unk26 == 0) && (D_80031420 & 3))
+		{
+			func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x28, alienInstances[arg0].unk4, 0, 0x7F, 0, 0x32, 3, 0x14, 0xFF, 0, 0xFF, 0, 0xFF);
+		}
+		func_80137468_146418(arg0, 0x26C);
+		func_800B034C_BF2FC(); // starts end of level handling?
+		return;
 	}
-	alienInstances[arg0].unk2C = 0x7D00; // set death timer 32000 - unnecessarily high, would last over 20 minutes if not for credits etc
-	s0->unk24 = 7; // falls to his knees
-	if ((alienInstances[arg0].unk26 == 0) && (D_80031420 & 3))
+	if (alienInstances[arg0].unk2C == 0x7CCE) // at death timer 31950 - about 2.5 seconds later
 	{
-	  func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x28, alienInstances[arg0].unk4, 0, 0x7F, 0, 0x32, 3, 0x14, 0xFF, 0, 0xFF, 0, 0xFF);
+		func_800BDDB4_CCD64(); // triggers visual effects - lightning, explosions, rings on ground
 	}
-	func_80137468_146418(arg0, 0x26C);
-	func_800B034C_BF2FC(); // starts end of level handling?
-	return;
-  }
-  if (alienInstances[arg0].unk2C == 0x7CCE) // at death timer 31950 - about 2.5 seconds later
-  {
-	func_800BDDB4_CCD64(); // triggers visual effects - lightning, explosions, rings on ground
-  }
-  if ((!(D_80052A8C & 7)) && (D_80031420 & 3))
-  {
-	new_var = 8;
-	func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0, 0x7F, 0, 5, 6, new_var, 0xFF, 0, 0xFF, 0, 0xFF);
-  }
-			}
+	if ((!(D_80052A8C & 7)) && (D_80031420 & 3))
+	{
+		new_var = 8;
+		func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0, 0x7F, 0, 5, 6, new_var, 0xFF, 0, 0xFF, 0, 0xFF);
+	}
+}
 
 void func_80089EB4_98E64(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
@@ -6864,7 +6827,6 @@ void func_8008AC5C_99C0C(u8 arg0)
 	}
 }
 
-
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) on-death func
 void func_8008AF58_99F08(u8 arg0)
 {
@@ -7018,7 +6980,6 @@ void func_8008B190_9A140(u8 arg0) {
 	}
 }
 
-
 // called only thru Processor on-death function
 void func_8008B870_9A820(u8 arg0) {
 	AlienInstance *inst;
@@ -7034,7 +6995,6 @@ void func_8008B870_9A820(u8 arg0) {
 	func_80137468_146418(idx, 0x11);
 }
 
-// https://decomp.me/scratch/YKVHR
 // Processor on-death function - does not explicitly win stage, open shield portal, or kill current stage enemies
 void func_8008B8E4_9A894(u8 arg0)
 {
@@ -7122,7 +7082,6 @@ void func_8008B8E4_9A894(u8 arg0)
 	}
 }
 
-// CURRENT(1895)
 // Shield Generator on-death function - called in Greece, Java, America, and Siberia - this func does not directly lead to boss cutscene
 void func_8008BC58_9AC08(u8 arg0)
 {
@@ -7191,7 +7150,6 @@ void func_8008BC58_9AC08(u8 arg0)
 		}
 
 		// walk through AlienInstances and despawn any active aliens in entire level
-
 		idx = index;
 		index = 0xFF;
 		for (iter = 0; iter != 0x100; iter += 0x40, idx += 0x40)
@@ -7212,26 +7170,25 @@ void func_8008BC58_9AC08(u8 arg0)
 	}
 }
 
-
 void func_8008BF8C_9AF3C(u8 arg0)
 {
-  s8 typeEntry;
-  typeEntry = D_8014DD50[alienInstances[arg0].unkC].unkC;
-  if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
-  {
-	func_80088E40_97DF0(arg0, typeEntry, D_8014DD50[typeEntry].unk0, D_8014DD50[typeEntry].unk2, D_8014DD50[typeEntry].unk4, 0, 0x14, 0);
-	alienInstances[arg0].unk2C = 0x23;
-	alienInstances[alienInstances[arg0].unk25].unk26--;
-	return;
-  }
-  if (alienInstances[arg0].unk2C == 0x22)
-  {
-	func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16) alienTypes[alienInstances[arg0].typeIndex].unkC, 0, 0);
-  }
-  if (alienInstances[arg0].unk2C == 1)
-  {
-	func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16) alienTypes[alienInstances[arg0].typeIndex].unkC, 4, 0);
-  }
+	s8 typeEntry;
+	typeEntry = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
+	{
+		func_80088E40_97DF0(arg0, typeEntry, D_8014DD50[typeEntry].unk0, D_8014DD50[typeEntry].unk2, D_8014DD50[typeEntry].unk4, 0, 0x14, 0);
+		alienInstances[arg0].unk2C = 0x23;
+		alienInstances[alienInstances[arg0].unk25].unk26--;
+		return;
+	}
+	if (alienInstances[arg0].unk2C == 0x22)
+	{
+		func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienTypes[alienInstances[arg0].typeIndex].unkC, 0, 0);
+	}
+	if (alienInstances[arg0].unk2C == 1)
+	{
+		func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienTypes[alienInstances[arg0].typeIndex].unkC, 4, 0);
+	}
 }
 
 void func_8008C0F8_9B0A8(u8 arg0)
@@ -7297,7 +7254,6 @@ void func_8008C0F8_9B0A8(u8 arg0)
 	func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16)alienTypes[alienInstances[arg0].typeIndex].unkC, 4);
 }
 
-// https://decomp.me/scratch/Pxu4Z
 void func_8008C428_9B3D8(u8 arg0)
 {
 	s16 sp56;
@@ -7462,7 +7418,6 @@ void func_8008C8B8_9B868(u8 arg0) {
 		D_80031410 = 0;
 	}
 }
-
 
 void func_8008CF50_9BF00(u8 arg0) {
 	func_80089EB4_98E64(arg0, 0x1C, 1, 2, 2);
