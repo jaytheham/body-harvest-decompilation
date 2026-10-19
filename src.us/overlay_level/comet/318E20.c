@@ -4584,12 +4584,12 @@ void func_802E0588_3246D8(u8 arg0) {
 	s16 delta;
 	s32 radius;
 	f32 offset2;
-	f32 speed[1];
+	f32 speed;
 	s32 yaw;
 	f64 turn[2];
 	union { f32 value; volatile f32 reload; } offset0;
 
-	speed[0] = alienInstances[arg0].unk12 / 32;
+	speed = alienInstances[arg0].unk12 / 32;
 	joint0 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 	joint1 = D_8014DD50[joint0].unkD;
 	joint2 = D_8014DD50[joint1].unkD;
@@ -4599,16 +4599,16 @@ void func_802E0588_3246D8(u8 arg0) {
 	yaw = alienInstances[arg0].unk6;
 	delta = yaw - D_802E7184_32B2D4;
 	radius = D_8014DD50[joint0].unk0;
-	*rotationPtr = (speed[0] / (200.0 * 3.141592654)) * 65536.0;
+	*rotationPtr = (speed / (200.0 * 3.141592654)) * 65536.0;
 	turn[0] = (f32)((radius * 2) * 3.141592654 * ((f32)delta / 65536.0f));
 	offset0.value = (turn[0] / 628.3185308) * 65536.0;
 	D_8014DD50[joint0].unkAUnsigned += rotation + offset0.value;
 	offset0.value = offset0.reload;
 	D_8014DD50[joint1].unkAUnsigned += rotation - offset0.value;
-	D_8014DD50[joint2].unkAUnsigned += (f32)((speed[0] / (128.0 * 3.141592654)) * 65536.0) + (f32)((turn[0] / 402.123859712) * 65536.0);
+	D_8014DD50[joint2].unkAUnsigned += (f32)((speed / (128.0 * 3.141592654)) * 65536.0) + (f32)((turn[0] / 402.123859712) * 65536.0);
 	D_8014DD50[joint3].unkAUnsigned += rotation - (f32)((turn[0] / 402.123859712) * 65536.0);
 	offset2 = (turn[0] / 270.176968244) * 65536.0;
-	D_8014DD50[joint4].unkAUnsigned += (f32)((speed[0] / (86.0 * 3.141592654)) * 65536.0) + offset2;
+	D_8014DD50[joint4].unkAUnsigned += (f32)((speed / (86.0 * 3.141592654)) * 65536.0) + offset2;
 	D_8014DD50[joint5].unkAUnsigned += rotation - offset2;
 	D_802E7184_32B2D4 = yaw;
 }

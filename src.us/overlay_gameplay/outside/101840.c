@@ -2706,8 +2706,8 @@ s16 func_800F9C50_108C00(s16 arg0, s16 arg1) {
 void func_800F9CB0_108C60(s16 arg0, s16 *arg1, s16 arg2) {
 	s32 sp1C;
 
-	sp1C = func_800F9C40_108BF0(arg0 - D_80159218);
-	if ((u32)(func_800F9C40_108BF0(arg2 - D_8015921C) + sp1C) < 0x9C4U) {
+	sp1C = func_800F9C40_108BF0(arg0 - D_80159218.x);
+	if ((u32)(func_800F9C40_108BF0(arg2 - D_80159218.z) + sp1C) < 0x9C4U) {
 		*arg1 += 0x14;
 	}
 }
@@ -11665,7 +11665,7 @@ block_212:
 								if (D_80052B34 != D_80159D5C) {
 									func_8010C4EC_11B49C(D_80052B34);
 								}
-								if (func_8010CF7C_11BF2C(((Unk8010ED84Pos *)&D_80159218)->unk0, ((Unk8010ED84Pos *)&D_80159218)->unk4) == 0) {
+								if (func_8010CF7C_11BF2C(D_80159218.x, D_80159218.z) == 0) {
 									D_80159320 &= ~0x400;
 								}
 							}

@@ -16,6 +16,9 @@ extern __osExceptionVector __ptExceptionPreamble[];
 
 #include "PR/sched.h"
 
+extern const s16 D_801416B0_150660[4][2];
+extern const s16 D_801416C0_150670[4][2];
+
 // Overlay entry point (shared RAM address 0x80070270 for all gameplay
 // overlays).  Declared as a data array here; TUs that genuinely call it as a
 // function (10A20.c, 53F0.c) define OVERLAY_ENTRY_AS_FUNC to get the function
@@ -908,7 +911,7 @@ extern s32 D_80048194;
 extern u8 D_800481BD[][0x50]; /* AI - alienInstances parent byte, one entry per instance */
 extern s16 D_800481A4; // 0x800481A4 = alienInstances[0].unk0C
 extern u8 D_800481CE; // 0x800481CE = alienInstances[0].unk36
-extern AlienInstance alienInstances[0xFE]; // 0x80048198
+extern AlienInstance alienInstances[0xFF]; // 0x80048198
 extern s32 D_8004D148; // is Snared cheat disabled
 extern s32 D_8004D14C; // AI - Mission active/completion flag (set to 0x73 on complete)
 extern s32 D_8004D150; // AI - Mission completed set bitmask/pointer
@@ -2723,8 +2726,7 @@ extern f32 D_801591F0;
 extern s16 D_801591F4;
 extern OutputStruct_8012B150 D_801591F8;
 extern s32 D_8015920C;
-extern s16 D_80159218;
-extern s16 D_8015921C;
+extern Vec3s D_80159218;
 extern s16 D_80159220[];
 extern s16 D_80159226;
 extern Unk8003E290Entry *D_8015922C;
