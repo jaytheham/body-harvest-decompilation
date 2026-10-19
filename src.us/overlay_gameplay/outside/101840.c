@@ -10836,35 +10836,34 @@ s32 func_80112A64_121A14(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	return (temp_t6 * temp_t6) + (temp_t7 * temp_t7);
 }
 
-// CURRENT(860): corrected reset bounds, countdown and float conversions; saved registers remain.
-#ifdef NON_MATCHING
-void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
+void func_80112A98_121A48(s32 centerX, s32 centerZ, s32 radius) {
 	VehicleInstance *vehicle;
 	Unk80259490 *spawnData;
 	s32 buildingIndex;
-	s16 x;
-	s16 z;
+	s16 spawnX;
+	s16 spawnZ;
 	s32 i;
-	u8 *entry;
-	s16 yRotation;
+	s32 quarterRange;
+	s16 groundHeight;
 
-	if (arg2 == 0) {
-		vehicle = &vehicleInstances[127];
-		spawnData = &D_80259490[127];
-
+	if (radius == 0) {
+		/* The full reset deliberately excludes slot zero. */
+		i = 127;
 		do {
-			x = ((spawnData->unk0 << 8) + 0x80);
-			z = ((spawnData->unk2 << 8) + 0x80);
+			vehicle = &vehicleInstances[i];
+			spawnData = &D_80259490[i];
+			spawnX = ((spawnData->unk0 << 8) + 0x80);
+			spawnZ = ((spawnData->unk2 << 8) + 0x80);
 
 			if (spawnData->unk6 == 0) {
 				vehicle->unk20 &= 0xFFFF7FFF;
 			} else {
 
 				vehicle->unk20 |= (0x8000 | VEHICLE_FLAG_UNK1);
-				func_800FB44C_10A3FC(vehicle, x);
-				func_800FB484_10A434(vehicle, z);
-				buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &yRotation);
-				func_800FB468_10A418(vehicle, yRotation);
+				func_800FB44C_10A3FC(vehicle, spawnX);
+				func_800FB484_10A434(vehicle, spawnZ);
+				buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &groundHeight);
+				func_800FB468_10A418(vehicle, groundHeight);
 
 				if (buildingIndex != -1) {
 					vehicle->unk20 |= VEHICLE_FLAG_ON_BRIDGE;
@@ -10877,34 +10876,34 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 				vehicle->unk1C = ((f32)(u32)vehicleTypes[vehicle->unk1A].hitPoints * ((f32)spawnData->unk10 / 100.0));
 			}
 
-			vehicle--;
-		} while ((u32)spawnData-- >= (u32)&D_80259490[2]);
+		} while (i-- > 1);
 	} else {
 
 		i = D_80158FD8;
 		if (i-- > 0) {
-			entry = &D_80158E80[i];
+
 			do {
-				vehicle = &vehicleInstances[*entry];
+				vehicle = &vehicleInstances[D_80158E80[i]];
 
 				if (vehicle != D_80052B34) {
-					s32 range = arg2 >> 2;
+					quarterRange = radius >> 2;
 
-					if (func_80112A64_121A14(arg0, arg1, vehicle->unk0, vehicle->unk4) < (range * range)) {
+					if (func_80112A64_121A14(centerX, centerZ, vehicle->unk0, vehicle->unk4) < (quarterRange * quarterRange)) {
 						spawnData = &D_80259490[vehicle->unk46 & 0x3F];
-						x = ((spawnData->unk0 << 8) + 0x80);
-						z = ((spawnData->unk2 << 8) + 0x80);
+						spawnX = ((spawnData->unk0 << 8) + 0x80);
+						spawnZ = ((spawnData->unk2 << 8) + 0x80);
 
 						if (spawnData->unk6 == 0) {
 							vehicle->unk20 &= 0xFFFF7FFF;
 						} else {
+							/* Health uses the loop slot, rather than the selected list entry. */
 							VehicleInstance *vehicleByI = &vehicleInstances[i];
 
 							vehicle->unk20 |= (0x8000 | VEHICLE_FLAG_UNK1);
-							func_800FB44C_10A3FC(vehicle, x);
-							func_800FB484_10A434(vehicle, z);
-							buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &yRotation);
-							func_800FB468_10A418(vehicle, yRotation);
+							func_800FB44C_10A3FC(vehicle, spawnX);
+							func_800FB484_10A434(vehicle, spawnZ);
+							buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &groundHeight);
+							func_800FB468_10A418(vehicle, groundHeight);
 
 							if (buildingIndex != -1) {
 								vehicle->unk20 |= VEHICLE_FLAG_ON_BRIDGE;
@@ -10918,7 +10917,7 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 						}
 					}
 				}
-				entry--;
+
 			} while (i-- > 0);
 		}
 	}
@@ -10926,9 +10925,6 @@ void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2) {
 	func_800FAC90_109C40();
 	func_800FAD10_109CC0();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80112A98_121A48.s")
-#endif
 
 void func_80112F98_121F48(void)
 {
