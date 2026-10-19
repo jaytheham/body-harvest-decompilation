@@ -1972,7 +1972,7 @@ extern u8 D_801407F4_14F7A4[];
 extern EffectRgb D_80140AA4_14FA54;
 extern u8 D_80140AA8_14FA58[8];
 extern AlienInstance *D_80140AB0_14FA60[];
-extern s32 D_80140AC4_14FA74;
+extern AlienInstance *D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
 extern Lights1 D_80140C30_14FBE0;
 extern TextAnimationScale D_80140C68_14FC18;
@@ -2070,6 +2070,7 @@ extern BuildingInstance D_80145E98;
 extern s16 D_8014619A;
 extern Unk80146212 D_80146212_1551C2[];
 extern s16 D_80146492_155442[];
+extern const WeaponEntry_80129864 D_801464C8_155478[];
 extern s8 D_8014667F_15562F[];
 extern Unk80146688 D_80146688_155638[][0x20];
 extern Unk80147090Entry_8012B26C D_80147090_156040[];
@@ -3008,6 +3009,9 @@ extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienType alienTypes[0x30]; // 80256680
+extern AlienType D_802566E8; // aliases alienTypes[1]
+extern AlienType D_80256750; // aliases alienTypes[2]
+extern AlienType D_80256DD0; // aliases alienTypes[18]
 extern u16 D_8025668C[]; // 8025668C (aliases alienTypes[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s32 D_80256DEC;
@@ -4087,7 +4091,7 @@ extern const InteriorAngleScale D_800A4A00_18CAC0;
 extern const f64 D_801441E8_153198[1];
 
 extern const f64 D_801451B8_154168[1];
-extern const ShadowGeometryConstant D_801451C0_154170;
+extern const char D_801453B0_154360[];
 extern const ShadowGeometryConstant D_801449E0_153990;
 extern const ShadowGeometryConstant D_801449F0_1539A0;
 extern const ShadowGeometryConstant D_801449F8_1539A8;

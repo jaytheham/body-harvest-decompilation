@@ -35,54 +35,16 @@ const f64 D_801451B8_154168[1] = {0.05};
 const ShadowGeometryConstant D_801451C0_154170 = {0.7};
 const f32 D_801451C8_154178[1] = {3000.0f};
 
-const u32 jtbl_801451CC_15417C[13] = {
-	OVERLAY_PTR(0x8012A73C), OVERLAY_PTR(0x8012A780), OVERLAY_PTR(0x8012AA60), OVERLAY_PTR(0x8012A860),
-	OVERLAY_PTR(0x8012A7E4), OVERLAY_PTR(0x8012A954), OVERLAY_PTR(0x8012A8EC), OVERLAY_PTR(0x8012AA30),
-	OVERLAY_PTR(0x8012AA60), OVERLAY_PTR(0x8012AA60), OVERLAY_PTR(0x8012AA60), OVERLAY_PTR(0x8012A804),
-	OVERLAY_PTR(0x8012A7E4),
-};
 
-const f64 D_80145200_1541B0[1] = {0.1};
-const f64 D_80145208_1541B8[1] = {0.05};
 
-const u32 jtbl_80145210_1541C0[101] = {
-	OVERLAY_PTR(0x8012CC40), OVERLAY_PTR(0x8012C554), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012C640),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012C554), OVERLAY_PTR(0x8012C978), OVERLAY_PTR(0x8012C978),
-	OVERLAY_PTR(0x8012C978), OVERLAY_PTR(0x8012C978), OVERLAY_PTR(0x8012C5EC), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012CED8), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012CED8), OVERLAY_PTR(0x8012CAA0), OVERLAY_PTR(0x8012CB08), OVERLAY_PTR(0x8012CB70),
-	OVERLAY_PTR(0x8012CA38), OVERLAY_PTR(0x8012C978), OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C9D8),
-	OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C5A0),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012C978),
-	OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C978), OVERLAY_PTR(0x8012C9D8),
-	OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012C978), OVERLAY_PTR(0x8012C9D8), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012C504), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012CA38),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012C68C), OVERLAY_PTR(0x8012C68C), OVERLAY_PTR(0x8012C68C),
-	OVERLAY_PTR(0x8012C68C), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012C6D8), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D0D4), OVERLAY_PTR(0x8012D0D4), OVERLAY_PTR(0x8012CBD8), OVERLAY_PTR(0x8012D0D4),
-	OVERLAY_PTR(0x8012CE08), OVERLAY_PTR(0x8012CD48), OVERLAY_PTR(0x8012CC98), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012CDA8), OVERLAY_PTR(0x8012D12C), OVERLAY_PTR(0x8012D1D4), OVERLAY_PTR(0x8012CF44),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012CE70), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D12C),
-	OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012D474), OVERLAY_PTR(0x8012CC98), OVERLAY_PTR(0x8012D474),
-	OVERLAY_PTR(0x8012D0D4),
-};
 
-const u32 D_801453A4_154354[3] = {0, 0, 0};
 
-const char D_801453B0_154360[] = "Hit floor\n";
 
 AlienInstance *D_80140AB0_14FA60[5] = {
 	NULL, NULL, NULL, NULL, NULL,
 };
 
-s32 D_80140AC4_14FA74 = 0;
+AlienInstance *D_80140AC4_14FA74 = 0;
 s32 D_80140AC8_14FA78 = 0;
 s32 D_80140ACC_14FA7C = 0x00080019;
 s32 D_80140AD0_14FA80 = 0x00100009;
@@ -2051,50 +2013,52 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128650_137600.s")
 #endif
 
-// CURRENT(2539): endpoint parameter stores and frame/register allocation remain.
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-	s32 color;
+	Gfx *packet;
 	s32 midX;
 	s32 midY;
 	s32 midZ;
+	f64 fade;
 	f32 length;
 	f32 dirX;
 	f32 dirY;
 	f32 dirZ;
 	s32 startStep;
-	s32 endStep;
-	f32 startStepF;
+	u32 endStep;
+	s32 stepLength;
 
-
-
-	length = sqrtf((f32)((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1)))) * 2;
+	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
 	if (length == 0.0f) {
 		return;
 	}
 
-	dirX = (f32)((arg3 - arg0) >> 1) / length;
-	dirY = (f32)((arg4 - arg1) >> 1) / length;
-	dirZ = (f32)((arg5 - arg2) >> 1) / length;
+	dirX = ((arg3 - arg0) >> 1) / length;
+	dirY = ((arg4 - arg1) >> 1) / length;
+	dirZ = ((arg5 - arg2) >> 1) / length;
 
 	startStep = (func_800038E0_44E0() % 30);
-	startStep = (s32)(((f32)startStep * length) / 100.0f);
-	startStepF = (f32)startStep;
+	startStep = (startStep * length) / 100.0f;
 
-	midX = arg0 = (s32)((f32)arg0 + (dirX * startStepF));
-	midY = arg1 = (s32)((f32)arg1 + (dirY * startStepF));
-	midZ = arg2 = (s32)((f32)arg2 + (dirZ * startStepF));
+	arg0 += dirX * startStep;
+	midX = arg0;
+	arg1 += dirY * startStep;
+	midY = arg1;
+	arg2 += dirZ * startStep;
+	midZ = arg2;
 
-	endStep = (func_800038E0_44E0() % 30); color = 255; if (color) {}
-	endStep = (s32)(((f32)endStep * length) / 100.0f);
-	startStepF = (f32)endStep;
+	endStep = (func_800038E0_44E0() % 30); if (255) {}
+	packet = D_8005BB30;
+	endStep = (s32)(((s32)endStep * length) / 100.0f);
+	stepLength = endStep;
 
-	arg3 = (s32)((f32)arg3 - (dirX * startStepF));
-	arg4 = (s32)((f32)arg4 - (dirY * startStepF));
-	arg5 = (s32)((f32)arg5 - (dirZ * startStepF));
+	(&arg3)[0] = arg3 - dirX * stepLength;
+	(&arg4)[0] = arg4 - dirY * stepLength;
+	(&arg5)[0] = arg5 - dirZ * stepLength;
 
 
-	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+	D_8005BB30++;
+	gDPSetRenderMode(packet, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 	gSPClearGeometryMode(D_8005BB30++, G_FOG);
@@ -2111,15 +2075,18 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	startStepF = (f32)(s32)((f64)((length - (f32)startStep) - startStepF) * D_801451C0_154170.value);
-	D_8005BB34->v.ob[0] = (s16)(s32)((f32)midX + (dirX * startStepF));
-	D_8005BB34->v.ob[1] = (s16)(s32)((f32)midY + (dirY * startStepF));
-	D_8005BB34->v.ob[2] = (s16)(s32)((f32)midZ + (dirZ * startStepF));
+	stepLength = startStep;
+	fade = (length - stepLength) - (s32)endStep;
+	stepLength = (s32)(fade * 0.7);
+	(*(Vtx * volatile *)&D_8005BB34)->v.ob[0] = midX + dirX * stepLength;
+	if (255) {}
+	D_8005BB34->v.ob[1] = midY + dirY * stepLength;
+	D_8005BB34->v.ob[2] = midZ + dirZ * stepLength;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = color;
-	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = 255;
+	D_8005BB34->v.cn[1] = 255;
 	D_8005BB34->v.cn[2] = 0;
 	D_8005BB34->v.cn[3] = 0x96;
 	D_8005BB34++;
@@ -2205,16 +2172,16 @@ Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 			value.spreadZ = (func_800038E0_44E0() % distance) - halfDistance;
 
 			arg0->unk1E = 0;
-			func_80129864_138814((s32)arg0, arg1, arg2 + dx, arg3 + dy, arg4 + value.spreadZ);
+			func_80129864_138814(arg0, arg1, arg2 + dx, arg3 + dy, arg4 + value.spreadZ);
 
 		}
 
 		arg0->unk1E = 0;
 		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].weaponFlags |= 0x20000;
-		value.projectile = func_80129864_138814((s32)arg0, arg1, arg2, arg3, arg4);
+		value.projectile = func_80129864_138814(arg0, arg1, arg2, arg3, arg4);
 	} else {
 		power = data.weapon->unk2;
-		value.projectile = func_80129864_138814((s32)arg0, arg1, arg2, arg3, arg4);
+		value.projectile = func_80129864_138814(arg0, arg1, arg2, arg3, arg4);
 	}
 
 	if ((D_801591A8 == 0) && (arg0 == (EntityInstance *)D_80052B34)) {
@@ -2234,40 +2201,44 @@ Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 }
 
 
-#ifdef NON_MATCHING
-Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	typedef Projectile *(*SpawnFunc_801226F8)(s16 *, BuildingInstance *, s16, s16, s16, f32, f32, f32);
-	SpawnFunc_801226F8 spawnFunc;
-
-	AlienInstance *alien;
-	VehicleInstance *vehicle;
+Projectile *func_80129864_138814(EntityInstance *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	EntityType *weaponData;
 	WeaponEntry_80129864 *entry;
-	WeaponEntry_80129864 *entryD;
-	Projectile *spawned;
+	s16 spE6;
+	f32 finalX;
+	f32 finalY;
+	f32 finalZ;
+	f32 dx;
+	f32 dy;
+	f32 dz;
 	s32 x;
 	s32 y;
 	s32 z;
-	s32 dx;
-	s32 dy;
-	s32 dz;
-	s16 spE6;
 	s16 hitX;
 	s16 hitY;
 	s16 hitZ;
-	s32 spAC;
-	f32 len;
 	f32 scale;
-	f32 fx;
-	f32 fy;
-	f32 fz;
-	s32 flags;
+	f32 len;
+	s32 spAC;
+	Projectile *spawned;
+	s16 spawnPos[3];
 	s32 sp9C;
+	union { AlienType *alien; Projectile *result; } value;
+	s32 angleX;
+	s32 angleZ;
+	s16 yaw;
+	s16 pitch;
+	s32 impactDamage;
+	s16 effectPos[3];
+	u8 rgb[3];
+	s32 tx;
+	s32 tz;
+	s32 dist2;
+	s32 dist;
+	f32 normX;
+	f32 normZ;
 
-	alien = (AlienInstance *)arg0;
-	vehicle = (VehicleInstance *)arg0;
-	spawnFunc = func_801226F8_1316A8;
-	weaponData = func_800FAFB8_109F68(vehicle);
+	weaponData = func_800FAFB8_109F68((VehicleInstance *)arg0);
 	sp9C = D_80052AD0;
 
 	if (D_801591A8 != 0) {
@@ -2275,16 +2246,16 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 	}
 
 	if (arg1 == 0) {
-		spE6 = weaponData->weapon1B;
+		spE6 = weaponData->weapon1;
 	} else {
-		spE6 = weaponData->weapon2B;
+		spE6 = weaponData->weapon2;
 	}
 
-	if ((D_801591A8 == 0) && (alien->unk1E > 0)) {
+	if ((D_801591A8 == 0) && (arg0->unk1E > 0)) {
 		return NULL;
 	}
 
-	if ((arg0 == (s32)D_80052B34) && (D_8014F7F0 != 0)) {
+	if ((arg0 == (EntityInstance *)D_80052B34) && (D_8014F7F0 != 0)) {
 		entry = &D_80145BE0_154B90[16];
 	} else {
 		entry = &D_80145BE0_154B90[spE6];
@@ -2294,12 +2265,12 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		return NULL;
 	}
 
-	func_80128504_1374B4(alien, arg1, &x, &y, &z);
-	hitX = x - alien->unk0;
-	hitY = y - alien->unk2;
-	hitZ = z - alien->unk4;
+	func_80128504_1374B4(((AlienInstance *)arg0), arg1, &x, &y, &z);
+	hitX = x - arg0->unk0;
+	hitY = y - arg0->unk2;
+	hitZ = z - arg0->unk4;
 
-	if (arg0 == (s32)D_80052B34) {
+	if (arg0 == (EntityInstance *)D_80052B34) {
 		if ((y < D_80222A70) && ((((s32)entry->unk8 >> 8) & 1) == 0)) {
 			D_80159320 |= 0x10000;
 			return NULL;
@@ -2309,23 +2280,23 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 
 	if (D_801591A8 == 0) {
 		if (spE6 == 0x39) {
-			s16 pos[3];
-
-			pos[0] = (s16)arg2;
-			pos[1] = (s16)(arg3 + 0x700);
-			pos[2] = (s16)arg4;
-			spawned = spawnFunc(pos, (BuildingInstance *)entry, 0, 0, 0, 0.0f, 0.0f, 0.0f);
+			spawnPos[0] = (s16)arg2;
+			spawnPos[1] = (s16)(arg3 + 0x700);
+			spawnPos[2] = (s16)arg4;
+			spawned = func_801226F8_1316A8((VehicleInstance *)spawnPos, entry, 0, 0, 0, 0.0f, 0.0f, 0.0f);
 			if (spawned != NULL) {
-				spawned->unk1C = 0x64;
+				spawned->unk28 = 0x64;
 			}
 			return NULL;
 		}
 
-		alien->unk1E = entry->unk14;
-		if ((arg0 == (s32)D_80052B34) && (entry->unk14 < 0x1E)) {
-			D_801591C0 = entry->unk14;
-		} else if (arg0 == (s32)D_80052B34) {
-			D_801591C0 = 0x1E;
+		arg0->unk1E = entry->unk14;
+		if (arg0 == (EntityInstance *)D_80052B34) {
+			if (entry->unk14 < 0x1E) {
+				D_801591C0 = entry->unk14;
+			} else {
+				D_801591C0 = 0x1E;
+			}
 		}
 
 		if (func_800703B0_7F360((s16)x, (s16)z) != 0) {
@@ -2339,8 +2310,7 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		}
 	}
 
-	flags = ((s32)entry->unk8 >> 8);
-	if (flags & 0x4000) {
+	if ((entry->unk8 >> 8) & 0x4000) {
 		arg2 = x;
 		arg3 = 0;
 		arg4 = z;
@@ -2348,34 +2318,35 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		dx = arg2 - x;
 		dy = arg3 - y;
 		dz = arg4 - z;
-		len = sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)));
+		len = (dx * dx) + (dy * dy) + (dz * dz);
 		if (len < 100.0f) {
 			return NULL;
 		}
 
+		len = sqrtf(len);
 		if ((u16)entry->unk0 >= 0xBB9) {
-			scale = D_801451C8_154178 / len;
+			scale = D_801451C8_154178[0] / len;
 		} else {
 			scale = (f32)(u16)entry->unk0 / len;
 		}
 
-		arg2 = x + (s32)((f32)dx * scale);
-		arg3 = y + (s32)((f32)dy * scale);
-		arg4 = z + (s32)((f32)dz * scale);
-		flags = ((s32)entry->unk8 >> 8);
+		dx *= scale;
+		dy *= scale;
+		dz *= scale;
+		arg2 = (f32)x + dx;
+		arg3 = (f32)y + dy;
+		arg4 = (f32)z + dz;
+
 	}
 
-	if ((flags & 6) && (entry->unk10 != 0) && (D_801591A8 == 0)) {
-		s16 spread;
-
-		spread = entry->unk10;
-		arg2 = (arg2 + (func_800038E0_44E0() % spread)) - (spread >> 1);
-		arg3 = (arg3 + (func_800038E0_44E0() % spread)) - (spread >> 1);
-		arg4 = (arg4 + (func_800038E0_44E0() % spread)) - (spread >> 1);
+	if (((entry->unk8 >> 8) & 6) && (entry->unk10 != 0) && (D_801591A8 == 0)) {
+		arg2 += (func_800038E0_44E0() % entry->unk10) - (entry->unk10 >> 1);
+		arg3 += (func_800038E0_44E0() % entry->unk10) - (entry->unk10 >> 1);
+		arg4 += (func_800038E0_44E0() % entry->unk10) - (entry->unk10 >> 1);
 	}
 
-	if ((arg0 == (s32)D_80052B34) && (entry == &D_80145BE0_154B90[20])) {
-		func_800EABE0_F9B90(alien);
+	if ((arg0 == (EntityInstance *)D_80052B34) && (entry == &D_80145BE0_154B90[20])) {
+		func_800EABE0_F9B90(((AlienInstance *)arg0));
 	}
 
 	if (D_801591A8 == 0) {
@@ -2385,87 +2356,77 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		}
 
 		if ((spE6 == 0x6B) || (spE6 == 0x6E)) {
-			func_80124170_133120(alien->unk0, alien->unk2, alien->unk4, entry->unk2, entry->unk4, alien);
+			func_80124170_133120(arg0->unk0, arg0->unk2, arg0->unk4, entry->unk2, entry->unk4, ((AlienInstance *)arg0));
 			if (spE6 == 0x6B) {
-				func_800D9DD8_E8D88(alien->unk0, alien->unk2, alien->unk4);
+				func_800D9DD8_E8D88(arg0->unk0, arg0->unk2, arg0->unk4);
 				return NULL;
 			}
-			func_800D9F60_E8F10(func_800FAE60_109E10(vehicle));
+			func_800D9F60_E8F10((VehicleInstance *)arg0 - vehicleInstances);
 			return NULL;
 		}
 
-		flags = ((s32)entry->unk8 >> 8);
-		if (flags & 0x100000) {
+		if ((entry->unk8 >> 8) & 0x100000) {
 			func_800D3C88_E2C38((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
 			func_801372B4_146264((s16)x, (s16)y, (s16)z, 7);
-			flags = ((s32)entry->unk8 >> 8);
+
 		} else if ((entry == &D_80145BE0_154B90[56]) || (entry == &D_80145BE0_154B90[112])) {
 			func_800DE9B8_ED968((s16)x, (s16)y, (s16)z, 0x64);
-			flags = ((s32)entry->unk8 >> 8);
+
 		} else if ((entry == &D_80145BE0_154B90[93]) || (entry == &D_80145BE0_154B90[32]) ||
 				   (entry == &D_80145BE0_154B90[33]) || (entry == &D_80145BE0_154B90[34]) ||
 				   (entry == &D_80145BE0_154B90[35])) {
 			func_800DE9B8_ED968((s16)x, (s16)y, (s16)z, 0xC8);
-			flags = ((s32)entry->unk8 >> 8);
+
 		} else if ((entry == &D_80145BE0_154B90[104]) || (entry == &D_80145BE0_154B90[102])) {
 			func_800DE9B8_ED968((s16)x, (s16)y, (s16)z, 0xFF);
 			func_800DEA08_ED9B8((s16)x, (s16)y, (s16)z, 0x46, 0xA, 8, 0x1E, 0x64, 0xFF, 0xFF, 0xFF);
-			flags = ((s32)entry->unk8 >> 8);
+
 		} else if (spE6 == 0x67) {
 			func_80125CA0_134C50(x, y, z, arg2, arg3, arg4);
-			flags = ((s32)entry->unk8 >> 8);
+
 		} else if ((spE6 == 0x2F) || (spE6 == 0x30) || (spE6 == 0x33)) {
 			func_800DF9C8_EE978((s16)x, (s16)y, (s16)z, 0x3C, 0, 0);
-			flags = ((s32)entry->unk8 >> 8);
+
 		} else if (spE6 == 0x24) {
 			func_800DF9C8_EE978((s16)x, (s16)y, (s16)z, 4, 0, 0);
-			flags = ((s32)entry->unk8 >> 8);
+
 		}
 
-		if (flags & 0x8000) {
+		if ((entry->unk8 >> 8) & 0x8000) {
 			func_80125C48_134BF8((s16)x, (s16)y, (s16)z);
-			flags = ((s32)entry->unk8 >> 8);
+
 		}
 
-		if ((flags & 0x20000) && (D_80052B34->unk1A == 0)) {
+		if (((entry->unk8 >> 8) & 0x20000) && (D_80052B34->unk1A == 0)) {
 			func_800DE9B8_ED968((s16)x, (s16)y, (s16)z, 0x32);
 		}
 	}
 
-	flags = ((s32)entry->unk8 >> 8);
-	if ((flags & 6) || ((D_801591A8 != 0) && !(flags & 8))) {
-		s32 tx;
-		s32 tz;
-		s32 dist2;
-		f32 invDist;
-		f32 normX;
-		f32 normZ;
+	if (((entry->unk8 >> 8) & 6) || ((D_801591A8 != 0) && !((entry->unk8 >> 8) & 8))) {
 
-		func_80127D88_136D38((BuildingInstance *)entry, alien, (s16)x, (s16)y, (s16)z, arg2, arg3, arg4);
+		func_80127D88_136D38((BuildingInstance *)entry, (VehicleInstance *)arg0, (s16)x, (s16)y, (s16)z, arg2, arg3, arg4);
 		if (D_801591A8 != 0) {
-			D_801591F8.unk18 = D_8015F9D0.unkC;
+			D_801591F8.hit = D_8015F9D0;
 			return NULL;
 		}
 
-		flags = ((s32)entry->unk8 >> 8);
-		if (flags & 0x80) {
+		if ((entry->unk8 >> 8) & 0x80) {
 			if ((spE6 != 0x2B) && (spE6 != 0x4F)) {
 				tx = D_8015F9D0.unk0 - x;
 				tz = D_8015F9D0.unk4 - z;
 				dist2 = (tx * tx) + (tz * tz);
-				if (dist2 != 0) {
-					f32 dist = sqrtf((f32)dist2);
-					if (dist != 0.0f) {
-						invDist = 1.0f / dist;
-						normX = (f32)tx * invDist;
-						normZ = (f32)tz * invDist;
-					} else {
-						normX = 0.0f;
-						normZ = 0.0f;
-					}
-				} else {
-					normX = 0.0f;
+				if (dist2 == 0) {
 					normZ = 0.0f;
+					normX = 0.0f;
+				} else {
+					dist = (s32)sqrtf((f32)dist2);
+					if (dist == 0) {
+						normZ = 0.0f;
+						normX = 0.0f;
+					} else {
+						normX = (f32)tx / (f32)dist;
+						normZ = (f32)tz / (f32)dist;
+					}
 				}
 
 				if ((spE6 == 0xD) || (spE6 == 0xE)) {
@@ -2481,93 +2442,112 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 				}
 			}
 
-			if ((spE6 == 0xD) || (spE6 == 0xE)) {
-				func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 1);
-			} else if ((spE6 == 0xF) || (spE6 == 0x10)) {
-				func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 2);
-			} else if (spE6 == 0x2B) {
-				func_800E5450_F4400(alien, (s16)(entry->unk15 + 1));
-			} else if (spE6 == 0x4F) {
-				func_800DEA08_ED9B8((s16)x, (s16)y, (s16)z, 0x1E, 0xA, 0, 0xF, 0x3C, 0xFF, 0xFF, 0);
-				func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 4);
-			} else if (spE6 == 0x62) {
-				func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 0);
+			switch (spE6) {
+				case 0x62:
+					func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 0);
+					break;
+				case 0xD:
+				case 0xE:
+					func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 1);
+					break;
+				case 0xF:
+				case 0x10:
+					func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 2);
+					break;
+				case 0x2B:
+					func_800E5450_F4400((AlienInstance *)arg0, (s16)(entry->unk15 + 1));
+					break;
+				case 0x4F:
+					func_800DEA08_ED9B8((s16)x, (s16)y, (s16)z, 0x1E, 0xA, 0, 0xF, 0x3C, 0xFF, 0xFF, 0);
+					func_800E52E8_F4298((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 4);
+					break;
+
 			}
-		} else if (flags & 0x40000) {
+		} else if ((entry->unk8 >> 8) & 0x40000) {
 			func_800D16BC_E066C((s16)x, (s16)y, (s16)z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 3);
-		} else if ((flags & 6) && (spE6 != 0x67) && ((func_800038E0_44E0() & 3) != 0)) {
+		} else if (((entry->unk8 >> 8) & 6) && (spE6 != 0x67) && (func_800038E0_44E0() % 4)) {
 			func_80128E48_137DF8(x, y, z, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
 		}
 
-		if ((D_8015F9D0.unk8 >= 2) && (D_8015F9D0.unk8 <= 0xE)) {
-			s16 pitch;
-			s32 localFlags;
-
-			pitch = entry->unk2;
-			localFlags = ((s32)entry->unk8 >> 8);
-			switch (D_8015F9D0.unk8 - 2) {
-				case 0:
-					spAC += 1;
-					if (localFlags & 0x40) {
-						func_80137130_1460E0(0, 0xD4, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
+		if (D_8015F9D0.unk8 == 0xA) {
+			return NULL;
+		}
+		spAC = 0;
+		if (((entry->unk8 >> 8) & 4) != 0) {
+			spAC = 7;
+		}
+		if (((entry->unk8 >> 8) & 0x80) != 0) {
+			spAC = 0xE;
+		}
+		angleX = x - D_8015F9D0.unk0;
+		angleZ = z - D_8015F9D0.unk4;
+		yaw = func_80003824_4424((f32)angleX, (f32)angleZ) + 0x8000;
+		pitch = func_80003824_4424((f32)(y - D_8015F9D0.unk2), sqrtf((f32)(angleX * angleX + angleZ * angleZ))) - 0x4000;
+		impactDamage = entry->unk2;
+		switch (D_8015F9D0.unk8 - 2) {
+			case 0:
+				spAC++;
+				if (((entry->unk8 >> 8) & 0x40) != 0) {
+					func_80137130_1460E0(0, 0xD4, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
+				}
+				break;
+			case 1:
+				spAC += 2;
+				angleX = D_8015F9D0.objectIndex;
+				if (func_8011BEA0_12AE50(angleX & 0xFF, impactDamage >> 7) != 0) {
+					if (D_80158FE8 == &buildingInstances[angleX]) {
+						D_8014ED48 = 8;
 					}
-					break;
-
-				case 1:
-					spAC += 2;
-					if (func_8011BEA0_12AE50(entry->unkE & 0xFF, ((s32)pitch >> 7)) != 0) {
-						if (D_80158FE8 == &buildingInstances[entry->unkE]) {
-							D_8014ED48 = 8;
-						}
-					}
-					break;
-
-				case 2:
-				case 3:
-				case 8:
-				case 9:
-				case 10:
-					if (localFlags & 0x40) {
-						func_80137130_1460E0(0, 0xD4, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
-					}
-					break;
-
-				case 4:
-				case 12:
-					spAC += 2;
-					func_8012E204_13D1B4(entry->unkE, (s32)entry);
-					break;
-
-				case 5:
-					spAC += 2;
-					if (localFlags & 0x40) {
-						func_80137130_1460E0(0, 0xD3, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
-					}
-					func_800794F8_884A8(D_8015F9D0.unkC, pitch);
-					break;
-
-				case 6:
+				}
+				break;
+			case 4:
+			case 12:
+				spAC += 2;
+				func_8012E204_13D1B4(D_8015F9D0.objectIndex, (s32)entry);
+				break;
+			case 11:
+				spAC += 2;
+				if (((entry->unk8 >> 8) & 0x40) != 0) {
+					func_80137130_1460E0(0, 0xD3, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
+				}
+				func_800794F8_884A8(D_8015F9D0.unkC, (s16)(s32)entry->unk2);
+				break;
+			case 3:
+				spAC += 3;
+				if ((entry != &D_80145BE0_154B90[70]) || (D_80052B34 != ((volatile Unk8015F9D0 *)&D_8015F9D0)->vehicle)) {
+					func_80128288_137238(D_8015F9D0.vehicle, yaw, pitch, entry->unk6);
+					func_80124C40_133BF0(D_8015F9D0.entity, impactDamage, D_8015F9D0.unk0, D_8015F9D0.unk4);
+				}
+				if (((entry->unk8 >> 8) & 0x40) != 0) {
+					func_80137130_1460E0(0, 0xD3, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
+				}
+				break;
+			case 6:
+				impactDamage *= D_80147090_156040[alienTypes[D_8015F9D0.alien->typeIndex].unk5A].damageScale;
+				impactDamage >>= 8;
+				D_8015F9D0.alien->unk20 |= ALIEN_FLAG_W;
+				/* fall through */
+			case 5:
+				tx = D_8015F9D0.alien->typeIndex;
+				value.alien = &alienTypes[tx];
+				if ((value.alien->unk54 & 0x40000000) != 0) {
+					func_80137130_1460E0(0, 0xD3, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
 					spAC += 3;
-					if ((entry == &D_80145BE0_154B90[70]) && ((s32)D_80052B34 != D_8015F9D0.unkC)) {
-						func_80128288_137238((VehicleInstance *)D_8015F9D0.unkC, D_8015F9D0.unk0 + 0x8000, entry->unk0, entry->unk6);
-						func_80124C40_133BF0((VehicleInstance *)D_8015F9D0.unkC, pitch, entry->unk0, entry->unk4);
-					}
-					if (localFlags & 0x40) {
-						func_80137130_1460E0(0, 0xD3, D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4);
-					}
-					break;
-
-				case 7:
-					spAC += 4;
-					if (D_8015F9D0.unk10 == 0xFF) {
-						spAC = 0x1F;
-					} else {
-						spAC += D_8015F9D0.unk10;
-					}
-					break;
-
-				case 11:
-			}
+				} else if (!((currentLevel != 5) && ((value.alien == &D_80256750) || (value.alien == &D_802566E8))) && !(((D_8015F9D0.alien->unk20 & ALIEN_FLAG_INVINCIBLE) != 0) || (value.alien == &D_80256DD0))) {
+					spAC += 6;
+				} else {
+					spAC = 0;
+				}
+				func_80124C40_133BF0(D_8015F9D0.entity, impactDamage, D_8015F9D0.unk0, D_8015F9D0.unk4);
+				break;
+			case 7:
+				spAC += 4;
+				if (D_8015F9D0.unk10 == 0xFF) {
+					spAC = 0x1F;
+				} else {
+					spAC += D_8015F9D0.unk10;
+				}
+				break;
 		}
 
 		if (spE6 == 0x4F) {
@@ -2576,17 +2556,13 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 		}
 
 		if (spE6 == 0x67) {
-			s16 pos[3];
-			s8 rgb[3];
-
 			func_800C3BD8_D2B88(D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 0x78, 5, 0xFF, 0xEE, 0);
-			pos[0] = D_8015F9D0.unk0;
-			pos[1] = D_8015F9D0.unk2;
-			pos[2] = D_8015F9D0.unk4;
+			effectPos[0] = D_8015F9D0.unk0;
+			((volatile s16 *)effectPos)[2] = D_8015F9D0.unk4;
 			rgb[0] = 0xFF;
 			rgb[1] = 0xFF;
 			rgb[2] = 0xFF;
-			func_800B2354_C1304(pos, rgb, 0x100, 0x258);
+			func_800B2354_C1304(effectPos, rgb, 0x100, 0x258);
 			return NULL;
 		}
 
@@ -2612,89 +2588,79 @@ Projectile *func_80129864_138814(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg
 			spAC = 0x1E;
 		}
 
-		if (D_8015F9D0.unk8 == 0xA) {
-			return NULL;
-		}
-		spAC = 0;
-		if (flags & 4) {
-			spAC = 7;
-		}
-		if (flags & 0x80) {
-			spAC = 0xE;
-		}
 		func_80124170_133120(D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, entry->unk2, entry->unk4, NULL);
-		if (flags & 0x40000) {
+		if ((entry->unk8 >> 8) & 0x40000) {
 			func_800D05A8_DF558(D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, 0xC8, 0x8C, 0x8C, 0xC8);
 		} else {
 			func_800E0F4C_EFEFC(D_8015F9D0.unk0, D_8015F9D0.unk2, D_8015F9D0.unk4, spAC);
 		}
 		if ((sp9C != 0) && (D_80052AD0 == 0)) {
 			D_80158F90 = &D_80158F84;
-			D_80158F84 = alien->unk0;
-			D_80158F90[1] = alien->unk2;
-			D_80158F90[2] = alien->unk4;
+			D_80158F90[0] = arg0->unk0;
+			D_80158F90[1] = arg0->unk2;
+			D_80158F90[2] = arg0->unk4;
 		}
 		return NULL;
 	}
 
-	dx = arg2 - x;
-	dy = arg3 - y;
-	dz = arg4 - z;
-	len = sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)));
-	if (len == 0.0f) {
-		return NULL;
-	}
+	if ((((entry->unk8 >> 8) & 6) == 0) || ((D_801591A8 != 0) && (((entry->unk8 >> 8) & 8) != 0))) {
 
-	scale = (f32)entry->unk13 / len;
-	fx = (f32)dx * scale;
-	fy = (f32)dy * scale;
-	fz = (f32)dz * scale;
+		finalX = arg2 - x;
+		finalY = arg3 - y;
+		finalZ = arg4 - z;
+		len = sqrtf((finalX * finalX) + (finalZ * finalZ) + (finalY * finalY));
+		scale = (f32)entry->unk13 / len;
+		len = finalX * scale;
+		normX = finalY * scale;
+		normZ = finalZ * scale;
 
-	if (D_801591A8 != 0) {
-		entryD = &D_80145BE0_154B90[20];
-		spawned = spawnFunc((s16 *)alien, (BuildingInstance *)entryD, hitX, hitY, hitZ, fx, fy, fz);
-	} else {
-		spawned = spawnFunc((s16 *)alien, (BuildingInstance *)entry, hitX, hitY, hitZ, fx, fy, fz);
-	}
-
-	if (spawned == NULL) {
-		return NULL;
-	}
-
-	if ((((s32)entry->unk8 >> 8) & 0x800) != 0) {
-		if (arg0 == (s32)D_80052B34) {
-			s16 c;
-			f64 f;
-
-			c = coss((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
-			f = ((f64)(f32)coss((D_80159318 + 0xFA0) & 0xFFFF) / 32768.0) * ((f64)(f32)c / 32768.0);
-			spawned->unk18 = (s32)((f64)entry->unk13 * f);
-			spawned->unk1C = (s32)((f64)(f32)sins((D_80159318 + 0x1770) & 0xFFFF) / 32768.0 * (f64)entry->unk13);
-			c = sins((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
-			f = ((f64)(f32)coss((D_80159318 + 0xFA0) & 0xFFFF) / 32768.0) * ((f64)(f32)c / 32768.0);
-			spawned->unk20 = (s32)((f64)entry->unk13 * f);
+		if (D_801591A8 != 0) {
+			spawned = func_801226F8_1316A8(((VehicleInstance *)arg0), (WeaponEntry_80129864 *)&D_80145BE0_154B90[20], hitX, hitY, hitZ, len, normX, normZ);
 		} else {
-			spawned->unk18 = (s32)fx;
-			spawned->unk20 = (s32)fz;
-			spawned->unk1C = (s32)(fy + (scale * 2000.0f));
+			spawned = func_801226F8_1316A8(((VehicleInstance *)arg0), entry, hitX, hitY, hitZ, len, normX, normZ);
 		}
-	}
 
-	if (D_801591A8 != 0) {
-		func_80128650_137600(spawned, 0);
-		D_801591F8.unk18 = D_8015F9D0.unkC;
-		return NULL;
-	}
+		if (spawned == NULL) {
+			return NULL;
+		}
 
-	if (entry->unkE != 0) {
-		return spawned;
-	}
+		if ((((s32)entry->unk8 >> 8) & 0x800) != 0) {
+			if (arg0 == (EntityInstance *)D_80052B34) {
+				s16 c;
 
-	return NULL;
+				c = coss((u16)(D_80052B34->unk6 - D_80052B2C->unk36));
+				spawned->unk10 = (f32)((((f64)(f32)coss((u16)(D_80159318 + 0xFA0)) / 32768.0) * ((f64)(f32)c / 32768.0)) * (f64)entry->unk13);
+				spawned->unk14 = (f32)((f64)(f32)sins((u16)(D_80159318 + 0x1770)) / 32768.0 * (f64)entry->unk13);
+				c = sins((u16)(D_80052B34->unk6 - D_80052B2C->unk36));
+				spawned->unk18F32 = (f32)((((f64)(f32)coss((u16)(D_80159318 + 0xFA0)) / 32768.0) * ((f64)(f32)c / 32768.0)) * (f64)entry->unk13);
+			} else {
+				spawned->unk10 = len;
+				spawned->unk18F32 = normZ;
+				dx = scale * 2000.0f;
+				spawned->unk14 = normX + dx;
+			}
+		}
+
+		if (D_801591A8 != 0) {
+			func_80128650_137600(spawned, 0);
+			D_801591F8.hit = D_8015F9D0;
+			return NULL;
+		}
+
+		if (D_801591A8 != 0) {
+			func_80128650_137600(spawned, 1);
+			D_801591F8.hit = D_8015F9D0;
+		}
+
+		if (entry->unkE != 0) {
+			value.result = spawned;
+		} else {
+			value.result = NULL;
+		}
+		return value.result;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80129864_138814.s")
-#endif
+
 
 void func_8012B110_13A0C0(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2) {
 	Projectile *result;
@@ -2740,700 +2706,648 @@ void func_8012B21C_13A1CC(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-void func_8012B26C_13A21C(void) {
-	s32 i;
-	Projectile *projectile;
-	WeaponEntry_80129864 *entry;
-	Unk8015F790 *queueEntry;
-
-	if (D_8015F9EC != 0) {
-		D_8015F9EC--;
-	}
-
-	func_8011DE60_12CE10(1);
-
-	for (i = D_8015F9E4 - 1; i >= 0; i--) {
-		UnkProjectileCtrl_8012B26C *ctrl;
-		s16 groundY;
-		s16 prevX;
-		s16 prevY;
-		s16 prevZ;
-		s16 x;
-		s16 y;
-		s16 z;
-		s32 dx;
-		s32 dy;
-		s32 dz;
-		s32 alive;
-		s32 impactDamage;
-		s16 deferredAlien;
-
-		projectile = &D_8015EB90[i];
-		entry = &D_80145BE0_154B90[projectile->unk20];
-		ctrl = (UnkProjectileCtrl_8012B26C *)&projectile->unkC;
-
-		if (projectile->unk28 == 0) {
-			continue;
-		}
-
-		alive = 1;
-		impactDamage = entry->unk2;
-		deferredAlien = -1;
-		prevX = (s16)projectile->unk0;
-		prevY = (s16)projectile->unk4;
-		prevZ = (s16)projectile->unk8;
-
-		if (entry->unkE != 0) {
-			s16 turnDelta;
-
-			if (ctrl->unk0 < 1.0f) {
-				ctrl->unk0 = (f32)((f64)ctrl->unk0 + D_80145200_1541B0);
-			}
-
-			turnDelta = func_800F9C50_108C00(
-				ctrl->unk4,
-				func_80003824_4424(projectile->unk0 - (f32)ctrl->unkC.asPos->x, projectile->unk8 - (f32)ctrl->unkC.asPos->z)
-			);
-
-			if (turnDelta > entry->unkE) {
-				turnDelta = entry->unkE;
-			}
-			if (turnDelta < -entry->unkE) {
-				turnDelta = -entry->unkE;
-			}
-			ctrl->unk4 = (s16)(ctrl->unk4 + turnDelta);
-
-			if (ctrl->unk0 >= 1.0f) {
-				s16 desiredY;
-				s16 yVel;
-				s32 dist;
-				f32 travel;
-				f32 step;
-				f32 current;
-				f32 desired;
-
-				dist = func_800047FC_53FC((s16)((s16)projectile->unk0 - ctrl->unkC.asPos->x));
-				dist += func_800047FC_53FC((s16)((s16)projectile->unk8 - ctrl->unkC.asPos->z));
-				desiredY = ctrl->unkC.asPos->y;
-				groundY = (s16)((func_800B84D0_C7480((s16)projectile->unk0, (s16)projectile->unk8) >> 8) + 0x32);
-				if (desiredY < groundY) {
-					desiredY = groundY;
-				}
-
-				travel = sqrtf((f32)dist) / (f32)ctrl->unk8;
-				if (travel > 0.0f) {
-					step = (f32)(u8)entry->unk12;
-					current = (f32)projectile->unk12S16;
-					desired = ((f32)desiredY - projectile->unk4) / travel;
-
-					if ((current + step) <= desired) {
-						yVel = (s16)(current + step);
-					} else if (desired <= (current - step)) {
-						yVel = (s16)(current - step);
-					} else {
-						yVel = (s16)desired;
-					}
-
-					projectile->unk12S16 = yVel;
-				}
-			}
-
-			dx = (s32)((((f32)coss((u16)ctrl->unk4) / 32768.0) * ctrl->unk8) * ctrl->unk0);
-			dy = (s32)((f32)ctrl->unk6 * ctrl->unk0);
-			dz = (s32)((((f32)sins((u16)ctrl->unk4) / 32768.0) * ctrl->unk8) * ctrl->unk0);
-		} else {
-			if (ctrl->unk0 < 1.0f) {
-				ctrl->unk0 = (f32)(ctrl->unk0 + D_80145208_1541B8);
-			}
-
-			dx = (s32)((f32)ctrl->unk4 * ctrl->unk0);
-			dy = (s32)((f32)ctrl->unk8 * ctrl->unk0);
-			dz = (s32)(ctrl->unkC.asFloat * ctrl->unk0);
-		}
-
-		projectile->unk28--;
-		projectile->unk0 += dx;
-		projectile->unk4 += dy;
-		projectile->unk8 += dz;
-
-		if (projectile->unk28 == 0) {
-			alive = 0;
-		}
-
-		if (((D_80145BE8_154B98[projectile->unk20][0] >> 8) & 8) != 0) {
-			projectile->unk14 -= 3.0f;
-		}
-
-		if (projectile->unk14 > 100.0f) {
-			projectile->unk14 = 100.0f;
-		}
-
-		x = (s16)projectile->unk0;
-		y = (s16)projectile->unk4;
-		z = (s16)projectile->unk8;
-		groundY = (s16)(func_800B84D0_C7480((s16)projectile->unk0, (s16)projectile->unk8) >> 8);
-
-		if (projectile->unk4 < (f32)groundY) {
-			projectile->unk4 = (f32)groundY;
-			alive = 0;
-			if (((projectile->unk20 == 0x1D) || (projectile->unk20 == 0x1A)) && (D_801591A8 == 0)) {
-				func_800B8F30_C7EE0((s16)(x >> 8), (s16)(z >> 8), 1);
-				func_800DFBA8_EEB58(x, y, z, 0xB4, 6);
-			}
-		}
-
-		if (projectile->unk4 < (f32)D_80222A70) {
-			if ((D_80052A8C & 1) == 0) {
-				func_800D8FA0_E7F50(x, y, z);
-			}
-		}
-
-		if ((alive != 0) && ((((s32)entry->unk8 >> 8) & 1) == 0) && (projectile->unk4 < (f32)D_80222A70)) {
-			alive = 0;
-		}
-
-		if ((alive != 0) && ((((s32)entry->unk8 >> 8) & 0x200) != 0) && ((f32)D_80222A70 < projectile->unk4)) {
-			projectile->unk4 = (f32)D_80222A70;
-		}
-
-		if (func_800B0D10_BFCC0((s32)projectile->unk0, (s32)projectile->unk8, 0) != 0) {
-			alive = 0;
-		}
-
-		if (alive != 0) {
-			s32 vehicleIdx;
-
-			vehicleIdx = D_80158FD8 - 1;
-			if (vehicleIdx >= 0) {
-				while (alive != 0) {
-					VehicleInstance *vehicle = &vehicleInstances[D_80158E80[vehicleIdx]];
-					if ((D_80145BE0_154B90[arg2].unk20 & VEHICLE_FLAG_INSIDE_PLAY_BOUNDS) != 0) {
-						VehicleType *vehicleType = &vehicleTypes[vehicle->unk1A];
-						s32 vehicleRadius = vehicleType->unk8;
-						s32 distance = func_800047FC_53FC((s16)((s16)vehicle->unk0 - (s16)projectile->unk0));
-						distance += func_800047FC_53FC((s16)((s16)D_80145BE0_154B90[arg2].unk4 - (s16)projectile->unk8));
-
-						if ((vehicleType->unk16 & 0xF) == 0) {
-							distance += func_800047FC_53FC((s16)((s16)D_80145BE0_154B90[arg2].unk2 - (s16)projectile->unk4));
-						}
-
-						if ((distance < vehicleRadius) && (vehicle != (VehicleInstance *)projectile->unk24) &&
-							(((vehicleType->unk16 & 0xF) != 2) ||
-							 (((f32)D_80145BE0_154B90[arg2].unk2 <= projectile->unk4) &&
-							  (projectile->unk4 <= (f32)(D_80145BE0_154B90[arg2].unk2 + vehicleType->unk38)) &&
-							  ((func_8010C4EC_11B49C(vehicle), 1) != 0) &&
-							  (func_8010CF7C_11BF2C((s16)projectile->unk0, (s16)projectile->unk8) != 0)))) {
-							s16 hitYaw;
-							s16 hitPitch;
-							f32 horizLen;
-
-							alive = 0;
-							hitYaw = (s16)(func_80003824_4424((f32)dx, (f32)dz) + 0x8000);
-							horizLen = sqrtf((f32)((dx * dx) + (dz * dz)));
-							hitPitch = (s16)(func_80003824_4424((f32)dy, horizLen) + 0x4000);
-							func_80128288_137238(vehicle, hitYaw, hitPitch, entry->unk6);
-							func_80124C40_133BF0(vehicle, impactDamage, (s16)projectile->unk0, (s16)projectile->unk8);
-						}
-					}
-
-					vehicleIdx--;
-					if (vehicleIdx < 0) {
-						break;
-					}
-				}
-			}
-		}
-
-		if (alive != 0) {
-			s16 hitSlot;
-
-			hitSlot = func_8012E114_13D0C4((s16)projectile->unk0, (s16)projectile->unk4, (s16)projectile->unk8);
-			if (hitSlot != -1) {
-				if (D_8015FAD0[hitSlot].unk2C != 0xA) {
-					osSyncPrintf(&D_801450FC_1540AC);
-					func_8012E204_13D1B4(hitSlot, (void *)entry);
-				}
-				if (D_8015FAD0[hitSlot].unk2C != 0xD) {
-					alive = 0;
-				}
-			}
-		}
-
-		if (alive != 0) {
-			s16 hitTopY;
-			s32 buildingIdx;
-
-			buildingIdx = func_8011E6FC_12D6AC((s16)projectile->unk0, (s16)projectile->unk8, &hitTopY);
-			if (buildingIdx != -1) {
-				BuildingInstance *hitBuilding = &buildingInstances[buildingIdx];
-				s16 projectileY = (s16)projectile->unk4;
-
-				if ((hitBuilding->yCoord < projectileY) && (projectileY < hitTopY)) {
-					alive = 0;
-					if ((hitBuilding == D_80158FE8) && (func_8011BEA0_12AE50(buildingIdx & 0xFF, impactDamage >> 7) != 0)) {
-						D_8014ED48 = 8;
-					}
-				}
-			}
-		}
-
-		if (alive != 0) {
-			s32 hitX;
-			s32 hitY;
-			s32 hitZ;
-			f32 hitRatio;
-
-			hitX = (s16)projectile->unk0;
-			hitY = (s16)projectile->unk4;
-			hitZ = (s16)projectile->unk8;
-			if (func_80125D70_134D20(prevX, prevY, prevZ, &hitX, &hitY, &hitZ, &hitRatio) != 0) {
-				alive = 0;
-				projectile->unk0 = (f32)(prevX + (s32)((f32)(hitX - prevX) * hitRatio));
-				projectile->unk4 = (f32)(prevY + (s32)((f32)(hitY - prevY) * hitRatio));
-				projectile->unk8 = (f32)(prevZ + (s32)((f32)(hitZ - prevZ) * hitRatio));
-			}
-		}
-
-		if (alive != 0) {
-			s16 alienIdx;
-			AlienInstance *alien;
-
-			for (alienIdx = 0xFE; (alienIdx != 0) && (alive != 0); alienIdx--) {
-				AlienType *alienType;
-				s16 testY;
-				s32 distance;
-
-				alien = &alienInstances[0xFE + (0xFE - alienIdx)];
-
-				if (((void *)alien == (void *)projectile->unk24) || (func_8012235C_13130C((Unk8004D0F8 *)alien) == 0)) {
-					continue;
-				}
-				if ((func_80122320_1312D0((s32)projectile->unk24) != 0) && (func_80122320_1312D0((s32)alien) != 0)) {
-					continue;
-				}
-
-				alienType = &alienTypes[alien->typeIndex];
-				distance = func_800047FC_53FC((s16)((s16)alien->unk0 - (s16)projectile->unk0));
-				distance += func_800047FC_53FC((s16)((s16)alien->unk4 - (s16)projectile->unk8));
-				if ((alienType->unk16 & 0xF) == 0) {
-					distance += func_800047FC_53FC((s16)((s16)alien->unk2 - (s16)projectile->unk4));
-				}
-
-				testY = alien->unk2;
-				if ((alienType->unk16 & 0x10) != 0) {
-					testY = (s16)(testY - alienType->unk38);
-				}
-
-				if ((distance < alienType->unk8) && ((f32)testY < projectile->unk4) && (projectile->unk4 < (f32)(alien->unk2 + alienType->unk38))) {
-					u8 type = alien->typeIndex;
-
-					if ((type >= 0x1B) && (type < 0x20) && (((alien->unk20 & ALIEN_FLAG_INVINCIBLE) != 0) || (D_80140AC4_14FA74 == (s32)alien))) {
-						deferredAlien = alienIdx;
-						continue;
-					}
-
-					if (alienType->unk5A != -1) {
-						Unk80147090Entry_8012B26C *hitEntry;
-						s32 hitX;
-						s32 hitY;
-						s32 hitZ;
-						s32 threshold2;
-						s32 lineDist;
-						s32 sideDist;
-						s32 ax;
-						s32 az;
-
-						hitEntry = &D_80147090_156040[alienType->unk5A];
-						threshold2 = hitEntry->radius * hitEntry->radius;
-						func_80128428_1373D8((VehicleInstance *)alien, hitEntry->x, hitEntry->y, hitEntry->z, &hitX, &hitY, &hitZ);
-
-						lineDist = func_801269BC_13596C(
-							prevX >> 31,
-							(u32)(s16)prevX,
-							prevZ >> 31,
-							(u32)(s16)prevZ,
-							x >> 31,
-							(u32)x,
-							z >> 31,
-							(u32)z,
-							hitX >> 31,
-							(u32)hitX,
-							hitZ >> 31,
-							(u32)hitZ
-						);
-
-						if (lineDist < threshold2) {
-							ax = prevX - x;
-							az = prevZ - z;
-							if (ax < 0) {
-								ax = -ax;
-							}
-							if (az < 0) {
-								az = -az;
-							}
-
-							if (az < ax) {
-								sideDist = func_801269BC_13596C(
-									prevX >> 31,
-									(u32)(s16)prevX,
-									prevY >> 31,
-									(u32)prevY,
-									x >> 31,
-									(u32)x,
-									y >> 31,
-									(u32)y,
-									hitX >> 31,
-									(u32)hitX,
-									hitY >> 31,
-									(u32)hitY
-								);
-							} else {
-								sideDist = func_801269BC_13596C(
-									prevZ >> 31,
-									(u32)(s16)prevZ,
-									prevY >> 31,
-									(u32)prevY,
-									z >> 31,
-									(u32)z,
-									y >> 31,
-									(u32)y,
-									hitZ >> 31,
-									(u32)hitZ,
-									hitY >> 31,
-									(u32)hitY
-								);
-							}
-
-							if (sideDist < threshold2) {
-								alien->unk20 |= ALIEN_FLAG_W;
-								impactDamage = (impactDamage * D_80147098_156048[(s8)alienType->pad5A[0] * 0xC]) >> 8;
-							}
-						}
-					}
-
-					alive = 0;
-					func_80124C40_133BF0((VehicleInstance *)alien, impactDamage, (s16)projectile->unk0, (s16)projectile->unk8);
-				}
-			}
-		}
-
-		if (deferredAlien != -1) {
-			alive = 0;
-			func_80124C40_133BF0((VehicleInstance *)&alienInstances[0xFE + deferredAlien], 0, (s16)projectile->unk0, (s16)projectile->unk8);
-		}
-
-		if (alive == 0) {
-			projectile->unk28 = 0;
-			func_80124170_133120(
-				(s16)projectile->unk0,
-				groundY,
-				(s16)projectile->unk8,
-				impactDamage,
-				entry->unk4,
-				NULL
-			);
-			if ((((s32)entry->unk8 >> 8) & 0x400) == 0) {
-				s16 yPlusFive = (s16)(projectile->unk4 + 5.0f);
-				s16 yPlusTen = (s16)(projectile->unk4 + 10.0f);
-
-				switch (projectile->unk20) {
-				case 0x0B:
-					func_800DF038_EDFE8(x, yPlusTen, z, 0x97, 0, NULL);
-					break;
-
-				case 0x0C:
-				case 0x14:
-					func_800E0F4C_EFEFC(x, y, z, 0x17);
-					break;
-
-				case 0x12:
-					func_800E0F4C_EFEFC(x, y, z, 0);
-					break;
-
-				case 0x15:
-				case 0x16:
-				case 0x17:
-				case 0x18:
-				case 0x24:
-				case 0x2E:
-				case 0x31:
-				case 0x34:
-					func_800DF038_EDFE8(x, yPlusFive, z, 0x64, 0, NULL);
-					break;
-
-				case 0x19:
-					func_800DF9C8_EE978(x, y, z, 0xC8, 0, NULL);
-					break;
-
-				case 0x1D:
-				case 0x1F:
-					func_801236F0_1326A0(x, yPlusTen, z, 0x50, 0x10, (projectile->unk20 == 0x1D) ? 0x14 : 0x1E);
-					break;
-
-				case 0x20:
-					func_800D05A8_DF558(x, yPlusTen, z, 0x1F4, 0xFF, 0x96, 0x96);
-					break;
-
-				case 0x21:
-					func_800D05A8_DF558(x, yPlusTen, z, 0xC8, 0x96, 0xFF, 0x96);
-					break;
-
-				case 0x22:
-					func_800D05A8_DF558(x, yPlusTen, z, 0x15E, 0x96, 0x96, 0xFF);
-					break;
-
-				case 0x23:
-				case 0x4C:
-				case 0x1000:
-					func_800D05A8_DF558(x, yPlusTen, z, 0x2BC, 0xFF, 0xFF, 0xFF);
-					break;
-
-				case 0x25:
-				case 0x26:
-				case 0x27:
-				case 0x28:
-				case 0x29:
-				case 0x2F:
-				case 0x30:
-				case 0x32:
-				case 0x33:
-				case 0x35:
-					func_800DF9C8_EE978(x, yPlusFive, z, 0xC8, 0, NULL);
-					break;
-
-				case 0x2A:
-					func_800E0F4C_EFEFC(x, y, z, 0x16);
-					break;
-
-				case 0x39:
-					func_800B8F30_C7EE0((s16)(x >> 8), (s16)(z >> 8), 1);
-					break;
-
-				case 0x56:
-				case 0x57:
-				case 0x58:
-				case 0x59:
-					func_800E0F4C_EFEFC(x, y, z, 0xE);
-					break;
-
-				case 0x5A: {
-					u16 randA;
-					u16 randB;
-					s16 randC;
-					u16 randD;
-					s16 randE;
-					s16 randF;
-					s32 randG;
-					s32 temp;
-
-					randA = (u16)func_800038E0_44E0();
-					randB = (u16)func_800038E0_44E0();
-					randC = (s16)(func_800038E0_44E0() & 0xFFFF);
-					randD = (u16)func_800038E0_44E0();
-					randE = (s16)(func_800038E0_44E0() & 0xFFFF);
-					randF = (s16)(func_800038E0_44E0() & 0xFFFF);
-					randG = func_800038E0_44E0();
-
-					temp = randC & 7;
-					if ((randC < 0) && (temp != 0)) {
-						temp -= 8;
-					}
-
-					func_800CA5EC_D959C(
-						x,
-						y,
-						z,
-						(s8)((randA % 0x32) - 0x19),
-						(s8)((randB % 0x32) - 0x19),
-						-8,
-						0x3C,
-						0x32,
-						8,
-						(u8)((randD % 0x23) + 0x9B),
-						(u8)(temp + 0x14),
-						(u8)((randE % 0x10) + 0xB6),
-						(u8)((randF % 0x10) + 0x16),
-						(u8)((randG % 0x10) + 0xC0)
-					);
-					func_800DEA08_ED9B8(x, y, z, 0x12C, -8, 1, 0xC0, 0x10, 0xBE, 0x1E, 0);
-					func_80137130_1460E0(0, 0xF4, x, y, z);
-					func_80137130_1460E0(0, 0xAD, x, y, z);
-					break;
-				}
-
-				case 0x5B:
-					func_800DEA08_ED9B8(x, y, z, 0x12C, -8, 1, 0xC0, 0x10, 0xBE, 0x1E, 0);
-					func_80137130_1460E0(0, 0xF4, x, y, z);
-					func_80137130_1460E0(0, 0xAD, x, y, z);
-					break;
-
-				case 0x5C:
-				case 0x5D:
-				case 0x6F:
-					func_800DF038_EDFE8(x, yPlusTen, z, 0x96, 0, NULL);
-					break;
-
-				case 0x5E:
-					func_800D05A8_DF558(x, yPlusTen, z, 0x96, 0xFF, 0x96, 0xFF);
-					break;
-
-				case 0x5F:
-					func_800D05A8_DF558(x, yPlusTen, z, 0xAA, 0x32, 0xC8, 0xF5);
-					break;
-
-				case 0x60:
-					func_800DF038_EDFE8(x, yPlusFive, z, 0x97, 0, NULL);
-					break;
-
-				case 0x61:
-				case 0x6D:
-					func_800DF038_EDFE8(x, yPlusFive, z, 0x96, 0, NULL);
-					func_80137234_1461E4(0xE8, x, yPlusTen, z, 0x32);
-					break;
-
-				case 0x63:
-					func_800DF038_EDFE8(x, yPlusFive, z, 0xBF, 0, NULL);
-					break;
-
-				case 0x64:
-				case 0x6A:
-					func_800DF038_EDFE8(x, yPlusTen, z, 0x32, 0, NULL);
-					func_80137234_1461E4(0xE8, x, yPlusTen, z, 0x32);
-					break;
-
-				case 0x66:
-					func_800D05A8_DF558(x, yPlusTen, z, 0x258, 0x32, 0xC8, 0xF5);
-					break;
-
-				case 0x67: {
-					extern u8 D_801464C8_155478[];
-
-					Projectile *spawned;
-					s16 spawnPos[3];
-					s16 spawnY;
-					s32 k;
-
-					spawnY = (s16)(func_800B84D0_C7480(x, z) >> 8);
-					if (spawnY < y) {
-						spawnY = y;
-					}
-
-					spawnPos[0] = x;
-					spawnPos[1] = (s16)(spawnY + 0xA);
-					spawnPos[2] = z;
-
-					for (k = 0; k < 8; k++) {
-						s16 angle;
-						f32 velX;
-						f32 velZ;
-
-						angle = (s16)(func_800038E0_44E0() & 0xFFFF);
-						velX = (f32)(((f64)(f32)coss((u16)angle) / 32768.0) * 100.0);
-						velZ = (f32)(((f64)(f32)sins((u16)angle) / 32768.0) * 100.0);
-						spawned = func_801226F8_1316A8((VehicleInstance *)spawnPos, D_801464C8_155478, 0, 0, 0, velX, 0.0f, velZ);
-						if (spawned != NULL) {
-							spawned->unk24 = projectile->unk24;
-						}
-					}
-					break;
-				}
-
-				case 0x68:
-					func_800D05A8_DF558(x, yPlusTen, z, 0x320, 0xFF, 0x64, 0x78);
-					break;
-
-				case 0x69: {
-					u16 randA;
-					u16 randB;
-					s16 randC;
-					u16 randD;
-					s16 randE;
-					s16 randF;
-					s32 randG;
-					s32 temp;
-
-					randA = (u16)func_800038E0_44E0();
-					randB = (u16)func_800038E0_44E0();
-					randC = (s16)(func_800038E0_44E0() & 0xFFFF);
-					randD = (u16)func_800038E0_44E0();
-					randE = (s16)(func_800038E0_44E0() & 0xFFFF);
-					randF = (s16)(func_800038E0_44E0() & 0xFFFF);
-					randG = func_800038E0_44E0();
-
-					temp = randC & 7;
-					if ((randC < 0) && (temp != 0)) {
-						temp -= 8;
-					}
-
-					func_800CA5EC_D959C(
-						x,
-						y,
-						z,
-						(s8)((randA % 0x32) - 0x19),
-						(s8)((randB % 0x32) - 0x19),
-						-8,
-						0x3C,
-						0x32,
-						8,
-						(u8)((randD % 0x23) + 0x9B),
-						(u8)(temp + 0x14),
-						(u8)((randE % 0x10) + 0xA0),
-						(u8)((randF % 0x10) + 0x16),
-						(u8)((randG % 0x10) + 0xC0)
-					);
-					func_800DEA08_ED9B8(x, y, z, 0x12C, -8, 1, 0xC0, 0x10, 0xA0, 0x1E, 0xA0);
-					func_80137130_1460E0(0, 0xF4, x, y, z);
-					func_80137130_1460E0(0, 0xAD, x, y, z);
-					break;
-				}
-				}
-			}
-		}
-
-		func_801238DC_13288C((s16)i);
-	}
-
-	for (i = 0xF; i != 0; i--) {
-		queueEntry = &D_8015F790[i];
-		if (queueEntry->unk1E & 2) {
-			s32 j;
-
-			for (j = 3; j >= 0; j--) {
-				queueEntry->posX[j] = (j != 0) ? queueEntry->posX[j - 1] : queueEntry->curX;
-				queueEntry->posY[j] = (j != 0) ? queueEntry->posY[j - 1] : queueEntry->curY;
-				queueEntry->posZ[j] = (j != 0) ? queueEntry->posZ[j - 1] : queueEntry->curZ;
-			}
-
-			if (queueEntry->unk1E & 1) {
-				u16 count = queueEntry->unk1E;
-				s32 burstCount = count >> 2;
-
-				queueEntry->unk1E = (u16)((((burstCount - 1) << 2) & 0xFFFC) | (count & 3));
-				if (burstCount == 0) {
-					queueEntry->unk1E &= 0xFCFF;
-					D_8015F9E8--;
-				}
-			} else {
-				projectile = (Projectile *)queueEntry->unk20;
-				queueEntry->curX = (s16)projectile->unk0;
-				queueEntry->curY = (s16)projectile->unk4;
-				queueEntry->curZ = (s16)projectile->unk8;
-			}
-		}
-	}
-
-	for (i = 0; i < 8; i++) {
-		if (D_8015F9F8[i][3] != 0) {
-			D_8015F9F8[i][3]--;
-		}
-	}
-
-	func_8011DE60_12CE10(0);
+
+void func_8012B26C_13A21C(void)
+{
+  s16 spawnPos[3];
+  Projectile *projectile;
+  Unk8015F790 *queueEntry;
+  const WeaponEntry_80129864 *entry;
+  union
+  {
+    UnkProjectileCtrl_8012B26C *ctrl;
+    VehicleType *vehicle;
+    AlienType *alien;
+    s32 random;
+  } data;
+  union
+  {
+    UnkPos16_8012B26C *target;
+    VehicleInstance *vehicle;
+    AlienInstance *alien;
+  } entity;
+  s32 i;
+  s32 index;
+  s32 height;
+  s16 turnSpeed;
+  s16 turnDelta;
+  s16 hitSlot;
+  s16 deferredAlien;
+  s16 spawnAngle;
+  s16 cosValue;
+  u16 count;
+  s16 groundY;
+  f32 travel;
+  f32 step;
+  f32 current;
+  f32 desired;
+  s32 alive;
+  s32 distance;
+  s32 deltaX;
+  u32 nextIndex;
+  s32 deltaZ;
+  s16 hitAngleOrTop;
+  u8 type;
+  s32 pad; /* Preserve the original local block layout. */
+  union { s32 s; u32 u; } randD;
+  s32 randG;
+  s32 burstCount;
+  s32 buildingIdx;
+  BuildingInstance *hitBuilding;
+  s32 impactDamage;
+  Unk80147090Entry_8012B26C *hitEntry;
+  s32 weakX;
+  s32 weakY;
+  s32 weakZ;
+  s32 randB;
+  s32 previousX;
+  s32 previousY;
+  s32 previousZ;
+  s32 currentX;
+  s32 currentY;
+  s32 currentZ;
+  s32 threshold2;
+  s32 lineDist;
+  s32 ax;
+  f32 hitRatio;
+  s32 rayX;
+  s32 rayY;
+  s32 rayZ;
+  s32 diff;
+  s32 testY;
+  s32 buildingY;
+  Projectile *spawned;
+  s32 historyIndex;
+  if (D_8015F9EC != 0)
+  {
+    D_8015F9EC--;
+  }
+  func_8011DE60_12CE10(1);
+  i = D_8015F9E4;
+  if (i--)
+  {
+    nextIndex = i;
+    do
+    {
+      if (nextIndex) {} /* Retain the next loop index as a register value. */
+      projectile = &D_8015EB90[i];
+      entry = &D_80145BE0_154B90[projectile->unk20];
+      data.ctrl = (UnkProjectileCtrl_8012B26C *) (&projectile->unkC);
+      if (projectile->unk28 == 0)
+      {
+        continue;
+      }
+      alive = 1;
+      deferredAlien = -1;
+      previousX = projectile->unk0;
+      previousY = projectile->unk4;
+      previousZ = projectile->unk8;
+      if (projectile->unk4 < ((f32) D_80222A70))
+      {
+        if ((D_80052A8C & 1) == 0)
+        {
+          func_800D8FA0_E7F50(projectile->unk0, projectile->unk4, projectile->unk8);
+        }
+      }
+      if ((turnSpeed = entry->unkE) != 0)
+      {
+        if ((f64) projectile->unkC < 1.0f)
+        {
+          data.ctrl->unk0 = (f32) (((f64) data.ctrl->unk0) + 0.1);
+        }
+        entity.target = data.ctrl->unkC.asPos;
+        turnDelta = func_800F9C50_108C00(data.ctrl->unk4, func_80003824_4424(projectile->unk0 - ((f32) entity.target->x), projectile->unk8 - ((f32) entity.target->z)));
+        if (turnDelta > turnSpeed)
+        {
+          turnDelta = turnSpeed;
+        }
+        if (turnDelta < (-turnSpeed))
+        {
+          turnDelta = -turnSpeed;
+        }
+        data.ctrl->unk4 = (s16) (data.ctrl->unk4 + turnDelta);
+        if (data.ctrl->unk0 >= 1.0)
+        {
+          distance = func_800047FC_53FC((s16) (projectile->unk0 - entity.target->x)) + func_800047FC_53FC((s16) (projectile->unk8 - entity.target->z));
+          height = (func_800B84D0_C7480((s16) projectile->unk0, (s16) projectile->unk8) >> 8) + 0x32;
+          groundY = entity.target->y;
+          if (groundY < height)
+          {
+            groundY = height;
+          }
+          travel = ((f32) ((s32) sqrtf((f32) distance))) / ((f32) data.ctrl->unk8);
+          if (travel > 0.0f)
+          {
+            desired = (((f32) groundY) - projectile->unk4) / travel;
+            current = (f32) projectile->unk12S16;
+            step = (f32) ((u32) entry->unk12);
+            if ((current + step) <= desired)
+            {
+              projectile->unk12S16 = ((f32) projectile->unk12S16) + step;
+            }
+            else
+              if (desired <= (current - step))
+            {
+              projectile->unk12S16 = ((f32) projectile->unk12S16) - step;
+            }
+            else
+            {
+              projectile->unk12S16 = desired;
+            }
+          }
+        }
+        if (D_8015EB90[i].unk0) {} if (D_8015EB90[i].unk8) {} /* Preserve X/Z/Y reload order. */
+        deltaX = (s32) (((((f32) coss((u16) data.ctrl->unk4)) / 32768.0) * data.ctrl->unk8) * data.ctrl->unk0);
+        height = (s32) (((f32) data.ctrl->unk6) * data.ctrl->unk0);
+        deltaZ = (s32) (((((f32) sins((u16) data.ctrl->unk4)) / 32768.0) * data.ctrl->unk8) * data.ctrl->unk0);
+      }
+      else
+      {
+        if (projectile->unkC < 1.0)
+        {
+          data.ctrl->unk0 = (f32) (data.ctrl->unk0 + 0.05);
+        }
+        deltaX = (s32) (data.ctrl->motion[1] * data.ctrl->unk0);
+        height = (s32) (data.ctrl->motion[2] * data.ctrl->unk0);
+        deltaZ = (s32) (data.ctrl->motion[3] * data.ctrl->unk0);
+      }
+      current = (f32) deltaX;
+      travel = (f32) height;
+      desired = (f32) deltaZ;
+      projectile->unk0 += current;
+      projectile->unk4 += travel;
+      projectile->unk8 += desired;
+      projectile->unk28--;
+      if (projectile->unk28 == 0)
+      {
+        alive = 0;
+      }
+      if (((D_80145BE8_154B98[projectile->unk20][0] >> 8) & 8) != 0)
+      {
+        projectile->unk14 -= 3.0f;
+      }
+      if (projectile->unk14 > 100.0f)
+      {
+        projectile->unk14 = 100.0f;
+      }
+      if ((f32) deltaX) {}
+      groundY = (s16) (func_800B84D0_C7480((s16) projectile->unk0, (s16) projectile->unk8) >> 8);
+      if (projectile->unk4 < ((f32) groundY))
+      {
+        projectile->unk4 = (f32) groundY;
+        alive = 0;
+        if (((projectile->unk20 == 0x1D) || (projectile->unk20 == 0x1A)) && (D_801591A8 == 0))
+        {
+          func_800B8F30_C7EE0((s16) (((s16) projectile->unk0) >> 8), (s16) (((s16) projectile->unk8) >> 8), 1);
+          func_800DFBA8_EEB58((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0xB4, 6);
+        }
+      }
+      if (((alive != 0) && (((((s32) entry->unk8) >> 8) & 1) == 0)) && (projectile->unk4 < ((f32) D_80222A70)))
+      {
+        alive = 0;
+      }
+      if (((alive != 0) && (((((s32) entry->unk8) >> 8) & 0x200) != 0)) && (((f32) D_80222A70) < projectile->unk4))
+      {
+        projectile->unk4 = (f32) D_80222A70;
+      }
+      impactDamage = entry->unk2;
+      if (func_800B0D10_BFCC0((s32) projectile->unk0, (s32) projectile->unk8, 0) != 0)
+      {
+        alive = 0;
+      }
+      {
+        index = D_80158FD8;
+        while (alive && (index--))
+        {
+          entity.vehicle = &vehicleInstances[D_80158E80[index]];
+          if ((entity.vehicle->unk20 & VEHICLE_FLAG_INSIDE_PLAY_BOUNDS) != 0)
+          {
+            data.vehicle = &vehicleTypes[entity.vehicle->unk1A];
+            distance = func_800047FC_53FC((s16) (entity.vehicle->unk0 - projectile->unk0)) + func_800047FC_53FC((s16) (entity.vehicle->unk4 - projectile->unk8));
+            if ((data.vehicle->unk16 & 0xF) == 0)
+            {
+              distance += func_800047FC_53FC((s16) (entity.vehicle->unk2 - projectile->unk4));
+            }
+            if (((distance < data.vehicle->unk8) && (entity.vehicle != ((VehicleInstance *) projectile->unk24))) && (((data.vehicle->unk16 & 0xF) != 2) || ((((!(projectile->unk4 < ((f32) entity.vehicle->unk2))) && (!(((f32) (entity.vehicle->unk2 + data.vehicle->unk38)) < projectile->unk4))) && (((func_8010C4EC_11B49C(entity.vehicle), 1)) != 0)) && (func_8010CF7C_11BF2C((s16) projectile->unk0, (s16) projectile->unk8) != 0))))
+            {
+              hitAngleOrTop = (s16) (func_80003824_4424(current, (f32) deltaZ) + 0x8000);
+              alive = 0;
+              func_80128288_137238(entity.vehicle, hitAngleOrTop, (s16) (func_80003824_4424(travel, sqrtf((f32) ((deltaX * deltaX) + (deltaZ * deltaZ)))) + 0x4000), entry->unk6);
+              func_80124C40_133BF0((EntityInstance *) entity.vehicle, impactDamage, (s16) projectile->unk0, (s16) projectile->unk8);
+              break;
+            }
+          }
+        }
+
+      }
+      do
+      {
+        if (alive != 0)
+        {
+          if ((hitSlot = func_8012E114_13D0C4((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8)) != (-1))
+          {
+            if (D_8015FAD0[hitSlot].unk2C != 0xA)
+            {
+              osSyncPrintf(D_801450FC_1540AC);
+              func_8012E204_13D1B4(hitSlot, (s32) entry);
+            }
+            if (D_8015FAD0[hitSlot].unk2C == 0xD)
+            {
+              break;
+            }
+            alive = 0;
+          }
+        }
+        if (alive != 0)
+        {
+          buildingIdx = func_8011E6FC_12D6AC((s16) projectile->unk0, (s16) projectile->unk8, &hitAngleOrTop);
+          if (buildingIdx != (-1))
+          {
+            height = projectile->unk4;
+            hitBuilding = &buildingInstances[buildingIdx];
+            if (((buildingIdx != (-1)) && (hitBuilding->yCoord < height)) && (height < hitAngleOrTop))
+            {
+              alive = 0;
+              if ((hitBuilding == D_80158FE8) && (func_8011BEA0_12AE50(buildingIdx & 0xFF, impactDamage >> 7) != 0))
+              {
+                D_8014ED48 = 8;
+              }
+            }
+          }
+        }
+        if (alive != 0)
+        {
+          rayX = projectile->unk0;
+          rayY = projectile->unk4;
+          rayZ = projectile->unk8;
+          lineDist = rayX - previousX;
+          currentX = rayY - previousY;
+          currentZ = rayZ - previousZ;
+          if (func_80125D70_134D20(previousX, previousY, previousZ, &rayX, &rayY, &rayZ, &hitRatio) != 0)
+          {
+            alive = 0;
+            lineDist = ((f32) lineDist) * hitRatio;
+            currentX = ((f32) currentX) * hitRatio;
+            currentZ = ((f32) currentZ) * hitRatio;
+            projectile->unk0 = previousX + lineDist;
+            projectile->unk4 = previousY + currentX;
+            projectile->unk8 = previousZ + currentZ;
+          }
+        }
+      }
+      while (0);
+      {
+        index = 0xFF;
+        while (alive && (index--))
+        {
+          entity.alien = &alienInstances[index];
+          if ((((void *) projectile->unk24) == ((void *) entity.alien)) || (func_8012235C_13130C((Unk8004D0F8 *) entity.alien) == 0))
+          {
+            continue;
+          }
+          if ((func_80122320_1312D0(projectile->unk24) != 0) && (func_80122320_1312D0((s32) entity.alien) != 0))
+          {
+            continue;
+          }
+          data.alien = &alienTypes[entity.alien->typeIndex];
+          distance = func_800047FC_53FC((s16) (entity.alien->unk0 - projectile->unk0)) + func_800047FC_53FC((s16) (entity.alien->unk4 - projectile->unk8));
+          if ((data.alien->unk16 & 0xF) == 0)
+          {
+            distance += func_800047FC_53FC((s16) (entity.alien->unk2 - projectile->unk4));
+          }
+          testY = entity.alien->unk2;
+          if ((data.alien->unk16 & 0x10) != 0)
+          {
+            testY -= data.alien->unk38;
+          }
+          if (((distance < data.alien->unk8) && (((f32) testY) < projectile->unk4)) && (projectile->unk4 < ((f32) (entity.alien->unk2 + data.alien->unk38))))
+          {
+            type = entity.alien->typeIndex;
+            if (((type >= 0x1B) && (type < 0x20)) && (((entity.alien->unk20 & ALIEN_FLAG_INVINCIBLE) != 0) || (D_80140AC4_14FA74 == &alienInstances[index])))
+            {
+              deferredAlien = index;
+              continue;
+            }
+            alive = 0;
+            deferredAlien = -1;
+            if (data.alien->unk5A != (-1))
+            {
+              height = data.alien->unk5A;
+              hitEntry = &D_80147090_156040[height];
+              func_80128428_1373D8(entity.alien, D_80147090_156040[height].x, D_80147090_156040[height].y, D_80147090_156040[height].z, &weakX, &weakY, &weakZ);
+              currentX = projectile->unk0;
+              threshold2 = hitEntry->radius * hitEntry->radius;
+              currentY = projectile->unk4;
+              currentZ = projectile->unk8;
+              if (func_801269BC_13596C(previousX, previousZ, currentX, currentZ, weakX, weakZ) < threshold2)
+              {
+                diff = previousX - currentX;
+                if ((-diff) < diff)
+                {
+                  ax = diff;
+                }
+                else
+                {
+                  ax = -diff;
+                }
+                diff = previousZ - currentZ;
+                if ((-diff) < diff)
+                {
+                  lineDist = diff;
+                }
+                else
+                {
+                  lineDist = -diff;
+                }
+                if (lineDist < ax)
+                {
+                  lineDist = func_801269BC_13596C(previousX, previousY, currentX, currentY, weakX, weakY);
+                }
+                else
+                {
+                  lineDist = func_801269BC_13596C(previousZ, previousY, currentZ, currentY, weakZ, weakY);
+                }
+                if (lineDist < threshold2)
+                {
+                  impactDamage *= D_80147090_156040[alienTypes[entity.alien->typeIndex].unk5A].damageScale;
+                  impactDamage >>= 8;
+                  entity.alien->unk20 |= ALIEN_FLAG_W;
+                }
+              }
+            }
+            func_80124C40_133BF0((EntityInstance *) entity.alien, impactDamage, (s16) projectile->unk0, (s16) projectile->unk8);
+            break;
+          }
+        }
+
+      }
+      if (deferredAlien != (-1))
+      {
+        func_80124C40_133BF0((EntityInstance *) &alienInstances[deferredAlien], 0, (s16) projectile->unk0, (s16) projectile->unk8);
+        alive = 0;
+      }
+      if (alive == 0)
+      {
+        func_80124170_133120((s16) projectile->unk0, groundY, (s16) projectile->unk8, entry->unk2, entry->unk4, NULL);
+        if (((((s32) entry->unk8) >> 8) & 0x400) == 0)
+        {
+          switch (projectile->unk20)
+          {
+            case 0x39:
+              func_800B8F30_C7EE0((s16) (((s16) projectile->unk0) >> 8), (s16) (((s16) projectile->unk8) >> 8), 1);
+              break;
+
+            case 0x0C:
+
+            case 0x14:
+              func_800E0F4C_EFEFC((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0x17);
+              break;
+
+            case 0x2A:
+              func_800E0F4C_EFEFC((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0x16);
+              break;
+
+            case 0x19:
+              func_800DF9C8_EE978((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0xC8, 0, NULL);
+              break;
+
+            case 0x12:
+              func_800E0F4C_EFEFC((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0);
+              break;
+
+            case 0x54:
+
+            case 0x55:
+
+            case 0x56:
+
+            case 0x57:
+              func_800E0F4C_EFEFC((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0xE);
+              break;
+
+            case 0x59:
+            {
+              threshold2 = func_800038E0_44E0() & 0xFFFF;
+              randB = func_800038E0_44E0() & 0xFFFF;
+              currentY = func_800038E0_44E0() & 0xFFFF;
+              randD.s = func_800038E0_44E0() & 0xFFFF;
+              height = func_800038E0_44E0() & 0xFFFF;
+              data.random = func_800038E0_44E0() & 0xFFFF;
+              randG = func_800038E0_44E0();
+              func_800CA5EC_D959C((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, (s8) ((threshold2 % 0x32) - 0x19), 0x3C, (s8) ((randB % 0x32) - 0x19), 0x32, 8, (u8) ((currentY % 8) + 0x14), (u8) ((randD.s % 0x23) + 0x9B), 0, (u8) ((height % 0x10) + 0xB6), (u8) ((data.random % 0x10) + 0x16), (u8) ((randG % 0x10) + 0xC0));
+            }
+              func_800DEA08_ED9B8((s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8, 0x12C, -8, 1, 0x10, 0xC0, 0, 0xBE, 0x1E);
+              func_80137130_1460E0(0, 0xF4, (s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8);
+              func_80137130_1460E0(0, 0xAD, (s16) projectile->unk0, (s16) projectile->unk4, (s16) projectile->unk8);
+              break;
+
+            case 0x15:
+
+            case 0x16:
+
+            case 0x17:
+
+            case 0x18:
+
+            case 0x24:
+
+            case 0x2E:
+
+            case 0x31:
+
+            case 0x34:
+              func_800DF038_EDFE8((s16) projectile->unk0, (s16) (projectile->unk4 + 5.0f), (s16) projectile->unk8, 0x64, 0, NULL);
+              break;
+
+            case 0x25:
+
+            case 0x26:
+
+            case 0x27:
+
+            case 0x28:
+
+            case 0x29:
+
+            case 0x2F:
+
+            case 0x30:
+
+            case 0x32:
+
+            case 0x33:
+
+            case 0x35:
+              func_800DF9C8_EE978((s16) projectile->unk0, (s16) (projectile->unk4 + 5.0f), (s16) projectile->unk8, 0xC8, 0, NULL);
+              break;
+
+            case 0x23:
+
+            case 0x4A:
+
+            case 0x1000:
+              func_800D05A8_DF558((s16) projectile->unk0, (s16) (projectile->unk4 + 10.0f), (s16) projectile->unk8, 0x2BC, 0xFF, 0xFF, 0xFF);
+              break;
+
+            case 0x20:
+              func_800D05A8_DF558((s16) projectile->unk0, (s16) (projectile->unk4 + 10.0f), (s16) projectile->unk8, 0x1F4, 0xFF, 0x96, 0x96);
+              break;
+
+            case 0x21:
+              func_800D05A8_DF558((s16) projectile->unk0, (s16) (projectile->unk4 + 10.0f), (s16) projectile->unk8, 0xC8, 0x96, 0xFF, 0x96);
+              break;
+
+            case 0x22:
+              func_800D05A8_DF558((s16) projectile->unk0, (s16) (projectile->unk4 + 10.0f), (s16) projectile->unk8, 0x15E, 0x96, 0x96, 0xFF);
+              break;
+
+            case 0x5D:
+              func_800D05A8_DF558((s16) projectile->unk0, (s16) (projectile->unk4 + 10.0f), (s16) projectile->unk8, 0x96, 0xFF, 0x96, 0xFF);
+              break;
+
+            case 0x0B:
+              func_800DF038_EDFE8((s16) projectile->unk0, (s16) (projectile->unk4 + 10.0f), (s16) projectile->unk8, 0x97, 0, NULL);
+              break;
+
+            case 0x61:
+
+            case 0x6D:
+              func_800DF038_EDFE8((s16) projectile->unk0, (s16) (projectile->unk4 + 5.0f), (s16) projectile->unk8, 0x96, 0, NULL);
+              func_80137234_1461E4(0xE8, (s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0x32);
+              break;
+
+            case 0x60:
+              func_800DF038_EDFE8((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 5.0f), (s16) D_8015EB90[i].unk8, 0x97, 0, NULL);
+              break;
+
+            case 0x63:
+              func_800DF038_EDFE8((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 5.0f), (s16) D_8015EB90[i].unk8, 0xBF, 0, NULL);
+              break;
+
+            case 0x5F:
+              func_800D05A8_DF558((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0xAA, 0x32, 0xC8, 0xF5);
+              break;
+
+            case 0x68:
+              func_800D05A8_DF558((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0x320, 0xFF, 0x64, 0x78);
+              break;
+
+            case 0x1D:
+
+            case 0x1F:
+              func_801236F0_1326A0((s16) D_8015EB90[i].unk0, (s16) D_8015EB90[i].unk4, (s16) D_8015EB90[i].unk8, 0x50, 0x10, (D_8015EB90[i].unk20 == 0x1D) ? (0x14) : (0x1E));
+              break;
+
+            case 0x66:
+            {
+              func_800D05A8_DF558((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0x258, 0x32, 0xC8, 0xF5);
+              height = func_800B84D0_C7480((s16) projectile->unk0, (s16) projectile->unk8) >> 8;
+              if (height < D_8015EB90[i].unk4)
+              {
+                height = projectile->unk4;
+              }
+              spawnPos[0] = (s16) D_8015EB90[i].unk0;
+              spawnPos[1] = (s16) (height + 0xA);
+              spawnPos[2] = (s16) D_8015EB90[i].unk8;
+              for (burstCount = 0; burstCount < 8; burstCount++)
+              {
+                spawnAngle = (s16) (func_800038E0_44E0() & 0xFFFF);
+                cosValue = coss((u16) spawnAngle);
+                height = sins((u16) spawnAngle);
+                spawned = func_801226F8_1316A8((VehicleInstance *) spawnPos, (WeaponEntry_80129864 *) D_801464C8_155478, 0, 0, 0, (f32) ((((f64) ((f32) cosValue)) / 32768.0) * 100.0), 0.0f, (f32) ((((f64) ((f32) height)) / 32768.0) * 100.0));
+                if (spawned != NULL)
+                {
+                  spawned->unk24 = D_8015EB90[i].unk24;
+                }
+              }
+
+              break;
+            }
+
+            case 0x5B:
+
+            case 0x5C:
+
+            case 0x5E:
+
+            case 0x6F:
+              func_800DF038_EDFE8((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0x96, 0, NULL);
+              break;
+
+            case 0x64:
+
+            case 0x6A:
+              func_800DF038_EDFE8((s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0x32, 0, NULL);
+              func_80137234_1461E4(0xE8, (s16) D_8015EB90[i].unk0, (s16) (D_8015EB90[i].unk4 + 10.0f), (s16) D_8015EB90[i].unk8, 0x32);
+              break;
+
+            case 0x65:
+            {
+              threshold2 = func_800038E0_44E0() & 0xFFFF;
+              randB = func_800038E0_44E0() & 0xFFFF;
+              currentY = func_800038E0_44E0() & 0xFFFF;
+              randD.s = func_800038E0_44E0() & 0xFFFF;
+              height = func_800038E0_44E0() & 0xFFFF;
+              data.random = func_800038E0_44E0() & 0xFFFF;
+              randG = func_800038E0_44E0();
+              func_800CA5EC_D959C((s16) D_8015EB90[i].unk0, (s16) D_8015EB90[i].unk4, (s16) D_8015EB90[i].unk8, (s8) ((threshold2 % 0x32) - 0x19), 0x3C, (s8) ((randB % 0x32) - 0x19), 0x32, 8, (u8) ((currentY % 8) + 0x14), (u8) ((randD.s % 0x23) + 0x9B), 0xA0, (u8) ((height % 0x10) + 0xA0), (u8) ((data.random % 0x10) + 0x16), (u8) ((randG % 0x10) + 0xC0));
+              func_800DEA08_ED9B8((s16) D_8015EB90[i].unk0, (s16) D_8015EB90[i].unk4, (s16) D_8015EB90[i].unk8, 0x12C, -8, 1, 0x10, 0xC0, 0xA0, 0xA0, 0x1E);
+              func_80137130_1460E0(0, 0xF4, (s16) D_8015EB90[i].unk0, (s16) D_8015EB90[i].unk4, (s16) D_8015EB90[i].unk8);
+              func_80137130_1460E0(0, 0xAD, (s16) D_8015EB90[i].unk0, (s16) D_8015EB90[i].unk4, (s16) D_8015EB90[i].unk8);
+              break;
+            }
+
+          }
+
+          func_801238DC_13288C((s16) i);
+        }
+      }
+    } while ((randD.u = (u32) i, nextIndex = randD.u - 1, i = nextIndex, randD.u));
+  }
+
+  buildingY = 0x10;
+  while (buildingY--)
+  {
+    queueEntry = &D_8015F790[buildingY];
+    if (queueEntry->trailActive)
+    {
+      historyIndex = 4;
+      do
+      {
+        queueEntry->historyX[historyIndex] = queueEntry->historyX[historyIndex - 1];
+        queueEntry->historyY[historyIndex] = queueEntry->historyY[historyIndex - 1];
+        queueEntry->historyZ[historyIndex] = queueEntry->historyZ[historyIndex - 1];
+      }
+      while ((historyIndex--) >= 2);
+      if (queueEntry->trailEnded)
+      {
+        if (queueEntry->trailCount-- == 0)
+        {
+          queueEntry->trailActive = 0;
+          queueEntry->trailEnded = 0;
+          D_8015F9E8--;
+        }
+      }
+      else
+      {
+        projectile = (Projectile *) queueEntry->unk20;
+        queueEntry->curX = (s16) projectile->unk0;
+        queueEntry->curY = (s16) projectile->unk4;
+        queueEntry->curZ = (s16) projectile->unk8;
+      }
+    }
+  }
+  for (i = 0; i < 8; i++)
+  {
+    if (D_8015F9F8[i][3] != 0)
+    {
+      D_8015F9F8[i][3]--;
+    }
+  }
+
+  func_8011DE60_12CE10(0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012B26C_13A21C.s")
-#endif
+
 
 s32 func_8012D600_13C5B0(void)
 {
@@ -3538,135 +3452,133 @@ void func_8012D84C_13C7FC()
 	}
 }
 
-// CURRENT(20): four register differences remain in the initial matrix packet.
 // DisplayForces - Debug draw interaction boxes
-#ifdef NON_MATCHING
 void func_8012D884_13C834(void) {
-	Unk8015FAD0 *var_s3;
-	s16 temp_a3;
-	s16 temp_s2;
-	s16 temp_t7;
-	s16 temp_s4;
-	s16 temp_t8;
-	s16 temp_t9;
-	Gfx *matrix; Gfx *packet;
-	s32 var_s5;
+	Unk8015FAD0 *entry;
+	s16 halfY;
+	s16 z;
+	s16 halfX;
+	s16 halfZ;
+	s16 y;
+	s16 x;
+	s32 i;
 
-	var_s3 = D_8015FAD0;
+	entry = D_8015FAD0;
 	if (D_80047710 == -0x63) {
-		matrix = D_8005BB2C; D_8005BB2C = &matrix[1]; packet = matrix++; gSPMatrix(packet++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW); var_s5 = 25; if (var_s5) {}
+		i = 25;
+		if (i) {} /* Preserve the counter live range across the matrix packet. */
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
+		for (; i--; ) {
+			if (entry->unk2C != 0) {
+				x = entry->unk0 >> 16;
+				y = entry->unk4 >> 16;
+				z = entry->unk8 >> 16;
+				halfX = entry->unk18;
+				halfZ = entry->unk1A;
+				halfY = entry->unk1C;
+				D_8005BB34->v.ob[0] = x + halfX;
+				D_8005BB34->v.ob[1] = y + halfY;
+				D_8005BB34->v.ob[2] = z + halfZ;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34[1].v.ob[0] = x + halfX;
+				D_8005BB34[1].v.ob[1] = y - halfY;
+				D_8005BB34[1].v.ob[2] = z + halfZ;
+				D_8005BB34[1].v.flag = 0;
+				D_8005BB34[1].v.tc[0] = 0;
+				D_8005BB34[1].v.tc[1] = 0;
+				D_8005BB34[1].v.cn[0] = 0;
+				D_8005BB34[1].v.cn[1] = 0;
+				D_8005BB34[1].v.cn[2] = 0xFF;
+				D_8005BB34[1].v.cn[3] = 0xFF;
+				D_8005BB34[2].v.ob[0] = x + halfX;
+				D_8005BB34[2].v.ob[1] = y + halfY;
+				D_8005BB34[2].v.ob[2] = z - halfZ;
+				D_8005BB34[2].v.flag = 0;
+				D_8005BB34[2].v.tc[0] = 0;
+				D_8005BB34[2].v.tc[1] = 0;
+				D_8005BB34[2].v.cn[0] = 0;
+				D_8005BB34[2].v.cn[1] = 0xFF;
+				D_8005BB34[2].v.cn[2] = 0;
+				D_8005BB34[2].v.cn[3] = 0xFF;
+				D_8005BB34[3].v.ob[0] = x + halfX;
+				D_8005BB34[3].v.ob[1] = y - halfY;
+				D_8005BB34[3].v.ob[2] = z - halfZ;
+				D_8005BB34[3].v.flag = 0;
+				D_8005BB34[3].v.tc[0] = 0;
+				D_8005BB34[3].v.tc[1] = 0;
+				D_8005BB34[3].v.cn[0] = 0;
+				D_8005BB34[3].v.cn[1] = 0xFF;
+				D_8005BB34[3].v.cn[2] = 0xFF;
+				D_8005BB34[3].v.cn[3] = 0xFF;
+				D_8005BB34[4].v.ob[0] = x - halfX;
+				D_8005BB34[4].v.ob[1] = y + halfY;
+				D_8005BB34[4].v.ob[2] = z + halfZ;
+				D_8005BB34[4].v.flag = 0;
+				D_8005BB34[4].v.tc[0] = 0;
+				D_8005BB34[4].v.tc[1] = 0;
+				D_8005BB34[4].v.cn[0] = 0xFF;
+				D_8005BB34[4].v.cn[1] = 0;
+				D_8005BB34[4].v.cn[2] = 0;
+				D_8005BB34[4].v.cn[3] = 0xFF;
+				D_8005BB34[5].v.ob[0] = x - halfX;
+				D_8005BB34[5].v.ob[1] = y - halfY;
+				D_8005BB34[5].v.ob[2] = z + halfZ;
+				D_8005BB34[5].v.flag = 0;
+				D_8005BB34[5].v.tc[0] = 0;
+				D_8005BB34[5].v.tc[1] = 0;
+				D_8005BB34[5].v.cn[0] = 0xFF;
+				D_8005BB34[5].v.cn[1] = 0;
+				D_8005BB34[5].v.cn[2] = 0xFF;
+				D_8005BB34[5].v.cn[3] = 0xFF;
+				D_8005BB34[6].v.ob[0] = x - halfX;
+				D_8005BB34[6].v.ob[1] = y + halfY;
+				D_8005BB34[6].v.ob[2] = z - halfZ;
+				D_8005BB34[6].v.flag = 0;
+				D_8005BB34[6].v.tc[0] = 0;
+				D_8005BB34[6].v.tc[1] = 0;
+				D_8005BB34[6].v.cn[0] = 0xFF;
+				D_8005BB34[6].v.cn[1] = 0xFF;
+				D_8005BB34[6].v.cn[2] = 0;
+				D_8005BB34[6].v.cn[3] = 0xFF;
+				D_8005BB34[7].v.ob[0] = x - halfX;
+				D_8005BB34[7].v.ob[1] = y - halfY;
+				D_8005BB34[7].v.ob[2] = z - halfZ;
+				D_8005BB34[7].v.flag = 0;
+				D_8005BB34[7].v.tc[0] = 0;
+				D_8005BB34[7].v.tc[1] = 0;
+				D_8005BB34[7].v.cn[0] = 0xFF;
+				D_8005BB34[7].v.cn[1] = 0xFF;
+				D_8005BB34[7].v.cn[2] = 0xFF;
+				D_8005BB34[7].v.cn[3] = 0xFF;
 
-		if (var_s5) {} {
-			for (; var_s5--; ) {
-				if (var_s3->unk2C != 0) {
-					temp_t9 = var_s3->unk0 >> 16; temp_t8 = var_s3->unk4 >> 16; temp_s2 = var_s3->unk8 >> 16; temp_t7 = var_s3->unk18; temp_s4 = var_s3->unk1A; temp_a3 = var_s3->unk1C; D_8005BB34->v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34->v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34->v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34->v.flag = 0;
-					D_8005BB34->v.tc[0] = 0;
-					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = 0;
-					D_8005BB34->v.cn[1] = 0;
-					D_8005BB34->v.cn[2] = 0;
-					D_8005BB34->v.cn[3] = 0xFF;
-					D_8005BB34[1].v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34[1].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[1].v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34[1].v.flag = 0;
-					D_8005BB34[1].v.tc[0] = 0;
-					D_8005BB34[1].v.tc[1] = 0;
-					D_8005BB34[1].v.cn[0] = 0;
-					D_8005BB34[1].v.cn[1] = 0;
-					D_8005BB34[1].v.cn[2] = 0xFF;
-					D_8005BB34[1].v.cn[3] = 0xFF;
-					D_8005BB34[2].v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34[2].v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34[2].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[2].v.flag = 0;
-					D_8005BB34[2].v.tc[0] = 0;
-					D_8005BB34[2].v.tc[1] = 0;
-					D_8005BB34[2].v.cn[0] = 0;
-					D_8005BB34[2].v.cn[1] = 0xFF;
-					D_8005BB34[2].v.cn[2] = 0;
-					D_8005BB34[2].v.cn[3] = 0xFF;
-					D_8005BB34[3].v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34[3].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[3].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[3].v.flag = 0;
-					D_8005BB34[3].v.tc[0] = 0;
-					D_8005BB34[3].v.tc[1] = 0;
-					D_8005BB34[3].v.cn[0] = 0;
-					D_8005BB34[3].v.cn[1] = 0xFF;
-					D_8005BB34[3].v.cn[2] = 0xFF;
-					D_8005BB34[3].v.cn[3] = 0xFF;
-					D_8005BB34[4].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[4].v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34[4].v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34[4].v.flag = 0;
-					D_8005BB34[4].v.tc[0] = 0;
-					D_8005BB34[4].v.tc[1] = 0;
-					D_8005BB34[4].v.cn[0] = 0xFF;
-					D_8005BB34[4].v.cn[1] = 0;
-					D_8005BB34[4].v.cn[2] = 0;
-					D_8005BB34[4].v.cn[3] = 0xFF;
-					D_8005BB34[5].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[5].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[5].v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34[5].v.flag = 0;
-					D_8005BB34[5].v.tc[0] = 0;
-					D_8005BB34[5].v.tc[1] = 0;
-					D_8005BB34[5].v.cn[0] = 0xFF;
-					D_8005BB34[5].v.cn[1] = 0;
-					D_8005BB34[5].v.cn[2] = 0xFF;
-					D_8005BB34[5].v.cn[3] = 0xFF;
-					D_8005BB34[6].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[6].v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34[6].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[6].v.flag = 0;
-					D_8005BB34[6].v.tc[0] = 0;
-					D_8005BB34[6].v.tc[1] = 0;
-					D_8005BB34[6].v.cn[0] = 0xFF;
-					D_8005BB34[6].v.cn[1] = 0xFF;
-					D_8005BB34[6].v.cn[2] = 0;
-					D_8005BB34[6].v.cn[3] = 0xFF;
-					D_8005BB34[7].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[7].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[7].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[7].v.flag = 0;
-					D_8005BB34[7].v.tc[0] = 0;
-					D_8005BB34[7].v.tc[1] = 0;
-					D_8005BB34[7].v.cn[0] = 0xFF;
-					D_8005BB34[7].v.cn[1] = 0xFF;
-					D_8005BB34[7].v.cn[2] = 0xFF;
-					D_8005BB34[7].v.cn[3] = 0xFF;
+				gSPVertex(D_8005BB30++, D_8005BB34, 8, 0);
+				gSPLine3D(D_8005BB30++, 0, 1, 0);
+				gSPLine3D(D_8005BB30++, 1, 3, 0);
+				gSPLine3D(D_8005BB30++, 3, 2, 0);
+				gSPLine3D(D_8005BB30++, 2, 0, 0);
+				gSPLine3D(D_8005BB30++, 4, 5, 0);
+				gSPLine3D(D_8005BB30++, 5, 7, 0);
+				gSPLine3D(D_8005BB30++, 7, 6, 0);
+				gSPLine3D(D_8005BB30++, 6, 4, 0);
+				gSPLine3D(D_8005BB30++, 7, 3, 0);
+				gSPLine3D(D_8005BB30++, 6, 2, 0);
+				gSPLine3D(D_8005BB30++, 5, 1, 0);
+				gSPLine3D(D_8005BB30++, 4, 0, 0);
 
-					gSPVertex(D_8005BB30++, D_8005BB34, 8, 0);
-					gSPLine3D(D_8005BB30++, 0, 1, 0);
-					gSPLine3D(D_8005BB30++, 1, 3, 0);
-					gSPLine3D(D_8005BB30++, 3, 2, 0);
-					gSPLine3D(D_8005BB30++, 2, 0, 0);
-					gSPLine3D(D_8005BB30++, 4, 5, 0);
-					gSPLine3D(D_8005BB30++, 5, 7, 0);
-					gSPLine3D(D_8005BB30++, 7, 6, 0);
-					gSPLine3D(D_8005BB30++, 6, 4, 0);
-					gSPLine3D(D_8005BB30++, 7, 3, 0);
-					gSPLine3D(D_8005BB30++, 6, 2, 0);
-					gSPLine3D(D_8005BB30++, 5, 1, 0);
-					gSPLine3D(D_8005BB30++, 4, 0, 0);
-
-					D_8005BB34 += 8;
-				}
-
-
-				var_s3++;
+				D_8005BB34 += 8;
 			}
+
+			entry++;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D884_13C834.s")
-#endif
 
 s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6)
 {
@@ -3817,217 +3729,227 @@ void func_8012E204_13D1B4(s16 arg0, s32 arg1) {
 	callback(arg1, arg0);
 }
 
-// CURRENT(19686)
-#ifdef NON_MATCHING
 void func_8012E258_13D208(void) {
-    s32 activeCount;
-    s32 i;
-    VehicleInstance *vehicle;
-    Unk8015FAD0 *entry;
-    s32 minY;
-    s16 x;
-    s16 y;
-    s16 z;
-    s16 halfX;
-    s16 halfZ;
-    s16 halfY;
-    s32 top;
-    s16 minX;
-    s16 maxX;
-    s16 minForward;
-    s16 minStrafe;
-    s16 pushX;
-    s16 collisionIdx;
-    s16 pushZ;
-    s16 side;
-    s16 behavior;
-    s16 minZ;
-    s16 maxZ;
-    s32 j;
-    s32 cornersReady;
-activeCount = D_80158FD8;
+	s32 activeCount;
+	s32 i;
+	VehicleInstance *vehicle;
+	Unk8015FAD0 *entry;
+	s32 minY;
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 halfX;
+	s16 halfZ;
+	s16 halfY;
+	s32 top;
+	s16 minX;
+	s16 maxX;
+	s16 minForward;
+	s16 minStrafe;
+	s16 pushX;
+	s16 collisionIdx;
+	s16 pushZ;
+	s16 side;
+	s16 behavior;
+	s16 minZ;
+	s16 maxZ;
+	s32 j;
+	s32 cornersReady;
+	activeCount = D_80158FD8;
 	D_80159320 &= 0xFEFFFFFF;
 	D_80159320 &= 0xFF7FFFFF;
 	if (activeCount--) {
-	do {
-		vehicle = &vehicleInstances[D_80158E80[activeCount]];
-
-		if ((currentLevel != 2) || (vehicle->unk1A != 5)) {
-			cornersReady = 0;
-			i = 0x18; entry = &D_8015FAD0[0x18]; do { if (entry->unk2C != 0) { if (entry->unk2C < 4) {
-				y = entry->unk4 >> 0x10; x = entry->unk0 >> 0x10; z = entry->unk8 >> 0x10;
-				halfX = entry->unk18;
-				halfZ = entry->unk1A; if (halfZ) {}
-				halfY = entry->unk1C;
-
-				if (halfZ < halfX) {
-					top = halfX;
-				} else {
-					top = halfZ;
-				}
-
-				
-
-				minY = top + vehicleTypes[vehicle->unk1A].unkC + 0x64;
-				if (((vehicle->unk0 - x >= 0) ? vehicle->unk0 - x : -(vehicle->unk0 - x)) < minY) {
-
-				
-				if (((vehicle->unk4 - z >= 0) ? vehicle->unk4 - z : -(vehicle->unk4 - z)) < minY) {
-
-				if ((vehicleTypes[vehicle->unk1A].unk38 + vehicle->unk2 >= y - halfY) && ((top = y + halfY) >= vehicle->unk2)) {
-
-				side = 0;
-				if (!cornersReady) {
-					cornersReady = 1;
-					func_8010C4EC_11B49C(vehicle);
-				}
-
-				minZ = 0x7FFF;
-				maxZ = -0x8000;
-				minX = -0x8000;
-				maxX = 0x7FFF;
-
-				{
-					j = 3; do {
-						f32 fx;
-						f32 fz;
-
-						fx = D_80159D78[j] + vehicle->unk4C;
-						fz = D_80159D98[j] + vehicle->unk54;
-
-						if ((f32)minX < fx) {
-							minX = (s16)fx;
+		do {
+			vehicle = &vehicleInstances[D_80158E80[activeCount]];
+			if ((currentLevel != 2) || (vehicle->unk1A != 5)) {
+				cornersReady = 0;
+				/* Keep the index initialization and entry address on the same line for IDO scheduling. */
+				i = 0x18; do { entry = &D_8015FAD0[i];
+					if ((entry->unk2C != 0) && (entry->unk2C < 4)) {
+						x = entry->unk0 >> 0x10;
+						y = entry->unk4 >> 0x10;
+						z = entry->unk8 >> 0x10;
+						halfX = entry->unk18;
+						halfZ = entry->unk1A;
+						halfY = entry->unk1C;
+						if (halfZ) {
 						}
-						if (fx < (f32)maxX) {
-							maxX = (s16)fx;
-						}
-						if (fz < (f32)minZ) {
-							minZ = (s16)fz;
-						}
-						if ((f32)maxZ < fz) {
-							maxZ = (s16)fz;
-						}
-					} while (j--);
-				}
-
-				minZ = -((minZ - z) - halfZ);
-				maxZ = (maxZ - z) + halfZ;
-				minX = (minX - x) + halfX;
-				maxX = -((maxX - x) - halfX);
-
-				minY = 0x7FFF;
-				if ((minZ <= 0) || (minX <= 0) || (maxZ <= 0) || (maxX <= 0)) {
-					behavior = 0;
-					collisionIdx = vehicleTypes[vehicle->unk1A].unk38 >> 1;
-				} else {
-					if ((minZ > 0) && (minZ < minY)) {
-						minY = minZ;
-						side = 1;
-					}
-					if ((maxZ > 0) && (maxZ < minY)) {
-						minY = maxZ;
-						side = 2;
-					}
-					if ((minX > 0) && (minX < minY)) {
-						minY = minX;
-						side = 3;
-					}
-					if ((maxX > 0) && (maxX < minY)) {
-						side = 4;
-					}
-
-					if ((side > 0) && (entry->unk2C == 2)) {
-						osSyncPrintf(D_801453B0_154360);
-						func_800FB468_10A418(vehicle, (f32)(top));
-						vehicle->unk34 = 0.0f;
-
-						if (entry->unk20 != NULL) {
-							((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
-						}
-						return;
-					}
-					behavior = 0;
-					collisionIdx = vehicleTypes[vehicle->unk1A].unk38 >> 1;
-				switch (side) {
-				case 1:
-					pushX = 0;
-					pushZ = minZ;
-					break;
-				case 2:
-					pushX = 0;
-					pushZ = -maxZ;
-					break;
-				case 3:
-					pushX = -minX;
-					pushZ = 0;
-					break;
-				case 4:
-					pushX = maxX;
-					pushZ = 0;
-					break;
-				}
-
+						minY = vehicleTypes[vehicle->unk1A].unkC + ((halfZ < halfX) ? halfX : halfZ) + 0x64;
+						if (((vehicle->unk0 - x >= 0) ? vehicle->unk0 - x : -(vehicle->unk0 - x)) < minY) {
+							top = (vehicle->unk4 - z >= 0) ? vehicle->unk4 - z : -(vehicle->unk4 - z);
+							if (top < minY) {
+								if ((vehicleTypes[vehicle->unk1A].unk38 + vehicle->unk2 >= y - halfY) && ((top = y + halfY) >= vehicle->unk2)) {
+									side = 0;
+									if (!cornersReady) {
+										cornersReady = 1;
+										func_8010C4EC_11B49C(vehicle);
+									}
+									minZ = 0x7FFF;
+									maxZ = -0x8000;
+									minX = -0x8000;
+									maxX = 0x7FFF;
+									{
+										j = 3; do {
+											f32 fx;
+											f32 fz;
+											fx = D_80159D78[j] + vehicle->unk4C;
+											fz = D_80159D98[j] + vehicle->unk54;
+											if ((f32)minX < fx) {
+												minX = (s16)fx;
+											}
+											if (fx < (f32)maxX) {
+												maxX = (s16)fx;
+											}
+											if (fz < (f32)minZ) {
+												minZ = (s16)fz;
+											}
+											if ((f32)maxZ < fz) {
+												maxZ = (s16)fz;
+											}
+										} while (j--);
+									}
+									minZ = -((minZ - z) - halfZ);
+									maxZ = (maxZ - z) + halfZ;
+									minX = (minX - x) + halfX;
+									maxX = -((maxX - x) - halfX);
+									minY = 0x7FFF;
+									if ((minZ <= 0) || (minX <= 0) || (maxZ <= 0) || (maxX <= 0)) {
+										behavior = 0;
+										collisionIdx = vehicleTypes[vehicle->unk1A].unk38 >> 1;
+									} else {
+										if ((minZ > 0) && (minZ < minY)) {
+											minY = minZ;
+											side = 1;
+										}
+										if ((maxZ > 0) && (maxZ < minY)) {
+											minY = maxZ;
+											side = 2;
+										}
+										if ((minX > 0) && (minX < minY)) {
+											minY = minX;
+											side = 3;
+										}
+										if ((maxX > 0) && (maxX < minY)) {
+											side = 4;
+										}
+										if ((side > 0) && (entry->unk2C == 2)) {
+											osSyncPrintf(D_801453B0_154360);
+											func_800FB468_10A418(vehicle, (f32)top);
+											vehicle->unk34 = 0.0f;
+											if (entry->unk20 != NULL) {
+												entry->unk20(vehicle, (s16)i);
+											}
+											return;
+										}
+										behavior = 0;
+										collisionIdx = vehicleTypes[vehicle->unk1A].unk38 >> 1;
+										switch (side) {
+											case 1:
+											pushX = 0;
+											pushZ = minZ;
+											break;
+											case 2:
+											pushX = 0;
+											pushZ = -maxZ;
+											break;
+											case 3:
+											pushX = -minX;
+											pushZ = 0;
+											break;
+											case 4:
+											pushX = maxX;
+											pushZ = 0;
+											break;
+										}
+									}
+									if (side > 0) {
+										if ((top - vehicle->unk2) < collisionIdx) {
+											behavior = 1;
+										} else {
+											minForward = pushX;
+											minStrafe = pushZ;
+											behavior = 2;
+										}
+									} else {
+										s16 xMax;
+										s16 xMin;
+										s16 zMax;
+										s16 zMin;
+										xMax = x + halfX;
+										xMin = x - halfX;
+										zMax = z + halfZ;
+										zMin = z - halfZ;
+										if (func_8010CF7C_11BF2C(xMax, zMax) != 0) {
+											if ((top - vehicle->unk2) < collisionIdx) {
+												behavior = 1;
+											} else {
+												minForward = 10;
+												minStrafe = 10;
+												behavior = 2;
+											}
+										}
+										if (func_8010CF7C_11BF2C(xMax, zMin) != 0) {
+											if ((top - vehicle->unk2) < collisionIdx) {
+												behavior = 1;
+											} else {
+												minForward = 10;
+												minStrafe = -10;
+												behavior = 2;
+											}
+										}
+										if (func_8010CF7C_11BF2C(xMin, zMax) != 0) {
+											if ((top - vehicle->unk2) < collisionIdx) {
+												behavior = 1;
+											} else {
+												minForward = -10;
+												minStrafe = 10;
+												behavior = 2;
+											}
+										}
+										if (func_8010CF7C_11BF2C(xMin, zMin) != 0) {
+											if ((top - vehicle->unk2) < collisionIdx) {
+												behavior = 1;
+											} else {
+												minForward = -10;
+												minStrafe = -10;
+												behavior = 2;
+											}
+										}
+									}
+									if (behavior != 0) {
+										switch (behavior) {
+											case 1:
+											func_800FB468_10A418(vehicle, (f32)top);
+											vehicle->unk34 = 0.0f;
+											func_800FB3C4_10A374(vehicle, (f32)((f64)entry->unkC / 65536.0));
+											func_800FB40C_10A3BC(vehicle, (f32)((f64)entry->unk14 / 65536.0));
+											if (entry->unk20 != NULL) {
+												entry->unk20(vehicle, (s16)i);
+											}
+											break;
+											case 2:
+											func_800FB430_10A3E0(vehicle, 0.0f);
+											func_800FB3C4_10A374(vehicle, minForward);
+											func_800FB40C_10A3BC(vehicle, minStrafe);
+											if (entry->unk20 != NULL) {
+												entry->unk20(vehicle, (s16)i);
+											}
+											break;
+											case 3:
+											if (entry->unk20 != NULL) {
+												entry->unk20(vehicle, (s16)i);
+											}
+											break;
+										}
+									}
 								}
-
-				if (side > 0) {
-					if (((top) - vehicle->unk2) < collisionIdx) { behavior = 1; } else { minForward = pushX; minStrafe = pushZ; behavior = 2; }
-				} else {
- s16 xMax; s16 xMin; s16 zMax; s16 zMin;
-					xMax = x + halfX;
-					xMin = x - halfX;
-					zMax = z + halfZ;
-					zMin = z - halfZ;
-
-					if (func_8010CF7C_11BF2C(xMax, zMax) != 0) {
-						if (((top) - vehicle->unk2) < collisionIdx) { behavior = 1; } else { minForward = 10; minStrafe = 10; behavior = 2; }
+							}
+						}
+					} else {
+						top = i;
 					}
-
-					if (func_8010CF7C_11BF2C(xMax, zMin) != 0) {
-						if (((top) - vehicle->unk2) < collisionIdx) { behavior = 1; } else { minForward = 10.0f; minStrafe = -10; behavior = 2; }
-					}
-
-					if (func_8010CF7C_11BF2C(xMin, zMax) != 0) {
-						if (((top) - vehicle->unk2) < collisionIdx) { behavior = 1; } else { minForward = -10; minStrafe = 10; behavior = 2; }
-					}
-
-					if (func_8010CF7C_11BF2C(xMin, zMin) != 0) {
-						if (((top) - vehicle->unk2) < collisionIdx) { behavior = 1; } else { minForward = -10; minStrafe = -10; behavior = 2; }
-					}
-				}
-
-				if (behavior != 0) { switch (behavior) {
-				case 1:
-					func_800FB468_10A418(vehicle, (f32)(top));
-					vehicle->unk34 = 0.0f;
-					func_800FB3C4_10A374(vehicle, (f32)((f64)entry->unkC / 65536.0));
-					func_800FB40C_10A3BC(vehicle, (f32)((f64)entry->unk14 / 65536.0));
-					if (entry->unk20 != NULL) {
-						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
-					}
-					break;
-
-				case 2:
-					func_800FB430_10A3E0(vehicle, 0.0f);
-					func_800FB3C4_10A374(vehicle, minForward);
-					func_800FB40C_10A3BC(vehicle, minStrafe);
-					if (entry->unk20 != NULL) {
-						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
-					}
-					break;
-
-				case 3:
-					if (entry->unk20 != NULL) {
-						((void (*)(VehicleInstance *, s16))entry->unk20)(vehicle, (s16)i);
-					}
-					break;
-				}
-				}
-				} } } } else { i |= 0; } } entry--; } while (i--);
-		}
-
-	} while (activeCount--);
+				} while (i--);
+			}
+		} while (activeCount--);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012E258_13D208.s")
-#endif

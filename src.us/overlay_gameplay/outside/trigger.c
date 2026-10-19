@@ -922,7 +922,7 @@ u8 func_800B03CC_BF37C(u8 arg0, s16 arg1, s16 arg2)
 	parentAlien = &alienInstances[alienInstances[temp_v0].unk25];
 	*((s16 *)&parentAlien->unk24) = arg1;
 	*((s16 *)&parentAlien->unk26) = arg2;
-	D_80140AC4_14FA74 = (s32)&alienInstances[temp_v0];
+	D_80140AC4_14FA74 = &alienInstances[temp_v0];
 	osSyncPrintf("Add boss %d, %d\n", temp_v0, alienInstances[temp_v0].unk25);
 	D_80140AB0_14FA60[0] = &alienInstances[temp_v0];
 
