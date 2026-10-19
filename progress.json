@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-18T08:22:53Z",
-  "commit": "d687bd5c",
-  "commit_timestamp": "2026-10-18T21:22:01+13:00",
+  "generated": "2026-10-19T01:10:42Z",
+  "commit": "1d0f23a3",
+  "commit_timestamp": "2026-10-19T14:09:48+13:00",
   "overall": {
     "total_functions": 3058,
-    "matched": 2632,
-    "non_matching": 425,
+    "matched": 2648,
+    "non_matching": 409,
     "asm_stubs": 1,
-    "matched_pct": 86.07,
+    "matched_pct": 86.59,
     "decompiled_pct": 99.97
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1203,
-      "non_matching": 246,
+      "matched": 1219,
+      "non_matching": 230,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 83.0,
+      "matched_pct": 84.1,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -2181,7 +2181,7 @@
       "asm_stubs": 0,
       "total": 219,
       "matched_pct": 81.3,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/101840_rodata.c",
@@ -2261,17 +2261,17 @@
       "asm_stubs": 0,
       "total": 23,
       "matched_pct": 65.2,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/884C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 151,
-      "non_matching": 23,
+      "matched": 167,
+      "non_matching": 7,
       "asm_stubs": 0,
       "total": 174,
-      "matched_pct": 86.8,
-      "contributor": "lunarlaurus"
+      "matched_pct": 96.0,
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/9BFF0.c",
@@ -2596,18 +2596,18 @@
   ],
   "contributors": [
     {
-      "name": "lunarlaurus",
-      "files": 37,
-      "matched": 1462,
-      "non_matching": 306,
-      "asm_stubs": 0
+      "name": "jaytheham",
+      "files": 66,
+      "matched": 1193,
+      "non_matching": 175,
+      "asm_stubs": 1
     },
     {
-      "name": "jaytheham",
-      "files": 63,
-      "matched": 833,
-      "non_matching": 119,
-      "asm_stubs": 1
+      "name": "lunarlaurus",
+      "files": 34,
+      "matched": 1118,
+      "non_matching": 234,
+      "asm_stubs": 0
     },
     {
       "name": "Jay",
@@ -2886,9 +2886,9 @@
     },
     {
       "date": "2026-10-18",
-      "commit": "0f7a72b",
-      "matched": 2632,
-      "non_matching": 425,
+      "commit": "7cf8c68",
+      "matched": 2648,
+      "non_matching": 409,
       "total": 3058
     }
   ]
