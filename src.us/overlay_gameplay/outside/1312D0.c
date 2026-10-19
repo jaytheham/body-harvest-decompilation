@@ -3538,135 +3538,133 @@ void func_8012D84C_13C7FC()
 	}
 }
 
-// CURRENT(20): four register differences remain in the initial matrix packet.
 // DisplayForces - Debug draw interaction boxes
-#ifdef NON_MATCHING
 void func_8012D884_13C834(void) {
-	Unk8015FAD0 *var_s3;
-	s16 temp_a3;
-	s16 temp_s2;
-	s16 temp_t7;
-	s16 temp_s4;
-	s16 temp_t8;
-	s16 temp_t9;
-	Gfx *matrix; Gfx *packet;
-	s32 var_s5;
+	Unk8015FAD0 *entry;
+	s16 halfY;
+	s16 z;
+	s16 halfX;
+	s16 halfZ;
+	s16 y;
+	s16 x;
+	s32 i;
 
-	var_s3 = D_8015FAD0;
+	entry = D_8015FAD0;
 	if (D_80047710 == -0x63) {
-		matrix = D_8005BB2C; D_8005BB2C = &matrix[1]; packet = matrix++; gSPMatrix(packet++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW); var_s5 = 25; if (var_s5) {}
+		i = 25;
+		if (i) {} /* Preserve the counter live range across the matrix packet. */
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
+		for (; i--; ) {
+			if (entry->unk2C != 0) {
+				x = entry->unk0 >> 16;
+				y = entry->unk4 >> 16;
+				z = entry->unk8 >> 16;
+				halfX = entry->unk18;
+				halfZ = entry->unk1A;
+				halfY = entry->unk1C;
+				D_8005BB34->v.ob[0] = x + halfX;
+				D_8005BB34->v.ob[1] = y + halfY;
+				D_8005BB34->v.ob[2] = z + halfZ;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = 0xFF;
+				D_8005BB34[1].v.ob[0] = x + halfX;
+				D_8005BB34[1].v.ob[1] = y - halfY;
+				D_8005BB34[1].v.ob[2] = z + halfZ;
+				D_8005BB34[1].v.flag = 0;
+				D_8005BB34[1].v.tc[0] = 0;
+				D_8005BB34[1].v.tc[1] = 0;
+				D_8005BB34[1].v.cn[0] = 0;
+				D_8005BB34[1].v.cn[1] = 0;
+				D_8005BB34[1].v.cn[2] = 0xFF;
+				D_8005BB34[1].v.cn[3] = 0xFF;
+				D_8005BB34[2].v.ob[0] = x + halfX;
+				D_8005BB34[2].v.ob[1] = y + halfY;
+				D_8005BB34[2].v.ob[2] = z - halfZ;
+				D_8005BB34[2].v.flag = 0;
+				D_8005BB34[2].v.tc[0] = 0;
+				D_8005BB34[2].v.tc[1] = 0;
+				D_8005BB34[2].v.cn[0] = 0;
+				D_8005BB34[2].v.cn[1] = 0xFF;
+				D_8005BB34[2].v.cn[2] = 0;
+				D_8005BB34[2].v.cn[3] = 0xFF;
+				D_8005BB34[3].v.ob[0] = x + halfX;
+				D_8005BB34[3].v.ob[1] = y - halfY;
+				D_8005BB34[3].v.ob[2] = z - halfZ;
+				D_8005BB34[3].v.flag = 0;
+				D_8005BB34[3].v.tc[0] = 0;
+				D_8005BB34[3].v.tc[1] = 0;
+				D_8005BB34[3].v.cn[0] = 0;
+				D_8005BB34[3].v.cn[1] = 0xFF;
+				D_8005BB34[3].v.cn[2] = 0xFF;
+				D_8005BB34[3].v.cn[3] = 0xFF;
+				D_8005BB34[4].v.ob[0] = x - halfX;
+				D_8005BB34[4].v.ob[1] = y + halfY;
+				D_8005BB34[4].v.ob[2] = z + halfZ;
+				D_8005BB34[4].v.flag = 0;
+				D_8005BB34[4].v.tc[0] = 0;
+				D_8005BB34[4].v.tc[1] = 0;
+				D_8005BB34[4].v.cn[0] = 0xFF;
+				D_8005BB34[4].v.cn[1] = 0;
+				D_8005BB34[4].v.cn[2] = 0;
+				D_8005BB34[4].v.cn[3] = 0xFF;
+				D_8005BB34[5].v.ob[0] = x - halfX;
+				D_8005BB34[5].v.ob[1] = y - halfY;
+				D_8005BB34[5].v.ob[2] = z + halfZ;
+				D_8005BB34[5].v.flag = 0;
+				D_8005BB34[5].v.tc[0] = 0;
+				D_8005BB34[5].v.tc[1] = 0;
+				D_8005BB34[5].v.cn[0] = 0xFF;
+				D_8005BB34[5].v.cn[1] = 0;
+				D_8005BB34[5].v.cn[2] = 0xFF;
+				D_8005BB34[5].v.cn[3] = 0xFF;
+				D_8005BB34[6].v.ob[0] = x - halfX;
+				D_8005BB34[6].v.ob[1] = y + halfY;
+				D_8005BB34[6].v.ob[2] = z - halfZ;
+				D_8005BB34[6].v.flag = 0;
+				D_8005BB34[6].v.tc[0] = 0;
+				D_8005BB34[6].v.tc[1] = 0;
+				D_8005BB34[6].v.cn[0] = 0xFF;
+				D_8005BB34[6].v.cn[1] = 0xFF;
+				D_8005BB34[6].v.cn[2] = 0;
+				D_8005BB34[6].v.cn[3] = 0xFF;
+				D_8005BB34[7].v.ob[0] = x - halfX;
+				D_8005BB34[7].v.ob[1] = y - halfY;
+				D_8005BB34[7].v.ob[2] = z - halfZ;
+				D_8005BB34[7].v.flag = 0;
+				D_8005BB34[7].v.tc[0] = 0;
+				D_8005BB34[7].v.tc[1] = 0;
+				D_8005BB34[7].v.cn[0] = 0xFF;
+				D_8005BB34[7].v.cn[1] = 0xFF;
+				D_8005BB34[7].v.cn[2] = 0xFF;
+				D_8005BB34[7].v.cn[3] = 0xFF;
 
-		if (var_s5) {} {
-			for (; var_s5--; ) {
-				if (var_s3->unk2C != 0) {
-					temp_t9 = var_s3->unk0 >> 16; temp_t8 = var_s3->unk4 >> 16; temp_s2 = var_s3->unk8 >> 16; temp_t7 = var_s3->unk18; temp_s4 = var_s3->unk1A; temp_a3 = var_s3->unk1C; D_8005BB34->v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34->v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34->v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34->v.flag = 0;
-					D_8005BB34->v.tc[0] = 0;
-					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = 0;
-					D_8005BB34->v.cn[1] = 0;
-					D_8005BB34->v.cn[2] = 0;
-					D_8005BB34->v.cn[3] = 0xFF;
-					D_8005BB34[1].v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34[1].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[1].v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34[1].v.flag = 0;
-					D_8005BB34[1].v.tc[0] = 0;
-					D_8005BB34[1].v.tc[1] = 0;
-					D_8005BB34[1].v.cn[0] = 0;
-					D_8005BB34[1].v.cn[1] = 0;
-					D_8005BB34[1].v.cn[2] = 0xFF;
-					D_8005BB34[1].v.cn[3] = 0xFF;
-					D_8005BB34[2].v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34[2].v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34[2].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[2].v.flag = 0;
-					D_8005BB34[2].v.tc[0] = 0;
-					D_8005BB34[2].v.tc[1] = 0;
-					D_8005BB34[2].v.cn[0] = 0;
-					D_8005BB34[2].v.cn[1] = 0xFF;
-					D_8005BB34[2].v.cn[2] = 0;
-					D_8005BB34[2].v.cn[3] = 0xFF;
-					D_8005BB34[3].v.ob[0] = temp_t9 + temp_t7;
-					D_8005BB34[3].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[3].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[3].v.flag = 0;
-					D_8005BB34[3].v.tc[0] = 0;
-					D_8005BB34[3].v.tc[1] = 0;
-					D_8005BB34[3].v.cn[0] = 0;
-					D_8005BB34[3].v.cn[1] = 0xFF;
-					D_8005BB34[3].v.cn[2] = 0xFF;
-					D_8005BB34[3].v.cn[3] = 0xFF;
-					D_8005BB34[4].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[4].v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34[4].v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34[4].v.flag = 0;
-					D_8005BB34[4].v.tc[0] = 0;
-					D_8005BB34[4].v.tc[1] = 0;
-					D_8005BB34[4].v.cn[0] = 0xFF;
-					D_8005BB34[4].v.cn[1] = 0;
-					D_8005BB34[4].v.cn[2] = 0;
-					D_8005BB34[4].v.cn[3] = 0xFF;
-					D_8005BB34[5].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[5].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[5].v.ob[2] = temp_s2 + temp_s4;
-					D_8005BB34[5].v.flag = 0;
-					D_8005BB34[5].v.tc[0] = 0;
-					D_8005BB34[5].v.tc[1] = 0;
-					D_8005BB34[5].v.cn[0] = 0xFF;
-					D_8005BB34[5].v.cn[1] = 0;
-					D_8005BB34[5].v.cn[2] = 0xFF;
-					D_8005BB34[5].v.cn[3] = 0xFF;
-					D_8005BB34[6].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[6].v.ob[1] = temp_t8 + temp_a3;
-					D_8005BB34[6].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[6].v.flag = 0;
-					D_8005BB34[6].v.tc[0] = 0;
-					D_8005BB34[6].v.tc[1] = 0;
-					D_8005BB34[6].v.cn[0] = 0xFF;
-					D_8005BB34[6].v.cn[1] = 0xFF;
-					D_8005BB34[6].v.cn[2] = 0;
-					D_8005BB34[6].v.cn[3] = 0xFF;
-					D_8005BB34[7].v.ob[0] = temp_t9 - temp_t7;
-					D_8005BB34[7].v.ob[1] = temp_t8 - temp_a3;
-					D_8005BB34[7].v.ob[2] = temp_s2 - temp_s4;
-					D_8005BB34[7].v.flag = 0;
-					D_8005BB34[7].v.tc[0] = 0;
-					D_8005BB34[7].v.tc[1] = 0;
-					D_8005BB34[7].v.cn[0] = 0xFF;
-					D_8005BB34[7].v.cn[1] = 0xFF;
-					D_8005BB34[7].v.cn[2] = 0xFF;
-					D_8005BB34[7].v.cn[3] = 0xFF;
+				gSPVertex(D_8005BB30++, D_8005BB34, 8, 0);
+				gSPLine3D(D_8005BB30++, 0, 1, 0);
+				gSPLine3D(D_8005BB30++, 1, 3, 0);
+				gSPLine3D(D_8005BB30++, 3, 2, 0);
+				gSPLine3D(D_8005BB30++, 2, 0, 0);
+				gSPLine3D(D_8005BB30++, 4, 5, 0);
+				gSPLine3D(D_8005BB30++, 5, 7, 0);
+				gSPLine3D(D_8005BB30++, 7, 6, 0);
+				gSPLine3D(D_8005BB30++, 6, 4, 0);
+				gSPLine3D(D_8005BB30++, 7, 3, 0);
+				gSPLine3D(D_8005BB30++, 6, 2, 0);
+				gSPLine3D(D_8005BB30++, 5, 1, 0);
+				gSPLine3D(D_8005BB30++, 4, 0, 0);
 
-					gSPVertex(D_8005BB30++, D_8005BB34, 8, 0);
-					gSPLine3D(D_8005BB30++, 0, 1, 0);
-					gSPLine3D(D_8005BB30++, 1, 3, 0);
-					gSPLine3D(D_8005BB30++, 3, 2, 0);
-					gSPLine3D(D_8005BB30++, 2, 0, 0);
-					gSPLine3D(D_8005BB30++, 4, 5, 0);
-					gSPLine3D(D_8005BB30++, 5, 7, 0);
-					gSPLine3D(D_8005BB30++, 7, 6, 0);
-					gSPLine3D(D_8005BB30++, 6, 4, 0);
-					gSPLine3D(D_8005BB30++, 7, 3, 0);
-					gSPLine3D(D_8005BB30++, 6, 2, 0);
-					gSPLine3D(D_8005BB30++, 5, 1, 0);
-					gSPLine3D(D_8005BB30++, 4, 0, 0);
-
-					D_8005BB34 += 8;
-				}
-
-
-				var_s3++;
+				D_8005BB34 += 8;
 			}
+
+			entry++;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_8012D884_13C834.s")
-#endif
 
 s32 func_8012DDA8_13CD58(s16 arg0, s16 arg1, s16 arg2, s16 arg3, void *arg4, s32 arg5, s32 *arg6)
 {
