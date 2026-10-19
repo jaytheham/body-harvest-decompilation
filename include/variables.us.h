@@ -3009,6 +3009,9 @@ extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
 extern AlienType alienTypes[0x30]; // 80256680
+extern AlienType D_802566E8; // aliases alienTypes[1]
+extern AlienType D_80256750; // aliases alienTypes[2]
+extern AlienType D_80256DD0; // aliases alienTypes[18]
 extern u16 D_8025668C[]; // 8025668C (aliases alienTypes[0].unkC)
 extern u16 D_802566BA[]; // 802566BA
 extern s32 D_80256DEC;

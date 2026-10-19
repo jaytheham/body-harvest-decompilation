@@ -1013,7 +1013,7 @@ void func_80015674_16274(s16 arg0);
 void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s32 *arg4);
 void func_80124B5C_133B0C(s16, s16, s16, s32, s32);
 Projectile *func_80129354_138304(EntityInstance *, s32, s32, s32, s32);
-Projectile *func_80129864_138814(s32, s32, s32, s32, s32);
+Projectile *func_80129864_138814(EntityInstance *, s32, s32, s32, s32);
 void func_8012B110_13A0C0(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2);
 void func_8012B26C_13A21C(void);
 void func_8012D808_13C7B8(s32);

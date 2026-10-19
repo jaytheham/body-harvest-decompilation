@@ -1832,7 +1832,16 @@ typedef struct {
 	};
 	/* 0x06 */ u8 pad6[0x2];
 	/* 0x08 */ s32 unk8;
-	/* 0x0C */ s32 unkC;
+	union {
+		/* 0x0C */ s32 unkC;
+		AlienInstance *alien;
+		VehicleInstance *vehicle;
+		EntityInstance *entity;
+		struct {
+			s16 objectHigh;
+			s16 objectIndex;
+		};
+	};
 	/* 0x10 */ u8 unk10;
 	/* 0x11 */ u8 pad11[0x3];
 } Unk8015F9D0; /* size = 0x14 */
@@ -1955,7 +1964,13 @@ typedef struct {
 } InputStruct_8012B150; /* size = 0x06 */
 
 typedef struct {
-	/* 0x00 */ char pad[0x18];
+	union {
+		/* 0x00 */ char pad[0x18];
+		struct {
+			Unk8015F9D0 hit;
+			u8 pad14[4];
+		};
+	};
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ s32 unk1C;
 	/* 0x20 */ s32 unk20;
