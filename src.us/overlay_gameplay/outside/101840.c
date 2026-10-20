@@ -9347,8 +9347,6 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(745): indexed vehicle reload restores shift/add stride; loop-exit layout remains.
 s32 func_8010E480_11D430(void) {
     BuildingInstance *building;
     VehicleInstance *vehicle;
@@ -9356,6 +9354,7 @@ s32 func_8010E480_11D430(void) {
     s16 z;
     s32 i;
     u8 index;
+    s32 radius;
 
     i = D_80152C96;
     while (i--) {
@@ -9369,30 +9368,30 @@ s32 func_8010E480_11D430(void) {
                 z = building->zCoord;
                 x = (x << 8) + 0x80;
                 z = (z << 8) + 0x80;
-                if (func_8010DC00_11CBB0(x, z, 0x12) != 0) {
-                    break;
+                if (func_8010DC00_11CBB0(x, z, 0x12)) {
+                    goto hit;
                 }
-                index = D_80152CA0[i].unk0;
-                vehicle = &vehicleInstances[index];
+                vehicle = &vehicleInstances[(s32)D_80152CA0[i].unk0];
             case 2:
                 x = vehicle->unk0;
                 z = vehicle->unk4;
-                if (func_8010DC00_11CBB0(x, z, vehicleTypes[vehicle->unk1A].unkC / 12) != 0) {
-                    break;
+                radius = vehicleTypes[vehicle->unk1A].unkC / 12;
+                /* Preserve IDO's pointer allocation; both updates compile away here. */
+                vehicle = &vehicle[1];
+                vehicle = &vehicle[-1];
+                if (func_8010DC00_11CBB0(x, z, radius)) {
+                    goto hit;
                 }
             default:
                 continue;
             }
-            func_80102D00_111CB0(D_80159D5C, (D_80159D5C->unk0 - x) * 0.0625, 0.0f, (D_80159D5C->unk4 - z) * 0.0625);
-            return 1;
         }
     }
     return 0;
+hit:
+    func_80102D00_111CB0(D_80159D5C, (D_80159D5C->unk0 - x) * 0.0625, 0.0f, (D_80159D5C->unk4 - z) * 0.0625);
+    return 1;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010E480_11D430.s")
-#endif
 
 s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
 	AlienType *type;
