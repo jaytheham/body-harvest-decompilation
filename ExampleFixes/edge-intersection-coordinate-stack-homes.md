@@ -1,0 +1,5 @@
+`incorrect ASM`: `func_8010EA54_11DA04` used sequential `if (result == 0)` edge tests, adding branch-delay nops and loading both center coordinates early. The second absolute-value test lacked the target unconditional branch. Converted coordinates spilled at `sp+0x4C/0x48/0x44/0x40` instead of `sp+0x54/0x48/0x44/0x40`.
+
+-> `code changed`: Combine the four intersection calls with short-circuit `||`. Use direct vehicle fields in the final three calls, explicit `if/else` absolute values, and a separate signed-short copy of the second argument for the bound test. Keep the first converted coordinate in a one-element float array and the other three in a three-element float array. Declare one reserved word between the signed-short copy and the three-element array.
+
+-> `correct ASM`: The first three calls branch directly to the shared hit block, with the next vehicle-pointer load in the delay slot. Both absolute-value branches retain their explicit second arms. The frame is `0x70`, intersection outputs are `sp+0x64/0x60`, and converted coordinates use `sp+0x54/0x48/0x44/0x40`. Full US ROM checksum matches.

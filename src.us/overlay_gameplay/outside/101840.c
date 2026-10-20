@@ -9449,20 +9449,19 @@ s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
 	return 0;
 }
 
-// CURRENT(7074): structured edge tests; argument preservation and local storage remain.
-#ifdef NON_MATCHING
 s32 func_8010EA54_11DA04(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4) {
 	s16 camX;
 	s16 camY;
 	int temp;
 	f32 hit[2];
-	f32 sp54;
-	f32 sp48;
-	f32 sp44;
-	f32 sp40;
 	s32 absX;
 	s32 absY;
+	f32 savedX[1];
+	s16 y;
+	s32 padding; /* Preserve the converted-coordinate stack homes. */
+	f32 endpoints[3];
 
+	y = arg1;
 	camX = D_80159D5C->unk0;
 	temp = (s16)(((arg0 - arg2) >> 1) + arg0) - camX;
 	if (temp >= 0) {
@@ -9470,52 +9469,31 @@ s32 func_8010EA54_11DA04(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4) {
 	} else {
 		absX = -temp;
 	}
-
 	camY = D_80159D5C->unk4;
-	temp = (s16)(((arg1 - arg3) >> 1) + arg1) - camY;
-	absY = -temp;
+	temp = (s16)(((y - arg3) >> 1) + y) - camY;
 	if (temp >= 0) {
 		absY = temp;
+	} else {
+		absY = -temp;
 	}
-
 	if ((absY + absX) >= ((D_80159D64->unkC * 2) + 0x200)) {
 		return 0;
 	}
 
-	sp54 = arg0;
-	sp48 = arg1;
-	sp44 = arg2;
-	sp40 = arg3;
-	temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[0] + camX, D_80159D98[0] + camY, D_80159D78[1] + camX,
-						 D_80159D98[1] + camY, &hit[1], &hit[0]);
-	if (temp == 0) {
-		camX = D_80159D5C->unk0;
-		camY = D_80159D5C->unk4;
-		temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[1] + camX, D_80159D98[1] + camY, D_80159D78[2] + camX,
-						 D_80159D98[2] + camY, &hit[1], &hit[0]);
-	}
-	if (temp == 0) {
-		camX = D_80159D5C->unk0;
-		camY = D_80159D5C->unk4;
-		temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[2] + camX, D_80159D98[2] + camY, D_80159D78[3] + camX,
-						 D_80159D98[3] + camY, &hit[1], &hit[0]);
-	}
-	if (temp == 0) {
-		camX = D_80159D5C->unk0;
-		camY = D_80159D5C->unk4;
-		temp = func_8010EF40_11DEF0(sp54, sp48, sp44, sp40, D_80159D78[3] + camX, D_80159D98[3] + camY, D_80159D78[0] + camX,
-						 D_80159D98[0] + camY, &hit[1], &hit[0]);
-	}
-	if (temp != 0) {
+	savedX[0] = arg0;
+	endpoints[2] = arg1;
+	endpoints[1] = arg2;
+	endpoints[0] = arg3;
+	if (func_8010EF40_11DEF0(savedX[0], endpoints[2], endpoints[1], endpoints[0], D_80159D78[0] + camX, D_80159D98[0] + camY, D_80159D78[1] + camX, D_80159D98[1] + camY, &hit[1], &hit[0]) ||
+		func_8010EF40_11DEF0(savedX[0], endpoints[2], endpoints[1], endpoints[0], D_80159D78[1] + D_80159D5C->unk0, D_80159D98[1] + D_80159D5C->unk4, D_80159D78[2] + D_80159D5C->unk0, D_80159D98[2] + D_80159D5C->unk4, &hit[1], &hit[0]) ||
+		func_8010EF40_11DEF0(savedX[0], endpoints[2], endpoints[1], endpoints[0], D_80159D78[2] + D_80159D5C->unk0, D_80159D98[2] + D_80159D5C->unk4, D_80159D78[3] + D_80159D5C->unk0, D_80159D98[3] + D_80159D5C->unk4, &hit[1], &hit[0]) ||
+		func_8010EF40_11DEF0(savedX[0], endpoints[2], endpoints[1], endpoints[0], D_80159D78[3] + D_80159D5C->unk0, D_80159D98[3] + D_80159D5C->unk4, D_80159D78[0] + D_80159D5C->unk0, D_80159D98[0] + D_80159D5C->unk4, &hit[1], &hit[0])) {
 		*arg4 = func_800F9D24_108CD4((s16)(s32)hit[1], (s16)(s32)hit[0]);
 		return 1;
 	}
 	*arg4 = 0;
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010EA54_11DA04.s")
-#endif
 
 void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 	f32 dist;
