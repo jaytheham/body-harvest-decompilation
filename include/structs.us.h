@@ -1636,12 +1636,27 @@ typedef struct {
 	/* 0x17 */ u8 unk17;
 } BuildingInstance; /* size = 0x18 */
 
+typedef struct {
+	u32 unk0;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
+} BuildingCollisionVolume;
+
+typedef struct {
+	s16 values[16];
+} TerrainCollisionRow;
+
 // 0x00 xxyyyyyy yyyyyy = Model
 // 0x04 xxyyyyyy yyyyyy = Damaged model
 // 0x10 xxyyzzaa yy = Collision data
 // 0x18 xxyyzzaa yy = Max health aa = Detail props(00 = Windmill 01 = flag 02 = Fountain effect 04 = Black oblong 05 = Statue's hand 06 = Grass oblong
 typedef struct {
-	/* 0x00 */ u8 pad0[0x10];
+	union {
+		u8 pad0[0x10];
+		struct { void *model; u8 padModel[0xC]; };
+	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;

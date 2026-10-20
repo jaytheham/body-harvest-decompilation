@@ -117,11 +117,11 @@ const u32 jtbl_80144D20_153CD0[] = {
 	OVERLAY_PTR(0x8010FC24),
 };
 
-const f64 D_80144D50_153D00[1] = {0.33};
+const ShadowGeometryConstant D_80144D50_153D00 = {0.33};
 
-const f64 D_80144D58_153D08[1] = {0.33};
+const ShadowGeometryConstant D_80144D58_153D08 = {0.33};
 
-const f64 D_80144D60_153D10[1] = {0.33};
+const ShadowGeometryConstant D_80144D60_153D10 = {0.33};
 
 const f64 D_80144D68_153D18[1] = {1.1};
 
