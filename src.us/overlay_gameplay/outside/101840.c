@@ -10307,7 +10307,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	s16 spDA;
 	s16 spD8;
 	s16 spD6;
-	s16 spD4;
+	union { u16 raw[1]; s16 signedValue; } topHeight;
 	s16 spD2;
 	s16 spD0;
 	s16 spCE;
@@ -10336,6 +10336,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	BuildingInstance *building;
 	BuildingType *buildingType;
 	s32 sp70;
+	s32 height;
 
 	arg1 = (&arg1)[0];
 	func_800FAE60_109E10(arg0);
@@ -10349,8 +10350,9 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	func_8010C4EC_11B49C(arg0);
-	spD4 = arg0->unk2 + vehicleType->unk38;
+	height = vehicleType->unk38;
 	spD2 = arg0->unk2;
+	topHeight.raw[0] = arg0->unk2 + (height & 0xFFFF);
 
 	if (arg1 == 0) {
 		func_801103B4_11F364(arg0, vehicleType);
@@ -10366,7 +10368,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		s16 *strip = D_80158BC8;
 
 		do {
-			if ((strip[3] != -0x8000) && (spD4 >= strip[1]) && (strip[3] >= spD2) && (func_8010CF7C_11BF2C(strip[0], strip[2]) != 0)) {
+			if ((strip[3] != -0x8000) && (((s16)topHeight.raw[0]) >= strip[1]) && (strip[3] >= spD2) && (func_8010CF7C_11BF2C(strip[0], strip[2]) != 0)) {
 				if (arg1 == 0) {
 					func_800FB430_10A3E0(arg0, (f32) ((s16) arg0->unk12 >> 1));
 					arg0->unk30 = arg0->unk30 / 2;
@@ -10400,8 +10402,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		} while (zPoint < &D_80159D98[4]);
 	}
 
-	minZ = (minZ & ~0x7F) | 0x40;
-	minX = (minX & ~0x7F) | 0x40;
+	minZ &= ~0x7F; minX &= ~0x7F;
+	minX |= 0x40; minZ |= 0x40;
 	gridX = minX;
 
 	while (gridX < maxX + 0x80) {
@@ -10457,10 +10459,9 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	if (!(vehicleTypes[arg0->unk1A].unk4C & 0x20000000)) {
-		gridX = 3;
 		if (currentLevel == 1) {
-			xPoint = &D_80159D78[3];
-			zPoint = &D_80159D98[3];
+			gridX = 3;
+			xPoint = &D_80159D78[3]; zPoint = &D_80159D98[3];
 		do {
 				if (func_8010F72C_11E6DC((s16) (s32) (*xPoint + arg0->unk4C), (s16) (s32) arg0->unk50,
 										(s16) (s32) (*zPoint + arg0->unk54), vehicleType->unk38) != 0) {
@@ -10475,8 +10476,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 	building = &buildingInstances[func_80117508_1264B8((s16) (arg0->unk4 - 0x400)) - 1];
 	while (1) {
-		building++;
-		if (((building - buildingInstances) >= 0xFF) || (arg0->unk4 < (building->zCoord - 0x400))) {
+		building++; if (((building - buildingInstances) >= 0xFF) || (arg0->unk4 < (building->zCoord - 0x400))) {
 			break;
 		}
 
@@ -10486,7 +10486,9 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 			spawn = &spawn[buildingType->unk1A[2]];
 
 			j = buildingType->unk1A[3];
-			while (j--) {
+			if (j--) {
+				gridX = topHeight.signedValue;
+			do {
 				spD8 = building->yCoord + spawn->unk8;
 				spD6 = building->yCoord + spawn->unkA;
 				spCA = spawn->unk4;
@@ -10495,8 +10497,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 				spCA += building->xCoord;
 				spC8 += building->zCoord;
 
-				if ((((spD4 >= spD8) && (spD6 >= spD4)) || ((spD2 >= spD8) && (spD6 >= spD2)) || ((spD8 >= spD2) && (spD4 >= spD8)) ||
-					 ((spD6 >= spD2) && (spD4 >= spD6))) &&
+				if ((((gridX >= spD8) && (spD6 >= gridX)) || ((spD2 >= spD8) && (spD6 >= spD2)) || ((spD8 >= spD2) && (gridX >= spD8)) ||
+					 ((spD6 >= spD2) && (gridX >= spD6))) &&
 					(func_8010CF7C_11BF2C(spCA, spC8) != 0)) {
 					if (arg1 == 0) {
 						if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(vehicleType->unk4C & 0x20000000)) {
@@ -10512,26 +10514,27 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 					}
 					return 9;
 				}
-				spawn--;
+				gridX = topHeight.signedValue; spawn--;
+			} while (j--);
 			}
 		}
 	}
+
+	if (gridX) {}
 
 	bestY = -1;
 	spC0 = 0;
 	do {
 	if ((D_80159260 != 0) && (D_80159262 == 0) && (arg0 == D_80052B34)) {
-		break;
+		continue;
 	}
 
 	if ((arg0->unk1A == 0) || (vehicleTypes[arg0->unk1A].unk4C & 0x20000000)) {
 		func_8011DE60_12CE10(1);
 	}
 
-	xPoint = &D_80159D78[3];
-	zPoint = &D_80159D98[3];
-	gridX = 3;
-	do {
+	xPoint = &D_80159D78[3]; zPoint = &D_80159D98[3];
+	gridX = 3; do {
 		bestX = (s32) (*xPoint + (f32) arg0->unk0);
 		sp7C = (s32) (*zPoint + (f32) arg0->unk4);
 		if ((func_800F9D60_108D10((s16) bestX, (s16) sp7C, &spDA, &spD8, &spD6) != -1) && (spDA < spD6) && (spD6 >= bestY)) {
@@ -10552,8 +10555,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		sp98 = (f32) arg0->unk0;
 		sp94 = (f32) arg0->unk4;
 		spCC = spDA;
-		spD0 = spD6;
 		spCE = spD8;
+		spD0 = spD6;
 	}
 
 	if ((arg0->unk1A == 0) || (vehicleTypes[arg0->unk1A].unk4C & 0x20000000)) {
@@ -10562,13 +10565,13 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 	if (bestY >= 0) {
 		spC0 = 5;
-		bestX = (s32) sp98;
 		spDA = spCC;
+		bestX = sp98;
 		spD8 = spCE;
 		spD6 = spD0;
-		sp7C = (s32) sp94;
-		building = &buildingInstances[func_8011D260_12C210((s8) (bestX >> 8), (s8) (sp7C >> 8))];
-		sp70 = (s32) building->buildingType;
+		sp7C = sp94;
+		building = &buildingInstances[func_8011D260_12C210(bestX >> 8, sp7C >> 8)];
+		sp70 = building->buildingType;
 	}
 
 	if (arg0->unk1A == 0) {
@@ -10576,27 +10579,27 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 			if (arg1 == 0) {
 				func_8010FAC8_11EA78(2, 0x80C);
 			}
-			break;
+			continue;
 		}
-		if (spD4 < spD8) {
+		if (((s16)topHeight.raw[0]) < spD8) {
 			if (arg1 == 0) {
 				func_8010FAC8_11EA78(3, 8);
 			}
-			break;
+			continue;
 		}
 		if ((spD6 + 0x14) < spD2) {
 			if (arg1 == 0) {
 				func_8010FAC8_11EA78(2, 0x808);
 			}
-			break;
+			continue;
 		}
 		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && ((f32) (spD6 - 0x20) <= D_8015919C) && (spD6 >= spD2)) {
 			if (arg1 == 0) {
 				func_8010FAC8_11EA78(4, spD6);
 			}
-			break;
+			continue;
 		}
-		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (spD6 >= spD2) && (spD8 < spD4)) {
+		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (spD6 >= spD2) && (spD8 < ((s16)topHeight.raw[0]))) {
 			if (arg1 == 0) {
 				func_8010FAC8_11EA78(5, 0);
 				func_8010FAC8_11EA78(0xA, (s32) building);
@@ -10611,68 +10614,71 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 					func_8010FAC8_11EA78(2, 2);
 					func_8010FAC8_11EA78(6, spD6);
 				}
-				break;
-			}
-			if ((spD2 < spD6) && ((spD6 - spD2) >= 0x20) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
-				return 5;
-			}
-			if ((spD2 < spD6) && ((spD2 + 0x20) >= spD6) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
-				if (arg1 == 0) {
-					func_8010FAC8_11EA78(6, spD6);
+			} else {
+				if ((spD2 < spD6) && ((spD6 - spD2) >= 0x20) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
+					return 5;
 				}
-				break;
-			}
-			if ((spDA < spD6) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_UNDER_BRIDGE) && ((spD6 - spD2) < 0x20) &&
-				(func_801081AC_11715C(arg0->unk0, arg0->unk4) == 0)) {
-				if (arg1 == 0) {
-					func_8010FAC8_11EA78(3, 4);
-					func_8010FAC8_11EA78(2, 2);
-					func_8010FAC8_11EA78(6, spD6);
+				if ((spD2 < spD6) && ((spD2 + 0x20) >= spD6) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
+					if (arg1 == 0) {
+						func_8010FAC8_11EA78(6, spD6);
+					}
+					continue;
 				}
-				break;
+				if ((spDA < spD6) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_UNDER_BRIDGE) && ((spD6 - spD2) < 0x20) &&
+					(func_801081AC_11715C(arg0->unk0, arg0->unk4) == 0)) {
+					if (arg1 == 0) {
+						func_8010FAC8_11EA78(3, 4);
+						func_8010FAC8_11EA78(2, 2);
+						func_8010FAC8_11EA78(6, spD6);
+					}
+				} else {
+					if (((spD8 < ((s16)topHeight.raw[0])) && (((s16)topHeight.raw[0]) < spD6)) || ((spD8 < spD2) && (((s16)topHeight.raw[0]) < spD6)) || ((spD2 < spD8) && (spD8 < ((s16)topHeight.raw[0]))) ||
+						((spD2 < spD6) && (spD6 < ((s16)topHeight.raw[0])))) {
+						if (arg1 != 0) return 5;
+						bestY = (s32)(vehicleType->unk38 + D_8015919C);
+						if ((spD8 >= bestY) && (spD8 < ((s16)topHeight.raw[0])) && (((s16)topHeight.raw[0]) < spD6)) return 5;
+						return 5;
+					}
+
+				}
 			}
-			if (((spD8 < spD4) && (spD4 < spD6)) || ((spD8 < spD2) && (spD4 < spD6)) || ((spD2 < spD8) && (spD8 < spD4)) ||
-				((spD2 < spD6) && (spD6 < spD4))) {
-				if (arg1 != 0) return 5;
-				bestY = (s32)(vehicleType->unk38 + D_8015919C);
-				if ((spD8 >= bestY) && (spD8 < spD4) && (spD4 < spD6)) return 5;
-				return 5;
-			}
-			break;
 		}
-		break;
+		continue;
 	}
 
 	if (spC0 == 0) {
 		if (arg1 == 0) {
 			func_8010FAC8_11EA78(2, 0x80C);
 		}
-		break;
+		continue;
 	}
-	if (spD4 < spD8) {
+	if (((s16)(u16)topHeight.signedValue) < spD8) {
 		if (arg1 == 0) {
 			func_8010FAC8_11EA78(3, 8);
 		}
-		break;
+		continue;
 	}
 	if ((spD6 < spD2) && (arg0->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 		if ((D_80222A70 < arg0->unk2) && (arg1 == 0)) {
 			func_8010FAC8_11EA78(2, 0x808);
 		}
-		break;
+		continue;
 	}
-	if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (((f64) spD6 - ((f64) vehicleType->unk36 * D_80144D50_153D00.value)) < (f64) D_8015919C) && (spD6 >= spD2)) {
-		if (arg1 == 0) {
-			if ((arg0 == D_80052B34) && (D_801591AC == 6)) {
-				return 5;
+	if (arg0->unk20 & VEHICLE_FLAG_AIRBORNE) {
+		var_f0 = D_80144D50_153D00.value;
+		if ((((f64) spD6 - ((f64) vehicleType->unk36 * var_f0)) < (f64) D_8015919C) && (spD6 >= spD2)) {
+			if (arg1 == 0) {
+				if ((arg0 == D_80052B34) && (D_801591AC == 6)) {
+					return 5;
+				}
+				func_8010FAC8_11EA78(4, spD6);
 			}
-			func_8010FAC8_11EA78(4, spD6);
+			continue;
 		}
-		break;
 	}
 
 	var_f0 = D_80144D58_153D08.value;
-	if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(vehicleTypes[arg0->unk1A].unk4C & 0x20000000) && (spD6 >= spD2) && (spD8 < spD4)) {
+	if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(vehicleTypes[arg0->unk1A].unk4C & 0x20000000) && (spD6 >= spD2) && (spD8 < ((s16)(u16)topHeight.signedValue))) {
 		if (arg1 == 0) {
 			func_8010FAC8_11EA78(5, 0);
 			func_8010FAC8_11EA78(0xA, (s32) building);
@@ -10685,64 +10691,62 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 			if (arg1 == 0) {
 				func_8010FAC8_11EA78(2, 2);
 			}
-			break;
+			continue;
 		}
 
-		if ((spDA < spD6) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_UNDER_BRIDGE) && ((f64) (spD6 - spD2) < ((f64) vehicleType->unk36 * var_f0))) {
-			gridX = func_80108138_1170E8(arg0->unk0, arg0->unk2, arg0->unk4);
-			var_f0 = D_80144D60_153D10.value;
-			if (gridX != 0) {
-				if (arg1 == 0) {
-					func_8010FAC8_11EA78(3, 0x800);
-					func_8010FAC8_11EA78(2, 2);
+		if ((spDA < spD6) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_UNDER_BRIDGE) && ((f64) (spD6 - spD2) < ((f64) vehicleType->unk36 * var_f0)) && (gridX = func_80108138_1170E8(arg0->unk0, arg0->unk2, arg0->unk4), var_f0 = D_80144D60_153D10.value, gridX != 0)) {
+			if (arg1 == 0) {
+				func_8010FAC8_11EA78(3, 0x800);
+				func_8010FAC8_11EA78(2, 2);
+			}
+
+		} else {
+
+			if ((spD6 >= spD2) && (sp70 != D_8015EA28)) {
+				if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (((f64) vehicleType->unk36 * var_f0) <= (f64) (spD6 - spD2)) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
+					return 6;
 				}
-				break;
 			}
-		}
 
-		if ((spD6 >= spD2) && (sp70 != D_8015EA28)) {
-			if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (((f64) vehicleType->unk36 * var_f0) <= (f64) (spD6 - spD2)) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
-				return 6;
-			}
-		}
-
-		if ((spD6 < spD2) || (arg0->unk20 & VEHICLE_FLAG_AIRBORNE) || !((f64) spD6 <= ((f64) spD2 + ((f64) vehicleType->unk36 * var_f0))) || !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
-			if ((vehicleType->unk4C & 0x20) && (spDA < spD6) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_UNDER_BRIDGE) &&
-				((f64) (spD6 - spD2) < ((f64) vehicleType->unk36 * var_f0))) {
-				if (func_80108138_1170E8(arg0->unk0, arg0->unk2, arg0->unk4) == 0) {
+			if ((spD6 >= spD2) && !(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && ((f64) spD6 <= ((f64) spD2 + ((f64) vehicleType->unk36 * var_f0))) && (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE)) {
+			} else {
+				if ((vehicleType->unk4C & 0x20) && (spDA < spD6) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_UNDER_BRIDGE) &&
+					((f64) (spD6 - spD2) < ((f64) vehicleType->unk36 * var_f0)) && (func_80108138_1170E8(arg0->unk0, arg0->unk2, arg0->unk4) == 0)) {
 					if (arg1 == 0) {
 						func_8010FAC8_11EA78(3, 4);
 						func_8010FAC8_11EA78(2, 2);
 					}
-					break;
-				}
-			}
 
-			if (((spD4 >= spD8) && (spD6 >= spD4)) || ((spD2 >= spD8) && (spD6 >= spD2)) || ((spD8 >= spD2) && (spD4 >= spD8)) || ((spD6 >= spD2) && (spD4 >= spD6))) {
-				bestY = (s32)(vehicleType->unk38 + D_8015919C);
-				if ((spD8 >= bestY) && (spD8 < spD4) && (spD4 < spD6)) {
-					return 5;
-				}
+				} else {
 
-				if ((arg1 == 0) && (currentLevel == 4) && (((arg0->unk1A == 2) && (arg0->unk12 >= 0xB)) || ((arg0->unk1A == 0x11) && (arg0->unk12 >= 0x10)))) {
-					building = &buildingInstances[func_8011D260_12C210((s8) (bestX >> 8), (s8) (sp7C >> 8))];
-					buildingType = &buildingTypes[building->buildingType];
+					if (((((s16)(u16)topHeight.signedValue) >= spD8) && (spD6 >= ((s16)(u16)topHeight.signedValue))) || ((spD2 >= spD8) && (spD6 >= spD2)) || ((spD8 >= spD2) && (((s16)(u16)topHeight.signedValue) >= spD8)) || ((spD6 >= spD2) && (((s16)(u16)topHeight.signedValue) >= spD6))) {
+						bestY = (s32)(vehicleType->unk38 + D_8015919C);
+						if ((spD8 >= bestY) && (spD8 < ((s16)(u16)topHeight.signedValue)) && (((s16)(u16)topHeight.signedValue) < spD6)) {
+							return 5;
+						}
 
-					if (!(((u32) building->unk8 >> 0xC) & 0x1000) && (((buildingType->unk10 * buildingType->unk12) < 0x10000) || (buildingType->model == &D_C0067F0))) {
-						func_8011C080_12B030((u8)(building - buildingInstances));
+						if ((arg1 == 0) && (currentLevel == 4) && (((arg0->unk1A == 2) && (arg0->unk12 >= 0xB)) || ((arg0->unk1A == 0x11) && (arg0->unk12 >= 0x10)))) {
+							building = &buildingInstances[func_8011D260_12C210(bestX >> 8, sp7C >> 8)];
+							buildingType = &buildingTypes[building->buildingType];
+
+							if (!(((u32) building->unk8 >> 0xC) & 0x1000) && (((buildingType->unk10 * buildingType->unk12) < 0x10000) || (buildingType->model == &D_C0067F0))) {
+								func_8011C080_12B030((u8)(building - buildingInstances));
+							}
+						}
+
+						if (arg1 == 0) {
+							func_800FB430_10A3E0(arg0, (f32) ((s16) arg0->unk12 >> 1));
+							arg0->unk30 = arg0->unk30 / 2;
+							arg0->unk38 = arg0->unk38 / 2;
+						}
+						return 9;
 					}
-				}
 
-				if (arg1 == 0) {
-					func_800FB430_10A3E0(arg0, (f32) ((s16) arg0->unk12 >> 1));
-					arg0->unk30 = arg0->unk30 / 2;
-					arg0->unk38 = arg0->unk38 / 2;
 				}
-				return 9;
 			}
-			break;
+
 		}
-		break;
+		continue;
 	}
 
 	} while (0);
@@ -10760,12 +10764,11 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 	if (((D_80222A70 >= arg0->unk2) && !(vehicleTypes[arg0->unk1A].unk4C & 0x20)) ||
 		(!(vehicleTypes[arg0->unk1A].unk4C & 0x20) && !(vehicleTypes[arg0->unk1A].unk4C & 0x20000000) && (vehicleTypes[arg0->unk1A].unk4C & 0x10000000))) {
-		zPoint = &D_80159D98[3];
-		xPoint = &D_80159D78[3];
+		xPoint = &D_80159D78[3]; zPoint = &D_80159D98[3];
 		gridX = 3;
 		do {
-			s32 water = func_800F9D24_108CD4((s16) (s32) (*xPoint + (f32) arg0->unk0), (s16) (s32) (*zPoint + (f32) arg0->unk4));
-			if ((D_80222A70 < water) && (water >= spD2)) {
+			height = func_800F9D24_108CD4((s16) (s32) (*xPoint + (f32) arg0->unk0), (s16) (s32) (*zPoint + (f32) arg0->unk4));
+			if ((D_80222A70 < height) && (height >= spD2)) {
 				return 6;
 			}
 		
@@ -10776,8 +10779,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 	else if ((! (arg0->unk20 & VEHICLE_FLAG_AIRBORNE) || ((arg0->unk1A == 0) && (D_80222A70 >= arg0->unk2))) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && !(arg0->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)) {
 		gridX = 3;
-		zPoint = &D_80159D98[3];
-		xPoint = &D_80159D78[3];
+		xPoint = &D_80159D78[3]; zPoint = &D_80159D98[3];
 		do {
 			if ((func_800FAA08_1099B8((s16) (s32) (*xPoint + arg0->unk4C), (s16) (s32) (*zPoint + arg0->unk54)) >= 0xA) &&
 				((func_800B84D0_C7480((s16) (s32) (*xPoint + arg0->unk4C), (s16) (s32) (*zPoint + arg0->unk54)) >> 8) >= D_80222A70) &&
@@ -10800,6 +10802,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80110FB4_11FF64.s")
 #endif
+
 
 
 s16 func_8011290C_1218BC(VehicleInstance *arg0) {
