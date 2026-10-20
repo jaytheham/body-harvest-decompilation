@@ -9599,7 +9599,7 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 }
 
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010EF40_11DEF0.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_late_rodata.s")
 #endif
 
 void func_8010F218_11E1C8(void) {
@@ -9821,8 +9821,6 @@ void func_8010FAC8_11EA78(u8 arg0, s32 arg1) {
 	D_80158F98[idx].unk4 = arg1;
 }
 
-// CURRENT(40)
-#ifdef NON_MATCHING
 s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 	Unk80158F98 *entry;
 	s32 i;
@@ -9854,7 +9852,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					break;
 				}
 
-				case 2: {
+				case 10: {
 					speed = entry->unk4;
 					if (speed != 0) {
 						func_8010F834_11E7E4(arg0, ((EntityInstance *)speed)->unk0, ((EntityInstance *)speed)->unk2, ((EntityInstance *)speed)->unk4);
@@ -9862,7 +9860,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					break;
 				}
 
-				case 3: {
+				case 11: {
 					speed = entry->unk4;
 					if (speed != 0) {
 						func_8010F96C_11E91C(arg0, (Unk80052B40_fp *)speed);
@@ -9870,7 +9868,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					break;
 				}
 
-				case 4: {
+				case 12: {
 					speed = entry->unk4;
 					if (speed != 0) {
 						func_8010F9B4_11E964(arg0, speed);
@@ -9878,15 +9876,15 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					break;
 				}
 
-				case 5:
+				case 2:
 					arg0->unk20 &= ~entry->unk4;
 					break;
 
-				case 6:
+				case 3:
 					arg0->unk20 |= entry->unk4;
 					break;
 
-				case 7:
+				case 4:
 					arg0->unk20 |= VEHICLE_FLAG_ON_BRIDGE;
 					arg0->unk20 &= ~VEHICLE_FLAG_AIRBORNE;
 					func_800FB468_10A418(arg0, (f32)entry->unk4);
@@ -9903,12 +9901,12 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					ret = 1;
 					break;
 
-				case 8:
+				case 5:
 					arg0->unk20 &= ~VEHICLE_FLAG_ON_BRIDGE;
 					D_80159320 |= 0x200000;
 					break;
 
-				case 9:
+				case 6:
 					func_800FB468_10A418(arg0, (f32)entry->unk4);
 					arg0->unk34 = 0.0f;
 					if (currentLevel != 4) {
@@ -9921,24 +9919,14 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					ret = 1;
 					break;
 
-				case 10: {
+				case 7: {
 					AlienInstance *other;
 					s32 weight;
 					f32 speedF;
 
-					{
-						s32 weight;
-						speedF = func_800FB11C_10A0CC(arg0);
-						if (vtype[arg0->unk1A].unk32 >= 0x1771) {
-							weight = vtype[arg0->unk1A].unk32;
-						} else {
-							weight = 0x1770;
-						}
-
-						other = (AlienInstance *)entry->unk4;
-						weight = (s32)(((f64)((f32)weight * speedF)) / scale);
-						speed = weight;
-					}
+					speedF = func_800FB11C_10A0CC(arg0);
+					speed = (s32)((f64)((f32)(vtype[arg0->unk1A].unk32 >= 0x1771 ? vtype[arg0->unk1A].unk32 : 0x1770) * speedF) / scale);
+					other = (AlienInstance *)entry->unk4;
 
 					if ((twenty < (f64)func_800FB11C_10A0CC(arg0)) && (atype[other->typeIndex].unk32 < 0x7D1)) {
 						func_80088154_97104((EntityInstance *)entry->unk4, speed, func_800FB160_10A110(arg0));
@@ -9960,10 +9948,10 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 					break;
 				}
 
-				case 11:
+				case 8:
 					break;
 
-				case 12:
+				case 9:
 					func_80088154_97104((EntityInstance *)entry->unk4, 0x7FFE, arg0->unk6);
 					break;
 			}
@@ -9974,9 +9962,7 @@ s32 func_8010FAFC_11EAAC(VehicleInstance *arg0) {
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010FAFC_11EAAC.s")
-#endif
+
 
 s32 func_8010FF84_11EF34(VehicleInstance *arg0, s32 arg1)
 {
