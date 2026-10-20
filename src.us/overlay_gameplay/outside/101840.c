@@ -9548,19 +9548,18 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1464): inline deltas remove assignment spills; parameter reloads and floating allocation remain.
 int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9) {
     f32 slope;
-    f32 coordinate;
+    f32 intercept;
     if (arg2 < arg0) {
-        slope = arg2;
+        intercept = arg2;
         arg2 = arg0;
-        arg0 = slope;
+        arg0 = intercept;
     }
     if (arg3 < arg1) {
-        slope = arg3;
+        intercept = arg3;
         arg3 = arg1;
-        arg1 = slope;
+        arg1 = intercept;
     }
     if (arg0 == arg2) {
         if (arg4 == arg6) {
@@ -9569,16 +9568,18 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
         if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0)))) {
             return 0;
         }
-        if (0.0 == (arg7 - arg5)) {
+        intercept = arg7 - arg5;
+        if (0.0 == intercept) {
             *arg8 = arg0;
             *arg9 = arg5;
             return (arg1 <= arg5) && (arg5 <= arg3);
         }
-        slope = (arg7 - arg5) / (arg6 - arg4);
+        slope = intercept / (arg6 - arg4);
         *arg8 = arg0;
-        coordinate = (arg5 - slope * arg4) + slope * arg0;
-        *arg9 = coordinate;
-        return (arg1 <= coordinate) && (coordinate <= arg3);
+        intercept = arg5 - slope * arg4;
+        slope = intercept + slope * arg0;
+        *arg9 = slope;
+        return (arg1 <= slope) && (slope <= arg3);
     }
     if (arg5 == arg7) {
         return 0;
@@ -9586,18 +9587,19 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
     if (!(((arg5 <= arg1) && (arg1 <= arg7)) || ((arg1 <= arg5) && (arg7 <= arg1)))) {
         return 0;
     }
-    if (0.0 == (arg6 - arg4)) {
+    intercept = arg6 - arg4;
+    if (0.0 == intercept) {
         *arg8 = arg4;
         *arg9 = arg1;
         return (arg0 <= arg4) && (arg4 <= arg2);
     }
-    slope = (arg7 - arg5) / (arg6 - arg4);
-    coordinate = (arg1 - (arg5 - slope * arg4)) / slope;
-    *arg8 = coordinate;
+    slope = (arg7 - arg5) / intercept;
+    intercept = arg5 - slope * arg4;
+    slope = (arg1 - intercept) / slope;
+    *arg8 = slope;
     *arg9 = arg1;
-    return (arg0 <= coordinate) && (coordinate <= arg2);
+    return (arg0 <= slope) && (slope <= arg2);
 }
-
 #else
 #pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_late_rodata.s")
 #endif
