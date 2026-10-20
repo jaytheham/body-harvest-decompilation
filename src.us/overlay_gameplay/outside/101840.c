@@ -10096,10 +10096,11 @@ void func_801103B4_11F364(VehicleInstance *arg0, VehicleType *arg1) {
 	}
 }
 
-// CURRENT(510): probes, countdown loops, and stack match; final return path remains.
-#ifdef NON_MATCHING
 s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
-	s32 sp8C;
+	union {
+		s32 unused;
+		Unk8015FAD0 *volume;
+	} scratch;
 	s32 checkFlags;
 	s32 var_s6;
 	s16 maxY;
@@ -10108,11 +10109,14 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	s32 zMax;
 	s32 xMin;
 	s32 zMin;
-	Unk8015FAD0 *entry;
-	int flagsAccum;
+	s32 flags;
+	union {
+		int accumulated;
+		volatile int sampled;
+	} collisionFlags;
 	s32 outY;
 
-	flagsAccum = 0;
+	collisionFlags.accumulated = 0;
 	outY = 0;
 	maxY = arg0->unk2 + arg1->unk38;
 	minY = arg0->unk2;
@@ -10125,7 +10129,7 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 			if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) != 0) {
 				if (arg2 == 0) {
 					if (!(checkFlags & 4) && (arg2 == 0)) {
-						func_8010FAC8_11EA78(0xB, sp8C);
+						func_8010FAC8_11EA78(0xB, scratch.unused);
 					}
 					return 9;
 				}
@@ -10145,31 +10149,31 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 
 	var_s6 = 25;
 	while (var_s6--) {
-		entry = &D_8015FAD0[var_s6];
-		if (entry->unk2C >= 4) {
-			if (((entry->unk4 >> 16) + entry->unk1C) >= minY) {
-				if (maxY >= ((entry->unk4 >> 16) - entry->unk1C)) {
-					xMax = (entry->unk0 >> 16) + entry->unk18;
-					zMax = (entry->unk8 >> 16) + entry->unk1A;
-					xMin = (entry->unk0 >> 16) - entry->unk18;
-					zMin = (entry->unk8 >> 16) - entry->unk1A;
+		scratch.volume = &D_8015FAD0[var_s6];
+		if (scratch.volume->unk2C >= 4) {
+			if (((scratch.volume->unk4 >> 16) + scratch.volume->unk1C) >= minY) {
+				if (maxY >= ((scratch.volume->unk4 >> 16) - scratch.volume->unk1C)) {
+					xMax = (scratch.volume->unk0 >> 16) + scratch.volume->unk18;
+					zMax = (scratch.volume->unk8 >> 16) + scratch.volume->unk1A;
+					xMin = (scratch.volume->unk0 >> 16) - scratch.volume->unk18;
+					zMin = (scratch.volume->unk8 >> 16) - scratch.volume->unk1A;
 
 					if (func_8010CF7C_11BF2C((s16) xMax, (s16) zMax) || func_8010CF7C_11BF2C((s16) xMax, (s16) zMin) ||
 						func_8010CF7C_11BF2C((s16) xMin, (s16) zMax) || func_8010CF7C_11BF2C((s16) xMin, (s16) zMin)) {
-						checkFlags = func_8012DF90_13CF40(entry, arg0, arg2);
+						checkFlags = func_8012DF90_13CF40(scratch.volume, arg0, arg2);
 						if (checkFlags & 1) {
 							if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) != 0) {
 								if (arg2 == 0) {
 									if (!(checkFlags & 4)) {
-										func_8010FAC8_11EA78(0xB, (s32) entry);
+										func_8010FAC8_11EA78(0xB, (s32) scratch.volume);
 									}
 								}
 							}
-							flagsAccum |= checkFlags;
+							collisionFlags.accumulated |= checkFlags;
 						}
 
 						if ((checkFlags & 2) && (arg2 == 0)) {
-							func_8010FAC8_11EA78(6, (entry->unk4 >> 16) + entry->unk1C);
+							func_8010FAC8_11EA78(6, (scratch.volume->unk4 >> 16) + scratch.volume->unk1C);
 						}
 					}
 				}
@@ -10177,17 +10181,15 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 		}
 	}
 
-	if (flagsAccum & 1) {
-		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) || (flagsAccum & 8)) {
+	flags = collisionFlags.sampled;
+	if (flags & 1) {
+		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) || (flags & 8)) {
 			return 9;
 		}
 		return 6;
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8011049C_11F44C.s")
-#endif
 
 // https://decomp.me/scratch/kdokH
 // CURRENT(6373)
