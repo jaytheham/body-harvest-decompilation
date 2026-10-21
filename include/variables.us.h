@@ -1971,7 +1971,7 @@ extern s32 D_8013FD7C_14ED2C;
 extern Unk8013FDA8Entry D_8013FDA8_14ED58[];
 extern u8 D_80140768[];
 extern WeaponSpecEntry D_80140768_14F718[];
-extern u8 D_801407F4_14F7A4[];
+extern RoadTileInfo D_801407F4_14F7A4[];
 extern EffectRgb D_80140AA4_14FA54;
 extern u8 D_80140AA8_14FA58[8];
 extern AlienInstance *D_80140AB0_14FA60[];

@@ -1054,8 +1054,13 @@ typedef struct {
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ u8 unk44; // direction bitmask (1=N, 2=S, 4=W, 8=E) ?
 	/* 0x45 */ u8 unk45;
-	/* 0x46 */ u8 unk46;
-	/* 0x47 */ u8 unk47;
+	union {
+		struct {
+			/* 0x46 */ u8 unk46;
+			/* 0x47 */ u8 unk47;
+		};
+		/* 0x46 */ u16 pathFlags;
+	};
 	/* 0x48 */ u8 unk48;
 	/* 0x49 */ u8 pad49[3];
 	/* 0x4C */ f32 unk4C; // X postion as float
@@ -4050,5 +4055,14 @@ typedef union {
 	s32 value;
 	struct { s16 high; s16 low; } halves;
 } WaterLevelValue;
+
+typedef struct {
+	/* 0x00 */ u8 mapX;
+	/* 0x01 */ u8 mapZ;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 directions;
+	/* 0x05 */ u8 pad5;
+} RoadTileInfo; /* size = 0x06 */
 
 #endif /* LIBULTRA_REFERENCE */

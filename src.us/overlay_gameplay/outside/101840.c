@@ -328,39 +328,39 @@ WeaponSpecEntry D_80140768_14F718[14] = {
 	{93, 0, 2, 5, 8000},
 	{8, 25, 18, 20, 5750}
 };
-u8 D_801407F4_14F7A4[] = {
-	0xE0, 0xE0, 0x10, 0x5B, 0x0A, 0x00,
-	0x80, 0x80, 0x0A, 0xAA, 0x0C, 0x00,
-	0xE0, 0xE0, 0x20, 0x00, 0x0A, 0x00,
-	0x80, 0x80, 0x0A, 0xAA, 0x0C, 0x00,
-	0x40, 0x40, 0x00, 0x00, 0x05, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x80, 0x80, 0x0A, 0xAA, 0x03, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0xE0, 0xE0, 0x10, 0x5B, 0x0A, 0x00,
-	0x40, 0x40, 0x00, 0x00, 0x05, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x03, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x0C, 0x00,
-	0x80, 0x80, 0x0A, 0xAA, 0x03, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0xC0, 0xC0, 0x00, 0x00, 0x0A, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x0F, 0x00,
-	0x40, 0x80, 0x00, 0x00, 0x04, 0x00,
-	0x80, 0xC4, 0x00, 0x00, 0x02, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x0E, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x07, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x0C, 0x00,
-	0x80, 0x80, 0x00, 0x00, 0x03, 0x00
+RoadTileInfo D_801407F4_14F7A4[] = {
+	{0xE0, 0xE0, 0x10, 0x5B, 0x0A, 0x00},
+	{0x80, 0x80, 0x0A, 0xAA, 0x0C, 0x00},
+	{0xE0, 0xE0, 0x20, 0x00, 0x0A, 0x00},
+	{0x80, 0x80, 0x0A, 0xAA, 0x0C, 0x00},
+	{0x40, 0x40, 0x00, 0x00, 0x05, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x80, 0x80, 0x0A, 0xAA, 0x03, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0xE0, 0xE0, 0x10, 0x5B, 0x0A, 0x00},
+	{0x40, 0x40, 0x00, 0x00, 0x05, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x03, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x0C, 0x00},
+	{0x80, 0x80, 0x0A, 0xAA, 0x03, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0xC0, 0xC0, 0x00, 0x00, 0x0A, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x0F, 0x00},
+	{0x40, 0x80, 0x00, 0x00, 0x04, 0x00},
+	{0x80, 0xC4, 0x00, 0x00, 0x02, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x0E, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x07, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x00, 0x00, 0x00, 0x00, 0x00, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x0C, 0x00},
+	{0x80, 0x80, 0x00, 0x00, 0x03, 0x00}
 };
 f32 D_801408B4_14F864[7][11] = {
 	{70.0f, 120.0f, 180.0f, 240.0f, 260.0f, 300.0f, 400.0f, 500.0f, 2.0f, 0.8f, 0.5f},
@@ -3680,7 +3680,7 @@ void func_800FC568_10B518(void) {
 // CURRENT(205): word return restores result copy; second flag register and epilogue remain.
 #ifdef NON_MATCHING
 s32 func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
-    u8 *entry;
+    RoadTileInfo *entry;
     s32 result;
     TerrainObjectCell *tile;
     u8 idx;
@@ -3692,8 +3692,8 @@ s32 func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
     if (tile->flag10) {
         idx += 16;
     }
-    *arg2 = entry[idx * 6];
-    *arg3 = entry[idx * 6 + 1];
+    *arg2 = entry[idx].mapX;
+    *arg3 = entry[idx].mapZ;
     result = func_800B325C_C220C(arg0, arg1, 0xFFFF);
     if ((s16)(((result & 0x4000) == 0) ^ ((arg0 & 1) == 0)) != 0) {
         *arg2 = 0x100 - *arg2;
@@ -6763,104 +6763,101 @@ void func_801052E8_114298(Unk80052B2C *arg0, OSContPad *arg1) {
 	D_8004DCC0 = D_8004DCC0 > gears[10] ? D_8004DCC0 : gears[10];
 }
 
-// CURRENT(17202)
-#ifdef NON_MATCHING
 void func_80106628_1155D8(VehicleInstance *arg0) {
 	VehicleType *type;
 	s16 gridAngleX;
 	s16 gridAngleY;
-	s16 mapX;
-	s16 mapY;
-	s16 absDeltaX;
-	s16 absDeltaY;
-	s16 tileFlipX;
-	s16 tileFlipY;
-	s16 tempS16;
-	s16 steerDelta;
-	s16 absSteerDelta;
-	s32 steerStep;
 	s8 gridX;
 	s8 gridY;
-	s8 stepX;
-	s8 stepY;
 	u8 tileType;
-	u8 tileFlags;
 	u8 nextMoveMask;
 	u8 moveMask;
+	s16 mapX;
+	s16 mapY;
+	u16 tileWord;
+	s16 pad62;
+	s16 tempS16;
+	s32 absSteerDelta;
+	u8 pad5B;
+	s8 pad5A;
+	s8 stepY;
+	s8 stepX;
+	s16 steerDelta;
+	s16 tileFlipX;
+	s16 tileFlipY;
+	s32 pad48;
+	s32 steerStep;
 
 	type = &vehicleTypes[arg0->unk1A];
 	arg0->unk20 |= VEHICLE_FLAG_UNK1;
 	func_80014508_15108(arg0, 1, 1);
 
-	gridAngleX = arg0->unk0 - arg0->unk40;
-	if (-gridAngleX < gridAngleX) {
-		absDeltaX = gridAngleX;
+	if (-(arg0->unk0 - arg0->unk40) < (arg0->unk0 - arg0->unk40)) {
+		gridAngleX = (arg0->unk0 - arg0->unk40);
 	} else {
-		absDeltaX = -gridAngleX;
+		gridAngleX = -(arg0->unk0 - arg0->unk40);
 	}
 
-	gridAngleY = arg0->unk4 - arg0->unk42;
-	if (-gridAngleY < gridAngleY) {
-		absDeltaY = gridAngleY;
+	if (-(arg0->unk4 - arg0->unk42) < (arg0->unk4 - arg0->unk42)) {
+		gridAngleY = (arg0->unk4 - arg0->unk42);
 	} else {
-		absDeltaY = -gridAngleY;
+		gridAngleY = -(arg0->unk4 - arg0->unk42);
 	}
 
-	if ((absDeltaX < 0x61) && (absDeltaY < 0x61)) {
+	if ((gridAngleX < 0x61) && (gridAngleY < 0x61)) {
 		gridX = arg0->unk47;
 		gridY = arg0->unk48;
 
-		tempS16 = func_800B325C_C220C(gridX, gridY, 0xFFFF);
-		tileType = (tempS16 & 0x7C0) >> 6;
-		tileFlipX = ((tempS16 & 0x4000) == 0) ^ ((gridX & 1) == 0);
-		tileFlipY = ((tempS16 & 0x2000) == 0) ^ ((gridY & 1) == 0);
-		tileFlags = D_801407F4_14F7A4[tileType * 6 + 4];
-		nextMoveMask = 0;
+		tileWord = func_800B325C_C220C(gridX, gridY, 0xFFFF);
+		tileType = (tileWord & 0x7C0) >> 6;
+		nextMoveMask = D_801407F4_14F7A4[tileType].directions;
+		tileFlipX = ((tileWord & 0x4000) == 0) ^ ((gridX & 1) == 0);
+		tileFlipY = ((tileWord & 0x2000) == 0) ^ ((gridY & 1) == 0);
+		moveMask = 0;
 
 		if (tileFlipX != 0) {
-			if (tileFlags & 8) {
-				nextMoveMask = 4;
+			if (nextMoveMask & 8) {
+				moveMask = 4;
 			}
-			if (tileFlags & 4) {
-				nextMoveMask = (nextMoveMask | 8) & 0xFF;
+			if (nextMoveMask & 4) {
+				moveMask |= 8;
 			}
 		} else {
-			nextMoveMask = tileFlags & 0xC;
-			moveMask = tileFlags;
+			moveMask = nextMoveMask;
+			moveMask &= 0xC;
 		}
 
 		if (tileFlipY != 0) {
-			if (tileFlags & 1) {
-				nextMoveMask = (nextMoveMask | 2) & 0xFF;
+			if (nextMoveMask & 1) {
+				moveMask |= 2;
 			}
-			if (tileFlags & 2) {
-				nextMoveMask = (nextMoveMask | 1) & 0xFF;
+			if (nextMoveMask & 2) {
+				moveMask |= 1;
 			}
 		} else {
-			nextMoveMask = (nextMoveMask | (tileFlags & 3)) & 0xFF;
+			moveMask |= nextMoveMask & 3;
 		}
 
-		moveMask = nextMoveMask;
+		nextMoveMask = moveMask;
 		if (nextMoveMask & arg0->unk44) {
-			if ((func_800038E0_44E0(nextMoveMask, tileFlipX, nextMoveMask, tileFlipY) >= 0xC351) &&
+			if ((func_800038E0_44E0() >= 0xC351) &&
 				((tileType == 0xF) || (tileType == 0x12) || (tileType == 0x13))) {
-				moveMask = arg0->unk44;
-				if (moveMask & 3) {
-					nextMoveMask &= 0xC;
+				if (arg0->unk44 & 3) {
+					nextMoveMask = moveMask & 0xC;
 				}
-				if (moveMask & 0xC) {
+				if (arg0->unk44 & 0xC) {
 					nextMoveMask &= 3;
 				}
 			} else {
-				moveMask = tileType;
+				/* Keep the candidate byte live across the junction query. */
+				if (moveMask) {}
 				nextMoveMask = arg0->unk44;
 			}
 		} else {
-			moveMask = tileType;
 			if (arg0->unk44 & 3) {
-				nextMoveMask &= 0xC;
+				nextMoveMask = moveMask & 0xC;
 			} else {
-				nextMoveMask &= 3;
+				nextMoveMask = moveMask & 3;
 			}
 		}
 
@@ -6873,20 +6870,20 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 		}
 
 		if ((nextMoveMask & 3) == 3) {
-			if (func_800038E0_44E0(nextMoveMask, moveMask) >= 0x8000) {
+			if (func_800038E0_44E0() >= 0x8000) {
 				nextMoveMask = 1;
 			} else {
 				nextMoveMask = 2;
 			}
 		} else if ((nextMoveMask & 0xC) == 0xC) {
-			if (func_800038E0_44E0(nextMoveMask, moveMask) >= 0x8000) {
+			if (func_800038E0_44E0() >= 0x8000) {
 				nextMoveMask = 8;
 			} else {
 				nextMoveMask = 4;
 			}
 		}
 
-		if (moveMask == 0xB) {
+		if (tileType == 0xB) {
 			if (nextMoveMask & 4) {
 				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xB) {
 					do {
@@ -6908,7 +6905,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 					gridX--;
 				}
 			}
-		} else if (moveMask == 0xA) {
+		} else if (tileType == 0xA) {
 			if (nextMoveMask & 1) {
 				if ((func_800B325C_C220C(gridX, gridY, 0x3C0) >> 6) == 0xA) {
 					do {
@@ -6930,7 +6927,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 					gridY--;
 				}
 			}
-		} else if (moveMask == 0xE) {
+		} else if (tileType == 0xE) {
 			switch (arg0->unk44) {
 			case 1:
 				stepX = -1;
@@ -6990,7 +6987,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 			mapY -= 0x10;
 		}
 
-		if (arg0->unk44 == 1) {
+		if (arg0->unk44 == 1U) {
 			mapX += 0x10;
 		}
 		if (arg0->unk44 == 2) {
@@ -7003,9 +7000,9 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 			mapY -= 0x10;
 		}
 
+		arg0->unk44 = nextMoveMask;
 		arg0->unk47 = gridX;
 		arg0->unk48 = gridY;
-		arg0->unk44 = nextMoveMask;
 		arg0->unk40 = (gridX << 8) + mapX;
 		arg0->unk42 = (gridY << 8) + mapY;
 	}
@@ -7013,10 +7010,13 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 	gridAngleX = arg0->unk40 - arg0->unk0;
 	gridAngleY = arg0->unk42 - arg0->unk4;
 	tempS16 = func_80003824_4424((f32)gridAngleX, (f32)gridAngleY);
-	steerDelta = func_800F9C50_108C00(tempS16, arg0->unk6);
-	absSteerDelta = (steerDelta < 0) ? -steerDelta : steerDelta;
+	if ((steerDelta = func_800F9C50_108C00(tempS16, arg0->unk6), -func_800F9C50_108C00(tempS16, arg0->unk6) < steerDelta)) {
+		absSteerDelta = func_800F9C50_108C00(tempS16, arg0->unk6);
+	} else {
+		absSteerDelta = -func_800F9C50_108C00(tempS16, arg0->unk6);
+	}
 
-	if ((arg0->unk46 >> 14) == 1) {
+	if (((u32)arg0->pathFlags >> 14) == 1) {
 		arg0->unk45 = 0x28;
 	} else {
 		arg0->unk45 = 0x1E;
@@ -7047,7 +7047,7 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 		arg0->unk6 -= steerStep;
 	}
 
-	steerDelta = ((*(s16 *)((u8 *)type + 0x40)) * arg0->unk45) / 100;
+	steerDelta = (type->unk40 * arg0->unk45) / 100;
 	if (arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) {
 		steerDelta = (f64)steerDelta * 0.5;
 	}
@@ -7063,9 +7063,6 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80106628_1155D8.s")
-#endif
 
 // https://decomp.me/scratch/kngxs
 // CURRENT(5064)
