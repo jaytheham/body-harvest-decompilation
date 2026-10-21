@@ -422,6 +422,7 @@ void func_80083DBC_5426C(s16, u8);
 void func_80083F8C_5443C(s16 arg0, u8 arg1);
 u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
 void func_80084508_549B8(u8 arg0);
+void func_8008472C_54BDC(u8 arg0);
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11);
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
 u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7);
@@ -439,6 +440,7 @@ void func_80088BDC_5908C(void);
 u8 func_800891F8_596A8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3);
 void func_800894A0_59950(u8 arg0);
+void func_80089AB4_59F64(void);
 u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 								 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14);
 void func_8008A5F8_5AAA8(u8 arg0);

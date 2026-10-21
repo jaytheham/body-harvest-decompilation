@@ -3558,8 +3558,7 @@ void func_8008C8E0_5CD90(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C8E0_5CD90.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Main particle update dispatcher: iterates all slots and calls per-type update function
+// Dispatches particle updates and advances the global fade.
 void func_8008CC3C_5D0EC(void) {
 	u8 i;
 
@@ -3598,15 +3597,15 @@ void func_8008CC3C_5D0EC(void) {
 				func_8008B264_5B714(i);
 				break;
 
-			case 8:
+			case 9:
 				func_8008BB38_5BFE8(i);
 				break;
 
-			case 9:
+			case 10:
 				func_8008C7E4_5CC94();
 				break;
 
-			case 10:
+			case 8:
 				break;
 
 			default:
@@ -3625,9 +3624,7 @@ void func_8008CC3C_5D0EC(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008CC3C_5D0EC.s")
-#endif
+
 
 // AI - Renders a camera-aligned billboard quad for a single particle
 void func_8008CDC8_5D278(void) {
@@ -4775,16 +4772,3 @@ const f64 D_800AEC68_7F118[1] = { 255 };
 const f64 D_800AEC70_7F120[1] = { 255 };
 const f64 D_800AEC78_7F128[1] = { 255 };
 const f64 D_800AEC80_7F130[1] = { 255 };
-const u32 jtbl_800AEC88_7F138[11] = {
-#if defined(VERSION_US)
-    0x8008CC90, 0x8008CCA8, 0x8008CCB8, 0x8008CCC8,
-    0x8008CCD8, 0x8008CCE8, 0x8008CCF8, 0x8008CD08,
-    0x8008CD30, 0x8008CD18, 0x8008CD28,
-#elif defined(VERSION_EU)
-    0x8008D450, 0x8008D468, 0x8008D478, 0x8008D488,
-    0x8008D498, 0x8008D4A8, 0x8008D4B8, 0x8008D4C8,
-    0x8008D4F0, 0x8008D4D8, 0x8008D4E8,
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
