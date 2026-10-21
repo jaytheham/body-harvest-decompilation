@@ -1490,7 +1490,7 @@ extern u32 D_800AA640_7AAF0[];
 extern Mtx D_800AA648_7AAF8;
 extern u8 D_800AA688_7AB38[];
 extern Unk800AA694Entry D_800AA694[];
-extern u8 D_800AA724[];
+extern u8 D_800AA724[][4];
 extern u8* D_800AA76C[];
 extern s16 D_800AA7B4_7AC64[];
 extern s16 D_800AA7B8_7AC68[];

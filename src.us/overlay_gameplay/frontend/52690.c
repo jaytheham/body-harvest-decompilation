@@ -3922,51 +3922,45 @@ void func_8008DBEC_5E09C(void) {
 	D_800E1D69 = 0;
 }
 
-// CURRENT(82) - instruction match apart from the eight-byte excess stack frame
-// AI - Allocates a sprite/texture slot in the 2D sprite system
-#ifdef NON_MATCHING
+// Allocates a 2D sprite slot and advances the free-slot cursor.
 u8 func_8008DC34_5E0E4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
-	u8 var_v1;
-	u8 temp_t3;
-	Unk800AA694Entry *temp_t2;
+	u8 index;
+	u8 slot;
 
 	if (D_800E1D68 >= 0x32) {
 		return 0xFF;
 	}
 
 	D_800E1980[D_800E1D69].unk0 = arg0;
-	temp_t2 = &D_800AA694[arg3];
 	D_800E1980[D_800E1D69].unkC = arg3;
 	D_800E1980[D_800E1D69].unkA = arg4;
 	D_800E1980[D_800E1D69].unk2 = arg1;
 	D_800E1980[D_800E1D69].unk4 = arg2;
 	D_800E1980[D_800E1D69].unkF = 0;
-	D_800E1980[D_800E1D69].unk10 = temp_t2->unk1;
-	D_800E1980[D_800E1D69].unk11 = temp_t2->unk2;
-	D_800E1980[D_800E1D69].unk12 = temp_t2->unk3;
+	/* The explicit typed address avoids an extra IDO pointer-temporary home. */
+	D_800E1980[D_800E1D69].unk10 = ((Unk800AA694Entry *)&D_800AA694[arg3])->unk1;
+	D_800E1980[D_800E1D69].unk11 = ((Unk800AA694Entry *)&D_800AA694[arg3])->unk2;
+	D_800E1980[D_800E1D69].unk12 = ((Unk800AA694Entry *)&D_800AA694[arg3])->unk3;
 
-	D_800E1980[D_800E1D69].unkE = func_800038E0_44E0() % temp_t2->unk0;
-	temp_t3 = D_800E1D69;
-	var_v1 = D_800E1D69;
-	D_800E1980[D_800E1D69].unkD = ((u8 (*)[4])D_800AA724)[arg3][3];
-	D_800E1980[D_800E1D69].unk6 = ((u8 (*)[4])D_800AA724)[arg3][0];
-	D_800E1980[D_800E1D69].unk7 = ((u8 (*)[4])D_800AA724)[arg3][1];
-	D_800E1980[D_800E1D69].unk8 = ((u8 (*)[4])D_800AA724)[arg3][2];
+	D_800E1980[D_800E1D69].unkE = func_800038E0_44E0() % ((Unk800AA694Entry *)&D_800AA694[arg3])->unk0;
+	slot = D_800E1D69;
+	index = D_800E1D69;
+	D_800E1980[D_800E1D69].unkD = D_800AA724[arg3][3];
+	D_800E1980[D_800E1D69].unk6 = D_800AA724[arg3][0];
+	D_800E1980[D_800E1D69].unk7 = D_800AA724[arg3][1];
+	D_800E1980[D_800E1D69].unk8 = D_800AA724[arg3][2];
 
-	while (var_v1 < 0x32) {
-		if (D_800E1980[var_v1].unkA == 0) {
-			D_800E1D69 = var_v1;
-			var_v1 = 0x32;
+	while (index < 0x32) {
+		if (D_800E1980[index].unkA == 0) {
+			D_800E1D69 = index;
+			index = 0x32;
 		}
-		var_v1++;
+		index++;
 	}
 
 	D_800E1D68++;
-	return temp_t3;
+	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008DC34_5E0E4.s")
-#endif
 
 // AI - Sets color values for a sprite slot
 void func_8008DDF0_5E2A0(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
