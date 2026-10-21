@@ -2324,6 +2324,24 @@ typedef struct {
 } Unk800DE840; /* size = 0x1C */
 
 typedef struct {
+	s16 position[3];
+	u8 primitive[3];
+	u8 environment[3];
+} FrontendBillboardColors;
+
+typedef struct {
+	u8 flags[2];
+	s16 scale;
+	s16 next;
+	s16 previous;
+	s16 position[3];
+	u16 delay;
+	u8 unused10;
+	u8 alpha;
+	u8 tail[0xA];
+} FrontendBillboardParticle; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
 	/* 0x30 */ Vec3f positions[4];
 	/* 0x60 */ u16 unk60;

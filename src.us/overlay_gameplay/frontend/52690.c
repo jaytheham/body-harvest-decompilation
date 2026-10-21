@@ -1513,7 +1513,7 @@ void func_80086528_569D8(s32 arg0) {
 	s32 alpha;
 	s32 tailAlpha;
 
-	base = &D_800DE840[D_800DE130[arg0 & 0xFF].unk6];
+	base = &D_800DE840[D_800DE130[arg0].unk6];
 	alpha = (0xFF - D_800D7971) & 0xFF;
 	if (D_800D7970 == 0) {
 		alpha = 0xFF;
@@ -2845,15 +2845,15 @@ void func_8008A5F8_5AAA8(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A5F8_5AAA8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(7952)
-// AI - Renders type-3 particles as billboarded quads with primitive and environment colors
-void func_8008A928_5ADD8(s32 arg0) {
+// Renders billboard particles with primitive and environment colors.
+void func_8008A928_5ADD8(u8 arg0) {
+	Gfx *gfx;
 	Unk800DE840 *entry;
-	Unk800DE840 *cur;
-	u8 *entryBytes;
+	FrontendBillboardParticle *first;
+	FrontendBillboardColors *colors;
 	s16 idx;
-	f32 scale;
+	s16 headerIdx;
+	s16 firstIdx;
 	f32 x;
 	f32 y;
 	f32 z;
@@ -2864,105 +2864,97 @@ void func_8008A928_5ADD8(s32 arg0) {
 	f32 dy1;
 	f32 dz1;
 
-	entry = &D_800DE840[D_800DE130[arg0 & 0xFF].unk6];
-	cur = &D_800DE840[entry->unk4];
-	idx = cur->unk4;
+	headerIdx = D_800DE130[arg0].unk6;
+	firstIdx = D_800DE840[headerIdx].unk4;
+	entry = &D_800DE840[headerIdx];
+	first = (FrontendBillboardParticle *)&D_800DE840[firstIdx];
+	idx = first->next;
 
-	if (*(u16 *)&cur->unkE > 0) {
-		return;
-	}
+	if (first->delay <= 0) {
 
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0,
-						 PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0);
-	gDPLoadTextureBlock(D_8005BB2C++, D_100D700, G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPPipeSync(D_8005BB2C++);
-
-	if ((idx == -6) || (idx == -5)) {
-		return;
-	}
-
-	entryBytes = (u8 *)&entry->unk8;
-
-	while (1) {
-		cur = &D_800DE840[idx];
-
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, entryBytes[6], entryBytes[7], entryBytes[8], (u8)cur->unk11);
-		gDPSetEnvColor(D_8005BB2C++, entryBytes[9], entryBytes[10], entryBytes[11], (u8)cur->unk11);
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0,
+							 PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0);
+		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_100D700), G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
 
-		scale = cur->unk2;
-		x = cur->unk8;
-		y = cur->unkA;
-		z = cur->unkC;
-		dx0 = scale * D_800DE0C0.x;
-		dy0 = scale * D_800DE0C0.y;
-		dz0 = scale * D_800DE0C0.z;
-		dx1 = scale * D_800DE0C0.rightX;
-		dy1 = scale * D_800DE0C0.rightY;
-		dz1 = scale * D_800DE0C0.rightZ;
+		colors = (FrontendBillboardColors *)&entry->unk8;
 
-		D_8005BB34->v.ob[0] = (s16)(s32)(x + dx0);
-		D_8005BB34->v.ob[1] = (s16)(s32)(y + dy0);
-		D_8005BB34->v.ob[2] = (s16)(s32)(z + dz0);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = 0;
-		D_8005BB34->v.cn[1] = 0;
-		D_8005BB34->v.cn[2] = 0;
-		D_8005BB34->v.cn[3] = 0;
+		while ((idx != -6) && (idx != -5)) {
+			FrontendBillboardParticle *cur = (FrontendBillboardParticle *)&D_800DE840[idx];
 
-		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)(x + dx1);
-		D_8005BB34->v.ob[1] = (s16)(s32)(y + dy1);
-		D_8005BB34->v.ob[2] = (s16)(s32)(z + dz1);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x400;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = 0;
-		D_8005BB34->v.cn[1] = 0;
-		D_8005BB34->v.cn[2] = 0;
-		D_8005BB34->v.cn[3] = 0;
+			{
+				gfx = D_8005BB2C++;
+				gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8);
+				gfx->words.w1 = _SHIFTL(colors->primitive[1], 16, 8) |
+					_SHIFTL(colors->primitive[2], 8, 8) |
+					_SHIFTL(colors->primitive[0], 24, 8) |
+					_SHIFTL(cur->alpha, 0, 8);
+			}
+			{
+				gfx = D_8005BB2C++;
+				gfx->words.w0 = _SHIFTL(G_SETENVCOLOR, 24, 8);
+				gfx->words.w1 = _SHIFTL(colors->environment[1], 16, 8) |
+					_SHIFTL(colors->environment[2], 8, 8) |
+					_SHIFTL(colors->environment[0], 24, 8) |
+					_SHIFTL(cur->alpha, 0, 8);
+			}
+			gDPPipeSync(D_8005BB2C++);
 
-		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)(x - dx0);
-		D_8005BB34->v.ob[1] = (s16)(s32)(y - dy0);
-		D_8005BB34->v.ob[2] = (s16)(s32)(z - dz0);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x400;
-		D_8005BB34->v.tc[1] = 0x400;
-		D_8005BB34->v.cn[0] = 0;
-		D_8005BB34->v.cn[1] = 0;
-		D_8005BB34->v.cn[2] = 0;
-		D_8005BB34->v.cn[3] = 0;
+			x = D_800DE840[idx].unk8;
+			y = D_800DE840[idx].unkA;
+			z = D_800DE840[idx].unkC;
+			dx0 = cur->scale * D_800DE0C0.x;
+			dy0 = cur->scale * D_800DE0C0.y;
+			dz0 = cur->scale * D_800DE0C0.z;
+			dx1 = cur->scale * D_800DE0C0.rightX;
+			dy1 = cur->scale * D_800DE0C0.rightY;
+			dz1 = cur->scale * D_800DE0C0.rightZ;
 
-		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)(x - dx1);
-		D_8005BB34->v.ob[1] = (s16)(s32)(y - dy1);
-		D_8005BB34->v.ob[2] = (s16)(s32)(z - dz1);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0x400;
-		D_8005BB34->v.cn[0] = 0;
-		D_8005BB34->v.cn[1] = 0;
-		D_8005BB34->v.cn[2] = 0;
-		D_8005BB34->v.cn[3] = 0;
+			D_8005BB34->v.ob[0] = x + dx0; D_8005BB34->v.ob[1] = y + dy0; D_8005BB34->v.ob[2] = z + dz0; D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = 0;
 
-		D_8005BB34++;
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
-		gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
-		gDPPipeSync(D_8005BB2C++);
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = x + dx1; D_8005BB34->v.ob[1] = y + dy1; D_8005BB34->v.ob[2] = z + dz1; D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x400;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = 0;
 
-		idx = cur->unk4;
-		if ((idx == -6) || (idx == -5)) {
-			return;
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = x - dx0; D_8005BB34->v.ob[1] = y - dy0; D_8005BB34->v.ob[2] = z - dz0; D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x400;
+			D_8005BB34->v.tc[1] = 0x400;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = 0;
+
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = x - dx1; D_8005BB34->v.ob[1] = y - dy1; D_8005BB34->v.ob[2] = z - dz1; D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0x400;
+			D_8005BB34->v.cn[0] = 0;
+			D_8005BB34->v.cn[1] = 0;
+			D_8005BB34->v.cn[2] = 0;
+			D_8005BB34->v.cn[3] = 0;
+
+			D_8005BB34++;
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+			gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
+			gDPPipeSync(D_8005BB2C++);
+
+			idx = D_800DE840[idx].unk4;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A928_5ADD8.s")
-#endif
 
 void func_8008AEC8_5B378(u8 arg0) {
 	s16 srcIdx;
