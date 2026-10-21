@@ -3220,45 +3220,40 @@ void func_8008BB38_5BFE8(u8 arg0) {
 	} while (idx != -6);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(28873)
-// AI - Renders type-5 ribbon/line segments between sequential particles with fading alpha
+// Renders ribbon segments between sequential particles with fading alpha.
 void func_8008BC00_5C0B0(u8 arg0) {
+	f32 spread;
+	f32 curZ;
+	f32 curY;
+	f32 curX;
+	f32 curZ2;
+	f32 curY2;
+	f32 curX2;
 	s16 idx;
-	s16 nextIdx;
-	s16 rand4;
+	s32 nextIdx;
 	u8 texFrame;
 	u8 colR;
 	u8 colG;
 	u8 colB;
-	f32 curX;
-	f32 curY;
-	f32 curZ;
-	f32 curX2;
-	f32 curY2;
-	f32 curZ2;
 	f32 nextX;
 	f32 nextY;
 	f32 nextZ;
 	f32 nextX2;
 	f32 nextY2;
 	f32 nextZ2;
-	f32 spread;
-	f32 zero;
-	s32 rand;
-	Unk800DE840 *entry;
+	Unk8008C7E4Sub *entry;
 	idx = D_800DE130[arg0].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
 
-	rand = func_800038E0_44E0() % 6;
-	if (rand == 1) {
+	texFrame = func_800038E0_44E0() % 6;
+	if (texFrame == 1) {
 		colR = 0xC8;
 		colG = 0xFF;
 		colB = 0xC8;
-	} else if (rand == 2) {
+	} else if (texFrame == 2) {
 		colR = 0xC8;
 		colG = 0xC8;
 		colB = 0xFF;
@@ -3269,43 +3264,38 @@ void func_8008BC00_5C0B0(u8 arg0) {
 	}
 
 	if ((idx != -5) && (idx != -6)) {
-		entry = &D_800DE840[idx];
+		entry = (Unk8008C7E4Sub *)&D_800DE840[idx].unk8;
 		if (D_800DE0B6 == 1) {
-			rand4 = func_800038E0_44E0() % 4;
-			spread = (f32)((rand4 * 2) + 0x14);
-			curX2 = (f32)entry->unk8 - spread;
-			curX = (f32)entry->unk8 + spread;
+			spread = (((func_800038E0_44E0() % 4) * 2) + 0x14);
+			curX = entry->unk0 + spread; curX2 = entry->unk0 - spread;
 
-			rand4 = func_800038E0_44E0() % 4;
-			spread = (f32)((rand4 * 2) + 0x14);
-			curY = (f32)entry->unkA + spread;
-			curY2 = (f32)entry->unkA - spread;
+			spread = (((func_800038E0_44E0() % 4) * 2) + 0x14);
+			curY = entry->unk2 + spread;
+			curY2 = entry->unk2 - spread;
 
-			rand4 = func_800038E0_44E0() % 4;
-			spread = (f32)((rand4 * 2) + 0x14);
-			curZ = (f32)entry->unkC + spread;
-			curZ2 = (f32)entry->unkC - spread;
+			spread = (((func_800038E0_44E0() % 4) * 2) + 0x14);
+			curZ = entry->unk4 + spread;
+			curZ2 = entry->unk4 - spread;
 		} else {
-			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			spread = (((func_800038E0_44E0() % 5) * 4) + 0x14);
 			if ((func_800038E0_44E0() % 0xB) < 6) {
-				spread = -spread;
+				spread = 0.0f - spread;
 			}
-			curX2 = (f32)entry->unk8 - spread;
-			curX = (f32)entry->unk8 + spread;
+			curX = entry->unk0 + spread; curX2 = entry->unk0 - spread;
 
-			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			spread = (((func_800038E0_44E0() % 5) * 4) + 0x14);
 			if ((func_800038E0_44E0() % 0xB) < 6) {
-				spread = -spread;
+				spread = 0.0f - spread;
 			}
-			curY = (f32)entry->unkA + spread;
-			curY2 = (f32)entry->unkA - spread;
+			curY = entry->unk2 + spread;
+			curY2 = entry->unk2 - spread;
 
-			spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+			spread = (((func_800038E0_44E0() % 5) * 4) + 0x14);
 			if ((func_800038E0_44E0() % 0xB) < 6) {
-				spread = -spread;
+				spread = 0.0f - spread;
 			}
-			curZ = (f32)entry->unkC + spread;
-			curZ2 = (f32)entry->unkC - spread;
+			curZ = entry->unk4 + spread;
+			curZ2 = entry->unk4 - spread;
 		}
 	}
 
@@ -3318,21 +3308,16 @@ void func_8008BC00_5C0B0(u8 arg0) {
 				if (D_800DE0B6 == 1) {
 					texFrame = 0;
 				} else {
-					rand = func_800038E0_44E0();
-					rand4 = rand % 4;
-					if ((rand < 0) && (rand4 != 0)) {
-						rand4 -= 4;
-					}
-					texFrame = rand4 & 0xFF;
+					texFrame = func_800038E0_44E0() % 4;
 				}
 
-				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100B4F0[texFrame << 9])), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100B4F0[texFrame << 9]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 				gDPPipeSync(D_8005BB2C++);
 
-				D_8005BB34->v.ob[0] = (s16)(s32)curX;
-				D_8005BB34->v.ob[1] = (s16)(s32)curY;
-				D_8005BB34->v.ob[2] = (s16)(s32)curZ;
+				D_8005BB34->v.ob[0] = curX;
+				D_8005BB34->v.ob[1] = curY;
+				D_8005BB34->v.ob[2] = curZ;
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0;
@@ -3342,9 +3327,9 @@ void func_8008BC00_5C0B0(u8 arg0) {
 				D_8005BB34->v.cn[3] = 0xFF;
 
 				D_8005BB34++;
-				D_8005BB34->v.ob[0] = (s16)(s32)curX2;
-				D_8005BB34->v.ob[1] = (s16)(s32)curY2;
-				D_8005BB34->v.ob[2] = (s16)(s32)curZ2;
+				D_8005BB34->v.ob[0] = curX2;
+				D_8005BB34->v.ob[1] = curY2;
+				D_8005BB34->v.ob[2] = curZ2;
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0x800;
@@ -3355,89 +3340,115 @@ void func_8008BC00_5C0B0(u8 arg0) {
 
 				D_8005BB34++;
 
-				entry = &D_800DE840[nextIdx];
+				entry = (Unk8008C7E4Sub *)&D_800DE840[nextIdx].unk8;
 				if (D_800DE0B6 == 1) {
-					rand4 = func_800038E0_44E0() % 4;
-					spread = (f32)((rand4 * 2) + 0x14);
-					nextX = (f32)entry->unk8 + spread;
-					nextX2 = (f32)entry->unk8 - spread;
+					spread = (((func_800038E0_44E0() % 4) * 2) + 0x14);
+					nextX = entry->unk0 + spread;
+					nextX2 = entry->unk0 - spread;
 
-					rand4 = func_800038E0_44E0() % 4;
-					spread = (f32)((rand4 * 2) + 0x14);
-					nextY = (f32)entry->unkA + spread;
-					nextY2 = (f32)entry->unkA - spread;
+					spread = (((func_800038E0_44E0() % 4) * 2) + 0x14);
+					nextY = entry->unk2 + spread;
+					nextY2 = entry->unk2 - spread;
 
-					rand4 = func_800038E0_44E0() % 4;
-					spread = (f32)((rand4 * 2) + 0x14);
-					nextZ = (f32)entry->unkC + spread;
-					nextZ2 = (f32)entry->unkC - spread;
+					spread = (((func_800038E0_44E0() % 4) * 2) + 0x14);
+					nextZ = entry->unk4 + spread;
+					nextZ2 = entry->unk4 - spread;
 				} else {
-					zero = 0.0f;
-					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
-					if ((func_800038E0_44E0() % 0xB) < 6) {
-						spread = zero - spread;
-					}
-					nextX = (f32)entry->unk8 + spread;
-					nextX2 = (f32)entry->unk8 - spread;
 
-					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					spread = (((func_800038E0_44E0() % 5) * 4) + 0x14);
 					if ((func_800038E0_44E0() % 0xB) < 6) {
-						spread = zero - spread;
+						spread = 0.0f - spread;
 					}
-					nextY = (f32)entry->unkA + spread;
-					nextY2 = (f32)entry->unkA - spread;
+					nextX = entry->unk0 + spread;
+					nextX2 = entry->unk0 - spread;
 
-					spread = (f32)(((func_800038E0_44E0() % 5) * 4) + 0x14);
+					spread = (((func_800038E0_44E0() % 5) * 4) + 0x14);
 					if ((func_800038E0_44E0() % 0xB) < 6) {
-						spread = zero - spread;
+						spread = 0.0f - spread;
 					}
-					nextZ = (f32)entry->unkC + spread;
-					nextZ2 = (f32)entry->unkC - spread;
+					nextY = entry->unk2 + spread;
+					nextY2 = entry->unk2 - spread;
+
+					spread = (((func_800038E0_44E0() % 5) * 4) + 0x14);
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						spread = 0.0f - spread;
+					}
+					nextZ = entry->unk4 + spread;
+					nextZ2 = entry->unk4 - spread;
 				}
 
-				D_8005BB34->v.ob[0] = (s16)(s32)nextX;
-				D_8005BB34->v.ob[1] = (s16)(s32)nextY;
-				D_8005BB34->v.ob[2] = (s16)(s32)nextZ;
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0x800;
-				D_8005BB34->v.tc[1] = 0x800;
-				D_8005BB34->v.cn[0] = colR;
-				D_8005BB34->v.cn[1] = colG;
-				D_8005BB34->v.cn[2] = colB;
-				D_8005BB34->v.cn[3] = 0x32;
+				if (D_800DE0B6 == 1) {
+					D_8005BB34->v.ob[0] = nextX;
+					D_8005BB34->v.ob[1] = nextY;
+					D_8005BB34->v.ob[2] = nextZ;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0x800;
+					D_8005BB34->v.tc[1] = 0x800;
+					D_8005BB34->v.cn[0] = colR;
+					D_8005BB34->v.cn[1] = colG;
+					D_8005BB34->v.cn[2] = colB;
+					D_8005BB34->v.cn[3] = 0x32;
 
-				D_8005BB34++;
-				D_8005BB34->v.ob[0] = (s16)(s32)nextX2;
-				D_8005BB34->v.ob[1] = (s16)(s32)nextY2;
-				D_8005BB34->v.ob[2] = (s16)(s32)nextZ2;
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0x800;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = colR;
-				D_8005BB34->v.cn[1] = colG;
-				D_8005BB34->v.cn[2] = colB;
-				D_8005BB34->v.cn[3] = 0x32;
+					D_8005BB34++;
+					D_8005BB34->v.ob[0] = nextX2;
+					D_8005BB34->v.ob[1] = nextY2;
+					D_8005BB34->v.ob[2] = nextZ2;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0x800;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = colR;
+					D_8005BB34->v.cn[1] = colG;
+					D_8005BB34->v.cn[2] = colB;
+					D_8005BB34->v.cn[3] = 0x32;
 
-				D_8005BB34++;
+					D_8005BB34++;
 
+				} else {
+					D_8005BB34->v.ob[0] = nextX;
+					D_8005BB34->v.ob[1] = nextY;
+					D_8005BB34->v.ob[2] = nextZ;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0x800;
+					D_8005BB34->v.tc[1] = 0x800;
+					D_8005BB34->v.cn[0] = colR;
+					D_8005BB34->v.cn[1] = colG;
+					D_8005BB34->v.cn[2] = colB;
+					D_8005BB34->v.cn[3] = 0x32;
+
+					D_8005BB34++;
+					D_8005BB34->v.ob[0] = nextX2;
+					D_8005BB34->v.ob[1] = nextY2;
+					D_8005BB34->v.ob[2] = nextZ2;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0x800;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = colR;
+					D_8005BB34->v.cn[1] = colG;
+					D_8005BB34->v.cn[2] = colB;
+					D_8005BB34->v.cn[3] = 0x32;
+
+					D_8005BB34++;
+
+				}
+				curX2 = nextX;
 				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 
+				curY2 = nextY;
+				curZ2 = nextZ;
 				curX = nextX2;
 				curY = nextY2;
 				curZ = nextZ2;
-				curX2 = nextX;
-				curY2 = nextY;
-				curZ2 = nextZ;
+				/* Keep a separate source boundary before the loop sentinel load. */
+				(void)0;
+
 			}
 
 			idx = nextIdx;
-		} while ((idx != -5) && (idx != -6));
+		} while ((nextIdx != -5) && (idx != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008BC00_5C0B0.s")
-#endif
+
 
 // AI - Creates a type-9 trail entry with position, color, and velocity
 void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7, s16 arg8, u8 arg9) {
