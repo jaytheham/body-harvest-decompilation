@@ -9028,88 +9028,81 @@ s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
 	return count == 2;
 }
 
-
-// CURRENT(32922)
 #ifdef NON_MATCHING
 s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4) {
-	f32 xIn;
-	f32 zIn;
-	f32 xArg;
-	f32 zArg;
-	f32 slopeMain;
+	f32 slopeMain[1];
 	f32 interceptMain;
-	f32 slopeEdge;
-	f32 interceptEdge;
+	s32 absFirst;
+	s32 pad;
+	s32 sideFlags[4];
+	s32 distSq;
 	f32 x0;
-	f32 z0;
+	s32 bestDist;
+	s32 worstDist;
+	s32 closestCorner;
+	s32 farthestCorner;
+	s32 i;
+	s16 chosenCorner;
+	s32 startSide;
+	s16 firstAng;
+	s16 secondAng;
+	s16 centerAng;
+	s16 firstCorner;
+	s16 secondCorner;
 	f32 x1;
 	f32 z1;
+	f32 xIn;
+	f32 zIn;
+	f32 slopeEdge;
+	f32 interceptEdge;
+	f32 z0;
 	f32 x2;
 	f32 z2;
 	f32 xHit;
 	f32 zHit;
-	f32 dx;
-	f32 dz;
-	s32 sideFlags[4];
-	s32 sideA;
-	s32 sideB;
-	s32 startSide;
-	s32 i;
-	s32 outer;
-	s32 closestCorner;
-	s32 farthestCorner;
-	s32 bestDist;
-	s32 worstDist;
-	s32 distSq;
-	s32 chosenCorner;
-	s32 firstCorner;
-	s32 secondCorner;
-	s16 firstAng;
-	s16 secondAng;
-	s16 centerAng;
-
-	func_80003824_4424((f32)(*arg3 - arg1), (f32)(*arg2 - arg0));
-	func_8010C4EC_11B49C(arg4);
-
-	xArg = (f32)arg0;
-	zArg = (f32)arg1;
-	xIn = (f32)*arg2;
-	zIn = (f32)*arg3;
-
-	dx = xArg - xIn;
-	if (xIn > xArg) {
-		dx = -dx;
-	}
-	if (dx < 5.0f) {
-		xIn = xArg + 5.0f;
-	}
-
-	slopeMain = (zIn - zArg) / (xIn - xArg);
-	interceptMain = zArg - (slopeMain * xArg);
-
-	for (i = 3; i >= 0; i--) {
-		z0 = D_80159D5C->unk54 + D_80159D98[3 + i];
-		x0 = D_80159D5C->unk4C + D_80159D78[3 + i];
-		sideFlags[i] = interceptMain < (z0 - (x0 * slopeMain));
-	}
 
 	bestDist = 0x7FFFFFFF;
 	worstDist = 0;
 	closestCorner = -1;
 	farthestCorner = -1;
 
-	for (outer = 2; outer > 0; outer--) {
-		if ((sideFlags[0] == sideFlags[outer]) || (sideFlags[0] == sideFlags[outer + 1])) {
+	func_80003824_4424(*arg3 - arg1, *arg2 - arg0);
+	secondCorner = -1;
+	firstCorner = -1;
+	func_8010C4EC_11B49C(arg4);
+
+	x0 = *arg2;
+	z0 = *arg3;
+
+	if ((x0 <= arg0 ? arg0 - x0 : -(arg0 - x0)) < 5.0f) {
+		x0 = arg0 + 5.0f;
+	}
+
+	slopeMain[0] = (z0 - arg1) / (x0 - arg0);
+	slopeMain[0] = slopeMain[0]; /* Preserve IDO main-slope register allocation. */
+	interceptMain = arg1 - (slopeMain[0] * arg0);
+
+	i = 4;
+	if (1) {
+		while (i--) {
+			sideFlags[i] = interceptMain <
+			    ((D_80159D5C->unk54 + D_80159D98[i]) -
+			     (slopeMain[0] * (D_80159D78[i] + D_80159D5C->unk4C)));
+		}
+	}
+
+	i = 3;
+	while (i--) {
+		if (sideFlags[3] == sideFlags[i]) {
 			continue;
 		}
 
-		x0 = arg4->unk4C;
-		z0 = arg4->unk54;
+		xIn = *arg2;
+		zIn = *arg3;
 
-		for (i = 3; i >= 0; i--) {
-			dx = (D_80159D78[3 + i] + x0) - xArg;
-			dz = (D_80159D98[3 + i] + z0) - zArg;
-			distSq = ((s32)dx * (s32)dx) + ((s32)dz * (s32)dz);
+		i = 4;
+		while (i--) {
+			distSq = ((s32)((D_80159D78[i] + arg4->unk4C) - arg0) * (s32)((D_80159D78[i] + arg4->unk4C) - arg0)) + ((s32)((D_80159D98[i] + arg4->unk54) - arg1) * (s32)((D_80159D98[i] + arg4->unk54) - arg1));
 
 			if (distSq < bestDist) {
 				bestDist = distSq;
@@ -9122,16 +9115,15 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 			}
 		}
 
-		x1 = D_80159D78[closestCorner] + x0;
-		z1 = D_80159D98[closestCorner] + z0;
+		x1 = D_80159D78[closestCorner] + arg4->unk4C;
+		z1 = D_80159D98[closestCorner] + arg4->unk54;
 
-		slopeEdge = (zArg - z1) / (xArg - x1);
+		slopeEdge = (arg1 - z1) / (arg0 - x1);
 		interceptEdge = z1 - (slopeEdge * x1);
 		startSide = interceptEdge < (zIn - (xIn * slopeEdge));
 
-		firstCorner = -1;
-		secondCorner = -1;
-		for (i = 3; i >= 0; i--) {
+		i = 4;
+		while (i--) {
 			if ((i == closestCorner) || (i == farthestCorner)) {
 				continue;
 			}
@@ -9141,10 +9133,10 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 			if (startSide == (interceptEdge < (z2 - (slopeEdge * x2)))) {
 				if (firstCorner == -1) {
 					firstCorner = i;
-					firstAng = func_80003824_4424(z2 - zArg, x2 - xArg);
+					firstAng = func_80003824_4424(z2 - arg1, x2 - arg0);
 				} else {
 					secondCorner = i;
-					secondAng = func_80003824_4424(z2 - zArg, x2 - xArg);
+					secondAng = func_80003824_4424(z2 - arg1, x2 - arg0);
 				}
 			}
 		}
@@ -9152,12 +9144,14 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		if (secondCorner == -1) {
 			chosenCorner = firstCorner;
 		} else {
-			centerAng = func_80003824_4424(z1 - zArg, x1 - xArg);
+			centerAng = func_80003824_4424(z1 - arg1, x1 - arg0);
 			firstAng = func_800F9C50_108C00(centerAng, firstAng);
 			secondAng = func_800F9C50_108C00(centerAng, secondAng);
-			chosenCorner = secondCorner;
-			if (((secondAng < 0) ? -secondAng : secondAng) < ((firstAng < 0) ? -firstAng : firstAng)) {
+			absFirst = firstAng >= 0 ? firstAng : -firstAng;
+			if ((secondAng >= 0 ? secondAng : -secondAng) < absFirst) {
 				chosenCorner = firstCorner;
+			} else {
+				chosenCorner = secondCorner;
 			}
 		}
 
@@ -9167,50 +9161,38 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 			return 0;
 		}
 
-		x0 = arg4->unk4C;
-		z0 = arg4->unk54;
-		x1 = D_80159D78[closestCorner] + x0;
-		z1 = D_80159D98[closestCorner] + z0;
-		xIn = D_80159D78[chosenCorner] + x0;
-		zIn = D_80159D98[chosenCorner] + z0;
+		x1 = D_80159D78[closestCorner] + arg4->unk4C;
+		z1 = D_80159D98[closestCorner] + arg4->unk54;
+		xIn = D_80159D78[chosenCorner] + arg4->unk4C;
+		zIn = D_80159D98[chosenCorner] + arg4->unk54;
 
-		dx = xIn - x1;
-		if (x1 > xIn) {
-			dx = -dx;
-		}
-		if (dx < 5.0f) {
+		if ((xIn <= x1 ? x1 - xIn : -(x1 - xIn)) < 5.0f) {
 			xIn = x1 + 5.0f;
 		}
 
-		dz = zIn - z1;
-		if (z1 > zIn) {
-			dz = -dz;
-		}
-		if (dz < 5.0f) {
+		if ((zIn <= z1 ? z1 - zIn : -(z1 - zIn)) < 5.0f) {
 			zIn = z1 + 5.0f;
 		}
 
 		slopeEdge = (zIn - z1) / (xIn - x1);
 		interceptEdge = z1 - (slopeEdge * x1);
 
-		x2 = D_80159D5C->unk4C;
-		z2 = D_80159D5C->unk54;
-		sideA = interceptEdge < (z2 - (slopeEdge * x2));
-		sideB = interceptEdge < (zArg - (slopeEdge * xArg));
+		sideFlags[0] = interceptEdge < (D_80159D5C->unk54 - (slopeEdge * D_80159D5C->unk4C));
+		sideFlags[1] = interceptEdge < (arg1 - (slopeEdge * arg0));
 
-		xHit = (interceptMain - interceptEdge) / (slopeEdge - slopeMain);
-		zHit = (slopeMain * xHit) + interceptMain;
+		xHit = x2 = (interceptMain - interceptEdge) / (slopeEdge - slopeMain[0]);
+		zHit = z2 = (slopeMain[0] * xHit) + interceptMain;
 
-		if ((D_80144D08_153CB8 < (f64)zHit) || ((f64)zHit < -32768.0) ||
-			(D_80144D10_153CC0 < (f64)xHit) || ((f64)xHit < -32768.0)) {
+		if ((D_80144D08_153CB8[0] < zHit) || (zHit < -32768.0) ||
+			(D_80144D10_153CC0[0] < xHit) || (xHit < -32768.0)) {
 			*arg2 = -0x7FFF;
 			*arg3 = -0x7FFF;
 		} else {
-			*arg2 = (s16)(s32)xHit;
-			*arg3 = (s16)(s32)zHit;
+			*arg2 = x2;
+			*arg3 = z2;
 		}
 
-		return sideA != sideB;
+		return sideFlags[0] != sideFlags[1];
 	}
 
 	return 0;
