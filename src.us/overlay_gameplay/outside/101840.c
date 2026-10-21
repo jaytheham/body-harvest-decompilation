@@ -7614,7 +7614,7 @@ void func_80108B48_117AF8(VehicleInstance *arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80108B48_117AF8.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_scud_rodata.s")
 #endif
 
 void func_80108CA8_117C58(VehicleInstance *arg0) {
@@ -7643,77 +7643,62 @@ void func_80108CA8_117C58(VehicleInstance *arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(6145)
 void func_80108D80_117D30(VehicleInstance *arg0, VehicleType *arg1) {
-	f32 temp_f0;
-	f32 temp_f2;
-	f32 temp_f12;
-	s32 padStack0;
-	s32 padStack1;
-	s16 sp2E;
-	s16 temp_s0;
-	s16 temp_s4;
-	s16 temp_s5;
-	s16 temp_s6;
-	s32 temp_v0;
-	s32 tableIndex;
-	WeaponSpecEntry *tableEntry;
+	s32 terrainHeight;
+	f32 angularDamping;
+	f32 speed;
+	s16 angularStep;
+	s16 headingCorrection;
+	f32 drag;
+	WeaponSpecEntry *weaponSpec;
+	s32 vehicleIndex;
+	s16 weaponIndex;
+	s16 sinHeading;
+	s16 cosHeading;
 
-	temp_f0 = (f32)((f64)arg1->unk45 * 0.00390625);
-	temp_f2 = (f32)((f64)arg1->unk47 / D_80144BD8_153B88[0]);
-	tableIndex = func_800FAE60_109E10(arg0);
+	angularDamping = (f32)((f64)arg1->unk45 * 0.00390625);
+	drag = (f32)((f64)arg1->unk47 / D_80144BD8_153B88[0]);
+	vehicleIndex = func_800FAE60_109E10(arg0);
 
 	if (arg0 == D_80052B34) {
 		D_80159320 &= ~0x800;
 	}
 
-	arg0->unk26 = (s16)(arg0->unk26 + (func_800F9C50_108C00(arg0->unk2A, arg0->unkA) / arg1->unk44));
-	arg0->unk24 = (s16)(arg0->unk24 + (func_800F9C50_108C00(arg0->unk28, arg0->unk8) / arg1->unk44));
+	arg0->unk26 += func_800F9C50_108C00(arg0->unk2A, arg0->unkA) / arg1->unk44;
+	arg0->unk24 += func_800F9C50_108C00(arg0->unk28, arg0->unk8) / arg1->unk44;
 
-	temp_s0 = arg0->unk26;
-	arg0->unkA = (s16)(arg0->unkA + temp_s0);
+	angularStep = arg0->unk26;
+	arg0->unkA = (s16)(arg0->unkA + angularStep);
 	arg0->unk8 = (s16)(arg0->unk8 + arg0->unk24);
 	arg0->unk6 = (s16)(arg0->unk6 + arg0->unk22 + arg0->unk16);
 
-	arg0->unk26 = (s16)(s32)((f32)temp_s0 * temp_f0);
-	arg0->unk24 = (s16)(s32)((f32)arg0->unk24 * temp_f0);
-	arg0->unk22 = (s16)(s32)((f32)arg0->unk22 * temp_f0);
-	arg0->unk16 = (s16)(s32)((f32)arg0->unk16 * temp_f0);
+	arg0->unk26 = (s16)(s32)((f32)angularStep * angularDamping);
+	arg0->unk24 = (s16)(s32)((f32)arg0->unk24 * angularDamping);
+	arg0->unk22 = (s16)(s32)((f32)arg0->unk22 * angularDamping);
+	arg0->unk16 = (s16)(s32)((f32)arg0->unk16 * angularDamping);
 
-	arg0->unk30 = arg0->unk30 * temp_f2;
-	arg0->unk34 = arg0->unk34 * temp_f2;
-	arg0->unk38 = arg0->unk38 * temp_f2;
+	arg0->unk30 = arg0->unk30 * drag;
+	arg0->unk34 = arg0->unk34 * drag;
+	arg0->unk38 = arg0->unk38 * drag;
 
 	if (arg0->unk1A != 0) {
-		temp_s0 = (s16)(func_800F9C50_108C00(arg0->unk6, arg0->unkE) / 5);
-		arg0->unkE = (s16)(arg0->unkE + temp_s0);
-		temp_f12 = arg0->unk58;
-
-		if ((s16)(s32)((f32)((temp_f12 - D_80158C58[tableIndex]) * (f32)arg1->unk44) * 30.0f) < 0x1556) {
-			if (0.0f < temp_f12) {
-			}
-		} else {
-			if (0.0f < temp_f12) {
-			}
+		headingCorrection = (s16)(func_800F9C50_108C00(arg0->unk6, arg0->unkE) / 5);
+		arg0->unkE = (s16)(arg0->unkE + headingCorrection);
+		angularStep = (s16)(s32)((((speed = arg0->unk58) - D_80158C58[vehicleIndex]) * (f32)arg1->unk44) * 30.0f);
+		if (angularStep >= 0x1556) {
+			angularStep = 0x1555;
 		}
-
-		arg0->unk2A = 0;
-		if (0.0f < temp_f12) {
-			arg0->unk28 = (s16)(-temp_s0 * 3);
-		} else {
-			arg0->unk28 = 0;
-		}
+		/* The clamped acceleration is calculated, but pitch response is disabled. */
+		arg0->unk2A = angularStep * 0;
+		arg0->unk28 = 0.0f < speed ? -headingCorrection * 3 : 0;
 	}
 
-	func_800FB430_10A3E0(arg0, arg0->unk58 * temp_f2);
-	sp2E = coss((u16)arg0->unkE);
-	temp_s5 = sins((u16)arg0->unkE);
-	temp_v0 = func_800F9EC4_108E74(
-		(s16)(s32)((((f64)(f32)sp2E / 32768.0) * (f64)arg0->unk12) + (f64)arg0->unk0),
-		(s16)(s32)((((f64)(f32)temp_s5 / 32768.0) * (f64)arg0->unk12) + (f64)arg0->unk4));
-
-	func_800FB3E8_10A398(arg0, (f32)(((temp_v0 + arg0->unk2E) - arg0->unk2) / 5));
+	func_800FB430_10A3E0(arg0, arg0->unk58 * drag);
+	cosHeading = coss((u16)arg0->unkE);
+	sinHeading = sins((u16)arg0->unkE);
+	func_800FB3E8_10A398(arg0, (f32)((func_800F9EC4_108E74(
+		(s16)(s32)((((f64)(f32)cosHeading / 32768.0) * (f64)arg0->unk12) + (f64)arg0->unk0),
+		(s16)(s32)((((f64)(f32)sinHeading / 32768.0) * (f64)arg0->unk12) + (f64)arg0->unk4)) + arg0->unk2E - arg0->unk2) / 5));
 
 	if ((D_80222A70 < arg0->unk2) || ((arg0->unk2 < D_80222A70) && !(arg1->unk4C & 0x100))) {
 		func_800FB468_10A418(arg0, (f32)D_80222A70);
@@ -7725,25 +7710,26 @@ void func_80108D80_117D30(VehicleInstance *arg0, VehicleType *arg1) {
 		arg0->unk2E = 0x14;
 	}
 
-	temp_v0 = func_800F9EC4_108E74(arg0->unk0, arg0->unk4);
+	terrainHeight = func_800F9EC4_108E74(arg0->unk0, arg0->unk4);
 
 	if ((arg0->unk1A == 0) && (arg0->unk2 < D_80222A70)) {
 		arg0->unk2E = (s16)(arg0->unk2E + 4);
 	}
 
-	if ((arg0->unk1A == 0) && ((D_80222A70 - 0x24) < temp_v0) &&
+	if ((arg0->unk1A == 0) && ((D_80222A70 - 0x24) < terrainHeight) &&
 		(func_800FAA08_1099B8((s16)(s32)arg0->unk4C, (s16)(s32)arg0->unk54) < 0xA)) {
+		arg0->unk20 &= ~VEHICLE_FLAG_AIRBORNE;
 		arg0->unk2E = 1;
-		arg0->unk20 = (u16)(arg0->unk20 & ~VEHICLE_FLAG_AIRBORNE);
 	} else {
 		arg0->unk20 = (u16)(arg0->unk20 | VEHICLE_FLAG_AIRBORNE);
 	}
 
 	if (arg0 == D_80052B34) {
-		temp_s6 = arg1->unk55;
-		if (temp_s6 != 0) {
-			tableEntry = &D_80140768_14F718[temp_s6];
-			if ((f32)tableEntry->unk2 <= func_800FB11C_10A0CC(arg0)) {
+		weaponSpec = D_80140768_14F718;
+		weaponIndex = arg1->unk55;
+		if (weaponIndex != 0) {
+			weaponSpec = &weaponSpec[weaponIndex];
+			if ((f32)weaponSpec->unk4 <= func_800FB11C_10A0CC(arg0)) {
 				arg0->unk20 = (u16)(arg0->unk20 | VEHICLE_FLAG_AIRBORNE);
 				arg0->unk2E = (s16)(arg0->unk2E + 1);
 				func_800FB3E8_10A398(arg0, 1.0f);
@@ -7754,10 +7740,6 @@ void func_80108D80_117D30(VehicleInstance *arg0, VehicleType *arg1) {
 		}
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_scud_rodata.s")
-#endif
 
 void func_80109370_118320(VehicleInstance *arg0, VehicleType *arg1) {
 	s32 temp_v1;
