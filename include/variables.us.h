@@ -999,6 +999,7 @@ extern Unk80052B2C D_80052AE8;
 extern s16 D_80052B1C;
 extern VehicleInstance* D_80052B20;
 extern Unk80052B2C* D_80052B2C;
+extern VehicleInstance *D_80052B34_Read;
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern s32 D_80052B38; // CPU frame preparation time: elapsed time from the scheduler starting a frame until the gameplay thread signals that its work is complete, before graphics-task submission.
 extern s32 D_80052B3C; // Graphics-task completion latency: elapsed time from just after graphics-task submission until the scheduler receives its completion message.
@@ -2792,6 +2793,7 @@ extern s16 D_801593A8[0x20];
 extern s16 D_801593E8;
 extern s16 D_801593EA;
 extern s16 D_801593EC;
+extern s16 D_801593EC_Write;
 extern UnkF9230Func80102FA4Point D_801593F0[];
 extern UnkF9230Func80102FA4Point D_80159420[];
 extern UnkF9230Func80102FA4Point D_801594E0[];
@@ -4172,9 +4174,9 @@ extern s16 D_801409F0_Begin;
 
 extern const f64 D_80144BA0_153B50[1];
 extern const ShadowGeometryConstant D_80144BA8_153B58;
-extern const f64 D_80144BB0_153B60[1];
-extern const f64 D_80144BB8_153B68[1];
-extern const f64 D_80144BC0_153B70[1];
+extern const ShadowGeometryConstant D_80144BB0_153B60;
+extern const ShadowGeometryConstant D_80144BB8_153B68;
+extern const ShadowGeometryConstant D_80144BC0_153B70;
 extern const f64 D_80144BC8_153B78[1];
 extern const f64 D_80144BD0_153B80[1];
 extern const f64 D_80144BD8_153B88[1];
