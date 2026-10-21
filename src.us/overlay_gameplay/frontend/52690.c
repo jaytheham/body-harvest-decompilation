@@ -4316,9 +4316,7 @@ void func_8008EEC4_5F374(void) {
 }
 
 // https://decomp.me/scratch/fAy3j
-// CURRENT(10) - instruction match apart from compiler-generated constant addresses
 // AI - Creates orbiting particle effects for cinematic lighting mode
-#ifdef NON_MATCHING
 void func_8008F1E0_5F690(void)
 {
   s16 temp_a0;
@@ -4383,15 +4381,13 @@ void func_8008F1E0_5F690(void)
 	  }
 	  func_800837B4_53C64(sp90, sp90);
 	  func_800838B8_53D68(250.0f, sp90, sp90);
-	  func_80085CEC_5619C((s16) ((s32) sp90[0]), (s16) ((s32) sp90[1]), (s16) ((s32) sp90[2]), 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
+	  func_80085CEC_5619C((s32)sp90[0], (s32)sp90[1], (s32)sp90[2], 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
 	  var_s1++;
 	}
 	while (var_s1 < 3);
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F1E0_5F690.s")
-#endif
+
 
 // AI - Initializes a particle slot entry to default values
 void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
@@ -4842,5 +4838,3 @@ const u32 jtbl_800AECB4_7F164[11] = {
 #error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
 };
-const f64 D_800AECE0_7F190[1] = { 360 };
-const f64 D_800AECE8_7F198[1] = { 6.2831853070000001 };
