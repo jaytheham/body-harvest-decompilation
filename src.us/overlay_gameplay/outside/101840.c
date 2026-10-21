@@ -7512,7 +7512,7 @@ void func_801081F0_1171A0(VehicleInstance *arg0, VehicleType *arg1) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_801081F0_1171A0.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_scud_rodata.s")
 #endif
 
 void func_8010895C_11790C(VehicleInstance *arg0)
@@ -7563,11 +7563,10 @@ void func_8010895C_11790C(VehicleInstance *arg0)
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(205): update store and angle load order improved; register allocation remains.
 void func_80108B48_117AF8(VehicleInstance *arg0) {
 	s16 temp_a1;
 	s16 temp;
+	s32 yawStep;
 	s32 temp_v0;
 
 	if (arg0->unkA > 0) {
@@ -7584,20 +7583,23 @@ void func_80108B48_117AF8(VehicleInstance *arg0) {
 		temp_v0 = 0x32;
 	}
 	arg0->unk24 = arg0->unk24 + temp_v0;
-	arg0->unk22 = arg0->unk22 + 0x28;
 	arg0->unk24 = arg0->unk24 - (arg0->unk24 >> 4);
 	arg0->unk8 = temp_a1 + arg0->unk24;
+	arg0->unkA = arg0->unkA + arg0->unk26;
+	arg0->unk22 += 0x28;
 	temp = arg0->unk22;
-	arg0->unkA = arg0->unk26 + arg0->unkA;
-	arg0->unk6 = arg0->unk6 + temp + arg0->unk16;
-	arg0->unk16 = arg0->unk16 >> 1;
+	yawStep = arg0->unk16;
+	arg0->unk6 = arg0->unk6 + temp + yawStep;
+	arg0->unk16 = yawStep >> 1;
 	if (D_80052A8C & 1) {
 		arg0->unk34 = arg0->unk34 - 1.0f;
+		temp = arg0->unk22;
 	}
-	if (arg0->unk22 >= 0x7D1) {
+	if (temp >= 0x7D1) {
 		arg0->unk22 = 0x7D0;
+		temp = arg0->unk22;
 	}
-	if (arg0->unk22 < -0x7D0) {
+	if (temp < -0x7D0) {
 		arg0->unk22 = -0x7D0;
 	}
 	if (arg0->unk24 >= 0x7D1) {
@@ -7613,9 +7615,6 @@ void func_80108B48_117AF8(VehicleInstance *arg0) {
 		arg0->unk26 = -0x7D0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_scud_rodata.s")
-#endif
 
 void func_80108CA8_117C58(VehicleInstance *arg0) {
 	arg0->unk8 = arg0->unk8 + arg0->unk24;
