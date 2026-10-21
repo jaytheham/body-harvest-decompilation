@@ -4604,48 +4604,37 @@ void func_8008FDF0_602A0(void) {
 	func_8008FAAC_5FF5C();
 }
 
-#ifdef NON_MATCHING
-// CURRENT(13651)
 // AI - Effect command dispatcher: creates particle effects from a structured command table (30 effect types)
-void func_8008FE98_60348(s32 arg0) {
-	Unk800AA998Entry *entry;
+void func_8008FE98_60348(u8 arg0) {
+	s16 slot;
 
-	entry = &D_800AA998[arg0 & 0xFF];
-
-	switch (entry->type) {
+	switch (D_800AA998[arg0].type) {
 		case 0:
-			entry->unk1 = func_8008B08C_5B53C(entry->unk2, entry->unk4, entry->unk6,
-									  (s8)(entry->unk8 & 0xFF), entry->unkA, entry->unkC, entry->unkE);
+			D_800AA998[arg0].unk1 = func_8008B08C_5B53C(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE);
 			break;
 
 		case 1:
-			func_8008B19C_5B64C(D_800AA998[entry->unk8].unk1, (u8)(entry->unkA & 0xFF));
+			func_8008B19C_5B64C(D_800AA998[D_800AA998[arg0].unk8].unk1, D_800AA998[arg0].unkA);
 			break;
 
 		case 2:
-			func_80085CEC_5619C(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
-								entry->unkA, entry->unkC, 0xA0, 0xF, 0x32, 0xFF, 0xFF, 0xFF, 1,
-								entry->unkE);
+			func_80085CEC_5619C(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE, 0xA0, 0xF, 0x32, 0xFF, 0xFF, 0xFF, 1);
 			break;
 
 		case 3:
-			D_800DE0BE = entry->unk8;
-			D_800DE0BF = entry->unkA;
+			D_800DE0BE = D_800AA998[arg0].unk8;
+			D_800DE0BF = D_800AA998[arg0].unkA;
 			break;
 
 		case 4:
 			if (D_800313D0_31FD0 != 2) {
-				func_8008A460_5A910(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
-								   entry->unkA, entry->unkC, entry->unkE, 0x1E,
-								   9, 0xFA, 0x55, 1, 0, 0xDC, 1);
+				func_8008A460_5A910(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, 0x1E, 9, D_800AA998[arg0].unkE, 0xFA, 0x55, 1, 0, 0xDC, 1);
 			}
 			break;
 
 		case 5:
 			if (D_800313D0_31FD0 != 2) {
-				func_8008A460_5A910(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
-								   entry->unkA, entry->unkC, entry->unkE, 0x1E,
-								   7, 0x8C, 0x73, 0xA, 0, 0xDC, 0);
+				func_8008A460_5A910(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, 0x1E, 7, D_800AA998[arg0].unkE, 0x8C, 0x73, 0, 0xA, 0xDC, 0);
 			}
 			break;
 
@@ -4655,49 +4644,31 @@ void func_8008FE98_60348(s32 arg0) {
 
 		case 7:
 			if (D_800DE0B6 == 1) {
-				func_8008C73C_5CBEC(entry->unk2, entry->unk4, entry->unk6, 0xFF, 0x78,
-							  0x5A, entry->unk8, entry->unkA, entry->unkC,
-							  entry->unkE);
+				func_8008C73C_5CBEC(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0xFF, 0x78, 0x5A, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE);
 			} else {
-				func_8008C73C_5CBEC(entry->unk2, entry->unk4, entry->unk6, 0xFF, 0xE6,
-							  0x32, entry->unk8, entry->unkA, entry->unkC,
-							  entry->unkE);
+				func_8008C73C_5CBEC(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0xFF, 0xE6, 0x32, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE);
 			}
 			break;
 
 		case 8:
-			switch (entry->unkA) {
-				case 0:
-					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
-								   (u16)entry->unk8, 0, 0, 0);
-					break;
-
-				case 1:
-					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
-								   (u16)entry->unk8, 0, (s32)D_800AB448, 0);
-					break;
-
-				case 2:
-					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
-								   (u16)entry->unk8, 0, 0, 1);
-					break;
-
-				case 3:
-					func_8008EB20_5EFD0(entry->unk2, entry->unk4, entry->unk6,
-								   (u16)entry->unk8, 0, (s32)D_800AB454, 0);
-					break;
+			if (D_800AA998[arg0].unkA == 0) {
+				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, 0, 0);
+			} else if (D_800AA998[arg0].unkA == 1) {
+				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, (s32)D_800AB448, 0);
+			} else if (D_800AA998[arg0].unkA == 2) {
+				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, 0, 1);
+			} else if (D_800AA998[arg0].unkA == 3) {
+				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, (s32)D_800AB454, 0);
 			}
 			break;
 
 		case 9:
-			func_8008DDF0_5E2A0(
-				func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0, entry->unk8),
-				(u8)(entry->unkA & 0xFF), (u8)(entry->unkC & 0xFF), (u8)(entry->unkE & 0xFF));
+			slot = func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0, D_800AA998[arg0].unk8);
+			func_8008DDF0_5E2A0(slot, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE);
 			break;
 
 		case 10:
-			func_80084324_547D4(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
-							 entry->unkA, entry->unkC, entry->unkE, 0xB4);
+			func_80084324_547D4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE, 0xB4);
 			break;
 
 		case 11:
@@ -4706,19 +4677,15 @@ void func_8008FE98_60348(s32 arg0) {
 			break;
 
 		case 12:
-			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xA,
-								 entry->unk8);
+			func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0xA, D_800AA998[arg0].unk8);
 			break;
 
 		case 13:
-			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xC,
-								 entry->unk8);
+			func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0xC, D_800AA998[arg0].unk8);
 			break;
 
 		case 14:
-			func_80085CEC_5619C(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
-								entry->unkA, entry->unkC, 0xF0, 0xF, 0x32, 0xC8, 0xA0, 0xA, 1,
-								entry->unkE);
+			func_80085CEC_5619C(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE, 0xF0, 0xF, 0x32, 0xC8, 0xA0, 0xA, 1);
 			break;
 
 		case 15:
@@ -4730,28 +4697,23 @@ void func_8008FE98_60348(s32 arg0) {
 			break;
 
 		case 17:
-			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xE, 0x46);
+			func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0xE, 0x46);
 			break;
 
 		case 18:
-			func_8008B7BC_5BC6C(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
-						   entry->unkA, entry->unkC, entry->unkE);
+			func_8008B7BC_5BC6C(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE);
 			break;
 
 		case 19:
-			func_8008A460_5A910(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
-							   entry->unkA, entry->unkC, entry->unkE, 0xFA,
-							   0x1D, 0x1E, 0xFF, 0xFF, 0xFF, 0xFF, 0);
+			func_8008A460_5A910(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, 0xFA, 0x1D, D_800AA998[arg0].unkE, 0x1E, 0xFF, 0xFF, 0xFF, 0xFF, 0);
 			break;
 
 		case 20:
-			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0xF,
-								 entry->unk8);
+			func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0xF, D_800AA998[arg0].unk8);
 			break;
 
 		case 21:
-			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0x10,
-								 entry->unk8);
+			func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0x10, D_800AA998[arg0].unk8);
 			break;
 
 		case 22:
@@ -4764,8 +4726,7 @@ void func_8008FE98_60348(s32 arg0) {
 			break;
 
 		case 24:
-			func_8008DC34_5E0E4(entry->unk2, entry->unk4, entry->unk6, 0x11,
-								 entry->unk8);
+			func_8008DC34_5E0E4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, 0x11, D_800AA998[arg0].unk8);
 			break;
 
 		case 25:
@@ -4774,8 +4735,7 @@ void func_8008FE98_60348(s32 arg0) {
 
 		case 26:
 			D_800DE0B8 = 1;
-			func_80084324_547D4(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
-							 entry->unkA, entry->unkC, entry->unkE, 0xD48);
+			func_80084324_547D4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE, 0xD48);
 			break;
 
 		case 27:
@@ -4786,22 +4746,16 @@ void func_8008FE98_60348(s32 arg0) {
 		case 28:
 			D_800DE0B9 = 1;
 			D_800DE0BB = 0;
-			func_80084324_547D4(entry->unk2, entry->unk4, entry->unk6, entry->unk8,
-							 entry->unkA, entry->unkC, entry->unkE, 0x190);
-			D_800DE0BC = 1;
+			D_800DE0BC = func_80084324_547D4(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE, 0x190);
 			break;
 
 		case 29:
 			D_800DE0BD = 1;
-			func_80085CEC_5619C(entry->unk2, entry->unk4, entry->unk6, (s8)(entry->unk8 & 0xFF),
-								entry->unkA, entry->unkC, 0x8C, 0x28, 0x64, 0xFF, 0xFF, 0xFF, 1,
-								entry->unkE);
+			func_80085CEC_5619C(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, D_800AA998[arg0].unkA, D_800AA998[arg0].unkC, D_800AA998[arg0].unkE, 0x8C, 0x28, 0x64, 0xFF, 0xFF, 0xFF, 1);
 			break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008FE98_60348.s")
-#endif
+
 
 // AI - Sets up the 3D rendering pipeline: projection, camera look-at, and viewport
 void func_80090648_60AF8(void) {
@@ -4816,7 +4770,7 @@ void func_80090648_60AF8(void) {
 	func_80004D38_5938();
 
 	guPerspective((Mtx*)D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510,
-				  D_800AED68_7F218[0], 1.0f);
+				  2500.0f, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
@@ -4896,27 +4850,3 @@ const u32 jtbl_800AECB4_7F164[11] = {
 };
 const f64 D_800AECE0_7F190[1] = { 360 };
 const f64 D_800AECE8_7F198[1] = { 6.2831853070000001 };
-const u32 jtbl_800AECF0_7F1A0[30] = {
-#if defined(VERSION_US)
-    0x8008FEDC, 0x8008FF18, 0x8008FF38, 0x8008FFA4,
-    0x8008FFC0, 0x80090040, 0x800900BC, 0x800900CC,
-    0x80090174, 0x8009024C, 0x8009028C, 0x800902C8,
-    0x800902E0, 0x80090304, 0x80090328, 0x80090394,
-    0x800903A4, 0x800903B0, 0x800903D4, 0x80090408,
-    0x80090478, 0x8009049C, 0x800904C0, 0x800904D8,
-    0x800904E4, 0x80090508, 0x80090518, 0x80090560,
-    0x80090578, 0x800905CC,
-#elif defined(VERSION_EU)
-    0x8009069C, 0x800906D8, 0x800906F8, 0x80090764,
-    0x80090780, 0x80090800, 0x8009087C, 0x8009088C,
-    0x80090934, 0x80090A0C, 0x80090A4C, 0x80090A88,
-    0x80090AA0, 0x80090AC4, 0x80090AE8, 0x80090B54,
-    0x80090B64, 0x80090B70, 0x80090B94, 0x80090BC8,
-    0x80090C38, 0x80090C5C, 0x80090C80, 0x80090C98,
-    0x80090CA4, 0x80090CC8, 0x80090CD8, 0x80090D20,
-    0x80090D38, 0x80090D8C,
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const f32 D_800AED68_7F218[1] = { 2500.0f };

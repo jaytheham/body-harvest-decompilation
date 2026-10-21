@@ -1,0 +1,5 @@
+`lh t5,0xA(v1); lh a0,2(v1); ... sw t5,0x10(sp); lh t6,0xC(v1)` -> In `func_8008FE98_60348`, replace the cached command pointer with `D_800AA998[arg0]` throughout the switch. Remove redundant masks and argument casts. -> `lh t5,0xA(v1); lh t6,0xC(v1); lh t7,0xE(v1); ...` groups command loads before outgoing argument stores and reproduces the target scheduling.
+
+`lh t5,0xA(v1)` after case 9, followed by a two-register phase difference through the remaining cases -> Assign `func_8008DC34_5E0E4(...)` to an `s16 slot` before passing it to `func_8008DDF0_5E2A0`; an inline call or `u8 slot` gives the wrong temporary-register phase. -> `lh t7,0xA(v1)` and all subsequent registers match; the instruction count and `0x50` stack frame remain unchanged.
+
+`lw t8,-0x130C(at)` with the explicit `2500.0f` data symbol preceding the generated jump table -> Remove the dispatcher's placeholder jump table and replace the following function's `D_800AED68_7F218[0]` with the literal `2500.0f`, removing its placeholder const too. -> `lw t8,-0x1310(at)` addresses the generated table at `0x800AECF0`, followed by the generated float at `0x800AED68`.
