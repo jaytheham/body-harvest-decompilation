@@ -437,6 +437,7 @@ segments:
 
       # Shadow state includes the private StripModelToBones pointers and count.
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/F7870, vram: 0x801575A0}
+      - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/101840, vram: 0x80159D10}
 
   - name: overlay_gameplay_inside
     type: code

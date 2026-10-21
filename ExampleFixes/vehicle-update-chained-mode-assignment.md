@@ -1,0 +1,7 @@
+Incorrect ASM in `func_8010BA04_11A9B4`: named vehicle pointer retains stale values across calls and produces saved registers -> code changed: use direct `D_80052B34` member accesses; read random results into a word before updating vehicle angular velocities; access `vehicleTypes[D_80052B34->unk1A].unk42` -> correct ASM: global pointer reloads through `a3`, vehicle in `a2`, and the target post-call loads.
+
+Incorrect ASM: signed float conversions omit the FCSR conversion sequences, and an unsigned field's `< 0` test disappears -> code changed: cast the speed and health fraction through `u32` before narrowing to the helper arguments; test `unk4C & 0x20000000` -> correct ASM: unsigned conversion sequences and `sll`/`bgez` flag test.
+
+Incorrect ASM: the double multiplier's operands and subsequent floating registers are reversed -> code changed: declare `D_80144CD8_153C88` as `ShadowGeometryConstant` and use `.value` -> correct ASM: `mul.d f18,f10,f16` and target floating-register sequence.
+
+Incorrect ASM: separate `modeTemp = D_80050AD0; D_80050AD4 = modeTemp;` leaves the decay shift after its branch and changes the suffix registers -> code changed: use `modeTemp = D_80050AD4 = D_80050AD0;` in the first two mode transitions -> correct ASM: `sra t9,v0,2` in the earlier decay branch delay slot and the exact target suffix.

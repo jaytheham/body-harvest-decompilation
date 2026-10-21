@@ -1054,8 +1054,13 @@ typedef struct {
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ u8 unk44; // direction bitmask (1=N, 2=S, 4=W, 8=E) ?
 	/* 0x45 */ u8 unk45;
-	/* 0x46 */ u8 unk46;
-	/* 0x47 */ u8 unk47;
+	union {
+		struct {
+			/* 0x46 */ u8 unk46;
+			/* 0x47 */ u8 unk47;
+		};
+		/* 0x46 */ u16 pathFlags;
+	};
 	/* 0x48 */ u8 unk48;
 	/* 0x49 */ u8 pad49[3];
 	/* 0x4C */ f32 unk4C; // X postion as float
@@ -1636,12 +1641,27 @@ typedef struct {
 	/* 0x17 */ u8 unk17;
 } BuildingInstance; /* size = 0x18 */
 
+typedef struct {
+	u32 unk0;
+	s16 unk4;
+	s16 unk6;
+	s16 unk8;
+	s16 unkA;
+} BuildingCollisionVolume;
+
+typedef struct {
+	s16 values[16];
+} TerrainCollisionRow;
+
 // 0x00 xxyyyyyy yyyyyy = Model
 // 0x04 xxyyyyyy yyyyyy = Damaged model
 // 0x10 xxyyzzaa yy = Collision data
 // 0x18 xxyyzzaa yy = Max health aa = Detail props(00 = Windmill 01 = flag 02 = Fountain effect 04 = Black oblong 05 = Statue's hand 06 = Grass oblong
 typedef struct {
-	/* 0x00 */ u8 pad0[0x10];
+	union {
+		u8 pad0[0x10];
+		struct { void *model; u8 padModel[0xC]; };
+	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
@@ -3134,7 +3154,7 @@ typedef struct {
 } PowerupItem; /* stride = 0x12 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x4];
+	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
@@ -4023,5 +4043,26 @@ typedef struct {
 	u8 root;
 	JointIdByte child;
 } SavedJointIds;
+
+/* Pointer and raw-address views of a vehicle reference. */
+typedef union {
+    VehicleInstance *vehicle;
+    u32 address;
+} VehicleAddressValue;
+
+/* Word water height with its low signed halfword used by particle effects. */
+typedef union {
+	s32 value;
+	struct { s16 high; s16 low; } halves;
+} WaterLevelValue;
+
+typedef struct {
+	/* 0x00 */ u8 mapX;
+	/* 0x01 */ u8 mapZ;
+	/* 0x02 */ u8 unk2;
+	/* 0x03 */ u8 unk3;
+	/* 0x04 */ u8 directions;
+	/* 0x05 */ u8 pad5;
+} RoadTileInfo; /* size = 0x06 */
 
 #endif /* LIBULTRA_REFERENCE */

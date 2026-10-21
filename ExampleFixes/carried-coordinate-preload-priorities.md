@@ -1,0 +1,5 @@
+incorrect ASM: In `func_80103308_1122B8`, the carried coordinates used `$f24/$f26/$f28`, and loading X/Y/Z produced `lwc1 $f24,0x18(cursor)` before Y and Z. Reversing the loads alone changed the coordinate-to-register assignment. The target loads Z/Y/X into `$f30/$f28/$f26`.
+
+code changed: Add a third empty `if (spring == 2.0) { }` in the loop so the existing unused constant web receives a register before the carried coordinates. Initialize `chainZ`, then one empty `if (chainZ) { }`; initialize `chainY`, then two empty `if (chainY) { }`; finally initialize `chainX`. Each initializer reads the corresponding `D_801594E0[1].pos` field. These empty conditions emit no instructions but change IDO live-unit priorities and preserve the desired preload ordering.
+
+correct ASM: The preload sequence becomes `lwc1 $f30,0x20(cursor)` -> `lwc1 $f28,0x1c(cursor)` -> `lwc1 $f26,0x18(cursor)`, and the loop retains X/Y/Z in `$f26/$f28/$f30`. This fixes this floating-point allocation and preload region; the entire function remains unmatched because of cursor allocation and other scheduling differences.
