@@ -5827,12 +5827,17 @@ s32 func_80102FA4_111F54(void) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(8828): corrected carried point and countdown cursor; floating temporaries remain.
-void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
+void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
+{
 	UnkF9230Func80102FA4Point *point;
+	f32 new_var;
 	f32 midX;
 	f32 midY;
 	f32 midZ;
+	f32 loopX;
+	f32 loopY;
+	f32 loopZ;
+	s32 unused;
 	f32 chainX;
 	f32 chainY;
 	f32 chainZ;
@@ -5841,58 +5846,64 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 	f32 posZ;
 	f64 damping;
 	f64 spring;
-
+	f64 half;
+	f32 lastX;
+	f32 lastY;
+	f32 lastZ;
+	f32 oldX;
+	f32 oldY;
+	f32 oldZ;
+	half = 0.5;
 	damping = D_80144AA0_153A50[0];
-	midX = (f32)(arg0->unk0 - (((f32)arg0->unk0 - D_801593F0[10].pos.x) * 0.5));
-	midY = (f32)(arg0->unk2 - (((f32)arg0->unk2 - D_801593F0[10].pos.y) * 0.5));
-	midZ = (f32)(arg0->unk4 - (((f32)arg0->unk4 - D_801593F0[10].pos.z) * 0.5));
-
-	D_801593F0[11].vel.x = (f32)((D_801593F0[11].vel.x * damping) + (midX - D_801593F0[11].pos.x));
-	D_801593F0[11].vel.y = (f32)(((D_801593F0[11].vel.y * damping) + (midY - D_801593F0[11].pos.y)) - 4.0);
-	D_801593F0[11].vel.z = (f32)((D_801593F0[11].vel.z * damping) + (midZ - D_801593F0[11].pos.z));
-
+	midX = (f32)(arg0->unk0 - ((((f32)arg0->unk0) - D_801593F0[10].pos.x) * half));
+	midY = (f32)(arg0->unk2 - ((((f32)arg0->unk2) - D_801593F0[10].pos.y) * half));
+	midZ = (f32)(arg0->unk4 - ((((f32)arg0->unk4) - D_801593F0[10].pos.z) * half));
+	unused = arg0->unk6;
+	point = D_801594E0;
+	D_801593F0[11].vel.x = (f32)((midX - D_801593F0[11].pos.x) + (D_801593F0[11].vel.x * damping));
+	D_801593F0[11].vel.y = (f32)(((midY - D_801593F0[11].pos.y) + (D_801593F0[11].vel.y * damping)) - 4.0);
+	D_801593F0[11].vel.z = (f32)((midZ - D_801593F0[11].pos.z) + (D_801593F0[11].vel.z * damping));
 	D_801593F0[11].pos.x = (f32)arg0->unk0;
 	D_801593F0[11].pos.y = (f32)(arg0->unk2 + 0x26);
 	D_801593F0[11].pos.z = (f32)arg0->unk4;
-
-	chainX = D_801594E0[1].pos.x;
-	chainY = D_801594E0[1].pos.y;
-	chainZ = D_801594E0[1].pos.z;
 	spring = D_80144AA8_153A58[0];
-
-	point = D_801594E0;
-	do {
+	chainZ = D_801594E0[1].pos.z;
+	chainY = D_801594E0[1].pos.y;
+	chainX = D_801594E0[1].pos.x;
+	do
+	{
 		posX = point->pos.x;
 		posY = point->pos.y;
 		posZ = point->pos.z;
-
-
-		midX = (f32)(chainX - ((chainX - point[-1].pos.x) * 0.5));
-		midY = (f32)(chainY - ((chainY - point[-1].pos.y) * 0.5));
-		midZ = (f32)(chainZ - ((chainZ - point[-1].pos.z) * 0.5));
-
-		point->vel.x = (f32)((point->vel.x * damping) + (midX - posX));
-		point->vel.y = (f32)(((point->vel.y * damping) + (midY - posY)) - 4.0);
-		point->vel.z = (f32)((point->vel.z * damping) + (midZ - posZ));
-
-		chainX = (f32)(posX + (point->vel.x * spring));
-		point->pos.x = chainX;
+		loopX = (f32)(chainX - ((chainX - point[-1].pos.x) * half));
+		loopY = (f32)(chainY - ((chainY - point[-1].pos.y) * half));
+		loopZ = (f32)(chainZ - ((chainZ - point[-1].pos.z) * half));
+		new_var = point->vel.x;
+		point->vel.x = (f32)((new_var * damping) + (loopX - posX));
+		point->vel.y = (f32)(((point->vel.y * damping) + (loopY - posY)) - 4.0);
+		point->vel.z = (f32)((point->vel.z * damping) + (loopZ - posZ));
+		chainX = (f32)(posX + (new_var * spring));
 		chainY = (f32)(posY + (point->vel.y * spring));
-		point->pos.y = chainY;
 		chainZ = (f32)(posZ + (point->vel.z * spring));
+		point->pos.x = chainX;
+		point->pos.y = chainY;
 		point->pos.z = chainZ;
-	} while ((u32)point-- >= (u32)D_80159420);
-
-	midX = (f32)(D_801593F0[1].pos.x - ((D_801593F0[1].pos.x - (f32)arg1->unk0) * 0.5));
-	midY = (f32)(D_801593F0[1].pos.y - ((D_801593F0[1].pos.y - (f32)arg1->unk2) * 0.5));
-	midZ = (f32)(D_801593F0[1].pos.z - ((D_801593F0[1].pos.z - (f32)arg1->unk4) * 0.5));
-
-	D_801593F0[0].vel.x = (f32)((D_801593F0[0].vel.x * damping) + (midX - D_801593F0[0].pos.x));
-	D_801593F0[0].vel.y = (f32)(((D_801593F0[0].vel.y * damping) + (midY - D_801593F0[0].pos.y)) - 4.0);
-	D_801593F0[0].vel.z = (f32)((D_801593F0[0].vel.z * damping) + (midZ - D_801593F0[0].pos.z));
-
+	} while ((point--) >= D_80159420);
+	oldX = D_801593F0[1].pos.x;
+	oldY = D_801593F0[1].pos.y;
+	oldZ = D_801593F0[1].pos.z;
+	lastZ = oldZ;
+	lastY = oldY;
+	lastX = oldX;
+	lastX = (f32)(oldX - ((oldX - ((f32)arg1->unk0)) * half));
+	lastY = (f32)(oldY - ((oldY - ((f32)arg1->unk2)) * half));
+	lastZ = (f32)(oldZ - ((oldZ - ((f32)arg1->unk4)) * half));
+	D_801593F0[0].vel.x = (f32)((lastX - D_801593F0[0].pos.x) + (D_801593F0[0].vel.x * damping));
+	D_801593F0[0].vel.y = (f32)(((lastY - D_801593F0[0].pos.y) + (D_801593F0[0].vel.y * damping)) - 4.0);
+	D_801593F0[0].vel.z = (f32)((lastZ - D_801593F0[0].pos.z) + (D_801593F0[0].vel.z * damping));
 	D_801593F0[0].pos.x = (f32)arg1->unk0;
-	D_801593F0[0].pos.y = (f32)(vehicleTypes[arg1->unk1A].unk38 + arg1->unk2);
+	unused = arg1->unk2;
+	D_801593F0[0].pos.y = (f32)(vehicleTypes[arg1->unk1A].unk38 + unused);
 	D_801593F0[0].pos.z = (f32)arg1->unk4;
 }
 #else
