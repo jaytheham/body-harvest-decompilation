@@ -452,6 +452,7 @@ void func_8008CC3C_5D0EC(void);
 void func_8008DFA0_5E450(void);
 void func_8008EEC4_5F374(void);
 void func_8008F1E0_5F690(void);
+void func_8008F534_5F9E4(u8 arg0, u8 arg1);
 void func_8008F574_5FA24(void);
 void func_8008F704_5FBB4(u8 arg0);
 void func_8008FA60_5FF10(void);

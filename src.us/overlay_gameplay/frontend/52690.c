@@ -4402,29 +4402,26 @@ void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
 	D_800DE130[arg1].unk8 = -6;
 }
 
-// CURRENT(20) - two adjacent constant loads remain reversed
 // AI - Resets the entire particle system: clears all slots, sets default global state
-#ifdef NON_MATCHING
 void func_8008F574_5FA24(void) {
-	int var_s0;
+	int emptySlot;
 	u8 i;
 	u16 j;
-	u8 *var_a0;
-	Unk800311A0 *var_v0;
+	u8 *color;
+	Unk800311A0 *position;
 
 	D_800DE0EB = 0;
-	var_a0 = D_800DE0E8;
-	var_v0 = &D_800DE0B0;
-	var_s0 = (int)(var_v0->unk0 * 0) + 0xFF;
-	var_v0->unk0 = 0x78;
-	var_v0->unk2 = -0x26C;
-	var_v0->unk4 = -0xDFC;
-	D_800DE0E4[0] = var_s0;
-	D_800DE0E4[1] = var_s0;
-	D_800DE0E4[2] = var_s0;
-	var_a0[0] = 0x28;
-	var_a0[1] = 0x28;
-	var_a0[2] = 0x28;
+	/* Keep this folded guard and the pointer setup on one line for IDO scheduling. */
+	emptySlot = 0xFF; if (D_800DE0BB * 0) { emptySlot = 0; } color = D_800DE0E8; position = &D_800DE0B0;
+	position->unk0 = 0x78;
+	position->unk2 = -0x26C;
+	position->unk4 = -0xDFC;
+	D_800DE0E4[0] = emptySlot;
+	D_800DE0E4[1] = emptySlot;
+	D_800DE0E4[2] = emptySlot;
+	color[0] = 0x28;
+	color[1] = 0x28;
+	color[2] = 0x28;
 	func_8008DBEC_5E09C();
 
 	for (i = 0; i < 0x96; i++) {
@@ -4442,23 +4439,20 @@ void func_8008F574_5FA24(void) {
 	func_8008F534_5F9E4(5, 0x93);
 	func_8008F534_5F9E4(0xA, 0x92);
 
-	D_800DE0BE = var_s0;
-	D_800DE0BF = var_s0;
+	D_800DE0BE = emptySlot;
+	D_800DE0BF = emptySlot;
 	D_800DE0B6 = 0;
 	D_800DE0B7 = 0;
 	D_800DE0B8 = 0;
 	D_800DE0B9 = 0;
 	D_800DE0BD = 0;
 	D_800DE0BA = 0;
-	D_800DE0BB = var_s0;
+	D_800DE0BB = emptySlot;
 	D_800DE839 = 0;
 	D_800DE838 = 4;
 	D_800E1D6B = 0;
 	D_800E1D6C = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008F574_5FA24.s")
-#endif
 
 // AI - Renders a colored 3D quad from pre-computed vertex/color lookup tables
 void func_8008F704_5FBB4(u8 arg0) {
