@@ -3836,16 +3836,14 @@ void func_8008D510_5D9C0(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2095)
-// AI - Main render dispatcher: sets RDP state, iterates all slots, calls per-type render function
-s32 func_8008D98C_5DE3C(Gfx **arg0) {
-	s32 i;
+// Sets particle render state and dispatches each active effect type.
+void func_8008D98C_5DE3C(void) {
+	u8 i;
 
 	func_80088E18_592C8();
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_TF_BILERP | G_TL_LOD | G_TD_SHARPEN | G_CYC_1CYCLE);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK | G_FOG | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
@@ -3860,55 +3858,49 @@ s32 func_8008D98C_5DE3C(Gfx **arg0) {
 	func_8008E158_5E608();
 	func_8008FA60_5FF10();
 
-	for (i = 0; i < 0x96; i = (i + 1) & 0xFF) {
-		u8 entryType = D_800DE130[i].unk0;
-
-		if (entryType != 0xFA) {
-			if (entryType < 0xB) {
-				switch (entryType) {
+	for (i = 0; i < 0x96; i++) {
+		if (0xFA != D_800DE130[i].unk0) {
+			switch (D_800DE130[i].unk0) {
 			case 0:
-				func_800847E4_54C94((u8)i);
-				break;
-
-			case 1:
-				func_80089764_59C14((u8)i);
-				break;
-
-			case 2:
-				func_80089B38_59FE8();
-				break;
-
-			case 3:
-				func_8008A928_5ADD8((u8)i);
+				func_800847E4_54C94(i);
 				break;
 
 			case 4:
-				func_8008B534_5B9E4((u8)i);
+				func_80089764_59C14(i);
 				break;
 
 			case 5:
-				func_8008BC00_5C0B0((u8)i);
+				func_80089B38_59FE8();
 				break;
 
 			case 6:
+				func_8008A928_5ADD8(i);
+				break;
+
 			case 7:
-			case 8:
+				func_8008B534_5B9E4(i);
+				break;
+
 			case 9:
+				func_8008BC00_5C0B0(i);
+				break;
+
+			case 1:
+			case 2:
+			case 3:
+			case 8:
 			case 10:
 				break;
 
 			default:
 				break;
-				}
 			}
 		}
 	}
 
-	return func_800878A4_57D54();
+	func_800878A4_57D54();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008D98C_5DE3C.s")
-#endif
+
 
 /* Clears unkA field in all 50 D_800E1980 entries and resets globals */
 // AI - Clears sprite slot tracking state and resets globals
@@ -4548,9 +4540,9 @@ void func_8008FBD4_60084(void) {
 }
 
 // AI - Main particle render entry point: loads identity matrix and calls render dispatcher
-s32 func_8008FD9C_6024C(void) {
+void func_8008FD9C_6024C(void) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_LOAD | G_MTX_MODELVIEW);
-	return func_8008D98C_5DE3C(&D_8005BB2C);
+	func_8008D98C_5DE3C();
 }
 
 // AI - Main per-frame particle update: computes camera delta, dispatches updates, ambient spawns, debug input
@@ -4792,19 +4784,6 @@ const u32 jtbl_800AEC88_7F138[11] = {
     0x8008D450, 0x8008D468, 0x8008D478, 0x8008D488,
     0x8008D498, 0x8008D4A8, 0x8008D4B8, 0x8008D4C8,
     0x8008D4F0, 0x8008D4D8, 0x8008D4E8,
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const u32 jtbl_800AECB4_7F164[11] = {
-#if defined(VERSION_US)
-    0x8008DB5C, 0x8008DBB4, 0x8008DBB4, 0x8008DBB4,
-    0x8008DB6C, 0x8008DB7C, 0x8008DB8C, 0x8008DB9C,
-    0x8008DBB4, 0x8008DBAC, 0x8008DBB4,
-#elif defined(VERSION_EU)
-    0x8008E31C, 0x8008E374, 0x8008E374, 0x8008E374,
-    0x8008E32C, 0x8008E33C, 0x8008E34C, 0x8008E35C,
-    0x8008E374, 0x8008E36C, 0x8008E374,
 #else
 #error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
