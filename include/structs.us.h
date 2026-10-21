@@ -3149,7 +3149,7 @@ typedef struct {
 } PowerupItem; /* stride = 0x12 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x4];
+	/* 0x00 */ f32 unk0;
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
