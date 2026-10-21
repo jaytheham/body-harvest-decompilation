@@ -2587,78 +2587,65 @@ void func_80089B38_59FE8(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80089B38_59FE8.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Spawns a type-6 child particle with velocity derived from template parameters and randomization
+// Spawns a child particle with transformed and randomized velocity.
 void func_8008A094_5A544(u8 arg0) {
-	extern f64 D_800AEC70_7F120;
-	extern f64 D_800AEC78_7F128;
-	extern f64 D_800AEC80_7F130;
-
-	Unk800DE840 *entry;
-	Unk800DE840 *spawn;
-	Unk800DE840 *template;
-	u8 *spawnBytes;
-	u8 *templateBytes;
-	f32 x;
-	f32 y;
-	f32 z;
-	f32 randX;
-	f32 randY;
-	f32 randZ;
+	s32 headIndex;
 	s16 index;
 	s16 templateIndex;
-	s32 scale;
+	JetStreamParticleState *particle;
+	FrontendSpurtEmitterState *emitter;
+	Vec3f base;
+	Vec3f random;
+	Unk800DE840 *head[2]; /* The second slot preserves the original frame. */
 
-	entry = &D_800DE840[D_800DE130[arg0].unk6];
-	templateIndex = entry->unk4;
+	headIndex = D_800DE130[arg0].unk6;
+	headIndex &= -1; /* IDO: retain the initial v0/v1 allocation. */
+	templateIndex = D_800DE840[headIndex].unk4;
+	head[0] = &D_800DE840[headIndex];
 	index = func_80083B7C_5402C(arg0);
 	if (index == -3) {
 		return;
 	}
 
-	spawn = &D_800DE840[index];
-	spawn->unk8 = entry->unk8;
-	spawn->unkA = entry->unkA;
-	spawn->unkC = entry->unkC;
+	particle = (JetStreamParticleState *)&head[0]->unk8;
+	D_800DE840[index].unk8 = particle->position[0];
+	D_800DE840[index].unkA = particle->position[1];
+	D_800DE840[index].unkC = particle->position[2];
 
-	template = &D_800DE840[templateIndex];
-	spawn->unk11 = template->unk10;
-	spawn->unk2 = (func_800038E0_44E0() % (entry->unk2 * 2)) + entry->unk2;
+	emitter = (FrontendSpurtEmitterState *)&D_800DE840[(&templateIndex)[0]].unk8;
+	D_800DE840[index].unk11 = emitter->alpha;
+	D_800DE840[index].unk2 = head[0]->unk2 + (func_800038E0_44E0() % (head[0]->unk2 * 2));
 
-	templateBytes = (u8 *)&template->unk8;
-	x = (s8)templateBytes[0];
-	y = (s8)templateBytes[1];
-	z = (s8)templateBytes[2];
-	func_800837B4_53C64(&x, &x);
+	base.x = emitter->velocity[0];
+	base.y = emitter->velocity[1];
+	base.z = emitter->velocity[2];
+	func_800837B4_53C64(&base.x, &base.x);
 
-	randX = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC70_7F120[0]);
+	random.x = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->spread) / D_800AEC70_7F120[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		randX = -randX;
+		random.x = 0.0f - random.x;
 	}
-	randX += x;
+	random.x += base.x;
 
-	randY = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC78_7F128[0]);
+	random.y = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->spread) / D_800AEC78_7F128[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		randY = -randY;
+		random.y = 0.0f - random.y;
 	}
-	randY += y;
+	random.y += base.y;
 
-	randZ = (f32)((f64)(f32)(func_800038E0_44E0() % templateBytes[4]) / D_800AEC80_7F130[0]);
+	random.z = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->spread) / D_800AEC80_7F130[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		randZ = -randZ;
+		random.z = 0.0f - random.z;
 	}
-	randZ += z;
+	random.z += base.z;
 
-	func_800837B4_53C64(&randX, &randX);
-	spawnBytes = (u8 *)&spawn->unk8;
-	scale = (s32)templateBytes[3] / 4;
-	spawnBytes[0xA] = (s8)((f32)scale * randX);
-	spawnBytes[0xB] = (s8)((f32)scale * randY);
-	spawnBytes[0xC] = (s8)((f32)scale * randZ);
+	particle = (JetStreamParticleState *)&D_800DE840[index].unk8;
+	func_800837B4_53C64(&random.x, &random.x);
+	particle->velocity[0] = (emitter->size / 4) * random.x;
+	particle->velocity[1] = (emitter->size / 4) * random.y;
+	particle->velocity[2] = (emitter->size / 4) * random.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A094_5A544.s")
-#endif
+
 
 // Creates an emitter and initializes its visual and control nodes.
 u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14) {
