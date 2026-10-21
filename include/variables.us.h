@@ -4210,7 +4210,7 @@ extern const f32 D_80144CB8_153C68[1];
 extern const f64 D_80144CC0_153C70[1];
 extern const f64 D_80144CC8_153C78[1];
 extern const f64 D_80144CD0_153C80[1];
-extern const f64 D_80144CD8_153C88[1];
+extern const ShadowGeometryConstant D_80144CD8_153C88;
 extern const u32 jtbl_80144CE0_153C90[];
 extern const ShadowGeometryConstant D_80144CF8_153CA8;
 extern const ShadowGeometryConstant D_80144D00_153CB0;

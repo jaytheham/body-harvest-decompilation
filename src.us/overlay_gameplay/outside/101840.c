@@ -8464,7 +8464,7 @@ void func_8010ADA4_119D54(VehicleInstance *arg0, VehicleType *arg1) {
 	D_80159250 = 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010ADA4_119D54.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_scud_rodata.s")
 #endif
 
 void func_8010B5C8_11A578(VehicleInstance *arg0, VehicleType *arg1) {
@@ -8535,28 +8535,23 @@ s32 func_8010B970_11A920(u8 *arg0, VehicleInstance *arg1) {
 	return 0;
 }
 
-// CURRENT(25049)
-#ifdef NON_MATCHING
 void func_8010BA04_11A9B4(void) {
-	VehicleInstance *vehicle;
 	VehicleType *type;
+	s32 pad1;
 	VehicleInstance *otherVehicle;
-	s32 *modePtr;
+	s32 pad2;
 	s32 modeTemp;
 	s32 temp;
 	u16 flags;
 	f32 tempF0;
-	f32 hitPointsF;
 
-	vehicle = D_80052B34;
-	type = &vehicleTypes[vehicle->unk1A];
+	type = &vehicleTypes[D_80052B34->unk1A];
 
-	if ((D_8015930E == 0) && (currentLevel == 1) && (vehicle->unk1A == 3)) {
-		if ((vehicle->unk0 < 0x3601) || (vehicle->unk4 >= -0x5400)) {
-			if (!(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)) {
-				D_80158BD0[vehicle - vehicleInstances] = 0x20;
+	if ((D_8015930E == 0) && (currentLevel == 1) && (D_80052B34->unk1A == 3)) {
+		if ((D_80052B34->unk0 < 0x3601) || (D_80052B34->unk4 >= -0x5400)) {
+			if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
+				D_80158BD0[D_80052B34 - vehicleInstances] = 0x20;
 				func_800FDEA8_10CE58(D_80052B2C, 0);
-				vehicle = D_80052B34;
 			} else {
 				D_8004DC58 = 3;
 				D_8015930E = 1;
@@ -8571,90 +8566,79 @@ void func_8010BA04_11A9B4(void) {
 	if (D_80159320 & 0x00800000) {
 		otherVehicle = func_80109960_118910();
 		tempF0 = (f32)((f64)(f32)sins(D_80159250) / 32768.0);
-		D_80159238 = (f32)((f64)((vehicle->unk54 - otherVehicle->unk54) * tempF0) * D_80144CD8_153C88);
+		D_80159238 = (f32)((f64)((D_80052B34->unk54 - otherVehicle->unk54) * tempF0) * D_80144CD8_153C88.value);
 		D_8015923C = tempF0 * 418.0f;
-		vehicle->unk30 = 0.0f;
-		vehicle->unk34 = 0.0f;
-		vehicle->unk38 = 0.0f;
-		func_800FB40C_10A3BC(vehicle, D_8015EA38 - D_8015EA34);
-		vehicle = D_80052B34;
+		D_80052B34->unk30 = 0.0f;
+		D_80052B34->unk34 = 0.0f;
+		D_80052B34->unk38 = 0.0f;
+		func_800FB40C_10A3BC(D_80052B34, D_8015EA38 - D_8015EA34);
 	}
 
-	if (!(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80159320 & 0x00400000) && (D_80159268 != 0)) {
+	if (!(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80159320 & 0x00400000) && (D_80159268 != 0)) {
 		D_8015930E = 0;
 		D_80159268 = 0;
 	}
 
-	if ((vehicle->unk1A != 0) && (vehicle->unk2 >= D_80222A70) && (D_801591AC != 6)) {
-		temp = (s32)func_800FB11C_10A0CC(vehicle);
-		flags = temp & 0xFFFF;
-		hitPointsF = type->hitPoints;
-		temp = (s32)(((f32)vehicle->unk1C * 255.0f) / hitPointsF);
-		func_800E1D48_F0CF8(flags, temp & 0xFF);
-		vehicle = D_80052B34;
+	if ((D_80052B34->unk1A != 0) && (D_80052B34->unk2 >= D_80222A70) && (D_801591AC != 6)) {
+		func_800E1D48_F0CF8((u16)(u32)func_800FB11C_10A0CC(D_80052B34), (u8)(u32)(((f32)D_80052B34->unk1C * 255.0f) / (f32)type->hitPoints));
 	}
 
-	if ((vehicle->unk1A != 0) && !(vehicle->unk20 & VEHICLE_FLAG_AIRBORNE) && (func_800F9C50_108C00(vehicle->unk6, vehicle->unkE) >= 0x4000)) {
-		vehicle = D_80052B34;
-		vehicle->unkE += 0x8000;
-		vehicle->unk12 = -vehicle->unk12;
-		vehicle->unk10 = -vehicle->unk10;
+	if ((D_80052B34->unk1A != 0) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (func_800F9C50_108C00(D_80052B34->unk6, D_80052B34->unkE) >= 0x4000)) {
+		D_80052B34->unkE += 0x8000;
+		D_80052B34->unk12 = -D_80052B34->unk12;
+		D_80052B34->unk10 = -D_80052B34->unk10;
 
-		if (vehicle->unk12 < (((s16 *)((u8 *)type + 0x42))[0] * 2)) {
-			vehicle->unk34 = -(vehicle->unk12 >> 1);
-			vehicle->unk12 >>= 1;
-			vehicle->unk20 |= 2;
-			vehicle->unk24 = (s16)(vehicle->unk24 + (func_800038E0_44E0() & 0x3FF) - 0x1FF);
-			vehicle = D_80052B34;
-			vehicle->unk22 = (s16)(vehicle->unk22 + (func_800038E0_44E0() & 0x3FF) - 0x1FF);
-			vehicle = D_80052B34;
-			vehicle->unk26 = (s16)(vehicle->unk26 + (func_800038E0_44E0() & 0x3FF) - 0x1FF);
+		if (D_80052B34->unk12 < (vehicleTypes[D_80052B34->unk1A].unk42 * 2)) {
+			D_80052B34->unk34 = -(D_80052B34->unk12 >> 1);
+			D_80052B34->unk12 >>= 1;
+			D_80052B34->unk20 |= 2;
+			temp = func_800038E0_44E0();
+			D_80052B34->unk24 = D_80052B34->unk24 + (temp & 0x3FF) - 0x1FF;
+			temp = func_800038E0_44E0();
+			D_80052B34->unk22 = D_80052B34->unk22 + (temp & 0x3FF) - 0x1FF;
+			temp = func_800038E0_44E0();
+			D_80052B34->unk26 = D_80052B34->unk26 + (temp & 0x3FF) - 0x1FF;
 		}
 	}
 
 	if (D_801591C0 < 4) {
 		D_801591C0--;
 	} else {
-		D_801591C0 -= D_801591C0 >> 2;
+		D_801591C0 = (s16)(D_801591C0 - (D_801591C0 >> 2));
 	}
 
 	if (D_801591C0 < 0) {
 		D_801591C0 = 0;
 	}
 
-	modePtr = &D_80050AD4;
-	modeTemp = *modePtr;
+	modeTemp = D_80050AD4;
 	if (modeTemp == 3) {
 		gameplayMode = 0;
-		*modePtr = D_80050AD0;
-		modeTemp = *modePtr;
+		modeTemp = D_80050AD4 = D_80050AD0;
 	}
 
 	if (modeTemp == 0xD) {
 		gameplayMode = 0x10;
-		*modePtr = D_80050AD0;
-		modeTemp = *modePtr;
+		modeTemp = D_80050AD4 = D_80050AD0;
 	}
 
 	if (modeTemp == 0xC) {
 		gameplayMode = 8;
-		*modePtr = D_80050AD0;
+		D_80050AD4 = D_80050AD0;
 	}
 
 	if ((currentControllerStates[0].button & 4) && (gameplayMode != 3) && (gameplayMode != 0xB) && (D_80159300 == 0)) {
-		vehicle = D_80052B34;
-		flags = vehicle->unk20;
+		flags = D_80052B34->unk20;
 		if (!(flags & VEHICLE_FLAG_PATH_GUIDED)) {
-			if (!(flags & VEHICLE_FLAG_AIRBORNE) || ((D_80222A70 >= vehicle->unk2) && !((vehicleTypes[vehicle->unk1A].unk4C < 0) && (vehicleTypes[vehicle->unk1A].unk4C & 0x100)))) {
-				if (!((currentLevel == 4) && (vehicle->unk1A == 0xE)) && (D_80159264 == 0)) {
+			if (!(flags & VEHICLE_FLAG_AIRBORNE) || ((D_80222A70 >= D_80052B34->unk2) && !((vehicleTypes[D_80052B34->unk1A].unk4C & 0x20000000) && (vehicleTypes[D_80052B34->unk1A].unk4C & 0x100)))) {
+				if (!((currentLevel == 4) && (D_80052B34->unk1A == 0xE)) && (D_80159264 == 0)) {
 					func_800FDEA8_10CE58(D_80052B2C, 0);
-					vehicle = D_80052B34;
 				}
 			}
 		}
 	}
 
-	if ((*modePtr >= 2) && ((currentLevel != 3) || (vehicle->unk1A != 3))) {
+	if ((D_80050AD4 >= 2) && ((currentLevel != 3) || (D_80052B34->unk1A != 3))) {
 		func_8000345C_405C(0x2000);
 	}
 
@@ -8662,9 +8646,6 @@ void func_8010BA04_11A9B4(void) {
 		D_80158E60 -= 10.0f;
 	}
 }
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_scud_rodata.s")
-#endif
 
 void func_8010C14C_11B0FC(void) {
 	static s32 state = 0;
