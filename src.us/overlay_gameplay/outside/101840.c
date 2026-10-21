@@ -5899,8 +5899,6 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103308_1122B8.s")
 #endif
 
-// CURRENT(3413): corrected mass conversion and loops; ratio scheduling and local allocation remain.
-#ifdef NON_MATCHING
 void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	VehicleType *type0;
 	VehicleType *type1;
@@ -5908,22 +5906,22 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	s32 pad0;
 	s32 pad1;
 	s32 pad2;
+	s16 dz;
+	s16 x0;
+	s16 y0;
+	s16 z0;
+	f32 dist;
+	f32 oneMinus;
+	f32 ratio;
+	f32 temp;
 	s32 pad3;
 	s32 pad4;
 	s32 pad5;
 	s32 pad6;
 	s32 pad7;
-	f32 dist;
-	f32 invDist;
-	f32 ratio;
-	f32 oneMinus;
-	f32 temp;
-	s16 dy;
 	s16 dx;
-	s16 dz;
-	s16 x0;
-	s16 y0;
-	s16 z0;
+	s16 dy;
+	f32 invDist;
 	s32 i;
 	u32 mass0;
 
@@ -5952,12 +5950,14 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	dx = arg0->unk0 - arg1->unk0;
 	dy = arg0->unk2 - arg1->unk2;
 	dz = arg0->unk4 - arg1->unk4;
+	if (dy) { }
 
 	dist = (f32)(s32)sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)));
-	mass0 = type0->unk32;
-	ratio = (s32)(mass0 + type1->unk32);
+	if (D_80158E60) { }
 	invDist = D_80158E60 / dist;
-	ratio = (f32)mass0 / ratio;
+	mass0 = type0->unk32;
+	oneMinus = type0->unk32 + type1->unk32;
+	ratio = (f32)mass0 / oneMinus;
 	oneMinus = 1.0f - ratio;
 
 	x0 = (s16)(s32)((f32)arg0->unk0 - ((f32)dx * oneMinus));
@@ -6010,6 +6010,7 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 
 		func_80102D00_111CB0(arg1, (f32)dx, (f32)dy, (f32)dz);
 
+		if (ratio) { }
 		damping = D_80144AB8_153A68[0];
 		arg1->unk30 = (f32)((f64)arg1->unk30 * damping);
 		arg1->unk34 = (f32)((f64)arg1->unk34 * damping);
@@ -6025,6 +6026,7 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 	i = 0xB;
 	if (1) {
 		do {
+			if (point != (void *)&D_8013FD88_14ED38) { }
 			temp = func_800F9F64_108F14((s16)(s32)point->pos.x, (s16)(s32)point->pos.z);
 			temp += 15;
 			if (point->pos.y < temp) {
@@ -6038,9 +6040,7 @@ void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
 		func_800FDE00_10CDB0();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103760_112710.s")
-#endif
+
 
 void func_80103D18_112CC8(VehicleInstance *arg0, VehicleInstance *arg1)
 {
