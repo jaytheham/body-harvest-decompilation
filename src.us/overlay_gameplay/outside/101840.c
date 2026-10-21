@@ -84,53 +84,6 @@ const f64 D_80144AB8_153A68[1] = {0.9};
 
 const f64 D_80144AC0_153A70[1] = {0.9};
 
-const f64 D_80144AC8_153A78[1] = {300};
-
-const f64 D_80144AD0_153A80[1] = {0.008333333};
-
-const f64 D_80144AD8_153A88[1] = {0.05};
-
-const f64 D_80144AE0_153A90[1] = {-0.05};
-
-const f64 D_80144AE8_153A98[1] = {0.05};
-
-const f64 D_80144AF0_153AA0[1] = {0.05};
-
-const f64 D_80144AF8_153AA8[1] = {0.05};
-
-const f64 D_80144B00_153AB0[1] = {-0.05};
-
-const f64 D_80144B08_153AB8[1] = {0.05};
-
-const f64 D_80144B10_153AC0[1] = {0.94};
-
-const f64 D_80144B18_153AC8[1] = {0.94};
-
-const f64 D_80144B20_153AD0[1] = {0.05};
-
-const ShadowGeometryConstant D_80144B28_153AD8 = {0.9};
-
-const ShadowGeometryConstant D_80144B30_153AE0 = {300};
-
-const ShadowGeometryConstant D_80144B38_153AE8 = {0.0833333333};
-
-const ShadowGeometryConstant D_80144B40_153AF0 = {0.0833333333};
-
-const f64 D_80144B48_153AF8[1] = {0.97};
-
-const f64 D_80144B50_153B00[1] = {0.97};
-
-const ShadowGeometryConstant D_80144B58_153B08 = {0.1};
-
-const f64 D_80144B60_153B10[1] = {300};
-
-const f64 D_80144B68_153B18[1] = {0.97};
-
-const f64 D_80144B70_153B20[1] = {0.97};
-
-const ShadowGeometryConstant D_80144B78_153B28 = {0.1666666667};
-
-
 s32 D_8013FCD0_14EC80 = 0;
 u8 D_8013FCD4_14EC84[0x9C] = {
 	0x8C, 0x00, 0x00, 0x46, 0xFF, 0x28, 0xFF, 0xFF, 0x00, 0xD2, 0x23, 0x00, 0xFF, 0x62, 0x00, 0xFA,
@@ -6123,124 +6076,141 @@ void func_80103DD0_112D80(void) {
 	}
 }
 
-// CURRENT(10354)
-#ifdef NON_MATCHING
 // Do vehicle acceleration?
 void func_80103E54_112E04(VehicleInstance *arg0, OSContPad *arg1) {
 	VehicleType *type;
 	f32 typeSteer;
-	f64 var_f2;
-	s32 temp_t9;
-	s32 var_a0;
-	u16 var_v0;
-	s16 sp2A;
+	s32 controlState;
+	s16 volume;
+	s32 direction;
+	s32 absStick;
+	s32 stickX;
+	s32 buttons;
+	f64 controlValue;
+	f64 speed;
+	s32 *directionState;
+	s32 *directionTimer;
+	f32 *acceleration;
+	OSContPad *controller;
 
+	acceleration = &D_80158E58;
+	directionTimer = &D_80159254;
+	directionState = &D_8015924C;
+	typeSteer = vehicleTypes[arg0->unk1A].unk48;
 	type = &vehicleTypes[arg0->unk1A];
-	typeSteer = type->unk48;
+	controller = arg1;
 
 	if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) || (type->unk4C & 0x20000000)) {
 		if ((D_80159320 & 0x40000) && (arg0->unk1A != 0x13)) {
 			D_80158E5C = 0.0f;
 		} else {
-			temp_t9 = arg1->stick_x;
-			var_a0 = -temp_t9;
-			if (var_a0 < temp_t9) {
-				var_a0 = temp_t9;
+			stickX = controller->stick_x;
+			if (-stickX < stickX) {
+				absStick = stickX;
+			} else {
+				absStick = -stickX;
 			}
-			D_80158E5C = (f32)(((f64)(f32)(var_a0 * temp_t9) / D_80144AC8_153A78[0]) * (f64)typeSteer);
+			D_80158E5C = (f32)(((f64)(f32)(absStick * stickX) / 300.0) * (f64)typeSteer);
 		}
 
 		if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE)) {
-			f32 temp_f0 = arg0->unk58;
-			f32 var_f0;
-
-			if (temp_f0 >= 0.0f) {
-				var_f0 = temp_f0;
-			} else {
-				var_f0 = -temp_f0;
-			}
-			D_80158E5C /= sqrtf((f32)(((f64)var_f0 * D_80144AD0_153A80[0]) + 1.0));
+			D_80158E5C /= sqrtf((f32)(((f64)(arg0->unk58 >= 0.0f ? arg0->unk58 : -arg0->unk58) * 0.008333333) + 1.0));
 		}
 
-		D_80158E58 = 0.0f;
+		(*acceleration) = 0.0f;
 		func_80103DD0_112D80();
-		temp_t9 = arg1->button & 0xC000;
-		if ((temp_t9 == 0xC000) && (!(vehicleTypes[arg0->unk1A].unk4C & 0x10000000) || (vehicleTypes[arg0->unk1A].unk4C & 0x400100))) {
+		controlState = controller->button & 0xC000;
+		if ((controlState == 0xC000) && (!(vehicleTypes[arg0->unk1A].unk4C & 0x10000000) || (vehicleTypes[arg0->unk1A].unk4C & 0x400100))) {
 			if (!(D_80159320 & 0x04000000)) {
-				f64 temp_f2 = (f64)arg0->unk58 * 2.0;
+				controlValue = (f64)arg0->unk58 * 2.0;
 
-				if (temp_f2 >= 0.0) {
-					sp2A = (s16)(u32)temp_f2;
+				if (controlValue >= 0.0) {
+					volume = (s16)(u32)controlValue;
 				} else {
-					sp2A = (s16)(u32)-temp_f2;
+					volume = (s16)(u32)-controlValue;
 				}
 
-				arg0->unk30 = (f32)((f64)arg0->unk30 + (((f64)(f32)coss(arg0->unkE) / 32768.0) * (f64)arg0->unk58));
-				arg0->unk38 = (f32)((f64)arg0->unk38 + (((f64)(f32)sins(arg0->unkE) / 32768.0) * (f64)arg0->unk58));
+				arg0->unk30 += ((f64)(f32)coss(arg0->unkE) / 32768.0) * (f64)arg0->unk58;
+				arg0->unk38 += ((f64)(f32)sins(arg0->unkE) / 32768.0) * (f64)arg0->unk58;
 				func_800FB430_10A3E0(arg0, 0.0f);
 				arg0->unkE = arg0->unk6;
 			}
 
 			D_80159320 |= 0x04000000;
 			D_80158C58[arg0 - vehicleInstances] = arg0->unk58;
-			if ((arg0 == D_80052B34) && !(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80222A70 != arg0->unk2) && (*(s16 *)((u8 *)type + 0x66) != 0) && (func_800FB11C_10A0CC(arg0) > 5.0f)) {
+			if ((arg0 == D_80052B34) && !(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80222A70 != arg0->unk2) && (type->unk66 != 0) && (func_800FB11C_10A0CC(arg0) > 5.0f)) {
 				if (D_80159272 == 0) {
 					D_80159272 = 1;
-					func_80001144_1D44(*((u8 *)&sp2A + 1), 0x14, 5);
+					func_80001144_1D44(((u8 *)&volume)[1], 0x14, 5);
 				}
 			} else {
 				D_80159272 = 0;
 			}
 
-			var_f2 = D_80144AD8_153A88[0];
+			controlValue = 0.05;
 		} else {
-			var_a0 = D_8015924C;
-			if ((var_a0 == 0) && ((f64)arg0->unk58 < D_80144AE0_153A90[0])) {
-				var_a0 = -1;
+			direction = *directionState;
+			if ((direction == 0) && ((f64)arg0->unk58 < -0.05)) {
+				direction = -1;
 			}
-			if ((var_a0 == 0) && (D_80144AE8_153A98[0] < (f64)arg0->unk58)) {
-				var_a0 = 1;
+			if ((direction == 0) && (0.05 < (f64)arg0->unk58)) {
+				direction = 1;
 			}
 
-			var_f2 = D_80144AF0_153AA0[0];
-			if (temp_t9 == 0) {
-				D_80159254 = 0;
-				var_a0 = 0;
+			controlValue = 0.05;
+			if (controlState == 0) {
+				(*directionTimer) = 0;
+				direction = 0;
 				D_8013FD88_14ED38 = 1;
 			}
 
 			D_80159320 &= ~0x04000000;
-			var_v0 = arg1->button;
-			if (var_v0 & 0x8000) {
+			buttons = controller->button;
+			if (buttons & 0x8000) {
 				if (D_8013FD88_14ED38 == 1) {
-					D_8015924C = var_a0;
+					/* Preserve IDO's latch-address priority without extra instructions. */
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
+					*directionState = direction;
+					/* Keep the save and call arguments in distinct allocator blocks. */
+					if (arg0 != (void *)&D_8013FD88_14ED38) { }
 					func_80001144_1D44(0x28U, 5, 3);
-					var_f2 = D_80144AF8_153AA8[0];
+					controlValue = 0.05;
 					D_8013FD88_14ED38 = 0;
-					var_a0 = D_8015924C;
+					direction = *directionState;
 				}
 
-				if (((f64)arg0->unk58 < D_80144B00_153AB0[0]) || (var_a0 >= 0) || (++D_80159254 > D_80047724) || (D_80222A70 == arg0->unk2)) {
-					D_80158E58 = (f32)((f64)D_80158E58 + 1.0);
+				speed = arg0->unk58;
+				if ((speed < -0.05) || (direction >= 0) || (++(*directionTimer) > D_80047724) || (D_80222A70 == arg0->unk2)) {
+					(*acceleration) = (f32)((f64)(*acceleration) + 1.0);
+					buttons = controller->button;
 				} else {
-					arg0->unk58 = (f32)((f64)arg0->unk58 * 0.5);
+					arg0->unk58 = (f32)(speed * 0.5);
+					buttons = controller->button;
 				}
-
-				var_v0 = arg1->button;
 			}
 
-			D_8015924C = var_a0;
-			if (var_v0 & 0x4000) {
-				D_8015924C = var_a0;
-				if ((var_f2 < (f64)arg0->unk58) || (var_a0 <= 0) || (--D_80159254 < -D_80047724) || (D_80222A70 == arg0->unk2)) {
+			*directionState = direction;
+			if (buttons & 0x4000) {
+				speed = arg0->unk58;
+				D_8015924C = direction;
+				if ((controlValue < speed) || ((*directionState = direction) <= 0) || (--(*directionTimer) < -D_80047724) || (D_80222A70 == arg0->unk2)) {
 					if (D_8013FD88_14ED38 == 1) {
 						func_80001144_1D44(0x14U, 5, 3);
-						var_f2 = D_80144B08_153AB8[0];
+						controlValue = 0.05;
 						D_8013FD88_14ED38 = 0;
 					}
 
-					D_80158E58 = (f32)((f64)D_80158E58 - 1.0);
-					if ((arg0 == D_80052B34) && !(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80222A70 != arg0->unk2) && (*(s16 *)((u8 *)type + 0x66) != 0) && ((f64)arg0->unk58 > 10.0)) {
+					(*acceleration) = (f32)((f64)(*acceleration) - 1.0);
+					if ((arg0 == D_80052B34) && !(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80222A70 != arg0->unk2) && (type->unk66 != 0) && ((f64)arg0->unk58 > 10.0)) {
 						if (D_80159272 == 0) {
 							D_80159272 = 1;
 						}
@@ -6250,46 +6220,44 @@ void func_80103E54_112E04(VehicleInstance *arg0, OSContPad *arg1) {
 
 					if (arg0->unk20 & VEHICLE_FLAG_AIRBORNE) {
 						if (arg0->unkA < 0xBB8) {
-							if (var_f2 < (f64)arg0->unk58) {
-								arg0->unk58 = (f32)((f64)arg0->unk58 * D_80144B10_153AC0[0]);
+							if (controlValue < (f64)arg0->unk58) {
+								arg0->unk58 = (f32)((f64)arg0->unk58 * 0.94);
 							}
 						}
-						D_80158E58 = 0.0f;
+						(*acceleration) = 0.0f;
 					} else {
-						if (var_f2 < (f64)arg0->unk58) {
-							arg0->unk58 = (f32)((f64)arg0->unk58 * D_80144B18_153AC8[0]);
+						if (controlValue < (f64)arg0->unk58) {
+							arg0->unk58 = (f32)((f64)arg0->unk58 * 0.94);
 						}
 					}
 				} else {
-					arg0->unk58 = (f32)((f64)arg0->unk58 * 0.5);
+					arg0->unk58 = (f32)(speed * 0.5);
 					D_80159272 = 0;
 				}
 			}
 		}
 
 		if (D_80159272 != 0) {
-			func_801371B8_146168((s32)arg0, 0x18B, arg0->unk0, arg0->unk2, arg0->unk4, -1.0f);
-			var_f2 = D_80144B20_153AD0[0];
+			func_801371B8_146168(arg0, 0x18B, arg0->unk0, arg0->unk2, arg0->unk4, -1.0f);
+			controlValue = 0.05;
 		}
 
-		if ((arg0 == D_80052B34) && (D_80159272 != 0) && (!(currentControllerStates[0].button & 0x4000) || ((f64)arg0->unk58 <= var_f2)) && !(D_80159320 & 0x04000000)) {
+		if ((arg0 == D_80052B34) && (D_80159272 != 0) && (!(currentControllerStates[0].button & 0x4000) || ((f64)arg0->unk58 <= controlValue)) && !(D_80159320 & 0x04000000)) {
 			D_80159272 = 0;
 		}
 
 		if (arg0->unk3C <= 0) {
-			D_80158E58 = 0.0f;
-			if (*(s16 *)((u8 *)type + 0x66) == 0) {
+			controlState = !type->unk66;
+			(*acceleration) = 0.0f;
+			if (controlState) {
 				D_80158E5C = 0.0f;
 			}
 			arg0->unk3C = 0;
 		}
 
-		D_80158E58 /= 16.0f;
+		D_80158E58 /= 16;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103E54_112E04.s")
-#endif
 
 // Helicopter (and plane?) controls.
 void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
@@ -6345,7 +6313,7 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 
-			arg0->unk34 = (f32)((f64)arg0->unk34 * D_80144B28_153AD8.value);
+			arg0->unk34 = (f32)((f64)arg0->unk34 * 0.9);
 
 			if (sp2A >= 0x97 || (currentLevel == 3 && arg0->unk1A == 0xD)) {
 				arg0->unk2A = (s16)(arg1->stick_y * 80);
@@ -6360,7 +6328,7 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 
 
-			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / D_80144B30_153AE0.value) * (f64)maxSteer);
+			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / 300.0) * (f64)maxSteer);
 
 			if (currentControllerStates[1].stick_x >= 0) {
 				absStickX = currentControllerStates[1].stick_x;
@@ -6380,7 +6348,7 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 
 			if (typeFlags != 0 && !(currentControllerStates[0].button & 0x10)) {
 				trig = sins((u16)arg0->unkA);
-				sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)(u32)type->unk3E * D_801591F0)) * D_80144B38_153AE8.value);
+				sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)(u32)type->unk3E * D_801591F0)) * 0.0833333333);
 
 				trig = coss((u16)arg0->unk6);
 				func_801027E8_111798(arg0,
@@ -6389,7 +6357,7 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 					(f32)(((f64)(f32)sins((u16)arg0->unk6) / 32768.0) * (f64)sp2C));
 
 				trig = sins((u16)arg0->unk8);
-				sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)(u32)type->unk3E * D_801591F0)) * D_80144B40_153AF0.value);
+				sp2C = (f32)((((f64)(f32)trig / 32768.0) * (f64)((f32)(u32)type->unk3E * D_801591F0)) * 0.0833333333);
 
 				trig = sins((u16)arg0->unk6);
 				func_801027E8_111798(arg0,
@@ -6400,9 +6368,9 @@ void func_801047C8_113778(VehicleInstance *arg0, OSContPad *arg1) {
 
 			if (currentControllerStates[0].button & 0x4000) {
 				f64 damping;
-				damping = D_80144B48_153AF8[0];
+				damping = 0.97;
 				func_800FB430_10A3E0(D_80052B34, (f32)((f64)D_80052B34->unk58 * damping));
-				damping = D_80144B50_153B00[0];
+				damping = 0.97;
 				D_80052B34->unk30 = (f32)((f64)D_80052B34->unk30 * damping);
 				D_80052B34->unk34 = (f32)((f64)D_80052B34->unk34 * damping);
 				D_80052B34->unk38 = (f32)((f64)D_80052B34->unk38 * damping);
@@ -6456,7 +6424,7 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 		if (arg1->button & 0x10) {
 			arg0->unk28 = (s16)(-arg1->stick_x * 80);
 		} else {
-			arg0->unk34 = (f32)((f64)arg0->unk34 - ((f64)arg0->unk34 * D_80144B58_153B08.value));
+			arg0->unk34 = (f32)((f64)arg0->unk34 - ((f64)arg0->unk34 * 0.1));
 			arg0->unk2A = (s16)(arg1->stick_y * 80);
 			arg0->unk28 = (s16)(-arg1->stick_x * 40);
 
@@ -6467,7 +6435,7 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 				absStickX = -stickX;
 			}
 
-			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / D_80144B60_153B10[0]) * (f64)maxSteer);
+			D_80158E5C = (f32)(((f64)(f32)(absStickX * stickX) / 300.0) * (f64)maxSteer);
 		}
 
 		if (!(arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && arg0->unk34 < 0.0f) {
@@ -6490,9 +6458,9 @@ void func_80104E00_113DB0(VehicleInstance *arg0, OSContPad *arg1) {
 
 		if (currentControllerStates[0].button & 0x4000) {
 			f64 damping;
-			damping = D_80144B68_153B18[0];
+			damping = 0.97;
 			func_800FB430_10A3E0(D_80052B34, (f32)((f64)D_80052B34->unk58 * damping));
-			damping = D_80144B70_153B20[0];
+			damping = 0.97;
 			D_80052B34->unk30 = (f32)((f64)D_80052B34->unk30 * damping);
 			D_80052B34->unk34 = (f32)((f64)D_80052B34->unk34 * damping);
 			D_80052B34->unk38 = (f32)((f64)D_80052B34->unk38 * damping);
@@ -6663,7 +6631,7 @@ void func_801052E8_114298(Unk80052B2C *arg0, OSContPad *arg1) {
 		speed = func_800FB11C_10A0CC(vehicle);
 		if (speed < 16.0f) vehicle->unk22 *= speed * 0.0625;
 	} else if (type->unk66 != 0) {
-		speed = D_80158E5C * D_80144B78_153B28.value;
+		speed = D_80158E5C * 0.1666666667;
 		vehicle->unk22 = func_80003824_4424(type->unk66 + ((f64)vehicle->unk58 + (f64)vehicle->unk58), speed);
 		if (vehicle->unk58 >= 0.0f) speed = vehicle->unk58;
 		else speed = -vehicle->unk58;
