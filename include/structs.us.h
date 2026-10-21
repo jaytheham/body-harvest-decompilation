@@ -2144,12 +2144,25 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[4];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 pad9;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ u8 unk10;
 } Unk8008C7E4Sub; /* size = 0x12 */
+
+typedef struct {
+	/* 0x00 */ u16 x;
+	/* 0x02 */ u16 y;
+	/* 0x04 */ u16 z;
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 pad9;
+	/* 0x0A */ s16 velocityX;
+	/* 0x0C */ s16 velocityY;
+	/* 0x0E */ s16 velocityZ;
+	/* 0x10 */ u8 life;
+} FrontendLineParticle; /* size = 0x12 */
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x8];

@@ -3485,78 +3485,73 @@ void func_8008C7E4_5CC94(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(6709)
-// AI - Renders type-9 particles as 3D line segments with gradient alpha
+// Renders type-9 particles as line segments with fading tails.
 void func_8008C8E0_5CD90(void) {
 	s16 index;
 	s16 x;
 	s16 y;
 	s16 z;
-	s16 *entryData;
-	u8 *entryBytes;
-	Unk800DE840 *entry;
+	s32 startX;
+	s32 startY;
+	s32 startZ;
+	FrontendLineParticle *particle;
 
 	index = D_800DE80E;
 	gDPPipeSync(D_8005BB2C++);
 	if ((index != -6) && (index != -5)) {
-		while (1) {
+		do {
 			gDPPipeSync(D_8005BB2C++);
 
-			entry = &D_800DE840[index];
-			entryData = &entry->unk8;
-			entryBytes = (u8 *)entryData;
+			startX = D_800DE840[index].unk8;
+			startY = D_800DE840[index].unkA;
+			startZ = D_800DE840[index].unkC;
+			particle = (FrontendLineParticle *)&D_800DE840[index].unk8;
 			if (D_800DE0B6 == 1) {
-				x = entryData[0] - (entryData[5] * 3);
-				y = entryData[1] - (entryData[6] * 3);
-				z = entryData[2] - (entryData[7] * 3);
+				x = (s16)particle->x - (particle->velocityX * 3);
+				y = (s16)particle->y - (particle->velocityY * 3);
+				z = (s16)particle->z - (particle->velocityZ * 3);
 			} else {
-				x = entryData[0] - (entryData[5] * 2);
-				y = entryData[1] - (entryData[6] * 2);
-				z = entryData[2] - (entryData[7] * 2);
+				x = (s16)particle->x - (particle->velocityX * 2);
+				y = (s16)particle->y - (particle->velocityY * 2);
+				z = (s16)particle->z - (particle->velocityZ * 2);
 			}
 
-			D_8005BB34->v.ob[0] = (s16)(s32)(f32)entryData[0];
-			D_8005BB34->v.ob[1] = (s16)(s32)(f32)entryData[1];
-			D_8005BB34->v.ob[2] = (s16)(s32)(f32)entryData[2];
+			D_8005BB34->v.ob[0] = (f32)startX;
+			D_8005BB34->v.ob[1] = (f32)startY;
+			D_8005BB34->v.ob[2] = (f32)startZ;
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = entryBytes[6];
-			D_8005BB34->v.cn[1] = entryBytes[7];
-			D_8005BB34->v.cn[2] = entryBytes[8];
+			D_8005BB34->v.cn[0] = particle->color[0];
+			D_8005BB34->v.cn[1] = particle->color[1];
+			D_8005BB34->v.cn[2] = particle->color[2];
 			D_8005BB34->v.cn[3] = 0xFF;
 
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)(s32)(f32)x;
-			D_8005BB34->v.ob[1] = (s16)(s32)(f32)y;
-			D_8005BB34->v.ob[2] = (s16)(s32)(f32)z;
+			D_8005BB34->v.ob[0] = (f32)x;
+			D_8005BB34->v.ob[1] = (f32)y;
+			D_8005BB34->v.ob[2] = (f32)z;
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0x800;
 			D_8005BB34->v.tc[1] = 0x800;
-			D_8005BB34->v.cn[0] = entryBytes[6];
-			D_8005BB34->v.cn[1] = entryBytes[7];
-			D_8005BB34->v.cn[2] = entryBytes[8];
+			D_8005BB34->v.cn[0] = particle->color[0];
+			D_8005BB34->v.cn[1] = particle->color[1];
+			D_8005BB34->v.cn[2] = particle->color[2];
 			D_8005BB34->v.cn[3] = 0x19;
 
 			D_8005BB34++;
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
 			if (D_800DE0B6 == 1) {
-				gImmp1(D_8005BB2C++, G_LINE3D, 0x201);
+				gSPLineW3D(D_8005BB2C++, 0, 1, 1, 0);
 			} else {
-				gImmp1(D_8005BB2C++, G_LINE3D, 0x205);
+				gSPLineW3D(D_8005BB2C++, 0, 1, 5, 0);
 			}
 
-			index = entry->unk4;
-			if ((index == -6) || (index == -5)) {
-				break;
-			}
-		}
+			index = D_800DE840[index].unk4;
+		} while ((index != -6) && (index != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008C8E0_5CD90.s")
-#endif
+
 
 // Dispatches particle updates and advances the global fade.
 void func_8008CC3C_5D0EC(void) {
