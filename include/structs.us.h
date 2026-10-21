@@ -2242,6 +2242,22 @@ typedef struct {
 } Unk800AA998Entry; /* size = 0x10 */
 
 typedef struct {
+	s8 unk0;
+	s8 unk1;
+	s8 unk2;
+	s8 unk3;
+	s8 unk4;
+	s8 unk5;
+	union {
+		s8 values[2];
+		struct {
+			s8 width;
+			s8 height;
+		} size;
+	} dimensions;
+} Unk800AA694Entry; /* size = 0x08 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

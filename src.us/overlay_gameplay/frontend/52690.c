@@ -3928,24 +3928,24 @@ void func_8008DBEC_5E09C(void) {
 u8 func_8008DC34_5E0E4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
 	u8 var_v1;
 	u8 temp_t3;
-	s8 *temp_t2;
+	Unk800AA694Entry *temp_t2;
 
 	if (D_800E1D68 >= 0x32) {
 		return 0xFF;
 	}
 
 	D_800E1980[D_800E1D69].unk0 = arg0;
-	temp_t2 = ((s8 (*)[8])D_800AA694)[arg3];
+	temp_t2 = &D_800AA694[arg3];
 	D_800E1980[D_800E1D69].unkC = arg3;
 	D_800E1980[D_800E1D69].unkA = arg4;
 	D_800E1980[D_800E1D69].unk2 = arg1;
 	D_800E1980[D_800E1D69].unk4 = arg2;
 	D_800E1980[D_800E1D69].unkF = 0;
-	D_800E1980[D_800E1D69].unk10 = temp_t2[1];
-	D_800E1980[D_800E1D69].unk11 = temp_t2[2];
-	D_800E1980[D_800E1D69].unk12 = temp_t2[3];
+	D_800E1980[D_800E1D69].unk10 = temp_t2->unk1;
+	D_800E1980[D_800E1D69].unk11 = temp_t2->unk2;
+	D_800E1980[D_800E1D69].unk12 = temp_t2->unk3;
 
-	D_800E1980[D_800E1D69].unkE = func_800038E0_44E0() % temp_t2[0];
+	D_800E1980[D_800E1D69].unkE = func_800038E0_44E0() % temp_t2->unk0;
 	temp_t3 = D_800E1D69;
 	var_v1 = D_800E1D69;
 	D_800E1980[D_800E1D69].unkD = ((u8 (*)[4])D_800AA724)[arg3][3];
@@ -4047,7 +4047,7 @@ void func_8008DFA0_5E450(void)
 					{
 						entry->unkD -= entry->unk12;
 						entry->unkE++;
-						if (entry->unkE >= D_800AA694[entry->unkC * 8])
+						if (entry->unkE >= ((s8 *)D_800AA694)[entry->unkC * 8])
 						{
 							entry->unkE = 0;
 						}
@@ -4074,86 +4074,64 @@ void func_8008DFA0_5E450(void)
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(31147)
-// AI - Renders 2D sprites with various texture formats (I4, IA8, RGBA16) and render types (generic quad, simple quad, pulsing)
+// Renders active 2D sprites using their texture format and quad renderer.
 void func_8008E158_5E608(void) {
-	typedef struct {
-		s8 unk0;
-		s8 unk1;
-		s8 unk2;
-		s8 unk3;
-		s8 unk4;
-		s8 unk5;
-		s8 unk6;
-		s8 unk7;
-	} Unk800AA694Entry;
-
 	s32 pad0;
 	s32 pad1;
-	s32 i;
-	s32 remaining;
+	u8 i;
+	u8 remaining;
+	s32 value;
 
 	remaining = D_800E1D68;
 	i = 0;
-	if (remaining > 0) {
+	value = remaining;
+	if (value > 0) {
 		do {
-			Unk800E1980* entry;
 			u8 type;
 
-			entry = &D_800E1980[i];
-			if (entry->unkA != 0) {
-				if (entry->unkF == 0) {
+			if (D_800E1980[i].unkA != 0) {
+				if (D_800E1980[i].unkF == 0) {
+					u8 pad2;
 					u8 savedIndex;
-					Unk800AA694Entry* typeCfg;
+					Unk800AA694Entry *typeCfg;
+					s32 offset;
+					Unk800E1980 *sprite;
 
-					type = entry->unkC;
+					sprite = &D_800E1980[i];
+					type = D_800E1980[i].unkC;
+					/* Preserve the folded lifetime dependency for IDO register allocation. */
+					value = (D_800E1980[i].unkA * 0) + 0xFF;
 					savedIndex = i;
-					if ((type != 0xFF) || ((u8)entry->unkE != 0xFF)) {
-						typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
+					if ((value != type) || (value != D_800E1980[i].unkE)) {
+						gDPPipeSync(D_8005BB2C++);
+						typeCfg = &D_800AA694[type];
 						if (typeCfg->unk5 == 0) {
-							u32 texAddr;
-
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
-
-							texAddr = (u32)(D_800AA76C[type] + (((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6) / 2));
-							gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(texAddr), G_IM_FMT_I, typeCfg->unk6, typeCfg->unk7, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+							offset = ((typeCfg->dimensions.size.height * sprite->unkE) * typeCfg->dimensions.size.width) / 2; gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0); gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_800AA76C[type][offset]), G_IM_FMT_I, typeCfg->dimensions.values[0], typeCfg->dimensions.values[1], 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 						} else if (typeCfg->unk5 == 1) {
-							u32 texAddr;
-
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
-
-							texAddr = (u32)(D_800AA76C[type] + ((typeCfg->unk7 * (u8)entry->unkE) * typeCfg->unk6));
-							gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(texAddr), G_IM_FMT_IA, G_IM_SIZ_8b, typeCfg->unk6, typeCfg->unk7, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+							offset = (typeCfg->dimensions.size.height * sprite->unkE) * typeCfg->dimensions.size.width; gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0); gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_800AA76C[type][offset]), G_IM_FMT_IA, G_IM_SIZ_8b, typeCfg->dimensions.values[0], typeCfg->dimensions.values[1], 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 						} else if (typeCfg->unk5 == 2) {
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-							gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_800AA76C[type]), G_IM_FMT_RGBA, G_IM_SIZ_16b, typeCfg->unk6, typeCfg->unk7, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+							gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA); gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_800AA76C[type]), G_IM_FMT_RGBA, G_IM_SIZ_16b, typeCfg->dimensions.values[0], typeCfg->dimensions.values[1], 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
 						}
 
-						D_800DE12D = typeCfg->unk6;
-						D_800DE12E = typeCfg->unk7;
+						D_800DE12D = typeCfg->dimensions.values[0];
+						D_800DE12E = typeCfg->dimensions.values[1];
 
 						gDPPipeSync(D_8005BB2C++);
 					}
 
-					D_800DE118.x = (f32)entry->unk0;
-					D_800DE118.y = (f32)entry->unk2;
-					D_800DE118.z = (f32)entry->unk4;
-					D_800DE124 = &entry->unk6;
-
-					if (type == 0xA) {
-						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
-					} else if (type == 0xB) {
-						D_800DE128 = (f32)((u8)entry->unkD * entry->unkA);
+					typeCfg = &D_800AA694[type]; D_800DE118.x = D_800E1980[i].unk0; D_800DE118.y = D_800E1980[i].unk2; D_800DE118.z = D_800E1980[i].unk4; D_800DE124 = &D_800E1980[i].unk6; value = D_800E1980[i].unkC; if (value == 0xA) {
+						value = D_800E1980[i].unkD;
+						D_800DE128 = (f32)(D_800E1980[i].unkD * sprite->unkA);
+					} else if (value == 0xB) {
+						value = D_800E1980[i].unkD;
+						D_800DE128 = (f32)(D_800E1980[i].unkD * sprite->unkA);
 					} else {
-						D_800DE128 = (f32)entry->unkA;
+						D_800DE128 = (f32)D_800E1980[i].unkA;
+						value = D_800E1980[i].unkD;
 					}
 
-					D_800DE12C = entry->unkD;
-					typeCfg = (Unk800AA694Entry*)&D_800AA694[type * 8];
+					D_800DE12C = value;
 					switch (typeCfg->unk4) {
 					case 0:
 						func_8008D14C_5D5FC();
@@ -4171,16 +4149,15 @@ void func_8008E158_5E608(void) {
 					i = savedIndex;
 				}
 
-				remaining = (remaining - 1) & 0xFF;
+				remaining--;
 			}
 
-			i = (i + 1) & 0xFF;
-		} while (remaining > 0);
+			i++;
+			value = remaining;
+		} while (value > 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008E158_5E608.s")
-#endif
+
 
 // AI - Creates a 2D sprite with color, velocity, and animation parameters
 void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
