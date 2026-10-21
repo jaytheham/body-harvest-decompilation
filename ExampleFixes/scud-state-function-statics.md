@@ -1,0 +1,5 @@
+`func_8010C14C_11B0FC`: incorrect ASM: external state and timer cache their addresses in `s1`/`s0`, with a `0x48` frame and indirect loads/stores -> code changed: use function-static `state = 0` and uninitialized `timer`, pin this unit's BSS at US `0x80159D10` / EU `0x80159D40`, and remove the automatic timer temporary -> correct ASM: state value in `v1`, timer value in `s0`, direct global stores, and a `0x40` frame.
+
+Incorrect ASM: generated switch table precedes the preserved constants at ROM `0x153B50` -> code changed: attach those constants to the preceding assembly function, remove the placeholder table, and retain the following constants with the clipping function -> correct ASM: generated five-entry table at ROM `0x153C90` and unchanged following rodata.
+
+Incorrect ASM: `lh` for the saved vehicle angles -> code changed: declare `D_8015927E`, `D_80159280`, and `D_80159282` as `u16`, and assign the spawned vehicle type through `D_80158E64` -> correct ASM: `lhu` for each angle and the target pointer load/store scheduling.
