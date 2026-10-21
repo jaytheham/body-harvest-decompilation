@@ -2750,100 +2750,87 @@ u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A460_5A910.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(5167)
-// AI - Updates type-6 particles: applies velocity/gravity, checks boundaries, spawns children at intervals, frees expired
+// Updates the emitter's children, applies gravity, and spawns new particles.
 void func_8008A5F8_5AAA8(u8 arg0) {
-	Unk800DE130 *temp_s4;
-	Unk800DE840 *sp40;
-	Unk800DE840 *temp_s5;
-	Unk800DE840 *temp_s0;
-	s16 var_s2;
-	s16 temp_s1;
-	u8 *temp_v0;
-	u8 *temp_v1;
-	u8 *temp_s0_2;
-	u16 temp_v0_2;
-	s32 temp_v1_2;
-	u8 var_s1;
-	u8 temp_s3;
+	s16 headIdx;
+	s16 templateIdx;
+	s16 idx;
+	s16 nextIdx;
+	JetStreamParticleState *particle;
+	FrontendSpurtVisualState *visual;
+	FrontendSpurtEmitterState *emitter;
+	u8 count;
+	u8 i;
+	u8 effectId;
 
-	temp_s3 = arg0;
-	temp_s4 = &D_800DE130[temp_s3];
-	sp40 = &D_800DE840[temp_s4->unk6];
-	temp_s5 = &D_800DE840[sp40->unk4];
-	var_s2 = temp_s5->unk4;
+	effectId = arg0;
+	headIdx = D_800DE130[effectId].unk6;
+	templateIdx = D_800DE840[headIdx].unk4;
+	idx = D_800DE840[templateIdx].unk4;
 
-	if ((var_s2 != -5) && (var_s2 != -6)) {
+	if ((idx != -5) && (idx != -6)) {
 		do {
-			temp_s0 = &D_800DE840[var_s2];
-			temp_s0->unk8 += ((s8 *)temp_s0)[0x12];
-			temp_s0->unkC += ((s8 *)temp_s0)[0x14];
-			temp_s0->unkA += ((s8 *)temp_s0)[0x13];
-			temp_v0 = (u8 *)&temp_s0->unk8;
+			((FrontendJetStreamNode *)&D_800DE840[idx])->particle.position[0] += ((FrontendJetStreamNode *)&D_800DE840[idx])->particle.velocity[0];
+			((FrontendJetStreamNode *)&D_800DE840[idx])->particle.position[2] += ((FrontendJetStreamNode *)&D_800DE840[idx])->particle.velocity[2];
+			((FrontendJetStreamNode *)&D_800DE840[idx])->particle.position[1] += ((FrontendJetStreamNode *)&D_800DE840[idx])->particle.velocity[1];
+			particle = &((FrontendJetStreamNode *)&D_800DE840[idx])->particle;
 
 			if (D_800DE0B6 == 0) {
-				temp_v1 = (u8 *)&sp40->unk8;
-				if ((s8)temp_v0[3] >= -0x31) {
-					temp_v0[3] = (u8)((s8)temp_v0[3] - 1);
+				visual = (FrontendSpurtVisualState *)&D_800DE840[headIdx].unk8;
+				if (particle->velocity[1] >= -0x31) {
+					particle->velocity[1]--;
 				} else {
-					temp_v0[3] = 0xCE;
+					particle->velocity[1] = -0x32;
 				}
 
-				if ((temp_v1[0xC] == 0) && (temp_s0->unkA <= 0)) {
-					func_800899F0_59EA0(temp_s0->unk8, temp_s0->unkC, temp_s0->unk2, temp_v1[6], temp_v1[7], temp_v1[8], temp_v0[9]);
-					if ((temp_s4->unk4 < 4) && (((u8 *)&temp_s5->unk8)[5] == 0)) {
-						func_800840C4_54574(temp_s3 & 0xFF);
-						func_80083B14_53FC4(temp_s3 & 0xFF);
+				if ((visual->mode == 0) && (particle->position[1] <= 0)) {
+					func_800899F0_59EA0(particle->position[0], particle->position[2], ((FrontendJetStreamNode *)&D_800DE840[idx])->size, visual->visual.color[0], visual->visual.color[1], visual->visual.color[2], particle->opacity);
+					if ((D_800DE130[effectId].unk4 < 4) && (((FrontendSpurtEmitterState *)&D_800DE840[templateIdx].unk8)->remaining == 0)) {
+						func_800840C4_54574(effectId);
+						func_80083B14_53FC4(effectId);
 						return;
 					}
-					temp_s1 = temp_s0->unk4;
-					func_80083DBC_5426C(var_s2, temp_s3 & 0xFF);
-					var_s2 = temp_s1;
-				} else if ((temp_v1[0xC] == 1) && (temp_s0->unkA < -0x1F3)) {
-					if ((temp_s4->unk4 < 4) && (((u8 *)&temp_s5->unk8)[5] == 0)) {
-						func_800840C4_54574(temp_s3 & 0xFF);
-						func_80083B14_53FC4(temp_s3 & 0xFF);
+					nextIdx = D_800DE840[idx].unk4;
+					func_80083DBC_5426C(idx, effectId);
+					idx = nextIdx;
+				} else if ((visual->mode == 1) && (particle->position[1] < -0x1F3)) {
+					if ((D_800DE130[effectId].unk4 < 4) && (((FrontendSpurtEmitterState *)&D_800DE840[templateIdx].unk8)->remaining == 0)) {
+						func_800840C4_54574(effectId);
+						func_80083B14_53FC4(effectId);
 						return;
 					}
-					temp_s1 = temp_s0->unk4;
-					func_80083DBC_5426C(var_s2, temp_s3 & 0xFF);
-					var_s2 = temp_s1;
+					nextIdx = D_800DE840[idx].unk4;
+					func_80083DBC_5426C(idx, effectId);
+					idx = nextIdx;
 				} else {
-					var_s2 = temp_s0->unk4;
+					idx = D_800DE840[idx].unk4;
 				}
 			} else {
-				var_s2 = temp_s0->unk4;
+				idx = D_800DE840[idx].unk4;
 			}
-		} while ((var_s2 != -5) && (var_s2 != -6));
+		} while ((idx != -5) && (idx != -6));
 	}
 
-	temp_s0_2 = (u8 *)&temp_s5->unk8;
+	emitter = (FrontendSpurtEmitterState *)&D_800DE840[templateIdx].unk8;
 	if (D_800DE0B6 == 1) {
 		if ((func_800038E0_44E0() % 8) == 1) {
-			func_8008A094_5A544(temp_s3 & 0xFF);
+			func_8008A094_5A544(effectId);
 		}
 	} else {
-		temp_v0_2 = *(u16 *)&temp_s0_2[6];
-		if ((s32)temp_v0_2 > 0) {
-			*(u16 *)&temp_s0_2[6] = temp_v0_2 - 1;
+		if (emitter->delay > 0) {
+			emitter->delay--;
 			return;
 		}
 
-		temp_v1_2 = (func_800038E0_44E0() % 3) + 2;
-		if ((temp_v1_2 & 0xFF) > 0) {
-			for (var_s1 = 0; var_s1 < (temp_v1_2 & 0xFF); var_s1++) {
-				if (temp_s0_2[5] > 0) {
-					func_8008A094_5A544(temp_s3 & 0xFF);
-					temp_s0_2[5]--;
-				}
+		count = (func_800038E0_44E0() % 3) + 2;
+		for (i = 0; i < count; i++) {
+			if (emitter->remaining > 0) {
+				func_8008A094_5A544(effectId);
+				emitter->remaining--;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_8008A5F8_5AAA8.s")
-#endif
 
 // Renders billboard particles with primitive and environment colors.
 void func_8008A928_5ADD8(u8 arg0) {

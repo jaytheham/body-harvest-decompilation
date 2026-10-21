@@ -443,6 +443,8 @@ void func_800894A0_59950(u8 arg0);
 void func_80089AB4_59F64(void);
 u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 								 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14);
+void func_800899F0_59EA0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6);
+void func_8008A094_5A544(u8 arg0);
 void func_8008A5F8_5AAA8(u8 arg0);
 void func_8008AEC8_5B378(u8 arg0);
 void func_8008B264_5B714(u8 arg0);

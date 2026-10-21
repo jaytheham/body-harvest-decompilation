@@ -2850,6 +2850,31 @@ typedef struct {
 } JetStreamParticleState; /* size = 0x0E */
 
 typedef struct {
+	u8 flags[2];
+	u16 size;
+	s16 next;
+	s16 previous;
+	JetStreamParticleState particle;
+	u8 pad16[6];
+} FrontendJetStreamNode; /* size = 0x1C */
+
+typedef struct {
+	SpurtVisualState visual;
+	u8 mode;
+	u8 padD;
+} FrontendSpurtVisualState; /* size = 0x0E */
+
+typedef struct {
+	s8 velocity[3];
+	u8 size;
+	u8 spread;
+	u8 remaining;
+	u16 delay;
+	u8 alpha;
+	u8 pad9[3];
+} FrontendSpurtEmitterState; /* size = 0x0C */
+
+typedef struct {
     s16 position[3];
     u8 color[3];
     u8 pad9;
