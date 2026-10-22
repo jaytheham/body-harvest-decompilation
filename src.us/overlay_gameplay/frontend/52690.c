@@ -1952,22 +1952,16 @@ void func_800878A4_57D54(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800878A4_57D54.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(5554)
-// AI - Creates a type-3 particle effect with position, randomized colors, motion velocities, and optional child particle spawning
+// Spawns a solid particle with randomized motion and an optional child effect.
 s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, s32 arg6, u8 arg7) {
-	f32 sp40;
-	f32 sp44;
-	f32 sp48;
+	s32 parentIndex;
+	FrontendSolidParticleState *particle;
+	FrontendSolidParticleMotion *motion;
+	Vec3f direction;
+	s16 padRet;
 	s16 ret;
+	s16 padLink;
 	s16 linkIdx;
-	s32 temp;
-	s16 valY;
-	u8 res;
-	Unk800DE840 *entry;
-	Unk800DE840 *parent;
-	u8 *entryBytes;
-	u8 *linkBytes;
 
 	if (D_800DE824 >= 0x23) {
 		return -3;
@@ -1979,89 +1973,79 @@ s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 
 	ret = func_80083C98_54148(0x94);
 	if (ret != -3) {
-		entry = &D_800DE840[ret];
-		parent = &D_800DE840[entry->unk4];
-		entry->unk2 = arg3 * 4;
-		entry->unk8 = arg0;
-		entry->unkA = arg1;
-		entry->unkC = arg2;
-		linkIdx = parent->unk4;
+		parentIndex = D_800DE840[ret].unk4;
+		parentIndex &= -1;
+		linkIdx = D_800DE840[parentIndex].unk4;
+		D_800DE840[ret].unk2 = arg3 * 4;
+		D_800DE840[ret].unk8 = arg0;
+		D_800DE840[ret].unkA = arg1;
+		D_800DE840[ret].unkC = arg2;
 
-		entryBytes = (u8 *)entry + 8;
-		entryBytes[6] = (u8)((func_800038E0_44E0() % 80) + 20);
-		entryBytes[7] = (u8)((func_800038E0_44E0() % 80) + 20);
-		entryBytes[8] = (u8)((func_800038E0_44E0() % 80) + 20);
-		*(s32 *)((u8 *)parent + 8) = arg6;
+		particle = (FrontendSolidParticleState *)&D_800DE840[ret].unk8;
+		particle->color[0] = (u8)((func_800038E0_44E0() % 80) + 20);
+		particle->color[1] = (u8)((func_800038E0_44E0() % 80) + 20);
+		particle->color[2] = (u8)((func_800038E0_44E0() % 80) + 20);
+		((FrontendSolidParticleModel *)&D_800DE840[parentIndex].unk8)->displayList = arg6;
 
 		arg5 = ((func_800038E0_44E0() % 6) + (arg5 / 7)) - 3;
-		sp40 = (f32)((func_800038E0_44E0() % 20) - 10);
+		direction.x = (f32)((func_800038E0_44E0() % 20) - 10);
 
-		temp = (func_800038E0_44E0() % 6) + 6;
-		if (temp >= 0) {
-			sp44 = (f32)((func_800038E0_44E0() % 6) + 6);
+		parentIndex = (func_800038E0_44E0() % 6) + 6;
+		if (parentIndex >= 0) {
+			direction.y = (f32)((func_800038E0_44E0() % 6) + 6);
 		} else {
-			sp44 = (f32)(-6 - (func_800038E0_44E0() % 6));
+			direction.y = (f32)(-6 - (func_800038E0_44E0() % 6));
 		}
 
-		sp48 = (f32)((func_800038E0_44E0() % 20) - 10);
-		func_800837B4_53C64(&sp40, &sp40);
+		direction.z = (f32)((func_800038E0_44E0() % 20) - 10);
+		func_800837B4_53C64(&direction.x, &direction.x);
 
-		linkBytes = (u8 *)D_800DE840 + (linkIdx * 0x1C) + 8;
-		linkBytes[0] = (u8)((s8)((f32)(u32)arg5 * sp40));
+		motion = (FrontendSolidParticleMotion *)(s32)&D_800DE840[linkIdx].unk8;
+		motion->velocity[0] = (u8)((s8)((f32)(u32)arg5 * direction.x));
 
-		valY = (s16)((f32)(u32)arg5 * sp44);
-		if (valY >= 0) {
-			linkBytes[1] = (u8)valY;
-		} else {
-			linkBytes[1] = (u8)(-valY);
-		}
+		motion->velocity[1] = (s16)((f32)(u32)arg5 * direction.y) >= 0 ? (s16)((f32)(u32)arg5 * direction.y) : -(s16)((f32)(u32)arg5 * direction.y);
 
-		linkBytes[2] = (u8)((s8)((f32)(u32)arg5 * sp48));
-		linkBytes[3] = (u8)(func_800038E0_44E0() % 255);
-		linkBytes[4] = (u8)(func_800038E0_44E0() % 255);
-		linkBytes[5] = (u8)(func_800038E0_44E0() % 255);
-		linkBytes[6] = (u8)((func_800038E0_44E0() % 20) - 10);
-		linkBytes[7] = (u8)((func_800038E0_44E0() % 20) - 10);
-		linkBytes[8] = (u8)((func_800038E0_44E0() % 20) - 10);
+		motion->velocity[2] = (u8)((s8)((f32)(u32)arg5 * direction.z));
+		motion->rotation[0] = (u8)(func_800038E0_44E0() % 255);
+		motion->rotation[1] = (u8)(func_800038E0_44E0() % 255);
+		motion->rotation[2] = (u8)(func_800038E0_44E0() % 255);
+		motion->angularVelocity[0] = (u8)((func_800038E0_44E0() % 20) - 10);
+		motion->angularVelocity[1] = (u8)((func_800038E0_44E0() % 20) - 10);
+		motion->angularVelocity[2] = (u8)((func_800038E0_44E0() % 20) - 10);
 
 		if (arg7 == 0) {
-			entryBytes[0xB] = 0;
+			particle->flags = 0;
 		} else {
-			entryBytes[0xB] = 8;
+			particle->flags = 8;
 		}
 
-		if (((func_800038E0_44E0() % 100) < 40) || (arg7 != 0)) {
-			entryBytes[0xB] |= 1;
+		if (((u8)(func_800038E0_44E0() % 100) < 40) || (arg7 != 0)) {
+			particle->flags |= 1;
 		}
 
 		if (arg7 != 0) {
 			if (arg4 != -9) {
-				res = func_800891F8_596A8(arg0, arg1, arg2, ret, arg4);
-				entryBytes[9] = res;
-				if (res != 0xFB) {
-					entryBytes[0xB] |= 4;
+				particle->childEffect = func_800891F8_596A8(arg0, arg1, arg2, ret, arg4);
+				if (particle->childEffect != 0xFB) {
+					particle->flags |= 4;
 				}
-				entryBytes[0xA] = 0;
+				particle->frame = 0;
 			}
 		} else if ((func_800038E0_44E0() % 100) >= 41) {
-			res = func_800891F8_596A8(arg0, arg1, arg2, ret, arg4);
-			entryBytes[9] = res;
-			if (res != 0xFC) {
-				entryBytes[0xB] |= 4;
+			particle->childEffect = func_800891F8_596A8(arg0, arg1, arg2, ret, arg4);
+			if (particle->childEffect != 0xFC) {
+				particle->flags |= 4;
 			}
-			entryBytes[0xA] = 0;
+			particle->frame = 0;
 		}
 
 		if (arg7 == 2) {
-			entryBytes[0xB] |= 0x80;
+			particle->flags |= 0x80;
 		}
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800885A0_58A50.s")
-#endif
 
 // AI - Sets color values (from u16 args) into a particle's third linked entry
 void func_80088A38_58EE8(u16 arg0, u16 arg1, u16 arg2, s16 arg3) {
