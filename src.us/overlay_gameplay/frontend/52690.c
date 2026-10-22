@@ -646,11 +646,8 @@ s16 func_80083D50_54200(u8 arg0) {
 	return result;
 }
 
-// CURRENT(1785)
-// AI - Frees a D_800DE840 linked-list entry from its parent chain, updating neighbor links
-#ifdef NON_MATCHING
+// Frees a D_800DE840 linked-list entry and updates its parent chain.
 void func_80083DBC_5426C(s16 arg0, u8 arg1) {
-	Unk800DE840 *temp_v0;
 	Unk800DE130 *parent;
 	s32 temp_a3;
 	s16 temp_v1;
@@ -659,8 +656,7 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 	u32 head;
 	u32 tail;
 
-	temp_v0 = &D_800DE840[arg0];
-	if (temp_v0->unk0 == 0) {
+	if (D_800DE840[arg0].unk0 == 0) {
 		return;
 	}
 
@@ -682,14 +678,14 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 		case 2:
 			head = -4;
 			tail = -5;
-			temp_v1 = temp_v0->unk6;
+			temp_v1 = D_800DE840[arg0].unk6;
 			if (temp_v1 == head) {
 				temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
-				parent->unk6 = temp_v0->unk4;
+				parent->unk6 = D_800DE840[arg0].unk4;
 				temp_a1 = &D_800DE840[parent->unk6];
 				temp_a1->unk6 = head;
 				temp_a1->unk4 = tail;
-			} else if (temp_v0->unk4 == tail) {
+			} else if (D_800DE840[arg0].unk4 == tail) {
 				parent->unk8 = temp_v1;
 				temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
 				temp_a1 = &D_800DE840[parent->unk6];
@@ -701,25 +697,25 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 		default:
 			head = -4;
 			tail = -5;
-			temp_v1 = temp_v0->unk6;
+			temp_v1 = D_800DE840[arg0].unk6;
 			if (temp_v1 == head) {
-				temp_idx = temp_v0->unk4;
+				temp_idx = D_800DE840[arg0].unk4;
 				parent->unk6 = temp_idx;
 				D_800DE840[temp_idx].unk6 = head;
 				temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
 			} else {
-				temp_idx = temp_v0->unk4;
+				temp_idx = D_800DE840[arg0].unk4;
 				if (temp_idx == tail) {
 					parent->unk8 = temp_v1;
 					D_800DE840[temp_v1].unk4 = tail;
 					temp_a3 = ((volatile Unk800DE130 *)parent)->unk4;
 				} else {
 					D_800DE840[temp_idx].unk6 = temp_v1;
-					D_800DE840[temp_v0->unk6].unk4 = temp_v0->unk4;
+					D_800DE840[D_800DE840[arg0].unk6].unk4 = D_800DE840[arg0].unk4;
 				}
 			}
 			break;
-		}
+	}
 
 	D_800DE840[arg0].unk0 = 0;
 	parent->unk4 = temp_a3 - 1;
@@ -728,9 +724,6 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 		D_800E197A = arg0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80083DBC_5426C.s")
-#endif
 
 /* Free 3 linked entries from D_800DE840 chain starting at arg0 */
 // AI - Frees three linked entries from the D_800DE840 pool chain
