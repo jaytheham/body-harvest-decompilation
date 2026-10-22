@@ -307,6 +307,17 @@ typedef struct {
 	/* 0x0C */ s16 unkC;
 } Frontend52690Unk8Motion;
 
+typedef union {
+	s16 position[3];
+	struct {
+		/* 0x00 */ u8 alpha;
+		/* 0x01 */ s8 quadrant;
+		/* 0x02 */ u8 phase;
+		/* 0x03 */ u8 pad3[3];
+		/* 0x06 */ s16 radius;
+	} segment;
+} FrontendAuraPayload;
+
 typedef struct {
 	/* 0x00 */ u8 active;
 	/* 0x01 */ u8 flags;

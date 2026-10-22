@@ -931,43 +931,34 @@ void func_8008472C_54BDC(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(59773)
-// AI - Renders a 3D particle ring/aura effect using alpha-blended triangles
+// Renders a 3D particle ring/aura effect using alpha-blended triangles
 void func_800847E4_54C94(u8 arg0) {
 	u8 color[3];
 	Unk800DE130 *entry130;
 	Unk800DE840 *entry840;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	u8 *view;
-	Vec3f origin;
+	FrontendAuraPayload *payload;
 	Vec3f vecA;
 	Vec3f vecB;
 	Vec3f outA;
 	Vec3f outB;
+	Vec3f origin;
+	/* Reset the consumed index to keep the node address in its own IDO live range. */
+	s32 headIndex;
 	f32 camDx;
 	f32 camDy;
 	f32 camDz;
-	f32 dist;
+	Vec3f point0;
+	Vec3f point1;
 	f32 t0;
 	f32 t1;
-	f32 p0x;
-	f32 p0y;
-	f32 p0z;
+	f32 distBias;
 	u8 count;
-	f32 p1x;
-	f32 p1y;
-	f32 p1z;
-	f64 distBias;
-	u8 alpha0;
-	u8 alpha1;
-	u8 triCount;
-	u16 ringScale;
+	u8 remaining;
+	s8 quadrant;
 
 	entry130 = &D_800DE130[arg0];
-	count = entry130->unk4 - 1;
+	headIndex = entry130->unkA;
+	count = entry130->unk4 - 1; if (&count) {} /* Retain the byte home across helper calls. */
 
 	if ((D_800DE0B8 == 1) || (D_800DE0B9 != 0)) {
 		color[0] = 0x82;
@@ -979,127 +970,155 @@ void func_800847E4_54C94(u8 arg0) {
 		color[2] = 0x16;
 	}
 
-	entry840 = &D_800DE840[entry130->unkA];
-	view = (u8 *)entry840 + 8;
-	origin.x = ((s16 *)view)[0];
-	origin.y = ((s16 *)view)[1];
-	origin.z = ((s16 *)view)[2];
+	entry840 = &D_800DE840[headIndex]; headIndex = 0;
+	payload = (FrontendAuraPayload *)&entry840->unk8;
+	payload = (FrontendAuraPayload *)((u32)payload & -1);
+	origin.x = payload->position[0];
+	origin.y = payload->position[1];
+	origin.z = payload->position[2];
 
-	camDx = origin.x - (D_800DE100[0] * 4.0f);
-	camDy = origin.y - (D_800DE100[1] * 4.0f);
-	camDz = origin.z - (D_800DE100[2] * 4.0f);
-	dist = sqrtf((camDx * camDx) + (camDy * camDy) + (camDz * camDz));
+	camDx = origin.x - (D_800DE100[0] * 4);
+	camDy = origin.y - (D_800DE100[1] * 4);
+	camDz = origin.z - (D_800DE100[2] * 4);
+	camDz = sqrtf((camDx * camDx) + (camDy * camDy) + (camDz * camDz));
+
+	distBias = (camDz / 4) + 800.0;
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, 1);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE);
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, color[0], color[1], color[2], 0);
+	gDPSetColor(D_8005BB2C++, G_SETPRIMCOLOR, _SHIFTL(color[2], 8, 8) | (_SHIFTL(color[1], 16, 8) | _SHIFTL(color[0], 24, 8)));
 	gDPPipeSync(D_8005BB2C++);
 
-	triCount = count;
-	if ((s32)triCount > 0) {
-		distBias = (f64)((f64)(dist / 4.0f) + 800.0);
+	if ((s32)count > 0) {
 		do {
-				f32 scale;
-			f32 texScale;
 
-			entry840 = &D_800DE840[entry840->unk4];
-				scale = (f32)(distBias * ((f64)*(s16 *)((u8 *)entry840 + 0xE) * 0.00390625));
+			headIndex = entry840->unk4;
+			entry840 = &D_800DE840[headIndex]; headIndex = 0;
+			/* The scale is consumed before point0.z is used as a coordinate. */
+			point0.z = (f32)(distBias * ((f64)(f32)((FrontendAuraPayload *)&entry840->unk8)->segment.radius * 0.00390625));
 
-				func_800838B8_53D68(scale, &D_800DE0C0.x, (f32 *)&vecA);
-				func_800838B8_53D68(scale, D_800DE0CC, (f32 *)&vecB);
+			func_800838B8_53D68(point0.z, &D_800DE0C0.x, &vecA.x);
+			func_800838B8_53D68(point0.z, D_800DE0CC, &vecB.x);
 
-			view = (u8 *)entry840 + 8;
-			texScale = 256.0f;
-			t0 = (f32)view[2] / texScale;
-			t1 = (f32)(view[2] + 0xA) / texScale;
+			payload = (FrontendAuraPayload *)&entry840->unk8;
+			payload = (FrontendAuraPayload *)((u32)payload & -1);
+			t0 = (f32)(u32)payload->segment.phase / 256;
+			t1 = (f32)(payload->segment.phase + 0xA) / 256;
 
-			switch (*((s8 *)view + 1)) {
-				case 0:
-					func_80083884_53D34((f32 *)&origin, (f32 *)&vecA, (f32 *)&outA);
-					func_80083884_53D34((f32 *)&origin, (f32 *)&vecB, (f32 *)&outB);
-					break;
-				case 1:
-					func_80083884_53D34((f32 *)&origin, (f32 *)&vecB, (f32 *)&outA);
-					func_80083850_53D00((f32 *)&origin, (f32 *)&vecA, (f32 *)&outB);
-					break;
-				case 2:
-					func_80083850_53D00((f32 *)&origin, (f32 *)&vecA, (f32 *)&outA);
-					func_80083850_53D00((f32 *)&origin, (f32 *)&vecB, (f32 *)&outB);
-					break;
-				default:
-					func_80083850_53D00((f32 *)&origin, (f32 *)&vecB, (f32 *)&outA);
-					func_80083884_53D34((f32 *)&origin, (f32 *)&vecA, (f32 *)&outB);
-					break;
+			quadrant = payload->segment.quadrant;
+			if (quadrant == 0) {
+				func_80083884_53D34(&origin.x, &vecA.x, &outA.x);
+				func_80083884_53D34(&origin.x, &vecB.x, &outB.x);
+			} else if (quadrant == 1) {
+				func_80083884_53D34(&origin.x, &vecB.x, &outA.x);
+				func_80083850_53D00(&origin.x, &vecA.x, &outB.x);
+			} else if (quadrant == 2) {
+				func_80083850_53D00(&origin.x, &vecA.x, &outA.x);
+				func_80083850_53D00(&origin.x, &vecB.x, &outB.x);
+			} else {
+				func_80083850_53D00(&origin.x, &vecB.x, &outA.x);
+				func_80083884_53D34(&origin.x, &vecA.x, &outB.x);
 			}
 
-			camDx = outB.x - outA.x;
-			camDy = outB.y - outA.y;
-			camDz = outB.z - outA.z;
 
-			p0x = (camDx * t0) + outA.x;
-			p0y = (camDy * t0) + outA.y;
-			p0z = (camDz * t0) + outA.z;
-			p1x = (camDx * t1) + outA.x;
-			p1y = (camDy * t1) + outA.y;
-			p1z = (camDz * t1) + outA.z;
+			point0.x = ((outB.x - outA.x) * t0) + outA.x;
+			point0.y = ((outB.y - outA.y) * t0) + outA.y;
+			point0.z = ((outB.z - outA.z) * t0) + outA.z;
+			point1.x = ((outB.x - outA.x) * t1) + outA.x;
+			point1.y = ((outB.y - outA.y) * t1) + outA.y;
+			point1.z = ((outB.z - outA.z) * t1) + outA.z;
 
 			if (D_800DE0B7 != 0) {
-				alpha0 = (u8)(s32)(((f32)((u32)view[0] * D_800DE0BB)) / 255.0f);
-				alpha1 = (u8)(s32)(((f32)(D_800DE0BB * 20)) / 255.0f);
+				D_8005BB34->v.ob[0] = (s16)origin.x;
+				D_8005BB34->v.ob[1] = (s16)origin.y;
+				D_8005BB34->v.ob[2] = (s16)origin.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = ((f32)(payload->segment.alpha * D_800DE0BB)) / 255.0f;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)point1.x;
+				D_8005BB34->v.ob[1] = (s16)point1.y;
+				D_8005BB34->v.ob[2] = (s16)point1.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = ((f32)(D_800DE0BB * 20)) / 255.0f;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)point0.x;
+				D_8005BB34->v.ob[1] = (s16)point0.y;
+				D_8005BB34->v.ob[2] = (s16)point0.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = ((f32)(D_800DE0BB * 20)) / 255.0f;
+				D_8005BB34++;
+
 			} else {
-				alpha0 = view[0];
-				alpha1 = 20;
+				D_8005BB34->v.ob[0] = (s16)origin.x;
+				D_8005BB34->v.ob[1] = (s16)origin.y;
+				D_8005BB34->v.ob[2] = (s16)origin.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = payload->segment.alpha;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)point1.x;
+				D_8005BB34->v.ob[1] = (s16)point1.y;
+				D_8005BB34->v.ob[2] = (s16)point1.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = 20;
+				D_8005BB34++;
+
+				D_8005BB34->v.ob[0] = (s16)point0.x;
+				D_8005BB34->v.ob[1] = (s16)point0.y;
+				D_8005BB34->v.ob[2] = (s16)point0.z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0;
+				D_8005BB34->v.cn[1] = 0;
+				D_8005BB34->v.cn[2] = 0;
+				D_8005BB34->v.cn[3] = 20;
+				D_8005BB34++;
+
 			}
 
-			D_8005BB34->v.ob[0] = (s16)origin.x;
-			D_8005BB34->v.ob[1] = (s16)origin.y;
-			D_8005BB34->v.ob[2] = (s16)origin.z;
-			D_8005BB34->v.flag = 0;
-			D_8005BB34->v.tc[0] = 0;
-			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = 0;
-			D_8005BB34->v.cn[1] = 0;
-			D_8005BB34->v.cn[2] = 0;
-			D_8005BB34->v.cn[3] = alpha0;
-			D_8005BB34++;
-
-			D_8005BB34->v.ob[0] = (s16)p1x;
-			D_8005BB34->v.ob[1] = (s16)p1y;
-			D_8005BB34->v.ob[2] = (s16)p1z;
-			D_8005BB34->v.flag = 0;
-			D_8005BB34->v.tc[0] = 0;
-			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = 0;
-			D_8005BB34->v.cn[1] = 0;
-			D_8005BB34->v.cn[2] = 0;
-			D_8005BB34->v.cn[3] = alpha1;
-			D_8005BB34++;
-
-			D_8005BB34->v.ob[0] = (s16)p0x;
-			D_8005BB34->v.ob[1] = (s16)p0y;
-			D_8005BB34->v.ob[2] = (s16)p0z;
-			D_8005BB34->v.flag = 0;
-			D_8005BB34->v.tc[0] = 0;
-			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = 0;
-			D_8005BB34->v.cn[1] = 0;
-			D_8005BB34->v.cn[2] = 0;
-			D_8005BB34->v.cn[3] = alpha1;
-			D_8005BB34++;
-
+			remaining = count;
 			gDPPipeSync(D_8005BB2C++);
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
 			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 
-			triCount = (triCount - 1) & 0xFF;
-		} while ((s32)triCount > 0);
+			remaining--; if (D_800DE0BB * 20 + entry840->unk0) {} /* Preserve IDO constant/node priorities. */
+			count = remaining;
+		} while (remaining > 0);
 	}
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_100DE80);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DE80));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0x0000, G_TX_LOADTILE, 0,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
@@ -1109,19 +1128,15 @@ void func_800847E4_54C94(u8 arg0) {
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0x0000, G_TX_RENDERTILE, 0,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
 			   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31, 31);
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 
-	ringScale = *(u16 *)((u8 *)&D_800DE840[entry130->unkA] + 2);
-	func_800853A8_55858(&origin, color, D_800DE0E4, ringScale, D_800DE0BB);
+	func_800853A8_55858(&origin, color, D_800DE0E4, (u16)D_800DE840[entry130->unkA].unk2, D_800DE0BB);
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800847E4_54C94.s")
-#endif
 
 void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	FrontendRingOffsets offsets;
