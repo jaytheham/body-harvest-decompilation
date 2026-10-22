@@ -137,16 +137,12 @@ void func_800829E4_52E94(s32 arg0) {
 }
 
 // transitionToNextLevel
-#ifdef NON_MATCHING
-// CURRENT(14240)
+
 // AI - Main level completion/transition animation loop with 3D rotation and text
 s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	Unk80052B40 sp12C;
+	s32 padTop[3];
 	u16 sp132;
-	s16 sp128;
+	Unk80052B40 sp12C;
 	Unk80052B40 sp124;
 	Unk80052B40 sp11C;
 	Unk80052B40 sp114;
@@ -154,27 +150,31 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	Unk80052B40 sp104;
 	s32 sp100;
 	s32 spFC;
-	s32 spD8;
-	s32 spD0;
-	s32 spB8;
-	s32 sp88;
 	s32 sp80;
 	s32 sp74;
 	s32 sp70;
-	s16 varV0_3;
-	s32 tempA3;
-	s32 tempS0;
-	s32 tempS1;
+	s32 varV0_3;
+	s32 varS4;
+	s32 padMotion;
 	s32 tempS6;
-	s32 tempT5;
 	s32 varFp;
+	s32 spD8;
+	s32 padD4;
+	s32 spD0;
 	s32 varS0;
 	s32 varS1;
-	s32 varS4;
+	s32 padDistance;
 	s32 varV0;
 	s32 varV0_2;
+	Mtx *spB8;
+	Gfx *gfx;
+	Gfx *normalizeGfx;
+	Gfx *projectionGfx;
+	Gfx *modelviewGfx;
 	s32 varV0_4;
 	Frontend52690Entry *tempV0;
+	Gfx *digitGfx;
+	s32 padMidpoint[3];
 
 	(void)arg1;
 	sp12C = D_80094A84_64F34;
@@ -185,27 +185,21 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	varS4 = 0;
 	varFp = 0;
 	sp104 = D_80094AAC_64F5C;
-	spD8 = 0;
-	tempV0 = ((Frontend52690Entry *)D_80094A1C_64ECC) + arg0;
+	spD8 = 0; if (&spD8) {}
+	tempV0 = &D_80094A1C_64ECC[arg0];
 	spD0 = 0;
+	sp100 = tempV0->unk0;
 	spFC = tempV0->unk4 + 1;
 	D_80052ACA = 4;
-	sp100 = tempV0->unk0;
 
 	func_8001363C_1423C();
 	func_8000AFDC_BBDC();
 	func_800823C0_52870();
 
-	tempT5 = (spFC + sp100 + 1) / 2;
-	tempS6 = ((tempT5 - sp100) * 0xA) + 0x10;
-	sp80 = ((spFC - sp100) * 0xA) + 0xA;
-	sp74 = tempS6 - 0x10;
-	sp88 = tempT5;
-
-	do {
-		tempS0 = tempS6 - varS4;
-		sp70 = tempS0 * 4;
-		tempS1 = -tempS0;
+	varV0_4 = (spFC + sp100 + 1) / 2;
+	tempS6 = varV0_4 - sp100;
+	tempS6 = tempS6 * 10 + 0x10; sp80 = ((spFC - sp100) * 0xA) + 0xA; do {
+		sp70 = (tempS6 - varS4) * 4;
 
 		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 		func_80011E14_12A14(0);
@@ -213,21 +207,21 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 		func_80004D38_5938();
 		func_800821E0_52690(0xFF, 0, 0);
 
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+		{ gfx = D_8005BB2C++; gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_L, 24, 8) | _SHIFTL(G_MDSFT_RENDERMODE, 8, 8) | (32 - G_MDSFT_RENDERMODE); gfx->words.w1 = G_RM_AA_XLU_SURF | G_RM_AA_XLU_SURF2; }
 
-		sp104.unk0 = varFp * 0x190;
-		sp104.unk2 = varFp * 0x64;
-		sp104.unk4 = varFp * 0xC8;
+		sp104.unk4 = (u16)varFp * 0x190;
+		sp104.unk2 = (u16)varFp * 0x64;
+		sp104.unk0 = (u16)varFp * 0xC8;
 
 		if (tempS6 < varS4) {
-			sp12C.unk2 = -0xA0;
+			sp12C.unk4 = -0xA0;
 			sp11C.unk0 = 0;
 		}
 
 		if (tempS6 >= varS4) {
-			sp124.unk2 = (varS4 * 0x10) - 0x96;
+			sp124.unk4 = (varS4 * 0x10) - 0x96;
 		} else {
-			sp124.unk2 = ((varS4 - tempS6) * 0x10) - 0x12C;
+			sp124.unk4 = ((varS4 - tempS6) * 0x10) - 0x12C;
 		}
 
 		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC[0], 1.0f);
@@ -236,57 +230,50 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 		spB8 = D_8005BB38;
 		func_800039D0_45D0(NULL, &sp114, NULL, D_8005BB38);
 
-		gSPPerspNormalize(D_8005BB2C++, sp132);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB3C), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		{ normalizeGfx = D_8005BB2C++; normalizeGfx->words.w0 = _SHIFTL(G_MOVEWORD, 24, 8) | G_MW_PERSPNORM; normalizeGfx->words.w1 = sp132; }
+		{ projectionGfx = D_8005BB2C++; projectionGfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION, 16, 8) | sizeof(Mtx); projectionGfx->words.w1 = K0_TO_PHYS(D_8005BB3C); }
+		{ modelviewGfx = D_8005BB2C++; modelviewGfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); modelviewGfx->words.w1 = K0_TO_PHYS(D_8005BB38++); }
 
 		func_80082868_52D18(varFp & 0xF);
 		func_800823D8_52888(varS4, arg0);
 
 		sp10C.unk4 = sp70;
-		if (tempS1 < tempS0) {
-			varV0 = tempS0;
-		} else {
-			varV0 = tempS1;
+		if (MAX(tempS6 - varS4, -(tempS6 - varS4)) < 0x64) {
+			sp10C.unk0 = -0xFA - ((coss((u16)(((tempS6 - varS4) << 0x10) / 0xC8)) * 0x1F4) / 0xFFFF);
 		}
 
-		if (varV0 < 0x64) {
-			sp10C.unk0 = -0xFA - ((coss((u16)((tempS0 << 0x10) / 0xC8)) * 0x1F4) / 0xFFFF);
-		}
-
-		func_800823C8_52878((s32)&sp10C, (s32)&sp104, varFp);
+		func_800823C8_52878(&sp10C, &sp104, varFp);
 		guPerspective((Mtx *)D_8005BB38, &sp132, 55.0f, 1.3333334f, 1.0f, 2000.0f, 1.0f);
 
-		gSPPerspNormalize(D_8005BB2C++, sp132);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(spB8), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+		{ normalizeGfx = D_8005BB2C++; normalizeGfx->words.w0 = _SHIFTL(G_MOVEWORD, 24, 8) | G_MW_PERSPNORM; normalizeGfx->words.w1 = sp132; }
+		{ projectionGfx = D_8005BB2C++; projectionGfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION, 16, 8) | sizeof(Mtx); projectionGfx->words.w1 = K0_TO_PHYS(D_8005BB38++); }
+		{ projectionGfx = D_8005BB2C++; projectionGfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION, 16, 8) | sizeof(Mtx); projectionGfx->words.w1 = K0_TO_PHYS(spB8); }
 
 		func_800039D0_45D0(&sp124, &sp11C, NULL, D_8005BB38);
 
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		{ modelviewGfx = D_8005BB2C++; modelviewGfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); modelviewGfx->words.w1 = K0_TO_PHYS(D_8005BB38++); }
 
 		func_800039D0_45D0(&sp12C, NULL, NULL, D_8005BB38);
 
-		varV0_2 = sp88;
 		if (varS4 < tempS6) {
 			varV0_2 = sp100;
-			varS1 = sp88;
+			varS1 = (spFC + sp100 + 1) / 2;
 		} else {
+			varV0_2 = (spFC + sp100 + 1) / 2;
 			varS1 = spFC;
 		}
 
-		varS0 = varV0_2;
-		while (varS0 < varS1) {
+		for (varS0 = varV0_2; varS0 < varS1; varS0++) {
 			func_800829E4_52E94(varS0);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			varS0++;
+			{ digitGfx = D_8005BB2C++; digitGfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); digitGfx->words.w1 = K0_TO_PHYS(D_8005BB38); }
 		}
 
 		D_8005BB38++;
 		func_8000345C_405C(0xD000);
 
+		varV0 = spD8 + 1;
 		if (spD0 != 0) {
-			spD8++;
+			spD8 = varV0;
 			func_8000AFDC_BBDC();
 			varV0_3 = D_800313D0_31FD0;
 
@@ -332,7 +319,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 				varS4++;
 			}
 
-			gSPViewport(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB24));
+			{ gfx = D_8005BB2C++; gfx->words.w0 = _SHIFTL(G_MOVEMEM, 24, 8) | _SHIFTL(G_MV_VIEWPORT, 16, 8) | sizeof(Vp); gfx->words.w1 = (u32)OS_PHYSICAL_TO_K0(D_8005BB24); }
 			func_8000B044_BC44();
 		} else if ((varS4 == tempS6) && !(currentControllerStates[0].button & 0x9000)) {
 			spD0 = 1;
@@ -347,14 +334,18 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 			varS4++;
 		}
 
+#line 393
 		varFp++;
-		if (varS4 < sp74) {
+#line 385
+
+		if (varS4 < tempS6 - 0x10) {
 			varV0_4 = 0;
 		} else if ((tempS6 + 0x10) < varS4) {
 			varV0_4 = 0x20;
 		} else {
 			varV0_4 = (varS4 - tempS6) + 0x10;
 		}
+
 
 		sp114.unk0 = (varV0_4 << 0xA) + 0x8000;
 		if ((sp80 < varS4) || (varS4 == 0)) {
@@ -368,9 +359,6 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	D_80052ACA = 3;
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80082CBC_5316C.s")
-#endif
 
 /* 3x3 matrix-vector multiply: out = mat^T * vec */
 // AI - 3x3 matrix-vector multiply: out = mat^T * vec
@@ -3535,7 +3523,7 @@ void func_8008CDC8_5D278(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-// CURRENT(60)
+
 // AI - Renders a camera-facing billboard quad using orientation basis vectors
 void func_8008D14C_5D5FC(void) {
 	f32 temp_f8;
