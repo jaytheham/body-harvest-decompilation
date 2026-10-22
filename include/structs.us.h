@@ -304,7 +304,19 @@ typedef struct {
 	/* 0x08 */ s8 unk8;
 	/* 0x09 */ u8 unk9;
 	/* 0x0A */ u8 unkA;
+	/* 0x0C */ s16 unkC;
 } Frontend52690Unk8Motion;
+
+typedef union {
+	s16 position[3];
+	struct {
+		/* 0x00 */ u8 alpha;
+		/* 0x01 */ s8 quadrant;
+		/* 0x02 */ u8 phase;
+		/* 0x03 */ u8 pad3[3];
+		/* 0x06 */ s16 radius;
+	} segment;
+} FrontendAuraPayload;
 
 typedef struct {
 	/* 0x00 */ u8 active;
@@ -391,7 +403,10 @@ typedef struct {
 		s16 unk0;
 		u16 unk0Unsigned;
 	};
-	/* 0x02 */ s16 unk2;
+	/* 0x02 */ union {
+		s16 unk2;
+		u16 unk2Unsigned;
+	};
 	/* 0x04 */ s16 unk4;
 } Unk800311A0; /* size = 0x06 */
 
@@ -2144,12 +2159,25 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[4];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 pad9;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ u8 unk10;
 } Unk8008C7E4Sub; /* size = 0x12 */
+
+typedef struct {
+	/* 0x00 */ u16 x;
+	/* 0x02 */ u16 y;
+	/* 0x04 */ u16 z;
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 pad9;
+	/* 0x0A */ s16 velocityX;
+	/* 0x0C */ s16 velocityY;
+	/* 0x0E */ s16 velocityZ;
+	/* 0x10 */ u8 life;
+} FrontendLineParticle; /* size = 0x12 */
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x8];
@@ -2221,7 +2249,7 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 pad2[2];
+	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 unk4;
 	/* 0x05 */ u8 pad5;
 	/* 0x06 */ s16 unk6;
@@ -2240,6 +2268,22 @@ typedef struct {
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
 } Unk800AA998Entry; /* size = 0x10 */
+
+typedef struct {
+	s8 unk0;
+	s8 unk1;
+	s8 unk2;
+	s8 unk3;
+	s8 unk4;
+	s8 unk5;
+	union {
+		s8 values[2];
+		struct {
+			s8 width;
+			s8 height;
+		} size;
+	} dimensions;
+} Unk800AA694Entry; /* size = 0x08 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2293,6 +2337,97 @@ typedef struct {
 	/* 0x18 */ u8 unk18;
 	/* 0x19 */ u8 pad19[0x3];
 } Unk800DE840; /* size = 0x1C */
+
+typedef struct {
+	s16 position[3];
+	u8 primitive[3];
+	u8 environment[3];
+} FrontendBillboardColors;
+
+typedef struct {
+	s16 position[3];
+	u8 primitiveR;
+	u8 primitiveG;
+	u8 primitiveB;
+	u8 environmentR;
+	u8 environmentG;
+	u8 environmentB;
+	u8 age;
+	u8 tail[7];
+} FrontendInterpolatedParticleState; /* size = 0x14 */
+
+typedef struct {
+	u8 colors[6];
+	u8 textureFrame;
+	u8 pad7;
+	u8 rotation;
+	u8 alpha;
+	u8 environmentAlpha;
+	u8 rate;
+	u8 tail[8];
+} FrontendInterpolatedParticleMotion; /* size = 0x14 */
+
+typedef struct {
+	u16 size;
+	u8 scale[3];
+	u8 velocity[3];
+	u8 mode;
+	u8 tail[11];
+} FrontendInterpolatedParticleShape; /* size = 0x14 */
+
+typedef struct {
+	u8 flags[2];
+	s16 scale;
+	s16 next;
+	s16 previous;
+	s16 position[3];
+	u16 delay;
+	u8 unused10;
+	u8 alpha;
+	u8 tail[0xA];
+} FrontendBillboardParticle; /* size = 0x1C */
+
+typedef struct {
+    u8 flags[2];
+    s16 size;
+    s16 next;
+    s16 previous;
+    s16 position[3];
+    u8 color[3];
+    u8 age;
+    u8 opacity;
+    u8 growth;
+    u8 pad14[8];
+} FrontendGroundParticle; /* size = 0x1C */
+
+typedef struct {
+	s16 position[3];
+	u8 color[3];
+	u8 alpha;
+	u8 age;
+	u8 padB[9];
+} FrontendChildParticleState; /* size = 0x14 */
+
+typedef struct {
+	s16 position[3];
+	u8 color[3];
+	u8 childEffect;
+	u8 frame;
+	u8 flags;
+	u8 tail[8];
+} FrontendSolidParticleState; /* size = 0x14 */
+
+typedef struct {
+	s8 velocity[3];
+	u8 rotation[3];
+	s8 angularVelocity[3];
+	u8 tail[11];
+} FrontendSolidParticleMotion; /* size = 0x14 */
+
+typedef struct {
+	u32 displayList;
+	u8 tail[16];
+} FrontendSolidParticleModel; /* size = 0x14 */
 
 typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
@@ -2801,6 +2936,31 @@ typedef struct {
 	/* 0x0A */ s8 velocity[3];
 	/* 0x0D */ u8 bounced;
 } JetStreamParticleState; /* size = 0x0E */
+
+typedef struct {
+	u8 flags[2];
+	u16 size;
+	s16 next;
+	s16 previous;
+	JetStreamParticleState particle;
+	u8 pad16[6];
+} FrontendJetStreamNode; /* size = 0x1C */
+
+typedef struct {
+	SpurtVisualState visual;
+	u8 mode;
+	u8 padD;
+} FrontendSpurtVisualState; /* size = 0x0E */
+
+typedef struct {
+	s8 velocity[3];
+	u8 size;
+	u8 spread;
+	u8 remaining;
+	u16 delay;
+	u8 alpha;
+	u8 pad9[3];
+} FrontendSpurtEmitterState; /* size = 0x0C */
 
 typedef struct {
     s16 position[3];
