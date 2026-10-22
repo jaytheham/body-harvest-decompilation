@@ -105,71 +105,36 @@ void func_80082868_52D18(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, D_4002250);
 }
 
-// CURRENT(4374)
 // AI - Decomposes a number into digits and loads 4 digit textures from atlas into TMEM
-#ifdef NON_MATCHING
 void func_800829E4_52E94(s32 arg0) {
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 digits[4];
-	s32 *digitPtr;
-	s32 *digitEnd;
 	s32 divisor;
-	s32 quotient;
 	s32 divisorStep;
+	s32 digits[4];
+	s32 digitIndex;
+
 	divisor = 1000;
 	divisorStep = 10;
-	digitPtr = digits;
-	digitEnd = digits + 4;
-	quotient = 0;
-	while (digitPtr < digitEnd) {
-		quotient = arg0 / divisor;
-		*digitPtr++ = quotient;
-		arg0 -= quotient * divisor;
+	digitIndex = 0; while (digitIndex < 4) {
+		digits[digitIndex] = arg0 / divisor;
+		arg0 -= digits[digitIndex] * divisor;
+		/* Keep the decoding loop rolled; the texture loop below is unrolled. */
+		digitIndex++;
+		digitIndex--;
+		digitIndex++;
 		divisor /= divisorStep;
 	}
 
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[3] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[2] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0x0080, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[1] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0x0100, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-
-	gDPTileSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[0] << 10));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, 0x0180, G_TX_LOADTILE, 0,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-			   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
-
+	for (digitIndex = 0; digitIndex < 4; digitIndex++) {
+		gDPTileSync(D_8005BB2C++);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_4002BA0 + (digits[3 - digitIndex] << 10));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 0, digitIndex * 0x80, G_TX_LOADTILE, 0,
+				   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
+				   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 512);
+	}
 	gSPDisplayList(D_8005BB2C++, D_4000170);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800829E4_52E94.s")
-#endif
 
 // transitionToNextLevel
 #ifdef NON_MATCHING
