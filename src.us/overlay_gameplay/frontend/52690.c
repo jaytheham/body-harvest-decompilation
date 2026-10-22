@@ -27,7 +27,7 @@ void func_800823C0_52870(void) {
 
 /* Empty stub - stores three arguments and returns */
 // AI - Empty stub that stores three arguments and returns
-void func_800823C8_52878(s32 arg0, s32 arg1, s32 arg2) {
+void func_800823C8_52878(Unk80052B40 *arg0, Unk80052B40 *arg1, s32 arg2) {
 }
 
 // AI - Renders a frontend menu entry with two textures and fade-in/out animation
@@ -42,8 +42,8 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	spA8 = D_80094A6C_64F1C;
 	spA0 = D_80094A74_64F24;
 	sp98 = D_80094A7C_64F2C;
-	entryUnk0 = ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk0;
-	entryUnk4Plus1 = ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk4 + 1;
+	entryUnk0 = D_80094A1C_64ECC[arg1].unk0;
+	entryUnk4Plus1 = D_80094A1C_64ECC[arg1].unk4 + 1;
 	fade = 0;
 
 	if (arg0 < 0x80) {
@@ -59,7 +59,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	/* The zero index retains the target's fade register reset before the call. */
 	func_800039D0_45D0(&spA8, &spA0, &sp98, &D_8005BB38[fade = 0]);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gDPLoadTextureBlock(D_8005BB2C++, ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, D_80094A1C_64ECC[arg1].unk8, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
@@ -78,7 +78,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	spA8.unk4 = (fade * 8) - 0x76C;
 	func_800039D0_45D0(&spA8, &spA0, &sp98, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gDPLoadTextureBlock(D_8005BB2C++, ((Frontend52690Entry *)D_80094A1C_64ECC)[arg1].unkC, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, D_80094A1C_64ECC[arg1].unkC, G_IM_FMT_IA, G_IM_SIZ_8b, 64, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPDisplayList(D_8005BB2C++, D_4000040);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gDPPipeSync(D_8005BB2C++);

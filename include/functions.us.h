@@ -366,6 +366,7 @@ void func_8007A038_4A4E8(void);
 s32 func_8007CFB4_4D464(s32 arg0);
 s32 func_8007D2B0_4D760(void);
 s32 func_80082CBC_5316C(s32 arg0, s32* arg1);
+void func_800823C8_52878(Unk80052B40 *arg0, Unk80052B40 *arg1, s32 arg2);
 s32 func_80076504_469B4(void);
 s32 func_800776BC_47B6C(void);
 extern MissionData* func_800706E8_40B98(s16 arg0);
