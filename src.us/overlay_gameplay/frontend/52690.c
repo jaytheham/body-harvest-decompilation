@@ -1588,132 +1588,126 @@ void func_80086528_569D8(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086528_569D8.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(13583)
-// AI - Creates a particle effect with 3 linked entries; sets position, randomized colors/velocity, and animation flags based on strength
-s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5) {
-	s16 ret;
+// Creates an interpolated particle with linked motion and shape entries.
+s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4, u8 arg5) {
+	/* Reuse the entry address for the shape payload after its last node access. */
+	union { u32 address; Unk800DE840 *node; FrontendInterpolatedParticleShape *shape; } parent;
+	FrontendInterpolatedParticleState *particle;
+	/* The initial strength capture shares storage with the later motion pointer. */
+	union { u32 value; FrontendInterpolatedParticleMotion *motion; } work;
+	s16 parentIndex;
 	s16 linkIdx;
-	s16 strength;
-	Unk800DE840 *entry;
-	Unk800DE840 *parent;
-	u8 *entryBytes;
-	u8 *parentBytes;
-	u8 *linkBytes;
-	u8 localColors[12];
+	s16 ret;
+	u8 localColors[4][3];
+	s32 strength;
 
-	strength = arg3;
 	ret = func_80083C98_54148(0x95);
 	if (ret != -3) {
-		entry = &D_800DE840[ret];
-		parent = &D_800DE840[entry->unk4];
-		entry->unk2 = strength;
-		linkIdx = parent->unk4;
+		parentIndex = D_800DE840[ret].unk4;
+		parent.address = (u32)&D_800DE840[parentIndex];
+		linkIdx = parent.node->unk4;
+		particle = (FrontendInterpolatedParticleState *)&D_800DE840[ret].unk8;
+		strength = arg3;
+		work.value = strength;
+		D_800DE840[ret].unk2 = work.value;
 
-		if ((u8 *)arg4 == NULL) {
-			func_8008EDB4_5F264(localColors, entry, strength);
-			entryBytes = (u8 *)entry + 8;
-			parentBytes = (u8 *)parent + 8;
-			entryBytes[6] = localColors[0];
-			entryBytes[7] = localColors[1];
-			entryBytes[8] = localColors[2];
-			entryBytes[9] = localColors[3];
-			entryBytes[10] = localColors[4];
-			entryBytes[11] = localColors[5];
-			parentBytes[0] = localColors[6];
-			parentBytes[1] = localColors[7];
-			parentBytes[2] = localColors[8];
-			parentBytes[3] = localColors[9];
-			parentBytes[4] = localColors[10];
-			parentBytes[5] = localColors[11];
+		if (arg4 == NULL) {
+			func_8008EDB4_5F264(localColors);
+			work.value = (u32)&parent.node->unk8;
+			parent.address = work.value;
+			particle->primitiveR = localColors[0][0];
+			particle->primitiveG = localColors[0][1];
+			particle->primitiveB = localColors[0][2];
+			particle->environmentR = localColors[1][0];
+			particle->environmentG = localColors[1][1];
+			particle->environmentB = localColors[1][2];
+			work.motion->colors[0] = localColors[2][0];
+			work.motion->colors[1] = localColors[2][1];
+			work.motion->colors[2] = localColors[2][2];
+			work.motion->colors[3] = localColors[3][0];
+			work.motion->colors[4] = localColors[3][1];
+			work.motion->colors[5] = localColors[3][2];
 		} else {
-			u8 *arg4Bytes;
-
-			arg4Bytes = (u8 *)arg4;
-			entryBytes = (u8 *)entry + 8;
-			parentBytes = (u8 *)parent + 8;
-			entryBytes[6] = arg4Bytes[0];
-			entryBytes[7] = arg4Bytes[1];
-			entryBytes[8] = arg4Bytes[2];
-			entryBytes[9] = arg4Bytes[3];
-			entryBytes[10] = arg4Bytes[4];
-			entryBytes[11] = arg4Bytes[5];
-			parentBytes[0] = arg4Bytes[6];
-			parentBytes[1] = arg4Bytes[7];
-			parentBytes[2] = arg4Bytes[8];
-			parentBytes[3] = arg4Bytes[9];
-			parentBytes[4] = arg4Bytes[10];
-			parentBytes[5] = arg4Bytes[11];
+			work.value = (u32)&parent.node->unk8;
+			parent.address = work.value;
+			particle->primitiveR = arg4[0];
+			particle->primitiveG = arg4[1];
+			particle->primitiveB = arg4[2];
+			particle->environmentR = arg4[3];
+			particle->environmentG = arg4[4];
+			particle->environmentB = arg4[5];
+			work.motion->colors[0] = arg4[6];
+			work.motion->colors[1] = arg4[7];
+			work.motion->colors[2] = arg4[8];
+			work.motion->colors[3] = arg4[9];
+			work.motion->colors[4] = arg4[10];
+			work.motion->colors[5] = arg4[11];
 		}
 
-		entryBytes = (u8 *)entry + 8;
-		parentBytes = (u8 *)parent + 8;
-		entry->unk8 = arg0;
-		entry->unkA = arg1;
-		entry->unkC = arg2;
-		entryBytes[0xC] = 0;
-		entryBytes[6] = (s8)(func_800038E0_44E0() % 16);
-		entryBytes[7] = 0;
-		entryBytes[8] = (s8)(func_800038E0_44E0() % 256);
-		entryBytes[9] = 0xFF;
-		entryBytes[10] = 0xFF;
+		particle->position[0] = arg0;
+		particle->position[1] = arg1;
+		particle->position[2] = arg2;
+		particle->age = 0;
+		work.motion->textureFrame = func_800038E0_44E0() % 16;
+		work.motion->pad7 = 0;
+		work.motion->rotation = func_800038E0_44E0() % 256;
+		work.motion->alpha = 0xFF;
+		work.motion->environmentAlpha = 0xFF;
 		if (strength < 0x4B) {
-			entryBytes[11] = 3;
+			work.motion->rate = 3;
 		} else if (strength < 0x96) {
-			entryBytes[11] = 2;
+			work.motion->rate = 2;
 		} else {
-			entryBytes[11] = 1;
+			work.motion->rate = 1;
 		}
 
-		linkBytes = (u8 *)&D_800DE840[linkIdx] + 8;
-		*((s16 *)linkBytes + 0) = 0;
+		/* Reuse the node carrier for the linked shape entry. */
+		parent.address = (u32)&D_800DE840[linkIdx].unk8;
+		parent.shape->size = 0;
 		if ((func_800038E0_44E0() % 3) == 1) {
-			linkBytes[2] = (s8)(func_800038E0_44E0() % 40);
+			parent.shape->scale[0] = func_800038E0_44E0() % 40;
 		} else {
-			linkBytes[2] = 0;
-		}
-		if ((func_800038E0_44E0() % 3) == 1) {
-			linkBytes[3] = (s8)(func_800038E0_44E0() % 40);
-		} else {
-			linkBytes[3] = 0;
+			parent.shape->scale[0] = 0;
 		}
 		if ((func_800038E0_44E0() % 3) == 1) {
-			linkBytes[4] = (s8)(func_800038E0_44E0() % 40);
+			parent.shape->scale[1] = func_800038E0_44E0() % 40;
 		} else {
-			linkBytes[4] = 0;
+			parent.shape->scale[1] = 0;
+		}
+		if ((func_800038E0_44E0() % 3) == 1) {
+			parent.shape->scale[2] = func_800038E0_44E0() % 40;
+		} else {
+			parent.shape->scale[2] = 0;
 		}
 		if ((func_800038E0_44E0() % 2) == 1) {
-			linkBytes[5] = (s8)(func_800038E0_44E0() % 7);
+			parent.shape->velocity[0] = func_800038E0_44E0() % 7;
 		} else {
-			linkBytes[5] = 0;
+			parent.shape->velocity[0] = 0;
 		}
 		if ((func_800038E0_44E0() % 2) == 1) {
-			linkBytes[6] = (s8)(func_800038E0_44E0() % 7);
+			parent.shape->velocity[1] = func_800038E0_44E0() % 7;
 		} else {
-			linkBytes[6] = 0;
+			parent.shape->velocity[1] = 0;
 		}
 		if ((func_800038E0_44E0() % 2) == 1) {
-			linkBytes[7] = (s8)(func_800038E0_44E0() % 7);
+			parent.shape->velocity[2] = func_800038E0_44E0() % 7;
 		} else {
-			linkBytes[7] = 0;
+			parent.shape->velocity[2] = 0;
 		}
-		linkBytes[8] = (u8)arg5;
-		if ((u8)arg5 == 1) {
-			linkBytes[2] = 0;
-			linkBytes[3] = 0;
-			linkBytes[4] = 0;
-			linkBytes[5] = 0x14;
-			linkBytes[6] = 0;
-			linkBytes[7] = 0;
-			parentBytes[8] = 0;
+		parent.shape->mode = arg5;
+		if (arg5 == 1) {
+			parent.shape->scale[0] = 0;
+			parent.shape->scale[1] = 0;
+			parent.shape->scale[2] = 0;
+			parent.shape->velocity[0] = 0x14;
+			parent.shape->velocity[1] = 0;
+			parent.shape->velocity[2] = 0;
+			work.motion->rotation = 0;
 		}
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086C58_57108.s")
-#endif
 
 // AI - Updates type-2 particles: animates growth, interpolates colors toward target, cycles animation frames, frees expired entries
 void func_800870AC_5755C(void) {
@@ -4085,7 +4079,7 @@ void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s8 arg4) {
 }
 
 // AI - Creates a full explosion effect: particle + sprites + child effects based on strength
-s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5, u8 arg6)
+s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 *arg5, u8 arg6)
 {
   s16 pad1;
   u8 i;
@@ -4139,14 +4133,14 @@ s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg
 }
 
 // AI - Wrapper for explosion effect that temporarily sets a global flag
-void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s32 arg5) {
+void func_8008ED44_5F1F4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 *arg5) {
 	D_800DE0EB = 1;
 	func_8008EB20_5EFD0(arg0, arg1, arg2, arg3, arg4, arg5, 0);
 	D_800DE0EB = 0;
 }
 
 // AI - Generates randomized color sets from a base color lookup table
-void func_8008EDB4_5F264(s8 arg0[][3]) {
+void func_8008EDB4_5F264(u8 arg0[][3]) {
 	s32 i;
 	s32 j;
 	s16 temp;
@@ -4521,11 +4515,11 @@ void func_8008FE98_60348(u8 arg0) {
 			if (D_800AA998[arg0].unkA == 0) {
 				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, 0, 0);
 			} else if (D_800AA998[arg0].unkA == 1) {
-				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, (s32)D_800AB448, 0);
+				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, D_800AB448, 0);
 			} else if (D_800AA998[arg0].unkA == 2) {
 				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, 0, 1);
 			} else if (D_800AA998[arg0].unkA == 3) {
-				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, (s32)D_800AB454, 0);
+				func_8008EB20_5EFD0(D_800AA998[arg0].unk2, D_800AA998[arg0].unk4, D_800AA998[arg0].unk6, D_800AA998[arg0].unk8, 0, D_800AB454, 0);
 			}
 			break;
 
