@@ -1503,90 +1503,91 @@ void func_80085FF0_564A0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085FF0_564A0.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(26836)
-// AI - Renders particle trail/line segments with fading alpha between linked positions
-void func_80086528_569D8(s32 arg0) {
-	Unk800DE840 *base;
-	Unk800DE840 *node;
-	Vtx *vtx;
-	s32 alpha;
-	s32 tailAlpha;
+// Renders fading particle trails as pairs of colored vertices.
+void func_80086528_569D8(u8 arg0) {
+	/* Keep the payload base separate from the cached full-node address. */
+	union {
+		u32 address;
+		Frontend52690Unk8Motion *particle;
+	} work;
+	FrontendInterpolatedParticleState *colors;
+	s16 idx;
+	u8 count;
+	u8 alpha;
+	u32 tailAlpha;
 
-	base = &D_800DE840[D_800DE130[arg0].unk6];
-	alpha = (0xFF - D_800D7971) & 0xFF;
+	idx = D_800DE840[D_800DE130[arg0].unk6].unk4;
+	colors = (FrontendInterpolatedParticleState *)&D_800DE840[D_800DE130[arg0].unk6].unk8;
+	count = 0;
+	alpha = 0xFF - D_800D7971;
 	if (D_800D7970 == 0) {
 		alpha = 0xFF;
 	}
 
-	if ((base->unk4 == -5) || (base->unk4 == -6)) {
-		return;
-	}
-
-	tailAlpha = (s32)(((f32)(alpha * 0x14)) / 255.0f);
-	node = &D_800DE840[base->unk4];
-
-	while ((node->unk4 != -5) && (node->unk4 != -6)) {
-		vtx = D_8005BB34;
+	while ((idx != -5) && (idx != -6)) {
+		tailAlpha = (((f32)(alpha * 0x14)) / 255.0f);
 		if (D_800DE0B7 == 1) {
-			vtx->v.ob[0] = (s16)(f32)(D_800AA7B4_7AC64[D_800E1D6A] + node->unk8);
-			vtx->v.ob[1] = (s16)(f32)(D_800AA7B8_7AC68[D_800E1D6A] + node->unkA);
-			vtx->v.ob[2] = (s16)(f32)(D_800AA7BC_7AC6C[D_800E1D6A] + node->unkC);
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = base->unkE;
-			vtx->v.cn[1] = base->unkF;
-			vtx->v.cn[2] = base->unk10;
-			vtx->v.cn[3] = (u8)((node->unk11 * alpha) / 255.0f);
+			work.address = (u32)&D_800DE840[idx].unk8;
 
-			vtx++;
-			vtx->v.ob[0] = (s16)(f32)((D_800AA7B4_7AC64[D_800E1D6A] + node->unk8) - (s8)node->unkE);
-			vtx->v.ob[1] = (s16)(f32)((D_800AA7B8_7AC68[D_800E1D6A] + node->unkA) - (s8)node->unkF);
-			vtx->v.ob[2] = (s16)(f32)((D_800AA7BC_7AC6C[D_800E1D6A] + node->unkC) - (s8)node->unk10);
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = base->unkE;
-			vtx->v.cn[1] = base->unkF;
-			vtx->v.cn[2] = base->unk10;
-			vtx->v.cn[3] = tailAlpha;
+			D_8005BB34->v.ob[0] = (f32)(D_800AA7B4_7AC64[D_800E1D6A] + work.particle->unk0);
+			D_8005BB34->v.ob[1] = (f32)(D_800AA7B8_7AC68[D_800E1D6A] + work.particle->unk2);
+			D_8005BB34->v.ob[2] = (f32)(D_800AA7BC_7AC6C[D_800E1D6A] + work.particle->unk4);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = colors->primitiveR;
+			D_8005BB34->v.cn[1] = colors->primitiveG;
+			D_8005BB34->v.cn[2] = colors->primitiveB;
+			D_8005BB34->v.cn[3] = ((work.particle->unk9 * alpha) / 255.0f);
+
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = (f32)((D_800AA7B4_7AC64[D_800E1D6A] + work.particle->unk0) - work.particle->unk6);
+			D_8005BB34->v.ob[1] = (f32)((D_800AA7B8_7AC68[D_800E1D6A] + work.particle->unk2) - work.particle->unk7);
+			D_8005BB34->v.ob[2] = (f32)((D_800AA7BC_7AC6C[D_800E1D6A] + work.particle->unk4) - work.particle->unk8);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = colors->primitiveR;
+			D_8005BB34->v.cn[1] = colors->primitiveG;
+			D_8005BB34->v.cn[2] = colors->primitiveB;
+			D_8005BB34->v.cn[3] = tailAlpha;
+			D_8005BB34++;
 		} else {
-			vtx->v.ob[0] = (s16)(f32)node->unk8;
-			vtx->v.ob[1] = (s16)(f32)node->unkA;
-			vtx->v.ob[2] = (s16)(f32)node->unkC;
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = base->unkE;
-			vtx->v.cn[1] = base->unkF;
-			vtx->v.cn[2] = base->unk10;
-			vtx->v.cn[3] = (u8)((node->unk11 * alpha) / 255.0f);
+			work.address = (u32)&D_800DE840[idx].unk8;
 
-			vtx++;
-			vtx->v.ob[0] = (s16)(f32)(node->unk8 - (s8)node->unkE);
-			vtx->v.ob[1] = (s16)(f32)(node->unkA - (s8)node->unkF);
-			vtx->v.ob[2] = (s16)(f32)(node->unkC - (s8)node->unk10);
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = base->unkE;
-			vtx->v.cn[1] = base->unkF;
-			vtx->v.cn[2] = base->unk10;
-			vtx->v.cn[3] = tailAlpha;
+			D_8005BB34->v.ob[0] = (f32)work.particle->unk0;
+			D_8005BB34->v.ob[1] = (f32)work.particle->unk2;
+			D_8005BB34->v.ob[2] = (f32)work.particle->unk4;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = colors->primitiveR;
+			D_8005BB34->v.cn[1] = colors->primitiveG;
+			D_8005BB34->v.cn[2] = colors->primitiveB;
+			D_8005BB34->v.cn[3] = ((work.particle->unk9 * alpha) / 255.0f);
+
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = (f32)(work.particle->unk0 - work.particle->unk6);
+			D_8005BB34->v.ob[1] = (f32)(work.particle->unk2 - work.particle->unk7);
+			D_8005BB34->v.ob[2] = (f32)(work.particle->unk4 - work.particle->unk8);
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = colors->primitiveR;
+			D_8005BB34->v.cn[1] = colors->primitiveG;
+			D_8005BB34->v.cn[2] = colors->primitiveB;
+			D_8005BB34->v.cn[3] = tailAlpha;
+			D_8005BB34++;
 		}
 
-		D_8005BB34 += 2;
-		gSPVertex(D_8005BB2C++, D_8005BB34 - 2, 2, 0);
-		gSPNumLights(D_8005BB2C++, 1);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
+		gSPLineW3D(D_8005BB2C++, 0, 1, 1, 0);
 		gDPPipeSync(D_8005BB2C++);
 
-		node = &D_800DE840[node->unk4];
+		count++;
+		idx = D_800DE840[idx].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80086528_569D8.s")
-#endif
 
 // Creates an interpolated particle with linked motion and shape entries.
 s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4, u8 arg5) {
