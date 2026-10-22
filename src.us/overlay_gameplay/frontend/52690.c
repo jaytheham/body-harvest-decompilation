@@ -1288,15 +1288,17 @@ s32 func_80085CB8_56168(s16 arg0) {
 	return arg0;
 }
 
-// CURRENT(4055)
-// AI - Creates a particle system: allocates a parent entry and spawns multiple child particles
-#ifdef NON_MATCHING
+// Creates a particle system: allocates a parent entry and spawns multiple child particles
 void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, s16 arg8,
 					 u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	u8 temp_s5;
-	s16 temp_v0;
-	s32 temp_s1;
 	u8 i;
+	s16 temp_v0;
+	/* Reuse one word for disjoint values to retain IDO's 0x48-byte frame. */
+	union {
+		s32 value;
+		Unk800DE840 *node;
+	} state;
 	f32 direction[3];
 
 	temp_s5 = func_80083A58_53F08(1);
@@ -1304,39 +1306,40 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 		return;
 	}
 
-	temp_v0 = ((s32 (*)(u8))func_80083B7C_5402C)(temp_s5);
-	if (temp_v0 == -3) {
+	state.value = func_80083B7C_5402C(temp_s5);
+	temp_v0 = state.value;
+	if (state.value == -3) {
 		func_80083B14_53FC4(temp_s5);
 		return;
 	}
 
+	D_800DE130[temp_s5].unkA = temp_v0;
+	state.node = &D_800DE840[temp_v0];
+	state.node->unk8 = arg0;
+	state.node->unkA = arg1;
+	state.node->unkC = arg2;
+	state.node->unk2 = arg9;
+	state.node->unkE = arg10;
+	state.node->unkF = arg11;
+	state.node->unk10 = arg12;
+	((Frontend52690Unk8Motion *)&state.node->unk8)->unkA = arg13;
+
 	direction[0] = arg3;
 	direction[1] = arg4;
 	direction[2] = arg5;
-	D_800DE130[temp_s5].unkA = temp_v0;
-	D_800DE840[temp_v0].unk8 = arg0;
-	D_800DE840[temp_v0].unkA = arg1;
-	D_800DE840[temp_v0].unkC = arg2;
-	D_800DE840[temp_v0].unk2 = arg9;
-	D_800DE840[temp_v0].unkE = arg10;
-	D_800DE840[temp_v0].unkF = arg11;
-	D_800DE840[temp_v0].unk10 = arg12;
-	((u8 *)&D_800DE840[temp_v0].unk12)[0] = arg13;
-
 	func_800837B4_53C64(direction, direction);
 
-	temp_s1 = arg8;
+	state.value = arg8;
+	state.value = func_80085CB8_56168((s16)state.value);
+	arg8 = state.value;
 	i = 0;
-	if ((temp_s1 = func_80085CB8_56168((s16)temp_s1)) > 0) {
+	if (state.value > 0) {
 		do {
 			func_800857D4_55C84(temp_s5, direction, arg6, arg7);
 			i++;
-		} while (i < (s16)temp_s1);
+		} while (i < arg8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085CEC_5619C.s")
-#endif
 
 // AI - Creates a simpler particle effect: allocates parent entry and spawns child particles
 void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {

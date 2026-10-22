@@ -1,0 +1,11 @@
+Incorrect ASM: `func_80085CEC_5619C` reserved a 0x50-byte frame and placed its direction array at sp+0x3C. Reusing its halfword index as the later particle count also merged the early and late live ranges, occupying S3 and replacing the fourth argument's saved-register prologue with an LB from its stack home.
+-> Code changed: Use a local union containing `s32 value` and `Unk800DE840 *node` for the allocation result, particle-node pointer, and clamp result in disjoint phases. Keep the initial halfword index separate, assign the clamp result back to the already-consumed `arg8` parameter, and compare the byte loop counter against `arg8`.
+-> Correct ASM: `addiu sp,sp,-0x48`, direction array at sp+0x34, the fourth argument preserved in S3, and `lh s1,0x6A(sp)` before clamping. The initial index uses V1 and the final count uses S1 without overlapping the fourth argument's saved register.
+
+Incorrect ASM: Using direction components before metadata assigned the signed byte arguments to T4/T5 and metadata bytes to T6/T7/T8/T9/T0, although all instruction kinds and positions already matched.
+-> Code changed: Write the node's metadata fields before assigning `direction[0]`, `direction[1]`, and `direction[2]`; leave normalization after both groups.
+-> Correct ASM: The scheduler still loads direction bytes first, into T9/T0, while metadata loads use T4/T5/T6/T7/T8. Metadata stores remain in the same target positions, including the final byte store in normalization's JAL delay slot.
+
+Incorrect ASM: Casting the allocator to a word-returning function pointer produced an indirect JALR. Ordinary scalar word/halfword copies could instead remove the target's redundant sign extension; unsigned masks and discarded conditions could preserve it while introducing extra compiler temporaries.
+-> Code changed: Call the declared allocator directly into the union's word member, then assign that member to the halfword index. For the count, assign `arg8` to the word member and pass `(s16)state.value` directly to the clamp. No discarded conditions or unsigned masks are needed.
+-> Correct ASM: A direct allocator JAL followed by `sll v1,v0,16`, `sra t0,v1,16`, the raw V0 failure comparison, and `move v1,t0` in its delay slot. The clamp argument retains its own SLL/SRA/MOVE sequence, and the full US ROM checksum passes.
