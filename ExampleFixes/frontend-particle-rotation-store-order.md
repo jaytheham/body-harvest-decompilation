@@ -1,0 +1,3 @@
+Incorrect ASM: In `func_80085FF0_564A0`, storing rotated X before rotated Y loaded X velocity before Y velocity and delayed the Z store until after the X addition.
+-> Code changed: Compute both rotated halfword results before storing either coordinate, then write Z, Y, X in source order: `particle->unk4 += particle->unk8; particle->unk2 = newY + particle->unk7; particle->unk0 = newX + particle->unk6;`.
+-> Correct ASM: The rotation block loads Y velocity before X velocity, stores Z before `cvt.s.w`, and schedules the X addition/store between the Y cosine multiply and sine multiply, matching the target block's instruction order. The complete function still has interpolation, register, and stack differences.

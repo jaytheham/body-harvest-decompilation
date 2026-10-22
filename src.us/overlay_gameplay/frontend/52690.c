@@ -1380,128 +1380,110 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(11871)
-// AI - Updates particle motion per frame: interpolation, velocity+gravity, or rotation modes
+// Updates particle interpolation, motion, fading, and rotation.
 void func_80085FF0_564A0(u8 arg0) {
-	Unk800DE130 *entry130;
-	Unk800DE840 *start;
-	Unk800DE840 *current;
 	Frontend52690Unk8Motion *startUnk8;
-	Frontend52690Unk8Motion *currentUnk8;
+	Frontend52690Unk8Motion *particle;
 	s16 currentIdx;
+	s16 value;
+	s16 next;
 
-	entry130 = &D_800DE130[arg0];
-	start = &D_800DE840[entry130->unk6];
-	startUnk8 = (Frontend52690Unk8Motion *)&start->unk8;
-	currentIdx = start->unk4;
+	currentIdx = D_800DE130[arg0].unk6;
+	startUnk8 = (Frontend52690Unk8Motion *)(s32)&D_800DE840[currentIdx].unk8;
+	currentIdx = D_800DE840[currentIdx].unk4;
 
-	if ((currentIdx != -5) && (currentIdx != -6)) {
-		while (1) {
-			u8 mode;
+	while ((currentIdx != -5) && (currentIdx != -6)) {
+		if (startUnk8->unkA == 2) {
+			if (startUnk8->unk9 == 0) {
+				func_800840C4_54574(arg0);
+				func_80083B14_53FC4(arg0);
+				return;
+			}
+			particle = (Frontend52690Unk8Motion *)(s32)&D_800DE840[currentIdx].unk8;
 
-			mode = startUnk8->unkA;
-			current = &D_800DE840[currentIdx];
-			currentUnk8 = (Frontend52690Unk8Motion *)&current->unk8;
+			particle->unk6 = (s8)((startUnk8->unk0 - particle->unk0) / startUnk8->unk9);
+			particle->unk7 = (s8)((startUnk8->unk2 - particle->unk2) / startUnk8->unk9);
+			particle->unk8 = (s8)((startUnk8->unk4 - particle->unk4) / startUnk8->unk9);
 
-			if (mode == 2) {
-				u8 divisor;
+			/* Keep X/Y and two Z uses for IDO's target allocation priorities. */
+			particle->unk0 += particle->unk6; if (particle->unk0 + particle->unk2 + (particle->unk4 * particle->unk4)) {}
+			particle->unk2 += particle->unk7;
+			particle->unk4 += particle->unk8;
 
-				divisor = startUnk8->unk9;
-				if (divisor == 0) {
+			if (particle->unk9 < 0xEB) {
+				particle->unk9 = (u8)(particle->unk9 + 0x14);
+			}
+			currentIdx = D_800DE840[currentIdx].unk4;
+			continue;
+		} else {
+			particle = (Frontend52690Unk8Motion *)(s32)&D_800DE840[currentIdx].unk8;
+
+			if (particle->unk9 < 0xF) {
+
+				if (D_800DE130[arg0].unk4 < 3) {
 					func_800840C4_54574(arg0);
 					func_80083B14_53FC4(arg0);
 					return;
 				}
 
-				currentUnk8->unk6 = (s8)((startUnk8->unk0 - currentUnk8->unk0) / divisor);
-				currentUnk8->unk7 = (s8)((startUnk8->unk2 - currentUnk8->unk2) / startUnk8->unk9);
-				currentUnk8->unk8 = (s8)((startUnk8->unk4 - currentUnk8->unk4) / startUnk8->unk9);
-
-				currentUnk8->unk0 = (s16)(currentUnk8->unk0 + currentUnk8->unk6);
-				currentUnk8->unk2 = (s16)(currentUnk8->unk2 + currentUnk8->unk7);
-				currentUnk8->unk4 = (s16)(currentUnk8->unk4 + currentUnk8->unk8);
-
-				if (currentUnk8->unk9 < 0xEB) {
-					currentUnk8->unk9 = (u8)(currentUnk8->unk9 + 0x14);
-				}
-			} else {
-				if (currentUnk8->unk9 < 0xF) {
-					if (entry130->unk4 < 3) {
-						func_800840C4_54574(arg0);
-						func_80083B14_53FC4(arg0);
-						return;
-					}
-
-					func_80083DBC_5426C(currentIdx, arg0);
-					currentIdx = current->unk4;
-					if ((currentIdx == -5) || (currentIdx == -6)) {
-						break;
-					}
-					continue;
-				}
-
-				if (mode == 4) {
-					f32 angle;
-					f32 cosAngle;
-					f32 sinAngle;
-					s16 x;
-					s16 y;
-
-					x = currentUnk8->unk0;
-					y = currentUnk8->unk2;
-					angle = (f32)((1.0 * D_800AEC60_7F110[0]) / D_800AEC58_7F108[0]);
-
-					cosAngle = cosf(angle);
-					sinAngle = sinf(angle);
-					currentUnk8->unk0 = (s16)((s16)((sinAngle * y) + (x * cosAngle)) + currentUnk8->unk6);
-
-					cosAngle = cosf(angle);
-					sinAngle = sinf(angle);
-					currentUnk8->unk4 = (s16)(currentUnk8->unk4 + currentUnk8->unk8);
-					currentUnk8->unk2 = (s16)((s16)((y * cosAngle) - (sinAngle * x)) + currentUnk8->unk7);
-				} else {
-					currentUnk8->unk0 = (s16)(currentUnk8->unk0 + currentUnk8->unk6);
-					currentUnk8->unk4 = (s16)(currentUnk8->unk4 + currentUnk8->unk8);
-					currentUnk8->unk2 = (s16)(currentUnk8->unk2 + currentUnk8->unk7);
-				}
-
-				currentUnk8->unkA++;
-				if (currentUnk8->unkA >= 0xB) {
-					currentUnk8->unk9 = (u8)(currentUnk8->unk9 - 0xA);
-				}
-
-				if ((currentUnk8->unk2 < -0xC7) && (D_800DE0BD != 1)) {
-					currentUnk8->unk2 = -0xC7;
-					currentUnk8->unk7 = 0;
-				}
-
-				if ((mode != 3) && (mode != 4) && (D_800DE0BD != 1)) {
-					if (currentUnk8->unk7 >= -9) {
-						currentUnk8->unk7--;
-					} else {
-						currentUnk8->unk7 = -0xA;
-					}
-				}
+				next = D_800DE840[currentIdx].unk4;
+				func_80083DBC_5426C(currentIdx, arg0);
+				currentIdx = next;
+				continue;
 			}
 
-			currentIdx = current->unk4;
-			if ((currentIdx == -5) || (currentIdx == -6)) {
-				break;
+			if (startUnk8->unkA == 4) {
+				s16 newX;
+				f32 angle;
+				f32 cosAngle;
+
+				newX = 1;
+				angle = ((f32)newX * 6.2831853070000001) / 360.0;
+
+				cosAngle = cosf(angle);
+				newX = (s16)((sinf(angle) * particle->unk2) + (particle->unk0 * cosAngle));
+
+				cosAngle = cosf(angle);
+				value = (s16)((particle->unk2 * cosAngle) - (sinf(angle) * particle->unk0));
+				particle->unk4 += particle->unk8;
+				particle->unk2 = value + particle->unk7;
+				particle->unk0 = newX + particle->unk6;
+			} else {
+				particle->unk0 += particle->unk6;
+				particle->unk4 += particle->unk8;
+				particle->unk2 += particle->unk7;
+			}
+
+			particle->unkA++;
+			if (particle->unkA >= 0xB) {
+				particle->unk9 = (u8)(particle->unk9 - 0xA);
+			}
+
+			if ((particle->unk2 < -0xC7) && (D_800DE0BD != 1)) {
+				particle->unk2 = -0xC7;
+				particle->unk7 = 0;
+			}
+
+			if ((startUnk8->unkA != 3) && (startUnk8->unkA != 4) && (D_800DE0BD != 1)) {
+				if (particle->unk7 >= -9) {
+					particle->unk7--;
+				} else {
+					particle->unk7 = -0xA;
+				}
 			}
 		}
+
+		currentIdx = D_800DE840[currentIdx].unk4;
 	}
 
 	if (startUnk8->unkA == 2) {
+		value = 0x37;
 		startUnk8->unk9--;
-		startUnk8->unk6 = (s8)((func_800038E0_44E0() % 0x37) + 0xC8);
-		startUnk8->unk7 = (s8)((func_800038E0_44E0() % 0x37) + 0xC8);
-		startUnk8->unk8 = (s8)((func_800038E0_44E0() % 0x37) + 0xC8);
+		startUnk8->unk6 = (s8)((func_800038E0_44E0() % value) + 0xC8);
+		startUnk8->unk7 = (s8)((func_800038E0_44E0() % value) + 0xC8);
+		startUnk8->unk8 = (s8)((func_800038E0_44E0() % value) + 0xC8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80085FF0_564A0.s")
-#endif
 
 // Renders fading particle trails as pairs of colored vertices.
 void func_80086528_569D8(u8 arg0) {
@@ -4678,5 +4660,3 @@ void func_80090648_60AF8(void) {
 const f64 D_800AEC40_7F0F0[1] = { 255 };
 const f64 D_800AEC48_7F0F8[1] = { 255 };
 const f64 D_800AEC50_7F100[1] = { 255 };
-const f64 D_800AEC58_7F108[1] = { 360 };
-const f64 D_800AEC60_7F110[1] = { 6.2831853070000001 };
