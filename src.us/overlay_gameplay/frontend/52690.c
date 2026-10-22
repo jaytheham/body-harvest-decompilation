@@ -2178,55 +2178,39 @@ void func_80088BDC_5908C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088BDC_5908C.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(8258)
-// AI - Renders type-3/solid particles with matrix transforms, scale/rotation, and configurable geometry modes
+// Renders linked solid particles using their model and motion nodes.
 void func_80088E18_592C8(void) {
 	s16 cur;
 	Unk800DE840 *entry;
 	Unk800DE840 *parent;
-	Unk800DE840 *nextLink;
 	Unk80052B40 spC4;
 	Unk80052B40 spBC;
 	Unk80052B40 spB4;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-	s32 pad8;
-	s32 pad9;
-	s32 pad10;
-	s32 pad11;
-	s32 pad12;
-	s32 pad13;
-	s32 pad14;
-	s32 pad15;
-	s32 pad16;
+	Unk800DE840 *nextLink;
+	s32 parentIndex;
+	s32 motionIndex;
+	s32 pad4; /* Preserves the transform vectors' stack homes. */
 
 	cur = D_800DE826;
 	while ((cur != -6) && (cur != -5)) {
 		entry = &D_800DE840[cur];
-		parent = &D_800DE840[entry->unk4];
-		nextLink = &D_800DE840[parent->unk4];
+		parentIndex = entry->unk4;
+		parent = &D_800DE840[parentIndex];
+		motionIndex = parent->unk4;
+		nextLink = &D_800DE840[motionIndex];
 
-		spC4.unk0 = entry->unk2;
-		spC4.unk2 = entry->unk2;
-		spC4.unk4 = entry->unk2;
+		spC4.unk4 = entry->unk2; spC4.unk2 = entry->unk2; spC4.unk0 = entry->unk2;
 
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, entry->unkE, entry->unkF, entry->unk10, 0xFF);
 
 		spB4.unk0 = entry->unk8;
 		spB4.unk2 = entry->unkA;
 		spB4.unk4 = entry->unkC;
-		spBC.unk0 = (s16)(((u8 *)nextLink)[0x0B] << 8);
-		spBC.unk2 = (s16)(((u8 *)nextLink)[0x0C] << 8);
-		spBC.unk4 = (s16)(((u8 *)nextLink)[0x0D] << 8);
+		spBC.unk0 = ((FrontendSolidParticleMotion *)&nextLink->unk8)->rotation[0] << 8;
+		spBC.unk2 = ((FrontendSolidParticleMotion *)&nextLink->unk8)->rotation[1] << 8;
+		spBC.unk4 = ((FrontendSolidParticleMotion *)&nextLink->unk8)->rotation[2] << 8;
 
-		if (!(((u8 *)entry)[0x13] & 8)) {
+		if (!(((FrontendSolidParticleState *)&entry->unk8)->flags & 8)) {
 			gDPPipeSync(D_8005BB2C++);
 			gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
@@ -2242,7 +2226,7 @@ void func_80088E18_592C8(void) {
 			gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 			gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG | G_LIGHTING);
 			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
-			if (!(((u8 *)entry)[0x13] & 0x80)) {
+			if (!(((FrontendSolidParticleState *)&entry->unk8)->flags & 0x80)) {
 				gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 			} else {
 				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -2252,18 +2236,17 @@ void func_80088E18_592C8(void) {
 
 		func_800039D0_45D0(&spB4, &spBC, &spC4, D_8005BB38);
 
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
 
-		gSPDisplayList(D_8005BB2C++, *(u32 *)&parent->unk8);
+		gSPDisplayList(D_8005BB2C++, ((FrontendSolidParticleModel *)&parent->unk8)->displayList);
 
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
 		cur = nextLink->unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088E18_592C8.s")
-#endif
+
 
 // https://decomp.me/scratch/7xbIK
 // AI - Allocates a child particle (type 4) linked to a parent; copies template data and returns allocation ID

@@ -2363,6 +2363,27 @@ typedef struct {
 } FrontendChildParticleState; /* size = 0x14 */
 
 typedef struct {
+	s16 position[3];
+	u8 color[3];
+	u8 childEffect;
+	u8 frame;
+	u8 flags;
+	u8 tail[8];
+} FrontendSolidParticleState; /* size = 0x14 */
+
+typedef struct {
+	s8 velocity[3];
+	u8 rotation[3];
+	s8 angularVelocity[3];
+	u8 tail[11];
+} FrontendSolidParticleMotion; /* size = 0x14 */
+
+typedef struct {
+	u32 displayList;
+	u8 tail[16];
+} FrontendSolidParticleModel; /* size = 0x14 */
+
+typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
 	/* 0x30 */ Vec3f positions[4];
 	/* 0x60 */ u16 unk60;
