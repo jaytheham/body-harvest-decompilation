@@ -2347,36 +2347,28 @@ void func_80089388_59838(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	D_800DE840[idx].unk10 = D_800DE840[D_800DE130[arg3].unk6].unk10;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1680)
-// AI - Updates type-4 child particles: interpolates colors toward head values, ages, frees expired entries
+// Updates child colors, growth, and lifetime; removes expired particles.
 void func_800894A0_59950(u8 arg0) {
 	Unk800DE130 *entry130;
-	Unk800DE840 *cur;
 	u8 *headBytes;
-	u8 *pos;
-	u8 *pos2;
+	FrontendChildParticleState *pos;
 	s16 idx;
 	u8 slot;
 
 	slot = arg0;
 	entry130 = &D_800DE130[slot];
 	{
-		Unk800DE840 *src;
-		Unk800DE840 *head;
-		s16 *srcPos;
+		Vec3s *srcPos;
 
-		src = &D_800DE840[*(s16 *)((u8 *)entry130 + 2)];
-		head = &D_800DE840[entry130->unk6];
+		srcPos = (Vec3s *)&D_800DE840[entry130->unk2].unk8;
+		idx = entry130->unk6;
 
-		srcPos = &src->unk8;
-		head->unk8 = srcPos[0];
-		srcPos++;
-		head->unkA = srcPos[0];
-		head->unkC = srcPos[1];
+		D_800DE840[idx].unk8 = srcPos->x;
+		D_800DE840[idx].unkA = srcPos->y;
+		D_800DE840[idx].unkC = srcPos->z;
 
-		idx = head->unk4;
-		headBytes = (u8 *)&head->unk11;
+		headBytes = &D_800DE840[idx].unk11;
+		idx = D_800DE840[idx].unk4;
 	}
 	if ((idx == -5) || (idx == -6)) {
 		return;
@@ -2385,14 +2377,12 @@ void func_800894A0_59950(u8 arg0) {
 	do {
 		s8 steps;
 
-		pos = (u8 *)&D_800DE840[idx].unk8;
-		cur = (Unk800DE840 *)(pos - 8);
-		pos2 = pos;
+		pos = (FrontendChildParticleState *)&D_800DE840[idx].unk8;
 
-		if (pos[9] < 10) {
+		if (pos->alpha < 10) {
 			s16 next;
 
-			next = cur->unk4;
+			next = D_800DE840[idx].unk4;
 			func_80083DBC_5426C(idx, slot);
 			if (entry130->unk4 == 1) {
 				func_80083DBC_5426C(entry130->unk6, slot);
@@ -2401,25 +2391,22 @@ void func_800894A0_59950(u8 arg0) {
 			}
 			idx = next;
 		} else {
-			steps = (s8)(0x23 - pos[0xA]);
+			steps = (s8)(0x23 - pos->age);
 			if (steps > 0) {
-				pos[6] = pos[6] - ((pos[6] - headBytes[0]) / steps);
-				pos[7] = pos[7] - ((pos[7] - headBytes[1]) / steps);
-				pos[8] = pos[8] - ((pos[8] - headBytes[2]) / steps);
+				pos->color[0] = pos->color[0] - ((pos->color[0] - headBytes[0]) / steps);
+				pos->color[1] = pos->color[1] - ((pos->color[1] - headBytes[1]) / steps);
+				pos->color[2] = pos->color[2] - ((pos->color[2] - headBytes[2]) / steps);
 			}
 
-			*(s16 *)(pos + 2) += (func_800038E0_44E0() % 2) + 1;
-			cur->unk2 += (func_800038E0_44E0() % 3) + 2;
-			pos2[0xA]++;
-			pos2[9] -= 9;
+			pos->position[1] += (func_800038E0_44E0() % 2) + 1;
+			D_800DE840[idx].unk2 += (func_800038E0_44E0() % 3) + 2;
+			pos->age++;
+			pos->alpha -= 9;
 
-			idx = cur->unk4;
+			idx = D_800DE840[idx].unk4;
 		}
 	} while ((idx != -5) && (idx != -6));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800894A0_59950.s")
-#endif
 
 // AI - Renders type-1 particles: loads particle texture and renders each entry as a billboarded sprite
 void func_80089764_59C14(u8 arg0) {

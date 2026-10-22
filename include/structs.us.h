@@ -2234,7 +2234,7 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
-	/* 0x02 */ u8 pad2[2];
+	/* 0x02 */ s16 unk2;
 	/* 0x04 */ u8 unk4;
 	/* 0x05 */ u8 pad5;
 	/* 0x06 */ s16 unk6;
@@ -2353,6 +2353,14 @@ typedef struct {
     u8 growth;
     u8 pad14[8];
 } FrontendGroundParticle; /* size = 0x1C */
+
+typedef struct {
+	s16 position[3];
+	u8 color[3];
+	u8 alpha;
+	u8 age;
+	u8 padB[9];
+} FrontendChildParticleState; /* size = 0x14 */
 
 typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
