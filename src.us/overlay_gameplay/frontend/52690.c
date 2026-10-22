@@ -334,10 +334,6 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 			varS4++;
 		}
 
-#line 393
-		varFp++;
-#line 385
-
 		if (varS4 < tempS6 - 0x10) {
 			varV0_4 = 0;
 		} else if ((tempS6 + 0x10) < varS4) {
@@ -347,6 +343,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 		}
 
 
+		varFp++;
 		sp114.unk0 = (varV0_4 << 0xA) + 0x8000;
 		if ((sp80 < varS4) || (varS4 == 0)) {
 			func_80005AEC_66EC(0xFF, 0xFF, 0xFF, 0x20);
