@@ -2342,6 +2342,19 @@ typedef struct {
 } FrontendBillboardParticle; /* size = 0x1C */
 
 typedef struct {
+    u8 flags[2];
+    s16 size;
+    s16 next;
+    s16 previous;
+    s16 position[3];
+    u8 color[3];
+    u8 age;
+    u8 opacity;
+    u8 growth;
+    u8 pad14[8];
+} FrontendGroundParticle; /* size = 0x1C */
+
+typedef struct {
 	/* 0x00 */ AAA70Unk8014F618Head head;
 	/* 0x30 */ Vec3f positions[4];
 	/* 0x60 */ u16 unk60;
