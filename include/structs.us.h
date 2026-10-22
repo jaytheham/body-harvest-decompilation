@@ -391,7 +391,10 @@ typedef struct {
 		s16 unk0;
 		u16 unk0Unsigned;
 	};
-	/* 0x02 */ s16 unk2;
+	/* 0x02 */ union {
+		s16 unk2;
+		u16 unk2Unsigned;
+	};
 	/* 0x04 */ s16 unk4;
 } Unk800311A0; /* size = 0x06 */
 
@@ -2328,6 +2331,37 @@ typedef struct {
 	u8 primitive[3];
 	u8 environment[3];
 } FrontendBillboardColors;
+
+typedef struct {
+	s16 position[3];
+	u8 primitiveR;
+	u8 primitiveG;
+	u8 primitiveB;
+	u8 environmentR;
+	u8 environmentG;
+	u8 environmentB;
+	u8 age;
+	u8 tail[7];
+} FrontendInterpolatedParticleState; /* size = 0x14 */
+
+typedef struct {
+	u8 colors[6];
+	u8 textureFrame;
+	u8 pad7;
+	u8 rotation;
+	u8 alpha;
+	u8 environmentAlpha;
+	u8 rate;
+	u8 tail[8];
+} FrontendInterpolatedParticleMotion; /* size = 0x14 */
+
+typedef struct {
+	u16 size;
+	u8 scale[3];
+	u8 velocity[3];
+	u8 mode;
+	u8 tail[11];
+} FrontendInterpolatedParticleShape; /* size = 0x14 */
 
 typedef struct {
 	u8 flags[2];
