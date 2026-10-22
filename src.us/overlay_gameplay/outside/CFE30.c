@@ -220,9 +220,6 @@ const u32 jtbl_801441C4_153174[] = {
 const f64 D_801441E0_153190[1] = {
     1.7
 };
-const f64 D_801441E8_153198[1] = {
-    6000.0,
-};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -11819,11 +11816,10 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E614C_F50FC.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800E64B4_F5464(void) {
 	s32 slotCount = 4;
 	Unk800E614CFxSlot *slot;
-	s32 pad[2];
+	s32 pad[2]; /* Preserve the target counter spill at sp + 0x64. */
 	Unk800E614CFxEntry *entry;
 	s32 activeCount;
 	Unk800E614CFxMotion *motion;
@@ -11878,8 +11874,8 @@ void func_800E64B4_F5464(void) {
 					slot->unk1E8 = func_800038E0_44E0() & 0x24;
 					slot->unk1E0 = 0;
 					slot->unk1E4 += (func_800038E0_44E0() & 0x1FFF) - 0xFFF;
-					motion->velocityX = (s32) (((f32) coss((u16) slot->unk1E4) / 32768.0) * D_801441E8_153198[0]);
-					motion->velocityZ = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * D_801441E8_153198[0]);
+					motion->velocityX = (s32) (((f32) coss((u16) slot->unk1E4) / 32768.0) * 6000.0);
+					motion->velocityZ = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * 6000.0);
 				}
 
 				if (func_800047FC_53FC((s16) ((((motion->x >> 8) - D_80052B34->unk0) >> 8))) + func_800047FC_53FC((s16) ((((motion->z >> 8) - D_80052B34->unk4) >> 8))) >= 0x1F5) {
@@ -11941,9 +11937,7 @@ void func_800E64B4_F5464(void) {
 		(s16) ((func_800038E0_44E0() % 16) + 1));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E64B4_F5464.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_800E6A38_F59E8(void) {

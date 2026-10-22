@@ -4086,7 +4086,6 @@ extern const f64 D_80144028_152FD8[1];
 
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
-extern const f64 D_801441E8_153198[1];
 
 extern const f64 D_801451B8_154168[1];
 extern const char D_801453B0_154360[];
