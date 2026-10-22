@@ -304,6 +304,7 @@ typedef struct {
 	/* 0x08 */ s8 unk8;
 	/* 0x09 */ u8 unk9;
 	/* 0x0A */ u8 unkA;
+	/* 0x0C */ s16 unkC;
 } Frontend52690Unk8Motion;
 
 typedef struct {

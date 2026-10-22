@@ -1198,84 +1198,69 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(11541)
-// AI - Spawns a child particle with random position offset and velocity from a template
+// Spawns a child particle with randomized direction or a radial position offset.
 void func_800857D4_55C84(u8 arg0, f32 *arg1, u8 arg2, u8 arg3) {
-	extern f64 D_800AEC40_7F0F0;
-	extern f64 D_800AEC48_7F0F8;
-	extern f64 D_800AEC50_7F100;
-
-	s16 *template;
-	s16 *spawn;
+	Frontend52690Unk8Motion *template;
+	Frontend52690Unk8Motion *spawn;
+	Vec3f random;
 	s16 spawnIdx;
-	s16 range;
 	s16 spreadX;
 	s16 spreadY;
 	s16 spreadZ;
-	f32 randX;
-	f32 randY;
-	f32 randZ;
-	s32 scale;
 
-	template = (s16 *)((u8 *)&D_800DE840[D_800DE130[arg0].unk6] + 8);
+	template = (Frontend52690Unk8Motion *)(s32)&D_800DE840[D_800DE130[arg0].unk6].unk8;
 	spawnIdx = func_80083B7C_5402C(arg0);
 	if (spawnIdx == -3) {
 		return;
 	}
 
-	if ((((u8 *)template)[0xA] == 1) || (((u8 *)template)[0xA] == 3) || (((u8 *)template)[0xA] == 4)) {
-		spawn = (s16 *)((u8 *)&D_800DE840[spawnIdx] + 8);
-		spawn[0] = template[0];
-		spawn[1] = template[1];
-		spawn[2] = template[2];
+	if ((template->unkA == 1) || (template->unkA == 3) || (template->unkA == 4)) {
+		spawn = (Frontend52690Unk8Motion *)(s32)&D_800DE840[spawnIdx].unk8;
+		spawn->unk0 = template->unk0;
+		spawn->unk2 = template->unk2;
+		spawn->unk4 = template->unk4;
 
-		randX = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC40_7F0F0[0]);
+		random.x = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 21) < 10) {
-			randX = -randX;
+			random.x = 0.0f - random.x;
 		}
-		randX += arg1[0];
+		random.x += arg1[0];
 
-		randY = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC48_7F0F8[0]);
+		random.y = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 21) < 10) {
-			randY = -randY;
+			random.y = 0.0f - random.y;
 		}
-		randY += arg1[1];
+		random.y += arg1[1];
 
-		randZ = (f32)((f64)(f32)(func_800038E0_44E0() % (u8)arg3) / D_800AEC50_7F100[0]);
+		random.z = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 21) < 10) {
-			randZ = -randZ;
+			random.z = 0.0f - random.z;
 		}
-		randZ += arg1[2];
+		random.z += arg1[2];
 
-		func_800837B4_53C64(&randX, &randX);
-		scale = ((s8)arg2) / 4;
-		((s8 *)spawn)[6] = (s8)((f32)scale * randX);
-		((s8 *)spawn)[7] = (s8)((f32)scale * randY);
-		((s8 *)spawn)[8] = (s8)((f32)scale * randZ);
-		((u8 *)spawn)[9] = 0xFF;
-		((u8 *)spawn)[0xA] = 0;
+		func_800837B4_53C64(&random.x, &random.x);
+		spawn->unk6 = (arg2 / 4) * random.x;
+		spawn->unk7 = (arg2 / 4) * random.y;
+		spawn->unk8 = (arg2 / 4) * random.z;
+		spawn->unk9 = 0xFF;
+		spawn->unkA = 0;
 		return;
 	}
 
-	range = template[6];
-	spreadX = (func_800038E0_44E0() % (range * 2)) - range;
-	spreadY = (func_800038E0_44E0() % (range * 2)) - range;
-	spreadZ = (func_800038E0_44E0() % (range * 2)) - range;
+	spreadX = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+	spreadY = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+	spreadZ = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
 
-	spawn = (s16 *)((u8 *)&D_800DE840[spawnIdx] + 8);
-	spawn[0] = template[0] + spreadX;
-	spawn[1] = template[1] + spreadY;
-	spawn[2] = template[2] + spreadZ;
-	((s8 *)spawn)[6] = -(spreadX / ((u8 *)template)[9]);
-	((s8 *)spawn)[7] = -(spreadY / ((u8 *)template)[9]);
-	((s8 *)spawn)[8] = -(spreadZ / ((u8 *)template)[9]);
-	((u8 *)spawn)[9] = 12;
-	((u8 *)spawn)[0xA] = 0;
+	spawn = (Frontend52690Unk8Motion *)(s32)&D_800DE840[spawnIdx].unk8;
+	spawn->unk0 = template->unk0 + spreadX;
+	spawn->unk2 = template->unk2 + spreadY;
+	spawn->unk4 = template->unk4 + spreadZ;
+	spawn->unk6 = -(spreadX / template->unk9);
+	spawn->unk7 = -(spreadY / template->unk9);
+	spawn->unk8 = -(spreadZ / template->unk9);
+	spawn->unk9 = 12;
+	spawn->unkA = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_800857D4_55C84.s")
-#endif
 
 /* Clamps a value to the range [1, 80] */
 // AI - Clamps a value to the range [1, 80]
@@ -4653,13 +4638,3 @@ void func_80090648_60AF8(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
-
-
-
-
-
-
-/* ===== Frontend .rodata (ROM 0x7F0F0 - 0x7F220) ===== */
-const f64 D_800AEC40_7F0F0[1] = { 255 };
-const f64 D_800AEC48_7F0F8[1] = { 255 };
-const f64 D_800AEC50_7F100[1] = { 255 };
