@@ -2099,84 +2099,85 @@ void func_80088B54_59004(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(1125)
-// AI - Updates type-3 particles: applies gravity, ages particles, spawns child effects, frees expired entries
+// Updates solid particle motion, gravity, linked effects, and expiry.
 void func_80088BDC_5908C(void) {
-	s16 temp_a1;
-	s16 temp_s0;
-	s16 temp_s1_unkA;
-	s16 var_s3;
-	Unk800DE840 *temp_s1;
-	Unk800DE840 *temp_s2;
-	u8 *temp_s0_2;
-	u8 *var_v0;
+	s16 height;
+	s16 nextIndex;
+	s32 value;
+	s32 motionIndex;
+	s16 index;
+	Unk800DE840 *entry;
+	Unk800DE840 *motionNode;
+	FrontendSolidParticleState *particle;
+	FrontendSolidParticleMotion *motion;
 
-	var_s3 = D_800DE826;
-	if ((var_s3 != -5) && (var_s3 != -6)) {
-		s16 three;
-		s16 six;
-		s8 neg14;
+	index = D_800DE826;
+	if (index == -6) {
+		/* IDO: rematerialize this sentinel so the gravity limit stays cached. */
+	}
+	if ((index != -5) && (index != -6)) {
+		s16 childFramePeriod;
+		s16 impactScaleDivisor;
+		s8 minVelocityY;
 
-		neg14 = -0x14;
-		six = 6;
-		three = 3;
+		minVelocityY = -0x14;
+		impactScaleDivisor = 6;
+		childFramePeriod = 3;
 		while (1) {
-			temp_s1 = &D_800DE840[var_s3];
-			temp_s1_unkA = temp_s1->unkA;
-			temp_s0_2 = (u8 *)temp_s1 + 8;
-			temp_s2 = &D_800DE840[D_800DE840[temp_s1->unk4].unk4];
-			var_v0 = (u8 *)temp_s2 + 8;
+			entry = &D_800DE840[index];
+			particle = (FrontendSolidParticleState *)&entry->unk8;
+			value = entry->unk4;
+			motionIndex = D_800DE840[value].unk4;
+			motionNode = &D_800DE840[motionIndex];
+			motion = (FrontendSolidParticleMotion *)&motionNode->unk8;
 
-			temp_s1->unk8 += (s8)var_v0[0];
-			temp_s1->unkC += (s8)var_v0[2];
-			temp_s1->unkA = temp_s1_unkA + (s8)var_v0[1];
+			entry->unk8 += motion->velocity[0];
+			entry->unkC += motion->velocity[2];
+			entry->unkA += motion->velocity[1];
 
-			if ((s8)var_v0[1] >= -0x13) {
-				var_v0[1] = ((s8)var_v0[1]) - 1;
+			if (motion->velocity[1] >= -0x13) {
+				motion->velocity[1] = motion->velocity[1] - 1;
 			} else {
-				var_v0[1] = neg14;
+				motion->velocity[1] = minVelocityY;
 			}
 
-			var_v0[3] += (s8)var_v0[6];
-			var_v0[4] += (s8)var_v0[7];
-			var_v0[5] += (s8)var_v0[8];
+			motion->rotation[0] += motion->angularVelocity[0];
+			motion->rotation[1] += motion->angularVelocity[1];
+			motion->rotation[2] += motion->angularVelocity[2];
 
-			if ((temp_s0_2[11] & 4) && (temp_s0_2[10] == 0)) {
-				func_80089388_59838(*(s16 *)(temp_s0_2 + 0), *(s16 *)(temp_s0_2 + 2), *(s16 *)(temp_s0_2 + 4), temp_s0_2[9]);
+			if ((particle->flags & 4) && (particle->frame == 0)) {
+				func_80089388_59838(particle->position[0], particle->position[1], particle->position[2], particle->childEffect);
 			}
 
-			temp_s0_2[10]++;
-			if ((u8)temp_s0_2[10] == three) {
-				temp_s0_2[10] = 0;
+			particle->frame++;
+			if (particle->frame == childFramePeriod) {
+				particle->frame = 0;
 			}
 
-			temp_a1 = *(s16 *)(temp_s0_2 + 2);
-			if (temp_a1 <= 0) {
-				if (temp_s0_2[11] & 1) {
-					func_8008EB20_5EFD0(*(s16 *)(temp_s0_2 + 0), temp_a1, *(s16 *)(temp_s0_2 + 4), ((u16)(temp_s1->unk2 / six)), 0, 0, 0);
+			height = particle->position[1];
+			if (height <= 0) {
+				value = particle->flags;
+				if (value & 1) {
+					func_8008EB20_5EFD0(particle->position[0], height, particle->position[2], entry->unk2 / impactScaleDivisor, 0, 0, 0);
 				}
 
-				temp_s0 = temp_s2->unk4;
-				func_80083F8C_5443C(var_s3, 0x94);
-				var_s3 = temp_s0;
+				nextIndex = motionNode->unk4;
+				func_80083F8C_5443C(index, 0x94);
+				index = nextIndex;
 			} else {
-				var_s3 = temp_s2->unk4;
+				index = motionNode->unk4;
 			}
 
-			if (var_s3 == -5) {
+			if (index == -5) {
 				break;
 			}
-			if (var_s3 != -6) {
-				continue;
+			if (index == -6) {
+				break;
 			}
-			break;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/52690/func_80088BDC_5908C.s")
-#endif
+
 
 // Renders linked solid particles using their model and motion nodes.
 void func_80088E18_592C8(void) {
