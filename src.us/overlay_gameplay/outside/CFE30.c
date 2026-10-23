@@ -7038,8 +7038,6 @@ void func_800D6140_E50F0(u8 arg0) {
 	}
 }
 
-// CURRENT(32643)
-#ifdef NON_MATCHING
 void func_800D6290_E5240(u8 arg0) {
 	s16 index;
 	s16 nextIndex;
@@ -7086,7 +7084,7 @@ void func_800D6290_E5240(u8 arg0) {
 				nextEntry = &D_80154318[nextIndex];
 				nextState = &nextEntry->trailParticle;
 
-				D_8005BB34->v.ob[0] = state->position[0];
+				D_8005BB34->v.ob[0] = D_80154318[index].trailParticle.position[0]; if (state) {}
 				D_8005BB34->v.ob[1] = state->position[1] + (func_800038E0_44E0() % 5) + 0xF;
 				D_8005BB34->v.ob[2] = state->position[2];
 				D_8005BB34->v.flag = 0;
@@ -7192,10 +7190,6 @@ void func_800D6290_E5240(u8 arg0) {
 		} while ((index != -5) && (index != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6290_E5240.s")
-#endif
-
 
 void func_800D6A84_E5A34(u8 arg0)
 {
