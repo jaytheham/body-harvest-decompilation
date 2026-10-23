@@ -194,20 +194,6 @@ const u32 jtbl_80144138_1530E8[] = {
 };
 const f32 D_80144190_153140[1] = {0.6f};
 
-const u32 jtbl_80144194_153144[] = {
-    OVERLAY_PTR(0x800E1F60),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1E40),
-    OVERLAY_PTR(0x800E1E40),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1E40),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1E40),
-};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -10529,7 +10515,6 @@ void func_800E1C10_F0BC0(void) {
 	D_80156EDC.unk4 = D_80052B34->unk4;
 }
 
-#ifdef NON_MATCHING
 void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 	s32 skipSecondCall = 0;
 	s32 shouldClamp = 0;
@@ -10606,9 +10591,6 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
-#endif
 
 void func_800E1F70_F0F20(VehicleInstance *arg0) {
 	u8 speed;
