@@ -8984,75 +8984,62 @@ void func_800DBA9C_EAA4C(void) {
 }
 
 
-#ifdef NON_MATCHING
-// CURRENT(1200)
 void func_800DBE20_EADD0(void) {
+	s16 *position;
 	f32 distances[0x1E];
-	f32 negOne;
-	f32 negTwo;
 	f32 four;
 	u8 i;
 	u8 backPos;
-	s16 *position;
-	f32 dx;
-	f32 dz;
 
-	negOne = -1.0f;
-	negTwo = -2.0f;
 	four = 4.0f;
 	backPos = 0x1D;
-	for (i = 0; i < 0x1E; i++) {
+	i = 0; do { /* Keep on one line for IDO preheader scheduling. */
 		Unk801541F8Entry *effect;
 
 		effect = &D_80154088[i];
 		D_80157540[i] = 0xFE;
-		if (effect->unk0 == 0xFA) {
-			distances[i] = negOne;
-		} else if (!(effect->unk1 & 1)) {
-			distances[i] = negTwo;
+		if (effect->unk0 != 0xFA) {
+			if (!(effect->unk1 & 1)) {
+				distances[i] = -2;
+			} else {
+
+				switch (effect->unk0) {
+					case 0: {
+
+						position = D_80154318[effect->unkA].position;
+						distances[i] = sqrtf(SQ(position[2] - (D_80153BA0.z * four)) + SQ(position[0] - (D_80153BA0.x * four)));
+						break;
+					}
+					case 1: {
+
+						position = D_80154318[effect->unkA].position;
+						distances[i] = sqrtf(SQ(position[2] - (D_80153BA0.z * four)) + SQ(position[0] - (D_80153BA0.x * four)));
+						break;
+					}
+					case 5: {
+
+						position = D_80154318[effect->unk6].position;
+						distances[i] = sqrtf(SQ(position[2] - (D_80153BA0.z * four)) + SQ(position[0] - (D_80153BA0.x * four)));
+						break;
+					}
+					default:
+						osSyncPrintf(D_80143B58_152B08);
+						break;
+				}
+			}
 		} else {
-
-		switch (effect->unk0) {
-			case 0: {
-
-				position = D_80154318[effect->unkA].position;
-				dx = position[0] - (D_80153BA0.x * four);
-				dz = position[2] - (D_80153BA0.z * four);
-				distances[i] = sqrtf((dx * dx) + (dz * dz));
-				break;
-			}
-			case 1: {
-
-				position = D_80154318[effect->unkA].position;
-				dx = position[0] - (D_80153BA0.x * four);
-				dz = position[2] - (D_80153BA0.z * four);
-				distances[i] = sqrtf((dx * dx) + (dz * dz));
-				break;
-			}
-			case 5: {
-
-				position = D_80154318[effect->unk6].position;
-				dx = position[0] - (D_80153BA0.x * four);
-				dz = position[2] - (D_80153BA0.z * four);
-				distances[i] = sqrtf((dx * dx) + (dz * dz));
-				break;
-			}
-			default:
-				osSyncPrintf(D_80143B58_152B08);
-				break;
+			distances[i] = -1;
 		}
-		}
-	}
+		i++;
+	} while (i < 0x1E);
 
 	for (i = 0; i < 0x1E; i++) {
-		f32 distance;
 
-		distance = distances[i];
-		if (distance == negOne) {
+		if (-1 == distances[i]) {
 			continue;
 		}
 
-		if (distance == negTwo) {
+		if (-2 == distances[i]) {
 			D_80157540[backPos] = i;
 			backPos--;
 		} else {
@@ -9063,11 +9050,11 @@ void func_800DBE20_EADD0(void) {
 				u8 end;
 
 				slot = D_80157540[pos];
-				end = backPos;
 				if (slot == 0xFE) {
 					D_80157540[pos] = i;
 					pos = 0x1E;
-				} else if (distances[slot] < distance) {
+				} else if (distances[slot] < distances[i]) {
+					end = backPos;
 					if (pos < backPos) {
 						do {
 							D_80157540[end] = D_80157540[end - 1];
@@ -9081,9 +9068,7 @@ void func_800DBE20_EADD0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DBE20_EADD0.s")
-#endif
+
 
 // CURRENT(1580)
 void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
