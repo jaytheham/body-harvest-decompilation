@@ -11736,7 +11736,6 @@ s32 func_800E60CC_F507C(u8 arg0, u8 arg1) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
 void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk800E614CFxSlot *slot;
 	s32 slotIdx;
@@ -11759,18 +11758,15 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 
 	if ((currentLevel == 1 || currentLevel == 3) && D_80052ACA != 2) {
-		slotIdx = 0;
-		while (((Unk800E614CFxSlot *)(s32)&D_80153300[slotIdx])->unk1E6 != 0) {
-			slotIdx++;
-		}
+		/* Preserve IDO's indexed search and its initial multiply by zero. */
+		slotIdx = arg3 * 0 - 1;
+		while (D_80153300[++slotIdx].unk1E6 != 0) {}
 
-		if (arg3 != 0) {
+		{
 			s32 i;
 
-
-
 			i = arg3;
-			while (i--) {
+			if (i--) do {
 				Unk800E614CFxEntry *entry;
 				s32 z;
 
@@ -11778,7 +11774,7 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 				entry->unk0 = (func_800038E0_44E0() * 2) + (arg0 << 8);
 				z = (func_800038E0_44E0() * 2) + (arg2 << 8);
 				entry->unk8 = z;
-				entry->unk4 = func_800B84D0_C7480((s16) (entry->unk0 >> 8), (s16) (z >> 8));
+				entry->unk4 = func_800B84D0_C7480(entry->unk0 >> 8, z >> 8);
 				if (entry->unk4 < ((D_80222A70 + 0xC8) << 8)) {
 					entry->unk4 = (((func_800038E0_44E0() % hundred) + D_80222A70) + 0xC8) << 8;
 				}
@@ -11787,34 +11783,31 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 				entry->unk14 = 0;
 				entry->unk18 = func_800038E0_44E0() & 0x1F;
 
-			}
+			} while (i--);
 		}
 
-		slot = &D_80153300[slotIdx];
+		/* Rematerialize the slot base separately from the entry-loop cursor. */
+		slot = (Unk800E614CFxSlot *)(s32)&D_80153300_slotView[slotIdx];
+		if (slot) {} /* Retain IDO's typed address before the RNG call. */
 		angle = func_800038E0_44E0();
 		slot->motion.x = arg0 << 8;
 		slot->motion.y = arg1 << 8;
 		slot->motion.z = arg2 << 8;
 
 		{
-
-
 			motion = &slot->motion;
-			motion->velocityX = (s32) (((f32)coss((u16) angle) / 32768.0) * (f32)(D_800313F4 * hundred));
-			motion->velocityZ = (s32) (((f32)sins((u16) angle) / 32768.0) * (f32)(D_800313F4 * hundred));
+			motion->velocityX = (((f32)coss(angle) / 32768.0) * (f32)(D_800313F4 * hundred));
+			motion->velocityZ = (((f32)sins(angle) / 32768.0) * (f32)(D_800313F4 * hundred));
 		}
 
 		motion->velocityY = 0;
 		slot->unk1DC = 0;
 		slot->unk1E0 = 0x708;
-		slot->unk1E8 = 0x32;
 		slot->unk1E6 = arg3;
+		slot->unk1E8 = 0x32;
 		slot->unk1E4 = func_800038E0_44E0();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E614C_F50FC.s")
-#endif
 
 void func_800E64B4_F5464(void) {
 	s32 slotCount = 4;

@@ -2435,6 +2435,7 @@ extern s16 D_80152C96; // AI - number of entries in D_80152CA0 (measured: 0, the
 extern Unk80152CA0Entry D_80152CA0[]; // AI - the shield list, 3 bytes per entry; the invincibility cheat adds one and sets VEHICLE_FLAG_SHIELDED on the player
 extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
 extern Unk800E614CFxSlot D_80153300[4];
+extern Unk800E614CFxSlot D_80153300_slotView[4]; /* Same storage; separate compiler address view. */
 extern Unk800E614CFxSlot D_801538C4;
 extern u8 D_80153AB0; // Nuke in progress?
 extern CameraBasis D_80153AB8;
