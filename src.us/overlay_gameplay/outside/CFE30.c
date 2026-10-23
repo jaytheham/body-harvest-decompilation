@@ -7506,14 +7506,13 @@ void func_800D7790_E6740(void) {
 	}
 }
 
-// CURRENT(510)
-#ifdef NON_MATCHING
 void func_800D7870_E6820(void) {
 	s16 idx;
 	Unk80154318Entry *entry;
 	Unk80052B40 *sub;
 	f32 off0;
 	f32 scale;
+	Unk80052B40 *copy;
 	f32 off1;
 	f32 off2;
 	f32 off3;
@@ -7530,14 +7529,15 @@ void func_800D7870_E6820(void) {
 	}
 
 	do {
-		gDPPipeSync(D_8005BB2C++);
 		entry = &D_80154318[idx];
+		copy = &entry->positionVector; sub = copy;
+		gDPPipeSync(D_8005BB2C++);
 
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100AEF0 + (entry->unkE << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
 
-		sub = &entry->positionVector;
-		scale = (f32)entry->unk2;
+		off0 = (f32)entry->unk2;
+		scale = off0;
 		off0 = scale * D_80153AB8.x;
 		off1 = scale * D_80153AB8.y;
 		off2 = scale * D_80153AB8.z;
@@ -7613,9 +7613,6 @@ void func_800D7870_E6820(void) {
 		idx = D_80154318[idx].unk4;
 	} while ((idx != -5) && (idx != -6));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
-#endif
 
 s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
