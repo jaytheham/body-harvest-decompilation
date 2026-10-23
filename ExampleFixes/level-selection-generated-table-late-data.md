@@ -9,3 +9,8 @@ Initialize both flags in their declarations (`s32 skipSecondCall = 0; s32 should
 Validated with function diff score 0 and full ROM checksum OK.
 
 The earlier effects dispatcher `func_800DD604_EC5B4` also matches immediately after removing its two placeholder tables. The explosion float 0.6 must follow those generated tables. A normal C const declaration is emitted ahead of generated switch tables even when written later in the source, shifting both table addresses by four bytes. `CFE30_explosion_late_rodata.s` places this float with the still assembly-backed explosion function. Remove this support pragma when enabling that function and let the C literal generate its constant. Full ROM checksum OK and dispatcher diff score 0.
+
+
+`incorrect ASM`: Keeping the two `func_800DD604_EC5B4` placeholder jump tables while enabling C duplicates its generated tables and shifts later rodata.
+-> `code changed`: Remove `jtbl_80144110_1530C0` and `jtbl_80144138_1530E8` and enable the dispatcher. The later explosion function already generates its own `0.6f` literal after these tables.
+-> `correct ASM`: Both generated switch tables and the following float occupy their target addresses; the dispatcher scores zero and both ROM checksums pass without support assembly.
