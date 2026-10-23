@@ -208,15 +208,6 @@ const u32 jtbl_80144194_153144[] = {
     OVERLAY_PTR(0x800E1EA8),
     OVERLAY_PTR(0x800E1E40),
 };
-const u32 jtbl_801441C4_153174[] = {
-    OVERLAY_PTR(0x800E39F4),
-    OVERLAY_PTR(0x800E3B00),
-    OVERLAY_PTR(0x800E3C10),
-    OVERLAY_PTR(0x800E3D70),
-    OVERLAY_PTR(0x800E4488),
-    OVERLAY_PTR(0x800E3DBC),
-    OVERLAY_PTR(0x800E3F7C),
-};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -11017,13 +11008,14 @@ void func_800E3738_F26E8(u16 arg0, u8 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 arg6, s16 arg7, u8 arg8) {
 	s16 rot;
 	s16 x1;
+	s16 unused;
 	s16 z1;
 	s16 x2;
 	s16 z2;
+	s16 unused2;
 	u8 red0;
 	u8 green0;
 	u8 blue0;
@@ -11033,171 +11025,94 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	u8 green1;
 	u8 blue1;
 	s16 size;
-	u8 maxStep;
+	u8 unused3;
 	f32 stepScale;
+	s32 difference;
+	Gfx *gfx;
 
-	rot = func_80003824_4424((f32)(arg3 - arg0), (f32)(arg5 - arg2));
-	rot = (s16)(rot + 0x4000);
+	rot = func_80003824_4424((f32)(arg3 - arg0), (f32)(arg5 - arg2)) + 0x4000;
 
-	maxStep = D_8013DD18_14CCC8[arg8];
-	stepScale = (f32)(0xFF / maxStep);
+	stepScale = (f32)(0xFF / D_8013DD18_14CCC8[arg8]);
 
 	switch (arg8) {
 		case 0:
-			if (arg7 == maxStep) {
-				red0 = 0xFA;
-				green0 = 0x50;
-				blue0 = 0x64;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0;
-				blue1 = 0;
+			if (arg7 == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xFA; green0 = 0x50; blue0 = 0x64; alpha0 = 0xFF; red1 = 0xFF; alpha1 = 0xFF; green1 = 0; blue1 = 0;
 			} else {
-				red0 = 0x96;
-				green0 = 0;
-				blue0 = 0;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0x96;
-				alpha1 = 0;
-				green1 = 0;
-				blue1 = 0;
+				red0 = 0x96; green0 = 0; blue0 = 0; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1); red1 = 0x96; alpha1 = 0; green1 = 0; blue1 = 0;
 			}
 			size = 0xC;
 			break;
 		case 1:
-			if (arg7 == maxStep) {
-				red0 = 0xFF;
-				green0 = 0x96;
-				blue0 = 0;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0x96;
-				green1 = 0;
-				blue1 = 0x32;
+			if (arg7 == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xFF; green0 = 0x96; blue0 = 0; alpha0 = 0xFF;
+				red1 = 0xFF; alpha1 = 0x96; green1 = 0; blue1 = 0x32;
 			} else {
-				red0 = 0x96;
-				green0 = 0;
-				blue0 = 0;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0x96;
-				alpha1 = 0;
-				green1 = 0;
-				blue1 = 0;
+				red0 = 0x96; green0 = 0; blue0 = 0; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = 0x96; alpha1 = 0; green1 = 0; blue1 = 0;
 			}
 			size = 0xA;
 			break;
 		case 2:
-			if (arg7 >= maxStep - 1) {
-				red0 = 0xFF;
-				green0 = 0xFF;
-				blue0 = 0x78;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0x64;
-				green1 = 0x64;
-				blue1 = 0x32;
+			if (arg7 >= D_8013DD18_14CCC8[arg8] - 1) {
+				red0 = 0xFF; green0 = 0xFF; blue0 = 0x78; alpha0 = 0xFF;
+				red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0x32;
 				func_80135D44_144CF4(arg3, arg4, arg5, 2.0f);
 			} else {
-				red0 = 0xAA;
-				green0 = 0xAA;
-				blue0 = 0x64;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0xFF;
-				blue1 = 0;
+				red0 = 0xAA; green0 = 0xAA; blue0 = 0x64; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = 0xFF; alpha1 = 0xFF; green1 = 0xFF; blue1 = 0;
 			}
 			size = 0x1E;
 			break;
 		case 3:
-			alpha0 = 0xFF;
-			red0 = 0xFF;
-			blue0 = 0x78;
-			green0 = 0xFF;
-			alpha1 = 0x64;
-			red1 = 0xFF;
-			green1 = 0x64;
-			blue1 = 0x32;
+			red0 = 0xFF; green0 = 0xFF; blue0 = 0x78; alpha0 = 0xFF;
+			red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0x32;
 			size = 0xF;
 			break;
 		case 5:
-			if (arg7 == maxStep) {
-				red0 = 0xFF;
-				green0 = 0xFF;
-				blue0 = 0x78;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0x64;
-				green1 = 0x64;
-				blue1 = 0x32;
+			difference = arg7;
+			if (difference == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xFF; green0 = 0xFF; blue0 = 0x78; alpha0 = 0xFF;
+				red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0x32;
 			} else {
-				red0 = 255.0f - (f32)(s16)(maxStep - arg7) * stepScale;
-				green0 = 0;
-				blue0 = 0;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0xFF;
-				alpha1 = 0x64;
-				green1 = 0x64;
-				blue1 = 0;
+				difference = (s16)(D_8013DD18_14CCC8[arg8] - difference);
+				red0 = 0xFF; green0 = 255.0f - (f32)difference * stepScale; blue0 = 0; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0;
 			}
 			size = 0xA;
 			break;
 		case 6:
-			if (arg7 == maxStep) {
-				red0 = 0xDC;
-				green0 = 0x8C;
-				blue0 = 0;
-				alpha0 = 0xFF;
-				red1 = 0xDC;
-				alpha1 = 0x8C;
-				green1 = 0;
-				blue1 = 0xFF;
+			difference = arg7;
+			if (difference == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xDC; green0 = 0x8C; blue0 = 0; alpha0 = 0xFF;
+				red1 = 0xDC; alpha1 = 0x8C; green1 = 0; blue1 = 0xFF;
 			} else {
-				s16 rem = (s16)(maxStep - arg7);
-				f32 color;
+				difference = (s16)(D_8013DD18_14CCC8[arg8] - difference);
 
-				color = (((35.0f / (f32)(u32)maxStep) * rem) * 3.0f) + 220.0f;
-				red0 = color > 255.0f ? 255.0f : color;
-				color = (((115.0f / (f32)(u32)maxStep) * rem) * 3.0f) + 140.0f;
-				green0 = color > 255.0f ? 255.0f : color;
-				color = ((f32)rem * stepScale) * 3.0f;
-				blue0 = color > 255.0f ? 255.0f : color;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = red0;
-				alpha1 = green0;
-				green1 = blue0;
-				blue1 = 0;
+				red0 = ((((35.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 220.0f) > 255.0f ? 255.0f : ((((35.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 220.0f);
+				green0 = ((((115.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 140.0f) > 255.0f ? 255.0f : ((((115.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 140.0f);
+				blue0 = (((f32)difference * stepScale) * 3) > 255.0f ? 255.0f : (((f32)difference * stepScale) * 3); alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = red0; alpha1 = green0; green1 = blue0; blue1 = 0;
 			}
 			size = 0xC;
 			break;
 		case 4:
-			if (arg7 > (maxStep >> 1)) {
-				red0 = 0xFF;
-				green0 = 0xFF;
-				blue0 = 0;
-				alpha0 = 0x46;
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0;
-				blue1 = 0;
+			difference = arg7;
+			if (difference > (D_8013DD18_14CCC8[arg8] >> 1)) {
+				red0 = 0xFF; green0 = 0xFF; blue0 = 0; alpha0 = 0x46;
+				red1 = 0xFF; alpha1 = 0xFF; green1 = 0; blue1 = 0;
 			} else {
-				s32 half = maxStep >> 1;
-				s16 rem = (s16)(half - arg7);
 				s32 dec;
-
-				red0 = 0xFF;
-				green0 = 255.0f - ((f32)rem * stepScale) * 2.0f;
-				dec = 0x46 - ((rem * 0x46) / half);
-				if (dec < 0) {
-					dec = 0;
-				}
+				difference = (s16)((D_8013DD18_14CCC8[arg8] >> 1) - difference);
+				red0 = 0xFF; green0 = 255.0f - ((f32)difference * stepScale) * 2;
+				dec = 0x46 - ((difference * 0x46) / (D_8013DD18_14CCC8[arg8] >> 1));
 				blue0 = 0;
-				alpha0 = (u8)dec;
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0;
-				blue1 = 0;
+				if (dec < 0) {
+					alpha0 = 0;
+				} else {
+					alpha0 = dec;
+				}
+				red1 = 0xFF; alpha1 = 0xFF; green1 = 0; blue1 = 0;
 			}
 			size = 0x14;
 			break;
@@ -11206,13 +11121,13 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	if (arg8 == 3) {
 		x1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.x);
 		z1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.z);
-		x2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AC4.x);
-		z2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AC4.z);
+		x2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.rightX);
+		z2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.rightZ);
 	} else {
-		x1 = ((f32)coss((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
-		z1 = ((f32)sins((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
-		x2 = ((f32)coss((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
-		z2 = ((f32)sins((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
+		x1 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)coss((u16)rot) / 32768.0);
+		z1 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)sins((u16)rot) / 32768.0);
+		x2 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)coss((u16)rot) / 32768.0);
+		z2 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)sins((u16)rot) / 32768.0);
 	}
 
 	D_8005BB34->v.ob[0] = arg0;
@@ -11287,27 +11202,27 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = blue1;
 	D_8005BB34++;
 
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADING_SMOOTH);
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 6), 6, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 4, 2, 0, 0, 1, 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 3, 1, 0, 3, 5, 1, 0);
 
 	if (arg6 != 0) {
-		gDPPipeSync(D_8005BB2C++);
+		gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
-#endif
 
 void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	Unk80052B40 position;
