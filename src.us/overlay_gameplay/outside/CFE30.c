@@ -11672,23 +11672,22 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	}
 }
 
-// CURRENT(16)
 // Remove a matching shield and compact its entry list.
-#ifdef NON_MATCHING
 void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 	s16 i;
 	s16 j;
-	s32 newCount;
+	s16 newCount;
 	s16 count;
+	s32 id[1];
 	s32 type;
 
-	osSyncPrintf(&D_80143F7C_152F2C, arg1);
+	osSyncPrintf(&D_80143F7C_152F2C, id[0] = arg1);
 	count = D_80152C96;
 	type = arg0;
 
 	for (i = 0; i <= count; i++) {
 		if (type == D_80152CA0[i].unk1) {
-			if (arg1 == D_80152CA0[i].unk0) {
+			if (id[0] == D_80152CA0[i].unk0) {
 				if (D_80152CA0[i].unk1 == 2) {
 					vehicleInstances[D_80152CA0[i].unk0].unk20 &= ~0x80;
 				} else if (D_80152CA0[i].unk1 == 1) {
@@ -11709,9 +11708,6 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5E3C_F4DEC.s")
-#endif
 
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
