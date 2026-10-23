@@ -947,6 +947,7 @@ int func_800F1DDC_100D8C(void) {
 	s32 x;
 	s32 z;
 	s32 flag;
+	s32 once;
 
 	flag = 1;
 	D_80157F96 = flag;
@@ -1065,11 +1066,10 @@ int func_800F1DDC_100D8C(void) {
 		if (((D_80159DE2 >= 0x8001) || (D_80159DE2 == 0)) && (speed != 0.0f)) {
 			D_80159DE2 = 0;
 			level = buildingInstances[D_80159DDF].yCoord;
-			D_80157FE4_Write = 0.0f;
-			/* IDO schedules the argument LUI first when this call has an earlier source line. */
-#line 1
-			func_80135D44_144CF4(x, level, z, 2.0f);
-#line 1073
+			/* Keep call setup ahead of the store; IDO removes this single-pass loop. */
+			for (once = 1; once; func_80135D44_144CF4(x, level, z, 2.0f), once = 0) {
+				D_80157FE4_Write = 0.0f;
+			}
 		} else if (speed != 0.0f) {
 			speed -= 0.2;
 			D_80157FE4_Write = speed;

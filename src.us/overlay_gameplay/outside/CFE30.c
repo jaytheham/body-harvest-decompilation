@@ -97,132 +97,9 @@ const f32 D_8014401C_152FCC[1] = {0.4f};
 const f32 D_80144020_152FD0[1] = {0.4f};
 const f32 D_80144024_152FD4[1] = {0.8f};
 const f64 D_80144028_152FD8[1] = {300.0};
-const u32 jtbl_80144030_152FE0[] = {
-    OVERLAY_PTR(0x800DAC34),
-    OVERLAY_PTR(0x800DAC44),
-    OVERLAY_PTR(0x800DAC24),
-    OVERLAY_PTR(0x800DAC54),
-    OVERLAY_PTR(0x800DAC64),
-    OVERLAY_PTR(0x800DAC74),
-    OVERLAY_PTR(0x800DACA4),
-    OVERLAY_PTR(0x800DACB4),
-    OVERLAY_PTR(0x800DAC94),
-    OVERLAY_PTR(0x800DAC84),
-};
-const u32 jtbl_80144058_153008[] = {
-    OVERLAY_PTR(0x800DAD7C),
-    OVERLAY_PTR(0x800DAD8C),
-    OVERLAY_PTR(0x800DAD9C),
-    OVERLAY_PTR(0x800DADAC),
-    OVERLAY_PTR(0x800DADBC),
-    OVERLAY_PTR(0x800DADCC),
-    OVERLAY_PTR(0x800DADDC),
-    OVERLAY_PTR(0x800DAE1C),
-    OVERLAY_PTR(0x800DADFC),
-    OVERLAY_PTR(0x800DADEC),
-    OVERLAY_PTR(0x800DAE0C),
-    OVERLAY_PTR(0x800DAE2C),
-    OVERLAY_PTR(0x800DAD6C),
-    OVERLAY_PTR(0x800DAE3C),
-    OVERLAY_PTR(0x800DAE4C),
-    OVERLAY_PTR(0x800DAE5C),
-    OVERLAY_PTR(0x800DAE6C),
-    OVERLAY_PTR(0x800DAE7C),
-    OVERLAY_PTR(0x800DAE8C),
-    OVERLAY_PTR(0x800DAE9C),
-    OVERLAY_PTR(0x800DAEAC),
-    OVERLAY_PTR(0x800DAEBC),
-};
 
-const f64 D_801440B0_153060[1] = {180.0};
-const f64 D_801440B8_153068[1] = {180.0};
-const f64 D_801440C0_153070[1] = {180.0};
-const f64 D_801440C8_153078[1] = {180.0};
-const f64 D_801440D0_153080[1] = {102.0};
-const f32 D_801440D8_153088[1] = {3000.0f};
-const f64 D_801440E0_153090[1] = {
-    0.00035714285714285714,
-};
-const f32 D_801440E8_153098[1] = {3001.0f};
-const f32 D_801440EC_15309C[1] = {3000.0f};
-const f64 D_801440F0_1530A0[1] = {
-    3001.0,
-};
-const f32 D_801440F8_1530A8[1] = {0.003921569f};
-const f64 D_80144100_1530B0[1] = {
-    3001.0,
-};
-const f64 D_80144108_1530B8[1] = {
-    0.8,
-};
 
-const u32 jtbl_80144110_1530C0[] = {
-    OVERLAY_PTR(0x800DD7C0),
-    OVERLAY_PTR(0x800DD7B0),
-    OVERLAY_PTR(0x800DD7D0),
-    OVERLAY_PTR(0x800DD7E0),
-    OVERLAY_PTR(0x800DD7F0),
-    OVERLAY_PTR(0x800DD800),
-    OVERLAY_PTR(0x800DD830),
-    OVERLAY_PTR(0x800DD840),
-    OVERLAY_PTR(0x800DD820),
-    OVERLAY_PTR(0x800DD810),
-};
-const u32 jtbl_80144138_1530E8[] = {
-    OVERLAY_PTR(0x800DD934),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DD944),
-    OVERLAY_PTR(0x800DD954),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DD964),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DD974),
-    OVERLAY_PTR(0x800DD924),
-    OVERLAY_PTR(0x800DDA20),
-    OVERLAY_PTR(0x800DD984),
-    OVERLAY_PTR(0x800DD994),
-    OVERLAY_PTR(0x800DD9A4),
-    OVERLAY_PTR(0x800DD9B4),
-    OVERLAY_PTR(0x800DD9C4),
-    OVERLAY_PTR(0x800DD9D4),
-    OVERLAY_PTR(0x800DD9E4),
-    OVERLAY_PTR(0x800DDA20),
-};
-const f32 D_80144190_153140[1] = {0.6f};
 
-const u32 jtbl_80144194_153144[] = {
-    OVERLAY_PTR(0x800E1F60),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1E40),
-    OVERLAY_PTR(0x800E1E40),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1E40),
-    OVERLAY_PTR(0x800E1EA8),
-    OVERLAY_PTR(0x800E1E40),
-};
-const u32 jtbl_801441C4_153174[] = {
-    OVERLAY_PTR(0x800E39F4),
-    OVERLAY_PTR(0x800E3B00),
-    OVERLAY_PTR(0x800E3C10),
-    OVERLAY_PTR(0x800E3D70),
-    OVERLAY_PTR(0x800E4488),
-    OVERLAY_PTR(0x800E3DBC),
-    OVERLAY_PTR(0x800E3F7C),
-};
-const f64 D_801441E0_153190[1] = {
-    1.7
-};
-const f64 D_801441E8_153198[1] = {
-    6000.0,
-};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -504,9 +381,13 @@ u8 D_8013E31C_14D2CC[0x08] = {
 u8 D_8013E324_14D2D4[0x0C] = {
 	0xFF, 0xFF, 0xFF, 0x64, 0x00, 0x00, 0x64, 0xFF, 0x00, 0x00, 0x00, 0x00,
 };
-u8 D_8013E330_14D2E0[0x14] = {
-	0xFF, 0xC3, 0xC3, 0xFF, 0xDC, 0xAA, 0xFF, 0xDC, 0x78, 0xC3, 0xFF, 0xC3, 0xC3, 0xDC, 0xFF, 0xFF,
-	0x87, 0xFF, 0x00, 0x00,
+EffectRgb D_8013E330_14D2E0[6] = {
+	{0xFF, 0xC3, 0xC3},
+	{0xFF, 0xDC, 0xAA},
+	{0xFF, 0xDC, 0x78},
+	{0xC3, 0xFF, 0xC3},
+	{0xC3, 0xDC, 0xFF},
+	{0xFF, 0x87, 0xFF},
 };
 u8 D_8013E344_14D2F4 = 0;
 u8 D_8013E348_14D2F8[10][6] = {
@@ -2720,7 +2601,7 @@ void func_800C6D80_D5D30(void) {
 // CURRENT(4225)
 #ifdef NON_MATCHING
 // AI - Spawn a particle/effect entry at (arg0,arg1,arg2) from source effect arg4 with random colour/velocity
-s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, s32 arg6, s32 arg7) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
 	u8 *entryBytes;
@@ -2733,7 +2614,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 		return -3;
 	}
 
-	if (((s16 *)&arg4)[1] == -3) {
+	if (arg4 == -3) {
 		osSyncPrintf(D_801435A4_152554);
 		return -3;
 	}
@@ -2760,7 +2641,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 	linked->displayList = (Gfx *)arg6;
 
 	temp = func_800038E0_44E0() % 6;
-	((u16 *)&arg5)[1] = (u16)(temp + (((u16 *)&arg5)[1] / 7) - 3);
+	arg5 = (u16)(temp + (arg5 / 7) - 3);
 
 	sp40.x = (f32)((func_800038E0_44E0() % 20) - 10);
 	if ((func_800038E0_44E0() % 6) + 6 >= 0) {
@@ -2778,14 +2659,14 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 
 	func_800C1024_CFFD4(&sp40, &sp40);
 
-	D_80154318[linkedIdx].payload[0] = (s8)(s32)((f32)((u16 *)&arg5)[1] * sp40.x);
-	temp = (s16)(s32)((f32)((u16 *)&arg5)[1] * sp40.y);
+	D_80154318[linkedIdx].payload[0] = (s8)(s32)((f32)arg5 * sp40.x);
+	temp = (s16)(s32)((f32)arg5 * sp40.y);
 	if (temp >= 0) {
 		D_80154318[linkedIdx].payload[1] = (s8)temp;
 	} else {
 		D_80154318[linkedIdx].payload[1] = (s8)-temp;
 	}
-	D_80154318[linkedIdx].payload[2] = (s8)(s32)((f32)((u16 *)&arg5)[1] * sp40.z);
+	D_80154318[linkedIdx].payload[2] = (s8)(s32)((f32)arg5 * sp40.z);
 
 	D_80154318[linkedIdx].payload[3] = func_800038E0_44E0() % 0xFF;
 	D_80154318[linkedIdx].payload[4] = func_800038E0_44E0() % 0xFF;
@@ -6771,6 +6652,7 @@ void func_800D4C10_E3BC0(void) {
 		f32 segLen;
 		s16 cosVal;
 		u32 texAddr;
+		Gfx *gfx;
 		u8 steps;
 		s16 radius;
 		u8 i;
@@ -6802,23 +6684,29 @@ void func_800D4C10_E3BC0(void) {
 		cosVal = coss(0x4000);
 		spE4.x = (f32)((((f32)sins(0x4000) / 32768.0) * spFC.z) +
 			((spFC.x) * ((f32)cosVal / 32768.0)));
-		spE4.y = zeroF;
 		cosVal = coss(0x4000);
 		spE4.z = (f32)(((spFC.z) * ((f32)cosVal / 32768.0)) -
 			(((f32)sins(0x4000) / 32768.0) * spFC.x));
 
+		spE4.y = zeroF;
 		func_800C1024_CFFD4(&spE4, &spE4);
 		func_800C1024_CFFD4(&spFC, &spF0);
 		func_800C1128_D00D8(fortyF, &spF0, &spF0);
 		segLen = sqrtf((spF0.x * spF0.x) + (spF0.y * spF0.y) + (spF0.z * spF0.z));
 
-		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, texAddr, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPPipeSync(D_8005BB2C++);
-
 		x = (f32)entry->previousPosition[0];
 		y = (f32)entry->previousPosition[1];
 		z = (f32)entry->previousPosition[2];
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xFD900000; gfx->words.w1 = texAddr;
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xF5900000; gfx->words.w1 = 0x07080200;
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xE6000000; gfx->words.w1 = 0;
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xF3000000; gfx->words.w1 = 0x070FF400;
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xE7000000; gfx->words.w1 = 0;
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xF5800400; gfx->words.w1 = 0x00080200;
+		gfx = D_8005BB2C++; gfx->words.w0 = 0xF2000000; gfx->words.w1 = 0x0007C07C;
+		gDPPipeSync(D_8005BB2C++);
+
 
 		steps = len / segLen;
 		if (steps >= 0xA) {
@@ -6828,7 +6716,7 @@ void func_800D4C10_E3BC0(void) {
 		radius = (s16)((steps * 8) + 0xA);
 		if (steps > 0) {
 			fadeStep = 0x96 / steps;
-			for (; i < steps; i++) {
+			do {
 				x -= spF0.x;
 				y -= spF0.y;
 				z -= spF0.z;
@@ -6897,10 +6785,11 @@ void func_800D4C10_E3BC0(void) {
 				if (radius <= 0) {
 					radius = 1;
 				}
-			}
+			} while (++i < steps);
 		}
 
-		index = entry->unk4;
+if (entry) {}
+		index = D_80154318[index].unk4;
 	}
 }
 #else
@@ -6978,45 +6867,49 @@ void func_800D5684_E4634(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 // CURRENT(7940)
+#ifdef NON_MATCHING
 void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	s16 z;
 	s16 y;
-	s16 x;
 	s16 parent;
-	u16 angle;
+	union { u16 angle; s16 x; } angleX;
+	s32 selector;
 	f32 sine;
 	f32 scaleCos;
 	f32 scaleSin;
 	u32 dist;
 	SpinnerParentState *parentState;
+Unk80154318Entry *entry;
+SpinnerMotionState *motion;
 
-	angle = (u16)((((arg2 + (arg4 * 0x78)) << 0x10) / 360) & 0xFFFF);
-	parent = D_80154318[arg0].unk4;
+	selector = arg4;
+	angleX.angle = (u16)((((arg2 + (selector * 0x78)) << 0x10) / 360) & 0xFFFF);
+	if (&entry) {} parent = D_80154318[arg0].unk4; entry = &D_80154318[arg0];
 	dist = (u32)arg1;
-	scaleSin = (f32)(((f32)sins((u16)angle) / 32768.0) * dist);
-	scaleCos = (f32)(((f32)coss((u16)angle) / 32768.0) * dist);
-	x = ((f32)coss((u16)arg3) / 32768.0) * scaleSin;
+	scaleSin = (f32)(((f32)sins((u16)angleX.angle) / 32768.0) * dist);
+	scaleCos = (f32)(((f32)coss((u16)angleX.angle) / 32768.0) * dist);
+	angleX.x = ((f32)coss((u16)arg3) / 32768.0) * scaleSin;
 	sine = (f32)sins((u16)arg3);
-	x += D_80154318[arg0].unk8;
-	y = (s32)scaleCos + D_80154318[arg0].unkA;
-	z = (s32)((sine / 32768.0) * -scaleSin) + D_80154318[arg0].unkC;
+motion = &entry->spinnerMotion;
+	angleX.x += entry->unk8;
+	y = entry->unkA + (s32)scaleCos;
+	z = (s32)((sine / 32768.0) * -scaleSin) + entry->unkC;
 
 	parentState = &D_80154318[parent].spinnerState;
-	if (arg4 == 0) {
-		func_800D6084_E5034(D_80154318[arg0].spinnerMotion.unit[0], x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
-	} else if (arg4 == 1) {
-		func_800D6084_E5034(D_80154318[arg0].spinnerMotion.unit[1], x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+	if (selector == 0) {
+		func_800D6084_E5034(motion->unit[0], angleX.x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+	} else if (selector == 1) {
+		func_800D6084_E5034(motion->unit[1], angleX.x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	} else {
-		func_800D6084_E5034(D_80154318[arg0].spinnerMotion.unit[2], x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(motion->unit[2], angleX.x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	}
 
-	if (D_80154318[arg0].unk4 == -5) {
+	if (entry->unk4 == -5) {
 		D_80153BC4 = &D_80153B80;
 		D_80153BC8 = 55.0f;
 		D_80153BCC = 0xFF;
-		D_80153BB8.x = x;
+		D_80153BB8.x = angleX.x;
 		D_80153BB8.y = y;
 		D_80153BB8.z = z;
 		func_800DB350_EA300();
@@ -7161,8 +7054,6 @@ void func_800D6140_E50F0(u8 arg0) {
 	}
 }
 
-// CURRENT(32643)
-#ifdef NON_MATCHING
 void func_800D6290_E5240(u8 arg0) {
 	s16 index;
 	s16 nextIndex;
@@ -7209,7 +7100,7 @@ void func_800D6290_E5240(u8 arg0) {
 				nextEntry = &D_80154318[nextIndex];
 				nextState = &nextEntry->trailParticle;
 
-				D_8005BB34->v.ob[0] = state->position[0];
+				D_8005BB34->v.ob[0] = D_80154318[index].trailParticle.position[0]; if (state) {}
 				D_8005BB34->v.ob[1] = state->position[1] + (func_800038E0_44E0() % 5) + 0xF;
 				D_8005BB34->v.ob[2] = state->position[2];
 				D_8005BB34->v.flag = 0;
@@ -7315,9 +7206,7 @@ void func_800D6290_E5240(u8 arg0) {
 		} while ((index != -5) && (index != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D6290_E5240.s")
-#endif
+
 
 
 void func_800D6A84_E5A34(u8 arg0)
@@ -7447,11 +7336,11 @@ void func_800D6EAC_E5E5C(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-void func_800D702C_E5FDC(s16 arg0, s32 arg1) {
-	struct { Unk80052B40 scale; s16 pad5A; Unk80052B40 rotation; s16 pad62; Unk80052B40 position; } transform;
+void func_800D702C_E5FDC(s16 arg0, u8 arg1) {
+	struct { Unk80052B40 scale; s16 pad5A; Unk80052B40 rotation; s16 pad62; Unk80052B40 position; s16 pad6A; s32 pad6C; } transform;
 	Unk80153AE0Entry *sp24;
 	s16 temp_v0;
-	s32 temp_t8;
+	u8 temp_t8;
 	s32 var_a1;
 	Unk80153AE0Entry *temp_t1;
 	Unk80052B40 *modelScale;
@@ -7491,7 +7380,7 @@ void func_800D702C_E5FDC(s16 arg0, s32 arg1) {
 	}
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, var_a1);
 	gDPPipeSync(D_8005BB2C++);
-	sp24 = temp_t1;
+	sp24 = temp_t1; if (sp24) {}
 	func_800039D0_45D0(&transform.position, &transform.rotation, &transform.scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, sp24->unk1C);
@@ -7501,15 +7390,12 @@ void func_800D702C_E5FDC(s16 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D702C_E5FDC.s")
 #endif
 
+
 // CURRENT(2279)
 #ifdef NON_MATCHING
 void func_800D7284_E6234(u8 arg0) {
-	struct {
-		s16 position[2];
-		u8 color[3];
-		f32 z;
-		s16 index;
-	} vars;
+	s16 index;
+	f32 z;
 	Unk80154318Entry *sp2C;
 	f32 x;
 	f32 y;
@@ -7517,58 +7403,62 @@ void func_800D7284_E6234(u8 arg0) {
 	f32 temp_f14;
 	f32 temp_f2;
 	s32 temp_a0;
+	u8 color[3];
+	s16 position[2];
 	s32 var_v0;
-	u8 temp_v0_13;
-	u8 temp_v0_14;
+	s32 temp_v0_13;
+	s16 unused_temp_v0_14;
 	SpurtVisualState *var_v1;
 
-	vars.index = D_80154088[arg0].unk6;
-	sp2C = &D_80154318[vars.index];
-	if (func_800B93AC_C835C(sp2C->unk8, sp2C->unkC, (u16) sp2C->unk2, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+	if (&index) {}
+index = D_80154088[arg0].unk6;
+	if ((sp2C = &D_80154318[index], func_800B93AC_C835C(sp2C->unk8, sp2C->unkC, (u16) sp2C->unk2, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950)) != 0) {
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 		gDPPipeSync(D_8005BB2C++);
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100B0F0), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
-		func_800D702C_E5FDC(vars.index, 0);
-		func_800D702C_E5FDC(vars.index, 1);
-		func_800D702C_E5FDC(vars.index, 2);
-		func_800D702C_E5FDC(vars.index, 3);
-		func_800D702C_E5FDC(vars.index, 4);
-		vars.position[0] = sp2C->unk8;
-		vars.position[1] = sp2C->unkC;
-		vars.color[0] = 0xFF;
-		vars.color[1] = 0xFF;
-		vars.color[2] = 0xFF;
+		func_800D702C_E5FDC(index, 0);
+		func_800D702C_E5FDC(index, 1);
+		func_800D702C_E5FDC(index, 2);
+		func_800D702C_E5FDC(index, 3);
+		func_800D702C_E5FDC(index, 4);
+		position[0] = sp2C->unk8;
+		position[1] = sp2C->unkC;
+		color[0] = 0xFF;
+		color[1] = 0xFF;
+		color[2] = 0xFF;
 		temp_v0_13 = sp2C->unkE;
-		var_v1 = &sp2C->spurtVisual;
+		var_v1 = &sp2C->spurtVisual; if (var_v1) {}
 		if (temp_v0_13 < 4) {
-			func_800B2354_C1304(&vars.position[0], &vars.color[0], 0x200, (s16) ((temp_v0_13 << 9) + 0x200));
+			func_800B2354_C1304(&position[0], &color[0], 0x200, (s16) ((temp_v0_13 << 9) + 0x200));
 		} else if (temp_v0_13 < 9) {
-			func_800B2354_C1304(&vars.position[0], &vars.color[0], 0x100, (s16) (0x1300 - (temp_v0_13 << 9)));
+			func_800B2354_C1304(&position[0], &color[0], 0x100, (s16) (0x1300 - (temp_v0_13 << 9)));
 		}
 		x = var_v1->position[0];
 		y = var_v1->position[1];
-		vars.z = var_v1->position[2];
+		z = var_v1->position[2];
 		temp_f0 = x - (D_80153BA0.x * 4.0f);
 		temp_f2 = y - (D_80153BA0.y * 4.0f);
-		temp_f14 = vars.z - (D_80153BA0.z * 4.0f);
+		temp_f14 = z - (D_80153BA0.z * 4.0f);
 		sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2) + (temp_f14 * temp_f14));
-		temp_v0_14 = var_v1->color[0];
-		if (temp_v0_14 < 0x51) {
-			temp_a0 = 0xFF - (temp_v0_14 * 2);
+		var_v0 = var_v1->color[0];
+		if (var_v0 < 0x51) {
+			temp_a0 = 0xFF - (var_v0 * 2);
 			var_v0 = temp_a0;
 			if (temp_a0 < 0) {
 				var_v0 = 0;
 			}
-			func_800E35E0_F2590(var_v0 & 0xFF);
+			func_800E35E0_F2590(var_v0 & 0xFF); if (sp2C) {}
 		}
 	}
 }
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7284_E6234.s")
 #endif
-
 
 s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2) {
 	s16 temp_v0;
@@ -7629,14 +7519,13 @@ void func_800D7790_E6740(void) {
 	}
 }
 
-// CURRENT(510)
-#ifdef NON_MATCHING
 void func_800D7870_E6820(void) {
 	s16 idx;
 	Unk80154318Entry *entry;
 	Unk80052B40 *sub;
 	f32 off0;
 	f32 scale;
+	Unk80052B40 *copy;
 	f32 off1;
 	f32 off2;
 	f32 off3;
@@ -7653,14 +7542,15 @@ void func_800D7870_E6820(void) {
 	}
 
 	do {
-		gDPPipeSync(D_8005BB2C++);
 		entry = &D_80154318[idx];
+		copy = &entry->positionVector; sub = copy;
+		gDPPipeSync(D_8005BB2C++);
 
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100AEF0 + (entry->unkE << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
 
-		sub = &entry->positionVector;
-		scale = (f32)entry->unk2;
+		off0 = (f32)entry->unk2;
+		scale = off0;
 		off0 = scale * D_80153AB8.x;
 		off1 = scale * D_80153AB8.y;
 		off2 = scale * D_80153AB8.z;
@@ -7736,9 +7626,6 @@ void func_800D7870_E6820(void) {
 		idx = D_80154318[idx].unk4;
 	} while ((idx != -5) && (idx != -6));
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7870_E6820.s")
-#endif
 
 s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
@@ -7814,9 +7701,10 @@ void func_800D8190_E7140(void) {
 	Unk80154318Entry *entry;
 	Vec3f direction;
 	s32 current;
-	s16 size;
-	EffectPositionPair *position;
+	s16 size[1];
+	union { EffectPositionPair *points; Gfx *gfx; } position;
 	f32 two;
+s32 partial;
 	s16 x0;
 	s16 y0;
 	s16 z0;
@@ -7833,40 +7721,46 @@ void func_800D8190_E7140(void) {
 	s16 tipZ;
 
 	two = 2.0f;
-	current = D_801542D6;
+	x0 = D_80153BCC;
+current = D_801542D6;
+if (current) {}
 
-	gDPPipeSync(D_8005BB2C++);
+	position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0xE7000000; position.gfx->words.w1 = 0;
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPPipeSync(D_8005BB2C++);
+	position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0xE7000000; position.gfx->words.w1 = 0;
 	gDPPipeSync(D_8005BB2C++);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[func_800038E0_44E0() % 16]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 
-	while ((current != -5) && (current != -6)) {
+	if (x0) { x0 ^= 0; }
+while ((current != -5) && (current != -6)) {
 		entry = &D_80154318[current];
 		direction.x = entry->unk8 - entry->previousPosition[0];
 		direction.y = entry->unkA - entry->previousPosition[1];
 		direction.z = entry->unkC - entry->previousPosition[2];
 
-		position = &entry->positionPair;
-		size = entry->unk2;
+		position.points = &entry->positionPair;
+		x0 = entry->unk2;
 		if ((direction.x == 0.0f) && (direction.y == 0.0f) && (direction.z == 0.0f)) {
-			current = entry->unk4;
+			current = D_80154318[current].unk4;
 			continue;
 		}
 
 		func_800C1024_CFFD4(&direction, &direction);
-				func_800C1128_D00D8((f32)size, &direction, &direction);
+size[0] = x0;
+				func_800C1128_D00D8((f32)x0, &direction, &direction);
 
 		halfZ = (s16)(direction.z / two);
 		halfX = (s16)(direction.x / two);
-		tipX = position->position[0] + (s16)(direction.x * 3.0f);
-		tipY = position->position[1] + (s16)(direction.y * 3.0f);
-		tipZ = position->position[2] + (s16)(direction.z * 3.0f);
+		tipX = position.points->position[0] + (s16)(direction.x * 3.0f);
+		tipY = position.points->position[1] + (s16)(direction.y * 3.0f);
+		tipZ = position.points->position[2] + (s16)(direction.z * 3.0f);
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] + (size / 2));
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] - halfX);
+		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] + halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] + (partial = size[0] / 2));
+		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
@@ -7876,9 +7770,9 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = 0xD2;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] - (size / 2));
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] + halfX);
+		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] - halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] - partial);
+		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0;
@@ -7889,7 +7783,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = x0 = (f32)(tipX + halfZ);
-		D_8005BB34->v.ob[1] = y0 = (f32)(tipY + (size / 2));
+		D_8005BB34->v.ob[1] = y0 = (f32)(tipY + partial);
 		D_8005BB34->v.ob[2] = z0 = (f32)(tipZ - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
@@ -7901,7 +7795,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = x1 = (f32)(tipX - halfZ);
-		D_8005BB34->v.ob[1] = y1 = (f32)(tipY - (size / 2));
+		D_8005BB34->v.ob[1] = y1 = (f32)(tipY - partial);
 		D_8005BB34->v.ob[2] = z1 = (f32)(tipZ + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
@@ -7916,9 +7810,9 @@ void func_800D8190_E7140(void) {
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 		gDPPipeSync(D_8005BB2C++);
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] - (size / 2));
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] - halfX);
+		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] + halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] - partial);
+		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
@@ -7928,9 +7822,9 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = 0xD2;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] + (size / 2));
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] + halfX);
+		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] - halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] + partial);
+		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0;
@@ -7967,14 +7861,14 @@ void func_800D8190_E7140(void) {
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 
-		x2 = position->position[0] + (s16)(direction.x * 2.5);
-		y2 = position->position[1] + (s16)(direction.y * 2.5);
-		z2 = position->position[2] + (s16)(direction.z * 2.5);
+		x2 = position.points->position[0] + (s16)(direction.x * 2.5);
+		y2 = position.points->position[1] + (s16)(direction.y * 2.5);
+		z2 = position.points->position[2] + (s16)(direction.z * 2.5);
 		halfZ = (s16)(direction.z / 3.0f);
 		halfX = (s16)(direction.x / 3.0f);
 
 		D_8005BB34->v.ob[0] = (f32)(x2 + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 + (size / 3));
+		D_8005BB34->v.ob[1] = (f32)(y2 + (partial = size[0] / 3));
 		D_8005BB34->v.ob[2] = (f32)(z2 - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
@@ -7986,7 +7880,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 - (size / 3));
+		D_8005BB34->v.ob[1] = (f32)(y2 - partial);
 		D_8005BB34->v.ob[2] = (f32)(z2 - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
@@ -7998,7 +7892,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 + (size / 3));
+		D_8005BB34->v.ob[1] = (f32)(y2 + partial);
 		D_8005BB34->v.ob[2] = (f32)(z2 + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
@@ -8010,7 +7904,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 - (size / 3));
+		D_8005BB34->v.ob[1] = (f32)(y2 - partial);
 		D_8005BB34->v.ob[2] = (f32)(z2 + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
@@ -8033,16 +7927,22 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 0, 1, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 0, 2, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 2, 3, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 3, 1, 0);
+		position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0x0400144F; position.gfx->words.w1 = K0_TO_PHYS(D_8005BB34 - 5);
+position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080002;
+position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080004;
+position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080406;
+position.gfx = D_8005BB2C++;
+position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080602;
 
 		D_80156EDA += 0xD;
-		current = entry->unk4;
+		current = D_80154318[current].unk4;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8190_E7140.s")
 #endif
@@ -8489,7 +8389,7 @@ s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 // CURRENT(120)
 #ifdef NON_MATCHING
 void func_800DA510_E94C0(s16 arg0, s16 arg1) {
-	Unk80052B40 *dstPos;
+	EffectLightningTrailState *dstPos;
 	EffectPositionPair *srcPos;
 
 	s16 effect;
@@ -8499,10 +8399,10 @@ void func_800DA510_E94C0(s16 arg0, s16 arg1) {
 
 
 	srcPos = &D_80154318[arg0].positionPair;
-	dstPos = &D_80154318[arg1].positionVector;
-	dir.x = srcPos->previousPosition[0] - dstPos->unk0;
-	dir.y = srcPos->previousPosition[1] - dstPos->unk2;
-	dir.z = srcPos->previousPosition[2] - dstPos->unk4;
+	dstPos = &D_80154318[arg1].lightningTrail;
+	dir.x = srcPos->previousPosition[0] - dstPos->position.unk0;
+	dir.y = srcPos->previousPosition[1] - dstPos->position.unk2;
+	dir.z = srcPos->previousPosition[2] - dstPos->position.unk4;
 
 	if ((dir.x != 0.0f) || (dir.y != 0.0f) || (dir.z != 0.0f)) {
 		func_800C1024_CFFD4(&dir, &dir);
@@ -8511,18 +8411,17 @@ void func_800DA510_E94C0(s16 arg0, s16 arg1) {
 			(s32)((f64)srcPos->previousPosition[2] + (400.0 * (f64)dir.z)), 1);
 		if (effect != 0xFB) {
 			u8 flags;
-			flags = D_80154318[arg1].unkF;
+			flags = dstPos->flags;
 			func_800D19DC_E098C(effect, flags);
 		}
-		dstPos->unk0 = srcPos->previousPosition[0];
-		dstPos->unk2 = srcPos->previousPosition[1];
-		dstPos->unk4 = srcPos->previousPosition[2];
+		dstPos->position.unk0 = srcPos->previousPosition[0];
+		dstPos->position.unk2 = srcPos->previousPosition[1];
+		dstPos->position.unk4 = srcPos->previousPosition[2];
 	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA510_E94C0.s")
 #endif
-
 
 s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 temp_s32;
@@ -8620,189 +8519,170 @@ void func_800DAA1C_E99CC(u8 arg0) {
 	}
 }
 
-/* CURRENT(2700) */
 // particle effect dispatcher/updater
-#ifdef NON_MATCHING
 void func_800DABBC_E9B6C(void) {
-	s32 i;
+	u8 i;
 	s32 temp;
-	u8 type;
+	s32 type;
 	s32 secondType;
-	
 
-	for (i = 0; i < 0x1E; i = (i + 1) & 0xFF) { // iterate through effect pool with 30 slots
+	for (i = 0; i < 0x1E; i++) {
 		type = D_80154088[i].unk0;
-		if (type >= 10) {
-			if (type == 0xFA) {
-				continue;
+		// Preserve the selector copy used by the original switch.
+		switch (type ^ 0) {
+		case 2:
+			func_800C5894_D4844(i);
+			continue;
+
+		case 0:
+			func_800C22EC_D129C(i);
+			continue;
+
+		case 1:
+			func_800C2EE4_D1E94(i);
+			continue;
+
+		case 3:
+			func_800C8F5C_D7F0C(i);
+			continue;
+
+		case 4:
+			func_800CA848_D97F8(i);
+			continue;
+
+		case 5:
+			func_800CD42C_DC3DC(i);
+			continue;
+
+		case 9:
+			func_800CE1C0_DD170(i);
+			continue;
+
+		case 8:
+			func_800D1A94_E0A44(i);
+			continue;
+
+		case 6:
+			func_800D6140_E50F0(i);
+			continue;
+
+		case 7:
+			func_800D6EAC_E5E5C(i);
+			continue;
+
+		case 0xFA: continue;
+		default:
+			temp = (type >= 10) ? 1 : 0;
+			if (temp != 0) {
+				osSyncPrintf(D_80143A50_152A00, type);
+			} else {
+				osSyncPrintf(D_80143A94_152A44);
 			}
-		} else {
-			switch (type) {
-				case 0:
-					func_800C5894_D4844((u8)i);
-					continue;
-
-				case 1:
-					func_800C22EC_D129C((u8)i);
-					continue;
-
-				case 2:
-					func_800C2EE4_D1E94((u8)i);
-					continue;
-
-				case 3:
-					func_800C8F5C_D7F0C((u8)i);
-					continue;
-
-				case 4:
-					func_800CA848_D97F8((u8)i);
-					continue;
-
-				case 5:
-					func_800CD42C_DC3DC((u8)i);
-					continue;
-
-				case 6:
-					func_800CE1C0_DD170((u8)i);
-					continue;
-
-				case 7:
-					func_800D1A94_E0A44((u8)i);
-					continue;
-
-				case 8:
-					func_800D6140_E50F0((u8)i);
-					continue;
-
-				case 9:
-					func_800D6EAC_E5E5C((u8)i);
-					continue;
-
-				default:
-					break;
-			}
-		}
-
-		temp = (type >= 10) ? 1 : 0;
-		if (temp != 0) {
-			osSyncPrintf(D_80143A50_152A00);
-		} else {
-			osSyncPrintf(D_80143A94_152A44);
 		}
 	}
 
-	for (i = 0; i < 0x16; i = (i + 1) & 0xFF) {
+	for (i = 0; i < 0x16; i++) {
 		secondType = D_801541F8[i].unk0;
-		if (secondType >= 0x20) {
-			if (secondType == 0xFA) {
-				continue;
+		switch (secondType) {
+		case 22:
+			func_800C3E2C_D2DDC();
+			continue;
+
+		case 10:
+			func_800C4AA0_D3A50();
+			continue;
+
+		case 11:
+			func_800C6558_D5508();
+			continue;
+
+		case 12:
+			func_800C8294_D7244();
+			continue;
+
+		case 13:
+			func_800C9668_D8618();
+			continue;
+
+		case 14:
+			func_800CB394_DA344();
+			continue;
+
+		case 15:
+			func_800CBE98_DAE48();
+			continue;
+
+		case 16:
+			func_800CCB60_DBB10();
+			continue;
+
+		case 19:
+			func_800CDBF4_DCBA4();
+			continue;
+
+		case 18:
+			func_800CF070_DE020();
+			continue;
+
+		case 20:
+			func_800CF948_DE8F8();
+			continue;
+
+		case 17:
+			func_800D0C00_DFBB0();
+			continue;
+
+		case 21:
+			func_800D25D0_E1580();
+			continue;
+
+		case 23:
+			func_800D36EC_E269C();
+			continue;
+
+		case 24:
+			func_800D3D40_E2CF0();
+			continue;
+
+		case 25:
+			func_800D4B44_E3AF4();
+			continue;
+
+		case 26:
+			func_800D5684_E4634();
+			continue;
+
+		case 27:
+			func_800D7790_E6740();
+			continue;
+
+		case 28:
+			func_800D80B4_E7064();
+			continue;
+
+		case 29:
+			func_800D90A4_E8054();
+			continue;
+
+		case 30:
+			func_800D95D0_E8580();
+			continue;
+
+		case 31:
+			func_800D9B54_E8B04();
+			continue;
+
+		case 0xFA: continue;
+		default:
+			if ((i < 10) && ((temp = i) >= 0)) {
+				osSyncPrintf(D_80143AD4_152A84, temp);
+			} else {
+				osSyncPrintf(D_80143B18_152AC8);
 			}
-		} else { // secondary effect pool?
-			switch (secondType - 10) {
-				case 0:
-					func_800C3E2C_D2DDC();
-					continue;
-
-				case 1:
-					func_800C4AA0_D3A50();
-					continue;
-
-				case 2:
-					func_800C6558_D5508();
-					continue;
-
-				case 3:
-					func_800C8294_D7244();
-					continue;
-
-				case 4:
-					func_800C9668_D8618();
-					continue;
-
-				case 5:
-					func_800CB394_DA344();
-					continue;
-
-				case 6:
-					func_800CBE98_DAE48();
-					continue;
-
-				case 7:
-					func_800CCB60_DBB10();
-					continue;
-
-				case 8:
-					func_800CDBF4_DCBA4();
-					continue;
-
-				case 9:
-					func_800CF070_DE020();
-					continue;
-
-				case 10:
-					func_800CF948_DE8F8();
-					continue;
-
-				case 11:
-					func_800D0C00_DFBB0();
-					continue;
-
-				case 12:
-					func_800D25D0_E1580();
-					continue;
-
-				case 13:
-					func_800D36EC_E269C();
-					continue;
-
-				case 14:
-					func_800D3D40_E2CF0();
-					continue;
-
-				case 15:
-					func_800D4B44_E3AF4();
-					continue;
-
-				case 16:
-					func_800D5684_E4634();
-					continue;
-
-				case 17:
-					func_800D7790_E6740();
-					continue;
-
-				case 18:
-					func_800D80B4_E7064();
-					continue;
-
-				case 19:
-					func_800D90A4_E8054();
-					continue;
-
-				case 20:
-					func_800D95D0_E8580();
-					continue;
-
-				case 21:
-					func_800D9B54_E8B04();
-					continue;
-
-				default:
-					break;
-			}
-		}
-
-		if ((i < 10) && (i >= 0)) {
-			osSyncPrintf(D_80143AD4_152A84, i);
-		} else {
-			osSyncPrintf(D_80143B18_152AC8);
 		}
 
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DABBC_E9B6C.s")
-#endif
 
 // CURRENT(1262)
 void func_800DAF24_E9ED4(u8 arg0) {
@@ -9050,75 +8930,62 @@ void func_800DBA9C_EAA4C(void) {
 }
 
 
-#ifdef NON_MATCHING
-// CURRENT(1200)
 void func_800DBE20_EADD0(void) {
+	s16 *position;
 	f32 distances[0x1E];
-	f32 negOne;
-	f32 negTwo;
 	f32 four;
 	u8 i;
 	u8 backPos;
-	s16 *position;
-	f32 dx;
-	f32 dz;
 
-	negOne = -1.0f;
-	negTwo = -2.0f;
 	four = 4.0f;
 	backPos = 0x1D;
-	for (i = 0; i < 0x1E; i++) {
+	i = 0; do { /* Keep on one line for IDO preheader scheduling. */
 		Unk801541F8Entry *effect;
 
 		effect = &D_80154088[i];
 		D_80157540[i] = 0xFE;
-		if (effect->unk0 == 0xFA) {
-			distances[i] = negOne;
-		} else if (!(effect->unk1 & 1)) {
-			distances[i] = negTwo;
+		if (effect->unk0 != 0xFA) {
+			if (!(effect->unk1 & 1)) {
+				distances[i] = -2;
+			} else {
+
+				switch (effect->unk0) {
+					case 0: {
+
+						position = D_80154318[effect->unkA].position;
+						distances[i] = sqrtf(SQ(position[2] - (D_80153BA0.z * four)) + SQ(position[0] - (D_80153BA0.x * four)));
+						break;
+					}
+					case 1: {
+
+						position = D_80154318[effect->unkA].position;
+						distances[i] = sqrtf(SQ(position[2] - (D_80153BA0.z * four)) + SQ(position[0] - (D_80153BA0.x * four)));
+						break;
+					}
+					case 5: {
+
+						position = D_80154318[effect->unk6].position;
+						distances[i] = sqrtf(SQ(position[2] - (D_80153BA0.z * four)) + SQ(position[0] - (D_80153BA0.x * four)));
+						break;
+					}
+					default:
+						osSyncPrintf(D_80143B58_152B08);
+						break;
+				}
+			}
 		} else {
-
-		switch (effect->unk0) {
-			case 0: {
-
-				position = D_80154318[effect->unkA].position;
-				dx = position[0] - (D_80153BA0.x * four);
-				dz = position[2] - (D_80153BA0.z * four);
-				distances[i] = sqrtf((dx * dx) + (dz * dz));
-				break;
-			}
-			case 1: {
-
-				position = D_80154318[effect->unkA].position;
-				dx = position[0] - (D_80153BA0.x * four);
-				dz = position[2] - (D_80153BA0.z * four);
-				distances[i] = sqrtf((dx * dx) + (dz * dz));
-				break;
-			}
-			case 5: {
-
-				position = D_80154318[effect->unk6].position;
-				dx = position[0] - (D_80153BA0.x * four);
-				dz = position[2] - (D_80153BA0.z * four);
-				distances[i] = sqrtf((dx * dx) + (dz * dz));
-				break;
-			}
-			default:
-				osSyncPrintf(D_80143B58_152B08);
-				break;
+			distances[i] = -1;
 		}
-		}
-	}
+		i++;
+	} while (i < 0x1E);
 
 	for (i = 0; i < 0x1E; i++) {
-		f32 distance;
 
-		distance = distances[i];
-		if (distance == negOne) {
+		if (-1 == distances[i]) {
 			continue;
 		}
 
-		if (distance == negTwo) {
+		if (-2 == distances[i]) {
 			D_80157540[backPos] = i;
 			backPos--;
 		} else {
@@ -9129,11 +8996,11 @@ void func_800DBE20_EADD0(void) {
 				u8 end;
 
 				slot = D_80157540[pos];
-				end = backPos;
 				if (slot == 0xFE) {
 					D_80157540[pos] = i;
 					pos = 0x1E;
-				} else if (distances[slot] < distance) {
+				} else if (distances[slot] < distances[i]) {
+					end = backPos;
 					if (pos < backPos) {
 						do {
 							D_80157540[end] = D_80157540[end - 1];
@@ -9147,9 +9014,7 @@ void func_800DBE20_EADD0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DBE20_EADD0.s")
-#endif
+
 
 // CURRENT(1580)
 void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
@@ -9232,27 +9097,25 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 }
 
-// CURRENT(43188)
 #ifdef NON_MATCHING
-void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
+void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 	Vec3f viewDir;
 	Vec3f toTarget;
 	Vec3f pos;
 	Vec3f beamVec;
-	Vec3f beamDir;
-	f32 beamLen;
+	f64 halfTurn;
+	f32 four = 4;
 	f32 facing;
 	f32 angleDelta;
-	f32 maxDist;
-	f32 four = 4.0f;
-	f64 halfTurn = 180.0;
-	f32 phase;
-	f32 alphaF;
-	u32 alpha;
-	s32 flicker;
-	u8 col[3];
-	s32 i;
+	f32 beamLen;
+	u32 phase;
+	u16 flicker;
+	u8 alpha;
 	u8 strength;
+	EffectRgb col;
+	s32 i;
+	f32 maxDist;
+	void *gfx = &arg2; /* Keep the byte argument in its ABI home. */
 
 	(void)arg3;
 
@@ -9264,125 +9127,124 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 	viewDir.z = D_80153B90.z;
 	func_800C1024_CFFD4(&viewDir, &viewDir);
 
-	toTarget.x = (D_80153BA0.x * four) - arg0->x;
-	toTarget.y = (D_80153BA0.y * four) - arg0->y;
-	toTarget.z = (D_80153BA0.z * four) - arg0->z;
+	toTarget.x = (D_80153BA0.x * four) - arg0->x; toTarget.y = (D_80153BA0.y * four) - arg0->y; toTarget.z = (D_80153BA0.z * four) - arg0->z;
 	beamLen = func_800C0FD4_CFF84(&toTarget);
 	func_800C1024_CFFD4(&toTarget, &toTarget);
 
 	facing = func_800C1090_D0040(&toTarget, &viewDir);
 
-	if ((((f64)(f32)(s16)(0x4000 - func_80003680_4280(facing)) * halfTurn) / 32768.0) <= halfTurn) {
-		angleDelta = (f32)(halfTurn - (((f64)(f32)(s16)(0x4000 - func_80003680_4280(facing)) * halfTurn) / 32768.0));
+	if ((((f32)(s16)(0x4000 - func_80003680_4280(facing)) * 180.0) / 32768.0) <= (halfTurn = (f64)180.0f)) {
+		angleDelta = (halfTurn - (((f32)(s16)(0x4000 - func_80003680_4280(facing)) * 180.0) / 32768.0));
 	} else {
-		angleDelta = (f32)-(halfTurn - (((f64)(f32)(s16)(0x4000 - func_80003680_4280(facing)) * halfTurn) / 32768.0));
+		angleDelta = -(halfTurn - (((f32)(s16)(0x4000 - func_80003680_4280(facing)) * 180.0) / 32768.0));
 	}
 
-	if (((f64)angleDelta) < 2.5) {
+	if (angleDelta < 2.5) {
 		strength = 0xFF;
-	} else if (((f64)angleDelta) < 5.0) {
-		strength = (u8)((f64)(f32)(5.0 - ((f64)angleDelta)) * 102.0);
+	} else if (angleDelta < 5.0) {
+		strength = ((f32)(5.0 - angleDelta) * 102.0);
 	}
 
-	alpha = strength;
 	if ((arg1 <= 150.0f) && (angleDelta < 15.0f)) {
-		alpha = 0xFF;
+		strength = 0xFF;
 	}
 
 	maxDist = 3000.0f;
-	if ((arg1 > 330.0f) && (arg1 <= (f32)3000.0f)) {
-		maxDist = (f32)3000.0f;
-		alphaF = (f32)(u32)alpha;
-		alpha = (u8)(alphaF * (f32)(0.00035714285714285714 * (f64)((f32)3001.0f - arg1)));
-	} else if (maxDist < arg1) {
-		alpha = 0;
+	if ((arg1 > 330.0f) && (arg1 <= maxDist)) {
+		strength = ((f32)strength * (f32)(0.00035714285714285714 * (3001.0f - arg1)));
+	} else {
+		if (maxDist < arg1) {
+			strength = 0;
+		}
 	}
 
-	if ((s8)arg2 != -1) {
-		alpha = (u8)(((f32)alpha * (f32)(s8)arg2) / 100.0f);
+	if (arg2 != -1) {
+		strength = (((f32)strength * (f32)arg2) / 100);
 	}
 
-	if (D_8013E344_14D2F4 < (u8)alpha) {
-		D_8013E344_14D2F4 = alpha;
+	if (D_8013E344_14D2F4 < strength) {
+		D_8013E344_14D2F4 = strength;
 	}
 	if (D_8013E344_14D2F4 >= 0xB5) {
 		D_8013E344_14D2F4 = 0xB4;
 	}
 
-	if ((angleDelta < 22.0f) && (((f64)angleDelta) > 2.5) && (arg1 < maxDist)) {
-		func_800C1128_D00D8(2.0f * facing, &viewDir, &pos);
+	if ((angleDelta < 22.0f) && (angleDelta > 2.5) && (arg1 < maxDist)) {
+		func_800C1128_D00D8(2 * facing, &viewDir, &pos);
 		func_800C10C0_D0070(&toTarget, &pos, &toTarget);
 		func_800C1128_D00D8(beamLen, &toTarget, &beamVec);
 
-		pos.x = (D_80153BA0.x * four) + beamVec.x;
-		pos.y = (D_80153BA0.y * four) + beamVec.y;
-		pos.z = (D_80153BA0.z * four) + beamVec.z;
+		pos.x = (D_80153BA0.x * four) + beamVec.x; pos.y = (D_80153BA0.y * four) + beamVec.y; pos.z = (D_80153BA0.z * four) + beamVec.z;
 
-		beamDir.x = arg0->x - pos.x;
-		beamDir.y = arg0->y - pos.y;
-		beamDir.z = arg0->z - pos.z;
+		beamVec.x = arg0->x - pos.x; beamVec.y = arg0->y - pos.y; beamVec.z = arg0->z - pos.z;
 
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
-		gDPPipeSync(D_8005BB2C++);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, D_100DA00, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gfx = D_8005BB2C++;
+		((Gfx *)gfx)->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); ((Gfx *)gfx)->words.w1 = 0;
+		gfx = D_8005BB2C++;
+		((Gfx *)gfx)->words.w0 = 0xFCFF99FF; ((Gfx *)gfx)->words.w1 = 0xFF327F3F;
+		gfx = D_8005BB2C++;
+		((Gfx *)gfx)->words.w0 = 0xB900031D; ((Gfx *)gfx)->words.w1 = G_RM_AA_ZB_XLU_SURF | G_RM_AA_ZB_XLU_SURF2;
+		gfx = D_8005BB2C++;
+		((Gfx *)gfx)->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); ((Gfx *)gfx)->words.w1 = 0;
+		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
 
-		if (((f64)angleDelta) < 5.0) {
-			phase = (f32)(u16)((3001.0 - (f64)arg1) / 16.0);
-			flicker = (u16)(s32)(phase * ((f32)0.003921569f * (f32)(0xFF - alpha)));
+		if (angleDelta < 5.0) {
+			beamLen = (f32)(u16)((3001.0 - (f64)arg1) / 16);
+			beamLen *= 0.003921569f * (f32)(0xFF - strength);
+			flicker = (u16)beamLen;
 		} else {
-			phase = (f32)(u16)((3001.0 - (f64)arg1) / 16.0);
-			flicker = (u16)(s32)(phase / (angleDelta / four));
+			beamLen = (f32)(u16)(((f64)3001.0f - (f64)arg1) / 16);
+			flicker = (u16)(beamLen / (angleDelta / 4));
 		}
 
 		if (flicker >= 0x100) {
 			flicker = 0xFF;
 		}
 
-		phase = (f32)(u16)(arg1 / 20.0f);
-		for (i = 0; i < 6; i++) {
-			u32 scale = (u32)(D_8013DFB4_14CF64[i] * phase);
+		phase = (u16)(arg1 / 20);
+		for (i = 0; i < 6; i = (u8)(i + 1)) {
+			u16 scale = D_8013DFB4_14CF64[i] * phase;
 			f32 d = D_8013DFCC_14CF7C[i];
 
-			col[0] = D_8013E330_14D2E0[(i * 3) + 0];
-			col[1] = D_8013E330_14D2E0[(i * 3) + 1];
-			col[2] = D_8013E330_14D2E0[(i * 3) + 2];
+			col.r = D_8013E330_14D2E0[i].r;
+			col.g = D_8013E330_14D2E0[i].g;
+			col.b = D_8013E330_14D2E0[i].b;
 
-			D_80153BB8.x = (f32)(arg0->x - (d * (beamDir.x / four)));
-			D_80153BB8.y = (f32)(arg0->y - (d * (beamDir.y / four)));
-			D_80153BB8.z = (f32)(arg0->z - (d * (beamDir.z / four)));
-			D_80153BC4 = col;
-			D_80153BC8 = (f32)(u16)scale;
+			D_80153BB8.x = (f32)(arg0->x - (d * (beamVec.x / 4)));
+			D_80153BB8.y = (f32)(arg0->y - (d * (beamVec.y / 4)));
+			D_80153BB8.z = (f32)(arg0->z - (d * (beamVec.z / 4)));
+			D_80153BC4 = &col;
+			D_80153BC8 = (f32)scale;
 			D_80153BCC = flicker;
 			func_800DB350_EA300();
 		}
 
-		gDPLoadTextureBlock_4b(D_8005BB2C++, D_100DC00, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
 
-		D_80153BB8.x = (f32)((f64)arg0->x + ((f64)(beamDir.x / 3.0f) * 0.8));
-		D_80153BB8.y = (f32)((f64)arg0->y + ((f64)(beamDir.y / 3.0f) * 0.8));
-		D_80153BB8.z = (f32)((f64)arg0->z + ((f64)(beamDir.z / 3.0f) * 0.8));
+		D_80153BB8.x = (f32)((f64)arg0->x + ((f64)(beamVec.x / 3) * 0.8));
+		D_80153BB8.y = (f32)((f64)arg0->y + ((f64)(beamVec.y / 3) * 0.8));
+		D_80153BB8.z = (f32)((f64)arg0->z + ((f64)(beamVec.z / 3) * 0.8));
 		D_80153BC4 = &D_80153B80;
-		D_80153BC8 = (f32)(u16)(phase * 1.0f);
+		D_80153BC8 = (f32)(u16)((f32)phase * 1);
 		D_80153BCC = flicker;
 		func_800DB350_EA300();
 
-		D_80153BB8.x = arg0->x + ((beamDir.x / 3.0f) * 2.0f);
-		D_80153BB8.y = arg0->y + ((beamDir.y / 3.0f) * 2.0f);
-		D_80153BB8.z = arg0->z + ((beamDir.z / 3.0f) * 2.0f);
-		D_80153BC8 = (f32)(u16)(phase * 3.0);
+		D_80153BB8.x = arg0->x + ((beamVec.x / 3) * 2);
+		D_80153BB8.y = arg0->y + ((beamVec.y / 3) * 2);
+		D_80153BB8.z = arg0->z + ((beamVec.z / 3) * 2);
+		D_80153BC8 = (f32)(u16)((f32)phase * 3.0);
 		func_800DB350_EA300();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC5B8_EB568.s")
-#endif
+
 
 // DrawNonZBufferedEffects
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_beam_late_rodata.s")
+#endif
+
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
-#ifdef NON_MATCHING
 void func_800DD604_EC5B4(void) {
 	u8 i;
 	u8 effect;
@@ -9565,9 +9427,6 @@ void func_800DD604_EC5B4(void) {
 		D_80156ED9 = 0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DD604_EC5B4.s")
-#endif
 
 void func_800DDB18_ECAC8(void) {
 	u8 i;
@@ -9756,58 +9615,37 @@ void func_800DE150_ED100(void) {
 	D_80157530 = activeCount;
 }
 
-// CURRENT (1470)
-#ifdef NON_MATCHING
 void func_800DE2E8_ED298(void) {
 	s32 i;
-	Vec3f *position;
 
-	position = &D_80153BB8;
 	i = 0;
 	do {
 		UnkFC8E8Entry *entry;
 		u8 type;
-			f32 x, y, z;
 		EffectParticleConfig *cfg;
-			s32 texOffset;
+		s32 texOffset;
 
 		entry = &D_80156EF0[i];
 		if ((entry->unkA != 0) && (func_800B9228_C81D8(entry->unk0, entry->unk4, (s16)(s32)(D_80047954 * 4.0f), (s16)(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) && (entry->unkF == 0)) {
 			type = entry->unkC;
-			cfg = &D_8013DFF4_14CFA4[type];
 
 			if ((type != 0xFF) || (entry->unkE != 0xFF)) {
 				gDPPipeSync(D_8005BB2C++);
+				cfg = &D_8013DFF4_14CFA4[type];
 				if (cfg->format == 0) {
 
-					texOffset = ((cfg->height * entry->unkE) * cfg->width) / 2;
-					gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-					gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
-					gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
-					gDPLoadTextureBlock_4b(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_I, cfg->width, cfg->height, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+					texOffset = ((cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width) / 2; gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0); gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ); gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN); gDPLoadTextureBlock_4b(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_I, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				} else if (cfg->format == 1) {
 
-					texOffset = (cfg->height * entry->unkE) * cfg->width;
-					gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
-					gDPLoadTextureBlock(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_IA, G_IM_SIZ_8b, cfg->width, cfg->height, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+					texOffset = (cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width; gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0); gDPLoadTextureBlock(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_IA, G_IM_SIZ_8b, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				}
 
-				D_80153BCD = cfg->width;
-				D_80153BCE = cfg->height;
+				D_80153BCD = cfg->dimensions.values[0];
+				D_80153BCE = cfg->dimensions.values[1];
 				gDPPipeSync(D_8005BB2C++);
 			}
 
-			x = entry->unk0;
-			y = entry->unk2;
-			z = entry->unk4;
-			D_80153BB8.x = x;
-			D_80153BB8.y = y;
-			D_80153BB8.z = z;
-			D_80153BC4 = &entry->unk6;
-			D_80153BC8 = (f32)entry->unkA;
-			D_80153BCC = entry->unkD;
-
-			switch (cfg->drawMode) {
+			cfg = &D_8013DFF4_14CFA4[type]; D_80153BB8.x = D_80156EF0[i].unk0; D_80153BB8.y = D_80156EF0[i].unk2; D_80153BB8.z = D_80156EF0[i].unk4; D_80153BC4 = &entry->unk6; D_80153BC8 = (f32)entry->unkA; D_80153BCC = entry->unkD; switch (cfg->drawMode) {
 				case 0:
 					func_800DB350_EA300();
 					break;
@@ -9825,9 +9663,6 @@ void func_800DE2E8_ED298(void) {
 		i = (i + 1) & 0xFF;
 	} while (i < 0x50);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
-#endif
 
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_800DDB60_ECB10(arg0, arg1, arg2, 1, (s32) arg3);
@@ -9895,7 +9730,7 @@ void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2) {
 	}
 }
 
-u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
+u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s8 arg4) {
 	u8 slot;
 
 	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 6, 0xA);
@@ -9923,127 +9758,109 @@ void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	}
 }
 
+// CURRENT(58): result and palette stack homes are eight bytes above the target.
 #ifdef NON_MATCHING
-// CURRENT(4882): typed palettes, promoted radii, and byte final-loop index.
 s16 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s8 *arg5) {
 	s16 result;
 	s16 i;
 	s16 j;
-	s32 spreadCount;
-	s32 halfRadius;
-	s32 radius;
 	u16 temp;
-	u16 clampedRadius;
 	u16 r0;
 	u8 tempColors[4][3];
-	u8 loopCount;
 	u8 k;
-	s32 slot;
+	u8 slot;
 
 	func_800038E0_44E0();
-	clampedRadius = arg3;
-	radius = clampedRadius;
 
-	if (func_800B93AC_C835C(arg0, arg2, (u16)(clampedRadius * 2), (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f),
-			0x4000 - D_80047950) == 0) {
-		return -3;
-	}
+	if (func_800B93AC_C835C(arg0, arg2, (u16)(arg3 * 2), (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f),
+	0x4000 - D_80047950) != 0) {
 
-	if (radius < 0x1E) {
-		clampedRadius = 0x1E;
-		radius = 0x1E;
-	}
+		if (arg3 < 0x1E) {
+			arg3 = 0x1E;
+		}
 
-	if (radius >= 0x12D) {
-		clampedRadius = 0x12C;
-	}
+		if (arg3 >= 0x12D) {
+			arg3 = 0x12C;
+		}
 
-	if ((arg1 < (D_80222A70 - 0x32)) && ((currentLevel != 4) || (D_80047F94 != 2) || (gameplayMode != 0xB))) {
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 3; j++) {
-				if (currentLevel == 5) {
-					tempColors[i][j] = D_8013DF9C_14CF4C[i][j];
-				} else {
-					tempColors[i][j] = D_8013DF90_14CF40[i][j];
+		if ((arg1 < (D_80222A70 - 0x32)) && ((currentLevel != 4) || (D_80047F94 != 2) || (gameplayMode != 0xB))) {
+			for (i = 0; i < 4; i++) {
+				for (j = 0; j < 3; j++) {
+					if (currentLevel == 5) {
+						tempColors[i][j] = D_8013DF9C_14CF4C[i][j];
+					} else {
+						tempColors[i][j] = D_8013DF90_14CF40[i][j];
+					}
 				}
 			}
+
+			result = func_800C613C_D50EC(arg0, arg1, arg2, arg3, tempColors[0]);
+			if ((arg3 / 10) > 0) {
+				i = 0;
+				do {
+					r0 = func_800038E0_44E0();
+					func_800D8FA0_E7F50((r0 % arg3) + arg0 - (arg3 >> 1), arg1,
+					(func_800038E0_44E0() % arg3) + arg2 - (arg3 >> 1));
+					i++;
+				} while (i < (arg3 / 10));
+			}
+		} else {
+			result = func_800C613C_D50EC(arg0, arg1, arg2, arg3, arg5);
 		}
 
-		radius = clampedRadius;
-		result = func_800C613C_D50EC(arg0, arg1, arg2, clampedRadius, tempColors[0]);
-		spreadCount = radius / 10;
-		if (spreadCount > 0) {
-			halfRadius = radius >> 1;
-			i = 0;
-			do {
-				r0 = func_800038E0_44E0();
-				func_800D8FA0_E7F50((r0 % radius) + arg0 - halfRadius, arg1,
-					(func_800038E0_44E0() % radius) + arg2 - halfRadius);
-				i++;
-			} while (i < spreadCount);
-		}
-	} else {
-		result = func_800C613C_D50EC(arg0, arg1, arg2, clampedRadius, arg5);
-	}
+		if (result != -3) {
 
-	if (result == -3) {
+			if (arg3 >= 0x12C) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 8.0f);
+			} else if (arg3 >= 0x96) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 3.0f);
+			} else if (arg3 >= 0x50) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
+			}
+
+			if (arg3 >= 0x51) {
+				func_800DEE5C_EDE0C(arg0, arg1, arg2, (arg3 / 10) + 0x14, 6);
+				func_80137234_1461E4(0x15F, arg0, arg1, arg2, (arg3 / 10));
+			}
+
+			func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 7, arg3 * 8), 0xB4);
+			slot = func_800DDB60_ECB10(arg0, arg1, arg2, 7, arg3 * 6);
+			func_800DDE1C_ECDCC(slot, 0x6E);
+			func_800DDEE0_ECE90(slot, 1);
+
+			if (D_80153B87 == 0) {
+				temp = arg3 / 6;
+				if (temp >= 0x29) {
+					temp = 0x28;
+				}
+				func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, arg3, 0xB4, temp, 6, 0xFF, 0xFF, 0xFF);
+			}
+
+			if (arg3 < 0x96) {
+				func_80137234_1461E4(0xEA, arg0, arg1, arg2, arg3);
+			} else if (arg3 >= 0x191) {
+				func_80137234_1461E4(0xE8, arg0, arg1, arg2, arg3);
+			} else {
+				func_80137234_1461E4(0xE9, arg0, arg1, arg2, arg3);
+			}
+
+			for (k = 0; k < arg4; k++) {
+				func_800C7924_D68D4(arg0, arg1, arg2, arg3, result, arg3,
+				D_8013DD20_14CCD0[func_800038E0_44E0() % 8], 0);
+			}
+
+			if (arg3 < 0x96) {
+				func_800DEA08_ED9B8(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x1E, 0xFA, 0x32, 0x32, 0x32);
+			} else {
+				func_800DEA08_ED9B8(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x3C, 0xFA, 0x32, 0x32, 0x32);
+			}
+
+		}
 		return result;
 	}
-
-	radius = clampedRadius;
-	if (radius >= 0x12C) {
-		func_80135D44_144CF4(arg0, arg1, arg2, 8.0f);
-	} else if (radius >= 0x96) {
-		func_80135D44_144CF4(arg0, arg1, arg2, 3.0f);
-	} else if (radius >= 0x50) {
-		func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
-	}
-
-	if (radius >= 0x51) {
-		spreadCount = radius / 10;
-		func_800DEE5C_EDE0C(arg0, arg1, arg2, spreadCount + 0x14, 6);
-		func_80137234_1461E4(0x15F, arg0, arg1, arg2, spreadCount);
-	}
-
-	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 7, radius * 8), 0xB4);
-	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 7, radius * 6);
-	func_800DDE1C_ECDCC(slot, 0x6E);
-	func_800DDEE0_ECE90(slot, 1);
-
-	if (D_80153B87 == 0) {
-		temp = radius / 6;
-		if ((u16) temp >= 0x29) {
-			temp = 0x28;
-		}
-		func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, clampedRadius, 0xB4, temp, 6, 0xFF, 0xFF, 0xFF);
-	}
-
-	if (radius < 0x96) {
-		func_80137234_1461E4(0xEA, arg0, arg1, arg2, clampedRadius);
-	} else if (radius >= 0x191) {
-		func_80137234_1461E4(0xE8, arg0, arg1, arg2, clampedRadius);
-	} else {
-		func_80137234_1461E4(0xE9, arg0, arg1, arg2, clampedRadius);
-	}
-
-	loopCount = arg4;
-	if (loopCount > 0) {
-		k = 0;
-		do {
-			func_800C7924_D68D4(arg0, arg1, arg2, radius, result, clampedRadius,
-				D_8013DD20_14CCD0[func_800038E0_44E0() % 8], 0);
-			k = (k + 1) & 0xFF;
-		} while (k < loopCount);
-	}
-
-	if (radius < 0x96) {
-		func_800DEA08_ED9B8(arg0, arg1, arg2, radius, radius / 16, 1, 0x1E, 0xFA, 0x32, 0x32, 0x32);
-	} else {
-		func_800DEA08_ED9B8(arg0, arg1, arg2, radius, radius / 16, 1, 0x3C, 0xFA, 0x32, 0x32, 0x32);
-	}
-
-	return result;
+	return -3;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
 #endif
@@ -10105,8 +9922,6 @@ void func_800DFA98_EEA48(s8 arg0[][3]) {
 }
 
 // large explosion effect with smaller random explosions
-// CURRENT(5): only generated 0.6f rodata address differs; retain wrapper without a new late-rodata file.
-#ifdef NON_MATCHING
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	u8 unused; /* Preserve the original local stack layout. */
 	s8 sp68[4][3];
@@ -10141,9 +9956,6 @@ void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 		} while (arg4 < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFBA8_EEB58.s")
-#endif
 
 void func_800DFE68_EEE18(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DEA08_ED9B8(arg0, arg1, arg2, 0xF, 2, 1, 0x14, 0xFF, 0xFF, 0xFA, 0xDC);
@@ -10544,7 +10356,6 @@ void func_800E1C10_F0BC0(void) {
 	D_80156EDC.unk4 = D_80052B34->unk4;
 }
 
-#ifdef NON_MATCHING
 void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 	s32 skipSecondCall = 0;
 	s32 shouldClamp = 0;
@@ -10621,105 +10432,54 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1D48_F0CF8.s")
-#endif
 
-// CURRENT(6532)
-#ifdef NON_MATCHING
 void func_800E1F70_F0F20(VehicleInstance *arg0) {
-	s16 randA;
-	s16 randB;
-	s16 randC;
-	u8 temp;
+	u8 speed;
 
 	if (-arg0->unk58 < arg0->unk58) {
-		temp = arg0->unk58;
+		speed = arg0->unk58;
 	} else {
-		temp = -arg0->unk58;
+		speed = -arg0->unk58;
 	}
 
 	if (arg0->unk1A == 0) {
-		if ((func_800038E0_44E0() % 30) < (temp + 10)) {
-			randA = func_800038E0_44E0();
-			randB = func_800038E0_44E0();
-			randC = func_800038E0_44E0();
+		if ((func_800038E0_44E0_U16() % 30) < (speed + 10)) {
 			func_800DEED0_EDE80(
-				(((u16)randA % 28) + D_80052B34->unk0) - 14,
+				D_80052B34->unk0 + (func_800038E0_44E0_U16() % 28) - 14,
 				D_80222A70 + 3,
-				(((u16)randB % 28) + D_80052B34->unk4) - 14,
-				(((u16)randC % 5) + temp + 10),
-				(func_800038E0_44E0() % 10) + temp + 45);
+				D_80052B34->unk4 + (func_800038E0_44E0_U16() % 28) - 14,
+				(func_800038E0_44E0_U16() % 5) + speed + 10,
+				(func_800038E0_44E0_U16() % 10) + speed + 45);
 		}
-	} else if ((func_800038E0_44E0() % 40) < (temp + 10)) {
+	} else if ((func_800038E0_44E0_U16() % 40) < (speed + 10)) {
 		if (vehicleTypes[arg0->unk1A].unk4C & 0x20000) {
-			randA = func_800038E0_44E0();
-			randB = func_800038E0_44E0();
-			randC = func_800038E0_44E0();
 			func_800DEED0_EDE80(
-				(((u16)randA % 40) + arg0->unk0) - 20,
+				arg0->unk0 + (func_800038E0_44E0_U16() % 40) - 20,
 				D_80222A70 + 3,
-				(((u16)randB % 40) + arg0->unk4) - 20,
-				(((u16)randC % 40) + vehicleTypes[arg0->unk1A].unkC),
-				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
+				arg0->unk4 + (func_800038E0_44E0_U16() % 40) - 20,
+				vehicleTypes[arg0->unk1A].unkC + (func_800038E0_44E0_U16() % 40),
+				(func_800038E0_44E0_U16() % 10) + (speed / 2) + 60);
 		} else {
-			randA = func_800038E0_44E0();
-			randB = func_800038E0_44E0();
-			randC = func_800038E0_44E0();
 			func_800DEED0_EDE80(
-				(((u16)randA % 40) + arg0->unk0) - 20,
+				arg0->unk0 + (func_800038E0_44E0_U16() % 40) - 20,
 				D_80222A70 + 3,
-				(((u16)randB % 40) + arg0->unk4) - 20,
-				(((u16)randC % 20) + (vehicleTypes[arg0->unk1A].unkC / 2)),
-				(func_800038E0_44E0() % 10) + ((s32)temp / 2) + 60);
+				arg0->unk4 + (func_800038E0_44E0_U16() % 40) - 20,
+				vehicleTypes[arg0->unk1A].unkC / 2 + (func_800038E0_44E0_U16() % 20),
+				(func_800038E0_44E0_U16() % 10) + (speed / 2) + 60);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1F70_F0F20.s")
-#endif
 
-// CURRENT(2598)
-#ifdef NON_MATCHING
 void func_800E24B8_F1468(u8 arg0) {
-	AlienInstance *alien;
-	s32 temp_v0;
-	s32 var_a1;
-	s16 divisor;
-	s16 x; s16 z;
-
-	temp_v0 = func_800038E0_44E0();
-	alien = &alienInstances[arg0];
-	{
-		s32 temp_a0;
-		s32 temp_t9;
-		temp_t9 = alien->unk12 >> 5;
-		temp_a0 = -temp_t9;
-		if (temp_a0 < temp_t9) {
-			var_a1 = temp_t9;
-		} else {
-			var_a1 = temp_a0;
-		}
-
-	}
-
-	if ((temp_v0 % 40) < (var_a1 + 10)) {
-		u16 sp28;
-		u16 sp26;
-		u16 sp24;
-		sp24 = func_800038E0_44E0();
-		sp26 = func_800038E0_44E0();
-		sp28 = func_800038E0_44E0();
-		temp_v0 = func_800038E0_44E0();
-		divisor = 30;
-		x = (sp24 % divisor) + alien->unk0 - 15;
-		z = (sp26 % divisor) + alien->unk4 - 15;
-		func_800DEED0_EDE80(x, D_80222A70 + 5, z, (sp28 % 20) + alienTypes[alien->typeIndex].unkC / 2, (temp_v0 % 10) + 50);
+	if ((func_800038E0_44E0_U16() % 40) < (BH_ABS(alienInstances[arg0].unk12 >> 5) + 10)) {
+		func_800DEED0_EDE80(
+			alienInstances[arg0].unk0 + (func_800038E0_44E0_U16() % 30) - 15,
+			D_80222A70 + 5,
+			alienInstances[arg0].unk4 + (func_800038E0_44E0_U16() % 30) - 15,
+			alienTypes[alienInstances[arg0].typeIndex].unkC / 2 + (func_800038E0_44E0_U16() % 20),
+			(func_800038E0_44E0_U16() % 10) + 50);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E24B8_F1468.s")
-#endif
 
 void func_800E2668_F1618(void) {
 
@@ -10765,24 +10525,24 @@ void func_800E2750_F1700(u8 arg0) {
 	}
 }
 
-// CURRENT(10695)
-#ifdef NON_MATCHING
 void func_800E2830_F17E0(void) {
-	Unk800311A0 *entry;
-	s32 count;
-	s32 i;
-	s32 yLimit;
-	s16 xOffset;
+	u8 i;
+	s16 value;
+	s32 velocity;
 	s16 didShrink;
+	s32 xOffset;
+	u8 *timer;
 	didShrink = 0;
-	if (D_8013E408_14D3B8 == 5) {
-		if ((D_80154300) < D_80154308) {
+	timer = &D_8013E408_14D3B8;
+	value = *timer;
+	if (value == 5) {
+		if (D_80154300 < D_80154308) {
 			func_800E2750_F1700(D_80154300);
-			(D_80154300) += 1;
+			D_80154300++;
 		}
-		D_8013E408_14D3B8 = 0;
+		*timer = 0;
 	} else {
-		D_8013E408_14D3B8++;
+		*timer = value + 1;
 	}
 
 	D_80154080 = (s8)(func_80003824_4424(D_80153B90.z, D_80153B90.x) / 2048);
@@ -10812,63 +10572,53 @@ void func_800E2830_F17E0(void) {
 		D_801541F0.unk2 += 3;
 	}
 
-	count = (D_80154300);
-	i = 0;
-	if (count > 0) {
-		do {
+	for (i = 0; i < D_80154300; i++) {
 
-			if (currentLevel == LEVEL_SIBERIA) {
-				xOffset = (s16)(s32)((((f32)sins((u16)(((i + D_80052A8C) << 11) & 0xFFFF)) / 32768.0) *
-									(((s32)D_80154300 / 5) + 0x10)) + ((D_80154080 * (u16)D_80153BD0[i].unk4 * 2) >> 4));
-			} else {
-				xOffset = (s16)((s32)((u16)D_80153BD0[i].unk4 * D_80154080 * 2) >> 4);
-			}
+		if (currentLevel == LEVEL_SIBERIA) {
+			value = sins((u16)(i + D_80052A8C) << 11);
+			velocity = (u16)D_80153BD0[i].unk4;
+			xOffset = (s16)((((f32)value / 32768.0) * (D_80154300 / 5 + 0x10)) + ((D_80154080 * velocity * 2) >> 4));
+		} else {
+			velocity = (u16)D_80153BD0[i].unk4;
+			xOffset = (s16)((s32)((u32)velocity * D_80154080 * 2) >> 4);
+		}
 
-			yLimit = D_80068088 * 0x10;
-			entry = &D_80153BD0[i];
-			entry->unk2 += (u16)entry->unk4;
-			entry->unk0 += xOffset;
+		xOffset &= 0xFFFF;
+		D_80153BD0[i].unk0 += xOffset;
+		D_80153BD0[i].unk2 += velocity;
 
-			if (yLimit < entry->unk2) {
-				if ((D_80154308 < count) && (didShrink == 0)) {
-					(D_80154300) = count - 1;
-					count = (D_80154300);
-					didShrink = 1;
-					if (count != i) {
-						D_80153BD0[i] = D_80153BD0[count];
-						i = (i - 1) & 0xFF;
-					}
-				} else {
-					func_800E2750_F1700(i);
-					count = (D_80154300);
+		if (D_80068088 * 0x10 < D_80153BD0[i].unk2) {
+			if ((D_80154308 < D_80154300) && (didShrink == 0)) {
+				didShrink = 1;
+				D_80154300--;
+				if (D_80154300 != i) {
+					D_80153BD0[i] = D_80153BD0[D_80154300];
+					i--;
 				}
 			} else {
-				if ((D_80068084 * 0x10) < entry->unk0) {
-					entry->unk0 = 0;
-					if (currentLevel == LEVEL_JAVA) {
-						entry->unk4 = (func_800038E0_44E0() % 100) + 0x4B;
-					} else if (currentLevel == LEVEL_SIBERIA) {
-						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
-					}
-					count = (D_80154300);
-				} else if (entry->unk0 < 0) {
-					entry->unk0 = D_80068084 * 0x10;
-					if (currentLevel == LEVEL_JAVA) {
-						entry->unk4 = (func_800038E0_44E0() % 100) + 0x4B;
-					} else if (currentLevel == LEVEL_SIBERIA) {
-						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
-					}
-					count = (D_80154300);
+				func_800E2750_F1700(i);
+			}
+		} else {
+			if ((D_80068084 * 0x10) < D_80153BD0[i].unk0) {
+				D_80153BD0[i].unk0 = 0;
+				if (currentLevel == LEVEL_JAVA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 100) + 0x4B);
+				} else if (currentLevel == LEVEL_SIBERIA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 75) + 0x19);
+				}
+			} else if (D_80153BD0[i].unk0 < 0) {
+				D_80153BD0[i].unk0 = D_80068084 * 0x10;
+				if (currentLevel == LEVEL_JAVA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 100) + 0x4B);
+				} else if (currentLevel == LEVEL_SIBERIA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 75) + 0x19);
 				}
 			}
+		}
 
-			i = (i + 1) & 0xFF;
-		} while (i < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2830_F17E0.s")
-#endif
+
 
 void func_800E2DB4_F1D64(void) {
 	gDPPipeSync(D_8005BB2C++);
@@ -11023,13 +10773,14 @@ void func_800E3738_F26E8(u16 arg0, u8 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s32 arg6, s16 arg7, u8 arg8) {
 	s16 rot;
 	s16 x1;
+	s16 unused;
 	s16 z1;
 	s16 x2;
 	s16 z2;
+	s16 unused2;
 	u8 red0;
 	u8 green0;
 	u8 blue0;
@@ -11039,171 +10790,94 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	u8 green1;
 	u8 blue1;
 	s16 size;
-	u8 maxStep;
+	u8 unused3;
 	f32 stepScale;
+	s32 difference;
+	Gfx *gfx;
 
-	rot = func_80003824_4424((f32)(arg3 - arg0), (f32)(arg5 - arg2));
-	rot = (s16)(rot + 0x4000);
+	rot = func_80003824_4424((f32)(arg3 - arg0), (f32)(arg5 - arg2)) + 0x4000;
 
-	maxStep = D_8013DD18_14CCC8[arg8];
-	stepScale = (f32)(0xFF / maxStep);
+	stepScale = (f32)(0xFF / D_8013DD18_14CCC8[arg8]);
 
 	switch (arg8) {
 		case 0:
-			if (arg7 == maxStep) {
-				red0 = 0xFA;
-				green0 = 0x50;
-				blue0 = 0x64;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0;
-				blue1 = 0;
+			if (arg7 == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xFA; green0 = 0x50; blue0 = 0x64; alpha0 = 0xFF; red1 = 0xFF; alpha1 = 0xFF; green1 = 0; blue1 = 0;
 			} else {
-				red0 = 0x96;
-				green0 = 0;
-				blue0 = 0;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0x96;
-				alpha1 = 0;
-				green1 = 0;
-				blue1 = 0;
+				red0 = 0x96; green0 = 0; blue0 = 0; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1); red1 = 0x96; alpha1 = 0; green1 = 0; blue1 = 0;
 			}
 			size = 0xC;
 			break;
 		case 1:
-			if (arg7 == maxStep) {
-				red0 = 0xFF;
-				green0 = 0x96;
-				blue0 = 0;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0x96;
-				green1 = 0;
-				blue1 = 0x32;
+			if (arg7 == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xFF; green0 = 0x96; blue0 = 0; alpha0 = 0xFF;
+				red1 = 0xFF; alpha1 = 0x96; green1 = 0; blue1 = 0x32;
 			} else {
-				red0 = 0x96;
-				green0 = 0;
-				blue0 = 0;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0x96;
-				alpha1 = 0;
-				green1 = 0;
-				blue1 = 0;
+				red0 = 0x96; green0 = 0; blue0 = 0; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = 0x96; alpha1 = 0; green1 = 0; blue1 = 0;
 			}
 			size = 0xA;
 			break;
 		case 2:
-			if (arg7 >= maxStep - 1) {
-				red0 = 0xFF;
-				green0 = 0xFF;
-				blue0 = 0x78;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0x64;
-				green1 = 0x64;
-				blue1 = 0x32;
+			if (arg7 >= D_8013DD18_14CCC8[arg8] - 1) {
+				red0 = 0xFF; green0 = 0xFF; blue0 = 0x78; alpha0 = 0xFF;
+				red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0x32;
 				func_80135D44_144CF4(arg3, arg4, arg5, 2.0f);
 			} else {
-				red0 = 0xAA;
-				green0 = 0xAA;
-				blue0 = 0x64;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0xFF;
-				blue1 = 0;
+				red0 = 0xAA; green0 = 0xAA; blue0 = 0x64; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = 0xFF; alpha1 = 0xFF; green1 = 0xFF; blue1 = 0;
 			}
 			size = 0x1E;
 			break;
 		case 3:
-			alpha0 = 0xFF;
-			red0 = 0xFF;
-			blue0 = 0x78;
-			green0 = 0xFF;
-			alpha1 = 0x64;
-			red1 = 0xFF;
-			green1 = 0x64;
-			blue1 = 0x32;
+			red0 = 0xFF; green0 = 0xFF; blue0 = 0x78; alpha0 = 0xFF;
+			red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0x32;
 			size = 0xF;
 			break;
 		case 5:
-			if (arg7 == maxStep) {
-				red0 = 0xFF;
-				green0 = 0xFF;
-				blue0 = 0x78;
-				alpha0 = 0xFF;
-				red1 = 0xFF;
-				alpha1 = 0x64;
-				green1 = 0x64;
-				blue1 = 0x32;
+			difference = arg7;
+			if (difference == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xFF; green0 = 0xFF; blue0 = 0x78; alpha0 = 0xFF;
+				red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0x32;
 			} else {
-				red0 = 255.0f - (f32)(s16)(maxStep - arg7) * stepScale;
-				green0 = 0;
-				blue0 = 0;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = 0xFF;
-				alpha1 = 0x64;
-				green1 = 0x64;
-				blue1 = 0;
+				difference = (s16)(D_8013DD18_14CCC8[arg8] - difference);
+				red0 = 0xFF; green0 = 255.0f - (f32)difference * stepScale; blue0 = 0; alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = 0xFF; alpha1 = 0x64; green1 = 0x64; blue1 = 0;
 			}
 			size = 0xA;
 			break;
 		case 6:
-			if (arg7 == maxStep) {
-				red0 = 0xDC;
-				green0 = 0x8C;
-				blue0 = 0;
-				alpha0 = 0xFF;
-				red1 = 0xDC;
-				alpha1 = 0x8C;
-				green1 = 0;
-				blue1 = 0xFF;
+			difference = arg7;
+			if (difference == D_8013DD18_14CCC8[arg8]) {
+				red0 = 0xDC; green0 = 0x8C; blue0 = 0; alpha0 = 0xFF;
+				red1 = 0xDC; alpha1 = 0x8C; green1 = 0; blue1 = 0xFF;
 			} else {
-				s16 rem = (s16)(maxStep - arg7);
-				f32 color;
+				difference = (s16)(D_8013DD18_14CCC8[arg8] - difference);
 
-				color = (((35.0f / (f32)(u32)maxStep) * rem) * 3.0f) + 220.0f;
-				red0 = color > 255.0f ? 255.0f : color;
-				color = (((115.0f / (f32)(u32)maxStep) * rem) * 3.0f) + 140.0f;
-				green0 = color > 255.0f ? 255.0f : color;
-				color = ((f32)rem * stepScale) * 3.0f;
-				blue0 = color > 255.0f ? 255.0f : color;
-				alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
-				red1 = red0;
-				alpha1 = green0;
-				green1 = blue0;
-				blue1 = 0;
+				red0 = ((((35.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 220.0f) > 255.0f ? 255.0f : ((((35.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 220.0f);
+				green0 = ((((115.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 140.0f) > 255.0f ? 255.0f : ((((115.0f / (f32)(u32)D_8013DD18_14CCC8[arg8]) * difference) * 3) + 140.0f);
+				blue0 = (((f32)difference * stepScale) * 3) > 255.0f ? 255.0f : (((f32)difference * stepScale) * 3); alpha0 = ((u8)((f32)arg7 * stepScale) >> 1);
+				red1 = red0; alpha1 = green0; green1 = blue0; blue1 = 0;
 			}
 			size = 0xC;
 			break;
 		case 4:
-			if (arg7 > (maxStep >> 1)) {
-				red0 = 0xFF;
-				green0 = 0xFF;
-				blue0 = 0;
-				alpha0 = 0x46;
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0;
-				blue1 = 0;
+			difference = arg7;
+			if (difference > (D_8013DD18_14CCC8[arg8] >> 1)) {
+				red0 = 0xFF; green0 = 0xFF; blue0 = 0; alpha0 = 0x46;
+				red1 = 0xFF; alpha1 = 0xFF; green1 = 0; blue1 = 0;
 			} else {
-				s32 half = maxStep >> 1;
-				s16 rem = (s16)(half - arg7);
 				s32 dec;
-
-				red0 = 0xFF;
-				green0 = 255.0f - ((f32)rem * stepScale) * 2.0f;
-				dec = 0x46 - ((rem * 0x46) / half);
-				if (dec < 0) {
-					dec = 0;
-				}
+				difference = (s16)((D_8013DD18_14CCC8[arg8] >> 1) - difference);
+				red0 = 0xFF; green0 = 255.0f - ((f32)difference * stepScale) * 2;
+				dec = 0x46 - ((difference * 0x46) / (D_8013DD18_14CCC8[arg8] >> 1));
 				blue0 = 0;
-				alpha0 = (u8)dec;
-				red1 = 0xFF;
-				alpha1 = 0xFF;
-				green1 = 0;
-				blue1 = 0;
+				if (dec < 0) {
+					alpha0 = 0;
+				} else {
+					alpha0 = dec;
+				}
+				red1 = 0xFF; alpha1 = 0xFF; green1 = 0; blue1 = 0;
 			}
 			size = 0x14;
 			break;
@@ -11212,13 +10886,13 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	if (arg8 == 3) {
 		x1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.x);
 		z1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.z);
-		x2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AC4.x);
-		z2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AC4.z);
+		x2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.rightX);
+		z2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.rightZ);
 	} else {
-		x1 = ((f32)coss((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
-		z1 = ((f32)sins((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
-		x2 = ((f32)coss((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
-		z2 = ((f32)sins((u16)rot) / 32768.0) * (D_8013DD18_14CCC8[arg8] + size - arg7);
+		x1 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)coss((u16)rot) / 32768.0);
+		z1 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)sins((u16)rot) / 32768.0);
+		x2 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)coss((u16)rot) / 32768.0);
+		z2 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)sins((u16)rot) / 32768.0);
 	}
 
 	D_8005BB34->v.ob[0] = arg0;
@@ -11293,27 +10967,27 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	D_8005BB34->v.cn[3] = blue1;
 	D_8005BB34++;
 
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADING_SMOOTH);
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 6), 6, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 4, 2, 0, 0, 1, 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 3, 1, 0, 3, 5, 1, 0);
 
 	if (arg6 != 0) {
-		gDPPipeSync(D_8005BB2C++);
+		gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E3928_F28D8.s")
-#endif
 
 void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	Unk80052B40 position;
@@ -11359,43 +11033,27 @@ void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-// CURRENT(330)
-#ifdef NON_MATCHING
 void func_800E5044_F3FF4(void) {
-	LaserEntry *entry;
-	LaserEntry *end;
-	s32 arg4, arg5, arg6, arg7, arg8;
-
-	/* Keep the render-mode stores and pointer initializations on their shared lines for IDO scheduling. */
+	s32 i;
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	{ Gfx *packet = D_8005BB2C++; packet->words.w1 = G_RM_AA_ZB_OPA_SURF | G_RM_AA_ZB_OPA_SURF2; packet->words.w0 = _SHIFTL(G_SETOTHERMODE_L, 24, 8) | _SHIFTL(G_MDSFT_RENDERMODE, 8, 8) | 29; }
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 
-	end = &D_80152D00[64]; entry = D_80152D00;
-	do {
-		if (entry->type == 1) {
-			arg4 = entry->y2;
-			arg5 = entry->z2;
-			arg6 = entry->extra;
-			arg7 = entry->timer;
-			arg8 = entry->colorIdx;
-			func_800E3928_F28D8(entry->x1, entry->y1, entry->z1, entry->x2, arg4, arg5, arg6, arg7, arg8);
-		} else if (entry->type == 2) {
-			func_800E4CEC_F3C9C(entry->alien, entry->timerLow);
+	for (i = 0; i < 64; i++) {
+		if (D_80152D00[i].type == 1) {
+			func_800E3928_F28D8(D_80152D00[i].x1, D_80152D00[i].y1, D_80152D00[i].z1, D_80152D00[i].x2, D_80152D00[i].y2, D_80152D00[i].z2, D_80152D00[i].extra, D_80152D00[i].timer, D_80152D00[i].colorIdx);
+		} else if (D_80152D00[i].type == 2) {
+			func_800E4CEC_F3C9C(D_80152D00[i].alien, D_80152D00[i].timerLow);
 		}
-		entry++;
-	} while (entry != end);
+	}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5044_F3FF4.s")
-#endif
 
 void func_800E520C_F41BC(void) {
 	s32 i;
@@ -11509,37 +11167,38 @@ void func_800E552C_F44DC(void) {
 	D_80152C96 = 0;
 }
 
-// CURRENT(28573)
-#ifdef NON_MATCHING
 void func_800E5538_F44E8(void) {
+	s32 temp_s5;
+	u32 var_a3;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
 	Unk80052B40 scale;
-	f64 temp_f20;
 	s16 var_a2;
-	s32 var_a3;
 	s16 var_t0;
 	s16 var_t1;
 	s16 var_t2;
 	s32 temp_a0;
-	s32 temp_s5;
-	s32 var_s2;
 	Unk80152CA0Entry *entry;
+	u8 var_s2;
+	s16 textureOffset;
+	s32 timer;
+	Gfx *gfx;
 
 	temp_s5 = D_80052A8C;
 	temp_s5 = (temp_s5 * 4) & 0xFF;
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
-	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETGEOMETRYMODE, 24, 8); gfx->words.w1 = G_LIGHTING;
 
 	var_s2 = 0;
-	if (D_80152C96 > 0) {
-		temp_f20 = D_801441E0_153190[0];
-		do {
+	if (D_80152C96 > 0) { do {
 			entry = &D_80152CA0[var_s2];
-						var_a3 = 0x64;
+			var_a3 = 0x64;
 			if (entry->unk1 != 0) {
 				temp_a0 = 0x40 - (temp_s5 / 2);
+				textureOffset = (((temp_s5 / 4) % 8) << 8) / 2;
 				if (entry->unk1 == 2) {
 					var_t0 = vehicleInstances[entry->unk0].unk0;
 					var_t1 = vehicleInstances[entry->unk0].unk2;
@@ -11552,18 +11211,19 @@ void func_800E5538_F44E8(void) {
 					var_a2 = buildingTypes[buildingInstances[entry->unk0].buildingType].unk14 * 15;
 				}
 
-								if (entry->unk2 != 0) {
-					var_a3 = (s16)entry->unk2;
+								timer = entry->unk2;
+				if (timer != 0) {
+					var_a3 = (s16)timer;
 				}
 
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x64, 0xA0, 0xF0, (f64)var_a3 * temp_f20);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x64, 0xA0, 0xF0, (s32)var_a3 * 1.7);
 
 				scale.unk0 = ((temp_a0 >= 0 ? temp_a0 : -temp_a0) * 2) + var_a2;
 				scale.unk2 = ((temp_a0 >= 0 ? temp_a0 : -temp_a0) * 2) + var_a2;
 				scale.unk4 = ((temp_a0 >= 0 ? temp_a0 : -temp_a0) * 2) + var_a2;
 
 				if (entry->unk2 != 0) {
-										scale.unk0 += ((0x64 - entry->unk2) * scale.unk0) / 0xC8;
+					scale.unk0 += ((0x64 - entry->unk2) * scale.unk0) / 0xC8;
 					scale.unk2 += ((0x64 - entry->unk2) * scale.unk2) / 0xC8;
 					scale.unk4 += ((0x64 - entry->unk2) * scale.unk4) / 0xC8;
 				}
@@ -11574,31 +11234,22 @@ void func_800E5538_F44E8(void) {
 				position.unk0 = var_t0;
 				position.unk2 = var_t1;
 				position.unk4 = var_t2;
-								func_800039D0_45D0(&position, &rotation, &scale, D_8005BB38 += 0x40);
+				func_800039D0_45D0(&position, &rotation, &scale, ++D_8005BB38);
 
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (s16)(((s32)(((temp_s5 / 4) % 8) << 8) / 2)) + (u32)&D_50327B0);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-				gDPLoadSync(D_8005BB2C++);
-				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 1024);
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+				gDPLoadTextureBlock(D_8005BB2C++, &D_50327B0[textureOffset], G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
 				gSPTexture(D_8005BB2C++, 0x1000, 0x1000, 0, G_TX_RENDERTILE, G_ON);
-				gDPPipeSync(D_8005BB2C++);
+				gfx = D_8005BB2C++;
+				gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI_PRIM, G_CC_PASS2);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPDisplayList(D_8005BB2C++, (u32)&D_50332A0);
+				gSPDisplayList(D_8005BB2C++, &D_50332A0);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 
 			var_s2++;
-			var_s2 &= 0xFF;
 		} while (var_s2 < D_80152C96);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
-#endif
 
 void func_800E5B78_F4B28(void)
 {
@@ -11675,23 +11326,22 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	}
 }
 
-// CURRENT(16)
 // Remove a matching shield and compact its entry list.
-#ifdef NON_MATCHING
 void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 	s16 i;
 	s16 j;
-	s32 newCount;
+	s16 newCount;
 	s16 count;
+	s32 id[1];
 	s32 type;
 
-	osSyncPrintf(&D_80143F7C_152F2C, arg1);
+	osSyncPrintf(&D_80143F7C_152F2C, id[0] = arg1);
 	count = D_80152C96;
 	type = arg0;
 
 	for (i = 0; i <= count; i++) {
 		if (type == D_80152CA0[i].unk1) {
-			if (arg1 == D_80152CA0[i].unk0) {
+			if (id[0] == D_80152CA0[i].unk0) {
 				if (D_80152CA0[i].unk1 == 2) {
 					vehicleInstances[D_80152CA0[i].unk0].unk20 &= ~0x80;
 				} else if (D_80152CA0[i].unk1 == 1) {
@@ -11712,9 +11362,6 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5E3C_F4DEC.s")
-#endif
 
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
@@ -11739,7 +11386,6 @@ s32 func_800E60CC_F507C(u8 arg0, u8 arg1) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
 void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk800E614CFxSlot *slot;
 	s32 slotIdx;
@@ -11762,18 +11408,15 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 
 	if ((currentLevel == 1 || currentLevel == 3) && D_80052ACA != 2) {
-		slotIdx = 0;
-		while (((Unk800E614CFxSlot *)(s32)&D_80153300[slotIdx])->unk1E6 != 0) {
-			slotIdx++;
-		}
+		/* Preserve IDO's indexed search and its initial multiply by zero. */
+		slotIdx = arg3 * 0 - 1;
+		while (D_80153300[++slotIdx].unk1E6 != 0) {}
 
-		if (arg3 != 0) {
+		{
 			s32 i;
 
-
-
 			i = arg3;
-			while (i--) {
+			if (i--) do {
 				Unk800E614CFxEntry *entry;
 				s32 z;
 
@@ -11781,7 +11424,7 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 				entry->unk0 = (func_800038E0_44E0() * 2) + (arg0 << 8);
 				z = (func_800038E0_44E0() * 2) + (arg2 << 8);
 				entry->unk8 = z;
-				entry->unk4 = func_800B84D0_C7480((s16) (entry->unk0 >> 8), (s16) (z >> 8));
+				entry->unk4 = func_800B84D0_C7480(entry->unk0 >> 8, z >> 8);
 				if (entry->unk4 < ((D_80222A70 + 0xC8) << 8)) {
 					entry->unk4 = (((func_800038E0_44E0() % hundred) + D_80222A70) + 0xC8) << 8;
 				}
@@ -11790,40 +11433,36 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 				entry->unk14 = 0;
 				entry->unk18 = func_800038E0_44E0() & 0x1F;
 
-			}
+			} while (i--);
 		}
 
-		slot = &D_80153300[slotIdx];
+		/* Rematerialize the slot base separately from the entry-loop cursor. */
+		slot = (Unk800E614CFxSlot *)(s32)&D_80153300_slotView[slotIdx];
+		if (slot) {} /* Retain IDO's typed address before the RNG call. */
 		angle = func_800038E0_44E0();
 		slot->motion.x = arg0 << 8;
 		slot->motion.y = arg1 << 8;
 		slot->motion.z = arg2 << 8;
 
 		{
-
-
 			motion = &slot->motion;
-			motion->velocityX = (s32) (((f32)coss((u16) angle) / 32768.0) * (f32)(D_800313F4 * hundred));
-			motion->velocityZ = (s32) (((f32)sins((u16) angle) / 32768.0) * (f32)(D_800313F4 * hundred));
+			motion->velocityX = (((f32)coss(angle) / 32768.0) * (f32)(D_800313F4 * hundred));
+			motion->velocityZ = (((f32)sins(angle) / 32768.0) * (f32)(D_800313F4 * hundred));
 		}
 
 		motion->velocityY = 0;
 		slot->unk1DC = 0;
 		slot->unk1E0 = 0x708;
-		slot->unk1E8 = 0x32;
 		slot->unk1E6 = arg3;
+		slot->unk1E8 = 0x32;
 		slot->unk1E4 = func_800038E0_44E0();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E614C_F50FC.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_800E64B4_F5464(void) {
 	s32 slotCount = 4;
 	Unk800E614CFxSlot *slot;
-	s32 pad[2];
+	s32 pad[2]; /* Preserve the target counter spill at sp + 0x64. */
 	Unk800E614CFxEntry *entry;
 	s32 activeCount;
 	Unk800E614CFxMotion *motion;
@@ -11878,8 +11517,8 @@ void func_800E64B4_F5464(void) {
 					slot->unk1E8 = func_800038E0_44E0() & 0x24;
 					slot->unk1E0 = 0;
 					slot->unk1E4 += (func_800038E0_44E0() & 0x1FFF) - 0xFFF;
-					motion->velocityX = (s32) (((f32) coss((u16) slot->unk1E4) / 32768.0) * D_801441E8_153198[0]);
-					motion->velocityZ = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * D_801441E8_153198[0]);
+					motion->velocityX = (s32) (((f32) coss((u16) slot->unk1E4) / 32768.0) * 6000.0);
+					motion->velocityZ = (s32) (((f32) sins((u16) slot->unk1E4) / 32768.0) * 6000.0);
 				}
 
 				if (func_800047FC_53FC((s16) ((((motion->x >> 8) - D_80052B34->unk0) >> 8))) + func_800047FC_53FC((s16) ((((motion->z >> 8) - D_80052B34->unk4) >> 8))) >= 0x1F5) {
@@ -11941,9 +11580,6 @@ void func_800E64B4_F5464(void) {
 		(s16) ((func_800038E0_44E0() % 16) + 1));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E64B4_F5464.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800E6A38_F59E8(void) {
@@ -11986,11 +11622,11 @@ void func_800E6A38_F59E8(void) {
 	gDPTileSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
 
-	for (; slotCount--; ) {
+	while (slotCount--) {
 		slot = &D_80153300[slotCount];
 		remain = slot->unk1E6;
 		if (remain != 0) {
-			for (; remain--; ) {
+			while (remain--) {
 			entry = &slot->entries[remain];
 
 
@@ -12020,12 +11656,11 @@ void func_800E6A38_F59E8(void) {
 				vtx0->v.tc[0] = 0x1000;
 				vtx0->v.tc[1] = 0x0800;
 
-				yTop = baseY + 0x14;
 				vtx3 = D_8005BB34;
 				vtx1 = vtx3;
 				D_8005BB34->v.ob[0] = baseX;
 				D_8005BB34++;
-				vtx3->v.ob[1] = yTop;
+				vtx3->v.ob[1] = yTop = baseY + 0x14;
 				vtx3->v.ob[2] = baseZ;
 				vtx3->v.tc[0] = 0x1000;
 				vtx3->v.tc[1] = 0;
@@ -12034,10 +11669,9 @@ void func_800E6A38_F59E8(void) {
 				vtx2 = vtx3;
 				D_8005BB34->v.ob[0] = baseX + xOff;
 				D_8005BB34++;
-				vtx3->v.ob[1] = yTop;
 				vtx3->v.tc[0] = 0;
+				vtx3->v.ob[1] = yTop;
 				vtx3->v.tc[1] = 0x0800;
-
 				vtx3->v.ob[2] = baseZ + zOff;
 
 				vtx3 = D_8005BB34;
@@ -12102,6 +11736,7 @@ void func_800E6A38_F59E8(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
+
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {

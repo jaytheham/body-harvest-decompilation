@@ -1725,6 +1725,9 @@ s32 func_800038E0_44E0(void)
 	return (((u32) D_800476C0) >> 16) & new_var;
 }
 
+/* The RNG always returns 0..0xFFFF. This view keeps sample temporaries halfword-sized. */
+#pragma weak func_800038E0_44E0_U16 = func_800038E0_44E0
+
 // https://decomp.me/scratch/7UqC0
 f32 func_80003910_4510(f32 arg0, s32 arg1)
 {

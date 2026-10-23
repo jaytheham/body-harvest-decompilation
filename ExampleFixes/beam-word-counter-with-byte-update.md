@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800DC5B8_EB568`, a byte loop counter keeps both its promoted value and its narrowed value in saved registers. The loop starts with two zero moves, and the update writes the narrowed byte to a second saved register. The extra saved register also makes caching the scratch-vector address worthwhile.
+
+-> `code changed`: Use a word-sized loop counter with the explicit update `i = (u8)(i + 1)`. Put the byte alpha local in the old byte counter slot and the word counter after the color array, preserving the strength and color offsets. Restore ordinary combine, render-mode, and texture-load macros; retain one shared cursor for the two standalone pipe-sync packets.
+
+-> `correct ASM`: The loop counter occupies one saved register and narrows through a temporary register. The scratch-vector address is rematerialized for both helper calls. The save set is exactly `s0` through `s3`, `ra`, `f20`, and `f22`, with the target save offsets and a `0xF0` frame. The complete function still has floating-point register and scheduling differences.

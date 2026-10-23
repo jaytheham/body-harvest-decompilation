@@ -2435,15 +2435,17 @@ extern s16 D_80152C96; // AI - number of entries in D_80152CA0 (measured: 0, the
 extern Unk80152CA0Entry D_80152CA0[]; // AI - the shield list, 3 bytes per entry; the invincibility cheat adds one and sets VEHICLE_FLAG_SHIELDED on the player
 extern LaserEntry D_80152D00[64]; /* laser/beam effect pool (0x600 bytes) */
 extern Unk800E614CFxSlot D_80153300[4];
+extern Unk800E614CFxSlot D_80153300_slotView[4]; /* Same storage; separate compiler address view. */
 extern Unk800E614CFxSlot D_801538C4;
 extern u8 D_80153AB0; // Nuke in progress?
 extern CameraBasis D_80153AB8;
 extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Unk80153AE0Entry D_80153AE0[];
+extern EffectRgb D_8013E330_14D2E0[6];
 extern u8 D_80153B80;
 extern u8 D_80153B84;
-extern s8 D_80153B87;
+extern u8 D_80153B87;
 extern s16 D_80153B88;
 extern Vec3f D_80153B90;
 extern Vec3f D_80153BA0;
@@ -2464,7 +2466,6 @@ extern s8 D_80153BCE;
 extern Unk800311A0 D_80153BD0[];
 extern u8 D_8013E408_14D3B8;
 extern VehicleSpawnOffset D_8013DB10_14CAC0[4][23];
-extern const f64 D_801441E0_153190[1];
 extern s8 D_80154080;
 extern Unk80154082 D_80154082;
 extern Unk801541F8Entry D_80154088[]; // Special effects
@@ -4086,7 +4087,6 @@ extern const f64 D_80144028_152FD8[1];
 
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
-extern const f64 D_801441E8_153198[1];
 
 extern const f64 D_801451B8_154168[1];
 extern const char D_801453B0_154360[];
