@@ -10750,24 +10750,24 @@ void func_800E2750_F1700(u8 arg0) {
 	}
 }
 
-// CURRENT(10695)
-#ifdef NON_MATCHING
 void func_800E2830_F17E0(void) {
-	Unk800311A0 *entry;
-	s32 count;
-	s32 i;
-	s32 yLimit;
-	s16 xOffset;
+	u8 i;
+	s16 value;
+	s32 velocity;
 	s16 didShrink;
+	s32 xOffset;
+	u8 *timer;
 	didShrink = 0;
-	if (D_8013E408_14D3B8 == 5) {
-		if ((D_80154300) < D_80154308) {
+	timer = &D_8013E408_14D3B8;
+	value = *timer;
+	if (value == 5) {
+		if (D_80154300 < D_80154308) {
 			func_800E2750_F1700(D_80154300);
-			(D_80154300) += 1;
+			D_80154300++;
 		}
-		D_8013E408_14D3B8 = 0;
+		*timer = 0;
 	} else {
-		D_8013E408_14D3B8++;
+		*timer = value + 1;
 	}
 
 	D_80154080 = (s8)(func_80003824_4424(D_80153B90.z, D_80153B90.x) / 2048);
@@ -10797,63 +10797,53 @@ void func_800E2830_F17E0(void) {
 		D_801541F0.unk2 += 3;
 	}
 
-	count = (D_80154300);
-	i = 0;
-	if (count > 0) {
-		do {
+	for (i = 0; i < D_80154300; i++) {
 
-			if (currentLevel == LEVEL_SIBERIA) {
-				xOffset = (s16)(s32)((((f32)sins((u16)(((i + D_80052A8C) << 11) & 0xFFFF)) / 32768.0) *
-									(((s32)D_80154300 / 5) + 0x10)) + ((D_80154080 * (u16)D_80153BD0[i].unk4 * 2) >> 4));
-			} else {
-				xOffset = (s16)((s32)((u16)D_80153BD0[i].unk4 * D_80154080 * 2) >> 4);
-			}
+		if (currentLevel == LEVEL_SIBERIA) {
+			value = sins((u16)(i + D_80052A8C) << 11);
+			velocity = (u16)D_80153BD0[i].unk4;
+			xOffset = (s16)((((f32)value / 32768.0) * (D_80154300 / 5 + 0x10)) + ((D_80154080 * velocity * 2) >> 4));
+		} else {
+			velocity = (u16)D_80153BD0[i].unk4;
+			xOffset = (s16)((s32)((u32)velocity * D_80154080 * 2) >> 4);
+		}
 
-			yLimit = D_80068088 * 0x10;
-			entry = &D_80153BD0[i];
-			entry->unk2 += (u16)entry->unk4;
-			entry->unk0 += xOffset;
+		xOffset &= 0xFFFF;
+		D_80153BD0[i].unk0 += xOffset;
+		D_80153BD0[i].unk2 += velocity;
 
-			if (yLimit < entry->unk2) {
-				if ((D_80154308 < count) && (didShrink == 0)) {
-					(D_80154300) = count - 1;
-					count = (D_80154300);
-					didShrink = 1;
-					if (count != i) {
-						D_80153BD0[i] = D_80153BD0[count];
-						i = (i - 1) & 0xFF;
-					}
-				} else {
-					func_800E2750_F1700(i);
-					count = (D_80154300);
+		if (D_80068088 * 0x10 < D_80153BD0[i].unk2) {
+			if ((D_80154308 < D_80154300) && (didShrink == 0)) {
+				didShrink = 1;
+				D_80154300--;
+				if (D_80154300 != i) {
+					D_80153BD0[i] = D_80153BD0[D_80154300];
+					i--;
 				}
 			} else {
-				if ((D_80068084 * 0x10) < entry->unk0) {
-					entry->unk0 = 0;
-					if (currentLevel == LEVEL_JAVA) {
-						entry->unk4 = (func_800038E0_44E0() % 100) + 0x4B;
-					} else if (currentLevel == LEVEL_SIBERIA) {
-						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
-					}
-					count = (D_80154300);
-				} else if (entry->unk0 < 0) {
-					entry->unk0 = D_80068084 * 0x10;
-					if (currentLevel == LEVEL_JAVA) {
-						entry->unk4 = (func_800038E0_44E0() % 100) + 0x4B;
-					} else if (currentLevel == LEVEL_SIBERIA) {
-						entry->unk4 = (func_800038E0_44E0() % 75) + 0x19;
-					}
-					count = (D_80154300);
+				func_800E2750_F1700(i);
+			}
+		} else {
+			if ((D_80068084 * 0x10) < D_80153BD0[i].unk0) {
+				D_80153BD0[i].unk0 = 0;
+				if (currentLevel == LEVEL_JAVA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 100) + 0x4B);
+				} else if (currentLevel == LEVEL_SIBERIA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 75) + 0x19);
+				}
+			} else if (D_80153BD0[i].unk0 < 0) {
+				D_80153BD0[i].unk0 = D_80068084 * 0x10;
+				if (currentLevel == LEVEL_JAVA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 100) + 0x4B);
+				} else if (currentLevel == LEVEL_SIBERIA) {
+					D_80153BD0[i].unk4 = (s16)((func_800038E0_44E0() % 75) + 0x19);
 				}
 			}
+		}
 
-			i = (i + 1) & 0xFF;
-		} while (i < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E2830_F17E0.s")
-#endif
+
 
 void func_800E2DB4_F1D64(void) {
 	gDPPipeSync(D_8005BB2C++);
