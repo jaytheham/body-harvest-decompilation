@@ -192,7 +192,6 @@ const u32 jtbl_80144138_1530E8[] = {
     OVERLAY_PTR(0x800DD9E4),
     OVERLAY_PTR(0x800DDA20),
 };
-const f32 D_80144190_153140[1] = {0.6f};
 
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
@@ -10076,8 +10075,6 @@ void func_800DFA98_EEA48(s8 arg0[][3]) {
 }
 
 // large explosion effect with smaller random explosions
-// CURRENT(5): only generated 0.6f rodata address differs; retain wrapper without a new late-rodata file.
-#ifdef NON_MATCHING
 void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 	u8 unused; /* Preserve the original local stack layout. */
 	s8 sp68[4][3];
@@ -10112,9 +10109,6 @@ void func_800DFBA8_EEB58(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4) {
 		} while (arg4 < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DFBA8_EEB58.s")
-#endif
 
 void func_800DFE68_EEE18(s16 arg0, s16 arg1, s16 arg2) {
 	func_800DEA08_ED9B8(arg0, arg1, arg2, 0xF, 2, 1, 0x14, 0xFF, 0xFF, 0xFA, 0xDC);
