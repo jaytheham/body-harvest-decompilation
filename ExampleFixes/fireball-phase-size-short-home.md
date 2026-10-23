@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D8190_E7140`, keeping the full size in a saved register and repeating `size / 2` and `size / 3` omits the target's short store before the scale call and its two later short reloads. Taking the scalar's address alone instead introduces repeated reloads and divisions throughout the vertex writes.
+
+-> `code changed`: Load the initial size into the existing `x0` short before normalization. After normalization, copy it into `s16 size[1]` and pass `x0` to the scale helper. Use one `s32 partial` for the quotient: assign `partial = size[0] / 2` in the first quad's first Y expression, then assign `partial = size[0] / 3` in the final shape's first Y expression. Reuse `partial` in the remaining Y expressions of each phase.
+
+-> `correct ASM`: A signed halfword store appears before the scale helper, followed by one signed halfword reload for each quotient. The extra repeated divisions disappear. This matches the size-storage instruction pattern; the complete function's register allocation, scheduling, and frame remain unfinished.

@@ -3028,6 +3028,13 @@ typedef struct {
 } EffectPositionPair;
 
 typedef struct {
+	Unk80052B40 position;
+	u8 unk6;
+	u8 flags;
+	u8 pad8[4];
+} EffectLightningTrailState;
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
@@ -3070,6 +3077,7 @@ typedef struct {
 				};
 				/* 0x08 */ s16 coordinates[6];
 				/* 0x08 */ EffectPositionPair positionPair;
+				/* 0x08 */ EffectLightningTrailState lightningTrail;
 				/* 0x08 */ u8 payload[12];
 			};
 			union {

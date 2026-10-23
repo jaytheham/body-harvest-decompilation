@@ -2442,6 +2442,7 @@ extern CameraBasis D_80153AB8;
 extern Vec3f D_80153AC4;
 extern Vec3f D_80153AD0;
 extern Unk80153AE0Entry D_80153AE0[];
+extern EffectRgb D_8013E330_14D2E0[6];
 extern u8 D_80153B80;
 extern u8 D_80153B84;
 extern u8 D_80153B87;

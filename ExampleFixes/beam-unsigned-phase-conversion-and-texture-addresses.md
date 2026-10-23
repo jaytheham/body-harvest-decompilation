@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800DC5B8_EB568`, storing the truncated phase as `f32` creates a pre-loop `mov.s` into `f20`, spills the value to `sp+0x4C`, and reloads it for both final draws. Passing the texture symbols directly also omits the target address-mask instructions.
+
+-> `code changed`: Store the truncated loop phase in a `u32`, assigning `(u16)(arg1 / 20)`. Convert it to `f32` at the two final multiplications so that multiplication by one remains single precision and the final double multiplication first rounds through single precision. Use a separate, already dead float temporary for the two flicker calculations. Pass `K0_TO_PHYS(D_100DA00)` and `K0_TO_PHYS(D_100DC00)` to the texture-image commands, as in neighboring matched renderers.
+
+-> `correct ASM`: The unsigned-word-to-float conversion writes `f20` directly and retains that value through the loop and final draws; the `sp+0x4C` spill and reloads disappear. Both texture-image commands emit the target `0x1FFFFFFF` masks. The complete function still has register and scheduling differences.
