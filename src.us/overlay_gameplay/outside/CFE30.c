@@ -10664,47 +10664,16 @@ void func_800E1F70_F0F20(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E1F70_F0F20.s")
 #endif
 
-// CURRENT(2598)
-#ifdef NON_MATCHING
 void func_800E24B8_F1468(u8 arg0) {
-	AlienInstance *alien;
-	s32 temp_v0;
-	s32 var_a1;
-	s16 divisor;
-	s16 x; s16 z;
-
-	temp_v0 = func_800038E0_44E0();
-	alien = &alienInstances[arg0];
-	{
-		s32 temp_a0;
-		s32 temp_t9;
-		temp_t9 = alien->unk12 >> 5;
-		temp_a0 = -temp_t9;
-		if (temp_a0 < temp_t9) {
-			var_a1 = temp_t9;
-		} else {
-			var_a1 = temp_a0;
-		}
-
-	}
-
-	if ((temp_v0 % 40) < (var_a1 + 10)) {
-		u16 sp28;
-		u16 sp26;
-		u16 sp24;
-		sp24 = func_800038E0_44E0();
-		sp26 = func_800038E0_44E0();
-		sp28 = func_800038E0_44E0();
-		temp_v0 = func_800038E0_44E0();
-		divisor = 30;
-		x = (sp24 % divisor) + alien->unk0 - 15;
-		z = (sp26 % divisor) + alien->unk4 - 15;
-		func_800DEED0_EDE80(x, D_80222A70 + 5, z, (sp28 % 20) + alienTypes[alien->typeIndex].unkC / 2, (temp_v0 % 10) + 50);
+	if ((func_800038E0_44E0_U16() % 40) < (BH_ABS(alienInstances[arg0].unk12 >> 5) + 10)) {
+		func_800DEED0_EDE80(
+			alienInstances[arg0].unk0 + (func_800038E0_44E0_U16() % 30) - 15,
+			D_80222A70 + 5,
+			alienInstances[arg0].unk4 + (func_800038E0_44E0_U16() % 30) - 15,
+			alienTypes[alienInstances[arg0].typeIndex].unkC / 2 + (func_800038E0_44E0_U16() % 20),
+			(func_800038E0_44E0_U16() % 10) + 50);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E24B8_F1468.s")
-#endif
 
 void func_800E2668_F1618(void) {
 
