@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D702C_E5FDC`, caching the record width before its first multiply computes the record address before the model address. Placing the rotation assignments between scale X and scale Y makes UGEN load scale Y into `t9` and scale Z into `t4`. The resulting dependencies fill the two multiply-hazard slots with loads instead of the target NOPs. Checking the saved model pointer after pipe sync also gives opacity `a2` and the model pointer `t0`.
+
+-> `code changed`: Read `effect->unk2` directly in all scale and position expressions, allowing IDO to form the common width value. Assign scale X, Y, and Z consecutively, then assign rotation, then position. Keep `sp24 = model; if (sp24) {}` between `gDPSetPrimColor` and `gDPPipeSync`, separating their packet-pointer allocation blocks.
+
+-> `correct ASM`: The model address is computed before the record address. Scale Y uses `t8`, scale Z uses `t3`, and rotation uses `t5`. The target `MFLO; SH; NOP; MULTU` sequences and early record-Y load return. Opacity uses `a1`, the model pointer uses `t1`, and the matrix-base pointer uses `t2`. Every instruction matches; both US and EU ROM checksums pass.

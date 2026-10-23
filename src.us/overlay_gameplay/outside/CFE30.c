@@ -7335,7 +7335,6 @@ void func_800D6EAC_E5E5C(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800D702C_E5FDC(s16 arg0, u8 arg1) {
 	struct { Unk80052B40 scale; s16 pad5A; Unk80052B40 rotation; s16 pad62; Unk80052B40 position; s16 pad6A; s32 pad6C; } transform;
 	Unk80153AE0Entry *sp24;
@@ -7346,21 +7345,19 @@ void func_800D702C_E5FDC(s16 arg0, u8 arg1) {
 	Unk80052B40 *modelScale;
 	Unk80154318Entry *temp_v1;
 
-	arg1 = (u8)arg1;
 	temp_t8 = arg1;
 	temp_t1 = &D_80153AE0[temp_t8];
 	temp_v1 = &D_80154318[arg0];
 	modelScale = &temp_t1->modelScale;
-	temp_v0 = temp_v1->unk2;
-	transform.scale.unk0 = modelScale->unk0 * temp_v0;
+	transform.scale.unk0 = modelScale->unk0 * temp_v1->unk2;
+	transform.scale.unk2 = modelScale->unk2 * temp_v1->unk2;
+	transform.scale.unk4 = modelScale->unk4 * temp_v1->unk2;
 	transform.rotation.unk0 = temp_t1->angle;
 	transform.rotation.unk2 = 0;
 	transform.rotation.unk4 = 0;
-	transform.scale.unk2 = modelScale->unk2 * temp_v0;
-	transform.scale.unk4 = modelScale->unk4 * temp_v0;
-	transform.position.unk0 = (temp_v0 * temp_t1->unk0) + temp_v1->unk8;
-	transform.position.unk2 = (temp_v0 * temp_t1->unk2) + temp_v1->unkA;
-	transform.position.unk4 = (temp_v0 * temp_t1->unk4) + temp_v1->unkC;
+	transform.position.unk0 = (temp_v1->unk2 * temp_t1->unk0) + temp_v1->unk8;
+	transform.position.unk2 = (temp_v1->unk2 * temp_t1->unk2) + temp_v1->unkA;
+	transform.position.unk4 = (temp_v1->unk2 * temp_t1->unk4) + temp_v1->unkC;
 	if ((temp_t8 == 3) || (temp_t8 == 4)) {
 		temp_v0 = temp_v1->unkE;
 		if (temp_v0 < 0xE) {
@@ -7379,16 +7376,13 @@ void func_800D702C_E5FDC(s16 arg0, u8 arg1) {
 		}
 	}
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, var_a1);
-	gDPPipeSync(D_8005BB2C++);
 	sp24 = temp_t1; if (sp24) {}
+	gDPPipeSync(D_8005BB2C++);
 	func_800039D0_45D0(&transform.position, &transform.rotation, &transform.scale, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, sp24->unk1C);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D702C_E5FDC.s")
-#endif
 
 
 // CURRENT(2279)
