@@ -11938,7 +11938,6 @@ void func_800E64B4_F5464(void) {
 	}
 }
 
-
 #ifdef NON_MATCHING
 void func_800E6A38_F59E8(void) {
 	s32 slotCount = 4;
@@ -11980,11 +11979,11 @@ void func_800E6A38_F59E8(void) {
 	gDPTileSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
 
-	for (; slotCount--; ) {
+	while (slotCount--) {
 		slot = &D_80153300[slotCount];
 		remain = slot->unk1E6;
 		if (remain != 0) {
-			for (; remain--; ) {
+			while (remain--) {
 			entry = &slot->entries[remain];
 
 
@@ -12014,12 +12013,11 @@ void func_800E6A38_F59E8(void) {
 				vtx0->v.tc[0] = 0x1000;
 				vtx0->v.tc[1] = 0x0800;
 
-				yTop = baseY + 0x14;
 				vtx3 = D_8005BB34;
 				vtx1 = vtx3;
 				D_8005BB34->v.ob[0] = baseX;
 				D_8005BB34++;
-				vtx3->v.ob[1] = yTop;
+				vtx3->v.ob[1] = yTop = baseY + 0x14;
 				vtx3->v.ob[2] = baseZ;
 				vtx3->v.tc[0] = 0x1000;
 				vtx3->v.tc[1] = 0;
@@ -12028,10 +12026,9 @@ void func_800E6A38_F59E8(void) {
 				vtx2 = vtx3;
 				D_8005BB34->v.ob[0] = baseX + xOff;
 				D_8005BB34++;
-				vtx3->v.ob[1] = yTop;
 				vtx3->v.tc[0] = 0;
+				vtx3->v.ob[1] = yTop;
 				vtx3->v.tc[1] = 0x0800;
-
 				vtx3->v.ob[2] = baseZ + zOff;
 
 				vtx3 = D_8005BB34;
@@ -12096,6 +12093,7 @@ void func_800E6A38_F59E8(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
+
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
