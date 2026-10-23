@@ -11353,43 +11353,27 @@ void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-// CURRENT(330)
-#ifdef NON_MATCHING
 void func_800E5044_F3FF4(void) {
-	LaserEntry *entry;
-	LaserEntry *end;
-	s32 arg4, arg5, arg6, arg7, arg8;
-
-	/* Keep the render-mode stores and pointer initializations on their shared lines for IDO scheduling. */
+	s32 i;
 
 	gDPPipeSync(D_8005BB2C++);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-	{ Gfx *packet = D_8005BB2C++; packet->words.w1 = G_RM_AA_ZB_OPA_SURF | G_RM_AA_ZB_OPA_SURF2; packet->words.w0 = _SHIFTL(G_SETOTHERMODE_L, 24, 8) | _SHIFTL(G_MDSFT_RENDERMODE, 8, 8) | 29; }
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 
-	end = &D_80152D00[64]; entry = D_80152D00;
-	do {
-		if (entry->type == 1) {
-			arg4 = entry->y2;
-			arg5 = entry->z2;
-			arg6 = entry->extra;
-			arg7 = entry->timer;
-			arg8 = entry->colorIdx;
-			func_800E3928_F28D8(entry->x1, entry->y1, entry->z1, entry->x2, arg4, arg5, arg6, arg7, arg8);
-		} else if (entry->type == 2) {
-			func_800E4CEC_F3C9C(entry->alien, entry->timerLow);
+	for (i = 0; i < 64; i++) {
+		if (D_80152D00[i].type == 1) {
+			func_800E3928_F28D8(D_80152D00[i].x1, D_80152D00[i].y1, D_80152D00[i].z1, D_80152D00[i].x2, D_80152D00[i].y2, D_80152D00[i].z2, D_80152D00[i].extra, D_80152D00[i].timer, D_80152D00[i].colorIdx);
+		} else if (D_80152D00[i].type == 2) {
+			func_800E4CEC_F3C9C(D_80152D00[i].alien, D_80152D00[i].timerLow);
 		}
-		entry++;
-	} while (entry != end);
+	}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5044_F3FF4.s")
-#endif
 
 void func_800E520C_F41BC(void) {
 	s32 i;
