@@ -217,9 +217,6 @@ const u32 jtbl_801441C4_153174[] = {
     OVERLAY_PTR(0x800E3DBC),
     OVERLAY_PTR(0x800E3F7C),
 };
-const f64 D_801441E0_153190[1] = {
-    1.7
-};
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -11506,37 +11503,38 @@ void func_800E552C_F44DC(void) {
 	D_80152C96 = 0;
 }
 
-// CURRENT(28573)
-#ifdef NON_MATCHING
 void func_800E5538_F44E8(void) {
+	s32 temp_s5;
+	u32 var_a3;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
 	Unk80052B40 scale;
-	f64 temp_f20;
 	s16 var_a2;
-	s32 var_a3;
 	s16 var_t0;
 	s16 var_t1;
 	s16 var_t2;
 	s32 temp_a0;
-	s32 temp_s5;
-	s32 var_s2;
 	Unk80152CA0Entry *entry;
+	u8 var_s2;
+	s16 textureOffset;
+	s32 timer;
+	Gfx *gfx;
 
 	temp_s5 = D_80052A8C;
 	temp_s5 = (temp_s5 * 4) & 0xFF;
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 	gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
-	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETGEOMETRYMODE, 24, 8); gfx->words.w1 = G_LIGHTING;
 
 	var_s2 = 0;
-	if (D_80152C96 > 0) {
-		temp_f20 = D_801441E0_153190[0];
-		do {
+	if (D_80152C96 > 0) { do {
 			entry = &D_80152CA0[var_s2];
-						var_a3 = 0x64;
+			var_a3 = 0x64;
 			if (entry->unk1 != 0) {
 				temp_a0 = 0x40 - (temp_s5 / 2);
+				textureOffset = (((temp_s5 / 4) % 8) << 8) / 2;
 				if (entry->unk1 == 2) {
 					var_t0 = vehicleInstances[entry->unk0].unk0;
 					var_t1 = vehicleInstances[entry->unk0].unk2;
@@ -11549,18 +11547,19 @@ void func_800E5538_F44E8(void) {
 					var_a2 = buildingTypes[buildingInstances[entry->unk0].buildingType].unk14 * 15;
 				}
 
-								if (entry->unk2 != 0) {
-					var_a3 = (s16)entry->unk2;
+								timer = entry->unk2;
+				if (timer != 0) {
+					var_a3 = (s16)timer;
 				}
 
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x64, 0xA0, 0xF0, (f64)var_a3 * temp_f20);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x64, 0xA0, 0xF0, (s32)var_a3 * 1.7);
 
 				scale.unk0 = ((temp_a0 >= 0 ? temp_a0 : -temp_a0) * 2) + var_a2;
 				scale.unk2 = ((temp_a0 >= 0 ? temp_a0 : -temp_a0) * 2) + var_a2;
 				scale.unk4 = ((temp_a0 >= 0 ? temp_a0 : -temp_a0) * 2) + var_a2;
 
 				if (entry->unk2 != 0) {
-										scale.unk0 += ((0x64 - entry->unk2) * scale.unk0) / 0xC8;
+					scale.unk0 += ((0x64 - entry->unk2) * scale.unk0) / 0xC8;
 					scale.unk2 += ((0x64 - entry->unk2) * scale.unk2) / 0xC8;
 					scale.unk4 += ((0x64 - entry->unk2) * scale.unk4) / 0xC8;
 				}
@@ -11571,31 +11570,22 @@ void func_800E5538_F44E8(void) {
 				position.unk0 = var_t0;
 				position.unk2 = var_t1;
 				position.unk4 = var_t2;
-								func_800039D0_45D0(&position, &rotation, &scale, D_8005BB38 += 0x40);
+				func_800039D0_45D0(&position, &rotation, &scale, ++D_8005BB38);
 
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (s16)(((s32)(((temp_s5 / 4) % 8) << 8) / 2)) + (u32)&D_50327B0);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-				gDPLoadSync(D_8005BB2C++);
-				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 1024);
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-				gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+				gDPLoadTextureBlock(D_8005BB2C++, &D_50327B0[textureOffset], G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
 				gSPTexture(D_8005BB2C++, 0x1000, 0x1000, 0, G_TX_RENDERTILE, G_ON);
-				gDPPipeSync(D_8005BB2C++);
+				gfx = D_8005BB2C++;
+				gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
 				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI_PRIM, G_CC_PASS2);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPDisplayList(D_8005BB2C++, (u32)&D_50332A0);
+				gSPDisplayList(D_8005BB2C++, &D_50332A0);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 
 			var_s2++;
-			var_s2 &= 0xFF;
 		} while (var_s2 < D_80152C96);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E5538_F44E8.s")
-#endif
 
 void func_800E5B78_F4B28(void)
 {
