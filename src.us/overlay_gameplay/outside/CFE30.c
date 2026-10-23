@@ -2690,7 +2690,7 @@ void func_800C6D80_D5D30(void) {
 // CURRENT(4225)
 #ifdef NON_MATCHING
 // AI - Spawn a particle/effect entry at (arg0,arg1,arg2) from source effect arg4 with random colour/velocity
-s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7) {
+s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, s32 arg6, s32 arg7) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
 	u8 *entryBytes;
@@ -2703,7 +2703,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 		return -3;
 	}
 
-	if (((s16 *)&arg4)[1] == -3) {
+	if (arg4 == -3) {
 		osSyncPrintf(D_801435A4_152554);
 		return -3;
 	}
@@ -2730,7 +2730,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 	linked->displayList = (Gfx *)arg6;
 
 	temp = func_800038E0_44E0() % 6;
-	((u16 *)&arg5)[1] = (u16)(temp + (((u16 *)&arg5)[1] / 7) - 3);
+	arg5 = (u16)(temp + (arg5 / 7) - 3);
 
 	sp40.x = (f32)((func_800038E0_44E0() % 20) - 10);
 	if ((func_800038E0_44E0() % 6) + 6 >= 0) {
@@ -2748,14 +2748,14 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 ar
 
 	func_800C1024_CFFD4(&sp40, &sp40);
 
-	D_80154318[linkedIdx].payload[0] = (s8)(s32)((f32)((u16 *)&arg5)[1] * sp40.x);
-	temp = (s16)(s32)((f32)((u16 *)&arg5)[1] * sp40.y);
+	D_80154318[linkedIdx].payload[0] = (s8)(s32)((f32)arg5 * sp40.x);
+	temp = (s16)(s32)((f32)arg5 * sp40.y);
 	if (temp >= 0) {
 		D_80154318[linkedIdx].payload[1] = (s8)temp;
 	} else {
 		D_80154318[linkedIdx].payload[1] = (s8)-temp;
 	}
-	D_80154318[linkedIdx].payload[2] = (s8)(s32)((f32)((u16 *)&arg5)[1] * sp40.z);
+	D_80154318[linkedIdx].payload[2] = (s8)(s32)((f32)arg5 * sp40.z);
 
 	D_80154318[linkedIdx].payload[3] = func_800038E0_44E0() % 0xFF;
 	D_80154318[linkedIdx].payload[4] = func_800038E0_44E0() % 0xFF;
@@ -9726,58 +9726,37 @@ void func_800DE150_ED100(void) {
 	D_80157530 = activeCount;
 }
 
-// CURRENT (1470)
-#ifdef NON_MATCHING
 void func_800DE2E8_ED298(void) {
 	s32 i;
-	Vec3f *position;
 
-	position = &D_80153BB8;
 	i = 0;
 	do {
 		UnkFC8E8Entry *entry;
 		u8 type;
-			f32 x, y, z;
 		EffectParticleConfig *cfg;
-			s32 texOffset;
+		s32 texOffset;
 
 		entry = &D_80156EF0[i];
 		if ((entry->unkA != 0) && (func_800B9228_C81D8(entry->unk0, entry->unk4, (s16)(s32)(D_80047954 * 4.0f), (s16)(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) && (entry->unkF == 0)) {
 			type = entry->unkC;
-			cfg = &D_8013DFF4_14CFA4[type];
 
 			if ((type != 0xFF) || (entry->unkE != 0xFF)) {
 				gDPPipeSync(D_8005BB2C++);
+				cfg = &D_8013DFF4_14CFA4[type];
 				if (cfg->format == 0) {
 
-					texOffset = ((cfg->height * entry->unkE) * cfg->width) / 2;
-					gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-					gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ);
-					gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
-					gDPLoadTextureBlock_4b(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_I, cfg->width, cfg->height, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+					texOffset = ((cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width) / 2; gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0); gDPSetColorDither(D_8005BB2C++, G_CD_MAGICSQ); gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN); gDPLoadTextureBlock_4b(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_I, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				} else if (cfg->format == 1) {
 
-					texOffset = (cfg->height * entry->unkE) * cfg->width;
-					gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
-					gDPLoadTextureBlock(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_IA, G_IM_SIZ_8b, cfg->width, cfg->height, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+					texOffset = (cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width; gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0); gDPLoadTextureBlock(D_8005BB2C++, (D_8013E0C0_14D070[type] + texOffset) & 0x1FFFFFFF, G_IM_FMT_IA, G_IM_SIZ_8b, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				}
 
-				D_80153BCD = cfg->width;
-				D_80153BCE = cfg->height;
+				D_80153BCD = cfg->dimensions.values[0];
+				D_80153BCE = cfg->dimensions.values[1];
 				gDPPipeSync(D_8005BB2C++);
 			}
 
-			x = entry->unk0;
-			y = entry->unk2;
-			z = entry->unk4;
-			D_80153BB8.x = x;
-			D_80153BB8.y = y;
-			D_80153BB8.z = z;
-			D_80153BC4 = &entry->unk6;
-			D_80153BC8 = (f32)entry->unkA;
-			D_80153BCC = entry->unkD;
-
-			switch (cfg->drawMode) {
+			cfg = &D_8013DFF4_14CFA4[type]; D_80153BB8.x = D_80156EF0[i].unk0; D_80153BB8.y = D_80156EF0[i].unk2; D_80153BB8.z = D_80156EF0[i].unk4; D_80153BC4 = &entry->unk6; D_80153BC8 = (f32)entry->unkA; D_80153BCC = entry->unkD; switch (cfg->drawMode) {
 				case 0:
 					func_800DB350_EA300();
 					break;
@@ -9795,9 +9774,6 @@ void func_800DE2E8_ED298(void) {
 		i = (i + 1) & 0xFF;
 	} while (i < 0x50);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DE2E8_ED298.s")
-#endif
 
 void func_800DE9B8_ED968(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	func_800DDB60_ECB10(arg0, arg1, arg2, 1, (s32) arg3);
@@ -9865,7 +9841,7 @@ void func_800DEB7C_EDB2C(u16 arg0, u8 arg1, s16 arg2) {
 	}
 }
 
-u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4) {
+u8 func_800DEE5C_EDE0C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s8 arg4) {
 	u8 slot;
 
 	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 6, 0xA);
@@ -9893,127 +9869,109 @@ void func_800DEF2C_EDEDC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	}
 }
 
+// CURRENT(58): result and palette stack homes are eight bytes above the target.
 #ifdef NON_MATCHING
-// CURRENT(4882): typed palettes, promoted radii, and byte final-loop index.
 s16 func_800DF038_EDFE8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, s8 *arg5) {
 	s16 result;
 	s16 i;
 	s16 j;
-	s32 spreadCount;
-	s32 halfRadius;
-	s32 radius;
 	u16 temp;
-	u16 clampedRadius;
 	u16 r0;
 	u8 tempColors[4][3];
-	u8 loopCount;
 	u8 k;
-	s32 slot;
+	u8 slot;
 
 	func_800038E0_44E0();
-	clampedRadius = arg3;
-	radius = clampedRadius;
 
-	if (func_800B93AC_C835C(arg0, arg2, (u16)(clampedRadius * 2), (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f),
-			0x4000 - D_80047950) == 0) {
-		return -3;
-	}
+	if (func_800B93AC_C835C(arg0, arg2, (u16)(arg3 * 2), (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f),
+	0x4000 - D_80047950) != 0) {
 
-	if (radius < 0x1E) {
-		clampedRadius = 0x1E;
-		radius = 0x1E;
-	}
+		if (arg3 < 0x1E) {
+			arg3 = 0x1E;
+		}
 
-	if (radius >= 0x12D) {
-		clampedRadius = 0x12C;
-	}
+		if (arg3 >= 0x12D) {
+			arg3 = 0x12C;
+		}
 
-	if ((arg1 < (D_80222A70 - 0x32)) && ((currentLevel != 4) || (D_80047F94 != 2) || (gameplayMode != 0xB))) {
-		for (i = 0; i < 4; i++) {
-			for (j = 0; j < 3; j++) {
-				if (currentLevel == 5) {
-					tempColors[i][j] = D_8013DF9C_14CF4C[i][j];
-				} else {
-					tempColors[i][j] = D_8013DF90_14CF40[i][j];
+		if ((arg1 < (D_80222A70 - 0x32)) && ((currentLevel != 4) || (D_80047F94 != 2) || (gameplayMode != 0xB))) {
+			for (i = 0; i < 4; i++) {
+				for (j = 0; j < 3; j++) {
+					if (currentLevel == 5) {
+						tempColors[i][j] = D_8013DF9C_14CF4C[i][j];
+					} else {
+						tempColors[i][j] = D_8013DF90_14CF40[i][j];
+					}
 				}
 			}
+
+			result = func_800C613C_D50EC(arg0, arg1, arg2, arg3, tempColors[0]);
+			if ((arg3 / 10) > 0) {
+				i = 0;
+				do {
+					r0 = func_800038E0_44E0();
+					func_800D8FA0_E7F50((r0 % arg3) + arg0 - (arg3 >> 1), arg1,
+					(func_800038E0_44E0() % arg3) + arg2 - (arg3 >> 1));
+					i++;
+				} while (i < (arg3 / 10));
+			}
+		} else {
+			result = func_800C613C_D50EC(arg0, arg1, arg2, arg3, arg5);
 		}
 
-		radius = clampedRadius;
-		result = func_800C613C_D50EC(arg0, arg1, arg2, clampedRadius, tempColors[0]);
-		spreadCount = radius / 10;
-		if (spreadCount > 0) {
-			halfRadius = radius >> 1;
-			i = 0;
-			do {
-				r0 = func_800038E0_44E0();
-				func_800D8FA0_E7F50((r0 % radius) + arg0 - halfRadius, arg1,
-					(func_800038E0_44E0() % radius) + arg2 - halfRadius);
-				i++;
-			} while (i < spreadCount);
-		}
-	} else {
-		result = func_800C613C_D50EC(arg0, arg1, arg2, clampedRadius, arg5);
-	}
+		if (result != -3) {
 
-	if (result == -3) {
+			if (arg3 >= 0x12C) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 8.0f);
+			} else if (arg3 >= 0x96) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 3.0f);
+			} else if (arg3 >= 0x50) {
+				func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
+			}
+
+			if (arg3 >= 0x51) {
+				func_800DEE5C_EDE0C(arg0, arg1, arg2, (arg3 / 10) + 0x14, 6);
+				func_80137234_1461E4(0x15F, arg0, arg1, arg2, (arg3 / 10));
+			}
+
+			func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 7, arg3 * 8), 0xB4);
+			slot = func_800DDB60_ECB10(arg0, arg1, arg2, 7, arg3 * 6);
+			func_800DDE1C_ECDCC(slot, 0x6E);
+			func_800DDEE0_ECE90(slot, 1);
+
+			if (D_80153B87 == 0) {
+				temp = arg3 / 6;
+				if (temp >= 0x29) {
+					temp = 0x28;
+				}
+				func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, arg3, 0xB4, temp, 6, 0xFF, 0xFF, 0xFF);
+			}
+
+			if (arg3 < 0x96) {
+				func_80137234_1461E4(0xEA, arg0, arg1, arg2, arg3);
+			} else if (arg3 >= 0x191) {
+				func_80137234_1461E4(0xE8, arg0, arg1, arg2, arg3);
+			} else {
+				func_80137234_1461E4(0xE9, arg0, arg1, arg2, arg3);
+			}
+
+			for (k = 0; k < arg4; k++) {
+				func_800C7924_D68D4(arg0, arg1, arg2, arg3, result, arg3,
+				D_8013DD20_14CCD0[func_800038E0_44E0() % 8], 0);
+			}
+
+			if (arg3 < 0x96) {
+				func_800DEA08_ED9B8(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x1E, 0xFA, 0x32, 0x32, 0x32);
+			} else {
+				func_800DEA08_ED9B8(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x3C, 0xFA, 0x32, 0x32, 0x32);
+			}
+
+		}
 		return result;
 	}
-
-	radius = clampedRadius;
-	if (radius >= 0x12C) {
-		func_80135D44_144CF4(arg0, arg1, arg2, 8.0f);
-	} else if (radius >= 0x96) {
-		func_80135D44_144CF4(arg0, arg1, arg2, 3.0f);
-	} else if (radius >= 0x50) {
-		func_80135D44_144CF4(arg0, arg1, arg2, 2.0f);
-	}
-
-	if (radius >= 0x51) {
-		spreadCount = radius / 10;
-		func_800DEE5C_EDE0C(arg0, arg1, arg2, spreadCount + 0x14, 6);
-		func_80137234_1461E4(0x15F, arg0, arg1, arg2, spreadCount);
-	}
-
-	func_800DDE1C_ECDCC(func_800DDB60_ECB10(arg0, arg1, arg2, 7, radius * 8), 0xB4);
-	slot = func_800DDB60_ECB10(arg0, arg1, arg2, 7, radius * 6);
-	func_800DDE1C_ECDCC(slot, 0x6E);
-	func_800DDEE0_ECE90(slot, 1);
-
-	if (D_80153B87 == 0) {
-		temp = radius / 6;
-		if ((u16) temp >= 0x29) {
-			temp = 0x28;
-		}
-		func_800C541C_D43CC(arg0, arg1, arg2, 0, 0x7F, 0, clampedRadius, 0xB4, temp, 6, 0xFF, 0xFF, 0xFF);
-	}
-
-	if (radius < 0x96) {
-		func_80137234_1461E4(0xEA, arg0, arg1, arg2, clampedRadius);
-	} else if (radius >= 0x191) {
-		func_80137234_1461E4(0xE8, arg0, arg1, arg2, clampedRadius);
-	} else {
-		func_80137234_1461E4(0xE9, arg0, arg1, arg2, clampedRadius);
-	}
-
-	loopCount = arg4;
-	if (loopCount > 0) {
-		k = 0;
-		do {
-			func_800C7924_D68D4(arg0, arg1, arg2, radius, result, clampedRadius,
-				D_8013DD20_14CCD0[func_800038E0_44E0() % 8], 0);
-			k = (k + 1) & 0xFF;
-		} while (k < loopCount);
-	}
-
-	if (radius < 0x96) {
-		func_800DEA08_ED9B8(arg0, arg1, arg2, radius, radius / 16, 1, 0x1E, 0xFA, 0x32, 0x32, 0x32);
-	} else {
-		func_800DEA08_ED9B8(arg0, arg1, arg2, radius, radius / 16, 1, 0x3C, 0xFA, 0x32, 0x32, 0x32);
-	}
-
-	return result;
+	return -3;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DF038_EDFE8.s")
 #endif

@@ -2444,7 +2444,7 @@ extern Vec3f D_80153AD0;
 extern Unk80153AE0Entry D_80153AE0[];
 extern u8 D_80153B80;
 extern u8 D_80153B84;
-extern s8 D_80153B87;
+extern u8 D_80153B87;
 extern s16 D_80153B88;
 extern Vec3f D_80153B90;
 extern Vec3f D_80153BA0;

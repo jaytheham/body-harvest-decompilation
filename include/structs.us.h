@@ -2809,8 +2809,13 @@ typedef struct {
 	/* 0x03 */ s8 fadeStep;
 	/* 0x04 */ s8 drawMode;
 	/* 0x05 */ s8 format;
-	/* 0x06 */ s8 width;
-	/* 0x07 */ s8 height;
+	/* 0x06 */ union {
+		s8 values[2];
+		struct {
+			s8 width;
+			s8 height;
+		} size;
+	} dimensions;
 } EffectParticleConfig; /* size = 0x08 */
 
 typedef struct {
