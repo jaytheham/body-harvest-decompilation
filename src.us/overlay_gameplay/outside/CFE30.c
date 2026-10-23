@@ -97,64 +97,7 @@ const f32 D_8014401C_152FCC[1] = {0.4f};
 const f32 D_80144020_152FD0[1] = {0.4f};
 const f32 D_80144024_152FD4[1] = {0.8f};
 const f64 D_80144028_152FD8[1] = {300.0};
-const u32 jtbl_80144030_152FE0[] = {
-    OVERLAY_PTR(0x800DAC34),
-    OVERLAY_PTR(0x800DAC44),
-    OVERLAY_PTR(0x800DAC24),
-    OVERLAY_PTR(0x800DAC54),
-    OVERLAY_PTR(0x800DAC64),
-    OVERLAY_PTR(0x800DAC74),
-    OVERLAY_PTR(0x800DACA4),
-    OVERLAY_PTR(0x800DACB4),
-    OVERLAY_PTR(0x800DAC94),
-    OVERLAY_PTR(0x800DAC84),
-};
-const u32 jtbl_80144058_153008[] = {
-    OVERLAY_PTR(0x800DAD7C),
-    OVERLAY_PTR(0x800DAD8C),
-    OVERLAY_PTR(0x800DAD9C),
-    OVERLAY_PTR(0x800DADAC),
-    OVERLAY_PTR(0x800DADBC),
-    OVERLAY_PTR(0x800DADCC),
-    OVERLAY_PTR(0x800DADDC),
-    OVERLAY_PTR(0x800DAE1C),
-    OVERLAY_PTR(0x800DADFC),
-    OVERLAY_PTR(0x800DADEC),
-    OVERLAY_PTR(0x800DAE0C),
-    OVERLAY_PTR(0x800DAE2C),
-    OVERLAY_PTR(0x800DAD6C),
-    OVERLAY_PTR(0x800DAE3C),
-    OVERLAY_PTR(0x800DAE4C),
-    OVERLAY_PTR(0x800DAE5C),
-    OVERLAY_PTR(0x800DAE6C),
-    OVERLAY_PTR(0x800DAE7C),
-    OVERLAY_PTR(0x800DAE8C),
-    OVERLAY_PTR(0x800DAE9C),
-    OVERLAY_PTR(0x800DAEAC),
-    OVERLAY_PTR(0x800DAEBC),
-};
 
-const f64 D_801440B0_153060[1] = {180.0};
-const f64 D_801440B8_153068[1] = {180.0};
-const f64 D_801440C0_153070[1] = {180.0};
-const f64 D_801440C8_153078[1] = {180.0};
-const f64 D_801440D0_153080[1] = {102.0};
-const f32 D_801440D8_153088[1] = {3000.0f};
-const f64 D_801440E0_153090[1] = {
-    0.00035714285714285714,
-};
-const f32 D_801440E8_153098[1] = {3001.0f};
-const f32 D_801440EC_15309C[1] = {3000.0f};
-const f64 D_801440F0_1530A0[1] = {
-    3001.0,
-};
-const f32 D_801440F8_1530A8[1] = {0.003921569f};
-const f64 D_80144100_1530B0[1] = {
-    3001.0,
-};
-const f64 D_80144108_1530B8[1] = {
-    0.8,
-};
 
 
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
@@ -8554,189 +8497,170 @@ void func_800DAA1C_E99CC(u8 arg0) {
 	}
 }
 
-/* CURRENT(2700) */
 // particle effect dispatcher/updater
-#ifdef NON_MATCHING
 void func_800DABBC_E9B6C(void) {
-	s32 i;
+	u8 i;
 	s32 temp;
-	u8 type;
+	s32 type;
 	s32 secondType;
-	
 
-	for (i = 0; i < 0x1E; i = (i + 1) & 0xFF) { // iterate through effect pool with 30 slots
+	for (i = 0; i < 0x1E; i++) {
 		type = D_80154088[i].unk0;
-		if (type >= 10) {
-			if (type == 0xFA) {
-				continue;
+		// Preserve the selector copy used by the original switch.
+		switch (type ^ 0) {
+		case 2:
+			func_800C5894_D4844(i);
+			continue;
+
+		case 0:
+			func_800C22EC_D129C(i);
+			continue;
+
+		case 1:
+			func_800C2EE4_D1E94(i);
+			continue;
+
+		case 3:
+			func_800C8F5C_D7F0C(i);
+			continue;
+
+		case 4:
+			func_800CA848_D97F8(i);
+			continue;
+
+		case 5:
+			func_800CD42C_DC3DC(i);
+			continue;
+
+		case 9:
+			func_800CE1C0_DD170(i);
+			continue;
+
+		case 8:
+			func_800D1A94_E0A44(i);
+			continue;
+
+		case 6:
+			func_800D6140_E50F0(i);
+			continue;
+
+		case 7:
+			func_800D6EAC_E5E5C(i);
+			continue;
+
+		case 0xFA: continue;
+		default:
+			temp = (type >= 10) ? 1 : 0;
+			if (temp != 0) {
+				osSyncPrintf(D_80143A50_152A00, type);
+			} else {
+				osSyncPrintf(D_80143A94_152A44);
 			}
-		} else {
-			switch (type) {
-				case 0:
-					func_800C5894_D4844((u8)i);
-					continue;
-
-				case 1:
-					func_800C22EC_D129C((u8)i);
-					continue;
-
-				case 2:
-					func_800C2EE4_D1E94((u8)i);
-					continue;
-
-				case 3:
-					func_800C8F5C_D7F0C((u8)i);
-					continue;
-
-				case 4:
-					func_800CA848_D97F8((u8)i);
-					continue;
-
-				case 5:
-					func_800CD42C_DC3DC((u8)i);
-					continue;
-
-				case 6:
-					func_800CE1C0_DD170((u8)i);
-					continue;
-
-				case 7:
-					func_800D1A94_E0A44((u8)i);
-					continue;
-
-				case 8:
-					func_800D6140_E50F0((u8)i);
-					continue;
-
-				case 9:
-					func_800D6EAC_E5E5C((u8)i);
-					continue;
-
-				default:
-					break;
-			}
-		}
-
-		temp = (type >= 10) ? 1 : 0;
-		if (temp != 0) {
-			osSyncPrintf(D_80143A50_152A00);
-		} else {
-			osSyncPrintf(D_80143A94_152A44);
 		}
 	}
 
-	for (i = 0; i < 0x16; i = (i + 1) & 0xFF) {
+	for (i = 0; i < 0x16; i++) {
 		secondType = D_801541F8[i].unk0;
-		if (secondType >= 0x20) {
-			if (secondType == 0xFA) {
-				continue;
+		switch (secondType) {
+		case 22:
+			func_800C3E2C_D2DDC();
+			continue;
+
+		case 10:
+			func_800C4AA0_D3A50();
+			continue;
+
+		case 11:
+			func_800C6558_D5508();
+			continue;
+
+		case 12:
+			func_800C8294_D7244();
+			continue;
+
+		case 13:
+			func_800C9668_D8618();
+			continue;
+
+		case 14:
+			func_800CB394_DA344();
+			continue;
+
+		case 15:
+			func_800CBE98_DAE48();
+			continue;
+
+		case 16:
+			func_800CCB60_DBB10();
+			continue;
+
+		case 19:
+			func_800CDBF4_DCBA4();
+			continue;
+
+		case 18:
+			func_800CF070_DE020();
+			continue;
+
+		case 20:
+			func_800CF948_DE8F8();
+			continue;
+
+		case 17:
+			func_800D0C00_DFBB0();
+			continue;
+
+		case 21:
+			func_800D25D0_E1580();
+			continue;
+
+		case 23:
+			func_800D36EC_E269C();
+			continue;
+
+		case 24:
+			func_800D3D40_E2CF0();
+			continue;
+
+		case 25:
+			func_800D4B44_E3AF4();
+			continue;
+
+		case 26:
+			func_800D5684_E4634();
+			continue;
+
+		case 27:
+			func_800D7790_E6740();
+			continue;
+
+		case 28:
+			func_800D80B4_E7064();
+			continue;
+
+		case 29:
+			func_800D90A4_E8054();
+			continue;
+
+		case 30:
+			func_800D95D0_E8580();
+			continue;
+
+		case 31:
+			func_800D9B54_E8B04();
+			continue;
+
+		case 0xFA: continue;
+		default:
+			if ((i < 10) && ((temp = i) >= 0)) {
+				osSyncPrintf(D_80143AD4_152A84, temp);
+			} else {
+				osSyncPrintf(D_80143B18_152AC8);
 			}
-		} else { // secondary effect pool?
-			switch (secondType - 10) {
-				case 0:
-					func_800C3E2C_D2DDC();
-					continue;
-
-				case 1:
-					func_800C4AA0_D3A50();
-					continue;
-
-				case 2:
-					func_800C6558_D5508();
-					continue;
-
-				case 3:
-					func_800C8294_D7244();
-					continue;
-
-				case 4:
-					func_800C9668_D8618();
-					continue;
-
-				case 5:
-					func_800CB394_DA344();
-					continue;
-
-				case 6:
-					func_800CBE98_DAE48();
-					continue;
-
-				case 7:
-					func_800CCB60_DBB10();
-					continue;
-
-				case 8:
-					func_800CDBF4_DCBA4();
-					continue;
-
-				case 9:
-					func_800CF070_DE020();
-					continue;
-
-				case 10:
-					func_800CF948_DE8F8();
-					continue;
-
-				case 11:
-					func_800D0C00_DFBB0();
-					continue;
-
-				case 12:
-					func_800D25D0_E1580();
-					continue;
-
-				case 13:
-					func_800D36EC_E269C();
-					continue;
-
-				case 14:
-					func_800D3D40_E2CF0();
-					continue;
-
-				case 15:
-					func_800D4B44_E3AF4();
-					continue;
-
-				case 16:
-					func_800D5684_E4634();
-					continue;
-
-				case 17:
-					func_800D7790_E6740();
-					continue;
-
-				case 18:
-					func_800D80B4_E7064();
-					continue;
-
-				case 19:
-					func_800D90A4_E8054();
-					continue;
-
-				case 20:
-					func_800D95D0_E8580();
-					continue;
-
-				case 21:
-					func_800D9B54_E8B04();
-					continue;
-
-				default:
-					break;
-			}
-		}
-
-		if ((i < 10) && (i >= 0)) {
-			osSyncPrintf(D_80143AD4_152A84, i);
-		} else {
-			osSyncPrintf(D_80143B18_152AC8);
 		}
 
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DABBC_E9B6C.s")
-#endif
 
 // CURRENT(1262)
 void func_800DAF24_E9ED4(u8 arg0) {
@@ -9295,7 +9219,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s32 arg2, s32 arg3) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DC5B8_EB568.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_beam_late_rodata.s")
 #endif
 
 // DrawNonZBufferedEffects
