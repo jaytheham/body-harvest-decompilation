@@ -2601,7 +2601,7 @@ void func_800C6D80_D5D30(void) {
 // CURRENT(4225)
 #ifdef NON_MATCHING
 // AI - Spawn a particle/effect entry at (arg0,arg1,arg2) from source effect arg4 with random colour/velocity
-s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, s32 arg6, s32 arg7) {
+s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, Gfx *arg6, s32 arg7) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
 	u8 *entryBytes;
@@ -2638,7 +2638,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 	entryBytes[7] = (func_800038E0_44E0() % 80) + 0x14;
 	entryBytes[8] = (func_800038E0_44E0() % 80) + 0x14;
 
-	linked->displayList = (Gfx *)arg6;
+	linked->displayList = arg6;
 
 	temp = func_800038E0_44E0() % 6;
 	arg5 = (u16)(temp + (arg5 / 7) - 3);
@@ -6299,8 +6299,6 @@ void func_800D3614_E25C4(u8 arg0) {
 	}
 }
 
-// CURRENT(12594)
-#ifdef NON_MATCHING
 void func_800D36EC_E269C(void) {
 	s16 temp_s3;
 	s16 var_v0;
@@ -6315,7 +6313,6 @@ void func_800D36EC_E269C(void) {
 	s32 lastRandom;
 	Unk80052B40 *position;
 	UnkFC8E8Entry *temp_s0_2;
-	Unk80154318Entry *temp_s6;
 
 	var_v0 = D_8015429A;
 	temp_fp = 0x1E;
@@ -6326,55 +6323,51 @@ void func_800D36EC_E269C(void) {
 		}
 		if ((var_v0 != -5) && (var_v0 != -6)) {
 			do {
-			temp_s6 = &D_80154318[var_v0];
-			temp_s3 = temp_s6->unk2;
-			if (func_800B93AC_C835C(temp_s6->unk8, temp_s6->unkC, temp_s3 & 0xFFFF, (s16) (s32) (D_80047954 * 4.0f),
-									   (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-				if ((func_800038E0_44E0() % 20) < 4) {
-					temp_s2 = func_800038E0_44E0() & 0xFFFF;
-					temp_s1 = func_800038E0_44E0() & 0xFFFF;
-					lastRandom = func_800038E0_44E0();
-					position = &temp_s6->positionVector;
-					temp_v1 = temp_s3 / 2;
-					temp_v0 = func_800DDB60_ECB10((s16) (((temp_s2 % temp_s3) + temp_s6->unk8) - temp_v1), (s16) (position->unk2 + 0xA),
-												  (s16) (((temp_s1 % temp_s3) + position->unk4) - temp_v1), 3,
-												  ((s32) (lastRandom % temp_s3) / 4) + 0x28);
-					if (temp_v0 != 0xFF) {
-						temp_s0_2 = &D_80156EF0[temp_v0 & 0xFF];
-						temp_s0_2->unk6 = (s8) ((func_800038E0_44E0() % temp_fp) + 0x50);
-						temp_s0_2->unk7 = (s8) ((func_800038E0_44E0() % temp_fp) + 0x50);
-						temp_s0_2->unk8 = (s8) ((func_800038E0_44E0() % temp_fp) + 0x50);
-						temp_s0_2->unk11 = 4;
-					}
-				}
-				if ((func_800038E0_44E0() % 60) < 5) {
-					position = &temp_s6->positionVector;
-					temp_s7 = func_800038E0_44E0() & 0xFFFF;
-					temp_s4 = func_800038E0_44E0() & 0xFFFF;
-					temp_s5 = func_800038E0_44E0() & 0xFFFF;
-					temp_s2 = func_800038E0_44E0() & 0xFFFF;
-					temp_s1 = func_800038E0_44E0() & 0xFFFF;
-					lastRandom = func_800038E0_44E0();
-					func_800CA5EC_D959C(temp_s6->unk8, (s16) (position->unk2 + 0xA), position->unk4, (s8) ((temp_s7 % 160) - 0x50),
-										 (temp_s4 % 45) + 0x50, (temp_s5 % 160) - 0x50, (temp_s2 % temp_fp) + 0x32,
-										 5, (temp_s1 % 12) + 8, (lastRandom % 50) + 0x28, 0xFF,
-										 0x5A, 0x1E, 0xFA);
-					if ((func_800038E0_44E0() % 20) < 0xF) {
+				temp_s3 = D_80154318[var_v0].unk2;
+				if (func_800B93AC_C835C(D_80154318[var_v0].unk8, D_80154318[var_v0].unkC, temp_s3 & 0xFFFF, (D_80047954 * 4.0f),
+					(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+					if ((func_800038E0_44E0() % 20) < 4) {
+						temp_s2 = func_800038E0_44E0() & 0xFFFF;
 						temp_s1 = func_800038E0_44E0() & 0xFFFF;
 						lastRandom = func_800038E0_44E0();
-						func_800C7924_D68D4(temp_s6->unk8, (s16) (position->unk2 + 0xA), position->unk4, (s16) ((temp_s1 % 20) + 0x14), -8,
-										 (lastRandom % temp_s3) + temp_s3, (s32) &D_A003F40, 3);
+						position = (Unk80052B40 *)(s32)D_80154318[var_v0].payload;
+						temp_v1 = temp_s3 / 2;
+						temp_v0 = func_800DDB60_ECB10((((temp_s2 % temp_s3) + position->unk0) - temp_v1), (position->unk2 + 0xA),
+							(((temp_s1 % temp_s3) + position->unk4) - temp_v1), 3,
+							((lastRandom % temp_s3) / 4) + 0x28);
+						if (temp_v0 != 0xFF) {
+							temp_s0_2 = &D_80156EF0[temp_v0];
+							temp_s0_2->unk6 = ((func_800038E0_44E0() % temp_fp) + 0x50);
+							temp_s0_2->unk7 = ((func_800038E0_44E0() % temp_fp) + 0x50);
+							temp_s0_2->unk8 = ((func_800038E0_44E0() % temp_fp) + 0x50);
+							temp_s0_2->unk11 = 4;
+						}
+					}
+					if ((func_800038E0_44E0() % 60) < 5) {
+						position = (Unk80052B40 *)(s32)D_80154318[var_v0].payload;
+						temp_s7 = func_800038E0_44E0() & 0xFFFF;
+						temp_s4 = func_800038E0_44E0() & 0xFFFF;
+						temp_s5 = func_800038E0_44E0() & 0xFFFF;
+						temp_s2 = func_800038E0_44E0() & 0xFFFF;
+						temp_s1 = func_800038E0_44E0() & 0xFFFF;
+						lastRandom = func_800038E0_44E0();
+						func_800CA5EC_D959C(position->unk0, (position->unk2 + 0xA), position->unk4, ((temp_s7 % 160) - 0x50),
+							(temp_s4 % 45) + 0x50, (temp_s5 % 160) - 0x50, (temp_s2 % temp_fp) + 0x32,
+							5, (temp_s1 % 12) + 8, (lastRandom % 50) + 0x28, 0xFF,
+							0x5A, 0x1E, 0xFA);
+						if ((func_800038E0_44E0() % 20) < 0xF) {
+							temp_s1 = func_800038E0_44E0() & 0xFFFF;
+							lastRandom = func_800038E0_44E0();
+							func_800C7924_D68D4(position->unk0, (position->unk2 + 0xA), position->unk4, ((temp_s1 % 20) + 0x14), -8,
+								(lastRandom % temp_s3) + temp_s3, D_A003F40, 3);
+						}
 					}
 				}
-			}
-			var_v0 = temp_s6->unk4;
+				var_v0 = D_80154318[var_v0].unk4;
 			} while (var_v0 != -5 && var_v0 != -6);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D36EC_E269C.s")
-#endif
 
 s16 func_800D3C88_E2C38(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	s32 dummy;

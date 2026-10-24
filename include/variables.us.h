@@ -3496,7 +3496,7 @@ extern u8 D_955300[];
 extern u8 D_963A70[];
 extern u8 D_963A70_2[];
 extern Gfx D_A002120[];
-extern u8 D_A003F40;
+extern Gfx D_A003F40[];
 extern Unk8014DD50 *D_802E67D0_32A920[];
 extern Gfx D_A014AD8[];
 extern u8 D_A01E340[];
