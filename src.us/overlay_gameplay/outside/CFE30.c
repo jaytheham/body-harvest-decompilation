@@ -4204,12 +4204,11 @@ void func_800CCB60_DBB10(void) {
 	}
 }
 
-// CURRENT(218)
-#ifdef NON_MATCHING
+// Render animated sparks.
 void func_800CCD54_DBD04(void) {
 	Vec3f dir;
 	s16 index;
-	Unk80154318Entry *entry;
+	EffectSparkState *spark;
 
 	D_80153BCD = 0x10;
 	D_80153BCE = 0x10;
@@ -4219,23 +4218,23 @@ void func_800CCD54_DBD04(void) {
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	if ((index != -5) && (index != -6)) {
 		do {
-			entry = &D_80154318[index];
+			spark = (EffectSparkState *)D_80154318[index].payload;
 
 			gDPPipeSync(D_8005BB2C++);
-			gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E880 + (entry->unk14 << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100E880[spark->phase << 7]), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gDPPipeSync(D_8005BB2C++);
 
-			dir.x = (D_80153BA0.x * 4.0f) - entry->unk8;
-			dir.y = (D_80153BA0.y * 4.0f) - entry->unkA;
-			dir.z = (D_80153BA0.z * 4.0f) - entry->unkC;
+			dir.x = (D_80153BA0.x * 4.0f) - spark->x;
+			dir.y = (D_80153BA0.y * 4.0f) - spark->y;
+			dir.z = (D_80153BA0.z * 4.0f) - spark->z;
 			func_800C1024_CFFD4(&dir, &dir);
 
-			D_80153BB8.x = entry->unk8 + (dir.x * entry->unk12);
-			D_80153BB8.y = entry->unkA + (dir.y * entry->unk12);
-			D_80153BB8.z = entry->unkC + (dir.z * entry->unk12);
+			D_80153BB8.x = spark->x + (dir.x * spark->width);
+			D_80153BB8.y = spark->y + (dir.y * spark->width);
+			D_80153BB8.z = spark->z + (dir.z * spark->width);
 			D_80153BCC = 0xFF;
-			D_80153BC8 = entry->unk2;
-			D_80153BC4 = &entry->unkE;
+			D_80153BC8 = D_80154318[index].unk2;
+			D_80153BC4 = &spark->r;
 			func_800DB350_EA300();
 
 			index = D_80154318[index].unk4;
@@ -4244,9 +4243,6 @@ void func_800CCD54_DBD04(void) {
 
 	D_80156EDA += D_80154244 * 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CCD54_DBD04.s")
-#endif
 
 // Create a jet-stream particle from the emitter.
 void func_800CD0B0_DC060(u8 arg0) {
