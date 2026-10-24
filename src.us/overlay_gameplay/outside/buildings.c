@@ -2706,53 +2706,40 @@ s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 s32 func_8011C338_12B2E8(s8 *arg0, s32 arg1) {
-	s32 sp34;
-	s32 sp30;
-	s32 sp2C;
-	s32 sp28;
-	s32 sp24;
-	s32 sp20;
+	s32 centerX;
+	s32 centerZ;
+	s32 radius;
+	s32 pad28;
+	s32 pad24;
+	s32 foundStart;
 	s32 index;
-	s32 origIndex;
-	s32 flag;
+	s32 startIndex;
 	BuildingInstance *building;
-	s16 xCoord;
 
-	sp30 = arg0[1] << 8;
-	sp2C = arg0[2] << 8;
-	sp34 = arg0[0] << 8;
-	sp20 = 0;
-	index = func_80117508_1264B8((s16)(sp30 - sp2C));
-	sp28 = arg0[0] << 8;
-	sp24 = arg0[1] << 8;
-	origIndex = index;
-	flag = sp20;
+	centerX = arg0[0] << 8;
+	centerZ = arg0[1] << 8;
+	radius = arg0[2] << 8;
+	foundStart = 0;
+	index = func_80117508_1264B8((s16)(centerZ - radius));
+	startIndex = index;
 	building = &buildingInstances[index];
-	xCoord = building->xCoord;
 
-	while (TRUE) {
-		if ((xCoord >= (sp34 - sp2C)) && (xCoord < (sp34 + sp2C)) && flag) {
+	do {
+		/* Preserve IDO live-range ordering for the bounds and zone pointer. */
+		if (centerX - radius) {}
+		if ((u8)(u32)arg0) {}
+		if ((building->xCoord >= (centerX - radius)) && (building->xCoord < (centerX + radius)) && foundStart) {
 			return index;
 		}
 		if (index == arg1) {
-			flag = 1;
+			foundStart = 1;
 		}
 		index++;
 		building++;
-		if (index >= 0xFF) {
-			return origIndex;
-		}
-		if (building->zCoord >= (sp30 + sp2C)) {
-			return origIndex;
-		}
-		xCoord = building->xCoord;
-	}
+	} while (index < 0xFF && building->zCoord < (centerZ + radius));
+	return startIndex;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C338_12B2E8.s")
-#endif
 
 s32 func_8011C42C_12B3DC(s32 arg0) {
 	s32 temp_v0;
