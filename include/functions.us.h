@@ -978,7 +978,7 @@ s32 func_80118670_127620(s32 arg0, s32 arg1);
 void func_8011A604_1295B4(void);
 void func_8011D030_12BFE0(u8 arg0);
 void func_8011BB94_12AB44(s32, s32);
-s32 func_8011C25C_12B20C();
+s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1);
 s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3);
 void func_80122244_1311F4(BuildingInstance *arg0);
 void func_8011FA90_12EA40(BuildingInstance *, u8, s16, s16, s16, s16, s16, s16, s32);

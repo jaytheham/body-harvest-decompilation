@@ -2846,54 +2846,41 @@ void func_8011C6A8_12B658(u8 arg0) {
 	}
 }
 
-// CURRENT(1298)
-#ifdef NON_MATCHING
 void func_8011C770_12B720(s32 arg0, s32 arg1) {
 	Unk80146688 *zone;
+	s32 entityIndex;
+	s32 alienIndex;
 
 	zone = &D_80146688_155638[currentLevel - 1][arg0];
 	{
 		BuildingInstance *building;
-		s32 buildingIndex;
 		s32 count;
 
 		count = 0;
-		buildingIndex = func_8011C25C_12B20C((s8 *) zone, 0);
-		if (buildingIndex != -1) {
+		entityIndex = func_8011C25C_12B20C((s8 *) zone, 0);
+		if (entityIndex != -1) {
 			do {
-				building = &buildingInstances[buildingIndex];
-				building->padC[2] = arg1;
-				building->unk8 ^= ((((u32) building->unk8 >> 12) | 0x20) ^ ((u32) building->unk8 >> 12)) << 12;
+				building = &buildingInstances[entityIndex];
+				building->unkE = arg1;
+				building->statusFlags |= 0x20;
 				count++;
-			} while ((buildingIndex = func_8011C25C_12B20C((s8 *) zone, count)) != -1);
+			} while ((entityIndex = func_8011C25C_12B20C((s8 *) zone, count)) != -1);
 		}
 	}
 
-	if (D_8014D507 > 0) {
-		u8 *alienIds;
-		u8 *alienIdsEnd;
-		u8 alienId;
-
-		alienIds = D_8014D408;
-		alienIdsEnd = alienIds + D_8014D507;
-		alienId = *alienIds;
-		do {
-			alienIds++;
-			if (arg0 == alienInstances[alienId].unk3D) {
-				alienInstances[alienId].unk12 = 0xA0;
-				alienInstances[alienId].unk38 = arg1;
-				alienInstances[alienId].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_UNK1);
-				alienInstances[alienId].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
-			}
-		} while ((alienIds < alienIdsEnd) && (alienId = *alienIds, 1));
+	for (alienIndex = 0; alienIndex < D_8014D507; alienIndex++) {
+		entityIndex = D_8014D408[alienIndex];
+		if (arg0 == alienInstances[entityIndex].unk3D) {
+			alienInstances[entityIndex].unk12 = 0xA0;
+			alienInstances[entityIndex].unk38 = arg1;
+			alienInstances[entityIndex].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[entityIndex].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
+		}
 	}
 
 	D_8015EA20 = zone->unk0A;
 	D_8015EA24 = zone->unk0A;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C770_12B720.s")
-#endif
 
 void func_8011C8E8_12B898(s32 arg0, s32 arg1) {
 	s32 i;
