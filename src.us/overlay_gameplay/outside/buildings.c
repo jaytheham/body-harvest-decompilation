@@ -76,16 +76,6 @@ const f32 D_80144FE0_153F90[1] = {0.3330000042915344};
 const f32 D_80144FE4_153F94[1] = {0.3330000042915344};
 const f32 D_80144FE8_153F98[1] = {0.3330000042915344};
 
-const f64 D_80144FF0_153FA0[1] = {2600.0};
-
-const f64 D_80144FF8_153FA8[1] = {362.0};
-
-const f64 D_80145000_153FB0[1] = {217.0};
-
-const f64 D_80145008_153FB8[1] = {362.0};
-
-const f64 D_80145010_153FC0[1] = {461.0};
-
 // .data
 u8 D_80140A00_14F9B0[0x14] = {
 	0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0xD4, 0x08, 0x0A, 0x00, 0x1B, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -4682,34 +4672,28 @@ void func_80121A64_130A14(BuildingInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121A64_130A14.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(5649)
 void func_80121EB4_130E64(s16 *arg0) {
+	s16 angle;
 	f32 sp38;
 	f32 sp34;
+	s16 x;
+	s16 y;
 	f32 temp_f0;
-	f64 temp_f16;
-	s32 temp_a0;
-	s32 temp_a3;
-	s32 temp_f6;
 
-	temp_f6 = (s32) ((((f64) (f32) sins(((*arg0 + D_80052A8C) * 0x2EE) & 0xFFFF)) / 32768.0) * D_80144FF0_153FA0[0]);
-	sp38 = (f32) (D_80145000_153FB0[0] - ((((f64) (f32) coss(temp_f6 & 0xFFFF)) / 32768.0) * D_80144FF8_153FA8[0]));
-	temp_f16 = ((f64) (f32) sins((s16) temp_f6 & 0xFFFF)) / 32768.0;
-
+	angle = ((f32)sins((u16)((*arg0 + D_80052A8C) * 750)) / 32768.0) * 2600.0;
+	sp38 = 217.0 - ((f32)coss((u16)angle) / 32768.0) * 362.0;
+	sp34 = 461.0 - ((f32)sins((u16)angle) / 32768.0) * 362.0;
 	D_80052B40.unk0 = 0xD9;
 	D_80052B40.unk2 = 0x1CD;
 	D_80052B40.unk4 = 0;
 	D_80052B48.unk0 = 0;
-	D_80052B48.unk2 = (s16) temp_f6;
+	D_80052B48.unk2Unsigned = angle;
 	D_80052B48.unk4 = 0;
-
-	sp34 = (f32) (D_80145010_153FC0[0] - (temp_f16 * D_80145008_153FB8[0]));
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	gSPDisplayList(D_8005BB2C++, (u32)&D_B008828);
+	gSPDisplayList(D_8005BB2C++, &D_B008828);
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
@@ -4721,24 +4705,24 @@ void func_80121EB4_130E64(s16 *arg0) {
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	guAlign((Mtx *) temp_a0, temp_f0, (f32) 0x2D - sp34, -((f32) -0x63 - sp38), temp_f0);
+	x = 0x2D;
+	y = -0x63;
+	guAlign(D_8005BB38, 0.0f, x - sp34, -(y - sp38), 0.0f);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	D_80052B50.unk0 = 0xC8;
 	D_80052B50.unk2 = 0xC8;
 	D_80052B50.unk4 = 0xC8;
-	func_800039D0_45D0(NULL, NULL, &D_80052B50, temp_a3);
+	func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	gSPDisplayList(D_8005BB2C++, (u32)&D_B008F88);
+	D_8005BB38++;
+	gSPDisplayList(D_8005BB2C++, &D_B008F88);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80121EB4_130E64.s")
-#endif
 
 void func_80122244_1311F4(BuildingInstance *arg0) {
 	EffectRgb color;
