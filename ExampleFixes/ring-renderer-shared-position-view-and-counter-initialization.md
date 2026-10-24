@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D4C10_E3BC0`, reading the first coordinate differences through a full entry pointer and creating a position view only for the later reads folds those later reads into `lh ...,0xE(s5)`, `lh ...,0x10(s5)`, and `lh ...,0x12(s5)`. Initializing the segment counter before the first cosine call also moves its zero assignment ahead of the texture-address spill.
+
+-> `code changed`: Create one `EffectPositionPair *positions = &D_80154318[index].positionPair` before computing the differences. Use its `position[]` and `previousPosition[]` arrays for both sets of reads. Read the next link through `D_80154318[index].unk4` in the zero-length branch. Initialize the segment counter immediately after `cosVal = coss(0x4000)`.
+
+-> `correct ASM`: The later reads use `addiu v1,s5,8` followed by `lh t6,6(v1)`, `lh t7,8(v1)`, and `lh t8,0xA(v1)`. The texture-address store precedes `jal coss`, whose delay slot becomes `move s2,zero`. The extra `move s2,s5` for the zero-length branch disappears. These instruction sequences match; the complete renderer still has stack-size, packet-copy, and vertex-loop scheduling differences.

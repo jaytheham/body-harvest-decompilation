@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D16BC_E066C`, testing the clamped word carrier directly after `var_v1 = (u8)magnitude` makes IDO share the byte conversion, emit an extra `move`, and produce 201 instructions instead of the target's 200. Keeping `magnitude` unsigned also selects `sltiu` for an explicit mask comparison.
+
+-> `code changed`: Keep the unsigned floating-point conversion explicit, store its result in a signed word carrier, assign the clamped working value with a byte cast, and test the raw carrier with a word mask: `s32 magnitude; magnitude = (u32)(sqrtf(...) / 100.0f); var_v1 = (u8)magnitude; if ((magnitude & 0xFF) < 2) var_v1 = 2;`. Wrap the three step assignments and the allocation loop in one `if (1)` block to keep the conversion result in `v0` and the clamped working count in `v1`.
+
+-> `correct ASM`: IDO emits two independent `andi ..., 0xff` instructions around the signed `slti ..., 2` test and its branch, removes the extra `move`, and produces the target's 200-instruction count. The function remains unmatched: register allocation and the word-versus-halfword call spill still differ.

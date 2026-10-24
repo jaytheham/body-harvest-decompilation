@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D0614_DF5C4`, named distance, full-record, and smoke-payload caches reserve an oversized `0x98` frame. The direction vector starts at `sp+0x78` instead of `sp+0x7c`. Simply inlining the typed `smokePuff` member changes address reassociation and adds instructions; the distance and half-distance spills also land four bytes too low.
+
+-> `code changed`: Use the unsigned-short `arg3` directly for distance arithmetic. Remove both pointer locals, and access the payload through `((SmokePuffState *)(s32)D_80154318[effectId].payload)`. Keep `Vec3f dir`, `s16 spread`, the two byte counters, and `s16 effectId` in that declaration order. Store `kind = 0` before `opacity = 0xff`.
+
+-> `correct ASM`: The frame becomes `0x88`, the vector occupies `sp+0x7c..0x84`, the effect ID uses `sp+0x76`, and the automatic distance/half-distance spills use `sp+0x6c` and `sp+0x64`. All 325 instructions through ROM offset `0xDFAD4` match exactly. The complete function remains unmatched because the following lightning-call argument setup has scheduling and scratch-register differences.
