@@ -71,9 +71,8 @@ u8 D_80140A00_14F9B0[0x14] = {
 	0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_80140A14_14F9C4[0x14] = {
-	0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0xD5, 0x78, 0x0A, 0x00, 0x1C, 0xB8, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00,
+Gfx *D_80140A14_14F9C4[5] = {
+	NULL, (Gfx *)0x0901D578, (Gfx *)0x0A001CB8, NULL, NULL,
 };
 
 u8 D_80140A28_14F9D8[0x18] = {
@@ -3231,74 +3230,73 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D438_12C3E8.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1) {
+	Gfx *gfx;
 	BuildingType *type;
-	u32 *typeWords;
-	u8 value;
-	u8 buildingIndex;
+	s32 value;
 
-	value = arg0 & 0xFF;
-	buildingIndex = value & 0x7F;
-	if (buildingIndex >= 0x19) {
+	value = arg0;
+	type = &buildingTypes[value & 0x7F];
+	if ((value & 0x7F) >= 0x19) {
 		osSyncPrintf(D_80144EC8_153E78, value);
 		return;
 	}
 
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_80031260_31E60));
-	gSPViewport(D_8005BB2C++, (u32)D_140A80);
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
+	gSPViewport(D_8005BB2C++, D_140A80);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, 64, 64);
 	gSPClipRatio(D_8005BB2C++, FRUSTRATIO_1);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, 0xFFFCFFFC);
-	gDPSetFillColor(D_8005BB2C++, 0);
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, K0_TO_PHYS(arg1));
+	gDPSetFillColor(D_8005BB2C++, 0xFFFCFFFC);
 	gDPPipeSync(D_8005BB2C++);
 	gDPFillRectangle(D_8005BB2C++, 0, 0, 63, 63);
-	gDPSetDepthImage(D_8005BB2C++, K0_TO_PHYS(D_802C2080));
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 64, K0_TO_PHYS(D_802C2080));
+	gDPSetDepthImage(D_8005BB2C++, K0_TO_PHYS(arg1));
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	gSPSetGeometryMode(D_8005BB2C++, 0x80008000);
+	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING | G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
-	D_8005BB38 += 0x40;
-
-	type = &buildingTypes[buildingIndex];
-	typeWords = (u32 *) type;
 	D_80052B40.unk0 = 0;
 	D_80052B40.unk2 = 0;
-	D_80052B40.unk4 = 0;
-	D_80052B44 = -(s16) type->unk14;
+	D_80052B40.unk4 = -type->unk14;
 	D_80052B48.unk0 = 0;
-	D_80052B48.unk2 = 0x8000;
+	D_80052B48.unk2Unsigned = 0x8000;
 	D_80052B48.unk4 = 0x4000;
-	D_80052B50.unk0 = (s16) (s32) (((256.0 / (f64) (type->unk10 * 2)) * 128.0));
+	D_80052B50.unk0 = (s16) (s32) (((256 / (f64) (type->unk10 * 2)) * 128));
 	D_80052B50.unk2 = 0x100;
-	D_80052B54 = (s16) (s32) (((256.0 / (f64) (type->unk12 * 2)) * 128.0));
+	D_80052B50.unk4 = (s16) (s32) (((256 / (f64) (type->unk12 * 2)) * 128));
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = (_SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | _SHIFTL(sizeof(Mtx), 0, 16)); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
 
-	guOrtho(D_8005BB38, -64.0f, 64.0f, 64.0f, 0.0f, 1.0f, (f32) type->unk14, 1.0f);
+	guOrtho(D_8005BB38, -64.0f, 64.0f, 64.0f, -64.0f, 0.0f, (f32) type->unk14, 1.0f);
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = (_SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION, 16, 8) | _SHIFTL(sizeof(Mtx), 0, 16)); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
 
-	if (arg0 & 0x80) {
-		if ((u32) D_5002D40 == typeWords[0]) {
-			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) D_5002D40, 2));
-		} else if (typeWords[1] != 0) {
-			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) typeWords[1], 2));
+	if (value & 0x80) {
+		if ((s32) type->model == (s32) D_5002D40) {
+			gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870((s32) D_5002D40, 2));
+		} else if (type->damagedModel != 0) {
+			gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870((s32) type->damagedModel, 2));
 		} else {
-			gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) typeWords[0], 2));
+			gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870((s32) type->model, 2));
 		}
-	} else if ((u32) D_5002D40 == typeWords[0]) {
-		gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) D_5002D40, 2));
+	} else if ((s32) type->model == (s32) D_5002D40) {
+		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870((s32) D_5002D40, 2));
 	} else {
-		gSPDisplayList(D_8005BB2C++, (u32)func_800E88C0_F7870((s32) typeWords[0], 2));
+		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870((s32) type->model, 2));
 	}
 
-	if (D_8015EA28 == value) {
+	value = D_8015EA28 - value;
+	if (value == 0) {
 		D_80052B40.unk0 = 0x100;
 		D_80052B40.unk2 = 0;
 		D_80052B40.unk4 = 0;
@@ -3306,14 +3304,12 @@ void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1) {
 
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
+		gSPDisplayList(D_8005BB2C++, D_80140A14_14F9C4[currentLevel]);
 		gDPPipeSync(D_8005BB2C++);
 
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
-#endif
 // Decode cached building heights and advance the pending queue.
 void func_8011DBA0_12CB50(void) {
 

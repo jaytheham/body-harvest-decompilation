@@ -4206,4 +4206,5 @@ extern const f32 D_80144024_152FD4[1];
 extern const f64 D_80144028_152FD8[1];
 extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];
+extern Gfx *D_80140A14_14F9C4[5];
 #endif /* LIBULTRA_REFERENCE */

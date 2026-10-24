@@ -1675,7 +1675,7 @@ typedef struct {
 typedef struct {
 	union {
 		u8 pad0[0x10];
-		struct { void *model; u8 padModel[0xC]; };
+		struct { void *model; void *damagedModel; u8 padModel[0x8]; };
 	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
