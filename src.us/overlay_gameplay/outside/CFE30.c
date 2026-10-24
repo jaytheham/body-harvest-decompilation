@@ -89,14 +89,6 @@ const f64 D_80143FF0_152FA0[1] = {255.0};
 const f64 D_80143FF8_152FA8[1] = {0.6};
 const f32 D_80144000_152FB0[1] = {1.6666666f};
 const f32 D_80144004_152FB4[1] = {10000.0f};
-const f64 D_80144008_152FB8[1] = {0.33333};
-const f32 D_80144010_152FC0[1] = {20.833334f};
-const f32 D_80144014_152FC4[1] = {1.6666666f};
-const f32 D_80144018_152FC8[1] = {0.8f};
-const f32 D_8014401C_152FCC[1] = {0.4f};
-const f32 D_80144020_152FD0[1] = {0.4f};
-const f32 D_80144024_152FD4[1] = {0.8f};
-const f64 D_80144028_152FD8[1] = {300.0};
 
 
 
@@ -5007,8 +4999,6 @@ void func_800CF174_DE124(Vec3f *arg0, u8 arg1) {
 	D_80156EDA += 4;
 }
 
-// CURRENT(280)
-#ifdef NON_MATCHING
 void func_800CF2E0_DE290(void) {
 	Unk80154318Entry *entry;
 	Unk80154318Sub *ribbon;
@@ -5019,12 +5009,10 @@ void func_800CF2E0_DE290(void) {
 	Vec3f point3;
 	Vec3f point1;
 	Vec3f point2;
-	s32 pad0; /* Preserve the original local stack layout. */
-	s32 pad1;
 	f32 extent;
 	f64 scale;
 	u8 firstTexture;
-	u8 lastTexture;
+	s32 lastTexture;
 	u8 firstHigh;
 	u8 lastHigh;
 
@@ -5036,7 +5024,7 @@ void func_800CF2E0_DE290(void) {
 	TEXEL0, ENVIRONMENT, TEXEL0, 0, PRIMITIVE, 0);
 
 	if ((index != -6) && (index != -5)) {
-		scale = D_80144008_152FB8[0];
+		scale = 0.33333;
 		do {
 			entry = &D_80154318[index];
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
@@ -5106,10 +5094,6 @@ void func_800CF2E0_DE290(void) {
 		} while ((index != -6) && (index != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CF2E0_DE290.s")
-#endif
-
 void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 idx;
 	Unk80154318Entry *entry;
@@ -5233,15 +5217,13 @@ void func_800CF948_DE8F8(void) {
 }
 
 
-#ifdef NON_MATCHING
 void func_800CFD84_DED34(void) {
 	s16 curr;
-	AnimatedFlareState *flare;
-	s16 radius;
 	s16 texOffset;
 	Unk80052B40 pos;
 	Unk80052B40 rot;
 	Unk80052B40 scale;
+	AnimatedFlareState *flare;
 
 	curr = D_80154276;
 
@@ -5259,59 +5241,54 @@ void func_800CFD84_DED34(void) {
 
 	if (curr != -6 && curr != -5) {
 		do {
-		flare = &D_80154318[curr].animatedFlare;
+			flare = &D_80154318[curr].animatedFlare;
 
-		if (flare->age >= 9) {
-
-			if (flare->age < 20) {
-				radius = D_80154318[curr].unk2;
-				scale.unk0 = (f32)(radius >= 0 ? radius : -radius) * (1.6666666f * (f32)(flare->age - 5));
-				scale.unk2 = (f32)(radius >= 0 ? radius : -radius) * (1.6666666f * (f32)(flare->age - 5));
-				scale.unk4 = (f32)(radius >= 0 ? radius : -radius) * (1.6666666f * (f32)(flare->age - 5));
-			} else {
-				radius = D_80154318[curr].unk2;
-				scale.unk0 = (f32)(radius >= 0 ? radius : -radius) * (25.0f + 2.5f * (f32)(20 - flare->age));
-				scale.unk2 = (f32)(radius >= 0 ? radius : -radius) * (25.0f + 2.5f * (f32)(20 - flare->age));
-				scale.unk4 = (f32)(radius >= 0 ? radius : -radius) * (25.0f + 2.5f * (f32)(20 - flare->age));
-			}
-
-			if (func_800B93AC_C835C(flare->position[0], flare->position[2], (u16)scale.unk0,
-				(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+			if (flare->age >= 9) {
 
 				if (flare->age < 20) {
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, flare->red, flare->green, flare->blue, (u32)((f32)(flare->age - 8) * 20.833334f));
+					scale.unk0 = (f32)(D_80154318[curr].unk2 >= 0 ? D_80154318[curr].unk2 : -D_80154318[curr].unk2) * (1.6666666f * (f32)(flare->age - 5));
+					scale.unk2 = (f32)(D_80154318[curr].unk2 >= 0 ? D_80154318[curr].unk2 : -D_80154318[curr].unk2) * (1.6666666f * (f32)(flare->age - 5));
+					scale.unk4 = (f32)(D_80154318[curr].unk2 >= 0 ? D_80154318[curr].unk2 : -D_80154318[curr].unk2) * (1.6666666f * (f32)(flare->age - 5));
 				} else {
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, flare->red, flare->green, flare->blue, (u32)(250.0f + ((f32)(20 - flare->age) * 50.0f)));
+					scale.unk0 = (f32)(D_80154318[curr].unk2 >= 0 ? D_80154318[curr].unk2 : -D_80154318[curr].unk2) * (25.0f + 2.5f * (f32)(20 - flare->age));
+					scale.unk2 = (f32)(D_80154318[curr].unk2 >= 0 ? D_80154318[curr].unk2 : -D_80154318[curr].unk2) * (25.0f + 2.5f * (f32)(20 - flare->age));
+					scale.unk4 = (f32)(D_80154318[curr].unk2 >= 0 ? D_80154318[curr].unk2 : -D_80154318[curr].unk2) * (25.0f + 2.5f * (f32)(20 - flare->age));
 				}
 
-				rot.unk0 = flare->age << 10;
-				rot.unk2 = 0;
-				rot.unk4 = 0;
-				pos.unk0 = flare->position[0];
-				pos.unk2 = flare->position[1];
-				pos.unk4 = flare->position[2];
-				texOffset = (flare->age % 8) << 8;
+				if (func_800B93AC_C835C(flare->position[0], flare->position[2], (u16)scale.unk0,
+					(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 
-				func_800039D0_45D0(&pos, &rot, &scale, D_8005BB38);
+					if (flare->age < 20) {
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, flare->red, flare->green, flare->blue, (u32)((f32)(flare->age - 8) * 20.833334f));
+					} else {
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, flare->red, flare->green, flare->blue, (u32)(250.0f + ((f32)(20 - flare->age) * 50.0f)));
+					}
 
-				gDPLoadTextureBlock(D_8005BB2C++, &D_50327B0[texOffset], G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
-				gDPPipeSync(D_8005BB2C++);
-				gDPTileSync(D_8005BB2C++);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPDisplayList(D_8005BB2C++, (Gfx *)&D_50332A0);
-				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+					rot.unk0 = flare->age << 10;
+					rot.unk2 = 0;
+					rot.unk4 = 0;
+					pos.unk0 = flare->position[0];
+					pos.unk2 = flare->position[1];
+					pos.unk4 = flare->position[2];
+					texOffset = (flare->age % 8) << 8;
 
-				D_80156EDA += 0x2F;
+					func_800039D0_45D0(&pos, &rot, &scale, D_8005BB38);
+
+					gDPLoadTextureBlock(D_8005BB2C++, &D_50327B0[texOffset], G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 4, 4, G_TX_NOLOD, G_TX_NOLOD);
+					gDPPipeSync(D_8005BB2C++);
+					gDPTileSync(D_8005BB2C++);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+					gSPDisplayList(D_8005BB2C++, (Gfx *)&D_50332A0);
+					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+					D_80156EDA += 0x2F;
+				}
 			}
-		}
 
 			curr = D_80154318[curr].unk4;
 		} while (curr != -6 && curr != -5);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CFD84_DED34.s")
-#endif
 
 void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6) {
 	func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
@@ -5396,7 +5373,7 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 	return -3;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D0614_DF5C4.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_smoke_with_constants.s")
 #endif
 
 void func_800D0C00_DFBB0(void) {
