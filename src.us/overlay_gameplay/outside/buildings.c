@@ -3926,16 +3926,11 @@ void func_8011F22C_12E1DC(s32 arg0, s32 arg1) {
 	D_8015EA52 = 0x78;
 }
 
-// CURRENT(587)
-#ifdef NON_MATCHING
 // AI - Animates and draws a building's shield-gate wings, opening/closing based on player proximity
 void func_8011F244_12E1F4(BuildingInstance *arg0) {
-	s32 sp84;
-	s32 temp_v1;
-	s32 sp5C;
-	u8 temp_v0_12;
+	s32 gateVelocity;
 
-	sp84 = 0;
+	gateVelocity = 0;
 	D_80052B40.unk0 = (s16)(arg0->unkD + 0x92);
 	D_80052B40.unk2 = 0x5E;
 	D_80052B40.unk4 = 0;
@@ -3957,15 +3952,17 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
 
 	if (gameplayMode == 1) {
+		s32 distanceX;
+
 		if (D_8015EA52 != 0) {
 			D_8015EA52--;
 		}
 
 		if (func_8000726C_7E6C(0x14) != 0) {
-			if ((D_8015EA52 != 0) || ((sp5C = func_800F9C40_108BF0(D_80052B34->unk0 - arg0->xCoord), (u32)(func_800F9C40_108BF0(D_80052B34->unk4 - arg0->zCoord) + sp5C) < 0x258U))) {
+			if ((D_8015EA52 != 0) || ((distanceX = func_800F9C40_108BF0(D_80052B34->unk0 - arg0->xCoord), (u32)(func_800F9C40_108BF0(D_80052B34->unk4 - arg0->zCoord) + distanceX) < 0x258U))) {
 				if ((s32)arg0->unkD < 0x78) {
 					arg0->unkD = (u8)(arg0->unkD + 4);
-					sp84 = 0x40000;
+					gateVelocity = 0x40000;
 					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FCC_153F7C[0]);
 					if (arg0->unkD == 0x78) {
 						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD0_153F80[0]);
@@ -3974,7 +3971,7 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 			} else {
 				if ((s32)arg0->unkD > 0) {
 					arg0->unkD = (u8)(arg0->unkD - 4);
-					sp84 = -0x40000;
+					gateVelocity = -0x40000;
 					func_801371B8_146168(0x64, 0x138, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD4_153F84[0]);
 					if (arg0->unkD == 0) {
 						func_801371B8_146168(0, 0xE9, arg0->xCoord, arg0->yCoord, arg0->zCoord, D_80144FD8_153F88[0]);
@@ -3983,43 +3980,40 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 			}
 		}
 
-		temp_v0_12 = arg0->unkD;
-		if (arg0->unk8 & 1) {
-			temp_v1 = (arg0 - buildingInstances) * 0x10;
+		if (arg0->lowFlags & 1) {
 			func_8012D700_13C6B0(1,
-				(temp_v1 + 2) & 0xFFFF,
+				((arg0 - buildingInstances) * 0x10) + 2,
 				arg0->xCoord,
 				(s16)(arg0->yCoord + 0xF1),
-				arg0->zCoord + temp_v0_12 + 0x49,
+				arg0->zCoord + arg0->unkD + 0x49,
 				0,
 				0,
-				sp84,
+				gateVelocity,
 				0x10,
 				0x49,
 				0x93,
 				func_8011F22C_12E1DC,
 				func_8012E1F8_13D1A8);
 			func_8012D700_13C6B0(1,
-				(temp_v1 + 1) & 0xFFFF,
+				((arg0 - buildingInstances) * 0x10) + 1,
 				arg0->xCoord,
 				(s16)(arg0->yCoord + 0xF1),
 				(arg0->zCoord - arg0->unkD) - 0x49,
 				0,
 				0,
-				-sp84,
+				-gateVelocity,
 				0x10,
 				0x49,
 				0x93,
 				func_8011F22C_12E1DC,
 				func_8012E1F8_13D1A8);
 		} else {
-			temp_v1 = (arg0 - buildingInstances) * 0x10;
 			func_8012D700_13C6B0(1,
-				temp_v1 & 0xFFFF,
-				(s16)(arg0->xCoord + temp_v0_12 + 0x49),
+				((arg0 - buildingInstances) * 0x10),
+				(s16)(arg0->xCoord + arg0->unkD + 0x49),
 				(s16)(arg0->yCoord + 0xF1),
 				arg0->zCoord,
-				sp84,
+				gateVelocity,
 				0,
 				0,
 				0x49,
@@ -4028,11 +4022,11 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 				func_8011F22C_12E1DC,
 				func_8012E1F8_13D1A8);
 			func_8012D700_13C6B0(1,
-				(temp_v1 + 1) & 0xFFFF,
+				((arg0 - buildingInstances) * 0x10) + 1,
 				(s16)(arg0->xCoord - arg0->unkD - 0x49),
 				(s16)(arg0->yCoord + 0xF1),
 				arg0->zCoord,
-				-sp84,
+				-gateVelocity,
 				0,
 				0,
 				0x49,
@@ -4043,11 +4037,9 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011F244_12E1F4.s")
-#endif
 
 // AI - Animates a building's door tilt based on player proximity and draws it
+
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
 
