@@ -3026,6 +3026,11 @@ typedef union {
 } RingPaletteTable;
 
 typedef struct {
+	Vec3s position;
+	Vec3s velocity;
+} FallingRibbonParticleState; /* size = 0x0C */
+
+typedef struct {
 	union {
 		s16 position[3];
 		Vec3s positionVector;
@@ -3052,6 +3057,7 @@ typedef struct {
 	union {
 		EffectInterpolationState interpolation;
 		AnimatedFlareState animatedFlare;
+		FallingRibbonParticleState fallingRibbon;
 		Unk80154318Sub ribbonState;
 		JetStreamParticleState jetStreamParticle;
 		struct {
