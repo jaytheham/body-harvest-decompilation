@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D45B4_E3564`, `scaleX + points->position[0]` emits `addu a3,a0,s4` instead of `addu a3,s4,a0`. The same reversal affects twelve X/Y/Z additions across four draw calls. Swapping the written operands, adding redundant signed casts, and changing declaration order leave the output unchanged.
+
+-> `code changed`: Add `Vec3s positionVector` and `Vec3s previousPositionVector` views alongside the existing arrays in `EffectPositionPair`, preserving its layout with anonymous unions. Access coordinates through the vector members, for example `scaleX + points->positionVector.x`. Remove unused quarter-coordinate declarations and redundant assignment casts.
+
+-> `correct ASM`: The sums emit the target order: `addu a3,s4,a0`, `addu t5,s2,a2`, and `addu t4,s5,a1`, with all twelve additions corrected and no new instructions. IDO gives an indexed array reference greater expression weight than a struct-member reference; changing the access shape fixes the order. The function diff is exact, and both full US and EU ROM checksums are `OK`.

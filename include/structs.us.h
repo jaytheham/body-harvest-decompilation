@@ -3004,7 +3004,10 @@ typedef struct {
 } EffectInterpolationState;
 
 typedef struct {
-	s16 position[3];
+	union {
+		s16 position[3];
+		Vec3s positionVector;
+	};
 	u8 opacity;
 	u8 pad7[3];
 	u8 paletteIndex;
@@ -3023,8 +3026,19 @@ typedef union {
 } RingPaletteTable;
 
 typedef struct {
-	s16 position[3];
-	s16 previousPosition[3];
+	Vec3s position;
+	Vec3s velocity;
+} FallingRibbonParticleState; /* size = 0x0C */
+
+typedef struct {
+	union {
+		s16 position[3];
+		Vec3s positionVector;
+	};
+	union {
+		s16 previousPosition[3];
+		Vec3s previousPositionVector;
+	};
 } EffectPositionPair;
 
 typedef struct {
@@ -3043,6 +3057,7 @@ typedef struct {
 	union {
 		EffectInterpolationState interpolation;
 		AnimatedFlareState animatedFlare;
+		FallingRibbonParticleState fallingRibbon;
 		Unk80154318Sub ribbonState;
 		JetStreamParticleState jetStreamParticle;
 		struct {
@@ -3120,6 +3135,26 @@ typedef struct {
 	/* 0x0C */ u8 alpha;
 	/* 0x0D */ u8 padD;
 } FloatingNumberState; /* size = 0x0E */
+
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 y;
+	/* 0x04 */ s16 z;
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 height;
+	/* 0x0A */ u8 frame;
+	/* 0x0B */ u8 kind;
+} BubbleParticleState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 y;
+	/* 0x04 */ s16 z;
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 topAlpha;
+	/* 0x0A */ u8 bottomAlpha;
+	/* 0x0B */ s8 phase;
+} EffectStripState; /* size = 0x0C */
 
 typedef struct {
 	s16 x;
@@ -4127,6 +4162,12 @@ typedef struct {
 	u8 g;
 	u8 b;
 } EffectRgb;
+
+typedef struct {
+	/* 0x00 */ Vec3s position;
+	/* 0x06 */ EffectRgb primitive;
+	/* 0x09 */ EffectRgb environment;
+} EffectEmitterColorState; /* size = 0x0C */
 
 typedef struct {
 	u8 r;

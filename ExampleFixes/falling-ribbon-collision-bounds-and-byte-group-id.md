@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800CE1C0_DD170`, the draft enters water and ground collision handling when `waterLevel < y` and `floor < y`; the target skips those blocks on those comparisons. A word-sized group-ID local and explicit byte masks split the value across `v0`, `s2`, and a stack spill. The spread divisor takes `s8`, displacing the slot pointer.
+
+-> `code changed`: Test `y <= waterLevel` and `y <= floor`. Keep the helper-call ID in a `u8` local and rely on the existing function parameter types for narrowing. Access the slot array with the original byte argument. Define the payload as `FallingRibbonParticleState`, with signed-short position and velocity vectors, and use that typed member instead of reinterpreting a short array.
+
+-> `correct ASM`: The collision tests emit the target `slt/bnezl` skips. The helper-call ID occupies `s7`, the once-per-update flag occupies `s6`, and the slot address occupies `s8`; redundant copies and the ID spill disappear. The divisor is materialized in `v1` after the random calls. The complete function and both US and EU ROM checksums match.
