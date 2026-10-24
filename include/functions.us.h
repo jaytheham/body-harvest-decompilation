@@ -974,7 +974,7 @@ void func_80116784_125734();
 void func_80115CC0_124C70(void);
 s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3);
 s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2);
-s32 func_80118670_127620(s16 arg0, s16 arg1);
+s32 func_80118670_127620(s32 arg0, s32 arg1);
 void func_8011A604_1295B4(void);
 void func_8011D030_12BFE0(u8 arg0);
 void func_8011BB94_12AB44(s32, s32);
