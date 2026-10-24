@@ -4205,8 +4205,6 @@ s32 func_80120634_12F5E4(void) {
 	}
 }
 
-// CURRENT(4395)
-#ifdef NON_MATCHING
 // Debug? Find the nearest special building of type D_A01F868
 // in front of and behind the player along the Z-axis,
 // then render a three-segment 3D line connecting those buildings and the player
@@ -4215,8 +4213,8 @@ void func_801206B0_12F660(void) {
 	BuildingInstance *instB;
 	VehicleInstance *playerVehicle;
 	s16 idx;
-	s8 xCell;
-	s8 zCell;
+	s32 xCell;
+	s32 zCell;
 
 	if (!(D_80052558 & 8)) {
 		D_80052558 |= 8;
@@ -4225,29 +4223,22 @@ void func_801206B0_12F660(void) {
 		D_8015EA34 = D_8015EA38;
 		D_8015EA38 = playerVehicle->unk54;
 
-		xCell = (s8)((s16)playerVehicle->unk0 >> 8);
-		zCell = (s8)((s16)playerVehicle->unk4 >> 8);
+		idx = playerVehicle->unk0 >> 8;
+		xCell = (s8)(idx & 0xFF);
+		zCell = playerVehicle->unk4 >> 8;
 
-		for (zCell += 1;; zCell += 1) {
+		do {
+			zCell++;
 			idx = func_8011D260_12C210(xCell, zCell);
-			if (idx != -1) {
-				instA = &buildingInstances[idx];
-				if (*(s32 *)&buildingTypes[instA->buildingType] == (s32)D_A01F868) {
-					break;
-				}
-			}
-		}
+			instA = &buildingInstances[idx];
+		} while (idx == -1 || buildingTypes[instA->buildingType].model != D_A01F868);
 
-		zCell = (s8)((s16)playerVehicle->unk4 >> 8);
-		for (zCell -= 1;; zCell -= 1) {
+		zCell = playerVehicle->unk4 >> 8;
+		do {
+			zCell--;
 			idx = func_8011D260_12C210(xCell, zCell);
-			if (idx != -1) {
-				instB = &buildingInstances[idx];
-				if (*(s32 *)&buildingTypes[instB->buildingType] == (s32)D_A01F868) {
-					break;
-				}
-			}
-		}
+			instB = &buildingInstances[idx];
+		} while (idx == -1 || buildingTypes[instB->buildingType].model != D_A01F868);
 
 		D_8015EA3C = (s16)((f32)D_8015EA3C + (D_8015EA34 - D_8015EA38));
 
@@ -4324,9 +4315,6 @@ void func_801206B0_12F660(void) {
 		D_8005BB34 += 5;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801206B0_12F660.s")
-#endif
 
 void func_80120BC4_12FB74(BuildingInstance *arg0) {
 	s32 angle;
