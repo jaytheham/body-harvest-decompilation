@@ -4279,4 +4279,9 @@ typedef struct {
 	/* 0x05 */ u8 pad5;
 } RoadTileInfo; /* size = 0x06 */
 
+typedef struct {
+	s32 shift;
+	s32 bias;
+} BuildingHeightDecode;
+
 #endif /* LIBULTRA_REFERENCE */

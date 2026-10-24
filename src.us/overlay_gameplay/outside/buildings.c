@@ -58,9 +58,9 @@ const f32 D_80144F98_153F48[1] = {0.6000000238418579};
 
 const f64 D_80144FA0_153F50[1] = {0.4};
 
-const f64 D_80144FA8_153F58[1] = {32767.0};
 
-const f64 D_80144FB0_153F60[1] = {63.0};
+
+
 
 
 
@@ -81,12 +81,10 @@ u8 D_80140A28_14F9D8[0x18] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-u8 D_80140A40_14F9F0[0x50] = {
-	0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x05, 0x00, 0x02, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x04, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0x00, 0x03, 0x80, 0x00,
-	0x00, 0x00, 0x00, 0x02, 0x00, 0x03, 0xC0, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x03, 0xE0, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0xF0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x03, 0xF8, 0x00,
-	0x00, 0x80, 0x00, 0x80, 0x01, 0xFF, 0x00, 0x00, 0x00, 0x80, 0x00, 0x80, 0x01, 0xFF, 0x00, 0x00,
+BuildingHeightDecode D_80140A40_14F9F0[10] = {
+	{6, 0}, {5, 0x20000}, {4, 0x30000}, {3, 0x38000},
+	{2, 0x3C000}, {1, 0x3E000}, {0, 0x3F000}, {0, 0x3F800},
+	{0x800080, 0x1FF0000}, {0x800080, 0x1FF0000},
 };
 
 u8 D_80140A90_14FA40[4] = {
@@ -636,7 +634,7 @@ void func_8011694C_1258FC(void) {
 		D_8015EB60[i] = 0xFF;
 	}
 	for (i = 7; i >= 0; i--) {
-		((&D_8015EB70)[i]) = 0xFF;
+		(D_8015EB70[i]) = 0xFF;
 	}
 
 	for (i = 0; i < 0xFF; i++) {
@@ -3225,7 +3223,7 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 	}
 	
 	if (D_8015EB6A < 8) {
-		(&D_8015EB70)[D_8015EB6A] = value;
+		D_8015EB70[D_8015EB6A] = value;
 		D_8015EB6A++;
 	}
 }
@@ -3234,7 +3232,7 @@ void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
 #endif
 
 #ifdef NON_MATCHING
-void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
+void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1) {
 	BuildingType *type;
 	u32 *typeWords;
 	u8 value;
@@ -3316,46 +3314,42 @@ void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1, s16 startIndex, s32 arg3) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D4FC_12C4AC.s")
 #endif
-// CURRENT(9775)
-#ifdef NON_MATCHING
-void func_8011DBA0_12CB50() {
-	typedef struct {
-		s32 unk0;
-		s32 unk4;
-	} Unk80140A40;
+// Decode cached building heights and advance the pending queue.
+void func_8011DBA0_12CB50(void) {
 
 	BuildingType *type;
-	Unk80140A40 *unkTable;
+	BuildingHeightDecode (*unkTable)[1];
 	u16 *unkPtr;
+	u16 (*maps)[64];
 	u8 *pendingPtr;
-	s16 startIndex;
-	s16 index;
-	u32 counter;
+	s32 startIndex;
+	s32 index;
+	s32 count;
 	u16 value;
-	Unk80140A40 *entry;
-	s32 temp;
+	BuildingHeightDecode *entry;
 
-	index = D_8015EB68;
-	unkPtr = (u16 *)((u8 *)&D_802B2080 + (index << 0xD));
+	maps = (u16 (*)[64])D_802B2080;
+	startIndex = D_8015EB68;
+	unkPtr = maps[startIndex << 6];
 
 	if (D_8015EB6C != 0) {
 		D_8015EB6C--;
 		if (D_8015EB6C == 0) {
-			type = &buildingTypes[(u8)D_8015EB6E & 0x7F];
-			unkTable = (Unk80140A40 *)D_80140A40_14F9F0;
-			counter = 0xFFF;
+			type = &buildingTypes[D_8015EB6E & 0x7F];
+			unkTable = (BuildingHeightDecode (*)[1])D_80140A40_14F9F0;
+			
 
-			do {
+			count = 0x1000; if (count) { for (; count--; ) {
 				value = *unkPtr;
-				entry = &unkTable[value >> 0xD];
-				temp = (entry->unk4 + ((((s32)value >> 2) & 0x7FF) << entry->unk0)) >> 3;
-				*unkPtr = (u16)((1.0 - ((f64)temp / D_80144FA8_153F58[0])) * (f64)type->unk14);
-				unkPtr++;
-			} while (counter-- != 0);
+				if (unkPtr && value) {} /* Preserve IDO live-range boundaries. */
+				entry = unkTable[value >> 0xD];
+				*unkPtr = (u32)((1.0 - ((f64)((entry->bias + ((((s32)value >> 2) & 0x7FF) << entry->shift)) >> 3) / 32767.0)) * type->unk14);
+				++unkPtr;
+			} }
 
-			D_8015EB60[index] = (u8)D_8015EB6E;
-			index++;
-			D_8015EB68 = index;
+			startIndex = D_8015EB68;
+			D_8015EB60[startIndex] = D_8015EB6E;
+			D_8015EB68 = startIndex + 1;
 			if (D_8015EB68 >= 8) {
 				D_8015EB68 = 0;
 			}
@@ -3364,37 +3358,31 @@ void func_8011DBA0_12CB50() {
 	}
 
 	if ((D_8015EB6A != 0) && (D_8015EB6C == 0)) {
+		D_8015EB6E = D_8015EB70[0];
 		startIndex = D_8015EB68;
-		D_8015EB6E = D_8015EB70;
 		index = startIndex;
 
-		while ((D_8015EB60[index] != 0xFF) && (*((u8 *)&buildingTypes[D_8015EB60[index]] + 0x1A) & 0x10)) {
+		do {
+			if ((D_8015EB60[index] == 0xFF) || !(buildingTypes[D_8015EB60[index]].unk1A[0] & 0x10)) { break; }
 			index++;
 			if (index >= 8) {
 				index = 0;
 			}
-			if (index == startIndex) {
-				break;
-			}
-		}
+		} while (index != startIndex);
 
 		D_8015EB68 = index;
-		func_8011D4FC_12C4AC((u8)D_8015EB6E, (u16 *)((u8 *)&D_802B2080 + (D_8015EB68 << 0xD)), startIndex, arg3);
+		func_8011D4FC_12C4AC((u8)D_8015EB6E, maps[D_8015EB68 << 6]);
 
-		pendingPtr = &D_8015EB71;
-		while (pendingPtr < &D_8015EB77) {
+		pendingPtr = &D_8015EB70[0];
+		while (pendingPtr++ < &D_8015EB70[7]) {
 			pendingPtr[-1] = *pendingPtr;
-			pendingPtr++;
 		}
 
 		D_8015EB77 = 0xFF;
-		D_8015EB6C = 2;
+		count = D_8015EB6C; if (count) {} D_8015EB6C = 2; /* Preserve IDO address-register allocation. */
 		D_8015EB6A--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011DBA0_12CB50.s")
-#endif
 
 void func_8011DE60_12CE10(s32 arg0) {
 	D_8015EB80 = arg0;
@@ -3494,10 +3482,10 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		}
 	}
 
-	if (D_80144FB0_153F60[0] < localX) {
+	if (63.0 < localX) {
 		localX = 63.0f;
 	}
-	if (D_80144FB0_153F60[0] < localZ) {
+	if (63.0 < localZ) {
 		localZ = 63.0f;
 	}
 
