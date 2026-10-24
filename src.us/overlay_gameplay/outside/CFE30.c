@@ -4744,18 +4744,17 @@ void func_800CE1C0_DD170(u8 groupIndex) {
 }
 
 
-#ifdef NON_MATCHING
-// CURRENT(26000)
-void func_800CE6E8_DD698(u8 arg0) {
-	s16 index;
-	s16 nextIndex;
-	s8 sp42;
-	s8 sp43;
+void func_800CE6E8_DD698(u8 groupIndex) {
 	Unk80154318Entry *entry;
 	Unk80154318Entry *nextEntry;
-	Vtx *vtx;
+	s16 index;
+	s16 nextIndex;
+	s8 xOffset;
+	s8 zOffset;
+	Vec3s *position;
+	Vec3s *nextPosition;
 
-	index = D_80154088[arg0].unk6;
+	index = D_80154088[groupIndex].unk6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
@@ -4763,149 +4762,143 @@ void func_800CE6E8_DD698(u8 arg0) {
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100BD00), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 	entry = &D_80154318[index];
-	nextEntry = &D_80154318[entry->unk4];
+	nextIndex = entry->unk4;
+	nextEntry = &D_80154318[nextIndex];
 	if (nextEntry->unk8 < entry->unk8) {
-		sp42 = 0xF;
+		zOffset = 0xF;
 		if (nextEntry->unkC < entry->unkC) {
-			sp43 = -0xF;
+			xOffset = -0xF;
 		} else {
-			sp43 = 0xF;
+			xOffset = 0xF;
 		}
 	} else {
-		sp42 = -0xF;
-		sp43 = 0xF;
+		zOffset = -0xF;
 		if (nextEntry->unkC < entry->unkC) {
-			sp43 = -0xF;
+			xOffset = -0xF;
+		} else {
+			xOffset = 0xF;
 		}
 	}
 
 	if ((index != -5) && (index != -6)) {
-		while (1) {
+		do {
 			entry = &D_80154318[index];
 			nextIndex = entry->unk4;
 			if (nextIndex != -5) {
-				nextEntry = &D_80154318[nextIndex];
 
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = entry->unk8;
-				vtx->v.ob[1] = (func_800038E0_44E0() % 5) + entry->unkA + 0xF;
-				vtx->v.ob[2] = entry->unkC;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0;
-				vtx->v.tc[1] = 0;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
-
-				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = entry->unk8;
-				vtx->v.ob[1] = entry->unkA - (func_800038E0_44E0() % 5) - 0xF;
-				vtx->v.ob[2] = entry->unkC;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0;
-				vtx->v.tc[1] = 0x800;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				/* Read the entry view before rebasing the coordinate view. */
+				position = (Vec3s *)entry;
+				if (1) {
+					D_8005BB34->v.ob[0] = ((volatile Unk80154318Entry *)position)->unk8;
+				}
+				position = &((Unk80154318Entry *)position)->positionPair.positionVector;
+				D_8005BB34->v.ob[1] = (func_800038E0_44E0() % 5) + position->y + 0xF;
+				D_8005BB34->v.ob[2] = position->z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = nextEntry->unk8;
-				vtx->v.ob[1] = nextEntry->unkA - (func_800038E0_44E0() % 5) - 0xF;
-				vtx->v.ob[2] = nextEntry->unkC;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0x800;
-				vtx->v.tc[1] = 0x800;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				D_8005BB34->v.ob[0] = position->x;
+				D_8005BB34->v.ob[1] = position->y - (func_800038E0_44E0() % 5) - 0xF;
+				D_8005BB34->v.ob[2] = position->z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = nextEntry->unk8;
-				vtx->v.ob[1] = (func_800038E0_44E0() % 5) + nextEntry->unkA + 0xF;
-				vtx->v.ob[2] = nextEntry->unkC;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0x800;
-				vtx->v.tc[1] = 0;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				nextPosition = (Vec3s *)(s32)D_80154318[nextIndex].payload;
+				D_8005BB34->v.ob[0] = nextPosition->x;
+				D_8005BB34->v.ob[1] = nextPosition->y - (func_800038E0_44E0() % 5) - 0xF;
+				D_8005BB34->v.ob[2] = nextPosition->z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = entry->unk8 + sp43;
-				vtx->v.ob[1] = entry->unkA;
-				vtx->v.ob[2] = entry->unkC + sp42;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0;
-				vtx->v.tc[1] = 0;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				D_8005BB34->v.ob[0] = nextPosition->x;
+				D_8005BB34->v.ob[1] = (func_800038E0_44E0() % 5) + nextPosition->y + 0xF;
+				D_8005BB34->v.ob[2] = nextPosition->z;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = entry->unk8 - sp43;
-				vtx->v.ob[1] = entry->unkA;
-				vtx->v.ob[2] = entry->unkC - sp42;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0;
-				vtx->v.tc[1] = 0x800;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				D_8005BB34->v.ob[0] = position->x + xOffset;
+				D_8005BB34->v.ob[1] = position->y;
+				D_8005BB34->v.ob[2] = position->z + zOffset;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = nextEntry->unk8 - sp43;
-				vtx->v.ob[1] = nextEntry->unkA;
-				vtx->v.ob[2] = nextEntry->unkC - sp42;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0x800;
-				vtx->v.tc[1] = 0x800;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				D_8005BB34->v.ob[0] = position->x - xOffset;
+				D_8005BB34->v.ob[1] = position->y;
+				D_8005BB34->v.ob[2] = position->z - zOffset;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				vtx = D_8005BB34;
-				vtx->v.ob[0] = nextEntry->unk8 + sp43;
-				vtx->v.ob[1] = nextEntry->unkA;
-				vtx->v.ob[2] = nextEntry->unkC + sp42;
-				vtx->v.flag = 0;
-				vtx->v.tc[0] = 0x800;
-				vtx->v.tc[1] = 0;
-				vtx->v.cn[0] = 0x96;
-				vtx->v.cn[1] = 0xAA;
-				vtx->v.cn[2] = 0xFF;
-				vtx->v.cn[3] = 0xB4;
+				D_8005BB34->v.ob[0] = nextPosition->x - xOffset;
+				D_8005BB34->v.ob[1] = nextPosition->y;
+				D_8005BB34->v.ob[2] = nextPosition->z - zOffset;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0x800;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
 
 				D_8005BB34++;
-				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 8), 8, 0);
+				D_8005BB34->v.ob[0] = nextPosition->x + xOffset;
+				D_8005BB34->v.ob[1] = nextPosition->y;
+				D_8005BB34->v.ob[2] = nextPosition->z + zOffset;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0x800;
+				D_8005BB34->v.tc[1] = 0;
+				D_8005BB34->v.cn[0] = 0x96;
+				D_8005BB34->v.cn[1] = 0xAA;
+				D_8005BB34->v.cn[2] = 0xFF;
+				D_8005BB34->v.cn[3] = 0xB4;
+
+				D_8005BB34++;
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-8]), 8, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
-				gSP2Triangles(D_8005BB2C++, 4, 5, 7, 0, 7, 5, 6, 0);
+				gSP2Triangles(D_8005BB2C++, 7, 4, 5, 0, 7, 5, 6, 0);
 				D_80156EDA += 8;
 			}
 
 			index = nextIndex;
-			if ((nextIndex == -5) || (nextIndex == -6)) {
-				break;
-			}
-		}
+		} while (index != -5 && index != -6);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CE6E8_DD698.s")
-#endif
+
 
 void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 idx;
