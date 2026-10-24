@@ -3633,9 +3633,8 @@ s32 func_8011E6FC_12D6AC(s16 arg0, s16 arg1, s16 *arg2) {
 	return func_8011DE6C_12CE1C(arg0, arg1, arg2, (s16)temp_v0);
 }
 
-// CURRENT(5575)
-#ifdef NON_MATCHING
-s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
+s32 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s16 *outX, s16 *outZ) {
+	s32 index;
 	BuildingInstance *inst;
 	BuildingType *type;
 	s16 xMin;
@@ -3644,15 +3643,7 @@ s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
 	s16 zMax;
 	s16 edgeX;
 	s16 edgeZ;
-	s16 *outX;
-	s16 *outZ;
-	s32 temp_v0;
-	s32 temp_v1;
-	s32 temp;
-	s32 index;
 
-	outX = (s16 *)arg3;
-	outZ = (s16 *)arg4;
 	index = func_8011E6FC_12D6AC(arg0, arg1, arg2);
 	if (index == -1) {
 		return -1;
@@ -3660,86 +3651,51 @@ s16 func_8011E788_12D738(s16 arg0, s16 arg1, s16 *arg2, s32 arg3, s32 arg4) {
 
 	inst = &buildingInstances[index];
 	if (inst->buildingType == 0x1F) {
-		if (inst->unk8 & 1) {
+		if (inst->lowFlags & 1) {
 			*outX = arg0;
 			*outZ = arg1 & 0xFF00;
 		} else {
 			*outX = arg0 & 0xFF00;
 			*outZ = arg1;
 		}
-		return (s16)index;
-	}
-
-	type = &buildingTypes[inst->buildingType];
-	if (inst->unk8 & 1) {
-		zMin = inst->zCoord - type->unk10;
-		zMax = inst->zCoord + type->unk10;
-		xMax = inst->xCoord + type->unk12;
-		xMin = inst->xCoord - type->unk12;
+		return index;
 	} else {
-		zMin = inst->zCoord - type->unk12;
-		zMax = inst->zCoord + type->unk12;
-		xMax = inst->xCoord + type->unk10;
-		xMin = inst->xCoord - type->unk10;
-	}
+		type = &buildingTypes[inst->buildingType];
+		if (inst->lowFlags & 1) {
+			zMin = inst->zCoord - type->unk10;
+			zMax = inst->zCoord + type->unk10;
+			xMax = inst->xCoord + type->unk12;
+			xMin = inst->xCoord - type->unk12;
+		} else {
+			zMin = inst->zCoord - type->unk12;
+			zMax = inst->zCoord + type->unk12;
+			xMax = inst->xCoord + type->unk10;
+			xMin = inst->xCoord - type->unk10;
+		}
 
-	if (arg0 < xMin || xMax < arg0 || arg1 < zMin || zMax < arg1) {
+		if (arg0 >= xMin && arg0 <= xMax && arg1 >= zMin && arg1 <= zMax) {
+			if (((arg0 - xMax) >= 0 ? (arg0 - xMax) : -(arg0 - xMax)) < ((arg0 - xMin) >= 0 ? (arg0 - xMin) : -(arg0 - xMin))) {
+				edgeX = xMax;
+			} else {
+				edgeX = xMin;
+			}
+			if (((arg1 - zMin) >= 0 ? (arg1 - zMin) : -(arg1 - zMin)) < ((arg1 - zMax) >= 0 ? (arg1 - zMax) : -(arg1 - zMax))) {
+				edgeZ = zMin;
+			} else {
+				edgeZ = zMax;
+			}
+			if (((arg0 - edgeX) >= 0 ? (arg0 - edgeX) : -(arg0 - edgeX)) < ((arg1 - edgeZ) >= 0 ? (arg1 - edgeZ) : -(arg1 - edgeZ))) {
+				*outX = edgeX;
+				*outZ = arg1;
+			} else {
+				*outX = arg0;
+				*outZ = edgeZ;
+			}
+			return index;
+		}
 		return -1;
 	}
-
-	temp_v0 = arg0 - xMax;
-	temp_v1 = arg0 - xMin;
-	if (temp_v0 < 0) {
-		temp_v0 = -temp_v0;
-	}
-	if (temp_v1 < 0) {
-		temp_v1 = -temp_v1;
-	}
-
-	if (temp_v0 < temp_v1) {
-		edgeX = xMax;
-	} else {
-		edgeX = xMin;
-	}
-
-	temp_v0 = arg1 - zMin;
-	temp_v1 = arg1 - zMax;
-	if (temp_v0 < 0) {
-		temp_v0 = -temp_v0;
-	}
-	if (temp_v1 < 0) {
-		temp_v1 = -temp_v1;
-	}
-
-	if (temp_v0 < temp_v1) {
-		edgeZ = zMin;
-	} else {
-		edgeZ = zMax;
-	}
-
-	temp_v0 = arg0 - edgeX;
-	temp_v1 = arg1 - edgeZ;
-	if (temp_v0 < 0) {
-		temp_v0 = -temp_v0;
-	}
-	if (temp_v1 < 0) {
-		temp_v1 = -temp_v1;
-	}
-
-	if (temp_v0 < temp_v1) {
-		*outX = edgeX;
-		*outZ = arg1;
-	} else {
-		*outX = arg0;
-		*outZ = edgeZ;
-	}
-
-	temp = index;
-	return index;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011E788_12D738.s")
-#endif
 
 void func_8011E9F4_12D9A4(s32 arg0, s16 arg1) {
 	if (D_8015FAD0[arg1].unk2C == 6) {
