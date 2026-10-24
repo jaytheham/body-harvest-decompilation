@@ -3004,7 +3004,10 @@ typedef struct {
 } EffectInterpolationState;
 
 typedef struct {
-	s16 position[3];
+	union {
+		s16 position[3];
+		Vec3s positionVector;
+	};
 	u8 opacity;
 	u8 pad7[3];
 	u8 paletteIndex;

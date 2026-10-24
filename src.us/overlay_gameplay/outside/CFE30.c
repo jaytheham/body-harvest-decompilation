@@ -6186,90 +6186,72 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 }
 
 
-// CURRENT(30782)
-#ifdef NON_MATCHING
 void func_800D2ECC_E1E7C(void) {
-	s16 screenPosition[2];
-	s8 color[3];
-	s16 var_v1;
-	s32 temp_fp;
-	s16 temp_t3;
-	s16 temp_t3_2;
-	u8 slice;
-	s16 temp_t8;
-	u8 (*palette)[8];
+	s16 index;
+	s16 linkedIndex;
 	RingVisualState *visual;
 	RingEmitterState *ring;
-	Unk80154318Entry *temp_s5;
-	Unk80154318Entry *temp_s6;
+	u8 slice;
+	s8 color[3];
+	s16 screenPosition[2];
 
-	var_v1 = D_80154282;
+	index = D_80154282;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
 
-	if ((var_v1 == -5) || (var_v1 == -6)) {
+	if ((index == -5) || (index == -6)) {
 		return;
 	}
 
-	temp_fp = 0x1E;
-	palette = D_8013E108_14D0B8.colors;
-do {
-	temp_s5 = &D_80154318[var_v1];
-	temp_s6 = &D_80154318[temp_s5->unk4];
-	if (func_800B93AC_C835C(temp_s5->unk8, temp_s5->unkC, (temp_s6->unk8 + temp_s6->unkA) & 0xFFFF, (s16)(s32)(D_80047954 * 4.0f),
-						   (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-		slice = 0;
-		ring = &temp_s6->ringEmitter;
-		visual = &temp_s5->ringVisual;
-		temp_t8 = ring->width / 2;
-		func_800D2AB0_E1A60((s16)(visual->position[0] - temp_t8), (s16)(visual->position[0] + temp_t8), (s16)(visual->position[2] + ring->height),
-					   (s16)(visual->position[2] + ring->height), visual->position[1], ring->height + visual->position[1], ring->textureSlices[slice], visual->paletteIndex);
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] + (ring->width / 2)), (s16)(visual->position[0] + ring->width),
-					   (s16)(visual->position[2] + ring->height), (s16)(visual->position[2] + (ring->height / 2)), visual->position[1],
-					   ring->height + visual->position[1], ring->textureSlices[slice], visual->paletteIndex);
-		temp_t3 = ring->height / 2;
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] + ring->width), (s16)(visual->position[0] + ring->width), (s16)(visual->position[2] + temp_t3),
-					   (s16)(visual->position[2] - temp_t3), visual->position[1], ring->height + visual->position[1], ring->textureSlices[slice],
-					   visual->paletteIndex);
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] + ring->width), (s16)(visual->position[0] + (ring->width / 2)),
-					   (s16)(visual->position[2] - (ring->height / 2)), (s16)(visual->position[2] - ring->height), visual->position[1],
-					   ring->height + visual->position[1], ring->textureSlices[slice], visual->paletteIndex);
-		temp_t8 = ring->width / 2;
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] + temp_t8), (s16)(visual->position[0] - temp_t8), (s16)(visual->position[2] - ring->height),
-					   (s16)(visual->position[2] - ring->height), visual->position[1], ring->height + visual->position[1],
-					   ring->textureSlices[slice], visual->paletteIndex);
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] - (ring->width / 2)), (s16)(visual->position[0] - ring->width),
-					   (s16)(visual->position[2] - ring->height), (s16)(visual->position[2] - (ring->height / 2)), visual->position[1],
-					   ring->height + visual->position[1], ring->textureSlices[slice], visual->paletteIndex);
-		temp_t3_2 = ring->height / 2;
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] - ring->width), (s16)(visual->position[0] - ring->width), (s16)(visual->position[2] - temp_t3_2),
-					   (s16)(visual->position[2] + temp_t3_2), visual->position[1], ring->height + visual->position[1],
-					   ring->textureSlices[slice], visual->paletteIndex);
-		slice++;
-		func_800D2AB0_E1A60((s16)(visual->position[0] - ring->width), (s16)(visual->position[0] - (ring->width / 2)),
-					   (s16)(visual->position[2] + (ring->height / 2)), (s16)(visual->position[2] + ring->height), visual->position[1],
-					   ring->height + visual->position[1], ring->textureSlices[slice], visual->paletteIndex);
-		color[0] = palette[visual->paletteIndex][0] - (func_800038E0_44E0() % temp_fp);
-		color[1] = palette[visual->paletteIndex][1] - (func_800038E0_44E0() % temp_fp);
-		color[2] = palette[visual->paletteIndex][2] - (func_800038E0_44E0() % temp_fp);
-		screenPosition[0] = visual->position[0];
-		screenPosition[1] = visual->position[2];
-		func_800B2354_C1304(screenPosition, color, ring->width, 0x200);
-	}
-	var_v1 = temp_s6->unk4;
-	} while (var_v1 != -5 && var_v1 != -6);
+	do {
+		linkedIndex = D_80154318[index].unk4;
+		if (func_800B93AC_C835C(D_80154318[index].unk8, D_80154318[index].unkC, (D_80154318[linkedIndex].unkA + D_80154318[linkedIndex].unk8) & 0xFFFF, (D_80047954 * 4.0f),
+			(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
+			slice = 0;
+			ring = (RingEmitterState *)(s32)D_80154318[linkedIndex].payload;
+			visual = (RingVisualState *)(s32)D_80154318[index].payload;
+			func_800D2AB0_E1A60((visual->positionVector.x - (ring->width / 2)), (visual->positionVector.x + (ring->width / 2)), (visual->positionVector.z + ring->height),
+				(visual->positionVector.z + ring->height), visual->positionVector.y, D_80154318[linkedIndex].unk2 + visual->positionVector.y, ring->textureSlices[slice], visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x + (ring->width / 2)), (visual->positionVector.x + ring->width),
+				(visual->positionVector.z + ring->height), (visual->positionVector.z + (ring->height / 2)), visual->positionVector.y,
+				D_80154318[linkedIndex].unk2 + visual->positionVector.y, ring->textureSlices[slice], visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x + ring->width), (visual->positionVector.x + ring->width), (visual->positionVector.z + (ring->height / 2)),
+				(visual->positionVector.z - (ring->height / 2)), visual->positionVector.y, D_80154318[linkedIndex].unk2 + visual->positionVector.y, ring->textureSlices[slice],
+				visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x + ring->width), (visual->positionVector.x + (ring->width / 2)),
+				(visual->positionVector.z - (ring->height / 2)), (visual->positionVector.z - ring->height), visual->positionVector.y,
+				D_80154318[linkedIndex].unk2 + visual->positionVector.y, ring->textureSlices[slice], visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x + (ring->width / 2)), (visual->positionVector.x - (ring->width / 2)), (visual->positionVector.z - ring->height),
+				(visual->positionVector.z - ring->height), visual->positionVector.y, D_80154318[linkedIndex].unk2 + visual->positionVector.y,
+				ring->textureSlices[slice], visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x - (ring->width / 2)), (visual->positionVector.x - ring->width),
+				(visual->positionVector.z - ring->height), (visual->positionVector.z - (ring->height / 2)), visual->positionVector.y,
+				D_80154318[linkedIndex].unk2 + visual->positionVector.y, ring->textureSlices[slice], visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x - ring->width), (visual->positionVector.x - ring->width), (visual->positionVector.z - (ring->height / 2)),
+				(visual->positionVector.z + (ring->height / 2)), visual->positionVector.y, D_80154318[linkedIndex].unk2 + visual->positionVector.y,
+				ring->textureSlices[slice], visual->paletteIndex);
+			slice++;
+			func_800D2AB0_E1A60((visual->positionVector.x - ring->width), (visual->positionVector.x - (ring->width / 2)),
+				(visual->positionVector.z + (ring->height / 2)), (visual->positionVector.z + ring->height), visual->positionVector.y,
+				D_80154318[linkedIndex].unk2 + visual->positionVector.y, ring->textureSlices[slice], visual->paletteIndex);
+			color[0] = D_8013E108_14D0B8.colors[visual->paletteIndex][0] - (func_800038E0_44E0() % 0x1E);
+			color[1] = D_8013E108_14D0B8.colors[visual->paletteIndex][1] - (func_800038E0_44E0() % 0x1E);
+			color[2] = D_8013E108_14D0B8.colors[visual->paletteIndex][2] - (func_800038E0_44E0() % 0x1E);
+			screenPosition[0] = visual->positionVector.x;
+			screenPosition[1] = visual->positionVector.z;
+			func_800B2354_C1304(screenPosition, color, ring->width, 0x200);
+		}
+		index = D_80154318[linkedIndex].unk4;
+	} while (index != -5 && index != -6);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D2ECC_E1E7C.s")
-#endif
 
 void func_800D3614_E25C4(u8 arg0) {
 	s16 index = D_80154282;
