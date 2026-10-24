@@ -6507,8 +6507,6 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 }
 
 
-// CURRENT(2425)
-#ifdef NON_MATCHING
 void func_800D45B4_E3564(void) {
 	s16 index;
 
@@ -6517,9 +6515,7 @@ void func_800D45B4_E3564(void) {
 		s16 dx;
 		s16 dy;
 		s16 dz;
-		s16 quarterX;
 		s16 quarterY;
-		s16 quarterZ;
 		s16 scaleX;
 		s16 scaleZ;
 		u8 alpha;
@@ -6533,45 +6529,42 @@ void func_800D45B4_E3564(void) {
 		entry = &D_80154318[index];
 		points = &entry->positionPair;
 
-		dx = (s16)(entry->previousPosition[0] - entry->unk8);
-		dy = (s16)(entry->previousPosition[1] - entry->unkA);
-		dz = (s16)(entry->unk12 - entry->unkC);
+		dx = (entry->previousPosition[0] - entry->unk8);
+		dy = (entry->previousPosition[1] - entry->unkA);
+		dz = (entry->unk12 - entry->unkC);
 		alpha = 0xFF;
 		alpha -= entry->unk14 * 0x12;
 
 		cosVal = coss(0x888);
 		sinVal = sins(0x888);
 
-		stepZ = (s16)(dz / 4);
-		stepX = (s16)(dx / 4);
+		stepZ = (dz / 4);
+		stepX = (dx / 4);
 
-		scaleX = (s16)((((f32)sinVal / 32768.0) * stepZ) + (stepX * ((f32)cosVal / 32768.0)));
+		scaleX = ((((f32)sinVal / 32768.0) * stepZ) + (stepX * ((f32)cosVal / 32768.0)));
 		cosVal = coss(0x888);
 		sinVal = sins(0x888);
-		scaleZ = (s16)((stepZ * ((f32)cosVal / 32768.0)) - (((f32)sinVal / 32768.0) * stepX));
+		scaleZ = ((stepZ * ((f32)cosVal / 32768.0)) - (((f32)sinVal / 32768.0) * stepX));
 
-		func_800D3E3C_E2DEC(points->position[0], points->position[1], points->position[2], points->previousPosition[0], points->previousPosition[1], points->previousPosition[2], alpha);
+		func_800D3E3C_E2DEC(points->positionVector.x, points->positionVector.y, points->positionVector.z, points->previousPositionVector.x, points->previousPositionVector.y, points->previousPositionVector.z, alpha);
 
-		quarterY = (s16)(dy / 4);
-		func_800D3E3C_E2DEC(points->position[0], points->position[1], points->position[2], scaleX + points->position[0], quarterY + points->position[1], scaleZ + points->position[2], alpha);
-		func_800D3E3C_E2DEC(points->previousPosition[0], points->previousPosition[1], points->previousPosition[2], scaleX + points->position[0], quarterY + points->position[1], scaleZ + points->position[2], alpha);
+		quarterY = (dy / 4);
+		func_800D3E3C_E2DEC(points->positionVector.x, points->positionVector.y, points->positionVector.z, scaleX + points->positionVector.x, quarterY + points->positionVector.y, scaleZ + points->positionVector.z, alpha);
+		func_800D3E3C_E2DEC(points->previousPositionVector.x, points->previousPositionVector.y, points->previousPositionVector.z, scaleX + points->positionVector.x, quarterY + points->positionVector.y, scaleZ + points->positionVector.z, alpha);
 
 		cosVal = coss(0xF778);
 		sinVal = sins(0xF778);
-		scaleX = (s16)((((f32)sinVal / 32768.0) * stepZ) + (stepX * ((f32)cosVal / 32768.0)));
+		scaleX = ((((f32)sinVal / 32768.0) * stepZ) + (stepX * ((f32)cosVal / 32768.0)));
 		cosVal = coss(0xF778);
 		sinVal = sins(0xF778);
-		scaleZ = (s16)((stepZ * ((f32)cosVal / 32768.0)) - (((f32)sinVal / 32768.0) * stepX));
+		scaleZ = ((stepZ * ((f32)cosVal / 32768.0)) - (((f32)sinVal / 32768.0) * stepX));
 
-		func_800D3E3C_E2DEC(points->position[0], points->position[1], points->position[2], scaleX + points->position[0], quarterY + points->position[1], scaleZ + points->position[2], alpha);
-		func_800D3E3C_E2DEC(points->previousPosition[0], points->previousPosition[1], points->previousPosition[2], scaleX + points->position[0], quarterY + points->position[1], scaleZ + points->position[2], alpha);
+		func_800D3E3C_E2DEC(points->positionVector.x, points->positionVector.y, points->positionVector.z, scaleX + points->positionVector.x, quarterY + points->positionVector.y, scaleZ + points->positionVector.z, alpha);
+		func_800D3E3C_E2DEC(points->previousPositionVector.x, points->previousPositionVector.y, points->previousPositionVector.z, scaleX + points->positionVector.x, quarterY + points->positionVector.y, scaleZ + points->positionVector.z, alpha);
 
 		index = D_80154318[index].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D45B4_E3564.s")
-#endif
 
 s16 func_800D49CC_E397C(s16 arg0, s16 arg1, s16 arg2) {
 	s32 padStack;

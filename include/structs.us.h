@@ -3023,8 +3023,14 @@ typedef union {
 } RingPaletteTable;
 
 typedef struct {
-	s16 position[3];
-	s16 previousPosition[3];
+	union {
+		s16 position[3];
+		Vec3s positionVector;
+	};
+	union {
+		s16 previousPosition[3];
+		Vec3s previousPositionVector;
+	};
 } EffectPositionPair;
 
 typedef struct {
