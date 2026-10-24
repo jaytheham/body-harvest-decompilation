@@ -86,7 +86,6 @@ const f64 D_80143FD8_152F88[1] = {255.0};
 const f64 D_80143FE0_152F90[1] = {255.0};
 const f64 D_80143FE8_152F98[1] = {255.0};
 const f64 D_80143FF0_152FA0[1] = {255.0};
-const f64 D_80143FF8_152FA8[1] = {0.6};
 
 
 
@@ -196,14 +195,14 @@ VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 		{ 0x00, 0x00, 0x00, 0x00 },
 	},
 };
-u8 D_8013DC80_14CC30[0x70] = {
-	0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xF0, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x01, 0x00, 0xEC, 0x80, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0xF4, 0x80, 0x01, 0x00, 0xF4, 0x80, 0x01, 0x01, 0x00, 0x80,
-	0x01, 0x00, 0xFC, 0x80, 0x01, 0x00, 0xF8, 0x80, 0x01, 0x00, 0xF8, 0x80, 0x01, 0x01, 0x04, 0x80,
+u32 D_8013DC80_14CC30[28] = {
+	0x00000000, 0x0100F080, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x00000000, 0x00000000, 0x00000000,
+	0x0100EC80, 0x00000000, 0x00000000, 0x00000000,
+	0x00000000, 0x0100F480, 0x0100F480, 0x01010080,
+	0x0100FC80, 0x0100F880, 0x0100F880, 0x01010480,
 };
 u32 D_8013DCF0_14CCA0[0xA] = {
 	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
@@ -3769,14 +3768,11 @@ void func_800CB394_DA344(void) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(5155)
+// Render animated bubbles, their ground shadows, and palette-based overlays.
 void func_800CB4F8_DA4A8(void) {
 	s16 unitId;
 	Unk80154318Entry *entry;
-	u8 *entryBytes;
-	s16 *entryPos;
-	f64 scale;
+	BubbleParticleState *bubble;
 
 	if (D_80156EDA >= 0x28B) {
 		return;
@@ -3797,18 +3793,17 @@ void func_800CB4F8_DA4A8(void) {
 		return;
 	}
 
-	scale = D_80143FF8_152FA8;
 	while (1) {
 		entry = &D_80154318[unitId];
-		entryBytes = (u8 *)&entry->unk8;
-		entryPos = (s16 *)entryBytes;
-		if ((entry->unk14 == 0) || ((D_80052A8C % (entry->unk14 * 2)) < entry->unk14)) {
+		bubble = (BubbleParticleState *)entry->payload;
+		/* Keep the initial blink check separate from the period read. */
+		if ((((volatile Unk80154318Entry *)&D_80154318[unitId])->unk14 == 0) || (((u32)D_80052A8C % (entry->unk14 * 2)) >= entry->unk14)) {
 			if (func_800B93AC_C835C(
-					(s16)(entryPos[0] * 4),
-					(s16)(entryPos[1] * 4),
+					bubble->x * 4,
+					bubble->z * 4,
 					(u16)entry->unk2,
-					(s16)(D_80047954 * 4.0f),
-					(s32)(D_8004795C * 4.0f),
+					D_80047954 * 4.0f,
+					D_8004795C * 4.0f,
 					0x4000 - D_80047950
 				) != 0) {
 				gDPPipeSync(D_8005BB2C++);
@@ -3817,23 +3812,23 @@ void func_800CB4F8_DA4A8(void) {
 				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				gDPPipeSync(D_8005BB2C++);
 
-				D_80153BB8.x = (f32)(entryPos[0] * 4);
-				D_80153BB8.y = (f32)((func_800B84D0_C7480((s16)(entryPos[0] * 4), (s16)(entryPos[1] * 4)) >> 8) + 2);
-				D_80153BB8.z = (f32)(entryPos[1] * 4);
+				D_80153BB8.x = bubble->x * 4;
+				D_80153BB8.y = (func_800B84D0_C7480(bubble->x * 4, bubble->z * 4) >> 8) + 2;
+				D_80153BB8.z = bubble->z * 4;
 				D_80153BC4 = &D_80153B84;
-				D_80153BC8 = (f32)(entry->unk2 >> 2);
+				D_80153BC8 = entry->unk2 >> 2;
 				D_80153BCC = 0x69;
 				func_800DAFCC_E9F7C();
 
-				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100BF00[entryBytes[0xA] << 9]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100BF00[bubble->frame << 9]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				gDPPipeSync(D_8005BB2C++);
 
-				D_80153BB8.x = (f32)(entryPos[0] * 4);
-				D_80153BB8.y = (f32)((entryPos[1] + (entryBytes[9] / 50)) * 4);
-				D_80153BB8.z = (f32)(entryPos[1] * 4);
+				D_80153BB8.x = bubble->x * 4;
+				D_80153BB8.y = (bubble->y + (bubble->height / 50)) * 4;
+				D_80153BB8.z = bubble->z * 4;
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, 0);
-				D_80153BC4 = &entry->unkE;
-				D_80153BC8 = (f32)((f64)(f32)entry->unk2 * scale);
+				D_80153BC4 = &bubble->color[0];
+				D_80153BC8 = (f32)entry->unk2 * 0.6;
 				D_80153BCC = 0xFF;
 				func_800DB350_EA300();
 
@@ -3842,21 +3837,21 @@ void func_800CB4F8_DA4A8(void) {
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_1010880);
-				gDPNoOpTag(D_8005BB2C++, 0xE8000000);
+				gDPTileSync(D_8005BB2C++);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_4b, 0, 0x0100, G_TX_LOADTILE, 0,
 						   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 						   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 				gDPLoadSync(D_8005BB2C++);
 				gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
 				gDPPipeSync(D_8005BB2C++);
-				gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8013DC80_14CC30[entryBytes[0xB]]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+				gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8013DC80_14CC30[bubble->kind]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				gDPPipeSync(D_8005BB2C++);
 
-				D_80153BB8.x = (f32)(entryPos[0] * 4);
-				D_80153BB8.y = (f32)((entryPos[1] + (entryBytes[9] / 50)) * 4);
-				D_80153BB8.z = (f32)(entryPos[1] * 4);
+				D_80153BB8.x = bubble->x * 4;
+				D_80153BB8.y = (bubble->y + (bubble->height / 50)) * 4;
+				D_80153BB8.z = bubble->z * 4;
 				D_80153BC4 = &D_80153B84;
-				D_80153BC8 = (f32)((f64)(f32)entry->unk2 * 0.5);
+				D_80153BC8 = (f32)entry->unk2 * 0.5;
 				func_800DB350_EA300();
 
 				gDPPipeSync(D_8005BB2C++);
@@ -3865,7 +3860,7 @@ void func_800CB4F8_DA4A8(void) {
 			}
 		}
 
-		unitId = entry->unk4;
+		unitId = D_80154318[unitId].unk4;
 		if (unitId == -5) {
 			break;
 		}
@@ -3875,10 +3870,6 @@ void func_800CB4F8_DA4A8(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CB4F8_DA4A8.s")
-#endif
-
 void func_800CBD1C_DACCC(s16 arg0) {
 	Unk80154318Entry *entry;
 

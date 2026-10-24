@@ -3141,6 +3141,16 @@ typedef struct {
 	/* 0x02 */ s16 y;
 	/* 0x04 */ s16 z;
 	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 height;
+	/* 0x0A */ u8 frame;
+	/* 0x0B */ u8 kind;
+} BubbleParticleState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 x;
+	/* 0x02 */ s16 y;
+	/* 0x04 */ s16 z;
+	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 topAlpha;
 	/* 0x0A */ u8 bottomAlpha;
 	/* 0x0B */ s8 phase;

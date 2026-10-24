@@ -1943,6 +1943,7 @@ extern u8 D_8013D9B0_14C960;
 extern s32 D_8013D9B4_14C964;
 extern u8 D_8013DAE0_14CA90; /* particle/effect count */
 extern u8 D_8013DAE4_14CA94; /* particle/effect free index */
+extern u32 D_8013DC80_14CC30[28];
 extern Unk80154082 D_8013DF80_14CF30;
 extern u8 D_8013DF84_14CF34[];
 extern u8 D_8013DFA8_14CF58[][3];
