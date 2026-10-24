@@ -3181,54 +3181,32 @@ s32 func_8011D2DC_12C28C(s16 arg0, s16 arg1)
 	return -1;
 }
 
-// CURRENT(1725)
-#ifdef NON_MATCHING
 void func_8011D438_12C3E8(u8 arg0, s32 arg1) {
-	u8 value;
-	u8* ptr;
-	s32 i;
-	s32 count;
+	s32 count = 0;
 
-	value = arg0 & 0xFF;
-	value += (arg1 != 0 ? 0x80 : 0);
-	value &= 0xFF;
-	
+	arg0 += arg1 != 0 ? 0x80 : 0;
 	count = 8;
 	if (count) {
-		i = 7;
-		ptr = &D_8015EB67;
-		do {
-			if (value == *ptr) {
+		for (; count--;) {
+			if (arg0 == D_8015EB60[count]) {
 				return;
 			}
-			ptr--;
-		} while (i--);
+		}
 	}
-	
-	if (D_8015EB6E == value) {
+	count = D_8015EB6E - arg0;
+	if (count == 0) {
 		return;
 	}
-	
-	count = 8;
-	if (count) {
-		i = 7;
-		ptr = &D_8015EB77;
-		do {
-			if (value == *ptr) {
-				return;
-			}
-			ptr--;
-		} while (i--);
+	for (count = 8; count--;) {
+		if (arg0 == D_8015EB70[count]) {
+			return;
+		}
 	}
-	
 	if (D_8015EB6A < 8) {
-		D_8015EB70[D_8015EB6A] = value;
+		D_8015EB70[D_8015EB6A] = arg0;
 		D_8015EB6A++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011D438_12C3E8.s")
-#endif
 
 void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1) {
 	Gfx *gfx;
