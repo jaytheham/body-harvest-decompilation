@@ -4204,4 +4204,5 @@ extern const f32 D_8014401C_152FCC[1];
 extern const f32 D_80144020_152FD0[1];
 extern const f32 D_80144024_152FD4[1];
 extern const f64 D_80144028_152FD8[1];
+extern Gfx D_A01D390;
 #endif /* LIBULTRA_REFERENCE */
