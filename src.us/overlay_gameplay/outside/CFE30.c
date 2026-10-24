@@ -6002,129 +6002,118 @@ void func_800D25A4_E1554(s16 arg0) {
 	*(&D_80154327 + (arg0 * 0x1C)) = 1;
 }
 
-// CURRENT(6585)
-#ifdef NON_MATCHING
 void func_800D25D0_E1580(void) {
-	s32 sp50;
-	s16 var_s3;
-	s16 temp_s5;
-	s32 var_s7;
-	s32 var_v1;
+	s16 index;
+	s16 linkedIndex;
+	s32 sliceIndex;
 	s32 dx;
 	s32 dz;
+	s32 distance;
+	s32 width;
 	s32 randomX;
+	s32 cachedDistance;
 	s32 randomZ;
-	s32 temp_v0_4;
-	s16 temp_v1;
-	s16 temp_v1_2;
-	s16 temp_v1_3;
-	s16 temp_t0;
-	u8 temp_v0;
-	u8 temp_v0_3;
-	u8 temp_t5;
-	VehicleInstance *temp_s1;
-	RingEmitterState *temp_s2;
-	Unk80154318Entry *temp_s4;
-	Unk80154318Entry *temp_s6;
-	RingVisualState *temp_s0;
-	RingEmitterState *temp_s2_2;
+	s32 randomLife;
+	s16 height;
+	u8 opacity;
+	VehicleInstance *vehicle;
+	VehicleInstance *otherVehicle;
+	RingEmitterState *ring;
+	Unk80154318Entry *entry;
+	Unk80154318Entry *linkedEntry;
+	RingVisualState *visual;
 
-	var_s3 = D_80154282;
-	if ((var_s3 == -5) || (var_s3 == -6)) {
+	index = D_80154282;
+	if ((index == -5) || (index == -6)) {
 		func_800C1418_D03C8(0xB, 1);
 		return;
 	}
 
-	if (var_s3 != -5) {
-		if (var_s3 == -6) {
+	if (index != -5) {
+		if (index == -6) {
 			return;
 		}
 	} else {
 		return;
 	}
 
-	var_s7 = sp50;
 	do {
-	temp_s4 = &D_80154318[var_s3];
-	temp_s5 = temp_s4->unk4;
-	temp_s0 = &temp_s4->ringVisual;
-	if (temp_s4->unkF != 0) {
-		temp_s1 = D_80052B34;
-		dx = ((s32)temp_s1->unk0 - temp_s0->position[0]) >> 2;
-		dz = ((s32)temp_s1->unk4 - temp_s0->position[2]) >> 2;
-		temp_s2 = &D_80154318[temp_s5].ringEmitter;
-		
-		var_s7 = (dx * dx) + (dz * dz);
-		if ((f64)var_s7 < ((f64)(temp_s2->width * temp_s2->width) / 12.0)) {
-			func_80124118_1330C8(temp_s1, 0x14);
-			temp_s1 = D_80052B34;
-		}
-		if ((D_8013FD78_14ED28 != temp_s1) && (D_8013FD78_14ED28->unk20 & 0x8000)) {
-			dx = ((s32)D_8013FD78_14ED28->unk0 - temp_s0->position[0]) >> 2;
-			dz = ((s32)D_8013FD78_14ED28->unk4 - temp_s0->position[2]) >> 2;
-			
-			var_s7 = (dx * dx) + (dz * dz);
-			if ((f64)var_s7 < ((f64)(temp_s2->width * temp_s2->width) / 12.0)) {
-				func_80124118_1330C8(D_8013FD78_14ED28, 0x14);
+		entry = &D_80154318[index];
+		linkedIndex = entry->unk4;
+		visual = &entry->ringVisual;
+		if (entry->unkF != 0) {
+			vehicle = D_80052B34;
+			dx = (vehicle->unk0 - visual->positionVector.x) >> 2;
+			dz = (vehicle->unk4 - visual->positionVector.z) >> 2;
+			distance = (dx * dx) + (dz * dz);
+			cachedDistance = distance;
+			ring = (RingEmitterState *)(s32)D_80154318[linkedIndex].payload;
+
+			width = ring->width;
+			if ((f64)distance < ((f64)(width * width) / 12.0)) {
+				func_80124118_1330C8(vehicle, 0x14);
+				vehicle = D_80052B34;
+			}
+			otherVehicle = D_8013FD78_14ED28;
+			if ((otherVehicle != vehicle) && (otherVehicle->unk20 & 0x8000)) {
+				dx = (otherVehicle->unk0 - visual->positionVector.x) >> 2;
+				dz = (otherVehicle->unk4 - visual->positionVector.z) >> 2;
+
+				width = ring->width;
+				distance = (dx * dx) + (dz * dz);
+				cachedDistance = distance;
+				if ((f64)distance < ((f64)(width * width) / 12.0)) {
+					func_80124118_1330C8(otherVehicle, 0x14);
+				}
 			}
 		}
-	}
 
-	temp_v0 = (u8)temp_s0->opacity;
-	temp_s6 = &D_80154318[temp_s5];
-	temp_s2_2 = &temp_s6->ringEmitter;
-	if ((s32)temp_v0 >= 3) {
-		temp_s0->opacity = (u8)(temp_v0 - 3);
-	}
-
-	var_v1 = 0;
-	do {
-		temp_t5 = temp_s2_2->textureSlices[var_v1] + 1;
-		temp_s2_2->textureSlices[var_v1] = temp_t5;
-		if ((temp_t5 & 0xFF) >= 0x10) {
-			temp_s2_2->textureSlices[var_v1] = 0;
+		opacity = visual->opacity;
+		linkedEntry = &D_80154318[linkedIndex];
+		ring = (RingEmitterState *)(s32)linkedEntry->payload;
+		if (opacity >= 3) {
+			visual->opacity = opacity - 3;
 		}
-		var_v1 = (var_v1 + 1) & 0xFF;
-	} while (var_v1 < 8);
 
-	temp_v0_3 = temp_s0->paletteIndex;
-	if (temp_v0_3 == 0) {
-		func_80137368_146318(temp_s0->position[0], temp_s0->position[1], temp_s0->position[2], 2, var_s3);
-	} else if ((temp_v0_3 == 1) && (var_s7 < 0x1E8480)) {
-		func_801371B8_146168(temp_s0, 0x10, temp_s0->position[0], temp_s0->position[1], temp_s0->position[2], 0.5f);
-		temp_v0_4 = D_80052A8C;
-		if (!(temp_v0_4 & 3)) {
-			func_801371B8_146168(0, 0xEB, temp_s0->position[0], temp_s0->position[1], temp_s0->position[2], D_8014401C_152FCC[0]);
+		sliceIndex = 0;
+		do {
+			if (++ring->textureSlices[sliceIndex] >= 0x10) {
+				ring->textureSlices[sliceIndex] = 0;
+			}
+			sliceIndex = (sliceIndex + 1) & 0xFF;
+		} while (sliceIndex < 8);
+
+		if (visual->paletteIndex == 0) {
+			func_80137368_146318(visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, 2, index);
+		} else if ((visual->paletteIndex == 1) && (cachedDistance < 0x1E8480)) {
+			func_801371B8_146168(visual, 0x10, visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, 0.5f);
+			if (!(D_80052A8C & 3)) {
+				func_801371B8_146168(0, 0xEB, visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, D_8014401C_152FCC[0]);
+			}
+			if (!(D_80052A8C & 1)) {
+				func_80135D44_144CF4(visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, 3.0f);
+			}
 		}
-		if (!(D_80052A8C & 1)) {
-			func_80135D44_144CF4(temp_s0->position[0], temp_s0->position[1], temp_s0->position[2], 3.0f);
+
+		if (visual->paletteIndex == 0) {
+			linkedEntry->unk2 = (entry->unk2 * (0xFF - visual->opacity)) / 255;
+			randomX = func_800038E0_44E0() & 0xFFFF;
+			randomZ = func_800038E0_44E0() & 0xFFFF;
+			randomLife = func_800038E0_44E0();
+			width = ring->width;
+			height = ring->height;
+			func_800DDB60_ECB10(((randomX % (width * 2)) + visual->positionVector.x) - width,
+				((linkedEntry->unk2 / 2) + visual->positionVector.y),
+				((randomZ % (height * 2)) + visual->positionVector.z) - height,
+				0xB,
+				(randomLife % 15) + 0xF);
+		} else {
+			linkedEntry->unk2 = entry->unk2;
 		}
-	}
 
-	if (temp_s0->paletteIndex == 0) {
-		temp_s6->unk2 = (s16)((s32)(temp_s4->unk2 * (0xFF - (u8)temp_s0->opacity)) / 255);
-		randomX = func_800038E0_44E0() & 0xFFFF;
-		randomZ = func_800038E0_44E0() & 0xFFFF;
-		temp_v1_3 = temp_s6->ringEmitter.width;
-		temp_t0 = temp_s2_2->height;
-		func_800DDB60_ECB10((s16)(((randomX % (temp_v1_3 * 2)) + temp_s0->position[0]) - temp_v1_3),
-						(s16)(((s16)temp_s6->unk2 / 2) + temp_s0->position[1]),
-						(s16)(((randomZ % (temp_t0 * 2)) + temp_s0->position[2]) - temp_t0),
-						0xB,
-						(func_800038E0_44E0() % 15) + 0xF);
-	} else {
-		temp_s6->unk2 = temp_s4->unk2;
-	}
-
-		var_s3 = D_80154318[temp_s5].unk4;
-	} while (var_s3 != -5 && var_s3 != -6);
-	if (var_s3 == -6) {
-		sp50 = var_s7;
-	}
+		index = D_80154318[linkedIndex].unk4;
+	} while (index != -5 && index != -6);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D25D0_E1580.s")
-#endif
 
 // CURRENT(4753)
 void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, u8 arg6, u8 arg7) {
