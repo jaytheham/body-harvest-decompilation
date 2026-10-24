@@ -87,8 +87,6 @@ const f64 D_80143FE0_152F90[1] = {255.0};
 const f64 D_80143FE8_152F98[1] = {255.0};
 const f64 D_80143FF0_152FA0[1] = {255.0};
 const f64 D_80143FF8_152FA8[1] = {0.6};
-const f32 D_80144000_152FB0[1] = {1.6666666f};
-const f32 D_80144004_152FB4[1] = {10000.0f};
 
 
 
@@ -3979,121 +3977,113 @@ void func_800CBE98_DAE48(void) {
 		}
 	}
 }
-#ifdef NON_MATCHING
-// CURRENT(8146)
+// Render an animated vertical strip and emit its ground ring.
 void func_800CC090_DB040(void) {
-	s16 spC4[2];
-	f32 temp_f0;
-	f32 temp_f2;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f20;
-	f32 temp_f22;
-	f32 temp_f24;
-	f32 temp_f30;
-	s16 temp_v0;
-	s16 var_a0 = D_8015423A;
-	s16 var_v1;
-	Unk80154318Entry *temp_s1;
+	f32 scale;
+	f32 leftY;
+	f32 leftX;
+	f32 leftZ;
+	f32 rightX;
+	f32 rightZ;
+	f32 rightY;
+	s32 magnitude;
+	Vec2_S16 groundPosition;
+	s16 index = D_8015423A;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100BCF0), G_IM_FMT_I, 32, 1, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-	if (var_a0 != -5 && var_a0 != -6) {
-		temp_f30 = 2.5f;
-		temp_f28 = 25.0f;
-		temp_f26 = D_80144000_152FB0;
-		temp_f24 = 20.0f;
-		temp_f22 = D_80144004_152FB4;
-
+	if (index != -5 && index != -6) {
 		while (1) {
-			Unk80154318Sub *var_v0;
+			EffectStripState *strip;
 
 			gDPPipeSync(D_8005BB2C++);
-			temp_s1 = &D_80154318[var_a0];
-			var_v0 = (Unk80154318Sub *)&temp_s1->unk8;
+			strip = (EffectStripState *)D_80154318[index].payload;
 
-			temp_v0 = temp_s1->unk2;
-			var_v1 = -temp_v0;
-			if (temp_v0 >= 0) {
-				var_v1 = temp_v0;
-			}
+			if (strip->phase < 0x14) {
+				if (D_80154318[index].unk2 >= 0) {
+					magnitude = D_80154318[index].unk2;
+				} else {
+					magnitude = -D_80154318[index].unk2;
+				}
 
-			if (var_v0->unkB < 0x14) {
-				temp_f0 = (f32)var_v1 * ((f32)var_v0->unkB / temp_f24) * temp_f26;
+				scale = magnitude * (strip->phase / 20.0f) * 1.6666666f;
 			} else {
-				temp_f0 = (f32)var_v1 - (((f32)(var_v0->unkB - 0x14) / temp_f28) * temp_f30);
+				if (D_80154318[index].unk2 >= 0) {
+					magnitude = D_80154318[index].unk2;
+				} else {
+					magnitude = -D_80154318[index].unk2;
+				}
+				scale = magnitude - (((strip->phase - 0x14) / 25.0f) * 2.5f);
 			}
 
-			temp_f12 = temp_f0 * D_80153AB8.x;
-			temp_f2 = temp_f0 * D_80153AB8.y;
-			temp_f14 = temp_f0 * D_80153AB8.z;
-			temp_f16 = temp_f0 * ((f32 *)&D_80153AB8)[3];
-			temp_f20 = temp_f0 * ((f32 *)&D_80153AB8)[4];
-			temp_f18 = temp_f0 * ((f32 *)&D_80153AB8)[5];
+			leftX = scale * D_80153AB8.x;
+			leftY = scale * D_80153AB8.y;
+			leftZ = scale * D_80153AB8.z;
+			rightX = scale * D_80153AB8.rightX;
+			rightY = scale * D_80153AB8.rightY;
+			rightZ = scale * D_80153AB8.rightZ;
 
-			D_8005BB34->v.ob[0] = (s16)((f32)var_v0->unk0 + temp_f12);
-			D_8005BB34->v.ob[1] = (s16)((f32)var_v0->unk2 + temp_f2 + temp_f22);
-			D_8005BB34->v.ob[2] = (s16)((f32)var_v0->unk4 + temp_f14);
+			D_8005BB34->v.ob[0] = (strip->x + leftX);
+			D_8005BB34->v.ob[1] = (strip->y + leftY + 10000.0f);
+			D_8005BB34->v.ob[2] = (strip->z + leftZ);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = (u8)var_v0->unk6;
-			D_8005BB34->v.cn[1] = (u8)var_v0->unk7;
-			D_8005BB34->v.cn[2] = (u8)var_v0->unk8;
-			D_8005BB34->v.cn[3] = var_v0->unk9;
+			D_8005BB34->v.cn[0] = strip->color[0];
+			D_8005BB34->v.cn[1] = strip->color[1];
+			D_8005BB34->v.cn[2] = strip->color[2];
+			D_8005BB34->v.cn[3] = strip->topAlpha;
 			D_8005BB34++;
 
-			D_8005BB34->v.ob[0] = (s16)((f32)var_v0->unk0 + temp_f16);
-			D_8005BB34->v.ob[1] = (s16)((f32)var_v0->unk2 + temp_f2 + temp_f22);
-			D_8005BB34->v.ob[2] = (s16)((f32)var_v0->unk4 + temp_f18);
+			D_8005BB34->v.ob[0] = (strip->x + rightX);
+			D_8005BB34->v.ob[1] = (strip->y + leftY + 10000.0f);
+			D_8005BB34->v.ob[2] = (strip->z + rightZ);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0x800;
 			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = (u8)var_v0->unk6;
-			D_8005BB34->v.cn[1] = (u8)var_v0->unk7;
-			D_8005BB34->v.cn[2] = (u8)var_v0->unk8;
-			D_8005BB34->v.cn[3] = var_v0->unk9;
+			D_8005BB34->v.cn[0] = strip->color[0];
+			D_8005BB34->v.cn[1] = strip->color[1];
+			D_8005BB34->v.cn[2] = strip->color[2];
+			D_8005BB34->v.cn[3] = strip->topAlpha;
 			D_8005BB34++;
 
-			D_8005BB34->v.ob[0] = (s16)((f32)var_v0->unk0 - temp_f12);
-			D_8005BB34->v.ob[1] = (s16)((f32)(temp_s1->unk2 >> 1) + ((f32)var_v0->unk2 - temp_f2));
-			D_8005BB34->v.ob[2] = (s16)((f32)var_v0->unk4 - temp_f14);
+			D_8005BB34->v.ob[0] = (strip->x - leftX);
+			D_8005BB34->v.ob[1] = ((D_80154318[index].unk2 >> 1) + (strip->y - leftY));
+			D_8005BB34->v.ob[2] = (strip->z - leftZ);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0x800;
 			D_8005BB34->v.tc[1] = 0x40;
-			D_8005BB34->v.cn[0] = (u8)var_v0->unk6;
-			D_8005BB34->v.cn[1] = (u8)var_v0->unk7;
-			D_8005BB34->v.cn[2] = (u8)var_v0->unk8;
-			D_8005BB34->v.cn[3] = var_v0->unkA;
+			D_8005BB34->v.cn[0] = strip->color[0];
+			D_8005BB34->v.cn[1] = strip->color[1];
+			D_8005BB34->v.cn[2] = strip->color[2];
+			D_8005BB34->v.cn[3] = strip->bottomAlpha;
 			D_8005BB34++;
 
-			D_8005BB34->v.ob[0] = (s16)((f32)var_v0->unk0 - temp_f16);
-			D_8005BB34->v.ob[1] = (s16)((f32)(temp_s1->unk2 >> 1) + ((f32)var_v0->unk2 - temp_f20));
-			D_8005BB34->v.ob[2] = (s16)((f32)var_v0->unk4 - temp_f18);
+			D_8005BB34->v.ob[0] = (strip->x - rightX);
+			D_8005BB34->v.ob[1] = ((D_80154318[index].unk2 >> 1) + (strip->y - rightY));
+			D_8005BB34->v.ob[2] = (strip->z - rightZ);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0x40;
-			D_8005BB34->v.cn[0] = (u8)var_v0->unk6;
-			D_8005BB34->v.cn[1] = (u8)var_v0->unk7;
-			D_8005BB34->v.cn[2] = (u8)var_v0->unk8;
-			D_8005BB34->v.cn[3] = var_v0->unkA;
+			D_8005BB34->v.cn[0] = strip->color[0];
+			D_8005BB34->v.cn[1] = strip->color[1];
+			D_8005BB34->v.cn[2] = strip->color[2];
+			D_8005BB34->v.cn[3] = strip->bottomAlpha;
 			D_8005BB34++;
 
-			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 
-			spC4[0] = var_v0->unk0;
-			spC4[1] = var_v0->unk4;
-			if (var_v0->unkB == 5) {
-				func_800B99A8_C8958((Unk80152B80 *)spC4, 30, 500, 255, (u8 *)&D_8013DF80_14CF30, 80, 20, 0);
+			groundPosition.x = strip->x;
+			groundPosition.z = strip->z;
+			if (strip->phase == 5) {
+				func_800B99A8_C8958(&groundPosition, 30, 500, 255, &D_8013DF80_14CF30.unk0, 80, 20, 0);
 			}
 
-			var_a0 = temp_s1->unk4;
-			if (var_a0 == -5 || var_a0 == -6) {
+			index = D_80154318[index].unk4;
+			if (index == -5 || index == -6) {
 				break;
 			}
 		}
@@ -4101,9 +4091,6 @@ void func_800CC090_DB040(void) {
 
 	D_80156EDA += D_80154238 * 4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CC090_DB040.s")
-#endif
 
 s32 func_800CC7B0_DB760(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	struct { s16 pad; s8 value; } zVelocity;
