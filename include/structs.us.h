@@ -4164,6 +4164,12 @@ typedef struct {
 } EffectRgb;
 
 typedef struct {
+	/* 0x00 */ Vec3s position;
+	/* 0x06 */ EffectRgb primitive;
+	/* 0x09 */ EffectRgb environment;
+} EffectEmitterColorState; /* size = 0x0C */
+
+typedef struct {
 	u8 r;
 	u8 g;
 	u8 b;

@@ -3587,54 +3587,55 @@ void func_800CA848_D97F8(u8 arg0) {
 	func_80137368_146318(rootBytes->position[0], rootBytes->position[1], rootBytes->position[2], 6, arg0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(6336)
+// Render the emitter's particles with primitive and environment tinting.
 void func_800CABC8_D9B78(u8 arg0) {
-	f32 temp_f0;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f20;
-	f32 temp_f22;
-	f32 temp_f24;
-	f32 temp_f26;
-	f32 temp_f2;
-	s16 var_t4;
-	Unk80154318Entry *temp_a1;
-	Unk80154318Entry *temp_a1_2;
-	Unk80154318Entry *temp_s3;
-	temp_s3 = &D_80154318[D_80154088[(u8)arg0].unk6];
-	temp_a1 = &D_80154318[temp_s3->unk4];
-	var_t4 = temp_a1->unk4;
-	if (*(u16 *)&temp_a1->unkE == 0 && D_80156EDA < 0x28B && D_80156ED9 != 2) {
+	f32 x;
+	f32 z;
+	f32 leftX;
+	f32 leftY;
+	f32 leftZ;
+	f32 rightX;
+	f32 rightY;
+	f32 rightZ;
+	f32 y;
+	s16 index;
+	s16 rootIndex;
+	s16 leaderIndex;
+	Unk80154318Entry *leader;
+	Unk80154318Entry *emitter;
+	rootIndex = D_80154088[arg0].unk6;
+	emitter = &D_80154318[rootIndex];
+	leaderIndex = emitter->unk4;
+	leader = &D_80154318[leaderIndex];
+	index = leader->unk4;
+	if ((u16)leader->spurtEmitter.age <= 0 && D_80156EDA < 0x28B && D_80156ED9 != 2) {
+		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0, PRIMITIVE, ENVIRONMENT, TEXEL0, ENVIRONMENT, PRIMITIVE, 0, TEXEL0, 0);
 		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_100D700), G_IM_FMT_IA, G_IM_SIZ_8b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
 
-		if (var_t4 != -6 && var_t4 != -5) {
-			u8 *temp_s3_bytes = (u8 *)&temp_s3->unk8;
+		if (index != -6 && index != -5) {
+			EffectEmitterColorState *colors = (EffectEmitterColorState *)emitter->payload;
 
 			do {
-				temp_a1_2 = &D_80154318[var_t4];
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, temp_s3_bytes[6], temp_s3_bytes[7], temp_s3_bytes[8], temp_a1_2->unk11);
-					gDPSetEnvColor(D_8005BB2C++, temp_s3_bytes[9], temp_s3_bytes[10], temp_s3_bytes[11], temp_a1_2->unk11);
+				Unk80154318Entry *child;
+
+				child = &D_80154318[index];
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, colors->primitive.r, colors->primitive.g, colors->primitive.b, child->unk11);
+				gDPSetEnvColor(D_8005BB2C++, colors->environment.r, colors->environment.g, colors->environment.b, child->unk11);
 				gDPPipeSync(D_8005BB2C++);
 
-				temp_f16 = (f32)temp_a1_2->unk2;
-				temp_f0 = (f32)temp_a1_2->unk8;
-				temp_f2 = (f32)temp_a1_2->unkA;
-				temp_f12 = (f32)temp_a1_2->unkC;
-				temp_f14 = temp_f16 * D_80153AB8.x;
-				temp_f18 = temp_f16 * D_80153AB8.y;
-				temp_f20 = temp_f16 * D_80153AB8.z;
-				temp_f22 = temp_f16 * ((f32 *)&D_80153AB8)[3];
-				temp_f24 = temp_f16 * ((f32 *)&D_80153AB8)[4];
-				temp_f26 = temp_f16 * ((f32 *)&D_80153AB8)[5];
+				x = D_80154318[index].unk8;
+				y = D_80154318[index].unkA;
+				z = D_80154318[index].unkC;
+				leftX = D_80154318[index].unk2 * D_80153AB8.x;
+				leftY = D_80154318[index].unk2 * D_80153AB8.y;
+				leftZ = D_80154318[index].unk2 * D_80153AB8.z;
+				rightX = D_80154318[index].unk2 * D_80153AB8.rightX;
+				rightY = D_80154318[index].unk2 * D_80153AB8.rightY;
+				rightZ = D_80154318[index].unk2 * D_80153AB8.rightZ;
 
-				D_8005BB34->v.ob[0] = (s16)(temp_f0 + temp_f14);
-				D_8005BB34->v.ob[1] = (s16)(temp_f2 + temp_f18);
-				D_8005BB34->v.ob[2] = (s16)(temp_f12 + temp_f20);
+				D_8005BB34->v.ob[0] = (x + leftX); D_8005BB34->v.ob[1] = (y + leftY); D_8005BB34->v.ob[2] = (z + leftZ);
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0;
@@ -3644,9 +3645,9 @@ void func_800CABC8_D9B78(u8 arg0) {
 				D_8005BB34->v.cn[3] = 0;
 				D_8005BB34++;
 
-				D_8005BB34->v.ob[0] = (s16)(temp_f0 + temp_f22);
-				D_8005BB34->v.ob[1] = (s16)(temp_f2 + temp_f24);
-				D_8005BB34->v.ob[2] = (s16)(temp_f12 + temp_f26);
+				D_8005BB34->v.ob[0] = (x + rightX);
+				D_8005BB34->v.ob[1] = (y + rightY);
+				D_8005BB34->v.ob[2] = (z + rightZ);
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0x400;
 				D_8005BB34->v.tc[1] = 0;
@@ -3656,9 +3657,9 @@ void func_800CABC8_D9B78(u8 arg0) {
 				D_8005BB34->v.cn[3] = 0;
 				D_8005BB34++;
 
-				D_8005BB34->v.ob[0] = (s16)(temp_f0 - temp_f14);
-				D_8005BB34->v.ob[1] = (s16)(temp_f2 - temp_f18);
-				D_8005BB34->v.ob[2] = (s16)(temp_f12 - temp_f20);
+				D_8005BB34->v.ob[0] = (x - leftX);
+				D_8005BB34->v.ob[1] = (y - leftY);
+				D_8005BB34->v.ob[2] = (z - leftZ);
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0x400;
 				D_8005BB34->v.tc[1] = 0x400;
@@ -3668,9 +3669,9 @@ void func_800CABC8_D9B78(u8 arg0) {
 				D_8005BB34->v.cn[3] = 0;
 				D_8005BB34++;
 
-				D_8005BB34->v.ob[0] = (s16)(temp_f0 - temp_f22);
-				D_8005BB34->v.ob[1] = (s16)(temp_f2 - temp_f24);
-				D_8005BB34->v.ob[2] = (s16)(temp_f12 - temp_f26);
+				D_8005BB34->v.ob[0] = (x - rightX);
+				D_8005BB34->v.ob[1] = (y - rightY);
+				D_8005BB34->v.ob[2] = (z - rightZ);
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0x400;
@@ -3680,18 +3681,15 @@ void func_800CABC8_D9B78(u8 arg0) {
 				D_8005BB34->v.cn[3] = 0;
 				D_8005BB34++;
 
-				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 				gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 				D_80156EDA += 4;
-				var_t4 = temp_a1_2->unk4;
-			} while (var_t4 != -6 && var_t4 != -5);
+				gDPPipeSync(D_8005BB2C++);
+				index = D_80154318[index].unk4;
+			} while (index != -6 && index != -5);
 		}
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CABC8_D9B78.s")
-#endif
 
 s16 func_800CB19C_DA14C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 temp_v0;
