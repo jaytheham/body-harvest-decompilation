@@ -223,6 +223,7 @@ void func_80080588_50A38(u8 arg0);
 
 #endif
 void func_800791A0_49650(s32 arg0);
+void func_80079390_49840(s32 arg0);
 void func_8000F618_10218(void);
 void func_8000F478_10078(BhGfxTask *arg0);
 void func_80001108_1D08(void);
