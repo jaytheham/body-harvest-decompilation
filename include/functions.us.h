@@ -380,7 +380,7 @@ void func_8007BFC4_4C474(void);
 void func_8007C4BC_4C96C(void);
 void func_8007C7F4_4CCA4(void);
 void func_8007D7E0_4DC90();
-s32 func_8007D91C_4DDCC(s32 arg0);
+s32 func_8007D91C_4DDCC(u8 arg0);
 void func_8007EA0C_4EEBC(s32* arg0);
 s32 func_8007E12C_4E5DC(void);
 void func_8007EB98_4F048(void);

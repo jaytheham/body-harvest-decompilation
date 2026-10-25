@@ -5231,16 +5231,13 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A8D = 0x0F;
 }
 
-// CURRENT(3220)
-#ifdef NON_MATCHING
-s32 func_8007D91C_4DDCC(s32 arg0) {
+s32 func_8007D91C_4DDCC(u8 arg0) {
 	s32 fadeState;
 	s32 flags;
 	s32 i;
 	s32 lookAtIndex;
 	f32 one;
 
-	arg0 &= 0xFF;
 	lookAtIndex = 0;
 
 	if (D_80094934_64DE4 != 0) {
@@ -5265,7 +5262,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	while (i < D_800D7A58) {
 		if (D_800D7A1C[i].unk1C != 0) {
 			D_80094944_64DF4 = D_800D7A1C[i].unk29;
-			func_80080668_50B18(D_800D7A1C[i].unk8, &D_800D7B10[D_800D7A1C[i].unk18], one, D_800D7A1C[i].unk19);
+			func_80080668_50B18(D_800D7A1C[i].unk8, (AnimChannelState*)&D_800D7B10[D_800D7A1C[i].unk18], one, D_800D7A1C[i].unk19);
 			if ((D_800D7A1C[i].unk20 & 0x20) != 0) {
 				func_800819C0_51E70(&D_8009499C);
 			}
@@ -5318,7 +5315,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 
 			if ((D_800D7A1C[i].unk20 & 1) != 0) {
 				gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, D_800D7A1C[i].unk24);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, D_800D7A1C[i].unk24);
 				gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0,
 						  TEXEL0, 0, SHADE, 0, TEXEL0, 0, PRIMITIVE, 0);
 			} else {
@@ -5335,12 +5332,12 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 			}
 
 			if ((flags & 4) != 0) {
-				guLookAtReflect((Mtx *)D_8005BB38, &D_800D7978[lookAtIndex], D_800D7A18[4], D_800D7A18[5], *(f32*)&D_800D7A18[6],
+				guLookAtReflect((Mtx *)D_8005BB38, &D_800D7978[lookAtIndex], ((FrontendCamState*)D_800D7A18)->unk10.x, ((FrontendCamState*)D_800D7A18)->unk10.y, ((FrontendCamState*)D_800D7A18)->unk10.z,
 						D_800D7A1C[i].unkC, D_800D7A1C[i].unkE, D_800D7A1C[i].unk10, 0.0f, 1.0f, 0.0f);
 				gSPLookAt(D_8005BB2C++, &D_800D7978[lookAtIndex]);
-				flags = D_800D7A1C[i].unk20;
 				lookAtIndex = (lookAtIndex + 1) & 0xFF;
 			}
+			flags = D_800D7A1C[i].unk20;
 
 			if ((flags & 8) != 0) {
 				gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -5349,7 +5346,7 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 			}
 
 			if (D_800D7A1C[i].unk2A != 0xFF) {
-				D_800D8514 = (s32*)D_800D7A40[D_800D7A1C[i].unk2A].unk0;
+				D_800D8514 = (s32*)D_800D7A44[D_800D7A1C[i].unk2A].unk0;
 			} else {
 				D_800D8514 = 0;
 			}
@@ -5378,15 +5375,17 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 	}
 
 	func_8008FD9C_6024C();
-	if ((D_800D7970 == 1) || (D_800D7970 == 2U)) {
-		func_8007FBF8_500A8();
+	if (D_800D7970 != 0) {
+		switch (D_800D7970) {
+		case 1:
+		case 2:
+			func_8007FBF8_500A8();
+			break;
+		}
 	}
 	func_80090648_60AF8();
 	return D_80094998_64E48;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D91C_4DDCC.s")
-#endif
 
 s32 func_8007E12C_4E5DC(void) {
 	Unk8007E12CEntry8* entry;
