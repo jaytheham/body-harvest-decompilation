@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-24T08:41:34Z",
-  "commit": "b8e46014",
-  "commit_timestamp": "2026-10-24T21:40:37+13:00",
+  "generated": "2026-10-25T04:34:20Z",
+  "commit": "826789bc",
+  "commit_timestamp": "2026-10-25T17:33:30+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is matched on the US page and an ASM stub here until the difference is expressed in C.",
   "overall": {
     "total_functions": 2723,
-    "matched": 2386,
-    "non_matching": 328,
+    "matched": 2403,
+    "non_matching": 311,
     "asm_stubs": 9,
-    "matched_pct": 87.62,
+    "matched_pct": 88.25,
     "decompiled_pct": 99.67
   },
   "segments": {
@@ -33,11 +33,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1272,
-      "non_matching": 177,
+      "matched": 1289,
+      "non_matching": 160,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 87.8,
+      "matched_pct": 89.0,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -668,11 +668,11 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 71,
-      "non_matching": 35,
+      "matched": 88,
+      "non_matching": 18,
       "asm_stubs": 0,
       "total": 106,
-      "matched_pct": 67.0,
+      "matched_pct": 83.0,
       "contributor": ""
     },
     {
@@ -807,9 +807,16 @@
     },
     {
       "date": "2026-10-18",
-      "commit": "de8b9ce",
-      "matched": 2386,
-      "non_matching": 328,
+      "commit": "26f495e",
+      "matched": 2392,
+      "non_matching": 322,
+      "total": 2723
+    },
+    {
+      "date": "2026-10-25",
+      "commit": "21fca8b",
+      "matched": 2403,
+      "non_matching": 311,
       "total": 2723
     }
   ]
