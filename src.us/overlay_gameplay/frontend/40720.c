@@ -2120,7 +2120,47 @@ s16 func_80076C98_47148(void) {
 }
 
 #ifdef VERSION_EU
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80076FD8_47488.s")
+s32 func_80076FD8_47488(void) {
+	u32 frames = 0;
+	s32 result = 1;
+	s32 holdFrames = 0;
+
+	if (D_800313D0_31FD0 == 2) {
+		D_800D74A4 = 0x55;
+	} else if (D_800313D0_31FD0 == 1) {
+		D_800D74A4 = 0x57;
+	} else {
+		D_800D74A4 = 0x56;
+	}
+	D_800D74A6 = D_800D74A4;
+	D_800909B0[D_800D74A4].unk1C = 1;
+	func_800132CC_13ECC();
+	do {
+		if (frames < 0x3E8U) {
+			func_80070C94_41144(0x55, 3, (s16) frames);
+		}
+		if (frames >= 0x21U) {
+			func_80070CC4_41174();
+			func_8007169C_41B4C();
+			if (isButtonNewlyPressed(0, 0x9000) != 0 || holdFrames >= 0xBB8) {
+				result = D_800D74A4 - 0x53;
+				func_80005AEC_66EC(0, 0, 0, 0x40);
+				func_800153D8_15FD8(0xC8);
+			}
+		}
+		func_80079390_49840(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_80005B84_6784();
+		func_8000505C_5C5C();
+		if (frames < 0x3E8U) {
+			frames += 1;
+		}
+		holdFrames += 1;
+	} while (func_80005B30_6730() == 0);
+	func_80070A20_40ED0();
+	return (s16) result;
+}
 #else
 s32 func_80076FD8_47488(void) {
 	return 3;
