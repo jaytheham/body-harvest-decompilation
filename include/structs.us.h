@@ -3629,6 +3629,22 @@ typedef struct {
 } FrontendLightSource; /* size = 0x1C */
 
 typedef struct {
+	/* 0x00 */ s32* unk0;
+	/* 0x04 */ Unk80080530_Dst* unk4;
+	/* 0x08 */ u8* unk8;
+	/* 0x0C */ Unk80080530_Src* unkC;
+	/* 0x10 */ Unk80080588Entry5* unk10;
+	/* 0x14 */ u8* unk14;
+	/* 0x18 */ u8* unk18;
+	/* 0x1C */ Unk80080588Entry1C* lightSources;
+} FrontendResourcePointers; /* size = 0x20 */
+
+typedef union {
+	Lights7 lights;
+	Light slots[7];
+} FrontendLightingBuffer; /* size = 0x78 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;

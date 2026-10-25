@@ -1565,7 +1565,7 @@ extern FrontendStruct D_800D7A68;
 extern u8 D_800D7A84;
 extern Unk80080588Rgb D_800D7A86;
 extern u8 D_800D7A8D;
-extern Light D_800D7A90[];
+extern FrontendLightingBuffer D_800D7A90;
 extern Unk80080588Rgb D_800D7B08;
 extern Unk80080588Rgb D_800D7B0C;
 extern Unk800801BCEntry D_800D7B10[];

@@ -5876,95 +5876,88 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
 	arg1->l.dir[2] = (-(z * cosY - 0 * sinY) * scale);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(4355)
 void func_8007F580_4FA30(s32 arg0) {
-
-	s32 tempLo;
-	s32 lightSlots;
 	u8 lightCount;
 	u8 iter;
-	u8 dlLightIndex;
-	FrontendLightSource* source;
+	u8 nextCount;
+	Unk80080588Entry1C* source;
 	Unk80080588Entry1C* sourceList;
-	Light* light;
-	u8* lightBytes;
+	Lights1* light;
+	Light* buffer;
 
 	lightCount = 0;
 	iter = 0;
-	if ((s32)D_800D7A8D > 0) {
-		sourceList = D_800D7A34;
-		while (iter < (u8)D_800D7A8D) {
-			tempLo = iter * 0x1C;
-			source = (FrontendLightSource*)((u8*)sourceList + tempLo);
-			if (source->unk18 != 0) {
+	if (D_800D7A8D > 0) {
+		buffer = D_800D7A90.slots;
+		sourceList = ((FrontendResourcePointers*)&D_800D7A18)->lightSources; do {
+			if (sourceList[iter].unk18 != 0) {
 				if (arg0 != 0) {
-					func_8007F830_4FCE0((Unk80080588Entry1C*)source);
+					func_8007F830_4FCE0(&sourceList[iter]);
 					sourceList = D_800D7A34;
 				}
 
-				light = &D_800D7A90[lightCount];
-				func_8007F3F8_4F8A8((FrontendStruct*)((u8*)sourceList + tempLo), &((Lights1*)light)->l[0]);
+				light = (Lights1*)&D_800D7A90.slots[lightCount];
+				/* Keep the lighting bases and source stride live across the helper call. */
+				if (lightCount && sourceList) {}
+				if (buffer) {}
+				if (&sourceList[lightCount]) {}
+				func_8007F3F8_4F8A8((FrontendStruct*)&sourceList[iter], &light->l[0]);
 				sourceList = D_800D7A34;
-				source = (FrontendLightSource*)((u8*)sourceList + tempLo);
-				lightBytes = (u8*)light;
 
-				lightCount = (lightCount + 1) & 0xFF;
-				lightBytes[8] = source->unk14;
-				lightBytes[12] = source->unk14;
-				lightBytes[9] = source->unk15;
-				lightBytes[13] = source->unk15;
-				lightBytes[10] = source->unk16;
-				lightBytes[14] = source->unk16;
+				/* Retain the byte count until all six color stores are complete. */
+				nextCount = lightCount;
+				nextCount++;
+				light->l[0].l.col[0] = sourceList[iter].unk14;
+				light->l[0].l.colc[0] = sourceList[iter].unk14;
+				light->l[0].l.col[1] = sourceList[iter].unk15;
+				light->l[0].l.colc[1] = sourceList[iter].unk15;
+				light->l[0].l.col[2] = sourceList[iter].unk16;
+				light->l[0].l.colc[2] = sourceList[iter].unk16;
+				lightCount = nextCount;
 			}
-			iter = (iter + 1) & 0xFF;
-		}
+			iter++;
+		} while (iter < D_800D7A8D);
 		iter = 0;
 	}
 
 	if (arg0 != 0) {
 		func_8007F830_4FCE0(&D_800D8530);
-		source = (FrontendLightSource*)&D_800D8530;
+		source = &D_800D8530;
 		D_800D7A86.unk0 = source->unk14;
 		D_800D7A86.unk1 = source->unk15;
 		D_800D7A86.unk2 = source->unk16;
 	}
 
-	D_800D7A90[0].l.col[0] = D_800D7A86.unk0;
-	D_800D7A90[0].l.colc[0] = D_800D7A86.unk0;
-	D_800D7A90[0].l.col[1] = D_800D7A86.unk1;
-	D_800D7A90[0].l.colc[1] = D_800D7A86.unk1;
-	D_800D7A90[0].l.col[2] = D_800D7A86.unk2;
-	D_800D7A90[0].l.colc[2] = D_800D7A86.unk2;
+	D_800D7A90.lights.a.l.col[0] = D_800D7A86.unk0;
+	D_800D7A90.lights.a.l.colc[0] = D_800D7A86.unk0;
+	D_800D7A90.lights.a.l.col[1] = D_800D7A86.unk1;
+	D_800D7A90.lights.a.l.colc[1] = D_800D7A86.unk1;
+	D_800D7A90.lights.a.l.col[2] = D_800D7A86.unk2;
+	D_800D7A90.lights.a.l.colc[2] = D_800D7A86.unk2;
 
 	if (lightCount == 0) {
-		lightBytes = (u8*)&D_800D7A90[0];
-		lightCount = 1;
-		lightBytes[8] = 0;
-		lightBytes[12] = 0;
-		lightBytes[9] = 0;
-		lightBytes[13] = 0;
-		lightBytes[10] = 0;
-		lightBytes[14] = 0;
-		lightBytes[16] = 0;
-		lightBytes[17] = 0;
-		lightBytes[18] = 0;
+		light = (Lights1*)&D_800D7A90.slots[lightCount];
+		if (lightCount) {}
+		nextCount = lightCount;
+		nextCount++;
+		light->l[0].l.col[0] = 0;
+		light->l[0].l.colc[0] = 0;
+		light->l[0].l.col[1] = 0;
+		light->l[0].l.colc[1] = 0;
+		light->l[0].l.col[2] = 0;
+		light->l[0].l.colc[2] = 0;
+		light->l[0].l.dir[0] = 0;
+		light->l[0].l.dir[1] = 0;
+		light->l[0].l.dir[2] = 0;
+		lightCount = nextCount;
 	}
 
-	lightSlots = lightCount;
-	if (lightSlots > 0) {
-		do {
-			gSPLight(D_8005BB2C++, &D_800D7A90[iter], iter + 1);
-			iter = (iter + 1) & 0xFF;
-		} while (iter < lightSlots);
+	for (iter = 0; iter < lightCount; iter++) {
+		gSPLight(D_8005BB2C++, &((Lights1*)&D_800D7A90.slots[iter])->l[0], iter + 1);
 	}
-
-	gSPLight(D_8005BB2C++, &D_800D7A90[0], lightSlots + 1);
+	gSPLight(D_8005BB2C++, &D_800D7A90.slots[0], lightCount + 1);
 	gSPNumLights(D_8005BB2C++, D_80094910_64DC0[lightCount]);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007F580_4FA30.s")
-#endif
 
 void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
 	FrontendLightTrack* track;
