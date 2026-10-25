@@ -4505,18 +4505,15 @@ void func_8007BEC0_4C370(void)
   }
 }
 
-// CURRENT(6838)
-#ifdef NON_MATCHING
 void func_8007BFC4_4C474(void) {
-	s16 holdCounter;
-	s16 startIndex;
-	u8 textBuffer[58];
-	s16 lineOffsets[100];
 	s16 lineCount;
 	s16 currentLine;
-	s32 line;
-	s32 row;
 	u16 fadeCounter;
+	s16 startIndex;
+	s16 holdCounter;
+	u8* lineText;
+	u8 textBuffer[52];
+	s16 lineOffsets[100];
 
 	fadeCounter = 0x4F;
 	holdCounter = 0;
@@ -4527,41 +4524,32 @@ void func_8007BFC4_4C474(void) {
 	switch (D_800313D0_31FD0) {
 	case 0:
 	default:
-		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
-			u8 ch = D_800933A0_63850[currentLine];
-			if ((ch == 0x40) || (ch == 0x3B)) {
-				if (ch == 0x40) {
-					lineOffsets[lineCount] = currentLine;
-					lineCount = (s16)(lineCount + 1);
+		for (currentLine = 0; currentLine < 0x400U; currentLine++) {
+			if ((D_800933A0_63850[currentLine] == 0x40) || (D_800933A0_63850[currentLine] == 0x3B)) {
+				if (D_800933A0_63850[currentLine] == 0x40) {
+					lineOffsets[lineCount++] = currentLine;
 				}
-				lineOffsets[lineCount] = currentLine + 1;
-				lineCount = (s16)(lineCount + 1);
+				lineOffsets[lineCount++] = currentLine + 1;
 			}
 		}
 		break;
 	case 1:
-		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
-			u8 ch = D_800938A0_63D50[currentLine];
-			if ((ch == 0x40) || (ch == 0x3B)) {
-				if (ch == 0x40) {
-					lineOffsets[lineCount] = currentLine;
-					lineCount = (s16)(lineCount + 1);
+		for (currentLine = 0; currentLine < 0x400U; currentLine++) {
+			if ((D_800938A0_63D50[currentLine] == 0x40) || (D_800938A0_63D50[currentLine] == 0x3B)) {
+				if (D_800938A0_63D50[currentLine] == 0x40) {
+					lineOffsets[lineCount++] = currentLine;
 				}
-				lineOffsets[lineCount] = currentLine + 1;
-				lineCount = (s16)(lineCount + 1);
+				lineOffsets[lineCount++] = currentLine + 1;
 			}
 		}
 		break;
 	case 2:
-		for (currentLine = 0; (u16)currentLine < 0x400; currentLine = (s16)(currentLine + 1)) {
-			u8 ch = D_80093DA0_64250[currentLine];
-			if ((ch == 0x40) || (ch == 0x3B)) {
-				if (ch == 0x40) {
-					lineOffsets[lineCount] = currentLine;
-					lineCount = (s16)(lineCount + 1);
+		for (currentLine = 0; currentLine < 0x400U; currentLine++) {
+			if ((D_80093DA0_64250[currentLine] == 0x40) || (D_80093DA0_64250[currentLine] == 0x3B)) {
+				if (D_80093DA0_64250[currentLine] == 0x40) {
+					lineOffsets[lineCount++] = currentLine;
 				}
-				lineOffsets[lineCount] = currentLine + 1;
-				lineCount = (s16)(lineCount + 1);
+				lineOffsets[lineCount++] = currentLine + 1;
 			}
 		}
 		break;
@@ -4582,38 +4570,29 @@ void func_8007BFC4_4C474(void) {
 			startIndex++;
 			fadeCounter = 0x4F;
 			drawText(&D_800AE04C_7E4FC, 0x4F);
-			line = 0xC - startIndex;
 		} else {
-			line = 0xC - startIndex;
 			if (startIndex < 0x59) {
 				drawText(&D_800AE050_7E500, fadeCounter);
 			}
 		}
 
-		if (currentLine > 0) {
-			do {
-			s32 row;
-			s16 textPos;
+		do {
+			if (currentLine > 0) {
+				if (currentLine < 3) {
+					drawText(&D_800AE054_7E504, 0xB4, 0xD7, 0xFE);
+				} else {
+					drawText(&D_800AE058_7E508, 0xEB, 0xE1, 0xFE);
+				}
 
-			if (currentLine < 3) {
-				drawText(&D_800AE054_7E504, 0xB4, 0xD7, 0xFE);
-			} else {
-				drawText(&D_800AE058_7E508, 0xEB, 0xE1, 0xFE);
+					drawText(&D_800AE05C_7E50C, 0xFF);
+				if (((0xC - startIndex) + currentLine) == 8) {
+					drawText(&D_800AE060_7E510, 0xFF - (fadeCounter * 3));
+				}
+				if (((0xC - startIndex) + currentLine) == 0) {
+					drawText(&D_800AE064_7E514, fadeCounter * 3);
+				}
 			}
-
-			drawText(&D_800AE05C_7E50C, 0xFF);
-			row = line + currentLine;
-			if (row == 8) {
-				drawText(&D_800AE060_7E510, 0xFF - (fadeCounter * 3));
-			}
-			if (row == 0) {
-				drawText(&D_800AE064_7E514, fadeCounter * 3);
-			}
-
-			row = line + currentLine;
-			if (row < 9) {
-				u8* lineText;
-				u8 ch;
+			if (((0xC - startIndex) + currentLine) < 9) {
 				switch (D_800313D0_31FD0) {
 				case 0:
 				default:
@@ -4627,45 +4606,33 @@ void func_8007BFC4_4C474(void) {
 					break;
 				}
 
-				ch = *lineText;
-				if (ch == 0x40) {
+				if (*lineText == 0x40) {
 					textBuffer[0] = 0;
 				} else {
-					textPos = 0;
-					if (ch != 0x3B) {
-						do {
-						textBuffer[textPos] = ch;
-						textPos = (s16)(textPos + 1);
-						lineText++;
-						ch = *lineText;
-						} while ((ch != 0x40) && (ch != 0x3B));
+					lineCount = 0;
+					while ((*lineText != 0x40) && (*lineText != 0x3B)) {
+						textBuffer[lineCount++] = *lineText++;
 					}
-					textBuffer[textPos] = 0;
+					textBuffer[lineCount] = 0;
 				}
 
-				drawText(&D_800AE068_7E518, 0x80, row, textBuffer);
+				drawText(&D_800AE068_7E518, 0x80, ((0xC - startIndex) + currentLine), textBuffer);
 			}
 
-			currentLine = (s16)(currentLine - 1);
-			} while ((currentLine > 0) && ((startIndex - 0xD) < currentLine));
-		}
+		} while ((--currentLine > 0) && ((startIndex - 0xD) < currentLine));
 
 		func_8000B044_BC44();
 		if ((holdCounter == 0x12C) || (isButtonNewlyPressed(0, BUTTON_A | BUTTON_START) != 0)) {
 			func_80005AEC_66EC(0, 0, 0, 0x40);
 		}
 
-		fadeCounter = (fadeCounter - 1) & 0xFFFF;
+		fadeCounter--;
 		func_80005B84_6784();
 		gDPFullSync(D_8005BB2C++);
 		gSPEndDisplayList(D_8005BB2C++);
 		func_8000505C_5C5C();
 	} while (func_80005B30_6730() == 0);
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007BFC4_4C474.s")
-#endif
 
 void func_8007C4BC_4C96C(void) {
 	u16 fadeCounter;
