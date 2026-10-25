@@ -1294,7 +1294,7 @@ extern s32 D_80094894_64D44[];
 extern s32 D_800948B4_64D64;
 extern s8 D_800948B8_64D68;
 extern s8 D_800948BC_64D6C;
-extern s32 D_800948C0_64D70[];
+extern DListPtrsCopy D_800948C0_64D70;
 extern u32 D_800948E0_64D90;
 extern u32 D_800948E0_Write;
 extern u32 D_800948E4_64D94;

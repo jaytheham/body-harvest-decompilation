@@ -3899,24 +3899,20 @@ void func_80079F30_4A3E0(u8 arg0) {
 	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
 }
 
-// CURRENT(3074)
-#ifdef NON_MATCHING
 // displayGameOver
 void func_8007A038_4A4E8(void) {
 	s32 timer;
 	s32 fade;
-	s32 pad0;
+	s32 i;
+	s32 blend;
 	LookAt lookAt;
-	u32 dlistPtrs[8];
+	DListPtrsCopy dlistPtrs;
 	Unk80052B40 rot;
 	Unk80052B40 trans;
 	Unk80052B40 scale;
-	s32 i;
-	s32 step;
 	s16 intensity;
-	s16 blend;
 
-	*(DListPtrsCopy *)dlistPtrs = *(DListPtrsCopy *)D_800948C0_64D70;
+	dlistPtrs = D_800948C0_64D70;
 
 	if (showDemoText != 0) {
 		return;
@@ -3931,12 +3927,9 @@ void func_8007A038_4A4E8(void) {
 
 	fade = 0;
 	D_80052ACC = 1;
-	timer = 0x1F3;
-	step = 0x1F4;
 
-
-	if (step != 0) {
-		for (;;) {
+	/* Keep the initial countdown test after IDO folds the zero term. */
+	for (timer = 0x1F4; timer-- + D_80094900 * 0; ) {
 		fade += 2;
 		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
 		func_80011E14_12A14(0);
@@ -3950,7 +3943,7 @@ void func_8007A038_4A4E8(void) {
 
 		if (fade < 0x7F) {
 			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84_32784]));
-			func_80005844_6444(0, 0, 0, (fade << 1) & 0xFF);
+			func_80005844_6444(0, 0, 0, fade * 2);
 		} else {
 			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, K0_TO_PHYS(D_8005BB48[D_80031B84_32784]));
 			func_80005844_6444(0, 0, 0, 0xFF);
@@ -3962,20 +3955,20 @@ void func_8007A038_4A4E8(void) {
 		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 		gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 
-		guOrtho((Mtx *)D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, -1.0f, 1000.0f, 1.0f);
+		guOrtho(D_8005BB38, -320.0f, 320.0f, -240.0f, 240.0f, -1.0f, 1000.0f, 1.0f);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 		gSPPerspNormalize(D_8005BB2C++, 0xFFFF);
 
-		guLookAtReflect((Mtx *)D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+		guLookAtReflect(D_8005BB38, &lookAt, 0.0f, 0.0f, 100.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 		gSPLookAt(D_8005BB2C++, &lookAt);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-		for (i = 0, step = fade; i < 8; i++, step -= 0x10) {
-			s32 alphaStep = step;
+		for (i = 0; i < 8; i++) {
+			s32 alphaStep = fade - i * 0x10;
 
 			if (i >= 4) {
-				alphaStep = step - 0x20;
+				alphaStep -= 0x20;
 			}
 
 			intensity = alphaStep * 2;
@@ -4009,7 +4002,7 @@ void func_8007A038_4A4E8(void) {
 			func_800039D0_45D0(0, &trans, 0, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			gSPDisplayList(D_8005BB2C++, (Gfx *)dlistPtrs[i]);
+			gSPDisplayList(D_8005BB2C++, dlistPtrs.words[i]);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 		}
 
@@ -4018,20 +4011,12 @@ void func_8007A038_4A4E8(void) {
 			break;
 		}
 
-			if (timer == 0) {
-				break;
-			}
-			timer--;
-		}
 	}
 
 	D_80052ACC = 0;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A038_4A4E8.s")
-#endif
 
 void func_8007A754_4AC04(void) {
 	func_8007C7F4_4CCA4();
