@@ -2591,66 +2591,52 @@ void func_8011C080_12B030(u8 arg0)
 	func_8011BB94_12AB44(arg0, 1);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(4954)
 s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	BuildingInstance *building;
-	BuildingType *type;
 	s32 halfX;
 	s32 halfZ;
 	s32 x;
-	s32 z;
-	s32 minX;
-	s32 minZ;
-	s32 maxX;
-	s32 maxZ;
 	s32 points[8];
-	s32 i;
-	s32 radiusSq;
-	s32 *corner;
-	s32 cornerX;
-	s32 cornerZ;
+	s32 z;
+	s32 dz;
+	s32 index;
+	s32 count;
+	s32 dx;
 
-	building = &buildingInstances[arg0];
-	type = &buildingTypes[building->buildingType];
 
-	if (building->unk8 & 1) {
-		halfX = type->unk12;
-		halfZ = type->unk10;
+	if (buildingInstances[arg0].buildingType) {} /* Keep the type-index load before the orientation branch. */
+	if ((buildingInstances[arg0].unk8 & 0xFFFF) & 1) {
+		halfX = buildingTypes[buildingInstances[arg0].buildingType].unk12;
+		halfZ = buildingTypes[buildingInstances[arg0].buildingType].unk10;
 	} else {
-		halfX = type->unk10;
-		halfZ = type->unk12;
+		halfX = buildingTypes[buildingInstances[arg0].buildingType].unk10;
+		halfZ = buildingTypes[buildingInstances[arg0].buildingType].unk12;
 	}
 
-	x = building->xCoord;
-	z = building->zCoord;
-	minX = x - halfX;
-	minZ = z - halfZ;
-	maxX = x + halfX;
-	maxZ = z + halfZ;
+	x = buildingInstances[arg0].xCoord;
+	z = buildingInstances[arg0].zCoord;
 
-	points[0] = maxX;
-	points[1] = maxZ;
-	points[2] = minX;
-	points[3] = maxZ;
-	points[4] = maxX;
-	points[5] = minZ;
-	points[6] = minX;
-	points[7] = minZ;
+	points[0] = x + halfX;
+	points[1] = z + halfZ;
+	points[2] = ((&count)[0] = x - halfX);
+	points[3] = z + halfZ;
+	points[4] = x + halfX;
+	points[5] = ((&dx)[0] = z - halfZ);
+	points[6] = count;
+	points[7] = dx;
 
-	radiusSq = (arg3 * arg3) >> 4;
-	i = 4;
-	corner = &points[6];
-	do {
-		cornerX = (corner[0] - arg1) >> 2;
-		cornerZ = (corner[1] - arg2) >> 2;
+	count = 4;
+	if (count) {
+		index = 3;
+		for (; count--; index--) {
+			dx = ((s32)(s64)(s32)(s64)(s32)(s64)(s32)(s64)(s32)(s64)points[index * 2] - arg1) >> 2; /* Five round trips are required for the IDO match. */
+			dz = (points[index * 2 + 1] - arg2) >> 2;
 
-		if (((cornerX * cornerX) + (cornerZ * cornerZ)) < radiusSq) {
-			return 1;
+			if (((dx * dx) + (dz * dz)) < ((arg3 * arg3) >> 4)) {
+				return 1;
+			}
+
 		}
-
-		corner -= 2;
-	} while (i-- != 0);
+	}
 
 	if ((x - arg1) < halfX) {
 		if ((z - arg2) < (halfZ + arg3)) {
@@ -2666,9 +2652,7 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011C0CC_12B07C.s")
-#endif
+
 
 s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
 	s16 centerX;
