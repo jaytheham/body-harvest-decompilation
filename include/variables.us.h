@@ -993,7 +993,6 @@ extern u8 D_80052ACD; // Bitflags. See D_80052ACDFlags.
 extern s32 D_80052AD0;
 extern s32 D_80052AD4;
 extern s32 D_80052AD8;
-extern u8 D_80052AFD;
 extern GameplayMode gameplayMode; // 80052adc
 extern s32 D_80052AE0;
 extern Unk80052B2C D_80052AE8;
