@@ -47,19 +47,36 @@ quick_args=()
 # The NTSC runs take longest, so they go first and in the background. The old tool is run from outside tools/, with
 # the vendored tree-sitter on PYTHONPATH.
 git show "$base:tools/progress.py" > "$work/progress_base.py"
-# The old tool counted the handwritten boot entry as a stub; the current one does not (HANDWRITTEN_ASM). Give the old
-# tool that one exclusion so the comparison still shows nothing else changed.
-"$PY" - "$work/progress_base.py" <<'PYEOF' || { echo "FAIL could not give the old progress.py the HANDWRITTEN_ASM exclusion"; exit 1; }
+# The old tool counted the handwritten boot entry as a stub, and counted a PAL-only C body under VERSION_EU as a
+# second NTSC definition; the current one does neither (HANDWRITTEN_ASM, ntsc_definitions). Give the old tool those
+# two corrections so the comparison still shows nothing else changed.
+"$PY" - "$work/progress_base.py" <<'PYEOF' || { echo "FAIL could not correct the old progress.py"; exit 1; }
 import sys
 from pathlib import Path
 
-old_line = r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')"
-new_line = r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\((?!\s*\"src\.us/core/entry\.s\")')"
+ntsc_definitions = (
+    "def _ntsc_definitions(text):\n"
+    "    sys.path.insert(0, 'tools')\n"
+    "    import progress\n"
+    "    return progress.ntsc_definitions(text)\n"
+    "\n"
+    "\n"
+    "def count_function_defs(text: str) -> int:"
+)
+replacements = [
+    (r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')",
+     r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\((?!\s*\"src\.us/core/entry\.s\")')"),
+    ("total_defs = count_function_defs(text)", "total_defs = count_function_defs(_ntsc_definitions(text))"),
+    ("total_defs = count_function_defs(blob)", "total_defs = count_function_defs(_ntsc_definitions(blob))"),
+    ("def count_function_defs(text: str) -> int:", ntsc_definitions),
+]
 path = Path(sys.argv[1])
 text = path.read_text(encoding="utf-8")
-if old_line not in text:
-    sys.exit(1)
-path.write_text(text.replace(old_line, new_line), encoding="utf-8")
+for old, new in replacements:
+    if text.count(old) != 1:
+        sys.exit(1)
+    text = text.replace(old, new)
+path.write_text(text, encoding="utf-8")
 PYEOF
 vendor=$(native "$PWD/tools/third_party/python_vendor")
 PYTHONPATH="$vendor" "$PY" "$wd/progress_base.py" --repo-root . --output "$wd/us_base.json" \
@@ -245,6 +262,28 @@ for description, source, stubs in (
 ):
     check(progress.count_global_asm_stubs(source) == stubs, f"NTSC stubs of {description}")
     check(progress.scan_active_branches(source, progress.EU_DEFINES)[2] == stubs, f"PAL stubs of {description}")
+
+# A function with a PAL body and an NTSC body is one function on each page, whichever branch comes first.
+for description, source in (
+    ("PAL body first", "#ifdef VERSION_EU\nvoid f(void) { }\n#else\nvoid f(void) { }\n#endif\n"),
+    ("NTSC body first",
+     "#if defined(VERSION_US)\nvoid f(void) { }\n#elif defined(VERSION_EU)\nvoid f(void) { }\n#endif\n"),
+):
+    want = {"matched": 1, "non_matching": 0, "asm_stubs": 0, "total": 1}
+    check(progress.analyse_blob(source) == want, f"NTSC count of a function with a {description}")
+    check(progress.analyse_text_eu(source) == want, f"PAL count of a function with a {description}")
+
+# Outside the version groups the NTSC reading of definitions is the text as written, so the NTSC page counts every
+# other file, and every file in the history, exactly as it did before PAL bodies existed.
+for description, source in (
+    ("a NON_MATCHING group with a C fallback",
+     "#ifdef NON_MATCHING\nvoid f(void) { }\n#else\nvoid f(void) { }\n#endif\n"),
+    ("a NON_MATCHING group with a pragma", f"#ifdef NON_MATCHING\nvoid f(void) {{ }}\n#else\n{PRAGMA_US}\n#endif\n"),
+    ("an #ifndef NON_MATCHING group", "#ifndef NON_MATCHING\nvoid f(void) { }\n#endif\n"),
+    ("another #if group", "#if 0\nvoid f(void) { }\n#else\nvoid g(void) { }\n#endif\n"),
+):
+    check(progress.ntsc_definitions(source).splitlines() == source.splitlines(),
+          f"NTSC reading of {description} is the text as written")
 
 # The default NTSC run is the run of the old tool.
 us_base = json.loads(Path(base_path).read_text(encoding="utf-8"))

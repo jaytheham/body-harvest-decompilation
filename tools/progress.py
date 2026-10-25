@@ -128,8 +128,8 @@ EU_NOTE = (
     "shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and "
     "must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, "
     "which has no tracked EU source.\n"
-    "Where PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is "
-    "matched on the US page and an ASM stub here until the difference is expressed in C."
+    "Where PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page "
+    "counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only."
 )
 
 
@@ -140,7 +140,7 @@ def analyse_file(path: Path) -> dict:
         return {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
     asm_stubs = count_global_asm_stubs(text)
     non_matching = len(RE_NON_MATCHING.findall(text))
-    total_defs = count_function_defs(text)
+    total_defs = count_function_defs(ntsc_definitions(text))
     matched = max(0, total_defs - non_matching)
     total = matched + non_matching + asm_stubs
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
@@ -272,7 +272,7 @@ def get_contributors(cwd: str, src_dirs: list) -> dict:
 def analyse_blob(blob: str) -> dict:
     asm_stubs = count_global_asm_stubs(blob)
     non_matching = len(RE_NON_MATCHING.findall(blob))
-    total_defs = count_function_defs(blob)
+    total_defs = count_function_defs(ntsc_definitions(blob))
     matched = max(0, total_defs - non_matching)
     total = matched + non_matching + asm_stubs
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
@@ -290,8 +290,9 @@ class _Branch:
     fallback: bool  # the current branch is an #elif or #else
 
 
-def version_condition(kind: str, cond: str, defines: frozenset) -> bool | None:
-    """Value of a condition on VERSION_US, VERSION_EU or NON_MATCHING, or None for any other condition.
+def version_condition(kind: str, cond: str, defines: frozenset, macros: frozenset = VERSION_MACROS) -> bool | None:
+    """Value of a condition on one of `macros` (by default VERSION_US, VERSION_EU or NON_MATCHING), or None for any
+    other condition.
 
     kind is the directive (if, ifdef, ifndef) and cond the text after it. Understood: `ifdef NAME`,
     `ifndef NAME` and `if [!]defined(NAME)`, with a trailing comment allowed. A macro is defined if it is in `defines`.
@@ -307,12 +308,12 @@ def version_condition(kind: str, cond: str, defines: frozenset) -> bool | None:
         if not m:
             return None
         name, negate = m.group(2) or m.group(3), bool(m.group(1))
-    if name not in VERSION_MACROS:
+    if name not in macros:
         return None
     return (name in defines) != negate
 
 
-def scan_active_branches(text: str, defines: frozenset) -> tuple:
+def scan_active_branches(text: str, defines: frozenset, macros: frozenset = VERSION_MACROS) -> tuple:
     """Read `text` as a build defining `defines` does: (compiled text, NON_MATCHING groups, GLOBAL_ASM stubs).
 
     The compiled text keeps the line numbers: a line in a branch the build does not compile, and every directive
@@ -326,7 +327,7 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
         outer_live = groups[-1].live if groups else True
         opened, elif_branch = RE_PP_IF.match(line), RE_PP_ELIF.match(line)
         if opened:
-            want = version_condition(opened.group(1), opened.group(2), defines)
+            want = version_condition(opened.group(1), opened.group(2), defines, macros)
             group = _Branch(outer_live, want is not None, bool(want), outer_live and want is not False,
                             bool(RE_NON_MATCHING.search(line)), False)
             non_matching += int(group.non_matching and outer_live)
@@ -334,7 +335,7 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
         elif elif_branch and groups:
             group = groups[-1]
             if group.version:
-                want = version_condition("if", elif_branch.group(1), defines)
+                want = version_condition("if", elif_branch.group(1), defines, macros)
                 group.live = group.parent_live and not group.taken and want is not False
                 group.taken = group.taken or want is not False
             else:
@@ -357,6 +358,17 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
         # A directive line: blanked if it belongs to a version group, else kept where its own group is compiled.
         out.append(line if not group.version and group.parent_live else "")
     return "\n".join(out), non_matching, asm_stubs
+
+
+# The NTSC count's reading of C definitions: only the version groups are evaluated, so a PAL-only body under
+# VERSION_EU is no NTSC definition, and every other group (NON_MATCHING included) is read as written, as it always was.
+NTSC_DEFINITION_MACROS = frozenset({"VERSION_US", "VERSION_EU"})
+
+
+def ntsc_definitions(text: str) -> str:
+    """`text` with the branches the NTSC build does not compile blanked, line numbers kept; a file without a version
+    group comes back line for line unchanged."""
+    return scan_active_branches(text, frozenset({"VERSION_US"}), NTSC_DEFINITION_MACROS)[0]
 
 
 def analyse_text_eu(text: str) -> dict:
