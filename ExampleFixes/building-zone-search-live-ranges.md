@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8011C338_12B2E8`, copying a zero-initialized flag after the helper call removes its stack store, and an early-return loop changes the branch sequence. After correcting those, IDO still assigns the original index to T2 rather than T3 and changes temporary registers in the bounds checks.
+
+-> `code changed`: Initialize and update the same `foundStart` word across the helper call. Load X, Z, and radius in that source order, retain two padding words, and express the search as a do/while with one fallback return. At the top of the loop retain the discarded conditions `if (centerX - radius) {}` and `if ((u8)(u32)arg0) {}`. The first establishes the lower-bound live range early; the second preserves a narrowed pointer live range without the temporary-register sequence introduced by a discarded byte load. Remove the unused coordinate reloads.
+
+-> `correct ASM`: The frame is 0x38 bytes, the helper delay slot stores zero at 0x20(sp), the lower X bound uses A1, the original index uses T3, and the loop temporary registers and all instructions match. Both regional ROM comparisons pass.

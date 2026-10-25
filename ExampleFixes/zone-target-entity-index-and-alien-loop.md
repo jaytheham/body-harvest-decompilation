@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8011C770_12B720`, separate building and byte-sized alien index locals swap S0/S1 in the first loop and put the alien ID in A0. The draft's conditional-comma pointer latch adds an extra branch. Its flag mask also clears bit zero, producing -0x41E2 instead of -0x41E1.
+
+-> `code changed`: Share one signed word entity index between the building lookup results and the alien-ID array reads. Use the existing typed byte `building->unkE` and `building->statusFlags |= 0x20`. Remove `ALIEN_FLAG_UNK1` from the alien flag-clear mask. Replace the explicit cursor/end loop with `for (alienIndex = 0; alienIndex < D_8014D507; alienIndex++)`, reading `entityIndex = D_8014D408[alienIndex]` inside the body.
+
+-> `correct ASM`: The shared index uses S0, the building lookup ordinal uses S1, and IDO converts the alien array index into a forward pointer traversal with a single `bnezl` latch. The alien-ID base uses the target temporary T8 rather than A1, preserving the later temporary-register sequence. The mask loads -0x41E1 and retains bit zero. Every instruction in the function matches.

@@ -1675,7 +1675,7 @@ typedef struct {
 typedef struct {
 	union {
 		u8 pad0[0x10];
-		struct { void *model; u8 padModel[0xC]; };
+		struct { void *model; void *damagedModel; u8 padModel[0x8]; };
 	};
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
@@ -4278,5 +4278,10 @@ typedef struct {
 	/* 0x04 */ u8 directions;
 	/* 0x05 */ u8 pad5;
 } RoadTileInfo; /* size = 0x06 */
+
+typedef struct {
+	s32 shift;
+	s32 bias;
+} BuildingHeightDecode;
 
 #endif /* LIBULTRA_REFERENCE */

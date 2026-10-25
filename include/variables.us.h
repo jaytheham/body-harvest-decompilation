@@ -2877,7 +2877,7 @@ extern s16 D_8015EB68;
 extern s16 D_8015EB6A;
 extern s16 D_8015EB6C;
 extern s16 D_8015EB6E;
-extern u8 D_8015EB70;
+extern u8 D_8015EB70[8];
 extern u8 D_8015EB71;
 extern u8 D_8015EB77;
 extern s32 D_8015EB78;
@@ -4204,4 +4204,7 @@ extern const f32 D_8014401C_152FCC[1];
 extern const f32 D_80144020_152FD0[1];
 extern const f32 D_80144024_152FD4[1];
 extern const f64 D_80144028_152FD8[1];
+extern Gfx D_A01D390;
+extern BuildingHeightDecode D_80140A40_14F9F0[10];
+extern Gfx *D_80140A14_14F9C4[5];
 #endif /* LIBULTRA_REFERENCE */
