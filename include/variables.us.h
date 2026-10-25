@@ -209,6 +209,7 @@ extern f32 D_80031418;
 extern f32 D_8003141C;
 extern s32 D_80031420; // AI - the saved options word: bits 0-1 blood setting, bit 2 aim option, bits 3-4 music volume, bits 5-6 sound effect volume; see GameStateFlags (read)
 extern s32 D_80031420_32020;
+extern u32 D_80031420_Options[1];
 extern s32 D_80031424[];
 extern s32 D_80031450_32050;
 extern s32 D_80031454;

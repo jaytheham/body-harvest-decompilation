@@ -318,7 +318,7 @@ segments:
       - [0x655C0, .data, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x65730, bin]
       - [0x7DD60, rodata, overlay_gameplay/frontend/rodata_7DD60]
-      - [0x7F860, .rodata, ../src.us/overlay_gameplay/frontend/40720]
+      - [0x7F7C0, .rodata, ../src.us/overlay_gameplay/frontend/40720]
       - [0x7F8F0, .rodata, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x7FA50, .rodata, ../src.us/overlay_gameplay/frontend/data_7EEF0]
       - [0x7FC50, .rodata, ../src.us/overlay_gameplay/frontend/52690]
