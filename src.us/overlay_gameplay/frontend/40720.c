@@ -6660,50 +6660,56 @@ void func_80081058_51508(void) {
 	gSPLineW3D(D_8005BB2C++, 4, 5, 10, 0);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(31401)
 void func_80081290_51740(void) {
-	Gfx *dl;
+	s32 j;
 	Vtx *baseVtx;
+	u32 i;
+	FrontendInterpPos *pos0;
+	FrontendInterpPos *pos1;
+	FrontendInterpVtxData *vtxData;
+	f32 oneMinusT;
+	f32 x;
+	f32 y;
+	f32 z;
+	FrontendTriBatch *batch;
 	Unk80052B40 sp84;
-	s32 i;
+	FrontendTriData *tri;
 
-	sp84 = D_800949C8;
+	sp84 = D_800949C8_64E78;
 
 	if (D_800313D0_31FD0 == 2) {
 		return;
 	}
 
 	baseVtx = D_8005BB34;
+	pos0 = D_800AC0CC.unk0;
+	pos1 = D_800AC0CC.unk4;
+	vtxData = D_800AC0CC.unk8;
+	j = 0;
 	if (D_800AC0CC.unk10 != 0) {
-		FrontendInterpPos *pos0 = D_800AC0CC.unk0;
-		FrontendInterpPos *pos1 = D_800AC0CC.unk4;
-		FrontendInterpVtxData *vtxData = D_800AC0CC.unk8;
-		for (i = 0; i < D_800AC0CC.unk10; i++) {
-			f32 t = D_800AC0CC.unk18;
-			f32 oneMinusT = 1.0f - t;
+		do {
+			oneMinusT = 1.0f - D_800AC0CC.unk18;
 
-			D_8005BB34->v.ob[0] = (s16) ((pos0[i].unk0 * oneMinusT) + (pos1[i].unk0 * t));
-			D_8005BB34->v.ob[1] = (s16) ((pos0[i].unk4 * oneMinusT) + (pos1[i].unk4 * t));
-			D_8005BB34->v.ob[2] = (s16) ((pos0[i].unk8 * oneMinusT) + (pos1[i].unk8 * t));
+			x = (pos1[j].unk0 * D_800AC0CC.unk18) + (pos0[j].unk0 * oneMinusT);
+			y = (pos1[j].unk4 * D_800AC0CC.unk18) + (pos0[j].unk4 * oneMinusT);
+			z = (pos1[j].unk8 * D_800AC0CC.unk18) + (pos0[j].unk8 * oneMinusT);
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y;
+			D_8005BB34->v.ob[2] = z;
 			D_8005BB34->v.flag = 0;
-			D_8005BB34->v.tc[0] = vtxData[i].unk0;
-			D_8005BB34->v.tc[1] = vtxData[i].unk2;
-			D_8005BB34->v.cn[0] = vtxData[i].unk4;
-			D_8005BB34->v.cn[1] = vtxData[i].unk5;
-			D_8005BB34->v.cn[2] = vtxData[i].unk6;
+			D_8005BB34->v.tc[0] = vtxData[j].unk0;
+			D_8005BB34->v.tc[1] = vtxData[j].unk2;
+			D_8005BB34->v.cn[0] = vtxData[j].unk4;
+			D_8005BB34->v.cn[1] = vtxData[j].unk5;
+			D_8005BB34->v.cn[2] = vtxData[j].unk6;
 			D_8005BB34->v.cn[3] = 0xFF;
 			D_8005BB34++;
-		}
+		} while ((u32)++j < D_800AC0CC.unk10);
 	}
 
 	if (D_800AC0CC.unk18 != 0.0f) {
-		f64 temp = (f64) D_800AC0CC.unk18 + D_800AEA58_7EF08[0];
-		if (temp > 1.0) {
-			D_800AC0CC.unk18 = 1.0f;
-		} else {
-			D_800AC0CC.unk18 = (f32) temp;
-		}
+		D_800AC0CC.unk18 = D_800AC0CC.unk18 + D_800AEA58_7EF08.value > 1.0 ?
+			1.0 : D_800AC0CC.unk18 + D_800AEA58_7EF08.value;
 	}
 
 	gDPPipeSync(D_8005BB2C++);
@@ -6721,90 +6727,33 @@ void func_80081290_51740(void) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 
-	sp84.unk0 = (s16) ((f64) sp84.unk0 * D_800AEA60_7EF10[0]);
-	sp84.unk2 = (s16) ((f64) sp84.unk2 * D_800AEA60_7EF10[0]);
-	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10[0]);
+	sp84.unk0 = (s16) ((f64) sp84.unk0 * D_800AEA60_7EF10.value);
+	sp84.unk2 = (s16) ((f64) sp84.unk2 * D_800AEA60_7EF10.value);
+	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10.value);
 
 	func_800039D0_45D0(NULL, NULL, &sp84, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	for (i = 0; i < D_800AC0CC.unk14; i++) {
-		s32 j;
-		s32 triCount;
-		FrontendTriBatch *batch = &D_800AC0CC.unkC[i];
+	i = 0;
+	if (D_800AC0CC.unk14 != 0) {
+		do {
+			batch = &D_800AC0CC.unkC[i];
 
-		gSPVertex(D_8005BB2C++, (Vtx *) ((u8 *) baseVtx + (batch->unk5 * 0x10)), batch->unk4, 0);
-
-		triCount = batch->unk6 / 2;
-		for (j = 0; j < triCount; j++) {
-			FrontendTriData *tri = &batch->unk0[j];
-			u8 a0;
-			u8 a1;
-			u8 a2;
-			u8 b0;
-			u8 b1;
-			u8 b2;
-
-			if (tri->unk3 == 0) {
-				a0 = tri->unk0;
-				a1 = tri->unk1;
-				a2 = tri->unk2;
-			} else if (tri->unk3 == 1) {
-				a0 = tri->unk1;
-				a1 = tri->unk2;
-				a2 = tri->unk0;
-			} else {
-				a0 = tri->unk2;
-				a1 = tri->unk0;
-				a2 = tri->unk1;
+			gSPVertex(D_8005BB2C++, &baseVtx[batch->unk5], batch->unk4, 0);
+			tri = batch->unk0;
+			for (j = 0; j < (batch->unk6 >> 1); j++) {
+				gSP2Triangles(D_8005BB2C++, tri[j * 2].unk0, tri[j * 2].unk1, tri[j * 2].unk2, tri[j * 2].unk3,
+					tri[j * 2 + 1].unk0, tri[j * 2 + 1].unk1, tri[j * 2 + 1].unk2, tri[j * 2 + 1].unk3);
 			}
-
-			if (tri->unk7 == 0) {
-				b0 = tri->unk4;
-				b1 = tri->unk5;
-				b2 = tri->unk6;
-			} else if (tri->unk7 == 1) {
-				b0 = tri->unk5;
-				b1 = tri->unk6;
-				b2 = tri->unk4;
-			} else {
-				b0 = tri->unk6;
-				b1 = tri->unk4;
-				b2 = tri->unk5;
+			if (batch->unk6 % 2) {
+				gSP1Triangle(D_8005BB2C++, tri[batch->unk6 - 1].unk0, tri[batch->unk6 - 1].unk1,
+					tri[batch->unk6 - 1].unk2, tri[batch->unk6 - 1].unk3);
 			}
-
-			gSP2Triangles(D_8005BB2C++, a0, a1, a2, 0, b0, b1, b2, 0);
-		}
-
-		if (batch->unk6 & 1) {
-			u8 a0;
-			u8 a1;
-			u8 a2;
-			FrontendTriData *tri = &batch->unk0[batch->unk6 / 2];
-
-			if (tri->unk3 == 0) {
-				a0 = tri->unk0;
-				a1 = tri->unk1;
-				a2 = tri->unk2;
-			} else if (tri->unk3 == 1) {
-				a0 = tri->unk1;
-				a1 = tri->unk2;
-				a2 = tri->unk0;
-			} else {
-				a0 = tri->unk2;
-				a1 = tri->unk0;
-				a2 = tri->unk1;
-			}
-
-			gSP1Triangle(D_8005BB2C++, a0, a1, a2, 0);
-		}
+		} while (++i < D_800AC0CC.unk14);
 	}
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081290_51740.s")
-#endif
 
 void func_800819C0_51E70(FrontendAnimState *arg0) {
 	f32 temp_f0;
@@ -7510,8 +7459,8 @@ const f32 D_800AEA3C_7EEEC[1] = { 0.00999999978f };
 const f64 D_800AEA40_7EEF0[1] = { 6.2831853070000001 };
 const f64 D_800AEA48_7EEF8[1] = { 360 };
 const f64 D_800AEA50_7EF00[1] = { 180 };
-const f64 D_800AEA58_7EF08[1] = { 0.01 };
-const f64 D_800AEA60_7EF10[1] = { 0.128 };
+const ShadowGeometryConstant D_800AEA58_7EF08 = { 0.01 };
+const ShadowGeometryConstant D_800AEA60_7EF10 = { 0.128 };
 const f64 D_800AEA68_7EF18[1] = { 0.40000000000000002 };
 const f32 D_800AEA70_7EF20[1] = { 0.00249999994f };
 const f32 D_800AEA74_7EF24[3] = { 0.00499999989f, 0.0f, 0.0f };

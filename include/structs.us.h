@@ -813,11 +813,7 @@ typedef struct {
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ u8 unk2;
 	/* 0x03 */ u8 unk3;
-	/* 0x04 */ u8 unk4;
-	/* 0x05 */ u8 unk5;
-	/* 0x06 */ u8 unk6;
-	/* 0x07 */ u8 unk7;
-} FrontendTriData; /* size = 0x08 */
+} FrontendTriData; /* size = 0x04 */
 
 typedef struct {
 	/* 0x00 */ FrontendTriData *unk0;
