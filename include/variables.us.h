@@ -1300,6 +1300,11 @@ extern u32 D_800948E8_64D98;
 extern u32 D_800948EC_64D9C;
 extern u32 D_800948F0_64DA0;
 extern u32 D_800948F4_64DA4;
+/* Independent inventory counter accesses across menu calls. */
+extern u32 D_800948F4_Write;
+extern u32 D_800948F4_Menu;
+extern u32 D_800948F4_Draw;
+extern u32 D_800948F4_Update;
 extern u32 D_800948F8_64DA8;
 extern u32 D_800948FC_64DAC;
 extern s32 D_80094900;

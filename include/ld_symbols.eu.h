@@ -24,6 +24,7 @@ extern Addr ___src_us_core_E830_c;
 extern Addr ___src_us_core_FD80_c;
 extern Addr ___src_us_core_loader_c;
 extern Addr ___src_us_overlay_gameplay_frontend_40720_c;
+extern Addr ___src_us_overlay_gameplay_frontend_4DC90_c;
 extern Addr ___src_us_overlay_gameplay_frontend_52690_c;
 extern Addr ___src_us_overlay_gameplay_inside_158330_c;
 extern Addr ___src_us_overlay_gameplay_inside_1648A0_c;

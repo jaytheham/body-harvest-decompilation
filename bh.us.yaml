@@ -312,6 +312,7 @@ segments:
     overlay: true
     subsegments:
       - [0x40720, c, overlay_gameplay/frontend/40720]
+      - [0x4DC90, c, overlay_gameplay/frontend/4DC90]
       - [0x52690, c, overlay_gameplay/frontend/52690]
       - [0x60E60, .data, overlay_gameplay/frontend/data_60E60]
       - [0x61D50, .data, overlay_gameplay/frontend/data_61D50]
@@ -326,7 +327,7 @@ segments:
       - [0x64750, .data, overlay_gameplay/frontend/data_64750]
       - [0x64B90, .data, overlay_gameplay/frontend/data_64B90]
       - [0x64D10, .data, overlay_gameplay/frontend/data_64D10]
-      - [0x64E00, .data, overlay_gameplay/frontend/40720]
+      - [0x64E00, .data, overlay_gameplay/frontend/4DC90]
       - [0x64F70, .data, overlay_gameplay/frontend/data_64F70]
       - [0x650C0, .data, overlay_gameplay/frontend/data_650C0]
       - [0x65350, .data, overlay_gameplay/frontend/data_65350]
@@ -345,6 +346,7 @@ segments:
       - [0x7C598, .data, overlay_gameplay/frontend/data_68FA0]
       - [0x7CDA0, .data, overlay_gameplay/frontend/data_68FA0]
       - [0x7D5A0, .rodata, overlay_gameplay/frontend/40720]
+      - [0x7ED90, .rodata, overlay_gameplay/frontend/4DC90]
       - [0x7EEF0, .rodata, overlay_gameplay/frontend/data_7EEF0]
       - [0x7F0F0, .rodata, overlay_gameplay/frontend/52690]
 
