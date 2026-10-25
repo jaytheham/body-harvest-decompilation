@@ -4924,12 +4924,11 @@ void func_8007C7F4_4CCA4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007C7F4_4CCA4.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(5741)
 // doSaveBeaconLoop
 s32 func_8007CFB4_4D464(s32 arg0) {
 	s16 timer;
 	s32 selection;
+	u32* frameCounter;
 
 	selection = 0;
 	timer = -1;
@@ -4938,28 +4937,26 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 	func_80070940_40DF0();
 	D_800D74A6 = 0x44;
 	D_800D74A4 = D_800D74A6;
-	D_800948F0_64DA0 = 0;
+	D_800948F0_Write = 0;
 
 	while (timer != 0) {
-		Gfx* dl;
-
 		func_800050C4_5CC4();
 		func_80011E14_12A14(0);
 		func_80004DDC_59DC(0, 0, 0, 0, 0xEF);
 		func_80008CA8_98A8(0);
 
-		if (D_800948F0_64DA0 >= 0x41U) {
-			if (D_800948F0_64DA0 < 0x3E8U) {
-				func_80070C64_41114(0x3F, 7, (s16)(D_800948F0_64DA0 - 0x3D));
+		frameCounter = &D_800948F0_64DA0;
+		if (*frameCounter >= 0x41U) {
+			if (*frameCounter < 0x3E8U) {
+				func_80070C64_41114(0x3F, 7, (s16)(*frameCounter - 0x3D));
 			}
 		}
 
-		if (arg0 != 0) {
-		} else {
+		if (arg0 == 0) {
 			func_80070A8C_40F3C(0x45);
 		}
 
-		if (D_800948F0_64DA0 >= 0x81U) {
+		if (D_800948F0_Menu >= 0x81U) {
 			if (timer == -1) {
 				func_80070CC4_41174();
 				func_8007166C_41B1C();
@@ -4970,10 +4967,11 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 					func_800708B8_40D68(0x44);
 					func_800708B8_40D68(0x45);
 					func_800153D8_15FD8(0xC8);
-					timer = 0x10;
 					if (selection == 1) {
-						func_80070C64_41114(0x46, (s16)1, 0);
+						func_80070C64_41114(0x46, 1, 0);
 						timer = 0x50;
+					} else {
+						timer = 0x10;
 					}
 				}
 
@@ -4984,14 +4982,15 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 			}
 		}
 
-		if (D_800948F0_64DA0 >= 0x41U) {
+		if (D_800948F0_Draw >= 0x41U) {
 			func_800731A8_43658();
 		}
 
 		func_8000B044_BC44();
 
-		if (D_800948F0_64DA0 < 0x3E8U) {
-			D_800948F0_64DA0++;
+		frameCounter = &D_800948F0_Update;
+		if (*frameCounter < 0x3E8U) {
+			D_800948F0_Write = *frameCounter + 1;
 		}
 
 		if (timer == 0x10) {
@@ -5011,7 +5010,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 			timer = (s16)(timer - 1);
 		}
 
-		if (D_800948F0_64DA0 < 0x55U) {
+		if (D_800948F0_Fade < 0x55U) {
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 			gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 			func_8000E53C_F13C();
@@ -5029,9 +5028,6 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007CFB4_4D464.s")
-#endif
 
 s32 func_8007D2B0_4D760(void) {
 	s16 timer;

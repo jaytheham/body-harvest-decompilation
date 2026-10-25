@@ -15,3 +15,9 @@ Incorrect ASM: compiling the inventory jump table and movie event interpreter in
 -> Code changed: split the movie initializer and subsequent code into `4DC90.c`, place its data and rodata at their original locations, and compile the existing final `2000.0` double before the inventory table in both versions. Keep the earlier EU rodata prefix ending before that double.
 
 -> Correct ASM: the inventory dispatch loads the table at `0x800AE8C0` in US and `0x800AF428` in EU; the movie diagnostics and event table retain their original addresses. Both complete ROMs match.
+
+Incorrect ASM: in `func_8007CFB4_4D464`, setting `timer = 0x10` before the selected-item test lets IDO hoist that assignment before the preceding menu calls and merge the following button-test block, removing three target instructions.
+
+-> Code changed: use `if (selection == 1) { func_80070C64_41114(0x46, 1, 0); timer = 0x50; } else { timer = 0x10; }`.
+
+-> Correct ASM: `bne s2,s4,...` has `li s0,0x10` in its delay slot; the extended path has `jal func_80070C64_41114` with `li s0,0x50` in the delay slot and an explicit branch to the next button test. Both complete ROMs match.
