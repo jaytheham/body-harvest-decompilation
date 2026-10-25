@@ -383,6 +383,7 @@ s32 func_8007B51C_1635DC(s32 arg0);
 void func_8007B618_4BAC8(void);
 void func_8007BFC4_4C474(void);
 void func_8007C4BC_4C96C(void);
+void func_8007C764_4CC14(u16 arg0, u16 arg1);
 void func_8007C7F4_4CCA4(void);
 void func_8007D7E0_4DC90();
 s32 func_8007D91C_4DDCC(u8 arg0);
