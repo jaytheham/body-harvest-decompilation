@@ -461,6 +461,7 @@ extern Addr libultra_viswapbuf_c;
 extern Addr libultra_viswapcontext_c;
 extern Addr libultra_yieldthread_c;
 extern Addr overlay_gameplay_frontend_40720_c;
+extern Addr overlay_gameplay_frontend_4DC90_c;
 extern Addr overlay_gameplay_frontend_52690_c;
 extern Addr overlay_gameplay_frontend_data_60E60_c;
 extern Addr overlay_gameplay_frontend_data_61D50_c;
