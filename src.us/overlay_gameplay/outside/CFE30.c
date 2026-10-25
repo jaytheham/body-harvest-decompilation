@@ -905,8 +905,6 @@ void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1ECC_D0E7C.s")
 #endif
 
-
-
 s32 func_800C21F0_D11A0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 {
   u8 sp27;
@@ -1284,7 +1282,6 @@ void func_800C3288_D2238(u8 arg0) {
 	func_800C1384_D0334(arg0);
 }
 
-// CURRENT(25829)
 #ifdef NON_MATCHING
 void func_800C3300_D22B0(u8 arg0) {
 	Unk801541F8Entry *effect;
@@ -1443,7 +1440,6 @@ void func_800C3300_D22B0(u8 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-/* CURRENT(545) */
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
 	s32 linkedIndex;
@@ -1540,7 +1536,6 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	osSyncPrintf(&D_801434C0_152470);
 }
 
-// CURRENT(0)
 void func_800C3E2C_D2DDC(void) {
 	Unk80154318Entry *entry;
 	EffectFirePayload *entrySub;
@@ -1826,8 +1821,6 @@ void func_800C4CB8_D3C68(void) {
 	}
 }
 
-
-// CURRENT(4247)
 // spawn particle?
 #ifdef NON_MATCHING
 void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
@@ -1896,7 +1889,6 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
 #endif
 
-// CURRENT(1305)
 // Spark emitter allocation.
 #ifdef NON_MATCHING
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
@@ -1964,7 +1956,6 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
 #endif
 
-// CURRENT(50)
 #ifdef NON_MATCHING
 // spawn radial particle effect?
 void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
@@ -2031,7 +2022,6 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C56A4_D4654.s")
 #endif
 
-// CURRENT(574)
 #ifdef NON_MATCHING
 // effect type 0
 void func_800C5894_D4844(u8 arg0) {
@@ -2195,8 +2185,6 @@ void func_800C5D14_D4CC4(u8 arg0) {
 	}
 }
 
-
-// CURRENT(96)
 #ifdef NON_MATCHING
 s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 	s32 tempA2;
@@ -2314,7 +2302,6 @@ s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C613C_D50EC.s")
 #endif
 
-// CURRENT(255)
 void func_800C6558_D5508(void) {
 	s16 idx;
 	EffectInterpolationState *entryBytes;
@@ -2412,8 +2399,6 @@ void func_800C6558_D5508(void) {
 	}
 }
 
-
-// CURRENT(26417)
 #ifdef NON_MATCHING
 void func_800C6D80_D5D30(void) {
 	Unk80052B40 sp158;
@@ -2587,7 +2572,6 @@ void func_800C6D80_D5D30(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6D80_D5D30.s")
 #endif
 
-// CURRENT(4225)
 #ifdef NON_MATCHING
 // AI - Spawn a particle/effect entry at (arg0,arg1,arg2) from source effect arg4 with random colour/velocity
 s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, Gfx *arg6, s32 arg7) {
@@ -2756,7 +2740,6 @@ void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
-// CURRENT(4817)
 #ifdef NON_MATCHING
 void func_800C8294_D7244(void) {
 	Unk80154318Entry *linked;
@@ -2863,7 +2846,6 @@ void func_800C8294_D7244(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8294_D7244.s")
 #endif
 
-// CURRENT(3374)
 #ifdef NON_MATCHING
 void func_800C8814_D77C4(void) {
 	s16 effectIdx;
@@ -2942,7 +2924,6 @@ void func_800C8814_D77C4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8814_D77C4.s")
 #endif
 
-// CURRENT(663)
 u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 idx;
 	u8 effect;
@@ -3179,7 +3160,6 @@ void func_800C9668_D8618(void) {
 	}
 }
 
-// CURRENT(17481)
 #ifdef NON_MATCHING
 // DrawNonZBufferedEffects?
 void func_800C978C_D873C(void) {
@@ -4501,7 +4481,6 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 	}
 }
 
-// CURRENT(899)
 #ifdef NON_MATCHING
 void func_800CDDE4_DCD94(void) {
 	s32 idx;
@@ -5551,7 +5530,6 @@ void func_800D10D0_E0080(void) {
 	}
 }
 
-// CURRENT(1310)
 #ifdef NON_MATCHING
 s32 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	s32 var_s1;
@@ -5629,7 +5607,6 @@ void func_800D1A1C_E09CC(u8 arg0) {
 	osSyncPrintf(&D_801437C0_152770);
 }
 
-// CURRENT(1314)
 // effect type 7
 #ifdef NON_MATCHING
 void func_800D1A94_E0A44(u8 arg0) {
@@ -5680,142 +5657,191 @@ void func_800D1A94_E0A44(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1A94_E0A44.s")
 #endif
 
-// CURRENT(19171)
 #ifdef NON_MATCHING
-void func_800D1C24_E0BD4(u8 arg0) {
- f32 spread;
- f32 curZ;
- f32 curY;
- f32 curX;
- f32 curZ2;
- f32 curY2;
- f32 curX2;
- f32 nextX;
- f32 nextY;
- f32 nextZ;
- f32 nextX2;
- f32 nextY2;
- f32 nextZ2;
- s32 texCoord;
- Unk801541F8Entry *effect;
- s32 nextIndex;
- u8 colorChoice;
- u8 red;
- u8 green;
- u8 blue;
- s32 repeats;
- s16 index;
- Unk80052B40 *position;
- effect = &D_80154088[arg0];
- index = effect->unk6;
- gDPPipeSync(D_8005BB2C++);
- gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
- gDPPipeSync(D_8005BB2C++);
- colorChoice = func_800038E0_44E0() % 6;
- if (colorChoice == 1) { red = 0xC8; green = 0xFF; blue = 0xC8; }
- else if (colorChoice == 2) { red = 0xC8; green = 0xC8; blue = 0xFF; }
- else { red = 0xFF; green = 0xFF; blue = 0xFF; }
- texCoord = 0x800;
- if (index != -5 && index != -6) { repeats = D_80154318[index].unkF; }
- while (repeats--) {
- index = effect->unk6;
- if (index != -5 && index != -6) {
-spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
-if ((func_800038E0_44E0() % 11) < 6) { spread = 0.0f - spread; }
-position = (Unk80052B40 *)(s32)D_80154318[index].payload;
-curX = position->unk0 + spread;
-curX2 = position->unk0 - spread;
-spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
-if ((func_800038E0_44E0() % 11) < 6) { spread = 0.0f - spread; }
-curY2 = position->unk2 - spread;
-curY = position->unk2 + spread;
-spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
-if ((func_800038E0_44E0() % 11) < 6) { spread = 0.0f - spread; }
-curZ = position->unk4 + spread;
-curZ2 = position->unk4 - spread;
-}
-if (index != -5 && index != -6) {
-do {
- nextIndex = D_80154318[index].unk4;
- if (nextIndex != -5) {
- gDPPipeSync(D_8005BB2C++);
- gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
- gDPPipeSync(D_8005BB2C++);
-D_8005BB34->v.ob[0] = curX;
-D_8005BB34->v.ob[1] = curY;
-D_8005BB34->v.ob[2] = curZ;
-D_8005BB34->v.flag = 0;
-D_8005BB34->v.tc[0] = 0;
-D_8005BB34->v.tc[1] = 0;
-D_8005BB34->v.cn[0] = red;
-D_8005BB34->v.cn[1] = green;
-D_8005BB34->v.cn[2] = blue;
-D_8005BB34->v.cn[3] = 0xFF;
-D_8005BB34++;
-D_8005BB34->v.ob[0] = curX2;
-D_8005BB34->v.ob[1] = curY2;
-D_8005BB34->v.ob[2] = curZ2;
-D_8005BB34->v.flag = 0;
-D_8005BB34->v.tc[0] = 0;
-D_8005BB34->v.tc[1] = texCoord;
-D_8005BB34->v.cn[0] = red;
-D_8005BB34->v.cn[1] = green;
-D_8005BB34->v.cn[2] = blue;
-D_8005BB34->v.cn[3] = 0xFF;
-D_8005BB34++;
-spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
-if ((func_800038E0_44E0() % 11) < 6) { spread = 0.0f - spread; }
-position = (Unk80052B40 *)(s32)D_80154318[nextIndex].payload;
-nextX = position->unk0 + spread;
-nextX2 = position->unk0 - spread;
-spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
-if ((func_800038E0_44E0() % 11) < 6) { spread = 0.0f - spread; }
-nextY = position->unk2 + spread;
-nextY2 = position->unk2 - spread;
-spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
-if ((func_800038E0_44E0() % 11) < 6) { spread = 0.0f - spread; }
-nextZ = position->unk4 + spread;
-nextZ2 = position->unk4 - spread;
-D_8005BB34->v.ob[0] = nextX;
-D_8005BB34->v.ob[1] = nextY;
-D_8005BB34->v.ob[2] = nextZ;
-D_8005BB34->v.flag = 0;
-D_8005BB34->v.tc[0] = texCoord;
-D_8005BB34->v.tc[1] = texCoord;
-D_8005BB34->v.cn[0] = red;
-D_8005BB34->v.cn[1] = green;
-D_8005BB34->v.cn[2] = blue;
-D_8005BB34->v.cn[3] = 0xFF;
-D_8005BB34++;
-D_8005BB34->v.ob[0] = nextX2;
-D_8005BB34->v.ob[1] = nextY2;
-D_8005BB34->v.ob[2] = nextZ2;
-D_8005BB34->v.flag = 0;
-D_8005BB34->v.tc[0] = texCoord;
-D_8005BB34->v.tc[1] = 0;
-D_8005BB34->v.cn[0] = red;
-D_8005BB34->v.cn[1] = green;
-D_8005BB34->v.cn[2] = blue;
-D_8005BB34->v.cn[3] = 0xFF;
-D_8005BB34++;
-gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
- gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
- D_80156EDA += 4;
-curX2 = nextX;
-if (1) {}
-curY2 = nextY;
-if (1) {}
-curZ2 = nextZ;
-curX = nextX2;
-if (1) {}
-curY = nextY2;
-if (1) {}
-curZ = nextZ2;
- }
- index = nextIndex;
- } while (nextIndex != -5 && index != -6);
- }
- }
+void func_800D1C24_E0BD4(u8 arg0)
+{
+	f32 spread;
+	f32 curZ;
+	f32 curY;
+	f32 curX;
+	f32 curZ2;
+	f32 curY2;
+	f32 curX2;
+	f32 nextX;
+	f32 nextY;
+	f32 nextZ;
+	f32 nextX2;
+	f32 nextY2;
+	f32 nextZ2;
+	s32 texCoord;
+	Unk801541F8Entry *effect;
+	s32 nextIndex;
+	u8 colorChoice;
+	u8 red;
+	u8 green;
+	u8 blue;
+	s32 repeats;
+	s16 index;
+	Unk80052B40 *position;
+	effect = &D_80154088[arg0];
+	index = effect->unk6;
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	gDPPipeSync(D_8005BB2C++);
+	colorChoice = func_800038E0_44E0() % 6;
+	if (colorChoice == 1)
+	{
+		red = 0xC8;
+		green = 0xFF;
+		blue = 0xC8;
+	}
+	else if (colorChoice == 2)
+	{
+		red = 0xC8;
+		green = 0xC8;
+		blue = 0xFF;
+	}
+	else
+	{
+		red = 0xFF;
+		green = 0xFF;
+		blue = 0xFF;
+	}
+	texCoord = 0x800;
+	if (index != -5 && index != -6)
+	{
+		repeats = D_80154318[index].unkF;
+	}
+	while (repeats--)
+	{
+		index = effect->unk6;
+		if (index != -5 && index != -6)
+		{
+			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
+			if ((func_800038E0_44E0() % 11) < 6)
+			{
+				spread = 0.0f - spread;
+			}
+			position = (Unk80052B40 *)(s32)D_80154318[index].payload;
+			curX = position->unk0 + spread;
+			curX2 = position->unk0 - spread;
+			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
+			if ((func_800038E0_44E0() % 11) < 6)
+			{
+				spread = 0.0f - spread;
+			}
+			curY2 = position->unk2 - spread;
+			curY = position->unk2 + spread;
+			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
+			if ((func_800038E0_44E0() % 11) < 6)
+			{
+				spread = 0.0f - spread;
+			}
+			curZ = position->unk4 + spread;
+			curZ2 = position->unk4 - spread;
+		}
+		if (index != -5 && index != -6)
+		{
+			do
+			{
+				nextIndex = D_80154318[index].unk4;
+				if (nextIndex != -5)
+				{
+					gDPPipeSync(D_8005BB2C++);
+					gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+					gDPPipeSync(D_8005BB2C++);
+					D_8005BB34->v.ob[0] = curX;
+					D_8005BB34->v.ob[1] = curY;
+					D_8005BB34->v.ob[2] = curZ;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = red;
+					D_8005BB34->v.cn[1] = green;
+					D_8005BB34->v.cn[2] = blue;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34++;
+					D_8005BB34->v.ob[0] = curX2;
+					D_8005BB34->v.ob[1] = curY2;
+					D_8005BB34->v.ob[2] = curZ2;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = texCoord;
+					D_8005BB34->v.cn[0] = red;
+					D_8005BB34->v.cn[1] = green;
+					D_8005BB34->v.cn[2] = blue;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34++;
+					spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
+					if ((func_800038E0_44E0() % 11) < 6)
+					{
+						spread = 0.0f - spread;
+					}
+					position = (Unk80052B40 *)(s32)D_80154318[nextIndex].payload;
+					nextX = position->unk0 + spread;
+					nextX2 = position->unk0 - spread;
+					spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
+					if ((func_800038E0_44E0() % 11) < 6)
+					{
+						spread = 0.0f - spread;
+					}
+					nextY = position->unk2 + spread;
+					nextY2 = position->unk2 - spread;
+					spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
+					if ((func_800038E0_44E0() % 11) < 6)
+					{
+						spread = 0.0f - spread;
+					}
+					nextZ = position->unk4 + spread;
+					nextZ2 = position->unk4 - spread;
+					D_8005BB34->v.ob[0] = nextX;
+					D_8005BB34->v.ob[1] = nextY;
+					D_8005BB34->v.ob[2] = nextZ;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = texCoord;
+					D_8005BB34->v.tc[1] = texCoord;
+					D_8005BB34->v.cn[0] = red;
+					D_8005BB34->v.cn[1] = green;
+					D_8005BB34->v.cn[2] = blue;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34++;
+					D_8005BB34->v.ob[0] = nextX2;
+					D_8005BB34->v.ob[1] = nextY2;
+					D_8005BB34->v.ob[2] = nextZ2;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = texCoord;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = red;
+					D_8005BB34->v.cn[1] = green;
+					D_8005BB34->v.cn[2] = blue;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34++;
+					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+					gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
+					D_80156EDA += 4;
+					curX2 = nextX;
+					if (1)
+					{
+					}
+					curY2 = nextY;
+					if (1)
+					{
+					}
+					curZ2 = nextZ;
+					curX = nextX2;
+					if (1)
+					{
+					}
+					curY = nextY2;
+					if (1)
+					{
+					}
+					curZ = nextZ2;
+				}
+				index = nextIndex;
+			} while (nextIndex != -5 && index != -6);
+		}
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
@@ -6441,7 +6467,6 @@ void func_800D4B44_E3AF4(void) {
 	}
 }
 
-// CURRENT(23749)
 #ifdef NON_MATCHING
 void func_800D4C10_E3BC0(void) {
 	Vec3f spFC;
@@ -6665,7 +6690,6 @@ void func_800D5684_E4634(void) {
 	}
 }
 
-// CURRENT(7940)
 #ifdef NON_MATCHING
 void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	s16 z;
@@ -7186,8 +7210,6 @@ void func_800D702C_E5FDC(s16 arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-
-// CURRENT(2279)
 #ifdef NON_MATCHING
 void func_800D7284_E6234(u8 arg0) {
 	s16 index;
@@ -7489,7 +7511,6 @@ void func_800D80B4_E7064(void) {
 	}
 }
 
-// CURRENT(12070)
 #ifdef NON_MATCHING
 void func_800D8190_E7140(void) {
 	Unk80154318Entry *entry;
@@ -7736,8 +7757,6 @@ position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080602;
 		current = D_80154318[current].unk4;
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8190_E7140.s")
 #endif
@@ -8181,7 +8200,6 @@ s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v0;
 }
 
-// CURRENT(120)
 #ifdef NON_MATCHING
 void func_800DA510_E94C0(s16 arg0, s16 arg1) {
 	EffectPositionPair *srcPos;
@@ -11494,7 +11512,6 @@ void func_800E6A38_F59E8(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
-
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
