@@ -366,9 +366,10 @@ NTSC recompiles identically for the EU shape.
 - 2026-10-25: No `GLOBAL_ASM` stub is left in either build. `libultra/sl.c` is shared with PAL (`bh.eu.yaml` names
   `../src.us/libultra/sl` for its code at 0x1B970 and data at 0x35A00, and `shared_overlay_files.txt` lists it); one pin,
   `D_80034E00_35A00 = alGlobals;`, keeps the EU label that the other libultra assembly still uses. `src.eu` is now empty
-  (kept by a `.gitkeep`). The four PAL-only bodies are C under `#ifdef VERSION_EU`: `func_80076FD8_47488`,
-  `func_80077E88_48338` and `func_8007B900_4BDB0` in `40720.c`, and `func_80006DDC_79DC` in `core/53F0.c`, which reads
-  every variable through its shared NTSC name. Its match needed `Unk80052B2C.unk40` typed `s32`, not `u8*`: every write
+  (kept by a `.gitkeep`). The last three PAL-only bodies are C beside their NTSC ones: `func_80076FD8_47488` and
+  `func_80077E88_48338` in `40720.c`, and `func_80006DDC_79DC` in `core/53F0.c` (#457 had matched
+  `func_8007B900_4BDB0` for both versions). They use the shared NTSC names of every variable and function. The
+  `53F0.c` match needed `Unk80052B2C.unk40` typed `s32`, not `u8*`: every write
   stores 3, and PAL keeps that 3 in one register with the level checks. The boot entry moved into `src.us/core/entry.s`,
   included by the save code's file so both stay one object (see `ExampleFixes`); `tools/progress.py` counts it as
   handwritten, not as a stub.
