@@ -1079,99 +1079,53 @@ void func_80080588_50A38(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(8571)
-void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, s32 arg3) {
-	f32 sp70;
-	f32 sp6C;
-	f32 sp68;
-	f32 sp64;
-	f32 sp60;
-	f32 sp5C;
-	f32 sp50;
-	f32 sp4C;
-	f32 sp48;
-	f32 temp_f0;
-	f32 temp_f10;
-	f32 temp_f10_2;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f18;
-	f32 temp_f2;
-	f32 temp_f2_2;
-	f32 temp_f4;
-	f32 temp_f6;
-	f32 temp_f6_2;
-	f32 temp_f8;
-	f32 temp_f8_2;
-	f64 temp_f22;
-	f64 temp_f20;
-	s32 temp_t6;
-	s32 var_s0;
-	s32 count;
-	AnimChannelState *temp_a1;
+// CURRENT(1382)
+void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3) {
+	s32 pad[5];
+	f32 targetZ, targetY, targetX;
+	f32 rotationZ, rotationY, rotationX;
 
-	count = arg3 & 0xFF;
-	var_s0 = 0;
-	if (count != 0) {
-		temp_f22 = 4096.0;
-		temp_f20 = D_800AEA50_7EF00[0];
+	volatile f32 copyZ; f32 copyY; volatile f32 copyX;
+	f32 z, x, y;
+	f32 elapsed, duration, fraction;
+	f32 scale;
+	f64 units, degrees;
+	u8 i;
+	AnimChannelState *channel;
+
+	if (0) { osSyncPrintf(D_800AE97C_7EE2C, &targetX, &targetY, &targetZ, &rotationX, &rotationY, &rotationZ, &copyX, &copyY, &copyZ); }
+	i = 0;
+	if (arg3 != 0) {
+		scale = 4096.0f;
+		units = 4096.0;
+		if (scale) {}
+		if (units) {}
+		degrees = D_800AEA50_7EF00[0];
 		do {
-			temp_a1 = &arg1[var_s0];
-			if (temp_a1->unk14 != 0) {
-				temp_f14 = temp_a1->unk1C;
-				temp_f18 = arg2 / (temp_a1->unk20 - temp_f14);
-				temp_f10 = (f32)(((f64)(f32)temp_a1->unk2A * temp_f20) / temp_f22);
-				sp68 = temp_f10;
-				temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / temp_f22);
-				sp6C = temp_f6;
-				temp_f8 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
-				sp70 = temp_f8;
-				temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / temp_f22);
-				sp5C = temp_f4;
-				sp48 = temp_f10;
-				temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / temp_f22);
-				sp60 = temp_f10_2;
-				sp4C = temp_f6;
-				sp50 = temp_f8;
-				temp_f8_2 = ((sp48 - temp_f4) * temp_f18) + temp_f4;
-				sp5C = temp_f8_2;
-				temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / temp_f22);
-				sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
-				sp64 = temp_f6_2;
-				sp64 = ((sp50 - temp_f6_2) * temp_f18) + temp_f6_2;
-				temp_f2 = temp_a1->unk8;
-				temp_f12 = temp_a1->unkC;
-				temp_f0 = temp_a1->unk10;
-				temp_a1->unk0 = (s16)(s32)((f64)(temp_f8_2 * 70.0f) / temp_f20);
-				temp_a1->unk2 = (s16)(s32)((f64)(sp60 * 70.0f) / temp_f20);
-				temp_a1->unk4 = (s16)(s32)((f64)(sp64 * 70.0f) / temp_f20);
-				temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;
-				temp_f2_2 = (f32)temp_a1->unk28;
-				temp_a1->unkC = (((f32)temp_a1->unk26 - temp_f12) * temp_f18) + temp_f12;
-				temp_a1->unk1C = temp_a1->unk1C + arg2;
-				temp_a1->unk10 = ((temp_f2_2 - temp_f0) * temp_f18) + temp_f0;
-				if (temp_a1->unk20 <= temp_a1->unk1C) {
-					temp_t6 = temp_a1->unk18 + 1;
-					temp_a1->unk8 = (f32)temp_a1->unk24;
-					temp_a1->unk10 = temp_f2_2;
-					temp_a1->unk18 = temp_t6;
-					temp_a1->unk0 = (s16)temp_a1->unk2A;
-					temp_a1->unk2 = (s16)temp_a1->unk2C;
-					temp_a1->unkC = (f32)temp_a1->unk26;
-					temp_a1->unk4 = (s16)temp_a1->unk2E;
-					if (temp_t6 == temp_a1->unk14) {
-						temp_a1->unk14 = 0;
-						temp_a1->unk18 = 0;
-						if (var_s0 == 0) {
-							arg0->unk54 = 0;
-						}
-					} else {
-						func_80080AD4_50F84(arg0, temp_a1, var_s0 & 0xFF);
-					}
-				}
-			}
-			var_s0 = (var_s0 + 1) & 0xFF;
-		} while (count != var_s0);
+			channel = &arg1[i];
+			if (channel->unk14 != 0) { targetX = (elapsed = channel->unk1C, duration = channel->unk20, fraction = arg2 / (duration - elapsed), (f32)channel->unk2A * degrees / units); targetY = (f32)channel->unk2C * degrees / units; targetZ = (f32)channel->unk2E * degrees / units; rotationX = (f32)channel->unk0 * degrees / units; copyX = targetX; rotationY = (f32)channel->unk2 * degrees / units; copyY = targetY; copyZ = targetZ; rotationZ = (f32)channel->unk4 * degrees / units; rotationX += (copyX - rotationX) * fraction; rotationY += (copyY - rotationY) * fraction; rotationZ = (copyZ - rotationZ) * fraction + rotationZ; x = channel->unk8;
+				y = channel->unkC;
+				z = channel->unk10;
+				channel->unk0 = rotationX * scale / degrees;
+				channel->unk2 = rotationY * scale / degrees;
+				channel->unk4 = rotationZ * scale / degrees;
+				channel->unk8 = ((f32)channel->unk24 - x) * fraction + x; channel->unkC = ((f32)channel->unk26 - y) * fraction + y; x = channel->unk28; channel->unk10 = (x - z) * fraction + z; channel->unk1C += arg2;
+				if (channel->unk1C >= channel->unk20) {
+				channel->unk8 = channel->unk24;
+				channel->unk10 = x;
+				channel->unk18++;
+				channel->unk0 = channel->unk2A;
+				channel->unk2 = channel->unk2C;
+				channel->unkC = channel->unk26;
+				channel->unk4 = channel->unk2E;
+				if (channel->unk18 == channel->unk14) { channel->unk14 = 0;
+				channel->unk18 = 0;
+				if (i == 0) { arg0->unk54 = 0;
+				} }
+				else { func_80080AD4_50F84(arg0, channel, i);
+				} } }
+			i++;
+		} while (i != arg3);
 	}
 }
 #else
@@ -1586,23 +1540,23 @@ f32 D_80094950_64E00 = 0.0f;
 f32 D_80094954_64E04 = 0.0f;
 
 Mtx D_80094958_64E08 = { {
-    { 0x00010000, 0x00000000, 0x00000001, 0x00000000 },
-    { 0x00000000, 0x00010000, 0x00000000, 0x00000001 },
-    { 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
-    { 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+	{ 0x00010000, 0x00000000, 0x00000001, 0x00000000 },
+	{ 0x00000000, 0x00010000, 0x00000000, 0x00000001 },
+	{ 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
+	{ 0x00000000, 0x00000000, 0x00000000, 0x00000000 },
 } };
 
 s32 D_80094998_64E48 = 0;
 
 // Note: the unk20 field (0x64E6C) is aliased by D_800949BC_64E6C
 FrontendAnimState D_8009499C_64E4C = {
-    { 0x04, 0x07, 0x39, 0x90, 0x00, 0x00, 0x00, 0x00 },
-    0.0f,
-    0.25f,
-    0x0000,
-    0x0008,
-    { 0x20, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02 },
-    0x00000000
+	{ 0x04, 0x07, 0x39, 0x90, 0x00, 0x00, 0x00, 0x00 },
+	0.0f,
+	0.25f,
+	0x0000,
+	0x0008,
+	{ 0x20, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02 },
+	0x00000000
 };
 
 Unk80052B40 D_800949C0_64E70 = { 0x0100, 0x0100, 0x0100 };

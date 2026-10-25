@@ -406,7 +406,7 @@ void func_8007F580_4FA30(s32 arg0);
 void func_8007F830_4FCE0(Unk80080588Entry1C* arg0);
 void func_8007FBF8_500A8(void);
 void func_8007FE8C_5033C(Unk8007FE8CArg* arg0);
-void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, s32 arg3);
+void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3);
 void func_800819C0_51E70(FrontendAnimState *arg0);
 void func_80081A50_51F00(FrontendTextureInfo *arg0);
 void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3);
