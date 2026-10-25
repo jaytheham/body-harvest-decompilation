@@ -3570,7 +3570,7 @@ s32 func_8007946C_4991C(u8* arg0) {
 
 #ifdef NON_MATCHING
 // CURRENT(8549)
-void func_8007949C_4994C(s32 arg0, s32 arg1) {
+void func_8007949C_4994C(s32 arg0, u16 arg1) {
 	s32 i;
 	s32 tempA3;
 	s32 tempT0;
@@ -3667,26 +3667,21 @@ void func_8007949C_4994C(s32 arg0, s32 arg1) {
 #endif
 
 // displayHighScores
-#ifdef NON_MATCHING
-// CURRENT(7438)
-void func_800796D0_49B80(s32 arg0, s32 arg1) {
+void func_800796D0_49B80(s32 arg0, u16 arg1) {
 	s16 shouldExit;
 	s16 i;
 	s16 timer;
-	s32 tempArg1;
 	s32 t;
 	s32 fade;
-	s32 slide;
-	s32 minutes;
-	s32 seconds;
-	s32 centiseconds;
+	u32 minutes;
+	u32 seconds;
+	u32 centiseconds;
 	SaveSummary* entry;
 
 	shouldExit = 0;
 	timer = 0;
-	tempArg1 = arg1;
 
-	func_8007949C_4994C(arg0, tempArg1 & 0xFFFF);
+	func_8007949C_4994C(arg0, arg1);
 	func_800134CC_140CC();
 
 	do {
@@ -3701,50 +3696,43 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 		drawText(&D_800ADCE4_7E194, 0xFF);
 
 		switch (D_800313D0_31FD0) {
+		case 0:
+		default:
+			drawText(&D_800ADCE8_7E198, 0x80, 0);
+			break;
 		case 2:
 			drawText(&D_800ADCF8_7E1A8, 0x80, 0);
 			break;
 		case 1:
 			drawText(&D_800ADD08_7E1B8, 0x80, 0);
 			break;
-		case 0:
-		default:
-			drawText(&D_800ADCE8_7E198, 0x80, 0);
-			break;
 		}
 
 		drawText(&D_800ADD18_7E1C8, 0x14, 0x32, 0x12C, 0xFA);
 
 		for (i = 0; i < 5; i++) {
-			t = i * 250;
-			if (timer < (t + 0x14)) {
+			if (timer < (i * 250 + 0x14)) {
 				continue;
 			}
-			if ((i != 4) && (timer >= (t + 0x10E))) {
-				continue;
-			}
-
-			slide = (timer - t) - 0x14;
-			if (slide < 0x1F) {
+			if ((i != 4) && (timer >= (i * 250 + 0x10E))) {
 				continue;
 			}
 
-			fade = slide - 0x32;
+			fade = (timer - i * 250) - 0x14;
+			if (fade < 0x1F) {
+				continue;
+			}
+
+			fade -= 0x32;
 
 			if (i != 4) {
-				t = (fade * 6) - 0x384;
-				if (t < 0) {
-					t = 0;
-				}
-				if (t >= 0x12D) {
-					t = 0x12C;
-				}
+				t = MIN(0x12C, MAX(0, (fade * 6) - 0x384));
 
 				drawText(&D_800ADD1C_7E1CC, t);
 				drawText(&D_800ADD20_7E1D0, (s32)(255.0f - (((f32)t / 300.0f) * 255.0f)));
 			}
 
-			drawText(&D_800ADD24_7E1D4, 0x80, 2, *((&D_80031548) - i));
+			drawText(&D_800ADD24_7E1D4, 0x80, 2, D_80031538_32138[4 - i]);
 
 			if (fade >= 0x10) {
 				if (i == 4) {
@@ -3755,78 +3743,60 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 
 				drawText(&D_800ADD30_7E1E0, 0x800);
 
-				entry = (&D_80048008) - i;
-				t = 6 - func_8007946C_4991C(entry);
-				t = (t < 0) ? ((t + 1) >> 1) : (t >> 1);
-				drawText(&D_800ADD34_7E1E4, t + 4, 3, entry);
+				entry = &D_80047FB8[4 - i];
+				t = 6 - func_8007946C_4991C(entry->name);
+				t /= 2;
+				drawText(&D_800ADD34_7E1E4, t + 4, 3, entry->name);
 				drawText(&D_800ADD3C_7E1EC, 0x400);
 			}
 
-			t = (fade << 4) - 0x1E0;
-			if (t < 0) {
-				t = 0;
-			}
-			if (t >= 0x281) {
-				t = 0x280;
-			}
+			t = MIN(0x280, MAX(0, (fade << 4) - 0x1E0));
 
-			entry = (&D_80048008) - i;
+			entry = &D_80047FB8[4 - i];
 			drawText(&D_800ADD40_7E1F0, t);
 
 			switch (D_800313D0_31FD0) {
+			case 0:
+			default:
+				drawText(&D_800ADD44_7E1F4, -0x10, 4);
+				break;
 			case 2:
 				drawText(&D_800ADD50_7E200, -0x10, 4);
 				break;
 			case 1:
 				drawText(&D_800ADD5C_7E20C, -0x10, 4);
 				break;
-			case 0:
-			default:
-				drawText(&D_800ADD44_7E1F4, -0x10, 4);
-				break;
 			}
 
 			drawText(&D_800ADD68_7E218, -t);
-			drawText(&D_800ADD6C_7E21C, 0x30, 4, entry->unk8);
+			drawText(&D_800ADD6C_7E21C, 0x30, 4, entry->score);
 
-			t = (fade << 4) - 0x2D0;
-			if (t < 0) {
-				t = 0;
-			}
-			if (t >= 0x281) {
-				t = 0x280;
-			}
+			t = MIN(0x280, MAX(0, (fade << 4) - 0x2D0));
 
 			drawText(&D_800ADD74_7E224, t);
 
 			switch (D_800313D0_31FD0) {
+			case 0:
+			default:
+				drawText(&D_800ADD78_7E228, -0x10, 5);
+				break;
 			case 2:
 				drawText(&D_800ADD8C_7E23C, -0x10, 5);
 				break;
 			case 1:
 				drawText(&D_800ADD98_7E248, -0x10, 5);
 				break;
-			case 0:
-			default:
-				drawText(&D_800ADD78_7E228, -0x10, 5);
-				break;
 			}
 
 			drawText(&D_800ADDA8_7E258, -t);
-			drawText(&D_800ADDAC_7E25C, 0x30, 5, entry->unkC);
+			drawText(&D_800ADDAC_7E25C, 0x30, 5, entry->humansKilled);
 
-			t = (fade << 4) - 0x3C0;
-			if (t < 0) {
-				t = 0;
-			}
-			if (t >= 0x281) {
-				t = 0x280;
-			}
+			t = MIN(0x280, MAX(0, (fade << 4) - 0x3C0));
 
-			fade = entry->unk10;
-			minutes = (fade / 60) / 60;
-			seconds = (fade / 60) % 60;
-			centiseconds = fade % 60;
+			centiseconds = entry->secondsTaken;
+			minutes = (centiseconds / 60) / 60;
+			seconds = (centiseconds / 60) % 60;
+			centiseconds %= 60;
 
 			if (minutes >= 100) {
 				minutes = 99;
@@ -3837,15 +3807,15 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 			drawText(&D_800ADDB4_7E264, t);
 
 			switch (D_800313D0_31FD0) {
+			case 0:
+			default:
+				drawText(&D_800ADDB8_7E268, -0x10, 6);
+				break;
 			case 2:
 				drawText(&D_800ADDC0_7E270, -0x10, 6);
 				break;
 			case 1:
 				drawText(&D_800ADDC8_7E278, -0x10, 6);
-				break;
-			case 0:
-			default:
-				drawText(&D_800ADDB8_7E268, -0x10, 6);
 				break;
 			}
 
@@ -3883,9 +3853,6 @@ void func_800796D0_49B80(s32 arg0, s32 arg1) {
 	func_800153D8_15FD8(0xC8);
 	drawText(&D_800ADE48_7E2F8, 0xFF, 0xFF, 0xFE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800796D0_49B80.s")
-#endif
 
 // CURRENT(1074)
 void func_80079F30_4A3E0(u8 arg0) {
