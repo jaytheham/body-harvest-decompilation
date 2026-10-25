@@ -2137,7 +2137,7 @@ s32 func_80076FD8_47488(void) {
 	func_800132CC_13ECC();
 	do {
 		if (frames < 0x3E8U) {
-			func_80070C94_41144(0x55, 3, (s16) frames);
+			func_80070C94_41144(0x55, 3, frames);
 		}
 		if (frames >= 0x21U) {
 			func_80070CC4_41174();
