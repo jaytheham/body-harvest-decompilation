@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run from the root of a checkout (src.us and src.eu present, git history available), with PY set.
+# Run from the root of a checkout (src.us present, src.eu optional, git history available), with PY set.
 # Checks tools/progress.py --version eu and that the default NTSC run still writes what it wrote before the EU view
 # existed. It asserts invariants, not the numbers of the day:
 #   - the EU json has the keys of the NTSC json plus "version": "eu" and a "note", and the same shapes below them
@@ -7,8 +7,9 @@
 #     the sums of their files
 #   - the EU core segment has the NTSC core segment's total and no more matched functions
 #   - the EU overlay segments hold no matched function except empty C stubs and the functions of the files that
-#     NTSC shares with PAL (the src.us files named in EU_SOURCE_ROOTS: a stub file under src.eu is checked against
-#     its empty functions, a shared file is not)
+#     NTSC shares with PAL (the src.us files of shared_overlay_files.txt: a stub file under src.eu, if there is one,
+#     is checked against its empty functions, a shared file is not)
+#   - libultra/sl.c, which NTSC and PAL share, has the same counts on both pages
 #   - the history is empty or a weekly series of at least two points
 #   - the preprocessor evaluation of ifdef / ifndef / [!]defined() on VERSION_US, VERSION_EU and NON_MATCHING gives
 #     the PAL build's reading of small synthetic files
@@ -46,6 +47,37 @@ quick_args=()
 # The NTSC runs take longest, so they go first and in the background. The old tool is run from outside tools/, with
 # the vendored tree-sitter on PYTHONPATH.
 git show "$base:tools/progress.py" > "$work/progress_base.py"
+# The old tool counted the handwritten boot entry as a stub, and counted a PAL-only C body under VERSION_EU as a
+# second NTSC definition; the current one does neither (HANDWRITTEN_ASM, ntsc_definitions). Give the old tool those
+# two corrections so the comparison still shows nothing else changed.
+"$PY" - "$work/progress_base.py" <<'PYEOF' || { echo "FAIL could not correct the old progress.py"; exit 1; }
+import sys
+from pathlib import Path
+
+ntsc_definitions = (
+    "def _ntsc_definitions(text):\n"
+    "    sys.path.insert(0, 'tools')\n"
+    "    import progress\n"
+    "    return progress.ntsc_definitions(text)\n"
+    "\n"
+    "\n"
+    "def count_function_defs(text: str) -> int:"
+)
+replacements = [
+    (r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')",
+     r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\((?!\s*\"src\.us/core/entry\.s\")')"),
+    ("total_defs = count_function_defs(text)", "total_defs = count_function_defs(_ntsc_definitions(text))"),
+    ("total_defs = count_function_defs(blob)", "total_defs = count_function_defs(_ntsc_definitions(blob))"),
+    ("def count_function_defs(text: str) -> int:", ntsc_definitions),
+]
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+for old, new in replacements:
+    if text.count(old) != 1:
+        sys.exit(1)
+    text = text.replace(old, new)
+path.write_text(text, encoding="utf-8")
+PYEOF
 vendor=$(native "$PWD/tools/third_party/python_vendor")
 PYTHONPATH="$vendor" "$PY" "$wd/progress_base.py" --repo-root . --output "$wd/us_base.json" \
     ${quick_args[@]+"${quick_args[@]}"} > "$work/us_base.log" 2>&1 &
@@ -173,6 +205,13 @@ for seg_name, seg in eu["segments"].items():
     check(seg["matched"] - shared_matched <= stubs,
           f"{seg_name}: matched ({seg['matched']}, {shared_matched} of them in shared files) is at most its empty C stubs ({stubs}) plus the shared files")
 
+# libultra/sl.c is a file of the NTSC tree that the PAL build compiles, with no version branch: both pages count it
+# alike.
+sl_counts = {name: [{k: f[k] for k in COUNTS} for f in doc["files"] if f["path"].endswith("libultra/sl.c")]
+             for name, doc in (("eu", eu), ("us", us))}
+check(len(sl_counts["eu"]) == 1 and sl_counts["eu"] == sl_counts["us"],
+      f"libultra/sl.c is counted once on the EU page, with the NTSC page's counts ({sl_counts})")
+
 # The PAL reading of small files: (description, source, matched, non_matching, asm_stubs).
 sys.path.insert(0, str(repo / "tools"))
 import progress  # noqa: E402
@@ -213,6 +252,38 @@ for description, source, matched, non_matching, asm_stubs in CASES:
     check(got == want, f"PAL reading of {description}")
     if got != want:
         print(f"     got {got}, wanted {want}")
+
+# Handwritten assembly pulled in by GLOBAL_ASM is no stub, in the NTSC and the PAL reading; undecompiled code still is.
+PRAGMA_ENTRY = '#pragma GLOBAL_ASM("src.us/core/entry.s")'
+for description, source, stubs in (
+    ("the handwritten boot entry", f"{PRAGMA_ENTRY}\n", 0),
+    ("an undecompiled function", f"{PRAGMA_US}\n", 1),
+    ("the boot entry beside an undecompiled function", f"{PRAGMA_ENTRY}\n{PRAGMA_US}\n", 1),
+):
+    check(progress.count_global_asm_stubs(source) == stubs, f"NTSC stubs of {description}")
+    check(progress.scan_active_branches(source, progress.EU_DEFINES)[2] == stubs, f"PAL stubs of {description}")
+
+# A function with a PAL body and an NTSC body is one function on each page, whichever branch comes first.
+for description, source in (
+    ("PAL body first", "#ifdef VERSION_EU\nvoid f(void) { }\n#else\nvoid f(void) { }\n#endif\n"),
+    ("NTSC body first",
+     "#if defined(VERSION_US)\nvoid f(void) { }\n#elif defined(VERSION_EU)\nvoid f(void) { }\n#endif\n"),
+):
+    want = {"matched": 1, "non_matching": 0, "asm_stubs": 0, "total": 1}
+    check(progress.analyse_blob(source) == want, f"NTSC count of a function with a {description}")
+    check(progress.analyse_text_eu(source) == want, f"PAL count of a function with a {description}")
+
+# Outside the version groups the NTSC reading of definitions is the text as written, so the NTSC page counts every
+# other file, and every file in the history, exactly as it did before PAL bodies existed.
+for description, source in (
+    ("a NON_MATCHING group with a C fallback",
+     "#ifdef NON_MATCHING\nvoid f(void) { }\n#else\nvoid f(void) { }\n#endif\n"),
+    ("a NON_MATCHING group with a pragma", f"#ifdef NON_MATCHING\nvoid f(void) {{ }}\n#else\n{PRAGMA_US}\n#endif\n"),
+    ("an #ifndef NON_MATCHING group", "#ifndef NON_MATCHING\nvoid f(void) { }\n#endif\n"),
+    ("another #if group", "#if 0\nvoid f(void) { }\n#else\nvoid g(void) { }\n#endif\n"),
+):
+    check(progress.ntsc_definitions(source).splitlines() == source.splitlines(),
+          f"NTSC reading of {description} is the text as written")
 
 # The default NTSC run is the run of the old tool.
 us_base = json.loads(Path(base_path).read_text(encoding="utf-8"))

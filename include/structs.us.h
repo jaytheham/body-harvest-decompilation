@@ -1461,7 +1461,7 @@ typedef struct {
 	/* 0x38 */ VehicleInstance* unk38;
 	/* 0x3C */ s16 unk3C;
 	/* 0x3E */ s16 unk3E;
-	/* 0x40 */ u8* unk40;
+	/* 0x40 */ s32 unk40;
 } Unk80052B2C; /* size = 0x44 */
 
 typedef struct Unk80042DB8 {

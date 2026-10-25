@@ -733,7 +733,7 @@ void func_80006DDC_79DC(void) {
 			loadFrontendData();
 			setFullResolution();
 			D_80052AE8.unk30 = 0;
-			D_80052AE8.unk40 = (u8*)3;
+			D_80052AE8.unk40 = 3;
 			break;
 		// End of level, go to next level or end game
 		case 2:
@@ -788,15 +788,128 @@ void func_80006DDC_79DC(void) {
 			}
 			setFullResolution();
 			D_80052AE8.unk30 = 0;
-			D_80052AE8.unk40 = (u8*)3;
+			D_80052AE8.unk40 = 3;
 			break;
 		}
 	} while (var_s3 == 0);
 	D_80068080 = 4;
 }
 #elif defined(VERSION_EU)
-/* asm/nonmatchings/core is mapped to asm.eu/src.us/core in an EU build (--asm-root), so this names the EU assembly. */
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_80006DDC_79DC.s")
+// AI - PAL also ends the game after level 3 when flag 0x80 of D_80052ACD is set. A while loop (not the NTSC
+// do-while) keeps the loop-invariant addresses out of saved registers, as the PAL build does.
+void func_80006DDC_79DC(void) {
+	s32 pad0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	void (*loadLevelCallback)(void *);
+	u32 var_s3;
+
+	loadLevelCallback = (void (*)(void *)) loadLevel;
+	D_80052ACA = 5;
+	var_s3 = 0;
+	gameplayMode = GAMEPLAY_MODE_LOADING_LEVEL;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	func_8000F190_FD90(loadLevelCallback);
+	while (destroyThreadIfMessageInQueue() == 0) {
+		func_800050C4_5CC4();
+		func_8000505C_5C5C();
+	}
+	while (var_s3 == 0) {
+		D_80052ACA = 0;
+		pad0 = currentLevel - 1;
+		D_800313E8 = D_80031620_32220[pad0].unk0;
+		D_80047743 = D_800313E8;
+		D_800313EC = D_80031620_32220[pad0].unk1;
+		D_80047744 = D_800313EC;
+		D_800313F0 = D_80031620_32220[pad0].unk2;
+		D_80047745 = D_800313F0;
+		D_800313F4 = D_80031620_32220[pad0].unk3;
+		D_800313F8 = D_80031634_32234[pad0 * 2];
+		D_800313FC = D_80031634_32234[pad0 * 2 + 1];
+		D_80047964 = 0x53C5;
+		D_8004794E = 0xCCF;
+		D_80047960 = 244.0f;
+		setGameplayResolution();
+		func_80070270(8);
+		D_800313C8_31FC8 = 0;
+		__osInitialize_emu();
+		switch (D_80052AC8) {
+		case 1:
+			var_s3 = 1;
+			func_800056A8_62A8();
+			func_800056A8_62A8();
+			func_80011D24_12924();
+			loadFrontendData();
+			setFullResolution();
+			D_80052AE8.unk30 = 0;
+			D_80052AE8.unk40 = 3;
+			break;
+		// End of level, go to next level or end game
+		case 2:
+			if (currentLevel == 5 || (currentLevel == 3 && (D_80052ACD & 0x80) != 0)) {
+				func_800170F4_17CF4(3);
+				func_800056A8_62A8();
+				func_800056A8_62A8();
+			} else {
+				func_80005654_6254(0xFF, 0xFF, 0xFF);
+				func_80005654_6254(0xFF, 0xFF, 0xFF);
+			}
+			func_80011D24_12924();
+			loadFrontendData();
+			setGameplayResolution();
+			D_80052A98[currentLevel - 1].score = D_80052B2C->unk30;
+			D_80052A98[currentLevel - 1].humansKilled = D_8004816A;
+			D_80052A98[currentLevel - 1].secondsElapsed = D_80052A90 / 1000U;
+			if (D_80047FA0 < currentLevel) {
+				D_80047FA0 = currentLevel;
+			}
+			if (currentLevel == 3 && (D_80052ACD & 0x80) != 0) {
+				D_800476A0 = 1;
+				var_s3 = 1;
+				setFullResolution();
+				func_80070270(0xD);
+			} else if (currentLevel == 5) {
+				D_800476A0 = 1;
+				var_s3 = 1;
+				setFullResolution();
+				func_80070270(6); // Show end game cutscene + credits
+			} else {
+				currentLevel += 1;
+				func_80007570_8170();
+				D_800476A0 = 1;
+				func_80070270(2);
+				func_80005654_6254(0xFF, 0xFF, 0xFF);
+				func_80005654_6254(0xFF, 0xFF, 0xFF);
+				func_8000F190_FD90(loadLevelCallback);
+				while (destroyThreadIfMessageInQueue() == 0) {
+					func_800050C4_5CC4();
+					func_8000505C_5C5C();
+				}
+			}
+			break;
+		case 0:
+			var_s3 = 1;
+			func_800050C4_5CC4();
+			func_8000505C_5C5C();
+			func_800050C4_5CC4();
+			func_8000505C_5C5C();
+			func_80011D24_12924();
+			loadFrontendData();
+			if (showDemoText != 1) {
+				func_80070270(3);
+				setFullResolution();
+				func_80070270(5);
+			}
+			setFullResolution();
+			D_80052AE8.unk30 = 0;
+			D_80052AE8.unk40 = 3;
+			break;
+		}
+	}
+	D_80068080 = 4;
+}
 #else
 #error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif

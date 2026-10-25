@@ -1,32 +1,13 @@
 #include <ultra64.h>
 #include "common.h"
 
-/* Preserve the boot unit's alignment origin for unreachable thread epilogues. */
+/*
+ * The boot entry is handwritten assembly (entry.s) assembled into this unit rather than into an object of its own:
+ * IDO's .align 5 padding is object-relative, and the epilogue of func_80000ED4_1AD4 only lands at ROM 0x1C20 when
+ * this object starts at 0x1000 (see ExampleFixes/scheduler-stack-guards-and-translation-unit-alignment.md).
+ */
 #ifndef __clang__
-#pragma GLOBAL_ASM(
-glabel func_80000400_1000
-    /* 1000 80000400 3C088004 */  lui        $t0, %hi(D_8003FB20)
-    /* 1004 80000404 3C090003 */  lui        $t1, (0x30750 >> 16)
-    /* 1008 80000408 2508FB20 */  addiu      $t0, $t0, %lo(D_8003FB20)
-    /* 100C 8000040C 35290750 */  ori        $t1, $t1, (0x30750 & 0xFFFF)
-  .L80000410_1010:
-    /* 1010 80000410 2129FFF8 */  addi       $t1, $t1, -0x8 /* handwritten instruction */
-    /* 1014 80000414 AD000000 */  sw         $zero, 0x0($t0)
-    /* 1018 80000418 AD000004 */  sw         $zero, 0x4($t0)
-    /* 101C 8000041C 1520FFFC */  bnez       $t1, .L80000410_1010
-    /* 1020 80000420 21080008 */   addi      $t0, $t0, 0x8 /* handwritten instruction */
-    /* 1024 80000424 3C0A8001 */  lui        $t2, %hi(func_8000EF10_FB10)
-    /* 1028 80000428 3C1D8006 */  lui        $sp, %hi(D_8005BF58)
-    /* 102C 8000042C 254AEF10 */  addiu      $t2, $t2, %lo(func_8000EF10_FB10)
-    /* 1030 80000430 01400008 */  jr         $t2
-    /* 1034 80000434 27BDBF58 */   addiu     $sp, $sp, %lo(D_8005BF58)
-    /* 1038 80000438 00000000 */  nop
-    /* 103C 8000043C 00000000 */  nop
-    /* 1040 80000440 00000000 */  nop
-    /* 1044 80000444 00000000 */  nop
-    /* 1048 80000448 00000000 */  nop
-    /* 104C 8000044C 00000000 */  nop
-)
+#pragma GLOBAL_ASM("src.us/core/entry.s")
 #endif
 
 /* Shared graphics state (ROM 0x31D20 - 0x31EF0) */

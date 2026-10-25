@@ -6,9 +6,9 @@ Walks the NTSC build's C sources (src.us/**/*.c, which includes the core that
 the PAL build compiles too), counts matched / NON_MATCHING / GLOBAL_ASM functions
 per file and segment, reads git log for history, and emits progress.json.
 
-With --version eu it walks the PAL build instead (src.eu/**/*.c and the shared
-src.us/core/**/*.c, keeping only the branches the EU build compiles) and emits
-progress.eu.json. The default, --version us, is the NTSC count described above.
+With --version eu it walks the PAL build instead (the shared src.us/core/**/*.c and the shared
+files of shared_overlay_files.txt, plus any src.eu/**/*.c, keeping only the branches the EU build
+compiles) and emits progress.eu.json. The default, --version us, is the NTSC count described above.
 
 Usage:
   python3 tools/progress.py [--version {us,eu}] [--output path/to/progress.json] [--repo-root DIR]
@@ -69,6 +69,17 @@ def parse_args():
 
 # Regex patterns
 RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')
+RE_PRAGMA_GLOBAL_ASM_PATH = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(\s*"([^"]*)"')
+# Handwritten assembly assembled into a C unit by GLOBAL_ASM: not undecompiled code, so no stub.
+HANDWRITTEN_ASM: frozenset = frozenset({"src.us/core/entry.s"})
+
+
+def is_stub_pragma(line: str) -> bool:
+    """Whether a GLOBAL_ASM pragma line stands for undecompiled code, as opposed to a HANDWRITTEN_ASM file."""
+    if not RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+        return False
+    named = RE_PRAGMA_GLOBAL_ASM_PATH.match(line)
+    return not (named and named.group(1) in HANDWRITTEN_ASM)
 RE_ENDIF_LINE = re.compile(r'^\s*#\s*endif\b')
 RE_PP_IF = re.compile(r'^\s*#\s*(if|ifdef|ifndef)\b(.*)$')
 RE_PP_ELIF = re.compile(r'^\s*#\s*elif\b(.*)$')
@@ -89,13 +100,15 @@ SEGMENT_DISPLAY = {
 SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
 # C source roots of the NTSC build. src.us/core holds the files both versions compile; src.eu is
-# not counted here. It holds the PAL build's own libultra file (sl.c), a GLOBAL_ASM stub; --version eu
-# counts it. Every gameplay and level overlay is shared with NTSC (shared_overlay_files.txt).
+# not counted here (it holds no file now). Every gameplay and level overlay, and libultra/sl.c, is shared
+# with NTSC (shared_overlay_files.txt).
 SOURCE_ROOTS = ("src.us",)
 # C source roots of the PAL build, and the version macro its preprocessor defines.
-# The PAL build also compiles the files of shared_overlay_files.txt (see eu_source_roots); a root that names a single .c file is
-# a file of the NTSC tree that the PAL build compiles too.
-EU_SOURCE_ROOTS = ("src.eu", "src.us/core")
+# src.us/core must stay first: main() exits if roots[0] is missing. src.eu is kept (and skipped when absent) so that
+# past history points still count the stub files they held (libultra/sl.c until it was shared).
+# The PAL build also compiles the files of shared_overlay_files.txt (see eu_source_roots), libultra/sl.c among
+# them; a root that names a single .c file is a file of the NTSC tree that the PAL build compiles too.
+EU_SOURCE_ROOTS = ("src.us/core", "src.eu")
 
 
 def eu_source_roots(repo_root: str) -> tuple:
@@ -113,10 +126,10 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in "
     "shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and "
-    "must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has "
-    "no tracked EU source.\n"
-    "Where PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is "
-    "matched on the US page and an ASM stub here until the difference is expressed in C."
+    "must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, "
+    "which has no tracked EU source.\n"
+    "Where PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page "
+    "counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only."
 )
 
 
@@ -127,7 +140,7 @@ def analyse_file(path: Path) -> dict:
         return {"matched": 0, "non_matching": 0, "asm_stubs": 0, "total": 0}
     asm_stubs = count_global_asm_stubs(text)
     non_matching = len(RE_NON_MATCHING.findall(text))
-    total_defs = count_function_defs(text)
+    total_defs = count_function_defs(ntsc_definitions(text))
     matched = max(0, total_defs - non_matching)
     total = matched + non_matching + asm_stubs
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
@@ -158,7 +171,7 @@ def count_global_asm_stubs(text: str) -> int:
         elif RE_ENDIF_LINE.match(line):
             if groups:
                 groups.pop()
-        elif RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+        elif is_stub_pragma(line):
             if any(first == "NON_MATCHING" and branch != first for first, branch in groups):
                 continue
             if any("VERSION_EU" in branch for _, branch in groups):
@@ -259,7 +272,7 @@ def get_contributors(cwd: str, src_dirs: list) -> dict:
 def analyse_blob(blob: str) -> dict:
     asm_stubs = count_global_asm_stubs(blob)
     non_matching = len(RE_NON_MATCHING.findall(blob))
-    total_defs = count_function_defs(blob)
+    total_defs = count_function_defs(ntsc_definitions(blob))
     matched = max(0, total_defs - non_matching)
     total = matched + non_matching + asm_stubs
     return {"matched": matched, "non_matching": non_matching, "asm_stubs": asm_stubs, "total": total}
@@ -277,8 +290,9 @@ class _Branch:
     fallback: bool  # the current branch is an #elif or #else
 
 
-def version_condition(kind: str, cond: str, defines: frozenset) -> bool | None:
-    """Value of a condition on VERSION_US, VERSION_EU or NON_MATCHING, or None for any other condition.
+def version_condition(kind: str, cond: str, defines: frozenset, macros: frozenset = VERSION_MACROS) -> bool | None:
+    """Value of a condition on one of `macros` (by default VERSION_US, VERSION_EU or NON_MATCHING), or None for any
+    other condition.
 
     kind is the directive (if, ifdef, ifndef) and cond the text after it. Understood: `ifdef NAME`,
     `ifndef NAME` and `if [!]defined(NAME)`, with a trailing comment allowed. A macro is defined if it is in `defines`.
@@ -294,12 +308,12 @@ def version_condition(kind: str, cond: str, defines: frozenset) -> bool | None:
         if not m:
             return None
         name, negate = m.group(2) or m.group(3), bool(m.group(1))
-    if name not in VERSION_MACROS:
+    if name not in macros:
         return None
     return (name in defines) != negate
 
 
-def scan_active_branches(text: str, defines: frozenset) -> tuple:
+def scan_active_branches(text: str, defines: frozenset, macros: frozenset = VERSION_MACROS) -> tuple:
     """Read `text` as a build defining `defines` does: (compiled text, NON_MATCHING groups, GLOBAL_ASM stubs).
 
     The compiled text keeps the line numbers: a line in a branch the build does not compile, and every directive
@@ -313,7 +327,7 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
         outer_live = groups[-1].live if groups else True
         opened, elif_branch = RE_PP_IF.match(line), RE_PP_ELIF.match(line)
         if opened:
-            want = version_condition(opened.group(1), opened.group(2), defines)
+            want = version_condition(opened.group(1), opened.group(2), defines, macros)
             group = _Branch(outer_live, want is not None, bool(want), outer_live and want is not False,
                             bool(RE_NON_MATCHING.search(line)), False)
             non_matching += int(group.non_matching and outer_live)
@@ -321,7 +335,7 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
         elif elif_branch and groups:
             group = groups[-1]
             if group.version:
-                want = version_condition("if", elif_branch.group(1), defines)
+                want = version_condition("if", elif_branch.group(1), defines, macros)
                 group.live = group.parent_live and not group.taken and want is not False
                 group.taken = group.taken or want is not False
             else:
@@ -338,12 +352,23 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
             live = groups[-1].live if groups else True
             out.append(line if live else "")
             in_fallback = any(g.non_matching and g.fallback for g in groups)
-            if live and not in_fallback and RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+            if live and not in_fallback and is_stub_pragma(line):
                 asm_stubs += 1
             continue
         # A directive line: blanked if it belongs to a version group, else kept where its own group is compiled.
         out.append(line if not group.version and group.parent_live else "")
     return "\n".join(out), non_matching, asm_stubs
+
+
+# The NTSC count's reading of C definitions: only the version groups are evaluated, so a PAL-only body under
+# VERSION_EU is no NTSC definition, and every other group (NON_MATCHING included) is read as written, as it always was.
+NTSC_DEFINITION_MACROS = frozenset({"VERSION_US", "VERSION_EU"})
+
+
+def ntsc_definitions(text: str) -> str:
+    """`text` with the branches the NTSC build does not compile blanked, line numbers kept; a file without a version
+    group comes back line for line unchanged."""
+    return scan_active_branches(text, frozenset({"VERSION_US"}), NTSC_DEFINITION_MACROS)[0]
 
 
 def analyse_text_eu(text: str) -> dict:
