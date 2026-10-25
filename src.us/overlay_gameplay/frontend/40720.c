@@ -6820,50 +6820,21 @@ void func_800819C0_51E70(FrontendAnimState *arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(5165)
 void func_80081A50_51F00(FrontendTextureInfo *arg0) {
-	Gfx *dl;
-	s32 loadCount;
-	s32 lineCount;
-	s32 dxt;
-
+	u8 *img;
+	s32 size;
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1,
-		arg0->img + (arg0->unk10 * ((s32) (arg0->unk14 * arg0->unk15) / 2)));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-
-	loadCount = (((arg0->unk14 * arg0->unk15) + 3) >> 2) - 1;
-	if (loadCount > 0x7FF) {
-		loadCount = 0x7FF;
-	}
-
-	lineCount = (s32) arg0->unk14 / 16;
-	if (lineCount <= 0) {
-		lineCount = 1;
-	}
-	dxt = (lineCount + 0x7FF) / lineCount;
-
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, loadCount, dxt);
-
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b,
-		((((s32) arg0->unk14 >> 1) + 7) >> 3) & 0x1FF,
-		0, G_TX_RENDERTILE, 0,
-		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0,
-		((arg0->unk14 - 1) << 2), ((arg0->unk15 - 1) << 2));
+	size = arg0->unk14 * arg0->unk15;
+	size /= 2;
+	img = &arg0->img[arg0->unk10 * size];
+	gDPLoadTextureBlock_4b(D_8005BB2C++, img,
+		G_IM_FMT_I, arg0->unk14, arg0->unk15, 0,
+		G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP,
+		G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, TEXEL0,
 		PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, TEXEL0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80081A50_51F00.s")
-#endif
 
 f32 D_80094950_64E00 = 0.0f;
 f32 D_80094954_64E04 = 0.0f;
