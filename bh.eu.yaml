@@ -304,18 +304,23 @@ segments:
 
   - name: overlay_gameplay_frontend
     type: code
+    subalign: 4
     start: 0x40750
     vram: 0x800702A0
     exclusive_ram_id: 800702A0
     overlay: true
     subsegments:
       - [0x40750, c, ../src.us/overlay_gameplay/frontend/40720]
+      - [0x4E450, c, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x52E50, c, ../src.us/overlay_gameplay/frontend/52690]
       - [0x61620, bin]
-      # NTSC 0x64E00-0x64F70 is compiled from 40720.c (bh.us.yaml); PAL has the same 368 bytes at +0x7C0, apart from 12 string pointers.
-      - [0x655C0, .data, ../src.us/overlay_gameplay/frontend/40720]
+      # NTSC 0x64E00-0x64F70 is compiled from 4DC90.c (bh.us.yaml); PAL has the same 368 bytes at +0x7C0, apart from 12 string pointers.
+      - [0x655C0, .data, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x65730, bin]
       - [0x7DD60, rodata, overlay_gameplay/frontend/rodata_7DD60]
+      - [0x7F7C0, .rodata, ../src.us/overlay_gameplay/frontend/40720]
+      - [0x7F8F0, .rodata, ../src.us/overlay_gameplay/frontend/4DC90]
+      - [0x7FA50, .rodata, ../src.us/overlay_gameplay/frontend/data_7EEF0]
       - [0x7FC50, .rodata, ../src.us/overlay_gameplay/frontend/52690]
 
   - name: overlay_gameplay_outside
