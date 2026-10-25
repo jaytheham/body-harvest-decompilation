@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-25T07:28:36Z",
-  "commit": "826789bc",
-  "commit_timestamp": "2026-10-25T17:33:30+13:00",
+  "generated": "2026-10-25T18:40:20Z",
+  "commit": "fba5adb7",
+  "commit_timestamp": "2026-10-26T07:39:36+13:00",
   "overall": {
-    "total_functions": 3058,
-    "matched": 2746,
-    "non_matching": 311,
+    "total_functions": 3057,
+    "matched": 2759,
+    "non_matching": 297,
     "asm_stubs": 1,
-    "matched_pct": 89.8,
+    "matched_pct": 90.25,
     "decompiled_pct": 99.97
   },
   "segments": {
@@ -22,11 +22,11 @@
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 187,
-      "non_matching": 31,
+      "matched": 200,
+      "non_matching": 17,
       "asm_stubs": 0,
-      "total": 218,
-      "matched_pct": 85.8,
+      "total": 217,
+      "matched_pct": 92.2,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/outside": {
@@ -1916,11 +1916,21 @@
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 82,
-      "non_matching": 31,
+      "matched": 58,
+      "non_matching": 16,
       "asm_stubs": 0,
-      "total": 113,
-      "matched_pct": 72.6,
+      "total": 74,
+      "matched_pct": 78.4,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/4DC90.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 37,
+      "non_matching": 1,
+      "asm_stubs": 0,
+      "total": 38,
+      "matched_pct": 97.4,
       "contributor": "jaytheham"
     },
     {
@@ -2115,6 +2125,16 @@
     },
     {
       "path": "overlay_gameplay/frontend/data_68FA0.c",
+      "segment": "overlay_gameplay/frontend",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "overlay_gameplay/frontend/data_7EEF0.c",
       "segment": "overlay_gameplay/frontend",
       "matched": 0,
       "non_matching": 0,
@@ -2607,9 +2627,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 74,
-      "matched": 1780,
-      "non_matching": 214,
+      "files": 76,
+      "matched": 1793,
+      "non_matching": 200,
       "asm_stubs": 1
     },
     {
@@ -2903,10 +2923,10 @@
     },
     {
       "date": "2026-10-25",
-      "commit": "21fca8b",
-      "matched": 2746,
-      "non_matching": 311,
-      "total": 3058
+      "commit": "72f8d43",
+      "matched": 2759,
+      "non_matching": 297,
+      "total": 3057
     }
   ]
 }
