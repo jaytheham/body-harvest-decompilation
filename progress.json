@@ -1,31 +1,31 @@
 {
-  "generated": "2026-10-25T18:52:55Z",
-  "commit": "a8384f03",
-  "commit_timestamp": "2026-10-26T07:51:56+13:00",
+  "generated": "2026-10-25T21:03:13Z",
+  "commit": "c7bf814d",
+  "commit_timestamp": "2026-10-26T10:02:16+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 2759,
+    "matched": 2760,
     "non_matching": 297,
-    "asm_stubs": 1,
-    "matched_pct": 90.25,
-    "decompiled_pct": 99.97
+    "asm_stubs": 0,
+    "matched_pct": 90.28,
+    "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
       "display_name": "Core",
       "matched": 333,
       "non_matching": 22,
-      "asm_stubs": 1,
-      "total": 356,
-      "matched_pct": 93.5,
-      "decompiled_pct": 99.7
+      "asm_stubs": 0,
+      "total": 355,
+      "matched_pct": 93.8,
+      "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
       "display_name": "Gameplay / Frontend",
-      "matched": 200,
+      "matched": 201,
       "non_matching": 17,
       "asm_stubs": 0,
-      "total": 217,
+      "total": 218,
       "matched_pct": 92.2,
       "decompiled_pct": 100.0
     },
@@ -108,10 +108,10 @@
       "segment": "core",
       "matched": 50,
       "non_matching": 8,
-      "asm_stubs": 1,
-      "total": 59,
-      "matched_pct": 84.7,
-      "contributor": "jaytheham"
+      "asm_stubs": 0,
+      "total": 58,
+      "matched_pct": 86.2,
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/10A20.c",
@@ -211,7 +211,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 98.7,
-      "contributor": "jaytheham"
+      "contributor": "lunarlaurus"
     },
     {
       "path": "core/AD60.c",
@@ -1916,12 +1916,12 @@
     {
       "path": "overlay_gameplay/frontend/40720.c",
       "segment": "overlay_gameplay/frontend",
-      "matched": 58,
+      "matched": 59,
       "non_matching": 16,
       "asm_stubs": 0,
-      "total": 74,
-      "matched_pct": 78.4,
-      "contributor": "jaytheham"
+      "total": 75,
+      "matched_pct": 78.7,
+      "contributor": "lunarlaurus"
     },
     {
       "path": "overlay_gameplay/frontend/4DC90.c",
@@ -2627,16 +2627,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 76,
-      "matched": 1793,
-      "non_matching": 200,
-      "asm_stubs": 1
+      "files": 73,
+      "matched": 1611,
+      "non_matching": 175,
+      "asm_stubs": 0
     },
     {
       "name": "lunarlaurus",
-      "files": 27,
-      "matched": 629,
-      "non_matching": 97,
+      "files": 30,
+      "matched": 812,
+      "non_matching": 122,
       "asm_stubs": 0
     },
     {
@@ -2923,8 +2923,8 @@
     },
     {
       "date": "2026-10-25",
-      "commit": "a8384f0",
-      "matched": 2759,
+      "commit": "c7bf814",
+      "matched": 2760,
       "non_matching": 297,
       "total": 3057
     }

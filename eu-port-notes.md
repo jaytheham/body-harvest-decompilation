@@ -363,3 +363,13 @@ NTSC recompiles identically for the EU shape.
   `docs/pal-vs-na.md`, "A shared file whose PAL code or data differs", has the method and the traps (an asm-processor change turned out to be
   unnecessary; the three pragmas resolve through `asm/nonmatchings` once both versions are extracted again).
 - 2026-10-15: With #434 and #435 merged every gameplay and level overlay file is shared with PAL (`shared_overlay_files.txt`, 46 entries); `src.eu` holds only `libultra/sl.c`, a `GLOBAL_ASM` stub with nothing to share. The PAL progress page reads 2224 of 2722 functions matched (81.7 percent, 99.67 percent decompiled) with `tools/progress.py --version eu`; the US page reads 2568 of 3058 (83.98 percent); both measured on `b5365fa2`. The PAL history chart is empty until a second weekly point shares core, because the series starts at the first week whose `bh.eu.yaml` names `../src.us/core`. The PAL page note was cut to what it counts; the 2026-10-12 relocation measurement above stays here.
+- 2026-10-25: No `GLOBAL_ASM` stub is left in either build. `libultra/sl.c` is shared with PAL (`bh.eu.yaml` names
+  `../src.us/libultra/sl` for its code at 0x1B970 and data at 0x35A00, and `shared_overlay_files.txt` lists it); one pin,
+  `D_80034E00_35A00 = alGlobals;`, keeps the EU label that the other libultra assembly still uses. `src.eu` is now empty
+  (kept by a `.gitkeep`). The last three PAL-only bodies are C beside their NTSC ones: `func_80076FD8_47488` and
+  `func_80077E88_48338` in `40720.c`, and `func_80006DDC_79DC` in `core/53F0.c` (#457 had matched
+  `func_8007B900_4BDB0` for both versions). They use the shared NTSC names of every variable and function. The
+  `53F0.c` match needed `Unk80052B2C.unk40` typed `s32`, not `u8*`: every write
+  stores 3, and PAL keeps that 3 in one register with the level checks. The boot entry moved into `src.us/core/entry.s`,
+  included by the save code's file so both stay one object (see `ExampleFixes`); `tools/progress.py` counts it as
+  handwritten, not as a stub.
