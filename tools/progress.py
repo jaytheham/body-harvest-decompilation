@@ -69,6 +69,17 @@ def parse_args():
 
 # Regex patterns
 RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')
+RE_PRAGMA_GLOBAL_ASM_PATH = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(\s*"([^"]*)"')
+# Handwritten assembly assembled into a C unit by GLOBAL_ASM: not undecompiled code, so no stub.
+HANDWRITTEN_ASM: frozenset = frozenset({"src.us/core/entry.s"})
+
+
+def is_stub_pragma(line: str) -> bool:
+    """Whether a GLOBAL_ASM pragma line stands for undecompiled code, as opposed to a HANDWRITTEN_ASM file."""
+    if not RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+        return False
+    named = RE_PRAGMA_GLOBAL_ASM_PATH.match(line)
+    return not (named and named.group(1) in HANDWRITTEN_ASM)
 RE_ENDIF_LINE = re.compile(r'^\s*#\s*endif\b')
 RE_PP_IF = re.compile(r'^\s*#\s*(if|ifdef|ifndef)\b(.*)$')
 RE_PP_ELIF = re.compile(r'^\s*#\s*elif\b(.*)$')
@@ -158,7 +169,7 @@ def count_global_asm_stubs(text: str) -> int:
         elif RE_ENDIF_LINE.match(line):
             if groups:
                 groups.pop()
-        elif RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+        elif is_stub_pragma(line):
             if any(first == "NON_MATCHING" and branch != first for first, branch in groups):
                 continue
             if any("VERSION_EU" in branch for _, branch in groups):
@@ -338,7 +349,7 @@ def scan_active_branches(text: str, defines: frozenset) -> tuple:
             live = groups[-1].live if groups else True
             out.append(line if live else "")
             in_fallback = any(g.non_matching and g.fallback for g in groups)
-            if live and not in_fallback and RE_PRAGMA_GLOBAL_ASM_LINE.match(line):
+            if live and not in_fallback and is_stub_pragma(line):
                 asm_stubs += 1
             continue
         # A directive line: blanked if it belongs to a version group, else kept where its own group is compiled.

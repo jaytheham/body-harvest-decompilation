@@ -46,6 +46,20 @@ quick_args=()
 # The NTSC runs take longest, so they go first and in the background. The old tool is run from outside tools/, with
 # the vendored tree-sitter on PYTHONPATH.
 git show "$base:tools/progress.py" > "$work/progress_base.py"
+# The old tool counted the handwritten boot entry as a stub; the current one does not (HANDWRITTEN_ASM). Give the old
+# tool that one exclusion so the comparison still shows nothing else changed.
+"$PY" - "$work/progress_base.py" <<'PYEOF' || { echo "FAIL could not give the old progress.py the HANDWRITTEN_ASM exclusion"; exit 1; }
+import sys
+from pathlib import Path
+
+old_line = r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\(')"
+new_line = r"RE_PRAGMA_GLOBAL_ASM_LINE = re.compile(r'^\s*#pragma\s+GLOBAL_ASM\s*\((?!\s*\"src\.us/core/entry\.s\")')"
+path = Path(sys.argv[1])
+text = path.read_text(encoding="utf-8")
+if old_line not in text:
+    sys.exit(1)
+path.write_text(text.replace(old_line, new_line), encoding="utf-8")
+PYEOF
 vendor=$(native "$PWD/tools/third_party/python_vendor")
 PYTHONPATH="$vendor" "$PY" "$wd/progress_base.py" --repo-root . --output "$wd/us_base.json" \
     ${quick_args[@]+"${quick_args[@]}"} > "$work/us_base.log" 2>&1 &
@@ -213,6 +227,16 @@ for description, source, matched, non_matching, asm_stubs in CASES:
     check(got == want, f"PAL reading of {description}")
     if got != want:
         print(f"     got {got}, wanted {want}")
+
+# Handwritten assembly pulled in by GLOBAL_ASM is no stub, in the NTSC and the PAL reading; undecompiled code still is.
+PRAGMA_ENTRY = '#pragma GLOBAL_ASM("src.us/core/entry.s")'
+for description, source, stubs in (
+    ("the handwritten boot entry", f"{PRAGMA_ENTRY}\n", 0),
+    ("an undecompiled function", f"{PRAGMA_US}\n", 1),
+    ("the boot entry beside an undecompiled function", f"{PRAGMA_ENTRY}\n{PRAGMA_US}\n", 1),
+):
+    check(progress.count_global_asm_stubs(source) == stubs, f"NTSC stubs of {description}")
+    check(progress.scan_active_branches(source, progress.EU_DEFINES)[2] == stubs, f"PAL stubs of {description}")
 
 # The default NTSC run is the run of the old tool.
 us_base = json.loads(Path(base_path).read_text(encoding="utf-8"))
