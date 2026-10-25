@@ -3568,103 +3568,41 @@ s32 func_8007946C_4991C(u8* arg0) {
 	return len;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(8549)
 void func_8007949C_4994C(s32 arg0, u16 arg1) {
 	s32 i;
-	s32 tempA3;
-	s32 tempT0;
-	s32 v1;
-	SaveSummary* entry;
-	u8* tempS5;
-	u8* tempS7;
-	u8* tempS8;
-
-	tempA3 = (u16)D_80052A98[0].secondsElapsed;
-	tempT0 = *(u16*)&D_80052A98[0].humansKilled;
+	s32 j;
+	s32 k;
 
 	for (i = 0; i < 5; i++) {
 		if (D_80047FB8[i].score < arg0) {
-			entry = &D_80047FB8[i];
-			if (i < 4) {
-				tempS8 = (u8*)&D_80048008;
-				tempS5 = tempS8;
-				tempS7 = tempS8;
-				v1 = 4;
-				while (1) {
-					u8 tempU0;
-					u8 tempU1;
-					u8 tempU2;
-					u8 tempU3;
-					u8 tempU4;
-					u8 tempU5;
-					s32 tempW0;
-					s16 tempH0;
-					s32 tempW1;
-
-					tempU0 = tempS8[-0x14];
-					tempU1 = tempS8[-0x13];
-					tempS8[0] = tempU0;
-					tempS8[1] = tempU1;
-					tempU2 = tempS5[-0xF];
-					tempU3 = tempS5[-0x10];
-					tempU4 = tempS5[-0x11];
-					tempU5 = tempS5[-0x12];
-					tempS5[5] = tempU2;
-					tempS5[4] = tempU3;
-					tempS5[3] = tempU4;
-					tempS5[2] = tempU5;
-					tempW0 = *(s32*)(tempS7 - 0xC);
-					tempH0 = *(s16*)(tempS7 - 8);
-					tempW1 = *(s32*)(tempS7 - 4);
-					tempS5--;
-					tempS7--;
-					v1--;
-					tempS5 -= 0x13;
-					tempS7 -= 0x13;
-					tempS8 -= 0x14;
-					*(s32*)(tempS7 + 0x1C) = tempW0;
-					*(s16*)(tempS7 + 0x20) = tempH0;
-					*(s32*)(tempS7 + 0x24) = tempW1;
-					if (i == v1) {
-						break;
-					}
+			for (j = 4; j > i; j--) {
+				for (k = 0; k != 6; k++) {
+					D_80047FB8[j].name[k] = D_80047FB8[j - 1].name[k];
 				}
+				D_80047FB8[j].score = D_80047FB8[j - 1].score;
+				D_80047FB8[j].humansKilled = D_80047FB8[j - 1].humansKilled;
+				D_80047FB8[j].secondsTaken = D_80047FB8[j - 1].secondsTaken;
 			}
 
-			{
-				u8* src;
-				u8* dst;
+			j = 0;
+			do {
+				D_80047FB8[i].name[j] = D_80047FA8[j];
+				j++;
+			} while (&D_80047FA8[j] < &D_80047FAE_NameEnd);
 
-				src = D_80047FA8;
-				dst = &entry->unk0;
-				do {
-					*dst++ = *src++;
-				} while (src < &D_80047FAE);
-			}
-
-			entry->unkC = 0;
-			entry->unkC += tempT0;
-			entry->unkC += *(u16*)&D_80052A98[1].humansKilled;
-			entry->unk10 = 0;
-			entry->unk10 = tempA3;
-			entry->unk10 += D_80052A98[1].secondsElapsed;
-			entry->unk10 += D_80052A98[2].secondsElapsed;
-			entry->unkC += *(u16*)&D_80052A98[2].humansKilled;
-			entry->unk10 += D_80052A98[3].secondsElapsed;
-			entry->unkC += *(u16*)&D_80052A98[3].humansKilled;
-			entry->unk10 += D_80052A98[4].secondsElapsed;
-			entry->unkC += *(u16*)&D_80052A98[4].humansKilled;
-			entry->unk10 += D_80052A98[5].secondsElapsed;
-			entry->unk8 = arg0;
-			entry->unkC += *(u16*)&D_80052A98[5].humansKilled;
+			D_80047FB8[i].score = arg0;
+			D_80047FB8[i].humansKilled = 0;
+			D_80047FB8[i].secondsTaken = 0;
+			j = 0;
+			do {
+				D_80047FB8[i].secondsTaken += D_80052A98[j].secondsElapsed;
+				D_80047FB8[i].humansKilled += D_80052A98[j].humansKilled;
+				j++;
+			} while (j < 6);
+			i = 5;
 		}
 	}
-
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007949C_4994C.s")
-#endif
 
 // displayHighScores
 void func_800796D0_49B80(s32 arg0, u16 arg1) {

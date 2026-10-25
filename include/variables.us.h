@@ -874,6 +874,7 @@ extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0; // stage of level
 extern u8 D_80047FA8[6]; /* save data bytes */
 extern u8 D_80047FAE;
+extern u8 D_80047FAE_NameEnd;
 extern SaveSummary D_80047FB8[5];
 extern SaveSummary D_80048008;
 extern SaveSummary D_8004801C;
