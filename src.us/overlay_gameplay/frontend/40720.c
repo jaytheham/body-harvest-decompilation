@@ -4037,106 +4037,86 @@ void func_8007A754_4AC04(void) {
 	func_8007C7F4_4CCA4();
 }
 
-#ifdef NON_MATCHING
-// CURRENT(22177)
 void func_8007A774_4AC24(s32 arg0) {
-	s16 phase;
-	s32 pad0;
-	s32 pad1;
-	s16 timer;
 	u16 perspNorm;
-	s16 rotX;
-	s16 rotY;
+	s16 cameraPulse;
+	s16 blend;
+	s16 posZ;
 	s16 rotZ;
+	s16 rotX;
 	s16 posX;
 	s16 posY;
-	s16 posZ;
-	s16 tilt;
-	s16 blend;
-	s16 cameraPulse;
+	s16 rotY;
+	s16 phase;
 	s32 isAnimated;
 
 	phase = D_800D7962;
-	D_80052A8C = D_80052A8C + 1;
 
 	isAnimated = 0;
 	rotX = 0x154;
 	posZ = 0;
 	rotZ = 0;
-	tilt = 0;
+	cameraPulse = 0;
 	blend = 0;
 	posX = 0x50;
 	posY = 0x2A8;
 	rotY = 0x1E0;
-
-	cameraPulse = 0;
+	D_80052A8C++;
 
 	switch (phase - 5) {
 	case 0:
-		timer = D_800D7960;
-		rotY = (s16)(((((s32)timer << 4) - timer) << 5) / 120);
-		D_800D7960 = timer + 1;
-		if (timer >= 121) {
+		rotY = D_800D7960 * 480 / 120;
+		if (D_800D7960++ >= 121) {
 			D_800D7962 = phase + 1;
 			D_800D7960 = 0;
 		}
 		break;
 
 	case 1:
-		timer = D_800D7960;
-		D_800D7960 = timer + 1;
-		if (timer >= 71) {
+		if (D_800D7960++ >= 71) {
 			D_800D7960 = 0;
 			D_800D7962 = phase + 1;
 		}
 		break;
 
 	case 2:
-		timer = D_800D7960;
-		blend = (s16)(-100 * timer);
-		D_800D7960 = timer + 1;
-		if (timer >= 101) {
+		blend = (-100 * D_800D7960);
+		if (D_800D7960++ >= 101) {
 			D_800D7960 = 0;
 			D_800D7962 = phase + 1;
 		}
 		break;
 
 	case 3:
-		timer = D_800D7960;
-		rotX = (s16)(D_800AE868_7ED18[0] - ((f64)timer * D_800AE870_7ED20[0]));
-		posX = (s16)(((f64)timer * 8.5) + 80.0);
-		posY = (s16)(D_800AE878_7ED28[0] - ((f64)timer * D_800AE880_7ED30[0]));
-		blend = (s16)(((timer * 125) * 4) - 10000);
-		D_800D7960 = timer + 1;
-		if (timer >= 21) {
+		blend = D_800D7960 * 500 - 10000;
+		rotX = (340.0 - (D_800D7960 * 19.25));
+		posX = ((D_800D7960 * 8.5) + 80.0);
+		posY = (680.0 - (D_800D7960 * 28.5));
+		if (D_800D7960++ >= 21) {
 			D_800D7960 = 0;
 			D_800D7962 = phase + 1;
 		}
 		break;
 
 	case 4:
-		timer = D_800D7960;
-		posZ = (s16)(-332 * timer);
-		posX = (s16)(250 - timer);
+		posZ = -D_800D7960 * 300;
 		rotX = -0x2D;
-		posY = (s16)(D_800AE888_7ED38[0] + ((f64)timer * D_800AE890_7ED40[0]));
-		D_800D7960 = timer + 1;
-		if (timer >= 51) {
+		posX = (250 - D_800D7960);
+		posY = D_800D7960 * 1.8 + 110.0;
+		if (D_800D7960++ >= 51) {
 			D_800D7960 = 0;
 			D_800D7962 = phase + 1;
 		}
 		break;
 
 	case 5:
-		timer = D_800D7960;
 		isAnimated = 1;
 		rotX = -0x2D;
-		rotZ = (s16)(-3 * timer);
 		posZ = -15000;
+		rotZ = -D_800D7960 * 3;
 		posX = 200;
 		posY = 200;
-		D_800D7960 = timer + 1;
-		if (timer >= 301) {
+		if (D_800D7960++ >= 301) {
 			D_800D7962 = phase + 1;
 			D_800D7960 = 0;
 		}
@@ -4150,12 +4130,12 @@ void func_8007A774_4AC24(s32 arg0) {
 		posZ = -15000;
 	}
 
-	guPerspective(D_8005BB38, &perspNorm, 73.0f, 1.25f, 150.0f, D_800AE898_7ED48[0], 1.0f);
+	guPerspective(D_8005BB38, &perspNorm, 73.0f, 1.25f, 150.0f, 1500.0f, 1.0f);
 
 	gSPPerspNormalize(D_8005BB2C++, perspNorm);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt(D_8005BB38, 0.0f, 0.0f, 120.0f, 0.0f, 85.0f, 300.0f, 0.0f, 1.0f, 0.0f);
+	guLookAt(D_8005BB38, 0.0f, 120.0f, 300.0f, 0.0f, 85.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
@@ -4180,13 +4160,13 @@ void func_8007A774_4AC24(s32 arg0) {
 
 	D_80052B40.unk0 = rotZ;
 	if (isAnimated == 1) {
-		D_80052B40.unk2 = (s16)((((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * 8.0) + 40.0);
+		D_80052B40.unk2 = ((((f32)coss((D_80052A8C * 2000)) / 32768.0) * 8.0) + 40.0);
 	} else {
 		D_80052B40.unk2 = 0x28;
 	}
 
 	D_80052B40.unk4 = 0;
-	D_80052B48.unk0 = (s16)(-0x898 - (posZ / 3));
+	D_80052B48.unk0 = (-0x898 - (posZ / 3));
 	D_80052B48.unk2 = posZ;
 	D_80052B48.unk4 = 0x3DB8;
 	D_80052B50.unk0 = rotY;
@@ -4197,9 +4177,9 @@ void func_8007A774_4AC24(s32 arg0) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	if (isAnimated == 1) {
-		D_80052B48.unk0 = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8A0_7ED50[0]));
+		D_80052B48.unk0 = (((f32)coss((D_80052A8C * 1000)) / 32768.0) * 1200.0);
 	} else {
-		D_80052B48.unk0 = 0;
+		D_80052B48_Reset.unk0 = 0;
 	}
 
 	D_80052B48.unk2 = 0;
@@ -4217,13 +4197,13 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B40.unk2 = 0x30;
 	D_80052B40.unk4 = 0;
 	if (isAnimated == 1) {
-		cameraPulse = (s16)((s32)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8A8_7ED58[0]));
-		tilt = (s16)(((f64)(f32)sins((u16)(D_80052A8C * 1000)) / 32768.0) * D_800AE8B0_7ED60[0]);
+		cameraPulse = (((f32)coss((D_80052A8C * 2000)) / 32768.0) * 2000.0);
+		blend = (((f32)sins((D_80052A8C * 1000)) / 32768.0) * 1000.0);
 	}
 
 	D_80052B48.unk0 = cameraPulse;
 	D_80052B48.unk2 = 0;
-	D_80052B48.unk4 = tilt;
+	D_80052B48.unk4 = blend;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, 0, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -4237,7 +4217,7 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B48.unk4 = 0;
 
 	if (isAnimated == 1) {
-		D_80052B48.unk0 = (s16)(((f64)(f32)coss((u16)(D_80052A8C * 2000)) / 32768.0) * D_800AE8B8_7ED68[0]);
+		D_80052B48.unk0 = (((f32)coss((D_80052A8C * 2000)) / 32768.0) * 2000.0);
 	} else {
 		D_80052B48.unk0 = 0;
 	}
@@ -4250,9 +4230,9 @@ void func_8007A774_4AC24(s32 arg0) {
 	D_80052B40.unk4 = 0;
 
 	if (isAnimated == 1) {
-		D_80052B50.unk0 = (s16)(200.0 - (((f64)(f32)sins((u16)(D_80052A8C * 2000)) / 32768.0) * 20.0));
-		D_80052B50.unk2 = (s16)(200.0 + (((f64)(f32)sins((u16)(D_80052A8C * 2000)) / 32768.0) * 20.0));
-		D_80052B50.unk4 = (s16)(200.0 - (((f64)(f32)sins((u16)(D_80052A8C * 2000)) / 32768.0) * 20.0));
+		D_80052B50.unk0 = (200.0 - (((f32)sins((D_80052A8C * 2000)) / 32768.0) * 20.0));
+		D_80052B50.unk2 = (200.0 + (((f32)sins((D_80052A8C * 2000)) / 32768.0) * 20.0));
+		D_80052B50.unk4 = (200.0 - (((f32)sins((D_80052A8C * 2000)) / 32768.0) * 20.0));
 	} else {
 		D_80052B50.unk0 = posX;
 		D_80052B50.unk2 = posY;
@@ -4267,12 +4247,9 @@ void func_8007A774_4AC24(s32 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if (arg0 == 0) {
-		D_800948E0_64D90++;
+		D_800948E0_Write = D_800948E0_64D90 + 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007A774_4AC24.s")
-#endif
 
 // displayClearSaveData
 void func_8007B618_4BAC8(void) {
@@ -5745,19 +5722,9 @@ const u32 jtbl_800AE82C_7ECDC[8] = {
 	0x80078DF4, 0x80078B68, 0x80078DAC, 0x80078DB8,
 	0x80078DC4, 0x80078DD0, 0x80078DDC, 0x80078DE8,
 };
-const u32 jtbl_800AE84C_7ECFC[7] = {
-	0x8007A7F4, 0x8007A840, 0x8007A86C, 0x8007A8B4,
-	0x8007A98C, 0x8007AA20, 0x00000000,
-};
-const f64 D_800AE868_7ED18[1] = { 340 };
-const f64 D_800AE870_7ED20[1] = { 19.25 };
-const f64 D_800AE878_7ED28[1] = { 680 };
-const f64 D_800AE880_7ED30[1] = { 28.5 };
-const f64 D_800AE888_7ED38[1] = { 1.8 };
-const f64 D_800AE890_7ED40[1] = { 110 };
-const f32 D_800AE898_7ED48[2] = { 1500.0f, 0.0f };
-const f64 D_800AE8A0_7ED50[1] = { 1200 };
-const f64 D_800AE8A8_7ED58[1] = { 2000 };
-const f64 D_800AE8B0_7ED60[1] = { 1000 };
 #endif
-const f64 D_800AE8B8_7ED68[1] = { 2000 };
+
+#ifdef VERSION_EU
+/* Last entry of the preceding switch table, before this unit's generated rodata. */
+const u32 D_800AF3B0_7F860[1] = { 0x80078FDC };
+#endif

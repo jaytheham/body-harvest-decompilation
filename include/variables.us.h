@@ -1006,6 +1006,7 @@ extern s32 D_80052B3C; // Graphics-task completion latency: elapsed time from ju
 extern Unk80052B40 D_80052B40;
 extern s16 D_80052B44;
 extern Unk80052B48 D_80052B48;
+extern Unk80052B48 D_80052B48_Reset;
 extern Unk80052B40 D_80052B50;
 extern s16 D_80052B54;
 extern s32 D_80052B58;
@@ -1295,6 +1296,7 @@ extern s8 D_800948B8_64D68;
 extern s8 D_800948BC_64D6C;
 extern s32 D_800948C0_64D70[];
 extern u32 D_800948E0_64D90;
+extern u32 D_800948E0_Write;
 extern u32 D_800948E4_64D94;
 extern u32 D_800948E8_64D98;
 extern u32 D_800948EC_64D9C;
