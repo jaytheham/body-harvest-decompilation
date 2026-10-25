@@ -4354,9 +4354,6 @@ void func_8007B618_4BAC8(void) {
 }
 
 // displayCopyright
-#ifdef VERSION_EU
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007B900_4BDB0.s")
-#else
 void func_8007B900_4BDB0(void) {
 	s32 counter;
 
@@ -4376,7 +4373,9 @@ void func_8007B900_4BDB0(void) {
 		drawText(&D_800ADF3C_7E3EC, 48, 128, 4);
 		drawText(&D_800ADF58_7E408, 128, 5);
 		drawText(&D_800ADF7C_7E42C, 128, 6);
+#ifndef VERSION_EU
 		drawText(&D_800ADF9C_7E44C, 128, 7);
+#endif
 		drawText(&D_800ADFC0_7E470, 0, 128, 9);
 
 		if (counter == 0) {
@@ -4391,7 +4390,6 @@ void func_8007B900_4BDB0(void) {
 		func_8000505C_5C5C();
 	} while (func_80005B30_6730() == 0);
 }
-#endif
 
 // displayPublisherLogo
 // The four values that place the publisher logo; PAL's picture is taller.
