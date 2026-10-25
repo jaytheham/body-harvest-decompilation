@@ -1,0 +1,39 @@
+#include <ultra64.h>
+#include "common.h"
+
+const f64 D_800AEA40_7EEF0[1] = { 6.2831853070000001 };
+const f64 D_800AEA48_7EEF8[1] = { 360 };
+const f64 D_800AEA50_7EF00[1] = { 180 };
+const ShadowGeometryConstant D_800AEA58_7EF08 = { 0.01 };
+const ShadowGeometryConstant D_800AEA60_7EF10 = { 0.128 };
+const f64 D_800AEA68_7EF18[1] = { 0.40000000000000002 };
+const f32 D_800AEA70_7EF20[1] = { 0.00249999994f };
+const f32 D_800AEA74_7EF24[3] = { 0.00499999989f, 0.0f, 0.0f };
+const char D_800AEA80_7EF30[] = "JAVA 1941";
+const char D_800AEA8C_7EF3C[] = "AMERICA 1966";
+const char D_800AEA9C_7EF4C[] = "SIBERIA 1991";
+const char D_800AEAAC_7EF5C[] = "ALIEN COMET 2016";
+const char D_800AEAC0_7EF70[] = "JAVA 1941";
+const char D_800AEACC_7EF7C[] = "USA 1966";
+const char D_800AEAD8_7EF88[] = "SIBERIE 1991";
+const char D_800AEAE8_7EF98[] = "COMETE 2016";
+const char D_800AEAF4_7EFA4[] = "JAVA 1941";
+const char D_800AEB00_7EFB0[] = "AMERIKA 1966";
+const char D_800AEB10_7EFC0[] = "SIBIRIEN 1991";
+const char D_800AEB20_7EFD0[] = "KOMET 2016";
+const char D_800AEB2C_7EFDC[] = "%C";
+const char D_800AEB30_7EFE0[] = "%@Primary objective complete.";
+const char D_800AEB50_7F000[] = "%@Co-ordinates for next";
+const char D_800AEB68_7F018[] = "%@objective selected:";
+const char D_800AEB80_7F030[] = "%C";
+const char D_800AEB84_7F034[] = "%@Objectif principal atteint.";
+const char D_800AEBA4_7F054[] = "%@Co-ordonn\351e selectionn\351e pour";
+const char D_800AEBC4_7F074[] = "%@le prochain objectif:";
+const char D_800AEBDC_7F08C[] = "%C";
+const char D_800AEBE0_7F090[] = "%@Prim\344rziel erf\374llt.";
+const char D_800AEBF8_7F0A8[] = "%@Koordinaten f\374r n\344chstes";
+const char D_800AEC14_7F0C4[] = "%@Ziel gew\344hlt:";
+const char D_800AEC24_7F0D4[] = "%@%s";
+const char D_800AEC2C_7F0DC[] = "%@%s";
+const char D_800AEC34_7F0E4[] = "%@%s";
+const f32 D_800AEC3C_7F0EC[1] = { 20000.0f };

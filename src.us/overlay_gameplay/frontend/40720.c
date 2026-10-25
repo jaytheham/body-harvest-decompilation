@@ -5214,17 +5214,17 @@ void func_8007D7E0_4DC90(void) {
 
 	D_800D7A18 = D_80095080_65530;
 	D_800D7A1C = D_800950C0_65570;
-	D_800D7A20 = (u8*)D_80095698_65B48;
+	D_800D7A20 = (FrontendMovieResource*)D_80095698_65B48;
 	D_800D7A24 = (Unk80080530_Src*)D_80095910_65DC0;
 	D_800D7A28 = D_80096540_669F0;
 	D_800D7A2C = (u8*)D_80095D9C_6624C;
-	D_800D7A30 = (u8*)D_80095DB0_66260;
+	D_800D7A30 = (FrontendCamEntry*)D_80095DB0_66260;
 	D_800D7A34 = D_80096384_66834;
 	D_800D7A38 = D_80096528_669D8;
 	D_800D7A3C = (u8*)D_80096370_66820;
 	D_800D7A40 = (Unk8007E12CEntry8*)D_80096548_669F8;
 	D_800D7A48 = (u8*)D_800965E8_66A98;
-	D_800D7A44 = (u8*)D_800965D8_66A88; /* legacy - kept for asm */
+	D_800D7A44 = D_800965D8_66A88; /* Alternate object-event bindings. */
 	D_800D7A4C = D_800965F0_66AA0;
 
 	D_800D7A58 = 0x22;
@@ -5388,221 +5388,229 @@ s32 func_8007D91C_4DDCC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007D91C_4DDCC.s")
 #endif
 
-#ifdef NON_MATCHING
 s32 func_8007E12C_4E5DC(void) {
 	Unk8007E12CEntry8* entry;
+	FrontendMovieResource* argEntry;
 	Unk80080530_Dst* dst;
-	Unk8007E12CEntry8* argEntry;
-	u8 op;
+	FrontendLightTrack* lightTrack;
 	u8 arg;
+	Unk8007E12CEntry8* descriptor;
 	u8 i;
-	s32 returnValue;
+	/* Keep the result in memory across event helpers. */
+	volatile s32 returnValue;
+	Unk8007E12CEntry8* audio;
+	s32 op;
+	u8 one;
 
 	returnValue = 0;
 	entry = &((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C];
-	if (D_80094900 != entry->unk0) {
-		return returnValue;
-	}
-
-	while (1) {
-		op = entry->unk4;
-		if (op >= 0x23) {
-			osSyncPrintf(&D_800AE8E0_7ED90);
-		} else {
-			arg = entry->unk5;
+	if (entry->unk0 == D_80094900) {
+		while (1) {
+			op = entry->unk4;
 			switch (op) {
-			case 0:
-				argEntry = &((Unk8007E12CEntry8*)D_800D7A20)[arg];
-				dst = &D_800D7A1C[argEntry->unk4];
-				dst->unk8 = func_800809DC_50E8C(*(s32*)argEntry->unk0);
-				dst->unk29 = argEntry->unk5;
-				func_8008035C_5080C(dst->unk8, &D_800D7B10[dst->unk18], (FrontendStreamHeader*)argEntry->unk0, 1, dst->unk19);
-				break;
-			case 1:
-				D_80094930_64DE0 = 1;
-				func_8007EE8C_4F33C(((s32**)D_800D7A2C)[arg]);
-				break;
-			case 2:
-				if ((arg == 1) || (arg == 2)) {
-					func_8007FBC8_50078(arg);
-					arg = ((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C].unk5;
-				}
-				D_800D7970 = arg;
-				break;
-			case 3:
-				D_80094904_64DB4 = arg;
-				break;
-			case 4:
-				if ((D_800313D0_31FD0 == 2) && (arg == 0x13)) {
+				case 0:
+					argEntry = &D_800D7A20[entry->unk5];
+					dst = &D_800D7A1C[argEntry->objectIndex];
+					dst->unk8 = func_800809DC_50E8C(argEntry->stream->frameCount);
+					dst->unk29 = argEntry->flags;
+					func_8008035C_5080C(dst->unk8, (AnimChannelState*)&D_800D7B10[dst->unk18], argEntry->stream, 1, dst->unk19);
 					break;
-				}
-				dst = &D_800D7A1C[arg];
-				dst->unk28 = 0xFF;
-				dst->unk29 = 0xFF;
-				dst->unk2A = 0xFF;
-				dst->unk1C = 1;
-				func_80080F8C_5143C((AnimChannelState*)&D_800D7B10[D_800D7A84], (s16*)dst->unk4, dst->unk19);
-				func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
-				dst->unk18 = D_800D7A84;
-				D_800D7A84 += dst->unk19;
-				break;
-			case 5:
-				if ((D_800313D0_31FD0 == 2) && (arg == 0x13)) {
+				case 1:
+					D_80094930_64DE0 = 1;
+					func_8007EE8C_4F33C(((s32**)D_800D7A2C)[entry->unk5]);
 					break;
-				}
-				dst = &D_800D7A1C[arg];
-				func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
-				dst->unk1C = 0;
+				case 2:
+					break;
+				case 3:
+					arg = entry->unk5;
+					/* Byte width preserves the comparison order and opcode spill home. */
+					one = 1;
+					if ((one == arg) || (arg == 2)) {
+						func_8007FBC8_50078(arg);
+						arg = ((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C].unk5;
+					}
+					D_800D7970 = arg;
+					break;
+				case 4:
+					D_80094904_64DB4 = entry->unk5;
+					break;
+				case 5:
+					arg = entry->unk5;
+					if ((D_800313D0_31FD0 == 2) && (arg == 0x13)) {
+						break;
+					}
+					dst = &D_800D7A1C[arg];
+					dst->unk28 = 0xFF;
+					dst->unk29 = 0xFF;
+					dst->unk2A = 0xFF;
+					dst->unk1C = 1;
+					func_80080F8C_5143C((AnimChannelState*)&D_800D7B10[D_800D7A84], ((FrontendObjectResourceHeader*)dst)->pose, dst->unk19);
+					func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
+					dst->unk18 = D_800D7A84;
+					D_800D7A84 += dst->unk19;
+					break;
+				case 6:
+					arg = entry->unk5;
+					if ((D_800313D0_31FD0 == 2) && (arg == 0x13)) {
+						break;
+					}
+					dst = &D_800D7A1C[arg];
+					func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
+					dst->unk1C = 0;
+					break;
+				case 7:
+					D_800D8510 = 1.0f;
+					D_80094900 = 0;
+					D_80094930_64DE0 = 0;
+					func_8008098C_50E3C();
+					D_800DE068 = D_800D88E8;
+					D_800D7A84 = 0;
+					for (i = 0; i < D_800D7A58; i++) {
+						D_800D7A1C[i].unk1C = 0;
+					}
+					D_800D7970 = 0;
+					for (i = 0; i < D_800D7A8D; i++) {
+						D_800D7A34[i].unk18 = 0;
+					}
+					D_800D7974 = 1.33333337f;
+					D_800AC0E4_7C594 = 0.0f;
+					break;
+				case 8:
+					D_80094998_64E48 = 1;
+					returnValue = 1;
+					break;
+				case 9:
+					D_80094930_64DE0 = 0;
+					func_8007EE0C_4F2BC(&D_800D7A30[entry->unk5]);
+					break;
+				case 10:
+					D_800D7A86 = D_800D7A38[entry->unk5];
+					D_800D8530.unk14 = D_800D7A38[entry->unk5].unk0;
+					D_800D8530.unk15 = D_800D7A38[entry->unk5].unk1;
+					D_800D8530.unk16 = D_800D7A38[entry->unk5].unk2;
+					break;
+				case 11:
+					D_800D7A34[entry->unk5].unk18 = 1;
+					break;
+				case 12:
+					D_800D7A34[entry->unk5].unk18 = 0;
+					break;
+				case 13:
+					lightTrack = ((FrontendLightTrack**)D_800D7A3C)[entry->unk5];
+					if (lightTrack->destination == 0xFF) {
+						func_8007FB90_50040((s32*)&D_800D8530, (s32*)lightTrack);
+					} else {
+						func_8007FB90_50040((s32*)&D_800D7A34[lightTrack->destination], (s32*)lightTrack);
+					}
+					break;
+				case 14:
+					func_8008F574_5FA24();
+					D_800D7A60++;
+					D_800D7A54 = ((Unk8007E12CEntry8**)D_800D7A50)[D_800D7A60];
+					D_800D7A5C = 0;
+					D_80094900 = 0;
+					break;
+				case 16:
+					func_80080530_509E0(&D_800D7A24[entry->unk5]);
+					break;
+				case 17:
+					for (i = 0; i < D_800D7A8D; i++) {
+						D_800D7A34[i].unk18 = 0;
+					}
+					break;
+				case 18:
+					D_800D7B08.unk0 = D_800D7A38[entry->unk5].unk0;
+					D_800D7B08.unk1 = D_800D7A38[entry->unk5].unk1;
+					D_800D7B08.unk2 = D_800D7A38[entry->unk5].unk2;
+					D_800D7B0C = D_800D7B08;
+					break;
+				case 19:
+					D_80094908_64DB8 = entry->unk5;
+					break;
+				case 20:
+					arg = entry->unk5;
+					descriptor = &D_800D7A40[arg];
+					dst = &D_800D7A1C[descriptor->unk4];
+					dst->unk28 = arg;
+					break;
+				case 21:
+					dst = &D_800D7A1C[entry->unk5];
+					dst->unk28 = 0x15;
+					break;
+				case 22:
+					D_800D8510 = (u32)entry->unk5;
+					break;
+				case 23:
+					arg = entry->unk5;
+					descriptor = &D_800D7A44[arg];
+					dst = &D_800D7A1C[descriptor->unk4];
+					dst->unk2A = arg;
+					break;
+				case 24:
+					D_800D7974 = ((f32*)D_800D7A48)[entry->unk5];
+					break;
+				case 25:
+					func_8008FE98_60348(entry->unk5);
+					break;
+				case 26:
+					D_800D7B0C.unk0 = D_800D7A38[entry->unk5].unk0;
+					D_800D7B0C.unk1 = D_800D7A38[entry->unk5].unk1;
+					D_800D7B0C.unk2 = D_800D7A38[entry->unk5].unk2;
+					break;
+				case 27:
+					D_8009490C_64DBC = entry->unk5;
+					break;
+				case 28:
+					D_800AC0E4_7C594 = 0.00999999978f;
+					break;
+				case 29:
+					D_800949BC_64E6C = 1;
+					break;
+				case 30:
+					audio = &((Unk8007E12CEntry8*)(void*)D_800D7A4C)[entry->unk5];
+					if (audio->unk4 != 6) {
+						D_800D8524 = audio->unk4;
+						D_800D8520 = D_800D7A4C[entry->unk5].unk0;
+					} else {
+						D_800D8518 = audio->unk0;
+						D_800D851C = D_800D7A4C[entry->unk5].unk4;
+					}
+					break;
+				case 31:
+					D_80094948_64DF8 = 1;
+					break;
+				case 32:
+					D_80094948_64DF8 = 0;
+					break;
+				case 33:
+					D_800D8528 = (u32)entry->unk5;
+					break;
+				case 34:
+					D_8009494C_64DFC = entry->unk5;
+					D_80094950_64E00 = 0.0f;
+					break;
+				default:
+					osSyncPrintf(D_800AE8E0_7ED90);
+					break;
+			}
+
+			if ((returnValue == 0) && (op != 0xE)) {
+				D_800D7A5C++;
+			}
+
+			if (returnValue != 0) {
 				break;
-			case 6:
-				D_800D8510 = 1.0f;
-				D_80094900 = 0;
-				D_80094930_64DE0 = 0;
-				func_8008098C_50E3C();
-				D_800DE068 = (s32)&D_800D88E8;
-				D_800D7A84 = 0;
-				for (i = 0; i < D_800D7A58; i++) {
-					D_800D7A1C[i].unk1C = 0;
-				}
-				D_800D7970 = 0;
-				for (i = 0; i < D_800D7A8D; i++) {
-					D_800D7A34[i].unk18 = 0;
-				}
-				D_800D7974 = D_800AEA38_7EEE8[0];
-				D_800AC0E4_7C594 = 0.0f;
-				break;
-			case 7:
-				D_80094998_64E48 = 1;
-				returnValue = 1;
-				break;
-			case 8:
-				D_80094930_64DE0 = 0;
-				func_8007EE0C_4F2BC(&((FrontendCamEntry*)D_800D7A30)[arg]);
-				break;
-			case 9:
-				D_800D7A86 = D_800D7A38[arg];
-				((u8*)&D_800D8530)[0x14] = D_800D7A38[arg].unk0;
-				((u8*)&D_800D8530)[0x15] = D_800D7A38[arg].unk1;
-				((u8*)&D_800D8530)[0x16] = D_800D7A38[arg].unk2;
-				break;
-			case 10:
-				D_800D7A34[arg].unk18 = 1;
-				break;
-			case 11:
-				D_800D7A34[arg].unk18 = 0;
-				break;
-			case 12:
-				argEntry = (Unk8007E12CEntry8*)(((s32**)D_800D7A3C)[arg]);
-				if (((u8*)argEntry)[8] == 0xFF) {
-					func_8007FB90_50040(&D_800D8530);
-				} else {
-					func_8007FB90_50040(&D_800D7A34[((u8*)argEntry)[8]]);
-				}
-				break;
-			case 13:
-				func_8008F574_5FA24();
-				D_800D7A60++;
-				D_800D7A54 = ((s32*)D_800D7A50)[D_800D7A60];
-				D_800D7A5C = 0;
-				D_80094900 = 0;
-				break;
-			case 14:
-				func_80080530_509E0(&D_800D7A24[arg]);
-				break;
-			case 15:
-				for (i = 0; i < D_800D7A8D; i++) {
-					D_800D7A34[i].unk18 = 0;
-				}
-				break;
-			case 16:
-				D_800D7B08 = D_800D7A38[arg];
-				D_800D7B0C = D_800D7B08;
-				break;
-			case 17:
-				D_80094908_64DB8 = arg;
-				break;
-			case 18:
-				argEntry = &D_800D7A40[arg];
-				dst = &D_800D7A1C[argEntry->unk4];
-				dst->unk28 = arg;
-				break;
-			case 19:
-				dst = &D_800D7A1C[arg];
-				dst->unk28 = 0x15;
-				break;
-			case 20:
-				D_800D8510 = arg;
-				break;
-			case 21:
-				argEntry = &D_800D7A40[arg];
-				dst = &D_800D7A1C[argEntry->unk4];
-				dst->unk2A = arg;
-				break;
-			case 22:
-				D_800D7974 = ((f32*)D_800D7A48)[arg];
-				break;
-			case 23:
-				func_8008FE98_60348(arg);
-				break;
-			case 24:
-				D_800D7B0C = D_800D7A38[arg];
-				break;
-			case 25:
-				D_8009490C_64DBC = arg;
-				break;
-			case 26:
-				D_800AC0E4_7C594 = D_800AEA3C_7EEEC[0];
-				break;
-			case 27:
-				D_800949BC_64E6C = 1;
-				break;
-			case 28:
-				argEntry = &D_800D7A4C[arg];
-				if (argEntry->unk4 == 6) {
-					D_800D8518 = argEntry->unk0;
-					D_800D851C = argEntry->unk4;
-				} else {
-					D_800D8524 = argEntry->unk4;
-					D_800D8520 = argEntry->unk0;
-				}
-				break;
-			case 29:
-				D_80094948_64DF8 = 1;
-				break;
-			case 30:
-				D_80094948_64DF8 = 0;
-				break;
-			case 31:
-				D_800D8528 = arg;
-				break;
-			case 32:
-				D_8009494C_64DFC = arg;
-				D_80094950_64E00 = 0.0f;
-				break;
-			default:
+			}
+
+			entry = &((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C];
+			if (entry->unk0 != D_80094900) {
 				break;
 			}
 		}
 
-		if ((returnValue == 0) && (op != 0xE)) {
-			D_800D7A5C++;
-		}
-
-		if (returnValue != 0) {
-			break;
-		}
-
-		entry = &((Unk8007E12CEntry8*)D_800D7A54)[D_800D7A5C];
-		if (D_80094900 != entry->unk0) {
-			break;
-		}
 	}
-
 	return returnValue;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_8007E12C_4E5DC.s")
-#endif
 
 void func_8007EA0C_4EEBC(s32* arg0) {
 	u8 v1;
@@ -5614,8 +5622,8 @@ void func_8007EA0C_4EEBC(s32* arg0) {
 	D_800D7970 = 0;
 	D_80094930_64DE0 = 0;
 
-	D_800D7A50 = *arg0;
-	D_800D7A54 = ((s32*)D_800D7A50)[D_800D7A60];
+	D_800D7A50 = (Unk8007E12CEntry8**)*arg0;
+	D_800D7A54 = ((Unk8007E12CEntry8**)D_800D7A50)[D_800D7A60];
 
 	for (v1 = 0; v1 < D_800D7A58; v1++) {
 		D_800D7A1C[v1].unk1C = 0;
@@ -5639,7 +5647,7 @@ void func_8007EA0C_4EEBC(s32* arg0) {
 		D_800D8550[v1] = NULL;
 	}
 
-	D_800DE068 = (s32)&D_800D88E8;
+	D_800DE068 = D_800D88E8;
 	D_800D8518 = 0;
 	D_800D8520 = 0;
 	D_80094948_64DF8 = 0;
@@ -6391,8 +6399,8 @@ FrontendStreamSlot* func_800809DC_50E8C(s32 arg0) {
 		if (D_800D8550[i] == NULL) {
 			slot = &D_800D8578[i];
 			D_800D8550[i] = slot;
-			slot->unk50 = D_800DE068;
-			D_800DE068 += arg0 * 14;
+			slot->unk50 = (s32)D_800DE068;
+			D_800DE068 = &((AnimFrameData14*)(void*)D_800DE068)[arg0];
 			return slot;
 		}
 	}
@@ -7431,58 +7439,11 @@ const u32 jtbl_800AE8C0_7ED70[8] = {
 	0x8007D6A0, 0x8007D560, 0x8007D5AC, 0x8007D540,
 	0x8007D5F8, 0x8007D648, 0x00000000, 0x00000000,
 };
+#endif
+
+/* Shared diagnostics precede the generated event table in both releases. */
 const char D_800AE8E0_7ED90[] = "INVALID MOVIE EVENT!!!!!\012";
 const char D_800AE8FC_7EDAC[] = "ERROR: guLookAt is going to CRASH.\012";
 const char D_800AE920_7EDD0[] = "ERROR: Too many keyframes for buffers! 100 KF Maximum!\012";
 const char D_800AE958_7EE08[] = "newAmbientLight r: %d g: %d b: %d\012";
 const char D_800AE97C_7EE2C[] = "ERROR: No free animation buffers! See Frank. \012";
-const u32 jtbl_800AE9AC_7EE5C[35] = {
-	0x8007E1DC, 0x8007E25C, 0x8007E978, 0x8007E288,
-	0x8007E2D0, 0x8007E2E0, 0x8007E378, 0x8007E3B8,
-	0x8007E4A4, 0x8007E4B4, 0x8007E4DC, 0x8007E568,
-	0x8007E584, 0x8007E5A0, 0x8007E5FC, 0x8007E96C,
-	0x8007E648, 0x8007E670, 0x8007E6B8, 0x8007E724,
-	0x8007E734, 0x8007E764, 0x8007E784, 0x8007E7B0,
-	0x8007E7E0, 0x8007E804, 0x8007E814, 0x8007E870,
-	0x8007E880, 0x8007E894, 0x8007E8A0, 0x8007E90C,
-	0x8007E918, 0x8007E924, 0x8007E950,
-};
-const f32 D_800AEA38_7EEE8[1] = { 1.33333337f };
-const f32 D_800AEA3C_7EEEC[1] = { 0.00999999978f };
-const f64 D_800AEA40_7EEF0[1] = { 6.2831853070000001 };
-const f64 D_800AEA48_7EEF8[1] = { 360 };
-const f64 D_800AEA50_7EF00[1] = { 180 };
-const ShadowGeometryConstant D_800AEA58_7EF08 = { 0.01 };
-const ShadowGeometryConstant D_800AEA60_7EF10 = { 0.128 };
-const f64 D_800AEA68_7EF18[1] = { 0.40000000000000002 };
-const f32 D_800AEA70_7EF20[1] = { 0.00249999994f };
-const f32 D_800AEA74_7EF24[3] = { 0.00499999989f, 0.0f, 0.0f };
-const char D_800AEA80_7EF30[] = "JAVA 1941";
-const char D_800AEA8C_7EF3C[] = "AMERICA 1966";
-const char D_800AEA9C_7EF4C[] = "SIBERIA 1991";
-const char D_800AEAAC_7EF5C[] = "ALIEN COMET 2016";
-const char D_800AEAC0_7EF70[] = "JAVA 1941";
-const char D_800AEACC_7EF7C[] = "USA 1966";
-const char D_800AEAD8_7EF88[] = "SIBERIE 1991";
-const char D_800AEAE8_7EF98[] = "COMETE 2016";
-const char D_800AEAF4_7EFA4[] = "JAVA 1941";
-const char D_800AEB00_7EFB0[] = "AMERIKA 1966";
-const char D_800AEB10_7EFC0[] = "SIBIRIEN 1991";
-const char D_800AEB20_7EFD0[] = "KOMET 2016";
-const char D_800AEB2C_7EFDC[] = "%C";
-const char D_800AEB30_7EFE0[] = "%@Primary objective complete.";
-const char D_800AEB50_7F000[] = "%@Co-ordinates for next";
-const char D_800AEB68_7F018[] = "%@objective selected:";
-const char D_800AEB80_7F030[] = "%C";
-const char D_800AEB84_7F034[] = "%@Objectif principal atteint.";
-const char D_800AEBA4_7F054[] = "%@Co-ordonn\351e selectionn\351e pour";
-const char D_800AEBC4_7F074[] = "%@le prochain objectif:";
-const char D_800AEBDC_7F08C[] = "%C";
-const char D_800AEBE0_7F090[] = "%@Prim\344rziel erf\374llt.";
-const char D_800AEBF8_7F0A8[] = "%@Koordinaten f\374r n\344chstes";
-const char D_800AEC14_7F0C4[] = "%@Ziel gew\344hlt:";
-const char D_800AEC24_7F0D4[] = "%@%s";
-const char D_800AEC2C_7F0DC[] = "%@%s";
-const char D_800AEC34_7F0E4[] = "%@%s";
-const f32 D_800AEC3C_7F0EC[1] = { 20000.0f };
-#endif

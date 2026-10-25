@@ -305,6 +305,7 @@ segments:
 
   - name: overlay_gameplay_frontend
     type: code
+    subalign: 4
     start: 0x40720
     vram: 0x80070270
     exclusive_ram_id: 80070270
@@ -344,6 +345,7 @@ segments:
       - [0x7C598, .data, overlay_gameplay/frontend/data_68FA0]
       - [0x7CDA0, .data, overlay_gameplay/frontend/data_68FA0]
       - [0x7D5A0, .rodata, overlay_gameplay/frontend/40720]
+      - [0x7EEF0, .rodata, overlay_gameplay/frontend/data_7EEF0]
       - [0x7F0F0, .rodata, overlay_gameplay/frontend/52690]
 
   - name: overlay_gameplay_outside

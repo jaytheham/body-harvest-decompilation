@@ -777,7 +777,9 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ FrontendLightKeyframe* unk0;
 	/* 0x04 */ s32 unk4;
-} FrontendLightTrack; /* size = 0x08 */
+	/* 0x08 */ u8 destination;
+	/* 0x09 */ u8 pad9[3];
+} FrontendLightTrack; /* size = 0x0C */
 
 typedef struct {
 	/* 0x00 */ FrontendLightKeyframe* unk0;
@@ -2176,6 +2178,11 @@ typedef struct {
 } FrontendLineParticle; /* size = 0x12 */
 
 typedef struct {
+	/* 0x00 */ u8 pad0[4];
+	/* 0x04 */ s16* pose;
+} FrontendObjectResourceHeader; /* size = 0x08 */
+
+typedef struct {
 	/* 0x00 */ u8 pad0[0x8];
 	/* 0x08 */ void* unk8;
 	/* 0x0C */ s16 unkC;
@@ -3121,6 +3128,13 @@ typedef struct {
 	/* 0x05 */ u8 unk5;
 	/* 0x06 */ u8 pad6[2];
 } Unk8007E12CEntry8;
+
+typedef struct {
+    /* 0x00 */ FrontendStreamHeader* stream;
+    /* 0x04 */ u8 objectIndex;
+    /* 0x05 */ u8 flags;
+    /* 0x06 */ u8 pad6[2];
+} FrontendMovieResource; /* size = 0x08 */
 
 typedef struct {
 	/* 0x00 */ s16 position[3];
