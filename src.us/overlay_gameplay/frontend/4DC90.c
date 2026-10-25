@@ -1129,7 +1129,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80080668_50B18.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/4DC90/func_80080668_50B18.s")
 #endif
 
 void func_8008098C_50E3C(void) {
