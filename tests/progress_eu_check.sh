@@ -1,5 +1,5 @@
 #!/bin/bash
-# Run from the root of a checkout (src.us and src.eu present, git history available), with PY set.
+# Run from the root of a checkout (src.us present, src.eu optional, git history available), with PY set.
 # Checks tools/progress.py --version eu and that the default NTSC run still writes what it wrote before the EU view
 # existed. It asserts invariants, not the numbers of the day:
 #   - the EU json has the keys of the NTSC json plus "version": "eu" and a "note", and the same shapes below them
@@ -7,8 +7,9 @@
 #     the sums of their files
 #   - the EU core segment has the NTSC core segment's total and no more matched functions
 #   - the EU overlay segments hold no matched function except empty C stubs and the functions of the files that
-#     NTSC shares with PAL (the src.us files named in EU_SOURCE_ROOTS: a stub file under src.eu is checked against
-#     its empty functions, a shared file is not)
+#     NTSC shares with PAL (the src.us files of shared_overlay_files.txt: a stub file under src.eu, if there is one,
+#     is checked against its empty functions, a shared file is not)
+#   - libultra/sl.c, which NTSC and PAL share, has the same counts on both pages
 #   - the history is empty or a weekly series of at least two points
 #   - the preprocessor evaluation of ifdef / ifndef / [!]defined() on VERSION_US, VERSION_EU and NON_MATCHING gives
 #     the PAL build's reading of small synthetic files
@@ -186,6 +187,13 @@ for seg_name, seg in eu["segments"].items():
             shared_matched += f["matched"]  # a file of the NTSC tree that the PAL build compiles too
     check(seg["matched"] - shared_matched <= stubs,
           f"{seg_name}: matched ({seg['matched']}, {shared_matched} of them in shared files) is at most its empty C stubs ({stubs}) plus the shared files")
+
+# libultra/sl.c is a file of the NTSC tree that the PAL build compiles, with no version branch: both pages count it
+# alike.
+sl_counts = {name: [{k: f[k] for k in COUNTS} for f in doc["files"] if f["path"].endswith("libultra/sl.c")]
+             for name, doc in (("eu", eu), ("us", us))}
+check(len(sl_counts["eu"]) == 1 and sl_counts["eu"] == sl_counts["us"],
+      f"libultra/sl.c is counted once on the EU page, with the NTSC page's counts ({sl_counts})")
 
 # The PAL reading of small files: (description, source, matched, non_matching, asm_stubs).
 sys.path.insert(0, str(repo / "tools"))

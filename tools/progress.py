@@ -6,9 +6,9 @@ Walks the NTSC build's C sources (src.us/**/*.c, which includes the core that
 the PAL build compiles too), counts matched / NON_MATCHING / GLOBAL_ASM functions
 per file and segment, reads git log for history, and emits progress.json.
 
-With --version eu it walks the PAL build instead (src.eu/**/*.c and the shared
-src.us/core/**/*.c, keeping only the branches the EU build compiles) and emits
-progress.eu.json. The default, --version us, is the NTSC count described above.
+With --version eu it walks the PAL build instead (the shared src.us/core/**/*.c and the shared
+files of shared_overlay_files.txt, plus any src.eu/**/*.c, keeping only the branches the EU build
+compiles) and emits progress.eu.json. The default, --version us, is the NTSC count described above.
 
 Usage:
   python3 tools/progress.py [--version {us,eu}] [--output path/to/progress.json] [--repo-root DIR]
@@ -100,13 +100,15 @@ SEGMENT_DISPLAY = {
 SEGMENT_ORDER = list(SEGMENT_DISPLAY.keys())
 
 # C source roots of the NTSC build. src.us/core holds the files both versions compile; src.eu is
-# not counted here. It holds the PAL build's own libultra file (sl.c), a GLOBAL_ASM stub; --version eu
-# counts it. Every gameplay and level overlay is shared with NTSC (shared_overlay_files.txt).
+# not counted here (it holds no file now). Every gameplay and level overlay, and libultra/sl.c, is shared
+# with NTSC (shared_overlay_files.txt).
 SOURCE_ROOTS = ("src.us",)
 # C source roots of the PAL build, and the version macro its preprocessor defines.
-# The PAL build also compiles the files of shared_overlay_files.txt (see eu_source_roots); a root that names a single .c file is
-# a file of the NTSC tree that the PAL build compiles too.
-EU_SOURCE_ROOTS = ("src.eu", "src.us/core")
+# src.us/core must stay first: main() exits if roots[0] is missing. src.eu is kept (and skipped when absent) so that
+# past history points still count the stub files they held (libultra/sl.c until it was shared).
+# The PAL build also compiles the files of shared_overlay_files.txt (see eu_source_roots), libultra/sl.c among
+# them; a root that names a single .c file is a file of the NTSC tree that the PAL build compiles too.
+EU_SOURCE_ROOTS = ("src.us/core", "src.eu")
 
 
 def eu_source_roots(repo_root: str) -> tuple:
@@ -124,8 +126,8 @@ RE_PP_COMMENT = re.compile(r'/\*.*?\*/|//.*$')
 EU_NOTE = (
     "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in "
     "shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and "
-    "must not be summed; and the one stub under src.eu (libultra/sl.c). Not counted: the rest of libultra, which has "
-    "no tracked EU source.\n"
+    "must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, "
+    "which has no tracked EU source.\n"
     "Where PAL differs, a shared function is written `#ifdef VERSION_EU`, a GLOBAL_ASM pragma, then the C body. It is "
     "matched on the US page and an ASM stub here until the difference is expressed in C."
 )

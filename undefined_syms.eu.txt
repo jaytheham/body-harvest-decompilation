@@ -745,6 +745,10 @@ D_802D4AD0 = 0x802D4B10;
 D_80037120_37D20_R = D_80037120_37D20;
 D_80037124_37D24_R = D_80037124_37D24;
 
+/* libultra/sl (shared C): the EU label of the file's own data (ROM 0x35A00), still named by the EU assembly of
+   the other libultra files now that the shared object owns the data under its NTSC name. */
+D_80034E00_35A00 = alGlobals;
+
 /* Names that the NA symbol files gained for the functions matched in src.us/core since this port began:
    the NA name at its EU address (NA + 0x30 in the core), or an alias of a name that is already here. */
 D_80031648_32248_W = D_80031648_32248;
