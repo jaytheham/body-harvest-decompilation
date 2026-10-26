@@ -6467,7 +6467,6 @@ void func_800D4B44_E3AF4(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800D4C10_E3BC0(void) {
 	Vec3f spFC;
 	Vec3f spF0;
@@ -6483,8 +6482,6 @@ void func_800D4C10_E3BC0(void) {
 
 		f32 len;
 		f32 segLen;
-		u32 texAddr;
-		s32 fadeStep;
 		f32 x;
 		f32 y;
 		f32 z;
@@ -6508,9 +6505,7 @@ void func_800D4C10_E3BC0(void) {
 			continue;
 		}
 
-		texAddr = K0_TO_PHYS(D_100DC00);
 		cosVal = coss(0x4000);
-		i = 0;
 		spE4.x = (f32)((((f32)sins(0x4000) / 32768.0) * spFC.z) +
 			((spFC.x) * ((f32)cosVal / 32768.0)));
 		cosVal = coss(0x4000);
@@ -6527,7 +6522,7 @@ void func_800D4C10_E3BC0(void) {
 		y = ((EffectPositionPair *)(s32)&D_80154318[index].positionPair)->previousPosition[1];
 		z = ((EffectPositionPair *)(s32)&D_80154318[index].positionPair)->previousPosition[2];
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, texAddr, G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
 
 
@@ -6536,21 +6531,20 @@ void func_800D4C10_E3BC0(void) {
 			steps = 9;
 		}
 
+		i = 0;
 		radius = (s16)((steps * 8) + 0xA);
 		if (steps > 0) {
-			fadeStep = 0x96 / steps;
-			texAddr = 0;
 			do {
 				x -= spF0.x;
 				y -= spF0.y;
 				z -= spF0.z;
 
 				distance += segLen;
-				mod = (s32)texAddr % 3;
+				mod = i % 3;
 				c0 = palette[mod][0];
 				c1 = palette[mod][1];
 				c2 = palette[mod][2];
-				alpha = ((s32)texAddr * fadeStep) + 0x64;
+				alpha = (i * (0x96 / steps)) + 0x64;
 
 				D_8005BB34->v.ob[0] = (((f32)radius * spE4.x) + x);
 				yLo = ((f32)radius + y);
@@ -6608,7 +6602,7 @@ void func_800D4C10_E3BC0(void) {
 				if (radius <= 0) {
 					radius = 1;
 				}
-			texAddr = ++i;
+				++i;
 			} while (i < steps);
 		}
 
@@ -6616,9 +6610,6 @@ void func_800D4C10_E3BC0(void) {
 		index = D_80154318[index].unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D4C10_E3BC0.s")
-#endif
 
 s16 func_800D5424_E43D4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	u8 *base;
