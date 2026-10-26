@@ -5228,7 +5228,6 @@ void func_800D05A8_DF558(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg
 	func_800D0614_DF5C4(arg0, arg1, arg2, arg3, arg4, arg5, arg6, 1);
 }
 
-#ifdef NON_MATCHING
 s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5, u8 arg6, s32 arg7) {
 	Vec3f dir;
 	s16 spread;
@@ -5239,7 +5238,8 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 	if (func_800B93AC_C835C(arg0, arg2, (arg3 * 2) & 0xFFFF, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 		effectId = func_800C17B4_D0764(7, 1);
 		if (effectId != -3) {
-			func_801371B8_146168((SmokePuffState *)(s32)D_80154318[effectId].payload, 0x188, arg0, arg1, arg2, D_80144018_152FC8[0]);
+			/* Preserve IDO's payload address calculation. */
+			func_801371B8_146168((SmokePuffState *)(s32)D_80154318[effectId].payload, 0x188, arg0, arg1, arg2, 0.8f);
 
 			D_80154318[effectId].unk2 = arg3;
 			((SmokePuffState *)(s32)D_80154318[effectId].payload)->position[0] = arg0;
@@ -5271,28 +5271,27 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 
 			i = 0;
 			if (arg7 == 1) {
+				for (; i < (s32)burstCount; i++) {
+					spread = ((func_800038E0_44E0() % arg3) / 4) + arg3 / 2;
 
-		for (; i < (s32)burstCount; i++) {
-			spread = ((func_800038E0_44E0() % arg3) / 4) + arg3 / 2;
+					dir.x = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						dir.x = 0.0f - dir.x;
+					}
 
-			dir.x = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
-			if ((func_800038E0_44E0() % 0xB) < 6) {
-				dir.x = 0.0f - dir.x;
-			}
+					dir.y = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						dir.y = 0.0f - dir.y;
+					}
 
-			dir.y = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
-			if ((func_800038E0_44E0() % 0xB) < 6) {
-				dir.y = 0.0f - dir.y;
-			}
+					dir.z = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
+					if ((func_800038E0_44E0() % 0xB) < 6) {
+						dir.z = 0.0f - dir.z;
+					}
 
-			dir.z = (f32)(func_800038E0_44E0() % 0xFE) + 1.0f;
-			if ((func_800038E0_44E0() % 0xB) < 6) {
-				dir.z = 0.0f - dir.z;
-			}
-
-			func_800C1024_CFFD4(&dir, &dir);
-			func_800D16BC_E066C(arg0, arg1, arg2, arg0 + (s32)(dir.x * spread), arg1 + (s16)(s32)(dir.y * spread), arg2 + (s16)(s32)(dir.z * spread), (func_800038E0_44E0() % 6) + 6);
-		}
+					func_800C1024_CFFD4(&dir, &dir);
+					func_800D16BC_E066C(arg0, arg1, arg2, arg0 + (s16)(s32)(dir.x * spread), arg1 + (s16)(s32)(dir.y * spread), arg2 + (s16)(s32)(dir.z * spread), (func_800038E0_44E0() % 6) + 6);
+				}
 			}
 		}
 		return effectId;
@@ -5300,9 +5299,6 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 
 	return -3;
 }
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_smoke_with_constants.s")
-#endif
 
 void func_800D0C00_DFBB0(void) {
 	s16 index = D_80154252;
@@ -5967,7 +5963,7 @@ void func_800D25D0_E1580(void) {
 		} else if ((visual->paletteIndex == 1) && (cachedDistance < 0x1E8480)) {
 			func_801371B8_146168(visual, 0x10, visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, 0.5f);
 			if (!(D_80052A8C & 3)) {
-				func_801371B8_146168(0, 0xEB, visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, D_8014401C_152FCC[0]);
+				func_801371B8_146168(0, 0xEB, visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, 0.4f);
 			}
 			if (!(D_80052A8C & 1)) {
 				func_80135D44_144CF4(visual->positionVector.x, visual->positionVector.y, visual->positionVector.z, 3.0f);
@@ -7064,7 +7060,7 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	func_800D6A84_E5A34(2);
 	func_800D6A84_E5A34(3);
 	func_800D6A84_E5A34(4);
-	func_80014A3C_1563C(0, 0xE8, 0.0f, 0, D_80144020_152FD0[0]);
+	func_80014A3C_1563C(0, 0xE8, 0.0f, 0, 0.4f);
 	func_80135D08_144CB8(3.0f, 1, 0x3C, 1);
 }
 
@@ -7146,7 +7142,7 @@ void func_800D6EAC_E5E5C(u8 arg0) {
 	func_800D6C18_E5BC8(next, 4);
 	if (!(D_80052A8C & 1)) {
 		func_80135D08_144CB8(10.0f, 1, 1, 1);
-		func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144024_152FD4[0]);
+		func_80014A3C_1563C(0, 0xEB, 0.0f, 0, 0.8f);
 	}
 }
 
@@ -8060,7 +8056,7 @@ void func_800D9C98_E8C48(s16 arg0, s16 arg1)
 	if (entryData[2] & 1)
 	{
 		s32 rnd;
-		sp2C = func_800DEE5C_EDE0C(entryData[3], (s16)((s32)(entryData[4] + (D_80144028_152FD8[0] * (((f64)((f32)sins(0x4000 - (entryData[2] << 10)))) / 32768.0)))), entryData[5], 0x46, 0x18 - entryData[2]);
+		sp2C = func_800DEE5C_EDE0C(entryData[3], (s16)((s32)(entryData[4] + (300.0 * (((f64)((f32)sins(0x4000 - (entryData[2] << 10)))) / 32768.0)))), entryData[5], 0x46, 0x18 - entryData[2]);
 		rnd = func_800038E0_44E0() % 128;
 		rnd += 0x40;
 		func_800DDD90_ECD40((u8)sp2C, 0xFF, rnd, 0);
