@@ -5674,7 +5674,8 @@ void func_800D1C24_E0BD4(u8 arg0)
 	f32 nextY2;
 	f32 nextZ2;
 	s32 texCoord;
-	Unk801541F8Entry *effect;
+
+	Unk80052B40 *position;
 	s32 nextIndex;
 	u8 colorChoice;
 	u8 red;
@@ -5682,9 +5683,8 @@ void func_800D1C24_E0BD4(u8 arg0)
 	u8 blue;
 	s32 repeats;
 	s16 index;
-	Unk80052B40 *position;
-	effect = &D_80154088[arg0];
-	index = effect->unk6;
+
+	index = D_80154088[arg0].unk6;
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
@@ -5714,7 +5714,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 	}
 	while (repeats--)
 	{
-		index = effect->unk6;
+		index = D_80154088[arg0].unk6;
 		if (index != -5 && index != -6)
 		{
 			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
@@ -6480,7 +6480,7 @@ void func_800D4C10_E3BC0(void) {
 	index = D_801542B2;
 	palette = D_8013DFA8_14CF58;
 	while (index != -5 && index != -6) {
-		EffectPositionPair *positions;
+
 		f32 len;
 		f32 segLen;
 		u32 texAddr;
@@ -6498,10 +6498,9 @@ void func_800D4C10_E3BC0(void) {
 		u8 alpha;
 		u8 mod;
 
-		positions = &D_80154318[index].positionPair;
-		spFC.x = (f32)(positions->previousPosition[0] - positions->position[0]);
-		spFC.y = (f32)(positions->previousPosition[1] - positions->position[1]);
-		spFC.z = (f32)(positions->previousPosition[2] - positions->position[2]);
+		spFC.x = (f32)(D_80154318[index].positionPair.previousPosition[0] - D_80154318[index].positionPair.position[0]);
+		spFC.y = (f32)(D_80154318[index].positionPair.previousPosition[1] - D_80154318[index].positionPair.position[1]);
+		spFC.z = (f32)(D_80154318[index].positionPair.previousPosition[2] - D_80154318[index].positionPair.position[2]);
 		len = sqrtf((spFC.x * spFC.x) + (spFC.y * spFC.y) + (spFC.z * spFC.z));
 
 		if (len == 0.0f) {
@@ -6524,9 +6523,9 @@ void func_800D4C10_E3BC0(void) {
 		func_800C1128_D00D8(40.0f, &spF0, &spF0);
 		segLen = sqrtf((spF0.x * spF0.x) + (spF0.y * spF0.y) + (spF0.z * spF0.z));
 
-		x = positions->previousPosition[0];
-		y = positions->previousPosition[1];
-		z = positions->previousPosition[2];
+		x = ((EffectPositionPair *)(s32)&D_80154318[index].positionPair)->previousPosition[0];
+		y = ((EffectPositionPair *)(s32)&D_80154318[index].positionPair)->previousPosition[1];
+		z = ((EffectPositionPair *)(s32)&D_80154318[index].positionPair)->previousPosition[2];
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 		gDPLoadTextureBlock_4b(D_8005BB2C++, texAddr, G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
@@ -6545,12 +6544,12 @@ void func_800D4C10_E3BC0(void) {
 				y -= spF0.y;
 				z -= spF0.z;
 
+				distance += segLen;
 				mod = i % 3;
 				c0 = palette[mod][0];
 				c1 = palette[mod][1];
 				c2 = palette[mod][2];
 				alpha = (i * fadeStep) + 0x64;
-				distance += segLen;
 
 				D_8005BB34->v.ob[0] = (((f32)radius * spE4.x) + x);
 				yLo = ((f32)radius + y);
@@ -6695,28 +6694,27 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	s16 z;
 	s16 y;
 	s16 parent;
-	union { u16 angle; s16 x; } angleX;
+	s16 angleX;
 	s32 selector;
 	f32 sine;
 	f32 scaleCos;
 	f32 scaleSin;
-	s32 dist;
+	u32 dist;
 	SpinnerParentState *parentState;
 	Unk80154318Entry *entry[1];
 	SpinnerMotionState *motion;
 
 	selector = arg4;
-	angleX.angle = ((arg2 + (selector * 0x78)) << 0x10) / 360;
-	if (entry) {}
+	angleX = ((arg2 + (selector * 0x78)) << 0x10) / 360;
 	parent = D_80154318[arg0].unk4;
 	entry[0] = &D_80154318[arg0];
 	dist = arg1;
-	scaleSin = (f32)(((f32)sins(angleX.angle) / 32768.0) * (u32)dist);
-	scaleCos = (f32)(((f32)coss(angleX.angle) / 32768.0) * (u32)dist);
-	angleX.x = ((f32)coss(arg3) / 32768.0) * scaleSin;
+	scaleSin = (f32)(((f32)sins(angleX) / 32768.0) * dist);
+	scaleCos = (f32)(((f32)coss(angleX) / 32768.0) * dist);
+	angleX = ((f32)coss(arg3) / 32768.0) * scaleSin;
 	sine = (f32)sins(arg3);
 	motion = &entry[0]->spinnerMotion;
-	angleX.x += motion->position[0];
+	angleX += motion->position[0];
 	y = (s32)scaleCos;
 	y += motion->position[1];
 	z = (s32)((sine / 32768.0) * -scaleSin);
@@ -6724,18 +6722,18 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 
 	parentState = &D_80154318[parent].spinnerState;
 	if (selector == 0) {
-		func_800D6084_E5034(motion->unit[0], angleX.x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(motion->unit[0], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	} else if (selector == 1) {
-		func_800D6084_E5034(motion->unit[1], angleX.x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(motion->unit[1], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	} else {
-		func_800D6084_E5034(motion->unit[2], angleX.x, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(motion->unit[2], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	}
 
 	if (entry[0]->unk4 == -5) {
 		D_80153BC4 = &D_80153B80;
 		D_80153BC8 = 55.0f;
 		D_80153BCC = 0xFF;
-		D_80153BB8.x = angleX.x;
+		D_80153BB8.x = angleX;
 		D_80153BB8.y = y;
 		D_80153BB8.z = z;
 		func_800DB350_EA300();
@@ -7514,12 +7512,14 @@ void func_800D80B4_E7064(void) {
 #ifdef NON_MATCHING
 void func_800D8190_E7140(void) {
 	Unk80154318Entry *entry;
+	int alpha;
+	int endAlpha;
 	Vec3f direction;
-	s16 current;
-	union { EffectPositionPair *points; Gfx *gfx; } position;
+	int current;
+	EffectPositionPair *position;
 	f32 two;
 	s16 size[1];
-s32 partial;
+	s32 partial;
 	s16 x0;
 	s16 y0;
 	s16 z0;
@@ -7531,32 +7531,24 @@ s32 partial;
 	s16 z2;
 	s16 halfZ;
 	s16 halfX;
-	s16 tipX;
-	s16 tipY;
-	s16 tipZ;
 
 	two = 2.0f;
-	x0 = D_80153BCC;
-current = D_801542D6;
-if (current) {}
+	current = D_801542D6;
 
-	position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0xE7000000; position.gfx->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0xE7000000; position.gfx->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 	gDPPipeSync(D_8005BB2C++);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[func_800038E0_44E0() % 16]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 
-	if (x0) { x0 ^= 0; }
-while ((current != -5) && (current != -6)) {
+	while ((current != -5) && (current != -6)) {
 		entry = &D_80154318[current];
 		direction.x = entry->unk8 - entry->previousPosition[0];
 		direction.y = entry->unkA - entry->previousPosition[1];
 		direction.z = entry->unkC - entry->previousPosition[2];
 
-		position.points = &entry->positionPair;
+		position = &entry->positionPair;
 		x0 = entry->unk2;
 		if ((direction.x == 0.0f) && (direction.y == 0.0f) && (direction.z == 0.0f)) {
 			current = D_80154318[current].unk4;
@@ -7564,42 +7556,43 @@ while ((current != -5) && (current != -6)) {
 		}
 
 		func_800C1024_CFFD4(&direction, &direction);
-size[0] = x0;
-				func_800C1128_D00D8((f32)x0, &direction, &direction);
+		size[0] = x0;
+		func_800C1128_D00D8((f32)x0, &direction, &direction);
 
+		alpha = 0xD2;
 		halfZ = (s16)(direction.z / two);
 		halfX = (s16)(direction.x / two);
-		tipX = position.points->position[0] + (s16)(direction.x * 3.0f);
-		tipY = position.points->position[1] + (s16)(direction.y * 3.0f);
-		tipZ = position.points->position[2] + (s16)(direction.z * 3.0f);
+		x2 = position->position[0] + (s16)(direction.x * 3.0f);
+		y2 = position->position[1] + (s16)(direction.y * 3.0f);
+		z2 = position->position[2] + (s16)(direction.z * 3.0f);
 
-		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] + (partial = size[0] / 2));
-		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] - halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->position[1] + (partial = size[0] / 2));
+		D_8005BB34->v.ob[2] = (f32)(position->position[2] - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = 0xD2;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] - partial);
-		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] + halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->position[0] - halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->position[1] - partial);
+		D_8005BB34->v.ob[2] = (f32)(position->position[2] + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = 0xD2;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = x0 = (f32)(tipX + halfZ);
-		D_8005BB34->v.ob[1] = y0 = (f32)(tipY + partial);
-		D_8005BB34->v.ob[2] = z0 = (f32)(tipZ - halfX);
+		D_8005BB34->v.ob[0] = x0 = (f32)(x2 + halfZ);
+		D_8005BB34->v.ob[1] = y0 = (f32)(y2 + partial);
+		D_8005BB34->v.ob[2] = z0 = (f32)(z2 - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0x800;
@@ -7609,9 +7602,9 @@ size[0] = x0;
 		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = x1 = (f32)(tipX - halfZ);
-		D_8005BB34->v.ob[1] = y1 = (f32)(tipY - partial);
-		D_8005BB34->v.ob[2] = z1 = (f32)(tipZ + halfX);
+		D_8005BB34->v.ob[0] = x1 = (f32)(x2 - halfZ);
+		D_8005BB34->v.ob[1] = y1 = (f32)(y2 - partial);
+		D_8005BB34->v.ob[2] = z1 = (f32)(z2 + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0x800;
@@ -7625,28 +7618,28 @@ size[0] = x0;
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 		gDPPipeSync(D_8005BB2C++);
 
-		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] - partial);
-		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] - halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->position[1] - partial);
+		D_8005BB34->v.ob[2] = (f32)(position->position[2] - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = 0xD2;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = (f32)(position.points->position[0] - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position.points->position[1] + partial);
-		D_8005BB34->v.ob[2] = (f32)(position.points->position[2] + halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->position[0] - halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->position[1] + partial);
+		D_8005BB34->v.ob[2] = (f32)(position->position[2] + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = 0xD2;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = x0;
@@ -7676,9 +7669,9 @@ size[0] = x0;
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 
-		x2 = position.points->position[0] + (s16)(direction.x * 2.5);
-		y2 = position.points->position[1] + (s16)(direction.y * 2.5);
-		z2 = position.points->position[2] + (s16)(direction.z * 2.5);
+		x2 = position->position[0] + (s16)(direction.x * 2.5);
+		y2 = position->position[1] + (s16)(direction.y * 2.5);
+		z2 = position->position[2] + (s16)(direction.z * 2.5);
 		halfZ = (s16)(direction.z / 3.0f);
 		halfX = (s16)(direction.x / 3.0f);
 
@@ -7691,7 +7684,8 @@ size[0] = x0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xD7;
+		endAlpha = 0xD7;
+		D_8005BB34->v.cn[3] = endAlpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 + halfZ);
@@ -7703,7 +7697,7 @@ size[0] = x0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xD7;
+		D_8005BB34->v.cn[3] = endAlpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
@@ -7715,7 +7709,7 @@ size[0] = x0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xD7;
+		D_8005BB34->v.cn[3] = endAlpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
@@ -7727,7 +7721,7 @@ size[0] = x0;
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xD7;
+		D_8005BB34->v.cn[3] = endAlpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2);
@@ -7742,21 +7736,18 @@ size[0] = x0;
 		D_8005BB34->v.cn[3] = 0xFF;
 		D_8005BB34++;
 
-		position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0x0400144F; position.gfx->words.w1 = K0_TO_PHYS(D_8005BB34 - 5);
-position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080002;
-position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080004;
-position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080406;
-position.gfx = D_8005BB2C++;
-position.gfx->words.w0 = 0xBF000000; position.gfx->words.w1 = 0x00080602;
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 0, 1, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 0, 2, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 2, 3, 0);
+		gSP1Triangle(D_8005BB2C++, 4, 3, 1, 0);
 
 		D_80156EDA += 0xD;
 		current = D_80154318[current].unk4;
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8190_E7140.s")
 #endif
@@ -8916,14 +8907,11 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 	f32 facing;
 	f32 angleDelta;
 	f32 beamLen;
-	u32 phase = _SHIFTL(G_RDPPIPESYNC, 24, 8);
+	u32 phase;
 	u16 flicker;
-	u8 alpha;
+	u8 i;
 	u8 strength;
 	EffectRgb col;
-	s32 i;
-	f32 maxDist;
-	Gfx *gfx = (Gfx *)&arg2; /* Keep the byte argument in its ABI home. */
 
 	(void)arg3;
 
@@ -8957,11 +8945,10 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 		strength = 0xFF;
 	}
 
-	maxDist = 3000.0f;
-	if ((arg1 > 330.0f) && (arg1 <= maxDist)) {
+	if ((arg1 > 330.0f) && (arg1 <= 3000.0f)) {
 		strength = ((f32)strength * (f32)(0.00035714285714285714 * (3001.0f - arg1)));
 	} else {
-		if (maxDist < arg1) {
+		if (3000.0f < arg1) {
 			strength = 0;
 		}
 	}
@@ -8977,7 +8964,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 		D_8013E344_14D2F4 = 0xB4;
 	}
 
-	if ((angleDelta < 22.0f) && (angleDelta > 2.5) && (arg1 < maxDist)) {
+	if ((angleDelta < 22.0f) && (angleDelta > 2.5) && (arg1 < 3000.0f)) {
 		func_800C1128_D00D8(2 * facing, &viewDir, &pos);
 		func_800C10C0_D0070(&toTarget, &pos, &toTarget);
 		func_800C1128_D00D8(beamLen, &toTarget, &beamVec);
@@ -8986,14 +8973,10 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 
 		beamVec.x = arg0->x - pos.x; beamVec.y = arg0->y - pos.y; beamVec.z = arg0->z - pos.z;
 
-		gfx = D_8005BB2C++;
-		gfx->words.w0 = phase; gfx->words.w1 = 0;
-		gfx = D_8005BB2C++;
-		gfx->words.w0 = 0xFCFF99FF; gfx->words.w1 = 0xFF327F3F;
-		gfx = D_8005BB2C++;
-		gfx->words.w0 = 0xB900031D; gfx->words.w1 = G_RM_AA_ZB_XLU_SURF | G_RM_AA_ZB_XLU_SURF2;
-		gfx = D_8005BB2C++;
-		gfx->words.w0 = phase; gfx->words.w1 = 0;
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+		gDPPipeSync(D_8005BB2C++);
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
 
 		if (angleDelta < 5.0) {
@@ -9010,7 +8993,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 		}
 
 		phase = (u16)(arg1 / 20);
-		for (i = 0; i < 6; i = (u8)(i + 1)) {
+		for (i = 0; i < 6; i++) {
 			u16 scale = D_8013DFB4_14CF64[i] * phase;
 			f32 d = D_8013DFCC_14CF7C[i];
 
@@ -10175,15 +10158,15 @@ void func_800E1D48_F0CF8(u16 arg0, u8 arg1) {
 
 			case 4:
 				switch (D_80052B34->unk1A) {
-				    case 2:
-				        skipSecondCall = 1;
-				        shouldClamp = 1;
-				        break;
-				    case 0x11:
-				        shouldClamp = 1;
-				        break;
-				    default:
-				        break;
+					case 2:
+						skipSecondCall = 1;
+						shouldClamp = 1;
+						break;
+					case 0x11:
+						shouldClamp = 1;
+						break;
+					default:
+						break;
 				}
 				break;
 
@@ -11369,12 +11352,7 @@ void func_800E6A38_F59E8(void) {
 	s16 xOff;
 	s16 zOff;
 	s16 yTop;
-	Vtx *vtx0;
-	Vtx *vtx1;
-	Vtx *vtx2;
-	Vtx *vtx3;
-	Vtx *vtx4;
-	Vtx *vtx5;
+	Gfx *gfx;
 
 	if ((currentLevel != 1) || (D_80052ACA == 2)) {
 		return;
@@ -11401,7 +11379,14 @@ void func_800E6A38_F59E8(void) {
 		remain = slot->unk1E6;
 		if (remain != 0) {
 			while (remain--) {
-			entry = &slot->entries[remain];
+				Vtx *vtx0;
+				Vtx *vtx1;
+				Vtx *vtx2;
+				Vtx *vtx3;
+				Vtx *vtx4;
+				Vtx *vtx5;
+
+				entry = &slot->entries[remain];
 				baseX = entry->unk0 >> 8;
 				baseY = (D_8013DF00_14CEB0[entry->unk18] + entry->unk4) >> 8;
 				baseZ = entry->unk8 >> 8;
@@ -11420,43 +11405,43 @@ void func_800E6A38_F59E8(void) {
 				xOff = ((f32)coss(-angle) / 32768.0) * (radius + 20);
 				zOff = ((f32)sins(-angle) / 32768.0) * (radius + 20);
 
-				vtx0 = D_8005BB34++;
-				vtx0->v.ob[0] = baseX;
+				vtx0 = D_8005BB34; vtx0->v.ob[0] = baseX;
+				D_8005BB34++;
 				vtx0->v.ob[1] = baseY;
 				vtx0->v.ob[2] = baseZ;
 				vtx0->v.tc[0] = 0x1000;
 				vtx0->v.tc[1] = 0x0800;
 
-				vtx1 = D_8005BB34++;
-				vtx1->v.ob[0] = baseX;
+				vtx1 = D_8005BB34; vtx1->v.ob[0] = baseX;
+				D_8005BB34++;
 				vtx1->v.ob[1] = yTop = baseY + 0x14;
 				vtx1->v.ob[2] = baseZ;
 				vtx1->v.tc[0] = 0x1000;
 				vtx1->v.tc[1] = 0;
 
-				vtx2 = D_8005BB34++;
-				vtx2->v.ob[0] = baseX + xOff;
+				vtx2 = D_8005BB34; vtx2->v.ob[0] = baseX + xOff;
+				D_8005BB34++;
 				vtx2->v.ob[1] = yTop;
 				vtx2->v.ob[2] = baseZ + zOff;
 				vtx2->v.tc[0] = 0;
 				vtx2->v.tc[1] = 0x0800;
 
-				vtx3 = D_8005BB34++;
-				vtx3->v.ob[0] = baseX - xOff;
+				vtx3 = D_8005BB34; vtx3->v.ob[0] = baseX - xOff;
+				D_8005BB34++;
 				vtx3->v.ob[1] = yTop;
 				vtx3->v.ob[2] = baseZ - zOff;
 				vtx3->v.tc[0] = 0x1000;
 				vtx3->v.tc[1] = 0;
 
-				vtx4 = D_8005BB34++;
-				vtx4->v.ob[0] = baseX + (entry->unkC >> 7);
+				vtx4 = D_8005BB34; vtx4->v.ob[0] = baseX + (entry->unkC >> 7);
+				D_8005BB34++;
 				vtx4->v.ob[1] = baseY + (entry->unk10 >> 7) + 0x14;
 				vtx4->v.ob[2] = baseZ + (entry->unk14 >> 7);
 				vtx4->v.tc[0] = 0;
 				vtx4->v.tc[1] = 0x0800;
 
-				vtx5 = D_8005BB34++;
-				vtx5->v.ob[0] = vtx4->v.ob[0];
+				vtx5 = D_8005BB34; vtx5->v.ob[0] = vtx4->v.ob[0];
+				D_8005BB34++;
 				vtx5->v.ob[1] = vtx4->v.ob[1];
 				vtx5->v.ob[2] = vtx4->v.ob[2];
 				vtx5->v.tc[0] = 0;
@@ -11482,9 +11467,9 @@ void func_800E6A38_F59E8(void) {
 				vtx0->v.cn[2] = 0;
 				vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vtx3->v.cn[3] = (vtx4->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
 
-				gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 6, 0);
-				gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
-				gSP1Triangle(D_8005BB2C++, 2, 3, 5, 0);
+				gSPVertex(gfx = D_8005BB2C++, K0_TO_PHYS(vtx0), 6, 0);
+				gSP1Triangle(gfx = D_8005BB2C++, 0, 1, 4, 0);
+				gSP1Triangle(gfx = D_8005BB2C++, 2, 3, 5, 0);
 			}
 		}
 	}
@@ -11499,6 +11484,8 @@ void func_800E6A38_F59E8(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
+
+
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
