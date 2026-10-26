@@ -11352,13 +11352,22 @@ void func_800E6A38_F59E8(void) {
 	s16 xOff;
 	s16 zOff;
 	s16 yTop;
-	Gfx *gfx;
+	Vtx *vtx0;
+	Vtx *vtx1;
+	Vtx *vtx2;
+	union { Vtx *v; Gfx *g; } vertex3;
+	union { Vtx *v; s32 uv; } vertex4;
+	Vtx *vtx5;
+	void *gfx;
+
 
 	if ((currentLevel != 1) || (D_80052ACA == 2)) {
 		return;
 	}
 
-	gDPPipeSync(D_8005BB2C++);
+	/* Reuse the cursor to avoid an extra macro-local frame word. */
+	gfx = D_8005BB2C++;
+	((Gfx *)gfx)->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); ((Gfx *)gfx)->words.w1 = 0;
 	gDPTileSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -11379,12 +11388,6 @@ void func_800E6A38_F59E8(void) {
 		remain = slot->unk1E6;
 		if (remain != 0) {
 			while (remain--) {
-				Vtx *vtx0;
-				Vtx *vtx1;
-				Vtx *vtx2;
-				Vtx *vtx3;
-				Vtx *vtx4;
-				Vtx *vtx5;
 
 				entry = &slot->entries[remain];
 				baseX = entry->unk0 >> 8;
@@ -11405,71 +11408,72 @@ void func_800E6A38_F59E8(void) {
 				xOff = ((f32)coss(-angle) / 32768.0) * (radius + 20);
 				zOff = ((f32)sins(-angle) / 32768.0) * (radius + 20);
 
-				vtx0 = D_8005BB34; vtx0->v.ob[0] = baseX;
+				/* Keep the saved vertices for the shared color stores below. */
+				vtx0 = gfx = D_8005BB34; vtx0->v.ob[0] = baseX;
 				D_8005BB34++;
 				vtx0->v.ob[1] = baseY;
 				vtx0->v.ob[2] = baseZ;
-				vtx0->v.tc[0] = 0x1000;
+				vtx0->v.tc[0] = (vertex4.uv = 0x1000);
 				vtx0->v.tc[1] = 0x0800;
 
-				vtx1 = D_8005BB34; vtx1->v.ob[0] = baseX;
+				vtx1 = gfx = D_8005BB34; vtx1->v.ob[0] = baseX;
 				D_8005BB34++;
 				vtx1->v.ob[1] = yTop = baseY + 0x14;
 				vtx1->v.ob[2] = baseZ;
-				vtx1->v.tc[0] = 0x1000;
+				vtx1->v.tc[0] = vertex4.uv;
 				vtx1->v.tc[1] = 0;
 
-				vtx2 = D_8005BB34; vtx2->v.ob[0] = baseX + xOff;
+				vtx2 = gfx = D_8005BB34; vtx2->v.ob[0] = baseX + xOff;
 				D_8005BB34++;
 				vtx2->v.ob[1] = yTop;
 				vtx2->v.ob[2] = baseZ + zOff;
 				vtx2->v.tc[0] = 0;
 				vtx2->v.tc[1] = 0x0800;
 
-				vtx3 = D_8005BB34; vtx3->v.ob[0] = baseX - xOff;
+				vertex3.v = D_8005BB34; vertex3.v->v.ob[0] = baseX - xOff;
 				D_8005BB34++;
-				vtx3->v.ob[1] = yTop;
-				vtx3->v.ob[2] = baseZ - zOff;
-				vtx3->v.tc[0] = 0x1000;
-				vtx3->v.tc[1] = 0;
+				vertex3.v->v.ob[1] = yTop;
+				vertex3.v->v.ob[2] = baseZ - zOff;
+				vertex3.v->v.tc[0] = vertex4.uv;
+				vertex3.v->v.tc[1] = 0;
 
-				vtx4 = D_8005BB34; vtx4->v.ob[0] = baseX + (entry->unkC >> 7);
+				vertex4.v = gfx = D_8005BB34; vertex4.v->v.ob[0] = baseX + (entry->unkC >> 7);
 				D_8005BB34++;
-				vtx4->v.ob[1] = baseY + (entry->unk10 >> 7) + 0x14;
-				vtx4->v.ob[2] = baseZ + (entry->unk14 >> 7);
-				vtx4->v.tc[0] = 0;
-				vtx4->v.tc[1] = 0x0800;
+				vertex4.v->v.ob[1] = baseY + (entry->unk10 >> 7) + 0x14;
+				vertex4.v->v.ob[2] = baseZ + (entry->unk14 >> 7);
+				vertex4.v->v.tc[0] = 0;
+				vertex4.v->v.tc[1] = 0x0800;
 
-				vtx5 = D_8005BB34; vtx5->v.ob[0] = vtx4->v.ob[0];
+				vtx5 = gfx = D_8005BB34; vtx5->v.ob[0] = vertex4.v->v.ob[0];
 				D_8005BB34++;
-				vtx5->v.ob[1] = vtx4->v.ob[1];
-				vtx5->v.ob[2] = vtx4->v.ob[2];
+				vtx5->v.ob[1] = vertex4.v->v.ob[1];
+				vtx5->v.ob[2] = vertex4.v->v.ob[2];
 				vtx5->v.tc[0] = 0;
 				vtx5->v.tc[1] = 0;
 
 				vtx5->v.cn[0] = 0;
-				vtx4->v.cn[0] = 0;
-				vtx3->v.cn[0] = 0;
+				vertex4.v->v.cn[0] = 0;
+				vertex3.v->v.cn[0] = 0;
 				vtx2->v.cn[0] = 0;
 				vtx1->v.cn[0] = 0;
 				vtx0->v.cn[0] = 0;
 				vtx5->v.cn[1] = 0;
-				vtx4->v.cn[1] = 0;
-				vtx3->v.cn[1] = 0;
+				vertex4.v->v.cn[1] = 0;
+				vertex3.v->v.cn[1] = 0;
 				vtx2->v.cn[1] = 0;
 				vtx1->v.cn[1] = 0;
 				vtx0->v.cn[1] = 0;
 				vtx5->v.cn[2] = 0;
-				vtx4->v.cn[2] = 0;
-				vtx3->v.cn[2] = 0;
+				vertex4.v->v.cn[2] = 0;
+				vertex3.v->v.cn[2] = 0;
 				vtx2->v.cn[2] = 0;
 				vtx1->v.cn[2] = 0;
 				vtx0->v.cn[2] = 0;
-				vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vtx3->v.cn[3] = (vtx4->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
+				vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vertex3.v->v.cn[3] = (vertex4.v->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
 
-				gSPVertex(gfx = D_8005BB2C++, K0_TO_PHYS(vtx0), 6, 0);
-				gSP1Triangle(gfx = D_8005BB2C++, 0, 1, 4, 0);
-				gSP1Triangle(gfx = D_8005BB2C++, 2, 3, 5, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 6, 0);
+				gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
+				gSP1Triangle(vertex3.g = D_8005BB2C++, 2, 3, 5, 0);
 			}
 		}
 	}
@@ -11484,6 +11488,7 @@ void func_800E6A38_F59E8(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
+
 
 
 
