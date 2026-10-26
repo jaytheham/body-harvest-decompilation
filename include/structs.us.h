@@ -3045,10 +3045,9 @@ typedef struct {
 } EffectPositionPair;
 
 typedef struct {
-	Unk80052B40 position;
-	u8 unk6;
-	u8 flags;
-	u8 pad8[4];
+	/* 0x00 */ Unk80052B40 position;
+	/* 0x06 */ s16 flags;
+	/* 0x08 */ u8 pad8[4];
 } EffectLightningTrailState;
 
 typedef struct {

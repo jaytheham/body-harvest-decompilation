@@ -8200,7 +8200,6 @@ s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v0;
 }
 
-#ifdef NON_MATCHING
 void func_800DA510_E94C0(s16 arg0, s16 arg1) {
 	EffectPositionPair *srcPos;
 	EffectLightningTrailState *dstPos;
@@ -8214,24 +8213,23 @@ void func_800DA510_E94C0(s16 arg0, s16 arg1) {
 	dir.y = srcPos->previousPosition[1] - dstPos->position.unk2;
 	dir.z = srcPos->previousPosition[2] - dstPos->position.unk4;
 
-	if ((dir.x != 0.0f) || (dir.y != 0.0f) || (dir.z != 0.0f)) {
-		func_800C1024_CFFD4(&dir, &dir);
-		effect = func_800D16BC_E066C(srcPos->previousPosition[0], srcPos->previousPosition[1], srcPos->previousPosition[2],
-			srcPos->previousPosition[0] + (400.0 * dir.x),
-			srcPos->previousPosition[1] + (400.0 * dir.y),
-			srcPos->previousPosition[2] + (400.0 * dir.z), 1);
-		if (effect != 0xFB) {
-			u8 flags = dstPos->flags;
-			func_800D19DC_E098C(effect, flags);
-		}
-		dstPos->position.unk0 = srcPos->previousPosition[0];
-		dstPos->position.unk2 = srcPos->previousPosition[1];
-		dstPos->position.unk4 = srcPos->previousPosition[2];
+	if ((dir.x == 0.0f) && (dir.y == 0.0f) && (dir.z == 0.0f)) {
+		return;
 	}
+	func_800C1024_CFFD4(&dir, &dir);
+	effect = func_800D16BC_E066C(srcPos->previousPosition[0], srcPos->previousPosition[1], srcPos->previousPosition[2],
+		srcPos->previousPosition[0] + (400.0 * dir.x),
+		srcPos->previousPosition[1] + (400.0 * dir.y),
+		srcPos->previousPosition[2] + (400.0 * dir.z), 1);
+	if (effect != 0xFB) {
+		u8 flags = dstPos->flags;
+		func_800D19DC_E098C(effect, flags);
+	}
+	dstPos->position.unk0 = srcPos->previousPosition[0];
+	dstPos->position.unk2 = srcPos->previousPosition[1];
+	dstPos->position.unk4 = srcPos->previousPosition[2];
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800DA510_E94C0.s")
-#endif
+
 
 s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 temp_s32;
