@@ -5530,28 +5530,27 @@ void func_800D10D0_E0080(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 s32 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	s32 var_s1;
 	s32 var_v1;
 	s32 magnitude;
-	s16 temp_s2;
-	s16 var_a1;
-	s16 temp_s3;
-	s16 temp_s4;
+	s16 deltaX;
+	s16 stepZ;
+	s16 deltaY;
+	s16 deltaZ;
 	s16 stepX;
 	s16 stepY;
-	u8 sp47;
-	s16 temp_v0_3;
-	u8 var_s0;
-	Unk80154318Entry *temp_v1;
+	u8 effectIndex;
+	s16 entryIndex;
+	u8 segment;
+	Unk80154318Entry *entry;
 
-	sp47 = func_800C1598_D0548(8);
-	if (sp47 != 0xFB) {
-		temp_s2 = arg3 - arg0;
-		temp_s3 = arg4 - arg1;
-		temp_s4 = arg5 - arg2;
-		magnitude = (u32)(sqrtf((f32)((temp_s2 * temp_s2) + (temp_s3 * temp_s3) + (temp_s4 * temp_s4))) / 100.0f);
+	effectIndex = func_800C1598_D0548(8);
+	if (effectIndex != 0xFB) {
+		deltaX = arg3 - arg0;
+		deltaY = arg4 - arg1;
+		deltaZ = arg5 - arg2;
+		magnitude = (u32)(sqrtf((f32)((deltaX * deltaX) + (deltaY * deltaY) + (deltaZ * deltaZ))) / 100.0f);
 		var_v1 = (u8)magnitude;
 		if ((magnitude & 0xFF) < 2) {
 			var_v1 = 2;
@@ -5561,34 +5560,33 @@ s32 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 			var_v1 = 0xF;
 			var_s1 = 0xF;
 		}
-if (1) {
-		stepX = temp_s2 / var_v1;
-		stepY = temp_s3 / var_v1;
-		var_a1 = temp_s4 / var_v1;
-		
-		for (var_s0 = 0; var_s0 <= var_s1; var_s0++) {
-				temp_v0_3 = func_800C18D0_D0880(sp47);
-				if (temp_v0_3 == -3) {
+		/* Preserve IDO's count assignments and the Z-step call spill. */
+		if (1) {
+			stepX = deltaX / (var_v1 ? var_s1 : var_s1);
+			stepY = deltaY / var_s1;
+			stepZ = deltaZ / var_s1;
+
+			for (segment = 0; segment <= var_s1; segment++) {
+				entryIndex = func_800C18D0_D0880(effectIndex);
+				if (var_s1) {}
+				if (entryIndex == -3) {
 					osSyncPrintf(&D_80143770_152720);
-					func_800C1418_D03C8(sp47, 0);
-					func_800C1384_D0334(sp47);
+					func_800C1418_D03C8(effectIndex, 0);
+					func_800C1384_D0334(effectIndex);
 					return 0xFB;
 				}
-				temp_v1 = &D_80154318[temp_v0_3];
-				temp_v1->unkE = arg6;
-				temp_v1->unkF = 1;
-				temp_v1->unk8 = arg0 + (stepX * var_s0);
-				temp_v1->unkA = arg1 + (stepY * var_s0);
-				temp_v1->unkC = arg2 + (var_a1 * var_s0);
+				entry = &D_80154318[entryIndex];
+				entry->unkE = arg6;
+				entry->unkF = 1;
+				entry->unk8 = arg0 + (stepX * segment);
+				entry->unkA = arg1 + (stepY * segment);
+				entry->unkC = arg2 + (stepZ * segment);
 			}
-}
+		}
 	}
 
-	return sp47;
+	return effectIndex;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D16BC_E066C.s")
-#endif
 
 void func_800D19DC_E098C(u8 arg0, u8 arg1) {
 	s16 temp_v0 = D_80154088[arg0].unk6;
