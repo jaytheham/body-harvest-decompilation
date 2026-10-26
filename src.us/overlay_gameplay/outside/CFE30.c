@@ -11339,151 +11339,160 @@ void func_800E64B4_F5464(void) {
 }
 
 #ifdef NON_MATCHING
-void func_800E6A38_F59E8(void) {
-	s32 slotCount = 4;
-	s16 angle;
-	Unk800E614CFxSlot *slot;
-	Unk800E614CFxEntry *entry;
-	s16 baseX;
-	s16 baseY;
-	s16 baseZ;
-	s32 remain;
-	s16 radius;
-	s16 xOff;
-	s16 zOff;
-	s16 yTop;
-	Vtx *vtx0;
-	Vtx *vtx1;
-	Vtx *vtx2;
-	union { Vtx *v; Gfx *g; } vertex3;
-	union { Vtx *v; s32 uv; } vertex4;
-	Vtx *vtx5;
-	void *gfx;
-
-
-	if ((currentLevel != 1) || (D_80052ACA == 2)) {
-		return;
-	}
-
-	/* Reuse the cursor to avoid an extra macro-local frame word. */
-	gfx = D_8005BB2C++;
-	((Gfx *)gfx)->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); ((Gfx *)gfx)->words.w1 = 0;
-	gDPTileSync(D_8005BB2C++);
-	gDPLoadSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
-	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
-	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
-	gDPLoadTextureBlock_4b(D_8005BB2C++, D_5039AB0, G_IM_FMT_CI, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPLoadTLUT_pal16(D_8005BB2C++, 0, D_5039EB0);
-	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-	gDPPipeSync(D_8005BB2C++);
-	gDPTileSync(D_8005BB2C++);
-	gDPLoadSync(D_8005BB2C++);
-
-	while (slotCount--) {
-		slot = &D_80153300[slotCount];
-		remain = slot->unk1E6;
-		if (remain != 0) {
-			while (remain--) {
-
-				entry = &slot->entries[remain];
-				baseX = entry->unk0 >> 8;
-				baseY = (D_8013DF00_14CEB0[entry->unk18] + entry->unk4) >> 8;
-				baseZ = entry->unk8 >> 8;
-				angle = func_80003824_4424((f32)entry->unk14, (f32)entry->unkC);
-
-				if ((entry->unk18 >= 0x1B) || (entry->unk18 < 0xB)) {
-					radius = entry->unk18 & 3;
-					if (radius == 3) {
-						radius = 1;
-					}
-				} else {
-					radius = 2;
-				}
-
-				radius *= 20;
-				xOff = ((f32)coss(-angle) / 32768.0) * (radius + 20);
-				zOff = ((f32)sins(-angle) / 32768.0) * (radius + 20);
-
-				/* Keep the saved vertices for the shared color stores below. */
-				vtx0 = gfx = D_8005BB34; vtx0->v.ob[0] = baseX;
-				D_8005BB34++;
-				vtx0->v.ob[1] = baseY;
-				vtx0->v.ob[2] = baseZ;
-				vtx0->v.tc[0] = (vertex4.uv = 0x1000);
-				vtx0->v.tc[1] = 0x0800;
-
-				vtx1 = gfx = D_8005BB34; vtx1->v.ob[0] = baseX;
-				D_8005BB34++;
-				vtx1->v.ob[1] = yTop = baseY + 0x14;
-				vtx1->v.ob[2] = baseZ;
-				vtx1->v.tc[0] = vertex4.uv;
-				vtx1->v.tc[1] = 0;
-
-				vtx2 = gfx = D_8005BB34; vtx2->v.ob[0] = baseX + xOff;
-				D_8005BB34++;
-				vtx2->v.ob[1] = yTop;
-				vtx2->v.ob[2] = baseZ + zOff;
-				vtx2->v.tc[0] = 0;
-				vtx2->v.tc[1] = 0x0800;
-
-				vertex3.v = D_8005BB34; vertex3.v->v.ob[0] = baseX - xOff;
-				D_8005BB34++;
-				vertex3.v->v.ob[1] = yTop;
-				vertex3.v->v.ob[2] = baseZ - zOff;
-				vertex3.v->v.tc[0] = vertex4.uv;
-				vertex3.v->v.tc[1] = 0;
-
-				vertex4.v = gfx = D_8005BB34; vertex4.v->v.ob[0] = baseX + (entry->unkC >> 7);
-				D_8005BB34++;
-				vertex4.v->v.ob[1] = baseY + (entry->unk10 >> 7) + 0x14;
-				vertex4.v->v.ob[2] = baseZ + (entry->unk14 >> 7);
-				vertex4.v->v.tc[0] = 0;
-				vertex4.v->v.tc[1] = 0x0800;
-
-				vtx5 = gfx = D_8005BB34; vtx5->v.ob[0] = vertex4.v->v.ob[0];
-				D_8005BB34++;
-				vtx5->v.ob[1] = vertex4.v->v.ob[1];
-				vtx5->v.ob[2] = vertex4.v->v.ob[2];
-				vtx5->v.tc[0] = 0;
-				vtx5->v.tc[1] = 0;
-
-				vtx5->v.cn[0] = 0;
-				vertex4.v->v.cn[0] = 0;
-				vertex3.v->v.cn[0] = 0;
-				vtx2->v.cn[0] = 0;
-				vtx1->v.cn[0] = 0;
-				vtx0->v.cn[0] = 0;
-				vtx5->v.cn[1] = 0;
-				vertex4.v->v.cn[1] = 0;
-				vertex3.v->v.cn[1] = 0;
-				vtx2->v.cn[1] = 0;
-				vtx1->v.cn[1] = 0;
-				vtx0->v.cn[1] = 0;
-				vtx5->v.cn[2] = 0;
-				vertex4.v->v.cn[2] = 0;
-				vertex3.v->v.cn[2] = 0;
-				vtx2->v.cn[2] = 0;
-				vtx1->v.cn[2] = 0;
-				vtx0->v.cn[2] = 0;
-				vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vertex3.v->v.cn[3] = (vertex4.v->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
-
-				gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 6, 0);
-				gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
-				gSP1Triangle(vertex3.g = D_8005BB2C++, 2, 3, 5, 0);
-			}
+void func_800E6A38_F59E8(void)
+{
+	// This features multiple unlikely lines of code - it needs to be fixed to have more "normal" code
+	// e.g. the Vtx Gfx union, vertex3 & 4 treated differently to the rest, the useless gfx pointer
+  s32 slotCount = 4;
+  s16 angle;
+  Unk800E614CFxSlot *slot;
+  Unk800E614CFxEntry *entry;
+  s16 baseX;
+  s16 baseY;
+  s16 baseZ;
+  s32 remain;
+  s16 radius;
+  s16 xOff;
+  s16 zOff;
+  s16 yTop;
+  Vtx *vtx0;
+  Vtx *vtx1;
+  Vtx *vtx2;
+  union 
+  {
+	Vtx *v;
+	Gfx *g;
+  } vertex3;
+  union 
+  {
+	Vtx *v;
+	s32 uv;
+  } vertex4;
+  Vtx *vtx5;
+  void *gfx;
+  if ((currentLevel != 1) || (D_80052ACA == 2))
+  {
+	return;
+  }
+  
+  gDPPipeSync(D_8005BB2C++);
+  gDPTileSync(D_8005BB2C++);
+  gDPLoadSync(D_8005BB2C++);
+  gDPSetCycleType(D_8005BB2C++, 0 << 20);
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+  gSPClearGeometryMode(D_8005BB2C++, 0x00003000);
+  gSPSetGeometryMode(D_8005BB2C++, 0x00000001 | 0x00020000);
+  gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+  gDPSetRenderMode(D_8005BB2C++, (((((((((0x8 | 0x10) | 0x40) | 0x100) | 0x80) | 0x4000) | 0x800) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), (((((((((0x8 | 0x10) | 0x40) | 0x100) | 0x80) | 0x4000) | 0x800) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+  gDPLoadTextureBlock_4b(D_8005BB2C++, D_5039AB0, 2, 64, 32, 0, 0 | 0, 0 | 0, 0, 0, 0, 0);
+  gDPLoadTLUT_pal16(D_8005BB2C++, 0, D_5039EB0);
+  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
+  gDPPipeSync(D_8005BB2C++);
+  gDPTileSync(D_8005BB2C++);
+  gDPLoadSync(D_8005BB2C++);
+  while (slotCount--)
+  {
+	slot = &D_80153300[slotCount];
+	remain = slot->unk1E6;
+	if (remain != 0)
+	{
+	  while (remain--)
+	  {
+		entry = &slot->entries[remain];
+		baseX = entry->unk0 >> 8;
+		baseY = (D_8013DF00_14CEB0[entry->unk18] + entry->unk4) >> 8;
+		baseZ = entry->unk8 >> 8;
+		angle = func_80003824_4424((f32) entry->unk14, (f32) entry->unkC);
+		if ((entry->unk18 >= 0x1B) || (entry->unk18 < 0xB))
+		{
+		  radius = entry->unk18 & 3;
+		  if (radius == 3)
+		  {
+			radius = 1;
+		  }
 		}
-	}
+		else
+		{
+		  radius = 2;
+		}
+		radius *= 20;
+		xOff = (((f32) coss(-angle)) / 32768.0) * (radius + 20);
+		zOff = (((f32) sins(-angle)) / 32768.0) * (radius + 20);
+		vtx0 = (gfx = D_8005BB34);
+		vtx0->v.ob[0] = baseX;
+		D_8005BB34++;
+		vtx0->v.ob[1] = baseY;
+		vtx0->v.ob[2] = baseZ;
+		vtx0->v.tc[0] = (vertex4.uv = 0x1000);
+		vtx0->v.tc[1] = 0x0800;
+		vtx1 = (gfx = D_8005BB34);
+		vtx1->v.ob[0] = baseX;
+		D_8005BB34++;
+		vtx1->v.ob[1] = (yTop = baseY + 0x14);
+		vtx1->v.ob[2] = baseZ;
+		vtx1->v.tc[0] = vertex4.uv;
+		vtx1->v.tc[1] = 0;
+		vtx2 = (gfx = D_8005BB34);
+		vtx2->v.ob[0] = baseX + xOff;
+		D_8005BB34++;
+		vtx2->v.ob[1] = yTop;
+		vtx2->v.ob[2] = baseZ + zOff;
+		vtx2->v.tc[0] = 0;
+		vtx2->v.tc[1] = 0x0800;
+		vertex3.v = D_8005BB34;
+		vertex3.v->v.ob[0] = baseX - xOff;
+		D_8005BB34++;
+		vertex3.v->v.ob[1] = yTop;
+		vertex3.v->v.ob[2] = baseZ - zOff;
+		vertex3.v->v.tc[0] = vertex4.uv;
+		vertex3.v->v.tc[1] = 0;
+		vertex4.v = (gfx = D_8005BB34);
+		vertex4.v->v.ob[0] = baseX + (entry->unkC >> 7);
+		D_8005BB34++;
+		vertex4.v->v.ob[1] = (baseY + (entry->unk10 >> 7)) + 0x14;
+		vertex4.v->v.ob[2] = baseZ + (entry->unk14 >> 7);
+		vertex4.v->v.tc[0] = 0;
+		vertex4.v->v.tc[1] = 0x0800;
+		vtx5 = (gfx = D_8005BB34);
+		vtx5->v.ob[0] = vertex4.v->v.ob[0];
+		D_8005BB34++;
+		vtx5->v.ob[1] = vertex4.v->v.ob[1];
+		vtx5->v.ob[2] = vertex4.v->v.ob[2];
+		vtx5->v.tc[0] = 0;
+		vtx5->v.tc[1] = 0;
+		vtx5->v.cn[0] = 0;
+		vertex4.v->v.cn[0] = 0;
+		vertex3.v->v.cn[0] = 0;
+		vtx2->v.cn[0] = 0;
+		vtx1->v.cn[0] = 0;
+		vtx0->v.cn[0] = 0;
+		vtx5->v.cn[1] = 0;
+		vertex4.v->v.cn[1] = 0;
+		vertex3.v->v.cn[1] = 0;
+		vtx2->v.cn[1] = 0;
+		vtx1->v.cn[1] = 0;
+		vtx0->v.cn[1] = 0;
+		vtx5->v.cn[2] = 0;
+		vertex4.v->v.cn[2] = 0;
+		vertex3.v->v.cn[2] = 0;
+		vtx2->v.cn[2] = 0;
+		vtx1->v.cn[2] = 0;
+		vtx0->v.cn[2] = 0;
+		vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vertex3.v->v.cn[3] = (vertex4.v->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
+		gSPVertex(D_8005BB2C++, ((u32) vtx0) & 0x1FFFFFFF, 6, 0);
+		gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
+		gSP1Triangle(vertex3.g = D_8005BB2C++, 2, 3, 5, 0);
+	  }
 
-	gDPTileSync(D_8005BB2C++);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
-	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	}
+  }
+
+  gDPTileSync(D_8005BB2C++);
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
+  gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
+  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
+  gDPSetCycleType(D_8005BB2C++, 1 << 20);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
