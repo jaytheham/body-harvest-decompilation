@@ -6539,17 +6539,18 @@ void func_800D4C10_E3BC0(void) {
 		radius = (s16)((steps * 8) + 0xA);
 		if (steps > 0) {
 			fadeStep = 0x96 / steps;
+			texAddr = 0;
 			do {
 				x -= spF0.x;
 				y -= spF0.y;
 				z -= spF0.z;
 
 				distance += segLen;
-				mod = i % 3;
+				mod = (s32)texAddr % 3;
 				c0 = palette[mod][0];
 				c1 = palette[mod][1];
 				c2 = palette[mod][2];
-				alpha = (i * fadeStep) + 0x64;
+				alpha = ((s32)texAddr * fadeStep) + 0x64;
 
 				D_8005BB34->v.ob[0] = (((f32)radius * spE4.x) + x);
 				yLo = ((f32)radius + y);
@@ -6607,7 +6608,8 @@ void func_800D4C10_E3BC0(void) {
 				if (radius <= 0) {
 					radius = 1;
 				}
-			} while (++i < steps);
+			texAddr = ++i;
+			} while (i < steps);
 		}
 
 
@@ -6707,9 +6709,9 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	selector = arg4;
 	angleX = ((arg2 + (selector * 0x78)) << 0x10) / 360;
 	parent = D_80154318[arg0].unk4;
-	entry[0] = &D_80154318[arg0];
+	
 	dist = arg1;
-	scaleSin = (f32)(((f32)sins(angleX) / 32768.0) * dist);
+	scaleSin = (entry[0] = &D_80154318[arg0], (f32)(((f32)sins(angleX) / 32768.0) * dist));
 	scaleCos = (f32)(((f32)coss(angleX) / 32768.0) * dist);
 	angleX = ((f32)coss(arg3) / 32768.0) * scaleSin;
 	sine = (f32)sins(arg3);
@@ -7224,7 +7226,7 @@ void func_800D7284_E6234(u8 arg0) {
 	s32 var_v0;
 	s32 temp_v0_13;
 	s16 unused_temp_v0_14;
-	SpurtVisualState *var_v1;
+	NukeEffectState *var_v1;
 
 	if (&index) {}
 index = D_80154088[arg0].unk6;
@@ -7245,7 +7247,7 @@ index = D_80154088[arg0].unk6;
 		color[1] = 0xFF;
 		color[2] = 0xFF;
 		temp_v0_13 = sp2C->unkE;
-		var_v1 = &sp2C->spurtVisual; if (var_v1) {}
+		var_v1 = &sp2C->nukeEffect; if (var_v1) {}
 		if (temp_v0_13 < 4) {
 			func_800B2354_C1304(&position[0], &color[0], 0x200, (s16) ((temp_v0_13 << 9) + 0x200));
 		} else if (temp_v0_13 < 9) {
@@ -7258,7 +7260,7 @@ index = D_80154088[arg0].unk6;
 		temp_f2 = y - (D_80153BA0.y * 4.0f);
 		temp_f14 = z - (D_80153BA0.z * 4.0f);
 		sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2) + (temp_f14 * temp_f14));
-		var_v0 = var_v1->color[0];
+		var_v0 = var_v1->age;
 		if (var_v0 < 0x51) {
 			temp_a0 = 0xFF - (var_v0 * 2);
 			if (temp_a0 < 0) {
@@ -7512,10 +7514,8 @@ void func_800D80B4_E7064(void) {
 #ifdef NON_MATCHING
 void func_800D8190_E7140(void) {
 	Unk80154318Entry *entry;
-	int alpha;
-	int endAlpha;
 	Vec3f direction;
-	int current;
+	s16 current;
 	EffectPositionPair *position;
 	f32 two;
 	s16 size[1];
@@ -7531,16 +7531,24 @@ void func_800D8190_E7140(void) {
 	s16 z2;
 	s16 halfZ;
 	s16 halfX;
+	int alpha;
+	Gfx *gfx;
 
 	two = 2.0f;
 	current = D_801542D6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPPipeSync(D_8005BB2C++);
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++; \
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
+	gfx->words.w1 = 0;
+	gfx = D_8005BB2C++; \
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
+	gfx->words.w1 = 0;
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[func_800038E0_44E0() % 16]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPPipeSync(D_8005BB2C++);
+	gfx = D_8005BB2C++; \
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
+	gfx->words.w1 = 0;
 
 	while ((current != -5) && (current != -6)) {
 		entry = &D_80154318[current];
@@ -7590,6 +7598,8 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
+		/* Keep cached corners in a separate IDO block. */
+		if (1) {}
 		D_8005BB34->v.ob[0] = x0 = (f32)(x2 + halfZ);
 		D_8005BB34->v.ob[1] = y0 = (f32)(y2 + partial);
 		D_8005BB34->v.ob[2] = z0 = (f32)(z2 - halfX);
@@ -7616,7 +7626,9 @@ void func_800D8190_E7140(void) {
 
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
-		gDPPipeSync(D_8005BB2C++);
+		gfx = D_8005BB2C++; \
+		gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
+		gfx->words.w1 = 0;
 
 		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
 		D_8005BB34->v.ob[1] = (f32)(position->position[1] - partial);
@@ -7684,8 +7696,8 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		endAlpha = 0xD7;
-		D_8005BB34->v.cn[3] = endAlpha;
+		alpha = 0xD7;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 + halfZ);
@@ -7697,7 +7709,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = endAlpha;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
@@ -7709,7 +7721,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = endAlpha;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
@@ -7721,7 +7733,7 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
 		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
 		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = endAlpha;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
 		D_8005BB34->v.ob[0] = (f32)(x2);
@@ -7737,17 +7749,25 @@ void func_800D8190_E7140(void) {
 		D_8005BB34++;
 
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 0, 1, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 0, 2, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 2, 3, 0);
-		gSP1Triangle(D_8005BB2C++, 4, 3, 1, 0);
+		gfx = D_8005BB2C++; \
+		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
+		gfx->words.w1 = __gsSP1Triangle_w1f(4, 0, 1, 0);
+		/* Preserve the first triangle's separate opcode materialization. */
+		if (1) {}
+		gfx = D_8005BB2C++; \
+		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
+		gfx->words.w1 = __gsSP1Triangle_w1f(4, 0, 2, 0);
+		gfx = D_8005BB2C++; \
+		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
+		gfx->words.w1 = __gsSP1Triangle_w1f(4, 2, 3, 0);
+		gfx = D_8005BB2C++; \
+		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
+		gfx->words.w1 = __gsSP1Triangle_w1f(4, 3, 1, 0);
 
 		D_80156EDA += 0xD;
 		current = D_80154318[current].unk4;
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8190_E7140.s")
 #endif

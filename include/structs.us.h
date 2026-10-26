@@ -2915,6 +2915,12 @@ typedef union {
 
 typedef struct {
 	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 age;
+	/* 0x07 */ u8 pad7[5];
+} NukeEffectState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
 	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 shadowColor[3];
 } SpurtVisualState; /* size = 0x0C */
@@ -3072,6 +3078,7 @@ typedef struct {
 				/* 0x08 */ TrailParticleState trailParticle;
 				/* 0x08 */ SparkEmitterState sparkEmitter;
 				/* 0x08 */ SpurtVisualState spurtVisual;
+				/* 0x08 */ NukeEffectState nukeEffect;
 				/* 0x08 */ SpurtEmitterState spurtEmitter;
 				/* 0x08 */ EffectCallbackState callbackState;
 				/* 0x08 */ SpinnerParentState spinnerState;
