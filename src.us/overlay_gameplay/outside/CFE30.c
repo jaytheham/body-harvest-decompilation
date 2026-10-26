@@ -8896,7 +8896,6 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	gSP2Triangles(D_8005BB2C++, 4, 2, 3, 0, 0, 3, 4, 0);
 }
 
-#ifdef NON_MATCHING
 void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 	Vec3f viewDir;
 	Vec3f toTarget;
@@ -8912,6 +8911,10 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 	u8 i;
 	u8 strength;
 	EffectRgb col;
+	Gfx *sync1;
+	Gfx *sync2;
+	Gfx *combine;
+	Gfx *render;
 
 	(void)arg3;
 
@@ -8973,11 +8976,22 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 
 		beamVec.x = arg0->x - pos.x; beamVec.y = arg0->y - pos.y; beamVec.z = arg0->z - pos.z;
 
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
-		gDPPipeSync(D_8005BB2C++);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
+		gDPPipeSync(sync1 = D_8005BB2C++);
+		gDPSetCombineLERP(combine = D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gDPSetRenderMode(render = D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+		gDPPipeSync(sync2 = D_8005BB2C++);
+		/* Reuse sync packets and splice these lines to preserve IDO's frame and scheduling. */
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DA00)); \
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0); \
+		sync1 = D_8005BB2C++; \
+		sync1->words.w0 = _SHIFTL(G_RDPLOADSYNC, 24, 8); \
+		sync1->words.w1 = 0; \
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, CALC_DXT_4b(32)); \
+		sync2 = D_8005BB2C++; \
+		sync2->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
+		sync2->words.w1 = 0; \
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0); \
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 124, 124);
 
 		if (angleDelta < 5.0) {
 			beamLen = (f32)(u16)((3001.0 - (f64)arg1) / 16);
@@ -9010,7 +9024,17 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 			func_800DB350_EA300();
 		}
 
-		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DC00)); \
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0); \
+		sync1 = D_8005BB2C++; \
+		sync1->words.w0 = _SHIFTL(G_RDPLOADSYNC, 24, 8); \
+		sync1->words.w1 = 0; \
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, CALC_DXT_4b(32)); \
+		sync2 = D_8005BB2C++; \
+		sync2->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
+		sync2->words.w1 = 0; \
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0); \
+		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 124, 124);
 
 		D_80153BB8.x = (f32)((f64)arg0->x + ((f64)(beamVec.x / 3) * 0.8));
 		D_80153BB8.y = (f32)((f64)arg0->y + ((f64)(beamVec.y / 3) * 0.8));
@@ -9027,9 +9051,7 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 		func_800DB350_EA300();
 	}
 }
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/CFE30_beam_late_rodata.s")
-#endif
+
 
 // DrawNonZBufferedEffects
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }

@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800DC5B8_EB568`, ordinary setup macros produce the correct instructions and `0xF0` frame, but the common pipe-sync opcode occupies `t0` instead of `t2` at ROM `0xEBB40`, `0xEBBCC`, and `0xEBC18`. Assigning four distinct setup packet cursors inside the existing macro arguments fixes the register but enlarges the frame to `0x100`.
+
+-> `code changed`: Keep the setup macros and assign their packet arguments to distinct `sync1`, `combine`, `render`, and `sync2` pointers. Expand both texture-block loads into their existing component macros, except reuse `sync1` and `sync2` for the load-sync and pipe-sync word stores. This removes four macro-local pointer slots. Keep each texture sequence on one preprocessor line; backslash-newline splices make the source readable without changing IDO scheduling.
+
+-> `correct ASM`: The shared opcode uses `t2`, the frame returns to `0xF0`, and all instructions and stack offsets match. The complete US ROM reports `build/bh.us.z64: OK`.
