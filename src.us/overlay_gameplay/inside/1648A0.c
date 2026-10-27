@@ -2713,7 +2713,7 @@ void func_8007F878_167938(void) {
 // CURRENT(1160)
 // AI - Render NPC model with full matrix transforms
 #ifdef NON_MATCHING
-void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
+void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
 	s32 position[3];
 	s16 scale[3];

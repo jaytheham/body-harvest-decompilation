@@ -6860,152 +6860,125 @@ void func_80072300_15A3C0(void)
 	s32 v1;
 	s32 v0;
 	s32 fp;
-	u8 a1;
+	int a1;
 
 	D_800E65D0 = 0;
-	D_800E6468[0] = 0xFF;
-	D_800E6468[1] = 0xFF;
-	for (v0 = 2; v0 < 0x132; v0++) {
+	for (v0 = 0; v0 < 0x132; v0++) {
 		D_800E6468[v0] = 0xFF;
 	}
 
+	
 	fp = 0x60;
-	a0 = D_800E6464;
-	y = 0;
-	if (a0 > 0) {
-		v1 = D_800E6460;
-		while (1) {
-			if (v1 > 0) {
-				x = 0;
-				while (x < v1) {
-					a1 = D_800E69A8[(v1 * y) + x];
-					if (a1 != 0xFF) {
-						switch (a1 & 0x1F) {
-							case 20:
-							case 22:
-								D_800E6468[((v1 + 2) * (y + 2)) + x + 1] = 1;
-								D_800E6468[((v1 + 2) * y) + x + 1] = 1;
-								break;
+	for (y = 0; y < D_800E6464; y++) {
+		for (x = 0; x < D_800E6460; x++) {
+			a1 = D_800E69A8[(D_800E6460 * y) + x];
+			if (a1 != 0xFF) {
+				switch (a1 %= 0x20U) {
+					case 20:
+					case 22:
+						D_800E6468[((D_800E6460 + 2) * (y + 2)) + x + 1] = 1;
+						D_800E6468[((D_800E6460 + 2) * y) + x + 1] = 1;
+						break;
 
-							case 21:
-							case 23:
-								D_800E6468[((v1 + 2) * (y + 1)) + x] = 1;
-								D_800E6468[((v1 + 2) * (y + 1)) + x + 2] = 1;
-								break;
+					case 21:
+					case 23:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x] = 1;
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 2] = 1;
+						break;
 
-							case 0:
-								D_800E6468[((v1 + 2) * (y + 1)) + x] = 1;
-								D_800E6468[((v1 + 2) * y) + x + 1] = 1;
-								break;
+					case 0:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x] = 1;
+						D_800E6468[((D_800E6460 + 2) * y) + x + 1] = 1;
+						break;
 
-							case 1:
-								D_800E6468[((v1 + 2) * (y + 1)) + x] = 1;
-								D_800E6468[((v1 + 2) * (y + 2)) + x + 1] = 1;
-								break;
+					case 1:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x] = 1;
+						D_800E6468[((D_800E6460 + 2) * (y + 2)) + x + 1] = 1;
+						break;
 
-							case 2:
-								D_800E6468[((v1 + 2) * (y + 1)) + x + 2] = 1;
-								D_800E6468[((v1 + 2) * (y + 2)) + x + 1] = 1;
-								break;
+					case 2:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 2] = 1;
+						D_800E6468[((D_800E6460 + 2) * (y + 2)) + x + 1] = 1;
+						break;
 
-							case 3:
-								D_800E6468[((v1 + 2) * (y + 1)) + x + 2] = 1;
-								D_800E6468[((v1 + 2) * y) + x + 1] = 1;
-								break;
+					case 3:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 2] = 1;
+						D_800E6468[((D_800E6460 + 2) * y) + x + 1] = 1;
+						break;
 
-							case 24:
-							case 25:
-							case 26:
-							case 27:
-								D_800E6468[((v1 + 2) * (y + 1)) + x + 1] = 1;
-								break;
+					case 24:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 1] = 1;
+						break;
 
-							case 16:
-								v0 = x * fp;
-								D_800E6A78.unk4C = (f32) (v0 + D_800E65C8->unk28 + fp);
-								D_800E6468[((v1 + 2) * y) + x + 1] = 1;
-								D_800E65CC = v0;
-								D_800E65D0 = 1;
-								break;
+					case 25:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 1] = 1;
+						break;
 
-							case 4:
-							case 8:
-							case 28:
-								D_800E6468[((v1 + 2) * y) + x + 1] = 1;
-								break;
+					case 26:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 1] = 1;
+						break;
 
-							case 5:
-							case 9:
-							case 29:
-								D_800E6468[((v1 + 2) * (y + 1)) + x] = 1;
-								break;
+					case 27:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 1] = 1;
+						break;
 
-							case 6:
-							case 10:
-							case 30:
-								D_800E6468[((v1 + 2) * (y + 2)) + x + 1] = 1;
-								break;
+					case 16:
+						v0 = x * fp;
+						D_800E6A78.unk4C = (f32) (v0 + D_800E65C8->unk28 + fp);
+						D_800E6468[((D_800E6460 + 2) * y) + x + 1] = 1;
+						D_800E65CC = v0;
+						D_800E65D0 = 1;
+						break;
 
-							case 7:
-							case 11:
-							case 31:
-								D_800E6468[((v1 + 2) * (y + 1)) + x + 2] = 1;
-								break;
+					case 4:
+					case 8:
+					case 28:
+						D_800E6468[((D_800E6460 + 2) * y) + x + 1] = 1;
+						break;
 
-							case 17:
-							case 18:
-							case 19:
-								osSyncPrintf(&D_800A43EC_18C4AC);
-								v1 = D_800E6460;
-								break;
+					case 5:
+					case 9:
+					case 29:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x] = 1;
+						break;
 
-							default:
-								break;
-						}
-					}
-					x++;
+					case 6:
+					case 10:
+					case 30:
+						D_800E6468[((D_800E6460 + 2) * (y + 2)) + x + 1] = 1;
+						break;
+
+					case 7:
+					case 11:
+					case 31:
+						D_800E6468[((D_800E6460 + 2) * (y + 1)) + x + 2] = 1;
+						break;
+
+					case 17:
+					case 18:
+					case 19:
+					default:
+						osSyncPrintf(&D_800A43EC_18C4AC, a1);
+												break;
+
+					case 12:
+					case 13:
+					case 14:
+					case 15:
+						break;
 				}
 			}
-			a0 = D_800E6464;
-			y++;
-			if (y >= a0) {
-				break;
-			}
 		}
-		y = 0;
 	}
 
-	v1 = a0 + 2;
-	if (v1 > 0) {
-		v0 = D_800E6460 + 2;
-		while (y < v1) {
-			if (v0 > 0) {
-				for (x = 1; x < v0; x++) {}
-			}
-			y++;
-		}
-		y = 0;
+	for (y = 0; y < D_800E6464 + 2; y++) {
+		for (x = 0; x < D_800E6460 + 2; x++) {}
 	}
-
-	if (a0 > 0) {
-		v1 = D_800E6460;
-		while (y < a0) {
-			if (v1 > 0) {
-				for (x = 1; x < v1; x++) {}
-			}
-			y++;
-		}
-		y = 0;
+	for (y = 0; y < D_800E6464; y++) {
+		for (x = 0; x < D_800E6460; x++) {}
 	}
-
-	if (a0 > 0) {
-		v1 = D_800E6460;
-		while (y < a0) {
-			if (v1 > 0) {
-				for (x = 1; x < v1; x++) {}
-			}
-			y++;
-		}
+	for (y = 0; y < D_800E6464; y++) {
+		for (x = 0; x < D_800E6460; x++) {}
 	}
 }
 #else
@@ -7489,19 +7462,18 @@ void func_80073A48_15BB08(void) {
 #ifdef NON_MATCHING
 // AI - Renders the top-of-screen HUD gradient bar with level-specific colors
 void func_80073A50_15BB10(void) {
-	s16 baseY;
-	s16 y1;
-	s16 y2;
-	s16 y3;
-	s16 y4;
-	s32 matrix;
-	s32 dx;
-	s32 dz;
+	s32 baseY;
+	s32 y1;
+	s32 y2;
+	s32 y3;
+	s32 y4;
+	s16 dx;
+	s16 dz;
 	s32 angle;
 
 	dx = (s32)(D_8008DDF4_175EB4 - D_800E659C);
 	dz = (s32)(D_8008DDFC_175EBC - D_800E65A4);
-	angle = func_80003824_4424((f32)(s16)(s32)sqrtf((f32)(((s16)dx * (s16)dx) + ((s16)dz * (s16)dz))), D_8008DDF8_175EB8 - D_800E65A0);
+	angle = func_80003824_4424((f32)(s16)(s32)sqrtf((f32)((dx * dx) + (dz * dz))), D_8008DDF8_175EB8 - D_800E65A0);
 
 	if ((currentLevel == 1) || (currentLevel == 3)) {
 		baseY = 0x32 - (angle / 0x24);
@@ -7746,7 +7718,7 @@ void func_80073A50_15BB10(void) {
 	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, -100.0f, 100.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	func_800039D0_45D0(NULL, NULL, NULL, matrix);
+	func_800039D0_45D0(NULL, NULL, NULL, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
@@ -8084,120 +8056,113 @@ void func_80074D98_15CE58(s32 arg0) {
 #ifdef NON_MATCHING
 // AI - Renders 3D room objects with visibility culling and texture offsets
 void func_80074FF0_15D0B0(void) {
-	s16 spDE;
-	s16 spDC;
-	s16 spDA;
-	s16 spD8;
-	s16 spD6;
-	s16 spD4;
-	s32 spC4;
-	s32 spC0;
-	s32 spBC;
-	s32 spB8;
-	s32 spB4;
-	s32 spB0;
-	s16 spA6;
-	s16 spA4;
-	s16 spA2;
-	s16 spA0;
-	s16 sp9E;
-	s16 sp9C;
 	Unk800E66A8 *entry;
-	f32 dimX;
-	f32 dimZ;
+	f64 radiusScale;
 	f64 temp_f20;
-	s32 objIdx;
-	s32 temp;
+	u8 objIdx;
+	s32 flags;
 	s32 i;
 	s32 halfDim;
-	u16 temp_u16;
-	Unk80070F7CObj *obj;
+	Gfx *displayList;
+	u16 rotation[6];
+	f32 positionScale;
+	f32 angleScale;
+	f32 halfDivisor;
+	s32 position[6];
+	f32 dimX;
+	f32 dimZ;
+	s16 scale[6];
 
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-	entry = D_800E66A8;
 	i = 0;
 	if (D_800E668C > 0) {
-		temp_f20 = D_800A4AB0_18CB70[0];
+		radiusScale = 1.5;
+		halfDivisor = 2.0f;
+		angleScale = 32768.0f;
+		positionScale = 65536.0f;
+		if (radiusScale) {}
+		if (halfDivisor && halfDivisor) {}
+		if (angleScale) {}
+		if (positionScale) {}
+		if (&D_800E65BC) {}
+		if (&D_8005BB38) {}
+		temp_f20 = D_800A4AB0_18CB70.value;
 		do {
-			objIdx = entry->unk0;
-			obj = &D_800E65BC[objIdx];
-			if (obj->unk44 & 1) {
-				temp_u16 = obj->unk18;
-				dimX = temp_u16;
-				temp_u16 = obj->unk1A;
-				dimZ = temp_u16;
+			if (D_800E66A8[i].pad2F[0]) {} if (&D_8005BB38 && &D_8005BB38) {} if (&D_8005BB38 && &D_8005BB38) {} if (&D_800E65BC && &D_800E65BC) {} if (&D_8005BB2C) {} if (i) {} objIdx = D_800E66A8[i].unk0; if ((s32)(objIdx * sizeof(Unk80070F7CObj))) {}
+			if (D_800E65BC[objIdx].unk44 & 1) {
+				displayList = D_800E65BC[objIdx].unk0;
+				dimX = (u32)D_800E65BC[objIdx].unk18;
+				dimZ = (u32)D_800E65BC[objIdx].unk1A;
 				if (dimZ < dimX) {
-					halfDim = (s32) (dimX / 2.0f);
+					halfDim = (s32) (dimX / halfDivisor);
 				} else {
-					halfDim = (s32) (dimZ / 2.0f);
+					halfDim = (s32) (dimZ / halfDivisor);
 				}
 
 				if (func_8007C428_1644E8(
-					entry->unk2 - 0x60,
-					entry->unk4,
-					entry->unk6 - 0x60,
-					(u16) (s32) ((f64) halfDim * 1.5),
+					D_800E66A8[i].unk2 - 0x60,
+					D_800E66A8[i].unk4,
+					D_800E66A8[i].unk6 - 0x60,
+					(u16) (u32) ((f64) halfDim * radiusScale),
 					(s32) D_8008DDF4_175EB4,
 					(s32) D_8008DDF8_175EB8,
 					(s32) D_8008DDFC_175EBC,
-					(u16) (s32) (((f64) (D_8008DDF0_175EB0 * 32768.0f)) / temp_f20),
+					(u16) (s32) (((f64) (D_8008DDF0_175EB0 * angleScale)) / temp_f20),
 					0x238E
 				)) {
-					temp = obj->unk40;
-					if (temp & 0x100) {
-						spB0 = (entry->unk2 - 0x60) << 0x10;
-						spB4 = entry->unk4 << 0x10;
-						sp9C = 0x40;
-						spA0 = 0x40;
-						spD4 = entry->unk8 << 0xE;
-						spD6 = 0;
-						spD8 = 0;
-						spB8 = (entry->unk6 - 0x60) << 0x10;
-						sp9E = 0x40;
-						spA2 = 0x100;
-						spA6 = 0x100;
-						spDA = (s16) (s32) (((f64) (entry->unk18 * 32768.0f)) / temp_f20);
-						spDC = (s16) (s32) (((f64) (entry->unk1C * 32768.0f)) / temp_f20);
-						spA4 = 0x100;
-						spBC = (s32) (entry->unk20 * 65536.0f);
-						spDE = (s16) (s32) (((f64) (entry->unk14 * 32768.0f)) / temp_f20);
-						spC0 = (s32) (entry->unk24 * 65536.0f);
-						spC4 = (s32) (entry->unk28 * 65536.0f);
-						func_80076A58_15EB18(1, &spD4, &spB0, &sp9C, obj->unk0);
-					} else if (((temp & 0x04000000) && (entry->unk2E & 1)) ||
-							   ((temp & 0x08000000) && !(entry->unk2E & 1))) {
-						temp = D_8005BB38;
-						D_8005BB38 += 0x40;
+					flags = D_800E65BC[objIdx].unk40;
+					if (flags & 0x100) {
+						position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
+						position[1] = D_800E66A8[i].unk4 << 0x10;
+						scale[0] = 0x40;
+						scale[2] = 0x40;
+						rotation[0] = D_800E66A8[i].unk8 << 0xE;
+						rotation[1] = 0;
+						rotation[2] = 0;
+						position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
+						scale[1] = 0x40;
+						scale[3] = 0x100;
+						scale[5] = 0x100;
+						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
+						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
+						scale[4] = 0x100;
+						position[3] = (s32) (D_800E66A8[i].unk20 * positionScale);
+						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
+						position[4] = (s32) (D_800E66A8[i].unk24 * positionScale);
+						position[5] = (s32) (D_800E66A8[i].unk28 * positionScale);
+						func_80076A58_15EB18(1, &rotation[0], &position[0], &scale[0], displayList);
+					} else if (((flags & 0x04000000) && (D_800E66A8[i].unk2E & 1)) ||
+							   ((flags & 0x08000000) && !(D_800E66A8[i].unk2E & 1))) {
+						
 						func_800773F4_15F4B4(
-							obj->unk0,
-							(s32) (entry->unk20 * 65536.0f) + ((entry->unk2 - 0x60) << 0x10),
-							(s32) (entry->unk24 * 65536.0f) + (entry->unk4 << 0x10),
-							(s32) (entry->unk28 * 65536.0f) + ((entry->unk6 - 0x60) << 0x10),
+							displayList,
+							(s32) (D_800E66A8[i].unk20 * positionScale) + ((D_800E66A8[i].unk2 - 0x60) << 0x10),
+							(s32) (D_800E66A8[i].unk24 * positionScale) + (D_800E66A8[i].unk4 << 0x10),
+							(s32) (D_800E66A8[i].unk28 * positionScale) + ((D_800E66A8[i].unk6 - 0x60) << 0x10),
 							0,
-							entry->unk8 << 0xE,
+							D_800E66A8[i].unk8 << 0xE,
 							0,
-							temp,
+							D_8005BB38++,
 							0,
 							0x40);
-						temp = D_8005BB38;
-						D_8005BB38 += 0x40;
-						func_800773F4_15F4B4(obj->unk4, obj->unk2C << 0x10, obj->unk2E << 0x10, obj->unk30 << 0x10,
-							0, 0, 0, temp, 1, 0x100);
+						
+						func_800773F4_15F4B4(D_800E65BC[objIdx].unk4, D_800E65BC[objIdx].unk2C << 0x10, D_800E65BC[objIdx].unk2E << 0x10, D_800E65BC[objIdx].unk30 << 0x10,
+							0, 0, 0, D_8005BB38++, 1, 0x100);
 
 						gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 					} else {
-						D_8005BB38 += 0x40;
+						
 						func_800773F4_15F4B4(
-							obj->unk0,
-							(s32) (entry->unk20 * 65536.0f) + ((entry->unk2 - 0x60) << 0x10),
-							(s32) (entry->unk24 * 65536.0f) + (entry->unk4 << 0x10),
-							(s32) (entry->unk28 * 65536.0f) + ((entry->unk6 - 0x60) << 0x10),
-							(s16) (s32) (((f64) (entry->unk14 * 32768.0f)) / temp_f20),
-							(entry->unk8 << 0xE) + (s16) (s32) (((f64) (entry->unk18 * 32768.0f)) / temp_f20),
-							(s16) (s32) (((f64) (entry->unk1C * 32768.0f)) / temp_f20),
-							D_8005BB38,
+							displayList,
+							(s32) (D_800E66A8[i].unk20 * positionScale) + ((D_800E66A8[i].unk2 - 0x60) << 0x10),
+							(s32) (D_800E66A8[i].unk24 * positionScale) + (D_800E66A8[i].unk4 << 0x10),
+							(s32) (D_800E66A8[i].unk28 * positionScale) + ((D_800E66A8[i].unk6 - 0x60) << 0x10),
+							(s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20),
+							(D_800E66A8[i].unk8 << 0xE) + (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20),
+							(s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20),
+							D_8005BB38++,
 							1,
 							0x40);
 					}
@@ -8205,7 +8170,6 @@ void func_80074FF0_15D0B0(void) {
 			}
 
 			i++;
-			entry++;
 		} while (i < D_800E668C);
 	}
 }
@@ -8216,35 +8180,27 @@ void func_80074FF0_15D0B0(void) {
 #ifdef NON_MATCHING
 // AI - Main room renderer: floor scan direction + object rendering
 void func_8007568C_15D74C(void) {
-	s16 sp102;
-	s16 sp100;
-	s16 spFE;
-	s16 spFC;
-	s16 spFA;
-	s16 spF8;
-	s32 spE8;
-	s32 spE4;
-	s32 spE0;
-	s32 spDC;
-	s32 spD8;
-	s32 spD4;
-	s16 spCA;
-	s16 spC8;
-	s16 spC6;
-	s16 spC4;
-	s16 spC2;
-	s16 spC0;
+	s32 padHigh0;
+	s32 padHigh1;
+	f64 radiusScale;
+	f64 temp_f20;
 	Unk800E66A8 *entry;
-	Unk80070F7CObj *obj;
 	f32 dimX;
 	f32 dimZ;
-	f64 temp_f20;
 	s32 objIdx;
-	s32 variant;
+	Gfx *variant;
 	s32 i;
 	s32 halfDim;
-	s32 tmp;
-	u16 temp_u16;
+	u16 rotation[6];
+	f32 positionScale;
+	f32 angleScale;
+	f32 halfDivisor;
+	s32 position[6];
+	s32 padPosition0;
+	s32 padPosition1;
+	s16 scale[6];
+	union { s32 effectId; s32 textureOffset; } scratch;
+	Unk8008DED0Entry *entry2;
 
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
@@ -8275,113 +8231,121 @@ void func_8007568C_15D74C(void) {
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-	i = 0;
 	entry = D_800E66A8;
+	i = 0;
 	if (D_800E668C > 0) {
-		temp_f20 = D_800A4AC0_18CB80[0];
-		while (i < D_800E668C) {
+		radiusScale = 1.5;
+		halfDivisor = 2.0f;
+		angleScale = 32768.0f;
+		positionScale = 65536.0f;
+		if (radiusScale) {}
+		if (halfDivisor && halfDivisor) {}
+		if (angleScale) {}
+		if (positionScale) {}
+		if (&D_800E65BC) {}
+		if (&D_8005BB38) {}
+		temp_f20 = D_800A4AC0_18CB80.value;
+		do {
+			entry = &D_800E66A8[i];
 			objIdx = entry->unk0;
-			obj = &D_800E65BC[objIdx];
 
-			if (!(obj->unk44 & 1)) {
-				variant = obj->unk0;
-				if ((obj->unk40 & 0x10000000) && (entry->unk2E & 1)) {
-					variant = obj->unk4;
-				}
-
-				if (objIdx == 0x1E) {
-					temp_u16 = obj->unk18;
-					dimX = temp_u16;
-					temp_u16 = obj->unk1A;
-					dimZ = temp_u16;
-					halfDim = (dimZ < dimX) ? (s32)(dimX / 2.0f) : (s32)(dimZ / 2.0f);
+			if (!(D_800E65BC[objIdx].unk44 & 1)) {
+				if (objIdx == 0x1F) {
+					dimX = (u32)D_800E65BC[objIdx].unk18;
+					dimZ = (u32)D_800E65BC[objIdx].unk1A;
+					halfDim = (dimZ < dimX) ? (s32)(dimX / halfDivisor) : (s32)(dimZ / halfDivisor);
 					if (func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
-						((u16)(s32)((f64)halfDim * 1.5)), (s32)D_8008DDF4_175EB4, (s32)D_8008DDF8_175EB8,
-						(s32)D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / temp_f20), 0x238E)) {
+						((u16)(u32)((f64)halfDim * radiusScale)), D_8008DDF4_175EB4, D_8008DDF8_175EB8,
+						D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
 						func_8007F8F4_1679B4(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60, entry->unk8 << 0xE);
 					}
-				} else if (variant != 0) {
-					temp_u16 = obj->unk18;
-					dimX = temp_u16;
-					temp_u16 = obj->unk1A;
-					dimZ = temp_u16;
-					halfDim = (dimZ < dimX) ? (s32)(dimX / 2.0f) : (s32)(dimZ / 2.0f);
+				} else {
+				if ((D_800E65BC[objIdx].unk40 & 0x10000000) && (entry->unk2E & 1)) {
+					variant = D_800E65BC[objIdx].unk4;
+				} else {
+					variant = D_800E65BC[objIdx].unk0;
+				}
+
+				if (variant != NULL) {
+					dimX = (u32)D_800E65BC[objIdx].unk18;
+					dimZ = (u32)D_800E65BC[objIdx].unk1A;
+					halfDim = (dimZ < dimX) ? (s32)(dimX / halfDivisor) : (s32)(dimZ / halfDivisor);
 
 					if (func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
-						((u16)(s32)((f64)halfDim * 1.5)), (s32)D_8008DDF4_175EB4, (s32)D_8008DDF8_175EB8,
-						(s32)D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / temp_f20), 0x238E)) {
+						((u16)(u32)((f64)halfDim * radiusScale)), D_8008DDF4_175EB4, D_8008DDF8_175EB8,
+						D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
 						if (objIdx == 0x1E) {
 							gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-							gSPSegment(D_8005BB2C++, 6, (D_800E65C4[(entry->unk2C & 0xFC) >> 2] * 2) + D_800A5720);
+							scratch.textureOffset = D_800E65C4[(entry->unk2C & 0xFC) >> 2];
+							gSPSegment(D_8005BB2C++, 6, &D_800A5720[scratch.textureOffset * 2]);
 
-							D_8005BB38 += 0x40;
 							func_800773F4_15F4B4(
 								variant,
-								(s32)(entry->unk20 * 65536.0f) + ((entry->unk2 - 0x60) << 0x10),
-								(s32)(entry->unk24 * 65536.0f) + (entry->unk4 << 0x10),
-								(s32)(entry->unk28 * 65536.0f) + ((entry->unk6 - 0x60) << 0x10),
+								(s32)(entry->unk20 * positionScale) + ((entry->unk2 - 0x60) << 0x10),
+								(s32)(entry->unk24 * positionScale) + (entry->unk4 << 0x10),
+								(s32)(entry->unk28 * positionScale) + ((entry->unk6 - 0x60) << 0x10),
 								0,
 								entry->unk8 << 0xE,
 								0,
-								D_8005BB38,
+								D_8005BB38++,
 								1,
 								0x40
 							);
 
 							gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-						} else if (obj->unk40 & 0x100) {
-							spF8 = entry->unk8 << 0xE;
-							spD4 = (entry->unk2 - 0x60) << 0x10;
-							spD8 = entry->unk4 << 0x10;
-							spDC = (entry->unk6 - 0x60) << 0x10;
-							spE0 = (s32)(entry->unk20 * 65536.0f);
-							spE4 = (s32)(entry->unk24 * 65536.0f);
-							spE8 = (s32)(entry->unk28 * 65536.0f);
-							spFA = 0;
-							spFC = 0;
-							spFE = (s16)(s32)(((f64)(entry->unk18 * 32768.0f)) / temp_f20);
-							sp100 = (s16)(s32)(((f64)(entry->unk1C * 32768.0f)) / temp_f20);
-							sp102 = (s16)(s32)(((f64)(entry->unk14 * 32768.0f)) / temp_f20);
-							spC0 = 0x40;
-							spC2 = 0x40;
-							spC4 = 0x40;
-							spC6 = 0x100;
-							spC8 = 0x100;
-							spCA = 0x100;
-							func_80076A58_15EB18(1, &spF8, &spD4, &spC0, variant);
-						} else if (((obj->unk40 & 0x04000000) && (entry->unk2E & 1)) ||
-								   ((obj->unk40 & 0x08000000) && !(entry->unk2E & 1))) {
-							tmp = D_8005BB38;
-							D_8005BB38 += 0x40;
+						} else if (D_800E65BC[objIdx].unk40 & 0x100) {
+							rotation[0] = entry->unk8 << 0xE;
+							position[0] = (entry->unk2 - 0x60) << 0x10;
+							scale[0] = 0x40;
+							scale[2] = 0x40;
+							position[2] = (entry->unk6 - 0x60) << 0x10;
+							position[1] = entry->unk4 << 0x10;
+							scale[1] = 0x40;
+							rotation[3] = (s16)(s32)(((f64)(entry->unk18 * angleScale)) / temp_f20);
+							rotation[4] = (s16)(s32)(((f64)(entry->unk1C * angleScale)) / temp_f20);
+							rotation[1] = 0;
+							rotation[2] = 0;
+							scale[3] = 0x100;
+							scale[5] = 0x100;
+							rotation[5] = (s16)(s32)(((f64)(entry->unk14 * angleScale)) / temp_f20);
+							position[3] = (s32)(entry->unk20 * positionScale);
+							scale[4] = 0x100;
+							position[4] = (s32)(entry->unk24 * positionScale);
+							position[5] = (s32)(entry->unk28 * positionScale);
+							func_80076A58_15EB18(1, rotation, position, scale, variant);
+						} else if (((D_800E65BC[objIdx].unk40 & 0x04000000) && (entry->unk2E & 1)) ||
+								   ((D_800E65BC[objIdx].unk40 & 0x08000000) && !(entry->unk2E & 1))) {
+
+
 							func_800773F4_15F4B4(
 								variant,
-								(s32)(entry->unk20 * 65536.0f) + ((entry->unk2 - 0x60) << 0x10),
-								(s32)(entry->unk24 * 65536.0f) + (entry->unk4 << 0x10),
-								(s32)(entry->unk28 * 65536.0f) + ((entry->unk6 - 0x60) << 0x10),
+								(s32)(entry->unk20 * positionScale) + ((entry->unk2 - 0x60) << 0x10),
+								(s32)(entry->unk24 * positionScale) + (entry->unk4 << 0x10),
+								(s32)(entry->unk28 * positionScale) + ((entry->unk6 - 0x60) << 0x10),
 								0,
 								entry->unk8 << 0xE,
 								0,
-								tmp,
+								D_8005BB38++,
 								0,
 								0x40
 							);
-							tmp = D_8005BB38;
-							D_8005BB38 += 0x40;
-							func_800773F4_15F4B4(obj->unk4, obj->unk2C << 0x10, obj->unk2E << 0x10, obj->unk30 << 0x10,
-								0, 0, 0, tmp, 1, 0x100);
+
+
+							func_800773F4_15F4B4(D_800E65BC[objIdx].unk4, D_800E65BC[objIdx].unk2C << 0x10, D_800E65BC[objIdx].unk2E << 0x10, D_800E65BC[objIdx].unk30 << 0x10,
+								0, 0, 0, D_8005BB38++, 1, 0x100);
 
 							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 						} else {
-							D_8005BB38 += 0x40;
+
 							func_800773F4_15F4B4(
 								variant,
-								(s32)(entry->unk20 * 65536.0f) + ((entry->unk2 - 0x60) << 0x10),
-								(s32)(entry->unk24 * 65536.0f) + (entry->unk4 << 0x10),
-								(s32)(entry->unk28 * 65536.0f) + ((entry->unk6 - 0x60) << 0x10),
-								(s16)(s32)(((f64)(entry->unk14 * 32768.0f)) / temp_f20),
-								(entry->unk8 << 0xE) + (s16)(s32)(((f64)(entry->unk18 * 32768.0f)) / temp_f20),
-								(s16)(s32)(((f64)(entry->unk1C * 32768.0f)) / temp_f20),
-								D_8005BB38,
+								(s32)(entry->unk20 * positionScale) + ((entry->unk2 - 0x60) << 0x10),
+								(s32)(entry->unk24 * positionScale) + (entry->unk4 << 0x10),
+								(s32)(entry->unk28 * positionScale) + ((entry->unk6 - 0x60) << 0x10),
+								(s16)(s32)(((f64)(entry->unk14 * angleScale)) / temp_f20),
+								(entry->unk8 << 0xE) + (s16)(s32)(((f64)(entry->unk18 * angleScale)) / temp_f20),
+								(s16)(s32)(((f64)(entry->unk1C * angleScale)) / temp_f20),
+								D_8005BB38++,
 								1,
 								0x40
 							);
@@ -8389,23 +8353,23 @@ void func_8007568C_15D74C(void) {
 					}
 				}
 
+				}
+
 				if (i == D_800E65F8) {
-					tmp = D_800E65F0;
-					if ((tmp == 1) && (obj->unk40 & 4)) {
+					if ((D_800E65F0 == 1) && (D_800E65BC[objIdx].unk40 & 4)) {
 						func_800768B8_15E978(i);
 					}
-					if ((tmp == 2) || (tmp == 3)) {
+					if ((D_800E65F0 == 2) || (D_800E65F0 == 3)) {
 						func_80076678_15E738(i);
 					}
-					if (tmp == 6) {
+					if (D_800E65F0 == 6) {
 						func_80076538_15E5F8(i);
 					}
 				}
 			}
 
 			i += 1;
-			entry += 1;
-		}
+		} while (i < D_800E668C);
 	}
 
 	if (D_800E65F0 == 5) {
@@ -8413,26 +8377,25 @@ void func_8007568C_15D74C(void) {
 	}
 
 	if (D_800E65A8 & 0x10) {
-		tmp = ((s32)(D_800E664E & 0xFC) >> 2);
+		scratch.effectId = ((s32)(D_800E664E & 0xFC) >> 2);
 		if ((D_800E664E & 3) == 2) {
-			Unk8008DED0Entry *entry2 = &D_8008DED0_175F90[tmp];
+			entry2 = &D_8008DED0_175F90[scratch.effectId];
 			if (entry2->unk8 != 0) {
 				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 
-				i = D_8005BB38;
-				D_8005BB38 += 0x40;
+
 				func_800773F4_15F4B4(entry2->unk0, (s32)(D_800E6650.x * 65536.0f), (s32)(D_800E6650.y * 65536.0f),
-					(s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, i, 1, 0x40);
+					(s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, D_8005BB38++, 1, 0x40);
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 			} else {
-				func_8008B53C_1735FC((s16)(s32)D_800E6650.x, (s16)(s32)D_800E6650.y, (s16)(s32)D_800E6650.z, 0x28, tmp);
+				func_8008B53C_1735FC((s16)(s32)D_800E6650.x, (s16)(s32)D_800E6650.y, (s16)(s32)D_800E6650.z, 0x28, scratch.effectId);
 			}
 		} else {
-			i = D_8005BB38;
-			D_8005BB38 += 0x40;
-			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][tmp], (s32)(D_800E6650.x * 65536.0f),
-				(s32)(D_800E6650.y * 65536.0f), (s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, i, 1, 0x40);
+
+
+			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][scratch.effectId], (s32)(D_800E6650.x * 65536.0f),
+				(s32)(D_800E6650.y * 65536.0f), (s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, D_8005BB38++, 1, 0x40);
 		}
 
 		gSPSetLights2(D_8005BB2C++, D_8008DE50_175F10.lights);
@@ -9000,6 +8963,7 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 }
 
 
+
 // Removes the spawned object associated with a room entry.
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 	s32 type;
@@ -9025,6 +8989,9 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 		break;
 	}
 }
+
+
+
 
 
 
