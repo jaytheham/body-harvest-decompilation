@@ -56,74 +56,86 @@ u32 D_8008DF9C_17605C[1] = { 0x00000000 };
 
 // Room object & level tables (ROM 0x176060 - 0x184F20)
 
-// AI - Per-room effect/overlay display lists (indexed by currentLevel*0xB + variant)
-Gfx *D_8008DFA0_176060[66] = {
-	(Gfx *)0x01000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x01000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F006140,
-	(Gfx *)0x01000000,
-	(Gfx *)0x00000001,
-	(Gfx *)0x0F006E78,
-	(Gfx *)0x01000000,
-	(Gfx *)0x00000001,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F00DF98,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F01DCC0,
-	(Gfx *)0x0F01D7E0,
-	(Gfx *)0x0F00F700,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F013D38,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F00E6B0,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F01EA70,
-	(Gfx *)0x0F00D590,
-	(Gfx *)0x0F01E588,
-	(Gfx *)0x0F01E358,
-	(Gfx *)0x0F01E1C8,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F00C6F0,
-	(Gfx *)0x0F00CA38,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F01B130,
-	(Gfx *)0x0F007F50,
-	(Gfx *)0x0F009198,
-	(Gfx *)0x0F00A998,
-	(Gfx *)0x0F00BD58,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x0F01DF50,
-	(Gfx *)0x0F00C6F0,
-	(Gfx *)0x0F00C148,
-	(Gfx *)0x0F010EA8,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000,
-	(Gfx *)0x00000000
+// AI - Per-room effect/overlay display lists, indexed by level and event
+Gfx *D_8008DFA0_176060[6][11] = {
+	{
+		(Gfx *)0x01000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x01000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F006140,
+		(Gfx *)0x01000000,
+		(Gfx *)0x00000001,
+		(Gfx *)0x0F006E78,
+		(Gfx *)0x01000000,
+		(Gfx *)0x00000001,
+	},
+	{
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F00DF98,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F01DCC0,
+		(Gfx *)0x0F01D7E0,
+		(Gfx *)0x0F00F700,
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F013D38,
+	},
+	{
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F00E6B0,
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F01EA70,
+		(Gfx *)0x0F00D590,
+		(Gfx *)0x0F01E588,
+		(Gfx *)0x0F01E358,
+		(Gfx *)0x0F01E1C8,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+	},
+	{
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F00C6F0,
+		(Gfx *)0x0F00CA38,
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F01B130,
+		(Gfx *)0x0F007F50,
+		(Gfx *)0x0F009198,
+		(Gfx *)0x0F00A998,
+		(Gfx *)0x0F00BD58,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+	},
+	{
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x0F01DF50,
+		(Gfx *)0x0F00C6F0,
+		(Gfx *)0x0F00C148,
+		(Gfx *)0x0F010EA8,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+	},
+	{
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000,
+		(Gfx *)0x00000000
+	},
 };
 
 // AI - Room object catalog: 25 rooms x 32 room-object types (geometry, dimensions, spawns, flags)
@@ -8522,7 +8534,7 @@ void func_8007568C_15D74C(void) {
 		} else {
 			i = D_8005BB38;
 			D_8005BB38 += 0x40;
-			func_800773F4_15F4B4(D_8008DFA0_176060[(currentLevel * 0xB) + tmp], (s32)(D_800E6650.x * 65536.0f),
+			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][tmp], (s32)(D_800E6650.x * 65536.0f),
 				(s32)(D_800E6650.y * 65536.0f), (s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, i, 1, 0x40);
 		}
 
@@ -10460,37 +10472,34 @@ void func_8007A818_1628D8(s32 arg0) {
 }
 
 // AI - Handles room interaction events and mission triggers
-#ifdef NON_MATCHING
 void func_8007A8AC_16296C(s32 arg0) {
 	s32 eventId;
-	Unk800E66A8* entry;
+	s32 pad;
 	s32 changed;
-	Unk80070F7CObj* room;
-	Unk8008DED0Entry* dlEntry;
+	s32 objectId;
 
-	entry = &D_800E66A8[D_800E662C];
-	room = &D_800E65BC[entry->unk0];
+	objectId = D_800E66A8[D_800E662C].unk0;
 	changed = 0;
 
-	if (room->unk40 & 8) {
-		if (entry->unk2E) {
-			if (room->unk40 & 0x80) {
+	if (D_800E65BC[objectId].unk40 & 8) {
+		if (D_800E66A8[D_800E662C].unk2E & 1) {
+			if (D_800E65BC[objectId].unk40 & 0x80) {
 				D_800E6614++;
 			} else {
 				D_800E65FC++;
 			}
 
-			if (room->unk40 & 0x40) {
+			if (D_800E65BC[objectId].unk40 & 0x40) {
 				D_800E6604++;
 			}
 		} else {
-			if (room->unk40 & 0x80) {
+			if (D_800E65BC[objectId].unk40 & 0x80) {
 				D_800E6614--;
 			} else {
 				D_800E65FC--;
 			}
 
-			if (room->unk40 & 0x40) {
+			if (D_800E65BC[objectId].unk40 & 0x40) {
 				D_800E6604--;
 				if (D_800E6604 == 0) {
 					D_800E6608 = 0;
@@ -10500,66 +10509,64 @@ void func_8007A8AC_16296C(s32 arg0) {
 
 		if (D_800E6628 == 1) {
 			func_80071304_1593C4();
-			entry = &D_800E66A8[D_800E662C];
 		}
 	}
 
-	if ((entry->unk2C & 3) != 1) {
-	if ((entry->unk2C & 3) != 2) {
-	if ((entry->unk2C & 3) == 3) {
-		arg0 = func_8007B2F0_1633B0(D_800E662C);
-	}
-	} else {
-		if (entry->unk2E & 1) {
-			if (!(D_80047970[buildingInteriorToLoadId] & (1 << D_800E662C))) {
-				eventId = (entry->unk2C & 0xFC) >> 2;
-				if ((func_8007A634_1626F4(eventId) == 0) && (func_8007A6DC_16279C(eventId) == 0)) {
-					osSyncPrintf(D_800A4958_18CA18, eventId, D_800E662C);
-					osSyncPrintf(D_800A4978_18CA38, D_80048026);
-					osSyncPrintf(D_800A498C_18CA4C, buildingInteriorToLoadId);
-					func_8007A784_162844(eventId);
-					func_8007A818_1628D8(eventId);
+	if ((D_800E66A8[D_800E662C].unk2C & 3) != 1) {
+		if ((D_800E66A8[D_800E662C].unk2C & 3) != 2) {
+			if ((D_800E66A8[D_800E662C].unk2C & 3) == 3) {
+				arg0 = func_8007B2F0_1633B0(D_800E662C);
+			}
+		} else {
+			if (D_800E66A8[D_800E662C].unk2E & 1) {
+				eventId = (D_800E66A8[D_800E662C].unk2C & 0xFC) >> 2;
+				if (!(D_80047970[buildingInteriorToLoadId] & (1 << D_800E662C))) {
+					if ((func_8007A634_1626F4(eventId) == 0) && (func_8007A6DC_16279C(eventId) == 0)) {
+						osSyncPrintf(D_800A4958_18CA18, eventId, D_800E662C);
+						osSyncPrintf(D_800A4978_18CA38, D_80048026);
+						osSyncPrintf(D_800A498C_18CA4C, buildingInteriorToLoadId);
+						func_8007A784_162844(eventId);
+						func_8007A818_1628D8(eventId);
 
-					dlEntry = &D_8008DED0_175F90[eventId];
-					if ((currentLevel != 2) || (dlEntry->unk0 != (Gfx*)D_F019540)) {
-						D_800E65A8 |= 0x10;
-						func_8007B1E0_1632A0(D_800E662C);
-					}
-
-					if (dlEntry->unk4 == 1) {
-						D_80047970[buildingInteriorToLoadId] |= (1 << D_800E662C);
-					}
-
-					changed = 1;
-					if (eventId == 1) {
-						D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].hitPoints / 4;
-						if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C) {
-							D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+						if ((currentLevel != 2) || (D_8008DED0_175F90[eventId].unk0 != (Gfx*)D_F019540)) {
+							D_800E65A8 |= 0x10;
+							func_8007B1E0_1632A0(D_800E662C);
 						}
-					} else if (eventId == 0x10) {
-						D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
-						if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C) {
-							D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
-						}
-					} else {
-						func_80008C44_9844(eventId);
-						osSyncPrintf(D_800A49A0_18CA60, eventId);
-					}
 
-					func_8008DC44_175D04(eventId);
+						if (D_8008DED0_175F90[eventId].unk4 == 1) {
+							D_80047970[buildingInteriorToLoadId] |= (1 << D_800E662C);
+						}
+
+						changed = 1;
+						if (eventId == 1) {
+							D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].hitPoints / 4;
+							if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C) {
+								D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+							}
+						} else if (eventId == 0x10) {
+							D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+							if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C) {
+								D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+							}
+						} else {
+							func_80008C44_9844(eventId);
+							osSyncPrintf(D_800A49A0_18CA60, eventId);
+						}
+
+						func_8008DC44_175D04(eventId);
+					}
 				}
 			}
 		}
-	}
 	} else {
-		 eventId = (entry->unk2C & 0xFC) >> 2;
-		if (entry->unk2E & 1) {
+		if (D_800E66A8[D_800E662C].unk2E & 1) {
+			eventId = (D_800E66A8[D_800E662C].unk2C & 0xFC) >> 2;
 			D_80047970[buildingInteriorToLoadId] |= (1 << D_800E662C);
 
-			if (func_8000726C_7E6C((u64)(s64)eventId) == 0) {
-				func_800072CC_7ECC((u64)(s64)eventId);
+			if (func_8000726C_7E6C(eventId) == 0) {
+				func_800072CC_7ECC(eventId);
 				if (eventId < 0xB) {
-					if (D_8008DFA0_176060[(currentLevel * 0x2C) + eventId] != NULL) {
+					if (D_8008DFA0_176060[currentLevel][eventId] != NULL) {
 						changed = 1;
 						D_800E65A8 |= 0x10;
 						func_8007B1E0_1632A0(D_800E662C);
@@ -10584,9 +10591,7 @@ void func_8007A8AC_16296C(s32 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A8AC_16296C.s")
-#endif
+
 
 // AI - Handles building exit/transition logic
 void func_8007AE40_162F00(void)
