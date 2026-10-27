@@ -8702,54 +8702,53 @@ void func_800768B8_15E978(s32 arg0) {
 }
 
 
-// CURRENT(1928)
-#ifdef NON_MATCHING
-// AI - Sets up matrix, renders transformed geometry with display list
-void func_80076A58_15EB18(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	s32 sp3C;
-	s32 temp_s2;
-	s32 temp_t9;
-	s32 var_s0;
-	s32 var_s1;
-	s32 var_s2;
-	s32 var_s3;
-	u8 *var_s4;
+void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4) {
+	/* Command and position cursors have disjoint lifetimes. */
+	union { Gfx *gfx; s32 *position; } cursor;
+	u8 *matrices;
+	union { s32 count; s32 bound; } limit;
+	s32 index;
+	u16 *rotation;
+	s16 *scale;
 
-	temp_s2 = arg0 & 0xFF;
-	var_s4 = (u8 *)(D_8005BB2C + 2);
-	gSPSegment(D_8005BB2C++, 7, var_s4);
+	/* Extra macro packet locals move the saved count out of sp+0x3C. */
+	matrices = (u8 *)&D_8005BB2C[2];
+	cursor.gfx = D_8005BB2C++; cursor.gfx->words.w0 = (_SHIFTL(G_MOVEWORD, 24, 8) | _SHIFTL(7 * 4, 8, 16) | G_MW_SEGMENT); cursor.gfx->words.w1 = osVirtualToPhysical(matrices);
 
-	temp_t9 = ((temp_s2 << 6) + 5) & ~5;
-	D_8005BB2C = (Gfx *)(var_s4 + temp_t9);
-	gSPBranchList(D_8005BB2C++, (void *)(0x07000000 + temp_t9));
+	index = ((arg0 << 6) + 5) & ~5;
+	gSPBranchList(D_8005BB2C++, (void *)(0x07000000 + index));
+	D_8005BB2C = (Gfx *)&matrices[index];
 
-	sp3C = temp_s2;
-	func_80076C08_15ECC8((s32 *)arg2, (u16 *)arg1, (s16 *)arg3, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	limit.count = arg0;
+	func_80076C08_15ECC8(arg2, arg1, arg3, D_8005BB38);
+	cursor.gfx = D_8005BB2C++;
+	cursor.gfx->words.w0 = (_SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx));
+	cursor.gfx->words.w1 = K0_TO_PHYS(D_8005BB38);
+	D_8005BB38++;
 
-	if (sp3C > 0) {
-		var_s0 = arg2 + 0xC;
-		var_s2 = arg1 + 6;
-		var_s3 = arg3 + 6;
-		var_s1 = 6;
-		temp_t9 = (sp3C << 2) - sp3C;
-		temp_t9 <<= 1;
+	if (limit.count > 0) {
+		cursor.position = &arg2[3];
+		rotation = &arg1[3];
+		scale = &arg3[3];
+		index = 6; limit.bound = limit.count * 6;
 		do {
-			func_80077010_15F0D0(var_s0, var_s2, var_s3, var_s4);
-			var_s1 += 6;
-			var_s0 += 0xC;
-			var_s2 += 6;
-			var_s3 += 6;
-			var_s4 += 0x40;
-		} while (var_s1 <= temp_t9);
+			func_80077010_15F0D0(cursor.position, rotation, scale, (s32 *)matrices);
+			/* Preserve the two cursor uses and the counter lifetime without instructions. */
+			if (cursor.position && cursor.position) {}
+			if (index) {}
+			index += 6;
+			cursor.position = &cursor.position[3];
+			rotation = &rotation[3];
+			scale = &scale[3];
+			matrices = &matrices[0x40];
+		} while (index <= limit.bound);
 	}
 
-	gSPDisplayList(D_8005BB2C++, arg4);
+	cursor.gfx = D_8005BB2C++;
+	cursor.gfx->words.w0 = _SHIFTL(G_DL, 24, 8);
+	cursor.gfx->words.w1 = (u32)arg4;
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076A58_15EB18.s")
-#endif
 
 void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
 	s32 matrix[16];

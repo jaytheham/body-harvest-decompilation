@@ -1241,6 +1241,7 @@ s32 func_800745F0_835A0(void);
 u8 func_80074500_834B0(void);
 u8 func_80074558_83508(void);
 void func_80074578_83528(u8 *arg0);
+void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4);
 void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3);
 void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3);
 void func_8007774C_15F80C(s32 arg0, s32 arg1);
