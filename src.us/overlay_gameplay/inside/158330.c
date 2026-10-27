@@ -6102,23 +6102,10 @@ const f32 D_800A4AB8_18CB78[1] = {315.0f};
 
 const f64 D_800A4AC0_18CB80[1] = {180.0};
 
-const u32 jtbl_800A4AC8_18CB88[] = {
-	OVERLAY_PTR(0x80077874), OVERLAY_PTR(0x800778C8), OVERLAY_PTR(0x80077930), OVERLAY_PTR(0x80077A48), OVERLAY_PTR(0x80077A48), OVERLAY_PTR(0x800778FC), OVERLAY_PTR(0x800779A4), OVERLAY_PTR(0x80077A04), 
-};
 
-const u32 jtbl_800A4AE8_18CBA8[] = {
-	OVERLAY_PTR(0x80077AA8), OVERLAY_PTR(0x80077ACC), OVERLAY_PTR(0x80077AF0), OVERLAY_PTR(0x80077B30), OVERLAY_PTR(0x80077B30), OVERLAY_PTR(0x80077ACC), OVERLAY_PTR(0x80077B14), OVERLAY_PTR(0x80077B14), 
-};
 
-const u32 jtbl_800A4B08_18CBC8[] = {
-	OVERLAY_PTR(0x800785C4), OVERLAY_PTR(0x8007862C), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786A8), OVERLAY_PTR(0x800786A8), OVERLAY_PTR(0x800786FC), 
-	OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), OVERLAY_PTR(0x800786FC), 
-	OVERLAY_PTR(0x800786A8), OVERLAY_PTR(0x800786A8), OVERLAY_PTR(0x800786A8),
-};
 
-const f32 D_800A4B54_18CC14[1] = {0.10000000149011612f};
 
-const f32 D_800A4B58_18CC18[1] = {0.20000000298023224f};
 
 
 
@@ -9025,7 +9012,6 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1)
 }
 
 // AI - Spawns objects/enemies in a room based on type
-#ifdef NON_MATCHING
 void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 	s32 objType;
 	s32 x;
@@ -9102,12 +9088,9 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007774C_15F80C.s")
-#endif
+
 
 // Removes the spawned object associated with a room entry.
-#ifdef NON_MATCHING
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 	s32 type;
 
@@ -9134,9 +9117,7 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 }
 
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077A5C_15FB1C.s")
-#endif
+
 
 // AI - Spawns or despawns room objects based on visit flag
 void func_80077B40_15FC00(s32 arg0, s32 arg1) {
@@ -9510,7 +9491,7 @@ void func_800784B8_160578(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/inside/158330_event_late_rodata.s")
 #endif
 
 // AI - Handles room selection confirmation and building exit logic
