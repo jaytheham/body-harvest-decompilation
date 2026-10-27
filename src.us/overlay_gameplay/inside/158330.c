@@ -7844,143 +7844,130 @@ void func_80073A50_15BB10(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073A50_15BB10.s")
 #endif
 
-// CURRENT (7311)
-#ifdef NON_MATCHING
-// AI - Renders an individual floor tile from the interior grid
+// Render one visible floor tile.
 void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
-	u8 cellType;
-	s32 pad0;
-	s32 pad1;
+	s32 cellType;
+	s32 rotation;
+	s32 textureOffset;
 	s32 pad2;
 	s32 pad3;
-	s32 temp;
-	s16 worldX;
-	s16 worldZ;
+	s32 pad4;
+	u16 sp94[6];
+	s32 worldX;
+	s32 worldZ;
 	s32 xBase;
+	s32 sp70[6];
 	s32 zBase;
 	s32 variant;
-	s16 sp94[6];
-	s32 sp70[6];
 	s16 sp5C[6];
 
 	cellType = D_800E69A8[(D_800E6460 * arg1) + arg0];
-	if (cellType == 0xFF) {
-		return;
-	}
+	if (cellType != 0xFF) {
 
-	xBase = arg0 * 0x60;
-	worldX = xBase + 0x30;
-	zBase = arg1 * 0x60;
-	worldZ = zBase + 0x30;
+		xBase = arg0 * 0x60;
+		worldX = xBase + 0x30;
+		zBase = arg1 * 0x60;
+		worldZ = zBase + 0x30;
 
-	if (!func_8007C428_1644E8(
-			worldX,
-			0x30,
-			worldZ,
-			0x48,
-			(s32)D_8008DDF4_175EB4,
-			(s32)D_8008DDF8_175EB8,
-			(s32)D_8008DDFC_175EBC,
-			(s16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / D_800A4AA0_18CB60[0]),
-			0x238E)) {
-		return;
-	}
-
-	gSPSegment(D_8005BB2C++, 0x06, (void *)((D_800E65C4[(cellType & 0xE0) >> 5] * 2) + (u32)D_800A5720));
-
-	variant = (cellType & 0x1C) >> 2;
-	if ((variant == 4) && (D_800E65C8->unkC != 0xFF)) {
-		sp94[0] = (cellType & 3) << 0xE;
-		sp94[1] = 0;
-		sp94[2] = 0;
-
-		sp70[0] = worldX << 0x10;
-		sp70[1] = 0;
-		sp70[2] = worldZ << 0x10;
-
-		sp5C[0] = 0x40;
-		sp5C[1] = 0x40;
-		sp5C[2] = 0x40;
-
-		switch (D_800E65C8->unkC) {
-			case 0x400:
-				sp94[3] = (s16)(s32)(((f64)((f32)D_800E65DC * 32768.0f)) / D_800A4AA8_18CB68[0]);
-				sp94[4] = 0;
-				sp94[5] = 0;
-				sp70[3] = D_800E65C8->unk18 << 0x10;
-				sp70[4] = 0;
-				sp70[5] = D_800E65C8->unk1C << 0x10;
-				break;
-
-			case 0x1000:
-				sp94[3] = 0;
-				sp94[4] = 0;
-				sp94[5] = 0;
-				sp70[3] = (D_800E65C8->unk18 + D_800E65DC) << 0x10;
-				sp70[4] = 0;
-				sp70[5] = D_800E65C8->unk1C << 0x10;
-				break;
-
-			case 0x2000:
-				sp94[3] = 0;
-				sp94[4] = 0;
-				sp94[5] = 0;
-				sp70[3] = D_800E65C8->unk18 << 0x10;
-				sp70[4] = D_800E65DC << 0x10;
-				sp70[5] = D_800E65C8->unk1C << 0x10;
-				break;
-
-			default:
-				osSyncPrintf(D_800A443C_18C4FC);
-				break;
+		if (!func_8007C428_1644E8(
+				worldX,
+				0x30,
+				worldZ,
+				0x48,
+				(s32)D_8008DDF4_175EB4,
+				(s32)D_8008DDF8_175EB8,
+				(s32)D_8008DDFC_175EBC,
+				(s16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / D_800A4AA0_18CB60[0]),
+				0x238E)) {
+			return;
 		}
 
-		sp5C[3] = 0x100;
-		sp5C[4] = 0x100;
-		sp5C[5] = 0x100;
-		func_80076A58_15EB18(1, sp94, sp70, sp5C, D_800E65C0[variant]);
+		textureOffset = D_800E65C4[(cellType & 0xE0) >> 5];
+		gSPSegment(D_8005BB2C++, 6, &D_800A5720[textureOffset * 2]);
 
-		if (D_800E65C8->unk2C != 0) {
-			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-			temp = D_8005BB38;
-			D_8005BB38 += 0x40;
+		variant = (cellType & 0x1C) >> 2;
+		if ((variant == 4) && (D_800E65C8->unkC != 0xFF)) {
+			rotation = (cellType & 3) << 0xE;
+			sp94[0] = rotation;
+			sp94[1] = 0;
+			sp94[2] = 0;
+
+			sp70[0] = worldX << 0x10; sp70[1] = 0; sp70[2] = worldZ << 0x10;
+
+			sp5C[0] = 0x40; sp5C[1] = 0x40; sp5C[2] = 0x40;
+
+			switch (D_800E65C8->unkC) {
+				case 0x400:
+					sp94[3] = (s16)(s32)(((f64)((f32)D_800E65DC * 32768.0f)) / D_800A4AA8_18CB68[0]);
+					sp94[4] = 0;
+					sp94[5] = 0;
+					sp70[3] = D_800E65C8->unk18 << 0x10;
+					sp70[4] = 0;
+					sp70[5] = D_800E65C8->unk1C << 0x10;
+					break;
+
+				case 0x1000:
+					sp94[3] = 0;
+					sp94[4] = 0;
+					sp94[5] = 0;
+					sp70[3] = (D_800E65C8->unk18 + D_800E65DC) << 0x10;
+					sp70[4] = 0;
+					sp70[5] = D_800E65C8->unk1C << 0x10;
+					break;
+
+				case 0x2000:
+					sp94[3] = 0;
+					sp94[4] = 0;
+					sp94[5] = 0;
+					sp70[3] = D_800E65C8->unk18 << 0x10; sp70[4] = D_800E65DC << 0x10;
+					sp70[5] = D_800E65C8->unk1C << 0x10;
+					break;
+
+				default:
+					osSyncPrintf(D_800A443C_18C4FC);
+					break;
+			}
+
+			sp5C[3] = 0x100;
+			sp5C[4] = 0x100;
+			sp5C[5] = 0x100;
+			func_80076A58_15EB18(1, sp94, sp70, sp5C, D_800E65C0[variant]);
+
+			if (D_800E65C8->unk2C != 0) {
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+
+				func_800773F4_15F4B4(
+					D_800E65C8->unk2C,
+					worldX << 0x10,
+					0,
+					(zBase - 0x30) << 0x10,
+					0,
+					rotation,
+					0,
+					D_8005BB38++,
+					1,
+					0x40
+				);
+
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+			}
+		} else {
 
 			func_800773F4_15F4B4(
-				D_800E65C8->unk2C,
-				worldX << 0x10,
+				D_800E65C0[variant],
+				(xBase + 0x30) << 0x10,
 				0,
-				(zBase - 0x30) << 0x10,
+				(zBase + 0x30) << 0x10,
 				0,
-				sp94[0],
+				(cellType & 3) << 0xE,
 				0,
-				temp,
+				D_8005BB38++,
 				1,
 				0x40
 			);
-
-			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		}
-	} else {
-		temp = D_8005BB38;
-		D_8005BB38 += 0x40;
-
-		func_800773F4_15F4B4(
-			D_800E65C0[variant],
-			(xBase + 0x30) << 0x10,
-			0,
-			(zBase + 0x30) << 0x10,
-			0,
-			(cellType & 3) << 0xE,
-			0,
-			temp,
-			1,
-			0x40
-		);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007453C_15C5FC.s")
-#endif
 
 // AI - Renders floor tiles scanning from bottom-right upward
 void func_80074998_15CA58(void) {
@@ -8737,7 +8724,7 @@ void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
+void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, Mtx *arg3) {
 	s32 matrix[16];
 	/* Word writes retain the trig spills; scalar reads retain their allocation. */
 	union { s32 value; s32 words[1]; } cosX;
@@ -8817,7 +8804,7 @@ void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
 	}
 
 	/* Keep this setup together and form the source cursor before the end. */
-	arg0 = (s32 *)arg3; src = matrix; matrixEnd = &matrix[16]; do { arg0[0] = (src[0] & 0xFFFF0000U) + ((src[1] & 0xFFFF0000U) >> 0x10);
+	arg0 = arg3->m[0]; src = matrix; matrixEnd = &matrix[16]; do { arg0[0] = (src[0] & 0xFFFF0000U) + ((src[1] & 0xFFFF0000U) >> 0x10);
 		arg0 = &arg0[4];
 		arg0[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
 		arg0[-3] = (src[2] & 0xFFFF0000U) + ((src[3] & 0xFFFF0000U) >> 0x10);
@@ -8924,7 +8911,7 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 
 
 // AI - Applies transformation and draws a display list
-void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6, s32 arg7, s32 arg8, s16 arg9)
+void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6, Mtx *arg7, s32 arg8, s16 arg9)
 {
 	u16 sp38[3];
 	s16 sp30[3];
@@ -10999,7 +10986,7 @@ void func_8007C420_1644E0(void) {
 }
 
 // AI - Frustum culling check for room objects
-s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5, s32 arg6, u16 arg7, s16 arg8) {
+s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5, s32 arg6, u32 arg7, s16 arg8) {
 	s32 baseAngle;
 	s32 pad1;
 	s32 pad2;
