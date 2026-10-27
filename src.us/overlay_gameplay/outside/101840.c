@@ -2891,10 +2891,10 @@ s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 	temp_v0 = 0xFF - (s16)(arg1 & 0xFF);
 	if (temp_v0 < temp_v1) {
 		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x100].height
-		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x101].height;
+			- D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x101].height;
 	} else {
 		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8)].height
-		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 1].height;
+			- D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 1].height;
 	}
 	if (diff >= 0) {
 		var_a0 = diff;
@@ -2903,10 +2903,10 @@ s16 func_800FAA08_1099B8(s16 arg0, s16 arg1) {
 	}
 	if (temp_v0 < temp_v1) {
 		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 1].height
-		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x101].height;
+			- D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x101].height;
 	} else {
 		diff = D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8)].height
-		    - D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x100].height;
+			- D_80052A94[(s16)(arg1 >> 8)].cells[(s16)(arg0 >> 8) + 0x100].height;
 	}
 	if (diff >= 0) {
 		var_v0 = diff;
@@ -3633,28 +3633,28 @@ void func_800FC568_10B518(void) {
 // CURRENT(205): word return restores result copy; second flag register and epilogue remain.
 #ifdef NON_MATCHING
 s32 func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
-    RoadTileInfo *entry;
-    s32 result;
-    TerrainObjectCell *tile;
-    u8 idx;
+	RoadTileInfo *entry;
+	s32 result;
+	TerrainObjectCell *tile;
+	u8 idx;
 
-    tile = &D_80052A94[arg1].objects[arg0];
-    
-    entry = D_801407F4_14F7A4;
-    idx = tile->terrainType;
-    if (tile->flag10) {
-        idx += 16;
-    }
-    *arg2 = entry[idx].mapX;
-    *arg3 = entry[idx].mapZ;
-    result = func_800B325C_C220C(arg0, arg1, 0xFFFF);
-    if ((s16)(((result & 0x4000) == 0) ^ ((arg0 & 1) == 0)) != 0) {
-        *arg2 = 0x100 - *arg2;
-    }
-    if ((s16)(((result & 0x2000) == 0) ^ ((arg1 & 1) == 0)) != 0) {
-        *arg3 = 0x100 - *arg3;
-    }
-    return result;
+	tile = &D_80052A94[arg1].objects[arg0];
+	
+	entry = D_801407F4_14F7A4;
+	idx = tile->terrainType;
+	if (tile->flag10) {
+		idx += 16;
+	}
+	*arg2 = entry[idx].mapX;
+	*arg3 = entry[idx].mapZ;
+	result = func_800B325C_C220C(arg0, arg1, 0xFFFF);
+	if ((s16)(((result & 0x4000) == 0) ^ ((arg0 & 1) == 0)) != 0) {
+		*arg2 = 0x100 - *arg2;
+	}
+	if ((s16)(((result & 0x2000) == 0) ^ ((arg1 & 1) == 0)) != 0) {
+		*arg3 = 0x100 - *arg3;
+	}
+	return result;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FC7E0_10B790.s")
@@ -9153,49 +9153,49 @@ s32 func_8010E040_11CFF0(s32 arg0, s32 arg1, s32 arg2) {
 }
 
 s32 func_8010E480_11D430(void) {
-    BuildingInstance *building;
-    VehicleInstance *vehicle;
-    s16 x;
-    s16 z;
-    s32 i;
-    u8 index;
-    s32 radius;
+	BuildingInstance *building;
+	VehicleInstance *vehicle;
+	s16 x;
+	s16 z;
+	s32 i;
+	u8 index;
+	s32 radius;
 
-    i = D_80152C96;
-    while (i--) {
-        index = D_80152CA0[i].unk0;
-        vehicle = &vehicleInstances[index];
-        if (vehicle != D_80159D5C) {
-            switch (D_80152CA0[i].unk1) {
-            case 1:
-                building = &buildingInstances[index];
-                x = building->xCoord;
-                z = building->zCoord;
-                x = (x << 8) + 0x80;
-                z = (z << 8) + 0x80;
-                if (func_8010DC00_11CBB0(x, z, 0x12)) {
-                    goto hit;
-                }
-                vehicle = &vehicleInstances[(s32)D_80152CA0[i].unk0];
-            case 2:
-                x = vehicle->unk0;
-                z = vehicle->unk4;
-                radius = vehicleTypes[vehicle->unk1A].unkC / 12;
-                /* Preserve IDO's pointer allocation; both updates compile away here. */
-                vehicle = &vehicle[1];
-                vehicle = &vehicle[-1];
-                if (func_8010DC00_11CBB0(x, z, radius)) {
-                    goto hit;
-                }
-            default:
-                continue;
-            }
-        }
-    }
-    return 0;
+	i = D_80152C96;
+	while (i--) {
+		index = D_80152CA0[i].unk0;
+		vehicle = &vehicleInstances[index];
+		if (vehicle != D_80159D5C) {
+			switch (D_80152CA0[i].unk1) {
+			case 1:
+				building = &buildingInstances[index];
+				x = building->xCoord;
+				z = building->zCoord;
+				x = (x << 8) + 0x80;
+				z = (z << 8) + 0x80;
+				if (func_8010DC00_11CBB0(x, z, 0x12)) {
+					goto hit;
+				}
+				vehicle = &vehicleInstances[(s32)D_80152CA0[i].unk0];
+			case 2:
+				x = vehicle->unk0;
+				z = vehicle->unk4;
+				radius = vehicleTypes[vehicle->unk1A].unkC / 12;
+				/* Preserve IDO's pointer allocation; both updates compile away here. */
+				vehicle = &vehicle[1];
+				vehicle = &vehicle[-1];
+				if (func_8010DC00_11CBB0(x, z, radius)) {
+					goto hit;
+				}
+			default:
+				continue;
+			}
+		}
+	}
+	return 0;
 hit:
-    func_80102D00_111CB0(D_80159D5C, (D_80159D5C->unk0 - x) * 0.0625, 0.0f, (D_80159D5C->unk4 - z) * 0.0625);
-    return 1;
+	func_80102D00_111CB0(D_80159D5C, (D_80159D5C->unk0 - x) * 0.0625, 0.0f, (D_80159D5C->unk4 - z) * 0.0625);
+	return 1;
 }
 
 s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1) {
@@ -10082,6 +10082,7 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	return 0;
 }
 
+// Has some fake-match bs that likely needs removing to allow matching
 #ifdef NON_MATCHING
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	f64 var_f0;
