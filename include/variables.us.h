@@ -2531,6 +2531,7 @@ extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
 extern EffectParticleConfig D_8013DFF4_14CFA4[15];
 extern u32 D_8013E0C0_14D070[15];
+extern Unk80052B40_fp D_8013E0FC_14D0AC;
 extern u8 D_8013E06C_14D01C[0x3C];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
@@ -4094,11 +4095,8 @@ extern Gfx D_5033E00[];
 
 extern RingPaletteTable D_8013E108_14D0B8;
 
-extern const f32 D_80144020_152FD0[1];
 
-extern const f32 D_80144024_152FD4[1];
 
-extern const f64 D_80144028_152FD8[1];
 
 extern const InteriorAngleScale D_800A4A00_18CAC0;
 
@@ -4212,12 +4210,6 @@ extern const ShadowGeometryConstant D_802E0DE0_260520;
 extern const ShadowGeometryConstant D_802E0DE8_260528;
 extern const ShadowGeometryConstant D_802E0DF0_260530;
 
-/* Trailing constant placeholders in the CFE30 smoke-spawner fallback. */
-extern const f32 D_80144018_152FC8[1];
-extern const f32 D_8014401C_152FCC[1];
-extern const f32 D_80144020_152FD0[1];
-extern const f32 D_80144024_152FD4[1];
-extern const f64 D_80144028_152FD8[1];
 extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];
 extern Gfx *D_80140A14_14F9C4[5];

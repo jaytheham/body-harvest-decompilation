@@ -2915,6 +2915,12 @@ typedef union {
 
 typedef struct {
 	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 age;
+	/* 0x07 */ u8 pad7[5];
+} NukeEffectState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
 	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 shadowColor[3];
 } SpurtVisualState; /* size = 0x0C */
@@ -2936,6 +2942,21 @@ typedef struct {
 	/* 0x0A */ u8 age;
 	/* 0x0B */ u8 padB;
 } TrailParticleState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 effectId;
+	/* 0x0A */ u8 timer;
+	/* 0x0B */ u8 flags;
+} ChunkEffectState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s8 velocity[3];
+	/* 0x03 */ u8 rotation[3];
+	/* 0x06 */ s8 angularVelocity[3];
+	/* 0x09 */ u8 pad9[3];
+} ChunkMotionState; /* size = 0x0C */
 
 typedef struct {
 	/* 0x00 */ s16 position[3];
@@ -3045,10 +3066,9 @@ typedef struct {
 } EffectPositionPair;
 
 typedef struct {
-	Unk80052B40 position;
-	u8 unk6;
-	u8 flags;
-	u8 pad8[4];
+	/* 0x00 */ Unk80052B40 position;
+	/* 0x06 */ s16 flags;
+	/* 0x08 */ u8 pad8[4];
 } EffectLightningTrailState;
 
 typedef struct {
@@ -3071,8 +3091,11 @@ typedef struct {
 				/* 0x08 */ SmokePuffState smokePuff;
 				/* 0x08 */ EffectFirePayload firePayload;
 				/* 0x08 */ TrailParticleState trailParticle;
+				/* 0x08 */ ChunkEffectState chunkEffect;
+				/* 0x08 */ ChunkMotionState chunkMotion;
 				/* 0x08 */ SparkEmitterState sparkEmitter;
 				/* 0x08 */ SpurtVisualState spurtVisual;
+				/* 0x08 */ NukeEffectState nukeEffect;
 				/* 0x08 */ SpurtEmitterState spurtEmitter;
 				/* 0x08 */ EffectCallbackState callbackState;
 				/* 0x08 */ SpinnerParentState spinnerState;

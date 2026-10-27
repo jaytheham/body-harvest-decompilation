@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800DC5B8_EB568`, manually writing the pipe-sync, combine, and render-mode words changes instruction scheduling around ROM 0xEBB7C through 0xEBCCC and adds a loop conversion copy near 0xEC190. Replacing these writes with macros initially gives a 0x100 stack frame instead of 0xF0.
+
+-> `code changed`: Use `gDPPipeSync`, `gDPSetCombineLERP`, and `gDPSetRenderMode`. The combine arguments are `0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0` for both cycles. Remove the obsolete graphics pointer and unused alpha local. Keep the phase as `u32`; declare the loop index as `u8` immediately after the `u16 flicker` local and before the byte strength and RGB locals, and use ordinary `i++`. Replace the cached `maxDist` local with `3000.0f` at its uses.
+
+-> `correct ASM`: The instruction sequence, 0xF0 frame, and all stack offsets match, including strength at sp+0xA0 and RGB at sp+0x9C. The whole US ROM has only three remaining differing words: the shared pipe-sync opcode uses t0 instead of t2 at 0xEBB40, 0xEBBCC, and 0xEBC18. This is a partial instruction/layout fix, not a completed function match.
