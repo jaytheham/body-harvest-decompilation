@@ -10384,8 +10384,6 @@ s32 func_8007A6DC_16279C(s32 arg0) {
 	return 0;
 }
 
-
-// CURRENT(95) - r57 hoist-table-element-address lever (was 540 with the sum-3 spelling)
 void func_8007A784_162844(s32 arg0) {
 	s16 i;
 	if (arg0 == 0x14) {
@@ -10400,8 +10398,6 @@ void func_8007A784_162844(s32 arg0) {
 	}
 }
 
-
-// CURRENT(95)
 // AI - Marks a second event building as visited
 void func_8007A818_1628D8(s32 arg0) {
 	s16 i;
