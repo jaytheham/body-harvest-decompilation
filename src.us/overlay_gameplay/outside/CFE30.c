@@ -2570,16 +2570,17 @@ void func_800C6D80_D5D30(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C6D80_D5D30.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Spawn a particle/effect entry at (arg0,arg1,arg2) from source effect arg4 with random colour/velocity
-s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, Gfx *arg6, s32 arg7) {
-	Unk80154318Entry *entry;
-	Unk80154318Entry *linked;
-	u8 *entryBytes;
+s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, Gfx *arg6, u8 arg7) {
+	s32 parentIndex;
+	ChunkEffectState *chunk;
+	ChunkMotionState *motion;
 	Vec3f sp40;
-	s16 idx;
-	s32 temp;
 
+	s16 pad;
+	s16 idx;
+	s16 padLink;
+	s16 linkedIdx;
 
 	if (D_80154214 >= 0x23) {
 		return -3;
@@ -2592,99 +2593,89 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 
 	idx = func_800C18FC_D08AC(2, 1);
 	if (idx != -3) {
-	s16 linkedIdx;
-	u8 mode;
 
-	entry = &D_80154318[idx];
-	linked = &D_80154318[entry->unk4]; linkedIdx = linked->unk4;
+		parentIndex = D_80154318[idx].unk4;
+		linkedIdx = D_80154318[parentIndex].unk4;
 
-	entry->unk2 = arg3 * 4;
-	entry->unk8 = arg0;
-	entry->unkA = arg1;
-	entry->unkC = arg2;
+		D_80154318[idx].unk2 = arg3 * 4;
+		D_80154318[idx].unk8 = arg0;
+		D_80154318[idx].unkA = arg1;
+		D_80154318[idx].unkC = arg2;
 
-	entryBytes = entry->payload;
+		chunk = &D_80154318[idx].chunkEffect;
 
-	entryBytes[6] = (func_800038E0_44E0() % 80) + 0x14;
-	entryBytes[7] = (func_800038E0_44E0() % 80) + 0x14;
-	entryBytes[8] = (func_800038E0_44E0() % 80) + 0x14;
+		chunk->color[0] = (func_800038E0_44E0() % 80) + 0x14;
+		chunk->color[1] = (func_800038E0_44E0() % 80) + 0x14;
+		chunk->color[2] = (func_800038E0_44E0() % 80) + 0x14;
 
-	linked->displayList = arg6;
+		D_80154318[parentIndex].displayList = arg6;
 
-	temp = func_800038E0_44E0() % 6;
-	arg5 = (u16)(temp + (arg5 / 7) - 3);
+		arg5 = (func_800038E0_44E0() % 6) + (arg5 / 7) - 3;
 
-	sp40.x = (f32)((func_800038E0_44E0() % 20) - 10);
-	if ((func_800038E0_44E0() % 6) + 6 >= 0) {
-		sp40.y = (f32)((func_800038E0_44E0() % 6) + 6);
-	} else {
-		sp40.y = (f32)(-6 - (func_800038E0_44E0() % 6));
-	}
-	sp40.z = (f32)((func_800038E0_44E0() % 20) - 10);
+		sp40.x = (f32)((func_800038E0_44E0() % 20) - 10);
+		if ((func_800038E0_44E0() % 6) + 6 >= 0) {
+			sp40.y = (f32)((func_800038E0_44E0() % 6) + 6);
+		} else {
+			sp40.y = (f32)(-6 - (func_800038E0_44E0() % 6));
+		}
+		sp40.z = (f32)((func_800038E0_44E0() % 20) - 10);
 
-	if (arg6 == (s32)&D_502D390) {
-		sp40.x = sp40.x / 2;
-		sp40.y = sp40.y / 2;
-		sp40.z = sp40.z / 2;
-	}
+		if (arg6 == (Gfx *)&D_502D390) {
+			sp40.x = sp40.x / 2;
+			sp40.y = sp40.y / 2;
+			sp40.z = sp40.z / 2;
+		}
 
-	func_800C1024_CFFD4(&sp40, &sp40);
+		func_800C1024_CFFD4(&sp40, &sp40);
+		motion = (ChunkMotionState *)(s32)&D_80154318[linkedIdx].chunkMotion;
 
-	D_80154318[linkedIdx].payload[0] = (s8)(s32)((f32)arg5 * sp40.x);
-	temp = (s16)(s32)((f32)arg5 * sp40.y);
-	if (temp >= 0) {
-		D_80154318[linkedIdx].payload[1] = (s8)temp;
-	} else {
-		D_80154318[linkedIdx].payload[1] = (s8)-temp;
-	}
-	D_80154318[linkedIdx].payload[2] = (s8)(s32)((f32)arg5 * sp40.z);
+		motion->velocity[0] = (u8)((s8)((f32)(u32)arg5 * sp40.x));
+		motion->velocity[1] = (s16)((f32)(u32)arg5 * sp40.y) >= 0 ?
+			(s16)((f32)(u32)arg5 * sp40.y) : -(s16)((f32)(u32)arg5 * sp40.y);
+		motion->velocity[2] = (u8)((s8)((f32)(u32)arg5 * sp40.z));
 
-	D_80154318[linkedIdx].payload[3] = func_800038E0_44E0() % 0xFF;
-	D_80154318[linkedIdx].payload[4] = func_800038E0_44E0() % 0xFF;
-	D_80154318[linkedIdx].payload[5] = func_800038E0_44E0() % 0xFF;
-	D_80154318[linkedIdx].payload[6] = (func_800038E0_44E0() % 20) - 10;
-	D_80154318[linkedIdx].payload[7] = (func_800038E0_44E0() % 20) - 10;
-	D_80154318[linkedIdx].payload[8] = (func_800038E0_44E0() % 20) - 10;
+		motion->rotation[0] = func_800038E0_44E0() % 0xFF;
+		motion->rotation[1] = func_800038E0_44E0() % 0xFF;
+		motion->rotation[2] = func_800038E0_44E0() % 0xFF;
+		motion->angularVelocity[0] = (func_800038E0_44E0() % 20) - 10;
+		motion->angularVelocity[1] = (func_800038E0_44E0() % 20) - 10;
+		motion->angularVelocity[2] = (func_800038E0_44E0() % 20) - 10;
 
-	mode = arg7;
-	if (mode == 0) {
-		entryBytes[0xB] = 0;
-	} else if (mode == 3) {
-		entryBytes[0xB] = 0x10;
-	} else {
-		entryBytes[0xB] = 8;
-	}
+		if (arg7 == 0) {
+			chunk->flags = 0;
+		} else if (arg7 == 3) {
+			chunk->flags = 0x10;
+		} else {
+			chunk->flags = 8;
+		}
 
-	if ((u8)(func_800038E0_44E0() % 100) < 0x28 || mode != 0) {
-		entryBytes[0xB] |= 1;
-	}
+		if ((u8)(func_800038E0_44E0() % 100) < 0x28 || arg7 != 0) {
+			chunk->flags |= 1;
+		}
 
-	if (mode != 0) {
-		if ((s16)arg4 != -9) {
-			entryBytes[9] = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, (s16)arg4);
-			if (entryBytes[9] != 0xFB) {
-				entryBytes[0xB] |= 4;
+		if (arg7 != 0) {
+			if ((s16)arg4 != -9) {
+				chunk->effectId = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, (s16)arg4);
+				if (chunk->effectId != 0xFB) {
+					chunk->flags |= 4;
+				}
+				chunk->timer = 0;
 			}
+		} else if ((func_800038E0_44E0() % 100) >= 0x29) {
+			chunk->effectId = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, (s16)arg4);
+			if (chunk->effectId != 0xFC) {
+				chunk->flags |= 4;
+			}
+			chunk->timer = 0;
 		}
-		entryBytes[0xA] = 0;
-	} else if ((func_800038E0_44E0() % 100) >= 0x29) {
-		entryBytes[9] = func_800C8C7C_D7C2C(arg0, arg1, arg2, idx, (s16)arg4);
-		if (entryBytes[9] != 0xFC) {
-			entryBytes[0xB] |= 4;
-		}
-		entryBytes[0xA] = 0;
-	}
 
-	if (mode == 2) {
-		entryBytes[0xB] |= 0x80;
-	}
+		if (arg7 == 2) {
+			chunk->flags |= 0x80;
+		}
 
 	}
 	return idx;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C7924_D68D4.s")
-#endif
 
 void func_800C7E18_D6DC8(void) {
 	s16 effectIdx;
