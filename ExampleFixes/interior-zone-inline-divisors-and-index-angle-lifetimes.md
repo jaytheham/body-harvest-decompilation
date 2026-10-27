@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8007A168_162228`, init-plus-if margin selection omits the target unconditional branch. Named half-dimension floats reserve extra homes and use different FPRs; inline `/ 2.0f` instead generates multiplication by 0.5. Reusing the catalog index for its angle leaves the initial byte load in v1 rather than v0.
+
+-> `code changed`: Select the margin with a ternary. Inline each half-dimension as `/ (f32)2`. Declare the room pointer and object index before the two output floats, followed by independent angle and scratch locals. Load the signed angle field before reusing the margin scratch for room orientation. Define the catalog angle at offset 0x24 as s16 and convert its byte-pair initializers in big-endian order.
+
+-> `correct ASM`: The margin block retains `beqz; ...; b; li v0,0x14`. The half-dimensions use `div.s` in f16 and f6. Width/depth occupy sp+0x3C/0x38 in the 0x48 frame, the cached room address and catalog stride spill at sp+0x2C/0x28, and the initial object load uses v0 while the later signed angle uses v1. The complete function and US ROM checksum match.

@@ -470,7 +470,7 @@ typedef struct {
 	/* 0x1C */ u8 pad1C[0x2]; // AI - pad1C[0] = signed height offset written to the instance's unk4
 	/* 0x1E */ s16 unk1E; // AI - signed animation offset/scale parameter for the room entry
 	/* 0x20 */ f32 unk20; // AI - animation speed/magnitude (float, e.g. 0.1 / 2.0 / 5.0 / 25.0)
-	/* 0x24 */ u8 pad24[0x02];
+	/* 0x24 */ s16 unk24; // AI - interaction angle in degrees
 	/* 0x26 */ s16 unk26; // AI - base offset for animated geometry (X)
 	/* 0x28 */ s16 unk28; // AI - base offset for animated geometry (Y)
 	/* 0x2A */ s16 unk2A; // AI - base offset for animated geometry (Z)
@@ -753,11 +753,6 @@ typedef struct {
 	/* 0x0C */ s8 unkC;
 	/* 0x0D */ u8 unkD;
 } Unk89834Pos; /* size = 0x0E */
-
-typedef struct {
-	/* 0x00 */ u8 pad0[0x24];
-	/* 0x24 */ s16 unk24;
-} Unk8007A168Obj; /* size = 0x26 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
