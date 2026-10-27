@@ -10943,9 +10943,7 @@ s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4,
 	return 0;
 }
 
-// CURRENT(15)
 // AI - Checks line-segment intersection with collision boundary
-#ifdef NON_MATCHING
 s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007CAA8_6A40 *arg4) {
 	f32 deltaZ;
 	f32 deltaX;
@@ -10961,7 +10959,8 @@ s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007CAA8_6A4
 	D_800E6670.x = ratio * D_800E6680.x + D_800E6660.x;
 	if ((D_800E6660.z <= D_800E6670.z) && (D_800E6670.x < (arg1 + arg3)) && ((arg0 - arg3) < D_800E6670.x)) {
 		deltaX = D_800E6670.x - D_800E6660.x;
-		distanceSquared = (deltaX * deltaX) + (deltaZ * deltaZ); if ((f64)distanceSquared != 0.0) {}
+		/* Preserve the cached direction Z through the distance sum. */
+		distanceSquared = (deltaX * deltaX) + (deltaZ * deltaZ); if ((f64)distanceSquared != 0.0) {} if ((f64)D_800E6680.z != 0.0) {}
 		if (distanceSquared <= arg4->unk10) {
 			arg4->unk10 = distanceSquared;
 			return 1;
@@ -10969,9 +10968,7 @@ s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007CAA8_6A4
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C1DC_16429C.s")
-#endif
+
 
 // AI - Checks if a direction angle is within a range threshold
 s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5) {
