@@ -11097,9 +11097,7 @@ s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 void func_8007C420_1644E0(void) {
 }
 
-// CURRENT(546)
 // AI - Frustum culling check for room objects
-#ifdef NON_MATCHING
 s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 arg5, s32 arg6, u16 arg7, s16 arg8) {
 	s32 baseAngle;
 	s32 pad1;
@@ -11120,21 +11118,17 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 a
 	if (yProj != 0) {}
 	baseAngle = func_80003824_4424((f32)yProj, (f32)xProj);
 	angle = (arg8 / 2) + baseAngle;
-	if (1) {
-		if ((angle & 0xFFFF) != 0) {}
-		coss(angle);
-	}
-
-	if ((s32)((((f32)sins(angle & 0xFFFF) / 32768.0) * radius)) < -arg3) {
+	xLimit = ((f32)coss(angle) / 32768.0) * radius;
+	yProj = ((f32)sins(angle) / 32768.0) * radius;
+	if (yProj < -arg3) {
 		return 0;
 	}
-
-	xLimit = ((f32)coss((angle - arg8) & 0xFFFF) / 32768.0) * radius;
-
-	if (arg3 < (s32)((((f32)sins((angle - arg8) & 0xFFFF) / 32768.0) * radius))) {
+	angle -= arg8;
+	xLimit = ((f32)coss(angle) / 32768.0) * radius;
+	yProj = ((f32)sins(angle) / 32768.0) * radius;
+	if (arg3 < yProj) {
 		return 0;
 	}
-
 	if (xLimit < (0x28 - arg3)) {
 		return 0;
 	}
@@ -11146,9 +11140,7 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 a
 	return 1;
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C428_1644E8.s")
-#endif
+
 
 // AI - Checks if a grid cell is passable (not occupied)
 s32 func_8007C698_164758(s32 arg0, s32 arg1)
