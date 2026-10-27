@@ -3916,11 +3916,6 @@ typedef struct {
 } Unk158330DstState;
 
 typedef struct {
-	char pad0[0x10];
-	f32 unk10;
-} Unk8007C1DC;
-
-typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[0x23];
 	/* 0x24 */ f32 unk24;
