@@ -10321,78 +10321,68 @@ s32 func_8007A370_162430(s32 arg0, s32 arg1) {
 	return 0;
 }
 
-// CURRENT(160)
 // AI - Checks if player position is within room hotspot bounds
-#ifdef NON_MATCHING
 s32 func_8007A414_1624D4(s32 arg0, s32 arg1, s32 arg2) {
-	s32 sp2C;
-	s32 sp28;
-	s32 sp24;
-	s32 sp20;
-	f32 x;
-	f32 z;
-	s16 temp_t0;
-	s16 temp_t1;
-	u16 temp_a3;
-	u8 temp_a2;
-	Unk80070F7CObj *temp_v0;
-	Unk800E66A8 *temp_v1;
+	s32 centerX;
+	s32 centerZ;
+	s32 widthX;
+	s32 widthZ;
+	s32 hotspotOffset;
+	s32 hotspotWidth;
+	s32 roomDepth;
+	s32 objectId;
 
-	temp_v1 = &D_800E66A8[arg0];
-	temp_a2 = temp_v1->unk0;
-	temp_v0 = &((Unk80070F7CObj *) D_800E65BC)[temp_a2];
-	temp_a3 = temp_v0->unk1A;
-	temp_t0 = temp_v0->unk32;
-	temp_t1 = temp_v0->unk34;
+	objectId = D_800E66A8[arg0].unk0;
+	roomDepth = D_800E65BC[objectId].unk1A;
+	hotspotOffset = D_800E65BC[objectId].unk32;
+	hotspotWidth = D_800E65BC[objectId].unk34;
 
-	switch (temp_v1->unk8) {
+	switch (D_800E66A8[arg0].unk8) {
 		case 0:
-			sp2C = temp_v1->unk2 + temp_t0;
-			sp28 = temp_v1->unk6 + ((s32) temp_a3 / 2) + 0xF;
-			sp24 = temp_t1;
-			sp20 = 0xF;
+			centerX = D_800E66A8[arg0].unk2 + hotspotOffset;
+			centerZ = D_800E66A8[arg0].unk6 + (roomDepth / 2) + 0xF;
+			widthX = hotspotWidth;
+			widthZ = 0xF;
 			break;
 
 		case 1:
-			sp28 = temp_v1->unk6 - temp_t0;
-			sp2C = temp_v1->unk2 + ((s32) temp_a3 / 2) + 0xF;
-			sp24 = 0xF;
-			sp20 = temp_t1;
+			centerZ = D_800E66A8[arg0].unk6 - hotspotOffset;
+			centerX = D_800E66A8[arg0].unk2 + (roomDepth / 2) + 0xF;
+			widthX = 0xF;
+			widthZ = hotspotWidth;
 			break;
 
 		case 2:
-			sp2C = temp_v1->unk2 - temp_t0;
-			sp28 = temp_v1->unk6 - ((s32) temp_a3 / 2) - 0xF;
-			sp24 = temp_t1;
-			sp20 = 0xF;
+			centerX = D_800E66A8[arg0].unk2 - hotspotOffset;
+			centerZ = D_800E66A8[arg0].unk6 - (roomDepth / 2) - 0xF;
+			widthX = hotspotWidth;
+			widthZ = 0xF;
 			break;
 
 		case 3:
-			sp28 = temp_v1->unk6 + temp_t0;
-			sp2C = temp_v1->unk2 - ((s32) temp_a3 / 2) - 0xF;
-			sp24 = 0xF;
-			sp20 = temp_t1;
+			centerZ = D_800E66A8[arg0].unk6 + hotspotOffset;
+			centerX = D_800E66A8[arg0].unk2 - (roomDepth / 2) - 0xF;
+			widthX = 0xF;
+			widthZ = hotspotWidth;
 			break;
 
 		default:
-			osSyncPrintf(&D_800A493C_18C9FC);
+			osSyncPrintf(D_800A493C_18C9FC);
 			break;
+
 	}
 
-	if (func_8007C3C0_164480(x = (f32) arg1,
-							 z = (f32) arg2,
-							 (f32) (sp2C - (sp24 / 2)),
-							 (f32) (sp2C + (sp24 / 2)),
-							 (f32) (sp28 - (sp20 / 2)),
-							 (f32) (sp28 + (sp20 / 2))) != 0) {
+	if (func_8007C3C0_164480((f32) arg1,
+							 (f32) arg2,
+							 (f32) (centerX - (widthX / 2)),
+							 (f32) (centerX + (widthX / 2)),
+							 (f32) (centerZ - (widthZ / 2)),
+							 (f32) (centerZ + (widthZ / 2))) != 0) {
 		return 1;
+	} else {
+		return 0;
 	}
-
-	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007A414_1624D4.s")
-#endif
 
 // AI - Clears the room selection active flag
 void func_8007A618_1626D8(void) {
