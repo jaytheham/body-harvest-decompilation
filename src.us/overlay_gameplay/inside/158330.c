@@ -9038,17 +9038,16 @@ void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 	func_80077A5C_15FB1C(arg0, arg1);
 }
 
-#ifdef NON_MATCHING
 // AI - Updates room visibility, object animation, and mission triggers
 void func_80077B94_15FC54(void) {
-	Unk800E66A8 *var_s0;
-	s32 pad;
-	f32 var_f0;
+	Unk800E66A8 *room;
+	s32 stackPad; /* Preserve the IDO local area before the float spill. */
+	f32 animationStep;
 	s32 count;
 	s32 eventId;
-	s32 var_s5;
-	s32 temp_s4;
-	s32 temp_s3;
+	s32 objectIndex;
+	s32 entryOffset;
+	s32 typeId;
 
 	if (D_800E65A8 & 0x10) {
 		if (D_800E6638 != 0) {
@@ -9076,240 +9075,240 @@ void func_80077B94_15FC54(void) {
 		}
 	}
 
-	var_s5 = 0;
+	objectIndex = 0;
 	if (D_800E668C > 0) {
-		var_s0 = D_800E66A8;
+		room = D_800E66A8;
 		do {
-			temp_s3 = var_s0->unk0;
-			
-			eventId = var_s0->unk2D & 0x3F;
+			typeId = room->unk0;
 
-			if (temp_s3 == 0x1D) {
+			eventId = room->unk2D & 0x3F;
+
+			if (typeId == 0x1D) {
 				if (func_8000726C_7E6C(eventId) != 0) {
 					s32 gridX;
 					s32 gridZ;
 
 					gridX = D_800E6AC4 / 96.0f;
 					gridZ = D_800E6ACC / 96.0f;
-					if ((gridX == var_s0->unk2) && (gridZ == var_s0->unk6)) {
-						if (var_s0->unk2C != 0) {
-							
-							if (!(var_s0->unk2E & 1)) {
-								var_s0->unk2E |= 1;
-								D_800E662C = var_s5;
+					if ((gridX == room->unk2) && (gridZ == room->unk6)) {
+						if (room->unk2C != 0) {
+
+							if (!(room->unk2E & 1)) {
+								room->unk2E |= 1;
+								D_800E662C = objectIndex;
 								func_8007A8AC_16296C(0);
 							}
 						}
 					} else {
-						var_s0->unk2E &= ~1;
+						room->unk2E &= ~1;
 					}
 				}
 				count = D_800E668C;
 			} else {
-				Unk80070F7CObj *objects;
+				Unk80070F7CObj *objectBase; Unk80070F7CObj *objectEntry;
 				Unk80070F7CObj **catalog;
-				s32 *level;
+				Level *level;
 
 				catalog = &D_800E65BC;
-				var_f0 = 0.0f;
-				if ((eventId != 0) && (var_s0->unk2D & 0x40)) {
+				animationStep = 0.0f;
+				if ((eventId != 0) && (room->unk2D & 0x40)) {
 
 					if (func_8000726C_7E6C(eventId) != 0) {
 
-						if (!(var_s0->unk2E & 1)) {
-							var_s0->unk2E |= 1;
-							var_s0->unk2E |= 2;
+						if (!(room->unk2E & 1)) {
+							room->unk2E |= 1;
+							room->unk2E |= 2;
 						}
 					} else {
 
-						if (var_s0->unk2E & 1) {
-							var_s0->unk2E &= ~1;
-							var_s0->unk2E |= 2;
+						if (room->unk2E & 1) {
+							room->unk2E &= ~1;
+							room->unk2E |= 2;
 						}
 					}
 				}
-				objects = *catalog;
-				if (var_s0->unk2E & 2) {
-					
-					if (!(objects[temp_s3].unk40 & 0x40000000)) {
-						if (objects[temp_s3].unk40 & 0x20000000) {
-							func_80077B40_15FC00(var_s5, temp_s3); objects = *catalog;
+				objectBase = *catalog;
+				if (room->unk2E & 2) {
+
+					if (!(objectBase[typeId].unk40 & 0x40000000)) {
+						if (objectBase[typeId].unk40 & 0x20000000) {
+							func_80077B40_15FC00(objectIndex, typeId); objectBase = *catalog;
 						} else {
-							func_800775F0_15F6B0(var_s5, temp_s3); objects = *catalog;
+							func_800775F0_15F6B0(objectIndex, typeId); objectBase = *catalog;
 						}
 					}
 				}
-				temp_s4 = temp_s3 * 0x48;
-				if (objects[temp_s3].unk40 & 0x7E00) {
-					if (var_s0->unk2E & 1) {
-						
-						if (var_s0->unk10 < objects[temp_s3].unk1E) {
-							var_f0 = objects[temp_s3].unk20;
-							var_s0->unk10 = var_s0->unk10 + 1;
+				entryOffset = typeId * 0x48;
+				objectEntry = (void *)objectBase[typeId].pad0;
+				/* End the base lifetime before reading the selected entry. */
+				objectBase = NULL;
+				if (objectEntry->unk40 & 0x7E00) {
+					if (room->unk2E & 1) {
+
+						if (room->unk10 < objectEntry->unk1E) {
+							animationStep = objectEntry->unk20;
+							room->unk10 = room->unk10 + 1;
 						}
-						if (objects[temp_s3].unk40 & 0x20000) {
-							var_s0->unk10 = 0;
+						if (objectEntry->unk40 & 0x20000) {
+							room->unk10 = 0;
 						}
-						if (objects[temp_s3].unk40 & 0x40000) {
-							var_f0 = 0.0f;
+						if (objectEntry->unk40 & 0x40000) {
+							animationStep = 0.0f;
 						}
 					} else {
-						
-						if (var_s0->unk10 > 0) {
-							var_f0 = -objects[temp_s3].unk20;
-							var_s0->unk10 = var_s0->unk10 - 1;
+
+						if (room->unk10 > 0) {
+							animationStep = -objectEntry->unk20;
+							room->unk10 = room->unk10 - 1;
 						}
-						if (objects[temp_s3].unk40 & 0x40000) {
-							var_s0->unk10 = objects[temp_s3].unk1E;
+						if (objectEntry->unk40 & 0x40000) {
+							room->unk10 = objectEntry->unk1E;
 						}
-						if (objects[temp_s3].unk40 & 0x20000) {
-							var_f0 = 0.0f;
+						if (objectEntry->unk40 & 0x20000) {
+							animationStep = 0.0f;
 						}
 					}
-					if (var_f0 != 0.0f) {
-						
-						if ((objects[temp_s3].unk40 & 0x01000000) && (D_80047970[buildingInteriorToLoadId] & (1 << var_s5))) {
-							var_f0 = -var_f0;
+					if (animationStep != 0.0f) {
+
+						if ((objectEntry->unk40 & 0x01000000) && (D_80047970[buildingInteriorToLoadId] & (1 << objectIndex))) {
+							animationStep = -animationStep;
 						}
-						switch (objects[temp_s3].unk40 & 0x7E00) {
+						switch (objectEntry->unk40 & 0x7E00) {
 							case 0x200:
-								var_s0->unk14 = var_s0->unk14 + var_f0;
-								break;
+							room->unk14 = room->unk14 + animationStep;
+							break;
 							case 0x400:
-								var_s0->unk18 = var_s0->unk18 + var_f0;
-								break;
+							room->unk18 = room->unk18 + animationStep;
+							break;
 							case 0x800:
-								var_s0->unk1C = var_s0->unk1C + var_f0;
-								break;
+							room->unk1C = room->unk1C + animationStep;
+							break;
 							case 0x1000:
-								if (!(objects[temp_s3].unk40 & 0x100)) {
-									
-									switch (var_s0->unk8) {
-										case 0:
-											var_s0->unk20 = var_s0->unk20 + var_f0;
-											break;
-										case 1:
-											var_s0->unk28 = var_s0->unk28 + var_f0;
-											break;
-										case 2:
-											var_s0->unk20 = var_s0->unk20 - var_f0;
-											break;
-										case 3:
-											var_s0->unk28 = var_s0->unk28 - var_f0;
-											break;
-									}
-								} else {
-									var_s0->unk20 = var_s0->unk20 + var_f0;
+							if (!(objectEntry->unk40 & 0x100)) {
+
+								switch (room->unk8) {
+									case 0:
+									room->unk20 = room->unk20 + animationStep;
+									break;
+									case 1:
+									room->unk28 = room->unk28 + animationStep;
+									break;
+									case 2:
+									room->unk20 = room->unk20 - animationStep;
+									break;
+									case 3:
+									room->unk28 = room->unk28 - animationStep;
+									break;
 								}
-								break;
+							} else {
+								room->unk20 = room->unk20 + animationStep;
+							}
+							break;
 							case 0x2000:
-								var_s0->unk24 = var_s0->unk24 + var_f0;
-								if (temp_s3 == 0x1E) {
-									
-									var_f0 = var_s0->unk4;
-									var_f0 += var_s0->unk24;
-									if ((var_f0 > 0.0f) && (var_f0 < 60.0f)) {
-										func_80015388_15F88(0x138); objects = *catalog;
-									}
+							room->unk24 = room->unk24 + animationStep;
+							if (typeId == 0x1E) {
+
+								animationStep = room->unk4;
+								animationStep += room->unk24;
+								if ((animationStep > 0.0f) && (animationStep < 60.0f)) {
+									func_80015388_15F88(0x138); objectEntry = &(*catalog)[typeId];
 								}
-								break;
+							}
+							break;
 							case 0x4000:
-								if (!(objects[temp_s3].unk40 & 0x100)) {
-									
-									switch (var_s0->unk8) {
-										case 0:
-											var_s0->unk28 = var_s0->unk28 + var_f0;
-											break;
-										case 1:
-											var_s0->unk20 = var_s0->unk20 - var_f0;
-											break;
-										case 2:
-											var_s0->unk28 = var_s0->unk28 - var_f0;
-											break;
-										case 3:
-											var_s0->unk20 = var_s0->unk20 + var_f0;
-											break;
-									}
-								} else {
-									var_s0->unk28 = var_s0->unk28 + var_f0;
+							if (!(objectEntry->unk40 & 0x100)) {
+
+								switch (room->unk8) {
+									case 0:
+									room->unk28 = room->unk28 + animationStep;
+									break;
+									case 1:
+									room->unk20 = room->unk20 - animationStep;
+									break;
+									case 2:
+									room->unk28 = room->unk28 - animationStep;
+									break;
+									case 3:
+									room->unk20 = room->unk20 + animationStep;
+									break;
 								}
-								break;
+							} else {
+								room->unk28 = room->unk28 + animationStep;
+							}
+							break;
 						}
 					} else {
-						if (objects[temp_s3].unk40 & 0x80000) {
-							var_s0->unk2E ^= 1;
+						if (objectEntry->unk40 & 0x80000) {
+							room->unk2E ^= 1;
 						}
-						if ((objects[temp_s3].unk40 & 0x200000) && (var_s0->unk2E & 1) && (var_s0->unkE != -1)) {
-							var_s0->unkE = -1;
+						if ((objectEntry->unk40 & 0x200000) && (room->unk2E & 1) && (room->unkE != -1)) {
+							room->unkE = -1;
 						}
-						func_800787E8_1608A8(temp_s3, var_s5); objects = *catalog;
+						func_800787E8_1608A8(typeId, objectIndex); objectEntry = &(*catalog)[typeId];
 					}
 				}
-				
-				if (objects[temp_s3].unk14 != -1) {
-					
-					if (objects[temp_s3].unk40 & 0x100000) {
-						if ((var_s0->unk2D & 0x40) && (eventId != 0) && !(objects[temp_s3].unk44 & 8)) {
+
+				if (objectEntry->unk14 != -1) {
+
+					if (objectEntry->unk40 & 0x100000) {
+						if ((room->unk2D & 0x40) && (eventId != 0) && !(objectEntry->unk44 & 8)) {
 							if (func_8000726C_7E6C(eventId) != 0) {
-								objects = *catalog;
-								if (objects[temp_s3].unk40 & 0x200000) {
-									if (var_s0->unkC < objects[temp_s3].unk16) {
-										func_80014A3C_1563C((s32)var_s0, objects[temp_s3].unk14, 0.0f, 0, -1.0f);
-										var_s0->unkC = var_s0->unkC + 1;
+								objectEntry = &(*catalog)[typeId];
+								if (objectEntry->unk40 & 0x200000) {
+									if (room->unkC < objectEntry->unk16) {
+										func_80014A3C_1563C((s32)room, objectEntry->unk14, 0.0f, 0, -1.0f);
+										room->unkC = room->unkC + 1;
 									}
 								} else {
-									func_80014A3C_1563C((s32)var_s0, objects[temp_s3].unk14, 0.0f, 0, -1.0f);
+									func_80014A3C_1563C((s32)room, objectEntry->unk14, 0.0f, 0, -1.0f);
 								}
 							}
 						} else {
 							level = &currentLevel;
 							if (level) {}
-							if (var_s0->unk2E & 1) {
-							if (!(objects[temp_s3].unk40 & 0x200000)) {
-								if ((*level != 1) || (D_800E66A4 != 3) || (temp_s4 != 0x3F0)) {
-									func_80014A3C_1563C((s32)var_s0, objects[temp_s3].unk14, 0.0f, 0, -1.0f);
-								}
-								func_800787E8_1608A8(temp_s3, var_s5);
-							} else if (var_s0->unkC < objects[temp_s3].unk16) {
-								func_80014A3C_1563C((s32)var_s0, objects[temp_s3].unk14, 0.0f, 0, -1.0f);
-								
-								var_s0->unkC = var_s0->unkC + 1;
-								objects = *catalog;
-								if ((var_s0->unkC + 1) == objects[temp_s3].unk16) {
-									func_800787E8_1608A8(temp_s3, var_s5); objects = *catalog;
-									if (!(objects[temp_s3].unk40 & 0x800000)) {
-										var_s0->unkC = 0;
-										var_s0->unk2E &= ~1;
+							/* Keep this byte load separate from the later flag reads. */
+							if ((u8)(s8)room->unk2E & 1) {
+								if (!(objectEntry->unk40 & 0x200000)) {
+									if ((*level != 1) || (D_800E66A4 != 3) || (entryOffset != 0x3F0)) {
+										func_80014A3C_1563C((s32)room, objectEntry->unk14, 0.0f, 0, -1.0f);
+									}
+									func_800787E8_1608A8(typeId, objectIndex);
+								} else if (room->unkC < objectEntry->unk16) {
+									func_80014A3C_1563C((s32)room, objectEntry->unk14, 0.0f, 0, -1.0f);
+
+									room->unkC = room->unkC + 1;
+
+									if ((room->unkC + 1) == (*catalog)[typeId].unk16) {
+										func_800787E8_1608A8(typeId, objectIndex);
+										if (!((*catalog)[typeId].unk40 & 0x800000)) {
+											room->unkC = 0;
+											room->unk2E &= ~1;
+										}
 									}
 								}
+							} else {
+								if ((*level == 1) && (D_800E66A4 == 3U) && (entryOffset == 0x3F0)) {
+									func_80014A3C_1563C((s32)room, objectEntry->unk14, 0.0f, 0, -1.0f);
+								}
+								func_800787E8_1608A8(typeId, objectIndex);
 							}
-						} else {
-							if ((*level == 1) && (D_800E66A4 == 3U) && (temp_s4 == 0x3F0)) {
-								func_80014A3C_1563C((s32)var_s0, objects[temp_s3].unk14, 0.0f, 0, -1.0f);
-							}
-							func_800787E8_1608A8(temp_s3, var_s5);
 						}
-					}
-					} else if (var_s0->unk2E & 2) {
-						func_800153D8_15FD8(objects[temp_s3].unk14);
-						func_800787E8_1608A8(temp_s3, var_s5);
+					} else if (room->unk2E & 2) {
+						func_800153D8_15FD8(objectEntry->unk14);
+						func_800787E8_1608A8(typeId, objectIndex);
 					}
 				} else {
-					func_800787E8_1608A8(temp_s3, var_s5);
+					func_800787E8_1608A8(typeId, objectIndex);
 				}
 				count = D_800E668C;
-				var_s0->unk2E &= ~2;
+				room->unk2E &= ~2;
 			}
-			var_s5++;
-			var_s0++;
-		} while (var_s5 < count);
+			objectIndex++;
+			room++;
+		} while (objectIndex < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80077B94_15FC54.s")
-#endif
 
-// AI - Handles level-specific interior events and missions
 #ifdef NON_MATCHING
 void func_800784B8_160578(void) {
 	s32 interiorId;
