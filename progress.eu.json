@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-26T07:38:06Z",
-  "commit": "c7bf814d",
-  "commit_timestamp": "2026-10-26T10:02:16+13:00",
+  "generated": "2026-10-27T03:08:01Z",
+  "commit": "f849c057",
+  "commit_timestamp": "2026-10-27T16:06:55+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2425,
-    "non_matching": 297,
+    "matched": 2432,
+    "non_matching": 290,
     "asm_stubs": 0,
-    "matched_pct": 89.09,
+    "matched_pct": 89.35,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -33,11 +33,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1289,
-      "non_matching": 160,
+      "matched": 1296,
+      "non_matching": 153,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 89.0,
+      "matched_pct": 89.4,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -628,11 +628,11 @@
     {
       "path": "overlay_gameplay/outside/CFE30.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 255,
-      "non_matching": 27,
+      "matched": 262,
+      "non_matching": 20,
       "asm_stubs": 0,
       "total": 282,
-      "matched_pct": 90.4,
+      "matched_pct": 92.9,
       "contributor": ""
     },
     {
@@ -834,9 +834,9 @@
     },
     {
       "date": "2026-10-25",
-      "commit": "c7bf814",
-      "matched": 2425,
-      "non_matching": 297,
+      "commit": "f849c05",
+      "matched": 2432,
+      "non_matching": 290,
       "total": 2722
     }
   ]
