@@ -6088,39 +6088,6 @@ const u32 jtbl_800A4A08_18CAC8[] = {
 	OVERLAY_PTR(0x80072530), OVERLAY_PTR(0x80072550), OVERLAY_PTR(0x80072570), OVERLAY_PTR(0x80072590), OVERLAY_PTR(0x8007260C), OVERLAY_PTR(0x80072628), OVERLAY_PTR(0x80072648), OVERLAY_PTR(0x80072668), 
 };
 
-const u32 jtbl_800A4A88_18CB48[] = {
-	OVERLAY_PTR(0x80072FA8), OVERLAY_PTR(0x80072EB4), OVERLAY_PTR(0x80072FA8), OVERLAY_PTR(0x80072F04), OVERLAY_PTR(0x80072FA0), 0x00000000,
-};
-
-const f64 D_800A4AA0_18CB60[1] = {180.0};
-
-const f64 D_800A4AA8_18CB68[1] = {180.0};
-
-const f64 D_800A4AB0_18CB70[1] = {180.0};
-
-const f32 D_800A4AB8_18CB78[1] = {315.0f};
-
-const f64 D_800A4AC0_18CB80[1] = {180.0};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -7289,16 +7256,15 @@ void func_8007290C_15A9CC(void)
 }
 
 
-// jtbl_800A4A88_18CB48
-// https://decomp.me/scratch/hiUtd
-// CURRENT(0)
-#ifdef NON_MATCHING
 // AI - Checks if current interior has special vehicle-spawn rooms
 s32 func_80072E88_15AF48(void)
 {
   switch (currentLevel)
   {
 	case 1:
+	case 3:
+	  break;
+	case 2:
 	  if (D_800E66A4 != 1)
 	{
 	  break;
@@ -7310,8 +7276,6 @@ s32 func_80072E88_15AF48(void)
 	}
 	  return 1;
 
-	case 2:
-	case 3:
 	case 4:
 	  if (D_800E66A4 == 1)
 	{
@@ -7337,9 +7301,6 @@ s32 func_80072E88_15AF48(void)
 
   return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072E88_15AF48.s")
-#endif
 
 // AI - Per-frame secondary update: missions, fades, room rendering, lighting
 void func_80072FB4_15B074(void) {
@@ -7841,7 +7802,7 @@ void func_80073A50_15BB10(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073A50_15BB10.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif
 
 // Render one visible floor tile.
