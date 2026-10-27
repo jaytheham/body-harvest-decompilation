@@ -8751,105 +8751,98 @@ void func_80076A58_15EB18(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076A58_15EB18.s")
 #endif
 
-// CURRENT (5013)
-#ifdef NON_MATCHING
-// AI - Builds transformation matrix from position, rotation, and scale
 void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, s32 arg3) {
-	Unk800476C8 sp48[2];
-	s32 sp44;
-	s32 sp40;
-	s32 sp3C;
-	s32 sp38;
-	s32 sp34;
-	s32 temp_v0;
-	s32 *var_v0;
-	s32 *var_a0;
+	s32 matrix[16];
+	/* Word writes retain the trig spills; scalar reads retain their allocation. */
+	union { s32 value; s32 words[1]; } cosX;
+	union { s32 value; s32 words[1]; } sinX;
+	s32 cosZ;
+	s32 sinZ;
+	s32 cosY;
+	s32 sinY;
+	s32 *src;
+	s32 *matrixEnd;
 
-	sp48[0].unkC = 0;
-	sp48[0].unk1C = 0;
-	sp48[1].unkC = 0;
-	sp48[1].unk1C = 0x10000;
+	matrix[3] = 0;
+	matrix[7] = 0;
+	matrix[11] = 0;
+	matrix[15] = 0x10000;
 
 	if (arg0 != NULL) {
-		sp48[1].unk10 = arg0[0];
-		sp48[1].unk14 = arg0[1];
-		sp48[1].unk18 = arg0[2];
+		matrix[12] = arg0[0];
+		matrix[13] = arg0[1];
+		matrix[14] = arg0[2];
 	} else {
-		sp48[1].unk10 = 0;
-		sp48[1].unk14 = 0;
-		sp48[1].unk18 = 0;
+		matrix[12] = 0;
+		matrix[13] = 0;
+		matrix[14] = 0;
 	}
 
 	if (arg1 != NULL) {
-		sp44 = coss(arg1[0]);
-		sp40 = sins(arg1[0]);
-		sp3C = coss(arg1[2]);
-		sp38 = sins(arg1[2]);
-		sp34 = coss(arg1[1]);
-		temp_v0 = sins(arg1[1]);
+		cosX.words[0] = coss(arg1[0]);
+		sinX.words[0] = sins(arg1[0]);
+		cosZ = coss(arg1[2]);
+		sinZ = sins(arg1[2]);
+		cosY = coss(arg1[1]);
+		sinY = sins(arg1[1]);
 
-		sp48[0].unk8 = (-sp40) * 2;
-		sp48[0].unk0 = ((sp44 * sp34) >> 0xF) * 2;
-		sp48[0].unk4 = ((sp44 * temp_v0) >> 0xF) * 2;
-		sp48[0].unk10 = (((-sp3C * temp_v0) >> 0xF) + ((((sp40 * sp38) >> 0xF) * sp34) >> 0xF)) * 2;
-		sp48[0].unk14 = (((sp3C * sp34) >> 0xF) + ((((sp40 * sp38) >> 0xF) * temp_v0) >> 0xF)) * 2;
-		sp48[0].unk18 = ((sp38 * sp44) >> 0xF) * 2;
-		sp48[1].unk0 = (((sp38 * temp_v0) >> 0xF) + ((((sp40 * sp3C) >> 0xF) * sp34) >> 0xF)) * 2;
-		sp48[1].unk4 = (((-sp38 * sp34) >> 0xF) + ((((sp40 * sp3C) >> 0xF) * temp_v0) >> 0xF)) * 2;
-		sp48[1].unk8 = ((sp44 * sp3C) >> 0xF) * 2;
+		matrix[0] = ((cosX.value * cosY) >> 0xF) * 2;
+		matrix[1] = ((cosX.value * sinY) >> 0xF) * 2;
+		matrix[2] = (-sinX.value) * 2;
+		matrix[4] = (((-cosZ * sinY) >> 0xF) + ((((sinX.value * sinZ) >> 0xF) * cosY) >> 0xF)) * 2;
+		matrix[5] = (((cosZ * cosY) >> 0xF) + ((((sinX.value * sinZ) >> 0xF) * sinY) >> 0xF)) * 2;
+		matrix[6] = ((sinZ * cosX.value) >> 0xF) * 2;
+		matrix[8] = (((sinZ * sinY) >> 0xF) + ((((sinX.value * cosZ) >> 0xF) * cosY) >> 0xF)) * 2;
+		matrix[9] = (((-sinZ * cosY) >> 0xF) + ((((sinX.value * cosZ) >> 0xF) * sinY) >> 0xF)) * 2;
+		matrix[10] = ((cosX.value * cosZ) >> 0xF) * 2;
 	} else {
-		sp48[0].unk0 = 0x10000;
-		sp48[0].unk10 = 0;
-		sp48[1].unk0 = 0;
-		sp48[0].unk4 = 0;
-		sp48[0].unk14 = 0x10000;
-		sp48[1].unk4 = 0;
-		sp48[0].unk8 = 0;
-		sp48[0].unk18 = 0;
-		sp48[1].unk8 = 0x10000;
+		matrix[0] = 0x10000;
+		matrix[4] = 0;
+		matrix[8] = 0;
+		matrix[1] = 0;
+		matrix[5] = 0x10000;
+		matrix[9] = 0;
+		matrix[2] = 0;
+		matrix[6] = 0;
+		matrix[10] = 0x10000;
 	}
 
 	if (arg2 != NULL) {
-		sp48[0].unk0 = sp48[0].unk0 * arg2[0];
-		sp48[0].unk4 = sp48[0].unk4 * arg2[0];
-		sp48[0].unk0 = sp48[0].unk0 >> 8;
-		sp48[0].unk8 = sp48[0].unk8 * arg2[0];
-		sp48[0].unk4 = sp48[0].unk4 >> 8;
-		sp48[0].unk8 = sp48[0].unk8 >> 8;
+		matrix[0] *= arg2[0];
+		matrix[1] *= arg2[0];
+		matrix[2] *= arg2[0];
+		matrix[0] >>= 8;
+		matrix[1] >>= 8;
+		matrix[2] >>= 8;
 
-		sp48[0].unk10 = sp48[0].unk10 * arg2[1];
-		sp48[0].unk14 = sp48[0].unk14 * arg2[1];
-		sp48[0].unk10 = sp48[0].unk10 >> 8;
-		sp48[0].unk18 = sp48[0].unk18 * arg2[1];
-		sp48[0].unk14 = sp48[0].unk14 >> 8;
-		sp48[0].unk18 = sp48[0].unk18 >> 8;
+		matrix[4] *= arg2[1];
+		matrix[5] *= arg2[1];
+		matrix[6] *= arg2[1];
+		matrix[4] >>= 8;
+		matrix[5] >>= 8;
+		matrix[6] >>= 8;
 
-		sp48[1].unk0 = sp48[1].unk0 * arg2[2];
-		sp48[1].unk4 = sp48[1].unk4 * arg2[2];
-		sp48[1].unk0 = sp48[1].unk0 >> 8;
-		sp48[1].unk8 = sp48[1].unk8 * arg2[2];
-		sp48[1].unk4 = sp48[1].unk4 >> 8;
-		sp48[1].unk8 = sp48[1].unk8 >> 8;
+		matrix[8] *= arg2[2];
+		matrix[9] *= arg2[2];
+		matrix[10] *= arg2[2];
+		matrix[8] >>= 8;
+		matrix[9] >>= 8;
+		matrix[10] >>= 8;
 	}
 
-	var_v0 = (s32 *)sp48;
-	var_a0 = (s32 *)arg3;
-	do {
-		var_a0[0] = ((var_v0[1] & 0xFFFF0000) >> 0x10) + (var_v0[0] & 0xFFFF0000);
-		var_a0 += 4;
-		var_a0[4] = (var_v0[0] << 0x10) + (var_v0[1] & 0xFFFF);
-		var_a0[-3] = ((var_v0[3] & 0xFFFF0000) >> 0x10) + (var_v0[2] & 0xFFFF0000);
-		var_a0[5] = (var_v0[2] << 0x10) + (var_v0[3] & 0xFFFF);
-		var_a0[-2] = ((var_v0[5] & 0xFFFF0000) >> 0x10) + (var_v0[4] & 0xFFFF0000);
-		var_a0[6] = (var_v0[4] << 0x10) + (var_v0[5] & 0xFFFF);
-		var_a0[-1] = ((var_v0[7] & 0xFFFF0000) >> 0x10) + (var_v0[6] & 0xFFFF0000);
-		var_a0[7] = (var_v0[6] << 0x10) + (var_v0[7] & 0xFFFF);
-		var_v0 += 8;
-	} while (var_v0 != (s32 *)&sp48[2]);
+	/* Keep this setup together and form the source cursor before the end. */
+	arg0 = (s32 *)arg3; src = matrix; matrixEnd = &matrix[16]; do { arg0[0] = (src[0] & 0xFFFF0000U) + ((src[1] & 0xFFFF0000U) >> 0x10);
+		arg0 = &arg0[4];
+		arg0[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
+		arg0[-3] = (src[2] & 0xFFFF0000U) + ((src[3] & 0xFFFF0000U) >> 0x10);
+		arg0[5] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
+		arg0[-2] = (src[4] & 0xFFFF0000U) + ((src[5] & 0xFFFF0000U) >> 0x10);
+		arg0[6] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
+		arg0[-1] = (src[6] & 0xFFFF0000U) + ((src[7] & 0xFFFF0000U) >> 0x10);
+		arg0[7] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
+		src = &src[8];
+	} while (src != matrixEnd);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80076C08_15ECC8.s")
-#endif
 
 void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 	/* Unpacked 16.16 matrix in row order. */
