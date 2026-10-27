@@ -6120,9 +6120,7 @@ const f32 D_800A4B54_18CC14[1] = {0.10000000149011612f};
 
 const f32 D_800A4B58_18CC18[1] = {0.20000000298023224f};
 
-const u32 jtbl_800A4B5C_18CC1C[] = {
-	OVERLAY_PTR(0x80078B04), OVERLAY_PTR(0x80078B20), OVERLAY_PTR(0x80078BCC), OVERLAY_PTR(0x80078BE8), OVERLAY_PTR(0x80078CD4),
-};
+
 
 
 
@@ -9628,49 +9626,45 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 }
 
 
-// jtbl_800A4B5C_18CC1C
-#ifdef NON_MATCHING
 // AI - Sets room visitability flags based on level and building variant
 void func_80078AD4_160B94(s32 arg0) {
 	s32 shouldSet;
-	s32 phase;
 
 	shouldSet = 0;
-	phase = D_800E66A4;
 
 	switch (currentLevel) {
 		case 1:
-			if (phase == 5) {
+			if (D_800E66A4 == 5) {
 				shouldSet = 1;
 			}
 			break;
 
 		case 2:
-			if ((phase == 0) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 9)) {
+			if ((D_800E66A4 == 0) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 9)) {
 				shouldSet = 1;
 			}
-			if ((phase == 1) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 5)) {
+			if ((D_800E66A4 == 1) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 5)) {
 				shouldSet = 1;
 			}
-			if (phase == 5) {
+			if (D_800E66A4 == 5) {
 				shouldSet = 1;
 			}
 			break;
 
 		case 3:
-			if (phase == 5) {
+			if (D_800E66A4 == 5) {
 				shouldSet = 1;
 			}
 			break;
 
 		case 4:
-			if ((phase == 0) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 2)) {
+			if ((D_800E66A4 == 0) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 2)) {
 				shouldSet = 1;
 			}
-			if ((phase == 1) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 8)) {
+			if ((D_800E66A4 == 1) && ((((buildingInstances[D_80052540].unk8 << 26) >> 28)) == 8)) {
 				shouldSet = 1;
 			}
-			if (phase == 2) {
+			if (D_800E66A4 == 2) {
 				s32 attrBits;
 
 				attrBits = (buildingInstances[D_80052540].unk8 << 26) >> 28;
@@ -9678,7 +9672,7 @@ void func_80078AD4_160B94(s32 arg0) {
 					shouldSet = 1;
 				}
 			}
-			if (phase == 5) {
+			if (D_800E66A4 == 5) {
 				shouldSet = 1;
 			}
 			break;
@@ -9696,9 +9690,6 @@ void func_80078AD4_160B94(s32 arg0) {
 		D_800E65BC[arg0].unk40 &= ~2;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80078AD4_160B94.s")
-#endif
 
 // AI - Handles player room selection and interaction detection
 void func_80078D68_160E28(void) {
