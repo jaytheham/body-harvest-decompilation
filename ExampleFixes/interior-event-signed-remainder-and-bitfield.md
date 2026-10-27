@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800784B8_160578`, testing the signed frame counter with `(counter % 4) == 0` removes the target negative-remainder adjustment. Manually replacing the building rotation word also changes unrelated bytes, and the split interior-ID dispatch misses the target single jump table.
+
+-> `code changed`: Use `!(D_800E65AC % 4)` for the first counter test. Set `buildingInstances[0x35].rotationIndex = 6` through the existing bitfield. Use one switch containing the high `0x6E` case as well as the lower cases; `switch (interiorId ^ 0)` preserves its selector copy. Express the damage clamp as an explicit negative/otherwise store, without an unconditional store before the test.
+
+-> `correct ASM`: The signed adjustment retains `bgez`, `andi`, `beqz`, and `addiu -4`; rotation emits `lbu`, `andi 0xffc3`, `ori 0x18`, and `sb`. The initial event blocks, complete level-4 switch, clamp stores, and generated jump table match. The complete routine remains behind its assembly fallback because the level-5 guard still differs in scheduling.

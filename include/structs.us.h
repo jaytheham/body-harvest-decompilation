@@ -468,7 +468,7 @@ typedef struct {
 	/* 0x18 */ u16 unk18; // AI - object/room width (dimension, halved for positioning & culling)
 	/* 0x1A */ u16 unk1A; // AI - object/room depth (dimension, halved for positioning & culling)
 	/* 0x1C */ u8 pad1C[0x2]; // AI - pad1C[0] = signed height offset written to the instance's unk4
-	/* 0x1E */ s16 unk1E; // AI - signed animation offset/scale parameter for the room entry
+	/* 0x1E */ u16 unk1E; // Animation duration in frames
 	/* 0x20 */ f32 unk20; // AI - animation speed/magnitude (float, e.g. 0.1 / 2.0 / 5.0 / 25.0)
 	/* 0x24 */ s16 unk24; // AI - interaction angle in degrees
 	/* 0x26 */ s16 unk26; // AI - base offset for animated geometry (X)
@@ -2752,10 +2752,13 @@ typedef struct {
 	/* 0x06 */ s16 unk6; // AI - room-space Z position
 	/* 0x08 */ u8 unk8; // AI - orientation (0-3)
 	/* 0x09 */ u8 pad9[0x1];
-	/* 0x0A */ s16 unkA; // AI - spawned entity/object handle (0 if none)
-	/* 0x0C */ s16 unkC; // AI - room-visit related value (from the object's unk16)
+	/* 0x0A */ union {
+		s16 unkA; // Spawned entity/object handle (0 if none).
+		u8 handleBytes[2];
+	};
+	/* 0x0C */ u16 unkC; // AI - room-visit related value (from the object's unk16)
 	/* 0x0E */ s16 unkE; // AI - state/sentinel (-1 = unused)
-	/* 0x10 */ s16 unk10; // AI - additional state value
+	/* 0x10 */ u16 unk10; // AI - additional state value
 	/* 0x12 */ u8 pad12[0x2];
 	/* 0x14 */ f32 unk14; // AI - animated offset (X)
 	/* 0x18 */ f32 unk18; // AI - animated offset (Y)
