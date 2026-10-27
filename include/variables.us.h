@@ -1384,17 +1384,17 @@ extern void* D_80098AF0_68FA0[45];
 extern Unk8007E12CEntry8 D_80098BA4_69054[];
 extern void* D_80098FE4_69494[3];
 extern u32 D_80098FFC_694AC[];
-// AI - Per-room display lists (8 Gfx per room, 32 bytes each; indexed by levelIndex << 5)
-extern u8 D_8009C1A8_184268[];
+// AI - Per-room display-list pointers (8 pointers per room, 32 bytes each; indexed by levelIndex << 5)
+extern InteriorRoomDisplayListTable D_8009C1A8_184268;
 extern s32 D_8009C4C4_184584[]; // Fake symbol - dont' use
 // AI - Per-world base offsets into the room object catalog (D_8008E0A8_176168) / room ranges
 extern s32 D_8009C4C8_184588[];
 // AI - Per-room misc data (8 s32 per room, 32 bytes each; indexed by levelIndex << 5)
-extern s32 D_8009C4E4_1845A4[];
+extern InteriorRoomOffsetTable D_8009C4E4_1845A4;
 // AI - Per-room configuration table (25 rooms; runtime pointer D_800E65C8)
 extern Unk9C804 D_8009C804_1848C4[];
 // AI - Room map/layout data (per-room tile map, 0x1E bytes per currentLevel)
-extern u8 D_8009CD7C_184E3C[];
+extern InteriorRoomMapSize D_8009CD7C_184E3C[5][15];
 // AI - Event building interior IDs (first set) that count as visited for missions
 extern InteriorPrimaryEventBuildings D_8009CE14_184ED4;
 // AI - Second event building interior IDs that count as visited for missions
@@ -1722,7 +1722,7 @@ extern s16 D_800E66B2[];
 extern u8 D_800E66B3[];
 extern u8 D_800E69A7[];
 // AI - Tile map copied from the interior record (InteriorRoomData.tileMap)
-extern u8 D_800E69A8[];
+extern u8 D_800E69A8[100];
 extern Vec3f D_800E6A10;
 extern s32 D_800E6A1C;
 extern s32 D_800E6A20;

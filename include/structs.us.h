@@ -456,7 +456,10 @@ typedef struct {
 // AI - Room object type definition: one entry in a room's 32-entry object catalog (D_8008E0A8_176168[room][type])
 // AI - A room object provides the geometry, dimensions, embedded spawns and behavior flags referenced by placed instances (Unk800E66A8)
 typedef struct {
-	/* 0x00 */ u8 pad0[0x8]; // AI - bytes 0x00-0x03 = main Gfx display list, 0x04-0x07 = alternate (visited) display list
+	/* 0x00 */ union {
+		u8 pad0[8];
+		struct { Gfx *unk0; Gfx *unk4; };
+	};
 	/* 0x08 */ s16 unk8; // AI - local offset X (spawn/entity placement within the room)
 	/* 0x0A */ s16 unkA; // AI - local offset Z (spawn/entity placement within the room)
 	/* 0x0C */ s16 unkC; // AI - spawned entity/object type
@@ -4232,6 +4235,22 @@ typedef struct {
 typedef struct {
 	f64 value;
 } InteriorAngleScale;
+
+typedef struct {
+    u8 width;
+    u8 height;
+} InteriorRoomMapSize;
+
+typedef union {
+    s32 flat[25 * 8];
+    s32 rows[25][8];
+    u8 bytes[25 * 32];
+} InteriorRoomOffsetTable;
+
+typedef union {
+    Gfx *rows[25][8];
+    u8 bytes[25 * 32];
+} InteriorRoomDisplayListTable;
 
 typedef union {
 	s16 flat[22];
