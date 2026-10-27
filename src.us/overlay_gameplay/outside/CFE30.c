@@ -311,9 +311,7 @@ u8 D_8013E0A8_14D058[0x18] = {
 u32 D_8013E0C0_14D070[15] = {
 	0x05033FA0, 0x0100D800, 0x0100E080, 0x0100E080, 0x0100E280, 0x0100E080, 0x0100E280, 0x0100D800, 0x0100C700, 0x0100C700, 0x0100E080, 0x0100E080, 0x0100E080, 0x0100C700, 0x050474F0
 };
-u8 D_8013E0FC_14D0AC[0x0C] = {
-	0xFF, 0x32, 0x32, 0x64, 0x00, 0x00, 0xFF, 0x32, 0x32, 0x64, 0x00, 0x00,
-};
+Unk80052B40_fp D_8013E0FC_14D0AC = { 0xFF323264, 0x0000FF32, 0x32640000 };
 RingPaletteTable D_8013E108_14D0B8 = {{
 	0xFF, 0xFF, 0x00, 0xFF, 0xE6, 0x96, 0x3C, 0xFF, 0xAA, 0xE6, 0xFF, 0x8C, 0x5A, 0xB4, 0xDC, 0xB4,
 	0x78, 0xBE, 0xFF, 0x78, 0x28, 0x6E, 0xB4, 0xA0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
@@ -2740,21 +2738,19 @@ void func_800C820C_D71BC(s8 arg0, s8 arg1, s8 arg2, s16 arg3) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800C8294_D7244(void) {
-	Unk80154318Entry *linked;
-	Unk80154318Entry *entry;
 	Unk80154318Entry *next;
-	Unk80154318Sub *entrySub;
-	s16 hitY;
 	s16 effectIdx;
+	s16 linkedIndex;
+	ChunkEffectState *entrySub;
+	s16 motionIndex;
+	s16 hitY;
+	s32 nextIndex;
+	ChunkMotionState *motion;
 	Unk80052B40_fp sp84;
-	u8 *nextBytes;
 
-	sp84.unk0 = *(s32 *)&D_8013E0FC_14D0AC[0];
 	effectIdx = D_80154216;
-	sp84.unk8 = *(s32 *)&D_8013E0FC_14D0AC[8];
-	sp84.unk4 = *(s32 *)&D_8013E0FC_14D0AC[4];
+	sp84 = D_8013E0FC_14D0AC;
 
 	if ((effectIdx == -5) || (effectIdx == -6)) {
 		func_800C1418_D03C8(2, 1);
@@ -2762,89 +2758,87 @@ void func_800C8294_D7244(void) {
 	}
 
 	while ((effectIdx != -5) && (effectIdx != -6)) {
-		entry = &D_80154318[effectIdx];
-		linked = &D_80154318[entry->unk4];
-		next = &D_80154318[linked->unk4];
+		linkedIndex = D_80154318[effectIdx].unk4;
+		motionIndex = D_80154318[linkedIndex].unk4;
+		next = &D_80154318[motionIndex];
 
-		entrySub = (Unk80154318Sub *)&entry->unk8;
-		nextBytes = (u8 *)&next->unk8;
+		entrySub = &D_80154318[effectIdx].chunkEffect;
+		motion = &next->chunkMotion;
 
-		entry->unk8 += ((s8 *)&next->unk8)[0];
-		entry->unkC += ((s8 *)&next->unk8)[2];
-		entry->unkA += ((s8 *)&next->unk8)[1];
+		D_80154318[effectIdx].unk8 += motion->velocity[0];
+		D_80154318[effectIdx].unkC += motion->velocity[2];
+		D_80154318[effectIdx].unkA += motion->velocity[1];
 
-		func_80137368_146318(entry->unk8, entry->unkA, entry->unkC, 0xD, effectIdx);
+		func_80137368_146318(D_80154318[effectIdx].unk8, D_80154318[effectIdx].unkA, D_80154318[effectIdx].unkC, 0xD, effectIdx);
 
-		hitY = (s16)(func_800B84D0_C7480(entrySub->unk0, entrySub->unk4) >> 8);
+		hitY = (s16)(func_800B84D0_C7480(entrySub->position[0], entrySub->position[2]) >> 8);
 
-		if ((s8)nextBytes[1] >= -0x13) {
-			nextBytes[1] = (u8)((s8)nextBytes[1] - 1);
+		if (motion->velocity[1] >= -0x13) {
+			motion->velocity[1]--;
 		} else {
-			nextBytes[1] = (u8)-0x14;
+			motion->velocity[1] = -0x14;
 		}
 
-		nextBytes[3] = (u8)(nextBytes[3] + (s8)nextBytes[6]);
-		nextBytes[4] = (u8)(nextBytes[4] + (s8)nextBytes[7]);
-		nextBytes[5] = (u8)(nextBytes[5] + (s8)nextBytes[8]);
+		motion->rotation[0] += motion->angularVelocity[0];
+		motion->rotation[1] += motion->angularVelocity[1];
+		motion->rotation[2] += motion->angularVelocity[2];
 
-		if ((entrySub->unkB & 4) && (entrySub->unkA == 0)) {
-			func_800C8E10_D7DC0(entrySub->unk0, entrySub->unk2, entrySub->unk4, entrySub->unk9);
+		if ((entrySub->flags & 4) && (entrySub->timer == 0)) {
+			func_800C8E10_D7DC0(entrySub->position[0], entrySub->position[1], entrySub->position[2], entrySub->effectId);
 		}
 
-		entrySub->unkA++;
-		if (entrySub->unkA == 3U) {
-			entrySub->unkA = 0;
+		entrySub->timer++;
+		if (entrySub->timer == 3U) {
+			entrySub->timer = 0;
 		}
 
-		if (D_80222A70 >= entrySub->unk2) {
-			if (entrySub->unkB & 0x10) {
-				func_800DEA08_ED9B8(entrySub->unk0, (s16)D_80222A70, entrySub->unk4, 0xC8, 0xA, 8, 0x28, 0xDC, 0x96, 0x96,
+		if (D_80222A70 >= entrySub->position[1]) {
+			if (entrySub->flags & 0x10) {
+				func_800DEA08_ED9B8(entrySub->position[0], (s16)D_80222A70, entrySub->position[2], 0xC8, 0xA, 8, 0x28, 0xDC, 0x96, 0x96,
 					0x96);
-				func_801371B8_146168(0, 0x16D, entrySub->unk0, ((s16 *)&D_80222A70)[1], entrySub->unk4, -1.0f);
+				func_801371B8_146168(0, 0x16D, entrySub->position[0], (s16)D_80222A70, entrySub->position[2], -1.0f);
 			}
 
-			func_800E0E9C_EFE4C(entrySub->unk0, entrySub->unk4, (u16)(entry->unk2 >> 2));
+			func_800E0E9C_EFE4C(entrySub->position[0], entrySub->position[2], (u16)(D_80154318[effectIdx].unk2 >> 2));
 			func_800C1D40_D0CF0(effectIdx, 2, 1);
 			effectIdx = next->unk4;
 			continue;
 		}
 
-		if (hitY >= entrySub->unk2) {
-			if (entrySub->unkB & 1) {
-				if (entrySub->unkB & 0x18) {
-					if (*(s32 *)&linked->unk8 == (s32)&D_502D390) {
+		if (hitY >= entrySub->position[1]) {
+			if (entrySub->flags & 1) {
+				if (entrySub->flags & 0x18) {
+					if (D_80154318[linkedIndex].displayList == (Gfx *)&D_502D390) {
 						if ((D_80031420 & 3) == 3) {
-							if ((currentLevel == 4) &&
+							if ((D_80031420 & 3) && (currentLevel == 4) &&
 								((func_8000726C_7E6C((u64)0xB) == 0) || (func_8000726C_7E6C((u64)0xC) != 0))) {
-								func_800CA5EC_D959C(entrySub->unk0, (s16)(func_800B84D0_C7480(entrySub->unk0, entrySub->unk4) >> 8),
-									entrySub->unk4, 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0, 0xFF, 0, 0xFF);
+								func_800CA5EC_D959C(entrySub->position[0], (s16)(func_800B84D0_C7480(entrySub->position[0], entrySub->position[2]) >> 8),
+									entrySub->position[2], 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0, 0xFF, 0, 0xFF);
 							} else if ((D_80031420 & 3) == 3) {
-								func_800DF9C8_EE978(entrySub->unk0, entrySub->unk2, entrySub->unk4, 0x32, 0, (s32)&sp84);
-								func_800CA5EC_D959C(entrySub->unk0, (s16)(func_800B84D0_C7480(entrySub->unk0, entrySub->unk4) >> 8),
-									entrySub->unk4, 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0xFF, 0, 0, 0xFF);
+								func_800DF9C8_EE978(entrySub->position[0], entrySub->position[1], entrySub->position[2], 0x32, 0, &sp84);
+								func_800CA5EC_D959C(entrySub->position[0], (s16)(func_800B84D0_C7480(entrySub->position[0], entrySub->position[2]) >> 8),
+									entrySub->position[2], 0, 0x7F, 0, 0x28, 5, 0x19, 0xFF, 0xFF, 0, 0, 0xFF);
 							}
 
-							func_80137130_1460E0((s32)entrySub, 0xF4, entrySub->unk0, entrySub->unk2, entrySub->unk4);
-							func_80137130_1460E0((s32)entrySub, 0xAD, entrySub->unk0, entrySub->unk2, entrySub->unk4);
+							func_80137130_1460E0((s32)entrySub, 0xF4, entrySub->position[0], entrySub->position[1], entrySub->position[2]);
+							func_80137130_1460E0((s32)entrySub, 0xAD, entrySub->position[0], entrySub->position[1], entrySub->position[2]);
 						}
 					} else {
-						func_800DF038_EDFE8(entrySub->unk0, entrySub->unk2, entrySub->unk4, (u16)(entry->unk2 / 2), 0, 0);
+						func_800DF038_EDFE8(entrySub->position[0], entrySub->position[1], entrySub->position[2], (u16)(D_80154318[effectIdx].unk2 / 2), 0, 0);
 					}
 				} else {
-					func_800DF038_EDFE8(entrySub->unk0, entrySub->unk2, entrySub->unk4, (u16)(entry->unk2 / 6), 0, 0);
+					func_800DF038_EDFE8(entrySub->position[0], entrySub->position[1], entrySub->position[2], (u16)(D_80154318[effectIdx].unk2 / 6), 0, 0);
 				}
 			}
 
+			nextIndex = next->unk4;
 			func_800C1D40_D0CF0(effectIdx, 2, 1);
-			effectIdx = next->unk4;
+			effectIdx = (s16)nextIndex;
 		} else {
 			effectIdx = next->unk4;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8294_D7244.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800C8814_D77C4(void) {

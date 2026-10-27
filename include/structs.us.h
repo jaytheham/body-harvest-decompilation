@@ -2946,6 +2946,21 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 position[3];
 	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 effectId;
+	/* 0x0A */ u8 timer;
+	/* 0x0B */ u8 flags;
+} ChunkEffectState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s8 velocity[3];
+	/* 0x03 */ u8 rotation[3];
+	/* 0x06 */ s8 angularVelocity[3];
+	/* 0x09 */ u8 pad9[3];
+} ChunkMotionState; /* size = 0x0C */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 opacity;
 	/* 0x0A */ s8 velocity[3];
 	/* 0x0D */ u8 bounced;
@@ -3076,6 +3091,8 @@ typedef struct {
 				/* 0x08 */ SmokePuffState smokePuff;
 				/* 0x08 */ EffectFirePayload firePayload;
 				/* 0x08 */ TrailParticleState trailParticle;
+				/* 0x08 */ ChunkEffectState chunkEffect;
+				/* 0x08 */ ChunkMotionState chunkMotion;
 				/* 0x08 */ SparkEmitterState sparkEmitter;
 				/* 0x08 */ SpurtVisualState spurtVisual;
 				/* 0x08 */ NukeEffectState nukeEffect;

@@ -2531,6 +2531,7 @@ extern Unk800311A0 D_80156EDC;
 extern Unk800311A0 D_80156EE4;
 extern EffectParticleConfig D_8013DFF4_14CFA4[15];
 extern u32 D_8013E0C0_14D070[15];
+extern Unk80052B40_fp D_8013E0FC_14D0AC;
 extern u8 D_8013E06C_14D01C[0x3C];
 extern UnkFC8E8Entry D_80156EF0[];
 extern u8 D_80157530;
