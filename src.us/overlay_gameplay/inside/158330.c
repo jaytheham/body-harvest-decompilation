@@ -6126,13 +6126,9 @@ const u32 jtbl_800A4B5C_18CC1C[] = {
 
 const f64 D_800A4B70_18CC30[1] = {180.0};
 
-const u32 jtbl_800A4B78_18CC38[] = {
-	OVERLAY_PTR(0x80079448), OVERLAY_PTR(0x80079458), OVERLAY_PTR(0x80079468), OVERLAY_PTR(0x80079478), OVERLAY_PTR(0x80079488), OVERLAY_PTR(0x80079498),
-};
 
-const f64 D_800A4B90_18CC50[1] = {180.0};
 
-const f32 D_800A4B98_18CC58[1] = {0.4000000059604645f};
+
 
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
@@ -9868,9 +9864,6 @@ void func_80079310_1613D0(void) {
 	D_800E65A8 &= ~0x8000;
 }
 
-// jtbl_800A4B78_18CC38
-#ifdef NON_MATCHING
-/* CURRENT(5) */
 // AI - Debug room selection tool (controller 2 input)
 void func_80079330_1613F0(void) {
 	func_8000345C_405C(0x20);
@@ -9927,9 +9920,6 @@ void func_80079330_1613F0(void) {
 
 	D_800E65F0 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80079330_1613F0.s")
-#endif
 
 // AI - Debug tool: adjusts room object offset values
 void func_800794BC_16157C(void) {
@@ -10285,7 +10275,7 @@ s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 		angle = D_800E65BC[objectId].unk24;
 		value = entry->unk8;
 		if (func_8007C2D0_164390(arg4, arg3, arg2, arg1, value << 0xE,
-			(s16)(s32)(((f32)angle * 32768.0f) / D_800A4B90_18CC50[0]))) {
+			(s16)(s32)(((f32)angle * 32768.0f) / 180.0))) {
 			return 1;
 		}
 	}
@@ -10647,7 +10637,7 @@ void func_8007AE40_162F00(void)
 	}
 	else if (roomId != 0x1F)
 	{
-		func_80014A3C_1563C(0, 0xD1, 0, 0, D_800A4B98_18CC58[0]);
+		func_80014A3C_1563C(0, 0xD1, 0, 0, 0.4f);
 	}
 }
 
