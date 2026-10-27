@@ -2788,8 +2788,13 @@ typedef struct {
 	/* 0x28 */ s16 unk28; // AI - interaction center X (plus D_800E65CC)
 	/* 0x2A */ s16 unk2A; // AI - interaction half width
 	/* 0x2C */ s32 unk2C;
-	/* 0x30 */ s16 unk30; // AI - music/ambient id
-	/* 0x32 */ s16 unk32;
+	union {
+		struct {
+			/* 0x30 */ s16 unk30;
+			/* 0x32 */ s16 unk32;
+		};
+		/* 0x30 */ s32 musicId;
+	};
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
 } Unk9C804; /* stride 0x38 */

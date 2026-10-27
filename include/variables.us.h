@@ -1527,7 +1527,7 @@ extern u8 *D_800AED70;
 extern u8 *D_800AED74;
 extern u8 D_800AED78[];
 extern s32 D_800AED88[];
-extern s8 D_800D6460;
+extern InteriorRoomData D_800D6460[254];
 extern u8 D_800D6D88;
 extern u8 D_800D6D89;
 extern u8 D_800D6D8A;
