@@ -8825,7 +8825,8 @@ s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
 }
 
 #ifdef NON_MATCHING
-s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4) {
+s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4)
+{
 	f32 slopeMain[1];
 	f32 interceptMain;
 	s32 absFirst;
@@ -8870,7 +8871,8 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 	x0 = *arg2;
 	z0 = *arg3;
 
-	if ((x0 <= arg0 ? arg0 - x0 : -(arg0 - x0)) < 5.0f) {
+	if ((x0 <= arg0 ? arg0 - x0 : -(arg0 - x0)) < 5.0f)
+	{
 		x0 = arg0 + 5.0f;
 	}
 
@@ -8879,17 +8881,21 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 	interceptMain = arg1 - (slopeMain[0] * arg0);
 
 	i = 4;
-	if (1) {
-		while (i--) {
+	if (1)
+	{
+		while (i--)
+		{
 			sideFlags[i] = interceptMain <
-			    ((D_80159D5C->unk54 + D_80159D98[i]) -
-			     (slopeMain[0] * (D_80159D78[i] + D_80159D5C->unk4C)));
+						   ((D_80159D5C->unk54 + D_80159D98[i]) -
+							(slopeMain[0] * (D_80159D78[i] + D_80159D5C->unk4C)));
 		}
 	}
 
 	i = 3;
-	while (i--) {
-		if (sideFlags[3] == sideFlags[i]) {
+	while (i--)
+	{
+		if (sideFlags[3] == sideFlags[i])
+		{
 			continue;
 		}
 
@@ -8897,15 +8903,18 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		zIn = *arg3;
 
 		i = 4;
-		while (i--) {
+		while (i--)
+		{
 			distSq = ((s32)((D_80159D78[i] + arg4->unk4C) - arg0) * (s32)((D_80159D78[i] + arg4->unk4C) - arg0)) + ((s32)((D_80159D98[i] + arg4->unk54) - arg1) * (s32)((D_80159D98[i] + arg4->unk54) - arg1));
 
-			if (distSq < bestDist) {
+			if (distSq < bestDist)
+			{
 				bestDist = distSq;
 				closestCorner = i;
 			}
 
-			if (distSq > worstDist) {
+			if (distSq > worstDist)
+			{
 				worstDist = distSq;
 				farthestCorner = i;
 			}
@@ -8919,39 +8928,52 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		startSide = interceptEdge < (zIn - (xIn * slopeEdge));
 
 		i = 4;
-		while (i--) {
-			if ((i == closestCorner) || (i == farthestCorner)) {
+		while (i--)
+		{
+			if ((i == closestCorner) || (i == farthestCorner))
+			{
 				continue;
 			}
 
 			x2 = D_80159D78[i] + D_80159D5C->unk4C;
 			z2 = D_80159D98[i] + D_80159D5C->unk54;
-			if (startSide == (interceptEdge < (z2 - (slopeEdge * x2)))) {
-				if (firstCorner == -1) {
+			if (startSide == (interceptEdge < (z2 - (slopeEdge * x2))))
+			{
+				if (firstCorner == -1)
+				{
 					firstCorner = i;
 					firstAng = func_80003824_4424(z2 - arg1, x2 - arg0);
-				} else {
+				}
+				else
+				{
 					secondCorner = i;
 					secondAng = func_80003824_4424(z2 - arg1, x2 - arg0);
 				}
 			}
 		}
 
-		if (secondCorner == -1) {
+		if (secondCorner == -1)
+		{
 			chosenCorner = firstCorner;
-		} else {
+		}
+		else
+		{
 			centerAng = func_80003824_4424(z1 - arg1, x1 - arg0);
 			firstAng = func_800F9C50_108C00(centerAng, firstAng);
 			secondAng = func_800F9C50_108C00(centerAng, secondAng);
 			absFirst = firstAng >= 0 ? firstAng : -firstAng;
-			if ((secondAng >= 0 ? secondAng : -secondAng) < absFirst) {
+			if ((secondAng >= 0 ? secondAng : -secondAng) < absFirst)
+			{
 				chosenCorner = firstCorner;
-			} else {
+			}
+			else
+			{
 				chosenCorner = secondCorner;
 			}
 		}
 
-		if (chosenCorner == -1) {
+		if (chosenCorner == -1)
+		{
 			*arg2 = -0x7FFF;
 			*arg3 = -0x7FFF;
 			return 0;
@@ -8962,11 +8984,13 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		xIn = D_80159D78[chosenCorner] + arg4->unk4C;
 		zIn = D_80159D98[chosenCorner] + arg4->unk54;
 
-		if ((xIn <= x1 ? x1 - xIn : -(x1 - xIn)) < 5.0f) {
+		if ((xIn <= x1 ? x1 - xIn : -(x1 - xIn)) < 5.0f)
+		{
 			xIn = x1 + 5.0f;
 		}
 
-		if ((zIn <= z1 ? z1 - zIn : -(z1 - zIn)) < 5.0f) {
+		if ((zIn <= z1 ? z1 - zIn : -(z1 - zIn)) < 5.0f)
+		{
 			zIn = z1 + 5.0f;
 		}
 
@@ -8980,10 +9004,13 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		zHit = z2 = (slopeMain[0] * xHit) + interceptMain;
 
 		if ((D_80144D08_153CB8[0] < zHit) || (zHit < -32768.0) ||
-			(D_80144D10_153CC0[0] < xHit) || (xHit < -32768.0)) {
+			(D_80144D10_153CC0[0] < xHit) || (xHit < -32768.0))
+		{
 			*arg2 = -0x7FFF;
 			*arg3 = -0x7FFF;
-		} else {
+		}
+		else
+		{
 			*arg2 = x2;
 			*arg3 = z2;
 		}
@@ -9303,57 +9330,67 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 }
 
 #ifdef NON_MATCHING
-int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9) {
-    f32 slope;
-    f32 intercept;
-    if (arg2 < arg0) {
-        intercept = arg2;
-        arg2 = arg0;
-        arg0 = intercept;
-    }
-    if (arg3 < arg1) {
-        intercept = arg3;
-        arg3 = arg1;
-        arg1 = intercept;
-    }
-    if (arg0 == arg2) {
-        if (arg4 == arg6) {
-            return 0;
-        }
-        if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0)))) {
-            return 0;
-        }
-        intercept = arg7 - arg5;
-        if (0.0 == intercept) {
-            *arg8 = arg0;
-            *arg9 = arg5;
-            return (arg1 <= arg5) && (arg5 <= arg3);
-        }
-        slope = intercept / (arg6 - arg4);
-        *arg8 = arg0;
-        intercept = arg5 - slope * arg4;
-        slope = intercept + slope * arg0;
-        *arg9 = slope;
-        return (arg1 <= slope) && (slope <= arg3);
-    }
-    if (arg5 == arg7) {
-        return 0;
-    }
-    if (!(((arg5 <= arg1) && (arg1 <= arg7)) || ((arg1 <= arg5) && (arg7 <= arg1)))) {
-        return 0;
-    }
-    intercept = arg6 - arg4;
-    if (0.0 == intercept) {
-        *arg8 = arg4;
-        *arg9 = arg1;
-        return (arg0 <= arg4) && (arg4 <= arg2);
-    }
-    slope = (arg7 - arg5) / intercept;
-    intercept = arg5 - slope * arg4;
-    slope = (arg1 - intercept) / slope;
-    *arg8 = slope;
-    *arg9 = arg1;
-    return (arg0 <= slope) && (slope <= arg2);
+int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9)
+{
+	f32 slope;
+	f32 intercept;
+	if (arg2 < arg0)
+	{
+		intercept = arg2;
+		arg2 = arg0;
+		arg0 = intercept;
+	}
+	if (arg3 < arg1)
+	{
+		intercept = arg3;
+		arg3 = arg1;
+		arg1 = intercept;
+	}
+	if (arg0 == arg2)
+	{
+		if (arg4 == arg6)
+		{
+			return 0;
+		}
+		if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0))))
+		{
+			return 0;
+		}
+		intercept = arg7 - arg5;
+		if (0.0 == intercept)
+		{
+			*arg8 = arg0;
+			*arg9 = arg5;
+			return (arg1 <= arg5) && (arg5 <= arg3);
+		}
+		slope = intercept / (arg6 - arg4);
+		*arg8 = arg0;
+		intercept = arg5 - slope * arg4;
+		slope = intercept + slope * arg0;
+		*arg9 = slope;
+		return (arg1 <= slope) && (slope <= arg3);
+	}
+	if (arg5 == arg7)
+	{
+		return 0;
+	}
+	if (!(((arg5 <= arg1) && (arg1 <= arg7)) || ((arg1 <= arg5) && (arg7 <= arg1))))
+	{
+		return 0;
+	}
+	intercept = arg6 - arg4;
+	if (0.0 == intercept)
+	{
+		*arg8 = arg4;
+		*arg9 = arg1;
+		return (arg0 <= arg4) && (arg4 <= arg2);
+	}
+	slope = (arg7 - arg5) / intercept;
+	intercept = arg5 - slope * arg4;
+	slope = (arg1 - intercept) / slope;
+	*arg8 = slope;
+	*arg9 = arg1;
+	return (arg0 <= slope) && (slope <= arg2);
 }
 #else
 #pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/101840_late_rodata.s")
