@@ -456,7 +456,10 @@ typedef struct {
 // AI - Room object type definition: one entry in a room's 32-entry object catalog (D_8008E0A8_176168[room][type])
 // AI - A room object provides the geometry, dimensions, embedded spawns and behavior flags referenced by placed instances (Unk800E66A8)
 typedef struct {
-	/* 0x00 */ u8 pad0[0x8]; // AI - bytes 0x00-0x03 = main Gfx display list, 0x04-0x07 = alternate (visited) display list
+	/* 0x00 */ union {
+		u8 pad0[8];
+		struct { Gfx *unk0; Gfx *unk4; };
+	};
 	/* 0x08 */ s16 unk8; // AI - local offset X (spawn/entity placement within the room)
 	/* 0x0A */ s16 unkA; // AI - local offset Z (spawn/entity placement within the room)
 	/* 0x0C */ s16 unkC; // AI - spawned entity/object type
@@ -468,9 +471,9 @@ typedef struct {
 	/* 0x18 */ u16 unk18; // AI - object/room width (dimension, halved for positioning & culling)
 	/* 0x1A */ u16 unk1A; // AI - object/room depth (dimension, halved for positioning & culling)
 	/* 0x1C */ u8 pad1C[0x2]; // AI - pad1C[0] = signed height offset written to the instance's unk4
-	/* 0x1E */ s16 unk1E; // AI - signed animation offset/scale parameter for the room entry
+	/* 0x1E */ u16 unk1E; // Animation duration in frames
 	/* 0x20 */ f32 unk20; // AI - animation speed/magnitude (float, e.g. 0.1 / 2.0 / 5.0 / 25.0)
-	/* 0x24 */ u8 pad24[0x02];
+	/* 0x24 */ s16 unk24; // AI - interaction angle in degrees
 	/* 0x26 */ s16 unk26; // AI - base offset for animated geometry (X)
 	/* 0x28 */ s16 unk28; // AI - base offset for animated geometry (Y)
 	/* 0x2A */ s16 unk2A; // AI - base offset for animated geometry (Z)
@@ -753,11 +756,6 @@ typedef struct {
 	/* 0x0C */ s8 unkC;
 	/* 0x0D */ u8 unkD;
 } Unk89834Pos; /* size = 0x0E */
-
-typedef struct {
-	/* 0x00 */ u8 pad0[0x24];
-	/* 0x24 */ s16 unk24;
-} Unk8007A168Obj; /* size = 0x26 */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2757,10 +2755,13 @@ typedef struct {
 	/* 0x06 */ s16 unk6; // AI - room-space Z position
 	/* 0x08 */ u8 unk8; // AI - orientation (0-3)
 	/* 0x09 */ u8 pad9[0x1];
-	/* 0x0A */ s16 unkA; // AI - spawned entity/object handle (0 if none)
-	/* 0x0C */ s16 unkC; // AI - room-visit related value (from the object's unk16)
+	/* 0x0A */ union {
+		s16 unkA; // Spawned entity/object handle (0 if none).
+		u8 handleBytes[2];
+	};
+	/* 0x0C */ u16 unkC; // AI - room-visit related value (from the object's unk16)
 	/* 0x0E */ s16 unkE; // AI - state/sentinel (-1 = unused)
-	/* 0x10 */ s16 unk10; // AI - additional state value
+	/* 0x10 */ u16 unk10; // AI - additional state value
 	/* 0x12 */ u8 pad12[0x2];
 	/* 0x14 */ f32 unk14; // AI - animated offset (X)
 	/* 0x18 */ f32 unk18; // AI - animated offset (Y)
@@ -2790,8 +2791,13 @@ typedef struct {
 	/* 0x28 */ s16 unk28; // AI - interaction center X (plus D_800E65CC)
 	/* 0x2A */ s16 unk2A; // AI - interaction half width
 	/* 0x2C */ s32 unk2C;
-	/* 0x30 */ s16 unk30; // AI - music/ambient id
-	/* 0x32 */ s16 unk32;
+	union {
+		struct {
+			/* 0x30 */ s16 unk30;
+			/* 0x32 */ s16 unk32;
+		};
+		/* 0x30 */ s32 musicId;
+	};
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
 } Unk9C804; /* stride 0x38 */
@@ -3916,11 +3922,6 @@ typedef struct {
 } Unk158330DstState;
 
 typedef struct {
-	char pad0[0x10];
-	f32 unk10;
-} Unk8007C1DC;
-
-typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1[0x23];
 	/* 0x24 */ f32 unk24;
@@ -4234,6 +4235,22 @@ typedef struct {
 typedef struct {
 	f64 value;
 } InteriorAngleScale;
+
+typedef struct {
+    u8 width;
+    u8 height;
+} InteriorRoomMapSize;
+
+typedef union {
+    s32 flat[25 * 8];
+    s32 rows[25][8];
+    u8 bytes[25 * 32];
+} InteriorRoomOffsetTable;
+
+typedef union {
+    Gfx *rows[25][8];
+    u8 bytes[25 * 32];
+} InteriorRoomDisplayListTable;
 
 typedef union {
 	s16 flat[22];

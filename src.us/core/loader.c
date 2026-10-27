@@ -385,7 +385,7 @@ s32 func_800104AC_110AC(u8 arg0) {
 	return var_s1;
 }
 
-s32 func_800105F0_111F0(s32 *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5) {
+s32 func_800105F0_111F0(void *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32 *arg5) {
 	s32 sp34;
 	s32 sp30;
 	s32 sp2C;

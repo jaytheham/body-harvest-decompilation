@@ -1246,7 +1246,7 @@ extern Unk8008DE78 D_8008DE78_175F38;
 // AI - Interior special-effect entries (effect display list + enabled flag)
 extern Unk8008DED0Entry D_8008DED0_175F90[];
 // AI - Per-room effect/overlay display lists (indexed by currentLevel*0xB + variant)
-extern Gfx *D_8008DFA0_176060[];
+extern Gfx *D_8008DFA0_176060[][11];
 extern u8 D_F019540[];
 // AI - Room object catalog: 25 rooms x 32 room-object types (geometry, dimensions, spawns, flags)
 extern Unk80070F7CObj D_8008E0A8_176168[25][32];
@@ -1384,17 +1384,17 @@ extern void* D_80098AF0_68FA0[45];
 extern Unk8007E12CEntry8 D_80098BA4_69054[];
 extern void* D_80098FE4_69494[3];
 extern u32 D_80098FFC_694AC[];
-// AI - Per-room display lists (8 Gfx per room, 32 bytes each; indexed by levelIndex << 5)
-extern u8 D_8009C1A8_184268[];
+// AI - Per-room display-list pointers (8 pointers per room, 32 bytes each; indexed by levelIndex << 5)
+extern InteriorRoomDisplayListTable D_8009C1A8_184268;
 extern s32 D_8009C4C4_184584[]; // Fake symbol - dont' use
 // AI - Per-world base offsets into the room object catalog (D_8008E0A8_176168) / room ranges
 extern s32 D_8009C4C8_184588[];
 // AI - Per-room misc data (8 s32 per room, 32 bytes each; indexed by levelIndex << 5)
-extern s32 D_8009C4E4_1845A4[];
+extern InteriorRoomOffsetTable D_8009C4E4_1845A4;
 // AI - Per-room configuration table (25 rooms; runtime pointer D_800E65C8)
 extern Unk9C804 D_8009C804_1848C4[];
 // AI - Room map/layout data (per-room tile map, 0x1E bytes per currentLevel)
-extern u8 D_8009CD7C_184E3C[];
+extern InteriorRoomMapSize D_8009CD7C_184E3C[5][15];
 // AI - Event building interior IDs (first set) that count as visited for missions
 extern InteriorPrimaryEventBuildings D_8009CE14_184ED4;
 // AI - Second event building interior IDs that count as visited for missions
@@ -1527,7 +1527,7 @@ extern u8 *D_800AED70;
 extern u8 *D_800AED74;
 extern u8 D_800AED78[];
 extern s32 D_800AED88[];
-extern s8 D_800D6460;
+extern InteriorRoomData D_800D6460[254];
 extern u8 D_800D6D88;
 extern u8 D_800D6D89;
 extern u8 D_800D6D8A;
@@ -1722,7 +1722,7 @@ extern s16 D_800E66B2[];
 extern u8 D_800E66B3[];
 extern u8 D_800E69A7[];
 // AI - Tile map copied from the interior record (InteriorRoomData.tileMap)
-extern u8 D_800E69A8[];
+extern u8 D_800E69A8[100];
 extern Vec3f D_800E6A10;
 extern s32 D_800E6A1C;
 extern s32 D_800E6A20;
@@ -4099,6 +4099,11 @@ extern RingPaletteTable D_8013E108_14D0B8;
 
 
 extern const InteriorAngleScale D_800A4A00_18CAC0;
+extern const f64 D_800A4AA0_18CB60[1];
+extern const f64 D_800A4AA8_18CB68[1];
+extern const f32 D_800A4AB8_18CB78[1];
+extern const InteriorAngleScale D_800A4AB0_18CB70;
+extern const InteriorAngleScale D_800A4AC0_18CB80;
 
 
 extern const f64 D_801451B8_154168[1];
