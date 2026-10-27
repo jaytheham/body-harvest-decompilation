@@ -10773,16 +10773,15 @@ s32 func_8007B51C_1635DC(s32 arg0) {
 	return 1;
 }
 
-// CURRENT(845)
 // AI - Detects collision with walls and room objects
-#ifdef NON_MATCHING
 void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *arg3) {
-	Unk800E66A8 *object;
-	f32 minX, maxX, minZOrHeight, maxZ;
-	s32 objectZ;
+	s32 minGridX;
+	f32 objectHeight;
+	f32 minX, maxX, minZ, maxZ;
 	s32 minGridZ;
 	s32 maxGridZ;
-	s32 minGridX, var_a2;
+	s32 objectZ;
+	s32 var_a2;
 	s32 x;
 	s32 gridZ;
 	f32 objectWidth;
@@ -10790,6 +10789,7 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 	s32 objectIndex;
 	s32 offsetX;
 	s32 offsetZ;
+	s32 pad;
 	u8 objType;
 
 	arg3->unk18 = 0;
@@ -10803,17 +10803,17 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 		maxX += arg1->x;
 	}
 
-	minZOrHeight = arg0->z - arg2;
+	minZ = arg0->z - arg2;
 	maxZ = arg0->z + arg2;
 	if (arg1->z < 0.0f) {
-		minZOrHeight += arg1->z;
+		minZ += arg1->z;
 	} else {
 		maxZ += arg1->z;
 	}
 
 	minGridX = (s32)minX / 96;
 	var_a2 = (s32)maxX / 96;
-	minGridZ = (s32)minZOrHeight / 96;
+	minGridZ = (s32)minZ / 96;
 	maxGridZ = (s32)maxZ / 96;
 	if (minGridX < 0) {
 		minGridX = 0;
@@ -10833,42 +10833,37 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 	arg3->unk10 = arg1->x * arg1->x + arg1->z * arg1->z;
 
 	if (var_a2 >= x) {
-		s32 maxGridXExclusive = var_a2 + 1;
 		do {
-			gridZ = minGridZ;
-			if (maxGridZ >= gridZ) {
-				s32 maxGridZExclusive = maxGridZ + 1;
-				do {
-					if (D_800E6468[gridZ * (D_800E6460 + 2) + x] != 0xFF) {
-						var_a2 = func_8007BEC8_163F88(arg0, arg1, arg2, 96, 96, x * 96, gridZ * 96, arg3);
-						if (var_a2 != 0) {
-							D_800E6698 = 0;
-							D_800E669C = 1;
-							arg3->unk18 = 0;
-							arg3->unk1C = 1;
-							arg3->unkE = var_a2;
-							arg3->unkC = x;
-							arg3->unkD = gridZ;
-							D_800E66A0 = var_a2;
-						}
+			for (gridZ = minGridZ; gridZ <= maxGridZ; gridZ++) {
+				if (D_800E6468[gridZ * (D_800E6460 + 2) + x] != 0xFF) {
+					minGridX = func_8007BEC8_163F88(arg0, arg1, arg2, 96, 96, x * 96, gridZ * 96, arg3);
+					if (minGridX != 0) {
+						D_800E6698 = 0;
+						D_800E669C = 1;
+						arg3->unk18 = 0;
+						arg3->unk1C = 1;
+						arg3->unkE = minGridX;
+						arg3->unkC = x;
+						arg3->unkD = gridZ;
+						D_800E66A0 = minGridX;
 					}
-					gridZ++;
-				} while (maxGridZExclusive != gridZ);
+				}
 			}
 			x++;
-		} while (maxGridXExclusive != x);
+		} while (x <= var_a2);
 	}
 
 	objectIndex = 0;
 	if (D_800E668C > 0) {
 		do {
+			Unk800E66A8 *object;
 			object = &D_800E66A8[objectIndex];
 			objType = object->unk0;
-			minZOrHeight = object->unk4;
+			objectHeight = object->unk4;
 			if (objType == 0x1E) {
-				minZOrHeight += object->unk24;
+				objectHeight += object->unk24;
 			}
-			if (minZOrHeight < 60.0f && (D_800E65BC[objType].unk40 & 0x20)) {
+			if (objectHeight < 60.0f && (D_800E65BC[objType].unk40 & 0x20)) {
 				func_800774E0_15F5A0(objectIndex, &objectWidth, &objectDepth);
 				x = object->unk2;
 				objectZ = object->unk6;
@@ -10912,9 +10907,6 @@ void func_8007B65C_16371C(Vec3f *arg0, Vec3f *arg1, f32 arg2, Unk8007CAA8_6A40 *
 		} while (objectIndex < D_800E668C);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007B65C_16371C.s")
-#endif
 
 // AI - Returns door sub-object offset and dimensions by orientation
 void func_8007BC18_163CD8(u8 arg0, f32 *arg1, f32 *arg2, s32 *arg3, s32 *arg4) {
@@ -11012,40 +11004,32 @@ s32 func_8007BEC8_163F88(Vec3f *arg0, Vec3f *arg1, f32 arg2, s32 arg3, s32 arg4,
 	return 0;
 }
 
-// CURRENT(215)
+// CURRENT(15)
 // AI - Checks line-segment intersection with collision boundary
 #ifdef NON_MATCHING
 s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007CAA8_6A40 *arg4) {
-	f32 startZ;
-	f32 directionX;
 	f32 deltaZ;
 	f32 deltaX;
 	f32 distanceSquared;
+	f32 ratio;
 
 	D_800E6670.z = arg2 - arg3;
 	if (D_800E6680.z == 0.0f) {
 		return 0;
 	}
-
-	startZ = D_800E6660.z;
-	deltaZ = D_800E6670.z - startZ;
-	directionX = D_800E6680.x;
-	D_800E6670.x = (deltaZ / D_800E6680.z) * directionX + D_800E6660.x;
-
-	if ((startZ <= D_800E6670.z) && (D_800E6670.x < (arg1 + arg3)) &&
-	    ((arg0 - arg3) < D_800E6670.x)) {
+	ratio = D_800E6670.z; deltaZ = ratio - D_800E6660.z;
+	ratio = (deltaZ / D_800E6680.z);
+	D_800E6670.x = ratio * D_800E6680.x + D_800E6660.x;
+	if ((D_800E6660.z <= D_800E6670.z) && (D_800E6670.x < (arg1 + arg3)) && ((arg0 - arg3) < D_800E6670.x)) {
 		deltaX = D_800E6670.x - D_800E6660.x;
-		distanceSquared = (deltaX * deltaX) + (deltaZ * deltaZ);
-		if ((f64)distanceSquared != 0.0) {}
+		distanceSquared = (deltaX * deltaX) + (deltaZ * deltaZ); if ((f64)distanceSquared != 0.0) {}
 		if (distanceSquared <= arg4->unk10) {
 			arg4->unk10 = distanceSquared;
 			return 1;
 		}
 	}
-
 	return 0;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007C1DC_16429C.s")
 #endif
