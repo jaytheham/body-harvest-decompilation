@@ -398,16 +398,19 @@ typedef struct {
 	/* 0x08 */ s32 z;
 } Vec3i; /* size = 0x0C */
 
-typedef struct {
-	/* 0x00 */ union {
-		s16 unk0;
-		u16 unk0Unsigned;
+typedef union {
+	struct {
+		/* 0x00 */ union {
+			s16 unk0;
+			u16 unk0Unsigned;
+		};
+		/* 0x02 */ union {
+			s16 unk2;
+			u16 unk2Unsigned;
+		};
+		/* 0x04 */ s16 unk4;
 	};
-	/* 0x02 */ union {
-		s16 unk2;
-		u16 unk2Unsigned;
-	};
-	/* 0x04 */ s16 unk4;
+	s16 components[3];
 } Unk800311A0; /* size = 0x06 */
 
 typedef struct {
@@ -1577,9 +1580,9 @@ typedef struct {
 	/* 0x5A */ u8 pad5A[0x2];
 	/* 0x5C */ u8 unk5C;
 	/* 0x5D */ u8 unk5D;
-	/* 0x5E */ u8 unk5E;
-	/* 0x5F */ u8 unk5F;
-	/* 0x60 */ u8 unk60;
+	/* 0x5E */ s8 unk5E;
+	/* 0x5F */ s8 unk5F;
+	/* 0x60 */ s8 unk60;
 	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
 	/* 0x62 */ u8 unk62;
 	/* 0x63 */ u8 unk63;
@@ -1904,11 +1907,12 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ u8 pad4[0x2];
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC[0x4];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 } Unk80259490; /* size = 0x12 */
 

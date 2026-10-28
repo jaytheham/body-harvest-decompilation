@@ -94,7 +94,6 @@ u8 D_80140A94_14FA44[0x0C] = {
 	0xFF, 0xFF, 0xF0, 0xFF, 0xFA, 0x14, 0xE6, 0xC8, 0x1E, 0xB4, 0x96, 0x00,
 };
 
-// CURRENT(940)
 #ifdef NON_MATCHING
 s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s16 instanceId;
@@ -173,7 +172,6 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
 #endif
 
-// CURRENT(149)
 #ifdef NON_MATCHING
 s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 sp24;
@@ -193,7 +191,6 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011619C_12514C.s")
 #endif
 
-// CURRENT(3558)
 #ifdef NON_MATCHING
 // AI - Converts a destroyed building into rubble/trail debris near the given coordinates
 s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
@@ -317,7 +314,6 @@ void func_80116554_125504(s16 arg0, s16 *arg1, s16 *arg2) {
 	*arg2 = sp4;
 }
 
-// CURRENT(700)
 #ifdef NON_MATCHING
 s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 *arg5) {
 	BuildingInstance *sp18;
@@ -365,7 +361,6 @@ void func_80116724_1256D4(void) {
 	}
 }
 
-// CURRENT(205)
 #ifdef NON_MATCHING
 void func_80116784_125734(void) {
 	Unk80148620 *s4;
@@ -436,7 +431,6 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 }
 
 // guess_initBuildingsDoors
-// CURRENT(41814)
 #ifdef NON_MATCHING
 void func_8011694C_1258FC(void) {
 	Unk800522C0 *doorRef;
@@ -749,7 +743,6 @@ s32 func_80117464_126414(u8 arg0) {
 	return 0;
 }
 
-// CURRENT(1050)
 #ifdef NON_MATCHING
 // Is the return value from this used to determine how close a building is?
 // And if it should be drawn?
@@ -827,7 +820,6 @@ s32 func_80117508_1264B8(s16 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117508_1264B8.s")
 #endif
 
-// https://decomp.me/scratch/UNJJQ
 Unk80148620 *func_801176B0_126660(void)
 {
   s32 i;
@@ -841,7 +833,6 @@ Unk80148620 *func_801176B0_126660(void)
   return NULL;
 }
 
-// CURRENT(7525)
 #ifdef NON_MATCHING
 void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	AlienInstance *alien;
@@ -924,7 +915,6 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
 #endif
 
-// CURRENT(1562)
 #ifdef NON_MATCHING
 void func_80117A4C_1269FC(Unk80148620 *arg0) {
 	s16 sp3A;
@@ -1029,7 +1019,6 @@ s32 func_80118114_1270C4(s16 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(7353)
 void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 	BuildingInstance *building;
 	s32 buildingId;
@@ -1238,7 +1227,6 @@ s32 func_80118670_127620(s32 arg0, s32 arg1) {
 	return 0x400;
 }
 
-// CURRENT(70000)
 #ifdef NON_MATCHING
 // DisplayBuildings
 void func_80118774_127724(s32 arg0) {
@@ -1278,6 +1266,9 @@ void func_80118774_127724(s32 arg0) {
 	s32 propMode;
 	s32 i;
 	s32 searchCount;
+	s32 scanActive;
+	s32 processBuilding;
+	s32 skipBuilding;
 	s16 maxY;
 	s16 maxYClamped;
 	s16 halfX;
@@ -1335,505 +1326,519 @@ void func_80118774_127724(s32 arg0) {
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 
 	sp168 = 0;
-	if (func_801185F8_1275A8(building, sp1D4) == 0) {
-		goto end_scan;
+	scanActive = func_801185F8_1275A8(building, sp1D4) != 0;
+	if (scanActive) {
+		scale = D_80144F38_153EE8[0];
 	}
 
-	scale = D_80144F38_153EE8[0];
-
-main_scan:
-	flags = (u32)building->unk8 >> 12;
-	if (!(flags & 1) || (building->buildingType == 0x1F)) {
-		goto advance_building;
-	}
-
-	if (!func_801184F4_1274A4(building) && (building->zCoord < sp1D4)) {
-		goto advance_building;
-	}
-
-	sp88 = building - buildingInstances;
-	sp19F = (u8)sp88;
-	if (!func_8011853C_1274EC(building, sp1D6)) {
-		goto after_building;
-	}
-
-	sp1C8 = building->buildingType;
-	type = &buildingTypes[building->buildingType];
-	if (building->unk8 & 1) {
-		halfX = type->unk12;
-		halfZ = type->unk10;
-	} else {
-		halfX = type->unk10;
-		halfZ = type->unk12;
-	}
-
-	bboxTest = func_800B960C_C85BC((s16)(building->xCoord - halfX), (s16)(building->zCoord - halfZ), halfX * 2, halfZ * 2);
-	currentIndex = sp19F;
-	if (func_801184F4_1274A4(building)) {
-		bboxTest = 1;
-	}
-
-	if ((sp1C8 != D_8015EA28) && (bboxTest == 0)) {
-		goto after_building;
-	}
-
-	sp1A4 = -1;
-	if ((D_80159DDF != 0xFF) && (D_80159DDF == (u8)sp88)) {
-		sp198 = 1;
-	}
-
-	if ((s8)building->hitPoints < (s8)building->unk10) {
-		sp19F = currentIndex;
-		func_800710D4_80084(0xFF, 0xFF, 0xFF);
-	}
-
-	if (sp1C8 == D_8015EA28) {
-		sp180[sp16E] = (u8)sp88;
-		sp16E++;
-	}
-
-	specialPtr = &D_8015EB67;
-	propMode = flags & 4;
-	searchCount = 7;
-	while (searchCount != 0) {
-		temp = propMode ? 0x80 : 0;
-		if (*specialPtr == (u8)(temp + sp1C8)) {
-			break;
-		}
-		specialPtr--;
-		searchCount--;
-	}
-
-	if (specialPtr == (&D_8015EB67 - 8)) {
-		sp19F = currentIndex;
-		func_8011D438_12C3E8((u8)sp1C8, propMode);
-	}
-
-	currentIndex = sp19F;
-
-process_current:
-	if (sp192 == sp88) {
-		sp192 = -1;
-	}
-	if (sp196 == sp88) {
-		sp196 = -1;
-	}
-	if (sp194 == sp88) {
-		sp194 = -1;
-	}
-
-	D_80052B40.unk0 = building->xCoord >> 2;
-	D_80052B40.unk2 = building->yCoord >> 2;
-	D_80052B40.unk4 = building->zCoord >> 2;
-	D_80052B48.unk0 = building->unk8 << 14;
-	D_80052B48.unk2 = 0;
-	D_80052B48.unk4 = 0;
-
-	if (D_80159DDF == currentIndex) {
-		D_80052B40.unk0 += D_80159DE0;
-		D_80052B40.unk2 += D_80159DE2;
-		D_80052B40.unk4 += D_80159DE4;
-	}
-
-	func_800039D0_45D0(&D_80052B40, &D_80052B48, (Unk80052B40 *)&D_800311A0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-
-	if (building->buildingType == D_8015EA28) {
-		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-		gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A00_14F9B0)[currentLevel]);
-
-		D_80052B40.unk0 = (((u8 *)building)[0xD] << 7) - 0x80;
-		if (D_80052554 == 0x400) {
-			D_80052B40.unk2 = (s16)(s32)(((f64)(f32)sins((u16)D_80052554) / 32768.0) * (f64)D_80052B40.unk0);
-		} else {
-			D_80052B40.unk0 = (s16)(s32)(((f64)(f32)coss((u16)D_80052554) / 32768.0) * (f64)D_80052B40.unk0);
-			D_80052B40.unk2 = (s16)(s32)(((f64)(f32)sins((u16)D_80052554) / 32768.0) * (f64)((((u8 *)building)[0xD] << 7) - 0x80));
-		}
-		D_80052B40.unk4 = 0;
-		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-		gSPTexture(D_8005BB2C++, ((u8 *)building)[0xD] << 12, 0x2000, 5, G_TX_RENDERTILE, G_ON);
-		gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A14_14F9C4)[currentLevel]);
-		if (D_80052554 != 0x400) {
-			gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A28_14F9D8)[currentLevel]);
-		}
-		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-	} else {
-		if (building->buildingType == D_8015EA29) {
-			gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-		} else {
-			gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-		}
-
-		if (!(flags & 4)) {
-			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[0]);
-		} else if (*(u32 *)&buildingTypes[building->buildingType].pad0[4] != 0) {
-			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[4]);
-		} else {
-			gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[0]);
-		}
-	}
-
-	doorRef = &D_800522C0[0x1F];
-	flags = (u32)building->unk8 >> 12;
-	propMode = flags & 4;
-	searchCount = 0x1F;
-	while (searchCount != 0) {
-		prop = &D_80148390_157340[((u8 *)doorRef)[8]];
-		if (building->buildingType == doorRef->unkC) {
-			sp14C = 0xA;
-			sp1A4++;
-			sp7C = building + sp1A4;
-			if (propMode) {
-				bboxTest = 1;
-			} else {
-				bboxTest = prop->unk16;
-			}
-
-			sp1BA = doorRef->unk0;
-			sp1B8 = doorRef->unk2 + (prop->unk10 >> 1);
-			sp1B6 = doorRef->unk4;
-			func_80116554_125504(building->unk8 & 3, &sp1BA, &sp1B6);
-
-			sp90 = bboxTest & 2;
-			sp1B4 = prop->unkC >> (sp90 == 0);
-			sp1B2 = prop->unkE;
-			func_80116554_125504(doorRef->unk6, &sp1B4, (s16 *)&sp1B2);
-			func_80116554_125504(building->unk8 & 3, &sp1B4, (s16 *)&sp1B2);
-			if (bboxTest & 0x80) {
-				sp14C = 0xB;
-			}
-
-			if ((sp7C->door1InteriorId == 0xFF) && ((func_80118114_1270C4((s16)sp88) == 0) || (sp1A4 != 0))) {
-				flags = (u32)building->unk8 >> 12;
-				propMode = flags & 4;
-				goto next_door_ref;
-			}
-
-			if ((sp7C->door1InteriorId != 0xF0) && !(flags & 4)) {
-				temp = currentIndex * 0x10;
-				if (bboxTest & 0x20) {
-					func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
-						0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_801183EC_12739C, 0);
-				} else {
-					func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
-						0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_80118418_1273C8, 0);
-				}
-			}
-
-			if (prop->unk0 != NULL) {
-				D_80052B40.unk0 = doorRef->unk0;
-				D_80052B40.unk2 = doorRef->unk2;
-				D_80052B40.unk4 = doorRef->unk4;
-				D_80052B48.unk0 = doorRef->unk6 << 14;
-				D_80052B48.unk2 = 0;
-				D_80052B48.unk4 = 0;
-				temp = currentIndex * 0x10 + sp1A4;
-				if (((u8 *)doorRef)[8] == 4) {
-					D_80052B48.unk0 += 0x8000;
-				}
-
-				gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-				func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-
-				if ((prop->unk8 != NULL) && ((prop->unk8 != D_5038D48) || (D_8005254C != temp) || (D_8015EA2C != 0.0f))) {
-					gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
-					gSPDisplayList(D_8005BB2C++, prop->unk8);
-				}
-
-				if (bboxTest & 8) {
-					D_80052B40.unk0 = -prop->unkC;
-				} else if (bboxTest & 1) {
-					D_80052B40.unk0 = prop->unkC >> 1;
-				} else if (bboxTest & 0x40) {
-					D_80052B40.unk0 = (s16)(-prop->unkC) >> 1;
-				} else {
-					D_80052B40.unk0 = 0;
-				}
-
-				if (bboxTest & 4) {
-					D_80052B40.unk2 = 0x7A;
-				} else {
-					D_80052B40.unk2 = 0;
-				}
-				D_80052B40.unk4 = -2;
-				D_80052B48.unk0 = 0;
-				D_80052B48.unk2 = 0;
-				D_80052B48.unk4 = 0;
-
-				if (D_8005254C == temp) {
-					switch (prop->unk12) {
-						case 1:
-							D_80052B48.unk0 = (u16)(-(s32)((f64)D_8015EA2C * scale));
-							break;
-						case 2:
-							tempF = (f32)(u16)prop->unkC;
-							D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * tempF) * D_80144F60_153F10[0]));
-							break;
-						case 3:
-							D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * 16384.0f));
-							D_80052B40.unk2 = (s16)(s32)((f32)(u16)prop->unk10 * D_8015EA2C);
-							break;
-						case 4:
-							D_80052B48.unk4 = (s16)(u32)(D_8015EA2C * D_80144F70_153F20[0]);
-							break;
-						case 5:
-							D_80052B48.unk0 = (s16)((s32)((f64)D_8015EA2C * scale) + 0x8000);
-							break;
-						case 6:
-							D_80052B48.unk0 = (s16)(s32)((f64)D_8015EA2C * scale);
-							break;
-						case 7:
-							tempF = (f32)(u16)prop->unkC;
-							D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * tempF) * D_80144F68_153F18[0]));
-							break;
-					}
-				} else if (prop->unk12 == 5) {
-					D_80052B48.unk0 = 0x8000;
-				}
-
-				if (bboxTest & 0x10) {
-					D_80052B48.unk0 += 0x8000;
-				}
-
-				if (sp7C->door1InteriorId == 0xF0) {
-					gSPDisplayList(D_8005BB2C++, D_504E888);
-				}
-
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)doorRef)[0x10], ((u8 *)doorRef)[0x11], ((u8 *)doorRef)[0x12], 0);
-				sp74 = bboxTest & 4;
-				sp78 = bboxTest & 0x10;
-				func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-
-				if (flags & 4) {
-					gSPDisplayList(D_8005BB2C++, D_5038A00);
-					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-				} else {
-					if ((D_8015EA2C != 0.0f) && (D_8005254C == temp)) {
-						gSPDisplayList(D_8005BB2C++, prop->unk4);
-					} else {
-						gSPDisplayList(D_8005BB2C++, prop->unk0);
-					}
-					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-
-					if (sp90 != 0) {
-						D_80052B48.unk0 = (sp78 != 0) ? 0x8000 : 0;
-						D_80052B48.unk2 = 0;
-						D_80052B48.unk4 = 0;
-						D_80052B50.unk0 = -0x100;
-						D_80052B50.unk2 = 0x100;
-						D_80052B50.unk4 = 0x100;
-						if (prop->unk12 == 5) {
-							D_80052B48.unk0 = 0x8000 - (s32)((f64)D_8015EA2C * scale);
-						}
-						D_80052B40.unk0 = -D_80052B40.unk0;
-						D_80052B40.unk2 = 0;
-						D_80052B40.unk4 = -2;
-						func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
-						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-						gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
-						gSPSetGeometryMode(D_8005BB2C++, G_CULL_FRONT);
-						gSPDisplayList(D_8005BB2C++, prop->unk0);
-						gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
-						gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
-					}
-
-					if (sp74 != 0) {
-						D_80052B40.unk0 = 0;
-						D_80052B40.unk2 = 0x29;
-						D_80052B40.unk4 = -0xC;
-						D_80052B48.unk0 = 0;
-						D_80052B48.unk2 = 0;
-						D_80052B48.unk4 = (s16)(0x10000 - (s32)(D_8015EA2C * D_80144F74_153F24[0]));
-						func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-						gSPDisplayList(D_8005BB2C++, D_504EC90);
-					}
-				}
-
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, 0);
-				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-				flags = (u32)building->unk8 >> 12;
-				propMode = flags & 4;
-			}
-		}
-
-next_door_ref:
-		doorRef = (Unk800522C0 *)((u8 *)doorRef - 0x14);
-		searchCount--;
-	}
-
-	if (!(propMode) && (flags & 1)) {
-		if (buildingTypes[building->buildingType].pad16[5] != 0xFF) {
-			action = (UnkBuildingAction_80118774 *)((u8 *)D_801486A0_157650 + (buildingTypes[building->buildingType].pad16[5] * sizeof(UnkBuildingAction_80118774)));
-			D_80159DD0 = building;
-			D_80159DC0 = action->unkF;
-			D_80159DC4 = action->unk10;
-			D_80159DC8 = action->unk8;
-			D_80159DCA = action->unkA;
-			D_80159DCC = action->unkC;
-			func_80116554_125504(building->unk8 & 3, &D_80159DC8, &D_80159DCC);
-			if (buildingTypes[building->buildingType].pad16[5] == 0xA) {
-				D_80159DCA = 0x11;
-				switch (building->unk8 & 3) {
-					case 0:
-						D_80159DC8 = -9;
-						D_80159DCC = 5;
-						break;
-					case 1:
-						D_80159DC8 = -5;
-						D_80159DCC = -9;
-						break;
-					case 2:
-						D_80159DC8 = 9;
-						D_80159DCC = -5;
-						break;
-					case 3:
-						D_80159DC8 = 5;
-						D_80159DCC = 9;
-						break;
-				}
-			}
-			action->unk4(building);
-		}
-	}
-
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	doorMap = (UnkBuildDoorMap *)D_80052A7C;
-	searchCount = 0x6D;
 	while (1) {
-		if (building->buildingType == doorMap->unk0) {
-			D_80159DC8 = ((s16 *)doorMap)[2];
-			D_80159DCC = ((s16 *)doorMap)[3];
-		}
-		doorMap = (UnkBuildDoorMap *)((u8 *)doorMap - 0x0C);
-		if (--searchCount != 0) {
-			continue;
-		}
-		break;
-	}
+		processBuilding = 0;
+		skipBuilding = 0;
+		if (sp168 == 0) {
+			if (!scanActive) {
+				scale = D_80144F78_153F28[0];
+				sp168 = 1;
+				continue;
+			}
+			do {
+				flags = (u32)building->unk8 >> 12;
+				if (!(flags & 1) || (building->buildingType == 0x1F)) {
+					skipBuilding = 1;
+					break;
+				}
 
-after_building:
-	if (sp168 != 0) {
-		goto revisit_neighbors;
-	}
+				if (!func_801184F4_1274A4(building) && (building->zCoord < sp1D4)) {
+					skipBuilding = 1;
+					break;
+				}
 
-	if ((s8)building->hitPoints < (s8)building->unk10) {
-		func_80070FB8_7FF68();
-		building->unk10 = building->hitPoints;
-	}
+				sp88 = building - buildingInstances;
+				sp19F = (u8)sp88;
+				if (!func_8011853C_1274EC(building, sp1D6)) {
+					break;
+				}
 
-advance_building:
-	building++;
-	if (func_801185F8_1275A8(building, sp1D4) != 0) {
-		goto main_scan;
-	}
+				sp1C8 = building->buildingType;
+				type = &buildingTypes[building->buildingType];
+				if (building->unk8 & 1) {
+					halfX = type->unk12;
+					halfZ = type->unk10;
+				} else {
+					halfX = type->unk10;
+					halfZ = type->unk12;
+				}
 
-end_scan:
-	scale = D_80144F78_153F28[0];
+				bboxTest = func_800B960C_C85BC((s16)(building->xCoord - halfX), (s16)(building->zCoord - halfZ), halfX * 2, halfZ * 2);
+				currentIndex = sp19F;
+				if (func_801184F4_1274A4(building)) {
+					bboxTest = 1;
+				}
 
-revisit_neighbors:
-	if (sp192 != -1) {
-		neighbor = &buildingInstances[sp192];
-		currentIndex = (u8)sp192;
-		if (neighbor->buildingType != 0x1F) {
-			sp168 = 1;
-			sp88 = neighbor - buildingInstances;
-			sp1A4 = -1;
-			building = neighbor;
-			goto process_current;
-		}
-	}
+				if ((sp1C8 != D_8015EA28) && (bboxTest == 0)) {
+					break;
+				}
 
-	if (sp196 != -1) {
-		neighbor = &buildingInstances[sp196];
-		currentIndex = (u8)sp196;
-		if (neighbor->buildingType != 0x1F) {
-			sp168 = 1;
-			sp88 = neighbor - buildingInstances;
-			sp1A4 = -1;
-			building = neighbor;
-			goto process_current;
-		}
-	}
+				sp1A4 = -1;
+				if ((D_80159DDF != 0xFF) && (D_80159DDF == (u8)sp88)) {
+					sp198 = 1;
+				}
 
-	if (sp194 != -1) {
-		neighbor = &buildingInstances[sp194];
-		currentIndex = (u8)sp194;
-		if (neighbor->buildingType != 0x1F) {
-			sp168 = 1;
-			sp88 = neighbor - buildingInstances;
-			sp1A4 = -1;
-			building = neighbor;
-			goto process_current;
-		}
-	}
+				if ((s8)building->hitPoints < (s8)building->unk10) {
+					sp19F = currentIndex;
+					func_800710D4_80084(0xFF, 0xFF, 0xFF);
+				}
 
-	if ((D_80159DDF != 0xFF) && (sp198 == 0)) {
-		neighbor = &buildingInstances[D_80159DDF];
-		currentIndex = D_80159DDF;
-		if (neighbor->buildingType != 0x1F) {
-			sp198 = 1;
-			sp168 = 1;
-			sp88 = neighbor - buildingInstances;
-			sp1A4 = -1;
-			building = neighbor;
-			goto process_current;
-		}
-	}
+				if (sp1C8 == D_8015EA28) {
+					sp180[sp16E] = (u8)sp88;
+					sp16E++;
+				}
 
-	if (sp16E != -1) {
-		sp16E = 0;
-		scanPtr = &sp180[0xF];
-		i = 0xF;
-		while (i != 0) {
-			currentIndex = *scanPtr;
-			if (currentIndex != 0xFF) {
-				neighbor = &buildingInstances[currentIndex];
-				func_80115F20_124ED0(neighbor->xCoord, neighbor->zCoord, &sp194, &sp196);
-				revisitIndex = (sp194 != currentIndex) ? (u8)sp194 : (u8)sp196;
-				specialPtr = &sp180[0xF];
-				temp = 0xF;
-				while (temp != 0) {
-					if (revisitIndex == *specialPtr) {
-						revisitIndex = 0xFF;
+				specialPtr = &D_8015EB67;
+				propMode = flags & 4;
+				searchCount = 7;
+				while (searchCount != 0) {
+					temp = propMode ? 0x80 : 0;
+					if (*specialPtr == (u8)(temp + sp1C8)) {
 						break;
 					}
 					specialPtr--;
-					temp--;
+					searchCount--;
 				}
-				if (revisitIndex != 0xFF) {
-					sp170[sp16E] = revisitIndex;
-					sp16E++;
+
+				if (specialPtr == (&D_8015EB67 - 8)) {
+					sp19F = currentIndex;
+					func_8011D438_12C3E8((u8)sp1C8, propMode);
+				}
+
+				currentIndex = sp19F;
+
+				processBuilding = 1;
+			} while (0);
+		} else {
+			do {
+				if (sp192 != -1) {
+					neighbor = &buildingInstances[sp192];
+					currentIndex = (u8)sp192;
+					if (neighbor->buildingType != 0x1F) {
+						sp168 = 1;
+						sp88 = neighbor - buildingInstances;
+						sp1A4 = -1;
+						building = neighbor;
+						processBuilding = 1;
+						break;
+					}
+				}
+
+				if (sp196 != -1) {
+					neighbor = &buildingInstances[sp196];
+					currentIndex = (u8)sp196;
+					if (neighbor->buildingType != 0x1F) {
+						sp168 = 1;
+						sp88 = neighbor - buildingInstances;
+						sp1A4 = -1;
+						building = neighbor;
+						processBuilding = 1;
+						break;
+					}
+				}
+
+				if (sp194 != -1) {
+					neighbor = &buildingInstances[sp194];
+					currentIndex = (u8)sp194;
+					if (neighbor->buildingType != 0x1F) {
+						sp168 = 1;
+						sp88 = neighbor - buildingInstances;
+						sp1A4 = -1;
+						building = neighbor;
+						processBuilding = 1;
+						break;
+					}
+				}
+
+				if ((D_80159DDF != 0xFF) && (sp198 == 0)) {
+					neighbor = &buildingInstances[D_80159DDF];
+					currentIndex = D_80159DDF;
+					if (neighbor->buildingType != 0x1F) {
+						sp198 = 1;
+						sp168 = 1;
+						sp88 = neighbor - buildingInstances;
+						sp1A4 = -1;
+						building = neighbor;
+						processBuilding = 1;
+						break;
+					}
+				}
+
+				if (sp16E != -1) {
+					sp16E = 0;
+					scanPtr = &sp180[0xF];
+					i = 0xF;
+					while (i != 0) {
+						currentIndex = *scanPtr;
+						if (currentIndex != 0xFF) {
+							neighbor = &buildingInstances[currentIndex];
+							func_80115F20_124ED0(neighbor->xCoord, neighbor->zCoord, &sp194, &sp196);
+							revisitIndex = (sp194 != currentIndex) ? (u8)sp194 : (u8)sp196;
+							specialPtr = &sp180[0xF];
+							temp = 0xF;
+							while (temp != 0) {
+								if (revisitIndex == *specialPtr) {
+									revisitIndex = 0xFF;
+									break;
+								}
+								specialPtr--;
+								temp--;
+							}
+							if (revisitIndex != 0xFF) {
+								sp170[sp16E] = revisitIndex;
+								sp16E++;
+							}
+						}
+						scanPtr--;
+						i--;
+					}
+					sp16E = -1;
+					sp194 = -1;
+					sp196 = -1;
+				}
+
+				revisitPtr = &sp170[0xF];
+				i = 0xF;
+				while (i != 0) {
+					currentIndex = *revisitPtr;
+					if (currentIndex != 0xFF) {
+						building = &buildingInstances[currentIndex];
+						*revisitPtr = 0xFF;
+						sp168 = 1;
+						sp88 = building - buildingInstances;
+						sp1A4 = -1;
+						processBuilding = 1;
+						break;
+					}
+					revisitPtr--;
+					i--;
+				}
+			} while (0);
+			if (!processBuilding) {
+				break;
+			}
+		}
+
+		if (processBuilding) {
+			if (sp192 == sp88) {
+				sp192 = -1;
+			}
+			if (sp196 == sp88) {
+				sp196 = -1;
+			}
+			if (sp194 == sp88) {
+				sp194 = -1;
+			}
+
+			D_80052B40.unk0 = building->xCoord >> 2;
+			D_80052B40.unk2 = building->yCoord >> 2;
+			D_80052B40.unk4 = building->zCoord >> 2;
+			D_80052B48.unk0 = building->unk8 << 14;
+			D_80052B48.unk2 = 0;
+			D_80052B48.unk4 = 0;
+
+			if (D_80159DDF == currentIndex) {
+				D_80052B40.unk0 += D_80159DE0;
+				D_80052B40.unk2 += D_80159DE2;
+				D_80052B40.unk4 += D_80159DE4;
+			}
+
+			func_800039D0_45D0(&D_80052B40, &D_80052B48, (Unk80052B40 *)&D_800311A0, D_8005BB38);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+
+			if (building->buildingType == D_8015EA28) {
+				gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+				gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A00_14F9B0)[currentLevel]);
+
+				D_80052B40.unk0 = (((u8 *)building)[0xD] << 7) - 0x80;
+				if (D_80052554 == 0x400) {
+					D_80052B40.unk2 = (s16)(s32)(((f64)(f32)sins((u16)D_80052554) / 32768.0) * (f64)D_80052B40.unk0);
+				} else {
+					D_80052B40.unk0 = (s16)(s32)(((f64)(f32)coss((u16)D_80052554) / 32768.0) * (f64)D_80052B40.unk0);
+					D_80052B40.unk2 = (s16)(s32)(((f64)(f32)sins((u16)D_80052554) / 32768.0) * (f64)((((u8 *)building)[0xD] << 7) - 0x80));
+				}
+				D_80052B40.unk4 = 0;
+				func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPTexture(D_8005BB2C++, ((u8 *)building)[0xD] << 12, 0x2000, 5, G_TX_RENDERTILE, G_ON);
+				gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A14_14F9C4)[currentLevel]);
+				if (D_80052554 != 0x400) {
+					gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A28_14F9D8)[currentLevel]);
+				}
+				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+			} else {
+				if (building->buildingType == D_8015EA29) {
+					gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+					gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+					gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+				} else {
+					gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+				}
+
+				if (!(flags & 4)) {
+					gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[0]);
+				} else if (*(u32 *)&buildingTypes[building->buildingType].pad0[4] != 0) {
+					gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[4]);
+				} else {
+					gSPDisplayList(D_8005BB2C++, *(u32 *)&buildingTypes[building->buildingType].pad0[0]);
 				}
 			}
-			scanPtr--;
-			i--;
-		}
-		sp16E = -1;
-		sp194 = -1;
-		sp196 = -1;
-	}
 
-	revisitPtr = &sp170[0xF];
-	i = 0xF;
-	while (i != 0) {
-		currentIndex = *revisitPtr;
-		if (currentIndex != 0xFF) {
-			building = &buildingInstances[currentIndex];
-			*revisitPtr = 0xFF;
-			sp168 = 1;
-			sp88 = building - buildingInstances;
-			sp1A4 = -1;
-			goto process_current;
+			doorRef = &D_800522C0[0x1F];
+			flags = (u32)building->unk8 >> 12;
+			propMode = flags & 4;
+			searchCount = 0x1F;
+			while (searchCount != 0) {
+				prop = &D_80148390_157340[((u8 *)doorRef)[8]];
+				if (building->buildingType == doorRef->unkC) {
+					sp14C = 0xA;
+					sp1A4++;
+					sp7C = building + sp1A4;
+					if (propMode) {
+						bboxTest = 1;
+					} else {
+						bboxTest = prop->unk16;
+					}
+
+					sp1BA = doorRef->unk0;
+					sp1B8 = doorRef->unk2 + (prop->unk10 >> 1);
+					sp1B6 = doorRef->unk4;
+					func_80116554_125504(building->unk8 & 3, &sp1BA, &sp1B6);
+
+					sp90 = bboxTest & 2;
+					sp1B4 = prop->unkC >> (sp90 == 0);
+					sp1B2 = prop->unkE;
+					func_80116554_125504(doorRef->unk6, &sp1B4, (s16 *)&sp1B2);
+					func_80116554_125504(building->unk8 & 3, &sp1B4, (s16 *)&sp1B2);
+					if (bboxTest & 0x80) {
+						sp14C = 0xB;
+					}
+
+					if ((sp7C->door1InteriorId == 0xFF) && ((func_80118114_1270C4((s16)sp88) == 0) || (sp1A4 != 0))) {
+						flags = (u32)building->unk8 >> 12;
+						propMode = flags & 4;
+					} else {
+
+						if ((sp7C->door1InteriorId != 0xF0) && !(flags & 4)) {
+							temp = currentIndex * 0x10;
+							if (bboxTest & 0x20) {
+								func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
+									0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_801183EC_12739C, 0);
+							} else {
+								func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
+									0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_80118418_1273C8, 0);
+							}
+						}
+
+						if (prop->unk0 != NULL) {
+							D_80052B40.unk0 = doorRef->unk0;
+							D_80052B40.unk2 = doorRef->unk2;
+							D_80052B40.unk4 = doorRef->unk4;
+							D_80052B48.unk0 = doorRef->unk6 << 14;
+							D_80052B48.unk2 = 0;
+							D_80052B48.unk4 = 0;
+							temp = currentIndex * 0x10 + sp1A4;
+							if (((u8 *)doorRef)[8] == 4) {
+								D_80052B48.unk0 += 0x8000;
+							}
+
+							gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+							func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
+							gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+							if ((prop->unk8 != NULL) && ((prop->unk8 != D_5038D48) || (D_8005254C != temp) || (D_8015EA2C != 0.0f))) {
+								gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
+								gSPDisplayList(D_8005BB2C++, prop->unk8);
+							}
+
+							if (bboxTest & 8) {
+								D_80052B40.unk0 = -prop->unkC;
+							} else if (bboxTest & 1) {
+								D_80052B40.unk0 = prop->unkC >> 1;
+							} else if (bboxTest & 0x40) {
+								D_80052B40.unk0 = (s16)(-prop->unkC) >> 1;
+							} else {
+								D_80052B40.unk0 = 0;
+							}
+
+							if (bboxTest & 4) {
+								D_80052B40.unk2 = 0x7A;
+							} else {
+								D_80052B40.unk2 = 0;
+							}
+							D_80052B40.unk4 = -2;
+							D_80052B48.unk0 = 0;
+							D_80052B48.unk2 = 0;
+							D_80052B48.unk4 = 0;
+
+							if (D_8005254C == temp) {
+								switch (prop->unk12) {
+									case 1:
+										D_80052B48.unk0 = (u16)(-(s32)((f64)D_8015EA2C * scale));
+										break;
+									case 2:
+										tempF = (f32)(u16)prop->unkC;
+										D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * tempF) * D_80144F60_153F10[0]));
+										break;
+									case 3:
+										D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * 16384.0f));
+										D_80052B40.unk2 = (s16)(s32)((f32)(u16)prop->unk10 * D_8015EA2C);
+										break;
+									case 4:
+										D_80052B48.unk4 = (s16)(u32)(D_8015EA2C * D_80144F70_153F20[0]);
+										break;
+									case 5:
+										D_80052B48.unk0 = (s16)((s32)((f64)D_8015EA2C * scale) + 0x8000);
+										break;
+									case 6:
+										D_80052B48.unk0 = (s16)(s32)((f64)D_8015EA2C * scale);
+										break;
+									case 7:
+										tempF = (f32)(u16)prop->unkC;
+										D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * tempF) * D_80144F68_153F18[0]));
+										break;
+								}
+							} else if (prop->unk12 == 5) {
+								D_80052B48.unk0 = 0x8000;
+							}
+
+							if (bboxTest & 0x10) {
+								D_80052B48.unk0 += 0x8000;
+							}
+
+							if (sp7C->door1InteriorId == 0xF0) {
+								gSPDisplayList(D_8005BB2C++, D_504E888);
+							}
+
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)doorRef)[0x10], ((u8 *)doorRef)[0x11], ((u8 *)doorRef)[0x12], 0);
+							sp74 = bboxTest & 4;
+							sp78 = bboxTest & 0x10;
+							func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
+							gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+
+							if (flags & 4) {
+								gSPDisplayList(D_8005BB2C++, D_5038A00);
+								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							} else {
+								if ((D_8015EA2C != 0.0f) && (D_8005254C == temp)) {
+									gSPDisplayList(D_8005BB2C++, prop->unk4);
+								} else {
+									gSPDisplayList(D_8005BB2C++, prop->unk0);
+								}
+								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+
+								if (sp90 != 0) {
+									D_80052B48.unk0 = (sp78 != 0) ? 0x8000 : 0;
+									D_80052B48.unk2 = 0;
+									D_80052B48.unk4 = 0;
+									D_80052B50.unk0 = -0x100;
+									D_80052B50.unk2 = 0x100;
+									D_80052B50.unk4 = 0x100;
+									if (prop->unk12 == 5) {
+										D_80052B48.unk0 = 0x8000 - (s32)((f64)D_8015EA2C * scale);
+									}
+									D_80052B40.unk0 = -D_80052B40.unk0;
+									D_80052B40.unk2 = 0;
+									D_80052B40.unk4 = -2;
+									func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+									gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+									gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
+									gSPSetGeometryMode(D_8005BB2C++, G_CULL_FRONT);
+									gSPDisplayList(D_8005BB2C++, prop->unk0);
+									gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
+									gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
+								}
+
+								if (sp74 != 0) {
+									D_80052B40.unk0 = 0;
+									D_80052B40.unk2 = 0x29;
+									D_80052B40.unk4 = -0xC;
+									D_80052B48.unk0 = 0;
+									D_80052B48.unk2 = 0;
+									D_80052B48.unk4 = (s16)(0x10000 - (s32)(D_8015EA2C * D_80144F74_153F24[0]));
+									func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
+									gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+									gSPDisplayList(D_8005BB2C++, D_504EC90);
+								}
+							}
+
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, 0);
+							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							flags = (u32)building->unk8 >> 12;
+							propMode = flags & 4;
+						}
+					}
+				}
+
+				doorRef = (Unk800522C0 *)((u8 *)doorRef - 0x14);
+				searchCount--;
+			}
+
+			if (!(propMode) && (flags & 1)) {
+				if (buildingTypes[building->buildingType].pad16[5] != 0xFF) {
+					action = (UnkBuildingAction_80118774 *)((u8 *)D_801486A0_157650 + (buildingTypes[building->buildingType].pad16[5] * sizeof(UnkBuildingAction_80118774)));
+					D_80159DD0 = building;
+					D_80159DC0 = action->unkF;
+					D_80159DC4 = action->unk10;
+					D_80159DC8 = action->unk8;
+					D_80159DCA = action->unkA;
+					D_80159DCC = action->unkC;
+					func_80116554_125504(building->unk8 & 3, &D_80159DC8, &D_80159DCC);
+					if (buildingTypes[building->buildingType].pad16[5] == 0xA) {
+						D_80159DCA = 0x11;
+						switch (building->unk8 & 3) {
+							case 0:
+								D_80159DC8 = -9;
+								D_80159DCC = 5;
+								break;
+							case 1:
+								D_80159DC8 = -5;
+								D_80159DCC = -9;
+								break;
+							case 2:
+								D_80159DC8 = 9;
+								D_80159DCC = -5;
+								break;
+							case 3:
+								D_80159DC8 = 5;
+								D_80159DCC = 9;
+								break;
+						}
+					}
+					action->unk4(building);
+				}
+			}
+
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			doorMap = (UnkBuildDoorMap *)D_80052A7C;
+			searchCount = 0x6D;
+			while (1) {
+				if (building->buildingType == doorMap->unk0) {
+					D_80159DC8 = ((s16 *)doorMap)[2];
+					D_80159DCC = ((s16 *)doorMap)[3];
+				}
+				doorMap = (UnkBuildDoorMap *)((u8 *)doorMap - 0x0C);
+				if (--searchCount != 0) {
+					continue;
+				}
+				break;
+			}
 		}
-		revisitPtr--;
-		i--;
+
+		if (sp168 == 0) {
+			if (!skipBuilding && ((s8)building->hitPoints < (s8)building->unk10)) {
+				func_80070FB8_7FF68();
+				building->unk10 = building->hitPoints;
+			}
+			building++;
+			scanActive = func_801185F8_1275A8(building, sp1D4) != 0;
+		}
 	}
 
 	for (i = 0; i < 0x20; i++) {
@@ -1848,7 +1853,6 @@ revisit_neighbors:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
 #endif
 
-// CURRENT(3140)
 #ifdef NON_MATCHING
 void func_8011A2A0_129250(void) {
 	VehicleInstance *var_s1;
@@ -1937,7 +1941,6 @@ void func_8011A2A0_129250(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A2A0_129250.s")
 #endif
 
-// CURRENT(21919)
 // building instance updater
 #ifdef NON_MATCHING
 void func_8011A604_1295B4(void) {
@@ -2284,7 +2287,6 @@ s32 func_8011B584_12A534(s32 arg0, s32 arg1) {
 	return 0;
 }
 
-// CURRENT(22351)
 #ifdef NON_MATCHING
 // Find building within range and matching criteria?
 s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
@@ -2389,7 +2391,6 @@ s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
 #endif
 
-// CURRENT(4000)
 #ifdef NON_MATCHING
 void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
 	BuildingInstance *building;
@@ -2425,7 +2426,6 @@ void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
 
 // draw explosion etc when building is damaged/destroyed
 #ifdef NON_MATCHING
-// CURRENT(6030)
 void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 	BuildingInstance *building;
 	BuildingType *type;
@@ -2503,7 +2503,6 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
 #endif
 
-// CURRENT(443)
 #ifdef NON_MATCHING
 // AI - Checks whether a building can currently be destroyed/damaged
 s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
@@ -2550,7 +2549,6 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BEA0_12AE50.s")
 #endif
 
-// CURRENT(55)
 // building on fire but not destroyed- called for Pollstura Suburbs fire mission/event
 #ifdef NON_MATCHING
 void func_8011BF7C_12AF2C(u8 arg0) {
@@ -2603,7 +2601,7 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 dx;
 
 
-	if (buildingInstances[arg0].buildingType) {} /* Keep the type-index load before the orientation branch. */
+	if (buildingInstances[arg0].buildingType) {}
 	if ((buildingInstances[arg0].unk8 & 0xFFFF) & 1) {
 		halfX = buildingTypes[buildingInstances[arg0].buildingType].unk12;
 		halfZ = buildingTypes[buildingInstances[arg0].buildingType].unk10;
@@ -2652,7 +2650,6 @@ s32 func_8011C0CC_12B07C(s32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 
 	return 0;
 }
-
 
 s32 func_8011C25C_12B20C(s8 *arg0, s32 arg1) {
 	s16 centerX;
@@ -2710,7 +2707,6 @@ s32 func_8011C338_12B2E8(s8 *arg0, s32 arg1) {
 	building = &buildingInstances[index];
 
 	do {
-		/* Preserve IDO live-range ordering for the bounds and zone pointer. */
 		if (centerX - radius) {}
 		if ((u8)(u32)arg0) {}
 		if ((building->xCoord >= (centerX - radius)) && (building->xCoord < (centerX + radius)) && foundStart) {
@@ -3210,6 +3206,7 @@ void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1) {
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	}
 }
+
 // Decode cached building heights and advance the pending queue.
 void func_8011DBA0_12CB50(void) {
 
@@ -3237,7 +3234,7 @@ void func_8011DBA0_12CB50(void) {
 
 			count = 0x1000; if (count) { for (; count--; ) {
 				value = *unkPtr;
-				if (unkPtr && value) {} /* Preserve IDO live-range boundaries. */
+				if (unkPtr && value) {}
 				entry = unkTable[value >> 0xD];
 				*unkPtr = (u32)((1.0 - ((f64)((entry->bias + ((((s32)value >> 2) & 0x7FF) << entry->shift)) >> 3) / 32767.0)) * type->unk14);
 				++unkPtr;
@@ -3275,7 +3272,7 @@ void func_8011DBA0_12CB50(void) {
 		}
 
 		D_8015EB77 = 0xFF;
-		count = D_8015EB6C; if (count) {} D_8015EB6C = 2; /* Preserve IDO address-register allocation. */
+		count = D_8015EB6C; if (count) {} D_8015EB6C = 2;
 		D_8015EB6A--;
 	}
 }
@@ -3604,7 +3601,7 @@ void func_8011EB40_12DAF0(BuildingInstance *arg0) {
 			D_8015EA48 += D_8015EA44;
 		}
 
-		if (1) {} /* Preserve IDO live-range boundaries. */
+		if (1) {}
 		rotorAngle = D_8015EA48 + 0x78D;
 
 		switch (D_8015EA4A) {
@@ -3833,7 +3830,6 @@ void func_8011F244_12E1F4(BuildingInstance *arg0) {
 }
 
 // AI - Animates a building's door tilt based on player proximity and draws it
-
 void func_8011F818_12E7C8(BuildingInstance *arg0) {
 	s32 result;
 
@@ -4137,7 +4133,6 @@ void func_80120BC4_12FB74(BuildingInstance *arg0) {
 	func_801206B0_12F660();
 }
 
-// CURRENT(5208)
 void func_80120D6C_12FD1C(BuildingInstance *arg0) {
 	s32 pad0[2];
 	s32 count;
@@ -4176,7 +4171,6 @@ void func_80120D6C_12FD1C(BuildingInstance *arg0) {
 	gSPVertex(D_8005BB2C++, D_8005BB34 - 25, 25, 0);
 	gSPDisplayList(D_8005BB2C++, &D_5038FF8);
 }
-
 
 void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 	BuildingInstance *building;
@@ -4232,7 +4226,6 @@ void func_80121128_1300D8(BuildingInstance *arg0) {
 	}
 
 	D_80052B44 = -0x1A1;
-	// Empty blocks retain IDO's shared physical-address mask register.
 	if (doorMask & 8) {
 		func_800039D0_45D0(&D_80052B40, 0, 0, D_8005BB38);
 		if (1) {}
@@ -4313,7 +4306,6 @@ void func_80121128_1300D8(BuildingInstance *arg0) {
 			0, 0, 0, 0x60, 0x26, 0x8C, 0, func_8012101C_12FFCC);
 	}
 
-	// Empty blocks retain IDO's shared physical-address mask register.
 	if (doorMask & 8) {
 		func_8012D700_13C6B0(1, ((arg0 - buildingInstances) << 4) + 8,
 			arg0->xCoord - doorOffset - 0x60, arg0->yCoord + 0x8C, arg0->zCoord - 0x1A1,
@@ -4398,7 +4390,6 @@ void func_80121A64_130A14(BuildingInstance *arg0) {
 		D_80052B50.unk2 = 0x123;
 		D_80052B50.unk4 = 0x3E;
 
-		// Preserve the original renderer's angle-state writeback.
 		D_80140AA0_14FA50 = D_80140AA0_14FA50;
 		func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);

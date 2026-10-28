@@ -956,6 +956,13 @@ extern f32 D_8004DCB8;
 extern s16 D_8004DCBC;
 extern f32 D_8004DCC0;
 extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
+extern s16 D_8004DCD2;
+extern s16 D_8004DCD4;
+extern s16 D_8004DCEC;
+extern u16 D_8004DCF0;
+extern f32 D_8004DD00;
+extern f32 D_8004DD04;
+extern f32 D_8004DD08;
 extern VehicleInstance D_8004E798;
 extern s32 D_80050AD0;
 extern s32 D_80050AD4; // AI - the pause menu's chosen item, also used as the selected weapon slot (stored in AAA70.c and 173B60.c); 101840.c turns 3, 0xD and 0xC into modes 0, 0x10 and 8 (read from the code)
@@ -2235,6 +2242,7 @@ extern s16 D_8014940E;
 extern s16 D_80149430;
 extern s16 D_80149432;
 extern s16 D_80149434; // AI - loadWindowCenterX: centre X of the 19x19 terrain window, copied each frame from the camera record +0x3C (measured)
+extern s32 D_80149438;
 extern s16 D_80149436; // AI - loadWindowCenterZ: centre Z of the same window, copied from the camera record +0x3E (measured)
 extern s16 D_80149440;
 extern u8 D_80149441;
@@ -2758,6 +2766,7 @@ extern s16 D_80159236;
 extern s16 D_80159244;
 extern f32 D_80159238;
 extern f32 D_8015923C;
+extern s16 D_80159240;
 extern s16 D_80159242;
 extern s16 D_80159246;
 extern s16 D_80159248;

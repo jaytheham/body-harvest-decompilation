@@ -31,7 +31,6 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
-// CURRENT(5)
 #ifdef NON_MATCHING
 // AI - Frontend overlay entry point; dispatches frontend actions (6=end-game comet movie + credits, 7=end-game message).
 s32 func_80070270_40720(s32 arg0) {
@@ -441,7 +440,6 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-// CURRENT(9255)
 #ifdef NON_MATCHING
 void func_80070CC4_41174(void)
 {
@@ -541,7 +539,6 @@ void func_80070CC4_41174(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
 #endif
 
-// CURRENT(6340)
 #ifdef NON_MATCHING
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
@@ -781,7 +778,6 @@ s32 func_80071760_41C10(s32 arg0)
 	return textWidth - totalWidth;
 }
 
-// CURRENT(17165)
 #ifdef NON_MATCHING
 void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
@@ -849,7 +845,6 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
 #endif
 
- // CURRENT(2155)
 #ifdef NON_MATCHING
 void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	s32 textureIndex;
@@ -947,7 +942,6 @@ void func_800722A4_42754(void) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(2310)
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 padTop0;
 	s32 padTop1;
@@ -1096,10 +1090,8 @@ void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
 
-
 // Checks if selected inventory item is 0xb (weapon crystals)
 #ifdef NON_MATCHING
-// CURRENT(2883)
 void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 unusedPad0;
 	s32 unusedPad1;
@@ -1171,6 +1163,7 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
 #endif
+
 // display inventory models
 #ifdef NON_MATCHING
 void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
@@ -1230,9 +1223,6 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072E18_432C8.s")
 #endif
 
-
-// CURRENT(100690) - the body compiles now (first real score; the earlier 0 was the
-// wrapped-function artifact). 9 data symbols + array/scalar + 2-arg sins fixed.
 #ifdef NON_MATCHING
 void func_800731A8_43658(void) {
 	void *sp114;
@@ -1639,9 +1629,7 @@ block_87:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s")
 #endif
 
-
 #ifdef NON_MATCHING
-// CURRENT(5566)
 void func_80075710_45BC0(void) {
 	s32 matrixPtr;
 	s32 rowTextureOffset;
@@ -2171,7 +2159,6 @@ s32 func_80076FD8_47488(void) {
 /**
  * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
  */
-// AI - Copies the tiled framebuffer from strided src (arg0) to contiguous dst (arg1): 16 dwords per tile across 8x10x32 tiles.
 void func_80076FE0_47490(s32 arg0, s32 arg1) {
 	s32 *src;
 	s32 *dst;
@@ -2975,7 +2962,6 @@ s32 func_80077E88_48338(void)
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(3239)
 s32 func_80078110_485C0(void) {
 	s32 state;
 	u32 frameCounter;
@@ -3090,7 +3076,6 @@ s32 func_80078110_485C0(void) {
 
 // doChooseFileNameLoop
 #ifdef NON_MATCHING
-// CURRENT(3990)
 s32 func_80078424_488D4(void) {
 	s32 state;
 	u32 frameCounter;
@@ -3952,7 +3937,6 @@ void func_800796D0_49B80(s32 arg0, u16 arg1) {
 	drawText(&D_800ADE48_7E2F8, 0xFF, 0xFF, 0xFE);
 }
 
-// CURRENT(1074)
 void func_80079F30_4A3E0(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
@@ -3993,7 +3977,6 @@ void func_8007A038_4A4E8(void) {
 	fade = 0;
 	D_80052ACC = 1;
 
-	/* Keep the initial countdown test after IDO folds the zero term. */
 	for (timer = 0x1F4; timer-- + D_80094900 * 0; ) {
 		fade += 2;
 		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
@@ -4322,9 +4305,7 @@ void func_8007B618_4BAC8(void) {
 	gSPEndDisplayList(D_8005BB2C++);
 	func_8000505C_5C5C();
 
-	/* Keep this setup on one line: IDO schedules the constant before the byte load. */
 	if (isButtonNewlyPressed(0, 0x1000) != 0) { selection = tempOsc; one = (int)(selection * 0) + 1; sp3D = sp3E; oscillation = sp3D; if (oscillation) {} do { func_800791A0_49650(one);
-			/* These empty tests preserve the target saved-register allocation. */
 			if (&D_8005BB2C) {} tempOsc = oscillation;
 			oscillation = (u8)(((s32)tempOsc + 2) % 64);
 			drawText(&D_800ADE4C_7E2FC, 0x82, 0xF0, 0x64);
@@ -5124,7 +5105,6 @@ s32 func_8007D2B0_4D760(void) {
 	s32 i;
 	s32 selection;
 	s16 menuWarmup;
-	/* Preserve the original stack storage for render setup. */
 	s32 renderSetupDone[4];
 	u8* weaponSlot;
 	u32* frameCounter;
@@ -5292,7 +5272,6 @@ s32 func_8007D2B0_4D760(void) {
 	osSyncPrintf(D_800AE4C8_7E978, D_80047948);
 	return 0;
 }
-
 
 /* ===== Frontend .rodata (ROM 0x7D5A0 - 0x7F0F0) ===== */
 #ifndef VERSION_EU
