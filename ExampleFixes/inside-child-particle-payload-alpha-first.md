@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_80089408_1714C8`, ordinary typed payload pointers spill or delay their `+8` adjustment across random calls. Writing alpha through the containing array caches a separate record pointer, and the first RGB store uses offset `0xE` before rebasing the saved payload pointer.
+
+-> `code changed`: Initialize the source and destination views through `(PayloadType *)(s32)&D_800FB7B0[index].unk8`. Initialize each destination view before its lifetime RNG call. Write alpha through `dstPos->unk9` before RGB, retaining lifetime access through the containing array. Use a separate integer for the parent kind and inline the final random remainder.
+
+-> `correct ASM`: Each branch computes the record twice, writes lifetime through the temporary, writes alpha with `sb ...,0x11(s0)`, advances with `addiu s0,s0,8`, and stores RGB at offsets `6/7/8`. The source remains in `s1`, destination index in `a2` at `sp+0x26`, and the frame is `0x30`. All 144 instructions and the complete US ROM checksum match.

@@ -2230,40 +2230,39 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 }
 
 // AI - Spawn a child particle effect for rendering
-#ifdef NON_MATCHING
 void func_80089408_1714C8(u8 arg0) {
 	s16 srcIndex;
 	Unk89408Pos *srcPos;
 	s16 dstIndex;
-	Unk89408Pos *dstPos;
+	Unk84EECEffectPositionView *dstPos;
 	s32 temp;
 
 	srcIndex = D_800FB6F8[arg0].unk6;
 	dstIndex = func_80083390_16B450(arg0);
 	if (dstIndex != -3) {
-		srcPos = (Unk89408Pos *)&D_800FB7B0[srcIndex].unk8;
-		srcIndex = srcPos->unkA;
+		srcPos = (Unk89408Pos *)(s32)&D_800FB7B0[srcIndex].unk8;
+		temp = srcPos->unkA;
 
-		if (srcIndex == 1) {
+		if (temp == 1) {
+			dstPos = (Unk84EECEffectPositionView *)(s32)&D_800FB7B0[dstIndex].unk8;
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
-			D_800FB7B0[dstIndex].unk11 = 0x82;
-			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk6 = 0xAA;
-			dstPos->unk7 = 0xAA;
+			dstPos->unk9 = 0x82;
+			dstPos->unk6.bytes.high = 0xAA;
+			dstPos->unk6.bytes.low = 0xAA;
 			dstPos->unk8 = 0xAA;
-		} else if (srcIndex == 0) {
+		} else if (temp == 0) {
+			dstPos = (Unk84EECEffectPositionView *)(s32)&D_800FB7B0[dstIndex].unk8;
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
-			D_800FB7B0[dstIndex].unk11 = 0xFF;
-			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk6 = 0xFF;
-			dstPos->unk7 = 0xFF;
+			dstPos->unk9 = 0xFF;
+			dstPos->unk6.bytes.high = 0xFF;
+			dstPos->unk6.bytes.low = 0xFF;
 			dstPos->unk8 = 0xFF;
 		} else {
+			dstPos = (Unk84EECEffectPositionView *)(s32)&D_800FB7B0[dstIndex].unk8;
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
-			D_800FB7B0[dstIndex].unk11 = 0xFF;
-			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk6 = 0x32;
-			dstPos->unk7 = 0xFF;
+			dstPos->unk9 = 0xFF;
+			dstPos->unk6.bytes.high = 0x32;
+			dstPos->unk6.bytes.low = 0xFF;
 			dstPos->unk8 = 0x82;
 		}
 
@@ -2272,14 +2271,10 @@ void func_80089408_1714C8(u8 arg0) {
 		dstPos->unk4 = srcPos->unk4;
 		dstPos->unkA = (func_800038E0_44E0() % 6) + srcPos->unk6 - 3;
 		dstPos->unkB = (func_800038E0_44E0() % 6) + srcPos->unk7 - 3;
-		temp = func_800038E0_44E0() % 6;
+		dstPos->unkC = (func_800038E0_44E0() % 6) + srcPos->unk8 - 3;
 		dstPos->unkD = 0;
-		dstPos->unkC = srcPos->unk8 + temp - 3;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089408_1714C8.s")
-#endif
 
 // Create a large candle(?) flame effect
 u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
