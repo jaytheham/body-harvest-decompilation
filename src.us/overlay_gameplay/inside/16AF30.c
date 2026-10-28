@@ -1958,134 +1958,91 @@ void func_800881C0_170280(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800881C0_170280.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Render slot type 5 effects: fire/magma-like particles
+// Render slot type 5 fire particles.
 void func_80088654_170714(void) {
-	typedef struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		s16 unk6;
-		s16 unk8;
-		s16 unkA;
-		s16 unkC;
-		s8 unkE;
-		s8 unkF;
-		s8 unk10;
-		u8 unk11;
-		u8 unk12;
-		u8 unk13;
-		u8 unk14;
-	} Unk84EECEffect;
+	s16 effect;
+	Unk84EECEffect *entry;
+	f32 height1;
+	f32 height2;
+	f32 offsetX1;
+	f32 offsetZ1;
+	f32 offsetX2;
+	f32 offsetZ2;
 
-	Gfx *dl;
-	Vtx *vtx;
-	Unk84EECEffect *effect;
-	f32 f2, f12, f18, f20;
-	s16 effectIdx;
-
-	effectIdx = D_800FB78E;
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	effect = D_800FB78E;
+	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100DE00), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPPipeSync(D_8005BB2C++);
 
-	if ((effectIdx != -5) && (effectIdx != -6)) {
-		while ((effectIdx != -5) && (effectIdx != -6)) {
-			effect = &((Unk84EECEffect *)&D_800FB7B0)[effectIdx];
-			
-			// Read color components
-			f2 = (f32)(u8)effect->unk11;
-			if ((s8)effect->unk11 < 0) {
-				f2 += 4294967296.0f;
-			}
-			
-			f12 = (f32)(u8)effect->unk12;
-			if ((s8)effect->unk12 < 0) {
-				f12 += 4294967296.0f;
-			}
-			
-			f18 = (f32)(u8)effect->unk13;
-			if ((s8)effect->unk13 < 0) {
-				f18 += 4294967296.0f;
-			}
-			
-			f20 = (f32)(u8)effect->unk14;
-			if ((s8)effect->unk14 < 0) {
-				f20 += 4294967296.0f;
-			}
-			
-			vtx = D_8005BB34;
-			
-			// First vertex
-			vtx->v.ob[0] = effect->unk8;
-			vtx->v.ob[1] = effect->unkA;
-			vtx->v.ob[2] = effect->unkC;
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0x800;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xE6;
-			vtx->v.cn[2] = 0x96;
-			vtx->v.cn[3] = 0x64;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Second vertex
-			vtx->v.ob[0] = effect->unk8;
-			vtx->v.ob[1] = effect->unk2 + effect->unkA;
-			vtx->v.ob[2] = effect->unkC;
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0x800;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xDC;
-			vtx->v.cn[2] = 0x78;
-			vtx->v.cn[3] = 0xB4;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Third vertex
-			vtx->v.ob[0] = (s16)(s32)((f32)effect->unk8 + (f2 * D_800FB6A8[0]));
-			vtx->v.ob[1] = (s16)(s32)((f32)effect->unkA + f12);
-			vtx->v.ob[2] = (s16)(s32)((f32)effect->unkC + (f2 * D_800FB6A8[2]));
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xDC;
-			vtx->v.cn[2] = 0x78;
-			vtx->v.cn[3] = 0xB4;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Fourth vertex
-			vtx->v.ob[0] = (s16)(s32)((f32)effect->unk8 + (f18 * D_800FB6A8[3]));
-			vtx->v.ob[1] = (s16)(s32)((f32)effect->unkA + f20);
-			vtx->v.ob[2] = (s16)(s32)((f32)effect->unkC + (f18 * D_800FB6A8[5]));
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0x800;
-			vtx->v.tc[1] = 0x800;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xC8;
-			vtx->v.cn[2] = 0x64;
-			vtx->v.cn[3] = 0xB4;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Add geometry to command list
-			gSPVertex(D_8005BB2C++, vtx - 4, 4, 0);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadTile(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31, 31);
-			gDPPipeSync(D_8005BB2C++);
-			
-			// Get next effect
-			effectIdx = effect->unk4;
-		}
+	if ((effect != -5) && (effect != -6)) {
+		do {
+			entry = &D_800FB7B0[effect];
+			offsetX1 = (f32)(u32)entry->unk11;
+			offsetX1 *= D_800FB6A8[0];
+			height1 = (f32)(u32)entry->unk12;
+			offsetZ1 = (f32)(u32)entry->unk11;
+			offsetZ1 *= D_800FB6A8[2];
+			offsetX2 = (f32)(u32)entry->unk13;
+			offsetX2 *= D_800FB6A8[3];
+			height2 = (f32)(u32)entry->unk14;
+			offsetZ2 = (f32)(u32)entry->unk13;
+			offsetZ2 *= D_800FB6A8[5];
+
+			D_8005BB34->v.ob[0] = entry->unk8;
+			D_8005BB34->v.ob[1] = entry->unkA;
+			D_8005BB34->v.ob[2] = entry->unkC;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x800;
+			D_8005BB34->v.tc[1] = 0x0;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xE6;
+			D_8005BB34->v.cn[2] = 0x96;
+			D_8005BB34->v.cn[3] = 0x64;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = entry->unk8;
+			D_8005BB34->v.ob[1] = entry->unk2 + entry->unkA;
+			D_8005BB34->v.ob[2] = entry->unkC;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x0;
+			D_8005BB34->v.tc[1] = 0x800;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xDC;
+			D_8005BB34->v.cn[2] = 0x78;
+			D_8005BB34->v.cn[3] = 0xB4;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = entry->unk8 + offsetX1;
+			D_8005BB34->v.ob[1] = entry->unkA + height1;
+			D_8005BB34->v.ob[2] = entry->unkC + offsetZ1;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x0;
+			D_8005BB34->v.tc[1] = 0x0;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xDC;
+			D_8005BB34->v.cn[2] = 0x78;
+			D_8005BB34->v.cn[3] = 0xB4;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = entry->unk8 + offsetX2;
+			D_8005BB34->v.ob[1] = entry->unkA + height2;
+			D_8005BB34->v.ob[2] = entry->unkC + offsetZ2;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x800;
+			D_8005BB34->v.tc[1] = 0x800;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xC8;
+			D_8005BB34->v.cn[2] = 0x64;
+			D_8005BB34->v.cn[3] = 0xB4;
+			D_8005BB34++;
+
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+			gSP2Triangles(D_8005BB2C++, 0, 2, 3, 0, 3, 1, 2, 0);
+			effect = entry->unk4;
+		} while ((effect != -5) && (effect != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
-#endif
 
 // AI - Render slot type 6 effects: shrinking sprites
 void func_80088B9C_170C5C(void) {
