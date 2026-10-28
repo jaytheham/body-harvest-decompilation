@@ -5450,46 +5450,50 @@ void func_80101C14_110BC4(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80101C14_110BC4.s")
 #endif
 
-// CURRENT(5248): typed flags and display lists; frame matches, scheduling and allocation remain.
-#ifdef NON_MATCHING
 void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	Unk8013FDA8Entry *entry;
-	s16 temp;
-	s32 pad;
+	s16 scale;
+	s32 flags;
 	Mtx *sp40;
 	s32 count;
 	s32 i;
 	s32 loops;
-	VehicleType *type = &vehicleTypes[arg0];
+	VehicleType *type;
 
-	temp = (s16)(256.0 / ((f64)(f32)type->unkC * 0.125));
+	type = &vehicleTypes[arg0];
 	i = type->detailProp;
-	loops = type->unk54;
-	count = 0;
 	sp40 = D_8005BB38;
 	D_8005BB38 = sp40 + 1;
+
+	scale = 256.0 / ((f32)type->unkC * 0.125);
+	loops = type->unk54;
+	count = 0;
 
 	D_80052B40.unk0 = arg1 >> 2;
 	D_80052B40.unk2 = arg2 >> 2;
 	D_80052B40.unk4 = arg3 >> 2;
 
-	D_80052B48.unk0 = (s16)arg4;
-	D_80052B48.unk2 = (s16)arg6;
-	D_80052B48.unk4 = (s16)arg5;
+	D_80052B48.unk0 = arg4;
+	D_80052B48.unk2 = arg6;
+	D_80052B48.unk4 = arg5;
 
-	D_80052B50.unk0 = temp;
-	D_80052B50.unk2 = temp;
-	D_80052B50.unk4 = temp;
+	D_80052B50.unk0 = scale;
+	D_80052B50.unk2 = scale;
+	D_80052B50.unk4 = scale;
 	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, sp40);
 
 	{
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(sp40), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, type->modelDL);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(sp40), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+		gSPDisplayList(D_8005BB2C++, type->modelDL);
 	}
 
-	entry = &D_8013FDA8_14ED58[i];
-	while (loops--) {
-		Gfx *gfx;
+	flags = loops--;
+	if (flags) {
+		entry = &D_8013FDA8_14ED58[i];
+		do {
+			/* Preserve IDO's shared physical-address mask register. */
+			if (0x1FFFFFFFU == count) {}
+
 			func_800FE910_10D8C0(i);
 
 			if (entry->flags & 1) {
@@ -5500,11 +5504,14 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 			}
 
 			if ((u8 *)entry->displayList != D_50312E8) {
-				if (i == 0xE) {
-					func_802D4CD0_18D7E0(0x19, 0);
-				} else if (i == 0xF) {
+				switch (i) {
+				case 0xF:
 					func_802D4CD0_18D7E0(0x18, 0);
-				} else {
+					break;
+				case 0xE:
+					func_802D4CD0_18D7E0(0x19, 0);
+					break;
+				default:
 					if (entry->flags & 0x20) {
 						gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
@@ -5520,28 +5527,32 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 					}
 
 					if (((u8 *)entry->displayList != D_50445A0) && ((u8 *)entry->displayList != D_9043D50)) {
-						gSPDisplayList(D_8005BB2C++, *(u32 *)&entry->displayList);
+						gSPDisplayList(D_8005BB2C++, entry->displayList);
 					}
 				}
 			}
 
-			temp = entry->flags;
+			flags = entry->flags;
 			i++;
 			entry++;
 
-			if (temp & 2) {
+			if (flags & 2) {
+				count--;
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
 
+			flags = loops--;
+		} while (flags);
 	}
 
-	while (count--) {
-		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+	flags = count--;
+	if (flags) {
+		do {
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+			flags = count--;
+		} while (flags);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80101EF4_110EA4.s")
-#endif
 
 // CURRENT(1466)
 void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, s16 arg2) {
@@ -5749,7 +5760,7 @@ void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 
 // CURRENT(9396): corrected current-point updates and terrain-test exit; floating allocation remains.
 #ifdef NON_MATCHING
-s32 func_80102FA4_111F54(void) {
+void func_80102FA4_111F54(void) {
 	UnkF9230Func80102FA4Point *points;
 	UnkF9230Func80102FA4Point *cur;
 	UnkF9230Func80102FA4Point *prev;
@@ -5757,7 +5768,6 @@ s32 func_80102FA4_111F54(void) {
 	f64 spring;
 	f32 chain[3];
 	s32 i;
-	s32 ret;
 	f32 groundY;
 	f32 midX;
 	f32 midY;
@@ -5813,14 +5823,12 @@ s32 func_80102FA4_111F54(void) {
 	i = 10;
 	do {
 		groundY = func_800F9F64_108F14((s16)(s32)cur->pos.x, (s16)(s32)cur->pos.z);
-		ret = i;
 		if (groundY < cur->pos.y) {
-			return ret;
+			return;
 		}
 		cur--;
 	} while (i--);
 	D_80159320 &= 0x7FFFFFFF;
-	return (s32)&D_80159320;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80102FA4_111F54.s")

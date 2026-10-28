@@ -956,7 +956,7 @@ void func_8012D884_13C834(void);
 void func_801365E0_145590(void);
 void func_80102D00_111CB0(VehicleInstance *, f32, f32, f32);
 void func_80102DDC_111D8C(VehicleInstance *, s16, s16, f32);
-s32 func_80102FA4_111F54(void);
+void func_80102FA4_111F54(void);
 void func_80106628_1155D8(VehicleInstance *arg0);
 void func_80107EBC_116E6C(VehicleInstance *arg0);
 void func_80108B48_117AF8(VehicleInstance *arg0);
