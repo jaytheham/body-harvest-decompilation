@@ -24,6 +24,12 @@ typedef union ShadowModelCommand {
     } command;
 } ShadowModelCommand;
 
+typedef struct CometJointChain {
+    s16 joints[18];
+    s16 child;
+    s16 root;
+} CometJointChain;
+
 typedef struct MissionCommand {
     u8 opcode;
     u8 args[2];
