@@ -724,6 +724,19 @@ typedef struct {
 	/* 0x0C */ u8 unkC;
 } UnkScatterEffectTail;
 
+typedef union {
+	UnkScatterEffectTail *data;
+	s32 randomValue;
+} ScatterEffectScratch;
+
+typedef union {
+	u32 word;
+	struct {
+		u16 first;
+		u16 second;
+	} values;
+} EffectRandomPair;
+
 typedef struct {
 	/* 0x00 */ u8 pad0[4];
 	/* 0x04 */ u8 texture;

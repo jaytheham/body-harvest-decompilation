@@ -1093,31 +1093,27 @@ void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
 }
 
 // AI - Create a random scatter effect with sub-particle burst
-#ifdef NON_MATCHING
-s32 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
-	UnkScatterEffectTail *entry;
-	s32 half;
-	s8 dirY;
-	s16 ret;
-	u16 randY;
-	u16 randX;
+s16 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	s8 dirX;
+	s8 dirY;
+	ScatterEffectScratch scratch;
+	s16 ret;
+	EffectRandomPair random;
 
 	ret = func_80083390_16B450(0xE);
 	if (ret != -3) {
 		D_800FB7B0[ret].unk2 = arg0;
-		entry = (UnkScatterEffectTail *)&D_800FB7B0[ret].unk8;
-		half = arg1 / 2;
-		entry->unk0 = (func_800038E0_44E0() % arg1) + arg3 * 4 - half;
-		entry->unk2 = (func_800038E0_44E0() % arg1) + arg4 * 4 - half;
-		entry->unk4 = (func_800038E0_44E0() % arg1) + arg5 * 4 - half;
-		entry->unk6 = -1;
-		entry->unk7 = -1;
-		entry->unk8 = -1;
-		entry->unk9 = arg1;
-		entry->unkA = func_800038E0_44E0() % 8;
-		entry->unkB = arg2;
-		entry->unkC = 0;
+		scratch.data = (UnkScatterEffectTail *)&D_800FB7B0[ret].unk8;
+		scratch.data->unk0 = (func_800038E0_44E0() % arg1) + arg3 * 4 - arg1 / 2;
+		scratch.data->unk2 = (func_800038E0_44E0() % arg1) + arg4 * 4 - arg1 / 2;
+		scratch.data->unk4 = (func_800038E0_44E0() % arg1) + arg5 * 4 - arg1 / 2;
+		scratch.data->unk6 = -1;
+		scratch.data->unk7 = -1;
+		scratch.data->unk8 = -1;
+		scratch.data->unk9 = arg1;
+		scratch.data->unkA = func_800038E0_44E0() % 8;
+		scratch.data->unkB = arg2;
+		scratch.data->unkC = 0;
 
 		dirX = (func_800038E0_44E0() % 70) + 0x37;
 		dirY = (func_800038E0_44E0() % 70) + 0x37;
@@ -1128,16 +1124,14 @@ s32 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg
 			dirY = -dirY;
 		}
 
-		randX = func_800038E0_44E0();
-		randY = func_800038E0_44E0();
-		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (randX % 60) + 0x41, dirY, 0x1E, (randY % 60) + 0x46, (func_800038E0_44E0() % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
+		random.values.first = func_800038E0_44E0();
+		random.values.second = func_800038E0_44E0();
+		scratch.randomValue = func_800038E0_44E0();
+		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (random.values.first % 60) + 0x41, dirY, 0x1E, (random.values.second % 60) + 0x46, (scratch.randomValue % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
-#endif
 
 // AI - Create a scatter effect with a specific flag set
 void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
