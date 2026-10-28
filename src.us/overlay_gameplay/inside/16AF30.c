@@ -915,69 +915,63 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 }
 
 // AI - Spawn a child particle effect with randomized offset from parent
-#ifdef NON_MATCHING
 void func_800852B8_16D378(u8 arg0) {
-	s16 stackPad0;
-	s16 stackPad1;
+	s32 headIndex;
+	s16 index;
 	s16 templateIndex;
-	s16 *templateIndexPointer;
-	Unk84EECEffectTemplateData *templateData;
-	Vec3f sourceVector;
-	Vec3f destinationVector;
-	Unk84EECEffect *baseEffect;
-	s16 child;
-	s16 sourceIndex;
+	JetStreamParticleState *particle;
+	Unk84EECEffectTemplateData *emitter;
+	Vec3f base;
+	Vec3f random;
+	Unk84EECEffect *head[2]; /* The second slot preserves the original frame. */
 
-	sourceIndex = D_800FB6F8[arg0].unk6;
-	baseEffect = &D_800FB7B0[sourceIndex];
-	templateIndex = baseEffect->unk4;
-	templateIndexPointer = &templateIndex;
-	child = func_80083390_16B450(arg0);
-	if (child == -3) {
+	headIndex = D_800FB6F8[arg0].unk6;
+	headIndex &= -1; /* IDO: retain the initial v0/v1 allocation. */
+	templateIndex = D_800FB7B0[headIndex].unk4;
+	head[0] = &D_800FB7B0[headIndex];
+	index = func_80083390_16B450(arg0);
+	if (index == -3) {
 		return;
 	}
-	D_800FB7B0[child].unk8 = baseEffect->unk8;
-	baseEffect = (Unk84EECEffect *)&baseEffect->unk8;
-	D_800FB7B0[child].unkA = ((Unk84EECEffectTailView *)baseEffect)->unk2;
-	D_800FB7B0[child].unkC = ((Unk84EECEffectTailView *)baseEffect)->unk4;
-	templateData = (Unk84EECEffectTemplateData *)&D_800FB7B0[*templateIndexPointer].unk8;
-	D_800FB7B0[child].unk11 = templateData->unk10;
-	D_800FB7B0[child].unk2 = (func_800038E0_44E0() % (D_800FB7B0[sourceIndex].unk2 * 2)) + D_800FB7B0[sourceIndex].unk2;
 
-	sourceVector.x = (f32)templateData->offsetX;
-	sourceVector.y = (f32)templateData->offsetY;
-	sourceVector.z = (f32)templateData->offsetZ;
-	func_80083014_16B0D4(&sourceVector, &sourceVector);
+	particle = (JetStreamParticleState *)&head[0]->unk8;
+	D_800FB7B0[index].unk8 = particle->position[0];
+	D_800FB7B0[index].unkA = particle->position[1];
+	D_800FB7B0[index].unkC = particle->position[2];
 
-	destinationVector.x = (f32)((f64)(f32)(func_800038E0_44E0() % templateData->radius) / D_800A5470_18D530[0]);
+	emitter = (Unk84EECEffectTemplateData *)&D_800FB7B0[(&templateIndex)[0]].unk8;
+	D_800FB7B0[index].unk11 = emitter->unk10;
+	D_800FB7B0[index].unk2 = head[0]->unk2 + (func_800038E0_44E0() % (head[0]->unk2 * 2));
+
+	base.x = emitter->offsetX;
+	base.y = emitter->offsetY;
+	base.z = emitter->offsetZ;
+	func_80083014_16B0D4(&base, &base);
+
+	random.x = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / D_800A5470_18D530[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		destinationVector.x = 0.0f - destinationVector.x;
+		random.x = 0.0f - random.x;
 	}
-	destinationVector.x += sourceVector.x;
+	random.x += base.x;
 
-	destinationVector.y = (f32)((f64)(f32)(func_800038E0_44E0() % templateData->radius) / D_800A5478_18D538[0]);
+	random.y = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / D_800A5478_18D538[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		destinationVector.y = 0.0f - destinationVector.y;
+		random.y = 0.0f - random.y;
 	}
-	destinationVector.y += sourceVector.y;
+	random.y += base.y;
 
-	destinationVector.z = (f32)((f64)(f32)(func_800038E0_44E0() % templateData->radius) / D_800A5480_18D540[0]);
+	random.z = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / D_800A5480_18D540[0]);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		destinationVector.z = 0.0f - destinationVector.z;
+		random.z = 0.0f - random.z;
 	}
-	destinationVector.z += sourceVector.z;
+	random.z += base.z;
 
-	baseEffect = &D_800FB7B0[child];
-	func_80083014_16B0D4(&destinationVector, &destinationVector);
-
-	baseEffect = (Unk84EECEffect *)&baseEffect->unk8;
-	((Unk84EECEffectTailView *)baseEffect)->unkA = (s8)((s32)templateData->strength / 4 * destinationVector.x);
-	((Unk84EECEffectTailView *)baseEffect)->unkB = (s8)((s32)templateData->strength / 4 * destinationVector.y);
-	((Unk84EECEffectTailView *)baseEffect)->unkC = (s8)((s32)templateData->strength / 4 * destinationVector.z);
+	particle = (JetStreamParticleState *)&D_800FB7B0[index].unk8;
+	func_80083014_16B0D4(&random, &random);
+	particle->velocity[0] = (emitter->strength / 4) * random.x;
+	particle->velocity[1] = (emitter->strength / 4) * random.y;
+	particle->velocity[2] = (emitter->strength / 4) * random.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
-#endif
 
 // AI - Create a simple effect instance with position and color data
 void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {

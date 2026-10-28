@@ -61,3 +61,7 @@ addu    v1,t8,t9
 lh      t0,4(v1)
 sw      v1,0x30(sp)
 ```
+
+incorrect ASM: `func_800852B8_16D378` saved the source header at sp+0x28 and its template index at sp+0x5A, restored the header before the allocation-failure branch, and saved it again before the random-size call.
+-> code changed: Adapt the matched `func_8008A094_5A544` counterpart. Use a full-width head index followed by `headIndex &= -1`, an addressed scalar template index `(&templateIndex)[0]`, a two-element typed header-pointer array with only element zero used, and separate typed particle/emitter views. Read the random-size base through the retained header pointer.
+-> correct ASM: Source index uses V0 and source header V1; `sw v1,0x30(sp)` and `sh t0,0x58(sp)` preserve the source before allocation. `lw v0,0x30(sp)` follows the success-path multiply, and `lw t9,0x30(sp)` follows the random call with no intervening header spill. The complete 0x60-byte-frame function and normal ROM checksum match.
