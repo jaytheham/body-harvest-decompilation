@@ -3177,10 +3177,12 @@ void func_802DBD18_31FE68(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_802DBDD0_31FF20(u8 arg0) {
 	s32 pad0;
 	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
 	s16 temp_v1;
 	s16 y;
 
@@ -3196,9 +3198,6 @@ void func_802DBDD0_31FF20(u8 arg0) {
 		func_800DFA34_EE9E4(alienInstances[arg0].unk0, y, alienInstances[arg0].unk4, 0x96, 0);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DBDD0_31FF20.s")
-#endif
 
 void func_802DBEA4_31FFF4(u8 arg0, s16 arg1, s16 arg2) {
 	s16 params[2];
