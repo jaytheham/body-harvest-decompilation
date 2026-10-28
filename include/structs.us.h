@@ -1577,9 +1577,9 @@ typedef struct {
 	/* 0x5A */ u8 pad5A[0x2];
 	/* 0x5C */ u8 unk5C;
 	/* 0x5D */ u8 unk5D;
-	/* 0x5E */ u8 unk5E;
-	/* 0x5F */ u8 unk5F;
-	/* 0x60 */ u8 unk60;
+	/* 0x5E */ s8 unk5E;
+	/* 0x5F */ s8 unk5F;
+	/* 0x60 */ s8 unk60;
 	/* 0x61 */ u8 unk61; // Max fuel (/ 0x100) ?
 	/* 0x62 */ u8 unk62;
 	/* 0x63 */ u8 unk63;

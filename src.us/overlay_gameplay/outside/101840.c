@@ -4996,39 +4996,27 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 	D_80159320 |= 0x800000;
 }
 
-// CURRENT(22935)
-#ifdef NON_MATCHING
 // DisplayVehicles
 void func_8010065C_10F60C(s32 arg0) {
 	s32 index;
-	s32 stackPad[54];
 	s32 i;
+	VehicleType *type;
 	s32 count;
 	s32 matrixCount;
-	s32 *mtxSrc;
-	s32 *mtxDst;
-	u8 typePart;
-	u8 listIndex;
-	u8 *vehicleIndexPtr;
-	VehicleInstance *vehicle;
-	VehicleType *type;
-	u8 *typeBytes;
-	ShadowPartEntry *shadowPart;
+	s32 listIndex;
 	void (*updateMtx)(s32);
+	VehicleInstance *vehicle;
+	Unk8013FDA8Entry *shadowPart;
 	u8 *model;
 
-	mtxSrc = (s32 *)&D_80031120_31D20;
-	mtxDst = (s32 *)&D_801592C0;
-	for (i = 0; i < (sizeof(Mtx) / sizeof(s32)); i++) {
-		*mtxDst++ = *mtxSrc++;
-	}
+	D_801592C0 = D_80031120_31D20;
 
 	gDPPipeSync(D_8005BB30++);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_PASS2);
 	gDPSetRenderMode(D_8005BB30++,
 		AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL | G_RM_FOG_SHADE_A,
 		AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL |
-			GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM));
+		GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM));
 	gDPSetCycleType(D_8005BB30++, G_CYC_2CYCLE);
 	gSPSetGeometryMode(D_8005BB30++, G_FOG);
 
@@ -5048,49 +5036,50 @@ void func_8010065C_10F60C(s32 arg0) {
 			func_800EA5B8_F9568();
 		}
 	}
-	D_80159264 = (D_80052B34->unk1A == 0);
+	if (D_80052B34->unk1A == 0) {
+		D_80159264 = 1;
+	} else {
+		D_80159264 = 0;
+	}
 
 	if (arg0 == 0) {
-		i = 7;
-		while (i != 0) {
+		i = 8;
+		while (i--) {
 			D_80158B90[i].unk6 = -0x8000;
-			i--;
 		}
 		D_801593EA = 0;
 		guLookAtReflect(D_8005BB38, &D_801592A0, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f,
-						0.0f);
+			0.0f);
 	}
 
 	if ((currentLevel == 2) && (arg0 == 0)) {
-		VehicleInstance *adam = func_80109960_118910();
+		vehicle = func_80109960_118910();
 
-		func_8012D700_13C6B0(2, 0x7FFF, adam->unk0 + 0xB, adam->unk2 + 0x39, adam->unk4, 0, 0, 0, 0x5D,
-							D_8013FD74_14ED24, 0x19, &func_80100638_10F5E8, &func_8012E1F8_13D1A8);
-		func_8012D700_13C6B0(7, 0x7FFE, adam->unk0 + 0x67, adam->unk2 + 0x69, adam->unk4, 0, 0, 0, 0x15,
-							0x89, 0x3F, &func_801005CC_10F57C, NULL);
-		func_8012D700_13C6B0(7, 0x7FFD, adam->unk0 - 0x4F, adam->unk2 + 0x69, adam->unk4, 0, 0, 0, 0x15,
-							0x89, 0x3F, &func_801005CC_10F57C, NULL);
-		func_8012D700_13C6B0(7, 0x7FFC, adam->unk0 + 0x47, adam->unk2 + 0x69, adam->unk4 + 0x95, 0, 0, 0,
-							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
-		func_8012D700_13C6B0(7, 0x7FFB, adam->unk0 - 0x32, adam->unk2 + 0x69, adam->unk4 + 0x95, 0, 0, 0,
-							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
-		func_8012D700_13C6B0(7, 0x7FFA, adam->unk0 + 0x47, adam->unk2 + 0x69, adam->unk4 - 0x98, 0, 0, 0,
-							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
-		func_8012D700_13C6B0(7, 0x7FF9, adam->unk0 - 0x32, adam->unk2 + 0x69, adam->unk4 - 0x98, 0, 0, 0,
-							D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(2, 0x7FFF, vehicle->unk0 + 0xB, vehicle->unk2 + 0x39, vehicle->unk4, 0, 0, 0, 0x5D,
+			D_8013FD74_14ED24, 0x19, &func_80100638_10F5E8, &func_8012E1F8_13D1A8);
+		func_8012D700_13C6B0(7, 0x7FFE, vehicle->unk0 + 0x67, vehicle->unk2 + 0x69, vehicle->unk4, 0, 0, 0, 0x15,
+			0x89, 0x3F, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFD, vehicle->unk0 - 0x4F, vehicle->unk2 + 0x69, vehicle->unk4, 0, 0, 0, 0x15,
+			0x89, 0x3F, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFC, vehicle->unk0 + 0x47, vehicle->unk2 + 0x69, vehicle->unk4 + 0x95, 0, 0, 0,
+			D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFB, vehicle->unk0 - 0x32, vehicle->unk2 + 0x69, vehicle->unk4 + 0x95, 0, 0, 0,
+			D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FFA, vehicle->unk0 + 0x47, vehicle->unk2 + 0x69, vehicle->unk4 - 0x98, 0, 0, 0,
+			D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
+		func_8012D700_13C6B0(7, 0x7FF9, vehicle->unk0 - 0x32, vehicle->unk2 + 0x69, vehicle->unk4 - 0x98, 0, 0, 0,
+			D_8013FD70_14ED20, 0x14, 0x40, &func_801005CC_10F57C, NULL);
 	}
 
 	if (arg0 == 0) {
 		D_80158FE0 = 0;
 	}
 
-	if (D_80158FD8 != 0) {
-		count = D_80158FD8 - 1;
-		vehicleIndexPtr = &D_80158E80[count];
-		for (index = count; index != 0; index--, vehicleIndexPtr--) {
-			vehicle = &vehicleInstances[*vehicleIndexPtr];
+	index = D_80158FD8;
+	if (index--) {
+		do {
+			vehicle = &vehicleInstances[D_80158E80[index]];
 			type = &vehicleTypes[vehicle->unk1A];
-			typeBytes = (u8 *)type;
 
 			if (arg0 != 0) {
 				if (vehicle != D_80052B34) {
@@ -5109,26 +5098,31 @@ void func_8010065C_10F60C(s32 arg0) {
 				D_8005BB34->v.ob[0] = vehicle->unk0;
 				D_8005BB34->v.ob[1] = D_80158B90[D_801593EA].unk2;
 				D_8005BB34->v.ob[2] = vehicle->unk4;
+				D_8005BB34->v.flag = 0;
+				D_8005BB34->v.tc[0] = 0;
+				D_8005BB34->v.tc[1] = 0;
 				D_8005BB34->v.cn[0] = 0x8E;
 				D_8005BB34->v.cn[1] = 0x63;
 				D_8005BB34->v.cn[2] = 0x3C;
 				D_8005BB34->v.cn[3] = 0xFF;
-				D_8005BB34++;
 
-				D_8005BB34->v.ob[0] = vehicle->unk0;
-				D_8005BB34->v.ob[1] = vehicle->unk2;
-				D_8005BB34->v.ob[2] = vehicle->unk4;
-				D_8005BB34->v.cn[0] = 0x8E;
-				D_8005BB34->v.cn[1] = 0x63;
-				D_8005BB34->v.cn[2] = 0x3C;
-				D_8005BB34->v.cn[3] = 0xFF;
-				D_8005BB34++;
+				D_8005BB34[1].v.ob[0] = vehicle->unk0;
+				D_8005BB34[1].v.ob[1] = vehicle->unk2;
+				D_8005BB34[1].v.ob[2] = vehicle->unk4;
+				D_8005BB34[1].v.flag = 0;
+				D_8005BB34[1].v.tc[0] = 0;
+				D_8005BB34[1].v.tc[1] = 0;
+				D_8005BB34[1].v.cn[0] = 0x8E;
+				D_8005BB34[1].v.cn[1] = 0x63;
+				D_8005BB34[1].v.cn[2] = 0x3C;
+				D_8005BB34[1].v.cn[3] = 0xFF;
 
 				gDPPipeSync(D_8005BB30++);
-				gSPVertex(D_8005BB30++, K0_TO_PHYS(D_8005BB34 - 2), 2, 0);
-				gDPSetTextureLUT(D_8005BB30++, G_TT_NONE);
+				gSPVertex(D_8005BB30++, D_8005BB34, 2, 0);
+				gSPLine3D(D_8005BB30++, 0, 1, 0);
 				gDPPipeSync(D_8005BB30++);
 
+				D_8005BB34 += 2;
 				D_801593EA++;
 			}
 
@@ -5139,12 +5133,19 @@ void func_8010065C_10F60C(s32 arg0) {
 				continue;
 			}
 
-			D_80158F00[D_80158FE0] = *vehicleIndexPtr;
+			D_80158F00[D_80158FE0] = D_80158E80[index];
 			D_80158FE0++;
+			/* Preserve IDO's boundary between the list update and camera setup. */
+			if (arg0) {}
 
-			if ((func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, type->unkC, (s16)D_80052B2C->unk0,
-								D_80052B2C->unk8, 0x4000 - D_80047950) == 0) || !(vehicle->unk20 & 0x8000) ||
-				((D_801493E0 == 0) && (vehicle == D_80052B34))) {
+			if ((func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, (u16)vehicleTypes[vehicle->unk1A].unkC, (s16)D_80052B2C->unk0,
+				D_80052B2C->unk8, 0x4000 - D_80047950) == 0)) {
+				continue;
+			}
+			if (!(vehicle->unk20 & 0x8000)) {
+				continue;
+			}
+			if ((D_801493E0 == 0) && (vehicle == D_80052B34)) {
 				continue;
 			}
 
@@ -5158,17 +5159,17 @@ void func_8010065C_10F60C(s32 arg0) {
 
 			if ((currentLevel == 2) && (vehicle->unk1A == 1) && (vehicle == D_80052B34)) {
 				gSPClearGeometryMode(D_8005BB2C++, G_FOG);
-				gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_SURF2);
+				gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 			}
 
 			if (vehicle->unk1A == 0) {
-				gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 				func_800FB3E8_10A398(D_80052B34, D_80159238);
 				func_800FB40C_10A3BC(D_80052B34, D_8015923C);
 				func_800EF14C_FE0FC(D_80052B34);
 				func_800FB3E8_10A398(D_80052B34, -D_80159238);
 				func_800FB40C_10A3BC(D_80052B34, -D_8015923C);
-				gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+				gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 			} else {
 				func_800FFD28_10ECD8(vehicle);
 
@@ -5177,9 +5178,9 @@ void func_8010065C_10F60C(s32 arg0) {
 					func_80100114_10F0C4(vehicle);
 				}
 
-				gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
-				if (*(s32 *)type != 0) {
-					gSPDisplayList(D_8005BB2C++, (Gfx *)(*(s32 *)type));
+				gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
+				if (type->modelDL != 0) {
+					gSPDisplayList(D_8005BB2C++, type->modelDL);
 				}
 
 				if ((type->unk4C & 0x01000000) && (vehicle == D_80052B34)) {
@@ -5191,178 +5192,193 @@ void func_8010065C_10F60C(s32 arg0) {
 					D_80052B50.unk4 = 0x37;
 					func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
-					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
-							  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-					gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+					D_8005BB38++;
+					gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 					gSPDisplayList(D_8005BB2C++, D_50445A0);
-					gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+					gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 				}
 
 				matrixCount = 0;
-				listIndex = typeBytes[0x53];
-				shadowPart = (ShadowPartEntry *)&D_8013FDA8_14ED58[listIndex];
-				for (count = typeBytes[0x54] - 1; count != 0; count--) {
-					model = (u8 *)shadowPart->model;
+				count = type->unk54;
+				listIndex = type->detailProp;
+				if (count--) {
+					shadowPart = &D_8013FDA8_14ED58[listIndex];
+					do {
+						model = (u8 *)shadowPart->displayList;
 
-					if (shadowPart->flags & 0x40) {
-						for (i = 0; i < 2; i++) {
-							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-							matrixCount--;
+						if (shadowPart->flags & 0x40) {
+							i = 3;
+							while (i--) {
+								matrixCount--;
+								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							}
 						}
-					}
-					if (shadowPart->flags & 0x80) {
-						for (i = 0; i < 3; i++) {
-							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-							matrixCount--;
+						if (shadowPart->flags & 0x80) {
+							i = 4;
+							while (i--) {
+								matrixCount--;
+								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							}
 						}
-					}
-					if (shadowPart->flags & 0x100) {
-						for (i = 0; i < 4; i++) {
-							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-							matrixCount--;
+						if (shadowPart->flags & 0x100) {
+							i = 5;
+							while (i--) {
+								matrixCount--;
+								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+							}
 						}
-					}
 
-					if ((currentLevel == 4) && (vehicle->unk1A == 0xD) && (vehicle->unk20 & VEHICLE_FLAG_SCUD_LAUNCHED)) {
-						count--;
-					}
+						if ((currentLevel == 4) && (vehicle->unk1A == 0xD) && (vehicle->unk20 & VEHICLE_FLAG_SCUD_LAUNCHED)) {
+							count--;
+						}
 
-					updateMtx = (void (*)(s32))shadowPart->updateMtx;
-					if ((vehicle == D_80052B34) || (vehicle == D_80158E74) ||
-						((currentLevel == 2) && (vehicle->unk1A == 5))) {
-						if ((vehicle == D_80052B34) && (updateMtx == func_800FF5A8_10E558)) {
-							if (D_8015930C >= 0x2619) {
-								if (model == D_5032130) {
-									model = D_5031990;
-								} else if (model == D_5032038) {
-									model = D_50318A0;
-								} else if (model == D_5031F30) {
-									model = D_50317A0;
-								} else if (model == D_5031DB0) {
-									model = D_5031650;
-								} else if (model == D_5031BC0) {
-									model = D_50314B0;
+						if ((vehicle == D_80052B34) || (vehicle == D_80158E74) ||
+							((currentLevel == 2) && (vehicle->unk1A == 5))) {
+							updateMtx = (void (*)(s32))shadowPart->transform;
+							if ((vehicle == D_80052B34) && (updateMtx == func_800FF5A8_10E558)) {
+								if (D_8015930C >= 0x2619) {
+									if (model == D_5032130) {
+										model = D_5031990;
+									}
+									if (model == D_5032038) {
+										model = D_50318A0;
+									}
+									if (model == D_5031F30) {
+										model = D_50317A0;
+									}
+									if (model == D_5031DB0) {
+										model = D_5031650;
+									}
+									if (model == D_5031BC0) {
+										model = D_50314B0;
+									}
 								}
-							}
 
-							if ((currentLevel == 4) &&
-								(((vehicle->unk1A == 5) && (listIndex == 0x85)) ||
-								 ((vehicle->unk1A == 9) && (listIndex == 0x8D)))) {
-								func_800FF604_10E5B4(listIndex);
-							} else {
-								func_800FF5A8_10E558(listIndex);
-							}
-						} else if ((vehicle == D_80158E74) &&
-								   (updateMtx == func_800FF5A8_10E558)) {
-							if (D_80159234 >= 0x2619) {
-								if (model == D_5032130) {
-									model = D_5031990;
-								} else if (model == D_5032038) {
-									model = D_50318A0;
-								} else if (model == D_5031F30) {
-									model = D_50317A0;
-								} else if (model == D_5031DB0) {
-									model = D_5031650;
-								} else if (model == D_5031BC0) {
-									model = D_50314B0;
-								}
-							}
-
-							if ((currentLevel == 4) &&
-								(((vehicle->unk1A == 5) && (listIndex == 0x85)) ||
-								 ((vehicle->unk1A == 9) && (listIndex == 0x8D)))) {
-								func_800FF6C0_10E670(listIndex);
-							} else {
-								func_800FF664_10E614(listIndex);
-							}
-						} else {
-							updateMtx(listIndex);
-						}
-					} else if (updateMtx == func_800FEB04_10DAB4) {
-						updateMtx(listIndex);
-					} else {
-						func_800FE910_10D8C0(listIndex);
-					}
-
-					if (shadowPart->flags & 1) {
-						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
-								  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-						matrixCount++;
-					} else {
-						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
-								  G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-					}
-
-					if (((model != D_50312E8) || (vehicle == D_80158E78) ||
-						((model == D_50312E8) &&
-						 (((listIndex == typeBytes[0x63]) &&
-						   ((D_80050AD4 == 0) || (vehicle == D_8013FD78_14ED28))) ||
-						  ((listIndex == typeBytes[0x64]) &&
-						   ((D_80050AD4 == 1) || (vehicle == D_8013FD78_14ED28)))) &&
-						 !(D_80159320 & 0x10000) && (D_80031414 == 0) && (vehicle == D_80052B34) &&
-						 (D_8015930E == 0) && (gameplayMode == 1) &&
-						 (vehicle->unk1E == 0) && (currentControllerStates[0].button & 0x2000))) &&
-						((vehicle == D_80052B34) || ((model != D_50445A0) && (model != D_9043D50)))) {
-						switch (listIndex) {
-							case 14:
-								func_802D4CD0_18D7E0(0x18, 0);
-								break;
-							case 15:
-								func_802D4CD0_18D7E0(0x19, 0);
-								break;
-							default:
-								if (shadowPart->flags & 0x20) {
-									gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
-									D_80052B50.unk0 = -0x100;
-									D_80052B50.unk2 = 0x100;
-									D_80052B50.unk4 = 0x100;
-									func_800039D0_45D0(NULL, 0, &D_80052B50, D_8005BB38);
-									gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
-											  G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+								if ((currentLevel == 4) &&
+									(((vehicle->unk1A == 5) && (listIndex == 0x85)) ||
+									((vehicle->unk1A == 9) && (listIndex == 0x8D)))) {
+									func_800FF604_10E5B4(listIndex);
 								} else {
-									gSPSetGeometryMode(D_8005BB2C++, G_FOG);
-									gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
+									func_800FF5A8_10E558(listIndex);
+								}
+							} else if ((vehicle == D_80158E74) &&
+								(updateMtx == func_800FF5A8_10E558)) {
+								if (D_80159234 >= 0x2619) {
+									if (model == D_5032130) {
+										model = D_5031990;
+									}
+									if (model == D_5032038) {
+										model = D_50318A0;
+									}
+									if (model == D_5031F30) {
+										model = D_50317A0;
+									}
+									if (model == D_5031DB0) {
+										model = D_5031650;
+									}
+									if (model == D_5031BC0) {
+										model = D_50314B0;
+									}
 								}
 
-								if ((model == D_50445A0) || (model == D_9043D50)) {
-									gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+								if ((currentLevel == 4) &&
+									(((vehicle->unk1A == 5) && (listIndex == 0x85)) ||
+									((vehicle->unk1A == 9) && (listIndex == 0x8D)))) {
+									func_800FF6C0_10E670(listIndex);
+								} else {
+									func_800FF664_10E614(listIndex);
 								}
+							} else {
+								updateMtx(listIndex);
+							}
+						} else if (updateMtx == func_800FEB04_10DAB4) {
+							updateMtx(listIndex);
+						} else {
+							func_800FE910_10D8C0(listIndex);
+						}
+
+						if (shadowPart->flags & 1) {
+							gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+							D_8005BB38++;
+							matrixCount++;
+						} else {
+							gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+							D_8005BB38++;
+						}
+
+						if ((((u8 *)shadowPart->displayList != D_50312E8) || (vehicle == D_80158E78) ||
+							(((u8 *)shadowPart->displayList == D_50312E8) &&
+							(((listIndex == type->unk63) &&
+							((D_80050AD4 == 0) || (vehicle == D_8013FD78_14ED28))) ||
+							((listIndex == type->unk64) &&
+							((D_80050AD4 == 1) || (vehicle == D_8013FD78_14ED28)))) &&
+							!(D_80159320 & 0x10000) && (D_80031414 == 0) && (vehicle == D_80052B34) &&
+							(D_8015930E == 0) && (gameplayMode == 1) &&
+							(vehicle->unk1E == 0) && (currentControllerStates[0].button & 0x2000))) &&
+							((vehicle == D_80052B34) || ((model != D_50445A0) && (model != D_9043D50)))) {
+							switch (listIndex) {
+								case 14:
+									func_802D4CD0_18D7E0(0x18, 0);
+									break;
+								case 15:
+									func_802D4CD0_18D7E0(0x19, 0);
+									break;
+								default:
+									if (shadowPart->flags & 0x20) {
+										gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+										D_80052B50.unk0 = -0x100;
+										D_80052B50.unk2 = 0x100;
+										D_80052B50.unk4 = 0x100;
+										func_800039D0_45D0(NULL, 0, &D_80052B50, D_8005BB38);
+										gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+										D_8005BB38++;
+									} else {
+										gSPClearGeometryMode(D_8005BB2C++, G_CULL_FRONT);
+										gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
+									}
+
+									if ((model == D_50445A0) || (model == D_9043D50)) {
+										gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+									}
+									gSPDisplayList(D_8005BB2C++, model);
+									if ((model == D_50445A0) || (model == D_9043D50)) {
+										gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+									}
+									break;
+							}
+
+							if (shadowPart->flags & 0x10) {
+								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+								shadowPart->unk8.unk0 = -shadowPart->unk8.unk0;
+								func_800FF258_10E208(listIndex);
+								gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+								D_8005BB38++;
 								gSPDisplayList(D_8005BB2C++, model);
-								if ((model == D_50445A0) || (model == D_9043D50)) {
-									gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
-								}
-								break;
+								shadowPart->unk8.unk0 = -shadowPart->unk8.unk0;
+							}
 						}
 
-						if (shadowPart->flags & 0x10) {
+						listIndex++;
+						if (((shadowPart++)->flags & 2) && (matrixCount > 0)) {
 							gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-							shadowPart->offset.unk0 = -shadowPart->offset.unk0;
-							func_800FF258_10E208(listIndex);
-							gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++),
-									  G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-							gSPDisplayList(D_8005BB2C++, model);
-							shadowPart->offset.unk0 = -shadowPart->offset.unk0;
+							matrixCount--;
 						}
-					}
-
-					listIndex++;
-					if ((shadowPart->flags & 2) && (matrixCount > 0)) {
-						gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-						matrixCount--;
-					}
-					shadowPart++;
+					} while (count--);
 				}
 
-				while (matrixCount != 0) {
+				while (matrixCount--) {
 					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-					matrixCount--;
 				}
 			}
 
 			if ((currentLevel == 2) && (vehicle->unk1A == 1) && (vehicle == D_80052B34)) {
-				gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
-				gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+				gSPSetGeometryMode(D_8005BB2C++, G_FOG);
+				gDPSetRenderMode(D_8005BB2C++,
+					AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL | G_RM_FOG_SHADE_A,
+					AA_EN | Z_CMP | IM_RD | CVG_DST_CLAMP | ZMODE_OPA | ALPHA_CVG_SEL |
+					GBL_c2(G_BL_CLR_IN, G_BL_A_IN, G_BL_CLR_MEM, G_BL_A_MEM));
 			}
 
 			if (D_80159320 & 0x100000) {
@@ -5372,15 +5388,12 @@ void func_8010065C_10F60C(s32 arg0) {
 				func_80070FB8_7FF68();
 				vehicle->unk20 &= ~0x2000;
 			}
-		}
+		} while (index--);
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
+	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010065C_10F60C.s")
-#endif
 
 // DisplayDeadVehicles
 void func_80101C14_110BC4(void) {
