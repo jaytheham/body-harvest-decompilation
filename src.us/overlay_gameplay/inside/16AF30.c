@@ -1434,17 +1434,19 @@ void func_80086A34_16EAF4(void) {
 	}
 }
 
-// AI - Update effect slot type 7: physics (gravity, movement) and spawn child effects
-#ifdef NON_MATCHING
+// Move particles, handle impacts, and emit new particles.
 void func_80086B34_16EBF4(u8 arg0) {
 	u8 slotIdx;
 	UnkFB6F8Entry *slot;
 	Unk84EECEffect *head;
 	Unk84EECEffectTailView *entryTail;
-	Unk84EECEffectTailView *headTail;
-	Unk84EECEffect * volatile headEffect;
+	UnkScatterEffectTail *headTail;
+	Unk84EECEffectTail *emitter;
+	s32 rootIndex;
+	s32 emitterIndex;
+	/* Keep the emitter header addressable across helper calls. */
+	Unk84EECEffect *emitterHeader[1];
 	Unk84EECEffect *entry;
-	Unk84EECEffect *effects;
 	s16 next;
 	s16 effect;
 	u16 timer;
@@ -1453,66 +1455,63 @@ void func_80086B34_16EBF4(u8 arg0) {
 	u8 count;
 
 	slotIdx = arg0;
-	effects = D_800FB7B0;
 	slot = &D_800FB6F8[slotIdx];
-		head = &effects[slot->unk6];
-		headEffect = &effects[head->unk4];
-		effect = headEffect->unk4;
+	rootIndex = slot->unk6;
+	head = &D_800FB7B0[rootIndex];
+	emitterIndex = head->unk4;
+	emitterHeader[0] = &((Unk84EECEffect *)(s32)D_800FB7B0)[emitterIndex];
+	effect = emitterHeader[0]->unk4;
 
 	if ((effect != -5) && (effect != -6)) {
 		clamp = -0x14;
 		do {
-			entry = &effects[effect];
-			entryTail = (Unk84EECEffectTailView *) &entry->unk8;
-			headTail = (Unk84EECEffectTailView *) &head->unk8;
+			headTail = (UnkScatterEffectTail *)&head->unk8;
+			entry = &D_800FB7B0[effect];
+			entryTail = (Unk84EECEffectTailView *)&entry->unk8;
 
-			entryTail->unk0 += (s8) entry->unk12;
-			entryTail->unk4 += (s8) entry->unk14;
-			entry->unkA += (s8) entry->unk13;
+			entryTail->unk0 += (s8)entry->unk12;
+			entryTail->unk4 += (s8)entry->unk14;
+			entry->unkA += (s8)entry->unk13;
 
-			if ((s8) entryTail->unkB >= -0x13) {
-				entryTail->unkB = (s8) entryTail->unkB - 1;
+			if ((s8)entryTail->unkB >= -0x13) {
+				entryTail->unkB = (s8)entryTail->unkB - 1;
 			} else {
 				entryTail->unkB = clamp;
 			}
 
 			if (entryTail->unk2 < 2) {
-				func_8008568C_16D74C(entryTail->unk0, entryTail->unk4, entry->unk2, ((u8 *)headTail)[6], ((u8 *)headTail)[7], ((u8 *)headTail)[8], *((u8 *)entry + 9));
+				func_8008568C_16D74C(entryTail->unk0, entryTail->unk4, entry->unk2, headTail->unk6, headTail->unk7, headTail->unk8, entryTail->unk9);
 
-				if ((slot->unk4 < 4) && (*((u8 *) headEffect + 0xD) == 0)) {
-				func_800839B8_16BA78(slotIdx);
-				func_80083300_16B3C0(slotIdx);
+				if ((slot->unk4 < 4) && (((Unk84EECEffectBytes *)emitterHeader[0])->unkD == 0)) {
+					func_800839B8_16BA78(slotIdx);
+					func_80083300_16B3C0(slotIdx);
 					return;
 				}
 
-				next = entry->unk4;
+				next = D_800FB7B0[effect].unk4;
 				func_800835F0_16B6B0(effect, slotIdx);
 				effect = next;
 			} else {
-				effect = entry->unk4;
+				effect = D_800FB7B0[effect].unk4;
 			}
 		} while ((effect != -5) && (effect != -6));
 	}
 
-	timer = *(u16 *) &headEffect->unkE;
+	emitter = (Unk84EECEffectTail *)&emitterHeader[0]->unk8;
+	timer = (u16)emitter->unk6;
 	if (timer > 0) {
-		entryTail = (Unk84EECEffectTailView *) ((u8 *) headEffect + 8);
-		entryTail->unk6 = timer - 1;
+		emitter->unk6 = timer - 1;
 		return;
 	}
 
-	entryTail = (Unk84EECEffectTailView *) ((u8 *) headEffect + 8);
 	count = (func_800038E0_44E0() % 3) + 2;
 	for (i = 0; i < count; i = (i + 1) & 0xFF) {
-		if (((u8 *) entryTail)[5] > 0) {
-		func_800852B8_16D378(arg0);
-			((u8 *) entryTail)[5]--;
+		if (emitter->unk5 > 0) {
+			func_800852B8_16D378(slotIdx);
+			emitter->unk5--;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086B34_16EBF4.s")
-#endif
 
 // Update each of the fifteen effect slots.
 void func_80086D88_16EE48(void) {
