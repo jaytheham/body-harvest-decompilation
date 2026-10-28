@@ -87,8 +87,6 @@ const f64 D_80143FE0_152F90[1] = {255.0};
 const f64 D_80143FE8_152F98[1] = {255.0};
 const f64 D_80143FF0_152FA0[1] = {255.0};
 
-
-
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -416,7 +414,6 @@ s16 D_8013E3F8_14D3A8 = 0;
 u32 D_pad14D3AA[3] = { 0 };
 u8 D_8013E408_14D3B8 = 0;
 EffectRgb D_8013E40C_14D3BC = { 0xFF, 0x80, 0x80 };
-
 
 void func_800C0E80_CFE30(f32 *mat, f32 *vec, f32 *out) {
 	out[0] = vec[0] * mat[0] + vec[1] * mat[3] + vec[2] * mat[6];
@@ -847,7 +844,6 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 	osSyncPrintf(&D_80143304_1522B4);
 }
 
-// CURRENT(82)
 #ifdef NON_MATCHING
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 	s32 sp3C;
@@ -927,7 +923,6 @@ s32 func_800C2274_D1224(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	return temp_v1;
 }
 
-// CURRENT(0)
 // effect type 1
 void func_800C22EC_D129C(u8 arg0) {
 	s16 unitId;
@@ -995,7 +990,6 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(6462)
 void func_800C25F8_D15A8(u8 arg0) {
 	s32 dx;
 	s32 dy;
@@ -2317,7 +2311,6 @@ void func_800C6558_D5508(void) {
 		return;
 	}
 
-	/* Keep these block boundaries for IDO sentinel register allocation. */
 	if (1) {
 		if (1) {
 			if (1) {
@@ -2950,7 +2943,6 @@ u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	return effect;
 }
 
-
 void func_800C8E10_D7DC0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 {
 	s16 idx;
@@ -3048,7 +3040,6 @@ void func_800C8F5C_D7F0C(u8 arg0) {
 	}
 }
 
-// CURRENT(225)
 void func_800C927C_D822C(u8 arg0) {
 	Unk801541F8Entry *effect;
 	s16 index;
@@ -3116,7 +3107,6 @@ void func_800C9530_D84E0(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5
 		}
 	}
 }
-
 
 void func_800C9668_D8618(void) {
 	s16 var_s0;
@@ -3378,7 +3368,6 @@ void func_800CA1B0_D9160(u8 arg0) {
 // spurt/blood visual effect?
 u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
 						u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
-	/* These unused locals preserve the target frame and effect-byte slot. */
 	s32 padding[6];
 	s16 unused;
 	u8 effect;
@@ -3487,7 +3476,6 @@ void func_800CA848_D97F8(u8 arg0) {
 	rootBytes = (EffectInterpolationState *)&root->unk8;
 	currentUnitId = leader->unk4;
 	if (currentUnitId != -5 && currentUnitId != -6) {
-		/* Preserve the target stride register and temporary allocation. */
 		if (1) {
 			do {
 				current = &D_80154318[currentUnitId];
@@ -3760,7 +3748,6 @@ void func_800CB4F8_DA4A8(void) {
 	while (1) {
 		entry = &D_80154318[unitId];
 		bubble = (BubbleParticleState *)entry->payload;
-		/* Keep the initial blink check separate from the period read. */
 		if ((((volatile Unk80154318Entry *)&D_80154318[unitId])->unk14 == 0) || (((u32)D_80052A8C % (entry->unk14 * 2)) >= entry->unk14)) {
 			if (func_800B93AC_C835C(
 					bubble->x * 4,
@@ -3834,6 +3821,7 @@ void func_800CB4F8_DA4A8(void) {
 		}
 	}
 }
+
 void func_800CBD1C_DACCC(s16 arg0) {
 	Unk80154318Entry *entry;
 
@@ -3932,6 +3920,7 @@ void func_800CBE98_DAE48(void) {
 		}
 	}
 }
+
 // Render an animated vertical strip and emit its ground ring.
 void func_800CC090_DB040(void) {
 	f32 scale;
@@ -4117,7 +4106,6 @@ void func_800CCB60_DBB10(void) {
 				unitId = nextUnitId;
 			} else {
 				sub = (EffectSparkState *)&D_80154318[unitId].unk8;
-				/* Preserve IDO block boundaries for payload loads and sentinel registers. */
 				if (1) {
 					if (1) {
 						if (1) {
@@ -4201,7 +4189,6 @@ void func_800CD0B0_DC060(u8 arg0) {
 	unitId = result;
 	if (result != -3) {
 		random = func_800038E0_44E0();
-		/* Convert the array base before indexing to preserve IDO address sharing. */
 		base = (Unk80154318Entry *)(s32)D_80154318;
 		sub = (JetStreamParticleState *)(s32)base[unitId].payload;
 		D_80154318[unitId].unk2 = (random % 40) + 0x14;
@@ -4220,7 +4207,6 @@ void func_800CD0B0_DC060(u8 arg0) {
 		sub->bounced = 0;
 	}
 }
-
 
 // Create jet stream effect? - used by Alpha 1 building takeoff/landing, some enemy visual effects
 u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) {
@@ -4281,7 +4267,6 @@ void func_800CD390_DC340(u8 arg0) {
 }
 
 // effect type 5
-// CURRENT(3159)
 void func_800CD42C_DC3DC(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
@@ -4301,7 +4286,6 @@ void func_800CD42C_DC3DC(u8 arg0) {
 	}
 
 	if ((index != -5) && (index != -6)) {
-		/* Preserve the particle loop's register allocation. */
 		if (1) {
 			do {
 				entry = &D_80154318[index];
@@ -4354,7 +4338,6 @@ void func_800CD42C_DC3DC(u8 arg0) {
 	}
 }
 
-
 void func_800CD7FC_DC7AC(u8 arg0) {
 	s16 index;
 
@@ -4380,7 +4363,6 @@ void func_800CD7FC_DC7AC(u8 arg0) {
 		index = D_80154318[index].unk4;
 	}
 }
-
 
 void func_800CDA98_DCA48(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 temp_v0;
@@ -4567,7 +4549,6 @@ s32 func_800CE100_DD0B0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 	return -0xD;
 }
 
-// CURRENT(5334)
 // effect type 6
 void func_800CE1C0_DD170(u8 groupIndex) {
 	s16 buildingIndex;
@@ -4723,7 +4704,6 @@ void func_800CE6E8_DD698(u8 groupIndex) {
 			nextIndex = entry->unk4;
 			if (nextIndex != -5) {
 
-				/* Read the entry view before rebasing the coordinate view. */
 				position = (Vec3s *)entry;
 				if (1) {
 					D_8005BB34->v.ob[0] = ((volatile Unk80154318Entry *)position)->unk8;
@@ -5013,6 +4993,7 @@ void func_800CF2E0_DE290(void) {
 		} while ((index != -6) && (index != -5));
 	}
 }
+
 void func_800CF80C_DE7BC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 idx;
 	Unk80154318Entry *entry;
@@ -5135,7 +5116,6 @@ void func_800CF948_DE8F8(void) {
 	}
 }
 
-
 void func_800CFD84_DED34(void) {
 	s16 curr;
 	s16 texOffset;
@@ -5223,7 +5203,6 @@ s16 func_800D0614_DF5C4(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 arg5
 	if (func_800B93AC_C835C(arg0, arg2, (arg3 * 2) & 0xFFFF, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 		effectId = func_800C17B4_D0764(7, 1);
 		if (effectId != -3) {
-			/* Preserve IDO's payload address calculation. */
 			func_801371B8_146168((SmokePuffState *)(s32)D_80154318[effectId].payload, 0x188, arg0, arg1, arg2, 0.8f);
 
 			D_80154318[effectId].unk2 = arg3;
@@ -5473,8 +5452,6 @@ void func_800D10D0_E0080(void) {
 
 			{
 				Gfx *packet = D_8005BB2C++;
-
-				/* Preserve the primitive-color operand order used by IDO. */
 				packet->words.w0 = (_SHIFTL(G_SETPRIMCOLOR, 24, 8) | _SHIFTL(0, 8, 8) | _SHIFTL(0, 0, 8));
 				packet->words.w1 = (_SHIFTL(puff->color[1], 16, 8) | _SHIFTL(puff->color[2], 8, 8) | _SHIFTL(puff->color[0], 24, 8) | _SHIFTL(puff->opacity, 0, 8));
 			}
@@ -5541,7 +5518,6 @@ s32 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 			var_v1 = 0xF;
 			var_s1 = 0xF;
 		}
-		/* Preserve IDO's count assignments and the Z-step call spill. */
 		if (1) {
 			stepX = deltaX / (var_v1 ? var_s1 : var_s1);
 			stepY = deltaY / var_s1;
@@ -6033,7 +6009,6 @@ void func_800D2AB0_E1A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-
 void func_800D2ECC_E1E7C(void) {
 	s16 index;
 	s16 linkedIndex;
@@ -6329,7 +6304,6 @@ void func_800D3E3C_E2DEC(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 }
 
-
 void func_800D45B4_E3564(void) {
 	s16 index;
 
@@ -6619,7 +6593,6 @@ s16 func_800D5424_E43D4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5)
 	return sp2E;
 }
 
-
 void func_800D5588_E4538(s16 arg0) {
 	if (arg0 != -3) {
 		func_800C1E24_D0DD4(arg0, 0x10, 1);
@@ -6789,7 +6762,6 @@ void func_800D5AF4_E4AA4(void) {
 		curr = parent->unk4;
 	}
 }
-
 
 u8 func_800D5FD4_E4F84(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5) {
 	u8 slot;
@@ -7003,8 +6975,6 @@ void func_800D6290_E5240(u8 arg0) {
 	}
 }
 
-
-
 void func_800D6A84_E5A34(u8 arg0)
 {
 	D_80153AE0[arg0].unk13 = 0;
@@ -7198,7 +7168,6 @@ void func_800D7284_E6234(u8 arg0) {
 	s16 unused_temp_v0_14;
 	NukeEffectState *var_v1;
 
-	if (&index) {}
 index = D_80154088[arg0].unk6;
 	if ((sp2C = &D_80154318[index], func_800B93AC_C835C(sp2C->unk8, sp2C->unkC, (u16) sp2C->unk2, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950)) != 0) {
 		gDPPipeSync(D_8005BB2C++);
@@ -7462,8 +7431,6 @@ void func_800D8000_E6FB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-
-// CURRENT(250)
 void func_800D80B4_E7064(void) {
 	s16 s1;
 	s16 *coordinates;
@@ -7785,7 +7752,6 @@ void func_800D90A4_E8054(void) {
 	}
 }
 
-
 void func_800D9294_E8244(void) {
 	s16 var_s2;
 
@@ -7904,7 +7870,6 @@ void func_800D9754_E8704(s16 arg0) {
 	}
 }
 
-// CURRENT(429)
 void func_800D978C_E873C(void) {
 	u32 opcode;
 	s16 var_v1;
@@ -7951,7 +7916,6 @@ void func_800D978C_E873C(void) {
 		}
 	}
 }
-
 
 // Create group effect?
 s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
@@ -8013,7 +7977,6 @@ void func_800D9B54_E8B04(void) {
 			{
 				EffectCallbackState *data = (EffectCallbackState *)(s32)&entry->callbackState;
 
-				/* Preserve the payload base for IDO's timer accesses. */
 				if (1) {
 					if (data->timer != 0) {
 						data->timer--;
@@ -8026,7 +7989,6 @@ void func_800D9B54_E8B04(void) {
 		} while (temp_s2 != -5 && var_s1 != -6);
 	}
 }
-
 
 void func_800D9C60_E8C10(s16 arg0) {
 	if (arg0 != -3) {
@@ -8073,7 +8035,6 @@ void func_800D9E38_E8DE8(s16 arg0, s16 arg1) {
 		func_80135D44_144CF4(entryData[3], entryData[4], entryData[5], (f32)(entryData[2] >> 1));
 	}
 }
-
 
 void func_800D9F60_E8F10(s32 arg0) {
 	struct {
@@ -8166,6 +8127,7 @@ void func_800DA3A8_E9358(s16 arg0, s16 arg1)
 	dst[2] = src[5];
 
 }
+
 s16 func_800DA450_E9400(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s32 retval;
 	s16 temp_v0;
@@ -8210,7 +8172,6 @@ void func_800DA510_E94C0(s16 arg0, s16 arg1) {
 	dstPos->position.unk2 = srcPos->previousPosition[1];
 	dstPos->position.unk4 = srcPos->previousPosition[2];
 }
-
 
 s16 func_800DA6F0_E96A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 temp_s32;
@@ -8473,7 +8434,6 @@ void func_800DABBC_E9B6C(void) {
 	}
 }
 
-// CURRENT(1262)
 void func_800DAF24_E9ED4(u8 arg0) {
 	u8 i;
 	u8 count;
@@ -8664,7 +8624,6 @@ void func_800DB714_EA6C4(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-/* CURRENT(2775) */
 void func_800DBA9C_EAA4C(void) {
 	D_8005BB34->v.ob[0] = (s16)(s32)D_80153BB8.x;
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y + D_80153BC8);
@@ -8718,7 +8677,6 @@ void func_800DBA9C_EAA4C(void) {
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
 
-
 void func_800DBE20_EADD0(void) {
 	s16 *position;
 	f32 distances[0x1E];
@@ -8728,7 +8686,7 @@ void func_800DBE20_EADD0(void) {
 
 	four = 4.0f;
 	backPos = 0x1D;
-	i = 0; do { /* Keep on one line for IDO preheader scheduling. */
+	i = 0; do {
 		Unk801541F8Entry *effect;
 
 		effect = &D_80154088[i];
@@ -8804,8 +8762,6 @@ void func_800DBE20_EADD0(void) {
 	}
 }
 
-
-// CURRENT(1580)
 void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	f32 sp4;
 	f32 temp_f0;
@@ -8970,7 +8926,6 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 		gDPSetCombineLERP(combine = D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 		gDPSetRenderMode(render = D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 		gDPPipeSync(sync2 = D_8005BB2C++);
-		/* Reuse sync packets and splice these lines to preserve IDO's frame and scheduling. */
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DA00)); \
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0); \
 		sync1 = D_8005BB2C++; \
@@ -9041,7 +8996,6 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 		func_800DB350_EA300();
 	}
 }
-
 
 // DrawNonZBufferedEffects
 void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
@@ -10388,7 +10342,6 @@ void func_800E2830_F17E0(void) {
 	}
 }
 
-
 void func_800E2DB4_F1D64(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
@@ -11058,7 +11011,6 @@ void func_800E5B78_F4B28(void)
 	}
 }
 
-
 // Allocate shield (temporary shield around Adam, triggered by Defender cheat and by unused item pickup
 void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	Unk80152CA0Entry *entry;
@@ -11177,7 +11129,6 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 
 	if ((currentLevel == 1 || currentLevel == 3) && D_80052ACA != 2) {
-		/* Preserve IDO's indexed search and its initial multiply by zero. */
 		slotIdx = arg3 * 0 - 1;
 		while (D_80153300[++slotIdx].unk1E6 != 0) {}
 
@@ -11205,9 +11156,8 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			} while (i--);
 		}
 
-		/* Rematerialize the slot base separately from the entry-loop cursor. */
 		slot = (Unk800E614CFxSlot *)(s32)&D_80153300_slotView[slotIdx];
-		if (slot) {} /* Retain IDO's typed address before the RNG call. */
+		if (slot) {}
 		angle = func_800038E0_44E0();
 		slot->motion.x = arg0 << 8;
 		slot->motion.y = arg1 << 8;
@@ -11231,7 +11181,7 @@ void func_800E614C_F50FC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 void func_800E64B4_F5464(void) {
 	s32 slotCount = 4;
 	Unk800E614CFxSlot *slot;
-	s32 pad[2]; /* Preserve the target counter spill at sp + 0x64. */
+	s32 pad[2];
 	Unk800E614CFxEntry *entry;
 	s32 activeCount;
 	Unk800E614CFxMotion *motion;
@@ -11430,6 +11380,8 @@ void func_800E6A38_F59E8(void)
 		radius *= 20;
 		xOff = (((f32) coss(-angle)) / 32768.0) * (radius + 20);
 		zOff = (((f32) sins(-angle)) / 32768.0) * (radius + 20);
+		// Most other matched functions that create vertices using D_8005BB34
+		// follow a particular structure, can we not reuse that common structure here too?
 		vtx0 = (gfx = D_8005BB34);
 		vtx0->v.ob[0] = baseX;
 		D_8005BB34++;
@@ -11509,9 +11461,6 @@ void func_800E6A38_F59E8(void)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
-
-
-
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
