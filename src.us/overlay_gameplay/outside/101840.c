@@ -5382,8 +5382,6 @@ void func_8010065C_10F60C(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010065C_10F60C.s")
 #endif
 
-#ifdef NON_MATCHING
-// CURRENT(110): corrected renderer; three saved registers remain rotated.
 // DisplayDeadVehicles
 void func_80101C14_110BC4(void) {
 	s32 i;
@@ -5393,62 +5391,63 @@ void func_80101C14_110BC4(void) {
 
 	i = 0x80;
 	while (i--) {
-			VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
-			VehicleType *type;
+		VehicleInstance *vehicle = &vehicleInstances[D_80158E80[i]];
+		VehicleType *type;
 
-			if (currentLevel != 1) {
-				continue;
-			}
+		if (currentLevel != 1) {
+			continue;
+		}
 
-			if (vehicle->unk1A != 0x11) {
-				continue;
-			}
-			if (vehicle->unk20 & 0x8000) {
-				continue;
-			}
+		if (vehicle->unk1A != 0x11) {
+			continue;
+		}
+		if (vehicle->unk20 & 0x8000) {
+			continue;
+		}
 
-			type = &vehicleTypes[vehicle->unk1A];
-			if (vehicle->unk0 < (D_801493B0 - 0x200)) {
-				continue;
-			}
-			if ((D_801493AC + 0x200) < vehicle->unk0) {
-				continue;
-			}
-			if (vehicle->unk4 < (D_801493B8 - 0x200)) {
-				continue;
-			}
-			if ((D_801493B4 + 0x200) < vehicle->unk4) {
-				continue;
-			}
-			if (func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, (u16)vehicleTypes[vehicle->unk1A].unkC, (s16)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0) {
-				continue;
-			}
-			if (vehicle->unk1E >= 0x81) {
-				continue;
-			}
+		type = &vehicleTypes[vehicle->unk1A];
+		if (vehicle->unk0 < (D_801493B0 - 0x200)) {
+			continue;
+		}
+		if ((D_801493AC + 0x200) < vehicle->unk0) {
+			continue;
+		}
+		if (vehicle->unk4 < (D_801493B8 - 0x200)) {
+			continue;
+		}
+		if ((D_801493B4 + 0x200) < vehicle->unk4) {
+			continue;
+		}
+		if (func_800B93AC_C835C(vehicle->unk0, vehicle->unk4, (u16)vehicleTypes[vehicle->unk1A].unkC, (s16)D_80052B2C->unk0, (s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0) {
+			continue;
+		}
+		if (vehicle->unk1E >= 0x81) {
+			continue;
+		}
 
-			func_800FFD28_10ECD8(vehicle);
+		/* Preserve IDO's saved-register allocation for the drawing state. */
+		if (type->unkC == D_80052B50.unk0 + (D_8005BB38 != 0)) {}
+		func_800FFD28_10ECD8(vehicle);
 
-			D_80052B50.unk0 = (s16)(0x100 - (vehicle->unk1E << 1));
-			D_80052B50.unk2 = (s16)(0x100 - (vehicle->unk1E << 1));
-			D_80052B50.unk4 = 0x100;
-			func_800039D0_45D0(0, 0, &D_80052B50, D_8005BB38);
+		D_80052B50.unk0 = 0x100 - (vehicle->unk1E << 1);
+		D_80052B50.unk2 = 0x100 - (vehicle->unk1E << 1);
+		D_80052B50.unk4 = 0x100;
+		/* Keep the scale constant live across the same drawing blocks. */
+		if (vehicle->unk1E == 0x100) {}
+		func_800039D0_45D0(0, 0, &D_80052B50, D_8005BB38);
 
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			D_8005BB38++;
-			gSPDisplayList(D_8005BB2C++, type->modelDL);
+		D_8005BB38++;
+		gSPDisplayList(D_8005BB2C++, type->modelDL);
 
-			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-			gDPPipeSync(D_8005BB2C++);
+		gDPPipeSync(D_8005BB2C++);
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80101C14_110BC4.s")
-#endif
 
 void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6) {
 	Unk8013FDA8Entry *entry;
