@@ -903,6 +903,7 @@ void func_800EA2B0_F9260(s32 arg0);
 void func_800EA2BC_F926C(void);
 void func_800EA434_F93E4(void);
 void func_800EB0C8_FA078(VehicleInstance *arg0);
+void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2);
 void func_800EC3A0_FB350(s16 arg0);
 void func_800EC450_FB400(void);
 void func_800EC468_FB418(void);

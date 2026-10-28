@@ -1,3 +1,5 @@
+/* Player record aliases the first vehicle instance. */
+D_8004DCD0 = vehicleInstances;
 D_80144E20 = 0x80144E20;
 /* Directional-light members retained for NON_MATCHING assembly. */
 D_800942A8_64758 = D_800942A0_64750 + 0x8;

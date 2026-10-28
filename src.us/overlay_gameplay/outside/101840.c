@@ -351,8 +351,6 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 	}
 }
 
-// CURRENT(780): typed word coordinates; temporary and floating registers remain.
-
 #ifdef NON_MATCHING
 void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s32 sp7C;
@@ -418,7 +416,6 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2980_101930.s")
 #endif
 
-// CURRENT(120)
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	UnkF9230ShadowWalker *walker;
 	u8 count;
@@ -654,7 +651,6 @@ void func_800F32EC_10229C(u8 arg0, u8 arg1)
 	}
 }
 
-// CURRENT(1074)
 void func_800F34AC_10245C(u8 arg0) {
 	UnkF9230ShadowWalker *walker;
 	
@@ -761,7 +757,6 @@ s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, volatile s16 arg2, s16 ar
 	return sp36_s32;
 }
 
-// CURRENT(1716): corrected radii, slot spill and dual counters; allocation and local homes remain.
 #ifdef NON_MATCHING
 s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	UnkF9230ShadowWalker *walker;
@@ -991,8 +986,6 @@ s32 func_800F450C_1034BC(u8 arg0, u8 arg1) {
 	return angle;
 }
 
-// https://decomp.me/scratch/gNcUf
-// CURRENT(28)
 void func_800F4748_1036F8(UnkF9230ShadowWalker *arg0, u8 arg1, u8 arg2)
 {
 	UnkF9230ShadowLimb *entry;
@@ -1032,7 +1025,6 @@ void func_800F4748_1036F8(UnkF9230ShadowWalker *arg0, u8 arg1, u8 arg2)
 	}
 }
 
-// CURRENT(15): instructions match; three literal-pool addresses remain.
 #ifdef NON_MATCHING
 void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	UnkF9230ShadowLimb *entry;
@@ -1121,7 +1113,6 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F49A4_103954.s")
 #endif
 
-// CURRENT(215): frame and later instructions match; one promoted-index copy remains.
 #ifdef NON_MATCHING
 void func_800F4DB0_103D60(void) {
 	s32 var_fp;
@@ -1273,7 +1264,6 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	}
 }
 
-// CURRENT(74661)
 #ifdef NON_MATCHING
 void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 radius;
@@ -1564,7 +1554,6 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(22311)
 void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sp15C;
 	f32 sp160;
@@ -1899,7 +1888,6 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F63D0_105380.s")
 #endif
 
-// CURRENT(56921)
 #ifdef NON_MATCHING
 void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sp134;
@@ -2160,126 +2148,130 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
 	UnkF9230ShadowWalker *walker;
-	Unk801601F0 *anim;
-	Unk80052B40 sp84;
-	Unk80052B40 sp8C;
 	s16 spD2;
 	s16 spD0;
-	s16 sp80;
-	s32 spAC;
-	s32 spB0;
-	s32 spB4;
-	s32 spB8;
-	s32 spC4;
-	s32 spC8;
-	s32 spCC;
+	s32 spC4[3];
+	s32 spB8[3];
+	s32 spAC[3];
+	union {
+		s32 angle;
+		f32 trig;
+	} scratch;
+	s32 heading;
+	s32 reach;
 	s32 frameGroup;
 	s32 i;
+	UnkF9230ShadowLimb *nextEntry;
+	Unk80052B40 sp8C;
+	Unk80052B40 sp84;
+	s16 sp82;
+	s16 sp80;
 
 	if (D_80157FF0[arg0] != -1) {
 		return;
 	}
 
 	walker = &D_80158000[arg0];
-	anim = &D_801601F0[walker->limbs[0].unk23];
+	sp82 = D_801601F0[walker->limbs[0].unk23].unkA / 20;
 
 	for (i = 0; i < 6; i++) {
-		UnkF9230ShadowLimb *entry = &walker->limbs[i];
-		if (entry->unk23 != 1) {
-			continue;
-		}
+		if (walker->limbs[i + 1].unk23 == 1) {
 
 		gDPPipeSync(D_8005BB2C++);
 
 		if (i < 3) {
-			sp80 = (s16)(0x4000 - ((anim->unk10 * i) + anim->unkE));
+			scratch.angle = D_801601F0[walker->limbs[0].unk23].unk10 * i + D_801601F0[walker->limbs[0].unk23].unkE;
+			scratch.angle = (s16)(0x4000 - scratch.angle);
 		} else {
-			sp80 = (s16)(((anim->unk10 * (i - 3)) + anim->unkE) - 0x4000);
+			scratch.angle = (s16)(((D_801601F0[walker->limbs[0].unk23].unk10 * (i - 3)) + D_801601F0[walker->limbs[0].unk23].unkE) - 0x4000);
 		}
 
 		sp84.unk0 = walker->limbs[0].unk18 + 0x4000;
-		if ((i & 1) != 0) {
+		if ((i % 2) == 1) {
 			sp84.unk2 = (s16)(walker->unk168 * 0x2BC);
 		} else {
-			sp84.unk2 = (s16)(-(s16)(walker->unk168 * 0x190));
+			sp84.unk2 = -walker->unk168 * 0x190;
 		}
 		frameGroup = i % 3;
-		sp84.unk4 = (s16)(walker->unk168 * (frameGroup * 0x12C));
+		sp84.unk4 = (s16)(walker->unk168 * 0x12C * frameGroup);
 
-		sp8C.unk0 = (s16)(s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)(walker->unk168 * (frameGroup * sp82 + 0xA)));
+		heading = scratch.angle & 0xFFFF;
+		scratch.trig = coss(heading & 0xFFFF);
+		reach = frameGroup * sp82 + 10;
+		sp8C.unk0 = (s16)(s32)((f64)walker->limbs[0].words[4] - (((f64)scratch.trig) / 32768.0) * (f64)(walker->unk168 * reach));
 		func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &sp80);
 		sp8C.unk2 = sp80 + walker->unk16A;
-		sp8C.unk4 = (s16)(s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)(walker->unk168 * (frameGroup * sp82 + 0xA)));
+		sp8C.unk4 = (s16)(s32)((f64)walker->limbs[0].words[5] - (((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)(walker->unk168 * reach));
 
 		if (walker->limbs[0].unk22 == 8) {
-			s16 limit = (s16)(D_80222A70 - 0x64);
+			reach = D_80222A70 - 0x64;
 
-			if (sp8C.unk2 > limit) {
-				sp8C.unk2 = limit;
+			if (sp8C.unk2 > reach) {
+				sp8C.unk2 = reach;
 			}
 		}
 
-		D_8005BB38 += 0x40;
+		D_8005BB38++;
 		func_800039D0_45D0(&sp8C, &sp84, NULL, D_8005BB38);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-		spAC = (s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)anim->unk4);
-		spB0 = anim->unkA;
-		spB4 = (s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)anim->unk4);
-		spB8 = (s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)anim->unk6);
-		spC4 = (s32)((((f64)(f32)coss(sp80)) / 32768.0) * (f64)spD2);
-		spC8 = spD0;
-		spCC = (s32)((((f64)(f32)sins(sp80)) / 32768.0) * (f64)spD2);
+		spAC[0] = (s32)((((f64)(f32)coss(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk4);
+		spAC[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk4);
+		spAC[1] = D_801601F0[walker->limbs[0].unk23].unkA;
+		spB8[0] = (s32)((((f64)(f32)coss(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk6);
+		spB8[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk6);
+		spB8[1] = 0;
+		func_800F4258_103208(walker, D_801601F0[walker->limbs[0].unk23].unk4, spAC[1], D_801601F0[walker->limbs[0].unk23].unk6, 0, &spD2, &spD0);
+		spC4[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)spD2);
+		spC4[0] = (s32)((((f64)(f32)coss(heading & 0xFFFF)) / 32768.0) * (f64)spD2);
+		spC4[1] = spD0;
 
-		func_800F4258_103208(walker, anim->unk4, sp8C.unk2, anim->unk6, 0, &spD2, &spD0);
-
-		switch (anim->unk14) {
+		switch (D_801601F0[walker->limbs[0].unk23].unk14) {
 			case 0:
-				func_800F7790_106740(&spB8, &spC4, &spAC, walker->limbs[0].unk23);
+				func_800F7790_106740(spB8, spC4, spAC, walker->limbs[0].unk23);
 				break;
 			case 1:
-				func_800F554C_1044FC(&spB8, &spC4, &spAC, walker->limbs[0].unk23);
+				func_800F554C_1044FC(spB8, spC4, spAC, walker->limbs[0].unk23);
 				break;
 			case 2:
-				func_800F63D0_105380(&spB8, &spC4, &spAC, walker->limbs[0].unk23);
+				func_800F63D0_105380(spB8, spC4, spAC, walker->limbs[0].unk23);
 				break;
 		}
 
 		if (walker->limbs[0].unk22 == 4) {
-			UnkF9230ShadowLimb *nextEntry = &walker->limbs[1];
+			nextEntry = &walker->limbs[i + 1];
 
 			if (walker->unk168 == 1) {
-				func_800DF038_EDFE8((s16)(spAC + sp8C.unk0), (s16)(spB0 + sp8C.unk2), (s16)(spB4 + sp8C.unk4), 0x46, 0, 0);
+				func_800DF038_EDFE8((s16)(spAC[0] + sp8C.unk0), (s16)(spAC[1] + sp8C.unk2), (s16)(spAC[2] + sp8C.unk4), 0x46, 0, 0);
 			}
 
-			func_800C1ECC_D0E7C((s16)(spAC + sp8C.unk0), (s16)(spB0 + sp8C.unk2), (s16)(spB4 + sp8C.unk4), nextEntry->unk22, 0);
-			func_8011E6FC_12D6AC((s16)(spAC + sp8C.unk0), (s16)(spB4 + sp8C.unk4), &sp80);
+			func_800C1ECC_D0E7C((s16)(spAC[0] + sp8C.unk0), (s16)(spAC[1] + sp8C.unk2), (s16)(spAC[2] + sp8C.unk4), nextEntry->unk22, 0);
+			func_8011E6FC_12D6AC(sp8C.unk0, sp8C.unk4, &sp80);
 			if (sp80 >= sp8C.unk2) {
 				nextEntry->unk23 = 2;
-				func_800DF038_EDFE8((s16)(spAC + sp8C.unk0), sp80, (s16)(spB4 + sp8C.unk4), 0x46, 0, 0);
+				func_800DF038_EDFE8(sp8C.unk0, sp80, sp8C.unk4, 0x46, 0, 0);
 			}
 		}
 
 		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+		}
 	}
-}
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F842C_1073DC.s")
 #endif
 
-// CURRENT(20852)
 #ifdef NON_MATCHING
 void func_800F8B24_107AD4(s32 arg0) {
-	UnkF9230ShadowWalker *walker;
 	Unk80052B40 sp140;
 	Unk80052B40 sp138;
+	UnkF9230ShadowWalker *walker;
+	s32 x0, y0, z0, x1, z1, x2, y2, z2;
+	u8 count;
+	s16 y1;
+	int i;
 	s32 sp100[3];
 	s32 spF4[3];
 	s32 spE8[3];
-	Unk801601F0 *anim;
-	s32 i;
-	s32 updateState;
-	u8 state;
 	Mtx spA8;
 
 	if (D_80157FF0[arg0] != -1) {
@@ -2287,13 +2279,13 @@ void func_800F8B24_107AD4(s32 arg0) {
 	}
 
 	walker = &D_80158000[arg0];
-	anim = &D_801601F0[walker->limbs[0].unk23];
+	i = walker->alienIdx;
 
-	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)anim->unk6, (s16)D_80052B2C->unk0,
-						 (s32)D_80052B2C->unk8, 0x4000 - D_80047950)
-			!= 0)
-		|| (walker->limbs[0].unk22 == 8)) {
-		if (anim->unk14 != 0) {
+	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)D_801601F0[walker->limbs[0].unk23].unk6, (s16)D_80052B2C->unk0,
+	(s32)D_80052B2C->unk8, 0x4000 - D_80047950)
+	!= 0)
+	|| (walker->limbs[0].unk22 == 8)) {
+		if (D_801601F0[walker->limbs[0].unk23].unk14 != 0) {
 			gDPPipeSync(D_8005BB2C++);
 			guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
 			gSPLookAt(D_8005BB2C++, &walker->lookAt);
@@ -2303,101 +2295,95 @@ void func_800F8B24_107AD4(s32 arg0) {
 		gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
 		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
 
-		state = walker->limbs[0].unk22;
-		updateState = 0;
-		if ((state == 2) || (state == 4) || (state == 8)) {
-			updateState = 1;
-		}
-
-		if (updateState != 0) {
+		if (((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) {
 			func_800F842C_1073DC(arg0);
-			state = walker->limbs[0].unk22;
 		}
 
-		if (state == 0x10) {
+		if (walker->limbs[0].unk22 == 0x10) {
 			AlienInstance *alien;
 
-			alien = &alienInstances[walker->alienIdx];
+			alien = &alienInstances[i];
 			sp140.unk0 = alien->unk0;
 			sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
 			sp140.unk4 = alien->unk4;
 			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38++;
 
 			sp138.unk0 = -walker->limbs[0].unk18;
-			sp138.unk2 = -D_8014DD50[alien->unkC].unkA;
+			sp138.unk2 = -(u16)D_8014DD50[alien->unkC].unkA;
 			sp138.unk4 = 0;
 			func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38++;
 
 			sp140.unk2 = walker->unk16A;
-			sp140.unk0 = -sp140.unk0;
-			sp140.unk2 = -sp140.unk2;
-			sp140.unk4 = -sp140.unk4;
+			for (i = 0; i < 3; i++) {
+				sp140.components[i] = -sp140.components[i];
+			}
 			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			D_8005BB38++;
 
-			state = walker->limbs[0].unk22;
 		}
 
-		for (i = 0; i < anim->unkC; i++) {
-			UnkF9230ShadowLimb *entry;
-			s16 arg7;
+		count = D_801601F0[walker->limbs[0].unk23].unkC;
+		i = 0;
+		if (count > 0) {
+			UnkF9230ShadowLimb *cursor = &walker->limbs[0];
+			do {
+				UnkF9230ShadowLimb *entry;
 
-			entry = &walker->limbs[i + 1];
-			if (entry->unk23 != 0) {
-				continue;
-			}
+				entry = &cursor[1];
+				if (cursor[1].unk23 == 0) {
 
-			if (state == 0x10) {
-				arg7 = walker->unk16A;
-			} else {
-				arg7 = entry->unk16;
-			}
+					x0 = entry->unkA;
+					y0 = entry->unk2;
+					z0 = entry->unkC;
+					x1 = entry->unk1E;
+					if (walker->limbs[0].unk22 == 0x10) {
+						y1 = walker->unk16A;
+					} else {
+						y1 = entry->unk16;
+					}
 
-			sp100[0] = entry->unkA;
-			sp100[1] = entry->unk2;
-			sp100[2] = entry->unkC;
-			spF4[0] = entry->unk1E;
-			spF4[1] = arg7;
-			spF4[2] = entry->unk20;
-			spE8[0] = entry->unk12;
-			spE8[1] = entry->unk14;
-			spE8[2] = entry->unk16;
+					z1 = entry->unk20;
+					x2 = entry->unkE;
+					y2 = entry->unk10;
+					z2 = entry->unk12;
+					sp100[0] = x0;
+					sp100[1] = y0;
+					sp100[2] = z0;
+					spF4[0] = x1;
+					spF4[1] = y1;
+					spF4[2] = z1;
+					spE8[0] = x2;
+					spE8[1] = y2;
+					spE8[2] = z2;
 
-			if (walker->limbs[0].unk22 == 4) {
-				s32 rnd;
-				s32 mod;
+					if (walker->limbs[0].unk22 == 4) {
+						spE8[0] += func_800038E0_44E0() % 16 - 8;
+						spE8[2] += func_800038E0_44E0() % 16 - 8;
+					}
 
-				rnd = func_800038E0_44E0();
-				mod = rnd & 0xF;
-				if ((rnd < 0) && (mod != 0)) {
-					mod -= 0x10;
+					switch (D_801601F0[walker->limbs[0].unk23].unk14) {
+					case 0:
+						func_800F7790_106740(sp100, spE8, spF4, walker->limbs[0].unk23);
+						break;
+					case 1:
+						func_800F554C_1044FC(sp100, spE8, spF4, walker->limbs[0].unk23);
+						break;
+					case 2:
+						func_800F63D0_105380(sp100, spE8, spF4, walker->limbs[0].unk23);
+						break;
+					}
 				}
-				spE8[0] = spE8[0] + mod - 8;
-
-				rnd = func_800038E0_44E0();
-				mod = rnd & 0xF;
-				if ((rnd < 0) && (mod != 0)) {
-					mod -= 0x10;
-				}
-				spE8[2] = spE8[2] + mod - 8;
-			}
-
-			switch (anim->unk14) {
-				case 0:
-					func_800F7790_106740(sp100, spE8, spF4, walker->limbs[0].unk23);
-					break;
-				case 1:
-					func_800F554C_1044FC(sp100, spE8, spF4, walker->limbs[0].unk23);
-					break;
-				case 2:
-					func_800F63D0_105380(sp100, spE8, spF4, walker->limbs[0].unk23);
-					break;
-			}
+				i++;
+				cursor++;
+			} while (i != count);
 		}
 
-		if (state & 0x10) {
+		if (walker->limbs[0].unk22 & 0x10) {
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 		}
 	}
@@ -2407,86 +2393,75 @@ void func_800F8B24_107AD4(s32 arg0) {
 #endif
 
 #ifdef NON_MATCHING
-// CURRENT(11073)
 void func_800F9118_1080C8(s32 arg0) {
+	s32 index;
+	s16 oldX;
+	s16 rearY;
+	s32 centerX;
+	s32 thirdSin;
+	s16 oldZ;
+	s16 centerY;
+	s32 cosOffset;
+	s32 sinOffset;
+	s32 sumZ;
+	s32 sumX;
+	s16 minusX;
+	s16 heading;
+	s16 radius;
+	s16 centerZ;
+	s16 groundY;
+	u8 count;
+	int countWord;
+	s32 divisor;
+	s32 terrain;
 	UnkF9230ShadowWalker *walker;
-	s32 spBC;
-	s16 spB8;
-	s16 spAC;
-	s16 sp96;
-	s16 sp92;
-	s32 sp74;
-	s32 sp70;
-	s32 sp64;
-	f64 temp_f20;
-	s16 temp_a3;
-	s16 temp_fp;
-	s16 temp_s1;
-	s16 temp_s2_2;
-	s16 temp_s3;
-	s16 temp_s3_2;
-	s16 temp_s4;
-	s16 temp_s4_2;
-	s16 temp_s6_2;
-	s32 temp_s7;
-	s16 temp_s7_2;
-	s16 temp_v1_3;
-	s16 var_s5;
-	s16 var_t1;
-	s32 temp_lo;
-	s32 temp_lo_2;
-	s32 temp_s2;
-	s32 temp_t3;
-	s32 temp_t5;
-	s32 temp_v0_2;
-	s32 temp_v1_2;
-	s32 var_a2;
-	u8 temp_s0;
-	Unk801601F0 *temp_v1;
 
 	if (D_80157FF0[arg0] == -1) {
 		walker = &D_80158000[arg0];
-		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &sp92) == -1) && (walker->limbs[0].unk22 != 0x10)) {
-			temp_v1 = &D_801601F0[walker->limbs[0].unk23];
-			temp_s0 = temp_v1->unkC;
-			var_t1 = temp_v1->unk8;
+		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &groundY) == -1) &&
+			(walker->limbs[0].unk22 != 0x10)) {
+			count = D_801601F0[walker->limbs[0].unk23].unkC;
+			centerZ = D_801601F0[walker->limbs[0].unk23].unk8;
 			if (D_8013FCD0_14EC80 != 0) {
-				var_t1 *= 2;
+				centerZ *= 2;
 			}
-			sp96 = var_t1;
-			if (func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)temp_v1->unk6, (s16)D_80052B2C->unk0,
+			radius = centerZ;
+			if (func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16,
+					(u16)D_801601F0[walker->limbs[0].unk23].unk6, (s16)D_80052B2C->unk0,
 					(s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) {
-				var_a2 = 0;
-				if (func_800E95BC_F856C(*(s32 *)&walker->limbs[0].unk10, func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
-						*(s32 *)&walker->limbs[0].unk14) == 0) {
-					sp74 = (s32)temp_s0;
-					if ((s32)temp_s0 > 0) {
-						UnkF9230ShadowLimb *var_limb = &walker->limbs[1];
+				if (func_800E95BC_F856C(walker->limbs[0].words[4],
+						func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
+						walker->limbs[0].words[5]) == 0) {
+					index = 0;
+					countWord = count;
+					if (count > 0) {
 						do {
-							spBC = var_a2;
-							if (var_limb->unk23 == 0) {
-								temp_f20 = (f64)sp96;
-								if (walker->limbs[0].unk22 & 0x80) {
-									var_s5 = walker->limbs[0].unk1A;
-								} else {
-									var_s5 = walker->limbs[0].unk18;
-								}
-								if (var_a2 >= (sp74 / 2)) {
-									var_s5 += 0x8000;
-								}
-								temp_s2 = var_s5 & 0xFFFF;
-								temp_s1 = (s16)(s32)((((f64)(f32)coss(temp_s2 & 0xFFFF)) / 32768.0) * temp_f20);
-								temp_s3 = var_limb->unk6;
-								temp_s4 = var_limb->unk8;
-								temp_s2_2 = (s16)(s32)((((f64)(f32)sins(temp_s2 & 0xFFFF)) / 32768.0) * temp_f20);
-								temp_v0_2 = func_800B84D0_C7480(temp_s3, temp_s4);
-								temp_lo = temp_s1 / 3;
-								temp_lo_2 = temp_s2_2 / 3;
+							UnkF9230ShadowLimb *limb = &walker->limbs[index + 1];
 
-								D_8005BB34->v.ob[0] = temp_s3 + temp_lo;
-								temp_v1_2 = temp_v0_2 >> 8;
-								D_8005BB34->v.ob[1] = (s16)temp_v1_2;
-								D_8005BB34->v.ob[2] = temp_s4 + temp_lo_2;
+							if (limb->unk23 == 0) {
+								terrain = countWord / 2;
+								if (walker->limbs[0].unk22 & 0x80) {
+									heading = walker->limbs[0].unk1A;
+								} else {
+									heading = walker->limbs[0].unk18;
+								}
+								if (index >= terrain) {
+									heading += 0x8000;
+								}
+								sinOffset = heading & 0xFFFF;
+								cosOffset = (s16)(s32)((((f64)(f32)coss(sinOffset & 0xFFFF)) / 32768.0) * (f64)radius);
+								sinOffset = (s16)(s32)((((f64)(f32)sins(sinOffset & 0xFFFF)) / 32768.0) * (f64)radius);
+								oldX = limb->unkA;
+								oldZ = limb->unkC;
+								terrain = func_800B84D0_C7480(oldX, oldZ);
+								divisor = 3;
+								sumZ = cosOffset / divisor;
+								thirdSin = sinOffset / divisor;
+
+								D_8005BB34->v.ob[0] = oldX + sumZ;
+								sumX = terrain >> 8;
+								D_8005BB34->v.ob[1] = sumX;
+								D_8005BB34->v.ob[2] = oldZ + thirdSin;
 								D_8005BB34->v.flag = 0;
 								D_8005BB34->v.tc[0] = 0x100;
 								D_8005BB34->v.tc[1] = 0;
@@ -2496,9 +2471,9 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0;
 								D_8005BB34++;
 
-								D_8005BB34->v.ob[0] = temp_s3 - temp_lo;
-								D_8005BB34->v.ob[1] = (s16)temp_v1_2;
-								D_8005BB34->v.ob[2] = temp_s4 - temp_lo_2;
+								D_8005BB34->v.ob[0] = oldX - sumZ;
+								D_8005BB34->v.ob[1] = sumX;
+								D_8005BB34->v.ob[2] = oldZ - thirdSin;
 								D_8005BB34->v.flag = 0;
 								D_8005BB34->v.tc[0] = 0x200;
 								D_8005BB34->v.tc[1] = 0;
@@ -2508,12 +2483,12 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0;
 								D_8005BB34++;
 
-								temp_s7 = var_limb->unk1E;
-								temp_fp = var_limb->unk20;
-								func_8011E6FC_12D6AC(temp_s7, temp_fp, &spAC);
-								D_8005BB34->v.ob[0] = temp_s7;
-								D_8005BB34->v.ob[1] = spAC;
-								D_8005BB34->v.ob[2] = temp_fp;
+								centerX = limb->unk1E;
+								centerZ = limb->unk20;
+								func_8011E6FC_12D6AC(centerX, centerZ, &centerY);
+								D_8005BB34->v.ob[0] = centerX;
+								D_8005BB34->v.ob[1] = centerY;
+								D_8005BB34->v.ob[2] = centerZ;
 								D_8005BB34->v.flag = 0;
 								D_8005BB34->v.tc[0] = 0x80;
 								D_8005BB34->v.tc[1] = 0;
@@ -2523,18 +2498,16 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								temp_s3_2 = var_limb->unkE;
-								temp_s4_2 = var_limb->unk12;
-								temp_v1_3 = temp_s3_2 + temp_s1;
-								temp_a3 = temp_s4_2 + temp_s2_2;
-								sp64 = (s32)temp_a3;
-								sp70 = (s32)temp_v1_3;
-								func_8011E6FC_12D6AC(temp_v1_3, temp_a3, &spB8);
-								D_8005BB34->v.ob[0] = (s16)sp70;
-								temp_s6_2 = temp_s3_2 - temp_s1;
-								temp_s7_2 = temp_s4_2 - temp_s2_2;
-								D_8005BB34->v.ob[1] = spB8;
-								D_8005BB34->v.ob[2] = (s16)sp64;
+								oldX = limb->unkE;
+								oldZ = limb->unk12;
+								sumX = oldX + cosOffset;
+								sumZ = oldZ + sinOffset;
+								func_8011E6FC_12D6AC(sumX, sumZ, &rearY);
+								D_8005BB34->v.ob[0] = sumX;
+								minusX = oldX - cosOffset;
+								centerX = oldZ - sinOffset;
+								D_8005BB34->v.ob[1] = rearY;
+								D_8005BB34->v.ob[2] = sumZ;
 								D_8005BB34->v.flag = 0;
 								D_8005BB34->v.tc[0] = 0;
 								D_8005BB34->v.tc[1] = 0x180;
@@ -2544,10 +2517,10 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								func_8011E6FC_12D6AC(temp_s6_2, temp_s7_2, &spB8);
-								D_8005BB34->v.ob[0] = temp_s6_2;
-								D_8005BB34->v.ob[1] = spB8;
-								D_8005BB34->v.ob[2] = temp_s7_2;
+								func_8011E6FC_12D6AC(minusX, centerX, &rearY);
+								D_8005BB34->v.ob[0] = minusX;
+								D_8005BB34->v.ob[1] = rearY;
+								D_8005BB34->v.ob[2] = centerX;
 								D_8005BB34->v.flag = 0;
 								D_8005BB34->v.tc[0] = 0x100;
 								D_8005BB34->v.tc[1] = 0x180;
@@ -2557,26 +2530,27 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								temp_t5 = (var_s5 - 0x4000) & 0xFFFF;
-								if (spBC >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
-									temp_t3 = (var_s5 + 0x4000) & 0xFFFF;
-									coss(temp_t3 & 0xFFFF);
-									sins(temp_t3 & 0xFFFF);
+								cosOffset = heading - 0x4000;
+								cosOffset &= 0xFFFF;
+								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
+									cosOffset = heading + 0x4000;
+									cosOffset &= 0xFFFF;
+									coss(cosOffset & 0xFFFF);
+									sins(cosOffset & 0xFFFF);
 								} else {
-									coss(temp_t5 & 0xFFFF);
-									sins(temp_t5 & 0xFFFF);
+									coss(cosOffset & 0xFFFF);
+									sins(cosOffset & 0xFFFF);
 								}
 
-								if (sp74 != 8) {
-									gSPVertex(D_8005BB2C++, D_8005BB34 - 5, 5, 0);
+								if (8 != countWord) {
+									gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 									gSP1Triangle(D_8005BB2C++, 0, 1, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 1, 4, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 2, 3, 4, 0);
 								}
 							}
-							var_a2 = spBC + 1;
-							var_limb++;
-						} while (var_a2 != sp74);
+							index++;
+						} while (index != countWord);
 					}
 				}
 			}
@@ -2810,8 +2784,6 @@ s16 func_800FA018_108FC8(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	return func_80003824_4424((f32)arg2, (f32)(h0 - h1));
 }
 
-
-// CURRENT(665)
 s32 func_800FA40C_1093BC(VehicleInstance *vehicle, s16 angle, s32 distance) {
 	VehicleType *type;
 	s16 height0;
@@ -2852,7 +2824,6 @@ s16 func_800FA690_109640(s16 arg0, s16 arg1, s16 arg2)
 	return func_80003824_4424(100.0f, (f32)(h1 - new_var));
 }
 
-// CURRENT(3227)
 s16 func_800FA7F0_1097A0(VehicleInstance *arg0, s16 arg1, s32 arg2) {
 	VehicleType *type;
 	s16 h1;
@@ -2957,7 +2928,6 @@ void func_800FAC90_109C40(void) {
 	} while (var_s0 != end);
 }
 
-// CURRENT(535)
 void func_800FAD10_109CC0(void) {
 	s32 i;
 	D_80158FD8 = 0;
@@ -3058,7 +3028,6 @@ f32 func_800FB11C_10A0CC(VehicleInstance *arg0) {
 	return sqrtf((sp1C * sp1C) + (temp_f0 * temp_f0));
 }
 
-// CURRENT(300)
 s32 func_800FB160_10A110(VehicleInstance *arg0) {
 	f32 sp1C;
 	f32 sp18;
@@ -3151,89 +3120,79 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(21992)
 #ifdef NON_MATCHING
 void func_800FB504_10A4B4(void) {
-	VehicleInstance *vehicle;
-	VehicleType *type;
-	CameraAlienRef *scanAlien;
-	AlienInstance *alien;
-	AlienInstance *targetAlien;
-	InputStruct_8012B150 *cameraTarget;
-	s16 steerClamp;
-	s16 pitchClamp;
-	s16 pitch;
-	s16 yaw;
+	s32 i;
+	s32 bestScore;
 	s16 bestIndex;
-	s16 diff;
+	VehicleType *type;
+	AlienInstance *scanAlien;
+	s16 pitchClamp;
+	s32 nextX;
+	s32 tmp;
+	s32 nextZ;
+	s32 targetDist;
+	AlienInstance *targetAlien;
+	s16 steerClamp;
+	s16 yaw;
+	s32 diff;
 	s16 cosVal;
-	s16 restoreSigned;
+	f32 scale;
+	s32 selectedInput;
+	WeaponEntry_80129864 *animBase;
+	s32 animFrame;
 	s32 worldX;
 	s32 worldY;
 	s32 worldZ;
 	s32 restoreSpeed;
-	s32 bestScore;
-	s32 targetDist;
-	s32 nextX;
-	s32 nextY;
-	s32 nextZ;
-	s32 i;
-	s32 selectedInput;
-	s32 tmp;
-	u16 inputButtons;
-	u16 animFrame;
-	u16 *animBase;
 
 	bestIndex = -1;
 	yaw = D_80159318;
-	vehicle = D_80052B34;
 
-	if (vehicle == NULL) {
+	if (!D_80052B34) {
 		D_80158FF4 = NULL;
 		return;
 	}
 
-	type = &vehicleTypes[vehicle->unk1A];
-	steerClamp = type->arcOfFire;
-	if (steerClamp < 0) {
-		steerClamp = -steerClamp;
-	}
+	type = &vehicleTypes[D_80052B34->unk1A];
+	steerClamp = type->arcOfFire >= 0 ? type->arcOfFire : -type->arcOfFire;
 
 	pitchClamp = D_80052B2C->unk36;
 
 	if (D_80050AD4 == 1) {
 		if (type->unk4C & 0x08000000) {
 			restoreSpeed = type->gun2X;
-			if (restoreSpeed < 0) {
-				type->gun2X = -restoreSpeed;
+			if (type->gun2X < 0) {
+				type->gun2X = -type->gun2X;
 			}
 		}
-		func_80128504_1374B4((AlienInstance *) vehicle, 1, &worldX, &worldY, &worldZ);
+		func_80128504_1374B4((AlienInstance *) D_80052B34, 1, &worldX, &worldY, &worldZ);
 	} else {
 		if (type->unk4C & 0x08000000) {
 			restoreSpeed = type->gun1X;
-			if (restoreSpeed < 0) {
-				type->gun1X = -restoreSpeed;
+			if (type->gun1X < 0) {
+				type->gun1X = -type->gun1X;
 			}
 		}
-		func_80128504_1374B4((AlienInstance *) vehicle, 0, &worldX, &worldY, &worldZ);
+		func_80128504_1374B4((AlienInstance *) D_80052B34, 0, &worldX, &worldY, &worldZ);
 	}
 
 	if (!(type->unk4C & 0x00800000)) {
 		s32 hasPitch = type->unk4C & 0x00010000;
-		inputButtons = currentControllerStates[0].button;
-		if ((hasPitch || (type->unk4C & 0x00080000)) && ((inputButtons & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
+		if ((hasPitch || (type->unk4C & 0x00080000)) && ((currentControllerStates[0].button & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1)))) {
 			if (hasPitch) {
-				pitchClamp -= (currentControllerStates[0].stick_x * currentControllerStates[0].stick_x * currentControllerStates[0].stick_x) >> 8;
+				diff = D_8004758A;
+				pitchClamp -= (diff * diff * diff) >> 8;
 			} else {
 				pitchClamp = 0;
 			}
 
-			tmp = (currentControllerStates[0].stick_y * currentControllerStates[0].stick_y * currentControllerStates[0].stick_y) >> 9;
+			targetDist = D_8004758B;
+			targetDist = (targetDist * targetDist * targetDist) >> 9;
 			if (D_80031420_32020 & 4) {
-				yaw += tmp;
+				yaw += targetDist;
 			} else {
-				yaw -= tmp;
+				yaw -= targetDist;
 			}
 
 			D_80159320 |= 0x40000;
@@ -3246,8 +3205,7 @@ void func_800FB504_10A4B4(void) {
 		D_80159320 &= 0xFFFBFFFF;
 		pitchClamp = 0;
 		yaw = 0;
-		inputButtons = currentControllerStates[0].button;
-		if ((inputButtons & 0x10) && (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
+		if ((currentControllerStates[0].button & 0x10) && (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE)) {
 			D_801591BC = 1;
 		} else {
 			D_801591BC = 0;
@@ -3256,49 +3214,37 @@ void func_800FB504_10A4B4(void) {
 
 	D_80158FF0 = 0;
 
-	if (D_80159048 == 0) {
+	if (!D_80159048) {
 		bestScore = 0x17E8;
-		for (i = 0xFE; i != 0; i--) {
-			scanAlien = (CameraAlienRef *) &alienInstances[0xFE + i];
+		i = 0xFF;
+		if (i--) {
+		do {
+			scanAlien = &alienInstances[i];
 
-			if (scanAlien->unk1A >= 2) {
-				u16 angleDiff;
-				s32 dx;
-				s32 dz;
-				s32 distSq;
+			if (scanAlien->typeIndex >= 2) {
+				s16 angleDiff;
 
-				if ((scanAlien->unk20 & 0x00100000) || (scanAlien->unk20 & 0x00400000)) {
-					continue;
-				}
-
-				if ((scanAlien->unk1A == 0) || (scanAlien->unk1A == 1)) {
-					continue;
-				}
-
-				dx = (worldX - scanAlien->unk0) >> 1;
-				dz = (worldZ - scanAlien->unk4) >> 1;
-				distSq = (dx * dx) + (dz * dz);
-
-				if ((u32) distSq >= 0x3C8000) {
-					continue;
-				}
-
-				angleDiff = func_80003824_4424((f32) dx, (f32) dz);
-				diff = func_800F9C50_108C00(D_80052B34->unk6 - D_80052B2C->unk36, angleDiff) - 0x8000;
-				tmp = diff;
-				if (tmp < -0x8000) {
-					tmp += 0x10000;
-				}
-
-				if (tmp < 0) {
-					tmp = -tmp;
-				}
-
-				if (tmp < bestScore) {
-					bestScore = tmp;
-					bestIndex = i;
+				if (!(scanAlien->unk20 & 0x00100000) && !(scanAlien->unk20 & 0x00400000) &&
+					(scanAlien->typeIndex != 0) && (scanAlien->typeIndex != 1)) {
+					nextX = (worldX - scanAlien->unk0) >> 1;
+					nextZ = (worldZ - scanAlien->unk4) >> 1;
+					if ((u32)((nextX * nextX) + (nextZ * nextZ)) < 0x3C8000) {
+						angleDiff = func_80003824_4424((f32) nextX, (f32) nextZ);
+						tmp = func_800F9C50_108C00(D_80052B34->unk6 - D_80052B2C->unk36, angleDiff) - 0x8000;
+						if (tmp < -0x8000) {
+							tmp += 0x10000;
+						}
+						if (tmp < 0) {
+							tmp = -tmp;
+						}
+						if (tmp < bestScore) {
+							bestScore = tmp;
+							bestIndex = i;
+						}
+					}
 				}
 			}
+		} while (i--);
 		}
 
 		if (bestIndex == -1) {
@@ -3309,15 +3255,14 @@ void func_800FB504_10A4B4(void) {
 	}
 
 	targetAlien = D_80158FEC;
-	targetDist = 0;
 	if (targetAlien != NULL) {
-		s32 dx = (worldX - targetAlien->unk0) >> 1;
-		s32 dz = (worldZ - targetAlien->unk4) >> 1;
-		targetDist = (s32) sqrtf((f32) ((dx * dx) + (dz * dz)));
+		nextX = (worldX - targetAlien->unk0) >> 1;
+		nextZ = (worldZ - targetAlien->unk4) >> 1;
+		targetDist = (s32) sqrtf((f32) ((nextX * nextX) + (nextZ * nextZ)));
 	}
 
-	inputButtons = currentControllerStates[0].button;
-	if (!(inputButtons & 0x10)) {
+	if (currentControllerStates[0].button & 0x10) {
+	} else {
 		targetAlien = D_80158FEC;
 		if (targetAlien != NULL) {
 			yaw = func_80003824_4424((f32) targetDist, (f32) ((targetAlien->unk2 - worldY) >> 1));
@@ -3343,26 +3288,17 @@ void func_800FB504_10A4B4(void) {
 		pitchClamp = steerClamp;
 	}
 
-	pitch = pitchClamp;
-	if (pitch < -steerClamp) {
-		pitch = -steerClamp;
+	if (pitchClamp < -steerClamp) {
+		pitchClamp = -steerClamp;
 	}
 
-	pitchClamp = pitch;
-
-	diff = func_800F9C50_108C00(D_80052B2C->unk36, pitch);
-	tmp = -diff;
-	if (tmp < diff) {
-		tmp = diff;
-	}
+	diff = func_800F9C50_108C00(D_80052B2C->unk36, pitchClamp);
+	tmp = -diff < diff ? diff : -diff;
 
 	if (tmp < D_8015929C) {
 		D_80052B2C->unk36 = pitchClamp;
 	} else {
-		tmp = D_8015929C;
-		if (diff >= 0) {
-			tmp = -tmp;
-		}
+		tmp = diff < 0 ? D_8015929C : -D_8015929C;
 		D_80052B2C->unk36 += tmp;
 	}
 
@@ -3383,19 +3319,13 @@ void func_800FB504_10A4B4(void) {
 	}
 
 	diff = func_800F9C50_108C00(D_80159318, yaw);
-	tmp = -diff;
-	if (tmp < diff) {
-		tmp = diff;
-	}
+	tmp = -diff < diff ? diff : -diff;
 
 	if (tmp < 0x190) {
 		D_80159318 = yaw;
 	} else {
-		if (diff < 0) {
-			D_80159318 += 0x190;
-		} else {
-			D_80159318 -= 0x190;
-		}
+		tmp = diff < 0 ? 0x190 : -0x190;
+		D_80159318 += tmp;
 	}
 
 	if (type->arcOfFire < 0) {
@@ -3407,46 +3337,44 @@ void func_800FB504_10A4B4(void) {
 	}
 
 	D_8015F9F0 = 0x2C;
-	cosVal = coss((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
-	nextX = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) cosVal / 32768.0) * D_80144A60_153A10[0]) + (f64) worldX);
-	nextY = (s32) ((((f64) (f32) sins((u16) D_80159318) / 32768.0) * D_80144A68_153A18[0]) + (f64) worldY);
-	cosVal = sins((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF);
-	nextZ = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) cosVal / 32768.0) * D_80144A70_153A20[0]) + (f64) worldZ);
+	nextX = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) coss((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF) / 32768.0) * D_80144A60_153A10[0]) + (f64) worldX);
+	tmp = (s32) ((((f64) (f32) sins((u16) D_80159318) / 32768.0) * D_80144A68_153A18[0]) + (f64) worldY);
+	nextZ = (s32) ((((f64) (f32) coss((u16) D_80159318) / 32768.0) * ((f64) (f32) sins((D_80052B34->unk6 - D_80052B2C->unk36) & 0xFFFF) / 32768.0) * D_80144A70_153A20[0]) + (f64) worldZ);
 
-	tmp = D_801493A0 << 8;
-	if (nextX < tmp) {
-		f32 scale = (f32) (tmp - worldX) / (f32) (nextX - worldX);
-		nextX = tmp;
-		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+	selectedInput = D_801493A0 << 8;
+	if (nextX < selectedInput) {
+		scale = (f32) (selectedInput - worldX) / (f32) (nextX - worldX);
+		nextX = selectedInput;
+		tmp = (s32) ((f32) worldY + ((f32) (tmp - worldY) * scale));
 		nextZ = (s32) ((f32) worldZ + ((f32) (nextZ - worldZ) * scale));
 	}
 
-	tmp = D_801493A4 << 8;
-	if (nextZ < tmp) {
-		f32 scale = (f32) (tmp - worldZ) / (f32) (nextZ - worldZ);
-		nextZ = tmp;
+	selectedInput = D_801493A4 << 8;
+	if (nextZ < selectedInput) {
+		scale = (f32) (selectedInput - worldZ) / (f32) (nextZ - worldZ);
+		nextZ = selectedInput;
 		nextX = (s32) ((f32) worldX + ((f32) (nextX - worldX) * scale));
-		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+		tmp = (s32) ((f32) worldY + ((f32) (tmp - worldY) * scale));
 	}
 
-	tmp = D_80149398 << 8;
-	if (tmp < nextX) {
-		f32 scale = (f32) (tmp - worldX) / (f32) (nextX - worldX);
-		nextX = tmp;
-		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+	selectedInput = D_80149398 << 8;
+	if (selectedInput < nextX) {
+		scale = (f32) (selectedInput - worldX) / (f32) (nextX - worldX);
+		nextX = selectedInput;
+		tmp = (s32) ((f32) worldY + ((f32) (tmp - worldY) * scale));
 		nextZ = (s32) ((f32) worldZ + ((f32) (nextZ - worldZ) * scale));
 	}
 
-	tmp = D_8014939C << 8;
-	if (tmp < nextZ) {
-		f32 scale = (f32) (tmp - worldZ) / (f32) (nextZ - worldZ);
-		nextZ = tmp;
+	selectedInput = D_8014939C << 8;
+	if (selectedInput < nextZ) {
+		scale = (f32) (selectedInput - worldZ) / (f32) (nextZ - worldZ);
+		nextZ = selectedInput;
 		nextX = (s32) ((f32) worldX + ((f32) (nextX - worldX) * scale));
-		nextY = (s32) ((f32) worldY + ((f32) (nextY - worldY) * scale));
+		tmp = (s32) ((f32) worldY + ((f32) (tmp - worldY) * scale));
 	}
 
 	D_80159000.unk0 = nextX;
-	D_80159000.unk2 = nextY;
+	D_80159000.unk2 = tmp;
 	D_80159000.unk4 = nextZ;
 
 	if (D_80050AD4 == 1) {
@@ -3455,42 +3383,39 @@ void func_800FB504_10A4B4(void) {
 		selectedInput = type->weapon1;
 	}
 
-	animFrame = D_80145BE0_154B90[selectedInput].unk0;
+	animBase = (WeaponEntry_80129864 *) &D_80145BE0_154B90[selectedInput];
+	animFrame = (u16)animBase->unk0;
 	if (animFrame >= 0x1195) {
-		animFrame = 0x1194;
-		D_80145BE0_154B90[selectedInput].unk0 = animFrame;
+		((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = 0x1194;
 	}
 
 	D_801591A8 = 1;
 	if (D_80050AD4 == 1) {
-		i = 1;
+		nextX = 1;
 	} else {
-		i = 0;
+		nextX = 0;
 	}
 
-	cameraTarget = (InputStruct_8012B150 *) D_80158FEC;
-	if (cameraTarget == NULL) {
-		cameraTarget = (InputStruct_8012B150 *) D_80158FF4;
-	}
+	tmp = D_80158FEC != NULL ? (s32) D_80158FEC : (s32) D_80158FF4;
 
-	func_8012B150_13A100((s32) D_80052B34, i, (InputStruct_8012B150 *) D_80158FF4, (s32) cameraTarget);
+	func_8012B150_13A100((s32) D_80052B34, nextX, (InputStruct_8012B150 *) D_80158FF4, tmp);
 
-	D_801591B4 = D_801591F8.unk20;
-	animBase[0] = animFrame;
-	D_80159028.unk0 = D_801591F8.unk18;
-	D_80159028.unk2 = D_801591F8.unk1C;
-	D_80159028.unk4 = D_801591F8.unk20;
+	D_801591B4 = D_801591F8.hit.unk8;
+	((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = animFrame;
+	D_80159028.unk0 = D_801591F8.hit.unk0;
+	D_80159028.unk2 = D_801591F8.hit.unk2;
+	D_80159028.unk4 = D_801591F8.hit.unk4;
 	D_801591A8 = 0;
 
 	if (type->unk4C & 0x08000000) {
-		restoreSigned = (s16) restoreSpeed;
 		if (D_80050AD4 == 1) {
-			type->gun2X = restoreSigned;
+			type->gun2X = restoreSpeed;
 		} else {
-			type->gun1X = restoreSigned;
+			type->gun1X = restoreSpeed;
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FB504_10A4B4.s")
 #endif
@@ -3686,29 +3611,16 @@ void func_800FC90C_10B8BC(VehicleInstance *arg0, s16 *arg1) {
 
 #ifdef NON_MATCHING
 void func_800FCA5C_10BA0C(void) {
-	s16 sp66;
-	u8 *var_s0;
-	u8 *var_s1;
-	VehicleInstance *var_s0_2;
-	u8 *temp_s4;
-	Unk80258250Entry *entry_80258250;
-	Unk80259D7EEntry *entry_80259D7E;
-	f32 var_f12;
-	f32 var_f6;
-	f64 temp_f20;
-	s16 temp_a0;
-	s16 temp_f10;
-	s16 temp_t4;
-	s16 temp_v0;
-	s32 temp_s3;
-	s32 temp_t0;
-	s32 temp_t1;
-	s32 temp_t6;
-	s32 var_s2;
-	s32 var_s2_2;
-	s8 *var_s5;
-	u16 temp_t4_2;
-	void *temp_s4_raw;
+	VehicleInstance *vehicle;
+	VehicleType *type;
+	Unk80259490 *spawn;
+	f32 squaredRadius;
+	s32 i;
+	s32 buildingIndex;
+	f64 scale;
+	s16 groundY;
+	s16 spawnValue;
+
 
 	D_80159300 = 0;
 	D_8013FD88_14ED38 = 0;
@@ -3717,21 +3629,18 @@ void func_800FCA5C_10BA0C(void) {
 		return;
 	}
 
-	var_s0 = (u8 *)&vehicleTypes[0x13];
-	while ((u32)var_s0 >= (u32)&vehicleTypes[1]) {
-		entry_80258250 = (Unk80258250Entry *)var_s0;
-		if ((currentLevel != 3) || (var_s0 != (u8 *)&vehicleTypes[0x14])) {
-			temp_t0 = entry_80258250->unk34 >> 1;
-			temp_t1 = entry_80258250->unk36 >> 1;
-			var_f12 = (f32)((temp_t0 * temp_t0) + (temp_t1 * temp_t1));
-			if (entry_80258250->unk16 != 1) {
-				temp_t6 = entry_80258250->unk38 >> 1;
-				var_f12 += (f32)(temp_t6 * temp_t6);
+	{
+		VehicleType *typeWalker;
+		typeWalker = &vehicleTypes[0x13]; do {
+			if ((currentLevel != 3) || (typeWalker != &vehicleTypes[0xD])) {
+				squaredRadius = (f32)(SQ(typeWalker->unk34 >> 1) + SQ(typeWalker->unk36 >> 1));
+				if (typeWalker->unk16 != 1) {
+					squaredRadius += (f32)SQ(typeWalker->unk38 >> 1);
+				}
+				typeWalker->unk8 = (s32)squaredRadius;
+				typeWalker->unkC = sqrtf(squaredRadius);
 			}
-			entry_80258250->unk8 = (s32)var_f12;
-			entry_80258250->unkC = (s16)(s32)sqrtf(var_f12);
-		}
-		var_s0 -= 0x70;
+		} while (typeWalker-- >= &vehicleTypes[1]);
 	}
 
 	D_80158FD8 = 0;
@@ -3747,8 +3656,7 @@ void func_800FCA5C_10BA0C(void) {
 	D_8014ED54 = 0;
 	D_8015930E = 0;
 	D_80158E64 = 0;
-	D_80050AD0 = 0;
-	D_80050AD4 = 0;
+	D_80050AD4 = D_80050AD0 = 0;
 	D_801591AC = 0;
 	D_80159320 = 0;
 	D_8015931A = 0;
@@ -3787,78 +3695,59 @@ void func_800FCA5C_10BA0C(void) {
 	D_8015929C = 0x4B0;
 	D_8014ED04 = 0x186A0;
 	D_801591C2 = 0;
-	D_80159020 = &D_80159028;
+	D_80159020 = (VehicleInstance *)&D_80159028;
 	D_80158F90 = 0;
 	D_80158FEC = 0;
-	D_80158FF4 = &D_80159000;
+	D_80158FF4 = &D_80159000.unk0;
 	D_80149438 = 0;
-	D_80159234 = 0;
-	D_8015930C = D_80159234;
+	D_8015930C = D_80159234 = 0;
 	D_80047724 = 6;
 	D_80047726 = 0x258;
 	D_80047728 = 0x4B0;
 
-	var_s1 = D_80259D7E;
-	var_s2 = 0x31;
-	while (var_s2 != 0) {
-		entry_80259D7E = (Unk80259D7EEntry *)var_s1;
-		entry_80259D7E->unk4 = 0;
-		temp_a0 = entry_80259D7E->unk4;
-		var_s1 -= 0x12;
-		entry_80259D7E->unk8 = temp_a0;
-		entry_80259D7E->unk6 = temp_a0;
-		var_s2 -= 1;
+
+	i = 50;
+	while (i--) {
+		D_80159050[i].unk0 = D_80159050[i].unk2 = D_80159050[i].unk4 = 0;
 	}
 
-	temp_f20 = D_80144A78_153A28[0];
-	var_s5 = &D_80158C4F;
-	var_s1 = D_80259D7E;
-	var_s0_2 = &vehicleInstances[127];
-	var_s2_2 = 0x7F;
-	while (var_s2_2 != 0) {
-		temp_t4 = ((Unk80259D7EEntry *)var_s1)->unk6;
-		temp_s4 = &vehicleTypes[((u8)temp_t4 & 0xFF)];
-		var_s0_2->unk1A = (u8)temp_t4;
-		func_800FAE84_109E34(var_s0_2);
-		func_800FB44C_10A3FC(var_s0_2, (f32)(((s16)((Unk80259D7EEntry *)var_s1)->unk0 << 8) + 0x80));
-		func_800FB484_10A434(var_s0_2, (f32)(((s16)((Unk80259D7EEntry *)var_s1)->unk2 << 8) + 0x80));
-		temp_s3 = func_8011E6FC_12D6AC(var_s0_2->unk0, var_s0_2->unk4, &sp66);
-		func_800FB468_10A418(var_s0_2, (f32)sp66);
-		if (temp_s3 != -1) {
-			var_s0_2->unk20 |= VEHICLE_FLAG_ON_BRIDGE;
+	scale = D_80144A78_153A28[0]; i = 127; do {
+		vehicle = &vehicleInstances[i];
+		spawn = &D_80259490[i];
+		spawnValue = spawn->unk6;
+		type = &vehicleTypes[(u8)spawnValue & 0xFF];
+		vehicle->unk1A = (u8)(spawnValue + type->unk14 * 0);
+		func_800FAE84_109E34(vehicle);
+		func_800FB44C_10A3FC(vehicle, (spawn->unk0 << 8) + 0x80);
+		func_800FB484_10A434(vehicle, (spawn->unk2 << 8) + 0x80);
+		buildingIndex = func_8011E6FC_12D6AC(vehicle->unk0, vehicle->unk4, &groundY);
+		func_800FB468_10A418(vehicle, groundY);
+		if (buildingIndex != -1) {
+			vehicle->unk20 |= VEHICLE_FLAG_ON_BRIDGE;
 		}
-		var_s0_2->unkE = (s16)(0x4000 - ((Unk80259D7EEntry *)var_s1)->unk8);
-		var_s0_2->unk6 = (s16)(0x4000 - ((Unk80259D7EEntry *)var_s1)->unk8);
-		var_s0_2->unk46 = (u8)((var_s2_2 & 0x3F) | (var_s0_2->unk46 & 0xFFC0));
-		*var_s5 = (s8)((Unk80259D7EEntry *)var_s1)->unkE;
-		if ((((Unk80259D7EEntry *)var_s1)->unk6 != 0) || (var_s2_2 == 0)) {
-			var_s0_2->unk20 |= (0x8000 | VEHICLE_FLAG_UNK1);
+		vehicle->unkE = 0x4000U - spawn->unk8;
+		vehicle->unk6 = 0x4000 - spawn->unk8;
+		vehicle->unk46 = (i & 0x3F) | (vehicle->unk46 & 0xFFC0);
+		D_80158BD0[i] = spawn->unkE;
+		if ((spawn->unk6 != 0) || (i == 0)) {
+			vehicle->unk20 |= 0x8000 | VEHICLE_FLAG_UNK1;
 		}
-		if ((currentLevel == 1) && (var_s0_2->unk1A == 0x12) && (D_80047F98 > 0)) {
-			var_s0_2->unk20 &= 0x7FFF;
+		if ((currentLevel == 1) && (vehicle->unk1A == 0x12) && (D_80047F98 > 0)) {
+			vehicle->unk20 &= 0x7FFF;
 		}
-		if ((((Unk80259D7EEntry *)var_s1)->unkC & 0x400) && ((currentLevel != 3) || (var_s0_2->unk1A != 0xD))) {
-			func_800FC90C_10B8BC(var_s0_2, (s16 *)var_s1);
+		if ((spawn->unkC & 0x400) && ((currentLevel != 3) || (vehicle->unk1A != 0xD))) {
+			func_800FC90C_10B8BC(vehicle, &spawn->unk0);
 		}
-		temp_v0 = ((Unk80259D7EEntry *)var_s1)->unkA;
-		if (temp_v0 == 1) {
-			var_s0_2->unk3C = 1;
+		spawnValue = spawn->unkA;
+		if (spawnValue == 1) {
+			vehicle->unk3C = 1;
 		} else {
-			var_s0_2->unk3C = (s16)(s32)((f64)(f32)(temp_s4[0x61] << 8) * ((f64)(f32)temp_v0 * temp_f20));
+			vehicle->unk3C = (f32)(type->unk61 << 8) * ((f32)spawnValue * scale);
 		}
-		temp_t4_2 = temp_s4[0x3A];
-		var_f6 = (f32)temp_t4_2;
-		if ((s32)temp_t4_2 < 0) {
-			var_f6 += 4294967296.0f;
-		}
-		temp_f10 = ((Unk80259D7EEntry *)var_s1)->unk10;
-		var_s0_2->unk1C = (s16)(s32)((f64)var_f6 * ((f64)(f32)temp_f10 * temp_f20));
-		var_s0_2 -= 1;
-		var_s1 -= 0x12;
-		var_s5 -= 1;
-		var_s2_2 -= 1;
-	}
+		vehicle->unk1C = (f32)(u32)type->hitPoints * ((f32)spawn->unk10 * scale);
+	} while (i--);
 
+	if (D_80158FD8 == 1) {}
 	func_800FAD10_109CC0();
 	func_800FD510_10C4C0(0, 0);
 	func_800FB504_10A4B4();
@@ -4067,8 +3956,6 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	D_8004DCB4 = (f32)D_80052B34->unk0;
 	D_8004DCB8 = (f32)D_80052B34->unk4;
 }
-
-// CURRENT(395): corrected percentage scaling and spawn array; search-loop scheduling remains.
 
 #ifdef NON_MATCHING
 void func_800FD858_10C808(s16 arg0) {
@@ -5560,7 +5447,6 @@ void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	}
 }
 
-// CURRENT(1466)
 void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s16 temp_s0;
 	f32 temp_f14;
@@ -5607,7 +5493,6 @@ void func_801022F4_1112A4(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(887)
 void func_80102600_1115B0(VehicleInstance *arg0, s16 arg1, f32 arg2) {
 	f32 temp_f20;
 	f32 temp_f22;
@@ -5764,7 +5649,6 @@ void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 	}
 }
 
-// CURRENT(9396): corrected current-point updates and terrain-test exit; floating allocation remains.
 #ifdef NON_MATCHING
 void func_80102FA4_111F54(void) {
 	UnkF9230Func80102FA4Point *points;
@@ -7057,8 +6941,6 @@ void func_80106628_1155D8(VehicleInstance *arg0) {
 	}
 }
 
-// https://decomp.me/scratch/kngxs
-// CURRENT(5064)
 void func_80107184_116134(VehicleInstance *arg0, s32 arg1, s32 arg2, f32 arg3)
 {
 	s32 headingDelta;
@@ -7272,7 +7154,6 @@ void func_80107970_116920(VehicleInstance *arg0, s32 arg1) {
 	}
 }
 
-// CURRENT(1435)
 void func_80107EBC_116E6C(VehicleInstance *arg0) {
 	f32 varX;
 	f32 varY;
@@ -9530,7 +9411,6 @@ void func_8010F5D8_11E588(VehicleInstance *arg0) {
 	arg0->unk24 += func_800038E0_44E0() & 0x400;
 }
 
-// CURRENT(920)
 int func_8010F72C_11E6DC(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s32 idx;
 	BuildingInstance *building;
@@ -9985,8 +9865,6 @@ s32 func_8011049C_11F44C(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	return 0;
 }
 
-// https://decomp.me/scratch/kdokH
-// CURRENT(6373)
 s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	s16 sp76;
 	s16 sp74;

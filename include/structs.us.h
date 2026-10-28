@@ -398,16 +398,19 @@ typedef struct {
 	/* 0x08 */ s32 z;
 } Vec3i; /* size = 0x0C */
 
-typedef struct {
-	/* 0x00 */ union {
-		s16 unk0;
-		u16 unk0Unsigned;
+typedef union {
+	struct {
+		/* 0x00 */ union {
+			s16 unk0;
+			u16 unk0Unsigned;
+		};
+		/* 0x02 */ union {
+			s16 unk2;
+			u16 unk2Unsigned;
+		};
+		/* 0x04 */ s16 unk4;
 	};
-	/* 0x02 */ union {
-		s16 unk2;
-		u16 unk2Unsigned;
-	};
-	/* 0x04 */ s16 unk4;
+	s16 components[3];
 } Unk800311A0; /* size = 0x06 */
 
 typedef struct {
@@ -1904,11 +1907,12 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ u8 pad4[0x2];
+	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
-	/* 0x0C */ u8 padC[0x4];
+	/* 0x0C */ s16 unkC;
+	/* 0x0E */ s16 unkE;
 	/* 0x10 */ s16 unk10;
 } Unk80259490; /* size = 0x12 */
 
