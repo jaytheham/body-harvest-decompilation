@@ -42,6 +42,10 @@ This functionality may be removed if not needed.
 
 Reading assembly from file is also supported, by either `GLOBAL_ASM("file.s")` or `#pragma GLOBAL_ASM("file.s")`.
 
+Several files can contribute to the same block: `#pragma GLOBAL_ASM("function.s", "constants.s")`.
+They are read in order, with path remapping and dependencies applied to each file.
+This lets a read-only function extraction use a separate `.late_rodata` file for its literal placeholders.
+
 ### What is supported?
 
 `.text`, `.data`, `.bss` and `.rodata` sections, `.word`/`.incbin`, `.ascii`/`.asciz`, and `-g`, `-g3`, `-O1`, `-O2`, `-framepointer` and `-mips1`/`-mips2` flags to the IDO compiler.

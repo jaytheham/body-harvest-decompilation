@@ -27,6 +27,7 @@ You will be tasked with an existing C function to modify iteratively until it pr
 - Important: Rather than blindly making changes when dealing with incorrect or out-of-order instructions, first check for other functions with sections of assembly that are the same as the target assembly section you are focussed on using `.\tools\Search-AsmPattern.ps1 -Offset <ROM offset> -Count <number of instructions to match>` e.g. `.\tools\Search-AsmPattern.ps1 -Offset 0x884C0 -Count 8` look up the C implementation of any functions it returns as reference for your own implementation - if they're not wrapped in NON_MATCHING then they are already matched and can be used as a reference for how to implement the same logic in your function.
 - The majority of the game code is already matched, you should make extensive use of `Search-AsmPattern.ps1` and any other methods that will enable you to find already matching code that can be used verbatim or as reference for your current function.
 - The workbench will help resolve any tricky compiler behaviour `https://github.com/akratch/n64-decomp-workbench/blob/main/docs/START_HERE.md`
+- Compiler debug tools are available, read `DebugCompiler.md`
 
 # Your Workflow
 1. If on master branch, create a new git branch named like `decomp-yyyy-MM-dd-HH-mm`
@@ -52,7 +53,7 @@ If a function has a switch statement and there is an associated jump table const
 - The EU build includes these three US headers too (through `include/common.eu.h`), so a declaration added there also serves the shared files (`src.us/core/` and `shared_overlay_files.txt`). The `.eu.h` headers are for declarations that exist in the PAL release only (none yet).
 - Important: Replace all pointer math with struct/array access!
 - Remove unnecessary casts.
-- Remove excessive temporary variables.
+- Remove unnecessary temporary variables.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Search in `/asm` for any `jal` references (e.g. `jal        func_80073DC0_82D70`) to the target function to determine correct parameter and return types.
 
