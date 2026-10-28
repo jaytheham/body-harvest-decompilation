@@ -1006,7 +1006,6 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 }
 
 // AI - Create a multi-part debris/shatter effect with two linked entries
-#ifdef NON_MATCHING
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	s32 pad0;
 	s32 pad1;
@@ -1014,11 +1013,12 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 	s16 effect;
 	Unk84EECEffect *entry;
 	Unk84EECEffectBytes *other;
-	u8 ret;
-	s16 temp;
-	u8 life;
-	Unk84EECEffectTailUpdate *tail;
 	s16 clamp;
+	u8 ret;
+	Unk84EECEffectTailUpdate *tail;
+	u8 temp;
+	s32 childIndex;
+	Unk84EECEffectTailUpdate *childTail;
 
 	pad0 = 0;
 	pad1 = 0;
@@ -1033,7 +1033,8 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			return 0xFB;
 		} else {
 			entry = &D_800FB7B0[effect];
-					other = (Unk84EECEffectBytes *)&D_800FB7B0[entry->unk4];
+			childIndex = entry->unk4;
+			other = (Unk84EECEffectBytes *)&D_800FB7B0[childIndex];
 			entry->unk2 = arg7;
 			entry->unk8 = arg0 << 2;
 			entry->unkA = arg1 << 2;
@@ -1044,6 +1045,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			other->unkA = arg5;
 			other->unkB = arg6;
 			other->unkC = arg9;
+			childTail = (Unk84EECEffectTailUpdate *)&other->unk8;
 
 			entry->unkE = temp;
 			entry->unkF = arg11;
@@ -1051,6 +1053,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			tail = (Unk84EECEffectTailUpdate *)&entry->unk8;
 
 			clamp = temp - 0x78;
+
 			if (clamp < 0) {
 				clamp = 0;
 			}
@@ -1068,24 +1071,19 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			}
 			tail->unkB = clamp;
 
-			tail = (Unk84EECEffectTailUpdate *)&other->unk8;
-			tail->pad8 = arg13;
-			life = arg8;
-			if (life >= 0x4C) {
-				life = 0x4B;
-			} else if (life == 0) {
-				life = 1;
+			childTail->pad8 = arg13;
+			if (arg8 >= 0x4C) {
+				arg8 = 0x4B;
+			} else if (arg8 == 0) {
+				arg8 = 1;
 			}
-			tail->unk5 = life;
-			tail->unk6.word = 0;
+			childTail->unk5 = arg8;
+			childTail->unk6.word = 0;
 		}
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008574C_16D80C.s")
-#endif
 
 // AI - Wrapper to create a debris effect with preset parameters
 void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
