@@ -446,7 +446,7 @@ void func_80084508_549B8(u8 arg0);
 void func_8008472C_54BDC(u8 arg0);
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11);
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
-u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7);
+u8 func_80084C68_16CD28(s16 arg0, volatile s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7);
 void func_800857D4_55C84(u8 arg0, f32 *arg1, u8 arg2, u8 arg3);
 s32 func_80085CB8_56168(s16 arg0);
 void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6);

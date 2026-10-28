@@ -745,14 +745,13 @@ s32 func_80084C18_16CCD8(u8 arg0)
 	return result;
 }
 
-#ifdef NON_MATCHING
 // Create a fire effect
-u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
-	UnkFB6F8Entry *owner;
+u8 func_80084C68_16CD28(s16 arg0, volatile s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	Unk84EECEffect *entry;
-	Unk84EECEffect *linked;
-	u8 slot;
+	Unk84EECEffectTailUpdate *data;
 	s16 effect;
+	u16 bright;
+	u8 slot;
 
 	if ((slot = func_80083224_16B2E4(0)) != 0xFB) {
 		effect = func_80083584_16B644(slot);
@@ -763,14 +762,13 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
-			owner = &D_800FB6F8[slot];
+		D_800FB6F8[slot].unkA = effect;
 
+		data = (Unk84EECEffectTailUpdate *)&D_800FB7B0[entry->unk4].unk8;
 		entry->unk8 = arg0 * 4;
-		owner->unkA = effect;
-		entry->unkC = arg2 * 4;
-		linked = &D_800FB7B0[entry->unk4];
 		entry->unkA = arg1 * 4;
-		linked->unkC = 0;
+		entry->unkC = arg2 * 4;
+		data->pad4 = 0;
 
 		entry->unkE = arg5;
 		entry->unkF = arg6;
@@ -786,39 +784,38 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 			entry->unk2 = 0x10;
 		}
 
-		linked->unkA = arg3;
-		if (linked->unkA < 0x18) {
-			linked->unkA = 0x18;
+		data->pad2 = arg3;
+		if (data->pad2 < 0x18) {
+			data->pad2 = 0x18;
 		}
 
-		linked->unk8 = arg4;
+		data->pad0 = arg4;
 
-		if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
-			entry->unk11 = 0xFF;
-		} else {
-			entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
+		data = (Unk84EECEffectTailUpdate *)&entry->unk8;
+		bright = (u8)(arg5 / 3) + arg5;
+		if (bright >= 0x100) {
+			bright = 0xFF;
 		}
+		data->unk9 = bright;
 
-		if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
-			entry->unk12 = 0xFF;
-		} else {
-			entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
+		bright = (u8)(arg6 / 3) + arg6;
+		if (bright >= 0x100) {
+			bright = 0xFF;
 		}
+		data->unkA = bright;
 
-		if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
-			entry->unk13 = 0xFF;
-		} else {
-			entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
+		bright = (u8)(arg7 / 3) + arg7;
+		if (bright >= 0x100) {
+			bright = 0xFF;
 		}
+		D_800FB7B0[effect].unk13 = bright;
 
-		owner->unk2 = func_80084C18_16CCD8(slot);
+		D_800FB6F8[slot].unk2 = func_80084C18_16CCD8(slot);
 	}
 
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
-#endif
+
 
 // AI - Create a linked paired effect (two entries linked together)
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
