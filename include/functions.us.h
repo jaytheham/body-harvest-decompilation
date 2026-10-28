@@ -1739,7 +1739,7 @@ void func_8011BA80_12AA30(u8 arg0, s16 arg1);
 
 void func_80086FC4_16F084(s32 arg0);
 void func_80087A40_16FB00(u8 arg0);
-void func_80087CB8_16FD78(s32 arg0);
+void func_80087CB8_16FD78(u8 arg0);
 void func_80087E3C_16FEFC(void);
 void func_800881C0_170280(void);
 void func_80088654_170714(void);

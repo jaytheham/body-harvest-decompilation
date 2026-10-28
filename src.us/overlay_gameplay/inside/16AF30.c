@@ -1811,20 +1811,15 @@ void func_80087A40_16FB00(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Render slot type 2 effects: simple shaded triangles
-void func_80087CB8_16FD78(s32 arg0) {
-	f32 sp58[3];
+void func_80087CB8_16FD78(u8 arg0) {
 	UnkFB6F8Entry *entry;
-	Unk84EECEffect *effectBase;
-	Unk84EECEffect *effect;
-	s8 *color;
+	Unk84EECEffectPositionView *root;
 	s16 next;
+	Vec3f position;
 
-	entry = &D_800FB6F8[arg0 & 0xFF];
-	effectBase = D_800FB7B0;
-	next = effectBase[entry->unk6].unk4;
-	color = &effectBase[entry->unk6].unkE;
+	entry = &D_800FB6F8[arg0];
+	next = D_800FB7B0[entry->unk6].unk4;
+	root = (Unk84EECEffectPositionView *)&D_800FB7B0[entry->unk6].unk8;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -1832,18 +1827,14 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 	if ((next != -5) && (next != -6)) {
 		do {
-		effect = &D_800FB7B0[next];
-		sp58[0] = effect->unk8;
-		sp58[1] = effect->unkA;
-		sp58[2] = effect->unkC;
-		func_80089148_171208(sp58, (u8 *)color, effectBase[entry->unk6].unk2, effect->unk11);
-		next = effect->unk4;
+			position.x = D_800FB7B0[next].unk8;
+			position.y = D_800FB7B0[next].unkA;
+			position.z = D_800FB7B0[next].unkC;
+			func_80089148_171208(&position.x, &root->unk6.bytes.high, D_800FB7B0[entry->unk6].unk2, D_800FB7B0[next].unk11);
+			next = D_800FB7B0[next].unk4;
 		} while ((next != -5) && (next != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087CB8_16FD78.s")
-#endif
 
 void func_80087E3C_16FEFC(void) {
 	Vec3f dir;
@@ -2745,7 +2736,7 @@ void func_8008B1A8_173268(void) {
 					func_80087A40_16FB00(i);
 					break;
 				case 2:
-					func_80087CB8_16FD78(i & 0xFF);
+					func_80087CB8_16FD78(i);
 					break;
 				case 3:
 					func_80087E3C_16FEFC();
