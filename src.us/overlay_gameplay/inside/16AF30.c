@@ -1845,13 +1845,10 @@ void func_80087CB8_16FD78(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087CB8_16FD78.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Render slot type 3 effects: camera-facing sprites with texture
 void func_80087E3C_16FEFC(void) {
-	s16 effect;
-	s32 pad;
 	Vec3f dir;
-	Unk84EECEffect *entry;
+	s16 effect;
+	Unk84EECEffectPositionView *pos;
 
 	D_800FB6E5 = 0x10;
 	D_800FB6E6 = 0x10;
@@ -1860,39 +1857,31 @@ void func_80087E3C_16FEFC(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 
-	pad = 0;
-
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			s16 *pos;
+			pos = (Unk84EECEffectPositionView *)&D_800FB7B0[effect].unk8;
 
-			entry = &D_800FB7B0[effect];
-		
 			gDPPipeSync(D_8005BB2C++);
-			gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E880 + (entry->unk12 << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E880 + (pos->unkA << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gDPPipeSync(D_8005BB2C++);
 
-			dir.x = (D_8008DDF4_175EB4 * 4.0f) - entry->unk8;
-			dir.y = (D_8008DDF8_175EB8 * 4.0f) - entry->unkA;
-			dir.z = (D_8008DDFC_175EBC * 4.0f) - entry->unkC;
+			dir.x = (D_8008DDF4_175EB4 * 4.0f) - pos->unk0;
+			dir.y = (D_8008DDF8_175EB8 * 4.0f) - pos->unk2;
+			dir.z = (D_8008DDFC_175EBC * 4.0f) - pos->unk4;
 			func_80083014_16B0D4(&dir, &dir);
 
-			pos = &entry->unk8;
-			D_800FB6D0.x = pos[0] + (dir.x * ((u8 *)pos)[1]);
-			D_800FB6D0.y = pos[1] + (dir.y * ((u8 *)pos)[1]);
-			D_800FB6D0.z = pos[2] + (dir.z * ((u8 *)pos)[1]);
+			D_800FB6D0.x = pos->unk0 + (dir.x * (f32)(u32)pos->unk9);
+			D_800FB6D0.y = pos->unk2 + (dir.y * (f32)(u32)pos->unk9);
+			D_800FB6D0.z = pos->unk4 + (dir.z * (f32)(u32)pos->unk9);
 			D_800FB6E4 = 0xFF;
-			D_800FB6E0 = entry->unk2;
-			D_800FB6DC = (s8 *)(pos + 3);
-		func_8008A1D8_172298();
+			D_800FB6E0 = D_800FB7B0[effect].unk2;
+			D_800FB6DC = (s8 *)&pos->unk6.bytes.high;
+			func_8008A1D8_172298();
 
-			effect = entry->unk4;
+			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -5) && (effect != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087E3C_16FEFC.s")
-#endif
 
 void func_800881C0_170280(void)
 {
