@@ -1894,69 +1894,61 @@ void func_80087E3C_16FEFC(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087E3C_16FEFC.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800881C0_170280(void)
 {
-  Unk89834Pos *spAC;
-  s32 var_s6;
-  Vec3f sp9C;
-  s16 var_t2;
-  Unk89834Pos *s1;
-  var_t2 = D_800FB79A;
+  /* Preserve the original previous-payload stack read before the first iteration. */
+  Unk89834Pos *previous;
+  s16 textureSide;
+  s16 effect;
+  Vec3f towardCamera;
+  Unk89834Pos *particle;
+  effect = D_800FB79A;
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
   D_800FB6E5 = 0x20;
   D_800FB6E6 = 0x20;
-  var_s6 = 0;
-  if ((var_t2 != (-5)) && (var_t2 != (-6)))
+  textureSide = 0;
+  if ((effect != -5) && (effect != -6))
   {
-    if (!s1->unk4)
-    {
-    }
-    spAC = spAC;
+    previous = previous;
     do
     {
       gDPPipeSync(D_8005BB2C++);
-      if (var_s6 == 0)
+      if (textureSide == 0)
       {
-        gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_100DA00) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
-        var_s6 = 1;
-        D_800FB6E4 = spAC->unk9 - 0x28;
+        gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        textureSide = 1;
+        D_800FB6E4 = previous->unk9 - 0x28;
       }
       else
       {
-        gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_100DC00) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
-        var_s6 = 0;
-        D_800FB6E4 = spAC->unk9 + spAC->unkA;
+        gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        textureSide = 0;
+        D_800FB6E4 = previous->unk9 + previous->unkA;
       }
       gDPPipeSync(D_8005BB2C++);
-      s1 = &D_800FB7B0[var_t2];
-      s1 = (Unk89834Pos *) (&s1->unk8);
-      spAC = s1;
-      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unk8);
-      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkA);
-      s1 = &D_800FB7B0[var_t2];
-      sp9C.z = (D_800E7410.z * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkC);
-      func_80083014_16B0D4(&sp9C, &sp9C);
-      D_800FB6D0.x = ((f32) s1->unk0) + (sp9C.x * ((f32) s1->unkD));
-      D_800FB6D0.y = ((f32) s1->unk2) + (sp9C.y * ((f32) s1->unkD));
-      D_800FB6D0.z = ((f32) s1->unk4) + (sp9C.z * ((f32) s1->unkD));
-      D_800FB6DC = &s1->unk6;
-      D_800FB6E0 = (f32) s1->unk2;
-      D_800FB6E4 = s1->unk9 + s1->unkA;
+      particle = (Unk89834Pos *)&D_800FB7B0[effect].unk8;
+      previous = particle;
+      towardCamera.x = (D_800E7410.x * 4.0f) - D_800FB7B0[effect].unk8;
+      towardCamera.y = (D_800E7410.y * 4.0f) - D_800FB7B0[effect].unkA;
+      towardCamera.z = (D_800E7410.z * 4.0f) - D_800FB7B0[effect].unkC;
+      func_80083014_16B0D4(&towardCamera, &towardCamera);
+      D_800FB6D0.x = particle->unk0 + (towardCamera.x * ((f32)(u32)particle->unkD));
+      D_800FB6D0.y = particle->unk2 + (towardCamera.y * ((f32)(u32)particle->unkD));
+      D_800FB6D0.z = particle->unk4 + (towardCamera.z * ((f32)(u32)particle->unkD));
+      D_800FB6DC = &particle->unk6;
+      D_800FB6E0 = D_800FB7B0[effect].unk2;
+      D_800FB6E4 = particle->unk9 + particle->unkA;
       func_8008A1D8_172298();
-      var_t2 = s1->unk4;
+      effect = D_800FB7B0[effect].unk4;
     }
-    while ((var_t2 != (-5)) && (var_t2 != (-6)));
-    if (var_t2 == (-6))
+    while ((effect != -5) && (effect != -6));
+    if (effect == -6)
     {
-      spAC = spAC;
+      previous = previous;
     }
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800881C0_170280.s")
-#endif
 
 // Render slot type 5 fire particles.
 void func_80088654_170714(void) {
