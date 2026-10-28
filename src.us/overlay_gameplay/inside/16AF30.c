@@ -14,13 +14,13 @@ u32 D_800A2620_18A6E0[28] = {
 };
 
 // AI - Animated sprite type table (8 bytes per type)
-s8 D_800A2690_18A750[8] = {
-	0x01, 0x03, 0x02, 0x0A, 0x00, 0x00, 0x20, 0x20,
+EffectParticleConfig D_800A2690_18A750[1] = {
+	{0x01, 0x03, 0x02, 0x0A, 0x00, 0x00, {{0x20, 0x20}}},
 };
 
 // AI - Animated sprite entry data table (4 bytes per type)
-u8 D_800A2698_18A758[4] = {
-	0xC8, 0x96, 0x64, 0xFF,
+EffectParticleColor D_800A2698_18A758[1] = {
+	{0xC8, 0x96, 0x64, 0xFF},
 };
 
 // AI - Animated sprite texture base pointers
@@ -2568,7 +2568,7 @@ void func_8008A59C_17265C(void) {
 	u8 i;
 
 	for (i = 0; i < 0x14; i++) {
-		(&D_800FC8E8)[i].unkA = 0;
+		D_800FC8E8[i].unkA = 0;
 	}
 	D_800FCA78 = 0;
 	D_800FCA79 = 0;
@@ -2584,13 +2584,13 @@ void func_8008A5E4_1726A4(void) {
 	i = 0;
 	if ((s32)activeCount > 0) {
 		do {
-			entry = &(&D_800FC8E8)[i];
+			entry = &D_800FC8E8[i];
 			if (entry->unkA != 0) {
 				if (entry->unkF == 0) {
 					if (entry->unk12 < entry->unkD) {
 						entry->unkD = (u8)(entry->unkD - entry->unk12);
 						entry->unkE++;
-						if (entry->unkE >= D_800A2690_18A750[entry->unkC * 8]) {
+						if (entry->unkE >= D_800A2690_18A750[entry->unkC].phaseCount) {
 							entry->unkE = 0;
 						}
 						entry->unkA += entry->unk10;
@@ -2638,7 +2638,7 @@ void func_8008A704_1727C4(void) {
 	}
 
 	do {
-		entry = &(&D_800FC8E8)[i];
+		entry = &D_800FC8E8[i];
 		
 		if (entry->unkA == 0) {
 			i++;
@@ -2658,7 +2658,7 @@ void func_8008A704_1727C4(void) {
 
 		gDPPipeSync(D_8005BB2C++);
 
-		tableA = &D_800A2690_18A750[t5 * 8];
+		tableA = (s8 *)&D_800A2690_18A750[t5];
 		unk5 = tableA[5];
 
 		if (unk5 == 0) {
@@ -2760,101 +2760,83 @@ void func_8008A704_1727C4(void) {
 #endif
 
 // AI - Allocate a new animated sprite slot in UnkFC8E8Entry table
-#ifdef NON_MATCHING
 s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
-	UnkFC8E8Entry *entry;
-	s8 *tableA;
-	u8 *tableB;
 	u8 slot;
-	u8 search;
-	u8 *arg3Ptr;
-	s32 divisor;
-	s32 result;
+	u8 i;
 
-	if ((s32) D_800FCA78 >= 0x14) {
+	if (D_800FCA78 >= 0x14) {
 		return 0xFF;
 	}
 
-	slot = D_800FCA79;
-	entry = &(&D_800FC8E8)[slot];
-	entry->unk0 = arg0 * 4;
-	entry->unk2 = arg1 * 4;
-	entry->unk4 = arg2 * 4;
-	entry->unkA = arg4;
-	entry->unkC = arg3;
-	entry->unkF = 0;
-	tableA = &D_800A2690_18A750[arg3 * 8];
-	entry->unk10 = tableA[1];
-	entry->unk11 = tableA[2];
-	entry->unk12 = tableA[3];
+	D_800FC8E8[D_800FCA79].unk0 = arg0 * 4;
+	D_800FC8E8[D_800FCA79].unk2 = arg1 * 4;
+	D_800FC8E8[D_800FCA79].unk4 = arg2 * 4;
+	D_800FC8E8[D_800FCA79].unkC = arg3;
+	D_800FC8E8[D_800FCA79].unkF = 0;
+	D_800FC8E8[D_800FCA79].unkA = arg4;
+	D_800FC8E8[D_800FCA79].unk10 = D_800A2690_18A750[arg3].sizeStep;
+	D_800FC8E8[D_800FCA79].unk11 = D_800A2690_18A750[arg3].heightStep;
+	D_800FC8E8[D_800FCA79].unk12 = D_800A2690_18A750[arg3].fadeStep;
+	arg4 = func_800038E0_44E0_U16();
+	D_800FC8E8[D_800FCA79].unkE = arg4 % D_800A2690_18A750[arg3].phaseCount;
 
-	result = func_800038E0_44E0(entry, arg1, arg2, &D_800FC8E8);
 	slot = D_800FCA79;
-	entry = &(&D_800FC8E8)[slot];
-	divisor = tableA[0];
-	arg3Ptr = &arg3;
-	tableB = &D_800A2698_18A758[*arg3Ptr * 4];
-	entry->unkE = result % divisor;
-	entry->unkD = tableB[3];
-	entry->unk6 = tableB[0];
-	entry->unk7 = tableB[1];
-	entry->unk8 = tableB[2];
+	D_800FC8E8[D_800FCA79].unkD = D_800A2698_18A758[arg3].alpha;
+	D_800FC8E8[D_800FCA79].unk6 = D_800A2698_18A758[arg3].r;
+	D_800FC8E8[D_800FCA79].unk7 = D_800A2698_18A758[arg3].g;
+	D_800FC8E8[D_800FCA79].unk8 = D_800A2698_18A758[arg3].b;
 
-	for (search = slot; search < 0x14; search++) {
-		if ((&D_800FC8E8)[search].unkA == 0) {
-			D_800FCA79 = search;
-			search = 0x14;
+	for (i = slot; i < 0x14; i++) {
+		if (D_800FC8E8[i].unkA == 0) {
+			D_800FCA79 = i;
+			i = 0x14;
 		}
 	}
-
 	D_800FCA78++;
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008AD40_172E00.s")
-#endif
 
 // AI - Set sprite entry color values
 void func_8008AF08_172FC8(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unk6 = arg1;
-		(&D_800FC8E8)[arg0].unk7 = arg2;
-		(&D_800FC8E8)[arg0].unk8 = arg3;
+		D_800FC8E8[arg0].unk6 = arg1;
+		D_800FC8E8[arg0].unk7 = arg2;
+		D_800FC8E8[arg0].unk8 = arg3;
 	}
 }
 
 // AI - Set sprite entry unkF field
 void func_8008AF5C_17301C(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unkD = arg1;
+		D_800FC8E8[arg0].unkD = arg1;
 	}
 }
 
 // AI - Set sprite entry unk10 field
 void func_8008AF94_173054(u8 arg0, s8 arg1) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unk12 = arg1;
+		D_800FC8E8[arg0].unk12 = arg1;
 	}
 }
 
 // AI - Set sprite entry velocity values
 void func_8008AFD0_173090(u8 arg0, s8 arg1, s8 arg2) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unk10 = arg1;
-		(&D_800FC8E8)[arg0].unk11 = arg2;
+		D_800FC8E8[arg0].unk10 = arg1;
+		D_800FC8E8[arg0].unk11 = arg2;
 	}
 }
 
 // AI - Set sprite entry unkD field
 void func_8008B020_1730E0(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unkF = arg1;
+		D_800FC8E8[arg0].unkF = arg1;
 	}
 }
 
 // AI - Free a sprite entry in the UnkFC8E8Entry table
 void func_8008B058_173118(u8 arg0) {
-	(&D_800FC8E8)[arg0].unkA = 0;
+	D_800FC8E8[arg0].unkA = 0;
 	if (arg0 < D_800FCA79) {
 		D_800FCA79 = arg0;
 	}
