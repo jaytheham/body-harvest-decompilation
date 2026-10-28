@@ -3630,11 +3630,9 @@ void func_800FC568_10B518(void) {
 	gDPPipeSync(D_8005BB30++);
 }
 
-// CURRENT(205): word return restores result copy; second flag register and epilogue remain.
-#ifdef NON_MATCHING
-s32 func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
+void func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
 	RoadTileInfo *entry;
-	s32 result;
+	u16 result;
 	TerrainObjectCell *tile;
 	u8 idx;
 
@@ -3647,18 +3645,15 @@ s32 func_800FC7E0_10B790(s8 arg0, s8 arg1, s16 *arg2, s16 *arg3) {
 	}
 	*arg2 = entry[idx].mapX;
 	*arg3 = entry[idx].mapZ;
-	result = func_800B325C_C220C(arg0, arg1, 0xFFFF);
+	result = func_800B325C_C220C_U16(arg0, arg1, 0xFFFF);
 	if ((s16)(((result & 0x4000) == 0) ^ ((arg0 & 1) == 0)) != 0) {
 		*arg2 = 0x100 - *arg2;
 	}
 	if ((s16)(((result & 0x2000) == 0) ^ ((arg1 & 1) == 0)) != 0) {
 		*arg3 = 0x100 - *arg3;
 	}
-	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FC7E0_10B790.s")
-#endif
+
 
 void func_800FC90C_10B8BC(VehicleInstance *arg0, s16 *arg1) {
 	s16 sp36;

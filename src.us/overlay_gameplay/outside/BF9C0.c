@@ -1028,6 +1028,8 @@ void func_800B31FC_C21AC(s8 arg0, s8 arg1)
 	tile->terrainType = 12;
 }
 
+#pragma weak func_800B325C_C220C_U16 = func_800B325C_C220C
+
 /* Test bits in the world tile map at (arg0, arg1) */
 s32 func_800B325C_C220C(s8 arg0, s8 arg1, u16 arg2)
 {
