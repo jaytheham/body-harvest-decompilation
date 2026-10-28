@@ -915,22 +915,6 @@ const f32 D_802E7B8C_32BCDC[] = { 0.0f };
 
 const f64 D_802E7B90_32BCE0[] = { 1000.0 };
 
-const f64 D_802E7B98_32BCE8[] = { 1000.0 };
-
-const f64 D_802E7BA0_32BCF0[] = { 628.3185308 };
-
-const f64 D_802E7BA8_32BCF8[] = { 3.141592654 };
-
-const f64 D_802E7BB0_32BD00[] = { 628.3185308 };
-
-const f64 D_802E7BB8_32BD08[] = { 402.123859712 };
-
-const f64 D_802E7BC0_32BD10[] = { 402.123859712 };
-
-const f64 D_802E7BC8_32BD18[] = { 270.176968244 };
-
-const f64 D_802E7BD0_32BD20[] = { 270.176968244 };
-
 void func_802D4CD0_318E20(s32 arg0, s32 arg1) {
 	arg1 = arg0;
 	if (arg0 < 0x14) {
@@ -4286,8 +4270,6 @@ void func_802DF290_3233E0(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF290_3233E0.s")
 #endif
 
-// MATCHED - but rodata
-#ifdef NON_MATCHING
 void func_802DF940_323A90(void) {
 	s32 randomYaw;
 	s32 randomPitch;
@@ -4362,9 +4344,6 @@ void func_802DF940_323A90(void) {
 	}
 	D_8014D17C++;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF940_323A90.s")
-#endif
 
 void func_802DFE68_323FB8() {
 	AlienInstance *inst;
@@ -4584,7 +4563,7 @@ void func_802E0588_3246D8(u8 arg0) {
 	D_802E7184_32B2D4 = yaw;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s", "asm/late_rodata/comet_wheel_rotation.s")
 #endif
 
 void func_802E0B64_324CB4(u8 arg0) {
