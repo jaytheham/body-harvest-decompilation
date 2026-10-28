@@ -1744,7 +1744,7 @@ void func_80087E3C_16FEFC(void);
 void func_800881C0_170280(void);
 void func_80088654_170714(void);
 void func_80088B9C_170C5C(void);
-void func_80088DFC_170EBC(s32 arg0);
+void func_80088DFC_170EBC(u8 arg0);
 void func_80089BCC_171C8C(u8 arg0);
 void func_8008A704_1727C4(void);
 void func_8008B594_173654(void);

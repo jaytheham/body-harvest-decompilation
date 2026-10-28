@@ -2115,24 +2115,25 @@ void func_80088B9C_170C5C(void) {
 }
 
 // AI - Render slot type 6 effects with prim/env colors (glow effects)
-#ifdef NON_MATCHING
-void func_80088DFC_170EBC(s32 arg0) {
+void func_80088DFC_170EBC(u8 arg0) {
 	s16 effect;
-	Unk84EECEffectTail *base;
+	s16 rootIndex;
+	s16 childIndex;
+	Unk84EECEffectPositionView *base;
 	Unk84EECEffect *baseStart;
 	Unk84EECEffect *entry;
-	s16 posX;
-	s16 posY;
-	s16 posZ;
+	Unk84EECEffect *initialEntry;
 
-	baseStart = &D_800FB7B0[D_800FB6F8[arg0 & 0xFF].unk6];
-	entry = &D_800FB7B0[baseStart->unk4];
-	effect = entry->unk4;
+	rootIndex = D_800FB6F8[arg0].unk6;
+	baseStart = &D_800FB7B0[rootIndex];
+	childIndex = baseStart->unk4;
+	initialEntry = &D_800FB7B0[childIndex];
+	effect = initialEntry->unk4;
 
 	D_800FB6E5 = 0x10;
 	D_800FB6E6 = 0x10;
 
-	if (*(u16 *)&entry->unkE > 0) {
+	if (((Unk84EECEffectBytes *)initialEntry)->unkE.word > 0) {
 		return;
 	}
 
@@ -2142,30 +2143,24 @@ void func_80088DFC_170EBC(s32 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if ((effect != -6) && (effect != -5)) {
-		base = (Unk84EECEffectTail *)&baseStart->unk8;
+		base = (Unk84EECEffectPositionView *)&baseStart->unk8;
 		do {
 			entry = &D_800FB7B0[effect];
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)&base->unk6)[0], ((u8 *)&base->unk6)[1], base->pad8, entry->unk11);
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, base->unk6.bytes.high, base->unk6.bytes.low, base->unk8, entry->unk11);
 			gDPSetEnvColor(D_8005BB2C++, base->unk9, base->unkA, base->unkB, entry->unk11);
 			gDPPipeSync(D_8005BB2C++);
 
-			posX = entry->unk8;
-			posY = entry->unkA;
-			posZ = entry->unkC;
-			D_800FB6D0.x = (f32)posX;
-			D_800FB6D0.y = (f32)posY;
-			D_800FB6D0.z = (f32)posZ;
-			D_800FB6DC = (s8 *)&base->unk6;
-			D_800FB6E0 = (f32)entry->unk2;
+			D_800FB6D0.x = D_800FB7B0[effect].unk8;
+			D_800FB6D0.y = D_800FB7B0[effect].unkA;
+			D_800FB6D0.z = D_800FB7B0[effect].unkC;
+			D_800FB6DC = (s8 *)&base->unk6.bytes.high;
+			D_800FB6E0 = entry->unk2;
 			D_800FB6E4 = entry->unk11;
 			func_8008A1D8_172298();
-			effect = entry->unk4;
+			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -6) && (effect != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
-#endif
 
 // AI - Render a single textured triangle
 void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
@@ -2826,7 +2821,7 @@ void func_8008B1A8_173268(void) {
 				case 6:
 					break;
 				case 7:
-					func_80088DFC_170EBC(i & 0xFF);
+					func_80088DFC_170EBC(i);
 					break;
 				case 8:
 					func_80089BCC_171C8C(i);
