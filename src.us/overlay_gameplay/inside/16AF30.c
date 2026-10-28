@@ -54,12 +54,6 @@ const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream
 const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n"; // "Call to draw generic flat effect with unknown render type.\n"
 const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"; // "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"
 
-const f64 D_800A5450_18D510[1] = {255.0};
-
-const f64 D_800A5458_18D518[1] = {255.0};
-
-const f64 D_800A5460_18D520[1] = {255.0};
-
 
 
 // AI - 3x3 matrix-by-vector multiplication
@@ -408,70 +402,71 @@ void func_800839B8_16BA78(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Spawn a new visual particle effect (copy from template with randomization)
+// Spawn a child particle from its template.
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
-	f32 sp3C;
-	f32 sp38;
-	f32 sp34;
-	s16 temp;
-	s16 radius;
-	s16 sp30;
-	s16 sp2E;
-	s16 idx;
-	Unk84EECEffect *effectUnit;
-	Unk84EECEffect *newUnit;
+	Frontend52690Unk8Motion *template;
+	Frontend52690Unk8Motion *spawn;
+	Vec3f random;
+	s16 spawnIdx;
+	s16 spreadX;
+	s16 spreadY;
+	s16 spreadZ;
 
-	effectUnit = &D_800FB7B0[D_800FB6F8[arg0].unk6];
-	idx = func_80083390_16B450(arg0);
-	if (idx != -3) {
-		if (effectUnit->unk12 == 1) {
-			newUnit = &D_800FB7B0[idx];
-			newUnit->unk8 = effectUnit->unk8;
-			newUnit->unkA = effectUnit->unkA;
-			newUnit->unkC = effectUnit->unkC;
-			sp34 = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510[0]);
-			if ((func_800038E0_44E0() % 21) < 10) {
-				sp34 = 0.0f - sp34;
-			}
-			sp34 += arg1->x;
-			sp38 = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518[0]);
-			if ((func_800038E0_44E0() % 21) < 10) {
-				sp38 = 0.0f - sp38;
-			}
-			sp38 += arg1->y;
-			sp3C = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520[0]);
-			if ((func_800038E0_44E0() % 21) < 10) {
-				sp3C = 0.0f - sp3C;
-			}
-			sp3C += arg1->z;
-			func_80083014_16B0D4((Vec3f *)&sp34, (Vec3f *)&sp34);
-			newUnit->unkE = ((f32) (arg2 / 4) * sp34);
-			sp34 = sp3C;
-			newUnit->unkF = ((f32) (arg2 / 4) * sp38);
-			newUnit->unk11 = 0xFF;
-			newUnit->unk12 = 0;
-			newUnit->unk10 = ((f32) (arg2 / 4) * sp34);
-			return;
-		}
-		radius = (((u16)effectUnit->unk14 << 8) | effectUnit->unk15);
-		sp30 = (func_800038E0_44E0() % (radius * 2)) - radius;
-		sp2E = (func_800038E0_44E0() % (radius * 2)) - radius;
-		temp = (func_800038E0_44E0() % (radius * 2)) - radius;
-		newUnit = &D_800FB7B0[idx];
-		newUnit->unk8 = effectUnit->unk8 + sp30;
-		newUnit->unkA = effectUnit->unkA + sp2E;
-		newUnit->unkC = effectUnit->unkC + temp;
-		newUnit->unkE = -(sp30 / (s32)effectUnit->unk11);
-		newUnit->unkF = -(sp2E / (s32)effectUnit->unk11);
-		newUnit->unk10 = -(temp / (s32)effectUnit->unk11);
-		newUnit->unk11 = 0xC;
-		newUnit->unk12 = 0;
+	/* The integer address view preserves the separate payload base in IDO. */
+	template = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
+	spawnIdx = func_80083390_16B450(arg0);
+	if (spawnIdx == -3) {
+		return;
 	}
+
+	if (template->unkA == 1) {
+		spawn = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[spawnIdx].unk8;
+		spawn->unk0 = template->unk0;
+		spawn->unk2 = template->unk2;
+		spawn->unk4 = template->unk4;
+
+		random.x = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			random.x = 0.0f - random.x;
+		}
+		random.x += arg1->x;
+
+		random.y = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			random.y = 0.0f - random.y;
+		}
+		random.y += arg1->y;
+
+		random.z = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			random.z = 0.0f - random.z;
+		}
+		random.z += arg1->z;
+
+		func_80083014_16B0D4(&random, &random);
+		spawn->unk6 = (arg2 / 4) * random.x;
+		spawn->unk7 = (arg2 / 4) * random.y;
+		spawn->unk8 = (arg2 / 4) * random.z;
+		spawn->unk9 = 0xFF;
+		spawn->unkA = 0;
+		return;
+	}
+
+	spreadX = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+	spreadY = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+	spreadZ = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+
+	spawn = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[spawnIdx].unk8;
+	spawn->unk0 = template->unk0 + spreadX;
+	spawn->unk2 = template->unk2 + spreadY;
+	spawn->unk4 = template->unk4 + spreadZ;
+	spawn->unk6 = -(spreadX / template->unk9);
+	spawn->unk7 = -(spreadY / template->unk9);
+	spawn->unk8 = -(spreadZ / template->unk9);
+	spawn->unk9 = 12;
+	spawn->unkA = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
-#endif
+
 
 // AI - Create a burst effect (explosion) with randomized particle positions
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
