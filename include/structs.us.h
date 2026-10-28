@@ -724,6 +724,17 @@ typedef struct {
 	/* 0x0C */ u8 unkC;
 } UnkScatterEffectTail;
 
+typedef struct {
+	/* 0x00 */ u8 pad0[4];
+	/* 0x04 */ u8 texture;
+	/* 0x05 */ s8 offsetX1;
+	/* 0x06 */ s8 offsetX2;
+	/* 0x07 */ s8 offsetY1;
+	/* 0x08 */ s8 offsetY2;
+	/* 0x09 */ u8 pad9[5];
+} EffectBillboardFrame; /* size = 0x0E */
+
+
 /* Cutscene entry: 24 bytes (6 s32), stored in D_80157E90[5] (120 bytes) */
 typedef struct {
 	/* 0x00 */ Unk84EECEffect effect;

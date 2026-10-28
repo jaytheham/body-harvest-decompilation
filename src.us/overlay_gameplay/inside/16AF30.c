@@ -1597,193 +1597,163 @@ void func_80086F58_16F018(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Render slot type 0 effects: textured billboard quads with color
-void func_80086FC4_16F084(s32 arg0) {
-	Unk84EECEffect *sp30;
-	Unk84EECEffect *sp28;
-	Unk84EECEffect *temp_t5;
-	Unk89408Pos *temp_a3;
-	s16 sp9C;
-	s16 sp9A;
-	s16 var_a2;
-	f32 temp_f2;
-	f32 temp_f0;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f20;
-	f32 var_f2;
-	f32 var_f12;
-	f32 var_f22;
-	f32 var_f18;
-	u8 temp_t6;
-	u8 temp_t7;
-	u8 temp_t8;
-	u8 temp_t9;
+// Render the main billboard and its linked particles.
+void func_80086FC4_16F084(u8 arg0) {
+	Unk84EECEffect *particle;
+	UnkScatterEffectTail *position;
+	EffectBillboardFrame *frame;
+	f32 offsetX1;
+	f32 offsetZ1;
+	f32 offsetX2;
+	s16 effect;
+	s16 rootIndex;
+	s16 frameIndex;
+	f32 offsetZ2;
+	f32 height1;
+	f32 height2;
 
-	sp9C = *(s16 *)(&D_800FB6FE + ((arg0 & 0xFF) * 0xC));
-	sp30 = &D_800FB7B0[sp9C];
-	sp9A = sp30->unk4;
-	sp28 = &D_800FB7B0[sp9A];
+	rootIndex = D_800FB6FE[arg0][0];
+	frameIndex = D_800FB7B0[rootIndex].unk4;
+
+	position = (UnkScatterEffectTail *)(s32)&D_800FB7B0[rootIndex].unk8;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[sp28->unkC]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[((Unk84EECEffectBytes *)&D_800FB7B0[frameIndex])->unkC]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-	temp_f2 = sp30->unk2;
-	temp_a3 = (Unk89408Pos *)&sp30->unk8;
-	temp_f0 = temp_f2 * D_800FB6A8[0];
-	temp_f12 = temp_f2 * D_800FB6A8[1];
-	temp_f14 = temp_f2 * D_800FB6A8[2];
-	temp_f16 = temp_f2 * D_800FB6A8[3];
-	temp_f18 = temp_f2 * D_800FB6A8[4];
-	temp_f20 = temp_f2 * D_800FB6A8[5];
+	offsetX1 = D_800FB6A8[0] * D_800FB7B0[rootIndex].unk2;
+	height1 = D_800FB6A8[1] * D_800FB7B0[rootIndex].unk2;
+	offsetZ1 = D_800FB6A8[2] * D_800FB7B0[rootIndex].unk2;
+	offsetX2 = D_800FB6A8[3] * D_800FB7B0[rootIndex].unk2;
+	height2 = D_800FB6A8[4] * D_800FB7B0[rootIndex].unk2;
+	offsetZ2 = D_800FB6A8[5] * D_800FB7B0[rootIndex].unk2;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)((temp_a3->unk0 + (s8)sp28->unk15) + temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)((temp_a3->unk2 + (s8)sp28->unkF) + temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 + temp_f14);
+	frame = (EffectBillboardFrame *)(s32)&D_800FB7B0[frameIndex].unk8;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)((position->unk0 + frame->offsetX1) + offsetX1);
+	D_8005BB34->v.ob[1] = (s16)(s32)((position->unk2 + frame->offsetY1) + height1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 + offsetZ1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk6;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unk7;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unk8;
+	D_8005BB34->v.cn[0] = position->unk6;
+	D_8005BB34->v.cn[1] = position->unk7;
+	D_8005BB34->v.cn[2] = position->unk8;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)((temp_a3->unk0 + (s8)sp28->unkE) + temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)((temp_a3->unk2 + (s8)sp28->unk10) + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 + temp_f20);
+	D_8005BB34->v.ob[0] = (s16)(s32)((position->unk0 + frame->offsetX2) + offsetX2);
+	D_8005BB34->v.ob[1] = (s16)(s32)((position->unk2 + frame->offsetY2) + height2);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 + offsetZ2);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk6;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unk7;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unk8;
+	D_8005BB34->v.cn[0] = position->unk6;
+	D_8005BB34->v.cn[1] = position->unk7;
+	D_8005BB34->v.cn[2] = position->unk8;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(temp_a3->unk0 - temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)(temp_a3->unk2 - temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 - temp_f14);
+	D_8005BB34->v.ob[0] = (s16)(s32)(position->unk0 - offsetX1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(position->unk2 - height1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 - offsetZ1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk9;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unkA;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unkB;
+	D_8005BB34->v.cn[0] = position->unk9;
+	D_8005BB34->v.cn[1] = position->unkA;
+	D_8005BB34->v.cn[2] = position->unkB;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(temp_a3->unk0 - temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(temp_a3->unk2 - temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 - temp_f20);
+	D_8005BB34->v.ob[0] = (s16)(s32)(position->unk0 - offsetX2);
+	D_8005BB34->v.ob[1] = (s16)(s32)(position->unk2 - height2);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 - offsetZ2);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk9;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unkA;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unkB;
+	D_8005BB34->v.cn[0] = position->unk9;
+	D_8005BB34->v.cn[1] = position->unkA;
+	D_8005BB34->v.cn[2] = position->unkB;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DE00));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 0x800);
+	effect = D_800FB7B0[frameIndex].unk4;
+
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DE00), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << G_TEXTURE_IMAGE_FRAC, 15 << G_TEXTURE_IMAGE_FRAC);
 
-	var_a2 = sp28->unk4;
-	while ((var_a2 != -5) && (var_a2 != -6)) {
-		temp_t5 = &D_800FB7B0[var_a2];
-		temp_t6 = temp_t5->unk12;
-		var_f2 = (f32)temp_t6;
-		if ((s32)temp_t6 < 0) {
-			var_f2 += 4294967296.0f;
-		}
-		temp_t7 = temp_t5->unk13;
-		var_f12 = (f32)temp_t7;
-		if ((s32)temp_t7 < 0) {
-			var_f12 += 4294967296.0f;
-		}
-		temp_t8 = temp_t5->unk14;
-		var_f22 = (f32)temp_t8;
-		if ((s32)temp_t8 < 0) {
-			var_f22 += 4294967296.0f;
-		}
-		temp_t9 = temp_t5->unk15;
-		var_f18 = (f32)temp_t9;
-		if ((s32)temp_t9 < 0) {
-			var_f18 += 4294967296.0f;
-		}
+	while ((effect != -5) && (effect != -6)) {
+		particle = &D_800FB7B0[effect];
+		offsetX1 = (f32)(u32)particle->unk12;
+		offsetX1 *= D_800FB6A8[0];
+		height1 = (f32)(u32)particle->unk13;
+		offsetZ1 = (f32)(u32)particle->unk12;
+		offsetZ1 *= D_800FB6A8[2];
+		offsetX2 = (f32)(u32)particle->unk14;
+		offsetX2 *= D_800FB6A8[3];
+		height2 = (f32)(u32)particle->unk15;
+		offsetZ2 = (f32)(u32)particle->unk14;
+		offsetZ2 *= D_800FB6A8[5];
 
-		D_8005BB34->v.ob[0] = temp_t5->unk8;
-		D_8005BB34->v.ob[1] = temp_t5->unkA;
-		D_8005BB34->v.ob[2] = temp_t5->unkC;
+		D_8005BB34->v.ob[0] = particle->unk8;
+		D_8005BB34->v.ob[1] = particle->unkA;
+		D_8005BB34->v.ob[2] = particle->unkC;
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x400;
 		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		D_8005BB34->v.ob[0] = temp_t5->unk8;
-		D_8005BB34->v.ob[1] = temp_t5->unk2 + temp_t5->unkA;
-		D_8005BB34->v.ob[2] = temp_t5->unkC;
+		D_8005BB34->v.ob[0] = particle->unk8;
+		D_8005BB34->v.ob[1] = particle->unk2 + particle->unkA;
+		D_8005BB34->v.ob[2] = particle->unkC;
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0x400;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)((f32)temp_t5->unk8 + (var_f2 * D_800FB6A8[0]));
-		D_8005BB34->v.ob[1] = (s16)(s32)((f32)temp_t5->unkA + var_f12);
-		D_8005BB34->v.ob[2] = (s16)(s32)((f32)temp_t5->unkC + (var_f2 * D_800FB6A8[2]));
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)particle->unk8 + offsetX1);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)particle->unkA + height1);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)particle->unkC + offsetZ1);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)((f32)temp_t5->unk8 + (var_f22 * D_800FB6A8[3]));
-		D_8005BB34->v.ob[1] = (s16)(s32)((f32)temp_t5->unkA + var_f18);
-		D_8005BB34->v.ob[2] = (s16)(s32)((f32)temp_t5->unkC + (var_f22 * D_800FB6A8[5]));
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)particle->unk8 + offsetX2);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)particle->unkA + height2);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)particle->unkC + offsetZ2);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x400;
 		D_8005BB34->v.tc[1] = 0x400;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 2, 3, 0, 3, 1, 2, 0);
 
-		var_a2 = temp_t5->unk4;
+		effect = particle->unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086FC4_16F084.s")
-#endif
 
 // AI - Render slot type 1 effects: textured billboard quads
 void func_80087A40_16FB00(u8 arg0) {
@@ -2233,7 +2203,7 @@ void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 temp_v0;
 	s8 *temp_v1;
 
-	temp_v0 = *(s16 *)(&D_800FB6FE + (arg3 * 0xC));
+	temp_v0 = D_800FB6FE[arg3][0];
 	temp_v1 = (s8 *)&D_800FB7B0[temp_v0];
 	*(s16 *)(temp_v1 + 0x8) = arg0 * 4;
 	*(s16 *)(temp_v1 + 0xA) = arg1 * 4;
@@ -2730,7 +2700,7 @@ void func_8008B1A8_173268(void) {
 		if (D_800FB6F8[i].unk0 != 0xFA) {
 			switch (D_800FB6F8[i].unk0) {
 				case 0:
-					func_80086FC4_16F084(i & 0xFF);
+					func_80086FC4_16F084(i);
 					break;
 				case 1:
 					func_80087A40_16FB00(i);
