@@ -567,6 +567,7 @@ void func_800794BC_16157C(void);
 void func_80079658_161718(void);
 void func_8007978C_16184C(void);
 void func_800797A4_88754(s32 arg0, u8 arg1);
+void func_802DDC44_321D94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
 void func_80079954_161A14(void);
 void func_80079C4C_161D0C(void);
 void func_80079E50_161F10(void);
