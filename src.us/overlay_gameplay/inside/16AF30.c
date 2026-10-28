@@ -2610,154 +2610,55 @@ void func_8008A5E4_1726A4(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 // AI - Render animated sprite entries from UnkFC8E8Entry table
 void func_8008A704_1727C4(void) {
 	u8 count;
-	u8 i;
-	UnkFC8E8Entry *entry;
-	s8 *tableA;
-	u8 t5;
-	s8 unk5;
-	s8 t8;
-	s8 t7;
-	u8 t9;
-	s32 mult;
-	s32 t3;
-	s32 t4;
-	s32 v0;
-	s32 t0;
-	s32 v1;
-	s8 field4;
+	s32 i;
 
 	count = D_800FCA78;
 	i = 0;
+	if ((s32)count > 0) {
+		do {
+			UnkFC8E8Entry *entry;
+			u8 type;
+			EffectParticleConfig *cfg;
+			s32 texOffset;
 
-	if ((s32)count <= 0) {
-		return;
+			entry = &D_800FC8E8[i];
+			if (entry->unkA != 0) {
+				if (entry->unkF == 0) {
+					type = entry->unkC;
+					if ((type != 0xFF) || (entry->unkE != 0xFF)) {
+						gDPPipeSync(D_8005BB2C++);
+						cfg = &D_800A2690_18A750[type];
+						if (cfg->format == 0) {
+							texOffset = ((cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width) / 2; gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0); gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_800A269C_18A75C[type] + texOffset), G_IM_FMT_I, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+						} else if (cfg->format == 1) {
+							texOffset = (cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width; gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0); gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_800A269C_18A75C[type] + texOffset), G_IM_FMT_IA, G_IM_SIZ_8b, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+						}
+						D_800FB6E5 = cfg->dimensions.values[0];
+						D_800FB6E6 = cfg->dimensions.values[1];
+						gDPPipeSync(D_8005BB2C++);
+					}
+
+					cfg = &D_800A2690_18A750[type]; D_800FB6D0.x = D_800FC8E8[i].unk0; D_800FB6D0.y = D_800FC8E8[i].unk2; D_800FB6D0.z = D_800FC8E8[i].unk4; D_800FB6DC = &entry->unk6; D_800FB6E0 = D_800FC8E8[i].unkA; D_800FB6E4 = entry->unkD; switch (cfg->drawMode) {
+					case 0:
+						func_8008A1D8_172298();
+						break;
+					case 2:
+						func_80089E54_171F14();
+						break;
+					default:
+						osSyncPrintf(D_800A53D4_18D494);
+						break;
+					}
+				}
+				count--;
+			}
+			i = (i + 1) & 0xFF;
+		} while ((s32)count > 0);
 	}
-
-	do {
-		entry = &D_800FC8E8[i];
-		
-		if (entry->unkA == 0) {
-			i++;
-			continue;
-		}
-		
-		if (entry->unkF != 0) {
-			count--;
-			continue;
-		}
-		
-		t5 = entry->unkC;
-		if ((t5 == 0xFF) || (entry->unkE == 0xFF)) {
-			count--;
-			continue;
-		}
-
-		gDPPipeSync(D_8005BB2C++);
-
-		tableA = (s8 *)&D_800A2690_18A750[t5];
-		unk5 = tableA[5];
-
-		if (unk5 == 0) {
-			t8 = tableA[7];
-			t7 = tableA[6];
-			t9 = entry->unkE;
-			mult = t8 * t9 * t7 / 2;
-			
-			gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_800A269C_18A75C[t5] + mult));
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-				G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPLoadSync(D_8005BB2C++);
-
-			t3 = ((s32)((t8 * t7) + 3) >> 2) - 1;
-			t4 = (t3 < 0x7FF) ? t3 : 0x7FF;
-			
-			v0 = t7 / 16;
-			t0 = (v0 <= 0) ? 1 : v0;
-			v1 = (v0 <= 0) ? 1 : v0;
-			
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, t4, (s32)(t0 + 0x7FF) / v1);
-
-			gDPPipeSync(D_8005BB2C++);
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, ((((s32)tableA[6] >> 1) + 7) >> 3), 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (tableA[7] - 1) << G_TEXTURE_IMAGE_FRAC, (tableA[6] - 1) << G_TEXTURE_IMAGE_FRAC);
-		} else if (unk5 == 1) {
-			t8 = tableA[7];
-			t7 = tableA[6];
-			t9 = entry->unkE;
-			mult = t8 * t9 * t7;
-			
-			gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
-
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_800A269C_18A75C[t5] + mult));
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-				G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPLoadSync(D_8005BB2C++);
-
-			t3 = ((s32)((t8 * t7) + 1) >> 1) - 1;
-			t4 = (t3 < 0x7FF) ? t3 : 0x7FF;
-			
-			v0 = t7 / 8;
-			t0 = (v0 <= 0) ? 1 : v0;
-			v1 = (v0 <= 0) ? 1 : v0;
-			
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, t4, (s32)(t0 + 0x7FF) / v1);
-
-			gDPPipeSync(D_8005BB2C++);
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, ((tableA[6] + 7) >> 3), 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (tableA[7] - 1) << G_TEXTURE_IMAGE_FRAC, (tableA[6] - 1) << G_TEXTURE_IMAGE_FRAC);
-		}
-
-		D_800FB6E5 = tableA[6];
-		D_800FB6E6 = tableA[7];
-
-		gDPPipeSync(D_8005BB2C++);
-
-		D_800FB6D0.x = entry->unk0;
-		D_800FB6D0.y = entry->unk2;
-		D_800FB6D0.z = entry->unk4;
-		D_800FB6DC = &entry->unk6;
-		D_800FB6E0 = entry->unkA;
-		D_800FB6E4 = entry->unkD;
-
-		field4 = tableA[4];
-		
-		switch (field4) {
-		case 0:
-			func_8008A1D8_172298();
-			break;
-		case 2:
-			func_80089E54_171F14();
-			break;
-		default:
-			osSyncPrintf(D_800A53D4_18D494);
-			break;
-		}
-
-		count--;
-		i++;
-	} while ((count & 0xFF) > 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A704_1727C4.s")
-#endif
 
 // AI - Allocate a new animated sprite slot in UnkFC8E8Entry table
 s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
