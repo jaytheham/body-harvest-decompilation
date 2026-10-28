@@ -68,10 +68,7 @@ const f64 D_800A5478_18D538[1] = {255.0};
 
 const f64 D_800A5480_18D540[1] = {255.0};
 
-const u32 jtbl_800A5488_18D548[] = {
-	OVERLAY_PTR(0x80086DDC), OVERLAY_PTR(0x80086DEC), OVERLAY_PTR(0x80086DFC), OVERLAY_PTR(0x80086E0C), OVERLAY_PTR(0x80086E1C), OVERLAY_PTR(0x80086E2C), OVERLAY_PTR(0x80086E3C), OVERLAY_PTR(0x80086E4C), 
-	OVERLAY_PTR(0x80086E5C),
-};
+
 
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
@@ -1517,21 +1514,20 @@ void func_80086B34_16EBF4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086B34_16EBF4.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Main update dispatcher: iterate all 15 slots and call type-specific update
+// Update each of the fifteen effect slots.
 void func_80086D88_16EE48(void) {
 	s32 i;
 
 	for (i = 0; i < 0xF; i = (i + 1) & 0xFF) {
-		switch (D_800FB6F8[i].pad0[0]) {
+		switch (D_800FB6F8[i].unk0) {
 			case 0:
-				func_80085F28_16DFE8(i & 0xFF);
+				func_80085F28_16DFE8(i);
 				break;
 			case 1:
-				func_80085D40_16DE00(i & 0xFF);
+				func_80085D40_16DE00(i);
 				break;
 			case 2:
-				func_80084258_16C318(i & 0xFF);
+				func_80084258_16C318(i);
 				break;
 			case 3:
 				func_80086550_16E610();
@@ -1546,17 +1542,14 @@ void func_80086D88_16EE48(void) {
 				func_80086A34_16EAF4();
 				break;
 			case 7:
-				func_80086B34_16EBF4(i & 0xFF);
+				func_80086B34_16EBF4(i);
 				break;
 			case 8:
-				func_80089834_1718F4(i & 0xFF);
+				func_80089834_1718F4(i);
 				break;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086D88_16EE48.s")
-#endif
 
 // Remove a slot and clean up its linked effects.
 void func_80086E90_16EF50(u8 arg0) {

@@ -641,6 +641,8 @@ void func_80086E90_16EF50(u8 arg0);
 void func_80086F58_16F018(s16 arg0);
 void func_80089794_171854(u8 arg0);
 void func_80086F24_16EFE4(s16 arg0);
+void func_80085F28_16DFE8(u8 arg0);
+void func_80086B34_16EBF4(u8 arg0);
 void func_80086D88_16EE48(void);
 void func_8008735C_9630C(u8);
 void func_800873A8_96358(u8);
@@ -1737,6 +1739,10 @@ void func_8012B150_13A100(s32 arg0, s32 arg1, InputStruct_8012B150 *arg2, s32 ar
 s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4);
 void func_8011BA80_12AA30(u8 arg0, s16 arg1);
 
+void func_80085F28_16DFE8(u8 arg0);
+void func_80086B34_16EBF4(u8 arg0);
+void func_80086D88_16EE48(void);
+void func_80089834_1718F4(u8 arg0);
 void func_80086FC4_16F084(u8 arg0);
 void func_80087A40_16FB00(u8 arg0);
 void func_80087CB8_16FD78(u8 arg0);
