@@ -60,14 +60,6 @@ const f64 D_800A5458_18D518[1] = {255.0};
 
 const f64 D_800A5460_18D520[1] = {255.0};
 
-const f64 D_800A5468_18D528[1] = {0.9};
-
-const f64 D_800A5470_18D530[1] = {255.0};
-
-const f64 D_800A5478_18D538[1] = {255.0};
-
-const f64 D_800A5480_18D540[1] = {255.0};
-
 
 
 // AI - 3x3 matrix-by-vector multiplication
@@ -829,10 +821,8 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 #endif
 
 // AI - Create a linked paired effect (two entries linked together)
-#ifdef NON_MATCHING
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	s16 effect;
-	u16 temp;
 	s16 linkedIndex;
 	s16 x;
 	s16 y;
@@ -844,16 +834,15 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg
 
 	effect = func_80083584_16B644(0xD);
 	if (effect != -3) {
-		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528[0]);
+		D_800FB7B0[effect].unk2 = (f32)arg3 * 0.9;
 		entry = &D_800FB7B0[effect];
-			entryTail = (Unk84EECEffectTail *)&entry->unk8;
+		entryTail = (Unk84EECEffectTail *)&entry->unk8;
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
 		entry->unk8 = x;
 		entry->unkA = y;
 		entry->unkC = z;
-		entry->unk2 = temp;
 		entry->unk11 = arg10;
 		entry->unk15 = arg11;
 		entry->unkE = arg4;
@@ -887,9 +876,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg
 
 	return effect;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
-#endif
+
 
 // Create a candle flame effect
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
@@ -948,19 +935,19 @@ void func_800852B8_16D378(u8 arg0) {
 	base.z = emitter->offsetZ;
 	func_80083014_16B0D4(&base, &base);
 
-	random.x = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / D_800A5470_18D530[0]);
+	random.x = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
 		random.x = 0.0f - random.x;
 	}
 	random.x += base.x;
 
-	random.y = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / D_800A5478_18D538[0]);
+	random.y = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
 		random.y = 0.0f - random.y;
 	}
 	random.y += base.y;
 
-	random.z = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / D_800A5480_18D540[0]);
+	random.z = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
 		random.z = 0.0f - random.z;
 	}

@@ -1,0 +1,5 @@
+`incorrect ASM`: `func_80084EEC_16CFAC` captured the scaled size in a u16 temporary, giving `mfc1 v1,$f18` and delaying `sh v1,2(a0)` past the color loads and stores. A manually declared 0.9 array also reversed the multiply operands and changed the floating registers.
+
+`code changed`: Replace the temporary assignment with `D_800FB7B0[effect].unk2 = (f32)arg3 * 0.9` before taking the named entry pointer. Keep the coordinate assignments and stores afterward. Replace the 0.9 placeholder and the three following 255.0 placeholders with literals at their uses, so IDO emits them in their original order. Retain the volatile halfword parameter to reproduce its second load for the linked record.
+
+`correct ASM`: The scale parameter loads into T9; `cvt.s.w f6,f4; cvt.d.s f8,f6; mul.d f16,f8,f10; trunc.w.d f18,f16` overlaps the record-address and coordinate calculations. `mfc1 t7,f18` occurs between the first and second coordinate stores, and `sh t7,2(a0)` follows the third. The literal constants occupy the original 0x800A5468 through 0x800A5480 addresses. The full normal ROM checksum passes.
