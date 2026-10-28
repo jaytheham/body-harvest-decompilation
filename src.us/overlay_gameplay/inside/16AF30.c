@@ -73,11 +73,6 @@ const u32 jtbl_800A5488_18D548[] = {
 	OVERLAY_PTR(0x80086E5C),
 };
 
-const u32 jtbl_800A54AC_18D56C[] = {
-	OVERLAY_PTR(0x8008B3B0), OVERLAY_PTR(0x8008B3C0), OVERLAY_PTR(0x8008B3D0), OVERLAY_PTR(0x8008B3E0), OVERLAY_PTR(0x8008B3F0), OVERLAY_PTR(0x8008B400), OVERLAY_PTR(0x8008B438), OVERLAY_PTR(0x8008B410), 
-	OVERLAY_PTR(0x8008B420),
-};
-
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0[0] + arg1->y * arg0[3] + arg0[6] * arg1->z;
@@ -2909,7 +2904,6 @@ void func_8008B0AC_17316C(void) {
 }
 // Matched - Needs below funcs also matched so rodata builds properly.
 // AI - Main render dispatcher: set up RDP state and render all active slots
-#ifdef NON_MATCHING
 void func_8008B1A8_173268(void) {
 	s32 i;
 
@@ -2937,7 +2931,7 @@ void func_8008B1A8_173268(void) {
 					func_80086FC4_16F084(i & 0xFF);
 					break;
 				case 1:
-					func_80087A40_16FB00(i & 0xFF);
+					func_80087A40_16FB00(i);
 					break;
 				case 2:
 					func_80087CB8_16FD78(i & 0xFF);
@@ -2957,7 +2951,7 @@ void func_8008B1A8_173268(void) {
 					func_80088DFC_170EBC(i & 0xFF);
 					break;
 				case 8:
-					func_80089BCC_171C8C(i & 0xFF);
+					func_80089BCC_171C8C(i);
 					break;
 				default:
 					osSyncPrintf(D_800A5410_18D4D0, D_800FB6F8[i].unk0);
@@ -2968,9 +2962,6 @@ void func_8008B1A8_173268(void) {
 
 	func_8008B594_173654();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
-#endif
 
 // AI - Main update and render entry point: update effects, then render
 void func_8008B474_173534(void) {
