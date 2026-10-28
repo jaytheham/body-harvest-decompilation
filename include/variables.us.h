@@ -956,7 +956,6 @@ extern f32 D_8004DCB8;
 extern s16 D_8004DCBC;
 extern f32 D_8004DCC0;
 extern VehicleInstance vehicleInstances[0x80]; // 8004DCD0
-extern VehicleInstance D_8004DCD0; // Player record: aliases vehicleInstances[0]
 extern s16 D_8004DCD2;
 extern s16 D_8004DCD4;
 extern s16 D_8004DCEC;

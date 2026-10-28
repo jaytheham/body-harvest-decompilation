@@ -9,7 +9,6 @@ alienInstances = 0x80048198; // size:0x4FB0
 
 D_8004D1B2 = 0x8004D1B2;
 vehicleInstances = 0x8004DCD0; // size:0x2E00
-D_8004DCD0 = 0x8004DCD0; // size:0x5C (player record alias)
 buildingInstances = 0x80050AD8; // size:0x23DC
 buildingInteriorToLoadId = 0x80052548;
 gameplayMode = 0x80052ADC;
