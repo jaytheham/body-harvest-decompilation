@@ -9958,7 +9958,17 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
+/* IDO counts these cold reads when allocating registers, then removes their
+ * empty checks. Keep the height snapshot separate from the bridge coordinates.
+ * Arguments must be side-effect-free signed height locals. */
+#define IDO_HEIGHT_READ4(value) if (value) {} if (value) {} if (value) {} if (value) {}
+#define IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ4(value) IDO_HEIGHT_READ4(value) IDO_HEIGHT_READ4(value) IDO_HEIGHT_READ4(value)
+#define IDO_HEIGHT_COLD_SPAN(value) do { IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ16(value) } while (0)
+#define IDO_SIGNED_HEIGHT_READS(value) \
+    ((value) + (value) + (value) + (value) + (value) + (value) + (value) + \
+     (value) + (value) + (value) + (value) + (value) + (value) + (value) + \
+     (value) + (value) + (value) + (value) + (value) + (value) + (value))
+
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	f64 var_f0;
 	VehicleType *vehicleType;
@@ -10021,21 +10031,20 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		return bestY;
 	}
 
-	j = 7; // Shouldn't j be used to index into the base variable that D_80158BC8 is the end of
-	// Instead of strip being declared and subtracted from - try changing this
+	j = 7;
 	if (currentLevel == 1) {
-		s16 *strip = D_80158BC8;
+		UnkF9230Func8010065CEntry *strip = &D_80158B90[7];
 
 		do {
-			if ((strip[3] != -0x8000) && (((s16)topHeight.raw[0]) >= strip[1]) && (strip[3] >= spD2) && (func_8010CF7C_11BF2C(strip[0], strip[2]) != 0)) {
+			if ((strip->unk6 != -0x8000) && (((s16)topHeight.raw[0]) >= strip->unk2) && (strip->unk6 >= spD2) && (func_8010CF7C_11BF2C(strip->unk0, strip->unk4) != 0)) {
 				if (arg1 == 0) {
-					func_800FB430_10A3E0(arg0, (f32) ((s16) arg0->unk12 >> 1));
+					func_800FB430_10A3E0(arg0, (f32) (arg0->unk12 >> 1));
 					arg0->unk30 = arg0->unk30 / 2;
 					arg0->unk38 = arg0->unk38 / 2;
 				}
 				return 9;
 			}
-			strip -= 4;
+			strip--;
 		} while (j--);
 	}
 
@@ -10145,7 +10154,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 			j = buildingType->unk1A[3];
 			if (j--) {
-				gridX = topHeight.signedValue;
+				height = topHeight.signedValue;
 			do {
 				spD8 = building->yCoord + spawn->unk8;
 				spD6 = building->yCoord + spawn->unkA;
@@ -10155,14 +10164,14 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 				spCA += building->xCoord;
 				spC8 += building->zCoord;
 
-				if ((((gridX >= spD8) && (spD6 >= gridX)) || ((spD2 >= spD8) && (spD6 >= spD2)) || ((spD8 >= spD2) && (gridX >= spD8)) ||
-					 ((spD6 >= spD2) && (gridX >= spD6))) &&
+				if ((((height >= spD8) && (spD6 >= height)) || ((spD2 >= spD8) && (spD6 >= spD2)) || ((spD8 >= spD2) && (height >= spD8)) ||
+					 ((spD6 >= spD2) && (height >= spD6))) &&
 					(func_8010CF7C_11BF2C(spCA, spC8) != 0)) {
 					if (arg1 == 0) {
 						if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(vehicleType->unk4C & 0x20000000)) {
 							func_8010FAC8_11EA78(0xA, (s32) building);
 						}
-						func_800FB430_10A3E0(arg0, (f32) ((s16) arg0->unk12 >> 1));
+						func_800FB430_10A3E0(arg0, (f32) (arg0->unk12 >> 1));
 						arg0->unk30 = arg0->unk30 / 2;
 						arg0->unk38 = arg0->unk38 / 2;
 						if ((currentLevel == 4) && (arg0->unk1A == 2) && (arg0->unk12 >= 0xB) && !(((u32) building->unk8 >> 0xC) & 0x1000) &&
@@ -10170,15 +10179,14 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 							func_8011C080_12B030((u8)(building - buildingInstances));
 						}
 					}
-					return 9;
+					IDO_HEIGHT_COLD_SPAN(height); return 9;
 				}
-				gridX = topHeight.signedValue; spawn--;
+				height = topHeight.signedValue; spawn--;
 			} while (j--);
 			}
 		}
 	}
 
-	if (gridX) {}
 
 	bestY = -1;
 	spC0 = 0;
@@ -10192,7 +10200,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	xPoint = &D_80159D78[3]; zPoint = &D_80159D98[3];
-	for (gridX = 3;gridX--;) {
+	gridX = 3;
+	do {
 		bestX = (s32) (*xPoint + (f32) arg0->unk0);
 		sp7C = (s32) (*zPoint + (f32) arg0->unk4);
 		if ((func_800F9D60_108D10((s16) bestX, (s16) sp7C, &spDA, &spD8, &spD6) != -1) && (spDA < spD6) && (spD6 >= bestY)) {
@@ -10206,7 +10215,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	
 			xPoint--;
 			zPoint--;
-		}
+		} while (gridX--);
 
 	if ((func_800F9D60_108D10(arg0->unk0, arg0->unk4, &spDA, &spD8, &spD6) != -1) && (spDA < spD6) && (spD6 >= bestY)) {
 		bestY = spD6;
@@ -10310,7 +10319,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		}
 		continue;
 	}
-	if (((s16)(u16)topHeight.signedValue) < spD8) {
+	if (IDO_SIGNED_HEIGHT_READS(spD2)) {} if (((s16)(u16)topHeight.signedValue) < spD8) {
 		if (arg1 == 0) {
 			func_8010FAC8_11EA78(3, 8);
 		}
@@ -10393,7 +10402,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 						}
 
 						if (arg1 == 0) {
-							func_800FB430_10A3E0(arg0, (f32) ((s16) arg0->unk12 >> 1));
+							func_800FB430_10A3E0(arg0, (f32) (arg0->unk12 >> 1));
 							arg0->unk30 = arg0->unk30 / 2;
 							arg0->unk38 = arg0->unk38 / 2;
 						}
@@ -10457,9 +10466,11 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80110FB4_11FF64.s")
-#endif
+
+#undef IDO_SIGNED_HEIGHT_READS
+#undef IDO_HEIGHT_COLD_SPAN
+#undef IDO_HEIGHT_READ16
+#undef IDO_HEIGHT_READ4
 
 s16 func_8011290C_1218BC(VehicleInstance *arg0) {
 	volatile s16 sp26;
