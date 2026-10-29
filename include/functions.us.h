@@ -977,7 +977,7 @@ void func_80109C84_118C34(VehicleInstance *arg0, VehicleType *arg1);
 void func_8010ADA4_119D54(VehicleInstance *arg0, VehicleType *arg1);
 void func_8010BA04_11A9B4(void);
 void func_8010C14C_11B0FC(void);
-void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2);
+void func_8011815C_12710C(EntityInstance *arg0, s16 arg1, s32 arg2);
 void func_80112A98_121A48(s32 arg0, s32 arg1, s32 arg2);
 void func_80112F98_121F48(void);
 void func_80113310_1222C0(VehicleInstance *arg0);
@@ -1820,3 +1820,5 @@ void func_802DB8D8_2BDD08(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 ar
 
 void func_802D4DCC_2B71FC(void);
 
+
+void func_800EC0D0_FB080(s32 arg0);

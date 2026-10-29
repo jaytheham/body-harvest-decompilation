@@ -946,17 +946,16 @@ s32 func_80118114_1270C4(s16 arg0) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
-	BuildingInstance *building;
+void func_8011815C_12710C(EntityInstance *arg0, s16 arg1, s32 arg2) {
+	s16 doorData;
+	s32 canEnter;
 	s32 buildingId;
 	Unk80148620 *found;
-	s16 doorData;
 	s16 doorId;
-	s32 canEnter;
+	BuildingInstance *building;
 
 	doorData = D_8015FAD0[arg1].unk1E;
-	if (((u8 *) arg0)[0x1A] != 0) {
+	if (arg0->unk1A != 0) {
 		return;
 	}
 
@@ -966,24 +965,24 @@ void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 
 	buildingId = (s16) (doorData >> 4);
 	building = &buildingInstances[buildingId];
-	if ((((u32) building->unk8 >> 0xC) & 0x10) != 0) {
+	if ((building->statusFlags & 0x10) != 0) {
 		return;
 	}
 
-	if ((((u32) building->unk8 >> 0xC) & 4) != 0) {
+	if ((building->statusFlags & 4) != 0) {
 		return;
 	}
 
-	D_80052540 = (s16) buildingId;
+	D_80052540 = buildingId;
 	found = func_801176B0_126660();
 	D_80052540 = 0xFF;
 
 	doorId = doorData & 0xF;
 	if ((found != NULL && doorId != 0) ||
-		func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0) {
+		func_8000726C_7E6C(building->keyId) != 0) {
 		D_80052540 = buildingId;
 		D_80052544 = doorId;
-		buildingInteriorToLoadId = (&building->door1InteriorId)[doorId];
+		buildingInteriorToLoadId = building->doorInteriorIds[doorId];
 		if (buildingInteriorToLoadId == 0xF0) {
 			return;
 		}
@@ -998,40 +997,29 @@ void func_8011815C_12710C(void *arg0, s16 arg1, s32 arg2) {
 			return;
 		}
 
-		if (arg2 != 0) {
-			canEnter = D_8004D148 == 0;
-			if (canEnter == 0) {
-				canEnter = func_8000726C_7E6C(0, (building->unk8 << 0x14) >> 0x1A, buildingId, building) != 0;
+	} else {
+		if (D_8015EB78 == 0) {
+			if (currentLevel != 1 || building->keyId != 0x2E ||
+				func_8000726C_7E6C(0xA) == 0) {
+				func_8001A650_1B250(0);
 			}
-			func_800EC0D0_FB080(canEnter);
-		} else {
-			gameplayMode = 6;
+			D_8015EB78 = 0xC8;
+			osSyncPrintf(D_80144E68_153E18, building->keyId);
 		}
 		return;
 	}
 
-	if (D_8015EB78 != 0) {
-		return;
-	}
-
-	if (currentLevel == 1) {
-		if (((building->unk8 << 0x14) >> 0x1A) == 0x2E) {
-			if (func_8000726C_7E6C(0, 0xA, buildingId, building) != 0) {
-				D_8015EB78 = 0xC8;
-				osSyncPrintf(D_80144E68_153E18, (building->unk8 << 0x14) >> 0x1A);
-				return;
-			}
+	if (arg2 != 0) {
+		canEnter = D_8004D148 == 0;
+		if (canEnter == 0) {
+			canEnter = func_8000726C_7E6C(building->keyId) != 0;
 		}
+		func_800EC0D0_FB080(canEnter);
+	} else {
+		gameplayMode = 6;
 	}
-
-	func_8001A650_1B250(0);
-	D_8015EB78 = 0xC8;
-	osSyncPrintf(D_80144E68_153E18, (building->unk8 << 0x14) >> 0x1A);
-	return;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011815C_12710C.s")
-#endif
+
 
 void func_801183EC_12739C(void *arg0, s16 arg1) {
 	func_8011815C_12710C(arg0, arg1, 0);

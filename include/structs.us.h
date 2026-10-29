@@ -1671,6 +1671,7 @@ typedef struct {
 		/* 0x08 */ u32 unk8;
 		struct { u8 padState[2]; u16 stateAndRotation; };
 		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
+		struct { u32 padKeyStatus : 20; u32 keyId : 6; u32 padKeyLow : 6; };
 	};
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
