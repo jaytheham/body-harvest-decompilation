@@ -3356,7 +3356,7 @@ s32 func_8011DE6C_12CE1C(s16 arg0, s16 arg1, s16 *arg2, s16 arg3) {
 		}
 
 		if ((f32)type->unk10 < (localX >= 0.0f ? localX : -localX) ||
-		    (f32)type->unk12 < (localZ >= 0.0f ? localZ : -localZ)) {
+			(f32)type->unk12 < (localZ >= 0.0f ? localZ : -localZ)) {
 			*arg2 = cellY;
 			return -1;
 		}
@@ -3987,9 +3987,7 @@ s32 func_80120634_12F5E4(void) {
 	}
 }
 
-// Debug? Find the nearest special building of type D_A01F868
-// in front of and behind the player along the Z-axis,
-// then render a three-segment 3D line connecting those buildings and the player
+// Draw Java cable car cables
 void func_801206B0_12F660(void) {
 	BuildingInstance *instA;
 	BuildingInstance *instB;
@@ -4098,6 +4096,7 @@ void func_801206B0_12F660(void) {
 	}
 }
 
+// Animate Java cable car bullwheel and draw cables
 void func_80120BC4_12FB74(BuildingInstance *arg0) {
 	s32 angle;
 
