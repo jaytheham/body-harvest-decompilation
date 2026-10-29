@@ -2492,20 +2492,16 @@ void func_8011BB94_12AB44(s32 arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BB94_12AB44.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Checks whether a building can currently be destroyed/damaged
-s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
-	s32 buildingId;
-	BuildingInstance* building;
-	s8 hitPoints;
+// Apply building damage and update destruction effects.
+s32 func_8011BEA0_12AE50(u8 arg0, s32 arg1) {
+	BuildingInstance *building;
 
-	buildingId = arg0 & 0xFF;
-	building = &buildingInstances[buildingId];
+	building = &buildingInstances[arg0];
 	if (building->unkC != 0) {
 		return 0;
 	}
 
-	if (((*(u32*)&building->isDestroyable >> 12) & 0x1000) != 0) {
+	if ((building->statusFlags & 0x1000) != 0) {
 		return 0;
 	}
 
@@ -2513,20 +2509,19 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 		return 0;
 	}
 
-	hitPoints = (s8) building->hitPoints;
-	building->unk10 = hitPoints;
-	if (hitPoints > 0) {
-		if (arg1 < hitPoints) {
-			building->hitPoints = hitPoints - arg1;
+	building->unk10 = building->hitPoints;
+	if (building->hitPoints > 0) {
+		if (arg1 < building->hitPoints) {
+			building->hitPoints = building->hitPoints - arg1;
 		} else {
 			building->hitPoints = 0;
 		}
 	}
 
-	func_8011BB94_12AB44(buildingId, 1);
+	func_8011BB94_12AB44(arg0, 1);
 
-	if ((s8) building->hitPoints <= 0) {
-		if (D_8015EA29 == building->buildingType) {
+	if (building->hitPoints <= 0) {
+		if (building->buildingType == D_8015EA29) {
 			D_80052AC8 = 0;
 			D_80052AD0 = 0;
 		}
@@ -2534,9 +2529,6 @@ s32 func_8011BEA0_12AE50(s32 arg0, s32 arg1) {
 
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BEA0_12AE50.s")
-#endif
 
 // building on fire but not destroyed- called for Pollstura Suburbs fire mission/event
 #ifdef NON_MATCHING

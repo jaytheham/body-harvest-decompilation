@@ -1024,7 +1024,7 @@ void func_801238DC_13288C(s16);
 void func_80124170_133120(s16, s16, s16, s32, s32, void *);
 void func_80124C40_133BF0(EntityInstance *, s32, s16, s16);
 void func_80124BA8_133B58(void);
-s32 func_8011BEA0_12AE50(s32, s32);
+s32 func_8011BEA0_12AE50(u8 arg0, s32 arg1);
 s16 func_800F9EC4_108E74(s16 arg0, s16 arg1);
 s16 func_800F9F00_108EB0(s16, s16);
 int func_8012235C_13130C(Unk8004D0F8 *);

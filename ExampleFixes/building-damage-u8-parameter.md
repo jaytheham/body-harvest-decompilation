@@ -1,0 +1,5 @@
+`incorrect ASM`: `func_8011BEA0_12AE50` with an `s32` index and a separate masked local lacked the target entry `sw a0,0x20(sp)`. A cached hit-points local also left the spilled building pointer at `sp+0x1C` in a larger stack frame. Changing the index to `u8` while retaining caller expressions such as `func_8011BEA0_12AE50(bldg & 0xFF, damage)` added redundant `move`/`andi`/`move` instructions in callers.
+
+-> `code changed`: Declare the function index as `u8` in the definition and shared header, index `buildingInstances[arg0]` directly, use `building->statusFlags & 0x1000`, and read `building->hitPoints` directly instead of caching it. Remove the explicit `& 0xFF` from all five callers. Compare `building->buildingType == D_8015EA29` to retain the target load order.
+
+-> `correct ASM`: The entry masks the parameter into `a2` and saves `a0` in the branch delay slot at ROM `0x12AE7C`; the stack frame is `0x20` bytes and the building pointer spills at `sp+0x18`. Callers emit the original single argument mask. The function diff is zero and the full US ROM matches.

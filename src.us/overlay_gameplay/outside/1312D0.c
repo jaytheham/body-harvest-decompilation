@@ -719,7 +719,7 @@ void func_80124170_133120(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s32 arg4, void
 				} else {
 					dist = (u32)sqrtf((f32)distSq);
 					damage = (s32)(((f32)(arg4 - dist) * scale) * (f32)(arg4 - dist)) >> 7;
-					if ((damage != 0) && (func_8011BEA0_12AE50(count & 0xFF, damage) != 0) && (entity.building == D_80158FE8)) {
+					if ((damage != 0) && (func_8011BEA0_12AE50(count, damage) != 0) && (entity.building == D_80158FE8)) {
 						D_8014ED48 = 8;
 					}
 				}
@@ -1790,7 +1790,7 @@ void func_80127F9C_136F4C(s16 arg0, s16 arg1, s16 arg2)
 	bldg = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
 	if ((bldg != (-1)) && (D_80158FE8 == (&buildingInstances[bldg])))
 	{
-		if (func_8011BEA0_12AE50(bldg & 0xFF, D_80145BE0_154B90[arg2].unk2 >> 7) != 0)
+		if (func_8011BEA0_12AE50(bldg, D_80145BE0_154B90[arg2].unk2 >> 7) != 0)
 		{
 			D_8014ED48 = 8;
 		}
@@ -2494,7 +2494,7 @@ Projectile *func_80129864_138814(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 			case 1:
 				spAC += 2;
 				angleX = D_8015F9D0.objectIndex;
-				if (func_8011BEA0_12AE50(angleX & 0xFF, impactDamage >> 7) != 0) {
+				if (func_8011BEA0_12AE50(angleX, impactDamage >> 7) != 0) {
 					if (D_80158FE8 == &buildingInstances[angleX]) {
 						D_8014ED48 = 8;
 					}
@@ -2968,7 +2968,7 @@ void func_8012B26C_13A21C(void)
             if (((buildingIdx != (-1)) && (hitBuilding->yCoord < height)) && (height < hitAngleOrTop))
             {
               alive = 0;
-              if ((hitBuilding == D_80158FE8) && (func_8011BEA0_12AE50(buildingIdx & 0xFF, impactDamage >> 7) != 0))
+              if ((hitBuilding == D_80158FE8) && (func_8011BEA0_12AE50(buildingIdx, impactDamage >> 7) != 0))
               {
                 D_8014ED48 = 8;
               }
