@@ -3293,43 +3293,42 @@ void func_800C978C_D873C(void) {
 // spawn random water particle?
 #ifdef NON_MATCHING
 void func_800CA1B0_D9160(u8 arg0) {
-	u8 effect;
-	s32 result;
+	u8 effect; u8 mode;
+	s16 originalIndex;
 	s16 newUnitIdx;
 	s16 parentIdx;
-	Unk80154318Entry *effectUnit;
+	Unk80052B40 *effectUnit;
 	SpurtEmitterState *parent;
 	Vec3f sp44;
 	Vec3f sp38;
 
 	effect = arg0;
-	result = D_80154088[effect].unk6;
- effectUnit = &D_80154318[result];
-	parentIdx = effectUnit->unk4;
+	originalIndex = D_80154088[effect].unk6;
+ effectUnit = &D_80154318[originalIndex].positionVector;
+	parentIdx = D_80154318[originalIndex].unk4;
 
-	if (D_80156ED8 == 1) {
+	mode = D_80156ED8; if (mode == 1) {
 		if ((func_800038E0_44E0() % 9) < 3) {
 			return;
-		}
+		} mode = D_80156ED8;
 	}
 
-	if ((D_80156ED8 == 1) && ((func_800038E0_44E0() % 10) <= 0)) {
+	if ((mode == 1) && ((func_800038E0_44E0() % 10) <= 0)) {
 		return;
 	}
 
-	result = func_800C17B4_D0764(effect, 0);
- newUnitIdx = result;
-	if (result != -3) {
+	newUnitIdx = func_800C17B4_D0764(effect, 0);
+	if (newUnitIdx != -3) {
 		Unk80154318Entry *newUnit;
 
 		newUnit = &D_80154318[newUnitIdx];
-		newUnit->unk8 = effectUnit->unk8;
-		newUnit->unkA = effectUnit->unkA;
-		newUnit->unkC = effectUnit->unkC;
+		newUnit->unk8 = effectUnit->unk0;
+		newUnit->unkA = effectUnit->unk2;
+		newUnit->unkC = effectUnit->unk4;
 
 		parent = (SpurtEmitterState *)(s32)D_80154318[parentIdx].payload;
 		newUnit->unk11 = parent->alpha;
-		newUnit->unk2 = (func_800038E0_44E0() % (effectUnit->unk2 * 2)) + effectUnit->unk2;
+		newUnit->unk2 = (func_800038E0_44E0() % (D_80154318[originalIndex].unk2 * 2)) + D_80154318[originalIndex].unk2;
 
 		sp44.x = parent->velocity[0];
 		sp44.y = parent->velocity[1];
@@ -4450,55 +4449,57 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 
 #ifdef NON_MATCHING
 void func_800CDDE4_DCD94(void) {
-	s32 idx;
-	s32 padding;
+	s16 index;
+	Gfx *gfx;
 
-	s16 sp88[3];
-	u16 sp78[3];
-	Unk80052B40 sp80;
+	s16 scale[3];
+	u16 rotation[3];
+	Unk80052B40 translation;
 	Unk80052B40 *position;
 
-	sp88[2] = 0x46;
-	idx = D_8015426A;
+	scale[2] = 0x46; scale[2] = scale[2];
+	index = D_8015426A;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gfx = D_8005BB2C++; gDPSetRenderMode(gfx, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 
-	if ((idx != -6) && (idx != -5)) {
+	if ((index != -6) && (index != -5)) {
 		do {
 			gDPPipeSync(D_8005BB2C++);
 
-			position = &D_80154318[idx].positionVector;
-			if (D_80154318[idx].unk11 == 1) {
-				sp78[0] = 0;
-				sp78[1] = 0;
-				sp78[2] = 0x8000;
-				sp88[2] = sp88[0] = sp88[1] = 0x96;
+			position = &D_80154318[index].positionVector;
+			if (D_80154318[index].unk11 == 1) {
+				rotation[0] = 0;
+				rotation[1] = 0;
+				rotation[2] = 0x8000; rotation[2] = rotation[2];
+				scale[2] = 0x96; scale[1] = scale[2] & 0xFFFF; scale[0] = scale[2];
 			} else {
-				sp78[1] = 0;
-				sp78[0] = 0;
-				sp78[2] = 0;
-				sp88[2] = sp88[0] = sp88[1] = 0x46;
+				rotation[1] = 0;
+				rotation[0] = 0;
+				rotation[2] = 0; rotation[2] = rotation[2];
+				scale[2] = 0x46; scale[1] = scale[2] & 0xFFFF; scale[0] = scale[2];
 			}
 
-			sp80.unk0 = position->unk0;
-			sp80.unk2 = position->unk2;
-			sp80.unk4 = position->unk4;
+			translation.unk0 = position->unk0;
+			translation.unk2 = position->unk2;
+			translation.unk4 = position->unk4;
 
-			func_800039D0_45D0(&sp80, (Unk80052B40 *)sp78, (Unk80052B40 *)sp88, D_8005BB38);
+			func_800039D0_45D0(&translation, (Unk80052B40 *)rotation, (Unk80052B40 *)scale, D_8005BB38);
 
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gSPDisplayList(D_8005BB2C++, D_5033E00);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-			idx = D_80154318[idx].unk4;
+			index = D_80154318[index].unk4;
 			D_80156EDA += 0x1E;
-		} while ((idx != -6) && (idx != -5));
+		} while ((index != -6) && (index != -5));
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDDE4_DCD94.s")
 #endif
@@ -5608,6 +5609,8 @@ void func_800D1A94_E0A44(u8 arg0) {
 	func_800B1A68_C0A18(&sp40, &sp3C, &sp38);
 	func_80137368_146318(sp34->position[0], sp34->position[1], sp34->position[2], 7, arg0);
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1A94_E0A44.s")
 #endif
@@ -5798,6 +5801,8 @@ void func_800D1C24_E0BD4(u8 arg0)
 		}
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
 #endif
@@ -6684,6 +6689,8 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 		func_800DB350_EA300();
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5760_E4710.s")
 #endif
@@ -7165,17 +7172,33 @@ void func_800D7284_E6234(u8 arg0) {
 	s16 position[2];
 	s32 var_v0;
 	s32 temp_v0_13;
-	s16 unused_temp_v0_14;
+	s16 *coordinates;
 	NukeEffectState *var_v1;
 
 index = D_80154088[arg0].unk6;
 	if ((sp2C = &D_80154318[index], func_800B93AC_C835C(sp2C->unk8, sp2C->unkC, (u16) sp2C->unk2, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950)) != 0) {
-		gDPPipeSync(D_8005BB2C++);
+		if (1) {
+if (1) {
+if (1) {
+if (1) {
+if (1) {
+if (1) {
+if (1) {
+if (1) {
+gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 		gDPPipeSync(D_8005BB2C++);
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100B0F0), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
-		func_800D702C_E5FDC(index, 0);
+		}
+}
+}
+}
+}
+}
+}
+}
+func_800D702C_E5FDC(index, 0);
 		func_800D702C_E5FDC(index, 1);
 		func_800D702C_E5FDC(index, 2);
 		func_800D702C_E5FDC(index, 3);
@@ -7192,9 +7215,10 @@ index = D_80154088[arg0].unk6;
 		} else if (temp_v0_13 < 9) {
 			func_800B2354_C1304(&position[0], &color[0], 0x100, (s16) (0x1300 - (temp_v0_13 << 9)));
 		}
-		x = var_v1->position[0];
-		y = var_v1->position[1];
-		z = var_v1->position[2];
+		coordinates = var_v1->position;
+		x = coordinates[0];
+		y = coordinates[1];
+		z = coordinates[2];
 		temp_f0 = x - (D_80153BA0.x * 4.0f);
 		temp_f2 = y - (D_80153BA0.y * 4.0f);
 		temp_f14 = z - (D_80153BA0.z * 4.0f);
@@ -7211,6 +7235,8 @@ index = D_80154088[arg0].unk6;
 		}
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7284_E6234.s")
 #endif
@@ -7453,10 +7479,9 @@ void func_800D8190_E7140(void) {
 	Unk80154318Entry *entry;
 	Vec3f direction;
 	s16 current;
-	EffectPositionPair *position;
-	f32 two;
-	s16 size[1];
+	Vec3s *position;
 	s32 partial;
+	s16 size[1];
 	s16 x0;
 	s16 y0;
 	s16 z0;
@@ -7471,14 +7496,11 @@ void func_800D8190_E7140(void) {
 	int alpha;
 	Gfx *gfx;
 
-	two = 2.0f;
 	current = D_801542D6;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gfx = D_8005BB2C++; \
-	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
-	gfx->words.w1 = 0;
+	gDPPipeSync(D_8005BB2C++);
 	gfx = D_8005BB2C++; \
 	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
 	gfx->words.w1 = 0;
@@ -7493,7 +7515,7 @@ void func_800D8190_E7140(void) {
 		direction.y = entry->unkA - entry->previousPosition[1];
 		direction.z = entry->unkC - entry->previousPosition[2];
 
-		position = &entry->positionPair;
+		position = &entry->positionPair.positionVector;
 		x0 = entry->unk2;
 		if ((direction.x == 0.0f) && (direction.y == 0.0f) && (direction.z == 0.0f)) {
 			current = D_80154318[current].unk4;
@@ -7505,15 +7527,15 @@ void func_800D8190_E7140(void) {
 		func_800C1128_D00D8((f32)x0, &direction, &direction);
 
 		alpha = 0xD2;
-		halfZ = (s16)(direction.z / two);
-		halfX = (s16)(direction.x / two);
-		x2 = position->position[0] + (s16)(direction.x * 3.0f);
-		y2 = position->position[1] + (s16)(direction.y * 3.0f);
-		z2 = position->position[2] + (s16)(direction.z * 3.0f);
+		halfZ = (s16)(direction.z / 2);
+		halfX = (s16)(direction.x / 2);
+		x2 = position->x + (s16)(direction.x * 3.0f);
+		y2 = position->y + (s16)(direction.y * 3.0f);
+		z2 = position->z + (s16)(direction.z * 3.0f);
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] + (partial = size[0] / 2));
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] - halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->x + halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->y + (partial = size[0] / 2));
+		D_8005BB34->v.ob[2] = (f32)(position->z - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
@@ -7523,9 +7545,9 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] - partial);
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] + halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->x - halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->y - partial);
+		D_8005BB34->v.ob[2] = (f32)(position->z + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0;
@@ -7567,9 +7589,9 @@ void func_800D8190_E7140(void) {
 		gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
 		gfx->words.w1 = 0;
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] - partial);
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] - halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->x + halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->y - partial);
+		D_8005BB34->v.ob[2] = (f32)(position->z - halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
@@ -7579,9 +7601,9 @@ void func_800D8190_E7140(void) {
 		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 
-		D_8005BB34->v.ob[0] = (f32)(position->position[0] - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->position[1] + partial);
-		D_8005BB34->v.ob[2] = (f32)(position->position[2] + halfX);
+		D_8005BB34->v.ob[0] = (f32)(position->x - halfZ);
+		D_8005BB34->v.ob[1] = (f32)(position->y + partial);
+		D_8005BB34->v.ob[2] = (f32)(position->z + halfX);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x800;
 		D_8005BB34->v.tc[1] = 0;
@@ -7618,9 +7640,9 @@ void func_800D8190_E7140(void) {
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
 
-		x2 = position->position[0] + (s16)(direction.x * 2.5);
-		y2 = position->position[1] + (s16)(direction.y * 2.5);
-		z2 = position->position[2] + (s16)(direction.z * 2.5);
+		x2 = position->x + (s16)(direction.x * 2.5);
+		y2 = position->y + (s16)(direction.y * 2.5);
+		z2 = position->z + (s16)(direction.z * 2.5);
 		halfZ = (s16)(direction.z / 3.0f);
 		halfX = (s16)(direction.x / 3.0f);
 
@@ -7705,6 +7727,7 @@ void func_800D8190_E7140(void) {
 		current = D_80154318[current].unk4;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8190_E7140.s")
 #endif
@@ -11340,20 +11363,21 @@ void func_800E6A38_F59E8(void)
   gDPPipeSync(D_8005BB2C++);
   gDPTileSync(D_8005BB2C++);
   gDPLoadSync(D_8005BB2C++);
-  gDPSetCycleType(D_8005BB2C++, 0 << 20);
-  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
-  gSPClearGeometryMode(D_8005BB2C++, 0x00003000);
-  gSPSetGeometryMode(D_8005BB2C++, 0x00000001 | 0x00020000);
+  gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+  gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+  gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
   gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-  gDPSetRenderMode(D_8005BB2C++, (((((((((0x8 | 0x10) | 0x40) | 0x100) | 0x80) | 0x4000) | 0x800) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), (((((((((0x8 | 0x10) | 0x40) | 0x100) | 0x80) | 0x4000) | 0x800) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
-  gDPLoadTextureBlock_4b(D_8005BB2C++, D_5039AB0, 2, 64, 32, 0, 0 | 0, 0 | 0, 0, 0, 0, 0);
+  gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+  gDPLoadTextureBlock_4b(D_8005BB2C++, D_5039AB0, G_IM_FMT_CI, 64, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
   gDPLoadTLUT_pal16(D_8005BB2C++, 0, D_5039EB0);
-  gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
+  gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
   gDPPipeSync(D_8005BB2C++);
   gDPTileSync(D_8005BB2C++);
   gDPLoadSync(D_8005BB2C++);
   while (slotCount--)
   {
+
 	slot = &D_80153300[slotCount];
 	remain = slot->unk1E6;
 	if (remain != 0)
@@ -11454,10 +11478,11 @@ void func_800E6A38_F59E8(void)
   gDPTileSync(D_8005BB2C++);
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
-  gDPSetRenderMode(D_8005BB2C++, (((3 << 30) | (2 << 26)) | (0 << 22)) | (0 << 18), (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
-  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
-  gDPSetCycleType(D_8005BB2C++, 1 << 20);
+  gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+  gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+  gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
