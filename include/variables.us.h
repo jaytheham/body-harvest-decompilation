@@ -4228,4 +4228,5 @@ extern const ShadowGeometryConstant D_802E0DF0_260530;
 extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];
 extern Gfx *D_80140A14_14F9C4[5];
+extern const ShadowGeometryConstant D_80144F08_153EB8;
 #endif /* LIBULTRA_REFERENCE */

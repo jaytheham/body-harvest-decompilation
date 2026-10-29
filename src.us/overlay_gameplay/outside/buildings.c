@@ -12,7 +12,7 @@ const char D_80144E84_153E34[] = "WARNING: Too many hashing conflicts\n"; // "WA
 const char D_80144EAC_153E5C[] = "This level data is kaput\n"; // "This level data is kaput\n"
 const char D_80144EC8_153E78[] = "ERROR:Trying to generate heightmap for building type %d\n"; // "ERROR:Trying to generate heightmap for building type %d\n"
 
-const f64 D_80144F08_153EB8[1] = {3.141592654};
+const ShadowGeometryConstant D_80144F08_153EB8 = {3.141592654};
 
 const f32 D_80144F10_153EC0[1] = {0.949999988079071};
 
@@ -171,24 +171,23 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
 #endif
 
-#ifdef NON_MATCHING
 s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
-	f32 sp24;
-	f32 sp20;
-	s16 var_v1;
+	f32 tangent;
+	s32 pad; /* Preserve the sine and angle spill locations. */
+	f32 sine;
+	f32 angle;
+	s16 height;
 
-	sp20 = (f32)(((f32)arg0 * D_80144F08_153EB8[0]) / 32768.0);
-	sp24 = sinf(sp20) / cosf(sp20);
+	angle = ((f32)arg0 * D_80144F08_153EB8.value) / 32768.0;
+	sine = sinf(angle);
+	tangent = sine / cosf(angle);
 	if (arg2 >= 0) {
-		var_v1 = (s16)(s32)(-sp24 * (f32)(arg1 - arg2));
+		height = -tangent * (arg1 - arg2);
 	} else {
-		var_v1 = (s16)(s32)(((f32)(arg1 - arg2) * sp24) - 2.0 * (sp24 * (f32)arg1));
+		height = ((arg1 - arg2) * tangent) - 2.0 * (tangent * arg1);
 	}
-	return (s16)(var_v1 - (var_v1 >> 2));
+	return height - (height >> 2);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011619C_12514C.s")
-#endif
 
 #ifdef NON_MATCHING
 // AI - Converts a destroyed building into rubble/trail debris near the given coordinates
