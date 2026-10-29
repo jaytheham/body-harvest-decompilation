@@ -2391,38 +2391,27 @@ s32 func_8011B6C0_12A670(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011B6C0_12A670.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_8011BA80_12AA30(u8 arg0, s16 arg1) {
+void func_8011BA80_12AA30(u8 arg0, s32 arg1) {
 	BuildingInstance *building;
+	s32 minX;
+	s32 minZ;
 	BuildingInstance *end;
-	s16 minX;
-	s16 minZ;
-	s16 maxX;
-	s16 maxZ;
+	BuildingInstance *iter;
 
-	building = &buildingInstances[func_80117508_1264B8((s16)(buildingInstances[arg0].zCoord - arg1))];
-	end = &buildingInstances[ARRAY_COUNT(buildingInstances)];
 	minX = buildingInstances[arg0].xCoord - arg1;
 	minZ = buildingInstances[arg0].zCoord - arg1;
-	maxX = minX + (arg1 << 1);
-	maxZ = minZ + (arg1 << 1);
-
-	if ((building < end) && (building->zCoord < maxZ)) {
-		while (TRUE) {
-			if (((building->unk8 >> 12) & 1) && (building->xCoord >= minX) && (building->xCoord < maxX)) {
-				building->unk8 ^= 0x10000000;
+	building = &buildingInstances[func_80117508_1264B8(minZ)];
+	end = &buildingInstances[ARRAY_COUNT(buildingInstances)];
+	iter = building;
+	if (building < end && building->zCoord < minZ + (arg1 << 1)) {
+		do {
+			if ((iter->statusFlags & 1) && iter->xCoord >= minX && iter->xCoord < minX + (arg1 << 1)) {
+				iter->statusFlags |= 0x10000;
 			}
-
-			building++;
-			if ((building >= end) || (building->zCoord >= maxZ)) {
-				break;
-			}
-		}
+			iter++;
+		} while (iter < end && iter->zCoord < minZ + (arg1 << 1));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BA80_12AA30.s")
-#endif
 
 // draw explosion etc when building is damaged/destroyed
 #ifdef NON_MATCHING
