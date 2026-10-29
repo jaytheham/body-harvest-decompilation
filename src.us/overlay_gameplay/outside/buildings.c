@@ -56,7 +56,6 @@ const f32 D_80144F94_153F44[1] = {0.20000000298023224};
 
 const f32 D_80144F98_153F48[1] = {0.6000000238418579};
 
-const f64 D_80144FA0_153F50[1] = {0.4};
 
 
 
@@ -2531,37 +2530,33 @@ s32 func_8011BEA0_12AE50(u8 arg0, s32 arg1) {
 }
 
 // building on fire but not destroyed- called for Pollstura Suburbs fire mission/event
-#ifdef NON_MATCHING
 void func_8011BF7C_12AF2C(u8 arg0) {
 	BuildingInstance *inst = &buildingInstances[arg0];
 	BuildingType *type = &buildingTypes[inst->buildingType];
 
-	if ((s8)inst->hitPoints <= 0) { // only if building isn't already destroyed
+	if (inst->hitPoints <= 0) { // only if building isn't already destroyed
 		return;
 	}
-	if (!((inst->unk8 >> 12) & 1)) {
+	if (!(inst->statusFlags & 1)) {
 		return;
 	}
-	if ((inst->unk8 >> 12) & 0x10) {
+	if (inst->statusFlags & 0x10) {
 		return;
 	}
 	// fire/smoke effect on top of building?
 	func_800D249C_E144C(
 		inst->xCoord,
-		(s16)(s32)(inst->yCoord + type->unk14 * D_80144FA0_153F50[0]),
+		inst->yCoord + type->unk14 * 0.4,
 		inst->zCoord,
 		0xC8,
 		0x55,
 		0x55,
-		(s32)arg0,
+		arg0,
 		0
 	);
 	inst->hitPoints = 1; // building HP to 1 but won't explode during the mission
-	inst->unk8 = (((inst->unk8 >> 12 | 0x10) ^ (inst->unk8 >> 12)) << 12) ^ inst->unk8;
+	inst->statusFlags |= 0x10;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011BF7C_12AF2C.s")
-#endif
 
 void func_8011C080_12B030(u8 arg0)
 {
