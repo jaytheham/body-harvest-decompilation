@@ -184,88 +184,64 @@ s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 	return height - (height >> 2);
 }
 
-#ifdef NON_MATCHING
-// AI - Converts a destroyed building into rubble/trail debris near the given coordinates
-s32 func_8011629C_12524C(BuildingInstance *arg0, s16 arg1, s16 arg2) {
-	BuildingInstance *temp;
-	BuildingInstance *prev;
-	u8 *buildingType;
+// Link the next endpoint and update the intervening building grid cells.
+void func_8011629C_12524C(BuildingInstance *start, s16 xStep, s16 zStep) {
+	BuildingInstance *previous;
 	s16 x;
 	s16 z;
-	s16 y;
-	s32 idx;
+	s16 height;
+	s32 index;
 	s32 count;
-	s32 stride;
-	s32 minusOne;
-	s8 hitPoints;
-	u8 trailType;
+	s32 previousIndex;
+	u8 previousId;
+	BuildingInstance *endpoint;
 
-	x = (s16)(arg0->xCoord >> 8);
-	z = (s16)(arg0->zCoord >> 8);
-	prev = NULL;
+	x = start->xCoord >> 8;
+	z = start->zCoord >> 8;
+	previous = NULL;
 	count = -1;
-	minusOne = -1;
-	stride = 0x18;
-	buildingType = &D_8015EA28;
 
 	while (TRUE) {
-		x += arg1;
-		z += arg2;
-		idx = func_8011D260_12C210((s8)x, (s8)z);
-		count += 1;
-		if (idx == minusOne) {
+		x += xStep;
+		z += zStep;
+		index = func_8011D260_12C210(x, z);
+		count++;
+		if (index == -1) {
 			continue;
 		}
 
-		temp = buildingInstances[idx];
-		if (*buildingType != temp->buildingType) {
-			prev = temp;
-			continue;
+		endpoint = &buildingInstances[index];
+		if (endpoint->buildingType == D_8015EA28) {
+			break;
 		}
-
-		y = temp->yCoord;
-		if (y < arg0->yCoord) {
-			y = arg0->yCoord;
-		}
-
-		prev->yCoord = y;
-		temp->yCoord = prev->yCoord;
-		arg0->yCoord = prev->yCoord;
-
-		hitPoints = buildingTypes[*buildingType].unk19;
-		prev->hitPoints = hitPoints;
-		temp->hitPoints = hitPoints;
-		arg0->hitPoints = hitPoints;
-
-		arg0->unkD = count;
-		temp->padC[1] = count;
-		prev->buildingType = 0x1F;
-		prev->rotation = (u8)((prev->rotation & 0xFC) | (arg0->unk8 & 3));
-		break;
+		previousIndex = index;
+		previous = endpoint;
 	}
 
-	x = (s16)(arg0->xCoord >> 8);
-	z = (s16)(arg0->zCoord >> 8);
-	trailType = count;
-
-	if (count != 0) {
-		count -= 1;
-		while (TRUE) {
-			x += arg1;
-			z += arg2;
-			func_8011CC40_12BBF0((u8)x, (u8)z, trailType);
-			if (count == 0) {
-				break;
-			}
-			count -= 1;
-		}
+	if (endpoint->yCoord < start->yCoord) {
+		height = start->yCoord;
+	} else {
+		height = endpoint->yCoord;
 	}
+	previous->yCoord = height;
+	start->yCoord = endpoint->yCoord = previous->yCoord;
 
-	return count;
+	start->hitPoints = endpoint->hitPoints = previous->hitPoints = buildingTypes[D_8015EA28].unk19;
+
+	start->unkD = count;
+	endpoint->unkD = count;
+	previous->buildingType = 0x1F;
+	previous->rotationLowFlags = start->unk8;
+
+	x = start->xCoord >> 8;
+	z = start->zCoord >> 8;
+	previousId = previousIndex;
+	while (count--) {
+		x += xStep;
+		z += zStep;
+		func_8011CC40_12BBF0(x, z, previousId);
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011629C_12524C.s")
-#endif
 
 Unk800522C0 *func_801164C4_125474(s16 arg0, s16 arg1) {
 	s32 i;

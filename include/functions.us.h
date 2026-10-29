@@ -991,7 +991,7 @@ s32 func_8010E480_11D430(void);
 s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1);
 s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2);
 s32 func_80115824_1247D4(VehicleInstance *arg0, s32 arg1);
-s32 func_8011629C_12524C(BuildingInstance *, s16, s16);
+void func_8011629C_12524C(BuildingInstance *, s16, s16);
 Unk800522C0 *func_801164C4_125474(s16, s16);
 s32 func_801165FC_1255AC(u8, u8, s16 *, s16 *, s16 *, s16 *);
 void func_8011694C_1258FC(void);
