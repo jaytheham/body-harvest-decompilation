@@ -880,7 +880,6 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
 #endif
 
-// https://decomp.me/scratch/tnWWg
 s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5)
 {
 	float new_var;
@@ -1047,7 +1046,6 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	s16 legRadius;
 	u8 parentAlien;
 	s32 i;
-
 
 	parentAlien = walker->alienIdx;
 	posX = (s16)walker->limbs[0].words[4];
@@ -2432,14 +2430,12 @@ void func_800F9118_1080C8(s32 arg0) {
 				if (func_800E95BC_F856C(walker->limbs[0].words[4],
 						func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
 						walker->limbs[0].words[5]) == 0) {
-					index = 0;
-					countWord = count;
-					if (count > 0) {
-						do {
+					
+					for (index = 0; index != count; index++) {
 							UnkF9230ShadowLimb *limb = &walker->limbs[index + 1];
 
 							if (limb->unk23 == 0) {
-								terrain = countWord / 2;
+								terrain = count / 2;
 								if (walker->limbs[0].unk22 & 0x80) {
 									heading = walker->limbs[0].unk1A;
 								} else {
@@ -2542,16 +2538,14 @@ void func_800F9118_1080C8(s32 arg0) {
 									sins(cosOffset & 0xFFFF);
 								}
 
-								if (8 != countWord) {
+								if (8 != count) {
 									gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
 									gSP1Triangle(D_8005BB2C++, 0, 1, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 1, 4, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 2, 3, 4, 0);
 								}
 							}
-							index++;
-						} while (index != countWord);
-					}
+						}
 				}
 			}
 		}
@@ -3631,7 +3625,7 @@ void func_800FCA5C_10BA0C(void) {
 
 	{
 		VehicleType *typeWalker;
-		typeWalker = &vehicleTypes[0x13]; do {
+		for (typeWalker = &vehicleTypes[0x13]; typeWalker-- >= &vehicleTypes[1];){
 			if ((currentLevel != 3) || (typeWalker != &vehicleTypes[0xD])) {
 				squaredRadius = (f32)(SQ(typeWalker->unk34 >> 1) + SQ(typeWalker->unk36 >> 1));
 				if (typeWalker->unk16 != 1) {
@@ -3640,7 +3634,7 @@ void func_800FCA5C_10BA0C(void) {
 				typeWalker->unk8 = (s32)squaredRadius;
 				typeWalker->unkC = sqrtf(squaredRadius);
 			}
-		} while (typeWalker-- >= &vehicleTypes[1]);
+		}
 	}
 
 	D_80158FD8 = 0;
@@ -3704,7 +3698,6 @@ void func_800FCA5C_10BA0C(void) {
 	D_80047724 = 6;
 	D_80047726 = 0x258;
 	D_80047728 = 0x4B0;
-
 
 	i = 50;
 	while (i--) {
@@ -5678,8 +5671,7 @@ void func_80102FA4_111F54(void) {
 	chain[1] = D_801594E0[1].pos.y;
 	chain[0] = D_801594E0[1].pos.z;
 
-	cur = D_801594E0;
-	do {
+	for (cur = D_801594E0; (u32)cur-- >= (u32)D_80159420;) {
 		prev = cur - 1;
 
 		midX = (f32)(chain[2] - (((chain[2] - prev->pos.x)) * 0.5));
@@ -5700,7 +5692,7 @@ void func_80102FA4_111F54(void) {
 		chain[1] = midY;
 		cur->pos.z = midZ;
 		chain[0] = midZ;
-	} while ((u32)cur-- >= (u32)D_80159420);
+	}
 
 	points[0].vel.x = (f32)(points[0].vel.x * damping);
 	points[0].vel.y = (f32)((points[0].vel.y * damping) - 4);
@@ -5709,15 +5701,12 @@ void func_80102FA4_111F54(void) {
 	points[0].pos.y += points[0].vel.y;
 	points[0].pos.z += points[0].vel.z;
 
-	cur = D_801594E0;
-	i = 10;
-	do {
+	for (cur = D_801594E0, i = 10; cur--,i--;) {
 		groundY = func_800F9F64_108F14((s16)(s32)cur->pos.x, (s16)(s32)cur->pos.z);
 		if (groundY < cur->pos.y) {
 			return;
-		}
-		cur--;
-	} while (i--);
+		}	
+	}
 	D_80159320 &= 0x7FFFFFFF;
 }
 #else
@@ -8775,19 +8764,14 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 	slopeMain[0] = slopeMain[0]; /* Preserve IDO main-slope register allocation. */
 	interceptMain = arg1 - (slopeMain[0] * arg0);
 
-	i = 4;
-	if (1)
-	{
-		while (i--)
+		for (i = 4;i--;)
 		{
 			sideFlags[i] = interceptMain <
 						   ((D_80159D5C->unk54 + D_80159D98[i]) -
 							(slopeMain[0] * (D_80159D78[i] + D_80159D5C->unk4C)));
 		}
-	}
 
-	i = 3;
-	while (i--)
+	for (i = 3;i--;)
 	{
 		if (sideFlags[3] == sideFlags[i])
 		{
@@ -9974,7 +9958,6 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 	return 0;
 }
 
-// Has some fake-match bs that likely needs removing to allow matching
 #ifdef NON_MATCHING
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	f64 var_f0;
@@ -10038,7 +10021,8 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 		return bestY;
 	}
 
-	j = 7;
+	j = 7; // Shouldn't j be used to index into the base variable that D_80158BC8 is the end of
+	// Instead of strip being declared and subtracted from - try changing this
 	if (currentLevel == 1) {
 		s16 *strip = D_80158BC8;
 
@@ -10087,7 +10071,6 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 			bestY = func_80078B58_87B08(gridX, (s16) i);
 
 			if (bestY > 0) {
-				
 
 				if (((func_800F9D24_108CD4((s16)gridX, (s16) i) + ((TerrainCollisionRow *)D_8013BB8C_14AB3C)[currentLevel].values[bestY - 16]) >= arg0->unk2) && (func_8010DC00_11CBB0(gridX, i, ((TerrainCollisionRow *)D_8013BC2C_14ABDC)[currentLevel].values[bestY - 16]) != 0)) {
 					bestY = func_8010B804_11A7B4(bestY, arg0, gridX, (s16) i);
@@ -10209,7 +10192,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	}
 
 	xPoint = &D_80159D78[3]; zPoint = &D_80159D98[3];
-	gridX = 3; do {
+	for (gridX = 3;gridX--;) {
 		bestX = (s32) (*xPoint + (f32) arg0->unk0);
 		sp7C = (s32) (*zPoint + (f32) arg0->unk4);
 		if ((func_800F9D60_108D10((s16) bestX, (s16) sp7C, &spDA, &spD8, &spD6) != -1) && (spDA < spD6) && (spD6 >= bestY)) {
@@ -10223,7 +10206,7 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	
 			xPoint--;
 			zPoint--;
-		} while (gridX--);
+		}
 
 	if ((func_800F9D60_108D10(arg0->unk0, arg0->unk4, &spDA, &spD8, &spD6) != -1) && (spDA < spD6) && (spD6 >= bestY)) {
 		bestY = spD6;
@@ -10477,8 +10460,6 @@ s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80110FB4_11FF64.s")
 #endif
-
-
 
 s16 func_8011290C_1218BC(VehicleInstance *arg0) {
 	volatile s16 sp26;
