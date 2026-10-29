@@ -313,27 +313,27 @@ void func_80116554_125504(s16 arg0, s16 *arg1, s16 *arg2) {
 	*arg2 = sp4;
 }
 
-#ifdef NON_MATCHING
 s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 *arg5) {
-	BuildingInstance *sp18;
-	Unk800522C0 *sp20;
-	s16 sp1E;
-	s16 sp1C;
+	BuildingInstance *building;
+	Unk800522C0 *door;
+	s16 xOffset;
+	s16 zOffset;
 
-	sp20 = func_801164C4_125474(arg0, arg1);
-	if (sp20 == NULL) {
+	door = func_801164C4_125474(arg0, arg1);
+	if (door == NULL) {
 		*arg5 = -1;
 		return 0;
 	}
-
-	sp1E = sp20->unk0;
-	sp1C = sp20->unk4;
-	sp18 = buildingInstances + arg0;
-	func_80116554_125504((s16)(sp18->unk8 & 3), &sp1E, &sp1C);
-	*arg2 = sp18->xCoord + sp1E;
-	*arg3 = sp18->yCoord + sp20->unk2;
-	*arg4 = sp18->zCoord + sp1C;
-	*arg5 = (sp18->unk8 + sp20->unk6) << 14;
+	door = (Unk800522C0 *)((u32)door | 0); /* Retain the saved pointer register in IDO. */
+	xOffset = door->unk0;
+	zOffset = door->unk4;
+	building = &buildingInstances[arg0];
+	if (1) {} /* Keep the offset stores before argument setup. */
+	func_80116554_125504(building->unk8 & 3, &xOffset, &zOffset);
+	*arg2 = building->xCoord + xOffset;
+	*arg3 = building->yCoord + door->unk2;
+	*arg4 = building->zCoord + zOffset;
+	*arg5 = ((s16)((building->unk8 & 3) + door->unk6) & 3) << 14;
 
 	if (D_8015EB7C != 0) {
 		D_8015EB7C = 0;
@@ -341,9 +341,6 @@ s32 func_801165FC_1255AC(u8 arg0, u8 arg1, s16 *arg2, s16 *arg3, s16 *arg4, s16 
 	}
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801165FC_1255AC.s")
-#endif
 
 void func_80116724_1256D4(void) {
 	s32 building_idx;
