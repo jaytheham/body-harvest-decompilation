@@ -93,7 +93,7 @@ u8 D_80140A94_14FA44[0x0C] = {
 	0xFF, 0xFF, 0xF0, 0xFF, 0xFA, 0x14, 0xE6, 0xC8, 0x1E, 0xB4, 0x96, 0x00,
 };
 
-#ifdef NON_MATCHING
+// Find the endpoint buildings along the starting building's grid axis.
 s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s16 instanceId;
 	s16 testId;
@@ -101,9 +101,9 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	s16 z;
 	s16 xStep;
 	s16 zStep;
-	u8 buildingType;
+	s16 buildingType;
 
-	instanceId = func_8011D260_12C210((s8)(arg0 >> 8), (s8)(arg1 >> 8));
+	instanceId = func_8011D260_12C210(arg0 >> 8, arg1 >> 8);
 	if (instanceId == -1) {
 		*arg2 = -1;
 		*arg3 = -1;
@@ -111,49 +111,43 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 	}
 
 	buildingType = buildingInstances[instanceId].buildingType;
-	if ((0x1F != buildingType) && (D_8015EA28 != buildingType)) {
-		*arg2 = -1;
-		*arg3 = -1;
-		return -1;
-	}
+	if ((buildingType == 0x1F) || (buildingType == D_8015EA28)) {
+		if (buildingInstances[instanceId].lowFlags & 1) {
+			xStep = 0;
+			zStep = 1;
+		} else {
+			xStep = 1;
+			zStep = 0;
+		}
 
-	x = arg0 >> 8;
-	z = arg1 >> 8;
-
-	xStep = 1;
-	zStep = 0;
-	if (buildingInstances[instanceId].unk8 & 1) {
-		xStep = 0;
-		zStep = 1;
-	}
-
-	*arg2 = 0;
-	*arg3 = 0;
-
-	if (*arg2 == 0) {
-		do {
-			x += xStep;
-			z += zStep;
-			testId = func_8011D260_12C210((s8)x, (s8)z);
-			buildingType = buildingInstances[testId].buildingType;
-			if (buildingType != 0x1F) {
-				if (buildingType == D_8015EA28) {
-					*arg2 = testId;
-				} else {
-					*arg2 = instanceId;
-				}
-			}
-		} while (*arg2 == 0);
-
+		*arg2 = 0;
+		*arg3 = 0;
 		x = arg0 >> 8;
 		z = arg1 >> 8;
-	}
 
-	if (*arg3 == 0) {
-		do {
+		if (*arg2 == 0) {
+			do {
+				x += xStep;
+				z += zStep;
+				testId = func_8011D260_12C210(x, z);
+				buildingType = buildingInstances[testId].buildingType;
+				if (buildingType != 0x1F) {
+					if (buildingType == D_8015EA28) {
+						*arg2 = testId;
+					} else {
+						*arg2 = instanceId;
+					}
+				}
+			} while (*arg2 == 0);
+
+			x = arg0 >> 8;
+			z = arg1 >> 8;
+		}
+
+		while (*arg3 == 0) {
 			x -= xStep;
 			z -= zStep;
-			testId = func_8011D260_12C210((s8)x, (s8)z);
+			testId = func_8011D260_12C210(x, z);
 			buildingType = buildingInstances[testId].buildingType;
 			if (buildingType != 0x1F) {
 				if (buildingType == D_8015EA28) {
@@ -162,14 +156,15 @@ s16 func_80115F20_124ED0(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3) {
 					*arg3 = instanceId;
 				}
 			}
-		} while (*arg3 == 0);
-	}
+		}
 
-	return instanceId;
+		return instanceId;
+	} else {
+		*arg2 = -1;
+		*arg3 = -1;
+		return -1;
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80115F20_124ED0.s")
-#endif
 
 s16 func_8011619C_12514C(s16 arg0, s16 arg1, s16 arg2) {
 	f32 tangent;
