@@ -93,21 +93,17 @@ f32 func_80082FC4_16B084(Vec3f *arg0) {
 	return var_f12;
 }
 
-#ifdef NON_MATCHING
 // AI - Normalize a 3D vector (divide by its magnitude)
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
 	temp_f0 = func_80082FC4_16B084(arg0);
 	if ((f64) temp_f0 == 0.0) {
-		osSyncPrintf(D_800A4F70_18D030, arg0);
+		osSyncPrintf(D_800A4F70_18D030);
 		*arg1 = *arg0;
-		return;
+	} else {
+		func_80082F74_16B034(temp_f0, arg0, arg1);
 	}
-	func_80082F74_16B034(temp_f0, arg0, arg1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083014_16B0D4.s")
-#endif
 
 // AI - Dot product of two 3D vectors
 f32 func_80083090_16B150(Vec3f *arg0, Vec3f *arg1) {
