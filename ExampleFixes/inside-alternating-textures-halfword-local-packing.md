@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800881C0_170280`, a separate full-record pointer adds `move s4,s2`, consumes the saved register needed by the pipe-sync opcode, and prevents caching the physical-address mask. After removing it, a word-sized texture flag leaves frame `0xB8`, the previous-payload home at `sp+0xB4`, and the camera vector at `sp+0xA4`.
+
+-> `code changed`: Keep only the typed payload views and use indexed record fields for size and next links. Preserve the original previous-payload self-assignments and first-iteration stack read. Declare the previous pointer first, then a signed-halfword texture flag and signed-halfword particle index, then the camera vector and current payload pointer. Convert displacement through `u32`; retain both complete `gDPLoadTextureBlock_4b` branches.
+
+-> `correct ASM`: The extra record copy disappears, the mask remains in `s8`, and the texture header remains in `s7`. The frame is `0xB0`, previous payload is at `sp+0xAC`, and the camera vector occupies `sp+0x9C/0xA0/0xA4`. All 293 instructions and the complete US ROM checksum match.

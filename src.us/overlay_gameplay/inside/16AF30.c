@@ -14,13 +14,13 @@ u32 D_800A2620_18A6E0[28] = {
 };
 
 // AI - Animated sprite type table (8 bytes per type)
-s8 D_800A2690_18A750[8] = {
-	0x01, 0x03, 0x02, 0x0A, 0x00, 0x00, 0x20, 0x20,
+EffectParticleConfig D_800A2690_18A750[1] = {
+	{0x01, 0x03, 0x02, 0x0A, 0x00, 0x00, {{0x20, 0x20}}},
 };
 
 // AI - Animated sprite entry data table (4 bytes per type)
-u8 D_800A2698_18A758[4] = {
-	0xC8, 0x96, 0x64, 0xFF,
+EffectParticleColor D_800A2698_18A758[1] = {
+	{0xC8, 0x96, 0x64, 0xFF},
 };
 
 // AI - Animated sprite texture base pointers
@@ -54,29 +54,7 @@ const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream
 const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n"; // "Call to draw generic flat effect with unknown render type.\n"
 const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"; // "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"
 
-const f64 D_800A5450_18D510[1] = {255.0};
 
-const f64 D_800A5458_18D518[1] = {255.0};
-
-const f64 D_800A5460_18D520[1] = {255.0};
-
-const f64 D_800A5468_18D528[1] = {0.9};
-
-const f64 D_800A5470_18D530[1] = {255.0};
-
-const f64 D_800A5478_18D538[1] = {255.0};
-
-const f64 D_800A5480_18D540[1] = {255.0};
-
-const u32 jtbl_800A5488_18D548[] = {
-	OVERLAY_PTR(0x80086DDC), OVERLAY_PTR(0x80086DEC), OVERLAY_PTR(0x80086DFC), OVERLAY_PTR(0x80086E0C), OVERLAY_PTR(0x80086E1C), OVERLAY_PTR(0x80086E2C), OVERLAY_PTR(0x80086E3C), OVERLAY_PTR(0x80086E4C), 
-	OVERLAY_PTR(0x80086E5C),
-};
-
-const u32 jtbl_800A54AC_18D56C[] = {
-	OVERLAY_PTR(0x8008B3B0), OVERLAY_PTR(0x8008B3C0), OVERLAY_PTR(0x8008B3D0), OVERLAY_PTR(0x8008B3E0), OVERLAY_PTR(0x8008B3F0), OVERLAY_PTR(0x8008B400), OVERLAY_PTR(0x8008B438), OVERLAY_PTR(0x8008B410), 
-	OVERLAY_PTR(0x8008B420),
-};
 
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
@@ -115,21 +93,17 @@ f32 func_80082FC4_16B084(Vec3f *arg0) {
 	return var_f12;
 }
 
-#ifdef NON_MATCHING
 // AI - Normalize a 3D vector (divide by its magnitude)
 void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
 	temp_f0 = func_80082FC4_16B084(arg0);
 	if ((f64) temp_f0 == 0.0) {
-		osSyncPrintf(D_800A4F70_18D030, arg0);
+		osSyncPrintf(D_800A4F70_18D030);
 		*arg1 = *arg0;
-		return;
+	} else {
+		func_80082F74_16B034(temp_f0, arg0, arg1);
 	}
-	func_80082F74_16B034(temp_f0, arg0, arg1);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083014_16B0D4.s")
-#endif
 
 // AI - Dot product of two 3D vectors
 f32 func_80083090_16B150(Vec3f *arg0, Vec3f *arg1) {
@@ -300,81 +274,63 @@ s16 func_80083584_16B644(u8 arg0) {
 	return sp1E;
 }
 
-#ifdef NON_MATCHING
-// AI - Remove/free a visual effect instance from the linked list
+// Remove a visual effect from its slot's linked list.
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
-	Unk84EECEffect *effect;
-	UnkFB6F8Entry *slot;
-	s16 temp;
-	Unk84EECEffect *baseEffect;
 
-	effect = &D_800FB7B0[arg0];
-	baseEffect = effect;
-	slot = &D_800FB6F8[arg1];
-
-	if (effect->unk0 == 0) {
+	if (D_800FB7B0[arg0].unk0 == 0) {
 		osSyncPrintf(&D_800A5064_18D124, arg0, arg1);
 		return;
 	}
 
-	switch (slot->unk4) {
+	switch (D_800FB6F8[arg1].unk4) {
 		case 0:
 			osSyncPrintf(&D_800A50AC_18D16C);
-			slot->unk6 = -6;
-			slot->unk8 = -6;
+			D_800FB6F8[arg1].unk6 = -6;
+			D_800FB6F8[arg1].unk8 = -6;
 			return;
 
 		case 1:
-			slot->unk6 = -6;
-			slot->unk8 = -6;
+			D_800FB6F8[arg1].unk6 = -6;
+			D_800FB6F8[arg1].unk8 = -6;
 			break;
 
 		case 2:
-			temp = effect->unk6;
-			if (temp == -4) {
-				slot->unk6 = effect->unk4;
-				effect = &D_800FB7B0[slot->unk6];
-				effect->unk6 = -4;
-				effect->unk4 = -5;
-			} else if (effect->unk4 == -5) {
-				slot->unk8 = temp;
-				effect = &D_800FB7B0[slot->unk6];
-				effect->unk6 = -4;
-				effect->unk4 = -5;
+			if ((-4) == D_800FB7B0[arg0].unk6) {
+				D_800FB6F8[arg1].unk6 = D_800FB7B0[arg0].unk4;
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk6 = (-4);
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk4 = (-5);
+			} else if ((-5) == D_800FB7B0[arg0].unk4) {
+				D_800FB6F8[arg1].unk8 = D_800FB7B0[arg0].unk6;
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk6 = (-4);
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk4 = (-5);
 			} else {
 				osSyncPrintf(&D_800A50E8_18D1A8);
 			}
 			break;
 
 		default:
-			temp = effect->unk6;
-			if (temp == -4) {
-				slot->unk6 = effect->unk4;
-				effect = &D_800FB7B0[effect->unk4];
-				effect->unk6 = -4;
-			} else if (effect->unk4 == -5) {
-				slot->unk8 = temp;
-				effect = &D_800FB7B0[temp];
-				effect->unk4 = -5;
+			if ((-4) == D_800FB7B0[arg0].unk6) {
+				D_800FB6F8[arg1].unk6 = D_800FB7B0[arg0].unk4;
+				D_800FB7B0[D_800FB7B0[arg0].unk4].unk6 = (-4);
 			} else {
-				effect = &D_800FB7B0[effect->unk4];
-				effect->unk6 = temp;
-				effect = &D_800FB7B0[slot->unk6];
-				effect->unk4 = slot->unk8;
+				if ((-5) == D_800FB7B0[arg0].unk4) {
+					D_800FB6F8[arg1].unk8 = D_800FB7B0[arg0].unk6;
+					D_800FB7B0[D_800FB7B0[arg0].unk6].unk4 = (-5);
+				} else {
+					D_800FB7B0[D_800FB7B0[arg0].unk4].unk6 = D_800FB7B0[arg0].unk6;
+					D_800FB7B0[D_800FB7B0[arg0].unk6].unk4 = D_800FB7B0[arg0].unk4;
+				}
 			}
 			break;
 	}
 
-	baseEffect->unk0 = 0;
-	slot->unk4--;
-	D_800FC8E0--;
+	D_800FB7B0[arg0].unk0 = 0;
+	D_800FB6F8[arg1].unk4 = D_800FB6F8[arg1].unk4 - 1;
+	D_800FC8E0 = D_800FC8E0 - 1;
 	if (arg0 < D_800FC8E2) {
 		D_800FC8E2 = arg0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800835F0_16B6B0.s")
-#endif
 
 // AI - Remove three specific effects from a slot
 void func_80083814_16B8D4(s16 arg0, u8 arg1)
@@ -424,70 +380,71 @@ void func_800839B8_16BA78(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Spawn a new visual particle effect (copy from template with randomization)
+// Spawn a child particle from its template.
 void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
-	f32 sp3C;
-	f32 sp38;
-	f32 sp34;
-	s16 temp;
-	s16 radius;
-	s16 sp30;
-	s16 sp2E;
-	s16 idx;
-	Unk84EECEffect *effectUnit;
-	Unk84EECEffect *newUnit;
+	Frontend52690Unk8Motion *template;
+	Frontend52690Unk8Motion *spawn;
+	Vec3f random;
+	s16 spawnIdx;
+	s16 spreadX;
+	s16 spreadY;
+	s16 spreadZ;
 
-	effectUnit = &D_800FB7B0[D_800FB6F8[arg0].unk6];
-	idx = func_80083390_16B450(arg0);
-	if (idx != -3) {
-		if (effectUnit->unk12 == 1) {
-			newUnit = &D_800FB7B0[idx];
-			newUnit->unk8 = effectUnit->unk8;
-			newUnit->unkA = effectUnit->unkA;
-			newUnit->unkC = effectUnit->unkC;
-			sp34 = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5450_18D510[0]);
-			if ((func_800038E0_44E0() % 21) < 10) {
-				sp34 = 0.0f - sp34;
-			}
-			sp34 += arg1->x;
-			sp38 = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5458_18D518[0]);
-			if ((func_800038E0_44E0() % 21) < 10) {
-				sp38 = 0.0f - sp38;
-			}
-			sp38 += arg1->y;
-			sp3C = (f32) ((f32) (func_800038E0_44E0() % arg3) / D_800A5460_18D520[0]);
-			if ((func_800038E0_44E0() % 21) < 10) {
-				sp3C = 0.0f - sp3C;
-			}
-			sp3C += arg1->z;
-			func_80083014_16B0D4((Vec3f *)&sp34, (Vec3f *)&sp34);
-			newUnit->unkE = ((f32) (arg2 / 4) * sp34);
-			sp34 = sp3C;
-			newUnit->unkF = ((f32) (arg2 / 4) * sp38);
-			newUnit->unk11 = 0xFF;
-			newUnit->unk12 = 0;
-			newUnit->unk10 = ((f32) (arg2 / 4) * sp34);
-			return;
-		}
-		radius = (((u16)effectUnit->unk14 << 8) | effectUnit->unk15);
-		sp30 = (func_800038E0_44E0() % (radius * 2)) - radius;
-		sp2E = (func_800038E0_44E0() % (radius * 2)) - radius;
-		temp = (func_800038E0_44E0() % (radius * 2)) - radius;
-		newUnit = &D_800FB7B0[idx];
-		newUnit->unk8 = effectUnit->unk8 + sp30;
-		newUnit->unkA = effectUnit->unkA + sp2E;
-		newUnit->unkC = effectUnit->unkC + temp;
-		newUnit->unkE = -(sp30 / (s32)effectUnit->unk11);
-		newUnit->unkF = -(sp2E / (s32)effectUnit->unk11);
-		newUnit->unk10 = -(temp / (s32)effectUnit->unk11);
-		newUnit->unk11 = 0xC;
-		newUnit->unk12 = 0;
+	/* The integer address view preserves the separate payload base in IDO. */
+	template = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
+	spawnIdx = func_80083390_16B450(arg0);
+	if (spawnIdx == -3) {
+		return;
 	}
+
+	if (template->unkA == 1) {
+		spawn = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[spawnIdx].unk8;
+		spawn->unk0 = template->unk0;
+		spawn->unk2 = template->unk2;
+		spawn->unk4 = template->unk4;
+
+		random.x = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			random.x = 0.0f - random.x;
+		}
+		random.x += arg1->x;
+
+		random.y = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			random.y = 0.0f - random.y;
+		}
+		random.y += arg1->y;
+
+		random.z = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
+		if ((func_800038E0_44E0() % 21) < 10) {
+			random.z = 0.0f - random.z;
+		}
+		random.z += arg1->z;
+
+		func_80083014_16B0D4(&random, &random);
+		spawn->unk6 = (arg2 / 4) * random.x;
+		spawn->unk7 = (arg2 / 4) * random.y;
+		spawn->unk8 = (arg2 / 4) * random.z;
+		spawn->unk9 = 0xFF;
+		spawn->unkA = 0;
+		return;
+	}
+
+	spreadX = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+	spreadY = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+	spreadZ = (func_800038E0_44E0() % (template->unkC * 2)) - template->unkC;
+
+	spawn = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[spawnIdx].unk8;
+	spawn->unk0 = template->unk0 + spreadX;
+	spawn->unk2 = template->unk2 + spreadY;
+	spawn->unk4 = template->unk4 + spreadZ;
+	spawn->unk6 = -(spreadX / template->unk9);
+	spawn->unk7 = -(spreadY / template->unk9);
+	spawn->unk8 = -(spreadZ / template->unk9);
+	spawn->unk9 = 12;
+	spawn->unkA = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80083A20_16BAE0.s")
-#endif
+
 
 // AI - Create a burst effect (explosion) with randomized particle positions
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
@@ -761,14 +718,13 @@ s32 func_80084C18_16CCD8(u8 arg0)
 	return result;
 }
 
-#ifdef NON_MATCHING
 // Create a fire effect
-u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
-	UnkFB6F8Entry *owner;
+u8 func_80084C68_16CD28(s16 arg0, volatile s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	Unk84EECEffect *entry;
-	Unk84EECEffect *linked;
-	u8 slot;
+	Unk84EECEffectTailUpdate *data;
 	s16 effect;
+	u16 bright;
+	u8 slot;
 
 	if ((slot = func_80083224_16B2E4(0)) != 0xFB) {
 		effect = func_80083584_16B644(slot);
@@ -779,14 +735,13 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 		}
 
 		entry = &D_800FB7B0[effect];
-			owner = &D_800FB6F8[slot];
+		D_800FB6F8[slot].unkA = effect;
 
+		data = (Unk84EECEffectTailUpdate *)&D_800FB7B0[entry->unk4].unk8;
 		entry->unk8 = arg0 * 4;
-		owner->unkA = effect;
-		entry->unkC = arg2 * 4;
-		linked = &D_800FB7B0[entry->unk4];
 		entry->unkA = arg1 * 4;
-		linked->unkC = 0;
+		entry->unkC = arg2 * 4;
+		data->pad4 = 0;
 
 		entry->unkE = arg5;
 		entry->unkF = arg6;
@@ -802,45 +757,42 @@ u8 func_80084C68_16CD28(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg
 			entry->unk2 = 0x10;
 		}
 
-		linked->unkA = arg3;
-		if (linked->unkA < 0x18) {
-			linked->unkA = 0x18;
+		data->pad2 = arg3;
+		if (data->pad2 < 0x18) {
+			data->pad2 = 0x18;
 		}
 
-		linked->unk8 = arg4;
+		data->pad0 = arg4;
 
-		if ((u16)(arg5 + ((arg5 / 3) & 0xFF)) >= 0x100) {
-			entry->unk11 = 0xFF;
-		} else {
-			entry->unk11 = (u16)(arg5 + ((arg5 / 3) & 0xFF));
+		data = (Unk84EECEffectTailUpdate *)&entry->unk8;
+		bright = (u8)(arg5 / 3) + arg5;
+		if (bright >= 0x100) {
+			bright = 0xFF;
 		}
+		data->unk9 = bright;
 
-		if ((u16)(arg6 + ((arg6 / 3) & 0xFF)) >= 0x100) {
-			entry->unk12 = 0xFF;
-		} else {
-			entry->unk12 = (u16)(arg6 + ((arg6 / 3) & 0xFF));
+		bright = (u8)(arg6 / 3) + arg6;
+		if (bright >= 0x100) {
+			bright = 0xFF;
 		}
+		data->unkA = bright;
 
-		if ((u16)(arg7 + ((arg7 / 3) & 0xFF)) >= 0x100) {
-			entry->unk13 = 0xFF;
-		} else {
-			entry->unk13 = (u16)(arg7 + ((arg7 / 3) & 0xFF));
+		bright = (u8)(arg7 / 3) + arg7;
+		if (bright >= 0x100) {
+			bright = 0xFF;
 		}
+		D_800FB7B0[effect].unk13 = bright;
 
-		owner->unk2 = func_80084C18_16CCD8(slot);
+		D_800FB6F8[slot].unk2 = func_80084C18_16CCD8(slot);
 	}
 
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084C68_16CD28.s")
-#endif
+
 
 // AI - Create a linked paired effect (two entries linked together)
-#ifdef NON_MATCHING
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	s16 effect;
-	u16 temp;
 	s16 linkedIndex;
 	s16 x;
 	s16 y;
@@ -852,16 +804,15 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg
 
 	effect = func_80083584_16B644(0xD);
 	if (effect != -3) {
-		temp = (s16)(s32)((f64)(f32)arg3 * D_800A5468_18D528[0]);
+		D_800FB7B0[effect].unk2 = (f32)arg3 * 0.9;
 		entry = &D_800FB7B0[effect];
-			entryTail = (Unk84EECEffectTail *)&entry->unk8;
+		entryTail = (Unk84EECEffectTail *)&entry->unk8;
 		x = arg0 * 4;
 		y = arg1 * 4;
 		z = arg2 * 4;
 		entry->unk8 = x;
 		entry->unkA = y;
 		entry->unkC = z;
-		entry->unk2 = temp;
 		entry->unk11 = arg10;
 		entry->unk15 = arg11;
 		entry->unkE = arg4;
@@ -895,9 +846,7 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg
 
 	return effect;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80084EEC_16CFAC.s")
-#endif
+
 
 // Create a candle flame effect
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
@@ -923,69 +872,63 @@ s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 }
 
 // AI - Spawn a child particle effect with randomized offset from parent
-#ifdef NON_MATCHING
 void func_800852B8_16D378(u8 arg0) {
-	s16 stackPad0;
-	s16 stackPad1;
+	s32 headIndex;
+	s16 index;
 	s16 templateIndex;
-	s16 *templateIndexPointer;
-	Unk84EECEffectTemplateData *templateData;
-	Vec3f sourceVector;
-	Vec3f destinationVector;
-	Unk84EECEffect *baseEffect;
-	s16 child;
-	s16 sourceIndex;
+	JetStreamParticleState *particle;
+	Unk84EECEffectTemplateData *emitter;
+	Vec3f base;
+	Vec3f random;
+	Unk84EECEffect *head[2]; /* The second slot preserves the original frame. */
 
-	sourceIndex = D_800FB6F8[arg0].unk6;
-	baseEffect = &D_800FB7B0[sourceIndex];
-	templateIndex = baseEffect->unk4;
-	templateIndexPointer = &templateIndex;
-	child = func_80083390_16B450(arg0);
-	if (child == -3) {
+	headIndex = D_800FB6F8[arg0].unk6;
+	headIndex &= -1; /* IDO: retain the initial v0/v1 allocation. */
+	templateIndex = D_800FB7B0[headIndex].unk4;
+	head[0] = &D_800FB7B0[headIndex];
+	index = func_80083390_16B450(arg0);
+	if (index == -3) {
 		return;
 	}
-	D_800FB7B0[child].unk8 = baseEffect->unk8;
-	baseEffect = (Unk84EECEffect *)&baseEffect->unk8;
-	D_800FB7B0[child].unkA = ((Unk84EECEffectTailView *)baseEffect)->unk2;
-	D_800FB7B0[child].unkC = ((Unk84EECEffectTailView *)baseEffect)->unk4;
-	templateData = (Unk84EECEffectTemplateData *)&D_800FB7B0[*templateIndexPointer].unk8;
-	D_800FB7B0[child].unk11 = templateData->unk10;
-	D_800FB7B0[child].unk2 = (func_800038E0_44E0() % (D_800FB7B0[sourceIndex].unk2 * 2)) + D_800FB7B0[sourceIndex].unk2;
 
-	sourceVector.x = (f32)templateData->offsetX;
-	sourceVector.y = (f32)templateData->offsetY;
-	sourceVector.z = (f32)templateData->offsetZ;
-	func_80083014_16B0D4(&sourceVector, &sourceVector);
+	particle = (JetStreamParticleState *)&head[0]->unk8;
+	D_800FB7B0[index].unk8 = particle->position[0];
+	D_800FB7B0[index].unkA = particle->position[1];
+	D_800FB7B0[index].unkC = particle->position[2];
 
-	destinationVector.x = (f32)((f64)(f32)(func_800038E0_44E0() % templateData->radius) / D_800A5470_18D530[0]);
+	emitter = (Unk84EECEffectTemplateData *)&D_800FB7B0[(&templateIndex)[0]].unk8;
+	D_800FB7B0[index].unk11 = emitter->unk10;
+	D_800FB7B0[index].unk2 = head[0]->unk2 + (func_800038E0_44E0() % (head[0]->unk2 * 2));
+
+	base.x = emitter->offsetX;
+	base.y = emitter->offsetY;
+	base.z = emitter->offsetZ;
+	func_80083014_16B0D4(&base, &base);
+
+	random.x = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		destinationVector.x = 0.0f - destinationVector.x;
+		random.x = 0.0f - random.x;
 	}
-	destinationVector.x += sourceVector.x;
+	random.x += base.x;
 
-	destinationVector.y = (f32)((f64)(f32)(func_800038E0_44E0() % templateData->radius) / D_800A5478_18D538[0]);
+	random.y = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		destinationVector.y = 0.0f - destinationVector.y;
+		random.y = 0.0f - random.y;
 	}
-	destinationVector.y += sourceVector.y;
+	random.y += base.y;
 
-	destinationVector.z = (f32)((f64)(f32)(func_800038E0_44E0() % templateData->radius) / D_800A5480_18D540[0]);
+	random.z = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->radius) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
-		destinationVector.z = 0.0f - destinationVector.z;
+		random.z = 0.0f - random.z;
 	}
-	destinationVector.z += sourceVector.z;
+	random.z += base.z;
 
-	baseEffect = &D_800FB7B0[child];
-	func_80083014_16B0D4(&destinationVector, &destinationVector);
-
-	baseEffect = (Unk84EECEffect *)&baseEffect->unk8;
-	((Unk84EECEffectTailView *)baseEffect)->unkA = (s8)((s32)templateData->strength / 4 * destinationVector.x);
-	((Unk84EECEffectTailView *)baseEffect)->unkB = (s8)((s32)templateData->strength / 4 * destinationVector.y);
-	((Unk84EECEffectTailView *)baseEffect)->unkC = (s8)((s32)templateData->strength / 4 * destinationVector.z);
+	particle = (JetStreamParticleState *)&D_800FB7B0[index].unk8;
+	func_80083014_16B0D4(&random, &random);
+	particle->velocity[0] = (emitter->strength / 4) * random.x;
+	particle->velocity[1] = (emitter->strength / 4) * random.y;
+	particle->velocity[2] = (emitter->strength / 4) * random.z;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800852B8_16D378.s")
-#endif
 
 // AI - Create a simple effect instance with position and color data
 void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg5, u8 arg6) {
@@ -1014,7 +957,6 @@ void func_8008568C_16D74C(s16 arg0, s16 arg1, u16 arg2, u8 arg3, u8 arg4, u8 arg
 }
 
 // AI - Create a multi-part debris/shatter effect with two linked entries
-#ifdef NON_MATCHING
 u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13) {
 	s32 pad0;
 	s32 pad1;
@@ -1022,11 +964,12 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 	s16 effect;
 	Unk84EECEffect *entry;
 	Unk84EECEffectBytes *other;
-	u8 ret;
-	s16 temp;
-	u8 life;
-	Unk84EECEffectTailUpdate *tail;
 	s16 clamp;
+	u8 ret;
+	Unk84EECEffectTailUpdate *tail;
+	u8 temp;
+	s32 childIndex;
+	Unk84EECEffectTailUpdate *childTail;
 
 	pad0 = 0;
 	pad1 = 0;
@@ -1041,7 +984,8 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			return 0xFB;
 		} else {
 			entry = &D_800FB7B0[effect];
-					other = (Unk84EECEffectBytes *)&D_800FB7B0[entry->unk4];
+			childIndex = entry->unk4;
+			other = (Unk84EECEffectBytes *)&D_800FB7B0[childIndex];
 			entry->unk2 = arg7;
 			entry->unk8 = arg0 << 2;
 			entry->unkA = arg1 << 2;
@@ -1052,6 +996,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			other->unkA = arg5;
 			other->unkB = arg6;
 			other->unkC = arg9;
+			childTail = (Unk84EECEffectTailUpdate *)&other->unk8;
 
 			entry->unkE = temp;
 			entry->unkF = arg11;
@@ -1059,6 +1004,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			tail = (Unk84EECEffectTailUpdate *)&entry->unk8;
 
 			clamp = temp - 0x78;
+
 			if (clamp < 0) {
 				clamp = 0;
 			}
@@ -1076,24 +1022,19 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 			}
 			tail->unkB = clamp;
 
-			tail = (Unk84EECEffectTailUpdate *)&other->unk8;
-			tail->pad8 = arg13;
-			life = arg8;
-			if (life >= 0x4C) {
-				life = 0x4B;
-			} else if (life == 0) {
-				life = 1;
+			childTail->pad8 = arg13;
+			if (arg8 >= 0x4C) {
+				arg8 = 0x4B;
+			} else if (arg8 == 0) {
+				arg8 = 1;
 			}
-			tail->unk5 = life;
-			tail->unk6.word = 0;
+			childTail->unk5 = arg8;
+			childTail->unk6.word = 0;
 		}
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008574C_16D80C.s")
-#endif
 
 // AI - Wrapper to create a debris effect with preset parameters
 void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
@@ -1101,31 +1042,27 @@ void func_800858F4_16D9B4(s16 arg0, s16 arg1, s16 arg2) {
 }
 
 // AI - Create a random scatter effect with sub-particle burst
-#ifdef NON_MATCHING
-s32 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
-	UnkScatterEffectTail *entry;
-	s32 half;
-	s8 dirY;
-	s16 ret;
-	u16 randY;
-	u16 randX;
+s16 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5) {
 	s8 dirX;
+	s8 dirY;
+	ScatterEffectScratch scratch;
+	s16 ret;
+	EffectRandomPair random;
 
 	ret = func_80083390_16B450(0xE);
 	if (ret != -3) {
 		D_800FB7B0[ret].unk2 = arg0;
-		entry = (UnkScatterEffectTail *)&D_800FB7B0[ret].unk8;
-		half = arg1 / 2;
-		entry->unk0 = (func_800038E0_44E0() % arg1) + arg3 * 4 - half;
-		entry->unk2 = (func_800038E0_44E0() % arg1) + arg4 * 4 - half;
-		entry->unk4 = (func_800038E0_44E0() % arg1) + arg5 * 4 - half;
-		entry->unk6 = -1;
-		entry->unk7 = -1;
-		entry->unk8 = -1;
-		entry->unk9 = arg1;
-		entry->unkA = func_800038E0_44E0() % 8;
-		entry->unkB = arg2;
-		entry->unkC = 0;
+		scratch.data = (UnkScatterEffectTail *)&D_800FB7B0[ret].unk8;
+		scratch.data->unk0 = (func_800038E0_44E0() % arg1) + arg3 * 4 - arg1 / 2;
+		scratch.data->unk2 = (func_800038E0_44E0() % arg1) + arg4 * 4 - arg1 / 2;
+		scratch.data->unk4 = (func_800038E0_44E0() % arg1) + arg5 * 4 - arg1 / 2;
+		scratch.data->unk6 = -1;
+		scratch.data->unk7 = -1;
+		scratch.data->unk8 = -1;
+		scratch.data->unk9 = arg1;
+		scratch.data->unkA = func_800038E0_44E0() % 8;
+		scratch.data->unkB = arg2;
+		scratch.data->unkC = 0;
 
 		dirX = (func_800038E0_44E0() % 70) + 0x37;
 		dirY = (func_800038E0_44E0() % 70) + 0x37;
@@ -1136,16 +1073,14 @@ s32 func_80085984_16DA44(s16 arg0, u8 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg
 			dirY = -dirY;
 		}
 
-		randX = func_800038E0_44E0();
-		randY = func_800038E0_44E0();
-		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (randX % 60) + 0x41, dirY, 0x1E, (randY % 60) + 0x46, (func_800038E0_44E0() % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
+		random.values.first = func_800038E0_44E0();
+		random.values.second = func_800038E0_44E0();
+		scratch.randomValue = func_800038E0_44E0();
+		func_80083F08_16BFC8(arg3, arg4, arg5, dirX, (random.values.first % 60) + 0x41, dirY, 0x1E, (random.values.second % 60) + 0x46, (scratch.randomValue % 3) + 3, 0xA, 0xC8, 0xC8, 0xFF);
 	}
 
 	return ret;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085984_16DA44.s")
-#endif
 
 // AI - Create a scatter effect with a specific flag set
 void func_80085CB4_16DD74(s16 arg0, s16 arg1, s16 arg2) {
@@ -1211,79 +1146,84 @@ void func_80085D40_16DE00(u8 arg0) {
 }
 
 // AI - Update effect slot type 0: random jitter, color, and lifecycle
-#ifdef NON_MATCHING
 void func_80085F28_16DFE8(u8 arg0) {
-	Unk84EECEffectTailUpdate *s1;
-	Unk84EECEffect *s2;
-	s16 s3;
-	s16 s4;
+	Unk84EECEffectTailUpdate *emitterData;
+	Unk84EECEffect *root;
+	s16 jitterDivisor;
+	s16 randomMatch;
 	UnkFB6F8Entry *slot;
-	Unk84EECEffectTailView *spread;
-	Unk84EECEffectTailUpdate *spreadTail;
-	s16 effect;
-	void *saved[3];
+	s16 *effectSize;
+	s16 particleIndex;
+	s32 rootIndex;
+	UnkFB6F8Entry *savedSlot[1];
+	Vec3s *rootPosition;
+	Unk84EECEffectBytes *emitterHeader[1];
 
-	slot = &D_800FB6F8[arg0];
-	s2 = &D_800FB7B0[slot->unk6];
-	s1 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[s2->unk4].unk8;
-	spread = (Unk84EECEffectTailView *)&s2->unk2;
-	spreadTail = (Unk84EECEffectTailUpdate *)&s2->unk8;
 	{
-		s32 counter;
+		s32 emitterIndex;
 
-		counter = s1->pad4 + 1;
-		s1->pad4 = counter;
-		if ((counter & 0xFF) == 0x10) {
-			s1->pad4 = 0;
+		slot = &D_800FB6F8[arg0];
+		rootIndex = slot->unk6;
+		/* Identity masks retain IDO's index register allocation. */
+		rootIndex &= -1;
+		root = &D_800FB7B0[rootIndex];
+		emitterIndex = root->unk4;
+		emitterIndex &= -1;
+		effectSize = &root->unk2;
+		rootPosition = (Vec3s *)&root->unk8;
+		emitterData = (Unk84EECEffectTailUpdate *)&((Unk84EECEffectBytes *)D_800FB7B0)[emitterIndex].unk8;
+		emitterData->pad4++;
+		if (emitterData->pad4 == 0x10) {
+			emitterData->pad4 = 0;
 		}
-	}
-	saved[0] = s1;
-	saved[2] = slot;
-	s3 = 6;
-	s4 = 1;
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->unk5 = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
-	}
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->unk6.bytes.low = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
-	}
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->unk6.bytes.high = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
-	}
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->pad8 = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
+		emitterHeader[0] = &((Unk84EECEffectBytes *)D_800FB7B0)[emitterIndex];
+		savedSlot[0] = slot;
 	}
 
-	if ((func_800038E0_44E0() % 4) == s4) {
+	jitterDivisor = 6;
+	randomMatch = 1;
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->unk5 = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->unk6.bytes.low = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->unk6.bytes.high = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->pad8 = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+
+	if ((func_800038E0_44E0() % 4) == randomMatch) {
 		s16 slotIndex;
 
-		slotIndex = ((UnkFB6F8Entry *)saved[2])->unk2;
-		if (D_800FB6FC[slotIndex * 0xC] < 0x23) {
+		slotIndex = savedSlot[0]->unk2;
+		if (D_800FB6F8[slotIndex].unk4 < 0x23) {
 			func_80084980_16CA40(arg0, slotIndex);
 		}
 	}
 
-	if (((func_800038E0_44E0() % 2) == s4) && (((UnkFB6F8Entry *)saved[2])->unk4 < 0x14)) {
+	if (((func_800038E0_44E0() % 2) == randomMatch) && (savedSlot[0]->unk4 < 0x14)) {
 		func_80084628_16C6E8(arg0);
 	}
 
-	if (s1->pad0 != 0xFFFF) {
-		if (s1->pad0 > 0) {
-			s1->pad0--;
-			effect = spread->unk0;
-			if (effect < s1->pad2) {
-				spread->unk0 = effect + 2;
-				spreadTail->pad2 = spreadTail->pad2 + 1;
+	if (emitterData->pad0 != 0xFFFF) {
+		if (emitterData->pad0 > 0) {
+			emitterData->pad0--;
+			if ((*effectSize) < emitterData->pad2) {
+				*effectSize = (*effectSize) + 2;
+				rootPosition->y = rootPosition->y + 1;
 			}
 		} else {
-			if (spread->unk0 >= 0x1F) {
-				spread->unk0 = spread->unk0 - 2;
-				spreadTail->pad2 = spreadTail->pad2 - 1;
+			if ((*effectSize) >= 0x1F) {
+				*effectSize = (*effectSize) - 2;
+				rootPosition->y = rootPosition->y - 1;
 			} else {
 				s16 expirationIndex;
 
-			expirationIndex = ((UnkFB6F8Entry *)saved[2])->unk2;
-		if (expirationIndex != 0xFB) {
+				expirationIndex = savedSlot[0]->unk2;
+				if (expirationIndex != 0xFB) {
 					D_800FB6F8[expirationIndex].unk2 = 0xF1;
 				}
 				func_800839B8_16BA78(arg0);
@@ -1293,33 +1233,30 @@ void func_80085F28_16DFE8(u8 arg0) {
 		}
 	}
 
-	effect = *(s16 *)((u8 *)saved[0] - 4);
-	for (; (effect != -5) && (effect != -6);) {
-			Unk84EECEffectTailUpdate *entry8;
+	particleIndex = emitterHeader[0]->unk4;
+	for (; (particleIndex != -5) && (particleIndex != -6);) {
+		Unk84EECEffectTailUpdate *data;
 
-			entry8 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[effect].unk8;
-			if (D_800FB7B0[effect].unk11 < 0x1E) {
-				s16 nextEffect;
+		data = (Unk84EECEffectTailUpdate *)&D_800FB7B0[particleIndex].unk8;
+		if (D_800FB7B0[particleIndex].unk11 < 0x1E) {
+			s16 nextEffect;
 
-				nextEffect = D_800FB7B0[effect].unk4;
-					func_800835F0_16B6B0(effect, arg0);
-					effect = nextEffect;
-			} else {
-				entry8->unkA = (func_800038E0_44E0() % 8) + 5;
-				entry8->unkC = (func_800038E0_44E0() % 8) + 5;
-				entry8->unkB = (func_800038E0_44E0() % 0xA) + 7;
-				entry8->unkD = (func_800038E0_44E0() % 0xA) + 7;
-				entry8->unk9 = (entry8->unk9 - (func_800038E0_44E0() % 4)) - 6;
-				entry8->pad2 = entry8->pad2 + (func_800038E0_44E0() % 4) + 5;
-				entry8->unk6.bytes.low = entry8->unk6.bytes.low - 2;
-				entry8->pad8 = entry8->pad8 - 3;
-				effect = D_800FB7B0[effect].unk4;
-			}
+			nextEffect = D_800FB7B0[particleIndex].unk4;
+			func_800835F0_16B6B0(particleIndex, arg0);
+			particleIndex = nextEffect;
+		} else {
+			data->unkA = (func_800038E0_44E0() % 8) + 5;
+			data->unkC = (func_800038E0_44E0() % 8) + 5;
+			data->unkB = (func_800038E0_44E0() % 0xA) + 7;
+			data->unkD = (func_800038E0_44E0() % 0xA) + 7;
+			data->unk9 = (data->unk9 - (func_800038E0_44E0() % 4)) - 6;
+			data->pad2 += (func_800038E0_44E0() % 4) + 5;
+			data->unk6.bytes.low = data->unk6.bytes.low - 2;
+			data->pad8 = data->pad8 - 3;
+			particleIndex = D_800FB7B0[particleIndex].unk4;
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085F28_16DFE8.s")
-#endif
 
 // AI - Update effect slot type 3: movement, color cycling, and expiration
 void func_80086550_16E610(void)
@@ -1442,17 +1379,19 @@ void func_80086A34_16EAF4(void) {
 	}
 }
 
-// AI - Update effect slot type 7: physics (gravity, movement) and spawn child effects
-#ifdef NON_MATCHING
+// Move particles, handle impacts, and emit new particles.
 void func_80086B34_16EBF4(u8 arg0) {
 	u8 slotIdx;
 	UnkFB6F8Entry *slot;
 	Unk84EECEffect *head;
 	Unk84EECEffectTailView *entryTail;
-	Unk84EECEffectTailView *headTail;
-	Unk84EECEffect * volatile headEffect;
+	UnkScatterEffectTail *headTail;
+	Unk84EECEffectTail *emitter;
+	s32 rootIndex;
+	s32 emitterIndex;
+	/* Keep the emitter header addressable across helper calls. */
+	Unk84EECEffect *emitterHeader[1];
 	Unk84EECEffect *entry;
-	Unk84EECEffect *effects;
 	s16 next;
 	s16 effect;
 	u16 timer;
@@ -1461,82 +1400,78 @@ void func_80086B34_16EBF4(u8 arg0) {
 	u8 count;
 
 	slotIdx = arg0;
-	effects = D_800FB7B0;
 	slot = &D_800FB6F8[slotIdx];
-		head = &effects[slot->unk6];
-		headEffect = &effects[head->unk4];
-		effect = headEffect->unk4;
+	rootIndex = slot->unk6;
+	head = &D_800FB7B0[rootIndex];
+	emitterIndex = head->unk4;
+	emitterHeader[0] = &((Unk84EECEffect *)(s32)D_800FB7B0)[emitterIndex];
+	effect = emitterHeader[0]->unk4;
 
 	if ((effect != -5) && (effect != -6)) {
 		clamp = -0x14;
 		do {
-			entry = &effects[effect];
-			entryTail = (Unk84EECEffectTailView *) &entry->unk8;
-			headTail = (Unk84EECEffectTailView *) &head->unk8;
+			headTail = (UnkScatterEffectTail *)&head->unk8;
+			entry = &D_800FB7B0[effect];
+			entryTail = (Unk84EECEffectTailView *)&entry->unk8;
 
-			entryTail->unk0 += (s8) entry->unk12;
-			entryTail->unk4 += (s8) entry->unk14;
-			entry->unkA += (s8) entry->unk13;
+			entryTail->unk0 += (s8)entry->unk12;
+			entryTail->unk4 += (s8)entry->unk14;
+			entry->unkA += (s8)entry->unk13;
 
-			if ((s8) entryTail->unkB >= -0x13) {
-				entryTail->unkB = (s8) entryTail->unkB - 1;
+			if ((s8)entryTail->unkB >= -0x13) {
+				entryTail->unkB = (s8)entryTail->unkB - 1;
 			} else {
 				entryTail->unkB = clamp;
 			}
 
 			if (entryTail->unk2 < 2) {
-				func_8008568C_16D74C(entryTail->unk0, entryTail->unk4, entry->unk2, ((u8 *)headTail)[6], ((u8 *)headTail)[7], ((u8 *)headTail)[8], *((u8 *)entry + 9));
+				func_8008568C_16D74C(entryTail->unk0, entryTail->unk4, entry->unk2, headTail->unk6, headTail->unk7, headTail->unk8, entryTail->unk9);
 
-				if ((slot->unk4 < 4) && (*((u8 *) headEffect + 0xD) == 0)) {
-				func_800839B8_16BA78(slotIdx);
-				func_80083300_16B3C0(slotIdx);
+				if ((slot->unk4 < 4) && (((Unk84EECEffectBytes *)emitterHeader[0])->unkD == 0)) {
+					func_800839B8_16BA78(slotIdx);
+					func_80083300_16B3C0(slotIdx);
 					return;
 				}
 
-				next = entry->unk4;
+				next = D_800FB7B0[effect].unk4;
 				func_800835F0_16B6B0(effect, slotIdx);
 				effect = next;
 			} else {
-				effect = entry->unk4;
+				effect = D_800FB7B0[effect].unk4;
 			}
 		} while ((effect != -5) && (effect != -6));
 	}
 
-	timer = *(u16 *) &headEffect->unkE;
+	emitter = (Unk84EECEffectTail *)&emitterHeader[0]->unk8;
+	timer = (u16)emitter->unk6;
 	if (timer > 0) {
-		entryTail = (Unk84EECEffectTailView *) ((u8 *) headEffect + 8);
-		entryTail->unk6 = timer - 1;
+		emitter->unk6 = timer - 1;
 		return;
 	}
 
-	entryTail = (Unk84EECEffectTailView *) ((u8 *) headEffect + 8);
 	count = (func_800038E0_44E0() % 3) + 2;
 	for (i = 0; i < count; i = (i + 1) & 0xFF) {
-		if (((u8 *) entryTail)[5] > 0) {
-		func_800852B8_16D378(arg0);
-			((u8 *) entryTail)[5]--;
+		if (emitter->unk5 > 0) {
+			func_800852B8_16D378(slotIdx);
+			emitter->unk5--;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086B34_16EBF4.s")
-#endif
 
-#ifdef NON_MATCHING
-// AI - Main update dispatcher: iterate all 15 slots and call type-specific update
+// Update each of the fifteen effect slots.
 void func_80086D88_16EE48(void) {
 	s32 i;
 
 	for (i = 0; i < 0xF; i = (i + 1) & 0xFF) {
-		switch (D_800FB6F8[i].pad0[0]) {
+		switch (D_800FB6F8[i].unk0) {
 			case 0:
-				func_80085F28_16DFE8(i & 0xFF);
+				func_80085F28_16DFE8(i);
 				break;
 			case 1:
-				func_80085D40_16DE00(i & 0xFF);
+				func_80085D40_16DE00(i);
 				break;
 			case 2:
-				func_80084258_16C318(i & 0xFF);
+				func_80084258_16C318(i);
 				break;
 			case 3:
 				func_80086550_16E610();
@@ -1551,41 +1486,27 @@ void func_80086D88_16EE48(void) {
 				func_80086A34_16EAF4();
 				break;
 			case 7:
-				func_80086B34_16EBF4(i & 0xFF);
+				func_80086B34_16EBF4(i);
 				break;
 			case 8:
-				func_80089834_1718F4(i & 0xFF);
+				func_80089834_1718F4(i);
 				break;
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086D88_16EE48.s")
-#endif
 
-// AI - Remove a slot and clean up all its associated effects
-#ifdef NON_MATCHING
+// Remove a slot and clean up its linked effects.
 void func_80086E90_16EF50(u8 arg0) {
-	UnkFB6F8Entry * volatile sp1C;
-	s16 temp_v1;
-	register UnkFB6F8Entry *temp_s0;
-
 	if (arg0 < 0xF) {
 		if (D_800FB6F8[arg0].unk0 == 0) {
-			sp1C = &D_800FB6F8[arg0];
 			func_800839B8_16BA78(arg0);
-			temp_s0 = sp1C;
-			temp_v1 = temp_s0->unk2;
-			if (temp_v1 != 0xFB) {
-				D_800FB6F8[temp_v1].unk2 = 0xF1;
+			if (D_800FB6F8[arg0].unk2 != 0xFB) {
+				D_800FB6F8[D_800FB6F8[arg0].unk2].unk2 = 0xF1;
 			}
 			func_80083300_16B3C0(arg0);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086E90_16EF50.s")
-#endif
 
 // AI - Remove effects linked to slot 0xD
 void func_80086F24_16EFE4(s16 arg0) {
@@ -1602,193 +1523,163 @@ void func_80086F58_16F018(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Render slot type 0 effects: textured billboard quads with color
-void func_80086FC4_16F084(s32 arg0) {
-	Unk84EECEffect *sp30;
-	Unk84EECEffect *sp28;
-	Unk84EECEffect *temp_t5;
-	Unk89408Pos *temp_a3;
-	s16 sp9C;
-	s16 sp9A;
-	s16 var_a2;
-	f32 temp_f2;
-	f32 temp_f0;
-	f32 temp_f12;
-	f32 temp_f14;
-	f32 temp_f16;
-	f32 temp_f18;
-	f32 temp_f20;
-	f32 var_f2;
-	f32 var_f12;
-	f32 var_f22;
-	f32 var_f18;
-	u8 temp_t6;
-	u8 temp_t7;
-	u8 temp_t8;
-	u8 temp_t9;
+// Render the main billboard and its linked particles.
+void func_80086FC4_16F084(u8 arg0) {
+	Unk84EECEffect *particle;
+	UnkScatterEffectTail *position;
+	EffectBillboardFrame *frame;
+	f32 offsetX1;
+	f32 offsetZ1;
+	f32 offsetX2;
+	s16 effect;
+	s16 rootIndex;
+	s16 frameIndex;
+	f32 offsetZ2;
+	f32 height1;
+	f32 height2;
 
-	sp9C = *(s16 *)(&D_800FB6FE + ((arg0 & 0xFF) * 0xC));
-	sp30 = &D_800FB7B0[sp9C];
-	sp9A = sp30->unk4;
-	sp28 = &D_800FB7B0[sp9A];
+	rootIndex = D_800FB6FE[arg0][0];
+	frameIndex = D_800FB7B0[rootIndex].unk4;
+
+	position = (UnkScatterEffectTail *)(s32)&D_800FB7B0[rootIndex].unk8;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPPipeSync(D_8005BB2C++);
-	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[sp28->unkC]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[((Unk84EECEffectBytes *)&D_800FB7B0[frameIndex])->unkC]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-	temp_f2 = sp30->unk2;
-	temp_a3 = (Unk89408Pos *)&sp30->unk8;
-	temp_f0 = temp_f2 * D_800FB6A8[0];
-	temp_f12 = temp_f2 * D_800FB6A8[1];
-	temp_f14 = temp_f2 * D_800FB6A8[2];
-	temp_f16 = temp_f2 * D_800FB6A8[3];
-	temp_f18 = temp_f2 * D_800FB6A8[4];
-	temp_f20 = temp_f2 * D_800FB6A8[5];
+	offsetX1 = D_800FB6A8[0] * D_800FB7B0[rootIndex].unk2;
+	height1 = D_800FB6A8[1] * D_800FB7B0[rootIndex].unk2;
+	offsetZ1 = D_800FB6A8[2] * D_800FB7B0[rootIndex].unk2;
+	offsetX2 = D_800FB6A8[3] * D_800FB7B0[rootIndex].unk2;
+	height2 = D_800FB6A8[4] * D_800FB7B0[rootIndex].unk2;
+	offsetZ2 = D_800FB6A8[5] * D_800FB7B0[rootIndex].unk2;
 
-	D_8005BB34->v.ob[0] = (s16)(s32)((temp_a3->unk0 + (s8)sp28->unk15) + temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)((temp_a3->unk2 + (s8)sp28->unkF) + temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 + temp_f14);
+	frame = (EffectBillboardFrame *)(s32)&D_800FB7B0[frameIndex].unk8;
+
+	D_8005BB34->v.ob[0] = (s16)(s32)((position->unk0 + frame->offsetX1) + offsetX1);
+	D_8005BB34->v.ob[1] = (s16)(s32)((position->unk2 + frame->offsetY1) + height1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 + offsetZ1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk6;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unk7;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unk8;
+	D_8005BB34->v.cn[0] = position->unk6;
+	D_8005BB34->v.cn[1] = position->unk7;
+	D_8005BB34->v.cn[2] = position->unk8;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)((temp_a3->unk0 + (s8)sp28->unkE) + temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)((temp_a3->unk2 + (s8)sp28->unk10) + temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 + temp_f20);
+	D_8005BB34->v.ob[0] = (s16)(s32)((position->unk0 + frame->offsetX2) + offsetX2);
+	D_8005BB34->v.ob[1] = (s16)(s32)((position->unk2 + frame->offsetY2) + height2);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 + offsetZ2);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk6;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unk7;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unk8;
+	D_8005BB34->v.cn[0] = position->unk6;
+	D_8005BB34->v.cn[1] = position->unk7;
+	D_8005BB34->v.cn[2] = position->unk8;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(temp_a3->unk0 - temp_f0);
-	D_8005BB34->v.ob[1] = (s16)(s32)(temp_a3->unk2 - temp_f12);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 - temp_f14);
+	D_8005BB34->v.ob[0] = (s16)(s32)(position->unk0 - offsetX1);
+	D_8005BB34->v.ob[1] = (s16)(s32)(position->unk2 - height1);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 - offsetZ1);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x800;
 	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk9;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unkA;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unkB;
+	D_8005BB34->v.cn[0] = position->unk9;
+	D_8005BB34->v.cn[1] = position->unkA;
+	D_8005BB34->v.cn[2] = position->unkB;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	D_8005BB34->v.ob[0] = (s16)(s32)(temp_a3->unk0 - temp_f16);
-	D_8005BB34->v.ob[1] = (s16)(s32)(temp_a3->unk2 - temp_f18);
-	D_8005BB34->v.ob[2] = (s16)(s32)(temp_a3->unk4 - temp_f20);
+	D_8005BB34->v.ob[0] = (s16)(s32)(position->unk0 - offsetX2);
+	D_8005BB34->v.ob[1] = (s16)(s32)(position->unk2 - height2);
+	D_8005BB34->v.ob[2] = (s16)(s32)(position->unk4 - offsetZ2);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x800;
-	D_8005BB34->v.cn[0] = (u8)temp_a3->unk9;
-	D_8005BB34->v.cn[1] = (u8)temp_a3->unkA;
-	D_8005BB34->v.cn[2] = (u8)temp_a3->unkB;
+	D_8005BB34->v.cn[0] = position->unk9;
+	D_8005BB34->v.cn[1] = position->unkA;
+	D_8005BB34->v.cn[2] = position->unkB;
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	D_8005BB34++;
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100DE00));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 63, 0x800);
+	effect = D_800FB7B0[frameIndex].unk4;
+
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DE00), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-		G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 15 << G_TEXTURE_IMAGE_FRAC, 15 << G_TEXTURE_IMAGE_FRAC);
 
-	var_a2 = sp28->unk4;
-	while ((var_a2 != -5) && (var_a2 != -6)) {
-		temp_t5 = &D_800FB7B0[var_a2];
-		temp_t6 = temp_t5->unk12;
-		var_f2 = (f32)temp_t6;
-		if ((s32)temp_t6 < 0) {
-			var_f2 += 4294967296.0f;
-		}
-		temp_t7 = temp_t5->unk13;
-		var_f12 = (f32)temp_t7;
-		if ((s32)temp_t7 < 0) {
-			var_f12 += 4294967296.0f;
-		}
-		temp_t8 = temp_t5->unk14;
-		var_f22 = (f32)temp_t8;
-		if ((s32)temp_t8 < 0) {
-			var_f22 += 4294967296.0f;
-		}
-		temp_t9 = temp_t5->unk15;
-		var_f18 = (f32)temp_t9;
-		if ((s32)temp_t9 < 0) {
-			var_f18 += 4294967296.0f;
-		}
+	while ((effect != -5) && (effect != -6)) {
+		particle = &D_800FB7B0[effect];
+		offsetX1 = (f32)(u32)particle->unk12;
+		offsetX1 *= D_800FB6A8[0];
+		height1 = (f32)(u32)particle->unk13;
+		offsetZ1 = (f32)(u32)particle->unk12;
+		offsetZ1 *= D_800FB6A8[2];
+		offsetX2 = (f32)(u32)particle->unk14;
+		offsetX2 *= D_800FB6A8[3];
+		height2 = (f32)(u32)particle->unk15;
+		offsetZ2 = (f32)(u32)particle->unk14;
+		offsetZ2 *= D_800FB6A8[5];
 
-		D_8005BB34->v.ob[0] = temp_t5->unk8;
-		D_8005BB34->v.ob[1] = temp_t5->unkA;
-		D_8005BB34->v.ob[2] = temp_t5->unkC;
+		D_8005BB34->v.ob[0] = particle->unk8;
+		D_8005BB34->v.ob[1] = particle->unkA;
+		D_8005BB34->v.ob[2] = particle->unkC;
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x400;
 		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		D_8005BB34->v.ob[0] = temp_t5->unk8;
-		D_8005BB34->v.ob[1] = temp_t5->unk2 + temp_t5->unkA;
-		D_8005BB34->v.ob[2] = temp_t5->unkC;
+		D_8005BB34->v.ob[0] = particle->unk8;
+		D_8005BB34->v.ob[1] = particle->unk2 + particle->unkA;
+		D_8005BB34->v.ob[2] = particle->unkC;
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0x400;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)((f32)temp_t5->unk8 + (var_f2 * D_800FB6A8[0]));
-		D_8005BB34->v.ob[1] = (s16)(s32)((f32)temp_t5->unkA + var_f12);
-		D_8005BB34->v.ob[2] = (s16)(s32)((f32)temp_t5->unkC + (var_f2 * D_800FB6A8[2]));
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)particle->unk8 + offsetX1);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)particle->unkA + height1);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)particle->unkC + offsetZ1);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
 		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		D_8005BB34->v.ob[0] = (s16)(s32)((f32)temp_t5->unk8 + (var_f22 * D_800FB6A8[3]));
-		D_8005BB34->v.ob[1] = (s16)(s32)((f32)temp_t5->unkA + var_f18);
-		D_8005BB34->v.ob[2] = (s16)(s32)((f32)temp_t5->unkC + (var_f22 * D_800FB6A8[5]));
+		D_8005BB34->v.ob[0] = (s16)(s32)((f32)particle->unk8 + offsetX2);
+		D_8005BB34->v.ob[1] = (s16)(s32)((f32)particle->unkA + height2);
+		D_8005BB34->v.ob[2] = (s16)(s32)((f32)particle->unkC + offsetZ2);
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0x400;
 		D_8005BB34->v.tc[1] = 0x400;
-		D_8005BB34->v.cn[0] = (u8)temp_t5->unkE;
-		D_8005BB34->v.cn[1] = (u8)temp_t5->unkF;
-		D_8005BB34->v.cn[2] = (u8)temp_t5->unk10;
-		D_8005BB34->v.cn[3] = (u8)temp_t5->unk11;
+		D_8005BB34->v.cn[0] = particle->unkE;
+		D_8005BB34->v.cn[1] = particle->unkF;
+		D_8005BB34->v.cn[2] = particle->unk10;
+		D_8005BB34->v.cn[3] = particle->unk11;
 
 		D_8005BB34++;
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 		gSP2Triangles(D_8005BB2C++, 0, 2, 3, 0, 3, 1, 2, 0);
 
-		var_a2 = temp_t5->unk4;
+		effect = particle->unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80086FC4_16F084.s")
-#endif
 
 // AI - Render slot type 1 effects: textured billboard quads
 void func_80087A40_16FB00(u8 arg0) {
@@ -1816,20 +1707,15 @@ void func_80087A40_16FB00(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// AI - Render slot type 2 effects: simple shaded triangles
-void func_80087CB8_16FD78(s32 arg0) {
-	f32 sp58[3];
+void func_80087CB8_16FD78(u8 arg0) {
 	UnkFB6F8Entry *entry;
-	Unk84EECEffect *effectBase;
-	Unk84EECEffect *effect;
-	s8 *color;
+	Unk84EECEffectPositionView *root;
 	s16 next;
+	Vec3f position;
 
-	entry = &D_800FB6F8[arg0 & 0xFF];
-	effectBase = D_800FB7B0;
-	next = effectBase[entry->unk6].unk4;
-	color = &effectBase[entry->unk6].unkE;
+	entry = &D_800FB6F8[arg0];
+	next = D_800FB7B0[entry->unk6].unk4;
+	root = (Unk84EECEffectPositionView *)&D_800FB7B0[entry->unk6].unk8;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -1837,26 +1723,19 @@ void func_80087CB8_16FD78(s32 arg0) {
 
 	if ((next != -5) && (next != -6)) {
 		do {
-		effect = &D_800FB7B0[next];
-		sp58[0] = effect->unk8;
-		sp58[1] = effect->unkA;
-		sp58[2] = effect->unkC;
-		func_80089148_171208(sp58, (u8 *)color, effectBase[entry->unk6].unk2, effect->unk11);
-		next = effect->unk4;
+			position.x = D_800FB7B0[next].unk8;
+			position.y = D_800FB7B0[next].unkA;
+			position.z = D_800FB7B0[next].unkC;
+			func_80089148_171208(&position.x, &root->unk6.bytes.high, D_800FB7B0[entry->unk6].unk2, D_800FB7B0[next].unk11);
+			next = D_800FB7B0[next].unk4;
 		} while ((next != -5) && (next != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087CB8_16FD78.s")
-#endif
 
-#ifdef NON_MATCHING
-// AI - Render slot type 3 effects: camera-facing sprites with texture
 void func_80087E3C_16FEFC(void) {
-	s16 effect;
-	s32 pad;
 	Vec3f dir;
-	Unk84EECEffect *entry;
+	s16 effect;
+	Unk84EECEffectPositionView *pos;
 
 	D_800FB6E5 = 0x10;
 	D_800FB6E6 = 0x10;
@@ -1865,232 +1744,173 @@ void func_80087E3C_16FEFC(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 
-	pad = 0;
-
 	if ((effect != -5) && (effect != -6)) {
 		do {
-			s16 *pos;
+			pos = (Unk84EECEffectPositionView *)&D_800FB7B0[effect].unk8;
 
-			entry = &D_800FB7B0[effect];
-		
 			gDPPipeSync(D_8005BB2C++);
-			gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E880 + (entry->unk12 << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E880 + (pos->unkA << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gDPPipeSync(D_8005BB2C++);
 
-			dir.x = (D_8008DDF4_175EB4 * 4.0f) - entry->unk8;
-			dir.y = (D_8008DDF8_175EB8 * 4.0f) - entry->unkA;
-			dir.z = (D_8008DDFC_175EBC * 4.0f) - entry->unkC;
+			dir.x = (D_8008DDF4_175EB4 * 4.0f) - pos->unk0;
+			dir.y = (D_8008DDF8_175EB8 * 4.0f) - pos->unk2;
+			dir.z = (D_8008DDFC_175EBC * 4.0f) - pos->unk4;
 			func_80083014_16B0D4(&dir, &dir);
 
-			pos = &entry->unk8;
-			D_800FB6D0.x = pos[0] + (dir.x * ((u8 *)pos)[1]);
-			D_800FB6D0.y = pos[1] + (dir.y * ((u8 *)pos)[1]);
-			D_800FB6D0.z = pos[2] + (dir.z * ((u8 *)pos)[1]);
+			D_800FB6D0.x = pos->unk0 + (dir.x * (f32)(u32)pos->unk9);
+			D_800FB6D0.y = pos->unk2 + (dir.y * (f32)(u32)pos->unk9);
+			D_800FB6D0.z = pos->unk4 + (dir.z * (f32)(u32)pos->unk9);
 			D_800FB6E4 = 0xFF;
-			D_800FB6E0 = entry->unk2;
-			D_800FB6DC = (s8 *)(pos + 3);
-		func_8008A1D8_172298();
+			D_800FB6E0 = D_800FB7B0[effect].unk2;
+			D_800FB6DC = (s8 *)&pos->unk6.bytes.high;
+			func_8008A1D8_172298();
 
-			effect = entry->unk4;
+			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -5) && (effect != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80087E3C_16FEFC.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_800881C0_170280(void)
 {
-  Unk89834Pos *spAC;
-  s32 var_s6;
-  Vec3f sp9C;
-  s16 var_t2;
-  Unk89834Pos *s1;
-  var_t2 = D_800FB79A;
+  /* Preserve the original previous-payload stack read before the first iteration. */
+  Unk89834Pos *previous;
+  s16 textureSide;
+  s16 effect;
+  Vec3f towardCamera;
+  Unk89834Pos *particle;
+  effect = D_800FB79A;
   gDPPipeSync(D_8005BB2C++);
   gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
   D_800FB6E5 = 0x20;
   D_800FB6E6 = 0x20;
-  var_s6 = 0;
-  if ((var_t2 != (-5)) && (var_t2 != (-6)))
+  textureSide = 0;
+  if ((effect != -5) && (effect != -6))
   {
-    if (!s1->unk4)
-    {
-    }
-    spAC = spAC;
+    previous = previous;
     do
     {
       gDPPipeSync(D_8005BB2C++);
-      if (var_s6 == 0)
+      if (textureSide == 0)
       {
-        gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_100DA00) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
-        var_s6 = 1;
-        D_800FB6E4 = spAC->unk9 - 0x28;
+        gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        textureSide = 1;
+        D_800FB6E4 = previous->unk9 - 0x28;
       }
       else
       {
-        gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_100DC00) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
-        var_s6 = 0;
-        D_800FB6E4 = spAC->unk9 + spAC->unkA;
+        gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+        textureSide = 0;
+        D_800FB6E4 = previous->unk9 + previous->unkA;
       }
       gDPPipeSync(D_8005BB2C++);
-      s1 = &D_800FB7B0[var_t2];
-      s1 = (Unk89834Pos *) (&s1->unk8);
-      spAC = s1;
-      sp9C.x = (D_800E7410.x * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unk8);
-      sp9C.y = (D_800E7410.y * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkA);
-      s1 = &D_800FB7B0[var_t2];
-      sp9C.z = (D_800E7410.z * 4.0f) - ((f32) (&D_800FB7B0[var_t2])->unkC);
-      func_80083014_16B0D4(&sp9C, &sp9C);
-      D_800FB6D0.x = ((f32) s1->unk0) + (sp9C.x * ((f32) s1->unkD));
-      D_800FB6D0.y = ((f32) s1->unk2) + (sp9C.y * ((f32) s1->unkD));
-      D_800FB6D0.z = ((f32) s1->unk4) + (sp9C.z * ((f32) s1->unkD));
-      D_800FB6DC = &s1->unk6;
-      D_800FB6E0 = (f32) s1->unk2;
-      D_800FB6E4 = s1->unk9 + s1->unkA;
+      particle = (Unk89834Pos *)&D_800FB7B0[effect].unk8;
+      previous = particle;
+      towardCamera.x = (D_800E7410.x * 4.0f) - D_800FB7B0[effect].unk8;
+      towardCamera.y = (D_800E7410.y * 4.0f) - D_800FB7B0[effect].unkA;
+      towardCamera.z = (D_800E7410.z * 4.0f) - D_800FB7B0[effect].unkC;
+      func_80083014_16B0D4(&towardCamera, &towardCamera);
+      D_800FB6D0.x = particle->unk0 + (towardCamera.x * ((f32)(u32)particle->unkD));
+      D_800FB6D0.y = particle->unk2 + (towardCamera.y * ((f32)(u32)particle->unkD));
+      D_800FB6D0.z = particle->unk4 + (towardCamera.z * ((f32)(u32)particle->unkD));
+      D_800FB6DC = &particle->unk6;
+      D_800FB6E0 = D_800FB7B0[effect].unk2;
+      D_800FB6E4 = particle->unk9 + particle->unkA;
       func_8008A1D8_172298();
-      var_t2 = s1->unk4;
+      effect = D_800FB7B0[effect].unk4;
     }
-    while ((var_t2 != (-5)) && (var_t2 != (-6)));
-    if (var_t2 == (-6))
+    while ((effect != -5) && (effect != -6));
+    if (effect == -6)
     {
-      spAC = spAC;
+      previous = previous;
     }
   }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800881C0_170280.s")
-#endif
 
-#ifdef NON_MATCHING
-// AI - Render slot type 5 effects: fire/magma-like particles
+// Render slot type 5 fire particles.
 void func_80088654_170714(void) {
-	typedef struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		s16 unk6;
-		s16 unk8;
-		s16 unkA;
-		s16 unkC;
-		s8 unkE;
-		s8 unkF;
-		s8 unk10;
-		u8 unk11;
-		u8 unk12;
-		u8 unk13;
-		u8 unk14;
-	} Unk84EECEffect;
+	s16 effect;
+	Unk84EECEffect *entry;
+	f32 height1;
+	f32 height2;
+	f32 offsetX1;
+	f32 offsetZ1;
+	f32 offsetX2;
+	f32 offsetZ2;
 
-	Gfx *dl;
-	Vtx *vtx;
-	Unk84EECEffect *effect;
-	f32 f2, f12, f18, f20;
-	s16 effectIdx;
-
-	effectIdx = D_800FB78E;
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG);
+	effect = D_800FB78E;
+	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100DE00), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPPipeSync(D_8005BB2C++);
 
-	if ((effectIdx != -5) && (effectIdx != -6)) {
-		while ((effectIdx != -5) && (effectIdx != -6)) {
-			effect = &((Unk84EECEffect *)&D_800FB7B0)[effectIdx];
-			
-			// Read color components
-			f2 = (f32)(u8)effect->unk11;
-			if ((s8)effect->unk11 < 0) {
-				f2 += 4294967296.0f;
-			}
-			
-			f12 = (f32)(u8)effect->unk12;
-			if ((s8)effect->unk12 < 0) {
-				f12 += 4294967296.0f;
-			}
-			
-			f18 = (f32)(u8)effect->unk13;
-			if ((s8)effect->unk13 < 0) {
-				f18 += 4294967296.0f;
-			}
-			
-			f20 = (f32)(u8)effect->unk14;
-			if ((s8)effect->unk14 < 0) {
-				f20 += 4294967296.0f;
-			}
-			
-			vtx = D_8005BB34;
-			
-			// First vertex
-			vtx->v.ob[0] = effect->unk8;
-			vtx->v.ob[1] = effect->unkA;
-			vtx->v.ob[2] = effect->unkC;
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0x800;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xE6;
-			vtx->v.cn[2] = 0x96;
-			vtx->v.cn[3] = 0x64;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Second vertex
-			vtx->v.ob[0] = effect->unk8;
-			vtx->v.ob[1] = effect->unk2 + effect->unkA;
-			vtx->v.ob[2] = effect->unkC;
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0x800;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xDC;
-			vtx->v.cn[2] = 0x78;
-			vtx->v.cn[3] = 0xB4;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Third vertex
-			vtx->v.ob[0] = (s16)(s32)((f32)effect->unk8 + (f2 * D_800FB6A8[0]));
-			vtx->v.ob[1] = (s16)(s32)((f32)effect->unkA + f12);
-			vtx->v.ob[2] = (s16)(s32)((f32)effect->unkC + (f2 * D_800FB6A8[2]));
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0;
-			vtx->v.tc[1] = 0;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xDC;
-			vtx->v.cn[2] = 0x78;
-			vtx->v.cn[3] = 0xB4;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Fourth vertex
-			vtx->v.ob[0] = (s16)(s32)((f32)effect->unk8 + (f18 * D_800FB6A8[3]));
-			vtx->v.ob[1] = (s16)(s32)((f32)effect->unkA + f20);
-			vtx->v.ob[2] = (s16)(s32)((f32)effect->unkC + (f18 * D_800FB6A8[5]));
-			vtx->v.flag = 0;
-			vtx->v.tc[0] = 0x800;
-			vtx->v.tc[1] = 0x800;
-			vtx->v.cn[0] = 0xFF;
-			vtx->v.cn[1] = 0xC8;
-			vtx->v.cn[2] = 0x64;
-			vtx->v.cn[3] = 0xB4;
-			vtx++;
-			D_8005BB34 = vtx;
-			
-			// Add geometry to command list
-			gSPVertex(D_8005BB2C++, vtx - 4, 4, 0);
-			gDPLoadSync(D_8005BB2C++);
-			gDPLoadTile(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31, 31);
-			gDPPipeSync(D_8005BB2C++);
-			
-			// Get next effect
-			effectIdx = effect->unk4;
-		}
+	if ((effect != -5) && (effect != -6)) {
+		do {
+			entry = &D_800FB7B0[effect];
+			offsetX1 = (f32)(u32)entry->unk11;
+			offsetX1 *= D_800FB6A8[0];
+			height1 = (f32)(u32)entry->unk12;
+			offsetZ1 = (f32)(u32)entry->unk11;
+			offsetZ1 *= D_800FB6A8[2];
+			offsetX2 = (f32)(u32)entry->unk13;
+			offsetX2 *= D_800FB6A8[3];
+			height2 = (f32)(u32)entry->unk14;
+			offsetZ2 = (f32)(u32)entry->unk13;
+			offsetZ2 *= D_800FB6A8[5];
+
+			D_8005BB34->v.ob[0] = entry->unk8;
+			D_8005BB34->v.ob[1] = entry->unkA;
+			D_8005BB34->v.ob[2] = entry->unkC;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x800;
+			D_8005BB34->v.tc[1] = 0x0;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xE6;
+			D_8005BB34->v.cn[2] = 0x96;
+			D_8005BB34->v.cn[3] = 0x64;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = entry->unk8;
+			D_8005BB34->v.ob[1] = entry->unk2 + entry->unkA;
+			D_8005BB34->v.ob[2] = entry->unkC;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x0;
+			D_8005BB34->v.tc[1] = 0x800;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xDC;
+			D_8005BB34->v.cn[2] = 0x78;
+			D_8005BB34->v.cn[3] = 0xB4;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = entry->unk8 + offsetX1;
+			D_8005BB34->v.ob[1] = entry->unkA + height1;
+			D_8005BB34->v.ob[2] = entry->unkC + offsetZ1;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x0;
+			D_8005BB34->v.tc[1] = 0x0;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xDC;
+			D_8005BB34->v.cn[2] = 0x78;
+			D_8005BB34->v.cn[3] = 0xB4;
+			D_8005BB34++;
+
+			D_8005BB34->v.ob[0] = entry->unk8 + offsetX2;
+			D_8005BB34->v.ob[1] = entry->unkA + height2;
+			D_8005BB34->v.ob[2] = entry->unkC + offsetZ2;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0x800;
+			D_8005BB34->v.tc[1] = 0x800;
+			D_8005BB34->v.cn[0] = 0xFF;
+			D_8005BB34->v.cn[1] = 0xC8;
+			D_8005BB34->v.cn[2] = 0x64;
+			D_8005BB34->v.cn[3] = 0xB4;
+			D_8005BB34++;
+
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+			gSP2Triangles(D_8005BB2C++, 0, 2, 3, 0, 3, 1, 2, 0);
+			effect = entry->unk4;
+		} while ((effect != -5) && (effect != -6));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088654_170714.s")
-#endif
 
 // AI - Render slot type 6 effects: shrinking sprites
 void func_80088B9C_170C5C(void) {
@@ -2120,24 +1940,25 @@ void func_80088B9C_170C5C(void) {
 }
 
 // AI - Render slot type 6 effects with prim/env colors (glow effects)
-#ifdef NON_MATCHING
-void func_80088DFC_170EBC(s32 arg0) {
+void func_80088DFC_170EBC(u8 arg0) {
 	s16 effect;
-	Unk84EECEffectTail *base;
+	s16 rootIndex;
+	s16 childIndex;
+	Unk84EECEffectPositionView *base;
 	Unk84EECEffect *baseStart;
 	Unk84EECEffect *entry;
-	s16 posX;
-	s16 posY;
-	s16 posZ;
+	Unk84EECEffect *initialEntry;
 
-	baseStart = &D_800FB7B0[D_800FB6F8[arg0 & 0xFF].unk6];
-	entry = &D_800FB7B0[baseStart->unk4];
-	effect = entry->unk4;
+	rootIndex = D_800FB6F8[arg0].unk6;
+	baseStart = &D_800FB7B0[rootIndex];
+	childIndex = baseStart->unk4;
+	initialEntry = &D_800FB7B0[childIndex];
+	effect = initialEntry->unk4;
 
 	D_800FB6E5 = 0x10;
 	D_800FB6E6 = 0x10;
 
-	if (*(u16 *)&entry->unkE > 0) {
+	if (((Unk84EECEffectBytes *)initialEntry)->unkE.word > 0) {
 		return;
 	}
 
@@ -2147,30 +1968,24 @@ void func_80088DFC_170EBC(s32 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if ((effect != -6) && (effect != -5)) {
-		base = (Unk84EECEffectTail *)&baseStart->unk8;
+		base = (Unk84EECEffectPositionView *)&baseStart->unk8;
 		do {
 			entry = &D_800FB7B0[effect];
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, ((u8 *)&base->unk6)[0], ((u8 *)&base->unk6)[1], base->pad8, entry->unk11);
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, base->unk6.bytes.high, base->unk6.bytes.low, base->unk8, entry->unk11);
 			gDPSetEnvColor(D_8005BB2C++, base->unk9, base->unkA, base->unkB, entry->unk11);
 			gDPPipeSync(D_8005BB2C++);
 
-			posX = entry->unk8;
-			posY = entry->unkA;
-			posZ = entry->unkC;
-			D_800FB6D0.x = (f32)posX;
-			D_800FB6D0.y = (f32)posY;
-			D_800FB6D0.z = (f32)posZ;
-			D_800FB6DC = (s8 *)&base->unk6;
-			D_800FB6E0 = (f32)entry->unk2;
+			D_800FB6D0.x = D_800FB7B0[effect].unk8;
+			D_800FB6D0.y = D_800FB7B0[effect].unkA;
+			D_800FB6D0.z = D_800FB7B0[effect].unkC;
+			D_800FB6DC = (s8 *)&base->unk6.bytes.high;
+			D_800FB6E0 = entry->unk2;
 			D_800FB6E4 = entry->unk11;
 			func_8008A1D8_172298();
-			effect = entry->unk4;
+			effect = D_800FB7B0[effect].unk4;
 		} while ((effect != -6) && (effect != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80088DFC_170EBC.s")
-#endif
 
 // AI - Render a single textured triangle
 void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
@@ -2235,40 +2050,39 @@ void func_80089148_171208(f32 *arg0, u8 *arg1, u16 arg2, u8 arg3) {
 }
 
 // AI - Spawn a child particle effect for rendering
-#ifdef NON_MATCHING
 void func_80089408_1714C8(u8 arg0) {
 	s16 srcIndex;
 	Unk89408Pos *srcPos;
 	s16 dstIndex;
-	Unk89408Pos *dstPos;
+	Unk84EECEffectPositionView *dstPos;
 	s32 temp;
 
 	srcIndex = D_800FB6F8[arg0].unk6;
 	dstIndex = func_80083390_16B450(arg0);
 	if (dstIndex != -3) {
-		srcPos = (Unk89408Pos *)&D_800FB7B0[srcIndex].unk8;
-		srcIndex = srcPos->unkA;
+		srcPos = (Unk89408Pos *)(s32)&D_800FB7B0[srcIndex].unk8;
+		temp = srcPos->unkA;
 
-		if (srcIndex == 1) {
+		if (temp == 1) {
+			dstPos = (Unk84EECEffectPositionView *)(s32)&D_800FB7B0[dstIndex].unk8;
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0x23) + 0x23;
-			D_800FB7B0[dstIndex].unk11 = 0x82;
-			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk6 = 0xAA;
-			dstPos->unk7 = 0xAA;
+			dstPos->unk9 = 0x82;
+			dstPos->unk6.bytes.high = 0xAA;
+			dstPos->unk6.bytes.low = 0xAA;
 			dstPos->unk8 = 0xAA;
-		} else if (srcIndex == 0) {
+		} else if (temp == 0) {
+			dstPos = (Unk84EECEffectPositionView *)(s32)&D_800FB7B0[dstIndex].unk8;
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
-			D_800FB7B0[dstIndex].unk11 = 0xFF;
-			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk6 = 0xFF;
-			dstPos->unk7 = 0xFF;
+			dstPos->unk9 = 0xFF;
+			dstPos->unk6.bytes.high = 0xFF;
+			dstPos->unk6.bytes.low = 0xFF;
 			dstPos->unk8 = 0xFF;
 		} else {
+			dstPos = (Unk84EECEffectPositionView *)(s32)&D_800FB7B0[dstIndex].unk8;
 			D_800FB7B0[dstIndex].unk2 = (func_800038E0_44E0() % 0xA) + 0xA;
-			D_800FB7B0[dstIndex].unk11 = 0xFF;
-			dstPos = (Unk89408Pos *)&D_800FB7B0[dstIndex].unk8;
-			dstPos->unk6 = 0x32;
-			dstPos->unk7 = 0xFF;
+			dstPos->unk9 = 0xFF;
+			dstPos->unk6.bytes.high = 0x32;
+			dstPos->unk6.bytes.low = 0xFF;
 			dstPos->unk8 = 0x82;
 		}
 
@@ -2277,14 +2091,10 @@ void func_80089408_1714C8(u8 arg0) {
 		dstPos->unk4 = srcPos->unk4;
 		dstPos->unkA = (func_800038E0_44E0() % 6) + srcPos->unk6 - 3;
 		dstPos->unkB = (func_800038E0_44E0() % 6) + srcPos->unk7 - 3;
-		temp = func_800038E0_44E0() % 6;
+		dstPos->unkC = (func_800038E0_44E0() % 6) + srcPos->unk8 - 3;
 		dstPos->unkD = 0;
-		dstPos->unkC = srcPos->unk8 + temp - 3;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80089408_1714C8.s")
-#endif
 
 // Create a large candle(?) flame effect
 u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
@@ -2319,7 +2129,7 @@ void func_8008972C_1717EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 temp_v0;
 	s8 *temp_v1;
 
-	temp_v0 = *(s16 *)(&D_800FB6FE + (arg3 * 0xC));
+	temp_v0 = D_800FB6FE[arg3][0];
 	temp_v1 = (s8 *)&D_800FB7B0[temp_v0];
 	*(s16 *)(temp_v1 + 0x8) = arg0 * 4;
 	*(s16 *)(temp_v1 + 0xA) = arg1 * 4;
@@ -2573,7 +2383,7 @@ void func_8008A59C_17265C(void) {
 	u8 i;
 
 	for (i = 0; i < 0x14; i++) {
-		(&D_800FC8E8)[i].unkA = 0;
+		D_800FC8E8[i].unkA = 0;
 	}
 	D_800FCA78 = 0;
 	D_800FCA79 = 0;
@@ -2589,13 +2399,13 @@ void func_8008A5E4_1726A4(void) {
 	i = 0;
 	if ((s32)activeCount > 0) {
 		do {
-			entry = &(&D_800FC8E8)[i];
+			entry = &D_800FC8E8[i];
 			if (entry->unkA != 0) {
 				if (entry->unkF == 0) {
 					if (entry->unk12 < entry->unkD) {
 						entry->unkD = (u8)(entry->unkD - entry->unk12);
 						entry->unkE++;
-						if (entry->unkE >= D_800A2690_18A750[entry->unkC * 8]) {
+						if (entry->unkE >= D_800A2690_18A750[entry->unkC].phaseCount) {
 							entry->unkE = 0;
 						}
 						entry->unkA += entry->unk10;
@@ -2615,251 +2425,134 @@ void func_8008A5E4_1726A4(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 // AI - Render animated sprite entries from UnkFC8E8Entry table
 void func_8008A704_1727C4(void) {
 	u8 count;
-	u8 i;
-	UnkFC8E8Entry *entry;
-	s8 *tableA;
-	u8 t5;
-	s8 unk5;
-	s8 t8;
-	s8 t7;
-	u8 t9;
-	s32 mult;
-	s32 t3;
-	s32 t4;
-	s32 v0;
-	s32 t0;
-	s32 v1;
-	s8 field4;
+	s32 i;
 
 	count = D_800FCA78;
 	i = 0;
+	if ((s32)count > 0) {
+		do {
+			UnkFC8E8Entry *entry;
+			u8 type;
+			EffectParticleConfig *cfg;
+			s32 texOffset;
 
-	if ((s32)count <= 0) {
-		return;
+			entry = &D_800FC8E8[i];
+			if (entry->unkA != 0) {
+				if (entry->unkF == 0) {
+					type = entry->unkC;
+					if ((type != 0xFF) || (entry->unkE != 0xFF)) {
+						gDPPipeSync(D_8005BB2C++);
+						cfg = &D_800A2690_18A750[type];
+						if (cfg->format == 0) {
+							texOffset = ((cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width) / 2; gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0); gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_800A269C_18A75C[type] + texOffset), G_IM_FMT_I, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+						} else if (cfg->format == 1) {
+							texOffset = (cfg->dimensions.size.height * entry->unkE) * cfg->dimensions.size.width; gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0); gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_800A269C_18A75C[type] + texOffset), G_IM_FMT_IA, G_IM_SIZ_8b, cfg->dimensions.values[0], cfg->dimensions.values[1], 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+						}
+						D_800FB6E5 = cfg->dimensions.values[0];
+						D_800FB6E6 = cfg->dimensions.values[1];
+						gDPPipeSync(D_8005BB2C++);
+					}
+
+					cfg = &D_800A2690_18A750[type]; D_800FB6D0.x = D_800FC8E8[i].unk0; D_800FB6D0.y = D_800FC8E8[i].unk2; D_800FB6D0.z = D_800FC8E8[i].unk4; D_800FB6DC = &entry->unk6; D_800FB6E0 = D_800FC8E8[i].unkA; D_800FB6E4 = entry->unkD; switch (cfg->drawMode) {
+					case 0:
+						func_8008A1D8_172298();
+						break;
+					case 2:
+						func_80089E54_171F14();
+						break;
+					default:
+						osSyncPrintf(D_800A53D4_18D494);
+						break;
+					}
+				}
+				count--;
+			}
+			i = (i + 1) & 0xFF;
+		} while ((s32)count > 0);
 	}
-
-	do {
-		entry = &(&D_800FC8E8)[i];
-		
-		if (entry->unkA == 0) {
-			i++;
-			continue;
-		}
-		
-		if (entry->unkF != 0) {
-			count--;
-			continue;
-		}
-		
-		t5 = entry->unkC;
-		if ((t5 == 0xFF) || (entry->unkE == 0xFF)) {
-			count--;
-			continue;
-		}
-
-		gDPPipeSync(D_8005BB2C++);
-
-		tableA = &D_800A2690_18A750[t5 * 8];
-		unk5 = tableA[5];
-
-		if (unk5 == 0) {
-			t8 = tableA[7];
-			t7 = tableA[6];
-			t9 = entry->unkE;
-			mult = t8 * t9 * t7 / 2;
-			
-			gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_800A269C_18A75C[t5] + mult));
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-				G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPLoadSync(D_8005BB2C++);
-
-			t3 = ((s32)((t8 * t7) + 3) >> 2) - 1;
-			t4 = (t3 < 0x7FF) ? t3 : 0x7FF;
-			
-			v0 = t7 / 16;
-			t0 = (v0 <= 0) ? 1 : v0;
-			v1 = (v0 <= 0) ? 1 : v0;
-			
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, t4, (s32)(t0 + 0x7FF) / v1);
-
-			gDPPipeSync(D_8005BB2C++);
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, ((((s32)tableA[6] >> 1) + 7) >> 3), 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (tableA[7] - 1) << G_TEXTURE_IMAGE_FRAC, (tableA[6] - 1) << G_TEXTURE_IMAGE_FRAC);
-		} else if (unk5 == 1) {
-			t8 = tableA[7];
-			t7 = tableA[6];
-			t9 = entry->unkE;
-			mult = t8 * t9 * t7;
-			
-			gDPSetCombineLERP(D_8005BB2C++, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, TEXEL0, 0);
-
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_800A269C_18A75C[t5] + mult));
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP,
-				G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPLoadSync(D_8005BB2C++);
-
-			t3 = ((s32)((t8 * t7) + 1) >> 1) - 1;
-			t4 = (t3 < 0x7FF) ? t3 : 0x7FF;
-			
-			v0 = t7 / 8;
-			t0 = (v0 <= 0) ? 1 : v0;
-			v1 = (v0 <= 0) ? 1 : v0;
-			
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, t4, (s32)(t0 + 0x7FF) / v1);
-
-			gDPPipeSync(D_8005BB2C++);
-
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, ((tableA[6] + 7) >> 3), 0, G_TX_RENDERTILE, 0,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (tableA[7] - 1) << G_TEXTURE_IMAGE_FRAC, (tableA[6] - 1) << G_TEXTURE_IMAGE_FRAC);
-		}
-
-		D_800FB6E5 = tableA[6];
-		D_800FB6E6 = tableA[7];
-
-		gDPPipeSync(D_8005BB2C++);
-
-		D_800FB6D0.x = entry->unk0;
-		D_800FB6D0.y = entry->unk2;
-		D_800FB6D0.z = entry->unk4;
-		D_800FB6DC = &entry->unk6;
-		D_800FB6E0 = entry->unkA;
-		D_800FB6E4 = entry->unkD;
-
-		field4 = tableA[4];
-		
-		switch (field4) {
-		case 0:
-			func_8008A1D8_172298();
-			break;
-		case 2:
-			func_80089E54_171F14();
-			break;
-		default:
-			osSyncPrintf(D_800A53D4_18D494);
-			break;
-		}
-
-		count--;
-		i++;
-	} while ((count & 0xFF) > 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008A704_1727C4.s")
-#endif
 
 // AI - Allocate a new animated sprite slot in UnkFC8E8Entry table
-#ifdef NON_MATCHING
 s32 func_8008AD40_172E00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
-	UnkFC8E8Entry *entry;
-	s8 *tableA;
-	u8 *tableB;
 	u8 slot;
-	u8 search;
-	u8 *arg3Ptr;
-	s32 divisor;
-	s32 result;
+	u8 i;
 
-	if ((s32) D_800FCA78 >= 0x14) {
+	if (D_800FCA78 >= 0x14) {
 		return 0xFF;
 	}
 
-	slot = D_800FCA79;
-	entry = &(&D_800FC8E8)[slot];
-	entry->unk0 = arg0 * 4;
-	entry->unk2 = arg1 * 4;
-	entry->unk4 = arg2 * 4;
-	entry->unkA = arg4;
-	entry->unkC = arg3;
-	entry->unkF = 0;
-	tableA = &D_800A2690_18A750[arg3 * 8];
-	entry->unk10 = tableA[1];
-	entry->unk11 = tableA[2];
-	entry->unk12 = tableA[3];
+	D_800FC8E8[D_800FCA79].unk0 = arg0 * 4;
+	D_800FC8E8[D_800FCA79].unk2 = arg1 * 4;
+	D_800FC8E8[D_800FCA79].unk4 = arg2 * 4;
+	D_800FC8E8[D_800FCA79].unkC = arg3;
+	D_800FC8E8[D_800FCA79].unkF = 0;
+	D_800FC8E8[D_800FCA79].unkA = arg4;
+	D_800FC8E8[D_800FCA79].unk10 = D_800A2690_18A750[arg3].sizeStep;
+	D_800FC8E8[D_800FCA79].unk11 = D_800A2690_18A750[arg3].heightStep;
+	D_800FC8E8[D_800FCA79].unk12 = D_800A2690_18A750[arg3].fadeStep;
+	arg4 = func_800038E0_44E0_U16();
+	D_800FC8E8[D_800FCA79].unkE = arg4 % D_800A2690_18A750[arg3].phaseCount;
 
-	result = func_800038E0_44E0(entry, arg1, arg2, &D_800FC8E8);
 	slot = D_800FCA79;
-	entry = &(&D_800FC8E8)[slot];
-	divisor = tableA[0];
-	arg3Ptr = &arg3;
-	tableB = &D_800A2698_18A758[*arg3Ptr * 4];
-	entry->unkE = result % divisor;
-	entry->unkD = tableB[3];
-	entry->unk6 = tableB[0];
-	entry->unk7 = tableB[1];
-	entry->unk8 = tableB[2];
+	D_800FC8E8[D_800FCA79].unkD = D_800A2698_18A758[arg3].alpha;
+	D_800FC8E8[D_800FCA79].unk6 = D_800A2698_18A758[arg3].r;
+	D_800FC8E8[D_800FCA79].unk7 = D_800A2698_18A758[arg3].g;
+	D_800FC8E8[D_800FCA79].unk8 = D_800A2698_18A758[arg3].b;
 
-	for (search = slot; search < 0x14; search++) {
-		if ((&D_800FC8E8)[search].unkA == 0) {
-			D_800FCA79 = search;
-			search = 0x14;
+	for (i = slot; i < 0x14; i++) {
+		if (D_800FC8E8[i].unkA == 0) {
+			D_800FCA79 = i;
+			i = 0x14;
 		}
 	}
-
 	D_800FCA78++;
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008AD40_172E00.s")
-#endif
 
 // AI - Set sprite entry color values
 void func_8008AF08_172FC8(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unk6 = arg1;
-		(&D_800FC8E8)[arg0].unk7 = arg2;
-		(&D_800FC8E8)[arg0].unk8 = arg3;
+		D_800FC8E8[arg0].unk6 = arg1;
+		D_800FC8E8[arg0].unk7 = arg2;
+		D_800FC8E8[arg0].unk8 = arg3;
 	}
 }
 
 // AI - Set sprite entry unkF field
 void func_8008AF5C_17301C(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unkD = arg1;
+		D_800FC8E8[arg0].unkD = arg1;
 	}
 }
 
 // AI - Set sprite entry unk10 field
 void func_8008AF94_173054(u8 arg0, s8 arg1) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unk12 = arg1;
+		D_800FC8E8[arg0].unk12 = arg1;
 	}
 }
 
 // AI - Set sprite entry velocity values
 void func_8008AFD0_173090(u8 arg0, s8 arg1, s8 arg2) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unk10 = arg1;
-		(&D_800FC8E8)[arg0].unk11 = arg2;
+		D_800FC8E8[arg0].unk10 = arg1;
+		D_800FC8E8[arg0].unk11 = arg2;
 	}
 }
 
 // AI - Set sprite entry unkD field
 void func_8008B020_1730E0(u8 arg0, u8 arg1) {
 	if (arg0 != 0xFF) {
-		(&D_800FC8E8)[arg0].unkF = arg1;
+		D_800FC8E8[arg0].unkF = arg1;
 	}
 }
 
 // AI - Free a sprite entry in the UnkFC8E8Entry table
 void func_8008B058_173118(u8 arg0) {
-	(&D_800FC8E8)[arg0].unkA = 0;
+	D_800FC8E8[arg0].unkA = 0;
 	if (arg0 < D_800FCA79) {
 		D_800FCA79 = arg0;
 	}
@@ -2909,7 +2602,6 @@ void func_8008B0AC_17316C(void) {
 }
 // Matched - Needs below funcs also matched so rodata builds properly.
 // AI - Main render dispatcher: set up RDP state and render all active slots
-#ifdef NON_MATCHING
 void func_8008B1A8_173268(void) {
 	s32 i;
 
@@ -2934,13 +2626,13 @@ void func_8008B1A8_173268(void) {
 		if (D_800FB6F8[i].unk0 != 0xFA) {
 			switch (D_800FB6F8[i].unk0) {
 				case 0:
-					func_80086FC4_16F084(i & 0xFF);
+					func_80086FC4_16F084(i);
 					break;
 				case 1:
-					func_80087A40_16FB00(i & 0xFF);
+					func_80087A40_16FB00(i);
 					break;
 				case 2:
-					func_80087CB8_16FD78(i & 0xFF);
+					func_80087CB8_16FD78(i);
 					break;
 				case 3:
 					func_80087E3C_16FEFC();
@@ -2954,10 +2646,10 @@ void func_8008B1A8_173268(void) {
 				case 6:
 					break;
 				case 7:
-					func_80088DFC_170EBC(i & 0xFF);
+					func_80088DFC_170EBC(i);
 					break;
 				case 8:
-					func_80089BCC_171C8C(i & 0xFF);
+					func_80089BCC_171C8C(i);
 					break;
 				default:
 					osSyncPrintf(D_800A5410_18D4D0, D_800FB6F8[i].unk0);
@@ -2968,9 +2660,6 @@ void func_8008B1A8_173268(void) {
 
 	func_8008B594_173654();
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_8008B1A8_173268.s")
-#endif
 
 // AI - Main update and render entry point: update effects, then render
 void func_8008B474_173534(void) {

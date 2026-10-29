@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_80088654_170714`, named float width caches occupy `f0/f16`, displacing the X offsets to `f2/f18`. Inlining the unsigned conversions fixes allocation, but ordinary `offset = convertedWidth * basis` emits four `mul.s` instructions with reversed source operands. Manual signed-byte correction tests also disagree with the target unsigned-conversion branches.
+
+-> `code changed`: Use the existing 22-byte particle record. Initialize each X/Z offset separately with `(f32)(u32)entry->unk11` or `entry->unk13`, then scale with `offset *= D_800FB6A8[index]`. Keep heights as unsigned conversions of bytes `0x12/0x14`. Write each vertex directly through `D_8005BB34`, increment the global after each vertex, and use `gDPLoadTextureBlock_4b`, `gSPVertex`, and `gSP2Triangles`.
+
+-> `correct ASM`: IDO shares each width conversion in `f2/f18`, keeps X offsets in `f0/f16`, and emits `mul.s f0,f2,f8`, `mul.s f14,f2,f6`, `mul.s f16,f18,f4`, and `mul.s f22,f18,f10`. All 338 instructions and the complete US ROM checksum match.

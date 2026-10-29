@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_80088DFC_170EBC`, advancing with `effect = entry->unk4` leaves the record in `s4`, colors in `s0`, and the display-list cursor in `v1`. Named integer coordinates occupy argument registers; named float coordinates use `f0/f2/f12` instead of the target conversion temporaries.
+
+-> `code changed`: Keep named signed-halfword root and child indices and a separate initial child pointer. Advance through `effect = D_800FB7B0[effect].unk4` after rendering. Read all three coordinate fields directly through that same indexed array. Retain the child pointer for alpha and size, and use the existing pipe-sync, combine, texture-load, primitive-color, and environment-color macros. Declare the renderer parameter as `u8` and pass the dispatcher index without its redundant mask.
+
+-> `correct ASM`: The record address is cached in `s0`, colors in `s1`, display-list address in `s2`, position destination in `s3`, and effect index in `s4`. Coordinate loads use `t8/t9/t7`; conversions use `f4/f8/f16` to `f6/f10/f18`. All 211 instructions, the dispatcher, and the complete US ROM checksum match.

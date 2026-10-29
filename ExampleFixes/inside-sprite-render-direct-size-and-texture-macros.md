@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8008A704_1727C4`, `D_800FB6E0 = entry->unkA` reloads the size late with `lh t8,0xA(t2); mtc1 t8,f4; nop; cvt.s.w f6,f4`. The entry guard uses `t8` instead of `a0`, rotating scratch registers throughout the texture commands.
+
+-> `code changed`: Use the matched outside sprite renderer as a reference. Keep the per-type configuration in `EffectParticleConfig`, use the existing `gDPLoadTextureBlock_4b` and `gDPLoadTextureBlock` macros, and read the render size directly as `D_800FB6E0 = D_800FC8E8[i].unkA`. Keep the type-table rebind, render-state assignments, and draw-mode switch on one physical source line. Decrement the active count for each occupied entry, and use the target's OR check for type/frame validity.
+
+-> `correct ASM`: The guard uses `lh a0,0xA(t2)`. After the final pipe sync, `lh a0,0xA(t2)` is scheduled ahead of the coordinate loads and later feeds `mtc1 a0,f4`, with no extra `nop`. Both texture macro sequences and all 399 function instructions match; the full US ROM verifies `OK`.
