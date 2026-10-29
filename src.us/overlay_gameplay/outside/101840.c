@@ -8708,7 +8708,6 @@ s32 func_8010D234_11C1E4(s16 arg0, s16 arg1) {
 	return count == 2;
 }
 
-#ifdef NON_MATCHING
 s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4)
 {
 	f32 slopeMain[1];
@@ -8752,9 +8751,17 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 	firstCorner = -1;
 	func_8010C4EC_11B49C(arg4);
 
+	/* These empty tests preserve IDO's ordering of cached spill slots. */
+	if (arg4->unk54 + arg4->unk4C) {}
+	if (closestCorner >= 0)
+	{
+		if (D_80159D78[closestCorner]) {}
+		if (D_80159D98[closestCorner]) {}
+	}
 	x0 = *arg2;
 	z0 = *arg3;
 
+	i = 4;
 	if ((x0 <= arg0 ? arg0 - x0 : -(arg0 - x0)) < 5.0f)
 	{
 		x0 = arg0 + 5.0f;
@@ -8764,12 +8771,12 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 	slopeMain[0] = slopeMain[0]; /* Preserve IDO main-slope register allocation. */
 	interceptMain = arg1 - (slopeMain[0] * arg0);
 
-		for (i = 4;i--;)
-		{
-			sideFlags[i] = interceptMain <
-						   ((D_80159D5C->unk54 + D_80159D98[i]) -
-							(slopeMain[0] * (D_80159D78[i] + D_80159D5C->unk4C)));
-		}
+	while (i--)
+	{
+		sideFlags[i] = interceptMain <
+			((D_80159D5C->unk54 + D_80159D98[i]) -
+			 (slopeMain[0] * (D_80159D78[i] + D_80159D5C->unk4C)));
+	}
 
 	for (i = 3;i--;)
 	{
@@ -8899,9 +8906,6 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010D4EC_11C49C.s")
-#endif
 
 s32 func_8010DC00_11CBB0(s32 arg0, s32 arg1, s32 arg2) {
 	VehicleInstance *vehicle;
