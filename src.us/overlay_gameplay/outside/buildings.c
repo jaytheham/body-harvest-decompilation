@@ -1795,93 +1795,74 @@ void func_80118774_127724(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80118774_127724.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_8011A2A0_129250(void) {
-	VehicleInstance *var_s1;
-	s8 *var_s3;
-	s32 var_s4;
-	BuildingInstance *var_s5;
-	s8 *var_s6;
-	s16 var_s0;
-	s16 var_s2;
-	s32 var_v1;
-	s32 temp_v0_4;
-	s8 temp_v0;
-	s8 temp_v0_2;
-	s8 temp_v0_3;
-	u16 temp_t4;
-	extern s8 D_80140B03_14FAB3;
+	s32 firingIndex;
+	s8 *period;
+	s32 index;
+	BuildingInstance *building;
+	s32 vehicleId;
+	s32 timerIndex;
+	s16 targetZ;
+	s16 targetX;
+	u16 randomX;
+	s32 oldTimer;
+	s8 phaseLength;
 
 	if ((D_80052B34->unk0 >= 0x5701) && (D_80052B34->unk0 < 0x6000)) {
 		if ((D_80052B34->unk4 >= 0x5001) && (D_80052B34->unk4 < 0x5B00) && (func_8000726C_7E6C(2) == 0)) {
-			var_s4 = func_8011D260_12C210(0x5B, 0x5C);
-			if (var_s4 != -1) {
-				var_s5 = &buildingInstances[var_s4];
+			index = func_8011D260_12C210(0x5B, 0x5C);
+			if (index != -1) {
+				building = &buildingInstances[index];
 				D_80158E78 = NULL;
-				var_s3 = &D_8015EB86;
-				var_s6 = &D_80140B03_14FAB3;
-				var_s1 = &vehicleInstances[115];
-				var_s4 = 0;
-				do {
-					var_s1->unk1A = 0x12;
-					func_800FAE84_109E34(var_s1);
-					if (var_s3 == &D_8015EB86) {
-						func_800FB44C_10A3FC(var_s1, (f32) (var_s5->xCoord + 0x11B));
+				firingIndex = 0;
+				timerIndex = 115;
+				vehicleId = 115;
+				for (index = 0; firingIndex != 1; vehicleId++, index++, timerIndex++, firingIndex++) {
+					vehicleInstances[vehicleId].unk1A = 0x12;
+					func_800FAE84_109E34(&vehicleInstances[vehicleId]);
+					if (firingIndex == 0) {
+						func_800FB44C_10A3FC(&vehicleInstances[vehicleId], building->xCoord + 0x11B);
 					} else {
-						func_800FB44C_10A3FC(var_s1, (f32) (var_s5->xCoord - 0x11F));
+						func_800FB44C_10A3FC(&vehicleInstances[vehicleId], building->xCoord - 0x11F);
 					}
-					func_800FB468_10A418(var_s1, (f32) (var_s5->yCoord + 0x1A8));
-					func_800FB484_10A434(var_s1, (f32) (var_s5->zCoord - 0x1D3));
-					temp_v0 = var_s6[-0x73];
-					var_s1->unkE = -0x4000;
-					temp_t4 = var_s1->unk20 | 0x8000;
-					var_s1->unk20 = temp_t4;
-					var_s1->unk46 = (var_s1->unk46 & 0xFFC0) | 0x3F;
-					var_s1->unk20 = temp_t4 & ~VEHICLE_FLAG_UNK1;
-					var_s6[-0x73] = temp_v0 - 1;
-					var_s1->unk6 = var_s1->unkE;
-					if (temp_v0 <= 0) {
-						D_80140A90_14FA40[var_s4] = (func_800038E0_44E0() & 0x3F) + 0x3C;
-						*var_s3 = (func_800038E0_44E0() & 0x1F) + 0x10;
-						*(&D_8015EB88 + var_s4) = (func_800038E0_44E0() & 3) + 9;
+					func_800FB468_10A418(&vehicleInstances[vehicleId], building->yCoord + 0x1A8);
+					func_800FB484_10A434(&vehicleInstances[vehicleId], building->zCoord - 0x1D3);
+					oldTimer = (s8)D_80140A90_14FA40[timerIndex - 115];
+					vehicleInstances[vehicleId].unkE = -0x4000;
+					vehicleInstances[vehicleId].unk6 = vehicleInstances[vehicleId].unkE;
+					vehicleInstances[vehicleId].unk46 = (vehicleInstances[vehicleId].unk46 & 0xFFC0) | 0x3F;
+					vehicleInstances[vehicleId].unk20 |= 0x8000;
+					vehicleInstances[vehicleId].unk20 &= ~VEHICLE_FLAG_UNK1;
+					D_80140A90_14FA40[timerIndex - 115] = oldTimer - 1;
+					if (oldTimer <= 0) {
+						period = &D_8015EB88[index];
+						D_80140A90_14FA40[index] = (func_800038E0_44E0() & 0x3F) + 0x3C;
+						D_8015EB86[firingIndex] = (func_800038E0_44E0() & 0x1F) + 0x10;
+						*period = (func_800038E0_44E0() & 3) + 9;
 					}
-					temp_v0_2 = *var_s3;
-					*var_s3 = temp_v0_2 - 1;
-					if (temp_v0_2 > 0) {
-						temp_v0_3 = *(&D_8015EB88 + var_s4);
-						if ((u32)((u32) D_80052A8C % (u32) temp_v0_3) < (u32)(temp_v0_3 >> 1)) {
-							temp_v0_4 = func_800038E0_44E0();
-							if (var_s3 == &D_8015EB86) {
-								var_v1 = 0x32;
+					if (D_8015EB86[firingIndex]-- > 0) {
+						phaseLength = D_8015EB88[index];
+						if ((u32)D_80052A8C % phaseLength < (phaseLength >> 1)) {
+							randomX = func_800038E0_44E0();
+							targetX = ((firingIndex == 0 ? 0x32 : -0x32) + D_80052B34->unk0 + (randomX & 0x7F)) - 0x3F;
+							targetZ = D_80052B34->unk4;
+							if (targetZ < 0x51A4) {
+								targetZ = 0x51A4;
+							}
+							targetZ += (func_800038E0_44E0() & 0x7F) - 0x3F;
+							if (index == 0) {
+								D_80158E78 = &vehicleInstances[126];
 							} else {
-								var_v1 = -0x32;
+								D_80158E78 = &vehicleInstances[127];
 							}
-							var_s2 = (var_v1 + D_80052B34->unk0 + (temp_v0_4 & 0x7F)) - 0x3F;
-							var_s0 = D_80052B34->unk4;
-							if (var_s0 < 0x51A4) {
-								var_s0 = 0x51A4;
-							}
-							var_s0 = (var_s0 + (func_800038E0_44E0() & 0x7F)) - 0x3F;
-							if (var_s4 == 0) {
-								D_80158E78 = &D_80050A18;
-							} else {
-								D_80158E78 = &D_80050A74;
-							}
-							func_80129354_138304((s32) var_s1, 0, var_s2, func_800F9FAC_108F5C(var_s2, var_s0), var_s0);
+							func_80129354_138304((EntityInstance *)&vehicleInstances[vehicleId], 0, targetX, func_800F9FAC_108F5C(targetX, targetZ), targetZ);
 						}
 					}
-					var_s3++;
-					var_s1++;
-					var_s4++;
-					var_s6++;
-				} while (var_s3 != &D_8015EB87);
+				}
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A2A0_129250.s")
-#endif
 
 // building instance updater
 #ifdef NON_MATCHING

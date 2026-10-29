@@ -2908,9 +2908,9 @@ extern s32 D_8015EB78;
 extern s32 D_8015EB7C;
 extern s32 D_8015EB80;
 extern u16 D_8015EB84;
-extern s8 D_8015EB86;
+extern s8 D_8015EB86[1];
 extern s8 D_8015EB87;
-extern s8 D_8015EB88;
+extern s8 D_8015EB88[1];
 extern Projectile D_8015EB90[64];
 extern Unk8015F790 D_8015F790[16]; // Projectile trails?
 extern Unk8015F9D0 D_8015F9D0;
