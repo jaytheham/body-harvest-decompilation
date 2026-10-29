@@ -726,33 +726,31 @@ s32 func_80117464_126414(u8 arg0) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
-// Is the return value from this used to determine how close a building is?
-// And if it should be drawn?
+// Search the building Z-order table and rewind entries sharing the selected Z.
 s32 func_80117508_1264B8(s16 arg0) {
-	s32 halfStep;
-	s32 candidate;
-	s32 step = 0x40;
+	s32 offset;
+	s32 step;
 	s32 distPrev;
 	s32 distThis;
 	s32 distNext;
 	s32 index;
-	u8 thisId;
-	s32 bestId;
+	u8 lookupId;
+	u8 *entry;
+	u8 buildingId;
 
 	index = 0x7F;
-	thisId = D_8015EA60[0x7F];
-	do {
-		halfStep = step >> 1;
-		if ((buildingInstances[thisId].zCoord < arg0) && (((u32)buildingInstances[thisId].unk8 >> 12) & 1)) {
-			candidate = step;
+	buildingId = D_8015EA60[0x7F];
+	for (step = 0x40; step != 0; step >>= 1) {
+		if ((buildingInstances[buildingId].zCoord < arg0) && (buildingInstances[buildingId].statusFlags & 1)) {
+			offset = step;
 		} else {
-			candidate = -step;
+			offset = -step;
 		}
-		index += candidate;
-		thisId = D_8015EA60[index];
-		step = halfStep;
-	} while (halfStep != 0);
+		index += offset;
+		entry = &D_8015EA60[index];
+		lookupId = entry[0];
+		buildingId = lookupId;
+	}
 
 	if (index > 0) {
 		distPrev = arg0 - buildingInstances[D_8015EA60[index - 1]].zCoord;
@@ -760,8 +758,8 @@ s32 func_80117508_1264B8(s16 arg0) {
 		distPrev = 0xF423F;
 	}
 
-	distThis = arg0 - buildingInstances[thisId].zCoord;
-	if (((u32)index < 0xFEU) && (((u32)buildingInstances[D_8015EA60[index + 1]].unk8 >> 12) & 1)) {
+	distThis = arg0 - buildingInstances[lookupId].zCoord;
+	if ((index < 0xFE) && (buildingInstances[D_8015EA60[index + 1]].statusFlags & 1)) {
 		distNext = arg0 - buildingInstances[D_8015EA60[index + 1]].zCoord;
 	} else {
 		distNext = 0xF423F;
@@ -779,29 +777,22 @@ s32 func_80117508_1264B8(s16 arg0) {
 
 	if (distPrev < distThis) {
 		if (distPrev < distNext) {
-			bestId = D_8015EA60[index - 1];
+			index = D_8015EA60[index - 1];
 		} else {
-			bestId = D_8015EA60[index + 1];
+			index = D_8015EA60[index + 1];
 		}
 	} else if (distThis < distNext) {
-		bestId = thisId;
+		index = lookupId;
 	} else {
-		bestId = D_8015EA60[index + 1];
+		index = D_8015EA60[index + 1];
 	}
 
-	if ((s32)bestId > 0) {
-		if (buildingInstances[bestId - 1].zCoord == buildingInstances[bestId].zCoord) {
-			do {
-				bestId--;
-			} while ((s32)bestId > 0 && buildingInstances[bestId - 1].zCoord == buildingInstances[bestId].zCoord);
-		}
+	while (index > 0 && buildingInstances[index - 1].zCoord == buildingInstances[index].zCoord) {
+		index--;
 	}
 
-	return bestId & 0xFF;
+	return index & 0xFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117508_1264B8.s")
-#endif
 
 Unk80148620 *func_801176B0_126660(void)
 {
