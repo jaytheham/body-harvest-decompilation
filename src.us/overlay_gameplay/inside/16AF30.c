@@ -278,81 +278,63 @@ s16 func_80083584_16B644(u8 arg0) {
 	return sp1E;
 }
 
-#ifdef NON_MATCHING
-// AI - Remove/free a visual effect instance from the linked list
+// Remove a visual effect from its slot's linked list.
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
-	Unk84EECEffect *effect;
-	UnkFB6F8Entry *slot;
-	s16 temp;
-	Unk84EECEffect *baseEffect;
 
-	effect = &D_800FB7B0[arg0];
-	baseEffect = effect;
-	slot = &D_800FB6F8[arg1];
-
-	if (effect->unk0 == 0) {
+	if (D_800FB7B0[arg0].unk0 == 0) {
 		osSyncPrintf(&D_800A5064_18D124, arg0, arg1);
 		return;
 	}
 
-	switch (slot->unk4) {
+	switch (D_800FB6F8[arg1].unk4) {
 		case 0:
 			osSyncPrintf(&D_800A50AC_18D16C);
-			slot->unk6 = -6;
-			slot->unk8 = -6;
+			D_800FB6F8[arg1].unk6 = -6;
+			D_800FB6F8[arg1].unk8 = -6;
 			return;
 
 		case 1:
-			slot->unk6 = -6;
-			slot->unk8 = -6;
+			D_800FB6F8[arg1].unk6 = -6;
+			D_800FB6F8[arg1].unk8 = -6;
 			break;
 
 		case 2:
-			temp = effect->unk6;
-			if (temp == -4) {
-				slot->unk6 = effect->unk4;
-				effect = &D_800FB7B0[slot->unk6];
-				effect->unk6 = -4;
-				effect->unk4 = -5;
-			} else if (effect->unk4 == -5) {
-				slot->unk8 = temp;
-				effect = &D_800FB7B0[slot->unk6];
-				effect->unk6 = -4;
-				effect->unk4 = -5;
+			if ((-4) == D_800FB7B0[arg0].unk6) {
+				D_800FB6F8[arg1].unk6 = D_800FB7B0[arg0].unk4;
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk6 = (-4);
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk4 = (-5);
+			} else if ((-5) == D_800FB7B0[arg0].unk4) {
+				D_800FB6F8[arg1].unk8 = D_800FB7B0[arg0].unk6;
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk6 = (-4);
+				D_800FB7B0[D_800FB6F8[arg1].unk6].unk4 = (-5);
 			} else {
 				osSyncPrintf(&D_800A50E8_18D1A8);
 			}
 			break;
 
 		default:
-			temp = effect->unk6;
-			if (temp == -4) {
-				slot->unk6 = effect->unk4;
-				effect = &D_800FB7B0[effect->unk4];
-				effect->unk6 = -4;
-			} else if (effect->unk4 == -5) {
-				slot->unk8 = temp;
-				effect = &D_800FB7B0[temp];
-				effect->unk4 = -5;
+			if ((-4) == D_800FB7B0[arg0].unk6) {
+				D_800FB6F8[arg1].unk6 = D_800FB7B0[arg0].unk4;
+				D_800FB7B0[D_800FB7B0[arg0].unk4].unk6 = (-4);
 			} else {
-				effect = &D_800FB7B0[effect->unk4];
-				effect->unk6 = temp;
-				effect = &D_800FB7B0[slot->unk6];
-				effect->unk4 = slot->unk8;
+				if ((-5) == D_800FB7B0[arg0].unk4) {
+					D_800FB6F8[arg1].unk8 = D_800FB7B0[arg0].unk6;
+					D_800FB7B0[D_800FB7B0[arg0].unk6].unk4 = (-5);
+				} else {
+					D_800FB7B0[D_800FB7B0[arg0].unk4].unk6 = D_800FB7B0[arg0].unk6;
+					D_800FB7B0[D_800FB7B0[arg0].unk6].unk4 = D_800FB7B0[arg0].unk4;
+				}
 			}
 			break;
 	}
 
-	baseEffect->unk0 = 0;
-	slot->unk4--;
-	D_800FC8E0--;
+	D_800FB7B0[arg0].unk0 = 0;
+	D_800FB6F8[arg1].unk4 = D_800FB6F8[arg1].unk4 - 1;
+	D_800FC8E0 = D_800FC8E0 - 1;
 	if (arg0 < D_800FC8E2) {
 		D_800FC8E2 = arg0;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_800835F0_16B6B0.s")
-#endif
 
 // AI - Remove three specific effects from a slot
 void func_80083814_16B8D4(s16 arg0, u8 arg1)
