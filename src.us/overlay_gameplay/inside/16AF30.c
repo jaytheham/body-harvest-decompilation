@@ -1146,79 +1146,84 @@ void func_80085D40_16DE00(u8 arg0) {
 }
 
 // AI - Update effect slot type 0: random jitter, color, and lifecycle
-#ifdef NON_MATCHING
 void func_80085F28_16DFE8(u8 arg0) {
-	Unk84EECEffectTailUpdate *s1;
-	Unk84EECEffect *s2;
-	s16 s3;
-	s16 s4;
+	Unk84EECEffectTailUpdate *emitterData;
+	Unk84EECEffect *root;
+	s16 jitterDivisor;
+	s16 randomMatch;
 	UnkFB6F8Entry *slot;
-	Unk84EECEffectTailView *spread;
-	Unk84EECEffectTailUpdate *spreadTail;
-	s16 effect;
-	void *saved[3];
+	s16 *effectSize;
+	s16 particleIndex;
+	s32 rootIndex;
+	UnkFB6F8Entry *savedSlot[1];
+	Vec3s *rootPosition;
+	Unk84EECEffectBytes *emitterHeader[1];
 
-	slot = &D_800FB6F8[arg0];
-	s2 = &D_800FB7B0[slot->unk6];
-	s1 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[s2->unk4].unk8;
-	spread = (Unk84EECEffectTailView *)&s2->unk2;
-	spreadTail = (Unk84EECEffectTailUpdate *)&s2->unk8;
 	{
-		s32 counter;
+		s32 emitterIndex;
 
-		counter = s1->pad4 + 1;
-		s1->pad4 = counter;
-		if ((counter & 0xFF) == 0x10) {
-			s1->pad4 = 0;
+		slot = &D_800FB6F8[arg0];
+		rootIndex = slot->unk6;
+		/* Identity masks retain IDO's index register allocation. */
+		rootIndex &= -1;
+		root = &D_800FB7B0[rootIndex];
+		emitterIndex = root->unk4;
+		emitterIndex &= -1;
+		effectSize = &root->unk2;
+		rootPosition = (Vec3s *)&root->unk8;
+		emitterData = (Unk84EECEffectTailUpdate *)&((Unk84EECEffectBytes *)D_800FB7B0)[emitterIndex].unk8;
+		emitterData->pad4++;
+		if (emitterData->pad4 == 0x10) {
+			emitterData->pad4 = 0;
 		}
-	}
-	saved[0] = s1;
-	saved[2] = slot;
-	s3 = 6;
-	s4 = 1;
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->unk5 = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
-	}
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->unk6.bytes.low = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
-	}
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->unk6.bytes.high = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
-	}
-	if ((func_800038E0_44E0() % s3) == s4) {
-		s1->pad8 = (func_800038E0_44E0() % (spread->unk0 / 4)) - (spread->unk0 / 8);
+		emitterHeader[0] = &((Unk84EECEffectBytes *)D_800FB7B0)[emitterIndex];
+		savedSlot[0] = slot;
 	}
 
-	if ((func_800038E0_44E0() % 4) == s4) {
+	jitterDivisor = 6;
+	randomMatch = 1;
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->unk5 = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->unk6.bytes.low = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->unk6.bytes.high = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+	if ((func_800038E0_44E0() % jitterDivisor) == randomMatch) {
+		emitterData->pad8 = (func_800038E0_44E0() % (*effectSize / 4)) - (*effectSize / 8);
+	}
+
+	if ((func_800038E0_44E0() % 4) == randomMatch) {
 		s16 slotIndex;
 
-		slotIndex = ((UnkFB6F8Entry *)saved[2])->unk2;
-		if (D_800FB6FC[slotIndex * 0xC] < 0x23) {
+		slotIndex = savedSlot[0]->unk2;
+		if (D_800FB6F8[slotIndex].unk4 < 0x23) {
 			func_80084980_16CA40(arg0, slotIndex);
 		}
 	}
 
-	if (((func_800038E0_44E0() % 2) == s4) && (((UnkFB6F8Entry *)saved[2])->unk4 < 0x14)) {
+	if (((func_800038E0_44E0() % 2) == randomMatch) && (savedSlot[0]->unk4 < 0x14)) {
 		func_80084628_16C6E8(arg0);
 	}
 
-	if (s1->pad0 != 0xFFFF) {
-		if (s1->pad0 > 0) {
-			s1->pad0--;
-			effect = spread->unk0;
-			if (effect < s1->pad2) {
-				spread->unk0 = effect + 2;
-				spreadTail->pad2 = spreadTail->pad2 + 1;
+	if (emitterData->pad0 != 0xFFFF) {
+		if (emitterData->pad0 > 0) {
+			emitterData->pad0--;
+			if ((*effectSize) < emitterData->pad2) {
+				*effectSize = (*effectSize) + 2;
+				rootPosition->y = rootPosition->y + 1;
 			}
 		} else {
-			if (spread->unk0 >= 0x1F) {
-				spread->unk0 = spread->unk0 - 2;
-				spreadTail->pad2 = spreadTail->pad2 - 1;
+			if ((*effectSize) >= 0x1F) {
+				*effectSize = (*effectSize) - 2;
+				rootPosition->y = rootPosition->y - 1;
 			} else {
 				s16 expirationIndex;
 
-			expirationIndex = ((UnkFB6F8Entry *)saved[2])->unk2;
-		if (expirationIndex != 0xFB) {
+				expirationIndex = savedSlot[0]->unk2;
+				if (expirationIndex != 0xFB) {
 					D_800FB6F8[expirationIndex].unk2 = 0xF1;
 				}
 				func_800839B8_16BA78(arg0);
@@ -1228,33 +1233,30 @@ void func_80085F28_16DFE8(u8 arg0) {
 		}
 	}
 
-	effect = *(s16 *)((u8 *)saved[0] - 4);
-	for (; (effect != -5) && (effect != -6);) {
-			Unk84EECEffectTailUpdate *entry8;
+	particleIndex = emitterHeader[0]->unk4;
+	for (; (particleIndex != -5) && (particleIndex != -6);) {
+		Unk84EECEffectTailUpdate *data;
 
-			entry8 = (Unk84EECEffectTailUpdate *)&D_800FB7B0[effect].unk8;
-			if (D_800FB7B0[effect].unk11 < 0x1E) {
-				s16 nextEffect;
+		data = (Unk84EECEffectTailUpdate *)&D_800FB7B0[particleIndex].unk8;
+		if (D_800FB7B0[particleIndex].unk11 < 0x1E) {
+			s16 nextEffect;
 
-				nextEffect = D_800FB7B0[effect].unk4;
-					func_800835F0_16B6B0(effect, arg0);
-					effect = nextEffect;
-			} else {
-				entry8->unkA = (func_800038E0_44E0() % 8) + 5;
-				entry8->unkC = (func_800038E0_44E0() % 8) + 5;
-				entry8->unkB = (func_800038E0_44E0() % 0xA) + 7;
-				entry8->unkD = (func_800038E0_44E0() % 0xA) + 7;
-				entry8->unk9 = (entry8->unk9 - (func_800038E0_44E0() % 4)) - 6;
-				entry8->pad2 = entry8->pad2 + (func_800038E0_44E0() % 4) + 5;
-				entry8->unk6.bytes.low = entry8->unk6.bytes.low - 2;
-				entry8->pad8 = entry8->pad8 - 3;
-				effect = D_800FB7B0[effect].unk4;
-			}
+			nextEffect = D_800FB7B0[particleIndex].unk4;
+			func_800835F0_16B6B0(particleIndex, arg0);
+			particleIndex = nextEffect;
+		} else {
+			data->unkA = (func_800038E0_44E0() % 8) + 5;
+			data->unkC = (func_800038E0_44E0() % 8) + 5;
+			data->unkB = (func_800038E0_44E0() % 0xA) + 7;
+			data->unkD = (func_800038E0_44E0() % 0xA) + 7;
+			data->unk9 = (data->unk9 - (func_800038E0_44E0() % 4)) - 6;
+			data->pad2 += (func_800038E0_44E0() % 4) + 5;
+			data->unk6.bytes.low = data->unk6.bytes.low - 2;
+			data->pad8 = data->pad8 - 3;
+			particleIndex = D_800FB7B0[particleIndex].unk4;
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/16AF30/func_80085F28_16DFE8.s")
-#endif
 
 // AI - Update effect slot type 3: movement, color cycling, and expiration
 void func_80086550_16E610(void)
