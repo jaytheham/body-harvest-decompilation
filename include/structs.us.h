@@ -1513,7 +1513,13 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
-	/* 0x04 */ s16 unk4;
+	union {
+		/* 0x04 */ s16 unk4;
+		struct {
+			/* 0x04 */ u8 vehicleType;
+			/* 0x05 */ u8 vehicleIndex;
+		};
+	};
 	/* 0x06 */ u8 unk6;
 	/* 0x07 */ u8 pad7;
 } Unk80148620; /* size = 0x08 */

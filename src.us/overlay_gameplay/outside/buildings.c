@@ -857,29 +857,24 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_80117A4C_1269FC(Unk80148620 *arg0) {
-	s16 sp3A;
-	s16 sp38;
-	s16 sp36;
-	s16 sp34;
-	VehicleInstance *temp_s0;
+void func_80117A4C_1269FC(Unk80148620 *entry) {
+	VehicleInstance *vehicle;
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 yaw;
 
-	temp_s0 = &vehicleInstances[(u8)(arg0->unk4 >> 8)];
-	temp_s0->unk1A = (u8)(arg0->unk4 & 0xFF);
-	func_800FDD48_10CCF8((u8)(arg0->unk4 >> 8));
-	func_800FAE84_109E34(temp_s0);
-	temp_s0->unk20 |= 0x8049;
-	func_801165FC_1255AC(D_80052543, 0, &sp3A, &sp38, &sp36, &sp34);
-	func_800FB44C_10A3FC(temp_s0,
-						 (f32)(((f64)vehicleTypes[temp_s0->unk1A].unk36 * ((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0)) +
-							   (f64)sp3A));
-	func_800FB468_10A418(temp_s0, (f32)sp38);
-	func_800FB484_10A434(temp_s0,
-						 (f32)(((f64)vehicleTypes[temp_s0->unk1A].unk36 * ((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0)) +
-							   (f64)sp36));
-	temp_s0->unk6 = 0x4000 - sp34;
-	func_800FD510_10C4C0(0, (u8)(arg0->unk4 >> 8));
+	vehicle = &vehicleInstances[entry->vehicleIndex];
+	vehicle->unk1A = entry->vehicleType;
+	func_800FDD48_10CCF8(entry->vehicleIndex);
+	func_800FAE84_109E34(vehicle);
+	vehicle->unk20 |= 0x8049;
+	func_801165FC_1255AC(D_80052543, 0, &x, &y, &z, &yaw);
+	func_800FB44C_10A3FC(vehicle, ((f32)coss(-0x4000 - yaw) / 32768.0) * vehicleTypes[vehicle->unk1A].unk36 + x);
+	func_800FB468_10A418(vehicle, y);
+	func_800FB484_10A434(vehicle, ((f32)sins(-0x4000 - yaw) / 32768.0) * vehicleTypes[vehicle->unk1A].unk36 + z);
+	vehicle->unk6 = 0x4000 - yaw;
+	func_800FD510_10C4C0(0, entry->vehicleIndex);
 	func_800FDD48_10CCF8(0);
 	D_8015EA2C = D_80144F10_153EC0[0];
 	D_8015EA30 = 0.0f;
@@ -887,31 +882,22 @@ void func_80117A4C_1269FC(Unk80148620 *arg0) {
 	D_8015930E = 1;
 	D_80159262 = 0;
 	D_8005254C &= ~7;
-	D_80158BD0[(u8)(arg0->unk4 >> 8)] = 0;
+	D_80158BD0[entry->vehicleIndex] = 0;
 	if (currentLevel == 3) {
-		s16 cosA = coss((u16)(-0x4000 - sp34));
-		func_80112A98_121A48((s32)((((f64)(f32)cosA / 32768.0) * D_80144F18_153EC8[0]) + (f64)sp3A),
-							(s32)((((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0) * D_80144F18_153EC8[0]) + (f64)sp36),
-							0x258);
+		func_80112A98_121A48(D_80144F18_153EC8[0] * ((f32)coss(-0x4000 - yaw) / 32768.0) + x,
+			D_80144F18_153EC8[0] * ((f32)sins(-0x4000 - yaw) / 32768.0) + z, 0x258);
 	} else {
-		s16 cosA = coss((u16)(-0x4000 - sp34));
-		func_80112A98_121A48((s32)((((f64)(f32)cosA / 32768.0) * 200.0) + (f64)sp3A),
-							(s32)((((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0) * 200.0) + (f64)sp36),
-							0x190);
+		func_80112A98_121A48(((f32)coss(-0x4000 - yaw) / 32768.0) * 200.0 + x,
+			((f32)sins(-0x4000 - yaw) / 32768.0) * 200.0 + z, 0x190);
 	}
-	func_801176F4_1266A4(D_80052543, 0, (u8)(arg0->unk4 >> 8));
-	if ((currentLevel == 1) && ((arg0 - D_80148620_1575D0) == 3)) {
+	func_801176F4_1266A4(D_80052543, 0, entry->vehicleIndex);
+	if (currentLevel == 1 && entry - D_80148620_1575D0 == 3) {
 		D_80159262 = 1;
-		func_800FB44C_10A3FC(temp_s0,
-						 (f32)((f64)sp3A - (((f64)(f32)coss((u16)(-0x4000 - sp34)) / 32768.0) * D_80144F20_153ED0[0])));
-		func_800FB484_10A434(temp_s0,
-						 (f32)((f64)sp36 - (((f64)(f32)sins((u16)(-0x4000 - sp34)) / 32768.0) * D_80144F28_153ED8[0])));
+		func_800FB44C_10A3FC(vehicle, x - D_80144F20_153ED0[0] * ((f32)coss(-0x4000 - yaw) / 32768.0));
+		func_800FB484_10A434(vehicle, z - D_80144F28_153ED8[0] * ((f32)sins(-0x4000 - yaw) / 32768.0));
 	}
 	func_800EFEB4_FEE64(0, 3, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_80117A4C_1269FC.s")
-#endif
 
 void func_80117F10_126EC0(void) {
 	D_8015EA30 = D_80144F30_153EE0[0];
