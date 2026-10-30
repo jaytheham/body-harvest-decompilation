@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800C1ECC_D0E7C`, copying the effect type and caching the effect pointer reserves unnecessary local homes. The type, effect-address, entry-address, and kind spills occupy incorrect offsets despite matching instruction order and registers.
+
+-> `code changed`: Keep only the smoke-payload pointer and signed-halfword unit index as locals. Access the effect array through the original byte argument. Assign the typed smoke-payload pointer immediately after the successful unit-allocation gate, retaining the branch-specific pointer assignments after each lifetime store. Remove the constant color temporary and store the three equal color values separately.
+
+-> `correct ASM`: IDO creates the payload-address expression before the kind gate and assigns the target spill homes: type at `sp+0x3c`, effect address at `sp+0x38`, entry address at `sp+0x34`, and kind at `sp+0x2c`, with a `0x48` frame. All 201 instructions match byte for byte and the complete US ROM checksum passes.

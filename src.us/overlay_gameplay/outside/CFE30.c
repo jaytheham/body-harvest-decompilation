@@ -844,35 +844,29 @@ void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 	osSyncPrintf(&D_80143304_1522B4);
 }
 
-#ifdef NON_MATCHING
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
-	s32 sp3C;
+	SmokePuffState *puff;
 	s16 sp42;
-	u8 temp_v0;
-	sp3C = arg3;
-	if (sp3C < 0x1E) {
-		Unk801541F8Entry *sp38[1];
-		sp38[0] = &D_80154088[arg3];
-		if (sp38[0]->unk0 == 0) {
+	if (arg3 < 0x1E) {
+		if (D_80154088[arg3].unk0 == 0) {
 			if ((D_80156ED8 != 1) || ((func_800038E0_44E0() % 9) < 6)) {
 				if ((D_80156ED8 != 2) || ((func_800038E0_44E0() % 9) < 3)) {
 					sp42 = func_800C18D0_D0880(arg3);
 					
 					if (sp42 != -3) {
-						SmokePuffState *puff;
+						puff = &D_80154318[sp42].smokePuff;
 						if ((arg4 == 0) || (arg4 == 2)) {
 							D_80154318[sp42].unk2 = (func_800038E0_44E0() % 12) + 0x10;
 							puff = &D_80154318[sp42].smokePuff;
 							puff->position[0] = (func_800038E0_44E0() % 13) + arg0 - 6;
 							puff->position[1] = (func_800038E0_44E0() % 19) + arg1 - 9;
 							puff->position[2] = (func_800038E0_44E0() % 13) + arg2 - 6;
-							temp_v0 = 0xF5;
-							puff->color[0] = temp_v0;
-							puff->color[1] = temp_v0;
-							puff->color[2] = temp_v0;
+							puff->color[0] = 0xF5;
+							puff->color[1] = 0xF5;
+							puff->color[2] = 0xF5;
 							puff->opacity = 0xFF;
 							if (arg4 == 0) {
-								func_80137368_146318(puff->position[0], puff->position[1], puff->position[2], 4, sp3C);
+								func_80137368_146318(puff->position[0], puff->position[1], puff->position[2], 4, arg3);
 							}
 						} else if (arg4 == 1) {
 							D_80154318[sp42].unk2 = (func_800038E0_44E0() % 20) + 0x14;
@@ -884,10 +878,10 @@ void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 							puff->color[1] = (func_800038E0_44E0() % 100) + 0x82;
 							puff->color[2] = (func_800038E0_44E0() % 100) + 0x82;
 							puff->opacity = 0xFF;
-							func_80137368_146318(puff->position[0], puff->position[1], puff->position[2], 5, sp3C);
+							func_80137368_146318(puff->position[0], puff->position[1], puff->position[2], 5, arg3);
 						}
 						D_80154318[sp42].smokePuff.kind = arg4;
-						sp38[0]->unkA = sp42;
+						D_80154088[arg3].unkA = sp42;
 					}
 					
 				}
@@ -895,9 +889,6 @@ void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C1ECC_D0E7C.s")
-#endif
 
 s32 func_800C21F0_D11A0(s16 arg0, s16 arg1, s16 arg2, u8 arg3)
 {
