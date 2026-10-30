@@ -469,8 +469,6 @@ extern Addr overlay_gameplay_frontend_data_62550_c;
 extern Addr overlay_gameplay_frontend_data_62650_c;
 extern Addr overlay_gameplay_frontend_data_63850_c;
 extern Addr overlay_gameplay_frontend_data_64750_c;
-extern Addr overlay_gameplay_frontend_data_64B90_c;
-extern Addr overlay_gameplay_frontend_data_64D10_c;
 extern Addr overlay_gameplay_frontend_data_64F70_c;
 extern Addr overlay_gameplay_frontend_data_650C0_c;
 extern Addr overlay_gameplay_frontend_data_65350_c;

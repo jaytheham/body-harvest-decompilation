@@ -287,7 +287,11 @@ def build(args):
         marker.unlink(missing_ok=True)
     header_folders = ("include", paths["src"]) if args.version == "us" else ("include", paths["src"], "src.us")
     headers_time = max((p.stat().st_mtime_ns for folder in header_folders for p in (ROOT / folder).rglob("*.h")), default=0)
-    asm_time = max((p.stat().st_mtime_ns for p in (ROOT / paths["asm"]).rglob("*.s")), default=0)
+    # GLOBAL_ASM can also include checked-in assembly beside the C source
+    # (such as version-specific late rodata), not just extracted files.
+    asm_folders = {paths["asm"], paths["src"], "src.us"}
+    asm_time = max((p.stat().st_mtime_ns for folder in asm_folders
+                    for p in (ROOT / folder).rglob("*.s")), default=0)
 
     def binary(source, target):
         run([linker, "-r", "-b", "binary", "-o", target, source], quiet=args.quiet)
