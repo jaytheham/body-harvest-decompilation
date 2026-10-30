@@ -686,10 +686,6 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 s32 D_80094844_64CF4 = 0;
 s32 D_80094848_64CF8 = 0;
 s32 D_8009484C_64CFC = 0;
-s32 D_80094850_64D00 = 0;
-s32 D_80094854_64D04 = 0;
-u8 D_80094858_64D08 = 0x28;
-s32 D_8009485C_64D0C = 0;
 
 
 
@@ -1155,30 +1151,36 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 #endif
 
 // display inventory models
-#ifdef NON_MATCHING
 void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-	Unk80052B40 spC4;
-	Unk80052B40 spBC;
-	Unk80052B40 spB4;
-	FrontendItemRenderData* itemEntry;
-	Gfx* displayList;
+	static s32 itemRotation = 0;
+	s32 padding[3];
+	f32 baseX;
+	f32 baseY;
+	Unk80052B40 position;
+	Unk80052B40 scale;
+	Unk80052B40 rotation;
+	FrontendItemRenderData *itemEntry;
+	Gfx *displayList;
 	s32 scaleInt;
+	s32 screenOrigin[2]; /* Y, X */
 	s32 itemCount;
 	s16 i;
 	u32 xOffset;
 	u32 yOffset;
 	f32 itemScale;
 
-	func_800722A4_42754(arg3);
-	D_80094850_64D00 += 0x2D8;
+	screenOrigin[1] = arg0;
+	screenOrigin[0] = arg1;
+	func_800722A4_42754();
+	itemRotation += 0x2D8;
 
 	itemCount = 0;
 	for (i = 0; i < 0xD; i++) {
-		itemEntry = &D_800942E0_64790[((currentLevel * 13) + i) - 13];
+		itemEntry = &((FrontendItemRenderData (*)[13])D_800942E0_64790)[currentLevel - 1][i];
 		displayList = itemEntry->displayList;
 		if ((D_800AED78[i] != 0) && (displayList != NULL)) {
 			xOffset = ((((itemCount % 3) * 0x5A) - 0x5A) & 0xFFFF);
-			yOffset = ((((itemCount / 3) * -0x50) + 0x50) & 0xFFFF);
+			yOffset = (((-(itemCount / 3) * 0x50) + 0x50) & 0xFFFF);
 			itemScale = itemEntry->scale * arg3;
 			itemCount++;
 
@@ -1186,32 +1188,37 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
+			baseX = screenOrigin[1]; baseY = screenOrigin[0];
 			func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-			spC4.unk0 = (s16) (s32) ((f32) arg0 + ((f32) xOffset * arg3));
-			spC4.unk2 = (s16) (s32) ((f32) arg1 + ((f32) yOffset * arg3));
-			spC4.unk4 = arg2;
+			position.unk0 = (0, baseX) + ((f32)xOffset * arg3);
+			position.unk2 = (0, baseY) + ((f32)yOffset * arg3);
+			position.unk4 = arg2;
 
-			spB4.unk0 = D_80094850_64D00;
-			spB4.unk2 = 0;
-			spB4.unk4 = 0;
+			rotation.unk0 = itemRotation & 0xFFFF;
+			rotation.unk2 = 0;
+			rotation.unk4 = 0;
 
-			scaleInt = (s32) (256.0f * itemScale);
-			spBC.unk0 = scaleInt;
-			spBC.unk2 = scaleInt;
-			spBC.unk4 = scaleInt;
+			scaleInt = 256.0f * itemScale;
+			scale.unk0 = scaleInt;
+			scale.unk2 = scaleInt;
+			scale.unk4 = scaleInt;
 
-			func_800039D0_45D0(&spC4, &spB4, &spBC, D_8005BB38);
+			func_800039D0_45D0(&position, &rotation, &scale, D_8005BB38);
+			if (i) {}
+			if (displayList->words.w0 + displayList->words.w1) {}
+			if ((baseX + baseX + arg3 + arg3 + arg3 + baseY) < (arg3 + baseX + arg3 + baseY + baseX + arg3)) {}
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayList));
 			gDPPipeSync(D_8005BB2C++);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072E18_432C8.s")
-#endif
+
+s32 D_80094854_64D04 = 0;
+u8 D_80094858_64D08 = 0x28;
+s32 D_8009485C_64D0C = 0;
 
 #ifdef NON_MATCHING
 void func_800731A8_43658(void) {
