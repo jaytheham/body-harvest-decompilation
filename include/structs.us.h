@@ -4188,6 +4188,15 @@ typedef struct {
 } DListPtrsCopy;
 
 typedef struct {
+    s32 frames[11];
+} IntroStartFrames;
+
+typedef struct {
+    s32 frames[8];
+} IntroStopFrames;
+
+
+typedef struct {
 	/* 0x00 */ s16 distance; // orbit radius
 	/* 0x02 */ s16 yaw;      // horizontal angle
 	/* 0x04 */ s16 pitch;    // vertical angle

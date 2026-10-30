@@ -1901,68 +1901,83 @@ s32 func_8007685C_46D0C(void) {
 }
 
 // doIntroMovieLoop
-#ifdef NON_MATCHING
+s32 D_80094860_64D10 = 0;
+u32 D_80094864_64D14 = 0;
+
+// Intro movie event start frames
+IntroStartFrames D_80094868_64D18 = {{
+    0x00000000, 0x0000021C, 0x0000045B, 0x00000596, 0x000006E7, 0x000008B1,
+    0x00000A87, 0x00000C03, 0x00000D89, 0x00000F87, 0x0000128E,
+}};
+
+IntroStopFrames D_80094894_64D44 = {{
+    0x00000002, 0x000001C2, 0x000004E2, 0x0000064F, 0x000007D0, 0x00000997,
+    0x00000BFE, 0x00000FD2,
+}};
+
+
 s32 func_800768C4_46D74(void) {
+	static s32 movieFrame = 0;
+	static s8 startIndex = 0;
+	static s8 stopIndex = 0;
 	s32 result;
 	s32 fadeResult;
-	s16 i;
-	s16 idx;
-	s32 timingA[11];
-	s32 timingB[8];
+	s32 idx;
+	IntroStartFrames timingA;
+	s32 elapsedSeconds;
+	IntroStopFrames timingB;
+	OSMesgQueue *messageQueue = &D_8006A8B0;
+	s32 framesPerSecond;
 
 	result = 1;
+	framesPerSecond = 60;
 
-	for (i = 0; i < ARRAY_COUNT(timingA); i++) {
-		timingA[i] = D_80094868_64D18[i];
-	}
-	for (i = 0; i < ARRAY_COUNT(timingB); i++) {
-		timingB[i] = D_80094894_64D44[i];
-	}
+	timingA = D_80094868_64D18;
+	timingB = D_80094894_64D44;
 
 	D_80052ACA = 6;
 	D_8004772C = 0xFF;
 	D_80047730 = 0x40;
 	D_80047734 = 0;
-	D_80047739 = 0;
-	D_8004773A = 0;
-	D_80047738 = 0;
+	D_80047738 = D_80047739 = D_8004773A = 0;
 	D_800D74AA = 0;
 	D_800D6D8C = 1;
 
 	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
 	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
 
-	drawText(&D_800ADC84_7E134, 0xE6, 0xE6, 0xE6, 0xFF);
+	drawText(D_800ADC84_7E134, 0xE6, 0xE6, 0xE6, 0xFF);
 	func_8007D7E0_4DC90();
 	func_8007BFC4_4C474();
 
 	do {
+		if (result) {}
 		func_800791A0_49650(1);
 
 		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
 		fadeResult = func_8007D91C_4DDCC(0);
+		elapsedSeconds = D_800313D4_31FD4 / framesPerSecond;
+		if (elapsedSeconds) {}
 
 		func_8000B044_BC44();
 		gDPFullSync(D_8005BB2C++);
 		gSPEndDisplayList(D_8005BB2C++);
 
-		osSendMesg(&D_8006A8B0, &D_800314CC_320CC, 1);
+		osSendMesg(messageQueue, &D_800314CC_320CC, 1);
 
-		idx = D_800948B8_64D68;
-		if (D_800948B4_64D64 == timingA[idx]) {
-			D_800948B8_64D68++;
-			func_8001322C_13E2C(idx);
+		idx = startIndex;
+		if (movieFrame == timingA.frames[idx]) {
+			func_8001322C_13E2C(startIndex++);
 			D_800313E0++;
 		}
 
-		idx = D_800948BC_64D6C;
-		if (D_800948B4_64D64 == timingB[idx]) {
-			D_800948BC_64D6C++;
-			func_800131A4_13DA4(idx);
+		idx = stopIndex;
+		if (movieFrame == timingB.frames[idx]) {
+			func_800131A4_13DA4(stopIndex++);
 			D_800313DC++;
 		}
 
-		D_800948B4_64D64++;
+		movieFrame++;
 
 		if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) || (fadeResult != 0)) {
 			result = 2;
@@ -1971,10 +1986,10 @@ s32 func_800768C4_46D74(void) {
 	} while (func_80005B30_6730() == 0);
 
 	D_800313D8++;
-	D_800948B4_64D64 = 0;
+	movieFrame = 0;
 	D_80052ACA = 3;
-	D_800948BC_64D6C = 0;
-	D_800948B8_64D68 = 0;
+	stopIndex = 0;
+	startIndex = 0;
 
 	func_800056A8_62A8();
 	func_800056A8_62A8();
@@ -1982,9 +1997,40 @@ s32 func_800768C4_46D74(void) {
 
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800768C4_46D74.s")
-#endif
+
+// Weapon/vehicle display list offsets
+DListPtrsCopy D_800948C0_64D70 = {{
+    0x040A32C0, 0x040A2850, 0x040A20A0, 0x040A1820,
+    0x040A4348, 0x040A0F98, 0x040A09C0, 0x040A5248,
+}};
+
+u32 D_800948E0_64D90 = 0;
+u32 D_800948E4_64D94 = 0x000000C8;
+u32 D_800948E8_64D98 = 0x000000C8;
+u32 D_800948EC_64D9C = 0;
+
+u32 D_800948F0_64DA0 = 0;
+
+u32 D_800948F4_64DA4 = 0;
+u32 D_800948F8_64DA8 = 0;
+u32 D_800948FC_64DAC = 0;
+
+s32 D_80094900_64DB0 = 0;
+u8 D_80094904_64DB4 = 0;
+u8 D_80094908_64DB8 = 0x07;
+u8 D_8009490C_64DBC = 0x07;
+
+s32 D_80094910_64DC0[8] = { 1, 1, 2, 3, 4, 5, 6, 7 };
+
+s32 D_80094930_64DE0 = 0;
+s32 D_80094934_64DE4 = 0;
+s32 D_80094938_64DE8 = 0;
+u32 D_8009493C_64DEC = 0;
+u32 D_80094940_64DF0 = 0x0E000000;
+
+u8 D_80094944_64DF4 = 0xFF;
+s32 D_80094948_64DF8 = 0;
+u8 D_8009494C_64DFC = 0;
 
 // Called once before showing the 'Select Slot' screen
 // doFileSelectLoop

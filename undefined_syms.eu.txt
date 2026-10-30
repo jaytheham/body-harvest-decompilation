@@ -5868,3 +5868,5 @@ D_80047F88 = currentSaveFileIndex + 4;
 D_80047F8C = currentSaveFileIndex + 8;
 
 frontendFileNameWrite = D_80047FA8;
+
+D_800ADC84_7E134 = D_800AE440_7E8F0;

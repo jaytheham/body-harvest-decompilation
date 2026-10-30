@@ -326,7 +326,6 @@ segments:
       - [0x64250, .data, overlay_gameplay/frontend/data_63850]
       - [0x64750, .data, overlay_gameplay/frontend/data_64750]
       - [0x64B90, .data, overlay_gameplay/frontend/40720]
-      - [0x64D10, .data, overlay_gameplay/frontend/data_64D10]
       - [0x64E00, .data, overlay_gameplay/frontend/4DC90]
       - [0x64F70, .data, overlay_gameplay/frontend/data_64F70]
       - [0x650C0, .data, overlay_gameplay/frontend/data_650C0]
