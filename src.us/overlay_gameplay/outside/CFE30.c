@@ -1918,14 +1918,13 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
 #endif
 
-#ifdef NON_MATCHING
-// spawn radial particle effect?
+// Radial spark emitter allocation.
 void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
-	s32 i;
+	u8 i;
 	u8 effect;
 	u8 count;
-	s16 idx;
-	s32 result;
+	s16 unitId;
+	s32 allocation;
 
 	if (D_80156ED9 == 2) {
 		return;
@@ -1952,37 +1951,35 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 		return;
 	}
 
-	result = func_800C17B4_D0764(effect, 0);
-	idx = result;
-	if (result == -3) {
+	allocation = func_800C17B4_D0764(effect, 0);
+	unitId = allocation;
+	if (allocation == -3) {
 		osSyncPrintf(&D_80143554_152504);
 		func_800C1384_D0334(effect);
 		return;
 	}
 
+	D_80154088[effect].unkA = unitId;
 	D_80154088[effect].unk1 = D_80154088[effect].unk1;
-	D_80154088[effect].unkA = idx;
 
-	D_80154318[idx].unkE = 0xFF;
-	D_80154318[idx].unkF = 0xFF;
-	D_80154318[idx].unk10 = 0xFF;
+	D_80154318[unitId].sparkEmitter.color[0] = 0xFF;
+	D_80154318[unitId].sparkEmitter.color[1] = 0xFF;
+	D_80154318[unitId].sparkEmitter.color[2] = 0xFF;
 
-	D_80154318[idx].unk2 = arg6;
-	D_80154318[idx].unk8 = arg0;
-	D_80154318[idx].unkA = arg1;
-	D_80154318[idx].unkC = arg2;
-	D_80154318[idx].radialRadius = arg3;
-	D_80154318[idx].unk11 = arg4;
+	D_80154318[unitId].unk2 = arg6;
+	D_80154318[unitId].sparkEmitter.position[0] = arg0;
+	D_80154318[unitId].sparkEmitter.position[1] = arg1;
+	D_80154318[unitId].sparkEmitter.position[2] = arg2;
+	D_80154318[unitId].sparkEmitter.radius = arg3;
 
-	D_80154318[idx].payload[10] = (i = 0) + 2;
+	D_80154318[unitId].sparkEmitter.kind = (i = 0) + 2;
+	D_80154318[unitId].sparkEmitter.lifetime = arg4;
 	while (i < count) {
 		func_800C4F48_D3EF8(effect, 0, 0, 0);
-		i = (i + 1) & 0xFF;
+		i++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C56A4_D4654.s")
-#endif
+
 
 #ifdef NON_MATCHING
 // effect type 0
