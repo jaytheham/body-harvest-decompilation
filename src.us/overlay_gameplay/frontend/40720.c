@@ -1594,9 +1594,9 @@ block_87:
 }
 #else
 #ifdef VERSION_EU
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s", "src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s", "src.us/overlay_gameplay/frontend/40720_late_rodata.s")
 #endif
 #endif
 

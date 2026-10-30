@@ -4538,7 +4538,7 @@ void func_802E0588_3246D8(u8 arg0) {
 	D_802E7184_32B2D4 = yaw;
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_level/comet/318E20_wheel_rotation_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s", "src.us/overlay_level/comet/318E20_wheel_rotation_late_rodata.s")
 #endif
 
 void func_802E0B64_324CB4(u8 arg0) {
