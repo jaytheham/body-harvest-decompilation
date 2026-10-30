@@ -314,6 +314,8 @@ segments:
       - [0x4E450, c, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x52E50, c, ../src.us/overlay_gameplay/frontend/52690]
       - [0x61620, bin]
+      - [0x65350, .data, ../src.us/overlay_gameplay/frontend/40720]
+      - [0x654D0, bin]
       # NTSC 0x64E00-0x64F70 is compiled from 4DC90.c (bh.us.yaml); PAL has the same 368 bytes at +0x7C0, apart from 12 string pointers.
       - [0x655C0, .data, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x65730, bin]

@@ -31,6 +31,42 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
+// Frontend animation/frame data
+s16 D_800946E0_64B90[0x70] = {
+    0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0103, 0x0000, 0xFFF8, 0xFFC0, 0x0008, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0xFFF8, 0xFFC4, 0xFFFD, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0x0012, 0xFFF8, 0x0001, 0x0000, 0x0000, 0x0000,
+    0x0103, 0x0000, 0x0005, 0xFFC1, 0x0006, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0x0002, 0xFFC3, 0xFFFF, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0x0000, 0x000C, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0x0000, 0x0032, 0x0004, 0x0000, 0x0000, 0x0000,
+    0x0102, 0x0000, 0x0000, 0x000F, 0x0002, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0xFFE6, 0x002C, 0xFFFE, 0x0000, 0x0000, 0x0000,
+    0x0103, 0x0000, 0xFFF1, 0xFFD8, 0xFFF9, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0xFFFA, 0xFFDA, 0x0015, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0x001A, 0x002B, 0xFFFD, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0x000C, 0xFFD9, 0xFFFB, 0x0000, 0x0000, 0x0000,
+};
+
+// Weapon selection text pointers
+s32 D_800947C0_64C70[6] = {
+    0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)D_800AD700_7DBB0,
+};
+s32 D_800947D8_64C88[3] = {
+    (s32)D_800AD704_7DBB4, (s32)D_800AD70C_7DBBC, (s32)D_800AD718_7DBC8,
+};
+s32 D_800947E4_64C94[3] = {
+    (s32)D_800AD720_7DBD0, (s32)D_800AD734_7DBE4, (s32)D_800AD73C_7DBEC,
+};
+s32 D_800947F0_64CA0[13] = {
+    (s32)D_800AD744_7DBF4, (s32)D_800AD758_7DC08, (s32)D_800AD760_7DC10, (s32)D_800AD768_7DC18, (s32)D_800AD774_7DC24,
+    (s32)D_800AD780_7DC30, (s32)D_800AD790_7DC40, (s32)D_800AD79C_7DC4C, (s32)D_800AD7AC_7DC5C, (s32)D_800AD7B0_7DC60,
+    0x00000000, 0x00000000, 0x00000000,
+};
+
+s16 D_80094824_64CD4 = 0;
+s16 D_80094828_64CD8 = 0;
 // Frontend overlay entry point; dispatches frontend actions.
 s32 func_80070270_40720(s32 arg0) {
 		switch (arg0) {
@@ -432,49 +468,36 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	MissionDataNav* selectedFileData;
+	MissionData* selectedFileData;
 	s32 playAltMoveSfx = 0;
+	static s16 horizontalRepeatDelay = 0x1E;
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_x < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_x >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
-		D_8009482C_64CDC = 0x1E;
+		horizontalRepeatDelay = 0x1E;
 	}
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_y < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_y >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
 		D_80094828_64CD8 = 1;
 		D_80094830_64CE0 = 0x1E;
 	}
 
+	selectedFileData = &D_800909B0[D_800D74A4];
 	selectedFileIndex = D_800D74A4;
-	selectedFileData = ((MissionDataNav*)D_800909B0) + selectedFileIndex;
 
-	if (D_80094824_64CD4 || --D_8009482C_64CDC == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x14 || isButtonNewlyPressed(0, 0x200)) {
-			selectedFileIndex = selectedFileData->unk22;
-			if (selectedFileIndex != 0) {
-				while (1) {
-					if (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-						selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
-						if (selectedFileIndex != 0) {
-							continue;
-						}
-					}
-					break;
-				}
-			}
-		} else if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
-			selectedFileIndex = selectedFileData->unk23;
-			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk23;
-					if (selectedFileIndex == 0) {
-						break;
-					}
-				}
+	if (D_80094824_64CD4 || --horizontalRepeatDelay == 0) {
+		if ((D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) && selectedFileData->unk22 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk22;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
+		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+			if (selectedFileData->unk23 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk23;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
 			}
 		}
 	}
@@ -482,34 +505,24 @@ void func_80070CC4_41174(void)
 	if (selectedFileIndex != D_800D74A4 && selectedFileIndex != 0) {
 		D_800D74A4 = selectedFileIndex;
 		D_80094824_64CD4 = 0;
-		if (D_8009482C_64CDC < 8) {
-			D_8009482C_64CDC = 8;
+		if (horizontalRepeatDelay < 8) {
+			horizontalRepeatDelay = 8;
 		}
 		func_800153D8_15FD8(0xC9);
 		return;
 	}
 
-	if (D_80094828_64CD8 || --D_80094830_64CE0 == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_y >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
-			selectedFileIndex = selectedFileData->unk24;
-			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk24;
-					if (selectedFileIndex == 0) {
-						break;
-					}
-				}
+	if (D_80094828_64CD8 || (D_80094830_64CE0 = D_80094830_64CE0 - 1) == 0) {
+		if ((D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) && selectedFileData->unk24 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk24;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
 				playAltMoveSfx = 1;
-			}
-		} else if (currentControllerStates[CONTROLLER_ONE].stick_y < -0x14 || isButtonNewlyPressed(0, 0x400)) {
-			selectedFileIndex = selectedFileData->unk25;
-			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk25;
-					if (selectedFileIndex == 0) {
-						break;
-					}
-				}
+		} else if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+			if (selectedFileData->unk25 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk25;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
 			}
 		}
 	}
@@ -527,13 +540,21 @@ void func_80070CC4_41174(void)
 		}
 	}
 }
-#else
-#ifdef VERSION_EU
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
-#endif
-#endif
+
+/* Keep these definitions after the function-local repeat timer in data order. */
+s16 D_80094830_64CE0 = 0x1E;
+s16 D_80094834_64CE4 = 0;
+s16 D_80094838_64CE8 = 0;
+s16 D_8009483C_64CEC = 0x1E;
+s16 D_80094840_64CF0 = 0x1E;
+s32 D_80094844_64CF4 = 0;
+s32 D_80094848_64CF8 = 0;
+s32 D_8009484C_64CFC = 0;
+s32 D_80094850_64D00 = 0;
+s32 D_80094854_64D04 = 0;
+u8 D_80094858_64D08 = 0x28;
+s32 D_8009485C_64D0C = 0;
+
 
 #ifdef NON_MATCHING
 void func_800710D8_41588(s16 arg0, s16 arg1) {
@@ -691,7 +712,11 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800710D8_41588.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#endif
 #endif
 
 void func_8007166C_41B1C(void)
@@ -2029,7 +2054,7 @@ s16 func_80076C98_47148(void) {
 		} while (saveFile--);
 	}
 
-	D_800909B0[4].pad22[3] = 5;
+	D_800909B0[4].unk25 = 5;
 	while (result == 1) {
 		if (frameCounter < 0x3E8U) {
 			func_80070C64_41114(1, 6, (s16)frameCounter);
@@ -2415,7 +2440,7 @@ s32 func_80077494_47944(void) {
 
   selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
-  D_800909B0[4].pad22[3] = 0;
+  D_800909B0[4].unk25 = 0;
 
   while (state == 1) {
 	if (frameCounter >= 0x29U) {
@@ -2512,7 +2537,7 @@ s32 func_800776BC_47B6C(void) {
 
   selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
-  D_800909B0[4].pad22[3] = 0;
+  D_800909B0[4].unk25 = 0;
   sourceFileIndexPtr = &D_80047F88;
   saveNameBase = D_800D6DA8;
   saveNameStride = 7;
