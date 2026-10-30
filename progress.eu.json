@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-29T18:31:21Z",
-  "commit": "a9826761",
-  "commit_timestamp": "2026-10-30T07:30:14+13:00",
+  "generated": "2026-10-30T03:04:57Z",
+  "commit": "77b09374",
+  "commit_timestamp": "2026-10-30T16:03:51+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2488,
-    "non_matching": 234,
+    "matched": 2502,
+    "non_matching": 220,
     "asm_stubs": 0,
-    "matched_pct": 91.4,
+    "matched_pct": 91.92,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -33,11 +33,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1303,
-      "non_matching": 146,
+      "matched": 1317,
+      "non_matching": 132,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 89.9,
+      "matched_pct": 90.9,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -688,11 +688,11 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 88,
-      "non_matching": 18,
+      "matched": 102,
+      "non_matching": 4,
       "asm_stubs": 0,
       "total": 106,
-      "matched_pct": 83.0,
+      "matched_pct": 96.2,
       "contributor": ""
     },
     {
@@ -834,9 +834,9 @@
     },
     {
       "date": "2026-10-25",
-      "commit": "7ada9f8",
-      "matched": 2488,
-      "non_matching": 234,
+      "commit": "7f79a59",
+      "matched": 2502,
+      "non_matching": 220,
       "total": 2722
     }
   ]
