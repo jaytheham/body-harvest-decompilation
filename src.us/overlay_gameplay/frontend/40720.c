@@ -1602,22 +1602,16 @@ block_87:
 
 #ifdef NON_MATCHING
 void func_80075710_45BC0(void) {
+	s32 padding[21];
 	s32 matrixPtr;
-	s32 rowTextureOffset;
-	s32 rowBottomY;
-	s32 rowTopY;
-	s32 rowIndex;
-	s32 rowTop;
-	s32 rowBottom;
-	u32 textureBase;
-	u32 textureImage;
+
 
 	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C[0], D_800AE780_7EC30[0], 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	guRotate(D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	D_8005BB38++;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
@@ -1626,18 +1620,19 @@ void func_80075710_45BC0(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 
-	textureBase = (u32)D_800AED88;
-	rowBottomY = 0x20;
-	rowTopY = 0;
-	rowIndex = 0;
-	do {
-		textureImage = textureBase + (rowIndex << 11);
-		rowTop = ((rowTopY << 2) & 0xFFF);
-		rowBottom = (((rowBottomY << 2) - 1) & 0xFFF);
-		rowTextureOffset = 0;
-		do {
+	{
+	s32 rowIndex;
+	s32 rowTextureOffset;
+	s32 rowBottom;
+	s32 rowTopY;
+	s32 rowBottomY;
+	s16 rowTop;
+	u16 (*textureBase)[1024];
+	u16 (*textureImage)[1024];
+	textureBase = (u16 (*)[1024])D_800AED88; 	rowBottomY = 0x20; 	rowTopY = 0; 	for (rowIndex = 0; rowBottomY != 0x120; rowIndex += 0xA, rowTopY += 0x20, rowBottomY += 0x20) {
+		textureImage = &textureBase[rowIndex]; 		rowTop = rowTopY << 2; 		rowBottom = (rowBottomY << 2) - 1; 		for (rowTextureOffset = 0; rowTextureOffset != 0x140; rowTextureOffset += 0x20) {
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, textureImage);
-			textureImage += 0x800;
+			textureImage++;
 			gDPTileSync(D_8005BB2C++);
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_RENDERTILE, 0,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
@@ -1649,21 +1644,20 @@ void func_80075710_45BC0(void) {
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
-			gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTop, ((rowTextureOffset + 0x20) << 2) - 1,
+			
+			gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTop, (((s16)rowTextureOffset + 0x20) << 2) - 1,
 								rowBottom, G_TX_RENDERTILE, 0, 0, 0x1000, 0x400);
-			rowTextureOffset += 0x20;
-		} while (rowTextureOffset != 0x140);
+			}
 
-		rowBottomY += 0x20;
-		rowTopY += 0x20;
-		rowIndex += 0xA;
-	} while (rowBottomY != 0x120);
+		}
 
+	}
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_COPY);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	if (D_8005BB2C[-1].words.w0 == 0xE6000000U) {}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075710_45BC0.s")
