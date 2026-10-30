@@ -5863,3 +5863,6 @@ D_800D74A8 = D_800D74A4 + 4;
 D_800942E0_64790 = D_80094278_64728 + 0x68;
 
 frontendSelectedEntry = D_800D74A4;
+
+D_80047F88 = currentSaveFileIndex + 4;
+D_80047F8C = currentSaveFileIndex + 8;

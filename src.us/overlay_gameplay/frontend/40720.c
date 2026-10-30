@@ -2451,22 +2451,16 @@ s32 func_80077494_47944(void) {
 }
 
 // doCopyFile
-#ifdef NON_MATCHING
 s32 func_800776BC_47B6C(void) {
+  s32 *indexPointer = &currentSaveFileIndex;
+  s32 nameIndex;
+  s32 padding[4]; /* Preserve the original local stack area. */
   s32 saveSlotSp;
-  u8* saveName;
-  s16 saveSlot;
-  s32 sourceFileIndex;
-  s32 destFileIndex;
+  s32 saveSlot;
   s32 i;
   s32 foundSelectableFile;
   s32 state;
   u32 frameCounter;
-  s16* selectedSaveSlot;
-  s32* sourceFileIndexPtr;
-  s32* destFileIndexPtr;
-  u8* saveNameBase;
-  s32 saveNameStride;
 
   frameCounter = 0;
   state = 1;
@@ -2476,46 +2470,40 @@ s32 func_800776BC_47B6C(void) {
   func_800708B8_40D68(5);
   func_800708B8_40D68(6);
   func_80070514_409C4(0x34);
-  currentSaveFileIndex = 0;
+  *indexPointer = 0;
 
-  i = 0;
-  if (0 < 3) {
-	selectedSaveSlot = &D_800D74A4;
-	saveName = D_800D6DA8[0];
+  i = currentSaveFileIndex;
+  nameIndex = 0;
+  if (i < 3) {
 	do {
-	  getSaveFileName(i, saveName);
+	  getSaveFileName(i, D_800D6DA8[nameIndex]);
 	  saveSlot = i + 2;
-	  if (saveName[1] == 0x6D) {
-		func_80070A8C_40F3C((s16) (i + 2));
+	  if (D_800D6DA8[nameIndex][1] == 0x6D) {
+		func_80070A8C_40F3C(i + 2);
 	  } else {
-		saveSlotSp = (s32) saveSlot;
+		saveSlotSp = saveSlot;
 		func_80070B68_41018(saveSlot);
 		if (foundSelectableFile == 0) {
-		  *selectedSaveSlot = (s16) saveSlotSp;
+		  frontendSelectedEntry = saveSlotSp;
 		  foundSelectableFile = 1;
 		}
 	  }
 	  i++;
-	  saveName += 7;
+	  nameIndex++;
 	} while (i < 3);
   }
 
-  selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
   D_800909B0[4].unk25 = 0;
-  sourceFileIndexPtr = &D_80047F88;
-  saveNameBase = D_800D6DA8[0];
-  saveNameStride = 7;
 
-  do {
+  while (state == 1) {
 	if (frameCounter >= 0x29U) {
 	  func_80070CC4_41174();
 	  func_8007166C_41B1C();
 
 	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		sourceFileIndex = *selectedSaveSlot - 2;
-		*sourceFileIndexPtr = sourceFileIndex;
-		if (saveNameBase[(sourceFileIndex * saveNameStride) + 1] != 0x6D) {
+		D_80047F88 = frontendSelectedEntry - 2;
+		if (D_800D6DA8[D_80047F88][1] != 0x6D) {
 		  state = 2;
 		}
 	  }
@@ -2537,16 +2525,16 @@ s32 func_800776BC_47B6C(void) {
 	  func_8000AFDC_BBDC();
 	  func_800709F0_40EA0();
 	}
-  } while (state == 1);
+  }
 
   func_80070BD8_41088(2, 4);
   func_800153D8_15FD8(0xC8);
-  func_80070A8C_40F3C(*selectedSaveSlot);
+  func_80070A8C_40F3C(frontendSelectedEntry);
 
-  if (*selectedSaveSlot == 2) {
-	*selectedSaveSlot = 3;
+  if (frontendSelectedEntry == 2) {
+	frontendSelectedEntry = 3;
   } else {
-	*selectedSaveSlot = 2;
+	frontendSelectedEntry = 2;
   }
 
   func_80070CC4_41174();
@@ -2554,7 +2542,6 @@ s32 func_800776BC_47B6C(void) {
 	state = 1;
 	func_800708B8_40D68(0x34);
 	func_80070514_409C4(0x35);
-	destFileIndexPtr = &D_80047F8C;
 
 	do {
 	  if (frameCounter >= 0x41U) {
@@ -2562,9 +2549,8 @@ s32 func_800776BC_47B6C(void) {
 		func_8007166C_41B1C();
 
 		if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		  destFileIndex = *selectedSaveSlot - 2;
-		  *destFileIndexPtr = destFileIndex;
-		  if (destFileIndex != *sourceFileIndexPtr) {
+		  D_80047F8C = frontendSelectedEntry - 2;
+		  if ((0, D_80047F88) != D_80047F8C) {
 			state = 2;
 		  }
 		}
@@ -2598,9 +2584,6 @@ s32 func_800776BC_47B6C(void) {
 
   return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800776BC_47B6C.s")
-#endif
 
 // doFileDetailsLoop
 s32 func_800779FC_47EAC(void) {
