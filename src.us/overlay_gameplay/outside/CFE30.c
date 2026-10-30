@@ -5531,7 +5531,6 @@ void func_800D1A1C_E09CC(u8 arg0) {
 }
 
 // effect type 7
-#ifdef NON_MATCHING
 void func_800D1A94_E0A44(u8 arg0) {
 	s32 lastIndex;
 	Vec2_S16 sp40;
@@ -5565,7 +5564,7 @@ void func_800D1A94_E0A44(u8 arg0) {
 	}
 
 	sp34 = &D_80154318[D_80154088[arg0].unk6].ringVisual;
-	white = ~(lastIndex ^ 0xFF);
+	white = sp34->position[0] * 0 + 0xFF;
 	sp38.b = 0xFF;
 	sp38.g = white;
 	sp38.r = white;
@@ -5576,11 +5575,6 @@ void func_800D1A94_E0A44(u8 arg0) {
 	func_800B1A68_C0A18(&sp40, &sp3C, &sp38);
 	func_80137368_146318(sp34->position[0], sp34->position[1], sp34->position[2], 7, arg0);
 }
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1A94_E0A44.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800D1C24_E0BD4(u8 arg0)
