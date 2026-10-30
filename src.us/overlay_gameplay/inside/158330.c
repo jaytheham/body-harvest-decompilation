@@ -7736,7 +7736,7 @@ void func_80073A50_15BB10(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073A50_15BB10.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif
 
 // Render one visible floor tile.
@@ -9367,7 +9367,11 @@ void func_800784B8_160578(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/inside/158330_event_late_rodata.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s", "src.us/overlay_gameplay/inside/158330_event_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_800784B8_160578.s", "src.us/overlay_gameplay/inside/158330_event_late_rodata.s")
+#endif
 #endif
 
 // AI - Handles room selection confirmation and building exit logic

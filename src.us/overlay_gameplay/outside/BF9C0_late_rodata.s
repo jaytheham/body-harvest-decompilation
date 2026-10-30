@@ -19,5 +19,3 @@ dlabel D_80142E88_151E38
 
 dlabel D_80142E90_151E40
     .float 0.1
-
-.text

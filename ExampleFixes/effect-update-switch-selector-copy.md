@@ -6,6 +6,6 @@
 
 `incorrect ASM`: Leaving the later beam renderer's thirteen C constant placeholders at file scope places them ahead of the newly generated dispatcher tables. Both table references move by 0x60, and the beam's floating-point loads reference displaced constants.
 
--> `code changed`: Move those unchanged constants into `CFE30_beam_late_rodata.s`, immediately before a copy of the untouched beam reference instructions, and use that support pragma for the assembly-backed beam. Remove this support pragma when enabling the beam C implementation.
+-> `code changed`: Move those unchanged constants into `CFE30_beam_late_rodata.s`, and include it alongside the extracted function-specific assembly using a multi-argument `GLOBAL_ASM` pragma. Remove this support pragma when enabling the beam C implementation.
 
 -> `correct ASM`: The dispatcher tables occupy 0x80144030 and 0x80144058, followed by the beam constants at 0x801440B0. Both complete US and EU ROM checksums pass.
