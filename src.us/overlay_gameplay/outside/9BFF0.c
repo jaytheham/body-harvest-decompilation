@@ -2677,7 +2677,7 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 	var_a1 = (var_a0 = ((alienTypes[temp_s0->typeIndex].unk52 * var_a1) / 0xC8) >> 5);
 	if (((&alienInstances[arg0])->unk20 << 4) >= 0)
 	{
-		func_8011BEA0_12AE50(sp7B & 0xFF, var_a1);
+		func_8011BEA0_12AE50(sp7B, var_a1);
 		if ((&alienInstances[arg0])->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 		{
 			func_80137468_146418(arg0, 8);
