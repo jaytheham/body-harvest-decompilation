@@ -392,6 +392,11 @@ typedef struct {
 	/* 0x08 */ f32 z;
 } Vec3f; /* size = 0x0C */
 
+typedef union {
+	Vec3f vector;
+	f32 components[3];
+} Vec3fComponents; /* size = 0x0C */
+
 typedef struct {
 	/* 0x00 */ s16 x;
 	/* 0x02 */ s16 y;
