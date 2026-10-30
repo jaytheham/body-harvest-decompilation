@@ -46,6 +46,7 @@ overlay_gameplay/outside/constData.c
 overlay_gameplay/outside/constData2.c
 overlay_gameplay/outside/mutableData.c
 overlay_gameplay/frontend/40720.c
+overlay_gameplay/frontend/data_7DD60.c
 overlay_gameplay/frontend/data_7EEF0.c
 overlay_gameplay/frontend/4DC90.c
 libultra/sl.c

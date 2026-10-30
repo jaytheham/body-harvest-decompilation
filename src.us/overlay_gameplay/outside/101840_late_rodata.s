@@ -1,18 +1,3 @@
-.late_rodata
-.late_rodata_alignment 8
-
-dlabel D_80144CF8_153CA8
-    .double 1.2
-
-dlabel D_80144D00_153CB0
-    .double 1.2
-
-dlabel D_80144D08_153CB8
-    .double 32767
-
-dlabel D_80144D10_153CC0
-    .double 32767
-
 .text
 # Unchanged US/EU clipping-predicate reference instructions.
 glabel func_8010EF40_11DEF0

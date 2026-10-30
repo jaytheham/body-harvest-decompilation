@@ -46,44 +46,6 @@ const ShadowGeometryConstant D_80144A10_1539C0 = {3.14};
 
 const ShadowGeometryConstant D_80144A18_1539C8 = {180};
 
-const f64 D_80144A20_1539D0[1] = {180};
-
-const f64 D_80144A28_1539D8[1] = {3.141592654};
-
-const f64 D_80144A30_1539E0[1] = {180};
-
-const f64 D_80144A38_1539E8[1] = {1.2};
-
-const char D_80144A40_1539F0[] = "Max static count %d\n"; // "Max static count %d\n"
-
-const f64 D_80144A58_153A08[1] = {2608};
-
-const f64 D_80144A60_153A10[1] = {2000};
-
-const f64 D_80144A68_153A18[1] = {2000};
-
-const f64 D_80144A70_153A20[1] = {2000};
-
-const f64 D_80144A78_153A28[1] = {0.01};
-
-const ShadowGeometryConstant D_80144A80_153A30 = {0.01};
-
-const f64 D_80144A88_153A38[1] = {1.414213562};
-
-const f64 D_80144A90_153A40[1] = {0.9};
-
-const f64 D_80144A98_153A48[1] = {0.1666666667};
-
-const f64 D_80144AA0_153A50[1] = {0.9};
-
-const f64 D_80144AA8_153A58[1] = {0.1666666667};
-
-const f64 D_80144AB0_153A60[1] = {0.1};
-
-const f64 D_80144AB8_153A68[1] = {0.9};
-
-const f64 D_80144AC0_153A70[1] = {0.9};
-
 s32 D_8013FCD0_14EC80 = 0;
 u8 D_8013FCD4_14EC84[0x9C] = {
 	0x8C, 0x00, 0x00, 0x46, 0xFF, 0x28, 0xFF, 0xFF, 0x00, 0xD2, 0x23, 0x00, 0xFF, 0x62, 0x00, 0xFA,
@@ -1012,7 +974,6 @@ void func_800F4748_1036F8(UnkF9230ShadowWalker *arg0, u8 arg1, u8 arg2)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	UnkF9230ShadowLimb *entry;
 	s16 spB2;
@@ -1095,9 +1056,6 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		entry->unk12 = posZ + legRadius;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F49A4_103954.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800F4DB0_103D60(void) {
@@ -1231,7 +1189,7 @@ void func_800F4DB0_103D60(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4DB0_103D60.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4DB0_103D60.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
 
 void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
@@ -3565,7 +3523,6 @@ void func_800FC90C_10B8BC(VehicleInstance *arg0, s16 *arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800FCA5C_10BA0C(void) {
 	VehicleInstance *vehicle;
 	VehicleType *type;
@@ -3587,7 +3544,7 @@ void func_800FCA5C_10BA0C(void) {
 
 	{
 		VehicleType *typeWalker;
-		for (typeWalker = &vehicleTypes[0x13]; typeWalker-- >= &vehicleTypes[1];){
+		for (typeWalker = &vehicleTypes[0x14]; typeWalker-- >= &vehicleTypes[1];){
 			if ((currentLevel != 3) || (typeWalker != &vehicleTypes[0xD])) {
 				squaredRadius = (f32)(SQ(typeWalker->unk34 >> 1) + SQ(typeWalker->unk36 >> 1));
 				if (typeWalker->unk16 != 1) {
@@ -3666,7 +3623,8 @@ void func_800FCA5C_10BA0C(void) {
 		D_80159050[i].unk0 = D_80159050[i].unk2 = D_80159050[i].unk4 = 0;
 	}
 
-	scale = D_80144A78_153A28[0]; i = 127; do {
+	scale = 0.01;
+	i = 127; do {
 		vehicle = &vehicleInstances[i];
 		spawn = &D_80259490[i];
 		spawnValue = spawn->unk6;
@@ -3682,7 +3640,7 @@ void func_800FCA5C_10BA0C(void) {
 		}
 		vehicle->unkE = 0x4000U - spawn->unk8;
 		vehicle->unk6 = 0x4000 - spawn->unk8;
-		vehicle->unk46 = (i & 0x3F) | (vehicle->unk46 & 0xFFC0);
+		vehicle->unk46 = ((u8)i & 0x3F) | (vehicle->unk46 & 0xFFC0);
 		D_80158BD0[i] = spawn->unkE;
 		if ((spawn->unk6 != 0) || (i == 0)) {
 			vehicle->unk20 |= 0x8000 | VEHICLE_FLAG_UNK1;
@@ -3694,7 +3652,7 @@ void func_800FCA5C_10BA0C(void) {
 			func_800FC90C_10B8BC(vehicle, &spawn->unk0);
 		}
 		spawnValue = spawn->unkA;
-		if (spawnValue == 1) {
+		if ((s32)(u32)spawnValue == 1) {
 			vehicle->unk3C = 1;
 		} else {
 			vehicle->unk3C = (f32)(type->unk61 << 8) * ((f32)spawnValue * scale);
@@ -3710,9 +3668,7 @@ void func_800FCA5C_10BA0C(void) {
 		D_80159320 |= 0x20000;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FCA5C_10BA0C.s")
-#endif
+
 
 void func_800FD0EC_10C09C(void) {
 	D_80159310 += 2;
@@ -3952,7 +3908,7 @@ void func_800FD858_10C808(s16 arg0) {
 	vehicle->unk1C = vehicleTypes[vehicle->unk1A].hitPoints;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD858_10C808.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD858_10C808.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
 #endif
 
 void func_800FDB00_10CAB0(void) {
@@ -8479,7 +8435,7 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 			} else if (D_80159D64->unk16 == 1) {
 				D_80159D54 = vehicleTypes[temp_v0].unkC;
 			} else {
-				D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * D_80144CF8_153CA8.value);
+				D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * 1.2);
 			}
 			D_80159D54 *= D_80159D54;
 			return;
@@ -8555,7 +8511,7 @@ void func_8010CA38_11B9E8(VehicleInstance *arg0) {
 		} else if (D_80159D68->unk16 == 1) {
 			D_80159D58 = vehicleTypes[temp_v0].unkC;
 		} else {
-			D_80159D58 = (f32)(vehicleTypes[temp_v0].unkC * D_80144D00_153CB0.value);
+			D_80159D58 = (f32)(vehicleTypes[temp_v0].unkC * 1.2);
 		}
 		D_80159D58 *= D_80159D58;
 		return;
@@ -8881,8 +8837,8 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		xHit = x2 = (interceptMain - interceptEdge) / (slopeEdge - slopeMain[0]);
 		zHit = z2 = (slopeMain[0] * xHit) + interceptMain;
 
-		if ((D_80144D08_153CB8[0] < zHit) || (zHit < -32768.0) ||
-			(D_80144D10_153CC0[0] < xHit) || (xHit < -32768.0))
+		if ((32767.0 < zHit) || (zHit < -32768.0) ||
+			(32767.0 < xHit) || (xHit < -32768.0))
 		{
 			*arg2 = -0x7FFF;
 			*arg3 = -0x7FFF;

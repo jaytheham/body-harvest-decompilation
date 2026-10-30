@@ -1,0 +1,5 @@
+`incorrect ASM`: An external or file-static signed-short horizontal countdown makes IDO keep its address in a register, store the decrement, then reload the halfword for the zero test. Named countdown temporaries instead occupy `v0` and change subsequent temporary registers.
+
+-> `code changed`: Declare `horizontalRepeatDelay` as a function-local `static s16` in `func_80070CC4_41174`. Move the original `data_64B90.c` definitions into `40720.c`, keeping its prefix before this function and its remaining definitions afterward so the local static retains its original initialized-data position. Map the unit to US ROM 0x64B90 and PAL ROM 0x65350. Compute `selectedFileData = &D_800909B0[D_800D74A4]` before copying `D_800D74A4` into the short selected index. Use the dedicated stick globals and scan neighboring entries from the current index only when the requested edge is present.
+
+-> `correct ASM`: The countdown emits `lh t5; addiu t6,t5,-1; sll t7,t6,16; sra t8,t7,16; bnez t8; sh t6`. The entry-pointer multiply result uses `t2`, and the short copy uses `t3`. Every function instruction and both complete ROM checksums match.
