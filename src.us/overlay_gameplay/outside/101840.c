@@ -46,44 +46,6 @@ const ShadowGeometryConstant D_80144A10_1539C0 = {3.14};
 
 const ShadowGeometryConstant D_80144A18_1539C8 = {180};
 
-const f64 D_80144A20_1539D0[1] = {180};
-
-const f64 D_80144A28_1539D8[1] = {3.141592654};
-
-const f64 D_80144A30_1539E0[1] = {180};
-
-const f64 D_80144A38_1539E8[1] = {1.2};
-
-const char D_80144A40_1539F0[] = "Max static count %d\n"; // "Max static count %d\n"
-
-const f64 D_80144A58_153A08[1] = {2608};
-
-const f64 D_80144A60_153A10[1] = {2000};
-
-const f64 D_80144A68_153A18[1] = {2000};
-
-const f64 D_80144A70_153A20[1] = {2000};
-
-const f64 D_80144A78_153A28[1] = {0.01};
-
-const ShadowGeometryConstant D_80144A80_153A30 = {0.01};
-
-const f64 D_80144A88_153A38[1] = {1.414213562};
-
-const f64 D_80144A90_153A40[1] = {0.9};
-
-const f64 D_80144A98_153A48[1] = {0.1666666667};
-
-const f64 D_80144AA0_153A50[1] = {0.9};
-
-const f64 D_80144AA8_153A58[1] = {0.1666666667};
-
-const f64 D_80144AB0_153A60[1] = {0.1};
-
-const f64 D_80144AB8_153A68[1] = {0.9};
-
-const f64 D_80144AC0_153A70[1] = {0.9};
-
 s32 D_8013FCD0_14EC80 = 0;
 u8 D_8013FCD4_14EC84[0x9C] = {
 	0x8C, 0x00, 0x00, 0x46, 0xFF, 0x28, 0xFF, 0xFF, 0x00, 0xD2, 0x23, 0x00, 0xFF, 0x62, 0x00, 0xFA,
@@ -1012,7 +974,6 @@ void func_800F4748_1036F8(UnkF9230ShadowWalker *arg0, u8 arg1, u8 arg2)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	UnkF9230ShadowLimb *entry;
 	s16 spB2;
@@ -1095,9 +1056,6 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 		entry->unk12 = posZ + legRadius;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F49A4_103954.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800F4DB0_103D60(void) {
@@ -1231,7 +1189,7 @@ void func_800F4DB0_103D60(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4DB0_103D60.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4DB0_103D60.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
 
 void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
