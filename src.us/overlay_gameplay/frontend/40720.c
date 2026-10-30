@@ -31,8 +31,7 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
-#ifdef NON_MATCHING
-// AI - Frontend overlay entry point; dispatches frontend actions (6=end-game comet movie + credits, 7=end-game message).
+// Frontend overlay entry point; dispatches frontend actions.
 s32 func_80070270_40720(s32 arg0) {
 		switch (arg0) {
 		case 1:
@@ -53,30 +52,23 @@ s32 func_80070270_40720(s32 arg0) {
 		case 6:
 				func_80076504_469B4();
 				break;
-		case 7:
+		case 13:
 				func_8007685C_46D0C();
 				break;
-		case 8:
-				return func_8007CFB4_4D464(1);
 		case 9:
+				return func_8007CFB4_4D464(1);
+		case 14:
 				return func_8007CFB4_4D464(0);
-		case 10:
-				return func_8007D2B0_4D760();
 		case 11:
+				return func_8007D2B0_4D760();
+		case 12:
 				D_800946DC_64B8C = FE_STATE_PRESS_START;
 				func_800789E4_48E94();
-				break;
-		case 12:
-		case 13:
-		case 14:
 				break;
 		}
 
 		return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
-#endif
 
 // calculatePlayersTotalScore
 s32 func_80070390_40840(void) {
@@ -536,7 +528,11 @@ void func_80070CC4_41174(void)
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#endif
 #endif
 
 #ifdef NON_MATCHING
@@ -5583,76 +5579,12 @@ const char D_800AE448_7E8F8[] = "Tesking key %d,  result = %d \012";
 const char D_800AE468_7E918[] = "WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\012";
 const char D_800AE49C_7E94C[] = "*******************InventorySelect=%d, \012";
 const char D_800AE4C8_7E978[] = "INV>>>>WeaponSelect=%d\012";
-const u32 jtbl_800AE4E0_7E990[14] = {
-	0x8007029C, 0x800702AC, 0x800702DC, 0x800702EC,
-	0x80070300, 0x8007031C, 0x8007037C, 0x8007037C,
-	0x8007033C, 0x8007037C, 0x8007035C, 0x8007036C,
-	0x8007032C, 0x8007034C,
-};
-const ShadowGeometryConstant D_800AE518_7E9C8 = { 0.69999999999999996 };
-const f64 D_800AE520_7E9D0[1] = { 35 };
-const u32 jtbl_800AE528_7E9D8[91] = {
-	0x800739B4, 0x800739D8, 0x800739FC, 0x80073A20,
-	0x80073A44, 0x80073A68, 0x80073A94, 0x80073BDC,
-	0x80073D24, 0x80073E6C, 0x80073E98, 0x80073EC4,
-	0x80073EF0, 0x80073F1C, 0x80073F48, 0x80073F74,
-	0x80073FA0, 0x80073FCC, 0x800740B0, 0x80074194,
-	0x800741FC, 0x800742A8, 0x800742D4, 0x80074300,
-	0x8007432C, 0x80074358, 0x80074384, 0x800743B0,
-	0x800743DC, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074428,
-	0x80074448, 0x80074468, 0x8007448C, 0x800744B8,
-	0x800744E4, 0x80074510, 0x8007453C, 0x80074568,
-	0x80074594, 0x800745D4, 0x80074614, 0x80074640,
-	0x80074B64, 0x80074BA4, 0x80074BE4, 0x80074C10,
-	0x80074C3C, 0x80074C68, 0x80074C94, 0x80074CD4,
-	0x80074F78, 0x8007515C, 0x800754B8, 0x800754E4,
-	0x80075500, 0x8007551C, 0x80075538, 0x80075554,
-	0x80075640, 0x80075570, 0x8007558C, 0x800755A8,
-	0x800755C4, 0x800755F0, 0x8007561C,
-};
-const u32 jtbl_800AE694_7EB44[12] = {
-	0x80074FB8, 0x80074FCC, 0x80074FE0, 0x80074FF4,
-	0x80075008, 0x8007501C, 0x80075030, 0x80075044,
-	0x80075058, 0x8007506C, 0x800750F4, 0x80075108,
-};
-const u32 jtbl_800AE6C4_7EB74[12] = {
-	0x8007519C, 0x80075488, 0x80075488, 0x80075488,
-	0x80075488, 0x800751B0, 0x800751C4, 0x800751D8,
-	0x80075488, 0x800751EC, 0x80075200, 0x80075214,
-};
-const u32 jtbl_800AE6F4_7EBA4[12] = {
-	0x80075254, 0x80075488, 0x80075268, 0x8007527C,
-	0x80075290, 0x800752A4, 0x800752B8, 0x80075488,
-	0x80075488, 0x80075488, 0x800752CC, 0x800752E0,
-};
-const u32 jtbl_800AE724_7EBD4[12] = {
-	0x80075320, 0x80075334, 0x80075488, 0x80075348,
-	0x8007535C, 0x80075370, 0x80075384, 0x80075398,
-	0x80075488, 0x80075488, 0x800753AC, 0x800753C0,
-};
-const u32 jtbl_800AE754_7EC04[10] = {
-	0x80075400, 0x80075414, 0x80075428, 0x8007543C,
-	0x80075488, 0x80075488, 0x80075488, 0x80075488,
-	0x80075450, 0x80075464,
-};
-const f32 D_800AE77C_7EC2C[1] = { -10000.0f };
-const f32 D_800AE780_7EC30[1] = { 10000.0f };
-const f32 D_800AE784_7EC34[1] = { 1500.0f };
-const f32 D_800AE788_7EC38[1] = { 0.200000003f };
-const u32 jtbl_800AE78C_7EC3C[8] = {
-	0x80077E34, 0x80077E5C, 0x80077E34, 0x80077E14,
-	0x80077E54, 0x80077E54, 0x80077E54, 0x80077E54,
-};
 #endif
 
 
+
+
 #ifdef VERSION_EU
-/* Final entry of the preceding switch table. */
-const u32 D_800AF310_7F7C0[1] = { 0x80078028 };
+/* Tail of the preceding diagnostic string, before the generated table. */
+const u32 D_800AF040_7F4F0[1] = { 0x25640A00 };
 #endif
