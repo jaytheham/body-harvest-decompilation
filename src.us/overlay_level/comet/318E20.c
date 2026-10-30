@@ -16,15 +16,15 @@ void (*D_802E4E84_328FD4[21])(void) = {
 };
 
 Unk802E4ED8_entry D_802E4ED8_329028[9] = {
-	{ 0x1603, 0x017E, 0x660E, { 0x01, 0x90 }, 0x0000, 0x00 },
-	{ 0xF1F9, 0x017A, 0x5202, { 0x01, 0x90 }, 0x0000, 0x00 },
-	{ 0x3182, 0x019A, 0x0000, { 0x01, 0x90 }, 0x0000, 0x00 },
-	{ 0xE684, 0x01B8, 0x0000, { 0x01, 0x90 }, 0x0000, 0x00 },
-	{ 0xCDFE, 0x019A, 0x0000, { 0x01, 0x90 }, 0x0000, 0x00 },
-	{ 0xDA00, 0x0195, 0xEE00, { 0x01, 0x90 }, 0x0001, 0x00 },
-	{ 0xDA00, 0x0195, 0x1200, { 0x01, 0x90 }, 0x0001, 0x00 },
-	{ 0xE600, 0x0178, 0xF384, { 0x01, 0x90 }, 0x0000, 0x00 },
-	{ 0xE600, 0x015E, 0x0C7C, { 0x01, 0x90 }, 0x0000, 0x00 }
+	{ 0x1603, 0x017E, 0x660E, 0x0190, 0x0000, 0x00 },
+	{ 0xF1F9, 0x017A, 0x5202, 0x0190, 0x0000, 0x00 },
+	{ 0x3182, 0x019A, 0x0000, 0x0190, 0x0000, 0x00 },
+	{ 0xE684, 0x01B8, 0x0000, 0x0190, 0x0000, 0x00 },
+	{ 0xCDFE, 0x019A, 0x0000, 0x0190, 0x0000, 0x00 },
+	{ 0xDA00, 0x0195, 0xEE00, 0x0190, 0x0001, 0x00 },
+	{ 0xDA00, 0x0195, 0x1200, 0x0190, 0x0001, 0x00 },
+	{ 0xE600, 0x0178, 0xF384, 0x0190, 0x0000, 0x00 },
+	{ 0xE600, 0x015E, 0x0C7C, 0x0190, 0x0000, 0x00 }
 };
 
 s32 D_802E4F44_329094[9] = {
@@ -867,53 +867,6 @@ const char D_802E7AD0_32BC20[0x14] = "Ready to shoot gun\n";
 
 const char D_802E7AE4_32BC34[0x1C] = "Create new gun %d type %d\n";
 
-const f64 D_802E7B00_32BC50[] = { 150.0 };
-
-const u32 jtbl_802E7B08_32BC58[7] = {
-	LEVEL_PTR(0x802D6A14), LEVEL_PTR(0x802D6CD4), LEVEL_PTR(0x802D6F88), LEVEL_PTR(0x802D7038), LEVEL_PTR(0x802D720C), LEVEL_PTR(0x802D7358), LEVEL_PTR(0x802D74E0)
-};
-
-const f32 D_802E7B24_32BC74[] = { 13.6999998f };
-
-const f64 D_802E7B28_32BC78[] = { 0.2 };
-
-const f64 D_802E7B30_32BC80[] = { 1300.0 };
-
-const f32 D_802E7B38_32BC88[] = { 5000.0f };
-
-const f32 D_802E7B3C_32BC8C[] = { 0.0f };
-
-const f64 D_802E7B40_32BC90[] = { 0.9 };
-
-const f32 D_802E7B48_32BC98[] = { 0.100000001f };
-
-const f32 D_802E7B4C_32BC9C[] = { 0.100000001f };
-
-const f32 D_802E7B50_32BCA0[] = { 0.100000001f };
-
-const FloatConstant D_802E7B54_32BCA4 = { 6500.0f };
-
-const ShadowGeometryConstant D_802E7B58_32BCA8 = { 700.0 };
-
-const ShadowGeometryConstant D_802E7B60_32BCB0 = { 4000.0 };
-
-const ShadowGeometryConstant D_802E7B68_32BCB8 = { 150.0 };
-
-const f32 D_802E7B70_32BCC0[] = { 0.100000001f };
-
-const f32 D_802E7B74_32BCC4[] = { 0.100000001f };
-
-const f32 D_802E7B78_32BCC8[] = { 0.100000001f };
-
-const f32 D_802E7B7C_32BCCC[] = { 0.0f };
-
-const f64 D_802E7B80_32BCD0[] = { 0.9 };
-
-const f32 D_802E7B88_32BCD8[] = { 62500.0f };
-
-const f32 D_802E7B8C_32BCDC[] = { 0.0f };
-
-const f64 D_802E7B90_32BCE0[] = { 1000.0 };
 
 void func_802D4CD0_318E20(s32 arg0, s32 arg1) {
 	arg1 = arg0;
@@ -1040,135 +993,100 @@ void func_802D4F4C_31909C(void) {
 }
 
 
-#ifdef NON_MATCHING
 void func_802D522C_31937C(s16 arg0) {
-	Unk80052B40_fp *temp_fp;
-	s16 spBE;
-	s16 spB8;
-	s16 spB4;
-	s16 spB0;
-	s16 var_s1;
-	s16 var_s1_2;
-	s16 var_s4;
-	s16 var_s5;
-	s32 sp90;
-	s32 sp8C;
-	s32 sp88;
-	s32 sp84;
-	s16 temp_a1;
-	s16 temp_a3;
-	s32 temp_v0;
-	s32 var_s6;
-	s8 temp_s2;
-	u32 temp_hi;
-	u32 temp_v1_2;
-	f64 temp_f20;
-	Gfx *temp_v1;
-	Gfx *temp_v1_3;
-	Gfx *temp_v1_4;
-	Gfx *temp_v1_5;
-	s32 temp_t3;
-	s32 temp_t4;
-	Vtx *temp_t5;
+	s16 layer;
+	s16 i;
+	s16 x;
+	s16 y;
+	s16 z;
+	s16 pulse;
+	u16 angle;
+	s16 orientation;
+	u8 red;
+	u8 blue;
+	s16 width;
+	s32 start;
 
-	temp_fp = &D_802E4ED8_329028[arg0];
-	D_80052B40.unk0 = temp_fp->unk0 / 4;
-	D_80052B40.unk2 = temp_fp->unk4 / 4;
-	D_80052B40.unk4 = temp_fp->unk8 / 4;
+	D_80052B40.unk0 = D_802E4ED8_329028[arg0].unk0 / 4;
+	D_80052B40.unk2 = D_802E4ED8_329028[arg0].unk2 / 4;
+	D_80052B40.unk4 = D_802E4ED8_329028[arg0].unk4 / 4;
 	D_80052B50.unk0 = 0x40;
 	D_80052B50.unk2 = 0x40;
 	D_80052B50.unk4 = 0x40;
-	func_800039D0_45D0(&D_80052B40, &D_80052B50, &D_80052B50, D_8005BB38);
+	func_800039D0_45D0(&D_80052B40, NULL, &D_80052B50, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
-	temp_a3 = temp_fp->unk8;
-	var_s4 = 0;
-	var_s5 = 0;
-	temp_a1 = temp_fp->unk4;
-	if (temp_a3 == 0) {
-		sp90 = -temp_a1 / 2;
-		var_s5 = D_80052B40.unk2;
+	orientation = D_802E4ED8_329028[arg0].unk8;
+	x = 0;
+	z = 0;
+	width = D_802E4ED8_329028[arg0].unk6;
+	if (orientation == 0) {
+		start = -width / 2;
+		z = start;
 	} else {
-		sp90 = -temp_a1 / 2;
-		var_s4 = D_80052B40.unk2;
+		start = -width / 2;
+		x = start;
 	}
-	temp_hi = (u32)D_80052A8C % 10U;
-	var_s6 = ((D_80052A8C * 0x9C4) & 0xFFFF);
-	if (temp_hi == ((u32)D_80052A8C % 20U)) {
-		spB4 = (s16)temp_hi;
+	y = 0x64;
+	angle = (u32)D_80052A8C * 0x9C4;
+	if (((u32)D_80052A8C % 20U) == ((u32)D_80052A8C % 10U)) {
+		pulse = ((u32)D_80052A8C % 10U);
 	} else {
-		spB4 = 0xA - temp_hi;
+		pulse = 0xA - ((u32)D_80052A8C % 10U);
 	}
-	spBE = 0;
-	temp_f20 = D_802E7B00_32BC50;
-	sp84 = temp_a1 / 4;
-	spB8 = 0x64;
-	spB0 = temp_a3;
-	do {
-		var_s1 = 0;
-		sp8C = spB8 + spB4 + 0xA;
-		sp88 = spB8 - spB4 - 0xA;
-		do {
-			temp_s2 = (u8)(s32)(temp_f20 - (((f64)(f32)sins(var_s6 & 0xFFFF) / 32768.0) * 100.0));
-			temp_v1_2 = (u32)((((f64)(f32)coss(var_s6 & 0xFFFF) / 32768.0) * 100.0) + temp_f20);
-			D_8005BB34->v.ob[0] = var_s4;
-			var_s6 = (var_s6 + 0x7D0) & 0xFFFF;
-			D_8005BB34->v.ob[1] = (s16)sp8C;
-			D_8005BB34->v.ob[2] = var_s5;
+
+	for (layer = 0; layer < 3; layer++) {
+
+		for (i = 0; i < 5; i++) {
+			red = (u32)(150.0 - (((f64)(f32)sins(angle) / 32768.0) * 100.0));
+			blue = (u32)((((f64)(f32)coss(angle) / 32768.0) * 100.0) + 150.0);
+			angle += 0x7D0;
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y + pulse + 0xA;
+			D_8005BB34->v.ob[2] = z;
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = temp_s2;
+			D_8005BB34->v.cn[0] = red;
 			D_8005BB34->v.cn[1] = 0x28;
-			D_8005BB34->v.cn[2] = (u8)temp_v1_2;
+			D_8005BB34->v.cn[2] = blue;
 			D_8005BB34->v.cn[3] = 0x64;
-			temp_t5 = D_8005BB34 + 1;
-			D_8005BB34 = temp_t5;
-			temp_t5->v.ob[0] = var_s4;
-			temp_t5->v.ob[1] = (s16)sp88;
-			temp_t5->v.ob[2] = var_s5;
-			temp_t5->v.flag = 0;
-			temp_t5->v.tc[0] = 0;
-			temp_t5->v.tc[1] = 0;
-			temp_t5->v.cn[0] = temp_s2;
-			temp_t5->v.cn[1] = 0x28;
-			temp_t5->v.cn[2] = (u8)temp_v1_2;
-			temp_t5->v.cn[3] = 0x64;
-			D_8005BB34 += 1;
-			if (spB0 == 0) {
-				var_s5 += sp84;
+			D_8005BB34++;
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y - pulse - 0xA;
+			D_8005BB34->v.ob[2] = z;
+			D_8005BB34->v.flag = 0;
+			D_8005BB34->v.tc[0] = 0;
+			D_8005BB34->v.tc[1] = 0;
+			D_8005BB34->v.cn[0] = red;
+			D_8005BB34->v.cn[1] = 0x28;
+			D_8005BB34->v.cn[2] = blue;
+			D_8005BB34->v.cn[3] = 0x64;
+			D_8005BB34++;
+			if (orientation == 0) {
+				z += width / 4;
 			} else {
-				var_s4 += sp84;
+				x += width / 4;
 			}
 			if (((u32)D_80052A8C % (u32)((func_800038E0_44E0() % 40) + 0x1E)) == 0) {
-				func_800C541C_D43CC(temp_fp->unk0 + var_s4, temp_fp->unk4 + spB8,
-					temp_fp->unk8 + var_s5, 0, 0x7F, 0, 0x28, 0xFF, 0x14, 0x14,
-					temp_s2, 0x28, temp_v1_2 & 0xFF);
+				func_800C541C_D43CC(D_802E4ED8_329028[arg0].unk0 + x, D_802E4ED8_329028[arg0].unk2 + y,
+					D_802E4ED8_329028[arg0].unk4 + z, 0, 0x7F, 0, 0x28, 0xFF, 0x14, 0x14,
+					red, 0x28, blue);
 			}
-			var_s1 += 1;
-		} while (var_s1 < 5);
-		spB8 += 0x55;
-		if (spB0 == 0) {
-			var_s5 = D_80052B40.unk2;
-		} else {
-			var_s4 = D_80052B40.unk2;
 		}
-		var_s6 = (var_s6 + 0x1D4C) & 0xFFFF;
-		var_s1_2 = 0;
-		gSPVertex(D_8005BB2C++, D_8005BB34 - 0xA0, 10, 0);
-		do {
-			temp_v0 = var_s1_2 * 2;
-			temp_t3 = (temp_v0 + 2) & 0xFF;
-			temp_t4 = (temp_v0 + 4) & 0xFF;
-			gSP1Triangle(D_8005BB2C++, temp_v0 & 0xFF, temp_t3, temp_t4, 0);
-			var_s1_2 += 2;
-			gSP1Triangle(D_8005BB2C++, temp_t3, temp_t4, (temp_v0 + 6) & 0xFF, 0);
-		} while (var_s1_2 < 8);
-		spBE += 1;
-	} while (spBE < 3);
+		y += 0x55;
+		if (orientation == 0) {
+			z = start;
+		} else {
+			x = start;
+		}
+		angle += 0x1D4C;
+		gSPVertex(D_8005BB2C++, D_8005BB34 - 10, 10, 0);
+		for (i = 0; i < 8; i += 2) {
+			gSP1Triangle(D_8005BB2C++, i, i + 1, i + 2, 0);
+			gSP1Triangle(D_8005BB2C++, i + 1, i + 2, i + 3, 0);
+		}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D522C_31937C.s")
-#endif
 
 // AI - Iterates the nine D_802E4ED8_329028 entries, calling func_802D522C_31937C for active ones in range per func_800B960C_C85BC.
 void func_802D58BC_319A0C(void) {
@@ -1733,7 +1651,11 @@ s32 func_802D67A8_31A8F8(void) {
 	return 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D67A8_31A8F8.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D67A8_31A8F8.s", "src.us/overlay_level/comet/318E20_unmatched_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802D67A8_31A8F8.s", "src.us/overlay_level/comet/318E20_unmatched_late_rodata.eu.s")
+#endif
 #endif
 
 void func_802D7548_31B698(void) {
