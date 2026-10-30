@@ -980,22 +980,15 @@ void func_800C2554_D1504(s16 arg0, u8 arg1) {
 	func_800C1A4C_D09FC(arg0, arg1, 0);
 }
 
-#ifdef NON_MATCHING
 void func_800C25F8_D15A8(u8 arg0) {
-	s32 dx;
-	s32 dy;
-	s32 dz;
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
-	Unk80154318Entry *linkedEntry;
-	Unk80154318Entry *deltaEntry;
-	Unk80154318Entry *deltaLinked;
 	Vec3f delta;
 	f32 dot;
 	s16 unitId;
 	s16 nextId;
 	s16 i;
-	u8 texType;
+	s32 texType;
 
 	D_80153BCD = 0x20;
 	D_80153BCE = 0x20;
@@ -1003,7 +996,7 @@ void func_800C25F8_D15A8(u8 arg0) {
 
 	gDPPipeSync(D_8005BB2C++);
 
-	texType = *(u8 *)&D_80154318[effect->unk6].unk12;
+	texType = ((SmokePuffState *)(s32)D_80154318[D_80154088[arg0].unk6].payload)->kind;
 	if ((texType == 0) || (texType == 2)) {
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E080), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
@@ -1015,68 +1008,63 @@ void func_800C25F8_D15A8(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 
 	if (effect->unk4 >= 2) {
-		deltaEntry = &D_80154318[effect->unk8];
-		deltaLinked = &D_80154318[deltaEntry->unk6];
-		dx = deltaEntry->unk8 - deltaLinked->unk8;
-		dy = deltaEntry->unkA - deltaLinked->unkA;
-		dz = deltaEntry->unkC - deltaLinked->unkC;
-		delta.x = (f32)dx;
-		delta.y = (f32)dy;
-		delta.z = (f32)dz;
+		unitId = effect->unk8;
+		entry = &D_80154318[unitId];
+		nextId = entry->unk6;
+		delta.x = D_80154318[unitId].unk8 - D_80154318[nextId].unk8;
+		delta.y = D_80154318[unitId].unkA - D_80154318[nextId].unkA;
+		delta.z = D_80154318[unitId].unkC - D_80154318[nextId].unkC;
 		dot = func_800C1090_D0040(&D_80153AD0, &delta);
 	} else {
 		dot = 1.0f;
 	}
 
 	if (dot < 0.0f) {
-		unitId = effect->unk6;
+		unitId = D_80154088[arg0].unk6;
 	} else {
-		unitId = effect->unk8;
+		unitId = D_80154088[arg0].unk8;
 	}
 
 	i = 0;
-	if (effect->unk4 > 0) {
+	if (D_80154088[arg0].unk4 > 0) {
 		do {
 			entry = &D_80154318[unitId];
-			D_80153BB8.x = (f32)entry->unk8;
+			D_80153BB8.x = entry->unk8;
+			D_80153BB8.y = entry->unkA;
+			D_80153BB8.z = entry->unkC;
 			D_80153BC4 = &entry->unkE;
+			D_80153BC8 = entry->unk2;
 			D_80153BCC = entry->unk11;
-			D_80153BB8.y = (f32)entry->unkA;
-			D_80153BB8.z = (f32)entry->unkC;
-			D_80153BC8 = (f32)entry->unk2;
 			func_800DB350_EA300();
 			D_80156EDA += 4;
 
-			if ((effect->unk1 & 2) && (i < (effect->unk4 - 1))) {
+			if ((D_80154088[arg0].unk1 & 2) && (i < (D_80154088[arg0].unk4 - 1))) {
 				if (dot < 0.0f) {
-					nextId = entry->unk4;
+					nextId = D_80154318[unitId].unk4;
 				} else {
-					nextId = entry->unk6;
+					nextId = D_80154318[unitId].unk6;
 				}
 
-				linkedEntry = &D_80154318[nextId];
-				D_80153BC4 = &linkedEntry->unkE;
-				D_80153BCC = linkedEntry->unk11;
-				D_80153BB8.x = (f32)((f64)((f32)linkedEntry->unk8 + D_80153BB8.x) * 0.5);
-				D_80153BB8.y = (f32)((f64)((f32)linkedEntry->unkA + D_80153BB8.y) * 0.5);
-				D_80153BB8.z = (f32)((f64)((f32)linkedEntry->unkC + D_80153BB8.z) * 0.5);
-				D_80153BC8 = (f32)linkedEntry->unk2;
+				entry = &D_80154318[nextId];
+				D_80153BB8.x = (entry->unk8 + D_80153BB8.x) * 0.5;
+				D_80153BB8.y = (entry->unkA + D_80153BB8.y) * 0.5;
+				D_80153BB8.z = (entry->unkC + D_80153BB8.z) * 0.5;
+				D_80153BC4 = &entry->unkE;
+				D_80153BC8 = entry->unk2;
+				D_80153BCC = entry->unk11;
 				func_800DB350_EA300();
 				D_80156EDA += 4;
 			}
 
 			i++;
 			if (dot < 0.0f) {
-				unitId = entry->unk4;
+				unitId = D_80154318[unitId].unk4;
 			} else {
-				unitId = entry->unk6;
+				unitId = D_80154318[unitId].unk6;
 			}
-		} while (i < effect->unk4);
+		} while (i < D_80154088[arg0].unk4);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C25F8_D15A8.s")
-#endif
 
 void func_800C2B90_D1B40(u8 arg0, u8 arg1) {
 	u8 *arg1Ptr;
