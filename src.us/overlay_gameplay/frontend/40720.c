@@ -2842,81 +2842,78 @@ s32 func_80077E88_48338(void) {
 	return state;
 }
 
-#ifdef NON_MATCHING
 s32 func_80078110_485C0(void) {
 	s32 state;
 	u32 frameCounter;
-	s16 var_v0;
-	s16 temp_a0;
-	MissionData* missions;
+	s16 completionFlags;
+	s32 firstGroupMask;
+	s16 *completedFlags = &D_80048026;
 
 	frameCounter = 0;
 	state = 1;
-	var_v0 = D_80048026;
+	completionFlags = *completedFlags;
 
-	if ((var_v0 & 0xE07) == 0xE07 && (var_v0 & 0x38) != 0x38 && (var_v0 & 0x1C0) != 0x1C0) {
-		missions = D_800909B0;
-		((u8*)missions)[0xD45] = 0x53;
-		((u8*)missions)[0xDC2] = 0x50;
+	if ((completionFlags & 0xE07) == 0xE07 && (completionFlags & 0x38) != 0x38 && (completionFlags & 0x1C0) != 0x1C0) {
+		D_800909B0[80].unk25 = 0x53;
+		D_800909B0[83].unk24 = 0x50;
 	} else {
-		missions = D_800909B0;
-		((u8*)missions)[0xD45] = 0x52;
-		((u8*)missions)[0xDC2] = 0x51;
+		D_800909B0[80].unk25 = 0x52;
+		D_800909B0[83].unk24 = 0x51;
 	}
 
-	if ((var_v0 & 0x1F8) == 0x1F8 && (temp_a0 = var_v0 & 7, temp_a0 != 7) && ((var_v0 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
-		((u8*)missions)[0xD6F] = 0x52;
-		((u8*)missions)[0xD98] = 0x51;
+	if ((completionFlags & 0x1F8) == 0x1F8 && (firstGroupMask = completionFlags & 7, firstGroupMask != 7) && ((completionFlags & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
+		D_800909B0[81].unk25 = 0x52;
+		D_800909B0[82].unk24 = 0x51;
 	} else {
-		((u8*)missions)[0xD6F] = 0x53;
-		((u8*)missions)[0xD98] = 0x50;
-		temp_a0 = var_v0 & 7;
+		D_800909B0[81].unk25 = 0x53;
+		D_800909B0[82].unk24 = 0x50;
+		firstGroupMask = completionFlags & 7;
 	}
 
 	D_800D74A4 = 0x50;
-	if (temp_a0 != 7) {
+	if (firstGroupMask != 7) {
 		D_800D74A4++;
-		if ((var_v0 & 0x38) != 0x38) {
+		if ((completionFlags & 0x38) != 0x38) {
 			D_800D74A4++;
-			if ((var_v0 & 0x1C0) != 0x1C0) {
+			if ((completionFlags & 0x1C0) != 0x1C0) {
 				D_800D74A4++;
 			}
 		}
 	}
 
 	D_800D74A6 = D_800D74A4;
-	missions[D_800D74A4].unk1C = 1;
+	D_800909B0[D_800D74A4].unk1C = 1;
 
 	while (state == 1) {
 		if (frameCounter < 0x3E8U) {
-			func_80070C64_41114(0x4F, 6, (s16)frameCounter);
+			func_80070C64_41114(0x4F, 6, frameCounter);
 		}
 
 		func_80070BD8_41088(0x50, 0x54);
-		func_80070AEC_40F9C((s16)(D_80047FA0 + 0x50), 0x54);
+		func_80070AEC_40F9C(D_80047FA0 + 0x50, 0x54);
 
-		var_v0 = D_80048026;
-		if ((var_v0 & 7) != 7) {
+		completionFlags = *completedFlags;
+		if ((completionFlags & 7) != 7) {
 			func_80070AEC_40F9C(0x50, 0x50);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0x38) != 0x38) {
+		if ((completionFlags & 0x38) != 0x38) {
 			func_80070AEC_40F9C(0x51, 0x51);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0x1C0) != 0x1C0) {
+		if ((completionFlags & 0x1C0) != 0x1C0) {
 			func_80070AEC_40F9C(0x52, 0x52);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0xE00) != 0xE00) {
+		if ((completionFlags & 0xE00) != 0xE00) {
 			func_80070AEC_40F9C(0x53, 0x53);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0xFFF) != 0xFFF) {
+		if ((completionFlags & 0xFFF) != 0xFFF) {
 			func_80070AEC_40F9C(0x54, 0x54);
 		}
 
@@ -2951,9 +2948,6 @@ s32 func_80078110_485C0(void) {
 
 	return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078110_485C0.s")
-#endif
 
 // doChooseFileNameLoop
 #ifdef NON_MATCHING
