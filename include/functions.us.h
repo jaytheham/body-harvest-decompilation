@@ -1730,7 +1730,7 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1);
 s32 func_80118114_1270C4(s16 arg0);
 s32 func_8011C594_12B544(u8 arg0);
 s32 func_8011C4D4_12B484(void);
-s32 func_8011C42C_12B3DC(s32 arg0);
+s32 func_8011C42C_12B3DC(s8 *arg0);
 void func_8011CDA4_12BD54(void);
 void func_800B91C8_C8178(s16 arg0, s16 arg1, s32 arg2);
 void func_800D9B14_E8AC4(s16 arg0, s16 arg1, s16 arg2, s16 arg3);

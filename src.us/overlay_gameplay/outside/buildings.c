@@ -2546,7 +2546,7 @@ s32 func_8011C338_12B2E8(s8 *arg0, s32 arg1) {
 	return startIndex;
 }
 
-s32 func_8011C42C_12B3DC(s32 arg0) {
+s32 func_8011C42C_12B3DC(s8 *arg0) {
 	s32 temp_v0;
 	s32 temp_v0_2;
 	s32 var_s0;
