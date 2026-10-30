@@ -351,7 +351,6 @@ void func_800F2890_101840(u8 arg0, s32 *arg1, s32 *arg2, u8 *arg3) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s32 sp7C;
 	s32 sp78;
@@ -365,56 +364,50 @@ void func_800F2980_101930(UnkF9230ShadowWalker *walker) {
 	s16 var_v0;
 	s32 var_s3;
 	u8 temp_s0;
-	u8 temp_v1;
 	Unk801601F0 *temp_v0;
-	s32 typeIndex;
 
-	typeIndex = walker->limbs[0].unk23;
-	temp_v0 = &D_801601F0[typeIndex];
+	var_s4 = walker->limbs[0].unk23;
+	temp_v0 = &D_801601F0[(u8)var_s4];
 	sp6E = temp_v0->unk10;
 	sp6C = temp_v0->unk6;
 	sp6A = temp_v0->unk4;
-	temp_v1 = walker->limbs[0].unk22;
 	temp_s0 = temp_v0->unkC;
 	var_s4 = temp_v0->unkE;
-	if (temp_v1 & 0x80) {
+	if (walker->limbs[0].unk22 & 0x80) {
 		sp68 = walker->limbs[0].unk1A;
 		var_v0 = walker->limbs[0].unk18;
 	} else {
 		var_v0 = walker->limbs[0].unk18;
 		sp68 = var_v0;
 	}
-	if (temp_v1 == 0x10) {
+	if (walker->limbs[0].unk22 == 0x10) {
 		sp68 = 0;
 	}
-	sp7C = (s32)((((f32)coss((u16)var_v0) / 32768.0) * walker->limbs[0].unk1C) + walker->limbs[0].position.x);
-	sp78 = (s32)((((f32)sins((u16)walker->limbs[0].unk18) / 32768.0) * walker->limbs[0].unk1C) + walker->limbs[0].position.z);
+	sp7C = (s32)(walker->limbs[0].position.x + (walker->limbs[0].unk1C * ((f32)coss(var_v0) / 32768.0)));
+	sp78 = (s32)(walker->limbs[0].position.z + (walker->limbs[0].unk1C * ((f32)sins(walker->limbs[0].unk18) / 32768.0)));
 	walker->limbs[0].position.anchorX = sp7C;
 	walker->limbs[0].position.anchorZ = sp78;
 	var_s3 = 0;
-	if ((s32) temp_s0 / 2 > 0) {
+	if (temp_s0 / 2 > 0) {
 		do {
 			s32 pre_angle = sp68 - var_s4;
 			if (walker->limbs[var_s3 + 1].unk23 == 0) {
-				var_v0 = (s16) (pre_angle - 0x4000);
-				walker->limbs[var_s3 + 1].unk6 = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6C) + sp7C);
-				walker->limbs[var_s3 + 1].unk8 = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6C) + sp78);
-				walker->limbs[var_s3 + 1].unk1A = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6A) + sp7C);
-				walker->limbs[var_s3 + 1].unk1C = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6A) + sp78);
-				var_v0 = (s16) (sp68 + var_s4 + 0x4000);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk6 = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6C) + sp7C);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk8 = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6C) + sp78);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk1A = (s16) (s32) ((((f32) coss((u16) var_v0) / 32768.0) * sp6A) + sp7C);
-				walker->limbs[var_s3 + ((s32) temp_s0 / 2) + 1].unk1C = (s16) (s32) ((((f32) sins((u16) var_v0) / 32768.0) * sp6A) + sp78);
+				var_v0 = pre_angle - 0x4000;
+				walker->limbs[var_s3 + 1].unk6 = (s32) ((((f32) coss(var_v0) / 32768.0) * sp6C) + sp7C);
+				walker->limbs[var_s3 + 1].unk8 = (s32) ((((f32) sins(var_v0) / 32768.0) * sp6C) + sp78);
+				walker->limbs[var_s3 + 1].unk1A = (s32) ((((f32) coss(var_v0) / 32768.0) * sp6A) + sp7C);
+				walker->limbs[var_s3 + 1].unk1C = (s32) ((((f32) sins(var_v0) / 32768.0) * sp6A) + sp78);
+				var_v0 = sp68 + var_s4 + 0x4000;
+				walker->limbs[var_s3 + (temp_s0 / 2) + 1].unk6 = (s32) ((((f32) coss(var_v0) / 32768.0) * sp6C) + sp7C);
+				walker->limbs[var_s3 + (temp_s0 / 2) + 1].unk8 = (s32) ((((f32) sins(var_v0) / 32768.0) * sp6C) + sp78);
+				walker->limbs[var_s3 + (temp_s0 / 2) + 1].unk1A = (s32) ((((f32) coss(var_v0) / 32768.0) * sp6A) + sp7C);
+				walker->limbs[var_s3 + (temp_s0 / 2) + 1].unk1C = (s32) ((((f32) sins(var_v0) / 32768.0) * sp6A) + sp78);
 				var_s4 += sp6E;
 			}
 			var_s3 += 1;
-		} while (var_s3 != ((s32) temp_s0 / 2));
+		} while (var_s3 != (temp_s0 / 2));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F2980_101930.s")
-#endif
 
 void func_800F2D48_101CF8(u8 arg0, s16 arg1, s16 arg2) {
 	UnkF9230ShadowWalker *walker;
