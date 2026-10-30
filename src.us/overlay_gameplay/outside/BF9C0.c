@@ -792,7 +792,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 y;
 	s16 dx;
 	s16 dy;
-	s16 distance;
 	s32 intensity;
 	u32 fracY;
 	s32 squareX;
@@ -829,9 +828,9 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			distance = (s32)sqrtf(dy * dy + squareX) - arg2;
-			if (distance > 0) {
-				intensity = (s16)(arg3 - distance);
+			intensity = (s16)((s32)sqrtf(dy * dy + squareX) - arg2);
+			if (intensity > 0) {
+				intensity = (s16)(arg3 - intensity);
 				if (intensity > 0) {
 					intensity = (s16)(((f32)intensity / arg3) * 255.0f);
 					if (intensity >= 256) {
@@ -841,10 +840,19 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			} else {
 				intensity = 255;
 			}
-			if (intensity > 0) {
+			if (intensity <= 0) {
+				continue;
+			}
+			{
 				s16 color;
-				if ((s16)(x + tileX) >= baseX && (s16)(x + tileX) <= (s16)(baseX + 19)) {
-					if ((s16)(y + tileY) >= baseY && (s16)(y + tileY) <= (s16)(baseY + 19)) {
+				if ((s16)(x + tileX) < baseX || (s16)(x + tileX) > (s16)(baseX + 19)) {
+					continue;
+				}
+				{
+					if ((s16)(y + tileY) < baseY || (s16)(y + tileY) > (s16)(baseY + 19)) {
+						continue;
+					}
+					{
 						pixel = &((EffectRgb (*)[19])D_80152740)[(u16)((y + ringY) % 19)][(u16)((x + ringX) % 19)];
 						color = ((arg1[0] * intensity) >> 8) + pixel->r;
 						if (color >= 256) color = 255;
