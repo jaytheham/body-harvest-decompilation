@@ -30,24 +30,6 @@ const f64 D_80142E40_151DF0[1] = {1.022};
 const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
 /* Crater radius multiplier */
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
-/* Jump table for func_800B960C_C85BC */
-const u32 jtbl_80142E50_151E00[] = {
-	OVERLAY_PTR(0x800B9784),
-	OVERLAY_PTR(0x800B97D4),
-	OVERLAY_PTR(0x800B981C),
-	OVERLAY_PTR(0x800B9864),
-	OVERLAY_PTR(0x800B98AC),
-};
-/* Crater radius decay thresholds */
-const f64 D_80142E68_151E18[1] = {0.4};
-const f64 D_80142E70_151E20[1] = {0.2};
-const f64 D_80142E78_151E28[1] = {0.1};
-/* Crater brightness reduction factors */
-const f64 D_80142E80_151E30[1] = {0.2};
-const f64 D_80142E88_151E38[1] = {0.1};
-/* Initial crater radius (legacy) */
-const f32 D_80142E90_151E40[1] = {0.10000000149011612f};
-
 /* Water palette color words (first byte updated during rendering). */
 SignedWord D_8013D940_14C8F0 = { 0 };
 SignedWord D_8013D944_14C8F4 = { 0 };
@@ -810,7 +792,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 y;
 	s16 dx;
 	s16 dy;
-	s16 distance;
 	s32 intensity;
 	u32 fracY;
 	s32 squareX;
@@ -847,9 +828,9 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			distance = (s32)sqrtf(dy * dy + squareX) - arg2;
-			if (distance > 0) {
-				intensity = (s16)(arg3 - distance);
+			intensity = (s16)((s32)sqrtf(dy * dy + squareX) - arg2);
+			if (intensity > 0) {
+				intensity = (s16)(arg3 - intensity);
 				if (intensity > 0) {
 					intensity = (s16)(((f32)intensity / arg3) * 255.0f);
 					if (intensity >= 256) {
@@ -859,10 +840,19 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			} else {
 				intensity = 255;
 			}
-			if (intensity > 0) {
+			if (intensity <= 0) {
+				continue;
+			}
+			{
 				s16 color;
-				if ((s16)(x + tileX) >= baseX && (s16)(x + tileX) <= (s16)(baseX + 19)) {
-					if ((s16)(y + tileY) >= baseY && (s16)(y + tileY) <= (s16)(baseY + 19)) {
+				if ((s16)(x + tileX) < baseX || (s16)(x + tileX) > (s16)(baseX + 19)) {
+					continue;
+				}
+				{
+					if ((s16)(y + tileY) < baseY || (s16)(y + tileY) > (s16)(baseY + 19)) {
+						continue;
+					}
+					{
 						pixel = &((EffectRgb (*)[19])D_80152740)[(u16)((y + ringY) % 19)][(u16)((x + ringX) % 19)];
 						color = ((arg1[0] * intensity) >> 8) + pixel->r;
 						if (color >= 256) color = 255;
@@ -1837,7 +1827,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4) {
+s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
 	if (arg0 & 0x8000) {
 		if (arg0 & 0x400) {
@@ -1929,7 +1919,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * 5) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -1991,7 +1981,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2049,7 +2039,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2107,7 +2097,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2731,7 +2721,6 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 }
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-#ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	s16 objX;
 	s16 objZ;
@@ -2789,9 +2778,6 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 
 	return D_8014F854;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
-#endif
 
 /* Deactivate a particle/effect slot */
 void func_800B9954_C8904(u8 arg0) {
@@ -3298,7 +3284,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/BF9C0_late_rodata.s", "asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 #endif
 
 /* Rectangle bounding overlap test with parameter extraction */

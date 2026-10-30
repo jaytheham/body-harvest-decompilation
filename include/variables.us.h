@@ -4237,5 +4237,12 @@ extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];
 extern Gfx *D_80140A14_14F9C4[5];
 extern const ShadowGeometryConstant D_80144F08_153EB8;
-#endif /* LIBULTRA_REFERENCE */
+/* Terrain/effect constants following the frustum-culling switch table. */
+extern const f64 D_80142E68_151E18[1];
+extern const f64 D_80142E70_151E20[1];
+extern const f64 D_80142E78_151E28[1];
+extern const f64 D_80142E80_151E30[1];
+extern const f64 D_80142E88_151E38[1];
+extern const f32 D_80142E90_151E40[1];
 
+#endif /* LIBULTRA_REFERENCE */
