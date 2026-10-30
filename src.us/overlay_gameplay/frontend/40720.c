@@ -844,12 +844,11 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 #endif
 #endif
 
-#ifdef NON_MATCHING
-void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
+void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 textureIndex;
 	s32 weaponType;
-	s32 sizeX;
-	s32 sizeY;
+	s16 sizeX;
+	s16 sizeY;
 	s16 posX;
 	s16 posY;
 
@@ -867,13 +866,8 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
 	gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
 
-	{
-		s32 unused8;
-
-		scale = 2.0f;
-		arg2 = arg2 * scale;
-		arg3 = arg3 * scale;
-	}
+	arg2 = arg2 * 2;
+	arg3 = arg3 * 2;
 
 	if (weaponSlots[D_800D74AE] != 0) {
 		gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0xAA, 0xD2, 0xFF);
@@ -884,27 +878,24 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-	gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (textureIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_8025CCC0[textureIndex * 0x240]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-	sizeX = (s32)(12.0f * arg2);
-	sizeY = (s32)(12.0f * arg3);
+	sizeX = 12.0f * arg2;
+	sizeY = 12.0f * arg3;
 
 	gDPPipeSync(D_8005BB2C++);
 
 	gSPTextureRectangle(D_8005BB2C++,
-		((posX - sizeX) + 0xC) * 4,
-		((posY - sizeY) + 0xC) * 4,
-		((posX + sizeX) + 0xC) * 4,
-		((posY + sizeY) + 0xC) * 4,
+		((posX - sizeX) + 0xC) << 2,
+		((posY - sizeY) + 0xC) << 2,
+		((posX + sizeX) + 0xC) << 2,
+		((posY + sizeY) + 0xC) << 2,
 		G_TX_RENDERTILE, 0, 0,
 		(s32)((1.0f / arg2) * 1024.0f),
 		(s32)((1.0f / arg3) * 1024.0f));
 
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
-#endif
 
 void func_800722A4_42754(void) {
 	u16 perspNorm;
