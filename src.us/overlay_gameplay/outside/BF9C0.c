@@ -2978,7 +2978,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif
 
 /* Clamps arg0 to the range [arg1, arg2] */
@@ -3276,7 +3276,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/BF9C0_late_rodata.s", "asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 #endif
 
 /* Rectangle bounding overlap test with parameter extraction */
