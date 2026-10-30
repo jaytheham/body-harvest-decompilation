@@ -769,14 +769,9 @@ s32 func_80071760_41C10(s32 arg0)
 	return textWidth - totalWidth;
 }
 
-#ifdef NON_MATCHING
 void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
-	s32 slotCol;
-	s32 slotRow;
-	u8* weaponSlot;
-	s32 baseX;
-	s32 baseY;
+	s32 weaponIndex;
 	s32 sizeX;
 	s32 sizeY;
 	s16 posX;
@@ -784,61 +779,52 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 texIndex;
 
 	i = 0;
-	weaponSlot = &weaponSlots[7];
-	do {
-		u8 weapon = *weaponSlot;
+	weaponIndex = 7; do {
+		if (weaponSlots[weaponIndex] != 0) {
+			posX = arg0 - (s16)((64.0f * arg2) / 2) + (((i % 3) * 32.0) * arg2);
+			posY = arg1 - (s16)((64.0f * arg3) / 2) + (((i / 3) * 32.0) * arg3);
+			i++;
+			texIndex = D_80031474[weaponSlots[weaponIndex]];
+			sizeX = 12 * arg2;
+			sizeY = 12 * arg3;
 
-		if (weapon == 0) {
-			continue;
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+			gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+			{ Gfx* palettePacket = D_8005BB2C++; gDPTileSync(palettePacket); }
+			{ Gfx *tilePacket = D_8005BB2C++; tilePacket->force_structure_alignment =
+					((u64)(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(256, 0, 9)) << 32) |
+					_SHIFTL(G_TX_LOADTILE, 24, 3); }
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+			gDPPipeSync(D_8005BB2C++);
+
+			if (weaponSlots[weaponIndex] != 0) {
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0xAA, 0xD2, 0xFF);
+			} else {
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0x23, 0x46, 0xFF);
+			}
+
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_8025CCC0[texIndex * 0x240]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPPipeSync(D_8005BB2C++);
+
+			gSPTextureRectangle(D_8005BB2C++,
+				((posX - sizeX) + 0xC) << 2,
+				((posY - sizeY) + 0xC) << 2,
+				((posX + sizeX) + 0xC) << 2,
+				((posY + sizeY) + 0xC) << 2,
+				G_TX_RENDERTILE, 0, 0,
+				(s32)((1.0f / arg2) * 1024.0f),
+				(s32)((1.0f / arg3) * 1024.0f));
+
+			gDPPipeSync(D_8005BB2C++);
 		}
-
-		slotCol = i % 3;
-		slotRow = i / 3;
-		baseX = arg0 - (s16)((64.0f * arg2) / 2.0f);
-		baseY = arg1 - (s16)((64.0f * arg3) / 2.0f);
-		posX = (s16)(baseX + ((slotCol * 32.0) * arg2));
-		i = (i + 1) & 0xFF;
-		posY = (s16)(baseY + ((slotRow * 32.0) * arg3));
-		texIndex = D_80031474[weapon];
-		sizeX = (s16)(12.0f * arg2);
-		sizeY = (s16)(12.0f * arg3);
-
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-		gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
-		gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
-
-		if (weapon != 0) {
-			gDPSetPrimColor(D_8005BB2C++, 0, 1, 0xD2, 0xAA, 0x00, 0xFF);
-		} else {
-			gDPSetPrimColor(D_8005BB2C++, 0, 1, 0x46, 0x23, 0x00, 0xFF);
-		}
-
-		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
-		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-
-		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPPipeSync(D_8005BB2C++);
-
-		gSPTextureRectangle(D_8005BB2C++,
-			((posX - sizeX) + 0xC) * 4,
-			((posY - sizeY) + 0xC) * 4,
-			((posX + sizeX) + 0xC) * 4,
-			((posY + sizeY) + 0xC) * 4,
-			G_TX_RENDERTILE, 0, 0,
-			(s32)((1.0f / arg2) * 1024.0f),
-			(s32)((1.0f / arg3) * 1024.0f));
-
-		gDPPipeSync(D_8005BB2C++);
-	} while (weaponSlot-- >= weaponSlots);
+	} while (weaponIndex-- >= 0);
 }
-#else
-#ifdef VERSION_EU
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
-#endif
-#endif
 
 void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 textureIndex;
@@ -1135,7 +1121,11 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#endif
 #endif
 
 // display inventory models
