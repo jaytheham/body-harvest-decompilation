@@ -4133,7 +4133,6 @@ extern const f64 D_80144A58_153A08[1];
 extern const f64 D_80144A60_153A10[1];
 extern const f64 D_80144A68_153A18[1];
 extern const f64 D_80144A70_153A20[1];
-extern const f64 D_80144A78_153A28[1];
 extern const f64 D_80144A88_153A38[1];
 extern const f64 D_80144A90_153A40[1];
 extern const f64 D_80144A98_153A48[1];

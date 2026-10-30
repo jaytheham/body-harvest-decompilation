@@ -3523,7 +3523,6 @@ void func_800FC90C_10B8BC(VehicleInstance *arg0, s16 *arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800FCA5C_10BA0C(void) {
 	VehicleInstance *vehicle;
 	VehicleType *type;
@@ -3545,7 +3544,7 @@ void func_800FCA5C_10BA0C(void) {
 
 	{
 		VehicleType *typeWalker;
-		for (typeWalker = &vehicleTypes[0x13]; typeWalker-- >= &vehicleTypes[1];){
+		for (typeWalker = &vehicleTypes[0x14]; typeWalker-- >= &vehicleTypes[1];){
 			if ((currentLevel != 3) || (typeWalker != &vehicleTypes[0xD])) {
 				squaredRadius = (f32)(SQ(typeWalker->unk34 >> 1) + SQ(typeWalker->unk36 >> 1));
 				if (typeWalker->unk16 != 1) {
@@ -3624,7 +3623,8 @@ void func_800FCA5C_10BA0C(void) {
 		D_80159050[i].unk0 = D_80159050[i].unk2 = D_80159050[i].unk4 = 0;
 	}
 
-	scale = D_80144A78_153A28[0]; i = 127; do {
+	scale = 0.01;
+	i = 127; do {
 		vehicle = &vehicleInstances[i];
 		spawn = &D_80259490[i];
 		spawnValue = spawn->unk6;
@@ -3640,7 +3640,7 @@ void func_800FCA5C_10BA0C(void) {
 		}
 		vehicle->unkE = 0x4000U - spawn->unk8;
 		vehicle->unk6 = 0x4000 - spawn->unk8;
-		vehicle->unk46 = (i & 0x3F) | (vehicle->unk46 & 0xFFC0);
+		vehicle->unk46 = ((u8)i & 0x3F) | (vehicle->unk46 & 0xFFC0);
 		D_80158BD0[i] = spawn->unkE;
 		if ((spawn->unk6 != 0) || (i == 0)) {
 			vehicle->unk20 |= 0x8000 | VEHICLE_FLAG_UNK1;
@@ -3652,7 +3652,7 @@ void func_800FCA5C_10BA0C(void) {
 			func_800FC90C_10B8BC(vehicle, &spawn->unk0);
 		}
 		spawnValue = spawn->unkA;
-		if (spawnValue == 1) {
+		if ((s32)(u32)spawnValue == 1) {
 			vehicle->unk3C = 1;
 		} else {
 			vehicle->unk3C = (f32)(type->unk61 << 8) * ((f32)spawnValue * scale);
@@ -3668,9 +3668,7 @@ void func_800FCA5C_10BA0C(void) {
 		D_80159320 |= 0x20000;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FCA5C_10BA0C.s")
-#endif
+
 
 void func_800FD0EC_10C09C(void) {
 	D_80159310 += 2;
@@ -3910,7 +3908,7 @@ void func_800FD858_10C808(s16 arg0) {
 	vehicle->unk1C = vehicleTypes[vehicle->unk1A].hitPoints;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD858_10C808.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD858_10C808.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
 #endif
 
 void func_800FDB00_10CAB0(void) {
