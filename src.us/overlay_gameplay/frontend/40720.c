@@ -545,37 +545,27 @@ void func_80070CC4_41174(void)
 s16 D_80094830_64CE0 = 0x1E;
 s16 D_80094834_64CE4 = 0;
 s16 D_80094838_64CE8 = 0;
-s16 D_8009483C_64CEC = 0x1E;
-s16 D_80094840_64CF0 = 0x1E;
-s32 D_80094844_64CF4 = 0;
-s32 D_80094848_64CF8 = 0;
-s32 D_8009484C_64CFC = 0;
-s32 D_80094850_64D00 = 0;
-s32 D_80094854_64D04 = 0;
-u8 D_80094858_64D08 = 0x28;
-s32 D_8009485C_64D0C = 0;
-
-
-#ifdef NON_MATCHING
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
-	s32 i;
+	s16 i;
+	static s16 horizontalRepeatDelay = 0x1E;
+	static s16 verticalRepeatDelay = 0x1E;
 
 	D_800D74A8 = (D_800D74A4 - arg0) - 1;
 	selectedMissionBefore = D_800D74A4;
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_x < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_x >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094834_64CE4 = 1;
-		D_8009483C_64CEC = 0x1E;
+		horizontalRepeatDelay = 0x1E;
 	}
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_y < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_y >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
 		D_80094838_64CE8 = 1;
-		D_80094840_64CF0 = 0x1E;
+		verticalRepeatDelay = 0x1E;
 	}
 
-	if (D_80094834_64CE4 || --D_8009483C_64CEC == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x14 || isButtonNewlyPressed(0, 0x200)) {
+	if (D_80094834_64CE4 || --horizontalRepeatDelay == 0) {
+		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
@@ -585,28 +575,22 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 						} else {
 						D_800D74AC--;
 						}
-						i--;
 
-					if (D_800AED78[D_800D74AC] != 0 && D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
+					if (D_800AED78[D_800D74AC] != 0 && ((FrontendItemRenderData(*)[13])D_800942E0_64790)[currentLevel][D_800D74AC - 13].displayList != NULL) {
 						break;
 					}
-				} while ((s16)i >= 0);
+				} while (--i >= 0);
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
 						func_800153D8_15FD8(0xCB);
 					}
 				break;
-			case 1:
-				i = 8;
-				do {
-					if (D_800D74AE < 8) {
-						D_800D74AE++;
-					} else {
+			case 1: i = 8; do {
+					if (D_800D74AE++ >= 8) {
 						D_800D74AE = 0;
 					}
-					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && --i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
@@ -618,35 +602,25 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 
 			D_80094834_64CE4 = 0;
-			if (D_8009483C_64CEC < 8) {
-				D_8009483C_64CEC = 8;
+			if (horizontalRepeatDelay < 8) {
+				horizontalRepeatDelay = 8;
 			}
 		}
 
-		if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+		if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
-				while (1) {
-						if (D_800D74AC >= 0xD) {
-							D_800D74AC = 0;
-						} else {
+				do {
+					if (D_800D74AC >= 0xD) {
+						D_800D74AC = 0;
+					} else {
 						D_800D74AC++;
-						}
-						i--;
-
-					if (D_800AED78[D_800D74AC] != 0) {
-						if (D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
-							break;
-						}
 					}
-
-					if ((s16)i >= 0) {
-						continue;
+					if (D_800AED78[D_800D74AC] != 0 && ((FrontendItemRenderData(*)[13])D_800942E0_64790)[currentLevel][D_800D74AC - 13].displayList != NULL) {
+						break;
 					}
-
-					break;
-				}
+				} while (--i >= 0);
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
@@ -656,13 +630,10 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			case 1:
 				i = 8;
 				do {
-					if (D_800D74AE > 0) {
-						D_800D74AE--;
-					} else {
+					if (D_800D74AE-- <= 0) {
 						D_800D74AE = 7;
 					}
-					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && --i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
@@ -673,21 +644,21 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 
 			D_80094834_64CE4 = 0;
-			if (D_8009483C_64CEC < 8) {
-				D_8009483C_64CEC = 8;
+			if (horizontalRepeatDelay < 8) {
+				horizontalRepeatDelay = 8;
 			}
 		}
 	}
 
-	if (D_80094838_64CE8 || --D_80094840_64CF0 == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_y >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
+	if (D_80094838_64CE8 || --verticalRepeatDelay == 0) {
+		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
 			if (arg1 == 0) {
 				D_800D74A4 = 0x48;
 			}
 
 			D_80094838_64CE8 = 0;
-			if (D_80094840_64CF0 < 8) {
-				D_80094840_64CF0 = 8;
+			if (verticalRepeatDelay < 8) {
+				verticalRepeatDelay = 8;
 			}
 
 			if (selectedMissionBefore != D_800D74A4) {
@@ -695,14 +666,14 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 		}
 
-		if (currentControllerStates[CONTROLLER_ONE].stick_y < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+		if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
 			D_80094838_64CE8 = 0;
 			if (arg1 == 0) {
 				D_800D74A4 = 0x4A;
 			}
 
-			if (D_80094840_64CF0 < 8) {
-				D_80094840_64CF0 = 8;
+			if (verticalRepeatDelay < 8) {
+				verticalRepeatDelay = 8;
 			}
 
 			if (selectedMissionBefore != D_800D74A4) {
@@ -711,13 +682,16 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 		}
 	}
 }
-#else
-#ifdef VERSION_EU
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
-#endif
-#endif
+
+s32 D_80094844_64CF4 = 0;
+s32 D_80094848_64CF8 = 0;
+s32 D_8009484C_64CFC = 0;
+s32 D_80094850_64D00 = 0;
+s32 D_80094854_64D04 = 0;
+u8 D_80094858_64D08 = 0x28;
+s32 D_8009485C_64D0C = 0;
+
+
 
 void func_8007166C_41B1C(void)
 {
@@ -863,7 +837,11 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	} while (weaponSlot-- >= weaponSlots);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#endif
 #endif
 
 #ifdef NON_MATCHING
