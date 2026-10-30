@@ -1702,12 +1702,12 @@ void func_80075B64_46014(s16 arg0) {
 
 // Show version info on title screen if slot 3 named GRIMLN
 void func_80075C84_46134(void) {
-	if (D_800D6DA8[0xE] == 0x47) {
-		if (D_800D6DA8[0xF] == 0x52) {
-			if (D_800D6DA8[0x13] == 0x4E) {
-				if (D_800D6DA8[0x11] == 0x4D) {
-					if (D_800D6DA8[0x12] == 0x4C) {
-						if (D_800D6DA8[0x10] == 0x49) {
+	if (D_800D6DA8[2][0] == 0x47) {
+		if (D_800D6DA8[2][1] == 0x52) {
+			if (D_800D6DA8[2][5] == 0x4E) {
+				if (D_800D6DA8[2][3] == 0x4D) {
+					if (D_800D6DA8[2][4] == 0x4C) {
+						if (D_800D6DA8[2][2] == 0x49) {
 							drawText(&D_800ADC18_7E0C8, 0x14, 0x14, 0x12C, 0xF0);
 							drawText(&D_800ADC1C_7E0CC, 1, 0, &D_800ADC30_7E0E0, &D_800ADC3C_7E0EC);
 							drawText(&D_800ADC48_7E0F8, 1, 1);
@@ -2016,8 +2016,8 @@ s16 func_80076C98_47148(void) {
 		do {
 			D_800D6D90[saveFile] = func_80002A88_3688(saveFile);
 			D_800D6D98[saveFile] = func_80002B20_3720(saveFile);
-			getSaveFileName(saveFile, &D_800D6DA8[saveFile * 7]);
-			if (D_800D6DA8[saveFile * 7 + 1] != 'm') {
+			getSaveFileName(saveFile, D_800D6DA8[saveFile]);
+			if (D_800D6DA8[saveFile][1] != 'm') {
 				hasCorruptSave = 1;
 			}
 		} while (saveFile--);
@@ -2368,19 +2368,17 @@ s32 func_80077344_477F4(void) {
 }
 
 // doDeleteFile
-#ifdef NON_MATCHING
 s32 func_80077494_47944(void) {
   u32 frameCounter;
   s32 i;
+  s32 nameIndex;
   s32 foundSelectableFile;
   s32 state;
-  s16 saveSlot;
-  s16* selectedSaveSlot;
+  s32 saveSlot;
 
   frameCounter = 0;
-  foundSelectableFile = 0;
-  selectedSaveSlot = &D_800D74A4;
   state = 1;
+  foundSelectableFile = 0;
 
   func_800708B8_40D68(1);
   func_800708B8_40D68(5);
@@ -2388,26 +2386,27 @@ s32 func_80077494_47944(void) {
   func_80070514_409C4(0x33);
 
   currentSaveFileIndex = 0;
-  i = 0;
-  if (0 < 3) {
+  i = currentSaveFileIndex;
+  nameIndex = 0;
+  if (i < 3) {
 	do {
-	  getSaveFileName(i, &D_800D6DA8[i * 7]);
+	  getSaveFileName(i, D_800D6DA8[nameIndex]);
 	  saveSlot = i + 2;
 
-	  if (D_800D6DA8[(i * 7) + 1] == 0x6D) {
+	  if (D_800D6DA8[nameIndex][1] == 0x6D) {
 		func_80070A8C_40F3C(saveSlot); // If the second letter of filename is "m" it cannot be copied or deleted
 	  } else {
 		func_80070B68_41018(saveSlot);
 		if (foundSelectableFile == 0) {
-		  *selectedSaveSlot = saveSlot;
+		  frontendSelectedEntry = saveSlot;
 		  foundSelectableFile = 1;
 		}
 	  }
 	  i++;
+	  nameIndex++;
 	} while (i < 3);
   }
 
-  selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
   D_800909B0[4].unk25 = 0;
 
@@ -2417,7 +2416,7 @@ s32 func_80077494_47944(void) {
 	  func_8007166C_41B1C();
 
 	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		if (D_800D6DA8[((*selectedSaveSlot - 2) * 7) + 1] != 0x6D) {
+		if (D_800D6DA8[(0, frontendSelectedEntry - 2)][1] != 0x6D) {
 		  state = 2;
 		}
 	  }
@@ -2439,7 +2438,7 @@ s32 func_80077494_47944(void) {
 
   func_800153D8_15FD8(0xC8);
 
-  currentSaveFileIndex = *selectedSaveSlot - 2;
+  currentSaveFileIndex = frontendSelectedEntry - 2;
   if ((state != 0) && (func_80077204_476B4() == 2)) {
 	D_800476A0 = 3;
   }
@@ -2450,9 +2449,6 @@ s32 func_80077494_47944(void) {
 
   return currentSaveFileIndex;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077494_47944.s")
-#endif
 
 // doCopyFile
 #ifdef NON_MATCHING
@@ -2485,7 +2481,7 @@ s32 func_800776BC_47B6C(void) {
   i = 0;
   if (0 < 3) {
 	selectedSaveSlot = &D_800D74A4;
-	saveName = D_800D6DA8;
+	saveName = D_800D6DA8[0];
 	do {
 	  getSaveFileName(i, saveName);
 	  saveSlot = i + 2;
@@ -2508,7 +2504,7 @@ s32 func_800776BC_47B6C(void) {
   func_8007166C_41B1C();
   D_800909B0[4].unk25 = 0;
   sourceFileIndexPtr = &D_80047F88;
-  saveNameBase = D_800D6DA8;
+  saveNameBase = D_800D6DA8[0];
   saveNameStride = 7;
 
   do {
@@ -2640,7 +2636,7 @@ s32 func_800779FC_47EAC(void) {
 	D_800D6D90[D_80047F84] = temp;
 	temp = func_80002B20_3720(D_80047F84);
 	D_800D6D98[D_80047F84] = temp;
-	func_80002AB4(D_80047F84, &D_800D6DA8[D_80047F84 * 7]);
+	func_80002AB4(D_80047F84, D_800D6DA8[D_80047F84]);
 
 	while (state == 1) {
 		if (frameCounter < 0x3E8U) {
