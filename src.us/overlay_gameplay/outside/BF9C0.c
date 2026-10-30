@@ -1819,7 +1819,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4) {
+s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
 	if (arg0 & 0x8000) {
 		if (arg0 & 0x400) {
@@ -1911,7 +1911,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * 5) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -1973,7 +1973,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2031,7 +2031,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
@@ -2089,7 +2089,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				Vtx *v = copiedBase + (y * cols) + x;
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, arg6)) {
+					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
 						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						s16 idx = ++sp12C.counts[b];
 
