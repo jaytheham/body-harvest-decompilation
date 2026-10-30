@@ -5866,3 +5866,5 @@ frontendSelectedEntry = D_800D74A4;
 
 D_80047F88 = currentSaveFileIndex + 4;
 D_80047F8C = currentSaveFileIndex + 8;
+
+frontendFileNameWrite = D_80047FA8;

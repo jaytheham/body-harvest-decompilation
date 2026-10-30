@@ -2950,17 +2950,13 @@ s32 func_80078110_485C0(void) {
 }
 
 // doChooseFileNameLoop
-#ifdef NON_MATCHING
 s32 func_80078424_488D4(void) {
 	s32 state;
 	u32 frameCounter;
-	s16 nameLength;
 	s32 changed;
-	s32 i;
+	s16 nameLength;
 	u8 backupName[6];
-	u8 typedName[7];
-	s16 textWidth;
-	MissionData* entry;
+	s32 i;
 
 	D_800D74A6 = 0x16;
 	D_800D74A4 = D_800D74A6;
@@ -2968,17 +2964,14 @@ s32 func_80078424_488D4(void) {
 	state = 1;
 	nameLength = 0;
 
-	i = 5;
-	do {
+	i = 5; do {
 		backupName[i] = D_80047FA8[i];
 		D_80047FA8[i] = 0x20;
-	} while (i-- != 0);
+	} while (i--);
 
 	func_80070514_409C4(0x15);
-	D_800909B0[50].unk0 = 0xA0;
-	D_800909B0[50].unk2 = 0x88;
-	D_800909B0[50].unk4 = 0xD2;
-	D_800909B0[50].unk6 = 0xC2;
+	D_800909B0[50].unk0 = 0xA0; D_800909B0[50].unk2 = 0x88;
+	D_800909B0[50].unk4 = 0xD2; D_800909B0[50].unk6 = 0xC2;
 	D_800909B0[50].unkC = 0x30;
 	D_800909B0[50].unkA = 0;
 	D_800909B0[50].unk10 = 0x23;
@@ -2989,23 +2982,15 @@ s32 func_80078424_488D4(void) {
 	D_800909B0[22].unk1C = 1;
 
 	while (state == 1) {
+		MissionData *entry;
+
 		changed = 0;
 
 		if ((frameCounter < 0x1C) && ((frameCounter & 3) == 0)) {
-			s32 step;
-			s16 leftChar;
-			s16 rightChar;
-			s16 centerChar;
-
-			step = (s32)(frameCounter >> 2);
-			leftChar = (s16)(step + 0x24);
-			rightChar = (s16)(0x23 - step);
-			centerChar = (s16)(0x31 - step);
-
-			func_80070514_409C4((s16)(step + 0x16));
-			func_80070514_409C4(rightChar);
-			func_80070514_409C4(leftChar);
-			func_80070514_409C4(centerChar);
+			func_80070514_409C4((frameCounter >> 2) + 0x16);
+			func_80070514_409C4(0x23 - (frameCounter >> 2));
+			func_80070514_409C4((frameCounter >> 2) + 0x24);
+			func_80070514_409C4(0x31 - (frameCounter >> 2));
 		}
 
 		if (nameLength == 0) {
@@ -3020,8 +3005,7 @@ s32 func_80078424_488D4(void) {
 				switch (D_800D74A4) {
 				case 0x30:
 					if (nameLength > 0) {
-						nameLength--;
-						D_80047FA8[nameLength] = 0x20;
+						frontendFileNameWrite[--nameLength] = 0x20;
 						changed = 1;
 					}
 
@@ -3053,8 +3037,7 @@ s32 func_80078424_488D4(void) {
 
 				default:
 					if (nameLength < 6) {
-						D_80047FA8[nameLength] = (u8)(D_800D74A4 + 0x2B);
-						nameLength++;
+						frontendFileNameWrite[nameLength++] = D_800D74A4 + 0x2B;
 						changed = 1;
 					}
 
@@ -3087,25 +3070,21 @@ s32 func_80078424_488D4(void) {
 		}
 
 		if (changed != 0) {
-			s32 len;
+			s16 textWidth;
+			u8 typedName[7];
 
-			len = 0;
-			if (D_80047FA8[0] != 0x20) {
-				typedName[0] = D_80047FA8[0];
-				len = 1;
-				while ((len < 6) && (D_80047FA8[len] != 0x20)) {
-					typedName[len] = D_80047FA8[len];
-					len++;
-				}
+			i = 0;
+			while ((i < 6) && (D_80047FA8[i] != 0x20)) {
+				typedName[i] = D_80047FA8[i];
+				i++;
 			}
-
-			typedName[len] = 0;
-			textWidth = (s16)(func_8000A2B8_AEB8(typedName, 0) + 0x30);
+			typedName[i] = 0;
+			textWidth = func_8000A2B8_AEB8(typedName, 0) + 0x30;
 			D_800909B0[50].unk0 = D_800909B0[50].unk2;
 			D_800909B0[50].unk4 = D_800909B0[50].unk6;
 			D_800909B0[50].unkA = D_800909B0[50].unkC;
 			D_800909B0[50].unkE = D_800909B0[50].unk10;
-			D_800909B0[50].unk2 = (s16)(0xA0 - (textWidth >> 1));
+			D_800909B0[50].unk2 = 0xA0 - (textWidth >> 1);
 			D_800909B0[50].unkC = textWidth;
 
 			func_80070494_40944(0x32)->unk16 = 0;
@@ -3140,9 +3119,6 @@ s32 func_80078424_488D4(void) {
 	(void)backupName;
 	return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
-#endif
 
 // startFile (unused?)
 // AI - Starts a new file at level 1 and enters the gameplay/frontend transition loop (func_80006DDC_79DC).

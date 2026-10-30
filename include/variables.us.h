@@ -874,6 +874,7 @@ extern s32 D_80047F98; // beacon states - how many save beacons have been deploy
 extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0; // stage of level
 extern u8 D_80047FA8[6]; /* save data bytes */
+extern u8 frontendFileNameWrite[6];
 extern u8 D_80047FAE;
 extern u8 D_80047FAE_NameEnd;
 extern SaveSummary D_80047FB8[5];

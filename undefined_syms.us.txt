@@ -7040,3 +7040,5 @@ D_80031420_Options = 0x80031420;
 D_8015EA28_Read = D_8015EA28;
 
 frontendSelectedEntry = D_800D74A4;
+
+frontendFileNameWrite = D_80047FA8;
