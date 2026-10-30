@@ -3050,10 +3050,19 @@ typedef struct {
 typedef struct {
     s16 position[3];
     u8 color[3];
-    u8 pad9;
-    u8 active;
+    u8 lifetime;
+    u8 kind;
     u8 padB;
-} SparkEmitterState; /* size = 0x0C */
+    s16 radius;
+} SparkEmitterState; /* size = 0x0E */
+
+typedef struct {
+    s16 position[3];
+    s8 velocity[3];
+    u8 opacity;
+    u8 age;
+    u8 padB;
+} SparkParticleState; /* size = 0x0C */
 
 typedef struct {
 	/* 0x00 */ s16 position[3];
@@ -3137,6 +3146,7 @@ typedef struct {
 		EffectInterpolationState interpolation;
 		AnimatedFlareState animatedFlare;
 		FallingRibbonParticleState fallingRibbon;
+		SparkEmitterState sparkEmitter;
 		Unk80154318Sub ribbonState;
 		JetStreamParticleState jetStreamParticle;
 		struct {
@@ -3149,7 +3159,7 @@ typedef struct {
 				/* 0x08 */ TrailParticleState trailParticle;
 				/* 0x08 */ ChunkEffectState chunkEffect;
 				/* 0x08 */ ChunkMotionState chunkMotion;
-				/* 0x08 */ SparkEmitterState sparkEmitter;
+				/* 0x08 */ SparkParticleState sparkParticle;
 				/* 0x08 */ SpurtVisualState spurtVisual;
 				/* 0x08 */ NukeEffectState nukeEffect;
 				/* 0x08 */ SpurtEmitterState spurtEmitter;

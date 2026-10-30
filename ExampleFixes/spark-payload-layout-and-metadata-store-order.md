@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800C4F48_D3EF8`, a direct field-address payload pointer lets IDO fold the particle's eight-byte header into every access. Declaring the pointer locals after the vector puts that vector at `sp+0x3C` instead of `sp+0x34`. Writing opacity and age before the final velocity assignment lets their byte stores move ahead of the Y multiplication and changes the scratch-register rotation.
+
+-> `code changed`: Define the emitter's signed radius and the particle's signed velocity array in typed payload views. Put the extended emitter view in the outer pool-entry union so the entry stride remains `0x1C`. Declare both payload pointers before the vector and preserve the payload address through an integer cast. In C, assign all three velocity components before assigning opacity and age.
+
+-> `correct ASM`: Both particle branches form a pointer at pool-entry offset eight. The `0x48` frame contains the vector at `sp+0x34` and the saved unit index at `sp+0x32`. IDO emits the opacity and age stores after the Z stack load and before the final multiplication, with the target scratch registers. All 309 instructions match.

@@ -1786,73 +1786,70 @@ void func_800C4CB8_D3C68(void) {
 	}
 }
 
-// spawn particle?
-#ifdef NON_MATCHING
+// Spark particle allocation.
 void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
-	Vec3f sp34;
-	s16 idx;
-	s16 sp30;
-	s16 sp2E;
-	s16 temp;
-	Unk80154318Sub *effectUnit;
-	Unk80154318Sub *newUnit;
+	SparkEmitterState *effectUnit;
+	SparkParticleState *newUnit;
+	Vec3f velocity;
+	s16 unitId;
+	s16 offsetX;
+	s16 offsetY;
+	s16 offsetZ;
 
-	effectUnit = (Unk80154318Sub *)&D_80154318[D_80154088[arg0].unk6].unk8;
-	idx = func_800C17B4_D0764(arg0, 0);
-	if (idx == -3) {
+	effectUnit = (SparkEmitterState *)(s32)D_80154318[D_80154088[arg0].unk6].payload;
+	unitId = func_800C17B4_D0764(arg0, 0);
+	if (unitId == -3) {
 		return;
 	}
 
-	if (effectUnit->unkA == 1) {
-		newUnit = (Unk80154318Sub *)&D_80154318[idx].unk8;
-		newUnit->unk0 = effectUnit->unk0;
-		newUnit->unk2 = effectUnit->unk2;
-		newUnit->unk4 = effectUnit->unk4;
+	if (effectUnit->kind == 1) {
+		newUnit = (SparkParticleState *)(s32)D_80154318[unitId].payload;
+		newUnit->position[0] = effectUnit->position[0];
+		newUnit->position[1] = effectUnit->position[1];
+		newUnit->position[2] = effectUnit->position[2];
 
-		sp34.x = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC0_152F70[0]);
+		velocity.x = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC0_152F70[0]);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp34.x = 0.0f - sp34.x;
+			velocity.x = 0.0f - velocity.x;
 		}
-		sp34.x += arg1->x;
+		velocity.x += arg1->x;
 
-		sp34.y = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC8_152F78[0]);
+		velocity.y = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC8_152F78[0]);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp34.y = 0.0f - sp34.y;
+			velocity.y = 0.0f - velocity.y;
 		}
-		sp34.y += arg1->y;
+		velocity.y += arg1->y;
 
-		sp34.z = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FD0_152F80[0]);
+		velocity.z = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FD0_152F80[0]);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
-			sp34.z = 0.0f - sp34.z;
+			velocity.z = 0.0f - velocity.z;
 		}
-		sp34.z += arg1->z;
+		velocity.z += arg1->z;
 
-		func_800C1024_CFFD4(&sp34, &sp34);
-		newUnit->unk6 = (s8)(s32)((f32)(arg2 / 4) * sp34.x);
-		newUnit->unk7 = (s8)(s32)((f32)(arg2 / 4) * sp34.y);
-		newUnit->unk9 = 0xFF;
-		newUnit->unkA = 0;
-		newUnit->unk8 = (s8)(s32)((f32)(arg2 / 4) * sp34.z);
+		func_800C1024_CFFD4(&velocity, &velocity);
+		newUnit->velocity[0] = (f32)(arg2 / 4) * velocity.x;
+		newUnit->velocity[1] = (f32)(arg2 / 4) * velocity.y;
+		newUnit->velocity[2] = (f32)(arg2 / 4) * velocity.z;
+		newUnit->opacity = 0xFF;
+		newUnit->age = 0;
 		return;
 	}
 
-	sp30 = (func_800038E0_44E0() % (*(s16 *)&effectUnit->unkC * 2)) - *(s16 *)&effectUnit->unkC;
-	sp2E = (func_800038E0_44E0() % (*(s16 *)&effectUnit->unkC * 2)) - *(s16 *)&effectUnit->unkC;
-	temp = (func_800038E0_44E0() % (*(s16 *)&effectUnit->unkC * 2)) - *(s16 *)&effectUnit->unkC;
-	newUnit = (Unk80154318Sub *)&D_80154318[idx].unk8;
-	newUnit->unk0 = effectUnit->unk0 + sp30;
-	newUnit->unk2 = effectUnit->unk2 + sp2E;
-	newUnit->unk4 = effectUnit->unk4 + temp;
+	offsetX = (func_800038E0_44E0() % (effectUnit->radius * 2)) - effectUnit->radius;
+	offsetY = (func_800038E0_44E0() % (effectUnit->radius * 2)) - effectUnit->radius;
+	offsetZ = (func_800038E0_44E0() % (effectUnit->radius * 2)) - effectUnit->radius;
+	newUnit = (SparkParticleState *)(s32)D_80154318[unitId].payload;
+	newUnit->position[0] = effectUnit->position[0] + offsetX;
+	newUnit->position[1] = effectUnit->position[1] + offsetY;
+	newUnit->position[2] = effectUnit->position[2] + offsetZ;
 
-	newUnit->unk6 = (s8)-(sp30 / effectUnit->unk9);
-	newUnit->unk7 = (s8)-(sp2E / effectUnit->unk9);
-	newUnit->unk8 = (s8)-(temp / effectUnit->unk9);
-	newUnit->unk9 = 0xC;
-	newUnit->unkA = 0;
+	newUnit->velocity[0] = -(offsetX / effectUnit->lifetime);
+	newUnit->velocity[1] = -(offsetY / effectUnit->lifetime);
+	newUnit->velocity[2] = -(offsetZ / effectUnit->lifetime);
+	newUnit->opacity = 0xC;
+	newUnit->age = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C4F48_D3EF8.s")
-#endif
+
 
 // Spark emitter allocation.
 #ifdef NON_MATCHING
@@ -1897,7 +1894,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 
 	entry->sparkEmitter.position[0] = arg0;
 	entry->sparkEmitter.position[2] = arg2;
-	entry->sparkEmitter.active = 1;
+	entry->sparkEmitter.kind = 1;
 
 	sp44.x = arg3;
 	sp44.y = arg4;
