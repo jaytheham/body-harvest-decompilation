@@ -8437,7 +8437,7 @@ void func_8010C4EC_11B49C(VehicleInstance *arg0) {
 			} else if (D_80159D64->unk16 == 1) {
 				D_80159D54 = vehicleTypes[temp_v0].unkC;
 			} else {
-				D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * D_80144CF8_153CA8.value);
+				D_80159D54 = (f32)(vehicleTypes[temp_v0].unkC * 1.2);
 			}
 			D_80159D54 *= D_80159D54;
 			return;
@@ -8513,7 +8513,7 @@ void func_8010CA38_11B9E8(VehicleInstance *arg0) {
 		} else if (D_80159D68->unk16 == 1) {
 			D_80159D58 = vehicleTypes[temp_v0].unkC;
 		} else {
-			D_80159D58 = (f32)(vehicleTypes[temp_v0].unkC * D_80144D00_153CB0.value);
+			D_80159D58 = (f32)(vehicleTypes[temp_v0].unkC * 1.2);
 		}
 		D_80159D58 *= D_80159D58;
 		return;
@@ -8839,8 +8839,8 @@ s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstan
 		xHit = x2 = (interceptMain - interceptEdge) / (slopeEdge - slopeMain[0]);
 		zHit = z2 = (slopeMain[0] * xHit) + interceptMain;
 
-		if ((D_80144D08_153CB8[0] < zHit) || (zHit < -32768.0) ||
-			(D_80144D10_153CC0[0] < xHit) || (xHit < -32768.0))
+		if ((32767.0 < zHit) || (zHit < -32768.0) ||
+			(32767.0 < xHit) || (xHit < -32768.0))
 		{
 			*arg2 = -0x7FFF;
 			*arg3 = -0x7FFF;
