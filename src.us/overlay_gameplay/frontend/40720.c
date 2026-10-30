@@ -31,8 +31,43 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
-#ifdef NON_MATCHING
-// AI - Frontend overlay entry point; dispatches frontend actions (6=end-game comet movie + credits, 7=end-game message).
+// Frontend animation/frame data
+s16 D_800946E0_64B90[0x70] = {
+    0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0103, 0x0000, 0xFFF8, 0xFFC0, 0x0008, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0xFFF8, 0xFFC4, 0xFFFD, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0x0012, 0xFFF8, 0x0001, 0x0000, 0x0000, 0x0000,
+    0x0103, 0x0000, 0x0005, 0xFFC1, 0x0006, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0x0002, 0xFFC3, 0xFFFF, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0x0000, 0x000C, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0x0000, 0x0032, 0x0004, 0x0000, 0x0000, 0x0000,
+    0x0102, 0x0000, 0x0000, 0x000F, 0x0002, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0xFFE6, 0x002C, 0xFFFE, 0x0000, 0x0000, 0x0000,
+    0x0103, 0x0000, 0xFFF1, 0xFFD8, 0xFFF9, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0xFFFA, 0xFFDA, 0x0015, 0x0000, 0x0000, 0x0000,
+    0xFFFF, 0x0000, 0x001A, 0x002B, 0xFFFD, 0x0000, 0x0000, 0x0000,
+    0x01FF, 0x0000, 0x000C, 0xFFD9, 0xFFFB, 0x0000, 0x0000, 0x0000,
+};
+
+// Weapon selection text pointers
+s32 D_800947C0_64C70[6] = {
+    0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)D_800AD700_7DBB0,
+};
+s32 D_800947D8_64C88[3] = {
+    (s32)D_800AD704_7DBB4, (s32)D_800AD70C_7DBBC, (s32)D_800AD718_7DBC8,
+};
+s32 D_800947E4_64C94[3] = {
+    (s32)D_800AD720_7DBD0, (s32)D_800AD734_7DBE4, (s32)D_800AD73C_7DBEC,
+};
+s32 D_800947F0_64CA0[13] = {
+    (s32)D_800AD744_7DBF4, (s32)D_800AD758_7DC08, (s32)D_800AD760_7DC10, (s32)D_800AD768_7DC18, (s32)D_800AD774_7DC24,
+    (s32)D_800AD780_7DC30, (s32)D_800AD790_7DC40, (s32)D_800AD79C_7DC4C, (s32)D_800AD7AC_7DC5C, (s32)D_800AD7B0_7DC60,
+    0x00000000, 0x00000000, 0x00000000,
+};
+
+s16 D_80094824_64CD4 = 0;
+s16 D_80094828_64CD8 = 0;
+// Frontend overlay entry point; dispatches frontend actions.
 s32 func_80070270_40720(s32 arg0) {
 		switch (arg0) {
 		case 1:
@@ -53,30 +88,23 @@ s32 func_80070270_40720(s32 arg0) {
 		case 6:
 				func_80076504_469B4();
 				break;
-		case 7:
+		case 13:
 				func_8007685C_46D0C();
 				break;
-		case 8:
-				return func_8007CFB4_4D464(1);
 		case 9:
+				return func_8007CFB4_4D464(1);
+		case 14:
 				return func_8007CFB4_4D464(0);
-		case 10:
-				return func_8007D2B0_4D760();
 		case 11:
+				return func_8007D2B0_4D760();
+		case 12:
 				D_800946DC_64B8C = FE_STATE_PRESS_START;
 				func_800789E4_48E94();
-				break;
-		case 12:
-		case 13:
-		case 14:
 				break;
 		}
 
 		return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070270_40720.s")
-#endif
 
 // calculatePlayersTotalScore
 s32 func_80070390_40840(void) {
@@ -440,49 +468,36 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
   }
 }
 
-#ifdef NON_MATCHING
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	MissionDataNav* selectedFileData;
+	MissionData* selectedFileData;
 	s32 playAltMoveSfx = 0;
+	static s16 horizontalRepeatDelay = 0x1E;
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_x < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_x >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094824_64CD4 = 1;
-		D_8009482C_64CDC = 0x1E;
+		horizontalRepeatDelay = 0x1E;
 	}
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_y < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_y >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
 		D_80094828_64CD8 = 1;
 		D_80094830_64CE0 = 0x1E;
 	}
 
+	selectedFileData = &D_800909B0[D_800D74A4];
 	selectedFileIndex = D_800D74A4;
-	selectedFileData = ((MissionDataNav*)D_800909B0) + selectedFileIndex;
 
-	if (D_80094824_64CD4 || --D_8009482C_64CDC == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x14 || isButtonNewlyPressed(0, 0x200)) {
-			selectedFileIndex = selectedFileData->unk22;
-			if (selectedFileIndex != 0) {
-				while (1) {
-					if (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-						selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk22;
-						if (selectedFileIndex != 0) {
-							continue;
-						}
-					}
-					break;
-				}
-			}
-		} else if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
-			selectedFileIndex = selectedFileData->unk23;
-			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk23;
-					if (selectedFileIndex == 0) {
-						break;
-					}
-				}
+	if (D_80094824_64CD4 || --horizontalRepeatDelay == 0) {
+		if ((D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) && selectedFileData->unk22 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk22;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
+		} else if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+			if (selectedFileData->unk23 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk23;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
 			}
 		}
 	}
@@ -490,34 +505,24 @@ void func_80070CC4_41174(void)
 	if (selectedFileIndex != D_800D74A4 && selectedFileIndex != 0) {
 		D_800D74A4 = selectedFileIndex;
 		D_80094824_64CD4 = 0;
-		if (D_8009482C_64CDC < 8) {
-			D_8009482C_64CDC = 8;
+		if (horizontalRepeatDelay < 8) {
+			horizontalRepeatDelay = 8;
 		}
 		func_800153D8_15FD8(0xC9);
 		return;
 	}
 
-	if (D_80094828_64CD8 || --D_80094830_64CE0 == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_y >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
-			selectedFileIndex = selectedFileData->unk24;
-			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk24;
-					if (selectedFileIndex == 0) {
-						break;
-					}
-				}
+	if (D_80094828_64CD8 || (D_80094830_64CE0 = D_80094830_64CE0 - 1) == 0) {
+		if ((D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) && selectedFileData->unk24 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk24;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
 				playAltMoveSfx = 1;
-			}
-		} else if (currentControllerStates[CONTROLLER_ONE].stick_y < -0x14 || isButtonNewlyPressed(0, 0x400)) {
-			selectedFileIndex = selectedFileData->unk25;
-			if (selectedFileIndex != 0) {
-				while (((MissionDataNav*)D_800909B0)[selectedFileIndex].unk1C == 3) {
-					selectedFileIndex = ((MissionDataNav*)D_800909B0)[selectedFileIndex].unk25;
-					if (selectedFileIndex == 0) {
-						break;
-					}
-				}
+		} else if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+			if (selectedFileData->unk25 != 0) {
+				do {
+					selectedFileIndex = D_800909B0[selectedFileIndex].unk25;
+				} while (selectedFileIndex != 0 && D_800909B0[selectedFileIndex].unk1C == 3);
 			}
 		}
 	}
@@ -535,30 +540,32 @@ void func_80070CC4_41174(void)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80070CC4_41174.s")
-#endif
 
-#ifdef NON_MATCHING
+/* Keep these definitions after the function-local repeat timer in data order. */
+s16 D_80094830_64CE0 = 0x1E;
+s16 D_80094834_64CE4 = 0;
+s16 D_80094838_64CE8 = 0;
 void func_800710D8_41588(s16 arg0, s16 arg1) {
 	s16 selectedMissionBefore;
-	s32 i;
+	s16 i;
+	static s16 horizontalRepeatDelay = 0x1E;
+	static s16 verticalRepeatDelay = 0x1E;
 
 	D_800D74A8 = (D_800D74A4 - arg0) - 1;
 	selectedMissionBefore = D_800D74A4;
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_x < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_x >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
+	if (D_8004758A < 0x15 && D_8004758A >= -0x14 && !isButtonNewlyPressed(0, 0x300)) {
 		D_80094834_64CE4 = 1;
-		D_8009483C_64CEC = 0x1E;
+		horizontalRepeatDelay = 0x1E;
 	}
 
-	if (currentControllerStates[CONTROLLER_ONE].stick_y < 0x15 && currentControllerStates[CONTROLLER_ONE].stick_y >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
+	if (D_8004758B < 0x15 && D_8004758B >= -0x14 && !isButtonNewlyPressed(0, 0xC00)) {
 		D_80094838_64CE8 = 1;
-		D_80094840_64CF0 = 0x1E;
+		verticalRepeatDelay = 0x1E;
 	}
 
-	if (D_80094834_64CE4 || --D_8009483C_64CEC == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x14 || isButtonNewlyPressed(0, 0x200)) {
+	if (D_80094834_64CE4 || --horizontalRepeatDelay == 0) {
+		if (D_8004758A < -0x14 || isButtonNewlyPressed(0, 0x200)) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
@@ -568,28 +575,22 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 						} else {
 						D_800D74AC--;
 						}
-						i--;
 
-					if (D_800AED78[D_800D74AC] != 0 && D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
+					if (D_800AED78[D_800D74AC] != 0 && ((FrontendItemRenderData(*)[13])D_800942E0_64790)[currentLevel][D_800D74AC - 13].displayList != NULL) {
 						break;
 					}
-				} while ((s16)i >= 0);
+				} while (--i >= 0);
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
 						func_800153D8_15FD8(0xCB);
 					}
 				break;
-			case 1:
-				i = 8;
-				do {
-					if (D_800D74AE < 8) {
-						D_800D74AE++;
-					} else {
+			case 1: i = 8; do {
+					if (D_800D74AE++ >= 8) {
 						D_800D74AE = 0;
 					}
-					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && --i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
@@ -601,35 +602,25 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 
 			D_80094834_64CE4 = 0;
-			if (D_8009483C_64CEC < 8) {
-				D_8009483C_64CEC = 8;
+			if (horizontalRepeatDelay < 8) {
+				horizontalRepeatDelay = 8;
 			}
 		}
 
-		if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
+		if (D_8004758A >= 0x15 || isButtonNewlyPressed(0, 0x100)) {
 			switch (arg1) {
 			case 2:
 					i = 0xD;
-				while (1) {
-						if (D_800D74AC >= 0xD) {
-							D_800D74AC = 0;
-						} else {
+				do {
+					if (D_800D74AC >= 0xD) {
+						D_800D74AC = 0;
+					} else {
 						D_800D74AC++;
-						}
-						i--;
-
-					if (D_800AED78[D_800D74AC] != 0) {
-						if (D_800942E0_64790[((((currentLevel << 2) - currentLevel) << 2) + currentLevel - 13) + D_800D74AC].displayList != NULL) {
-							break;
-						}
 					}
-
-					if ((s16)i >= 0) {
-						continue;
+					if (D_800AED78[D_800D74AC] != 0 && ((FrontendItemRenderData(*)[13])D_800942E0_64790)[currentLevel][D_800D74AC - 13].displayList != NULL) {
+						break;
 					}
-
-					break;
-				}
+				} while (--i >= 0);
 
 					if (D_800D74AC != 0) {
 						func_80070494_40944(0x4E)->unk28 = 0x64;
@@ -639,13 +630,10 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			case 1:
 				i = 8;
 				do {
-					if (D_800D74AE > 0) {
-						D_800D74AE--;
-					} else {
+					if (D_800D74AE-- <= 0) {
 						D_800D74AE = 7;
 					}
-					i--;
-				} while (weaponSlots[D_800D74AE] == 0 && (s16)i >= 0);
+				} while (weaponSlots[D_800D74AE] == 0 && --i >= 0);
 
 				func_80070494_40944(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
@@ -656,21 +644,21 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 
 			D_80094834_64CE4 = 0;
-			if (D_8009483C_64CEC < 8) {
-				D_8009483C_64CEC = 8;
+			if (horizontalRepeatDelay < 8) {
+				horizontalRepeatDelay = 8;
 			}
 		}
 	}
 
-	if (D_80094838_64CE8 || --D_80094840_64CF0 == 0) {
-		if (currentControllerStates[CONTROLLER_ONE].stick_y >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
+	if (D_80094838_64CE8 || --verticalRepeatDelay == 0) {
+		if (D_8004758B >= 0x15 || isButtonNewlyPressed(0, 0x800)) {
 			if (arg1 == 0) {
 				D_800D74A4 = 0x48;
 			}
 
 			D_80094838_64CE8 = 0;
-			if (D_80094840_64CF0 < 8) {
-				D_80094840_64CF0 = 8;
+			if (verticalRepeatDelay < 8) {
+				verticalRepeatDelay = 8;
 			}
 
 			if (selectedMissionBefore != D_800D74A4) {
@@ -678,14 +666,14 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 			}
 		}
 
-		if (currentControllerStates[CONTROLLER_ONE].stick_y < -0x14 || isButtonNewlyPressed(0, 0x400)) {
+		if (D_8004758B < -0x14 || isButtonNewlyPressed(0, 0x400)) {
 			D_80094838_64CE8 = 0;
 			if (arg1 == 0) {
 				D_800D74A4 = 0x4A;
 			}
 
-			if (D_80094840_64CF0 < 8) {
-				D_80094840_64CF0 = 8;
+			if (verticalRepeatDelay < 8) {
+				verticalRepeatDelay = 8;
 			}
 
 			if (selectedMissionBefore != D_800D74A4) {
@@ -694,9 +682,12 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800710D8_41588.s")
-#endif
+
+s32 D_80094844_64CF4 = 0;
+s32 D_80094848_64CF8 = 0;
+
+
+
 
 void func_8007166C_41B1C(void)
 {
@@ -778,14 +769,9 @@ s32 func_80071760_41C10(s32 arg0)
 	return textWidth - totalWidth;
 }
 
-#ifdef NON_MATCHING
 void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 i;
-	s32 slotCol;
-	s32 slotRow;
-	u8* weaponSlot;
-	s32 baseX;
-	s32 baseY;
+	s32 weaponIndex;
 	s32 sizeX;
 	s32 sizeY;
 	s16 posX;
@@ -793,64 +779,58 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 texIndex;
 
 	i = 0;
-	weaponSlot = &weaponSlots[7];
-	do {
-		u8 weapon = *weaponSlot;
+	weaponIndex = 7; do {
+		if (weaponSlots[weaponIndex] != 0) {
+			posX = arg0 - (s16)((64.0f * arg2) / 2) + (((i % 3) * 32.0) * arg2);
+			posY = arg1 - (s16)((64.0f * arg3) / 2) + (((i / 3) * 32.0) * arg3);
+			i++;
+			texIndex = D_80031474[weaponSlots[weaponIndex]];
+			sizeX = 12 * arg2;
+			sizeY = 12 * arg3;
 
-		if (weapon == 0) {
-			continue;
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+			gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, D_80260500);
+			{ Gfx* palettePacket = D_8005BB2C++; gDPTileSync(palettePacket); }
+			{ Gfx *tilePacket = D_8005BB2C++; tilePacket->force_structure_alignment =
+					((u64)(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(256, 0, 9)) << 32) |
+					_SHIFTL(G_TX_LOADTILE, 24, 3); }
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadTLUTCmd(D_8005BB2C++, G_TX_LOADTILE, 255);
+			gDPPipeSync(D_8005BB2C++);
+
+			if (weaponSlots[weaponIndex] != 0) {
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0xAA, 0xD2, 0xFF);
+			} else {
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0x23, 0x46, 0xFF);
+			}
+
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_8025CCC0[texIndex * 0x240]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPPipeSync(D_8005BB2C++);
+
+			gSPTextureRectangle(D_8005BB2C++,
+				((posX - sizeX) + 0xC) << 2,
+				((posY - sizeY) + 0xC) << 2,
+				((posX + sizeX) + 0xC) << 2,
+				((posY + sizeY) + 0xC) << 2,
+				G_TX_RENDERTILE, 0, 0,
+				(s32)((1.0f / arg2) * 1024.0f),
+				(s32)((1.0f / arg3) * 1024.0f));
+
+			gDPPipeSync(D_8005BB2C++);
 		}
-
-		slotCol = i % 3;
-		slotRow = i / 3;
-		baseX = arg0 - (s16)((64.0f * arg2) / 2.0f);
-		baseY = arg1 - (s16)((64.0f * arg3) / 2.0f);
-		posX = (s16)(baseX + ((slotCol * 32.0) * arg2));
-		i = (i + 1) & 0xFF;
-		posY = (s16)(baseY + ((slotRow * 32.0) * arg3));
-		texIndex = D_80031474[weapon];
-		sizeX = (s16)(12.0f * arg2);
-		sizeY = (s16)(12.0f * arg3);
-
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-		gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
-		gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
-
-		if (weapon != 0) {
-			gDPSetPrimColor(D_8005BB2C++, 0, 1, 0xD2, 0xAA, 0x00, 0xFF);
-		} else {
-			gDPSetPrimColor(D_8005BB2C++, 0, 1, 0x46, 0x23, 0x00, 0xFF);
-		}
-
-		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
-		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-
-		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPPipeSync(D_8005BB2C++);
-
-		gSPTextureRectangle(D_8005BB2C++,
-			((posX - sizeX) + 0xC) * 4,
-			((posY - sizeY) + 0xC) * 4,
-			((posX + sizeX) + 0xC) * 4,
-			((posY + sizeY) + 0xC) * 4,
-			G_TX_RENDERTILE, 0, 0,
-			(s32)((1.0f / arg2) * 1024.0f),
-			(s32)((1.0f / arg3) * 1024.0f));
-
-		gDPPipeSync(D_8005BB2C++);
-	} while (weaponSlot-- >= weaponSlots);
+	} while (weaponIndex-- >= 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071900_41DB0.s")
-#endif
 
-#ifdef NON_MATCHING
-void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
+void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 textureIndex;
 	s32 weaponType;
-	s32 sizeX;
-	s32 sizeY;
+	s16 sizeX;
+	s16 sizeY;
 	s16 posX;
 	s16 posY;
 
@@ -868,13 +848,8 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
 	gDPLoadTLUT_pal256(D_8005BB2C++, D_80260500);
 
-	{
-		s32 unused8;
-
-		scale = 2.0f;
-		arg2 = arg2 * scale;
-		arg3 = arg3 * scale;
-	}
+	arg2 = arg2 * 2;
+	arg3 = arg3 * 2;
 
 	if (weaponSlots[D_800D74AE] != 0) {
 		gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x00, 0xAA, 0xD2, 0xFF);
@@ -885,27 +860,24 @@ void func_80071E80_42330(s16 arg0, s16 arg1, f32 arg2, f32 arg3) {
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-	gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (textureIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_8025CCC0[textureIndex * 0x240]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-	sizeX = (s32)(12.0f * arg2);
-	sizeY = (s32)(12.0f * arg3);
+	sizeX = 12.0f * arg2;
+	sizeY = 12.0f * arg3;
 
 	gDPPipeSync(D_8005BB2C++);
 
 	gSPTextureRectangle(D_8005BB2C++,
-		((posX - sizeX) + 0xC) * 4,
-		((posY - sizeY) + 0xC) * 4,
-		((posX + sizeX) + 0xC) * 4,
-		((posY + sizeY) + 0xC) * 4,
+		((posX - sizeX) + 0xC) << 2,
+		((posY - sizeY) + 0xC) << 2,
+		((posX + sizeX) + 0xC) << 2,
+		((posY + sizeY) + 0xC) << 2,
 		G_TX_RENDERTILE, 0, 0,
 		(s32)((1.0f / arg2) * 1024.0f),
 		(s32)((1.0f / arg3) * 1024.0f));
 
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80071E80_42330.s")
-#endif
 
 void func_800722A4_42754(void) {
 	u16 perspNorm;
@@ -941,23 +913,18 @@ void func_800722A4_42754(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
 }
 
-#ifdef NON_MATCHING
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-	s32 padTop0;
-	s32 padTop1;
-	s32 padTop2;
-	u16 spD4;
-	Unk80052B40 spBC;
-	Unk80052B40 spB4;
-	Unk80052B40 spAC;
-	s32 sp9C;
-	s32 xPos;
+	s16 topPadding;
+	u16 spacing;
+	s32 padTop[4];
+	Unk80052B40 position;
+	Unk80052B40 scaleVector;
+	Unk80052B40 rotation;
+	s32 middlePadding[3];
+	s32 startX;
 	s32 scaleInt;
-	s32 unused8;
 	s16 i;
-	s32 unused0;
-	s32 unused1;
-	s32 unused2;
+	f32 scale;
 	s32 count;
 	s32 remaining;
 	Gfx* displayList;
@@ -965,22 +932,19 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	D_80094844_64CF4 += 0x2D8;
 	count = D_8004DC5C;
 	remaining = count;
-	sp9C = arg0;
-	spD4 = 0;
+	startX = arg0;
+	spacing = 0;
 
-	switch (remaining) {
-	case 1:
-		sp9C = arg0 - 0x78;
-		spD4 = 0x50;
-		break;
-	case 2:
-		sp9C = arg0 - 0x55;
-		spD4 = 0x50;
-		break;
-	case 3:
-		sp9C = arg0 - 0x28;
-		spD4 = 0x50;
-		break;
+	if (count != 1) {
+		if ((remaining & 0xFFFFFFFF) != 2) {
+			if ((remaining & 0xFFFFFFFF) == 3) {
+				spacing = 0x50; startX = arg0 - 0x28;
+			}
+		} else {
+			spacing = 0x50; startX = arg0 - 0x55;
+		}
+	} else {
+		spacing = 0x50; startX = arg0 - 0x78;
 	}
 
 	if (count > 0) {
@@ -988,9 +952,9 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 		do {
 			displayList = D_800942D8_64788;
 			if (displayList != NULL) {
-				scale = (f32)((f64)arg3 * 1.5);
+				scale = arg3 * 1.5;
 				scale = D_800942DC_6478C * scale;
-				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
+				arg0 = ((u32)spacing * (u32)(3 - remaining)) + startX;
 				remaining--;
 
 				gDPPipeSync(D_8005BB2C++);
@@ -1000,35 +964,31 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-				scaleInt = (s32)(256.0f * scale);
-				spBC.unk0 = xPos;
-				spBC.unk2 = arg1;
-				spBC.unk4 = arg2;
+				scaleInt = 256.0f * scale;
+				position.unk0 = arg0;
+				position.unk2 = arg1;
+				position.unk4 = arg2;
 
-				spAC.unk0 = D_80094844_64CF4;
-				spAC.unk2 = 0;
-				spAC.unk4 = 0;
+				rotation.unk0 = D_80094844_64CF4 & 0xFFFF;
+				rotation.unk2 = 0;
+				rotation.unk4 = 0;
 
-				spB4.unk0 = scaleInt;
-				spB4.unk2 = scaleInt;
-				spB4.unk4 = scaleInt;
+				scaleVector.unk0 = scaleInt;
+				scaleVector.unk2 = scaleInt;
+				scaleVector.unk4 = scaleInt;
 
-				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
+				func_800039D0_45D0(&position, &rotation, &scaleVector, D_8005BB38);
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & mask));
+				gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayList));
 				gDPPipeSync(D_8005BB2C++);
 
 				count = D_8004DC5C;
 			}
 
-			i++;
 		} while (++i < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
-#endif
 
 // Renders the twelve artifact slots around the rotating inventory display.
 void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
@@ -1091,61 +1051,60 @@ void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 // Checks if selected inventory item is 0xb (weapon crystals)
-#ifdef NON_MATCHING
 void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-	s32 unusedPad0;
+	static s32 itemRotation = 0;
+	Gfx *packet;
 	s32 unusedPad1;
 	s32 unusedPad2;
 	s32 unusedPad3;
 	Unk80052B40 sp60;
 	Unk80052B40 sp58;
 	Unk80052B40 sp50;
-	FrontendItemRenderData* itemEntry;
 	Gfx* displayList;
-	s32 displayListAddr;
-	s32 matrixAddr;
+	s32 padding[2];
+	FrontendItemRenderData* itemEntry;
+	Mtx *matrix;
 	s32 scaleInt;
-	f32 itemScale;
+	s16 selectedItem;
 
 	func_800722A4_42754();
+	selectedItem = D_800D74AC;
 
-	if (D_800D74AC == 0xB) {
+	if (selectedItem == 0xB) {
 		func_80072604_42AB4(-0xE6, -0x32, -0x190, arg3);
 		return;
 	}
 
-	if (D_800D74AC == 0xC) {
+	if (selectedItem == 0xC) {
 		func_800728F4_42DA4(-0xB4, -0x32, -0x190, arg3);
 		return;
 	}
 
-	if (D_800D74AC == 0) {
+	if (selectedItem == 0) {
 		return;
 	}
 
-	itemEntry = &D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13];
+	itemEntry = &((FrontendItemRenderData (*)[13])D_800942E0_64790)[currentLevel - 1][selectedItem];
 	displayList = itemEntry->displayList;
-	if ((D_800AED78[D_800D74AC] == 0) || (displayList == NULL)) {
+	if ((D_800AED78[selectedItem] == 0) || (displayList == NULL)) {
 		return;
 	}
 
-	D_8009484C_64CFC = D_8009484C_64CFC + 0x16C;
-	itemScale = itemEntry->scale * 2.0f;
-	arg3 = itemScale * arg3;
-	displayListAddr = (s32)displayList;
+	if ((arg3 = (itemEntry->scale * 2) * arg3,1)) {} itemRotation = itemRotation + 0x16C;
 
-	gDPPipeSync(D_8005BB2C++);
+	packet=D_8005BB2C++; packet->words.w0=0xE7000000; packet->words.w1=0;
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	packet=D_8005BB2C++; packet->words.w0=0xBB000000; packet->words.w1=0x80008000;
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	matrix = D_8005BB38;
 
 	sp60.unk0 = arg0;
 	sp60.unk2 = arg1;
 	sp60.unk4 = arg2;
 
-	sp50.unk0 = D_8009484C_64CFC;
+	sp50.unk0 = itemRotation & 0xFFFF;
 	sp50.unk2 = 0;
 	sp50.unk4 = 0;
 
@@ -1154,41 +1113,44 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	sp58.unk2 = scaleInt;
 	sp58.unk4 = scaleInt;
 
-	func_800039D0_45D0(&sp60, &sp50, &sp58, D_8005BB38);
+	func_800039D0_45D0(&sp60, &sp50, &sp58, matrix);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayListAddr));
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayList));
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072B68_43018.s")
-#endif
 
 // display inventory models
-#ifdef NON_MATCHING
 void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-	Unk80052B40 spC4;
-	Unk80052B40 spBC;
-	Unk80052B40 spB4;
-	FrontendItemRenderData* itemEntry;
-	Gfx* displayList;
+	static s32 itemRotation = 0;
+	s32 padding[3];
+	f32 baseX;
+	f32 baseY;
+	Unk80052B40 position;
+	Unk80052B40 scale;
+	Unk80052B40 rotation;
+	FrontendItemRenderData *itemEntry;
+	Gfx *displayList;
 	s32 scaleInt;
+	s32 screenOrigin[2]; /* Y, X */
 	s32 itemCount;
 	s16 i;
 	u32 xOffset;
 	u32 yOffset;
 	f32 itemScale;
 
-	func_800722A4_42754(arg3);
-	D_80094850_64D00 += 0x2D8;
+	screenOrigin[1] = arg0;
+	screenOrigin[0] = arg1;
+	func_800722A4_42754();
+	itemRotation += 0x2D8;
 
 	itemCount = 0;
 	for (i = 0; i < 0xD; i++) {
-		itemEntry = &D_800942E0_64790[((currentLevel * 13) + i) - 13];
+		itemEntry = &((FrontendItemRenderData (*)[13])D_800942E0_64790)[currentLevel - 1][i];
 		displayList = itemEntry->displayList;
 		if ((D_800AED78[i] != 0) && (displayList != NULL)) {
 			xOffset = ((((itemCount % 3) * 0x5A) - 0x5A) & 0xFFFF);
-			yOffset = ((((itemCount / 3) * -0x50) + 0x50) & 0xFFFF);
+			yOffset = (((-(itemCount / 3) * 0x50) + 0x50) & 0xFFFF);
 			itemScale = itemEntry->scale * arg3;
 			itemCount++;
 
@@ -1196,32 +1158,37 @@ void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
+			baseX = screenOrigin[1]; baseY = screenOrigin[0];
 			func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-			spC4.unk0 = (s16) (s32) ((f32) arg0 + ((f32) xOffset * arg3));
-			spC4.unk2 = (s16) (s32) ((f32) arg1 + ((f32) yOffset * arg3));
-			spC4.unk4 = arg2;
+			position.unk0 = (0, baseX) + ((f32)xOffset * arg3);
+			position.unk2 = (0, baseY) + ((f32)yOffset * arg3);
+			position.unk4 = arg2;
 
-			spB4.unk0 = D_80094850_64D00;
-			spB4.unk2 = 0;
-			spB4.unk4 = 0;
+			rotation.unk0 = itemRotation & 0xFFFF;
+			rotation.unk2 = 0;
+			rotation.unk4 = 0;
 
-			scaleInt = (s32) (256.0f * itemScale);
-			spBC.unk0 = scaleInt;
-			spBC.unk2 = scaleInt;
-			spBC.unk4 = scaleInt;
+			scaleInt = 256.0f * itemScale;
+			scale.unk0 = scaleInt;
+			scale.unk2 = scaleInt;
+			scale.unk4 = scaleInt;
 
-			func_800039D0_45D0(&spC4, &spB4, &spBC, D_8005BB38);
+			func_800039D0_45D0(&position, &rotation, &scale, D_8005BB38);
+			if (i) {}
+			if (displayList->words.w0 + displayList->words.w1) {}
+			if ((baseX + baseX + arg3 + arg3 + arg3 + baseY) < (arg3 + baseX + arg3 + baseY + baseX + arg3)) {}
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayList));
 			gDPPipeSync(D_8005BB2C++);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072E18_432C8.s")
-#endif
+
+s32 D_80094854_64D04 = 0;
+u8 D_80094858_64D08 = 0x28;
+s32 D_8009485C_64D0C = 0;
 
 #ifdef NON_MATCHING
 void func_800731A8_43658(void) {
@@ -1626,27 +1593,25 @@ block_87:
 	drawText(&D_800ADC0C_7E0BC, 0x400U, 0x400, NULL, 0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#endif
 #endif
 
 #ifdef NON_MATCHING
 void func_80075710_45BC0(void) {
+	s32 padding[21];
 	s32 matrixPtr;
-	s32 rowTextureOffset;
-	s32 rowBottomY;
-	s32 rowTopY;
-	s32 rowIndex;
-	s32 rowTop;
-	s32 rowBottom;
-	u32 textureBase;
-	u32 textureImage;
+
 
 	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C[0], D_800AE780_7EC30[0], 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	guRotate(D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, OS_PHYSICAL_TO_K0(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-	D_8005BB38 += 0x40;
+	D_8005BB38++;
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPLoadSync(D_8005BB2C++);
@@ -1655,18 +1620,19 @@ void func_80075710_45BC0(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 
-	textureBase = (u32)D_800AED88;
-	rowBottomY = 0x20;
-	rowTopY = 0;
-	rowIndex = 0;
-	do {
-		textureImage = textureBase + (rowIndex << 11);
-		rowTop = ((rowTopY << 2) & 0xFFF);
-		rowBottom = (((rowBottomY << 2) - 1) & 0xFFF);
-		rowTextureOffset = 0;
-		do {
+	{
+	s32 rowIndex;
+	s32 rowTextureOffset;
+	s32 rowBottom;
+	s32 rowTopY;
+	s32 rowBottomY;
+	s16 rowTop;
+	u16 (*textureBase)[1024];
+	u16 (*textureImage)[1024];
+	textureBase = (u16 (*)[1024])D_800AED88; 	rowBottomY = 0x20; 	rowTopY = 0; 	for (rowIndex = 0; rowBottomY != 0x120; rowIndex += 0xA, rowTopY += 0x20, rowBottomY += 0x20) {
+		textureImage = &textureBase[rowIndex]; 		rowTop = rowTopY << 2; 		rowBottom = (rowBottomY << 2) - 1; 		for (rowTextureOffset = 0; rowTextureOffset != 0x140; rowTextureOffset += 0x20) {
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, textureImage);
-			textureImage += 0x800;
+			textureImage++;
 			gDPTileSync(D_8005BB2C++);
 			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_RENDERTILE, 0,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
@@ -1678,21 +1644,20 @@ void func_80075710_45BC0(void) {
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 					   G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
 			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
-			gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTop, ((rowTextureOffset + 0x20) << 2) - 1,
+			
+			gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTop, (((s16)rowTextureOffset + 0x20) << 2) - 1,
 								rowBottom, G_TX_RENDERTILE, 0, 0, 0x1000, 0x400);
-			rowTextureOffset += 0x20;
-		} while (rowTextureOffset != 0x140);
+			}
 
-		rowBottomY += 0x20;
-		rowTopY += 0x20;
-		rowIndex += 0xA;
-	} while (rowBottomY != 0x120);
+		}
 
+	}
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_COPY);
+	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+	if (D_8005BB2C[-1].words.w0 == 0xE6000000U) {}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80075710_45BC0.s")
@@ -1712,12 +1677,12 @@ void func_80075B64_46014(s16 arg0) {
 
 // Show version info on title screen if slot 3 named GRIMLN
 void func_80075C84_46134(void) {
-	if (D_800D6DA8[0xE] == 0x47) {
-		if (D_800D6DA8[0xF] == 0x52) {
-			if (D_800D6DA8[0x13] == 0x4E) {
-				if (D_800D6DA8[0x11] == 0x4D) {
-					if (D_800D6DA8[0x12] == 0x4C) {
-						if (D_800D6DA8[0x10] == 0x49) {
+	if (D_800D6DA8[2][0] == 0x47) {
+		if (D_800D6DA8[2][1] == 0x52) {
+			if (D_800D6DA8[2][5] == 0x4E) {
+				if (D_800D6DA8[2][3] == 0x4D) {
+					if (D_800D6DA8[2][4] == 0x4C) {
+						if (D_800D6DA8[2][2] == 0x49) {
 							drawText(&D_800ADC18_7E0C8, 0x14, 0x14, 0x12C, 0xF0);
 							drawText(&D_800ADC1C_7E0CC, 1, 0, &D_800ADC30_7E0E0, &D_800ADC3C_7E0EC);
 							drawText(&D_800ADC48_7E0F8, 1, 1);
@@ -1911,68 +1876,83 @@ s32 func_8007685C_46D0C(void) {
 }
 
 // doIntroMovieLoop
-#ifdef NON_MATCHING
+s32 D_80094860_64D10 = 0;
+u32 D_80094864_64D14 = 0;
+
+// Intro movie event start frames
+IntroStartFrames D_80094868_64D18 = {{
+    0x00000000, 0x0000021C, 0x0000045B, 0x00000596, 0x000006E7, 0x000008B1,
+    0x00000A87, 0x00000C03, 0x00000D89, 0x00000F87, 0x0000128E,
+}};
+
+IntroStopFrames D_80094894_64D44 = {{
+    0x00000002, 0x000001C2, 0x000004E2, 0x0000064F, 0x000007D0, 0x00000997,
+    0x00000BFE, 0x00000FD2,
+}};
+
+
 s32 func_800768C4_46D74(void) {
+	static s32 movieFrame = 0;
+	static s8 startIndex = 0;
+	static s8 stopIndex = 0;
 	s32 result;
 	s32 fadeResult;
-	s16 i;
-	s16 idx;
-	s32 timingA[11];
-	s32 timingB[8];
+	s32 idx;
+	IntroStartFrames timingA;
+	s32 elapsedSeconds;
+	IntroStopFrames timingB;
+	OSMesgQueue *messageQueue = &D_8006A8B0;
+	s32 framesPerSecond;
 
 	result = 1;
+	framesPerSecond = 60;
 
-	for (i = 0; i < ARRAY_COUNT(timingA); i++) {
-		timingA[i] = D_80094868_64D18[i];
-	}
-	for (i = 0; i < ARRAY_COUNT(timingB); i++) {
-		timingB[i] = D_80094894_64D44[i];
-	}
+	timingA = D_80094868_64D18;
+	timingB = D_80094894_64D44;
 
 	D_80052ACA = 6;
 	D_8004772C = 0xFF;
 	D_80047730 = 0x40;
 	D_80047734 = 0;
-	D_80047739 = 0;
-	D_8004773A = 0;
-	D_80047738 = 0;
+	D_80047738 = D_80047739 = D_8004773A = 0;
 	D_800D74AA = 0;
 	D_800D6D8C = 1;
 
 	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
 	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
 
-	drawText(&D_800ADC84_7E134, 0xE6, 0xE6, 0xE6, 0xFF);
+	drawText(D_800ADC84_7E134, 0xE6, 0xE6, 0xE6, 0xFF);
 	func_8007D7E0_4DC90();
 	func_8007BFC4_4C474();
 
 	do {
+		if (result) {}
 		func_800791A0_49650(1);
 
 		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
 		fadeResult = func_8007D91C_4DDCC(0);
+		elapsedSeconds = D_800313D4_31FD4 / framesPerSecond;
+		if (elapsedSeconds) {}
 
 		func_8000B044_BC44();
 		gDPFullSync(D_8005BB2C++);
 		gSPEndDisplayList(D_8005BB2C++);
 
-		osSendMesg(&D_8006A8B0, &D_800314CC_320CC, 1);
+		osSendMesg(messageQueue, &D_800314CC_320CC, 1);
 
-		idx = D_800948B8_64D68;
-		if (D_800948B4_64D64 == timingA[idx]) {
-			D_800948B8_64D68++;
-			func_8001322C_13E2C(idx);
+		idx = startIndex;
+		if (movieFrame == timingA.frames[idx]) {
+			func_8001322C_13E2C(startIndex++);
 			D_800313E0++;
 		}
 
-		idx = D_800948BC_64D6C;
-		if (D_800948B4_64D64 == timingB[idx]) {
-			D_800948BC_64D6C++;
-			func_800131A4_13DA4(idx);
+		idx = stopIndex;
+		if (movieFrame == timingB.frames[idx]) {
+			func_800131A4_13DA4(stopIndex++);
 			D_800313DC++;
 		}
 
-		D_800948B4_64D64++;
+		movieFrame++;
 
 		if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) || (fadeResult != 0)) {
 			result = 2;
@@ -1981,10 +1961,10 @@ s32 func_800768C4_46D74(void) {
 	} while (func_80005B30_6730() == 0);
 
 	D_800313D8++;
-	D_800948B4_64D64 = 0;
+	movieFrame = 0;
 	D_80052ACA = 3;
-	D_800948BC_64D6C = 0;
-	D_800948B8_64D68 = 0;
+	stopIndex = 0;
+	startIndex = 0;
 
 	func_800056A8_62A8();
 	func_800056A8_62A8();
@@ -1992,9 +1972,40 @@ s32 func_800768C4_46D74(void) {
 
 	return result;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800768C4_46D74.s")
-#endif
+
+// Weapon/vehicle display list offsets
+DListPtrsCopy D_800948C0_64D70 = {{
+    0x040A32C0, 0x040A2850, 0x040A20A0, 0x040A1820,
+    0x040A4348, 0x040A0F98, 0x040A09C0, 0x040A5248,
+}};
+
+u32 D_800948E0_64D90 = 0;
+u32 D_800948E4_64D94 = 0x000000C8;
+u32 D_800948E8_64D98 = 0x000000C8;
+u32 D_800948EC_64D9C = 0;
+
+u32 D_800948F0_64DA0 = 0;
+
+u32 D_800948F4_64DA4 = 0;
+u32 D_800948F8_64DA8 = 0;
+u32 D_800948FC_64DAC = 0;
+
+s32 D_80094900_64DB0 = 0;
+u8 D_80094904_64DB4 = 0;
+u8 D_80094908_64DB8 = 0x07;
+u8 D_8009490C_64DBC = 0x07;
+
+s32 D_80094910_64DC0[8] = { 1, 1, 2, 3, 4, 5, 6, 7 };
+
+s32 D_80094930_64DE0 = 0;
+s32 D_80094934_64DE4 = 0;
+s32 D_80094938_64DE8 = 0;
+u32 D_8009493C_64DEC = 0;
+u32 D_80094940_64DF0 = 0x0E000000;
+
+u8 D_80094944_64DF4 = 0xFF;
+s32 D_80094948_64DF8 = 0;
+u8 D_8009494C_64DFC = 0;
 
 // Called once before showing the 'Select Slot' screen
 // doFileSelectLoop
@@ -2026,14 +2037,14 @@ s16 func_80076C98_47148(void) {
 		do {
 			D_800D6D90[saveFile] = func_80002A88_3688(saveFile);
 			D_800D6D98[saveFile] = func_80002B20_3720(saveFile);
-			getSaveFileName(saveFile, &D_800D6DA8[saveFile * 7]);
-			if (D_800D6DA8[saveFile * 7 + 1] != 'm') {
+			getSaveFileName(saveFile, D_800D6DA8[saveFile]);
+			if (D_800D6DA8[saveFile][1] != 'm') {
 				hasCorruptSave = 1;
 			}
 		} while (saveFile--);
 	}
 
-	D_800909B0[4].pad22[3] = 5;
+	D_800909B0[4].unk25 = 5;
 	while (result == 1) {
 		if (frameCounter < 0x3E8U) {
 			func_80070C64_41114(1, 6, (s16)frameCounter);
@@ -2378,19 +2389,17 @@ s32 func_80077344_477F4(void) {
 }
 
 // doDeleteFile
-#ifdef NON_MATCHING
 s32 func_80077494_47944(void) {
   u32 frameCounter;
   s32 i;
+  s32 nameIndex;
   s32 foundSelectableFile;
   s32 state;
-  s16 saveSlot;
-  s16* selectedSaveSlot;
+  s32 saveSlot;
 
   frameCounter = 0;
-  foundSelectableFile = 0;
-  selectedSaveSlot = &D_800D74A4;
   state = 1;
+  foundSelectableFile = 0;
 
   func_800708B8_40D68(1);
   func_800708B8_40D68(5);
@@ -2398,28 +2407,29 @@ s32 func_80077494_47944(void) {
   func_80070514_409C4(0x33);
 
   currentSaveFileIndex = 0;
-  i = 0;
-  if (0 < 3) {
+  i = currentSaveFileIndex;
+  nameIndex = 0;
+  if (i < 3) {
 	do {
-	  getSaveFileName(i, &D_800D6DA8[i * 7]);
+	  getSaveFileName(i, D_800D6DA8[nameIndex]);
 	  saveSlot = i + 2;
 
-	  if (D_800D6DA8[(i * 7) + 1] == 0x6D) {
+	  if (D_800D6DA8[nameIndex][1] == 0x6D) {
 		func_80070A8C_40F3C(saveSlot); // If the second letter of filename is "m" it cannot be copied or deleted
 	  } else {
 		func_80070B68_41018(saveSlot);
 		if (foundSelectableFile == 0) {
-		  *selectedSaveSlot = saveSlot;
+		  frontendSelectedEntry = saveSlot;
 		  foundSelectableFile = 1;
 		}
 	  }
 	  i++;
+	  nameIndex++;
 	} while (i < 3);
   }
 
-  selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
-  D_800909B0[4].pad22[3] = 0;
+  D_800909B0[4].unk25 = 0;
 
   while (state == 1) {
 	if (frameCounter >= 0x29U) {
@@ -2427,7 +2437,7 @@ s32 func_80077494_47944(void) {
 	  func_8007166C_41B1C();
 
 	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		if (D_800D6DA8[((*selectedSaveSlot - 2) * 7) + 1] != 0x6D) {
+		if (D_800D6DA8[(0, frontendSelectedEntry - 2)][1] != 0x6D) {
 		  state = 2;
 		}
 	  }
@@ -2449,7 +2459,7 @@ s32 func_80077494_47944(void) {
 
   func_800153D8_15FD8(0xC8);
 
-  currentSaveFileIndex = *selectedSaveSlot - 2;
+  currentSaveFileIndex = frontendSelectedEntry - 2;
   if ((state != 0) && (func_80077204_476B4() == 2)) {
 	D_800476A0 = 3;
   }
@@ -2460,27 +2470,18 @@ s32 func_80077494_47944(void) {
 
   return currentSaveFileIndex;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077494_47944.s")
-#endif
 
 // doCopyFile
-#ifdef NON_MATCHING
 s32 func_800776BC_47B6C(void) {
+  s32 *indexPointer = &currentSaveFileIndex;
+  s32 nameIndex;
+  s32 padding[4]; /* Preserve the original local stack area. */
   s32 saveSlotSp;
-  u8* saveName;
-  s16 saveSlot;
-  s32 sourceFileIndex;
-  s32 destFileIndex;
+  s32 saveSlot;
   s32 i;
   s32 foundSelectableFile;
   s32 state;
   u32 frameCounter;
-  s16* selectedSaveSlot;
-  s32* sourceFileIndexPtr;
-  s32* destFileIndexPtr;
-  u8* saveNameBase;
-  s32 saveNameStride;
 
   frameCounter = 0;
   state = 1;
@@ -2490,46 +2491,40 @@ s32 func_800776BC_47B6C(void) {
   func_800708B8_40D68(5);
   func_800708B8_40D68(6);
   func_80070514_409C4(0x34);
-  currentSaveFileIndex = 0;
+  *indexPointer = 0;
 
-  i = 0;
-  if (0 < 3) {
-	selectedSaveSlot = &D_800D74A4;
-	saveName = D_800D6DA8;
+  i = currentSaveFileIndex;
+  nameIndex = 0;
+  if (i < 3) {
 	do {
-	  getSaveFileName(i, saveName);
+	  getSaveFileName(i, D_800D6DA8[nameIndex]);
 	  saveSlot = i + 2;
-	  if (saveName[1] == 0x6D) {
-		func_80070A8C_40F3C((s16) (i + 2));
+	  if (D_800D6DA8[nameIndex][1] == 0x6D) {
+		func_80070A8C_40F3C(i + 2);
 	  } else {
-		saveSlotSp = (s32) saveSlot;
+		saveSlotSp = saveSlot;
 		func_80070B68_41018(saveSlot);
 		if (foundSelectableFile == 0) {
-		  *selectedSaveSlot = (s16) saveSlotSp;
+		  frontendSelectedEntry = saveSlotSp;
 		  foundSelectableFile = 1;
 		}
 	  }
 	  i++;
-	  saveName += 7;
+	  nameIndex++;
 	} while (i < 3);
   }
 
-  selectedSaveSlot = &D_800D74A4;
   func_8007166C_41B1C();
-  D_800909B0[4].pad22[3] = 0;
-  sourceFileIndexPtr = &D_80047F88;
-  saveNameBase = D_800D6DA8;
-  saveNameStride = 7;
+  D_800909B0[4].unk25 = 0;
 
-  do {
+  while (state == 1) {
 	if (frameCounter >= 0x29U) {
 	  func_80070CC4_41174();
 	  func_8007166C_41B1C();
 
 	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		sourceFileIndex = *selectedSaveSlot - 2;
-		*sourceFileIndexPtr = sourceFileIndex;
-		if (saveNameBase[(sourceFileIndex * saveNameStride) + 1] != 0x6D) {
+		D_80047F88 = frontendSelectedEntry - 2;
+		if (D_800D6DA8[D_80047F88][1] != 0x6D) {
 		  state = 2;
 		}
 	  }
@@ -2551,16 +2546,16 @@ s32 func_800776BC_47B6C(void) {
 	  func_8000AFDC_BBDC();
 	  func_800709F0_40EA0();
 	}
-  } while (state == 1);
+  }
 
   func_80070BD8_41088(2, 4);
   func_800153D8_15FD8(0xC8);
-  func_80070A8C_40F3C(*selectedSaveSlot);
+  func_80070A8C_40F3C(frontendSelectedEntry);
 
-  if (*selectedSaveSlot == 2) {
-	*selectedSaveSlot = 3;
+  if (frontendSelectedEntry == 2) {
+	frontendSelectedEntry = 3;
   } else {
-	*selectedSaveSlot = 2;
+	frontendSelectedEntry = 2;
   }
 
   func_80070CC4_41174();
@@ -2568,7 +2563,6 @@ s32 func_800776BC_47B6C(void) {
 	state = 1;
 	func_800708B8_40D68(0x34);
 	func_80070514_409C4(0x35);
-	destFileIndexPtr = &D_80047F8C;
 
 	do {
 	  if (frameCounter >= 0x41U) {
@@ -2576,9 +2570,8 @@ s32 func_800776BC_47B6C(void) {
 		func_8007166C_41B1C();
 
 		if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		  destFileIndex = *selectedSaveSlot - 2;
-		  *destFileIndexPtr = destFileIndex;
-		  if (destFileIndex != *sourceFileIndexPtr) {
+		  D_80047F8C = frontendSelectedEntry - 2;
+		  if ((0, D_80047F88) != D_80047F8C) {
 			state = 2;
 		  }
 		}
@@ -2612,9 +2605,6 @@ s32 func_800776BC_47B6C(void) {
 
   return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800776BC_47B6C.s")
-#endif
 
 // doFileDetailsLoop
 s32 func_800779FC_47EAC(void) {
@@ -2650,7 +2640,7 @@ s32 func_800779FC_47EAC(void) {
 	D_800D6D90[D_80047F84] = temp;
 	temp = func_80002B20_3720(D_80047F84);
 	D_800D6D98[D_80047F84] = temp;
-	func_80002AB4(D_80047F84, &D_800D6DA8[D_80047F84 * 7]);
+	func_80002AB4(D_80047F84, D_800D6DA8[D_80047F84]);
 
 	while (state == 1) {
 		if (frameCounter < 0x3E8U) {
@@ -2710,10 +2700,10 @@ s32 func_800779FC_47EAC(void) {
 	return state;
 }
 
-#ifdef NON_MATCHING
 s32 func_80077CE0_48190(s32 arg0) {
 	u32 frameCounter;
 	s32 state;
+	s32 selectedSlot;
 
 	if (arg0 != 0) {
 		frameCounter = 0x11;
@@ -2722,11 +2712,8 @@ s32 func_80077CE0_48190(s32 arg0) {
 	}
 
 	state = 1;
-	if (arg0 != 0) {
-		D_800D74A6 = arg0 + 7;
-	} else {
-		D_800D74A6 = 8;
-	}
+	selectedSlot = arg0 != 0 ? arg0 + 7 : 8;
+	D_800D74A6 = selectedSlot;
 	D_800D74A4 = D_800D74A6;
 	func_8007166C_41B1C();
 
@@ -2763,27 +2750,27 @@ s32 func_80077CE0_48190(s32 arg0) {
 	func_8000AFDC_BBDC();
 
 	switch (state) {
-	case 0:
-	case 1:
+	case 3:
 		func_800153D8_15FD8(0xC8);
-		if (state == 0) {
-			func_80070940_40DF0();
-		} else {
-			func_800709F0_40EA0();
-		}
+		func_80070940_40DF0();
 		D_800476A0 = 1;
 		break;
-
+	case 0:
 	case 2:
+		func_800153D8_15FD8(0xC8);
+		func_800709F0_40EA0();
+		D_800476A0 = 1;
+		break;
+	case 4:
+	case 5:
+	case 6:
+	case 7:
 		func_800153D8_15FD8(0xCB);
 		break;
 	}
 
 	return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077CE0_48190.s")
-#endif
 
 s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 	return 0;
@@ -2876,81 +2863,78 @@ s32 func_80077E88_48338(void) {
 	return state;
 }
 
-#ifdef NON_MATCHING
 s32 func_80078110_485C0(void) {
 	s32 state;
 	u32 frameCounter;
-	s16 var_v0;
-	s16 temp_a0;
-	MissionData* missions;
+	s16 completionFlags;
+	s32 firstGroupMask;
+	s16 *completedFlags = &D_80048026;
 
 	frameCounter = 0;
 	state = 1;
-	var_v0 = D_80048026;
+	completionFlags = *completedFlags;
 
-	if ((var_v0 & 0xE07) == 0xE07 && (var_v0 & 0x38) != 0x38 && (var_v0 & 0x1C0) != 0x1C0) {
-		missions = D_800909B0;
-		((u8*)missions)[0xD45] = 0x53;
-		((u8*)missions)[0xDC2] = 0x50;
+	if ((completionFlags & 0xE07) == 0xE07 && (completionFlags & 0x38) != 0x38 && (completionFlags & 0x1C0) != 0x1C0) {
+		D_800909B0[80].unk25 = 0x53;
+		D_800909B0[83].unk24 = 0x50;
 	} else {
-		missions = D_800909B0;
-		((u8*)missions)[0xD45] = 0x52;
-		((u8*)missions)[0xDC2] = 0x51;
+		D_800909B0[80].unk25 = 0x52;
+		D_800909B0[83].unk24 = 0x51;
 	}
 
-	if ((var_v0 & 0x1F8) == 0x1F8 && (temp_a0 = var_v0 & 7, temp_a0 != 7) && ((var_v0 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
-		((u8*)missions)[0xD6F] = 0x52;
-		((u8*)missions)[0xD98] = 0x51;
+	if ((completionFlags & 0x1F8) == 0x1F8 && (firstGroupMask = completionFlags & 7, firstGroupMask != 7) && ((completionFlags & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
+		D_800909B0[81].unk25 = 0x52;
+		D_800909B0[82].unk24 = 0x51;
 	} else {
-		((u8*)missions)[0xD6F] = 0x53;
-		((u8*)missions)[0xD98] = 0x50;
-		temp_a0 = var_v0 & 7;
+		D_800909B0[81].unk25 = 0x53;
+		D_800909B0[82].unk24 = 0x50;
+		firstGroupMask = completionFlags & 7;
 	}
 
 	D_800D74A4 = 0x50;
-	if (temp_a0 != 7) {
+	if (firstGroupMask != 7) {
 		D_800D74A4++;
-		if ((var_v0 & 0x38) != 0x38) {
+		if ((completionFlags & 0x38) != 0x38) {
 			D_800D74A4++;
-			if ((var_v0 & 0x1C0) != 0x1C0) {
+			if ((completionFlags & 0x1C0) != 0x1C0) {
 				D_800D74A4++;
 			}
 		}
 	}
 
 	D_800D74A6 = D_800D74A4;
-	missions[D_800D74A4].unk1C = 1;
+	D_800909B0[D_800D74A4].unk1C = 1;
 
 	while (state == 1) {
 		if (frameCounter < 0x3E8U) {
-			func_80070C64_41114(0x4F, 6, (s16)frameCounter);
+			func_80070C64_41114(0x4F, 6, frameCounter);
 		}
 
 		func_80070BD8_41088(0x50, 0x54);
-		func_80070AEC_40F9C((s16)(D_80047FA0 + 0x50), 0x54);
+		func_80070AEC_40F9C(D_80047FA0 + 0x50, 0x54);
 
-		var_v0 = D_80048026;
-		if ((var_v0 & 7) != 7) {
+		completionFlags = *completedFlags;
+		if ((completionFlags & 7) != 7) {
 			func_80070AEC_40F9C(0x50, 0x50);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0x38) != 0x38) {
+		if ((completionFlags & 0x38) != 0x38) {
 			func_80070AEC_40F9C(0x51, 0x51);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0x1C0) != 0x1C0) {
+		if ((completionFlags & 0x1C0) != 0x1C0) {
 			func_80070AEC_40F9C(0x52, 0x52);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0xE00) != 0xE00) {
+		if ((completionFlags & 0xE00) != 0xE00) {
 			func_80070AEC_40F9C(0x53, 0x53);
-			var_v0 = D_80048026;
+			completionFlags = *completedFlags;
 		}
 
-		if ((var_v0 & 0xFFF) != 0xFFF) {
+		if ((completionFlags & 0xFFF) != 0xFFF) {
 			func_80070AEC_40F9C(0x54, 0x54);
 		}
 
@@ -2985,22 +2969,15 @@ s32 func_80078110_485C0(void) {
 
 	return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078110_485C0.s")
-#endif
 
 // doChooseFileNameLoop
-#ifdef NON_MATCHING
 s32 func_80078424_488D4(void) {
 	s32 state;
 	u32 frameCounter;
-	s16 nameLength;
 	s32 changed;
-	s32 i;
+	s16 nameLength;
 	u8 backupName[6];
-	u8 typedName[7];
-	s16 textWidth;
-	MissionData* entry;
+	s32 i;
 
 	D_800D74A6 = 0x16;
 	D_800D74A4 = D_800D74A6;
@@ -3008,17 +2985,14 @@ s32 func_80078424_488D4(void) {
 	state = 1;
 	nameLength = 0;
 
-	i = 5;
-	do {
+	i = 5; do {
 		backupName[i] = D_80047FA8[i];
 		D_80047FA8[i] = 0x20;
-	} while (i-- != 0);
+	} while (i--);
 
 	func_80070514_409C4(0x15);
-	D_800909B0[50].unk0 = 0xA0;
-	D_800909B0[50].unk2 = 0x88;
-	D_800909B0[50].unk4 = 0xD2;
-	D_800909B0[50].unk6 = 0xC2;
+	D_800909B0[50].unk0 = 0xA0; D_800909B0[50].unk2 = 0x88;
+	D_800909B0[50].unk4 = 0xD2; D_800909B0[50].unk6 = 0xC2;
 	D_800909B0[50].unkC = 0x30;
 	D_800909B0[50].unkA = 0;
 	D_800909B0[50].unk10 = 0x23;
@@ -3029,23 +3003,15 @@ s32 func_80078424_488D4(void) {
 	D_800909B0[22].unk1C = 1;
 
 	while (state == 1) {
+		MissionData *entry;
+
 		changed = 0;
 
 		if ((frameCounter < 0x1C) && ((frameCounter & 3) == 0)) {
-			s32 step;
-			s16 leftChar;
-			s16 rightChar;
-			s16 centerChar;
-
-			step = (s32)(frameCounter >> 2);
-			leftChar = (s16)(step + 0x24);
-			rightChar = (s16)(0x23 - step);
-			centerChar = (s16)(0x31 - step);
-
-			func_80070514_409C4((s16)(step + 0x16));
-			func_80070514_409C4(rightChar);
-			func_80070514_409C4(leftChar);
-			func_80070514_409C4(centerChar);
+			func_80070514_409C4((frameCounter >> 2) + 0x16);
+			func_80070514_409C4(0x23 - (frameCounter >> 2));
+			func_80070514_409C4((frameCounter >> 2) + 0x24);
+			func_80070514_409C4(0x31 - (frameCounter >> 2));
 		}
 
 		if (nameLength == 0) {
@@ -3060,8 +3026,7 @@ s32 func_80078424_488D4(void) {
 				switch (D_800D74A4) {
 				case 0x30:
 					if (nameLength > 0) {
-						nameLength--;
-						D_80047FA8[nameLength] = 0x20;
+						frontendFileNameWrite[--nameLength] = 0x20;
 						changed = 1;
 					}
 
@@ -3093,8 +3058,7 @@ s32 func_80078424_488D4(void) {
 
 				default:
 					if (nameLength < 6) {
-						D_80047FA8[nameLength] = (u8)(D_800D74A4 + 0x2B);
-						nameLength++;
+						frontendFileNameWrite[nameLength++] = D_800D74A4 + 0x2B;
 						changed = 1;
 					}
 
@@ -3127,25 +3091,21 @@ s32 func_80078424_488D4(void) {
 		}
 
 		if (changed != 0) {
-			s32 len;
+			s16 textWidth;
+			u8 typedName[7];
 
-			len = 0;
-			if (D_80047FA8[0] != 0x20) {
-				typedName[0] = D_80047FA8[0];
-				len = 1;
-				while ((len < 6) && (D_80047FA8[len] != 0x20)) {
-					typedName[len] = D_80047FA8[len];
-					len++;
-				}
+			i = 0;
+			while ((i < 6) && (D_80047FA8[i] != 0x20)) {
+				typedName[i] = D_80047FA8[i];
+				i++;
 			}
-
-			typedName[len] = 0;
-			textWidth = (s16)(func_8000A2B8_AEB8(typedName, 0) + 0x30);
+			typedName[i] = 0;
+			textWidth = func_8000A2B8_AEB8(typedName, 0) + 0x30;
 			D_800909B0[50].unk0 = D_800909B0[50].unk2;
 			D_800909B0[50].unk4 = D_800909B0[50].unk6;
 			D_800909B0[50].unkA = D_800909B0[50].unkC;
 			D_800909B0[50].unkE = D_800909B0[50].unk10;
-			D_800909B0[50].unk2 = (s16)(0xA0 - (textWidth >> 1));
+			D_800909B0[50].unk2 = 0xA0 - (textWidth >> 1);
 			D_800909B0[50].unkC = textWidth;
 
 			func_80070494_40944(0x32)->unk16 = 0;
@@ -3180,9 +3140,6 @@ s32 func_80078424_488D4(void) {
 	(void)backupName;
 	return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80078424_488D4.s")
-#endif
 
 // startFile (unused?)
 // AI - Starts a new file at level 1 and enters the gameplay/frontend transition loop (func_80006DDC_79DC).
@@ -5583,76 +5540,12 @@ const char D_800AE448_7E8F8[] = "Tesking key %d,  result = %d \012";
 const char D_800AE468_7E918[] = "WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\012";
 const char D_800AE49C_7E94C[] = "*******************InventorySelect=%d, \012";
 const char D_800AE4C8_7E978[] = "INV>>>>WeaponSelect=%d\012";
-const u32 jtbl_800AE4E0_7E990[14] = {
-	0x8007029C, 0x800702AC, 0x800702DC, 0x800702EC,
-	0x80070300, 0x8007031C, 0x8007037C, 0x8007037C,
-	0x8007033C, 0x8007037C, 0x8007035C, 0x8007036C,
-	0x8007032C, 0x8007034C,
-};
-const ShadowGeometryConstant D_800AE518_7E9C8 = { 0.69999999999999996 };
-const f64 D_800AE520_7E9D0[1] = { 35 };
-const u32 jtbl_800AE528_7E9D8[91] = {
-	0x800739B4, 0x800739D8, 0x800739FC, 0x80073A20,
-	0x80073A44, 0x80073A68, 0x80073A94, 0x80073BDC,
-	0x80073D24, 0x80073E6C, 0x80073E98, 0x80073EC4,
-	0x80073EF0, 0x80073F1C, 0x80073F48, 0x80073F74,
-	0x80073FA0, 0x80073FCC, 0x800740B0, 0x80074194,
-	0x800741FC, 0x800742A8, 0x800742D4, 0x80074300,
-	0x8007432C, 0x80074358, 0x80074384, 0x800743B0,
-	0x800743DC, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074408,
-	0x80074408, 0x80074408, 0x80074408, 0x80074428,
-	0x80074448, 0x80074468, 0x8007448C, 0x800744B8,
-	0x800744E4, 0x80074510, 0x8007453C, 0x80074568,
-	0x80074594, 0x800745D4, 0x80074614, 0x80074640,
-	0x80074B64, 0x80074BA4, 0x80074BE4, 0x80074C10,
-	0x80074C3C, 0x80074C68, 0x80074C94, 0x80074CD4,
-	0x80074F78, 0x8007515C, 0x800754B8, 0x800754E4,
-	0x80075500, 0x8007551C, 0x80075538, 0x80075554,
-	0x80075640, 0x80075570, 0x8007558C, 0x800755A8,
-	0x800755C4, 0x800755F0, 0x8007561C,
-};
-const u32 jtbl_800AE694_7EB44[12] = {
-	0x80074FB8, 0x80074FCC, 0x80074FE0, 0x80074FF4,
-	0x80075008, 0x8007501C, 0x80075030, 0x80075044,
-	0x80075058, 0x8007506C, 0x800750F4, 0x80075108,
-};
-const u32 jtbl_800AE6C4_7EB74[12] = {
-	0x8007519C, 0x80075488, 0x80075488, 0x80075488,
-	0x80075488, 0x800751B0, 0x800751C4, 0x800751D8,
-	0x80075488, 0x800751EC, 0x80075200, 0x80075214,
-};
-const u32 jtbl_800AE6F4_7EBA4[12] = {
-	0x80075254, 0x80075488, 0x80075268, 0x8007527C,
-	0x80075290, 0x800752A4, 0x800752B8, 0x80075488,
-	0x80075488, 0x80075488, 0x800752CC, 0x800752E0,
-};
-const u32 jtbl_800AE724_7EBD4[12] = {
-	0x80075320, 0x80075334, 0x80075488, 0x80075348,
-	0x8007535C, 0x80075370, 0x80075384, 0x80075398,
-	0x80075488, 0x80075488, 0x800753AC, 0x800753C0,
-};
-const u32 jtbl_800AE754_7EC04[10] = {
-	0x80075400, 0x80075414, 0x80075428, 0x8007543C,
-	0x80075488, 0x80075488, 0x80075488, 0x80075488,
-	0x80075450, 0x80075464,
-};
-const f32 D_800AE77C_7EC2C[1] = { -10000.0f };
-const f32 D_800AE780_7EC30[1] = { 10000.0f };
-const f32 D_800AE784_7EC34[1] = { 1500.0f };
-const f32 D_800AE788_7EC38[1] = { 0.200000003f };
-const u32 jtbl_800AE78C_7EC3C[8] = {
-	0x80077E34, 0x80077E5C, 0x80077E34, 0x80077E14,
-	0x80077E54, 0x80077E54, 0x80077E54, 0x80077E54,
-};
 #endif
 
 
+
+
 #ifdef VERSION_EU
-/* Final entry of the preceding switch table. */
-const u32 D_800AF310_7F7C0[1] = { 0x80078028 };
+/* Tail of the preceding diagnostic string, before the generated table. */
+const u32 D_800AF040_7F4F0[1] = { 0x25640A00 };
 #endif

@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_80078110_485C0`, repeated direct reads of `D_80048026` cached its address in an extra saved register. A named mission-table pointer caused the second pair of menu-link stores to rematerialize separate global addresses, while the first pair used `a0` instead of the target `v1`. A signed-halfword temporary for the masked low three bits also added `sll/sra` normalization.
+
+-> `code changed`: Initialize a local `s16 *completedFlags = &D_80048026` and read the flag value through that pointer. Make the low-three-bit mask temporary word-sized. Access `D_800909B0` directly through its existing `MissionData` array: raw offsets `0xD45`, `0xDC2`, `0xD6F`, and `0xD98` become entries `80.unk25`, `83.unk24`, `81.unk25`, and `82.unk24`. Remove the mission-table pointer and its redundant branch assignments.
+
+-> `correct ASM`: Each flag read uses the target `lui v0; lh v0,offset(v0)` pair, with the first read scheduled before stack allocation. The mission-table base remains in `v1` across both pairs of link stores and the selected-entry update. The masked value uses `a0` without normalization. Both complete US and PAL ROMs pass their checksums.

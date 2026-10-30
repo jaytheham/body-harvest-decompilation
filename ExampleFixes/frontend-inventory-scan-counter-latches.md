@@ -1,0 +1,5 @@
+`incorrect ASM`: `func_800710D8_41588` uses controller-state fields instead of the dedicated stick globals, external countdowns reload their stored short result, and explicit in-body short counter decrements normalize before the item tests. Explicit wrap `if/else` statements omit the target unconditional weapon-index update stores.
+
+-> `code changed`: Use the dedicated stick globals, function-local static repeat delays in original initialized-data order, and typed `[currentLevel][itemIndex - 13]` render-table access. Use short scan counters with `--i >= 0` in the do/while latch. Use `if (weaponIndex++ >= 8) weaponIndex = 0` and `if (weaponIndex-- <= 0) weaponIndex = 7`. Put the left weapon scan header on one line: `case 1: i = 8; do {`.
+
+-> `correct ASM`: The scan subtraction is speculated before availability tests while short normalization stays at the latch and writes back to `a0`. Weapon-index stores occupy the branch delay slots. The left scan initializes `a0` after its pointer setup and selected-index load, with every register and instruction matching. Both complete ROM checksums pass.

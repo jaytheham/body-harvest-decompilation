@@ -2125,7 +2125,10 @@ typedef struct {
 	/* 0x1D */ u8 pad1D;
 	/* 0x1E */ s16 unk1E;
 	/* 0x20 */ s16 unk20;
-	/* 0x22 */ u8 pad22[0x4];
+	/* 0x22 */ u8 unk22;
+	/* 0x23 */ u8 unk23;
+	/* 0x24 */ u8 unk24;
+	/* 0x25 */ u8 unk25;
 	/* 0x26 */ u8 unk26;
 	/* 0x27 */ u8 unk27;
 	/* 0x28 */ s16 unk28;
@@ -4183,6 +4186,15 @@ typedef struct {
 typedef struct {
 	u32 words[8];
 } DListPtrsCopy;
+
+typedef struct {
+    s32 frames[11];
+} IntroStartFrames;
+
+typedef struct {
+    s32 frames[8];
+} IntroStopFrames;
+
 
 typedef struct {
 	/* 0x00 */ s16 distance; // orbit radius

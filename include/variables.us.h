@@ -874,6 +874,7 @@ extern s32 D_80047F98; // beacon states - how many save beacons have been deploy
 extern s32 D_80047F9C; // WarpPointNumber
 extern s32 D_80047FA0; // stage of level
 extern u8 D_80047FA8[6]; /* save data bytes */
+extern u8 frontendFileNameWrite[6];
 extern u8 D_80047FAE;
 extern u8 D_80047FAE_NameEnd;
 extern SaveSummary D_80047FB8[5];
@@ -1291,18 +1292,14 @@ extern s16 D_80094840_64CF0;
 extern s32 D_80094844_64CF4;
 extern s32 D_80094848_64CF8;
 extern s32 D_8009484C_64CFC;
-extern s32 D_80094850_64D00;
 extern s32 D_80094854_64D04;
 extern u8 D_80094858_64D08;
 extern s32 D_8009485C_64D0C;
 extern s32 D_80094860_64D10;
 extern s32 D_80094860_64D10_W;
 extern u32 D_80094864_64D14;
-extern s32 D_80094868_64D18[];
-extern s32 D_80094894_64D44[];
-extern s32 D_800948B4_64D64;
-extern s8 D_800948B8_64D68;
-extern s8 D_800948BC_64D6C;
+extern IntroStartFrames D_80094868_64D18;
+extern IntroStopFrames D_80094894_64D44;
 extern DListPtrsCopy D_800948C0_64D70;
 extern u32 D_800948E0_64D90;
 extern u32 D_800948E0_Write;
@@ -1543,12 +1540,13 @@ extern u8 D_800D6D90[];
 extern s32 D_800D6D98[];
 extern s8 D_800D6D92;
 extern s32 D_800D6DA0;
-extern u8 D_800D6DA8[];
+extern u8 D_800D6DA8[][7];
 extern u8 D_800D6DB6;
 extern MissionData D_800D6DC0[42];
 extern MissionData D_800D747A;
 extern u8 D_800D7490;
 extern s16 D_800D74A4;
+extern volatile s16 frontendSelectedEntry;
 extern s16 D_800D74A6;
 extern s16 D_800D74A8;
 extern s16 D_800D74AA;
