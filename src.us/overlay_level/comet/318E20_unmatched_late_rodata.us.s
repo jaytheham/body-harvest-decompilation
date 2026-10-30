@@ -1,10 +1,6 @@
 .late_rodata
 .late_rodata_alignment 8
 
-glabel D_802E7B30_32BC80
-.word 0x40945000
-.word 0x00000000
-
 glabel D_802E7B38_32BC88
 .word 0x459C4000
 
