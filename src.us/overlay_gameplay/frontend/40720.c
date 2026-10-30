@@ -685,7 +685,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 
 s32 D_80094844_64CF4 = 0;
 s32 D_80094848_64CF8 = 0;
-s32 D_8009484C_64CFC = 0;
+
 
 
 
@@ -1051,61 +1051,60 @@ void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 // Checks if selected inventory item is 0xb (weapon crystals)
-#ifdef NON_MATCHING
 void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-	s32 unusedPad0;
+	static s32 itemRotation = 0;
+	Gfx *packet;
 	s32 unusedPad1;
 	s32 unusedPad2;
 	s32 unusedPad3;
 	Unk80052B40 sp60;
 	Unk80052B40 sp58;
 	Unk80052B40 sp50;
-	FrontendItemRenderData* itemEntry;
 	Gfx* displayList;
-	s32 displayListAddr;
-	s32 matrixAddr;
+	s32 padding[2];
+	FrontendItemRenderData* itemEntry;
+	Mtx *matrix;
 	s32 scaleInt;
-	f32 itemScale;
+	s16 selectedItem;
 
 	func_800722A4_42754();
+	selectedItem = D_800D74AC;
 
-	if (D_800D74AC == 0xB) {
+	if (selectedItem == 0xB) {
 		func_80072604_42AB4(-0xE6, -0x32, -0x190, arg3);
 		return;
 	}
 
-	if (D_800D74AC == 0xC) {
+	if (selectedItem == 0xC) {
 		func_800728F4_42DA4(-0xB4, -0x32, -0x190, arg3);
 		return;
 	}
 
-	if (D_800D74AC == 0) {
+	if (selectedItem == 0) {
 		return;
 	}
 
-	itemEntry = &D_800942E0_64790[((currentLevel * 13) + D_800D74AC) - 13];
+	itemEntry = &((FrontendItemRenderData (*)[13])D_800942E0_64790)[currentLevel - 1][selectedItem];
 	displayList = itemEntry->displayList;
-	if ((D_800AED78[D_800D74AC] == 0) || (displayList == NULL)) {
+	if ((D_800AED78[selectedItem] == 0) || (displayList == NULL)) {
 		return;
 	}
 
-	D_8009484C_64CFC = D_8009484C_64CFC + 0x16C;
-	itemScale = itemEntry->scale * 2.0f;
-	arg3 = itemScale * arg3;
-	displayListAddr = (s32)displayList;
+	if ((arg3 = (itemEntry->scale * 2) * arg3,1)) {} itemRotation = itemRotation + 0x16C;
 
-	gDPPipeSync(D_8005BB2C++);
+	packet=D_8005BB2C++; packet->words.w0=0xE7000000; packet->words.w1=0;
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
+	packet=D_8005BB2C++; packet->words.w0=0xBB000000; packet->words.w1=0x80008000;
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	matrix = D_8005BB38;
 
 	sp60.unk0 = arg0;
 	sp60.unk2 = arg1;
 	sp60.unk4 = arg2;
 
-	sp50.unk0 = D_8009484C_64CFC;
+	sp50.unk0 = itemRotation & 0xFFFF;
 	sp50.unk2 = 0;
 	sp50.unk4 = 0;
 
@@ -1114,19 +1113,12 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	sp58.unk2 = scaleInt;
 	sp58.unk4 = scaleInt;
 
-	func_800039D0_45D0(&sp60, &sp50, &sp58, D_8005BB38);
+	func_800039D0_45D0(&sp60, &sp50, &sp58, matrix);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayListAddr));
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayList));
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#ifdef VERSION_EU
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
-#else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
-#endif
-#endif
 
 // display inventory models
 void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
@@ -1601,7 +1593,11 @@ block_87:
 	drawText(&D_800ADC0C_7E0BC, 0x400U, 0x400, NULL, 0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_800731A8_43658.s")
+#ifdef VERSION_EU
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.eu.s")
+#else
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/frontend/40720_late_rodata.s")
+#endif
 #endif
 
 #ifdef NON_MATCHING
