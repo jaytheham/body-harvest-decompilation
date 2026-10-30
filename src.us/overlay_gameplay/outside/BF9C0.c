@@ -30,24 +30,6 @@ const f64 D_80142E40_151DF0[1] = {1.022};
 const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
 /* Crater radius multiplier */
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
-/* Jump table for func_800B960C_C85BC */
-const u32 jtbl_80142E50_151E00[] = {
-	OVERLAY_PTR(0x800B9784),
-	OVERLAY_PTR(0x800B97D4),
-	OVERLAY_PTR(0x800B981C),
-	OVERLAY_PTR(0x800B9864),
-	OVERLAY_PTR(0x800B98AC),
-};
-/* Crater radius decay thresholds */
-const f64 D_80142E68_151E18[1] = {0.4};
-const f64 D_80142E70_151E20[1] = {0.2};
-const f64 D_80142E78_151E28[1] = {0.1};
-/* Crater brightness reduction factors */
-const f64 D_80142E80_151E30[1] = {0.2};
-const f64 D_80142E88_151E38[1] = {0.1};
-/* Initial crater radius (legacy) */
-const f32 D_80142E90_151E40[1] = {0.10000000149011612f};
-
 /* Water palette color words (first byte updated during rendering). */
 SignedWord D_8013D940_14C8F0 = { 0 };
 SignedWord D_8013D944_14C8F4 = { 0 };
@@ -2731,7 +2713,6 @@ s32 func_800B93AC_C835C(s16 arg0, s16 arg1, s32 arg2, s16 arg3, s32 arg4, s32 ar
 }
 
 /* World-space bounding box frustum cull: checks tile against camera position + angle */
-#ifdef NON_MATCHING
 s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 	s16 objX;
 	s16 objZ;
@@ -2789,9 +2770,6 @@ s32 func_800B960C_C85BC(s16 arg0, s16 arg1, u16 arg2, u16 arg3) {
 
 	return D_8014F854;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B960C_C85BC.s")
-#endif
 
 /* Deactivate a particle/effect slot */
 void func_800B9954_C8904(u8 arg0) {
@@ -3000,7 +2978,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
 #endif
 
 /* Clamps arg0 to the range [arg1, arg2] */
