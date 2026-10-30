@@ -56,6 +56,8 @@ If a function has a switch statement and there is an associated jump table const
 - Remove unnecessary temporary variables.
 - Replace goto-based control flow with structured control flow (if/else, for, while).
 - Search in `/asm` for any `jal` references (e.g. `jal        func_80073DC0_82D70`) to the target function to determine correct parameter and return types.
+- Prefer using existing gfx macros instead of manual gfx property setting (e.g. gfx->words.w0 = ...) where they produce the same, matching output.
+- There are many matched functions setting vertex data at D_8005BB34, use them as a reference to match other functions also interacting with D_8005BB34.
 
 `ExampleFixes` folder contains .md files with examples of fixes that have been applied previously to solve specific patterns, search in here for specific cases. Also `DecompHints.md`
 
