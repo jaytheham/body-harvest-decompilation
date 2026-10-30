@@ -3284,8 +3284,7 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
+#pragma GLOBAL_ASM("src.us/overlay_gameplay/outside/BF9C0_late_rodata.s", "asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 #endif
 
 /* Rectangle bounding overlap test with parameter extraction */
