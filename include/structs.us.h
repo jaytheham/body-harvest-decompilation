@@ -1672,6 +1672,7 @@ typedef struct {
 		struct { u8 padState[2]; u16 stateAndRotation; };
 		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
 		struct { u32 padKeyStatus : 20; u32 keyId : 6; u32 padKeyLow : 6; };
+		struct { u32 padRotationHigh : 26; u32 rotationIndexWord : 4; u32 padRotationLow : 2; };
 	};
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
@@ -3504,7 +3505,7 @@ typedef struct {
 	/* 0x02 */ s8 unk2;      /* half-size in 1/256 world units */
 	/* 0x03 */ s8 unk3;      /* 0 = active zone entry */
 	/* 0x04 */ u8 *name;
-	/* 0x08 */ u8 pad08[2];
+	/* 0x08 */ union { u8 pad08[2]; s16 unk08; };
 	/* 0x0A */ s16 unk0A;
 	/* 0x0C */ s16 unk0C;
 	/* 0x0E */ u8 pad0E[2];
@@ -4105,6 +4106,8 @@ typedef struct {
 
 typedef struct {
 	s32 unk0;
+	s16 unk4;
+	s16 unk6;
 	s16 unk8;
 	s16 unkA;
 } UnkBuildDoorMap;

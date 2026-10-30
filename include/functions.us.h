@@ -960,7 +960,7 @@ void func_801001B4_10F164(void);
 void func_801052E8_114298(Unk80052B2C *, OSContPad *);
 void func_8010065C_10F60C(s32 arg0);
 void func_80101C14_110BC4(void);
-void func_80118774_127724();
+void func_80118774_127724(void);
 void func_80124D60_133D10(void);
 void func_8012D884_13C834(void);
 void func_801365E0_145590(void);
