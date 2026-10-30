@@ -1410,87 +1410,81 @@ void func_800C3300_D22B0(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3300_D22B0.s")
 #endif
 
-#ifdef NON_MATCHING
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
 	s32 linkedIndex;
 	u16 color;
-	s32 channel;
-	u16 height;
-	s32 temp_u16;
-	Unk80154318Entry *base = D_80154318;
+	u16 channel;
+	u32 size;
+	u16 lifeCheck;
+	Unk80154318Entry *linkedEntry;
 	Unk80154318Entry *entry;
 	EffectFirePayload *entrySub;
 
 	slot = func_800C19D4_D0984(0xC, 1);
 	if (slot != -3) {
-		entry = &base[slot];
+		entry = &D_80154318[slot];
 		entry->unk8 = arg0;
 		entry->unkA = arg1;
 		entry->unkC = arg2;
 
 		channel = arg5;
 		linkedIndex = entry->unk4;
-		entrySub = (EffectFirePayload *)(s32)((Unk80154318Entry *)(s32)D_80154318)[linkedIndex].payload;
-		entrySub->control.phase = 0;
+		linkedEntry = &D_80154318[linkedIndex];
+		linkedEntry->firePayload.control.phase = 0;
 
 		entry->unkE = arg5;
 		entry->unkF = arg6;
 		entry->unk10 = arg7;
 
+		size = arg3;
 		if (arg3 < 0x10) {
-			arg3 = 0x10;
+			size = 0x10;
 		}
 
-		height = arg4;
-		temp_u16 = height;
-		if (height < 0x12) {
-			height = 0x12;
-			temp_u16 = 0x12;
+		lifeCheck = arg4;
+		if (arg4 < 0x12) {
+			arg4 = 0x12;
+			lifeCheck = 0x12;
 		}
 
-		if (temp_u16 == 0xFFFF) {
-			entry->unk2 = arg3;
+		if (lifeCheck == 0xFFFF) {
+			entry->unk2 = size;
 		} else {
-			entry->unk2 = arg3 / 8;
+			entry->unk2 = (s32)size / 8;
 		}
 
-		entrySub->control.sizeDelta = arg3;
-		entrySub->control.life = height;
+		entrySub = (EffectFirePayload *)(s32)D_80154318[linkedIndex].payload;
+		entrySub->control.sizeDelta = size;
+		entrySub->control.life = arg4;
 		entrySub->control.growthFrames = 8;
 
 		entrySub = &entry->firePayload;
 
 		color = (u8)(channel / 2) + channel;
-		if ((u16)color >= 0x100) {
+		if (color >= 0x100) {
 			color = 0xFF;
 		}
 		entrySub->visual.highlight[0] = color;
 
 		channel = arg6;
 		color = (u8)(channel / 2) + channel;
-		if ((u16)color >= 0x100) {
+		if (color >= 0x100) {
 			color = 0xFF;
-		} else {
-			color = (u16)color;
 		}
 		entrySub->visual.highlight[1] = color;
 
 		channel = arg7;
 		color = (u8)(channel / 2) + channel;
-		if ((u16)color >= 0x100) {
+		if (color >= 0x100) {
 			color = 0xFF;
-		} else {
-			color = (u16)color;
 		}
 		entrySub->visual.highlight[2] = color;
 	}
 
 	return slot;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3BD8_D2B88.s")
-#endif
+
 
 // Move fire effect?
 void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
