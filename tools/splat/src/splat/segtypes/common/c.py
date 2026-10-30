@@ -25,8 +25,20 @@ C_FUNC_RE = re.compile(
 
 # Local change to vendored splat 0.24.7: allow '.' and '-' in GLOBAL_ASM path components, so pragmas under
 # asm.eu/ are recognised (upstream matched only \w). Without it every EU GLOBAL_ASM function is written to
-# asm.eu/matchings and make VERSION=eu fails. Re-apply after any splat update; see docs/windows-build.md.
-C_GLOBAL_ASM_IDO_RE = re.compile(r"GLOBAL_ASM\(\"([\w.-]+\/)*([\w.-]+)\.s\"\)", re.MULTILINE)
+# asm.eu/matchings and make VERSION=eu fails. Also recognise every file in a multi-file pragma
+# (e.g. function assembly followed by late rodata). Re-apply after any splat update; see docs/windows-build.md.
+C_GLOBAL_ASM_IDO_RE = re.compile(
+    r'\bGLOBAL_ASM\s*\(\s*("[^"\n]+"(?:\s*,\s*"[^"\n]+")*)\s*\)', re.MULTILINE
+)
+C_GLOBAL_ASM_PATH_RE = re.compile(r'"(?:[\w.-]+/)*([\w.-]+)\.s"')
+
+
+def global_asm_ido_names(text: str) -> Set[str]:
+    return {
+        path.group(1)
+        for pragma in C_GLOBAL_ASM_IDO_RE.finditer(text)
+        for path in C_GLOBAL_ASM_PATH_RE.finditer(pragma.group(1))
+    }
 
 
 class CommonSegC(CommonSegCodeSubsegment):
@@ -109,7 +121,7 @@ class CommonSegC(CommonSegCodeSubsegment):
         with c_file.open(encoding="utf-8") as f:
             text = CommonSegC.strip_c_comments(f.read())
         if options.opts.compiler == IDO:
-            return set(m.group(2) for m in C_GLOBAL_ASM_IDO_RE.finditer(text))
+            return global_asm_ido_names(text)
         else:
             return set(CommonSegC.find_include_asm(text))
 
@@ -118,7 +130,7 @@ class CommonSegC(CommonSegCodeSubsegment):
         with c_file.open(encoding="utf-8") as f:
             text = CommonSegC.strip_c_comments(f.read())
         if options.opts.compiler == IDO:
-            return set(m.group(2) for m in C_GLOBAL_ASM_IDO_RE.finditer(text))
+            return global_asm_ido_names(text)
         else:
             return set(CommonSegC.find_include_rodata(text))
 
