@@ -927,23 +927,18 @@ void func_800722A4_42754(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_LIGHTING | G_SHADING_SMOOTH);
 }
 
-#ifdef NON_MATCHING
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
-	s32 padTop0;
-	s32 padTop1;
-	s32 padTop2;
-	u16 spD4;
-	Unk80052B40 spBC;
-	Unk80052B40 spB4;
-	Unk80052B40 spAC;
-	s32 sp9C;
-	s32 xPos;
+	s16 topPadding;
+	u16 spacing;
+	s32 padTop[4];
+	Unk80052B40 position;
+	Unk80052B40 scaleVector;
+	Unk80052B40 rotation;
+	s32 middlePadding[3];
+	s32 startX;
 	s32 scaleInt;
-	s32 unused8;
 	s16 i;
-	s32 unused0;
-	s32 unused1;
-	s32 unused2;
+	f32 scale;
 	s32 count;
 	s32 remaining;
 	Gfx* displayList;
@@ -951,22 +946,19 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	D_80094844_64CF4 += 0x2D8;
 	count = D_8004DC5C;
 	remaining = count;
-	sp9C = arg0;
-	spD4 = 0;
+	startX = arg0;
+	spacing = 0;
 
-	switch (remaining) {
-	case 1:
-		sp9C = arg0 - 0x78;
-		spD4 = 0x50;
-		break;
-	case 2:
-		sp9C = arg0 - 0x55;
-		spD4 = 0x50;
-		break;
-	case 3:
-		sp9C = arg0 - 0x28;
-		spD4 = 0x50;
-		break;
+	if (count != 1) {
+		if ((remaining & 0xFFFFFFFF) != 2) {
+			if ((remaining & 0xFFFFFFFF) == 3) {
+				spacing = 0x50; startX = arg0 - 0x28;
+			}
+		} else {
+			spacing = 0x50; startX = arg0 - 0x55;
+		}
+	} else {
+		spacing = 0x50; startX = arg0 - 0x78;
 	}
 
 	if (count > 0) {
@@ -974,9 +966,9 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 		do {
 			displayList = D_800942D8_64788;
 			if (displayList != NULL) {
-				scale = (f32)((f64)arg3 * 1.5);
+				scale = arg3 * 1.5;
 				scale = D_800942DC_6478C * scale;
-				xPos = ((u32)spD4 * (u32)(3 - remaining)) + sp9C;
+				arg0 = ((u32)spacing * (u32)(3 - remaining)) + startX;
 				remaining--;
 
 				gDPPipeSync(D_8005BB2C++);
@@ -986,35 +978,31 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 				func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-				scaleInt = (s32)(256.0f * scale);
-				spBC.unk0 = xPos;
-				spBC.unk2 = arg1;
-				spBC.unk4 = arg2;
+				scaleInt = 256.0f * scale;
+				position.unk0 = arg0;
+				position.unk2 = arg1;
+				position.unk4 = arg2;
 
-				spAC.unk0 = D_80094844_64CF4;
-				spAC.unk2 = 0;
-				spAC.unk4 = 0;
+				rotation.unk0 = D_80094844_64CF4 & 0xFFFF;
+				rotation.unk2 = 0;
+				rotation.unk4 = 0;
 
-				spB4.unk0 = scaleInt;
-				spB4.unk2 = scaleInt;
-				spB4.unk4 = scaleInt;
+				scaleVector.unk0 = scaleInt;
+				scaleVector.unk2 = scaleInt;
+				scaleVector.unk4 = scaleInt;
 
-				func_800039D0_45D0(&spBC, &spAC, &spB4, D_8005BB38);
+				func_800039D0_45D0(&position, &rotation, &scaleVector, D_8005BB38);
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPDisplayList(D_8005BB2C++, (Gfx *)((u32)displayList & mask));
+				gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(displayList));
 				gDPPipeSync(D_8005BB2C++);
 
 				count = D_8004DC5C;
 			}
 
-			i++;
 		} while (++i < count);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80072604_42AB4.s")
-#endif
 
 // Renders the twelve artifact slots around the rotating inventory display.
 void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
