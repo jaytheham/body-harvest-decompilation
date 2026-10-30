@@ -2650,7 +2650,7 @@ extern u8 D_80157F95;
 extern s16 D_80157F96;
 extern s16 D_80157F98;
 extern s16 D_80157F9A;
-#ifdef FEC70_BSS
+#if defined(FEC70_BSS) || defined(COMET_CUTSCENE_BSS)
 extern u8 D_80157F9E;
 extern u8 D_80157F9F;
 #else
@@ -3409,7 +3409,7 @@ extern EffectRgb D_802E4F78_3290C8;
 extern SignedWord D_802E4F7C_3290CC;
 extern EffectRgb D_802E4F80_3290D0;
 extern SignedWord D_802E4F84_3290D4;
-extern s32 D_802E4F88_3290D8[];
+extern CometLandingData D_802E4F88_3290D8;
 extern s16 D_802E4FB4_329104[];
 extern s16 D_802E5058_3291A8[];
 extern s16 D_802E510C_32925C[];
@@ -3496,6 +3496,7 @@ extern s16 D_802E7C3A;
 extern s32 D_802E7C3C;
 extern s16 D_802E7C40;
 extern f32 D_802E7C44;
+extern f32 D_802E7C44_Write;
 extern u8 D_802E7C48[];
 extern s32 D_802E7C50;
 extern s16 D_802E7C52;

@@ -4411,4 +4411,15 @@ typedef struct {
 	s32 bias;
 } BuildingHeightDecode;
 
+/* Landing-effect colors followed by the two comet joint transforms. */
+typedef union {
+    s32 words[3];
+    s8 rgb[4][3];
+} EffectColorPalette;
+
+typedef struct {
+    EffectColorPalette colors;
+    Unk8014DD50 transforms[2];
+} CometLandingData;
+
 #endif /* LIBULTRA_REFERENCE */
