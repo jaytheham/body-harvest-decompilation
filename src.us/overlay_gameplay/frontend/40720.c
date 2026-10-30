@@ -2700,10 +2700,10 @@ s32 func_800779FC_47EAC(void) {
 	return state;
 }
 
-#ifdef NON_MATCHING
 s32 func_80077CE0_48190(s32 arg0) {
 	u32 frameCounter;
 	s32 state;
+	s32 selectedSlot;
 
 	if (arg0 != 0) {
 		frameCounter = 0x11;
@@ -2712,11 +2712,8 @@ s32 func_80077CE0_48190(s32 arg0) {
 	}
 
 	state = 1;
-	if (arg0 != 0) {
-		D_800D74A6 = arg0 + 7;
-	} else {
-		D_800D74A6 = 8;
-	}
+	selectedSlot = arg0 != 0 ? arg0 + 7 : 8;
+	D_800D74A6 = selectedSlot;
 	D_800D74A4 = D_800D74A6;
 	func_8007166C_41B1C();
 
@@ -2753,27 +2750,27 @@ s32 func_80077CE0_48190(s32 arg0) {
 	func_8000AFDC_BBDC();
 
 	switch (state) {
-	case 0:
-	case 1:
+	case 3:
 		func_800153D8_15FD8(0xC8);
-		if (state == 0) {
-			func_80070940_40DF0();
-		} else {
-			func_800709F0_40EA0();
-		}
+		func_80070940_40DF0();
 		D_800476A0 = 1;
 		break;
-
+	case 0:
 	case 2:
+		func_800153D8_15FD8(0xC8);
+		func_800709F0_40EA0();
+		D_800476A0 = 1;
+		break;
+	case 4:
+	case 5:
+	case 6:
+	case 7:
 		func_800153D8_15FD8(0xCB);
 		break;
 	}
 
 	return state;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/40720/func_80077CE0_48190.s")
-#endif
 
 s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 	return 0;

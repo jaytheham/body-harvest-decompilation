@@ -180,16 +180,6 @@ dlabel D_800AE784_7EC34
 dlabel D_800AE788_7EC38
     .float 0.200000003
 
-dlabel jtbl_800AE78C_7EC3C
-    .word 0x80077E34
-    .word 0x80077E5C
-    .word 0x80077E34
-    .word 0x80077E14
-    .word 0x80077E54
-    .word 0x80077E54
-    .word 0x80077E54
-    .word 0x80077E54
-
 .text
 glabel func_80071900_41DB0
     /* 41DB0 80071900 27BDFFD0 */  addiu      $sp, $sp, -0x30
