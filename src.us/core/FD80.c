@@ -16,20 +16,6 @@ const f32 D_80037650_38250[] = {6000.0f};
 const f32 D_80037654_38254[] = {0.2617993950843811f};
 const f32 D_80037658_38258[] = {0.2617993950843811f, 0.0f};
 
-/* Read-only strings, numeric constants, and switch targets. */
-const char D_80037660_38260[] = "Schedule Stack Overflow\n";
-const char D_8003767C_3827C[] = "Boot Stack Overflow\n";
-const char D_80037694_38294[] = "Idle Stack Overflow\n";
-const char D_800376AC_382AC[] = "IO Stack Overflow\n";
-const char D_800376C0_382C0[] = "Main Stack Overflow\n";
-const char D_800376D8_382D8[] = "Rmon Stack Overflow\n";
-const char D_800376F0_382F0[] = "Controller Stack Overflow\n";
-const char D_8003770C_3830C[] = "Load Level Stack Overflow\n";
-const char D_80037728_38328[] = "RCP hang detected\n";
-const char D_8003773C_3833C[] = "black screen off\n";
-const char D_80037750_38350[] = "black screen on\n";
-const char D_80037764_38364[] = "level data %x\n";
-
 void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2) {
 }
 
@@ -254,28 +240,28 @@ void func_8000F6B0_102B0(void *arg0) {
 
 	for (;;) {
 		if (D_80068328 != 0xCEC) {
-			osSyncPrintf(D_80037660_38260);
+			osSyncPrintf("Schedule Stack Overflow\n");
 		}
 		if (D_8005BB50 != 0xCEC) {
-			osSyncPrintf(D_8003767C_3827C);
+			osSyncPrintf("Boot Stack Overflow\n");
 		}
 		if (D_8005BF58 != 0xCEC) {
-			osSyncPrintf(D_80037694_38294);
+			osSyncPrintf("Idle Stack Overflow\n");
 		}
 		if (D_8005C760 != 0xCEC) {
-			osSyncPrintf(D_800376AC_382AC);
+			osSyncPrintf("IO Stack Overflow\n");
 		}
 		if (D_8005CF68 != 0xCEC) {
-			osSyncPrintf(D_800376C0_382C0);
+			osSyncPrintf("Main Stack Overflow\n");
 		}
 		if (D_80064F70 != 0xCEC) {
-			osSyncPrintf(D_800376D8_382D8);
+			osSyncPrintf("Rmon Stack Overflow\n");
 		}
 		if (D_80065F78 != 0xCEC) {
-			osSyncPrintf(D_800376F0_382F0);
+			osSyncPrintf("Controller Stack Overflow\n");
 		}
 		if (D_80066780 != 0xCEC) {
-			osSyncPrintf(D_8003770C_3830C);
+			osSyncPrintf("Load Level Stack Overflow\n");
 		}
 
 		osRecvMesg(&D_8006A908, (OSMesg *)&message, 1);
@@ -288,7 +274,7 @@ void func_8000F6B0_102B0(void *arg0) {
 				hangCount++;
 			}
 			if (hangCount >= 0xB) {
-				osSyncPrintf(D_80037728_38328);
+				osSyncPrintf("RCP hang detected\n");
 				hangCount = 0;
 			}
 			func_80013818_14418();
@@ -319,13 +305,13 @@ void func_8000F6B0_102B0(void *arg0) {
 				}
 				if (D_8006807C != 0) {
 					if (D_80068080 == 0) {
-						osSyncPrintf(D_8003773C_3833C);
+						osSyncPrintf("black screen off\n");
 						osViBlack(0);
 						D_80035B5C_3675C = 0x36D;
 						osViSetYScale(D_80068090);
 						D_8006807C = 0;
 					} else {
-						osSyncPrintf(D_80037750_38350);
+						osSyncPrintf("black screen on\n");
 						D_80035B5C_3675C = 0x400;
 						osViSetYScale(1.0f);
 						osViBlack(1);
@@ -379,3 +365,6 @@ void func_8000F6B0_102B0(void *arg0) {
 		}
 	}
 }
+/* Defined last: 10A20.c references this string, and it has to land after the literals
+ * of the functions above to keep its place at the end of this file's .rodata. */
+const char D_80037764_38364[] = "level data %x\n";
