@@ -164,9 +164,6 @@ const char D_80036C50_37850[] = "CALLING RECURSIVELY";
 const char D_80036C64_37864[] = "SCRUB GAMENOTE\n";
 const char D_80036C74_37874[] = "RESTORE GAMENOTE\n";
 const f32 D_80036C88_37888[] = {10000.0f};
-const u32 jtbl_80036C8C_3788C[] = {
-	0x80002FB4, 0x80003024, 0x80002FEC, 0x80002FFC, 0x80003014, 0x80002FD0
-};
 
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 {
@@ -1375,19 +1372,16 @@ void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
 // https://decomp.me/scratch/VRB5q
-// CURRENT(245) - the opcode/register stream is identical to the target except for one
-// trailing nop the target carries before its epilogue; no source shape tested emits it
-#ifdef NON_MATCHING
-// AI - Background controller/EEPROM thread: polls input, services pending save/load requests
+// Background controller/EEPROM thread: polls input and services pending requests.
 void func_80002EF8_3AF8(void *arg0)
 {
-  OSMesg sp34;
+  OSMesg message;
   func_80001424_2024();
   func_8000FF40_10B40();
   osContStartReadData(&D_80043388);
-  while ((u64)1)
+  while (1)
   {
-	osRecvMesg(&D_80043388, &sp34, 1);
+	osRecvMesg(&D_80043388, &message, 1);
 	func_80002ED4_3AD4();
 	func_8000FF88_10B88();
 	func_80001190_1D90();
@@ -1432,9 +1426,7 @@ void func_80002EF8_3AF8(void *arg0)
   }
 
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002EF8_3AF8.s")
-#endif
+
 
 // CURRENT(590)
 #ifdef NON_MATCHING
