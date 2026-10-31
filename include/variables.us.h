@@ -1848,7 +1848,7 @@ extern s32 D_800FCA80;
 extern s32 D_800FCA84; // AI - interiorMenuJustOpened: 1 on the tick the menu opens, so the opening START press is not also a choice (read)
 extern s16 D_800FCA90;
 extern s16 D_800FCA92; // AI - interiorMenuPhase: 0xFF when the interior menu opens, counting down to 0x1E as it closes (measured)
-extern u8 D_800FCAD8;
+extern Mtx D_800FCAD8;
 extern u16 D_800FCB1E;
 extern s16 D_800FCF20;
 extern s16 D_800FCF22;
