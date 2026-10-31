@@ -2031,7 +2031,7 @@ void func_80075710_45BC0(void) {
 
 
 
-	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, -10000.0f, 10000.0f, 1.0f);
+	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C[0], D_800AE780_7EC30[0], 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	guRotate(D_8005BB38, 0.0f, 1.0f, 0.0f, 0.0f);
