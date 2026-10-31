@@ -229,9 +229,6 @@ segments:
       - [0x2FF40, databin, rsp/audioucode] # M_AUDTASK ucode: D_8002F310_2FF10, 0x1E10 bytes
       - [0x31D50, .data, ../src.us/core/1050]        # shared identity/scale Mtx + 5 static display lists
       - [0x32000, .data, ../src.us/core/53F0]
-      - [0x32030, .data, ../src.us/core/32000]
-      - [0x32080, .data, ../src.us/core/32050]
-      - [0x32100, .data, ../src.us/core/320D0]
       - [0x32280, .data, ../src.us/core/AD60]
       - [0x326B0, .data, ../src.us/core/E830]
       - [0x32780, .data, ../src.us/core/10A20]

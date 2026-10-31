@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8000577C_637C`, an external or tentative global phase counter keeps its address in `v1`, writes the increment before the range test, and writes zero again on wrap. A separate function-static write alias reproduces the instruction shape but writes to a different address.
+
+-> `code changed`: Use one function-local `static s32 textColorPhase = 0` for both reads and writes. Preserve its initialized-data position by moving the definitions from `core/32000.c`, `core/32050.c`, and `core/320D0.c` into `core/53F0.c` in their original order, placing the trailing data after the function. Extend the existing US/PAL `.data` mappings by removing the three intervening data-only mappings. Compute the signed remainder once and retain the early returns in the first two color branches.
+
+-> `correct ASM`: IDO emits `lui v0; lw v0; addiu v0,v0,10`, merges the wrap into `or v0,zero,zero`, and sinks one `lui at; sw v0` into each drawing branch. The counter remains at US RAM `0x800315D4` and PAL RAM `0x80031604`, and all target instructions match.

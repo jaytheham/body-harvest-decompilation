@@ -381,45 +381,119 @@ s32 func_800056D0_62D0(s16 arg0, s16 arg1) {
 	return ((u32)*p >> 0xF) ? 0 : D_8003E460_3F060[(((u32)*p << 0x16) >> 0x1C) | (((D_8021F250[((arg1 >> 10) << 6) + (arg0 >> 10)] & 0xF) + (currentLevel * 0xC) - 0xC) << 4)];
 }
 
-// https://decomp.me/scratch/Ps8Im
-// this requires a function static (D_800315D4_W)
-// which means you may have to map all other .bss data
-// for the file where that func is in (in the best scenario you add this function last and just let splat auto map .bss) 
-// Measured 30 (marker was CURRENT(0), a stale layout coincidence): the body below is
-// byte-exact except the three stores, which target the function-static D_800315D4_W and
-// land at 0x18 past the target's global D_800315D4_321D4 (map: 0x800315c4). Using the
-// global directly instead measures 1585/755 (IDO reloads it); the residual is the
-// unpinned .bss symbol address, not the source shape.
-// CURRENT(30)
-#ifdef NON_MATCHING
-// AI - Scrolls one of three credits-style text lines across the screen over a cycling timer
-void func_8000577C_637C(void)
-{
-  static s32 D_800315D4_W; // has to be a function static
-  s32 var_v0;
-  s32 temp_hi;
-  D_800315D4_W = D_800315D4_321D4 + 0xA;
-  if (D_800315D4_W >= 0x12C)
-  {
-	D_800315D4_W = 0;
-  }
-  temp_hi = D_800315D4_W % 0x12C;
-	
-  if (temp_hi < 0x64)
-  {
-	drawText(D_80036D68_37968, 0xFA - D_800315D4_W, D_800315D4_W + 0x96, 0x96);
-	return;
-  }
-  if (temp_hi < 0xC8)
-  {
-	drawText(D_80036D6C_3796C, 0x96, 0x15E - D_800315D4_W, D_800315D4_W + 0x32);
-	return;
-  }
-  drawText(D_80036D70_37970, D_800315D4_W - 0x32, 0x96, 0x1C2 - D_800315D4_W);
+s32 leomecha_bss_0004 = 0;
+f32 D_80031404 = 1.0f;
+s32 D_80031408 = 0;
+f32 D_8003140C = 0.0f;
+s32 D_80031410 = 0;
+s32 D_80031414 = 0;
+f32 D_80031418 = 1.8f;
+f32 D_8003141C = 0.6f; // Fraction of damage to Adam in easy mode
+s32 D_80031420 = 0x7B;
+s32 D_80031424[] = {0, 0, 1, 2, 3, 4, 0x29, 0x4B, 0x4F, 0x14, 0};
+
+s32 D_80031450_32050 = 0;
+s32 D_80031454 = 0;
+s32 D_80031458[] = {0x69, 0x6A, 0x6D, 0x6B, 0x6C, 0x05, 0x05};
+s32 D_80031474[] = {0, 5, 6, 7, 8, 9, 10, 11, 12, 13, 20, 0, 1, 9, 21, 22, 23, 24, 0, 0};
+s8 D_800314C4 = 0x19; // Number humans killed to end game?
+s32 D_800314C8_320C8 = 0;
+OSMesg D_800314CC_320CC = 1;
+
+Vp D_800314D0_320D0[] = {
+	640, 480, 511, 0, 640, 480, 511, 0,
+	640, 320, 511, 0, 640, 480, 511, 0
+};
+
+u8 *D_800314F0_320F0[] = {
+	(u8 *)D_80036CB0_378B0,
+	(u8 *)D_80036CBC_378BC,
+	(u8 *)D_80036CC4_378C4,
+	(u8 *)D_80036CCC_378CC,
+	(u8 *)D_80036CD4_378D4,
+	(u8 *)D_80036CDC_378DC,
+};
+
+u8 *D_80031508_32108[] = {
+	(u8 *)D_80036CE4_378E4,
+	(u8 *)D_80036CF0_378F0,
+	(u8 *)D_80036CF8_378F8,
+	(u8 *)D_80036D00_37900,
+	(u8 *)D_80036D04_37904,
+	(u8 *)D_80036D0C_3790C,
+};
+
+u8 *D_80031520_32120[] = {
+	(u8 *)D_80036D14_37914,
+	(u8 *)D_80036D20_37920,
+	(u8 *)D_80036D30_37930,
+	(u8 *)D_80036D38_37938,
+	(u8 *)D_80036D40_37940,
+	(u8 *)D_80036D4C_3794C,
+};
+
+u8 *D_80031538_32138[] = {
+	(u8 *)D_80036D54_37954,
+	(u8 *)D_80036D58_37958,
+	(u8 *)D_80036D5C_3795C,
+	(u8 *)D_80036D60_37960,
+	(u8 *)D_80036D64_37964,
+};
+
+BeaconEntry D_8003154C[5][6] = {
+	{{  -97,   -7, 0x00, 0x00 }, {  -12,   40, 0x00, 0x00 }, {   97,   77, 0x00, 0x00 }, {  -93,   -8, 0x00, 0x00 }, {  -93,   -7, 0x00, 0x00 }, {  -92,   -6, 0x00, 0x00 }},
+	{{   33,   95, 0x00, 0x00 }, {   94,   15, 0x00, 0x00 }, {  -32,  -63, 0x00, 0x00 }, {  -53,  103, 0x00, 0x00 }, {  -93,   -7, 0x00, 0x00 }, {  -92,   -6, 0x00, 0x00 }},
+	{{  -60,  100, 0x00, 0x00 }, {   15,  -35, 0x00, 0x00 }, {   44,   94, 0x00, 0x00 }, {  -93,   -8, 0x00, 0x00 }, {  -93,   -7, 0x00, 0x00 }, {  -92,   -6, 0x00, 0x00 }},
+	{{   40,   44, 0x00, 0x00 }, {  -47,   46, 0x00, 0x00 }, {  -76,   23, 0x00, 0x00 }, {    7,  -84, 0x00, 0x00 }, {  -93,   -7, 0x00, 0x00 }, {  -92,   -6, 0x00, 0x00 }},
+	{{  -97,   -7, 0x00, 0x00 }, {  -97,   -8, 0x00, 0x00 }, {  -94,   -6, 0x00, 0x00 }, {  -93,   -8, 0x00, 0x00 }, {  -93,   -7, 0x00, 0x00 }, {  -92,   -6, 0x00, 0x00 }},
+};
+
+Unk80052B40 D_800315C4_321C4 = { 0, 0, 0 };
+Unk80052B40 D_800315CC_321CC = { 0, 0, 0x100 };
+
+void func_8000577C_637C(void) {
+	static s32 textColorPhase = 0;
+	s32 phase;
+
+	textColorPhase += 10;
+	if (textColorPhase >= 300) {
+		textColorPhase = 0;
+	}
+	phase = textColorPhase % 300;
+	if (phase < 100) {
+		drawText(D_80036D68_37968, 250 - textColorPhase, textColorPhase + 150, 150);
+		return;
+	}
+	if (phase < 200) {
+		drawText(D_80036D6C_3796C, 150, 350 - textColorPhase, textColorPhase + 50);
+		return;
+	}
+	drawText(D_80036D70_37970, textColorPhase - 50, 150, 450 - textColorPhase);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/53F0/func_8000577C_637C.s")
-#endif
+
+Vtx D_800315D8_321D8[] = {
+	{ {{ -1, -1, 0 }, 0, { 0, 0 }, { 0, 0, 0, 0xFF }} },
+	{ {{ -1,  1, 0 }, 0, { 0, 2048 }, { 0, 0, 0, 0xFF }} },
+	{ {{  1, -1, 0 }, 0, { 2048, 0 }, { 0, 0, 0, 0xFF }} },
+	{ {{  1,  1, 0 }, 0, { 2048, 2048 }, { 0, 0, 0, 0xFF }} },
+};
+
+f32 D_80031618_32218 = 1.5f;
+s32 D_8003161C_3221C = -150;
+
+Unk80031620 D_80031620_32220[] = {
+	{ 0xD5, 0xE5, 0xF0, 0x00 },
+	{ 0x5F, 0x5E, 0x4F, 0x00 },
+	{ 0xFF, 0xA0, 0x27, 0x00 },
+	{ 0x95, 0x99, 0x8F, 0x00 },
+	{ 0x2A, 0x03, 0x00, 0x00 },
+};
+
+s16 D_80031634_32234[] = {
+	986, 993, 968, 992, 986, 996, 980, 995, 988, 992,
+};
+
+u16 D_80031648_32248 = 0;
 
 void func_80005844_6444(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
 	guOrtho(D_8005BB38, -1.0f, 1.0f, -1.0f, 1.0f, -10.0f, 10.0f, 1.0f);
