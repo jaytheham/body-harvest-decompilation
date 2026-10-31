@@ -428,53 +428,6 @@ extern const char D_80036C50_37850[]; /* osSyncPrintf format string - load faile
 extern const char D_80036C64_37864[];
 extern const char D_80036C74_37874[];
 extern const f32 D_80036C88_37888[];
-extern const char D_80036D68_37968[];
-extern const char D_80036D6C_3796C[];
-extern const char D_80036D70_37970[];
-extern const char D_80036D74_37974[]; /* osSyncPrintf format string - callback table full warning */
-extern const char D_80036DA4_379A4[];
-extern const char D_80036DBC_379BC[];
-extern const char D_80036DD0_379D0[]; /* osSyncPrintf format string */
-extern const char D_80036DD8_379D8[]; /* osSyncPrintf format string */
-extern const char D_80036DE4_379E4[]; /* osSyncPrintf format string */
-extern const char D_80036DF4_379F4[]; /* osSyncPrintf format string */
-extern const char D_80036E0C_37A0C[]; /* osSyncPrintf format string */
-extern const char D_80036E20_37A20[]; /* osSyncPrintf format string */
-extern const char D_80036E34_37A34[]; /* osSyncPrintf format string */
-extern const char D_80036E38_37A38[]; /* osSyncPrintf format string */
-extern const char D_80036E48_37A48[]; /* osSyncPrintf format string */
-extern const char D_80036E58_37A58[]; /* osSyncPrintf format string */
-extern const char D_80036E74_37A74[]; /* osSyncPrintf format string */
-extern const char D_80036E90_37A90[]; /* osSyncPrintf format string */
-extern const char D_80036E9C_37A9C[]; /* osSyncPrintf format string */
-extern const char D_80036EAC_37AAC[]; /* osSyncPrintf format string */
-extern const char D_80036EBC_37ABC[]; /* osSyncPrintf format string */
-extern const char D_80036ECC_37ACC[]; /* osSyncPrintf format string */
-extern const char D_80036EE0_37AE0[]; /* osSyncPrintf format string */
-extern const char D_80036EEC_37AEC[]; /* osSyncPrintf format string */
-extern const char D_80036EFC_37AFC[]; /* osSyncPrintf format string */
-extern const char D_80036F1C_37B1C[]; /* osSyncPrintf format string */
-extern const char D_80036F38_37B38[]; /* osSyncPrintf format string */
-extern const char D_80036F50_37B50[]; /* osSyncPrintf format string */
-extern const char D_80036F6C_37B6C[]; /* osSyncPrintf format string */
-extern const char D_80036F90_37B90[]; /* osSyncPrintf format string */
-extern const char D_80036FB4_37BB4[]; /* osSyncPrintf format string */
-extern const char D_80036FC8_37BC8[]; /* osSyncPrintf format string */
-extern const char D_80036FE4_37BE4[]; /* osSyncPrintf format string */
-extern const char D_80036FF0_37BF0[]; /* osSyncPrintf format string */
-extern const char D_80036FF4_37BF4[]; /* osSyncPrintf format string */
-extern const char D_80036FFC_37BFC[]; /* osSyncPrintf format string */
-extern const char D_80037000_37C00[]; /* osSyncPrintf format string */
-extern const char D_80037018_37C18[]; /* osSyncPrintf format string */
-extern const char D_80037034_37C34[]; /* osSyncPrintf format string */
-extern const char D_80037038_37C38[]; /* osSyncPrintf format string */
-extern const char D_80037070_37C70[]; /* osSyncPrintf format string */
-extern const char D_800370A8_37CA8[]; /* osSyncPrintf format string */
-extern const char D_800370B0_37CB0[]; /* osSyncPrintf format string */
-extern const char D_800370B4_37CB4[]; /* osSyncPrintf format string */
-extern const char D_800370B8_37CB8[]; /* osSyncPrintf format string */
-extern const char D_800370D4_37CD4[]; /* osSyncPrintf format string */
-extern const char D_80037100_37D00[];
 extern const f32 D_80037120_37D20[];
 extern const f32 D_80037124_37D24[];
 extern const f32 D_80037578_38178[];
