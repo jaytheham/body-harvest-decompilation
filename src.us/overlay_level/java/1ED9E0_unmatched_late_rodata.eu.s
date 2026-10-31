@@ -1,7 +1,5 @@
 .late_rodata
 .late_rodata_alignment 8
-glabel D_802E0EA8_1F9BB8
-.double 1000.0
 glabel D_802E0EB0_1F9BC0
 .double 1.7
 glabel jtbl_802E0EB8_1F9BC8
