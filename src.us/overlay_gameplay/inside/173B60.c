@@ -913,9 +913,9 @@ void func_8008CF2C_174FEC(void) {
 	u8 slots[9];
 	u8 slotValue;
 	s32 i;
-	s32 x;
-	s32 y;
 	s32 texIndex;
+	s16 x;
+	s16 y;
 	s32 stickX;
 	s32 stickY;
 	s16 fade;
@@ -1022,8 +1022,7 @@ void func_8008CF2C_174FEC(void) {
 	do {
 		slotValue = slots[i];
 		if (slotValue != 0xF) {
-			x = ((i % 3) << 5) + (D_80068084 / 2);
-			x = (s16)(x - 0x2C);
+			x = ((i % 3) << 5) + (D_80068084 / 2) - 0x2C;
 			texIndex = D_800A427C_18C33C[slotValue];
 
 			if (i == D_800A4340_Menu3) {
@@ -1037,8 +1036,7 @@ void func_8008CF2C_174FEC(void) {
 			}
 
 			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-			y = (i / 3) * 0x1E;
-			y += 0x38;
+			y = (i / 3) * 0x1E + 0x38;
 			gSPTextureRectangle(D_8005BB2C++, x << 2, y << 2, (x + 24) << 2, (y + 24) << 2, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
 		}
 	} while (i--);
@@ -1049,7 +1047,7 @@ void func_8008CF2C_174FEC(void) {
 			func_800153D8_15FD8(0xC6);
 		}
 
-		func_8001A54C_1B14C(D_800A56F0_18D7B0);
+		func_8001A54C_Menu(D_800A56F0_18D7B0, -1);
 		slotValue = slots[D_800A4340_Menu4];
 
 		switch (slotValue) {
@@ -1091,8 +1089,6 @@ void func_8008CF2C_174FEC(void) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")
 #endif
-
-
 
 // Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
 void func_8008D900_1759C0(void) {
