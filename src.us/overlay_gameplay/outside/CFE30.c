@@ -2363,22 +2363,15 @@ void func_800C6D80_D5D30(void) {
 	Unk80052B40 sp150;
 	Unk80052B40 sp148;
 	Unk80052B40 sp140;
-	s8 sp13E;
-	s8 sp13D;
-	s8 sp13C;
-	s16 sp13A;
-	s16 sp138;
-	f32 temp_f0;
+	s8 colors[3];
+	s16 shadowPosition[2];
 	f32 temp_f0_2;
 	f32 temp_f0_3;
-	f32 temp_f2;
-	f32 var_f0;
-	s16 temp_a3;
+	s32 temp_a3;
 	s16 var_a2;
 	s16 var_t1;
 	s32 temp_f16;
-	u16 temp_u16;
-	f64 temp_double;
+	s16 linkedIndex;
 	u8 *linkedBytes;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
@@ -2406,46 +2399,44 @@ void func_800C6D80_D5D30(void) {
 		return;
 	}
 
-	temp_double = D_80143FD8_152F88[0];
+	
 
 	do {
 		entry = &D_80154318[var_t1];
-		linked = &D_80154318[entry->unk4];
+		linkedIndex = entry->unk4;
+		linked = &D_80154318[linkedIndex];
 		next = &D_80154318[linked->unk4];
 		linkedBytes = (u8 *)&next->unk8;
 
-		temp_u16 = (u16)next->unk8;
-		temp_f16 = (s32)((f32)entry->unk2 * ((f32)temp_u16 * 0.03125) * 6.0);
-		sp158.unk4 = temp_f16;
-		sp158.unk2 = temp_f16;
-		sp158.unk0 = temp_f16;
+		
+		temp_f16 = (s16)((f32)entry->unk2 * ((f32)(u32)(u16)next->unk8 * 0.03125) * 6.0);
+		sp158.unk0 = sp158.unk2 = sp158.unk4 = temp_f16;
 
 		if (func_800B93AC_C835C(entry->unk8, entry->unkC, temp_f16 & 0xFFFF, (s16)(s32)(D_80047954 * 4.0f),
 								(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 			Unk80154318Sub *entrySub;
 			Unk80154318Sub *linkedSub;
 
-			sp158.unk0 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[2] / temp_double) + 1.0) * (f32)sp158.unk0);
-			sp158.unk2 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[3] / temp_double) + 1.0) * (f32)sp158.unk2);
+			sp158.unk0 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[2] / 255.0) + 1.0) * (f32)sp158.unk0);
+			sp158.unk2 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[3] / 255.0) + 1.0) * (f32)sp158.unk2);
 
-			entrySub = (Unk80154318Sub *)&entry->unk8;
+			entrySub = (Unk80154318Sub *)(s32)D_80154318[var_t1].coordinates;
 			linkedSub = (Unk80154318Sub *)&linked->unk8;
 
-			sp158.unk4 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[4] / temp_double) + 1.0) * (f32)sp158.unk4);
+			sp158.unk4 = (s16)(s32)((f32)(((f64)(f32)linkedBytes[4] / 255.0) + 1.0) * (f32)sp158.unk4);
 
-			sp140.unk0 = entry->unk8;
+			sp140.unk0 = entrySub->unk0;
 			sp140.unk2 = entrySub->unk2;
 			sp140.unk4 = entrySub->unk4;
 
-			temp_f0 = (D_80153BA0.x * 4.0f) - (f32)entry->unk8;
-			temp_f2 = (D_80153BA0.z * 4.0f) - (f32)entrySub->unk4;
-			temp_f0_2 = sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+			temp_f0_2 = ((D_80153BA0.x * 4.0f) - (f32)entrySub->unk0) * ((D_80153BA0.x * 4.0f) - (f32)entrySub->unk0);
+			temp_f0_2 = sqrtf((0, temp_f0_2) + (((D_80153BA0.z * 4.0f) - (f32)entrySub->unk4) * ((D_80153BA0.z * 4.0f) - (f32)entrySub->unk4)));
 
 			sp150.unk0 = 0;
 			sp150.unk2 = ((u8)linkedSub->unk8) << 8;
 			sp150.unk4 = 0;
 			sp148.unk0 = func_80003824_4424(D_80153B90.z, D_80153B90.x) + 0x8000;
-			sp148.unk2 = 0x8000;
+			((u16 *)&sp148)[1] = 0x8000;
 			sp148.unk4 = 0x4000 - func_80003824_4424((D_80153BA4 * 4.0f) - (f32)entrySub->unk2, temp_f0_2);
 
 			if (entrySub->unkC < 3) {
@@ -2488,37 +2479,38 @@ void func_800C6D80_D5D30(void) {
 			func_800039D0_45D0((Unk80052B40 *)&sp140, (Unk80052B40 *)&sp148, (Unk80052B40 *)&sp158, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			func_800039D0_45D0(NULL, (Unk80052B40 *)&sp150, NULL, D_8005BB38 + 1);
+			func_800039D0_45D0(NULL, (Unk80052B40 *)&sp150, NULL, ++D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			gSPDisplayList(D_8005BB2C++, D_504B640);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
-			temp_a3 = entry->unk2;
 			D_80156EDA += 0x15;
+			temp_a3 = entry->unk2;
 			if (temp_a3 >= 0x4C) {
-				sp13C = 0x7F;
-				sp13D = 0x6B;
-				sp13E = 0x5C;
-				sp138 = entry->unk8;
-				sp13A = entrySub->unk4;
+				colors[0] = 0x7F;
+				colors[1] = 0x6B;
+				colors[2] = 0x5C;
+				shadowPosition[0] = entrySub->unk0;
+				shadowPosition[1] = entrySub->unk4;
 
-				if (temp_a3 >= 0x2E) {
-					var_f0 = 1.0f;
-					if (temp_a3 < 0x64) {
+				var_a2 = temp_a3;
+				if (var_a2 >= 0x2E) {
+					temp_f0_2 = 1.0f;
+					if (var_a2 < 0x64) {
+						temp_f0_2 = (f32)var_a2 / 128;
 						var_a2 = (entrySub->unkC * 5) + 0x80;
-						var_f0 = (f32)temp_a3 / 128.0f;
 					} else {
-						var_a2 = (entrySub->unkC * 8) + (temp_a3 >> 1) + 0x80;
+						var_a2 = (entrySub->unkC * 8) + (var_a2 >> 1) + 0x80;
 					}
 
-					temp_f0_3 = ((f32)(0x24 - entrySub->unkC) / 32.0f) * var_f0;
-					sp13C = (s8)(u32)(127.0f * temp_f0_3);
-					sp13D = (s8)(u32)(107.0f * temp_f0_3);
-					sp13E = (s8)(u32)(92.0f * temp_f0_3);
+					temp_f0_3 = ((f32)(0x24 - entrySub->unkC) / 32) * temp_f0_2;
+					colors[0] = (s8)(u32)(colors[0] * temp_f0_3);
+					colors[1] = (s8)(u32)(colors[1] * temp_f0_3);
+					colors[2] = (s8)(u32)(colors[2] * temp_f0_3);
 
-					func_800B2354_C1304(&sp138, &sp13C, var_a2, (entrySub->unkC * 0x12) + 0x80);
+					func_800B2354_C1304(&shadowPosition[0], &colors[0], var_a2, (entrySub->unkC * 0x12) + 0x80);
 				}
 			}
 		}
@@ -2797,40 +2789,40 @@ void func_800C8814_D77C4(void) {
 	s16 nextIdx;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
-	u8 *entrySubBytes;
-	u8 *nextSubBytes;
+	
+	
 	Unk80052B40 spEC;
 	Unk80052B40 spE4;
-	Unk80052B40 spDC;
+	Unk80052B40 spDC; ChunkEffectState *entryState; ChunkMotionState *motion;
 	s32 pad2[4];
-	s32 pad[6];
+	s32 pad[5];
 
 	effectIdx = D_80154216;
 	if ((effectIdx != -6) && (effectIdx != -5)) {
 		do {
 			entry = &D_80154318[effectIdx];
-			spEC.unk4 = entry->unk2;
-			spEC.unk2 = entry->unk2;
+			spEC.components[2] = entry->unk2;
+			spEC.components[1] = entry->unk2;
 
-			linked = &D_80154318[entry->unk4];
-			nextIdx = linked->unk4;
-			spEC.unk0 = entry->unk2;
-			entrySubBytes = entry->payload;
+			nextIdx = D_80154318[entry->unk4].unk4; linked = &D_80154318[entry->unk4];
+			spEC.components[0] = entry->unk2; entryState = (ChunkEffectState *)(s32)entry->payload;
+			
 
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f),
 				(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, entrySubBytes[6], entrySubBytes[7], entrySubBytes[8], 0xFF);
+				
+				if (linked) {} gDPSetPrimColor(D_8005BB2C++, 0, 0, (u8)((Unk80154318Sub *)entryState)->unk6, (u8)((Unk80154318Sub *)entryState)->unk7, (u8)((Unk80154318Sub *)entryState)->unk8, 0xFF);
 
-				spDC.unk0 = entry->unk8;
-				spDC.unk2 = entry->unkA;
-				spDC.unk4 = entry->unkC;
+				spDC.unk0 = entryState->position[0];
+				spDC.unk2 = entryState->position[1];
+				spDC.unk4 = entryState->position[2];
 
-				nextSubBytes = D_80154318[nextIdx].payload;
-				spE4.unk0 = nextSubBytes[3] << 8;
-				spE4.unk2 = nextSubBytes[4] << 8;
-				spE4.unk4 = nextSubBytes[5] << 8;
+				motion = (ChunkMotionState *)(s32)D_80154318[nextIdx].payload;
+				spE4.unk0 = motion->rotation[0] << 8;
+				spE4.unk2 = motion->rotation[1] << 8;
+				spE4.unk4 = motion->rotation[2] << 8;
 
-				if (!(entrySubBytes[0xB] & 8)) {
+				if (!(entryState->flags & 8)) {
 					gDPPipeSync(D_8005BB2C++);
 					gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 					gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
@@ -2846,7 +2838,7 @@ void func_800C8814_D77C4(void) {
 					gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 					gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG | G_LIGHTING);
 					gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
-					if (!(entrySubBytes[0xB] & 0x80)) {
+					if (!(entryState->flags & 0x80)) {
 						gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 					} else {
 						gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -3106,22 +3098,24 @@ void func_800C9668_D8618(void) {
 // DrawNonZBufferedEffects?
 void func_800C978C_D873C(void) {
 	s16 unitId;
-	s32 pad[42];
+	s32 gap;
+	Unk80052B40 corner1;
+	Unk80052B40 corner2;
+	Unk80052B40 corner3;
+	Unk80052B40 corner4;
+	s16 y1;
+	s16 y2;
+	s16 y3;
+	s16 y4;
+	s32 pad[34];
 	s32 toggle;
 	s32 prevToggle;
 	Unk80154318Entry *entry;
 	u8 *sub;
 	s16 radius;
-	s16 sp102;
-	s16 spF4;
-	s16 spF0;
-	s16 spEC;
-	s16 spE8;
-	s16 y2;
-	s16 y3;
-	s16 y4;
 	f32 four;
 
+	unitId = D_80154222;
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, -1);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
@@ -3132,15 +3126,16 @@ void func_800C978C_D873C(void) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPLoadTextureBlock_4b(D_8005BB2C++, D_100E080, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E080), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 
 	toggle = 0;
-	unitId = D_80154222;
+	
 	four = 4.0f;
 	if ((D_80156ED9 != 2) && (unitId != -6) && (unitId != -5)) {
-		while ((unitId != -6) && (unitId != -5)) {
+		do {
 			prevToggle = toggle;
+			
 			if (((D_80156ED9 == 1) && (toggle == 0)) || (D_80156ED9 == 0)) {
 				entry = &D_80154318[unitId];
 				sub = (u8 *)&entry->unk8;
@@ -3150,34 +3145,39 @@ void func_800C978C_D873C(void) {
 						gDPPipeSync(D_8005BB2C++);
 						gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 						gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
+					gDPPipeSync(D_8005BB2C++);
 					} else {
 						gDPPipeSync(D_8005BB2C++);
 						gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 						gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-					}
 					gDPPipeSync(D_8005BB2C++);
+					}
 
-					radius = entry->unk2;
-					spE8 = radius + *(s16 *)&sub[0];
-					spF4 = *(s16 *)&sub[4] - radius;
-					spF0 = *(s16 *)&sub[0] - radius;
-					spEC = radius + *(s16 *)&sub[4];
+					if (&corner1) {}
+if (&corner2) {}
+if (&corner3) {}
+if (&corner4) {}
+radius = entry->unk2;
+					corner1.unk0 = corner4.unk0 = radius + *(s16 *)&sub[0];
+corner3.unk4 = corner4.unk4 = *(s16 *)&sub[4] - radius;
+corner2.unk0 = corner3.unk0 = *(s16 *)&sub[0] - radius;
+corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
 
 					if (sub[0xC] == 1) {
-						sp102 = D_80222A70;
+						y1 = D_80222A70;
 						y2 = D_80222A70;
 						y3 = D_80222A70;
 						y4 = D_80222A70;
 					} else {
-						sp102 = (func_800B84D0_C7480(spE8, spEC) >> 8) + 1;
-						y2 = (func_800B84D0_C7480(spF0, spEC) >> 8) + 1;
-						y3 = (func_800B84D0_C7480(spF0, spF4) >> 8) + 1;
-						y4 = (func_800B84D0_C7480(spE8, spF4) >> 8) + 1;
+						y1 = (func_800B84D0_C7480(corner1.unk0, corner1.unk4) >> 8) + 1;
+						y2 = (func_800B84D0_C7480(corner2.unk0, corner2.unk4) >> 8) + 1;
+						y3 = (func_800B84D0_C7480(corner3.unk0, corner3.unk4) >> 8) + 1;
+						y4 = (func_800B84D0_C7480(corner4.unk0, corner4.unk4) >> 8) + 1;
 					}
 
-					D_8005BB34->v.ob[0] = (f32)spE8;
-					D_8005BB34->v.ob[1] = (f32)sp102;
-					D_8005BB34->v.ob[2] = (f32)spEC;
+					D_8005BB34->v.ob[0] = (f32)corner1.unk0;
+					D_8005BB34->v.ob[1] = (f32)y1;
+					D_8005BB34->v.ob[2] = (f32)corner1.unk4;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -3187,9 +3187,9 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.cn[3] = sub[0xA];
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (f32)spF0;
-					D_8005BB34->v.ob[1] = y2;
-					D_8005BB34->v.ob[2] = (f32)spEC;
+					D_8005BB34->v.ob[0] = (f32)corner2.unk0;
+					D_8005BB34->v.ob[1] = (f32)y2;
+					D_8005BB34->v.ob[2] = (f32)corner2.unk4;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0;
@@ -3199,9 +3199,9 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.cn[3] = sub[0xA];
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (f32)spF0;
-					D_8005BB34->v.ob[1] = y3;
-					D_8005BB34->v.ob[2] = (f32)spF4;
+					D_8005BB34->v.ob[0] = (f32)corner3.unk0;
+					D_8005BB34->v.ob[1] = (f32)y3;
+					D_8005BB34->v.ob[2] = (f32)corner3.unk4;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0x800;
@@ -3211,9 +3211,9 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.cn[3] = sub[0xA];
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (f32)spE8;
-					D_8005BB34->v.ob[1] = y4;
-					D_8005BB34->v.ob[2] = (f32)spF4;
+					D_8005BB34->v.ob[0] = (f32)corner4.unk0;
+					D_8005BB34->v.ob[1] = (f32)y4;
+					D_8005BB34->v.ob[2] = (f32)corner4.unk4;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0x800;
@@ -3245,7 +3245,7 @@ void func_800C978C_D873C(void) {
 
 			toggle = (1 - prevToggle) & 0xFF;
 			unitId = D_80154318[unitId].unk4;
-		}
+		} while ((unitId != -6) && (unitId != -5));
 	}
 
 	gDPPipeSync(D_8005BB2C++);
@@ -5764,7 +5764,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 					{
 					}
 					curZ2 = nextZ;
-					curX = nextX2;
+					curX = nextX2; if (1) {} if (1) {}
 					if (1)
 					{
 					}
@@ -5779,8 +5779,6 @@ void func_800D1C24_E0BD4(u8 arg0)
 		}
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
 #endif
@@ -11454,7 +11452,6 @@ void func_800E6A38_F59E8(void)
   gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
   gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
 #endif
