@@ -2025,7 +2025,6 @@ void func_800731A8_43658(void) {
 #endif
 #endif
 
-
 void func_80075710_45BC0(void) {
     s32 pad[22];
 

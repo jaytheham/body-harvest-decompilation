@@ -9,8 +9,6 @@ const char D_801442BC_15326C[] = "."; // "."
 const char D_801442C0_153270[] = "."; // "."
 const char D_801442C4_153274[] = ".OK\n"; // ".OK\n"
 
-const f32 D_801442CC_15327C[1] = {10000.0f};
-const f64 D_801442D0_153280[2] = {0.55, 0.0};
 
 // StripModelToBones
 Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
@@ -56,59 +54,49 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 	return result;
 }
 
-// CURRENT(16124)
-#ifdef NON_MATCHING
-// castVehicleShadows?
+// Render cached vehicle shadow textures.
 void func_800E8A00_F79B0(void) {
 	VehicleType *vehicleType;
-	ShadowPartEntry *part;
-	s32 vehicleIndex;
-	s32 savedVehicleIndex;
-	s32 stackDepth;
-	s32 model;
-	u16 perspNorm;
-	s32 partStart;
-	s32 partCount;
-	s16 partFlags;
-	f32 size;
+	s32 value;
+	s32 remainingParts;
+	s32 savedVehicleType;
+	u16 perspectiveNorm;
+	s32 matrixDepth;
+	void *model;
+	s32 partIndex;
+	s32 shadowVehicleType;
 
-	vehicleIndex = D_80052AD8 - 5;
-	stackDepth = 0;
-	savedVehicleIndex = D_80052B34->unk1A;
+	savedVehicleType = D_80052B34->unk1A;
+	shadowVehicleType = D_80052AD8 - 5;
+	matrixDepth = 0;
 
-	if ((vehicleIndex < 0x14) && (vehicleIndex > 0)) {
-		vehicleType = &vehicleTypes[vehicleIndex];
-		if ((*(s32 *) vehicleType != 0) && (vehicleIndex != 0x13)) {
-			D_801575A4 = (void *) (&D_802C4080[vehicleIndex << 10]);
-			D_80052B34->unk8 = 0;
-			D_80052B34->unkA = 0;
-			D_80052B34->unk6 = 0;
-			D_80052B34->unk1A = (u8) vehicleIndex;
-			osSyncPrintf(D_8014429C_15324C, vehicleType->unk18, D_800344B4_350B4[vehicleType->unk18].name);
-		} else {
-			D_801575A4 = D_802C4080;
-		}
+	if ((shadowVehicleType < 0x14) && (shadowVehicleType > 0) &&
+		(vehicleTypes[shadowVehicleType].modelDL != 0) && (shadowVehicleType != 0x13)) {
+		vehicleType = &vehicleTypes[shadowVehicleType];
+		D_801575A4 = &D_802C4080[shadowVehicleType << 10];
+		D_80052B34->unk8 = 0;
+		D_80052B34->unkA = 0;
+		D_80052B34->unk6 = 0;
+		D_80052B34->unk1A = shadowVehicleType;
+		osSyncPrintf(D_8014429C_15324C, vehicleType->unk18, D_800344B4_350B4[vehicleType->unk18].name);
 	} else {
 		D_801575A4 = D_802C4080;
+		if ((D_80052B34->unk1A == 0) || (D_80052B34->unk1A == 0x13)) {
+			return;
+		}
 	}
-
-	if ((D_80052B34->unk1A == 0) || (D_80052B34->unk1A == 0x13)) {
-		D_80052B34->unk1A = (u8) savedVehicleIndex;
-		return;
-	}
-
 	vehicleType = &vehicleTypes[D_80052B34->unk1A];
 
 	gSPViewport(D_8005BB2C++, D_13E440);
-	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_FOG | G_LIGHTING);
+	gSPClearGeometryMode(D_8005BB2C++, 0xFFFFFFFF);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE | G_SHADING_SMOOTH);
-	gSPDisplayList(D_8005BB2C++, D_80031260_31E60);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_80031260_31E60));
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, 32, 32);
 	gSPClipRatio(D_8005BB2C++, FRUSTRATIO_1);
-	gSPDisplayList(D_8005BB2C++, D_800311A8);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, D_801575A4);
+	gDPSetColorImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_8b, 32, K0_TO_PHYS(D_801575A4));
 	gDPSetFillColor(D_8005BB2C++, 0);
 	gDPPipeSync(D_8005BB2C++);
 	gDPFillRectangle(D_8005BB2C++, 0, 0, 31, 31);
@@ -124,31 +112,30 @@ void func_800E8A00_F79B0(void) {
 	D_80052B40.unk2 = 0;
 	D_80052B40.unk4 = -0x2BC;
 
-	D_80052B48.unk0 = (s16) -D_80052B34->unk8;
+	D_80052B48.unk0 = -D_80052B34->unk8;
 	D_80052B48.unk2 = 0;
-	D_80052B48.unk4 = (s16) (D_80052B34->unkA + 0x4000);
+	D_80052B48.unk4 = D_80052B34->unkA + 0x4000;
 
-	size = (f32) ((u8 *) vehicleType)[0x65];
-	D_80052B50.unk0 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleType)[0x6C] * 2) + size));
-	D_80052B50.unk4 = (s16) (s32) (32768.0 / ((f32) (((u8 *) vehicleType)[0x6D] * 2) + size));
-	D_80052B50.unk2 = (s16) -((D_80052B50.unk0 + D_80052B50.unk4) >> 1);
+	D_80052B50.unk0 = (32768.0 / ((f32) (vehicleType->shadowWidth * 2) + (f32)(u32)vehicleType->pad65));
+	D_80052B50.unk4 = (32768.0 / ((f32) (vehicleType->shadowDepth * 2) + (f32)(u32)vehicleType->pad65));
+	D_80052B50.unk2 = -((D_80052B50.unk4 + D_80052B50.unk0) >> 1);
 
-	func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
+	func_800039D0_45D0(&D_80052B40, (Unk80052B40 *)&D_80052B48, &D_80052B50, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	guPerspective(D_8005BB38, &perspNorm, 20.0f, 1.0f, 50.0f, D_801442CC_15327C, 1.0f);
+	guPerspective(D_8005BB38, &perspectiveNorm, 20.0f, 1.0f, 50.0f, 10000.0f, 1.0f);
 
-	gSPPerspNormalize(D_8005BB2C++, perspNorm);
+	gSPPerspNormalize(D_8005BB2C++, perspectiveNorm);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleTypes[vehicleIndex]) != 0)) {
+	if ((shadowVehicleType < 0x15) && (shadowVehicleType > 0) && (vehicleTypes[shadowVehicleType].modelDL != 0)) {
 		osSyncPrintf(D_801442BC_15326C);
 	}
 
 	if (D_80052B34->unk1A != 0) {
-		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(*(s32 *) vehicleType, 1));
+		gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(vehicleType->modelDL, 1));
 	} else {
 		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
@@ -157,30 +144,28 @@ void func_800E8A00_F79B0(void) {
 		gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 	}
 
-	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleTypes[vehicleIndex]) != 0)) {
+	if ((shadowVehicleType < 0x15) && (shadowVehicleType > 0) && (vehicleTypes[shadowVehicleType].modelDL != 0)) {
 		osSyncPrintf(D_801442C0_153270);
 	}
 
-	partCount = ((u8 *) vehicleType)[0x54];
-	partStart = ((u8 *) vehicleType)[0x53];
-	if (partCount != 0) {
-		partCount--;
-		part = (ShadowPartEntry *) (&D_8013FDA8_14ED58[partStart]);
+	remainingParts = vehicleType->unk54;
+	partIndex = vehicleType->detailProp;
+	value = remainingParts--;
+	if (value) {
 
 		do {
-			model = part->model;
-			part->updateMtx(partStart);
-			partFlags = part->flags;
+			model = (void *)D_8013FDA8_14ED58[partIndex].displayList;
+			D_8013FDA8_14ED58[partIndex].updateMtx(partIndex);
 
-			if (partFlags & 1) {
+			if (D_8013FDA8_14ED58[partIndex].flags & 1) {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				stackDepth++;
+				matrixDepth++;
 			} else {
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			}
 
-			if ((partStart != ((u8 *) vehicleType)[0x63]) && (partStart != ((u8 *) vehicleType)[0x64])) {
-				if (partFlags & 0x20) {
+			if ((partIndex != vehicleType->unk63) && (partIndex != vehicleType->unk64)) {
+				if (D_8013FDA8_14ED58[partIndex].flags & 0x20) {
 					gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
 					D_80052B50.unk0 = -0x100;
@@ -195,42 +180,44 @@ void func_800E8A00_F79B0(void) {
 					gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 				}
 
-				if ((model != (s32) D_5031BC0) && (model != (s32) D_5031F30) && (model != (s32) D_5031DB0) &&
-					(model != (s32) D_5032038) && (model != (s32) D_5030BA0) && (model != (s32) D_5030CE8) &&
-					(model != (s32) D_5030E30) && (model != (s32) D_5030F18) && (model != (s32) D_5030FF8) &&
-					(model != (s32) D_50310D8) && (model != (s32) D_9043D50) && (model != (s32) D_50445A0)) {
-					gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870(model, 0));
+				if ((model != D_5031BC0) && (model != D_5031F30) && (model != D_5031DB0) &&
+					(model != D_5032038) && (model != D_5030BA0) && (model != D_5030CE8) &&
+					(model != D_5030E30) && (model != D_5030F18) && (model != D_5030FF8) &&
+					(model != D_50310D8) && (model != D_9043D50) && (model != D_50445A0)) {
+					gSPDisplayList(D_8005BB2C++, func_800E88C0_F7870((s32)model, 0));
 				}
 			}
 
-			partStart++;
-			part++;
+			value = D_8013FDA8_14ED58[partIndex].flags;
+			partIndex++;
 
-			if ((partFlags & 2) && (stackDepth > 0)) {
+			if ((value & 2) && (matrixDepth > 0)) {
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-				stackDepth--;
+				matrixDepth--;
 			}
 
-		} while (partCount-- != 0);
+			value = remainingParts--;
+		} while (value);
 	}
 
-	while (stackDepth > 0) {
-		gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-		stackDepth--;
+	value = matrixDepth--;
+	if (value) {
+		do {
+			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+			value = matrixDepth--;
+		} while (value);
 	}
 
 	gSPClipRatio(D_8005BB2C++, FRUSTRATIO_4);
 	gSPSetGeometryMode(D_8005BB2C++, G_FOG);
 
-	D_80052B34->unk1A = (u8) savedVehicleIndex;
+	D_80052B34->unk1A = savedVehicleType;
 
-	if ((vehicleIndex < 0x15) && (vehicleIndex > 0) && (*(s32 *) (&vehicleTypes[vehicleIndex]) != 0)) {
+	if ((shadowVehicleType < 0x15) && (shadowVehicleType > 0) && (vehicleTypes[shadowVehicleType].modelDL != 0)) {
 		osSyncPrintf(D_801442C4_153274);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E8A00_F79B0.s")
-#endif
+
 
 // SetupForShadows
 void func_800E94B8_F8468(void) {
@@ -315,38 +302,35 @@ s32 func_800E95BC_F856C(s32 arg0, s32 arg1, s32 arg2) {
 	return 0;
 }
 
-s16 func_800E9868_F8818(s32 arg0, s32 arg1) {
+s16 func_800E9868_F8818(s16 arg0, s16 arg1) {
 	return (s16) ((D_801493D8 * 4) + 0x310);
 }
 
-#ifdef NON_MATCHING
-// CURRENT(4940)
+// Draw an entity shadow using the selected terrain-height sampler.
 void func_800E988C_F883C(AlienInstance *arg0, AlienType *arg1) {
-	s16 sp86;
-	s16 sp84;
-	f32 sp8C;
-	f32 sp88;
-	s32 sp30;
-	s32 sp2C;
-	s32 sp28;
-	s32 sp24;
-	s16 (*sp74)(s16, s16);
-	s16 var_s7;
-	s16 (*var_t5)(s16, s16);
-	s16 (*var_v0)(s16, s16);
-	void *var_t4;
-	s32 temp_v0;
-	s32 temp_t0;
-	s32 temp_t1;
-	s32 temp_t2;
+	f32 sine;
+	f32 cosine;
+	s16 width;
+	s16 depth;
+	union {
+		s16 (*height)(s16, s16);
+		void *texture;
+	} data;
+	s32 typeIndex;
+	s16 depthCosine;
+	s16 widthNegativeSine;
+	s16 (*sampleHeight)(s16, s16);
+	s16 depthSine;
+	s16 widthCosine;
+	u8 color;
 
-	sp8C = (f32)((f32)sins((u16)arg0->unk6) / 32768.0);
-	sp88 = (f32)((f32)coss((u16)arg0->unk6) / 32768.0);
-	if (((void*)arg0 == (void*)D_80052B34) && (D_801493E0 == 0)) {
+	sine = (f32)sins(arg0->unk6) / 32768.0;
+	cosine = (f32)coss(arg0->unk6) / 32768.0;
+	if (((void*)arg0 == D_80052B34) && (D_801493E0 == 0)) {
 		return;
 	}
 
-	if ((arg0->unkC == -2) && (*(u16*)((u8*)arg0 + 0x20) & 0x800)) {
+	if ((arg0->unkC == -2) && (arg0->flagsHigh & 0x800)) {
 		return;
 	}
 
@@ -355,137 +339,135 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienType *arg1) {
 	}
 
 	if (arg0->unkC == -2) {
-		var_s7 = (s16)(((u16)((u8*)&vehicleTypes[arg0->typeIndex])[0x6C]) << 1);
-		sp84 = (s16)(((u16)((u8*)&vehicleTypes[arg0->typeIndex])[0x6D]) << 1);
+		width = vehicleTypes[arg0->typeIndex].shadowWidth << 1;
+		depth = vehicleTypes[arg0->typeIndex].shadowDepth << 1;
 	} else {
-		var_s7 = (*(s16*)((u8*)arg1 + 0x34)) >> 1;
-		sp84 = (*(s16*)((u8*)arg1 + 0x36)) >> 1;
+		width = arg1->unk34 >> 1;
+		depth = arg1->unk36 >> 1;
 	}
 
-	sp86 = var_s7;
 	if (func_800E95BC_F856C(arg0->unk0, (func_800B84D0_C7480(arg0->unk0, arg0->unk4) >> 8) + 5, arg0->unk4) != 0) {
 		return;
 	}
 
 	if (D_801575A0 & 1) {
-		var_v0 = func_800F9EC4_108E74;
-		var_t5 = (s16 (*)(s16, s16)) func_800E9868_F8818;
+		data.height = func_800F9EC4_108E74;
+		sampleHeight = func_800E9868_F8818;
 	} else {
-		var_t5 = func_800F9F00_108EB0;
-		var_v0 = func_800F9EC4_108E74;
+		sampleHeight = func_800F9F00_108EB0;
 		if (D_80222A70 >= arg0->unk2) {
-			var_t5 = func_800F9EC4_108E74;
+			data.height = func_800F9EC4_108E74;
+			sampleHeight = data.height;
+		} else {
+			data.height = func_800F9EC4_108E74;
 		}
 	}
 
-	if ((var_t5 == var_v0) && ((void*)arg0 == (void*)D_80052B34) && (vehicleTypes[arg0->typeIndex].unk4C & 0x20000000)) {
-		var_t5 = func_800F9F00_108EB0;
+	if ((sampleHeight == data.height) && ((void*)arg0 == D_80052B34) && (vehicleTypes[arg0->typeIndex].unk4C & 0x20000000)) {
+		sampleHeight = func_800F9F00_108EB0;
 	}
 
-	var_t4 = *(void**)((u8*)arg1 + 4);
-	var_s7 = sp86;
-	if ((void*)arg0 == (void*)D_80052B34) {
-		u8 temp_v0_3 = D_80052B34->unk1A;
+	data.texture = arg1->shadowTexture;
+	if ((void*)arg0 == D_80052B34) {
+		typeIndex = D_80052B34->unk1A;
 
-		if ((temp_v0_3 == 0) || (temp_v0_3 == 0x13)) {
-			var_t4 = D_5000000;
-			if (temp_v0_3 == 0) {
-				var_s7 = (s16)(s32)((*(s16*)((u8*)arg1 + 0x34)) * D_801442D0_153280);
-				sp84 = (s16)(s32)((*(s16*)((u8*)arg1 + 0x36)) * D_801442D0_153280);
+		if ((typeIndex == 0) || (typeIndex == 0x13)) {
+			data.texture = D_5000000;
+			if (typeIndex == 0) {
+				width = arg1->unk34 * 0.55;
+				depth = arg1->unk36 * 0.55;
 			}
 		} else {
-			var_t4 = D_802C4080;
+			data.texture = D_802C4080;
 		}
 	} else if (arg0->unkC == -2) {
-		u8 temp_v0_4 = arg0->typeIndex;
+		typeIndex = arg0->typeIndex;
 
-		if (temp_v0_4 == 0x13) {
-			var_t4 = D_5000000;
+		if (typeIndex == 0x13) {
+			data.texture = D_5000000;
 		} else {
-			var_t4 = &D_802C4080[temp_v0_4 << 10];
+			data.texture = &D_802C4080[typeIndex << 10];
 		}
 	}
 
-	if (var_t4 != NULL) {
+	if (data.texture != NULL) {
 		gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 0, 0, TEXEL0, SHADE, TEXEL0, 0, 0, 0, COMBINED, 0, 0, 0, COMBINED);
-		gDPLoadTextureBlock(D_8005BB2C++, var_t4, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gDPLoadTextureBlock(D_8005BB2C++, data.texture, G_IM_FMT_IA, G_IM_SIZ_8b, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	} else {
 		gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PASS2);
 	}
 
-	temp_v0 = (s16)(s32)((f32)sp84 * sp88);
-	temp_t0 = (s16)(s32)((f32)var_s7 * -sp8C);
-	temp_t1 = (s16)(s32)((f32)sp84 * sp8C);
-	temp_t2 = (s16)(s32)((f32)var_s7 * sp88);
+	depthCosine = (f32)depth * cosine;
+	widthNegativeSine = (f32)width * -sine;
+	depthSine = (f32)depth * sine;
+	widthCosine = (f32)width * cosine;
 
-	D_8005BB34->v.ob[0] = (s16) (arg0->unk0 + (s16) temp_v0 + (s16) temp_t0);
-	D_8005BB34->v.ob[2] = (s16) (arg0->unk4 + (s16) temp_t1 + (s16) temp_t2);
-	D_8005BB34->v.ob[1] = var_t5(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
-	D_8005BB34->v.tc[0] = 0;
+	D_8005BB34->v.ob[0] = (arg0->unk0 + depthCosine + widthNegativeSine);
+	D_8005BB34->v.ob[2] = (arg0->unk4 + depthSine + widthCosine);
+	D_8005BB34->v.ob[1] = sampleHeight(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
 	D_8005BB34->v.tc[1] = 0x7DA;
+	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[1] = D_8005BB34->v.cn[2];
-	D_8005BB34->v.cn[0] = D_8005BB34->v.cn[2];
+	color = D_8005BB34->v.cn[2];
+	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = color;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	sp74 = var_t5;
-	sp24 = (s16) temp_t2;
-	sp28 = (s16) temp_t1;
-	sp2C = (s16) temp_t0;
-	sp30 = (s16) temp_v0;
-	D_8005BB34->v.ob[0] = (s16) ((arg0->unk0 - sp30) + sp2C);
-	D_8005BB34->v.ob[2] = (s16) ((arg0->unk4 - sp28) + sp24);
-	D_8005BB34->v.ob[1] = var_t5(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
+	D_8005BB34->v.ob[0] = ((arg0->unk0 - depthCosine) + widthNegativeSine);
+	D_8005BB34->v.ob[2] = ((arg0->unk4 - depthSine) + widthCosine);
+	D_8005BB34->v.ob[1] = sampleHeight(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[1] = D_8005BB34->v.cn[2];
-	D_8005BB34->v.cn[0] = D_8005BB34->v.cn[2];
+	color = D_8005BB34->v.cn[2];
+	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = color;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16) ((arg0->unk0 + sp30) - sp2C);
-	D_8005BB34->v.ob[2] = (s16) ((arg0->unk4 + sp28) - sp24);
-	D_8005BB34->v.ob[1] = var_t5(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
+	D_8005BB34->v.ob[0] = ((arg0->unk0 + depthCosine) - widthNegativeSine);
+	D_8005BB34->v.ob[2] = ((arg0->unk4 + depthSine) - widthCosine);
+	D_8005BB34->v.ob[1] = sampleHeight(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
 	D_8005BB34->v.tc[0] = 0x7DA;
 	D_8005BB34->v.tc[1] = 0x7DA;
 	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[1] = D_8005BB34->v.cn[2];
-	D_8005BB34->v.cn[0] = D_8005BB34->v.cn[2];
+	color = D_8005BB34->v.cn[2];
+	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = color;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s16) ((arg0->unk0 - sp30) - sp2C);
-	D_8005BB34->v.ob[2] = (s16) ((arg0->unk4 - sp28) - sp24);
-	D_8005BB34->v.ob[1] = var_t5(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
+	D_8005BB34->v.ob[0] = ((arg0->unk0 - depthCosine) - widthNegativeSine);
+	D_8005BB34->v.ob[2] = ((arg0->unk4 - depthSine) - widthCosine);
+	D_8005BB34->v.ob[1] = sampleHeight(D_8005BB34->v.ob[0], D_8005BB34->v.ob[2]);
 	D_8005BB34->v.tc[0] = 0x7DA;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[1] = D_8005BB34->v.cn[2];
-	D_8005BB34->v.cn[0] = D_8005BB34->v.cn[2];
+	color = D_8005BB34->v.cn[2];
+	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = color;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
 	D_8005BB34->v.ob[0] = arg0->unk0;
 	D_8005BB34->v.ob[2] = arg0->unk4;
-	D_8005BB34->v.ob[1] = sp74(arg0->unk0, arg0->unk4);
+	D_8005BB34->v.ob[1] = sampleHeight(arg0->unk0, arg0->unk4);
 	D_8005BB34->v.tc[1] = 0x3ED;
 	D_8005BB34->v.tc[0] = D_8005BB34->v.tc[1];
 	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[1] = D_8005BB34->v.cn[2];
-	D_8005BB34->v.cn[0] = D_8005BB34->v.cn[2];
+	color = D_8005BB34->v.cn[2];
+	D_8005BB34->v.cn[1] = color;
+	D_8005BB34->v.cn[0] = color;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	gSPVertex(D_8005BB2C++, D_8005BB34 - 5, 5, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
 	gSP2Triangles(D_8005BB2C++, 1, 0, 4, 0, 3, 1, 4, 0);
 	gSP2Triangles(D_8005BB2C++, 2, 3, 4, 0, 0, 2, 4, 0);
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F7870/func_800E988C_F883C.s")
-#endif
+
 
 // StopDrawingShadows
 void func_800EA088_F9038(void) {

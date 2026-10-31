@@ -409,6 +409,7 @@ segments:
       - [0x155540, .rodata, ../src.us/overlay_gameplay/outside/148000]
       - [0x1556F0, .rodata, ../src.us/overlay_gameplay/outside/constData]
       - [0x157A50, .rodata, ../src.us/overlay_gameplay/outside/constData2]
+      - {start: 0x158E90, type: .fixed_bss, name: ../src.us/overlay_gameplay/outside/B49C0, vram: 0x8014F830}
       - {start: 0x158E90, type: .fixed_bss, name: ../src.us/overlay_gameplay/outside/F7870, vram: 0x801575D0}
       - {start: 0x158E90, type: .fixed_bss, name: ../src.us/overlay_gameplay/outside/101840, vram: 0x80159D40}
       - {start: 0x158E90, type: .fixed_bss, name: ../src.us/overlay_gameplay/outside/buildings, vram: 0x8015EBB0}
