@@ -35,3 +35,27 @@ void loadLevelData(u8 arg0) { ... }
 A `static const` declared inside the function does **not** work: function-local statics are emitted after all of that function's string literals.
 
 Verified on `src.us/core/loader.c` (~90 strings, `build/bh.us.z64: OK` and `build.eu/bh.eu.z64: OK`). Duplicated literals are never merged by IDO, so repeated texts such as `"------------------------------\n"` keep one rodata entry per call site.
+
+#### Refinement: the split is "all strings first, then non-string data"
+
+`53F0.c` shows the sharper version of the rule. Non-string literals that belong to a function body (float/double constants, jump tables) are **not** in that leading source-ordered block — they are emitted later, at the function's position in the code stream. So the layout of a TU is:
+
+1. every string literal of the TU (file-scope and in function bodies), in source order, with non-string *file-scope* data inserted at its declaration position;
+2. then, per function in order, that function's non-string literals and jump tables.
+
+That means a non-string file-scope const must sit **after the last string literal of the TU but before the first function that owns a non-string literal**:
+
+```c
+// 53F0.c target rodata: "Frontend" ... "Remember to give power up %d\n",
+//                       then -10000.0f/10000.0f, then 319.0f and the jump tables.
+s32 func_80008C44_9844(s32 arg0) { ... osSyncPrintf("Remember to give power up %d\n", arg0); ... }
+
+/* last string of the TU is above, so these land at 0x37D20/0x37D24 as in the ROM */
+const f32 D_80037120_37D20[] = {-10000.0f};
+const f32 D_80037124_37D24[] = {10000.0f};
+
+void func_80008CA8_98A8(int arg0) { ... guOrtho(..., -10000.0f, 10000.0f, 1.0f); ... }  // literals go to the tail
+```
+
+Leaving those two arrays at the top of the file would have emitted them *before* the level-name strings that the pointer tables now produce, shifting the whole .rodata. Verified on `src.us/core/53F0.c` (`bh.us.z64: OK` and `bh.eu.z64: OK`).
+
