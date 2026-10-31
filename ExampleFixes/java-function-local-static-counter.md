@@ -1,0 +1,5 @@
+`incorrect ASM`: A file-scope signed-halfword counter in `func_802D57F4_1EE504` was promoted into `a0`. IDO hoisted its final read into the switch predecessors, reused the earlier comparison value, and removed the target shared-tail `lui`/`lh` reload. File-static storage, arrays, ordinary structs, return-type changes, and equivalent switch exits retained that behavior; volatile access added an unwanted cached address.
+
+`code changed`: Declare the frame counter as a function-local `static s16 missionFrames = 0`. Keep the direct signed-halfword comparisons and final postincrement, with a common switch exit. Move the following data definitions after this function so the local static occupies the original `0x802E056C` slot, before `D_802E0570_1F9280`; remove the obsolete external counter declaration.
+
+`correct ASM`: The two comparison reads use `t6` and `t7`; the final counter increment reloads through `t5` at the common tail, sets `v0` to zero between the load and increment, and stores through `at`. Every instruction and register matches, and the US ROM checksum passes with the original data layout.
