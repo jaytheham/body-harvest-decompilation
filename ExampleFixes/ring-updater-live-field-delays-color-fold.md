@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800D1A94_E0A44`, `white = ~(lastIndex ^ 0xFF)` produced `li t1,0xFF; sb t1,0x39(sp); sb t1,0x38(sp)`, while the later endpoint address occupied `v0`. Every other instruction, frame offset, and register matched. A literal white value produced additional constant materializations; `arg0 * 0 + 0xFF` introduced a redundant parameter load, and using the traversal index extended its live range and changed the loop registers.
+
+-> `code changed`: After assigning the root payload pointer, use its already-needed coordinate to delay constant folding: `white = sp34->position[0] * 0 + 0xFF;`. Keep the three separate stores `sp38.b = 0xFF; sp38.g = white; sp38.r = white;`. The coordinate already participates in the following endpoint copy, so this expression adds no load and does not extend the traversal index lifetime.
+
+-> `correct ASM`: `li v0,0xFF; ...; li t4,0xFF; sb t4,0x3A(sp); sb v0,0x39(sp); sb v0,0x38(sp)`, followed by `addu t1,a3,t8; lh t9,8(t1); lh t4,0xC(t1)`. All 100 instructions match, with full US and EU ROM checksums passing.

@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800C3BD8_D2B88`, caching the fire pool base reverses the first address addition. A wide channel local delays `move a1,t4` until after the lifetime clamp. A separate lifetime local places the comparison value in `a0`, allowing `addiu v1,t1,8` to move into the size branch delay slot instead of following the branch merge.
+
+-> `code changed`: Index `D_80154318` directly and clear the linked entry's typed `firePayload.control.phase` before creating the payload pointer. Keep the channel and lifetime comparison copy as `u16`. Clamp the lifetime argument itself. Keep the independently clamped size as `u32` and cast it to `s32` for division by eight. Create the integer-cast payload view immediately before the three control-field stores.
+
+-> `correct ASM`: The pool address uses `addu a3,a0,t7`; the channel copy occurs before the linked-entry stores. The lifetime argument occupies `t2` and its comparison copy occupies `v1`. The size branch has a `nop` delay slot, followed by `addiu v1,t1,8` at the merge. All 108 instructions match, and both US and EU ROMs verify exactly.
