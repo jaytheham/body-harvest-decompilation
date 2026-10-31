@@ -2025,6 +2025,7 @@ void func_800731A8_43658(void) {
 #endif
 #endif
 
+
 void func_80075710_45BC0(void) {
     s32 pad[22];
 
@@ -2127,11 +2128,11 @@ void func_80075D58_46208(s32 arg0) {
 	}
 
 	func_800791A0_49650(2);
-	guPerspective(D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, 1500.0f, 1.0f);
+	guPerspective(D_8005BB38, &perspectiveNormal, 73.0f, 1.25f, 150.0f, D_800AE784_7EC34[0], 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, perspectiveNormal);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
-	guLookAt(D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, 0.2f, 1.0f, 0.0f);
+	guLookAt(D_8005BB38, 0.0f, 300.0f, 370.0f, 0.0f, 0.0f, 0.0f, D_800AE788_7EC38[0], 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
 	gDPPipeSync(D_8005BB2C++);
