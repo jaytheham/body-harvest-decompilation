@@ -1011,7 +1011,7 @@ void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	u32 mask = 0x1FFFFFFF;
 	Gfx* tempS6;
 
-	temp = (s32) ((0, 256.0f) * (f32) (arg3 * 0.7));
+	temp = (s32) ((0, 256.0f) * (f32) (arg3 * D_800AE518_7E9C8.value));
 	varS3 = 0;
 	varS4 = D_8004DC5E;
 	spA4.unk0 = arg0;
