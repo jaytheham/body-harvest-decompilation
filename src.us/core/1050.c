@@ -318,65 +318,65 @@ void func_80000AD4_16D4(BhAudioBuf *arg0)
 	}
 }
 
-// CURRENT(675)
-#ifdef NON_MATCHING
-s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
-	void *volatile buffer;
-	Unk80042DB8 *var_s0;
-	s32 pad1;
-	Unk80042DB8 *var_s1;
-	Unk80042DB8 *var_a2;
-	s32 temp_s1;
+s32 func_80000B14_1714(s32 addr, s32 len, void *state) {
+	u8 *buffer;
+	Unk80042DB8 *dmaBuffer;
+	Unk80042DB8 *firstBuffer;
+	u32 offset;
+	s32 bufferEnd;
+	Unk80042DB8 *previous;
 
-	var_a2 = NULL;
-	var_s1 = D_80042DA8.unk4;
+	previous = NULL;
+	firstBuffer = D_80042DA8.unk4;
 	D_800312FC_31EFC += 1;
-	var_s0 = var_s1;
-	if (var_s0 != NULL) {
+	dmaBuffer = firstBuffer;
+	if (dmaBuffer != NULL) {
 		do {
-			if (arg0 < (u32)var_s0->unk8) {
+			bufferEnd = dmaBuffer->unk8 + 0x400;
+			if (addr < dmaBuffer->unk8) {
 				break;
 			}
-			var_a2 = var_s0;
-			if ((var_s0->unk8 + 0x400) >= (s32)(arg0 + arg1)) {
-				var_s0->unkC = (s32)D_800431A0;
-				return osVirtualToPhysical((void *)((u8 *)var_s0->unk10 + arg0 - (u32)var_s0->unk8));
+			previous = dmaBuffer;
+			if (bufferEnd >= addr + len) {
+				dmaBuffer->unkC = D_800431A0;
+				return osVirtualToPhysical(&dmaBuffer->unk10[addr - dmaBuffer->unk8]);
 			}
-			var_s0 = var_s0->unk0;
-		} while (var_s0 != NULL);
+			dmaBuffer = dmaBuffer->unk0;
+		} while (dmaBuffer != NULL);
 	}
-	var_s0 = D_80042DA8.unk8;
-	if (var_s0 == NULL) {
-		return osVirtualToPhysical(var_s1);
+	dmaBuffer = D_80042DA8.unk8;
+	if (dmaBuffer == NULL) {
+		return osVirtualToPhysical(firstBuffer);
 	}
-	D_80042DA8.unk8 = var_s0->unk0;
-	alUnlink((ALLink *)var_s0);
-	if (var_a2 != NULL) {
-		alLink((ALLink *)var_s0, (ALLink *)var_a2);
+	D_80042DA8.unk8 = dmaBuffer->unk0;
+	alUnlink((ALLink *)dmaBuffer);
+	if (previous != NULL) {
+		alLink((ALLink *)dmaBuffer, (ALLink *)previous);
 	} else {
-		var_s1 = D_80042DA8.unk4;
-		if (var_s1 != NULL) {
-			D_80042DA8.unk4 = var_s0;
-			var_s0->unk0 = var_s1;
-			var_s0->unk4 = NULL;
-			var_s1->unk4 = var_s0;
+		firstBuffer = D_80042DA8.unk4;
+		if (firstBuffer != NULL) {
+			D_80042DA8.unk4 = dmaBuffer;
+			dmaBuffer->unk0 = firstBuffer;
+			dmaBuffer->unk4 = NULL;
+			firstBuffer->unk4 = dmaBuffer;
 		} else {
-			D_80042DA8.unk4 = var_s0;
-			var_s0->unk0 = NULL;
-			var_s0->unk4 = NULL;
+			D_80042DA8.unk4 = dmaBuffer;
+			dmaBuffer->unk0 = NULL;
+			dmaBuffer->unk4 = NULL;
 		}
 	}
-	temp_s1 = arg0 & 1;
-	arg0 = arg0 - temp_s1;
-	var_s0->unk8 = arg0;
-	var_s0->unkC = D_800431A0;
-	osPiStartDma(&D_8006A330[D_800312F0_31EF0++], 0, 0, arg0, buffer = var_s0->unk10, 0x400, &D_80067F58);
+	offset = addr & 1;
+	addr = addr - offset;
+	dmaBuffer->unk8 = addr;
+	dmaBuffer->unkC = D_800431A0;
+	osPiStartDma(&D_8006A330[D_800312F0_31EF0++], 0, 0, addr, buffer = dmaBuffer->unk10, 0x400, &D_80067F58);
 	D_80031300_31F00 += 1;
-	return osVirtualToPhysical(buffer) + temp_s1;
+	addr = osVirtualToPhysical(buffer);
+	/* Keep the alignment offset live across address translation. */
+	if (offset * 0) {}
+	return addr + offset;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000B14_1714.s")
-#endif
+
 
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
 	if (D_80042DA8.unk0 == 0) {

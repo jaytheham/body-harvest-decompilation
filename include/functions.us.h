@@ -58,7 +58,7 @@ s32 func_800F066C_FF61C();
 void func_80000D0C_190C(void);
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1);
 void func_80000AD4_16D4(BhAudioBuf *arg0);
-s32 func_80000B14_1714(u32, s32, u32);
+s32 func_80000B14_1714(s32 addr, s32 len, void *state);
 void func_80001050_1C50(s32);
 void func_8000108C_1C8C(s32);
 void func_800010C4_1CC4(s32);
