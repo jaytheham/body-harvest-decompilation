@@ -2003,6 +2003,14 @@ typedef struct {
 	/* 0x0E */ s16 unkE;
 } Unk8014DD50; /* size = 0x10 */
 
+/* Joint position view for an ordered Z-coordinate store. */
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ volatile s16 unk4;
+	/* 0x06 */ u8 pad6[0xA];
+} Unk8014DD50VolatileZ; /* size = 0x10 */
+
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
