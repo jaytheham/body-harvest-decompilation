@@ -2585,17 +2585,13 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ u32 displayList;
-	/* 0x04 */ u32 transform;
+	union {
+		/* 0x04 */ u32 transform;
+		/* 0x04 */ void (*updateMtx)(s32);
+	};
 	/* 0x08 */ Unk80052B40 unk8;
 	/* 0x0E */ s16 flags;
 } Unk8013FDA8Entry; /* size = 0x10 */
-
-typedef struct {
-	s32 model;
-	void (*updateMtx)(u8);
-	Unk80052B40 offset;
-	u16 flags;
-} ShadowPartEntry;
 
 typedef struct {
 	union {
