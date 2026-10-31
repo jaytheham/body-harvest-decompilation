@@ -235,8 +235,6 @@ extern s32 D_80031548;
 extern BeaconEntry D_8003154C[][6]; // beacon data array (indexed as [level-1][beacon], level 0 is at D_80031534)
 extern Unk80052B40 D_800315C4_321C4;
 extern Unk80052B40 D_800315CC_321CC;
-extern s32 D_800315D4_321D4;
-extern s32 D_800315D4_W;
 extern Vtx D_800315D8_321D8[];
 extern f32 D_80031618_32218;
 extern s32 D_8003161C_3221C;
@@ -1850,7 +1848,7 @@ extern s32 D_800FCA80;
 extern s32 D_800FCA84; // AI - interiorMenuJustOpened: 1 on the tick the menu opens, so the opening START press is not also a choice (read)
 extern s16 D_800FCA90;
 extern s16 D_800FCA92; // AI - interiorMenuPhase: 0xFF when the interior menu opens, counting down to 0x1E as it closes (measured)
-extern u8 D_800FCAD8;
+extern Mtx D_800FCAD8;
 extern u16 D_800FCB1E;
 extern s16 D_800FCF20;
 extern s16 D_800FCF22;
