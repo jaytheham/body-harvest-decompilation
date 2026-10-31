@@ -3,13 +3,6 @@
 #include "common.h"
 #include "version_shift.h"
 
-const char D_80144260_153210[] = "ERROR: StripModelToBones array overflow, size %d, max %d\n"; // "ERROR: StripModelToBones array overflow, size %d, max %d\n"
-const char D_8014429C_15324C[] = "Generating shadow for (%d), %s"; // "Generating shadow for (%d), %s"
-const char D_801442BC_15326C[] = "."; // "."
-const char D_801442C0_153270[] = "."; // "."
-const char D_801442C4_153274[] = ".OK\n"; // ".OK\n"
-
-
 // StripModelToBones
 Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 	ShadowModelCommand temp;
@@ -49,7 +42,7 @@ Gfx* func_800E88C0_F7870(s32 arg0, s32 arg1) {
 		}
 	} while (opcode != -0x48);
 	if (count >= 0x145) {
-		osSyncPrintf(D_80144260_153210, count, 0x145);
+		osSyncPrintf("ERROR: StripModelToBones array overflow, size %d, max %d\n", count, 0x145);
 	}
 	return result;
 }
@@ -78,7 +71,7 @@ void func_800E8A00_F79B0(void) {
 		D_80052B34->unkA = 0;
 		D_80052B34->unk6 = 0;
 		D_80052B34->unk1A = shadowVehicleType;
-		osSyncPrintf(D_8014429C_15324C, vehicleType->unk18, D_800344B4_350B4[vehicleType->unk18].name);
+		osSyncPrintf("Generating shadow for (%d), %s", vehicleType->unk18, D_800344B4_350B4[vehicleType->unk18].name);
 	} else {
 		D_801575A4 = D_802C4080;
 		if ((D_80052B34->unk1A == 0) || (D_80052B34->unk1A == 0x13)) {
@@ -131,7 +124,7 @@ void func_800E8A00_F79B0(void) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
 	if ((shadowVehicleType < 0x15) && (shadowVehicleType > 0) && (vehicleTypes[shadowVehicleType].modelDL != 0)) {
-		osSyncPrintf(D_801442BC_15326C);
+		osSyncPrintf(".");
 	}
 
 	if (D_80052B34->unk1A != 0) {
@@ -145,7 +138,7 @@ void func_800E8A00_F79B0(void) {
 	}
 
 	if ((shadowVehicleType < 0x15) && (shadowVehicleType > 0) && (vehicleTypes[shadowVehicleType].modelDL != 0)) {
-		osSyncPrintf(D_801442C0_153270);
+		osSyncPrintf(".");
 	}
 
 	remainingParts = vehicleType->unk54;
@@ -214,7 +207,7 @@ void func_800E8A00_F79B0(void) {
 	D_80052B34->unk1A = savedVehicleType;
 
 	if ((shadowVehicleType < 0x15) && (shadowVehicleType > 0) && (vehicleTypes[shadowVehicleType].modelDL != 0)) {
-		osSyncPrintf(D_801442C4_153274);
+		osSyncPrintf(".OK\n");
 	}
 }
 

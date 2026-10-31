@@ -2,18 +2,6 @@
 #include "common.h"
 #include "version_shift.h"
 
-const char D_80142790_151740[] = "Activate beacon %d\n"; // "Activate beacon %d\n"
-const char D_801427A4_151754[] = "Beacons:"; // "Beacons:"
-const char D_801427B0_151760[] = "BEACONS %d-On,\n "; // "BEACONS %d-On,\n "
-const char D_801427C4_151774[] = "BEACONS %d-Off,\n "; // "BEACONS %d-Off,\n "
-const char D_801427D8_151788[] = "teleport to:%d\n"; // "teleport to:%d\n"
-const char D_801427E8_151798[] = "beacon: %d\n"; // "beacon: %d\n"
-const char D_801427F4_1517A4[] = "state:%d\n"; // "state:%d\n"
-const char D_80142800_1517B0[] = "state+1:%d\n"; // "state+1:%d\n"
-const char D_8014280C_1517BC[] = "Launch beacon %d\n"; // "Launch beacon %d\n"
-const char D_80142820_1517D0[] = "Giving delayed powerup %d\n"; // "Giving delayed powerup %d\n"
-
-
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
 LevelBeaconData D_8013D898_14C848 = {{
@@ -45,7 +33,7 @@ void func_800A5A50_B4A00(s32 arg0, s32 arg1) {
 	s32 sp1C;
 
 	D_8014F800 = 1;
-	osSyncPrintf(D_80142790_151740, arg0);
+	osSyncPrintf("Activate beacon %d\n", arg0);
 	if (D_80151DD0 == 0) { // beacons disabled starting when human meter is 2 away from game over - set by func_800BDDCC
 		D_80047F9C = arg0 + 1;
 		sp1C = func_80009F18_AB18(arg1);
@@ -103,7 +91,7 @@ void func_800A5D3C_B4CEC(void)
 
 	D_8014F7F0 = 0;
 	D_8014F7F4 = 0;
-	osSyncPrintf(D_801427A4_151754);
+	osSyncPrintf("Beacons:");
 	for (i = 0; i < 6; i++)
 	{
 		if (i < D_80047F98)
@@ -111,13 +99,13 @@ void func_800A5D3C_B4CEC(void)
 			D_8003154C[currentLevel - 1][i].timer = 0;
 			D_8003154C[currentLevel - 1][i].state = 8;
 			func_800A5BD0_B4B80(i);
-			osSyncPrintf(D_801427B0_151760, i);
+			osSyncPrintf("BEACONS %d-On,\n ", i);
 		}
 		else
 		{
 			D_8003154C[currentLevel - 1][i].timer = 0;
 			D_8003154C[currentLevel - 1][i].state = 0;
-			osSyncPrintf(D_801427C4_151774, i);
+			osSyncPrintf("BEACONS %d-Off,\n ", i);
 		}
 	}
 	D_8014F804 = -1;
@@ -126,7 +114,7 @@ void func_800A5D3C_B4CEC(void)
 // warpToSaveBeacon
 // AI - Initiate warp/teleport to beacon
 void func_800A5EA8_B4E58(u8 arg0) {
-	osSyncPrintf(D_801427D8_151788, arg0); // teleport to:%d
+	osSyncPrintf("teleport to:%d\n", arg0);
 	D_8013D890_14C840 = 1;
 	D_8013D894_14C844 = arg0;
 }
@@ -145,9 +133,9 @@ void func_800A5F24_B4ED4(s32 arg0)
 {
 	if (D_8013D890_14C840 == 0)
 	{
-		osSyncPrintf(D_801427E8_151798, arg0);
-		osSyncPrintf(D_801427F4_1517A4, D_8003154C[currentLevel - 1][arg0].state);
-		osSyncPrintf(D_80142800_1517B0, D_8003154C[currentLevel - 1][arg0 + 1].state);
+		osSyncPrintf("beacon: %d\n", arg0);
+		osSyncPrintf("state:%d\n", D_8003154C[currentLevel - 1][arg0].state);
+		osSyncPrintf("state+1:%d\n", D_8003154C[currentLevel - 1][arg0 + 1].state);
 
 		arg0 = (D_8003154C[currentLevel - 1][arg0 + 1].state >= 4) ? arg0 + 1 : -1;
 
@@ -471,7 +459,7 @@ void func_800A6FD4_B5F84(void)
 {
 	u8 sp1F;
 	sp1F = D_80047F98;
-	osSyncPrintf(D_8014280C_1517BC, sp1F);
+	osSyncPrintf("Launch beacon %d\n", sp1F);
 	if (currentLevel != LEVEL_SIBERIA || sp1F != 3)
 	{
 		func_80013314_13F14();
@@ -1276,7 +1264,7 @@ void func_800A9238_B81E8() {
 	while (powerupTypePtr--, i--) {
 		powerupType = *powerupTypePtr;
 		if (negOne != powerupType) {
-			osSyncPrintf(D_80142820_1517D0, powerupType); // Giving delayed powerup %d
+			osSyncPrintf("Giving delayed powerup %d\n", powerupType);
 			func_800A8E18_B7DC8(*powerupTypePtr);
 		}
 	}

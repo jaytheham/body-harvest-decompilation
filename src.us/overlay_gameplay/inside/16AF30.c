@@ -31,31 +31,6 @@ s32 D_800A269C_18A75C[1] = {
 // AI - Lens flare active flag
 u8 D_800A26A0_18A760 = 0;
 
-// ============================================================
-// 16AF30 rodata
-// ============================================================
-
-const char D_800A4F70_18D030[] = "ieNormVecF3()  {0,0,0} -> {0,0,0}\n"; // "ieNormVecF3()  {0,0,0} -> {0,0,0}\n"
-const char D_800A4F94_18D054[] = "WARNING : Out of space to create a new special effect of type %d.\n"; // "WARNING : Out of space to create a new special effect of type %d.\n"
-const char D_800A4FD8_18D098[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n"; // "EFFECTS WARNING : Call to free up an effect which does not exist\n"
-const char D_800A501C_18D0DC[] = "WARNING - New special effect unit cannot be allocated - out of space.\n"; // "WARNING - New special effect unit cannot be allocated - out of space.\n"
-const char D_800A5064_18D124[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n"; // "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n"
-const char D_800A50AC_18D16C[] = "ERROR : Tried to kill unit from effect which has no units.\n"; // "ERROR : Tried to kill unit from effect which has no units.\n"
-const char D_800A50E8_18D1A8[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n"; // "ERROR : Unit list inconsistency occurred with 2 units left.\n"
-const char D_800A5128_18D1E8[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n"; // "EFFECTS WARNING : Call to free up invalid triple effect unit.\n"
-const char D_800A5168_18D228[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n"; // "EFFECTS WARNING : Call to free up invalid double effect unit.\n"
-const char D_800A51A8_18D268[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"; // "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"
-const char D_800A51F8_18D2B8[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"; // "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"
-const char D_800A5248_18D308[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"; // "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"
-const char D_800A5298_18D358[] = "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"; // "SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n"
-const char D_800A52E8_18D3A8[] = "EFFECTS WARNING : Cannot start fire effect - there are no units left\n"; // "EFFECTS WARNING : Cannot start fire effect - there are no units left\n"
-const char D_800A5330_18D3F0[] = "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n"; // "INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n"
-const char D_800A5384_18D444[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n"; // "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n"
-const char D_800A53D4_18D494[] = "Call to draw generic flat effect with unknown render type.\n"; // "Call to draw generic flat effect with unknown render type.\n"
-const char D_800A5410_18D4D0[] = "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"; // "INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n"
-
-
-
 // AI - 3x3 matrix-by-vector multiplication
 void func_80082E70_16AF30(f32 *arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0[0] + arg1->y * arg0[3] + arg0[6] * arg1->z;
@@ -98,7 +73,7 @@ void func_80083014_16B0D4(Vec3f *arg0, Vec3f *arg1) {
 	f32 temp_f0;
 	temp_f0 = func_80082FC4_16B084(arg0);
 	if ((f64) temp_f0 == 0.0) {
-		osSyncPrintf(D_800A4F70_18D030);
+		osSyncPrintf("ieNormVecF3()  {0,0,0} -> {0,0,0}\n");
 		*arg1 = *arg0;
 	} else {
 		func_80082F74_16B034(temp_f0, arg0, arg1);
@@ -157,7 +132,7 @@ u8 func_80083224_16B2E4(u8 arg0)
   count = D_800FB7AC;
   if (count >= 0xF)
   {
-	osSyncPrintf(&D_800A4F94_18D054, arg0);
+	osSyncPrintf("WARNING : Out of space to create a new special effect of type %d.\n", arg0);
 	slot = 0xFB;
   }
   else
@@ -188,7 +163,7 @@ u8 func_80083224_16B2E4(u8 arg0)
 void func_80083300_16B3C0(u8 arg0) {
 
 	if (D_800FB6F8[arg0].unk0 == 0xFA) {
-		osSyncPrintf(&D_800A4FD8_18D098);
+		osSyncPrintf("EFFECTS WARNING : Call to free up an effect which does not exist\n");
 	} else {
 		D_800FB6F8[arg0].unk0 = 0xFA;
 		D_800FB7AC = D_800FB7AC - 1;
@@ -204,7 +179,7 @@ s16 func_80083390_16B450(u8 arg0) {
 	s16 effect;
 
 	if (D_800FC8E0 >= 0xC8) {
-		osSyncPrintf(&D_800A501C_18D0DC);
+		osSyncPrintf("WARNING - New special effect unit cannot be allocated - out of space.\n");
 		effect = -3;
 	} else {
 		effect = D_800FC8E2;
@@ -278,13 +253,13 @@ s16 func_80083584_16B644(u8 arg0) {
 void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 
 	if (D_800FB7B0[arg0].unk0 == 0) {
-		osSyncPrintf(&D_800A5064_18D124, arg0, arg1);
+		osSyncPrintf("UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n", arg0, arg1);
 		return;
 	}
 
 	switch (D_800FB6F8[arg1].unk4) {
 		case 0:
-			osSyncPrintf(&D_800A50AC_18D16C);
+			osSyncPrintf("ERROR : Tried to kill unit from effect which has no units.\n");
 			D_800FB6F8[arg1].unk6 = -6;
 			D_800FB6F8[arg1].unk8 = -6;
 			return;
@@ -304,7 +279,7 @@ void func_800835F0_16B6B0(s16 arg0, u8 arg1) {
 				D_800FB7B0[D_800FB6F8[arg1].unk6].unk6 = (-4);
 				D_800FB7B0[D_800FB6F8[arg1].unk6].unk4 = (-5);
 			} else {
-				osSyncPrintf(&D_800A50E8_18D1A8);
+				osSyncPrintf("ERROR : Unit list inconsistency occurred with 2 units left.\n");
 			}
 			break;
 
@@ -355,7 +330,7 @@ void func_80083814_16B8D4(s16 arg0, u8 arg1)
 		func_800835F0_16B6B0(arg0, new_var);
 		return;
 	}
-	osSyncPrintf(&D_800A5128_18D1E8);
+	osSyncPrintf("EFFECTS WARNING : Call to free up invalid triple effect unit.\n");
 }
 
 // AI - Remove two specific effects from a slot
@@ -368,7 +343,7 @@ void func_80083924_16B9E4(s16 arg0, u8 arg1) {
 		func_800835F0_16B6B0(sp1E, arg1);
 		return;
 	}
-	osSyncPrintf(&D_800A5168_18D228);
+	osSyncPrintf("EFFECTS WARNING : Call to free up invalid double effect unit.\n");
 }
 
 // AI - Remove all effects from a slot
@@ -460,7 +435,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 	if (i != 0xFB) {
 		effect = func_80083390_16B450(slot);
 		if (effect == -3) {
-			osSyncPrintf(&D_800A51A8_18D268);
+			osSyncPrintf("EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n");
 			func_80083300_16B3C0(slot);
 			return;
 		}
@@ -484,7 +459,7 @@ void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg
 		if (count >= 0x33) {
 			count = 0x32;
 		} else if (count == 0) {
-			osSyncPrintf(&D_800A51F8_18D2B8);
+			osSyncPrintf("SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n");
 			count = 1;
 		}
 
@@ -511,7 +486,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 	if (effect != 0xFB) {
 		effect = func_80083390_16B450(slot);
 		if (effect == -3) {
-			osSyncPrintf(&D_800A5248_18D308);
+			osSyncPrintf("EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n");
 			func_80083300_16B3C0(slot);
 			return;
 		}
@@ -535,7 +510,7 @@ void func_800840F0_16C1B0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 ar
 		if (count >= 0x33) {
 			count = 0x32;
 		} else if (count == 0) {
-			osSyncPrintf(&D_800A5298_18D358);
+			osSyncPrintf("SPECIAL FX WARNING : Call to create particle system with no sparks : 1 created\n");
 			count = 1;
 		}
 
@@ -729,7 +704,7 @@ u8 func_80084C68_16CD28(s16 arg0, volatile s16 arg1, s16 arg2, u16 arg3, u16 arg
 	if ((slot = func_80083224_16B2E4(0)) != 0xFB) {
 		effect = func_80083584_16B644(slot);
 		if (effect == -3) {
-			osSyncPrintf(D_800A52E8_18D3A8);
+			osSyncPrintf("EFFECTS WARNING : Cannot start fire effect - there are no units left\n");
 			func_80083300_16B3C0(slot);
 			return 0xFB;
 		}
@@ -979,7 +954,7 @@ u8 func_8008574C_16D80C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		effect = func_80083584_16B644(ret);
 		temp = arg10;
 		if (effect == -3) {
-			osSyncPrintf(D_800A5330_18D3F0);
+			osSyncPrintf("INSIDE EFFECTS WARNING : Spurt effect not created - could not allocated any units\n");
 			func_80083300_16B3C0(ret);
 			return 0xFB;
 		} else {
@@ -2108,7 +2083,7 @@ u8 func_80089648_171708(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,
 		effect = func_80083390_16B450(slot);
 		if (effect == (-3))
 		{
-			osSyncPrintf(D_800A5384_18D444, (unsigned long)slot);
+			osSyncPrintf("EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n", (unsigned long)slot);
 			func_80083300_16B3C0(slot);
 			return 0xFB;
 		}
@@ -2464,7 +2439,7 @@ void func_8008A704_1727C4(void) {
 						func_80089E54_171F14();
 						break;
 					default:
-						osSyncPrintf(D_800A53D4_18D494);
+						osSyncPrintf("Call to draw generic flat effect with unknown render type.\n");
 						break;
 					}
 				}
@@ -2652,7 +2627,7 @@ void func_8008B1A8_173268(void) {
 					func_80089BCC_171C8C(i);
 					break;
 				default:
-					osSyncPrintf(D_800A5410_18D4D0, D_800FB6F8[i].unk0);
+					osSyncPrintf("INSIDE FX WARNING : Call to draw an effect of unknown type %d.\n", D_800FB6F8[i].unk0);
 					break;
 			}
 		}

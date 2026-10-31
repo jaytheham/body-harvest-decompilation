@@ -17,80 +17,6 @@ u8 D_800313F4_31FF4 = 0x80;
 s16 D_800313F8_31FF8 = 0x03CF;
 s16 D_800313FC_31FFC = 0x03E8;
 
-/* Read-only strings, numeric constants, and switch targets. */
-const char D_80036CB0_378B0[] = "Frontend";
-const char D_80036CBC_378BC[] = "Greece";
-const char D_80036CC4_378C4[] = "Java";
-const char D_80036CCC_378CC[] = "America";
-const char D_80036CD4_378D4[] = "Siberia";
-const char D_80036CDC_378DC[] = "Comet";
-const char D_80036CE4_378E4[] = "Frontend";
-const char D_80036CF0_378F0[] = "Gr\350ce";
-const char D_80036CF8_378F8[] = "Java";
-const char D_80036D00_37900[] = "USA";
-const char D_80036D04_37904[] = "Sib\351rie";
-const char D_80036D0C_3790C[] = "Com\350te";
-const char D_80036D14_37914[] = "Frontend";
-const char D_80036D20_37920[] = "Griechenland";
-const char D_80036D30_37930[] = "Java";
-const char D_80036D38_37938[] = "Amerika";
-const char D_80036D40_37940[] = "Sibirien";
-const char D_80036D4C_3794C[] = "Komet";
-const char D_80036D54_37954[] = "-1-";
-const char D_80036D58_37958[] = "-2-";
-const char D_80036D5C_3795C[] = "-3-";
-const char D_80036D60_37960[] = "-4-";
-const char D_80036D64_37964[] = "-5-";
-const char D_80036D68_37968[] = "%C";
-const char D_80036D6C_3796C[] = "%C";
-const char D_80036D70_37970[] = "%C";
-const char D_80036D74_37974[] = "**** ERROR: ALWAYS FUNCTION LIST OVERFLOW ****\n";
-const char D_80036DA4_379A4[] = "Increment objective %d\n";
-const char D_80036DBC_379BC[] = "Set objective %d\n";
-const char D_80036DD0_379D0[] = " player";
-const char D_80036DD8_379D8[] = " vehicle %d";
-const char D_80036DE4_379E4[] = " character %d";
-const char D_80036DF4_379F4[] = " building %d (%d,%d)";
-const char D_80036E0C_37A0C[] = " location (%d,%d)";
-const char D_80036E20_37A20[] = " random object %d (";
-const char D_80036E34_37A34[] = " )";
-const char D_80036E38_37A38[] = " it's always so";
-const char D_80036E48_37A48[] = " it's never so";
-const char D_80036E58_37A58[] = " is less than %d tiles from";
-const char D_80036E74_37A74[] = " is less than %d tiles from";
-const char D_80036E90_37A90[] = " is damaged";
-const char D_80036E9C_37A9C[] = " is not damaged";
-const char D_80036EAC_37AAC[] = " is not burning";
-const char D_80036EBC_37ABC[] = " is destroyed";
-const char D_80036ECC_37ACC[] = " is not destroyed";
-const char D_80036EE0_37AE0[] = " is inside";
-const char D_80036EEC_37AEC[] = " is not inside";
-const char D_80036EFC_37AFC[] = " mission %d has been completed";
-const char D_80036F1C_37B1C[] = " mission %d has been failed";
-const char D_80036F38_37B38[] = " wave %d has mutated";
-const char D_80036F50_37B50[] = " wave %d has been destroyed";
-const char D_80036F6C_37B6C[] = " timer %d is less than %d seconds";
-const char D_80036F90_37B90[] = " timer %d is more than %d seconds";
-const char D_80036FB4_37BB4[] = " player has key %d";
-const char D_80036FC8_37BC8[] = " player doesn't have key %d";
-const char D_80036FE4_37BE4[] = " because";
-const char D_80036FF0_37BF0[] = ",";
-const char D_80036FF4_37BF4[] = " and";
-const char D_80036FFC_37BFC[] = "\n";
-const char D_80037000_37C00[] = "checkin for cutscenes\n";
-const char D_80037018_37C18[] = "Playing dialog %d because";
-const char D_80037034_37C34[] = "\n";
-const char D_80037038_37C38[] = "**** ERROR: Character %d has no valid responses ****\n";
-const char D_80037070_37C70[] = "Daisy message %d will be played in %d seconds because";
-const char D_800370A8_37CA8[] = " and";
-const char D_800370B0_37CB0[] = ".\n";
-const char D_800370B4_37CB4[] = ",";
-const char D_800370B8_37CB8[] = "Playing daisy message %d\n";
-const char D_800370D4_37CD4[] = "Pending daisy message is no longer valid.\n";
-const char D_80037100_37D00[] = "Remember to give power up %d\n";
-const f32 D_80037120_37D20[] = {-10000.0f};
-const f32 D_80037124_37D24[] = {10000.0f};
-
 
 
 
@@ -348,7 +274,7 @@ void func_800053A0_5FA0(s16 arg0, s16 arg1, u16 arg2, u16 arg3, u8 arg4) {
 	sp60.unk2 = arg1;
 	sp58.unk0 = arg2;
 	sp58.unk2 = arg3;
-	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037120_37D20_R, D_80037124_37D24_R, 1.0f);
+	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, -10000.0f, 10000.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);
@@ -406,38 +332,38 @@ Vp D_800314D0_320D0[] = {
 };
 
 u8 *D_800314F0_320F0[] = {
-	(u8 *)D_80036CB0_378B0,
-	(u8 *)D_80036CBC_378BC,
-	(u8 *)D_80036CC4_378C4,
-	(u8 *)D_80036CCC_378CC,
-	(u8 *)D_80036CD4_378D4,
-	(u8 *)D_80036CDC_378DC,
+	(u8 *)"Frontend",
+	(u8 *)"Greece",
+	(u8 *)"Java",
+	(u8 *)"America",
+	(u8 *)"Siberia",
+	(u8 *)"Comet",
 };
 
 u8 *D_80031508_32108[] = {
-	(u8 *)D_80036CE4_378E4,
-	(u8 *)D_80036CF0_378F0,
-	(u8 *)D_80036CF8_378F8,
-	(u8 *)D_80036D00_37900,
-	(u8 *)D_80036D04_37904,
-	(u8 *)D_80036D0C_3790C,
+	(u8 *)"Frontend",
+	(u8 *)"Gr\350ce",
+	(u8 *)"Java",
+	(u8 *)"USA",
+	(u8 *)"Sib\351rie",
+	(u8 *)"Com\350te",
 };
 
 u8 *D_80031520_32120[] = {
-	(u8 *)D_80036D14_37914,
-	(u8 *)D_80036D20_37920,
-	(u8 *)D_80036D30_37930,
-	(u8 *)D_80036D38_37938,
-	(u8 *)D_80036D40_37940,
-	(u8 *)D_80036D4C_3794C,
+	(u8 *)"Frontend",
+	(u8 *)"Griechenland",
+	(u8 *)"Java",
+	(u8 *)"Amerika",
+	(u8 *)"Sibirien",
+	(u8 *)"Komet",
 };
 
 u8 *D_80031538_32138[] = {
-	(u8 *)D_80036D54_37954,
-	(u8 *)D_80036D58_37958,
-	(u8 *)D_80036D5C_3795C,
-	(u8 *)D_80036D60_37960,
-	(u8 *)D_80036D64_37964,
+	(u8 *)"-1-",
+	(u8 *)"-2-",
+	(u8 *)"-3-",
+	(u8 *)"-4-",
+	(u8 *)"-5-",
 };
 
 BeaconEntry D_8003154C[5][6] = {
@@ -461,14 +387,14 @@ void func_8000577C_637C(void) {
 	}
 	phase = textColorPhase % 300;
 	if (phase < 100) {
-		drawText(D_80036D68_37968, 250 - textColorPhase, textColorPhase + 150, 150);
+		drawText("%C", 250 - textColorPhase, textColorPhase + 150, 150);
 		return;
 	}
 	if (phase < 200) {
-		drawText(D_80036D6C_3796C, 150, 350 - textColorPhase, textColorPhase + 50);
+		drawText("%C", 150, 350 - textColorPhase, textColorPhase + 50);
 		return;
 	}
-	drawText(D_80036D70_37970, textColorPhase - 50, 150, 450 - textColorPhase);
+	drawText("%C", textColorPhase - 50, 150, 450 - textColorPhase);
 }
 
 Vtx D_800315D8_321D8[] = {
@@ -960,7 +886,7 @@ void func_80007410_8010(void *arg0) {
 	}
 
 	if (i == -1) {
-		osSyncPrintf(D_80036D74_37974);
+		osSyncPrintf("**** ERROR: ALWAYS FUNCTION LIST OVERFLOW ****\n");
 		return;
 	}
 	D_8004DC68[i] = (s32)arg0;
@@ -1037,14 +963,14 @@ void func_80007570_8170(void)
 
 void func_80007690_8290(void) {
 	D_80048030 = D_80048030 + 1;
-	osSyncPrintf(D_80036DA4_379A4, D_80048030);
+	osSyncPrintf("Increment objective %d\n", D_80048030);
 	// Increment objective %d
 	func_8001A650_1B250(1);
 }
 
 // Set objective
 void func_800076D4_82D4(s32 arg0) {
-	osSyncPrintf(D_80036DBC_379BC, arg0);
+	osSyncPrintf("Set objective %d\n", arg0);
 	// Set objective %d
 	if (D_80048030 < arg0) {
 		D_80048030 = (u8) arg0;
@@ -1107,24 +1033,24 @@ void func_800078E4_84E4(s32 arg0, s32 *arg1) {
 void func_80007900_8500(u8 *arg0) {
 	switch (arg0[0]) {
 		case 0x98:
-			osSyncPrintf(D_80036DD0_379D0);
+			osSyncPrintf(" player");
 			break;
 		case 0x9A:
-			osSyncPrintf(D_80036DD8_379D8, arg0[1]);
+			osSyncPrintf(" vehicle %d", arg0[1]);
 			break;
 		case 0x9B:
-			osSyncPrintf(D_80036DE4_379E4, arg0[1]);
+			osSyncPrintf(" character %d", arg0[1]);
 			break;
 		case 0x99:
-			osSyncPrintf(D_80036DF4_379F4, arg0[1], buildingInstances[arg0[1]].xCoord, buildingInstances[arg0[1]].zCoord);
+			osSyncPrintf(" building %d (%d,%d)", arg0[1], buildingInstances[arg0[1]].xCoord, buildingInstances[arg0[1]].zCoord);
 			break;
 		case 0xAD:
-			osSyncPrintf(D_80036E0C_37A0C, arg0[1], arg0[2]);
+			osSyncPrintf(" location (%d,%d)", arg0[1], arg0[2]);
 			break;
 		case 0xAF:
-			osSyncPrintf(D_80036E20_37A20, arg0[1]);
+			osSyncPrintf(" random object %d (", arg0[1]);
 			func_80007900_8500(&D_8004D180[arg0[1]].opcode);
-			osSyncPrintf(D_80036E34_37A34);
+			osSyncPrintf(" )");
 			break;
 		default:
 			break;
@@ -1133,74 +1059,74 @@ void func_80007900_8500(u8 *arg0) {
 void func_80007A20_8620(u8 *arg0) {
 	switch (arg0[8]) {
 		case 0xB3:
-			osSyncPrintf(D_80036E38_37A38);
+			osSyncPrintf(" it's always so");
 			break;
 		case 0xB2:
-			osSyncPrintf(D_80036E48_37A48);
+			osSyncPrintf(" it's never so");
 			break;
 		case 0x89:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036E58_37A58, arg0[6]);
+			osSyncPrintf(" is less than %d tiles from", arg0[6]);
 			func_80007900_8500(&arg0[3]);
 			break;
 		case 0x8A:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036E74_37A74, arg0[6]);
+			osSyncPrintf(" is less than %d tiles from", arg0[6]);
 			func_80007900_8500(&arg0[3]);
 			break;
 		case 0x8C:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036E90_37A90);
+			osSyncPrintf(" is damaged");
 			break;
 		case 0x8D:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036E9C_37A9C);
+			osSyncPrintf(" is not damaged");
 			break;
 		case 0xB1:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036EAC_37AAC);
+			osSyncPrintf(" is not burning");
 			break;
 		case 0x8E:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036EBC_37ABC);
+			osSyncPrintf(" is destroyed");
 			break;
 		case 0x8F:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036ECC_37ACC);
+			osSyncPrintf(" is not destroyed");
 			break;
 		case 0x91:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036EE0_37AE0);
+			osSyncPrintf(" is inside");
 			func_80007900_8500(&arg0[3]);
 			break;
 		case 0x92:
 			func_80007900_8500(arg0);
-			osSyncPrintf(D_80036EEC_37AEC);
+			osSyncPrintf(" is not inside");
 			func_80007900_8500(&arg0[3]);
 			break;
 		case 0x95:
-			osSyncPrintf(D_80036EFC_37AFC, arg0[6]);
+			osSyncPrintf(" mission %d has been completed", arg0[6]);
 			break;
 		case 0x96:
-			osSyncPrintf(D_80036F1C_37B1C, arg0[6]);
+			osSyncPrintf(" mission %d has been failed", arg0[6]);
 			break;
 		case 0xAA:
-			osSyncPrintf(D_80036F38_37B38, arg0[6]);
+			osSyncPrintf(" wave %d has mutated", arg0[6]);
 			break;
 		case 0xAB:
-			osSyncPrintf(D_80036F50_37B50, arg0[6]);
+			osSyncPrintf(" wave %d has been destroyed", arg0[6]);
 			break;
 		case 0xA6:
-			osSyncPrintf(D_80036F6C_37B6C, arg0[6], arg0[7]);
+			osSyncPrintf(" timer %d is less than %d seconds", arg0[6], arg0[7]);
 			break;
 		case 0xA7:
-			osSyncPrintf(D_80036F90_37B90, arg0[6], arg0[7]);
+			osSyncPrintf(" timer %d is more than %d seconds", arg0[6], arg0[7]);
 			break;
 		case 0xB9:
-			osSyncPrintf(D_80036FB4_37BB4, arg0[6]);
+			osSyncPrintf(" player has key %d", arg0[6]);
 			break;
 		case 0xBA:
-			osSyncPrintf(D_80036FC8_37BC8, arg0[6]);
+			osSyncPrintf(" player doesn't have key %d", arg0[6]);
 			break;
 		default:
 			break;
@@ -1212,21 +1138,21 @@ void func_80007C78_8878(u8 *arg0) {
 
 	i = arg0[3];
 	ptr = D_8004D348[arg0[2]];
-	osSyncPrintf(D_80036FE4_37BE4); //  because
+	osSyncPrintf(" because");
 	if (i--) {
 		do {
 			u8 *p = ptr;
 			ptr += 9;
 			func_80007A20_8620(p);
 			if (i >= 2) {
-				osSyncPrintf(D_80036FF0_37BF0); // ,
+				osSyncPrintf(",");
 			}
 			if (i == 1) {
-				osSyncPrintf(D_80036FF4_37BF4); //  and
+				osSyncPrintf(" and");
 			}
 		} while (i--);
 	}
-	osSyncPrintf(D_80036FFC_37BFC);
+	osSyncPrintf("\n");
 }
 
 s32 func_80007D44_8944(u8 *arg0) {
@@ -1387,7 +1313,7 @@ s32 func_80008478_9078(void) {
 	if ((currentLevel == LEVEL_GREECE) && (func_8000726C_7E6C(0xB) != 0) && (D_80052554 >= 0x401)) {
 		return 1;
 	}
-	osSyncPrintf(D_80037000_37C00); // checkin for cutscenes
+	osSyncPrintf("checkin for cutscenes\n");
 	if ((currentLevel == LEVEL_AMERICA) && (func_8000726C_7E6C(0x31) != 0) && (func_8000726C_7E6C(0x26) == 0)) {
 		return 1;
 	}
@@ -1422,7 +1348,7 @@ u8 func_8000851C_911C(s16 arg0) {
 				}
 				item = D_8004D348[entry[2]];
 				count = entry[3];
-				osSyncPrintf(D_80037018_37C18, entry[4] + 1);
+				osSyncPrintf("Playing dialog %d because", entry[4] + 1);
 				if (count--) {
 					do {
 						u8 *cur2 = item;
@@ -1430,7 +1356,7 @@ u8 func_8000851C_911C(s16 arg0) {
 						func_80007A20_8620(cur2);
 					} while (count--);
 				}
-				osSyncPrintf(D_80037034_37C34);
+				osSyncPrintf("\n");
 				return entry[4];
 				loop_1_check:
 				if (count--) {
@@ -1441,7 +1367,7 @@ u8 func_8000851C_911C(s16 arg0) {
 next:
 		entry += 6;
 	}
-	osSyncPrintf(D_80037038_37C38, arg0);
+	osSyncPrintf("**** ERROR: Character %d has no valid responses ****\n", arg0);
 	return 1;
 }
 
@@ -1468,7 +1394,7 @@ void guess_checkMissions(void) {
 						if (count == 0) {
 							switch (D_8004DC40) {
 							case -1:
-								osSyncPrintf(D_80037070_37C70, entry->unk4 + 1, entry->unk5);
+								osSyncPrintf("Daisy message %d will be played in %d seconds because", entry->unk4 + 1, entry->unk5);
 								pending = 1;
 								count = entry->unk3;
 								item = &D_8004D348[entry->unk2];
@@ -1477,13 +1403,13 @@ void guess_checkMissions(void) {
 										func_80007A20_8620(*item++);
 										switch (count) {
 										case 1:
-											osSyncPrintf(D_800370A8_37CA8);
+											osSyncPrintf(" and");
 											break;
 										case 0:
-											osSyncPrintf(D_800370B0_37CB0);
+											osSyncPrintf(".\n");
 											break;
 										default:
-											osSyncPrintf(D_800370B4_37CB4);
+											osSyncPrintf(",");
 											break;
 										}
 									} while (count--);
@@ -1491,7 +1417,7 @@ void guess_checkMissions(void) {
 								D_8004DC40 = entry->unk5 * 0x1E;
 								continue;
 							case 0:
-								osSyncPrintf(D_800370B8_37CB8, entry->unk4 + 1);
+								osSyncPrintf("Playing daisy message %d\n", entry->unk4 + 1);
 								func_80018D7C_1997C(entry->unk4);
 								D_8004D350[entry->unk2 * 9] = 0xB2;
 								D_8004DC40 = -1;
@@ -1508,7 +1434,7 @@ void guess_checkMissions(void) {
 			entry++;
 		}
 		if (D_8004DC40 != -1 && pending == 0) {
-			osSyncPrintf(D_800370D4_37CD4);
+			osSyncPrintf("Pending daisy message is no longer valid.\n");
 			D_8004DC40 = -1;
 		}
 	}
@@ -1561,8 +1487,7 @@ s32 func_80008C44_9844(s32 arg0) {
 	while (a1--) {
 		if (*v1 == -1) {
 			*v1 = arg0;
-			osSyncPrintf(D_80037100_37D00, arg0);
-			// Remember to give power up %d
+			osSyncPrintf("Remember to give power up %d\n", arg0);
 			break;
 		}
 		v1--;
