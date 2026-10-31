@@ -12,10 +12,7 @@ const char D_801427F4_1517A4[] = "state:%d\n"; // "state:%d\n"
 const char D_80142800_1517B0[] = "state+1:%d\n"; // "state+1:%d\n"
 const char D_8014280C_1517BC[] = "Launch beacon %d\n"; // "Launch beacon %d\n"
 const char D_80142820_1517D0[] = "Giving delayed powerup %d\n"; // "Giving delayed powerup %d\n"
-const u32 jtbl_8014283C_1517EC[] = {
-	OVERLAY_PTR(0x800A6934), OVERLAY_PTR(0x800A693C), OVERLAY_PTR(0x800A695C), OVERLAY_PTR(0x800A6A48),
-	OVERLAY_PTR(0x800A6ED8), OVERLAY_PTR(0x800A6F60), OVERLAY_PTR(0x800A6FA0),
-};
+
 
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
@@ -318,15 +315,16 @@ void func_800A6020_B4FD0(s16 arg0) {
 #endif
 
 // AI - Warp teleport state machine
-#ifdef NON_MATCHING
 void func_800A68CC_B587C(void) {
 	s16 sp2E;
 	s16 sp2C;
 	s16 temp;
 	s16 sp28;
 	s16 sp26;
-	u8 timer;
-		u8 *const warpTimer = &D_8014F808;
+
+	static s32 timerPadding[2]; /* Reserve the two preceding beacon flag words. */
+	static u8 warpTimer;
+	u8 cachedTimer;
 	if (func_8000726C_7E6C(0x27ULL) != 0) {
 		func_800A5F24_B4ED4(-1);
 		func_800073B8_7FB8(0x27ULL);
@@ -364,23 +362,21 @@ void func_800A68CC_B587C(void) {
 		}
 
 		func_800A6020_B4FD0(D_80157A3C / 4);
-		*warpTimer = 0;
+		warpTimer = 0;
 		break;
 
 	case 3:
-		do { timer = *warpTimer; } while (0);
 		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
-		timer++;
-		*warpTimer = timer;
+		++warpTimer;
 
-		if (timer < 0xB) {
-			func_800A6020_B4FD0((D_80157A3C / 4) - timer);
+		if (warpTimer < 0xB) {
+			func_800A6020_B4FD0((D_80157A3C / 4) - warpTimer);
 		} else {
-			func_800A6020_B4FD0((D_80157A3C / 4) + timer - 0x14);
+			func_800A6020_B4FD0((D_80157A3C / 4) + warpTimer - 0x14);
 		}
 
-		timer = *warpTimer;
-		if (timer == 0xA) {
+
+		if (warpTimer == 0xA) {
 			sp2E = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk0 << 8;
 			sp2C = (D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk2 + 1) << 8;
 			sp28 = D_8003E000_3EC00[currentLevel-1][D_8013D894_14C844].unk6;
@@ -429,18 +425,18 @@ void func_800A68CC_B587C(void) {
 			func_800153D8_15FD8(0xD7);
 		}
 
-		timer = *warpTimer;
-		if (timer == 0x12) {
+
+		if (warpTimer == 0x12) {
 			func_800E35E0_F2590(0x50);
 		}
 
-		timer = *warpTimer;
-		if (timer == 0x13) {
+
+		if (warpTimer == 0x13) {
 			func_800E35E0_F2590(0xA0);
 		}
 
-		timer = *warpTimer;
-		if (timer >= 0x14) {
+
+		if (warpTimer >= 0x14) {
 			func_800E35E0_F2590(0xFF);
 			D_8013D890_14C840 = 4;
 			func_80135D44_144CF4(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 5.0f);
@@ -451,22 +447,25 @@ void func_800A68CC_B587C(void) {
 		D_80157A3C += 4;
 		D_80052B34->unk2 = (D_80052B34->unk2 - (D_80157A3C << 1)) + 0x80;
 
-		if (D_80157A3C >= 0x40) {
+		temp = D_80157A3C;
+		if (temp >= 0x40) {
 			D_80157A3C = 0x40;
 			D_8013D890_14C840 = 5;
-			*warpTimer = 0;
+			temp = D_80157A3C;
+			warpTimer = 0;
 		}
 
-		func_800A6020_B4FD0(D_80157A3C / 4);
+		func_800A6020_B4FD0(temp / 4);
 		break;
 
 	case 5:
-		func_800A6020_B4FD0(*warpTimer + 0x10);
-		if ((*warpTimer) == 0xA) {
+		cachedTimer = warpTimer;
+		func_800A6020_B4FD0(cachedTimer + 0x10);
+		if (warpTimer == 0xA) {
 			D_8013D890_14C840 = 6;
 		}
 
-		*warpTimer = (*warpTimer) + 1;
+		warpTimer++;
 	case 6:
 		func_800EC468_FB418();
 		func_800FAC90_109C40();
@@ -479,9 +478,7 @@ void func_800A68CC_B587C(void) {
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A68CC_B587C.s")
-#endif
+
 
 
 // https://decomp.me/scratch/j8WAR
@@ -898,7 +895,7 @@ void func_800A854C_B74FC(void)
 	  {
 		entry->unk2 = yLimit;
 		entry->unk8 = 0;
-		
+
 		if (D_80222A70 < yLimit)
 		{
 		  if (sp8C < sp88)
@@ -951,7 +948,7 @@ void func_800A854C_B74FC(void)
 	  
 	  if (((dist < (f32)(vehicleTypes[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
 	  {
-		
+
 		if (D_80052B34->unk2 == (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8))
 		{
 		  accel = (((vehicleTypes[D_80052B34->unk1A].unkC + sp78) - (s16)distCopy) >> 2);
@@ -1291,7 +1288,7 @@ void func_800A9238_B81E8() {
 	s16 powerupType;
 	s32 i = 0x10;
 	s16 negOne = -1;
-	
+
 	while (powerupTypePtr--, i--) {
 		powerupType = *powerupTypePtr;
 		if (negOne != powerupType) {
@@ -1305,7 +1302,7 @@ void func_800A9238_B81E8() {
 // reset the pickup items pool?
 void func_800A92B0_B8260(void) {
 	s32 i;
-	
+
 	i = 16;
 	while (i--) {
 		D_8014F6D0[i].unkC = -1;
