@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-31T20:47:33Z",
-  "commit": "e0db4d87",
-  "commit_timestamp": "2026-11-01T09:46:20+13:00",
+  "generated": "2026-10-31T22:02:33Z",
+  "commit": "6d86e5a0",
+  "commit_timestamp": "2026-11-01T11:01:31+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 2876,
@@ -2231,7 +2231,7 @@
       "asm_stubs": 0,
       "total": 32,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/7F220.c",
@@ -2587,15 +2587,15 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 79,
-      "matched": 2149,
+      "files": 80,
+      "matched": 2181,
       "non_matching": 135,
       "asm_stubs": 0
     },
     {
       "name": "lunarlaurus",
-      "files": 20,
-      "matched": 390,
+      "files": 19,
+      "matched": 358,
       "non_matching": 46,
       "asm_stubs": 0
     },
