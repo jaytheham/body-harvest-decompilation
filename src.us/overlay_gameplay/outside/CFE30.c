@@ -3258,78 +3258,95 @@ void func_800C978C_D873C(void) {
 #endif
 
 // spawn random water particle?
-#ifdef NON_MATCHING
 void func_800CA1B0_D9160(u8 arg0) {
-	u8 effect; u8 mode;
+	u8 effect;
 	s16 originalIndex;
 	s16 newUnitIdx;
 	s16 parentIdx;
-	Unk80052B40 *effectUnit;
-	SpurtEmitterState *parent;
+	union {
+		s32 value;
+		SpurtEmitterState *parent;
+	} cache;
+	union {
+		Unk80052B40 *effectUnit;
+		SpurtEmitterState *parent;
+	} pointers;
 	Vec3f sp44;
 	Vec3f sp38;
 
 	effect = arg0;
 	originalIndex = D_80154088[effect].unk6;
- effectUnit = &D_80154318[originalIndex].positionVector;
+	pointers.effectUnit = &D_80154318[originalIndex].positionVector;
 	parentIdx = D_80154318[originalIndex].unk4;
 
-	mode = D_80156ED8; if (mode == 1) {
-		if ((func_800038E0_44E0() % 9) < 3) {
+	cache.value = D_80156ED8;
+	if (cache.value == 1) {
+		cache.value = func_800038E0_44E0();
+		if ((cache.value % 9) < 3) {
 			return;
-		} mode = D_80156ED8;
+		}
+		cache.value = D_80156ED8;
 	}
 
-	if ((mode == 1) && ((func_800038E0_44E0() % 10) <= 0)) {
-		return;
+	if (cache.value == 1) {
+		cache.value = func_800038E0_44E0();
+		if ((cache.value % 10) <= 0) {
+			return;
+		}
 	}
 
 	newUnitIdx = func_800C17B4_D0764(effect, 0);
 	if (newUnitIdx != -3) {
 		Unk80154318Entry *newUnit;
 
+		cache.parent = (SpurtEmitterState *)(s32)D_80154318[parentIdx].payload;
 		newUnit = &D_80154318[newUnitIdx];
-		newUnit->unk8 = effectUnit->unk0;
-		newUnit->unkA = effectUnit->unk2;
-		newUnit->unkC = effectUnit->unk4;
+		newUnit->unk8 = pointers.effectUnit->unk0;
+		newUnit->unkA = pointers.effectUnit->unk2;
+		newUnit->unkC = pointers.effectUnit->unk4;
 
-		parent = (SpurtEmitterState *)(s32)D_80154318[parentIdx].payload;
-		newUnit->unk11 = parent->alpha;
-		newUnit->unk2 = (func_800038E0_44E0() % (D_80154318[originalIndex].unk2 * 2)) + D_80154318[originalIndex].unk2;
+		pointers.parent = cache.parent;
+		newUnit->unk11 = pointers.parent->alpha;
+		cache.value = func_800038E0_44E0();
+		newUnit->unk2 = D_80154318[originalIndex].unk2 + (cache.value % (D_80154318[originalIndex].unk2 * 2));
 
-		sp44.x = parent->velocity[0];
-		sp44.y = parent->velocity[1];
-		sp44.z = parent->velocity[2];
+		sp44.x = pointers.parent->velocity[0];
+		sp44.y = pointers.parent->velocity[1];
+		sp44.z = pointers.parent->velocity[2];
 		func_800C1024_CFFD4(&sp44, &sp44);
 
-		sp38.x = (f32)((f64)(f32)(func_800038E0_44E0() % parent->kind) / D_80143FE0_152F90[0]);
-		if ((func_800038E0_44E0() % 0x15) < 0xA) {
+		cache.value = func_800038E0_44E0();
+		sp38.x = (f32)((f64)(f32)(cache.value % pointers.parent->kind) / D_80143FE0_152F90[0]);
+		cache.value = func_800038E0_44E0();
+		if ((cache.value % 0x15) < 0xA) {
 			sp38.x = 0.0f - sp38.x;
 		}
 		sp38.x += sp44.x;
 
-		sp38.y = (f32)((f64)(f32)(func_800038E0_44E0() % parent->kind) / D_80143FE8_152F98[0]);
-		if ((func_800038E0_44E0() % 0x15) < 0xA) {
+		cache.value = func_800038E0_44E0();
+		sp38.y = (f32)((f64)(f32)(cache.value % pointers.parent->kind) / D_80143FE8_152F98[0]);
+		cache.value = func_800038E0_44E0();
+		if ((cache.value % 0x15) < 0xA) {
 			sp38.y = 0.0f - sp38.y;
 		}
 		sp38.y += sp44.y;
 
-		sp38.z = (f32)((f64)(f32)(func_800038E0_44E0() % parent->kind) / D_80143FF0_152FA0[0]);
-		if ((func_800038E0_44E0() % 0x15) < 0xA) {
+		cache.value = func_800038E0_44E0();
+		sp38.z = (f32)((f64)(f32)(cache.value % pointers.parent->kind) / D_80143FF0_152FA0[0]);
+		cache.value = func_800038E0_44E0();
+		if ((cache.value % 0x15) < 0xA) {
 			sp38.z = 0.0f - sp38.z;
 		}
 		sp38.z += sp44.z;
 
 		func_800C1024_CFFD4(&sp38, &sp38);
 
-		((JetStreamParticleState *)(s32)D_80154318[newUnitIdx].payload)->velocity[0] = (s8)((f32)((s32)(parent->size / 4)) * sp38.x);
-		((JetStreamParticleState *)(s32)D_80154318[newUnitIdx].payload)->velocity[1] = (s8)((f32)((s32)(parent->size / 4)) * sp38.y);
-		((JetStreamParticleState *)(s32)D_80154318[newUnitIdx].payload)->velocity[2] = (s8)((f32)((s32)(parent->size / 4)) * sp38.z);
+		((JetStreamParticleState *)(s32)D_80154318[newUnitIdx].payload)->velocity[0] = (s8)((f32)(pointers.parent->size / 4) * sp38.x);
+		((JetStreamParticleState *)(s32)D_80154318[newUnitIdx].payload)->velocity[1] = (s8)((f32)(pointers.parent->size / 4) * sp38.y);
+		((JetStreamParticleState *)(s32)D_80154318[newUnitIdx].payload)->velocity[2] = (s8)((f32)(pointers.parent->size / 4) * sp38.z);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CA1B0_D9160.s")
-#endif
+
 
 // spurt/blood visual effect?
 u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8,
