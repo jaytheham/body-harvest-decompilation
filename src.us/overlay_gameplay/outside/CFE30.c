@@ -6600,7 +6600,6 @@ void func_800D5684_E4634(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	s16 z;
 	s16 y;
@@ -6613,8 +6612,9 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	u32 dist;
 	SpinnerParentState *parentState;
 	Unk80154318Entry *entry[1];
-	SpinnerMotionState *motion;
 
+	/* Preserve the unsigned angle conversion before the selector cache. */
+	parentState = (SpinnerParentState *)(u16)arg3;
 	selector = arg4;
 	angleX = ((arg2 + (selector * 0x78)) << 0x10) / 360;
 	parent = D_80154318[arg0].unk4;
@@ -6624,20 +6624,19 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 	scaleCos = (f32)(((f32)coss(angleX) / 32768.0) * dist);
 	angleX = ((f32)coss(arg3) / 32768.0) * scaleSin;
 	sine = (f32)sins(arg3);
-	motion = &entry[0]->spinnerMotion;
-	angleX += motion->position[0];
+	angleX += ((SpinnerMotionState *)(s32)&entry[0]->spinnerMotion)->position[0];
 	y = (s32)scaleCos;
-	y += motion->position[1];
+	y += ((SpinnerMotionState *)(s32)&entry[0]->spinnerMotion)->position[1];
 	z = (s32)((sine / 32768.0) * -scaleSin);
-	z += motion->position[2];
+	z += ((SpinnerMotionState *)(s32)&entry[0]->spinnerMotion)->position[2];
 
 	parentState = &D_80154318[parent].spinnerState;
 	if (selector == 0) {
-		func_800D6084_E5034(motion->unit[0], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(((SpinnerMotionState *)(s32)&entry[0]->spinnerMotion)->unit[0], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	} else if (selector == 1) {
-		func_800D6084_E5034(motion->unit[1], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(((SpinnerMotionState *)(s32)&entry[0]->spinnerMotion)->unit[1], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	} else {
-		func_800D6084_E5034(motion->unit[2], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
+		func_800D6084_E5034(((SpinnerMotionState *)(s32)&entry[0]->spinnerMotion)->unit[2], angleX, y, z, parentState->color[0], parentState->color[1], parentState->color[2]);
 	}
 
 	if (entry[0]->unk4 == -5) {
@@ -6650,11 +6649,6 @@ void func_800D5760_E4710(s16 arg0, u16 arg1, s16 arg2, s16 arg3, u8 arg4) {
 		func_800DB350_EA300();
 	}
 }
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D5760_E4710.s")
-#endif
 
 void func_800D5AF4_E4AA4(void) {
 	s16 angle;
