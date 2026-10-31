@@ -43,19 +43,18 @@ Verified on `src.us/core/loader.c` (~90 strings, `build/bh.us.z64: OK` and `buil
 1. every string literal of the TU (file-scope and in function bodies), in source order, with non-string *file-scope* data inserted at its declaration position;
 2. then, per function in order, that function's non-string literals and jump tables.
 
-That means a non-string file-scope const must sit **after the last string literal of the TU but before the first function that owns a non-string literal**:
+That means a non-string file-scope const that has to follow the strings must sit **after the last string literal of the TU but before the first function that owns a non-string literal**. Better still, inline it and let it become one of those function literals:
 
 ```c
 // 53F0.c target rodata: "Frontend" ... "Remember to give power up %d\n",
-//                       then -10000.0f/10000.0f, then 319.0f and the jump tables.
-s32 func_80008C44_9844(s32 arg0) { ... osSyncPrintf("Remember to give power up %d\n", arg0); ... }
-
-/* last string of the TU is above, so these land at 0x37D20/0x37D24 as in the ROM */
-const f32 D_80037120_37D20[] = {-10000.0f};
-const f32 D_80037124_37D24[] = {10000.0f};
-
-void func_80008CA8_98A8(int arg0) { ... guOrtho(..., -10000.0f, 10000.0f, 1.0f); ... }  // literals go to the tail
+//                       then -10000.0f/10000.0f (0x37D20/0x37D24), then 319.0f and the jump tables.
+// func_800053A0_5FA0 is the first function of the TU that owns a non-string literal,
+// so its float arguments are the first entries of block 2 -> exactly 0x37D20/0x37D24.
+guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, -10000.0f, 10000.0f, 1.0f);   // was D_80037120_37D20_R, D_80037124_37D24_R
 ```
 
-Leaving those two arrays at the top of the file would have emitted them *before* the level-name strings that the pointer tables now produce, shifting the whole .rodata. Verified on `src.us/core/53F0.c` (`bh.us.z64: OK` and `bh.eu.z64: OK`).
+(the `0.0f`/`320.0f`/`240.0f`/`1.0f` arguments are materialised as immediates, so only `-10000.0f`/`10000.0f` reach `.rodata`.) Deleting the `const f32 D_80037120_37D20[]` / `D_80037124_37D24[]` declarations also means removing their `_R` scalar aliases from `undefined_syms.us.txt` / `undefined_syms.eu.txt`, otherwise ld fails with `undefined symbol ... referenced in expression`.
+
+Keeping the arrays as file-scope declarations at the top of the file instead would have emitted them *before* the level-name strings that the pointer tables now produce, shifting the whole .rodata. Verified on `src.us/core/53F0.c` (`bh.us.z64: OK` and `bh.eu.z64: OK`).
+
 

@@ -742,8 +742,6 @@ D_8005BB4C = 0x8005BB7C;
 D_8021F250 = 0x8021F280;
 D_802D48CF = 0x802D490F;
 D_802D4AD0 = 0x802D4B10;
-D_80037120_37D20_R = D_80037120_37D20;
-D_80037124_37D24_R = D_80037124_37D24;
 
 /* libultra/sl (shared C): the EU label of the file's own data (ROM 0x35A00), still named by the EU assembly of
    the other libultra files now that the shared object owns the data under its NTSC name. */

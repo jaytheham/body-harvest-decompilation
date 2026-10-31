@@ -274,7 +274,7 @@ void func_800053A0_5FA0(s16 arg0, s16 arg1, u16 arg2, u16 arg3, u8 arg4) {
 	sp60.unk2 = arg1;
 	sp58.unk0 = arg2;
 	sp58.unk2 = arg3;
-	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, D_80037120_37D20_R, D_80037124_37D24_R, 1.0f);
+	guOrtho(D_8005BB38, 0.0f, 320.0f, 240.0f, 0.0f, -10000.0f, 10000.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_FOG | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);
@@ -1493,12 +1493,6 @@ s32 func_80008C44_9844(s32 arg0) {
 		v1--;
 	}
 }
-
-/* Declared after the last string-using function: IDO emits every string literal of the
- * TU in one leading .rodata block (in source order) and non-string file-scope data at its
- * declaration point inside that block, so these two have to come out after the strings. */
-const f32 D_80037120_37D20[] = {-10000.0f};
-const f32 D_80037124_37D24[] = {10000.0f};
 
 void func_80008CA8_98A8(int arg0) {
 	Unk80052B40 sp;

@@ -428,8 +428,6 @@ extern const char D_80036C50_37850[]; /* osSyncPrintf format string - load faile
 extern const char D_80036C64_37864[];
 extern const char D_80036C74_37874[];
 extern const f32 D_80036C88_37888[];
-extern const f32 D_80037120_37D20[];
-extern const f32 D_80037124_37D24[];
 extern const f32 D_80037578_38178[];
 extern const f64 D_80037580_38180[];
 extern const f64 D_80037600_38200[];
@@ -3927,8 +3925,6 @@ extern Unk8014DD50 D_802E6E30_32AF80[32];
 
 /* Scalar reads preserve the original IDO access and register-allocation patterns. */
 extern const f32 D_80036C88_37888_R;
-extern const f32 D_80037120_37D20_R;
-extern const f32 D_80037124_37D24_R;
 extern const f32 D_80037578_38178_R;
 extern const f64 D_80037580_38180_R;
 extern const f64 D_80037600_38200_R;
