@@ -2003,6 +2003,14 @@ typedef struct {
 	/* 0x0E */ s16 unkE;
 } Unk8014DD50; /* size = 0x10 */
 
+/* Joint position view for an ordered Z-coordinate store. */
+typedef struct {
+	/* 0x00 */ s16 unk0;
+	/* 0x02 */ s16 unk2;
+	/* 0x04 */ volatile s16 unk4;
+	/* 0x06 */ u8 pad6[0xA];
+} Unk8014DD50VolatileZ; /* size = 0x10 */
+
 typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
@@ -3523,7 +3531,7 @@ typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ u8 pad6[2];
+	/* 0x06 */ s16 unk6;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ u8 unkA;
 	/* 0x0B */ u8 padB;
@@ -4410,5 +4418,16 @@ typedef struct {
 	s32 shift;
 	s32 bias;
 } BuildingHeightDecode;
+
+/* Landing-effect colors followed by the two comet joint transforms. */
+typedef union {
+    s32 words[3];
+    s8 rgb[4][3];
+} EffectColorPalette;
+
+typedef struct {
+    EffectColorPalette colors;
+    Unk8014DD50 transforms[2];
+} CometLandingData;
 
 #endif /* LIBULTRA_REFERENCE */

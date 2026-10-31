@@ -7042,3 +7042,5 @@ D_8015EA28_Read = D_8015EA28;
 frontendSelectedEntry = D_800D74A4;
 
 frontendFileNameWrite = D_80047FA8;
+
+D_802E7C44_Write = D_802E7C44;
