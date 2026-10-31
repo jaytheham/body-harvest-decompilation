@@ -1,15 +1,15 @@
 {
-  "generated": "2026-10-31T19:01:40Z",
-  "commit": "b2b912ea",
-  "commit_timestamp": "2026-11-01T08:00:48+13:00",
+  "generated": "2026-10-31T19:08:56Z",
+  "commit": "bf5d44d8",
+  "commit_timestamp": "2026-11-01T08:07:47+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2537,
-    "non_matching": 185,
+    "matched": 2539,
+    "non_matching": 183,
     "asm_stubs": 0,
-    "matched_pct": 93.2,
+    "matched_pct": 93.28,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -33,11 +33,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1330,
-      "non_matching": 119,
+      "matched": 1332,
+      "non_matching": 117,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 91.8,
+      "matched_pct": 91.9,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -608,11 +608,11 @@
     {
       "path": "overlay_gameplay/outside/B49C0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 18,
-      "non_matching": 2,
+      "matched": 19,
+      "non_matching": 1,
       "asm_stubs": 0,
       "total": 20,
-      "matched_pct": 90.0,
+      "matched_pct": 95.0,
       "contributor": ""
     },
     {
@@ -658,11 +658,11 @@
     {
       "path": "overlay_gameplay/outside/F7870.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 7,
-      "non_matching": 1,
+      "matched": 8,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 8,
-      "matched_pct": 87.5,
+      "matched_pct": 100.0,
       "contributor": ""
     },
     {
@@ -844,9 +844,9 @@
     },
     {
       "date": "2026-10-25",
-      "commit": "c832c62",
-      "matched": 2537,
-      "non_matching": 185,
+      "commit": "6df0352",
+      "matched": 2538,
+      "non_matching": 184,
       "total": 2722
     }
   ]
