@@ -1437,6 +1437,7 @@ void func_802D6770_31A8C0(void) {
 	func_80007410_8010(func_802D6670_31A7C0);
 }
 
+// Comet starting cutscene - Alpha-1 landing cutscene with buildinginstance moved and vehicleinstance creation
 s32 func_802D67A8_31A8F8(void) {
 	f32 speed;
 	s16 effectX;
