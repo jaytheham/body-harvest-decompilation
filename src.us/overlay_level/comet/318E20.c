@@ -1880,7 +1880,7 @@ void func_802D7F10_31C060(u8 arg0) {
 		inst->unk20 &= ~ALIEN_FLAG_FALL;
 		inst->unk10 = 0;
 	}
-	temp_f6 = (s32)(((f32)(inst->unk12 - inst->unk2C) / (f32)type->unk40) * D_802E7B38_32BC88 * 2.0f);
+	temp_f6 = (s32)(((f32)(inst->unk12 - inst->unk2C) / (f32)type->unk40) * 5000.0f * 2.0f);
 	if ((temp_f6 == 0) || (inst->unk12 >= (type->unk40 - (type->unk3E * 2)))) {
 		if (inst->unkA > 0) {
 			if ((inst->unkA - 0x200) < 0) {

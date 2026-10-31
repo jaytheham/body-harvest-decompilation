@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_802DC8F4_320A44`, explicitly masking the three oscillation arguments with `& 0xFFFF` gave different GP cache registers across most of the function. The second three-component short-array initializer emitted its stores in order Z, Y, X. The attack transition used a different three-register cycle for the flags load, timer constant, and flags OR.
+
+-> `code changed`: Pass `temp_s0->unk48 * 0x32C8`, `temp_s0->unk48 * 1000`, and `D_80052A8C * 1500` directly to `sins`, whose parameter already converts to `u16`. Put the second `offset[0]`, `[1]`, and `[2]` assignments on separate source lines. Set `temp_s0->unk20 |= ALIEN_FLAG_UNKD` before assigning `unk26 = 0x96` and `unk48 = 0`.
+
+-> `correct ASM`: All 792 instructions, GP and FP registers, instruction order, and the `0xE0` frame match. The second vector stores use X, Y, Z order, and the transition uses the target flags-load/timer/OR registers. Three automatic cache locations remain different, so this documents the instruction and register correction rather than a completed function match.
