@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8008C8A4_174964`, a hand-written signed test around the vehicle-health denominator adds `mov.s` and delays the current-health load. Multiplying rectangle coordinates by four distributes the origin into a shared `-24 * steps` term. A separate rectangle-origin local uses `$t0` instead of the target `$v1`; initializing the eight-step default before a nested test removes a target branch.
+
+-> `code changed`: Convert the denominator directly as `(f32)(u32)vehicleTypes[vehicleInstances->unk1A].hitPoints`, inline the human-health ratio, and use an `if / else if / else` clamp. Reuse `yOffset` for `0x30 - steps * 6` before `gDPSetPrimColor`, then pass `(yOffset + 0xAF) << 2` and `(yOffset + 0xD2) << 2` to the rectangle helper.
+
+-> `correct ASM`: The vehicle ratio emits the target `lhu; mtc1; cvt.s.w; bgez; add.s; div.s` sequence with both inputs loaded before the fallback. The clamp retains `b .+8; move t1,t7`. The rectangle origin emits `subu v1,t8,t7`, followed by independent `addiu a1,v1,0xAF` / `addiu a3,v1,0xD2`, shifts, and moves. The function diff is zero and both complete US and EU ROM checksums match.

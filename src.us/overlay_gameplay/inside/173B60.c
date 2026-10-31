@@ -809,17 +809,12 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
 #endif
 
-#ifdef NON_MATCHING
-// AI - Main HUD renderer: ortho projection, scroll animation, health bars, ammo, text
+// Main HUD renderer: projection, scrolling, health bars, and status text
 void func_8008C8A4_174964(void) {
-	f32 temp_f16;
-	f32 temp_f8;
 	s32 yOffset;
-	s32 vehicleMaxHealth;
-	s32 temp_v1;
-	s16 temp_t1;
+	s16 steps;
 
-	guOrtho((Mtx *)&D_800FCAD8, 0.0f, (f32) D_80068084, (f32) D_80068088, 0.0f, -1000.0f, 1000.0f, 1.0f);
+	guOrtho(&D_800FCAD8, 0.0f, (f32) D_80068084, (f32) D_80068088, 0.0f, -1000.0f, 1000.0f, 1.0f);
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -858,14 +853,9 @@ void func_8008C8A4_174964(void) {
 		yOffset = (currentLevel == 5) ? 0 : -0x14;
 
 		if (D_80052B34->unk1C > 0) {
-			vehicleMaxHealth = vehicleTypes[vehicleInstances->unk1A].hitPoints;
-			temp_f8 = (f32) vehicleMaxHealth;
-			if (vehicleMaxHealth < 0) {
-				temp_f8 += 4294967296.0f;
-			}
-			func_8008BD18_173DD8(0x50, (s16) ((D_80068088 + yOffset) - 0x1E), (f32) vehicleInstances->unk1C / temp_f8, 0, &D_8025F540, 1, 0, D_800FCF44, 0x30);
+			func_8008BD18_173DD8(0x50, (D_80068088 + yOffset) - 0x1E, (f32) vehicleInstances->unk1C / (f32)(u32)vehicleTypes[vehicleInstances->unk1A].hitPoints, 0, &D_8025F540, 1, 0, D_800FCF44, 0x30);
 		} else {
-			func_8008BD18_173DD8(0x50, (s16) ((D_80068088 + yOffset) - 0x1E), 0.0f, 0, &D_8025F540, 0, 0, 0, 0x30);
+			func_8008BD18_173DD8(0x50, (D_80068088 + yOffset) - 0x1E, 0.0f, 0, &D_8025F540, 0, 0, 0, 0x30);
 		}
 
 		if (currentLevel < 5) {
@@ -877,8 +867,7 @@ void func_8008C8A4_174964(void) {
 			} else {
 				D_800FCF3C = D_8004816A;
 			}
-			temp_f16 = (f32) D_800FCF3C / (f32) (u8) D_800314C4;
-			func_8008BD18_173DD8(0x50, (s16) (D_80068088 - 0x1E), temp_f16, 0, &D_8025F780, 2, 0, D_800FCF46, 0x30);
+			func_8008BD18_173DD8(0x50, D_80068088 - 0x1E, (f32) D_800FCF3C / (f32) (u8) D_800314C4, 0, &D_8025F780, 2, 0, D_800FCF46, 0x30);
 			D_800FCF3C = D_8004816A;
 		}
 	}
@@ -899,26 +888,23 @@ void func_8008C8A4_174964(void) {
 
 	if (D_8006C6C6 > 0) {
 		if ((D_8006C6C4 - 8) < D_8006C6C6) {
-			temp_t1 = D_8006C6C4 - D_8006C6C6;
+			steps = D_8006C6C4 - D_8006C6C6;
+		} else if (D_8006C6C6 < 8) {
+			steps = D_8006C6C6;
 		} else {
-			temp_t1 = 8;
-			if (D_8006C6C6 < 8) {
-				temp_t1 = D_8006C6C6;
-			}
+			steps = 8;
 		}
 
+		yOffset = 0x30 - (steps * 6);
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
-		temp_v1 = 0x30 - (temp_t1 * 6);
-		func_800092B8_9EB8(0x1B8, (temp_v1 + 0xAF) * 4, 0x310, (temp_v1 + 0xD2) * 4, 0);
+		func_800092B8_9EB8(0x1B8, (yOffset + 0xAF) << 2, 0x310, (yOffset + 0xD2) << 2, 0);
 	}
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008C8A4_174964.s")
-#endif
+
 
 // doPauseMenu ?
 // Render and handle the pause menu: 3x3 icon grid, analog stick navigation
