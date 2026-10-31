@@ -86,8 +86,8 @@ Gfx D_80031260[18] = {
 u32 D_800312F0_31EF0 = 0;
 s32 D_800312F4_31EF4 = 0;
 u32 D_800312F8_31EF8 = 0;
-s32 D_800312FC_31EFC = 0;
-s32 D_80031300_31F00 = 0;
+u32 D_800312FC_31EFC = 0;
+u32 D_80031300_31F00 = 0;
 s32 D_80031304 = 1;
 s32 D_80031308_31F08 = 0;
 s32 D_8003130C_31F0C = 0;
@@ -225,34 +225,34 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 	osStartThread(&D_8003FB38);
 }
 
-// CURRENT(1172)
-#ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
-	OSMesg sp64;
-	OSScClient sp58;
-	BhAudioBuf *var_s0;
-	u32 var_v0;
-	u32 var_s6;
-	f32 var_f0;
+	BhAudioBuf *lastInfo;
+	u32 done;
+	OSMesg message;
+	u32 dmaCount;
+	OSScClient client;
+	f32 requestCount;
 
-	var_s6 = 0;
-	var_s0 = 0;
-	osScAddClient(&D_800680A0, &sp58, &D_8003FCE8);
-	do {
-		osRecvMesg(&D_8003FCE8, &sp64, 1);
-		switch (((OSScMsg *)sp64)->type) {
+	done = 0;
+	lastInfo = 0;
+	osScAddClient(&D_800680A0, &client, &D_8003FCE8);
+	while (done == 0) {
+		osRecvMesg(&D_8003FCE8, &message, 1);
+		switch (((OSScMsg *)message)->type) {
 		case OS_SC_RETRACE_MSG:
-			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], var_s0) != 0) {
-				osRecvMesg(&D_8003FD20, &sp64, 1);
-				func_80000AD4_16D4((s32)((BhAudioMsg *)sp64)->audioBuf);
-				var_s0 = ((BhAudioMsg *)sp64)->audioBuf;
+			/* Keep the shared frame-counter address live during dispatch. */
+			if ((u32)&D_800431A0 * 0) {}
+			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], lastInfo) != 0) {
+				osRecvMesg(&D_8003FD20, &message, 1);
+				func_80000AD4_16D4(((BhAudioMsg *)message)->audioBuf);
+				lastInfo = ((BhAudioMsg *)message)->audioBuf;
 			}
-			var_v0 = D_800312FC_31EFC;
-			if (var_v0 == 0) {
+			dmaCount = D_800312FC_31EFC;
+			if (dmaCount == 0) {
 				D_800431B4 = 0.0f;
 			} else {
-				var_f0 = (f32)(u32)var_v0;
-				D_800431B4 = (f32)(((f64)(var_f0 - (f32)(u32)D_80031300_31F00) * 100.0) / (f64)var_f0);
+				requestCount = (f32)dmaCount;
+				D_800431B4 = (f32)(((f64)(requestCount - (f32)D_80031300_31F00) * 100.0) / (f64)requestCount);
 			}
 			D_800312FC_31EFC = 0;
 			D_80031300_31F00 = 0;
@@ -260,15 +260,13 @@ void func_80000730_1330(s32 arg0) {
 		case OS_SC_PRE_NMI_MSG:
 			break;
 		case 10:
-			var_s6 = 1;
+			done = 1;
 			break;
 		}
-	} while (var_s6 == 0);
+	}
 	alClose(&D_8003FD58);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000730_1330.s")
-#endif
+
 
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
 	s32 sp3C;
@@ -309,7 +307,7 @@ s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
 	return 1;
 }
 
-void func_80000AD4_16D4(s32 arg0)
+void func_80000AD4_16D4(BhAudioBuf *arg0)
 {
 	int new_var;
 	u32 ret = func_8001BCE0_1C8E0();
