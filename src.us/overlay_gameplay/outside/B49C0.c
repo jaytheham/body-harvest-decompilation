@@ -155,164 +155,148 @@ void func_800A5F24_B4ED4(s32 arg0)
 	}
 }
 
-// CURRENT(16004)
-#ifdef NON_MATCHING
-// AI - Render warp ring visual effect
-void func_800A6020_B4FD0(s16 arg0) {
-	u8 sp55;
-	u8 sp56;
-	f64 var_f20;
-	s32 var_s3;
-	s32 var_s4;
-	s32 var_s5;
-	s32 var_v0;
-	s32 var_v1;
-	s32 lo;
-	s32 fp;
+// Render warp ring visual effect
+void func_800A6020_B4FD0(s16 phase) {
+	u8 i;
+	u8 alpha;
+	u8 red;
+	f64 radius;
+	u16 angle;
+	u16 size;
+	u16 value;
+	s32 verticalSpacing;
+	s32 heightStep;
+	s32 green;
+	s16 trig;
+	u16 height;
 
-	var_s4 = (D_80052A8C * 0x640) & 0xFFFF;
-	sp56 = 0xFF;
-	var_v0 = ((arg0 * 3) + 4) & 0xFFFF;
-	var_v1 = (0x28 - arg0) & 0xFFFF;
-	if (arg0 < 0x10) {
-		if (arg0 < 0) {
-			sp56 = ((arg0 * 0x19) + 0xFA) & 0xFF;
-			var_v0 = 4;
-			var_v1 = 0x32;
+	angle = D_80052A8C * 0x640;
+	alpha = 0xFF;
+	size = phase * 3 + 4;
+	value = 0x28 - phase;
+	if (phase < 0x10) {
+		if (phase < 0) {
+			alpha = (phase * 0x19) + 0xFA;
+			size = 4;
+			value = 0x32;
 		}
-		var_s5 = 0;
-		if (arg0 < 0) {
-			sp55 = (arg0 * 0x19) + 0xFF;
+		if (phase < 0) {
+			red = (phase * 0x19) + 0xFF;
 		} else {
-			sp55 = 0xFF - (arg0 * 0x10);
+			red = 0xFF - (phase * 0x10);
 		}
-		var_s3 = 0;
-		if ((arg0 >= 0xB) && (D_8013D890_14C840 != 5)) {
-			var_v0 = 0x22;
-			sp56 = (0x28A - (arg0 * 0x28)) & 0xFF;
+		if ((phase >= 0xB) && (D_8013D890_14C840 != 5)) {
+			size = 0x22;
+			alpha = 0x28A - phase * 0x28;
 		}
-		if ((arg0 >= 0x15) && (D_8013D890_14C840 == 5)) {
-			var_v1 = 4;
-			sp55 = 0;
-			sp56 = (0x41A - (arg0 * 0x28)) & 0xFF;
+		if ((phase >= 0x15) && (D_8013D890_14C840 == 5)) {
+			value = 4;
+			red = 0;
+			alpha = 0x41A - phase * 0x28;
 		}
-		var_f20 = (f64)var_v0;
-		if (var_v0 < 0) {
-			var_f20 += 4294967296.0;
-		}
-		lo = (var_v1 * 4) / 10;
-		fp = (sp55 / 2) + 0x7F;
-		do {
-			{
-			s32 t = ((var_s3 * var_v1) - 0x96) & 0xFFFF;
-			D_8005BB34->v.ob[0] = (s16)((((f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
-			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + t);
-			D_8005BB34->v.ob[2] = (s16)((((f32)sins(var_s4 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
+		verticalSpacing = value;
+		value = size;
+		radius = (u32)value;
+		heightStep = (verticalSpacing * 4) / 10;
+		green = (red / 2) + 0x7F;
+		for (i = 0; i < 0x10; i++) {
+			trig = coss(angle);
+
+			height = i * verticalSpacing - 0x96;
+			D_8005BB34->v.ob[0] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = D_80052B34->unk2 + height;
+			trig = sins(angle);
+			D_8005BB34->v.ob[2] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
 			D_8005BB34->v.cn[0] = 0x23;
-			{
-			s32 t2 = (var_s4 + 0xFA0) & 0xFFFF;
 			D_8005BB34->v.cn[1] = 0x5A;
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)((((f32)coss(t2 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
-			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((t + lo) & 0xFFFF));
-			var_s3 = (var_s5 + 1) & 0xFF;
-			var_s5 = var_s3;
-			D_8005BB34->v.ob[2] = (s16)((((f32)sins(t2 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
+			angle += 0xFA0;
+			height += heightStep;
+			trig = coss(angle);
+			D_8005BB34->v.ob[0] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = D_80052B34->unk2 + height;
+			trig = sins(angle);
+			D_8005BB34->v.ob[2] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = sp55;
-			var_s4 = (t2 + 0x1770) & 0xFFFF;
-			D_8005BB34->v.cn[1] = fp;
+			D_8005BB34->v.cn[0] = red;
+			D_8005BB34->v.cn[1] = green;
 			D_8005BB34->v.cn[2] = 0xFF;
-			D_8005BB34->v.cn[3] = sp56;
+			D_8005BB34->v.cn[3] = alpha;
 			D_8005BB34++;
-			}
-			}
-		} while (var_s3 < 0x10);
-		var_s5 = 0;
-		var_s4 = ((D_80052A8C * 0x640) + 0x8000) & 0xFFFF;
-		var_s3 = 0;
-		do {
-			{
-			s32 t = ((var_s3 * var_v1) - 0x96) & 0xFFFF;
-			D_8005BB34->v.ob[0] = (s16)((((f32)coss(var_s4 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
-			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + t);
-			D_8005BB34->v.ob[2] = (s16)((((f32)sins(var_s4 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
+			angle += 0x1770;
+		}
+		angle = D_80052A8C * 0x640 + 0x8000;
+		for (i = 0; i < 0x10; i++) {
+			trig = coss(angle);
+
+			height = i * verticalSpacing - 0x96;
+			D_8005BB34->v.ob[0] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = D_80052B34->unk2 + height;
+			trig = sins(angle);
+			D_8005BB34->v.ob[2] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
 			D_8005BB34->v.cn[0] = 0x23;
-			{
-			s32 t2 = (var_s4 + 0xFA0) & 0xFFFF;
 			D_8005BB34->v.cn[1] = 0x5A;
 			D_8005BB34->v.cn[2] = 0xA0;
 			D_8005BB34->v.cn[3] = 0;
 			D_8005BB34++;
-			D_8005BB34->v.ob[0] = (s16)((((f32)coss(t2 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk0);
-			D_8005BB34->v.ob[1] = (s16)(D_80052B34->unk2 + ((t + lo) & 0xFFFF));
-			var_s3 = (var_s5 + 1) & 0xFF;
-			var_s5 = var_s3;
-			D_8005BB34->v.ob[2] = (s16)((((f32)sins(t2 & 0xFFFF) / 32768.0) * var_f20) + D_80052B34->unk4);
+			angle += 0xFA0;
+			height += heightStep;
+			trig = coss(angle);
+			D_8005BB34->v.ob[0] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk0);
+			D_8005BB34->v.ob[1] = D_80052B34->unk2 + height;
+			trig = sins(angle);
+			D_8005BB34->v.ob[2] = (s16)((((f32)trig / 32768.0) * radius) + D_80052B34->unk4);
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
-			D_8005BB34->v.cn[0] = sp55;
-			var_s4 = (t2 + 0x1770) & 0xFFFF;
-			D_8005BB34->v.cn[1] = fp;
+			D_8005BB34->v.cn[0] = red;
+			D_8005BB34->v.cn[1] = green;
 			D_8005BB34->v.cn[2] = 0xFF;
-			D_8005BB34->v.cn[3] = sp56;
+			D_8005BB34->v.cn[3] = alpha;
 			D_8005BB34++;
-			}
-			}
-		} while (var_s3 < 0x10);
+			angle += 0x1770;
+		}
 		gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 		gSPSetGeometryMode(D_8005BB30++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
 		gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 		gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 		{
-		s32 va3 = 6;
-		gDPPipeSync(D_8005BB30++);
-		if ((arg0 >= 0xC) && (D_8013D890_14C840 != 5)) {
-			va3 = (0x10 - arg0) & 0xFF;
-		}
-		if ((arg0 >= 0x16) && (D_8013D890_14C840 == 5)) {
-			va3 = (0x1A - arg0) & 0xFF;
-		}
-		if (arg0 < -4) {
-			va3 = (arg0 + 0xA) & 0xFF;
-		}
-		gSPVertex(D_8005BB30++, D_8005BB34 - 0x40, 32, 0);
-		var_s5 = 0;
-		var_s3 = 0;
-		do {
-			if (!(var_s3 & 1)) {
-				gSPLineW3D(D_8005BB30++, var_s3, var_s3 + 1, va3, 0);
+			s32 lineWidth = 6;
+			gDPPipeSync(D_8005BB30++);
+			if ((phase >= 0xC) && (D_8013D890_14C840 != 5)) {
+				lineWidth = (0x10 - phase) & 0xFF;
 			}
-			var_s3 = (var_s5 + 1) & 0xFF;
-			var_s5 = var_s3;
-		} while (var_s3 < 0x1F);
-		var_s5 = 0;
-		var_s3 = 0;
-		gSPVertex(D_8005BB30++, D_8005BB34 - 0x20, 32, 0);
-		do {
-			if (!(var_s3 & 1)) {
-				gSPLineW3D(D_8005BB30++, var_s3, var_s3 + 1, va3, 0);
+			if ((phase >= 0x16) && (D_8013D890_14C840 == 5)) {
+				lineWidth = (0x1A - phase) & 0xFF;
 			}
-			var_s3 = (var_s5 + 1) & 0xFF;
-			var_s5 = var_s3;
-		} while (var_s3 < 0x1F);
+			if (phase < -4) {
+				lineWidth = (phase + 0xA) & 0xFF;
+			}
+			gSPVertex(D_8005BB30++, D_8005BB34 - 0x40, 32, 0);
+			for (i = 0; i < 0x1F; i++) {
+				if (!(i & 1)) {
+					gSPLineW3D(D_8005BB30++, i, i + 1, lineWidth, 0);
+				}
+			}
+			gSPVertex(D_8005BB30++, D_8005BB34 - 0x20, 32, 0);
+			for (i = 0; i < 0x1F; i++) {
+				if (!(i & 1)) {
+					gSPLineW3D(D_8005BB30++, i, i + 1, lineWidth, 0);
+				}
+			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B49C0/func_800A6020_B4FD0.s")
-#endif
 
 // AI - Warp teleport state machine
 void func_800A68CC_B587C(void) {
