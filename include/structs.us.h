@@ -1278,7 +1278,13 @@ typedef struct {
 			/* 0x1F */ u8 pad1F;
 		};
 	};
-	/* 0x20 */ s32 unk20; // Bit flags
+	union {
+		/* 0x20 */ s32 unk20; // Bit flags
+		struct {
+			/* 0x20 */ u16 flagsHigh;
+			/* 0x22 */ u16 flagsLow;
+		};
+	};
 	union {
 		struct {
 			/* 0x24 */ u8 unk24; // Human type/behavior. Harvester humans eaten count. Processor child alien spawned count. Black Adam behavior.
@@ -1403,7 +1409,10 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ s32 unk0; // Body modifier
-	/* 0x04 */ u8 pad4[0x4]; // Changes shadow
+	union {
+		/* 0x04 */ u8 pad4[0x4];
+		/* 0x04 */ void *shadowTexture;
+	};
 	/* 0x08 */ s32 unk8; // Collision model size? Maybe only be second h/word
 	/* 0x0C */ s16 unkC; // xxxxyyyy Variables xxxx (Drone King Shield size)(Spyder warp beam size) yyyy (Spyder Health goes up to this value from normal then begins to decrease)
 	/* 0x0E */ u8 padE[0x2];
@@ -1632,7 +1641,14 @@ typedef struct {
 	/* 0x66 */ s16 unk66;
 	/* 0x68 */ u8 pad68[2];
 	/* 0x6A */ s16 unk6A;
-	/* 0x6C */ u8 pad6C[0x4];
+	union {
+		/* 0x6C */ u8 pad6C[0x4];
+		struct {
+			/* 0x6C */ u8 shadowWidth;
+			/* 0x6D */ u8 shadowDepth;
+			/* 0x6E */ u8 pad6E[2];
+		};
+	};
 } VehicleType; /* size = 0x70 */
 
 typedef struct {
