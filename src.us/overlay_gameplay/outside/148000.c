@@ -2,16 +2,6 @@
 #include "common.h"
 #include "version_shift.h"
 
-const char D_80145A30_1549E0[] = "select "; // "select "
-const char D_80145A38_1549E8[] = "%d,"; // "%d,";
-const char D_80145A3C_1549EC[] = "\n"; // "\n";
-const char D_80145A40_1549F0[] = "No space left in inventory for the new item.\n"; // "No space left in inventory for the new item.\n";
-const char D_80145A70_154A20[] = "Give vehicle its weapon %d\n"; // "Give vehicle its weapon %d\n";
-const char D_80145A8C_154A3C[] = "Initialise Ammunition\n"; // "Initialise Ammunition\n";
-const char D_80145AA4_154A54[] = "Weapon %d not valid\n"; // "Weapon %d not valid\n";
-const char D_80145ABC_154A6C[] = "Weapon %d not valid\n"; // "Weapon %d not valid\n";
-const char D_80145AD4_154A84[] = "New weapon down\n"; // "New weapon down\n";
-
 // max ammo counts allowed for each weapon type- unlimited pistol, 100 shotgun, 999 machine gun...
 s16 D_80140D40_14FCF0[] = {
 	0x0000, 0x0000, -0x8000, 0x0064, 0x0032, 0x03E7, 0x0019, 0x0003,
@@ -46,11 +36,11 @@ void func_80139050_148000(void) {
 	for (var_s1 = weaponSlots, var_s0 = 0; var_s0 != 7; var_s0 += 1, var_s1 += 1){
 	
 		if (var_s0 == D_8004794A) {
-			osSyncPrintf(&D_80145A30_1549E0);
+			osSyncPrintf("select ");
 		}
-		osSyncPrintf(&D_80145A38_1549E8, *var_s1);
+		osSyncPrintf("%d,", *var_s1);
 	}
-	osSyncPrintf(&D_80145A3C_1549EC);
+	osSyncPrintf("\n");
 }
 
 void func_801390F4_1480A4(s16 arg0) {
@@ -98,7 +88,7 @@ s32 func_801391DC_14818C(s32 arg0, s16 arg1)
   {
 	if (weaponSlots[0] != 1)
 	{
-	  osSyncPrintf(&D_80145A40_1549F0);
+	  osSyncPrintf("No space left in inventory for the new item.\n");
 	  return 0;
 	}
 	for (i = 1; i < 7; i++)
@@ -251,7 +241,7 @@ void func_80139778_148728(void) {
 	} else {
 		temp_v0 = &vehicleTypes[temp_v1];
 		if (!(temp_v0->unk4C & 0x04000000)) {
-			osSyncPrintf(&D_80145A70_154A20, temp_v0->weapon1);
+			osSyncPrintf("Give vehicle its weapon %d\n", temp_v0->weapon1);
 			func_80139460_148410();
 			if (D_80031424[11]) {
 				func_801391DC_14818C(0xB, -0x8000);
@@ -334,7 +324,7 @@ void func_80139984_148934(void) {
 		D_80031424[6] = 0x29;
 		D_80031424[9] = 0x14;
 	}
-	osSyncPrintf(&D_80145A8C_154A3C);
+	osSyncPrintf("Initialise Ammunition\n");
 }
 
 void func_80139B34_148AE4(void) {
@@ -763,7 +753,7 @@ s32 func_8013B534_14A4E4(void) {
 			return 1;
 		}
 	}
-	osSyncPrintf(&D_80145AA4_154A54, D_801601D0);
+	osSyncPrintf("Weapon %d not valid\n", D_801601D0);
 	return 0;
 }
 
@@ -777,7 +767,7 @@ s32 func_8013B5E4_14A594(s32 arg0) {
 		return 1;
 	}
 
-	osSyncPrintf(&D_80145ABC_154A6C, D_801601D0);
+	osSyncPrintf("Weapon %d not valid\n", D_801601D0);
 	if (arg0 == 0) {
 		func_8013B298_14A248();
 	} else {
@@ -822,7 +812,7 @@ void func_8013B688_14A638(void) {
 
 		if (isButtonNewlyPressed(0, 0x400) != 0) {
 			if (D_801601DC == 3) {
-				osSyncPrintf(&D_80145AD4_154A84);
+				osSyncPrintf("New weapon down\n");
 				func_8013B30C_14A2BC();
 				func_8013B5E4_14A594(1);
 				D_801601E0 = 0x23;
