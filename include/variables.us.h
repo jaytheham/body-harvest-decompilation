@@ -493,19 +493,6 @@ extern const char D_800385E0_391E0[]; /* osSyncPrintf format string */
 extern const char D_800385E4_391E4[]; /* osSyncPrintf format string */
 extern const char D_80038614_39214[]; /* osSyncPrintf format string */
 extern const char D_80038618_39218[]; /* osSyncPrintf format string */
-extern const char D_800397DC_3A3DC[]; /* osSyncPrintf format string "broken index!\n" */
-extern const char D_800397EC_3A3EC[];
-extern const char D_800397F8_3A3F8[];
-extern const char D_800397FC_3A3FC[];
-extern const char D_80039804_3A404[];
-extern const char D_80039808_3A408[];
-extern const char D_8003980C_3A40C[];
-extern const char D_80039814_3A414[];
-extern const char D_80039818_3A418[];
-extern const char D_80039820_3A420[];
-extern const char D_80039828_3A428[];
-extern const char D_8003982C_3A42C[];
-extern const f32 D_80039830_3A430[];
 extern const Unk8014DD50 D_8003A040_3AC40[6];
 extern const Unk8014DD50 D_8003A0A0_3ACA0[2];
 extern const Unk8014DD50 D_8003A0C0_3ACC0[2];
@@ -3932,7 +3919,6 @@ extern const f64 D_80037610_38210_R;
 extern const f32 D_800382F0_38EF0_R;
 extern const f64 D_800382F8_38EF8_R;
 extern const f32 D_80038300_38F00_R;
-extern const f32 D_80039830_3A430_R;
 
 extern s16 D_8013DAFC_14CAAC[2];
 extern u8 D_8013DB00_14CAB0;
