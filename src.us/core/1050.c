@@ -1573,38 +1573,18 @@ void func_800033D4_3FD4(u16 arg0, s32 controllerNum)
 	}
 }
 
-// CURRENT(2250)
-#ifdef NON_MATCHING
-void func_8000345C_405C(u16 arg0)
-{
-  u16 *new_var;
-  s32 temp_v1;
-  new_var = D_800475D8;
-  if (!(D_800313C8 & 8))
-  {
-	if ((new_var[0] & arg0) && (previousControllerButtonStates[0] & arg0))
-	{
-	  currentControllerStates[0].button &= ~arg0;
+void func_8000345C_405C(u16 buttonMask) {
+	s32 i;
+
+	if (!(D_800313C8_31FC8 & 8)) {
+		for (i = 0; i < 4; i++) {
+			if ((D_800475D8[i] & buttonMask) && (previousControllerButtonStates[i] & buttonMask)) {
+				currentControllerStates[i].button &= ~buttonMask;
+			}
+		}
+		D_800475F8 &= ~buttonMask;
 	}
-	temp_v1 = ~arg0;
-	if ((new_var[1] & arg0) && (previousControllerButtonStates[1] & arg0))
-	{
-	  currentControllerStates[1].button &= temp_v1;
-	}
-	if ((D_800475D8[2] & arg0) && (previousControllerButtonStates[2] & arg0))
-	{
-	  currentControllerStates[2].button &= temp_v1;
-	}
-	if ((new_var[3] & arg0) && (previousControllerButtonStates[3] & arg0))
-	{
-	  currentControllerStates[3].button &= temp_v1;
-	}
-    D_800475F8 &= temp_v1;
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
-#endif
 
 s32 isButtonNewlyPressed(s32 controllerNum, u16 buttonMask)
 {
