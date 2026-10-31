@@ -414,20 +414,6 @@ u8 D_80033C6C_3486C = 0;
 s8 D_80033C70_34870[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
 u8 D_80033C80_34880 = 0;
 s8 D_80033C84_34884[] = {0, 1, 2, 3};
-/* Read-only strings, numeric constants, and switch targets. */
-const char D_800381C0_38DC0[] = "Sounds playing";
-const char D_800381D0_38DD0[] = " ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d\n";
-const char D_80038204_38E04[] = "\nSounds pending\n";
-const char D_80038218_38E18[] = " Snd ID%d obj %lx Slot%d State%d Vol %d\n";
-const char D_80038244_38E44[] = "\nSounds to be deleted\n";
-const char D_8003825C_38E5C[] = " Snd ID%d obj %lx Slot%d State%d Vol %d\n";
-const char D_80038288_38E88[] = "\n";
-const char D_8003828C_38E8C[] = "house offset %d\n";
-const char D_800382A0_38EA0[] = "Error:GetFreeSeqPlayer - Tell Ciaran\n";
-const char D_800382C8_38EC8[] = "Error: GetFreeSeqPlayer2 - Tell Ciaran\n";
-const f32 D_800382F0_38EF0[] = {171000.0f};
-const f64 D_800382F8_38EF8[] = {0.1};
-const f32 D_80038300_38F00[] = {1100.0f};
 
 void func_80012080_12C80(s32 arg0)
 {
@@ -780,41 +766,40 @@ void *func_80012834_13434(void *arg0) {
 void func_8001286C_1346C(void) {
 	Unk8006AA80Node *node;
 
-	osSyncPrintf(D_800381C0_38DC0); // Sounds playing
+	osSyncPrintf("Sounds playing");
 	node = D_8006AA80;
 	if (node != NULL) {
 		do {
 			if (node->unk6 >= 0) {
 				alSndpSetSound(D_8006AB10, node->unk6);
-				osSyncPrintf(D_800381D0_38DD0, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20, node->unk28, (s32) node->unk0E);
+				osSyncPrintf(" ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d\n", node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20, node->unk28, (s32) node->unk0E);
 				//  ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
 		node = D_8006AA80;
 	}
-	osSyncPrintf(D_80038204_38E04);
+	osSyncPrintf("\nSounds pending\n");
 	if (node != NULL) {
 		do {
 			if (node->unk6 == -1) {
-				osSyncPrintf(D_80038218_38E18, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
+				osSyncPrintf(" Snd ID%d obj %lx Slot%d State%d Vol %d\n", node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
 				//  Snd ID%d obj %lx Slot%d State%d Vol %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
 	}
 	node = D_8006AA80;
-	osSyncPrintf(D_80038244_38E44);
+	osSyncPrintf("\nSounds to be deleted\n");
 	if (node != NULL) {
 		do {
 			if (node->unk6 == -2) {
-				osSyncPrintf(D_8003825C_38E5C, node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
-				//  Snd ID%d obj %lx Slot%d State%d Vol %d
+				osSyncPrintf(" Snd ID%d obj %lx Slot%d State%d Vol %d\n", node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
 			}
 			node = node->unk34;
 		} while (node != NULL);
 	}
-	osSyncPrintf(D_80038288_38E88); // .
+	osSyncPrintf("\n");
 }
 
 void func_800129FC_135FC(s8 arg0, s8 arg1) {
@@ -1149,7 +1134,7 @@ void func_80013720_14320(void)
     if (D_8006AB88 != 0) {
         index = D_80033C88_34888 % 4;
         D_80033C88_34888++;
-        osSyncPrintf(D_8003828C_38E8C, index);
+        osSyncPrintf("house offset %d\n", index);
         index = D_80033C84_34884[index] + 0x1F;
         func_80015C94_16894(index, 6);
     }
@@ -1292,7 +1277,7 @@ s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1)
 	  var_f2 = arg0->unk24;
 	  if (arg0->unk0 == 0xD3)
 	  {
-		var_f2 += ((f32) func_800038E0_44E0()) / D_800382F0_38EF0_R;
+		var_f2 += ((f32) func_800038E0_44E0()) / 171000.0f;
 	  }
 	  if (arg0->unk0 == 0x97)
 	  {
@@ -1309,7 +1294,7 @@ s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1)
 	  {
 		alSndpSetFXMix(D_8006AB10, 0x50);
 	  }
-	  if (D_800382F8_38EF8_R < ((f64) var_f2))
+	  if (0.1 < ((f64) var_f2))
 	  {
 		alSndpSetPitch(D_8006AB10, var_f2);
 	  }
@@ -1453,7 +1438,7 @@ void func_80014208_14E08(s32 arg0, s16 arg1, s32 arg2) {
 
 	if (D_8006AB88 != 0) {
 		func_80014A3C_1563C((s32) &sp24, 0xC4, 0, 0,
-			sp24 = (f32)D_80032D88_33988 + ((f32) arg1 / D_80038300_38F00_R));
+			sp24 = (f32)D_80032D88_33988 + ((f32) arg1 / 1100.0f));
 	}
 }
 
@@ -1523,7 +1508,6 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
   VehicleType *type;
   f32 temp_f12;
   f32 temp_f2;
-  const f32 pitchScale = 9753.0f;
   type = &vehicleTypes[arg0->unk1A];
   if (!D_8006AB88)
   {
@@ -1579,7 +1563,7 @@ void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
 		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
 		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
 		/* The direct minPitch read preserves IDO's intermediate product register. */
-		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / pitchScale);
+		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 9753.0f);
 		temp_f14 += temp_f12;
 		break;
 
@@ -2424,11 +2408,11 @@ s8 func_800165EC_171EC(void)
 			func_80013E64_14A64(selectedSlot);
 			return selectedSlot;
 		}
-		osSyncPrintf(D_800382A0_38EA0);
+		osSyncPrintf("Error:GetFreeSeqPlayer - Tell Ciaran\n");
 	}
 	else
 	{
-		osSyncPrintf(D_800382C8_38EC8);
+		osSyncPrintf("Error: GetFreeSeqPlayer2 - Tell Ciaran\n");
 	}
 }
 

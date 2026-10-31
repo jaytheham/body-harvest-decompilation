@@ -435,19 +435,6 @@ extern const f64 D_80037610_38210[];
 extern const char D_80037764_38364[]; /* osSyncPrintf format string - defined in FD80.c, used by 10A20.c */
 extern const Unk80154082 D_800378CC_384CC;
 extern const Unk80378D0 D_800378D0_384D0;
-extern const char D_800381C0_38DC0[];
-extern const char D_800381D0_38DD0[];
-extern const char D_80038204_38E04[];
-extern const char D_80038218_38E18[];
-extern const char D_80038244_38E44[];
-extern const char D_8003825C_38E5C[];
-extern const char D_80038288_38E88[];
-extern const char D_8003828C_38E8C[];
-extern const char D_800382A0_38EA0[]; /* osSyncPrintf format string */
-extern const char D_800382C8_38EC8[]; /* osSyncPrintf format string */
-extern const f32 D_800382F0_38EF0[];
-extern const f64 D_800382F8_38EF8[];
-extern const f32 D_80038300_38F00[];
 extern const char D_800383B0_38FB0[];
 extern const char D_800383BC_38FBC[];
 extern const char D_800383C8_38FC8[];
@@ -3916,9 +3903,6 @@ extern const f32 D_80037578_38178_R;
 extern const f64 D_80037580_38180_R;
 extern const f64 D_80037600_38200_R;
 extern const f64 D_80037610_38210_R;
-extern const f32 D_800382F0_38EF0_R;
-extern const f64 D_800382F8_38EF8_R;
-extern const f32 D_80038300_38F00_R;
 
 extern s16 D_8013DAFC_14CAAC[2];
 extern u8 D_8013DB00_14CAB0;
