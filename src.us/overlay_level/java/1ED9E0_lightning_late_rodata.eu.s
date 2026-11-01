@@ -1,0 +1,31 @@
+.late_rodata
+.late_rodata_alignment 8
+glabel D_802E0ED8_1F9BE8
+.double 0.325
+glabel D_802E0EE0_1F9BF0
+.float 0.4
+glabel D_802E0EE4_1F9BF4
+.float 2500.0
+glabel D_802E0EE8_1F9BF8
+.float 1500.0
+.word 0
+glabel D_802E0EF0_1F9C00
+.double 0.075
+glabel D_802E0EF8_1F9C08
+.double 0.325
+glabel D_802E0F00_1F9C10
+.float 2500.0
+glabel D_802E0F04_1F9C14
+.float 1500.0
+glabel D_802E0F08_1F9C18
+.double 0.075
+glabel D_802E0F10_1F9C20
+.double 0.325
+glabel D_802E0F18_1F9C28
+.double 0.325
+glabel jtbl_802E0F20_1F9C30
+.word 0x802d79f0, 0x802d7a18, 0x802d7a3c, 0x802d7a64, 0x802d7a8c, 0x802d7ab4, 0x802d7adc, 0x802d7b98, 0x802d7b98, 0x802d7b04, 0x802d7b2c, 0x802d7b54, 0x802d7b7c, 0x802d7b98
+glabel D_802E0F58_1F9C68
+.double 4000.0
+glabel D_802E0F60_1F9C70
+.double 188.0

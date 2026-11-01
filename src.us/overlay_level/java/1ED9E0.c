@@ -883,13 +883,10 @@ void func_802D62A0_1EEFB0(void)
   }
 }
 
-#ifdef NON_MATCHING
 /* State machine for java zone building display sequence
  * D_80157F8C: current state (0-6)
  * D_80157F8E: frame counter within state
- * After cases 0-5, calls building position display funcs if state < 4
- * NOTE: C body matches ROM only when compiled with NON_MATCHING=1 flag.
- * IDO produces different code without that flag â€” do not strip this wrapper. */
+ * After cases 0-5, calls building position display funcs if state < 4 */
 s32 func_802D6338_1EF048(void) {
 	s16 temp_s1;
 
@@ -900,8 +897,7 @@ s32 func_802D6338_1EF048(void) {
 			D_802E0FB6 += 2;
 		}
 		buildingInstances[50].xCoord = (s16) (buildingInstances[50].xCoord - D_802E0FB6);
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -909,8 +905,7 @@ s32 func_802D6338_1EF048(void) {
 	case 1:
 		/* Continue building descent for longer phase */
 		buildingInstances[50].xCoord = (s16) (buildingInstances[50].xCoord - D_802E0FB6);
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x97) {
+		if (D_80157F8E++ >= 0x97) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -918,8 +913,7 @@ s32 func_802D6338_1EF048(void) {
 	case 2:
 		/* Snap building to fixed position */
 		buildingInstances[50].xCoord = (s16) -0x4B00;
-		D_80157F8E += 1;
-		if (D_80157F8E >= 2) {
+		if (D_80157F8E++ >= 2) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -930,8 +924,7 @@ s32 func_802D6338_1EF048(void) {
 		if (D_80157F8E == 0x62) {
 			func_800DF038_EDFE8((s16) (buildingInstances[49].xCoord + 0x64), (s16) (D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
 		}
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x83) {
+		if (D_80157F8E++ >= 0x83) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -951,8 +944,7 @@ s32 func_802D6338_1EF048(void) {
 		if ((D_80157F8E % 5) == 0) {
 			func_800E0F4C_EFEFC((s16) (buildingInstances[50].xCoord - (D_80157F8E * 0x32) + 0x3E8), (s16) (D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x19);
 		}
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -968,16 +960,13 @@ s32 func_802D6338_1EF048(void) {
 		if (D_80157F8E == 0x1E) {
 			func_8011C080_12B030(0x31);
 		}
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
 		break;
 	case 6:
 		return 1;
-	default:
-		break;
 	}
 
 	/* Tail: display building position while in early states */
@@ -987,9 +976,6 @@ s32 func_802D6338_1EF048(void) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6338_1EF048.s")
-#endif
 
 void func_802D6840_1EF550(void) {
 	D_802E0FB6 = 0;
@@ -1275,7 +1261,11 @@ void func_802D6E70_1EFB80(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s", "src.us/overlay_level/java/1ED9E0_lightning_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s", "src.us/overlay_level/java/1ED9E0_lightning_late_rodata.eu.s")
+#endif
 #endif
 
 // 0xC cutscene/mission called thru level overlay table
