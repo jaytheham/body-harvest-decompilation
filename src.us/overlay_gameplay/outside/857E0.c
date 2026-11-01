@@ -12,8 +12,6 @@ const s32 D_801416D0_150680[] = {
 const s32 D_80141734_1506E4[] = {
 	0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4
 };
-const f64 D_80141798_150748[] = {180.0};
-const f64 D_801417A0_150750[] = {90.0};
 
 s32 D_8013BB10_14AAC0 = 0;
 
@@ -758,17 +756,19 @@ void func_80078720_876D0(AlienInstance *alien)
 	}
 }
 
-// CURRENT(2443)
-#ifdef NON_MATCHING
 s32 func_80078828_877D8(s16 arg0, s16 arg1, u16 arg2, s32 arg3) {
     s32 sp3C;
     u16* sp38;
+    s32 style;
     s32 sp30;
     s16 sp2E;
+    s16 sine;
     s16 sp2A;
-    s16 sp20;
-    s32 sp1C;
-    s16 temp_a0;
+    s16 unused0;
+    s16 unused1;
+    s16 unused2;
+    s16 unused3;
+    s16 cosine;
 
     sp38 = func_800785B4_87564(arg0, arg1, &sp3C);
     if (sp38 == NULL) {
@@ -781,67 +781,39 @@ s32 func_80078828_877D8(s16 arg0, s16 arg1, u16 arg2, s32 arg3) {
         return 1;
     }
 
-    if (arg3 != 0) {
-        if (D_8013BC0C_14ABBC[(currentLevel << 4) + D_80259D90[sp30].unk0] >= 0x11) {
-            goto return_0_early;
-        }
-    }
-
-    temp_a0 = D_8013BC0C_14ABBC[(currentLevel << 4) + D_80259D90[sp30].unk0];
-
-    if (arg3 == 0) {
-        if (temp_a0 >= 0x15) {
-            goto return_0_early;
-        }
-    }
-
-    if (temp_a0 == 2) {
+    style = (arg2 + 0x2000) >> 14;
+    if (((arg3 != 0) && (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][D_80259D90[sp30].unk0] >= 0x11)) ||
+        ((arg3 == 0) && (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][D_80259D90[sp30].unk0] >= 0x15)) || (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][D_80259D90[sp30].unk0] == 2)) {
         return 0;
     }
 
     if (D_80259D90[sp30].unk0 >= 0xE) {
-        if (sp3C == 0 || sp3C == 3) {
-            if (((arg2 + 0x2000) >> 0xE) == 0) {
-                goto return_0_dir;
-            }
-            if (((arg2 + 0x2000) >> 0xE) == 2) {
-                goto return_0_dir;
-            }
-        }
-        if (sp3C == 1 || sp3C == 2) {
-            if (((arg2 + 0x2000) >> 0xE) == 1) {
-                goto return_0_dir;
-            }
-            if (((arg2 + 0x2000) >> 0xE) == 3) {
-                goto return_0_dir;
-            }
+        if ((((sp3C == 0) || (sp3C == 3)) &&
+             ((style == 0) || (2 == style))) ||
+            (((sp3C == 1) || (sp3C == 2)) &&
+             ((1 == style) || (style == 3)))) {
+            return 0;
         }
     }
 
-    sp1C = arg2;
     sp2E = (s16) (func_800B84D0_C7480(arg0, arg1) >> 8);
-    sp20 = coss(arg2);
-    sp20 = (s16) (func_800B84D0_C7480(
-                        (s16) ((((f64) (f32) sp20 / 32768.0) * 100.0) + (f64) arg0),
-                        (s16) ((((f64) (f32) sins(arg2) / 32768.0) * 100.0) + (f64) arg1)) >> 8);
-    sp2A = (s16) (D_801417A0_150750[0] - ((((f64) (f32) func_80003824_4424(100.0f, (f32) (sp20 - sp2E))) * D_80141798_150748[0]) / 32768.0));
+    cosine = coss(arg2);
+    sine = sins(arg2);
+    style = (s16) (func_800B84D0_C7480(
+                        (s16) ((((f64) (f32) cosine / 32768.0) * 100.0) + (f64) arg0),
+                        (s16) ((((f64) (f32) sine / 32768.0) * 100.0) + (f64) arg1)) >> 8);
+    sp2A = (s16) (90.0 - ((((f64) (f32) func_80003824_4424(100.0f, (f32) (style - sp2E))) * 180.0) / 32768));
 
     if (D_80259D90[sp30].unk0 < 0xE) {
-        func_80076918_858C8(sp30, sp1C, sp2A, 2);
+        func_80076918_858C8(sp30, arg2, sp2A, 2);
     } else {
-        func_80076918_858C8(sp30, sp1C, (s16) ((f64) ((f32) sp2A * 32768.0f) / D_80141798_150748[0]), 3);
+        func_80076918_858C8(sp30, arg2, (s16) ((f64) ((f32) sp2A * 32768.0f) / 180.0), 3);
     }
 
     func_800786CC_8767C(sp38, sp3C);
     return 1;
 
-return_0_early:
-return_0_dir:
-    return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078828_877D8.s")
-#endif
 
 s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
 	s32 sp24;
