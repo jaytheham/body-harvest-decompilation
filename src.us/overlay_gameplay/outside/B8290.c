@@ -311,8 +311,6 @@ void func_800A9E1C_B8DCC(Unk80222A78 *arg0)
 }
 
 // AI - Detect stuck and teleport
-/* CURRENT(284) */
-#ifdef NON_MATCHING
 s32 func_800A9F34_B8EE4(u8 arg0) {
 	AlienInstance *alien;
 	u8 parentIndex;
@@ -360,15 +358,17 @@ s32 func_800A9F34_B8EE4(u8 arg0) {
 		if (terrainHeight > ((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) + 5)) {
 			alienInstances[parentIndex].unk20 |= ALIEN_FLAG_UNKH;
 			alien->unk12 = 0;
-			alien->unk20 |= ALIEN_FLAG_INVINCIBLE;
+			if (1) {
+				alien->unk20 |= ALIEN_FLAG_INVINCIBLE;
 
-			callback.unk1 = rndX >> 8;
-			callback.unk2 = rndZ >> 8;
-			callback.unk8 = arg0;
-			callback.unk0 = 2;
-			callback.unk4 = D_8014F820 + 8;
-			callback.unkC = func_800A9E1C_B8DCC;
-			func_800AE454_BD404(&callback);
+				callback.unk1 = rndX >> 8;
+				callback.unk2 = rndZ >> 8;
+				callback.unk8 = arg0;
+				callback.unk0 = 2;
+				callback.unk4 = D_8014F820 + 8;
+				callback.unkC = func_800A9E1C_B8DCC;
+				func_800AE454_BD404(&callback);
+			}
 
 			func_800CF80C_DE7BC(alien->unk0, alien->unk2, alien->unk4, ((SignedWord *)D_8013D8C0_14C870)[currentLevel + 1].halves.low, 0xA0, 0xFF, 0, 3);
 
@@ -382,9 +382,6 @@ s32 func_800A9F34_B8EE4(u8 arg0) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9F34_B8EE4.s")
-#endif
 
 // CURRENT(6112)
 #ifdef NON_MATCHING
