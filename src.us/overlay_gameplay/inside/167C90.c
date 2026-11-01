@@ -494,54 +494,48 @@ void func_80080E28_168EE8(void) {
 }
 
 
-#ifdef NON_MATCHING
 // AI - Camera-wall collision check: prevent camera from clipping through walls
-s16 func_80080FD8_169098(void) {
+void func_80080FD8_169098(void) {
 	f32 sp84;
 	f32 sp80;
 	f32 sp7C;
 	f32 sp78;
-	f32 sp74;
+	s16 angle;
+	s16 yaw;
 	f32 sp70;
 	f32 sp6C;
 	f32 sp68;
 	f32 sp64;
 	f32 sp60;
-	f32 sp5C;
-	f32 sp58;
-	f32 sp54;
-	f32 sp50;
-	f32 sp4C;
-	f32 sp48;
-	s32 sp28[8];
-	s32 sp24;
+	Vec3f delta;
+	Vec3f origin;
+	Unk8007CAA8_6A40 collision;
 
+	yaw = 0x4000 - D_800E6A86;
 	if ((currentControllerStates[0].stick_x == 0 && currentControllerStates[0].stick_y == 0 &&
-		 D_800E7480 == 0 && D_800E7486 != 0 && (s16) (0x4000 - D_800E6A86) == D_800E73E0) ||
+		 D_800E7480 == 0 && D_800E7486 != 0 && yaw == D_800E73E0) ||
 		D_800E73E8 < 100.0f) {
 		sp84 = D_800E73F0.x - D_800E7410.x;
+		sp80 = D_800E73F0.y - D_800E7410.y;
 		sp7C = D_800E73F0.z - D_800E7410.z;
-		sp78 = sqrtf((sp84 * sp84) + ((D_800E73F0.y - D_800E7410.y) * (D_800E73F0.y - D_800E7410.y)) + (sp7C * sp7C));
-		sp24 = (u16) func_80003824_4424(sp7C, sp84);
+		sp78 = sqrtf((sp84 * sp84) + (sp80 * sp80) + (sp7C * sp7C));
+		angle = func_80003824_4424(sp7C, sp84);
 		if (sp78 < 192.0f) {
-			sp68 = (f32) ((f64) D_800E7410.x - (f64) (f32) sins(sp24) / 32768.0);
-			sp70 = (f32) ((f64) D_800E7410.z - (f64) (f32) coss(sp24) / 32768.0);
-			sp48 = D_800E6A78.unk4C;
-			sp54 = (sp68 + 96.0f) - D_800E6A78.unk4C;
-			sp50 = D_800E6A78.unk54;
-			sp5C = (sp70 + 96.0f) - D_800E6A78.unk54;
-			func_8007B65C_16371C((Vec3f *) &sp48, (Vec3f *) &sp54, 10.0f, (Unk8007CAA8_6A40 *) sp28);
-			if (sp28[7] == 0) {
+			sp68 = (f32) ((f64) D_800E7410.x - (f64) (f32) sins(angle) / 32768.0);
+			sp70 = (f32) ((f64) D_800E7410.z - (f64) (f32) coss(angle) / 32768.0);
+			origin.x = D_800E6A78.unk4C;
+			delta.x = (sp68 + 96.0f) - D_800E6A78.unk4C;
+			origin.z = D_800E6A78.unk54;
+			delta.z = (sp70 + 96.0f) - D_800E6A78.unk54;
+			func_8007B65C_16371C(&origin, &delta, 10.0f, &collision);
+			if (collision.unk1C == 0) {
 				D_800E7410.x = sp68;
 				D_800E7410.z = sp70;
 			}
 		}
 	}
-	return (s16) (0x4000 - D_800E6A86);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080FD8_169098.s")
-#endif
+
 
 // AI - Map yaw angle to a compass-direction marker index for the debug map
 s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
