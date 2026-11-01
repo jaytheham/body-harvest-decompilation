@@ -53,7 +53,6 @@ void func_802D95F8_31D748(u8 arg0);
 void func_802D9658_31D7A8(u8 arg0);
 void func_802D9F60_31E0B0(u8 arg0);
 void func_802DA6A4_31E7F4(u8 arg0);
-void func_802DA6D4_31E824(s32 arg0);
 void func_802DAD78_31EEC8(u8 arg0);
 void func_802DB1D4_31F324(u8 arg0);
 void func_802DB9FC_31FB4C(u8 arg0);
