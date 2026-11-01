@@ -23,6 +23,7 @@ func_802D60FC_stub
 func_800038E0_44E0_U16
 func_800B325C_C220C_U16
 func_80092A50_A1A00_WordArgs
+func_800B84D0_C7480_4Args
 sinf
 # An empty static C function that was hidden behind #ifdef NON_MATCHING until func_800F1DDC_100D8C matched (US and EU).
 func_800F2888_101838
