@@ -357,7 +357,7 @@ void func_800772EC_8629C(s32 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING // CURRENT(1690)
+#ifdef NON_MATCHING // CURRENT(865)
 // DisplayTrees
 void func_8007764C_865FC(void) {
 	Unk857E0Obj* end;
@@ -366,7 +366,8 @@ void func_8007764C_865FC(void) {
 	s32 cellX;
 	s32 cellZ;
 	s32 i;
-	s32 type;
+	s16 type;
+	s8 group;
 	s32 prevType;
 	Unk857E0Obj* obj;
 
@@ -393,10 +394,11 @@ void func_8007764C_865FC(void) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
-			if ((s8)type == -1) {
+			group = type;
+			if (group == -1) {
 				continue;
 			}
-			if (((s8)type == 4) || ((s8)type == 9) || ((s8)type == 0xE) || ((s8)type == 0x13) || ((s8)type == 0x18)) {
+			if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
 				func_80076868_85818(i);
 			} else {
 				obj->unk2 = type + 1;
@@ -416,10 +418,11 @@ void func_8007764C_865FC(void) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
-			if ((s8)type == -1) {
+			group = type;
+			if (group == -1) {
 				continue;
 			}
-			if (((s8)type == 0) || ((s8)type == 5) || ((s8)type == 0xA) || ((s8)type == 0xF) || ((s8)type == 0x14)) {
+			if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
 				func_80076868_85818(i);
 			} else {
 				obj->unk2 = type - 1;
@@ -439,10 +442,11 @@ void func_8007764C_865FC(void) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
-			if ((s8)type == -1) {
+			group = type;
+			if (group == -1) {
 				continue;
 			}
-			if ((s8)type >= 0x14) {
+			if (group >= 0x14) {
 				func_80076868_85818(i);
 			} else {
 				obj->unk2 = type + 5;
@@ -462,10 +466,11 @@ void func_8007764C_865FC(void) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
-			if ((s8)type == -1) {
+			group = type;
+			if (group == -1) {
 				continue;
 			}
-			if ((s8)type < 5) {
+			if (group < 5) {
 				func_80076868_85818(i);
 			} else {
 				obj->unk2 = type - 5;
@@ -588,6 +593,7 @@ void func_8007764C_865FC(void) {
 		}
 
 		i = (s32)obj->vertices;
+		i *= 1;
 		if (prevType != obj->unk0) {
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, obj->unk8);
 
@@ -624,6 +630,7 @@ void func_8007764C_865FC(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 }
+
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
