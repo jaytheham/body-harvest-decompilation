@@ -79,58 +79,6 @@ s8 D_80031720_32320[] = {
 	0, 10, 4, 8, 0, 10, -2, 14, -2, 12, -1, 16, -1, 16, -1, 16,
 };
 
-/* Read-only strings, numeric constants, and switch targets. */
-const u32 jtbl_80037460_38060[] = {
-#if defined(VERSION_US)
-	0x8000A3A8, 0x8000A3B0, 0x8000A3A0, 0x8000A3A8, 0x8000A3B8, 0x8000A3A8
-#elif defined(VERSION_EU)
-	0x8000A3D8, 0x8000A3E0, 0x8000A3D0, 0x8000A3D8, 0x8000A3E8, 0x8000A3D8
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const u32 jtbl_80037478_38078[] = {
-#if defined(VERSION_US)
-	0x8000A560, 0x8000A570, 0x8000A580, 0x8000A590, 0x8000A5A0, 0x8000A5B0
-#elif defined(VERSION_EU)
-	0x8000A590, 0x8000A5A0, 0x8000A5B0, 0x8000A5C0, 0x8000A5D0, 0x8000A5E0
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const u32 jtbl_80037490_38090[] = {
-#if defined(VERSION_US)
-	0x8000ACAC, 0x8000AF7C, 0x8000AF7C, 0x8000AD98, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AEFC, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF3C, 0x8000AE00, 0x8000AE64, 0x8000AEB0, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000ADDC, 0x8000AF7C, 0x8000A69C, 0x8000A6B8, 0x8000AF7C, 0x8000A878, 0x8000AF7C, 0x8000AF7C, 0x8000ABC0, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000AF7C, 0x8000ABD0, 0x8000ABE0
-#elif defined(VERSION_EU)
-	0x8000ACDC, 0x8000AFAC, 0x8000AFAC, 0x8000ADC8, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AF2C, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AF6C, 0x8000AE30, 0x8000AE94, 0x8000AEE0, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AE0C, 0x8000AFAC, 0x8000A6CC, 0x8000A6E8, 0x8000AFAC, 0x8000A8A8, 0x8000AFAC, 0x8000AFAC, 0x8000ABF0, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AFAC, 0x8000AC00, 0x8000AC10
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const u32 jtbl_80037560_38160[] = {
-#if defined(VERSION_US)
-	0x8000AC34, 0x8000AC40, 0x8000AC4C, 0x8000AC58, 0x8000AC64, 0x8000AC70
-#elif defined(VERSION_EU)
-	0x8000AC64, 0x8000AC70, 0x8000AC7C, 0x8000AC88, 0x8000AC94, 0x8000ACA0
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const f32 D_80037578_38178[] = {0.009999999776482582f};
-const f64 D_80037580_38180[] = {0.01};
-const u32 jtbl_80037588_38188[] = {
-#if defined(VERSION_US)
-	0x8000BC4C, 0x8000BC80, 0x8000BCB4, 0x8000BCE8, 0x8000BD1C, 0x8000BD50, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000B9F8, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000C56C, 0x8000BC40, 0x8000BD80, 0x8000BBB8, 0x8000C1BC, 0x8000C258, 0x8000C448, 0x8000C2D4, 0x8000C408, 0x8000BABC, 0x8000C488, 0x8000C4FC, 0x8000BB48
-#elif defined(VERSION_EU)
-	0x8000BC7C, 0x8000BCB0, 0x8000BCE4, 0x8000BD18, 0x8000BD4C, 0x8000BD80, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000BA28, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000C59C, 0x8000BC70, 0x8000BDB0, 0x8000BBE8, 0x8000C1EC, 0x8000C288, 0x8000C478, 0x8000C304, 0x8000C438, 0x8000BAEC, 0x8000C4B8, 0x8000C52C, 0x8000BB78
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
-};
-const f64 D_80037600_38200[] = {255.0};
-const f64 D_80037608_38208[] = {0.0};
-const f64 D_80037610_38210[] = {180.0};
-
 void func_8000A160_AD60(void) {
 	D_80053C98 = 0;
 	guOrtho(&D_80052B60, 0.0f, 320.0f, 240.0f, 0.0f, 0.0f, 1000.0f, 1.0f);
@@ -155,8 +103,6 @@ void func_8000A160_AD60(void) {
 	func_8000AFDC_BBDC();
 }
 
-// CURRENT(10)
-#ifdef NON_MATCHING
 s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 	s32 result;
 	u8 *ptr;
@@ -207,41 +153,23 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 	return result;
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A2B8_AEB8.s")
-#endif
 
-// CURRENT(145)
-#ifdef NON_MATCHING
-void func_8000A3DC_AFDC(s16 arg0, s8 *arg1)
-{
-  s16 temp_v1;
-  s32 temp_a3;
-  s32 var_v0;
-  s32 temp_t0;
-  s8 var_a2;
-  temp_v1 = arg0 * 2;
-  temp_a3 = temp_v1 >> 8;
-  var_a2 = (s8) temp_a3;
-  temp_t0 = (temp_v1 & 0xFFu) & 0xFF;
-  var_v0 = temp_v1;
-  var_v0 &= 0xFF;
-  var_a2 = (s8) temp_a3;
-  if (temp_t0 >= 0)
-  {
-	var_v0 = (temp_t0 + 1) & 0xFF;
-  }
-  if (var_a2 >= 0)
-  {
-	var_a2 = ((s8) temp_a3) + 1;
-  }
-  *arg1 = var_a2;
-  arg1++;
-  *((u8 *) arg1) = var_v0;
+void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
+    u8 low;
+    s8 high;
+    arg0 *= 2;
+    low = arg0 & 0xFF;
+    high = arg0 >> 8;
+    if (low >= 0) {
+        low++;
+    }
+    if (high >= 0) {
+        high++;
+    }
+    *arg1 = high;
+    arg1++;
+    *arg1 = low;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
-#endif
 
 s16 func_8000A43C_B03C(s8 *arg0)
 {
@@ -665,7 +593,11 @@ void drawText(void *arg0, ...) {
 	D_80053BE0 = (s16)((s8 *)s0 - (s8 *)D_80052BE0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s")
+#ifdef VERSION_US
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s", "src.us/core/AD60_text_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s", "src.us/core/AD60_text_late_rodata.eu.s")
+#endif
 #endif
 
 void func_8000AFDC_BBDC(void)
@@ -1445,39 +1377,34 @@ void func_8000D384_DF84(AnimFrameData *arg0, AnimFrameData *arg1, f32 arg2, Anim
 	((AnimFrameData14 *)arg3)->g = (u16)((f32)(u32)((AnimFrameData14 *)arg0)->g + (f32)(((AnimFrameData14 *)arg1)->g - ((AnimFrameData14 *)arg0)->g) * arg2);
 }
 
-// CURRENT(590)
-#ifdef NON_MATCHING
 void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4) {
-	s32 base;
-	u16 offset0;
-	AnimFrameData14 sp44;
-	AnimFrameData14 sp34;
-	AnimFrameData14 sp24;
+    u16 frame0;
+    u16 frame1;
+    AnimFrameData14 sp44;
+    AnimFrameData14 sp34;
+    AnimFrameData14 sp24;
 
-	offset0 = (*(u16 *)((s32)arg0 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF;
-	base = (s32)arg0 + (offset0 * 0xE);
-	sp44 = *(AnimFrameData14 *)(base + 0x50);
-
-	base = (s32)arg1 + (((*(u16 *)((s32)arg1 + (arg3 << 2) + 0xC) + arg2->unk18) & 0xFFFF) * 0xE);
-	sp34 = *(AnimFrameData14 *)(base + 0x50);
+    frame0 = arg0->channels[arg3].frameOffset;
+    frame0 += arg2->unk18;
+    sp44 = arg0->frames[frame0];
+    frame1 = arg1->channels[arg3].frameOffset;
+    frame1 += arg2->unk18;
+    sp34 = arg1->frames[frame1];
 
 	func_8000D384_DF84((AnimFrameData *)&sp44, (AnimFrameData *)&sp34, arg4, (AnimFrameData *)&sp24);
 
-	*(AnimFrameData14 *)&arg2->unk24 = sp24;
+	arg2->frame = sp24;
 	arg2->unk1C = 0.0f;
 
-	arg2->unk20 = (f32)(u32)sp24.g;
+	arg2->unk20 = (u32)sp24.g;
 
 	arg2->unk32 = arg2->unk0;
 	arg2->unk34 = arg2->unk2;
 	arg2->unk36 = arg2->unk4;
-	arg2->unk38 = (s16)arg2->unk8;
-	arg2->unk3A = (s16)arg2->unkC;
-	arg2->unk3C = (s16)arg2->unk10;
+	arg2->unk38 = arg2->unk8;
+	arg2->unk3A = arg2->unkC;
+	arg2->unk3C = arg2->unk10;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
-#endif
 
 // https://decomp.me/scratch/KhfAB
 s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7)

@@ -2722,14 +2722,6 @@ typedef struct {
 	/* 0x08 */ s32 unk8;
 } Unk80052B40_fp; /* size = 0x0C */
 
-typedef struct {
-	/* 0x000 */ u8 pad0[0x8];
-	/* 0x008 */ s32 unk8; /* num animation frames */
-	/* 0x00C */ u8 pad0C[2];
-	/* 0x00E */ u16 unkE;
-	/* 0x010 */ u8 pad10[0xE40];
-	/* 0xE50 */ s32 unkE50;
-} Unk8007F878_404; /* size = 0xE54 */
 
 /* 14-byte animation frame data entry (stride = 0xE, array starts at anim_data+0x50) */
 typedef struct {
@@ -2743,6 +2735,18 @@ typedef struct {
 typedef struct {
 	s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; u16 g;
 } AnimFrameData14; /* size = 0x0E */
+typedef struct {
+    u16 frameOffset;
+    u16 frameCount;
+} AnimChannelDescriptor;
+
+typedef struct {
+    /* 0x000 */ u8 pad0[0x8];
+    /* 0x008 */ s32 unk8; /* num animation frames */
+    /* 0x00C */ AnimChannelDescriptor channels[17];
+    /* 0x050 */ AnimFrameData14 frames[256];
+    /* 0xE50 */ s32 unkE50;
+} Unk8007F878_404; /* size = 0xE54 */
 
 /* 64-byte per-channel animation state element */
 typedef struct {
@@ -2757,6 +2761,9 @@ typedef struct {
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ f32 unk20;
+    union {
+        AnimFrameData14 frame;
+        struct {
 	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
 	/* 0x28 */ s16 unk28;
@@ -2764,6 +2771,8 @@ typedef struct {
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ u16 unk30;
+        };
+    };
 	/* 0x32 */ s16 unk32;
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
