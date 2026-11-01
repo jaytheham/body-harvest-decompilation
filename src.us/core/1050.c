@@ -1428,13 +1428,11 @@ void func_80002EF8_3AF8(void *arg0)
 }
 
 
-// CURRENT(590)
-#ifdef NON_MATCHING
 void func_80003064_3C64(void)
 {
-	s32 sp4;
-	s32 index;
-	s32 sp10;
+	s32 direction;
+	s32 controller;
+	s32 playbackWord;
 
 	if (D_800313C8_31FC8 == 1)
 	{
@@ -1449,32 +1447,29 @@ void func_80003064_3C64(void)
 		D_800476A8 = 0;
 		D_800476AC = 0;
 		D_800476A4 = 0;
-		D_800475FC = D_80047600 = D_80047604 = 0;
-		D_800475F8 = 0;
+		D_800475F8 = D_800475FC = D_80047600 = D_80047604 = 0;
 	}
-	index = 4;
-	if (index)
+	controller = 4;
+	if (controller)
 	{
-		while (index--)
+		while (controller--)
 		{
-			D_800475A0[index] = currentControllerStates[index];
+			D_800475A0[controller] = currentControllerStates[controller];
 			if (!(D_800313C8_31FC8 & 8))
 			{
 				if (D_800476A2)
 				{
-					currentControllerStates[index] = D_800475B8[index];
+					currentControllerStates[controller] = D_800475B8[controller];
 				}
 				else
 				{
-					// 0x80047588
-					currentControllerStates[index].button = 0;
-					currentControllerStates[index].stick_x = 0;
-					currentControllerStates[index].stick_y = 0;
+					currentControllerStates[controller].button = 0;
+					currentControllerStates[controller].stick_x = 0;
+					currentControllerStates[controller].stick_y = 0;
 				}
 			}
-			// 0x800475E0
-			previousControllerButtonStates[index] = D_800475D8[index];
-			D_800475D8[index] = currentControllerStates[index].button;
+			previousControllerButtonStates[controller] = D_800475D8[controller];
+			D_800475D8[controller] = currentControllerStates[controller].button;
 		}
 	}
 	if (D_800475F0)
@@ -1488,8 +1483,8 @@ void func_80003064_3C64(void)
 			D_800475F0 = 0;
 		}
 	}
-	sp4 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
-	if (((D_800475A0[0].stick_x < 0) ? -1 : 1) != sp4)
+	direction = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
+	if (((D_800475A0[0].stick_x < 0) ? -1 : 1) != direction)
 	{
 		D_800475F0 = (D_800475F0 + D_800475F4) + 1;
 		D_800475F4 = 8;
@@ -1508,8 +1503,8 @@ void func_80003064_3C64(void)
 		if (D_800313C8_31FC8 & 8)
 		{
 			currentControllerStates[0].stick_x = ((D_800475F8 & 0xFF000000) >> 24);
-			currentControllerStates[0].button = D_800475F8;
 			currentControllerStates[0].stick_y = ((D_800475F8 & 0xFF0000) >> 16);
+			currentControllerStates[0].button = D_800475F8 & 0xFFFF;
 
 			previousControllerButtonStates[0] = D_800475D8[0];
 			D_800475D8[0] = currentControllerStates[0].button;
@@ -1518,28 +1513,26 @@ void func_80003064_3C64(void)
 				D_800475FC--;
 				return;
 			}
-			sp10 = ((s32 *)__additional_scanline)[D_800313C4_31FC4];
+			playbackWord = ((s32 *)__additional_scanline)[D_800313C4_31FC4];
 			D_800313C4_31FC4++;
-			if (sp10 == 0x7FFFFFFF)
+			if (playbackWord == 0x7FFFFFFF)
 			{
 				func_80006DAC_79AC(0, 1);
 				D_800313C8_31FC8 = 0;
 			}
-			else if ((sp10 & 0xFFFF) == 0xC00)
+			else if ((playbackWord & 0xFFFF) == 0xC00)
 			{
-				D_800475FC = ((u32)(sp10 & 0xFFFF0000)) >> 16;
+				D_800475FC = ((playbackWord & 0xFFFF0000)) >> 16;
 				D_800475FC = D_800475FC - 1;
 			}
 			else
 			{
-				D_800475F8 = sp10;
+				D_800475F8 = playbackWord;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003064_3C64.s")
-#endif
+
 
 // https://decomp.me/scratch/66U7q
 void func_800033D4_3FD4(u16 arg0, s32 controllerNum)
