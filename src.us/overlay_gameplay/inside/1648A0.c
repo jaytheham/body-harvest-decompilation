@@ -2701,55 +2701,48 @@ void func_8007F878_167938(void) {
 	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[category][model].unkC, *(s32 *)&D_800E6AD8.unk410);
 }
 
-// CURRENT(1160)
 // AI - Render NPC model with full matrix transforms
-#ifdef NON_MATCHING
 void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
-	s32 position[3];
-	s16 scale[3];
-	u8 model;
+	Unk80052B40_fp position;
+	Unk80052B40 scale;
+	Unk80052B40 rotation;
 	u8 category;
-	s16 rotation[3];
-	Unk8009E4C8 *entry;
-	s32 translation[3];
-	position[0] = arg0 << 0x10;
+	u8 model;
+	Unk80052B40_fp translation;
 	category = D_800E6AD8.unk426;
-	position[1] = arg1 << 0x10;
 	model = D_800E6AD8.unk425;
-	position[2] = arg2 << 0x10;
-	rotation[0] = arg3;
-	rotation[1] = 0;
-	rotation[2] = 0;
-	scale[0] = 0x40;
-	scale[1] = 0x40;
-	scale[2] = 0x40;
-	func_8000C81C_D41C(position, rotation, scale, D_8005BB38);
+	position.unk0 = arg0 << 0x10;
+	position.unk4 = arg1 << 0x10;
+	position.unk8 = arg2 << 0x10;
+	rotation.unk0 = arg3;
+	rotation.unk2 = 0;
+	rotation.unk4 = 0;
+	scale.unk0 = 0x40;
+	scale.unk2 = 0x40;
+	scale.unk4 = 0x40;
+	func_8000C81C_D41C(&position.unk0, &rotation.unk0, &scale.unk0, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	if ((D_800E6AD8.unk426 == 4) && (D_800E6AD8.unk425 == 0))
 	{
-		translation[0] = (s32)(D_800E6AD8.unk8 * 65536.0f);
-		translation[1] = (s32)(D_800E6AD8.unkC * 65536.0f);
-		translation[2] = (s32)(D_800E6AD8.unk10 * 65536.0f);
+		translation.unk0 = (s32)(D_800E6AD8.unk8 * 65536.0f);
+		translation.unk4 = (s32)(D_800E6AD8.unkC * 65536.0f);
+		translation.unk8 = (s32)(D_800E6AD8.unk10 * 65536.0f);
 	}
 	else
 	{
-		translation[1] = 0;
-		translation[0] = (s32)(D_800E6AD8.unk8 * 65536.0f);
-		translation[2] = (s32)(D_800E6AD8.unk10 * 65536.0f);
+		translation.unk4 = 0;
+		translation.unk0 = (s32)(D_800E6AD8.unk8 * 65536.0f);
+		translation.unk8 = (s32)(D_800E6AD8.unk10 * 65536.0f);
 	}
-	rotation[0] = D_800E6AD8.unk2 * 8;
-	rotation[1] = D_800E6AD8.unk4 * 8;
-	rotation[2] = D_800E6AD8.unk0 * 8;
-	func_8000C81C_D41C(translation, rotation, NULL, D_8005BB38);
+	rotation.unk0 = D_800E6AD8.unk2 * 8;
+	rotation.unk2 = D_800E6AD8.unk4 * 8;
+	rotation.unk4 = D_800E6AD8.unk0 * 8;
+	func_8000C81C_D41C(&translation.unk0, &rotation.unk0, NULL, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
-	entry = &D_8009E4C8_186588[category][model];
-	func_8000CC3C_D83C(&D_800E6AD8, entry->unkC);
-	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(entry->unk0));
+	func_8000CC3C_D83C(&D_800E6AD8, D_8009E4C8_186588[category][model].unkC);
+	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_8009E4C8_186588[category][model].unk0));
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F8F4_1679B4.s")
-#endif
