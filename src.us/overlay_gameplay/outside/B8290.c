@@ -310,81 +310,76 @@ void func_800A9E1C_B8DCC(Unk80222A78 *arg0)
   alien->unkE = func_80003824_4424(a1, a2);
 }
 
-// CURRENT(11373)
-#ifdef NON_MATCHING
 // AI - Detect stuck and teleport
+/* CURRENT(284) */
+#ifdef NON_MATCHING
 s32 func_800A9F34_B8EE4(u8 arg0) {
 	AlienInstance *alien;
-	AlienInstance *parent;
+	u8 parentIndex;
 	Unk80222A78 callback;
+	s32 x;
+	s32 z;
 	s32 rndX;
 	s32 rndZ;
-	s32 dx;
-	s32 dz;
 	s32 absDx;
 	s32 lateral;
-	s32 velX;
-	s32 velZ;
-	s16 x;
-	s16 z;
-	s16 levelColor;
+	s32 dx;
+	s32 terrainHeight;
+	s32 dz;
+	s32 angle;
+	s32 effectY;
 
 	alien = &alienInstances[arg0];
-	parent = &alienInstances[alien->unk25];
-	if (parent->unk20 & ALIEN_FLAG_UNKH) {
-		return 0;
+	parentIndex = alien->unk25;
+	if (!(alienInstances[parentIndex].unk20 & ALIEN_FLAG_UNKH)) {
+
+		x = alien->unk0;
+		z = alien->unk4;
+		rndX = alienInstances[parentIndex].unk24Signed + (func_800038E0_44E0() % 1000) - 1000;
+		rndZ = alienInstances[parentIndex].unk26Signed + (func_800038E0_44E0() % 1000) - 1000;
+
+		dx = x - rndX;
+		angle = -dx;
+		absDx = angle < dx ? dx : angle;
+
+		dz = z - rndZ;
+		angle = -dz;
+		lateral = angle < dz ? dz : angle;
+
+		sqrtf((f32)((absDx * absDx) + (lateral * lateral)));
+
+		if (alien->unk12 >= 0) {
+			absDx = (s32)(((f32)sins((u16)(alien->unk6 - 0x4000)) / 32768.0) * 256.0);
+			lateral = (s32)(((f32)coss((u16)(alien->unk6 - 0x4000)) / 32768.0) * -256.0);
+		} else {
+			absDx = (s32)(((f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0) * 256.0);
+			lateral = (s32)(((f32)coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * -256.0);
+		}
+
+		terrainHeight = func_800B84D0_C7480(alien->unk0 - absDx, alien->unk4 - lateral) >> 8;
+		if (terrainHeight > ((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) + 5)) {
+			alienInstances[parentIndex].unk20 |= ALIEN_FLAG_UNKH;
+			alien->unk12 = 0;
+			alien->unk20 |= ALIEN_FLAG_INVINCIBLE;
+
+			callback.unk1 = rndX >> 8;
+			callback.unk2 = rndZ >> 8;
+			callback.unk8 = arg0;
+			callback.unk0 = 2;
+			callback.unk4 = D_8014F820 + 8;
+			callback.unkC = func_800A9E1C_B8DCC;
+			func_800AE454_BD404(&callback);
+
+			func_800CF80C_DE7BC(alien->unk0, alien->unk2, alien->unk4, ((SignedWord *)D_8013D8C0_14C870)[currentLevel + 1].halves.low, 0xA0, 0xFF, 0, 3);
+
+			x = (s16)rndX;
+			z = (s16)rndZ;
+			effectY = func_800B84D0_C7480(x, z) >> (alienTypes[27].unk58 + 8);
+			func_800CF80C_DE7BC(x, effectY, z, ((SignedWord *)D_8013D8C0_14C870)[currentLevel + 1].halves.low, 0xA0, 0xFF, 0, 2);
+			return 1;
+		}
+
 	}
-
-	x = alien->unk0;
-	z = alien->unk4;
-	rndX = (func_800038E0_44E0() % 1000) + parent->unk24 - 1000;
-	rndZ = (func_800038E0_44E0() % 1000) + parent->unk26 - 1000;
-
-	dx = x - rndX;
-	absDx = -dx;
-	if (absDx < dx) {
-		absDx = dx;
-	}
-
-	dz = z - rndZ;
-	lateral = -dz;
-	if (lateral < dz) {
-		lateral = dz;
-	}
-
-	sqrtf((f32)((absDx * absDx) + (lateral * lateral)));
-
-	if (alien->unk12 >= 0) {
-		velX = (s32)(((f32)sins((alien->unk6 - 0x4000) & 0xFFFF) / 32768.0) * 256.0);
-		velZ = (s32)(((f32)coss((alien->unk6 - 0x4000) & 0xFFFF) / 32768.0) * -256.0);
-	} else {
-		velX = (s32)(((f32)sins((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * 256.0);
-		velZ = (s32)(((f32)coss((alien->unk6 + 0x4000) & 0xFFFF) / 32768.0) * -256.0);
-	}
-
-	if (((func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) + 5) <
-		(func_800B84D0_C7480((s16)(alien->unk0 - velX), (s16)(alien->unk4 - velZ)) >> 8)) {
-		parent->unk20 |= ALIEN_FLAG_UNKH;
-		alien->unk12 = 0;
-		alien->unk20 |= ALIEN_FLAG_INVINCIBLE;
-
-		callback.unk0 = 2;
-		callback.unk1 = (s8)(rndX >> 8);
-		callback.unk2 = (s8)(rndZ >> 8);
-		callback.unk4 = D_8014F820 + 8;
-		callback.unk8 = arg0;
-		callback.unkC = func_800A9E1C_B8DCC;
-		func_800AE454_BD404(&callback);
-
-		levelColor = *(s16*)&D_8013D8C0_14C870[(s32)currentLevel * 4 + 6];
-		func_800CF80C_DE7BC(alien->unk0, alien->unk2, alien->unk4, levelColor, 0xA0, 0xFF, 0, 3);
-
-		x = (s16)rndX;
-		z = (s16)rndZ;
-		func_800CF80C_DE7BC(x, (s16)(func_800B84D0_C7480(x, z) >> (alienTypes[27].unk58 + 8)), z, levelColor, 0xA0, 0xFF, 0, 2);
-		return 1;
-	}
-
 	return 0;
 }
 #else
