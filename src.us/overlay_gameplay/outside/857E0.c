@@ -295,22 +295,21 @@ void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 }
 
 // fell tree
-#ifdef NON_MATCHING
-// CURRENT(47)
 void func_800770D8_86088(s32 arg0) {
-    Unk_8014D298* entry;
-    u32 temp_s1;
-    u16 treeIndex;
-    s32 timer;
-    u32 sp8C;
-    u32 sp88;
-    f32 scale[3];
-    Mtx sp30;
-    Mtx* mtx;
+	u16 treeIndex;
+	u16 timer;
+	Mtx* mtx;
+	u32 sp8C;
+	u32 sp88;
+	Unk_8014D298* entry;
+	u32 temp_s1;
+	f32 scale[3];
+	f32 value;
+	Mtx sp30;
 
 	entry = &D_8014D298[arg0];
 	timer = entry->unk2;
-    temp_s1 = (timer * 6) & 0xFFFF;
+	temp_s1 = (timer * 6) & 0xFFFF;
 	treeIndex = entry->unk0;
 	if ((s32)temp_s1 < (s32)entry->unk6) {
 
@@ -320,19 +319,17 @@ void func_800770D8_86088(s32 arg0) {
 		mtx = (Mtx*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk10;
 		guRotate(mtx, (f32)(u32)temp_s1, (f32)((f64)(f32)sins(entry->unk4) / 32768.0), 0.0f, (f32)-((f64)(f32)coss(entry->unk4) / 32768.0));
 
-		timer = (s16)(sp88 >> 0x10);
-		scale[2] = scale[0] = (f32)(s32)((((s32)((((s16)(sp8C >> 0x10) * timer) * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
+		value = (f32)(s32)((((s32)((((s16)(sp8C >> 0x10) * (s16)(sp88 >> 0x10)) * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
 
-		scale[1] = (f32)(s32)((((s32)((timer * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
+		scale[0] = value;
+		scale[2] = value;
+		scale[1] = (f32)(s32)((((s32)(((s16)(sp88 >> 0x10) * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
 		guScale(&sp30, scale[0], scale[1], scale[2]);
 
 		mtx->m[1][2] = sp8C;
 		mtx->m[1][3] = sp88;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800770D8_86088.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(12338)
