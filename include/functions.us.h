@@ -1717,6 +1717,7 @@ void func_80135D44(s32, s32, s32, f32);
 void func_80135D44_144CF4(s32, s32, s32, f32);
 void leoInitUnit_atten(void);
 s32 func_80092A50_A1A00(s16, s16, s32);
+s32 func_80092A50_A1A00_WordArgs(s32, s32, s32);
 u8 func_800AD554_BC504(s32, s32, s32);
 s32 func_8011B3F0_12A3A0(s16, s16*, s16*, s16*);
 s32 func_8011B454_12A404(s32, s16 *, s16 *, s16 *);

@@ -48,8 +48,377 @@ Unk802E04F8Entry D_802E04F8_1F9208[] = {
 };
 
 s32 D_802E0568_1F9278 = 0x45284827;
-s16 D_802E056C_1F927C = 0;
 
+/* ====================== .rodata ====================== */
+
+const char D_802E0D50_1F9A60[] = "Unwritten Java Function %d\n";
+const char D_802E0D6C_1F9A7C[] = "bladam creation fuckup\n";
+const char D_802E0D84_1F9A94[] = "Destroyed alien holding cable car\n";
+const char D_802E0DA8_1F9AB8[] = "Destroyed battery blob\n";
+const char D_802E0DC0_1F9AD0[] = "JAVA: Request native hut height map\n";
+const char D_802E0DE8_1F9AF8[] = "JAVA: Start humans exiting\n";
+const char D_802E0E04_1F9B14[] = "All done\n\n\n";
+const char D_802E0E10_1F9B20[] = "Init\n";
+const char D_802E0E18_1F9B28[] = "finishing\n";
+const char D_802E0E24_1F9B34[] = "add human\n";
+const char D_802E0E30_1F9B40[] = "end evac\n";
+const char D_802E0E3C_1F9B4C[] = "stop boat damage\n";
+const char D_802E0E50_1F9B60[] = "4:%d\n";
+const char D_802E0E58_1F9B68[] = "5:%d\n";
+const char D_802E0E60_1F9B70[] = "Lava pools killed\n";
+const char D_802E0E74_1F9B84[] = "Damage\n";
+const char D_802E0E7C_1F9B8C[] = "CREATE LIGHTNING!\n";
+
+
+void func_802D6DF8_1EFB08(void);
+
+// AI - Mission id dispatcher: calls D_802E04A4_1F91B4[arg0] for ids < 0x14, else the 0x14/0x15 cutscene and 0x44/0x45 cases.
+void func_802D4CD0_1ED9E0(s32 arg0, s32 arg1) {
+	arg1 = arg0;
+
+	if (arg0 < 0x14) {
+		((void (*)(void))D_802E04A4_1F91B4[arg0])();
+		return;
+	}
+
+	switch (arg1) {
+	case 0x14:
+		func_802D6DF8_1EFB08();
+		func_800EFEB4_FEE64((void *)&func_800F1134_1000E4, 9, 0); // boss cutscene setup
+		break;
+	case 0x15:
+		func_800EFEB4_FEE64((void *)&func_800F1DDC_100D8C, 8, 1); // level beginning cutscene
+		break;
+	case 0x45:
+		func_802D7980_1F0690();
+		break;
+	case 0x44:
+		func_80007690_8290();
+		break;
+	default:
+		osSyncPrintf(&D_802E0D50_1F9A60, arg0);
+		break;
+	}
+}
+
+s16 func_802D4DB0_1EDAC0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
+	s16 temp_v0;
+	Unk80154318Entry *temp_v1;
+
+	temp_v0 = func_800C17B4_D0764(0xD, 1);
+	if (temp_v0 != -3) {
+		temp_v1 = &D_80154318[temp_v0];
+		temp_v1->unk2 = arg3;
+		temp_v1->unk8 = arg0;
+		temp_v1->unkA = arg1;
+		temp_v1->unkC = arg2;
+	}
+	return temp_v0;
+}
+
+void func_802D4E34_1EDB44(s16 arg0) {
+	if (arg0 != -3) {
+		func_800C1A4C_D09FC(arg0, 0xD, 1);
+	}
+}
+
+void func_802D4E6C_1EDB7C(void) {
+	s16 var_v1;
+
+	func_800FB468_10A418(&vehicleInstances[8], 675.0f); // Gryphon plane on aircraft carrier spawns at height 675 - is later moved higher so it falls cleanly onto roof/not clipped into building
+	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
+	if (func_8000726C_7E6C((u64) 0x1E) != 0) {
+		func_800E2720_F16D0(0);
+		for (var_v1 = 0; var_v1 < 0x100; var_v1++) {
+			D_802D4AD0[var_v1] = D_802D48D0[var_v1];
+		}
+	} else {
+		func_802D4CD0_1ED9E0(0xC, 0);
+	}
+	buildingInstances[38].statusFlags |= 0x10000;
+	if (func_8000726C_7E6C((u64) 0x11) != 0) {
+		func_8011C080_12B030(0x31);
+		func_8011C080_12B030(0x32);
+	}
+	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_SHIELDED);
+}
+
+void func_802D4F70_1EDC80(s32 arg0) {
+	func_800072CC_7ECC((u64)0x2C);
+}
+
+// Blackness Harbor Black Adam encounter
+// AI - Spawns the Black Adam alien via func_8007956C_8851C(0x12), sets D_80256DEC and D_80157E7C, arms func_802D4F70_1EDC80.
+void func_802D4F98_1EDCA8(void) {
+	Unk80222A78 callback_struct;
+	s16 position;
+
+	D_802E04A0_1F91B0 = func_8007956C_8851C(0x12); // spawn Black Adam
+	if (D_802E04A0_1F91B0 != 0xFF) {
+		D_80256DEC = 0x6F;
+		D_80157E7C = 2;
+		func_8011E6FC_12D6AC(-0x5954, -0x2258, &position);
+		(&alienInstances[D_802E04A0_1F91B0])->unk0 = -0x5954; // spawn coords; height +10 to avoid clipping into alien barrier?
+		(&alienInstances[D_802E04A0_1F91B0])->unk4 = -0x2258;
+		(&alienInstances[D_802E04A0_1F91B0])->unk2 = (s16) (position + 0xA);
+		(&alienInstances[D_802E04A0_1F91B0])->unk24 = 4; // behavior case 4 standing and shooting
+		(&alienInstances[D_802E04A0_1F91B0])->unk1B = 3;
+		callback_struct.unk0 = 3;
+		callback_struct.unk8 = D_802E04A0_1F91B0;
+		callback_struct.unkC = (void (*)(void *)) func_802D4F70_1EDC80;
+		func_800AE454_BD404(&callback_struct);
+		return;
+	}
+	osSyncPrintf(D_802E0D6C_1F9A7C);
+}
+
+void func_802D507C_1EDD8C(s32 arg0) {
+	osSyncPrintf(D_802E0D84_1F9A94);
+	func_800073B8_7FB8(0xBLL);
+}
+
+// func called thru mission/cutscene table start of level overlay offset 0 - handles stage 1 Mantosaur inside the cable car building
+void func_802D50B0_1EDDC0(void) {
+	u8 alien_id;
+	Unk80222A78 callback_struct;
+
+	alien_id = func_8007956C_8851C(0x25); // spawn enemy type 0x25 Mantosaur
+	if (alien_id != 0xFF) {
+		alienInstances[alien_id].unk0 = -0x109A; // coords -4250, 17376, 1131
+		alienInstances[alien_id].unk2 = 0x46B;
+		alienInstances[alien_id].unk4 = 0x43E0;
+		alienInstances[alien_id].unkE = 0x4000;
+		alienInstances[alien_id].unk1B = 0;
+		callback_struct.unk0 = 3; // ties Mantosaur into event/trigger system to release cable car etc
+		callback_struct.unk8 = alien_id;
+		callback_struct.unkC = func_802D507C_1EDD8C;
+		func_800AE454_BD404(&callback_struct);
+	}
+}
+
+void func_802D513C_1EDE4C(s32 arg0) {
+	osSyncPrintf(&D_802E0DA8_1F9AB8);
+	func_800072CC_7ECC(0xC);
+}
+
+// func called thru mission/cutscene table start of level overlay offset 1 - handles stage 1 power station Jelly
+void func_802D5170_1EDE80(void) {
+	u8 alien_id;
+	Unk80222A78 callback_struct;
+
+	alien_id = func_8007956C_8851C(0x24); // spawn enemytype 0x24 Jelly ("Brain blob")
+	if (alien_id != 0xFF) {
+		alienInstances[alien_id].unk0 = -0x14D8; // spawn coords -5336, 10496
+		alienInstances[alien_id].unk4 = 0x2900;
+		alienInstances[alien_id].unk1B = 0;
+		callback_struct.unk0 = 3; // ties Jelly into event/trigger system
+		callback_struct.unk8 = alien_id;
+		callback_struct.unkC = func_802D513C_1EDE4C;
+		func_800AE454_BD404(&callback_struct);
+	}
+	func_800073B8_7FB8(0xCLL);
+}
+
+s32 func_802D51F8_1EDF08(void) {
+	s16 i;
+	s16 pad;
+	s16 position[3];
+	Projectile *result;
+
+	switch (D_80157F8C) {
+	case 0:
+		if (D_80157F8E >= 0x10) {
+			vehicleInstances[58].unk6 += 0x28A;
+		}
+		if (D_80157F8E++ >= 0x29) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
+
+	case 1:
+		if (D_80157F8E == 0xF) {
+			func_800DF038_EDFE8(0x3950, 0x640, 0x3C9C, 0x50, 0, 0);
+			func_80135D44_144CF4(0x3950, 0x640, 0x3C9C, 3.0f);
+			func_801371B8_146168(0, 0x5B, 0x3950, 0x640, 0x3C9C, -1.0f);
+		}
+		if (D_80157F8E++ >= 0x29) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
+
+	case 2:
+		if (D_80157F8E == 0xF) {
+			func_800DF038_EDFE8(0x3950, 0x640, 0x3C9C, 0x50, 0, 0);
+		}
+		if (D_80157F8E++ >= 0x33) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
+
+	case 3:
+		if (D_80157F8E == 0) {
+			position[0] = 0x4500;
+			position[2] = 0x2800;
+			position[1] = i * 400 + 400;
+			result = func_801226F8_1316A8(position, &D_80145E98, 0, 0, 0, 0.0f, 0.0f, 0.0f);
+			if (result != NULL) {
+				result->unk28 = 100;
+			}
+			for (i = 0; i < 0xFF; i++) {
+				if (alienInstances[i].typeIndex == 7 &&
+					alienInstances[i].unk0 < 0x4ADC &&
+					alienInstances[i].unk0 >= 0x3F25 &&
+					alienInstances[i].unk4 < 0x2DDC &&
+					alienInstances[i].unk4 >= 0x2225) {
+					func_80088760_97710(&alienInstances[i]);
+				}
+			}
+		}
+		if (D_80157F8E++ >= 2) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
+
+	case 4:
+		if (D_80157F8E++ >= 0x65) {
+			D_80157F8E = 0;
+			D_80157F8C++;
+		}
+		break;
+
+	case 5:
+		return 1;
+
+	default:
+		break;
+	}
+	return 0;
+}
+
+
+void func_802D5508_1EE218(void) {
+	if (D_802E0FB0-- <= 0) {
+		func_80013468_14068(6);
+		func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
+		func_800074BC_80BC(func_802D5508_1EE218);
+	}
+}
+
+void func_802D5560_1EE270(void) {
+	D_802E0FB0 = 0x1E;
+	func_80007410_8010(&func_802D5508_1EE218);
+}
+
+void func_802D5590_1EE2A0(void) {
+	f64 temp_f20;
+	s16 temp_s6;
+	s16 var_s1;
+	s32 var_v0;
+	s32 var_v0_2;
+
+	if (D_802E0FB0 == -1) {
+		func_800076D4_82D4(8);
+		func_80018D7C_1997C(0xDC);
+	}
+	D_802E0FB0++;
+	if (D_802E0FB0 == 0xA) {
+		func_80123E90_132E40(&vehicleInstances[80], 2);
+		D_802E0FB0 = 0;
+	}
+	if (vehicleInstances[80].unk1C <= 0) {
+		func_800074BC_80BC(func_802D5590_1EE2A0);
+		func_800AE190_BD140(D_801591C4);
+		temp_s6 = (s16) func_800DF9C8_EE978(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0xC8, 0, 0);
+		var_s1 = 0;
+		if (D_801591C4 >= 9) {
+			var_v0 = 8;
+		} else {
+			var_v0 = D_801591C4;
+		}
+		if (var_v0 > 0) {
+			temp_f20 = 1000.0;
+			do {
+				if (var_s1 < 4) {
+					func_801371B8_146168(0, 0x185, vehicleInstances[80].unk0, vehicleInstances[80].unk2, (s32) vehicleInstances[80].unk4, (f32) (((f64) (f32) (func_800038E0_44E0() % 100) / temp_f20) + 0.25));
+				}
+				func_800C7924_D68D4(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0x10, temp_s6, vehicleTypes[vehicleInstances[80].unk1A].unk36 * 2, &D_502D390, 1);
+				var_s1 += 1;
+				if (D_801591C4 >= 9) {
+					var_v0_2 = 8;
+				} else {
+					var_v0_2 = D_801591C4;
+				}
+			} while (var_s1 < var_v0_2);
+		}
+		D_801591C4 = 0;
+		func_800076D4_82D4(9);
+	}
+}
+
+
+int func_802D57F4_1EE504(void) {
+	static s16 missionFrames = 0;
+
+	switch (D_80157F8C) {
+	case 0:
+		buildingInstances[38].statusFlags |= 0x10000;
+		missionFrames = 0;
+		if (D_80157F8E == 1) {
+			osSyncPrintf(D_802E0DC0_1F9AD0);
+			func_8011D438_12C3E8(0xC, 0);
+		}
+		if (D_80157F8E++ >= 0x15) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
+	case 1:
+		alienTypes[1].unk54 &= ~2;
+		if (D_80157F8E == 5) {
+			osSyncPrintf(D_802E0DE8_1F9AF8);
+			buildingInstances[38].statusFlags |= 0x20;
+			buildingInstances[38].unkE = 0x50;
+		}
+		D_80157F8E++;
+		if (buildingInstances[38].unk7 == 0) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
+	case 2:
+		if (missionFrames == 0xB4) {
+			func_800C0D1C_CFCCC(-0x50, 0x50, 0);
+		}
+		if ((missionFrames == 0x91) || (missionFrames == 0xC8)) {
+			func_80014A3C_1563C(0, 0xDB, 800.0f, 0, -1.0f);
+		}
+		if (D_80157F8E++ >= 0x191) {
+			D_80157F8E = 0;
+			D_80157F8C += 1;
+		}
+		break;
+
+	case 3:
+		alienTypes[1].unk54 |= 2;
+		osSyncPrintf(D_802E0E04_1F9B14);
+		D_802E0FB0 = 0;
+		func_80007410_8010(&func_802D5590_1EE2A0);
+		D_802E0FB0 = -0x32;
+		return 1;
+	default:
+		break;
+	}
+	missionFrames++;
+	return 0;
+}
+
+/* Remaining .data follows missionFrames in declaration order. */
 s8 D_802E0570_1F9280[] = {
 	0x06, 0x0C, 0x0D, 0x18, 0x14, 0x0B, 0x1F, 0x02,
 	0x1C, 0xFB, 0x0E, 0xF1, 0x1D, 0xF1, 0x09, 0xE8,
@@ -289,439 +658,6 @@ AlienType D_802E0CE4_1F99F4 = {
 	{ 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 };
 
-/* ====================== .rodata ====================== */
-
-const char D_802E0D50_1F9A60[] = "Unwritten Java Function %d\n";
-const char D_802E0D6C_1F9A7C[] = "bladam creation fuckup\n";
-const char D_802E0D84_1F9A94[] = "Destroyed alien holding cable car\n";
-const char D_802E0DA8_1F9AB8[] = "Destroyed battery blob\n";
-const char D_802E0DC0_1F9AD0[] = "JAVA: Request native hut height map\n";
-const char D_802E0DE8_1F9AF8[] = "JAVA: Start humans exiting\n";
-const char D_802E0E04_1F9B14[] = "All done\n\n\n";
-const char D_802E0E10_1F9B20[] = "Init\n";
-const char D_802E0E18_1F9B28[] = "finishing\n";
-const char D_802E0E24_1F9B34[] = "add human\n";
-const char D_802E0E30_1F9B40[] = "end evac\n";
-const char D_802E0E3C_1F9B4C[] = "stop boat damage\n";
-const char D_802E0E50_1F9B60[] = "4:%d\n";
-const char D_802E0E58_1F9B68[] = "5:%d\n";
-const char D_802E0E60_1F9B70[] = "Lava pools killed\n";
-const char D_802E0E74_1F9B84[] = "Damage\n";
-const char D_802E0E7C_1F9B8C[] = "CREATE LIGHTNING!\n";
-
-const u32 jtbl_802E0E90_1F9BA0[] = {
-	LEVEL_PTR(0x802D522C), LEVEL_PTR(0x802D5278), LEVEL_PTR(0x802D5320), LEVEL_PTR(0x802D538C),
-	LEVEL_PTR(0x802D54C0), LEVEL_PTR(0x802D54EC),
-};
-
-const f64 D_802E0EA8_1F9BB8[] = { 1000.0 };
-const f64 D_802E0EB0_1F9BC0[] = { 1.7 };
-
-const u32 jtbl_802E0EB8_1F9BC8[] = {
-	LEVEL_PTR(0x802D6374), LEVEL_PTR(0x802D63F0), LEVEL_PTR(0x802D6440), LEVEL_PTR(0x802D6480),
-	LEVEL_PTR(0x802D6528), LEVEL_PTR(0x802D66AC), LEVEL_PTR(0x802D6794),
-};
-
-const f64 D_802E0ED8_1F9BE8[] = { 0.325 };
-const f32 D_802E0EE0_1F9BF0[] = { 0.4f };
-const f32 D_802E0EE4_1F9BF4[] = { 2500.0f };
-const f32 D_802E0EE8_1F9BF8[] = { 1500.0f };
-const f64 D_802E0EF0_1F9C00[] = { 0.075 };
-const f64 D_802E0EF8_1F9C08[] = { 0.325 };
-const f32 D_802E0F00_1F9C10[] = { 2500.0f };
-const f32 D_802E0F04_1F9C14[] = { 1500.0f };
-const f64 D_802E0F08_1F9C18[] = { 0.075 };
-const f64 D_802E0F10_1F9C20[] = { 0.325 };
-const f64 D_802E0F18_1F9C28[] = { 0.325 };
-
-const u32 jtbl_802E0F20_1F9C30[] = {
-	LEVEL_PTR(0x802D79B0), LEVEL_PTR(0x802D79D8), LEVEL_PTR(0x802D79FC), LEVEL_PTR(0x802D7A24),
-	LEVEL_PTR(0x802D7A4C), LEVEL_PTR(0x802D7A74), LEVEL_PTR(0x802D7A9C), LEVEL_PTR(0x802D7B58),
-	LEVEL_PTR(0x802D7B58), LEVEL_PTR(0x802D7AC4), LEVEL_PTR(0x802D7AEC), LEVEL_PTR(0x802D7B14),
-	LEVEL_PTR(0x802D7B3C), LEVEL_PTR(0x802D7B58),
-};
-
-const f64 D_802E0F58_1F9C68[] = { 4000.0 };
-const f64 D_802E0F60_1F9C70[] = { 188.0 };
-
-
-
-void func_802D6DF8_1EFB08(void);
-
-// AI - Mission id dispatcher: calls D_802E04A4_1F91B4[arg0] for ids < 0x14, else the 0x14/0x15 cutscene and 0x44/0x45 cases.
-void func_802D4CD0_1ED9E0(s32 arg0, s32 arg1) {
-	arg1 = arg0;
-
-	if (arg0 < 0x14) {
-		((void (*)(void))D_802E04A4_1F91B4[arg0])();
-		return;
-	}
-
-	switch (arg1) {
-	case 0x14:
-		func_802D6DF8_1EFB08();
-		func_800EFEB4_FEE64((void *)&func_800F1134_1000E4, 9, 0); // boss cutscene setup
-		break;
-	case 0x15:
-		func_800EFEB4_FEE64((void *)&func_800F1DDC_100D8C, 8, 1); // level beginning cutscene
-		break;
-	case 0x45:
-		func_802D7980_1F0690();
-		break;
-	case 0x44:
-		func_80007690_8290();
-		break;
-	default:
-		osSyncPrintf(&D_802E0D50_1F9A60, arg0);
-		break;
-	}
-}
-
-s16 func_802D4DB0_1EDAC0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
-	s16 temp_v0;
-	Unk80154318Entry *temp_v1;
-
-	temp_v0 = func_800C17B4_D0764(0xD, 1);
-	if (temp_v0 != -3) {
-		temp_v1 = &D_80154318[temp_v0];
-		temp_v1->unk2 = arg3;
-		temp_v1->unk8 = arg0;
-		temp_v1->unkA = arg1;
-		temp_v1->unkC = arg2;
-	}
-	return temp_v0;
-}
-
-void func_802D4E34_1EDB44(s16 arg0) {
-	if (arg0 != -3) {
-		func_800C1A4C_D09FC(arg0, 0xD, 1);
-	}
-}
-
-void func_802D4E6C_1EDB7C(void) {
-	s16 var_v1;
-
-	func_800FB468_10A418(&vehicleInstances[8], 675.0f); // Gryphon plane on aircraft carrier spawns at height 675 - is later moved higher so it falls cleanly onto roof/not clipped into building
-	vehicleInstances[8].unk20 = (u16) (vehicleInstances[8].unk20 | (VEHICLE_FLAG_UNK1 | VEHICLE_FLAG_AIRBORNE));
-	if (func_8000726C_7E6C((u64) 0x1E) != 0) {
-		func_800E2720_F16D0(0);
-		for (var_v1 = 0; var_v1 < 0x100; var_v1++) {
-			D_802D4AD0[var_v1] = D_802D48D0[var_v1];
-		}
-	} else {
-		func_802D4CD0_1ED9E0(0xC, 0);
-	}
-	buildingInstances[38].statusFlags |= 0x10000;
-	if (func_8000726C_7E6C((u64) 0x11) != 0) {
-		func_8011C080_12B030(0x31);
-		func_8011C080_12B030(0x32);
-	}
-	vehicleInstances[58].unk20 = (u16) (vehicleInstances[58].unk20 | VEHICLE_FLAG_SHIELDED);
-}
-
-void func_802D4F70_1EDC80(s32 arg0) {
-	func_800072CC_7ECC((u64)0x2C);
-}
-
-// Blackness Harbor Black Adam encounter
-// AI - Spawns the Black Adam alien via func_8007956C_8851C(0x12), sets D_80256DEC and D_80157E7C, arms func_802D4F70_1EDC80.
-void func_802D4F98_1EDCA8(void) {
-	Unk80222A78 callback_struct;
-	s16 position;
-
-	D_802E04A0_1F91B0 = func_8007956C_8851C(0x12); // spawn Black Adam
-	if (D_802E04A0_1F91B0 != 0xFF) {
-		D_80256DEC = 0x6F;
-		D_80157E7C = 2;
-		func_8011E6FC_12D6AC(-0x5954, -0x2258, &position);
-		(&alienInstances[D_802E04A0_1F91B0])->unk0 = -0x5954; // spawn coords; height +10 to avoid clipping into alien barrier?
-		(&alienInstances[D_802E04A0_1F91B0])->unk4 = -0x2258;
-		(&alienInstances[D_802E04A0_1F91B0])->unk2 = (s16) (position + 0xA);
-		(&alienInstances[D_802E04A0_1F91B0])->unk24 = 4; // behavior case 4 standing and shooting
-		(&alienInstances[D_802E04A0_1F91B0])->unk1B = 3;
-		callback_struct.unk0 = 3;
-		callback_struct.unk8 = D_802E04A0_1F91B0;
-		callback_struct.unkC = (void (*)(void *)) func_802D4F70_1EDC80;
-		func_800AE454_BD404(&callback_struct);
-		return;
-	}
-	osSyncPrintf(D_802E0D6C_1F9A7C);
-}
-
-void func_802D507C_1EDD8C(s32 arg0) {
-	osSyncPrintf(D_802E0D84_1F9A94);
-	func_800073B8_7FB8(0xBLL);
-}
-
-// func called thru mission/cutscene table start of level overlay offset 0 - handles stage 1 Mantosaur inside the cable car building
-void func_802D50B0_1EDDC0(void) {
-	u8 alien_id;
-	Unk80222A78 callback_struct;
-
-	alien_id = func_8007956C_8851C(0x25); // spawn enemy type 0x25 Mantosaur
-	if (alien_id != 0xFF) {
-		alienInstances[alien_id].unk0 = -0x109A; // coords -4250, 17376, 1131
-		alienInstances[alien_id].unk2 = 0x46B;
-		alienInstances[alien_id].unk4 = 0x43E0;
-		alienInstances[alien_id].unkE = 0x4000;
-		alienInstances[alien_id].unk1B = 0;
-		callback_struct.unk0 = 3; // ties Mantosaur into event/trigger system to release cable car etc
-		callback_struct.unk8 = alien_id;
-		callback_struct.unkC = func_802D507C_1EDD8C;
-		func_800AE454_BD404(&callback_struct);
-	}
-}
-
-void func_802D513C_1EDE4C(s32 arg0) {
-	osSyncPrintf(&D_802E0DA8_1F9AB8);
-	func_800072CC_7ECC(0xC);
-}
-
-// func called thru mission/cutscene table start of level overlay offset 1 - handles stage 1 power station Jelly
-void func_802D5170_1EDE80(void) {
-	u8 alien_id;
-	Unk80222A78 callback_struct;
-
-	alien_id = func_8007956C_8851C(0x24); // spawn enemytype 0x24 Jelly ("Brain blob")
-	if (alien_id != 0xFF) {
-		alienInstances[alien_id].unk0 = -0x14D8; // spawn coords -5336, 10496
-		alienInstances[alien_id].unk4 = 0x2900;
-		alienInstances[alien_id].unk1B = 0;
-		callback_struct.unk0 = 3; // ties Jelly into event/trigger system
-		callback_struct.unk8 = alien_id;
-		callback_struct.unkC = func_802D513C_1EDE4C;
-		func_800AE454_BD404(&callback_struct);
-	}
-	func_800073B8_7FB8(0xCLL);
-}
-
-// CURRENT(6632)
-#ifdef NON_MATCHING
-s32 func_802D51F8_1EDF08(void) {
-	s16 temp;
-
-	switch (D_80157F8C) {
-	case 0:
-		temp = D_80157F8E;
-		if (temp >= 0x10) {
-			vehicleInstances[58].unk6 += 0x28A;
-		}
-		D_80157F8E = temp + 1;
-		if (temp >= 0x29) {
-			D_80157F8E = 0;
-			D_80157F8C++;
-		}
-		return 0;
-
-	case 1:
-		temp = D_80157F8E;
-		if (temp == 0xF) {
-			func_800DF038_EDFE8(0x3950, 0x640, 0x3C9C, 0x50, 0, 0);
-			func_80135D44_144CF4(0x3950, 0x640, 0x3C9C, 3.0f);
-			func_801371B8_146168(0, 0x5B, 0x3950, 0x640, 0x3C9C, -1.0f);
-			temp = D_80157F8E;
-		}
-		D_80157F8E = temp + 1;
-		if (temp >= 0x29) {
-			D_80157F8E = 0;
-			D_80157F8C++;
-		}
-		return 0;
-
-	case 2:
-		temp = D_80157F8E;
-		if (temp == 0xF) {
-			func_800DF038_EDFE8(0x3950, 0x640, 0x3C9C, 0x50, 0, 0);
-			temp = D_80157F8E;
-		}
-		D_80157F8E = temp + 1;
-		if (temp >= 0x33) {
-			D_80157F8E = 0;
-			D_80157F8C++;
-		}
-		return 0;
-
-	case 3:
-		temp = D_80157F8E;
-		if (temp == 0) {
-			s16 sp46;
-			s16 sp3C[3];
-			Projectile *result;
-
-			sp3C[0] = 0x4500;
-			sp3C[1] = sp46 * 400 + 400;
-			sp3C[2] = 0x2800;
-			result = func_801226F8_1316A8(sp3C, &D_80145E98, 0, 0, 0, 0.0f, 0.0f, 0.0f);
-			if (result != NULL) {
-				result->unk28 = 100;
-			}
-			for (temp = 0; temp < 0xFF; temp++) {
-				if (alienInstances[temp].typeIndex == 7 &&
-					alienInstances[temp].unk0 >= 0x3F25 &&
-					alienInstances[temp].unk0 < 0x4ADC &&
-					alienInstances[temp].unk4 >= 0x2225 &&
-					alienInstances[temp].unk4 < 0x2DDC) {
-					sp46 = temp;
-					func_80088760_97710(&alienInstances[temp]);
-				}
-			}
-		}
-		if (temp < 2) {
-			D_80157F8E = temp + 1;
-		} else {
-			D_80157F8E = 0;
-			D_80157F8C++;
-		}
-		return 0;
-
-	case 4:
-		temp = D_80157F8E;
-		D_80157F8E = temp + 1;
-		if (temp >= 0x65) {
-			D_80157F8E = 0;
-			D_80157F8C++;
-		}
-		return 0;
-
-	case 5:
-		return 1;
-
-	default:
-		return 0;
-	}
-}
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D51F8_1EDF08.s")
-#endif
-
-void func_802D5508_1EE218(void) {
-	if (D_802E0FB0-- <= 0) {
-		func_80013468_14068(6);
-		func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
-		func_800074BC_80BC(func_802D5508_1EE218);
-	}
-}
-
-void func_802D5560_1EE270(void) {
-	D_802E0FB0 = 0x1E;
-	func_80007410_8010(&func_802D5508_1EE218);
-}
-
-#ifdef NON_MATCHING
-// CURRENT(430): corrected scale offset to 0.25; double setup remains after 20 compiled variants.
-void func_802D5590_1EE2A0(void) {
-	f64 temp_f20;
-	s16 temp_s6;
-	s16 var_s1;
-	s32 var_v0;
-	s32 var_v0_2;
-
-	if (D_802E0FB0 == -1) {
-		func_800076D4_82D4(8);
-		func_80018D7C_1997C(0xDC);
-	}
-	D_802E0FB0++;
-	if (D_802E0FB0 == 0xA) {
-		func_80123E90_132E40(&vehicleInstances[80], 2);
-		D_802E0FB0 = 0;
-	}
-	if (vehicleInstances[80].unk1C <= 0) {
-		func_800074BC_80BC(func_802D5590_1EE2A0);
-		func_800AE190_BD140(D_801591C4);
-		temp_s6 = (s16) func_800DF9C8_EE978(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0xC8, 0, 0);
-		var_s1 = 0;
-		if (D_801591C4 >= 9) {
-			var_v0 = 8;
-		} else {
-			var_v0 = D_801591C4;
-		}
-		if (var_v0 > 0) {
-			temp_f20 = D_802E0EA8_1F9BB8[0];
-			do {
-				if (var_s1 < 4) {
-					func_801371B8_146168(0, 0x185, vehicleInstances[80].unk0, vehicleInstances[80].unk2, (s32) vehicleInstances[80].unk4, (f32) (((f64) (f32) (func_800038E0_44E0() % 100) / temp_f20) + 0.25));
-				}
-				func_800C7924_D68D4(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0x10, (s32) temp_s6, vehicleTypes[vehicleInstances[80].unk1A].unk36 * 2, &D_502D390, 1);
-				var_s1 += 1;
-				if (D_801591C4 >= 9) {
-					var_v0_2 = 8;
-				} else {
-					var_v0_2 = D_801591C4;
-				}
-			} while (var_s1 < var_v0_2);
-		}
-		D_801591C4 = 0;
-		func_800076D4_82D4(9);
-	}
-}
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5590_1EE2A0.s")
-#endif
-
-#ifdef NON_MATCHING
-// CURRENT(2510): corrected fields and postincrement timers; timer load hoisting remains after 20+ builds.
-int func_802D57F4_1EE504(void) {
-
-	switch (D_80157F8C) {
-	case 0:
-		buildingInstances[38].statusFlags |= 0x10000;
-		D_802E056C_1F927C = 0;
-		if (D_80157F8E == 1) {
-			osSyncPrintf(D_802E0DC0_1F9AD0);
-			func_8011D438_12C3E8(0xC, 0);
-		}
-		if (D_80157F8E++ >= 0x15) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
-		break;
-
-	case 1:
-		alienTypes[1].unk54 &= ~2;
-		if (D_80157F8E == 5) {
-			osSyncPrintf(D_802E0DE8_1F9AF8);
-			buildingInstances[38].statusFlags |= 0x20;
-			buildingInstances[38].unkE = 0x50;
-		}
-		D_80157F8E++;
-		if (buildingInstances[38].unk7 == 0) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
-		break;
-
-	case 2:
-		if (D_802E056C_1F927C == 0xB4) {
-			func_800C0D1C_CFCCC(-0x50, 0x50, 0);
-		}
-		if ((D_802E056C_1F927C == 0x91) || (D_802E056C_1F927C == 0xC8)) {
-			func_80014A3C_1563C(0, 0xDB, 800.0f, 0, -1.0f);
-		}
-		if (D_80157F8E++ >= 0x191) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
-		break;
-
-	case 3:
-		alienTypes[1].unk54 |= 2;
-		osSyncPrintf(D_802E0E04_1F9B14);
-		D_802E0FB0 = 0;
-		func_80007410_8010(&func_802D5590_1EE2A0);
-		D_802E0FB0 = -0x32;
-		return 1;
-	default:
-		D_802E056C_1F927C += 1;
-		return 0;
-	}
-	D_802E056C_1F927C += 1;
-	return 0;
-}
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D57F4_1EE504.s")
-#endif
-
 void func_802D5A78_1EE788(void) {
 	osSyncPrintf(&D_802E0E10_1F9B20);
 	D_801591C4 = 0;
@@ -853,34 +789,34 @@ void func_802D5FBC_1EECCC(void) {
 
 // unused? appears to spawn Doodlebugs to attack the aircraft carrier in Blackness Naval Base (buildinginstance 34)
 #ifdef NON_MATCHING
-/* CURRENT 170: constant address and register scheduling remain after 20 builds. */
 void func_802D5FE4_1EECF4(void) {
-	s8 (*coords)[2];
-	s8 (*end)[2];
-	s32 invalid;
-	f64 scaleZ;
-	f64 scaleX;
-	s32 result;
-
-	coords = (s8 (*)[2])D_802E0570_1F9280;
-	end = (s8 (*)[2])D_802E0580_1F9290;
-	invalid = 0xFF;
-	scaleZ = 1.5;
-	scaleX = 1.7;
-	do {
-		s16 baseZ = buildingInstances[34].zCoord;
-		s16 x = buildingInstances[34].xCoord + (s32)((f64)((*coords)[0] << 8) * scaleX);
-		s16 z = baseZ + (s32)((f64)((*coords)[1] << 8) * scaleZ);
-		result = func_80092A50_A1A00(x, z, -1);
-		if ((result & 0xFF) != invalid) {
-			func_80080B44_8FAF4((u8)result, 0x22);
-		}
-		coords++;
-	} while (coords != end);
+    s32 i;
+    u8 result;
+    s32 x;
+    s32 z;
+    for (i = 0; i < 8; i++) {
+        x = (s32)((D_802E0570_1F9280[i * 2] << 8) * 1.7);
+        z = buildingInstances[34].zCoord;
+        (void)z;
+        z = (u16)z;
+        x = (u16)x;
+        z = (u16)(s32)((D_802E0570_1F9280[i * 2 + 1] << 8) * 1.5) + z;
+		x += buildingInstances[34].xCoord;
+        x = (s16)x;
+        z = (s16)z;
+        result = func_80092A50_A1A00_WordArgs(x, z, -1);
+        if (result == 0xFF) {
+            continue;
+        }
+        func_80080B44_8FAF4(result, 0x22);
+    }
 }
-
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s", "src.us/overlay_level/java/1ED9E0_unmatched_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s", "src.us/overlay_level/java/1ED9E0_unmatched_late_rodata.eu.s")
+#endif
 #endif
 
 // called through mission data table in java overlay D_802E04A4 entry 10
@@ -943,13 +879,10 @@ void func_802D62A0_1EEFB0(void)
   }
 }
 
-#ifdef NON_MATCHING
 /* State machine for java zone building display sequence
  * D_80157F8C: current state (0-6)
  * D_80157F8E: frame counter within state
- * After cases 0-5, calls building position display funcs if state < 4
- * NOTE: C body matches ROM only when compiled with NON_MATCHING=1 flag.
- * IDO produces different code without that flag â€” do not strip this wrapper. */
+ * After cases 0-5, calls building position display funcs if state < 4 */
 s32 func_802D6338_1EF048(void) {
 	s16 temp_s1;
 
@@ -960,8 +893,7 @@ s32 func_802D6338_1EF048(void) {
 			D_802E0FB6 += 2;
 		}
 		buildingInstances[50].xCoord = (s16) (buildingInstances[50].xCoord - D_802E0FB6);
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -969,8 +901,7 @@ s32 func_802D6338_1EF048(void) {
 	case 1:
 		/* Continue building descent for longer phase */
 		buildingInstances[50].xCoord = (s16) (buildingInstances[50].xCoord - D_802E0FB6);
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x97) {
+		if (D_80157F8E++ >= 0x97) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -978,8 +909,7 @@ s32 func_802D6338_1EF048(void) {
 	case 2:
 		/* Snap building to fixed position */
 		buildingInstances[50].xCoord = (s16) -0x4B00;
-		D_80157F8E += 1;
-		if (D_80157F8E >= 2) {
+		if (D_80157F8E++ >= 2) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -990,8 +920,7 @@ s32 func_802D6338_1EF048(void) {
 		if (D_80157F8E == 0x62) {
 			func_800DF038_EDFE8((s16) (buildingInstances[49].xCoord + 0x64), (s16) (D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
 		}
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x83) {
+		if (D_80157F8E++ >= 0x83) {
 			D_80157F8C += 1;
 			D_80157F8E = 0;
 		}
@@ -1011,8 +940,7 @@ s32 func_802D6338_1EF048(void) {
 		if ((D_80157F8E % 5) == 0) {
 			func_800E0F4C_EFEFC((s16) (buildingInstances[50].xCoord - (D_80157F8E * 0x32) + 0x3E8), (s16) (D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x19);
 		}
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
@@ -1028,16 +956,13 @@ s32 func_802D6338_1EF048(void) {
 		if (D_80157F8E == 0x1E) {
 			func_8011C080_12B030(0x31);
 		}
-		D_80157F8E += 1;
-		if (D_80157F8E >= 0x29) {
+		if (D_80157F8E++ >= 0x29) {
 			D_80157F8E = 0;
 			D_80157F8C += 1;
 		}
 		break;
 	case 6:
 		return 1;
-	default:
-		break;
 	}
 
 	/* Tail: display building position while in early states */
@@ -1047,9 +972,6 @@ s32 func_802D6338_1EF048(void) {
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6338_1EF048.s")
-#endif
 
 void func_802D6840_1EF550(void) {
 	D_802E0FB6 = 0;
@@ -1061,14 +983,15 @@ s32 func_802D687C_1EF58C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-#ifdef NON_MATCHING
-/* CURRENT 430: channel ordering and two global-address schedules remain. */
 int func_802D68F4_1EF604(void) {
 	s16 randomX;
 	s16 randomZ;
 	s16 weight;
 	s16 i;
 	s32 color;
+	s32 red;
+	s32 green;
+	s32 blue;
 	s32 color1;
 	s32 color2;
 	u16 firstColor;
@@ -1088,10 +1011,7 @@ int func_802D68F4_1EF604(void) {
 		if (D_80157F8E % 7 == 0) {
 			func_800D16BC_E066C(0x3980, 0xB3B, 0x1400, randomX + 0x3778, 0x1194, randomZ + 0x13EC, 10);
 		}
-		if (D_80157F8E++ >= 161) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
+		if (D_80157F8E++ >= 161) { D_80157F8E = 0; D_80157F8C += 1; }
 		break;
 	case 2:
 		randomX = func_800038E0_44E0() >> 5;
@@ -1101,15 +1021,13 @@ int func_802D68F4_1EF604(void) {
 		}
 		weight = 100 - D_80157F8E;
 		for (i = 0; i < 256; i++) {
-			s32 red;
-			s32 green;
-			s32 blue;
 
 			color = D_802D48D0[i];
 			red = ((s32)(color & 0xF800) >> 11) & 0xFF;
 			green = ((s32)(color & 0x7C0) >> 6) & 0xFF;
 			blue = ((s32)(color & 0x3E) >> 1) & 0xFF;
-			color = func_802D687C_1EF58C(red, 12, weight, 100);
+			color = 12;
+			color = func_802D687C_1EF58C(red >> 0, color, weight, 100);
 			D_802D4AD0[i] = color << 11;
 			D_802D4AD0[i] += func_802D687C_1EF58C(green, 12, weight, 100) << 6;
 			D_802D4AD0[i] += func_802D687C_1EF58C(blue, 10, weight, 100) * 2;
@@ -1118,52 +1036,42 @@ int func_802D68F4_1EF604(void) {
 			weight = 99 - D_80157F8E;
 		}
 		{
-			s32 red;
-			s32 green;
-			s32 blue;
 
 		color1 = D_802D48D0[D_802CA8D0];
 		red = ((s32)(color1 & 0xF800) >> 11) & 0xFF;
 		green = ((s32)(color1 & 0x7C0) >> 6) & 0xFF;
 		blue = ((s32)(color1 & 0x3E) >> 1) & 0xFF;
-		color1 = func_802D687C_1EF58C(red, 12, weight, 100);
+		color1 = 12;
+		color1 = func_802D687C_1EF58C(red >> 0, color1, weight, 100);
 		firstColor = color1 << 11;
 		firstColor += func_802D687C_1EF58C(green, 12, weight, 100) << 6;
 		firstColor += func_802D687C_1EF58C(blue, 10, weight, 100) * 2;
 		}
 		{
-			s32 red;
-			s32 green;
-			s32 blue;
 
 		color2 = D_802D48D0[D_802D48CF];
 		red = ((s32)(color2 & 0xF800) >> 11) & 0xFF;
 		green = ((s32)(color2 & 0x7C0) >> 6) & 0xFF;
 		blue = ((s32)(color2 & 0x3E) >> 1) & 0xFF;
-		color2 = func_802D687C_1EF58C(red, 12, weight, 100);
+		color2 = 12;
+		color2 = func_802D687C_1EF58C(red >> 0, color2, weight, 100);
 		secondColor = color2 << 11;
 		secondColor += func_802D687C_1EF58C(green, 12, weight, 100) << 6;
 		secondColor += func_802D687C_1EF58C(blue, 10, weight, 100) * 2;
 		}
 		func_800049D4_55D4(firstColor, secondColor);
 		leoInitUnit_atten();
-		if (D_80157F8E++ >= 101) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
+		if (D_80157F8E++ >= 101) { D_80157F8E = 0; D_80157F8C += 1; }
 		break;
 	case 3:
 		func_800072CC_7ECC(0x21);
 		return 1;
-	default:
-		break;
 	}
 	return 0;
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
-#endif
+
+
 
 void func_802D6DBC_1EFACC(void) {
 	D_802E0FB8 = 0;
@@ -1335,7 +1243,11 @@ void func_802D6E70_1EFB80(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s", "src.us/overlay_level/java/1ED9E0_lightning_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s", "src.us/overlay_level/java/1ED9E0_lightning_late_rodata.eu.s")
+#endif
 #endif
 
 // 0xC cutscene/mission called thru level overlay table
@@ -1348,8 +1260,6 @@ void func_802D795C_1F066C(void) {
 	func_800074BC_80BC(&func_802D6E70_1EFB80); // remove lightning from callback list
 }
 
-// CURRENT(5) - jump table offset 0xe90 vs 0xf20 (rodata layout)
-#ifdef NON_MATCHING
 void func_802D7980_1F0690(void) {
 	switch (D_80048030) {
 	case 0:
@@ -1414,9 +1324,6 @@ void func_802D7980_1F0690(void) {
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7980_1F0690.s")
-#endif
 
 void func_802D7B68_1F0878(u8 arg0) {
 	s16 sp5E;
@@ -2159,7 +2066,7 @@ void func_802D91F8_1F1F08(u8 arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D91F8_1F1F08.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D91F8_1F1F08.s", "src.us/overlay_level/java/1ED9E0_alien_late_rodata.s")
 #endif
 
 void func_802D9CB8_1F29C8(u8 alienIdx) {
