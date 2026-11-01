@@ -237,41 +237,38 @@ void func_800A99B8_B8968(u8 arg0)
 	} 
 }
 
-/* CURRENT(755) */
-#ifdef NON_MATCHING
 s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
 	u8 typeIndex;
 	s32 hpDelta;
 	s32 i;
-	u8 *members;
+	AlienInstance *parent;
 
 	typeIndex = alienInstances[arg0].typeIndex;
-	members = (u8 *)&alienInstances[alienInstances[arg0].unk25];
+	parent = &alienInstances[alienInstances[arg0].unk25];
 
 	if ((u32)D_80052A8C % 100 == 0) {
 		hpDelta = D_8013D8D8_14C888[0] - alienInstances[arg0].hitPoints;
 
 		for (i = 1; i < arg1; i++) {
-			if (members[i - 1] != 0xFF) {
-				hpDelta += D_8013D8D8_14C888[i] - alienInstances[members[i - 1]].hitPoints;
+			if (parent->alienIds[i - 1] != 0xFF) {
+				hpDelta = (hpDelta + D_8013D8D8_14C888[i]) - alienInstances[parent->alienIds[i - 1]].hitPoints;
 			}
 		}
 
 		D_8013D8D8_14C888[0] = alienInstances[arg0].hitPoints;
 
 		for (i = 1; i < arg1; i++) {
-			if (members[i - 1] != 0xFF) {
-				D_8013D8D8_14C888[i] = alienInstances[members[i - 1]].hitPoints;
+			if (parent->alienIds[i - 1] != 0xFF) {
+				D_8013D8D8_14C888[i] = alienInstances[parent->alienIds[i - 1]].hitPoints;
 			}
 		}
 
-		return ((f32)alienTypes[typeIndex].unk3A * arg2) < (f32) hpDelta;
+		if (((f32)alienTypes[typeIndex].unk3A * arg2) < (f32)hpDelta) {
+			return 1;
+		}
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9A90_B8A40.s")
-#endif
 
 // AI - Clear teleport flags callback
 void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
