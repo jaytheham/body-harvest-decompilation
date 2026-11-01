@@ -2352,6 +2352,9 @@ s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
   return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
 }
 
+/* Legacy callers prepare two additional words; terrain height ignores them. */
+#pragma weak func_800B84D0_C7480_4Args = func_800B84D0_C7480
+
 /* Get terrain height with random variation (roughness) */
 s32 func_800B85CC_C757C(s16 arg0, s16 arg1) {
 	Unk8003E290Entry *sp1C;
