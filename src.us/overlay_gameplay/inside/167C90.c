@@ -295,9 +295,9 @@ void func_80080770_168830(void) {
 	D_800E659C = D_800E6A78.unk4C - 96.0f;
 	D_800E65A0 = 50.0f;
 	D_800E65A4 = D_800E6A78.unk54 - 96.0f;
-	D_8008DDF4_175EB4 = (f32) (((f64) D_800E6A78.unk4C - (((f64) (f32) coss((u16) (D_800E6A78.unkE + 0x2000)) / 32768.0) * D_800A4F28_18CFE8)) - 96.0);
+	D_8008DDF4_175EB4 = (f32) (((f64) D_800E6A78.unk4C - (((f64) (f32) coss((u16) (D_800E6A78.unkE + 0x2000)) / 32768.0) * 130.0)) - 96.0);
 	D_8008DDF8_175EB8 = 75.0f;
-	D_8008DDFC_175EBC = (f32) (((f64) D_800E6A78.unk54 - (((f64) (f32) sins((u16) (D_800E6A78.unkE + 0x2000)) / 32768.0) * D_800A4F30_18CFF0)) - 96.0);
+	D_8008DDFC_175EBC = (f32) (((f64) D_800E6A78.unk54 - (((f64) (f32) sins((u16) (D_800E6A78.unkE + 0x2000)) / 32768.0) * 130.0)) - 96.0);
 }
 
 // AI - Set view mode to talking-to-NPC
@@ -458,7 +458,7 @@ void func_80080E28_168EE8(void) {
 			} else {
 				var_v1 = -delta;
 			}
-			if (D_800A4F38_18CFF8[0] < (f64) var_v1) {
+			if (91.02222222222223 < (f64) var_v1) {
 				if (D_800E7486 == 1) {
 					if (delta >= 0) {
 						var_v1 = delta;
@@ -530,7 +530,8 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
     f32 base;
     u32 result;
 
-    base = arg0 / D_800A4F40_18D000.value;
+    base = arg0 / 182.04444444444445;
+    if (base) {}
     if (arg1 != 0) {
         base = angle = base + 15.0f;
         if (angle < 0.0f) {
@@ -538,7 +539,7 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
         }
         result = (u8) (angle / 30.0f);
     } else {
-        angle = base + D_800A4F48_18D008.value;
+        base = angle = base + 22.5;
         if (angle < 0.0f) {
             angle += 360.0f;
         }
@@ -666,11 +667,7 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 }
 
 #else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.eu.s")
-#endif
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s")
 #endif
 
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation

@@ -4072,8 +4072,5 @@ extern const f64 D_800A4DB0_18CE70[1];
 extern const f64 D_80145160_154110[1];
 extern const f32 D_801451C8_154178[1];
 
-extern const f64 D_800A4F38_18CFF8[1];
-extern const ShadowGeometryConstant D_800A4F40_18D000;
-extern const ShadowGeometryConstant D_800A4F48_18D008;
 
 #endif /* LIBULTRA_REFERENCE */

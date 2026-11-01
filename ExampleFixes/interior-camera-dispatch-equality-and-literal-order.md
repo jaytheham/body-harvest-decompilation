@@ -4,7 +4,7 @@ In `func_8007FC74_167D34`, equality emitted `c.eq.s $f0,$f2` and `c.eq.s $f12,$f
 
 -> `code changed`
 
-Write the camera-coordinate globals first in both equalities. Remove the dispatch jump-table and `180.0` placeholders, retaining the inline literal; move the remaining functions' constants into supplemental `.late_rodata` attached to the next unmatched function. Keep separate US/EU table-address versions.
+Write the camera-coordinate globals first in both equalities. Remove the dispatch jump-table and `180.0` placeholders, retaining the inline literal; use inline constants for the later camera functions so IDO emits them after the generated jump table (see `interior-camera-compass-inline-constants.md`).
 
 -> `correct ASM`
 
