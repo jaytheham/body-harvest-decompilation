@@ -71,3 +71,5 @@ Be careful when you make changes not to accidently apply those changes to other 
 Whenever you match a function or a particularly tricky bit of asm if there is a detectable pattern or insight in the changes you made update `ExampleFixes` with a specific example of that change and what it fixed. Only of this form: `incorrect ASM` -> `code changed` -> `correct ASM`
 
 After matching a function commit the changes to the current branch.
+
+If switching to a different function before finishing matching the current function, commit any improvements to the current branch.
