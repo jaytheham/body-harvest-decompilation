@@ -386,203 +386,169 @@ s32 func_800A9F34_B8EE4(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800A9F34_B8EE4.s")
 #endif
 
-// CURRENT(27211)
+// CURRENT(6112)
 #ifdef NON_MATCHING
 // AI - Death explosion effects
 void func_800AA340_B92F0(u8 arg0) {
-	s16 spD6;
-	u16 spBC;
-	u8 sp99;
-	u8 sp98;
-	s16 sp96;
-	AlienInstance *sp80;
-	s32 sp7C;
-	s32 sp78;
-	s32 sp74;
-	f32 temp_f22_2;
-	f64 temp_f20;
-	f64 temp_f22;
-	s16 temp_s0_3;
-	s16 temp_s1_4;
-	s16 temp_s1_6;
-	s16 temp_s2_3;
-	s16 temp_s2_5;
-	s16 temp_s3;
-	s16 temp_s4;
-	s16 temp_s4_2;
-	s16 temp_s5;
-	s16 temp_s5_2;
-	s16 temp_s6_2;
-	s16 temp_t4;
-	s16 temp_v0_3;
-	s16 temp_v1;
-	s16 var_s3;
-	s16 var_s4;
-	s16 var_s6;
-	s16 var_v1;
-	s32 temp_f16;
-	s32 temp_fp;
-	s32 temp_s0;
-	s32 temp_s0_2;
-	s32 temp_s0_4;
-	s32 temp_s1;
-	s32 temp_s1_2;
-	s32 temp_s1_3;
-	s32 temp_s1_5;
-	s32 temp_s1_7;
-	s32 temp_s2;
-	s32 temp_s2_2;
-	s32 temp_s2_4;
-	s32 temp_s2_6;
-	s32 temp_s2_7;
-	s32 temp_s6;
-	s32 temp_s7;
-	s32 temp_v0_2;
-	u16 var_fp_2;
-	s32 var_s0;
-	s32 var_s5;
-	u16 var_fp;
-	s16 *typeVals;
+	s16 outer;
+	s16 phase;
+	AlienInstance *alien;
+	s32 beams;
+	s32 phaseOffset;
+	s32 segmentLimit;
+	s16 width;
+	u16 angle;
+	s32 height;
+	s32 randomX;
+	s32 randomY;
+	s32 randomZ;
+	s32 halfWidth;
+	s32 halfHeight;
+	s32 halfDepth;
+	f32 volume;
+	s16 segment;
+	u8 beamCount;
+	u8 segmentCount;
+	s16 beamHeight;
+	u8 effect;
+	f64 stepScale;
+	s32 depth;
 
-	temp_s1 = arg0 & 0xFF;
-	var_s0 = 0;
-	typeVals = &alienTypes[27].unkC;
+	randomX = 0;
 	D_80031414 = 1;
-	func_80089200_981B0(temp_s1 & 0xFF, 2, 0x12C);
-	sp80 = &alienInstances[temp_s1];
-	var_v1 = sp80->unk2C;
-	if (var_v1 >= 0x51) {
-		if (var_v1 >= 0x83) {
-			sp99 = 1;
-			sp98 = 6;
-			sp96 = (var_v1 * -4) + 0x2A8;
-			sp80->unkA = (s16) (s32) (( (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) * 200.0);
-			if ((func_800038E0_44E0() % 4) == 0) {
-				var_s0 = 1;
+	func_80089200_981B0(arg0, 2, 300);
+	alien = &alienInstances[arg0];
+	phase = alien->unk2C;
+	if (phase >= 81) {
+		if (phase >= 131) {
+			beamCount = 1;
+			segmentCount = 6;
+			beamHeight = -phase * 4 + 680;
+			alien->unkA = (s32)(((f32)coss((D_80052A8C * 20000) & 0xFFFF) / 32768.0) * 200.0);
+			if (func_800038E0_44E0() % -4 == 0) {
+				randomX = 1;
 			}
-		} else if ((var_v1 < 0x83) && (var_v1 >= 0x5B)) {
-			sp99 = 2;
-			sp98 = 4;
-			sp96 = (var_v1 * -4) + 0x2A8;
-			sp80->unkA = (s16) (s32) (( (f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) * 400.0);
-			if ((func_800038E0_44E0() % 2) == 0) {
-				var_s0 = 1;
+		} else if (phase < 131 && phase >= 91) {
+			beamCount = 2;
+			segmentCount = 4;
+			beamHeight = -phase * 4 + 680;
+			alien->unkA = (s32)(((f32)coss((D_80052A8C * 20000) & 0xFFFF) / 32768.0) * 400.0);
+			if (func_800038E0_44E0() % -2 == 0) {
+				randomX = 1;
 			}
 		} else {
-			sp99 = 4;
-			sp98 = 3;
-			sp96 = 0x140;
-			var_s0 = 1;
-			sp80->unkA = (s16) (s32) (((f32) coss((D_80052A8C * 0x4E20) & 0xFFFF) / 32768.0) * 800.0);
+			beamCount = 4;
+			segmentCount = 3;
+			beamHeight = 320;
+			alien->unkA = (s32)(((f32)coss((D_80052A8C * 20000) & 0xFFFF) / 32768.0) * 800.0);
+			randomX = 1;
 		}
-		if (var_s0 != 0) {
-			temp_s3 = typeVals[14] - 0xC8;
-			temp_s4 = typeVals[15] - 0xC8;
-			temp_s5 = typeVals[16] - 0xC8;
-			temp_s0 = func_800038E0_44E0() & 0xFFFF;
-			temp_s1_2 = func_800038E0_44E0() & 0xFFFF;
-			temp_s2 = func_800038E0_44E0() & 0xFFFF;
-			temp_s6 = temp_s3 >> 1;
-			temp_s7 = temp_s5 >> 1;
-			temp_fp = temp_s4 >> 1;
-			temp_v0_2 = func_800DDB60_ECB10((s16) (((temp_s0 % temp_s3) + sp80->unk0) - temp_s6), (s16) (((temp_s1_2 % temp_s5) + sp80->unk2) - temp_s7), (s16) (((temp_s2 % temp_s4) + sp80->unk4) - temp_fp), 7, (func_800038E0_44E0() % 300) + 0xC8);
-			func_800DDE1C_ECDCC(temp_v0_2, 0xFF);
-			func_800DDEE0_ECE90(temp_v0_2 & 0xFF, 1);
-			func_801371B8_146168(0, 0xE8, sp80->unk0, sp80->unk2, sp80->unk4, (f32) (((f32) (func_800038E0_44E0() % 100) / 500.0f) + D_80142900_1518B0));
-			temp_s0_2 = func_800038E0_44E0() & 0xFFFF;
-			temp_s1_3 = func_800038E0_44E0() & 0xFFFF;
-			temp_s2_2 = func_800038E0_44E0() & 0xFFFF;
-			func_800DFA34_EE9E4((s16) (((temp_s0_2 % temp_s3) + sp80->unk0) - temp_s6), (s16) (((temp_s1_3 % temp_s5) + sp80->unk2) - temp_s7), (s16) (((temp_s2_2 % temp_s4) + sp80->unk4) - temp_fp), ((func_800038E0_44E0() % 50) + 0x1E) & 0xFFFF, 0);
-			func_800E35E0_F2590(0x78);
+		if (randomX) {
+			width = alienTypes[27].unk34 - 200;
+			depth = (s16)(alienTypes[27].unk36 - 200);
+			height = (s16)(alienTypes[27].unk38 - 200);
+			randomX = (u16)func_800038E0_44E0();
+			randomY = (u16)func_800038E0_44E0();
+			randomZ = (u16)func_800038E0_44E0();
+			halfWidth = width >> 1;
+			halfHeight = height >> 1;
+			halfDepth = depth >> 1;
+			func_800DDE1C_ECDCC(effect = func_800DDB60_ECB10(randomX % width + alien->unk0 - halfWidth,
+				randomY % height + alien->unk2 - halfHeight,
+				randomZ % depth + alien->unk4 - halfDepth, 7, func_800038E0_44E0() % 300 + 200), 255);
+			func_800DDEE0_ECE90(effect, 1);
+			func_801371B8_146168(0, 232, alien->unk0, alien->unk2, alien->unk4,
+				(f32)((f32)(func_800038E0_44E0() % 100) / 500.0f + 0.9));
+			randomX = (u16)func_800038E0_44E0();
+			randomY = (u16)func_800038E0_44E0();
+			randomZ = (u16)func_800038E0_44E0();
+			func_800DFA34_EE9E4(randomX % width + alien->unk0 - halfWidth,
+				randomY % height + alien->unk2 - halfHeight,
+				randomZ % depth + alien->unk4 - halfDepth, (u16)(func_800038E0_44E0() % 50 + 30), 0);
+			func_800E35E0_F2590(120);
 		}
-		spD6 = 0;
-		if ((s32) sp99 > 0) {
-			sp74 = sp98 + 1;
-			sp7C = (s32) sp99;
-			sp78 = (s32) sp98;
-			var_fp = spBC;
+		outer = 0;
+		if (beamCount > 0) {
 			do {
-				var_s3 = 1;
-				var_s4 = sp80->unk0;
-				var_s6 = sp80->unk4;
-				var_s5 = sp80->unk2 + 0x64;
-				temp_s0_3 = (s16) ((s16) ((func_800038E0_44E0() % 500) + 0x1F4) / sp78);
-				switch (sp7C) {
+				segment = 1;
+				depth = alien->unk0;
+				halfWidth = alien->unk4;
+				height = alien->unk2 + 100;
+				randomX = (s16)((s16)(func_800038E0_44E0() % 500 + 500) / segmentCount);
+				switch (beamCount) {
 				case 1:
-					var_fp = func_800038E0_44E0() & 0xFFFF;
+					angle = func_800038E0_44E0() % 65536;
 					break;
 				case 2:
-					var_fp = (sp80->unk6 + (spD6 * (s16) (0x10000 / sp7C)) + ((D_80052A8C * 0x3200) & 0xFFFF) + 0x4000) & 0xFFFF;
+					phaseOffset = (u16)(D_80052A8C * 12800);
+				angle = alien->unk6 + outer * (s16)(65536 / beamCount) + phaseOffset + 0x4000;
 					break;
 				case 4:
-					var_fp = (sp80->unk6 + (spD6 * (s16) (0x10000 / sp7C)) + ((D_80052A8C * 0x1900) & 0xFFFF) + 0x4000) & 0xFFFF;
+					phaseOffset = (u16)(D_80052A8C * 6400);
+				angle = alien->unk6 + outer * (s16)(65536 / beamCount) + phaseOffset + 0x4000;
 					break;
 				}
-				if (sp74 >= 2) {
-					temp_f22 = (f64) temp_s0_3;
+				if (segmentCount + 1 >= 2) {
+					halfHeight = (s16)(32768 / segmentCount);
+					stepScale = randomX;
 					do {
-						temp_s1_4 = sp80->unk0;
-						temp_s2_3 = sp80->unk4;
-						temp_s0_4 = func_800B84D0_C7480(temp_s1_4, temp_s2_3) >> 8;
-						temp_f20 = (f64) var_s3;
-						temp_s1_5 = (s32) ((f64) temp_s1_4 + (((f64) (f32) sins(var_fp & 0xFFFF) / 32768.0) * temp_f22 * temp_f20));
-						temp_s2_4 = (s32) ((f64) temp_s2_3 + (-((f64) (f32) coss(var_fp & 0xFFFF) / 32768.0) * temp_f22 * temp_f20));
-						temp_f16 = (s32) ((f64) temp_s0_4 + (((f64) (f32) sins((var_s3 * (s16) (0x8000 / sp78)) & 0xFFFF) / 32768.0) * (f64) sp96));
-						func_800D16BC_E066C((s16) temp_s1_5, (s16) temp_f16, (s16) temp_s2_4, var_s4, var_s5, (s32) var_s6, 1);
-						var_s3 += 1;
-						var_s4 = (s16) temp_s1_5;
-						var_s5 = temp_f16;
-						var_s6 = (s16) temp_s2_4;
-					} while (var_s3 < sp74);
+						randomY = alien->unk0;
+						randomZ = alien->unk4;
+						randomX = func_800B84D0_C7480(randomY, randomZ) >> 8;
+						randomY = (s32)(randomY + (((f32)sins(angle) / 32768.0) * stepScale * segment));
+						randomZ = (s32)(randomZ + (-((f32)coss(angle) / 32768.0) * stepScale * segment));
+						randomX = (s32)(randomX + (((f32)sins((u16)(segment * halfHeight)) / 32768.0) * beamHeight));
+						func_800D16BC_E066C(randomY, randomX, randomZ, depth, height, halfWidth, 1);
+						depth = randomY;
+						height = randomX;
+						halfWidth = randomZ;
+						segment++;
+					} while (segment < segmentCount + 1);
 				}
-				temp_v0_3 = spD6 + 1;
-				spD6 = temp_v0_3;
-			} while (temp_v0_3 < sp7C);
-			spBC = var_fp;
+				outer++;
+		} while (outer < beamCount);
 		}
 	} else {
-		if (var_v1 == 0x50) {
-			func_800DF848_EE7F8(sp80->unk0, sp80->unk2, sp80->unk4, alienTypes[27].unkC, 0);
-			func_800E35E0_F2590(0xFF);
-			func_800C3BD8_D2B88(sp80->unk0, sp80->unk2, sp80->unk4, (u16)((f64)alienTypes[27].unkC * 1.5), 0x50, 0xF0, 0x78, 0);
-			var_v1 = sp80->unk2C;
+		if (phase == 80) {
+			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienTypes[27].unkC, 0);
+			func_800E35E0_F2590(255);
+			func_800C3BD8_D2B88(alien->unk0, alien->unk2, alien->unk4, (u16)(alienTypes[27].unkC * 1.5), 80, 240, 120, 0);
+			phase = alien->unk2C;
 		}
-		if ((var_v1 >= 0x29) && (var_v1 < 0x46)) {
-			temp_f22_2 = D_80142908_1518B8;
-			var_fp_2 = ((var_v1 * 0x1388) + 0xFFF9E580) & 0xFFFF;
-			spD6 = 0;
-			do {
-				temp_s1_6 = sp80->unk0;
-				temp_s2_5 = sp80->unk4;
-				func_800B84D0_C7480(temp_s1_6, temp_s2_5);
-				temp_s1_7 = (s32) ((f64) temp_s1_6 + (((f64) (f32) sins(var_fp_2 & 0xFFFF) / 32768.0) * (f64) (sp80->unk2C - 0x50) * 30.0));
-				temp_s2_6 = (s32) ((f64) temp_s2_5 + (-((f64) (f32) coss(var_fp_2 & 0xFFFF) / 32768.0) * (f64) (sp80->unk2C - 0x50) * 30.0));
-				func_801371B8_146168(0, 0xE8, sp80->unk0, sp80->unk2, sp80->unk4, temp_f22_2);
-				func_800DFA34_EE9E4((s16) temp_s1_7, (s16) (func_800B84D0_C7480((s16) temp_s1_7, (s16) temp_s2_6) >> 8), (s16) temp_s2_6, 0x4C, 0);
-				temp_t4 = spD6 + 1;
-				spD6 = temp_t4;
-				var_fp_2 = (var_fp_2 + 0x9C4) & 0xFFFF;
-			} while (temp_t4 < 2);
-			var_v1 = sp80->unk2C;
+		if (phase >= 41 && phase < 70) {
+			volume = 1.2f;
+			angle = phase * 5000 - 400000;
+			for (outer = 0; outer < 2; outer++) {
+				randomY = alien->unk0;
+				randomZ = alien->unk4;
+				func_800B84D0_C7480(randomY, randomZ);
+				randomY = (s32)(randomY + (((f32)sins(angle) / 32768.0) * (alien->unk2C - 80) * 30.0));
+				randomZ = (s32)(randomZ + (-((f32)coss(angle) / 32768.0) * (alien->unk2C - 80) * 30.0));
+				func_801371B8_146168(0, 232, alien->unk0, alien->unk2, alien->unk4, volume);
+				func_800DFA34_EE9E4(randomY, func_800B84D0_C7480(randomY, randomZ) >> 8, randomZ, 76, 0);
+				angle += 2500;
+			}
+			phase = alien->unk2C;
 		}
-		if ((var_v1 < 0x28) && (((var_v1 % 10) == 0) || (var_v1 == 1))) {
-			temp_s4_2 = ((func_800038E0_44E0() % 400) + sp80->unk0) - 0xC8;
-			temp_s6_2 = sp80->unk2;
-			temp_s5_2 = ((func_800038E0_44E0() % 400) + sp80->unk4) - 0xC8;
-			temp_s2_7 = func_800038E0_44E0() & 0xFFFF;
-			func_800D16BC_E066C(temp_s4_2, temp_s6_2, temp_s5_2, (s16) (((temp_s2_7 % 2000) + temp_s4_2) - 0x3E8), 0xBB8, ((func_800038E0_44E0() % 2000) + temp_s5_2) - 0x3E8, 5);
-			if (sp80->unk2C == 1) {
-				func_800DF848_EE7F8(temp_s4_2, temp_s6_2, temp_s5_2, (u16)(alienTypes[27].unkC * 2), 8);
-				func_800B8D80_C7D30(temp_s4_2, temp_s5_2, 1, 2);
+		if (phase < 40 && (phase % 10 == 0 || phase == 1)) {
+			depth = func_800038E0_44E0() % 400 + alien->unk0 - 200;
+			height = alien->unk2;
+			halfWidth = func_800038E0_44E0() % 400 + alien->unk4 - 200;
+			randomZ = (u16)func_800038E0_44E0();
+			func_800D16BC_E066C(depth, height, halfWidth,
+				randomZ % 2000 + depth - 1000, 3000, func_800038E0_44E0() % 2000 + halfWidth - 1000, 5);
+			if (alien->unk2C == 1) {
+				func_800DF848_EE7F8(depth, height, halfWidth, (u16)(alienTypes[27].unkC * 2), 8);
+				func_800B8D80_C7D30(depth, halfWidth, 1, 2);
 				func_800BED24_CDCD4();
 			} else {
-				func_800DF848_EE7F8(temp_s4_2, temp_s6_2, temp_s5_2, alienTypes[27].unkC, 8);
+				func_800DF848_EE7F8(depth, height, halfWidth, alienTypes[27].unkC, 8);
 			}
-			func_800E35E0_F2590(0xFF);
+			func_800E35E0_F2590(255);
 		}
-		temp_v1 = sp80->unkA;
-		if (temp_v1 < 0xBB8) {
-			sp80->unkA = (s16) (temp_v1 + 0x32);
+		phase = alien->unkA;
+		if (phase < 3000) {
+			alien->unkA = phase + 50;
 		}
 	}
 }
