@@ -1,4 +1,4 @@
-`func_800813B4_169474` (partial candidate, CURRENT(20)):
+`func_800813B4_169474`:
 
 ```asm
 # Incorrect: initial index move precedes hoisted address setup.

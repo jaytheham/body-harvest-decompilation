@@ -549,7 +549,6 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 }
 
 // AI - Check if camera yaw direction is clear by scanning collision-map markers
-#ifdef NON_MATCHING // CURRENT(20)
 s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 	u8 sp5F;
 	u8 var_s1;
@@ -557,21 +556,21 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 	s32 sp58;
 	s32 sp54;
 	s32 sp50;
-	s32 var_s0;
 	UnkS8Pair *var_s2;
 	s32 temp_v0;
 	s16 temp_x;
 	s16 temp_y;
+	s16 var_s0;
 	u8 count;
 	CameraScanCompletion done;
-	s16 x;
-	s16 y;
-	s32 result;
+	s32 x;
+	s32 y;
 	s32 sp2C;
+	UnkS8Pair *entry;
 
-	(void)&arg0; 
-	(void)&arg1; 
-	(void)&sp5F; 
+	(void)&arg0;
+	(void)&arg1;
+	(void)&sp5F;
 	(void)&sp2C;
 	if (arg2 > 155.0f) {
 		var_s0 = 1;
@@ -602,12 +601,15 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 
 	for (var_a3 = (s8)sp5F; !done.value; var_a3 = (s8)((var_a3 + 1) % var_s1)) {
 		count++;
-		x = (s16)(var_s2[var_a3].unk0 + temp_x);
+		entry = &var_s2[var_a3];
+		x = entry->unk0 + temp_x;
+		x = (s16)x;
 		if (x <= 0 || D_800E6460 < x) {
 			sp58 = 0;
 			break;
 		}
-		y = (s16)(var_s2[var_a3].unk1 + temp_y);
+		y = entry->unk1 + temp_y;
+		y = (s16)y;
 		if (y <= 0 || D_800E6464 < y) {
 			sp58 = 0;
 			break;
@@ -627,12 +629,15 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 	count = 0;
 	do {
 		count++;
-		x = (s16)(var_s2[var_a3].unk0 + temp_x);
+		entry = &var_s2[var_a3];
+		x = entry->unk0 + temp_x;
+		x = (s16)x;
 		if (x <= 0 || D_800E6460 < x) {
 			sp54 = 0;
 			break;
 		}
-		y = (s16)(var_s2[var_a3].unk1 + temp_y);
+		y = entry->unk1 + temp_y;
+		y = (s16)y;
 		if (y <= 0 || D_800E6464 < y) {
 			sp54 = 0;
 			break;
@@ -652,23 +657,19 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 
 	if ((sp54 != 0) && (sp58 != 0)) {
 		if (sp50 != 0) {
-			result = 1;
+			temp_v0 = 1;
 		} else {
-			result = 2;
+			temp_v0 = 2;
 		}
 	} else if (sp58 != 0) {
-		result = 1;
+		temp_v0 = 1;
 	} else if (sp54 != 0) {
-		result = 2;
+		temp_v0 = 2;
 	} else {
-		result = 0;
+		temp_v0 = 0;
 	}
-	return result;
+	return temp_v0;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s")
-#endif
 
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation
 void func_80081764_169824(void) {

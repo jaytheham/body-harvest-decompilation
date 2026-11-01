@@ -1,4 +1,4 @@
-`func_800813B4_169474` (partial candidate, CURRENT(140)):
+`func_800813B4_169474`:
 
 ```asm
 # Incorrect: clearing an already-zero u8 was optimized away.
