@@ -1987,7 +1987,7 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 		return;
 	}
 
-	frameHalfSrc = ((Unk8007F878_404 *)((Unk80157600 *)D_800E6F00)->unk404)->unkE / 2;
+	frameHalfSrc = ((Unk8007F878_404 *)((Unk80157600 *)D_800E6F00)->unk404)->channels[0].frameCount / 2;
 	if ((D_800E6A68 & 0x100) == 0x100) {
 		if (((Unk165E60AnimState *)D_800E6F00)->unk18 >= frameHalfSrc) {
 			osSyncPrintf(D_800A4CAC_18CD6C);
