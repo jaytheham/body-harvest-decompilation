@@ -1377,39 +1377,34 @@ void func_8000D384_DF84(AnimFrameData *arg0, AnimFrameData *arg1, f32 arg2, Anim
 	((AnimFrameData14 *)arg3)->g = (u16)((f32)(u32)((AnimFrameData14 *)arg0)->g + (f32)(((AnimFrameData14 *)arg1)->g - ((AnimFrameData14 *)arg0)->g) * arg2);
 }
 
-// CURRENT(590)
-#ifdef NON_MATCHING
 void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4) {
-	s32 base;
-	u16 offset0;
-	AnimFrameData14 sp44;
-	AnimFrameData14 sp34;
-	AnimFrameData14 sp24;
+    u16 frame0;
+    u16 frame1;
+    AnimFrameData14 sp44;
+    AnimFrameData14 sp34;
+    AnimFrameData14 sp24;
 
-	offset0 = (*(u16 *)((s32)arg0 + arg3 * 4 + 0xC) + arg2->unk18) & 0xFFFF;
-	base = (s32)arg0 + (offset0 * 0xE);
-	sp44 = *(AnimFrameData14 *)(base + 0x50);
-
-	base = (s32)arg1 + (((*(u16 *)((s32)arg1 + (arg3 << 2) + 0xC) + arg2->unk18) & 0xFFFF) * 0xE);
-	sp34 = *(AnimFrameData14 *)(base + 0x50);
+    frame0 = arg0->channels[arg3].frameOffset;
+    frame0 += arg2->unk18;
+    sp44 = arg0->frames[frame0];
+    frame1 = arg1->channels[arg3].frameOffset;
+    frame1 += arg2->unk18;
+    sp34 = arg1->frames[frame1];
 
 	func_8000D384_DF84((AnimFrameData *)&sp44, (AnimFrameData *)&sp34, arg4, (AnimFrameData *)&sp24);
 
-	*(AnimFrameData14 *)&arg2->unk24 = sp24;
+	arg2->frame = sp24;
 	arg2->unk1C = 0.0f;
 
-	arg2->unk20 = (f32)(u32)sp24.g;
+	arg2->unk20 = (u32)sp24.g;
 
 	arg2->unk32 = arg2->unk0;
 	arg2->unk34 = arg2->unk2;
 	arg2->unk36 = arg2->unk4;
-	arg2->unk38 = (s16)arg2->unk8;
-	arg2->unk3A = (s16)arg2->unkC;
-	arg2->unk3C = (s16)arg2->unk10;
+	arg2->unk38 = arg2->unk8;
+	arg2->unk3A = arg2->unkC;
+	arg2->unk3C = arg2->unk10;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000D588_E188.s")
-#endif
 
 // https://decomp.me/scratch/KhfAB
 s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7)
