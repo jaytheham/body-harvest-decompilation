@@ -2119,7 +2119,7 @@ extern s16 D_8014D188[]; // AI - Mission info continuation counts per mission
 extern s16 D_8014D1B6; // AI - Mission counter (initialized to 0)
 extern u32 D_8014D1B8[]; // AI - Mission object/alien used bitmask (7 entries)
 extern u8 D_8014D200[];
-extern u8 D_8014D298[][10];
+extern Unk_8014D298 D_8014D298[];
 extern s32 D_8014D2E8;
 extern s32 D_8014D2EC;
 extern s32 D_8014D2F0;

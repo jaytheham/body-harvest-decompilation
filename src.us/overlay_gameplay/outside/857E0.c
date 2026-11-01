@@ -50,7 +50,7 @@ void func_80076868_85818(s32 arg0) {
 	s8 neg_one;
 
 	for (i = 0; i < D_8014D2EC; i++) {
-		if (arg0 == *(u16*)D_8014D298[i]) {
+		if (arg0 == D_8014D298[i].unk0) {
 			func_800769A8_85958(i);
 		}
 	}
@@ -72,7 +72,7 @@ s32 func_80076918_858C8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 		index = D_8014D2EC;
 	}
 	index = D_8014D2EC;
-	entry = (Unk_8014D298 *) D_8014D298[index];
+	entry = &D_8014D298[index];
 	entry->unk2 = 0;
 	entry->unk0 = (s16) arg0;
 	entry->unk8 = (s16) arg3;
@@ -84,7 +84,7 @@ s32 func_80076918_858C8(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 
 void func_800769A8_85958(s32 arg0) {
 	s32 temp_t7;
-	*((Unk_8014D298 *) D_8014D298[arg0]) = *((Unk_8014D298 *) D_8014D298[D_8014D2EC = D_8014D2EC - 1]);
+	D_8014D298[arg0] = D_8014D298[D_8014D2EC = D_8014D2EC - 1];
 }
 
 #ifdef NON_MATCHING
@@ -298,35 +298,35 @@ void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 
 // fell tree
 #ifdef NON_MATCHING
-// CURRENT(2883)
+// CURRENT(47)
 void func_800770D8_86088(s32 arg0) {
-	Unk_8014D298* entry;
-	s32 temp_s1;
-	u16 treeIndex;
-	u32 sp8C;
-	u32 sp88;
-	s32 pad0;
-	s32 pad1;
+    Unk_8014D298* entry;
+    u32 temp_s1;
+    u16 treeIndex;
+    s32 timer;
+    u32 sp8C;
+    u32 sp88;
+    f32 scale[3];
+    Mtx sp30;
+    Mtx* mtx;
 
-	entry = (Unk_8014D298*)&D_8014D298[arg0];
-	temp_s1 = (entry->unk2 * 6) & 0xFFFF;
-	if (temp_s1 < (s32)entry->unk6) {
-		Mtx* mtx;
-		s16 temp_hi;
-		f32 temp_f0;
-		Mtx sp30;
+	entry = &D_8014D298[arg0];
+	timer = entry->unk2;
+    temp_s1 = (timer * 6) & 0xFFFF;
+	treeIndex = entry->unk0;
+	if ((s32)temp_s1 < (s32)entry->unk6) {
 
-		treeIndex = entry->unk0;
 		sp8C = *(u32*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk28;
 		sp88 = *(u32*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk2C;
 
 		mtx = (Mtx*)&((Unk857E0Obj*)D_80259D90)[treeIndex].unk10;
 		guRotate(mtx, (f32)(u32)temp_s1, (f32)((f64)(f32)sins(entry->unk4) / 32768.0), 0.0f, (f32)-((f64)(f32)coss(entry->unk4) / 32768.0));
 
-		temp_hi = (s16)(sp88 >> 0x10);
-		temp_f0 = (f32)(s32)((((s32)((((s16)(sp8C >> 0x10) * temp_hi) * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
+		timer = (s16)(sp88 >> 0x10);
+		scale[2] = scale[0] = (f32)(s32)((((s32)((((s16)(sp8C >> 0x10) * timer) * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
 
-		guScale(&sp30, temp_f0, (f32)(s32)((((s32)((temp_hi * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100), temp_f0);
+		scale[1] = (f32)(s32)((((s32)((timer * 0x41C64E6D + 0x3039) >> 0x10) % 0x40) + 0xE0) / 0x100);
+		guScale(&sp30, scale[0], scale[1], scale[2]);
 
 		mtx->m[1][2] = sp8C;
 		mtx->m[1][3] = sp88;
@@ -353,7 +353,7 @@ void func_800772EC_8629C(s32 arg0) {
 	u32 *temp_t8;
 	s32 temp_t2;
 
-	temp_v0 = (Unk_8014D298 *) &D_8014D298[arg0];
+	temp_v0 = &D_8014D298[arg0];
 	temp_s0 = &D_80259D90[temp_v0->unk0];
 	temp_t8 = (u32 *) D_8013BCDC_14AC8C;
 
@@ -410,7 +410,7 @@ void func_8007764C_865FC(void) {
 	cellZ = camZ >> 2;
 
 	for (i = 0; i < D_8014D2EC; i++) {
-		entry = (Unk_8014D298*) D_8014D298[i];
+		entry = &D_8014D298[i];
 		if ((u16) entry->unk8 == 2) {
 			func_800770D8_86088(i);
 		} else if ((u16) entry->unk8 == 3) {
