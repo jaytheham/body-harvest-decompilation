@@ -86,31 +86,34 @@ void func_800769A8_85958(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(19364)
+// CURRENT(5678)
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
+	s32 pattern;
+	s32 outer;
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
 	Unk80052B40 sp98;
 	u16* table;
-	Unk857E0Obj* entry;
+	Unk80259D90* entry;
 	s16 x;
-	s16 z;
-	s32 pattern;
-	u16 packed;
-	s32 outer;
+	s32 z;
+	u32 packed;
+	volatile u32 packedBackup;
 	s32 inner;
 	s32 obj;
 	s32 type;
 	s32 temp;
-	s16* tempTable;
+	OutsideTreeStyle* tempTable;
+	s32 vertexX;
+	s32 vertexZ;
 	s32 xOff;
 	s32 zOff;
 	u8 c0;
 	u8 c1;
 	u8 c2;
 
-	spA0 = *(Unk80052B40*)&D_8013BCCC_14AC7C;
-	sp98 = *(Unk80052B40*)&D_8013BCD4_14AC84;
+	spA0 = D_8013BCCC_Vector;
+	sp98 = D_8013BCD4_Vector;
 
 	if (D_8014D2E8 == 0x96) {
 		return;
@@ -130,142 +133,122 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	table = D_8021FA30[pattern];
 	for (outer = 0; outer != 0x10; outer++, table++) {
 		packed = *table;
-		if (packed == 0) {
-			continue;
-		}
+		if (packed != 0) {
+			for (inner = 0; packed != 0; inner++, packed = (u16)(packedBackup >> 4)) {
+				type = packed & 0xF;
+				packedBackup = packed;
+				if (type != 0) {
+					obj = func_80076830_857E0();
+					if (obj == -1) {
+						break;
+					}
 
-		inner = 0;
-		do {
-			type = packed & 0xF;
-			if (type != 0) {
-				obj = func_80076830_857E0();
-				if (obj == -1) {
-					return;
+					entry = &D_80259D90[obj];
+					entry->unk0 = type;
+					entry->pad1 = outer;
+					entry->unk2 = arg0;
+					entry->pad3 = inner;
+
+					xOff = ((arg1 << 2) + (outer & 3)) << 8;
+					zOff = ((arg2 << 2) + (outer >> 2)) << 8;
+					x = D_801416A0_150650[inner] + xOff - 0x8000;
+					z = (s16)(D_801416A8_150658[inner] + zOff - 0x8000);
+					entry->unk4 = x;
+					entry->unk6 = z;
+
+					if (type < 0xE) {
+						spA8.unk0 = x;
+						spA8.unk4 = z;
+						spA8.unk2 = (s16) (func_800B84D0_C7480_4Args(x, z, zOff, z) >> 8);
+						x = spA8.unk0;
+						z = spA8.unk4;
+						entry->unk8 = (void*)D_80222A30[type];
+
+						temp = (z * x * 0x41C64E6D + 0x3039) >> 16;
+						temp /= 256;
+						temp = temp % 32 + 240;
+						sp98.unk0 = temp;
+						sp98.unk4 = temp;
+						sp98.unk2 = ((((z * 0x41C64E6D + 0x3039) >> 16) / 256) % 32) + 240;
+
+						if (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2) {
+							spA0.unk0 = inner << 0xE;
+						}
+						func_800039D0_45D0(&spA8, &spA0, &sp98, (Mtx*)&entry->unk10);
+					} else {
+						spA8.unk0 = x;
+						spA8.unk4 = z;
+						xOff -= 0x8000;
+						zOff -= 0x8000;
+						if ((inner == 0) || (inner == 3)) {
+							c0 = 0xFF;
+							c1 = 0xFF;
+							c2 = 0xFF;
+						} else {
+							c0 = 0xC8;
+							c1 = 0xC8;
+							c2 = 0xC8;
+						}
+
+						tempTable = &((OutsideTreeStyle (*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
+						entry->unk8 = (void*)tempTable->texture;
+
+						vertexX = D_801416B0_150660[inner][0] + xOff;
+						vertexZ = D_801416C0_150670[inner][0] + zOff;
+						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
+
+						((Vtx*)&entry->unk10)[0].v.ob[0] = vertexX;
+						((Vtx*)&entry->unk10)[0].v.ob[1] = tempTable->height + temp;
+						((Vtx*)&entry->unk10)[0].v.cn[3] = 0xFF;
+						((Vtx*)&entry->unk10)[0].v.cn[2] = c2;
+						((Vtx*)&entry->unk10)[0].v.cn[1] = c1;
+						((Vtx*)&entry->unk10)[0].v.cn[0] = c0;
+						((Vtx*)&entry->unk10)[0].v.tc[1] = 0;
+						((Vtx*)&entry->unk10)[0].v.tc[0] = 0;
+						((Vtx*)&entry->unk10)[0].v.flag = 0;
+						((Vtx*)&entry->unk10)[0].v.ob[2] = vertexZ;
+
+						((Vtx*)&entry->unk10)[1].v.ob[1] = temp;
+						((Vtx*)&entry->unk10)[1].v.tc[0] = 0;
+						((Vtx*)&entry->unk10)[1].v.flag = 0;
+						((Vtx*)&entry->unk10)[1].v.ob[2] = vertexZ;
+						((Vtx*)&entry->unk10)[1].v.ob[0] = vertexX;
+						((Vtx*)&entry->unk10)[1].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
+						((Vtx*)&entry->unk10)[1].v.cn[3] = 0xFF;
+						((Vtx*)&entry->unk10)[1].v.cn[2] = c2;
+						((Vtx*)&entry->unk10)[1].v.cn[1] = c1;
+						((Vtx*)&entry->unk10)[1].v.cn[0] = c0;
+
+						vertexX = D_801416B0_150660[inner][1] + xOff;
+						vertexZ = D_801416C0_150670[inner][1] + zOff;
+						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
+
+						((Vtx*)&entry->unk10)[2].v.ob[0] = vertexX;
+						((Vtx*)&entry->unk10)[2].v.ob[1] = tempTable->height + temp;
+						((Vtx*)&entry->unk10)[2].v.flag = 0;
+						((Vtx*)&entry->unk10)[2].v.ob[2] = vertexZ;
+						((Vtx*)&entry->unk10)[2].v.tc[0] = tempTable->width << 0xB;
+						((Vtx*)&entry->unk10)[2].v.cn[3] = 0xFF;
+						((Vtx*)&entry->unk10)[2].v.cn[2] = c2;
+						((Vtx*)&entry->unk10)[2].v.cn[1] = c1;
+						((Vtx*)&entry->unk10)[2].v.cn[0] = c0;
+						((Vtx*)&entry->unk10)[2].v.tc[1] = 0;
+
+						((Vtx*)&entry->unk10)[3].v.flag = 0;
+						((Vtx*)&entry->unk10)[3].v.ob[2] = vertexZ;
+						((Vtx*)&entry->unk10)[3].v.ob[1] = temp;
+						((Vtx*)&entry->unk10)[3].v.ob[0] = vertexX;
+						((Vtx*)&entry->unk10)[3].v.tc[0] = tempTable->width << 0xB;
+						((Vtx*)&entry->unk10)[3].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
+						((Vtx*)&entry->unk10)[3].v.cn[3] = 0xFF;
+						((Vtx*)&entry->unk10)[3].v.cn[2] = c2;
+						((Vtx*)&entry->unk10)[3].v.cn[1] = c1;
+						((Vtx*)&entry->unk10)[3].v.cn[0] = c0;
+					}
 				}
 
-				entry = (Unk857E0Obj*) &D_80259D90[obj];
-				entry->unk0 = type;
-				entry->unk1 = outer;
-				entry->unk2 = arg0;
-				entry->unk3 = inner;
-
-				xOff = (((arg1 << 2) + (outer & 3)) << 8) - 0x8000;
-				zOff = (((arg2 << 2) + (outer >> 2)) << 8) - 0x8000;
-				x = D_801416A0_150650[inner] + xOff;
-				z = D_801416A8_150658[inner] + zOff;
-				entry->unk4 = x;
-				entry->unk6 = z;
-
-				if (type < 0xE) {
-					spA8.unk0 = x;
-					spA8.unk2 = (s16) (func_800B84D0_C7480(x, z) >> 8);
-					spA8.unk4 = z;
-					entry->unk8 = D_80222A30[type];
-
-					temp = (s16) ((((u32) ((u32) (x * z) * 0x41C64E6D)) + 0x3039) >> 0x10);
-					if (temp < 0) {
-						temp = (temp + 0xFF) >> 8;
-					} else {
-						temp >>= 8;
-					}
-					if (temp < 0) {
-						temp &= 0x1F;
-						if (temp != 0) {
-							temp -= 0x20;
-						}
-					}
-					sp98.unk0 = temp + 0xF0;
-					sp98.unk2 = temp + 0xF0;
-
-					temp = (s16) ((((u32) ((u32) x * 0x41C64E6D)) + 0x3039) >> 0x10);
-					if (temp < 0) {
-						temp = (temp + 0xFF) >> 8;
-					} else {
-						temp >>= 8;
-					}
-					if (temp < 0) {
-						temp &= 0x1F;
-						if (temp != 0) {
-							temp -= 0x20;
-						}
-					}
-					sp98.unk4 = temp + 0xF0;
-
-					if (D_8013BC0C_14ABBC[(currentLevel << 4) + type] == 2) {
-						spA0.unk0 = inner << 0xE;
-					}
-					func_800039D0_45D0(&spA8, &spA0, &sp98, (s32)&entry->unk10);
-				} else {
-					if ((inner == 0) || (inner == 3)) {
-						c0 = 0xFF;
-						c1 = 0xFF;
-						c2 = 0xFF;
-					} else {
-						c0 = 0xC8;
-						c1 = 0xC8;
-						c2 = 0xC8;
-					}
-
-					tempTable = (s16*) ((u8*) D_8013BB14_14AAC4 + (((currentLevel * 0x18) + (type * 0xC)) - 0xC0));
-					entry->unk8 = *(u32*) tempTable;
-
-					x = D_801416B0_150660[inner][0] + xOff;
-					z = D_801416C0_150670[inner][0] + zOff;
-					temp = func_800B84D0_C7480(x, z) >> 8;
-
-					entry->unk10 = x;
-					entry->unk12 = tempTable[2] + temp;
-					entry->unk14 = z;
-					entry->unk16 = 0;
-					entry->unk18 = 0;
-					entry->unk1A = 0;
-					entry->unk1C = c0;
-					entry->unk1D = c1;
-					entry->unk1E = c2;
-					entry->unk1F = 0xFF;
-
-					entry->unk20 = x;
-					entry->unk22 = temp;
-					entry->unk24 = z;
-					entry->unk26 = 0;
-					entry->unk28 = 0;
-					entry->unk2A = (tempTable[4] << 0xB) - 0x20;
-					entry->unk2C = c0;
-					entry->unk2D = c1;
-					entry->unk2E = c2;
-					entry->unk2F = 0xFF;
-
-					x = D_801416B0_150660[inner][1] + xOff;
-					z = D_801416C0_150670[inner][1] + zOff;
-					temp = func_800B84D0_C7480(x, z) >> 8;
-
-					entry->unk30 = x;
-					entry->unk32 = tempTable[6] + temp;
-					entry->unk34 = z;
-					entry->unk36 = 0;
-					entry->unk38 = tempTable[6] << 0xB;
-					entry->unk3A = 0;
-					entry->unk3C = c0;
-					entry->unk3D = c1;
-					entry->unk3E = c2;
-					entry->unk3F = 0xFF;
-
-					entry->unk40 = x;
-					entry->unk42 = temp;
-					entry->unk44 = z;
-					entry->unk46 = 0;
-					entry->unk48 = tempTable[6] << 0xB;
-					entry->unk4A = (tempTable[8] << 0xB) - 0x20;
-					entry->unk4C = c0;
-					entry->unk4D = c1;
-					entry->unk4E = c2;
-					entry->unk4F = 0xFF;
-				}
 			}
-
-			inner++;
-			packed >>= 4;
-		} while (packed != 0);
+		}
 	}
 }
 #else

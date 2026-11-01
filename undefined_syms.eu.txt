@@ -5895,3 +5895,7 @@ D_80095018_654C8 = D_80094858_64D08;
 D_8009501C_654CC = D_8009485C_64D0C;
 
 D_802E7C44_Write = D_802E7C44;
+
+/* Six-byte tree vectors spanning the split word and halfword definitions. */
+D_8013BCCC_Vector = D_8013BCCC_14AC7C;
+D_8013BCD4_Vector = D_8013BCD4_14AC84;

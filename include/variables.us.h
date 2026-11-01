@@ -1708,8 +1708,10 @@ extern s16 D_8013BB8C_14AB3C[];
 extern s16 D_8013BC0C_14ABBC[16];
 extern s16 D_8013BC2C_14ABDC[];
 extern u32 D_8013BCCC_14AC7C;
+extern Unk80052B40 D_8013BCCC_Vector;
 extern u16 D_8013BCD0_14AC80;
 extern u32 D_8013BCD4_14AC84;
+extern Unk80052B40 D_8013BCD4_Vector;
 extern u16 D_8013BCD8_14AC88;
 extern u8 D_8013BCDC_14AC8C[0x24];
 extern u8 D_8013BD00_14ACB0[4]; // used for bookkeeping Burrowers/sandworms in America
