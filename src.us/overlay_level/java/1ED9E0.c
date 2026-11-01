@@ -987,14 +987,15 @@ s32 func_802D687C_1EF58C(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
 	return (s32) (((arg3 - arg2) * arg0) + (arg1 * arg2)) / arg3;
 }
 
-#ifdef NON_MATCHING
-/* CURRENT 430: channel ordering and two global-address schedules remain. */
 int func_802D68F4_1EF604(void) {
 	s16 randomX;
 	s16 randomZ;
 	s16 weight;
 	s16 i;
 	s32 color;
+	s32 red;
+	s32 green;
+	s32 blue;
 	s32 color1;
 	s32 color2;
 	u16 firstColor;
@@ -1014,10 +1015,7 @@ int func_802D68F4_1EF604(void) {
 		if (D_80157F8E % 7 == 0) {
 			func_800D16BC_E066C(0x3980, 0xB3B, 0x1400, randomX + 0x3778, 0x1194, randomZ + 0x13EC, 10);
 		}
-		if (D_80157F8E++ >= 161) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
+		if (D_80157F8E++ >= 161) { D_80157F8E = 0; D_80157F8C += 1; }
 		break;
 	case 2:
 		randomX = func_800038E0_44E0() >> 5;
@@ -1027,15 +1025,13 @@ int func_802D68F4_1EF604(void) {
 		}
 		weight = 100 - D_80157F8E;
 		for (i = 0; i < 256; i++) {
-			s32 red;
-			s32 green;
-			s32 blue;
 
 			color = D_802D48D0[i];
 			red = ((s32)(color & 0xF800) >> 11) & 0xFF;
 			green = ((s32)(color & 0x7C0) >> 6) & 0xFF;
 			blue = ((s32)(color & 0x3E) >> 1) & 0xFF;
-			color = func_802D687C_1EF58C(red, 12, weight, 100);
+			color = 12;
+			color = func_802D687C_1EF58C(red >> 0, color, weight, 100);
 			D_802D4AD0[i] = color << 11;
 			D_802D4AD0[i] += func_802D687C_1EF58C(green, 12, weight, 100) << 6;
 			D_802D4AD0[i] += func_802D687C_1EF58C(blue, 10, weight, 100) * 2;
@@ -1044,52 +1040,42 @@ int func_802D68F4_1EF604(void) {
 			weight = 99 - D_80157F8E;
 		}
 		{
-			s32 red;
-			s32 green;
-			s32 blue;
 
 		color1 = D_802D48D0[D_802CA8D0];
 		red = ((s32)(color1 & 0xF800) >> 11) & 0xFF;
 		green = ((s32)(color1 & 0x7C0) >> 6) & 0xFF;
 		blue = ((s32)(color1 & 0x3E) >> 1) & 0xFF;
-		color1 = func_802D687C_1EF58C(red, 12, weight, 100);
+		color1 = 12;
+		color1 = func_802D687C_1EF58C(red >> 0, color1, weight, 100);
 		firstColor = color1 << 11;
 		firstColor += func_802D687C_1EF58C(green, 12, weight, 100) << 6;
 		firstColor += func_802D687C_1EF58C(blue, 10, weight, 100) * 2;
 		}
 		{
-			s32 red;
-			s32 green;
-			s32 blue;
 
 		color2 = D_802D48D0[D_802D48CF];
 		red = ((s32)(color2 & 0xF800) >> 11) & 0xFF;
 		green = ((s32)(color2 & 0x7C0) >> 6) & 0xFF;
 		blue = ((s32)(color2 & 0x3E) >> 1) & 0xFF;
-		color2 = func_802D687C_1EF58C(red, 12, weight, 100);
+		color2 = 12;
+		color2 = func_802D687C_1EF58C(red >> 0, color2, weight, 100);
 		secondColor = color2 << 11;
 		secondColor += func_802D687C_1EF58C(green, 12, weight, 100) << 6;
 		secondColor += func_802D687C_1EF58C(blue, 10, weight, 100) * 2;
 		}
 		func_800049D4_55D4(firstColor, secondColor);
 		leoInitUnit_atten();
-		if (D_80157F8E++ >= 101) {
-			D_80157F8E = 0;
-			D_80157F8C += 1;
-		}
+		if (D_80157F8E++ >= 101) { D_80157F8E = 0; D_80157F8C += 1; }
 		break;
 	case 3:
 		func_800072CC_7ECC(0x21);
 		return 1;
-	default:
-		break;
 	}
 	return 0;
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D68F4_1EF604.s")
-#endif
+
+
 
 void func_802D6DBC_1EFACC(void) {
 	D_802E0FB8 = 0;
