@@ -2684,12 +2684,12 @@ void func_8007F778_167838(void) {
 	}
 }
 
-// CURRENT(100)
-#ifdef NON_MATCHING
 // AI - Render NPC while animation is still playing
 void func_8007F878_167938(void) {
 	Unk8007F878_D6AD8 *ptr;
 	Unk8007F878_404 *temp;
+	u8 category;
+	u8 model;
 
 	ptr = &D_800E6AD8;
 	temp = (Unk8007F878_404 *) D_800E6AD8.unk404;
@@ -2704,11 +2704,10 @@ void func_8007F878_167938(void) {
 		return;
 	}
 
-	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[D_800E6AD8.unk426][D_800E6AD8.unk425].unkC, *(s32 *)&D_800E6AD8.unk410);
+	category = D_800E6AD8.unk426;
+	model = D_800E6AD8.unk425;
+	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[category][model].unkC, *(s32 *)&D_800E6AD8.unk410);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F878_167938.s")
-#endif
 
 // CURRENT(1160)
 // AI - Render NPC model with full matrix transforms
