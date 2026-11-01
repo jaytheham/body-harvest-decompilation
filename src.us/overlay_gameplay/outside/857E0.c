@@ -913,8 +913,6 @@ void func_80078F5C_87F0C(s16 arg0, s16 arg1, u16 arg2) {
 	}
 }
 
-// CURRENT(725)
-#ifdef NON_MATCHING
 s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 	s32 ctx10;
 	s32 ctx14;
@@ -922,13 +920,15 @@ s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 	VehicleType *type;
 	f32 speedFactor;
 	s32 scaled;
+    s32 result;
+    f64 force;
 
-	type = (VehicleType *)func_800FAFB8_109F68(arg1);
+	type = func_800FAFB8_109F68(arg1);
 	if ((currentLevel == 3) && ((arg1->unk1A == 9) || (arg1->unk1A == 8))) {
 		return 1;
 	}
 
-	if (*(s8 *)((u8 *)arg1 + 0xD) == -2) {
+	if (arg1->unkD == -2) {
 		speedFactor = func_800FB11C_10A0CC(arg1);
 	} else {
 		if ((-(s32)arg1->unk12) < arg1->unk12) {
@@ -940,10 +940,10 @@ s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 
 	scaled = (s32)((f32)type->unk32 * speedFactor);
 
-	ctx10 = *(s16 *)(arg0 + 0x10);
-	ctx14 = *(s16 *)(arg0 + 0x14);
+	ctx10 = ((Unk857E0Obj*)arg0)->unk10;
+	ctx14 = ((Unk857E0Obj*)arg0)->unk14;
 
-	if ((((s8 *)arg0)[3] == 1) || (((s8 *)arg0)[3] == 2)) {
+	if ((((Unk857E0Obj*)arg0)->unk3 == 1) || (((Unk857E0Obj*)arg0)->unk3 == 2)) {
 		if (((f64)(f32)coss((u16)arg1->unkE) / 32768.0) >= 0.0) {
 			direction = (f64)(f32)coss((u16)arg1->unkE) / 32768.0;
 		} else {
@@ -969,18 +969,14 @@ s32 func_80078FE0_87F90(u8 *arg0, VehicleInstance *arg1, s32 *arg2) {
 		}
 	}
 
-	scaled = (s32)(direction * (f64)scaled);
-	if (scaled < 0x7531 || *(s8 *)arg0 != 0xF) {
-		if (scaled < 0x249F1 || *(s8 *)arg0 != 0xE) {
-			return 0;
-		}
-		return 1;
-	}
-	return 1;
+	force = scaled;
+    result = direction * force;
+    if (((result > 30000) && (((Unk857E0Obj*)arg0)->unk0 == 15)) ||
+        ((result > 150000) && (((Unk857E0Obj*)arg0)->unk0 == 14))) {
+        return 1;
+    }
+    return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078FE0_87F90.s")
-#endif
 
 s32 func_800792E0_88290(u8 *arg0, s32 arg1) {
 	s32 sp44;
