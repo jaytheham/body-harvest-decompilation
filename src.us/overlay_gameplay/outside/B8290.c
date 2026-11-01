@@ -677,71 +677,78 @@ void func_800AB80C_BA7BC(u8 arg0) {
 	}
 }
 
-// CURRENT(7007)
+// CURRENT(2803)
 #ifdef NON_MATCHING
 // human behavior - for case 3 when captured by HCU
 void func_800AB8CC_BA87C(u8 arg0) {
-	AlienInstance *inst = &alienInstances[arg0];
-	AlienInstance *type = &alienInstances[inst->unk25];
+	s32 parentHeight;
+	AlienInstance *parent;
 	s32 helper0;
 	s32 helper1;
 	s32 helper2;
+	s32 parentIndex;
+	u16 rand2;
+	u16 rand1;
+	s32 temp;
+
+	parentIndex = alienInstances[(s32)arg0].unk25;
+	parent = &alienInstances[parentIndex];
 
 	// human's parent is HCU when being carried - use human's position for HCU to calculate path to its parent Harvester?
-	if (type->typeIndex == 2) {
-		inst->unk0 = type->unk0;
-		inst->unk4 = type->unk4;
-		if (type->unk20 & ALIEN_FLAG_UNKF) {
-			func_8008FF54_9EF04(type->unk25, &helper0, S&helper1, &helper2);
-			inst->unk2 = (s16)(((type->unk2C * (helper1 - type->unk2)) / 0xF) + type->unk2);
+	if (parent->typeIndex == 2) {
+		alienInstances[(s32)arg0].unk0 = parent->unk0;
+		alienInstances[(s32)arg0].unk4 = parent->unk4;
+		temp = parent->unk20;
+		if (temp & ALIEN_FLAG_UNKF) {
+			parentHeight = parent->unk2;
+			func_8008FF54_9EF04(parent->unk25, &helper0, &helper1, &helper2);
+			alienInstances[(s32)arg0].unk2 = (parent->unk2C * (helper1 - parentHeight)) / 0xF;
+			alienInstances[(s32)arg0].unk2 += parentHeight;
 			return;
 		}
 
-		inst->unk2 = (s16)((s32)(((f32)sins((u16)((D_80052A8C + arg0) * 0x1388)) / 32768.0) * 4.0 + (f64)(type->unk2) - 4.0));
+		alienInstances[(s32)arg0].unk2 = (s16)((s32)(((f32)sins((u16)((arg0 + D_80052A8C) * 0x1388)) / 32768.0) * 4.0 + (f64)(parent->unk2) - 4.0));
 		return;
 	}
 
 	// human's parent briefly becomes Harvester when being eaten
-	if (type->typeIndex == 0x19) {
-		func_8008FF54_9EF04(inst->unk25, &helper0, &helper1, &helper2);
-		inst->unk0 = (s16)helper0;
-		inst->unk2 = (s16)helper1;
-		inst->unk4 = (s16)helper2;
+	if (parent->typeIndex == 0x19) {
+		func_8008FF54_9EF04(parentIndex, &helper0, &helper1, &helper2);
+		alienInstances[(s32)arg0].unk0 = helper0;
+		alienInstances[(s32)arg0].unk2 = helper1;
+		alienInstances[(s32)arg0].unk4 = helper2;
 
-		if (type->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
-			inst->unk2 += D_8014DD50[type->unkC].unk2;
+		if (parent->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+			alienInstances[(s32)arg0].unk2 += D_8014DD50[parent->unkC].unk2;
 		}
 
-		inst->unk2C++;
-		if ((inst->unk2C % 0xC) != 0) {
+		alienInstances[(s32)arg0].unk2C++;
+		if ((alienInstances[(s32)arg0].unk2C % 0xC) != 0) {
 			return;
 		}
 
 		// random blood spurts when eaten
-		if ((inst->unk24 == 1) || (inst->unk24 == 0x1D)) {
-			s32 rand0;
-			s32 rand1;
-			s32 rand2;
-			s32 rand3;
+		if ((alienInstances[(s32)arg0].unk24 == 1) || (alienInstances[(s32)arg0].unk24 == 0x1D)) {
 
-			rand0 = func_800038E0_44E0();
+			parentIndex = (u16)func_800038E0_44E0();
 			rand1 = func_800038E0_44E0();
 			rand2 = func_800038E0_44E0();
-			rand3 = func_800038E0_44E0();
-			func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4,
-				(s8)((rand0 % 50) - 0x19), 0x50, (s8)((rand1 % 50) - 0x19), 0x19, 5,
-				(u8)((rand2 % 8) + 0xC), (u8)((rand3 % 0x23) + 0x69), 0, 0xFF, 0, 0xFF);
+			temp = func_800038E0_44E0();
+			func_800CA5EC_D959C(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk2, alienInstances[(s32)arg0].unk4,
+				(parentIndex % 50) - 0x19, 0x50, (rand1 % 50) - 0x19, 0x19, 5,
+				(rand2 % 8) + 0xC, (temp % 0x23) + 0x69, 0, 0xFF, 0, 0xFF);
 			return;
 		}
 
-		func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0xC8);
+		func_800E05B4_EF564(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk2, alienInstances[(s32)arg0].unk4, 0xC8);
 		return;
 	}
 
-	inst->unk24 = 0;
-	inst->unk2C = 0x64;
-	inst->unk20 |= ALIEN_FLAG_UNKF;
+	alienInstances[(s32)arg0].unk24 = 0;
+	alienInstances[(s32)arg0].unk2C = 0x64;
+	alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_UNKF;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AB8CC_BA87C.s")
 #endif
