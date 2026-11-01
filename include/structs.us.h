@@ -1148,6 +1148,10 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u32 unk8;
 	/* 0x0C */ u8 padC[4];
+	union {
+		Mtx matrix;
+		Vtx vertices[4];
+		struct {
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
@@ -1188,6 +1192,8 @@ typedef struct {
 	/* 0x4D */ u8 unk4D;
 	/* 0x4E */ u8 unk4E;
 	/* 0x4F */ u8 unk4F;
+		};
+	};
 } Unk857E0Obj; /* size = 0x50 */
 
 typedef struct {
