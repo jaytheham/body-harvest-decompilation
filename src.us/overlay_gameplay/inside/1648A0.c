@@ -2622,28 +2622,20 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EFD4_167094.s")
 #endif
 
-#ifdef NON_MATCHING
 // AI - Initialize NPC entity and its animation
 void func_8007F668_167728(u8 arg0, u8 arg1) {
-	s32 sp24;
-	Unk8009E4C8 *entry;
 
-	sp24 = arg0;
-	D_800E6AD8.unk426 = sp24 - 1;
 	D_800E6AD8.unk425 = arg1;
-	osSyncPrintf(D_800A4CE8_18CDA8, sp24);
+	D_800E6AD8.unk426 = arg0 - 1;
+	osSyncPrintf(D_800A4CE8_18CDA8);
 	D_800E6AD8.unk404 = func_8000C6F4_D2F4();
 	D_800E6AD8.unk408 = func_8000C6F4_D2F4();
 	D_800E6AD8.unk410 = 1.0f;
-	entry = &D_8009E4C8_186588[sp24 - 1][arg1];
 	func_8000C790_D390(&D_800E6AD8,
-		entry->unk4,
-		entry->unkC);
+		D_8009E4C8_186588[arg0 - 1][arg1].unk4,
+		D_8009E4C8_186588[arg0 - 1][arg1].unkC);
 	((Unk8007F878_404 *)D_800E6AD8.unk404)->unkE50 = 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007F668_167728.s")
-#endif
 
 // AI - Free NPC animation memory
 void func_8007F724_1677E4(void) {
