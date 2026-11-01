@@ -179,8 +179,8 @@ extern u8 D_80031260_31E60[];
 extern u32 D_800312F0_31EF0;
 extern s32 D_800312F4_31EF4;
 extern u32 D_800312F8_31EF8;
-extern s32 D_800312FC_31EFC;
-extern s32 D_80031300_31F00;
+extern u32 D_800312FC_31EFC;
+extern u32 D_80031300_31F00;
 extern s32 D_80031304;
 extern SaveSummary D_80031310_31F10[5];
 extern s32 D_80031374_31F74[]; /* weapon damage shift table */

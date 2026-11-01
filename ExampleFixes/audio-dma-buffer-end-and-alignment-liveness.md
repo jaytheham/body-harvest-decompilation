@@ -1,0 +1,5 @@
+Incorrect ASM: `func_80000B14_1714` computes the selected buffer end in a temporary register, rotates later temporaries, and gives the buffer pointer `s1` while spilling the one-byte alignment offset.
+
+-> Code changed: use the SDK's `ALDMAproc` parameter types, an unsigned ROM-start field, a byte-pointer buffer field, and indexed buffer access. Declare the buffer, node, original head, alignment offset, signed buffer end, and previous node in that order. Assign the buffer end before the first range test. Keep the buffer nonvolatile, assign the translated physical address back to `addr`, and place `if (offset * 0) {}` after translation.
+
+-> Correct ASM: the start and end values use `v0`/`v1`; the previous node spills at `0x30(sp)`; `s1` retains the alignment offset. The DMA call stores its buffer argument at `0x10(sp)` and spills that pointer at `0x44(sp)` in the delay slot. The final statistics store fills the address-translation call's delay slot.

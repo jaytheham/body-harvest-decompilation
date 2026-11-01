@@ -86,8 +86,8 @@ Gfx D_80031260[18] = {
 u32 D_800312F0_31EF0 = 0;
 s32 D_800312F4_31EF4 = 0;
 u32 D_800312F8_31EF8 = 0;
-s32 D_800312FC_31EFC = 0;
-s32 D_80031300_31F00 = 0;
+u32 D_800312FC_31EFC = 0;
+u32 D_80031300_31F00 = 0;
 s32 D_80031304 = 1;
 s32 D_80031308_31F08 = 0;
 s32 D_8003130C_31F0C = 0;
@@ -164,9 +164,6 @@ const char D_80036C50_37850[] = "CALLING RECURSIVELY";
 const char D_80036C64_37864[] = "SCRUB GAMENOTE\n";
 const char D_80036C74_37874[] = "RESTORE GAMENOTE\n";
 const f32 D_80036C88_37888[] = {10000.0f};
-const u32 jtbl_80036C8C_3788C[] = {
-	0x80002FB4, 0x80003024, 0x80002FEC, 0x80002FFC, 0x80003014, 0x80002FD0
-};
 
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 {
@@ -225,34 +222,34 @@ void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 	osStartThread(&D_8003FB38);
 }
 
-// CURRENT(1172)
-#ifdef NON_MATCHING
 void func_80000730_1330(s32 arg0) {
-	OSMesg sp64;
-	OSScClient sp58;
-	BhAudioBuf *var_s0;
-	u32 var_v0;
-	u32 var_s6;
-	f32 var_f0;
+	BhAudioBuf *lastInfo;
+	u32 done;
+	OSMesg message;
+	u32 dmaCount;
+	OSScClient client;
+	f32 requestCount;
 
-	var_s6 = 0;
-	var_s0 = 0;
-	osScAddClient(&D_800680A0, &sp58, &D_8003FCE8);
-	do {
-		osRecvMesg(&D_8003FCE8, &sp64, 1);
-		switch (((OSScMsg *)sp64)->type) {
+	done = 0;
+	lastInfo = 0;
+	osScAddClient(&D_800680A0, &client, &D_8003FCE8);
+	while (done == 0) {
+		osRecvMesg(&D_8003FCE8, &message, 1);
+		switch (((OSScMsg *)message)->type) {
 		case OS_SC_RETRACE_MSG:
-			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], var_s0) != 0) {
-				osRecvMesg(&D_8003FD20, &sp64, 1);
-				func_80000AD4_16D4((s32)((BhAudioMsg *)sp64)->audioBuf);
-				var_s0 = ((BhAudioMsg *)sp64)->audioBuf;
+			/* Keep the shared frame-counter address live during dispatch. */
+			if ((u32)&D_800431A0 * 0) {}
+			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], lastInfo) != 0) {
+				osRecvMesg(&D_8003FD20, &message, 1);
+				func_80000AD4_16D4(((BhAudioMsg *)message)->audioBuf);
+				lastInfo = ((BhAudioMsg *)message)->audioBuf;
 			}
-			var_v0 = D_800312FC_31EFC;
-			if (var_v0 == 0) {
+			dmaCount = D_800312FC_31EFC;
+			if (dmaCount == 0) {
 				D_800431B4 = 0.0f;
 			} else {
-				var_f0 = (f32)(u32)var_v0;
-				D_800431B4 = (f32)(((f64)(var_f0 - (f32)(u32)D_80031300_31F00) * 100.0) / (f64)var_f0);
+				requestCount = (f32)dmaCount;
+				D_800431B4 = (f32)(((f64)(requestCount - (f32)D_80031300_31F00) * 100.0) / (f64)requestCount);
 			}
 			D_800312FC_31EFC = 0;
 			D_80031300_31F00 = 0;
@@ -260,15 +257,13 @@ void func_80000730_1330(s32 arg0) {
 		case OS_SC_PRE_NMI_MSG:
 			break;
 		case 10:
-			var_s6 = 1;
+			done = 1;
 			break;
 		}
-	} while (var_s6 == 0);
+	}
 	alClose(&D_8003FD58);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000730_1330.s")
-#endif
+
 
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
 	s32 sp3C;
@@ -309,7 +304,7 @@ s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
 	return 1;
 }
 
-void func_80000AD4_16D4(s32 arg0)
+void func_80000AD4_16D4(BhAudioBuf *arg0)
 {
 	int new_var;
 	u32 ret = func_8001BCE0_1C8E0();
@@ -320,65 +315,65 @@ void func_80000AD4_16D4(s32 arg0)
 	}
 }
 
-// CURRENT(675)
-#ifdef NON_MATCHING
-s32 func_80000B14_1714(u32 arg0, s32 arg1, u32 arg2) {
-	void *volatile buffer;
-	Unk80042DB8 *var_s0;
-	s32 pad1;
-	Unk80042DB8 *var_s1;
-	Unk80042DB8 *var_a2;
-	s32 temp_s1;
+s32 func_80000B14_1714(s32 addr, s32 len, void *state) {
+	u8 *buffer;
+	Unk80042DB8 *dmaBuffer;
+	Unk80042DB8 *firstBuffer;
+	u32 offset;
+	s32 bufferEnd;
+	Unk80042DB8 *previous;
 
-	var_a2 = NULL;
-	var_s1 = D_80042DA8.unk4;
+	previous = NULL;
+	firstBuffer = D_80042DA8.unk4;
 	D_800312FC_31EFC += 1;
-	var_s0 = var_s1;
-	if (var_s0 != NULL) {
+	dmaBuffer = firstBuffer;
+	if (dmaBuffer != NULL) {
 		do {
-			if (arg0 < (u32)var_s0->unk8) {
+			bufferEnd = dmaBuffer->unk8 + 0x400;
+			if (addr < dmaBuffer->unk8) {
 				break;
 			}
-			var_a2 = var_s0;
-			if ((var_s0->unk8 + 0x400) >= (s32)(arg0 + arg1)) {
-				var_s0->unkC = (s32)D_800431A0;
-				return osVirtualToPhysical((void *)((u8 *)var_s0->unk10 + arg0 - (u32)var_s0->unk8));
+			previous = dmaBuffer;
+			if (bufferEnd >= addr + len) {
+				dmaBuffer->unkC = D_800431A0;
+				return osVirtualToPhysical(&dmaBuffer->unk10[addr - dmaBuffer->unk8]);
 			}
-			var_s0 = var_s0->unk0;
-		} while (var_s0 != NULL);
+			dmaBuffer = dmaBuffer->unk0;
+		} while (dmaBuffer != NULL);
 	}
-	var_s0 = D_80042DA8.unk8;
-	if (var_s0 == NULL) {
-		return osVirtualToPhysical(var_s1);
+	dmaBuffer = D_80042DA8.unk8;
+	if (dmaBuffer == NULL) {
+		return osVirtualToPhysical(firstBuffer);
 	}
-	D_80042DA8.unk8 = var_s0->unk0;
-	alUnlink((ALLink *)var_s0);
-	if (var_a2 != NULL) {
-		alLink((ALLink *)var_s0, (ALLink *)var_a2);
+	D_80042DA8.unk8 = dmaBuffer->unk0;
+	alUnlink((ALLink *)dmaBuffer);
+	if (previous != NULL) {
+		alLink((ALLink *)dmaBuffer, (ALLink *)previous);
 	} else {
-		var_s1 = D_80042DA8.unk4;
-		if (var_s1 != NULL) {
-			D_80042DA8.unk4 = var_s0;
-			var_s0->unk0 = var_s1;
-			var_s0->unk4 = NULL;
-			var_s1->unk4 = var_s0;
+		firstBuffer = D_80042DA8.unk4;
+		if (firstBuffer != NULL) {
+			D_80042DA8.unk4 = dmaBuffer;
+			dmaBuffer->unk0 = firstBuffer;
+			dmaBuffer->unk4 = NULL;
+			firstBuffer->unk4 = dmaBuffer;
 		} else {
-			D_80042DA8.unk4 = var_s0;
-			var_s0->unk0 = NULL;
-			var_s0->unk4 = NULL;
+			D_80042DA8.unk4 = dmaBuffer;
+			dmaBuffer->unk0 = NULL;
+			dmaBuffer->unk4 = NULL;
 		}
 	}
-	temp_s1 = arg0 & 1;
-	arg0 = arg0 - temp_s1;
-	var_s0->unk8 = arg0;
-	var_s0->unkC = D_800431A0;
-	osPiStartDma(&D_8006A330[D_800312F0_31EF0++], 0, 0, arg0, buffer = var_s0->unk10, 0x400, &D_80067F58);
+	offset = addr & 1;
+	addr = addr - offset;
+	dmaBuffer->unk8 = addr;
+	dmaBuffer->unkC = D_800431A0;
+	osPiStartDma(&D_8006A330[D_800312F0_31EF0++], 0, 0, addr, buffer = dmaBuffer->unk10, 0x400, &D_80067F58);
 	D_80031300_31F00 += 1;
-	return osVirtualToPhysical(buffer) + temp_s1;
+	addr = osVirtualToPhysical(buffer);
+	/* Keep the alignment offset live across address translation. */
+	if (offset * 0) {}
+	return addr + offset;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80000B14_1714.s")
-#endif
+
 
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
 	if (D_80042DA8.unk0 == 0) {
@@ -755,224 +750,118 @@ void func_80001984_2584(void) {
     }
 }
 
-// CURRENT (4796)
-#ifdef NON_MATCHING
 void guess_prepareToSaveGame(s32 arg0) {
-	Unk80052A98 *stats;
-	u8 *dest;
-	s32 i;
-	s32 cached;
+	s32 offset;
+	u32 i;
+	s32 stride;
 
-	dest = &D_800431C0[arg0 * 0x7A + 0x53];
-
-	stats = D_80052A98;
-	do {
-		osSyncPrintf(D_80036884_37484, stats->score);
-		cached = stats->score;
-		dest += 4;
-		dest[-3] = (u8)(cached >> 8);
-		dest[-2] = (u8)(cached >> 16);
-		dest[-1] = (u8)(cached >> 24);
-		dest[-4] = cached;
-		osSyncPrintf(D_80036894_37494, stats->humansKilled);
-		dest += 1;
-		dest[-1] = stats->humansKilled;
-		osSyncPrintf(D_800368A0_374A0, stats->secondsElapsed);
-		cached = stats->secondsElapsed;
-		dest[1] = (u8)(cached >> 8);
-		dest[2] = (u8)(cached >> 16);
-		dest += 3;
-		stats++;
-		dest[-3] = cached;
-	} while (stats < (Unk80052A98 *)&D_80052AC8);
-
+	stride = arg0 * 0x7A;
+	offset = stride + 0x53;
+	for (i = 0; i < 6U; i++) {
+		osSyncPrintf(D_80036884_37484, D_80052A98[i].score);
+		D_800431C0[offset++] = D_80052A98[i].score & 0xFF;
+		D_800431C0[offset++] = (D_80052A98[i].score >> 8) & 0xFF;
+		D_800431C0[offset++] = (D_80052A98[i].score >> 16) & 0xFF;
+		D_800431C0[offset++] = (D_80052A98[i].score >> 24) & 0xFF;
+		osSyncPrintf(D_80036894_37494, D_80052A98[i].humansKilled);
+		offset += 1;
+		D_800431C0[offset - 1] = D_80052A98[i].humansKilled;
+		osSyncPrintf(D_800368A0_374A0, D_80052A98[i].secondsElapsed);
+		D_800431C0[offset++] = D_80052A98[i].secondsElapsed & 0xFF;
+		D_800431C0[offset++] = (D_80052A98[i].secondsElapsed >> 8) & 0xFF;
+		D_800431C0[offset++] = (D_80052A98[i].secondsElapsed >> 16) & 0xFF;
+	}
 	osSyncPrintf(D_800368AC_374AC);
-	{
-		u32 level;
-		u32 area;
-
-		level = currentLevel;
-		area = D_80047FA0;
-		*dest++ = (u8)((area * 0x10) | level);
-		osSyncPrintf(D_800368C4_374C4, level, area);
-	}
-	{
-		u32 value;
-
-		value = D_80047F9C;
-		*dest++ = (u8)value;
-		osSyncPrintf(D_800368DC_374DC, value);
-	}
-	{
-		u32 value;
-
-		value = D_80031420;
-		dest[0] = (u8)value;
-		dest[1] = (u8)(value >> 8);
-		dest[2] = (u8)(value >> 0x10);
-		dest[3] = (u8)(value >> 0x18);
-		dest += 4;
-		osSyncPrintf(D_800368F4_374F4, (s32)value);
-	}
-
-	{
-		u8 *p;
-
-		p = &D_80047FA8[0];
-		do {
-			*dest++ = *p++;
-		} while ((u32)p < (u32)&D_80047FAE);
+	D_800431C0[offset++] = (u8)((D_80047FA0 * 0x10) | currentLevel);
+	osSyncPrintf(D_800368C4_374C4, currentLevel, D_80047FA0);
+	D_800431C0[offset++] = D_80047F9C & 0xFF;
+	osSyncPrintf(D_800368DC_374DC, D_80047F9C);
+	D_800431C0[offset] = D_80031420;
+	D_800431C0[offset + 1] = ((u32)D_80031420 >> 8) & 0xFF;
+	D_800431C0[offset + 2] = ((u32)D_80031420 >> 0x10) & 0xFF;
+	D_800431C0[offset + 3] = ((u32)D_80031420 >> 0x18) & 0xFF;
+	offset += 4;
+	osSyncPrintf(D_800368F4_374F4, (s32)D_80031420);
+	for (i = 0; i < 6; i++) {
+		D_800431C0[offset++] = D_80047FA8[i];
 	}
 	osSyncPrintf(D_80036904_37504);
-
-	for (i = 0; i < 7; i++) {
-		u8 slot;
-
-		slot = weaponSlots[i];
-		*dest++ = slot;
-		osSyncPrintf(D_80036910_37510, i, (s32)slot);
+	for (i = 0; (s32)i < 7; i++) {
+		D_800431C0[offset++] = weaponSlots[i];
+		osSyncPrintf(D_80036910_37510, i, weaponSlots[i]);
 	}
-
 	osSyncPrintf(D_8003692C_3752C);
 	{
 		u64 flags1;
-
-		flags1 = *(u64 *)&D_8004DC48;
+		flags1 = D_8004DC48.unk0;
 		osSyncPrintf(D_80036930_37530);
-		*dest++ = (s8)flags1;
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 8);
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x10);
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x18);
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x20);
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x28);
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x30);
-		*dest++ = (s8)(u32)__ull_rshift(flags1, 0x38);
-		osSyncPrintf(D_80036938_37538, *(u64 *)&D_8004DC48);
+		D_800431C0[offset++] = flags1 & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 8) & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 0x10) & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 0x18) & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 0x20) & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 0x28) & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 0x30) & 0xFF;
+		D_800431C0[offset++] = (flags1 >> 0x38) & 0xFF;
+		osSyncPrintf(D_80036938_37538, D_8004DC48.unk0);
 	}
-
-	*dest++ = (u8)((D_8004DC5C * 0x10) + D_8004DC5E);
-
-	{
-		s16 value1;
-
-		value1 = D_80048026;
-		dest += 2;
-		dest[-1] = (u8)((s32)value1 >> 8);
-		dest[-2] = (u8)value1;
-		osSyncPrintf(D_80036940_37540, (s32)value1);
+	D_800431C0[offset++] = (((D_8004DC5C << 4) & 0xFF) + D_8004DC5E);
+	D_800431C0[offset++] = D_80048026 & 0xFF;
+	D_800431C0[offset++] = (D_80048026 >> 8) & 0xFF;
+	osSyncPrintf(D_80036940_37540, (s32)D_80048026);
+	D_800431C0[offset++] = D_80048028 & 0xFF;
+	D_800431C0[offset++] = (D_80048028 >> 8) & 0xFF;
+	osSyncPrintf(D_8003696C_3756C);
+	D_800431C0[offset++] = D_8004DC50.flags & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 8) & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 0x10) & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 0x18) & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 0x20) & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 0x28) & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 0x30) & 0xFF;
+	D_800431C0[offset++] = (D_8004DC50.flags >> 0x38) & 0xFF;
+	osSyncPrintf(D_80036984_37584, D_8004DC50.flags);
+	if (D_80052A90 == 0) {
+		D_80052A90 = 1;
 	}
-
-	{
-		s16 value2;
-
-		value2 = D_80048028;
-		dest += 2;
-		dest[-1] = (u8)((s32)value2 >> 8);
-		dest[-2] = (u8)value2;
-		osSyncPrintf(D_8003696C_3756C);
-	}
-
-	{
-		u64 flags2;
-
-		flags2 = *(u64 *)&D_8004DC50;
-		*dest++ = (s8)flags2;
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 8);
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x10);
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x18);
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x20);
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x28);
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x30);
-		*dest++ = (s8)(u32)__ull_rshift(*(u64 *)&D_8004DC50, 0x38);
-		osSyncPrintf(D_80036984_37584, *(u64 *)&D_8004DC50);
-	}
-
-	{
-		u32 playtime;
-		u32 progress;
-
-		if (D_80052A90 == 0) {
-			D_80052A90 = 1;
-		}
-		playtime = D_80052A90;
-		progress = D_80047F98;
-		dest[0] = (s8)playtime;
-		dest[1] = (s8)(playtime >> 8);
-		dest[2] = (s8)(playtime >> 0x10);
-		dest[3] = (s8)(playtime >> 0x18);
-		dest[4] = (s8)progress;
-		dest += 5;
-		osSyncPrintf(D_8003698C_3758C, progress);
-	}
-
-	{
-		u32 value;
-
-		value = D_8004D154;
-		dest += 4;
-		dest[-4] = (u8)value;
-		dest[-3] = (u8)(value >> 8);
-		dest[-2] = (u8)(value >> 0x10);
-		dest[-1] = (u8)(value >> 0x18);
-		osSyncPrintf(D_800369A0_375A0, (s32)value);
-		value = D_8004D158;
-		dest += 4;
-		dest[-4] = (u8)value;
-		dest[-3] = (u8)(value >> 8);
-		dest[-2] = (u8)(value >> 0x10);
-		dest[-1] = (u8)(value >> 0x18);
-		osSyncPrintf(D_800369B4_375B4, (s32)value);
-	}
-
+	D_800431C0[offset] = D_80052A90 & 0xFF;
+	D_800431C0[offset + 1] = (D_80052A90 >> 8) & 0xFF;
+	D_800431C0[offset + 2] = (D_80052A90 >> 0x10) & 0xFF;
+	D_800431C0[offset + 3] = (D_80052A90 >> 0x18) & 0xFF;
+	D_800431C0[offset + 4] = (s8)D_80047F98;
+	offset += 5;
+	osSyncPrintf(D_8003698C_3758C, D_80047F98);
+	offset += 4;
+	D_800431C0[offset - 4] = D_8004D154 & 0xFF;
+	D_800431C0[offset - 3] = ((u32)D_8004D154 >> 8) & 0xFF;
+	D_800431C0[offset - 2] = ((u32)D_8004D154 >> 0x10) & 0xFF;
+	D_800431C0[offset - 1] = ((u32)D_8004D154 >> 0x18) & 0xFF;
+	osSyncPrintf(D_800369A0_375A0, (s32)D_8004D154);
+	offset += 4;
+	D_800431C0[offset - 4] = D_8004D158 & 0xFF;
+	D_800431C0[offset - 3] = ((u32)D_8004D158 >> 8) & 0xFF;
+	D_800431C0[offset - 2] = ((u32)D_8004D158 >> 0x10) & 0xFF;
+	D_800431C0[offset - 1] = ((u32)D_8004D158 >> 0x18) & 0xFF;
+	osSyncPrintf(D_800369B4_375B4, (s32)D_8004D158);
 	osSyncPrintf(D_800369C4_375C4);
 	osSyncPrintf(D_800369D0_375D0);
-
-	for (i = 0; i < 7; i++) {
-		*dest++ = (s8)(D_80048140[weaponSlots[i]] >> D_80031374_31F74[weaponSlots[i]]);
+	for (i = 0; (s32)i < 7; i++) {
+		D_800431C0[offset++] = (s8)(D_80048140[weaponSlots[i]] >> D_80031374_31F74[weaponSlots[i]]);
 		osSyncPrintf(D_80036A04_37604, i, (s32)D_80048140[i]);
 	}
-
-	{
-		u8 value;
-
-		value = D_80048030;
-		*dest++ = value;
-		osSyncPrintf(D_80036A20_37620, (s32)value);
-	}
-
-	{
-		u8 value;
-
-		value = D_80052ACD;
-		*dest++ = value;
-		osSyncPrintf(D_80036A38_37638, (s32)value);
-	}
-
-	{
-		u8 value0;
-		u8 value1;
-		u8 value2;
-		u8 value3;
-
-		value0 = D_8004815C;
-		value1 = D_80048160;
-		value2 = D_80048162;
-		value3 = D_8004815E;
-		dest[0] = (s8)value0;
-		dest[1] = (s8)value1;
-		dest[2] = (s8)value2;
-		dest[3] = (s8)value3;
-		dest += 3;
-		osSyncPrintf(D_80036A48_37648, (s32)value0, (s32)value1, (s32)value2, (s32)value3);
-	}
-
+	D_800431C0[offset++] = D_80048030;
+	osSyncPrintf(D_80036A20_37620, (s32)D_80048030);
+	D_800431C0[offset++] = D_80052ACD;
+	osSyncPrintf(D_80036A38_37638, (s32)D_80052ACD);
+	D_800431C0[offset++] = D_8004815C;
+	D_800431C0[offset++] = D_80048160;
+	D_800431C0[offset++] = D_80048162;
+	D_800431C0[offset] = D_8004815E;
+	osSyncPrintf(D_80036A48_37648, D_8004815C, D_80048160, D_80048162, D_8004815E);
 	osSyncPrintf(D_80036A68_37668);
-	func_800015B4_21B4(arg0 * 0x7A + 0x4F, 0x76);
+	func_800015B4_21B4(stride + 0x4F, 0x76);
 	osSyncPrintf(D_80036A6C_3766C);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_prepareToSaveGame.s")
-#endif
 
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
     s32 src;
@@ -1085,178 +974,144 @@ void func_800021CC_2DCC(s32 arg0)
 	func_800015B4_21B4(i + 0x4F, 0x76);
 }
 
-// CURRENT(17871)
-#ifdef NON_MATCHING
 void guess_loadSavedGame(s32 arg0) {
-	u32 sp34;
-	u32 sp30;
+	s32 pad[4];
+	u64 flags;
 	s32 saveSlot;
-	u8 *src;
-	Unk80052A98 *stat;
-	s32 shift;
-	u8 *p;
+	s32 src;
+	u32 i;
+	s32 j;
+	u32 k;
+	u8 *weapon;
 
 	saveSlot = arg0 * 0x7A + 0x4F;
 	if (validateSaveVersionAndChecksum(saveSlot, 0x76) != 0) {
-		src = D_800431C0 + saveSlot + 4;
-		stat = D_80052A98;
+		src = saveSlot + 4;
+		j = 0;
 		do {
-			stat->score = *src;
-			stat->score += (s32)src[1] << 8;
-			stat->score += (s32)src[2] << 16;
-			stat->score += (s32)src[3] << 24;
-			src += 4;
-			osSyncPrintf(D_80036A8C_3768C, stat->score);
-			stat->humansKilled = *src++;
-			osSyncPrintf(D_80036AA0_376A0, stat->humansKilled);
-			stat->secondsElapsed = src[0];
-			stat->secondsElapsed += src[1] << 8;
-			stat->secondsElapsed += src[2] << 16;
-			osSyncPrintf(D_80036AAC_376AC, stat->secondsElapsed);
-			src += 3;
-			stat++;
-		} while ((u32)stat < (u32)&D_80052AC8);
+			D_80052A98[j].score = D_800431C0[src++];
+			D_80052A98[j].score += D_800431C0[src++] << 8;
+			D_80052A98[j].score += D_800431C0[src++] << 16;
+			D_80052A98[j].score += D_800431C0[src++] << 24;
+			osSyncPrintf(D_80036A8C_3768C, D_80052A98[j].score);
+			D_80052A98[j].humansKilled = D_800431C0[src++];
+			osSyncPrintf(D_80036AA0_376A0, D_80052A98[j].humansKilled);
+			D_80052A98[j].secondsElapsed = D_800431C0[src++];
+			D_80052A98[j].secondsElapsed += D_800431C0[src++] << 8;
+			D_80052A98[j].secondsElapsed += D_800431C0[src++] << 16;
+			osSyncPrintf(D_80036AAC_376AC, D_80052A98[j].secondsElapsed);
+			j++;
+		} while (&D_80052A98[j] < &D_80052A98[6]);
 		osSyncPrintf(D_80036AB8_376B8);
 		{
-			u8 b;
+			s32 b;
 
-			b = *src++;
+			b = D_800431C0[src];
 			currentLevel = b & 0xF;
 			D_80047FA0 = (s32)b >> 4;
+			src++;
 		}
 		osSyncPrintf(D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
-		D_80047F9C = *src++ & 0xF;
+		D_80047F9C = D_800431C0[src++] & 0xF;
 		osSyncPrintf(D_80036AEC_376EC, D_80047F9C);
 		D_80031420 = 0;
-		shift = 0;
+		i = 0;
 		do {
-			D_80031420 += *src++ << shift;
-			shift += 8;
+			D_80031420 += D_800431C0[src++] << (s32)i;
+			i += 8;
 			continue;
-		} while (shift < 0x20);
+		} while ((s32)i < 0x20);
 		if (D_800313D0_31FD0 == 2) {
 			D_80031420 &= ~2;
 		}
-		func_80016FD0_17BD0((s16)((D_80031420 & 0x60) >> 5));
-		func_800170F4_17CF4((s16)((D_80031420 & 0x18) >> 3));
+		func_80016FD0_17BD0((s16)(((u32)D_80031420 & 0x60) >> 5));
+		func_800170F4_17CF4((s16)(((u32)D_80031420 & 0x18) >> 3));
 		osSyncPrintf(D_80036AFC_376FC, D_80031420);
-		p = D_80047FA8;
-		do {
-			*p++ = *src++;
-		} while ((u32)p < (u32)&D_80047FAE);
-		D_80047FAE = 0;
+		for (i = 0; &D_80047FA8[i] < &D_80047FA8[6]; i++) {
+			D_80047FA8[i] = D_800431C0[src++];
+		}
+		D_80047FAE_NameEnd = 0;
 		osSyncPrintf(D_80036B0C_3770C);
-		p = &weaponSlots[0];
-		{
-			u8 b;
-
-		do {
-			b = *src++;
-			*p = b;
-			osSyncPrintf(D_80036B18_37718, b);
-			p++;
-		} while ((u32)p < (u32)&D_8004813F);
+		for (weapon = weaponSlots; weapon < &weaponSlots[7]; weapon++) {
+			*weapon = D_800431C0[src++];
+			osSyncPrintf(D_80036B18_37718, *weapon);
 		}
 		osSyncPrintf(D_80036B1C_3771C);
-		sp34 = 0;
-		sp30 = 0;
+		flags = 0;
 		osSyncPrintf(D_80036B20_37720);
-		shift = 0;
+		i = 0;
 		do {
-			s64 shifted = __ll_lshift(*src, shift);
-			u32 newLo = (u32)shifted + sp34;
-			sp30 = (newLo < sp34 ? 1 : 0) + (u32)(shifted >> 32) + sp30;
-			sp34 = newLo;
-			src++;
-			shift += 8;
-		} while (shift < 0x40);
-		((Flags2x32 *)&D_8004DC48)->unk0 = sp30;
-		((Flags2x32 *)&D_8004DC48)->unk4 = sp34;
-		osSyncPrintf(D_80036B28_37728, sp30, sp34);
+			flags += (u64)D_800431C0[src++] << (s32)i;
+			i += 8;
+		} while ((s32)i < 64);
+		D_8004DC48.unk0 = flags;
+		if ((u32)&D_8004DC48 * 0) {}
+		osSyncPrintf(D_80036B28_37728, flags);
 		{
-			u8 b;
+			s32 b;
 
-			b = *src;
+			b = D_800431C0[src];
 			D_8004DC5C = (s8)((s32)b >> 4);
 			D_8004DC5E = b & 0xF;
 		}
-		D_80048026 = src[1];
-		D_80048026 += src[2] << 8;
+		D_80048026 = D_800431C0[src + (1)];
+		D_80048026 += (u16)(D_800431C0[src + (2)] << 8);
 		src += 3;
 		osSyncPrintf(D_80036B30_37730, D_80048026);
-		D_80048028 = src[0];
-		D_80048028 += src[1] << 8;
+		D_80048028 = D_800431C0[src + (0)];
+		D_80048028 += (u16)(D_800431C0[src + (1)] << 8);
 		src += 2;
-		D_8004DC50.unk0 = 0;
-		D_8004DC54 = 0;
+		D_8004DC50.flags = 0;
 		osSyncPrintf(D_80036B60_37760);
-		shift = 0;
-		do {
-			s64 shifted = __ll_lshift(*src, shift);
-			u32 newLo = D_8004DC54 + (u32)shifted;
-			D_8004DC50.unk0 = (newLo < D_8004DC54 ? 1 : 0) + (u32)(shifted >> 32) + D_8004DC50.unk0;
-			D_8004DC54 = newLo;
-			src++;
-			shift += 8;
-		} while (shift < 0x40);
-		osSyncPrintf(D_80036B78_37778, D_8004DC50.unk0, D_8004DC54);
+		for (i = 0; (s32)i < 64; i += 8) {
+			D_8004DC50.flags += (u64)D_800431C0[src++] << (s32)i;
+		}
+		osSyncPrintf(D_80036B78_37778, D_8004DC50.flags);
 		D_80052A90 = 0;
-		shift = 0;
+		i = 0;
 		do {
-			D_80052A90 += *src++ << shift;
-			shift += 8;
-		} while (shift < 0x20);
-		D_80047F98 = *src++;
+			D_80052A90 += D_800431C0[src++] << (s32)i;
+			i += 8;
+		} while ((s32)i < 0x20);
+		D_80047F98 = D_800431C0[src++];
 		osSyncPrintf(D_80036B80_37780, D_80047F98);
 		if (D_80047F98 < D_80047F9C) {
 			D_80047F98 = D_80047F9C;
 		}
 		osSyncPrintf(D_80036B94_37794, D_80047F98);
-		D_80047F94 = D_8003E000_3EC00[currentLevel-1][D_80047F98].unk0;
+		D_80047F94 = D_8003E000_3EC00[currentLevel-1][D_80047F98].unk4;
 		D_8004D154 = 0;
-		shift = 0;
+		i = 0;
 		do {
-			D_8004D154 += *src++ << shift;
-			shift += 8;
-		} while (shift < 0x20);
+			D_8004D154 += D_800431C0[src++] << (s32)i;
+			i += 8;
+		} while ((s32)i < 0x20);
 		osSyncPrintf(D_80036BA4_377A4, D_8004D154);
 		D_8004D150 = 0;
 		D_8004D158 = 0;
-		shift = 0;
-		do {
-			D_8004D158 += *src++ << shift;
-			shift += 8;
-			continue;
-		} while (shift < 0x20);
-		osSyncPrintf(D_80036BB8_377B8, D_8004D158);
-		osSyncPrintf(D_80036BC8_377C8);
-		{
-			s16 *q;
-			s32 i;
-
-		p = &weaponSlots[0];
-		q = &D_80048140[0];
 		i = 0;
 		do {
-			u8 slot = *p;
-			D_80048140[slot] = (s16)(*src++ << D_80031374_31F74[slot]);
-			osSyncPrintf(D_80036BD4_377D4, i, *q);
-			i++;
-			p++;
-			q++;
-		} while (i != 7);
+			D_8004D158 += D_800431C0[src++] << (s32)i;
+			i += 8;
+			continue;
+		} while ((s32)i < 0x20);
+		osSyncPrintf(D_80036BB8_377B8, D_8004D158);
+		osSyncPrintf(D_80036BC8_377C8);
+		/* Keep this setup on one line for IDO instruction scheduling. */
+        weapon = weaponSlots; k = 0; if ((u32)weapon * 0) {} if ((u32)weapon * 0) {} i = 0; j = 0; for (; k != 7; k++, i++, j++) {
+			D_80048140[weaponSlots[i]] = D_800431C0[src++] << D_80031374_31F74[weaponSlots[i]];
+			osSyncPrintf(D_80036BD4_377D4, k, D_80048140[j]);
 		}
-		D_80048030 = *src++;
+		D_80048030 = D_800431C0[src++];
 		osSyncPrintf(D_80036BF4_377F4, D_80048030);
 		osSyncPrintf(D_80036C0C_3780C, D_80052ACD);
-		D_80052ACD = *src++;
+		D_80052ACD = D_800431C0[src++];
 		osSyncPrintf(D_80036C1C_3781C, D_80052ACD);
-		D_8004815C = src[0];
-		D_80048160 = src[1];
-		D_80048162 = src[2];
-		D_8004815E = src[3];
-		src += 3;
-		osSyncPrintf(D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
+		D_80048140[14] = D_800431C0[src++];
+		D_80048140[16] = D_800431C0[src++];
+		D_80048140[17] = D_800431C0[src++];
+		D_80048140[15] = D_800431C0[src];
+		osSyncPrintf(D_80036C2C_3782C, D_80048140[14], D_80048140[16], D_80048140[17], D_80048140[15]);
 		osSyncPrintf(D_80036C4C_3784C);
 	} else {
 		osSyncPrintf(D_80036C50_37850, 0);
@@ -1266,9 +1121,6 @@ void guess_loadSavedGame(s32 arg0) {
 	}
 	currentSaveFileIndex = arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
-#endif
 
 s32 func_80002A88_3688(s32 arg0) {
 	return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
@@ -1377,19 +1229,16 @@ void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
 // https://decomp.me/scratch/VRB5q
-// CURRENT(245) - the opcode/register stream is identical to the target except for one
-// trailing nop the target carries before its epilogue; no source shape tested emits it
-#ifdef NON_MATCHING
-// AI - Background controller/EEPROM thread: polls input, services pending save/load requests
+// Background controller/EEPROM thread: polls input and services pending requests.
 void func_80002EF8_3AF8(void *arg0)
 {
-  OSMesg sp34;
+  OSMesg message;
   func_80001424_2024();
   func_8000FF40_10B40();
   osContStartReadData(&D_80043388);
-  while ((u64)1)
+  while (1)
   {
-	osRecvMesg(&D_80043388, &sp34, 1);
+	osRecvMesg(&D_80043388, &message, 1);
 	func_80002ED4_3AD4();
 	func_8000FF88_10B88();
 	func_80001190_1D90();
@@ -1434,17 +1283,13 @@ void func_80002EF8_3AF8(void *arg0)
   }
 
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80002EF8_3AF8.s")
-#endif
 
-// CURRENT(590)
-#ifdef NON_MATCHING
+
 void func_80003064_3C64(void)
 {
-	s32 sp4;
-	s32 index;
-	s32 sp10;
+	s32 direction;
+	s32 controller;
+	s32 playbackWord;
 
 	if (D_800313C8_31FC8 == 1)
 	{
@@ -1459,32 +1304,29 @@ void func_80003064_3C64(void)
 		D_800476A8 = 0;
 		D_800476AC = 0;
 		D_800476A4 = 0;
-		D_800475FC = D_80047600 = D_80047604 = 0;
-		D_800475F8 = 0;
+		D_800475F8 = D_800475FC = D_80047600 = D_80047604 = 0;
 	}
-	index = 4;
-	if (index)
+	controller = 4;
+	if (controller)
 	{
-		while (index--)
+		while (controller--)
 		{
-			D_800475A0[index] = currentControllerStates[index];
+			D_800475A0[controller] = currentControllerStates[controller];
 			if (!(D_800313C8_31FC8 & 8))
 			{
 				if (D_800476A2)
 				{
-					currentControllerStates[index] = D_800475B8[index];
+					currentControllerStates[controller] = D_800475B8[controller];
 				}
 				else
 				{
-					// 0x80047588
-					currentControllerStates[index].button = 0;
-					currentControllerStates[index].stick_x = 0;
-					currentControllerStates[index].stick_y = 0;
+					currentControllerStates[controller].button = 0;
+					currentControllerStates[controller].stick_x = 0;
+					currentControllerStates[controller].stick_y = 0;
 				}
 			}
-			// 0x800475E0
-			previousControllerButtonStates[index] = D_800475D8[index];
-			D_800475D8[index] = currentControllerStates[index].button;
+			previousControllerButtonStates[controller] = D_800475D8[controller];
+			D_800475D8[controller] = currentControllerStates[controller].button;
 		}
 	}
 	if (D_800475F0)
@@ -1498,8 +1340,8 @@ void func_80003064_3C64(void)
 			D_800475F0 = 0;
 		}
 	}
-	sp4 = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
-	if (((D_800475A0[0].stick_x < 0) ? -1 : 1) != sp4)
+	direction = (currentControllerStates[0].stick_x < 0) ? -1 : 1;
+	if (((D_800475A0[0].stick_x < 0) ? -1 : 1) != direction)
 	{
 		D_800475F0 = (D_800475F0 + D_800475F4) + 1;
 		D_800475F4 = 8;
@@ -1518,8 +1360,8 @@ void func_80003064_3C64(void)
 		if (D_800313C8_31FC8 & 8)
 		{
 			currentControllerStates[0].stick_x = ((D_800475F8 & 0xFF000000) >> 24);
-			currentControllerStates[0].button = D_800475F8;
 			currentControllerStates[0].stick_y = ((D_800475F8 & 0xFF0000) >> 16);
+			currentControllerStates[0].button = D_800475F8 & 0xFFFF;
 
 			previousControllerButtonStates[0] = D_800475D8[0];
 			D_800475D8[0] = currentControllerStates[0].button;
@@ -1528,28 +1370,26 @@ void func_80003064_3C64(void)
 				D_800475FC--;
 				return;
 			}
-			sp10 = ((s32 *)__additional_scanline)[D_800313C4_31FC4];
+			playbackWord = ((s32 *)__additional_scanline)[D_800313C4_31FC4];
 			D_800313C4_31FC4++;
-			if (sp10 == 0x7FFFFFFF)
+			if (playbackWord == 0x7FFFFFFF)
 			{
 				func_80006DAC_79AC(0, 1);
 				D_800313C8_31FC8 = 0;
 			}
-			else if ((sp10 & 0xFFFF) == 0xC00)
+			else if ((playbackWord & 0xFFFF) == 0xC00)
 			{
-				D_800475FC = ((u32)(sp10 & 0xFFFF0000)) >> 16;
+				D_800475FC = ((playbackWord & 0xFFFF0000)) >> 16;
 				D_800475FC = D_800475FC - 1;
 			}
 			else
 			{
-				D_800475F8 = sp10;
+				D_800475F8 = playbackWord;
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003064_3C64.s")
-#endif
+
 
 // https://decomp.me/scratch/66U7q
 void func_800033D4_3FD4(u16 arg0, s32 controllerNum)
@@ -1575,38 +1415,18 @@ void func_800033D4_3FD4(u16 arg0, s32 controllerNum)
 	}
 }
 
-// CURRENT(2250)
-#ifdef NON_MATCHING
-void func_8000345C_405C(u16 arg0)
-{
-  u16 *new_var;
-  s32 temp_v1;
-  new_var = D_800475D8;
-  if (!(D_800313C8 & 8))
-  {
-	if ((new_var[0] & arg0) && (previousControllerButtonStates[0] & arg0))
-	{
-	  currentControllerStates[0].button &= ~arg0;
+void func_8000345C_405C(u16 buttonMask) {
+	s32 i;
+
+	if (!(D_800313C8_31FC8 & 8)) {
+		for (i = 0; i < 4; i++) {
+			if ((D_800475D8[i] & buttonMask) && (previousControllerButtonStates[i] & buttonMask)) {
+				currentControllerStates[i].button &= ~buttonMask;
+			}
+		}
+		D_800475F8 &= ~buttonMask;
 	}
-	temp_v1 = ~arg0;
-	if ((new_var[1] & arg0) && (previousControllerButtonStates[1] & arg0))
-	{
-	  currentControllerStates[1].button &= temp_v1;
-	}
-	if ((D_800475D8[2] & arg0) && (previousControllerButtonStates[2] & arg0))
-	{
-	  currentControllerStates[2].button &= temp_v1;
-	}
-	if ((new_var[3] & arg0) && (previousControllerButtonStates[3] & arg0))
-	{
-	  currentControllerStates[3].button &= temp_v1;
-	}
-    D_800475F8 &= temp_v1;
-  }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_8000345C_405C.s")
-#endif
 
 s32 isButtonNewlyPressed(s32 controllerNum, u16 buttonMask)
 {
@@ -1853,17 +1673,16 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 	} while (src != (s32 *)&D_80047708);
 }
 
-// CURRENT(365)
-#ifdef NON_MATCHING
-void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
-	s32 sp3C[1];
-	s32 sp38;
+void func_80003DE8_49E8(TransformRow *arg0, s16 *arg1, s16 *arg2, Mtx *arg3) {
+	s32 sp3C;
+	s32 sp38[1];
 	s32 sp34;
 	s32 sp30;
 	s32 sp2C;
 	s32 temp1, temp2;
 	u32 mask;
 	s32 *src;
+	s32 temp3;
 
 	D_800476C8[0].unkC = 0;
 	D_800476C8[0].unk1C = 0;
@@ -1871,9 +1690,9 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	D_800476C8[1].unk1C = 0x10000;
 
 	if (arg0 != NULL) {
-		D_800476C8[1].unk10 = (s32)arg0->unk0 << 16;
-		D_800476C8[1].unk14 = (s32)arg0->unk2 << 16;
-		D_800476C8[1].unk18 = (s32)arg0->unk4 << 16;
+		D_800476C8[1].unk10 = arg0->position.unk0 << 16;
+		D_800476C8[1].unk14 = arg0->position.unk2 << 16;
+		D_800476C8[1].unk18 = arg0->position.unk4 << 16;
 	} else {
 		D_800476C8[1].unk10 = 0;
 		D_800476C8[1].unk14 = 0;
@@ -1881,28 +1700,28 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg1 != NULL) {
-		sp3C[0] = coss(arg1[0]);
-		sp38 = sins(arg1[0]);
+		sp3C = coss(arg1[0]);
+		sp38[0] = sins(arg1[0]);
 		sp34 = coss(arg1[2]);
 		sp30 = sins(arg1[2]);
 		sp2C = coss(arg1[1]);
 		temp1 = sins(arg1[1]);
-		D_800476C8[0].unk8 = (-sp38) * 2;
-		D_800476C8[0].unk0 = ((sp3C[0] * sp2C) >> 15) * 2;
-		D_800476C8[0].unk4 = ((sp3C[0] * temp1) >> 15) * 2;
-		temp2 = (sp38 * sp30) >> 15;
+		D_800476C8[0].unk0 = ((sp3C * sp2C) >> 15) * 2;
+		D_800476C8[0].unk4 = ((sp3C * temp1) >> 15) * 2;
+		D_800476C8[0].unk8 = (-sp38[0]) * 2;
+		temp2 = (sp38[0] * sp30) >> 15;
 
 		D_800476C8[0].unk10 = (((-sp34 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
 
 		D_800476C8[0].unk14 = (((sp34 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
-		D_800476C8[0].unk18 = ((sp30 * sp3C[0]) >> 15) * 2;
-		temp2 = (sp38 * sp34) >> 15;
-		D_800476C8[1].unk0 = (((sp30 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+		D_800476C8[0].unk18 = ((sp30 * sp3C) >> 15) * 2;
+		temp3 = (sp38[0] * sp34) >> 15;
+		D_800476C8[1].unk0 = (((sp30 * temp1) >> 15) + ((temp3 * sp2C) >> 15)) * 2;
 
-		D_800476C8[1].unk4 = (((-sp30 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
+		D_800476C8[1].unk4 = (((-sp30 * sp2C) >> 15) + ((temp3 * temp1) >> 15)) * 2;
 
-		if (sp3C[0] * 0) {}
-		D_800476C8[1].unk8 = ((sp3C[0] * sp34) >> 15) * 2;
+		D_800476C8[1].unk8 = ((sp3C * sp34) >> 15) * 2;
+		if (((u32)arg2 + sp38[0] + (sp38[0] >> 1)) * 0) {}
 	} else {
 		D_800476C8[0].unk0 = 0x10000;
 
@@ -1939,21 +1758,19 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	/* Keep this setup together to preserve the address scheduling. */
-	mask = 0xFFFF0000; arg0 = (Unk80052B40 *)arg3; src = D_800476C8_words; do { ((s32 *)arg0)[0] = (src[0] & mask) + ((src[1] & mask) >> 0x10);
-		arg0 = (Unk80052B40 *)&((s32 *)arg0)[4];
-		((s32 *)arg0)[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
-		((s32 *)arg0)[-3] = (src[2] & mask) + ((src[3] & mask) >> 0x10);
-		((s32 *)arg0)[5] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
-		((s32 *)arg0)[-2] = (src[4] & mask) + ((src[5] & mask) >> 0x10);
-		((s32 *)arg0)[6] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
-		((s32 *)arg0)[-1] = (src[6] & mask) + ((src[7] & mask) >> 0x10);
-		((s32 *)arg0)[7] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
+	mask = 0xFFFF0000; arg0 = (TransformRow *)arg3; src = D_800476C8_words; do { arg0[0].words[0] = (src[0] & mask) + ((src[1] & mask) >> 0x10);
+		arg0++;
+		arg0[1].words[0] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
+		arg0[-1].words[1] = (src[2] & mask) + ((src[3] & mask) >> 0x10);
+		arg0[1].words[1] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
+		arg0[-1].words[2] = (src[4] & mask) + ((src[5] & mask) >> 0x10);
+		arg0[1].words[2] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
+		arg0[-1].words[3] = (src[6] & mask) + ((src[7] & mask) >> 0x10);
+		arg0[1].words[3] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
 		src = &src[8];
-	} while (src != (s32 *)&D_80047708);
+	} while (src != &D_80047708.unk0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003DE8_49E8.s")
-#endif
+
 
 void func_80004214_4E14(s16 arg0, s32 arg1) {
 	Unk80052B40 v;

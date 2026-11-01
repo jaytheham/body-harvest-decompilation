@@ -1,0 +1,5 @@
+Incorrect ASM: `func_80003064_3C64` clears three replay globals in a chain and the packed input separately. Its later scratch registers rotate (`t9` instead of `t6` for the input-ready load), and playback X is stored after the next byte's extraction.
+
+-> Code changed: clear all four words with `D_800475F8 = D_800475FC = D_80047600 = D_80047604 = 0`. Decode the playback button field explicitly with `currentControllerStates[0].button = D_800475F8 & 0xFFFF`.
+
+-> Correct ASM: UGEN's additional assignment-result temporary restores the scratch cycle without adding an instruction. The input-ready load uses `t6`, and the redundant button mask changes the byte temporary lifetime so X is stored at ROM `0x3F08` before `t6` is reused for the previous-button load. No extra button-mask instruction remains.
