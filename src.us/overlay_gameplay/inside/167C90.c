@@ -553,8 +553,7 @@ s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
 }
 
 // AI - Check if camera yaw direction is clear by scanning collision-map markers
-// CURRENT(140)
-#ifdef NON_MATCHING
+#ifdef NON_MATCHING // CURRENT(20)
 s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 	u8 sp5F;
 	u8 var_s1;
@@ -604,9 +603,8 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 	count = 0;
 	done.value = 0;
 	sp2C = sp5F;
-	var_a3 = (s8) sp5F;
 
-	do {
+	for (var_a3 = (s8)sp5F; !done.value; var_a3 = (s8)((var_a3 + 1) % var_s1)) {
 		count++;
 		x = (s16)(var_s2[var_a3].unk0 + temp_x);
 		if (x <= 0 || D_800E6460 < x) {
@@ -626,8 +624,7 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 			done.signedValue = 0;
 			break;
 		}
-		var_a3 = (s8)((var_a3 + 1) % var_s1);
-	} while (!done.value);
+	}
 
 	var_a3 = (s8) sp2C;
 	sp54 = 1;
