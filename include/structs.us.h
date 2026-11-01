@@ -2725,7 +2725,9 @@ typedef struct {
 typedef struct {
 	/* 0x000 */ u8 pad0[0x8];
 	/* 0x008 */ s32 unk8; /* num animation frames */
-	/* 0x00C */ u8 pad0C[0xE44];
+	/* 0x00C */ u8 pad0C[2];
+	/* 0x00E */ u16 unkE;
+	/* 0x010 */ u8 pad10[0xE40];
 	/* 0xE50 */ s32 unkE50;
 } Unk8007F878_404; /* size = 0xE54 */
 
