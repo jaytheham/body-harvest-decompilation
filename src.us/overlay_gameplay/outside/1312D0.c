@@ -146,8 +146,6 @@ s16 func_801225C4_131574(Projectile *arg0)
 	return index;
 }
 
-// CURRENT(24833)
-#ifdef NON_MATCHING
 Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
     Projectile *entry;
     s16 sp7A;
@@ -159,8 +157,10 @@ Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *ar
     s16 sp6E;
     s16 sp6C;
     VehicleType *launchType;
-    f32 negArg5;
     f32 negArg7;
+    f32 negArg5;
+    s16 sinPitch;
+    s16 sp5C;
 
     sp7A = arg0->unk0 + arg2;
 	sp78 = arg0->unk2 + arg3;
@@ -169,14 +169,20 @@ Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *ar
 	negArg5 = -arg5;
 	
 	negArg7 = (negArg5 < arg5) ? arg5 : negArg5;
-	sp74 = ((negArg7 > 0) || (((-arg7 < arg7) ? arg7 : -arg7) > 0)) ? func_80003824_4424(arg5, arg7) : 0;
+	if ((negArg7 > 0) || ((negArg5 = (-arg7 < arg7) ? arg7 : -arg7), (negArg5 > 0))) {
+		sp74 = func_80003824_4424(arg5, arg7);
+	} else {
+		sp74 = 0;
+	}
 	if ((arg0->unkC == -2) && ((launchType = &vehicleTypes[arg0->unk1A])->launchAngle != 0xFF)) {
-		sp72 = launchType->launchAngle << 8;
+		sp72 = (s8)launchType->launchAngle << 8;
 		
 		negArg7 = sqrtf((arg5 * arg5) + (arg7 * arg7));
-		arg6 = (f32)((((f32)sins(sp72) / 32768.0) * negArg7) / ((f32)sins((u16)(0x4000 - sp72)) / 32768.0));
+		sinPitch = sins(sp72); sp5C = sins((u16)(0x4000 - sp72));
+		arg6 = (f32)((((f32)sinPitch / 32768.0) * negArg7) / ((f32)sp5C / 32768.0));
 	} else {
-		sp72 = func_80003824_4424(sqrtf((arg5 * arg5) + (arg7 * arg7)), arg6);
+		negArg7 = sqrtf((arg5 * arg5) + (arg7 * arg7));
+		sp72 = func_80003824_4424(negArg7, arg6);
 	}
 
 	if (D_8015F9E4 < 0x40) {
@@ -203,20 +209,22 @@ Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *ar
 		entry->unk10 = arg5;
 		entry->unk14 = arg6;
 		entry->unk18F32 = arg7;
-		entry->unk1D = (s8)((s32)(0x4000 - sp72) >> 8);
 		entry->unk1C = (s8)((s32)(0x4000 - sp74) >> 8);
+		entry->unk1D = (s8)((s32)(0x4000 - sp72) >> 8);
 
 		if ((arg0 == D_80052B34) && (arg1->unk13 < 0x32)) {
-			s16 sp5C;
 			sp5C = coss(D_80052B34->unk10);
-			entry->unk10 = (f32)(entry->unk10 + ((((f32)coss(D_80052B34->unkE) / 32768.0) * ((f32)sp5C / 32768.0) * D_80052B34->unk58) + (f64)D_80052B34->unk30));
-			entry->unk14 = (f32)(entry->unk14 + ((((f32)sins(D_80052B34->unk10) / 32768.0) * D_80052B34->unk58) + D_80052B34->unk34));
+			sinPitch = coss(D_80052B34->unkE);
+			entry->unk10 = (f32)(entry->unk10 + ((((f32)sinPitch / 32768.0) * ((f32)sp5C / 32768.0) * D_80052B34->unk58) + (f64)D_80052B34->unk30));
+			sinPitch = sins(D_80052B34->unk10);
+			entry->unk14 = (f32)(entry->unk14 + ((((f32)sinPitch / 32768.0) * D_80052B34->unk58) + D_80052B34->unk34));
 			sp5C = coss(D_80052B34->unk10);
-			entry->unk18F32 = (f32)(entry->unk18F32 + ((((f32)sins(D_80052B34->unkE) / 32768.0) * ((f32)sp5C / 32768.0) * D_80052B34->unk58) + (f64)D_80052B34->unk38));
+			sinPitch = sins(D_80052B34->unkE);
+			entry->unk18F32 = (f32)(entry->unk18F32 + ((((f32)sinPitch / 32768.0) * ((f32)sp5C / 32768.0) * D_80052B34->unk58) + (f64)D_80052B34->unk38));
 		}
 	}
 
-	entry->unk20 = (u32)(arg1 - D_80145BE0_154B90);
+	entry->unk20 = ((u32)arg1 - (u32)&D_80145BE0_154B90[0]) / sizeof(D_80145BE0_154B90[0]);
 	entry->unk24 = (s32)arg0;
 	entry->unk28 = (s16)((u16)arg1->unk0 / (s32)arg1->unk13);
 	if ((D_80145BE0_154B90[entry->unk20].unk8 >> 8) & 0x100) {
@@ -253,7 +261,7 @@ Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *ar
 
 				func_800DEA08_ED9B8(sp70, sp6E, sp6C, 0x32, 6, 2, 0x19, 0xFF, 0xE1, 0xDC, 0xA0);
 				func_800DE9B8_ED968(sp70, sp6E, sp6C, 0x64);
-				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)((negArg5 / 2)), -0x28, (s32)(negArg7 / 2), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800C541C_D43CC(sp70, sp6E, sp6C, (s8)(s32)(((-arg5) / 2)), -0x28, (s32)(negArg7 / 2), 0x1E, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
 
 				sp70 = (s16)(s32)(entry->unk0 + (arg5 / 2));
 				sp6E = (s16)(s32)(entry->unk4 + (arg6 / 2));
@@ -269,7 +277,7 @@ Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *ar
 				
 				negArg7 = -arg7;
 				func_800DEA08_ED9B8((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x32, 6, 2, 0x19, 0xFF, 0xE1, 0xDC, 0xA0);
-				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)((negArg5 / 2)), 0, (s32)(negArg7 / 2), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
+				func_800C541C_D43CC((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, (s8)(s32)(((-arg5) / 2)), 0, (s32)(negArg7 / 2), 0x14, 0xB4, 0x1E, 6, 0xFF, 0xFF, 0x64);
 				func_800DE9B8_ED968((s16)(s32)entry->unk0, (s16)(s32)entry->unk4, (s16)(s32)entry->unk8, 0x64);
 			} else if (entry->unk20 == 0x28) {
 			}
@@ -314,9 +322,6 @@ Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *ar
 	}
 	return NULL;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801226F8_1316A8.s")
-#endif
 
 void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5)
 {
