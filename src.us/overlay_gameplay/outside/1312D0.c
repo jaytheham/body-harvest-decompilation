@@ -1836,18 +1836,21 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 	func_80128428_1373D8(arg0, (s16)(s32)x, (s16)(s32)y, (s16)(s32)z, arg2, arg3, arg4);
 }
 
-// CURRENT(9299): collision exits, invariant allocation, and stack slots remain.
-#ifdef NON_MATCHING
 void func_80128650_137600(Projectile *arg0, s32 arg1) {
-	s32 absX; const WeaponEntry_80129864 *building;
-	union { VehicleInstance *vehicle; AlienInstance *alien; BuildingInstance *building; } entity;
-	union {AlienType *alienType; u8 *activeList;} data;
-	s16 floorY;
+	const WeaponEntry_80129864 *building;
+	VehicleInstance *vehicle;
+	AlienInstance *alien;
+	BuildingInstance *instance;
+	AlienType *alienType;
 	s32 i;
-	s32 instId;
+	s32 absX;
+	s16 floorY;
 	s32 absY;
-
-	s32 y; s32 iteration; f32 *motion; f64 increment;
+	s32 iteration;
+	f32 *motion;
+	s32 instId;
+	s32 y;
+	u8 *activeList;
 
 building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 
@@ -1859,10 +1862,10 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 	D_80158FEC = NULL;
 	D_80158FE8 = NULL;
 	D_80158FE4 = NULL;
-	motion = arg0->motion; increment = D_801451B8_154168[0];
+	motion = arg0->motion;
 	for (;; iteration++) {
 		if (arg0->unkC < 1.0) {
-			motion[0] += increment;
+			motion[0] += 0.05;
 		}
 
 		if ((iteration >> 1) < 0x18) {
@@ -1916,58 +1919,55 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 
 		 i = D_80158FD8; absX = i; i -= 1;
 		if (absX != 0) {
-			data.activeList = &D_80158E80[i];
+			activeList = &D_80158E80[i];
 			do {
-				entity.vehicle = &vehicleInstances[*data.activeList];
-				absY = func_800047FC_53FC((s16)(s32)((f32)entity.vehicle->unk2 - arg0->unk4));
-				absX = func_800047FC_53FC((s16)(s32)((f32)entity.vehicle->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)entity.vehicle->unk4 - arg0->unk8)) + absX + absY) < vehicleTypes[entity.vehicle->unk1A].unk8) {
-					if ((s32)entity.vehicle != arg0->unk24) {
+				vehicle = &vehicleInstances[*activeList];
+				absY = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk2 - arg0->unk4));
+				absX = func_800047FC_53FC((s16)(s32)((f32)vehicle->unk0 - arg0->unk0));
+				if ((func_800047FC_53FC((s16)(s32)((f32)vehicle->unk4 - arg0->unk8)) + absX + absY) < vehicleTypes[vehicle->unk1A].unk8) {
+					if ((s32)vehicle != arg0->unk24) {
 						D_8015F9D0.unk8 = 5;
-						D_80158FE4 = entity.vehicle;
-						break;
+						D_80158FE4 = vehicle;
+						goto end_simulation;
 					}
 				}
-				data.activeList--; absX = i; i -= 1;
+				activeList--; absX = i; i -= 1;
 			} while (absX != 0);
-			if (i >= 0) { break; }
 		}
 
 		instId = func_8011E6FC_12D6AC((s16)(s32)arg0->unk0, (s16)(s32)arg0->unk8, &floorY);
 		if (instId != -1) {
-			entity.building = &buildingInstances[instId]; y = (s32)arg0->unk4;
-			if ((entity.building->yCoord < y) && (y < floorY)) {
+			instance = &buildingInstances[instId]; y = (s32)arg0->unk4;
+			if ((instance->yCoord < y) && (y < floorY)) {
 				if (D_801591A8 != 0) {
-					D_80158FE8 = entity.building;
+					D_80158FE8 = instance;
 				}
 				D_8015F9D0.unk8 = 3;
 				break;
 			}
 		}
-		 entity.alien = &alienInstances[0xFE]; i = 0xFE; do {
-			if (func_8012235C_13130C((Unk8004D0F8 *)entity.alien) != 0) {
-				data.alienType = &alienTypes[entity.alien->typeIndex];
-				absY = func_800047FC_53FC((s16)(s32)((f32)entity.alien->unk2 - arg0->unk4));
-				absX = func_800047FC_53FC((s16)(s32)((f32)entity.alien->unk0 - arg0->unk0));
-				if ((func_800047FC_53FC((s16)(s32)((f32)entity.alien->unk4 - arg0->unk8)) + absX + absY) < data.alienType->unk8) {
-					if (((s32)entity.alien != arg0->unk24) && ((f32)entity.alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(entity.alien->unk2 + data.alienType->unk38))) {
+		 alien = &alienInstances[0xFE]; i = 0xFE; do {
+			if (func_8012235C_13130C((Unk8004D0F8 *)alien) != 0) {
+				alienType = &alienTypes[alien->typeIndex];
+				absY = func_800047FC_53FC((s16)(s32)((f32)alien->unk2 - arg0->unk4));
+				absX = func_800047FC_53FC((s16)(s32)((f32)alien->unk0 - arg0->unk0));
+				if ((func_800047FC_53FC((s16)(s32)((f32)alien->unk4 - arg0->unk8)) + absX + absY) < alienType->unk8) {
+					if (((s32)alien != arg0->unk24) && ((f32)alien->unk2 < arg0->unk4) && (arg0->unk4 < (f32)(alien->unk2 + alienType->unk38))) {
 						D_8015F9D0.unk8 = 7;
-						D_80158FEC = entity.alien;
-						break;
+						D_80158FEC = alien;
+						goto end_simulation;
 					}
 				}
 			}
-			absX = i; entity.alien--; i -= 1;
+			absX = i; alien--; i -= 1;
 		} while (absX != 0);
 
-		if (i >= 0) {
-			break;
-		}
 	}
 
-	D_8015F9D0.position[0] = (s16)(s32)arg0->unk0;
-	D_8015F9D0.position[1] = (s16)(s32)arg0->unk4;
-	D_8015F9D0.position[2] = (s16)(s32)arg0->unk8;
+end_simulation:
+	D_8015F9D0.unk0 = (s16)(s32)arg0->unk0;
+	D_8015F9D0.unk2 = (s16)(s32)arg0->unk4;
+	D_8015F9D0.unk4 = (s16)(s32)arg0->unk8;
 
 	if (arg1 != 0) {
 		D_80159220[0] = (s16)(s32)arg0->unk0;
@@ -1978,10 +1978,6 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 
 	func_801238DC_13288C((s16)(arg0 - D_8015EB90));
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128650_137600.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
@@ -2079,7 +2075,11 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	gSPLine3D(D_8005BB30++, 1, 2, 0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s", "src.us/overlay_gameplay/outside/1312D0_after_prediction_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s", "src.us/overlay_gameplay/outside/1312D0_after_prediction_late_rodata.eu.s")
+#endif
 #endif
 
 Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {

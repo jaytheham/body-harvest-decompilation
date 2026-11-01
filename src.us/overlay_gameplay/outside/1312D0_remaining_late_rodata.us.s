@@ -25,12 +25,3 @@ glabel jtbl_80145168_154118
 .word 0x80125198
 .word 0x80125198
 .word 0x80125070
-
-glabel D_801451B8_154168
-.double 0.05
-
-glabel D_801451C0_154170
-.double 0.7
-
-glabel D_801451C8_154178
-.float 3000.0
