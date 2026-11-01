@@ -1,0 +1,36 @@
+.late_rodata
+.late_rodata_alignment 8
+
+glabel D_80145160_154110
+.double 1000.0
+
+glabel jtbl_80145168_154118
+.word 0x80125024
+.word 0x80125198
+.word 0x80125070
+.word 0x80125154
+.word 0x80125108
+.word 0x801250BC
+.word 0x80125198
+.word 0x80125108
+.word 0x80125198
+.word 0x80125198
+.word 0x80125154
+.word 0x80125198
+.word 0x80125154
+.word 0x80125198
+.word 0x80125198
+.word 0x80125198
+.word 0x80125154
+.word 0x80125198
+.word 0x80125198
+.word 0x80125070
+
+glabel D_801451B8_154168
+.double 0.05
+
+glabel D_801451C0_154170
+.double 0.7
+
+glabel D_801451C8_154178
+.float 3000.0

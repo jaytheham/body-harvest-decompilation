@@ -4066,3 +4066,6 @@ extern const f64 D_80142E88_151E38[1];
 extern const f32 D_80142E90_151E40[1];
 
 #endif /* LIBULTRA_REFERENCE */
+
+extern const f64 D_80145160_154110[1];
+extern const f32 D_801451C8_154178[1];

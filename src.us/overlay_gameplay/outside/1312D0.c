@@ -13,32 +13,6 @@ const char D_801450DC_15408C[] = "hit weakpoint!\n"; // "hit weakpoint!\n"
 const char D_801450EC_15409C[] = "alpha chaingun\n"; // "alpha chaingun\n"
 const char D_801450FC_1540AC[] = "shoot force here\n"; // "shoot force here\n"
 
-const u32 jtbl_80145110_1540C0[20] = {
-	OVERLAY_PTR(0x80123A14), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A24), OVERLAY_PTR(0x80123A34),
-	OVERLAY_PTR(0x80123A04), OVERLAY_PTR(0x801239F4), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A04),
-	OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A34), OVERLAY_PTR(0x80123A3C),
-	OVERLAY_PTR(0x80123A34), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A3C),
-	OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A3C), OVERLAY_PTR(0x80123A24),
-};
-
-const f64 D_80145160_154110[1] = {1000.0};
-
-const u32 jtbl_80145168_154118[20] = {
-	OVERLAY_PTR(0x80125024), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125070), OVERLAY_PTR(0x80125154),
-	OVERLAY_PTR(0x80125108), OVERLAY_PTR(0x801250BC), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125108),
-	OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125154), OVERLAY_PTR(0x80125198),
-	OVERLAY_PTR(0x80125154), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125198),
-	OVERLAY_PTR(0x80125154), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125198), OVERLAY_PTR(0x80125070),
-};
-
-const f64 D_801451B8_154168[1] = {0.05};
-const ShadowGeometryConstant D_801451C0_154170 = {0.7};
-const f32 D_801451C8_154178[1] = {3000.0f};
-
-
-
-
-
 
 AlienInstance *D_80140AB0_14FA60[5] = {
 	NULL, NULL, NULL, NULL, NULL,
@@ -378,67 +352,59 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	}
 }
 
-// CURRENT(23): frame size and generated jump-table placement remain.
-#ifdef NON_MATCHING
 void func_801238DC_13288C(s16 arg0) {
-	Projectile *entry;
 	const WeaponEntry_80129864 *building;
-	s16 linkIndex;
 	s32 buildingIndex;
 
 	if (D_8015F9E4 == 0) {
 		return;
 	}
 
-	entry = &D_8015EB90[arg0];
-	linkIndex = entry->unk2A;
-	if (linkIndex != -1) {
-		D_8015F790[linkIndex].trailEnded = 1;
+	if (D_8015EB90[arg0].unk2A != -1) {
+		D_8015F790[D_8015EB90[arg0].unk2A].trailEnded = 1;
 	}
 
-	buildingIndex = entry->unk20;
+	buildingIndex = D_8015EB90[arg0].unk20;
 	if (D_801591A8 == 0) {
 		building = &D_80145BE0_154B90[buildingIndex];
 
-		if ((((s32)building->unk8 >> 8) & 0x1000) || (buildingIndex == 0x5D)) {
-			func_800C3288_D2238(entry->unk2E);
+		if (((building->unk8 >> 8) & 0x1000) || (buildingIndex == 0x5D)) {
+			func_800C3288_D2238(D_8015EB90[arg0].unk2E);
 		}
 
-		if ((((s32)building->unk8 >> 8) << 9) < 0) {
-			func_800D9C60_E8C10(entry->unk2C);
+		if (((building->unk8 >> 8) << 9) < 0) {
+			func_800D9C60_E8C10(D_8015EB90[arg0].unk2C);
 		}
 
 		switch (buildingIndex - 0x5C) {
 			case 5:
-				func_800D76A8_E6658(entry->unk2C);
+				func_800D76A8_E6658(D_8015EB90[arg0].unk2C);
 				break;
 			case 4:
 			case 7:
-				func_800D7FB4_E6F64(entry->unk2C);
+				func_800D7FB4_E6F64(D_8015EB90[arg0].unk2C);
 				break;
 			case 0:
-				func_800D4A78_E3A28(entry->unk2C);
+				func_800D4A78_E3A28(D_8015EB90[arg0].unk2C);
 				break;
 			case 2:
 			case 0x13:
-				func_800D5588_E4538(entry->unk2C);
+				func_800D5588_E4538(D_8015EB90[arg0].unk2C);
 				break;
 			case 3:
 			case 0xA:
 			case 0xC:
-				func_800D9C60_E8C10(entry->unk2C);
+				func_800D9C60_E8C10(D_8015EB90[arg0].unk2C);
 				break;
 		}
 	}
 
-	*entry = D_8015EB90[--D_8015F9E4];
-	D_8015F790[entry->unk2A].unk20 = entry;
+	D_8015EB90[arg0] = D_8015EB90[--D_8015F9E4];
+	D_8015F790[D_8015EB90[arg0].unk2A].unk20 = &D_8015EB90[arg0];
 }
 
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_801238DC_13288C.s")
-#endif
+
 
 // on Vehicle death
 void func_80123AC4_132A74(VehicleInstance *arg0)
@@ -1035,7 +1001,11 @@ void func_80124D60_133D10(void) {
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124D60_133D10.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124D60_133D10.s", "src.us/overlay_gameplay/outside/1312D0_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124D60_133D10.s", "src.us/overlay_gameplay/outside/1312D0_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
