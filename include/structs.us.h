@@ -1996,6 +1996,10 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ void *unk8;
 	/* 0x0C */ s32 unkC;
+	union {
+		Mtx matrix;
+		Vtx vertices[4];
+		struct {
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
@@ -2012,6 +2016,8 @@ typedef struct {
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ s16 unk44;
 	/* 0x46 */ u8 pad46[0xA];
+		};
+	};
 } Unk80259D90; /* size = 0x50 */
 
 typedef struct {

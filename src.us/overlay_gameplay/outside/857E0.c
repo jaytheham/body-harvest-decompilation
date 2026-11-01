@@ -86,31 +86,31 @@ void func_800769A8_85958(s32 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(5678)
+// CURRENT(4003)
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	s32 pattern;
 	s32 outer;
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
 	Unk80052B40 sp98;
-	u16* table;
 	Unk80259D90* entry;
+	s32 obj;
 	s16 x;
 	s32 z;
-	u32 packed;
-	volatile u32 packedBackup;
 	s32 inner;
-	s32 obj;
 	s32 type;
 	s32 temp;
 	OutsideTreeStyle* tempTable;
 	s32 vertexX;
 	s32 vertexZ;
-	s32 xOff;
-	s32 zOff;
+	u32 packed;
 	u8 c0;
 	u8 c1;
 	u8 c2;
+	u16* table;
+	u32 packedBackup[1];
+	s32 xOff;
+	s32 zOff;
 
 	spA0 = D_8013BCCC_Vector;
 	sp98 = D_8013BCD4_Vector;
@@ -134,9 +134,9 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	for (outer = 0; outer != 0x10; outer++, table++) {
 		packed = *table;
 		if (packed != 0) {
-			for (inner = 0; packed != 0; inner++, packed = (u16)(packedBackup >> 4)) {
+			for (inner = 0; packed != 0; inner++, packed = (u16)(packedBackup[0] >> 4)) {
 				type = packed & 0xF;
-				packedBackup = packed;
+				packedBackup[0] = packed;
 				if (type != 0) {
 					obj = func_80076830_857E0();
 					if (obj == -1) {
@@ -174,7 +174,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						if (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2) {
 							spA0.unk0 = inner << 0xE;
 						}
-						func_800039D0_45D0(&spA8, &spA0, &sp98, (Mtx*)&entry->unk10);
+						func_800039D0_45D0(&spA8, &spA0, &sp98, &entry->matrix);
 					} else {
 						spA8.unk0 = x;
 						spA8.unk4 = z;
@@ -191,59 +191,60 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						}
 
 						tempTable = &((OutsideTreeStyle (*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
-						entry->unk8 = (void*)tempTable->texture;
 
 						vertexX = D_801416B0_150660[inner][0] + xOff;
 						vertexZ = D_801416C0_150670[inner][0] + zOff;
+						entry->unk8 = (void*)tempTable->texture;
 						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
 
-						((Vtx*)&entry->unk10)[0].v.ob[0] = vertexX;
-						((Vtx*)&entry->unk10)[0].v.ob[1] = tempTable->height + temp;
-						((Vtx*)&entry->unk10)[0].v.cn[3] = 0xFF;
-						((Vtx*)&entry->unk10)[0].v.cn[2] = c2;
-						((Vtx*)&entry->unk10)[0].v.cn[1] = c1;
-						((Vtx*)&entry->unk10)[0].v.cn[0] = c0;
-						((Vtx*)&entry->unk10)[0].v.tc[1] = 0;
-						((Vtx*)&entry->unk10)[0].v.tc[0] = 0;
-						((Vtx*)&entry->unk10)[0].v.flag = 0;
-						((Vtx*)&entry->unk10)[0].v.ob[2] = vertexZ;
+						entry->vertices[0].v.ob[0] = vertexX;
+						entry->vertices[0].v.ob[1] = tempTable->height + temp;
+						entry->vertices[0].v.cn[3] = 0xFF;
+						entry->vertices[0].v.cn[2] = c2;
+						entry->vertices[0].v.cn[1] = c1;
+						entry->vertices[0].v.cn[0] = c0;
+						entry->vertices[0].v.tc[1] = 0;
+						entry->vertices[0].v.tc[0] = 0;
+						entry->vertices[0].v.flag = 0;
+						entry->vertices[0].v.ob[2] = vertexZ;
 
-						((Vtx*)&entry->unk10)[1].v.ob[1] = temp;
-						((Vtx*)&entry->unk10)[1].v.tc[0] = 0;
-						((Vtx*)&entry->unk10)[1].v.flag = 0;
-						((Vtx*)&entry->unk10)[1].v.ob[2] = vertexZ;
-						((Vtx*)&entry->unk10)[1].v.ob[0] = vertexX;
-						((Vtx*)&entry->unk10)[1].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
-						((Vtx*)&entry->unk10)[1].v.cn[3] = 0xFF;
-						((Vtx*)&entry->unk10)[1].v.cn[2] = c2;
-						((Vtx*)&entry->unk10)[1].v.cn[1] = c1;
-						((Vtx*)&entry->unk10)[1].v.cn[0] = c0;
-
+						entry->vertices[1].v.ob[1] = temp;
+						entry->vertices[1].v.tc[0] = 0;
+						entry->vertices[1].v.flag = 0;
+						entry->vertices[1].v.ob[2] = vertexZ;
+						entry->vertices[1].v.ob[0] = vertexX;
+						temp = tempTable->scale;
 						vertexX = D_801416B0_150660[inner][1] + xOff;
 						vertexZ = D_801416C0_150670[inner][1] + zOff;
+						entry->vertices[1].v.tc[1] = (temp << 0xB) - 0x20;
+						entry->vertices[1].v.cn[3] = 0xFF;
+						entry->vertices[1].v.cn[2] = c2;
+						entry->vertices[1].v.cn[1] = c1;
+						entry->vertices[1].v.cn[0] = c0;
+
 						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
 
-						((Vtx*)&entry->unk10)[2].v.ob[0] = vertexX;
-						((Vtx*)&entry->unk10)[2].v.ob[1] = tempTable->height + temp;
-						((Vtx*)&entry->unk10)[2].v.flag = 0;
-						((Vtx*)&entry->unk10)[2].v.ob[2] = vertexZ;
-						((Vtx*)&entry->unk10)[2].v.tc[0] = tempTable->width << 0xB;
-						((Vtx*)&entry->unk10)[2].v.cn[3] = 0xFF;
-						((Vtx*)&entry->unk10)[2].v.cn[2] = c2;
-						((Vtx*)&entry->unk10)[2].v.cn[1] = c1;
-						((Vtx*)&entry->unk10)[2].v.cn[0] = c0;
-						((Vtx*)&entry->unk10)[2].v.tc[1] = 0;
+						entry->vertices[2].v.ob[0] = vertexX;
+						entry->vertices[2].v.ob[1] = tempTable->height + temp;
+						entry->vertices[2].v.flag = 0;
+						entry->vertices[2].v.ob[2] = vertexZ;
+						entry->vertices[2].v.tc[0] = tempTable->width << 0xB;
+						entry->vertices[2].v.cn[3] = 0xFF;
+						entry->vertices[2].v.cn[2] = c2;
+						entry->vertices[2].v.cn[1] = c1;
+						entry->vertices[2].v.cn[0] = c0;
+						entry->vertices[2].v.tc[1] = 0;
 
-						((Vtx*)&entry->unk10)[3].v.flag = 0;
-						((Vtx*)&entry->unk10)[3].v.ob[2] = vertexZ;
-						((Vtx*)&entry->unk10)[3].v.ob[1] = temp;
-						((Vtx*)&entry->unk10)[3].v.ob[0] = vertexX;
-						((Vtx*)&entry->unk10)[3].v.tc[0] = tempTable->width << 0xB;
-						((Vtx*)&entry->unk10)[3].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
-						((Vtx*)&entry->unk10)[3].v.cn[3] = 0xFF;
-						((Vtx*)&entry->unk10)[3].v.cn[2] = c2;
-						((Vtx*)&entry->unk10)[3].v.cn[1] = c1;
-						((Vtx*)&entry->unk10)[3].v.cn[0] = c0;
+						entry->vertices[3].v.flag = 0;
+						entry->vertices[3].v.ob[2] = vertexZ;
+						entry->vertices[3].v.ob[1] = temp;
+						entry->vertices[3].v.ob[0] = vertexX;
+						entry->vertices[3].v.tc[0] = tempTable->width << 0xB;
+						entry->vertices[3].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
+						entry->vertices[3].v.cn[3] = 0xFF;
+						entry->vertices[3].v.cn[2] = c2;
+						entry->vertices[3].v.cn[1] = c1;
+						entry->vertices[3].v.cn[0] = c0;
 					}
 				}
 
@@ -251,6 +252,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
 #endif
