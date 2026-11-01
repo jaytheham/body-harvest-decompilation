@@ -982,25 +982,20 @@ void func_800AC198_BB148(u8 arg0)
 	}
 }
 
-// CURRENT (500)
 // AI - Select target
-#ifdef NON_MATCHING
 s32 func_800AC2FC_BB2AC(u8 arg0)
 {
-	s32 sp4C;
-	s32 v0;
+	s32 distanceSq;
 	s32 temp;
 	s32 dx, dz;
-	s16 a0;
-	s32 otherIdx;
+	s16 buildingIndex;
+	s32 targetIndex;
 	s32 state20;
-	s16 a3;
 
 	state20 = 0x14;
-	sp4C = 0x3D0900;
-	v0 = alienInstances[(s32)arg0].unk24;
+	distanceSq = 0x3D0900;
 
-	if ((v0 != 0) && (state20 != v0))
+	if ((alienInstances[(s32)arg0].unk24 != 0) && (state20 != alienInstances[(s32)arg0].unk24))
 	{
 		return 1;
 	}
@@ -1008,19 +1003,19 @@ s32 func_800AC2FC_BB2AC(u8 arg0)
 	if (!(alienInstances[(s32)arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ)))
 	{
 		temp = alienTypes[alienInstances[(s32)arg0].typeIndex].unk51;
-		if (state20 != v0)
+		if (state20 != alienInstances[(s32)arg0].unk24)
 		{
-			a0 = func_8011B6C0_12A670(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, (s16)(temp / 20), 1, 0x102C);
+			buildingIndex = func_8011B6C0_12A670(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, temp / 20, 1, 0x102C);
 		}
 		else
 		{
-			a0 = -1;
+			buildingIndex = -1;
 		}
 
-		if (a0 != -1)
+		if (buildingIndex != -1)
 		{
-			alienInstances[(s32)arg0].unk38 = a0;
-			temp = func_8011B3F0_12A3A0(a0, &alienInstances[(s32)arg0].unk14, &alienInstances[(s32)arg0].unk16, &alienInstances[(s32)arg0].unk18);
+			alienInstances[(s32)arg0].unk38 = buildingIndex;
+			temp = func_8011B3F0_12A3A0(buildingIndex, &alienInstances[(s32)arg0].unk14, &alienInstances[(s32)arg0].unk16, &alienInstances[(s32)arg0].unk18);
 		}
 		else
 		{
@@ -1029,30 +1024,30 @@ s32 func_800AC2FC_BB2AC(u8 arg0)
 		}
 		if (temp != 0)
 		{
-			alienInstances[(s32)arg0].unk48 = 0xA0;
 			alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+			alienInstances[(s32)arg0].unk48 = 0xA0;
 			return 0;
 		}
 
-		temp = func_800825E8_91598(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, &sp4C);
-		if (sp4C < 0x77A10)
+		temp = func_800825E8_91598(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, &distanceSq);
+		if (distanceSq < 0x77A10)
 		{
 			alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
 			alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY;
 			alienInstances[(s32)arg0].unk48 = 0xA0;
-			alienInstances[(s32)arg0].unk38 = (s16)(temp & 0xFF);
+			alienInstances[(s32)arg0].unk38 = temp & 0xFF;
 			return 0;
 		}
 
 		alienInstances[(s32)arg0].unk48 = 0x40;
 		alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
-		alienInstances[(s32)arg0].unkE = (s16)(alienInstances[(s32)arg0].unkE + ((s32)(func_800038E0_44E0() << 11) / 65535) - 0x400);
+		temp = (func_800038E0_44E0() << 11) / 65535;
+		alienInstances[(s32)arg0].unkE = alienInstances[(s32)arg0].unkE + temp - 0x400;
 		func_800AC198_BB148(arg0);
 		return 0;
 	}
 
-	a3 = alienInstances[(s32)arg0].unk38;
-	if (a3 == 0xFF)
+	if (alienInstances[(s32)arg0].unk38 == 0xFF)
 	{
 		if (alienInstances[(s32)arg0].unk2C != 0)
 		{
@@ -1068,10 +1063,11 @@ s32 func_800AC2FC_BB2AC(u8 arg0)
 	}
 	else if (alienInstances[(s32)arg0].unk20 & ALIEN_FLAG_AWAY)
 	{
-		otherIdx = a3 & 0xFF;
-		dx = alienInstances[otherIdx].unk0 - alienInstances[(s32)arg0].unk0;
-		dz = alienInstances[otherIdx].unk4 - alienInstances[(s32)arg0].unk4;
-		if ((dx * dx) + (dz * dz) >= 0x1DE841)
+		targetIndex = alienInstances[(s32)arg0].unk38 & 0xFF;
+		dx = alienInstances[targetIndex].unk0 - alienInstances[(s32)arg0].unk0;
+		dz = alienInstances[targetIndex].unk4 - alienInstances[(s32)arg0].unk4;
+		distanceSq = (dx * dx) + (dz * dz);
+		if (distanceSq >= 0x1DE841)
 		{
 			alienInstances[(s32)arg0].unk20 = alienInstances[(s32)arg0].unk20 & ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
 		}
@@ -1079,9 +1075,6 @@ s32 func_800AC2FC_BB2AC(u8 arg0)
 
 	return 1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC2FC_BB2AC.s")
-#endif
 
 
 // Possibly somewhere around here is a file split? Below is Human logic, above is Alien logic?
