@@ -861,75 +861,24 @@ s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
 	return value;
 }
 
-#ifdef NON_MATCHING
-// CURRENT(2375)
 s32 func_80078BC8_87B78(s16 arg0, s16 arg1) {
-	s32 idx;
-	Unk80259D90* entry;
-	s32 x;
-	s32 z;
-	s32 unk2_1;
+    s32 i;
+    s32 x;
+    s32 z;
 
-	arg0 >>= 7;
-	arg1 >>= 7;
-
-	unk2_1 = (s8) D_80259D90[1].unk2;
-
-	if (((s8) D_80259D90[0].unk2 != -1) && (arg0 == (D_80259D90[0].unk4 >> 7)) && (arg1 == (D_80259D90[0].unk6 >> 7))) {
-		return 0;
-	}
-
-	idx = 2;
-	if (unk2_1 != -1) {
-		x = D_80259D90[1].unk4;
-		z = D_80259D90[1].unk6;
-		if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
-			return 1;
-		}
-	}
-
-	entry = &D_80259D90[2];
-	for (; idx != 0x96; idx += 4, entry += 4) {
-		if ((s8) entry[0].unk2 != -1) {
-			x = entry[0].unk4;
-			if (arg0 == (x >> 7)) {
-				z = entry[0].unk6;
-				if (arg1 == (z >> 7)) {
-					return idx;
-				}
-			}
-		}
-
-		if ((s8) entry[1].unk2 != -1) {
-			x = entry[1].unk4;
-			z = entry[1].unk6;
-			if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
-				return idx + 1;
-			}
-		}
-
-		if ((s8) entry[2].unk2 != -1) {
-			x = entry[2].unk4;
-			z = entry[2].unk6;
-			if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
-				return idx + 2;
-			}
-		}
-
-		if ((s8) entry[3].unk2 != -1) {
-			x = entry[3].unk4;
-			z = entry[3].unk6;
-			if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
-				return idx + 3;
-			}
-		}
-	}
-
-	return -1;
+    arg0 >>= 7;
+    arg1 >>= 7;
+    for (i = 0; i != 0x96; i++) {
+        if ((s8) D_80259D90[i].unk2 != -1) {
+            x = D_80259D90[i].unk4;
+            z = D_80259D90[i].unk6;
+            if ((arg0 == (x >> 7)) && (arg1 == (z >> 7))) {
+                return i;
+            }
+        }
+    }
+    return -1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80078BC8_87B78.s")
-#endif
 
 #ifdef NON_MATCHING
 // CURRENT(4943)
