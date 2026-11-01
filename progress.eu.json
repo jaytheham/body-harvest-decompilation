@@ -1,25 +1,25 @@
 {
-  "generated": "2026-10-31T22:02:38Z",
-  "commit": "6d86e5a0",
-  "commit_timestamp": "2026-11-01T11:01:31+13:00",
+  "generated": "2026-11-01T04:24:50Z",
+  "commit": "9e63fe22",
+  "commit_timestamp": "2026-11-01T17:23:39+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2541,
-    "non_matching": 181,
+    "matched": 2549,
+    "non_matching": 173,
     "asm_stubs": 0,
-    "matched_pct": 93.35,
+    "matched_pct": 93.64,
     "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 334,
-      "non_matching": 21,
+      "matched": 342,
+      "non_matching": 13,
       "asm_stubs": 0,
       "total": 355,
-      "matched_pct": 94.1,
+      "matched_pct": 96.3,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
@@ -108,11 +108,11 @@
     {
       "path": "core/1050.c",
       "segment": "core",
-      "matched": 50,
-      "non_matching": 8,
+      "matched": 58,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 58,
-      "matched_pct": 86.2,
+      "matched_pct": 100.0,
       "contributor": ""
     },
     {
@@ -817,6 +817,13 @@
       "commit": "5aeed38",
       "matched": 2541,
       "non_matching": 181,
+      "total": 2722
+    },
+    {
+      "date": "2026-11-01",
+      "commit": "21d92e6",
+      "matched": 2549,
+      "non_matching": 173,
       "total": 2722
     }
   ]
