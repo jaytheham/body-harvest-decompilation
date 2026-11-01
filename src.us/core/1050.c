@@ -974,178 +974,144 @@ void func_800021CC_2DCC(s32 arg0)
 	func_800015B4_21B4(i + 0x4F, 0x76);
 }
 
-// CURRENT(17871)
-#ifdef NON_MATCHING
 void guess_loadSavedGame(s32 arg0) {
-	u32 sp34;
-	u32 sp30;
+	s32 pad[4];
+	u64 flags;
 	s32 saveSlot;
-	u8 *src;
-	Unk80052A98 *stat;
-	s32 shift;
-	u8 *p;
+	s32 src;
+	u32 i;
+	s32 j;
+	u32 k;
+	u8 *weapon;
 
 	saveSlot = arg0 * 0x7A + 0x4F;
 	if (validateSaveVersionAndChecksum(saveSlot, 0x76) != 0) {
-		src = D_800431C0 + saveSlot + 4;
-		stat = D_80052A98;
+		src = saveSlot + 4;
+		j = 0;
 		do {
-			stat->score = *src;
-			stat->score += (s32)src[1] << 8;
-			stat->score += (s32)src[2] << 16;
-			stat->score += (s32)src[3] << 24;
-			src += 4;
-			osSyncPrintf(D_80036A8C_3768C, stat->score);
-			stat->humansKilled = *src++;
-			osSyncPrintf(D_80036AA0_376A0, stat->humansKilled);
-			stat->secondsElapsed = src[0];
-			stat->secondsElapsed += src[1] << 8;
-			stat->secondsElapsed += src[2] << 16;
-			osSyncPrintf(D_80036AAC_376AC, stat->secondsElapsed);
-			src += 3;
-			stat++;
-		} while ((u32)stat < (u32)&D_80052AC8);
+			D_80052A98[j].score = D_800431C0[src++];
+			D_80052A98[j].score += D_800431C0[src++] << 8;
+			D_80052A98[j].score += D_800431C0[src++] << 16;
+			D_80052A98[j].score += D_800431C0[src++] << 24;
+			osSyncPrintf(D_80036A8C_3768C, D_80052A98[j].score);
+			D_80052A98[j].humansKilled = D_800431C0[src++];
+			osSyncPrintf(D_80036AA0_376A0, D_80052A98[j].humansKilled);
+			D_80052A98[j].secondsElapsed = D_800431C0[src++];
+			D_80052A98[j].secondsElapsed += D_800431C0[src++] << 8;
+			D_80052A98[j].secondsElapsed += D_800431C0[src++] << 16;
+			osSyncPrintf(D_80036AAC_376AC, D_80052A98[j].secondsElapsed);
+			j++;
+		} while (&D_80052A98[j] < &D_80052A98[6]);
 		osSyncPrintf(D_80036AB8_376B8);
 		{
-			u8 b;
+			s32 b;
 
-			b = *src++;
+			b = D_800431C0[src];
 			currentLevel = b & 0xF;
 			D_80047FA0 = (s32)b >> 4;
+			src++;
 		}
 		osSyncPrintf(D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
-		D_80047F9C = *src++ & 0xF;
+		D_80047F9C = D_800431C0[src++] & 0xF;
 		osSyncPrintf(D_80036AEC_376EC, D_80047F9C);
 		D_80031420 = 0;
-		shift = 0;
+		i = 0;
 		do {
-			D_80031420 += *src++ << shift;
-			shift += 8;
+			D_80031420 += D_800431C0[src++] << (s32)i;
+			i += 8;
 			continue;
-		} while (shift < 0x20);
+		} while ((s32)i < 0x20);
 		if (D_800313D0_31FD0 == 2) {
 			D_80031420 &= ~2;
 		}
-		func_80016FD0_17BD0((s16)((D_80031420 & 0x60) >> 5));
-		func_800170F4_17CF4((s16)((D_80031420 & 0x18) >> 3));
+		func_80016FD0_17BD0((s16)(((u32)D_80031420 & 0x60) >> 5));
+		func_800170F4_17CF4((s16)(((u32)D_80031420 & 0x18) >> 3));
 		osSyncPrintf(D_80036AFC_376FC, D_80031420);
-		p = D_80047FA8;
-		do {
-			*p++ = *src++;
-		} while ((u32)p < (u32)&D_80047FAE);
-		D_80047FAE = 0;
+		for (i = 0; &D_80047FA8[i] < &D_80047FA8[6]; i++) {
+			D_80047FA8[i] = D_800431C0[src++];
+		}
+		D_80047FAE_NameEnd = 0;
 		osSyncPrintf(D_80036B0C_3770C);
-		p = &weaponSlots[0];
-		{
-			u8 b;
-
-		do {
-			b = *src++;
-			*p = b;
-			osSyncPrintf(D_80036B18_37718, b);
-			p++;
-		} while ((u32)p < (u32)&D_8004813F);
+		for (weapon = weaponSlots; weapon < &weaponSlots[7]; weapon++) {
+			*weapon = D_800431C0[src++];
+			osSyncPrintf(D_80036B18_37718, *weapon);
 		}
 		osSyncPrintf(D_80036B1C_3771C);
-		sp34 = 0;
-		sp30 = 0;
+		flags = 0;
 		osSyncPrintf(D_80036B20_37720);
-		shift = 0;
+		i = 0;
 		do {
-			s64 shifted = __ll_lshift(*src, shift);
-			u32 newLo = (u32)shifted + sp34;
-			sp30 = (newLo < sp34 ? 1 : 0) + (u32)(shifted >> 32) + sp30;
-			sp34 = newLo;
-			src++;
-			shift += 8;
-		} while (shift < 0x40);
-		((Flags2x32 *)&D_8004DC48)->unk0 = sp30;
-		((Flags2x32 *)&D_8004DC48)->unk4 = sp34;
-		osSyncPrintf(D_80036B28_37728, sp30, sp34);
+			flags += (u64)D_800431C0[src++] << (s32)i;
+			i += 8;
+		} while ((s32)i < 64);
+		D_8004DC48.unk0 = flags;
+		if ((u32)&D_8004DC48 * 0) {}
+		osSyncPrintf(D_80036B28_37728, flags);
 		{
-			u8 b;
+			s32 b;
 
-			b = *src;
+			b = D_800431C0[src];
 			D_8004DC5C = (s8)((s32)b >> 4);
 			D_8004DC5E = b & 0xF;
 		}
-		D_80048026 = src[1];
-		D_80048026 += src[2] << 8;
+		D_80048026 = D_800431C0[src + (1)];
+		D_80048026 += (u16)(D_800431C0[src + (2)] << 8);
 		src += 3;
 		osSyncPrintf(D_80036B30_37730, D_80048026);
-		D_80048028 = src[0];
-		D_80048028 += src[1] << 8;
+		D_80048028 = D_800431C0[src + (0)];
+		D_80048028 += (u16)(D_800431C0[src + (1)] << 8);
 		src += 2;
-		D_8004DC50.unk0 = 0;
-		D_8004DC54 = 0;
+		D_8004DC50.flags = 0;
 		osSyncPrintf(D_80036B60_37760);
-		shift = 0;
-		do {
-			s64 shifted = __ll_lshift(*src, shift);
-			u32 newLo = D_8004DC54 + (u32)shifted;
-			D_8004DC50.unk0 = (newLo < D_8004DC54 ? 1 : 0) + (u32)(shifted >> 32) + D_8004DC50.unk0;
-			D_8004DC54 = newLo;
-			src++;
-			shift += 8;
-		} while (shift < 0x40);
-		osSyncPrintf(D_80036B78_37778, D_8004DC50.unk0, D_8004DC54);
+		for (i = 0; (s32)i < 64; i += 8) {
+			D_8004DC50.flags += (u64)D_800431C0[src++] << (s32)i;
+		}
+		osSyncPrintf(D_80036B78_37778, D_8004DC50.flags);
 		D_80052A90 = 0;
-		shift = 0;
+		i = 0;
 		do {
-			D_80052A90 += *src++ << shift;
-			shift += 8;
-		} while (shift < 0x20);
-		D_80047F98 = *src++;
+			D_80052A90 += D_800431C0[src++] << (s32)i;
+			i += 8;
+		} while ((s32)i < 0x20);
+		D_80047F98 = D_800431C0[src++];
 		osSyncPrintf(D_80036B80_37780, D_80047F98);
 		if (D_80047F98 < D_80047F9C) {
 			D_80047F98 = D_80047F9C;
 		}
 		osSyncPrintf(D_80036B94_37794, D_80047F98);
-		D_80047F94 = D_8003E000_3EC00[currentLevel-1][D_80047F98].unk0;
+		D_80047F94 = D_8003E000_3EC00[currentLevel-1][D_80047F98].unk4;
 		D_8004D154 = 0;
-		shift = 0;
+		i = 0;
 		do {
-			D_8004D154 += *src++ << shift;
-			shift += 8;
-		} while (shift < 0x20);
+			D_8004D154 += D_800431C0[src++] << (s32)i;
+			i += 8;
+		} while ((s32)i < 0x20);
 		osSyncPrintf(D_80036BA4_377A4, D_8004D154);
 		D_8004D150 = 0;
 		D_8004D158 = 0;
-		shift = 0;
-		do {
-			D_8004D158 += *src++ << shift;
-			shift += 8;
-			continue;
-		} while (shift < 0x20);
-		osSyncPrintf(D_80036BB8_377B8, D_8004D158);
-		osSyncPrintf(D_80036BC8_377C8);
-		{
-			s16 *q;
-			s32 i;
-
-		p = &weaponSlots[0];
-		q = &D_80048140[0];
 		i = 0;
 		do {
-			u8 slot = *p;
-			D_80048140[slot] = (s16)(*src++ << D_80031374_31F74[slot]);
-			osSyncPrintf(D_80036BD4_377D4, i, *q);
-			i++;
-			p++;
-			q++;
-		} while (i != 7);
+			D_8004D158 += D_800431C0[src++] << (s32)i;
+			i += 8;
+			continue;
+		} while ((s32)i < 0x20);
+		osSyncPrintf(D_80036BB8_377B8, D_8004D158);
+		osSyncPrintf(D_80036BC8_377C8);
+		/* Keep this setup on one line for IDO instruction scheduling. */
+        weapon = weaponSlots; k = 0; if ((u32)weapon * 0) {} if ((u32)weapon * 0) {} i = 0; j = 0; for (; k != 7; k++, i++, j++) {
+			D_80048140[weaponSlots[i]] = D_800431C0[src++] << D_80031374_31F74[weaponSlots[i]];
+			osSyncPrintf(D_80036BD4_377D4, k, D_80048140[j]);
 		}
-		D_80048030 = *src++;
+		D_80048030 = D_800431C0[src++];
 		osSyncPrintf(D_80036BF4_377F4, D_80048030);
 		osSyncPrintf(D_80036C0C_3780C, D_80052ACD);
-		D_80052ACD = *src++;
+		D_80052ACD = D_800431C0[src++];
 		osSyncPrintf(D_80036C1C_3781C, D_80052ACD);
-		D_8004815C = src[0];
-		D_80048160 = src[1];
-		D_80048162 = src[2];
-		D_8004815E = src[3];
-		src += 3;
-		osSyncPrintf(D_80036C2C_3782C, D_8004815C, D_80048160, D_80048162, D_8004815E);
+		D_80048140[14] = D_800431C0[src++];
+		D_80048140[16] = D_800431C0[src++];
+		D_80048140[17] = D_800431C0[src++];
+		D_80048140[15] = D_800431C0[src];
+		osSyncPrintf(D_80036C2C_3782C, D_80048140[14], D_80048140[16], D_80048140[17], D_80048140[15]);
 		osSyncPrintf(D_80036C4C_3784C);
 	} else {
 		osSyncPrintf(D_80036C50_37850, 0);
@@ -1155,9 +1121,6 @@ void guess_loadSavedGame(s32 arg0) {
 	}
 	currentSaveFileIndex = arg0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/guess_loadSavedGame.s")
-#endif
 
 s32 func_80002A88_3688(s32 arg0) {
 	return *(&D_80043243 + (arg0 * 0x7A)) & 0xF;
