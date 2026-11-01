@@ -1042,41 +1042,36 @@ void func_80125CA0_134C50(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 		func_80003824_4424(sqrtf((f32) ((sp2C * (0,sp2C)) + (sp28 * sp28))), (f32) -(arg4 - arg1)),	1);
 }
 
-// CURRENT(1523): upper-bound control flow and stack allocation remain.
-#ifdef NON_MATCHING
 Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, f32 *arg6) {
 
+	s32 var_v0_2;
+	s32 found;
+	s32 temp_s1;
 	Unk80259D90 *spD0;
+	f32 spCC;
+	f32 temp_f2;
+	f32 spC4;
 	s16 i;
 	s16 temp_a0;
 	s16 temp_v0;
 	s16 temp_v1;
-	s32 var_v0_2;
-	s32 found;
-	s32 temp_s1;
 	s16 *temp_s2;
 	s32 var_s4;
 	s32 var_s5;
-	f32 spCC;
-	f32 spC4;
 	f32 temp_f0;
-	f32 temp_f0_2;
-	f32 temp_f0_3;
-	f32 temp_f2;
 	f32 temp_f20;
 	f32 temp_f22;
 	f32 var_f2;
 	f32 var_f30;
 
+	i = 0x96;
 	spD0 = NULL;
 	var_s4 = *arg3;
-	found = 0;
 	var_s5 = *arg5;
+	found = 0;
 	temp_s1 = func_800047FC_53FC((s16)(arg0 - var_s4));
 	var_f30 = sqrtf((f32)(func_800047FC_53FC((s16)(arg2 - var_s5)) + temp_s1));
 
-	i = 0x96;
-	if (i) {}
 	while (i--) {
 		Unk80259D90 *temp_s0 = &D_80259D90[i];
 		if (temp_s0->unk0 >= 0xE) {
@@ -1094,7 +1089,7 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 					*arg6 = temp_f2;
 
 
-					temp_f22 = (temp_f2 * (f32)(*arg4 - arg1)) + (f32)arg1;
+					temp_f22 = ((f32)temp_f2 * (f32)(((Vec3i *)arg4)->x - arg1)) + (f32)arg1;
 
 					if (temp_s0->unk22 < temp_s0->unk42) {
 						var_v0_2 = temp_s0->unk22;
@@ -1105,33 +1100,34 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 					if ((f32)var_v0_2 <= temp_f22) {
 						temp_v0 = temp_s0->unk32;
 						temp_v1 = temp_s0->unk12;
-						temp_s1 = temp_v0;
 						if (temp_v0 < temp_v1) {
 							temp_s1 = temp_v1;
+						} else {
+							temp_s1 = temp_v0;
 						}
 
 						if (temp_f22 <= (f32)temp_s1) {
 							temp_s2 = (s16 *)func_80011F90_12B90(temp_s0->unk8);
 
-							if (temp_s0->unk10 == temp_s0->unk30) {
+							if (temp_s0->unk30 == temp_s0->unk10) {
 								var_f2 = spC4;
 							} else {
 								var_f2 = spCC;
 							}
 
-							temp_f0_2 = (f32)((f64)var_f2 * 0.00390625);
+							temp_f2 = (f32)((f64)var_f2 * 0.00390625);
 
-							temp_f20 = (f32)((f64)D_8013BB14_14AAC4[currentLevel * 12 + temp_s0->unk0 * 6 - 93]
-								* (-(temp_f0_2 - (f32)(s32)temp_f0_2) * 32.0));
+							temp_f20 = (f32)((f64)((s16 (*)[2][6])D_8013BB14_14AAC4)[currentLevel - 1][temp_s0->unk0 - 14][3]
+								* (-(temp_f2 - (f32)(s32)temp_f2) * 32.0));
 							temp_s1 = (s16)(temp_s0->unk22 - temp_s0->unk12);
-							temp_f0_3 = (f32)(((f64)(temp_f22 - (f32)(func_800B84D0_C7480((s16)(s32)spCC, (s16)(s32)spC4) >> 8))
+							temp_f2 = (f32)(((f64)(temp_f22 - (f32)(func_800B84D0_C7480((s16)(s32)spCC, (s16)(s32)spC4) >> 8))
 								* (32.0 / (f64)temp_s1)) + 31.0);
 
-							if (((temp_f0_3 >= 0.0f) || ((f64)temp_f0_3 <= 31.0))
-								&& (temp_s2[(s16)((((s32)temp_f0_3 << 5) - ((s32)temp_f20 & 0x1F)) + 0x1F)] & 1)) {
+							if (((temp_f2 >= 0.0f) || ((f64)temp_f2 <= 31.0))
+								&& (temp_s2[(s16)((((s16)temp_f2 << 5) - ((s16)temp_f20 & 0x1F)) + 0x1F)] & 1)) {
 								var_f30 = temp_f0;
 								var_s4 = (s32)spCC;
-								var_s5 = (s32)spC4; found = found * 0 + 1;
+								var_s5 = (s32)spC4; found = 1;
 							}
 						}
 					}
@@ -1148,9 +1144,6 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 
 	return NULL;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80125D70_134D20.s")
-#endif
 
 // CURRENT(1335): collision-store scheduling and stack slots remain.
 #ifdef NON_MATCHING
