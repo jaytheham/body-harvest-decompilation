@@ -157,9 +157,7 @@ void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
 	D_800E73DC = arg2;
 }
 
-// CURRENT(100)
 // AI - Compute camera position from spherical coords (yaw/pitch/distance) with collision smoothing
-#ifdef NON_MATCHING
 void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4) {
 	s32 gap0;
 	s32 gap1;
@@ -219,14 +217,14 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 			return;
 		}
 		if (D_800E7390 != 0) {
-			sp68 = (D_800E73F0.x - D_800E7430.x) / divisor;
-			D_800E7430.x += sp68;
+			temp_f0 = D_800E73F0.x;
+			((Vec3f *)(s32)&D_800E7430)->x = D_800E7430.x * 1.0f + (temp_f0 - D_800E7430.x) / divisor;
 			arg4 = arg0->x;
 			sp74 += (arg4 - sp74) / divisor;
-			if (D_800E7430.x <= D_800E73F0.x) {
-				var_f14 = D_800E73F0.x - D_800E7430.x;
+			if (D_800E7430.x <= temp_f0) {
+				var_f14 = temp_f0 - D_800E7430.x;
 			} else {
-				var_f14 = -(D_800E73F0.x - D_800E7430.x);
+				var_f14 = -(temp_f0 - D_800E7430.x);
 			}
 			if (var_f14 < 1.0f) {
 				if (arg4 <= sp74) {
@@ -243,13 +241,6 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 		}
 	}
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.eu.s")
-#endif
-#endif
 
 // AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
 void func_800804E0_1685A0(void) {
@@ -675,7 +666,11 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 }
 
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_800813B4_169474.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation
