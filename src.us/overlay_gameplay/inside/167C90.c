@@ -244,7 +244,11 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 // AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
@@ -844,10 +848,7 @@ void func_80081E90_169F50(s16 arg0, s16 arg1, s16 arg2) {
 	D_800E746A = a3->unk12;
 }
 
-// CURRENT(935)
 // AI - Render an ASCII debug map showing collision grid, player position, and camera markers
-// CURRENT(35)
-#ifdef NON_MATCHING
 void func_80081F98_16A058(void) {
 	s16 playerX;
 	s16 playerY;
@@ -876,6 +877,7 @@ void func_80081F98_16A058(void) {
 		if (width > 0) {
 			do {
 				cell = D_800E6468[width * row + col];
+				cell |= 0;
 				if (cell == 0xFF) {
 				((u8 (*)[0xC8]) sp58)[row][col] = 0x5F;
 			} else if (cell == 1) {
@@ -958,14 +960,6 @@ void func_80081F98_16A058(void) {
 		osSyncPrintf(D_800A4E40_18CF00);
 	}
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081F98_16A058.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80081F98_16A058.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.eu.s")
-#endif
-#endif
-
 // AI - Camera wall avoidance: detect collisions and rotate camera to prevent clipping
 void func_8008247C_16A53C(void) {
 	s32 magnitude;
