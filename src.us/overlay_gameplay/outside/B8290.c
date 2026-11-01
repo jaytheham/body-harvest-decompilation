@@ -10,72 +10,6 @@ const f32 D_80142908_1518B8[2] = {1.2f, 0.0f};
 
 const char D_80142910_1518C0[] = "Stop running to target\n"; // "Stop running to target\n"
 
-const u32 jtbl_80142928_1518D8[] = {
-	OVERLAY_PTR(0x800ABD28),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABD38),
-	OVERLAY_PTR(0x800ABD38),
-	OVERLAY_PTR(0x800ABD48),
-	OVERLAY_PTR(0x800ABD58),
-	OVERLAY_PTR(0x800ABD48),
-	OVERLAY_PTR(0x800ABD58),
-	OVERLAY_PTR(0x800ABD48),
-	OVERLAY_PTR(0x800ABD58),
-	OVERLAY_PTR(0x800ABD68),
-	OVERLAY_PTR(0x800ABD78),
-	OVERLAY_PTR(0x800ABD48),
-	OVERLAY_PTR(0x800ABD58),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABD88),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABD98),
-	OVERLAY_PTR(0x800ABDA8),
-	OVERLAY_PTR(0x800ABD38),
-};
-
-const u32 jtbl_8014299C_15194C[] = {
-	OVERLAY_PTR(0x800ABDE8),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABDF0),
-	OVERLAY_PTR(0x800ABDF0),
-	OVERLAY_PTR(0x800ABE00),
-	OVERLAY_PTR(0x800ABE10),
-	OVERLAY_PTR(0x800ABE00),
-	OVERLAY_PTR(0x800ABE10),
-	OVERLAY_PTR(0x800ABE00),
-	OVERLAY_PTR(0x800ABE10),
-	OVERLAY_PTR(0x800ABE20),
-	OVERLAY_PTR(0x800ABE30),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABDE0),
-	OVERLAY_PTR(0x800ABDE0),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE40),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE68),
-	OVERLAY_PTR(0x800ABE50),
-	OVERLAY_PTR(0x800ABE60),
-	OVERLAY_PTR(0x800ABDF0),
-};
-
-const f64 D_80142A10_1519C0[1] = {1000.0};
-const f64 D_80142A18_1519C8[1] = {1000.0};
 
 s32 D_8013D8C0_14C870[6] = { 0x00000000, 0x00000258, 0x00000258, 0x00000320, 0x00000320, 0x00000258 };
 u32 D_8013D8D8_14C888[6] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
@@ -830,8 +764,6 @@ void func_800ABC2C_BABDC(u8 arg0) {
 	ptr->unk48 = 0x30;
 }
 
-// CURRENT(20)
-#ifdef NON_MATCHING
 // Human behaviors - human's unk24 determines case
 s32 func_800ABCC8_BAC78(u8 arg0) {
 	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
@@ -899,7 +831,6 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 			case 5:
 			case 7:
 			case 9:
-			case 13:
 				func_800AB80C_BA7BC(arg0);
 				break;
 
@@ -933,9 +864,6 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800ABCC8_BAC78.s")
-#endif
 
 // https://decomp.me/scratch/8eJR6
 // AI - Pick random wander point
@@ -1158,9 +1086,7 @@ s32 func_800AC2FC_BB2AC(u8 arg0)
 
 // Possibly somewhere around here is a file split? Below is Human logic, above is Alien logic?
 
-// CURRENT(30)
 // AI - Avoid vehicle collision
-#ifdef NON_MATCHING
 void func_800AC5BC_BB56C(u8 arg0)
 {
 	s32 forward;
@@ -1180,7 +1106,7 @@ void func_800AC5BC_BB56C(u8 arg0)
 	if ((D_80052B34->unk1A != 0) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80052B34->unk12 != 0))
 	{
 		speedAbs = (-D_80052B34->unk58 < D_80052B34->unk58) ? D_80052B34->unk58 : -D_80052B34->unk58;
-		limit = speedAbs * 30.0f + (vehicleTypes[D_80052B34->unk1A].unk36 >> 1);
+		limit = speedAbs * 30.0f + (((VehicleType *)(s32)&vehicleTypes[D_80052B34->unk1A])->unk36 >> 1);
 		dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
 		dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
 		temp = (-dx < dx) ? dx : -dx;
@@ -1247,9 +1173,6 @@ void func_800AC5BC_BB56C(u8 arg0)
 	alienInstances[arg0].unk38 = 0xFF;
 	alienInstances[arg0].unk48 = 0xA0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AC5BC_BB56C.s")
-#endif
 
 // AI - Manage stamina timer
 // human behavior - called only thru the two human specs funcs at unk48 and unk4C
