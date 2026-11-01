@@ -85,8 +85,8 @@ void func_800769A8_85958(s32 arg0) {
 	D_8014D298[arg0] = D_8014D298[D_8014D2EC = D_8014D2EC - 1];
 }
 
-#ifdef NON_MATCHING
 // CURRENT(4003)
+#ifdef NON_MATCHING // CURRENT(3797)
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	s32 pattern;
 	s32 outer;
@@ -157,9 +157,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 					entry->unk6 = z;
 
 					if (type < 0xE) {
-						spA8.unk0 = x;
-						spA8.unk4 = z;
-						spA8.unk2 = (s16) (func_800B84D0_C7480_4Args(x, z, zOff, z) >> 8);
+						spA8.unk0 = x, spA8.unk4 = z, spA8.unk2 = (s16) (func_800B84D0_C7480_4Args(x, z, zOff, z) >> 8);
 						x = spA8.unk0;
 						z = spA8.unk4;
 						entry->unk8 = (void*)D_80222A30[type];
@@ -194,6 +192,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 
 						vertexX = D_801416B0_150660[inner][0] + xOff;
 						vertexZ = D_801416C0_150670[inner][0] + zOff;
+						entry = (Unk80259D90*)(s32)&D_80259D90[obj];
 						entry->unk8 = (void*)tempTable->texture;
 						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
 
@@ -252,7 +251,6 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 		}
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
 #endif
