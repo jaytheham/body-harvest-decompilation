@@ -4065,4 +4065,9 @@ extern const f64 D_80142E80_151E30[1];
 extern const f64 D_80142E88_151E38[1];
 extern const f32 D_80142E90_151E40[1];
 
+extern const f64 D_800A4D98_18CE58[1];
+extern const f64 D_800A4DA0_18CE60[1];
+extern const f64 D_800A4DA8_18CE68[1];
+extern const f64 D_800A4DB0_18CE70[1];
+
 #endif /* LIBULTRA_REFERENCE */

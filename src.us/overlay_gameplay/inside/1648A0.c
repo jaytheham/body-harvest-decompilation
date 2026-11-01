@@ -1608,28 +1608,6 @@ const f64 D_800A4D40_18CE00[1] = {3.141592654};
 
 const f64 D_800A4D48_18CE08[1] = {3.141592654};
 
-const u32 jtbl_800A4D50_18CE10[] = {
-	OVERLAY_PTR(0x8007D7D0), OVERLAY_PTR(0x8007D7DC), OVERLAY_PTR(0x8007D7E8), OVERLAY_PTR(0x8007D7F4), OVERLAY_PTR(0x8007D800),
-};
-
-const u32 jtbl_800A4D64_18CE24[] = {
-	OVERLAY_PTR(0x8007D848), OVERLAY_PTR(0x8007D854), OVERLAY_PTR(0x8007D860), OVERLAY_PTR(0x8007D86C), OVERLAY_PTR(0x8007D878),
-};
-
-const u32 jtbl_800A4D78_18CE38[] = {
-	OVERLAY_PTR(0x8007D930), OVERLAY_PTR(0x8007D93C), OVERLAY_PTR(0x8007D948), OVERLAY_PTR(0x8007D954), OVERLAY_PTR(0x8007D960), 0x00000000,
-};
-
-const f64 D_800A4D90_18CE50[1] = {180.0};
-
-const f64 D_800A4D98_18CE58[1] = {180.0};
-
-const f64 D_800A4DA0_18CE60[1] = {180.0};
-
-const f64 D_800A4DA8_18CE68[1] = {0.1};
-
-const f64 D_800A4DB0_18CE70[1] = {0.2};
-
 // AI - Initialize player character state and animation
 void func_8007C7E0_1648A0(void) {
 	VehicleInstance *v0 = &D_800E6A78;
@@ -1927,88 +1905,81 @@ s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
 	return result;
 }
 
-// CURRENT (760)
 // AI - Handle search behavior: turn, animate, and detect found state
-#ifdef NON_MATCHING
 void func_8007D69C_16575C(VehicleInstance *arg0) {
-	s32 stackPad;
-	typedef struct {
-		u8 pad0[0xE];
-		u16 unkE;
-	} Unk8007D69C_404;
-
+	s32 pad;
 	Unk8007D62C_Entry *searchTable;
 	s32 searchAnim;
 	s32 curAnim;
 	s32 frameHalfSrc;
 
-	if ((D_800E6A30 & 0xFFFF) != (arg0->unkE & 0xFFFF)) {
+	if ((arg0->unkE & 0xFFFF) != (D_800E6A30 & 0xFFFF)) {
 		curAnim = ((Unk165E60AnimState *)D_800E6F00)->unk40C;
 		if ((curAnim != 0x11) && (curAnim != 0xB) && (curAnim != 0xA)) {
 			func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 		}
 
-		func_8007D37C_16543C(arg0, (s16)D_800E6A30, 0);
+		func_8007D37C_16543C(arg0, D_800E6A30, 0);
 		D_800E6A68 |= 0x80;
 		return;
 	}
 
 	if ((D_800E6A68 & 0x80) == 0x80) {
 		D_800E6A68 &= ~0x80;
-		if (currentLevel == LEVEL_JAVA) goto level_java;
-		if (currentLevel == LEVEL_AMERICA) goto level_america;
-		if (currentLevel == LEVEL_SIBERIA) goto level_siberia;
-		if (currentLevel != LEVEL_COMET) goto level_default;
-		searchTable = D_800A08F0_1889B0;
-		goto level_done;
+		switch (currentLevel) {
+		case LEVEL_COMET:
+			searchTable = D_800A08F0_1889B0;
+			break;
 
-	level_siberia:
-		osSyncPrintf(D_800A4C14_18CCD4);
-		searchTable = D_800A0784_188844;
-		switch (D_800E6A2C) {
-		case 0: searchTable = D_800A0878_188938; break;
-		case 1: searchTable = D_800A0890_188950; break;
-		case 2: searchTable = D_800A08AC_18896C; break;
-		case 3: searchTable = D_800A08C4_188984; break;
-		case 4: searchTable = D_800A08D8_188998; break;
+		case LEVEL_SIBERIA:
+			osSyncPrintf(D_800A4C14_18CCD4);
+			switch (D_800E6A2C) {
+			case 0: searchTable = D_800A0878_188938; break;
+			case 1: searchTable = D_800A0890_188950; break;
+			case 2: searchTable = D_800A08AC_18896C; break;
+			case 3: searchTable = D_800A08C4_188984; break;
+			case 4: searchTable = D_800A08D8_188998; break;
+			default: searchTable = D_800A0784_188844; break;
+			}
+			break;
+
+		case LEVEL_AMERICA:
+			osSyncPrintf(D_800A4C30_18CCF0);
+			switch (D_800E6A2C) {
+			case 0: searchTable = D_800A080C_1888CC; break;
+			case 1: searchTable = D_800A0820_1888E0; break;
+			case 2: searchTable = D_800A0834_1888F4; break;
+			case 3: searchTable = D_800A0844_188904; break;
+			case 4: searchTable = D_800A0860_188920; break;
+			default: searchTable = D_800A0784_188844; break;
+			}
+			break;
+
+		case LEVEL_JAVA:
+			osSyncPrintf(D_800A4C48_18CD08);
+			switch (D_800E6A2C) {
+			case 0: searchTable = D_800A0790_188850; break;
+			case 1: searchTable = D_800A07AC_18886C; break;
+			case 2: searchTable = D_800A07CC_18888C; break;
+			case 3: searchTable = D_800A07EC_1888AC; break;
+			default: searchTable = D_800A0784_188844; break;
+			}
+			break;
+
+		default:
+			osSyncPrintf(D_800A4C64_18CD24);
+			searchTable = D_800A0784_188844;
+			switch (D_800E6A2C) {
+			case 0: searchTable = D_800A06EC_1887AC; break;
+			case 1: searchTable = D_800A070C_1887CC; break;
+			case 2: searchTable = D_800A0724_1887E4; break;
+			case 3: searchTable = D_800A0740_188800; break;
+			case 4: searchTable = D_800A075C_18881C; break;
+			default: searchTable = D_800A0784_188844; break;
+			}
+			break;
 		}
-		goto level_done;
 
-	level_america:
-		osSyncPrintf(D_800A4C30_18CCF0);
-		searchTable = D_800A0784_188844;
-		switch (D_800E6A2C) {
-		case 0: searchTable = D_800A080C_1888CC; break;
-		case 1: searchTable = D_800A0820_1888E0; break;
-		case 2: searchTable = D_800A0834_1888F4; break;
-		case 3: searchTable = D_800A0844_188904; break;
-		case 4: searchTable = D_800A0860_188920; break;
-		}
-		goto level_done;
-
-	level_java:
-		osSyncPrintf(D_800A4C48_18CD08);
-		switch (D_800E6A2C) {
-		case 0: searchTable = D_800A0790_188850; break;
-		case 1: searchTable = D_800A07AC_18886C; break;
-		case 2: searchTable = D_800A07CC_18888C; break;
-		case 3: searchTable = D_800A07EC_1888AC; break;
-		default: searchTable = D_800A0784_188844; break;
-		}
-		goto level_done;
-
-	level_default:
-		osSyncPrintf(D_800A4C64_18CD24);
-		searchTable = D_800A0784_188844;
-		switch (D_800E6A2C) {
-		case 0: searchTable = D_800A06EC_1887AC; break;
-		case 1: searchTable = D_800A070C_1887CC; break;
-		case 2: searchTable = D_800A0724_1887E4; break;
-		case 3: searchTable = D_800A0740_188800; break;
-		case 4: searchTable = D_800A075C_18881C; break;
-		}
-
-	level_done:
 		searchAnim = func_8007D62C_1656EC(searchTable, D_800E6A28);
 		osSyncPrintf(D_800A4C80_18CD40, D_800E6A28, D_800E6A2C, D_8009E8DC_18699C[searchAnim].pad20);
 		func_8007DAA8_165B68(D_800E6F00, searchAnim, NULL, 0.0f, 0x10);
@@ -2016,22 +1987,18 @@ void func_8007D69C_16575C(VehicleInstance *arg0) {
 		return;
 	}
 
-	frameHalfSrc = ((Unk8007D69C_404 *)((Unk80157600 *)D_800E6F00)->unk404)->unkE / 2;
+	frameHalfSrc = ((Unk8007F878_404 *)((Unk80157600 *)D_800E6F00)->unk404)->unkE / 2;
 	if ((D_800E6A68 & 0x100) == 0x100) {
 		if (((Unk165E60AnimState *)D_800E6F00)->unk18 >= frameHalfSrc) {
 			osSyncPrintf(D_800A4CAC_18CD6C);
 			func_8007B124_1631E4(D_800E6A1C);
 			D_800E6A68 &= ~0x100;
-			stackPad = 0;
 		}
 	}
 	if ((((Unk165E60AnimState *)D_800E6F00)->unk40C == 0x10) && (D_800E65A8 & 4)) {
 		func_8007A618_1626D8();
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007D69C_16575C.s")
-#endif
 // AI - Switch to a new animation (blended or direct)
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4) {
 	s32 temp_v0;
@@ -2076,7 +2043,7 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 // AI - Handle animation-end callback with yaw and chained anims
 void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 	if (((Unk8007F878_404 *)arg1->unk404)->unkE50 == 0) {
-		arg0->unkE += (s16)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / D_800A4D90_18CE50[0]);
+		arg0->unkE += (s16)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / 180.0);
 		arg1->unk2 = 0;
 		if (D_8009E8DC_18699C[arg1->unk40C].unk4 & 1) {
 			func_8007DAA8_165B68(arg1, arg1->unk40C, (void *)D_8009E8DC_18699C[arg1->unk40C].unk8, *(f32*)&arg2, 0x10);
@@ -2394,7 +2361,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 	D_800A08FC_1889BC = D_800E65A8;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s", "src.us/overlay_gameplay/inside/1648A0_player_update_late_rodata.s")
 #endif
 
 // CURRENT(10096)
