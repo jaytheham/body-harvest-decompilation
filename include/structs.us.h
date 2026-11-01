@@ -4474,4 +4474,21 @@ typedef struct {
     Unk8014DD50 transforms[2];
 } CometLandingData;
 
+typedef struct {
+    s32 x;
+    s32 z;
+} TreeFallDirection;
+
+typedef struct {
+    TreeFallDirection direction[4];
+} TreeFallDirections;
+
+typedef struct {
+    u32 texture;
+    s16 height;
+    s16 width;
+    s16 scale;
+    s16 flags;
+} OutsideTreeStyle;
+
 #endif /* LIBULTRA_REFERENCE */

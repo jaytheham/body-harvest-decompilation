@@ -331,58 +331,46 @@ void func_800770D8_86088(s32 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-// CURRENT(12338)
 void func_800772EC_8629C(s32 arg0) {
 	Unk_8014D298 *temp_v0;
 	Unk80259D90 *temp_s0;
+	s32 *temp_s1;
+	OutsideTreeStyle *temp_s2;
+	s32 index;
+
 	s32 sp70;
 	s32 sp6C;
 	s32 sp68;
 	u16 sp66;
-	s32 sp44[8];
-	s32 pad1;
-	s32 pad2;
-	s32 *temp_s1;
-	s16 *temp_s2;
-	u32 *temp_t8;
-	s32 temp_t2;
+	TreeFallDirections sp44;
+	u16 angle;
+	u16 timer;
 
 	temp_v0 = &D_8014D298[arg0];
-	temp_s0 = &D_80259D90[temp_v0->unk0];
-	temp_t8 = (u32 *) D_8013BCDC_14AC8C;
+	index = temp_v0->unk0;
+	temp_s0 = &D_80259D90[index];
+	timer = temp_v0->unk2;
+	temp_s2 = &((OutsideTreeStyle (*)[2])D_8013BB14_14AAC4)[currentLevel - 1][(s8)temp_s0->unk0 - 14];
+	sp44 = *(TreeFallDirections*)D_8013BCDC_14AC8C;
 
-	sp44[0] = (s32) temp_t8[0];
-	sp44[1] = (s32) temp_t8[1];
-
-	temp_t2 = (s32) temp_v0->unk2 * 0x7D0;
-
-	sp44[2] = (s32) temp_t8[2];
-	sp44[3] = (s32) temp_t8[3];
-	sp44[4] = (s32) temp_t8[4];
-	sp44[5] = (s32) temp_t8[5];
-	sp44[6] = (s32) temp_t8[6];
-	sp44[7] = (s32) temp_t8[7];
-
-	temp_s2 = (s16 *) ((u8 *) D_8013BB14_14AAC4 + currentLevel * 0x18 + temp_s0->unk0 * 0xC - 0xC0);
-	sp66 = (u16) (((temp_v0->unk4 + 0x2000) & 0xFFFF) >> 0xE);
-	temp_s1 = &sp44[sp66 * 2];
-	sp70 = temp_s0->unk20;
-	sp6C = temp_s0->unk22;
-	sp68 = temp_s0->unk24;
-
-	if (temp_t2 < temp_v0->unk6) {
-		temp_s0->unk10 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[0] * temp_s2[2])) + (f64) sp70);
-		temp_s0->unk14 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[1] * temp_s2[2])) + (f64) sp68);
-		temp_s0->unk12 = (s16) (s32) ((((f64) (f32) coss(sp66) / 32768.0) * (f64) temp_s2[2]) + (f64) sp6C);
-		temp_s0->unk30 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[0] * temp_s2[2])) + (f64) temp_s0->unk40);
-		temp_s0->unk34 = (s16) (s32) ((((f64) (f32) sins(sp66) / 32768.0) * (f64) (temp_s1[1] * temp_s2[2])) + (f64) temp_s0->unk44);
-		temp_s0->unk32 = (s16) (s32) ((((f64) (f32) coss(sp66) / 32768.0) * (f64) temp_s2[2]) + (f64) temp_s0->unk42);
+	if (timer * 2000 < temp_v0->unk6) {
+		sp66 = (u16)((s16)temp_v0->unk4 + 0x2000) >> 14;
+		sp70 = temp_s0->unk20;
+		sp6C = temp_s0->unk22;
+		sp68 = temp_s0->unk24;
+		angle = timer * 2000;
+		temp_s1 = &((s32*)sp44.direction)[sp66 * 2];
+		temp_s0->unk10 = (((temp_s1[0] * temp_s2->height) * ((f32)sins(angle) / 32768.0)) + sp70);
+		temp_s0->unk14 = (((temp_s1[1] * temp_s2->height) * ((f32)sins(angle) / 32768.0)) + sp68);
+		temp_s0->unk12 = ((((f32)coss(angle) / 32768.0) * temp_s2->height) + sp6C);
+		sp70 = temp_s0->unk40;
+		sp6C = temp_s0->unk42;
+		sp68 = temp_s0->unk44;
+		temp_s0->unk30 = (((temp_s1[0] * temp_s2->height) * ((f32)sins(angle) / 32768.0)) + sp70);
+		temp_s0->unk34 = (((temp_s1[1] * temp_s2->height) * ((f32)sins(angle) / 32768.0)) + sp68);
+		temp_s0->unk32 = ((((f32)coss(angle) / 32768.0) * temp_s2->height) + sp6C);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_800772EC_8629C.s")
-#endif
 
 // CURRENT(9878)
 #ifdef NON_MATCHING
