@@ -42,27 +42,6 @@ const char D_800A4EAC_18CF6C[] = "ERROR: NO FACES HIT\n";
 
 const char D_800A4EC4_18CF84[] = "CAMERA IS OUTSIDE ROOM,  RESETTING YAW inWallYaw=%d, cameraYaw=%d\n";
 
-const u32 jtbl_800A4F08_18CFC8[] = {
-	OVERLAY_PTR(0x8007FDB4), OVERLAY_PTR(0x8007FDF0), OVERLAY_PTR(0x8007FDA0), OVERLAY_PTR(0x8007FDC8), OVERLAY_PTR(0x8007FDF8), OVERLAY_PTR(0x8007FE0C),
-};
-
-const f64 D_800A4F20_18CFE0[1] = {180.0};
-
-// These two constants are referenced as scalar externs (see variables.us.h) so the
-// matched codegen in func_80080770_168830 is preserved; the bytes live here.
-const u8 D_800A4F28_18CFE8_bytes[8] = { 0x40, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00 };
-const u8 D_800A4F30_18CFF0_bytes[8] = { 0x40, 0x60, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00 };
-
-const f64 D_800A4F38_18CFF8[1] = {91.02222222222223};
-
-const ShadowGeometryConstant D_800A4F40_18D000 = {182.04444444444445};
-
-const ShadowGeometryConstant D_800A4F48_18D008 = {22.5};
-
-const u32 jtbl_800A4F50_18D010[] = {
-	OVERLAY_PTR(0x800829E8), OVERLAY_PTR(0x80082618), OVERLAY_PTR(0x80082704), OVERLAY_PTR(0x800827F0), OVERLAY_PTR(0x800828EC), 0x00000000, 0x00000000, 0x00000000, 
-};
-
 // AI - Reset all camera/view state variables to default values
 void func_8007FBD0_167C90(void) {
 	D_800E747C = 0;
@@ -82,9 +61,7 @@ void func_8007FBD0_167C90(void) {
 	D_800E73A8 = 0;
 }
 
-// CURRENT(30) 
 // AI - Main camera update dispatch: select view mode, set up projection and look-at matrices
-#ifdef NON_MATCHING
 void func_8007FC74_167D34(void) {
 	u16 sp56;
 	f32 sp50;
@@ -137,7 +114,7 @@ void func_8007FC74_167D34(void) {
 	D_800A096C_188A2C = D_800A0968_188A28;
 	D_800E73DE = D_800E73DF;
 
-	if ((D_800E659C == D_8008DDF4_175EB4) && (D_800E65A4 == D_8008DDFC_175EBC)) {
+	if ((D_8008DDF4_175EB4 == D_800E659C) && (D_8008DDFC_175EBC == D_800E65A4)) {
 		D_8008DDF4_175EB4 -= 10.0f;
 		D_8008DDFC_175EBC -= 10.0f;
 	}
@@ -170,9 +147,7 @@ void func_8007FC74_167D34(void) {
 	guMtxL2F(D_800E7350, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8007FC74_167D34.s")
-#endif
+
 
 
 // AI - Store three view-related values (NPC target coordinates)
@@ -289,7 +264,11 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_80080190_168250.s", "src.us/overlay_gameplay/inside/167C90_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 // AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
