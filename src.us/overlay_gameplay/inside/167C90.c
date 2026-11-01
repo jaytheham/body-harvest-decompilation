@@ -849,6 +849,7 @@ void func_80081E90_169F50(s16 arg0, s16 arg1, s16 arg2) {
 
 // CURRENT(935)
 // AI - Render an ASCII debug map showing collision grid, player position, and camera markers
+// CURRENT(35)
 #ifdef NON_MATCHING
 void func_80081F98_16A058(void) {
 	s16 playerX;
@@ -861,8 +862,8 @@ void func_80081F98_16A058(void) {
 	s32 width;
 	u8 sp58[0x9C38];
 	u8 (*mapRows)[0xC8];
-	s32 printWidth;
-	u8 secondMarker;
+	s32 secondMarker;
+	u8 pad4F;
 	u8 firstMarker;
 	s32 height;
 	s16 markerYaw;
@@ -876,9 +877,8 @@ void func_80081F98_16A058(void) {
 		width = D_800E6460 + 2;
 		col = 0;
 		if (width > 0) {
-			printWidth = width * row;
 			do {
-				cell = D_800E6468[printWidth];
+				cell = D_800E6468[width * row + col];
 				if (cell == 0xFF) {
 				((u8 (*)[0xC8]) sp58)[row][col] = 0x5F;
 			} else if (cell == 1) {
@@ -889,7 +889,6 @@ void func_80081F98_16A058(void) {
 				col++;
 				col--;
 				col++;
-				printWidth++;
 			} while (col < width);
 		}
 		row++;
@@ -905,8 +904,7 @@ void func_80081F98_16A058(void) {
 	if (D_800E73E8 > 155.0f) {
 		markerOffsets = D_800A09A4_188A64;
 		for (markerCol = 0; markerCol < 0x18; markerCol += 2) {
-			x = ((const s8 *) markerOffsets)[markerCol];
-			x += playerX;
+			x = ((const s8 *) markerOffsets)[markerCol] + playerX;
 			y = ((const s8 *) markerOffsets)[markerCol + 1] + playerY;
 			if ((x >= 0) && (y >= 0)) {
 				mapRows[y][x] = 0x4F;
@@ -938,8 +936,7 @@ void func_80081F98_16A058(void) {
 		firstMarker = func_800811DC_16929C(D_800E73E0, 0);
 		secondMarker = func_800811DC_16929C(markerYaw, 0);
 
-		x = markerOffsets[firstMarker].unk0;
-		x += playerX;
+		x = markerOffsets[firstMarker].unk0 + playerX;
 		y = markerOffsets[firstMarker].unk1 + playerY;
 		if ((x >= 0) && (y >= 0)) {
 			mapRows[y][x] = 0x5E;
