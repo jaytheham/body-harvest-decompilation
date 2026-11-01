@@ -969,18 +969,16 @@ void func_80081F98_16A058(void) {
 #endif
 #endif
 
-// CURRENT(1655)
 // AI - Camera wall avoidance: detect collisions and rotate camera to prevent clipping
-#ifdef NON_MATCHING
 void func_8008247C_16A53C(void) {
-	s32 delta;
 	s32 magnitude;
- s32 tempYaw;
-	u8 sp6A;
 	u8 sp6B;
+	u8 sp6A;
 	Vec3f sp5C;
 	Vec3f sp50;
+	s32 pad4C;
 	Unk8007CAA8_6A40 sp2C;
+	s32 delta;
 	s16 tempA0;
 	s16 tempA1;
 
@@ -1016,7 +1014,7 @@ void func_8008247C_16A53C(void) {
 	if (sp2C.unk1C != 0) {
 		sp6B = sp2C.unkC;
 		sp6A = sp2C.unkD;
-		osSyncPrintf(&D_800A4E44_18CF04);
+		osSyncPrintf(&D_800A4E44_18CF04, sp6B, sp6A);
 
 		switch (sp2C.unkE) {
 				case 1:
@@ -1089,25 +1087,14 @@ void func_8008247C_16A53C(void) {
 					osSyncPrintf(&D_800A4EAC_18CF6C);
 					return;
 		}
-	} else if (D_800E7484 == D_800E73E0) {
+	} else if (D_800E73E0 == D_800E7484) {
 		if (func_8007C698_164758((s32) D_800E7410.x, (s32) D_800E7410.z) != 0) {
 			D_800E7480 = 1;
-			tempYaw = (D_800E7484 = D_800E73E0 + 0x4000);
-			if (tempYaw < 0) {
-				tempYaw &= 0xFFFF;
-				if (tempYaw != 0) {
-					tempYaw -= 0x10000;
-				}
-			} else {
-				tempYaw &= 0xFFFF;
-			}
-			osSyncPrintf(&D_800A4EC4_18CF84, D_800E7484);
+			D_800E7484 = (D_800E73E0 + 0x4000) % 0x10000;
+			osSyncPrintf(&D_800A4EC4_18CF84, D_800E7484, D_800E73E0);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/167C90/func_8008247C_16A53C.s")
-#endif
 
 // AI - Set up interior gameplay pointer tables (initialisation)
 void func_80082AA0_16AB60(void) {
