@@ -789,32 +789,28 @@ void func_802D5FBC_1EECCC(void) {
 
 // unused? appears to spawn Doodlebugs to attack the aircraft carrier in Blackness Naval Base (buildinginstance 34)
 #ifdef NON_MATCHING
-/* CURRENT 170: constant address and register scheduling remain after 20 builds. */
 void func_802D5FE4_1EECF4(void) {
-	s8 (*coords)[2];
-	s8 (*end)[2];
-	s32 invalid;
-	f64 scaleZ;
-	f64 scaleX;
-	s32 result;
-
-	coords = (s8 (*)[2])D_802E0570_1F9280;
-	end = (s8 (*)[2])D_802E0580_1F9290;
-	invalid = 0xFF;
-	scaleZ = 1.5;
-	scaleX = 1.7;
-	do {
-		s16 baseZ = buildingInstances[34].zCoord;
-		s16 x = buildingInstances[34].xCoord + (s32)((f64)((*coords)[0] << 8) * scaleX);
-		s16 z = baseZ + (s32)((f64)((*coords)[1] << 8) * scaleZ);
-		result = func_80092A50_A1A00(x, z, -1);
-		if ((result & 0xFF) != invalid) {
-			func_80080B44_8FAF4((u8)result, 0x22);
-		}
-		coords++;
-	} while (coords != end);
+    s32 i;
+    u8 result;
+    s32 x;
+    s32 z;
+    for (i = 0; i < 8; i++) {
+        x = (s32)((D_802E0570_1F9280[i * 2] << 8) * 1.7);
+        z = buildingInstances[34].zCoord;
+        (void)z;
+        z = (u16)z;
+        x = (u16)x;
+        z = (u16)(s32)((D_802E0570_1F9280[i * 2 + 1] << 8) * 1.5) + z;
+		x += buildingInstances[34].xCoord;
+        x = (s16)x;
+        z = (s16)z;
+        result = func_80092A50_A1A00_WordArgs(x, z, -1);
+        if (result == 0xFF) {
+            continue;
+        }
+        func_80080B44_8FAF4(result, 0x22);
+    }
 }
-
 #else
 #if defined(VERSION_US)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D5FE4_1EECF4.s", "src.us/overlay_level/java/1ED9E0_unmatched_late_rodata.us.s")

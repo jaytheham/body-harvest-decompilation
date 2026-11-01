@@ -4136,3 +4136,6 @@ void func_800950D0_A4080(u8 arg0)
 {
 	func_8008E16C_9D11C(arg0);
 }
+
+#pragma weak func_80092A50_A1A00_WordArgs = func_80092A50_A1A00
+
