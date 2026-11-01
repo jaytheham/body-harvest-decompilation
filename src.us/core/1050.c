@@ -1673,17 +1673,16 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 	} while (src != (s32 *)&D_80047708);
 }
 
-// CURRENT(365)
-#ifdef NON_MATCHING
-void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
-	s32 sp3C[1];
-	s32 sp38;
+void func_80003DE8_49E8(TransformRow *arg0, s16 *arg1, s16 *arg2, Mtx *arg3) {
+	s32 sp3C;
+	s32 sp38[1];
 	s32 sp34;
 	s32 sp30;
 	s32 sp2C;
 	s32 temp1, temp2;
 	u32 mask;
 	s32 *src;
+	s32 temp3;
 
 	D_800476C8[0].unkC = 0;
 	D_800476C8[0].unk1C = 0;
@@ -1691,9 +1690,9 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	D_800476C8[1].unk1C = 0x10000;
 
 	if (arg0 != NULL) {
-		D_800476C8[1].unk10 = (s32)arg0->unk0 << 16;
-		D_800476C8[1].unk14 = (s32)arg0->unk2 << 16;
-		D_800476C8[1].unk18 = (s32)arg0->unk4 << 16;
+		D_800476C8[1].unk10 = arg0->position.unk0 << 16;
+		D_800476C8[1].unk14 = arg0->position.unk2 << 16;
+		D_800476C8[1].unk18 = arg0->position.unk4 << 16;
 	} else {
 		D_800476C8[1].unk10 = 0;
 		D_800476C8[1].unk14 = 0;
@@ -1701,28 +1700,28 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg1 != NULL) {
-		sp3C[0] = coss(arg1[0]);
-		sp38 = sins(arg1[0]);
+		sp3C = coss(arg1[0]);
+		sp38[0] = sins(arg1[0]);
 		sp34 = coss(arg1[2]);
 		sp30 = sins(arg1[2]);
 		sp2C = coss(arg1[1]);
 		temp1 = sins(arg1[1]);
-		D_800476C8[0].unk8 = (-sp38) * 2;
-		D_800476C8[0].unk0 = ((sp3C[0] * sp2C) >> 15) * 2;
-		D_800476C8[0].unk4 = ((sp3C[0] * temp1) >> 15) * 2;
-		temp2 = (sp38 * sp30) >> 15;
+		D_800476C8[0].unk0 = ((sp3C * sp2C) >> 15) * 2;
+		D_800476C8[0].unk4 = ((sp3C * temp1) >> 15) * 2;
+		D_800476C8[0].unk8 = (-sp38[0]) * 2;
+		temp2 = (sp38[0] * sp30) >> 15;
 
 		D_800476C8[0].unk10 = (((-sp34 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
 
 		D_800476C8[0].unk14 = (((sp34 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
-		D_800476C8[0].unk18 = ((sp30 * sp3C[0]) >> 15) * 2;
-		temp2 = (sp38 * sp34) >> 15;
-		D_800476C8[1].unk0 = (((sp30 * temp1) >> 15) + ((temp2 * sp2C) >> 15)) * 2;
+		D_800476C8[0].unk18 = ((sp30 * sp3C) >> 15) * 2;
+		temp3 = (sp38[0] * sp34) >> 15;
+		D_800476C8[1].unk0 = (((sp30 * temp1) >> 15) + ((temp3 * sp2C) >> 15)) * 2;
 
-		D_800476C8[1].unk4 = (((-sp30 * sp2C) >> 15) + ((temp2 * temp1) >> 15)) * 2;
+		D_800476C8[1].unk4 = (((-sp30 * sp2C) >> 15) + ((temp3 * temp1) >> 15)) * 2;
 
-		if (sp3C[0] * 0) {}
-		D_800476C8[1].unk8 = ((sp3C[0] * sp34) >> 15) * 2;
+		D_800476C8[1].unk8 = ((sp3C * sp34) >> 15) * 2;
+		if (((u32)arg2 + sp38[0] + (sp38[0] >> 1)) * 0) {}
 	} else {
 		D_800476C8[0].unk0 = 0x10000;
 
@@ -1759,21 +1758,19 @@ void func_80003DE8_49E8(Unk80052B40 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	/* Keep this setup together to preserve the address scheduling. */
-	mask = 0xFFFF0000; arg0 = (Unk80052B40 *)arg3; src = D_800476C8_words; do { ((s32 *)arg0)[0] = (src[0] & mask) + ((src[1] & mask) >> 0x10);
-		arg0 = (Unk80052B40 *)&((s32 *)arg0)[4];
-		((s32 *)arg0)[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
-		((s32 *)arg0)[-3] = (src[2] & mask) + ((src[3] & mask) >> 0x10);
-		((s32 *)arg0)[5] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
-		((s32 *)arg0)[-2] = (src[4] & mask) + ((src[5] & mask) >> 0x10);
-		((s32 *)arg0)[6] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
-		((s32 *)arg0)[-1] = (src[6] & mask) + ((src[7] & mask) >> 0x10);
-		((s32 *)arg0)[7] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
+	mask = 0xFFFF0000; arg0 = (TransformRow *)arg3; src = D_800476C8_words; do { arg0[0].words[0] = (src[0] & mask) + ((src[1] & mask) >> 0x10);
+		arg0++;
+		arg0[1].words[0] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
+		arg0[-1].words[1] = (src[2] & mask) + ((src[3] & mask) >> 0x10);
+		arg0[1].words[1] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
+		arg0[-1].words[2] = (src[4] & mask) + ((src[5] & mask) >> 0x10);
+		arg0[1].words[2] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
+		arg0[-1].words[3] = (src[6] & mask) + ((src[7] & mask) >> 0x10);
+		arg0[1].words[3] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
 		src = &src[8];
-	} while (src != (s32 *)&D_80047708);
+	} while (src != &D_80047708.unk0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/1050/func_80003DE8_49E8.s")
-#endif
+
 
 void func_80004214_4E14(s16 arg0, s32 arg1) {
 	Unk80052B40 v;

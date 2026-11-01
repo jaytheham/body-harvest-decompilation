@@ -732,6 +732,7 @@ void func_8009F130_AE0E0(void);
 void func_8009FB58_AEB08(void);
 void func_80015BCC_167CC(s32);
 void func_800039D0_45D0(Unk80052B40 *, Unk80052B40 *, Unk80052B40 *, Mtx *);
+void func_80003DE8_49E8(TransformRow *, s16 *, s16 *, Mtx *);
 s32 func_800FA40C_1093BC(VehicleInstance *, s16, s32);
 void func_800A1764_B0714(void);
 void func_800A17EC_B079C(void);

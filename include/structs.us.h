@@ -2547,6 +2547,11 @@ typedef struct {
 
 typedef Unk800311A0 Unk80052B40; /* size = 0x06 */
 
+typedef union {
+	Unk80052B40 position;
+	s32 words[4];
+} TransformRow; /* size = 0x10 */
+
 typedef struct {
 	/* 0x00 */ Unk80052B40 scale;
 	/* 0x06 */ s16 pad6;
