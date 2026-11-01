@@ -2,12 +2,12 @@
 #include "common.h"
 #include "version_shift.h"
 
-const f64 D_80142900_1518B0[1] = {0.9};
 
-const f32 D_80142908_1518B8[2] = {1.2f, 0.0f};
 
 // todo file split here
 
+const ShadowGeometryConstant D_80142900_1518B0 = {0.9};
+const f32 D_80142908_1518B8[2] = {1.2f, 0.0f};
 const char D_80142910_1518C0[] = "Stop running to target\n"; // "Stop running to target\n"
 
 
@@ -317,16 +317,19 @@ s32 func_800A9F34_B8EE4(u8 arg0) {
 	return 0;
 }
 
-// CURRENT(6112)
+// CURRENT(2251)
 #ifdef NON_MATCHING
 // AI - Death explosion effects
 void func_800AA340_B92F0(u8 arg0) {
 	s16 outer;
 	s16 phase;
 	AlienInstance *alien;
-	s32 beams;
 	s32 phaseOffset;
-	s32 segmentLimit;
+	s16 beamLength;
+	u16 sampleX;
+	u16 sampleY;
+	u16 sampleZ;
+	f32 volume;
 	s16 width;
 	u16 angle;
 	s32 height;
@@ -336,16 +339,19 @@ void func_800AA340_B92F0(u8 arg0) {
 	s32 halfWidth;
 	s32 halfHeight;
 	s32 halfDepth;
-	f32 volume;
+	s32 depth;
 	s16 segment;
 	u8 beamCount;
 	u8 segmentCount;
 	s16 beamHeight;
-	u8 effect;
-	f64 stepScale;
-	s32 depth;
+	u8 emitDebris;
+	s32 previousX;
+	s32 previousY;
+	s32 previousZ;
+	f64 heightScale;
+	f64 beamScale;
 
-	randomX = 0;
+	emitDebris = 0;
 	D_80031414 = 1;
 	func_80089200_981B0(arg0, 2, 300);
 	alien = &alienInstances[arg0];
@@ -355,57 +361,57 @@ void func_800AA340_B92F0(u8 arg0) {
 			beamCount = 1;
 			segmentCount = 6;
 			beamHeight = -phase * 4 + 680;
-			alien->unkA = (s32)(((f32)coss((D_80052A8C * 20000) & 0xFFFF) / 32768.0) * 200.0);
+			alien->unkA = (s32)(((f32)coss(D_80052A8C * 20000) / 32768.0) * 200.0);
 			if (func_800038E0_44E0() % -4 == 0) {
-				randomX = 1;
+				emitDebris = 1;
 			}
 		} else if (phase < 131 && phase >= 91) {
 			beamCount = 2;
 			segmentCount = 4;
 			beamHeight = -phase * 4 + 680;
-			alien->unkA = (s32)(((f32)coss((D_80052A8C * 20000) & 0xFFFF) / 32768.0) * 400.0);
+			alien->unkA = (s32)(((f32)coss(D_80052A8C * 20000) / 32768.0) * 400.0);
 			if (func_800038E0_44E0() % -2 == 0) {
-				randomX = 1;
+				emitDebris = 1;
 			}
 		} else {
 			beamCount = 4;
 			segmentCount = 3;
 			beamHeight = 320;
-			alien->unkA = (s32)(((f32)coss((D_80052A8C * 20000) & 0xFFFF) / 32768.0) * 800.0);
-			randomX = 1;
+			alien->unkA = (s32)(((f32)coss(D_80052A8C * 20000) / 32768.0) * 800.0);
+			emitDebris = 1;
 		}
-		if (randomX) {
+		if (emitDebris) {
 			width = alienTypes[27].unk34 - 200;
 			depth = (s16)(alienTypes[27].unk36 - 200);
 			height = (s16)(alienTypes[27].unk38 - 200);
-			randomX = (u16)func_800038E0_44E0();
-			randomY = (u16)func_800038E0_44E0();
-			randomZ = (u16)func_800038E0_44E0();
+			sampleX = (u16)func_800038E0_44E0();
+			sampleY = (u16)func_800038E0_44E0();
+			sampleZ = (u16)func_800038E0_44E0();
 			halfWidth = width >> 1;
 			halfHeight = height >> 1;
 			halfDepth = depth >> 1;
-			func_800DDE1C_ECDCC(effect = func_800DDB60_ECB10(randomX % width + alien->unk0 - halfWidth,
-				randomY % height + alien->unk2 - halfHeight,
-				randomZ % depth + alien->unk4 - halfDepth, 7, func_800038E0_44E0() % 300 + 200), 255);
-			func_800DDEE0_ECE90(effect, 1);
+			func_800DDE1C_ECDCC(emitDebris = func_800DDB60_ECB10(sampleX % width + alien->unk0 - halfWidth,
+				sampleY % height + alien->unk2 - halfHeight,
+				sampleZ % depth + alien->unk4 - halfDepth, 7, func_800038E0_44E0() % 300 + 200), 255);
+			func_800DDEE0_ECE90(emitDebris, 1);
 			func_801371B8_146168(0, 232, alien->unk0, alien->unk2, alien->unk4,
-				(f32)((f32)(func_800038E0_44E0() % 100) / 500.0f + 0.9));
-			randomX = (u16)func_800038E0_44E0();
-			randomY = (u16)func_800038E0_44E0();
-			randomZ = (u16)func_800038E0_44E0();
-			func_800DFA34_EE9E4(randomX % width + alien->unk0 - halfWidth,
-				randomY % height + alien->unk2 - halfHeight,
-				randomZ % depth + alien->unk4 - halfDepth, (u16)(func_800038E0_44E0() % 50 + 30), 0);
+				(f32)((f32)(func_800038E0_44E0() % 100) / 500.0f + D_80142900_1518B0.value));
+			sampleX = (u16)func_800038E0_44E0();
+			sampleY = (u16)func_800038E0_44E0();
+			sampleZ = (u16)func_800038E0_44E0();
+			func_800DFA34_EE9E4(sampleX % width + alien->unk0 - halfWidth,
+				sampleY % height + alien->unk2 - halfHeight,
+				sampleZ % depth + alien->unk4 - halfDepth, (u16)(func_800038E0_44E0() % 50 + 30), 0);
 			func_800E35E0_F2590(120);
 		}
 		outer = 0;
 		if (beamCount > 0) {
 			do {
 				segment = 1;
-				depth = alien->unk0;
-				halfWidth = alien->unk4;
-				height = alien->unk2 + 100;
-				randomX = (s16)((s16)(func_800038E0_44E0() % 500 + 500) / segmentCount);
+				previousX = alien->unk0;
+				previousY = alien->unk2 + 100;
+				previousZ = alien->unk4;
+				beamLength = (s16)((s16)(func_800038E0_44E0() % 500 + 500) / segmentCount);
 				switch (beamCount) {
 				case 1:
 					angle = func_800038E0_44E0() % 65536;
@@ -420,19 +426,19 @@ void func_800AA340_B92F0(u8 arg0) {
 					break;
 				}
 				if (segmentCount + 1 >= 2) {
+					beamScale = beamLength; heightScale = beamHeight;
 					halfHeight = (s16)(32768 / segmentCount);
-					stepScale = randomX;
 					do {
 						randomY = alien->unk0;
 						randomZ = alien->unk4;
 						randomX = func_800B84D0_C7480(randomY, randomZ) >> 8;
-						randomY = (s32)(randomY + (((f32)sins(angle) / 32768.0) * stepScale * segment));
-						randomZ = (s32)(randomZ + (-((f32)coss(angle) / 32768.0) * stepScale * segment));
-						randomX = (s32)(randomX + (((f32)sins((u16)(segment * halfHeight)) / 32768.0) * beamHeight));
-						func_800D16BC_E066C(randomY, randomX, randomZ, depth, height, halfWidth, 1);
-						depth = randomY;
-						height = randomX;
-						halfWidth = randomZ;
+						randomY = (s32)(randomY + (((f32)sins(angle) / 32768.0) * beamScale * segment));
+						randomZ = (s32)(randomZ + (-((f32)coss(angle) / 32768.0) * beamScale * segment));
+						randomX = (s32)(randomX + (((f32)sins((u16)(segment * halfHeight)) / 32768.0) * heightScale));
+						func_800D16BC_E066C(randomY, randomX, randomZ, previousX, previousY, previousZ, 1);
+						previousX = randomY;
+						previousY = randomX;
+						previousZ = randomZ;
 						segment++;
 					} while (segment < segmentCount + 1);
 				}
@@ -447,7 +453,7 @@ void func_800AA340_B92F0(u8 arg0) {
 			phase = alien->unk2C;
 		}
 		if (phase >= 41 && phase < 70) {
-			volume = 1.2f;
+			volume = D_80142908_1518B8[0];
 			angle = phase * 5000 - 400000;
 			for (outer = 0; outer < 2; outer++) {
 				randomY = alien->unk0;
@@ -462,18 +468,18 @@ void func_800AA340_B92F0(u8 arg0) {
 			phase = alien->unk2C;
 		}
 		if (phase < 40 && (phase % 10 == 0 || phase == 1)) {
-			depth = func_800038E0_44E0() % 400 + alien->unk0 - 200;
-			height = alien->unk2;
-			halfWidth = func_800038E0_44E0() % 400 + alien->unk4 - 200;
-			randomZ = (u16)func_800038E0_44E0();
-			func_800D16BC_E066C(depth, height, halfWidth,
-				randomZ % 2000 + depth - 1000, 3000, func_800038E0_44E0() % 2000 + halfWidth - 1000, 5);
+			depth = func_800038E0_44E0() % 400; depth += alien->unk0; depth -= 200;
+			halfWidth = alien->unk2;
+			height = func_800038E0_44E0() % 400 + alien->unk4 - 200;
+			sampleZ = (u16)func_800038E0_44E0();
+			func_800D16BC_E066C(depth, halfWidth, height,
+				sampleZ % 2000 + depth - 1000, 3000, func_800038E0_44E0() % 2000 + height - 1000, 5);
 			if (alien->unk2C == 1) {
-				func_800DF848_EE7F8(depth, height, halfWidth, (u16)(alienTypes[27].unkC * 2), 8);
-				func_800B8D80_C7D30(depth, halfWidth, 1, 2);
+				func_800DF848_EE7F8(depth, halfWidth, height, (u16)(alienTypes[27].unkC * 2), 8);
+				func_800B8D80_C7D30(depth, height, 1, 2);
 				func_800BED24_CDCD4();
 			} else {
-				func_800DF848_EE7F8(depth, height, halfWidth, alienTypes[27].unkC, 8);
+				func_800DF848_EE7F8(depth, halfWidth, height, alienTypes[27].unkC, 8);
 			}
 			func_800E35E0_F2590(255);
 		}
@@ -483,6 +489,8 @@ void func_800AA340_B92F0(u8 arg0) {
 		}
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AA340_B92F0.s")
 #endif

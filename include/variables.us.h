@@ -1781,6 +1781,8 @@ extern u8 D_8013D768_14C718;
 extern s16 D_8013D786_14C736[][8];
 extern u8 D_8013D894_14C844; // Beacon warp destination
 extern s32 D_8013D8C0_14C870[];
+extern const ShadowGeometryConstant D_80142900_1518B0;
+extern const f32 D_80142908_1518B8[2];
 extern Unk_8013D91C D_8013D91C[6];
 extern Lights1 D_8013D958_14C908;
 extern Lights1 D_8013D970_14C920;
