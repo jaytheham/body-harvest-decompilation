@@ -154,37 +154,22 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 }
 
 
-// CURRENT(145)
-#ifdef NON_MATCHING
-void func_8000A3DC_AFDC(s16 arg0, s8 *arg1)
-{
-  s16 temp_v1;
-  s32 temp_a3;
-  s32 var_v0;
-  s32 temp_t0;
-  s8 var_a2;
-  temp_v1 = arg0 * 2;
-  temp_a3 = temp_v1 >> 8;
-  var_a2 = (s8) temp_a3;
-  temp_t0 = (temp_v1 & 0xFFu) & 0xFF;
-  var_v0 = temp_v1;
-  var_v0 &= 0xFF;
-  var_a2 = (s8) temp_a3;
-  if (temp_t0 >= 0)
-  {
-	var_v0 = (temp_t0 + 1) & 0xFF;
-  }
-  if (var_a2 >= 0)
-  {
-	var_a2 = ((s8) temp_a3) + 1;
-  }
-  *arg1 = var_a2;
-  arg1++;
-  *((u8 *) arg1) = var_v0;
+void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
+    u8 low;
+    s8 high;
+    arg0 *= 2;
+    low = arg0 & 0xFF;
+    high = arg0 >> 8;
+    if (low >= 0) {
+        low++;
+    }
+    if (high >= 0) {
+        high++;
+    }
+    *arg1 = high;
+    arg1++;
+    *arg1 = low;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000A3DC_AFDC.s")
-#endif
 
 s16 func_8000A43C_B03C(s8 *arg0)
 {
