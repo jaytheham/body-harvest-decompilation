@@ -1278,8 +1278,6 @@ void func_802D795C_1F066C(void) {
 	func_800074BC_80BC(&func_802D6E70_1EFB80); // remove lightning from callback list
 }
 
-// CURRENT(5) - jump table offset 0xe90 vs 0xf20 (rodata layout)
-#ifdef NON_MATCHING
 void func_802D7980_1F0690(void) {
 	switch (D_80048030) {
 	case 0:
@@ -1344,9 +1342,6 @@ void func_802D7980_1F0690(void) {
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D7980_1F0690.s")
-#endif
 
 void func_802D7B68_1F0878(u8 arg0) {
 	s16 sp5E;
@@ -2089,7 +2084,7 @@ void func_802D91F8_1F1F08(u8 arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D91F8_1F1F08.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D91F8_1F1F08.s", "src.us/overlay_level/java/1ED9E0_alien_late_rodata.s")
 #endif
 
 void func_802D9CB8_1F29C8(u8 alienIdx) {

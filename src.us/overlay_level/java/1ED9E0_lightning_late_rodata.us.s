@@ -23,9 +23,3 @@ glabel D_802E0F10_1F9C20
 .double 0.325
 glabel D_802E0F18_1F9C28
 .double 0.325
-glabel jtbl_802E0F20_1F9C30
-.word 0x802d79b0, 0x802d79d8, 0x802d79fc, 0x802d7a24, 0x802d7a4c, 0x802d7a74, 0x802d7a9c, 0x802d7b58, 0x802d7b58, 0x802d7ac4, 0x802d7aec, 0x802d7b14, 0x802d7b3c, 0x802d7b58
-glabel D_802E0F58_1F9C68
-.double 4000.0
-glabel D_802E0F60_1F9C70
-.double 188.0
