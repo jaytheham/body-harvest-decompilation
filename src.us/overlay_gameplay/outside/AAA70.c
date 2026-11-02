@@ -1485,26 +1485,23 @@ void func_8009FB58_AEB08(void) {
 	}
 }
 
-#ifndef NON_MATCHING
-u16 D_8013D754_14C704 = 0;
-#endif
-
 // DisplayScanner
-#ifdef NON_MATCHING
 void func_800A03FC_AF3AC(void) {
 	static u16 D_8013D754_14C704 = 0;
 	u32 *clearWords;
-	s32 count;
+	VehicleInstance *firstPlayer;
+	/* Pack halfwords into the gaps preceding the six-byte vectors. */
+	s16 mapX;
 	Unk80052B40 sp170;
+	s16 temp;
 	Unk80052B40 sp168;
+	s16 tempMatrixColor;
 	Unk80052B40 sp160;
 	AlienInstance *alien;
 	VehicleInstance *vehicle;
-	s16 mapX;
+	VehicleInstance *player;
 	s16 mapZ;
-	s32 i;
-	s16 temp;
-	s16 tempMatrixColor;
+	s16 i;
 
 	clearWords = D_8014EDE0.words;
 	sp168 = D_8013D744_14C6F4;
@@ -1524,22 +1521,25 @@ void func_800A03FC_AF3AC(void) {
 		D_8013D590_14C540.colors[1] = (((temp * 8) + 0x19) << 8 & 0xF800) | ((((temp * 0x19) + 0x64) << 3) & 0x7C0) | (((temp * 2 + 0xA) >> 2) & 0x3E) | 1;
 		D_8013D590_14C540.colors[3] = (((temp * 4) + 0xC) << 8 & 0xF800) | ((((temp * 0xC) + 0x32) << 3) & 0x7C0) | (((temp + 5) >> 2) & 0x3E) | 1;
 
-		count = 0xFF;
-		do {
-			clearWords[0] = 0;
-			clearWords = &clearWords[1];
-		} while (count--);
+		{
+			s32 count;
+			count = 0xFF;
+			do {
+				clearWords[0] = 0;
+				clearWords = &clearWords[1];
+			} while (count--);
+		}
 
 		i = 0;
 		while (i < 0xFF) {
 			alien = &alienInstances[i];
 
 			if ((alien->typeIndex >= 3) || ((alien->typeIndex == 1) && ((alien->unk24 == 1) || (alien->unk24 == 0xF) || (alien->unk24 == 0x10)))) {
-				vehicle = D_80052B34;
+				firstPlayer = D_80052B34;
 				mapX = alien->unk0;
 				mapZ = alien->unk4;
-				mapX -= vehicle->unk0;
-				mapZ -= vehicle->unk4;
+				mapX -= firstPlayer->unk0;
+				mapZ -= firstPlayer->unk4;
 				mapX = (mapX + 0x1000) >> 8;
 				mapZ = (mapZ + 0x1000) >> 8;
 
@@ -1564,18 +1564,21 @@ void func_800A03FC_AF3AC(void) {
 				}
 			}
 
-			i = (s16)(i + 1);
+			i = i + 1;
 		}
 
 		i = 0;
 		while (i < D_80158FD8) {
+			player = D_80052B34;
 			vehicle = &vehicleInstances[D_80158E80[i]];
+			/* Preserve the original IDO pointer priorities without emitted checks. */
+			if (((player == NULL) + ((void *)player == &D_80052A8C) + ((void *)player == &D_80068084)) && (player == vehicle)) {}
 
-			if ((D_80052B34 != vehicle) && ((currentLevel != 1) || (vehicle->unk1A != 0x12))) {
+			if ((player != vehicle) && ((currentLevel != 1) || (vehicle->unk1A != 0x12))) {
 				mapX = vehicle->unk0;
 				mapZ = vehicle->unk4;
-				mapX -= D_80052B34->unk0;
-				mapZ -= D_80052B34->unk4;
+				mapX -= player->unk0;
+				mapZ -= player->unk4;
 				mapX = (mapX + 0x1000) >> 8;
 				mapZ = (mapZ + 0x1000) >> 8;
 
@@ -1586,7 +1589,7 @@ void func_800A03FC_AF3AC(void) {
 				func_8009BCC0_AAC70(mapX, mapZ + 1, 3);
 			}
 
-			i = (s16)(i + 1);
+			i = i + 1;
 		}
 
 		osWritebackDCacheAll();
@@ -1716,10 +1719,6 @@ void func_800A03FC_AF3AC(void) {
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_800A03FC_AF3AC.s")
-#endif
 
 s32 D_8013D758_14C708 = 0;
 s32 D_8013D75C_14C70C = 0;
