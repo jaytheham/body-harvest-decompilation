@@ -427,6 +427,7 @@ typedef union {
 		/* 0x04 */ s16 unk4;
 	};
 	s16 components[3];
+	u16 unsignedComponents[3];
 } Unk800311A0; /* size = 0x06 */
 
 typedef struct {
@@ -1475,7 +1476,10 @@ typedef struct {
 	/* 0x58 */ s16 unk58; // Height of body off the ground
 	/* 0x5A */ s8 unk5A;
 	/* 0x5B */ u8 pad5B;
-	/* 0x5C */ void (*unk5C)(u8); // On-death handler function pointer?
+	/* 0x5C */ union {
+		void (*unk5C)(u8); // On-death handler function pointer?
+		void (*deathCallback)(u8, s32, s32);
+	};
 	/* 0x60 */ u8 pad60[0x8]; // 0x60 xxxxyyyy xxxx Drops modifier?
 } AlienType; /* size = 0x68 */
 

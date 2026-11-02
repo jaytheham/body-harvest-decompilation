@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8012F2DC_13E28C`, external phase state materializes an address with `addiu` for the final update; masked angle expressions allocate extra temporaries and leave `nop` call delay slots. An `if`/`else` swaps the two hoisted phase-address `lui` instructions, and narrowing only the final color shifts the loop temporaries.
+
+-> `code changed`: Move the initialized phase word into the function as a private static, moving following initialized data after the function to retain data order. Pass `(u16)(phase * 1000)` directly to each `coss` call. Assign the positive/negative cosine with a conditional expression. Compute each color as `src[i] + (u8)(u32)((0xFF - src[i]) * cosVal)`.
+
+-> `correct ASM`: The final update uses separate fused `lui`/`lw` and `lui`/`sw` accesses, trig calls use `mflo a0; andi temporary,a0,0xFFFF; jal coss; move a0,temporary`, the branch-address loads occur in target order, and the color sum uses `addu t7,t5,v0`. The complete US ROM checksum passes.

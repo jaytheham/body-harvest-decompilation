@@ -56,8 +56,6 @@ const char D_80145628_1545D8[] = "total";
 
 const f32 D_80145630_1545E0[1] = {65535.0f};
 
-const u32 jtbl_80145634_1545E4[] = {OVERLAY_PTR(0x80130420), OVERLAY_PTR(0x80130430), OVERLAY_PTR(0x80130490), OVERLAY_PTR(0x801306B4), OVERLAY_PTR(0x801304A0), OVERLAY_PTR(0x801305A8), OVERLAY_PTR(0x80130608)};
-
 u32 D_80140BA0_14FB50[] = {
 	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
 	0x050592A0, 0x050594A0, 0x050596A0, 0x050598A0, 0x05059AA0,
@@ -85,34 +83,6 @@ u32 D_80140C48_14FBF8[] = {
 TextAnimationScale D_80140C68_14FC18 = { { 0x33, 0x33, 0x33 }, 0 };
 u8 D_80140C70_14FC20[] = { 0xD7, 0xD7, 0xFF, 0x00 };
 u8 D_80140C74_14FC24[] = { 0xFF, 0x00, 0x00, 0x00 };
-u32 D_80140C78_14FC28 = 0;
-s32 D_80140C7C_14FC2C = 0;
-u32 D_80140C80_14FC30 = 0;
-u32 D_80140C84_14FC34 = 1;
-u32 D_80140C88_14FC38 = 0;
-u32 D_80140C8C_14FC3C = 0;
-u32 D_80140C90_14FC40 = 0;
-u32 D_80140C94_14FC44 = 0;
-u32 D_80140C98_14FC48 = 0;
-u32 D_80140C9C_14FC4C = 0;
-u32 D_80140CA0_14FC50 = 0;
-u32 D_80140CA4_14FC54 = 1;
-u32 D_80140CA8_14FC58 = 0;
-u32 D_80140CAC_14FC5C = 0;
-u32 D_80140CB0_14FC60 = 0;
-u32 D_80140CB4_14FC64 = 1;
-u32 D_80140CB8_14FC68 = 0;
-u32 D_80140CBC_14FC6C = 0;
-u32 D_80140CC0_14FC70 = 0;
-u32 D_80140CC4_14FC74 = 0;
-u32 D_80140CC8_14FC78 = 0;
-u32 D_80140CCC_14FC7C = 0;
-u32 D_80140CD0_14FC80 = 0;
-u32 D_80140CD4_14FC84 = 0;
-u32 D_80140CD8_14FC88 = 0;
-s32 D_80140CDC_14FC8C = 0x82;
-s32 D_80140CE0_14FC90 = 0;
-
 void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
 {
 	int power;
@@ -231,13 +201,9 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 	return 0;
 }
 
-// https://decomp.me/scratch/RaB1d
-// This does match but doesn't compile right at the moment:
-// this requires D_8015FF84 as a function static so this may cause .bss issues
-// shouldn't be a problem if you match the entire TU / file
-#ifdef NON_MATCHING
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
+	static s32 colorState; /* Reserve the preceding end-of-level state slot. */
 	static s32 D_8015FF84;
 	s32 rem;
 	rem = D_8015FF84 % 300;
@@ -256,49 +222,47 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 	}
 	D_8015FF84 += arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
-#endif
 
-#ifdef NON_MATCHING
+
 void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 {
+	static u32 D_80140C78_14FC28 = 0;
 	f32 cosVal;
 	u8 i;
-	u32 angle;
 
-	if ((f32)coss(((D_80140C78_14FC28 * 1000) & 0xFFFF)) / 32768.0 >= 0.0) {
-		angle = (D_80140C78_14FC28 * 1000) & 0xFFFF;
-		cosVal = (f32)coss(angle) / 32768.0;
-	} else {
-		angle = (D_80140C78_14FC28 * 1000) & 0xFFFF;
-		cosVal = -((f32)coss(angle) / 32768.0);
-	}
+	cosVal = ((f32)coss((u16)(D_80140C78_14FC28 * 1000)) / 32768.0 >= 0.0)
+		? (f32)coss((u16)(D_80140C78_14FC28 * 1000)) / 32768.0
+		: -((f32)coss((u16)(D_80140C78_14FC28 * 1000)) / 32768.0);
 
 	for (i = 0; i < 3; i++) {
-		dst[i] = (u8)((u32)((0xFF - src[i]) * cosVal) + src[i]);
+		dst[i] = src[i] + (u8)(u32)((0xFF - src[i]) * cosVal);
 	}
 
 	D_80140C78_14FC28 += increment;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F2DC_13E28C.s")
-#endif
+
 
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
+	static s32 D_8015FF88;
+	s32 idx;
+	s32 x;
+	s32 halfW;
+	s32 bottomY;
+	s32 alpha;
+	s32 sHalf;
+	s32 rowBase;
+	s32 stackPad;
+	s32 band;
 	s32 i;
 	s32 textWidth;
 	u8 textLen;
-	s32 x;
-	u8 pulseColor[4];
 	s32 allMatched;
-
+	u8 pulseColor[12];
 	allMatched = 1;
 
 	if (arg6 != 0) {
-		s32 idx;
 
 		if ((arg7 & 4) != 0) {
 			D_8015FF88 = 100;
@@ -306,35 +270,17 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 			D_8015FF88 = 0;
 		}
 
-		for (idx = 0; &D_8015FF90[idx] != (s32 *) &D_80160050; idx += 4) {
+		for (idx = 0; idx < 48; idx++) {
 			if ((arg7 & 4) != 0) {
 				D_8015FF90[idx] = 100;
 			} else {
 				D_8015FF90[idx] = 0;
 			}
-
-			if ((arg7 & 4) != 0) {
-				D_8015FF90[idx + 1] = 100;
-			} else {
-				D_8015FF90[idx + 1] = 0;
-			}
-
-			if ((arg7 & 4) != 0) {
-				D_8015FF90[idx + 2] = 100;
-			} else {
-				D_8015FF90[idx + 2] = 0;
-			}
-
-			if ((arg7 & 4) != 0) {
-				D_8015FF90[idx + 3] = 100;
-			} else {
-				D_8015FF90[idx + 3] = 0;
-			}
 		}
 	}
 
 	if (arg5 != 0) {
-		for (i = 18; i >= 0; i--) {
+		for (i = 46; i >= 0; i--) {
 			D_8015FF90[i + 1] = D_8015FF90[i];
 		}
 		D_8015FF90[0] = D_8015FF88;
@@ -346,7 +292,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	textLen = 0;
 	textWidth = 0;
-	while (arg0[textLen] != 0) {
+	while (arg0[textLen] != 0U) {
 		textWidth += arg1 + 2;
 		if ((arg0[textLen] == 'i') || (arg0[textLen] == 'I') || (arg0[textLen] == '1')) {
 			textWidth -= arg1 >> 1;
@@ -356,131 +302,120 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	x = (D_80068084 / 2) - (textWidth >> 1);
 
-	for (i = 0; i < textLen; i++) {
-		if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
-			x += arg1 + 2;
-			continue;
-		}
+	halfW = arg1 >> 1;
+	i = 0;
+	if (textLen > 0) {
+		do {
+			if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
+				x += arg1 + 2;
+			} else {
 
-		if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
-			x -= arg1 >> 1;
-		}
+				bottomY = arg3 + arg2;
 
-		if (arg5 != 0) {
-			s32 halfW;
-			s32 centerX;
-			s32 rowBase;
-			s32 band;
-
-			halfW = arg1 >> 1;
-			centerX = x + halfW;
-			rowBase = i * 2;
-
-			for (band = 7; band >= 0; band--) {
-				s32 colIndex;
-				s32 alpha;
-				s32 sHalf;
-				s32 bandHeight;
-
-				colIndex = rowBase + band;
-				if (colIndex >= 0x30) {
-					osSyncPrintf(&D_801453C0_154370);
+				if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
+					x -= arg1 >> 1;
 				}
 
-				if ((arg7 & 0x10) != 0) {
-					alpha = D_8015FF90[(rowBase * 4) + band];
+				if (arg5 != 0) {
+
+					rowBase = i * 2;
+
+					band = 7;
+					do {
+
+						if (rowBase + band >= 0x30) {
+							osSyncPrintf(D_801453C0_154370);
+						} else {
+
+							if ((arg7 & 0x10) != 0) {
+								alpha = D_8015FF90[band + rowBase];
+							} else {
+								alpha = D_8015FF90[band];
+							}
+
+							if (((arg7 & 4) != 0) && (arg5 != 0) && (alpha == 0x5A) && ((arg7 & 4) != 0) && ((arg7 & 0x10) != 0) && (band == 6)) {
+								func_800153D8_15FD8(0xCD);
+							}
+
+							if (alpha != ((arg7 & 4) ? 0 : 100)) {
+								allMatched = 0;
+							}
+						}
+
+						textWidth = halfW - (s32)(((f32)alpha / 100.0f) * (f32)halfW);
+						if (textWidth <= 0) {
+							sHalf = 1;
+						} else {
+							sHalf = textWidth;
+						}
+
+						if ((((arg7 & 4) != 0) && (alpha == ((arg7 & 4) ? 0 : 100))) || (((arg7 & 4) == 0) && (alpha == ((arg7 & 4) ? 100 : 0)))) {
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
+						} else if (arg7 & 8) {
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
+						} else {
+							func_8012F24C_13E1FC(pulseColor, 5);
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], (u8)(u32)((((f32) (7 - band)) / 7.0f) * 255.0f));
+						}
+
+						if ((arg7 & 8) != 0) {
+							if (arg7 & 4) {
+								alpha = (arg7 & 4) ? 0 : 100;
+							} else {
+								alpha = (arg7 & 4) ? 100 : 0;
+							}
+						}
+						gDPPipeSync(D_8005BB2C++);
+						gSPTextureRectangle(
+						D_8005BB2C++,
+						((x + halfW) - sHalf) * 4,
+						(arg3 - alpha) * 4,
+						((x + halfW) + sHalf) * 4,
+						(bottomY + alpha) * 4,
+						G_TX_RENDERTILE,
+						0,
+						0,
+						(u16)(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
+						(u16)(s32)((1.0f / ((f32)((alpha * 2) + arg2) / 32)) * 1024.0f)
+						);
+					} while (--band >= 0);
+
+
 				} else {
-					alpha = D_8015FF90[band];
-				}
+					if ((arg7 & 0x20) != 0) {
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
+					} else {
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
+					}
 
-				if (((arg7 & 4) != 0) && (arg5 != 0) && (alpha == 0x5A) && ((arg7 & 0x10) != 0) && (band == 6)) {
-					func_800153D8_15FD8(0xCD);
-				}
-
-				if (((arg7 & 4) != 0 && alpha != 0) || ((arg7 & 4) == 0 && alpha != 100)) {
-					allMatched = 0;
-				}
-
-				sHalf = halfW - (s32) ((((f32) alpha) / 100.0f) * (f32) halfW);
-				if (sHalf <= 0) {
-					sHalf = 1;
-				}
-
-				if ((((arg7 & 4) != 0) && (alpha == 0)) || (((arg7 & 4) == 0) && (alpha == 100)) || ((arg7 & 8) != 0)) {
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
-				} else {
-					func_8012F24C_13E1FC(pulseColor, 5);
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], ((s32) ((((f32) (7 - band)) / 7.0f) * 255.0f)) & 0xFF);
-				}
-
-				bandHeight = alpha;
-				if ((arg7 & 8) != 0) {
-					bandHeight = ((arg7 & 4) != 0) ? 0 : 100;
-				}
-
-				gDPPipeSync(D_8005BB2C++);
-				gSPTextureRectangle(
+					gDPPipeSync(D_8005BB2C++);
+					gSPTextureRectangle(
 					D_8005BB2C++,
-					(centerX - sHalf) << 2,
-					(arg3 - bandHeight) << 2,
-					(centerX + sHalf) << 2,
-					(arg3 + arg2 + bandHeight) << 2,
+					x * 4,
+					arg3 * 4,
+					(x + arg1) * 4,
+					bottomY * 4,
 					G_TX_RENDERTILE,
 					0,
 					0,
-					(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
-					(s32) ((1.0f / (((f32) ((bandHeight * 2) + arg2)) / 32)) * 1024.0f)
-				);
+					(u16)(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
+					(u16)(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
+					);
+
+				}
+
+				x += arg1 + 2;
 			}
-
-			x += arg1;
-		} else {
-			if ((arg7 & 0x20) != 0) {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
-			} else {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
-			}
-
-			gDPPipeSync(D_8005BB2C++);
-			gSPTextureRectangle(
-				D_8005BB2C++,
-				x << 2,
-				arg3 << 2,
-				(x + arg1) << 2,
-				(arg3 + arg2) << 2,
-				G_TX_RENDERTILE,
-				0,
-				0,
-				(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
-				(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
-			);
-
-			x += arg1;
-		}
-
-		x += 2;
+		} while (++i != textLen);
 	}
 
 	if (arg5 != 0) {
-		s32 target;
-		s32 next;
-
-		if ((arg7 & 4) != 0) {
-			target = ((arg7 & 4) != 0) ? 0 : 100;
-			next = D_8015FF88 - 10;
-			if (next < target) {
-				D_8015FF88 = ((arg7 & 4) != 0) ? 0 : 100;
-			} else {
-				D_8015FF88 = next;
-			}
+		if (arg7 & 4) {
+			D_8015FF88 = D_8015FF88 - 10 < ((arg7 & 4) ? 0 : 100)
+			? ((arg7 & 4) ? 0 : 100) : D_8015FF88 - 10;
 		} else {
-			target = ((arg7 & 4) != 0) ? 0 : 100;
-			next = D_8015FF88 + 10;
-			if (target < next) {
-				D_8015FF88 = ((arg7 & 4) != 0) ? 0 : 100;
-			} else {
-				D_8015FF88 = next;
-			}
+			D_8015FF88 = D_8015FF88 + 10 > ((arg7 & 4) ? 0 : 100)
+			? ((arg7 & 4) ? 0 : 100) : D_8015FF88 + 10;
 		}
 	}
 
@@ -518,9 +453,12 @@ s32 func_8012FFB0_13EF60(void)
 }
 
 // End of level state manager
-#ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
 {
+	static u8 stretchState[0xC8]; /* Existing stretch phase and history precede the fade step. */
+	static s32 D_80160050;
+	static s32 D_80140C7C_14FC2C = 0;
+	static u32 D_80140C80_14FC30 = 0;
 	s16 rectLeft;           // Left edge of the fade rectangle
 	s16 rectRight;          // Right edge of the fade rectangle
 	s16 rectTop;            // Top edge of the fade rectangle
@@ -528,14 +466,14 @@ void func_8013001C_13EFCC(void)
 	s32 language;           // Language index (0=English, 1=French, 2=German)
 	u8* levelName;          // Pointer to the localized stage/level name string
 	s32 stackPad0;
-	s32 stackPad1;
-	s32 stackPad2;
-	u8 levelText[0x18];     // Buffer for assembling stage/level name text
+	s32 fadeSum;
+	s32 fadeCopy;
+	u8 levelText[0x24];     // Buffer for assembling stage/level name text
 
 	if (gameplayMode == 10) {
 		if (D_80140C80_14FC30 != 0) {
 			// Fade-out in progress: once the fade finishes, move to the next state
-		if (D_80140C7C_14FC2C > 0) {
+			if (D_80140C7C_14FC2C > 0) {
 				D_80160050 = -0x1000;
 			} else {
 				D_8013D580_14C530 = 1;
@@ -555,11 +493,9 @@ void func_8013001C_13EFCC(void)
 
 	// Animate the fade (either fading in or fading out)
 	if (D_80140C7C_14FC2C > 0) {
-		s32 fadeSum;
-		s32 fadeCopy;
 
 		// Convert the fade phase to a brightness value (0–180) for the screen
-		func_8012FE6C_13EE1C((s16)(((f32)(s32)D_80140C7C_14FC2C / D_80145630_1545E0[0]) * 180.0f));
+		func_8012FE6C_13EE1C((s16)(((f32)D_80140C7C_14FC2C / D_80145630_1545E0[0]) * 180.0f));
 
 		// Configure RDP for simple 2D rendering (no lighting, culling, or fog)
 		gDPPipeSync(D_8005BB2C++);
@@ -572,23 +508,25 @@ void func_8013001C_13EFCC(void)
 
 		// Draw a coloured rectangle that shrinks/grows with the fade
 		rectLeft   = func_80006520_7120((s16)(D_80068084 * 2), 0x70, (u16)D_80140C7C_14FC2C);
-		rectTop    = rectLeft + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), (u16)D_80140C7C_14FC2C);
+		rectTop    = func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), (u16)D_80140C7C_14FC2C);
+		rectTop = rectLeft + rectTop;
 		rectRight  = func_80006520_7120((s16)(D_80068088 * 2), 0x60, (u16)D_80140C7C_14FC2C);
-		rectBottom = rectRight + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), (u16)D_80140C7C_14FC2C);
+		rectBottom = func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), (u16)D_80140C7C_14FC2C);
+		rectBottom = rectRight + rectBottom;
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
 		func_800092B8_9EB8(rectLeft, rectRight, rectTop, rectBottom, 0);
 
 		// Advance the fade phase by the current step direction
-		fadeCopy = (s32)D_80140C7C_14FC2C + D_80160050;
+		fadeCopy = D_80140C7C_14FC2C + D_80160050;
 		fadeSum = fadeCopy;
 		if ((fadeSum >= 0x10000) && (D_80160050 > 0)) {
 			D_80160050 = 0;
 			D_80140C7C_14FC2C = 0xFFFF;
-		} else if ((fadeSum > 0) || (D_80160050 >= 0)) {
-			D_80140C7C_14FC2C = fadeCopy;
-		} else {
+		} else if ((fadeSum <= 0) && (D_80160050 < 0)) {
 			D_80160050 = 0;
 			D_80140C7C_14FC2C = 0;
+		} else {
+			D_80140C7C_14FC2C = fadeCopy;
 		}
 	}
 
@@ -710,10 +648,16 @@ void func_8013001C_13EFCC(void)
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8013001C_13EFCC.s")
-#endif
 
+
+u32 D_80140C84_14FC34 = 1;
+u32 D_80140C88_14FC38 = 0;
+u32 D_80140C8C_14FC3C = 0;
+u32 D_80140C90_14FC40 = 0;
+u32 D_80140C94_14FC44 = 0;
+u32 D_80140C98_14FC48 = 0;
+u32 D_80140C9C_14FC4C = 0;
+u32 D_80140CA0_14FC50 = 0;
 void func_801306C4_13F674(u8 *arg0)
 {
 	u8 scoreText[0x18];
@@ -825,73 +769,100 @@ void func_801306C4_13F674(u8 *arg0)
 	}
 }
 
+u32 D_80140CA4_14FC54 = 1;
+u32 D_80140CA8_14FC58 = 0;
+u32 D_80140CAC_14FC5C = 0;
+u32 D_80140CB0_14FC60 = 0;
+u32 D_80140CB4_14FC64 = 1;
+u32 D_80140CB8_14FC68 = 0;
+u32 D_80140CBC_14FC6C = 0;
+u32 D_80140CC0_14FC70 = 0;
+u32 D_80140CC4_14FC74 = 0;
+u32 D_80140CC8_14FC78 = 0;
+u32 D_80140CCC_14FC7C = 0;
+u32 D_80140CD0_14FC80 = 0;
+u32 D_80140CD4_14FC84 = 0;
+u32 D_80140CD8_14FC88 = 0;
+s32 D_80140CDC_14FC8C = 0x82;
+
 #ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
+	static s32 bonusPrefix;
+	static u8 D_80160058;
+	static s32 D_8016005C;
+	static s32 D_80160060;
+	static s32 D_80160064;
+	static s32 bonusPadding;
+	static u8 D_8016006C;
+	static u8 alphaStorage;
+	static s32 D_80160070;
+
 	s32 baseScore;
 	s32 bonusScore;
 	s32 stageScore; u8 scoreText[8]; s32 width;
-	union { s32 score; Unk80052B2C *player; } work;
+	s32 score;
+	Unk80052B2C *player;
+
 
 	if (D_80140CA4_14FC54 != 0) {
 		D_80140CA8_14FC58 = 0;
-		D_8016006C_RESET = 0;
-		D_80160058_W = 0;
+		D_8016006C = 0;
+		D_80160058 = 0;
 		D_80140CA4_14FC54 = 0;
-		D_80160070_INIT = bonusScore = D_80052B2C->unk30;
+		D_80160070 = bonusScore = D_80052B2C->unk30;
 		D_80140CAC_14FC5C = 0;
-		D_80140CB0_W_BUTTON = 0;
+		D_80140CB0_14FC60 = 0;
 		D_8016006D_W = 0;
 		// if no humans killed, give 5000 bonus to score
 		stageScore = bonusScore;
+		score = bonusScore;
 		baseScore = bonusScore;
-		work.score = bonusScore;
 		if (D_80048170 == 0) {
 			D_8016005C = baseScore;
 			bonusScore = stageScore += 0x1388;
 		} else {
-			D_8016005C = work.score;
-			bonusScore = stageScore = work.score;
+			D_8016005C = score;
+			bonusScore = stageScore = score;
 		}
 		// if no humans harvested, give 5000 bonus to score
-		work.score = stageScore + 0x1388;
+		score = stageScore + 0x1388;
 		if (D_8004816E == 0) {
 			D_80160060 = stageScore;
-			D_80160064 = work.score;
+			D_80160064 = score;
 		} else {
 			D_80160060 = stageScore;
 			D_80160064 = stageScore;
 		}
 	}
 
-	work.player = D_80052B2C;
-	bonusScore = work.player->unk30;
-	if ((D_80160070_FIRST == work.player->unk30) && (D_8016006C == 0x1E)) {
-		D_8016006C_RESET = 0;
+	player = D_80052B2C;
+	bonusScore = player->unk30;
+	if ((D_80160070 == player->unk30) && (D_8016006C == 0x1E)) {
+		D_8016006C = 0;
 		D_8016006D_W = 0;
 		if (D_80160058 + 1 < 4) {
-			D_80160058_W = D_80160058 + 1;
+			D_80160058 = D_80160058 + 1;
 		} else {
-			D_80160058_W = 4;
+			D_80160058 = 4;
 		}
 	}
 
 	if (D_80160070 == bonusScore) {
-		bonusScore = D_8016006C + 1;
-		if (bonusScore < 0x1E) {
-			D_8016006C_W = bonusScore;
+		if (D_8016006C + 1 < 0x1E) {
+			D_8016006C = D_8016006C + 1;
 		} else {
-			D_8016006C_W = 0x1E;
+			D_8016006C = 0x1E;
 		}
 	} else {
 		stageScore = bonusScore + 0x64;
-		if (D_80160070_LIMIT < stageScore) {
-			work.player->unk30 = D_80160070_LIMIT;
+		if (D_80160070 < stageScore) {
+			player->unk30 = D_80160070;
 		} else {
-			work.player->unk30 = stageScore;
+			player->unk30 = stageScore;
 		}
 		func_800153D8_15FD8(0xCD);
-		D_8016006C_RESET = 0;
+		D_8016006C = 0;
 	}
 
 	drawText(D_801454F0_1544A0, 0x400, 0x400);
@@ -931,8 +902,8 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 >= 2) {
 		if (D_80160058 == 2) {
 			func_8000577C_637C();
-			work.score = D_80160064;
-			D_80160070 = work.score;
+			score = D_80160064;
+			D_80160070 = score;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
 				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145550_154500, width, baseScore);
@@ -988,16 +959,16 @@ void func_80130BA0_13FB50(void)
 
 	if (isButtonNewlyPressed(0, 0xD000) != 0) {
 		if ((D_80140CB0_14FC60 == 0) || (D_80160058 < 3)) {
-			work.score = D_80160064;
-			D_80140CB0_W_BUTTON = 1;
+			score = D_80160064;
+			D_80140CB0_14FC60 = 1;
 			D_80140CAC_14FC5C = 0;
-			D_80160058_W = 3;
-			D_80160070 = work.score;
-			D_80052B2C->unk30 = work.score;
+			D_80160058 = 3;
+			D_80160070 = score;
+			D_80052B2C->unk30 = score;
 		} else {
 			D_80140CA8_14FC58 = 1;
-			D_80140CB0_W_BUTTON = 0;
-			D_80160058_W = 3;
+			D_80140CB0_14FC60 = 0;
+			D_80160058 = 3;
 		}
 	}
 
@@ -1126,9 +1097,10 @@ void func_80131280_140230(u8 *arg0)
 #ifdef NON_MATCHING
 s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5)
 {
+	static s32 D_80140CE0_14FC90 = 0;
 	s32 charIndex;
 	s32 charScreenX;
-	u8 *loopText;
+	s32 modelX;
 	s32 renderX;
 	s32 temp_v0;
 	Unk80052B40 pos;
@@ -1137,9 +1109,9 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	s32 currentSway;
 	volatile s32 swayOffset;
 	s32 renderWidth;
-	u32 lry;
-	u32 uly;
-	s32 *animationCounter = &D_80140CE0_14FC90;
+	s32 uly;
+	s32 lry;
+	s32 padding;
 	u8 currentChar;
 	s16 charCount;
 	u8 colorData[3];
@@ -1149,9 +1121,9 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, *screenWidth - 0x21, D_80068088);
 	charCount = 0;
 	renderWidth = 0;
-	currentChar = *text;
-	if (currentChar != 0)
+	if (*text != 0)
 	{
+		currentChar = text[charCount];
 		do
 		{
 			renderWidth = renderWidth + charWidth + 2;
@@ -1166,21 +1138,21 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 
 	if (arg5 != 0)
 	{
-		(*animationCounter) = 0;
+		D_80140CE0_14FC90 = 0;
 	}
 	if (arg4 == 0)
 	{
-		(*animationCounter) = 0xFFFF;
+		D_80140CE0_14FC90 = 0xFFFF;
 	}
 
 	{
-		renderX = (*screenWidth - ((*animationCounter) * six)) + 0x168;
+		modelX = (*screenWidth - (D_80140CE0_14FC90 * six)) + 0x168;
 		func_8012F2DC_13E28C(D_80140C74_14FC24, colorData, 5);
-		if ((*animationCounter) >= 0x3D)
+		if (D_80140CE0_14FC90 >= 0x3D)
 		{
-			if ((renderX >= 0) && (renderX <= *screenWidth))
+			if ((modelX >= 0) && (modelX <= *screenWidth))
 			{
-				if ((*animationCounter) == 0x46)
+				if (D_80140CE0_14FC90 == 0x46)
 				{
 					func_800153D8_15FD8(0x185);
 				}
@@ -1210,8 +1182,8 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 				gDPPipeSync(D_8005BB2C++);
 
-				temp_v0 = (s16)(((*animationCounter) & 0xE) >> 1);
-				pos.unk0 = renderX;
+				temp_v0 = (s16)((D_80140CE0_14FC90 & 0xE) >> 1);
+				pos.unk0 = modelX;
 				pos.unk4 = 0;
 				pos.unk2 = yPos + 0x1E;
 				result.unk0 = 0;
@@ -1228,30 +1200,29 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	}
 
 	renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + (charWidth >> 1);
-	if (((*animationCounter) >= 0x60) && ((*animationCounter) < 0xBE))
+	if ((D_80140CE0_14FC90 >= 0x60) && (D_80140CE0_14FC90 < 0xBE))
 	{
-		if ((((*animationCounter) - 0x5F) % (s32)six) == 0)
+		if (((D_80140CE0_14FC90 - 0x5F) % (s32)six) == 0)
 		{
-			func_800153D8_15FD8((s16)(((((*animationCounter) - 0x5F) % 12) / (s32)six) + 0xAC));
+			func_800153D8_15FD8((s16)((((D_80140CE0_14FC90 - 0x5F) % 12) / (s32)six) + 0xAC));
 		}
 	}
 
 	charIndex = 0;
-	loopText = text;
 	if (charCount > 0)
 	{
 		currentSway = swayOffset;
 		do
 		{
-			charScreenX = (D_80068084 - (((*animationCounter) - charIndex * 10) * 6)) + 0x21C;
-			if (*loopText == 0x31)
+			charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
+			if (text[charIndex] == 0x31)
 			{
 				renderX -= (charWidth >> 1);
 			}
 
-			if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
+			if (((charIndex * 10 + 0x5A) < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
 			{
-				swayOffset = (s32)((f32)(((f32)sins((u16)(((((*animationCounter) + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
+				swayOffset = (s32)((f32)(((f32)sins((u16)((((D_80140CE0_14FC90 + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
 				gDPPipeSync(D_8005BB2C++);
 				gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
 				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1291,23 +1262,23 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				D_800311A0.unk4 = result.unk4;
 			}
 
-			if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (D_80068084 >= charScreenX))
+			if (((charIndex * 10 + 0x5A) < D_80140CE0_14FC90) && (D_80068084 >= charScreenX))
 			{
-				if (func_8012EC3C_13DBEC(*loopText) != 0)
+				if (func_8012EC3C_13DBEC(text[charIndex]) != 0)
 				{
 					curX = renderX;
 
 					if (charScreenX < renderX)
 					{
-						uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFFU;
-						lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFFU;
+						lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFF;
+						uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFF;
 						currentSway = 0;
 					}
 					else
 					{
-						lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFFU;
-						uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFFU;
-						if (*loopText == 0x31)
+						lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFF;
+						uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFF;
+						if (text[charIndex] == 0x31)
 						{
 							curX = charScreenX - (charWidth >> 1);
 						}
@@ -1331,31 +1302,33 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 						gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140C74_14FC24[0], D_80140C74_14FC24[1], D_80140C74_14FC24[2], 0xFF);
 					}
 
-					gSPTextureRectangle(D_8005BB2C++,
-										(curX - (charWidth >> 1)) * 4, uly,
-										((charWidth >> 1) + curX) * 4, lry,
-										0, 0, 0,
-										(s32)((1.0f / ((f32)charWidth / 32)) * 1024.0f),
-										(s32)((1.0f / ((f32)charHeight / 32)) * 1024.0f));
+					{
+						Gfx *gfx = D_8005BB2C++;
+						gfx->words.w0 = _SHIFTL(G_TEXRECT, 24, 8) | _SHIFTL(((charWidth >> 1) + curX) * 4, 12, 12) | lry;
+						gfx->words.w1 = _SHIFTL((curX - (charWidth >> 1)) * 4, 12, 12) | uly;
+						gImmp1(D_8005BB2C++, G_RDPHALF_1, 0);
+						gImmp1(D_8005BB2C++, G_RDPHALF_2,
+							_SHIFTL((s32)((1.0f / ((f32)charWidth / 32)) * 1024.0f), 16, 16) |
+							_SHIFTL((s32)((1.0f / ((f32)charHeight / 32)) * 1024.0f), 0, 16));
+					}
 				}
 			}
 
 			renderX += charWidth;
 			if ((charCount == charIndex + 1) && (charScreenX <= 0))
 			{
-				(*animationCounter) = 0;
+				D_80140CE0_14FC90 = 0;
 				return 1;
 			}
 
-			loopText = &loopText[1];
 			charIndex += 1;
 		} while ((renderX += 2, charIndex) != charCount);
 		swayOffset = currentSway;
 	}
 
-	if ((*animationCounter) < 0xFFFF)
+	if (D_80140CE0_14FC90 < 0xFFFF)
 	{
-		(*animationCounter) += 1;
+		D_80140CE0_14FC90 += 1;
 	}
 
 	gDPPipeSync(D_8005BB2C++);
@@ -1363,5 +1336,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	return 0;
 }
 #else
+s32 D_80140CE0_14FC90 = 0;
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131858_140808.s")
 #endif
