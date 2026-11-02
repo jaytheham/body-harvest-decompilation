@@ -2894,10 +2894,13 @@ void func_800B9C28_C8BD8(void) {
 void func_800B9DB8_C8D68(u8 arg0)
 {
 	u8 row;
-	s32 tileSize;
+	s16 tileSize;
 	Vtx *startVertices;
+	s16 pad;
+	s16 mapX;
+	s16 mapZ;
 	Gfx *gfx;
-	Vec2_S16 map;
+	s32 worldZ;
 	Vtx *vertices[2];
 	u8 tileZ;
 	s16 visibleCount;
@@ -2915,8 +2918,8 @@ void func_800B9DB8_C8D68(u8 arg0)
 
 	D_8014F89A = 0;
 	D_8014FD28 = 0x8F;
-	map.x = D_80151DD8.mapPosX;
-	map.z = D_80151DD8.mapPosY;
+	mapX = D_80151DD8.mapPosX;
+	mapZ = D_80151DD8.mapPosY;
 	vertices[0] = startVertices;
 	vertices[1] = startVertices;
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
@@ -2938,7 +2941,6 @@ void func_800B9DB8_C8D68(u8 arg0)
 	}
 
 	{
-		s32 worldZ;
 		s16 bottom;
 		s16 left;
 		s16 top;
@@ -2948,18 +2950,18 @@ void func_800B9DB8_C8D68(u8 arg0)
 		u8 tileX;
 		u8 tile;
 		s32 firstTile[2];
-		firstTile[1] = map.z; firstTile[1] /= 4;
-		firstTile[0] = map.x; firstTile[0] /= 4;
+		firstTile[1] = mapZ; firstTile[1] /= 4;
+		firstTile[0] = mapX; firstTile[0] /= 4;
 		for (row = 0; row < 5; row++, row ^= 0)
 		{
 			tileZ = (firstTile[1] + row) & 0xFF;
 			worldZ = (s16)((tileZ << 10) + 0x8000);
 			for (column = 0; column < 5; column++)
 			{
-				left = (column == 0) ? (map.x % 4) : 0;
-				right = (column == tileSize) ? (map.x % 4) + 1 : tileSize;
-				top = (row == 0) ? (map.z % 4) : 0;
-				bottom = (row == tileSize) ? (map.z % 4) + 1 : tileSize;
+				left = (column == 0) ? (mapX % 4) : 0;
+				right = (column == tileSize) ? (mapX % 4) + 1 : tileSize;
+				top = (row == 0) ? (mapZ % 4) : 0;
+				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
 				tileX = (firstTile[0] + column) & 0xFF;
 				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
@@ -2994,11 +2996,13 @@ void func_800B9DB8_C8D68(u8 arg0)
 	func_800B753C_C64EC();
 	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
+
+
+/* Clamps arg0 to the range [arg1, arg2] */
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif
 
-/* Clamps arg0 to the range [arg1, arg2] */
 s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {
 	if (arg0 < arg1) {
 		return arg1;
