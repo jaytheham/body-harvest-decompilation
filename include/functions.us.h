@@ -1414,7 +1414,7 @@ s32 func_80011FAC_12BAC(void *arg0);
 s32 func_80012000_12C00(s32 arg0);
 Unk8006AA80Node *func_80012128_12D28();
 void func_8010C4EC_11B49C(VehicleInstance *arg0);
-void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4);
+void func_8009E994_AD944(f32 arg0, u8 *arg1, s16 arg2, s16 arg3, s32 arg4);
 s32 func_8010CF7C_11BF2C(s16 arg0, s16 arg1);
 s32 func_8010D4EC_11C49C(s16 arg0, s16 arg1, s16 *arg2, s16 *arg3, VehicleInstance *arg4);
 void func_80123AC4_132A74(VehicleInstance *arg0);
