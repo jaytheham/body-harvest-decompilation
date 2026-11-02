@@ -2226,7 +2226,8 @@ void func_800F8B24_107AD4(s32 arg0) {
 	Unk80052B40 sp140;
 	Unk80052B40 sp138;
 	UnkF9230ShadowWalker *walker;
-	s32 x0, y0, z0, x1, z1, x2, y2, z2;
+	union { s32 coord; Gfx *gfx; } work;
+	s32 y0, z0, x1, z1, x2, y2, z2;
 	u8 count;
 	u8 renderType;
 	s16 y1;
@@ -2248,7 +2249,9 @@ void func_800F8B24_107AD4(s32 arg0) {
 	!= 0)
 	|| (walker->limbs[0].unk22 == 8)) {
 		if (D_801601F0[walker->limbs[0].unk23].unk14 != 0) {
-			gDPPipeSync(D_8005BB2C++);
+			work.gfx = D_8005BB2C++;
+			work.gfx->words.w1 = 0;
+			work.gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8);
 			guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
 			gSPLookAt(D_8005BB2C++, &walker->lookAt);
 			gDPPipeSync(D_8005BB2C++);
@@ -2299,7 +2302,7 @@ void func_800F8B24_107AD4(s32 arg0) {
 				entry = &cursor[1];
 				if (cursor[1].unk23 == 0) {
 
-					x0 = entry->unkA;
+					work.coord = entry->unkA;
 					y0 = entry->unk2;
 					z0 = entry->unkC;
 					x1 = entry->unk1E;
@@ -2313,7 +2316,7 @@ void func_800F8B24_107AD4(s32 arg0) {
 					x2 = entry->unkE;
 					y2 = entry->unk10;
 					z2 = entry->unk12;
-					sp100[0] = x0;
+					sp100[0] = work.coord;
 					sp100[1] = y0;
 					sp100[2] = z0;
 					spF4[0] = x1;
