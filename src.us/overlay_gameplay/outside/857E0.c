@@ -356,7 +356,7 @@ void func_800772EC_8629C(s32 arg0) {
 }
 
 // DisplayTrees
-#ifdef NON_MATCHING // CURRENT(770)
+#ifdef NON_MATCHING // CURRENT(685)
 void func_8007764C_865FC(void) {
 	Unk857E0Obj* end;
 	s32 camX;
@@ -364,9 +364,8 @@ void func_8007764C_865FC(void) {
 	s32 cellX;
 	s32 cellZ;
 	s32 i;
-	s16 type;
-	s8 group;
-	s32 prevType;
+	s32 value;
+	s32 group;
 	Unk857E0Obj* obj;
 
 	camX = (D_80149434 - 0x880) >> 8;
@@ -391,16 +390,17 @@ void func_8007764C_865FC(void) {
 	while (cellX < D_8014D2F0) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			type = obj->unk2;
-			group = type;
-			if (type != 0) {}
+			value = obj->unk2;
+			group = value;
+			group = (s8)group;
+			value = i;
 			if (group == -1) {
 				continue;
 			}
 			if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
-				func_80076868_85818(i);
+				func_80076868_85818(value);
 			} else {
-				obj->unk2 = type + 1;
+				obj->unk2++;
 			}
 
 		}
@@ -416,16 +416,17 @@ void func_8007764C_865FC(void) {
 	while (D_8014D2F0 < cellX) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			type = obj->unk2;
-			group = type;
-			if (type != 0) {}
+			value = obj->unk2;
+			group = value;
+			group = (s8)group;
+			value = i;
 			if (group == -1) {
 				continue;
 			}
 			if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
-				func_80076868_85818(i);
+				func_80076868_85818(value);
 			} else {
-				obj->unk2 = type - 1;
+				obj->unk2--;
 			}
 
 		}
@@ -441,16 +442,17 @@ void func_8007764C_865FC(void) {
 	while (cellZ < D_8014D2F4) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			type = obj->unk2;
-			group = type;
-			if (type != 0) {}
+			value = obj->unk2;
+			group = value;
+			group = (s8)group;
+			value = i;
 			if (group == -1) {
 				continue;
 			}
 			if (group >= 0x14) {
-				func_80076868_85818(i);
+				func_80076868_85818(value);
 			} else {
-				obj->unk2 = type + 5;
+				obj->unk2 += 5;
 			}
 
 		}
@@ -466,16 +468,17 @@ void func_8007764C_865FC(void) {
 	while (D_8014D2F4 < cellZ) {
 		obj = (Unk857E0Obj*)D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			type = obj->unk2;
-			group = type;
-			if (type != 0) {}
+			value = obj->unk2;
+			group = value;
+			group = (s8)group;
+			value = i;
 			if (group == -1) {
 				continue;
 			}
 			if (group < 5) {
-				func_80076868_85818(i);
+				func_80076868_85818(value);
 			} else {
-				obj->unk2 = type - 5;
+				obj->unk2 -= 5;
 			}
 
 		}
@@ -501,25 +504,25 @@ void func_8007764C_865FC(void) {
 		if (obj->unk0 >= 0xE) {
 			continue;
 		}
-		type = obj->unk2;
-		if (type == -1) {
+		group = obj->unk2;
+		if (group == -1) {
 			continue;
 		}
-		if (type < 5) {
+		if (group < 5) {
 			if ((obj->unk1 >> 2) < (camZ - (cellZ << 2))) {
 				continue;
 			}
-		} else if (type >= 0x14) {
+		} else if (group >= 0x14) {
 			if ((obj->unk1 >> 2) >= ((camZ - ((cellZ + 4) << 2)) + 0x10)) {
 				continue;
 			}
 		}
 
-		if ((type == 0) || (type == 5) || (type == 0xA) || (type == 0xF) || (type == 0x14)) {
+		if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
 			if ((obj->unk1 & 3) < (camX - (cellX << 2))) {
 				continue;
 			}
-		} else if ((type == 4) || (type == 9) || (type == 0xE) || (type == 0x13) || (type == 0x18)) {
+		} else if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
 			if ((obj->unk1 & 3) >= ((camX - ((cellX + 4) << 2)) + 0x10)) {
 				continue;
 			}
@@ -564,32 +567,32 @@ void func_8007764C_865FC(void) {
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	prevType = -1;
+	value = -1;
 	end = (Unk857E0Obj*)&D_80259D90[150];
 	obj = (Unk857E0Obj*) D_80259D90;
 	for (; obj != end; obj++) {
 		if (obj->unk0 < 0xE) {
 			continue;
 		}
-		type = obj->unk2;
-		if (type == -1) {
+		group = obj->unk2;
+		if (group == -1) {
 			continue;
 		}
-		if (type < 5) {
+		if (group < 5) {
 			if ((obj->unk1 >> 2) < (camZ - (cellZ << 2))) {
 				continue;
 			}
-		} else if (type >= 0x14) {
+		} else if (group >= 0x14) {
 			if ((obj->unk1 >> 2) >= ((camZ - ((cellZ + 4) << 2)) + 0x10)) {
 				continue;
 			}
 		}
 
-		if ((type == 0) || (type == 5) || (type == 0xA) || (type == 0xF) || (type == 0x14)) {
+		if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
 			if ((obj->unk1 & 3) < (camX - (cellX << 2))) {
 				continue;
 			}
-		} else if ((type == 4) || (type == 9) || (type == 0xE) || (type == 0x13) || (type == 0x18)) {
+		} else if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
 			if ((obj->unk1 & 3) >= ((camX - ((cellX + 4) << 2)) + 0x10)) {
 				continue;
 			}
@@ -597,7 +600,7 @@ void func_8007764C_865FC(void) {
 
 		i = (s32)obj->vertices;
 		i *= 1;
-		if (prevType != obj->unk0) {
+		if (value != obj->unk0) {
 			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, obj->unk8);
 
 			gDPLoadSync(D_8005BB2C++);
@@ -616,7 +619,7 @@ void func_8007764C_865FC(void) {
 				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_PASS2);
 			}
 
-			prevType = obj->unk0;
+			value = obj->unk0;
 		}
 
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(i), 4, 0);
@@ -633,10 +636,10 @@ void func_8007764C_865FC(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
 #endif
-
 
 u16 func_80078530_874E0(s16 arg0, s16 arg1) {
 	u8 temp_v1;
