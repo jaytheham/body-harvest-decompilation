@@ -3451,7 +3451,7 @@ void func_800FB504_10A4B4(void)
 	}
 }
 #else
-GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FB504_10A4B4.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FB504_10A4B4.s")
 #endif
 
 s32 func_800FC1CC_10B17C(void) {
