@@ -802,16 +802,13 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	s16 temp_s3;
 	f32 var_f2;
 	f32 var_f0;
-	f32 temp_f2_2;
 	f32 temp_f12;
 	s16 temp_v0;
 	s16 temp_t1;
-	s32 temp_t3;
-	s32 temp_t6;
 	s16 *temp_a0;
 	s32 *temp_a1;
-	s32 *temp_a3;
 	s32 *temp_a2;
+	s32 *temp_a3;
 	s32 *temp_t0;
 
 	temp_v0 = func_80003824_4424(arg0->unk14 - arg0->unk8, arg0->unkC - arg0->unk0);
@@ -819,15 +816,14 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	*temp_a0 = temp_v0;
 	var_s0 = (s16) ((s16) arg1->unk3C >> 8);
 	var_s1 = (s16) ((s16) arg1->unk3E >> 8);
-	var_f2 = (f32) ((((f32) sins(temp_v0) / 32768.0) * D_801493A8) + arg0->unkC + 256.0);
+	var_f2 = (f32) ((((f32) sins(*temp_a0) / 32768.0) * D_801493A8) + arg0->unkC + 256.0);
 	var_f0 = (f32) ((((f32) coss(D_80047950) / 32768.0) * D_801493A8) + arg0->unk14 + 256.0);
-	temp_f2_2 = var_f2;
 	temp_f12 = 30719.0f;
-	if (temp_f12 < temp_f2_2) {
-		temp_f2_2 = temp_f12;
+	if (temp_f12 < var_f2) {
+		var_f2 = temp_f12;
 	}
-	if (temp_f2_2 < -30208.0f) {
-		temp_f2_2 = -30208.0f;
+	if (var_f2 < -30208.0f) {
+		var_f2 = -30208.0f;
 	}
 	if (temp_f12 < var_f0) {
 		var_f0 = temp_f12;
@@ -835,7 +831,7 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	if (var_f0 < -30208.0f) {
 		var_f0 = -30208.0f;
 	}
-	arg1->unk3C = (s16) (s32) temp_f2_2;
+	arg1->unk3C = (s16) (s32) var_f2;
 	arg1->unk3E = (s16) (s32) var_f0;
 	temp_t1 = (s16) ((s16) arg1->unk3C >> 8);
 	temp_s3 = (s16) ((s16) arg1->unk3E >> 8);
@@ -863,18 +859,16 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 			var_s1 -= 1;
 		} while (temp_s3 < var_s1);
 	}
-	D_80031404 = (f32) ((f32) sins(((s16) D_80047950 + 0x4000) & 0xFFFF) / 32768.0);
-	D_8003140C = (f32) ((f32) coss(((s16) D_80047950 + 0x4000) & 0xFFFF) / 32768.0);
+	D_80031404 = (f32) ((f32) sins((u16)(D_80047950 + 0x4000)) / 32768.0);
+	D_8003140C = (f32) ((f32) coss((u16)(D_80047950 + 0x4000)) / 32768.0);
 	temp_a1 = &D_801493C0;
 	temp_a3 = &D_801493BC;
 	temp_a2 = &D_801493C8;
 	temp_t0 = &D_801493C4;
-	temp_t3 = (s32) (arg1->unk3C - 0x780) >> 8;
-	*temp_a1 = temp_t3;
-	*temp_a3 = temp_t3 + 0x10;
-	temp_t6 = (s32) (arg1->unk3E - 0x780) >> 8;
-	*temp_a2 = temp_t6;
-	*temp_t0 = temp_t6 + 0x10;
+	*temp_a1 = (arg1->unk3C - 0x780) >> 8;
+	*temp_a2 = (arg1->unk3E - 0x780) >> 8;
+	*temp_a3 = *temp_a1 + 0x10;
+	*temp_t0 = *temp_a2 + 0x10;
 	D_801493B0 = *temp_a1 << 8;
 	D_801493B8 = *temp_a2 << 8;
 	D_801493AC = *temp_a3 << 8;
