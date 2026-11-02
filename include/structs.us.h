@@ -4217,6 +4217,11 @@ typedef struct {
 	};
 } SignpostData; /* size = 0x03 */
 
+typedef union {
+	Gfx *packet;
+	void (*callback)(s32, s16);
+} SignpostRenderScratch; /* size = 0x04 */
+
 typedef struct {
 	/* 0x00 */ s8 x;     // X map coordinate (<< 8 for actual value)
 	/* 0x01 */ s8 z;     // Z map coordinate (<< 8 for actual value)

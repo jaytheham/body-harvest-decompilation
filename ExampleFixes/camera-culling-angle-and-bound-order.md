@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8013493C_1438EC`, passing the cached atan result to `sins` folds the preceding global-angle store into `sh v0,lo(at)`; a second float copy assigns the first projected coordinate to f12; updating the X low/high bounds before the Z bounds changes pointer registers and store scheduling; explicit `& 0xFFFF` trig arguments omit the target argument moves.
+
+-> `code changed`: Read `sins(*temp_a0)` through the pointer used to store the global angle. Reuse the first projected-coordinate float directly for its clamp. Store both low bounds through their pointers before computing either upper bound, and derive each upper bound from its stored low bound. Pass `(u16)(D_80047950 + 0x4000)` directly to `sins` and `coss`.
+
+-> `correct ASM`: The initial store uses `lui a1; addiu a1; sh v0,0(a1)`, the projected coordinate uses f2, and low/upper bound pointers use a1/a2/a3/t0 with the target interleaved loads and stores. Each final trig input uses `lh a0; addiu a0,a0,0x4000; andi temp,a0,0xFFFF; jal; move a0,temp`. Every instruction and register matches; function diff score is zero.

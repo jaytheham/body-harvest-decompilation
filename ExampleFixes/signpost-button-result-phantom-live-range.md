@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_80136B50_145B00`, the cached player pointer used v1 instead of a0, the direction byte used v0 instead of v1, and the empty default check promoted switch constant 1 into a0. Removing the default removed the final heading load and five control-flow instructions.
+
+-> `code changed`: Reuse the unused word parameter for the first `isButtonNewlyPressed` result and test that result for the early return. In the empty default, compare that result twice against `player->unk2`. This keeps the return value live through dispatch during allocation, while the empty block disappears during code generation. Using `unk4` instead interferes with the real Z-coordinate reads in cases 1 and 3; the otherwise unread Y field avoids that interference.
+
+-> `correct ASM`: The player loads through a0, the direction byte loads into v1, switch constant 1 uses AT, and each real coordinate/heading cache uses v0. The final heading test retains `lh v0,0xE(a0); bltz v0; nop; b; nop`. All 153 instructions match exactly; function diff score is zero.
