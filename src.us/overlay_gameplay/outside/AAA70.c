@@ -68,8 +68,6 @@ const f64 D_80142708_1516B8[1] = {255.0};
 const f64 D_80142710_1516C0[1] = {500.0};
 const f64 D_80142718_1516C8[1] = {1000.0};
 const f64 D_80142720_1516D0[1] = {20224.0};
-const f64 D_80142728_1516D8[1] = {0.2};
-const f64 D_80142730_1516E0[1] = {0.2};
 
 u32 D_8013D540_14C4F0[16] = {
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
@@ -107,39 +105,6 @@ Vtx D_8013D628_14C5D8[4] = {
 	{ { { 24, 24, 0 }, 0, { 0x0800, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
 	{ { { -24, 24, 0 }, 0, { 0x0000, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
 };
-f32 D_8013D668_14C618 = 1.0f;
-u8 D_8013D66C_14C61C[4] = { 0x00, 0x05, 0x00, 0x02 };
-u8 D_8013D670_14C620[0x0C] = {
-	0x00, 0x00, 0x02, 0x00, 0x03, 0x00, 0x00, 0x00,
-	0x0F, 0x11, 0x04, 0x00,
-};
-// English menu strings
-u32 D_8013D67C_14C62C[15] = { OVERLAY_PTR(0x80142518),
-	OVERLAY_PTR(0x80142528), OVERLAY_PTR(0x80142534), OVERLAY_PTR(0x8014253C), OVERLAY_PTR(0x80142540), OVERLAY_PTR(0x80142548), OVERLAY_PTR(0x80142550), OVERLAY_PTR(0x80142558),
-	OVERLAY_PTR(0x80142560), OVERLAY_PTR(0x80142568), OVERLAY_PTR(0x80142570), OVERLAY_PTR(0x80142578), OVERLAY_PTR(0x80142580), OVERLAY_PTR(0x8014258C), OVERLAY_PTR(0x80142598),
-};
-// French menu strings
-u32 D_8013D6B8_14C668[15] = { OVERLAY_PTR(0x801425A0),
-	OVERLAY_PTR(0x801425B0), OVERLAY_PTR(0x801425BC), OVERLAY_PTR(0x801425C4), OVERLAY_PTR(0x801425CC), OVERLAY_PTR(0x801425D4), OVERLAY_PTR(0x801425DC), OVERLAY_PTR(0x801425E4),
-	OVERLAY_PTR(0x801425EC), OVERLAY_PTR(0x801425F4), OVERLAY_PTR(0x801425FC), OVERLAY_PTR(0x80142604), OVERLAY_PTR(0x8014260C), OVERLAY_PTR(0x80142618), OVERLAY_PTR(0x80142624),
-};
-// German menu strings
-u32 D_8013D6F4_14C6A4[15] = { OVERLAY_PTR(0x8014262C),
-	OVERLAY_PTR(0x8014263C), OVERLAY_PTR(0x80142644), OVERLAY_PTR(0x8014264C), OVERLAY_PTR(0x80142654), OVERLAY_PTR(0x8014265C), OVERLAY_PTR(0x80142664), OVERLAY_PTR(0x8014266C),
-	OVERLAY_PTR(0x80142674), OVERLAY_PTR(0x8014267C), OVERLAY_PTR(0x80142684), OVERLAY_PTR(0x8014268C), OVERLAY_PTR(0x80142694), OVERLAY_PTR(0x801426A0), OVERLAY_PTR(0x801426AC),
-};
-u32 D_8013D730_14C6E0 = 4;
-s32 D_8013D734_14C6E4 = 0;
-s16 D_8013D738_14C6E8[6] = { 0, 0, 0, 0, 0, 0 };
-Unk80052B40 D_8013D744_14C6F4 = { 0, 0, 0 };
-Unk80052B40 D_8013D74C_14C6FC = { 0, 0, 0 };
-u16 D_8013D754_14C704 = 0;
-s32 D_8013D758_14C708 = 0;
-s32 D_8013D75C_14C70C = 0;
-s32 D_8013D760_14C710 = 0;
-s32 D_8013D764_14C714 = 0;
-u8 D_8013D768_14C718 = 0;
-
 void func_8009BAC0_AAA70(void)
 {
   s32 i;
@@ -1045,29 +1010,39 @@ void func_8009D96C_AC91C(void)
 #endif
 
 // drawAlienHealth
-#ifdef NON_MATCHING
-void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
-	f32 interp;
+void func_8009E994_AD944(f32 arg0, u8 *arg1, s16 arg2, s16 arg3, s32 arg4) {
+	/* Preserve the existing shared BSS gaps around this private state. */
+	static s32 reservedPrefix;
+	static f32 startValue;
+	static s16 startLength;
+	static s16 reservedHalfword;
+	static s16 currentLength;
+	static f32 currentValue;
+	static s32 entityId;
+	static s32 reserved[2];
+	static s16 previousLength;
+	static f32 previousValue;
+	static f32 slide = 1.0f;
 	f64 zero;
 	s32 state;
 	s32 mode;
 
-
 	if ((arg3 == 0) || (func_80018AA0_196A0() != 0) || (func_8013B8C8_14A878() != 0)) {
-		interp = D_8013D668_14C618;
 		zero = 0.0;
 
-		if (interp > zero) {
-			if (interp < D_80142728_1516D8[0]) {
-				interp = zero;
+		if (slide > zero) {
+			f64 step;
+			step = 0.2;
+			if (slide < step) {
+				slide = zero;
 			} else {
-				interp = (f32)(interp - D_80142728_1516D8[0]);
+				slide = slide - step;
 			}
 		}
 
 		if (arg1 != 0) {
-			arg3 = D_8014F6C0;
-			arg0 = D_8014F6C4;
+			arg3 = previousLength;
+			arg0 = previousValue;
 		} else {
 			arg0 = 1.0f;
 			arg3 = 1;
@@ -1079,45 +1054,74 @@ void func_8009E994_AD944(f32 arg0, s32 arg1, s32 arg2, s16 arg3, s32 arg4) {
 		}
 
 		mode = (u8)D_8014F203;
-		if ((state != mode) || (D_8014F6B4 != arg4)) {
+		if ((state != mode) || (entityId != arg4)) {
+			slide = 0.0f;
 			if (mode == 0) {
-				D_8014F6A4 = 0.0f;
-				D_8014F6A8 = 0;
-				D_8013D668_14C618 = 0.0f;
+				startValue = 0.0f;
+				startLength = 0;
 			} else {
-				D_8014F6A4 = D_8014F6B0;
-				D_8014F6A8 = D_8014F6AC;
-				D_8013D668_14C618 = 0.0f;
+				startValue = currentValue;
+				startLength = currentLength;
 			}
 		}
 
-		interp = D_8013D668_14C618;
-		if (interp < 1.0) {
-			D_8014F6B0 = ((arg0 - D_8014F6A4) * interp) + D_8014F6A4; D_8014F6AC = (interp * (arg3 - D_8014F6A8)) + D_8014F6A8; interp += D_80142730_1516E0[0];
+		if (slide < 1.0) {
+			f64 step;
+			step = 0.2;
+			currentValue = ((arg0 - startValue) * slide) + startValue;
+			currentLength = startLength + (slide * (arg3 - startLength));
+			slide += step;
+			zero = 0.0;
 		} else {
-			interp = 1.0f;
-			D_8014F6B0 = arg0;
-			D_8014F6AC = arg3;
+			slide = 1.0f;
+			currentValue = arg0;
+			currentLength = arg3;
+			zero = 0.0;
 		}
-
-		zero = 0.0;
 	}
-	D_8014F6C4 = arg0;
-	D_8014F6C0 = arg3;
+	previousValue = arg0;
+	previousLength = arg3;
 
-	D_8013D668_14C618 = interp;
-	if (interp >= zero) {
-		if (((u8)D_8014F202 != 0) || (!(D_8013D668_14C618 = interp, interp >= 1.0))) {
-			D_8013D668_14C618 = interp;
-			func_8009C6CC_AB67C((s16)(((interp * 32.0f) * 2) + -32.0f), 0x8B, arg0, 0, arg1, 2, 0, (s16)arg2, arg3);
+	if (slide >= zero) {
+		if (((u8)D_8014F202 != 0) || (!(slide >= 1.0))) {
+			func_8009C6CC_AB67C((s16)(((slide * 32.0f) * 2) + -32.0f), 0x8B, arg0, 0, arg1, 2, 0, arg2, arg3);
 		}
 	}
 
-	D_8014F6B4 = arg4;
+	entityId = arg4;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009E994_AD944.s")
-#endif
+
+u8 D_8013D66C_14C61C[4] = { 0x00, 0x05, 0x00, 0x02 };
+u8 D_8013D670_14C620[0x0C] = {
+	0x00, 0x00, 0x02, 0x00, 0x03, 0x00, 0x00, 0x00,
+	0x0F, 0x11, 0x04, 0x00,
+};
+// English menu strings
+u32 D_8013D67C_14C62C[15] = { OVERLAY_PTR(0x80142518),
+	OVERLAY_PTR(0x80142528), OVERLAY_PTR(0x80142534), OVERLAY_PTR(0x8014253C), OVERLAY_PTR(0x80142540), OVERLAY_PTR(0x80142548), OVERLAY_PTR(0x80142550), OVERLAY_PTR(0x80142558),
+	OVERLAY_PTR(0x80142560), OVERLAY_PTR(0x80142568), OVERLAY_PTR(0x80142570), OVERLAY_PTR(0x80142578), OVERLAY_PTR(0x80142580), OVERLAY_PTR(0x8014258C), OVERLAY_PTR(0x80142598),
+};
+// French menu strings
+u32 D_8013D6B8_14C668[15] = { OVERLAY_PTR(0x801425A0),
+	OVERLAY_PTR(0x801425B0), OVERLAY_PTR(0x801425BC), OVERLAY_PTR(0x801425C4), OVERLAY_PTR(0x801425CC), OVERLAY_PTR(0x801425D4), OVERLAY_PTR(0x801425DC), OVERLAY_PTR(0x801425E4),
+	OVERLAY_PTR(0x801425EC), OVERLAY_PTR(0x801425F4), OVERLAY_PTR(0x801425FC), OVERLAY_PTR(0x80142604), OVERLAY_PTR(0x8014260C), OVERLAY_PTR(0x80142618), OVERLAY_PTR(0x80142624),
+};
+// German menu strings
+u32 D_8013D6F4_14C6A4[15] = { OVERLAY_PTR(0x8014262C),
+	OVERLAY_PTR(0x8014263C), OVERLAY_PTR(0x80142644), OVERLAY_PTR(0x8014264C), OVERLAY_PTR(0x80142654), OVERLAY_PTR(0x8014265C), OVERLAY_PTR(0x80142664), OVERLAY_PTR(0x8014266C),
+	OVERLAY_PTR(0x80142674), OVERLAY_PTR(0x8014267C), OVERLAY_PTR(0x80142684), OVERLAY_PTR(0x8014268C), OVERLAY_PTR(0x80142694), OVERLAY_PTR(0x801426A0), OVERLAY_PTR(0x801426AC),
+};
+u32 D_8013D730_14C6E0 = 4;
+s32 D_8013D734_14C6E4 = 0;
+s16 D_8013D738_14C6E8[6] = { 0, 0, 0, 0, 0, 0 };
+Unk80052B40 D_8013D744_14C6F4 = { 0, 0, 0 };
+Unk80052B40 D_8013D74C_14C6FC = { 0, 0, 0 };
+u16 D_8013D754_14C704 = 0;
+s32 D_8013D758_14C708 = 0;
+s32 D_8013D75C_14C70C = 0;
+s32 D_8013D760_14C710 = 0;
+s32 D_8013D764_14C714 = 0;
+u8 D_8013D768_14C718 = 0;
 
 void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	s32 var_v0;

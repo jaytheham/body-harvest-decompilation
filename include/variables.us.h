@@ -1764,7 +1764,6 @@ extern SignedWord D_8013D5D8_14C588;
 extern s32 D_8013D5DC_14C58C;
 extern s32 D_8013D5E0_14C590;
 extern Vtx D_8013D5E8[4];
-extern f32 D_8013D668_14C618;
 extern u8 D_8013D66C_14C61C[];
 extern u32 D_8013D67C_14C62C[];
 extern u32 D_8013D6B8_14C668[];
@@ -2217,13 +2216,6 @@ extern s16 D_8014F698;
 extern s16 D_8014F69C;
 extern s16 D_8014F69E;
 extern s16 D_8014F6A0;
-extern f32 D_8014F6A4;
-extern s16 D_8014F6A8;
-extern s16 D_8014F6AC;
-extern f32 D_8014F6B0;
-extern s32 D_8014F6B4;
-extern s16 D_8014F6C0;
-extern f32 D_8014F6C4;
 extern s32 D_8014F6C8;
 extern PowerupItem D_8014F6D0[0x10]; // pool with 16 slots for pickup items like big/small hearts and alpha 1 ammo
 extern PowerupItem D_8014F7DE; // False symbol - end of D_8014F6D0. Replace with D_8014F6D0
