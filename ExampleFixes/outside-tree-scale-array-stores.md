@@ -1,0 +1,5 @@
+Incorrect ASM: `func_800770D8_86088` with scalar scale locals omits three target `swc1` stores. A chained array assignment produces the correct `mov.s f2,f0` and `mov.s f12,f0`, but its anonymous float home expands the frame to `0xA0` instead of `0x98`. Splitting the assignment removes one required move and reschedules the random calculation.
+
+Code changed: retain `f32 scale[3]`, calculate the shared scale in an explicit `f32 value`, and assign `scale[0] = value; scale[2] = value;`. Pack the initial timer and object index as adjacent `u16` locals. Declare the matrix pointer before the saved words and the float value immediately before the matrix, filling its alignment gap. Use the signed saved-coordinate expression directly in both random calculations instead of assigning it to the unsigned timer. Load the object index before the guard.
+
+Correct ASM: the frame is `0x98`, the matrix begins at `sp+0x30`, the sine temporary is at `sp+0x2C`, and the three scale stores use `sp+0x74`, `sp+0x78`, and `sp+0x7C`. Both target float moves and random-calculation scheduling match. The complete function matches byte for byte, and both US and EU ROM checks pass.

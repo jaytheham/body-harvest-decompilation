@@ -1080,7 +1080,13 @@ typedef struct {
 	/* 0x06 */ s16 unk6; // X rotation
 	/* 0x08 */ s16 unk8; // Y rotation
 	/* 0x0A */ s16 unkA; // Z rotation
-	/* 0x0C */ s16 unkC;
+	union {
+		/* 0x0C */ s16 unkC;
+		struct {
+			/* 0x0C */ u8 unkC0;
+			/* 0x0D */ s8 unkD;
+		};
+	};
 	/* 0x0E */ s16 unkE; // "Direction"
 	/* 0x10 */ s16 unk10; // Elevation
 	/* 0x12 */ s16 unk12; // Speed
@@ -1147,6 +1153,10 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ u32 unk8;
 	/* 0x0C */ u8 padC[4];
+	union {
+		Mtx matrix;
+		Vtx vertices[4];
+		struct {
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
@@ -1187,6 +1197,8 @@ typedef struct {
 	/* 0x4D */ u8 unk4D;
 	/* 0x4E */ u8 unk4E;
 	/* 0x4F */ u8 unk4F;
+		};
+	};
 } Unk857E0Obj; /* size = 0x50 */
 
 typedef struct {
@@ -1989,6 +2001,10 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	/* 0x08 */ void *unk8;
 	/* 0x0C */ s32 unkC;
+	union {
+		Mtx matrix;
+		Vtx vertices[4];
+		struct {
 	/* 0x10 */ s16 unk10;
 	/* 0x12 */ s16 unk12;
 	/* 0x14 */ s16 unk14;
@@ -2005,6 +2021,8 @@ typedef struct {
 	/* 0x42 */ s16 unk42;
 	/* 0x44 */ s16 unk44;
 	/* 0x46 */ u8 pad46[0xA];
+		};
+	};
 } Unk80259D90; /* size = 0x50 */
 
 typedef struct {
@@ -4472,5 +4490,22 @@ typedef struct {
     EffectColorPalette colors;
     Unk8014DD50 transforms[2];
 } CometLandingData;
+
+typedef struct {
+    s32 x;
+    s32 z;
+} TreeFallDirection;
+
+typedef struct {
+    TreeFallDirection direction[4];
+} TreeFallDirections;
+
+typedef struct {
+    u32 texture;
+    s16 height;
+    s16 width;
+    s16 scale;
+    s16 flags;
+} OutsideTreeStyle;
 
 #endif /* LIBULTRA_REFERENCE */
