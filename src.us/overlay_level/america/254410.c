@@ -3311,7 +3311,6 @@ void func_802DC7FC_25BF3C(u8 arg0) {
 	func_800039D0_45D0(0, 0, &sp20, func_80011F90_12B90(&D_E020FF0));
 }
 
-// CURRENT(90)
 #ifdef NON_MATCHING
 void func_802DC880_25BFC0(u8 alienIdx)
 {
@@ -3524,7 +3523,6 @@ s32 func_802DCCD8_25C418(u8 arg0)
 	return 0;
 }
 
-// CURRENT(1115)
 #ifdef NON_MATCHING
 void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {

@@ -1070,51 +1070,97 @@ void func_80080588_50A38(u8 arg0) {
 }
 
 #ifdef NON_MATCHING
-// CURRENT(1382)
-void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3) {
+void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3)
+{
 	s32 pad[5];
-	f32 targetZ, targetY, targetX;
-	f32 rotationZ, rotationY, rotationX;
-
-	volatile f32 copyZ; f32 copyY; volatile f32 copyX;
-	f32 z, x, y;
-	f32 elapsed, duration, fraction;
+	f32 targetZ;
+	f32 targetY;
+	f32 targetX;
+	f32 rotationZ;
+	f32 rotationY;
+	f32 rotationX;
+	f32 copyZ;
+	f32 copyY;
+	f32 copyX;
+	f32 z;
+	f32 x;
+	f32 y;
+	f32 elapsed;
+	f32 duration;
+	f32 fraction;
 	f32 scale;
-	f64 units, degrees;
+	f64 units;
+	f64 degrees;
 	u8 i;
 	AnimChannelState *channel;
-
-	if (0) { osSyncPrintf(D_800AE97C_7EE2C, &targetX, &targetY, &targetZ, &rotationX, &rotationY, &rotationZ, &copyX, &copyY, &copyZ); }
+	if (0)
+	{
+		osSyncPrintf(D_800AE97C_7EE2C, &targetX, &targetY, &targetZ, &rotationX, &rotationY, &rotationZ, &copyX, &copyY, &copyZ);
+	}
 	i = 0;
-	if (arg3 != 0) {
+	if (arg3 != 0)
+	{
 		scale = 4096.0f;
 		units = 4096.0;
-		if (scale) {}
-		if (units) {}
+		if (scale)
+		{
+		}
+		if (units)
+		{
+		}
 		degrees = D_800AEA50_7EF00[0];
-		do {
+		do
+		{
 			channel = &arg1[i];
-			if (channel->unk14 != 0) { targetX = (elapsed = channel->unk1C, duration = channel->unk20, fraction = arg2 / (duration - elapsed), (f32)channel->unk2A * degrees / units); targetY = (f32)channel->unk2C * degrees / units; targetZ = (f32)channel->unk2E * degrees / units; rotationX = (f32)channel->unk0 * degrees / units; copyX = targetX; rotationY = (f32)channel->unk2 * degrees / units; copyY = targetY; copyZ = targetZ; rotationZ = (f32)channel->unk4 * degrees / units; rotationX += (copyX - rotationX) * fraction; rotationY += (copyY - rotationY) * fraction; rotationZ = (copyZ - rotationZ) * fraction + rotationZ; x = channel->unk8;
+			if (channel->unk14 != 0)
+			{
+				targetX = (elapsed = channel->unk1C, duration = channel->unk20, fraction = arg2 / (duration - elapsed), (((f32)channel->unk2A) * degrees) / units);
+				targetY = (((f32)channel->unk2C) * degrees) / units;
+				targetZ = (((f32)channel->unk2E) * degrees) / units;
+				rotationX = (((f32)channel->unk0) * degrees) / units;
+				copyX = targetX;
+				rotationY = (((f32)channel->unk2) * degrees) / units;
+				copyY = targetY;
+				copyZ = targetZ;
+				rotationZ = (((f32)channel->unk4) * degrees) / units;
+				rotationX += (copyX - rotationX) * fraction;
+				rotationY += (copyY - rotationY) * fraction;
+				rotationZ = ((copyZ - rotationZ) * fraction) + rotationZ;
+				x = channel->unk8;
 				y = channel->unkC;
 				z = channel->unk10;
-				channel->unk0 = rotationX * scale / degrees;
-				channel->unk2 = rotationY * scale / degrees;
-				channel->unk4 = rotationZ * scale / degrees;
-				channel->unk8 = ((f32)channel->unk24 - x) * fraction + x; channel->unkC = ((f32)channel->unk26 - y) * fraction + y; x = channel->unk28; channel->unk10 = (x - z) * fraction + z; channel->unk1C += arg2;
-				if (channel->unk1C >= channel->unk20) {
-				channel->unk8 = channel->unk24;
-				channel->unk10 = x;
-				channel->unk18++;
-				channel->unk0 = channel->unk2A;
-				channel->unk2 = channel->unk2C;
-				channel->unkC = channel->unk26;
-				channel->unk4 = channel->unk2E;
-				if (channel->unk18 == channel->unk14) { channel->unk14 = 0;
-				channel->unk18 = 0;
-				if (i == 0) { arg0->unk54 = 0;
-				} }
-				else { func_80080AD4_50F84(arg0, channel, i);
-				} } }
+				channel->unk0 = (rotationX * scale) / degrees;
+				channel->unk2 = (rotationY * scale) / degrees;
+				channel->unk4 = (rotationZ * scale) / degrees;
+				channel->unk8 = ((((f32)channel->unk24) - x) * fraction) + x;
+				channel->unkC = ((((f32)channel->unk26) - y) * fraction) + y;
+				x = channel->unk28;
+				channel->unk10 = ((x - z) * fraction) + z;
+				channel->unk1C += arg2;
+				if (channel->unk1C >= channel->unk20)
+				{
+					channel->unk8 = channel->unk24;
+					channel->unk10 = x;
+					channel->unk18++;
+					channel->unk0 = channel->unk2A;
+					channel->unk2 = channel->unk2C;
+					channel->unkC = channel->unk26;
+					channel->unk4 = channel->unk2E;
+					if (channel->unk18 == channel->unk14)
+					{
+						channel->unk14 = 0;
+						channel->unk18 = 0;
+						if (i == 0)
+						{
+							arg0->unk54 = 0;
+						}
+					}
+					else
+					{
+						func_80080AD4_50F84(arg0, channel, i);
+					}
+				}
+			}
 			i++;
 		} while (i != arg3);
 	}
