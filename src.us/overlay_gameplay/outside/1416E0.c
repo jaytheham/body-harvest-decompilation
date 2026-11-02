@@ -9,21 +9,6 @@ const CameraFadeScale D_80145688_154638 = {500.0};
 const f32 D_80145690_154640[1] = {0.05f};
 const f32 D_80145694_154644[1] = {0.1f};
 const f32 D_80145698_154648[1] = {0.1f};
-const f32 D_8014569C_15464C[1] = {0.1f};
-const f64 D_801456A0_154650[1] = {91.02222222222223};
-const f32 D_801456A8_154658[1] = {30719.0f};
-const CameraFadeScale D_801456B0_154660 = {0.7};
-const CameraFadeScale D_801456B8_154668 = {0.02};
-const CameraFadeScale D_801456C0_154670 = {0.02};
-const CameraFadeScale D_801456C8_154678 = {0.02};
-const CameraFadeScale D_801456D0_154680 = {0.7};
-const f32 D_801456D8_154688[1] = {0.1f};
-const f32 D_801456DC_15468C[1] = {0.1f};
-const f32 D_801456E0_154690[1] = {0.1f};
-const f32 D_801456E4_154694[1] = {0.1f};
-const CameraFadeScale D_801456E8_154698 = {500.0};
-const CameraFadeScale D_801456F0_1546A0 = {500.0};
-const f32 D_801456F8_1546A8[1] = {50000.0f};
 
 s16 D_8013E410_14D3C0[] = {
 	0x001E, 0x0000, 0x0000, 0x0000,
@@ -465,7 +450,6 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 
 // CURRENT(5): only generated interpolation constant address differs
 // AI - Vehicle camera orbit/recenter
-#ifdef NON_MATCHING
 void func_80133A54_142A04(Unk80160080 *arg0) {
 	Vec3f sp44;
 	f32 sp40;
@@ -505,9 +489,7 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 
 	func_801336CC_14267C(arg0, &sp44);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80133A54_142A04.s")
-#endif
+
 
 
 // AI - Apply yaw/pitch rotation to look-at vector
@@ -804,7 +786,7 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	} else {
 		temp_s0 = -temp_v0;
 	}
-	if (temp_s0 <= D_801456A0_154650[0]) {
+	if (temp_s0 <= 91.02222222222223) {
 		arg0->unk52 = var_s1;
 	} else {
 		arg0->unk52 = temp_v1 + (u16)(s32)(temp_v0 / 12.0);
@@ -813,7 +795,6 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 
 
 // CURRENT(2820)
-#ifdef NON_MATCHING
 // AI - Clipping/frustum setup for visible region culling
 void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	s16 var_s0;
@@ -841,7 +822,7 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	var_f2 = (f32) ((((f32) sins(temp_v0) / 32768.0) * D_801493A8) + arg0->unkC + 256.0);
 	var_f0 = (f32) ((((f32) coss(D_80047950) / 32768.0) * D_801493A8) + arg0->unk14 + 256.0);
 	temp_f2_2 = var_f2;
-	temp_f12 = D_801456A8_154658[0];
+	temp_f12 = 30719.0f;
 	if (temp_f12 < temp_f2_2) {
 		temp_f2_2 = temp_f12;
 	}
@@ -899,9 +880,7 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	D_801493AC = *temp_a3 << 8;
 	D_801493B4 = *temp_t0 << 8;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_8013493C_1438EC.s")
-#endif
+
 
 // AI - Copy camera state to shared structure
 void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
@@ -920,7 +899,6 @@ void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 
 // CURRENT(485)
 // AI - Smooth camera position/angle interpolation
-#ifdef NON_MATCHING
 void func_80134D44_143CF4(Unk80160080 *arg0) {
 	f64 temp_f2;
 	f64 temp_f12;
@@ -974,7 +952,7 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 		arg0->unk4A = (s32)(D_80160118 + (D_80160124 * (arg0->unk52 - D_80160118)));
 		if (D_80160140 != 0) {
 			temp_f2 = D_80160124;
-			if (D_801456B0_154660.value < temp_f2) {
+			if (0.7 < temp_f2) {
 				temp_f12 = (1.0 - temp_f2) * 0.25;
 				if (temp_f12 < (f64)D_80160134.value) {
 					D_80160134.reload = temp_f12;
@@ -982,7 +960,7 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 					D_80160134.reload = (f64)D_80160134.value;
 				}
 				temp_f14 = D_80160134.value;
-				var_f16 = D_801456B8_154668.value;
+				var_f16 = 0.02;
 				if (temp_f14 < var_f16) {
 					D_80160134.value = var_f16;
 				} else {
@@ -990,20 +968,20 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 				}
 			}
 		}
-		var_f16 = D_801456C0_154670.value;
+		var_f16 = 0.02;
 		D_80160124 += D_80160134.value;
 	} else {
 		arg0->unk4A = arg0->unk52;
 		D_80160124 = 1.0f;
 		D_80160140 = 0;
-		var_f16 = D_801456C8_154678.value;
+		var_f16 = 0.02;
 	}
 
 	if (D_80160128 < 1.0) {
 		arg0->unk4E = (s32)(D_8016011A + (D_80160128 * (arg0->unk56 - D_8016011A)));
 		if (D_8016013C != 0) {
 			temp_f2 = D_80160128;
-			if (D_801456D0_154680.value < temp_f2) {
+			if (0.7 < temp_f2) {
 				temp_f12 = (1.0 - temp_f2) * 0.25;
 				temp_f14 = D_80160138.value;
 				if (temp_f12 < temp_f14) {
@@ -1028,9 +1006,7 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 
 	arg0->unk4C = arg0->unk54;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80134D44_143CF4.s")
-#endif
+
 
 void func_801351DC_14418C(Unk80160080 *arg0)
 {
@@ -1213,11 +1189,11 @@ void func_801356F4_1446A4(Unk80160080 *arg0) {
 void func_801357EC_14479C(Unk80160080 *arg0) {
 	if (D_80160154 == 0 && D_801591BC != 0) {
 		D_80160124 = 0.0f;
-		D_80160134.value = D_801456D8_154688[0];
+		D_80160134.value = 0.1f;
 	}
 	if (D_80160154 != 0 && D_801591BC == 0) {
 		D_80160124 = 0.0f;
-		D_80160134.value = D_801456DC_15468C[0];
+		D_80160134.value = 0.1f;
 		if (arg0->unk6C == 1) {
 			arg0->unk56 = (s16)(vehicleTypes[D_80052B34->unk1A].unk5C * 0x10);
 		} else {
@@ -1232,7 +1208,6 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 // toggleCameraNearFarMode?
 // CURRENT(65)
 // AI - Toggle near/far camera mode
-#ifdef NON_MATCHING
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	f32 var_f14;
 	f32 temp_f0;
@@ -1260,7 +1235,7 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				if (D_8016015E == 0) {
 					func_800153D8_15FD8(0xC3);
 				}
-				var_f14 = D_801456E0_154690[0];
+				var_f14 = 0.1f;
 				D_8016015E = 1;
 				D_80160158 = 1;
 				D_80160138.value = var_f14;
@@ -1271,7 +1246,7 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 				D_80160128 = 0.0f;
 				temp_s0 = (s16)(s32)(temp_f0 / D_80160138.value);
 				D_80160138.value = (f32)(1.0 / temp_s0);
-				var_f14 = D_801456E4_154694[0];
+				var_f14 = 0.1f;
 			}
 
 			{
@@ -1325,16 +1300,14 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 			}
 		} else {
 			if (arg0->unk6C == 1) {
-				func_80014208_14E08(D_8016015C, (s16)(s32)((1.0 - temp_f0_2) * D_801456E8_154698.value), 0x40);
+				func_80014208_14E08(D_8016015C, (s16)(s32)((1.0 - temp_f0_2) * 500.0), 0x40);
 			} else if (arg0->unk6C == 2) {
-				func_80014208_14E08(D_8016015C, (s16)(s32)(temp_f0_2 * D_801456F0_1546A0.value), 0x40);
+				func_80014208_14E08(D_8016015C, (s16)(s32)(temp_f0_2 * 500.0), 0x40);
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801358E8_144898.s")
-#endif
+
 
 // AI - Initialize camera shake parameters
 void func_80135CB8_144C68(void) {
@@ -1360,7 +1333,6 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 // https://decomp.me/scratch/AXqIF
 // CURRENT(55)
 // AI - Calculate camera shake from impact distance
-#ifdef NON_MATCHING
 void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 {
 	f32 zero;
@@ -1397,7 +1369,7 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 			z = negative;
 		}
 		distance = ((x * x) + (y * y)) + (z * z);
-		attenuation = distance / D_801456F8_1546A8[0];
+		attenuation = distance / 50000.0f;
 		amplitude = arg3 - attenuation;
 		if (distance) {} /* Retain the numerator lifetime for IDO. */
 		if (arg3 < attenuation)
@@ -1414,9 +1386,7 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80135D44_144CF4.s")
-#endif
+
 
 // AI - Update and decay camera shake effects
 void func_80135F0C_144EBC(void) {
@@ -1582,7 +1552,6 @@ void func_80136570_145520(void) {
 // displaySignposts
 // AI - Render signpost sprites in 3D world
 // CURRENT(2231)
-#ifdef NON_MATCHING
 void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
@@ -1669,15 +1638,12 @@ void func_801365E0_145590(void) {
 		var_fp++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
-#endif
+
 
 // https://decomp.me/scratch/NQ4OJ
 // CURRENT(110)
 // Check if player is reading signpost
 // AI - Handle signpost interaction on button press
-#ifdef NON_MATCHING
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
 	s32 heading;
@@ -1749,6 +1715,4 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 		func_80018D7C_1997C((u16) sp28);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_80136B50_145B00.s")
-#endif
+
