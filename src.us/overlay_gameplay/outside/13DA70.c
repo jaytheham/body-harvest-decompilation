@@ -658,23 +658,6 @@ u32 D_80140C94_14FC44 = 0;
 u32 D_80140C98_14FC48 = 0;
 u32 D_80140C9C_14FC4C = 0;
 u32 D_80140CA0_14FC50 = 0;
-u32 D_80140CA4_14FC54 = 1;
-u32 D_80140CA8_14FC58 = 0;
-u32 D_80140CAC_14FC5C = 0;
-u32 D_80140CB0_14FC60 = 0;
-u32 D_80140CB4_14FC64 = 1;
-u32 D_80140CB8_14FC68 = 0;
-u32 D_80140CBC_14FC6C = 0;
-u32 D_80140CC0_14FC70 = 0;
-u32 D_80140CC4_14FC74 = 0;
-u32 D_80140CC8_14FC78 = 0;
-u32 D_80140CCC_14FC7C = 0;
-u32 D_80140CD0_14FC80 = 0;
-u32 D_80140CD4_14FC84 = 0;
-u32 D_80140CD8_14FC88 = 0;
-s32 D_80140CDC_14FC8C = 0x82;
-s32 D_80140CE0_14FC90 = 0;
-
 void func_801306C4_13F674(u8 *arg0)
 {
 	u8 scoreText[0x18];
@@ -786,73 +769,101 @@ void func_801306C4_13F674(u8 *arg0)
 	}
 }
 
+u32 D_80140CA4_14FC54 = 1;
+u32 D_80140CA8_14FC58 = 0;
+u32 D_80140CAC_14FC5C = 0;
+u32 D_80140CB0_14FC60 = 0;
+u32 D_80140CB4_14FC64 = 1;
+u32 D_80140CB8_14FC68 = 0;
+u32 D_80140CBC_14FC6C = 0;
+u32 D_80140CC0_14FC70 = 0;
+u32 D_80140CC4_14FC74 = 0;
+u32 D_80140CC8_14FC78 = 0;
+u32 D_80140CCC_14FC7C = 0;
+u32 D_80140CD0_14FC80 = 0;
+u32 D_80140CD4_14FC84 = 0;
+u32 D_80140CD8_14FC88 = 0;
+s32 D_80140CDC_14FC8C = 0x82;
+s32 D_80140CE0_14FC90 = 0;
+
 #ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
+	static s32 bonusPrefix;
+	static u8 D_80160058;
+	static s32 D_8016005C;
+	static s32 D_80160060;
+	static s32 D_80160064;
+	static s32 bonusPadding;
+	static u8 D_8016006C;
+	static u8 alphaStorage;
+	static s32 D_80160070;
+
 	s32 baseScore;
 	s32 bonusScore;
 	s32 stageScore; u8 scoreText[8]; s32 width;
-	union { s32 score; Unk80052B2C *player; } work;
+	s32 score;
+	Unk80052B2C *player;
+
 
 	if (D_80140CA4_14FC54 != 0) {
 		D_80140CA8_14FC58 = 0;
-		D_8016006C_RESET = 0;
-		D_80160058_W = 0;
+		D_8016006C = 0;
+		D_80160058 = 0;
 		D_80140CA4_14FC54 = 0;
-		D_80160070_INIT = bonusScore = D_80052B2C->unk30;
+		D_80160070 = bonusScore = D_80052B2C->unk30;
 		D_80140CAC_14FC5C = 0;
-		D_80140CB0_W_BUTTON = 0;
+		D_80140CB0_14FC60 = 0;
 		D_8016006D_W = 0;
 		// if no humans killed, give 5000 bonus to score
 		stageScore = bonusScore;
+		score = bonusScore;
 		baseScore = bonusScore;
-		work.score = bonusScore;
 		if (D_80048170 == 0) {
 			D_8016005C = baseScore;
 			bonusScore = stageScore += 0x1388;
 		} else {
-			D_8016005C = work.score;
-			bonusScore = stageScore = work.score;
+			D_8016005C = score;
+			bonusScore = stageScore = score;
 		}
 		// if no humans harvested, give 5000 bonus to score
-		work.score = stageScore + 0x1388;
+		score = stageScore + 0x1388;
 		if (D_8004816E == 0) {
 			D_80160060 = stageScore;
-			D_80160064 = work.score;
+			D_80160064 = score;
 		} else {
 			D_80160060 = stageScore;
 			D_80160064 = stageScore;
 		}
 	}
 
-	work.player = D_80052B2C;
-	bonusScore = work.player->unk30;
-	if ((D_80160070_FIRST == work.player->unk30) && (D_8016006C == 0x1E)) {
-		D_8016006C_RESET = 0;
+	player = D_80052B2C;
+	bonusScore = player->unk30;
+	if ((D_80160070 == player->unk30) && (D_8016006C == 0x1E)) {
+		D_8016006C = 0;
 		D_8016006D_W = 0;
 		if (D_80160058 + 1 < 4) {
-			D_80160058_W = D_80160058 + 1;
+			D_80160058 = D_80160058 + 1;
 		} else {
-			D_80160058_W = 4;
+			D_80160058 = 4;
 		}
 	}
 
 	if (D_80160070 == bonusScore) {
-		bonusScore = D_8016006C + 1;
-		if (bonusScore < 0x1E) {
-			D_8016006C_W = bonusScore;
+		if (D_8016006C + 1 < 0x1E) {
+			D_8016006C = D_8016006C + 1;
 		} else {
-			D_8016006C_W = 0x1E;
+			D_8016006C = 0x1E;
 		}
 	} else {
 		stageScore = bonusScore + 0x64;
-		if (D_80160070_LIMIT < stageScore) {
-			work.player->unk30 = D_80160070_LIMIT;
+		if (D_80160070 < stageScore) {
+			player->unk30 = D_80160070;
 		} else {
-			work.player->unk30 = stageScore;
+			player->unk30 = stageScore;
 		}
 		func_800153D8_15FD8(0xCD);
-		D_8016006C_RESET = 0;
+		D_8016006C = 0;
 	}
 
 	drawText(D_801454F0_1544A0, 0x400, 0x400);
@@ -892,8 +903,8 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 >= 2) {
 		if (D_80160058 == 2) {
 			func_8000577C_637C();
-			work.score = D_80160064;
-			D_80160070 = work.score;
+			score = D_80160064;
+			D_80160070 = score;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
 				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145550_154500, width, baseScore);
@@ -949,16 +960,16 @@ void func_80130BA0_13FB50(void)
 
 	if (isButtonNewlyPressed(0, 0xD000) != 0) {
 		if ((D_80140CB0_14FC60 == 0) || (D_80160058 < 3)) {
-			work.score = D_80160064;
-			D_80140CB0_W_BUTTON = 1;
+			score = D_80160064;
+			D_80140CB0_14FC60 = 1;
 			D_80140CAC_14FC5C = 0;
-			D_80160058_W = 3;
-			D_80160070 = work.score;
-			D_80052B2C->unk30 = work.score;
+			D_80160058 = 3;
+			D_80160070 = score;
+			D_80052B2C->unk30 = score;
 		} else {
 			D_80140CA8_14FC58 = 1;
-			D_80140CB0_W_BUTTON = 0;
-			D_80160058_W = 3;
+			D_80140CB0_14FC60 = 0;
+			D_80160058 = 3;
 		}
 	}
 
