@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800FDEA8_10CE58`, the same halfword local holds the initial X trig offset, the saved destination Z, and the previous scan index. The countdown latch loads that index with `lh s2,0xf8(sp)` and branches on `s2`, whereas the target uses `v1`. Declaring another local fixes the register role but expands the frame from 0x110 to 0x118.
+
+-> `code changed`: Reuse the existing `temp` halfword for the X trig offset, the subsequent helper result, and the saved destination Z; those values have disjoint lifetimes. Reserve the old `s2` local exclusively for the prior scan index and rename it `priorIndex`. Immediately after the X trig offset assignment, retain `temp = (s16)(u64)temp;`; AS1 removes the width round trip, while its integer temporary allocation reduces the remaining diff.
+
+-> `correct ASM`: The latch uses `lh v1,0xf8(sp)` and `bnez v1,...` with the original 0x110-byte frame. The draft score improves from 2509 to 2214. The complete function remains unmatched and retains its `NON_MATCHING` wrapper; normal US and EU checksums still pass.

@@ -4080,7 +4080,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	s16 lockX;
 	s16 lockZ;
 	s16 lockY;
-	s16 s2;
+	s16 priorIndex;
 	s16 s3;
 	s16 i;
 	s32 hitAdjusted;
@@ -4183,7 +4183,9 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 			{
 				do
 				{
-					s2 = (s16)((s32)(((((f64)((f32)coss(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk34)) * scale));
+					temp = (s16)((s32)(((((f64)((f32)coss(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk34)) * scale));
+					/* Retain the integer temporary order after AS1 removes this round trip. */
+					temp = (s16)(u64)temp;
 					s3 = (s16)((s32)(((((f64)((f32)sins(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk36)) * scale));
 					if (scanIndex == 8)
 					{
@@ -4193,9 +4195,9 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 					else
 					{
 						s1 = coss(yaw & 0xFFFF);
-						func_800FB44C_10A3FC(player, (f32)((((f64)vehicle->unk0) + ((((f64)((f32)s1)) / 32768.0) * ((f64)s2))) - ((((f64)((f32)sins(yaw & 0xFFFF))) / 32768.0) * ((f64)s3))));
+						func_800FB44C_10A3FC(player, (f32)((((f64)vehicle->unk0) + ((((f64)((f32)s1)) / 32768.0) * ((f64)temp))) - ((((f64)((f32)sins(yaw & 0xFFFF))) / 32768.0) * ((f64)s3))));
 						s1 = sins(yaw & 0xFFFF);
-						func_800FB484_10A434(player, (f32)(((((f64)((f32)coss(yaw & 0xFFFF))) / 32768.0) * ((f64)s3)) + (((f64)vehicle->unk4) + ((((f64)((f32)s1)) / 32768.0) * ((f64)s2)))));
+						func_800FB484_10A434(player, (f32)(((((f64)((f32)coss(yaw & 0xFFFF))) / 32768.0) * ((f64)s3)) + (((f64)vehicle->unk4) + ((((f64)((f32)s1)) / 32768.0) * ((f64)temp)))));
 					}
 					func_80115604_1245B4(player);
 					temp = func_800F9D60_108D10(player->unk0, player->unk4, &lockY, &lockZ, &lockX);
@@ -4257,13 +4259,13 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 							{
 								s0 = player->unk0;
 								s1 = player->unk2;
-								s2 = player->unk4;
+								temp = player->unk4;
 								func_800FB44C_10A3FC(player, (f32)vehicle->unk0);
 								func_800FB468_10A418(player, (f32)vehicle->unk2);
 								func_800FB484_10A434(player, (f32)vehicle->unk4);
 								D_80159300 = 0x18;
 								func_800EA434_F93E4();
-								func_800EBD9C_FAD4C(s0, s1, s2);
+								func_800EBD9C_FAD4C(s0, s1, temp);
 							}
 							else
 							{
@@ -4278,11 +4280,11 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 							hitAdjusted = 0;
 							func_800FB3E8_10A398(player, 36.0f);
 						}
-						s2 = scanIndex;
-						scanAngle.signedValue += (s2 & 1) ? (0xA000) : (0x8000);
-						scanIndex = s2 - 1;
+						priorIndex = scanIndex;
+						scanAngle.signedValue += (priorIndex & 1) ? (0xA000) : (0x8000);
+						scanIndex = priorIndex - 1;
 					}
-				} while (s2);
+				} while (priorIndex);
 			}
 			if (foundSpot == 0)
 			{
