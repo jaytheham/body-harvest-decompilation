@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-02T09:47:44Z",
-  "commit": "c51a3ead",
-  "commit_timestamp": "2026-11-02T22:46:41+13:00",
+  "generated": "2026-11-02T10:14:30Z",
+  "commit": "03196db4",
+  "commit_timestamp": "2026-11-02T23:13:16+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 2936,
@@ -2201,7 +2201,7 @@
       "asm_stubs": 0,
       "total": 13,
       "matched_pct": 53.8,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/1416E0.c",
@@ -2597,9 +2597,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 85,
-      "matched": 2385,
-      "non_matching": 106,
+      "files": 86,
+      "matched": 2392,
+      "non_matching": 112,
       "asm_stubs": 0
     },
     {
@@ -2611,9 +2611,9 @@
     },
     {
       "name": "lunarlaurus",
-      "files": 15,
-      "matched": 214,
-      "non_matching": 15,
+      "files": 14,
+      "matched": 207,
+      "non_matching": 9,
       "asm_stubs": 0
     },
     {
@@ -2900,7 +2900,7 @@
     },
     {
       "date": "2026-11-01",
-      "commit": "c51a3ea",
+      "commit": "e94e9f2",
       "matched": 2936,
       "non_matching": 121,
       "total": 3057
