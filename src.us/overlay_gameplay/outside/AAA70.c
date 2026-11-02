@@ -580,10 +580,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 
 
-const f64 D_80142710_1516C0[1] = {500.0};
-const f64 D_80142718_1516C8[1] = {1000.0};
-const f64 D_80142720_1516D0[1] = {20224.0};
-
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;
 	f32 temp_f2;
@@ -596,20 +592,21 @@ void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
 // Draw health, fuel, human-count and context bars.
 void func_8009D96C_AC91C(void)
 {
 	s16 blinkFrame;
 	AlienInstance *selectedAlien;
 	u8 vehicleType;
+	s16 panelHeight;
 	f32 lengthValue;
-	s32 buildingMaxHealth;
-	s16 buildingHealth;
+	s16 buildingMaxHealth;
+	s32 value;
 	u8 *texture;
 	s16 barWidth;
 	f32 healthFraction;
 	s16 flashTimer;
+	s16 blinkPeriod;
 	s32 entityId;
 	s32 verticalOffset;
 	s16 fuel;
@@ -677,10 +674,10 @@ void func_8009D96C_AC91C(void)
 				func_8009D900_AC8B0(&barWidth, &lengthValue, 0xB4);
 
 				healthFraction = ((f32) selectedAlien->hitPoints) / ((f32) alienTypes[selectedAlien->typeIndex].unk3A);
-				flashTimer = D_8014ED44;
-				D_8014F202 = 3;
 				texture = &D_8025EC40;
+				flashTimer = D_8014ED44;
 				entityId = (s32) selectedAlien;
+				D_8014F202 = 3;
 				if (D_80158FF0 != 0)
 				{
 					D_8014F202 = 4;
@@ -703,8 +700,8 @@ void func_8009D96C_AC91C(void)
 						func_8009D900_AC8B0(&barWidth, &lengthValue, 0xB4);
 
 						healthFraction = ((f32) D_80158FE4->unk1C) / ((f32) vehicleTypes[D_80158FE4->unk1A].hitPoints);
-						flashTimer = D_8014ED4A;
 						texture = &D_8025EE80;
+						flashTimer = D_8014ED4A;
 						D_8014F202 = 2;
 						entityId = (s32) D_80158FE4;
 					}
@@ -713,19 +710,19 @@ void func_8009D96C_AC91C(void)
 				if (D_80158FE8 != 0)
 				{
 
-					buildingHealth = D_80158FE8->hitPoints;
+					value = D_80158FE8->hitPoints;
 					buildingMaxHealth = buildingTypes[D_80158FE8->buildingType].unk19;
 					if (currentLevel == 5)
 					{
-						buildingHealth /= 3;
+						value = (s16)(value / 3);
 					}
-					lengthValue = (f32) (((f64) ((f32) buildingHealth)) * 0.0625);
+					lengthValue = (f32) (((f64) ((f32) value)) * 0.0625);
 					barWidth = (s16) ((((f64) ((f32) buildingMaxHealth)) * 0.0625) * 50.0);
 					func_8009D900_AC8B0(&barWidth, &lengthValue, 0xB4);
-					healthFraction = ((f32) buildingHealth) / ((f32) buildingMaxHealth);
+					healthFraction = ((f32) value) / ((f32) buildingMaxHealth);
+					texture = &D_8025F0C0;
 					flashTimer = D_8014ED48;
 					D_8014F202 = 1;
-					texture = &D_8025F0C0;
 					entityId = (s32) D_80158FE8;
 				}
 			}
@@ -744,7 +741,6 @@ void func_8009D96C_AC91C(void)
 	D_8014F203 = D_8014F202;
 	if (D_8014F1FA != 0x80)
 	{
-		s16 blinkPeriod;
 		blinkPeriod = 5 - (D_8015931A / 200);
 		if (currentLevel == 5)
 		{
@@ -912,7 +908,6 @@ void func_8009D96C_AC91C(void)
 	drawText(&D_80142510_1514C0, 0, 0xFF);
 	if ((D_8006C6C6 > 0) && (func_80018AC8_196C8() == 0))
 	{
-		s16 panelHeight;
 		if ((D_8006C6C4 - 8) < D_8006C6C6)
 		{
 			panelHeight = D_8006C6C4 - D_8006C6C6;
@@ -921,17 +916,14 @@ void func_8009D96C_AC91C(void)
 		{
 			panelHeight = (D_8006C6C6 < 8) ? D_8006C6C6 : 8;
 		}
+		value = 0x30 - panelHeight * 6;
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
-		func_800092B8_9EB8(((D_80068084 >> 1) - 0x2A) << 2, ((0x30 - (panelHeight * 6)) + 0xAF) << 2, ((D_80068084 >> 1) + 0x2C) << 2, ((0x30 - (panelHeight * 6)) + 0xD2) << 2, 0);
+		func_800092B8_9EB8(((D_80068084 >> 1) - 0x2A) << 2, (value + 0xAF) << 2, ((D_80068084 >> 1) + 0x2C) << 2, (value + 0xD2) << 2, 0);
 	}
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((0x40 | 0x200) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009D96C_AC91C.s")
-#endif
 
 // drawAlienHealth
 void func_8009E994_AD944(f32 arg0, u8 *arg1, s16 arg2, s16 arg3, s32 arg4) {

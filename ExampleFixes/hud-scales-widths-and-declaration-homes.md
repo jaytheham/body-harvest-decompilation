@@ -1,6 +1,6 @@
 # HUD scale, signed-width and declaration-home corrections
 
-`func_8009D96C_AC91C`, `src.us/overlay_gameplay/outside/AAA70.c` (partial match, score 16460 -> 412).
+`func_8009D96C_AC91C`, `src.us/overlay_gameplay/outside/AAA70.c` (intermediate correction, score 16460 -> 412; exact completion is recorded in `hud-screen-base-before-color-and-small-local-homes.md`).
 
 Incorrect ASM: vehicle/lower-player/fuel fractions materialized the immediate double `100.0`; building length divided by `100.0` then multiplied by `312.5`, and its level-specific health division narrowed to a byte. The HUD-count denominator loaded a signed byte, omitting the target unsigned-to-float correction. Multiplying rectangle coordinates by four folded additions into the wrong constants. The stack frame was `0xC0` with displaced locals.
 
