@@ -282,15 +282,10 @@ AlienInstance D_8013C1EC_14B19C = {
 };
 
 Unk80052B40 D_8013C23C_14B1EC = { { 0x40, 0x40, 0x40 } };
-u8 D_8013C244_14B1F4[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-u8 D_8013C24C_14B1FC[0x14] = {
-	0x00, 0x60, 0x00, 0x60, 0x00, 0x60, 0x00, 0x40,
-	0x00, 0x40, 0x00, 0x40, 0x00, 0x20, 0x00, 0x20,
-	0x00, 0x20, 0x00, 0x00,
-};
-
-u32 D_8013C260_14B210[2] = {0x00300030, 0x00300000};
-u32 D_8013C268_14B218[2] = {0x00400040, 0x00400000};
+Unk80052B40 D_8013C244_14B1F4 = { { 0, 0, 0 } };
+AlienRenderScales D_8013C24C_14B1FC = { { { 0x60, 0x60, 0x60 }, { 0x40, 0x40, 0x40 }, { 0x20, 0x20, 0x20 } } };
+Unk80052B40 D_8013C260_14B210 = { { 0x30, 0x30, 0x30 } };
+Unk80052B40 D_8013C268_14B218 = { { 0x40, 0x40, 0x40 } };
 
 s16 D_8013C270_14B220[8] = {
 	(s16)0xFF6A, (s16)0xFF6A, (s16)0xFEA2, (s16)0xFE3E,
@@ -1434,10 +1429,10 @@ void func_8007BEC0_8AE70(void)
 void func_8007C044_8AFF4(void) {
 	s16 drewType1 = 0;
 	s16 drewType2Or20 = 0;
-	Unk80052B40 rotation = { 0, 0, 0 };
-	AlienRenderScales scales = { { { 0x60, 0x60, 0x60 }, { 0x40, 0x40, 0x40 }, { 0x20, 0x20, 0x20 } } };
-	Unk80052B40 smallScale = { 0x30, 0x30, 0x30 };
-	Unk80052B40 fullScale = { 0x40, 0x40, 0x40 };
+	Unk80052B40 rotation;
+	AlienRenderScales scales;
+	Unk80052B40 smallScale;
+	Unk80052B40 fullScale;
 	Unk80052B40 position;
 	AlienInstance *inst;
 	AlienType *type;
@@ -1455,6 +1450,10 @@ void func_8007C044_8AFF4(void) {
 	f32 dz;
 	f32 distance;
 
+	rotation = D_8013C244_14B1F4;
+	scales = D_8013C24C_14B1FC;
+	smallScale = D_8013C260_14B210;
+	fullScale = D_8013C268_14B218;
 	swappedTexture = 0;
 
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1464,16 +1463,14 @@ void func_8007C044_8AFF4(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
 	for (i = 0; i < D_8014ECCC; i++) {
-			s32 typeIndex;
-			u8 typeNumber;
+			u8 typeIndex;
+			s32 typeNumber;
 
 		alienId = D_8014D510[i];
 		inst = &alienInstances[alienId];
 		flags = inst->unk20;
 
-		if ((flags & 0x200) && !(flags & 0x80000)) {
-			continue;
-		}
+		if (!(flags & 0x200) || (flags & 0x80000)) {
 
 		typeIndex = inst->typeIndex;
 		typeNumber = typeIndex;
@@ -1501,11 +1498,8 @@ void func_8007C044_8AFF4(void) {
 
 		type = &alienTypes[typeIndex];
 		if (type->unk54 & 0x200000) {
-			dx = inst->unk0 / four;
-			dz = inst->unk4 / four;
-			dy = inst->unk2 / four;
-			guLookAtReflect((Mtx *)D_8005BB38, &D_8014D550[i], D_80047954, D_80047958, D_8004795C, dx,
-				dy, dz, 0.0f, 1.0f, 0.0f);
+			guLookAtReflect(D_8005BB38, &D_8014D550[i], D_80047954, D_80047958, D_8004795C, inst->unk0 / four,
+				inst->unk2 / four, inst->unk4 / four, 0.0f, 1.0f, 0.0f);
 
 			gSPLookAt(D_8005BB2C++, &D_8014D550[i]);
 			gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
@@ -1536,6 +1530,7 @@ void func_8007C044_8AFF4(void) {
 
 		if ((type->unk54 & 0x40000) && (inst->unk48 != 0) && !(inst->unk20 & ALIEN_FLAG_UNKL)) {
 			func_8007B370_8A320(alienId);
+		}
 		}
 	}
 
@@ -1749,11 +1744,12 @@ void func_8007C044_8AFF4(void) {
 		inst = &inst[-1];
 	} while (i--);
 }
+
+// Disable and aliens don't spawn visibly (show on radar tho)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")
 #endif
 
-// Disable and aliens don't spawn visibly (show on radar tho)
 void func_8007D424_8C3D4(void) {
 	s32 idx;
 	AlienInstance *inst;
