@@ -2,8 +2,6 @@
 #include "common.h"
 #include "version_shift.h"
 
-/* This translation unit starts after the death-effect literal pool. */
-
 const char D_80142910_1518C0[] = "Stop running to target\n"; // "Stop running to target\n"
 
 s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
@@ -61,7 +59,6 @@ void func_800AB408_BA3B8(u8 arg0) {
 	}
 }
 
-// AI - Check vehicle follow range
 // human behavior - case 12 - if near Mr Lolly, do nothing
 void func_800AB4B4_BA464(u8 arg0) {
 	VehicleInstance *type;
@@ -82,7 +79,6 @@ void func_800AB4B4_BA464(u8 arg0) {
 	}
 	alienInstances[arg0].unk24--; // moves to case 11
 	alienInstances[arg0].unk48 = 0xC0;
-
 }
 
 // human behavior case 11 - following Mr Lolly
@@ -130,7 +126,6 @@ void func_800AB570_BA520(u8 arg0)
 		alienInstances[arg0].unk48 = 0xA0;
 	}
 }
-
 
 // AI - Gradual yaw rotation
 void func_800AB6D0_BA680(u8 arg0) {
@@ -265,15 +260,12 @@ void func_800AB8CC_BA87C(u8 arg0) {
 	if ((((((f32) (parentIndex & 7)) + ((f32) (parentIndex & 15))) + ((f32) (parentIndex & 31))) + ((f64) ((s32) inst))) != 0.0f)
 		;
 }
-
-
-// AI - Stun knockback timer
-// Human behavior- case 1 - ZOMBIE
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290_tail/func_800AB8CC_BA87C.s")
 #endif
 
+// AI - Stun knockback timer
+// Human behavior- case 1 - ZOMBIE
 void func_800ABC2C_BABDC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];
 
@@ -391,7 +383,6 @@ s32 func_800ABCC8_BAC78(u8 arg0) {
 	return 0;
 }
 
-// https://decomp.me/scratch/8eJR6
 // AI - Pick random wander point
 void func_800ABE7C_BAE2C(u8 arg0)
 {
@@ -601,9 +592,6 @@ s32 func_800AC2FC_BB2AC(u8 arg0)
 
 	return 1;
 }
-
-
-// Possibly somewhere around here is a file split? Below is Human logic, above is Alien logic?
 
 // AI - Avoid vehicle collision
 void func_800AC5BC_BB56C(u8 arg0)
@@ -971,7 +959,6 @@ u8 func_800AD240_BC1F0(u8 arg0)
 	return alienIdx;
 }
 
-// https://decomp.me/scratch/SVfUg
 // Spawn human from building
 s32 func_800AD3BC_BC36C(u8 arg0)
 {
@@ -1043,7 +1030,6 @@ u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
 	return idx;
 }
 
-// https://decomp.me/scratch/yN8so
 // AI - Compute vehicle offset
 void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2)
 {
@@ -1163,7 +1149,6 @@ void func_800AD814_BC7C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	}
 }
 
-
 // AI - Spawn and transition state
 u8 func_800ADA70_BCA20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	u8 idx;
@@ -1203,7 +1188,6 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 	} else if (state == 2) {
 		alienInstances[arg0].unk12 = 0;
 	}
-
 
 	switch (alienInstances[arg0].unk24 - 1) { // subtract 1 from actual unk24 value to determine case...
 		case 0:
@@ -1318,7 +1302,6 @@ void func_800ADB4C_BCAFC(u8 arg0) {
 	}
 }
 
-
 // AI - Cleanup wrapper
 void func_800ADFC0_BCF70(u8 arg0) {
 	func_800873A8_96358(arg0);
@@ -1388,7 +1371,6 @@ void func_800AE190_BD140(s16 arg0) {
 	D_80048170 += arg0; // increase "humans killed" count
 }
 
-// AI - Increment globals
 // this is only ever called through func_8008DA24 when HCU carries a human to harvester
 void func_800AE1C0_BD170(void) {
 	D_8004816A += 1; // increase human meter
