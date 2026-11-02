@@ -1007,7 +1007,7 @@ void func_8009811C_A70CC(void) {
 	OrbitCam cam3A4;
 	OrbitCam cams340[5];
 	OrbitCam cam32C;
-	s32 cameraIndex;
+	s32 startupFlags;
 	OrbitCam *sp324;
 	OrbitCam *sp320[1];
 	s32 sp31C[1];
@@ -1057,7 +1057,7 @@ void func_8009811C_A70CC(void) {
 	sp2B0 = D_8013D514_14C4C4;
 	sp2AC[0] = 0;
 	sp2A4 = D_8013D51C_14C4CC;
-	var_t4 = 0;
+	startupFlags = 0;
 	D_8004D14C = 0;
 	D_8014ED00 = -1;
 	var_a1 = currentLevel * 5;
@@ -1070,7 +1070,7 @@ void func_8009811C_A70CC(void) {
 	cam3CC.yaw = -0x4000;
 	cam3CC.targetZ = 0.0f;
 	if (D_8014ED04 != 0x186A0) {
-		var_t4 = 0x20;
+		startupFlags = 0x20;
 	}
 	temp_v1 = stage->unk4;
 	if ((temp_v1 > 0) || (stage->unk6 > 0)) {
@@ -1101,14 +1101,14 @@ void func_8009811C_A70CC(void) {
 	cam3B8.targetZ = 0.0f;
 	cam3A4 = cam3CC;
 	cam3A4.distance = 0x154;
-	sp2E8[0] = var_t4;
-	for (cameraIndex = 0; cameraIndex < 5; cameraIndex++) {
-		cams340[cameraIndex].distance = scratch.entries[cameraIndex - 5].unk8;
-		cams340[cameraIndex].pitch = 0x384;
-		cams340[cameraIndex].yaw = -0x4000;
-		cams340[cameraIndex].targetX = scratch.entries[cameraIndex - 5].unk0;
-		cams340[cameraIndex].targetY = scratch.entries[cameraIndex - 5].unk2;
-		cams340[cameraIndex].targetZ = 0.0f;
+	sp2E8[0] = startupFlags;
+	for (var_t4 = 0; var_t4 < 5; stage = &scratch.entries[++var_t4 - 5]) {
+		cams340[var_t4].distance = stage->unk8;
+		cams340[var_t4].pitch = 0x384;
+		cams340[var_t4].yaw = -0x4000;
+		cams340[var_t4].targetX = stage->unk0;
+		cams340[var_t4].targetY = stage->unk2;
+		cams340[var_t4].targetZ = 0.0f;
 	}
 	D_8014ED0C = 0.0f;
 	temp_f0 = cam3CC.distance;
@@ -1128,7 +1128,7 @@ void func_8009811C_A70CC(void) {
 	func_80095F08_A4EB8();
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], D_8005BB4C[-D_80031B84_32784]);
+	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], ((s32 *)&((u8 *)D_8005BB4C)[-(D_80031B84_32784 * 4)])[0]);
 	func_8000505C_5C5C();
 	osSetTime(D_80068084, D_80068088);
 	setGameplayResolution();
