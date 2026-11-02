@@ -57,17 +57,14 @@ const char D_801426B8_151668[] = " ";
 
 const f64 D_801426C0_151670[1] = {150.0};
 const f64 D_801426C8_151678[1] = {150.0};
-const f64 D_801426D0_151680[1] = {255.0};
-const f64 D_801426D8_151688[1] = {255.0};
-const f64 D_801426E0_151690[1] = {255.0};
-const f64 D_801426E8_151698[1] = {255.0};
-const f64 D_801426F0_1516A0[1] = {255.0};
-const f64 D_801426F8_1516A8[1] = {255.0};
-const f64 D_80142700_1516B0[1] = {255.0};
-const f64 D_80142708_1516B8[1] = {255.0};
-const f64 D_80142710_1516C0[1] = {500.0};
-const f64 D_80142718_1516C8[1] = {1000.0};
-const f64 D_80142720_1516D0[1] = {20224.0};
+const ShadowGeometryConstant D_801426D0_151680 = {255.0};
+const ShadowGeometryConstant D_801426D8_151688 = {255.0};
+const ShadowGeometryConstant D_801426E0_151690 = {255.0};
+const ShadowGeometryConstant D_801426E8_151698 = {255.0};
+const ShadowGeometryConstant D_801426F0_1516A0 = {255.0};
+const ShadowGeometryConstant D_801426F8_1516A8 = {255.0};
+const ShadowGeometryConstant D_80142700_1516B0 = {255.0};
+const ShadowGeometryConstant D_80142708_1516B8 = {255.0};
 
 u32 D_8013D540_14C4F0[16] = {
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
@@ -333,27 +330,20 @@ void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 // sp20 Length of the bar background
 // drawHudBarWithIcon
 #ifdef NON_MATCHING
-// CURRENT(29375) - body compiles for the first time: Vtx_t has no unk* members (ob/tc/cn), and the f64 scalars are declared f64[1] here (use [0]). Residual: ours 1174 instructions vs the target 1165 (delta +9) plus whole-function register allocation.
+// Rectangle shifts and chained vertex stores restored; remaining differences are cursor caching and floating clamp scheduling.
 void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
 	Vtx *vtx0;
 	Vtx *vtx1;
 	Vtx *vtx2;
 	Vtx *vtx3;
-	Vtx *iconVtx0;
-	Vtx *iconVtx1;
-	Vtx *iconVtx2;
-	Vtx *iconVtx3;
+	f64 pad; /* Original double stack home. */
 	s32 tempT2;
 	s32 iconSwap;
 
-	vtx0 = D_8005BB34;
-	D_8005BB34 = D_8005BB34 + 1;
-	vtx1 = D_8005BB34;
-	D_8005BB34 = D_8005BB34 + 1;
-	vtx2 = D_8005BB34;
-	D_8005BB34 = D_8005BB34 + 1;
-	vtx3 = D_8005BB34;
-	D_8005BB34 = D_8005BB34 + 1;
+	vtx0 = D_8005BB34++;
+	vtx1 = D_8005BB34++;
+	vtx2 = D_8005BB34++;
+	vtx3 = D_8005BB34++;
 
 	iconSwap = 0;
 
@@ -396,77 +386,57 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	if (arg3 != 0) {
 		arg0 = arg0 - 7;
-		func_800092B8_9EB8(((arg0 - arg8) - 6) * 4, ((arg1 + tempT2) - 8) * 4, (arg0 + 9) * 4,
-			((arg1 + tempT2) + 6) * 4, 3);
+		func_800092B8_9EB8(((arg0 - arg8) - 6) << 2, ((arg1 + tempT2) - 8) << 2, (arg0 + 9) << 2,
+			((arg1 + tempT2) + 6) << 2, 3);
 	} else {
 		arg0 = arg0 + 7;
 		if (arg5 == 2) {
-			func_800092B8_9EB8((arg0 - 0x11) * 4, ((arg1 - arg8) - 0xE) * 4, (arg0 - 2) * 4, (arg1 - 5) * 4, 3);
+			func_800092B8_9EB8((arg0 - 0x11) << 2, ((arg1 - arg8) - 0xE) << 2, (arg0 - 2) << 2, (arg1 - 5) << 2, 3);
 		} else {
-			func_800092B8_9EB8(((arg0 - arg8) - 0xE) * 4, ((arg1 + tempT2) - 8) * 4, (arg0 + 5) * 4,
-				((arg1 + tempT2) + 6) * 4, 3);
+			func_800092B8_9EB8(((arg0 - arg8) - 0xE) << 2, ((arg1 + tempT2) - 8) << 2, (arg0 + 5) << 2,
+				((arg1 + tempT2) + 6) << 2, 3);
 		}
 	}
 
 	if (arg5 != 0) {
-		vtx0 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
-		vtx1 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
-		vtx2 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
-		vtx3 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
+		vtx0 = D_8005BB34++;
+		vtx1 = D_8005BB34++;
+		vtx2 = D_8005BB34++;
+		vtx3 = D_8005BB34++;
 
 		if (arg5 == 2) {
-			vtx0->v.ob[0] = arg0 - 0xD;
-			vtx3->v.ob[0] = arg0 - 0xD;
-			vtx1->v.ob[0] = arg0 - 5;
-			vtx2->v.ob[0] = arg0 - 5;
+			vtx3->v.ob[0] = vtx0->v.ob[0] = arg0 - 0xD;
+			vtx1->v.ob[0] = vtx2->v.ob[0] = arg0 - 5;
 
-			vtx1->v.ob[1] = arg1 - 0xA;
-			vtx0->v.ob[1] = arg1 - 0xA;
-			vtx2->v.ob[1] = (s16)(((f32)(arg1 - 9) - ((f32)arg8 * arg2)) - 1.0f);
-			vtx3->v.ob[1] = vtx2->v.ob[1];
+			vtx0->v.ob[1] = vtx1->v.ob[1] = arg1 - 0xA;
+			vtx3->v.ob[1] = vtx2->v.ob[1] = (s16)(((f32)(arg1 - 9) - ((f32)arg8 * arg2)) - 1.0f);
 
 			vtx2->v.ob[2] = -1;
-			vtx3->v.ob[2] = vtx2->v.ob[2];
-			vtx1->v.ob[2] = vtx2->v.ob[2];
-			vtx0->v.ob[2] = vtx2->v.ob[2];
+			vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
-			vtx1->v.cn[0] = 0xFF;
-			vtx0->v.cn[0] = 0xFF;
-			vtx1->v.cn[1] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-			vtx0->v.cn[1] = vtx1->v.cn[1];
-			vtx1->v.cn[2] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-			vtx0->v.cn[2] = vtx1->v.cn[2];
+			vtx0->v.cn[0] = vtx1->v.cn[0] = 0xFF;
+			vtx0->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, arg7 << 5);
+			vtx0->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
 
-			vtx2->v.cn[0] = 0xFF;
-			vtx3->v.cn[0] = 0xFF;
-			vtx2->v.cn[1] = (u32)((((f64)arg2 * D_801426D8_151688[0]) + (f64)(arg7 << 5)) > D_801426D0_151680[0] ? D_801426D0_151680[0] : (((f64)arg2 * D_801426D8_151688[0]) + (f64)(arg7 << 5)));
-			vtx3->v.cn[1] = vtx2->v.cn[1];
-			vtx2->v.cn[2] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-			vtx3->v.cn[2] = vtx2->v.cn[2];
+			vtx3->v.cn[0] = vtx2->v.cn[0] = 0xFF;
+			vtx3->v.cn[1] = vtx2->v.cn[1] = (u32)MIN(D_801426D0_151680.value, arg2 * D_801426D8_151688.value + (arg7 << 5));
+			vtx3->v.cn[2] = vtx2->v.cn[2] = MIN(0xFF, arg7 << 5);
 
 			vtx3->v.tc[0] = 0;
-			vtx2->v.tc[0] = vtx3->v.tc[0];
-			vtx2->v.tc[1] = vtx3->v.tc[0];
-			vtx1->v.tc[1] = vtx3->v.tc[0];
-			vtx1->v.tc[0] = (s16)((f32)(arg8 * D_80047710 * 0x10) * arg2);
-			vtx0->v.tc[0] = vtx1->v.tc[0];
+			vtx1->v.tc[1] = vtx2->v.tc[1] = vtx2->v.tc[0] = vtx3->v.tc[0];
+			vtx0->v.tc[0] = vtx1->v.tc[0] = (s16)((f32)(arg8 * D_80047710 * 0x10) * arg2);
 			vtx3->v.tc[1] = 0x400;
 			vtx0->v.tc[1] = vtx3->v.tc[1];
 		} else {
 			if (arg3 != 0) {
 				vtx0->v.ob[0] = arg0 - 1;
 				vtx3->v.ob[0] = arg0 - 1;
-				vtx1->v.ob[0] = (s16)(((f32)arg0 - ((f32)arg8 * arg2)) - 1.0f);
+				vtx1->v.ob[0] = vtx2->v.ob[0] = (s16)(((f32)arg0 - ((f32)arg8 * arg2)) - 1.0f);
 			} else {
 				vtx0->v.ob[0] = arg0 - 0x2F;
 				vtx3->v.ob[0] = arg0 - 0x2F;
-				vtx1->v.ob[0] = (s16)((f32)(arg0 - 0x30) + ((f32)arg8 * arg2) + 1.0f);
+				vtx1->v.ob[0] = vtx2->v.ob[0] = (s16)((f32)(arg0 - 0x30) + ((f32)arg8 * arg2) + 1.0f);
 			}
-			vtx2->v.ob[0] = vtx1->v.ob[0];
 
 			vtx1->v.ob[1] = 3;
 			vtx0->v.ob[1] = vtx1->v.ob[1];
@@ -474,9 +444,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 			vtx3->v.ob[1] = vtx2->v.ob[1];
 
 			vtx2->v.ob[2] = -1;
-			vtx3->v.ob[2] = vtx2->v.ob[2];
-			vtx1->v.ob[2] = vtx2->v.ob[2];
-			vtx0->v.ob[2] = vtx2->v.ob[2];
+			vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
 			if (arg5 == 3) {
 				vtx1->v.cn[0] = 0xFF;
@@ -485,59 +453,39 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 				vtx0->v.cn[0] = 0xFF;
 
 				if (D_8013D5DC_14C58C != 0) {
-					vtx1->v.cn[1] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-					vtx2->v.cn[1] = vtx1->v.cn[1];
-					vtx3->v.cn[1] = vtx1->v.cn[1];
-					vtx0->v.cn[1] = vtx1->v.cn[1];
+					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, arg7 << 5);
 				} else {
-					vtx1->v.cn[1] = (u32)((((f64)(1.0f - arg2) * D_801426E8_151698[0]) + (f64)(arg7 << 5)) > D_801426E0_151690[0] ? D_801426E0_151690[0] : (((f64)(1.0f - arg2) * D_801426E8_151698[0]) + (f64)(arg7 << 5)));
-					vtx2->v.cn[1] = vtx1->v.cn[1];
-					vtx3->v.cn[1] = vtx1->v.cn[1];
-					vtx0->v.cn[1] = vtx1->v.cn[1];
+					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426E0_151690.value, (1.0f - arg2) * D_801426E8_151698.value + (arg7 << 5));
 				}
 
-				vtx1->v.cn[2] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-				vtx2->v.cn[2] = vtx1->v.cn[2];
-				vtx3->v.cn[2] = vtx1->v.cn[2];
-				vtx0->v.cn[2] = vtx1->v.cn[2];
+				vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
 			} else if (arg5 == 4) {
-				vtx3->v.cn[0] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-				vtx0->v.cn[0] = vtx3->v.cn[0];
-				vtx3->v.cn[1] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-				vtx0->v.cn[1] = vtx3->v.cn[1];
+				vtx0->v.cn[0] = vtx3->v.cn[0] = MIN(0xFF, arg7 << 5);
+				vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(0xFF, arg7 << 5);
 				vtx3->v.cn[2] = 0xFF;
 				vtx0->v.cn[2] = 0xFF;
 
-				vtx1->v.cn[0] = (u32)((((f64)arg2 * D_801426F8_1516A8[0]) + (f64)(arg7 << 5)) > D_801426F0_1516A0[0] ? D_801426F0_1516A0[0] : (((f64)arg2 * D_801426F8_1516A8[0]) + (f64)(arg7 << 5)));
-				vtx2->v.cn[0] = vtx1->v.cn[0];
-				vtx1->v.cn[1] = (u32)((((f64)arg2 * D_801426F8_1516A8[0]) + (f64)(arg7 << 5)) > D_801426F0_1516A0[0] ? D_801426F0_1516A0[0] : (((f64)arg2 * D_801426F8_1516A8[0]) + (f64)(arg7 << 5)));
-				vtx2->v.cn[1] = vtx1->v.cn[1];
+				vtx2->v.cn[0] = vtx1->v.cn[0] = (u32)MIN(D_801426F0_1516A0.value, arg2 * D_801426F8_1516A8.value + (arg7 << 5));
+				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426F0_1516A0.value, arg2 * D_801426F8_1516A8.value + (arg7 << 5));
 				vtx1->v.cn[2] = 0xFF;
 				vtx2->v.cn[2] = 0xFF;
 			} else {
 				vtx3->v.cn[0] = 0xFF;
 				vtx0->v.cn[0] = 0xFF;
-				vtx3->v.cn[1] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-				vtx0->v.cn[1] = vtx3->v.cn[1];
-				vtx3->v.cn[2] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-				vtx0->v.cn[2] = vtx3->v.cn[2];
+				vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(0xFF, arg7 << 5);
+				vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(0xFF, arg7 << 5);
 
 				vtx1->v.cn[0] = 0xFF;
 				vtx2->v.cn[0] = 0xFF;
-				vtx1->v.cn[1] = (u32)((((f64)arg2 * D_80142708_1516B8[0]) + (f64)(arg7 << 5)) > D_80142700_1516B0[0] ? D_80142700_1516B0[0] : (((f64)arg2 * D_80142708_1516B8[0]) + (f64)(arg7 << 5)));
-				vtx2->v.cn[1] = vtx1->v.cn[1];
-				vtx1->v.cn[2] = (arg7 << 5) >= 0x100 ? 0xFF : (arg7 << 5);
-				vtx2->v.cn[2] = vtx1->v.cn[2];
+				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_80142700_1516B0.value, arg2 * D_80142708_1516B8.value + (arg7 << 5));
+				vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
 			}
 
 			vtx1->v.tc[1] = 0;
-			vtx3->v.tc[0] = vtx1->v.tc[1];
-			vtx0->v.tc[0] = vtx1->v.tc[1];
-			vtx0->v.tc[1] = vtx1->v.tc[1];
+			vtx0->v.tc[1] = vtx0->v.tc[0] = vtx3->v.tc[0] = vtx1->v.tc[1];
 			vtx2->v.tc[1] = 0x400;
 			vtx3->v.tc[1] = vtx2->v.tc[1];
-			vtx1->v.tc[0] = (s16)((f64)arg8 * 128.0 * (f64)arg2);
-			vtx2->v.tc[0] = vtx1->v.tc[0];
+			vtx2->v.tc[0] = vtx1->v.tc[0] = (s16)((f64)arg8 * 128.0 * (f64)arg2);
 		}
 
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -554,65 +502,51 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	}
 
 	if (arg4 != NULL) {
-		iconVtx0 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
-		iconVtx1 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
-		iconVtx2 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
-		iconVtx3 = D_8005BB34;
-		D_8005BB34 = D_8005BB34 + 1;
+		vtx0 = D_8005BB34++;
+		vtx1 = D_8005BB34++;
+		vtx2 = D_8005BB34++;
+		vtx3 = D_8005BB34++;
 
 		if (arg5 == 2) {
-			iconVtx0->v.ob[0] = arg0 - 0x12;
-			iconVtx2->v.ob[0] = arg0 - 0x12;
-			iconVtx1->v.ob[0] = arg0;
-			iconVtx3->v.ob[0] = arg0;
+			vtx0->v.ob[0] = arg0 - 0x12;
+			vtx2->v.ob[0] = arg0 - 0x12;
+			vtx1->v.ob[0] = arg0;
+			vtx3->v.ob[0] = arg0;
 
-			iconVtx3->v.ob[1] = arg1 + 9;
-			iconVtx2->v.ob[1] = arg1 + 9;
-			iconVtx1->v.ob[1] = arg1 - 9;
-			iconVtx0->v.ob[1] = arg1 - 9;
+			vtx3->v.ob[1] = arg1 + 9;
+			vtx2->v.ob[1] = arg1 + 9;
+			vtx1->v.ob[1] = arg1 - 9;
+			vtx0->v.ob[1] = arg1 - 9;
 		} else {
-			iconVtx0->v.ob[0] = arg0 - (arg3 != 0 ? 0 : 0x30);
-			iconVtx2->v.ob[0] = iconVtx0->v.ob[0];
-			iconVtx1->v.ob[0] = arg0 - (arg3 != 0 ? -0x12 : 0x42);
-			iconVtx3->v.ob[0] = iconVtx1->v.ob[0];
+			vtx2->v.ob[0] = vtx0->v.ob[0] = arg0 - (arg3 != 0 ? 0 : 0x30);
+			vtx3->v.ob[0] = vtx1->v.ob[0] = arg0 - (arg3 != 0 ? -0x12 : 0x42);
 
-			iconVtx3->v.ob[1] = 9;
-			iconVtx2->v.ob[1] = iconVtx3->v.ob[1];
-			iconVtx1->v.ob[1] = -9;
-			iconVtx0->v.ob[1] = iconVtx1->v.ob[1];
+			vtx3->v.ob[1] = 9;
+			vtx2->v.ob[1] = vtx3->v.ob[1];
+			vtx1->v.ob[1] = -9;
+			vtx0->v.ob[1] = vtx1->v.ob[1];
 		}
 
-		iconVtx1->v.ob[2] = -1;
-		iconVtx0->v.ob[2] = iconVtx1->v.ob[2];
-		iconVtx3->v.ob[2] = iconVtx1->v.ob[2];
-		iconVtx2->v.ob[2] = iconVtx1->v.ob[2];
+		vtx1->v.ob[2] = -1;
+		vtx2->v.ob[2] = vtx3->v.ob[2] = vtx0->v.ob[2] = vtx1->v.ob[2];
 
-		iconVtx0->v.tc[0] = (arg6 * 0x30) + 0x600;
-		iconVtx2->v.tc[0] = iconVtx0->v.tc[0];
-		iconVtx3->v.tc[1] = iconVtx0->v.tc[0];
-		iconVtx2->v.tc[1] = iconVtx0->v.tc[0];
-		iconVtx1->v.tc[0] = -arg6 * 0x30;
-		iconVtx3->v.tc[0] = iconVtx1->v.tc[0];
-		iconVtx1->v.tc[1] = iconVtx1->v.tc[0];
-		iconVtx0->v.tc[1] = iconVtx1->v.tc[0];
+		vtx2->v.tc[1] = vtx3->v.tc[1] = vtx2->v.tc[0] = vtx0->v.tc[0] = (arg6 * 0x30) + 0x600;
+		vtx0->v.tc[1] = vtx1->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[0] = -arg6 * 0x30;
 
-		iconVtx1->v.cn[0] = 0xB9;
-		iconVtx0->v.cn[0] = 0xB9;
-		iconVtx3->v.cn[0] = 0xB9;
-		iconVtx2->v.cn[0] = 0xB9;
-		iconVtx1->v.cn[1] = 0xFF;
-		iconVtx0->v.cn[1] = 0xFF;
-		iconVtx3->v.cn[1] = 0xFF;
-		iconVtx2->v.cn[1] = 0xFF;
-		iconVtx1->v.cn[2] = 0xFF;
-		iconVtx0->v.cn[2] = 0xFF;
-		iconVtx3->v.cn[2] = 0xFF;
-		iconVtx2->v.cn[2] = 0xFF;
+		vtx1->v.cn[0] = 0xB9;
+		vtx0->v.cn[0] = 0xB9;
+		vtx3->v.cn[0] = 0xB9;
+		vtx2->v.cn[0] = 0xB9;
+		vtx1->v.cn[1] = 0xFF;
+		vtx0->v.cn[1] = 0xFF;
+		vtx3->v.cn[1] = 0xFF;
+		vtx2->v.cn[1] = 0xFF;
+		vtx1->v.cn[2] = 0xFF;
+		vtx0->v.cn[2] = 0xFF;
+		vtx3->v.cn[2] = 0xFF;
+		vtx2->v.cn[2] = 0xFF;
 
-		if ((arg5 == 2) && (arg4 == &D_8025CCC0[0x1F80]) && (D_80158FEC != NULL) && (*(u16 *)((u8 *)D_80158FEC + 0x1A) == 1)) {
+		if ((arg5 == 2) && (arg4 == &D_8025CCC0[0x1F80]) && (D_80158FEC != NULL) && (D_80158FEC->typeIndex == 1)) {
 			arg4 = &D_8025F780;
 			D_8013D5E0_14C590 = (s32)&D_8025F780;
 			iconSwap = 1;
@@ -637,9 +571,16 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
+
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C6CC_AB67C.s")
 #endif
+
+const f64 D_80142710_1516C0[1] = {500.0};
+const f64 D_80142718_1516C8[1] = {1000.0};
+const f64 D_80142720_1516D0[1] = {20224.0};
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;
