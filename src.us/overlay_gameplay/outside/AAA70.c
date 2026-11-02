@@ -232,14 +232,16 @@ void func_8009BDB8_AAD68(u8 arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-#ifdef NON_MATCHING
 void func_8009BF64_AAF14(u16 arg0) {
-	u8 var_a3;
-	u8 sp47;
+	u8 minutes;
+	u8 digit;
+	u8 divisor;
 
-	sp47 = (u8)(arg0 / 60);
-	arg0 = (u16)(arg0 % 60);
+	divisor = 60;
+	if (divisor) {}
 
+	minutes = arg0 / divisor;
+	arg0 %= 60;
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -251,30 +253,21 @@ void func_8009BF64_AAF14(u16 arg0) {
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x32, 0x5A, 0xE6, 0xFF);
 	gDPPipeSync(D_8005BB2C++);
 
-	func_8009BDB8_AAD68(0x1E, sp47);
+	func_8009BDB8_AAD68(0x1E, minutes);
 	if ((u32)D_80052A8C % 20U < 0xAU) {
 		func_8009BDB8_AAD68(0x29, 0xAU);
 	}
 
-	if ((s32)arg0 < 0xA) {
+	if (arg0 < 10) {
 		func_8009BDB8_AAD68(0x32, 0);
-		var_a3 = (u8)(arg0 % 10);
+		digit = arg0 % 10;
 	} else {
-		var_a3 = (u8)(arg0 % 10);
-		func_8009BDB8_AAD68(0x32, (arg0 - var_a3) / 10);
+		digit = arg0 % 10;
+		func_8009BDB8_AAD68(0x32, (arg0 - digit) / 10);
 	}
 
-	func_8009BDB8_AAD68(0x41, (u8)var_a3);
+	func_8009BDB8_AAD68(0x41, digit);
 }
-
-
-
-
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009BF64_AAF14.s")
-#endif
 
 // https://decomp.me/scratch/pjZZY
 // drawWaypointMarker ?
