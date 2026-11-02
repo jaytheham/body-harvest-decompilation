@@ -977,11 +977,10 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 			temp_f2 = D_80160128;
 			if (0.7 < temp_f2) {
 				temp_f12 = (1.0 - temp_f2) * 0.25;
-				temp_f14 = D_80160138.value;
-				if (temp_f12 < temp_f14) {
+				if (temp_f12 < (f64)D_80160138.value) {
 					D_80160138.reload = temp_f12;
 				} else {
-					D_80160138.reload = temp_f14;
+					D_80160138.reload = (f64)D_80160138.value;
 				}
 				temp_f14 = D_80160138.value;
 				if (temp_f14 < var_f16) {
@@ -989,6 +988,8 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 				} else {
 					D_80160138.reload = temp_f14;
 				}
+				if (temp_f2 < 1.0) {} /* Keep both inputs live so the reload retains f14. */
+				if (temp_f12 < 1.0) {}
 			}
 		}
 		D_80160128 += D_80160138.value;
