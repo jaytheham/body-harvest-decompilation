@@ -1111,100 +1111,74 @@ void func_8007AAEC_89A9C(void)
   }
 }
 
-// CURRENT(5401)
+// CURRENT(2506)
 #ifdef NON_MATCHING
 void func_8007AF8C_89F3C(void)
 {
-	AlienInstance *inst;
-	AlienInstance *end;
 	s32 countTypeA;
 	s32 countTypeB;
 	s32 countTypeC;
 	s32 countTypeD;
 	s32 idx;
-	u8 type;
-	u8 baseTypeA;
-	u8 baseTypeB;
-	u8 baseTypeC;
+	AlienInstance *inst;
+	s32 baseTypeA;
+	AlienInstance *end;
 
 	countTypeA = 0;
 	countTypeB = 0;
 	countTypeC = 0;
 	countTypeD = 0;
 	inst = alienInstances;
-	end = (AlienInstance *)&D_8004D148;
-	type = inst->typeIndex;
-	while (1)
+	end = &alienInstances[0xFF];
+	do
 	{
-		if ((type == 1) && (inst->unk24 != 0x13))
+		if ((inst->typeIndex == 1) && (inst->unk24 != 0x13))
 		{
 			countTypeA++;
 		}
-		else if ((type == 2) || (type == 0x20))
+		else if ((inst->typeIndex == 2) || (inst->typeIndex == 0x20))
 		{
 			countTypeB++;
 		}
-		else if ((type < 3) || (type >= 0x18))
-		{
-			if (type >= 0x21)
-			{
-				countTypeC++;
-			}
-			else if ((type >= 0x18) && (type < 0x20))
-			{
-				countTypeD++;
-			}
-		}
-		else
+		else if (((inst->typeIndex >= 3) && (inst->typeIndex < 0x18)) || (inst->typeIndex >= 0x21))
 		{
 			countTypeC++;
 		}
+		else if ((inst->typeIndex >= 0x18) && (inst->typeIndex < 0x20))
+		{
+			countTypeD++;
+		}
 
 		inst++;
-		if (!(inst < end))
-		{
-			break;
-		}
-		type = inst->typeIndex;
-	}
+	} while (inst < end);
 
+	baseTypeA = countTypeA & 0xFF;
 	D_8014D507 = countTypeA;
-	baseTypeA = countTypeA;
 	D_8014D508 = baseTypeA + countTypeB;
 	D_8014D509 = D_8014D508 + countTypeC;
 	D_8014D50A = D_8014D509 + countTypeD;
-
-	baseTypeB = D_8014D508;
-	baseTypeC = D_8014D509;
 	inst = alienInstances;
 	idx = 0;
 	do {
+		if ((inst->typeIndex == 1) && (inst->unk24 != 0x13))
 		{
 			D_8014D408[baseTypeA - countTypeA] = idx;
 			countTypeA--;
 		}
-		if ((type == 2) || (type == 0x20))
+		else if ((inst->typeIndex == 2) || (inst->typeIndex == 0x20))
 		{
-			D_8014D408[baseTypeB - countTypeB] = idx;
+			D_8014D408[D_8014D508 - countTypeB] = idx;
 			countTypeB--;
 		}
-		else if ((type < 3) || (type >= 0x18))
+		else if (((inst->typeIndex >= 3) && (inst->typeIndex < 0x18)) || (inst->typeIndex >= 0x21))
 		{
-			if (type >= 0x21)
-			{
-				D_8014D408[baseTypeC - countTypeC] = idx;
-				countTypeC--;
-			}
-			else if ((type >= 0x18) && (type < 0x20))
-			{
-				D_8014D408[D_8014D50A - countTypeD] = idx;
-				countTypeD--;
-			}
-		}
-		else
-		{
-			D_8014D408[baseTypeC - countTypeC] = idx;
+			D_8014D408[D_8014D509 - countTypeC] = idx;
 			countTypeC--;
+		}
+		else if ((inst->typeIndex >= 0x18) && (inst->typeIndex < 0x20))
+		{
+			D_8014D408[D_8014D50A - countTypeD] = idx;
+			countTypeD--;
 		}
 
 		idx++;

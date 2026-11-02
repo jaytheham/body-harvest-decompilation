@@ -1,0 +1,5 @@
+incorrect ASM (`func_8007AF8C_89F3C`): the second traversal writes the first group unconditionally and reuses the final type from the preceding traversal; class C has two separate increment/store blocks.
+
+-> code changed: Read `inst->typeIndex` through the current typed instance in both passes, guard the first group with `typeIndex == 1 && unk24 != 0x13`, and combine class C as `(typeIndex >= 3 && typeIndex < 0x18) || typeIndex >= 0x21`. Read the cumulative byte boundaries directly rather than copying them into narrow locals. Keep the first boundary as an explicitly masked word and use `&alienInstances[0xFF]` for the typed traversal end.
+
+-> correct ASM: Both passes test the current type and `unk24` before selecting the first group; the class-C paths share one increment/store block, with the target comparisons against 3, 0x18, and 0x21. The first-boundary `andi ...,0xFF` and subsequent cumulative-byte `lbu` operations remain. The full function remains NON_MATCHING because register allocation, address materialization, and the final branch schedule still differ (native diff score 2506).
