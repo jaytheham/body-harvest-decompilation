@@ -365,6 +365,7 @@ segments:
       - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Aliens
       - [0xB49C0, c, overlay_gameplay/outside/B49C0] # Beacons, Powerups
       - [0xB8290, c, overlay_gameplay/outside/B8290] # Aliens
+      - [0xBA200, c, overlay_gameplay/outside/B8290_tail]
       - [0xBD270, c, overlay_gameplay/outside/trigger]
       - [0xBF9C0, c, overlay_gameplay/outside/BF9C0] # Shield walls, gates, terrain, water
       - [0xCFE30, c, overlay_gameplay/outside/CFE30] # Special effects
@@ -416,6 +417,7 @@ segments:
       - [0x1516F0, .rodata, overlay_gameplay/outside/B2CB0]
       - [0x151740, .rodata, overlay_gameplay/outside/B49C0]
       - [0x1518B0, .rodata, overlay_gameplay/outside/B8290]
+      - [0x1518C0, .rodata, overlay_gameplay/outside/B8290_tail]
       - [0x151A60, .rodata, overlay_gameplay/outside/trigger]
       - [0x151CC0, .rodata, overlay_gameplay/outside/BF9C0]
       - [0x151E50, .rodata, overlay_gameplay/outside/CFE30]
