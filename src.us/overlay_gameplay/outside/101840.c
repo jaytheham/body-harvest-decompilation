@@ -1246,7 +1246,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 colorTopB;
 	s16 colorTopC;
 	u8 cR;
-	s32 cG;
+	u16 cG;
 	u8 cB;
 
 	if (&colorA) {}
