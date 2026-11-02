@@ -450,7 +450,6 @@ s32 func_8007956C_8851C(u8 arg0)
 	return slotIndex;
 }
 
-// https://decomp.me/scratch/tmc2b
 // Skip this and aliens freeze when they die, never disappear
 void func_800797A4_88754(s32 arg0, u8 arg1)
 {
@@ -494,7 +493,6 @@ void func_800797A4_88754(s32 arg0, u8 arg1)
   }
 }
 
-// https://decomp.me/scratch/Q33n1
 // a lot of alien death bookkeeping/effects
 void func_80079910_888C0(s32 arg0)
 {
@@ -663,7 +661,6 @@ void func_80079E64_88E14(s32 arg0) {
 	}
 }
 
-// CURRENT(1515)
 s32 func_80079F08_88EB8(s32 arg0) {
 	u8 typeIndex;
 	s16 floorY;
@@ -814,50 +811,50 @@ s32 func_8007A2A0_89250(s32 arg0)
 
 s32 func_8007A4F8_894A8(s32 arg0)
 {
-  u8 alienIdx;
-  alienIdx = D_8014D510[arg0];
-  if (((u32) arg0) >= D_8014ECCC)
-  {
-	osSyncPrintf(&D_801418B8_150868, alienIdx, arg0);
-	return 0;
-  }
-  if (!(alienInstances[alienIdx].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
-  {
-	osSyncPrintf(&D_801418D4_150884, alienIdx, arg0);
-	return 0;
-  }
-  alienInstances[alienIdx].unk20 &= ~(ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB);
-  if (alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKK)
-  {
-	func_800F375C_10270C((s8) (alienInstances[alienIdx].unk20 & 7));
-	alienInstances[alienIdx].unk20 &= ~ALIEN_FLAG_UNKK;
-  }
-  if (alienTypes[alienInstances[alienIdx].typeIndex].unk54 & 0x02000000)
-  {
-	if (alienInstances[alienIdx].unk3C != 0xFB)
+	u8 alienIdx;
+	alienIdx = D_8014D510[arg0];
+	if (((u32)arg0) >= D_8014ECCC)
 	{
-	  func_800CD390_DC340((u8) alienInstances[alienIdx].unk3C);
+		osSyncPrintf(&D_801418B8_150868, alienIdx, arg0);
+		return 0;
 	}
-	if (alienInstances[alienIdx].unk3D != 0xFB)
+	if (!(alienInstances[alienIdx].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 	{
-	  func_800CD390_DC340((u8) alienInstances[alienIdx].unk3D);
+		osSyncPrintf(&D_801418D4_150884, alienIdx, arg0);
+		return 0;
 	}
-  }
-  if (alienInstances[alienIdx].typeIndex == ALIEN_TYPE_HUMAN)
-  {
-	if (!(alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKD))
+	alienInstances[alienIdx].unk20 &= ~(ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB);
+	if (alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKK)
 	{
-	  alienInstances[alienIdx].unk48 = 0;
+		func_800F375C_10270C((s8)(alienInstances[alienIdx].unk20 & 7));
+		alienInstances[alienIdx].unk20 &= ~ALIEN_FLAG_UNKK;
 	}
-	if ((alienInstances[alienIdx].unk24 == 1) || (alienInstances[alienIdx].unk24 == 0x1D))
+	if (alienTypes[alienInstances[alienIdx].typeIndex].unk54 & 0x02000000)
 	{
-	  D_80048194--;
+		if (alienInstances[alienIdx].unk3C != 0xFB)
+		{
+			func_800CD390_DC340((u8)alienInstances[alienIdx].unk3C);
+		}
+		if (alienInstances[alienIdx].unk3D != 0xFB)
+		{
+			func_800CD390_DC340((u8)alienInstances[alienIdx].unk3D);
+		}
 	}
-  }
-  func_80079DC0_88D70(alienInstances[alienIdx].unkC);
-  D_8014ECCC--;
-  D_8014D510[arg0] = D_8014D510[D_8014ECCC];
-  return 1;
+	if (alienInstances[alienIdx].typeIndex == ALIEN_TYPE_HUMAN)
+	{
+		if (!(alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKD))
+		{
+			alienInstances[alienIdx].unk48 = 0;
+		}
+		if ((alienInstances[alienIdx].unk24 == 1) || (alienInstances[alienIdx].unk24 == 0x1D))
+		{
+			D_80048194--;
+		}
+	}
+	func_80079DC0_88D70(alienInstances[alienIdx].unkC);
+	D_8014ECCC--;
+	D_8014D510[arg0] = D_8014D510[D_8014ECCC];
+	return 1;
 }
 
 void func_8007A6B4_89664(u8 arg0)
@@ -995,118 +992,116 @@ void func_8007AA0C_899BC(void)
 	goto loop3;
 }
 
-// https://decomp.me/scratch/Jhhfz
 // R on controller 2 debug prints current vehicle info + target info (if any)
 // Skipping this stops aliens/humans moving
 void func_8007AAEC_89A9C(void)
 {
-  VehicleInstance *vehicle;
-  s32 new_var;
-  AlienInstance *alien;
-  alien = D_80158FEC;
-  vehicle = D_80052B34;
-  func_8007AF8C_89F3C();
-  func_8007D690_8C640();
-  func_8007D424_8C3D4();
-  func_8007FDD8_8ED88();
-  if (isButtonNewlyPressed(CONTROLLER_TWO, BUTTON_R) != 0)
-  {
-	if (vehicle != NULL)
+	VehicleInstance *vehicle;
+	s32 new_var;
+	AlienInstance *alien;
+	alien = D_80158FEC;
+	vehicle = D_80052B34;
+	func_8007AF8C_89F3C();
+	func_8007D690_8C640();
+	func_8007D424_8C3D4();
+	func_8007FDD8_8ED88();
+	if (isButtonNewlyPressed(CONTROLLER_TWO, BUTTON_R) != 0)
 	{
-	  osSyncPrintf(&D_80141990_150940, vehicle - vehicleInstances);
-	  osSyncPrintf(&D_8014199C_15094C, D_800344B4_350B4[vehicleTypes[vehicle->unk1A].unk18].name);
-	  osSyncPrintf(&D_801419A8_150958, (s32) vehicle->unk0, vehicle->unk2, vehicle->unk4);
-	  osSyncPrintf(&D_801419B8_150968, (s32) vehicle->unk6, vehicle->unkA, vehicle->unk8);
-	  osSyncPrintf(&D_801419C8_150978, (s32) vehicle->unkE);
-	  osSyncPrintf(&D_801419D8_150988, (s32) vehicle->unk10);
-	  osSyncPrintf(&D_801419E8_150998, (s32) vehicle->unk12);
-	  osSyncPrintf(&D_801419F4_1509A4, (double) vehicle->unk30, (double) vehicle->unk34, (double) vehicle->unk38);
-	  osSyncPrintf(&D_80141A04_1509B4, (s32) vehicle->unk20);
-	  if (vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)
-	  {
-		osSyncPrintf(&D_80141A10_1509C0);
-	  }
-	  if (vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE)
-	  {
-		osSyncPrintf(&D_80141A1C_1509CC);
-	  }
-	  if (vehicle->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)
-	  {
-		osSyncPrintf(&D_80141A28_1509D8);
-	  }
-	  if (vehicle->unk20 & VEHICLE_FLAG_UNDER_BRIDGE)
-	  {
-		osSyncPrintf(&D_80141A38_1509E8);
-	  }
-	  osSyncPrintf(&D_80141A48_1509F8);
-	}
-	if (alien != NULL)
-	{
-	  osSyncPrintf(&D_80141A4C_1509FC, alien - alienInstances);
-	  osSyncPrintf(&D_80141A58_150A08, alienTypes[alien->typeIndex].unk18);
-	  if (alien->typeIndex == 1)
-	  {
-		osSyncPrintf(&D_80141A64_150A14, (s32) alien->unk24);
-	  }
-	  osSyncPrintf(&D_80141A74_150A24, (s32) alien->unk0, alien->unk2, alien->unk4);
-	  osSyncPrintf(&D_80141A84_150A34, (s32) alien->unk6, alien->unkA, alien->unk8);
-	  osSyncPrintf(&D_80141A94_150A44, (s32) alien->unkE);
-	  osSyncPrintf(&D_80141AA4_150A54, (s32) alien->unk2A);
-	  osSyncPrintf(&D_80141ABC_150A6C, (s32) alien->unk12);
-	  osSyncPrintf(&D_80141AC8_150A78, (s32) alien->unk10);
-	  osSyncPrintf(&D_80141AD8_150A88, alien->unk20);
-	  if (alien->unk20 & ALIEN_FLAG_TARGET_OBJ)
-	  {
-		osSyncPrintf(&D_80141AE8_150A98);
-	  }
-	  if (alien->unk20 & ALIEN_FLAG_TARGET_VEHICLE)
-	  {
-		osSyncPrintf(&D_80141AF4_150AA4);
-	  }
-	  if (alien->unk20 & ALIEN_FLAG_TARGET_PT)
-	  {
-		osSyncPrintf(&D_80141B04_150AB4);
-	  }
-	  if (alien->unk20 & ALIEN_FLAG_PLAYER)
-	  {
-		osSyncPrintf(&D_80141B10_150AC0);
-	  }
-	  if (alien->unk20 & ALIEN_FLAG_AWAY)
-	  {
-		osSyncPrintf(&D_80141B18_150AC8);
-	  }
-	  if (alien->unk20 & ALIEN_FLAG_FALL)
-	  {
-		osSyncPrintf(&D_80141B20_150AD0);
-	  }
-	  if (alien->unk20 & ALIEN_FLAG_INVINCIBLE)
-	  {
-		osSyncPrintf(&D_80141B28_150AD8);
-	  }
-	  osSyncPrintf(&D_80141B34_150AE4);
-	  osSyncPrintf(&D_80141B38_150AE8, (s32) alien->hitPoints);
-	  osSyncPrintf(&D_80141B48_150AF8, (s32) alien->unk47);
-	  osSyncPrintf(&D_80141B60_150B10, (s32) alien->unk38, alien->unk14, alien->unk16, (s32) alien->unk18);
-	  osSyncPrintf(&D_80141B78_150B28, (s32) alien->unk28, (s32) alien->unk29);
-	  osSyncPrintf(&D_80141B94_150B44, (s32) alien->unk2C, alien->unk34, (s32) alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32) alien->unk1E);
-	  osSyncPrintf(&D_80141BD8_150B88, (s32) alien->unk1B);
-	  if ((alien->typeIndex == 0x19) || (alien->typeIndex == 0x1B))
-	  {
-		AlienInstance *parent;
-		parent = &alienInstances[alien->unk25];
-		osSyncPrintf(&D_80141BE4_150B94);
-		osSyncPrintf(&D_80141C08_150BB8, *((s32 *) (&parent->unk10)), *((s32 *) (&parent->unk14)));
-		osSyncPrintf(&D_80141C24_150BD4, parent->unk20);
-		if (alien->typeIndex == 0x19)
+		if (vehicle != NULL)
 		{
-		  osSyncPrintf(&D_80141C38_150BE8, (s32) parent->unk1B, ((u8 *) parent)[0x1E]);
+			osSyncPrintf(&D_80141990_150940, vehicle - vehicleInstances);
+			osSyncPrintf(&D_8014199C_15094C, D_800344B4_350B4[vehicleTypes[vehicle->unk1A].unk18].name);
+			osSyncPrintf(&D_801419A8_150958, (s32)vehicle->unk0, vehicle->unk2, vehicle->unk4);
+			osSyncPrintf(&D_801419B8_150968, (s32)vehicle->unk6, vehicle->unkA, vehicle->unk8);
+			osSyncPrintf(&D_801419C8_150978, (s32)vehicle->unkE);
+			osSyncPrintf(&D_801419D8_150988, (s32)vehicle->unk10);
+			osSyncPrintf(&D_801419E8_150998, (s32)vehicle->unk12);
+			osSyncPrintf(&D_801419F4_1509A4, (double)vehicle->unk30, (double)vehicle->unk34, (double)vehicle->unk38);
+			osSyncPrintf(&D_80141A04_1509B4, (s32)vehicle->unk20);
+			if (vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)
+			{
+				osSyncPrintf(&D_80141A10_1509C0);
+			}
+			if (vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE)
+			{
+				osSyncPrintf(&D_80141A1C_1509CC);
+			}
+			if (vehicle->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)
+			{
+				osSyncPrintf(&D_80141A28_1509D8);
+			}
+			if (vehicle->unk20 & VEHICLE_FLAG_UNDER_BRIDGE)
+			{
+				osSyncPrintf(&D_80141A38_1509E8);
+			}
+			osSyncPrintf(&D_80141A48_1509F8);
 		}
-	  }
+		if (alien != NULL)
+		{
+			osSyncPrintf(&D_80141A4C_1509FC, alien - alienInstances);
+			osSyncPrintf(&D_80141A58_150A08, alienTypes[alien->typeIndex].unk18);
+			if (alien->typeIndex == 1)
+			{
+				osSyncPrintf(&D_80141A64_150A14, (s32)alien->unk24);
+			}
+			osSyncPrintf(&D_80141A74_150A24, (s32)alien->unk0, alien->unk2, alien->unk4);
+			osSyncPrintf(&D_80141A84_150A34, (s32)alien->unk6, alien->unkA, alien->unk8);
+			osSyncPrintf(&D_80141A94_150A44, (s32)alien->unkE);
+			osSyncPrintf(&D_80141AA4_150A54, (s32)alien->unk2A);
+			osSyncPrintf(&D_80141ABC_150A6C, (s32)alien->unk12);
+			osSyncPrintf(&D_80141AC8_150A78, (s32)alien->unk10);
+			osSyncPrintf(&D_80141AD8_150A88, alien->unk20);
+			if (alien->unk20 & ALIEN_FLAG_TARGET_OBJ)
+			{
+				osSyncPrintf(&D_80141AE8_150A98);
+			}
+			if (alien->unk20 & ALIEN_FLAG_TARGET_VEHICLE)
+			{
+				osSyncPrintf(&D_80141AF4_150AA4);
+			}
+			if (alien->unk20 & ALIEN_FLAG_TARGET_PT)
+			{
+				osSyncPrintf(&D_80141B04_150AB4);
+			}
+			if (alien->unk20 & ALIEN_FLAG_PLAYER)
+			{
+				osSyncPrintf(&D_80141B10_150AC0);
+			}
+			if (alien->unk20 & ALIEN_FLAG_AWAY)
+			{
+				osSyncPrintf(&D_80141B18_150AC8);
+			}
+			if (alien->unk20 & ALIEN_FLAG_FALL)
+			{
+				osSyncPrintf(&D_80141B20_150AD0);
+			}
+			if (alien->unk20 & ALIEN_FLAG_INVINCIBLE)
+			{
+				osSyncPrintf(&D_80141B28_150AD8);
+			}
+			osSyncPrintf(&D_80141B34_150AE4);
+			osSyncPrintf(&D_80141B38_150AE8, (s32)alien->hitPoints);
+			osSyncPrintf(&D_80141B48_150AF8, (s32)alien->unk47);
+			osSyncPrintf(&D_80141B60_150B10, (s32)alien->unk38, alien->unk14, alien->unk16, (s32)alien->unk18);
+			osSyncPrintf(&D_80141B78_150B28, (s32)alien->unk28, (s32)alien->unk29);
+			osSyncPrintf(&D_80141B94_150B44, (s32)alien->unk2C, alien->unk34, (s32)alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32)alien->unk1E);
+			osSyncPrintf(&D_80141BD8_150B88, (s32)alien->unk1B);
+			if ((alien->typeIndex == 0x19) || (alien->typeIndex == 0x1B))
+			{
+				AlienInstance *parent;
+				parent = &alienInstances[alien->unk25];
+				osSyncPrintf(&D_80141BE4_150B94);
+				osSyncPrintf(&D_80141C08_150BB8, *((s32 *)(&parent->unk10)), *((s32 *)(&parent->unk14)));
+				osSyncPrintf(&D_80141C24_150BD4, parent->unk20);
+				if (alien->typeIndex == 0x19)
+				{
+					osSyncPrintf(&D_80141C38_150BE8, (s32)parent->unk1B, ((u8 *)parent)[0x1E]);
+				}
+			}
+		}
 	}
-  }
 }
 
-// CURRENT(2506)
 #ifdef NON_MATCHING
 void func_8007AF8C_89F3C(void)
 {
@@ -1227,7 +1222,6 @@ void func_8007B2A0_8A250(u8 arg0)
   gSPDisplayList(D_8005BB2C++, (Gfx *) alienTypes[typeIndex].unk0);
 }
 
-// CURRENT(5834)
 void func_8007B370_8A320(u8 arg0) {
 	s16 scale;
 	s16 scaling[3];
@@ -1279,8 +1273,6 @@ void func_8007B370_8A320(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-
-// CURRENT(30)
 #ifdef NON_MATCHING
 void func_8007B9CC_8A97C(u8 arg0) {
 	u8 typeIndex;
@@ -1374,7 +1366,6 @@ void func_8007B9CC_8A97C(u8 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B9CC_8A97C.s")
 #endif
 
-// https://decomp.me/scratch/mrFc0
 // drawComplexObjectShadows e.g. humans
 void func_8007BEC0_8AE70(void)
 {
@@ -1744,12 +1735,11 @@ void func_8007C044_8AFF4(void) {
 		inst = &inst[-1];
 	} while (i--);
 }
-
-// Disable and aliens don't spawn visibly (show on radar tho)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")
 #endif
 
+// Disable and aliens don't spawn visibly (show on radar tho)
 void func_8007D424_8C3D4(void) {
 	s32 idx;
 	AlienInstance *inst;
@@ -1809,7 +1799,6 @@ void func_8007D424_8C3D4(void) {
 	} while (idx < 0xFF);
 }
 
-// CURRENT(22760)
 #ifdef NON_MATCHING
 void func_8007D690_8C640(void) {
 	s16 sp9A;
@@ -2180,7 +2169,6 @@ block_167:
 
 	func_8011DE60_12CE10(0);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D690_8C640.s")
 #endif
@@ -2229,7 +2217,6 @@ s32 func_8007E500_8D4B0(EntityInstance *arg0, EntityType *arg1, EntityInstance *
 	return 0;
 }
 
-// CURRENT(625)
 #ifdef NON_MATCHING
 s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 	AlienType *type0;
@@ -2273,7 +2260,6 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 #endif
 
-// https://decomp.me/scratch/0eKzs
 s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1)
 {
 	s16 var_a3;
@@ -2370,7 +2356,6 @@ void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 		return;
 	}
 
-	/* Discarded comparisons preserve IDO live ranges and emit no instructions. */
 	heading = arg0->unkE;
 	if (heading < 0x4000) { }
 	diffA = heading;
@@ -2420,7 +2405,6 @@ void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// https://decomp.me/scratch/4d7WQ
 s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1)
 {
 	s32 pad0;
@@ -2596,7 +2580,6 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
-// CURRENT(21299)
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	u8 selfIndex;
@@ -2988,7 +2971,6 @@ void func_8007FDD8_8ED88(void)
 				osSyncPrintf(&D_80141D50_150D00);
 			}
 		}
-		/* Keep the type-table base and stride live for IDO. */
 		if (alienTypes[alienInstances[finalIndex].typeIndex].unk54) { }
 	}
 }
@@ -3995,7 +3977,6 @@ s32 func_80082CA0_91C50(u8 arg0)
 	startXPos = (alienInstances[arg0].unk0 >> 8) - 1;
 	startZPos = (alienInstances[arg0].unk4 >> 8) - 1;
 
-	/* Preserve the coordinate value webs used by IDO's register allocator. */
 	if (alienInstances[arg0].unk0) {}
 	if (alienInstances[arg0].unk4) {}
 	matchingXOffset = -1;
@@ -4225,7 +4206,6 @@ s32 func_800831A4_92154(u8 arg0, s16 *arg1, s16 *arg2, u8 *arg3) {
 	*arg3 = blockedBuilding;
 	return 1;
 }
-
 
 s32 func_800836D0_92680(u8 arg0, s16 *arg1, s16 *arg2) {
 	u8 ownTypeIndex;
@@ -5449,7 +5429,6 @@ s32 func_80086A34_959E4(u8 arg0, s32 arg1, s16 arg2)
 	return func_800865F4_955A4(arg0, arg1, sp54, var_a3, temp_v1);
 }
 
-
 s32 func_80086D70_95D20(u8 arg0, s32 arg1, s16 arg2)
 {
 	u8 typeIndex;
@@ -5498,7 +5477,6 @@ s32 func_80086D70_95D20(u8 arg0, s32 arg1, s16 arg2)
 	}
 	return func_800865F4_955A4(arg0, arg1, targetX, targetY, targetZ);
 }
-
 
 s32 func_800870D8_96088(s32 arg0, s32 arg1)
 {

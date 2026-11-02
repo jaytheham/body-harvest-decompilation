@@ -152,7 +152,6 @@ void func_8012EAC0_13DA70(s32 arg0, u8 *arg1)
 	arg1[numDigits] = 0;
 }
 
-// https://decomp.me/scratch/3FWe6
 /* Concatenates two strings (arg0 + arg1) into the output buffer arg2 */
 void func_8012EBC0_13DB70(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s16 i;
@@ -236,7 +235,6 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 // This does match but doesn't compile right at the moment:
 // this requires D_8015FF84 as a function static so this may cause .bss issues
 // shouldn't be a problem if you match the entire TU / file
-// CURRENT(0)
 #ifdef NON_MATCHING
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
@@ -262,7 +260,6 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
 #endif
 
-// CURRENT(1100)
 #ifdef NON_MATCHING
 void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 {
@@ -288,7 +285,6 @@ void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F2DC_13E28C.s")
 #endif
 
-// CURRENT(30251)
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
@@ -521,7 +517,6 @@ s32 func_8012FFB0_13EF60(void)
 	return score;
 }
 
-// CURRENT(8692)
 // End of level state manager
 #ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
@@ -721,115 +716,113 @@ void func_8013001C_13EFCC(void)
 
 void func_801306C4_13F674(u8 *arg0)
 {
-  u8 scoreText[0x18];
-  u8 pad[8];
-  char *new_var;
-  u32 temp;
-  if (D_80140C84_14FC34)
-  {
-	D_80140C84_W = 0;
-	D_80052B2C->unk30 = D_80052B2C->unk30 + 0x2710;
-	D_80140C88_14FC38 = 0;
-	D_80140C8C_14FC3C = 0;
-	D_80140C90_14FC40 = 0;
-	D_80140C94_14FC44 = 0;
-	D_80140C98_14FC48 = 0;
-	D_80140C9C_14FC4C = 0;
-	D_80140CA0_14FC50 = 0;
-  }
-  func_8012EAC0_13DA70(0x2710, scoreText);
-  if (D_80140C88_14FC38 == 0)
-  {
-	temp = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x47, D_80140C70_14FC20, D_80140C98_14FC48 == 0, D_80140C8C_14FC3C == 0, 0x14);
-	D_80140C98_14FC48 = temp;
-	D_80140C8C_14FC3C = 1;
-	if (temp != 0)
+	u8 scoreText[0x18];
+	u8 pad[8];
+	char *new_var;
+	u32 temp;
+	if (D_80140C84_14FC34)
 	{
-	  switch (D_800313D0_31FD0)
-	  {
-		case 0:
-
-		default:
-		  D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454C0_154470, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
-		  break;
-
-		case 2:
-		  D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454C8_154478, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
-		  break;
-
-		case 1:
-		  D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454D0_154480, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
-		  break;
-
-	  }
-
-	  D_80140C90_14FC40 = 1;
+		D_80140C84_W = 0;
+		D_80052B2C->unk30 = D_80052B2C->unk30 + 0x2710;
+		D_80140C88_14FC38 = 0;
+		D_80140C8C_14FC3C = 0;
+		D_80140C90_14FC40 = 0;
+		D_80140C94_14FC44 = 0;
+		D_80140C98_14FC48 = 0;
+		D_80140C9C_14FC4C = 0;
+		D_80140CA0_14FC50 = 0;
 	}
-	if (D_80140C9C_14FC4C != 0)
+	func_8012EAC0_13DA70(0x2710, scoreText);
+	if (D_80140C88_14FC38 == 0)
 	{
-	  D_80140CA0_14FC50 = func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, D_80140CA0_14FC50 == 0, D_80140C94_14FC44 == 0, 0x34);
-	  D_80140C94_14FC44 = 1;
-	}
-  }
-  else
-  {
-	D_80140C98_14FC48 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x47, D_80140C70_14FC20, D_80140C98_14FC48 == 0, D_80140C8C_14FC3C == 0, 8);
-	D_80140C8C_14FC3C = 1;
-	switch (D_800313D0_31FD0)
-	{
-	  case 0:
+		temp = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x47, D_80140C70_14FC20, D_80140C98_14FC48 == 0, D_80140C8C_14FC3C == 0, 0x14);
+		D_80140C98_14FC48 = temp;
+		D_80140C8C_14FC3C = 1;
+		if (temp != 0)
+		{
+			switch (D_800313D0_31FD0)
+			{
+			case 0:
 
-	  default:
-		func_8012F4E0_13E490(D_801454D8_154488, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
-		break;
+			default:
+				D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454C0_154470, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
+				break;
 
-	  case 2:
-		new_var = D_801454E0_154490;
-		func_8012F4E0_13E490(new_var, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
-		break;
+			case 2:
+				D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454C8_154478, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
+				break;
 
-	  case 1:
-		func_8012F4E0_13E490(D_801454E8_154498, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
-		break;
+			case 1:
+				D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454D0_154480, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
+				break;
+			}
 
-	}
-
-	func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, 0, 0, 0x20);
-  }
-  func_800033D4_3FD4(0xD000, 0);
-  temp = 1;
-  if (((currentControllerStates[0].button & 0xD000) != 0) && (D_80140C88_14FC38 == 0))
-  {
-	if (((D_80140C98_14FC48 == 0) || (D_80140C9C_14FC4C == 0)) || (D_80140CA0_14FC50 == 0))
-	{
-	  D_80140CA0_14FC50 = temp;
-	  D_80140C9C_14FC4C = temp;
-	  D_80140C98_14FC48 = temp;
-	  D_80140C94_14FC44 = 0;
-	  D_80140C90_14FC40 = 0;
-	  D_80140C8C_14FC3C = 0;
+			D_80140C90_14FC40 = 1;
+		}
+		if (D_80140C9C_14FC4C != 0)
+		{
+			D_80140CA0_14FC50 = func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, D_80140CA0_14FC50 == 0, D_80140C94_14FC44 == 0, 0x34);
+			D_80140C94_14FC44 = 1;
+		}
 	}
 	else
 	{
-	  D_80140C88_14FC38 = temp;
-	  D_80140C98_14FC48 = 0;
+		D_80140C98_14FC48 = func_8012F4E0_13E490(arg0, 0xA, 0x14, 0x47, D_80140C70_14FC20, D_80140C98_14FC48 == 0, D_80140C8C_14FC3C == 0, 8);
+		D_80140C8C_14FC3C = 1;
+		switch (D_800313D0_31FD0)
+		{
+		case 0:
+
+		default:
+			func_8012F4E0_13E490(D_801454D8_154488, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+			break;
+
+		case 2:
+			new_var = D_801454E0_154490;
+			func_8012F4E0_13E490(new_var, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+			break;
+
+		case 1:
+			func_8012F4E0_13E490(D_801454E8_154498, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+			break;
+		}
+
+		func_8012F4E0_13E490(scoreText, 0x14, 0x1E, 0xA2, D_80140C74_14FC24, 0, 0, 0x20);
 	}
-  }
-  if ((D_80140C88_14FC38 != 0) && (D_80140C98_14FC48 != 0))
-  {
-	D_80140C84_14FC34 = temp;
-	if (D_8015FF80 == 5)
+	func_800033D4_3FD4(0xD000, 0);
+	temp = 1;
+	if (((currentControllerStates[0].button & 0xD000) != 0) && (D_80140C88_14FC38 == 0))
 	{
-	  D_8015FF80 = 6;
-	  return;
+		if (((D_80140C98_14FC48 == 0) || (D_80140C9C_14FC4C == 0)) || (D_80140CA0_14FC50 == 0))
+		{
+			D_80140CA0_14FC50 = temp;
+			D_80140C9C_14FC4C = temp;
+			D_80140C98_14FC48 = temp;
+			D_80140C94_14FC44 = 0;
+			D_80140C90_14FC40 = 0;
+			D_80140C8C_14FC3C = 0;
+		}
+		else
+		{
+			D_80140C88_14FC38 = temp;
+			D_80140C98_14FC48 = 0;
+		}
 	}
-	if ((D_8004816E == 0) || (D_80048170 == 0))
+	if ((D_80140C88_14FC38 != 0) && (D_80140C98_14FC48 != 0))
 	{
-	  D_8015FF80 = 2;
-	  return;
+		D_80140C84_14FC34 = temp;
+		if (D_8015FF80 == 5)
+		{
+			D_8015FF80 = 6;
+			return;
+		}
+		if ((D_8004816E == 0) || (D_80048170 == 0))
+		{
+			D_8015FF80 = 2;
+			return;
+		}
+		D_8015FF80 = 4;
 	}
-	D_8015FF80 = 4;
-  }
 }
 
 #ifdef NON_MATCHING
@@ -1017,7 +1010,6 @@ void func_80130BA0_13FB50(void)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80130BA0_13FB50.s")
 #endif
 
-
 void func_80131280_140230(u8 *arg0)
 {
 	u8 scoreText[0x18];
@@ -1132,209 +1124,237 @@ void func_80131280_140230(u8 *arg0)
 }
 
 #ifdef NON_MATCHING
-s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5) {
-s32 charIndex;
-s32 charScreenX;
-u8 *loopText;
-s32 renderX;
-s32 temp_v0;
-Unk80052B40 pos;
-Unk80052B40 result;
-s32 *screenWidth = &D_80068084;
-s32 currentSway;
-volatile s32 swayOffset;
-s32 renderWidth;
-u32 lry;
-u32 uly;
-s32 *animationCounter = &D_80140CE0_14FC90;
-u8 currentChar;
-s16 charCount;
-u8 colorData[3];
-s32 curX;
-u32 six = 6;
-
-gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, *screenWidth - 0x21, D_80068088);
-charCount = 0;
-renderWidth = 0;
-currentChar = *text;
-if (currentChar != 0) {
-	do {
-		renderWidth = renderWidth + charWidth + 2;
-		if (currentChar == 0x31) {
-			renderWidth -= charWidth >> 1;
-		}
-		charCount += 1;
-		currentChar = text[charCount];
-	} while (currentChar != 0);
-}
-
-if (arg5 != 0) {
-	(*animationCounter) = 0;
-}
-if (arg4 == 0) {
-	(*animationCounter) = 0xFFFF;
-}
-
+s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5)
 {
-	renderX = (*screenWidth - ((*animationCounter) * six)) + 0x168;
-	func_8012F2DC_13E28C(D_80140C74_14FC24, colorData, 5);
-	if ((*animationCounter) >= 0x3D) {
-		if ((renderX >= 0) && (renderX <= *screenWidth)) {
-		if ((*animationCounter) == 0x46) {
-			func_800153D8_15FD8(0x185);
-		}
+	s32 charIndex;
+	s32 charScreenX;
+	u8 *loopText;
+	s32 renderX;
+	s32 temp_v0;
+	Unk80052B40 pos;
+	Unk80052B40 result;
+	s32 *screenWidth = &D_80068084;
+	s32 currentSway;
+	volatile s32 swayOffset;
+	s32 renderWidth;
+	u32 lry;
+	u32 uly;
+	s32 *animationCounter = &D_80140CE0_14FC90;
+	u8 currentChar;
+	s16 charCount;
+	u8 colorData[3];
+	s32 curX;
+	u32 six = 6;
 
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
-		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
-		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-		gSPSetLights1(D_8005BB2C++, D_80140C30_14FBE0);
-		gDPSetRenderMode(D_8005BB2C++, CVG_DST_CLAMP | ZMODE_OPA | FORCE_BL | G_RM_PASS, CVG_DST_CLAMP | ZMODE_OPA | FORCE_BL | G_RM_NOOP2);
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041480);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0x0040, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0x0040, 2, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, 2, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5040A80);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0x0000, G_TX_LOADTILE, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0x0000, 1, 0,
-			G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
-		gDPPipeSync(D_8005BB2C++);
-
-		temp_v0 = (s16) (((*animationCounter) & 0xE) >> 1);
-		pos.unk0 = renderX;
-		pos.unk4 = 0;
-		pos.unk2 = yPos + 0x1E;
-		result.unk0 = 0;
-		result.unk2 = 0;
-		result.unk4 = 0;
-		func_800039D0_45D0(&pos, &result, &D_80140C68_14FC18.scale, D_8005BB38);
-
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-		guRotateRPY(D_8005BB38, 0.0f, 90.0f, 180.0f);
-		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-	gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[temp_v0]);
-		}
+	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, *screenWidth - 0x21, D_80068088);
+	charCount = 0;
+	renderWidth = 0;
+	currentChar = *text;
+	if (currentChar != 0)
+	{
+		do
+		{
+			renderWidth = renderWidth + charWidth + 2;
+			if (currentChar == 0x31)
+			{
+				renderWidth -= charWidth >> 1;
+			}
+			charCount += 1;
+			currentChar = text[charCount];
+		} while (currentChar != 0);
 	}
-}
 
-renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + (charWidth >> 1);
-if (((*animationCounter) >= 0x60) && ((*animationCounter) < 0xBE)) {
-	if ((((*animationCounter) - 0x5F) % (s32)six) == 0) {
-		func_800153D8_15FD8((s16) (((((*animationCounter) - 0x5F) % 12) / (s32)six) + 0xAC));
+	if (arg5 != 0)
+	{
+		(*animationCounter) = 0;
 	}
-}
+	if (arg4 == 0)
+	{
+		(*animationCounter) = 0xFFFF;
+	}
 
-charIndex = 0;
-loopText = text;
-if (charCount > 0) {
-currentSway = swayOffset;
-	do {
-		charScreenX = (D_80068084 - (((*animationCounter) - charIndex * 10) * 6)) + 0x21C;
-		if (*loopText == 0x31) {
-			renderX -= (charWidth >> 1);
-		}
-
-		if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (charScreenX >= 0) && (D_80068084 >= charScreenX)) {
-			swayOffset = (s32) ((f32) (((f32)sins((u16) (((((*animationCounter) + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
-			gDPPipeSync(D_8005BB2C++);
-			gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
-			gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-			gSPDisplayList(D_8005BB2C++, D_80031230);
-			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-			gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_NOOP2);
-
-			pos.unk0 = charScreenX;
-			pos.unk2 = yPos + 0x1E;
-			pos.unk4 = 0;
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
-			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (currentSway = swayOffset, 0x80E580FF));
-			gSPLightColor(D_8005BB2C++, LIGHT_2, 0x407F40FF);
-
-			result.unk0 = D_800311A0.unk0;
-			result.unk2 = D_800311A0.unk2;
-			result.unk4 = D_800311A0.unk4;
-			D_800311A0.unk2 += currentSway;
-			D_800311A0.unk0 -= currentSway / 2;
-			D_800311A0.unk4 -= currentSway / 2;
-			D_800311A0.unk0 = (s16) (D_800311A0.unk0 * 2.5);
-			D_800311A0.unk2 = (s16) (D_800311A0.unk2 * -2.5);
-			D_800311A0.unk4 = (s16) (D_800311A0.unk4 * 2.5);
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[((u32) D_80052A8C % 7) << 9]));
-
-			func_800039D0_45D0(&pos, &result, &D_800311A0, D_8005BB38);
-
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-			guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			gDPPipeSync(D_8005BB2C++);
-			gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
-
-			D_800311A0.unk0 = result.unk0;
-			D_800311A0.unk2 = result.unk2;
-			D_800311A0.unk4 = result.unk4;
-		}
-
-		if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (D_80068084 >= charScreenX)) {
-			if (func_8012EC3C_13DBEC(*loopText) != 0) {
-				curX = renderX;
-
-				if (charScreenX < renderX) {
-					uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFFU;
-					lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFFU;
-					currentSway = 0;
-				} else {
-					lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFFU;
-					uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFFU;
-					if (*loopText == 0x31) {
-						curX = charScreenX - (charWidth >> 1);
-					} else {
-						curX = charScreenX;
-					}
+	{
+		renderX = (*screenWidth - ((*animationCounter) * six)) + 0x168;
+		func_8012F2DC_13E28C(D_80140C74_14FC24, colorData, 5);
+		if ((*animationCounter) >= 0x3D)
+		{
+			if ((renderX >= 0) && (renderX <= *screenWidth))
+			{
+				if ((*animationCounter) == 0x46)
+				{
+					func_800153D8_15FD8(0x185);
 				}
 
 				gDPPipeSync(D_8005BB2C++);
-				gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-				gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+				gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+				gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
+				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+				gSPSetLights1(D_8005BB2C++, D_80140C30_14FBE0);
+				gDPSetRenderMode(D_8005BB2C++, CVG_DST_CLAMP | ZMODE_OPA | FORCE_BL | G_RM_PASS, CVG_DST_CLAMP | ZMODE_OPA | FORCE_BL | G_RM_NOOP2);
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041480);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0x0040, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0x0040, 2, 0,
+						   G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, 2, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5040A80);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0x0000, G_TX_LOADTILE, 0,
+						   G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+				gDPLoadSync(D_8005BB2C++);
+				gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 4, 0x0000, 1, 0,
+						   G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
+				gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
+				gDPPipeSync(D_8005BB2C++);
 
-				if (curX == renderX) {
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, colorData[0], colorData[1], colorData[2], 0xFF);
-				} else {
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140C74_14FC24[0], D_80140C74_14FC24[1], D_80140C74_14FC24[2], 0xFF);
-				}
+				temp_v0 = (s16)(((*animationCounter) & 0xE) >> 1);
+				pos.unk0 = renderX;
+				pos.unk4 = 0;
+				pos.unk2 = yPos + 0x1E;
+				result.unk0 = 0;
+				result.unk2 = 0;
+				result.unk4 = 0;
+				func_800039D0_45D0(&pos, &result, &D_80140C68_14FC18.scale, D_8005BB38);
 
-				gSPTextureRectangle(D_8005BB2C++,
-					(curX - (charWidth >> 1)) * 4, uly,
-					((charWidth >> 1) + curX) * 4, lry,
-					0, 0, 0,
-					(s32)((1.0f / ((f32) charWidth / 32)) * 1024.0f),
-					(s32)((1.0f / ((f32) charHeight / 32)) * 1024.0f));
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				guRotateRPY(D_8005BB38, 0.0f, 90.0f, 180.0f);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[temp_v0]);
 			}
 		}
+	}
 
-		renderX += charWidth;
-		if ((charCount == charIndex + 1) && (charScreenX <= 0)) {
-			(*animationCounter) = 0;
-			return 1;
+	renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + (charWidth >> 1);
+	if (((*animationCounter) >= 0x60) && ((*animationCounter) < 0xBE))
+	{
+		if ((((*animationCounter) - 0x5F) % (s32)six) == 0)
+		{
+			func_800153D8_15FD8((s16)(((((*animationCounter) - 0x5F) % 12) / (s32)six) + 0xAC));
 		}
+	}
 
-		loopText = &loopText[1];
-		charIndex += 1;
-	} while ((renderX += 2, charIndex) != charCount);
-	swayOffset = currentSway;
-}
+	charIndex = 0;
+	loopText = text;
+	if (charCount > 0)
+	{
+		currentSway = swayOffset;
+		do
+		{
+			charScreenX = (D_80068084 - (((*animationCounter) - charIndex * 10) * 6)) + 0x21C;
+			if (*loopText == 0x31)
+			{
+				renderX -= (charWidth >> 1);
+			}
 
-	if ((*animationCounter) < 0xFFFF) {
+			if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
+			{
+				swayOffset = (s32)((f32)(((f32)sins((u16)(((((*animationCounter) + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
+				gDPPipeSync(D_8005BB2C++);
+				gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
+				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+				gSPDisplayList(D_8005BB2C++, D_80031230);
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+				gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_NOOP2);
+
+				pos.unk0 = charScreenX;
+				pos.unk2 = yPos + 0x1E;
+				pos.unk4 = 0;
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
+				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (currentSway = swayOffset, 0x80E580FF));
+				gSPLightColor(D_8005BB2C++, LIGHT_2, 0x407F40FF);
+
+				result.unk0 = D_800311A0.unk0;
+				result.unk2 = D_800311A0.unk2;
+				result.unk4 = D_800311A0.unk4;
+				D_800311A0.unk2 += currentSway;
+				D_800311A0.unk0 -= currentSway / 2;
+				D_800311A0.unk4 -= currentSway / 2;
+				D_800311A0.unk0 = (s16)(D_800311A0.unk0 * 2.5);
+				D_800311A0.unk2 = (s16)(D_800311A0.unk2 * -2.5);
+				D_800311A0.unk4 = (s16)(D_800311A0.unk4 * 2.5);
+				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[((u32)D_80052A8C % 7) << 9]));
+
+				func_800039D0_45D0(&pos, &result, &D_800311A0, D_8005BB38);
+
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				gDPPipeSync(D_8005BB2C++);
+				gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
+
+				D_800311A0.unk0 = result.unk0;
+				D_800311A0.unk2 = result.unk2;
+				D_800311A0.unk4 = result.unk4;
+			}
+
+			if (((charIndex * 10 + 0x5A) < (*animationCounter)) && (D_80068084 >= charScreenX))
+			{
+				if (func_8012EC3C_13DBEC(*loopText) != 0)
+				{
+					curX = renderX;
+
+					if (charScreenX < renderX)
+					{
+						uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFFU;
+						lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFFU;
+						currentSway = 0;
+					}
+					else
+					{
+						lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFFU;
+						uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFFU;
+						if (*loopText == 0x31)
+						{
+							curX = charScreenX - (charWidth >> 1);
+						}
+						else
+						{
+							curX = charScreenX;
+						}
+					}
+
+					gDPPipeSync(D_8005BB2C++);
+					gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+					gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+					gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+
+					if (curX == renderX)
+					{
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, colorData[0], colorData[1], colorData[2], 0xFF);
+					}
+					else
+					{
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140C74_14FC24[0], D_80140C74_14FC24[1], D_80140C74_14FC24[2], 0xFF);
+					}
+
+					gSPTextureRectangle(D_8005BB2C++,
+										(curX - (charWidth >> 1)) * 4, uly,
+										((charWidth >> 1) + curX) * 4, lry,
+										0, 0, 0,
+										(s32)((1.0f / ((f32)charWidth / 32)) * 1024.0f),
+										(s32)((1.0f / ((f32)charHeight / 32)) * 1024.0f));
+				}
+			}
+
+			renderX += charWidth;
+			if ((charCount == charIndex + 1) && (charScreenX <= 0))
+			{
+				(*animationCounter) = 0;
+				return 1;
+			}
+
+			loopText = &loopText[1];
+			charIndex += 1;
+		} while ((renderX += 2, charIndex) != charCount);
+		swayOffset = currentSway;
+	}
+
+	if ((*animationCounter) < 0xFFFF)
+	{
 		(*animationCounter) += 1;
 	}
 
