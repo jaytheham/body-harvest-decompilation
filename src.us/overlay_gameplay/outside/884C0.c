@@ -2364,54 +2364,55 @@ s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1)
 	return 1;
 }
 
-// CURRENT(7368)
-#ifdef NON_MATCHING
 void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 	s16 diffA;
 	s16 diffB;
-	s16 absA;
-	s16 absB;
+	s32 absA;
 	s16 chosen;
+	s32 absB;
 	s16 chosenDiff;
-	s16 absDiff;
-	s16 divisor;
+	s32 negative;
+	s16 heading;
 
 	if ((arg0->typeIndex < 3) || (arg0->typeIndex == 0x20)) {
 		arg0->unkE = (arg1 + arg2) / 2;
-		if (arg2 >= arg1) {
+		if ((&arg2)[0] >= (&arg1)[0]) {
 			arg0->unkE += 0x8000;
 		}
 		arg0->unk6 = arg0->unkE;
 		return;
 	}
 
-	// Agent - in body harvest code it's common for abs values to be calculated with ternary ops
-	// or one of the ABS macros
-	diffA = arg0->unkE - arg1;
-	absA = -diffA;
-	if (absA < diffA) {
-		absA = diffA;
-	}
-
-	diffB = arg2 - arg0->unkE;
-	absB = -diffB;
-	if (absB < diffB) {
-		absB = diffB;
-	}
+	/* Discarded comparisons preserve IDO live ranges and emit no instructions. */
+	heading = arg0->unkE;
+	if (heading < 0x4000) { }
+	diffA = heading;
+	diffA -= arg1;
+	if (diffA < 0x4000) { }
+	if (diffA < 0x4000) { }
+	if (diffA < 0x4000) { }
+	if (diffA < 0x4000) { }
+	negative = -diffA;
+	if (heading * heading != negative) { }
+	diffB = arg2;
+	diffB -= heading;
+	if (diffB < 0x4000) { }
+	absA = negative < diffA ? diffA : negative;
+	negative = -diffB;
+	absB = negative < diffB ? diffB : negative;
 
 	chosen = arg2;
-	chosenDiff = diffB;
 	if (absA < absB) {
 		chosen = arg1;
 		chosenDiff = diffA;
+	} else {
+		chosenDiff = diffB;
 	}
 
 	if (chosenDiff < 0) {
 		func_8007E734_8D6E4(arg0, chosen);
-		arg0->unk12 = 0;
-	} else {
-		arg0->unk12 = 0;
 	}
+	arg0->unk12 = 0;
 
 	if (chosen == arg1) {
 		arg0->unk2A = chosen - 0x4800;
@@ -2421,21 +2422,16 @@ void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 
 	arg0->unk47 |= 2;
 
-	divisor = alienTypes[arg0->typeIndex].unk42;
-	if (divisor != 0) {
+	chosen = alienTypes[arg0->typeIndex].unk42;
+	if (chosen != 0) {
 		diffA = arg0->unk2A - arg0->unkE;
-		absDiff = -diffA;
-		if (absDiff < diffA) {
-			absDiff = diffA;
-		}
-		arg0->unk34 = (absDiff / divisor) + 0x1E;
+		absB = BH_ABS(diffA);
+		if (absB < 0) { }
+		arg0->unk34 = (absB / chosen) + 0x1E;
 	} else {
 		arg0->unk34 = 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E980_8D930.s")
-#endif
 
 // https://decomp.me/scratch/4d7WQ
 s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1)
