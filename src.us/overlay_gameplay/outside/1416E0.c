@@ -1524,6 +1524,7 @@ void func_80136570_145520(void) {
 // displaySignposts
 // AI - Render signpost sprites in 3D world
 // CURRENT(2231)
+#ifdef NON_MATCHING
 void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
@@ -1612,6 +1613,10 @@ void func_801365E0_145590(void) {
 	}
 }
 
+
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
+#endif
 
 // https://decomp.me/scratch/NQ4OJ
 // CURRENT(110)
