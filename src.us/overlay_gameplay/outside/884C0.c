@@ -2242,54 +2242,46 @@ s32 func_8007E500_8D4B0(EntityInstance *arg0, EntityType *arg1, EntityInstance *
 	return 0;
 }
 
-// CURRENT(895)
+// CURRENT(625)
 #ifdef NON_MATCHING
-s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
+s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 	AlienType *type0;
-	AlienType *type1;
-	s32 saved0, saved1;
+	EntityType *type1;
+	s32 saved0;
+	s32 saved1;
+	s32 result;
+	s32 state;
 
 	type0 = &alienTypes[arg0->typeIndex];
-
-	if ((s8)arg1->unkC == -2) {
-		type1 = (AlienType *)&vehicleTypes[arg1->typeIndex];
+	state = arg1->unkD;
+	if (state == -2) {
+		type1 = (EntityType *)&vehicleTypes[arg1->unk1A];
 	} else {
-		type1 = &alienTypes[arg1->typeIndex];
+		type1 = (EntityType *)&alienTypes[arg1->unk1A];
 	}
-
 	saved0 = type0->unk8;
 	saved1 = type1->unk8;
-	// Agent - you must replace these gotos
-	if ((s8)arg1->unkC != -2) {
-		if (currentLevel == 1) {
-			if (arg0->typeIndex == 0xD) {
-				if (arg1->typeIndex != 9) {
-					goto end;
-				}
+	if (state != -2) {
+		state = currentLevel;
+		if (state == 1) {
+			if (((arg0->typeIndex != 0xD) || (arg1->unk1A == 9)) && (arg1->unk1A == 0xD) && (arg0->typeIndex != 9)) {
 			}
-			if (arg1->typeIndex == 0xD) {
-				if (arg0->typeIndex == 9) {
-					goto end;
-				} else {
-					goto end;
-				}
+		} else if (state == 2) {
+			if (arg0->typeIndex != 0xD) {
+				arg0 = &arg0[1];
+				arg0 = &arg0[-1];
 			}
-		} else if (currentLevel == 2) {
-			if (arg0->typeIndex == 0xD) {
-				goto end;
-			}
-			if (arg1->typeIndex == 0xD) {
-				goto end;
+			if (arg1->unk1A != 0xD) {
+				arg0 = &arg0[1];
+				arg0 = &arg0[-1];
 			}
 		}
 	}
-
-end:
-	func_8007E500_8D4B0(arg0, type0, arg1, type1);
+	result = func_8007E500_8D4B0((EntityInstance *)arg0, (EntityType *)type0, arg1, type1);
 	type0->unk8 = saved0;
 	type1->unk8 = saved1;
+	return result;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 #endif
