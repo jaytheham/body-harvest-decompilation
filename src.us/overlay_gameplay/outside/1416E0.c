@@ -1565,7 +1565,7 @@ void func_801365E0_145590(void) {
 			if ((var_s0 != 0) || (signpost->unk1 != 0)) {
 				var_s0 = (var_s0 << 24) >> 16;
 				var_s0 += 0x80;
-				var_s1 = (signpost->unk1 << 8) + 0x80;
+				var_s1 = (s64)((signpost->unk1 << 8) + 0x80);
 				func_8011E6FC_12D6AC(var_s0, var_s1, spCC);
 				if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
 					(D_801493B4 >= var_s1) &&

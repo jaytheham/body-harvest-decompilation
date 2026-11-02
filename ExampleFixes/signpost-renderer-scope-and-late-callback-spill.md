@@ -92,3 +92,37 @@ addiu sp,sp,-0xe8
 lui   a3,0x8080
 ori   a3,a3,0x80ff
 ```
+
+## Incorrect ASM
+
+```asm
+sll   t9,s1,8
+addiu s1,t9,128
+sll   t7,s0,16
+sll   t6,s1,16
+sra   s0,t7,16
+sra   s1,t6,16
+```
+
+## Code changed
+
+Widen the completed Z expression before storing it into the short local:
+
+```c
+var_s1 = (s64)((signpost->unk1 << 8) + 0x80);
+```
+
+## Correct ASM
+
+The X narrowing now precedes the Z shift, matching that part of the target order:
+
+```asm
+sll   t7,s0,16
+sra   s0,t7,16
+sll   t6,t9,8
+addiu t7,t6,128
+sll   t6,t7,16
+sra   s1,t6,16
+```
+
+No 64-bit instructions are emitted. This partial improvement lowers the function diff from 885 to 335; the initial copy is still missing and temporary registers still differ. The function remains guarded.
