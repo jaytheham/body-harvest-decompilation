@@ -792,11 +792,11 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 y;
 	s16 dx;
 	s16 dy;
-	s32 intensity;
 	u32 fracY;
 	s32 squareX;
 	s32 cellSize = 256;
 	u8 radius;
+	s16 intensity;
 	s32 tileX;
 	s32 tileY;
 	u32 fracX;
@@ -828,11 +828,11 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			intensity = (s16)((s32)sqrtf(dy * dy + squareX) - arg2);
+			intensity = (s32)sqrtf(dy * dy + squareX) - arg2;
 			if (intensity > 0) {
-				intensity = (s16)(arg3 - intensity);
+				intensity = arg3 - intensity;
 				if (intensity > 0) {
-					intensity = (s16)(((f32)intensity / arg3) * 255.0f);
+					intensity = ((f32)intensity / arg3) * 255.0f;
 					if (intensity >= 256) {
 						intensity = 255;
 					}
