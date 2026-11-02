@@ -749,10 +749,18 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 
 	resultSlot = slot;
 	D_80157FF8 = D_80157FF8 + 1;
+	if (arg1)
+	{
+	}
+	if (arg0)
+	{
+	}
+	if (alienY)
+	{
+	}
 	osSyncPrintf(D_80144934_1538E4, slot, D_80157FF8);
 
 	walker = &D_80158000[slot];
-	halfCount = D_801601F0[arg1].unkC;
 
 	walker->limbs[0].words[0] = alienX;
 	walker->limbs[0].words[1] = alienZ;
@@ -774,7 +782,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	outerRadius = D_801601F0[arg1].unk6;
 	innerRadius = D_801601F0[arg1].unk4;
 	i = 0;
-	halfCount = halfCount / 2;
+	halfCount = D_801601F0[arg1].unkC / 2;
 
 	if (halfCount > 0) {
 		s32 index;
@@ -818,6 +826,9 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 			index++;
 			i = index & 0xFF;
 			index = i;
+			if (i)
+			{
+			}
 			baseAngle += angleStep;
 		} while (i < halfCount);
 	}
