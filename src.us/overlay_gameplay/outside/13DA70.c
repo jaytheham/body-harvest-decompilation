@@ -56,8 +56,6 @@ const char D_80145628_1545D8[] = "total";
 
 const f32 D_80145630_1545E0[1] = {65535.0f};
 
-const u32 jtbl_80145634_1545E4[] = {OVERLAY_PTR(0x80130420), OVERLAY_PTR(0x80130430), OVERLAY_PTR(0x80130490), OVERLAY_PTR(0x801306B4), OVERLAY_PTR(0x801304A0), OVERLAY_PTR(0x801305A8), OVERLAY_PTR(0x80130608)};
-
 u32 D_80140BA0_14FB50[] = {
 	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
 	0x050592A0, 0x050594A0, 0x050596A0, 0x050598A0, 0x05059AA0,
@@ -243,33 +241,6 @@ void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 	D_80140C78_14FC28 += increment;
 }
 
-
-s32 D_80140C7C_14FC2C = 0;
-u32 D_80140C80_14FC30 = 0;
-u32 D_80140C84_14FC34 = 1;
-u32 D_80140C88_14FC38 = 0;
-u32 D_80140C8C_14FC3C = 0;
-u32 D_80140C90_14FC40 = 0;
-u32 D_80140C94_14FC44 = 0;
-u32 D_80140C98_14FC48 = 0;
-u32 D_80140C9C_14FC4C = 0;
-u32 D_80140CA0_14FC50 = 0;
-u32 D_80140CA4_14FC54 = 1;
-u32 D_80140CA8_14FC58 = 0;
-u32 D_80140CAC_14FC5C = 0;
-u32 D_80140CB0_14FC60 = 0;
-u32 D_80140CB4_14FC64 = 1;
-u32 D_80140CB8_14FC68 = 0;
-u32 D_80140CBC_14FC6C = 0;
-u32 D_80140CC0_14FC70 = 0;
-u32 D_80140CC4_14FC74 = 0;
-u32 D_80140CC8_14FC78 = 0;
-u32 D_80140CCC_14FC7C = 0;
-u32 D_80140CD0_14FC80 = 0;
-u32 D_80140CD4_14FC84 = 0;
-u32 D_80140CD8_14FC88 = 0;
-s32 D_80140CDC_14FC8C = 0x82;
-s32 D_80140CE0_14FC90 = 0;
 
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
@@ -482,9 +453,12 @@ s32 func_8012FFB0_13EF60(void)
 }
 
 // End of level state manager
-#ifdef NON_MATCHING
 void func_8013001C_13EFCC(void)
 {
+	static u8 stretchState[0xC8]; /* Existing stretch phase and history precede the fade step. */
+	static s32 D_80160050;
+	static s32 D_80140C7C_14FC2C = 0;
+	static u32 D_80140C80_14FC30 = 0;
 	s16 rectLeft;           // Left edge of the fade rectangle
 	s16 rectRight;          // Right edge of the fade rectangle
 	s16 rectTop;            // Top edge of the fade rectangle
@@ -492,14 +466,14 @@ void func_8013001C_13EFCC(void)
 	s32 language;           // Language index (0=English, 1=French, 2=German)
 	u8* levelName;          // Pointer to the localized stage/level name string
 	s32 stackPad0;
-	s32 stackPad1;
-	s32 stackPad2;
-	u8 levelText[0x18];     // Buffer for assembling stage/level name text
+	s32 fadeSum;
+	s32 fadeCopy;
+	u8 levelText[0x24];     // Buffer for assembling stage/level name text
 
 	if (gameplayMode == 10) {
 		if (D_80140C80_14FC30 != 0) {
 			// Fade-out in progress: once the fade finishes, move to the next state
-		if (D_80140C7C_14FC2C > 0) {
+			if (D_80140C7C_14FC2C > 0) {
 				D_80160050 = -0x1000;
 			} else {
 				D_8013D580_14C530 = 1;
@@ -519,11 +493,9 @@ void func_8013001C_13EFCC(void)
 
 	// Animate the fade (either fading in or fading out)
 	if (D_80140C7C_14FC2C > 0) {
-		s32 fadeSum;
-		s32 fadeCopy;
 
 		// Convert the fade phase to a brightness value (0–180) for the screen
-		func_8012FE6C_13EE1C((s16)(((f32)(s32)D_80140C7C_14FC2C / D_80145630_1545E0[0]) * 180.0f));
+		func_8012FE6C_13EE1C((s16)(((f32)D_80140C7C_14FC2C / D_80145630_1545E0[0]) * 180.0f));
 
 		// Configure RDP for simple 2D rendering (no lighting, culling, or fog)
 		gDPPipeSync(D_8005BB2C++);
@@ -536,23 +508,25 @@ void func_8013001C_13EFCC(void)
 
 		// Draw a coloured rectangle that shrinks/grows with the fade
 		rectLeft   = func_80006520_7120((s16)(D_80068084 * 2), 0x70, (u16)D_80140C7C_14FC2C);
-		rectTop    = rectLeft + func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), (u16)D_80140C7C_14FC2C);
+		rectTop    = func_80006520_7120(0, (s16)((D_80068084 * 4) - 0xE0), (u16)D_80140C7C_14FC2C);
+		rectTop = rectLeft + rectTop;
 		rectRight  = func_80006520_7120((s16)(D_80068088 * 2), 0x60, (u16)D_80140C7C_14FC2C);
-		rectBottom = rectRight + func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), (u16)D_80140C7C_14FC2C);
+		rectBottom = func_80006520_7120(0, (s16)((D_80068088 * 4) - 0xC0), (u16)D_80140C7C_14FC2C);
+		rectBottom = rectRight + rectBottom;
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x8C, 0x96, 0xF0, 0xAA);
 		func_800092B8_9EB8(rectLeft, rectRight, rectTop, rectBottom, 0);
 
 		// Advance the fade phase by the current step direction
-		fadeCopy = (s32)D_80140C7C_14FC2C + D_80160050;
+		fadeCopy = D_80140C7C_14FC2C + D_80160050;
 		fadeSum = fadeCopy;
 		if ((fadeSum >= 0x10000) && (D_80160050 > 0)) {
 			D_80160050 = 0;
 			D_80140C7C_14FC2C = 0xFFFF;
-		} else if ((fadeSum > 0) || (D_80160050 >= 0)) {
-			D_80140C7C_14FC2C = fadeCopy;
-		} else {
+		} else if ((fadeSum <= 0) && (D_80160050 < 0)) {
 			D_80160050 = 0;
 			D_80140C7C_14FC2C = 0;
+		} else {
+			D_80140C7C_14FC2C = fadeCopy;
 		}
 	}
 
@@ -674,9 +648,32 @@ void func_8013001C_13EFCC(void)
 		break;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8013001C_13EFCC.s")
-#endif
+
+
+u32 D_80140C84_14FC34 = 1;
+u32 D_80140C88_14FC38 = 0;
+u32 D_80140C8C_14FC3C = 0;
+u32 D_80140C90_14FC40 = 0;
+u32 D_80140C94_14FC44 = 0;
+u32 D_80140C98_14FC48 = 0;
+u32 D_80140C9C_14FC4C = 0;
+u32 D_80140CA0_14FC50 = 0;
+u32 D_80140CA4_14FC54 = 1;
+u32 D_80140CA8_14FC58 = 0;
+u32 D_80140CAC_14FC5C = 0;
+u32 D_80140CB0_14FC60 = 0;
+u32 D_80140CB4_14FC64 = 1;
+u32 D_80140CB8_14FC68 = 0;
+u32 D_80140CBC_14FC6C = 0;
+u32 D_80140CC0_14FC70 = 0;
+u32 D_80140CC4_14FC74 = 0;
+u32 D_80140CC8_14FC78 = 0;
+u32 D_80140CCC_14FC7C = 0;
+u32 D_80140CD0_14FC80 = 0;
+u32 D_80140CD4_14FC84 = 0;
+u32 D_80140CD8_14FC88 = 0;
+s32 D_80140CDC_14FC8C = 0x82;
+s32 D_80140CE0_14FC90 = 0;
 
 void func_801306C4_13F674(u8 *arg0)
 {

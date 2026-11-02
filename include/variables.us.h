@@ -2757,7 +2757,6 @@ extern u8 D_8015FAF8;
 extern u8 D_8015FAFC;
 extern u8 D_8015FF80;
 extern s32 D_8015FF90[];
-extern s32 D_80160050;
 extern u8 D_80160058;
 extern s32 D_8016005C;
 extern s32 D_80160060;
