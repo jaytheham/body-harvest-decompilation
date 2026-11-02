@@ -1032,8 +1032,8 @@ void func_8009E994_AD944(f32 arg0, u8 *arg1, s16 arg2, s16 arg3, s32 arg4) {
 	entityId = arg4;
 }
 
-u8 D_8013D66C_14C61C[4] = { 0x00, 0x05, 0x00, 0x02 };
-u8 D_8013D670_14C620[0x0C] = {
+u8 D_8013D66C_14C61C[16] = {
+	0x00, 0x05, 0x00, 0x02,
 	0x00, 0x00, 0x02, 0x00, 0x03, 0x00, 0x00, 0x00,
 	0x0F, 0x11, 0x04, 0x00,
 };
@@ -1052,18 +1052,6 @@ u32 D_8013D6F4_14C6A4[15] = { OVERLAY_PTR(0x8014262C),
 	OVERLAY_PTR(0x8014263C), OVERLAY_PTR(0x80142644), OVERLAY_PTR(0x8014264C), OVERLAY_PTR(0x80142654), OVERLAY_PTR(0x8014265C), OVERLAY_PTR(0x80142664), OVERLAY_PTR(0x8014266C),
 	OVERLAY_PTR(0x80142674), OVERLAY_PTR(0x8014267C), OVERLAY_PTR(0x80142684), OVERLAY_PTR(0x8014268C), OVERLAY_PTR(0x80142694), OVERLAY_PTR(0x801426A0), OVERLAY_PTR(0x801426AC),
 };
-u32 D_8013D730_14C6E0 = 4;
-s32 D_8013D734_14C6E4 = 0;
-s16 D_8013D738_14C6E8[6] = { 0, 0, 0, 0, 0, 0 };
-Unk80052B40 D_8013D744_14C6F4 = { 0, 0, 0 };
-Unk80052B40 D_8013D74C_14C6FC = { 0, 0, 0 };
-u16 D_8013D754_14C704 = 0;
-s32 D_8013D758_14C708 = 0;
-s32 D_8013D75C_14C70C = 0;
-s32 D_8013D760_14C710 = 0;
-s32 D_8013D764_14C714 = 0;
-u8 D_8013D768_14C718 = 0;
-
 void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	s32 var_v0;
 
@@ -1151,17 +1139,21 @@ void func_8009EE30_ADDE0(void)
 	gSP1Quadrangle(D_8005BB2C++, 0, 7, 8, 9, 0);
 }
 
-// CURRENT(17729)
+// CURRENT(7532)
 #ifdef NON_MATCHING
 void func_8009F130_AE0E0(void) {
+	static SignedWord selectedIndex = { 4 };
 	s16 alpha;
 	u8 menuVals[9];
-	s32 stickX;
-	s32 stickY;
+	s16 pad;
+	s16 x;
+	s16 y;
 	s32 i;
 	s32 icon;
 	u8 *menuPtr;
 	s32 selected;
+	s32 stickX;
+	s32 stickY;
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -1178,7 +1170,7 @@ void func_8009F130_AE0E0(void) {
 	} while (i--);
 
 	if (D_8013D734_14C6E4 == -1) {
-		D_8013D730_14C6E0 = 4;
+		selectedIndex.word = 4;
 	}
 
 	if (D_8014ED54 != 0) {
@@ -1198,22 +1190,22 @@ void func_8009F130_AE0E0(void) {
 		}
 	}
 
-	stickX = currentControllerStates[0].stick_x;
+	stickX = D_8004758A;
 	{
-		s16 x;
+		s32 x;
 
-		if (stickX < 0) {
-			x = -stickX;
-		} else {
+		if (stickX >= 0) {
 			x = stickX;
+		} else {
+			x = -stickX;
 		}
 
 		if (x < 0x14) {
-			stickY = currentControllerStates[0].stick_y;
-			if (stickY < 0) {
-				x = -stickY;
-			} else {
+			stickY = D_8004758B;
+			if (stickY >= 0) {
 				x = stickY;
+			} else {
+				x = -stickY;
 			}
 			if (x < 0x14) {
 				D_8014F1E0 = 1;
@@ -1222,54 +1214,54 @@ void func_8009F130_AE0E0(void) {
 	}
 
 	if (D_8014F1E0 == 1) {
-		if ((stickX < -0x1E) && (D_8013D730_14C6E0 >= 4) && (menuVals[D_8013D730_14C6E0] != 0xF)) {
-			D_8013D730_14C6E0--;
+		if ((stickX < -0x1E) && (selectedIndex.word >= 4) && (menuVals[selectedIndex.word - 1] != 0xF)) {
+			selectedIndex.word--;
 			D_8014F1E0 = 0;
 			func_800153D8_15FD8(0xC7);
-			stickX = currentControllerStates[0].stick_x;
+			stickX = D_8004758A;
 		}
 
-		if ((stickX >= 0x1F) && (D_8013D730_14C6E0 < 5) && (menuVals[D_8013D730_14C6E0 + 1] != 0xF) && (D_8013D738_14C6E8[0] == 0)) {
-			D_8013D730_14C6E0++;
+		if ((stickX >= 0x1F) && (selectedIndex.word < 5) && (menuVals[selectedIndex.word + 1] != 0xF) && (D_8013D738_14C6E8[0] == 0)) {
+			selectedIndex.word++;
 			D_8014F1E0 = 0;
 			func_800153D8_15FD8(0xC7);
 		}
 
-		stickY = currentControllerStates[0].stick_y;
-		if ((stickY >= 0x1F) && (D_8013D730_14C6E0 >= 2) && (menuVals[D_8013D730_14C6E0 - 3] != 0xF)) {
-			D_8013D730_14C6E0 -= 3;
+		stickY = D_8004758B;
+		if ((stickY >= 0x1F) && (selectedIndex.word >= 2) && (menuVals[selectedIndex.word - 3] != 0xF)) {
+			selectedIndex.word -= 3;
 			D_8014F1E0 = 0;
 			func_800153D8_15FD8(0xC7);
-			stickY = currentControllerStates[0].stick_y;
+			stickY = D_8004758B;
 		}
 
-		if ((stickY < -0x1E) && (D_8013D730_14C6E0 < 7) && (menuVals[D_8013D730_14C6E0 + 3] != 0xF)) {
-			D_8013D730_14C6E0 += 3;
+		if ((stickY < -0x1E) && (selectedIndex.word < 7) && (menuVals[selectedIndex.word + 3] != 0xF)) {
+			selectedIndex.word += 3;
 			D_8014F1E0 = 0;
 			func_800153D8_15FD8(0xC7);
 		}
 	}
 
 	alpha = D_8014ED56;
-	selected = menuVals[D_8013D730_14C6E0];
+	selected = menuVals[selectedIndex.word];
 	if ((alpha != 0xFF) || (D_80052AD0 == 0)) {
 		D_8013D734_14C6E4 = -1;
 		func_8001A54C_1B14C(D_801426B8_151668);
 		alpha = D_8014ED56 - 0x20;
-		D_8014ED56 = alpha;
+		D_8014ED56 -= 0x20;
 	} else {
 		if (D_8013D734_14C6E4 != selected) {
 			D_8013D734_14C6E4 = selected;
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				func_8001A54C_1B14C((void *) (&D_8013D67C_14C62C)[D_8013D734_14C6E4]);
+				func_8001A54C_1B14C((u8 *) D_8013D67C_14C62C[D_8013D734_14C6E4]);
 				break;
 			case 2:
-				func_8001A54C_1B14C((void *) (&D_8013D6F4_14C6A4)[D_8013D734_14C6E4]);
+				func_8001A54C_1B14C((u8 *) D_8013D6F4_14C6A4[D_8013D734_14C6E4]);
 				break;
 			case 1:
-				func_8001A54C_1B14C((void *) (&D_8013D6B8_14C668)[D_8013D734_14C6E4]);
+				func_8001A54C_1B14C((u8 *) D_8013D6B8_14C668[D_8013D734_14C6E4]);
 				break;
 			}
 			alpha = D_8014ED56;
@@ -1278,7 +1270,7 @@ void func_8009F130_AE0E0(void) {
 	}
 
 	if (D_8014F6C8 != -1) {
-		D_8013D730_14C6E0 = D_8014F6C8;
+		selectedIndex.word = D_8014F6C8;
 	}
 
 	if (alpha < 0xFF) {
@@ -1293,18 +1285,15 @@ void func_8009F130_AE0E0(void) {
 		u8 item = *menuPtr;
 
 		if (item != 0xF) {
-			s16 x;
-			s16 y;
-
 			x = (s16) ((((i % 3) << 5) + (D_80068084 / 2)) - 0x2C);
 			icon = D_8013D66C_14C61C[item];
 
-			if (i == D_8013D730_14C6E0) {
+			if (i == selectedIndex.word) {
 				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0xB9, 0xFF, 0xFF, D_8014ED56 & 0xFF);
 
-				if (D_8013D730_14C6E0 != D_8014EDDE) {
-					func_80013810_14410(D_8013D733_14C6E3);
-					D_8014EDDE = D_8013D730_14C6E0;
+				if (selectedIndex.word != ((SignedWord *)&D_8014EDDC)->unsignedHalves.low) {
+					func_80013810_14410(selectedIndex.signedBytes[3]);
+					((SignedWord *)&D_8014EDDC)->unsignedHalves.low = selectedIndex.word;
 				}
 			} else {
 				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0x5C, 0x7F, 0x7F, D_8014ED56 & 0xFF);
@@ -1313,7 +1302,7 @@ void func_8009F130_AE0E0(void) {
 			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (icon * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			y = ((i / 3) * 0x1E) + 0x38;
-			gSPTextureRectangle(D_8005BB2C++, x * 4, y * 4, (x + 0x18) * 4, (y + 0x18) * 4, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
+			gSPTextureRectangle(D_8005BB2C++, x << 2, y << 2, (x + 0x18) << 2, (y + 0x18) << 2, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
 		}
 
 		menuPtr--;
@@ -1324,7 +1313,7 @@ void func_8009F130_AE0E0(void) {
 			func_800153D8_15FD8(0xC6);
 		}
 
-		if (menuVals[D_8013D730_14C6E0] == 0xE) {
+		if (menuVals[selectedIndex.word] == 0xE) {
 			if (D_8014ED54 == 0) {
 				D_8014ED54 = 1;
 				return;
@@ -1332,14 +1321,14 @@ void func_8009F130_AE0E0(void) {
 			func_80006DAC_79AC(0, 1);
 		}
 
-		if (D_8013D730_14C6E0 == 3) {
+		if (selectedIndex.word == 3) {
 			D_80052B34->unk3C = (s16) (vehicleTypes[D_80052B34->unk1A].unk61 << 8);
-			((void (*)(VehicleType *, s32, VehicleInstance **)) func_800FD410_10C3C0)(&vehicleTypes[D_80052B34->unk1A], 0x70, &D_80052B34);
+			func_800FD410_10C3C0(&vehicleTypes[D_80052B34->unk1A]);
 			func_801392FC_1482AC(1);
 		}
 
-		if (D_8013D730_14C6E0 != 3) {
-			selected = menuVals[D_8013D730_14C6E0];
+		if (selectedIndex.word != 3) {
+			selected = menuVals[selectedIndex.word];
 			if ((selected != 0xF) && (selected != 8)) {
 				D_80050AD4 = selected;
 			}
@@ -1349,7 +1338,7 @@ void func_8009F130_AE0E0(void) {
 		gameplayMode = D_80052AE0;
 		D_80052B34->unk6 = D_801591D4;
 		D_8014ED56--;
-		D_8014F6C8 = D_8013D730_14C6E0;
+		D_8014F6C8 = selectedIndex.word;
 	}
 
 	if ((D_80159320 & 0x08000000) != 0) {
@@ -1358,14 +1347,28 @@ void func_8009F130_AE0E0(void) {
 	}
 
 	if (D_8014ED56 < 0x21) {
-		D_8013D730_14C6E0 = 4;
+		selectedIndex.word = 4;
 	}
 
 	gDPPipeSync(D_8005BB2C++);
 }
+
+
 #else
+s32 D_8013D730_14C6E0 = 4;
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009F130_AE0E0.s")
 #endif
+
+s32 D_8013D734_14C6E4 = 0;
+s16 D_8013D738_14C6E8[6] = { 0, 0, 0, 0, 0, 0 };
+Unk80052B40 D_8013D744_14C6F4 = { 0, 0, 0 };
+Unk80052B40 D_8013D74C_14C6FC = { 0, 0, 0 };
+u16 D_8013D754_14C704 = 0;
+s32 D_8013D758_14C708 = 0;
+s32 D_8013D75C_14C70C = 0;
+s32 D_8013D760_14C710 = 0;
+s32 D_8013D764_14C714 = 0;
+u8 D_8013D768_14C718 = 0;
 
 void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 	D_8014F1EC = (f32) arg0;

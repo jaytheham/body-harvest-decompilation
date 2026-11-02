@@ -4306,10 +4306,15 @@ typedef union {
 typedef union {
 	s32 word;
 	u8 bytes[4];
+	s8 signedBytes[4];
 	struct {
 		s16 high;
 		s16 low;
 	} halves;
+	struct {
+		u16 high;
+		u16 low;
+	} unsignedHalves;
 } SignedWord;
 
 typedef struct {
