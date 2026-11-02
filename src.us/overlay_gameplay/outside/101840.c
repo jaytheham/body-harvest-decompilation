@@ -3012,15 +3012,13 @@ void func_800FB468_10A418(VehicleInstance *arg0, f32 arg1) { arg0->unk50 = arg1;
 void func_800FB484_10A434(VehicleInstance *arg0, f32 arg1) { arg0->unk54 = arg1; arg0->unk4 = (s16)(s32)arg1; }
 
 void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
-	s32 temp_v0;
-	s32 temp_v1;
+	s32 index;
 
-	temp_v0 = D_801593E8;
-	temp_v1 = temp_v0 * 2;
-	*(s16 *)((u8 *)D_80159328 + temp_v1) = arg0;
-	*(s16 *)((u8 *)D_80159368 + temp_v1) = arg1;
-	*(s16 *)((u8 *)D_801593A8 + temp_v1) = arg2;
-	D_801593E8 = temp_v0 + 1;
+	index = D_801593E8;
+	D_80159328[index] = arg0;
+	D_80159368[index] = arg1;
+	D_801593A8[index] = arg2;
+	D_801593E8 = index + 1;
 	if (D_801593E8 >= 0x20) {
 		D_801593E8 = 0;
 	}
