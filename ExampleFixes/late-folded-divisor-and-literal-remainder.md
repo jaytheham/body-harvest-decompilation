@@ -45,3 +45,19 @@ if (loop--) {
 The guarded loop with the empty pointer test IDO retained the coordinate-table address in a saved register and changed the phase load inside the selected branch from a cached address plus `lh 0(base)` to the target's direct `lui` / `lh offset(base)`. The test emitted no branch or extra memory access.
 
 The containing function remains unmatched.
+
+
+## Keep the level address across the initial helper
+
+Incorrect ASM: the entry uses `lui t9,currentLevel` and `lw t9,offset(t9)`, omitting the target's cached-address `addiu` and separate saved-register prologue store. The enabled function is four bytes too short.
+
+Code changed: retain an empty pointer test immediately after the helper and on the same source line as the first graphics macro:
+
+```c
+level = &currentLevel;
+tile = (TileEntry *)D_801479B0_156960[level[0] - 1];
+selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
+if (level) {} gDPPipeSync(D_8005BB2C++);
+```
+
+Correct ASM: the entry now saves the address register, emits `lui` / `addiu` for `currentLevel`, and loads its value through offset zero before the helper. This reproduces the target's entry instruction sequence and total size `0x4fc`; the saved-register role still differs. Enabled score improves from5761 to5382. Loop address rematerialization and color/register scheduling remain unmatched, so the function stays under `NON_MATCHING`.

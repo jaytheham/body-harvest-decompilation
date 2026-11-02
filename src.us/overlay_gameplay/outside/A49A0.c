@@ -594,7 +594,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	tile = (TileEntry *)D_801479B0_156960[level[0] - 1];
 	selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
 
-	gDPPipeSync(D_8005BB2C++);
+	if (level) {} gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
