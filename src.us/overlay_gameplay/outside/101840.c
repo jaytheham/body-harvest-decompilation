@@ -3076,7 +3076,7 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 #ifdef NON_MATCHING
 void func_800FB504_10A4B4(void)
 {
-	s32 i;
+	union { s32 value; VehicleInstance *player; } work;
 	s32 bestScore;
 	s16 bestIndex;
 	VehicleType *type;
@@ -3103,13 +3103,14 @@ void func_800FB504_10A4B4(void)
 	bestIndex = -1;
 	yaw = D_80159318;
 
-	if (!D_80052B34)
+	work.player = D_80052B34;
+	if (!work.player)
 	{
 		D_80158FF4 = NULL;
 		return;
 	}
 
-	type = &vehicleTypes[D_80052B34->unk1A];
+	type = &vehicleTypes[work.player->unk1A];
 	steerClamp = type->arcOfFire >= 0 ? type->arcOfFire : -type->arcOfFire;
 
 	pitchClamp = D_80052B2C->unk36;
@@ -3124,7 +3125,8 @@ void func_800FB504_10A4B4(void)
 				type->gun2X = -type->gun2X;
 			}
 		}
-		func_80128504_1374B4((AlienInstance *)D_80052B34, 1, &worldX, &worldY, &worldZ);
+		work.player = D_80052B34;
+		func_80128504_1374B4((AlienInstance *)work.player, 1, &worldX, &worldY, &worldZ);
 	}
 	else
 	{
@@ -3136,7 +3138,8 @@ void func_800FB504_10A4B4(void)
 				type->gun1X = -type->gun1X;
 			}
 		}
-		func_80128504_1374B4((AlienInstance *)D_80052B34, 0, &worldX, &worldY, &worldZ);
+		work.player = D_80052B34;
+		func_80128504_1374B4((AlienInstance *)work.player, 0, &worldX, &worldY, &worldZ);
 	}
 
 	if (!(type->unk4C & 0x00800000))
@@ -3195,10 +3198,10 @@ void func_800FB504_10A4B4(void)
 	if (!D_80159048)
 	{
 		bestScore = 0x17E8;
-		i = 0xFF;
-		while (i--)
+		work.value = 0xFF;
+		while (work.value--)
 		{
-			scanAlien = &alienInstances[i];
+			scanAlien = &alienInstances[work.value];
 
 			if (scanAlien->typeIndex >= 2)
 			{
@@ -3223,7 +3226,7 @@ void func_800FB504_10A4B4(void)
 						if (tmp < bestScore)
 						{
 							bestScore = tmp;
-							bestIndex = i;
+							bestIndex = work.value;
 						}
 					}
 				}
@@ -3293,33 +3296,33 @@ void func_800FB504_10A4B4(void)
 	}
 
 	diff = func_800F9C50_108C00(D_80052B2C->unk36, pitchClamp);
-	tmp = -diff < diff ? diff : -diff;
+	work.value = -diff < diff ? diff : -diff;
 
-	if (tmp < D_8015929C)
+	if (work.value < D_8015929C)
 	{
 		D_80052B2C->unk36 = pitchClamp;
 	}
 	else
 	{
-		tmp = diff < 0 ? D_8015929C : -D_8015929C;
-		D_80052B2C->unk36 += tmp;
+		work.value = diff < 0 ? D_8015929C : -D_8015929C;
+		D_80052B2C->unk36 += work.value;
 	}
 
 	if ((currentLevel == 4) && (D_80052B34->unk1A == 0xC))
 	{
-		diff = D_80052B2C->unk36;
-		if (diff >= 0)
+		cosVal = D_80052B2C->unk36;
+		if (cosVal >= 0)
 		{
-			tmp = diff;
+			work.value = cosVal;
 		}
 		else
 		{
-			tmp = -diff;
+			work.value = -cosVal;
 		}
 
-		if (tmp < 0x4000)
+		if (work.value < 0x4000)
 		{
-			cosVal = (s16)(((f64)(f32)coss(D_80052B2C->unk36) / 32768.0) * D_80144A58_153A08[0]);
+			cosVal = (s16)(((f64)(f32)coss(cosVal) / 32768.0) * D_80144A58_153A08[0]);
 			if (yaw < cosVal)
 			{
 				yaw = cosVal;
@@ -3328,16 +3331,16 @@ void func_800FB504_10A4B4(void)
 	}
 
 	diff = func_800F9C50_108C00(D_80159318, yaw);
-	tmp = -diff < diff ? diff : -diff;
+	work.value = -diff < diff ? diff : -diff;
 
-	if (tmp < 0x190)
+	if (work.value < 0x190)
 	{
 		D_80159318 = yaw;
 	}
 	else
 	{
-		tmp = diff < 0 ? 0x190 : -0x190;
-		D_80159318 += tmp;
+		work.value = diff < 0 ? 0x190 : -0x190;
+		D_80159318 += work.value;
 	}
 
 	if (type->arcOfFire < 0)
@@ -3353,17 +3356,17 @@ void func_800FB504_10A4B4(void)
 	D_8015F9F0 = 0x2C;
 	diff = D_80052B34->unk6 - D_80052B2C->unk36;
 	nextX = (s32)((((f64)(f32)(bestScore = coss((u16)D_80159318)) / 32768.0) * ((f64)(f32)coss(diff & 0xFFFF) / 32768.0) * D_80144A60_153A10[0]) + (f64)worldX);
-	tmp = (s32)((((f64)(f32)sins((u16)D_80159318) / 32768.0) * D_80144A68_153A18[0]) + (f64)worldY);
+	work.value = (s32)((((f64)(f32)sins((u16)D_80159318) / 32768.0) * D_80144A68_153A18[0]) + (f64)worldY);
 	diff = D_80052B34->unk6 - D_80052B2C->unk36;
 	nextZ = (s32)((((f64)(f32)(bestScore = coss((u16)D_80159318)) / 32768.0) * ((f64)(f32)sins(diff & 0xFFFF) / 32768.0) * D_80144A70_153A20[0]) + (f64)worldZ);
 
-	tmp = nextX ? tmp : tmp;
+	work.value = nextX ? work.value : work.value;
 	selectedInput = D_801493A0 << 8;
 	if (nextX < selectedInput)
 	{
 		scale = (f32)(selectedInput - worldX) / (f32)(nextX - worldX);
 		nextX = selectedInput;
-		tmp = (s32)((f32)worldY + ((f32)(tmp - worldY) * scale));
+		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 		nextZ = (s32)((f32)worldZ + ((f32)(nextZ - worldZ) * scale));
 	}
 
@@ -3373,7 +3376,7 @@ void func_800FB504_10A4B4(void)
 		scale = (f32)(selectedInput - worldZ) / (f32)(nextZ - worldZ);
 		nextZ = selectedInput;
 		nextX = (s32)((f32)worldX + ((f32)(nextX - worldX) * scale));
-		tmp = (s32)((f32)worldY + ((f32)(tmp - worldY) * scale));
+		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 	}
 
 	selectedInput = D_80149398 << 8;
@@ -3381,7 +3384,7 @@ void func_800FB504_10A4B4(void)
 	{
 		scale = (f32)(selectedInput - worldX) / (f32)(nextX - worldX);
 		nextX = selectedInput;
-		tmp = (s32)((f32)worldY + ((f32)(tmp - worldY) * scale));
+		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 		nextZ = (s32)((f32)worldZ + ((f32)(nextZ - worldZ) * scale));
 	}
 
@@ -3391,11 +3394,11 @@ void func_800FB504_10A4B4(void)
 		scale = (f32)(selectedInput - worldZ) / (f32)(nextZ - worldZ);
 		nextZ = selectedInput;
 		nextX = (s32)((f32)worldX + ((f32)(nextX - worldX) * scale));
-		tmp = (s32)((f32)worldY + ((f32)(tmp - worldY) * scale));
+		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 	}
 
 	D_80159000.unk0 = nextX;
-	D_80159000.unk2 = tmp;
+	D_80159000.unk2 = work.value;
 	D_80159000.unk4 = nextZ;
 
 	if (D_80050AD4 == 1)
@@ -3424,9 +3427,9 @@ void func_800FB504_10A4B4(void)
 		nextX = 0;
 	}
 
-	i = D_80158FEC != NULL ? (s32)D_80158FEC : (s32)D_80158FF4;
+	work.value = D_80158FEC != NULL ? (s32)D_80158FEC : (s32)D_80158FF4;
 
-	func_8012B150_13A100((s32)D_80052B34, nextX, (InputStruct_8012B150 *)D_80158FF4, i);
+	func_8012B150_13A100((s32)D_80052B34, nextX, (InputStruct_8012B150 *)D_80158FF4, work.value);
 
 	D_801591B4 = D_801591F8.hit.unk8;
 	((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = animFrame;
@@ -3448,7 +3451,7 @@ void func_800FB504_10A4B4(void)
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FB504_10A4B4.s")
+GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FB504_10A4B4.s")
 #endif
 
 s32 func_800FC1CC_10B17C(void) {
