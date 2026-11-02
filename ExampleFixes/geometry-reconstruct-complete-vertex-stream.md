@@ -1,0 +1,7 @@
+`incorrect ASM` -> `code changed` -> `correct ASM`
+
+In the still-unmatched `func_800F63D0_105380`, the draft used a 44-byte descriptor stride, passed three unrelated float locals as a vector, wrote only sixteen vertices with a cached cursor, and emitted four triangles. These produced a 143856 diff score and a 0x1B8 frame.
+
+-> Use `D_801601F0[arg3].unk8`, a real `Vec3f` direction, and direct `D_8005BB34` member stores with one global increment for each of the nineteen vertices. Reconstruct the omitted midpoint/wing vertices and initialize their geometry and palette fields. Use the existing graphics macros for both texture loads and the sixteen target triangles. Integer 4 and 2 in the radius calculations preserve the target DIV.S and MUL.S operations. Represent the existing double constant as `ShadowGeometryConstant` without moving its data, and reuse short geometry scratch values across disjoint phases.
+
+-> The descriptor stride is 22 bytes; the vertex cursor advances nineteen times; the graphics stream contains all forty target packets. A comparison of the built assembly verified matching constant vertex fields and constant packet words. Separating the wide-X and absolute-X words gives the target 0x168 frame. Enabled-function diff score improves to 36237, with instruction scheduling, register allocation, and remaining expression differences unresolved. The NON_MATCHING wrapper remains; full US and EU checksums pass with the original assembly selected.
