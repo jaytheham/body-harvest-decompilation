@@ -337,8 +337,8 @@ s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	return 0xFF;
 }
 
-#ifdef NON_MATCHING
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
+#ifdef NON_MATCHING
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
 	s32 pad54; s32 pad50; s32 pad4C; s32 pad48; s32 pad44; s32 pad40;
 	s32 var_a2; s32 var_a3; s32 wallIndex; BoundingBox *wall;
@@ -360,7 +360,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	var_t2 = *arg4 - arg1;
 	var_t1 = *arg5 - arg2;
 	*arg6 = 0;
-	var_t3 = 0;
+	var_t3 = 0; if ((u32)&D_8014FD30 * 0) {}
 	do {
 		if (D_8014FD30.main.maxX < *arg3) {
 			if (var_t0 == 0) {
@@ -368,7 +368,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			}
 			temp_f14 = var_t0;
 			var_t3 = 1;
-			outerScale = (D_8014FD30.main.maxX - arg0) / temp_f14;
+			outerScale = (D_8014FD30.main.maxX - arg0) / temp_f14; if ((s32)outerScale * 0) {}
 			*arg3 = D_8014FD30.main.maxX;
 			temp_f0 = var_t2 * outerScale;
 			temp_f12 = var_t1 * outerScale;
@@ -377,14 +377,14 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			var_t0 = var_t0 * outerScale;
 			var_t2 = temp_f0;
 			*arg6 = 1;
-			var_t1 = temp_f12; if ((s32)outerScale * 0) {}
+			var_t1 = temp_f12;
 		} else if (*arg3 < D_8014FD30.main.minX) {
 			if (var_t0 == 0) {
 				break;
 			}
 			temp_f14 = var_t0;
 			var_t3 = 1;
-			outerScale = (D_8014FD30.main.minX - arg0) / temp_f14;
+			outerScale = (D_8014FD30.main.minX - arg0) / temp_f14; if ((s32)outerScale * 0) {}
 			*arg3 = D_8014FD30.main.minX;
 			temp_f0 = var_t2 * outerScale;
 			temp_f12 = var_t1 * outerScale;
@@ -393,7 +393,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			var_t0 = var_t0 * outerScale;
 			var_t2 = temp_f0;
 			*arg6 = 1;
-			var_t1 = temp_f12; if ((s32)outerScale * 0) {}
+			var_t1 = temp_f12;
 		}
 
 		if (D_8014FD30.main.maxZ < *arg5) {
@@ -408,10 +408,10 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			*arg3 = arg0 + temp_f12;
 			*arg4 = arg1 + temp_f0;
 			var_t0 = temp_f12;
-			var_t2 = temp_f0;
+			var_t2 = temp_f0; if ((s32)outerScale * 0) {}
 			*arg5 = D_8014FD30.main.maxZ;
 			var_t1 = var_t1 * outerScale;
-			*arg6 = 0; if ((s32)outerScale * 0) {}
+			*arg6 = 0; if (var_t0 * 0) {}
 		} else if (*arg5 < D_8014FD30.main.minZ) {
 			if (var_t1 == 0) {
 				break;
@@ -424,11 +424,11 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			*arg3 = arg0 + temp_f12;
 			*arg4 = arg1 + temp_f0;
 			var_t0 = temp_f12;
-			var_t2 = temp_f0;
+			var_t2 = temp_f0; if ((s32)outerScale * 0) {}
 			*arg5 = D_8014FD30.main.minZ;
 			var_t1 = var_t1 * outerScale;
 
-			*arg6 = 0; if ((s32)outerScale * 0) {}
+			*arg6 = 0; if (var_t0 * 0) {}
 		}
 
 		for (wallIndex = 0; wallIndex < 2; wallIndex++) {
