@@ -184,7 +184,7 @@ s32 func_80009F18_AB18(s32);
 void func_8000A160(void);
 void func_8000CF4C_DB4C(void *arg0, void *arg1, u8 arg2, s32 arg3);
 void func_8007DAA8_165B68(void *arg0, s32 arg1, void *arg2, f32 arg3, s32 arg4);
-s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1);
+s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1);
 s32 func_8007FB08_8EAB8(u8 arg0, u8 arg1);
 s32 func_8010E684_11D634(VehicleInstance *arg0, AlienInstance *arg1);
 int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9);

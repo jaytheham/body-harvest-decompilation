@@ -281,16 +281,11 @@ AlienInstance D_8013C1EC_14B19C = {
 	0,      /* pad4F */
 };
 
-u8 D_8013C23C_14B1EC[8] = {0x00, 0x40, 0x00, 0x40, 0x00, 0x40, 0x00, 0x00};
-u8 D_8013C244_14B1F4[8] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
-u8 D_8013C24C_14B1FC[0x14] = {
-	0x00, 0x60, 0x00, 0x60, 0x00, 0x60, 0x00, 0x40,
-	0x00, 0x40, 0x00, 0x40, 0x00, 0x20, 0x00, 0x20,
-	0x00, 0x20, 0x00, 0x00,
-};
-
-u32 D_8013C260_14B210[2] = {0x00300030, 0x00300000};
-u32 D_8013C268_14B218[2] = {0x00400040, 0x00400000};
+Unk80052B40 D_8013C23C_14B1EC = { { 0x40, 0x40, 0x40 } };
+Unk80052B40 D_8013C244_14B1F4 = { { 0, 0, 0 } };
+AlienRenderScales D_8013C24C_14B1FC = { { { 0x60, 0x60, 0x60 }, { 0x40, 0x40, 0x40 }, { 0x20, 0x20, 0x20 } } };
+Unk80052B40 D_8013C260_14B210 = { { 0x30, 0x30, 0x30 } };
+Unk80052B40 D_8013C268_14B218 = { { 0x40, 0x40, 0x40 } };
 
 s16 D_8013C270_14B220[8] = {
 	(s16)0xFF6A, (s16)0xFF6A, (s16)0xFEA2, (s16)0xFE3E,
@@ -1111,100 +1106,74 @@ void func_8007AAEC_89A9C(void)
   }
 }
 
-// CURRENT(5401)
+// CURRENT(2506)
 #ifdef NON_MATCHING
 void func_8007AF8C_89F3C(void)
 {
-	AlienInstance *inst;
-	AlienInstance *end;
 	s32 countTypeA;
 	s32 countTypeB;
 	s32 countTypeC;
 	s32 countTypeD;
 	s32 idx;
-	u8 type;
-	u8 baseTypeA;
-	u8 baseTypeB;
-	u8 baseTypeC;
+	AlienInstance *inst;
+	s32 baseTypeA;
+	AlienInstance *end;
 
 	countTypeA = 0;
 	countTypeB = 0;
 	countTypeC = 0;
 	countTypeD = 0;
 	inst = alienInstances;
-	end = (AlienInstance *)&D_8004D148;
-	type = inst->typeIndex;
-	while (1)
+	end = &alienInstances[0xFF];
+	do
 	{
-		if ((type == 1) && (inst->unk24 != 0x13))
+		if ((inst->typeIndex == 1) && (inst->unk24 != 0x13))
 		{
 			countTypeA++;
 		}
-		else if ((type == 2) || (type == 0x20))
+		else if ((inst->typeIndex == 2) || (inst->typeIndex == 0x20))
 		{
 			countTypeB++;
 		}
-		else if ((type < 3) || (type >= 0x18))
-		{
-			if (type >= 0x21)
-			{
-				countTypeC++;
-			}
-			else if ((type >= 0x18) && (type < 0x20))
-			{
-				countTypeD++;
-			}
-		}
-		else
+		else if (((inst->typeIndex >= 3) && (inst->typeIndex < 0x18)) || (inst->typeIndex >= 0x21))
 		{
 			countTypeC++;
 		}
+		else if ((inst->typeIndex >= 0x18) && (inst->typeIndex < 0x20))
+		{
+			countTypeD++;
+		}
 
 		inst++;
-		if (!(inst < end))
-		{
-			break;
-		}
-		type = inst->typeIndex;
-	}
+	} while (inst < end);
 
+	baseTypeA = countTypeA & 0xFF;
 	D_8014D507 = countTypeA;
-	baseTypeA = countTypeA;
 	D_8014D508 = baseTypeA + countTypeB;
 	D_8014D509 = D_8014D508 + countTypeC;
 	D_8014D50A = D_8014D509 + countTypeD;
-
-	baseTypeB = D_8014D508;
-	baseTypeC = D_8014D509;
 	inst = alienInstances;
 	idx = 0;
 	do {
+		if ((inst->typeIndex == 1) && (inst->unk24 != 0x13))
 		{
 			D_8014D408[baseTypeA - countTypeA] = idx;
 			countTypeA--;
 		}
-		if ((type == 2) || (type == 0x20))
+		else if ((inst->typeIndex == 2) || (inst->typeIndex == 0x20))
 		{
-			D_8014D408[baseTypeB - countTypeB] = idx;
+			D_8014D408[D_8014D508 - countTypeB] = idx;
 			countTypeB--;
 		}
-		else if ((type < 3) || (type >= 0x18))
+		else if (((inst->typeIndex >= 3) && (inst->typeIndex < 0x18)) || (inst->typeIndex >= 0x21))
 		{
-			if (type >= 0x21)
-			{
-				D_8014D408[baseTypeC - countTypeC] = idx;
-				countTypeC--;
-			}
-			else if ((type >= 0x18) && (type < 0x20))
-			{
-				D_8014D408[D_8014D50A - countTypeD] = idx;
-				countTypeD--;
-			}
-		}
-		else
-		{
-			D_8014D408[baseTypeC - countTypeC] = idx;
+			D_8014D408[D_8014D509 - countTypeC] = idx;
 			countTypeC--;
+		}
+		else if ((inst->typeIndex >= 0x18) && (inst->typeIndex < 0x20))
+		{
+			D_8014D408[D_8014D50A - countTypeD] = idx;
+			countTypeD--;
 		}
 
 		idx++;
@@ -1311,69 +1280,59 @@ void func_8007B370_8A320(u8 arg0) {
 }
 
 
-// CURRENT(3823)
+// CURRENT(30)
 #ifdef NON_MATCHING
 void func_8007B9CC_8A97C(u8 arg0) {
-	AlienInstance *alien;
-	AlienType *type;
+	u8 typeIndex;
 	Unk80052B40 sp70;
 	Unk80052B40 sp68;
 	Unk80052B40 sp60;
 	s32 sp5C;
-	s8 sp50;
-	s8 sp51;
-	s8 sp52;
-	s16 sp4E;
-	s16 sp4C;
-	u8 typeIndex;
-	s32 flags;
+	AlienType *type;
 	s16 yOffset;
-	void *model;
+	u8 color[3];
+	Vec2_S16 ground;
+	Gfx *model;
+	Gfx *gfx;
 
-	extern Gfx D_50509D8[];
-
-	alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
-	sp60 = *(Unk80052B40 *)&D_8013C23C_14B1EC[0];
-	sp5C = alien->unkC;
+	typeIndex = alienInstances[arg0].typeIndex;
+	sp60 = D_8013C23C_14B1EC;
+	sp5C = alienInstances[arg0].unkC;
 
 	if (typeIndex == 0x1B) {
-		sp50 = 0xFF;
-		sp51 = 0xFF;
-		sp52 = 0xFF;
-		sp4C = alien->unk0;
-		sp4E = alien->unk4;
+		color[0] = 0xFF;
+		color[1] = 0xFF;
+		color[2] = 0xFF;
+		ground.x = alienInstances[arg0].unk0;
+		ground.z = alienInstances[arg0].unk4;
 
 		if (currentLevel == 3) {
-			f32 temp_f0;
-
-			temp_f0 = (((s16)(func_800B84D0_C7480(alien->unk0, alien->unk4) >> 8) - alien->unk2) + 0x4B0) / 600.0f;
-			func_800B2354_C1304(&sp4C, &sp50, (s16)(temp_f0 * 256.0f), (s16)(temp_f0 * 800.0f));
+			yOffset = func_800B84D0_C7480(alienInstances[arg0].unk0, alienInstances[arg0].unk4) >> 8;
+			func_800B2354_C1304(&ground.x, color, (((yOffset - alienInstances[arg0].unk2) + 0x4B0) / 600.0f) * 256.0f, (((yOffset - alienInstances[arg0].unk2) + 0x4B0) / 600.0f) * 800.0f);
 		} else {
-			func_800B2354_C1304(&sp4C, &sp50, 0x100, 0x320);
+			func_800B2354_C1304(&ground.x, color, 0x100, 0x320);
 		}
 	}
 
-	sp70.unk2 = alien->unk2 >> 2;
-	sp70.unk0 = alien->unk0 >> 2;
-	sp70.unk4 = alien->unk4 >> 2;
-	sp68.unk0 = 0x4000 - alien->unk6;
-	sp68.unk2 = alien->unk44 + alien->unk8;
-	sp68.unk4 = alien->unk42 + alien->unkA;
+	sp70.unk0 = alienInstances[arg0].unk0 >> 2;
+	sp70.unk2 = alienInstances[arg0].unk2 >> 2;
+	sp70.unk4 = alienInstances[arg0].unk4 >> 2;
+	sp68.unk0 = 0x4000 - alienInstances[arg0].unk6;
+	sp68.unk2 = alienInstances[arg0].unk8 + alienInstances[arg0].unk44;
+	sp68.unk4 = alienInstances[arg0].unkA + alienInstances[arg0].unk42;
 
-	flags = alien->unk20;
-	if (!(flags & 0x40000000) && (alienTypes[typeIndex].unk54 & 0x80)) {
-		sp68.unk2 += (s32)(((f32)sins((D_80052A8C << 11) & 0xFFFF) / 32768.0) * 512.0);
-		sp68.unk4 += (s32)(((f32)coss(((D_80052A8C + 0xC) << 11) & 0xFFFF) / 32768.0) * 512.0);
+	if (!(alienInstances[arg0].unk20 & 0x40000000) && (alienTypes[typeIndex].unk54 & 0x80)) {
+		sp68.unk2 = (s16)(((f32)sins((D_80052A8C & 31) << 11) / 32768.0) * 512.0) + sp68.unk2;
+		sp68.unk4 = (s16)(((f32)coss(((D_80052A8C + 12) & 31) << 11) / 32768.0) * 512.0) + sp68.unk4;
 	}
 
 	type = &alienTypes[typeIndex];
-	if (flags & 0x80000000) {
+	if (alienInstances[arg0].unk20 & 0x80000000) {
 		func_800038E0_44E0();
 	}
 
 	if ((typeIndex != 2) && (typeIndex != 0x20)) {
-		yOffset = alien->unk4C;
+		yOffset = alienInstances[arg0].unk4C;
 		sp60.unk2 += yOffset;
 		if (!(type->unk54 & 0x4000)) {
 			sp60.unk0 -= yOffset;
@@ -1384,13 +1343,13 @@ void func_8007B9CC_8A97C(u8 arg0) {
 	if ((typeIndex != 2) && (typeIndex != 0x20)) {
 		func_800039D0_45D0(&sp70, &sp68, &sp60, D_8005BB38);
 	} else {
-		func_800039D0_45D0(&sp70, &sp68, (Unk80052B40 *)&D_800311A0, D_8005BB38);
+		func_800039D0_45D0(&sp70, &sp68, &D_800311A0, D_8005BB38);
 	}
 
 	setRandomSeed(D_80052A8C);
-	if ((alien->unk20 & ALIEN_FLAG_UNKL) && (gameplayMode != 2)) {
-		sp68.unk2 = (func_800038E0_44E0() / 64) + alien->unk8 + alien->unk44;
-		sp68.unk4 = (func_800038E0_44E0() / 64) + alien->unkA + alien->unk42;
+	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL) && (gameplayMode != 2)) {
+		sp68.unk2 = (func_800038E0_44E0() / 64) + alienInstances[arg0].unk44 + alienInstances[arg0].unk8;
+		sp68.unk4 = (func_800038E0_44E0() / 64) + alienInstances[arg0].unk42 + alienInstances[arg0].unkA;
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -1398,18 +1357,19 @@ void func_8007B9CC_8A97C(u8 arg0) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	if (sp5C != -1) {
-		gSPSegment(D_8005BB2C++, 0x07, osVirtualToPhysical((void *)(D_8005BB38 + 0x40)));
+		gSPSegment(D_8005BB2C++, 0x07, osVirtualToPhysical(D_8005BB38 + 1));
 	}
 
 	func_8007B170_8A120(sp5C);
 
 	model = type->unk0;
-	if ((typeIndex == 0x1A) && (alien->unk20 & ALIEN_FLAG_UNKL) && (alien->unk20 & ALIEN_FLAG_UNKG)) {
+	if ((typeIndex == 0x1A) && (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL) && (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKG)) {
 		model = D_50509D8;
 	}
 
-	gSPDisplayList(D_8005BB2C++, (Gfx *)model);
+	gfx = D_8005BB2C++; gfx->words.w0 = _SHIFTL(G_DL, 24, 8) | _SHIFTL(G_DL_PUSH, 16, 8); gfx->words.w1 = (u32)model;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B9CC_8A97C.s")
 #endif
@@ -1469,10 +1429,10 @@ void func_8007BEC0_8AE70(void)
 void func_8007C044_8AFF4(void) {
 	s16 drewType1 = 0;
 	s16 drewType2Or20 = 0;
-	Unk80052B40 rotation = { 0, 0, 0 };
-	AlienRenderScales scales = { { { 0x60, 0x60, 0x60 }, { 0x40, 0x40, 0x40 }, { 0x20, 0x20, 0x20 } } };
-	Unk80052B40 smallScale = { 0x30, 0x30, 0x30 };
-	Unk80052B40 fullScale = { 0x40, 0x40, 0x40 };
+	Unk80052B40 rotation;
+	AlienRenderScales scales;
+	Unk80052B40 smallScale;
+	Unk80052B40 fullScale;
 	Unk80052B40 position;
 	AlienInstance *inst;
 	AlienType *type;
@@ -1490,6 +1450,10 @@ void func_8007C044_8AFF4(void) {
 	f32 dz;
 	f32 distance;
 
+	rotation = D_8013C244_14B1F4;
+	scales = D_8013C24C_14B1FC;
+	smallScale = D_8013C260_14B210;
+	fullScale = D_8013C268_14B218;
 	swappedTexture = 0;
 
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1499,16 +1463,14 @@ void func_8007C044_8AFF4(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 
 	for (i = 0; i < D_8014ECCC; i++) {
-			s32 typeIndex;
-			u8 typeNumber;
+			u8 typeIndex;
+			s32 typeNumber;
 
 		alienId = D_8014D510[i];
 		inst = &alienInstances[alienId];
 		flags = inst->unk20;
 
-		if ((flags & 0x200) && !(flags & 0x80000)) {
-			continue;
-		}
+		if (!(flags & 0x200) || (flags & 0x80000)) {
 
 		typeIndex = inst->typeIndex;
 		typeNumber = typeIndex;
@@ -1536,11 +1498,8 @@ void func_8007C044_8AFF4(void) {
 
 		type = &alienTypes[typeIndex];
 		if (type->unk54 & 0x200000) {
-			dx = inst->unk0 / four;
-			dz = inst->unk4 / four;
-			dy = inst->unk2 / four;
-			guLookAtReflect((Mtx *)D_8005BB38, &D_8014D550[i], D_80047954, D_80047958, D_8004795C, dx,
-				dy, dz, 0.0f, 1.0f, 0.0f);
+			guLookAtReflect(D_8005BB38, &D_8014D550[i], D_80047954, D_80047958, D_8004795C, inst->unk0 / four,
+				inst->unk2 / four, inst->unk4 / four, 0.0f, 1.0f, 0.0f);
 
 			gSPLookAt(D_8005BB2C++, &D_8014D550[i]);
 			gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
@@ -1571,6 +1530,7 @@ void func_8007C044_8AFF4(void) {
 
 		if ((type->unk54 & 0x40000) && (inst->unk48 != 0) && !(inst->unk20 & ALIEN_FLAG_UNKL)) {
 			func_8007B370_8A320(alienId);
+		}
 		}
 	}
 
@@ -1784,11 +1744,12 @@ void func_8007C044_8AFF4(void) {
 		inst = &inst[-1];
 	} while (i--);
 }
+
+// Disable and aliens don't spawn visibly (show on radar tho)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")
 #endif
 
-// Disable and aliens don't spawn visibly (show on radar tho)
 void func_8007D424_8C3D4(void) {
 	s32 idx;
 	AlienInstance *inst;
@@ -2268,54 +2229,46 @@ s32 func_8007E500_8D4B0(EntityInstance *arg0, EntityType *arg1, EntityInstance *
 	return 0;
 }
 
-// CURRENT(895)
+// CURRENT(625)
 #ifdef NON_MATCHING
-s32 func_8007E608_8D5B8(AlienInstance *arg0, AlienInstance *arg1) {
+s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 	AlienType *type0;
-	AlienType *type1;
-	s32 saved0, saved1;
+	EntityType *type1;
+	s32 saved0;
+	s32 saved1;
+	s32 result;
+	s32 state;
 
 	type0 = &alienTypes[arg0->typeIndex];
-
-	if ((s8)arg1->unkC == -2) {
-		type1 = (AlienType *)&vehicleTypes[arg1->typeIndex];
+	state = arg1->unkD;
+	if (state == -2) {
+		type1 = (EntityType *)&vehicleTypes[arg1->unk1A];
 	} else {
-		type1 = &alienTypes[arg1->typeIndex];
+		type1 = (EntityType *)&alienTypes[arg1->unk1A];
 	}
-
 	saved0 = type0->unk8;
 	saved1 = type1->unk8;
-	// Agent - you must replace these gotos
-	if ((s8)arg1->unkC != -2) {
-		if (currentLevel == 1) {
-			if (arg0->typeIndex == 0xD) {
-				if (arg1->typeIndex != 9) {
-					goto end;
-				}
+	if (state != -2) {
+		state = currentLevel;
+		if (state == 1) {
+			if (((arg0->typeIndex != 0xD) || (arg1->unk1A == 9)) && (arg1->unk1A == 0xD) && (arg0->typeIndex != 9)) {
 			}
-			if (arg1->typeIndex == 0xD) {
-				if (arg0->typeIndex == 9) {
-					goto end;
-				} else {
-					goto end;
-				}
+		} else if (state == 2) {
+			if (arg0->typeIndex != 0xD) {
+				arg0 = &arg0[1];
+				arg0 = &arg0[-1];
 			}
-		} else if (currentLevel == 2) {
-			if (arg0->typeIndex == 0xD) {
-				goto end;
-			}
-			if (arg1->typeIndex == 0xD) {
-				goto end;
+			if (arg1->unk1A != 0xD) {
+				arg0 = &arg0[1];
+				arg0 = &arg0[-1];
 			}
 		}
 	}
-
-end:
-	func_8007E500_8D4B0(arg0, type0, arg1, type1);
+	result = func_8007E500_8D4B0((EntityInstance *)arg0, (EntityType *)type0, arg1, type1);
 	type0->unk8 = saved0;
 	type1->unk8 = saved1;
+	return result;
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
 #endif
@@ -2398,54 +2351,55 @@ s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1)
 	return 1;
 }
 
-// CURRENT(7368)
-#ifdef NON_MATCHING
 void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 	s16 diffA;
 	s16 diffB;
-	s16 absA;
-	s16 absB;
+	s32 absA;
 	s16 chosen;
+	s32 absB;
 	s16 chosenDiff;
-	s16 absDiff;
-	s16 divisor;
+	s32 negative;
+	s16 heading;
 
 	if ((arg0->typeIndex < 3) || (arg0->typeIndex == 0x20)) {
 		arg0->unkE = (arg1 + arg2) / 2;
-		if (arg2 >= arg1) {
+		if ((&arg2)[0] >= (&arg1)[0]) {
 			arg0->unkE += 0x8000;
 		}
 		arg0->unk6 = arg0->unkE;
 		return;
 	}
 
-	// Agent - in body harvest code it's common for abs values to be calculated with ternary ops
-	// or one of the ABS macros
-	diffA = arg0->unkE - arg1;
-	absA = -diffA;
-	if (absA < diffA) {
-		absA = diffA;
-	}
-
-	diffB = arg2 - arg0->unkE;
-	absB = -diffB;
-	if (absB < diffB) {
-		absB = diffB;
-	}
+	/* Discarded comparisons preserve IDO live ranges and emit no instructions. */
+	heading = arg0->unkE;
+	if (heading < 0x4000) { }
+	diffA = heading;
+	diffA -= arg1;
+	if (diffA < 0x4000) { }
+	if (diffA < 0x4000) { }
+	if (diffA < 0x4000) { }
+	if (diffA < 0x4000) { }
+	negative = -diffA;
+	if (heading * heading != negative) { }
+	diffB = arg2;
+	diffB -= heading;
+	if (diffB < 0x4000) { }
+	absA = negative < diffA ? diffA : negative;
+	negative = -diffB;
+	absB = negative < diffB ? diffB : negative;
 
 	chosen = arg2;
-	chosenDiff = diffB;
 	if (absA < absB) {
 		chosen = arg1;
 		chosenDiff = diffA;
+	} else {
+		chosenDiff = diffB;
 	}
 
 	if (chosenDiff < 0) {
 		func_8007E734_8D6E4(arg0, chosen);
-		arg0->unk12 = 0;
-	} else {
-		arg0->unk12 = 0;
 	}
+	arg0->unk12 = 0;
 
 	if (chosen == arg1) {
 		arg0->unk2A = chosen - 0x4800;
@@ -2455,21 +2409,16 @@ void func_8007E980_8D930(AlienInstance *arg0, s16 arg1, s16 arg2) {
 
 	arg0->unk47 |= 2;
 
-	divisor = alienTypes[arg0->typeIndex].unk42;
-	if (divisor != 0) {
+	chosen = alienTypes[arg0->typeIndex].unk42;
+	if (chosen != 0) {
 		diffA = arg0->unk2A - arg0->unkE;
-		absDiff = -diffA;
-		if (absDiff < diffA) {
-			absDiff = diffA;
-		}
-		arg0->unk34 = (absDiff / divisor) + 0x1E;
+		absB = BH_ABS(diffA);
+		if (absB < 0) { }
+		arg0->unk34 = (absB / chosen) + 0x1E;
 	} else {
 		arg0->unk34 = 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E980_8D930.s")
-#endif
 
 // https://decomp.me/scratch/4d7WQ
 s32 func_8007EB74_8DB24(AlienInstance *arg0, AlienInstance *arg1)

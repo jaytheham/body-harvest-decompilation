@@ -1352,7 +1352,13 @@ typedef struct {
 	/* 0x06 */ s16 unk6; // X rotation
 	/* 0x08 */ s16 unk8; // Y rotation
 	/* 0x0A */ s16 unkA; // Z rotation
-	/* 0x0C */ s16 unkC;
+	union {
+		/* 0x0C */ s16 unkC;
+		struct {
+			/* 0x0C */ u8 unkC0;
+			/* 0x0D */ s8 unkD;
+		};
+	};
 	/* 0x0E */ s16 unkE; // "Direction"
 	/* 0x10 */ s16 unk10; // Elevation
 	/* 0x12 */ s16 unk12; // Speed
@@ -1374,7 +1380,8 @@ typedef struct {
    byte offsets (e.g. func_80129354_138304). */
 typedef struct {
 	/* 0x00 */ u32 modelDL; // Model display list pointer
-	/* 0x04 */ u8 pad04[0x8];
+	/* 0x04 */ u8 pad04[0x4];
+	/* 0x08 */ s32 unk8;
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ u8 pad0E[0x6];
 	/* 0x14 */ s16 unk14;
