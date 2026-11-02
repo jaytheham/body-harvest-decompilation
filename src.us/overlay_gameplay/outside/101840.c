@@ -1877,28 +1877,30 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	
 	
 	s32 pad;
-s32 pad2;
-s16 spEA;
-	s16 spE8;
-	s16 spE6;
+	s32 pad2;
+	volatile s16 spEA;
+	volatile s16 spE8;
+	volatile s16 spE6;
 	s16 spE4;
 	s16 spE2;
 	s16 spE0;
-	u8 *levelColor;
 	s32 zTri;
 	s16 halfCos;
 	u8 cR;
 	s16 baseRed;
-	u8 cG;
+	s32 cG;
 	s16 baseGreen;
 	s16 spD2;
 	s16 spD0;
 	s16 spCE;
-	u8 cB;
+	s32 cB;
 	s16 baseBlue;
 
 /* Keep the addressed parameter and color halfwords in their target homes. */
 	if (&arg0) {}
+	if (&xStep) {}
+	if (&yStep) {}
+	if (&zStep) {}
 	if (&spEA) {}
 	if (&spE8) {}
 	if (&spE6) {}
@@ -1916,7 +1918,7 @@ s16 spEA;
 	
 	func_800F54AC_10445C(&direction.vector, &direction.vector);
 
-	trigResult = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	trigResult = func_80003824_4424((f32)(arg0[arg0[0] * 0 + 2] - arg2[2]), (f32)(arg0[arg0[0] * 0] - arg2[0]));
 	angle = trigResult;
 	phase = trigResult + 0x4000;
 	sp11C = (f32)((f64)(f32)sins((u16)phase) / 32768.0);
@@ -1935,9 +1937,12 @@ s16 spEA;
 
 	
 	spEA = D_8013FCD4_14EC84[currentLevel * 9 -9]; spE8 = D_8013FCD4_14EC84[currentLevel * 9 -8]; spE6 = D_8013FCD4_14EC84[currentLevel * 9 -7];
-	spE4 = (spEA - 0xB4 < 0) ? 0 : spEA - 0xB4;
-	spE2 = (spE8 - 0xB4 < 0) ? 0 : spE8 - 0xB4;
-	spE0 = (spE6 - 0xB4 < 0) ? 0 : spE6 - 0xB4;
+	phase = *(s16 *)&spEA - 0xB4;
+	spE4 = phase < 0 ? 0 : phase;
+	phase = *(s16 *)&spE8 - 0xB4;
+	spE2 = phase < 0 ? 0 : phase;
+	phase = *(s16 *)&spE6 - 0xB4;
+	spE0 = phase < 0 ? 0 : phase;
 	spD0 = D_8013FCD4_14EC84[currentLevel * 9 -2]; spD2 = D_8013FCD4_14EC84[currentLevel * 9 -3]; spCE = D_8013FCD4_14EC84[currentLevel * 9 -1];
 	cR = D_8013FCD4_14EC84[currentLevel * 9 -6];
 	cG = D_8013FCD4_14EC84[currentLevel * 9 -5];
@@ -1955,18 +1960,20 @@ s16 spEA;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	sinTerm = (s32)(sp11C * spF8);
-	cosTerm = (s32)((f32)((f64)(f32)trigResult / 32768.0) * spF8);
+	sinTerm = (s32)(spF8 * sp11C);
+	cosTerm = (s32)(spF8 * (f32)((f64)(f32)trigResult / 32768.0));
 	if (sinTerm + cosTerm) {}
+	halfSin = (s16)sinTerm;
+	halfCos = (s16)cosTerm;
 	xStep = (s16)(s32)(direction.vector.x * spF4);
 	yStep = (s16)(s32)(direction.vector.y * spF4);
 	zStep = (s16)(s32)(direction.vector.z * spF4);
-	xTri = ((s16)xStep) * 3;
-	zTri = ((s16)zStep) * 3;
+	xTri = *(s16 *)&xStep * 3;
 
-	D_8005BB34->v.ob[0] = arg1[0] + (s16)sinTerm + xTri;
+	D_8005BB34->v.ob[0] = arg1[0] + halfSin + xTri;
 	D_8005BB34->v.ob[1] = arg1[1] + yStep;
-	D_8005BB34->v.ob[2] = arg1[2] + (s16)cosTerm + zTri;
+	zTri = *(s16 *)&zStep * 3;
+	D_8005BB34->v.ob[2] = arg1[2] + halfCos + zTri;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x200;
@@ -1976,9 +1983,9 @@ s16 spEA;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - (s16)sinTerm + xTri;
+	D_8005BB34->v.ob[0] = arg1[0] - halfSin + xTri;
 	D_8005BB34->v.ob[1] = arg1[1] + yStep;
-	D_8005BB34->v.ob[2] = arg1[2] - (s16)cosTerm + zTri;
+	D_8005BB34->v.ob[2] = arg1[2] - halfCos + zTri;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x200;
@@ -2000,8 +2007,8 @@ s16 spEA;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	halfSin = (s16)sinTerm / 2;
-	halfCos = (s16)cosTerm / 2; if (halfSin + halfCos) {}
+	halfSin /= 2;
+	halfCos /= 2; if (halfSin + halfCos) {}
 
 	D_8005BB34->v.ob[0] = arg1[0];
 	D_8005BB34->v.ob[1] = arg1[1];
@@ -2045,11 +2052,11 @@ s16 spEA;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	baseRed = spEA;
+	baseRed = *(s16 *)&spEA;
 	D_8005BB34->v.cn[0] = baseRed;
-	baseGreen = spE8;
+	baseGreen = *(s16 *)&spE8;
 	D_8005BB34->v.cn[1] = baseGreen;
-	baseBlue = spE6;
+	baseBlue = *(s16 *)&spE6;
 	D_8005BB34->v.cn[2] = baseBlue;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
