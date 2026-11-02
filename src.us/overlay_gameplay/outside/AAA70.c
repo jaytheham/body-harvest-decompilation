@@ -1375,16 +1375,19 @@ void func_8009FB1C_AEACC(s16 arg0, s16 arg1) {
 	D_8014F1F0 = (f32) arg1;
 }
 
-// CURRENT(8983)
-#ifdef NON_MATCHING
 void func_8009FB58_AEB08(void) {
 	AlienInstance *alien;
 	VehicleInstance *player;
-	s32 pad0;
+	s32 value;
 	s32 pad1;
+	s32 gapA; /* Original unused word homes. */
+	s32 gapB;
 	s16 *scannerValues;
 	u32 mapTexture;
+	s32 reserved[1];
 
+	/* Preserve the original stack home and IDO address priorities. */
+	if ((void *)reserved != &D_8014EDDC) {}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
@@ -1392,31 +1395,28 @@ void func_8009FB58_AEB08(void) {
 
 	mapTexture = K0_TO_PHYS(D_5032190);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, mapTexture, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPSetPrimColor(D_8005BB2C++, 255, 255, (D_80052A8C * 12) & 0xFF, (D_80052A8C * 12) & 0xFF, 0, 0xFF);
+	{
+		Gfx *gfx = D_8005BB2C++;
+		gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF;
+		gfx->words.w1 = (((D_80052A8C * 12) & 0xFF) << 24) | (((D_80052A8C * 12) & 0xFF) << 16) | 0xFF;
+	}
 
 	gDPLoadTLUT_pal16(D_8005BB2C++, 0, (u32)D_5032390);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPPipeSync(D_8005BB2C++);
 
-	player = D_80052B34;
 	if (gzip_data_0000 != 0) {
-		s16 centerX;
-		s16 centerZ;
-		s16 x;
+		s32 centerX;
+		s32 centerZ;
 
-		centerX = ((s16)D_8006C56D << 8) + 0x80;
-		x = player->unk0;
-		if ((x < (centerX - 0x200)) || ((centerX + 0x200) < x)) {
-			centerZ = ((s16)D_8006C56E << 8) + 0x80;
-			func_8009C1D8_AB188(centerX, centerZ, 1);
+		centerX = (D_8006C56D << 8) + 0x80;
+		player = D_80052B34;
+		centerZ = (D_8006C56E << 8) + 0x80;
+		if ((player->unk0 >= centerX - 0x200) && (player->unk0 <= centerX + 0x200) &&
+			(player->unk4 >= centerZ - 0x200) && (player->unk4 <= centerZ + 0x200)) {
+			gzip_data_0000 = 0;
 		} else {
-			x = player->unk4;
-			centerZ = ((s16)D_8006C56E << 8) + 0x80;
-			if ((x < (centerZ - 0x200)) || ((centerZ + 0x200) < x)) {
-				func_8009C1D8_AB188(centerX, centerZ, 1);
-			} else {
-				gzip_data_0000 = 0;
-			}
+			func_8009C1D8_AB188(centerX, centerZ, 1);
 		}
 	}
 
@@ -1424,6 +1424,12 @@ void func_8009FB58_AEB08(void) {
 	{
 		s32 i;
 		for (i = 0; i < 0x18; i++, scannerValues++) {
+			if (scannerValues != &D_8014ED50) {}
+			if (scannerValues != &D_8014ED50) {}
+			if (scannerValues != &D_8014ED50) {}
+			if (i == 0) {}
+			if (i == 0) {}
+			if (i == 0) {}
 			if (*scannerValues > 0) {
 				func_80076208_851B8(i);
 			}
@@ -1433,15 +1439,17 @@ void func_8009FB58_AEB08(void) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 
 	if (D_8014ED04 != 0x186A0) {
-		s32 distance;
 
-		gDPSetPrimColor(D_8005BB2C++, 255, 255, (D_80052A8C * 20) & 0xFF, 0, (D_80052A8C * 20) & 0xFF, 0xFF);
+		{
+			Gfx *gfx = D_8005BB2C++;
+			gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF;
+			gfx->words.w1 = (((D_80052A8C * 20) & 0xFF) << 24) | (((D_80052A8C * 20) & 0xFF) << 8) | 0xFF;
+		}
 
-		func_8009C1D8_AB188(((s16 *)&D_8014ED04)[1], ((s16 *)&D_8014ED08)[1], 1);
+		func_8009C1D8_AB188(((SignedWord *)&D_8014ED04)->halves.low, ((SignedWord *)&D_8014ED08)->halves.low, 1);
 
-		distance = func_800F9C40_108BF0(player->unk0 - D_8014ED04);
-		distance += func_800F9C40_108BF0(player->unk4 - D_8014ED08);
-		if ((u32)distance < 0x190000U) {
+		value = func_800F9C40_108BF0(D_80052B34->unk0 - D_8014ED04);
+		if ((u32)(func_800F9C40_108BF0(D_80052B34->unk4 - D_8014ED08) + value) < 0x190000U) {
 			D_8014ED04 = 0x186A0;
 		}
 	}
@@ -1454,7 +1462,7 @@ void func_8009FB58_AEB08(void) {
 	D_80052B40.unk4 = -1;
 
 	D_80052B48.unk0 = 0;
-	D_80052B48.unk2 = 0xF000;
+	D_80052B48.unk2Unsigned = 0xF000;
 	D_80052B48.unk4 = 0;
 
 	gDPSetPrimColor(D_8005BB2C++, 255, 255, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -1475,25 +1483,30 @@ void func_8009FB58_AEB08(void) {
 	alien = &alienInstances[0xFE];
 	{
 		s32 i;
-		for (i = 0xFE; i != 0; i--) {
+		i = 0xFE;
+		for (;;) {
 		if ((alien->typeIndex == 0x19) && ((alien->unk20 & ALIEN_FLAG_UNKL) == 0)) {
-			s32 distance;
+			if ((void *)alien == &D_80052B34) {}
+			if ((void *)alien == &D_80052A8C) {}
+			if ((void *)alien == &D_80052B34) {}
+			if ((void *)alien == &D_80052A8C) {}
 
-			distance = func_800F9C40_108BF0((player->unk0 - alien->unk0) >> 2);
-			distance += func_800F9C40_108BF0((player->unk4 - alien->unk4) >> 2);
-			if (distance >= 0xC351) {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, (D_80052A8C * 0x10) & 0xFF);
+			value = func_800F9C40_108BF0((D_80052B34->unk0 - alien->unk0) >> 2);
+			if (func_800F9C40_108BF0((D_80052B34->unk4 - alien->unk4) >> 2) + value >= 0xC351) {
+				/* The redundant masks preserve IDO's temporary-register cycle. */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, ((D_80052A8C & 0xFFFF) * 0x10) & 0xFF & 0xFF & 0xFF & 0xFF);
 
 				func_8009C1D8_AB188(alien->unk0, alien->unk4, 1);
 			}
 		}
-		alien = (AlienInstance *)((u8 *)alien - 0x50);
-	}
+		alien--;
+			value = i--;
+			if (value == 0) {
+				break;
+			}
+		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009FB58_AEB08.s")
-#endif
 
 #ifdef NON_MATCHING
 // DisplayScanner
