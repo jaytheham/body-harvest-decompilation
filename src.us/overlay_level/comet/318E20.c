@@ -3344,9 +3344,9 @@ void func_802DC8F4_320A44(u8 arg0) {
 	if (temp_s0->unk8 <= 0x1963) { temp_s0->unk8 = temp_s0->unk8; } else { temp_s0->unk8 = 0x1964; }
 	if (temp_s0->unk3A != 0 && !(temp_s0->unk20 & ALIEN_FLAG_UNKD)) {
 		if (temp_s0->hitPoints < (sp58->unk3A / 4)) {
-			temp_s0->unk8 = (s16)(s32)((f64)(f32)sins((temp_s0->unk48 * 0x32C8) & 0xFFFF) / 32768.0 * D_802E7B58_32BCA8.value);
+			temp_s0->unk8 = (s16)(s32)((f64)(f32)sins(temp_s0->unk48 * 0x32C8) / 32768.0 * D_802E7B58_32BCA8.value);
 		} else {
-			temp_s0->unk8 = (s16)(s32)((f64)(f32)sins((temp_s0->unk48 * 1000) & 0xFFFF) / 32768.0 * D_802E7B60_32BCB0.value);
+			temp_s0->unk8 = (s16)(s32)((f64)(f32)sins(temp_s0->unk48 * 1000) / 32768.0 * D_802E7B60_32BCB0.value);
 		}
 		temp_s0->unk48++;
 	}
@@ -3356,7 +3356,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 	}
 	spA8 = func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4) >> 8;
 	if (D_80222A70 >= spA8) { spA8 = D_80222A70; }
-	temp_s0->unk2 = (s16)(s32)((f64)(spA8 + alienTypes[temp_s0->typeIndex].unk58) + (f64)(f32)sins((D_80052A8C * 1500) & 0xFFFF) / 32768.0 * 20);
+	temp_s0->unk2 = (s16)(s32)((f64)(spA8 + alienTypes[temp_s0->typeIndex].unk58) + (f64)(f32)sins(D_80052A8C * 1500) / 32768.0 * 20);
 	if (temp_s0->unk20 & ALIEN_FLAG_UNKD) {
 		temp_s0->unk12 -= sp58->unk3E / 2;
 		if (temp_s0->unk12 < 0) { temp_s0->unk12 = 0; }
@@ -3413,7 +3413,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 				temp_s0->unk3C--;
 				if (temp_s0->unk3C == 0) {
 					if (!(func_800038E0_44E0() & 1) && sp74 != 0 && temp_s0->hitPoints >= (sp58->unk3A / 4) && spCC < 0x640) {
-						temp_s0->unk26 = 0x96; temp_s0->unk48 = 0; temp_s0->unk20 |= ALIEN_FLAG_UNKD;
+						temp_s0->unk20 |= ALIEN_FLAG_UNKD; temp_s0->unk26 = 0x96; temp_s0->unk48 = 0;
 					} else {
 						temp_s0->unk3C = 0; temp_s0->unkE += 0x8000; temp_s0->unk26 = (func_800038E0_44E0() % 80) + 0x3C;
 					}
