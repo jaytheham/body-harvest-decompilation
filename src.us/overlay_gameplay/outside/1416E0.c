@@ -1528,7 +1528,7 @@ void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
 	Unk80052B40 spD0;
-	s16 spCC;
+	s16 spCC[2];
 	void (*sp68)(s32, s16);
 	s16 var_fp;
 	s16 var_s0;
@@ -1558,13 +1558,13 @@ void func_801365E0_145590(void) {
 			var_s0 = (var_s0 << 24) >> 16;
 			var_s0 += 0x80;
 			var_s1 = (signpost->unk1 << 8) + 0x80;
-			func_8011E6FC_12D6AC(var_s0, var_s1, &spCC);
+			func_8011E6FC_12D6AC(var_s0, var_s1, spCC);
 			if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
 				(D_801493B4 >= var_s1) &&
 				(func_800B93AC_C835C(var_s0, var_s1, 0x13, (s16) D_80052B2C->unk0, (s32) D_80052B2C->unk8,
 					0x4000 - D_80047950) != 0)) {
 				spE0.unk0 = var_s0 >> 2;
-				spE0.unk2 = spCC >> 2;
+				spE0.unk2 = spCC[0] >> 2;
 				spE0.unk4 = var_s1 >> 2;
 				spD8.unk0 = signpost->direction << 0xE;
 				spD8.unk2 = 0;
@@ -1584,7 +1584,7 @@ void func_801365E0_145590(void) {
 					width = 0x13;
 					height = 0x10;
 				}
-				func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, NULL,
+				func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC[0], var_s1, 0, 0, 0, width, height, 0x35, NULL,
 					func_8012E1F8_13D1A8);
 				switch (signpost->direction) {
 					case 0:
@@ -1603,10 +1603,11 @@ void func_801365E0_145590(void) {
 						var_s0 = (s16) (var_s0 - 0x18);
 						break;
 				}
-				func_8012D700_13C6B0(4, (var_fp + 0x2000), var_s0, spCC, var_s1, 0, 0, 0, width, height, 0x35, sp68,
+				func_8012D700_13C6B0(4, (var_fp + 0x2000), var_s0, spCC[0], var_s1, 0, 0, 0, width, height, 0x35, sp68,
 					NULL);
 			}
 		}
+		if (var_s0) {}
 		var_fp++;
 	}
 }
