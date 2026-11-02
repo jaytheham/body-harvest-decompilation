@@ -1074,21 +1074,20 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-#ifdef NON_MATCHING
 void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
-	s32 baseXWord;
+	s32 pad;
 	u8 row;
 	u8 col;
 	u8 spAC[5];
 	u8 spA8[3];
 	s32 i;
 	u8 spA0[3];
-	u16 mode;
 	u16 mapIndex;
+	u16 ringY;
 	f32 f0;
 	s16 baseY;
 	s16 sp94;
-	RingEntry *entry;
+
 	s16 timer;
 
 	D_8014F8A0 = (s16 (*)[256])arg2;
@@ -1096,10 +1095,9 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	baseY = D_8014F89D;
 
 	for (row = 0; row < 0x13; row++) {
-		baseXWord = (baseY + row) << 8;
 
 		for (col = 0; col < 0x13; col++) {
-			mapIndex = (u16)(sp94 + col + baseXWord);
+			mapIndex = (u16)(sp94 + col + ((baseY + row) << 8));
 
 			spAC[0] = ((u16 *)arg2)[mapIndex - 0x100] & 0x3F;
 			spAC[1] = ((u16 *)arg2)[mapIndex - 1] & 0x3F;
@@ -1108,33 +1106,31 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 			spAC[4] = ((u16 *)arg2)[mapIndex + 0x100] & 0x3F;
 
 			func_800B1814_C07C4(baseY + row, (sp94 + col), spA0);
-			
 
 			if (D_80151DD0 == 2) {
 				spA0[0] = func_800B0A10_BF9C0(spA0[0] / 2, spA0[0], D_8013D9AC_14C95C, 0x40);
 				spA0[1] = func_800B0A10_BF9C0(spA0[1] / 2, spA0[1], D_8013D9AC_14C95C, 0x40);
 				spA0[2] = func_800B0A10_BF9C0(spA0[2] / 2, spA0[2], D_8013D9AC_14C95C, 0x40);
-				
+
 			}
 
 			if (D_80151DD0 == 3) {
 				spA0[0] = func_800B0A10_BF9C0(0, spA0[0] / 2, D_8013D9AC_14C95C, 0x96);
 				spA0[1] = func_800B0A10_BF9C0(0, spA0[1] / 2, D_8013D9AC_14C95C, 0x96);
 				spA0[2] = func_800B0A10_BF9C0(0, spA0[2] / 2, D_8013D9AC_14C95C, 0x96);
-				
+
 			}
 
 			if (D_80151DD0 == 4) {
 				spA0[0] = spA0[1] = spA0[2] = 0;
 			}
 
-			mode = D_8013D9B0_14C960;
-			if ((u32)mode > 0U) {
-				if (mode >= 0x3D) {
-					timer = mode - 0x3C; timer ^= 0;
+			if ((u32)D_8013D9B0_14C960 > 0U) {
+				if (D_8013D9B0_14C960 >= 0x3D) {
+					timer = D_8013D9B0_14C960 - 0x3C;
 					f0 = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 				} else {
-					timer = mode; timer ^= 0;
+					timer = D_8013D9B0_14C960;
 					f0 = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 				}
 
@@ -1157,12 +1153,12 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 
 			func_800B2CF0_C1CA0(spAC, spA0, spA8);
 
-			mode = (u16)((D_80151DD8.ringX + col) % 19);
-			mapIndex = (u16)((D_80151DD8.ringY + row) % 19);
-			entry = &D_80151DD8.tiles[mapIndex][mode];
-			entry->r = spA8[0];
-			entry->b = spA8[2];
-			entry->g = spA8[1];
+			mapIndex = (u16)((D_80151DD8.ringX + col) % 19);
+			ringY = (u16)((D_80151DD8.ringY + row) % 19);
+
+			D_80151DD8.tiles[ringY][mapIndex].r = spA8[0];
+			D_80151DD8.tiles[ringY][mapIndex].b = spA8[2];
+			D_80151DD8.tiles[ringY][mapIndex].g = spA8[1];
 		}
 	}
 
@@ -1170,25 +1166,25 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 		for (col = 0; col < 0x13; col++) {
 			for (i = 0; i < 0x40; i = (i + 1) & 255) {
 				if (((sp94 + col) == D_8014FD48[i * 2]) && ((baseY + row) == D_8014FD48[(i * 2) + 1])) {
-					entry = &D_80151DD8.tiles[row][col];
+
 					arg0 = ((D_8014FD48[i * 2] * D_8014FD48[(i * 2) + 1]) % 60);
 
 					if ((arg0 + 0x14) < 0) {
-						entry->r = 0;
+						D_80151DD8.tiles[row][col].r = 0;
 					} else {
-						entry->r = arg0 + 0x14;
+						D_80151DD8.tiles[row][col].r = arg0 + 0x14;
 					}
 
 					if ((arg0 - 5) < 0) {
-						entry->g = 0;
+						D_80151DD8.tiles[row][col].g = 0;
 					} else {
-						entry->g = arg0 - 5;
+						D_80151DD8.tiles[row][col].g = arg0 - 5;
 					}
 
 					if ((arg0 - 0x19) < 0) {
-						entry->b = 0;
+						D_80151DD8.tiles[row][col].b = 0;
 					} else {
-						entry->b = arg0 - 0x19;
+						D_80151DD8.tiles[row][col].b = arg0 - 0x19;
 					}
 				}
 			}
@@ -1196,9 +1192,6 @@ void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	}
 
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B345C_C240C.s")
-#endif
 
 /* Copy a 19x19 tile region from the world map into the ring buffer and compute vertex colors */
 void func_800B4050_C3000(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {

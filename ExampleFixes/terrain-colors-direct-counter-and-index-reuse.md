@@ -1,0 +1,5 @@
+`addiu t4,v1,-0x3c; sll t5,t4,16; sra t6,t5,16; mtc1 t6,f4` -> read `D_8013D9B0_14C960` directly in both branch conditions and both signed-short timer assignments, removing the unsigned-short mode copy and identity XORs -> `addiu v1,v1,-0x3c; sll t8,v1,16; sra v1,t8,16; mtc1 v1,f4` in `func_800B345C_C240C`.
+
+`mfhi a0` for ring X and `mfhi v1` for ring Y -> reuse the existing map index variable for ring X, and use the separate unsigned-short variable for ring Y -> `mfhi v1` for ring X and `mfhi a0` for ring Y, including matching narrowing and address operands.
+
+`sb ...,0x78(sp)` for the temporary Y byte -> inline the shifted world-row index and access `D_80151DD8.tiles[row][column]` directly instead of retaining an entry pointer; retain one word of local padding -> `sb ...,0x7c(sp)`, with the original 0xb8 frame and all other stack operands unchanged.
