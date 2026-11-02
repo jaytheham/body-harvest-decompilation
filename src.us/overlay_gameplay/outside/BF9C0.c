@@ -1338,7 +1338,6 @@ void func_800B4660_C3610(s32 arg0) {
 	u8 sp59;
 	u8 sp54[3];
 
-
 	sp5C = (u16 *)D_8014F8A0;
 	D_8014F89C = D_80151DD8.mapPosX--;
 	D_8014F89D = D_80151DD8.mapPosY;
@@ -2324,32 +2323,32 @@ void func_800B753C_C64EC(void) {
 // Get height of terrain at given position
 s32 func_800B84D0_C7480(s16 xPosition, s16 zPosition)
 {
-  u32 xPosInTile;
-  u32 zPosInTile;
-  s32 var_t0;
-  s32 var_t1;
-  s32 var_t2;
+	u32 xPosInTile;
+	u32 zPosInTile;
+	s32 var_t0;
+	s32 var_t1;
+	s32 var_t2;
 
-  xPosInTile = xPosition & 0xFF;
-  zPosInTile = zPosition & 0xFF;
-  var_t0 = 0;
-  var_t1 = 0;
-  var_t2 = 0;
-  if ((xPosInTile + zPosInTile) < 0x100U)
-  {
-	var_t0 = D_80052A94[zPosition >> 8].col[xPosition >> 8] & 0x3F;
-	var_t1 = ((&D_80052A94[zPosition >> 8].col[xPosition >> 8])[1] & 0x3F) - var_t0;
-	var_t2 = ((&D_80052A94[zPosition >> 8])[1].col[xPosition >> 8] & 0x3F) - var_t0;
-  }
-  else
-  {
-	xPosInTile = 0x100 - xPosInTile;
-	zPosInTile = 0x100 - zPosInTile;
-	var_t0 = (&D_80052A94[zPosition >> 8])[1].col[(xPosition >> 8) + 1] & 0x3F;
-	var_t1 = ((&D_80052A94[zPosition >> 8])[1].col[xPosition >> 8] & 0x3F) - var_t0;
-	var_t2 = ((&D_80052A94[zPosition >> 8].col[xPosition >> 8])[1] & 0x3F) - var_t0;
-  }
-  return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
+	xPosInTile = xPosition & 0xFF;
+	zPosInTile = zPosition & 0xFF;
+	var_t0 = 0;
+	var_t1 = 0;
+	var_t2 = 0;
+	if ((xPosInTile + zPosInTile) < 0x100U)
+	{
+		var_t0 = D_80052A94[zPosition >> 8].col[xPosition >> 8] & 0x3F;
+		var_t1 = ((&D_80052A94[zPosition >> 8].col[xPosition >> 8])[1] & 0x3F) - var_t0;
+		var_t2 = ((&D_80052A94[zPosition >> 8])[1].col[xPosition >> 8] & 0x3F) - var_t0;
+	}
+	else
+	{
+		xPosInTile = 0x100 - xPosInTile;
+		zPosInTile = 0x100 - zPosInTile;
+		var_t0 = (&D_80052A94[zPosition >> 8])[1].col[(xPosition >> 8) + 1] & 0x3F;
+		var_t1 = ((&D_80052A94[zPosition >> 8])[1].col[xPosition >> 8] & 0x3F) - var_t0;
+		var_t2 = ((&D_80052A94[zPosition >> 8].col[xPosition >> 8])[1] & 0x3F) - var_t0;
+	}
+	return (((var_t0 << 8) + (var_t1 * xPosInTile)) + (var_t2 * zPosInTile)) << 5;
 }
 
 /* Legacy callers prepare two additional words; terrain height ignores them. */
@@ -3064,7 +3063,6 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	f32 worldXf;
 	f32 worldZf;
 	f32 delta;
-
 
 	water = (&D_80052AE8)[arg0 & 0xFF];
 	waterX = water->unk3C;
@@ -4059,53 +4057,54 @@ void func_800BD360_CC310(void)
 // Is target outside all open gates
 s32 func_800BD688_CC638(s16 targetX, s16 targetY, s16 targetZ, VehicleInstance *vehicle)
 {
-  s16 i;
-  s16 dist;
-  s32 x;
-  s32 y;
-  s32 z;
-  s32 absX;
-  s32 absY;
-  s32 absZ;
-  s32 height;
-  u32 distSq;
-  height = func_800B84D0_C7480(targetX, targetZ) >> 8;
-  if (height < D_80222A70)
-  {
-	height = D_80222A70;
-  }
-  if (vehicle != D_80052B34)
-  {
-	return 1; // Target is not player
-  }
-  for (i = 0; i < 8; i++)
-  {
-	if (D_8003E0FC_3ECFC[currentLevel - 1][i].openness != 0x50)
+	s16 i;
+	s16 dist;
+	s32 x;
+	s32 y;
+	s32 z;
+	s32 absX;
+	s32 absY;
+	s32 absZ;
+	s32 height;
+	u32 distSq;
+	height = func_800B84D0_C7480(targetX, targetZ) >> 8;
+	if (height < D_80222A70)
 	{
-	  continue; // Gate is not fully open
+		height = D_80222A70;
 	}
-	x = (D_8003E0FC_3ECFC[currentLevel - 1][i].xPosition << 8) - targetX;
-	absX = x >= 0 ? x : -x;
-	z = (D_8003E0FC_3ECFC[currentLevel - 1][i].zPosition << 8) - targetZ;
-	absZ = z >= 0 ? z : -z;
-	y = D_8003E0FC_3ECFC[currentLevel - 1][i].yPosition - targetY;
-	absY = y >= 0 ? y : -y;
-	distSq = ((absX * absX) + (absZ * absZ)) + (absY * absY);
-	  dist = sqrtf(distSq);
-	  if (dist >= 0xFAU) {
-		if (dist >= 0x1F4U)
+	if (vehicle != D_80052B34)
+	{
+		return 1; // Target is not player
+	}
+	for (i = 0; i < 8; i++)
+	{
+		if (D_8003E0FC_3ECFC[currentLevel - 1][i].openness != 0x50)
 		{
-		  continue;
+			continue; // Gate is not fully open
 		}
-		if ((height + 0xC8) >= D_8003E0FC_3ECFC[currentLevel - 1][i].yPosition)
+		x = (D_8003E0FC_3ECFC[currentLevel - 1][i].xPosition << 8) - targetX;
+		absX = x >= 0 ? x : -x;
+		z = (D_8003E0FC_3ECFC[currentLevel - 1][i].zPosition << 8) - targetZ;
+		absZ = z >= 0 ? z : -z;
+		y = D_8003E0FC_3ECFC[currentLevel - 1][i].yPosition - targetY;
+		absY = y >= 0 ? y : -y;
+		distSq = ((absX * absX) + (absZ * absZ)) + (absY * absY);
+		dist = sqrtf(distSq);
+		if (dist >= 0xFAU)
 		{
-		  continue;
+			if (dist >= 0x1F4U)
+			{
+				continue;
+			}
+			if ((height + 0xC8) >= D_8003E0FC_3ECFC[currentLevel - 1][i].yPosition)
+			{
+				continue;
+			}
 		}
-	  }
-	  return 0;
-  }
+		return 0;
+	}
 
-  return 1;
+	return 1;
 }
 
 // Expand opening gates and change level bounds if player passes through
@@ -4223,13 +4222,12 @@ void func_800BDAF4_CCAA4(void) {
 
 void func_800BDD24_CCCD4(u8 arg0)
 {
-  if ((D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness > 0) && (D_80048188 == 0))
-  {
-	D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness = (s8) -(
-		-D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness < D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness
-		? D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness
-		: -D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness);
-  }
+	if ((D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness > 0) && (D_80048188 == 0))
+	{
+		D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness = (s8) - (-D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness < D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness
+																		? D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness
+																		: -D_8003E0FC_3ECFC[currentLevel - 1][arg0].openness);
+	}
 }
 
 void func_800BDDA0_CCD50(void) {

@@ -205,7 +205,6 @@ s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
 	return ((red << 0xB) + (green << 6) + (blue & 0x3F)) & 0xFFFF;
 }
 
-// https://decomp.me/scratch/u6wU5
 s16 func_80095A6C_A4A1C(s16 arg0, s16 arg1, u16 arg2)
 {
 	D_801FEA30_Row **new_var;
@@ -254,7 +253,6 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 }
 
 // draws vehicle triangle icons on map
-/* CURRENT(2782) */
 #ifdef NON_MATCHING
 void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 	Vtx_t *vtx0;
@@ -311,7 +309,6 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
 #endif
 
-// CURRENT(1812)
 #ifdef NON_MATCHING
 void func_80095F08_A4EB8(void) {
 	s16* dst;
@@ -458,14 +455,11 @@ void func_80095F08_A4EB8(void) {
 			}
 		} while (i--);
 	}
-
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
 #endif
 
-// CURRENT(2451)
 #ifdef NON_MATCHING
 void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	Vtx_t *vtx0;
@@ -573,7 +567,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
 #endif
-/* CURRENT(6286) */
+
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	TileEntry *tile; Level *level;
@@ -720,82 +714,78 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	D_8013D510_14C4C0++;
 	gDPPipeSync(D_8005BB2C++);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
 
-// CURRENT(80)
 #ifdef NON_MATCHING
 void func_800970C0_A6070(void)
 {
-  Vtx *vtx0;
-  Vtx *vtx1;
-  Vtx *vtx2;
-  Vtx *vtx3;
-  u32 col;
-  u32 row;
-  u32 x0;
-  u32 x1;
-  s32 y0;
-  s32 y1;
-  gDPPipeSync(D_8005BB2C++);
-  gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
-  gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-  gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
-  gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
-  gDPSetColorDither(D_8005BB2C++, 2 << 6);
-  gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
-  for (row = 0; row < 8; row++)
-  {
-	y1 = -((row - 4) << 8);
-	y0 = y1 - 0x100;
-
-	for (col = 0; col < 8; col++)
+	Vtx *vtx0;
+	Vtx *vtx1;
+	Vtx *vtx2;
+	Vtx *vtx3;
+	u32 col;
+	u32 row;
+	u32 x0;
+	u32 x1;
+	s32 y0;
+	s32 y1;
+	gDPPipeSync(D_8005BB2C++);
+	gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+	gDPSetColorDither(D_8005BB2C++, 2 << 6);
+	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
+	for (row = 0; row < 8; row++)
 	{
-	  x1 = col - 4;
-	  x0 = x1 << 8;
-	  x1 = x0 + 0x100;
-	  vtx0 = D_8005BB34;
-	  D_8005BB34 = vtx0 + 1;
-	  vtx1 = D_8005BB34;
-	  D_8005BB34 = vtx1 + 1;
-	  vtx2 = D_8005BB34;
-	  D_8005BB34 = vtx2 + 1;
-	  vtx3 = D_8005BB34;
-	  D_8005BB34 = vtx3 + 1;
-	  vtx0->v.ob[0] = x0;
-	  vtx0->v.ob[1] = y0;
-	  vtx0->v.ob[2] = 0;
-	  vtx1->v.ob[0] = x1;
-	  vtx1->v.ob[1] = y0;
-	  vtx1->v.ob[2] = 0;
-	  vtx2->v.ob[0] = x0;
-	  vtx2->v.ob[1] = y1;
-	  vtx2->v.ob[2] = 0;
-	  vtx3->v.ob[0] = x1;
-	  vtx3->v.ob[1] = y1;
-	  vtx3->v.ob[2] = 0;
-	  vtx0->v.tc[0] = -0x20;
-	  vtx0->v.tc[1] = 0x7E0;
-	  vtx2->v.tc[0] = -0x20;
-	  vtx2->v.tc[1] = -0x20;
-	  vtx3->v.tc[0] = 0x7E0;
-	  vtx3->v.tc[1] = -0x20;
-	  vtx1->v.tc[0] = 0x7E0;
-	  vtx1->v.tc[1] = 0x7E0;
-	  gDPLoadTextureBlock(D_8005BB2C++, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10], G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	  gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
-	  gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
-	  gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
+		y1 = -((row - 4) << 8);
+		y0 = y1 - 0x100;
+
+		for (col = 0; col < 8; col++)
+		{
+			x1 = col - 4;
+			x0 = x1 << 8;
+			x1 = x0 + 0x100;
+			vtx0 = D_8005BB34;
+			D_8005BB34 = vtx0 + 1;
+			vtx1 = D_8005BB34;
+			D_8005BB34 = vtx1 + 1;
+			vtx2 = D_8005BB34;
+			D_8005BB34 = vtx2 + 1;
+			vtx3 = D_8005BB34;
+			D_8005BB34 = vtx3 + 1;
+			vtx0->v.ob[0] = x0;
+			vtx0->v.ob[1] = y0;
+			vtx0->v.ob[2] = 0;
+			vtx1->v.ob[0] = x1;
+			vtx1->v.ob[1] = y0;
+			vtx1->v.ob[2] = 0;
+			vtx2->v.ob[0] = x0;
+			vtx2->v.ob[1] = y1;
+			vtx2->v.ob[2] = 0;
+			vtx3->v.ob[0] = x1;
+			vtx3->v.ob[1] = y1;
+			vtx3->v.ob[2] = 0;
+			vtx0->v.tc[0] = -0x20;
+			vtx0->v.tc[1] = 0x7E0;
+			vtx2->v.tc[0] = -0x20;
+			vtx2->v.tc[1] = -0x20;
+			vtx3->v.tc[0] = 0x7E0;
+			vtx3->v.tc[1] = -0x20;
+			vtx1->v.tc[0] = 0x7E0;
+			vtx1->v.tc[1] = 0x7E0;
+			gDPLoadTextureBlock(D_8005BB2C++, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10], G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
+			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
+		}
 	}
 
-  }
-
-  gDPPipeSync(D_8005BB2C++);
+	gDPPipeSync(D_8005BB2C++);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
 #endif
@@ -897,6 +887,7 @@ void func_80097444_A63F4(s16 arg0, s16 arg1) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
+
 // draw 3d adam on map
 void func_80097994_A6944(void) {
 	s32 translation[3];
@@ -935,7 +926,6 @@ void func_80097994_A6944(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }
-
 
 // related to drawing 3d vehicles
 void func_80097B74_A6B24(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
@@ -1001,7 +991,6 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 	model1 = D_8005BB30++; model1->words.w0 = 0x01020040; model1->words.w1 = K0_TO_PHYS(&D_80031160);
 }
 
-// CURRENT(43918)
 #ifdef NON_MATCHING
 void func_8009811C_A70CC(void) {
 	f32 temp_f0;
