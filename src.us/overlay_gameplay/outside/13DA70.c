@@ -231,13 +231,9 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 	return 0;
 }
 
-// https://decomp.me/scratch/RaB1d
-// This does match but doesn't compile right at the moment:
-// this requires D_8015FF84 as a function static so this may cause .bss issues
-// shouldn't be a problem if you match the entire TU / file
-#ifdef NON_MATCHING
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
+	static s32 colorState; /* Reserve the preceding end-of-level state slot. */
 	static s32 D_8015FF84;
 	s32 rem;
 	rem = D_8015FF84 % 300;
@@ -256,9 +252,7 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 	}
 	D_8015FF84 += arg1;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F24C_13E1FC.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)

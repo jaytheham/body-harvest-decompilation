@@ -443,6 +443,7 @@ segments:
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/F7870, vram: 0x801575A0}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/101840, vram: 0x80159D10}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/buildings, vram: 0x8015EB80}
+      - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/13DA70, vram: 0x8015FF80}
 
   - name: overlay_gameplay_inside
     type: code
