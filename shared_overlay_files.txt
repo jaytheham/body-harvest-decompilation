@@ -25,6 +25,7 @@ overlay_gameplay/outside/AAA70.c
 overlay_gameplay/outside/B2CB0.c
 overlay_gameplay/outside/B49C0.c
 overlay_gameplay/outside/B8290.c
+overlay_gameplay/outside/B8290_tail.c
 overlay_gameplay/outside/trigger.c
 overlay_gameplay/outside/BF9C0.c
 overlay_gameplay/outside/CFE30.c

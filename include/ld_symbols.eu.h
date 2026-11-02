@@ -45,6 +45,7 @@ extern Addr ___src_us_overlay_gameplay_outside_AAA70_c;
 extern Addr ___src_us_overlay_gameplay_outside_B2CB0_c;
 extern Addr ___src_us_overlay_gameplay_outside_B49C0_c;
 extern Addr ___src_us_overlay_gameplay_outside_B8290_c;
+extern Addr ___src_us_overlay_gameplay_outside_B8290_tail_c;
 extern Addr ___src_us_overlay_gameplay_outside_BF9C0_c;
 extern Addr ___src_us_overlay_gameplay_outside_CFE30_c;
 extern Addr ___src_us_overlay_gameplay_outside_F6A50_c;

@@ -1,0 +1,1410 @@
+#include <ultra64.h>
+#include "common.h"
+#include "version_shift.h"
+
+/* This translation unit starts after the death-effect literal pool. */
+
+const char D_80142910_1518C0[] = "Stop running to target\n"; // "Stop running to target\n"
+
+s32 func_800AB250_BA200(u8 arg0, s32 arg1) {
+	AlienInstance *ptr;
+	s32 dx;
+	s32 dz;
+	ptr = &alienInstances[arg0];
+	if (ptr->unk20 & ALIEN_FLAG_PLAYER)
+	{
+		return 1;
+	}
+	ptr = &alienInstances[arg0];
+	dx = D_80052B34->unk0 - ptr->unk0;
+	dz = D_80052B34->unk4 - ptr->unk4;
+	if (((s32) sqrtf((f32) ((dx * dx) + (dz * dz)))) < arg1)
+	{
+		ptr->unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT);
+		return 1;
+	}
+	return 0;
+}
+
+// human behavior case 28
+void func_800AB32C_BA2DC(u8 arg0) {
+	if (D_80222A70 >= alienInstances[arg0].unk2) { // if human is in water
+		func_80088760_97710(&alienInstances[arg0]); // human dies
+		alienInstances[arg0].unk2C = 0xA;
+	}
+}
+
+// human behavior case 27
+void func_800AB390_BA340(u8 arg0) {
+	if (func_80080840_8F7F0(arg0, 0x19)) {
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
+		alienInstances[arg0].unk24 = 0x1C;
+	}
+	func_800AB32C_BA2DC(arg0); // human behavior case 28
+}
+
+// human behavior case 20 used for America 1 school/church mission- distance check to follow target vehicleinstance13 (Mr Lolly!)
+void func_800AB408_BA3B8(u8 arg0) {
+	s32 temp_a0;
+	s32 temp_v1;
+	AlienInstance* temp_v0;
+
+	temp_v0 = &alienInstances[arg0];
+	temp_v0->unk48 = 0xC0;
+	if (*(s16*) ((u8*) temp_v0 + 0x38) != 0x64) { // only follow Mr Lolly if not within range of the church
+		temp_v1 = vehicleInstances[13].unk0 - temp_v0->unk0;
+		temp_a0 = vehicleInstances[13].unk4 - temp_v0->unk4;
+		if (((temp_v1 * temp_v1) + (temp_a0 * temp_a0)) < 0x40000) {
+			func_800AD814_BC7C4(arg0, 0xB, 0xD, *((u8*) temp_v0 + 0x3F)); // if within 512 units of Mr Lolly, change behavior
+		}
+	}
+}
+
+// AI - Check vehicle follow range
+// human behavior - case 12 - if near Mr Lolly, do nothing
+void func_800AB4B4_BA464(u8 arg0) {
+	VehicleInstance *type;
+	s32 dx, dz, ndx, ndz;
+	s32 absDx, lateral;
+
+	type = &vehicleInstances[alienInstances[arg0].unk38];
+	dx = alienInstances[arg0].unk0 - type->unk0;
+	dz = alienInstances[arg0].unk4 - type->unk4;
+	ndx = -dx;
+	absDx = (ndx < dx) ? dx : ndx;
+	ndz = -dz;
+	if (absDx < 0xC9) {
+		lateral = (ndz < dz) ? dz : ndz;
+		if (lateral < 0xC9) {
+			return;
+		}
+	}
+	alienInstances[arg0].unk24--; // moves to case 11
+	alienInstances[arg0].unk48 = 0xC0;
+
+}
+
+// human behavior case 11 - following Mr Lolly
+void func_800AB570_BA520(u8 arg0)
+{
+	s16 targetX;
+	s16 targetY;
+	s16 targetZ;
+	s32 dx;
+	s32 absDx;
+	s32 dz;
+	s32 lateral;
+
+	s32 pad;
+
+	alienInstances[arg0].unk48 = 0xC0;
+	if (func_80080840_8F7F0(arg0, 0x23) != 0)
+	{
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk36 = 0;
+		alienInstances[arg0].unk24++;
+		return;
+	}
+  // if within range of the church (building 0x64) set building as the target
+	func_8011B3F0_12A3A0(0x64, &targetX, &targetY, &targetZ);
+	dx = alienInstances[arg0].unk0 - targetX;
+	dz = alienInstances[arg0].unk4 - targetZ;
+
+	absDx = -dx < dx ? dx : -dx;
+	lateral = -dz < dz ? dz : -dz;
+	dx = lateral < absDx
+			 ? -dx < dx ? dx : -dx
+		 : -dz < dz ? dz
+					: -dz;
+	if (dx < 0x4B0) // if within 1200 units of the church (about 4-5 tiles)
+	{
+		alienInstances[arg0].unk24 = 0x14;
+		pad = 0x64;
+		alienInstances[arg0].unk38 = pad;
+		alienInstances[arg0].unk16 = targetY;
+		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKI | ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+		alienInstances[arg0].unk14 = targetX;
+		alienInstances[arg0].unk18 = targetZ;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+		alienInstances[arg0].unk48 = 0xA0;
+	}
+}
+
+
+// AI - Gradual yaw rotation
+void func_800AB6D0_BA680(u8 arg0) {
+	alienInstances[arg0].unkE += 0x100;
+}
+
+// AI - Fast yaw rotation
+void func_800AB700_BA6B0(u8 arg0) {
+	alienInstances[arg0].unkE += 0x400;
+}
+
+// AI - Evade player proximity
+// Human behavior - called for case 6, 8, 10, 14
+void func_800AB730_BA6E0(u8 arg0) {
+	s32 dx;
+	s32 dz;
+	s32 neg_dx;
+	s32 neg_dz;
+	s32 abs_dx, abs_dz;
+
+	dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+	dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+	neg_dx = -dx;
+	if (neg_dx < dx) {
+		abs_dx = dx;
+	} else {
+		abs_dx = neg_dx;
+	}
+	neg_dz = -dz;
+	if (abs_dx < 0xC9) {
+		if (neg_dz < dz) {
+			abs_dz = dz;
+		} else {
+			abs_dz = neg_dz;
+		}
+		if (abs_dz < 0xC9) {
+			if (alienInstances[arg0].unk24 != 0xE || D_80052B34->unk1A == 0) {
+				return;
+			}
+		}
+	}
+	alienInstances[arg0].unk24--;
+	alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKI);
+	alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKG | ALIEN_FLAG_TARGET_OBJ);
+	alienInstances[arg0].unk48 = 0xC0;
+}
+
+// Human behavior - called for case 5, 7, 9, 13
+void func_800AB80C_BA7BC(u8 arg0) {
+	s32 dummy1, dummy2, dummy3, dummy4;
+	alienInstances[arg0].unk48 = 0xC0;
+	if (alienInstances[arg0].unk24 == 0xD && D_80052B34->unk1A != 0) {
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKI;
+		alienInstances[arg0].unk24 = 0x15;
+		return;
+	}
+	if (func_80080840_8F7F0(arg0, 0x23) != 0) {
+		alienInstances[arg0].unk48 = 0;
+		alienInstances[arg0].unk24++;
+		alienInstances[arg0].unk36 = 0;
+		alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKI;
+	}
+}
+
+// CURRENT(2803)
+#ifdef NON_MATCHING
+
+void func_800AB8CC_BA87C(u8 arg0) {
+	AlienInstance *inst;
+	s32 parentHeight;
+	AlienInstance *parent;
+	s32 helper0;
+	s32 helper1;
+	s32 helper2;
+	s32 parentIndex;
+	u16 rand2;
+	u16 rand1;
+	inst = &alienInstances[(s32) arg0];
+	parentIndex = inst->unk25;
+	parent = &alienInstances[parentIndex];
+	if (parent->typeIndex == 2)
+	{
+		inst->unk0 = parent->unk0;
+		inst->unk4 = parent->unk4;
+		parentHeight = parent->unk20;
+		if (parentHeight & ALIEN_FLAG_UNKF)
+		{
+			parentHeight = parent->unk2;
+			func_8008FF54_9EF04(parent->unk25, &helper0, &helper1, &helper2);
+			inst->unk2 = (parent->unk2C * (helper1 - parentHeight)) / 0xF;
+			inst->unk2 += parentHeight;
+		}
+		else
+		{
+			inst->unk2 = (s16) ((s32) ((((((f32) sins((u16) ((arg0 + D_80052A8C) * 0x1388))) / 32768.0) * 4.0) + ((f64) parent->unk2)) - 4.0));
+		}
+	}
+	else
+		if (parent->typeIndex == 0x19)
+	{
+		func_8008FF54_9EF04(parentIndex, &helper0, &helper1, &helper2);
+		inst->unk0 = helper0;
+		inst->unk2 = helper1;
+		inst->unk4 = helper2;
+		if (parent->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+		{
+			inst->unk2 += D_8014DD50[parent->unkC].unk2;
+		}
+		inst->unk2C++;
+		if ((inst->unk2C % 0xC) == 0)
+		{
+			if ((inst->unk24 == 1) || (inst->unk24 == 0x1D))
+			{
+				parentIndex = (u16) func_800038E0_44E0();
+				rand1 = func_800038E0_44E0();
+				rand2 = func_800038E0_44E0();
+				parentHeight = func_800038E0_44E0();
+				func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4, (parentIndex % 50) - 0x19, 0x50, (rand1 % 50) - 0x19, 0x19, 5, (rand2 % 8) + 0xC, (parentHeight % 0x23) + 0x69, 0, 0xFF, 0, 0xFF);
+			}
+			else
+			{
+				func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0xC8);
+			}
+		}
+	}
+	else
+	{
+		inst->unk24 = 0;
+		inst->unk20 |= ALIEN_FLAG_UNKF;
+		inst->unk2C = 0x64;
+	}
+	if ((((((f32) (parentIndex & 7)) + ((f32) (parentIndex & 15))) + ((f32) (parentIndex & 31))) + ((f64) ((s32) inst))) != 0.0f)
+		;
+}
+
+
+// AI - Stun knockback timer
+// Human behavior- case 1 - ZOMBIE
+
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290_tail/func_800AB8CC_BA87C.s")
+#endif
+
+void func_800ABC2C_BABDC(u8 arg0) {
+	AlienInstance *ptr = &alienInstances[arg0];
+
+	if (ptr->unk20 & ALIEN_FLAG_UNKF) {
+		ptr->unk48 = 0;
+		if (ptr->unk2C != 0) {
+			ptr->unk2C = ptr->unk2C - 1;
+			return;
+		}
+		ptr->unk20 &= ~ALIEN_FLAG_UNKF;
+		func_800E0AE0_EFA90(ptr->unk0, ptr->unk2 + 0x14, ptr->unk4, 0);
+		return;
+	}
+	ptr->unk48 = 0x30;
+}
+
+// Human behaviors - human's unk24 determines case
+s32 func_800ABCC8_BAC78(u8 arg0) {
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+		switch (alienInstances[arg0].unk24) {
+			case 1:
+				func_800ABC2C_BABDC(arg0); // zombie - visual error/crash game if not in Siberia (zombie graphic not available?)
+				break;
+
+			case 3:
+			case 4:
+			case 29:
+				func_800AB8CC_BA87C(arg0); // laying down - used when human carried by HCU
+				return 1;
+
+			case 5:
+			case 7:
+			case 9:
+			case 13:
+				func_800AB80C_BA7BC(arg0); // run towards player
+				break;
+
+			case 6:
+			case 8:
+			case 10:
+			case 14:
+				func_800AB730_BA6E0(arg0); // stand near player waiting
+				break;
+
+			case 11:
+				func_800AB570_BA520(arg0);
+				break;
+
+			case 12:
+				func_800AB4B4_BA464(arg0);
+				break;
+
+			case 20:
+				func_800AB408_BA3B8(arg0); // follow Mr Lolly
+				break;
+
+			case 27:
+				func_800AB390_BA340(arg0);
+				break;
+
+			case 28:
+				func_800AB32C_BA2DC(arg0);
+				break;
+		}
+	} else {
+		switch (alienInstances[arg0].unk24) {
+			case 15:
+			case 16:
+				return 1;
+
+			case 1:
+				alienInstances[arg0].unk48 = 0;
+				break;
+
+			case 3:
+			case 4:
+			case 29:
+				func_800AB8CC_BA87C(arg0);
+				return 1;
+
+			case 5:
+			case 7:
+			case 9:
+				func_800AB80C_BA7BC(arg0);
+				break;
+
+			case 6:
+			case 8:
+			case 10:
+				func_800AB730_BA6E0(arg0);
+				break;
+
+			case 11:
+				func_800AB570_BA520(arg0);
+				break;
+
+			case 12:
+				func_800AB4B4_BA464(arg0);
+				break;
+
+			case 20:
+				func_800AB408_BA3B8(arg0);
+				break;
+
+			case 27:
+				func_800AB390_BA340(arg0);
+				break;
+
+			case 28:
+				func_800AB32C_BA2DC(arg0);
+				break;
+		}
+	}
+
+	return 0;
+}
+
+// https://decomp.me/scratch/8eJR6
+// AI - Pick random wander point
+void func_800ABE7C_BAE2C(u8 arg0)
+{
+	u16 rnd;
+	s32 x = alienInstances[arg0].unk0 >> 8;
+	s32 z = alienInstances[arg0].unk4 >> 8;
+	s32 i;
+	Vec2_S16 *offsets;
+	s32 baseX;
+	s32 baseZ;
+	rnd = func_800038E0_44E0() >> 0xD;
+	i = 0;
+	baseX = x * 256; baseZ = z * 256; do {
+		i++;
+		x = (D_8013D8F0_14C8A0[rnd].x + baseX) + 0x80;
+		z = (D_8013D8F0_14C8A0[rnd].z + baseZ) + 0x80;
+		if (func_800B325C_C220C((x >> 8), (z >> 8), 0x1800) == 0)
+		{
+			break;
+		}
+	} while (i != 8);
+	if (i < 8)
+	{
+		alienInstances[arg0].unk14 = x;
+		alienInstances[arg0].unk18 = z;
+		alienInstances[arg0].unk16 = func_800B84D0_C7480(x, z) >> 8;
+		alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+	}
+}
+
+// AI - Wander patrol behavior
+void func_800ABFC0_BAF70(u8 arg0)
+{
+	s32 pad;
+  s32 sp28;
+  s32 sp24;
+  func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+  sp28 = alienInstances[arg0].unk0 >> 8;
+  sp24 = alienInstances[arg0].unk4 >> 8;
+  if ((func_80080840_8F7F0(arg0, 0xA) != 0) || (func_800B325C_C220C((s8) sp28, (s8) sp24, 0x800) != 0))
+  {
+	func_800ABE7C_BAE2C(arg0);
+  }
+  func_800AC198_BB148(arg0);
+}
+
+// AI - Alternate sub-states
+void func_800AC064_BB014(u8 arg0) {
+
+	if (alienInstances[arg0].unk3A != 0) {
+		alienInstances[arg0].unk3A = alienInstances[arg0].unk3A - 1;
+		return;
+	}
+	alienInstances[arg0].unk3A = (s16) ((func_800038E0_44E0() >> 6) + 0x80);
+	if (++alienInstances[arg0].unk26 >= 2) {
+		alienInstances[arg0].unk26 = 0;
+	}
+}
+
+// AI - Vehicle passenger AI
+void func_800AC0E4_BB094(u8 arg0)
+{
+  AlienInstance *alien;
+  alienInstances[arg0].unk48 = 0;
+  alien = &alienInstances[arg0];
+  if (((alienInstances[alien->unk38].unk20) << 11) < 0)
+  {
+	alien->unk20 &= ~ALIEN_FLAG_TARGET_OBJ;
+	alien->unk48 = 0x40;
+	return;
+  }
+  if (alien->unk36 == 0x10)
+  {
+	alien->unk1E = 0;
+  }
+  func_8012B110_13A0C0((s32) alien, 0, (InputStruct_8012B150 *) &alienInstances[alien->unk38]);
+}
+
+// AI - Enforce zone boundary
+void func_800AC198_BB148(u8 arg0)
+{
+	AlienInstance *alien;
+	s8 zoneIdx;
+	Unk80146688 *zone;
+	s32 dx;
+	s32 abs_dx;
+	s32 dz;
+	s32 abs_dz;
+	alien = &alienInstances[arg0];
+	zoneIdx = alien->unk3D;
+	if (zoneIdx != (-1))
+	{
+		zone = &D_80146688_155638[currentLevel - 1][zoneIdx];
+		dx = zone->unk0 - (alien->unk0 >> 8);
+		dz = zone->unk1 - (alien->unk4 >> 8);
+
+		abs_dx = (-dx < dx) ? dx : -dx;
+		abs_dz = (-dz < dz) ? dz : -dz;
+
+		dx = (abs_dz < abs_dx)
+			? (-dx < dx) ? dx : -dx
+			: (-dz < dz) ? dz : -dz;
+
+		if (zone->unk2 < dx)
+		{
+			alien->unk20 |= (ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+			alien->unk20 &= ~ALIEN_FLAG_AWAY;
+			alien->unk14 = (s16)(zone->unk0 << 8);
+			alien->unk18 = (s16)(zone->unk1 << 8);
+			alien->unk16 = (s16)((func_800B84D0_C7480(alien->unk14, alien->unk18) >> 8) + 0x64);
+			alien->unk2C = 0xC8;
+			alien->unk38 = 0xFF;
+		}
+	}
+}
+
+// AI - Select target
+s32 func_800AC2FC_BB2AC(u8 arg0)
+{
+	s32 distanceSq;
+	s32 temp;
+	s32 dx, dz;
+	s16 buildingIndex;
+	s32 targetIndex;
+	s32 state20;
+
+	state20 = 0x14;
+	distanceSq = 0x3D0900;
+
+	if ((alienInstances[(s32)arg0].unk24 != 0) && (state20 != alienInstances[(s32)arg0].unk24))
+	{
+		return 1;
+	}
+
+	if (!(alienInstances[(s32)arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ)))
+	{
+		temp = alienTypes[alienInstances[(s32)arg0].typeIndex].unk51;
+		if (state20 != alienInstances[(s32)arg0].unk24)
+		{
+			buildingIndex = func_8011B6C0_12A670(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, temp / 20, 1, 0x102C);
+		}
+		else
+		{
+			buildingIndex = -1;
+		}
+
+		if (buildingIndex != -1)
+		{
+			alienInstances[(s32)arg0].unk38 = buildingIndex;
+			temp = func_8011B3F0_12A3A0(buildingIndex, &alienInstances[(s32)arg0].unk14, &alienInstances[(s32)arg0].unk16, &alienInstances[(s32)arg0].unk18);
+		}
+		else
+		{
+			alienInstances[(s32)arg0].unk38 = 0xFF;
+			temp = 0;
+		}
+		if (temp != 0)
+		{
+			alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+			alienInstances[(s32)arg0].unk48 = 0xA0;
+			return 0;
+		}
+
+		temp = func_800825E8_91598(alienInstances[(s32)arg0].unk0, alienInstances[(s32)arg0].unk4, &distanceSq);
+		if (distanceSq < 0x77A10)
+		{
+			alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[(s32)arg0].unk20 |= ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY;
+			alienInstances[(s32)arg0].unk48 = 0xA0;
+			alienInstances[(s32)arg0].unk38 = temp & 0xFF;
+			return 0;
+		}
+
+		alienInstances[(s32)arg0].unk48 = 0x40;
+		alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+		temp = (func_800038E0_44E0() << 11) / 65535;
+		alienInstances[(s32)arg0].unkE = alienInstances[(s32)arg0].unkE + temp - 0x400;
+		func_800AC198_BB148(arg0);
+		return 0;
+	}
+
+	if (alienInstances[(s32)arg0].unk38 == 0xFF)
+	{
+		if (alienInstances[(s32)arg0].unk2C != 0)
+		{
+			alienInstances[(s32)arg0].unk2C = alienInstances[(s32)arg0].unk2C - 1;
+		}
+		else
+		{
+			osSyncPrintf(D_80142910_1518C0);
+			alienInstances[(s32)arg0].unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+			alienInstances[(s32)arg0].unk48 = 0x40;
+			func_800ABE7C_BAE2C(arg0);
+		}
+	}
+	else if (alienInstances[(s32)arg0].unk20 & ALIEN_FLAG_AWAY)
+	{
+		targetIndex = alienInstances[(s32)arg0].unk38 & 0xFF;
+		dx = alienInstances[targetIndex].unk0 - alienInstances[(s32)arg0].unk0;
+		dz = alienInstances[targetIndex].unk4 - alienInstances[(s32)arg0].unk4;
+		distanceSq = (dx * dx) + (dz * dz);
+		if (distanceSq >= 0x1DE841)
+		{
+			alienInstances[(s32)arg0].unk20 = alienInstances[(s32)arg0].unk20 & ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+		}
+	}
+
+	return 1;
+}
+
+
+// Possibly somewhere around here is a file split? Below is Human logic, above is Alien logic?
+
+// AI - Avoid vehicle collision
+void func_800AC5BC_BB56C(u8 arg0)
+{
+	s32 forward;
+	s32 lateral;
+	s32 dx;
+	s32 dz;
+	s32 limit;
+	f32 pad;
+	s32 triggered;
+	s16 yaw;
+	s16 delta;
+	s32 temp;
+	f32 speedAbs;
+	s16 trig;
+
+	triggered = 0;
+	if ((D_80052B34->unk1A != 0) && !(D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (D_80052B34->unk12 != 0))
+	{
+		speedAbs = (-D_80052B34->unk58 < D_80052B34->unk58) ? D_80052B34->unk58 : -D_80052B34->unk58;
+		limit = speedAbs * 30.0f + (((VehicleType *)(s32)&vehicleTypes[D_80052B34->unk1A])->unk36 >> 1);
+		dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+		dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+		temp = (-dx < dx) ? dx : -dx;
+		if (temp < limit)
+		{
+			if (-dz < dz)
+			{
+				lateral = dz;
+			}
+			else
+			{
+				lateral = -dz;
+			}
+			if (lateral < limit)
+			{
+				trig = coss(D_80052B34->unk6);
+				forward = (((f32)sins(D_80052B34->unk6) / 32768.0) * dz) + (dx * ((f32)trig / 32768.0));
+				trig = sins(D_80052B34->unk6);
+				lateral = (((f32)coss(D_80052B34->unk6) / 32768.0) * dz) + (-dx * ((f32)trig / 32768.0));
+				if ((forward < limit && D_80052B34->unk58 > 0.0f) || (-limit < forward && D_80052B34->unk58 < 0.0f))
+				{
+					if (-lateral < lateral)
+					{
+						temp = lateral;
+					}
+					else
+					{
+						temp = -lateral;
+					}
+					if (temp < (vehicleTypes[D_80052B34->unk1A].unk34 >> 1))
+					{
+						triggered = 1;
+					}
+				}
+			}
+		}
+	}
+	if ((triggered == 0) && ((D_80158FEC != &alienInstances[arg0]) || (func_800A2A88_B1A38() == 0)))
+	{
+		return;
+	}
+	yaw = D_80052B34->unk6 - D_80052B2C->unk36 + 0x4000;
+	delta = alienInstances[arg0].unkE - yaw;
+	if (-delta < delta)
+	{
+		temp = delta;
+	}
+	else
+	{
+		temp = -delta;
+	}
+	if (temp >= 0x4001)
+	{
+		yaw += 0x8000;
+	}
+	forward = alienInstances[arg0].unk0 + ((f32)coss(yaw) / 32768.0) * 1000.0;
+	dx = alienInstances[arg0].unk4 + ((f32)sins(yaw) / 32768.0) * 1000.0;
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | (ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+	alienInstances[arg0].unk14 = forward;
+	alienInstances[arg0].unk18 = dx;
+	alienInstances[arg0].unk16 = (func_800B84D0_C7480(alienInstances[arg0].unk14, alienInstances[arg0].unk18) >> 8) + 0x64;
+	alienInstances[arg0].unk2C = 0x32;
+	alienInstances[arg0].unk38 = 0xFF;
+	alienInstances[arg0].unk48 = 0xA0;
+}
+
+// AI - Manage stamina timer
+// human behavior - called only thru the two human specs funcs at unk48 and unk4C
+s32 func_800ACA3C_BB9EC(u8 arg0) {
+	AlienInstance *ptr = &alienInstances[arg0];
+	s32 flags = ptr->unk20;
+
+	if (flags & 0x4000) {
+		ptr->unk12 = 0;
+		if (flags & 0x600) {
+			ptr->unk2C -= 1;
+		} else {
+			ptr->unk2C -= 4;
+		}
+		if (ptr->unk2C <= 0) {
+			ptr->unk2C = 0;
+			ptr->unk20 &= ~ALIEN_FLAG_UNKF;
+			flags = ptr->unk20;
+		} else {
+			return 0;
+		}
+	}
+
+	// if human is in water long enough eventually they drown
+	if ((flags & 0x600) && (ptr->unk2 < D_80222A70)) {
+		ptr->unk48 = 0x60;
+		return 1;
+	}
+	if ((ptr->unk12 == 0x60) && (D_80222A70 < ptr->unk2)) {
+		if (flags & 0x1000) {
+			ptr->unk48 = 0xA0;
+		} else {
+			ptr->unk48 = 0x40;
+		}
+	}
+	return 1;
+}
+
+// AI - Validate current target
+void func_800ACB3C_BBAEC(u8 arg0) {
+
+	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_VEHICLE) &&
+		vehicleInstances[alienInstances[arg0].unk38].unk1C <= 0) {
+
+		alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~(ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY);
+		return;
+	}
+	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_OBJ) &&
+		alienInstances[alienInstances[arg0].unk38].hitPoints <= 0) {
+
+		alienInstances[arg0].unk20 = alienInstances[arg0].unk20 & ~(ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY);
+		return;
+	}
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER) &&
+		(alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT) &&
+		(alienInstances[arg0].unk38 != 0xFF)) {
+		if (func_800B325C_C220C((s8)(alienInstances[arg0].unk14 >> 8), (s8)(alienInstances[arg0].unk18 >> 8), 0x800) == 0) {
+			alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+		}
+	}
+}
+
+// Human behavior- alienspecs unk4C
+void func_800ACC5C_BBC0C(u8 arg0)
+{
+	u32 sp24;
+	alienInstances[arg0].unk12 = alienInstances[arg0].unk48;
+	if (((alienInstances[arg0].unk0 >> 8) != (alienInstances[arg0].unk2E >> 8)) || ((alienInstances[arg0].unk4 >> 8) != (alienInstances[arg0].unk32 >> 8)))
+	{
+		sp24 = 1;
+	}
+	if (alienInstances[arg0].unk24 != 0)
+	{
+		if (func_800ABCC8_BAC78(arg0) != 0)
+		{
+			return;
+		}
+		goto block_12;
+	}
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD))
+	{
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE)
+		{
+			if (func_80117464_126414(alienInstances[arg0].pad46) == 0)
+			{
+				alienInstances[arg0].unk38 = alienInstances[arg0].pad46;
+				func_8011B584_12A534(alienInstances[arg0].pad46, arg0);
+				{
+					buildingInstances[alienInstances[arg0].pad46].unk8 =
+						buildingInstances[alienInstances[arg0].pad46].unk8 ^
+						(((buildingInstances[alienInstances[arg0].pad46].unk8 >> 12) ^ ((buildingInstances[alienInstances[arg0].pad46].unk8 >> 12) | 0x8000)) << 12);
+				}
+			}
+		}
+		alienInstances[arg0].unk12 = 0;
+		if (sp24 != 0)
+		{
+			func_800AC198_BB148(arg0);
+		}
+		return;
+	}
+block_12:
+	if (func_800ACA3C_BB9EC(arg0) != 0)
+	{
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT)
+		{
+			if ((func_80080840_8F7F0(arg0, 0x50) != 0) && (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ))))
+			{
+				if (func_8011B584_12A534(alienInstances[arg0].unk38, arg0) == 0)
+				{
+					alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+				}
+			}
+		}
+		func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+		if ((sp24 != 0) && (func_800AC2FC_BB2AC(arg0) != 0))
+		{
+			func_800ACB3C_BBAEC(arg0);
+		}
+	}
+}
+
+// AI - Update free-roam AI
+// Human behavior func- alienspecs unk48
+void func_800ACE40_BBDF0(u8 arg0) {
+	AlienInstance *inst;
+	s32 flags;
+	s32 randomValue;
+
+	inst = &alienInstances[arg0];
+	if (!(inst->unk20 & ALIEN_FLAG_FALL)) {
+		inst->unk12 = inst->unk48;
+		if (func_800ACA3C_BB9EC(arg0) != 0) {
+			randomValue = func_800038E0_44E0() >> 8;
+			inst->unkE = (s16) ((inst->unkE + randomValue) - 0x80);
+			if (inst->unk24 != 0) {
+				if (func_800ABCC8_BAC78(arg0) != 0) {
+					return;
+				}
+			} else {
+				if (!(inst->unk20 & ALIEN_FLAG_UNKD)) {
+					func_800ABFC0_BAF70(arg0);
+					func_800AC5BC_BB56C(arg0);
+					flags = inst->unk20;
+					if (flags & 0x80000000) {
+						inst->unk20 = flags | ALIEN_FLAG_UNKD;
+					}
+					return;
+				}
+			}
+			func_800AC064_BB014(arg0);
+			if ((inst->unk20 & ALIEN_FLAG_TARGET_PT) && !(inst->unk20 & (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ)) &&
+				(func_80080840_8F7F0(arg0, 0x14) != 0) &&
+				(func_8011B584_12A534(inst->unk38, arg0) == 0)) {
+				inst->unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+			}
+			func_800808F0_8F8A0(arg0, &inst->unkE);
+			if (func_800AC2FC_BB2AC(arg0) != 0) {
+				func_800ACB3C_BBAEC(arg0);
+			}
+		}
+	}
+}
+
+// AI - Alert nearby aliens
+void func_800ACF9C_BBF4C(u8 arg0)
+{
+	s32 flags;
+	s32 dx;
+	s32 dz;
+	s32 abs_dx;
+	s32 abs_dz;
+	u8 alienIdx;
+	s16 x;
+	s16 z;
+	s32 i;
+	x = buildingInstances[arg0].xCoord;
+	z = buildingInstances[arg0].zCoord;
+
+	for (i = 0; i < D_8014D507; i++)
+	{
+		alienIdx = D_8014D408[i];
+		flags = alienInstances[alienIdx].unk20;
+		do
+		{
+		} while (0);
+		if (!(flags & 0x80))
+		{
+			if (alienInstances[alienIdx].unk24 == 0)
+			{
+				dx = x - alienInstances[alienIdx].unk0;
+				dz = z - alienInstances[alienIdx].unk4;
+				abs_dx = ((-dx) < dx) ? (dx) : (-dx);
+				abs_dz = ((-dz) < dz) ? (dz) : (-dz);
+				if (((abs_dz < abs_dx) ? (((-dx) < dx) ? (dx) : (-dx)) : (((-dz) < dz) ? (dz) : (-dz))) < 0x800)
+				{
+					alienInstances[alienIdx].unk20 |= ALIEN_FLAG_UNKD;
+					alienInstances[alienIdx].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ);
+				}
+			}
+		}
+	}
+	func_8011BA80_12AA30(arg0, 0x800);
+}
+
+// AI - Snap to grid target
+void func_800AD0F0_BC0A0(u8 arg0) {
+	s16 xPos, zPos;
+	s16 xOff, zOff;
+
+	xPos = alienInstances[arg0].unk0;
+	zPos = alienInstances[arg0].unk4;
+	xOff = (xPos & 0xFF) - 0x80;
+	zOff = (zPos & 0xFF) - 0x80;
+
+	alienInstances[arg0].unk38 = 0xFF;
+	alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
+	alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
+	alienInstances[arg0].unk48 = 0;
+
+	if (zOff < xOff) {
+		if (-zOff < xOff) {
+			xPos += 0x100;
+		} else {
+			zPos -= 0x100;
+		}
+	} else {
+		if (-zOff < xOff) {
+			zPos += 0x100;
+		} else {
+			xPos -= 0x100;
+		}
+	}
+
+	xPos = ((xPos >> 8) << 8) + 0x80;
+	zPos = ((zPos >> 8) << 8) + 0x80;
+	alienInstances[arg0].unk14 = xPos;
+	alienInstances[arg0].unk18 = zPos;
+	alienInstances[arg0].unk16 = func_800B84D0_C7480(xPos, zPos) >> 8;
+
+	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+		alienInstances[arg0].unk48 = 0x40;
+	}
+}
+
+// Spawn human from building - generic?
+u8 func_800AD240_BC1F0(u8 arg0)
+{
+	s16 sp2E;
+	s16 sp2C;
+	s16 sp2A;
+	u8 alienIdx;
+	if ((buildingInstances[arg0].unk7 == 0) || ((currentLevel == 3) && (arg0 == 0x3E))) // if spawned from school in America 1, return (special handling in func_800AD3BC )
+	{
+		return 0xFF;
+	}
+	func_8011B454_12A404(arg0, &sp2E, &sp2A, &sp2C);
+	alienIdx = func_8007956C_8851C(1); // spawn enemy type 0x1 - human
+	if (alienIdx != 0xFF)
+	{
+		buildingInstances[arg0].unk7--; // decrease building's "humans inside" value
+
+		alienInstances[alienIdx].unk0 = sp2E;
+		alienInstances[alienIdx].unk4 = sp2C;
+		alienInstances[alienIdx].unk2 = sp2A;
+		alienInstances[alienIdx].pad46 = arg0;
+		alienInstances[alienIdx].unk20 |= ALIEN_FLAG_UNKE;
+		alienInstances[alienIdx].unk1B = func_800B0F20_BFED0(sp2E, sp2C);
+
+		func_8011C680_12B630(alienIdx, buildingInstances[arg0].unk11);
+		func_800AD0F0_BC0A0(alienIdx);
+		if (currentLevel == 4 && D_80047F94 == 0 && func_8000726C_7E6C(0xB) == 0 && func_8000726C_7E6C(0xC) == 0) // if Siberia something something
+		{
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0); // case 1 - make this human a zombie
+		}
+	}
+	return alienIdx;
+}
+
+// https://decomp.me/scratch/SVfUg
+// Spawn human from building
+s32 func_800AD3BC_BC36C(u8 arg0)
+{
+	s16 xPos;
+	s16 zPos;
+	s16 yPos;
+	u8 alienIdx;
+	u8 targetBuilding;
+	func_8011B454_12A404(arg0, &xPos, &yPos, &zPos);
+	alienIdx = func_8007956C_8851C(1) & 0xFF; // spawn type 0x1 - human
+	if (alienIdx != 0xFF)
+	{
+		buildingInstances[arg0].unk7--; // decrease this building instance's "humans inside" value
+
+		alienInstances[alienIdx].pad46 = arg0;
+		alienInstances[alienIdx].unk0 = xPos;
+		alienInstances[alienIdx].unk4 = zPos;
+		alienInstances[alienIdx].unk2 = yPos;
+		alienInstances[alienIdx].unk48 = 0xA0;
+		alienInstances[alienIdx].unk20 |= ALIEN_FLAG_UNKD;
+		alienInstances[alienIdx].unk1B = func_800B0F20_BFED0(xPos, zPos);
+		func_8011C680_12B630(alienIdx, buildingInstances[arg0].unk11);
+		targetBuilding = buildingInstances[arg0].unkE;
+		if (targetBuilding != 0xFF)
+		{
+			alienInstances[alienIdx].unk38 = targetBuilding;
+			alienInstances[alienIdx].unk20 |= ALIEN_FLAG_TARGET_VEHICLE;
+		}
+		if (currentLevel == 3 && arg0 == 0x3E) // if spawned from America 1 school building
+		{
+			D_8004816C++; // increase human tracker value for the school/church mission
+			func_800AD814_BC7C4(alienIdx, 0x14, 0, 0); // human behavior = case 20 (follow Mr Lolly etc)
+		}
+		if ((currentLevel == 4 && func_8000726C_7E6C(0xB) == 0) && func_8000726C_7E6C(0xC) == 0) // if Siberia something something
+		{
+			func_800AD814_BC7C4(alienIdx, 1, 0, 0); // case 1 - make this human a zombie
+		}
+	}
+	return alienIdx;
+}
+
+// AI - Spawn at coordinates
+u8 func_800AD554_BC504(s32 arg0, s32 arg1, s32 arg2) {
+	u8 idx;
+	AlienInstance *ptr;
+	u8 v3;
+
+	idx = func_8007956C_8851C(1);
+	if (idx != 0xFF) {
+		ptr = &alienInstances[idx];
+		ptr->unk0 = arg0;
+		ptr->unk4 = arg1;
+		ptr->unk2E = arg0;
+		ptr->unk32 = arg1;
+		ptr->unk48 = 0x40;
+		ptr->unk20 |= ALIEN_FLAG_UNKD;
+		ptr->unk1B = func_800B0F20_BFED0(arg0, arg1);
+		v3 = buildingInstances[arg2].unk11;
+		if (v3 != -1) {
+			D_80146688_155638[currentLevel - 1][v3].unk0A += 1;
+		} else {
+			D_8015EA14 += 1;
+		}
+		func_8011C680_12B630(idx, (s8)v3);
+		ptr->unk38 = arg2;
+		func_8011B3F0_12A3A0(ptr->unk38, &ptr->unk14, &ptr->unk16, &ptr->unk18);
+		ptr->unk20 |= ALIEN_FLAG_TARGET_PT;
+	}
+	return idx;
+}
+
+// https://decomp.me/scratch/yN8so
+// AI - Compute vehicle offset
+void func_800AD698_BC648(VehicleInstance *arg0, s32 *arg1, s32 *arg2)
+{
+	s16 sp3E;
+	s16 sp3C;
+	s16 angle;
+	sp3E = vehicleTypes[arg0->unk1A].unk36;
+	sp3C = vehicleTypes[arg0->unk1A].unk34;
+	sp3E >>= 1;
+	sp3C >>= 1;
+	sp3E += 0x24;
+	sp3C += 0x24;
+	angle = (arg0->unk6 + 0x4000);
+	*arg1 = ((arg0->unk0 + ((((f32)coss(angle)) / 32768.0) * sp3E)) - ((((f32)sins(angle)) / 32768.0) * sp3C));
+	*arg2 = ((arg0->unk4 + ((((f32)sins(angle)) / 32768.0) * sp3E)) + ((((f32)coss(angle)) / 32768.0) * sp3C));
+}
+
+// AI - Set behavior state
+void func_800AD814_BC7C4(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+	AlienInstance *ptr;
+	s32 temp;
+
+	ptr = &alienInstances[arg0];
+	alienInstances[arg0].unk48 = 0x40;
+	alienInstances[arg0].unk3F = arg3;
+	alienInstances[arg0].unk24 = arg1;
+
+	if ((arg1 != 0x14) && (arg1 != 0xB) && (arg1 != 0xC) && (arg1 != 4)) {
+		D_8015EA14++;
+		func_8011C680_12B630((u8) arg0, -1);
+	}
+
+	switch (arg1) {
+		case 2:
+			func_800AD0F0_BC0A0((u8) arg0);
+			return;
+
+		case 1:
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT);
+			alienInstances[arg0].unk48 = 0x30;
+			break;
+
+		case 5:
+        case 7:
+        case 9:
+        case 0xD:
+			temp = D_80048190;
+			if (temp == 8) {
+				D_80048190 = 0;
+				temp = 0;
+			}
+			alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKI);
+			alienInstances[arg0].unk48 = 0xC0;
+			alienInstances[arg0].unk27 = temp;
+			alienInstances[arg0].unk38 = arg2;
+			D_80048190 = temp + 1;
+			break;
+
+		case 0xB:
+			temp = D_80048190;
+			if (temp == 8) {
+				D_80048190 = 0;
+				temp = 0;
+			}
+			alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_AWAY | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_UNKI | ALIEN_FLAG_TARGET_VEHICLE);
+			alienInstances[arg0].unk48 = 0xC0;
+			alienInstances[arg0].unk27 = temp;
+			alienInstances[arg0].unk38 = arg2;
+			D_80048190 = temp + 1;
+			break;
+
+		case 0xF:
+			if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
+				alienInstances[arg0].unk48 = 0xA0;
+			}
+			break;
+
+		case 0x11:
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[arg0].unk38 = 0x100;
+			break;
+
+		case 0x13:
+			alienInstances[arg0].unk48 = 0;
+			break;
+
+		case 0x14:
+			alienInstances[arg0].unk48 = 0xA0;
+			break;
+
+		case 0x19:
+			alienInstances[arg0].unk48 = 0xA0;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
+			alienInstances[arg0].unk6 = 0x4000;
+			alienInstances[arg0].unkE = -0x4000;
+			alienInstances[arg0].unk2C = 0;
+			break;
+
+		case 0x1A:
+			alienInstances[arg0].unk3C = arg2;
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+			alienInstances[arg0].unk48 = 0xC0;
+			func_800E7AA0_F6A50(ptr);
+			return;
+
+		case 0x1B:
+
+			alienInstances[arg0].unk38 = arg2;
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+			alienInstances[arg0].unk48 = 0xA0;
+			break;
+
+		default:
+			break;
+	}
+}
+
+
+// AI - Spawn and transition state
+u8 func_800ADA70_BCA20(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+	u8 idx;
+	AlienInstance *ptr;
+
+	idx = (u8) func_8007956C_8851C(1);
+	if (idx != 0xFF) {
+		ptr = &alienInstances[idx];
+		ptr->unk0 = arg0;
+		ptr->unk4 = arg1;
+		func_800AD814_BC7C4(idx, arg2, arg3, arg4);
+	}
+	return idx;
+}
+
+// AI - Cleanup alien
+void func_800ADAF8_BCAA8(u8 arg0) {
+	func_800873A8_96358(arg0);
+	if (alienInstances[arg0].unk24 == 4) {
+		alienInstances[arg0].unk12 = 0;
+	}
+}
+
+// Black Adam's behaviors - func is named at unk48 on his enemyspecs table (entry 0x12 in all levels)
+// unk24 on his enemyinstance determines case - running, shooting at you, kneeling on death, etc
+void func_800ADB4C_BCAFC(u8 arg0) {
+    AlienInstance *alien = &alienInstances[arg0];
+    s32 state;
+    s32 dx, dz, absDx, lateral;
+
+
+		state = func_800EF650_FE600(alien);
+	if ((state == 0) && (alienInstances[arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_VEHICLE | ALIEN_FLAG_TARGET_OBJ))) {
+		func_8008064C_8F5FC(arg0);
+	} else if (state == 1) {
+		func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+	} else if (state == 2) {
+		alienInstances[arg0].unk12 = 0;
+	}
+
+
+	switch (alienInstances[arg0].unk24 - 1) { // subtract 1 from actual unk24 value to determine case...
+		case 0:
+			dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+			dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+
+			absDx = -dx < dx ? dx : -dx;
+            lateral = -dz < dz ? dz : -dz;
+            state = lateral < absDx ? (-dx < dx ? dx : -dx) : (-dz < dz ? dz : -dz);
+
+			dx = func_80084FE8_93F98(arg0, 0x1000);
+			if ((state < 0x320) && (dx != 0)) {
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
+			} else if ((state >= 0x3E9) || (dx == 0)) {
+				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
+			}
+			alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT);
+			break;
+
+		case 1:
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_TARGET_PT) {
+				if (func_80080840_8F7F0(arg0, 0x32) != 0) {
+					alienInstances[arg0].unk12 = 0;
+					alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
+				}
+			}
+			break;
+
+		case 2:
+			break;
+
+		case 3:
+			if ((alienInstances[arg0].unk20 << 0xA) >= 0) {
+				func_8008554C_944FC(arg0);
+				if ((func_80084FE8_93F98(arg0, 0x1000) != 0) && (alienInstances[arg0].unk4E != 0)) {
+					alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
+				}
+				alienInstances[arg0].unk12 = 0;
+				alienInstances[arg0].unk20 |= (ALIEN_FLAG_PLAYER | ALIEN_FLAG_TARGET_PT);
+				if (alienInstances[arg0].hitPoints < ((s32)alienTypes[0x12].unk3A / 4)) {
+					func_80087AAC_96A5C(arg0);
+				}
+			}
+			break;
+
+		case 7:
+			if ((alienInstances[arg0].unk20 << 0xA) >= 0) {
+				func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+				alienInstances[arg0].unk12 = 0;
+			}
+			break;
+
+		case 4:
+			if ((alienInstances[arg0].unk20 << 1) >= 0) {
+				alienInstances[arg0].unk24 = 6;
+				alienInstances[arg0].unk2C = 0x1F4;
+			}
+			break;
+
+		case 5:
+			if (((D_80052A8C & 3) == 0) && ((D_80031420 & 3) != 0)) {
+					func_800CA5EC_D959C(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x28, alienInstances[arg0].unk4, 0, -0x80, 0, 5, 6, 8, 0xFF, 0, 0xFF, 0, 0xFF);
+				}
+
+			if (alienInstances[arg0].unk2C != 0) {
+				alienInstances[arg0].unk2C -= 1;
+			}
+
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
+			if (alienInstances[arg0].unk2C == 0x1E0) {
+				func_80018D7C_1997C(0xDE);
+			}
+
+			if (alienInstances[arg0].unk2C == 0x1CC) {
+				if (D_80052B34->unk1A != 0) {
+					func_800FDEA8_10CE58(D_80052B2C, 0);
+				}
+				D_80158C42 = 2;
+			}
+
+			state = func_80084E54_93E04((EntityInstance *) alien, (EntityInstance *) D_80052B34);
+			if (alienInstances[arg0].unk2C < 0x191) {
+				if ((D_80158FEC == &alienInstances[arg0]) || (state < 0x190)) {
+					if (D_8013D910_14C8C0[0] == 0) {
+						func_80018D7C_1997C(0xDF);
+						D_8013D910_14C8C0[0] = 1;
+					}
+				}
+			}
+
+			if (!(alienInstances[arg0].unk47 & 8) && (alienInstances[arg0].unk2C != 0)) {
+				break;
+			}
+
+			if (alienInstances[arg0].unk2C == 0) {
+				alienInstances[arg0].unk26 = 1;
+			} else {
+				alienInstances[arg0].unk26 = 0;
+			}
+			func_80088760_97710(alien);
+			break;
+
+		case 6:
+			break;
+
+		default:
+			break;
+	}
+
+	if (alienInstances[arg0].unk1E != 0) {
+		alienInstances[arg0].unk1E -= 1;
+	}
+}
+
+
+// AI - Cleanup wrapper
+void func_800ADFC0_BCF70(u8 arg0) {
+	func_800873A8_96358(arg0);
+}
+
+// AI - Cleanup wrapper
+void func_800ADFE8_BCF98(u8 arg0) {
+	func_800873A8_96358(arg0);
+}
+
+// AI - Escalate player proximity
+void func_800AE010_BCFC0(u8 arg0) {
+	s16 dx;
+	s16 dz;
+	s32 neg_dx;
+	s32 lateral;
+	s32 absDx;
+
+	dx = alienInstances[arg0].unk0 - D_80052B34->unk0;
+	dz = alienInstances[arg0].unk4 - D_80052B34->unk4;
+	neg_dx = -dx;
+
+	if (neg_dx < dx) {
+		absDx = dx;
+	} else {
+		absDx = neg_dx;
+	}
+
+	if (-dz < dz) {
+		lateral = dz;
+	} else {
+		lateral = -dz;
+	}
+
+	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+
+	if ((s16)(lateral + absDx) < 0x190) {
+		alienInstances[arg0].unk14 = D_80052B34->unk0;
+		alienInstances[arg0].unk18 = D_80052B34->unk4;
+		if (alienInstances[arg0].unk12 < 0x140) {
+			alienInstances[arg0].unk12 += 0x20;
+		}
+		alienInstances[arg0].unk20 |= (ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY);
+		if ((s16)(lateral + absDx) < 0x96) {
+			alienInstances[arg0].unk12 = 0x1C0;
+			if ((s16)(lateral + absDx) < 0x28) {
+				if (!(D_80052B34->unk0 & 1)) {
+					alienInstances[arg0].unkE += 0x222;
+				} else {
+					alienInstances[arg0].unkE -= 0x222;
+				}
+				alienInstances[arg0].unk12 = 0x280;
+			}
+		}
+		return;
+	}
+	if (alienInstances[arg0].unk12 > 0) {
+		alienInstances[arg0].unk12 -= 8;
+		return;
+	}
+	alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY);
+}
+
+// AI - Add to globals
+void func_800AE190_BD140(s16 arg0) {
+	D_8004816A += arg0; // increase human meter
+	D_80048170 += arg0; // increase "humans killed" count
+}
+
+// AI - Increment globals
+// this is only ever called through func_8008DA24 when HCU carries a human to harvester
+void func_800AE1C0_BD170(void) {
+	D_8004816A += 1; // increase human meter
+	D_8004816E += 1; // increase "humans harvested" count
+}
+
+// AI - Switch all idle aliens
+void func_800AE1EC_BD19C(void) {
+	s16 i;
+
+	for (i = 0; i < D_8014D507; i++) {
+		s32 idx = D_8014D408[i];
+		if (alienInstances[idx].unk24 == 0) {
+			func_800AD814_BC7C4(idx, 1, 0, 0);
+		} else if (alienInstances[idx].unk24 == 3) {
+			alienInstances[idx].unk24 = 0x1D;
+		}
+	}
+}
