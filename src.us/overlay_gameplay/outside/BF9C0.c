@@ -340,14 +340,15 @@ s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
+	s32 pad54; s32 pad50; s32 pad4C; s32 pad48; s32 pad44; s32 pad40;
 	s32 var_a2; s32 var_a3; s32 wallIndex; BoundingBox *wall;
 	f32 temp_f0;
+	f32 outerScale;
+	f32 temp_f2;
 	f32 temp_f12;
 	f32 temp_f14;
-	f32 temp_f2;
 	s16 temp_a0;
 	s16 temp_a1;
-	s16 temp_t7;
 	s32 temp_v0_3;
 	s32 temp_v0_4;
 	s32 var_t0;
@@ -356,8 +357,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	s32 var_t3;
 
 	var_t0 = *arg3 - arg0;
-	temp_t7 = arg1;
-	var_t2 = *arg4 - temp_t7;
+	var_t2 = *arg4 - arg1;
 	var_t1 = *arg5 - arg2;
 	*arg6 = 0;
 	var_t3 = 0;
@@ -368,32 +368,32 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			}
 			temp_f14 = var_t0;
 			var_t3 = 1;
-			temp_f2 = (D_8014FD30.main.maxX - arg0) / temp_f14;
+			outerScale = (D_8014FD30.main.maxX - arg0) / temp_f14;
 			*arg3 = D_8014FD30.main.maxX;
-			temp_f0 = var_t2 * temp_f2;
-			temp_f12 = var_t1 * temp_f2;
-			*arg4 = temp_t7 + temp_f0;
+			temp_f0 = var_t2 * outerScale;
+			temp_f12 = var_t1 * outerScale;
+			*arg4 = arg1 + temp_f0;
 			*arg5 = arg2 + temp_f12;
-			var_t0 = var_t0 * temp_f2;
+			var_t0 = var_t0 * outerScale;
 			var_t2 = temp_f0;
 			*arg6 = 1;
-			var_t1 = temp_f12;
+			var_t1 = temp_f12; if ((s32)outerScale * 0) {}
 		} else if (*arg3 < D_8014FD30.main.minX) {
 			if (var_t0 == 0) {
 				break;
 			}
 			temp_f14 = var_t0;
 			var_t3 = 1;
-			temp_f2 = (D_8014FD30.main.minX - arg0) / temp_f14;
+			outerScale = (D_8014FD30.main.minX - arg0) / temp_f14;
 			*arg3 = D_8014FD30.main.minX;
-			temp_f0 = var_t2 * temp_f2;
-			temp_f12 = var_t1 * temp_f2;
-			*arg4 = temp_t7 + temp_f0;
-			var_t0 = var_t0 * temp_f2;
+			temp_f0 = var_t2 * outerScale;
+			temp_f12 = var_t1 * outerScale;
+			*arg4 = arg1 + temp_f0;
 			*arg5 = arg2 + temp_f12;
+			var_t0 = var_t0 * outerScale;
 			var_t2 = temp_f0;
 			*arg6 = 1;
-			var_t1 = temp_f12;
+			var_t1 = temp_f12; if ((s32)outerScale * 0) {}
 		}
 
 		if (D_8014FD30.main.maxZ < *arg5) {
@@ -402,44 +402,44 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			}
 			temp_f14 = var_t1;
 			var_t3 = 1;
-			temp_f2 = (D_8014FD30.main.maxZ - arg2) / temp_f14;
-			temp_f12 = var_t0 * temp_f2;
-			temp_f0 = var_t2 * temp_f2;
+			outerScale = (D_8014FD30.main.maxZ - arg2) / temp_f14;
+			temp_f12 = var_t0 * outerScale;
+			temp_f0 = var_t2 * outerScale;
 			*arg3 = arg0 + temp_f12;
+			*arg4 = arg1 + temp_f0;
 			var_t0 = temp_f12;
-			*arg4 = temp_t7 + temp_f0;
 			var_t2 = temp_f0;
 			*arg5 = D_8014FD30.main.maxZ;
-			var_t1 = var_t1 * temp_f2;
-			*arg6 = 0;
+			var_t1 = var_t1 * outerScale;
+			*arg6 = 0; if ((s32)outerScale * 0) {}
 		} else if (*arg5 < D_8014FD30.main.minZ) {
 			if (var_t1 == 0) {
 				break;
 			}
 			temp_f14 = var_t1;
 			var_t3 = 1;
-			temp_f2 = (D_8014FD30.main.minZ - arg2) / temp_f14;
-			temp_f12 = var_t0 * temp_f2;
-			temp_f0 = var_t2 * temp_f2;
+			outerScale = (D_8014FD30.main.minZ - arg2) / temp_f14;
+			temp_f12 = var_t0 * outerScale;
+			temp_f0 = var_t2 * outerScale;
 			*arg3 = arg0 + temp_f12;
+			*arg4 = arg1 + temp_f0;
 			var_t0 = temp_f12;
-			*arg4 = temp_t7 + temp_f0;
 			var_t2 = temp_f0;
 			*arg5 = D_8014FD30.main.minZ;
-			var_t1 = var_t1 * temp_f2;
+			var_t1 = var_t1 * outerScale;
 
-			*arg6 = 0;
+			*arg6 = 0; if ((s32)outerScale * 0) {}
 		}
 
-		for (wall = &D_8014FD30.sub[0]; wall != &D_8014FD30.sub[2]; wall++) {
-			temp_a0 = wall->minX;
-			temp_a1 = wall->maxX;
+		for (wallIndex = 0; wallIndex < 2; wallIndex++) {
+			temp_a0 = D_8014FD30.sub[wallIndex].minX;
+			temp_a1 = D_8014FD30.sub[wallIndex].maxX;
 			if (temp_a0 == temp_a1) {
 				break;
 			}
-			if ((temp_a0 < arg0) && (arg0 < temp_a1) && (wall->minZ < arg2) && (arg2 < wall->maxZ)) {
+			if ((temp_a0 < arg0) && (arg0 < temp_a1) && (D_8014FD30.sub[wallIndex].minZ < arg2) && (arg2 < D_8014FD30.sub[wallIndex].maxZ)) {
 				*arg3 = arg0;
-				*arg4 = temp_t7;
+				*arg4 = arg1;
 				*arg5 = arg2;
 				*arg6 = 0xFF;
 				return 1;
@@ -452,17 +452,16 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 				} else if (*arg3 < arg0) {
 					var_a2 = temp_a1;
 				}
-				temp_f0 = (var_a2 - arg0) / temp_f14;
-				temp_f2 = temp_f0;
-				if ((temp_f0 > 0.0f) && (temp_f0 < 1.0)) {
-					temp_f12 = var_t1 * temp_f0;
+				temp_f2 = (var_a2 - arg0) / temp_f14;
+				if ((temp_f2 > 0.0f) && (temp_f2 < 1.0)) {
+					temp_f12 = var_t1 * temp_f2;
 					temp_v0_4 = arg2 + temp_f12;
 					var_a3 = temp_v0_4;
-					if ((wall->minZ < temp_v0_4) && (temp_v0_4 < wall->maxZ)) {
+					if ((D_8014FD30.sub[wallIndex].minZ < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxZ)) {
 						*arg3 = var_a2;
 						var_t3 = 1;
-						temp_f0 = var_t2 * temp_f0;
-						*arg4 = temp_t7 + temp_f0;
+						temp_f0 = var_t2 * temp_f2;
+						*arg4 = arg1 + temp_f0;
 						*arg5 = temp_v0_4;
 						var_t0 = var_t0 * temp_f2;
 						var_t2 = temp_f0;
@@ -475,22 +474,21 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			if (var_t1 != 0) {
 					temp_f14 = var_t1;
 				if (arg2 < *arg5) {
-					var_a3 = wall->minZ;
+					var_a3 = D_8014FD30.sub[wallIndex].minZ;
 				} else if (*arg5 < arg2) {
-					var_a3 = wall->maxZ;
+					var_a3 = D_8014FD30.sub[wallIndex].maxZ;
 				}
-				temp_f0 = (var_a3 - arg2) / temp_f14;
-				temp_f2 = temp_f0;
-				if ((temp_f0 > 0.0f) && (temp_f0 < 1.0)) {
-					temp_f12 = var_t0 * temp_f0;
+				temp_f2 = (var_a3 - arg2) / temp_f14;
+				if ((temp_f2 > 0.0f) && (temp_f2 < 1.0)) {
+					temp_f12 = var_t0 * temp_f2;
 					temp_v0_4 = arg0 + temp_f12;
 					var_a2 = temp_v0_4;
-					if ((wall->minX < temp_v0_4) && (temp_v0_4 < wall->maxX)) {
+					if ((D_8014FD30.sub[wallIndex].minX < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxX)) {
 						*arg3 = temp_v0_4;
 						var_t3 = 1;
-						temp_f0 = var_t2 * temp_f0;
+						temp_f0 = var_t2 * temp_f2;
+						*arg4 = arg1 + temp_f0;
 						var_t0 = temp_f12;
-						*arg4 = temp_t7 + temp_f0;
 						var_t2 = temp_f0;
 						*arg5 = var_a3;
 						*arg6 = 0;
@@ -504,11 +502,13 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	} while (0);
 	osSyncPrintf(D_80142D10_151CC0);
 	*arg3 = arg0;
-	*arg4 = temp_t7;
+	*arg4 = arg1;
 	*arg5 = arg2;
 	*arg6 = 0;
 	return 0;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
 #endif
