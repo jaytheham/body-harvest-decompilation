@@ -3780,15 +3780,14 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	Unk80052B2C *playerData;
 	VehicleType *type;
 	s32 wasAudioActive;
-	s16 vehicleGroup;
 
 	wasAudioActive = 0;
-	if (func_800E60CC_F507C(2, *((u8 *)D_80052B2C + 0x35)) != 0) {
-		func_800E5E3C_F4DEC(2, *((u8 *)D_80052B2C + 0x35));
+	if (func_800E60CC_F507C(2, D_80052B2C->unk35) != 0) {
+		func_800E5E3C_F4DEC(2, D_80052B2C->unk35);
 		wasAudioActive = 1;
 	}
 
-	playerData = &((Unk80052B2C *)&D_80052AE8)[(s16)arg0];
+	playerData = &(&D_80052AE8)[(s16)arg0];
 	playerData->unk34 = arg1;
 	D_80159318 = 0;
 
@@ -3796,7 +3795,7 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	D_80052B34 = playerData->unk38;
 	type = &vehicleTypes[D_80052B34->unk1A];
 
-	if (*(s16 *)((u8 *)type + 0x3C) < 0) {
+	if (type->arcOfFire < 0) {
 		playerData->unk36 = -0x7FFF;
 	} else {
 		playerData->unk36 = 0;
@@ -3816,7 +3815,7 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 		D_8015930C = D_80159234;
 		D_8013FD88_14ED38 = 1;
 		func_80001144_1D44(0x10, 0, 0);
-		func_8001A650_1B250(*(s16 *)((u8 *)&vehicleTypes[D_80052B34->unk1A].unk18 + sizeof(s16)));
+		func_8001A650_1B250(vehicleTypes[D_80052B34->unk1A].unk1A);
 		func_80139778_148728();
 	}
 
@@ -3844,7 +3843,7 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	if ((D_80052B34->unk1A != 0) && (D_80052B34->unk3C == 0) && ((currentLevel != 2) || (D_80052B34->unk1A != 1))) {
 		func_801371B8_146168(0, 0x37, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
 	} else {
-		func_801371B8_146168(0, *(s16 *)((u8 *)type + 0x68), D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
+		func_801371B8_146168(0, type->unk68, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, -1.0f);
 	}
 
 	D_801591D8 = 0;

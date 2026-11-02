@@ -1525,7 +1525,13 @@ typedef struct {
 	/* 0x20 */ s16 unk20;
 	/* 0x22 */ u8 pad22[0xE];
 	/* 0x30 */ s32 unk30;
-	/* 0x34 */ s16 unk34;
+	union {
+		/* 0x34 */ s16 unk34;
+		struct {
+			/* 0x34 */ u8 unk34High;
+			/* 0x35 */ u8 unk35;
+		};
+	};
 	/* 0x36 */ s16 unk36;
 	/* 0x38 */ VehicleInstance* unk38;
 	/* 0x3C */ s16 unk3C;
@@ -1615,7 +1621,13 @@ typedef struct {
 	/* 0x14 */ u16 unk14;
 	/* 0x16 */ u8 unk16;
 	/* 0x17 */ u8 pad17;
-	/* 0x18 */ s32 unk18; // string table index for vehicle name
+	union {
+		/* 0x18 */ s32 unk18; // string table index for vehicle name
+		struct {
+			/* 0x18 */ s16 unk18High;
+			/* 0x1A */ s16 unk1A;
+		};
+	};
 	/* 0x1C */ s32 weapon1;
 	/* 0x20 */ s16 gun1X;
 	/* 0x22 */ s16 gun1Y;
@@ -1663,7 +1675,7 @@ typedef struct {
 	/* 0x64 */ u8 unk64;
 	/* 0x65 */ u8 pad65;
 	/* 0x66 */ s16 unk66;
-	/* 0x68 */ u8 pad68[2];
+	/* 0x68 */ s16 unk68;
 	/* 0x6A */ s16 unk6A;
 	union {
 		/* 0x6C */ u8 pad6C[0x4];
