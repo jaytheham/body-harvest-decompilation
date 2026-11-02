@@ -1530,7 +1530,7 @@ void func_801365E0_145590(void) {
 	Unk80052B40 spD8;
 	Unk80052B40 spD0;
 	s16 spCC[2];
-	void (*sp68)(s32, s16);
+	SignpostRenderScratch scratch;
 	s16 var_fp;
 	s16 var_s0;
 	s16 var_s1;
@@ -1548,80 +1548,82 @@ void func_801365E0_145590(void) {
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetColorDither(D_8005BB2C++, G_CD_NOISE);
-	gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
+	scratch.packet = D_8005BB2C++;
+	scratch.packet->words.w1 = 0xFFFFFFFF;
+	scratch.packet->words.w0 = 0xBC00000A;
+	scratch.packet = D_8005BB2C++;
+	scratch.packet->words.w1 = 0xFFFFFFFF;
+	scratch.packet->words.w0 = 0xBC00040A;
 	gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
+	if (((s32)scratch.packet < (s32)D_8005BB2C) && ((s32)D_8005BB2C < (s32)scratch.packet)) {}
 
 	var_fp = 0;
 	while (var_fp < 0x20) {
 		signpost = &D_80258330[var_fp];
-		var_s0 = signpost->unk0;
-		if ((var_s0 != 0) || (signpost->unk1 != 0)) {
-			var_s0 = (var_s0 << 24) >> 16;
-			var_s0 += 0x80;
-			var_s1 = (signpost->unk1 << 8) + 0x80;
-			func_8011E6FC_12D6AC(var_s0, var_s1, spCC);
-			if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
-				(D_801493B4 >= var_s1) &&
-				(func_800B93AC_C835C(var_s0, var_s1, 0x13, (s16) D_80052B2C->unk0, (s32) D_80052B2C->unk8,
-					0x4000 - D_80047950) != 0)) {
-				spE0.unk0 = var_s0 >> 2;
-				spE0.unk2 = spCC[0] >> 2;
-				spE0.unk4 = var_s1 >> 2;
-				spD8.unk0 = signpost->direction << 0xE;
-				spD8.unk2 = 0;
-				spD8.unk4 = 0;
-				spD0.unk0 = 0x20;
-				spD0.unk2 = 0x20;
-				spD0.unk4 = 0x20;
-				sp68 = func_80136B50_145B00;
-				func_800039D0_45D0(&spE0, &spD8, &spD0, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				gDPPipeSync(D_8005BB2C++);
-				gSPDisplayList(D_8005BB2C++, D_504D1D0);
-				if (signpost->direction & 1) {
-					width = 0x10;
-					height = 0x13;
-				} else {
-					width = 0x13;
-					height = 0x10;
+		if (1) {
+			var_s0 = signpost->unk0;
+			if ((var_s0 != 0) || (signpost->unk1 != 0)) {
+				var_s0 = (var_s0 << 24) >> 16;
+				var_s0 += 0x80;
+				var_s1 = (signpost->unk1 << 8) + 0x80;
+				func_8011E6FC_12D6AC(var_s0, var_s1, spCC);
+				if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
+					(D_801493B4 >= var_s1) &&
+					(func_800B93AC_C835C(var_s0, var_s1, 0x13, (s16) D_80052B2C->unk0, (s32) D_80052B2C->unk8,
+						0x4000 - D_80047950) != 0)) {
+					spE0.unk0 = var_s0 >> 2;
+					spE0.unk2 = spCC[0] >> 2;
+					spE0.unk4 = var_s1 >> 2;
+					spD8.unk0 = signpost->direction << 0xE;
+					spD8.unk2 = 0;
+					spD8.unk4 = 0;
+					spD0.unk0 = 0x20;
+					spD0.unk2 = 0x20;
+					spD0.unk4 = 0x20;
+					func_800039D0_45D0(&spE0, &spD8, &spD0, D_8005BB38);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+					gDPPipeSync(D_8005BB2C++);
+					gSPDisplayList(D_8005BB2C++, D_504D1D0);
+					if (signpost->direction & 1) {
+						width = 0x10;
+						height = 0x13;
+					} else {
+						width = 0x13;
+						height = 0x10;
+					}
+					func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC[0], var_s1, 0, 0, 0, width, height, 0x35, NULL,
+						func_8012E1F8_13D1A8);
+					scratch.callback = func_80136B50_145B00;
+					switch (signpost->direction) {
+						case 0:
+							var_s1 += 0x18;
+							break;
+
+						case 1:
+							var_s0 = (s16) (var_s0 + 0x18);
+							break;
+
+						case 2:
+							var_s1 -= 0x18;
+							break;
+
+						case 3:
+							var_s0 = (s16) (var_s0 - 0x18);
+							break;
+					}
+					func_8012D700_13C6B0(4, (var_fp + 0x2000), var_s0, spCC[0], var_s1, 0, 0, 0, width, height, 0x35, scratch.callback,
+						NULL);
 				}
-				func_8012D700_13C6B0(5, (var_fp + 0x2000), var_s0, spCC[0], var_s1, 0, 0, 0, width, height, 0x35, NULL,
-					func_8012E1F8_13D1A8);
-				switch (signpost->direction) {
-					case 0:
-						var_s1 += 0x18;
-						break;
-
-					case 1:
-						var_s0 = (s16) (var_s0 + 0x18);
-						break;
-
-					case 2:
-						var_s1 -= 0x18;
-						break;
-
-					case 3:
-						var_s0 = (s16) (var_s0 - 0x18);
-						break;
-				}
-				func_8012D700_13C6B0(4, (var_fp + 0x2000), var_s0, spCC[0], var_s1, 0, 0, 0, width, height, 0x35, sp68,
-					NULL);
 			}
 		}
 		if (var_s0) {}
 		var_fp++;
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
 #endif
 
-// https://decomp.me/scratch/NQ4OJ
-// CURRENT(110)
-// Check if player is reading signpost
-// AI - Handle signpost interaction on button press
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
 	s32 heading;
