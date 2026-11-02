@@ -898,9 +898,7 @@ void func_802D516C_2548AC(void) {
 
 // called thru mission dispatch table offset 0x03
 void func_802D5190_2548D0(void) {
-	u32 *ptr = (u32*)((u8*)buildingInstances + 0x5D8); // set a bit/flag on the church building?
-	u32 val = *ptr;
-	*ptr = ((((val >> 12) | 0x20) ^ (val >> 12)) << 12) ^ val;
+	buildingInstances[0x3E].statusFlags |= 0x20;
 }
 
 void func_802D51B8_2548F8(void) {
