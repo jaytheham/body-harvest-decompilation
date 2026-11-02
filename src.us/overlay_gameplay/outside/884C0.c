@@ -1409,7 +1409,7 @@ void func_8007C044_8AFF4(void) {
 	s32 swappedTexture;
 	s32 lod;
 	s32 flags;
-	s32 color;
+	s32 drawId;
 	s32 i;
 	u32 alienId;
 	f32 four = 4.0f;
@@ -1509,8 +1509,8 @@ void func_8007C044_8AFF4(void) {
 		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
 		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 		gSPNumLights(D_8005BB2C++, 1);
-		gSPLookAtX(D_8005BB2C++, D_8013BD40_14ACF0);
-		gSPLookAtY(D_8005BB2C++, D_8013BD38_14ACE8);
+		gSPLight(D_8005BB2C++, D_8013BD40_14ACF0, 1);
+		gSPLight(D_8005BB2C++, D_8013BD38_14ACE8, 2);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041480);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
@@ -1539,7 +1539,7 @@ void func_8007C044_8AFF4(void) {
 					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041880);
 					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					gDPLoadSync(D_8005BB2C++);
-					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
 					gDPTileSync(D_8005BB2C++);
 					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					swappedTexture = 1;
@@ -1551,7 +1551,7 @@ void func_8007C044_8AFF4(void) {
 					gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 16, D_5041480);
 					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					gDPLoadSync(D_8005BB2C++);
-					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 127, 1024);
+					gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 511, 512);
 					gDPTileSync(D_8005BB2C++);
 					gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_8b, 0, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_WRAP, 4, G_TX_NOLOD);
 					swappedTexture = 0;
@@ -1645,32 +1645,28 @@ void func_8007C044_8AFF4(void) {
 	if (drewType2Or20 != 0) {
 		gSPDisplayList(D_8005BB2C++, (Gfx *)D_80031230);
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[((u32)D_80052A8C % 7) << 9]));
-		gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
 		gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 
 		for (i = D_8014D507; i < D_8014D508; i++) {
+			u8 drawIndex;
 		
-			alienId = D_8014D408[i];
-			inst = &alienInstances[alienId];
+			drawIndex = D_8014D408[i];
+			inst = &alienInstances[drawIndex];
 			flags = inst->unk20;
 
 			if ((inst->typeIndex == 0) || ((flags & 0x600) == 0) || !(flags & 0x10000000)) {
 				continue;
 			}
 
+			drawId = drawIndex;
+			distance = 1.0f;
 			if (flags & 0x100000) {
 				colorOffset = -0x30;
-				dx = 1.0f;
 			} else if (flags & 0x4000) {
 				colorOffset = inst->unk2C * 8;
-				dx = 1.0f;
 			} else {
-				colorOffset = (s16)((((f32)sins((u16)((alienId + D_80052A8C) << 13))) / 32768.0) * 32.0);
-				dx = 1.0f;
-			}
-
-			if (inst->typeIndex == 0x20) {
-				dx = (3 - inst->unk26) * 0.5;
+				colorOffset = (s16)((((f32)sins((u16)((drawIndex + D_80052A8C) << 13))) / 32768.0) * 32.0);
 			}
 
 			rotation.unk0 = D_800311A0.unk0;
@@ -1679,6 +1675,10 @@ void func_8007C044_8AFF4(void) {
 			D_800311A0.unk2 += colorOffset;
 			D_800311A0.unk0 -= colorOffset >> 1;
 			D_800311A0.unk4 -= colorOffset >> 1;
+
+			if (inst->typeIndex == 0x20) {
+				distance = (3 - inst->unk26) * 0.5;
+			}
 
 			if (inst->unk20 & ALIEN_FLAG_UNKP) {
 				gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
@@ -1692,13 +1692,13 @@ void func_8007C044_8AFF4(void) {
 			}
 
 
-			D_800311A0.unk0 = (s16)((f32)D_800311A0.unk0 * dx);
-			D_800311A0.unk2 = (s16)((f32)D_800311A0.unk2 * dx);
-			D_800311A0.unk4 = (s16)((f32)D_800311A0.unk4 * dx);
-			func_8007B9CC_8A97C(alienId);
-			D_800311A0.unk0 = (u16)rotation.unk0;
-			D_800311A0.unk2 = (u16)rotation.unk2;
-			D_800311A0.unk4 = (u16)rotation.unk4;
+			D_800311A0.unk0 = (s16)((f32)D_800311A0.unk0 * distance);
+			D_800311A0.unk2 = (s16)((f32)D_800311A0.unk2 * distance);
+			D_800311A0.unk4 = (s16)((f32)D_800311A0.unk4 * distance);
+			func_8007B9CC_8A97C(drawId);
+			D_800311A0.unk0 = rotation.unsignedComponents[0];
+			D_800311A0.unk2 = rotation.unsignedComponents[1];
+			D_800311A0.unk4 = rotation.unsignedComponents[2];
 		}
 
 		gSPDisplayList(D_8005BB2C++, (Gfx *)D_80031200);
@@ -1712,11 +1712,12 @@ void func_8007C044_8AFF4(void) {
 		inst = &inst[-1];
 	} while (i--);
 }
+
+// Disable and aliens don't spawn visibly (show on radar tho)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007C044_8AFF4.s")
 #endif
 
-// Disable and aliens don't spawn visibly (show on radar tho)
 void func_8007D424_8C3D4(void) {
 	s32 idx;
 	AlienInstance *inst;

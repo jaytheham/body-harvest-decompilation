@@ -427,6 +427,7 @@ typedef union {
 		/* 0x04 */ s16 unk4;
 	};
 	s16 components[3];
+	u16 unsignedComponents[3];
 } Unk800311A0; /* size = 0x06 */
 
 typedef struct {
