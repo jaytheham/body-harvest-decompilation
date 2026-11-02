@@ -2368,14 +2368,16 @@ void func_800F9118_1080C8(s32 arg0) {
 	s16 oldZ;
 	s16 centerY;
 	s16 cosOffset;
+	s16 rearX;
 	s32 sinOffset;
-	s16 minusX;
+	s32 minusX;
 	s16 heading;
 	u8 count;
 	union { s32 value; Gfx *gfx; } terrain;
 	s16 radius;
 	s16 centerZ;
 	s16 groundY;
+	s16 rearZ;
 
 	if (D_80157FF0[arg0] == -1) {
 		walker = &D_80158000[arg0];
@@ -2406,9 +2408,9 @@ void func_800F9118_1080C8(s32 arg0) {
 								if (index >= terrain.value) {
 									heading += 0x8000;
 								}
-								sinOffset = heading & 0xFFFF;
-								cosOffset = (s16)(s32)((((f64)(f32)coss(sinOffset & 0xFFFF)) / 32768.0) * (f64)radius);
-								sinOffset = (s16)(s32)((((f64)(f32)sins(sinOffset & 0xFFFF)) / 32768.0) * (f64)radius);
+								terrain.value = heading & 0xFFFF;
+								cosOffset = (s16)(s32)((((f64)(f32)coss(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
+								sinOffset = (s16)(s32)((((f64)(f32)sins(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
 								oldX = limb->unkA;
 								oldZ = limb->unkC;
 								centerX = func_800B84D0_C7480(oldX, oldZ) >> 8;
@@ -2454,14 +2456,14 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								oldX = limb->unkE;
-								oldZ = limb->unk12;
-								centerX = oldX + cosOffset;
-								terrain.value = oldZ + sinOffset;
+								rearX = limb->unkE;
+								rearZ = limb->unk12;
+								centerX = rearX + cosOffset;
+								terrain.value = rearZ + sinOffset;
 								func_8011E6FC_12D6AC(centerX, terrain.value, &rearY);
 								D_8005BB34->v.ob[0] = centerX;
-								minusX = oldX - cosOffset;
-								centerX = oldZ - sinOffset;
+								minusX = rearX - cosOffset;
+								centerX = rearZ - sinOffset;
 								D_8005BB34->v.ob[1] = rearY;
 								D_8005BB34->v.ob[2] = terrain.value;
 								D_8005BB34->v.flag = 0;
@@ -2489,7 +2491,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								terrain.value = heading - 0x4000;
 								terrain.value &= 0xFFFF;
 								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
-									terrain.value = heading + 0x4000;
+									terrain.value = heading + 0x4000; if (terrain.value) {}
 									terrain.value &= 0xFFFF;
 									coss(terrain.value & 0xFFFF);
 									sins(terrain.value & 0xFFFF);

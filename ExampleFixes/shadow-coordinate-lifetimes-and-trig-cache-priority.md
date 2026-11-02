@@ -1,0 +1,7 @@
+`incorrect ASM` -> `code changed` -> `correct ASM`
+
+In the still-unmatched `func_800F9118_1080C8`, reusing oldX/oldZ for the rear coordinates makes their cache priorities 35, ahead of the trig offsets at 20. Verified private UOPT diagnostics assign oldX/oldZ to s1/s2 and cosine to s4, unlike the target cosine/sine/front-X/front-Z roles s1/s2/s3/s4. A halfword minusX also generates a premature SLL/SRA pair before the rear terrain call.
+
+-> Keep minusX as a word until its short argument/store consumers. Split the rear captures into rearX/rearZ halfwords; put rearX after cosOffset and rearZ after groundY, filling existing padding. Store the initial masked heading in the existing terrain.value word, so the sine-result variable is first defined after cosine. Retain an empty `if (terrain.value) {}` after assigning the positive late angle and before masking it; it preserves the target's separate unmasked-value and masked-copy operations.
+
+-> Cosine, sine, front X, front Z, and heading use s1, s2, s3, s4, and s5. The premature rear-X narrowing disappears. The positive late-angle branch retains its separate mask/copy, while the 0xC0 frame and all addressed homes remain unchanged. Enabled diff improves from 4085 to 3210. Integer temporary registers, remaining scheduling, and the negative late-angle cache remain unresolved. The NON_MATCHING wrapper remains; normal US/EU checksum builds pass with the target assembly selected.
