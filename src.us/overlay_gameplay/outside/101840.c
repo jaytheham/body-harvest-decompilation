@@ -3923,7 +3923,6 @@ void func_800FD510_10C4C0(s32 arg0, s16 arg1) {
 	D_8004DCB8 = (f32)D_80052B34->unk4;
 }
 
-#ifdef NON_MATCHING
 void func_800FD858_10C808(s16 arg0) {
 	VehicleInstance *vehicle;
 	Unk80259490 *spawnData;
@@ -3940,6 +3939,8 @@ void func_800FD858_10C808(s16 arg0) {
 				} else if (func_800E60CC_F507C(2, arg0) != 0) {
 					func_800E5E3C_F4DEC(2, arg0);
 					vehicle->unk3C = vehicleTypes[vehicle->unk1A].unk61 << 8;
+				} else {
+					return;
 				}
 				return;
 			}
@@ -3962,9 +3963,6 @@ void func_800FD858_10C808(s16 arg0) {
 	vehicle->unk3C = (s16)((f32)spawnData->unkA * D_80144A80_153A30.value * (f32)(vehicleTypes[spawnData->unk6].unk61 << 8));
 	vehicle->unk1C = vehicleTypes[vehicle->unk1A].hitPoints;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FD858_10C808.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
-#endif
 
 void func_800FDB00_10CAB0(void) {
 	func_800156C8_162C8(0x10);
@@ -4318,7 +4316,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
 #endif
 
 void func_800FE910_10D8C0(s32 arg0) {
