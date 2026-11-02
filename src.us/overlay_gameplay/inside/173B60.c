@@ -905,7 +905,6 @@ void func_8008C8A4_174964(void) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 }
 
-
 // doPauseMenu ?
 // Render and handle the pause menu: 3x3 icon grid, analog stick navigation
 #ifdef NON_MATCHING
@@ -1092,7 +1091,6 @@ void func_8008CF2C_174FEC(void) {
 
 // Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
 void func_8008D900_1759C0(void) {
-	/* Retain the original stack homes around the three six-byte copies. */
 	s32 pad64;
 	s32 pad60;
 	Unk800A4354 sp58;

@@ -190,10 +190,9 @@ void func_800AB80C_BA7BC(u8 arg0) {
 	}
 }
 
-// CURRENT(2803)
 #ifdef NON_MATCHING
-
-void func_800AB8CC_BA87C(u8 arg0) {
+void func_800AB8CC_BA87C(u8 arg0)
+{
 	AlienInstance *inst;
 	s32 parentHeight;
 	AlienInstance *parent;
@@ -203,7 +202,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 	s32 parentIndex;
 	u16 rand2;
 	u16 rand1;
-	inst = &alienInstances[(s32) arg0];
+	inst = &alienInstances[(s32)arg0];
 	parentIndex = inst->unk25;
 	parent = &alienInstances[parentIndex];
 	if (parent->typeIndex == 2)
@@ -220,11 +219,10 @@ void func_800AB8CC_BA87C(u8 arg0) {
 		}
 		else
 		{
-			inst->unk2 = (s16) ((s32) ((((((f32) sins((u16) ((arg0 + D_80052A8C) * 0x1388))) / 32768.0) * 4.0) + ((f64) parent->unk2)) - 4.0));
+			inst->unk2 = (((((f32)sins((arg0 + D_80052A8C) * 0x1388)) / 32768.0) * 4.0) + parent->unk2) - 4.0;
 		}
 	}
-	else
-		if (parent->typeIndex == 0x19)
+	else if (parent->typeIndex == 0x19)
 	{
 		func_8008FF54_9EF04(parentIndex, &helper0, &helper1, &helper2);
 		inst->unk0 = helper0;
@@ -239,7 +237,7 @@ void func_800AB8CC_BA87C(u8 arg0) {
 		{
 			if ((inst->unk24 == 1) || (inst->unk24 == 0x1D))
 			{
-				parentIndex = (u16) func_800038E0_44E0();
+				parentIndex = (u16)func_800038E0_44E0();
 				rand1 = func_800038E0_44E0();
 				rand2 = func_800038E0_44E0();
 				parentHeight = func_800038E0_44E0();
@@ -257,8 +255,9 @@ void func_800AB8CC_BA87C(u8 arg0) {
 		inst->unk20 |= ALIEN_FLAG_UNKF;
 		inst->unk2C = 0x64;
 	}
-	if ((((((f32) (parentIndex & 7)) + ((f32) (parentIndex & 15))) + ((f32) (parentIndex & 31))) + ((f64) ((s32) inst))) != 0.0f)
-		;
+	if ((((((f32)(parentIndex & 7)) + ((f32)(parentIndex & 15))) + ((f32)(parentIndex & 31))) + ((f64)((s32)inst))) != 0.0f)
+	{
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290_tail/func_800AB8CC_BA87C.s")

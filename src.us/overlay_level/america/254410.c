@@ -898,9 +898,7 @@ void func_802D516C_2548AC(void) {
 
 // called thru mission dispatch table offset 0x03
 void func_802D5190_2548D0(void) {
-	u32 *ptr = (u32*)((u8*)buildingInstances + 0x5D8); // set a bit/flag on the church building?
-	u32 val = *ptr;
-	*ptr = ((((val >> 12) | 0x20) ^ (val >> 12)) << 12) ^ val;
+	buildingInstances[0x3E].statusFlags |= 0x20;
 }
 
 void func_802D51B8_2548F8(void) {
@@ -3313,7 +3311,6 @@ void func_802DC7FC_25BF3C(u8 arg0) {
 	func_800039D0_45D0(0, 0, &sp20, func_80011F90_12B90(&D_E020FF0));
 }
 
-// CURRENT(90)
 #ifdef NON_MATCHING
 void func_802DC880_25BFC0(u8 alienIdx)
 {
@@ -3526,7 +3523,6 @@ s32 func_802DCCD8_25C418(u8 arg0)
 	return 0;
 }
 
-// CURRENT(1115)
 #ifdef NON_MATCHING
 void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
