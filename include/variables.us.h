@@ -2783,7 +2783,7 @@ extern f32 D_8016011C;
 extern f32 D_80160120;
 extern f32 D_80160124;
 extern f32 D_80160128;
-extern f32 D_8016012C;
+extern CameraInterpolationStep D_8016012C;
 extern f32 D_80160130;
 extern CameraInterpolationStep D_80160134;
 extern CameraInterpolationStep D_80160138;
