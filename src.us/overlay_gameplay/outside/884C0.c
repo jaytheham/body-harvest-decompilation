@@ -1252,7 +1252,6 @@ void func_8007B370_8A320(u8 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-#ifdef NON_MATCHING
 void func_8007B9CC_8A97C(u8 arg0) {
 	u8 typeIndex;
 	Unk80052B40 sp70;
@@ -1264,7 +1263,7 @@ void func_8007B9CC_8A97C(u8 arg0) {
 	u8 color[3];
 	Vec2_S16 ground;
 	Gfx *model;
-	Gfx *gfx;
+	AlienInstance *inst;
 
 	typeIndex = alienInstances[arg0].typeIndex;
 	sp60 = D_8013C23C_14B1EC;
@@ -1319,8 +1318,9 @@ void func_8007B9CC_8A97C(u8 arg0) {
 
 	setRandomSeed(D_80052A8C);
 	if ((alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL) && (gameplayMode != 2)) {
-		sp68.unk2 = (func_800038E0_44E0() / 64) + alienInstances[arg0].unk44 + alienInstances[arg0].unk8;
-		sp68.unk4 = (func_800038E0_44E0() / 64) + alienInstances[arg0].unk42 + alienInstances[arg0].unkA;
+		inst = &alienInstances[arg0];
+		sp68.unk2 = (func_800038E0_44E0() / 64) + inst->unk8 + inst->unk44;
+		sp68.unk4 = (func_800038E0_44E0() / 64) + inst->unkA + inst->unk42;
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
@@ -1338,12 +1338,10 @@ void func_8007B9CC_8A97C(u8 arg0) {
 		model = D_50509D8;
 	}
 
-	gfx = D_8005BB2C++; gfx->words.w0 = _SHIFTL(G_DL, 24, 8) | _SHIFTL(G_DL_PUSH, 16, 8); gfx->words.w1 = (u32)model;
+	gSPDisplayList(D_8005BB2C++, model);
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007B9CC_8A97C.s")
-#endif
+
 
 // drawComplexObjectShadows e.g. humans
 void func_8007BEC0_8AE70(void)

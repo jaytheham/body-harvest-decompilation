@@ -1,0 +1,5 @@
+incorrect ASM (`func_8007B9CC_8A97C`): direct indexed instance fields give `lh t9,8(s0)` and a signed divide into t2 instead of `lh t2,8(s0)` and a divide into t9; the matching source otherwise differs by six temporary registers. Adding a typed instance pointer fixes the arithmetic but moves the segment packet spill from sp+0x38 to sp+0x34.
+
+-> code changed: Declare an `AlienInstance *inst`, assign it inside the death-perturbation branch, and calculate the angles as `(func_800038E0_44E0() / 64) + inst->unk8 + inst->unk44` and the corresponding unkA/unk42 sum. Replace the final manual G_DL packet stores and function-scope Gfx pointer with `gSPDisplayList(D_8005BB2C++, model)`.
+
+-> correct ASM: The angle loads occupy t2/t1 and t6/t8; signed division results occupy t9 and t5, followed by the target two additions for each angle. The segment packet saves and restores its cursor at sp+0x38. The frame remains 0x78 bytes, the function diff score is zero, and native US and EU ROM checksums are OK.
