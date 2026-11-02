@@ -355,8 +355,8 @@ void func_800772EC_8629C(s32 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING // CURRENT(865)
 // DisplayTrees
+#ifdef NON_MATCHING // CURRENT(770)
 void func_8007764C_865FC(void) {
 	Unk857E0Obj* end;
 	s32 camX;
@@ -393,6 +393,7 @@ void func_8007764C_865FC(void) {
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
 			group = type;
+			if (type != 0) {}
 			if (group == -1) {
 				continue;
 			}
@@ -417,6 +418,7 @@ void func_8007764C_865FC(void) {
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
 			group = type;
+			if (type != 0) {}
 			if (group == -1) {
 				continue;
 			}
@@ -441,6 +443,7 @@ void func_8007764C_865FC(void) {
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
 			group = type;
+			if (type != 0) {}
 			if (group == -1) {
 				continue;
 			}
@@ -465,6 +468,7 @@ void func_8007764C_865FC(void) {
 		for (i = 0; i != 0x96; i++, obj++) {
 			type = obj->unk2;
 			group = type;
+			if (type != 0) {}
 			if (group == -1) {
 				continue;
 			}
@@ -529,6 +533,7 @@ void func_8007764C_865FC(void) {
 
 	}
 
+	if (obj < (Unk857E0Obj*)&D_80259D90[150]) {}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
@@ -628,11 +633,10 @@ void func_8007764C_865FC(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
 #endif
+
 
 u16 func_80078530_874E0(s16 arg0, s16 arg1) {
 	u8 temp_v1;
