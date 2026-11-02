@@ -309,25 +309,24 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_80095F08_A4EB8(void) {
 	s16* dst;
-	u32 rnd, r0, r1;
+	u32 r0, r1;
+	s16 tileType;
+	s16 intensity;
+	u16 height;
 	s32 x;
 	s32 y;
-	s32 level4XMin;
-	s32 level4XMax;
-	s32 level4YMin;
-	s32 level4YMax;
 	s32 levelLimit;
 	u32 i;
 
-	u16 height;
-	u32 mapMask;
+	s32 maskX;
 	u32 outColor;
-	s16 tileType;
-	s16 intensity;
 	s16 mapDark;
+	s32 level4XMin;
+	s32 level4YMin;
+	s32 level4XMax;
+	s32 level4YMax;
 	s32 colorBase;
 	f32 f30;
 	f64 f28;
@@ -355,6 +354,7 @@ void func_80095F08_A4EB8(void) {
 		f26 = D_801424B8_151468[0];
 		f24 = D_801424C0_151470[0];
 		f22 = D_801424C8_151478[0];
+		if (f26) {} if (f22) {}
 		colorBase = 0x100;
 
 		do {
@@ -370,20 +370,19 @@ void func_80095F08_A4EB8(void) {
 
 
 			if (D_80052A94[y].objects[x].flag11) {
-				mapMask = ((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2][(x + 0x80) >> 2] & 0xF0;
-				outColor = mapMask ? 0xFFDF : 0;
+				u8 (*specialRow)[64];
+				specialRow = &((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
+				outColor = ((*specialRow)[(x + 0x80) >> 2] & 0xF0) ? 0xFFDF : 0;
 			} else {
 				height = D_80052A94[y].objects[x].height;
 				if (height < levelLimit) {
 					u32 dist; f32 ratio; f32 ySquare;
 					ySquare = (f32)(y * y);
-					rnd = func_800038E0_44E0();
-					r0 = rnd & 0xFF;
-					r1 = (rnd & 0xFF00) >> 8;
+					r1 = func_800038E0_44E0();
+					r0 = r1 & 0xFF;
+					r1 = (r1 & 0xFF00) >> 8;
 					ratio = (f32) ((r0 + f22) / (r1 + f22));
-					dist = (u32) ((f32) (x * x) * ratio) + (u32) (ySquare * ratio);
-
-					if (dist < 0x14) {
+					dist = (u32) ((f32) (x * x) * ratio) + (u32) (ySquare * ratio); if (dist < 0x14) {
 						intensity = (s16) f26;
 					} else {
 						intensity = (s16) (f28 / dist);
@@ -394,26 +393,25 @@ void func_80095F08_A4EB8(void) {
 					}
 
 
-					outColor = func_800959F0_A49A0((((intensity >> 3) * 0x10) >> 9) & 0xFFFF, (((intensity >> 3) * 0x10) >> 9) & 0xFFFF, ((((intensity >> 2) * 0x10) + ((intensity * 0xF) << 4)) >> 9) & 0xFFFF) & 0xFFFF;
+					outColor = func_800959F0_A49A0((u16)(((intensity >> 3) * 0x10) >> 9), (u16)(((intensity >> 3) * 0x10) >> 9), (s16)((((intensity >> 2) * 0x10) + (intensity * 0xF0)) >> 9)) & 0xFFFF;
 				} else {
-					u8 *maskRow;
-					s32 maskX;
-					maskRow = ((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
+					u8 (*maskRow)[64];
+					maskRow = &((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
 					maskX = x + 0x80;
 					if (D_80052A94[y].objects[x].terrainObject) {
 						tileType = D_80052A94[y].objects[x].terrainType;
 						if ((D_80052A94[y].objects[x].flag10 == 1) && (((tileType >= 4) && (tileType < 0xC)) || (tileType == 0xD))) {
-							outColor = (maskRow[maskX >> 2] & 0xF0) ? 0x528A : 0;
+							outColor = ((*maskRow)[maskX >> 2] & 0xF0) ? 0x528A : 0;
 						} else {
-							outColor = (maskRow[maskX >> 2] & 0xF0) ? 0x8410 : 0;
+							outColor = ((*maskRow)[maskX >> 2] & 0xF0) ? 0x8410 : 0;
 						}
 					} else {
 						u32 ax; f32 ratio; f32 ySquare;
 						u32 ay;
 						ySquare = (f32)(y * y);
-						rnd = func_800038E0_44E0();
-						r0 = rnd & 0xFF;
-						r1 = (rnd & 0xFF00) >> 8;
+						r1 = func_800038E0_44E0();
+						r0 = r1 & 0xFF;
+						r1 = (r1 & 0xFF00) >> 8;
 						ratio = (f32) ((r0 + f24) / (r1 + f24));
 
 						ax = (u32) (((f32) (x * x) * ratio) + f30);
@@ -424,15 +422,15 @@ void func_80095F08_A4EB8(void) {
 							intensity = (s16) D_801424D8_151488[0];
 						}
 
-						intensity = intensity + func_80095A6C_A4A1C(x, y, height);
+						intensity += func_80095A6C_A4A1C(x, y, height);
 						if (intensity < 0) {
 							intensity = 0;
 						}
 
-						mapDark = maskRow[maskX >> 2] & 0xF0;
-						outColor = func_800959F0_A49A0(((intensity * ((colorBase - mapDark) + (mapDark >> 2))) >> 8) & 0xFFFF,
+						mapDark = (*maskRow)[maskX >> 2] & 0xF0;
+						outColor = func_800959F0_A49A0((u16)((intensity * ((colorBase - mapDark) + (mapDark >> 2))) >> 8),
 						intensity,
-						((intensity * (colorBase - (maskRow[maskX >> 2] & 0xF0))) >> 7) & 0xFFFF) & 0xFFFF;
+						(u16)((intensity * (0x100 - mapDark)) >> 7)) & 0xFFFF;
 					}
 				}
 			}
@@ -456,9 +454,7 @@ void func_80095F08_A4EB8(void) {
 		} while (i--);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
