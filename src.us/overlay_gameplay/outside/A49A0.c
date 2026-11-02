@@ -466,8 +466,8 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	Vtx_t *vtx1;
 	Vtx_t *vtx2;
 	Vtx_t *vtx3;
-	MapMarkerScratch *scratch;
 	s16 wave;
+	MapMarkerScratch *scratch;
 	s32 absWave;
 	s16 trig = 0;
 	s16 value;
@@ -486,14 +486,15 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		return;
 	}
 
-	arg3 *= 8.0f;
 	arg1 >>= 5;
 	arg2 >>= 5;
+	arg3 *= 8.0f;
 
 	mode = arg4;
 	if (mode != 1) {
 		mode += mode * 0;
 	}
+	if (mode) {}
 
 	vtx1->ob[1] = -arg3;
 	vtx0->ob[1] = -arg3;
@@ -509,7 +510,8 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	vtx1->ob[2] = value;
 	vtx0->ob[2] = value;
 
-	if (mode == 4) {
+	switch (arg4) {
+	case 4:
 		scratch = (MapMarkerScratch *)&D_80052B40;
 		wave = (((((f32) arg0->distance / D_801424E0_151490[0]) * ((f32)sins(D_8013D50C_14C4BC) / 32768.0)) * 200.0));
 		trig = coss(-D_80052B34->unk6);
@@ -533,14 +535,15 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		scratch->position.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 		D_80052B48.unk4 = 0;
 		D_80052B48.unk2 = (-0x4000 - D_80052B34->unk6);
-		func_800039D0_45D0(&scratch->position, (Unk80052B40 *)&D_80052B48, NULL, (s32)D_8005BB38);
+		func_800039D0_45D0(&scratch->position, (Unk80052B40 *)&D_80052B48, NULL, D_8005BB38);
 		D_8013D50C_14C4BC = (s16)D_8013D50C_14C4BC + 0x300;
-	} else {
+		break;
+	default:
 		scratch = (MapMarkerScratch *)&D_80052B40;
 		scratch->position.unk2 = -arg2;
 		scratch->position.unk4 = 0;
 		scratch->position.unk0 = arg1;
-		func_800039D0_45D0(&scratch->position, NULL, NULL, (s32)D_8005BB38);
+		func_800039D0_45D0(&scratch->position, NULL, NULL, D_8005BB38);
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
