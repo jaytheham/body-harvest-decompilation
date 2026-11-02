@@ -1330,46 +1330,23 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 // AI - Calculate camera shake from impact distance
 void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 {
-	f32 zero;
 	f32 amplitude;
 
-	f32 attenuation;
 	f32 distance;
-	f32 negative;
 	s32 x;
 	s32 y;
 	s32 z;
-	zero = 0.0f;
-	if (arg3 != zero)
+	if (arg3 != 0.0f)
 	{
-		distance = (arg0 / 4) - D_80047954;
-		negative = -distance;
-		if (negative < ((arg0 / 4) - D_80047954)) {
-			x = ((arg0 / 4) - D_80047954);
-		} else {
-			x = negative;
-		}
-		distance = (arg1 / 4) - D_80047958;
-		negative = -distance;
-		if (negative < ((arg1 / 4) - D_80047958)) {
-			y = ((arg1 / 4) - D_80047958);
-		} else {
-			y = negative;
-		}
-		distance = (arg2 / 4) - D_8004795C;
-		negative = -distance;
-		if (negative < ((arg2 / 4) - D_8004795C)) {
-			z = ((arg2 / 4) - D_8004795C);
-		} else {
-			z = negative;
-		}
+		x = BH_ABS((arg0 / 4) - D_80047954);
+		y = BH_ABS((arg1 / 4) - D_80047958);
+		z = BH_ABS((arg2 / 4) - D_8004795C);
 		distance = ((x * x) + (y * y)) + (z * z);
-		attenuation = distance / 50000.0f;
-		amplitude = arg3 - attenuation;
+		amplitude = arg3 - (distance / 50000.0f);
 		if (distance) {} /* Retain the numerator lifetime for IDO. */
-		if (arg3 < attenuation)
+		if (arg3 < (distance / 50000.0f))
 		{
-			amplitude = zero;
+			amplitude = 0.0f;
 		}
 		else if (amplitude < 1.0)
 		{
