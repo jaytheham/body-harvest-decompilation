@@ -1,14 +1,14 @@
 {
-  "generated": "2026-11-02T03:25:07Z",
-  "commit": "b368a0e9",
-  "commit_timestamp": "2026-11-02T16:24:07+13:00",
+  "generated": "2026-11-02T03:27:36Z",
+  "commit": "97ff1ef3",
+  "commit_timestamp": "2026-11-02T16:26:33+13:00",
   "overall": {
-    "total_functions": 3057,
-    "matched": 2918,
-    "non_matching": 139,
-    "asm_stubs": 0,
-    "matched_pct": 95.45,
-    "decompiled_pct": 100.0
+    "total_functions": 3059,
+    "matched": 2924,
+    "non_matching": 133,
+    "asm_stubs": 2,
+    "matched_pct": 95.59,
+    "decompiled_pct": 99.93
   },
   "segments": {
     "core": {
@@ -31,12 +31,12 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1344,
-      "non_matching": 105,
-      "asm_stubs": 0,
-      "total": 1449,
-      "matched_pct": 92.8,
-      "decompiled_pct": 100.0
+      "matched": 1350,
+      "non_matching": 99,
+      "asm_stubs": 2,
+      "total": 1451,
+      "matched_pct": 93.0,
+      "decompiled_pct": 99.9
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -2246,11 +2246,11 @@
     {
       "path": "overlay_gameplay/outside/857E0.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 15,
-      "non_matching": 8,
-      "asm_stubs": 0,
-      "total": 23,
-      "matched_pct": 65.2,
+      "matched": 21,
+      "non_matching": 2,
+      "asm_stubs": 2,
+      "total": 25,
+      "matched_pct": 84.0,
       "contributor": "jaytheham"
     },
     {
@@ -2598,9 +2598,9 @@
     {
       "name": "jaytheham",
       "files": 84,
-      "matched": 2335,
-      "non_matching": 117,
-      "asm_stubs": 0
+      "matched": 2341,
+      "non_matching": 111,
+      "asm_stubs": 2
     },
     {
       "name": "Jay",
@@ -2900,10 +2900,10 @@
     },
     {
       "date": "2026-11-01",
-      "commit": "b368a0e",
-      "matched": 2918,
-      "non_matching": 139,
-      "total": 3057
+      "commit": "97ff1ef",
+      "matched": 2924,
+      "non_matching": 133,
+      "total": 3059
     }
   ]
 }
