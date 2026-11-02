@@ -21,7 +21,7 @@ void func_8007D7E0_4DC90(void) {
 	D_800D7A3C = (u8*)D_80096370_66820;
 	D_800D7A40 = (Unk8007E12CEntry8*)D_80096548_669F8;
 	D_800D7A48 = (u8*)D_800965E8_66A98;
-	D_800D7A44 = D_800965D8_66A88; /* Alternate object-event bindings. */
+	D_800D7A44 = D_800965D8_66A88;
 	D_800D7A4C = D_800965F0_66AA0;
 
 	D_800D7A58 = 0x22;
@@ -192,7 +192,6 @@ s32 func_8007E12C_4E5DC(void) {
 	u8 arg;
 	Unk8007E12CEntry8* descriptor;
 	u8 i;
-	/* Keep the result in memory across event helpers. */
 	volatile s32 returnValue;
 	Unk8007E12CEntry8* audio;
 	s32 op;
@@ -219,7 +218,6 @@ s32 func_8007E12C_4E5DC(void) {
 					break;
 				case 3:
 					arg = entry->unk5;
-					/* Byte width preserves the comparison order and opcode spill home. */
 					one = 1;
 					if ((one == arg) || (arg == 2)) {
 						func_8007FBC8_50078(arg);
@@ -649,9 +647,7 @@ void func_8007F3EC_4F89C(FrontendStruct* arg0) {
 	arg0->unk10 = 0;
 }
 
-/* Integer basis factors preserve the original zero/one products. */
 void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
-	/* Preserve IDO's local homes and trigonometric spill placement. */
 	s32 pad0[7];
 	f32 cosY;
 	f32 sinY;
@@ -701,14 +697,11 @@ void func_8007F580_4FA30(s32 arg0) {
 				}
 
 				light = (Lights1*)&D_800D7A90.slots[lightCount];
-				/* Keep the lighting bases and source stride live across the helper call. */
 				if (lightCount && sourceList) {}
 				if (buffer) {}
 				if (&sourceList[lightCount]) {}
 				func_8007F3F8_4F8A8((FrontendStruct*)&sourceList[iter], &light->l[0]);
 				sourceList = D_800D7A34;
-
-				/* Retain the byte count until all six color stores are complete. */
 				nextCount = lightCount;
 				nextCount++;
 				light->l[0].l.col[0] = sourceList[iter].unk14;
@@ -779,7 +772,6 @@ void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
 	f32 factor;
 	track = ((FrontendLightAnimState*)arg0)->unkC;
 	if (track != NULL) {
-		/* Reserve the keyframe snapshot register before loading the current frame. */
 		keyframe = (FrontendLightKeyframe*)track;
 		if (keyframe) {}
 		data = ((FrontendLightAnimState*)arg0)->unk0;
@@ -812,7 +804,7 @@ void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
 			((FrontendLightAnimState*)arg0)->unk15 = (f32)green + (keyframe->unk5 - (s32)green) * (1.0f / (f32)(total - elapsed));
 			blue = ((FrontendLightAnimState*)arg0)->unk16;
 			((FrontendLightAnimState*)arg0)->unk16 = (f32)blue + (keyframe->unk6 - (s32)blue) * factor;
-			/* Keep the elapsed duration live through all channel interpolation. */
+
 			if (elapsed) {}
 		}
 		((FrontendLightAnimState*)arg0)->unk4--;
@@ -1058,7 +1050,6 @@ void func_80080530_509E0(Unk80080530_Src* arg0) {
 }
 
 // ambient light ?
-// CURRENT(1245)
 void func_80080588_50A38(u8 arg0) {
 	Unk80080588Entry5 *selection;
 	u8 color;
@@ -1231,7 +1222,6 @@ void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 		D_800DE070[1].unk4 = ((-sinZ * cosY) >> 15) * 2;
 		D_800DE070[0].unk8 = ((-sinX * cosY) >> 15) * 2;
 		D_800DE070[0].unk18 = ((cosXSinZ + 0) + ((sinXCosZ * sinY) >> 15)) * 2;
-		/* Retain the lifetimes of the shared products during optimization. */
 		if (sinXCosZ * cosXSinZ * 0) {}
 		D_800DE098 = (cosXCosZ - (((sinZSinX + 0) * sinY) >> 15)) * 2;
 	} else {
@@ -1656,7 +1646,6 @@ void func_80081FF0_524A0(void) {
 	D_800D8528 = -D_800D8528;
 }
 
-/* Keep the branch assignments on separate lines for IDO scheduling. */
 void func_80082074_52524(void) {
 	f32 step;
 	u32 start;
@@ -1692,7 +1681,6 @@ void func_80082074_52524(void) {
 	D_800D7A1C[26].unk24 = alpha;
 }
 
-/* Shared diagnostics precede the generated event table in both releases. */
 const char D_800AE8E0_7ED90[] = "INVALID MOVIE EVENT!!!!!\012";
 const char D_800AE8FC_7EDAC[] = "ERROR: guLookAt is going to CRASH.\012";
 const char D_800AE920_7EDD0[] = "ERROR: Too many keyframes for buffers! 100 KF Maximum!\012";

@@ -103,7 +103,6 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 	D_80059CD4 = (s32)(((f32)cosine / 32768.0) * y + -((f32)trig / 32768.0) * x) * scale;
 }
 
-// https://decomp.me/scratch/5eScw
 /* Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate. */
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {

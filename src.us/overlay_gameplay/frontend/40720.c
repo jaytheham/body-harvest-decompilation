@@ -686,9 +686,6 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 s32 D_80094844_64CF4 = 0;
 s32 D_80094848_64CF8 = 0;
 
-
-
-
 void func_8007166C_41B1C(void)
 {
 	MissionData *entryA;
@@ -2028,8 +2025,6 @@ void func_800731A8_43658(void) {
 void func_80075710_45BC0(void) {
     s32 pad[22];
 
-
-
 	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, D_800AE77C_7EC2C[0], D_800AE780_7EC30[0], 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 
@@ -2309,10 +2304,15 @@ IntroStartFrames D_80094868_64D18 = {{
 }};
 
 IntroStopFrames D_80094894_64D44 = {{
-    0x00000002, 0x000001C2, 0x000004E2, 0x0000064F, 0x000007D0, 0x00000997,
-    0x00000BFE, 0x00000FD2,
+	0x00000002,
+	0x000001C2,
+	0x000004E2,
+	0x0000064F,
+	0x000007D0,
+	0x00000997,
+	0x00000BFE,
+	0x00000FD2,
 }};
-
 
 s32 func_800768C4_46D74(void) {
 	static s32 movieFrame = 0;
@@ -2898,7 +2898,7 @@ s32 func_80077494_47944(void) {
 s32 func_800776BC_47B6C(void) {
   s32 *indexPointer = &currentSaveFileIndex;
   s32 nameIndex;
-  s32 padding[4]; /* Preserve the original local stack area. */
+  s32 padding[4];
   s32 saveSlotSp;
   s32 saveSlot;
   s32 i;
@@ -5964,9 +5964,6 @@ const char D_800AE468_7E918[] = "WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=
 const char D_800AE49C_7E94C[] = "*******************InventorySelect=%d, \012";
 const char D_800AE4C8_7E978[] = "INV>>>>WeaponSelect=%d\012";
 #endif
-
-
-
 
 #ifdef VERSION_EU
 /* Tail of the preceding diagnostic string, before the generated table. */

@@ -1609,7 +1609,6 @@ void func_802D6890_255FD0(u8 arg0)
 	}
 	dx = alienInstances[arg0].unk26;
 	tempV1 = dx;
-	/* Preserve IDO's spill allocation and floating-register order. */
 	if ((f32)dx * (f32)dx)
 	{
 	}
@@ -4000,7 +3999,6 @@ void func_802DDF50_25D690(u8 arg0) {
 	}
 }
 
-
 void func_802DE5E8_25DD28(u8 arg0) {
 	s32 soundId;
 	s8 node;
@@ -4072,7 +4070,6 @@ void func_802DE5E8_25DD28(u8 arg0) {
 	func_800AA340_B92F0(arg0);
 	func_80137468_146418(soundId, 0x28);
 }
-
 
 void func_802DE990_25E0D0(u8 arg0, s16 arg1, s16 arg2, s16 arg3, Unk8014DD50 *arg4) {
 	s32 sp64;
@@ -4166,7 +4163,6 @@ void func_802DEE40_25E580(u8 arg0) {
 	alien->unk2C = 0;
 }
 
-// CURRENT(6787)
 void func_802DEED4_25E614(void) {
 	if (D_802E0CE8_260428[0] >= 0xF0) {
 		if (D_802E0CE4_260424[0] == 1) {
