@@ -274,17 +274,24 @@ s32 D_80140CE0_14FC90 = 0;
 #ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
+	static s32 D_8015FF88;
+	s32 idx;
+	s32 x;
+	s32 halfW;
+	s32 bottomY;
+	s32 alpha;
+	s32 sHalf;
+	s32 rowBase;
+	s32 stackPad;
+	s32 band;
 	s32 i;
 	s32 textWidth;
 	u8 textLen;
-	s32 x;
-	u8 pulseColor[4];
 	s32 allMatched;
-
+	u8 pulseColor[12];
 	allMatched = 1;
 
 	if (arg6 != 0) {
-		s32 idx;
 
 		if ((arg7 & 4) != 0) {
 			D_8015FF88 = 100;
@@ -292,35 +299,17 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 			D_8015FF88 = 0;
 		}
 
-		for (idx = 0; &D_8015FF90[idx] != (s32 *) &D_80160050; idx += 4) {
+		for (idx = 0; idx < 48; idx++) {
 			if ((arg7 & 4) != 0) {
 				D_8015FF90[idx] = 100;
 			} else {
 				D_8015FF90[idx] = 0;
 			}
-
-			if ((arg7 & 4) != 0) {
-				D_8015FF90[idx + 1] = 100;
-			} else {
-				D_8015FF90[idx + 1] = 0;
-			}
-
-			if ((arg7 & 4) != 0) {
-				D_8015FF90[idx + 2] = 100;
-			} else {
-				D_8015FF90[idx + 2] = 0;
-			}
-
-			if ((arg7 & 4) != 0) {
-				D_8015FF90[idx + 3] = 100;
-			} else {
-				D_8015FF90[idx + 3] = 0;
-			}
 		}
 	}
 
 	if (arg5 != 0) {
-		for (i = 18; i >= 0; i--) {
+		for (i = 46; i >= 0; i--) {
 			D_8015FF90[i + 1] = D_8015FF90[i];
 		}
 		D_8015FF90[0] = D_8015FF88;
@@ -332,7 +321,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	textLen = 0;
 	textWidth = 0;
-	while (arg0[textLen] != 0) {
+	while (arg0[textLen] != 0U) {
 		textWidth += arg1 + 2;
 		if ((arg0[textLen] == 'i') || (arg0[textLen] == 'I') || (arg0[textLen] == '1')) {
 			textWidth -= arg1 >> 1;
@@ -342,131 +331,120 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	x = (D_80068084 / 2) - (textWidth >> 1);
 
-	for (i = 0; i < textLen; i++) {
-		if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
-			x += arg1 + 2;
-			continue;
-		}
+	halfW = arg1 >> 1;
+	i = 0;
+	if (textLen > 0) {
+		do {
+			if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
+				x += arg1 + 2;
+			} else {
 
-		if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
-			x -= arg1 >> 1;
-		}
+				bottomY = arg3 + arg2;
 
-		if (arg5 != 0) {
-			s32 halfW;
-			s32 centerX;
-			s32 rowBase;
-			s32 band;
-
-			halfW = arg1 >> 1;
-			centerX = x + halfW;
-			rowBase = i * 2;
-
-			for (band = 7; band >= 0; band--) {
-				s32 colIndex;
-				s32 alpha;
-				s32 sHalf;
-				s32 bandHeight;
-
-				colIndex = rowBase + band;
-				if (colIndex >= 0x30) {
-					osSyncPrintf(&D_801453C0_154370);
+				if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
+					x -= arg1 >> 1;
 				}
 
-				if ((arg7 & 0x10) != 0) {
-					alpha = D_8015FF90[(rowBase * 4) + band];
+				if (arg5 != 0) {
+
+					rowBase = i * 2;
+
+					band = 7;
+					do {
+
+						if (rowBase + band >= 0x30) {
+							osSyncPrintf(D_801453C0_154370);
+						} else {
+
+							if ((arg7 & 0x10) != 0) {
+								alpha = D_8015FF90[band + rowBase];
+							} else {
+								alpha = D_8015FF90[band];
+							}
+
+							if (((arg7 & 4) != 0) && (arg5 != 0) && (alpha == 0x5A) && ((arg7 & 4) != 0) && ((arg7 & 0x10) != 0) && (band == 6)) {
+								func_800153D8_15FD8(0xCD);
+							}
+
+							if (alpha != ((arg7 & 4) ? 0 : 100)) {
+								allMatched = 0;
+							}
+						}
+
+						textWidth = halfW - (s32)(((f32)alpha / 100.0f) * (f32)halfW);
+						if (textWidth <= 0) {
+							sHalf = 1;
+						} else {
+							sHalf = textWidth;
+						}
+
+						if ((((arg7 & 4) != 0) && (alpha == ((arg7 & 4) ? 0 : 100))) || (((arg7 & 4) == 0) && (alpha == ((arg7 & 4) ? 100 : 0)))) {
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
+						} else if (arg7 & 8) {
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
+						} else {
+							func_8012F24C_13E1FC(pulseColor, 5);
+							gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], (u8)(u32)((((f32) (7 - band)) / 7.0f) * 255.0f));
+						}
+
+						if ((arg7 & 8) != 0) {
+							if (arg7 & 4) {
+								alpha = (arg7 & 4) ? 0 : 100;
+							} else {
+								alpha = (arg7 & 4) ? 100 : 0;
+							}
+						}
+						gDPPipeSync(D_8005BB2C++);
+						gSPTextureRectangle(
+						D_8005BB2C++,
+						((x + halfW) - sHalf) * 4,
+						(arg3 - alpha) * 4,
+						((x + halfW) + sHalf) * 4,
+						(bottomY + alpha) * 4,
+						G_TX_RENDERTILE,
+						0,
+						0,
+						(u16)(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
+						(u16)(s32)((1.0f / ((f32)((alpha * 2) + arg2) / 32)) * 1024.0f)
+						);
+					} while (--band >= 0);
+
+
 				} else {
-					alpha = D_8015FF90[band];
-				}
+					if ((arg7 & 0x20) != 0) {
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
+					} else {
+						gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
+					}
 
-				if (((arg7 & 4) != 0) && (arg5 != 0) && (alpha == 0x5A) && ((arg7 & 0x10) != 0) && (band == 6)) {
-					func_800153D8_15FD8(0xCD);
-				}
-
-				if (((arg7 & 4) != 0 && alpha != 0) || ((arg7 & 4) == 0 && alpha != 100)) {
-					allMatched = 0;
-				}
-
-				sHalf = halfW - (s32) ((((f32) alpha) / 100.0f) * (f32) halfW);
-				if (sHalf <= 0) {
-					sHalf = 1;
-				}
-
-				if ((((arg7 & 4) != 0) && (alpha == 0)) || (((arg7 & 4) == 0) && (alpha == 100)) || ((arg7 & 8) != 0)) {
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
-				} else {
-					func_8012F24C_13E1FC(pulseColor, 5);
-					gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], ((s32) ((((f32) (7 - band)) / 7.0f) * 255.0f)) & 0xFF);
-				}
-
-				bandHeight = alpha;
-				if ((arg7 & 8) != 0) {
-					bandHeight = ((arg7 & 4) != 0) ? 0 : 100;
-				}
-
-				gDPPipeSync(D_8005BB2C++);
-				gSPTextureRectangle(
+					gDPPipeSync(D_8005BB2C++);
+					gSPTextureRectangle(
 					D_8005BB2C++,
-					(centerX - sHalf) << 2,
-					(arg3 - bandHeight) << 2,
-					(centerX + sHalf) << 2,
-					(arg3 + arg2 + bandHeight) << 2,
+					x * 4,
+					arg3 * 4,
+					(x + arg1) * 4,
+					bottomY * 4,
 					G_TX_RENDERTILE,
 					0,
 					0,
-					(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
-					(s32) ((1.0f / (((f32) ((bandHeight * 2) + arg2)) / 32)) * 1024.0f)
-				);
+					(u16)(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
+					(u16)(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
+					);
+
+				}
+
+				x += arg1 + 2;
 			}
-
-			x += arg1;
-		} else {
-			if ((arg7 & 0x20) != 0) {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
-			} else {
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
-			}
-
-			gDPPipeSync(D_8005BB2C++);
-			gSPTextureRectangle(
-				D_8005BB2C++,
-				x << 2,
-				arg3 << 2,
-				(x + arg1) << 2,
-				(arg3 + arg2) << 2,
-				G_TX_RENDERTILE,
-				0,
-				0,
-				(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
-				(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
-			);
-
-			x += arg1;
-		}
-
-		x += 2;
+		} while (++i != textLen);
 	}
 
 	if (arg5 != 0) {
-		s32 target;
-		s32 next;
-
-		if ((arg7 & 4) != 0) {
-			target = ((arg7 & 4) != 0) ? 0 : 100;
-			next = D_8015FF88 - 10;
-			if (next < target) {
-				D_8015FF88 = ((arg7 & 4) != 0) ? 0 : 100;
-			} else {
-				D_8015FF88 = next;
-			}
+		if (arg7 & 4) {
+			D_8015FF88 = D_8015FF88 - 10 < ((arg7 & 4) ? 0 : 100)
+			? ((arg7 & 4) ? 0 : 100) : D_8015FF88 - 10;
 		} else {
-			target = ((arg7 & 4) != 0) ? 0 : 100;
-			next = D_8015FF88 + 10;
-			if (target < next) {
-				D_8015FF88 = ((arg7 & 4) != 0) ? 0 : 100;
-			} else {
-				D_8015FF88 = next;
-			}
+			D_8015FF88 = D_8015FF88 + 10 > ((arg7 & 4) ? 0 : 100)
+			? ((arg7 & 4) ? 0 : 100) : D_8015FF88 + 10;
 		}
 	}
 
@@ -1114,7 +1092,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 {
 	s32 charIndex;
 	s32 charScreenX;
-	u8 *loopText;
+	s32 halfW;
 	s32 renderX;
 	s32 temp_v0;
 	Unk80052B40 pos;

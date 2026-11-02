@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_8012F4E0_13E490`, the reconstructed history shift starts at array element 18 instead of 46, the per-letter stretch read multiplies the row displacement by an extra four, the color ramp uses signed `trunc.w.s`, and the overflow diagnostic falls through into fresh history reads.
+
+-> `code changed`: Shift `D_8015FF90[46]` through element zero into the next element; initialize all 48 entries with one indexed loop. Read the animated band as `D_8015FF90[band + rowBase]`. Put history reads, the sound trigger, and the completion check inside the diagnostic's `else`. Convert the ramp with `(u8)(u32)` and preserve the target's repeated flag-conditioned zero/100 selections. Keep the function under `NON_MATCHING` while register allocation remains unresolved.
+
+-> `correct ASM`: The shift begins at `0x80160048` and decrements by four; the band address adds separately scaled band and row indexes; the overflow path jumps directly to the retained stretch value; and alpha conversion emits the target FCSR-controlled unsigned conversion sequence. These sections have the target logic; the complete renderer is not yet matched.
