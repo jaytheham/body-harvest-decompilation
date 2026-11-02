@@ -57,14 +57,14 @@ const char D_801426B8_151668[] = " ";
 
 const f64 D_801426C0_151670[1] = {150.0};
 const f64 D_801426C8_151678[1] = {150.0};
-const ShadowGeometryConstant D_801426D0_151680 = {255.0};
-const ShadowGeometryConstant D_801426D8_151688 = {255.0};
-const ShadowGeometryConstant D_801426E0_151690 = {255.0};
-const ShadowGeometryConstant D_801426E8_151698 = {255.0};
-const ShadowGeometryConstant D_801426F0_1516A0 = {255.0};
-const ShadowGeometryConstant D_801426F8_1516A8 = {255.0};
-const ShadowGeometryConstant D_80142700_1516B0 = {255.0};
-const ShadowGeometryConstant D_80142708_1516B8 = {255.0};
+const f64 D_801426D0_151680[1] = {255.0};
+const f64 D_801426D8_151688[1] = {255.0};
+const f64 D_801426E0_151690[1] = {255.0};
+const f64 D_801426E8_151698[1] = {255.0};
+const f64 D_801426F0_1516A0[1] = {255.0};
+const f64 D_801426F8_1516A8[1] = {255.0};
+const f64 D_80142700_1516B0[1] = {255.0};
+const f64 D_80142708_1516B8[1] = {255.0};
 
 u32 D_8013D540_14C4F0[16] = {
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
@@ -419,7 +419,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 			vtx0->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
 
 			vtx3->v.cn[0] = vtx2->v.cn[0] = 0xFF;
-			vtx3->v.cn[1] = vtx2->v.cn[1] = (u32)MIN(D_801426D0_151680.value, arg2 * D_801426D8_151688.value + (arg7 << 5));
+			vtx3->v.cn[1] = vtx2->v.cn[1] = (u32)MIN(D_801426D0_151680[0], arg2 * D_801426D8_151688[0] + (arg7 << 5));
 			vtx3->v.cn[2] = vtx2->v.cn[2] = MIN(0xFF, arg7 << 5);
 
 			vtx3->v.tc[0] = 0;
@@ -455,7 +455,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 				if (D_8013D5DC_14C58C != 0) {
 					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, arg7 << 5);
 				} else {
-					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426E0_151690.value, (1.0f - arg2) * D_801426E8_151698.value + (arg7 << 5));
+					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426E0_151690[0], (1.0f - arg2) * D_801426E8_151698[0] + (arg7 << 5));
 				}
 
 				vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
@@ -465,8 +465,8 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 				vtx3->v.cn[2] = 0xFF;
 				vtx0->v.cn[2] = 0xFF;
 
-				vtx2->v.cn[0] = vtx1->v.cn[0] = (u32)MIN(D_801426F0_1516A0.value, arg2 * D_801426F8_1516A8.value + (arg7 << 5));
-				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426F0_1516A0.value, arg2 * D_801426F8_1516A8.value + (arg7 << 5));
+				vtx2->v.cn[0] = vtx1->v.cn[0] = (u32)MIN(D_801426F0_1516A0[0], arg2 * D_801426F8_1516A8[0] + (arg7 << 5));
+				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426F0_1516A0[0], arg2 * D_801426F8_1516A8[0] + (arg7 << 5));
 				vtx1->v.cn[2] = 0xFF;
 				vtx2->v.cn[2] = 0xFF;
 			} else {
@@ -477,7 +477,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 				vtx1->v.cn[0] = 0xFF;
 				vtx2->v.cn[0] = 0xFF;
-				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_80142700_1516B0.value, arg2 * D_80142708_1516B8.value + (arg7 << 5));
+				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_80142700_1516B0[0], arg2 * D_80142708_1516B8[0] + (arg7 << 5));
 				vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
 			}
 
@@ -577,8 +577,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C6CC_AB67C.s")
 #endif
-
-
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;

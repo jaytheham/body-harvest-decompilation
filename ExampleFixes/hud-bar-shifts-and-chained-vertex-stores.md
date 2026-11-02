@@ -15,3 +15,9 @@ Incorrect ASM: raw pointer arithmetic at `D_80158FEC + 0x1A` emits `lhu`, while 
 -> Code changed: read the existing `AlienInstance` field `D_80158FEC->typeIndex`.
 
 -> Correct ASM: the target type check uses `lbu offset 0x1A` and needs no cast or byte-offset pointer arithmetic.
+
+Incorrect ASM: accessing the renderer double constants through aggregate `.value` fields uses a different floating register cycle (comparison score 10847).
+
+-> Code changed: declare the eight 255.0 constants as `const f64 name[1]` and read element `[0]`.
+
+-> Correct ASM: the double multiply operand order and some floating registers align more closely with the target (comparison score 10722). This is a partial improvement; the renderer remains NON_MATCHING.
