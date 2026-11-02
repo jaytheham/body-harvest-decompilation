@@ -5617,7 +5617,6 @@ void func_80102DDC_111D8C(VehicleInstance *arg0, s16 arg1, s16 arg2, f32 arg3)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_80102FA4_111F54(void) {
 	s32 paddingBeforeCursor;
 	UnkF9230Func80102FA4Point *cur;
@@ -5652,6 +5651,10 @@ void func_80102FA4_111F54(void) {
 	chain[2] = cur[1].pos.x;
 	chain[1] = cur[1].pos.y;
 	chain[0] = cur[1].pos.z;
+	/* Preserve IDO's integer temporary order after AS1 removes these conversions. */
+	cur = (UnkF9230Func80102FA4Point *)(u64)cur;
+	cur = (UnkF9230Func80102FA4Point *)(u64)cur;
+	cur = (UnkF9230Func80102FA4Point *)(u64)cur;
 
 	do {
 		posX = cur->pos.x;
@@ -5699,9 +5702,6 @@ void func_80102FA4_111F54(void) {
 	} while (i--);
 	D_80159320 &= 0x7FFFFFFF;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80102FA4_111F54.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
