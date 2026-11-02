@@ -397,7 +397,7 @@ void func_800AA340_B92F0(u8 arg0) {
 			halfHeight = height >> 1;
 			halfDepth = depth >> 1;
 			emitDebris = func_800DDB60_ECB10(((sampleX % width) + alien->unk0) - halfWidth, ((sampleY % height) + alien->unk2) - halfHeight, ((sampleZ % depth) + alien->unk4) - halfDepth, 7, (func_800038E0_44E0() % 300) + 200);
-		func_800DDE1C_ECDCC(emitDebris, 255);
+			func_800DDE1C_ECDCC_S32(emitDebris, 255);
 			func_800DDEE0_ECE90(emitDebris, 1);
 			func_801371B8_146168(0, 232, alien->unk0, alien->unk2, alien->unk4, (f32) ((((f32) (func_800038E0_44E0() % 100)) / 500.0f) + D_80142900_1518B0.value));
 			sampleX = (u16) func_800038E0_44E0();
@@ -434,7 +434,8 @@ void func_800AA340_B92F0(u8 arg0) {
 
 				}
 
-				phaseOffset = (f64)beamLength + (f64)beamHeight; if ((segmentCount + 1) >= 2)
+				phaseOffset = ((f64) beamLength) + ((f64) beamHeight);
+				if ((segmentCount + 1) >= 2)
 				{
 					halfHeight = (s16) (32768 / segmentCount);
 					do
@@ -442,9 +443,9 @@ void func_800AA340_B92F0(u8 arg0) {
 						randomY = alien->unk0;
 						randomZ = alien->unk4;
 						randomX = func_800B84D0_C7480(randomY, randomZ) >> 8;
-						randomY += (((((f32) sins(angle)) / 32768.0) * beamLength) * segment);
-						randomZ += (((-(((f32) coss(angle)) / 32768.0)) * beamLength) * segment);
-						randomX += ((((f32) sins((u16) (segment * halfHeight))) / 32768.0) * beamHeight);
+						randomY += ((((f32) sins(angle)) / 32768.0) * beamLength) * segment;
+						randomZ += ((-(((f32) coss(angle)) / 32768.0)) * beamLength) * segment;
+						randomX += (((f32) sins((u16) (segment * halfHeight))) / 32768.0) * beamHeight;
 						func_800D16BC_E066C(randomY, randomX, randomZ, halfDepth, previousY, previousZ, 1);
 						halfDepth = randomY;
 						previousY = randomX;
@@ -462,7 +463,7 @@ void func_800AA340_B92F0(u8 arg0) {
 	{
 		if (phase == 80)
 		{
-			func_800DF848_EE7F8(alien->unk0, alien->unk2, alien->unk4, alienTypes[27].unkC, 0);
+			func_800DF848_EE7F8(alienInstances[arg0].unk0, alien->unk2, alien->unk4, alienTypes[27].unkC, 0);
 			func_800E35E0_F2590(255);
 			func_800C3BD8_D2B88(alien->unk0, alien->unk2, alien->unk4, (u16) (alienTypes[27].unkC * 1.5), 80, 240, 120, 0);
 			phase = alien->unk2C;
@@ -476,8 +477,8 @@ void func_800AA340_B92F0(u8 arg0) {
 				randomY = alien->unk0;
 				randomZ = alien->unk4;
 				func_800B84D0_C7480(randomY, randomZ);
-				randomY += (((((f32) sins(angle)) / 32768.0) * (alien->unk2C - 80)) * 30.0);
-				randomZ += (((-(((f32) coss(angle)) / 32768.0)) * (alien->unk2C - 80)) * 30.0);
+				randomY += ((((f32) sins(angle)) / 32768.0) * (alien->unk2C - 80)) * 30.0;
+				randomZ += ((-(((f32) coss(angle)) / 32768.0)) * (alien->unk2C - 80)) * 30.0;
 				func_801371B8_146168(0, 232, alien->unk0, alien->unk2, alien->unk4, volume);
 				func_800DFA34_EE9E4(randomY, func_800B84D0_C7480(randomY, randomZ) >> 8, randomZ, 76, 0);
 				angle += 2500;
@@ -514,7 +515,6 @@ void func_800AA340_B92F0(u8 arg0) {
 	}
 }
 
-// AI - Check player proximity
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/B8290/func_800AA340_B92F0.s")
