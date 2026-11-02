@@ -619,170 +619,167 @@ void func_800B19F8_C09A8(void) {
 	} while (i < 0x13);
 }
 
-#ifdef NON_MATCHING
 void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 	u8 quarterColor[3];
-	s16 temp_s0;
-	s16 temp_s1;
-	s16 temp_s2;
-	s16 temp_s3;
-	s16 temp_t3;
-	s16 temp_t4;
-	s16 temp_t5;
-	s16 temp_v1;
-	s32 temp_a3;
-	s32 temp_t6;
-	s32 temp_v0;
-	s8 temp_a0;
-	s8 temp_v1_2;
-	s8 var_a2;
-	s32 var_a3;
-	s8 var_s3;
-	s8 var_s4;
-	s8 var_s5;
-	s8 var_s6;
-	s32 var_t0;
-	s32 var_t1;
-	s32 var_t2;
-	s32 var_v0;
+	s16 baseZ;
+	s16 ringOffsetX;
+	s16 ringOffsetZ;
+	s16 baseX;
+	u32 fractionX;
+	u32 fractionZ;
+	s32 neighborHigh;
+	s32 twiceMinor;
+	s32 neighborLow;
+	s8 deltaZ;
+	s8 deltaX;
+	s8 error;
+	s32 startX;
+	s8 end;
+	s8 absDeltaZ;
+	s8 absDeltaX;
+	s8 step;
+	s32 startZ;
+	s32 finishX;
+	s32 finishZ;
+	s32 direction;
 	EffectRgb *pixel;
+	s8 x;
+	s8 z;
 
-	temp_t5 = D_8014F89C - 0x7F;
-	temp_s0 = D_8014F89D - 0x7F;
-	temp_s1 = D_8014F899 - temp_t5;
-	temp_s2 = D_8014F898 - temp_s0;
-	temp_v1 = arg0->x;
-	temp_t3 = arg0->z;
-	temp_t4 = arg1->x;
-	temp_s3 = arg1->z;
-	var_v0 = 0;
-	var_a3 = (temp_v1 >> 8) + 1;
-	var_t0 = (temp_t3 >> 8) + 1;
-	var_t1 = (temp_t4 >> 8) + 1;
-	var_t2 = (temp_s3 >> 8) + 1;
-	if ((u32)(temp_v1 & 0xFF) >= 0x81U) {
-		var_a3++;
+	direction = 0;
+	baseX = D_8014F89C - 0x7F;
+	baseZ = D_8014F89D - 0x7F;
+	ringOffsetX = D_8014F899 - baseX;
+	ringOffsetZ = D_8014F898 - baseZ;
+
+	startX = (arg0->x >> 8) + 1;
+	startZ = (arg0->z >> 8) + 1;
+	finishX = (arg1->x >> 8) + 1;
+	finishZ = (arg1->z >> 8) + 1;
+	fractionX = arg0->x & 0xFF;
+	fractionZ = arg0->z & 0xFF;
+	if (fractionX >= 0x81U) {
+		startX++;
 	}
-	if ((u32)(temp_t3 & 0xFF) >= 0x81U) {
-		var_t0++;
+	if (fractionZ >= 0x81U) {
+		startZ++;
 	}
-	if ((u32)(temp_t4 & 0xFF) >= 0x81U) {
-		var_t1++;
+	fractionX = arg1->x & 0xFF;
+	if (fractionX >= 0x81U) {
+		finishX++;
 	}
-	var_s6 = -1;
-	if ((u32)(temp_s3 & 0xFF) >= 0x81U) {
-		var_t2++;
+	step = -1;
+	fractionZ = arg1->z & 0xFF;
+	if (fractionZ >= 0x81U) {
+		finishZ++;
 	}
-	temp_v1_2 = var_t1 - var_a3;
-	temp_a0 = var_t2 - var_t0;
+	deltaX = finishX - startX;
+	deltaZ = finishZ - startZ;
 	quarterColor[0] = arg2->r >> 2;
 	quarterColor[1] = arg2->g >> 2;
 	quarterColor[2] = arg2->b >> 2;
-	if (temp_v1_2 > 0) {
-		var_v0 = 1;
+	if (deltaX > 0) {
+		direction = 1;
 	}
-	if (temp_a0 < 0) {
-		var_v0 = ~var_v0;
+	if (deltaZ < 0) {
+		direction = ~direction;
 	}
-	var_s6 = var_v0 != 0 ? 1 : -1;
-	var_s5 = temp_v1_2 >= 0 ? temp_v1_2 : -temp_v1_2;
-	var_s4 = temp_a0 >= 0 ? temp_a0 : -temp_a0;
+	step = direction != 0 ? 1 : -1;
+	absDeltaX = deltaX >= 0 ? deltaX : -deltaX;
+	absDeltaZ = deltaZ >= 0 ? deltaZ : -deltaZ;
 
-	if (var_s4 < var_s5) {
-		if (temp_v1_2 > 0) {
-			var_a3 = (s8)var_a3;
-			var_t0 = (s8)var_t0;
-			var_s3 = var_t1;
+	if (absDeltaZ < absDeltaX) {
+		if (deltaX > 0) {
+			x = startX;
+			z = startZ;
+			end = finishX;
 		} else {
-			var_s3 = var_a3;
-			var_a3 = (s8)var_t1;
-			var_t0 = (s8)var_t2;
+			x = finishX;
+			z = finishZ;
+			end = startX;
 		}
-		temp_t6 = var_s4 * 2;
-		var_a2 = temp_t6 - var_s5;
-		while (var_s3 >= var_a3) {
-			if (var_a3 >= temp_t5) {
-				temp_v0 = var_t0 - 1;
-				if ((s16)(temp_t5 + 0x13) >= var_a3) {
-					temp_a3 = var_t0 + 1;
-					if ((temp_v0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= temp_v0)) {
-						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0 - 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
-						pixel->r = quarterColor[0] + pixel->r;
+		twiceMinor = absDeltaZ * 2;
+		error = twiceMinor - absDeltaX;
+		while (end >= x) {
+			if (x >= baseX) {
+				neighborLow = z - 1;
+				if ((s16)(baseX + 0x13) >= x) {
+					neighborHigh = z + 1;
+					if ((neighborLow >= baseZ) && ((s16)(baseZ + 0x13) >= neighborLow)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((ringOffsetZ + z - 1) % 0x13)][(s8)((ringOffsetX + x) % 0x13)];
+						pixel->r = (u16)(quarterColor[0] + pixel->r);
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((var_t0 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= var_t0)) {
-						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
-						pixel->r = quarterColor[0] + pixel->r;
+					if ((z >= baseZ) && ((s16)(baseZ + 0x13) >= z)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((ringOffsetZ + z) % 0x13)][(s8)((ringOffsetX + x) % 0x13)];
+						pixel->r = (u16)(quarterColor[0] + pixel->r);
 						pixel->g = arg2->g;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((temp_a3 >= temp_s0) && ((s16)(temp_s0 + 0x13) >= temp_a3)) {
-						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0 + 1) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
-						pixel->r = quarterColor[0] + pixel->r;
+					if ((neighborHigh >= baseZ) && ((s16)(baseZ + 0x13) >= neighborHigh)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((ringOffsetZ + z + 1) % 0x13)][(s8)((ringOffsetX + x) % 0x13)];
+						pixel->r = (u16)(quarterColor[0] + pixel->r);
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 				}
 			}
-			var_a3 = (s8)(var_a3 + 1);
-			if (var_a2 >= 0) {
-				var_t0 = (s8)(var_t0 + var_s6);
-				var_a2 = (s8)(var_a2 + ((var_s4 - var_s5) * 2));
+			x = (s8)(x + 1);
+			if (error >= 0) {
+				z = (s8)(z + step);
+				error = (s8)(error + (s8)((absDeltaZ - absDeltaX) * 2));
 			} else {
-				var_a2 = (s8)(var_a2 + (s8)temp_t6);
+				error = (s8)(error + (s8)twiceMinor);
 			}
 		}
 	} else {
-		if (temp_a0 > 0) {
-			var_a3 = (s8)var_a3;
-			var_t0 = (s8)var_t0;
-			var_s3 = var_t2;
+		if (deltaZ > 0) {
+			x = startX;
+			z = startZ;
+			end = finishZ;
 		} else {
-			var_s3 = var_t0;
-			var_a3 = (s8)var_t1;
-			var_t0 = (s8)var_t2;
+			x = finishX;
+			z = finishZ;
+			end = startZ;
 		}
-		temp_t6 = var_s5 * 2;
-		var_a2 = temp_t6 - var_s4;
-		while (var_s3 >= var_t0) {
-			if (var_t0 >= temp_s0) {
-				temp_v0 = var_a3 - 1;
-				if ((s16)(temp_s0 + 0x13) >= var_t0) {
-					temp_a3 = var_a3 + 1;
-					if ((temp_v0 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_a3)) {
-						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 - 1) % 0x13)];
-						pixel->r = quarterColor[0] + pixel->r;
+		twiceMinor = absDeltaX * 2;
+		error = twiceMinor - absDeltaZ;
+		while (end >= z) {
+			if (z >= baseZ) {
+				neighborLow = x - 1;
+				if ((s16)(baseZ + 0x13) >= z) {
+					neighborHigh = x + 1;
+					if ((neighborLow >= baseX) && ((s16)(baseX + 0x13) >= neighborHigh)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((ringOffsetZ + z) % 0x13)][(s8)((ringOffsetX + x - 1) % 0x13)];
+						pixel->r = (u16)(quarterColor[0] + pixel->r);
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((var_a3 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= var_a3)) {
-						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3) % 0x13)];
-						pixel->r = quarterColor[0] + pixel->r;
+					if ((x >= baseX) && ((s16)(baseX + 0x13) >= x)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((ringOffsetZ + z) % 0x13)][(s8)((ringOffsetX + x) % 0x13)];
+						pixel->r = (u16)(quarterColor[0] + pixel->r);
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
-					if ((temp_a3 >= temp_t5) && ((s16)(temp_t5 + 0x13) >= temp_v0)) {
-						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((temp_s2 + var_t0) % 0x13)][(s8)((temp_s1 + var_a3 + 1) % 0x13)];
-						pixel->r = quarterColor[0] + pixel->r;
+					if ((neighborHigh >= baseX) && ((s16)(baseX + 0x13) >= neighborLow)) {
+						pixel = &((EffectRgb (*)[19])D_80152740)[(s8)((ringOffsetZ + z) % 0x13)][(s8)((ringOffsetX + x + 1) % 0x13)];
+						pixel->r = (u16)(quarterColor[0] + pixel->r);
 						pixel->g = (quarterColor[1] + pixel->g) & 0xFF;
 						pixel->b = (quarterColor[2] + pixel->b) & 0xFF;
 					}
 				}
 			}
-			var_t0 = (s8)(var_t0 + 1);
-			if (var_a2 >= 0) {
-				var_a3 = (s8)(var_a3 + var_s6);
-				var_a2 = (s8)(var_a2 + ((var_s5 - var_s4) * 2));
+			z = (s8)(z + 1);
+			if (error >= 0) {
+				x = (s8)(x + step);
+				error = (s8)(error + (s8)((absDeltaX - absDeltaZ) * 2));
 			} else {
-				var_a2 = (s8)(var_a2 + temp_t6);
+				error = (s8)(error + (s8)twiceMinor);
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1A68_C0A18.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
