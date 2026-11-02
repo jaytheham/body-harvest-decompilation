@@ -85,8 +85,7 @@ void func_800769A8_85958(s32 arg0) {
 	D_8014D298[arg0] = D_8014D298[D_8014D2EC = D_8014D2EC - 1];
 }
 
-// CURRENT(4003)
-#ifdef NON_MATCHING // CURRENT(3797)
+#ifdef NON_MATCHING
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	s32 pattern;
 	s32 outer;
@@ -356,7 +355,7 @@ void func_800772EC_8629C(s32 arg0) {
 }
 
 // DisplayTrees
-#ifdef NON_MATCHING // CURRENT(685)
+#ifdef NON_MATCHING
 void func_8007764C_865FC(void) {
 	Unk857E0Obj* end;
 	s32 camX;
@@ -636,7 +635,6 @@ void func_8007764C_865FC(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
 #endif
@@ -675,8 +673,6 @@ u16 *func_800785B4_87564(s16 arg0, s16 arg1, s32 *arg2) {
 	return &D_8021FA30[v1][(t1 & 3) * 4 + (t4 & 3)];
 }
 
-// https://decomp.me/scratch/AHGPz
-// CURRENT(5)
 s16 func_80078678_87628(u16 *arg0, s32 arg1, s32 arg2)
 {
   s16 temp_t7;
@@ -808,7 +804,6 @@ s32 func_80078828_877D8(s16 arg0, s16 arg1, u16 arg2, s32 arg3) {
 
     func_800786CC_8767C(sp38, sp3C);
     return 1;
-
 }
 
 s32 func_80078B58_87B08(s16 arg0, s16 arg1) {
