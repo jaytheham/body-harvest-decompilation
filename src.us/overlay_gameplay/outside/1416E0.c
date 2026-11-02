@@ -1631,7 +1631,8 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	sp32 = (s16)(sp1C->unk0 << 8) + 0x80;
 	sp30 = (s16)(sp1C->unk1 << 8) + 0x80;
 	sp28 = temp_v0;
-	if (!isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A))
+	arg0 = isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A);
+	if (!arg0)
 	{
 		return;
 	}
@@ -1676,7 +1677,7 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 		  }
 		  break;
 		  default:
-			if ((player->unk4 == 1) && (1 == player->unk4)) { }
+			if ((arg0 == player->unk2) && (player->unk2 == arg0)) { }
 		  break;
 	}
 	
