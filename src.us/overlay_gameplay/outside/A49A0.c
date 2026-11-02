@@ -727,10 +727,11 @@ void func_800970C0_A6070(void)
 	Vtx *vtx3;
 	u32 col;
 	u32 row;
-	u32 x0;
+	s32 x0;
 	u32 x1;
 	s32 y0;
 	s32 y1;
+	Gfx *gfx;
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
@@ -755,8 +756,7 @@ void func_800970C0_A6070(void)
 			D_8005BB34 = vtx1 + 1;
 			vtx2 = D_8005BB34;
 			D_8005BB34 = vtx2 + 1;
-			vtx3 = D_8005BB34;
-			D_8005BB34 = vtx3 + 1;
+			vtx3 = D_8005BB34++;
 			vtx0->v.ob[0] = x0;
 			vtx0->v.ob[1] = y0;
 			vtx0->v.ob[2] = 0;
@@ -778,8 +778,8 @@ void func_800970C0_A6070(void)
 			vtx1->v.tc[0] = 0x7E0;
 			vtx1->v.tc[1] = 0x7E0;
 			gDPLoadTextureBlock(D_8005BB2C++, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10], G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-			gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
-			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+			gSPVertex(gfx = D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
+			gSP1Triangle(gfx = D_8005BB2C++, 0, 1, 2, 0);
 			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
 		}
 	}
