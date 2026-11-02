@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800B2854_C1804`, separate distance and intensity locals moved the intensity calculation from v1 to v0, nested positive bounds tests rematerialized -256 across sqrtf, and an explicit square-X local reserved an unused optimizer spill home, putting the loop bound at sp+0x48.
+
+-> `code changed`: Reuse the distance halfword for intensity, reject zero-intensity or out-of-range tiles with continue, move fractional Y and the loop constants before the tile locals, preserve a halfword padding home before the ring coordinates, and inline dx*dx in the square-root argument so IDO hoists the invariant product.
+
+-> `correct ASM`: The intensity remains in v1, -256 remains in s8 across sqrtf, the tile and fractional-X homes are sp+0x70, sp+0x6c, and sp+0x68, and the loop bound spills at sp+0x4c. The final 165 target instructions match structurally. This is a partial checkpoint: startup scheduling and temporary registers remain unmatched, so the NON_MATCHING wrapper stays in place.
