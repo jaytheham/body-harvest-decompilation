@@ -153,22 +153,24 @@ s32 func_8000A2B8_AEB8(u8 *arg0, s16 arg1) {
 	return result;
 }
 
-
-void func_8000A3DC_AFDC(s16 arg0, s8 *arg1) {
-    u8 low;
-    s8 high;
-    arg0 *= 2;
-    low = arg0 & 0xFF;
-    high = arg0 >> 8;
-    if (low >= 0) {
-        low++;
-    }
-    if (high >= 0) {
-        high++;
-    }
-    *arg1 = high;
-    arg1++;
-    *arg1 = low;
+void func_8000A3DC_AFDC(s16 arg0, s8 *arg1)
+{
+	u8 low;
+	s8 high;
+	arg0 *= 2;
+	low = arg0 & 0xFF;
+	high = arg0 >> 8;
+	if (low >= 0)
+	{
+		low++;
+	}
+	if (high >= 0)
+	{
+		high++;
+	}
+	*arg1 = high;
+	arg1++;
+	*arg1 = low;
 }
 
 s16 func_8000A43C_B03C(s8 *arg0)
@@ -192,7 +194,6 @@ s16 func_8000A43C_B03C(s8 *arg0)
 	return (((s16) (((s16) (var_v1 << 8)) + var_a0)) / 2);
 }
 
-// CURRENT(67025)
 #ifdef NON_MATCHING
 void drawText(void *arg0, ...) {
 	u8 *s3;
@@ -616,7 +617,6 @@ void func_8000AFDC_BBDC(void)
 	}
 }
 
-// CURRENT(112386)
 #ifdef NON_MATCHING
 void func_8000B044_BC44(void) {
 	s16 i;
@@ -1022,7 +1022,6 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	}
 }
 
-// CURRENT(4963)
 #ifdef NON_MATCHING
 void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	extern Unk800476C8 D_80059C90[2];
@@ -1143,23 +1142,23 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
 {
-  u8 var_s0;
-  s16 sp48[3];
-  s32 sp3C[3];
-  s32 val;
+	u8 var_s0;
+	s16 sp48[3];
+	s32 sp3C[3];
+	s32 val;
 
-  for (var_s0 = 1; arg1 != var_s0; var_s0++)
+	for (var_s0 = 1; arg1 != var_s0; var_s0++)
 	{
-	  sp3C[0] = (arg0 + var_s0)->unk8 * 65536.0f;
-	  sp3C[1] = (arg0 + var_s0)->unkC * 65536.0f;
-	  sp3C[2] = (arg0 + var_s0)->unk10 * 65536.0f;
-	  sp48[0] = (arg0 + var_s0)->unk2 * 8;
-	  sp48[1] = (arg0 + var_s0)->unk4 * 8;
-	  sp48[2] = (arg0 + var_s0)->unk0 * 8;
+		sp3C[0] = (arg0 + var_s0)->unk8 * 65536.0f;
+		sp3C[1] = (arg0 + var_s0)->unkC * 65536.0f;
+		sp3C[2] = (arg0 + var_s0)->unk10 * 65536.0f;
+		sp48[0] = (arg0 + var_s0)->unk2 * 8;
+		sp48[1] = (arg0 + var_s0)->unk4 * 8;
+		sp48[2] = (arg0 + var_s0)->unk0 * 8;
 		val = D_8005BB38;
 		D_8005BB38 += 1;
-	  func_8000C81C_D41C(sp3C, sp48, 0, val);
-  }
+		func_8000C81C_D41C(sp3C, sp48, 0, val);
+	}
 }
 
 void func_8000CD54_D954(Unk8007F878_404 *arg0, AnimChannelState *arg1, u8 arg2) {
@@ -1176,7 +1175,6 @@ void func_8000CD54_D954(Unk8007F878_404 *arg0, AnimChannelState *arg1, u8 arg2) 
 	}
 }
 
-// https://decomp.me/scratch/6Zblw
 s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, s32 arg3, s32 arg4)
 {
 	AnimChannelState *ch;
@@ -1210,7 +1208,6 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 	return arg3;
 }
 
-// CURRENT(7256)
 #ifdef NON_MATCHING
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
 	f64 temp_f20;
@@ -1377,19 +1374,20 @@ void func_8000D384_DF84(AnimFrameData *arg0, AnimFrameData *arg1, f32 arg2, Anim
 	((AnimFrameData14 *)arg3)->g = (u16)((f32)(u32)((AnimFrameData14 *)arg0)->g + (f32)(((AnimFrameData14 *)arg1)->g - ((AnimFrameData14 *)arg0)->g) * arg2);
 }
 
-void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4) {
-    u16 frame0;
-    u16 frame1;
-    AnimFrameData14 sp44;
-    AnimFrameData14 sp34;
-    AnimFrameData14 sp24;
+void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, u8 arg3, f32 arg4)
+{
+	u16 frame0;
+	u16 frame1;
+	AnimFrameData14 sp44;
+	AnimFrameData14 sp34;
+	AnimFrameData14 sp24;
 
-    frame0 = arg0->channels[arg3].frameOffset;
-    frame0 += arg2->unk18;
-    sp44 = arg0->frames[frame0];
-    frame1 = arg1->channels[arg3].frameOffset;
-    frame1 += arg2->unk18;
-    sp34 = arg1->frames[frame1];
+	frame0 = arg0->channels[arg3].frameOffset;
+	frame0 += arg2->unk18;
+	sp44 = arg0->frames[frame0];
+	frame1 = arg1->channels[arg3].frameOffset;
+	frame1 += arg2->unk18;
+	sp34 = arg1->frames[frame1];
 
 	func_8000D384_DF84((AnimFrameData *)&sp44, (AnimFrameData *)&sp34, arg4, (AnimFrameData *)&sp24);
 
@@ -1406,7 +1404,6 @@ void func_8000D588_E188(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChanne
 	arg2->unk3C = arg2->unk10;
 }
 
-// https://decomp.me/scratch/KhfAB
 s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, s32 arg4, s32 arg5, f32 arg6, s32 arg7)
 {
 	s32 var_s1;
@@ -1451,7 +1448,6 @@ s32 func_8000D71C_E31C(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannel
 	return arg4;
 }
 
-// CURRENT(765)
 #ifdef NON_MATCHING
 void func_8000D8DC_E4DC(Unk8007F878_404 *arg0, Unk8007F878_404 *arg1, AnimChannelState *arg2, s32 arg3, f32 arg4, f32 arg5) {
 	s32 var_s0;

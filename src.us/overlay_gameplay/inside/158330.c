@@ -6842,7 +6842,6 @@ void func_80071F08_159FC8(void) {
 }
 
 // jtbl_800A4A08_18CAC8
-// CURRENT (12772)
 #ifdef NON_MATCHING
 // AI - Processes tile map to set up wall/collision boundaries
 void func_80072300_15A3C0(void)
@@ -8152,7 +8151,6 @@ void func_80074FF0_15D0B0(void) {
 		} while (i < D_800E668C);
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif
@@ -8326,7 +8324,6 @@ void func_8007568C_15D74C(void) {
 						}
 					}
 				}
-
 				}
 
 				if (i == D_800E65F8) {
