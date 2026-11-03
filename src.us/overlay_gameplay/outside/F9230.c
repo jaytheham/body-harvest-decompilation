@@ -20,10 +20,6 @@ const ShadowGeometryConstant D_801443F0_1533A0 = {3.141592654};
 const ShadowGeometryConstant D_801443F8_1533A8 = {3.141592654};
 const ShadowGeometryConstant D_80144400_1533B0 = {3.141592654};
 const ShadowGeometryConstant D_80144408_1533B8 = {180.0};
-const f32 D_80144410_1533C0[1] = {0.9f};
-const f32 D_80144414_1533C4[1] = {0.8f};
-const f32 D_80144418_1533C8[1] = {0.7f};
-const f32 D_8014441C_1533CC[1] = {0.6f};
 
 s32 D_8013E450_14D400[3] = {
 	0x00000000, 0x00000000, 0x000000FF,
@@ -503,16 +499,16 @@ void func_800EB090_FA040(void) {
 	D_80157A28 &= ~PLAYER_STATE_FLAG_SWIMMING;
 }
 
-#ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
-	s32 pad[2];
+	f32 finalX;
+	s32 stateFlags;
 	f32 speedScale;
 	f32 xDiff;
 	f32 zDiff;
 	f32 xStep;
 	f32 zStep;
 	f32 slopeDeg;
-	s32 stateFlags;
+	f32 finalZ;
 
 	stateFlags = D_8013E5AC_14D55C[D_80157600.unk40C].unk4;
 	speedScale = 1.0f;
@@ -523,7 +519,7 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	}
 
 	if (stateFlags & 0x800) {
-		f32 trig;
+		f32 temp;
 		func_800FB430_10A3E0(arg0, 0);
 
 		xDiff = D_80157600.unk8 - D_80157600.unk414;
@@ -531,8 +527,8 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 		xDiff /= 4;
 		zDiff /= 4;
 
-		trig = cosf((f32)(((f32)arg0->unkE * D_801443E8_153398.value) / 32768.0)); xStep = (trig * zDiff) - (sinf((f32)(((f32)arg0->unkE * D_801443F0_1533A0.value) / 32768.0)) * xDiff);
-		trig = sinf((f32)(((f32)arg0->unkE * D_801443F8_1533A8.value) / 32768.0)); zStep = (cosf((f32)(((f32)arg0->unkE * D_80144400_1533B0.value) / 32768.0)) * xDiff) + (trig * zDiff);
+		temp = cosf((f32)(((f32)arg0->unkE * D_801443E8_153398.value) / 32768.0)); xStep = (temp * zDiff) - (sinf((f32)(((f32)arg0->unkE * D_801443F0_1533A0.value) / 32768.0)) * xDiff);
+		temp = sinf((f32)(((f32)arg0->unkE * D_801443F8_1533A8.value) / 32768.0)); zStep = (cosf((f32)(((f32)arg0->unkE * D_80144400_1533B0.value) / 32768.0)) * xDiff) + (temp * zDiff);
 
 		slopeDeg = (f32)(((f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * D_80144408_1533B8.value) /
 				 32768.0);
@@ -541,17 +537,16 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 
 			if (!(flags & VEHICLE_FLAG_ON_BRIDGE) && !(flags & VEHICLE_FLAG_HALF_ON_BRIDGE) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
 				if (slopeDeg < -10.0f) {
-					speedScale = D_80144410_1533C0[0];
+					speedScale = 0.9f;
 				}
 				if (slopeDeg < -15.0f) {
-					speedScale = D_80144414_1533C4[0];
+					speedScale = 0.8f;
 				}
 				if (slopeDeg < -20.0f) {
-					speedScale = D_80144418_1533C8[0];
+					speedScale = 0.7f;
 				}
-				if (slopeDeg < -25.0f) {
-					speedScale = D_8014441C_1533CC[0];
-				}
+				/* Keep this condition and assignment on one line for IDO spill scheduling. */
+				if (slopeDeg < -25.0f) { speedScale = 0.6f; }
 			}
 		}
 
@@ -575,32 +570,33 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 					absDelta = -delta;
 				}
 				if (xStep >= 0) {
-					zDiff = xStep;
+					temp = xStep;
 				} else {
-					zDiff = -xStep;
+					temp = -xStep;
 				}
-				if ((f32)absDelta < zDiff) {
-					xDiff = pathX;
+				if ((f32)absDelta < temp) {
+					finalX = pathX;
 				} else {
-					xDiff = arg0->unk4C + xStep;
+					finalX = arg0->unk4C + xStep;
 				}
 				if (deltaZ >= 0) {
 					absDelta = deltaZ;
 				} else {
 					absDelta = -deltaZ;
 				}
-				if ((f32)absDelta < (zStep >= 0.0f ? zStep : -zStep)) {
-					zDiff = pathZ;
+				temp = zStep >= 0.0f ? zStep : -zStep;
+				if ((f32)absDelta < temp) {
+					finalZ = pathZ;
 				} else {
-					zDiff = arg0->unk54 + zStep;
+					finalZ = arg0->unk54 + zStep;
 				}
 			} else {
-				xDiff = arg0->unk4C + xStep;
-				zDiff = arg0->unk54 + zStep;
+				finalX = arg0->unk4C + xStep;
+				finalZ = arg0->unk54 + zStep;
 			}
 		}
-		func_800FB44C_10A3FC(arg0, xDiff);
-		func_800FB484_10A434(arg0, zDiff);
+		func_800FB44C_10A3FC(arg0, finalX);
+		func_800FB484_10A434(arg0, finalZ);
 	}
 
 	D_80157600.unk414 = D_80157600.unk8;
@@ -608,9 +604,6 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 }
 
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
-#endif
 
 // Do (player?) animation
 void func_800EB534_FA4E4(Unk80157600 *player, s32 arg1, s32 arg2, f32 arg3) {
