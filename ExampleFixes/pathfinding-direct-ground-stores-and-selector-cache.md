@@ -8,4 +8,4 @@ incorrect ASM: The clamp used unsigned value v0, signed comparison v1, and point
 
 incorrect ASM: The final level selector occupied v1 and its node pointer occupied v0.
 -> code changed: Capture currentLevel in the existing unused word and apply a compound multiply by one before the comparisons; form the typed node pointer through a signed-word address view.
--> correct ASM: The selector occupies v0, the node pointer v1, and the next node a0. The first 601 instructions match; six register differences remain in the alternate-child lookup, so the function remains NON_MATCHING.
+-> correct ASM: The selector occupies v0, the node pointer v1, and the next node a0. The first 601 instructions match.

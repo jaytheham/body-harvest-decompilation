@@ -3329,7 +3329,6 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 }
 
 // AI - Major pathfinding/movement AI
-#ifdef NON_MATCHING
 void func_80093C7C_A2C2C(u8 arg0)
 {
 	u8 typeIndex;
@@ -3346,7 +3345,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 	s32 dist;
 	s16 terrainPitch;
 	Unk8014DD50 *path3;
-	s32 pad94;
+	s32 level;
 	s32 deltaZ;
 	s32 absVal;
 	s32 sign;
@@ -3357,7 +3356,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 	s32 z;
 	Vec3f normal;
 	s8 pathResult;
-	u16 pathAngle;
+	u16 pad64;
 
 	typeIndex = alienInstances[arg0].typeIndex;
 	sp84 = D_8013CAFC_14BAAC;
@@ -3568,8 +3567,8 @@ void func_80093C7C_A2C2C(u8 arg0)
 		pathNodes[0] = pathNode;
 		pathNodes[1] = secondNode;
 
-		pad94 = currentLevel; pad94 *= 1;
-		if (pad94 == 1)
+		level = currentLevel; level *= 1;
+		if (level == 1)
 		{
 			pathResult = func_80081F18_90EC8(arg0, 2, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAE4_14BA94);
 		}
@@ -3581,10 +3580,12 @@ void func_80093C7C_A2C2C(u8 arg0)
 			}
 			else
 			{
-				pathNodes[0] = D_8014DD50[path3->unkD].unkC;
+				/* Keep both index scales for IDO's target temporary allocation. */
+				path2Index = ((s8 (*)[8])D_8014DD5C)[path3->unkD << 1][0];
+				pathNodes[0] = path2Index;
 			}
 
-			if (pad94 == 2)
+			if (level == 2)
 			{
 				pathResult = func_80081F18_90EC8(arg0, 1, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAEC_14BA9C);
 			}
@@ -3605,9 +3606,6 @@ void func_80093C7C_A2C2C(u8 arg0)
 		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
-#endif
 
 // AI - Simple collision update
 void func_800946A4_A3654(u8 arg0)
