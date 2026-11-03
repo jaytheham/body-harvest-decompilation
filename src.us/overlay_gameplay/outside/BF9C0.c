@@ -808,15 +808,17 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	baseX -= 127;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-	fracX = arg0[0] & 255;
+
 	fracY = arg0[1] & 255;
-	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius = (f32)(arg2 + arg3) / 256;
+
 	radius++;
+	fracX = arg0[0] & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
 		} else {
-			dx = cellSize - fracX + (x << 8) - 256;
+			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
 		}
 		squareX = dx * dx;
 		for (y = 1 - radius; y < radius + 1; y++) {
@@ -866,6 +868,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
