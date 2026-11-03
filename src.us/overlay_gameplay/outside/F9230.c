@@ -24,26 +24,6 @@ const f32 D_80144410_1533C0[1] = {0.9f};
 const f32 D_80144414_1533C4[1] = {0.8f};
 const f32 D_80144418_1533C8[1] = {0.7f};
 const f32 D_8014441C_1533CC[1] = {0.6f};
-const u32 jtbl_80144420_1533D0[] = {
-	OVERLAY_PTR(0x800EB5F0), OVERLAY_PTR(0x800EB5F0), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB5F8), OVERLAY_PTR(0x800EB600), OVERLAY_PTR(0x800EB608), OVERLAY_PTR(0x800EB610), OVERLAY_PTR(0x800EB618), OVERLAY_PTR(0x800EB620), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB624), OVERLAY_PTR(0x800EB5F0),
-};
-const f64 D_80144468_153418[1] = {3.141592654};
-const struct { f64 value; } D_80144470_153420 = {180.0};
-const f64 D_80144478_153428[1] = {70.0};
-const f64 D_80144480_153430[1] = {180.0};
-const f64 D_80144488_153438[1] = {180.0};
-const f64 D_80144490_153440[1] = {70.0};
-const f64 D_80144498_153448[1] = {0.8};
-const u32 jtbl_801444A0_153450[] = {
-	OVERLAY_PTR(0x800EDB50), OVERLAY_PTR(0x800EDF40), OVERLAY_PTR(0x800ED938), OVERLAY_PTR(0x800ED908), OVERLAY_PTR(0x800ED850), OVERLAY_PTR(0x800ED834),
-};
-const f32 D_801444B8_153468[1] = {0.03f};
-const f64 D_801444C0_153470[1] = {70.0};
-const f64 D_801444C8_153478[1] = {0.1};
-const f64 D_801444D0_153480[1] = {0.01};
-const f64 D_801444D8_153488[1] = {0.1};
-const f32 D_801444E0_153490[1] = {0.01f};
-const f64 D_801444E8_153498[1] = {0.1};
 
 s32 D_8013E450_14D400[3] = {
 	0x00000000, 0x00000000, 0x000000FF,
@@ -647,14 +627,13 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
 
-#ifdef NON_MATCHING
 // Do (player?) animation
 void func_800EB534_FA4E4(Unk80157600 *player, s32 arg1, s32 arg2, f32 arg3) {
 	s32 shouldAnimate = 0;
 	s32 turnOffset = 0;
 
 	if (player == &D_80157A48) {
-		osSyncPrintf(D_80144320_1532D0);
+		osSyncPrintf(D_80144320_1532D0, arg1);
 	}
 
 	switch (player->unk40C) {
@@ -729,9 +708,7 @@ void func_800EB534_FA4E4(Unk80157600 *player, s32 arg1, s32 arg2, f32 arg3) {
 		player->unk10 = 0.0f;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB534_FA4E4.s")
-#endif
+
 
 void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 animIdx;
@@ -955,7 +932,11 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 }
 
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 void func_800EC0D0_FB080(s32 arg0) {
