@@ -3363,7 +3363,9 @@ void func_802DC8F4_320A44(u8 arg0) {
 		offset[0] = -0x14; offset[1] = 0x78; offset[2] = -0x28;
 		func_800A931C_B82CC((s8)spDC, offset, rotated);
 		func_80128428_1373D8(temp_s0, rotated[0], rotated[1], rotated[2], &spC8, &spC4, &spC0);
-		offset[0] = 0x14; offset[1] = 0x78; offset[2] = -0x28;
+		offset[0] = 0x14;
+		offset[1] = 0x78;
+		offset[2] = -0x28;
 		func_800A931C_B82CC((s8)spDA, offset, rotated);
 		func_80128428_1373D8(temp_s0, rotated[0], rotated[1], rotated[2], &spBC, &spB8, &spB4);
 		func_800D16BC_E066C((s16)spC8, (s16)spC4, (s16)spC0, (s16)spBC, (s16)spB8, (s16)spB4, 1);
