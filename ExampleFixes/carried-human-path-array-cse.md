@@ -1,0 +1,3 @@
+incorrect ASM: Scalar node intermediates in func_8009012C_9F0DC kept the D_8014DD50 base in t1 across two branches, displaced the parent pointer to t2, and changed the final status branch into a branch-likely sequence.
+-> code changed: Construct pathNodes[0], pathNodes[1], and pathNodes[2] directly, indexing later nodes through the preceding array element; construct the two-node path directly too.
+-> correct ASM: The parent pointer is t1, speed is t2, the joint-table base is v0, and the status branch at 9F5C0 is ordinary beqz with the target nop delay slot. All three path halfword stores occur immediately before the helper call. Remaining function differences are temporary homes and the earlier distance-register allocation.

@@ -1909,11 +1909,9 @@ void func_8009012C_9F0DC(u32 arg0)
 		{
 			if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 			{
-				dz = D_8014DD50[parentNode].unkC;
-				target = D_8014DD50[dz].unkC;
-				pathNodes[0] = dz;
-				pathNodes[1] = target;
-				pathNodes[2] = D_8014DD50[target].unkD;
+				pathNodes[0] = D_8014DD50[parentNode].unkC;
+				pathNodes[1] = D_8014DD50[pathNodes[0]].unkC;
+				pathNodes[2] = D_8014DD50[pathNodes[1]].unkD;
 				pathResult = func_80081F18_90EC8(arg0, 3, 8, pathNodes, &D_8013C9D0_14B980);
 			}
 
@@ -1935,9 +1933,8 @@ void func_8009012C_9F0DC(u32 arg0)
 		{
 			if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 			{
-				target = D_8014DD50[parentNode].unkC;
 				pathNodes[0] = parentNode;
-				pathNodes[1] = target;
+				pathNodes[1] = D_8014DD50[parentNode].unkC;
 				pathResult = func_80081F18_90EC8(arg0, 2, 3, pathNodes, &D_8013C7A0_14B750);
 				if (pathResult == 1)
 				{
@@ -1972,6 +1969,7 @@ void func_8009012C_9F0DC(u32 arg0)
 		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009012C_9F0DC.s")
 #endif
