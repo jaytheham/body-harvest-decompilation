@@ -1836,99 +1836,92 @@ s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg
 /* Emit ground quad geometry: vertices + sorted-by-texture-bucket triangles */
 #ifdef NON_MATCHING
 void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, u8 arg6) {
-	struct {
-		s16 counts[8];
-		s16 tiles[8][16];
-		s16 order[8][16];
-	} sp12C;
-	s32 pad0;
-	s32 pad1;
-	s32 pad2;
-	s32 pad3;
-	s32 pad4;
-	s32 pad5;
-	s32 pad6;
-	s32 pad7;
-	s32 pad8;
-	s32 pad9;
-	s32 pad10;
-	s32 pad11;
-	s32 pad12;
-	s32 pad13;
-	Vtx *srcBase;
-	Vtx *copiedBase;
-	s16 width;
-	s16 height;
+	Vtx *src;
+	s32 width;
+	s32 height;
 	s16 x;
 	s16 y;
 	s16 bucket;
-	u8 modeByte;
+	Vtx *v;
+	u16 orders[8][16];
+	u16 tiles[8][16];
+	s16 counts[8];
+	u16 tile;
+	s16 b;
+	s16 idx;
+	s32 order;
+	u32 t;
+	s32 modeByte;
+	s16 cols;
+	s16 rows;
+	s32 total;
 
 	bucket = 0;
 	do {
-		sp12C.counts[bucket] = -1;
+		counts[bucket] = -1;
 		bucket = (s16)(bucket + 1);
 	} while (bucket < 8);
 
-	srcBase = arg0;
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
 		bucket = 0;
 		do {
-			Vtx *src = srcBase + (bucket * 0x12);
+			src = arg0 + (bucket * 0x12);
 
 			D_8005BB34[0] = src[0];
-			D_8005BB34[1] = src[1];
-			D_8005BB34[2] = src[2];
-			D_8005BB34[3] = src[3];
-			D_8005BB34[4] = src[4];
-			D_8005BB34 += 5;
+			D_8005BB34++;
+			D_8005BB34[0] = src[1];
+			D_8005BB34++;
+			D_8005BB34[0] = src[2];
+			D_8005BB34++;
+			D_8005BB34[0] = src[3];
+			D_8005BB34++;
+			D_8005BB34[0] = src[4];
+			D_8005BB34++;
 			bucket = (s16)(bucket + 1);
 		} while (bucket < 5);
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - 0x19), 25, 0);
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - 0x19), 25, 4);
 
-		copiedBase = D_8005BB34 - 0x19;
 		modeByte = D_8014F857;
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 4; x++) {
-				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				Vtx *v = copiedBase + (y * 5) + x;
+				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				v = &D_8005BB34[(y * 5) + x - 0x19];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
-						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						s16 idx = ++sp12C.counts[b];
+						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						idx = ++counts[b];
 
-						sp12C.tiles[b][idx] = tile;
-						sp12C.order[b][idx] = (y * 5) + x;
+						tiles[b][idx] = tile;
+						orders[b][idx] = (y * 5) + x;
 					}
 				}
 			}
 		}
 
 		for (bucket = 0; bucket < 8; bucket++) {
-			s16 i;
-			s16 count = sp12C.counts[bucket];
 
-			if (count < 0) {
+
+			if (counts[bucket] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (i = 0; i <= count; i++) {
-				u16 tile = (u16)sp12C.tiles[bucket][i];
-				s16 order = sp12C.order[bucket][i];
-				s16 base = (order + 4) * 2;
-				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+			for (x = 0; x <= counts[bucket]; x++) {
+				tile = (u16)tiles[bucket][x];
+
+				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
 
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 1,
-					((tile >> 13) & 3), 1, G_TX_NOLOD,
-					((tile >> 14) & 3), 5, G_TX_NOLOD);
-				gSP2Triangles(D_8005BB2C++, order + 5, order + 4, order + 9, 0, order + 5, order + 9, order + 10, 0);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = orders[bucket][x] + 4;
+				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
@@ -1937,180 +1930,188 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	width = arg3 - arg1;
 	height = arg4 - arg2;
 
-	if ((width * height) < 0xC) {
-		s16 cols = width + 1;
-		s16 rows = height + 1;
-		s32 total = rows * cols;
+	if (((arg3 - arg1) * (arg4 - arg2)) < 0xC) {
+		cols = (s16)width + 1;
+		rows = (s16)height + 1;
+		total = rows * cols;
 
 		for (y = 0; y < rows; y++) {
 			for (x = 0; x < cols; x++) {
-				D_8005BB34[0] = srcBase[(y * 0x12) + x];
+				D_8005BB34[0] = arg0[(y * 0x12) + x];
 				D_8005BB34++;
 			}
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 0);
-		copiedBase = D_8005BB34 - total;
-		modeByte = (u8)D_8014F854;
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		modeByte = D_8014F854;
 
-		for (y = 0; y < height; y++) {
-			for (x = 0; x < width; x++) {
-				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				Vtx *v = copiedBase + (y * cols) + x;
+		for (y = 0; y < (s16)height; y++) {
+			for (x = 0; x < (s16)width; x++) {
+				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				v = &D_8005BB34[(y * cols) + x - total];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
-						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						s16 idx = ++sp12C.counts[b];
+						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						idx = ++counts[b];
 
-						sp12C.tiles[b][idx] = tile;
-						sp12C.order[b][idx] = (y * cols) + x;
+						tiles[b][idx] = tile;
+						orders[b][idx] = (y * cols) + x;
 					}
 				}
 			}
 		}
 
 		for (bucket = 0; bucket < 8; bucket++) {
-			s16 i;
-			s16 count = sp12C.counts[bucket];
 
-			if (count < 0) {
+
+			if (counts[bucket] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (i = 0; i <= count; i++) {
-				u16 tile = (u16)sp12C.tiles[bucket][i];
-				s16 order = sp12C.order[bucket][i];
-				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+			for (x = 0; x <= counts[bucket]; x++) {
+				tile = (u16)tiles[bucket][x];
+				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
 
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 1,
-					((tile >> 13) & 3), 1, G_TX_NOLOD,
-					((tile >> 14) & 3), 5, G_TX_NOLOD);
-				gSP2Triangles(D_8005BB2C++, order + 5, order + 4, order + 4 + cols, 0, order + 5, order + 4 + cols, order + 5 + cols, 0);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = orders[bucket][x] + 4;
+				gSP2Triangles(D_8005BB2C++, order + 1, order, order + cols, 0, order + 1, order + cols, order + 1 + cols, 0);
 			}
 		}
 		return;
 	}
 
-	if (height == 4) {
-		s16 cols = 4;
-		s16 rows = 5;
-		s32 total = rows * cols;
+	if ((s16)height == 4) {
+		cols = 4;
+		rows = 5;
+		total = rows * cols;
 
-		for (y = 0; y < rows; y++) {
-			for (x = 0; x < cols; x++) {
-				D_8005BB34[0] = srcBase[(y * 0x12) + x];
-				D_8005BB34++;
-			}
+		for (y = 0; y < 5; y++) {
+			src = &arg0[y * 0x12];
+			D_8005BB34[0] = src[0];
+			D_8005BB34++;
+			D_8005BB34[0] = src[1];
+			D_8005BB34++;
+			D_8005BB34[0] = src[2];
+			D_8005BB34++;
+			D_8005BB34[0] = src[3];
+			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 0);
-		copiedBase = D_8005BB34 - total;
-		modeByte = (u8)D_8014F854;
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		modeByte = D_8014F854;
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 3; x++) {
-				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				Vtx *v = copiedBase + (y * cols) + x;
+				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				v = &D_8005BB34[(y * cols) + x - total];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
-						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						s16 idx = ++sp12C.counts[b];
+						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						idx = ++counts[b];
 
-						sp12C.tiles[b][idx] = tile;
-						sp12C.order[b][idx] = (y * cols) + x;
+						tiles[b][idx] = tile;
+						orders[b][idx] = (y * cols) + x;
 					}
 				}
 			}
 		}
 
 		for (bucket = 0; bucket < 8; bucket++) {
-			s16 i;
-			s16 count = sp12C.counts[bucket];
 
-			if (count < 0) {
+
+			if (counts[bucket] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (i = 0; i <= count; i++) {
-				u16 tile = (u16)sp12C.tiles[bucket][i];
-				s16 order = sp12C.order[bucket][i];
-				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+			for (x = 0; x <= counts[bucket]; x++) {
+				tile = (u16)tiles[bucket][x];
+				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
 
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 1,
-					((tile >> 13) & 3), 1, G_TX_NOLOD,
-					((tile >> 14) & 3), 5, G_TX_NOLOD);
-				gSP2Triangles(D_8005BB2C++, order + 5, order + 4, order + 8, 0, order + 5, order + 8, order + 9, 0);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = orders[bucket][x] + 4;
+				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 4, 0, order + 1, order + 4, order + 5, 0);
 			}
 		}
 		return;
 	}
 
 	else {
-		s16 cols = 5;
-		s16 rows = 4;
-		s32 total = rows * cols;
+		cols = 5;
+		rows = 4;
+		total = rows * cols;
 
-		for (y = 0; y < rows; y++) {
-			for (x = 0; x < cols; x++) {
-				D_8005BB34[0] = srcBase[(y * 0x12) + x];
-				D_8005BB34++;
-			}
+		for (y = 0; y < 4; y++) {
+			src = &arg0[y * 0x12];
+			D_8005BB34[0] = src[0];
+			D_8005BB34++;
+			D_8005BB34[0] = src[1];
+			D_8005BB34++;
+			D_8005BB34[0] = src[2];
+			D_8005BB34++;
+			D_8005BB34[0] = src[3];
+			D_8005BB34++;
+			D_8005BB34[0] = src[4];
+			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 0);
-		copiedBase = D_8005BB34 - total;
-		modeByte = (u8)D_8014F854;
+		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		modeByte = D_8014F854;
 
 		for (y = 0; y < 3; y++) {
 			for (x = 0; x < 4; x++) {
-				u16 tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				Vtx *v = copiedBase + (y * cols) + x;
+				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
+				v = &D_8005BB34[(y * cols) + x - total];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
-						s16 b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						s16 idx = ++sp12C.counts[b];
+						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
+						idx = ++counts[b];
 
-						sp12C.tiles[b][idx] = tile;
-						sp12C.order[b][idx] = (y * cols) + x;
+						tiles[b][idx] = tile;
+						orders[b][idx] = (y * cols) + x;
 					}
 				}
 			}
 		}
 
 		for (bucket = 0; bucket < 8; bucket++) {
-			s16 i;
-			s16 count = sp12C.counts[bucket];
 
-			if (count < 0) {
+
+			if (counts[bucket] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, &D_80224E80[(((arg6 * 8) + bucket) << 11)], G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (i = 0; i <= count; i++) {
-				u16 tile = (u16)sp12C.tiles[bucket][i];
-				s16 order = sp12C.order[bucket][i];
-				u32 t = ((u8)((tile & 0x3C0) >> 6)) & 1;
+			for (x = 0; x <= counts[bucket]; x++) {
+				tile = (u16)tiles[bucket][x];
+				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
 
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 1,
-					((tile >> 13) & 3), 1, G_TX_NOLOD,
-					((tile >> 14) & 3), 5, G_TX_NOLOD);
-				gSP2Triangles(D_8005BB2C++, order + 5, order + 4, order + 9, 0, order + 5, order + 9, order + 10, 0);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = orders[bucket][x] + 4;
+				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 #endif
