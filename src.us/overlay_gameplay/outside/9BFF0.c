@@ -1774,11 +1774,10 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 }
 
 // AI - AI state machine for carried humans/companions
-#ifdef NON_MATCHING
 void func_8009012C_9F0DC(u32 arg0)
 {
 	s32 radius;
-	s32 movementFlags;
+	s32 pad68;
 	u32 parentFlags;
 	u8 typeIdx;
 	s32 step;
@@ -1789,7 +1788,6 @@ void func_8009012C_9F0DC(u32 arg0)
 	s16 pathNodes[3];
 	s32 dx;
 	AlienInstance *parent;
-	AlienInstance *targetInst;
 	s16 target;
 	parentFlags = alienInstances[arg0].unk20;
 	parentNode = alienInstances[arg0].unkC;
@@ -1827,7 +1825,7 @@ void func_8009012C_9F0DC(u32 arg0)
 		targetSpeed = alienTypes[typeIdx].unk40;
 		dx = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
 		dz = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
-		movementFlags = alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB);
+
 
 		if (parentFlags & 0x2000)
 		{
@@ -1838,7 +1836,7 @@ void func_8009012C_9F0DC(u32 arg0)
 			radius = 0x300;
 		}
 
-		if (!movementFlags || (((dx * dx) + (dz * dz)) < (radius * radius)) || (alienInstances[arg0].unk47 & 1))
+		if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) || (((dx * dx) + (dz * dz)) < (radius * radius)) || (alienInstances[arg0].unk47 & 1))
 		{
 			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
 			if (parentFlags & 0x2000)
@@ -1863,11 +1861,10 @@ void func_8009012C_9F0DC(u32 arg0)
 			target = func_80082394_91344(alienInstances[arg0].unk0, alienInstances[arg0].unk4, 8);
 			if (target < 0xFF)
 			{
-				targetInst = &alienInstances[target];
-				osSyncPrintf(&D_80141E94_150E44, target, targetInst->unk0, targetInst->unk4);
-				alienInstances[arg0].unk14 = targetInst->unk0;
-				alienInstances[arg0].unk16 = targetInst->unk2;
-				alienInstances[arg0].unk18 = targetInst->unk4;
+				osSyncPrintf(&D_80141E94_150E44, target, alienInstances[target].unk0, alienInstances[target].unk4);
+				alienInstances[arg0].unk14 = alienInstances[target].unk0;
+				alienInstances[arg0].unk16 = alienInstances[target].unk2;
+				alienInstances[arg0].unk18 = alienInstances[target].unk4;
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
 				targetSpeed = alienTypes[typeIdx].unk40;
 			}
@@ -1970,9 +1967,7 @@ void func_8009012C_9F0DC(u32 arg0)
 	}
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009012C_9F0DC.s")
-#endif
+
 
 // AI - Decrement parent death timer or run standard AI
 void func_800908C4_9F874(u8 arg0)
