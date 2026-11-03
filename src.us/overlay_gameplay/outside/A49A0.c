@@ -456,7 +456,6 @@ void func_80095F08_A4EB8(void) {
 }
 
 
-#ifdef NON_MATCHING
 void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	Vtx_t *vtx0;
 	Vtx_t *vtx1;
@@ -466,7 +465,6 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	MapMarkerScratch *scratch;
 	s32 absWave;
 	s16 trig = 0;
-	s16 value;
 	s32 mode;
 
 	vtx0 = &D_8005BB34->v;
@@ -500,11 +498,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	vtx2->ob[1] = arg3;
 	vtx3->ob[0] = arg3;
 	vtx1->ob[0] = arg3;
-	vtx3->ob[2] = 0;
-	value = vtx3->ob[2];
-	vtx2->ob[2] = value;
-	vtx1->ob[2] = value;
-	vtx0->ob[2] = value;
+	vtx0->ob[2] = vtx1->ob[2] = vtx2->ob[2] = vtx3->ob[2] = 0;
 
 	switch (arg4) {
 	case 4:
@@ -533,24 +527,16 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		D_8013D50C = (s16)D_8013D50C_14C4BC + 0x300;
 		break;
 	default:
+		D_80052B40.unk0 = arg1;
 		D_80052B40.unk2 = -arg2;
 		D_80052B40.unk4 = 0;
-		D_80052B40.unk0 = arg1;
 		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	vtx3->tc[1] = 0;
-	value = vtx3->tc[1];
-	vtx2->tc[1] = value;
-	vtx2->tc[0] = value;
-	vtx0->tc[0] = value;
-	vtx1->tc[1] = 0x800;
-	value = vtx1->tc[1];
-	vtx1->tc[0] = value;
-	vtx3->tc[0] = value;
-	vtx0->tc[1] = value;
+	vtx0->tc[0] = vtx2->tc[0] = vtx2->tc[1] = vtx3->tc[1] = 0;
+	vtx0->tc[1] = vtx3->tc[0] = vtx1->tc[0] = vtx1->tc[1] = 0x800;
 
 	gDPPipeSync(D_8005BB2C++);
 	scratch = (MapMarkerScratch *)D_8005BB2C++; scratch->command[0] = (s32)0xB900031D; scratch->command[1] = 0x00504240;
@@ -560,10 +546,6 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
