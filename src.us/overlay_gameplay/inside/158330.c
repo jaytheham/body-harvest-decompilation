@@ -1,3 +1,4 @@
+#define INSIDE_158330_BSS
 #include <ultra64.h>
 #include "common.h"
 #include <stddef.h>
@@ -6052,13 +6053,6 @@ const char D_800A49EC_18CAAC[] = "Invalid Switch ID\n"; // "Invalid Switch ID\n"
 
 const InteriorAngleScale D_800A4A00_18CAC0 = {180.0};
 
-const u32 jtbl_800A4A08_18CAC8[] = {
-	OVERLAY_PTR(0x80072458), OVERLAY_PTR(0x8007248C), OVERLAY_PTR(0x800724C4), OVERLAY_PTR(0x800724FC), OVERLAY_PTR(0x8007260C), OVERLAY_PTR(0x80072628), OVERLAY_PTR(0x80072648), OVERLAY_PTR(0x80072668), 
-	OVERLAY_PTR(0x8007260C), OVERLAY_PTR(0x80072628), OVERLAY_PTR(0x80072648), OVERLAY_PTR(0x80072668), OVERLAY_PTR(0x80072698), OVERLAY_PTR(0x80072698), OVERLAY_PTR(0x80072698), OVERLAY_PTR(0x80072698), 
-	OVERLAY_PTR(0x800725B0), OVERLAY_PTR(0x80072688), OVERLAY_PTR(0x80072688), OVERLAY_PTR(0x80072688), OVERLAY_PTR(0x80072400), OVERLAY_PTR(0x80072434), OVERLAY_PTR(0x80072400), OVERLAY_PTR(0x80072434), 
-	OVERLAY_PTR(0x80072530), OVERLAY_PTR(0x80072550), OVERLAY_PTR(0x80072570), OVERLAY_PTR(0x80072590), OVERLAY_PTR(0x8007260C), OVERLAY_PTR(0x80072628), OVERLAY_PTR(0x80072648), OVERLAY_PTR(0x80072668), 
-};
-
 // AI - Trivial wrapper that calls the main interior update loop
 s32 func_80070270_158330(s32 arg0) {
 	func_8007290C_15A9CC();
@@ -6842,17 +6836,14 @@ void func_80071F08_159FC8(void) {
 }
 
 // jtbl_800A4A08_18CAC8
-#ifdef NON_MATCHING
 // AI - Processes tile map to set up wall/collision boundaries
 void func_80072300_15A3C0(void)
 {
 	s32 x;
 	s32 y;
-	s32 a0;
-	s32 v1;
 	s32 v0;
 	s32 fp;
-	int a1;
+	s32 a1;
 
 	D_800E65D0 = 0;
 	for (v0 = 0; v0 < 0x132; v0++) {
@@ -6973,9 +6964,6 @@ void func_80072300_15A3C0(void)
 		for (x = 0; x < D_800E6460; x++) {}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80072300_15A3C0.s")
-#endif
 
 // AI - Handles fade-in/fade-out transitions when entering/exiting buildings
 void func_8007279C_15A85C(void)
