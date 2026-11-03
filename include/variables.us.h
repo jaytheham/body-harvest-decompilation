@@ -4068,6 +4068,12 @@ extern const f64 D_800A4D98_18CE58[1];
 extern const f64 D_800A4DA0_18CE60[1];
 extern const f64 D_800A4DA8_18CE68[1];
 extern const f64 D_800A4DB0_18CE70[1];
+extern const ShadowGeometryConstant D_80144470_153420;
+extern const ShadowGeometryConstant D_80144478_153428;
+extern const ShadowGeometryConstant D_80144480_153430;
+extern const ShadowGeometryConstant D_80144488_153438;
+extern const ShadowGeometryConstant D_80144490_153440;
+extern const ShadowGeometryConstant D_80144498_153448;
 extern const f64 D_80145160_154110[1];
 extern const f32 D_801451C8_154178[1];
 

@@ -2728,7 +2728,7 @@ typedef struct {
 	/* 0x418 */ f32 unk418;
 	/* 0x41C */ u8 unk41C;
 	/* 0x41D */ u8 pad41D[0x3];
-	/* 0x420 */ void *unk420;
+	/* 0x420 */ s32 *unk420;
 	/* 0x424 */ u8 unk424;
 	/* 0x425 */ u8 pad425[0x23];
 } Unk80157600; /* size = 0x448. TODO This address outside is actually an array of 0x40 structs? */
@@ -2748,17 +2748,21 @@ typedef struct {
 } Unk8009E8DC; /* size = 0x34 */
 
 typedef struct {
+	/* 0x00 */ Vec2_S16 probePosition;
+	/* 0x04 */ f32 progress;
+	/* 0x08 */ s32 cuePlayed;
+} PlayerInteractionScratch; /* size = 0x0C; view beginning at D_801575C0 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s16 unk6;
-	/* 0x08 */ s16 unk8;
-	/* 0x0A */ s16 unkA;
-	/* 0x0C */ s16 unkC;
-	/* 0x0E */ s16 unkE;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
+	/* 0x06 */ union {
+		struct {
+			s16 unk6, unk8, unkA, unkC, unkE, unk10, unk12, unk14;
+		};
+		s16 coordinates[4][2];
+	};
 	/* 0x16 */ s16 unk16;
 } Unk801575E0; /* size = 0x18 */
 
