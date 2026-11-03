@@ -2479,7 +2479,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								terrain.value = heading - 0x4000;
+								terrain.value = (s16)(heading - 0x4000);
 								terrain.value &= 0xFFFF;
 								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
 									terrain.value = heading + 0x4000; if (terrain.value) {}
@@ -2492,7 +2492,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								}
 
 								if (8 != count) {
-									gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
+									gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
 									terrain.gfx = D_8005BB2C++; terrain.gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); terrain.gfx->words.w1 = __gsSP1Triangle_w1f(0, 1, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 1, 4, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 2, 3, 4, 0);
