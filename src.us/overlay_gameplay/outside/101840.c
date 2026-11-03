@@ -1068,7 +1068,6 @@ void func_800F49A4_103954(UnkF9230ShadowWalker *walker) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F4DB0_103D60(void) {
 	s32 var_fp;
 	UnkF9230ShadowWalker *walker;
@@ -1082,13 +1081,13 @@ void func_800F4DB0_103D60(void) {
 		if (D_80157FF0[i] == -1) {
 
 			walker = &D_80158000[i];
-			if (((i + D_80052A8C) & 0xF) == 0) {
+			if (((i + (u32)D_80052A8C) & 0xF) == 0) {
 				if ((((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) == 0 && walker->limbs[0].unk22 != 0x10) {
-					if ((alienInstances[walker->alienIdx].typeIndex == 0) || !(alienInstances[walker->alienIdx].unk20 & 0x80000) || ((alienInstances[walker->alienIdx].unk20 & 0x80000) && (i != (alienInstances[walker->alienIdx].unk20 & 7)))) {
+					if ((alienInstances[walker->alienIdx].typeIndex == 0) || !(alienInstances[walker->alienIdx].unk20 & 0x80000) || ((alienInstances[walker->alienIdx].unk20 & 0x80000) && (i != (u32)(alienInstances[walker->alienIdx].unk20 & 7)))) {
 						if (alienInstances[walker->alienIdx].typeIndex != 0) {
 							if (alienInstances[walker->alienIdx].unk20 & 0x600) {
 								func_8007A4F8_894A8(walker->alienIdx);
-								func_800DF848_EE7F8(alienInstances[walker->alienIdx].unk0, alienInstances[walker->alienIdx].unk2, alienInstances[walker->alienIdx].unk4, (u16)alienTypes[alienInstances[walker->alienIdx].typeIndex].unkC, 0);
+								func_800DF848_EE7F8(alienInstances[walker->alienIdx].unk0, alienInstances[walker->alienIdx].unk2, alienInstances[walker->alienIdx].unk4, alienTypes[alienInstances[walker->alienIdx].typeIndex].unkC, 0);
 								func_800F3038_101FE8(i);
 							} else {
 								func_80079910_888C0(walker->alienIdx);
@@ -1199,9 +1198,6 @@ void func_800F4DB0_103D60(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F4DB0_103D60.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
-#endif
 
 void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	f32 x = arg0->x;
@@ -1488,7 +1484,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
 
 #ifdef NON_MATCHING
