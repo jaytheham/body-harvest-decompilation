@@ -210,7 +210,6 @@ void func_800EA2BC_F926C(void)
   }
 }
 
-// https://decomp.me/scratch/Z56uZ
 void func_800EA2FC_F92AC(s16 arg0)
 {
 	if (arg0 >= 0x6E)
@@ -237,7 +236,6 @@ void *func_800EA3E8_F9398(s16 arg0) {
 	return D_8013E5AC_14D55C[arg0].pad20;
 }
 
-// https://decomp.me/scratch/0jDeb
 // guess_initAnimations
 void func_800EA434_F93E4(void)
 {
@@ -291,7 +289,6 @@ void func_800EA5B8_F9568(void) {
 	D_80048188 = 0;
 }
 
-// CURRENT(3950)
 f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	f32 diffX;
 	s32 pad0;
@@ -314,7 +311,6 @@ f32 func_800EA604_F95B4(s16 *arg0, Vec3f *arg1) {
 	return result;
 }
 
-// CURRENT(400)
 s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) {
 	s32 temp_v1;
 	s32 var_a0;
@@ -355,8 +351,6 @@ s32 func_800EA7DC_F978C(s16 arg0, Vec3f *arg1, Vec3f *arg2, s32 arg3, f32 arg4) 
 	return 0;
 }
 
-
-// CURRENT(2645)
 void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	s32 abs_diff;
 	s32 v1;
@@ -434,7 +428,6 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(5156)
 void func_800EABE0_F9B90(VehicleInstance *arg0) {
     Vec3f sp2C;
     s16 sp2A;
@@ -530,7 +523,6 @@ void func_800EB090_FA040(void) {
 	D_80157A28 &= ~PLAYER_STATE_FLAG_SWIMMING;
 }
 
-// CURRENT(5740)
 #ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 speedScale;
@@ -655,7 +647,6 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
 
-// CURRENT(10)
 #ifdef NON_MATCHING
 // Do (player?) animation
 void func_800EB534_FA4E4(Unk80157600 *player, s32 arg1, s32 arg2, f32 arg3) {
@@ -772,7 +763,6 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 }
 
-// https://decomp.me/scratch/OlHYp
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1)
 {
 	s32 animIdx;
@@ -919,9 +909,7 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-// CURRENT(4219)
 #ifdef NON_MATCHING
-// CURRENT(2843)
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	VehicleInstance *vehicle;
 	s16 xOff;
@@ -967,13 +955,10 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	D_80157E82 = arg1;
 	D_80157E84 = arg2;
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
 
-// CURRENT(378)
 void func_800EC0D0_FB080(s32 arg0) {
 	s32 pad0[2];
 	s16 sp46;
@@ -1054,7 +1039,6 @@ void func_800EC0D0_FB080(s32 arg0) {
 	(void)arg0;
 }
 
-
 void func_800EC330_FB2E0(void) {
 	Unk800522C0 *temp_v0;
 
@@ -1087,7 +1071,6 @@ void func_800EC3A0_FB350(s16 arg0) {
 	}
 }
 
-
 static void func_800EC448_stub(void) {
 }
 
@@ -1096,7 +1079,6 @@ void func_800EC450_FB400(void) { D_80157A28 |= PLAYER_STATE_FLAG_WARPING; }
 void func_800EC468_FB418(void) { D_80157A28 &= ~PLAYER_STATE_FLAG_WARPING; }
 
 #ifdef NON_MATCHING
-// CURRENT(18034)
 void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 	s32 padB8;
 	s32 padBC;
@@ -1964,36 +1946,33 @@ block_211:
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 #endif
 
-// https://decomp.me/scratch/ShNcq
-// CURRENT(268)
 // Is first weapon model valid
-// AI - Checks whether the alien type's first weapon model slot is a valid, non-empty entry
 s32 func_800EF0B0_FE060(s32 arg0)
 {
-  ShadowModelCommand buf;
-  ShadowModelCommand *ptr;
-  s32 count;
-  s32 sum;
-  ptr = (ShadowModelCommand *) func_80012000_12C00(arg0);
-  count = 0;
-  sum = 0;
- do {
-	buf = *ptr++;
-	count++;
-	sum += buf.command.opcode;
-} while (buf.command.opcode != -0x48 || count >= 0x39);
-	
-  if (currentControllerStates[1].button & 0x2000)
-  {
-	return 0;
-  }
-  if (sum == -0x88E && count == 0x38)
-  {
-	return 1;
-  }
-  return 0;
-}
+	ShadowModelCommand buf;
+	ShadowModelCommand *ptr;
+	s32 count;
+	s32 sum;
+	ptr = (ShadowModelCommand *)func_80012000_12C00(arg0);
+	count = 0;
+	sum = 0;
+	do
+	{
+		buf = *ptr++;
+		count++;
+		sum += buf.command.opcode;
+	} while (buf.command.opcode != -0x48 || count >= 0x39);
 
+	if (currentControllerStates[1].button & 0x2000)
+	{
+		return 0;
+	}
+	if (sum == -0x88E && count == 0x38)
+	{
+		return 1;
+	}
+	return 0;
+}
 
 // This checks the player modifier and writes values that cause either
 // normal or black adam to be rendered
@@ -2007,7 +1986,6 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 	static u16 powerupTimer = 0;
 
 	if (D_80157A3C != 0) {
-		/* Keep these phases separate so IDO rematerializes the global bases. */
 		if (1) {
 			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
@@ -2062,7 +2040,7 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 			func_800039D0_45D0(NULL, NULL, (Unk80052B40 *)sp9C, D_8005BB38++);
 
 			if (powerupTimer > 0) {
-				powerupTimer = powerupTimer; /* Retain the original unchanged-value store. */
+				powerupTimer = powerupTimer;
 				if (gameplayMode == 1) {
 					powerupTimer--;
 				}
@@ -2080,13 +2058,11 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 	}
 }
 
-// CURRENT(491)
 // Black Adam animations controller? called by his behavior function
 s32 func_800EF650_FE600(AlienInstance *arg0) {
 	s32 pad3[2];
 	s32 sp34;
 	f32 sp2C;
-
 
 	sp34 = arg0->unk12 >> 5;
 	if (sp34 < 2) {
@@ -2163,7 +2139,6 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 	return 0;
 }
 
-// CURRENT(34)
 // AI - Builds the model-view matrix stack for an alien and draws its animated model
 void func_800EF9F0_FE9A0(s16 arg0)
 {
@@ -2196,7 +2171,6 @@ void func_800EF9F0_FE9A0(s16 arg0)
 	func_8000CC3C_D83C((AnimChannelState *)(&D_80157A48), 0x10);
 	gSPDisplayList(D_8005BB2C++, modelDisplayList);
 }
-
 
 void func_800EFC28_FEBD8(u8 arg0) {
 	s16 idx;
