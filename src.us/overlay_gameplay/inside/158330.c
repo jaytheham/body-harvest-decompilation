@@ -7745,7 +7745,7 @@ void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
 				(s32)D_8008DDF4_175EB4,
 				(s32)D_8008DDF8_175EB8,
 				(s32)D_8008DDFC_175EBC,
-				(s16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / D_800A4AA0_18CB60[0]),
+				(s16)(s32)(((f64)(D_8008DDF0_175EB0 * 32768.0f)) / 180.0),
 				0x238E)) {
 			return;
 		}
@@ -7766,7 +7766,7 @@ void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
 
 			switch (D_800E65C8->unkC) {
 				case 0x400:
-					sp94[3] = (s16)(s32)(((f64)((f32)D_800E65DC * 32768.0f)) / D_800A4AA8_18CB68[0]);
+					sp94[3] = (s16)(s32)(((f64)((f32)D_800E65DC * 32768.0f)) / 180.0);
 					sp94[4] = 0;
 					sp94[5] = 0;
 					sp70[3] = D_800E65C8->unk18 << 0x10;
@@ -8025,7 +8025,6 @@ void func_80074D98_15CE58(s32 arg0) {
 	D_8008DE50_175F10.room.torchHandles[3] = func_80084EEC_16CFAC((s16) (tempX - 0x14), y, (s16) (tempZ + 0x14), 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
 }
 
-#ifdef NON_MATCHING
 // AI - Renders 3D room objects with visibility culling and texture offsets
 void func_80074FF0_15D0B0(void) {
 	s32 pad;
@@ -8048,14 +8047,8 @@ void func_80074FF0_15D0B0(void) {
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-	if (D_800E668C > 0) {
-		if (radiusScale) {}
-		if (halfDivisor && halfDivisor) {}
-		if (angleScale) {}
-		if (positionScale) {}
-		temp_f20 = D_800A4AB0_18CB70.value;
-		i = 0;
-		do {
+	for (i = 0; i < D_800E668C; i++) {
+		 temp_f20 = 180.0;
 			objIdx = D_800E66A8[i].unk0;
 			if (D_800E65BC[objIdx].unk44 & 1) {
 				displayList = D_800E65BC[objIdx].unk0;
@@ -8080,13 +8073,10 @@ void func_80074FF0_15D0B0(void) {
 				)) {
 					flags = D_800E65BC[objIdx].unk40;
 					if (flags & 0x100) {
-						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
-						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
-						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
-						position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
-						position[1] = D_800E66A8[i].unk4 << 0x10;
 						rotation[0] = D_800E66A8[i].unk8 << 0xE;
 						position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
+						position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
+						position[1] = D_800E66A8[i].unk4 << 0x10;
 						scale[0] = 0x40;
 						scale[2] = 0x40;
 						rotation[1] = 0;
@@ -8095,6 +8085,9 @@ void func_80074FF0_15D0B0(void) {
 						scale[3] = 0x100;
 						scale[5] = 0x100;
 						scale[4] = 0x100;
+						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
+						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
+						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
 						position[3] = (s32) (D_800E66A8[i].unk20 * positionScale);
 						position[4] = (s32) (D_800E66A8[i].unk24 * positionScale);
 						position[5] = (s32) (D_800E66A8[i].unk28 * positionScale);
@@ -8134,14 +8127,8 @@ void func_80074FF0_15D0B0(void) {
 					}
 				}
 			}
-
-			i++;
-		} while (i < D_800E668C);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
-#endif
 
 #ifdef NON_MATCHING
 // AI - Main room renderer: floor scan direction + object rendering
@@ -8361,7 +8348,7 @@ void func_8007568C_15D74C(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif
 
 // AI - Renders highlighted rectangle at a room entry position
