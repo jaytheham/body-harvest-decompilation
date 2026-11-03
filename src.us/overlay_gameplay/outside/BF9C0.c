@@ -3776,40 +3776,36 @@ s32 func_800BC5DC_CB58C(s16 arg0) {
 	return 0;
 }
 
-#ifdef NON_MATCHING
 void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
-	s16 i;
-	s16 temp_s2;
-	s16 temp_s5;
+	s16 vertexIndex;
+	s16 y;
+	s16 x;
 	u8 phase;
-	u8 var_v0;
+	u8 alpha;
 	Unk80052B40 position;
 	Unk80052B40 rotation;
-	s32 temp_fp;
-	int var_s2;
-	s32 spCC;
-	int pulse;
-	f64 temp_f22;
+	s32 groundHeight;
+	s32 innerRadius;
+	s32 outerRadius;
 
 	D_80052B58 = 0x80;
-	temp_fp = func_800B84D0_C7480(arg0, arg2) >> 8;
-	if (temp_fp < D_80222A70) {
-		temp_fp = D_80222A70;
+	groundHeight = func_800B84D0_C7480(arg0, arg2) >> 8;
+	if (groundHeight < D_80222A70) {
+		groundHeight = D_80222A70;
 	}
 
-	if ((temp_fp + 0xC8) < arg1) {
-		pulse = (arg3 * 4) - ((s32)phase / 4);
-		spCC = pulse + 0x3C;
+	if ((groundHeight + 0xC8) < arg1) {
+		innerRadius = (arg3 * 4) - ((s32)phase / 4);
+		outerRadius = innerRadius + 0x3C;
 	} else {
-		pulse = (arg3 * 2) - ((s32)phase / 4);
-		spCC = pulse + 0x1E;
+		innerRadius = (arg3 * 2) - ((s32)phase / 4);
+		outerRadius = innerRadius + 0x1E;
 	}
 
-	var_s2 = D_80052A8C & 0x1F;
-	if ((u32)var_s2 >= 0x11) {
-		phase = 0x20 - var_s2;
+	if ((u32)((u32)D_80052A8C & 0x1FU) >= 0x11) {
+		phase = 0x20 - ((u32)D_80052A8C & 0x1FU);
 	} else {
-		phase = var_s2;
+		phase = ((u32)D_80052A8C & 0x1FU);
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
@@ -3834,30 +3830,26 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	D_8005BB34->v.cn[1] = 0xFF - (phase * 5);
 	D_8005BB34->v.cn[2] = 0xFF;
 	D_8005BB34->v.cn[3] = 0;
-	i = 0; D_8005BB34++;
+	vertexIndex = 0; D_8005BB34++;
 
 
 	arg4 = 0;
-	temp_f22 = pulse;
-	temp_fp = (phase * 4) + 0x64;
 
-	for (; i < 10; i++) {
-		pulse = (i << 0x10) / 10;
-		var_s2 = (i << 0x10) / 3;
+	for (; vertexIndex < 10; vertexIndex++) {
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
-		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
-		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)temp_s2);
+		x = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + ((vertexIndex << 0x10) / 10))) / 32768.0) * (f64)innerRadius) + arg4);
+		x = (s16)(s32)((((f32)coss((((vertexIndex << 0x10) / 3) + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)x);
+		y = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + ((vertexIndex << 0x10) / 10))) / 32768.0) * (f64)innerRadius) + arg4);
+		y = (s16)(s32)((((f32)sins((((vertexIndex << 0x10) / 3) + (D_80052A8C * 0x708))) / 32768.0) * 14.0) + (f64)y);
 
-		if (D_80052B58 < temp_fp) {
-			var_v0 = D_80052B58;
+		if (D_80052B58 < (phase * 4) + 0x64) {
+			alpha = D_80052B58;
 		} else {
-			var_v0 = temp_fp;
+			alpha = (phase * 4) + 0x64;
 		}
 
-		D_8005BB34->v.ob[0] = temp_s5;
-		D_8005BB34->v.ob[1] = temp_s2;
+		D_8005BB34->v.ob[0] = x;
+		D_8005BB34->v.ob[1] = y;
 		D_8005BB34->v.ob[2] = 0x1C;
 		D_8005BB34->v.flag = 0;
 		D_8005BB34->v.tc[0] = 0;
@@ -3865,30 +3857,26 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 		D_8005BB34->v.cn[0] = 0xDC;
 		D_8005BB34->v.cn[1] = 0xE6;
 		D_8005BB34->v.cn[2] = 0xFF;
-		D_8005BB34->v.cn[3] = var_v0;
+		D_8005BB34->v.cn[3] = alpha;
 		D_8005BB34++;
 	}
 
-	temp_f22 = spCC;
-	temp_fp = 0xB4 - (phase * 6);
-	for (i = 0; i < 10; i++) {
-		pulse = (i << 0x10) / 10;
-		var_s2 = (i << 0x10) / 3;
+	for (vertexIndex = 0; vertexIndex < 10; vertexIndex++) {
 
-		temp_s5 = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
-		temp_s5 = (s16)(s32)((((f32)coss((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s5);
-		temp_s2 = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + pulse)) / 32768.0) * temp_f22) + arg4);
-		temp_s2 = (s16)(s32)((((f32)sins((var_s2 + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)temp_s2);
+		x = (s16)(s32)((((f32)coss(((D_80052A8C * 0x64) + ((vertexIndex << 0x10) / 10))) / 32768.0) * (f64)outerRadius) + arg4);
+		x = (s16)(s32)((((f32)coss((((vertexIndex << 0x10) / 3) + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)x);
+		y = (s16)(s32)((((f32)sins(((D_80052A8C * 0x64) + ((vertexIndex << 0x10) / 10))) / 32768.0) * (f64)outerRadius) + arg4);
+		y = (s16)(s32)((((f32)sins((((vertexIndex << 0x10) / 3) + (D_80052A8C * 0x708))) / 32768.0) * 7.0) + (f64)y);
 
-		if (D_80052B58 < temp_fp) {
-			var_v0 = D_80052B58;
+		if (D_80052B58 < 0xB4 - (phase * 6)) {
+			alpha = D_80052B58;
 		} else {
-			var_v0 = temp_fp;
+			alpha = 0xB4 - (phase * 6);
 		}
 
-		if (!(i & 1)) {
-			D_8005BB34->v.ob[0] = temp_s5;
-			D_8005BB34->v.ob[1] = temp_s2;
+		if (!(vertexIndex & 1)) {
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y;
 			D_8005BB34->v.ob[2] = 3;
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
@@ -3896,10 +3884,10 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 			D_8005BB34->v.cn[0] = 0x47;
 			D_8005BB34->v.cn[1] = 0x0A;
 			D_8005BB34->v.cn[2] = 0xD4;
-			D_8005BB34->v.cn[3] = var_v0;
+			D_8005BB34->v.cn[3] = alpha;
 		} else {
-			D_8005BB34->v.ob[0] = temp_s5;
-			D_8005BB34->v.ob[1] = temp_s2;
+			D_8005BB34->v.ob[0] = x;
+			D_8005BB34->v.ob[1] = y;
 			D_8005BB34->v.ob[2] = 3;
 			D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
@@ -3907,19 +3895,19 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 			D_8005BB34->v.cn[0] = 0x62;
 			D_8005BB34->v.cn[1] = 0xEF;
 			D_8005BB34->v.cn[2] = 0xFF;
-			D_8005BB34->v.cn[3] = var_v0;
+			D_8005BB34->v.cn[3] = alpha;
 		}
 		D_8005BB34++;
 	}
 
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x15), 21, 0);
-	for (i = 1; i < 10; i++) {
-		gSP1Triangle(D_8005BB2C++, 0, i, i + 1, 0);
+	for (vertexIndex = 1; vertexIndex < 10; vertexIndex++) {
+		gSP1Triangle(D_8005BB2C++, 0, vertexIndex, vertexIndex + 1, 0);
 	}
 	gSP1Triangle(D_8005BB2C++, 0, 10, 1, 0);
 
-	for (i = 1; i < 10; i++) {
-		gSP2Triangles(D_8005BB2C++, i + 1, i, i + 10, 0, i + 10, i + 11, i + 1, 0);
+	for (vertexIndex = 1; vertexIndex < 10; vertexIndex++) {
+		gSP2Triangles(D_8005BB2C++, vertexIndex + 1, vertexIndex, vertexIndex + 10, 0, vertexIndex + 10, vertexIndex + 11, vertexIndex + 1, 0);
 	}
 	gSP2Triangles(D_8005BB2C++, 1, 10, 20, 0, 20, 11, 1, 0);
 
@@ -3930,13 +3918,13 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 0x15), 21, 0);
-	for (i = 1; i < 10; i++) {
-		gSP1Triangle(D_8005BB2C++, 0, i, i + 1, 0);
+	for (vertexIndex = 1; vertexIndex < 10; vertexIndex++) {
+		gSP1Triangle(D_8005BB2C++, 0, vertexIndex, vertexIndex + 1, 0);
 	}
 	gSP1Triangle(D_8005BB2C++, 0, 10, 1, 0);
 
-	for (i = 1; i < 10; i++) {
-		gSP2Triangles(D_8005BB2C++, i + 1, i, i + 10, 0, i + 10, i + 11, i + 1, 0);
+	for (vertexIndex = 1; vertexIndex < 10; vertexIndex++) {
+		gSP2Triangles(D_8005BB2C++, vertexIndex + 1, vertexIndex, vertexIndex + 10, 0, vertexIndex + 10, vertexIndex + 11, vertexIndex + 1, 0);
 	}
 	gSP2Triangles(D_8005BB2C++, 1, 10, 20, 0, 20, 11, 1, 0);
 
@@ -3945,9 +3933,7 @@ void func_800BC760_CB710(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BC760_CB710.s")
-#endif
+
 
 void func_800BD20C_CC1BC(void)
 {
