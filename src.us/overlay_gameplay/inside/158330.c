@@ -7447,14 +7447,14 @@ void func_80073714_15B7D4(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 void func_80073A48_15BB08(void) {
 }
 
-#ifdef NON_MATCHING
 // AI - Renders the top-of-screen HUD gradient bar with level-specific colors
 void func_80073A50_15BB10(void) {
-	u16 baseY;
-	u16 y1;
-	u16 y2;
-	u16 y3;
-	u16 y4;
+	/* Preserve halfword arithmetic and signed vertex-coordinate reads. */
+	union { u16 value; s16 signedValue; } baseY;
+	s32 y1;
+	s32 y2;
+	s32 y3;
+	s32 y4;
 	s16 dx;
 	s16 dz;
 	s32 angle;
@@ -7463,15 +7463,16 @@ void func_80073A50_15BB10(void) {
 	dz = (s32)(D_8008DDFC_175EBC - D_800E65A4);
 	angle = func_80003824_4424((f32)(s16)(s32)sqrtf((f32)((dx * dx) + (dz * dz))), D_8008DDF8_175EB8 - D_800E65A0);
 
+	baseY.value = 0x32;
 	if ((currentLevel == 1) || (currentLevel == 3)) {
-		baseY = 0x32 - (angle / 0x24);
-		y1 = baseY + 0x3C;
-		y2 = baseY + 0x64;
-		y3 = baseY + 0x78;
-		y4 = baseY + 0xF0;
+		baseY.value -= (u16)(angle / 0x24);
+		y1 = baseY.signedValue + 0x3C;
+		y2 = baseY.signedValue + 0x64;
+		y3 = baseY.signedValue + 0x78;
+		y4 = baseY.signedValue + 0xF0;
 
 		D_8005BB34[0].v.ob[0] = 0;
-		D_8005BB34[0].v.ob[1] = baseY;
+		D_8005BB34[0].v.ob[1] = baseY.signedValue;
 		D_8005BB34[0].v.ob[2] = -5;
 		D_8005BB34[0].v.flag = 0;
 		D_8005BB34[0].v.tc[0] = 0;
@@ -7482,7 +7483,7 @@ void func_80073A50_15BB10(void) {
 		D_8005BB34[0].v.cn[3] = 0xFF;
 
 		D_8005BB34[1].v.ob[0] = 0x140;
-		D_8005BB34[1].v.ob[1] = baseY;
+		D_8005BB34[1].v.ob[1] = baseY.signedValue;
 		D_8005BB34[1].v.ob[2] = -5;
 		D_8005BB34[1].v.flag = 0;
 		D_8005BB34[1].v.tc[0] = 0;
@@ -7580,14 +7581,14 @@ void func_80073A50_15BB10(void) {
 		D_8005BB34[9].v.cn[2] = 0x0D;
 		D_8005BB34[9].v.cn[3] = 0xFF;
 	} else {
-		baseY = 0x32 - (angle / 0x24);
-		y1 = baseY + 0x3C;
-		y2 = baseY + 0x64;
-		y3 = baseY + 0x78;
-		y4 = baseY + 0xF0;
+		baseY.value -= (u16)(angle / 0x24);
+		y1 = baseY.signedValue + 0x3C;
+		y2 = baseY.signedValue + 0x64;
+		y3 = baseY.signedValue + 0x78;
+		y4 = baseY.signedValue + 0xF0;
 
 		D_8005BB34[0].v.ob[0] = 0;
-		D_8005BB34[0].v.ob[1] = baseY;
+		D_8005BB34[0].v.ob[1] = baseY.signedValue;
 		D_8005BB34[0].v.ob[2] = -5;
 		D_8005BB34[0].v.flag = 0;
 		D_8005BB34[0].v.tc[0] = 0;
@@ -7598,7 +7599,7 @@ void func_80073A50_15BB10(void) {
 		D_8005BB34[0].v.cn[3] = 0xFF;
 
 		D_8005BB34[1].v.ob[0] = 0x140;
-		D_8005BB34[1].v.ob[1] = baseY;
+		D_8005BB34[1].v.ob[1] = baseY.signedValue;
 		D_8005BB34[1].v.ob[2] = -5;
 		D_8005BB34[1].v.flag = 0;
 		D_8005BB34[1].v.tc[0] = 0;
@@ -7723,9 +7724,6 @@ void func_80073A50_15BB10(void) {
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80073A50_15BB10.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
-#endif
 
 // Render one visible floor tile.
 void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
@@ -8156,7 +8154,7 @@ void func_80074FF0_15D0B0(void) {
 }
 
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif
 
 #ifdef NON_MATCHING
