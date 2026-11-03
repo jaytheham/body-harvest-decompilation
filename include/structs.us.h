@@ -2728,7 +2728,7 @@ typedef struct {
 	/* 0x418 */ f32 unk418;
 	/* 0x41C */ u8 unk41C;
 	/* 0x41D */ u8 pad41D[0x3];
-	/* 0x420 */ void *unk420;
+	/* 0x420 */ s32 *unk420;
 	/* 0x424 */ u8 unk424;
 	/* 0x425 */ u8 pad425[0x23];
 } Unk80157600; /* size = 0x448. TODO This address outside is actually an array of 0x40 structs? */
@@ -2753,12 +2753,10 @@ typedef struct {
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ union {
 		struct {
-			s16 unk6, unk8, unkA, unkC, unkE, unk10;
+			s16 unk6, unk8, unkA, unkC, unkE, unk10, unk12, unk14;
 		};
-		s16 coordinates[3][2];
+		s16 coordinates[4][2];
 	};
-	/* 0x12 */ s16 unk12;
-	/* 0x14 */ s16 unk14;
 	/* 0x16 */ s16 unk16;
 } Unk801575E0; /* size = 0x18 */
 
