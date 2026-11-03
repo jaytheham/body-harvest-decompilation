@@ -879,8 +879,9 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	s16 yOff;
 	s16 zOff;
 	s16 rotatedX;
-	s32 x;
-	s32 z;
+	s16 z;
+	s32 deltaX;
+	s32 deltaZ;
 	f32 temp_f0;
 
 	D_80048188 = 1;
@@ -901,15 +902,14 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	temp_f0 = sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0)); if (D_801575E0.unk12) {}
 	cosYaw = cosf((f32)(((f32)vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
 
-	x = vehicleInstances[arg1].unk0 + rotatedX;
+	D_801575E0.unk6 = vehicleInstances[arg1].unk0 + rotatedX;
 	y = vehicleInstances[arg1].unk2 + yOff;
-	z = vehicleInstances[arg1].unk4 + (s32)((cosYaw * (f32)zOff) + ((f32)xOff * temp_f0));
-	D_801575E0.unk6 = x;
 	D_801575E0.unkA = y;
+	z = vehicleInstances[arg1].unk4 + (s32)((cosYaw * (f32)zOff) + ((f32)xOff * temp_f0));
 	D_801575E0.unkE = z;
-	x = (s16)(arg3->unk0 - x);
-	z = (s16)(arg3->unk4 - z);
-	D_801575E0.unk12 = func_80003824_4424(x, z) + 0x8000;
+	deltaX = (s16)(arg3->unk0 - (vehicleInstances[arg1].unk0 + rotatedX));
+	deltaZ = (s16)(arg3->unk4 - z);
+	D_801575E0.unk12 = func_80003824_4424(deltaX, deltaZ) + 0x8000;
 
 	D_80157E80 = arg0;
 	D_80157E82 = arg1;
