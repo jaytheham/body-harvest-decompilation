@@ -513,7 +513,7 @@ void func_8000B044_BC44(void) {
     s32 glyph_y;
     s32 flag_78, flag_74;
     u8 *text_ptr;
-    u32 glyph_code;
+    s32 glyph_code;
     s32 char_value;
     s16 x_pos, y_pos;
     s16 glyph_y_off;
@@ -523,13 +523,13 @@ void func_8000B044_BC44(void) {
 	alpha = 0xFF;
 
 	D_80053C94 = 0x1E;
-	D_80053C96 = (s16)(D_80068084 - 0x1E);
 
 	x_cursor = 0;
 	y_cursor = 0;
 	r = 0xFF; g = 0xFF; b = 0xFF;
 	clip_x_min = 0; clip_y_min = 0;
 	flag_78 = 0; flag_74 = 0;
+	D_80053C96 = (s16)(D_80068084 - 0x1E);
 
 	if (gameplayMode == 0) {
 		clip_x_max = 0x280; clip_y_max = 0x1E0;
@@ -560,12 +560,11 @@ void func_8000B044_BC44(void) {
 		if (minimum < D_80053BE8 * 1024 + D_80053BEC / 1024 +
 		              D_80053BE8 / 1024 + 1024) { }
 		do {
-        char_raw = text_ptr[i];
-        char_value = char_raw;
-        glyph_code = char_value;
-        if (minimum * (f32)char_value < 1024) { }
+        glyph_code = text_ptr[i];
+        char_value = glyph_code;
+        if (minimum * (f32)(x_cursor + 1) < 1024 + (f32)(x_cursor + 2)) { }
 		if (glyph_code & 0x80) {
-            glyph_code += 0x130U;
+            glyph_code = (u32)glyph_code + 0x130U;
 			char_idx = (s16)glyph_code;
 		} else {
             glyph_code = char_value + 0x130;
@@ -575,11 +574,10 @@ void func_8000B044_BC44(void) {
 		/* Space character */
 		if ((s16)glyph_code == 0x150) {
 			x_cursor = (s16)(x_cursor + D_800319C1_325C1);
-			continue;
 		}
 
 		/* Control codes */
-		if (char_value >= 0x20) {
+		else if (char_value >= 0x20) {
 
 		/* Printable character */
 		if (char_value >= 0xC0) {
@@ -596,7 +594,7 @@ void func_8000B044_BC44(void) {
 		/* Bounds check */
 		if ((x_pos + 16) < clip_x_min || clip_x_max < x_pos ||
 			(y_pos + 16) < clip_y_min || clip_y_max < y_pos) {
-			x_cursor = (s16)(x_cursor + glyph_data[1]);
+			x_cursor += glyph_data[1];
 			continue;
 		}
 
@@ -613,7 +611,7 @@ void func_8000B044_BC44(void) {
 
 		gDPPipeSync(D_8005BB2C++);
 
-		x_cursor = (s16)(x_cursor + glyph_data[1]);
+		x_cursor += glyph_data[1];
 		} else {
 			switch (char_value) {
 			case 10: { /* newline + alignment */
@@ -724,9 +722,16 @@ void func_8000B044_BC44(void) {
 				break;
 			}
 			case 21: { /* set RGB from next 3 bytes */
-				r = text_ptr[(s16)(i++ + 1)];
-				g = text_ptr[(s16)(i++ + 1)];
-				b = text_ptr[(s16)(i++ + 1)];
+                s32 first_index;
+                u32 second_index;
+                s32 third_index;
+                first_index = i + 1;
+                r = text_ptr[(s16)first_index];
+                second_index = first_index + 1U;
+                g = text_ptr[(s16)second_index];
+                third_index = (s32)second_index + 1;
+                b = text_ptr[(s16)third_index];
+                i = third_index;
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				break;
