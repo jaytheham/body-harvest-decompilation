@@ -1,9 +1,6 @@
 .late_rodata
 .late_rodata_alignment 8
 
-dlabel D_80144A38_1539E8
-    .double 1.2
-
 dlabel D_80144A40_1539F0
     .word 0x4D617820, 0x73746174, 0x69632063, 0x6F756E74, 0x2025640A, 0x00000000
 
