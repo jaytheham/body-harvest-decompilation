@@ -3427,39 +3427,10 @@ void func_80093C7C_A2C2C(u8 arg0)
 			alienInstances[arg0].unk3C = 0;
 		}
 
-		alienInstances[arg0].unk12 = 0;
-		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
-		{
-			if (alienInstances[arg0].unk2C != 0)
-			{
-				alienInstances[arg0].unk2C--;
-			}
-			else
-			{
-				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
-				func_80093AE4_A2A94(arg0, dist);
-			}
-		}
-		else
-		{
-			deltaZ = D_8014DD50[pathNode].unk6;
-			absVal = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
-			if ((absVal >= (0x2000 - alienTypes[typeIndex].unk42)) || (dist >= 0xFB) || (dist < 0xFA))
-			{
-				alienInstances[arg0].unk2C = 8;
-				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
-			}
-		}
-
-		path3 = &D_8014DD50[pathNext];
-		deltaZ = func_8009395C_A290C(arg0, alienInstances[arg0].unk6);
-		yawTarget = alienInstances[arg0].unk6 + 0x4000;
-		path3->unkA = deltaZ;
-		deltaZ = func_8009395C_A290C(arg0, yawTarget);
-		absVal = alienInstances[arg0].unk47;
-		path3->unk8 = deltaZ;
-
-		if (absVal & 1)
+		alienInstances[arg0].unk12 = 0; if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) { if (alienInstances[arg0].unk2C != 0) { alienInstances[arg0].unk2C--; } else { alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD; func_80093AE4_A2A94(arg0, dist); } } else { deltaZ = D_8014DD50[pathNode].unk6; absVal = (-deltaZ < deltaZ) ? deltaZ : -deltaZ; if ((absVal >= (0x2000 - alienTypes[typeIndex].unk42)) || (dist >= 0xFB) || (dist < 0xFA)) { alienInstances[arg0].unk2C = 8; alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD; } } 
+		D_8014DD50[pathNext].unkA = func_8009395C_A290C(arg0, alienInstances[arg0].unk6);
+		D_8014DD50[pathNext].unk8 = func_8009395C_A290C(arg0, (s16)(alienInstances[arg0].unk6 + 0x4000));
+		if (alienInstances[arg0].unk47 & 1)
 		{
 			alienInstances[arg0].unk34++;
 		}
@@ -3552,17 +3523,17 @@ void func_80093C7C_A2C2C(u8 arg0)
 		}
 	}
 
-	pathAngle = D_8014DD50[pathNode].unk6Unsigned;
-	if ((s16)pathAngle >= 0x2001)
+	if ((s16)D_8014DD50[pathNode].unk6Unsigned) {}
+	if ((s16)D_8014DD50[pathNode].unk6Unsigned >= 0x2001)
 	{
-		pathAngle = D_8014DD50[pathNode].unk6Unsigned = 0x2000;
+		D_8014DD50[pathNode].unk6Unsigned = 0x2000;
 	}
-	else if ((s16)pathAngle < -0x2000)
+	else if ((s16)D_8014DD50[pathNode].unk6Unsigned < -0x2000)
 	{
-		pathAngle = D_8014DD50[pathNode].unk6Unsigned = 0xE000;
+		D_8014DD50[pathNode].unk6Unsigned = 0xE000;
 	}
 
-	D_8014DD50[path2Index].unk6 = pathAngle;
+	D_8014DD50[path2Index].unk6 = D_8014DD50[pathNode].unk6Unsigned;
 
 	if ((func_80086230_951E0(arg0, pathNode, 0x8000) == 0) && (dist < 0x5DC) && (dist >= 0xC9) && (alienInstances[arg0].unk4E != 0) && !(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE))
 	{
@@ -3571,6 +3542,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 		{
 			alienInstances[arg0].unk36 = 0;
 			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE;
+			if (currentLevel) {}
 			switch (currentLevel)
 			{
 			case 1:
@@ -3584,25 +3556,26 @@ void func_80093C7C_A2C2C(u8 arg0)
 				break;
 			}
 		}
-		alienInstances[arg0].unk6 = (s16)(alienInstances[arg0].unk6 + D_8014DD50[path2Index].unk6Unsigned);
+		alienInstances[arg0].unk6 += D_8014DD50[path2Index].unk6Unsigned;
 	}
 
 	absVal = alienInstances[arg0].unk20;
 	if (absVal & ALIEN_FLAG_UNKE)
 	{
-		pathNext = D_8014DD50[path2Index].unkC;
-		path3 = &D_8014DD50[pathNext];
+		pathNode = D_8014DD50[path2Index].unkC;
+		path3 = (Unk8014DD50 *)(s32)&D_8014DD50[pathNode];
 		secondNode = path3->unkC;
-		pathNodes[0] = pathNext;
+		pathNodes[0] = pathNode;
 		pathNodes[1] = secondNode;
 
-		if (currentLevel == 1)
+		pad94 = currentLevel; pad94 *= 1;
+		if (pad94 == 1)
 		{
 			pathResult = func_80081F18_90EC8(arg0, 2, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAE4_14BA94);
 		}
 		else
 		{
-			if (absVal & ALIEN_FLAG_Z)
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_Z)
 			{
 				pathNodes[0] = secondNode;
 			}
@@ -3611,7 +3584,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 				pathNodes[0] = D_8014DD50[path3->unkD].unkC;
 			}
 
-			if (currentLevel == 2)
+			if (pad94 == 2)
 			{
 				pathResult = func_80081F18_90EC8(arg0, 1, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAEC_14BA9C);
 			}
@@ -3632,9 +3605,6 @@ void func_80093C7C_A2C2C(u8 arg0)
 		alienInstances[arg0].unk1E--;
 	}
 }
-
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
 #endif
