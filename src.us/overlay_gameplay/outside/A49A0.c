@@ -529,10 +529,10 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		scratch->position.unk4 = 0;
 		D_80052B48.unk0 = 0;
 		scratch->position.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
-		D_80052B48.unk4 = 0;
 		D_80052B48.unk2 = (-0x4000 - D_80052B34->unk6);
+		D_80052B48.unk4 = 0;
 		func_800039D0_45D0(&scratch->position, (Unk80052B40 *)&D_80052B48, NULL, D_8005BB38);
-		D_8013D50C_14C4BC = (s16)D_8013D50C_14C4BC + 0x300;
+		D_8013D50C = (s16)D_8013D50C_14C4BC + 0x300;
 		break;
 	default:
 		scratch = (MapMarkerScratch *)&D_80052B40;
