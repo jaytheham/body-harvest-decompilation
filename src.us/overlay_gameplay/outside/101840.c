@@ -1870,14 +1870,14 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 zTri;
 	s16 halfCos;
 	u8 cR;
-	s16 baseRed;
 	s32 cG;
-	s16 baseGreen;
 	s16 spD2;
 	s16 spD0;
 	s16 spCE;
 	s32 cB;
 	s16 baseBlue;
+	s16 baseRed;
+	s16 baseGreen;
 
 /* Keep the addressed parameter and color halfwords in their target homes. */
 	if (&arg0) {}
@@ -1926,7 +1926,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	spE2 = phase < 0 ? 0 : phase;
 	phase = *(s16 *)&spE6 - 0xB4;
 	spE0 = phase < 0 ? 0 : phase;
-	spD0 = D_8013FCD4_14EC84[currentLevel * 9 -2]; spD2 = D_8013FCD4_14EC84[currentLevel * 9 -3]; spCE = D_8013FCD4_14EC84[currentLevel * 9 -1];
+	spD2 = D_8013FCD4_14EC84[currentLevel * 9 -3]; spD0 = D_8013FCD4_14EC84[currentLevel * 9 -2]; spCE = D_8013FCD4_14EC84[currentLevel * 9 -1];
 	cR = D_8013FCD4_14EC84[currentLevel * 9 -6];
 	cG = D_8013FCD4_14EC84[currentLevel * 9 -5];
 	cB = D_8013FCD4_14EC84[currentLevel * 9 -4];
@@ -1990,10 +1990,16 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
+	xTri = arg1[0];
+	phase = xTri - arg2[0];
+	angle = -phase;
+	if (angle + angle) {}
+	phase = arg1[2] - arg2[2];
+	if (phase) {}
 	halfSin /= 2;
 	halfCos /= 2; if (halfSin + halfCos) {}
 
-	D_8005BB34->v.ob[0] = arg1[0];
+	D_8005BB34->v.ob[0] = xTri;
 	D_8005BB34->v.ob[1] = arg1[1];
 	D_8005BB34->v.ob[2] = arg1[2];
 	D_8005BB34->v.flag = 0;
@@ -2075,7 +2081,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
 	gDPPipeSync(D_8005BB2C++);
 	gDPLoadTextureBlock(D_8005BB2C++, D_1014480, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 10), 10, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-10]), 10, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 3, 2, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 2, 1, 0);
@@ -2089,6 +2095,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
