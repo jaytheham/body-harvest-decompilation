@@ -2236,12 +2236,13 @@ extern s32 D_8014F810;
 extern s16 D_8014F812;
 extern u32 D_8014F820;
 extern s32 D_8014F824;
-extern SignedWord D_8013D940_14C8F0;
-extern SignedWord D_8013D944_14C8F4;
-extern SignedWord D_8013D948_14C8F8;
-extern SignedWord D_8013D94C_14C8FC;
-extern SignedWord D_8013D950_14C900;
-extern SignedWord D_8013D954_14C904;
+extern u8 D_5041A80[];
+extern u8 D_8013D940_14C8F0;
+extern u8 D_8013D944_14C8F4;
+extern u8 D_8013D948_14C8F8;
+extern u8 D_8013D94C_14C8FC;
+extern u8 D_8013D950_14C900;
+extern u8 D_8013D954_14C904;
 extern SignedWord D_8013D9A8_14C958;
 
 extern s32 D_8014F828;
@@ -2275,7 +2276,7 @@ extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];
 extern u8 D_80151DD0; // state tracker for effects used by human meter/game over and black adam death
 extern TileRing D_80151DD8;
-extern s8 D_8015273E;
+extern u8 D_8015273E;
 extern u8 D_80152740[];
 extern s16 D_80152B7C;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
