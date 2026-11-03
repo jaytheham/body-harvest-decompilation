@@ -1735,17 +1735,17 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 }
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk48
-#ifdef NON_MATCHING
 void func_8008F9E4_9E994(u8 arg0)
 {
 	s8 node1;
 	s8 node2;
 	s8 node3;
 	s8 node4;
-	s16 tmpA;
 	s32 tmpB;
 	s16 sp36;
+	s32 pad30;
 	s32 moved = 0;
+	s16 tmpA;
 	s32 sp24;
 
 	if (((alienInstances[arg0].unk0 >> 8) != (alienInstances[arg0].unk2E >> 8)) || ((alienInstances[arg0].unk4 >> 8) != (alienInstances[arg0].unk32 >> 8)))
@@ -1759,11 +1759,11 @@ void func_8008F9E4_9E994(u8 arg0)
 	{
 		node1 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 		node2 = D_8014DD50[node1].unkD;
-		tmpA = alienInstances[arg0].unkA;
 		node3 = D_8014DD50[node2].unkD;
-		tmpB = tmpA;
 		node4 = D_8014DD50[node3].unkD;
 		sp36 = D_8014DD50[node4].unkD;
+		tmpA = alienInstances[arg0].unkA;
+		tmpB = tmpA;
 
 		if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
 		{
@@ -1807,14 +1807,13 @@ void func_8008F9E4_9E994(u8 arg0)
 	}
 
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unk8);
-	alienInstances[arg0].unk8 = (s16)(s32)(alienInstances[arg0].unk8 * D_80141EF0_150EA0.value);
+	alienInstances[arg0].unk8 = alienInstances[arg0].unk8 * D_80141EF0_150EA0.value;
 	alienInstances[arg0].unkE += alienInstances[arg0].unk8 / 8;
-	func_8008E978_9D928(arg0, func_8008E524_9D4D4(arg0, sp24, 2));
+	tmpB = func_8008E524_9D4D4(arg0, sp24, 2);
+	func_8008E978_9D928(arg0, tmpB);
 	func_8008EF1C_9DECC(arg0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F9E4_9E994.s")
-#endif
+
 
 // AI - Spawn a new alien instance from pool
 u8 func_8008FC78_9EC28(u8 arg0)
