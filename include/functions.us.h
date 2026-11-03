@@ -1408,7 +1408,7 @@ void func_800DDD30_ECCE0(u8 arg0, s16 arg1, s16 arg2, s16 arg3);
 void func_800DDF18_ECEC8(u8 arg0);
 void func_80101EF4_110EA4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6);
 void func_80097CB4_A6C64(OrbitCam *arg0, OrbitCam *arg1, OrbitCam *arg2, f32 arg3);
-void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3);
+void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, Mtx *arg3);
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1);
 s32 func_80011F90_12B90(void *arg0);
 s32 func_80011FAC_12BAC(void *arg0);

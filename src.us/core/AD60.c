@@ -1022,19 +1022,15 @@ void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
-void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
-	extern Unk800476C8 D_80059C90[2];
-	s32 sp3C;
-	s32 sp38;
-	s32 sp34;
-	s32 sp30;
-	s32 sp2C;
-	u32 *src;
-	u32 *dst;
+void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, Mtx *arg3) {
+	union { s32 value; s32 words[1]; } cosX;
+	union { s32 value; s32 words[1]; } sinX;
+	s32 cosZ;
+	s32 sinZ;
+	s32 cosY;
+	s32 sinY;
 	u32 mask;
-	s32 temp1;
-	s32 temp2;
+	s32 *src;
 
 	D_80059C90[0].unkC = 0;
 	D_80059C90[0].unk1C = 0;
@@ -1052,26 +1048,24 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg1 != NULL) {
-		sp3C = coss((u16)arg1[0]);
-		sp38 = sins((u16)arg1[0]);
-		sp34 = coss((u16)arg1[2]);
-		sp30 = sins((u16)arg1[2]);
-		sp2C = coss((u16)arg1[1]);
-		temp1 = sins((u16)arg1[1]);
+		cosX.words[0] = coss(arg1[0]);
+		sinX.words[0] = sins(arg1[0]);
+		cosZ = coss(arg1[2]);
+		sinZ = sins(arg1[2]);
+		cosY = coss(arg1[1]);
+		sinY = sins(arg1[1]);
 
-		D_80059C90[0].unk8 = -sp38 * 2;
-		D_80059C90[0].unk0 = ((sp3C * sp2C) >> 0xF) * 2;
-		D_80059C90[0].unk4 = ((sp3C * temp1) >> 0xF) * 2;
+		D_80059C90[0].unk0 = ((cosX.value * cosY) >> 0xF) * 2;
+		D_80059C90[0].unk4 = ((cosX.value * sinY) >> 0xF) * 2;
+		D_80059C90[0].unk8 = -sinX.value * 2;
 
-		temp2 = (sp38 * sp30) >> 0xF;
-		D_80059C90[0].unk10 = (((-sp34 * temp1) >> 0xF) + ((temp2 * sp2C) >> 0xF)) * 2;
-		D_80059C90[0].unk14 = (((sp34 * sp2C) >> 0xF) + ((temp2 * temp1) >> 0xF)) * 2;
-		D_80059C90[0].unk18 = ((sp30 * sp3C) >> 0xF) * 2;
+		D_80059C90[0].unk10 = (((-cosZ * sinY) >> 0xF) + ((((sinX.value * sinZ) >> 0xF) * cosY) >> 0xF)) * 2;
+		D_80059C90[0].unk14 = (((cosZ * cosY) >> 0xF) + ((((sinX.value * sinZ) >> 0xF) * sinY) >> 0xF)) * 2;
+		D_80059C90[0].unk18 = ((sinZ * cosX.value) >> 0xF) * 2;
 
-		temp2 = (sp38 * sp34) >> 0xF;
-		D_80059C90[1].unk0 = (((sp30 * temp1) >> 0xF) + ((temp2 * sp2C) >> 0xF)) * 2;
-		D_80059C90[1].unk4 = (((-sp30 * sp2C) >> 0xF) + ((temp2 * temp1) >> 0xF)) * 2;
-		D_80059C90[1].unk8 = ((sp3C * sp34) >> 0xF) * 2;
+		D_80059C90[1].unk0 = (((sinZ * sinY) >> 0xF) + ((((sinX.value * cosZ) >> 0xF) * cosY) >> 0xF)) * 2;
+		D_80059C90[1].unk4 = (((-sinZ * cosY) >> 0xF) + ((((sinX.value * cosZ) >> 0xF) * sinY) >> 0xF)) * 2;
+		D_80059C90[1].unk8 = ((cosX.value * cosZ) >> 0xF) * 2;
 	} else {
 		D_80059C90[0].unk0 = 0x10000;
 		D_80059C90[0].unk10 = 0;
@@ -1085,67 +1079,43 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 	}
 
 	if (arg2 != NULL) {
-		s32 temp3;
-		s32 temp4;
-		s32 temp5;
-
-		temp3 = D_80059C90[0].unk0 * arg2[0];
-		D_80059C90[0].unk0 = temp3;
-		temp4 = D_80059C90[0].unk4 * arg2[0];
-		D_80059C90[0].unk4 = temp4;
-		D_80059C90[0].unk0 = temp3 >> 8;
-		temp5 = D_80059C90[0].unk8 * arg2[0];
-		D_80059C90[0].unk8 = temp5;
-		D_80059C90[0].unk4 = temp4 >> 8;
-		D_80059C90[0].unk8 = temp5 >> 8;
-
-		temp3 = D_80059C90[0].unk10 * arg2[1];
-		D_80059C90[0].unk10 = temp3;
-		temp4 = D_80059C90[0].unk14 * arg2[1];
-		D_80059C90[0].unk14 = temp4;
-		D_80059C90[0].unk10 = temp3 >> 8;
-		temp5 = D_80059C90[0].unk18 * arg2[1];
-		D_80059C90[0].unk18 = temp5;
-		D_80059C90[0].unk14 = temp4 >> 8;
-		D_80059C90[0].unk18 = temp5 >> 8;
-
-		temp3 = D_80059C90[1].unk0 * arg2[2];
-		D_80059C90[1].unk0 = temp3;
-		temp4 = D_80059C90[1].unk4 * arg2[2];
-		D_80059C90[1].unk4 = temp4;
-		D_80059C90[1].unk0 = temp3 >> 8;
-		temp5 = D_80059C90[1].unk8 * arg2[2];
-		D_80059C90[1].unk8 = temp5;
-		D_80059C90[1].unk4 = temp4 >> 8;
-		D_80059C90[1].unk8 = temp5 >> 8;
+		D_80059C90[0].unk0 *= arg2[0];
+		D_80059C90[0].unk4 *= arg2[0];
+		D_80059C90[0].unk8 *= arg2[0];
+		D_80059C90[0].unk0 >>= 8;
+		D_80059C90[0].unk4 >>= 8;
+		D_80059C90[0].unk8 >>= 8;
+		D_80059C90[0].unk10 *= arg2[1];
+		D_80059C90[0].unk14 *= arg2[1];
+		D_80059C90[0].unk18 *= arg2[1];
+		D_80059C90[0].unk10 >>= 8;
+		D_80059C90[0].unk14 >>= 8;
+		D_80059C90[0].unk18 >>= 8;
+		D_80059C90[1].unk0 *= arg2[2];
+		D_80059C90[1].unk4 *= arg2[2];
+		D_80059C90[1].unk8 *= arg2[2];
+		D_80059C90[1].unk0 >>= 8;
+		D_80059C90[1].unk4 >>= 8;
+		D_80059C90[1].unk8 >>= 8;
 	}
-
-	mask = 0xFFFF0000;
-	src = (u32 *)D_80059C90;
-	dst = (u32 *)arg3;
-	do {
-		dst[0] = ((src[1] & mask) >> 0x10) + (src[0] & mask);
-		dst += 4;
-		dst[4] = (src[0] << 0x10) + (src[1] & 0xFFFF);
-		dst[-3] = ((src[3] & mask) >> 0x10) + (src[2] & mask);
-		dst[5] = (src[2] << 0x10) + (src[3] & 0xFFFF);
-		dst[-2] = ((src[5] & mask) >> 0x10) + (src[4] & mask);
-		dst[6] = (src[4] << 0x10) + (src[5] & 0xFFFF);
-		dst[-1] = ((src[7] & mask) >> 0x10) + (src[6] & mask);
-		dst[7] = (src[6] << 0x10) + (src[7] & 0xFFFF);
-		src += 8;
-	} while (src != (u32 *)&D_80059CD0);
+	mask = 0xFFFF0000; arg0 = arg3->m[0]; src = D_80059C90_words; do { arg0[0] = (src[0] & mask) + ((src[1] & mask) >> 16);
+		arg0 = &arg0[4];
+		arg0[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
+		arg0[-3] = (src[2] & mask) + ((src[3] & mask) >> 16);
+		arg0[5] = (src[2] << 8 << 8) + (src[3] & 0xFFFFU);
+		arg0[-2] = (src[4] & mask) + ((src[5] & mask) >> 16);
+		arg0[6] = (src[4] << 8 << 8) + (src[5] & 0xFFFFU);
+		arg0[-1] = (src[6] & mask) + ((src[7] & mask) >> 16);
+		arg0[7] = (src[6] << 8 << 8) + (src[7] & 0xFFFFU);
+		src = &src[8];
+	} while ((void *)src != &D_80059CD0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000C81C_D41C.s")
-#endif
-
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
 {
 	u8 var_s0;
 	s16 sp48[3];
 	s32 sp3C[3];
-	s32 val;
+	Mtx *val;
 
 	for (var_s0 = 1; arg1 != var_s0; var_s0++)
 	{

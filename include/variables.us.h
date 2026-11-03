@@ -877,6 +877,8 @@ extern s32 D_80053C98;
 extern s32 D_80053C98;
 extern s32 D_80054668[];
 extern s32 D_80054680;
+extern Unk800476C8 D_80059C90[2];
+extern s32 D_80059C90_words[16];
 extern s16 D_80059CD0;
 extern s16 D_80059CD2;
 extern s16 D_80059CD4;

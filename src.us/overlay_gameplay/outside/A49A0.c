@@ -890,7 +890,7 @@ void func_80097994_A6944(void) {
 	mapPos[1] = D_80157600.unk4 << 3;
 	mapPos[2] = D_80157600.unk0 << 3;
 
-	func_8000C81C_D41C(translation, mapPos, NULL, (s32 *)D_8005BB38);
+	func_8000C81C_D41C(translation, mapPos, NULL, D_8005BB38);
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	gSPSegment(D_8005BB2C++, 0x06, func_80011FAC_12BAC(&D_1001B50));

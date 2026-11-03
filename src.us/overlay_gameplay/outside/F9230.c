@@ -1919,7 +1919,7 @@ void func_800EF14C_FE0FC(VehicleInstance *arg0) {
 			spA4.unk2 = D_80157600.unk4 * 8;
 			spA4.unk4 = D_80157600.unk0 * 8;
 
-			func_8000C81C_D41C(&spAC.unk0, (s16 *)&spA4, NULL, (s32 *)D_8005BB38);
+			func_8000C81C_D41C(&spAC.unk0, (s16 *)&spA4, NULL, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
 			gSPSegment(D_8005BB2C++, 0x07, K0_TO_PHYS(D_8005BB38));
