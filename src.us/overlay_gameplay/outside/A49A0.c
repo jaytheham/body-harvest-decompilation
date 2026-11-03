@@ -997,7 +997,6 @@ void func_8009811C_A70CC(void) {
 	Unk80146688 *sp30C;
 	OrbitCam *var_s3;
 	f32 var_f12;
-	f32 var_f28;
 	f64 temp_f0_3;
 	f64 temp_f22;
 	s32 temp_v0;
@@ -1119,7 +1118,7 @@ void func_8009811C_A70CC(void) {
 		sp2E8[0] |= 1;
 	}
 	temp_f22 = 0.1;
-	var_f28 = sp2B8;
+	
 	var_s0 = sp31C[0];
 	while (1) {
 	if (var_s0 == 1) {
@@ -1740,29 +1739,29 @@ void func_8009811C_A70CC(void) {
 		}
 		if ((var_a1 == 1) || (D_8014ED2D == 1)) {
 			if (var_s3 == &cam3B8) {
-				var_f28 = 1.0f;
+				sp2B8 = 1.0f;
 			} else if (var_s3 == &cam32C) {
 				if (var_a1 == 1) {
 					if (D_8014ED2E >= 0x2001) {
 						temp_f2 = D_8014ED2E - 0x2000;
-						var_f28 = temp_f2 / 8192;
+						sp2B8 = temp_f2 / 8192;
 						D_8014ED2E = D_8014ED2E;
 					} else {
-						var_f28 = 0.0f;
+						sp2B8 = 0.0f;
 					}
 				} else if (D_8014ED2E < 0x2000) {
 					temp_f2 = 0x2000 - D_8014ED2E;
-					var_f28 = temp_f2 / 8192;
+					sp2B8 = temp_f2 / 8192;
 					D_8014ED2E = D_8014ED2E;
 				} else {
-					var_f28 = 0.0f;
+					sp2B8 = 0.0f;
 				}
 			}
 			if (D_80052B34->unk1A == 0) {
 				vec2D4.unk0 = D_80052B34->unk0 >> 7;
 				vec2D4.unk2 = -D_80052B34->unk4 >> 7;
-				temp_v1 = (s32) (12.0f * var_f28);
-				vec2D4.unk4 = (s32) (7.0f * var_f28);
+				temp_v1 = (s32) (12.0f * sp2B8);
+				vec2D4.unk4 = (s32) (7.0f * sp2B8);
 				vec2CC.unk0 = 0x4000 - D_80052B34->unk6;
 				vec2CC.unk2 = 0;
 				vec2CC.unk4 = 0;
@@ -1774,18 +1773,18 @@ void func_8009811C_A70CC(void) {
 				func_800039D0_45D0(NULL, &vec2CC, &vec2DC, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-				if ((var_f28 > 0.0f) && ((var_s3 == &cam3B8) || (var_s3 == &cam32C))) {
+				if ((sp2B8 > 0.0f) && ((var_s3 == &cam3B8) || (var_s3 == &cam32C))) {
 					func_80097994_A6944();
 				}
 			} else {
-				temp_v1 = (s32) (var_f28 * 256.0);
+				temp_v1 = (s32) (sp2B8 * 256.0);
 				vec2DC.unk4 = temp_v1;
 				vec2DC.unk2 = temp_v1;
 				vec2DC.unk0 = temp_v1;
 				func_800039D0_45D0(NULL, NULL, &vec2DC, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-				if (var_f28 > 0.0f) {
-					func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / var_f28), (s32) ((-D_80052B34->unk4 >> 5) / var_f28), 0, 0x4000 - D_80052B34->unk6);
+				if (sp2B8 > 0.0f) {
+					func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / sp2B8), (s32) ((-D_80052B34->unk4 >> 5) / sp2B8), 0, 0x4000 - D_80052B34->unk6);
 				}
 			}
 		}
@@ -1937,6 +1936,7 @@ void func_8009811C_A70CC(void) {
 	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_80013324_13F24();
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_8009811C_A70CC.s")
 #endif
