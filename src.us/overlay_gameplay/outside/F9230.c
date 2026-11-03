@@ -1571,7 +1571,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 			temp_f18 = D_801575C4;
 			temp_f0 = (f64) temp_f18;
-			if ((temp_f0 == 24.0) || ((D_80222A70 >= arg0->unk2) && (temp_f0 > 19.0) && (D_801575C4 = temp_f18, 1))) {
+			if ((temp_f0 == 24.0) || ((D_80222A70 >= arg0->unk2) && (temp_f0 > 19.0) && (((PlayerInteractionScratch *)&D_801575C0)->progress = temp_f18, 1))) {
 				func_800FB44C_10A3FC(arg0, (f32) D_801575E0.coordinates[0][D_801575E0.unk4]);
 				func_800FB468_10A418(arg0, (f32) D_801575E0.coordinates[1][D_801575E0.unk4]);
 				func_800FB484_10A434(arg0, (f32) D_801575E0.coordinates[2][D_801575E4]);
@@ -1590,11 +1590,12 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				effectColor[2] = 0xC8;
 				effectPosition.z = arg0->unk4;
 				func_800B99A8_C8958(&effectPosition, 0x25, 0xD3, 0x84, effectColor, 0x34, 7, 0);
+				temp_f18 = D_801575C4;
 			}
 			arg0->unk30 = 0.0f;
 			arg0->unk34 = 0.0f;
 			arg0->unk38 = 0.0f;
-			D_801575C4 += 1.0f;
+			D_801575C4 = temp_f18 + 1.0f;
 			break;
 		}
 	}

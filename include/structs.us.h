@@ -2748,6 +2748,12 @@ typedef struct {
 } Unk8009E8DC; /* size = 0x34 */
 
 typedef struct {
+	/* 0x00 */ Vec2_S16 probePosition;
+	/* 0x04 */ f32 progress;
+	/* 0x08 */ s32 cuePlayed;
+} PlayerInteractionScratch; /* size = 0x0C; view beginning at D_801575C0 */
+
+typedef struct {
 	/* 0x00 */ s16 unk0;
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
