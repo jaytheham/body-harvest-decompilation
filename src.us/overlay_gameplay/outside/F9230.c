@@ -911,7 +911,8 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 
 #ifdef NON_MATCHING
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
-	VehicleInstance *vehicle;
+	f32 cosYaw;
+	s16 y;
 	s16 xOff;
 	s16 yOff;
 	s16 zOff;
@@ -919,33 +920,30 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	s32 x;
 	s32 z;
 	f32 temp_f0;
-	f32 xOffF;
-	f32 zOffF;
 
 	D_80048188 = 1;
 	D_8004818C = 1;
 
-	vehicle = &vehicleInstances[arg1];
 
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk4 = 0;
 
-	xOff = (s8)vehicleTypes[vehicle->unk1A].unk5E;
-	yOff = (s8)vehicleTypes[vehicle->unk1A].unk5F;
-	zOff = (s8)vehicleTypes[vehicle->unk1A].unk60;
+	xOff = vehicleTypes[vehicleInstances[arg1].unk1A].unk5E;
+	yOff = vehicleTypes[vehicleInstances[arg1].unk1A].unk5F;
+	zOff = vehicleTypes[vehicleInstances[arg1].unk1A].unk60;
 
-	temp_f0 = cosf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0));
+	temp_f0 = cosf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
 
-	xOffF = (f32) xOff;
-	zOffF = (f32) zOff;
-	rotatedX = (s16) (s32) ((xOffF * temp_f0) - (sinf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0)) * zOffF));
+	rotatedX = (s16) (s32) (((f32)xOff * temp_f0) - (sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0)) * (f32)zOff));
 
-	temp_f0 = sinf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0));
-	z = vehicle->unk4 + (s32) ((cosf((f32) (( (f32) vehicle->unk6 * 3.141592654) / 32768.0)) * zOffF) + (xOffF * temp_f0));
+	temp_f0 = sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0)); if (D_801575E0.unk12) {}
+	cosYaw = cosf((f32)(((f32)vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
 
-	x = vehicle->unk0 + rotatedX;
+	x = vehicleInstances[arg1].unk0 + rotatedX;
+	y = vehicleInstances[arg1].unk2 + yOff;
+	z = vehicleInstances[arg1].unk4 + (s32)((cosYaw * (f32)zOff) + ((f32)xOff * temp_f0));
 	D_801575E0.unk6 = x;
-	D_801575E0.unkA = vehicle->unk2 + yOff;
+	D_801575E0.unkA = y;
 	D_801575E0.unkE = z;
 	x = (s16)(arg3->unk0 - x);
 	z = (s16)(arg3->unk4 - z);
@@ -955,6 +953,7 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	D_80157E82 = arg1;
 	D_80157E84 = arg2;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s")
 #endif
