@@ -1156,7 +1156,7 @@ void func_8009811C_A70CC(void) {
 			} else {
 				D_8014ED2E = temp_a1;
 				if (D_8014ED2C == 1) {
-					D_8014ED2E = temp_a1;
+					D_8014ED2E_Write = temp_a1;
 					func_80014208_14E08(D_8014ED38, (s32) ((1.0 - ((f32) temp_a1 / 16384)) * 500.0), 0x40);
 				}
 			}
@@ -1184,7 +1184,7 @@ void func_8009811C_A70CC(void) {
 					sp320[0] = &cam3CC;
 					D_8014ED2C = 0;
 				} else {
-					sp320[0] = &cams340[D_8014ED30];
+					sp320[0] = &cams340[D_8014ED30_Select];
 					D_8014ED2C = 2;
 				}
 			}
@@ -1433,13 +1433,13 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawText(&D_801423F4_1513A4, 0x80, 8, &D_801423FC_1513AC);
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30 + 1) - 5].unk8 == 0)) {
+				if ((D_8014ED30_Select == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30_Select + 1) - 5].unk8 == 0)) {
 					drawText(&D_8014240C_1513BC, 0x80, 8, &D_80142414_1513C4);
 				} else {
-					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30 + 1);
+					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30_Label + 1);
 				}
 			} else {
-				drawText(&D_80142434_1513E4, 0x80, 8, &D_8014243C_1513EC, D_8014ED30);
+				drawText(&D_80142434_1513E4, 0x80, 8, &D_8014243C_1513EC, D_8014ED30_Label);
 			}
 		} else if ((D_8013D528_14C4D8 != 0) && ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1))) {
 			switch (D_8013D528_14C4D8->unk3) {
@@ -1841,7 +1841,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				var_s0 = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30 + 1) - 5].unk8 == 0)) {
+				if ((D_8014ED30_Select == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30_Select + 1) - 5].unk8 == 0)) {
 					var_s0 = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
 				} else {
 					var_s0 = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
@@ -1936,6 +1936,7 @@ void func_8009811C_A70CC(void) {
 	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_80013324_13F24();
 }
+
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_8009811C_A70CC.s")
