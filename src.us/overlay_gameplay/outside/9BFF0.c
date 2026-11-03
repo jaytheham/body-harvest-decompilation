@@ -3351,14 +3351,14 @@ void func_80093C7C_A2C2C(u8 arg0)
 	s32 dist;
 	s16 sp9E;
 	Unk8014DD50 *path3;
-	s32 deltaX;
+	f32 cachedZ;
 	s32 deltaZ;
 	s32 absVal;
 	s32 sign;
 	Unk80154082 sp84;
-	s32 pad80;
+	f32 cachedX;
 	s32 x;
-	s32 pad78;
+	s32 deltaX;
 	s32 z;
 	f32 vecX;
 	f32 vecY;
@@ -3407,14 +3407,18 @@ void func_80093C7C_A2C2C(u8 arg0)
 			z = alien->unk4;
 			deltaX = x >> 2;
 			deltaZ = z >> 2;
-			vecX = (f32)deltaX - D_80047954;
+			cachedX = (f32)deltaX - D_80047954;
+			vecX = cachedX;
 			vecY = 0.0f;
-			vecZ = (f32)deltaZ - D_8004795C;
+			cachedZ = (f32)deltaZ - D_8004795C;
+			vecZ = cachedZ;
 			guNormalize(&vecX, &vecY, &vecZ);
-			vecX *= 120.0f;
-			vecZ *= 120.0f;
-			x = (s32)((f32)x - vecX);
-			z = (s32)((f32)z - vecZ);
+			cachedX = vecX;
+			cachedZ = vecZ;
+			x = (s32)((f32)x - (120.0f * cachedX));
+			z = (s32)((f32)z - (120.0f * cachedZ));
+			vecX = 120.0f * cachedX;
+			vecZ = 120.0f * cachedZ;
 
 			if (alien->unk20 & ALIEN_FLAG_UNKF)
 			{
@@ -3639,6 +3643,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 		alien->unk1E--;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
 #endif

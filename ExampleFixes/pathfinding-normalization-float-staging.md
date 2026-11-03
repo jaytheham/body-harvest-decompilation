@@ -1,0 +1,3 @@
+incorrect ASM: The normalization input interleaved the first mtc1 before the second integer shift, then converted and subtracted each coordinate with a different evaluation order.
+-> code changed: Stage each coordinate subtraction in a reusable float local before assigning the address-taken normalization vector; retain explicit normalized-coordinate products before updating the vector homes.
+-> correct ASM: Both integer shifts precede both mtc1 instructions, followed by the target ordering of the coordinate loads, cvt.s.w instructions, zero initialization, and sub.s instructions before guNormalize. Remaining register allocation and output scheduling differences keep the function NON_MATCHING.
