@@ -6907,7 +6907,7 @@ void func_80072300_15A3C0(void)
 
 					case 16:
 						v0 = x * fp;
-						D_800E6A78.unk4C = (f32) (v0 + D_800E65C8->unk28 + fp);
+						D_800E6A78.worldPosition[x * fp * 0] = (f32)((v0 + fp) + D_800E65C8->unk28);
 						D_800E6468[((D_800E6460 + 2) * y) + x + 1] = 1;
 						D_800E65CC = v0;
 						D_800E65D0 = 1;
