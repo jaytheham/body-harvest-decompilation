@@ -1351,309 +1351,156 @@ void func_8008EF7C_9DF2C(u8 arg0)
 }
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) movement/state machine
-#ifdef NON_MATCHING
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 {
-	u8 sp5F;
-	u8 sp5E;
-	s16 sp5A;
-	s32 sp48;
-	AlienInstance *sp30;
-	AlienType *sp2C;
-	s32 var_t1;
-	s16 var_t3;
+	u8 buildingId;
+	u8 parentId;
 	s8 otherType;
 	u8 alienType;
+	s16 targetSpeed;
+	s32 flags;
 	s32 distX;
-	s32 absX;
-	s32 negX;
 	s32 distZ;
-	s32 negZ;
-	s32 absZ;
-	s32 distance;
+	s32 step;
 	Unk80146688 *zone;
 
-	sp30 = &alienInstances[arg0];
-	alienType = sp30->typeIndex;
-	sp2C = &alienTypes[alienType];
-	sp5A = sp2C->unk40;
-	sp48 = 1;
+	alienType = alienInstances[arg0].typeIndex;
+	targetSpeed = alienTypes[alienType].unk40;
+	step = 1;
 
 	func_80137468_146418(arg0, 7);
 
-	if (!(sp30->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 	{
-		sp48 = 4;
+		step = 4;
 	}
 
-	if (sp30->unk2C > 0)
+	if (alienInstances[arg0].unk2C > 0)
 	{
-		sp30->unk2C = (s16)(sp30->unk2C - sp48);
+		alienInstances[arg0].unk2C = alienInstances[arg0].unk2C - step;
 	}
 
-	if ((func_8008E478_9D428(arg0) == 0) && (func_8008E30C_9D2BC(arg0, 0x80000000) == 0) && !(sp30->unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_OBJ)))
+	if ((func_8008E478_9D428(arg0) == 0) && (func_8008E30C_9D2BC(arg0, 0x80000000) == 0) && !(alienInstances[arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_OBJ)))
 	{
 		if (arg1 != 0)
 		{
-			sp5F = (u8)func_8011B6C0_12A670(sp30->unk0, sp30->unk4, (s16)(alienTypes[sp30->typeIndex].unk51 / 15), 1, 0x100C);
-			if (sp5F != 0xFF)
+			buildingId = func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 15, 1, 0x100C);
+			if (buildingId != 0xFF)
 			{
-				AlienInstance *sp20;
-				sp20 = &alienInstances[sp30->unk25];
-				otherType = sp20->unk3D;
-				if ((otherType == -1) || (otherType == (s8)buildingInstances[sp5F].unk11))
+				parentId = alienInstances[arg0].unk25;
+				otherType = alienInstances[parentId].unk3D;
+				if ((otherType == -1) || (otherType == (s8)buildingInstances[buildingId].unk11))
 				{
-					sp5E = sp30->unk25;
-					if (sp30->unk38 != sp5F)
+					if (alienInstances[arg0].unk38 != buildingId)
 					{
-						func_800ACF9C_BBF4C(sp5F);
+						func_800ACF9C_BBF4C(buildingId);
 					}
 
-					func_80080B44_8FAF4(arg0, sp5F);
-					sp30->unk16 += buildingTypes[buildingInstances[sp5F].buildingType].unk14 + 0x64;
-					sp30->unk20 &= ~(ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKC);
+					func_80080B44_8FAF4(arg0, buildingId);
+					alienInstances[arg0].unk16 += buildingTypes[buildingInstances[buildingId].buildingType].unk14 + 0x64;
+					alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKC);
 
-					func_80080B44_8FAF4(sp5E, sp5F);
-					sp20->unk3A = 0;
-					sp20->unk16 += 0xC8;
-					sp20->unk20 |= ALIEN_FLAG_UNKE;
+					func_80080B44_8FAF4(parentId, buildingId);
+					alienInstances[parentId].unk3A = 0;
+					alienInstances[parentId].unk16 += 0xC8;
+					alienInstances[parentId].unk20 |= ALIEN_FLAG_UNKE;
 				}
 			}
 		}
 
-		var_t1 = sp30->unk20;
-		var_t3 = sp5A;
+		flags = alienInstances[arg0].unk20;
 	}
 	else
 	{
-		if ((sp30->unk20 & (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKF)) && (sp30->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+		flags = alienInstances[arg0].unk20;
+		if ((flags & (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKF)) && (flags & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 		{
-			distX = sp30->unk0 - sp30->unk14;
-			negX = -distX;
-			distZ = sp30->unk4 - sp30->unk18;
+			distX = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
+			distZ = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
+			distZ = MAX(MAX(distX, -distX), MAX(distZ, -distZ));
 
-			if (negX < distX)
+			if (distZ < 0x23A)
 			{
-				absX = distX;
+				targetSpeed = -0x180;
+			}
+			else if (distZ >= 0x259)
+			{
+				targetSpeed = 0x180;
 			}
 			else
 			{
-				absX = negX;
+				targetSpeed = 0;
 			}
 
-			negZ = -distZ;
-			if (negZ < distZ)
-			{
-				absZ = distZ;
-			}
-			else
-			{
-				absZ = negZ;
-			}
-
-			if (absZ < absX)
-			{
-				if (negX < distX)
-				{
-					absX = distX;
-				}
-				else
-				{
-					absX = negX;
-				}
-				distance = absX;
-			}
-			else
-			{
-				if (negZ < distZ)
-				{
-					negX = distZ;
-				}
-				else
-				{
-					negX = negZ;
-				}
-				distance = negX;
-			}
-
-			if (distance < 0x23A)
-			{
-				sp5A = -0x180;
-			}
-			else if (distance >= 0x259)
-			{
-				sp5A = 0x180;
-			}
-			else
-			{
-				sp5A = 0;
-			}
-
-			func_80087720_966D0(arg0, distance);
-			var_t3 = sp5A;
-			var_t1 = sp30->unk20;
+			func_80087720_966D0(arg0, distZ);
+			flags = alienInstances[arg0].unk20;
 		}
 		else
 		{
 			func_8009170C_A06BC(arg0);
-			var_t3 = 0x180;
-			var_t1 = sp30->unk20;
+			targetSpeed = 0x180;
+			flags = alienInstances[arg0].unk20;
 		}
 	}
 
-	if ((var_t1 & 0x800) && (arg1 != 0) && (sp30->unk3D != -1))
+	if ((flags & 0x800) && (arg1 != 0) && (alienInstances[arg0].unk3D != -1))
 	{
-		zone = &D_80146688_155638[currentLevel - 1][sp30->unk3D];
+		zone = &D_80146688_155638[currentLevel - 1][alienInstances[arg0].unk3D];
 
-		distX = (sp30->unk0 >> 8) - zone->unk0;
-		negX = -distX;
-		distZ = (sp30->unk4 >> 8) - zone->unk1;
+		distX = (alienInstances[arg0].unk0 >> 8) - zone->unk0;
+		distZ = (alienInstances[arg0].unk4 >> 8) - zone->unk1;
+		distZ = MAX(MAX(distX, -distX), MAX(distZ, -distZ));
 
-		if (negX < distX)
-		{
-			absX = distX;
-		}
-		else
-		{
-			absX = negX;
-		}
-
-		negZ = -distZ;
-		if (negZ < distZ)
-		{
-			absZ = distZ;
-		}
-		else
-		{
-			absZ = negZ;
-		}
-
-		if (absZ < absX)
-		{
-			if (negX < distX)
-			{
-				absX = distX;
-			}
-			else
-			{
-				absX = negX;
-			}
-			distance = absX;
-		}
-		else
-		{
-			if (negZ < distZ)
-			{
-				negX = distZ;
-			}
-			else
-			{
-				negX = negZ;
-			}
-			distance = negX;
-		}
-
-		if ((zone->unk2 + 6) < distance)
+		if ((zone->unk2 + 6) < distZ)
 		{
 			if (1)
 			{
-				sp30->unk20 = var_t1 | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
+				alienInstances[arg0].unk20 = flags | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
 			}
-			sp30->unk20 &= ~ALIEN_FLAG_UNKC;
-			var_t1 = sp30->unk20;
-			sp30->unk38 = sp30->unk25;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKC;
+			flags = alienInstances[arg0].unk20;
+			alienInstances[arg0].unk38 = alienInstances[arg0].unk25;
 		}
 	}
-	else if ((var_t1 & 0x2000) && (arg1 != 0))
+	else if ((flags & 0x2000) && (arg1 != 0))
 	{
-		AlienInstance *parent;
+		distX = (alienInstances[arg0].unk0 - alienInstances[alienInstances[arg0].unk25].unk0) >> 8;
+		distZ = (alienInstances[arg0].unk4 - alienInstances[alienInstances[arg0].unk25].unk4) >> 8;
+		distZ = MAX(MAX(distX, -distX), MAX(distZ, -distZ));
 
-		sp5E = sp30->unk25;
-		parent = &alienInstances[sp5E];
-
-		distX = (sp30->unk0 - parent->unk0) >> 8;
-		negX = -distX;
-		distZ = (sp30->unk4 - parent->unk4) >> 8;
-
-		if (negX < distX)
+		if (distZ < 2)
 		{
-			absX = distX;
-		}
-		else
-		{
-			absX = negX;
-		}
-
-		negZ = -distZ;
-		if (negZ < distZ)
-		{
-			absZ = distZ;
-		}
-		else
-		{
-			absZ = negZ;
-		}
-
-		if (absZ < absX)
-		{
-			if (negX < distX)
-			{
-				absX = distX;
-			}
-			else
-			{
-				absX = negX;
-			}
-			distance = absX;
-		}
-		else
-		{
-			if (negZ < distZ)
-			{
-				negX = distZ;
-			}
-			else
-			{
-				negX = negZ;
-			}
-			distance = negX;
-		}
-
-		if (distance < 2)
-		{
-			sp30->unk20 = var_t1 & ~0x2020;
-			var_t1 = sp30->unk20;
-			sp30->unk38 = sp5E;
+			alienInstances[arg0].unk20 = flags & ~0x2020;
+			alienInstances[arg0].unk38 = alienInstances[arg0].unk25;
 		}
 	}
 
-	if (var_t1 & 0x4000)
+	flags = alienInstances[arg0].unk20;
+	if (flags & 0x4000)
 	{
-		if (var_t1 & 0x08000000)
+		if (flags & 0x08000000)
 		{
-			sp30->unk20 = var_t1 & ~ALIEN_FLAG_UNKF;
+			alienInstances[arg0].unk20 = flags & ~ALIEN_FLAG_UNKF;
 		}
 
-		sp30->unk3A--;
-		if (sp30->unk3A <= 0)
+		alienInstances[arg0].unk3A--;
+		if (alienInstances[arg0].unk3A <= 0)
 		{
-			sp30->unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_OBJ);
 		}
 	}
 
-	if (var_t3 >= sp30->unk12)
+	if (targetSpeed >= alienInstances[arg0].unk12)
 	{
-		sp30->unk12 += (s16)(sp2C->unk3E * sp48);
+		alienInstances[arg0].unk12 += alienTypes[alienType].unk3E * step;
 	}
 
-	if (var_t3 < sp30->unk12)
+	if (targetSpeed < alienInstances[arg0].unk12)
 	{
-		sp30->unk12 -= (s16)(sp2C->unk3E * sp48);
+		alienInstances[arg0].unk12 -= alienTypes[alienType].unk3E * step;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F0BC_9E06C.s")
-#endif
+
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior/targeting
 void func_8008F6C0_9E670(u8 arg0)
