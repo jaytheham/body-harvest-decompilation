@@ -309,25 +309,24 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_80095F08_A4EB8(void) {
 	s16* dst;
-	u32 rnd, r0, r1;
+	u32 r0, r1;
+	s16 tileType;
+	s16 intensity;
+	u16 height;
 	s32 x;
 	s32 y;
-	s32 level4XMin;
-	s32 level4XMax;
-	s32 level4YMin;
-	s32 level4YMax;
 	s32 levelLimit;
 	u32 i;
 
-	u16 height;
-	u32 mapMask;
+	s32 maskX;
 	u32 outColor;
-	s16 tileType;
-	s16 intensity;
 	s16 mapDark;
+	s32 level4XMin;
+	s32 level4YMin;
+	s32 level4XMax;
+	s32 level4YMax;
 	s32 colorBase;
 	f32 f30;
 	f64 f28;
@@ -355,6 +354,7 @@ void func_80095F08_A4EB8(void) {
 		f26 = D_801424B8_151468[0];
 		f24 = D_801424C0_151470[0];
 		f22 = D_801424C8_151478[0];
+		if (f26) {} if (f22) {}
 		colorBase = 0x100;
 
 		do {
@@ -370,20 +370,19 @@ void func_80095F08_A4EB8(void) {
 
 
 			if (D_80052A94[y].objects[x].flag11) {
-				mapMask = ((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2][(x + 0x80) >> 2] & 0xF0;
-				outColor = mapMask ? 0xFFDF : 0;
+				u8 (*specialRow)[64];
+				specialRow = &((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
+				outColor = ((*specialRow)[(x + 0x80) >> 2] & 0xF0) ? 0xFFDF : 0;
 			} else {
 				height = D_80052A94[y].objects[x].height;
 				if (height < levelLimit) {
 					u32 dist; f32 ratio; f32 ySquare;
 					ySquare = (f32)(y * y);
-					rnd = func_800038E0_44E0();
-					r0 = rnd & 0xFF;
-					r1 = (rnd & 0xFF00) >> 8;
+					r1 = func_800038E0_44E0();
+					r0 = r1 & 0xFF;
+					r1 = (r1 & 0xFF00) >> 8;
 					ratio = (f32) ((r0 + f22) / (r1 + f22));
-					dist = (u32) ((f32) (x * x) * ratio) + (u32) (ySquare * ratio);
-
-					if (dist < 0x14) {
+					dist = (u32) ((f32) (x * x) * ratio) + (u32) (ySquare * ratio); if (dist < 0x14) {
 						intensity = (s16) f26;
 					} else {
 						intensity = (s16) (f28 / dist);
@@ -394,26 +393,25 @@ void func_80095F08_A4EB8(void) {
 					}
 
 
-					outColor = func_800959F0_A49A0((((intensity >> 3) * 0x10) >> 9) & 0xFFFF, (((intensity >> 3) * 0x10) >> 9) & 0xFFFF, ((((intensity >> 2) * 0x10) + ((intensity * 0xF) << 4)) >> 9) & 0xFFFF) & 0xFFFF;
+					outColor = func_800959F0_A49A0((u16)(((intensity >> 3) * 0x10) >> 9), (u16)(((intensity >> 3) * 0x10) >> 9), (s16)((((intensity >> 2) * 0x10) + (intensity * 0xF0)) >> 9)) & 0xFFFF;
 				} else {
-					u8 *maskRow;
-					s32 maskX;
-					maskRow = ((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
+					u8 (*maskRow)[64];
+					maskRow = &((u8 (*)[64])D_8021EA30)[(y + 0x80) >> 2];
 					maskX = x + 0x80;
 					if (D_80052A94[y].objects[x].terrainObject) {
 						tileType = D_80052A94[y].objects[x].terrainType;
 						if ((D_80052A94[y].objects[x].flag10 == 1) && (((tileType >= 4) && (tileType < 0xC)) || (tileType == 0xD))) {
-							outColor = (maskRow[maskX >> 2] & 0xF0) ? 0x528A : 0;
+							outColor = ((*maskRow)[maskX >> 2] & 0xF0) ? 0x528A : 0;
 						} else {
-							outColor = (maskRow[maskX >> 2] & 0xF0) ? 0x8410 : 0;
+							outColor = ((*maskRow)[maskX >> 2] & 0xF0) ? 0x8410 : 0;
 						}
 					} else {
 						u32 ax; f32 ratio; f32 ySquare;
 						u32 ay;
 						ySquare = (f32)(y * y);
-						rnd = func_800038E0_44E0();
-						r0 = rnd & 0xFF;
-						r1 = (rnd & 0xFF00) >> 8;
+						r1 = func_800038E0_44E0();
+						r0 = r1 & 0xFF;
+						r1 = (r1 & 0xFF00) >> 8;
 						ratio = (f32) ((r0 + f24) / (r1 + f24));
 
 						ax = (u32) (((f32) (x * x) * ratio) + f30);
@@ -424,15 +422,15 @@ void func_80095F08_A4EB8(void) {
 							intensity = (s16) D_801424D8_151488[0];
 						}
 
-						intensity = intensity + func_80095A6C_A4A1C(x, y, height);
+						intensity += func_80095A6C_A4A1C(x, y, height);
 						if (intensity < 0) {
 							intensity = 0;
 						}
 
-						mapDark = maskRow[maskX >> 2] & 0xF0;
-						outColor = func_800959F0_A49A0(((intensity * ((colorBase - mapDark) + (mapDark >> 2))) >> 8) & 0xFFFF,
+						mapDark = (*maskRow)[maskX >> 2] & 0xF0;
+						outColor = func_800959F0_A49A0((u16)((intensity * ((colorBase - mapDark) + (mapDark >> 2))) >> 8),
 						intensity,
-						((intensity * (colorBase - (maskRow[maskX >> 2] & 0xF0))) >> 7) & 0xFFFF) & 0xFFFF;
+						(u16)((intensity * (0x100 - mapDark)) >> 7)) & 0xFFFF;
 					}
 				}
 			}
@@ -456,21 +454,17 @@ void func_80095F08_A4EB8(void) {
 		} while (i--);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095F08_A4EB8.s")
-#endif
 
-#ifdef NON_MATCHING
+
 void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4) {
 	Vtx_t *vtx0;
 	Vtx_t *vtx1;
 	Vtx_t *vtx2;
 	Vtx_t *vtx3;
-	MapMarkerScratch *scratch;
 	s16 wave;
+	MapMarkerScratch *scratch;
 	s32 absWave;
 	s16 trig = 0;
-	s16 value;
 	s32 mode;
 
 	vtx0 = &D_8005BB34->v;
@@ -486,14 +480,15 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		return;
 	}
 
-	arg3 *= 8.0f;
 	arg1 >>= 5;
 	arg2 >>= 5;
+	arg3 *= 8.0f;
 
 	mode = arg4;
 	if (mode != 1) {
 		mode += mode * 0;
 	}
+	if (mode) {}
 
 	vtx1->ob[1] = -arg3;
 	vtx0->ob[1] = -arg3;
@@ -503,14 +498,10 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	vtx2->ob[1] = arg3;
 	vtx3->ob[0] = arg3;
 	vtx1->ob[0] = arg3;
-	vtx3->ob[2] = 0;
-	value = vtx3->ob[2];
-	vtx2->ob[2] = value;
-	vtx1->ob[2] = value;
-	vtx0->ob[2] = value;
+	vtx0->ob[2] = vtx1->ob[2] = vtx2->ob[2] = vtx3->ob[2] = 0;
 
-	if (mode == 4) {
-		scratch = (MapMarkerScratch *)&D_80052B40;
+	switch (arg4) {
+	case 4:
 		wave = (((((f32) arg0->distance / D_801424E0_151490[0]) * ((f32)sins(D_8013D50C_14C4BC) / 32768.0)) * 200.0));
 		trig = coss(-D_80052B34->unk6);
 		if (wave >= 0) {
@@ -518,7 +509,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		} else {
 			absWave = -wave;
 		}
-		scratch->position.unk0 = (arg1 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
+		D_80052B40.unk0 = (arg1 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 
 		trig = sins(-D_80052B34->unk6);
 		if (wave >= 0) {
@@ -527,34 +518,25 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 			absWave = -wave;
 		}
 
-		scratch = (MapMarkerScratch *)&D_80052B40;
-		scratch->position.unk4 = 0;
+		D_80052B40.unk4 = 0;
 		D_80052B48.unk0 = 0;
-		scratch->position.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
-		D_80052B48.unk4 = 0;
+		D_80052B40.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 		D_80052B48.unk2 = (-0x4000 - D_80052B34->unk6);
-		func_800039D0_45D0(&scratch->position, (Unk80052B40 *)&D_80052B48, NULL, (s32)D_8005BB38);
-		D_8013D50C_14C4BC = (s16)D_8013D50C_14C4BC + 0x300;
-	} else {
-		scratch = (MapMarkerScratch *)&D_80052B40;
-		scratch->position.unk2 = -arg2;
-		scratch->position.unk4 = 0;
-		scratch->position.unk0 = arg1;
-		func_800039D0_45D0(&scratch->position, NULL, NULL, (s32)D_8005BB38);
+		D_80052B48.unk4 = 0;
+		func_800039D0_45D0(&D_80052B40, (Unk80052B40 *)&D_80052B48, NULL, D_8005BB38);
+		D_8013D50C = (s16)D_8013D50C_14C4BC + 0x300;
+		break;
+	default:
+		D_80052B40.unk0 = arg1;
+		D_80052B40.unk2 = -arg2;
+		D_80052B40.unk4 = 0;
+		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-	vtx3->tc[1] = 0;
-	value = vtx3->tc[1];
-	vtx2->tc[1] = value;
-	vtx2->tc[0] = value;
-	vtx0->tc[0] = value;
-	vtx1->tc[1] = 0x800;
-	value = vtx1->tc[1];
-	vtx1->tc[0] = value;
-	vtx3->tc[0] = value;
-	vtx0->tc[1] = value;
+	vtx0->tc[0] = vtx2->tc[0] = vtx2->tc[1] = vtx3->tc[1] = 0;
+	vtx0->tc[1] = vtx3->tc[0] = vtx1->tc[0] = vtx1->tc[1] = 0x800;
 
 	gDPPipeSync(D_8005BB2C++);
 	scratch = (MapMarkerScratch *)D_8005BB2C++; scratch->command[0] = (s32)0xB900031D; scratch->command[1] = 0x00504240;
@@ -564,9 +546,6 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
@@ -591,7 +570,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	tile = (TileEntry *)D_801479B0_156960[level[0] - 1];
 	selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
 
-	gDPPipeSync(D_8005BB2C++);
+	if (level) {} gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -731,6 +710,7 @@ void func_800970C0_A6070(void)
 	u32 x1;
 	s32 y0;
 	s32 y1;
+	Gfx *gfx;
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
@@ -777,9 +757,16 @@ void func_800970C0_A6070(void)
 			vtx3->v.tc[1] = -0x20;
 			vtx1->v.tc[0] = 0x7E0;
 			vtx1->v.tc[1] = 0x7E0;
-			gDPLoadTextureBlock(D_8005BB2C++, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10], G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-			gSPVertex(D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
-			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+			gfx = D_8005BB2C++;
+			gDPSetTextureImage(gfx, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10]);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0);
+			gDPLoadSync(D_8005BB2C++);
+			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, CALC_DXT(32, G_IM_SIZ_16b_BYTES));
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0);
+			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 124, 124);
+			gSPVertex(gfx = D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
+			gSP1Triangle(gfx = D_8005BB2C++, 0, 1, 2, 0);
 			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
 		}
 	}
@@ -1000,7 +987,7 @@ void func_8009811C_A70CC(void) {
 	OrbitCam cam3A4;
 	OrbitCam cams340[5];
 	OrbitCam cam32C;
-	s32 cameraIndex;
+	s32 startupFlags;
 	OrbitCam *sp324;
 	OrbitCam *sp320[1];
 	s32 sp31C[1];
@@ -1010,7 +997,6 @@ void func_8009811C_A70CC(void) {
 	Unk80146688 *sp30C;
 	OrbitCam *var_s3;
 	f32 var_f12;
-	f32 var_f28;
 	f64 temp_f0_3;
 	f64 temp_f22;
 	s32 temp_v0;
@@ -1050,7 +1036,7 @@ void func_8009811C_A70CC(void) {
 	sp2B0 = D_8013D514_14C4C4;
 	sp2AC[0] = 0;
 	sp2A4 = D_8013D51C_14C4CC;
-	var_t4 = 0;
+	startupFlags = 0;
 	D_8004D14C = 0;
 	D_8014ED00 = -1;
 	var_a1 = currentLevel * 5;
@@ -1063,7 +1049,7 @@ void func_8009811C_A70CC(void) {
 	cam3CC.yaw = -0x4000;
 	cam3CC.targetZ = 0.0f;
 	if (D_8014ED04 != 0x186A0) {
-		var_t4 = 0x20;
+		startupFlags = 0x20;
 	}
 	temp_v1 = stage->unk4;
 	if ((temp_v1 > 0) || (stage->unk6 > 0)) {
@@ -1094,14 +1080,14 @@ void func_8009811C_A70CC(void) {
 	cam3B8.targetZ = 0.0f;
 	cam3A4 = cam3CC;
 	cam3A4.distance = 0x154;
-	sp2E8[0] = var_t4;
-	for (cameraIndex = 0; cameraIndex < 5; cameraIndex++) {
-		cams340[cameraIndex].distance = scratch.entries[cameraIndex - 5].unk8;
-		cams340[cameraIndex].pitch = 0x384;
-		cams340[cameraIndex].yaw = -0x4000;
-		cams340[cameraIndex].targetX = scratch.entries[cameraIndex - 5].unk0;
-		cams340[cameraIndex].targetY = scratch.entries[cameraIndex - 5].unk2;
-		cams340[cameraIndex].targetZ = 0.0f;
+	sp2E8[0] = startupFlags;
+	for (var_t4 = 0; var_t4 < 5; stage = &scratch.entries[++var_t4 - 5]) {
+		cams340[var_t4].distance = stage->unk8;
+		cams340[var_t4].pitch = 0x384;
+		cams340[var_t4].yaw = -0x4000;
+		cams340[var_t4].targetX = stage->unk0;
+		cams340[var_t4].targetY = stage->unk2;
+		cams340[var_t4].targetZ = 0.0f;
 	}
 	D_8014ED0C = 0.0f;
 	temp_f0 = cam3CC.distance;
@@ -1121,7 +1107,7 @@ void func_8009811C_A70CC(void) {
 	func_80095F08_A4EB8();
 	func_8000505C_5C5C();
 	func_800050C4_5CC4();
-	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], D_8005BB4C[-D_80031B84_32784]);
+	func_8000DC9C_E89C(D_8005BB48[D_80031B84_32784], ((s32 *)&((u8 *)D_8005BB4C)[-(D_80031B84_32784 * 4)])[0]);
 	func_8000505C_5C5C();
 	osSetTime(D_80068084, D_80068088);
 	setGameplayResolution();
@@ -1132,7 +1118,7 @@ void func_8009811C_A70CC(void) {
 		sp2E8[0] |= 1;
 	}
 	temp_f22 = 0.1;
-	var_f28 = sp2B8;
+	
 	var_s0 = sp31C[0];
 	while (1) {
 	if (var_s0 == 1) {
@@ -1170,7 +1156,7 @@ void func_8009811C_A70CC(void) {
 			} else {
 				D_8014ED2E = temp_a1;
 				if (D_8014ED2C == 1) {
-					D_8014ED2E = temp_a1;
+					D_8014ED2E_Write = temp_a1;
 					func_80014208_14E08(D_8014ED38, (s32) ((1.0 - ((f32) temp_a1 / 16384)) * 500.0), 0x40);
 				}
 			}
@@ -1198,7 +1184,7 @@ void func_8009811C_A70CC(void) {
 					sp320[0] = &cam3CC;
 					D_8014ED2C = 0;
 				} else {
-					sp320[0] = &cams340[D_8014ED30];
+					sp320[0] = &cams340[D_8014ED30_Select];
 					D_8014ED2C = 2;
 				}
 			}
@@ -1447,13 +1433,13 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawText(&D_801423F4_1513A4, 0x80, 8, &D_801423FC_1513AC);
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30 + 1) - 5].unk8 == 0)) {
+				if ((D_8014ED30_Select == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30_Select + 1) - 5].unk8 == 0)) {
 					drawText(&D_8014240C_1513BC, 0x80, 8, &D_80142414_1513C4);
 				} else {
-					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30 + 1);
+					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30_Label + 1);
 				}
 			} else {
-				drawText(&D_80142434_1513E4, 0x80, 8, &D_8014243C_1513EC, D_8014ED30);
+				drawText(&D_80142434_1513E4, 0x80, 8, &D_8014243C_1513EC, D_8014ED30_Label);
 			}
 		} else if ((D_8013D528_14C4D8 != 0) && ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1))) {
 			switch (D_8013D528_14C4D8->unk3) {
@@ -1753,29 +1739,29 @@ void func_8009811C_A70CC(void) {
 		}
 		if ((var_a1 == 1) || (D_8014ED2D == 1)) {
 			if (var_s3 == &cam3B8) {
-				var_f28 = 1.0f;
+				sp2B8 = 1.0f;
 			} else if (var_s3 == &cam32C) {
 				if (var_a1 == 1) {
 					if (D_8014ED2E >= 0x2001) {
 						temp_f2 = D_8014ED2E - 0x2000;
-						var_f28 = temp_f2 / 8192;
+						sp2B8 = temp_f2 / 8192;
 						D_8014ED2E = D_8014ED2E;
 					} else {
-						var_f28 = 0.0f;
+						sp2B8 = 0.0f;
 					}
 				} else if (D_8014ED2E < 0x2000) {
 					temp_f2 = 0x2000 - D_8014ED2E;
-					var_f28 = temp_f2 / 8192;
+					sp2B8 = temp_f2 / 8192;
 					D_8014ED2E = D_8014ED2E;
 				} else {
-					var_f28 = 0.0f;
+					sp2B8 = 0.0f;
 				}
 			}
 			if (D_80052B34->unk1A == 0) {
 				vec2D4.unk0 = D_80052B34->unk0 >> 7;
 				vec2D4.unk2 = -D_80052B34->unk4 >> 7;
-				temp_v1 = (s32) (12.0f * var_f28);
-				vec2D4.unk4 = (s32) (7.0f * var_f28);
+				temp_v1 = (s32) (12.0f * sp2B8);
+				vec2D4.unk4 = (s32) (7.0f * sp2B8);
 				vec2CC.unk0 = 0x4000 - D_80052B34->unk6;
 				vec2CC.unk2 = 0;
 				vec2CC.unk4 = 0;
@@ -1787,18 +1773,18 @@ void func_8009811C_A70CC(void) {
 				func_800039D0_45D0(NULL, &vec2CC, &vec2DC, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-				if ((var_f28 > 0.0f) && ((var_s3 == &cam3B8) || (var_s3 == &cam32C))) {
+				if ((sp2B8 > 0.0f) && ((var_s3 == &cam3B8) || (var_s3 == &cam32C))) {
 					func_80097994_A6944();
 				}
 			} else {
-				temp_v1 = (s32) (var_f28 * 256.0);
+				temp_v1 = (s32) (sp2B8 * 256.0);
 				vec2DC.unk4 = temp_v1;
 				vec2DC.unk2 = temp_v1;
 				vec2DC.unk0 = temp_v1;
 				func_800039D0_45D0(NULL, NULL, &vec2DC, (s32)D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-				if (var_f28 > 0.0f) {
-					func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / var_f28), (s32) ((-D_80052B34->unk4 >> 5) / var_f28), 0, 0x4000 - D_80052B34->unk6);
+				if (sp2B8 > 0.0f) {
+					func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / sp2B8), (s32) ((-D_80052B34->unk4 >> 5) / sp2B8), 0, 0x4000 - D_80052B34->unk6);
 				}
 			}
 		}
@@ -1855,7 +1841,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				var_s0 = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30 + 1) - 5].unk8 == 0)) {
+				if ((D_8014ED30_Select == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30_Select + 1) - 5].unk8 == 0)) {
 					var_s0 = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
 				} else {
 					var_s0 = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
@@ -1950,6 +1936,8 @@ void func_8009811C_A70CC(void) {
 	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_80013324_13F24();
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_8009811C_A70CC.s")
 #endif

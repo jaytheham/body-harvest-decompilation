@@ -4071,4 +4071,8 @@ extern const f64 D_80145160_154110[1];
 extern const f32 D_801451C8_154178[1];
 
 
+extern s16 D_8014ED30_Select;
+extern s16 D_8014ED30_Label;
+extern s16 D_8014ED2E_Write;
+
 #endif /* LIBULTRA_REFERENCE */

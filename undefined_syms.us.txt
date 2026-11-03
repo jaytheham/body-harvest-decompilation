@@ -7042,3 +7042,9 @@ D_802E7C44_Write = D_802E7C44;
 /* Six-byte tree vectors spanning the split word and halfword definitions. */
 D_8013BCCC_Vector = D_8013BCCC_14AC7C;
 D_8013BCD4_Vector = D_8013BCD4_14AC84;
+
+D_8013D50C = D_8013D50C_14C4BC;
+
+D_8014ED30_Select = D_8014ED30;
+D_8014ED30_Label = D_8014ED30;
+D_8014ED2E_Write = D_8014ED2E;
