@@ -1084,7 +1084,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 			} else {
 				animationRate = D_80157600.unk410;
 			}
-			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, *(s32 *)&animationRate);
+			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, animationRate);
 		} else {
 			D_80157A28 = temp_t6;
 			D_80157A28 = D_80157A28 & ~PLAYER_STATE_FLAG_AIMING;
@@ -1612,7 +1612,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			temp_v1_6 = D_80157A28 & PLAYER_STATE_FLAG_DYING;
 		}
 		if (temp_v1_6 == PLAYER_STATE_FLAG_DYING) {
-			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, *(s32 *)&D_80157600.unk410);
+			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, D_80157600.unk410);
 			return;
 		}
 		if ((f64) ((f32) arg0->unk1C / (f32) vehicleTypes[arg0->unk1A].hitPoints) < 0.25) {
@@ -1833,12 +1833,12 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			   (AnimChannelState *) &D_80157600, 0x10, spAC, D_80157600.unk410);
 	} else {
 		if (D_80157600.unk40C == 0x38) {
-			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, *(s32 *)&D_80157600.unk410);
+			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, D_80157600.unk410);
 		}
-		func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, *(s32 *)&D_80157600.unk410);
+		func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, D_80157600.unk410);
 	}
 	if ((arg0->unk20 & 0x1000) && (D_80157A28 & PLAYER_STATE_FLAG_STRUGGLING)) {
-		func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, *(s32 *)&D_80157600.unk410);
+		func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, D_80157600.unk410);
 	}
 	func_800EBA54_FAA04((Unk80052B40 *) arg0, D_80157600.unk40C, (AnimChannelState *) &D_80157600);
 	if (D_80157600.unk40C != 0) {
@@ -2033,7 +2033,7 @@ s32 func_800EF650_FE600(AlienInstance *arg0) {
 			D_80157A48.unk410
 		);
 	} else {
-		func_8000CF4C_DB4C(D_80157A48.unk404, &D_80157A48, 0x10, *(s32 *)&D_80157A48.unk410);
+		func_8000CF4C_DB4C(D_80157A48.unk404, &D_80157A48, 0x10, D_80157A48.unk410);
 	}
 
 	if (D_8013E5AC_14D55C[D_80157A48.unk40C].unk4 & 0x480) {

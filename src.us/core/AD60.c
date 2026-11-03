@@ -1210,98 +1210,72 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 
 #ifdef NON_MATCHING
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
-	f64 temp_f20;
-	f64 temp_f22;
-	f32 sp70;
-	f32 sp6C;
-	f32 sp68;
-	f32 sp64;
-	f32 sp60;
-	f32 sp5C;
-	f32 sp50;
-	f32 sp4C;
-	f32 sp48;
-	f32 temp_f24;
-	s32 temp_t6;
-	s32 var_s0;
-	AnimChannelState *temp_a1;
+    f32 targetRotation[3];
+    f32 rotation[3];
+    f32 rotationCopy[3];
+    f32 z, x, y;
+    f32 elapsed, duration, fraction;
+    f32 scale;
+    f64 units, degrees;
+    s32 i;
+    AnimChannelState *channel;
 
-	var_s0 = 0;
-	if (arg2 != 0) {
-		temp_f24 = 4096.0f;
-		temp_f22 = 4096.0;
-		temp_f20 = D_80037610_38210_R;
-		do {
-			temp_a1 = &arg1[var_s0];
-			if (temp_a1->unk14 != 0) {
-				f32 temp_f0;
-				f32 temp_f10;
-				f32 temp_f10_2;
-				f32 temp_f12;
-				f32 temp_f14;
-				f32 temp_f16;
-				f32 temp_f18;
-				f32 temp_f2;
-				f32 temp_f2_2;
-				f32 temp_f4;
-				f32 temp_f6;
-				f32 temp_f6_2;
-
-				temp_f14 = temp_a1->unk1C;
-				temp_f16 = temp_a1->unk20;
-				temp_f18 = arg3 / (temp_f16 - temp_f14);
-				temp_f10 = (f32)(((f64)(f32)temp_a1->unk2A * temp_f20) / temp_f22);
-				sp68 = temp_f10;
-				temp_f6 = (f32)(((f64)(f32)temp_a1->unk2C * temp_f20) / temp_f22);
-				sp6C = temp_f6;
-				sp70 = (f32)(((f64)(f32)temp_a1->unk2E * temp_f20) / temp_f22);
-				temp_f4 = (f32)(((f64)(f32)temp_a1->unk0 * temp_f20) / temp_f22);
-				sp5C = temp_f4;
-				sp48 = temp_f10;
-				temp_f10_2 = (f32)(((f64)(f32)temp_a1->unk2 * temp_f20) / temp_f22);
-				sp60 = temp_f10_2;
-				sp4C = temp_f6;
-				sp50 = sp70;
-				sp5C = ((sp48 - temp_f4) * temp_f18) + temp_f4;
-				temp_f6_2 = (f32)(((f64)(f32)temp_a1->unk4 * temp_f20) / temp_f22);
-				sp60 = ((sp4C - temp_f10_2) * temp_f18) + temp_f10_2;
-				sp64 = temp_f6_2;
-				sp64 = ((sp50 - temp_f6_2) * temp_f18) + temp_f6_2;
-				temp_f2 = temp_a1->unk8;
-				temp_f12 = temp_a1->unkC;
-				temp_f0 = temp_a1->unk10;
-				temp_a1->unk0 = (s16)(s32)((f64)(sp5C * temp_f24) / temp_f20);
-				temp_a1->unk2 = (s16)(s32)((f64)(sp60 * temp_f24) / temp_f20);
-				temp_a1->unk4 = (s16)(s32)((f64)(sp64 * temp_f24) / temp_f20);
-				temp_a1->unk8 = (((f32)temp_a1->unk24 - temp_f2) * temp_f18) + temp_f2;
-				temp_f2_2 = (f32)temp_a1->unk28;
-				temp_a1->unkC = (((f32)temp_a1->unk26 - temp_f12) * temp_f18) + temp_f12;
-				temp_a1->unk1C = temp_a1->unk1C + arg3;
-				temp_a1->unk10 = ((temp_f2_2 - temp_f0) * temp_f18) + temp_f0;
-				if (temp_a1->unk20 <= temp_a1->unk1C) {
-					temp_t6 = temp_a1->unk18 + 1;
-					temp_a1->unk8 = (f32)temp_a1->unk24;
-					temp_a1->unk10 = temp_f2_2;
-					temp_a1->unk18 = temp_t6;
-					temp_a1->unk0 = (s16)temp_a1->unk2A;
-					temp_a1->unk2 = (s16)temp_a1->unk2C;
-					temp_a1->unkC = (f32)temp_a1->unk26;
-					temp_a1->unk4 = (s16)temp_a1->unk2E;
-					if (temp_t6 == temp_a1->unk14) {
-						temp_a1->unk14 = 0;
-						temp_a1->unk18 = 0;
-						if (var_s0 == 0) {
-							arg0->unkE50 = 0;
-						}
-					} else {
-						func_8000CD54_D954(arg0, temp_a1, (u8)var_s0);
-					}
-				}
-			}
-			var_s0++;
-			var_s0 &= 0xFF;
-		} while (arg2 != var_s0);
-	}
+    i = 0;
+    if (arg2 != 0) {
+        scale = 4096.0f;
+        units = 4096.0;
+        degrees = D_80037610_38210_R;
+        do {
+            channel = &arg1[i];
+            if (channel->unk14 != 0) {
+                elapsed = channel->unk1C;
+                duration = channel->unk20;
+                fraction = arg3 / (duration - elapsed);
+                targetRotation[0] = ((f32)channel->unk2A * degrees) / units;
+                targetRotation[1] = ((f32)channel->unk2C * degrees) / units;
+                targetRotation[2] = ((f32)channel->unk2E * degrees) / units;
+                rotation[0] = ((f32)channel->unk0 * degrees) / units;
+                rotationCopy[0] = targetRotation[0];
+                rotation[1] = ((f32)channel->unk2 * degrees) / units;
+                rotationCopy[1] = targetRotation[1];
+                rotationCopy[2] = targetRotation[2];
+                rotation[2] = ((f32)channel->unk4 * degrees) / units;
+                rotation[0] = ((rotationCopy[0] - rotation[0]) * fraction) + rotation[0];
+                rotation[1] = ((rotationCopy[1] - rotation[1]) * fraction) + rotation[1];
+                rotation[2] = ((rotationCopy[2] - rotation[2]) * fraction) + rotation[2];
+                x = channel->unk8;
+                y = channel->unkC;
+                z = channel->unk10;
+                channel->unk0 = (rotation[0] * scale) / degrees;
+                channel->unk2 = (rotation[1] * scale) / degrees;
+                channel->unk4 = (rotation[2] * scale) / degrees;
+                channel->unk8 = (((f32)channel->unk24 - x) * fraction) + x;
+                channel->unkC = (((f32)channel->unk26 - y) * fraction) + y;
+                x = channel->unk28;
+                channel->unk10 = ((x - z) * fraction) + z;
+                channel->unk1C += arg3;
+                if (channel->unk20 <= channel->unk1C) {
+                    channel->unk8 = channel->unk24;
+                    channel->unk10 = x;
+                    channel->unk18++;
+                    channel->unk0 = channel->unk2A;
+                    channel->unk2 = channel->unk2C;
+                    channel->unkC = channel->unk26;
+                    channel->unk4 = channel->unk2E;
+                    if (channel->unk14 == channel->unk18) {
+                        channel->unk14 = 0;
+                        channel->unk18 = 0;
+                        if (i == 0) {
+                            arg0->unkE50 = 0;
+                        }
+                    } else {
+                        func_8000CD54_D954(arg0, channel, i);
+                    }
+                }
+            }
+            i = (i + 1) & 0xFF;
+        } while (arg2 != i);
+    }
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
