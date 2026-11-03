@@ -1032,11 +1032,11 @@ void func_800EC468_FB418(void) { D_80157A28 &= ~PLAYER_STATE_FLAG_WARPING; }
 #ifdef NON_MATCHING
 void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 	f32 animationRate;
-	s32 padBC;
 	s16 spBA;
+	s32 padBC;
 	f32 spB0;
-	s32 spA8;
 	f32 temp_f0;
+	s32 spA8;
 	f32 temp_f16;
 	f32 var_f2;
 	f32 var_f12;
@@ -1047,7 +1047,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 	Vec3f sp80;
 	Vec3f sp74;
 	s32 var_a2;
-	s32 var_a2_2;
+	s32 statePadding;
 	f32 sp68;
 	s16 savedAngle[2];
 	s32 var_t0;
@@ -1102,11 +1102,11 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 
-			var_a2_2 = D_80157A28;
+			var_a2 = D_80157A28;
 
 			if ((arg1->button & 0x20) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
 				D_80157A28 |= PLAYER_STATE_FLAG_COMM_LINK;
-				var_a2_2 = D_80157A28;
+				var_a2 = D_80157A28;
 			} else if ((arg1->button & 0x10) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
 				D_80157A28 |= PLAYER_STATE_FLAG_AIMING;
 				func_800EABE0_F9B90(arg0);
@@ -1202,7 +1202,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 						}
 					}
 				}
-				var_a2_2 = D_80157A28;
+				var_a2 = D_80157A28;
 			} else if ((arg1->button & 0x2000) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
 				sp80.x = (f32)((s16)D_80159020->unk0 / 4);
 				sp80.y = (f32)((s16)D_80159020->unk2 / 4);
@@ -1220,11 +1220,11 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					sp68 = temp_f0;
 					func_800EBC94_FAC44(arg0, arg1);
 					if ((D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 0x480) == 0) {
-						func_800EB534_FA4E4(&D_80157600, ((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC].unk04, 0, temp_f0);
+						func_800EB534_FA4E4(&D_80157600, ((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC].unk04, 0, sp68);
 					}
 					D_80157A28 &= ~PLAYER_STATE_FLAG_MOVING;
 				}
-				var_a2_2 = D_80157A28;
+				var_a2 = D_80157A28;
 			} else {
 				D_80157A28 |= PLAYER_STATE_FLAG_MOVING;
 				arg0->unk22 = 0;
@@ -1236,7 +1236,6 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 
 				var_t0 = (s16)(func_80003824_4424((f32)arg1->stick_x, (f32)-arg1->stick_y) - D_80157A40);
 				D_8013E5AC_14D55C[16].unk10 = (s32)var_t0;
-				temp_f16 = sp90;
 
 				if (D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x480) {
 					savedAngle[0] = var_t0;
@@ -1253,7 +1252,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 						D_8013E5AC_14D55C[16].unk10 = var_t0;
 					} else {
 						savedAngle[0] = var_t0;
-						func_800EA8F8_F98A8(arg0, (s16)(func_80003824_4424((f32)arg1->stick_x, (f32)-arg1->stick_y) - D_80157A40), temp_f16);
+						func_800EA8F8_F98A8(arg0, (s16)(func_80003824_4424((f32)arg1->stick_x, (f32)-arg1->stick_y) - D_80157A40), sp90);
 						var_t0 = savedAngle[0];
 					}
 				}
@@ -1306,28 +1305,25 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					func_800FB430_10A3E0(arg0, 20.0f);
 				}
 
-				var_a2_2 = D_80157A28;
-				if (((var_a2_2 & 4) == 4) && (D_80157A0C != 5)) {
+				var_a2 = D_80157A28;
+				if (((var_a2 & 4) == 4) && (D_80157A0C != 5)) {
 					if (D_80157A0C == 2) {
 						func_800FB430_10A3E0(arg0, 5.0f);
 						func_80137130_1460E0(arg0, (s16)((D_80052A8C & 1) + 0xA0), arg0->unk0, arg0->unk2, arg0->unk4);
 					} else {
 						func_800FB430_10A3E0(arg0, 0.0f);
 					}
-					var_a2_2 = D_80157A28;
+					var_a2 = D_80157A28;
 				}
 			}
 
-			func_800137F0_143F0(var_a2_2);
+			func_800137F0_143F0(var_a2);
 			func_800ED78C_FC73C(arg0, arg1);
 		}
 	}
 
 	arg0->unk6 = arg0->unkE;
 }
-
-
-
 
 #else
 #if defined(VERSION_US)
