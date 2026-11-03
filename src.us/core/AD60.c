@@ -504,7 +504,7 @@ void func_8000AFDC_BBDC(void)
 #ifdef NON_MATCHING
 void func_8000B044_BC44(void) {
 	s16 i;
-	s32 r, g, b;
+	u32 r, g, b;
 	s16 x_cursor, y_cursor;
 	s32 flag_78, flag_74;
 	s16 clip_x_min, clip_x_max, clip_y_min, clip_y_max;
@@ -514,10 +514,8 @@ void func_8000B044_BC44(void) {
 	s16 char_idx;
 	s16 x_pos, y_pos;
 	s16 glyph_y_off;
+	s32 glyph_y;
 	s8 *glyph_data;
-	s16 glyph_advance;
-	s32 xh_i, yh_i, xl_i, yl_i;
-	s32 dsdx, dtdy;
 
 	alpha = 0xFF;
 
@@ -552,57 +550,59 @@ void func_8000B044_BC44(void) {
 	text_ptr = (u8 *)D_80052BE0;
 	i = 0;
 
-	if (D_80053BE0 <= 0) {
-		goto epilogue;
-	}
-
-	do {
+	if ((u16)D_80053BE0 > 0) {
+		do {
 		char_raw = text_ptr[i];
 		if (char_raw & 0x80) {
-			char_idx = (s16)((s16)char_raw + 0x130);
+			char_idx = (s16)(char_raw + 0x130);
 		} else {
-			char_idx = (s16)((s16)char_raw + 0x130);
+			char_idx = (s16)(char_raw + 0x130);
 		}
 
 		/* Space character */
 		if (char_idx == 0x150) {
 			x_cursor = (s16)(x_cursor + D_800319C1_325C1);
-			i = (s16)(i + 1);
 			continue;
 		}
 
 		/* Control codes */
-		if (char_raw < 0x20) {
-			s16 b0, b1;
+		if (char_raw >= 0x20) {
+
+		/* Printable character */
+		if (char_raw >= 0xC0) {
+			char_idx = (s16)(D_80031650_32250[char_raw - 0xC0] + 0x110);
+		}
+
+		glyph_data = &D_80031720_32320[char_idx * 2];
+		glyph_y_off = glyph_data[0];
+
+		x_pos = (s16)(x_cursor + D_80053BE2);
+		glyph_y = y_cursor + glyph_y_off;
+		y_pos = (s16)(glyph_y + D_80053BE4);
+
+		/* Bounds check */
+		if ((x_pos + 16) < clip_x_min || clip_x_max < x_pos ||
+			(y_pos + 16) < clip_y_min || clip_y_max < y_pos) {
+			x_cursor = (s16)(x_cursor + glyph_data[1]);
+			continue;
+		}
+
+		/* Render character */
+		gDPLoadTextureBlock_4b(D_8005BB2C++, &D_801F1210[char_idx * 128], G_IM_FMT_CI, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+
+		/* Compute texture rectangle coordinates (10.2 fixed point) */
+		gSPTextureRectangle(D_8005BB2C++,
+            (x_cursor * D_80053BE8 + D_80053BE2) * 4,
+            ((s16)glyph_y * D_80053BEC + D_80053BE4) * 4,
+            ((x_cursor + 16) * D_80053BE8 + D_80053BE2) * 4,
+            (((s16)glyph_y + 16) * D_80053BEC + D_80053BE4) * 4,
+            G_TX_RENDERTILE, 0, 0, 1024.0f / D_80053BE8, 1024.0f / D_80053BEC);
+
+		gDPPipeSync(D_8005BB2C++);
+
+		x_cursor = (s16)(x_cursor + glyph_data[1]);
+		} else {
 			switch (char_raw) {
-			case 1: /* gray */
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x96, 0x96, 0x96, 0xFF);
-				r = 0x96; g = 0x96; b = 0x96;
-				break;
-			case 2: /* light gray */
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0xE6, 0xE6, 0xFF);
-				r = 0xE6; g = 0xE6; b = 0xE6;
-				break;
-			case 3: /* green */
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0xE6, 0, 0xFF);
-				r = 0; g = 0xE6; b = 0;
-				break;
-			case 4: /* red */
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0, 0, 0xFF);
-				r = 0xE6; g = 0; b = 0;
-				break;
-			case 5: /* yellow */
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xDC, 0xDC, 0, 0xFF);
-				r = 0xDC; g = 0xDC; b = 0;
-				break;
-			case 6: /* blue */
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0xDC, 0xFF);
-				r = 0; g = 0; b = 0xDC;
-				break;
-			case 7: case 8: case 9:
-			case 11: case 12: case 13: case 14: case 15:
-			case 16: case 17:
-				break;
 			case 10: { /* newline + alignment */
 				s16 width;
 				s16 a1_idx;
@@ -629,103 +629,13 @@ void func_8000B044_BC44(void) {
 				y_cursor = (s16)(y_cursor + 0x14);
 				break;
 			}
-			case 18: /* reset scroll counter */
-				D_80053C88 = 0;
-				break;
-			case 19: { /* color fade based on timer */
-				s32 counter;
-				gDPPipeSync(D_8005BB2C++);
-				gDPTileSync(D_8005BB2C++);
-				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-				if (D_80053C98 != 0) {
-					counter = 0x10;
-				} else {
-					counter = (D_80052AD8 - D_80053C8C) - D_80053C88;
-				}
-				if (counter < 0) {
-					r = D_80053BF1; g = D_80053BF3; b = D_80053BF5;
-					alpha = (u8)D_80053BF6;
-				} else if (counter < 0x10) {
-					r = D_80053BF9; g = D_80053BFB; b = D_80053BFD;
-					alpha = (u8)D_80053BFE;
-				} else {
-					/* interpolated fade */
-					f32 t;
-					s32 fade_alpha;
-					s32 r0, g0, b0, a0_val;
-					s32 r1, g1, b1, a1_val;
-					t = ((f32)(0xFF - (counter << 4)) / 255.0f) * D_80037600_38200_R;
-					r0 = D_80053BF9; g0 = D_80053BFB; b0 = D_80053BFD; a0_val = (s32)(u8)D_80053BFE;
-					r1 = D_80053BF1; g1 = D_80053BF3; b1 = D_80053BF5; a1_val = (s32)(u8)D_80053BF6;
-					r = (s32)((r0 - (s16)D_80053BF2) * t + r0) & 0xFF;
-					g = (s32)((g0 - (s16)D_80053BF2) * t + g0) & 0xFF;
-					b = (s32)((b0 - (s16)D_80053BF2) * t + b0) & 0xFF;
-					alpha = (u8)a0_val;
-				}
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
-				D_80053C88 = (s16)(D_80053C88 + 4);
-				break;
-			}
-			case 20: { /* set x_cursor and y_cursor from next 2 bytes */
-				b0 = (s16)(s8)(u8)text_ptr[i + 1];
-				if ((u8)text_ptr[i + 1] & 0x80) {
-					flag_78 = 0;
-				}
-				x_cursor = (s16)(b0 * 4);
-				b1 = (s16)(s8)(u8)text_ptr[i + 2];
-				y_cursor = (s16)(b1 * 4);
-				i = (s16)(i + 2);
-				break;
-			}
-			case 21: { /* set RGB from next 3 bytes */
-				r = (u8)text_ptr[i + 1];
-				g = (u8)text_ptr[i + 2];
-				b = (u8)text_ptr[i + 3];
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
-				i = (s16)(i + 3);
-				break;
-			}
-			case 22: { /* set alpha from next 1 byte */
-				alpha = (u8)text_ptr[i + 1];
-				gDPPipeSync(D_8005BB2C++);
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
-				i = (s16)(i + 1);
-				break;
-			}
-			case 23: { /* call func, store in D_80053BE4 */
-				D_80053BE4 = func_8000A43C_B03C((s8 *)text_ptr + (s16)(i + 1));
-				i = (s16)(i + 1);
-				break;
-			}
-			case 24: { /* set scissor rect from next 4 bytes */
-				s32 sx0, sy0, sx1, sy1;
-				sx0 = (u8)text_ptr[i + 1];
-				sy0 = (u8)text_ptr[i + 2];
-				sx1 = (u8)text_ptr[i + 3];
-				sy1 = (u8)text_ptr[i + 4];
-				gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, sx0 * 4, sy0 * 4, sx1 * 4, sy1 * 4);
-				clip_x_min = (s16)(sx0 * 4);
-				clip_y_min = (s16)(sy0 * 4);
-				clip_x_max = (s16)(sx1 * 4);
-				clip_y_max = (s16)(sy1 * 4);
-				i = (s16)(i + 4);
-				break;
-			}
-			case 25: { /* call func, store in D_80053BE2 */
-				D_80053BE2 = func_8000A43C_B03C((s8 *)text_ptr + (s16)(i + 1));
-				i = (s16)(i + 1);
-				break;
-			}
 			case 26: { /* newline y-scroll + center-align */
 				s16 width;
 				s16 span;
 				s16 diff;
 
-				y_cursor = (s16)((s8)(u8)text_ptr[i + 1] * 4);
+				y_cursor = text_ptr[++i] * 4;
 				flag_78 = 1;
-				i = (s16)(i + 1);
 
 				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
 				span = (s16)(D_80053C96 - D_80053C94);
@@ -737,11 +647,113 @@ void func_8000B044_BC44(void) {
 				}
 				break;
 			}
+			case 29: { /* newline y-scroll + right-align */
+				s16 width;
+				y_cursor = text_ptr[++i] * 4;
+				flag_74 = 1;
+				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
+				x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
+				break;
+			}
+						case 20:
+                x_cursor = text_ptr[++i];
+                flag_78 = 0;
+                if (x_cursor & 0x80) { x_cursor -= 0x100; }
+                x_cursor *= 4;
+                y_cursor = text_ptr[++i];
+                if (y_cursor & 0x80) { y_cursor -= 0x100; }
+                y_cursor *= 4;
+                break;
+			case 18: /* reset scroll counter */
+				D_80053C88 = 0;
+				break;
+			case 1: /* gray */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x96, 0x96, 0x96, 0xFF);
+				r = 0x96; g = 0x96; b = 0x96;
+				break;
+			case 2: /* light gray */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0xE6, 0xE6, 0xFF);
+				r = 0xE6; g = 0xE6; b = 0xE6;
+				break;
+			case 3: /* green */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0xE6, 0, 0xFF);
+				r = 0; g = 0xE6; b = 0;
+				break;
+			case 4: /* red */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0, 0, 0xFF);
+				r = 0xE6; g = 0; b = 0;
+				break;
+			case 5: /* yellow */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xDC, 0xDC, 0, 0xFF);
+				r = 0xDC; g = 0xDC; b = 0;
+				break;
+			case 6: /* blue */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0xDC, 0xFF);
+				r = 0; g = 0; b = 0xDC;
+				break;
+			case 19: { /* color fade based on timer */
+				s32 counter;
+				gDPPipeSync(D_8005BB2C++);
+				if (D_80053C98 != 0) {
+					counter = 0x10;
+				} else {
+					counter = (D_80052AD8 - D_80053C8C) - D_80053C88;
+				}
+				if (counter < 0) {
+					r = D_80053BF1; g = D_80053BF3; b = D_80053BF5;
+					alpha = (u8)D_80053BF6;
+				} else if (counter >= 0x10) {
+					r = D_80053BF9; g = D_80053BFB; b = D_80053BFD;
+					alpha = (u8)D_80053BFE;
+				} else {
+					f64 fraction;
+                                        fraction = (f32)(u32)(u8)(0xFF - (counter << 4)) / D_80037600_38200_R;
+                                        r = (u32)(D_80053BF8 - (f32)(D_80053BF8 - D_80053BF0) * fraction) & 0xFF;
+                                        g = (u32)(D_80053BFA - (f32)(D_80053BFA - D_80053BF2) * fraction) & 0xFF;
+                                        b = (u32)(D_80053BFC - (f32)(D_80053BFC - D_80053BF4) * fraction) & 0xFF;
+                                        alpha = (u32)(D_80053BFE - (f32)(D_80053BFE - D_80053BF6) * fraction);
+
+				}
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
+				D_80053C88 = (s16)(D_80053C88 + 4);
+				break;
+			}
+			case 21: { /* set RGB from next 3 bytes */
+				r = text_ptr[++i];
+				g = text_ptr[++i];
+				b = text_ptr[++i];
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
+				break;
+			}
+			case 22: { /* set alpha from next 1 byte */
+				alpha = text_ptr[++i];
+				gDPPipeSync(D_8005BB2C++);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
+				break;
+			}
+			case 24:
+                clip_x_min = text_ptr[++i] * 4;
+                clip_y_min = text_ptr[++i] * 4;
+                clip_x_max = text_ptr[++i] * 4;
+                clip_y_max = text_ptr[++i] * 4;
+                gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, clip_x_min, clip_y_min, clip_x_max, clip_y_max);
+                break;
+			case 25: { /* call func, store in D_80053BE2 */
+				D_80053BE2 = func_8000A43C_B03C((s8 *)&text_ptr[++i]);
+				i = (s16)(i + 1);
+				break;
+			}
+			case 23: { /* call func, store in D_80053BE4 */
+				D_80053BE4 = func_8000A43C_B03C((s8 *)&text_ptr[++i]);
+				i = (s16)(i + 1);
+				break;
+			}
 			case 27: { /* call func, scale x */
 				s32 val;
-				val = func_8000A43C_B03C((s8 *)text_ptr + (s16)(i + 1));
-				D_80053BE8 = (f32)((f64)val * (1.0 / 32.0));
-				if ((f64)D_80053BE8 < D_80037580_38180_R) {
+				val = func_8000A43C_B03C((s8 *)&text_ptr[++i]);
+				D_80053BE8 = (f32)((f64)val * (1.0 / 1024.0));
+				if ((f64)D_80053BE8 < 0.01) {
 					D_80053BE8 = D_80037578_38178_R;
 				}
 				i = (s16)(i + 1);
@@ -749,75 +761,25 @@ void func_8000B044_BC44(void) {
 			}
 			case 28: { /* call func, scale y */
 				s32 val;
-				val = func_8000A43C_B03C((s8 *)text_ptr + (s16)(i + 1));
-				D_80053BEC = (f32)((f64)val * (1.0 / 32.0));
-				if ((f64)D_80053BEC < D_80037580_38180_R) {
+				val = func_8000A43C_B03C((s8 *)&text_ptr[++i]);
+				D_80053BEC = (f32)((f64)val * (1.0 / 1024.0));
+				if ((f64)D_80053BEC < 0.01) {
 					D_80053BEC = D_80037578_38178_R;
 				}
 				i = (s16)(i + 1);
 				break;
 			}
-			case 29: { /* newline y-scroll + right-align */
-				s16 width;
-				y_cursor = (s16)((s8)(u8)text_ptr[i + 1] * 4);
-				flag_74 = 1;
-				i = (s16)(i + 1);
-				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
-				x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
+			case 7: case 8: case 9:
+			case 11: case 12: case 13: case 14: case 15:
+			case 16: case 17:
 				break;
-			}
-			}
-			i = (s16)(i + 1);
+}
 			continue;
+
 		}
+		} while (++i < (u16)D_80053BE0);
+	}
 
-		/* Printable character */
-		if (char_raw >= 0xC0) {
-			char_idx = (s16)(D_800314D0_320D0[char_raw] + 0x110);
-		}
-
-		glyph_data = (s8 *)&D_80031720_32320[char_idx * 2];
-		glyph_y_off = glyph_data[0];
-		glyph_advance = glyph_data[1];
-
-		x_pos = (s16)(x_cursor + D_80053BE2);
-		y_pos = (s16)(y_cursor + glyph_y_off + D_80053BE4);
-
-		/* Bounds check */
-		if ((s16)(x_pos + 16) < clip_x_min || clip_x_max < x_pos ||
-			(s16)(y_pos + 16) < clip_y_min || clip_y_max < y_pos) {
-			x_cursor = (s16)(x_cursor + glyph_advance);
-			i = (s16)(i + 1);
-			continue;
-		}
-
-		/* Render character */
-		gDPLoadTextureBlock_4b(D_8005BB2C++, D_801F1210 + char_idx * 128, G_IM_FMT_CI, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-
-		/* Compute texture rectangle coordinates (10.2 fixed point) */
-		xh_i = (s32)(((x_cursor + 16) * D_80053BE8 + D_80053BE2) * 4.0f);
-		yh_i = (s32)((y_pos + 16) * D_80053BEC * 4.0f);
-		xl_i = (s32)((x_cursor * D_80053BE8 + D_80053BE2) * 4.0f);
-		yl_i = (s32)(y_pos * D_80053BEC * 4.0f);
-		dsdx = (s32)(1024.0f / D_80053BE8);
-		dtdy = (s32)(1024.0f / D_80053BEC);
-
-		gSPTextureRectangle(D_8005BB2C++, xl_i, yl_i, xh_i, yh_i, G_TX_RENDERTILE, 0, 0, dsdx, dtdy);
-
-		gDPPipeSync(D_8005BB2C++);
-		gDPTileSync(D_8005BB2C++);
-
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_IA16);
-		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
-
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
-
-		x_cursor = (s16)(x_cursor + glyph_advance);
-		i = (s16)(i + 1);
-		continue;
-	} while (i < D_80053BE0);
-
-epilogue:
 	/* Restore render state */
 	{
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
