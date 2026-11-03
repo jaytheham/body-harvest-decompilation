@@ -2275,7 +2275,7 @@ extern u16 D_8014FDC8;
 extern u8 D_8014FDD0[];
 extern u8 D_80151DD0; // state tracker for effects used by human meter/game over and black adam death
 extern TileRing D_80151DD8;
-extern s8 D_8015273E;
+extern u8 D_8015273E;
 extern u8 D_80152740[];
 extern s16 D_80152B7C;
 extern Unk80152B80 D_80152B80[15]; /* particle/effect array */
