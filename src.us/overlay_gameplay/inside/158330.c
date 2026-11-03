@@ -8028,7 +8028,7 @@ void func_80074D98_15CE58(s32 arg0) {
 // AI - Renders 3D room objects with visibility culling and texture offsets
 #ifdef NON_MATCHING
 void func_80074FF0_15D0B0(void) {
-	s32 pad;
+	s32 cameraZ;
 	f64 radiusScale = 1.5;
 	f64 temp_f20;
 	u8 objIdx;
@@ -8068,7 +8068,7 @@ void func_80074FF0_15D0B0(void) {
 					(u16) (u32) ((f64) halfDim * radiusScale),
 					(s32) D_8008DDF4_175EB4,
 					(s32) D_8008DDF8_175EB8,
-					(s32) D_8008DDFC_175EBC,
+					(cameraZ = (s32)(s64)((s32)D_8008DDFC_175EBC)),
 					(u16) (s32) (((f64) (D_8008DDF0_175EB0 * angleScale)) / temp_f20),
 					0x238E
 				)) {
