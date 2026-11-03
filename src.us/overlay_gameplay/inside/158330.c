@@ -8026,6 +8026,7 @@ void func_80074D98_15CE58(s32 arg0) {
 }
 
 // AI - Renders 3D room objects with visibility culling and texture offsets
+#ifdef NON_MATCHING
 void func_80074FF0_15D0B0(void) {
 	s32 pad;
 	f64 radiusScale = 1.5;
@@ -8129,11 +8130,14 @@ void func_80074FF0_15D0B0(void) {
 			}
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s")
+#endif
 
-#ifdef NON_MATCHING
 // AI - Main room renderer: floor scan direction + object rendering
+#ifdef NON_MATCHING
 void func_8007568C_15D74C(void) {
-	s32 padHigh0;
+	s32 effectKind;
 	s32 padHigh1;
 	f64 radiusScale = 1.5;
 	f64 temp_f20;
@@ -8152,7 +8156,7 @@ void func_8007568C_15D74C(void) {
 	s32 padPosition0;
 	s32 padPosition1;
 	s16 scale[6];
-	union { s32 effectId; s32 textureOffset; } scratch;
+	s32 scratch;
 	Unk8008DED0Entry *entry2;
 
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
@@ -8176,7 +8180,7 @@ void func_8007568C_15D74C(void) {
 		} else {
 			func_80074998_15CA58();
 		}
-	} else if (D_8008DDF0_175EB0 < D_800A4AB8_18CB78[0]) {
+	} else if (D_8008DDF0_175EB0 < 315.0f) {
 		func_80074A0C_15CACC();
 	} else {
 		func_80074D18_15CDD8();
@@ -8184,15 +8188,8 @@ void func_8007568C_15D74C(void) {
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-	entry = D_800E66A8;
-	if (D_800E668C > 0) {
-		if (radiusScale) {}
-		if (halfDivisor && halfDivisor) {}
-		if (angleScale) {}
-		if (positionScale) {}
-		temp_f20 = D_800A4AC0_18CB80.value;
-		i = 0;
-		do {
+	for (i = 0; i < D_800E668C; i++) {
+		temp_f20 = 180.0;
 			entry = &D_800E66A8[i];
 			objIdx = entry->unk0;
 
@@ -8223,8 +8220,8 @@ void func_8007568C_15D74C(void) {
 						D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
 						if (objIdx == 0x1E) {
 							gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-							scratch.textureOffset = D_800E65C4[(entry->unk2C & 0xFC) >> 2];
-							gSPSegment(D_8005BB2C++, 6, &D_800A5720[scratch.textureOffset * 2]);
+							scratch = D_800E65C4[(entry->unk2C & 0xFC) >> 2];
+							gSPSegment(D_8005BB2C++, 6, &D_800A5720[scratch * 2]);
 
 							func_800773F4_15F4B4(
 								variant,
@@ -8246,8 +8243,8 @@ void func_8007568C_15D74C(void) {
 							scale[0] = 0x40;
 							scale[2] = 0x40;
 							position[2] = (entry->unk6 - 0x60) << 0x10;
-							position[1] = entry->unk4 << 0x10;
 							scale[1] = 0x40;
+							position[1] = entry->unk4 << 0x10;
 							rotation[3] = (s16)(s32)(((f64)(entry->unk18 * angleScale)) / temp_f20);
 							rotation[4] = (s16)(s32)(((f64)(entry->unk1C * angleScale)) / temp_f20);
 							rotation[1] = 0;
@@ -8256,8 +8253,8 @@ void func_8007568C_15D74C(void) {
 							scale[5] = 0x100;
 							rotation[5] = (s16)(s32)(((f64)(entry->unk14 * angleScale)) / temp_f20);
 							position[3] = (s32)(entry->unk20 * positionScale);
-							scale[4] = 0x100;
 							position[4] = (s32)(entry->unk24 * positionScale);
+							scale[4] = 0x100;
 							position[5] = (s32)(entry->unk28 * positionScale);
 							func_80076A58_15EB18(1, rotation, position, scale, variant);
 						} else if (((D_800E65BC[objIdx].unk40 & 0x04000000) && (entry->unk2E & 1)) ||
@@ -8314,8 +8311,6 @@ void func_8007568C_15D74C(void) {
 				}
 			}
 
-			i += 1;
-		} while (i < D_800E668C);
 	}
 
 	if (D_800E65F0 == 5) {
@@ -8323,9 +8318,10 @@ void func_8007568C_15D74C(void) {
 	}
 
 	if (D_800E65A8 & 0x10) {
-		scratch.effectId = ((s32)(D_800E664E & 0xFC) >> 2);
-		if ((D_800E664E & 3) == 2) {
-			entry2 = &D_8008DED0_175F90[scratch.effectId];
+		scratch = ((s32)(D_800E664E & 0xFC) >> 2);
+		effectKind = D_800E664E & 3;
+		if (effectKind == 2) {
+			entry2 = &D_8008DED0_175F90[scratch];
 			if (entry2->unk8 != 0) {
 				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 
@@ -8335,12 +8331,12 @@ void func_8007568C_15D74C(void) {
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 			} else {
-				func_8008B53C_1735FC((s16)(s32)D_800E6650.x, (s16)(s32)D_800E6650.y, (s16)(s32)D_800E6650.z, 0x28, scratch.effectId);
+				func_8008B53C_1735FC((s16)(s32)D_800E6650.x, (s16)(s32)D_800E6650.y, (s16)(s32)D_800E6650.z, 0x28, scratch);
 			}
 		} else {
 
 
-			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][scratch.effectId], (s32)(D_800E6650.x * 65536.0f),
+			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][scratch], (s32)(D_800E6650.x * 65536.0f),
 				(s32)(D_800E6650.y * 65536.0f), (s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, D_8005BB38++, 1, 0x40);
 		}
 
