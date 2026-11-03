@@ -1,9 +1,6 @@
 .late_rodata
 .late_rodata_alignment 8
 
-dlabel D_80144468_153418
-.double 3.141592654
-
 dlabel D_80144470_153420
 .double 180.0
 

@@ -871,22 +871,21 @@ void func_800EBD9C_FAD4C(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
-	f32 cosYaw;
+	s32 x;
 	s16 y;
 	s16 xOff;
 	s16 yOff;
 	s16 zOff;
 	s16 rotatedX;
 	s16 z;
-	s32 deltaX;
-	s32 deltaZ;
-	f32 temp_f0;
+	s16 deltaX;
+	s16 deltaZ;
+	f32 cosYaw;
+	f32 trigValue;
 
 	D_80048188 = 1;
 	D_8004818C = 1;
-
 
 	D_801575E0.unk0 = 0;
 	D_801575E0.unk4 = 0;
@@ -895,34 +894,28 @@ void func_800EBE74_FAE24(s16 arg0, s16 arg1, s16 arg2, VehicleInstance *arg3) {
 	yOff = vehicleTypes[vehicleInstances[arg1].unk1A].unk5F;
 	zOff = vehicleTypes[vehicleInstances[arg1].unk1A].unk60;
 
-	temp_f0 = cosf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
+	trigValue = cosf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
 
-	rotatedX = (s16) (s32) (((f32)xOff * temp_f0) - (sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0)) * (f32)zOff));
+	rotatedX = (s32) ((xOff * trigValue) - (sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0)) * zOff));
 
-	temp_f0 = sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0)); if (D_801575E0.unk12) {}
+	trigValue = sinf((f32) (( (f32) vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
+	if (D_801575E0.unk12) {}
 	cosYaw = cosf((f32)(((f32)vehicleInstances[arg1].unk6 * 3.141592654) / 32768.0));
 
-	D_801575E0.unk6 = vehicleInstances[arg1].unk0 + rotatedX;
+	x = (s16)(vehicleInstances[arg1].unk0 + rotatedX);
+	D_801575E0.unk6 = x;
 	y = vehicleInstances[arg1].unk2 + yOff;
 	D_801575E0.unkA = y;
-	z = vehicleInstances[arg1].unk4 + (s32)((cosYaw * (f32)zOff) + ((f32)xOff * temp_f0));
+	z = vehicleInstances[arg1].unk4 + (s16)((cosYaw * zOff) + (xOff * trigValue));
 	D_801575E0.unkE = z;
-	deltaX = (s16)(arg3->unk0 - (vehicleInstances[arg1].unk0 + rotatedX));
-	deltaZ = (s16)(arg3->unk4 - z);
-	D_801575E0.unk12 = func_80003824_4424(deltaX, deltaZ) + 0x8000;
+	deltaX = arg3->unk0 - x;
+	deltaZ = arg3->unk4 - z;
+	D_801575E0.unk12 = (u16)func_80003824_4424(deltaX, deltaZ) + 0x8000;
 
 	D_80157E80 = arg0;
 	D_80157E82 = arg1;
 	D_80157E84 = arg2;
 }
-
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EBE74_FAE24.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.eu.s")
-#endif
-#endif
 
 void func_800EC0D0_FB080(s32 arg0) {
 	s32 pad0[2];
@@ -1344,7 +1337,11 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 
 
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 s32 func_800ED55C_FC50C(VehicleInstance *arg0, s32 arg1) {
