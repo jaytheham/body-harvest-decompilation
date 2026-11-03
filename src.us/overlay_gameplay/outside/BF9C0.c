@@ -30,14 +30,14 @@ const f64 D_80142E40_151DF0[1] = {1.022};
 const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
 /* Crater radius multiplier */
 const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
-/* Water palette color words (first byte updated during rendering). */
-SignedWord D_8013D940_14C8F0 = { 0 };
-SignedWord D_8013D944_14C8F4 = { 0 };
-SignedWord D_8013D948_14C8F8 = { 0 };
+/* Water palette color bytes, each stored in an aligned data slot. */
+u8 D_8013D940_14C8F0 = 0;
+u8 D_8013D944_14C8F4 = 0;
+u8 D_8013D948_14C8F8 = 0;
 /* RGBA black colors for ground tile blending */
-SignedWord D_8013D94C_14C8FC = { 0xFF000000 };
-SignedWord D_8013D950_14C900 = { 0xFF000000 };
-SignedWord D_8013D954_14C904 = { 0xFF000000 };
+u8 D_8013D94C_14C8FC = 0xFF;
+u8 D_8013D950_14C900 = 0xFF;
+u8 D_8013D954_14C904 = 0xFF;
 /* Ambient and directional light for indoor/no-lighting mode */
 Lights1 D_8013D958_14C908 = { { { { 0x20, 0x20, 0x20 }, 0x00, { 0x20, 0x20, 0x20 }, 0x00 } }, { { { { 0xFF, 0xFF, 0xFF }, 0x00, { 0xFF, 0xFF, 0xFF }, 0x00, { 0x32, 0x66, 0xE7 }, 0x00 } } } };
 /* Ambient and directional light for outdoor/lighting mode */
@@ -3032,56 +3032,47 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 /* Draw water surfaces: textured quads with scrolling UV animation */
 #ifdef NON_MATCHING
 // DrawVtxBufferWater
-void func_800BA5B0_C9560(s32 arg0, s32 unused) {
-	extern u8 D_5041A80[];
-	// Agent - is arg0 actually u8
+void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
-	s32 padStack[26];
-	Unk80052B2C *viewOrigin;
-	Gfx *gfx;
 	u8 *palette;
-	u8 flags[9][9];
-	u8 *flag;
-	s16 waterX;
-	s16 waterZ;
-	s16 snappedX;
-	s16 snappedZ;
 	s16 texXBase;
 	s16 texZBase;
-	s16 worldX;
-	s16 worldZ;
-	s16 terrainY;
+	s32 worldX;
+	s16 waterX;
+	s16 waterZ[1];
+	s16 snappedZ;
 	s16 waveY;
-	s16 rowZ;
-	s16 rowTexZ;
-	s16 rowBase;
-	s16 colBase;
-	s16 maxAlpha;
+	s16 waveDepth;
+	s32 rowZ;
+	s32 rowTexZ;
+	u8 flags[9][9];
+	u8 *flag;
+	s32 maxAlpha;
 	s16 batch;
 	s16 row;
 	s16 col;
-	s16 colIndex;
-	s16 tileBase;
+	s32 tileBase;
 	s32 hiddenCount;
 	s32 phase;
+	u16 wavePhase;
 	s32 phaseAbs;
 	s32 rowPhase;
 	s32 texAnim;
 	s32 color;
-	s32 alpha;
 	s32 heightDiff;
-	s32 batchBase;
+	s32 magnitude;
 	f32 worldXf;
 	f32 worldZf;
 	f32 delta;
+	Gfx *gfx;
 
-	water = (&D_80052AE8)[arg0 & 0xFF];
+	water = &(&D_80052AE8)[arg0];
 	waterX = water->unk3C;
-	waterZ = water->unk3E;
+	waterZ[0] = water->unk3E;
 	hiddenCount = 0;
 	if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 		waterX = D_80157F44;
-		waterZ = D_80157F46;
+		waterZ[0] = D_80157F46;
 	}
 
 	if (waterX < 0) {
@@ -3090,44 +3081,49 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	if (waterX > 0) {
 		waterX = waterX + 0x100;
 	}
-	if (waterZ < 0) {
-		waterZ = waterZ - 0x100;
+	if (waterZ[0] < 0) {
+		waterZ[0] = waterZ[0] - 0x100;
 	}
-	if (waterZ > 0) {
-		waterZ = waterZ + 0x100;
+	if (waterZ[0] > 0) {
+		waterZ[0] = waterZ[0] + 0x100;
 	}
 
-	palette = &D_8013D988_14C938[(currentLevel * 6) - 6];
-	D_8013D940_14C8F0.bytes[0] = palette[0];
-	D_8013D944_14C8F4.bytes[0] = palette[1];
-	D_8013D948_14C8F8.bytes[0] = palette[2];
-	D_8013D94C_14C8FC.bytes[0] = palette[3];
-	D_8013D950_14C900.bytes[0] = palette[4];
-	D_8013D954_14C904.bytes[0] = palette[5];
+	palette = &D_8013D988_14C938[currentLevel * 6];
+	D_8013D940_14C8F0 = palette[-6];
+	D_8013D944_14C8F4 = palette[-5];
+	D_8013D948_14C8F8 = palette[-4];
+	D_8013D94C_14C8FC = palette[-3];
+	D_8013D950_14C900 = palette[-2];
+	D_8013D954_14C904 = palette[-1];
 
-	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
-	gDPSetEnvColor(D_8005BB2C++, D_8013D940_14C8F0.word, D_8013D944_14C8F4.word, D_8013D948_14C8F8.word, 0xFF);
-	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_8013D94C_14C8FC.word, D_8013D950_14C900.word, D_8013D954_14C904.word, 0xFF);
-	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 1, G_TX_RENDERTILE, G_ON);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTLOD, 8, 8) | 1; gfx->words.w1 = G_TL_TILE;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETENVCOLOR, 24, 8); gfx->words.w1 = _SHIFTL(D_8013D940_14C8F0, 24, 8) | _SHIFTL(D_8013D944_14C8F4, 16, 8) | _SHIFTL(D_8013D948_14C8F8, 8, 8) | 0xFF;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF; gfx->words.w1 = _SHIFTL(D_8013D94C_14C8FC, 24, 8) | _SHIFTL(D_8013D950_14C900, 16, 8) | _SHIFTL(D_8013D954_14C904, 8, 8) | 0xFF;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTPERSP, 8, 8) | 1; gfx->words.w1 = G_TP_PERSP;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8); gfx->words.w1 = G_CULL_BOTH | G_FOG;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_TEXTURE, 24, 8) | _SHIFTL(1, 11, 3) | G_ON; gfx->words.w1 = 0x80008000;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_CYCLETYPE, 8, 8) | 2; gfx->words.w1 = G_CYC_2CYCLE;
 
 	phase = 0x40 - ((D_80052A8C * 2) & 0x7F);
-	phaseAbs = -phase;
-	if ((u32)phaseAbs >= (u32)phase) {
-		phaseAbs = phase;
-	}
+	phaseAbs = ((u32)-phase < (u32)phase) ? phase : -phase;
 	color = (0x78 - phaseAbs) & 0xFF;
 
-	gDPSetKeyR(D_8005BB2C++, color, 0, 0);
-	gDPSetKeyGB(D_8005BB2C++, color, 0, 0, color, 0);
+	gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
+	gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 
 	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, TEXEL1, SCALE, TEXEL1, TEXEL0, 0, TEXEL1, 0, ENVIRONMENT, PRIMITIVE, COMBINED, PRIMITIVE, 0, 0, 0, SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_INTER2);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, D_5041A80);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_5041A80));
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
@@ -3138,8 +3134,8 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
 
-	phase = (s32)D_80052A8C >> 1;
-	gDPSetTileSize(D_8005BB2C++, 1, 0, (qu102(15)), 0, (qu102(78)));
+	phase = (u32)D_80052A8C >> 1;
+	gDPSetTileSize(D_8005BB2C++, 1, -phase, 60, 252 - phase, 312);
 
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 8, 0, 2, 0,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
@@ -3147,63 +3143,54 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 
 	phase = D_80052A8C & 0xFFF;
 	texAnim = (D_80052A8C + 0xFC) & 0xFFF;
-	gDPSetTileSize(D_8005BB2C++, 2, 0, 0, phase, texAnim);
+	gDPSetTileSize(D_8005BB2C++, 2, phase, phase, texAnim, texAnim);
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 1, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 
-	phase = waterX & 0x1FF;
-	if ((waterX < 0) && (phase != 0)) {
-		phase = phase - 0x200;
-	}
-	snappedX = waterX - phase;
+	phase = (s16)(waterX % 0x200);
+	waterX = waterX - phase;
 
-	phase = waterZ & 0x1FF;
-	if ((waterZ < 0) && (phase != 0)) {
-		phase = phase - 0x200;
-	}
-	snappedZ = waterZ - phase;
+	phase = waterZ[0] % 0x200;
+	snappedZ = waterZ[0] - phase;
 
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
-	phase = snappedX & 0xFFF;
-	if ((snappedX < 0) && (phase != 0)) {
-		phase = phase - 0x1000;
-	}
+	wavePhase = D_80052A8C * 0x2BC;
+	phase = waterX % 0x1000;
 	texXBase = phase * 4;
 
-	phase = snappedZ & 0xFFF;
-	if ((snappedZ < 0) && (phase != 0)) {
-		phase = phase - 0x1000;
-	}
+	phase = snappedZ % 0x1000;
 	texZBase = phase * 4;
 
 	for (row = 0; row < 9; row++) {
-		rowZ = snappedZ - (row << 9) + 0x700;
+		rowZ = snappedZ - (s16)(row << 9) + 0x700;
 		rowTexZ = texZBase - (row << 0xB);
 		worldZf = (f32)rowZ;
 		for (col = 0; col < 9; col++) {
 			flag = &flags[row][col];
-			worldX = snappedX + (col << 9) - 0x900;
+			worldX = waterX + (s16)(col << 9) - 0x900;
 			*flag = 4;
-			heightDiff = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
-			waveY = 0;
-			if (heightDiff > 0) {
-				waveY = (s16)((coss((u16)(D_80052A8C * 0x2BC + ((((snappedX / 0x200) + col) & 1) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) & 1) * 0x9B14))) / 32768.0f) * (heightDiff / 10));
+			waveDepth = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
+			if (waveDepth > 0) {
+				waveY = (s16)(((f32)coss((u16)(wavePhase + ((((waterX / 0x200) + col) % 2) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
+			} else {
+				waveY = 0;
 			}
 
-			maxAlpha = 0x64;
 			if (currentLevel == LEVEL_GREECE) {
 				maxAlpha = 0xC8;
+			} else {
+				maxAlpha = 0x64;
 			}
 
-			worldXf = (f32)worldX;
 			if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
-				viewOrigin = &D_80157F08;
+				worldXf = (f32)worldX;
+				maxAlpha = func_800BA52C_C94DC((s16)(s32)(worldXf - D_80157F08.unk0), (s16)(s32)(worldZf - D_80157F08.unk8), 0, maxAlpha);
 			} else {
-				viewOrigin = D_80052B2C;
+				worldXf = (f32)worldX;
+				maxAlpha = func_800BA52C_C94DC((s16)(s32)(worldXf - D_80052B2C->unk0), (s16)(s32)(worldZf - D_80052B2C->unk8), 0, maxAlpha);
 			}
-			alpha = func_800BA52C_C94DC((s16)(s32)(worldXf - viewOrigin->unk0), (s16)(s32)(worldZf - viewOrigin->unk8), 0, maxAlpha);
 
 			D_8005BB34->v.ob[0] = worldX;
 			D_8005BB34->v.ob[1] = waveY + D_80222A70;
@@ -3214,17 +3201,19 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 			D_8005BB34->v.cn[0] = 0;
 			D_8005BB34->v.cn[1] = 0;
 			D_8005BB34->v.cn[2] = 0;
-			D_8005BB34->v.cn[3] = alpha;
+			D_8005BB34->v.cn[3] = maxAlpha;
 			D_8005BB34++;
 
-			delta = D_80052B2C->unk0 - worldXf;
-			if (delta < 0.0f) {
-				delta = -delta;
+			if (worldXf <= D_80052B2C->unk0) {
+				delta = D_80052B2C->unk0 - worldXf;
+			} else {
+				delta = -(D_80052B2C->unk0 - worldXf);
 			}
 			if (delta < 128.0f) {
-				delta = D_80052B2C->unk8 - worldZf;
-				if (delta < 0.0f) {
-					delta = -delta;
+				if (worldZf <= D_80052B2C->unk8) {
+					delta = D_80052B2C->unk8 - worldZf;
+				} else {
+					delta = -(D_80052B2C->unk8 - worldZf);
 				}
 				if (delta < 128.0f) {
 					*flag = 1;
@@ -3233,15 +3222,19 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 			}
 
 			heightDiff = D_80052B34->unk0 - worldX;
-			if (heightDiff < 0) {
-				heightDiff = -heightDiff;
+			if (heightDiff >= 0) {
+				magnitude = heightDiff;
+			} else {
+				magnitude = -heightDiff;
 			}
-			if (heightDiff < 0x100) {
-				terrainY = D_80052B34->unk4 - rowZ;
-				if (terrainY < 0) {
-					terrainY = -terrainY;
+			if (magnitude < 0x100) {
+				heightDiff = D_80052B34->unk4 - rowZ;
+				if (heightDiff >= 0) {
+					magnitude = heightDiff;
+				} else {
+					magnitude = -heightDiff;
 				}
-				if ((terrainY < 0x100) && (D_80052B34->unk2 < (D_80222A70 + 0x10))) {
+				if ((magnitude < 0x100) && (D_80052B34->unk2 < (D_80222A70 + 0x10))) {
 					*flag = 1;
 					continue;
 				}
@@ -3261,11 +3254,11 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 	n_alSynFreeFX(hiddenCount);
 
 	for (batch = 3; batch >= 0; batch--) {
-		gSPVertex(D_8005BB2C++, &(&D_8005BB34[-(batch * 0x12)])[-0x1B], 0x1B, 0);
+		gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(&D_8005BB34[-0x1B] - batch * 0x12), 0x1B, 0);
 
 		for (row = 0; row < 2; row++) {
 			for (col = 0; col < 8; col++) {
-				flag = &flags[((6 - (batch * 2)) + row)][col];
+				flag = &flags[(s16)(6 - (batch * 2)) + row][col];
 				if ((flag[0] & 2) && (flag[1] & 2) && (flag[9] & 2) && (flag[10] & 2)) {
 					continue;
 				}
@@ -3273,28 +3266,27 @@ void func_800BA5B0_C9560(s32 arg0, s32 unused) {
 					continue;
 				}
 
-				tileBase = (row * 9) + col;
-				if ((((snappedX / 0x200) + col) & 1) != 0) {
-					gSP1Triangle(D_8005BB2C++, tileBase, tileBase + 1, tileBase + 9, 0);
-					gSP1Triangle(D_8005BB2C++, tileBase + 1, tileBase + 10, tileBase + 9, 0);
+				tileBase = (s16)(row * 9);
+				if (((s16)(((col % 2) + ((waterX / 0x200) % 2)) % 2)) != 0) {
+					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 1, (col + tileBase) + 9, 0);
+					gSP1Triangle(D_8005BB2C++, (col + tileBase) + 1, (col + tileBase) + 10, (col + tileBase) + 9, 0);
 				} else {
-					gSP1Triangle(D_8005BB2C++, tileBase, tileBase + 1, tileBase + 10, 0);
-					gSP1Triangle(D_8005BB2C++, tileBase, tileBase + 10, tileBase + 9, 0);
+					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 1, (col + tileBase) + 10, 0);
+					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 10, (col + tileBase) + 9, 0);
 				}
 			}
 
 			rowPhase = 0x40 - ((((batch * 2) + row + D_80052A8C) * 3) & 0x7F);
-			phaseAbs = -rowPhase;
-			if ((u32)phaseAbs >= (u32)rowPhase) {
-				phaseAbs = rowPhase;
-			}
+			phaseAbs = ((u32)-rowPhase < (u32)rowPhase) ? rowPhase : -rowPhase;
 			color = (0x78 - phaseAbs) & 0xFF;
 
-			gDPSetKeyR(D_8005BB2C++, color, 0, 0);
-			gDPSetKeyGB(D_8005BB2C++, color, 0, 0, color, 0);
+			gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
+			gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 		}
 	}
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s", "src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
 #endif
