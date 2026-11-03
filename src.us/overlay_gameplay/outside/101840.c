@@ -722,6 +722,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	s16 innerRadius;
 	s16 outerRadius;
 	s32 i;
+	s32 index;
 	s32 pad3;
 	s16 baseAngle;
 	s16 alienX;
@@ -755,9 +756,8 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	if (arg0)
 	{
 	}
-	if (alienY)
-	{
-	}
+	if (alienY) {}
+	if (inst) {}
 	osSyncPrintf(D_80144934_1538E4, slot, D_80157FF8);
 
 	walker = &D_80158000[slot];
@@ -781,13 +781,12 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	angleStep = D_801601F0[arg1].unk10;
 	outerRadius = D_801601F0[arg1].unk6;
 	innerRadius = D_801601F0[arg1].unk4;
-	i = 0;
+	index = 0;
 	halfCount = D_801601F0[arg1].unkC / 2;
+	if (halfCount) {}
 
 	if (halfCount > 0) {
-		s32 index;
-
-		index = 0;
+		i = 0;
 		do {
 			UnkF9230ShadowLimb *a;
 			UnkF9230ShadowLimb *an;
@@ -837,6 +836,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	func_800F49A4_103954(walker);
 	return resultSlot;
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
 #endif
