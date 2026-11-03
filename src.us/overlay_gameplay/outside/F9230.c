@@ -15,11 +15,11 @@ const char D_801443BC_15336C[20] = "play shot anim\n"; // "play shot anim\n"
 const struct { f64 value; } D_801443D0_153380 = {180.0};
 const struct { f64 value; } D_801443D8_153388 = {180.0};
 const f64 D_801443E0_153390[1] = {180.0};
-const f64 D_801443E8_153398[1] = {3.141592654};
-const f64 D_801443F0_1533A0[1] = {3.141592654};
-const f64 D_801443F8_1533A8[1] = {3.141592654};
-const f64 D_80144400_1533B0[1] = {3.141592654};
-const f64 D_80144408_1533B8[1] = {180.0};
+const ShadowGeometryConstant D_801443E8_153398 = {3.141592654};
+const ShadowGeometryConstant D_801443F0_1533A0 = {3.141592654};
+const ShadowGeometryConstant D_801443F8_1533A8 = {3.141592654};
+const ShadowGeometryConstant D_80144400_1533B0 = {3.141592654};
+const ShadowGeometryConstant D_80144408_1533B8 = {180.0};
 const f32 D_80144410_1533C0[1] = {0.9f};
 const f32 D_80144414_1533C4[1] = {0.8f};
 const f32 D_80144418_1533C8[1] = {0.7f};
@@ -505,6 +505,7 @@ void func_800EB090_FA040(void) {
 
 #ifdef NON_MATCHING
 void func_800EB0C8_FA078(VehicleInstance *arg0) {
+	s32 pad[2];
 	f32 speedScale;
 	f32 xDiff;
 	f32 zDiff;
@@ -513,50 +514,43 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	f32 slopeDeg;
 	s32 stateFlags;
 
-	stateFlags = D_8013E5AC_14D55C[D_80157600.unk40C].unk0;
+	stateFlags = D_8013E5AC_14D55C[D_80157600.unk40C].unk4;
 	speedScale = 1.0f;
 
 	if (stateFlags & 0x10) {
 		func_800FB430_10A3E0(arg0, 0);
-		stateFlags = D_8013E5AC_14D55C[D_80157A0C].unk0;
+		stateFlags = D_8013E5AC_14D55C[D_80157A0C].unk4;
 	}
 
 	if (stateFlags & 0x800) {
-		f32 sinYaw;
-		f32 cosYaw;
-
+		f32 trig;
 		func_800FB430_10A3E0(arg0, 0);
 
 		xDiff = D_80157600.unk8 - D_80157600.unk414;
 		zDiff = D_80157600.unk10 - D_80157600.unk418;
-		xDiff /= 4.0f;
-		zDiff /= 4.0f;
+		xDiff /= 4;
+		zDiff /= 4;
 
-		cosYaw = cosf((f32)(((f32)arg0->unkE * D_801443E8_153398) / 32768.0));
-		sinYaw = sinf((f32)(((f32)arg0->unkE * D_801443F0_1533A0) / 32768.0));
-		xStep = (cosYaw * zDiff) - (sinYaw * xDiff);
+		trig = cosf((f32)(((f32)arg0->unkE * D_801443E8_153398.value) / 32768.0)); xStep = (trig * zDiff) - (sinf((f32)(((f32)arg0->unkE * D_801443F0_1533A0.value) / 32768.0)) * xDiff);
+		trig = sinf((f32)(((f32)arg0->unkE * D_801443F8_1533A8.value) / 32768.0)); zStep = (cosf((f32)(((f32)arg0->unkE * D_80144400_1533B0.value) / 32768.0)) * xDiff) + (trig * zDiff);
 
-		sinYaw = sinf((f32)(((f32)arg0->unkE * D_801443F8_1533A8) / 32768.0));
-		cosYaw = cosf((f32)(((f32)arg0->unkE * D_80144400_1533B0) / 32768.0));
-		zStep = (cosYaw * xDiff) + (sinYaw * zDiff);
-
-		slopeDeg = (f32)(((f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * D_80144408_1533B8) /
+		slopeDeg = (f32)(((f32)func_800FA690_109640(arg0->unk0, arg0->unk4, arg0->unkE) * D_80144408_1533B8.value) /
 				 32768.0);
 		if (slopeDeg < -10.0f) {
 			u16 flags = D_80052B34->unk20;
 
 			if (!(flags & VEHICLE_FLAG_ON_BRIDGE) && !(flags & VEHICLE_FLAG_HALF_ON_BRIDGE) && !(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)) {
 				if (slopeDeg < -10.0f) {
-					speedScale = D_80144410_1533C0;
+					speedScale = D_80144410_1533C0[0];
 				}
 				if (slopeDeg < -15.0f) {
-					speedScale = D_80144414_1533C4;
+					speedScale = D_80144414_1533C4[0];
 				}
 				if (slopeDeg < -20.0f) {
-					speedScale = D_80144418_1533C8;
+					speedScale = D_80144418_1533C8[0];
 				}
 				if (slopeDeg < -25.0f) {
-					speedScale = D_8014441C_1533CC;
+					speedScale = D_8014441C_1533CC[0];
 				}
 			}
 		}
@@ -564,44 +558,37 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 		xStep *= speedScale;
 		zStep *= speedScale;
 
-		if (D_80048188 != 0) {
-			s16 *path;
+		{
 			s16 pathX;
 			s16 pathZ;
 			s32 delta;
+			s32 deltaZ;
 			s32 absDelta;
 
-			path = (s16 *)&D_801575E0 + D_801575E0.unk4;
-			pathX = path[3];
-			if (pathX != 0x7FFF) {
-				pathZ = path[7];
+			if ((D_80048188 != 0) && ((pathX = D_801575E0.coordinates[0][D_801575E0.unk4]) != 0x7FFF)) {
+				pathZ = D_801575E0.coordinates[2][D_801575E0.unk4];
 				delta = (s16)(pathX - arg0->unk0);
-
-				if (delta < 0) {
-					absDelta = -delta;
-				} else {
+				deltaZ = (s16)(pathZ - arg0->unk4);
+				if (delta >= 0) {
 					absDelta = delta;
+				} else {
+					absDelta = -delta;
 				}
-
-				if (xStep >= 0.0f) {
+				if (xStep >= 0) {
 					zDiff = xStep;
 				} else {
 					zDiff = -xStep;
 				}
-
 				if ((f32)absDelta < zDiff) {
 					xDiff = pathX;
 				} else {
 					xDiff = arg0->unk4C + xStep;
 				}
-
-				delta = (s16)(pathZ - arg0->unk4);
-				if (delta < 0) {
-					absDelta = -delta;
+				if (deltaZ >= 0) {
+					absDelta = deltaZ;
 				} else {
-					absDelta = delta;
+					absDelta = -deltaZ;
 				}
-
 				if ((f32)absDelta < (zStep >= 0.0f ? zStep : -zStep)) {
 					zDiff = pathZ;
 				} else {
@@ -611,11 +598,7 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 				xDiff = arg0->unk4C + xStep;
 				zDiff = arg0->unk54 + zStep;
 			}
-		} else {
-			xDiff = arg0->unk4C + xStep;
-			zDiff = arg0->unk54 + zStep;
 		}
-
 		func_800FB44C_10A3FC(arg0, xDiff);
 		func_800FB484_10A434(arg0, zDiff);
 	}
@@ -623,6 +606,8 @@ void func_800EB0C8_FA078(VehicleInstance *arg0) {
 	D_80157600.unk414 = D_80157600.unk8;
 	D_80157600.unk418 = D_80157600.unk10;
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EB0C8_FA078.s")
 #endif
