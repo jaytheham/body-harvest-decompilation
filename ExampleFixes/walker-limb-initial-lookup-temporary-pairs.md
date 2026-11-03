@@ -1,0 +1,5 @@
+incorrect ASM: In `func_800F842C_1073DC`, the initial type address used `addu t1,s4,t0; lh t2,0xA(t1)`. The temporary sequence through the limb renderer differed from the target; the final display-list packet used T4/T5 instead of T1/T3. The enabled function scored 1505.
+
+-> code changed: Retain an empty address test after the initial height division, and preserve three signed-width round trips on its dividend: `sp82 = (s32)(s64)(s32)(s64)(s32)(s64)D_801601F0[walker->limbs[0].unk23].unkA / 20; if (&D_801601F0[walker->limbs[0].unk23]) {}`. Each conversion preserves the signed halfword value. The address test caches the lookup address; the conversions affect temporary-pair allocation and emit no additional instructions.
+
+-> correct ASM: The opening lookup becomes `addu v1,s4,t0; lh t1,0xA(v1)`, and the final packet uses the target T1/T3 sequence. The normal native compiler scores 1340 with the unchanged 0xD8 frame. This is a partial checkpoint: the cursor store still schedules after the lookup, and temporary-register differences remain, so the function retains its NON_MATCHING fallback.

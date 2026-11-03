@@ -2124,7 +2124,8 @@ void func_800F842C_1073DC(s32 arg0) {
 	}
 
 	walker = &D_80158000[arg0];
-	sp82 = D_801601F0[walker->limbs[0].unk23].unkA / 20;
+	sp82 = (s32)(s64)(s32)(s64)(s32)(s64)D_801601F0[walker->limbs[0].unk23].unkA / 20;
+	if (&D_801601F0[walker->limbs[0].unk23]) {}
 
 	for (i = 0; i < 6; i++) {
 		if (walker->limbs[i + 1].unk23 == 1) {
