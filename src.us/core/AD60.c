@@ -196,7 +196,7 @@ s16 func_8000A43C_B03C(s8 *arg0)
 
 #ifdef NON_MATCHING
 void drawText(char *arg0, ...) {
-	s8 *s3;
+	char *s3;
 	s8 *s0;
 	va_list s2;
 	u32 v0;
@@ -210,10 +210,10 @@ void drawText(char *arg0, ...) {
 	s32 sp64;
 	s32 sp60;
 
-	s3 = arg0;
-	v0 = (u8)*s3;
-	s0 = &D_80052BE0[(u16)D_80053BE0];
 	va_start(s2, arg0);
+	v0 = (u8)*arg0;
+	s0 = &D_80052BE0[(u16)D_80053BE0];
+	s3 = arg0;
 
 	if (v0 != 0) {
 		v0 = (u8)v0;
@@ -290,7 +290,7 @@ void drawText(char *arg0, ...) {
 					v1 = (u8)s3[1];
 					s3++;
 				}
-				switch (v1) {
+				switch (v1 ^ 0) {
 		case 0:
 			break;
 		case 'c':
@@ -358,8 +358,8 @@ void drawText(char *arg0, ...) {
 			*s0++ = 0x13;
 			break;
 		case 's': {
-			s8 *str;
-			str = va_arg(s2, s8 *);
+			char *str;
+			str = va_arg(s2, char *);
 			v0 = (u8)*str;
 			if (v0 != 0) {
 			do {
@@ -708,10 +708,10 @@ void func_8000B044_BC44(void) {
 				} else {
 					f64 fraction;
                                         fraction = (f32)(u32)(u8)(0xFF - (counter << 4)) / D_80037600_38200_R;
-                                        r = (u32)(D_80053BF8 - (f32)(D_80053BF8 - D_80053BF0) * fraction) & 0xFF;
-                                        g = (u32)(D_80053BFA - (f32)(D_80053BFA - D_80053BF2) * fraction) & 0xFF;
-                                        b = (u32)(D_80053BFC - (f32)(D_80053BFC - D_80053BF4) * fraction) & 0xFF;
-                                        alpha = (u32)(D_80053BFE - (f32)(D_80053BFE - D_80053BF6) * fraction);
+                                        r = (u32)(D_80053BF8 - (f32)(D_80053BF8 - D_80053BF0) * (f32)fraction) & 0xFF;
+                                        g = (u32)(D_80053BFA - (f32)(D_80053BFA - D_80053BF2) * (f32)fraction) & 0xFF;
+                                        b = (u32)(D_80053BFC - (f32)(D_80053BFC - D_80053BF4) * (f32)fraction) & 0xFF;
+                                        alpha = (u32)(D_80053BFE - (f32)(D_80053BFE - D_80053BF6) * (f32)fraction);
 
 				}
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
