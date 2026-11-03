@@ -508,7 +508,6 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 
 	switch (arg4) {
 	case 4:
-		scratch = (MapMarkerScratch *)&D_80052B40;
 		wave = (((((f32) arg0->distance / D_801424E0_151490[0]) * ((f32)sins(D_8013D50C_14C4BC) / 32768.0)) * 200.0));
 		trig = coss(-D_80052B34->unk6);
 		if (wave >= 0) {
@@ -516,7 +515,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 		} else {
 			absWave = -wave;
 		}
-		scratch->position.unk0 = (arg1 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
+		D_80052B40.unk0 = (arg1 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 
 		trig = sins(-D_80052B34->unk6);
 		if (wave >= 0) {
@@ -525,21 +524,19 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 			absWave = -wave;
 		}
 
-		scratch = (MapMarkerScratch *)&D_80052B40;
-		scratch->position.unk4 = 0;
+		D_80052B40.unk4 = 0;
 		D_80052B48.unk0 = 0;
-		scratch->position.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
+		D_80052B40.unk2 = (-arg2 - (((f32) absWave + arg3) * ((f32)trig / 32768.0)));
 		D_80052B48.unk2 = (-0x4000 - D_80052B34->unk6);
 		D_80052B48.unk4 = 0;
-		func_800039D0_45D0(&scratch->position, (Unk80052B40 *)&D_80052B48, NULL, D_8005BB38);
+		func_800039D0_45D0(&D_80052B40, (Unk80052B40 *)&D_80052B48, NULL, D_8005BB38);
 		D_8013D50C = (s16)D_8013D50C_14C4BC + 0x300;
 		break;
 	default:
-		scratch = (MapMarkerScratch *)&D_80052B40;
-		scratch->position.unk2 = -arg2;
-		scratch->position.unk4 = 0;
-		scratch->position.unk0 = arg1;
-		func_800039D0_45D0(&scratch->position, NULL, NULL, D_8005BB38);
+		D_80052B40.unk2 = -arg2;
+		D_80052B40.unk4 = 0;
+		D_80052B40.unk0 = arg1;
+		func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
 	}
 
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -563,6 +560,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800966EC_A569C.s")
 #endif
