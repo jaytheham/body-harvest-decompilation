@@ -718,7 +718,6 @@ void func_8008D634_9C5E4(u8 arg0)
 	}
 }
 
-// https://decomp.me/scratch/HCQa2
 // AI - Human capture/processing logic
 void func_8008D71C_9C6CC(u32 arg0)
 {
@@ -791,7 +790,6 @@ void func_8008D71C_9C6CC(u32 arg0)
 	}
 }
 
-// https://decomp.me/scratch/lrRls
 // AI - Detach alien from parent
 // Goliath/"Spyder" behavior - set unk25 parent to FF if parent harvester died?
 s32 func_8008D978_9C928(u8 arg0)
@@ -1018,7 +1016,6 @@ void func_8008E16C_9D11C(u8 arg0)
 	}
 }
 
-// AI - Fall/dying update
 // Mental HCU behavior func - specs unk48
 void func_8008E23C_9D1EC(u8 arg0)
 {
@@ -1196,7 +1193,6 @@ s32 func_8008E524_9D4D4(u8 arg0, s32 arg1, u8 arg2)
 	return (sp8C - sp8E) + arg1;
 }
 
-
 // AI - Vertical velocity/gravity update
 void func_8008E978_9D928(u8 arg0, s32 arg1)
 {
@@ -1245,7 +1241,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 {
 	s32 temp2;
-	s32 pad; // Preserve the unused stack slot at sp+0x48.
+	s32 pad;
 	s16 sp46;
 	s16 typeIndex;
 	s32 sp24;
@@ -1354,8 +1350,6 @@ void func_8008EF7C_9DF2C(u8 arg0)
 	}
 }
 
-// CURRENT(3341)
-// AI - AI movement/state machine
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) movement/state machine
 #ifdef NON_MATCHING
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
@@ -1657,9 +1651,6 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 		sp30->unk12 -= (s16)(sp2C->unk3E * sp48);
 	}
 }
-
-
-// AI - Set follow-target for companion aliens
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F0BC_9E06C.s")
 #endif
@@ -1694,7 +1685,6 @@ void func_8008F6C0_9E670(u8 arg0)
 	alienInstances[arg0].unk16 = buildingTypes[buildingInstances[temp_a1].buildingType].unk14 + alienInstances[arg0].unk16 + 0x64;
 }
 
-// AI - Movement update with follow-target refresh
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk4C
 void func_8008F818_9E7C8(u8 arg0)
 {
@@ -1744,8 +1734,6 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 	}
 }
 
-// Current(817)
-// AI - Harvester/drone AI update
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk48
 #ifdef NON_MATCHING
 void func_8008F9E4_9E994(u8 arg0)
@@ -1939,8 +1927,6 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 	func_80128428_1373D8(&alienInstances[arg0], (s16)x, (s16)y, (s16)z, arg1, arg2, arg3);
 }
 
-
-// CURRENT(2327)
 // AI - AI state machine for carried humans/companions
 #ifdef NON_MATCHING
 void func_8009012C_9F0DC(u32 arg0)
@@ -2360,7 +2346,6 @@ void func_80090D0C_9FCBC(u8 arg0)
 	}
 }
 
-// AI - Hybrid boss/companion AI update
 // Harvester/"Drone King" behavior func - alienspecs unk48
 void func_80091220_A01D0(u8 arg0)
 {
@@ -2427,6 +2412,7 @@ void func_80091220_A01D0(u8 arg0)
 		}
 	}
 }
+
 // AI - Building targeting / Drone Hunter AI
 void func_80091470_A0420(u8 arg0)
 {
@@ -2601,7 +2587,6 @@ void func_800918E0_A0890(u8 arg0)
 	alien->unk20 = flags & ~ALIEN_FLAG_UNKD;
 }
 
-// AI - General AI step (detach, player check, target update)
 // Goliath/"Spyder" attack AI
 s32 func_800919C0_A0970(u8 arg0, u8 arg1)
 {
@@ -2712,7 +2697,6 @@ s32 func_80091AC0_A0A70(u8 arg0, s8 arg1, s8 arg2)
 	return 1;
 }
 
-// AI - Movement AI with building attack
 // Goliath/"Spyder" behavior specs.unk4C
 void func_80091E70_A0E20(u8 arg0)
 {
@@ -2769,8 +2753,6 @@ void func_80091E70_A0E20(u8 arg0)
 	}
 }
 
-// CURRENT(10706)
-// AI - Drone/Boss attack AI with melee patterns
 // Goliath/"Spyder" behavior specs.unk48
 #ifdef NON_MATCHING
 void func_800920C0_A1070(u8 arg0)
@@ -3021,7 +3003,6 @@ s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
 	return result;
 }
 
-// https://decomp.me/scratch/Eb0Us
 // spawn 5 Doodlebugs to attack bridge during Greece ambulance mission
 void func_80092ADC_A1A8C(void)
 {
@@ -3040,7 +3021,6 @@ void func_80092ADC_A1A8C(void)
 	}
 }
 
-// AI - Advance patrol waypoint
 // set target for Doodlebug bridge attack in Greece?
 void func_80092BBC_A1B6C(u8 arg0)
 {
@@ -3520,7 +3500,6 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 	alienInstances[arg0].unk20 |= ALIEN_FLAG_FALL;
 }
 
-// CURRENT(13145)
 // AI - Major pathfinding/movement AI
 #ifdef NON_MATCHING
 void func_80093C7C_A2C2C(u8 arg0)
@@ -4001,7 +3980,6 @@ void func_80094B80_A3B30(u8 arg0)
 	}
 }
 
-// https://decomp.me/scratch/psru3
 // AI - Rotation/position sync with parent
 void func_80094BE0_A3B90(u8 arg0)
 {

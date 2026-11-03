@@ -6068,35 +6068,34 @@ s32 func_80070270_158330(s32 arg0) {
 // AI - Handles player interaction inside a building
 void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
 {
-  Unk9C804 *room;
-  s32 temp_v1;
-  s32 halfWidth;
-  f32 x;
-  f32 xx;
+	Unk9C804 *room;
+	s32 temp_v1;
+	s32 halfWidth;
+	f32 x;
+	f32 xx;
 
-  if (D_800E65D0 == 0)
-  {
-	return;
-  }
-  if ((isButtonNewlyPressed(0, 0x8000) == 0) && (D_800E65C8->unk0 != 4))
-  {
-	return;
-  }
-  room = D_800E65C8;
-  temp_v1 = room->unk28 + D_800E65CC;
-  x = D_800E6A78.unk4C - 96.0f;
-  xx = D_800E6A78.unk54 - 96.0f;
-  halfWidth = room->unk2A / 2;
-  room = D_800E65C8;
-  if (func_8007C3C0_164480(x, xx, temp_v1 - (room->unk2A / 2), temp_v1 + halfWidth, 0.0f, 30.0f) != 0)
-  {
-	if (func_8007A370_162430(0, (s32)((f64)(f32)(D_800E6A86 & 0xFFFF) * D_800A4A00_18CAC0.value / 32768.0)) != 0)
+	if (D_800E65D0 == 0)
 	{
-	  D_800E65A8 |= 0x800;
+		return;
 	}
-  }
+	if ((isButtonNewlyPressed(0, 0x8000) == 0) && (D_800E65C8->unk0 != 4))
+	{
+		return;
+	}
+	room = D_800E65C8;
+	temp_v1 = room->unk28 + D_800E65CC;
+	x = D_800E6A78.unk4C - 96.0f;
+	xx = D_800E6A78.unk54 - 96.0f;
+	halfWidth = room->unk2A / 2;
+	room = D_800E65C8;
+	if (func_8007C3C0_164480(x, xx, temp_v1 - (room->unk2A / 2), temp_v1 + halfWidth, 0.0f, 30.0f) != 0)
+	{
+		if (func_8007A370_162430(0, (s32)((f64)(f32)(D_800E6A86 & 0xFFFF) * D_800A4A00_18CAC0.value / 32768.0)) != 0)
+		{
+			D_800E65A8 |= 0x800;
+		}
+	}
 }
-
 
 // AI - Returns the center position offset of the current interior
 s32 func_800703D0_158490(void) {
@@ -6162,7 +6161,7 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 	s32 roomId;
 	s32 interiorId;
 	s32 levelIndex;
-	s32 roomType;
+	s32 objectType;
 	u8 roomX;
 	u8 roomY;
 	u8 *copyCursor;
@@ -6186,7 +6185,6 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 	roomIndex = 0;
 	do {
 		D_800E69A8[roomIndex] = copyCursor[offsetof(InteriorRoomData, tileMap)];
-		/* Retain the cursor use for IDO register allocation. */
 		if (copyCursor) {}
 		copyCursor++;
 		roomIndex++;
@@ -6196,9 +6194,8 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 	roomIndex = 0;
 	if (D_800E668C > 0) {
 		do {
-			roomType = D_800E65E8->objectType[roomIndex] & 0x1F;
-			// Actually objectType
-			// First 3 bits are:
+			objectType = D_800E65E8->objectType[roomIndex] & 0x1F;
+			// objectType first 3 bits are:
 			// 000 Facing forward
 			// 100 Facing forward
 			// 110 Facing back
@@ -6208,7 +6205,7 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 			// 010 Facing back
 			// Last 5 are object id
 
-			D_800E66A8[i].unk0 = roomType;
+			D_800E66A8[i].unk0 = objectType;
 			D_800E66A8[i].unk8 = (D_800E65E8->objectType[roomIndex] & 0x60) >> 5;
 			roomX = D_800E65E8->objectCellX[roomIndex];
 			roomY = D_800E65E8->objectCellY[roomIndex];
@@ -6223,16 +6220,16 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 			if (D_80047F40[interiorId / 32] & (1 << (interiorId % 32))) {
 				if (D_80047D40[interiorId] & (1 << i)) {
 					D_800E66A8[i].unk2E |= 1;
-					D_800E66A8[i].unkC = (u16)D_800E65BC[roomType].unk16;
+					D_800E66A8[i].unkC = (u16)D_800E65BC[objectType].unk16;
 				}
 			} else if (D_800E65E8->objectType[roomIndex] & 0x80) {
 				D_800E66A8[i].unk2E |= 1;
 			}
 			roomId = D_800E66A8[i].unk2D & 0x3F;
 
-			if (D_800E65BC[roomType].unk40 & 0xE0000) {
-				func_80070F7C_15903C(0, (u8)roomType, i);
-				if (D_800E65BC[roomType].unk40 & 0x80000) {
+			if (D_800E65BC[objectType].unk40 & 0xE0000) {
+				func_80070F7C_15903C(0, (u8)objectType, i);
+				if (D_800E65BC[objectType].unk40 & 0x80000) {
 					D_800E66A8[i].unk2E |= 1;
 					D_800E66A8[i].unk2E |= 2;
 				} else {
@@ -6245,10 +6242,10 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 					}
 					if (D_800E66A8[i].unk2E & 1) {
 						func_800072CC_7ECC((u64)roomId);
-						if (D_800E65BC[roomType].unk40 & 0x20000) {
+						if (D_800E65BC[objectType].unk40 & 0x20000) {
 							D_800E66A8[i].unk2E |= 2;
 						}
-					} else if (D_800E65BC[roomType].unk40 & 0x40000) {
+					} else if (D_800E65BC[objectType].unk40 & 0x40000) {
 						D_800E66A8[i].unk2E |= 2;
 					}
 				}
@@ -6264,31 +6261,31 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 				}
 				if (D_800E66A8[i].unk2E & 1) {
 					func_800072CC_7ECC((u64)roomId);
-					func_80070F7C_15903C(D_800E65BC[roomType].unk1E, roomType, i);
+					func_80070F7C_15903C(D_800E65BC[objectType].unk1E, objectType, i);
 				} else {
-					func_80070F7C_15903C(0, roomType, i);
+					func_80070F7C_15903C(0, objectType, i);
 				}
 			}
 
-			switch (roomType) {
+			switch (objectType) {
 			case 30:
-				D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+				D_800E66A8[i].unk4 = (s8)D_800E65BC[objectType].pad1C[0];
 				switch (D_800E66A8[i].unk8) {
 				case 0:
-					D_800E66A8[i].unk2 = ((s32)D_800E65BC[roomType].unk18 / 2) + ((s8)roomX * 0x60) + 0x60;
-					D_800E66A8[i].unk6 = ((s32)D_800E65BC[roomType].unk1A / 2) + ((s8)roomY * 0x60) + 0x60;
+					D_800E66A8[i].unk2 = ((s32)D_800E65BC[objectType].unk18 / 2) + ((s8)roomX * 0x60) + 0x60;
+					D_800E66A8[i].unk6 = ((s32)D_800E65BC[objectType].unk1A / 2) + ((s8)roomY * 0x60) + 0x60;
 					break;
 				case 1:
-					D_800E66A8[i].unk2 = ((s32)D_800E65BC[roomType].unk1A / 2) + ((s8)roomX * 0x60) + 0x60;
-					D_800E66A8[i].unk6 = ((s32)D_800E65BC[roomType].unk18 / 2) + (roomY * 0x60) + 0x60;
+					D_800E66A8[i].unk2 = ((s32)D_800E65BC[objectType].unk1A / 2) + ((s8)roomX * 0x60) + 0x60;
+					D_800E66A8[i].unk6 = ((s32)D_800E65BC[objectType].unk18 / 2) + (roomY * 0x60) + 0x60;
 					break;
 				case 2:
-					D_800E66A8[i].unk2 = ((s8)roomX * 0x60) - ((s32)D_800E65BC[roomType].unk18 / 2) + 0xC0;
-					D_800E66A8[i].unk6 = ((s8)roomY * 0x60) - ((s32)D_800E65BC[roomType].unk1A / 2) + 0xC0;
+					D_800E66A8[i].unk2 = ((s8)roomX * 0x60) - ((s32)D_800E65BC[objectType].unk18 / 2) + 0xC0;
+					D_800E66A8[i].unk6 = ((s8)roomY * 0x60) - ((s32)D_800E65BC[objectType].unk1A / 2) + 0xC0;
 					break;
 				case 3:
-					D_800E66A8[i].unk2 = ((s8)roomX * 0x60) - ((s32)D_800E65BC[roomType].unk1A / 2) + 0xC0;
-					D_800E66A8[i].unk6 = ((s8)roomY * 0x60) - ((s32)D_800E65BC[roomType].unk18 / 2) + 0xC0;
+					D_800E66A8[i].unk2 = ((s8)roomX * 0x60) - ((s32)D_800E65BC[objectType].unk1A / 2) + 0xC0;
+					D_800E66A8[i].unk6 = ((s8)roomY * 0x60) - ((s32)D_800E65BC[objectType].unk18 / 2) + 0xC0;
 					break;
 				}
 				break;
@@ -6302,28 +6299,28 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 			case 31:
 				D_800E6630 = (buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C;
 				D_800E66A8[i].unk2 = (roomX * 8) + 0x60;
-				D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+				D_800E66A8[i].unk4 = (s8)D_800E65BC[objectType].pad1C[0];
 				D_800E66A8[i].unk6 = (roomY * 8) + 0x60;
 
-				D_800E65BC[roomType].unk18 = D_8009CD7C_184E3C[currentLevel - 1][D_800E6630].width;
-				D_800E65BC[roomType].unk1A = D_8009CD7C_184E3C[currentLevel - 1][D_800E6630].height;
+				D_800E65BC[objectType].unk18 = D_8009CD7C_184E3C[currentLevel - 1][D_800E6630].width;
+				D_800E65BC[objectType].unk1A = D_8009CD7C_184E3C[currentLevel - 1][D_800E6630].height;
 
 				osSyncPrintf(D_800A4380_18C440, D_800E6630, D_800E66A8[i].unk2, D_800E66A8[i].unk6);
 				func_8007F668_167728((u8)currentLevel, D_800E6633);
 				break;
 
 			default:
-				if (D_800E65BC[roomType].unk0 == NULL) {
+				if (D_800E65BC[objectType].unk0 == NULL) {
 					i--;
 					break;
 				}
 
-				if (D_800E65BC[roomType].unk40 & 8) {
-					if (D_800E65BC[roomType].unk40 & 0x80) {
+				if (D_800E65BC[objectType].unk40 & 8) {
+					if (D_800E65BC[objectType].unk40 & 0x80) {
 						D_800E6610++;
 						if (D_800E66A8[i].unk2E & 1) {
 							D_800E6614++;
-							if (D_800E65BC[roomType].unk40 & 0x40) {
+							if (D_800E65BC[objectType].unk40 & 0x40) {
 								D_800E6604++;
 							}
 						}
@@ -6331,33 +6328,33 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 						D_800E6600++;
 						if (D_800E66A8[i].unk2E & 1) {
 							D_800E65FC++;
-							if (D_800E65BC[roomType].unk40 & 0x40) {
+							if (D_800E65BC[objectType].unk40 & 0x40) {
 								D_800E6604++;
 							}
 						}
 					}
 				}
 
-				if (D_800E65BC[roomType].unk40 & 0x80000000) {
+				if (D_800E65BC[objectType].unk40 & 0x80000000) {
 				D_800E66A8[i].unk2 = ((s8)roomX * 0x60) + 0x90;
-					D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+					D_800E66A8[i].unk4 = (s8)D_800E65BC[objectType].pad1C[0];
 				D_800E66A8[i].unk6 = ((s8)roomY * 0x60) + 0x90;
 				} else {
 					D_800E66A8[i].unk2 = (roomX * 8) + 0x60;
-					D_800E66A8[i].unk4 = (s8)D_800E65BC[roomType].pad1C[0];
+					D_800E66A8[i].unk4 = (s8)D_800E65BC[objectType].pad1C[0];
 					D_800E66A8[i].unk6 = (roomY * 8) + 0x60;
 				}
 
-				osSyncPrintf(D_800A43A8_18C468, roomType, D_800E66A8[i].unk2, D_800E66A8[i].unk6);
+				osSyncPrintf(D_800A43A8_18C468, objectType, D_800E66A8[i].unk2, D_800E66A8[i].unk6);
 				break;
 			}
 
-			if (D_800E65BC[roomType].unk40 & 0x40000000) {
-				func_8007774C_15F80C(i, roomType);
+			if (D_800E65BC[objectType].unk40 & 0x40000000) {
+				func_8007774C_15F80C(i, objectType);
 			}
 			if (D_800E66A8[i].unk2E & 1) {
-				if (!(D_800E65BC[roomType].unk40 & 0xE0000) && (D_800E65BC[roomType].unk40 & 0x20000000)) {
-					func_8007774C_15F80C(i, roomType);
+				if (!(D_800E65BC[objectType].unk40 & 0xE0000) && (D_800E65BC[objectType].unk40 & 0x20000000)) {
+					func_8007774C_15F80C(i, objectType);
 				}
 			}
 
@@ -6375,118 +6372,116 @@ void func_800705E0_1586A0(InteriorRoomData *arg0) {
 	func_80071304_1593C4();
 }
 
-
-
 // AI - Initializes a room entry's animated offset/scale values
 void func_80070F7C_15903C(s16 arg0, u8 arg1, u8 arg2)
 {
-  f32 var_f0;
-  Unk80070F7CObj *obj;
-  Unk80070F7CState *entry;
+	f32 var_f0;
+	Unk80070F7CObj *obj;
+	Unk80070F7CState *entry;
 
-  entry = &D_800E66A8[arg2];
-  entry->unk10 = arg0;
-  entry->unk20 = 0.0f;
-  entry->unk24 = 0.0f;
-  entry->unk28 = 0.0f;
-  entry->unk14 = 0.0f;
-  entry->unk18 = 0.0f;
-  entry->unk1C = 0.0f;
-  obj = &((Unk80070F7CObj *)D_800E65BC)[arg1];
-  if (obj->unk40 & 0x7F00)
-  {
-	entry->unk20 = (f32) obj->unk2C;
-	entry->unk24 = (f32) obj->unk2E;
-	entry->unk28 = (f32) obj->unk30;
-	entry->unk14 = (f32) obj->unk26;
-	entry->unk18 = (f32) obj->unk28;
-	entry->unk1C = (f32) obj->unk2A;
-	var_f0 = obj->unk20;
-	
-	if (obj->unk40 & 0x1000000)
+	entry = &D_800E66A8[arg2];
+	entry->unk10 = arg0;
+	entry->unk20 = 0.0f;
+	entry->unk24 = 0.0f;
+	entry->unk28 = 0.0f;
+	entry->unk14 = 0.0f;
+	entry->unk18 = 0.0f;
+	entry->unk1C = 0.0f;
+	obj = &((Unk80070F7CObj *)D_800E65BC)[arg1];
+	if (obj->unk40 & 0x7F00)
 	{
-	  if (D_80047970[buildingInteriorToLoadId] & (1 << arg2))
-	  {
-		var_f0 = -var_f0;
-	  }
-	}
-	switch (obj->unk40 & 0x7E00)
-	{
-	  case 0x200:
-		entry->unk14 += var_f0 * arg0;
-		return;
+		entry->unk20 = (f32)obj->unk2C;
+		entry->unk24 = (f32)obj->unk2E;
+		entry->unk28 = (f32)obj->unk30;
+		entry->unk14 = (f32)obj->unk26;
+		entry->unk18 = (f32)obj->unk28;
+		entry->unk1C = (f32)obj->unk2A;
+		var_f0 = obj->unk20;
 
-	  case 0x400:
-		entry->unk18 += var_f0 * arg0;
-		return;
-
-	  case 0x800:
-		entry->unk1C += var_f0 * arg0;
-		return;
-
-	  case 0x1000:
-		if (!(obj->unk40 & 0x100))
-	  {
-
-		switch (entry->unk8)
+		if (obj->unk40 & 0x1000000)
 		{
-		  case 0:
-			entry->unk20 += var_f0 * arg0;
-			return;
-
-		  case 1:
-			entry->unk28 += var_f0 * arg0;
-			return;
-
-		  case 2:
-			entry->unk20 += (-var_f0) * arg0;
-			return;
-
-		  case 3:
-			entry->unk28 += (-var_f0) * arg0;
-			return;
+			if (D_80047970[buildingInteriorToLoadId] & (1 << arg2))
+			{
+				var_f0 = -var_f0;
+			}
 		}
-	  }
-	  else
-	  {
-		entry->unk20 += var_f0 * arg0;
-		return;
-	  }
-		break;
-
-	  case 0x2000:
-		entry->unk24 += var_f0 * arg0;
-		return;
-
-	  case 0x4000:
-		if (!(obj->unk40 & 0x100))
-	  {
-		switch (entry->unk8)
+		switch (obj->unk40 & 0x7E00)
 		{
-		  case 0:
-			entry->unk28 += var_f0 * arg0;
+		case 0x200:
+			entry->unk14 += var_f0 * arg0;
 			return;
 
-		  case 1:
-			entry->unk20 += (-var_f0) * arg0;
+		case 0x400:
+			entry->unk18 += var_f0 * arg0;
 			return;
 
-		  case 2:
-			entry->unk28 += (-var_f0) * arg0;
+		case 0x800:
+			entry->unk1C += var_f0 * arg0;
 			return;
 
-		  case 3:
-			entry->unk20 += var_f0 * arg0;
+		case 0x1000:
+			if (!(obj->unk40 & 0x100))
+			{
+
+				switch (entry->unk8)
+				{
+				case 0:
+					entry->unk20 += var_f0 * arg0;
+					return;
+
+				case 1:
+					entry->unk28 += var_f0 * arg0;
+					return;
+
+				case 2:
+					entry->unk20 += (-var_f0) * arg0;
+					return;
+
+				case 3:
+					entry->unk28 += (-var_f0) * arg0;
+					return;
+				}
+			}
+			else
+			{
+				entry->unk20 += var_f0 * arg0;
+				return;
+			}
+			break;
+
+		case 0x2000:
+			entry->unk24 += var_f0 * arg0;
 			return;
+
+		case 0x4000:
+			if (!(obj->unk40 & 0x100))
+			{
+				switch (entry->unk8)
+				{
+				case 0:
+					entry->unk28 += var_f0 * arg0;
+					return;
+
+				case 1:
+					entry->unk20 += (-var_f0) * arg0;
+					return;
+
+				case 2:
+					entry->unk28 += (-var_f0) * arg0;
+					return;
+
+				case 3:
+					entry->unk20 += var_f0 * arg0;
+					return;
+				}
+			}
+			else
+			{
+				entry->unk28 += var_f0 * arg0;
+			}
+			break;
 		}
-	  }
-	  else
-	  {
-		entry->unk28 += var_f0 * arg0;
-	  }
-		break;
 	}
-  }
 }
 
 // AI - Updates interior lighting/brightness values with flicker animation
@@ -6829,8 +6824,6 @@ void func_80071F08_159FC8(void) {
 				D_800E6A78.unk54 = D_800E66A8[D_800E65EC].unk6;
 				break;
 		}
-
-
 	} else {
 		if (D_80047B70.unk0 == 0) {
 			D_800E65A8 = 0x40;
@@ -7190,51 +7183,50 @@ void func_8007290C_15A9CC(void)
 	D_80068080 = 7;
 }
 
-
 // AI - Checks if current interior has special vehicle-spawn rooms
 s32 func_80072E88_15AF48(void)
 {
-  switch (currentLevel)
-  {
+	switch (currentLevel)
+	{
 	case 1:
 	case 3:
-	  break;
+		break;
 	case 2:
-	  if (D_800E66A4 != 1)
-	{
-	  break;
-	}
-		
-	  if ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 5)
-	{
-	  break;
-	}
-	  return 1;
+		if (D_800E66A4 != 1)
+		{
+			break;
+		}
+
+		if ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 5)
+		{
+			break;
+		}
+		return 1;
 
 	case 4:
-	  if (D_800E66A4 == 1)
-	{
-	  if ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C == 8)
-	  {
+		if (D_800E66A4 == 1)
+		{
+			if ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C == 8)
+			{
+				return 1;
+			}
+		}
+		if (D_800E66A4 != 2)
+		{
+			break;
+		}
+
+		if (((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 0xA) && ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 6))
+		{
+			break;
+		}
 		return 1;
-	  }
-	}
-	  if (D_800E66A4 != 2)
-	{
-	  break;
-	}
-	  
-	  if (((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 0xA) && ((buildingInstances[D_80052540].unk8 << 0x1A) >> 0x1C != 6))
-	{
-	  break;
-	}
-	  return 1;
 
 	case 5:
-	  return 1;
-  }
+		return 1;
+	}
 
-  return 0;
+	return 0;
 }
 
 // AI - Per-frame secondary update: missions, fades, room rendering, lighting
@@ -7290,7 +7282,6 @@ void func_8007313C_15B1FC(void) {
 	}
 }
 
-
 // AI - Handles special building exit teleports to different map locations
 void func_80073200_15B2C0(void) {
 	if ((D_800E65D8 != 0) && !(D_800E65A8 & 8) && !(D_800E65A8 & 0x10)) {
@@ -7327,7 +7318,6 @@ void func_80073200_15B2C0(void) {
 	}
 }
 
-// AI - Empty stub function
 void func_80073434_stub(void) {}
 
 void func_8007343C_15B4FC(void) {
@@ -7347,7 +7337,6 @@ void func_8007343C_15B4FC(void) {
 	D_800E6A78.unk4C = D_80047B70.unk1C8;
 	D_800E6A78.unk54 = D_80047B70.unk1CC;
 }
-
 
 // AI - Saves current room state for later restoration
 void func_8007356C_15B62C(void) {
@@ -7369,7 +7358,6 @@ void func_8007356C_15B62C(void) {
 	D_80047B70.unk1C8 = D_800E6A78.unk4C;
 	D_80047B70.unk1CC = D_800E6A78.unk54;
 }
-
 
 // AI - Resets temporary room entry state
 void func_800736C4_15B784(void) {
@@ -8052,7 +8040,6 @@ void func_80074D98_15CE58(s32 arg0) {
 	D_8008DE50_175F10.room.torchHandles[3] = func_80084EEC_16CFAC((s16) (tempX - 0x14), y, (s16) (tempZ + 0x14), 0xC8, 0, 0xC8, 0, 0, 0x78, 0, 0x32, 0x64);
 }
 
-
 #ifdef NON_MATCHING
 // AI - Renders 3D room objects with visibility culling and texture offsets
 void func_80074FF0_15D0B0(void) {
@@ -8561,9 +8548,7 @@ void func_800768B8_15E978(s32 arg0) {
 	func_80073714_15B7D4(sp2C, sp28, sp34 - 0x60, 5, sp30 - 0x60, 0xFA, 0, 0);
 }
 
-
 void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4) {
-	/* Command and position cursors have disjoint lifetimes. */
 	union { Gfx *gfx; s32 *position; } cursor;
 	u8 *matrices;
 	union { s32 count; s32 bound; } limit;
@@ -8571,7 +8556,6 @@ void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4) {
 	u16 *rotation;
 	s16 *scale;
 
-	/* Extra macro packet locals move the saved count out of sp+0x3C. */
 	matrices = (u8 *)&D_8005BB2C[2];
 	cursor.gfx = D_8005BB2C++; cursor.gfx->words.w0 = (_SHIFTL(G_MOVEWORD, 24, 8) | _SHIFTL(7 * 4, 8, 16) | G_MW_SEGMENT); cursor.gfx->words.w1 = osVirtualToPhysical(matrices);
 
@@ -8593,7 +8577,6 @@ void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4) {
 		index = 6; limit.bound = limit.count * 6;
 		do {
 			func_80077010_15F0D0(cursor.position, rotation, scale, (s32 *)matrices);
-			/* Preserve the two cursor uses and the counter lifetime without instructions. */
 			if (cursor.position && cursor.position) {}
 			if (index) {}
 			index += 6;
@@ -8612,7 +8595,6 @@ void func_80076A58_15EB18(u8 arg0, u16 *arg1, s32 *arg2, s16 *arg3, Gfx *arg4) {
 
 void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, Mtx *arg3) {
 	s32 matrix[16];
-	/* Word writes retain the trig spills; scalar reads retain their allocation. */
 	union { s32 value; s32 words[1]; } cosX;
 	union { s32 value; s32 words[1]; } sinX;
 	s32 cosZ;
@@ -8689,7 +8671,6 @@ void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, Mtx *arg3) {
 		matrix[10] >>= 8;
 	}
 
-	/* Keep this setup together and form the source cursor before the end. */
 	arg0 = arg3->m[0]; src = matrix; matrixEnd = &matrix[16]; do { arg0[0] = (src[0] & 0xFFFF0000U) + ((src[1] & 0xFFFF0000U) >> 0x10);
 		arg0 = &arg0[4];
 		arg0[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
@@ -8704,7 +8685,6 @@ void func_80076C08_15ECC8(s32 *arg0, u16 *arg1, s16 *arg2, Mtx *arg3) {
 }
 
 void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
-	/* Unpacked 16.16 matrix in row order. */
 	s32 matrix[16];
 	s32 cosX;
 	s32 sinX;
@@ -8714,7 +8694,6 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 	s32 sinY;
 	s32 *src;
 	s32 *matrixEnd;
-
 
 	matrix[3] = 0;
 	matrix[7] = 0;
@@ -8781,7 +8760,6 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 		matrix[10] >>= 8;
 	}
 
-	/* Keep this setup together and form the source cursor before the end. */
 	arg0 = arg3; src = matrix; matrixEnd = &matrix[16]; do { arg0[0] = (src[0] & 0xFFFF0000U) + ((src[1] & 0xFFFF0000U) >> 0x10);
 		arg0 = &arg0[4];
 		arg0[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
@@ -8794,7 +8772,6 @@ void func_80077010_15F0D0(s32 *arg0, u16 *arg1, s16 *arg2, s32 *arg3) {
 		src = &src[8];
 	} while (src != matrixEnd);
 }
-
 
 // AI - Applies transformation and draws a display list
 void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6, Mtx *arg7, s32 arg8, s16 arg9)
@@ -8958,11 +8935,8 @@ void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 			// Steam jet
 			entry->unkA = func_80089648_171708(x, y, z, 0, -0xA, 0, 2);
 			break;
-
 	}
 }
-
-
 
 // Removes the spawned object associated with a room entry.
 void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
@@ -8990,12 +8964,6 @@ void func_80077A5C_15FB1C(s32 arg0, s32 arg1) {
 	}
 }
 
-
-
-
-
-
-
 // AI - Spawns or despawns room objects based on visit flag
 void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 	if (D_800E66A8[arg0].unk2E & 1) {
@@ -9008,7 +8976,7 @@ void func_80077B40_15FC00(s32 arg0, s32 arg1) {
 // AI - Updates room visibility, object animation, and mission triggers
 void func_80077B94_15FC54(void) {
 	Unk800E66A8 *room;
-	s32 stackPad; /* Preserve the IDO local area before the float spill. */
+	s32 stackPad;
 	f32 animationStep;
 	s32 count;
 	s32 eventId;
@@ -9107,7 +9075,6 @@ void func_80077B94_15FC54(void) {
 				}
 				entryOffset = typeId * 0x48;
 				objectEntry = (void *)objectBase[typeId].pad0;
-				/* End the base lifetime before reading the selected entry. */
 				objectBase = NULL;
 				if (objectEntry->unk40 & 0x7E00) {
 					if (room->unk2E & 1) {
@@ -9233,7 +9200,6 @@ void func_80077B94_15FC54(void) {
 						} else {
 							level = &currentLevel;
 							if (level) {}
-							/* Keep this byte load separate from the later flag reads. */
 							if ((u8)(s8)room->unk2E & 1) {
 								if (!(objectEntry->unk40 & 0x200000)) {
 									if ((*level != 1) || (D_800E66A4 != 3) || (entryOffset != 0x3F0)) {
@@ -9407,53 +9373,69 @@ void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 
 static void func_80078994_stub(void) {}
 // AI - Remaps button directions based on room orientation
-u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
+u8 func_8007899C_160A5C(s32 arg0, s32 arg1)
+{
 	u8 ret;
 
-	switch (D_800E66A8[arg1].unk8) {
+	switch (D_800E66A8[arg1].unk8)
+	{
 	case 0:
 		ret = arg0;
 		break;
 	case 1:
-		if (arg0 & 4) {
+		if (arg0 & 4)
+		{
 			ret |= 2;
 		}
-		if (arg0 & 8) {
+		if (arg0 & 8)
+		{
 			ret = ret | 1;
 		}
-		if (arg0 & 1) {
+		if (arg0 & 1)
+		{
 			ret = ret | 4;
 		}
-		if (arg0 & 2) {
+		if (arg0 & 2)
+		{
 			ret = ret | 8;
 		}
 		break;
-	case 2: {
-		if (arg0 & 4) {
+	case 2:
+	{
+		if (arg0 & 4)
+		{
 			ret |= 8;
 		}
-		if (arg0 & 8) {
+		if (arg0 & 8)
+		{
 			ret = ret | 4;
 		}
-		if (arg0 & 1) {
+		if (arg0 & 1)
+		{
 			ret = ret | 2;
 		}
-		if (arg0 & 2) {
+		if (arg0 & 2)
+		{
 			ret = ret | 1;
 		}
 		break;
 	}
-	case 3: {
-		if (arg0 & 4) {
+	case 3:
+	{
+		if (arg0 & 4)
+		{
 			ret |= 1;
 		}
-		if (arg0 & 8) {
+		if (arg0 & 8)
+		{
 			ret = ret | 2;
 		}
-		if (arg0 & 1) {
+		if (arg0 & 1)
+		{
 			ret = ret | 8;
 		}
-		if (arg0 & 2) {
+		if (arg0 & 2)
+		{
 			ret = ret | 4;
 		}
 		break;
@@ -9462,7 +9444,6 @@ u8 func_8007899C_160A5C(s32 arg0, s32 arg1) {
 
 	return ret;
 }
-
 
 // AI - Sets room visitability flags based on level and building variant
 void func_80078AD4_160B94(s32 arg0) {
@@ -9564,7 +9545,6 @@ void func_80078D68_160E28(void) {
 					break;
 
 				case 2:
-					/* Keep both conversion constants in saved floating-point registers. */
 					if (temp_f22 != temp_f20) {}
 					var_s1 = func_8007A168_162228(var_s3, D_800E66A8[var_s3].unk2, D_800E66A8[var_s3].unk6,
 						(s32)D_800E6A78.unk4C, (s32)D_800E6A78.unk54);
@@ -10073,6 +10053,7 @@ void func_80079E50_161F10(void) {
 		}
 	}
 }
+
 // AI - Checks if player is near a room interaction zone
 s32 func_8007A168_162228(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
@@ -10216,7 +10197,6 @@ s32 func_8007A634_1626F4(s32 arg0) {
 	}
 	return 0;
 }
-
 
 // AI - Checks if a second event building has been visited
 s32 func_8007A6DC_16279C(s32 arg0) {
@@ -10387,7 +10367,6 @@ void func_8007A8AC_16296C(s32 arg0) {
 	}
 }
 
-
 // AI - Handles building exit/transition logic
 void func_8007AE40_162F00(void)
 {
@@ -10493,7 +10472,6 @@ void func_8007B1E0_1632A0(s32 arg0)
 	D_800E6638 = 0;
 }
 
-// jtbl_800A4B9C_18CC5C
 // AI - Handles mission-related room events
 s32 func_8007B2F0_1633B0(s32 arg0) {
 	s32 roomId;
@@ -10542,7 +10520,6 @@ s32 func_8007B2F0_1633B0(s32 arg0) {
 	D_80047970[buildingInteriorToLoadId] = D_80047970[buildingInteriorToLoadId] | (1 << arg0);
 	return ret;
 }
-
 
 // AI - Handles special mission logic for Level 4 building 0x20
 s32 func_8007B51C_1635DC(s32 arg0) {
@@ -10820,7 +10797,6 @@ s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007CAA8_6A4
 	D_800E6670.x = ratio * D_800E6680.x + D_800E6660.x;
 	if ((D_800E6660.z <= D_800E6670.z) && (D_800E6670.x < (arg1 + arg3)) && ((arg0 - arg3) < D_800E6670.x)) {
 		deltaX = D_800E6670.x - D_800E6660.x;
-		/* Preserve the cached direction Z through the distance sum. */
 		distanceSquared = (deltaX * deltaX) + (deltaZ * deltaZ); if ((f64)distanceSquared != 0.0) {} if ((f64)D_800E6680.z != 0.0) {}
 		if (distanceSquared <= arg4->unk10) {
 			arg4->unk10 = distanceSquared;
@@ -10829,7 +10805,6 @@ s32 func_8007C1DC_16429C(f32 arg0, f32 arg1, f32 arg2, f32 arg3, Unk8007CAA8_6A4
 	}
 	return 0;
 }
-
 
 // AI - Checks if a direction angle is within a range threshold
 s32 func_8007C2D0_164390(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, s32 arg5) {
@@ -10874,7 +10849,7 @@ s32 func_8007C3C0_164480(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 	return 0;
 }
 
-// AI - Empty stub function (no-op placeholder)
+// AI - Empty stub function
 void func_8007C420_1644E0(void) {
 }
 
@@ -10920,8 +10895,6 @@ s32 func_8007C428_1644E8(s16 arg0, s16 arg1, s16 arg2, u16 arg3, s32 arg4, s32 a
 
 	return 1;
 }
-
-
 
 // AI - Checks if a grid cell is passable (not occupied)
 s32 func_8007C698_164758(s32 arg0, s32 arg1)
