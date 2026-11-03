@@ -1050,6 +1050,8 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
     if (arg2 != 0) {
         scale = 4096.0f;
         units = 4096.0;
+        if (scale) { }
+        if (units) { }
         degrees = D_80037610_38210_R;
         do {
             channel = &arg1[i];
