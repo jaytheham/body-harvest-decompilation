@@ -8164,7 +8164,7 @@ void func_80074FF0_15D0B0(void) {
 void func_8007568C_15D74C(void) {
 	s32 padHigh0;
 	s32 padHigh1;
-	f64 radiusScale;
+	f64 radiusScale = 1.5;
 	f64 temp_f20;
 	Unk800E66A8 *entry;
 	f32 dimX;
@@ -8174,9 +8174,9 @@ void func_8007568C_15D74C(void) {
 	s32 i;
 	s32 halfDim;
 	u16 rotation[6];
-	f32 positionScale;
-	f32 angleScale;
-	f32 halfDivisor;
+	f32 positionScale = 65536.0f;
+	f32 angleScale = 32768.0f;
+	f32 halfDivisor = 2.0f;
 	s32 position[6];
 	s32 padPosition0;
 	s32 padPosition1;
@@ -8214,19 +8214,13 @@ void func_8007568C_15D74C(void) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	entry = D_800E66A8;
-	i = 0;
 	if (D_800E668C > 0) {
-		radiusScale = 1.5;
-		halfDivisor = 2.0f;
-		angleScale = 32768.0f;
-		positionScale = 65536.0f;
 		if (radiusScale) {}
 		if (halfDivisor && halfDivisor) {}
 		if (angleScale) {}
 		if (positionScale) {}
-		if (&D_800E65BC) {}
-		if (&D_8005BB38) {}
 		temp_f20 = D_800A4AC0_18CB80.value;
+		i = 0;
 		do {
 			entry = &D_800E66A8[i];
 			objIdx = entry->unk0;
