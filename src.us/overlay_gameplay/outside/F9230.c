@@ -1388,7 +1388,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 	u8 effectColor[4];
 	f32 sp74;
 	f32 temp_f18;
-	s32 scriptedState;
+	f32 positionX;
 	s32 temp_v1_6;
 	VehicleInstance *temp_v0_3;
 	f32 interpolated[2];
@@ -1400,8 +1400,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 	if (D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 0x4000) {
 		func_80133E94_142E44((s32) (D_80157600.unkC / 4));
 	}
-	scriptedState = D_80048188;
-	if (scriptedState != 0) {
+	if (D_80048188 != 0) {
 		switch (D_801575E0.unk0) {
 		case 5:
 			if (D_80157600.unk40C != 0) {
@@ -1410,9 +1409,8 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 		case 4:
 			spAC = 1.0f;
 			if (D_80157600.unk424 == 0) {
-				temp_v1_6 = D_80157600.unk420[0];
-				if (D_80157600.unk40C != temp_v1_6) {
-					func_800EB534_FA4E4(&D_80157600, temp_v1_6, 0, 0);
+				if (D_80157600.unk40C != D_80157600.unk420[0]) {
+					func_800EB534_FA4E4(&D_80157600, D_80157600.unk420[0], 0, 0);
 				}
 			}
 			if (((Unk8007F878_404 *)D_80157600.unk404)->unkE50 == 0) {
@@ -1422,8 +1420,8 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				if (temp_v1_6 == 0xFF) {
 					D_80048188 = 0;
 					func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 0, 0);
-				} else if (D_80157600.unk40C != temp_v1_6) {
-					func_800EB534_FA4E4(&D_80157600, temp_v1_6, 0, 0);
+				} else if (D_80157600.unk40C != D_80157600.unk420[0]) {
+					func_800EB534_FA4E4(&D_80157600, D_80157600.unk420[0], 0, 0);
 				}
 			}
 			break;
@@ -1470,13 +1468,14 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				arg0->unk1C = 1;
 			}
 			break;
-		case 0:
+		case 0: {
+			s16 targetHeading;
 			if (vehicleInstances[D_80157E82].unk1C <= 0) {
 				D_80048188 = 0;
 			}
-			temp_v1_6 = D_801575E0.coordinates[3][D_801575E0.unk4];
-			if ((arg0->unkE & 0xFFFF) != (temp_v1_6 & 0xFFFF)) {
-				func_800EADF8_F9DA8(arg0, temp_v1_6);
+			targetHeading = D_801575E0.coordinates[3][D_801575E0.unk4];
+			if ((arg0->unkE & 0xFFFF) != (targetHeading & 0xFFFF)) {
+				func_800EADF8_F9DA8(arg0, targetHeading);
 				D_801575C8 = 0;
 				D_801575C4 = 0.0f;
 			} else {
@@ -1499,10 +1498,10 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 					D_801575C4 = temp_f18;
 					normalSpeed = (f32)((f64)(normalSpeed * temp_f18) / 6.0);
 					temp_f12 = (f32)((f64)(temp_f12 * temp_f18) / 6.0);
-					temp_f0_2 = temp_v1 + temp_f0_2;
+					positionX = temp_v1 + temp_f0_2;
 					interpolated[1] = temp_v1_6 + normalSpeed;
 					interpolated[0] = temp_a3 + temp_f12;
-					func_800FB44C_10A3FC(arg0, temp_f0_2);
+					func_800FB44C_10A3FC(arg0, positionX);
 					func_800FB468_10A418(arg0, interpolated[1]);
 					func_800FB484_10A434(arg0, interpolated[0]);
 					temp_v0_3 = &vehicleInstances[D_80157E82];
@@ -1533,6 +1532,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				arg0->unk38 = 0.0f;
 			}
 			break;
+		}
 		case 1:
 			if ((D_80157600.unk40C != 0x5B) && (D_80157600.unk40C != 0x5C)) {
 				D_801575C8 = 0;
@@ -1558,18 +1558,18 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				temp_f0_2 = (f32)((f64)(temp_f0_2 * temp_f18) / 24.0);
 				normalSpeed = (f32)((f64)(normalSpeed * temp_f18) / 24.0);
 				temp_f12 = (f32)((f64)(temp_f12 * temp_f18) / 24.0);
-				temp_f0_2 = temp_v1 + temp_f0_2;
+				positionX = temp_v1 + temp_f0_2;
 				interpolated[1] = temp_v1_6 + normalSpeed;
 				interpolated[0] = temp_a3 + temp_f12;
-				func_800FB44C_10A3FC(arg0, temp_f0_2);
+				func_800FB44C_10A3FC(arg0, positionX);
 				func_800FB468_10A418(arg0, interpolated[1]);
 				func_800FB484_10A434(arg0, interpolated[0]);
 			} else {
 				temp_v0_3 = &vehicleInstances[D_80052B1C];
-				temp_v1 = (s16)((vehicleTypes[temp_v0_3->unk1A].unk38 * 6) + temp_v0_3->unk2);
-				sp92 = temp_v1;
+				positionX = temp_v0_3->unk0;
+				sp92 = (vehicleTypes[temp_v0_3->unk1A].unk38 * 6) + temp_v0_3->unk2;
 				sp90 = (s32) D_80157600.unkC + arg0->unk2;
-				func_800FB44C_10A3FC(arg0, (f32) temp_v0_3->unk0);
+				func_800FB44C_10A3FC(arg0, positionX);
 				func_800FB484_10A434(arg0, (f32) vehicleInstances[D_80052B1C].unk4);
 				if (((sp92 - 0x64) < sp90) && (sp90 < (sp92 + 0x5A))) {
 					func_800E35E0_F2590(0xAA);
@@ -1605,8 +1605,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			break;
 		}
 	}
-	scriptedState = D_80048188;
-	if (scriptedState == 0) {
+	if (D_80048188 == 0) {
 		func_80136198_145148(0);
 		temp_v1_6 = D_80157A28 & PLAYER_STATE_FLAG_DYING;
 		if ((temp_v1_6 != PLAYER_STATE_FLAG_DYING) && (((VehicleInstance *) D_80052B34)->unk1C <= 0)) {
@@ -1703,8 +1702,8 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 		} else {
 			spAC = (f32) ((f64) sp74 / 70.0);
 		}
-		vehicleFlags = arg0->unk20;
-		if ((vehicleFlags & VEHICLE_FLAG_AIRBORNE) && !(vehicleFlags & VEHICLE_FLAG_ON_BRIDGE) && (temp_v1_6 == 0)) {
+
+		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && (temp_v1_6 == 0)) {
 			D_801575F8 += 1;
 			temp_v1_6 = D_801575D8 + 1;
 			D_801575D8 = temp_v1_6;
@@ -1722,7 +1721,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 					func_800EB534_FA4E4(&D_80157600, ANIM_FLAILING_BACK, 0, 0);
 				}
 			}
-		} else if (vehicleFlags & 0x1000) {
+		} else if (arg0->unk20 & 0x1000) {
 			if (D_80157600.unk40C != 9) {
 				func_800EB534_FA4E4(&D_80157600, ANIM_FLAILING_BACK, 0, 0);
 			}
@@ -1852,6 +1851,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 		D_8013FC04_14EBB4[0] = 0.0f;
 	}
 }
+
 
 
 #else
