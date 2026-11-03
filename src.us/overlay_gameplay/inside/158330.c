@@ -9314,6 +9314,7 @@ void func_800784B8_160578(void) {
 		}
 	}
 
+	do {} while (0);
 	if (currentLevel == 5) {
 		interiorId = buildingInteriorToLoadId;
 		if (interiorId == 1) {
