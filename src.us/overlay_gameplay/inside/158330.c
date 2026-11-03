@@ -7450,11 +7450,11 @@ void func_80073A48_15BB08(void) {
 #ifdef NON_MATCHING
 // AI - Renders the top-of-screen HUD gradient bar with level-specific colors
 void func_80073A50_15BB10(void) {
-	s32 baseY;
-	s32 y1;
-	s32 y2;
-	s32 y3;
-	s32 y4;
+	u16 baseY;
+	u16 y1;
+	u16 y2;
+	u16 y3;
+	u16 y4;
 	s16 dx;
 	s16 dz;
 	s32 angle;
