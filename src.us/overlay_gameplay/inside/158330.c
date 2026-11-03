@@ -8138,7 +8138,7 @@ void func_80074FF0_15D0B0(void) {
 #ifdef NON_MATCHING
 void func_8007568C_15D74C(void) {
 	s32 effectKind;
-	s32 padHigh1;
+	s32 cameraZ;
 	f64 radiusScale = 1.5;
 	f64 temp_f20;
 	Unk800E66A8 *entry;
@@ -8200,7 +8200,7 @@ void func_8007568C_15D74C(void) {
 					halfDim = (dimZ < dimX) ? (s32)(dimX / halfDivisor) : (s32)(dimZ / halfDivisor);
 					if (func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
 						((u16)(u32)((f64)halfDim * radiusScale)), D_8008DDF4_175EB4, D_8008DDF8_175EB8,
-						D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
+						(s32)(s64)(cameraZ = (s32)D_8008DDFC_175EBC), (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
 						func_8007F8F4_1679B4(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60, entry->unk8 << 0xE);
 					}
 				} else {
@@ -8239,23 +8239,23 @@ void func_8007568C_15D74C(void) {
 							gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 						} else if (D_800E65BC[objIdx].unk40 & 0x100) {
 							rotation[0] = entry->unk8 << 0xE;
-							position[0] = (entry->unk2 - 0x60) << 0x10;
-							scale[0] = 0x40;
-							scale[2] = 0x40;
-							position[2] = (entry->unk6 - 0x60) << 0x10;
-							scale[1] = 0x40;
-							position[1] = entry->unk4 << 0x10;
-							rotation[3] = (s16)(s32)(((f64)(entry->unk18 * angleScale)) / temp_f20);
-							rotation[4] = (s16)(s32)(((f64)(entry->unk1C * angleScale)) / temp_f20);
 							rotation[1] = 0;
 							rotation[2] = 0;
-							scale[3] = 0x100;
-							scale[5] = 0x100;
+							position[0] = (entry->unk2 - 0x60) << 0x10;
+							position[1] = entry->unk4 << 0x10;
+							position[2] = (entry->unk6 - 0x60) << 0x10;
+							scale[0] = 0x40;
+							scale[1] = 0x40;
+							scale[2] = 0x40;
+							rotation[3] = (s16)(s32)(((f64)(entry->unk18 * angleScale)) / temp_f20);
+							rotation[4] = (s16)(s32)(((f64)(entry->unk1C * angleScale)) / temp_f20);
 							rotation[5] = (s16)(s32)(((f64)(entry->unk14 * angleScale)) / temp_f20);
 							position[3] = (s32)(entry->unk20 * positionScale);
 							position[4] = (s32)(entry->unk24 * positionScale);
-							scale[4] = 0x100;
 							position[5] = (s32)(entry->unk28 * positionScale);
+							scale[3] = 0x100;
+							scale[4] = 0x100;
+							scale[5] = 0x100;
 							func_80076A58_15EB18(1, rotation, position, scale, variant);
 						} else if (((D_800E65BC[objIdx].unk40 & 0x04000000) && (entry->unk2E & 1)) ||
 								   ((D_800E65BC[objIdx].unk40 & 0x08000000) && !(entry->unk2E & 1))) {
@@ -8343,6 +8343,7 @@ void func_8007568C_15D74C(void) {
 		gSPSetLights2(D_8005BB2C++, D_8008DE50_175F10.lights);
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif
