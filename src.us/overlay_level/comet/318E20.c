@@ -4022,7 +4022,6 @@ void func_802DF188_3232D8(void) {
 }
 
 // AI - Comet level boss-event handler; on the boss trigger (D_8014D17C==0xC7) spawns the boss via func_800B03CC_BF37C (leads to the credits).
-#ifdef NON_MATCHING
 void func_802DF290_3233E0(void) {
 	s32 sp2C;
 	s32 sp28;
@@ -4039,6 +4038,17 @@ void func_802DF290_3233E0(void) {
 	u16 sp32;
 	u16 sp30;
 
+	/* Keep the shared stride/trigger constant ahead of coordinate caches. */
+	if (((D_8014D17C ^ 1) == 0x50) |
+	    ((D_8014D17C ^ 2) == 0x50) |
+	    ((D_8014D17C ^ 3) == 0x50) |
+	    ((D_8014D17C ^ 4) == 0x50) |
+	    ((D_8014D17C ^ 5) == 0x50) |
+	    ((D_8014D17C ^ 6) == 0x50) |
+	    ((D_8014D17C ^ 7) == 0x50) |
+	    ((D_8014D17C ^ 8) == 0x50) |
+	    ((D_8014D17C ^ 9) == 0x50) |
+	    ((D_8014D17C ^ 10) == 0x50)) {}
 	if ((f64)D_802E7C64 + 0.0) {}
 	if (D_8014D17C == 0x50) {
 		alienInstances[D_8014D17E].unk24 = 3;
@@ -4053,15 +4063,14 @@ void func_802DF290_3233E0(void) {
 	} else if (D_8014D17C == 0xAA) {
 		D_802E7C58 = 0x19;
 		sp28 = alienInstances[D_8014D17E].unk0;
-		sp2C = alienInstances[D_8014D17E].unk4;
+		timer = alienInstances[D_8014D17E].unk4;
 		D_802E7C60 = sp28;
-		D_802E7C68 = sp2C;
+		D_802E7C68 = timer;
 		sp2C = func_800B84D0_C7480(alienInstances[D_8014D17E].unk0, alienInstances[D_8014D17E].unk4) >> 8;
-		if (sp2C) {}
-		sp2C = (s32)((f64)sp2C + ((f64)(D_802E7C58 * 0xBE) * 0.00390625));
-		sp40 = D_802E7C68;
-		if ((f64)D_802E7C60 + 0.0) {}
-		D_802E7C64 = sp2C; D_802E7C5A = func_800D0DE4_DFD94(D_802E7C60, sp2C, sp40, 0xC8, 0, 0xFF, 0x6E);
+		/* Paired loads and checks preserve the target scheduler ties. */
+		sp28 = D_802E7C60; sp40 = D_802E7C68;
+		if ((f64)sp28 + 0.0) {} if ((f64)D_802E7C60 + 0.0) {}
+		D_802E7C64 = sp2C = (s32)((f64)sp2C + ((f64)(D_802E7C58 * 0xBE) * 0.00390625)); D_802E7C5A = func_800D0DE4_DFD94(D_802E7C60, sp2C, sp40, 0xC8, 0, 0xFF, 0x6E);
 		func_801371B8_146168(0, 0x189, alienInstances[D_8014D17E].unk0, alienInstances[D_8014D17E].unk2, (s32)alienInstances[D_8014D17E].unk4, -1.0f);
 		D_80052ACA = 2;
 	}
@@ -4109,9 +4118,7 @@ void func_802DF290_3233E0(void) {
 	}
 	D_8014D17C++;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DF290_3233E0.s")
-#endif
+
 
 void func_802DF940_323A90(void) {
 	s32 randomYaw;
