@@ -1,0 +1,7 @@
+# Core text renderer precision and constant candidates
+
+Incorrect ASM: `func_8000B044_BC44` converted the fade factor from double to float before each color calculation, producing `mul.s`, `sub.s`, and `cvt.w.s`. Centering narrowed the span to 16 bits and emitted two separate branches. Texture step and minimum-scale constants were repeatedly loaded instead of occupying the target saved FPRs.
+
+Code changed: keep `fraction` as `f64` in each product, retain the explicit float conversion of the integer color difference, and read each endpoint into its own `s16` local. Compute centering directly with signed `/ 2`. Capture the minimum scale once. A discarded floating comparison in the loop and a separate discarded comparison before the loop adjust IDO candidate frequencies without emitting instructions; the empty `do` preserves the initial minimum load order. Declare the renderer locals in their observed stack order.
+
+Correct ASM: the fade uses `cvt.d.w` for the endpoint, `cvt.s.w` plus `cvt.d.s` for the difference, then `mul.d`, `sub.d`, and `cvt.w.d`. Centering uses one signed division correction sequence. The frame is `0xA0`, alpha is at `sp+0x88`, clipping fields occupy `sp+0x80..0x86`, and flags occupy `sp+0x74/0x78`. Saved constants are `f20=4.0f`, `f22=1/1024`, `f24=0.01`, `f26=4.0f`, `f28=1024.0f`, and `f30=minimum`, with the target initialization order. The function remains NON_MATCHING while integer register allocation and index scheduling are refined.
