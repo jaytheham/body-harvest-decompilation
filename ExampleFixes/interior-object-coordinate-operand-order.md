@@ -1,0 +1,5 @@
+incorrect ASM: In `func_80074FF0_15D0B0`, writing each draw coordinate as `(s32)(offset * positionScale) + fixedCoordinate` puts the integer coordinate first in `addu`, schedules its loads early, and delays the final call flag and matrix pointer update. The rotation sum also has its converted angle first.
+
+-> code changed: Write each coordinate as `fixedCoordinate + (s32)(offset * positionScale)`. Conversely, write the Y rotation as `(s16)(s32)(scaledAngle / temp_f20) + (entryRotation << 14)`. Keep the indexed array accesses.
+
+-> correct ASM: Coordinate additions use the converted floating offset first (`addu a1,t3,t8`, `addu a2,t6,t0`, `addu a3,t1,t3`), while Y rotation uses the byte rotation first (`addu t8,t2,t3`). The final draw call now has the target structural scheduling, including the early flag store and late matrix pointer increment. This is a partial fix: the function still has culling-call and transform-initializer differences; its complete difference score improves from 4718 to 2248 before the separate initializer refinement.
