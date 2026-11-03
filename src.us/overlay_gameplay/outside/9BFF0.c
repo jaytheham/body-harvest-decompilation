@@ -3340,36 +3340,33 @@ void func_80093C7C_A2C2C(u8 arg0)
 	u16 jointYaw;
 	s16 pathNodes[2];
 	s16 path2Index;
-	s16 padA6;
-	AlienInstance *alien;
+	s16 secondNode;
+	Vec3f *vector;
 	VehicleInstance *vehicle;
 	s32 dist;
-	s16 sp9E;
+	s16 terrainPitch;
 	Unk8014DD50 *path3;
-	f32 cachedZ;
+	s32 pad94;
 	s32 deltaZ;
 	s32 absVal;
 	s32 sign;
 	Unk80154082 sp84;
-	f32 cachedX;
+	s32 pad80;
 	s32 x;
-	s32 deltaX;
+	s32 height;
 	s32 z;
-	f32 vecX;
-	f32 vecY;
-	f32 vecZ;
+	Vec3f normal;
 	s8 pathResult;
 	u16 pathAngle;
 
-	alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
+	typeIndex = alienInstances[arg0].typeIndex;
 	sp84 = D_8013CAFC_14BAAC;
-	deltaX = alien->unkC;
-	pathNode = D_8014DD50[deltaX].unkC;
+	absVal = alienInstances[arg0].unkC;
+	pathNode = D_8014DD50[absVal].unkC;
 	path2Index = D_8014DD50[pathNode].unkD;
 	pathNext = (s16)D_8014DD50[path2Index].unkD;
 
-	if ((alien->hitPoints < (alienTypes[typeIndex].unk3A / 4)) && (D_80222A70 < alien->unk2))
+	if ((alienInstances[arg0].hitPoints < (alienTypes[typeIndex].unk3A / 4)) && (D_80222A70 < alienInstances[arg0].unk2))
 	{
 		func_80089200_981B0(arg0, 4, 0x5A);
 	}
@@ -3379,70 +3376,67 @@ void func_80093C7C_A2C2C(u8 arg0)
 	{
 		func_800877E8_96798(arg0, 0x1F4, 0x320);
 	}
-	else if (func_800B325C_C220C((s8)(alien->unk0 >> 8), (s8)(alien->unk4 >> 8), 0x1000) != 0)
+	else if (func_800B325C_C220C((s8)(alienInstances[arg0].unk0 >> 8), (s8)(alienInstances[arg0].unk4 >> 8), 0x1000) != 0)
 	{
 		func_8008735C_9630C(arg0);
-		alien->unk4E = 1;
+		alienInstances[arg0].unk4E = 1;
 	}
 	else
 	{
 		func_80087720_966D0(arg0, dist);
 	}
 
-	deltaX = (s32)(alien->unk0 - D_80052B34->unk0) >> 2;
-	deltaZ = (s32)(alien->unk4 - D_80052B34->unk4) >> 2;
-	dist = (s32)sqrtf((f32)((deltaX * deltaX) + (deltaZ * deltaZ))) * 4;
+	x = (s32)(alienInstances[arg0].unk0 - D_80052B34->unk0) >> 2;
+	z = (s32)(alienInstances[arg0].unk4 - D_80052B34->unk4) >> 2;
+	dist = (s32)sqrtf((f32)((x * x) + (z * z))) * 4;
 
-	if (!(alien->unk20 & ALIEN_FLAG_FALL))
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
 	{
-		alien->unk30 = alien->unk2;
-		if ((alien->unk3C != 0) && (D_80222A70 < alien->unk2))
+		alienInstances[arg0].unk30 = alienInstances[arg0].unk2;
+		if ((alienInstances[arg0].unk3C != 0) && (D_80222A70 < alienInstances[arg0].unk2))
 		{
-			x = alien->unk0;
-			z = alien->unk4;
-			deltaX = x >> 2;
+			vector = &normal;
+			x = alienInstances[arg0].unk0;
+			z = alienInstances[arg0].unk4;
+			absVal = x >> 2;
 			deltaZ = z >> 2;
-			cachedX = (f32)deltaX - D_80047954;
-			vecX = cachedX;
-			vecY = 0.0f;
-			cachedZ = (f32)deltaZ - D_8004795C;
-			vecZ = cachedZ;
-			guNormalize(&vecX, &vecY, &vecZ);
-			cachedX = vecX;
-			cachedZ = vecZ;
-			x = (s32)((f32)x - (120.0f * cachedX));
-			z = (s32)((f32)z - (120.0f * cachedZ));
-			vecX = 120.0f * cachedX;
-			vecZ = 120.0f * cachedZ;
+			vector->z = (f32)absVal - D_80047954;
+			vector->y = 0.0f;
+			vector->x = (f32)deltaZ - D_8004795C;
+			guNormalize(&vector->z, &vector->y, &vector->x);
+			vector->z *= 120.0f;
+			vector->x *= 120.0f;
+			x -= vector->z;
+			z -= vector->x;
 
-			if (alien->unk20 & ALIEN_FLAG_UNKF)
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)
 			{
-				deltaX = (func_800B84D0_C7480(x, z) >> 8) + 0x32;
-				func_800DEA08_ED9B8(x, deltaX, z, 0xC8, 0x14, 0, 0x32, 0xC8, 0x88, 0x67, 0x11);
-				func_800DEE5C_EDE0C(x, (s16)(deltaX - 0x28), z, 0x50, 0x14);
-				func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 3.0f);
+				height = (func_800B84D0_C7480(x, z) >> 8) + 0x32;
+				func_800DEA08_ED9B8(x, height, z, 0xC8, 0x14, 0, 0x32, 0xC8, 0x88, 0x67, 0x11);
+				func_800DEE5C_EDE0C(x, (s16)(height - 0x28), z, 0x50, 0x14);
+				func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 3.0f);
 			}
 			else
 			{
-				deltaX = (func_800B84D0_C7480(x, z) >> 8) + 0x14;
-				func_800DEA08_ED9B8(x, deltaX, z, 0x64, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
-				func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 2.0f);
+				sign = (func_800B84D0_C7480(x, z) >> 8) + 0x14;
+				func_800DEA08_ED9B8(x, sign, z, 0x64, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
+				func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 2.0f);
 			}
 
 			func_80137468_146418(arg0, 0xC);
-			alien->unk3C = 0;
+			alienInstances[arg0].unk3C = 0;
 		}
 
-		alien->unk12 = 0;
-		if (alien->unk20 & ALIEN_FLAG_UNKD)
+		alienInstances[arg0].unk12 = 0;
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
 		{
-			if (alien->unk2C != 0)
+			if (alienInstances[arg0].unk2C != 0)
 			{
-				alien->unk2C--;
+				alienInstances[arg0].unk2C--;
 			}
 			else
 			{
-				alien->unk20 &= ~ALIEN_FLAG_UNKD;
+				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
 				func_80093AE4_A2A94(arg0, dist);
 			}
 		}
@@ -3452,27 +3446,27 @@ void func_80093C7C_A2C2C(u8 arg0)
 			absVal = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
 			if ((absVal >= (0x2000 - alienTypes[typeIndex].unk42)) || (dist >= 0xFB) || (dist < 0xFA))
 			{
-				alien->unk2C = 8;
-				alien->unk20 |= ALIEN_FLAG_UNKD;
+				alienInstances[arg0].unk2C = 8;
+				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD;
 			}
 		}
 
 		path3 = &D_8014DD50[pathNext];
-		deltaZ = func_8009395C_A290C(arg0, alien->unk6);
-		yawTarget = alien->unk6 + 0x4000;
+		deltaZ = func_8009395C_A290C(arg0, alienInstances[arg0].unk6);
+		yawTarget = alienInstances[arg0].unk6 + 0x4000;
 		path3->unkA = deltaZ;
 		deltaZ = func_8009395C_A290C(arg0, yawTarget);
-		absVal = alien->unk47;
+		absVal = alienInstances[arg0].unk47;
 		path3->unk8 = deltaZ;
 
 		if (absVal & 1)
 		{
-			alien->unk34++;
+			alienInstances[arg0].unk34++;
 		}
 	}
 	else
 	{
-		if (alien->unk10 > 0)
+		if (alienInstances[arg0].unk10 > 0)
 		{
 			path3 = &D_8014DD50[pathNext];
 			jointPitch = path3->unkAUnsigned;
@@ -3489,49 +3483,49 @@ void func_80093C7C_A2C2C(u8 arg0)
 				sign = (yawTarget > 0) ? 1 : ((yawTarget < 0) ? -1 : 0);
 				path3->unk8Unsigned = jointYaw - (sign * 0x320);
 			}
-			alien->unk3C = 1;
+			alienInstances[arg0].unk3C = 1;
 		}
 		else
 		{
-			sp9E = func_8009395C_A290C(arg0, alien->unk6);
-			deltaX = func_8009395C_A290C(arg0, (s16)(alien->unk6 + 0x4000));
+			terrainPitch = func_8009395C_A290C(arg0, alienInstances[arg0].unk6);
+			x = func_8009395C_A290C(arg0, (s16)(alienInstances[arg0].unk6 + 0x4000));
 
 
 			path3 = &D_8014DD50[pathNext];
 			jointPitch = path3->unkAUnsigned;
-			if (sp9E < (s16)jointPitch)
+			if (terrainPitch < (s16)jointPitch)
 			{
 				path3->unkAUnsigned -= 0x320;
 			}
 			else
 			{
-				path3->unkAUnsigned = sp9E;
+				path3->unkAUnsigned = terrainPitch;
 			}
 
 			jointYaw = path3->unk8Unsigned;
-			deltaZ = (s16)jointYaw - deltaX;
+			deltaZ = (s16)jointYaw - x;
 			absVal = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
 			if (absVal >= 0x321)
 			{
-				sign = (deltaX > 0) ? 1 : ((deltaX < 0) ? -1 : 0);
+				sign = (x > 0) ? 1 : ((x < 0) ? -1 : 0);
 				path3->unk8Unsigned = jointYaw + (sign * 0x320);
 			}
 			else
 			{
-				path3->unk8Unsigned = deltaX;
+				path3->unk8Unsigned = x;
 			}
 
-			if (alien->unk47 & 0xE)
+			if (alienInstances[arg0].unk47 & 0xE)
 			{
-				alien->unk3C = 0;
-				alien->unk20 &= ~(ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
+				alienInstances[arg0].unk3C = 0;
+				alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
 				func_80093AE4_A2A94(arg0, dist);
 			}
 		}
 
-		if (alien->unk47 & 8)
+		if (alienInstances[arg0].unk47 & 8)
 		{
-			if (alien->unk20 & ALIEN_FLAG_UNKF)
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)
 			{
 				func_80123AC4_132A74(D_80052B34);
 			}
@@ -3549,12 +3543,12 @@ void func_80093C7C_A2C2C(u8 arg0)
 			func_80137130_1460E0(vehicle, 2, vehicle->unk0, vehicle->unk2, vehicle->unk4);
 		}
 
-		alien->unk10 += 0x40;
-		func_800808F0_8F8A0(arg0, &alien->unkE);
-		alien->unk6 = alien->unkE;
-		if (alien->unk47 & 4)
+		alienInstances[arg0].unk10 += 0x40;
+		func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+		alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
+		if (alienInstances[arg0].unk47 & 4)
 		{
-			alien->unk12 = 0;
+			alienInstances[arg0].unk12 = 0;
 		}
 	}
 
@@ -3570,37 +3564,37 @@ void func_80093C7C_A2C2C(u8 arg0)
 
 	D_8014DD50[path2Index].unk6 = pathAngle;
 
-	if ((func_80086230_951E0(arg0, pathNode, 0x8000) == 0) && (dist < 0x5DC) && (dist >= 0xC9) && (alien->unk4E != 0) && !(alien->unk20 & ALIEN_FLAG_UNKE))
+	if ((func_80086230_951E0(arg0, pathNode, 0x8000) == 0) && (dist < 0x5DC) && (dist >= 0xC9) && (alienInstances[arg0].unk4E != 0) && !(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE))
 	{
-		alien->unk6 = (s16)(alien->unk6 - D_8014DD50[path2Index].unk6Unsigned);
+		alienInstances[arg0].unk6 = (s16)(alienInstances[arg0].unk6 - D_8014DD50[path2Index].unk6Unsigned);
 		if (func_800871CC_9617C(arg0, 0, 0x14) != 0)
 		{
-			alien->unk36 = 0;
-			alien->unk20 |= ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE;
 			switch (currentLevel)
 			{
 			case 1:
-				alien->unk1E = 0xC;
+				alienInstances[arg0].unk1E = 0xC;
 				break;
 			case 2:
-				alien->unk1E = 8;
+				alienInstances[arg0].unk1E = 8;
 				break;
 			case 3:
-				alien->unk1E = 6;
+				alienInstances[arg0].unk1E = 6;
 				break;
 			}
 		}
-		alien->unk6 = (s16)(alien->unk6 + D_8014DD50[path2Index].unk6Unsigned);
+		alienInstances[arg0].unk6 = (s16)(alienInstances[arg0].unk6 + D_8014DD50[path2Index].unk6Unsigned);
 	}
 
-	absVal = alien->unk20;
+	absVal = alienInstances[arg0].unk20;
 	if (absVal & ALIEN_FLAG_UNKE)
 	{
-		yawTarget = D_8014DD50[path2Index].unkC;
-		path3 = &D_8014DD50[yawTarget];
-		sp9E = path3->unkC;
-		pathNodes[0] = yawTarget;
-		pathNodes[1] = sp9E;
+		pathNext = D_8014DD50[path2Index].unkC;
+		path3 = &D_8014DD50[pathNext];
+		secondNode = path3->unkC;
+		pathNodes[0] = pathNext;
+		pathNodes[1] = secondNode;
 
 		if (currentLevel == 1)
 		{
@@ -3610,7 +3604,7 @@ void func_80093C7C_A2C2C(u8 arg0)
 		{
 			if (absVal & ALIEN_FLAG_Z)
 			{
-				pathNodes[0] = sp9E;
+				pathNodes[0] = secondNode;
 			}
 			else
 			{
@@ -3629,15 +3623,17 @@ void func_80093C7C_A2C2C(u8 arg0)
 
 		if (pathResult == 2)
 		{
-			alien->unk20 &= ~ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
 		}
 	}
 
-	if (alien->unk1E != 0)
+	if (alienInstances[arg0].unk1E != 0)
 	{
-		alien->unk1E--;
+		alienInstances[arg0].unk1E--;
 	}
 }
+
+
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
