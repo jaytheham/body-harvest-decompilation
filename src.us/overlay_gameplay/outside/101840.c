@@ -1245,9 +1245,6 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	u16 cG;
 	u8 cB;
 
-	if (&colorA) {}
-	if (&colorB) {}
-	if (&colorC) {}
 	radius = D_801601F0[arg3].unk8;
 	if (D_8013FCD0_14EC80 != 0) {
 		radius *= 2;
@@ -1266,6 +1263,9 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	colorA = levelColor[0x24];
 	colorB = levelColor[0x25];
 	colorC = levelColor[0x26];
+	if (&colorA) {}
+	if (&colorB) {}
+	if (&colorC) {}
 	colorAClamped = (colorA - 0xB4 < 0) ? 0 : colorA - 0xB4;
 	colorBClamped = (colorB - 0xB4 < 0) ? 0 : colorB - 0xB4;
 	colorCClamped = (colorC - 0xB4 < 0) ? 0 : colorC - 0xB4;
@@ -1276,6 +1276,8 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	cG = D_8013FCD4_14EC84[currentLevel * 9 + 0x28];
 	cB = D_8013FCD4_14EC84[currentLevel * 9 + 0x29];
 
+	if (cR) {}
+	if (cG) {}
 	radiusThird = radius / 3.0f;
 
 	D_8005BB34->v.ob[0] = arg0[0];
@@ -1465,7 +1467,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
 	gDPPipeSync(D_8005BB2C++);
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 14), 14, 0);
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-14]), 14, 0);
 	gDPLoadTextureBlock(D_8005BB2C++, D_1014080, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
 	gSP1Triangle(D_8005BB2C++, 3, 8, 5, 0);
@@ -1483,6 +1485,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
 	gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
