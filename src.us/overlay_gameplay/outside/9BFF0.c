@@ -12,8 +12,8 @@ const ShadowGeometryConstant D_80141EF0_150EA0 = {0.9};
 const f64 D_80141EF8_150EA8[] = {65.0};
 const f64 D_80141F00_150EB0[] = {65.0};
 const f32 D_80141F08_150EB8[] = {12000.0f};
-const f64 D_80141F10_150EC0[] = {1000.0};
-const f64 D_80141F18_150EC8[] = {1500.0};
+const ShadowGeometryConstant D_80141F10_150EC0 = {1000.0};
+const ShadowGeometryConstant D_80141F18_150EC8 = {1500.0};
 const f64 D_80141F20_150ED0[] = {9.424777962};
 const f64 D_80141F28_150ED8[] = {0.0};
 
@@ -1351,309 +1351,156 @@ void func_8008EF7C_9DF2C(u8 arg0)
 }
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) movement/state machine
-#ifdef NON_MATCHING
 void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 {
-	u8 sp5F;
-	u8 sp5E;
-	s16 sp5A;
-	s32 sp48;
-	AlienInstance *sp30;
-	AlienType *sp2C;
-	s32 var_t1;
-	s16 var_t3;
+	u8 buildingId;
+	u8 parentId;
 	s8 otherType;
 	u8 alienType;
+	s16 targetSpeed;
+	s32 flags;
 	s32 distX;
-	s32 absX;
-	s32 negX;
 	s32 distZ;
-	s32 negZ;
-	s32 absZ;
-	s32 distance;
+	s32 step;
 	Unk80146688 *zone;
 
-	sp30 = &alienInstances[arg0];
-	alienType = sp30->typeIndex;
-	sp2C = &alienTypes[alienType];
-	sp5A = sp2C->unk40;
-	sp48 = 1;
+	alienType = alienInstances[arg0].typeIndex;
+	targetSpeed = alienTypes[alienType].unk40;
+	step = 1;
 
 	func_80137468_146418(arg0, 7);
 
-	if (!(sp30->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+	if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 	{
-		sp48 = 4;
+		step = 4;
 	}
 
-	if (sp30->unk2C > 0)
+	if (alienInstances[arg0].unk2C > 0)
 	{
-		sp30->unk2C = (s16)(sp30->unk2C - sp48);
+		alienInstances[arg0].unk2C = alienInstances[arg0].unk2C - step;
 	}
 
-	if ((func_8008E478_9D428(arg0) == 0) && (func_8008E30C_9D2BC(arg0, 0x80000000) == 0) && !(sp30->unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_OBJ)))
+	if ((func_8008E478_9D428(arg0) == 0) && (func_8008E30C_9D2BC(arg0, 0x80000000) == 0) && !(alienInstances[arg0].unk20 & (ALIEN_FLAG_TARGET_PT | ALIEN_FLAG_TARGET_OBJ)))
 	{
 		if (arg1 != 0)
 		{
-			sp5F = (u8)func_8011B6C0_12A670(sp30->unk0, sp30->unk4, (s16)(alienTypes[sp30->typeIndex].unk51 / 15), 1, 0x100C);
-			if (sp5F != 0xFF)
+			buildingId = func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 15, 1, 0x100C);
+			if (buildingId != 0xFF)
 			{
-				AlienInstance *sp20;
-				sp20 = &alienInstances[sp30->unk25];
-				otherType = sp20->unk3D;
-				if ((otherType == -1) || (otherType == (s8)buildingInstances[sp5F].unk11))
+				parentId = alienInstances[arg0].unk25;
+				otherType = alienInstances[parentId].unk3D;
+				if ((otherType == -1) || (otherType == (s8)buildingInstances[buildingId].unk11))
 				{
-					sp5E = sp30->unk25;
-					if (sp30->unk38 != sp5F)
+					if (alienInstances[arg0].unk38 != buildingId)
 					{
-						func_800ACF9C_BBF4C(sp5F);
+						func_800ACF9C_BBF4C(buildingId);
 					}
 
-					func_80080B44_8FAF4(arg0, sp5F);
-					sp30->unk16 += buildingTypes[buildingInstances[sp5F].buildingType].unk14 + 0x64;
-					sp30->unk20 &= ~(ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKC);
+					func_80080B44_8FAF4(arg0, buildingId);
+					alienInstances[arg0].unk16 += buildingTypes[buildingInstances[buildingId].buildingType].unk14 + 0x64;
+					alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKH | ALIEN_FLAG_UNKC);
 
-					func_80080B44_8FAF4(sp5E, sp5F);
-					sp20->unk3A = 0;
-					sp20->unk16 += 0xC8;
-					sp20->unk20 |= ALIEN_FLAG_UNKE;
+					func_80080B44_8FAF4(parentId, buildingId);
+					alienInstances[parentId].unk3A = 0;
+					alienInstances[parentId].unk16 += 0xC8;
+					alienInstances[parentId].unk20 |= ALIEN_FLAG_UNKE;
 				}
 			}
 		}
 
-		var_t1 = sp30->unk20;
-		var_t3 = sp5A;
+		flags = alienInstances[arg0].unk20;
 	}
 	else
 	{
-		if ((sp30->unk20 & (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKF)) && (sp30->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+		flags = alienInstances[arg0].unk20;
+		if ((flags & (ALIEN_FLAG_PLAYER | ALIEN_FLAG_UNKF)) && (flags & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 		{
-			distX = sp30->unk0 - sp30->unk14;
-			negX = -distX;
-			distZ = sp30->unk4 - sp30->unk18;
+			distX = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
+			distZ = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
+			distZ = MAX(MAX(distX, -distX), MAX(distZ, -distZ));
 
-			if (negX < distX)
+			if (distZ < 0x23A)
 			{
-				absX = distX;
+				targetSpeed = -0x180;
+			}
+			else if (distZ >= 0x259)
+			{
+				targetSpeed = 0x180;
 			}
 			else
 			{
-				absX = negX;
+				targetSpeed = 0;
 			}
 
-			negZ = -distZ;
-			if (negZ < distZ)
-			{
-				absZ = distZ;
-			}
-			else
-			{
-				absZ = negZ;
-			}
-
-			if (absZ < absX)
-			{
-				if (negX < distX)
-				{
-					absX = distX;
-				}
-				else
-				{
-					absX = negX;
-				}
-				distance = absX;
-			}
-			else
-			{
-				if (negZ < distZ)
-				{
-					negX = distZ;
-				}
-				else
-				{
-					negX = negZ;
-				}
-				distance = negX;
-			}
-
-			if (distance < 0x23A)
-			{
-				sp5A = -0x180;
-			}
-			else if (distance >= 0x259)
-			{
-				sp5A = 0x180;
-			}
-			else
-			{
-				sp5A = 0;
-			}
-
-			func_80087720_966D0(arg0, distance);
-			var_t3 = sp5A;
-			var_t1 = sp30->unk20;
+			func_80087720_966D0(arg0, distZ);
+			flags = alienInstances[arg0].unk20;
 		}
 		else
 		{
 			func_8009170C_A06BC(arg0);
-			var_t3 = 0x180;
-			var_t1 = sp30->unk20;
+			targetSpeed = 0x180;
+			flags = alienInstances[arg0].unk20;
 		}
 	}
 
-	if ((var_t1 & 0x800) && (arg1 != 0) && (sp30->unk3D != -1))
+	if ((flags & 0x800) && (arg1 != 0) && (alienInstances[arg0].unk3D != -1))
 	{
-		zone = &D_80146688_155638[currentLevel - 1][sp30->unk3D];
+		zone = &D_80146688_155638[currentLevel - 1][alienInstances[arg0].unk3D];
 
-		distX = (sp30->unk0 >> 8) - zone->unk0;
-		negX = -distX;
-		distZ = (sp30->unk4 >> 8) - zone->unk1;
+		distX = (alienInstances[arg0].unk0 >> 8) - zone->unk0;
+		distZ = (alienInstances[arg0].unk4 >> 8) - zone->unk1;
+		distZ = MAX(MAX(distX, -distX), MAX(distZ, -distZ));
 
-		if (negX < distX)
-		{
-			absX = distX;
-		}
-		else
-		{
-			absX = negX;
-		}
-
-		negZ = -distZ;
-		if (negZ < distZ)
-		{
-			absZ = distZ;
-		}
-		else
-		{
-			absZ = negZ;
-		}
-
-		if (absZ < absX)
-		{
-			if (negX < distX)
-			{
-				absX = distX;
-			}
-			else
-			{
-				absX = negX;
-			}
-			distance = absX;
-		}
-		else
-		{
-			if (negZ < distZ)
-			{
-				negX = distZ;
-			}
-			else
-			{
-				negX = negZ;
-			}
-			distance = negX;
-		}
-
-		if ((zone->unk2 + 6) < distance)
+		if ((zone->unk2 + 6) < distZ)
 		{
 			if (1)
 			{
-				sp30->unk20 = var_t1 | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
+				alienInstances[arg0].unk20 = flags | (ALIEN_FLAG_UNKE | ALIEN_FLAG_TARGET_OBJ);
 			}
-			sp30->unk20 &= ~ALIEN_FLAG_UNKC;
-			var_t1 = sp30->unk20;
-			sp30->unk38 = sp30->unk25;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKC;
+			flags = alienInstances[arg0].unk20;
+			alienInstances[arg0].unk38 = alienInstances[arg0].unk25;
 		}
 	}
-	else if ((var_t1 & 0x2000) && (arg1 != 0))
+	else if ((flags & 0x2000) && (arg1 != 0))
 	{
-		AlienInstance *parent;
+		distX = (alienInstances[arg0].unk0 - alienInstances[alienInstances[arg0].unk25].unk0) >> 8;
+		distZ = (alienInstances[arg0].unk4 - alienInstances[alienInstances[arg0].unk25].unk4) >> 8;
+		distZ = MAX(MAX(distX, -distX), MAX(distZ, -distZ));
 
-		sp5E = sp30->unk25;
-		parent = &alienInstances[sp5E];
-
-		distX = (sp30->unk0 - parent->unk0) >> 8;
-		negX = -distX;
-		distZ = (sp30->unk4 - parent->unk4) >> 8;
-
-		if (negX < distX)
+		if (distZ < 2)
 		{
-			absX = distX;
-		}
-		else
-		{
-			absX = negX;
-		}
-
-		negZ = -distZ;
-		if (negZ < distZ)
-		{
-			absZ = distZ;
-		}
-		else
-		{
-			absZ = negZ;
-		}
-
-		if (absZ < absX)
-		{
-			if (negX < distX)
-			{
-				absX = distX;
-			}
-			else
-			{
-				absX = negX;
-			}
-			distance = absX;
-		}
-		else
-		{
-			if (negZ < distZ)
-			{
-				negX = distZ;
-			}
-			else
-			{
-				negX = negZ;
-			}
-			distance = negX;
-		}
-
-		if (distance < 2)
-		{
-			sp30->unk20 = var_t1 & ~0x2020;
-			var_t1 = sp30->unk20;
-			sp30->unk38 = sp5E;
+			alienInstances[arg0].unk20 = flags & ~0x2020;
+			alienInstances[arg0].unk38 = alienInstances[arg0].unk25;
 		}
 	}
 
-	if (var_t1 & 0x4000)
+	flags = alienInstances[arg0].unk20;
+	if (flags & 0x4000)
 	{
-		if (var_t1 & 0x08000000)
+		if (flags & 0x08000000)
 		{
-			sp30->unk20 = var_t1 & ~ALIEN_FLAG_UNKF;
+			alienInstances[arg0].unk20 = flags & ~ALIEN_FLAG_UNKF;
 		}
 
-		sp30->unk3A--;
-		if (sp30->unk3A <= 0)
+		alienInstances[arg0].unk3A--;
+		if (alienInstances[arg0].unk3A <= 0)
 		{
-			sp30->unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_OBJ);
+			alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_TARGET_OBJ);
 		}
 	}
 
-	if (var_t3 >= sp30->unk12)
+	if (targetSpeed >= alienInstances[arg0].unk12)
 	{
-		sp30->unk12 += (s16)(sp2C->unk3E * sp48);
+		alienInstances[arg0].unk12 += alienTypes[alienType].unk3E * step;
 	}
 
-	if (var_t3 < sp30->unk12)
+	if (targetSpeed < alienInstances[arg0].unk12)
 	{
-		sp30->unk12 -= (s16)(sp2C->unk3E * sp48);
+		alienInstances[arg0].unk12 -= alienTypes[alienType].unk3E * step;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F0BC_9E06C.s")
-#endif
+
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior/targeting
 void func_8008F6C0_9E670(u8 arg0)
@@ -1735,17 +1582,17 @@ void func_8008F8D4_9E884(u8 arg0, s16 arg1)
 }
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior specs.unk48
-#ifdef NON_MATCHING
 void func_8008F9E4_9E994(u8 arg0)
 {
 	s8 node1;
 	s8 node2;
 	s8 node3;
 	s8 node4;
-	s16 tmpA;
 	s32 tmpB;
 	s16 sp36;
+	s32 pad30;
 	s32 moved = 0;
+	s16 tmpA;
 	s32 sp24;
 
 	if (((alienInstances[arg0].unk0 >> 8) != (alienInstances[arg0].unk2E >> 8)) || ((alienInstances[arg0].unk4 >> 8) != (alienInstances[arg0].unk32 >> 8)))
@@ -1759,11 +1606,11 @@ void func_8008F9E4_9E994(u8 arg0)
 	{
 		node1 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 		node2 = D_8014DD50[node1].unkD;
-		tmpA = alienInstances[arg0].unkA;
 		node3 = D_8014DD50[node2].unkD;
-		tmpB = tmpA;
 		node4 = D_8014DD50[node3].unkD;
 		sp36 = D_8014DD50[node4].unkD;
+		tmpA = alienInstances[arg0].unkA;
+		tmpB = tmpA;
 
 		if (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER)
 		{
@@ -1807,14 +1654,13 @@ void func_8008F9E4_9E994(u8 arg0)
 	}
 
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unk8);
-	alienInstances[arg0].unk8 = (s16)(s32)(alienInstances[arg0].unk8 * D_80141EF0_150EA0.value);
+	alienInstances[arg0].unk8 = alienInstances[arg0].unk8 * D_80141EF0_150EA0.value;
 	alienInstances[arg0].unkE += alienInstances[arg0].unk8 / 8;
-	func_8008E978_9D928(arg0, func_8008E524_9D4D4(arg0, sp24, 2));
+	tmpB = func_8008E524_9D4D4(arg0, sp24, 2);
+	func_8008E978_9D928(arg0, tmpB);
 	func_8008EF1C_9DECC(arg0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8008F9E4_9E994.s")
-#endif
+
 
 // AI - Spawn a new alien instance from pool
 u8 func_8008FC78_9EC28(u8 arg0)
@@ -1928,11 +1774,10 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 }
 
 // AI - AI state machine for carried humans/companions
-#ifdef NON_MATCHING
 void func_8009012C_9F0DC(u32 arg0)
 {
 	s32 radius;
-	s32 movementFlags;
+	s32 pad68;
 	u32 parentFlags;
 	u8 typeIdx;
 	s32 step;
@@ -1943,7 +1788,6 @@ void func_8009012C_9F0DC(u32 arg0)
 	s16 pathNodes[3];
 	s32 dx;
 	AlienInstance *parent;
-	AlienInstance *targetInst;
 	s16 target;
 	parentFlags = alienInstances[arg0].unk20;
 	parentNode = alienInstances[arg0].unkC;
@@ -1981,7 +1825,7 @@ void func_8009012C_9F0DC(u32 arg0)
 		targetSpeed = alienTypes[typeIdx].unk40;
 		dx = alienInstances[arg0].unk0 - alienInstances[arg0].unk14;
 		dz = alienInstances[arg0].unk4 - alienInstances[arg0].unk18;
-		movementFlags = alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB);
+
 
 		if (parentFlags & 0x2000)
 		{
@@ -1992,7 +1836,7 @@ void func_8009012C_9F0DC(u32 arg0)
 			radius = 0x300;
 		}
 
-		if (!movementFlags || (((dx * dx) + (dz * dz)) < (radius * radius)) || (alienInstances[arg0].unk47 & 1))
+		if (!(alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) || (((dx * dx) + (dz * dz)) < (radius * radius)) || (alienInstances[arg0].unk47 & 1))
 		{
 			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_TARGET_PT;
 			if (parentFlags & 0x2000)
@@ -2017,11 +1861,10 @@ void func_8009012C_9F0DC(u32 arg0)
 			target = func_80082394_91344(alienInstances[arg0].unk0, alienInstances[arg0].unk4, 8);
 			if (target < 0xFF)
 			{
-				targetInst = &alienInstances[target];
-				osSyncPrintf(&D_80141E94_150E44, target, targetInst->unk0, targetInst->unk4);
-				alienInstances[arg0].unk14 = targetInst->unk0;
-				alienInstances[arg0].unk16 = targetInst->unk2;
-				alienInstances[arg0].unk18 = targetInst->unk4;
+				osSyncPrintf(&D_80141E94_150E44, target, alienInstances[target].unk0, alienInstances[target].unk4);
+				alienInstances[arg0].unk14 = alienInstances[target].unk0;
+				alienInstances[arg0].unk16 = alienInstances[target].unk2;
+				alienInstances[arg0].unk18 = alienInstances[target].unk4;
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_TARGET_PT;
 				targetSpeed = alienTypes[typeIdx].unk40;
 			}
@@ -2063,11 +1906,9 @@ void func_8009012C_9F0DC(u32 arg0)
 		{
 			if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 			{
-				dz = D_8014DD50[parentNode].unkC;
-				target = D_8014DD50[dz].unkC;
-				pathNodes[0] = dz;
-				pathNodes[1] = target;
-				pathNodes[2] = D_8014DD50[target].unkD;
+				pathNodes[0] = D_8014DD50[parentNode].unkC;
+				pathNodes[1] = D_8014DD50[pathNodes[0]].unkC;
+				pathNodes[2] = D_8014DD50[pathNodes[1]].unkD;
 				pathResult = func_80081F18_90EC8(arg0, 3, 8, pathNodes, &D_8013C9D0_14B980);
 			}
 
@@ -2089,9 +1930,8 @@ void func_8009012C_9F0DC(u32 arg0)
 		{
 			if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 			{
-				target = D_8014DD50[parentNode].unkC;
 				pathNodes[0] = parentNode;
-				pathNodes[1] = target;
+				pathNodes[1] = D_8014DD50[parentNode].unkC;
 				pathResult = func_80081F18_90EC8(arg0, 2, 3, pathNodes, &D_8013C7A0_14B750);
 				if (pathResult == 1)
 				{
@@ -2126,9 +1966,8 @@ void func_8009012C_9F0DC(u32 arg0)
 		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_8009012C_9F0DC.s")
-#endif
+
+
 
 // AI - Decrement parent death timer or run standard AI
 void func_800908C4_9F874(u8 arg0)
@@ -2754,36 +2593,42 @@ void func_80091E70_A0E20(u8 arg0)
 }
 
 // Goliath/"Spyder" behavior specs.unk48
-#ifdef NON_MATCHING
 void func_800920C0_A1070(u8 arg0)
 {
-	s16 sp86;
+	u8 specIndex;
+	u8 pad0;
+	u8 pad1;
 	u8 useAttack;
+	u8 savedArg0;
+	u8 pad3;
+	s16 pad90;
+	s16 swing;
+	s16 targetSpeed;
+	s16 fx;
+	u16 angle;
+	s16 sp86;
+	s16 entryIdx;
+	s16 arm;
 	s16 sp80;
 	s16 sp7E;
-	s16 arm;
-	s16 targetSpeed;
-	f32 sp6C;
-	f32 scale;
-	Unk8014DD50 *entry3;
-	s32 moveBlocked;
 	s32 sp78;
 	s32 sp74;
 	s32 sp70;
-	AlienType *type;
-	Unk8014DD50 *entry;
-	AlienInstance *alien;
+	f32 sp6C;
+	s32 cappedValue;
+	f32 scale;
+	s32 moveBlocked;
+	s32 pad5C;
 
-	alien = &alienInstances[arg0];
-	type = &alienTypes[alien->typeIndex];
-	targetSpeed = type->unk40;
-	sp86 = D_8014DD50[alien->unkC].unkC;
-	entry3 = &D_8014DD50[sp86];
+	specIndex = alienInstances[arg0].typeIndex;
+	targetSpeed = alienTypes[specIndex].unk40;
+	sp86 = D_8014DD50[alienInstances[arg0].unkC].unkC;
 	useAttack = 0;
-	entry = &D_8014DD50[entry3->unkC];
-	sp80 = D_8014DD50[entry->unkD].unkD;
+	entryIdx = D_8014DD50[sp86].unkC;
+	arm = D_8014DD50[entryIdx].unkD;
+	sp80 = D_8014DD50[arm].unkD;
 
-	func_80128428_1373D8(alien, entry3->unk0, (s16)((entry->unk2 + entry3->unk2) - 0x16), (s16)(entry->unk4 + entry3->unk4 + 0x32), &sp78, &sp74, &sp70);
+	func_80128428_1373D8(&alienInstances[arg0], D_8014DD50[sp86].unk0, (s16)((D_8014DD50[sp86].unk2 + D_8014DD50[entryIdx].unk2) - 0x16), (s16)(D_8014DD50[sp86].unk4 + D_8014DD50[entryIdx].unk4 + 0x32), &sp78, &sp74, &sp70);
 	if (sp80 != -1)
 	{
 		sp7E = D_8014DD50[sp80].unkD;
@@ -2792,158 +2637,144 @@ void func_800920C0_A1070(u8 arg0)
 	}
 
 	func_80090948_9F8F8(sp86, 0x7D0);
-	if ((alien->unk0 >> 8) != (alien->unk2E >> 8) || (alien->unk4 >> 8) != (alien->unk32 >> 8))
+	if ((alienInstances[arg0].unk2E >> 8) != (alienInstances[arg0].unk0 >> 8) || (alienInstances[arg0].unk32 >> 8) != (alienInstances[arg0].unk4 >> 8))
 	{
-			useAttack = 1;
+		useAttack = 1;
 	}
 
 	moveBlocked = func_800919C0_A0970(arg0, useAttack);
 
-	if (!(alien->unk20 & ALIEN_FLAG_UNKE))
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE))
 	{
-		if ((alien->unk47 & 4) && (func_80091AC0_A0A70(arg0, alien->unk28, alien->unk29) != 0))
+		if ((alienInstances[arg0].unk47 & 4) && (func_80091AC0_A0A70(arg0, alienInstances[arg0].unk28, alienInstances[arg0].unk29) != 0))
 		{
 			targetSpeed = 0;
-			alien->unk47 &= 0xFFFA;
+			alienInstances[arg0].unk47 &= 0xFFFA;
 		}
 
-		if (alien->unk47 & 8)
+		if (alienInstances[arg0].unk47 & 8)
 		{
-			s32 capped;
-			s32 cappedValue;
-			s16 fx;
 
-			alien->unk47 &= 0xFFF6;
+			alienInstances[arg0].unk47 &= 0xFFF6;
 			targetSpeed = 0;
 
-			if ((D_80052B34->unk1A != 0) && (alien->unk12 > 0))
+			if ((D_80052B34->unk1A != 0) && (alienInstances[arg0].unk12 > 0))
 			{
 				func_80137468_146418(arg0, 0x135);
 
-				capped = vehicleTypes[D_80052B34->unk1A].unk32;
-				if (capped >= 0x2711)
-				{
-					cappedValue = 0x2710;
-				}
-				else
-				{
-					cappedValue = capped;
-				}
+				cappedValue = MIN(0x2710, vehicleTypes[D_80052B34->unk1A].unk32);
+				scale = ((f32)alienInstances[arg0].unk12 / (f32)0x200) * (f32)(1.0 - ((f32)cappedValue / D_80141F08_150EB8[0]));
+				fx = (s16)((f32)D_80145BE2_154B92[alienTypes[alienInstances[arg0].typeIndex].unk1C].unk0 * scale);
+				func_80122524_1314D4(D_80052B34, fx, alienInstances[arg0].unk0, alienInstances[arg0].unk4);
 
-				scale = (f32)(1.0 - ((f32)cappedValue / D_80141F08_150EB8[0])) * ((f32)alien->unk12 / (f32)0x200);
-				fx = (s16)(s32)((f32)D_80145BE2_154B92[alienTypes[alien->typeIndex].unk1C].unk0 * scale);
-				func_80122524_1314D4(D_80052B34, fx, alien->unk0, alien->unk4);
+				func_80128288_137238(D_80052B34, alienInstances[arg0].unk6, (s16)(scale * D_80141F10_150EC0.value), (s16)(scale * D_80141F18_150EC8.value));
 
-				func_80128288_137238(D_80052B34, alien->unk6, (s16)(s32)(scale * D_80141F10_150EC0[0]), (s16)(s32)(scale * D_80141F18_150EC8[0]));
-
-				sp6C = (f32)((f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
+				sp6C = (f32)((f32)sins((u16)(alienInstances[arg0].unk6 + 0x4000)) / 32768.0);
+				fx = coss((u16)(alienInstances[arg0].unk6 + 0x4000));
 				func_800C541C_D43CC(
-					D_80052B34->unk0,
-					D_80052B34->unk2,
-					D_80052B34->unk4,
-					(s8)(s32)(sp6C * 127.0f),
-					0x50,
-					(s8)(s32)((f32)-((f64)(f32)coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * 127.0f),
-					0x3C,
-					0x80,
-					0x14,
-					0x14,
-					0xFF,
-					0xFF,
-					0xC8);
+				D_80052B34->unk0,
+				D_80052B34->unk2,
+				D_80052B34->unk4,
+				(s8)(sp6C * 127.0f),
+				0x50,
+				(s8)((f32)-((f64)(f32)fx / 32768.0) * 127.0f),
+				0x3C,
+				0x80,
+				0x14,
+				0x14,
+				0xFF,
+				0xFF,
+				0xC8);
 			}
 
 			func_80091A78_A0A28(arg0);
-			if (alien->unk1E != 0)
+			if (alienInstances[arg0].unk1E != 0)
 			{
-				alien->unk1E--;
+				alienInstances[arg0].unk1E--;
 			}
 		}
 
-		if (alien->unk20 & ALIEN_FLAG_UNKD)
+		if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD)
 		{
 			targetSpeed = 0x200;
 
-			if (!(alien->unk20 & ALIEN_FLAG_PLAYER) && (((arg0 ^ 0) & 0xF) == (D_80052A8C & 0xF)))
+			if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER) && ((D_80052A8C & 0xF) == (arg0 & 0xF)))
 			{
-				if (func_800B325C_C220C((s8)(alien->unk14 >> 8), (s8)(alien->unk18 >> 8), 0x800) == 0)
+				if (func_800B325C_C220C((s8)(alienInstances[arg0].unk14 >> 8), (s8)(alienInstances[arg0].unk18 >> 8), 0x800) == 0)
 				{
-					alien->unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+					alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
 				}
 			}
 
-			if (alien->unk47 & 1)
+			if (alienInstances[arg0].unk47 & 1)
 			{
-				alien->unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
+				alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKD | ALIEN_FLAG_TARGET_PT);
 			}
 		}
 	}
 	else
 	{
-		alien->unk2C--;
-		if (entry3->unkC != -1)
-		{
-			entry = &D_8014DD50[(s16)entry3->unkC];
-		}
-		arm = entry->unkD;
+		alienInstances[arg0].unk2C--;
+		entryIdx = D_8014DD50[sp86].unkC != -1 ? D_8014DD50[sp86].unkC : entryIdx;
+		arm = D_8014DD50[entryIdx].unkD;
 
-		if (alien->unk2C < 0x46)
+		if (alienInstances[arg0].unk2C < 0x46)
 		{
 			targetSpeed = -0x80;
-			if ((alien->unk2C <= 0) || (alien->unk47 & 1))
+			if ((alienInstances[arg0].unk2C <= 0) || (alienInstances[arg0].unk47 & 1))
 			{
-			alien->unk20 &= ~ALIEN_FLAG_UNKE;
-			alien->unk47 &= 0xFFFA;
+				alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
+				alienInstances[arg0].unk47 &= 0xFFFA;
 			}
 
-			entry3->unk6 = (s16)(s32)(((f32)sins((u16)((alien->unk2C * 0x17E8) & 0xFFFF)) / 32768.0) * 50.0);
+			angle = alienInstances[arg0].unk2C * 0x17E8;
+			D_8014DD50[sp86].unk6 = (s16)(((f32)sins(angle) / 32768.0) * 50.0);
 		}
 		else
 		{
 			targetSpeed = 0;
-			if ((D_80052B34->unk1A == 0) && (alien->unk20 & ALIEN_FLAG_PLAYER))
+			if ((D_80052B34->unk1A == 0) && (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER))
 			{
-				s16 swing;
-				swing = (s16)(s32)(sinf((f32)(((f64)(alien->unk2C - 0x46) * D_80141F20_150ED0[0]) / 30.0)) * (f32)(alien->unk2C * 0x32));
+				swing = (f32)(alienInstances[arg0].unk2C * 0x32) * sinf((f32)((D_80141F20_150ED0[0] * (f64)(alienInstances[arg0].unk2C - 0x46)) / 30.0));
 				if (-swing >= swing)
 				{
 					swing = -swing;
 				}
 
-				entry->unk6 = -swing;
+				D_8014DD50[entryIdx].unk6 = -swing;
 				D_8014DD50[arm].unk6 = swing;
 
-				if ((swing == 0) && (alien->unk2C != 0x63))
+				if ((swing == 0) && (alienInstances[arg0].unk2C != 0x63))
 				{
-					u8 savedArg0;
 					savedArg0 = arg0;
 					func_80137468_146418(arg0, 0x22);
-					if (((s16)(s32)func_80084F00_93EB0(D_80052B34, alien) < 0xC8) && (func_80084FE8_93F98(arg0, 0x400) != 0))
+					if (((s16)func_80084F00_93EB0(D_80052B34, &alienInstances[arg0]) < 0xC8) && (func_80084FE8_93F98(arg0, 0x400) != 0))
 					{
-						alien->unk1E = 0;
-						func_80122524_1314D4(D_80052B34, 0x64, alien->unk0, alien->unk4);
+						alienInstances[arg0].unk1E = 0;
+						func_80122524_1314D4(D_80052B34, 0x64, alienInstances[arg0].unk0, alienInstances[arg0].unk4);
 						func_80137468_146418(savedArg0, 2);
 					}
 				}
 
 				if (((alienInstances[arg0].unk2C + 5) % 10) == 0)
 				{
-					sp6C = (f32)((f64)(f32)sins((u16)(alien->unk6 + 0x4000)) / 32768.0);
+					sp6C = (f32)((f64)(f32)sins((u16)(alienInstances[arg0].unk6 + 0x4000)) / 32768.0);
+					fx = coss((u16)(alienInstances[arg0].unk6 + 0x4000));
 					func_800CA5EC_D959C(
-						(s16)sp78,
-						(s16)sp74,
-						(s16)sp70,
-						(s8)(s32)(sp6C * 127.0f),
-						0,
-						(s8)(s32)((f32)-((f64)(f32)coss((u16)(alien->unk6 + 0x4000)) / 32768.0) * 127.0f),
-						0x28,
-						3,
-						0xC,
-						0xFF,
-						0xAA,
-						0xFF,
-						0,
-						0x8C);
+					(s16)sp78,
+					(s16)sp74,
+					(s16)sp70,
+					(s8)(sp6C * 127.0f),
+					0,
+					(s8)((f32)-((f64)(f32)fx / 32768.0) * 127.0f),
+					0x28,
+					3,
+					0xC,
+					0xFF,
+					0xAA,
+					0xFF,
+					0,
+					0x8C);
 				}
 			}
 		}
@@ -2959,31 +2790,28 @@ void func_800920C0_A1070(u8 arg0)
 		targetSpeed = 0;
 	}
 
-	if (alien->unk12 < targetSpeed)
+	if (alienInstances[arg0].unk12 < targetSpeed)
 	{
-		alien->unk12 += type->unk3E;
-		if (targetSpeed < alien->unk12)
+		alienInstances[arg0].unk12 += alienTypes[specIndex].unk3E;
+		if (targetSpeed < alienInstances[arg0].unk12)
 		{
-			alien->unk12 = targetSpeed;
+			alienInstances[arg0].unk12 = targetSpeed;
 		}
 	}
-	else if (targetSpeed < alien->unk12)
+	else if (targetSpeed < alienInstances[arg0].unk12)
 	{
-		alien->unk12 -= type->unk3E;
-		if (alien->unk12 < targetSpeed)
+		alienInstances[arg0].unk12 -= alienTypes[specIndex].unk3E;
+		if (alienInstances[arg0].unk12 < targetSpeed)
 		{
-			alien->unk12 = targetSpeed;
+			alienInstances[arg0].unk12 = targetSpeed;
 		}
 	}
 
-	if (alien->unk1E != 0)
+	if (alienInstances[arg0].unk1E != 0)
 	{
-		alien->unk1E--;
+		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_800920C0_A1070.s")
-#endif
 
 // Spawn/allocate Doodlebug/Torabug
 s32 func_80092A50_A1A00(s16 arg0, s16 arg1, s32 arg2)
@@ -3501,220 +3329,173 @@ void func_80093AE4_A2A94(u8 arg0, s32 arg1)
 }
 
 // AI - Major pathfinding/movement AI
-#ifdef NON_MATCHING
 void func_80093C7C_A2C2C(u8 arg0)
 {
-   s32 typeIndex;
-   s16 yawTarget;
-   s16 pathNode;
-   s16 tempS16;
-   s16 pathNext;
-   s32 dist;
-   s16 sp9E;
-   s16 spB0;
-   s16 spB2;
-   Unk8014DD50 *path1;
-   Unk8014DD50 *path2;
-   AlienInstance *alien;
-	AlienType *type;
-   s32 deltaX;
-   s32 deltaZ;
-   s32 absVal;
-   s32 sign;
-   Unk80154082 sp84;
-   s32 x;
-   s32 z;
-   s32 xBack;
-   s32 zBack;
-   f32 vecX;
-   f32 vecY;
-   f32 vecZ;
-   s32 heading;
-   s8 pathResult;
-   u16 pathAngle;
+	u8 typeIndex;
+	s16 pathNode;
+	s16 yawTarget;
+	s16 pathNext;
+	u16 jointPitch;
+	u16 jointYaw;
+	s16 pathNodes[2];
+	s16 path2Index;
+	s16 secondNode;
+	Vec3f *vector;
+	VehicleInstance *vehicle;
+	s32 dist;
+	s16 terrainPitch;
+	Unk8014DD50 *path3;
+	s32 level;
+	s32 deltaZ;
+	s32 absVal;
+	s32 sign;
+	Unk80154082 sp84;
+	s32 pad80;
+	s32 x;
+	s32 height;
+	s32 z;
+	Vec3f normal;
+	s8 pathResult;
+	u16 pad64;
 
-	 alien = &alienInstances[arg0];
-	typeIndex = alien->typeIndex;
-	type = &alienTypes[typeIndex];
+	typeIndex = alienInstances[arg0].typeIndex;
 	sp84 = D_8013CAFC_14BAAC;
-	pathNode = D_8014DD50[alien->unkC].unkC;
-	path1 = &D_8014DD50[pathNode];
-	path2 = &D_8014DD50[path1->unkD];
-	pathNext = (s16)path2->unkD;
+	absVal = alienInstances[arg0].unkC;
+	pathNode = D_8014DD50[absVal].unkC;
+	path2Index = D_8014DD50[pathNode].unkD;
+	pathNext = (s16)D_8014DD50[path2Index].unkD;
 
-		if ((alien->hitPoints < (type->unk3A / 4)) && (D_80222A70 < alien->unk2))
+	if ((alienInstances[arg0].hitPoints < (alienTypes[typeIndex].unk3A / 4)) && (D_80222A70 < alienInstances[arg0].unk2))
 	{
 		func_80089200_981B0(arg0, 4, 0x5A);
 	}
 
-	if ((D_80052B34->unk1A == 0) && (D_80222A70 >= D_80052B34->unk2))
+	vehicle = D_80052B34;
+	if ((vehicle->unk1A == 0) && (D_80222A70 >= vehicle->unk2))
 	{
 		func_800877E8_96798(arg0, 0x1F4, 0x320);
 	}
-	else if (func_800B325C_C220C((s8)(alien->unk0 >> 8), (s8)(alien->unk4 >> 8), 0x1000) != 0)
+	else if (func_800B325C_C220C((s8)(alienInstances[arg0].unk0 >> 8), (s8)(alienInstances[arg0].unk4 >> 8), 0x1000) != 0)
 	{
 		func_8008735C_9630C(arg0);
-		alien->unk4E = 1;
+		alienInstances[arg0].unk4E = 1;
 	}
 	else
 	{
 		func_80087720_966D0(arg0, dist);
 	}
 
-	deltaX = (s32)(alien->unk0 - D_80052B34->unk0) >> 2;
-	deltaZ = (s32)(alien->unk4 - D_80052B34->unk4) >> 2;
-	dist = (s32)sqrtf((f32)((deltaX * deltaX) + (deltaZ * deltaZ))) * 4;
+	x = (s32)(alienInstances[arg0].unk0 - D_80052B34->unk0) >> 2;
+	z = (s32)(alienInstances[arg0].unk4 - D_80052B34->unk4) >> 2;
+	dist = (s32)sqrtf((f32)((x * x) + (z * z))) * 4;
 
-	if (!(alien->unk20 & ALIEN_FLAG_FALL))
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_FALL))
 	{
-		alien->unk30 = alien->unk2;
-		if ((alien->unk3C != 0) && (D_80222A70 < alien->unk2))
+		alienInstances[arg0].unk30 = alienInstances[arg0].unk2;
+		if ((alienInstances[arg0].unk3C != 0) && (D_80222A70 < alienInstances[arg0].unk2))
 		{
-			x = alien->unk0;
-			z = alien->unk4;
-			vecY = 0.0f;
-			vecX = (f32)(x >> 2) - D_80047954;
-			vecZ = (f32)(z >> 2) - D_8004795C;
-			guNormalize(&vecX, &vecY, &vecZ);
-			vecX *= 120.0f;
-			vecZ *= 120.0f;
-			xBack = (s32)((f32)x - vecX);
-			zBack = (s32)((f32)z - vecZ);
+			vector = &normal;
+			x = alienInstances[arg0].unk0;
+			z = alienInstances[arg0].unk4;
+			absVal = x >> 2;
+			deltaZ = z >> 2;
+			vector->z = (f32)absVal - D_80047954;
+			vector->y = 0.0f;
+			vector->x = (f32)deltaZ - D_8004795C;
+			guNormalize(&vector->z, &vector->y, &vector->x);
+			vector->z *= 120.0f;
+			vector->x *= 120.0f;
+			x -= vector->z;
+			z -= vector->x;
 
-			if (alien->unk20 & ALIEN_FLAG_UNKF)
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)
 			{
-				heading = (func_800B84D0_C7480(xBack, zBack) >> 8) + 0x32;
-				func_800DEA08_ED9B8(xBack, heading, zBack, 0xC8, 0x14, 0, 0x32, 0xC8, 0x88, 0x67, 0x11);
-				func_800DEE5C_EDE0C(xBack, (s16)(heading - 0x28), zBack, 0x50, 0x14);
-				func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 3.0f);
+				height = (func_800B84D0_C7480(x, z) >> 8) + 0x32;
+				func_800DEA08_ED9B8(x, height, z, 0xC8, 0x14, 0, 0x32, 0xC8, 0x88, 0x67, 0x11);
+				func_800DEE5C_EDE0C(x, (s16)(height - 0x28), z, 0x50, 0x14);
+				func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 3.0f);
 			}
 			else
 			{
-				heading = (func_800B84D0_C7480(xBack, zBack) >> 8) + 0x14;
-				func_800DEA08_ED9B8(xBack, heading, zBack, 0x64, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
-				func_80135D44_144CF4(alien->unk0, alien->unk2, alien->unk4, 2.0f);
+				sign = (func_800B84D0_C7480(x, z) >> 8) + 0x14;
+				func_800DEA08_ED9B8(x, sign, z, 0x64, 0xA, 0, 0x1E, 0xC8, 0x88, 0x67, 0x11);
+				func_80135D44_144CF4(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 2.0f);
 			}
 
 			func_80137468_146418(arg0, 0xC);
-			alien->unk3C = 0;
+			alienInstances[arg0].unk3C = 0;
 		}
 
-		alien->unk12 = 0;
-		if (alien->unk20 & ALIEN_FLAG_UNKD)
+		alienInstances[arg0].unk12 = 0; if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKD) { if (alienInstances[arg0].unk2C != 0) { alienInstances[arg0].unk2C--; } else { alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD; func_80093AE4_A2A94(arg0, dist); } } else { deltaZ = D_8014DD50[pathNode].unk6; absVal = (-deltaZ < deltaZ) ? deltaZ : -deltaZ; if ((absVal >= (0x2000 - alienTypes[typeIndex].unk42)) || (dist >= 0xFB) || (dist < 0xFA)) { alienInstances[arg0].unk2C = 8; alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKD; } } 
+		D_8014DD50[pathNext].unkA = func_8009395C_A290C(arg0, alienInstances[arg0].unk6);
+		D_8014DD50[pathNext].unk8 = func_8009395C_A290C(arg0, (s16)(alienInstances[arg0].unk6 + 0x4000));
+		if (alienInstances[arg0].unk47 & 1)
 		{
-			if (alien->unk2C != 0)
-			{
-				alien->unk2C--;
-			}
-			else
-			{
-				alien->unk20 &= ~ALIEN_FLAG_UNKD;
-				func_80093AE4_A2A94(arg0, dist);
-			}
-		}
-		else
-		{
-			tempS16 = path1->unk6;
-			absVal = (-tempS16 < tempS16) ? tempS16 : -tempS16;
-			if ((absVal >= (0x2000 - type->unk42)) || (dist >= 0xFB) || (dist < 0xFA))
-			{
-				alien->unk2C = 8;
-				alien->unk20 |= ALIEN_FLAG_UNKD;
-			}
-		}
-
-		type = (AlienType *)&D_8014DD50[pathNext];
-		((Unk8014DD50 *)type)->unkA = func_8009395C_A290C(arg0, alien->unk6);
-		((Unk8014DD50 *)type)->unk8 = func_8009395C_A290C(arg0, (s16)(alien->unk6 + 0x4000));
-
-		if (alien->unk47 & 1)
-		{
-			alien->unk34++;
+			alienInstances[arg0].unk34++;
 		}
 	}
 	else
+	{
+		if (alienInstances[arg0].unk10 > 0)
 		{
-			   if (alien->unk10 > 0)
-			   {
-				type = (AlienType *)&D_8014DD50[pathNext];
-				   tempS16 = ((Unk8014DD50 *)type)->unkA;
-				   if (tempS16 < 0x1000)
-				   {
-					   ((Unk8014DD50 *)type)->unkA += 0x320;
-				   }
+			path3 = &D_8014DD50[pathNext];
+			jointPitch = path3->unkAUnsigned;
+			if ((s16)jointPitch < 0x1000)
+			{
+				path3->unkAUnsigned += 0x320;
+			}
 
-				 yawTarget = ((Unk8014DD50 *)type)->unk8;
+			jointYaw = path3->unk8Unsigned;
+			yawTarget = (s16)jointYaw;
 			absVal = (-yawTarget < yawTarget) ? yawTarget : -yawTarget;
 			if (absVal >= 0x321)
 			{
-				if (yawTarget > 0)
-				{
-					sign = 1;
-				}
-				else if (yawTarget < 0)
-				{
-					sign = -1;
-				}
-				else
-				{
-					sign = 0;
-				}
-				((Unk8014DD50 *)type)->unk8 = (s16)(yawTarget - (sign * 0x320));
-						}
-						alien->unk3C = 1;
-				}
-				else
-				{
-						sp9E = func_8009395C_A290C(arg0, alien->unk6);
-			yawTarget = func_8009395C_A290C(arg0, (s16)(alien->unk6 + 0x4000));
+				sign = (yawTarget > 0) ? 1 : ((yawTarget < 0) ? -1 : 0);
+				path3->unk8Unsigned = jointYaw - (sign * 0x320);
+			}
+			alienInstances[arg0].unk3C = 1;
+		}
+		else
+		{
+			terrainPitch = func_8009395C_A290C(arg0, alienInstances[arg0].unk6);
+			x = func_8009395C_A290C(arg0, (s16)(alienInstances[arg0].unk6 + 0x4000));
 
 
-			type = (AlienType *)&D_8014DD50[pathNext];
-				   tempS16 = ((Unk8014DD50 *)type)->unkA;
-				   if (sp9E < tempS16)
-				   {
-					   ((Unk8014DD50 *)type)->unkA -= 0x320;
-				   }
-				   else
-				   {
-					   ((Unk8014DD50 *)type)->unkA = sp9E;
-				   }
+			path3 = &D_8014DD50[pathNext];
+			jointPitch = path3->unkAUnsigned;
+			if (terrainPitch < (s16)jointPitch)
+			{
+				path3->unkAUnsigned -= 0x320;
+			}
+			else
+			{
+				path3->unkAUnsigned = terrainPitch;
+			}
 
-				 heading = ((Unk8014DD50 *)type)->unk8;
-			tempS16 = (s16)(heading - yawTarget);
-			absVal = (-tempS16 < tempS16) ? tempS16 : -tempS16;
+			jointYaw = path3->unk8Unsigned;
+			deltaZ = (s16)jointYaw - x;
+			absVal = (-deltaZ < deltaZ) ? deltaZ : -deltaZ;
 			if (absVal >= 0x321)
 			{
-				if (yawTarget > 0)
-				{
-					sign = 1;
-				}
-				else if (yawTarget < 0)
-				{
-					sign = -1;
-				}
-				else
-				{
-					sign = 0;
-				}
-				((Unk8014DD50 *)type)->unk8 = (s16)(heading + (sign * 0x320));
+				sign = (x > 0) ? 1 : ((x < 0) ? -1 : 0);
+				path3->unk8Unsigned = jointYaw + (sign * 0x320);
 			}
-						else
-						{
-				((Unk8014DD50 *)type)->unk8 = yawTarget;
-						}
-
-						if (alien->unk47 & 0xE)
+			else
 			{
-				alien->unk3C = 0;
-				alien->unk20 &= ~(ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
+				path3->unk8Unsigned = x;
+			}
+
+			if (alienInstances[arg0].unk47 & 0xE)
+			{
+				alienInstances[arg0].unk3C = 0;
+				alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_FALL | ALIEN_FLAG_UNKD);
 				func_80093AE4_A2A94(arg0, dist);
 			}
 		}
 
-		if (alien->unk47 & 8)
+		if (alienInstances[arg0].unk47 & 8)
 		{
-			if (alien->unk20 & ALIEN_FLAG_UNKF)
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_UNKF)
 			{
 				func_80123AC4_132A74(D_80052B34);
 			}
@@ -3728,100 +3509,103 @@ void func_80093C7C_A2C2C(u8 arg0)
 				D_80157A38 = 0;
 			}
 
-			func_80137130_1460E0(D_80052B34, 2, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4);
+			vehicle = D_80052B34;
+			func_80137130_1460E0(vehicle, 2, vehicle->unk0, vehicle->unk2, vehicle->unk4);
 		}
 
-		alien->unk10 += 0x40;
-		func_800808F0_8F8A0(arg0, &alien->unkE);
-		alien->unk6 = alien->unkE;
-		if (alien->unk47 & 4)
+		alienInstances[arg0].unk10 += 0x40;
+		func_800808F0_8F8A0(arg0, &alienInstances[arg0].unkE);
+		alienInstances[arg0].unk6 = alienInstances[arg0].unkE;
+		if (alienInstances[arg0].unk47 & 4)
 		{
-			alien->unk12 = 0;
+			alienInstances[arg0].unk12 = 0;
 		}
 	}
 
-	pathAngle = (u16)path1->unk6;
-	if ((s16)pathAngle >= 0x2001)
+	if ((s16)D_8014DD50[pathNode].unk6Unsigned) {}
+	if ((s16)D_8014DD50[pathNode].unk6Unsigned >= 0x2001)
 	{
-		path1->unk6 = 0x2000;
-		pathAngle = 0x2000;
+		D_8014DD50[pathNode].unk6Unsigned = 0x2000;
 	}
-	else if ((s16)pathAngle < -0x2000)
+	else if ((s16)D_8014DD50[pathNode].unk6Unsigned < -0x2000)
 	{
-		path1->unk6 = -0x2000;
-		pathAngle = 0xE000;
+		D_8014DD50[pathNode].unk6Unsigned = 0xE000;
 	}
 
-	path2->unk6 = pathAngle;
+	D_8014DD50[path2Index].unk6 = D_8014DD50[pathNode].unk6Unsigned;
 
-	if ((func_80086230_951E0(arg0, pathNode, 0x8000) == 0) && (dist < 0x5DC) && (dist >= 0xC9) && (alien->unk4E != 0) && !(alien->unk20 & ALIEN_FLAG_UNKE))
+	if ((func_80086230_951E0(arg0, pathNode, 0x8000) == 0) && (dist < 0x5DC) && (dist >= 0xC9) && (alienInstances[arg0].unk4E != 0) && !(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKE))
 	{
-		alien->unk6 = (s16)(alien->unk6 - path2->unk6);
+		alienInstances[arg0].unk6 = (s16)(alienInstances[arg0].unk6 - D_8014DD50[path2Index].unk6Unsigned);
 		if (func_800871CC_9617C(arg0, 0, 0x14) != 0)
 		{
-			alien->unk36 = 0;
-			alien->unk20 |= ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk36 = 0;
+			alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE;
+			if (currentLevel) {}
 			switch (currentLevel)
 			{
 			case 1:
-				alien->unk1E = 0xC;
+				alienInstances[arg0].unk1E = 0xC;
 				break;
 			case 2:
-				alien->unk1E = 8;
+				alienInstances[arg0].unk1E = 8;
 				break;
 			case 3:
-				alien->unk1E = 6;
+				alienInstances[arg0].unk1E = 6;
 				break;
 			}
 		}
-		alien->unk6 = (s16)(alien->unk6 + path2->unk6);
+		alienInstances[arg0].unk6 += D_8014DD50[path2Index].unk6Unsigned;
 	}
 
-		if (alien->unk20 & ALIEN_FLAG_UNKE)
-		{
-		spB0 = (s16)path2->unkC;
-		type = (AlienType *)&D_8014DD50[spB0];
-		spB2 = (s16)((Unk8014DD50 *)type)->unkC;
+	absVal = alienInstances[arg0].unk20;
+	if (absVal & ALIEN_FLAG_UNKE)
+	{
+		pathNode = D_8014DD50[path2Index].unkC;
+		path3 = (Unk8014DD50 *)(s32)&D_8014DD50[pathNode];
+		secondNode = path3->unkC;
+		pathNodes[0] = pathNode;
+		pathNodes[1] = secondNode;
 
-		if (currentLevel == 1)
+		level = currentLevel; level *= 1;
+		if (level == 1)
 		{
-			pathResult = func_80081F18_90EC8(arg0, 2, 2, &spB0, (Unk8014DD50 **)&D_8013CAE4_14BA94);
+			pathResult = func_80081F18_90EC8(arg0, 2, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAE4_14BA94);
 		}
 		else
 		{
-			if (alien->unk20 & ALIEN_FLAG_Z)
+			if (alienInstances[arg0].unk20 & ALIEN_FLAG_Z)
 			{
-				spB0 = spB2;
+				pathNodes[0] = secondNode;
 			}
 			else
-						{
-				spB0 = D_8014DD50[((Unk8014DD50 *)type)->unkD].unkC;
-						}
+			{
+				/* Keep both index scales for IDO's target temporary allocation. */
+				path2Index = ((s8 (*)[8])D_8014DD5C)[path3->unkD << 1][0];
+				pathNodes[0] = path2Index;
+			}
 
-						if (currentLevel == 2)
+			if (level == 2)
 			{
-			pathResult = func_80081F18_90EC8(arg0, 1, 2, &spB0, (Unk8014DD50 **)&D_8013CAEC_14BA9C);
+				pathResult = func_80081F18_90EC8(arg0, 1, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAEC_14BA9C);
 			}
 			else
 			{
-				pathResult = func_80081F18_90EC8(arg0, 1, 2, &spB0, (Unk8014DD50 **)&D_8013CAF0_14BAA0);
+				pathResult = func_80081F18_90EC8(arg0, 1, 2, &pathNodes[0], (Unk8014DD50 **)&D_8013CAF0_14BAA0);
 			}
 		}
 
 		if (pathResult == 2)
 		{
-			alien->unk20 &= ~ALIEN_FLAG_UNKE;
+			alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKE;
 		}
 	}
 
-	if (alien->unk1E != 0)
+	if (alienInstances[arg0].unk1E != 0)
 	{
-		alien->unk1E--;
+		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/9BFF0/func_80093C7C_A2C2C.s")
-#endif
 
 // AI - Simple collision update
 void func_800946A4_A3654(u8 arg0)
