@@ -8043,41 +8043,35 @@ void func_80074D98_15CE58(s32 arg0) {
 #ifdef NON_MATCHING
 // AI - Renders 3D room objects with visibility culling and texture offsets
 void func_80074FF0_15D0B0(void) {
-	Unk800E66A8 *entry;
-	f64 radiusScale;
+	s32 pad;
+	f64 radiusScale = 1.5;
 	f64 temp_f20;
 	u8 objIdx;
 	s32 flags;
 	s32 i;
 	s32 halfDim;
-	Gfx *displayList;
 	u16 rotation[6];
-	f32 positionScale;
-	f32 angleScale;
-	f32 halfDivisor;
+	f32 positionScale = 65536.0f;
+	f32 angleScale = 32768.0f;
+	f32 halfDivisor = 2.0f;
 	s32 position[6];
 	f32 dimX;
 	f32 dimZ;
 	s16 scale[6];
+	Gfx *displayList;
 
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
-	i = 0;
 	if (D_800E668C > 0) {
-		radiusScale = 1.5;
-		halfDivisor = 2.0f;
-		angleScale = 32768.0f;
-		positionScale = 65536.0f;
 		if (radiusScale) {}
 		if (halfDivisor && halfDivisor) {}
 		if (angleScale) {}
 		if (positionScale) {}
-		if (&D_800E65BC) {}
-		if (&D_8005BB38) {}
 		temp_f20 = D_800A4AB0_18CB70.value;
+		i = 0;
 		do {
-			if (D_800E66A8[i].pad2F[0]) {} if (&D_8005BB38 && &D_8005BB38) {} if (&D_8005BB38 && &D_8005BB38) {} if (&D_800E65BC && &D_800E65BC) {} if (&D_8005BB2C) {} if (i) {} objIdx = D_800E66A8[i].unk0; if ((s32)(objIdx * sizeof(Unk80070F7CObj))) {}
+			objIdx = D_800E66A8[i].unk0;
 			if (D_800E65BC[objIdx].unk44 & 1) {
 				displayList = D_800E65BC[objIdx].unk0;
 				dimX = (u32)D_800E65BC[objIdx].unk18;
@@ -8101,28 +8095,28 @@ void func_80074FF0_15D0B0(void) {
 				)) {
 					flags = D_800E65BC[objIdx].unk40;
 					if (flags & 0x100) {
+						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
+						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
+						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
 						position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
 						position[1] = D_800E66A8[i].unk4 << 0x10;
+						rotation[0] = D_800E66A8[i].unk8 << 0xE;
+						position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
 						scale[0] = 0x40;
 						scale[2] = 0x40;
-						rotation[0] = D_800E66A8[i].unk8 << 0xE;
 						rotation[1] = 0;
 						rotation[2] = 0;
-						position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
 						scale[1] = 0x40;
 						scale[3] = 0x100;
 						scale[5] = 0x100;
-						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
-						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
 						scale[4] = 0x100;
 						position[3] = (s32) (D_800E66A8[i].unk20 * positionScale);
-						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
 						position[4] = (s32) (D_800E66A8[i].unk24 * positionScale);
 						position[5] = (s32) (D_800E66A8[i].unk28 * positionScale);
 						func_80076A58_15EB18(1, &rotation[0], &position[0], &scale[0], displayList);
 					} else if (((flags & 0x04000000) && (D_800E66A8[i].unk2E & 1)) ||
 							   ((flags & 0x08000000) && !(D_800E66A8[i].unk2E & 1))) {
-						
+
 						func_800773F4_15F4B4(
 							displayList,
 							(s32) (D_800E66A8[i].unk20 * positionScale) + ((D_800E66A8[i].unk2 - 0x60) << 0x10),
@@ -8134,13 +8128,13 @@ void func_80074FF0_15D0B0(void) {
 							D_8005BB38++,
 							0,
 							0x40);
-						
+
 						func_800773F4_15F4B4(D_800E65BC[objIdx].unk4, D_800E65BC[objIdx].unk2C << 0x10, D_800E65BC[objIdx].unk2E << 0x10, D_800E65BC[objIdx].unk30 << 0x10,
 							0, 0, 0, D_8005BB38++, 1, 0x100);
 
 						gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 					} else {
-						
+
 						func_800773F4_15F4B4(
 							displayList,
 							(s32) (D_800E66A8[i].unk20 * positionScale) + ((D_800E66A8[i].unk2 - 0x60) << 0x10),
@@ -8160,6 +8154,7 @@ void func_80074FF0_15D0B0(void) {
 		} while (i < D_800E668C);
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s")
 #endif
