@@ -4396,17 +4396,16 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800CDDE4_DCD94(void) {
 	s16 index;
 	Gfx *gfx;
 
-	s16 scale[3];
-	u16 rotation[3];
+	Unk80052B40 scale;
+	Unk80052B40 rotation;
 	Unk80052B40 translation;
 	Unk80052B40 *position;
 
-	scale[2] = 0x46; scale[2] = scale[2];
+	scale.components[2] = 0x46; scale.components[2] = scale.components[2];
 	index = D_8015426A;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -4421,22 +4420,22 @@ void func_800CDDE4_DCD94(void) {
 
 			position = &D_80154318[index].positionVector;
 			if (D_80154318[index].unk11 == 1) {
-				rotation[0] = 0;
-				rotation[1] = 0;
-				rotation[2] = 0x8000; rotation[2] = rotation[2];
-				scale[2] = 0x96; scale[1] = scale[2] & 0xFFFF; scale[0] = scale[2];
+				rotation.components[0] = 0;
+				rotation.components[1] = 0;
+				rotation.unsignedComponents[2] = 0x8000;
+				scale.components[0] = scale.components[1] = scale.components[2] = 0x96; scale.unsignedComponents[2] &= 0xFFFF;
 			} else {
-				rotation[1] = 0;
-				rotation[0] = 0;
-				rotation[2] = 0; rotation[2] = rotation[2];
-				scale[2] = 0x46; scale[1] = scale[2] & 0xFFFF; scale[0] = scale[2];
+				rotation.components[1] = 0;
+				rotation.components[0] = 0;
+				rotation.components[2] = 0; rotation.components[2] = rotation.components[2];
+				scale.components[0] = scale.components[1] = scale.components[2] = 0x46; scale.components[2] &= 0xFFFF; scale.unsignedComponents[2] = scale.components[2];
 			}
 
 			translation.unk0 = position->unk0;
 			translation.unk2 = position->unk2;
 			translation.unk4 = position->unk4;
 
-			func_800039D0_45D0(&translation, (Unk80052B40 *)rotation, (Unk80052B40 *)scale, D_8005BB38);
+			func_800039D0_45D0(&translation, &rotation, &scale, D_8005BB38);
 
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 			gSPDisplayList(D_8005BB2C++, D_5033E00);
@@ -4447,9 +4446,7 @@ void func_800CDDE4_DCD94(void) {
 		} while ((index != -6) && (index != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDDE4_DCD94.s")
-#endif
+
 
 u8 func_800CE040_DCFF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5)
 {
