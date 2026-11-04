@@ -7119,7 +7119,6 @@ void func_800D7284_E6234(u8 arg0) {
 	s16 position[2];
 	s32 var_v0;
 	s32 temp_v0_13;
-	s16 *coordinates;
 	NukeEffectState *var_v1;
 
 index = D_80154088[arg0].unk6;
@@ -7162,10 +7161,9 @@ func_800D702C_E5FDC(index, 0);
 		} else if (temp_v0_13 < 9) {
 			func_800B2354_C1304(&position[0], &color[0], 0x100, (s16) (0x1300 - (temp_v0_13 << 9)));
 		}
-		coordinates = var_v1->position;
-		x = coordinates[0];
-		y = coordinates[1];
-		z = coordinates[2];
+		x = var_v1->position[0];
+		y = var_v1->position[1];
+		z = var_v1->position[2];
 		temp_f0 = x - (D_80153BA0.x * 4.0f);
 		temp_f2 = y - (D_80153BA0.y * 4.0f);
 		temp_f14 = z - (D_80153BA0.z * 4.0f);
@@ -7182,8 +7180,6 @@ func_800D702C_E5FDC(index, 0);
 		}
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7284_E6234.s")
 #endif
