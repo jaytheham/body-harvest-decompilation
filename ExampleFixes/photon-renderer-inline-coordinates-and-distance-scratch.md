@@ -15,3 +15,9 @@ Incorrect ASM: The final sprite size used entry offset `0x1A`, the texture point
 -> Code changed: Read the unsigned root size from `entry->unk2`, use `K0_TO_PHYS` for the texture address, and select `gDPSetCombineLERP` with `0,0,0,SHADE,TEXEL0,0,SHADE,0` in both cycles. Pack primitive RGB with `gDPSetColor` and the matching nested shift expression.
 
 -> Correct ASM: The size load is `lhu ...,0x431A(...)`; texture setup masks the address with `0x1FFFFFFF`; the combine words are `0xFCFF99FF` and `0xFF327F3F`; primitive color loads occur at payload offsets 7, 6, and 8.
+
+`incorrect ASM`: Reusing `distZ` for the initial camera delta and the later ring-scale scratch keeps the initial delta in callee-saved `f20`; the target uses caller-saved `f14` for its subtraction and two multiply operands.
+
+-> `code changed`: Remove the initial `distZ` assignment. Spell the Z delta directly in both operands of the final squared-distance product passed to `sqrtf`, retaining the later `distZ` scale scratch.
+
+-> `correct ASM`: IDO computes the repeated delta once in `f14`. Every floating-point register and every instruction after the culling call now matches, while the frame, named homes, and main rendering loop remain unchanged. This remains a NON_MATCHING checkpoint: the initial culling setup still differs (score 2261 to 2246).
