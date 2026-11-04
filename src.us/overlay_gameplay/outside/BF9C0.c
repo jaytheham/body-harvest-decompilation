@@ -3001,7 +3001,8 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
-	u8 *palette;
+	u8 *padPalette;
+	Gfx *gfx;
 	s16 texXBase;
 	s16 texZBase;
 	s32 worldX;
@@ -3014,14 +3015,14 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	s32 rowTexZ;
 	u8 flags[9][9];
 	u8 *flag;
+	s32 hiddenCount;
+	u16 wavePhase[1];
 	s32 maxAlpha;
 	s16 batch;
 	s16 row;
 	s16 col;
 	s32 tileBase;
-	s32 hiddenCount;
 	s32 phase;
-	u16 wavePhase;
 	s32 phaseAbs;
 	s32 rowPhase;
 	s32 texAnim;
@@ -3031,7 +3032,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	f32 worldXf;
 	f32 worldZf;
 	f32 delta;
-	Gfx *gfx;
 
 	water = &(&D_80052AE8)[arg0];
 	waterX = water->unk3C;
@@ -3055,13 +3055,12 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		waterZ[0] = waterZ[0] + 0x100;
 	}
 
-	palette = &D_8013D988_14C938[currentLevel * 6];
-	D_8013D940_14C8F0 = palette[-6];
-	D_8013D944_14C8F4 = palette[-5];
-	D_8013D948_14C8F8 = palette[-4];
-	D_8013D94C_14C8FC = palette[-3];
-	D_8013D950_14C900 = palette[-2];
-	D_8013D954_14C904 = palette[-1];
+	D_8013D940_14C8F0 = D_8013D988_14C938[currentLevel * 6 - 6];
+	D_8013D944_14C8F4 = D_8013D988_14C938[currentLevel * 6 - 5];
+	D_8013D948_14C8F8 = D_8013D988_14C938[currentLevel * 6 - 4];
+	D_8013D94C_14C8FC = D_8013D988_14C938[currentLevel * 6 - 3];
+	D_8013D950_14C900 = D_8013D988_14C938[currentLevel * 6 - 2];
+	D_8013D954_14C904 = D_8013D988_14C938[currentLevel * 6 - 1];
 
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTLOD, 8, 8) | 1; gfx->words.w1 = G_TL_TILE;
@@ -3123,7 +3122,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
-	wavePhase = D_80052A8C * 0x2BC;
+	wavePhase[0] = D_80052A8C * 0x2BC;
 	phase = waterX % 0x1000;
 	texXBase = phase * 4;
 
@@ -3140,7 +3139,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 			*flag = 4;
 			waveDepth = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
 			if (waveDepth > 0) {
-				waveY = (s16)(((f32)coss((u16)(wavePhase + ((((waterX / 0x200) + col) % 2) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
+				waveY = (s16)(((f32)coss((u16)(wavePhase[0] + ((((waterX / 0x200) + col) % 2) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
 			} else {
 				waveY = 0;
 			}
@@ -3252,11 +3251,10 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		}
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s", "src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
 #endif
+
 
 /* Rectangle bounding overlap test with parameter extraction */
 s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {
