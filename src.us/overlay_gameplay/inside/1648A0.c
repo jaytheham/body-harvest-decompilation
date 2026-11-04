@@ -2078,7 +2078,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		}
 
 		if (hasSearchAnim == 0x10) {
-			func_8000CF4C_DB4C(((Unk80157600 *)D_800E6F00)->unk404, D_800E6F00, 0x10, *(s32 *)&((Unk80157600 *)D_800E6F00)->unk410);
+			func_8000CF4C_DB4C(((Unk80157600 *)D_800E6F00)->unk404, D_800E6F00, 0x10, ((Unk80157600 *)D_800E6F00)->unk410);
 			return;
 		}
 	} else if (flags & 0x8000) {
@@ -2339,7 +2339,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		channelRate = *(f32 *)&D_800E7310;
 		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, channelRate);
 	} else {
-		func_8000CF4C_DB4C((void *)D_800E7304, D_800E6F00, 0x10, *(s32 *)&D_800E7310);
+		func_8000CF4C_DB4C((void *)D_800E7304, D_800E6F00, 0x10, D_800E7310);
 	}
 
 	{
@@ -2639,7 +2639,7 @@ void func_8007F778_167838(void) {
 		}
 		func_8000CF4C_DB4C((Unk8007F878_404 *)D_800E6AD8.unk404, &D_800E6AD8,
 			D_8009E4C8_186588[temp_v1][temp_t0].unkC,
-			*(s32*)&D_800E6AD8.unk410);
+			D_800E6AD8.unk410);
 	}
 }
 
@@ -2665,7 +2665,7 @@ void func_8007F878_167938(void) {
 
 	category = D_800E6AD8.unk426;
 	model = D_800E6AD8.unk425;
-	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[category][model].unkC, *(s32 *)&D_800E6AD8.unk410);
+	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[category][model].unkC, D_800E6AD8.unk410);
 }
 
 // AI - Render NPC model with full matrix transforms
