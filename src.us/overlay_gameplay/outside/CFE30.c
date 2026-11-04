@@ -3057,16 +3057,16 @@ void func_800C9668_D8618(void) {
 // DrawNonZBufferedEffects?
 #ifdef NON_MATCHING
 void func_800C978C_D873C(void) {
+#define WATER_SPLASH_STATE(index) ((WaterSplashState *)(s32)(s64)(s32)&D_80154318[index].waterSplash)
 	s16 unitId;
 	s16 height2;
 	s16 height3;
 	s16 height4;
 	Unk80052B40 corner1;
+	u8 toggle;
 	Unk80052B40 corner2;
 	Unk80052B40 corner3;
 	Unk80052B40 corner4;
-	s32 toggle;
-	WaterSplashState *splash;
 
 	unitId = D_80154222;
 	gDPPipeSync(D_8005BB2C++);
@@ -3086,13 +3086,16 @@ void func_800C978C_D873C(void) {
 
 	if ((D_80156ED9 != 2) && (unitId != -6) && (unitId != -5)) {
 		do {
+			/* Keep IDO's loop region boundary. */
+			if (1) {}
+
 
 			if (((D_80156ED9 == 1) && (toggle == 0)) || (D_80156ED9 == 0)) {
 
-				splash = (WaterSplashState *)((u32)&D_80154318[unitId].waterSplash & -1U);
-				if ((func_800703B0_7F360(splash->position[0], splash->position[2]) != 0) &&
-					(func_800B93AC_C835C(splash->position[0], splash->position[2], (u16)D_80154318[unitId].unk2, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0)) {
-					if (splash->onWater == 1) {
+
+				if ((func_800703B0_7F360(WATER_SPLASH_STATE(unitId)->position[0], WATER_SPLASH_STATE(unitId)->position[2]) != 0) &&
+					(func_800B93AC_C835C(WATER_SPLASH_STATE(unitId)->position[0], WATER_SPLASH_STATE(unitId)->position[2], (u16)D_80154318[unitId].unk2, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0)) {
+					if (WATER_SPLASH_STATE(unitId)->onWater == 1) {
 						gDPPipeSync(D_8005BB2C++);
 						gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 						gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
@@ -3106,11 +3109,12 @@ void func_800C978C_D873C(void) {
 
 					/* Keep these corner coordinates in their original stack homes. */
 					if (&corner3) {} if (&corner4) {}
-					corner1.unk0=D_80154318[unitId].unk2+splash->position[0]; corner4.unk0=D_80154318[unitId].unk2+splash->position[0];
-					corner3.unk4=splash->position[2]-D_80154318[unitId].unk2; corner4.unk4=splash->position[2]-D_80154318[unitId].unk2;
-					corner2.unk0=splash->position[0]-D_80154318[unitId].unk2; corner3.unk0=splash->position[0]-D_80154318[unitId].unk2;
-					corner1.unk4=D_80154318[unitId].unk2+splash->position[2]; corner2.unk4=D_80154318[unitId].unk2+splash->position[2];
-					if (splash->onWater == 1) {
+					corner1.unk0=D_80154318[unitId].unk2+WATER_SPLASH_STATE(unitId)->position[0];
+					corner1.unk4=D_80154318[unitId].unk2+WATER_SPLASH_STATE(unitId)->position[2];
+					corner2.unk0=WATER_SPLASH_STATE(unitId)->position[0]-D_80154318[unitId].unk2;
+					corner2.unk4=D_80154318[unitId].unk2+WATER_SPLASH_STATE(unitId)->position[2];
+					corner4.unk4=corner3.components[2]=WATER_SPLASH_STATE(unitId)->position[2]-D_80154318[unitId].unk2; corner3.unk0=corner2.unk0; corner4.unk0=corner1.unk0;
+					if (WATER_SPLASH_STATE(unitId)->onWater == 1) {
 						corner1.unk2 = D_80222A70;
 						height2 = D_80222A70;
 						height3 = D_80222A70;
@@ -3128,10 +3132,10 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = splash->color[0];
-					D_8005BB34->v.cn[1] = splash->color[1];
-					D_8005BB34->v.cn[2] = splash->color[2];
-					D_8005BB34->v.cn[3] = splash->opacity;
+					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
+					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
+					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
+					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner2.unk0;
@@ -3140,10 +3144,10 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = splash->color[0];
-					D_8005BB34->v.cn[1] = splash->color[1];
-					D_8005BB34->v.cn[2] = splash->color[2];
-					D_8005BB34->v.cn[3] = splash->opacity;
+					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
+					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
+					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
+					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner3.unk0;
@@ -3152,10 +3156,10 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0x800;
-					D_8005BB34->v.cn[0] = splash->color[0];
-					D_8005BB34->v.cn[1] = splash->color[1];
-					D_8005BB34->v.cn[2] = splash->color[2];
-					D_8005BB34->v.cn[3] = splash->opacity;
+					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
+					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
+					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
+					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner4.unk0;
@@ -3164,22 +3168,22 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0x800;
-					D_8005BB34->v.cn[0] = splash->color[0];
-					D_8005BB34->v.cn[1] = splash->color[1];
-					D_8005BB34->v.cn[2] = splash->color[2];
-					D_8005BB34->v.cn[3] = splash->opacity;
+					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
+					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
+					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
+					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (f32)splash->position[0];
-					D_8005BB34->v.ob[1] = (f32)splash->position[1];
-					D_8005BB34->v.ob[2] = (f32)splash->position[2];
+					D_8005BB34->v.ob[0] = (f32)WATER_SPLASH_STATE(unitId)->position[0];
+					D_8005BB34->v.ob[1] = (f32)WATER_SPLASH_STATE(unitId)->position[1];
+					D_8005BB34->v.ob[2] = (f32)WATER_SPLASH_STATE(unitId)->position[2];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x400;
 					D_8005BB34->v.tc[1] = 0x400;
-					D_8005BB34->v.cn[0] = splash->color[0];
-					D_8005BB34->v.cn[1] = splash->color[1];
-					D_8005BB34->v.cn[2] = splash->color[2];
-					D_8005BB34->v.cn[3] = splash->opacity;
+					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
+					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
+					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
+					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
 					D_8005BB34++;
 
 					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
@@ -3200,6 +3204,7 @@ void func_800C978C_D873C(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_FOG);
 	gDPPipeSync(D_8005BB2C++);
 }
+#undef WATER_SPLASH_STATE
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C978C_D873C.s")
 #endif
