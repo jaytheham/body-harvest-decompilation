@@ -4142,14 +4142,14 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	s32 maxStepCount;
 	if (arg0) {} vehicle = arg0->unk38;
 	player = vehicleInstances;
-	i = vehicle->unk1A;
-	type = (VehicleType *)(s32)&vehicleTypes[i];
+	hitAdjusted = vehicle->unk1A;
+	type = (VehicleType *)(s32)&vehicleTypes[hitAdjusted];
 	changedAudio = 0;
-	halfTypeUnk36 = vehicleTypes[i].unk36 >> 1;
-	halfTypeUnk34 = vehicleTypes[i].unk34 >> 1;
-	foundSpot = 0;
+	halfTypeUnk36 = vehicleTypes[hitAdjusted].unk36 >> 1;
+	halfTypeUnk34 = vehicleTypes[hitAdjusted].unk34 >> 1;
+	hitAdjusted = 0; foundSpot = 0;
 	stepCount = 0;
-	if (i != 0)
+	if (vehicle->unk1A != 0)
 	{
 		if ((type->unk59 == 4) || (type->unk59 == 8))
 		{
@@ -4370,8 +4370,9 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s")
 #endif
+
 
 void func_800FE910_10D8C0(s32 arg0) {
 	func_800039D0_45D0(&D_8013FDA8_14ED58[arg0].unk8, 0, 0, D_8005BB38);
@@ -5867,7 +5868,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	D_801593F0[0].pos.z = (f32)arg1->unk4;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103308_1122B8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103308_1122B8.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
 #endif
 
 void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
