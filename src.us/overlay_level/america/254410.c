@@ -3583,8 +3583,8 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 		sp90[1] = arg2;
 		sp90[2] = arg3;
 		func_800A931C_B82CC(child, sp90, sp7C);
-		sp90[0] = sp7C[0];
 		sp90[1] = sp7C[1];
+		sp90[0] = sp7C[0];
 		sp90[2] = sp7C[2];
 		func_800A931C_B82CC(root, sp90, sp7C);
 		sp7C[0] = (((f32)sp7C[0]) * D_802DF3A8_25EAE8);
@@ -3678,10 +3678,7 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 					alienTypes[typeIndex].unk24 = callResult;
 					if (parent->unk20 & ALIEN_FLAG_UNKF)
 					{
-						sp7C[0] = flags;
-						sp7C[1] = tempVar;
-						sp7C[2] = callResult;
-						func_80128428_1373D8(&alienInstances[arg0], flags, tempVar, callResult, &sp78, &sp74, &sp70);
+						sp7C[0] = flags; sp7C[1] = tempVar; sp7C[2] = callResult; func_80128428_1373D8(&alienInstances[arg0], flags, tempVar, callResult, &sp78, &sp74, &sp70);
 						func_80135D44_144CF4(sp78, sp74, sp70, 2.0f);
 						alienTypes[typeIndex].unk1C = 0x60;
 					}
