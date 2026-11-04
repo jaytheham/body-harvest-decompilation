@@ -16,20 +16,6 @@ const f64 D_80142E18_151DC8[1] = {127.5};
 /* Cosine/sine of ~35.15° used in frustum check */
 const f32 D_80142E20_151DD0[1] = {0.5759139060974121f};
 const f32 D_80142E24_151DD4[1] = {0.5759139060974121f};
-/* Jump table for func_800B5538 */
-const u32 jtbl_80142E28_151DD8[] = {
-	OVERLAY_PTR(0x800B58D4),
-	OVERLAY_PTR(0x800B59C0),
-	OVERLAY_PTR(0x800B5AC8),
-	OVERLAY_PTR(0x800B5BB4),
-	OVERLAY_PTR(0x800B5CA0),
-};
-/* Growth multiplier for crater radius per frame (~1.022x) */
-const f64 D_80142E40_151DF0[1] = {1.022};
-/* Initial crater radius */
-const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
-/* Crater radius multiplier */
-const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
 /* Water palette color bytes, each stored in an aligned data slot. */
 u8 D_8013D940_14C8F0 = 0;
 u8 D_8013D944_14C8F4 = 0;
@@ -1573,14 +1559,10 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	D_8014F89A = 0;
 	scrollX = D_80149434;
 	scrollY = D_80149436;
-	D_8014F899 = D_80151DD8.ringX;
-	D_8014F898 = D_80151DD8.ringY;
-	D_8014F89C = D_80151DD8.mapPosX;
-	D_8014F89D = D_80151DD8.mapPosY;
-	col = D_8014F899;
-	indexByte[0] = D_8014F898;
-	color1 = D_8014F89C;
-	color2 = D_8014F89D;
+	col = D_8014F899 = D_80151DD8.ringX;
+	indexByte[0] = D_8014F898 = D_80151DD8.ringY;
+	color1 = D_8014F89C = D_80151DD8.mapPosX;
+	color2 = D_8014F89D = D_80151DD8.mapPosY;
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
 	rowWrap = 0;
@@ -1598,7 +1580,9 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 		do {
 
 
-			tileCenter = &ringRow[col]; posY = (color2 - 0x80) << 8;
+			tileCenter = &ringRow[col];
+			if (tileCenter) {}
+			posY = (color2 - 0x80) << 8;
 
 			if (col != 0x12) {
 				tileEast = &ringRow[col + 1];
@@ -1789,7 +1773,17 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 		col = D_8014F899;
 	} while (rowWrap < 0x12);
 }
+
 #else
+/* Jump table for func_800B5538 */
+const u32 jtbl_80142E28_151DD8[] = {
+	OVERLAY_PTR(0x800B58D4),
+	OVERLAY_PTR(0x800B59C0),
+	OVERLAY_PTR(0x800B5AC8),
+	OVERLAY_PTR(0x800B5BB4),
+	OVERLAY_PTR(0x800B5CA0),
+};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
@@ -2440,7 +2434,7 @@ void func_800B879C_C774C(void) {
 		}
 
 		D_8014F84C += D_8014F850;
-		D_8014F850 *= D_80142E40_151DF0[0];
+		D_8014F850 *= 1.022;
 		D_8014F830 += 1;
 
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
@@ -2463,7 +2457,7 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F832 = 0x76;
 	D_8014F84C = 0.0f;
 	arg0++;
-	D_8014F850 = D_80142E48_151DF8[0];
+	D_8014F850 = 0.7f;
 	arg1++;
 	D_8014F834 = (&arg2)[0];
 	D_8014F840 = 0x60;
@@ -2563,7 +2557,7 @@ void func_800B8F30_C7EE0(s16 tileX, s16 tileZ, u8 craterType) {
 	case 0:
 		func_800B8C2C_C7BDC(tileX, tileZ, 0x1F);
 		D_8014F832 = 0x12;
-		D_8014F850 = D_80142E4C_151DFC[0];
+		D_8014F850 = 3.2f;
 		D_8014F838 = 3;
 		break;
 
