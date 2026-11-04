@@ -782,7 +782,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 dx;
 	s16 dy;
 	u32 fracY;
-	s32 squareX;
+	s32 pad;
 	s32 cellSize = 256;
 	u8 radius;
 	s16 intensity;
@@ -812,14 +812,13 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		} else {
 			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
 		}
-		squareX = dx * dx;
 		for (y = 1 - radius; y < radius + 1; y++) {
 			if (y <= 0) {
 				dy = fracY + y * -256;
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			intensity = (s32)sqrtf(dy * dy + squareX) - arg2;
+			intensity = (s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (intensity > 0) {
 				intensity = arg3 - intensity;
 				if (intensity > 0) {
@@ -860,6 +859,8 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
+
+
 
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
