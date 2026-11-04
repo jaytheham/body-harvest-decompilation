@@ -1482,7 +1482,11 @@ extern u8 D_800E1D6C;
 extern u8 D_800E1D70[];
 extern s32 D_800E6460;
 extern s32 D_800E6464;
-extern u8 D_800E6468[];
+#ifdef INSIDE_158330_BSS
+u8 D_800E6468[0x132];
+#else
+extern u8 D_800E6468[0x132];
+#endif
 extern f32 D_800E659C;
 extern f32 D_800E65A0;
 extern f32 D_800E65A4;
