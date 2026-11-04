@@ -717,7 +717,8 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	UnkF9230ShadowWalker *walker;
 	s16 angleStep;
 	u8 slot;
-	s32 resultSlot;
+	s16 alienZ;
+	s16 alienY;
 	u8 alienIdx;
 	s16 innerRadius;
 	s16 outerRadius;
@@ -726,9 +727,8 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	s32 pad3;
 	s16 baseAngle;
 	s16 alienX;
-	s16 alienZ;
-	s16 alienY;
 	s32 halfCount;
+	s32 resultSlot;
 	AlienInstance *inst;
 
 	alienIdx = arg0;
@@ -783,7 +783,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	innerRadius = D_801601F0[arg1].unk4;
 	index = 0;
 	halfCount = D_801601F0[arg1].unkC / 2;
-	if (halfCount) {}
+	if (D_801601F0[arg1].unkC) {}
 
 	if (halfCount > 0) {
 		i = 0;
@@ -800,8 +800,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 
 			an->unk14 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienX);
 			an->unk18 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienZ);
-			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
-			an->unk16 = y;
+			an->unk16 = D_8014DD50[inst->unkC].unk2 + inst->unk2;
 			an->unk0 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienX);
 			an->unk4 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 - baseAngle) - 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienZ);
 			an->unk2 = func_800F384C_1027FC((UnkF9230Arg0 *)walker, an->unk16, an->unk0, an->unk4);
@@ -814,8 +813,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 
 			bn->unk14 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienX);
 			bn->unk18 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)innerRadius) + (f64)alienZ);
-			y = D_8014DD50[inst->unkC].unk2 + inst->unk2;
-			bn->unk16 = y;
+			bn->unk16 = D_8014DD50[inst->unkC].unk2 + inst->unk2;
 			bn->unk0 = (s32)((((f32)coss((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienX);
 			bn->unk4 = (s32)((((f32)sins((u16)((walker->limbs[0].unk18 + baseAngle) + 0x4000)) / 32768.0) * (f64)outerRadius) + (f64)alienZ);
 			bn->unk2 = func_800F384C_1027FC((UnkF9230Arg0 *)walker, bn->unk16, bn->unk0, bn->unk4);

@@ -1,0 +1,5 @@
+incorrect ASM: In func_800F3990_102940, observing the already divided halfCount lets IDO use v1 for both dividend and quotient. AS1 consequently expands the signed division through t7; the target quotient is a2. Assigning each height sum through a named s16 y also consumes a discarded narrowing temporary and shifts later temporary registers.
+
+-> code changed: Replace if (halfCount) {} with if (D_801601F0[arg1].unkC) {} immediately after computing halfCount. Assign both height sums directly to the destination limb's unk16 field. Retain the unused y declaration to preserve frame padding. Move the alien Z/Y declarations into the former return-slot declaration gap and place the return-slot declaration after halfCount.
+
+-> correct ASM: The raw count remains in v1, the quotient uses a2, and both height additions write through the target temporary registers without the extra narrowing allocation. The named half-count home is 0x98(sp). The ordinary native full-TU diff decreases from 754 to 186 with the same 0xC0 frame and instruction sequence. This function remains NON_MATCHING: the return/invariant spill homes and one loop-bound temporary still differ.
