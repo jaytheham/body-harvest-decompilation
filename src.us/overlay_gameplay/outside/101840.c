@@ -712,7 +712,6 @@ s32 func_800F384C_1027FC(UnkF9230Arg0 *arg0, s16 arg1, volatile s16 arg2, s16 ar
 	return sp36_s32;
 }
 
-#ifdef NON_MATCHING
 s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	UnkF9230ShadowWalker *walker;
 	s16 angleStep;
@@ -724,7 +723,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	s16 outerRadius;
 	s32 i;
 	s32 index;
-	s32 pad3;
+	s32 activeCount;
 	s16 baseAngle;
 	s16 alienX;
 	s32 halfCount;
@@ -764,7 +763,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	}
 	if (alienY) {}
 	if (inst) {}
-	osSyncPrintf(D_80144934_1538E4, resultSlot.words[0], D_80157FF8);
+	activeCount = D_80157FF8; osSyncPrintf(D_80144934_1538E4, resultSlot.words[0], activeCount);
 
 	walker = &D_80158000[slot];
 
@@ -840,9 +839,6 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	func_800F49A4_103954(walker);
 	return resultSlot.halves[1];
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
-#endif
 
 s16 func_800F3EE4_102E94(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s32 arg4, u8 arg5)
 {
