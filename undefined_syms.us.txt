@@ -7050,3 +7050,6 @@ D_8014ED30_Label = D_8014ED30;
 D_8014ED2E_Write = D_8014ED2E;
 
 D_80059C90_words = D_80059C90;
+
+/* Read view of the function-local flash counter. */
+D_8013DB00_14CAB0 = D_8013DB04_14CAB4 - 0x4;
