@@ -3089,7 +3089,7 @@ void func_800C978C_D873C(void) {
 	s32 toggle;
 	s32 prevToggle;
 	Unk80154318Entry *entry;
-	u8 *sub;
+	WaterSplashState *sub;
 	s16 radius;
 	f32 four;
 
@@ -3116,10 +3116,10 @@ void func_800C978C_D873C(void) {
 			
 			if (((D_80156ED9 == 1) && (toggle == 0)) || (D_80156ED9 == 0)) {
 				entry = &D_80154318[unitId];
-				sub = (u8 *)&entry->unk8;
-				if ((func_800703B0_7F360(*(s16 *)&sub[0], *(s16 *)&sub[4]) != 0) &&
-					(func_800B93AC_C835C(*(s16 *)&sub[0], *(s16 *)&sub[4], (u16)entry->unk2, (s16)(D_80047954 * four), (s32)(D_8004795C * four), 0x4000 - D_80047950) != 0)) {
-					if (sub[0xC] == 1) {
+				sub = &entry->waterSplash;
+				if ((func_800703B0_7F360(sub->position[0], sub->position[2]) != 0) &&
+					(func_800B93AC_C835C(sub->position[0], sub->position[2], (u16)entry->unk2, (s16)(D_80047954 * four), (s32)(D_8004795C * four), 0x4000 - D_80047950) != 0)) {
+					if (sub->onWater == 1) {
 						gDPPipeSync(D_8005BB2C++);
 						gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 						gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
@@ -3136,12 +3136,12 @@ if (&corner2) {}
 if (&corner3) {}
 if (&corner4) {}
 radius = entry->unk2;
-					corner1.unk0 = corner4.unk0 = radius + *(s16 *)&sub[0];
-corner3.unk4 = corner4.unk4 = *(s16 *)&sub[4] - radius;
-corner2.unk0 = corner3.unk0 = *(s16 *)&sub[0] - radius;
-corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
+					corner1.unk0 = corner4.unk0 = radius + sub->position[0];
+corner3.unk4 = corner4.unk4 = sub->position[2] - radius;
+corner2.unk0 = corner3.unk0 = sub->position[0] - radius;
+corner1.unk4 = corner2.unk4 = radius + sub->position[2];
 
-					if (sub[0xC] == 1) {
+					if (sub->onWater == 1) {
 						y1 = D_80222A70;
 						y2 = D_80222A70;
 						y3 = D_80222A70;
@@ -3159,10 +3159,10 @@ corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = sub[6];
-					D_8005BB34->v.cn[1] = sub[7];
-					D_8005BB34->v.cn[2] = sub[8];
-					D_8005BB34->v.cn[3] = sub[0xA];
+					D_8005BB34->v.cn[0] = sub->color[0];
+					D_8005BB34->v.cn[1] = sub->color[1];
+					D_8005BB34->v.cn[2] = sub->color[2];
+					D_8005BB34->v.cn[3] = sub->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner2.unk0;
@@ -3171,10 +3171,10 @@ corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = sub[6];
-					D_8005BB34->v.cn[1] = sub[7];
-					D_8005BB34->v.cn[2] = sub[8];
-					D_8005BB34->v.cn[3] = sub[0xA];
+					D_8005BB34->v.cn[0] = sub->color[0];
+					D_8005BB34->v.cn[1] = sub->color[1];
+					D_8005BB34->v.cn[2] = sub->color[2];
+					D_8005BB34->v.cn[3] = sub->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner3.unk0;
@@ -3183,10 +3183,10 @@ corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0x800;
-					D_8005BB34->v.cn[0] = sub[6];
-					D_8005BB34->v.cn[1] = sub[7];
-					D_8005BB34->v.cn[2] = sub[8];
-					D_8005BB34->v.cn[3] = sub[0xA];
+					D_8005BB34->v.cn[0] = sub->color[0];
+					D_8005BB34->v.cn[1] = sub->color[1];
+					D_8005BB34->v.cn[2] = sub->color[2];
+					D_8005BB34->v.cn[3] = sub->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner4.unk0;
@@ -3195,22 +3195,22 @@ corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0x800;
-					D_8005BB34->v.cn[0] = sub[6];
-					D_8005BB34->v.cn[1] = sub[7];
-					D_8005BB34->v.cn[2] = sub[8];
-					D_8005BB34->v.cn[3] = sub[0xA];
+					D_8005BB34->v.cn[0] = sub->color[0];
+					D_8005BB34->v.cn[1] = sub->color[1];
+					D_8005BB34->v.cn[2] = sub->color[2];
+					D_8005BB34->v.cn[3] = sub->opacity;
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (f32)*(s16 *)&sub[0];
-					D_8005BB34->v.ob[1] = (f32)*(s16 *)&sub[2];
-					D_8005BB34->v.ob[2] = (f32)*(s16 *)&sub[4];
+					D_8005BB34->v.ob[0] = (f32)sub->position[0];
+					D_8005BB34->v.ob[1] = (f32)sub->position[1];
+					D_8005BB34->v.ob[2] = (f32)sub->position[2];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x400;
 					D_8005BB34->v.tc[1] = 0x400;
-					D_8005BB34->v.cn[0] = sub[6];
-					D_8005BB34->v.cn[1] = sub[7];
-					D_8005BB34->v.cn[2] = sub[8];
-					D_8005BB34->v.cn[3] = sub[0xA];
+					D_8005BB34->v.cn[0] = sub->color[0];
+					D_8005BB34->v.cn[1] = sub->color[1];
+					D_8005BB34->v.cn[2] = sub->color[2];
+					D_8005BB34->v.cn[3] = sub->opacity;
 					D_8005BB34++;
 
 					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
@@ -3231,6 +3231,8 @@ corner1.unk4 = corner2.unk4 = radius + *(s16 *)&sub[4];
 	gSPSetGeometryMode(D_8005BB2C++, G_FOG);
 	gDPPipeSync(D_8005BB2C++);
 }
+
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C978C_D873C.s")
 #endif
