@@ -297,8 +297,8 @@ void drawText(char *arg0, ...) {
 			*s0++ = va_arg(s2, s32);
 			break;
 		case 'd':
-			v1 = va_arg(s2, s32);
 			v0 = 1000000;
+			v1 = va_arg(s2, s32);
 			if (v1 < 0) {
 				*s0++ = '-';
 				v1 = -v1;
