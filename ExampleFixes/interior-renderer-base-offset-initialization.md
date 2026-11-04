@@ -9,3 +9,9 @@ incorrect ASM: func_80074FF0_15D0B0 had interleaved base rotation and position a
 -> code changed: Group rotation[0..2], position[0..2] and scale[0..2], then group rotation[3..5], position[3..5] and scale[3..5], using the same base/offset grouping as the room renderer.
 
 -> correct ASM: Every instruction is structurally identical across the 0x69C-byte function, including the transform initialization. The frame remains 0x108 bytes, and every ROM byte outside the function matches. The native score falls from 1266 to 40; two cache-register choices and the order of two independent LI 256 instructions remain, so the NON_MATCHING fallback is retained.
+
+incorrect ASM: The object renderer emits `li t6,0x100; li t8,0x100` at ROM offsets 0x15D3E0 and 0x15D3E4, reversing the target's two independent scale constants. Reordering the three source assignments changes their allocated registers too.
+
+-> code changed: Keep the order and place `scale[3] = 0x100; scale[4] = 0x100; scale[5] = 0x100;` on one physical source line. Merging only the first two or the last two assignments does not change the output.
+
+-> correct ASM: The two instructions become `li t8,0x100; li t6,0x100`, exactly matching the target while preserving every store and all later instructions. The native score falls from 40 to 30; only the half-dimension and camera-Z register choices remain.

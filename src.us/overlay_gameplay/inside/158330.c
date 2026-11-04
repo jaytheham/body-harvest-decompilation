@@ -8049,12 +8049,12 @@ void func_80074FF0_15D0B0(void) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	for (i = 0; i < D_800E668C; i++) {
-		 temp_f20 = 180.0;
+			temp_f20 = 180.0;
 			objIdx = D_800E66A8[i].unk0;
 			if (D_800E65BC[objIdx].unk44 & 1) {
 				displayList = D_800E65BC[objIdx].unk0;
-				dimX = (u32)D_800E65BC[objIdx].unk18;
-				dimZ = (u32)D_800E65BC[objIdx].unk1A;
+				dimX = D_800E65BC[objIdx].unk18;
+				dimZ = D_800E65BC[objIdx].unk1A;
 				if (dimZ < dimX) {
 					halfDim = (s32) (dimX / halfDivisor);
 				} else {
@@ -8075,23 +8075,21 @@ void func_80074FF0_15D0B0(void) {
 					flags = D_800E65BC[objIdx].unk40;
 					if (flags & 0x100) {
 						rotation[0] = D_800E66A8[i].unk8 << 0xE;
-							rotation[1] = 0;
-							rotation[2] = 0;
-							position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
-							position[1] = D_800E66A8[i].unk4 << 0x10;
-							position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
-							scale[0] = 0x40;
-							scale[1] = 0x40;
-							scale[2] = 0x40;
-							rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
-							rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
-							rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
-							position[3] = (s32) (D_800E66A8[i].unk20 * positionScale);
-							position[4] = (s32) (D_800E66A8[i].unk24 * positionScale);
-							position[5] = (s32) (D_800E66A8[i].unk28 * positionScale);
-							scale[3] = 0x100;
-							scale[4] = 0x100;
-							scale[5] = 0x100;
+						rotation[1] = 0;
+						rotation[2] = 0;
+						position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
+						position[1] = D_800E66A8[i].unk4 << 0x10;
+						position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
+						scale[0] = 0x40;
+						scale[1] = 0x40;
+						scale[2] = 0x40;
+						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
+						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
+						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
+						position[3] = (s32) (D_800E66A8[i].unk20 * positionScale);
+						position[4] = (s32) (D_800E66A8[i].unk24 * positionScale);
+						position[5] = (s32) (D_800E66A8[i].unk28 * positionScale);
+						scale[3] = 0x100; scale[4] = 0x100; scale[5] = 0x100;
 							func_80076A58_15EB18(1, &rotation[0], &position[0], &scale[0], displayList);
 					} else if (((flags & 0x04000000) && (D_800E66A8[i].unk2E & 1)) ||
 						   ((flags & 0x08000000) && !(D_800E66A8[i].unk2E & 1))) {
