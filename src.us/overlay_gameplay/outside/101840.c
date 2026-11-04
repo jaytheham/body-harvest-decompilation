@@ -1848,7 +1848,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sp11C;
 	s32 trigResult;
 	s32 phase;
-	s32 xTri;
+	s32 xTri = 0;
 	s32 angle;
 	s32 cosTerm;
 	s16 halfSin;
@@ -1868,7 +1868,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 spE4;
 	s16 spE2;
 	s16 spE0;
-	s32 zTri;
+	s32 zTri = 0;
 	s16 halfCos;
 	u8 cR;
 	s32 cG;
