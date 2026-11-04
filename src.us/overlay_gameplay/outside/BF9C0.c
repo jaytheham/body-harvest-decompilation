@@ -120,11 +120,6 @@ EffectRgb D_8013DAF4_14CAA4 = {0xFF, 0x9B, 0xFF};
 EffectRgb D_8013DAF8_14CAA8 = {0xFF, 0xE6, 0xC8};
 /* Unused sprite/pointer */
 s16 D_8013DAFC_14CAAC[2] = { -1, 0 };
-/* Water animation frame counter */
-u8 D_8013DB00_14CAB0 = 0;
-/* Unused */
-s32 D_8013DB04_14CAB4 = 0;
-s32 D_8013DB08_14CAB8 = 0;
 
 // AI- Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
@@ -4518,30 +4513,31 @@ void func_800BED30_CDCE0(void) {
 
 #ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
+	static u8 flashCount = 0;
 	s16 var_a1;
 	s16 delta[1];
 	s32 temp_v1;
 	u16 color;
 	f32 sp30;
-	s32 timer;
+	s32 pad;
 	s32 clamp;
 	s32 remaining;
 	var_a1 = D_8013DAFC_14CAAC[0];
 	if (var_a1 == -1) {
 		if (D_8013D9CC_14C97C != 0) {
-			D_8013DB00_14CAB0 = 2;
+			flashCount = 2;
 		} else {
-			D_8013DB00_14CAB0 = (func_800038E0_44E0() % 2) + 2;
+			flashCount = (func_800038E0_44E0() % 2) + 2;
 		}
 		D_8013D9C0_14C970[0] += 8;
 		var_a1 = D_8013D9C0_14C970[0];
 		D_80152B7C = D_800313F8;
 		D_8013DB08_14CAB8 = 1;
 	}
-	timer = D_8013D9C0_14C970[0];
+	remaining = D_8013D9C0_14C970[0];
 	D_8013DAFC_14CAAC[0] = (u16)var_a1;
-	if ((var_a1 - 8) < timer) {
-		delta[0] = var_a1 - timer;
+	if ((var_a1 - 8) < remaining) {
+		delta[0] = var_a1 - remaining;
 		sp30 = (f32)((f64)(f32)D_8013D9C4_14C974[0] * 0.001953125);
 		temp_v1 = (s16)(s32)(200.0f - (100.0f * sp30)) - (delta[0] * 0xF);
 		D_8013DAFC_14CAAC[0] = var_a1;
@@ -4572,14 +4568,14 @@ void func_800C0678_CF628(void) {
 		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
 		D_8013D9C8_14C978 = 1;
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		if ((remaining == 7) && (D_8013DB00_14CAB0 > 0U)) {
-			D_8013DB00_14CAB0 = D_8013DB00_14CAB0 - 1;
+		if ((remaining == 7) && (flashCount > 0U)) {
+			flashCount--;
 		}
 		remaining = D_8013D9C0_14C970[0];
 		var_a1 = D_8013DAFC_14CAAC[0];
 		if (var_a1 == (remaining + 7)) {
 			D_8013DB04_14CAB4 = 1;
-			if (D_8013DB00_14CAB0 != 0) {
+			if (flashCount != 0) {
 				D_8013D9C0_14C970[0] += 8;
 				var_a1 = D_8013D9C0_14C970[0];
 				D_8013DAFC_14CAAC[0] = var_a1 - 1;
@@ -4610,11 +4606,12 @@ void func_800C0678_CF628(void) {
 		}
 	}
 	if ((D_8013DB04_14CAB4 != 0) || ((remaining = D_8013D9C0_14C970[0]) <= 0)) {
-		if (D_80151DD0 == 2) {
+		remaining = D_80151DD0;
+		if (remaining == 2) {
 			D_80047743 = (s32)D_800313E8 / 2;
 			D_80047744 = (s32)D_800313EC / 2;
 			D_80047745 = (s32)D_800313F0 / 2;
-		} else if (D_80151DD0 == 3) {
+		} else if (remaining == 3) {
 			D_80047743 = 0;
 			D_80047744 = 0;
 			D_80047745 = 0;
@@ -4641,8 +4638,12 @@ void func_800C0678_CF628(void) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
+u8 D_8013DB00_14CAB0 = 0;
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s", "src.us/overlay_gameplay/outside/BF9C0_flash_rodata.s")
 #endif
+
+s32 D_8013DB04_14CAB4 = 0;
+s32 D_8013DB08_14CAB8 = 0;
 
 s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
 	s32 dx;
