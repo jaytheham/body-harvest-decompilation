@@ -2953,7 +2953,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
 				tileX = (firstTile[0] + column) & 0xFF;
-				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
+				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX]; palette &= 0xF;
 				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
 				gDPLoadSync(D_8005BB2C++);
 
@@ -2962,7 +2962,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 				{
 					((u8(*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
 				}
-				gfx = D_8005BB2C++; gfx->words.w1 = 0x20000; gfx->words.w0 = 0xB6000000;
+				gfx = D_8005BB2C++; gfx->words.w0 = G_CLEARGEOMETRYMODE << 24; gfx->words.w1 = G_LIGHTING;
 				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
 				{
 					visibleCount += 1;
@@ -2985,13 +2985,11 @@ void func_800B9DB8_C8D68(u8 arg0)
 	func_800B753C_C64EC();
 	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
-
-
-/* Clamps arg0 to the range [arg1, arg2] */
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif
 
+/* Clamps arg0 to the range [arg1, arg2] */
 s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {
 	if (arg0 < arg1) {
 		return arg1;
