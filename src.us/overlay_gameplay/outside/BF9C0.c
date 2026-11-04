@@ -3252,7 +3252,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s", "src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
 #endif
 
 
@@ -3369,20 +3369,20 @@ void func_800BB5E0_CA590(void) {
 	s16 startZ;
 	s16 endX;
 	s16 endZ;
-	f64 texScale;
-	u32 scrollS;
-	u32 scrollT;
-	s16 baseX;
-	s16 baseZ;
-	s16 segStartX;
-	s16 segStartZ;
-	s16 segEndX;
-	s16 segEndZ;
 	s16 colorEnd;
 	s8 p1Index;
+	f64 texScale;
+	s16 segStartX;
+	s16 segStartZ;
+	s16 baseX;
+	s16 baseZ;
+	s16 segEndX;
+	s16 segEndZ;
+	u32 scrollT;
+	u32 scrollS;
 	Vec2_S16 lightStart;
 	Vec2_S16 lightEnd;
-	u8 color[3];
+	EffectRgb color;
 	Gfx *gfx;
 	s32 linkCount;
 	s32 texStartS;
@@ -3419,7 +3419,7 @@ void func_800BB5E0_CA590(void) {
 	linkCount = D_8003E0EE_3ECEE[level] * 8;
 	i = 0;
 	if ((linkCount) > 0) {
-		texScale = D_80142E68_151E18[0];
+		texScale = 0.4;
 
 		do {
 			p0Index = ((ShieldWallLink (*)[64])D_801479B0_156960)[level - 1][i].startIdx;
@@ -3465,13 +3465,13 @@ void func_800BB5E0_CA590(void) {
 						lightEnd.x = segEndX;
 						lightEnd.z = segEndZ;
 						colorStart = 0x20 - (D_80052A8C & 0x3F);
-						color[0] = 0x62 - (colorStart >= 0 ? colorStart : -colorStart);
+						color.r = 0x62 - (colorStart >= 0 ? colorStart : -colorStart);
 
 						colorEnd = 0x80 - ((D_80052A8C * 8) & 0xFF);
-						color[1] = 0xEF - (colorEnd >= 0 ? colorEnd : -colorEnd);
-						color[2] = 0xFF - (colorEnd >= 0 ? colorEnd : -colorEnd);
+						color.g = 0xEF - (colorEnd >= 0 ? colorEnd : -colorEnd);
+						color.b = 0xFF - (colorEnd >= 0 ? colorEnd : -colorEnd);
 
-						func_800B1A68_C0A18(&lightStart, &lightEnd, color);
+						func_800B1A68_C0A18(&lightStart, &lightEnd, &color);
 
 						if (segStartX == segEndX) {
 							scrollT = 0;
@@ -3490,6 +3490,7 @@ void func_800BB5E0_CA590(void) {
 						}
 
 
+						 if (baseX) {} if (baseZ) {} if (baseX) {} if (baseZ) {}
 						D_8005BB34[0].v.ob[0] = segStartX;
 						D_8005BB34[0].v.ob[1] = minY;
 						D_8005BB34[0].v.ob[2] = segStartZ;
@@ -3578,7 +3579,7 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[7].v.cn[2] = 0x96;
 						D_8005BB34[7].v.cn[3] = 0;
 
-						gSPVertex(D_8005BB2C++, D_8005BB34, 8, 0);
+						gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(D_8005BB34), 8, 0);
 
 						D_8005BB34 += 8;
 
@@ -3598,10 +3599,8 @@ void func_800BB5E0_CA590(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPDisplayList(D_8005BB2C++, D_80031200);
 }
-
-
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB5E0_CA590.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BB5E0_CA590.s", "src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
 #endif
 
 // (short playerX, short playerZ)
