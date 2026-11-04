@@ -11251,14 +11251,14 @@ void func_800E6A38_F59E8(void)
 	// e.g. the Vtx Gfx union, vertex3 & 4 treated differently to the rest, the useless gfx pointer
   s32 slotCount = 4;
   s16 angle;
+  s16 radius;
   Unk800E614CFxSlot *slot;
   Unk800E614CFxEntry *entry;
   s16 baseX;
   s16 baseY;
   s16 baseZ;
-  s32 remain;
-  s16 radius;
   s16 xOff;
+  s32 remain;
   s16 zOff;
   s16 yTop;
   Vtx *vtx0;
