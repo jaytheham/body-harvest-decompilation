@@ -1947,7 +1947,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	halfCos = (s16)cosTerm;
 	xStep = (s16)(s32)(direction.vector.x * spF4);
 	yStep = (s16)(s32)(direction.vector.y * spF4);
-	zStep = (s16)(s32)(direction.vector.z * spF4);
+	zStep = (s16)(s64)(s32)(direction.vector.z * spF4);
 	xTri = *(s16 *)&xStep * 3;
 
 	D_8005BB34->v.ob[0] = arg1[0] + halfSin + xTri;
