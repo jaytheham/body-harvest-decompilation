@@ -338,7 +338,6 @@ s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 }
 
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
-#ifdef NON_MATCHING
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
 	s32 pad54; s32 pad50; s32 pad4C; s32 pad48; s32 pad44; s32 pad40;
 	s32 var_a2; s32 var_a3; s32 wallIndex; BoundingBox *wall;
@@ -407,9 +406,9 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			temp_f0 = var_t2 * outerScale;
 			*arg3 = arg0 + temp_f12;
 			*arg4 = arg1 + temp_f0;
+			*arg5 = D_8014FD30.main.maxZ;
 			var_t0 = temp_f12;
 			var_t2 = temp_f0; if ((s32)outerScale * 0) {}
-			*arg5 = D_8014FD30.main.maxZ;
 			var_t1 = var_t1 * outerScale;
 			*arg6 = 0; if (var_t0 * 0) {}
 		} else if (*arg5 < D_8014FD30.main.minZ) {
@@ -423,9 +422,9 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			temp_f0 = var_t2 * outerScale;
 			*arg3 = arg0 + temp_f12;
 			*arg4 = arg1 + temp_f0;
+			*arg5 = D_8014FD30.main.minZ;
 			var_t0 = temp_f12;
 			var_t2 = temp_f0; if ((s32)outerScale * 0) {}
-			*arg5 = D_8014FD30.main.minZ;
 			var_t1 = var_t1 * outerScale;
 
 			*arg6 = 0; if (var_t0 * 0) {}
@@ -454,8 +453,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 				}
 				temp_f2 = (var_a2 - arg0) / temp_f14;
 				if ((temp_f2 > 0.0f) && (temp_f2 < 1.0)) {
-					temp_f12 = var_t1 * temp_f2;
-					temp_v0_4 = arg2 + temp_f12;
+					temp_v0_4 = arg2 + var_t1 * temp_f2;
 					var_a3 = temp_v0_4;
 					if ((D_8014FD30.sub[wallIndex].minZ < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxZ)) {
 						*arg3 = var_a2;
@@ -466,7 +464,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 						var_t0 = var_t0 * temp_f2;
 						var_t2 = temp_f0;
 						*arg6 = 1;
-						var_t1 = temp_f12;
+						var_t1 = var_t1 * temp_f2;
 					}
 				}
 			}
@@ -480,15 +478,14 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 				}
 				temp_f2 = (var_a3 - arg2) / temp_f14;
 				if ((temp_f2 > 0.0f) && (temp_f2 < 1.0)) {
-					temp_f12 = var_t0 * temp_f2;
-					temp_v0_4 = arg0 + temp_f12;
+					temp_v0_4 = arg0 + var_t0 * temp_f2;
 					var_a2 = temp_v0_4;
 					if ((D_8014FD30.sub[wallIndex].minX < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxX)) {
 						*arg3 = temp_v0_4;
 						var_t3 = 1;
 						temp_f0 = var_t2 * temp_f2;
 						*arg4 = arg1 + temp_f0;
-						var_t0 = temp_f12;
+						var_t0 = var_t0 * temp_f2;
 						var_t2 = temp_f0;
 						*arg5 = var_a3;
 						*arg6 = 0;
@@ -507,11 +504,6 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	*arg6 = 0;
 	return 0;
 }
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
-#endif
 
 void func_800B165C_C060C(s32 arg0) {
 	Unk8014FD30Type *wall;
