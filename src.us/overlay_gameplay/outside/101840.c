@@ -2117,6 +2117,7 @@ void func_800F842C_1073DC(s32 arg0) {
 	f32 trig;
 	s32 i;
 	UnkF9230ShadowLimb *nextEntry;
+	s16 initialHeight;
 	Unk80052B40 sp8C;
 	Unk80052B40 sp84;
 	s16 sp82;
@@ -2127,10 +2128,11 @@ void func_800F842C_1073DC(s32 arg0) {
 	}
 
 	walker = &D_80158000[arg0];
-	sp82 = (s32)(s64)(s32)(s64)(s32)(s64)D_801601F0[walker->limbs[0].unk23].unkA / 20;
+	initialHeight = D_801601F0[walker->limbs[0].unk23].unkA;
 	if (&D_801601F0[walker->limbs[0].unk23]) {}
 
 	for (i = 0; i < 6; i++) {
+		sp82 = initialHeight / 20;
 		if (walker->limbs[i + 1].unk23 == 1) {
 
 			gDPPipeSync(D_8005BB2C++);
