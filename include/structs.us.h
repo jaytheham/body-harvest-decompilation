@@ -2590,10 +2590,10 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ Vtx *unk0;
-	/* 0x04 */ s8 unk4;
-	/* 0x05 */ s8 unk5;
-	/* 0x06 */ s8 unk6;
-	/* 0x07 */ s8 pad7;
+	/* 0x04 */ u8 unk4;
+	/* 0x05 */ u8 unk5;
+	/* 0x06 */ u8 unk6;
+	/* 0x07 */ u8 pad7;
 } Unk800B753CEntry; /* size = 0x08 */
 
 typedef Unk800311A0 Unk80052B40; /* size = 0x06 */
