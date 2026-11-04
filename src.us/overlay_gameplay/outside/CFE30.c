@@ -2118,122 +2118,123 @@ void func_800C5D14_D4CC4(u8 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 s16 func_800C613C_D50EC(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4) {
-	s32 tempA2;
-	EffectInterpolationState *varV0;
-	EffectInterpolationState *varA1;
+#define MOTION_STATE ((EffectInterpolationState *)((u32)motion & -1U))
+	s32 linkedAddress;
+	EffectInterpolationState *state;
+	EffectInterpolationState *motion;
 	s16 linkIndex;
-	s16 sp40;
-	s16 sp3E;
-	u8 sp30[0xC];
+	s16 shapeIndex;
+	s16 unitId;
+	u8 colors[0xC];
 
-	sp3E = func_800C18FC_D08AC(1, 1);
-	if (sp3E != -3) {
-		linkIndex = D_80154318[sp3E].unk4;
-		tempA2 = (s32)&D_80154318[linkIndex];
-		sp40 = ((Unk80154318Entry *)tempA2)->unk4;
-		D_80154318[sp3E].unk2 = arg3;
+	unitId = func_800C18FC_D08AC(1, 1);
+	if (unitId != -3) {
+		linkIndex = D_80154318[unitId].unk4;
+		linkedAddress = (s32)&D_80154318[linkIndex];
+		shapeIndex = ((Unk80154318Entry *)linkedAddress)->unk4;
+		D_80154318[unitId].unk2 = arg3;
 
 		if (arg4 == NULL) {
-			func_800DFA98_EEA48((s8 (*)[3])sp30);
-			varV0 = (EffectInterpolationState *)(s32)&D_80154318[sp3E].interpolation;
-			varA1 = (EffectInterpolationState *)(s32)&((Unk80154318Entry *)tempA2)->interpolation;
+			func_800DFA98_EEA48((s8 (*)[3])colors);
+			state = (EffectInterpolationState *)(s32)&D_80154318[unitId].interpolation;
+			motion = (EffectInterpolationState *)(s32)&((Unk80154318Entry *)linkedAddress)->interpolation;
 			// End the cached entry lifetime to preserve secondary-payload stores.
-			tempA2 = (s32)varA1;
-			varV0->bytes[6] = sp30[0];
-			varV0->bytes[7] = sp30[1];
-			varV0->bytes[8] = sp30[2];
-			varV0->bytes[9] = sp30[3];
-			varV0->bytes[10] = sp30[4];
-			varV0->bytes[11] = sp30[5];
-			varA1->bytes[0] = sp30[6];
-			varA1->bytes[1] = sp30[7];
-			varA1->bytes[2] = sp30[8];
-			varA1->bytes[3] = sp30[9];
-			varA1->bytes[4] = sp30[10];
-			varA1->bytes[5] = sp30[11];
+			linkedAddress = (s32)motion;
+			if (MOTION_STATE) {}
+			state->bytes[6] = colors[0];
+			state->bytes[7] = colors[1];
+			state->bytes[8] = colors[2];
+			state->bytes[9] = colors[3];
+			state->bytes[10] = colors[4];
+			state->bytes[11] = colors[5];
+			MOTION_STATE->bytes[0] = colors[6];
+			MOTION_STATE->bytes[1] = colors[7];
+			MOTION_STATE->bytes[2] = colors[8];
+			MOTION_STATE->bytes[3] = colors[9];
+			MOTION_STATE->bytes[4] = colors[10];
+			MOTION_STATE->bytes[5] = colors[11];
 		} else {
-			varV0 = (EffectInterpolationState *)(s32)&D_80154318[sp3E].interpolation;
-			if (1) { varA1 = (EffectInterpolationState *)(s32)&((Unk80154318Entry *)tempA2)->interpolation; tempA2 = (s32)varA1; }
-			varV0->bytes[6] = arg4[0];
-			varV0->bytes[7] = arg4[1];
-			varV0->bytes[8] = arg4[2];
-			varV0->bytes[9] = arg4[3];
-			varV0->bytes[10] = arg4[4];
-			varV0->bytes[11] = arg4[5];
-			varA1->bytes[0] = arg4[6];
-			varA1->bytes[1] = arg4[7];
-			varA1->bytes[2] = arg4[8];
-			varA1->bytes[3] = arg4[9];
-			varA1->bytes[4] = arg4[10];
-			varA1->bytes[5] = arg4[11];
+			state = (EffectInterpolationState *)(s32)&D_80154318[unitId].interpolation;
+			motion = (EffectInterpolationState *)(s32)&((Unk80154318Entry *)linkedAddress)->interpolation; linkedAddress = (s32)motion;
+			if (MOTION_STATE) {}
+			state->bytes[6] = arg4[0];
+			state->bytes[7] = arg4[1];
+			state->bytes[8] = arg4[2];
+			state->bytes[9] = arg4[3];
+			state->bytes[10] = arg4[4];
+			state->bytes[11] = arg4[5];
+			MOTION_STATE->bytes[0] = arg4[6];
+			MOTION_STATE->bytes[1] = arg4[7];
+			MOTION_STATE->bytes[2] = arg4[8];
+			MOTION_STATE->bytes[3] = arg4[9];
+			MOTION_STATE->bytes[4] = arg4[10];
+			MOTION_STATE->bytes[5] = arg4[11];
 		}
 
-		varV0 = (EffectInterpolationState *)(s32)&D_80154318[sp3E].interpolation;
-		varV0->position[0] = arg0;
-		varV0->position[1] = arg1;
-		varV0->position[2] = arg2;
-		varV0->bytes[12] = 0;
-		varA1->bytes[6] = func_800038E0_44E0() % 16;
-		varA1->bytes[7] = 0;
-		varA1->bytes[8] = func_800038E0_44E0() % 256;
-		varA1->bytes[9] = 0xFF;
-		varA1->bytes[10] = 0xFF;
+		state = (EffectInterpolationState *)(s32)&D_80154318[unitId].interpolation;
+		state->position[0] = arg0;
+		state->position[1] = arg1;
+		state->position[2] = arg2;
+		state->bytes[12] = 0;
+		MOTION_STATE->bytes[6] = func_800038E0_44E0() % 16;
+		MOTION_STATE->bytes[7] = 0;
+		MOTION_STATE->bytes[8] = func_800038E0_44E0() % 256;
+		MOTION_STATE->bytes[9] = 0xFF;
+		MOTION_STATE->bytes[10] = 0xFF;
 
 		if (arg3 < 0x4B) {
-			varA1->bytes[11] = 3;
+			MOTION_STATE->bytes[11] = 3;
 		} else if (arg3 < 0x96) {
-			varA1->bytes[11] = 2;
+			MOTION_STATE->bytes[11] = 2;
 		} else {
-			varA1->bytes[11] = 1;
+			MOTION_STATE->bytes[11] = 1;
 		}
 
-		varV0 = (EffectInterpolationState *)(s32)&D_80154318[sp40].interpolation;
-		varV0->size = 0;
+		state = (EffectInterpolationState *)(s32)&D_80154318[shapeIndex].interpolation;
+		state->size = 0;
 
 		if ((func_800038E0_44E0() % 3) == 1) {
-			varV0->bytes[2] = func_800038E0_44E0() % 40;
+			state->bytes[2] = func_800038E0_44E0() % 40;
 		} else {
-			varV0->bytes[2] = 0;
-		}
-
-		if ((func_800038E0_44E0() % 3) == 1) {
-			varV0->bytes[3] = func_800038E0_44E0() % 40;
-		} else {
-			varV0->bytes[3] = 0;
+			state->bytes[2] = 0;
 		}
 
 		if ((func_800038E0_44E0() % 3) == 1) {
-			varV0->bytes[4] = func_800038E0_44E0() % 40;
+			state->bytes[3] = func_800038E0_44E0() % 40;
 		} else {
-			varV0->bytes[4] = 0;
+			state->bytes[3] = 0;
+		}
+
+		if ((func_800038E0_44E0() % 3) == 1) {
+			state->bytes[4] = func_800038E0_44E0() % 40;
+		} else {
+			state->bytes[4] = 0;
 		}
 
 		if ((func_800038E0_44E0() % 2) == 1) {
-			varV0->bytes[5] = func_800038E0_44E0() % 7;
+			state->bytes[5] = func_800038E0_44E0() % 7;
 		} else {
-			varV0->bytes[5] = 0;
+			state->bytes[5] = 0;
 		}
 
 		if ((func_800038E0_44E0() % 2) == 1) {
-			varV0->bytes[6] = func_800038E0_44E0() % 7;
+			state->bytes[6] = func_800038E0_44E0() % 7;
 		} else {
-			varV0->bytes[6] = 0;
+			state->bytes[6] = 0;
 		}
 
 		if ((func_800038E0_44E0() % 2) == 1) {
-			varV0->bytes[7] = func_800038E0_44E0() % 7;
+			state->bytes[7] = func_800038E0_44E0() % 7;
 		} else {
-			varV0->bytes[7] = 0;
+			state->bytes[7] = 0;
 		}
 	}
 
-	return sp3E;
+	return unitId;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C613C_D50EC.s")
-#endif
+#undef MOTION_STATE
+
 
 void func_800C6558_D5508(void) {
 	s16 idx;
