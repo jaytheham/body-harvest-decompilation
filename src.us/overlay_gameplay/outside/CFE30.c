@@ -2767,38 +2767,39 @@ void func_800C8814_D77C4(void) {
 	s16 nextIdx;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
-	
-	
-	Unk80052B40 spEC;
-	Unk80052B40 spE4;
-	Unk80052B40 spDC; ChunkEffectState *entryState; ChunkMotionState *motion;
-	s32 pad2[4];
+	Unk80052B40 scale;
+	Unk80052B40 rotation;
+	Unk80052B40 position;
+	ChunkEffectState *entryState;
+	ChunkMotionState *motion;
+	s32 parentIndex;
+	s32 pad2[1];
 	s32 pad[5];
 
 	effectIdx = D_80154216;
 	if ((effectIdx != -6) && (effectIdx != -5)) {
 		do {
 			entry = &D_80154318[effectIdx];
-			spEC.components[2] = entry->unk2;
-			spEC.components[1] = entry->unk2;
+			parentIndex = entry->unk4;
 
-			nextIdx = D_80154318[entry->unk4].unk4; linked = &D_80154318[entry->unk4];
-			spEC.components[0] = entry->unk2; entryState = (ChunkEffectState *)(s32)entry->payload;
-			
+			nextIdx = D_80154318[parentIndex].unk4;
+			linked = &D_80154318[parentIndex];
+			scale.unk2 = scale.unk4 = scale.unk0 = entry->unk2;
+			entryState = (ChunkEffectState *)(s32)entry->payload;
 
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f),
 				(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
-				
-				if (linked) {} gDPSetPrimColor(D_8005BB2C++, 0, 0, (u8)((Unk80154318Sub *)entryState)->unk6, (u8)((Unk80154318Sub *)entryState)->unk7, (u8)((Unk80154318Sub *)entryState)->unk8, 0xFF);
 
-				spDC.unk0 = entryState->position[0];
-				spDC.unk2 = entryState->position[1];
-				spDC.unk4 = entryState->position[2];
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, (u8)((Unk80154318Sub *)entryState)->unk6, (u8)((Unk80154318Sub *)entryState)->unk7, (u8)((Unk80154318Sub *)entryState)->unk8, 0xFF);
+
+				position.unk0 = entryState->position[0];
+				position.unk2 = entryState->position[1];
+				position.unk4 = entryState->position[2];
 
 				motion = (ChunkMotionState *)(s32)D_80154318[nextIdx].payload;
-				spE4.unk0 = motion->rotation[0] << 8;
-				spE4.unk2 = motion->rotation[1] << 8;
-				spE4.unk4 = motion->rotation[2] << 8;
+				rotation.unk0 = motion->rotation[0] << 8;
+				rotation.unk2 = motion->rotation[1] << 8;
+				rotation.unk4 = motion->rotation[2] << 8;
 
 				if (!(entryState->flags & 8)) {
 					gDPPipeSync(D_8005BB2C++);
@@ -2824,7 +2825,7 @@ void func_800C8814_D77C4(void) {
 					gDPPipeSync(D_8005BB2C++);
 				}
 
-				func_800039D0_45D0(&spDC, &spE4, &spEC, D_8005BB38);
+				func_800039D0_45D0(&position, &rotation, &scale, D_8005BB38);
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPDisplayList(D_8005BB2C++, linked->displayList);
