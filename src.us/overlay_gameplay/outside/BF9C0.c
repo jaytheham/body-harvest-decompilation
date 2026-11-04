@@ -1048,7 +1048,8 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+/* The word return value is intentionally unspecified; every caller discards it. */
+s32 func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 pad;
 	u8 row;
 	u8 col;
@@ -4383,24 +4384,23 @@ void func_800BED24_CDCD4(void) {
 	D_8013D9B4_14C964 = 0;
 }
 
-#ifdef NON_MATCHING
 void func_800BED30_CDCE0(void) {
 	f32 lightFactor;
 	u8 red;
 	u8 green;
 	u8 blue;
-	u8 fogRed, fogGreen, fogBlue;
 	u16 firstColor;
 	s16 paletteIndex;
 	s16 timer;
+	PaletteFadeWork work;
 
 	if ((u32)D_8013D9B0_14C960 > 0U) {
 		if (D_8013D9B0_14C960 >= 0x3D) {
 			timer = D_8013D9B0_14C960 - 0x3C;
-			lightFactor = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			lightFactor = ((1.0 - ((f32)coss((((timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 		} else {
-			timer = D_8013D9B0_14C960;
-			lightFactor = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+			work.timer = D_8013D9B0_14C960;
+			lightFactor = ((((f32)coss((((work.timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 		}
 
 		for (paletteIndex = 0; paletteIndex < 0x100; paletteIndex++) {
@@ -4418,51 +4418,50 @@ void func_800BED30_CDCE0(void) {
 
 
 
-			D_802D4AD0[paletteIndex] = red << 11;
-			D_802D4AD0[paletteIndex] += green << 6;
+			D_802D4AD0[paletteIndex] = red << 11, D_802D4AD0[paletteIndex] += green << 6;
 			D_802D4AD0[paletteIndex] += blue * 2;
 		}
 
 		if ((D_8013D9B0_14C960 - 1) >= 0x3D) {
-			lightFactor = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3D) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			work.timer = D_8013D9B0_14C960 - 0x3D;
+			lightFactor = ((1.0 - ((f32)coss((((work.timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 		} else {
 			if (D_8013D9B0_14C960 > 0) {
 				timer = (D_8013D9B0_14C960 - 1);
 			} else {
 				timer = (s16)D_8013D9B0_14C960;
 			}
-			lightFactor = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+			lightFactor = ((((f32)coss((((timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 		}
 		func_80004A38_5638(D_802CA8D0, &red, &green, &blue);
-		fogGreen = green; fogRed = red; fogBlue = blue;
+		
 		if (D_8013D9B4_14C964 != 0) {
-			fogRed = ((fogRed >> 1) + ((lightFactor * (f32)(u32)fogRed) / 2));
-			fogGreen = ((fogGreen >> 1) + ((lightFactor * (f32)(u32)fogGreen) / 2));
-			fogBlue = (u32)((fogBlue >> 1) + ((lightFactor * (f32)(u32)fogBlue) / 2));
+			red = ((red >> 1) + ((lightFactor * (f32)(u32)red) / 2));
+			green = ((green >> 1) + ((lightFactor * (f32)(u32)green) / 2));
+			blue = (u32)((blue >> 1) + ((lightFactor * (f32)(u32)blue) / 2));
 		} else {
-			fogRed = ((fogRed >> 2) + ((lightFactor * (f32)(u32)fogRed) * 0.75));
-			fogGreen = ((fogGreen >> 2) + ((lightFactor * (f32)(u32)fogGreen) * 0.75));
-			fogBlue = ((fogBlue >> 2) + ((lightFactor * (f32)(u32)fogBlue) * 0.75));
+			red = ((red >> 2) + ((lightFactor * (f32)(u32)red) * 0.75));
+			green = ((green >> 2) + ((lightFactor * (f32)(u32)green) * 0.75));
+			blue = ((blue >> 2) + ((lightFactor * (f32)(u32)blue) * 0.75));
 		}
-		red = fogRed;
-		green = fogGreen;
-		blue = fogBlue;
-		firstColor = (red << 11) + (green << 6) + blue * 2;
+		firstColor = red << 11;
+		firstColor += green << 6;
+		firstColor += blue * 2;
 		func_80004A38_5638(D_802D48CF, &red, &green, &blue);
-		fogGreen = green; fogRed = red; fogBlue = blue;
+		
 		if (D_8013D9B4_14C964 != 0) {
-			fogRed = ((fogRed >> 1) + ((lightFactor * (f32)(u32)fogRed) / 2));
-			fogGreen = ((fogGreen >> 1) + ((lightFactor * (f32)(u32)fogGreen) / 2));
-			fogBlue = (u32)((fogBlue >> 1) + ((lightFactor * (f32)(u32)fogBlue) / 2));
+			red = ((red >> 1) + ((lightFactor * (f32)(u32)red) / 2));
+			green = ((green >> 1) + ((lightFactor * (f32)(u32)green) / 2));
+			blue = (u32)((blue >> 1) + ((lightFactor * (f32)(u32)blue) / 2));
 		} else {
-			fogRed = ((fogRed >> 2) + ((lightFactor * (f32)(u32)fogRed) * 0.75));
-			fogGreen = ((fogGreen >> 2) + ((lightFactor * (f32)(u32)fogGreen) * 0.75));
-			fogBlue = ((fogBlue >> 2) + ((lightFactor * (f32)(u32)fogBlue) * 0.75));
+			red = ((red >> 2) + ((lightFactor * (f32)(u32)red) * 0.75));
+			green = ((green >> 2) + ((lightFactor * (f32)(u32)green) * 0.75));
+			blue = ((blue >> 2) + ((lightFactor * (f32)(u32)blue) * 0.75));
 		}
-		red = fogRed;
-		green = fogGreen;
-		blue = fogBlue;
-		func_800049D4_55D4(firstColor, ((red << 0xB) + (green << 6) + (blue * 2)));
+		work.color = red << 11;
+		work.color += green << 6;
+		work.color += blue * 2;
+		func_800049D4_55D4(firstColor, work.color);
 		leoInitUnit_atten();
 		if (D_8013D9B4_14C964 != 0) {
 
@@ -4476,7 +4475,7 @@ void func_800BED30_CDCE0(void) {
 			D_80047745 = (u32)((D_800313F0 >> 2) + (((f32)(u32)D_800313F0 * lightFactor) * 0.75));
 		}
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		if ((D_8013D9B0_14C960 != 0) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || (D_8013D9B0_14C960 >= 0x3D))) {
+		if (((u32)D_8013D9B0_14C960 > 0U) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || (D_8013D9B0_14C960 >= 0x3D))) {
 			D_8013D9B0_14C960 -= 1;
 			if (D_8013D9B0_14C960 >= 0x24) {
 				func_80137468_146418(-1, 0x21);
@@ -4484,10 +4483,6 @@ void func_800BED30_CDCE0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
-#endif
-
 #ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
 	static u8 flashCount = 0;
