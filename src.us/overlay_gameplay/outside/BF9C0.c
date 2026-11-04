@@ -1,3 +1,4 @@
+#define OUTSIDE_BF9C0_FUNCTIONS
 #include <ultra64.h>
 #include "common.h"
 #include "version_shift.h"
@@ -4536,16 +4537,16 @@ void func_800C0678_CF628(void) {
 		remaining = 7 - delta[0];
 		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
 		D_8013D9C8_14C978 = 1;
-		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
+		func_800B345C_C240C_S16(D_8014F89C, (var_a1 = D_8014F89D), (u8 *)D_801FEA30, 0);
 		if ((remaining == 7) && (flashCount > 0U)) {
 			flashCount--;
 		}
-		remaining = D_8013D9C0_14C970[0];
+		remaining = ((volatile s16 *)D_8013D9C0_14C970)[0];
 		var_a1 = D_8013DAFC_14CAAC[0];
 		if (var_a1 == (remaining + 7)) {
 			D_8013DB04_14CAB4 = 1;
 			if (flashCount != 0) {
-				D_8013D9C0_14C970[0] += 8;
+				D_8013D9C0_14C970[0] = remaining + 8;
 				var_a1 = D_8013D9C0_14C970[0];
 				D_8013DAFC_14CAAC[0] = var_a1 - 1;
 			}
@@ -4593,11 +4594,11 @@ void func_800C0678_CF628(void) {
 		func_80004948_5548();
 		D_8013DB04_14CAB4 = 0;
 		D_8013D9C8_14C978 = 0;
-		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
+		func_800B345C_C240C_S16(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 	}
 	remaining = D_8013D9C0_14C970[0];
 	if (remaining <= 0) {
-		var_a1 = -1;
+		var_a1 |= -1;
 		D_8013DAFC_14CAAC[0] = var_a1;
 		func_800074BC_80BC(func_800C0678_CF628);
 		remaining = D_8013D9C0_14C970[0];

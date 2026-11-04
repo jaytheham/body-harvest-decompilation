@@ -1518,6 +1518,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 sp114;
 	s16 sp112;
 	s16 sp110;
+	u8 temp_ra;
 	s16 sp10C;
 	s16 sp10A;
 	s16 sp108;
@@ -1525,7 +1526,6 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 sp104;
 	s16 temp_v1_2;
 	s16 temp_f6_3;
-	u8 temp_ra;
 	u8 *temp_a3;
 
 	if (&temp_f0) {}
@@ -1551,19 +1551,19 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	temp_f6 = (s16)(s32)(direction.x * temp_f12);
 	temp_f8 = (s16)(s32)(direction.y * temp_f12);
 	temp_f10 = (s16)(s32)(direction.z * temp_f12);
-	temp_a3 = &D_8013FCD4_14EC84[currentLevel * 9];
-	sp11A = temp_a3[0x51];
-	sp118 = temp_a3[0x52];
-	sp116 = temp_a3[0x53];
+	temp_a3 = D_8013FCD4_14EC84;
+	sp11A = temp_a3[currentLevel * 9 + 0x51];
+	sp118 = temp_a3[currentLevel * 9 + 0x52];
+	sp116 = temp_a3[currentLevel * 9 + 0x53];
 	sp114 = (sp11A - 0x82 < 0) ? 0 : sp11A - 0x82;
 	sp112 = (sp118 - 0x82 < 0) ? 0 : sp118 - 0x82;
 	sp110 = (sp116 - 0x82 < 0) ? 0 : sp116 - 0x82;
-	sp10C = temp_a3[0x55];
-	sp10A = temp_a3[0x56];
-	sp108 = temp_a3[0x57];
-	sp106 = temp_a3[0x58];
-	sp104 = temp_a3[0x59];
-	temp_ra = (temp_v0 = temp_a3[0x54]);
+	sp10C = temp_a3[currentLevel * 9 + 0x55];
+	sp10A = temp_a3[currentLevel * 9 + 0x56];
+	sp108 = temp_a3[currentLevel * 9 + 0x57];
+	sp106 = temp_a3[currentLevel * 9 + 0x58];
+	sp104 = temp_a3[currentLevel * 9 + 0x59];
+	temp_ra = (temp_v0 = temp_a3[currentLevel * 9 + 0x54]);
 
 	D_8005BB34->v.ob[0] = (s32)((f32)arg0[0] - direction.x * 4.0f);
 	D_8005BB34->v.ob[1] = arg0[1];
@@ -1837,8 +1837,6 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 14, 17, 15, 0);
 	gSP1Triangle(D_8005BB2C++, 13, 15, 16, 0);
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F63D0_105380.s", "src.us/overlay_gameplay/outside/101840_width_constant.s")
 #endif
