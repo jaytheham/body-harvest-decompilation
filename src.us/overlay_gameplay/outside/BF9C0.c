@@ -796,7 +796,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 		for (y = 1 - radius; y < radius + 1; y++) {
 			if (y <= 0) {
-				dy = fracY + y * -256;
+				dy = (s16)fracY + y * -256;
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
@@ -841,9 +841,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
