@@ -1287,8 +1287,8 @@ void func_800C3300_D22B0(u8 arg0) {
 
 		distX = basePos.x - (D_80153BA0.x * 4);
 		distY = basePos.y - (D_80153BA0.y * 4);
-		distZ = basePos.z - (D_80153BA0.z * 4);
-		distBias = sqrtf((distX * distX) + (distY * distY) + (distZ * distZ));
+
+		distBias = sqrtf((distX * distX) + (distY * distY) + ((basePos.z - (D_80153BA0.z * 4)) * (basePos.z - (D_80153BA0.z * 4))));
 
 		if (baseSub->mode == 0) {
 			func_800DC5B8_EB568(&basePos, distBias, -1, -1);
@@ -1401,6 +1401,7 @@ void func_800C3300_D22B0(u8 arg0) {
 		gDPPipeSync(D_8005BB2C++);
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3300_D22B0.s")
 #endif
