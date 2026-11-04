@@ -4538,9 +4538,11 @@ void func_800C0678_CF628(void) {
 		color += clamp << 6;
 		clamp = temp_v1 < 0 ? 0 : temp_v1;
 		color += clamp * 2;
-		delta[0] ^= 0; func_800049D4_55D4(color, color);
+		if (delta[0] * delta[0]) {} func_800049D4_55D4(color, color);
 		remaining = 7 - delta[0];
+		remaining = (s32)(s64)remaining;
 		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
+		remaining = (s32)(s64)remaining;
 		D_8013D9C8_14C978 = 1;
 		func_800B345C_C240C_S16(D_8014F89C, (var_a1 = D_8014F89D), (u8 *)D_801FEA30, 0);
 		if ((remaining == 7) && (flashCount > 0U)) {
