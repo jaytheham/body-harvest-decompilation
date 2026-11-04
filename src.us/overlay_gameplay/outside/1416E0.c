@@ -91,8 +91,6 @@ void func_80132740_1416F0(Unk80160080 *arg0) {
 	D_80160190 = 0;
 }
 
-
-
 // AI - Main camera update
 void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	f32 sp3C;
@@ -217,6 +215,7 @@ void func_80132980_141930(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	D_80160154 = D_801591BC;
 	D_80160180 = D_8016017C;
 }
+
 void func_801330E4_142094(Unk80160080 *arg0) {
 	u16 sp46;
 
@@ -280,7 +279,6 @@ void func_80133288_142238(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// Matched: on-foot orbit and recenter camera
 // AI - On-foot camera orbit/recenter
 void func_801333D0_142380(Unk80160080 *arg0) {
 	Vec3f sp3C;
@@ -290,10 +288,9 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 
 	vehicle = D_80052B34;
 	if (D_801600F0 == 0) {
-		if (D_80145698_154648[0]) {} /* Three eliminated reads retain IDO's constant and zero registers. */
 		if (D_80145698_154648[0]) {}
 		if (D_80145698_154648[0]) {}
-
+		if (D_80145698_154648[0]) {}
 
 		D_8016011C = 0.0f;
 		D_80160120 = 0.0f;
@@ -354,7 +351,6 @@ void func_801333D0_142380(Unk80160080 *arg0) {
 	func_801336CC_14267C(arg0, &sp3C);
 }
 
-
 // AI - Compute camera position from target
 void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 	f32 sp20;
@@ -382,9 +378,9 @@ void func_801336CC_14267C(Unk80160080 *arg0, Vec3f *arg1) {
 		arg0->unk5C = -temp_v0;
 		arg0->unk5A = D_80159318;
 		if (var_v1 != 0) {
-			D_80140CFC_Decrement = (u16)var_v1 - 1; /* Preserve IDO temporary allocation for the halfword store. */
+			D_80140CFC_Decrement = (u16)var_v1 - 1;
 		} else {
-			var_v1 = var_v1 * 0 + 1; /* Fold the reset after the counter register is assigned. */
+			var_v1 = var_v1 * 0 + 1;
 			D_80140CFC_Reset = var_v1;
 		}
 	}
@@ -448,7 +444,6 @@ void func_80133934_1428E4(Unk80160080 *arg0) {
 	func_801343D8_143388(arg0);
 }
 
-// CURRENT(5): only generated interpolation constant address differs
 // AI - Vehicle camera orbit/recenter
 void func_80133A54_142A04(Unk80160080 *arg0) {
 	Vec3f sp44;
@@ -489,8 +484,6 @@ void func_80133A54_142A04(Unk80160080 *arg0) {
 
 	func_801336CC_14267C(arg0, &sp44);
 }
-
-
 
 // AI - Apply yaw/pitch rotation to look-at vector
 void func_80133C9C_142C4C(Vec3f *arg0, Vec3f *arg1, void *arg2, s16 arg3, u32 arg4, s32 arg5, s16 arg6) {
@@ -551,10 +544,9 @@ void func_80133EBC_142E6C(Unk80160080 *arg0) {
 	*(Vec3f*)&arg0->unk24 = *(Vec3f*)&arg0->unk30;
 }
 
-// Matched: camera yaw rotation control
 // AI - Camera yaw rotation control
 void func_80133F28_142ED8(Unk80160080 *arg0) {
-	s32 pad24; /* Retain the target frame; the saved heading stays at sp+0x1E. */
+	s32 pad24;
 	s32 pad20;
 	s16 sp1E;
 	s16 temp_a0;
@@ -704,8 +696,6 @@ void func_80133F28_142ED8(Unk80160080 *arg0) {
 	func_800EA298_F9248(temp_a0);
 }
 
-
-// Matched: camera pitch and terrain collision avoidance
 // AI - Camera pitch/zoom and terrain collision avoidance
 void func_801343D8_143388(Unk80160080 *arg0) {
 	Vec3f sp6C;
@@ -719,7 +709,6 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	s16 temp_v1;
 
 	var_s1 = arg0->unk52;
-
 	sp54 = (s32)arg0->unk30;
 	sp50 = (s32)arg0->unk34;
 	sp4C = (s32)arg0->unk38;
@@ -793,8 +782,6 @@ void func_801343D8_143388(Unk80160080 *arg0) {
 	}
 }
 
-
-// CURRENT(2820)
 // AI - Clipping/frustum setup for visible region culling
 void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	s16 var_s0;
@@ -875,7 +862,6 @@ void func_8013493C_1438EC(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	D_801493B4 = *temp_t0 << 8;
 }
 
-
 // AI - Copy camera state to shared structure
 void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	arg1->unk0 = arg0->unk0;
@@ -891,7 +877,6 @@ void func_80134CCC_143C7C(Unk80160080 *arg0, Unk80052B2C *arg1) {
 	arg1->unk20 = D_80149404;
 }
 
-// CURRENT(485)
 // AI - Smooth camera position/angle interpolation
 void func_80134D44_143CF4(Unk80160080 *arg0) {
 	f64 temp_f2;
@@ -988,7 +973,7 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 				} else {
 					D_80160138.reload = temp_f14;
 				}
-				if (temp_f2 < 1.0) {} /* Keep both inputs live so the reload retains f14. */
+				if (temp_f2 < 1.0) {}
 				if (temp_f12 < 1.0) {}
 			}
 		}
@@ -1002,126 +987,129 @@ void func_80134D44_143CF4(Unk80160080 *arg0) {
 	arg0->unk4C = arg0->unk54;
 }
 
-
 void func_801351DC_14418C(Unk80160080 *arg0)
 {
-  s32 temp_t5;
-  s32 temp_t6;
-  s32 var_a0;
-  s32 zButtonState;
-  func_801358E8_144898(arg0, 0x12C, 0x4E2);
-  if (((D_80160148 >= 0) ? (D_80160148) : (-D_80160148)) < 2)
-  {
-	D_80160148 = 0;
-  }
-  zButtonState = currentControllerStates[CONTROLLER_ONE].button & BUTTON_Z;
-  if (zButtonState == 0)
-  {
-	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_LEFT)
+	s32 temp_t5;
+	s32 temp_t6;
+	s32 var_a0;
+	s32 zButtonState;
+	func_801358E8_144898(arg0, 0x12C, 0x4E2);
+	if (((D_80160148 >= 0) ? (D_80160148) : (-D_80160148)) < 2)
 	{
-	  if (D_80160148 < 0x100)
-	  {
-		D_80160148 = 0x100;
-	  }
-	  else if (D_80160148 < 0x400)
-	  {
-		D_80160148 += 0x40;
-	  }
-	  D_8016018C = 1;
+		D_80160148 = 0;
 	}
-	else if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_RIGHT)
+	zButtonState = currentControllerStates[CONTROLLER_ONE].button & BUTTON_Z;
+	if (zButtonState == 0)
 	{
-	  if (D_80160148 >= (-0xFF))
-	  {
-		D_80160148 = -0x100;
-	  }
-	  else if (D_80160148 >= (-0x3FF))
-	  {
-		D_80160148 -= 0x40;
-	  }
-	  D_8016018C = 1;
+		if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_LEFT)
+		{
+			if (D_80160148 < 0x100)
+			{
+				D_80160148 = 0x100;
+			}
+			else if (D_80160148 < 0x400)
+			{
+				D_80160148 += 0x40;
+			}
+			D_8016018C = 1;
+		}
+		else if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_RIGHT)
+		{
+			if (D_80160148 >= (-0xFF))
+			{
+				D_80160148 = -0x100;
+			}
+			else if (D_80160148 >= (-0x3FF))
+			{
+				D_80160148 -= 0x40;
+			}
+			D_8016018C = 1;
+		}
+		else if (D_80160148 != 0)
+		{
+			D_80160148 = (s16)(D_80160148 / 2);
+		}
 	}
-	else if (D_80160148 != 0)
+	temp_t5 = currentControllerStates[CONTROLLER_ONE].stick_x >= 0xB;
+	if ((-temp_t5 < temp_t5 ? temp_t5 : -temp_t5) == 0)
 	{
-	  D_80160148 = (s16) (D_80160148 / 2);
-	}
-  }
-  temp_t5 = currentControllerStates[CONTROLLER_ONE].stick_x >= 0xB;
-  if ((-temp_t5 < temp_t5 ? temp_t5 : -temp_t5) == 0)
-  {
-	temp_t6 = currentControllerStates[CONTROLLER_ONE].stick_y >= 0xB;
-	var_a0 = -temp_t6 < temp_t6 ? temp_t6 : -temp_t6;
+		temp_t6 = currentControllerStates[CONTROLLER_ONE].stick_y >= 0xB;
+		var_a0 = -temp_t6 < temp_t6 ? temp_t6 : -temp_t6;
 
-	if (((var_a0 == 0 && zButtonState == 0) && 
-		 !(currentControllerStates[CONTROLLER_ONE].button & BUTTON_R)) &&
-		!(currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN))
-	{
-	  goto skip_clear;
+		if (((var_a0 == 0 && zButtonState == 0) &&
+			 !(currentControllerStates[CONTROLLER_ONE].button & BUTTON_R)) &&
+			!(currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN))
+		{
+			goto skip_clear;
+		}
 	}
-  }
-  D_8016018C = 0;
-  skip_clear:
-  if (((zButtonState != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)))
-  {
-	D_80160190 = 1;
-  }
+	D_8016018C = 0;
+skip_clear:
+	if (((zButtonState != 0) || (currentControllerStates[CONTROLLER_ONE].button & BUTTON_C_DOWN)) && (!(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING)))
+	{
+		D_80160190 = 1;
+	}
 }
 
 // AI - Decay camera offset values toward zero
 void func_80135380_144330(Unk80160080 *arg0)
 {
-  f32 var_f0;
-  f32 temp_f2;
-  f32 var_f12;
-  var_f0 = 0.0f;
-  if ((temp_f2 = arg0->unk3C) <= var_f0)
-  {
-	var_f12 = 0.0f - temp_f2;
-	var_f0 = var_f12;
-  }
-  else
-  {
-	var_f12 = 0.0f - temp_f2;
-	var_f0 = -var_f12;
-  }
-  if (((f64) var_f0) < 2.0)
-  {
-	arg0->unk3C = 0.0f;
-  }
-  else
-  {
-	arg0->unk3C = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
-  }
-  if ((temp_f2 = arg0->unk40) <= 0.0f)
-  {
-	var_f12 = 0.0f - temp_f2;
-	var_f0 = var_f12;
-  }
-  else
-  {
-	var_f12 = 0.0f - temp_f2;
-	var_f0 = -var_f12;
-  }
-  if (((f64) var_f0) < 2.0)
-  {
-	arg0->unk40 = 0.0f;
-  }
-  else
-  {
-	arg0->unk40 = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
-  }
-  if ((temp_f2 = arg0->unk44) <= 0.0f)
-  {
- var_f12 = 0.0f - temp_f2; var_f0 = var_f12; } else {
-	var_f12 = 0.0f - temp_f2;
-	var_f0 = -var_f12;
-  }
-  if (((f64) var_f0) < 2.0)
-  {
-	arg0->unk44 = 0.0f;
-	return;
-  }
-  arg0->unk44 = (f32) (((f64) temp_f2) + (((f64) var_f12) / 12.0));
+	f32 var_f0;
+	f32 temp_f2;
+	f32 var_f12;
+	var_f0 = 0.0f;
+	if ((temp_f2 = arg0->unk3C) <= var_f0)
+	{
+		var_f12 = 0.0f - temp_f2;
+		var_f0 = var_f12;
+	}
+	else
+	{
+		var_f12 = 0.0f - temp_f2;
+		var_f0 = -var_f12;
+	}
+	if (((f64)var_f0) < 2.0)
+	{
+		arg0->unk3C = 0.0f;
+	}
+	else
+	{
+		arg0->unk3C = (f32)(((f64)temp_f2) + (((f64)var_f12) / 12.0));
+	}
+	if ((temp_f2 = arg0->unk40) <= 0.0f)
+	{
+		var_f12 = 0.0f - temp_f2;
+		var_f0 = var_f12;
+	}
+	else
+	{
+		var_f12 = 0.0f - temp_f2;
+		var_f0 = -var_f12;
+	}
+	if (((f64)var_f0) < 2.0)
+	{
+		arg0->unk40 = 0.0f;
+	}
+	else
+	{
+		arg0->unk40 = (f32)(((f64)temp_f2) + (((f64)var_f12) / 12.0));
+	}
+	if ((temp_f2 = arg0->unk44) <= 0.0f)
+	{
+		var_f12 = 0.0f - temp_f2;
+		var_f0 = var_f12;
+	}
+	else
+	{
+		var_f12 = 0.0f - temp_f2;
+		var_f0 = -var_f12;
+	}
+	if (((f64)var_f0) < 2.0)
+	{
+		arg0->unk44 = 0.0f;
+		return;
+	}
+	arg0->unk44 = (f32)(((f64)temp_f2) + (((f64)var_f12) / 12.0));
 }
 
 // AI - Vehicle camera target update
@@ -1160,7 +1148,6 @@ void func_80135630_1445E0(Unk80160080 *arg0) {
 }
 
 // vehicleCameraControls?
-// AI - Vehicle camera view cycling
 void func_801356F4_1446A4(Unk80160080 *arg0) {
 	VehicleType *temp = &vehicleTypes[D_80052B34->unk1A];
 	func_801358E8_144898(arg0, (s16)(temp->unk5C * 0x10), (s16)(temp->unk5D * 0x10));
@@ -1201,8 +1188,6 @@ void func_801357EC_14479C(Unk80160080 *arg0) {
 }
 
 // toggleCameraNearFarMode?
-// CURRENT(65)
-// AI - Toggle near/far camera mode
 void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	f32 var_f14;
 	f32 temp_f0;
@@ -1303,7 +1288,6 @@ void func_801358E8_144898(Unk80160080 *arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-
 // AI - Initialize camera shake parameters
 void func_80135CB8_144C68(void) {
 	D_80160160 = 0;
@@ -1325,8 +1309,6 @@ void func_80135D08_144CB8(f32 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	D_80160166 = arg3;
 }
 
-// https://decomp.me/scratch/AXqIF
-// CURRENT(55)
 // AI - Calculate camera shake from impact distance
 void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 {
@@ -1343,7 +1325,7 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 		z = BH_ABS((arg2 / 4) - D_8004795C);
 		distance = ((x * x) + (y * y)) + (z * z);
 		amplitude = arg3 - (distance / 50000.0f);
-		if (distance) {} /* Retain the numerator lifetime for IDO. */
+		if (distance) {}
 		if (arg3 < (distance / 50000.0f))
 		{
 			amplitude = 0.0f;
@@ -1358,7 +1340,6 @@ void func_80135D44_144CF4(s32 arg0, s32 arg1, s32 arg2, f32 arg3)
 		}
 	}
 }
-
 
 // AI - Update and decay camera shake effects
 void func_80135F0C_144EBC(void) {
@@ -1423,19 +1404,21 @@ void func_80136198_145148(s32 arg0) {
 s16 func_801361A4_145154(Unk80160080 *arg0)
 {
 	s16 ret;
-  if (D_8016017C && (D_80160180 == 0))
-  {
-	  D_80160184 = D_80052B34->unkE + 0x8000;
-  }
-  
-  if (D_8016017C)
-  {
-	arg0->unk5E = D_80160184;
-	ret = D_80160184;
-  } else {
-	  ret = D_80052B34->unkE;
-  }
-  return ret;
+	if (D_8016017C && (D_80160180 == 0))
+	{
+		D_80160184 = D_80052B34->unkE + 0x8000;
+	}
+
+	if (D_8016017C)
+	{
+		arg0->unk5E = D_80160184;
+		ret = D_80160184;
+	}
+	else
+	{
+		ret = D_80052B34->unkE;
+	}
+	return ret;
 }
 
 // AI - Camera collision avoidance against terrain
@@ -1508,7 +1491,6 @@ void func_80136214_1451C4(Unk80160080 *arg0) {
 	}
 }
 
-
 // AI - Switch to billboard rendering mode
 void func_80136570_145520(void) {
 	D_80034488_35088 = 1;
@@ -1520,10 +1502,7 @@ void func_80136570_145520(void) {
 	D_8006C550 = &D_80258F90;
 }
 
-// CURRENT(4071)
 // displaySignposts
-// AI - Render signpost sprites in 3D world
-// CURRENT(2231)
 #ifdef NON_MATCHING
 void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
@@ -1650,50 +1629,59 @@ void func_80136B50_145B00(s32 arg0, s16 arg1)
 	}
 	switch (sp1C->direction)
 	{
-		case 0:
-		  if (sp30 < player->unk4 &&
-			  (player->unk0 >= (sp32 - 0x13)) &&
-			  ((sp32 - -0x13) >= player->unk0) &&
-			  (player->unkE >= (-0x6000)) &&
-			  (player->unkE < (-0x1FFF))) { }
-		  break;
-		
-		case 1:
-		  if (sp32 < player->unk0 &&
-			  (player->unk4 >= (sp30 - 0x13)) &&
-			  ((sp30 + 0x13) >= player->unk4) &&
-			  (player->unkE >= (-0x5FFF)) &&
-			  (player->unkE >= 0x6000)) { }
-		  break;
-		
-		case 2:
-		  if (player->unk4 < sp30 &&
-			  (player->unk0 >= (sp32 - 0x13)) &&
-			  ((sp32 + 0x13) >= player->unk0) &&
-			  (player->unkE < 0x6001) &&
-			  (player->unkE >= 0x2000))
-		  { }
-		  break;
-		
-		case 3:
-		  if (player->unk0 < sp32 &&
-			  (player->unk4 >= (sp30 - 0x13)) &&
-			  ((sp30 + 0x13) >= player->unk4)) {
-			  heading = player->unkE;
-			  if (heading >= 0) {} 
-		  }
-		  break;
-		  default:
-			if ((arg0 == player->unk2) && (player->unk2 == arg0)) { }
-		  break;
+	case 0:
+		if (sp30 < player->unk4 &&
+			(player->unk0 >= (sp32 - 0x13)) &&
+			((sp32 - -0x13) >= player->unk0) &&
+			(player->unkE >= (-0x6000)) &&
+			(player->unkE < (-0x1FFF)))
+		{
+		}
+		break;
+
+	case 1:
+		if (sp32 < player->unk0 &&
+			(player->unk4 >= (sp30 - 0x13)) &&
+			((sp30 + 0x13) >= player->unk4) &&
+			(player->unkE >= (-0x5FFF)) &&
+			(player->unkE >= 0x6000))
+		{
+		}
+		break;
+
+	case 2:
+		if (player->unk4 < sp30 &&
+			(player->unk0 >= (sp32 - 0x13)) &&
+			((sp32 + 0x13) >= player->unk0) &&
+			(player->unkE < 0x6001) &&
+			(player->unkE >= 0x2000))
+		{
+		}
+		break;
+
+	case 3:
+		if (player->unk0 < sp32 &&
+			(player->unk4 >= (sp30 - 0x13)) &&
+			((sp30 + 0x13) >= player->unk4))
+		{
+			heading = player->unkE;
+			if (heading >= 0)
+			{
+			}
+		}
+		break;
+	default:
+		if ((arg0 == player->unk2) && (player->unk2 == arg0))
+		{
+		}
+		break;
 	}
-	
+
 	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) &&
 		D_80052B34->unk1A == 0 &&
 		func_800A3CD0_B2C80() != 0)
 	{
 		func_80136570_145520();
-		func_80018D7C_1997C((u16) sp28);
+		func_80018D7C_1997C((u16)sp28);
 	}
 }
-

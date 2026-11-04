@@ -578,7 +578,7 @@ s32 func_8007EEE0_4F390(void) {
 			((FrontendCamState*)D_800D7A18)->unk34 = (s16)((f32)(keyframe->unkE - angleZ) * t + (f32)angleZ);
 			fov = ((FrontendCamState*)D_800D7A18)->unk3C;
 			((FrontendCamState*)D_800D7A18)->unk3C = (s16)((f32)fov + (f32)(keyframe->unk10 - fov) * t);
-			/* Keep elapsed live through interpolation for IDO register allocation. */
+
 			if (elapsed) {}
 		}
 
@@ -835,67 +835,67 @@ void func_8007FBC8_50078(u8 arg0) {
 
 void func_8007FBF8_500A8(void)
 {
-  if (D_800D7970 == 1)
-  {
-	if ((D_800D7971 - D_80094908_64DB8) < 0)
+	if (D_800D7970 == 1)
 	{
-	  D_800D7971 = 0;
-	  D_800D7970 = 0;
+		if ((D_800D7971 - D_80094908_64DB8) < 0)
+		{
+			D_800D7971 = 0;
+			D_800D7970 = 0;
+		}
+		else
+		{
+			D_800D7971 = D_800D7971 - D_80094908_64DB8;
+		}
+	}
+	else if ((D_800D7971 + D_80094908_64DB8) >= 0x100)
+	{
+		D_800D7971 = 0xFF;
 	}
 	else
 	{
-	  D_800D7971 = D_800D7971 - D_80094908_64DB8;
+		D_800D7971 = D_800D7971 + D_80094908_64DB8;
 	}
-  }
-  else if ((D_800D7971 + D_80094908_64DB8) >= 0x100)
-  {
-	D_800D7971 = 0xFF;
-  }
-  else
-  {
-	D_800D7971 = D_800D7971 + D_80094908_64DB8;
-  }
-	
-  if (D_800D7B08.unk0 != D_800D7B0C.unk0)
-  {
-	if (D_800D7B0C.unk0 < D_800D7B08.unk0)
-	{
-		D_800D7B08.unk0 = MAX(D_800D7B0C.unk0, (((s16) D_800D7B08.unk0) - D_8009490C_64DBC));
-	}
-	else
-	{
-		D_800D7B08.unk0 = MIN(D_800D7B0C.unk0, (((s16) D_800D7B08.unk0) + D_8009490C_64DBC));
-	}
-  }
-	
-  if (D_800D7B08.unk1 != D_800D7B0C.unk1)
-  {
-	if (D_800D7B0C.unk1 < D_800D7B08.unk1)
-	{
-		D_800D7B08.unk1 = MAX(D_800D7B0C.unk1, (((s16) D_800D7B08.unk1) - D_8009490C_64DBC));
-	}
-	else
-	{
-		D_800D7B08.unk1 = MIN(D_800D7B0C.unk1, (((s16) D_800D7B08.unk1) + D_8009490C_64DBC));
-	}
-  }
 
-  if (D_800D7B08.unk2 != D_800D7B0C.unk2)
-  {
-	if (D_800D7B0C.unk2 < D_800D7B08.unk2)
+	if (D_800D7B08.unk0 != D_800D7B0C.unk0)
 	{
-		D_800D7B08.unk2 = MAX(D_800D7B0C.unk2, (((s16) D_800D7B08.unk2) - D_8009490C_64DBC));
+		if (D_800D7B0C.unk0 < D_800D7B08.unk0)
+		{
+			D_800D7B08.unk0 = MAX(D_800D7B0C.unk0, (((s16)D_800D7B08.unk0) - D_8009490C_64DBC));
+		}
+		else
+		{
+			D_800D7B08.unk0 = MIN(D_800D7B0C.unk0, (((s16)D_800D7B08.unk0) + D_8009490C_64DBC));
+		}
 	}
-	else
+
+	if (D_800D7B08.unk1 != D_800D7B0C.unk1)
 	{
-		D_800D7B08.unk2 = MIN(D_800D7B0C.unk2, (((s16) D_800D7B08.unk2) + D_8009490C_64DBC));
+		if (D_800D7B0C.unk1 < D_800D7B08.unk1)
+		{
+			D_800D7B08.unk1 = MAX(D_800D7B0C.unk1, (((s16)D_800D7B08.unk1) - D_8009490C_64DBC));
+		}
+		else
+		{
+			D_800D7B08.unk1 = MIN(D_800D7B0C.unk1, (((s16)D_800D7B08.unk1) + D_8009490C_64DBC));
+		}
 	}
-  }
-  gDPPipeSync(D_8005BB2C++);
-  gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-  gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
-  gDPSetPrimColor(D_8005BB2C++, 0, 0, D_800D7B08.unk0, D_800D7B08.unk1, D_800D7B08.unk2, D_800D7971);
-  gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
+
+	if (D_800D7B08.unk2 != D_800D7B0C.unk2)
+	{
+		if (D_800D7B0C.unk2 < D_800D7B08.unk2)
+		{
+			D_800D7B08.unk2 = MAX(D_800D7B0C.unk2, (((s16)D_800D7B08.unk2) - D_8009490C_64DBC));
+		}
+		else
+		{
+			D_800D7B08.unk2 = MIN(D_800D7B0C.unk2, (((s16)D_800D7B08.unk2) + D_8009490C_64DBC));
+		}
+	}
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, D_800D7B08.unk0, D_800D7B08.unk1, D_800D7B08.unk2, D_800D7971);
+	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
 }
 
 void func_8007FE8C_5033C(Unk8007FE8CArg* arg0) {
@@ -1303,7 +1303,6 @@ void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 		D_800DE070[1].unk8 >>= 8;
 	}
 
-	/* Keep this setup together to preserve the address scheduling. */
 	mask = 0xFFFF0000; arg0 = arg3; src = D_800DE070_words; do { arg0[0] = (src[0] & mask) + ((src[1] & mask) >> 0x10);
 		arg0 = &arg0[4];
 		arg0[4] = (src[0] << 8 << 8) + (src[1] & 0xFFFFU);
@@ -1319,56 +1318,55 @@ void func_80080B80_51030(s32 *arg0, s16 *arg1, s16 *arg2, s32 *arg3) {
 
 void func_80080F8C_5143C(AnimChannelState *arg0, s16 *arg1, s32 arg2)
 {
-  f32 zero;
-  s32 temp_t0;
-  s32 var_v0;
-  AnimChannelState *temp_v1;
-  zero = 0.0f;
-  arg0->unk0 = 0;
-  arg0->unk2 = 0;
-  arg0->unk4 = 0;
-  arg0->unk14 = 0;
-  arg0->unk18 = 0;
-  arg0->unk2A = 0;
-  arg0->unk2C = 0;
-  arg0->unk2E = 0;
-  arg0->unk24 = 0;
-  arg0->unk26 = 0;
-  arg0->unk28 = 0;
-  arg0->unk30 = 0;
-  var_v0 = 1;
-  arg0->unk8 = zero;
-  arg0->unkC = zero;
-  arg0->unk10 = zero;
-  arg0->unk1C = zero;
-  arg0->unk20 = zero;
-  if (arg2 != 1)
-  {
-	do
+	f32 zero;
+	s32 temp_t0;
+	s32 var_v0;
+	AnimChannelState *temp_v1;
+	zero = 0.0f;
+	arg0->unk0 = 0;
+	arg0->unk2 = 0;
+	arg0->unk4 = 0;
+	arg0->unk14 = 0;
+	arg0->unk18 = 0;
+	arg0->unk2A = 0;
+	arg0->unk2C = 0;
+	arg0->unk2E = 0;
+	arg0->unk24 = 0;
+	arg0->unk26 = 0;
+	arg0->unk28 = 0;
+	arg0->unk30 = 0;
+	var_v0 = 1;
+	arg0->unk8 = zero;
+	arg0->unkC = zero;
+	arg0->unk10 = zero;
+	arg0->unk1C = zero;
+	arg0->unk20 = zero;
+	if (arg2 != 1)
 	{
-	  temp_v1 = &arg0[var_v0];
-	  if (1)
-	  {
-		temp_v1->unk8 = (f32) arg1[0];
-		var_v0 += 1;
-	  }
-	  temp_t0 = var_v0 & 0xFF;
-	  var_v0 = temp_t0;
-	  arg1 += 8;
-	  temp_v1->unkC = (f32) arg1[-7];
-	  temp_v1->unk10 = (f32) arg1[-6];
-	  temp_v1->unk0 = 0;
-	  temp_v1->unk2 = 0;
-	  temp_v1->unk4 = 0;
-	  temp_v1->unk30 = 0;
-	  temp_v1->unk14 = 0;
-	  temp_v1->unk18 = 0;
-	  temp_v1->unk1C = zero;
-	  temp_v1->unk20 = zero;
-	  
+		do
+		{
+			temp_v1 = &arg0[var_v0];
+			if (1)
+			{
+				temp_v1->unk8 = (f32)arg1[0];
+				var_v0 += 1;
+			}
+			temp_t0 = var_v0 & 0xFF;
+			var_v0 = temp_t0;
+			arg1 += 8;
+			temp_v1->unkC = (f32)arg1[-7];
+			temp_v1->unk10 = (f32)arg1[-6];
+			temp_v1->unk0 = 0;
+			temp_v1->unk2 = 0;
+			temp_v1->unk4 = 0;
+			temp_v1->unk30 = 0;
+			temp_v1->unk14 = 0;
+			temp_v1->unk18 = 0;
+			temp_v1->unk1C = zero;
+			temp_v1->unk20 = zero;
+
+		} while (arg2 != temp_t0);
 	}
-	while (arg2 != temp_t0);
-  }
 }
 
 void func_80081058_51508(void) {
