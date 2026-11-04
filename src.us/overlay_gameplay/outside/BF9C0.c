@@ -1719,9 +1719,9 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 					break;
 				case 2:
 					if ((u8)amp == 0x15 || (u8)amp == 0x10) {
-						amp = ((u8)amp == 0x10) ? 0x1E : 0x50;
-						hueX -= amp * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-						hueY -= amp * (((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
+						cellH = ((scrollX >> 8) + ringCol) * 0x58AC; amp = ((u8)amp == 0x10) ? 0x1E : 0x50;
+						hueX -= amp * (((f64)(f32)coss((D_80052A8C * 900U + cellH)) / 32768.0));
+						hueY -= amp * (((f64)(f32)sins((D_80052A8C * 900 + cellH)) / 32768.0));
 					}
 					break;
 				case 3:
