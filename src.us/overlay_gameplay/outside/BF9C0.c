@@ -859,13 +859,13 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	
 	s16 color;
 	u32 fracY;
-	s32 squareX;
+	s32 padWord;
 	s32 cellSize = 256;
 	s32 tileX;
 	s32 tileY;
-	s32 fracX;
+	u32 fracX;
 	u8 radius;
-	s16 pad;
+	s16 padHalf;
 	s16 ringX;
 	s16 ringY;
 	EffectRgb *pixel;
@@ -877,15 +877,15 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	baseX -= 127;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-	fracX = arg0->unk0 & 255;
 	fracY = arg0->unk2 & 255;
-	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius = (f32)(arg2 + arg3) / 256;
 	radius++;
+	fracX = arg0->unk0 & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
 		} else {
-			dx = cellSize - fracX + (x << 8) - 256;
+			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
 		}
 		
 		for (y = 1 - radius; y < radius + 1; y++) {
