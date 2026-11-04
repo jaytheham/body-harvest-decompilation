@@ -3069,6 +3069,16 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 position[3];
 	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 age;
+	/* 0x0A */ u8 opacity;
+	/* 0x0B */ u8 growth;
+	/* 0x0C */ u8 onWater;
+	/* 0x0D */ u8 padD;
+} WaterSplashState; /* size = 0x0E */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 shadowColor[3];
 } SpurtVisualState; /* size = 0x0C */
 
@@ -3255,6 +3265,7 @@ typedef struct {
 		AnimatedFlareState animatedFlare;
 		FallingRibbonParticleState fallingRibbon;
 		SparkEmitterState sparkEmitter;
+		WaterSplashState waterSplash;
 		Unk80154318Sub ribbonState;
 		JetStreamParticleState jetStreamParticle;
 		struct {
