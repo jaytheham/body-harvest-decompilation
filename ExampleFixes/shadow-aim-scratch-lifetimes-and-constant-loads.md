@@ -27,3 +27,9 @@ incorrect ASM: Before the final helper, `move a1,zero` appears before the animat
 -> code changed: Keep the complete helper-selector `if/else` and the following `work.value` pointer selection on ONE PHYSICAL SOURCE LINE.
 
 -> correct ASM: The LUI precedes the comparison and `move a1,zero` occupies the target delay slot. The enabled function improves from score 2483 to 265, with every floating operation, stack home, and scan instruction matching. It remains NON_MATCHING: six pointer-load register fields, their redundant join copy, and three controller scratch-register fields remain.
+
+incorrect ASM: The partial result above still has the controller scratch-register cycle and the redundant player-pointer join copy.
+
+-> code changed: Apply the controller capture and branch-local pointer definitions in [shadow-aim-branch-local-player-reloads.md](shadow-aim-branch-local-player-reloads.md).
+
+-> correct ASM: The complete function matches all 818 instructions and passes the native US ROM checksum.
