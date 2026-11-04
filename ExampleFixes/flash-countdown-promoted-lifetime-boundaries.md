@@ -14,3 +14,9 @@ D_8013DAFC_14CAAC[0] = var_a1;
 Apply the decrement/store form to both restart paths. Narrowing the fog scale preserves the final signed-halfword store's low 16 bits: multiplying values congruent modulo 65536 and subtracting the same base gives congruent stored results. The decremented local is not read again before its next assignment. The squared signed halfword fits a signed word. These halfword operations supply the temporary normalization lifetimes directly; AS1 removes the redundant normalizations.
 
 -> `correct ASM`: The countdown and fog sequence use the target `li t8,7`, `mfc1 t4,f4`, `li t8,1`, and `t6/t4/t5/t7` arithmetic. Both restart paths use the target halfword loads, decrement destinations, and stores; the following allocation sequence also matches. The frame remains 0x40 and the function remains 425 instructions. This partial checkpoint reduces the diff score from 190 to 20: only the two address-load instructions at ROM CFC90/CFC94 remain swapped. Every ROM word outside the function matches. The function stays `NON_MATCHING`; its assembly fallback passes the full native US checksum.
+
+`incorrect ASM`: The checkpoint above still swaps the callback and state address loads.
+
+-> `code changed`: Apply the callback-derived all-ones mask and final signed-halfword conversion documented in [flash-countdown-callback-address-and-final-narrowing.md](flash-countdown-callback-address-and-final-narrowing.md).
+
+-> `correct ASM`: All 425 instructions match, including the callback address order and final T4 decrement. The assembly fallback is removed.

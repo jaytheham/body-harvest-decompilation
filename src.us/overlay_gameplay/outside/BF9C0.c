@@ -4477,7 +4477,6 @@ void func_800BED30_CDCE0(void) {
 		}
 	}
 }
-#ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
 	static u8 flashCount = 0;
 	s16 var_a1;
@@ -4597,19 +4596,15 @@ void func_800C0678_CF628(void) {
 	remaining = D_8013D9C0_14C970[0];
 	if (remaining <= 0) {
 		var_a1 |= -1;
-		D_8013DAFC_14CAAC[0] = var_a1;
+		D_8013DAFC_14CAAC[0] = (s16)(((u64)(u32)func_800C0678_CF628 | ~(u64)0) & (u64)(s64)var_a1);
 		func_800074BC_80BC(func_800C0678_CF628);
 		remaining = D_8013D9C0_14C970[0];
 	}
 	if (remaining != 0) {
-		D_8013D9C0_14C970[0] = remaining - 1;
+		D_8013D9C0_14C970[0] = (s16)(s64)remaining - 1;
 	}
 }
 
-#else
-u8 D_8013DB00_14CAB0 = 0;
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s", "src.us/overlay_gameplay/outside/BF9C0_flash_rodata.s")
-#endif
 
 s32 D_8013DB04_14CAB4 = 0;
 s32 D_8013DB08_14CAB8 = 0;
