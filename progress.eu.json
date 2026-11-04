@@ -1,15 +1,15 @@
 {
-  "generated": "2026-11-04T04:55:35Z",
-  "commit": "1805ba01",
-  "commit_timestamp": "2026-11-04T17:54:20+13:00",
+  "generated": "2026-11-04T05:54:40Z",
+  "commit": "cb07d0e1",
+  "commit_timestamp": "2026-11-04T18:53:29+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2627,
-    "non_matching": 95,
+    "matched": 2628,
+    "non_matching": 94,
     "asm_stubs": 0,
-    "matched_pct": 96.51,
+    "matched_pct": 96.55,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -33,11 +33,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1383,
-      "non_matching": 66,
+      "matched": 1384,
+      "non_matching": 65,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 95.4,
+      "matched_pct": 95.5,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -598,11 +598,11 @@
     {
       "path": "overlay_gameplay/outside/B8290_tail.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 39,
-      "non_matching": 1,
+      "matched": 40,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 40,
-      "matched_pct": 97.5,
+      "matched_pct": 100.0,
       "contributor": ""
     },
     {
@@ -831,9 +831,9 @@
     },
     {
       "date": "2026-11-01",
-      "commit": "1805ba0",
-      "matched": 2627,
-      "non_matching": 95,
+      "commit": "9bcd731",
+      "matched": 2628,
+      "non_matching": 94,
       "total": 2722
     }
   ]
