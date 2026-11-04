@@ -3070,14 +3070,14 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 #ifdef NON_MATCHING
 void func_800FB504_10A4B4(void)
 {
-	union { s32 value; VehicleInstance *player; } work;
+	s32 scanIndex;
 	s32 bestScore;
 	s16 bestIndex;
 	VehicleType *type;
 	AlienInstance *scanAlien;
 	s16 pitchClamp;
 	s32 nextX;
-	s32 tmp;
+	union { s32 value; VehicleInstance *player; } work;
 	s32 nextZ;
 	s32 targetDist;
 	AlienInstance *targetAlien;
@@ -3093,6 +3093,9 @@ void func_800FB504_10A4B4(void)
 	s32 worldY;
 	s32 worldZ;
 	s32 restoreSpeed;
+	s32 aimMask;
+	s16 trigValue;
+	s32 controllerCurve;
 
 	bestIndex = -1;
 	yaw = D_80159318;
@@ -3138,14 +3141,14 @@ void func_800FB504_10A4B4(void)
 
 	if (!(type->unk4C & 0x00800000))
 	{
-		selectedInput = type->unk4C & 0x00010000;
-		if ((selectedInput || (type->unk4C & 0x00080000)) && ((currentControllerStates[0].button & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1))))
+		aimMask = type->unk4C & 0x00010000;
+		if ((aimMask || (type->unk4C & 0x00080000)) && ((currentControllerStates[0].button & 0x10) || ((currentLevel == 2) && (D_80052B34->unk1A == 1))))
 		{
-			if (selectedInput)
+			if (aimMask)
 			{
-				diff = D_8004758A;
-				diff = diff * diff * diff;
-				pitchClamp -= diff >> 8;
+				controllerCurve = D_8004758A;
+				controllerCurve = controllerCurve * controllerCurve * controllerCurve;
+				pitchClamp -= controllerCurve >> 8;
 			}
 			else
 			{
@@ -3192,10 +3195,10 @@ void func_800FB504_10A4B4(void)
 	if (!D_80159048)
 	{
 		bestScore = 0x17E8;
-		work.value = 0xFF;
-		while (work.value--)
+		scanIndex = 0xFF;
+		while ((work.value = scanIndex--), work.value)
 		{
-			scanAlien = &alienInstances[work.value];
+			scanAlien = &alienInstances[scanIndex];
 
 			if (scanAlien->typeIndex >= 2)
 			{
@@ -3208,25 +3211,26 @@ void func_800FB504_10A4B4(void)
 					if ((u32)((nextX * nextX) + (nextZ * nextZ)) < 0x3C8000)
 					{
 						cosVal = func_80003824_4424((f32)nextX, (f32)nextZ);
-						tmp = func_800F9C50_108C00(D_80052B34->unk6 - D_80052B2C->unk36, cosVal) - 0x8000;
-						if (tmp < -0x8000)
+						diff = func_800F9C50_108C00(D_80052B34->unk6 - D_80052B2C->unk36, cosVal) - 0x8000;
+						if (diff < -0x8000)
 						{
-							tmp += 0x10000;
+							diff += 0x10000;
 						}
-						if (tmp < 0)
+						if (diff < 0)
 						{
-							tmp = -tmp;
+							diff = -diff;
 						}
-						if (tmp < bestScore)
+						if (diff < bestScore)
 						{
-							bestScore = tmp;
-							bestIndex = work.value;
+							bestScore = diff;
+							bestIndex = scanIndex;
 						}
 					}
 				}
 			}
 		}
 
+	if (work.value) {}
 		if (bestIndex == -1)
 		{
 			D_80158FEC = NULL;
@@ -3262,12 +3266,13 @@ void func_800FB504_10A4B4(void)
 		D_80159048 = 0;
 	}
 
+	work.player = D_80052B34;
 	if (yaw >= 0x1F41)
 	{
 		yaw = 0x1F40;
 	}
 
-	if ((D_80052B34->unk1A == 0) || (D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE))
+	if ((work.player->unk1A == 0) || (work.player->unk20 & VEHICLE_FLAG_AIRBORNE))
 	{
 		if (yaw < -0x1F40)
 		{
@@ -3304,19 +3309,19 @@ void func_800FB504_10A4B4(void)
 
 	if ((currentLevel == 4) && (D_80052B34->unk1A == 0xC))
 	{
-		cosVal = D_80052B2C->unk36;
-		if (cosVal >= 0)
+		steerClamp = D_80052B2C->unk36;
+		if (steerClamp >= 0)
 		{
-			work.value = cosVal;
+			work.value = steerClamp;
 		}
 		else
 		{
-			work.value = -cosVal;
+			work.value = -steerClamp;
 		}
 
 		if (work.value < 0x4000)
 		{
-			cosVal = (s16)(((f64)(f32)coss(cosVal) / 32768.0) * D_80144A58_153A08[0]);
+			cosVal = (s16)(((f64)(f32)coss(steerClamp) / 32768.0) * D_80144A58_153A08.value);
 			if (yaw < cosVal)
 			{
 				yaw = cosVal;
@@ -3342,51 +3347,52 @@ void func_800FB504_10A4B4(void)
 		D_80052B2C->unk36 += 0x8000;
 	}
 
-	if ((D_80052B34->unk20 & VEHICLE_FLAG_AIRBORNE) && (vehicleTypes[D_80052B34->unk1A].unk4C & 0x20000000))
+	work.player = D_80052B34;
+	if ((work.player->unk20 & VEHICLE_FLAG_AIRBORNE) && (vehicleTypes[work.player->unk1A].unk4C & 0x20000000))
 	{
-		D_80159318 = -D_80052B34->unkA;
+		D_80159318 = -work.player->unkA;
 	}
 
 	D_8015F9F0 = 0x2C;
+	diff = work.player->unk6 - D_80052B2C->unk36;
+	trigValue = coss(diff & 0xFFFF); nextX = (s32)((((f64)(f32)(coss((u16)D_80159318)) / 32768.0) * ((f64)(f32)trigValue / 32768.0) * D_80144A60_153A10.value) + (f64)worldX);
+	work.value = (s32)((((f64)(f32)sins((u16)D_80159318) / 32768.0) * D_80144A68_153A18.value) + (f64)worldY);
 	diff = D_80052B34->unk6 - D_80052B2C->unk36;
-	nextX = (s32)((((f64)(f32)(bestScore = coss((u16)D_80159318)) / 32768.0) * ((f64)(f32)coss(diff & 0xFFFF) / 32768.0) * D_80144A60_153A10[0]) + (f64)worldX);
-	work.value = (s32)((((f64)(f32)sins((u16)D_80159318) / 32768.0) * D_80144A68_153A18[0]) + (f64)worldY);
-	diff = D_80052B34->unk6 - D_80052B2C->unk36;
-	nextZ = (s32)((((f64)(f32)(bestScore = coss((u16)D_80159318)) / 32768.0) * ((f64)(f32)sins(diff & 0xFFFF) / 32768.0) * D_80144A70_153A20[0]) + (f64)worldZ);
+	trigValue = sins(diff & 0xFFFF); nextZ = scanIndex = (s32)((((f64)(f32)(coss((u16)D_80159318)) / 32768.0) * ((f64)(f32)trigValue / 32768.0) * D_80144A70_153A20.value) + (f64)worldZ);
 
 	work.value = nextX ? work.value : work.value;
-	selectedInput = D_801493A0 << 8;
-	if (nextX < selectedInput)
+	bestScore = D_801493A0 << 8;
+	if (nextX < bestScore)
 	{
-		scale = (f32)(selectedInput - worldX) / (f32)(nextX - worldX);
-		nextX = selectedInput;
+		scale = (f32)(bestScore - worldX) / (f32)(nextX - worldX);
+		nextX = bestScore;
 		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 		nextZ = (s32)((f32)worldZ + ((f32)(nextZ - worldZ) * scale));
 	}
 
-	selectedInput = D_801493A4 << 8;
-	if (nextZ < selectedInput)
+	bestScore = D_801493A4 << 8;
+	if (nextZ < bestScore)
 	{
-		scale = (f32)(selectedInput - worldZ) / (f32)(nextZ - worldZ);
-		nextZ = selectedInput;
+		scale = (f32)(bestScore - worldZ) / (f32)(nextZ - worldZ);
+		nextZ = bestScore;
 		nextX = (s32)((f32)worldX + ((f32)(nextX - worldX) * scale));
 		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 	}
 
-	selectedInput = D_80149398 << 8;
-	if (selectedInput < nextX)
+	bestScore = D_80149398 << 8;
+	if (bestScore < nextX)
 	{
-		scale = (f32)(selectedInput - worldX) / (f32)(nextX - worldX);
-		nextX = selectedInput;
+		scale = (f32)(bestScore - worldX) / (f32)(nextX - worldX);
+		nextX = bestScore;
 		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 		nextZ = (s32)((f32)worldZ + ((f32)(nextZ - worldZ) * scale));
 	}
 
-	selectedInput = D_8014939C << 8;
-	if (selectedInput < nextZ)
+	bestScore = D_8014939C << 8;
+	if (bestScore < nextZ)
 	{
-		scale = (f32)(selectedInput - worldZ) / (f32)(nextZ - worldZ);
-		nextZ = selectedInput;
+		scale = (f32)(bestScore - worldZ) / (f32)(nextZ - worldZ);
+		nextZ = bestScore;
 		nextX = (s32)((f32)worldX + ((f32)(nextX - worldX) * scale));
 		work.value = (s32)((f32)worldY + ((f32)(work.value - worldY) * scale));
 	}
@@ -3412,17 +3418,7 @@ void func_800FB504_10A4B4(void)
 	}
 
 	D_801591A8 = 1;
-	if (D_80050AD4 == 1)
-	{
-		nextX = 1;
-	}
-	else
-	{
-		nextX = 0;
-	}
-
-	work.value = D_80158FEC != NULL ? (s32)D_80158FEC : (s32)D_80158FF4;
-
+	if (D_80050AD4 == 1) 	{ 		nextX = 1; 	} 	else 	{ 		nextX = 0; 	}  	work.value = D_80158FEC != NULL ? (s32)D_80158FEC : (s32)D_80158FF4;
 	func_8012B150_13A100((s32)D_80052B34, nextX, (InputStruct_8012B150 *)D_80158FF4, work.value);
 
 	D_801591B4 = D_801591F8.hit.unk8;
