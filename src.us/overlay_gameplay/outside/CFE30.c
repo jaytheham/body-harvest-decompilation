@@ -2746,7 +2746,6 @@ void func_800C8294_D7244(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800C8814_D77C4(void) {
 	s16 effectIdx;
 	s16 nextIdx;
@@ -2769,7 +2768,7 @@ void func_800C8814_D77C4(void) {
 
 			nextIdx = D_80154318[parentIndex].unk4;
 			linked = &D_80154318[parentIndex];
-			scale.array[1] = scale.array[2] = scale.array[0] = entry->unk2;
+			scale.array[2] = entry->unk2; scale.array[1] = entry->unk2; scale.array[0] = entry->unk2;
 			entryState = (ChunkEffectState *)(s32)entry->payload;
 
 			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)scale.value.unk0, (s16)(D_80047954 * 4.0f),
@@ -2821,9 +2820,6 @@ void func_800C8814_D77C4(void) {
 		} while ((effectIdx != -6) && (effectIdx != -5));
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C8814_D77C4.s")
-#endif
 
 u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 idx;
