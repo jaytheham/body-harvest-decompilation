@@ -2751,7 +2751,7 @@ void func_800C8814_D77C4(void) {
 	s16 nextIdx;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linked;
-	Unk80052B40 scale;
+	union { s16 array[3]; Unk80052B40 value; } scale;
 	Unk80052B40 rotation;
 	Unk80052B40 position;
 	ChunkEffectState *entryState;
@@ -2768,10 +2768,10 @@ void func_800C8814_D77C4(void) {
 
 			nextIdx = D_80154318[parentIndex].unk4;
 			linked = &D_80154318[parentIndex];
-			scale.unk2 = scale.unk4 = scale.unk0 = entry->unk2;
+			scale.array[1] = scale.array[2] = scale.array[0] = entry->unk2;
 			entryState = (ChunkEffectState *)(s32)entry->payload;
 
-			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)entry->unk2, (s16)(D_80047954 * 4.0f),
+			if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)scale.value.unk0, (s16)(D_80047954 * 4.0f),
 				(s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0) {
 
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, (u8)((Unk80154318Sub *)entryState)->unk6, (u8)((Unk80154318Sub *)entryState)->unk7, (u8)((Unk80154318Sub *)entryState)->unk8, 0xFF);
@@ -2809,7 +2809,7 @@ void func_800C8814_D77C4(void) {
 					gDPPipeSync(D_8005BB2C++);
 				}
 
-				func_800039D0_45D0(&position, &rotation, &scale, D_8005BB38);
+				func_800039D0_45D0(&position, &rotation, &scale.value, D_8005BB38);
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 				gSPDisplayList(D_8005BB2C++, linked->displayList);

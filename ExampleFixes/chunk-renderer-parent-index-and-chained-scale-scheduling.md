@@ -3,3 +3,9 @@
 -> `code changed`: Cache `parentIndex = entry->unk4` before resolving the next link and shape pointer. Initialize the short vector with `scale.unk2 = scale.unk4 = scale.unk0 = entry->unk2`, and remove the discarded shape-pointer check. Keep the original opaque payload views; reduce the unused local reserve to account for the added index.
 
 -> `correct ASM`: The parent load becomes `lh v1,4(s1)`, the culling coordinate loads precede the scale stores, and `li t8,0x4000` fills `0xD7850`. Array base, stride, pipe-sync constant, matrix pointer, next index, and shape pointer use `s2` through `s7`. Every opcode, instruction order, and stack access matches. The function remains NON_MATCHING: the loop index uses `t1` instead of `t0`, and the shared size load uses `v0` instead of `t1` (13 differing words; diff score 70).
+
+`incorrect ASM`: The partial scalar-vector form leaves the loop index in `t1` instead of target `t0` and the size in `v0` instead of `t1` (13 differing words; score 70).
+
+-> `code changed`: Give the six-byte scale local separate array and vector views in a union. Keep the chained Y/Z/X stores through the array view, read the culling radius through `scale.value.unk0`, and pass `&scale.value` to the matrix helper.
+
+-> `correct ASM`: The loop index now uses `t0` throughout, with unchanged instruction order, saved registers, floating-point registers, and stack homes. The function remains NON_MATCHING: only the initial size load, its three stores, and the culling mask use `v0` instead of target `t1` (five differing words; score 25).
