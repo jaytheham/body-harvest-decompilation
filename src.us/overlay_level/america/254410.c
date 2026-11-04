@@ -3311,7 +3311,6 @@ void func_802DC7FC_25BF3C(u8 arg0) {
 	func_800039D0_45D0(0, 0, &sp20, func_80011F90_12B90(&D_E020FF0));
 }
 
-#ifdef NON_MATCHING
 void func_802DC880_25BFC0(u8 alienIdx)
 {
 	s16 spA6;
@@ -3349,20 +3348,18 @@ void func_802DC880_25BFC0(u8 alienIdx)
 	{
 		func_80137468_146418(alienIdx, 0x25D);
 	}
-	node = &D_8014DD50[alienInstances[alienIdx].unkC];
-	spA6 = node->unkC;
+	spA6 = D_8014DD50[alienInstances[alienIdx].unkC].unkC;
 	x = alienInstances[alienIdx].unk0;
 	z = alienInstances[alienIdx].unk4;
-	node = &D_8014DD50[spA6];
-	spA2 = node->unkD;
+	node = &D_8014DD50[D_8014DD50[spA6].unkD];
+	spA0 = node->unkD;
+	spA2 = D_8014DD50[spA6].unkD;
 	sp50[0] = 0xFF;
 	sp50[1] = 0xFF;
 	sp50[2] = 0xFF;
-	node = &D_8014DD50[spA2];
-	spA0 = node->unkD;
 	sp4C.x = x;
 	sp4C.z = z;
-	ratio = (f32)((func_800B84D0_C7480(x, z) >> 8) - alienInstances[alienIdx].unk2 + 0x4B0) / 600.0f;
+	ratio = (f32)((func_800B84D0_C7480_4Args(x, z, spA6, spA2) >> 8) - alienInstances[alienIdx].unk2 + 0x4B0) / 600.0f;
 	func_800B2354_C1304(&sp4C.x, sp50, ratio * 256.0f, ratio * 800.0f);
 	func_800A92E0_B8290(alienIdx, 0x7000);
 	if (alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKF)
@@ -3445,9 +3442,6 @@ void func_802DC880_25BFC0(u8 alienIdx)
 	}
 	func_800A9F34_B8EE4(alienIdx);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DC880_25BFC0.s")
-#endif
 
 s32 func_802DCCD8_25C418(u8 arg0)
 {
