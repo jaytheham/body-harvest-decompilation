@@ -3063,7 +3063,6 @@ void func_800FB4A0_10A450(s16 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800FB504_10A4B4(void)
 {
 	s32 scanIndex;
@@ -3143,8 +3142,8 @@ void func_800FB504_10A4B4(void)
 			if (aimMask)
 			{
 				controllerCurve = D_8004758A;
-				controllerCurve = controllerCurve * controllerCurve * controllerCurve;
-				pitchClamp -= controllerCurve >> 8;
+				controllerCurve = (controllerCurve * controllerCurve * controllerCurve) >> 8;
+				pitchClamp -= controllerCurve;
 			}
 			else
 			{
@@ -3247,22 +3246,25 @@ void func_800FB504_10A4B4(void)
 
 	if (currentControllerStates[0].button & 0x10)
 	{
+		work.player = D_80052B34;
 	}
 	else
 	{
 		targetAlien = D_80158FEC;
 		if (targetAlien != NULL)
 		{
-			yaw = func_80003824_4424((f32)targetDist, (f32)((targetAlien->unk2 - worldY) >> 1));
+			diff = func_80003824_4424((f32)targetDist, (f32)((targetAlien->unk2 - worldY) >> 1));
+			work.player = D_80052B34;
+			yaw = diff;
 		}
 		else
 		{
 			yaw = 0;
+			work.player = D_80052B34;
 		}
 		D_80159048 = 0;
 	}
 
-	work.player = D_80052B34;
 	if (yaw >= 0x1F41)
 	{
 		yaw = 0x1F40;
@@ -3436,9 +3438,6 @@ void func_800FB504_10A4B4(void)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FB504_10A4B4.s")
-#endif
 
 s32 func_800FC1CC_10B17C(void) {
 	s32 bestDist;
