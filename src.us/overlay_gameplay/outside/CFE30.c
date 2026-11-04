@@ -1975,108 +1975,92 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 }
 
 
-#ifdef NON_MATCHING
 // effect type 0
 void func_800C5894_D4844(u8 arg0) {
-	Unk801541F8Entry *sp3C;
-	Unk80154318Sub *temp_s0;
-	s32 quotient;
-	Unk80154318Sub *temp_s2;
-	s16 temp_s0_3;
-	s16 var_s1;
-	s16 var_s3;
-	u8 temp_s6;
-	s32 temp_v0_4;
-	s32 temp_v1_3;
-	s32 temp_a1;
-	Unk80154318Entry *var_a3;
-	temp_s6 = arg0;
-	sp3C = &D_80154088[temp_s6];
-	var_s1 = D_80154318[sp3C->unk6].unk4;
-	temp_s2 = &D_80154318[sp3C->unk6].ribbonState;
-	var_s3 = 0;
-	if ((var_s1 == -5) || (var_s1 == -6)) {
-		func_800C1418_D03C8(temp_s6, 0);
-		func_800C1384_D0334(temp_s6);
+	Unk80154318Sub *particle;
+	Unk80154318Sub *emitter;
+	s16 nextOrGroundHeight;
+	s16 unitId;
+	s16 processed;
+	u8 effectId;
+
+	effectId = arg0;
+	unitId = D_80154088[arg0].unk6;
+	emitter = &D_80154318[unitId].ribbonState;
+	unitId = D_80154318[unitId].unk4;
+	processed = 0;
+	if ((unitId == -5) || (unitId == -6)) {
+		func_800C1418_D03C8(effectId, 0);
+		func_800C1384_D0334(effectId);
 		return;
 	}
 	if (1) {
-		if (1) {
-			for (temp_s0 = &D_80154318[var_s1].ribbonState; (var_s1 != -5) && (var_s1 != -6); temp_s0 = &D_80154318[var_s1].ribbonState) {
-				var_s3++;
-				if (temp_s2->unkA == 2) {
-					temp_a1 = temp_s2->unk9;
-					if (temp_a1 == 0) {
-						func_800C1418_D03C8(temp_s6, 0);
-						func_800C1384_D0334(temp_s6);
+		for (particle = &D_80154318[unitId].ribbonState; (unitId != -5) && (unitId != -6); particle = &D_80154318[unitId].ribbonState) {
+			processed++;
+			if (emitter->unkA == 2) {
+				if (emitter->unk9 == 0) {
+					func_800C1418_D03C8(effectId, 0);
+					func_800C1384_D0334(effectId);
+					return;
+				}
+				particle->unk6 = (emitter->unk0 - particle->unk0) / emitter->unk9;
+				particle->unk7 = (emitter->unk2 - particle->unk2) / emitter->unk9;
+				particle->unk8 = (emitter->unk4 - particle->unk4) / emitter->unk9;
+				particle->unk0 += particle->unk6;
+				particle->unk2 += particle->unk7;
+				particle->unk4 += particle->unk8;
+				if (particle->unk9 < 0xEB) {
+					particle->unk9 += 0x14;
+				}
+				unitId = D_80154318[unitId].unk4;
+				continue;
+			} else {
+				if ((particle->unk9 < 0xF) || !(D_80222A70 < particle->unk2)) {
+					if (D_80154088[arg0].unk4 < 3) {
+						func_800C1418_D03C8(effectId, 0);
+						func_800C1384_D0334(effectId);
 						return;
 					}
-					var_a3 = &D_80154318[var_s1];
-					quotient = (temp_s2->unk0 - temp_s0->unk0) / temp_a1;
-					temp_s0->unk6 = quotient;
-					temp_s0->unk7 = (temp_s2->unk2 - temp_s0->unk2) / temp_s2->unk9;
-					temp_s0->unk8 = (temp_s2->unk4 - temp_s0->unk4) / temp_s2->unk9;
-					temp_s0->unk0 += temp_s0->unk6;
-					temp_s0->unk2 += temp_s0->unk7;
-					temp_s0->unk4 += temp_s0->unk8;
-					if ((s32)temp_s0->unk9 < 0xEB) {
-						temp_s0->unk9 += 0x14;
-					}
-					var_s1 = D_80154318[var_s1].unk4;
+					nextOrGroundHeight = D_80154318[unitId].unk4;
+					func_800C1A4C_D09FC(unitId, effectId, 0);
+					unitId = nextOrGroundHeight;
+					processed--;
 					continue;
 				} else {
-					var_a3 = &D_80154318[var_s1];
-					if (((s32)temp_s0->unk9 < 0xF) || !(D_80222A70 < temp_s0->unk2)) {
-						if ((s32)sp3C->unk4 < 3) {
-							func_800C1418_D03C8(temp_s6, 0);
-							func_800C1384_D0334(temp_s6);
-							return;
-						}
-						temp_s0_3 = var_a3->unk4;
-						func_800C1A4C_D09FC(var_s1, temp_s6, 0);
-						var_s3--;
-						var_s1 = temp_s0_3;
-						continue;
-					} else {
-						temp_s0->unk0 += temp_s0->unk6;
-						temp_s0->unk4 += temp_s0->unk8;
-						temp_s0->unk2 += temp_s0->unk7;
-						temp_v0_4 = func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4);
-						temp_s0->unkA++;
-						if ((temp_s0->unkA & 0xFF) >= 0xB) {
-							temp_v1_3 = temp_s0->unk9 - 0x14;
-							if (temp_v1_3 < 0) {
-								temp_s0->unk9 = 0;
-							} else {
-								temp_s0->unk9 = (u8)temp_v1_3;
-							}
-						}
-						temp_v1_3 = temp_v0_4 >> 8;
-						if ((s16)temp_v1_3 >= temp_s0->unk2) {
-							temp_s0->unk2 = (s16)((s16)temp_v1_3 + 2);
-							temp_s0->unk7 = 0;
-						}
-						if (temp_s0->unk7 >= -0x13) {
-							temp_s0->unk7--;
+					particle->unk0 += particle->unk6;
+					particle->unk4 += particle->unk8;
+					particle->unk2 += particle->unk7;
+					nextOrGroundHeight = func_800B84D0_C7480(particle->unk0, particle->unk4) >> 8;
+					particle->unkA++;
+					if (particle->unkA >= 0xB) {
+						if (particle->unk9 - 0x14 < 0) {
+							particle->unk9 = 0;
 						} else {
-							temp_s0->unk7 = -0x14;
+							particle->unk9 -= 0x14;
 						}
 					}
+					if (nextOrGroundHeight >= particle->unk2) {
+						particle->unk2 = nextOrGroundHeight + 2;
+						particle->unk7 = 0;
+					}
+					if (particle->unk7 >= -0x13) {
+						particle->unk7--;
+					} else {
+						particle->unk7 = -0x14;
+					}
 				}
-				var_s1 = D_80154318[var_s1].unk4;
 			}
+			unitId = D_80154318[unitId].unk4;
 		}
 	}
-	if (temp_s2->unkA == 2) {
-		temp_s2->unk9--;
-		temp_s2->unk6 = (s8)((func_800038E0_44E0() % 55) + 0xC8);
-		temp_s2->unk7 = (s8)((func_800038E0_44E0() % 55) + 0xC8);
-		temp_s2->unk8 = (s8)((func_800038E0_44E0() % 55) + 0xC8);
+	if (emitter->unkA == 2) {
+		emitter->unk9--;
+		emitter->unk6 = (func_800038E0_44E0() % 55) + 0xC8;
+		emitter->unk7 = (func_800038E0_44E0() % 55) + 0xC8;
+		emitter->unk8 = (func_800038E0_44E0() % 55) + 0xC8;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C5894_D4844.s")
-#endif
+
 
 void func_800C5D14_D4CC4(u8 arg0) {
 	s16 index;
