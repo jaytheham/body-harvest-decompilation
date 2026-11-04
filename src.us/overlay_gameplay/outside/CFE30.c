@@ -4426,7 +4426,7 @@ void func_800CDDE4_DCD94(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-	gfx = D_8005BB2C++; gDPSetRenderMode(gfx, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	gfx = D_8005BB2C++; gDPSetRenderMode(gfx++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 
 	if ((index != -6) && (index != -5)) {
@@ -4461,8 +4461,6 @@ void func_800CDDE4_DCD94(void) {
 		} while ((index != -6) && (index != -5));
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDDE4_DCD94.s")
 #endif
