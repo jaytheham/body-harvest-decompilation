@@ -2478,7 +2478,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								terrain.value = (s16)(heading - 0x4000);
+								terrain.value = (u16)(heading - 0x4000);
 								terrain.value &= 0xFFFF;
 								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
 									terrain.value = heading + 0x4000; if (terrain.value) {}
