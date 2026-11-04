@@ -15,3 +15,9 @@ incorrect ASM: The object renderer emits `li t6,0x100; li t8,0x100` at ROM offse
 -> code changed: Keep the order and place `scale[3] = 0x100; scale[4] = 0x100; scale[5] = 0x100;` on one physical source line. Merging only the first two or the last two assignments does not change the output.
 
 -> correct ASM: The two instructions become `li t8,0x100; li t6,0x100`, exactly matching the target while preserving every store and all later instructions. The native score falls from 40 to 30; only the half-dimension and camera-Z register choices remain.
+
+incorrect ASM: The room renderer also reverses its two independent LI 256 instructions when scale[3], scale[4] and scale[5] are initialized on separate lines.
+
+-> code changed: Keep all three offset-scale assignments on one physical source line in func_8007568C_15D74C.
+
+-> correct ASM: Both constant loads match the target, retaining the 0x138-byte frame and 0xEAC-byte body. The native score improves from 1032 to 1022; separate culling and cache-register differences remain.

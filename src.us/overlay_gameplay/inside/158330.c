@@ -8252,9 +8252,7 @@ void func_8007568C_15D74C(void) {
 							position[3] = (s32)(entry->unk20 * positionScale);
 							position[4] = (s32)(entry->unk24 * positionScale);
 							position[5] = (s32)(entry->unk28 * positionScale);
-							scale[3] = 0x100;
-							scale[4] = 0x100;
-							scale[5] = 0x100;
+							scale[3] = 0x100; scale[4] = 0x100; scale[5] = 0x100;
 							func_80076A58_15EB18(1, rotation, position, scale, variant);
 						} else if (((D_800E65BC[objIdx].unk40 & 0x04000000) && (entry->unk2E & 1)) ||
 								   ((D_800E65BC[objIdx].unk40 & 0x08000000) && !(entry->unk2E & 1))) {
