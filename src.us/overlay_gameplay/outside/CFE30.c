@@ -1257,93 +1257,92 @@ void func_800C3288_D2238(u8 arg0) {
 void func_800C3300_D22B0(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
-	Unk80154318Sub *baseSub;
-	Unk80154318Sub *sub;
-	Vec3f basePos;
+	PhotonEmitterState *baseSub;
+	PhotonRingState *sub;
 	Vec3f left;
 	Vec3f right;
 	Vec3f point0;
 	Vec3f point1;
+	Vec3f basePos;
+	s32 headIndex;
 	f32 distX;
 	f32 distY;
 	f32 distZ;
-	f32 dist;
+	Vec3f inner;
+	Vec3f outer;
 	f32 stepScale;
 	f32 finalScale;
-	f32 interpScale;
-	f32 lerpX;
-	f32 lerpY;
-	f32 lerpZ;
-	f64 ringDist;
-	s8 mode;
+	f32 distBias;
 	u8 count;
+	s8 mode;
 
-	effect = &D_80154088[arg0 & 0xFF];
-	entry = &D_80154318[effect->unkA];
+	effect = &D_80154088[arg0];
+	/* End each consumed index lifetime after forming the node address. */
+	headIndex = effect->unkA;
 	count = effect->unk4 - 1;
-	baseSub = (Unk80154318Sub *)&entry->unk8;
+	entry = &D_80154318[headIndex]; headIndex = 0;
+	baseSub = &entry->photonEmitter;
 
-	if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)(entry->unk2 * 4), (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f),
+	if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)(entry->unk2 * 4), (s16)(D_80047954 * 4), (s32)(D_8004795C * 4),
 			0x4000 - D_80047950) != 0) {
-		basePos.x = baseSub->unk0;
-		basePos.y = baseSub->unk2;
-		basePos.z = baseSub->unk4;
+		basePos.x = baseSub->position[0];
+		basePos.y = baseSub->position[1];
+		basePos.z = baseSub->position[2];
 
-		distX = basePos.x - (D_80153BA0.x * 4.0f);
-		distY = basePos.y - (D_80153BA0.y * 4.0f);
-		distZ = basePos.z - (D_80153BA0.z * 4.0f);
-		dist = sqrtf((distX * distX) + (distY * distY) + (distZ * distZ));
+		distX = basePos.x - (D_80153BA0.x * 4);
+		distY = basePos.y - (D_80153BA0.y * 4);
+		distZ = basePos.z - (D_80153BA0.z * 4);
+		distBias = sqrtf((distX * distX) + (distY * distY) + (distZ * distZ));
 
-		if (baseSub->unk9 == 0) {
-			func_800DC5B8_EB568(&basePos, dist, -1, -1);
+		if (baseSub->mode == 0) {
+			func_800DC5B8_EB568(&basePos, distBias, -1, -1);
 		}
+
+		distBias = (distBias / 4) + 800.0;
 
 		gDPPipeSync(D_8005BB2C++);
 		gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE, 0, 0, 0, PRIMITIVE, 0, 0, 0, SHADE);
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, baseSub->unk6, baseSub->unk7, baseSub->unk8, 0);
+		gDPSetColor(D_8005BB2C++, G_SETPRIMCOLOR, _SHIFTL(baseSub->color[2], 8, 8) | (_SHIFTL(baseSub->color[1], 16, 8) | _SHIFTL(baseSub->color[0], 24, 8)));
 		gDPPipeSync(D_8005BB2C++);
 
-		if ((s8)count > 0) {
-			ringDist = ((f64)(dist / 4.0f)) + 800.0;
+		if (count > 0) {
 
-			while ((s8)count > 0) {
-				entry = &D_80154318[entry->unk4];
-				sub = (Unk80154318Sub *)&entry->unk8;
+			do {
+				headIndex = entry->unk4;
+				entry = &D_80154318[headIndex]; headIndex = 0;
+				sub = &entry->photonRing;
 
-				stepScale = (f32)((f64)sub->unkD * (1.0 / 256.0));
-				interpScale = (f32)(ringDist * stepScale);
+				distZ = distBias * ((f32)(u32)sub->extent * (1.0 / 256.0));
 
-				func_800C1128_D00D8(interpScale, &D_80153AB8, &left);
-				func_800C1128_D00D8(interpScale, &D_80153AC4, &right);
+				func_800C1128_D00D8(distZ, &D_80153AB8, &left);
+				func_800C1128_D00D8(distZ, &D_80153AC4, &right);
 
-				finalScale = (f32)(sub->unk2 + 10) / 256.0f;
-				stepScale = (f32)sub->unk2 / 256.0f;
-				mode = ((s8 *)sub)[1];
+				stepScale = (f32)(u32)sub->phase / 256;
+				finalScale = (f32)(sub->phase + 10) / 256;
+				mode = sub->quadrant;
 
-				switch (mode) {
-					case 0:
-						func_800C10F4_D00A4(&basePos, &left, &point0);
-						func_800C10F4_D00A4(&basePos, &right, &point1);
-						break;
-					case 1:
-						func_800C10F4_D00A4(&basePos, &right, &point0);
-						func_800C10C0_D0070(&basePos, &left, &point1);
-						break;
-					case 2:
-						func_800C10C0_D0070(&basePos, &left, &point0);
-						func_800C10C0_D0070(&basePos, &right, &point1);
-						break;
-					default:
-						func_800C10C0_D0070(&basePos, &right, &point0);
-						func_800C10F4_D00A4(&basePos, &left, &point1);
-						break;
+				if (mode == 0) {
+					func_800C10F4_D00A4(&basePos, &left, &point0);
+					func_800C10F4_D00A4(&basePos, &right, &point1);
+				} else if (mode == 1) {
+					func_800C10F4_D00A4(&basePos, &right, &point0);
+					func_800C10C0_D0070(&basePos, &left, &point1);
+				} else if (mode == 2) {
+					func_800C10C0_D0070(&basePos, &left, &point0);
+					func_800C10C0_D0070(&basePos, &right, &point1);
+				} else {
+					func_800C10C0_D0070(&basePos, &right, &point0);
+					func_800C10F4_D00A4(&basePos, &left, &point1);
 				}
 
-				lerpX = point1.x - point0.x;
-				lerpY = point1.y - point0.y;
-				lerpZ = point1.z - point0.z;
+				inner.x = ((point1.x - point0.x) * stepScale) + point0.x;
+				inner.y = ((point1.y - point0.y) * stepScale) + point0.y;
+				inner.z = ((point1.z - point0.z) * stepScale) + point0.z;
+				outer.x = ((point1.x - point0.x) * finalScale) + point0.x;
+				outer.y = ((point1.y - point0.y) * finalScale) + point0.y;
+				outer.z = ((point1.z - point0.z) * finalScale) + point0.z;
 
 				D_8005BB34->v.ob[0] = (s16)basePos.x;
 				D_8005BB34->v.ob[1] = (s16)basePos.y;
@@ -1354,12 +1353,12 @@ void func_800C3300_D22B0(u8 arg0) {
 				D_8005BB34->v.cn[0] = 0;
 				D_8005BB34->v.cn[1] = 0;
 				D_8005BB34->v.cn[2] = 0;
-				D_8005BB34->v.cn[3] = ((u8 *)sub)[0];
+				D_8005BB34->v.cn[3] = sub->opacity;
 				D_8005BB34++;
 
-				D_8005BB34->v.ob[0] = (s16)((lerpX * finalScale) + point0.x);
-				D_8005BB34->v.ob[1] = (s16)((lerpY * finalScale) + point0.y);
-				D_8005BB34->v.ob[2] = (s16)((lerpZ * finalScale) + point0.z);
+				D_8005BB34->v.ob[0] = (s16)outer.x;
+				D_8005BB34->v.ob[1] = (s16)outer.y;
+				D_8005BB34->v.ob[2] = (s16)outer.z;
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0;
@@ -1369,9 +1368,9 @@ void func_800C3300_D22B0(u8 arg0) {
 				D_8005BB34->v.cn[3] = 0x14;
 				D_8005BB34++;
 
-				D_8005BB34->v.ob[0] = (s16)((lerpX * stepScale) + point0.x);
-				D_8005BB34->v.ob[1] = (s16)((lerpY * stepScale) + point0.y);
-				D_8005BB34->v.ob[2] = (s16)((lerpZ * stepScale) + point0.z);
+				D_8005BB34->v.ob[0] = (s16)inner.x;
+				D_8005BB34->v.ob[1] = (s16)inner.y;
+				D_8005BB34->v.ob[2] = (s16)inner.z;
 				D_8005BB34->v.flag = 0;
 				D_8005BB34->v.tc[0] = 0;
 				D_8005BB34->v.tc[1] = 0;
@@ -1382,21 +1381,21 @@ void func_800C3300_D22B0(u8 arg0) {
 				D_8005BB34++;
 
 				gDPPipeSync(D_8005BB2C++);
-				gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
+				gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-3]), 3, 0);
 				gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 
 				D_80156EDA += 3;
 				count--;
-			}
+			} while (count > 0);
 		}
 
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_MODULATEIA);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, D_100DE80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DE80), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		if (baseSub->unk9 != 2) {
-			func_800DC18C_EB13C(&basePos, &((u8 *)baseSub)[6], &D_80153B80,
-				*((u16 *)((u8 *)&D_80154318[effect->unkA] + 0x1A)), 0xFF);
+		if (baseSub->mode != 2) {
+			func_800DC18C_EB13C(&basePos, baseSub->color, &D_80153B80,
+				(u16)D_80154318[effect->unkA].unk2, 0xFF);
 			D_80156EDA += 4;
 		}
 
