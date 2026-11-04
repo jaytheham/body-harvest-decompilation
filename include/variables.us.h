@@ -1943,7 +1943,7 @@ extern u8 D_80147098_156048[];
 extern u8 D_801470C0_156070[];
 extern TileCoord D_801475F0[];
 extern ShieldWallPoint D_801475F0_1565A0[][48];
-extern u8 D_801479B0_156960[][0x80];
+extern ShieldWallLink D_801479B0_156960[][64];
 extern Unk8014FD30Type D_80147C30_156BE0[][6];
 extern const char D_80147F40_156EF0[];
 extern const char D_80147F48_156EF8[];

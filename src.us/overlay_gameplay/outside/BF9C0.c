@@ -3423,9 +3423,9 @@ void func_800BB5E0_CA590(void) {
 		texScale = 0.4;
 
 		do {
-			p0Index = ((ShieldWallLink (*)[64])D_801479B0_156960)[level - 1][i].startIdx;
+			p0Index = D_801479B0_156960[level - 1][i].startIdx;
 			if (p0Index != -1) {
-				p1Index = ((ShieldWallLink (*)[64])D_801479B0_156960)[level - 1][i].endIdx;
+				p1Index = D_801479B0_156960[level - 1][i].endIdx;
 				baseX = startX = D_801475F0_1565A0[level - 1][p0Index].x << 8;
 				baseZ = startZ = D_801475F0_1565A0[level - 1][p0Index].z << 8;
 				endX = D_801475F0_1565A0[level - 1][p1Index].x << 8;
