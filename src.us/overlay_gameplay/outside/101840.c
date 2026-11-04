@@ -4112,7 +4112,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	VehicleType *type;
 	s32 changedAudio;
 	u16 yaw;
-	s16 scanIndex;
+	volatile s16 scanIndex;
 	s16 temp;
 	union
 	{
@@ -4121,6 +4121,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	} scanAngle;
 	f32 tmpA;
 	f32 tmpB;
+	s16 offset;
 	f64 scale;
 	s32 foundSpot;
 	s16 s0;
@@ -4134,7 +4135,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	s32 hitAdjusted;
 	s32 stepCount;
 	s32 maxStepCount;
-	vehicle = arg0->unk38;
+	if (arg0) {} vehicle = arg0->unk38;
 	player = vehicleInstances;
 	i = vehicle->unk1A;
 	type = (VehicleType *)(s32)&vehicleTypes[i];
@@ -4231,9 +4232,9 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 			{
 				do
 				{
-					temp = (s16)((s32)(((((f64)((f32)coss(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk34)) * scale));
+					offset = (s16)((s32)(((((f64)((f32)coss(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk34)) * scale));
 					/* Retain the integer temporary order after AS1 removes this round trip. */
-					temp = (s16)(u64)temp;
+					offset = (s16)(u64)offset;
 					s3 = (s16)((s32)(((((f64)((f32)sins(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk36)) * scale));
 					if (scanIndex == 8)
 					{
@@ -4243,9 +4244,9 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 					else
 					{
 						s1 = coss(yaw & 0xFFFF);
-						func_800FB44C_10A3FC(player, (f32)((((f64)vehicle->unk0) + ((((f64)((f32)s1)) / 32768.0) * ((f64)temp))) - ((((f64)((f32)sins(yaw & 0xFFFF))) / 32768.0) * ((f64)s3))));
+						func_800FB44C_10A3FC(player, (f32)((((f64)vehicle->unk0) + ((((f64)((f32)s1)) / 32768.0) * ((f64)offset))) - ((((f64)((f32)sins(yaw & 0xFFFF))) / 32768.0) * ((f64)s3))));
 						s1 = sins(yaw & 0xFFFF);
-						func_800FB484_10A434(player, (f32)(((((f64)((f32)coss(yaw & 0xFFFF))) / 32768.0) * ((f64)s3)) + (((f64)vehicle->unk4) + ((((f64)((f32)s1)) / 32768.0) * ((f64)temp)))));
+						func_800FB484_10A434(player, (f32)(((((f64)((f32)coss(yaw & 0xFFFF))) / 32768.0) * ((f64)s3)) + (((f64)vehicle->unk4) + ((((f64)((f32)s1)) / 32768.0) * ((f64)offset)))));
 					}
 					func_80115604_1245B4(player);
 					temp = func_800F9D60_108D10(player->unk0, player->unk4, &lockY, &lockZ, &lockX);
@@ -4297,9 +4298,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 								}
 								if (player->unk2 < lockX)
 								{
-									if (arg0->unk34 && arg0->unk34)
-									{
-									}
+
 									player->unk2 = lockX;
 								}
 							}
