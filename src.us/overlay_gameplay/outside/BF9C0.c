@@ -3456,6 +3456,7 @@ void func_800BB5E0_CA590(void) {
 							segEndZ = endZ;
 						}
 
+						if (segEndX) {} if (segEndX) {} 
 						lightStart.x = segStartX;
 						lightStart.z = segStartZ;
 						lightEnd.x = segEndX;
@@ -3486,13 +3487,14 @@ void func_800BB5E0_CA590(void) {
 						}
 
 
+						
 						 if (baseX) {} if (baseZ) {} if (baseX) {} if (baseZ) {}
 						D_8005BB34[0].v.ob[0] = segStartX;
 						D_8005BB34[0].v.ob[1] = minY;
 						D_8005BB34[0].v.ob[2] = segStartZ;
 						D_8005BB34[0].v.flag = 0;
-						D_8005BB34[0].v.tc[0] = texStartS = (s16)((f64)(baseX - segStartX) * texScale + (f64)scrollS);
-						D_8005BB34[0].v.tc[1] = texStartT = (s16)((f64)(baseZ - segStartZ) * texScale + (f64)scrollT);
+						D_8005BB34[0].v.tc[0] = texStartS = (s16)((baseX - segStartX) * texScale + scrollS);
+						D_8005BB34[0].v.tc[1] = texStartT = (s16)((baseZ - segStartZ) * texScale + scrollT);
 						D_8005BB34[0].v.cn[0] = 0x46;
 						D_8005BB34[0].v.cn[1] = 0x46;
 						D_8005BB34[0].v.cn[2] = 0x96;
@@ -3513,13 +3515,14 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[2].v.ob[1] = minY;
 						D_8005BB34[2].v.ob[2] = segEndZ;
 						D_8005BB34[2].v.flag = 0;
-						D_8005BB34[2].v.tc[0] = texEndS = (s16)((f64)(baseX - segEndX) * texScale + (f64)scrollS);
-						D_8005BB34[2].v.tc[1] = texEndT = (s16)((f64)(baseZ - segEndZ) * texScale + (f64)scrollT);
+						D_8005BB34[2].v.tc[0] = texEndS = (s16)((baseX - segEndX) * texScale + scrollS);
+						D_8005BB34[2].v.tc[1] = texEndT = (s16)((baseZ - segEndZ) * texScale + scrollT);
 						D_8005BB34[2].v.cn[0] = 0x46;
 						D_8005BB34[2].v.cn[1] = 0x46;
 						D_8005BB34[2].v.cn[2] = 0x96;
 						D_8005BB34[2].v.cn[3] = alphaEnd;
 
+						 if (baseX) {} if (baseZ) {}
 						D_8005BB34[3].v.ob[0] = segEndX;
 						D_8005BB34[3].v.ob[1] = 0xBB8;
 						D_8005BB34[3].v.ob[2] = segEndZ;
@@ -3575,6 +3578,8 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[7].v.cn[2] = 0x96;
 						D_8005BB34[7].v.cn[3] = 0;
 
+						if (minY) {}
+						if (texEndT) {}
 						gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(D_8005BB34), 8, 0);
 
 						D_8005BB34 += 8;
