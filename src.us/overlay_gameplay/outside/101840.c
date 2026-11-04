@@ -2369,7 +2369,7 @@ void func_800F9118_1080C8(s32 arg0) {
 	s32 minusX;
 	s16 heading;
 	u8 count;
-	union { s32 value; Gfx *gfx; } terrain;
+	union { s32 value; Gfx *gfx; Unk801601F0 *descriptor; } terrain;
 	s16 radius;
 	s16 centerZ;
 	s16 groundY;
@@ -2379,7 +2379,7 @@ void func_800F9118_1080C8(s32 arg0) {
 		walker = &D_80158000[arg0];
 		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &groundY) == -1) &&
 			(walker->limbs[0].unk22 != 0x10)) {
-			count = D_801601F0[walker->limbs[0].unk23].unkC;
+			terrain.descriptor = &D_801601F0[walker->limbs[0].unk23]; count = terrain.descriptor->unkC;
 			radius = D_801601F0[walker->limbs[0].unk23].unk8;
 			if (D_8013FCD0_14EC80 != 0) {
 				radius *= 2;
