@@ -9268,6 +9268,7 @@ void func_800784B8_160578(void) {
 	}
 
 	do {} while (0);
+	if ((f32)(s32)*(unsigned int *)&currentLevel * (f32)(s32)*(unsigned int *)&currentLevel) {}
 	if (currentLevel == 5) {
 		interiorId = buildingInteriorToLoadId;
 		if (interiorId == 1) {
