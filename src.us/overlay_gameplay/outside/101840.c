@@ -1544,7 +1544,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	temp_v0_2 = coss(temp_v0_2);
 	gDPPipeSync(D_8005BB2C++);
 	temp_f12 = var_f2 * 2;
-	temp_f6 = (s16)(s32)(direction.x * temp_f12);
+	temp_f6 = (s16)(s64)(s32)(direction.x * temp_f12);
 	temp_f8 = (s16)(s32)(direction.y * temp_f12);
 	temp_f10 = (s16)(s32)(direction.z * temp_f12);
 	temp_a3 = D_8013FCD4_14EC84;
@@ -1678,7 +1678,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 
 	temp_v0 = arg1[0] - arg2[0];
 	absDistance = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
-	sp120 = arg1[0] + (s16)(s32)((f64)direction.x * ((f64)absDistance * 0.5));
+	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)absDistance * 0.5));
 	temp_v0_2 = arg1[2] - arg2[2];
 	absDistance = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
 	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistance * 0.5));
