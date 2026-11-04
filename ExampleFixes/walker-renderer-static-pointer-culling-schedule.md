@@ -1,0 +1,5 @@
+incorrect ASM: In func_800F8B24_107AD4, initializing walker through (UnkF9230ShadowWalker *)(u32)&D_80158000[arg0] leaves three loads before the heading subtraction: LBU s5,0x144(s0), LH a0,0x12(s0), and LH a1,0x16(s0).
+
+-> code changed: In an isolated native probe, initialize walker directly with &D_80158000[arg0]. Read the matched direct-array scheduling example func_802D9038_258778 in src.us/overlay_level/america/254410.c when comparing this form. Keep every other operation unchanged.
+
+-> correct ASM: The first 157 instructions match exactly, including SUBU t6,t5,t4; LBU s5,0x144(s0); SW t6,0x14(sp); LHU a2,0x1F6(a2); LH a0,0x12(s0); LH a1,0x16(s0). This is a local scheduling pattern, not a full-function match: the direct pointer changes later matrix-buffer and state-load scheduling (score 1404 versus the retained 180 baseline). Reading the initial alien index directly through the named array also fixes these load positions, but introduces MOVE s0,v0 and scores 250. The committed C therefore retains its previous form and NON_MATCHING wrapper.

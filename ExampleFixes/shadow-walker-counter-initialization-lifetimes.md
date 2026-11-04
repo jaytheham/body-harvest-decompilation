@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800F3990_102940`, initializing `i` before the positive-count test and `index` inside it gives the initial alien yaw to `s6`, emits `lh s6,0xE(s7)` and `sh s6,0x18(s2)`, and initializes `s5` before the test instead of the target `s6`.
+
+-> `code changed`: Declare `index` with the outer locals, initialize `index = 0` before computing `halfCount`, and initialize `i = 0` inside `if (halfCount > 0)`. Keep the existing masked `index`/`i` update. Retain an empty `if (inst) {}` after the existing alien-yaw read and an empty `if (halfCount) {}` after computing the half count to balance the instance and count live ranges.
+
+-> `correct ASM`: The yaw loads/stores use target `s5`; the pre-test zero initializes `s6` and the loop-entry zero initializes `s5`. The raw limb count and inner/outer radii also use target `v1`, `a1`, and `a0`. The normal full-TU diff decreases from 829 to 754 with the same `0xC0` frame and instruction count. The function remains `NON_MATCHING`: quotient allocation and spill homes still differ.
