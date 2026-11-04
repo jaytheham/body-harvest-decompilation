@@ -1,0 +1,5 @@
+`incorrect ASM`: In a captured-height variant of `func_800F842C_1073DC`, declaring the additional halfword after `sp80` produces `addiu sp,sp,-0xE0`, a cursor spill at `0x60(sp)`, and the height quotient at `0x8A(sp)`. The target uses a `0xD8` frame, cursor home `0x5C`, and quotient home `0x82`.
+
+-> `code changed`: Capture `D_801601F0[walker->limbs[0].unk23].unkA` once in `s16 initialHeight`. Express `sp82 = initialHeight / 20` at the start of the fixed six-iteration loop; IDO hoists this pure invariant division. Declare `initialHeight` immediately after the existing `nextEntry` pointer and before `sp8C`, filling the aggregate-alignment gap instead of extending the declaration block.
+
+-> `correct ASM`: The frame is again `addiu sp,sp,-0xD8`, the generated cursor uses `0x5C(sp)`, and the single hoisted quotient store uses `0x82(sp)`. All addressed local homes remain unchanged. This partial checkpoint also reduces register differences from 177 to 146 and the enabled diff score from 1340 to 1150. The cursor save still needs to move earlier, and register differences remain, so the function retains `NON_MATCHING`.
