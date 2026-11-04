@@ -728,8 +728,10 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	s16 baseAngle;
 	s16 alienX;
 	s32 halfCount;
-	s32 resultSlot;
+	ShadowWalkerSlotResult resultSlot;
 	AlienInstance *inst;
+	s32 padResult0;
+	s32 padResult1;
 
 	alienIdx = arg0;
 	inst = &alienInstances[alienIdx];
@@ -741,15 +743,19 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 		return -1;
 	}
 
-	for (slot = 0; slot < 8; slot++) {
+	for (slot = 0; ; ) {
 		if (D_80157FF0[slot] != -1) {
 			D_80157FF0[slot] = -1;
+			resultSlot.words[0] = slot;
+			break;
+		}
+		slot++;
+		if (slot >= 8) {
+			resultSlot.words[0] = slot;
 			break;
 		}
 	}
-
-	resultSlot = slot;
-	D_80157FF8 = D_80157FF8 + 1;
+	((u8 *)((s32)&D_80157FF8 ^ 0))[0] = D_80157FF8 + 1;
 	if (arg1)
 	{
 	}
@@ -758,7 +764,7 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 	}
 	if (alienY) {}
 	if (inst) {}
-	osSyncPrintf(D_80144934_1538E4, slot, D_80157FF8);
+	osSyncPrintf(D_80144934_1538E4, resultSlot.words[0], D_80157FF8);
 
 	walker = &D_80158000[slot];
 
@@ -827,14 +833,13 @@ s16 func_800F3990_102940(u8 arg0, u8 arg1) {
 			{
 			}
 			baseAngle += angleStep;
-		} while (i < halfCount);
+		} while ((s32)(s64)i < halfCount);
 	}
 
 	func_800F2980_101930(walker);
 	func_800F49A4_103954(walker);
-	return resultSlot;
+	return resultSlot.halves[1];
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F3990_102940.s")
 #endif
