@@ -1503,7 +1503,6 @@ void func_80136570_145520(void) {
 }
 
 // displaySignposts
-#ifdef NON_MATCHING
 void func_801365E0_145590(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
@@ -1540,11 +1539,11 @@ void func_801365E0_145590(void) {
 	while (var_fp < 0x20) {
 		signpost = &D_80258330[var_fp];
 		if (1) {
-			var_s0 = signpost->unk0;
-			if ((var_s0 != 0) || (signpost->unk1 != 0)) {
-				var_s0 = (var_s0 << 24) >> 16;
+			if ((signpost->unk0 != 0) || (signpost->unk1 != 0)) {
+				var_s0 = signpost->unk0 << 8;
 				var_s0 += 0x80;
-				var_s1 = (s64)((signpost->unk1 << 8) + 0x80);
+				var_s1 = signpost->unk1 << 8;
+				var_s1 += 0x80;
 				func_8011E6FC_12D6AC(var_s0, var_s1, spCC);
 				if ((var_s0 >= D_801493B0) && (D_801493AC >= var_s0) && (var_s1 >= D_801493B8) &&
 					(D_801493B4 >= var_s1) &&
@@ -1595,13 +1594,9 @@ void func_801365E0_145590(void) {
 				}
 			}
 		}
-		if (var_s0) {}
 		var_fp++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1416E0/func_801365E0_145590.s")
-#endif
 
 void func_80136B50_145B00(s32 arg0, s16 arg1)
 {
