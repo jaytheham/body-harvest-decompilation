@@ -4418,6 +4418,12 @@ typedef struct {
 	u8 b;
 } EffectRgb;
 
+/* A palette fade reuses one halfword for timing and packed RGB. */
+typedef union {
+	s16 timer;
+	u16 color;
+} PaletteFadeWork;
+
 typedef struct {
 	/* 0x00 */ Vec3s position;
 	/* 0x06 */ EffectRgb primitive;

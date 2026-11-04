@@ -859,13 +859,13 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	
 	s16 color;
 	u32 fracY;
-	s32 squareX;
+	s32 padWord;
 	s32 cellSize = 256;
 	s32 tileX;
 	s32 tileY;
-	s32 fracX;
+	u32 fracX;
 	u8 radius;
-	s16 pad;
+	s16 padHalf;
 	s16 ringX;
 	s16 ringY;
 	EffectRgb *pixel;
@@ -877,15 +877,15 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	baseX -= 127;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-	fracX = arg0->unk0 & 255;
 	fracY = arg0->unk2 & 255;
-	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius = (f32)(arg2 + arg3) / 256;
 	radius++;
+	fracX = arg0->unk0 & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
 		} else {
-			dx = cellSize - fracX + (x << 8) - 256;
+			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
 		}
 		
 		for (y = 1 - radius; y < radius + 1; y++) {
@@ -1048,7 +1048,8 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+/* The word return value is intentionally unspecified; every caller discards it. */
+s32 func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 pad;
 	u8 row;
 	u8 col;
@@ -1818,62 +1819,58 @@ s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg
 /* Emit ground quad geometry: vertices + sorted-by-texture-bucket triangles */
 #ifdef NON_MATCHING
 void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, u8 arg6) {
-	Vtx *src;
-	s32 width;
-	s32 height;
+	Vtx *v;
+	s16 width;
+	s16 height;
 	s16 x;
 	s16 y;
-	s16 bucket;
-	Vtx *v;
+	s32 order;
+	s16 cols;
+	s16 rows;
 	u16 orders[8][16];
 	u16 tiles[8][16];
 	s16 counts[8];
 	u16 tile;
 	s16 b;
 	s16 idx;
-	s32 order;
-	u32 t;
-	s32 modeByte;
-	s16 cols;
-	s16 rows;
-	s32 total;
+	u16 t;
+	u8 modeByte;
 
-	bucket = 0;
+	y = 0;
 	do {
-		counts[bucket] = -1;
-		bucket = (s16)(bucket + 1);
-	} while (bucket < 8);
+		counts[y] = -1;
+		y++;
+	} while (y < 8);
 
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
-		bucket = 0;
+		y = 0;
 		do {
-			src = arg0 + (bucket * 0x12);
 
-			D_8005BB34[0] = src[0];
+			D_8005BB34[0] = (&arg0[y * 0x12])[0];
 			D_8005BB34++;
-			D_8005BB34[0] = src[1];
+			D_8005BB34[0] = (&arg0[y * 0x12])[1];
 			D_8005BB34++;
-			D_8005BB34[0] = src[2];
+			D_8005BB34[0] = (&arg0[y * 0x12])[2];
 			D_8005BB34++;
-			D_8005BB34[0] = src[3];
+			D_8005BB34[0] = (&arg0[y * 0x12])[3];
 			D_8005BB34++;
-			D_8005BB34[0] = src[4];
+			D_8005BB34[0] = (&arg0[y * 0x12])[4];
 			D_8005BB34++;
-			bucket = (s16)(bucket + 1);
-		} while (bucket < 5);
+			y++;
+		} while (y < 5);
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - 0x19), 25, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-0x19], 25, 4);
 
 		modeByte = D_8014F857;
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 4; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * 5) + x - 0x19];
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-0x19])[y * 5])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -1884,38 +1881,36 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 
-	width = arg3 - arg1;
-	height = arg4 - arg2;
 
 	if (((arg3 - arg1) * (arg4 - arg2)) < 0xC) {
-		cols = (s16)width + 1;
-		rows = (s16)height + 1;
-		total = rows * cols;
+		width = arg3 - arg1;
+		height = arg4 - arg2;
+		cols = width + 1;
+		rows = height + 1;
 
 		for (y = 0; y < rows; y++) {
 			for (x = 0; x < cols; x++) {
@@ -1924,16 +1919,16 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
 		modeByte = D_8014F854;
 
-		for (y = 0; y < (s16)height; y++) {
-			for (x = 0; x < (s16)width; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * cols) + x - total];
+		for (y = 0; y < height; y++) {
+			for (x = 0; x < width; x++) {
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -1944,57 +1939,55 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + cols, 0, order + 1, order + cols, order + 1 + cols, 0);
 			}
 		}
 		return;
 	}
 
-	if ((s16)height == 4) {
+	if ((s16)(arg4 - arg2) == 4) {
 		cols = 4;
 		rows = 5;
-		total = rows * cols;
 
 		for (y = 0; y < 5; y++) {
-			src = &arg0[y * 0x12];
-			D_8005BB34[0] = src[0];
+			D_8005BB34[0] = (&arg0[y * 0x12])[0];
 			D_8005BB34++;
-			D_8005BB34[0] = src[1];
+			D_8005BB34[0] = (&arg0[y * 0x12])[1];
 			D_8005BB34++;
-			D_8005BB34[0] = src[2];
+			D_8005BB34[0] = (&arg0[y * 0x12])[2];
 			D_8005BB34++;
-			D_8005BB34[0] = src[3];
+			D_8005BB34[0] = (&arg0[y * 0x12])[3];
 			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
 		modeByte = D_8014F854;
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 3; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * cols) + x - total];
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -2005,24 +1998,24 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 4, 0, order + 1, order + 4, order + 5, 0);
 			}
 		}
@@ -2032,32 +2025,30 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	else {
 		cols = 5;
 		rows = 4;
-		total = rows * cols;
 
 		for (y = 0; y < 4; y++) {
-			src = &arg0[y * 0x12];
-			D_8005BB34[0] = src[0];
+			D_8005BB34[0] = (&arg0[y * 0x12])[0];
 			D_8005BB34++;
-			D_8005BB34[0] = src[1];
+			D_8005BB34[0] = (&arg0[y * 0x12])[1];
 			D_8005BB34++;
-			D_8005BB34[0] = src[2];
+			D_8005BB34[0] = (&arg0[y * 0x12])[2];
 			D_8005BB34++;
-			D_8005BB34[0] = src[3];
+			D_8005BB34[0] = (&arg0[y * 0x12])[3];
 			D_8005BB34++;
-			D_8005BB34[0] = src[4];
+			D_8005BB34[0] = (&arg0[y * 0x12])[4];
 			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
 		modeByte = D_8014F854;
 
 		for (y = 0; y < 3; y++) {
 			for (x = 0; x < 4; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * cols) + x - total];
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -2068,32 +2059,30 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 #endif
@@ -4395,24 +4384,23 @@ void func_800BED24_CDCD4(void) {
 	D_8013D9B4_14C964 = 0;
 }
 
-#ifdef NON_MATCHING
 void func_800BED30_CDCE0(void) {
 	f32 lightFactor;
 	u8 red;
 	u8 green;
 	u8 blue;
-	u8 fogRed, fogGreen, fogBlue;
 	u16 firstColor;
 	s16 paletteIndex;
 	s16 timer;
+	PaletteFadeWork work;
 
 	if ((u32)D_8013D9B0_14C960 > 0U) {
 		if (D_8013D9B0_14C960 >= 0x3D) {
 			timer = D_8013D9B0_14C960 - 0x3C;
-			lightFactor = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			lightFactor = ((1.0 - ((f32)coss((((timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 		} else {
-			timer = D_8013D9B0_14C960;
-			lightFactor = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+			work.timer = D_8013D9B0_14C960;
+			lightFactor = ((((f32)coss((((work.timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 		}
 
 		for (paletteIndex = 0; paletteIndex < 0x100; paletteIndex++) {
@@ -4430,51 +4418,50 @@ void func_800BED30_CDCE0(void) {
 
 
 
-			D_802D4AD0[paletteIndex] = red << 11;
-			D_802D4AD0[paletteIndex] += green << 6;
+			D_802D4AD0[paletteIndex] = red << 11, D_802D4AD0[paletteIndex] += green << 6;
 			D_802D4AD0[paletteIndex] += blue * 2;
 		}
 
 		if ((D_8013D9B0_14C960 - 1) >= 0x3D) {
-			lightFactor = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3D) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			work.timer = D_8013D9B0_14C960 - 0x3D;
+			lightFactor = ((1.0 - ((f32)coss((((work.timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 		} else {
 			if (D_8013D9B0_14C960 > 0) {
 				timer = (D_8013D9B0_14C960 - 1);
 			} else {
 				timer = (s16)D_8013D9B0_14C960;
 			}
-			lightFactor = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+			lightFactor = ((((f32)coss((((timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 		}
 		func_80004A38_5638(D_802CA8D0, &red, &green, &blue);
-		fogGreen = green; fogRed = red; fogBlue = blue;
+		
 		if (D_8013D9B4_14C964 != 0) {
-			fogRed = ((fogRed >> 1) + ((lightFactor * (f32)(u32)fogRed) / 2));
-			fogGreen = ((fogGreen >> 1) + ((lightFactor * (f32)(u32)fogGreen) / 2));
-			fogBlue = (u32)((fogBlue >> 1) + ((lightFactor * (f32)(u32)fogBlue) / 2));
+			red = ((red >> 1) + ((lightFactor * (f32)(u32)red) / 2));
+			green = ((green >> 1) + ((lightFactor * (f32)(u32)green) / 2));
+			blue = (u32)((blue >> 1) + ((lightFactor * (f32)(u32)blue) / 2));
 		} else {
-			fogRed = ((fogRed >> 2) + ((lightFactor * (f32)(u32)fogRed) * 0.75));
-			fogGreen = ((fogGreen >> 2) + ((lightFactor * (f32)(u32)fogGreen) * 0.75));
-			fogBlue = ((fogBlue >> 2) + ((lightFactor * (f32)(u32)fogBlue) * 0.75));
+			red = ((red >> 2) + ((lightFactor * (f32)(u32)red) * 0.75));
+			green = ((green >> 2) + ((lightFactor * (f32)(u32)green) * 0.75));
+			blue = ((blue >> 2) + ((lightFactor * (f32)(u32)blue) * 0.75));
 		}
-		red = fogRed;
-		green = fogGreen;
-		blue = fogBlue;
-		firstColor = (red << 11) + (green << 6) + blue * 2;
+		firstColor = red << 11;
+		firstColor += green << 6;
+		firstColor += blue * 2;
 		func_80004A38_5638(D_802D48CF, &red, &green, &blue);
-		fogGreen = green; fogRed = red; fogBlue = blue;
+		
 		if (D_8013D9B4_14C964 != 0) {
-			fogRed = ((fogRed >> 1) + ((lightFactor * (f32)(u32)fogRed) / 2));
-			fogGreen = ((fogGreen >> 1) + ((lightFactor * (f32)(u32)fogGreen) / 2));
-			fogBlue = (u32)((fogBlue >> 1) + ((lightFactor * (f32)(u32)fogBlue) / 2));
+			red = ((red >> 1) + ((lightFactor * (f32)(u32)red) / 2));
+			green = ((green >> 1) + ((lightFactor * (f32)(u32)green) / 2));
+			blue = (u32)((blue >> 1) + ((lightFactor * (f32)(u32)blue) / 2));
 		} else {
-			fogRed = ((fogRed >> 2) + ((lightFactor * (f32)(u32)fogRed) * 0.75));
-			fogGreen = ((fogGreen >> 2) + ((lightFactor * (f32)(u32)fogGreen) * 0.75));
-			fogBlue = ((fogBlue >> 2) + ((lightFactor * (f32)(u32)fogBlue) * 0.75));
+			red = ((red >> 2) + ((lightFactor * (f32)(u32)red) * 0.75));
+			green = ((green >> 2) + ((lightFactor * (f32)(u32)green) * 0.75));
+			blue = ((blue >> 2) + ((lightFactor * (f32)(u32)blue) * 0.75));
 		}
-		red = fogRed;
-		green = fogGreen;
-		blue = fogBlue;
-		func_800049D4_55D4(firstColor, ((red << 0xB) + (green << 6) + (blue * 2)));
+		work.color = red << 11;
+		work.color += green << 6;
+		work.color += blue * 2;
+		func_800049D4_55D4(firstColor, work.color);
 		leoInitUnit_atten();
 		if (D_8013D9B4_14C964 != 0) {
 
@@ -4488,7 +4475,7 @@ void func_800BED30_CDCE0(void) {
 			D_80047745 = (u32)((D_800313F0 >> 2) + (((f32)(u32)D_800313F0 * lightFactor) * 0.75));
 		}
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		if ((D_8013D9B0_14C960 != 0) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || (D_8013D9B0_14C960 >= 0x3D))) {
+		if (((u32)D_8013D9B0_14C960 > 0U) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || (D_8013D9B0_14C960 >= 0x3D))) {
 			D_8013D9B0_14C960 -= 1;
 			if (D_8013D9B0_14C960 >= 0x24) {
 				func_80137468_146418(-1, 0x21);
@@ -4496,10 +4483,6 @@ void func_800BED30_CDCE0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
-#endif
-
 #ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
 	static u8 flashCount = 0;

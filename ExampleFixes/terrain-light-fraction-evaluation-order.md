@@ -9,3 +9,9 @@
 -> `code changed`: Use `dx = (s16)(cellSize - fracX) + (x << 8) - 256;`.
 
 -> `correct ASM`: The subtraction precedes the shift, matching the target operation order without adding an extension instruction. Temporary register allocation and other setup ordering remain unmatched.
+
+`incorrect ASM`: `func_800B2854_C1804` contains an extra X-base setup copy, places the radius divide after the first fraction spill, and shifts the positive-X coordinate before subtracting its fractional position from 256.
+
+-> `code changed`: Apply the same fraction ordering used by the neighboring radial-light function: compute Y fraction first, assign the float radius directly to its byte, increment it, then capture X fraction. Keep X fraction unsigned and cast `cellSize - fracX` to a signed short before adding the shifted coordinate. Retain the word and halfword frame-padding homes.
+
+-> `correct ASM`: The extra setup copy disappears, the function has the exact target instruction count and 0x90 frame, and the positive-X subtraction precedes the shift. The comparison improves from 2180 to 1370; the function remains NON_MATCHING because startup normalization and fraction-spill timing still differ.

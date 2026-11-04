@@ -2369,7 +2369,7 @@ void func_800F9118_1080C8(s32 arg0) {
 	s32 minusX;
 	s16 heading;
 	u8 count;
-	union { s32 value; Gfx *gfx; } terrain;
+	union { s32 value; Gfx *gfx; Unk801601F0 *descriptor; } terrain;
 	s16 radius;
 	s16 centerZ;
 	s16 groundY;
@@ -2379,7 +2379,7 @@ void func_800F9118_1080C8(s32 arg0) {
 		walker = &D_80158000[arg0];
 		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &groundY) == -1) &&
 			(walker->limbs[0].unk22 != 0x10)) {
-			count = D_801601F0[walker->limbs[0].unk23].unkC;
+			terrain.descriptor = &D_801601F0[walker->limbs[0].unk23]; count = terrain.descriptor->unkC;
 			radius = D_801601F0[walker->limbs[0].unk23].unk8;
 			if (D_8013FCD0_14EC80 != 0) {
 				radius *= 2;
@@ -4142,14 +4142,14 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	s32 maxStepCount;
 	if (arg0) {} vehicle = arg0->unk38;
 	player = vehicleInstances;
-	i = vehicle->unk1A;
-	type = (VehicleType *)(s32)&vehicleTypes[i];
+	hitAdjusted = vehicle->unk1A;
+	type = (VehicleType *)(s32)&vehicleTypes[hitAdjusted];
 	changedAudio = 0;
-	halfTypeUnk36 = vehicleTypes[i].unk36 >> 1;
-	halfTypeUnk34 = vehicleTypes[i].unk34 >> 1;
-	foundSpot = 0;
+	halfTypeUnk36 = vehicleTypes[hitAdjusted].unk36 >> 1;
+	halfTypeUnk34 = vehicleTypes[hitAdjusted].unk34 >> 1;
+	hitAdjusted = 0; foundSpot = 0;
 	stepCount = 0;
-	if (i != 0)
+	if (vehicle->unk1A != 0)
 	{
 		if ((type->unk59 == 4) || (type->unk59 == 8))
 		{
@@ -4370,8 +4370,9 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s")
 #endif
+
 
 void func_800FE910_10D8C0(s32 arg0) {
 	func_800039D0_45D0(&D_8013FDA8_14ED58[arg0].unk8, 0, 0, D_8005BB38);
@@ -5867,7 +5868,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	D_801593F0[0].pos.z = (f32)arg1->unk4;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103308_1122B8.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_80103308_1122B8.s", "src.us/overlay_gameplay/outside/101840_vehicle_init_late_rodata.s")
 #endif
 
 void func_80103760_112710(VehicleInstance *arg0, VehicleInstance *arg1) {
