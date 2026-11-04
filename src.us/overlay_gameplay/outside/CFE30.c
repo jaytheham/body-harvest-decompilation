@@ -1852,22 +1852,22 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 
 
 // Spark emitter allocation.
-#ifdef NON_MATCHING
 void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10,
 						 u8 arg11, u8 arg12) {
-	s32 i;
+	u8 i;
 	u8 effect;
 	s32 spawnCount;
-	s16 idx;
 	Vec3f sp44;
+	s16 idx;
 	Unk80154318Entry *entry;
-	Unk801541F8Entry *sfx;
 	i = arg8;
 	if (i >= 0x29) {
 		i = 0x28;
 	}
 
-	spawnCount = ((D_80156ED8 == 1) || (D_80156ED8 == 2) || ((0x230 - i) < ((((s32)D_8005BB30 - (s32)D_8005BB20) - 0xE380) >> 3))) ? 0 : i;
+	if ((D_80156ED8 == 1) || (D_80156ED8 == 2) || ((spawnCount = i), (0x230 - i) < ((((s32)D_8005BB30 - (s32)D_8005BB20) - 0xE380) >> 3))) {
+		spawnCount = 0;
+	}
 
 	if ((spawnCount == 0) || (func_800B93AC_C835C(arg0, arg2, 0x96, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) == 0)) {
 		return;
@@ -1885,13 +1885,17 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 		return;
 	}
 
-	/* Preserve the unknown alias for IDO argument-load scheduling. */
-	sfx = (Unk801541F8Entry *)(s32)&D_80154088[effect];
 	entry = &D_80154318[idx];
 
-	sfx->unk1 = sfx->unk1;
-	sfx->unkA = idx;
+	D_80154088[effect].unk1 = D_80154088[effect].unk1;
+	entry->unk2 = arg9;
+	entry->sparkEmitter.position[1] = arg1;
+	entry->sparkEmitter.color[0] = arg10;
+	entry->sparkEmitter.color[1] = arg11;
+	entry->sparkEmitter.color[2] = arg12;
 
+	/* Keep this store opaque to preserve the argument-load schedule. */
+	((Unk801541F8Entry *)(s32)&D_80154088[effect])->unkA = idx;
 	entry->sparkEmitter.position[0] = arg0;
 	entry->sparkEmitter.position[2] = arg2;
 	entry->sparkEmitter.kind = 1;
@@ -1899,24 +1903,14 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	sp44.x = arg3;
 	sp44.y = arg4;
 	sp44.z = arg5;
-
-	entry->unk2 = arg9;
-	entry->sparkEmitter.position[1] = arg1;
-	entry->sparkEmitter.color[0] = arg10;
-	entry->sparkEmitter.color[1] = arg11;
-	entry->sparkEmitter.color[2] = arg12;
-
 	func_800C1024_CFFD4(&sp44, &sp44);
 
 	i = 0;
 	while (i < spawnCount) {
 		func_800C4F48_D3EF8(effect, &sp44, arg6, arg7);
-		i = (i + 1) & 0xFF;
+		i++;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C541C_D43CC.s")
-#endif
 
 // Radial spark emitter allocation.
 void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg5, u8 arg6) {
