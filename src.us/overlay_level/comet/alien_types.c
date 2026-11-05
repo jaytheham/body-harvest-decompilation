@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/9BFF0.h"
 
 AlienType D_80328F70_36D0C0[0x30] = {
 	/* [0x00] */

@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/9BFF0.h"
 #include "overlay_level/siberia/2B7100.h"
 
 AlienType D_8032B7D0_30F720[0x30] = {
