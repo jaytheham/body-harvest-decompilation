@@ -23,7 +23,7 @@ Vtx D_800316E0_322E0[] = {
 	{ {{ 16, -8, 0 }, 0, { 1024, 0 }, { 230, 230, 230, 255 }} },
 };
 
-/* Glyph vertical offsets and advances; D_800319C1_325C1 aliases the space advance. */
+/* Glyph vertical offsets and advances. */
 s8 D_80031720_32320[] = {
 	0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14,
 	0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14,
@@ -504,9 +504,11 @@ void func_8000B044_BC44(void) {
 	D_80053C96 = (s16)(D_80068084 - 0x1E);
 
 	if (gameplayMode == 0) {
-		clip_x_max = 0x280; clip_y_max = 0x1E0;
+		clip_x_max = 0x280;
+		clip_y_max = 0x1E0;
 	} else {
-		clip_x_max = 0x140; clip_y_max = 0xF0;
+		clip_x_max = 0x140;
+		clip_y_max = 0xF0;
 	}
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
@@ -526,7 +528,7 @@ void func_8000B044_BC44(void) {
 	i = 0;
 
 	if ((u16)D_80053BE0 > 0) {
-		minimum = D_80037578_38178_R;
+		minimum = 0.01f; if (minimum) { }
 		do { } while (0);
 		/* Retain the target constant candidate priorities without emitted work. */
 		if (minimum < D_80053BE8 * 1024 + D_80053BEC / 1024 +
@@ -545,7 +547,7 @@ void func_8000B044_BC44(void) {
 
 		/* Space character */
 		if ((s16)glyph_code == 0x150) {
-			x_cursor = (s16)(x_cursor + D_800319C1_325C1);
+			x_cursor += D_80031720_32320[0x2A1];
 		}
 
 		/* Control codes */
@@ -597,11 +599,11 @@ void func_8000B044_BC44(void) {
 						x_cursor = D_80053C94 + (D_80053C96 - D_80053C94 - width) / 2;
 					} else {
 						/* right-align */
-						x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
+						x_cursor = (s16)(D_80053C96 - (s16)width - D_80031720_32320[0x2A1]);
 					}
 				} else {
 					/* left-align */
-					x_cursor = (s16)(D_800319C1_325C1 + D_80053C94);
+					x_cursor = (s16)(D_80031720_32320[0x2A1] + D_80053C94);
 				}
 				y_cursor = (s16)(y_cursor + 0x14);
 				break;
@@ -610,7 +612,7 @@ void func_8000B044_BC44(void) {
 				s16 width;
 
 
-				y_cursor = text_ptr[(s16)(i++ + 1)] * 4;
+				glyph_y_off = i++ + 1; y_cursor = text_ptr[glyph_y_off] * 4;
 				flag_78 = 1;
 
 				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
@@ -619,18 +621,18 @@ void func_8000B044_BC44(void) {
 			}
 			case 29: { /* newline y-scroll + right-align */
 				s16 width;
-				y_cursor = text_ptr[(s16)(i++ + 1)] * 4;
+				glyph_y_off = i++ + 1; y_cursor = text_ptr[glyph_y_off] * 4;
 				flag_74 = 1;
 				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
-				x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
+				x_cursor = (s16)(D_80053C96 - (s16)width - D_80031720_32320[0x2A1]);
 				break;
 			}
 						case 20:
-                x_cursor = text_ptr[(s16)(i++ + 1)];
+                glyph_y_off = i++ + 1; x_cursor = text_ptr[glyph_y_off];
                 flag_78 = 0;
                 if (x_cursor & 0x80) { x_cursor -= 0x100; }
                 x_cursor *= 4;
-                y_cursor = text_ptr[(s16)(i++ + 1)];
+                glyph_y_off = i++ + 1; y_cursor = text_ptr[glyph_y_off];
                 if (y_cursor & 0x80) { y_cursor -= 0x100; }
                 y_cursor *= 4;
                 break;
@@ -679,7 +681,7 @@ void func_8000B044_BC44(void) {
 					f64 fraction;
 					s16 endpoint_r, endpoint_g, endpoint_b, endpoint_a;
 					endpoint_r = D_80053BF8;
-					fraction = (f32)(u32)(u8)(0xFF - (counter << 4)) / D_80037600_38200_R;
+					fraction = (f32)(u32)(u8)(0xFF - (counter << 4)) / 255.0;
 					r = (u32)(endpoint_r - (f32)(endpoint_r - D_80053BF0) * fraction) & 0xFF;
 					endpoint_g = D_80053BFA;
 					g = (u32)(endpoint_g - (f32)(endpoint_g - D_80053BF2) * fraction) & 0xFF;
@@ -694,46 +696,43 @@ void func_8000B044_BC44(void) {
 				break;
 			}
 			case 21: { /* set RGB from next 3 bytes */
-                s32 first_index;
-                u32 second_index;
-                s32 third_index;
-                first_index = i + 1;
-                r = text_ptr[(s16)first_index];
-                second_index = first_index + 1U;
-                g = text_ptr[(s16)second_index];
-                third_index = (s32)second_index + 1;
-                b = text_ptr[(s16)third_index];
-                i = third_index;
+                glyph_y_off = i + 1;
+                r = text_ptr[glyph_y_off];
+                glyph_y_off = i + 2U;
+                g = text_ptr[glyph_y_off];
+                glyph_y_off = i + 3;
+                b = text_ptr[glyph_y_off];
+                i += 3;
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				break;
 			}
 			case 22: { /* set alpha from next 1 byte */
-				alpha = text_ptr[(s16)(i++ + 1)];
+				glyph_y_off = i++ + 1; alpha = text_ptr[glyph_y_off];
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				break;
 			}
 			case 24:
-                clip_x_min = text_ptr[(s16)(i++ + 1)] * 4;
-                clip_y_min = text_ptr[(s16)(i++ + 1)] * 4;
-                clip_x_max = text_ptr[(s16)(i++ + 1)] * 4;
-                clip_y_max = text_ptr[(s16)(i++ + 1)] * 4;
+                glyph_y_off = i++ + 1; clip_x_min = text_ptr[glyph_y_off] * 4;
+                glyph_y_off = i++ + 1; clip_y_min = text_ptr[glyph_y_off] * 4;
+                glyph_y_off = i++ + 1; clip_x_max = text_ptr[glyph_y_off] * 4;
+                glyph_y_off = i++ + 1; clip_y_max = text_ptr[glyph_y_off] * 4;
                 gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, clip_x_min, clip_y_min, clip_x_max, clip_y_max);
                 break;
 			case 25: { /* call func, store in D_80053BE2 */
-				D_80053BE2 = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; D_80053BE2 = func_8000A43C_B03C((s8 *)&text_ptr[glyph_y_off]);
 				i = (s16)(i + 1);
 				break;
 			}
 			case 23: { /* call func, store in D_80053BE4 */
-				D_80053BE4 = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; D_80053BE4 = func_8000A43C_B03C((s8 *)&text_ptr[glyph_y_off]);
 				i = (s16)(i + 1);
 				break;
 			}
 			case 27: { /* call func, scale x */
 				s32 val;
-				val = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; val = func_8000A43C_B03C((s8 *)&text_ptr[glyph_y_off]);
 				D_80053BE8 = (f32)((f64)val * (1.0 / 1024.0));
 				if ((f64)D_80053BE8 < 0.01) {
 					D_80053BE8 = minimum;
@@ -743,7 +742,7 @@ void func_8000B044_BC44(void) {
 			}
 			case 28: { /* call func, scale y */
 				s32 val;
-				val = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; val = func_8000A43C_B03C((s8 *)&text_ptr[glyph_y_off]);
 				D_80053BEC = (f32)((f64)val * (1.0 / 1024.0));
 				if ((f64)D_80053BEC < 0.01) {
 					D_80053BEC = minimum;
