@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800B753C_C64EC`, early `continue` statements keep the texture group in a register on skip paths instead of reloading its stack home. The initial line count is stored before an ordinary `BLEZ`, while the target tests the narrowed count first and stores it only in the positive path.
+
+-> `code changed`: Enclose each group body in `if (counts[group] != -1)` instead of continuing early. Reuse the existing signed-halfword bucket workspace for `counts[group] + 1`. If that value is positive, assign it to `lineCount[0]` and enter a `do/while (lineCount[0] > 0)` loop. The bucket workspace is no longer needed for texture selection at this point; no new local is required.
+
+-> `correct ASM`: Skip branches restore the group from its stack home, and each loop entry uses `BLEZL` with the group reload in its delay slot, followed by the line-count `SH`. The frame remains 0x1348 bytes; the reconstruction improves from four instructions short to two instructions short (995 versus 997), with comparison score 27037 to 15214. Register, stack and graphics-command differences remain, so the function stays NON_MATCHING.
