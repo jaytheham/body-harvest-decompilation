@@ -1784,7 +1784,7 @@ const u32 jtbl_80142E28_151DD8[] = {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg5) {
+s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, u32 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
 	if (arg0 & 0x8000) {
 		if (arg0 & 0x400) {
