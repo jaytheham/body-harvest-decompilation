@@ -5,6 +5,7 @@
 #endif
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/trigger.h"
 
 /* Earlier overlay BSS variables occupy 0x802E0E30 through 0x802E0E47. */
 static u8 americaBssPrefix[0x18];

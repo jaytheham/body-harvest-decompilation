@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_level/greece/18D7E0.h"
 
 s32 D_802DD170[] = {
 	0x00000000,

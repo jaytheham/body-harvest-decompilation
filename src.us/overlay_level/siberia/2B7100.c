@@ -1,5 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/trigger.h"
+#include "overlay_level/siberia/2B7100.h"
 
 /* Earlier Siberia BSS variables occupy offsets 0x00 through 0x5F. */
 static u8 siberiaBssPrefix[0x60];

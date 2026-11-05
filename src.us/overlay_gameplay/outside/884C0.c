@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/trigger.h"
 #include "857E0.h"
 
 const char D_801417B0_150760[] = "explode walker\n"; // "explode walker\n"

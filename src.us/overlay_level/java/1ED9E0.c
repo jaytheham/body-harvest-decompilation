@@ -1,5 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/trigger.h"
+#include "overlay_level/greece/18D7E0.h"
 
 static void func_802D5DDC_stub(void);
 

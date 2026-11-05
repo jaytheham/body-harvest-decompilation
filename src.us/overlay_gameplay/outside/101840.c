@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_level/greece/18D7E0.h"
 
 const char D_801446A0_153650[] = "Error in walker index"; // "Error in walker index"
 const char D_801446B8_153668[] = "Attempt to get info on unallocated walker ID"; // "Attempt to get info on unallocated walker ID"

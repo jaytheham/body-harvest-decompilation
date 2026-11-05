@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "overlay_level/greece/18D7E0.h"
 #include "version_shift.h"
 
 const char D_80144DC0_153D70[] = "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"; // "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"

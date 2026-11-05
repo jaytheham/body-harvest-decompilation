@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_level/greece/18D7E0.h"
 
 AlienType D_8032B7D0_1E42E0[0x30] = {
 	/* [0x00] */

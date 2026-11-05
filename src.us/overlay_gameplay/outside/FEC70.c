@@ -1,6 +1,7 @@
 #define FEC70_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/trigger.h"
 #include "version_shift.h"
 
 const char D_801444F0_1534A0[] = "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n"; // "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n"
