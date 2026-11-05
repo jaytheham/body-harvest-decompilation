@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/12C80.h"
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
 #include "overlay_level/siberia/2B7100.h"

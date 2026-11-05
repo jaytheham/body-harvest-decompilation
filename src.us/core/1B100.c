@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/12C80.h"
 
 /* English message table. */
 MessageEntry D_800344B0_350B0[] = {

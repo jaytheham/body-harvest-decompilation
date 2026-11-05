@@ -1,6 +1,7 @@
 #define COMET_CUTSCENE_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "core/12C80.h"
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
 #include "version_shift.h"

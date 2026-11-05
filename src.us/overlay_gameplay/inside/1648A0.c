@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/12C80.h"
 #include "core/1050.h"
 
 // 32x32 8-bit intensity texture - player shadow?
