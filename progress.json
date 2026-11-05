@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-05T03:39:26Z",
-  "commit": "65a7a620",
-  "commit_timestamp": "2026-11-05T16:38:21+13:00",
+  "generated": "2026-11-05T04:59:30Z",
+  "commit": "323ab160",
+  "commit_timestamp": "2026-11-05T17:58:37+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 2978,
@@ -2281,7 +2281,7 @@
       "asm_stubs": 0,
       "total": 4,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/A49A0.c",
@@ -2541,7 +2541,7 @@
       "asm_stubs": 0,
       "total": 64,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/greece/alien_types.c",
@@ -2597,8 +2597,8 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 87,
-      "matched": 2442,
+      "files": 89,
+      "matched": 2510,
       "non_matching": 76,
       "asm_stubs": 0
     },
@@ -2611,8 +2611,8 @@
     },
     {
       "name": "lunarlaurus",
-      "files": 13,
-      "matched": 199,
+      "files": 11,
+      "matched": 131,
       "non_matching": 3,
       "asm_stubs": 0
     },
@@ -2900,7 +2900,7 @@
     },
     {
       "date": "2026-11-01",
-      "commit": "3b38c4b",
+      "commit": "959752a",
       "matched": 2978,
       "non_matching": 79,
       "total": 3057
