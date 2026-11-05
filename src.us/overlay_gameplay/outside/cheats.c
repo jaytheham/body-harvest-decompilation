@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/148000.h"
 #include "core/1B100.h"
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
