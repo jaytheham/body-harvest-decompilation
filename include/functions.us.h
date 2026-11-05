@@ -839,7 +839,12 @@ void func_800AB8CC_BA87C(u8 arg0);
 void func_800AC5BC_BB56C(u8 arg0);
 s32 func_800AC2FC_BB2AC(u8 arg0);
 void func_800B32AC_C225C(u16 *);
-void func_800B345C_C240C(u8, u8, u8 *, u8);
+s32 func_800B345C_C240C(u8, u8, u8 *, u8);
+/* Discarded-return view for an already byte-range second coordinate. */
+void func_800B345C_C240C_S16(u8 arg0, s16 arg1, u8 *arg2, u8 arg3);
+#ifdef OUTSIDE_BF9C0_FUNCTIONS
+#pragma weak func_800B345C_C240C_S16 = func_800B345C_C240C
+#endif
 void func_800B4050_C3000(u8, u8, u8 *, u8);
 void func_800B415C_C310C(s16, s16);
 void func_800B41C8_C3178(u8, u8, u8*, u8);
@@ -1637,7 +1642,7 @@ s16 func_800D3C88_E2C38(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 s32 func_800794F8_884A8(s32 arg0, s32 arg1);
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5);
 void func_80128650_137600(Projectile *arg0, s32 arg1);
-s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg5);
+s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, u32 arg2, u8 arg3, u8 arg4, s32 arg5);
 void func_800D9DD8_E8D88(s16 arg0, s16 arg1, s16 arg2);
 extern void (*__printfunc)(s32, s32);
 void func_8000EFB8_FBB8(void *);

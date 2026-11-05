@@ -1,3 +1,4 @@
+#define OUTSIDE_BF9C0_FUNCTIONS
 #include <ultra64.h>
 #include "common.h"
 #include "version_shift.h"
@@ -16,20 +17,6 @@ const f64 D_80142E18_151DC8[1] = {127.5};
 /* Cosine/sine of ~35.15° used in frustum check */
 const f32 D_80142E20_151DD0[1] = {0.5759139060974121f};
 const f32 D_80142E24_151DD4[1] = {0.5759139060974121f};
-/* Jump table for func_800B5538 */
-const u32 jtbl_80142E28_151DD8[] = {
-	OVERLAY_PTR(0x800B58D4),
-	OVERLAY_PTR(0x800B59C0),
-	OVERLAY_PTR(0x800B5AC8),
-	OVERLAY_PTR(0x800B5BB4),
-	OVERLAY_PTR(0x800B5CA0),
-};
-/* Growth multiplier for crater radius per frame (~1.022x) */
-const f64 D_80142E40_151DF0[1] = {1.022};
-/* Initial crater radius */
-const f32 D_80142E48_151DF8[1] = {0.699999988079071f};
-/* Crater radius multiplier */
-const f32 D_80142E4C_151DFC[1] = {3.200000047683716f};
 /* Water palette color bytes, each stored in an aligned data slot. */
 u8 D_8013D940_14C8F0 = 0;
 u8 D_8013D944_14C8F4 = 0;
@@ -120,11 +107,6 @@ EffectRgb D_8013DAF4_14CAA4 = {0xFF, 0x9B, 0xFF};
 EffectRgb D_8013DAF8_14CAA8 = {0xFF, 0xE6, 0xC8};
 /* Unused sprite/pointer */
 s16 D_8013DAFC_14CAAC[2] = { -1, 0 };
-/* Water animation frame counter */
-u8 D_8013DB00_14CAB0 = 0;
-/* Unused */
-s32 D_8013DB04_14CAB4 = 0;
-s32 D_8013DB08_14CAB8 = 0;
 
 // AI- Linear interpolation helper: ((arg3-arg2)*arg0 + arg1*arg2) / arg3
 s32 func_800B0A10_BF9C0(s32 arg0, s32 arg1, s16 arg2, s16 arg3) {
@@ -338,7 +320,6 @@ s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 }
 
 // ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
-#ifdef NON_MATCHING
 s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
 	s32 pad54; s32 pad50; s32 pad4C; s32 pad48; s32 pad44; s32 pad40;
 	s32 var_a2; s32 var_a3; s32 wallIndex; BoundingBox *wall;
@@ -407,9 +388,9 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			temp_f0 = var_t2 * outerScale;
 			*arg3 = arg0 + temp_f12;
 			*arg4 = arg1 + temp_f0;
+			*arg5 = D_8014FD30.main.maxZ;
 			var_t0 = temp_f12;
 			var_t2 = temp_f0; if ((s32)outerScale * 0) {}
-			*arg5 = D_8014FD30.main.maxZ;
 			var_t1 = var_t1 * outerScale;
 			*arg6 = 0; if (var_t0 * 0) {}
 		} else if (*arg5 < D_8014FD30.main.minZ) {
@@ -423,9 +404,9 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 			temp_f0 = var_t2 * outerScale;
 			*arg3 = arg0 + temp_f12;
 			*arg4 = arg1 + temp_f0;
+			*arg5 = D_8014FD30.main.minZ;
 			var_t0 = temp_f12;
 			var_t2 = temp_f0; if ((s32)outerScale * 0) {}
-			*arg5 = D_8014FD30.main.minZ;
 			var_t1 = var_t1 * outerScale;
 
 			*arg6 = 0; if (var_t0 * 0) {}
@@ -454,8 +435,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 				}
 				temp_f2 = (var_a2 - arg0) / temp_f14;
 				if ((temp_f2 > 0.0f) && (temp_f2 < 1.0)) {
-					temp_f12 = var_t1 * temp_f2;
-					temp_v0_4 = arg2 + temp_f12;
+					temp_v0_4 = arg2 + var_t1 * temp_f2;
 					var_a3 = temp_v0_4;
 					if ((D_8014FD30.sub[wallIndex].minZ < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxZ)) {
 						*arg3 = var_a2;
@@ -466,7 +446,7 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 						var_t0 = var_t0 * temp_f2;
 						var_t2 = temp_f0;
 						*arg6 = 1;
-						var_t1 = temp_f12;
+						var_t1 = var_t1 * temp_f2;
 					}
 				}
 			}
@@ -480,15 +460,14 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 				}
 				temp_f2 = (var_a3 - arg2) / temp_f14;
 				if ((temp_f2 > 0.0f) && (temp_f2 < 1.0)) {
-					temp_f12 = var_t0 * temp_f2;
-					temp_v0_4 = arg0 + temp_f12;
+					temp_v0_4 = arg0 + var_t0 * temp_f2;
 					var_a2 = temp_v0_4;
 					if ((D_8014FD30.sub[wallIndex].minX < temp_v0_4) && (temp_v0_4 < D_8014FD30.sub[wallIndex].maxX)) {
 						*arg3 = temp_v0_4;
 						var_t3 = 1;
 						temp_f0 = var_t2 * temp_f2;
 						*arg4 = arg1 + temp_f0;
-						var_t0 = temp_f12;
+						var_t0 = var_t0 * temp_f2;
 						var_t2 = temp_f0;
 						*arg5 = var_a3;
 						*arg6 = 0;
@@ -507,11 +486,6 @@ s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 
 	*arg6 = 0;
 	return 0;
 }
-
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B1028_BFFD8.s")
-#endif
 
 void func_800B165C_C060C(s32 arg0) {
 	Unk8014FD30Type *wall;
@@ -790,7 +764,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 dx;
 	s16 dy;
 	u32 fracY;
-	s32 squareX;
+	s32 pad;
 	s32 cellSize = 256;
 	u8 radius;
 	s16 intensity;
@@ -820,14 +794,13 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		} else {
 			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
 		}
-		squareX = dx * dx;
 		for (y = 1 - radius; y < radius + 1; y++) {
 			if (y <= 0) {
-				dy = fracY + y * -256;
+				dy = (s16)fracY + y * -256;
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
-			intensity = (s32)sqrtf(dy * dy + squareX) - arg2;
+			intensity = (s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (intensity > 0) {
 				intensity = arg3 - intensity;
 				if (intensity > 0) {
@@ -868,7 +841,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
@@ -885,13 +857,13 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	
 	s16 color;
 	u32 fracY;
-	s32 squareX;
+	s32 padWord;
 	s32 cellSize = 256;
 	s32 tileX;
 	s32 tileY;
-	s32 fracX;
+	u32 fracX;
 	u8 radius;
-	s16 pad;
+	s16 padHalf;
 	s16 ringX;
 	s16 ringY;
 	EffectRgb *pixel;
@@ -903,20 +875,20 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	baseX -= 127;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-	fracX = arg0->unk0 & 255;
 	fracY = arg0->unk2 & 255;
-	radius = (u32)((f32)(arg2 + arg3) / 256);
+	radius = (f32)(arg2 + arg3) / 256;
 	radius++;
+	fracX = arg0->unk0 & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
 		} else {
-			dx = cellSize - fracX + (x << 8) - 256;
+			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
 		}
 		
 		for (y = 1 - radius; y < radius + 1; y++) {
 			if (y <= 0) {
-				dy = fracY + y * -256;
+				dy = (s16)fracY + y * -256;
 			} else {
 				dy = cellSize - fracY + (y << 8) - 256;
 			}
@@ -949,8 +921,6 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
 #endif
@@ -1074,7 +1044,8 @@ void func_800B33BC_C236C(s32 arg0) {
 }
 
 /* Compute terrain vertex colors with dynamic lighting and per-level tints into the 19x19 ring buffer */
-void func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
+/* The word return value is intentionally unspecified; every caller discards it. */
+s32 func_800B345C_C240C(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s32 pad;
 	u8 row;
 	u8 col;
@@ -1585,14 +1556,10 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	D_8014F89A = 0;
 	scrollX = D_80149434;
 	scrollY = D_80149436;
-	D_8014F899 = D_80151DD8.ringX;
-	D_8014F898 = D_80151DD8.ringY;
-	D_8014F89C = D_80151DD8.mapPosX;
-	D_8014F89D = D_80151DD8.mapPosY;
-	col = D_8014F899;
-	indexByte[0] = D_8014F898;
-	color1 = D_8014F89C;
-	color2 = D_8014F89D;
+	col = D_8014F899 = D_80151DD8.ringX;
+	indexByte[0] = D_8014F898 = D_80151DD8.ringY;
+	color1 = D_8014F89C = D_80151DD8.mapPosX;
+	color2 = D_8014F89D = D_80151DD8.mapPosY;
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
 	rowWrap = 0;
@@ -1610,7 +1577,9 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 		do {
 
 
-			tileCenter = &ringRow[col]; posY = (color2 - 0x80) << 8;
+			tileCenter = &ringRow[col];
+			if (tileCenter) {}
+			posY = (color2 - 0x80) << 8;
 
 			if (col != 0x12) {
 				tileEast = &ringRow[col + 1];
@@ -1745,9 +1714,9 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 					break;
 				case 2:
 					if ((u8)amp == 0x15 || (u8)amp == 0x10) {
-						amp = ((u8)amp == 0x10) ? 0x1E : 0x50;
-						hueX -= amp * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-						hueY -= amp * (((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
+						cellH = ((scrollX >> 8) + ringCol) * 0x58AC; amp = ((u8)amp == 0x10) ? 0x1E : 0x50;
+						hueX -= amp * (((f64)(f32)coss((D_80052A8C * 900U + cellH)) / 32768.0));
+						hueY -= amp * (((f64)(f32)sins((D_80052A8C * 900 + cellH)) / 32768.0));
 					}
 					break;
 				case 3:
@@ -1801,11 +1770,21 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 		col = D_8014F899;
 	} while (rowWrap < 0x12);
 }
+
 #else
+/* Jump table for func_800B5538 */
+const u32 jtbl_80142E28_151DD8[] = {
+	OVERLAY_PTR(0x800B58D4),
+	OVERLAY_PTR(0x800B59C0),
+	OVERLAY_PTR(0x800B5AC8),
+	OVERLAY_PTR(0x800B5BB4),
+	OVERLAY_PTR(0x800B5CA0),
+};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
 #endif
 
-s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg5) {
+s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, u32 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
 	if (arg0 & 0x8000) {
 		if (arg0 & 0x400) {
@@ -1836,62 +1815,54 @@ s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, s32 arg2, u8 arg3, u8 arg4, s32 arg
 /* Emit ground quad geometry: vertices + sorted-by-texture-bucket triangles */
 #ifdef NON_MATCHING
 void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, u8 arg6) {
-	Vtx *src;
-	s32 width;
-	s32 height;
+	Vtx *v;
+	s16 width;
+	s16 height;
 	s16 x;
 	s16 y;
-	s16 bucket;
-	Vtx *v;
+	s32 order;
+	s16 cols;
+	s16 rows;
 	u16 orders[8][16];
 	u16 tiles[8][16];
 	s16 counts[8];
 	u16 tile;
 	s16 b;
 	s16 idx;
-	s32 order;
-	u32 t;
-	s32 modeByte;
-	s16 cols;
-	s16 rows;
-	s32 total;
+	u16 t;
+	u8 modeByte;
 
-	bucket = 0;
-	do {
-		counts[bucket] = -1;
-		bucket = (s16)(bucket + 1);
-	} while (bucket < 8);
+	for (y = 0; y < 8; y++) { counts[y] = -1; }
 
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
-		bucket = 0;
+		y = 0;
 		do {
-			src = arg0 + (bucket * 0x12);
 
-			D_8005BB34[0] = src[0];
+			D_8005BB34[0] = (&arg0[y * 0x12])[0];
 			D_8005BB34++;
-			D_8005BB34[0] = src[1];
+			D_8005BB34[0] = (&arg0[y * 0x12])[1];
 			D_8005BB34++;
-			D_8005BB34[0] = src[2];
+			D_8005BB34[0] = (&arg0[y * 0x12])[2];
 			D_8005BB34++;
-			D_8005BB34[0] = src[3];
+			D_8005BB34[0] = (&arg0[y * 0x12])[3];
 			D_8005BB34++;
-			D_8005BB34[0] = src[4];
+			D_8005BB34[0] = (&arg0[y * 0x12])[4];
 			D_8005BB34++;
-			bucket = (s16)(bucket + 1);
-		} while (bucket < 5);
+			y++;
+		} while (y < 5);
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - 0x19), 25, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-0x19], 25, 4);
 
 		modeByte = D_8014F857;
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 4; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * 5) + x - 0x19];
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-0x19])[y * 5])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -1902,38 +1873,36 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 
-	width = arg3 - arg1;
-	height = arg4 - arg2;
 
 	if (((arg3 - arg1) * (arg4 - arg2)) < 0xC) {
-		cols = (s16)width + 1;
-		rows = (s16)height + 1;
-		total = rows * cols;
+		width = arg3 - arg1;
+		height = arg4 - arg2;
+		cols = width + 1;
+		rows = height + 1;
 
 		for (y = 0; y < rows; y++) {
 			for (x = 0; x < cols; x++) {
@@ -1942,16 +1911,16 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
 		modeByte = D_8014F854;
 
-		for (y = 0; y < (s16)height; y++) {
-			for (x = 0; x < (s16)width; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * cols) + x - total];
+		for (y = 0; y < height; y++) {
+			for (x = 0; x < width; x++) {
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -1962,57 +1931,55 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + cols, 0, order + 1, order + cols, order + 1 + cols, 0);
 			}
 		}
 		return;
 	}
 
-	if ((s16)height == 4) {
+	if ((s16)(arg4 - arg2) == 4) {
 		cols = 4;
 		rows = 5;
-		total = rows * cols;
 
 		for (y = 0; y < 5; y++) {
-			src = &arg0[y * 0x12];
-			D_8005BB34[0] = src[0];
+			D_8005BB34[0] = (&arg0[y * 0x12])[0];
 			D_8005BB34++;
-			D_8005BB34[0] = src[1];
+			D_8005BB34[0] = (&arg0[y * 0x12])[1];
 			D_8005BB34++;
-			D_8005BB34[0] = src[2];
+			D_8005BB34[0] = (&arg0[y * 0x12])[2];
 			D_8005BB34++;
-			D_8005BB34[0] = src[3];
+			D_8005BB34[0] = (&arg0[y * 0x12])[3];
 			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
 		modeByte = D_8014F854;
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 3; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * cols) + x - total];
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -2023,24 +1990,24 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 4, 0, order + 1, order + 4, order + 5, 0);
 			}
 		}
@@ -2050,32 +2017,30 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	else {
 		cols = 5;
 		rows = 4;
-		total = rows * cols;
 
 		for (y = 0; y < 4; y++) {
-			src = &arg0[y * 0x12];
-			D_8005BB34[0] = src[0];
+			D_8005BB34[0] = (&arg0[y * 0x12])[0];
 			D_8005BB34++;
-			D_8005BB34[0] = src[1];
+			D_8005BB34[0] = (&arg0[y * 0x12])[1];
 			D_8005BB34++;
-			D_8005BB34[0] = src[2];
+			D_8005BB34[0] = (&arg0[y * 0x12])[2];
 			D_8005BB34++;
-			D_8005BB34[0] = src[3];
+			D_8005BB34[0] = (&arg0[y * 0x12])[3];
 			D_8005BB34++;
-			D_8005BB34[0] = src[4];
+			D_8005BB34[0] = (&arg0[y * 0x12])[4];
 			D_8005BB34++;
 		}
 
-		gSPVertex(D_8005BB2C++, (D_8005BB34 - total), total, 4);
+		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
 		modeByte = D_8014F854;
 
 		for (y = 0; y < 3; y++) {
 			for (x = 0; x < 4; x++) {
-				tile = ((s16 *)D_8014F8A0)[(arg5 + (y << 8) + x) & 0xFFFF];
-				v = &D_8005BB34[(y * cols) + x - total];
+				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
-				if ((modeByte != 1) || func_800B960C_C85BC(v[0].v.ob[0], v[0].v.ob[2], 0x100, 0x100)) {
-					if (func_800B5EE4_C4E94(tile, arg0, y & 0xFF, x & 0xFF, y & 0xFF, arg6)) {
+				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
+					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
 						idx = ++counts[b];
 
@@ -2086,32 +2051,30 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		for (bucket = 0; bucket < 8; bucket++) {
+		for (y = 0; y < 8; y++) {
 
 
-			if (counts[bucket] == -1) {
+			if (counts[y] == -1) {
 				continue;
 			}
 
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + bucket) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-			for (x = 0; x <= counts[bucket]; x++) {
-				tile = (u16)tiles[bucket][x];
-				t = ((u8)((tile & 0x3C0) >> 6)) % 2;
+			for (x = 0; x <= counts[y]; x++) {
+				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
+				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[bucket][x] + 4;
+				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 #endif
@@ -2119,38 +2082,37 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 /* Emit rotated/angled tile geometry from the road draw buffer (grouped by texture bucket) */
 #ifdef NON_MATCHING
 void func_800B753C_C64EC(void) {
+	s32 rawMode;
 	s32 group;
-	s16 *count;
-	s16 *countEnd;
+	s32 i;
 	s16 indices[8][0x121];
 	s16 counts[8];
 	s16 emittedQuads;
-	s32 i;
-	s16 bucket;
 	s16 lineCount[1];
+	s16 bucket;
 	s16 rowOffset;
 	s16 run;
-	s32 v0, v1, v2, v3;
+	s32 v0, v1, v2;
 	Unk800B753CEntry *entry;
 	Vtx *source;
 
 	emittedQuads = 0;
 	{
-		count = counts;
-		countEnd = counts + 8;
+		i = 0;
 
-		while (count < countEnd) {
-			*count++ = -1;
+		while (i < 8) {
+			counts[i++] = -1;
 		}
 	}
 
-	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(D_80254E80 + 0x200));
+	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(&D_80254E80[0x200]));
 	gDPLoadSync(D_8005BB2C++);
 
 	{
 
 		for (i = D_8014FD28 + 1; i < 0x90; i++) {
-			bucket = ((u8)D_8014F8A8[i].unk4) / 2;
+			rawMode = D_8014F8A8[i].unk4;
+			bucket = rawMode / 2;
 
 			counts[bucket]++;
 			indices[bucket][counts[bucket]] = i;
@@ -2160,16 +2122,15 @@ void func_800B753C_C64EC(void) {
 	gDPTileSync(D_8005BB2C++);
 
 	for (group = 0; group < 8; group++) {
+		if (counts[group] != -1) {
 
-		if (counts[group] == -1) {
-			continue;
-		}
+		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(group << 11) + 0x4000]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_80224E80 + (group << 11) + 0x4000), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-
-		lineCount[0] = counts[group] + 1;
+		bucket = counts[group] + 1;
 		rowOffset = 0;
-		while (lineCount[0] > 0) {
+		if (bucket > 0) {
+			lineCount[0] = bucket;
+			do {
 
 
 			if (lineCount[0] >= 9) {
@@ -2182,42 +2143,41 @@ void func_800B753C_C64EC(void) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
 				source = entry->unk0;
-				*D_8005BB34 = source[0];
+				D_8005BB34[0] = source[0];
 				source = entry->unk0;
 				D_8005BB34++;
-				*D_8005BB34 = source[1];
+				D_8005BB34[0] = source[1];
 				source = entry->unk0;
 				D_8005BB34++;
-				*D_8005BB34 = source[0x12];
+				D_8005BB34[0] = source[0x12];
 				source = entry->unk0;
 				D_8005BB34++;
-				*D_8005BB34 = source[0x13];
+				D_8005BB34[0] = source[0x13];
 				D_8005BB34++;
 			}
 
 			if (lineCount[0] != 0) {
-				gSPVertex(D_8005BB2C++, D_8005BB34 - (run * 4), run * 4, 0);
+				gSPVertex(D_8005BB2C++, &D_8005BB34[-(run * 4)], run * 4, 0);
 			}
 
 			v0 = 0;
 			v1 = 2;
 			v2 = 1;
-			v3 = 3;
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
+				rawMode = entry->unk4;
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((u8)entry->unk4 % 2) << 7, G_TX_RENDERTILE, 1,
-				entry->unk6 & 3, 1, G_TX_NOLOD,
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (rawMode % 2) << 7, G_TX_RENDERTILE, 0,
+				entry->unk6 & 3, 5, G_TX_NOLOD,
 				entry->unk5 & 3, 5, G_TX_NOLOD);
 				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v3, 0);
+				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v0 + 3, 0);
 
 				emittedQuads++;
 				v0 += 4;
 				v1 += 4;
 				v2 += 4;
-				v3 += 4;
 			}
 
 			if (lineCount[0] >= 9) {
@@ -2227,6 +2187,10 @@ void func_800B753C_C64EC(void) {
 			}
 
 			rowOffset += 8;
+
+			} while (lineCount[0] > 0);
+		}
+
 		}
 	}
 
@@ -2234,17 +2198,17 @@ void func_800B753C_C64EC(void) {
 	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(D_80254E80));
 	gDPLoadSync(D_8005BB2C++);
 
-	count = counts;
-	countEnd = counts + 8;
+	i = 0;
 
-	while (count < countEnd) {
-		*count++ = -1;
+	while (i < 8) {
+		counts[i++] = -1;
 	}
 
 	if ((s32)D_8014F89A > 0) {
 
 		for (i = 0; i < (s32)D_8014F89A; i++) {
-			bucket = ((u8)D_8014F8A8[i].unk4) / 2;
+			rawMode = D_8014F8A8[i].unk4;
+			bucket = rawMode / 2;
 
 			counts[bucket]++;
 			indices[bucket][counts[bucket]] = i;
@@ -2252,16 +2216,15 @@ void func_800B753C_C64EC(void) {
 	}
 
 	for (group = 0; group < 8; group++) {
+		if (counts[group] != -1) {
 
-		if (counts[group] == -1) {
-			continue;
-		}
+		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[group << 11]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_80224E80 + (group << 11)), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-
-		lineCount[0] = counts[group] + 1;
+		bucket = counts[group] + 1;
 		rowOffset = 0;
-		while (lineCount[0] > 0) {
+		if (bucket > 0) {
+			lineCount[0] = bucket;
+			do {
 
 
 			if (lineCount[0] >= 9) {
@@ -2274,42 +2237,41 @@ void func_800B753C_C64EC(void) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
 				source = entry->unk0;
-				*D_8005BB34 = source[0];
+				D_8005BB34[0] = source[0];
 				source = entry->unk0;
 				D_8005BB34++;
-				*D_8005BB34 = source[1];
+				D_8005BB34[0] = source[1];
 				source = entry->unk0;
 				D_8005BB34++;
-				*D_8005BB34 = source[0x12];
+				D_8005BB34[0] = source[0x12];
 				source = entry->unk0;
 				D_8005BB34++;
-				*D_8005BB34 = source[0x13];
+				D_8005BB34[0] = source[0x13];
 				D_8005BB34++;
 			}
 
 			if (lineCount[0] != 0) {
-				gSPVertex(D_8005BB2C++, D_8005BB34 - (run * 4), run * 4, 0);
+				gSPVertex(D_8005BB2C++, &D_8005BB34[-(run * 4)], run * 4, 0);
 			}
 
 			v0 = 0;
 			v1 = 2;
 			v2 = 1;
-			v3 = 3;
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
+				rawMode = entry->unk4;
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((u8)entry->unk4 % 2) << 7, G_TX_RENDERTILE, 1,
-				entry->unk6 & 3, 1, G_TX_NOLOD,
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (rawMode % 2) << 7, G_TX_RENDERTILE, 0,
+				entry->unk6 & 3, 5, G_TX_NOLOD,
 				entry->unk5 & 3, 5, G_TX_NOLOD);
 				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v3, 0);
+				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v0 + 3, 0);
 
 				emittedQuads++;
 				v0 += 4;
 				v1 += 4;
 				v2 += 4;
-				v3 += 4;
 			}
 
 			if (lineCount[0] >= 9) {
@@ -2319,11 +2281,16 @@ void func_800B753C_C64EC(void) {
 			}
 
 			rowOffset += 8;
+
+			} while (lineCount[0] > 0);
+		}
+
 		}
 	}
 
 	gDPPipeSync(D_8005BB2C++);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B753C_C64EC.s")
 #endif
@@ -2467,7 +2434,7 @@ void func_800B879C_C774C(void) {
 		}
 
 		D_8014F84C += D_8014F850;
-		D_8014F850 *= D_80142E40_151DF0[0];
+		D_8014F850 *= 1.022;
 		D_8014F830 += 1;
 
 		func_800B4050_C3000(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
@@ -2490,7 +2457,7 @@ void func_800B8C2C_C7BDC(s16 arg0, s16 arg1, s32 arg2) {
 	D_8014F832 = 0x76;
 	D_8014F84C = 0.0f;
 	arg0++;
-	D_8014F850 = D_80142E48_151DF8[0];
+	D_8014F850 = 0.7f;
 	arg1++;
 	D_8014F834 = (&arg2)[0];
 	D_8014F840 = 0x60;
@@ -2590,7 +2557,7 @@ void func_800B8F30_C7EE0(s16 tileX, s16 tileZ, u8 craterType) {
 	case 0:
 		func_800B8C2C_C7BDC(tileX, tileZ, 0x1F);
 		D_8014F832 = 0x12;
-		D_8014F850 = D_80142E4C_151DFC[0];
+		D_8014F850 = 3.2f;
 		D_8014F838 = 3;
 		break;
 
@@ -2965,7 +2932,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
 				tileX = (firstTile[0] + column) & 0xFF;
-				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX] & 0xF;
+				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX]; palette &= 0xF;
 				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
 				gDPLoadSync(D_8005BB2C++);
 
@@ -2974,7 +2941,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 				{
 					((u8(*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
 				}
-				gfx = D_8005BB2C++; gfx->words.w1 = 0x20000; gfx->words.w0 = 0xB6000000;
+				gfx = D_8005BB2C++; gfx->words.w0 = G_CLEARGEOMETRYMODE << 24; gfx->words.w1 = G_LIGHTING;
 				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
 				{
 					visibleCount += 1;
@@ -2997,13 +2964,11 @@ void func_800B9DB8_C8D68(u8 arg0)
 	func_800B753C_C64EC();
 	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
 }
-
-
-/* Clamps arg0 to the range [arg1, arg2] */
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
 #endif
 
+/* Clamps arg0 to the range [arg1, arg2] */
 s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {
 	if (arg0 < arg1) {
 		return arg1;
@@ -3035,7 +3000,8 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
-	u8 *palette;
+	u8 *padPalette;
+	Gfx *gfx;
 	s16 texXBase;
 	s16 texZBase;
 	s32 worldX;
@@ -3048,14 +3014,14 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	s32 rowTexZ;
 	u8 flags[9][9];
 	u8 *flag;
+	s32 hiddenCount;
+	u16 wavePhase[1];
 	s32 maxAlpha;
 	s16 batch;
 	s16 row;
 	s16 col;
 	s32 tileBase;
-	s32 hiddenCount;
 	s32 phase;
-	u16 wavePhase;
 	s32 phaseAbs;
 	s32 rowPhase;
 	s32 texAnim;
@@ -3065,7 +3031,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	f32 worldXf;
 	f32 worldZf;
 	f32 delta;
-	Gfx *gfx;
 
 	water = &(&D_80052AE8)[arg0];
 	waterX = water->unk3C;
@@ -3089,13 +3054,12 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		waterZ[0] = waterZ[0] + 0x100;
 	}
 
-	palette = &D_8013D988_14C938[currentLevel * 6];
-	D_8013D940_14C8F0 = palette[-6];
-	D_8013D944_14C8F4 = palette[-5];
-	D_8013D948_14C8F8 = palette[-4];
-	D_8013D94C_14C8FC = palette[-3];
-	D_8013D950_14C900 = palette[-2];
-	D_8013D954_14C904 = palette[-1];
+	D_8013D940_14C8F0 = D_8013D988_14C938[currentLevel * 6 - 6];
+	D_8013D944_14C8F4 = D_8013D988_14C938[currentLevel * 6 - 5];
+	D_8013D948_14C8F8 = D_8013D988_14C938[currentLevel * 6 - 4];
+	D_8013D94C_14C8FC = D_8013D988_14C938[currentLevel * 6 - 3];
+	D_8013D950_14C900 = D_8013D988_14C938[currentLevel * 6 - 2];
+	D_8013D954_14C904 = D_8013D988_14C938[currentLevel * 6 - 1];
 
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTLOD, 8, 8) | 1; gfx->words.w1 = G_TL_TILE;
@@ -3157,7 +3121,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
-	wavePhase = D_80052A8C * 0x2BC;
+	wavePhase[0] = D_80052A8C * 0x2BC;
 	phase = waterX % 0x1000;
 	texXBase = phase * 4;
 
@@ -3174,7 +3138,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 			*flag = 4;
 			waveDepth = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
 			if (waveDepth > 0) {
-				waveY = (s16)(((f32)coss((u16)(wavePhase + ((((waterX / 0x200) + col) % 2) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
+				waveY = (s16)(((f32)coss((u16)(wavePhase[0] + ((((waterX / 0x200) + col) % 2) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
 			} else {
 				waveY = 0;
 			}
@@ -3286,11 +3250,10 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		}
 	}
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s", "src.us/overlay_gameplay/outside/BF9C0_late_rodata.s")
 #endif
+
 
 /* Rectangle bounding overlap test with parameter extraction */
 s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {
@@ -4418,24 +4381,23 @@ void func_800BED24_CDCD4(void) {
 	D_8013D9B4_14C964 = 0;
 }
 
-#ifdef NON_MATCHING
 void func_800BED30_CDCE0(void) {
 	f32 lightFactor;
 	u8 red;
 	u8 green;
 	u8 blue;
-	u8 fogRed, fogGreen, fogBlue;
 	u16 firstColor;
 	s16 paletteIndex;
 	s16 timer;
+	PaletteFadeWork work;
 
 	if ((u32)D_8013D9B0_14C960 > 0U) {
 		if (D_8013D9B0_14C960 >= 0x3D) {
 			timer = D_8013D9B0_14C960 - 0x3C;
-			lightFactor = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			lightFactor = ((1.0 - ((f32)coss((((timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 		} else {
-			timer = D_8013D9B0_14C960;
-			lightFactor = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+			work.timer = D_8013D9B0_14C960;
+			lightFactor = ((((f32)coss((((work.timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 		}
 
 		for (paletteIndex = 0; paletteIndex < 0x100; paletteIndex++) {
@@ -4453,51 +4415,50 @@ void func_800BED30_CDCE0(void) {
 
 
 
-			D_802D4AD0[paletteIndex] = red << 11;
-			D_802D4AD0[paletteIndex] += green << 6;
+			D_802D4AD0[paletteIndex] = red << 11, D_802D4AD0[paletteIndex] += green << 6;
 			D_802D4AD0[paletteIndex] += blue * 2;
 		}
 
 		if ((D_8013D9B0_14C960 - 1) >= 0x3D) {
-			lightFactor = (f32)((1.0 - ((f32)coss((u16)((u32)(((f32)(s16)(D_8013D9B0_14C960 - 0x3D) / 15.0f) * 32768.0f))) / 32768.0)) / 2);
+			work.timer = D_8013D9B0_14C960 - 0x3D;
+			lightFactor = ((1.0 - ((f32)coss((((work.timer / 15.0f) * 32768.0f))) / 32768.0)) / 2);
 		} else {
 			if (D_8013D9B0_14C960 > 0) {
 				timer = (D_8013D9B0_14C960 - 1);
 			} else {
 				timer = (s16)D_8013D9B0_14C960;
 			}
-			lightFactor = (f32)((((f32)coss((u16)((u32)(((f32)timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
+			lightFactor = ((((f32)coss((((timer / 60.0f) * 32768.0f))) / 32768.0) + 1.0) / 2);
 		}
 		func_80004A38_5638(D_802CA8D0, &red, &green, &blue);
-		fogGreen = green; fogRed = red; fogBlue = blue;
+		
 		if (D_8013D9B4_14C964 != 0) {
-			fogRed = ((fogRed >> 1) + ((lightFactor * (f32)(u32)fogRed) / 2));
-			fogGreen = ((fogGreen >> 1) + ((lightFactor * (f32)(u32)fogGreen) / 2));
-			fogBlue = (u32)((fogBlue >> 1) + ((lightFactor * (f32)(u32)fogBlue) / 2));
+			red = ((red >> 1) + ((lightFactor * (f32)(u32)red) / 2));
+			green = ((green >> 1) + ((lightFactor * (f32)(u32)green) / 2));
+			blue = (u32)((blue >> 1) + ((lightFactor * (f32)(u32)blue) / 2));
 		} else {
-			fogRed = ((fogRed >> 2) + ((lightFactor * (f32)(u32)fogRed) * 0.75));
-			fogGreen = ((fogGreen >> 2) + ((lightFactor * (f32)(u32)fogGreen) * 0.75));
-			fogBlue = ((fogBlue >> 2) + ((lightFactor * (f32)(u32)fogBlue) * 0.75));
+			red = ((red >> 2) + ((lightFactor * (f32)(u32)red) * 0.75));
+			green = ((green >> 2) + ((lightFactor * (f32)(u32)green) * 0.75));
+			blue = ((blue >> 2) + ((lightFactor * (f32)(u32)blue) * 0.75));
 		}
-		red = fogRed;
-		green = fogGreen;
-		blue = fogBlue;
-		firstColor = (red << 11) + (green << 6) + blue * 2;
+		firstColor = red << 11;
+		firstColor += green << 6;
+		firstColor += blue * 2;
 		func_80004A38_5638(D_802D48CF, &red, &green, &blue);
-		fogGreen = green; fogRed = red; fogBlue = blue;
+		
 		if (D_8013D9B4_14C964 != 0) {
-			fogRed = ((fogRed >> 1) + ((lightFactor * (f32)(u32)fogRed) / 2));
-			fogGreen = ((fogGreen >> 1) + ((lightFactor * (f32)(u32)fogGreen) / 2));
-			fogBlue = (u32)((fogBlue >> 1) + ((lightFactor * (f32)(u32)fogBlue) / 2));
+			red = ((red >> 1) + ((lightFactor * (f32)(u32)red) / 2));
+			green = ((green >> 1) + ((lightFactor * (f32)(u32)green) / 2));
+			blue = (u32)((blue >> 1) + ((lightFactor * (f32)(u32)blue) / 2));
 		} else {
-			fogRed = ((fogRed >> 2) + ((lightFactor * (f32)(u32)fogRed) * 0.75));
-			fogGreen = ((fogGreen >> 2) + ((lightFactor * (f32)(u32)fogGreen) * 0.75));
-			fogBlue = ((fogBlue >> 2) + ((lightFactor * (f32)(u32)fogBlue) * 0.75));
+			red = ((red >> 2) + ((lightFactor * (f32)(u32)red) * 0.75));
+			green = ((green >> 2) + ((lightFactor * (f32)(u32)green) * 0.75));
+			blue = ((blue >> 2) + ((lightFactor * (f32)(u32)blue) * 0.75));
 		}
-		red = fogRed;
-		green = fogGreen;
-		blue = fogBlue;
-		func_800049D4_55D4(firstColor, ((red << 0xB) + (green << 6) + (blue * 2)));
+		work.color = red << 11;
+		work.color += green << 6;
+		work.color += blue * 2;
+		func_800049D4_55D4(firstColor, work.color);
 		leoInitUnit_atten();
 		if (D_8013D9B4_14C964 != 0) {
 
@@ -4511,7 +4472,7 @@ void func_800BED30_CDCE0(void) {
 			D_80047745 = (u32)((D_800313F0 >> 2) + (((f32)(u32)D_800313F0 * lightFactor) * 0.75));
 		}
 		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		if ((D_8013D9B0_14C960 != 0) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || (D_8013D9B0_14C960 >= 0x3D))) {
+		if (((u32)D_8013D9B0_14C960 > 0U) && (gameplayMode == 1) && ((D_8013D9B4_14C964 == 0) || (D_8013D9B0_14C960 >= 0x3D))) {
 			D_8013D9B0_14C960 -= 1;
 			if (D_8013D9B0_14C960 >= 0x24) {
 				func_80137468_146418(-1, 0x21);
@@ -4519,36 +4480,32 @@ void func_800BED30_CDCE0(void) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BED30_CDCE0.s")
-#endif
-
-#ifdef NON_MATCHING
 void func_800C0678_CF628(void) {
+	static u8 flashCount = 0;
 	s16 var_a1;
 	s16 delta[1];
 	s32 temp_v1;
 	u16 color;
 	f32 sp30;
-	s32 timer;
+	s32 pad;
 	s32 clamp;
 	s32 remaining;
 	var_a1 = D_8013DAFC_14CAAC[0];
 	if (var_a1 == -1) {
 		if (D_8013D9CC_14C97C != 0) {
-			D_8013DB00_14CAB0 = 2;
+			flashCount = 2;
 		} else {
-			D_8013DB00_14CAB0 = (func_800038E0_44E0() % 2) + 2;
+			flashCount = (func_800038E0_44E0() % 2) + 2;
 		}
 		D_8013D9C0_14C970[0] += 8;
 		var_a1 = D_8013D9C0_14C970[0];
 		D_80152B7C = D_800313F8;
 		D_8013DB08_14CAB8 = 1;
 	}
-	timer = D_8013D9C0_14C970[0];
+	remaining = D_8013D9C0_14C970[0];
 	D_8013DAFC_14CAAC[0] = (u16)var_a1;
-	if ((var_a1 - 8) < timer) {
-		delta[0] = var_a1 - timer;
+	if ((var_a1 - 8) < remaining) {
+		delta[0] = var_a1 - remaining;
 		sp30 = (f32)((f64)(f32)D_8013D9C4_14C974[0] * 0.001953125);
 		temp_v1 = (s16)(s32)(200.0f - (100.0f * sp30)) - (delta[0] * 0xF);
 		D_8013DAFC_14CAAC[0] = var_a1;
@@ -4574,28 +4531,30 @@ void func_800C0678_CF628(void) {
 		color += clamp << 6;
 		clamp = temp_v1 < 0 ? 0 : temp_v1;
 		color += clamp * 2;
-		delta[0] ^= 0; func_800049D4_55D4(color, color);
+		if (delta[0] * delta[0]) {} func_800049D4_55D4(color, color);
 		remaining = 7 - delta[0];
-		D_800313F8 = D_80152B7C - ((s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
+		D_800313F8 = D_80152B7C - ((s16)(s32)((f64)(f32)remaining * (1.0 - (f64)sp30)) * 0x32);
 		D_8013D9C8_14C978 = 1;
-		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
-		if ((remaining == 7) && (D_8013DB00_14CAB0 > 0U)) {
-			D_8013DB00_14CAB0 = D_8013DB00_14CAB0 - 1;
+		func_800B345C_C240C_S16(D_8014F89C, (var_a1 = D_8014F89D), (u8 *)D_801FEA30, 0);
+		if ((remaining == 7) && (flashCount > 0U)) {
+			flashCount--;
 		}
-		remaining = D_8013D9C0_14C970[0];
+		remaining = ((volatile s16 *)D_8013D9C0_14C970)[0];
 		var_a1 = D_8013DAFC_14CAAC[0];
 		if (var_a1 == (remaining + 7)) {
 			D_8013DB04_14CAB4 = 1;
-			if (D_8013DB00_14CAB0 != 0) {
-				D_8013D9C0_14C970[0] += 8;
+			if (flashCount != 0) {
+				D_8013D9C0_14C970[0] = remaining + 8;
 				var_a1 = D_8013D9C0_14C970[0];
-				D_8013DAFC_14CAAC[0] = var_a1 - 1;
+				var_a1--;
+				D_8013DAFC_14CAAC[0] = var_a1;
 			}
 		} else if (D_8013DB00_14CAB0 != 0) {
 			if ((u32)(func_800038E0_44E0() % 8) < 1U) {
 				D_8013D9C0_14C970[0] += 8;
 				var_a1 = D_8013D9C0_14C970[0];
-				D_8013DAFC_14CAAC[0] = var_a1 - 1;
+				var_a1--;
+				D_8013DAFC_14CAAC[0] = var_a1;
 			}
 		}
 	}
@@ -4617,11 +4576,12 @@ void func_800C0678_CF628(void) {
 		}
 	}
 	if ((D_8013DB04_14CAB4 != 0) || ((remaining = D_8013D9C0_14C970[0]) <= 0)) {
-		if (D_80151DD0 == 2) {
+		remaining = D_80151DD0;
+		if (remaining == 2) {
 			D_80047743 = (s32)D_800313E8 / 2;
 			D_80047744 = (s32)D_800313EC / 2;
 			D_80047745 = (s32)D_800313F0 / 2;
-		} else if (D_80151DD0 == 3) {
+		} else if (remaining == 3) {
 			D_80047743 = 0;
 			D_80047744 = 0;
 			D_80047745 = 0;
@@ -4634,22 +4594,23 @@ void func_800C0678_CF628(void) {
 		func_80004948_5548();
 		D_8013DB04_14CAB4 = 0;
 		D_8013D9C8_14C978 = 0;
-		func_800B345C_C240C(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
+		func_800B345C_C240C_S16(D_8014F89C, D_8014F89D, (u8 *)D_801FEA30, 0);
 	}
 	remaining = D_8013D9C0_14C970[0];
 	if (remaining <= 0) {
-		var_a1 = -1;
-		D_8013DAFC_14CAAC[0] = var_a1;
+		var_a1 |= -1;
+		D_8013DAFC_14CAAC[0] = (s16)(((u64)(u32)func_800C0678_CF628 | ~(u64)0) & (u64)(s64)var_a1);
 		func_800074BC_80BC(func_800C0678_CF628);
 		remaining = D_8013D9C0_14C970[0];
 	}
 	if (remaining != 0) {
-		D_8013D9C0_14C970[0] = remaining - 1;
+		D_8013D9C0_14C970[0] = (s16)(s64)remaining - 1;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800C0678_CF628.s")
-#endif
+
+
+s32 D_8013DB04_14CAB4 = 0;
+s32 D_8013DB08_14CAB8 = 0;
 
 s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
 	s32 dx;
