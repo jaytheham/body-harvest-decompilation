@@ -1,0 +1,11 @@
+`incorrect ASM`: In a captured-height variant of `func_800F842C_1073DC`, declaring the additional halfword after `sp80` produces `addiu sp,sp,-0xE0`, a cursor spill at `0x60(sp)`, and the height quotient at `0x8A(sp)`. The target uses a `0xD8` frame, cursor home `0x5C`, and quotient home `0x82`.
+
+-> `code changed`: Capture `D_801601F0[walker->limbs[0].unk23].unkA` once in `s16 initialHeight`. Express `sp82 = initialHeight / 20` at the start of the fixed six-iteration loop; IDO hoists this pure invariant division. Declare `initialHeight` immediately after the existing `nextEntry` pointer and before `sp8C`, filling the aggregate-alignment gap instead of extending the declaration block.
+
+-> `correct ASM`: The frame is again `addiu sp,sp,-0xD8`, the generated cursor uses `0x5C(sp)`, and the single hoisted quotient store uses `0x82(sp)`. All addressed local homes remain unchanged. This partial checkpoint also reduces register differences from 177 to 146 and the enabled diff score from 1340 to 1150. The cursor save still needs to move earlier, and register differences remain, so the function retains `NON_MATCHING`.
+
+incorrect ASM: In the retained 1150 reconstruction of func_800F842C_1073DC, the captured initialHeight crosses the empty address-check branch. UOPT colors that named halfword in v0, producing LH v0,0xa(v1), DIV zero,v0,at, MFLO t1, and SH t1,0x82(sp). The target uses t1 for the loaded height and t2 for the quotient.
+
+code changed: As a diagnostic control, remove the separately declared initialHeight and assign sp82 = D_801601F0[walker->limbs[0].unk23].unkA / 20 once before the loop, retaining the following address check. Keep the later loop body unchanged and remove its repeated sp82 assignment. This leaves the height as an expression temporary instead of a live named value across the address-check branch.
+
+correct ASM: The opening arithmetic becomes LH t1,0xa(v1), DIV zero,t1,at, MFLO t2, and SH t2,0x82(sp), matching those target words with the same 0xD8 frame and addressed homes. This control is not retained: later phase/cache register differences increase the whole-function score to 1585, and the cursor save still follows the pointer's closing alias marker. The retained C remains at 1150 with its assembly fallback.

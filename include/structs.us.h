@@ -3508,6 +3508,11 @@ typedef union {
 	s32 words[9];
 } UnkF9230ShadowLimb; /* size = 0x24 */
 
+typedef union {
+	s32 words[1];
+	s16 halves[2];
+} ShadowWalkerSlotResult; /* size = 0x04 */
+
 typedef struct {
 	/* 0x000 */ UnkF9230ShadowLimb limbs[9];
 	/* 0x144 */ u8 alienIdx;
