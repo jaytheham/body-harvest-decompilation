@@ -1,32 +1,33 @@
 #include <ultra64.h>
 #include "common.h"
-#include "version_shift.h"
+
+static void func_802D5DDC_stub(void);
 
 /* ====================== .data ====================== */
 
 u8 D_802E04A0_1F91B0 = 0xFF;
 
 void (*D_802E04A4_1F91B4[])(s32) = {
-	(void (*)(s32))LEVEL_PTR(0x802D50B0),
-	(void (*)(s32))LEVEL_PTR(0x802D5170),
-	(void (*)(s32))LEVEL_PTR(0x802D5560),
-	(void (*)(s32))LEVEL_PTR(0x802D5BF8),
-	(void (*)(s32))LEVEL_PTR(0x802D5A78),
-	(void (*)(s32))LEVEL_PTR(0x802D5BA0),
-	(void (*)(s32))LEVEL_PTR(0x802D5DDC),
-	(void (*)(s32))LEVEL_PTR(0x802D5DE4),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))LEVEL_PTR(0x802D60DC),
-	(void (*)(s32))LEVEL_PTR(0x802D6840),
-	(void (*)(s32))LEVEL_PTR(0x802D6DBC),
-	(void (*)(s32))LEVEL_PTR(0x802D7938),
-	(void (*)(s32))LEVEL_PTR(0x802D795C),
-	(void (*)(s32))LEVEL_PTR(0x802D5F98),
-	(void (*)(s32))LEVEL_PTR(0x802D5FBC),
-	(void (*)(s32))LEVEL_PTR(0x802D4F98),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))LEVEL_PTR(0x802D4E6C),
+	(void (*)(s32))func_802D50B0_1EDDC0,
+	(void (*)(s32))func_802D5170_1EDE80,
+	(void (*)(s32))func_802D5560_1EE270,
+	(void (*)(s32))func_802D5BF8_1EE908,
+	(void (*)(s32))func_802D5A78_1EE788,
+	(void (*)(s32))func_802D5BA0_1EE8B0,
+	(void (*)(s32))func_802D5DDC_stub,
+	(void (*)(s32))func_802D5DE4_1EEAF4,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_802D60DC_1EEDEC,
+	(void (*)(s32))func_802D6840_1EF550,
+	(void (*)(s32))func_802D6DBC_1EFACC,
+	(void (*)(s32))func_802D7938_1F0648,
+	(void (*)(s32))func_802D795C_1F066C,
+	(void (*)(s32))func_802D5F98_1EECA8,
+	(void (*)(s32))func_802D5FBC_1EECCC,
+	(void (*)(s32))func_802D4F98_1EDCA8,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_802D4E6C_1EDB7C,
 	NULL,
 };
 
@@ -599,12 +600,12 @@ Unk8014DD50 D_802E0B20_1F9830[] = {
 
 u32 D_802E0C90_1F99A0[] = { 0x00000000, 0x00000000, 0x00010023 };
 
-Unk8014DD50 *D_802E0C9C_1F99AC = (Unk8014DD50 *)LEVEL_PTR(0x802E0B1C);
-Unk8014DD50 *D_802E0CA0_1F99B0 = (Unk8014DD50 *)LEVEL_PTR(0x802E0B5C);
-Unk8014DD50 *D_802E0CA4_1F99B4 = (Unk8014DD50 *)LEVEL_PTR(0x802E0B9C);
-Unk8014DD50 *D_802E0CA8_1F99B8 = (Unk8014DD50 *)LEVEL_PTR(0x802E0BDC);
-Unk8014DD50 *D_802E0CAC_1F99BC = (Unk8014DD50 *)LEVEL_PTR(0x802E0C1C);
-Unk8014DD50 *D_802E0CB0_1F99C0 = (Unk8014DD50 *)LEVEL_PTR(0x802E0C5C);
+Unk8014DD50 *D_802E0C9C_1F99AC = (Unk8014DD50 *)&D_802E0B1C_1F982C;
+Unk8014DD50 *D_802E0CA0_1F99B0 = (Unk8014DD50 *)&D_802E0B20_1F9830[3].unkC;
+Unk8014DD50 *D_802E0CA4_1F99B4 = (Unk8014DD50 *)&D_802E0B20_1F9830[7].unkC;
+Unk8014DD50 *D_802E0CA8_1F99B8 = (Unk8014DD50 *)&D_802E0B20_1F9830[11].unkC;
+Unk8014DD50 *D_802E0CAC_1F99BC = (Unk8014DD50 *)&D_802E0B20_1F9830[15].unkC;
+Unk8014DD50 *D_802E0CB0_1F99C0 = (Unk8014DD50 *)&D_802E0B20_1F9830[19].unkC;
 
 Vec3s D_802E0CB4_1F99C4 = { -35, 58, 80 };
 Vec3s D_802E0CBC_1F99CC = { 30, 58, 80 };
@@ -624,7 +625,7 @@ AlienType D_802E0CE4_1F99F4 = {
 	0x01F4,                         /* unk14 */
 	0x00,                           /* unk16 */
 	0x00,                           /* pad17 */
-	OVERLAY_PTR(0x801481F8),                     /* unk18 */
+	D_801481F8_1571A8,                     /* unk18 */
 	0x00000056,                     /* unk1C */
 	0xFFE2,                         /* unk20 */
 	0x0024,                         /* unk22 */
@@ -644,8 +645,8 @@ AlienType D_802E0CE4_1F99F4 = {
 	0x0600,                         /* unk40 */
 	0x0800,                         /* unk42 */
 	NULL,                           /* unk44 */
-	(void (*)(u8))LEVEL_PTR(0x802DF99C),       /* unk48 */
-	(void *)LEVEL_PTR(0x802DF99C),             /* unk4C */
+	(void (*)(u8))func_802DF99C_1F86AC,       /* unk48 */
+	(void *)func_802DF99C_1F86AC,             /* unk4C */
 	0xFF,                           /* unk50 */
 	0x00,                           /* unk51 */
 	0x00,                           /* unk52 */
@@ -654,7 +655,7 @@ AlienType D_802E0CE4_1F99F4 = {
 	0x012C,                         /* unk58 */
 	0xFF,                           /* unk5A */
 	0x00,                           /* pad5B */
-	(void (*)(u8))LEVEL_PTR(0x802DFC28),       /* unk5C */
+	(void (*)(u8))func_802DFC28_1F8938,       /* unk5C */
 	{ 0x13, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 };
 

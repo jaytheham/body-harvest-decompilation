@@ -5,7 +5,6 @@
 #endif
 #include <ultra64.h>
 #include "common.h"
-#include "version_shift.h"
 
 /* Earlier overlay BSS variables occupy 0x802E0E30 through 0x802E0E47. */
 static u8 americaBssPrefix[0x18];
@@ -13,26 +12,26 @@ static u8 americaBssPrefix[0x18];
 /* ====================== .data ====================== */
 
 void (*D_802DF350_25EA90[])(s32) = {
-	(void (*)(s32))LEVEL_PTR(0x802D4DD4),
-	(void (*)(s32))LEVEL_PTR(0x802D5148),
-	(void (*)(s32))LEVEL_PTR(0x802D516C),
-	(void (*)(s32))LEVEL_PTR(0x802D5190),
-	(void (*)(s32))LEVEL_PTR(0x802D52B0),
-	(void (*)(s32))LEVEL_PTR(0x802D51B8),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))LEVEL_PTR(0x802D5440),
-	(void (*)(s32))LEVEL_PTR(0x802D546C),
-	(void (*)(s32))LEVEL_PTR(0x802D5530),
-	(void (*)(s32))LEVEL_PTR(0x802D55A0),
-	(void (*)(s32))LEVEL_PTR(0x802DEED4),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))OVERLAY_PTR(0x80076820),
-	(void (*)(s32))LEVEL_PTR(0x802D55E4),
+	(void (*)(s32))func_802D4DD4_254514,
+	(void (*)(s32))func_802D5148_254888,
+	(void (*)(s32))func_802D516C_2548AC,
+	(void (*)(s32))func_802D5190_2548D0,
+	(void (*)(s32))func_802D52B0_2549F0,
+	(void (*)(s32))func_802D51B8_2548F8,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_802D5440_254B80,
+	(void (*)(s32))func_802D546C_254BAC,
+	(void (*)(s32))func_802D5530_254C70,
+	(void (*)(s32))func_802D55A0_254CE0,
+	(void (*)(s32))func_802DEED4_25E614,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_80076820_857D0,
+	(void (*)(s32))func_802D55E4_254D24,
 	NULL,
 };
 
