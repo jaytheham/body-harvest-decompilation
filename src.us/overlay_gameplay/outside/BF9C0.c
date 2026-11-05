@@ -850,113 +850,81 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-// CURRENT(1650)
-// AI - Scans a radius-derived tile ring around arg0's coordinates, computes per-cell distance via sqrtf and scales arg1's RGB into the EffectRgb array at D_80152740
 #ifdef NON_MATCHING
-void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3)
+void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
+	s16 baseY;
+	s16 baseX;
+	s16 x;
+	s16 y;
+	s16 dx;
+	s16 dy;
+	s16 distance;
+	
+	s16 color;
+	u32 fracY;
+	s32 padWord;
+	s32 cellSize = 256;
+	s32 tileX;
+	s32 tileY;
+	u32 fracX;
+	u8 radius;
+	s16 padHalf;
+	s16 ringX;
+	s16 ringY;
+	EffectRgb *pixel;
+
+	baseY = D_8014F89D - 127;
+	tileX = (arg0->unk0 >> 8) + 1;
+	baseX = D_8014F89C;
+	tileY = (arg0->unk2 >> 8) + 1;
+	baseX -= 127;
+	ringX = D_8014F899 + tileX - baseX;
+	ringY = D_8014F898 + tileY - baseY;
+	fracY = arg0->unk2 & 255;
+	radius = (f32)(arg2 + arg3) / 256;
+	radius++;
+	fracX = arg0->unk0 & 255;
+	for (x = 1 - radius; x < radius + 1; x++) {
+		if (x <= 0) {
+			dx = (s16)fracX + x * -256;
+		} else {
+			dx = (s16)(cellSize - fracX) + (x << 8) - 256;
+		}
+		
+		for (y = 1 - radius; y < radius + 1; y++) {
+			if (y <= 0) {
+				dy = (s16)fracY + y * -256;
+			} else {
+				dy = cellSize - fracY + (y << 8) - 256;
+			}
+			distance = (s32)sqrtf(dy * dy + dx * dx) - arg2;
+			if (distance < 0) {
+				distance = -distance;
+			}
+			distance = arg3 - distance;
+			if (distance <= 0) { continue; }
 {
-  s16 baseY;
-  s16 baseX;
-  s16 x;
-  s16 y;
-  s16 dx;
-  s16 dy;
-  s16 distance;
-  s16 color;
-  u32 fracY;
-  s32 squareX;
-  s32 cellSize = 256;
-  s32 tileX;
-  s32 tileY;
-  s32 fracX;
-  u8 radius;
-  s16 pad;
-  s16 ringX;
-  s16 ringY;
-  EffectRgb *pixel;
-  baseY = D_8014F89D - 127;
-  tileX = (arg0->unk0 >> 8) + 1;
-  baseX = D_8014F89C;
-  tileY = (arg0->unk2 >> 8) + 1;
-  fracX = arg0->unk0 & 255;
-  baseX -= 127;
-  ringX = (D_8014F899 + tileX) - baseX;
-  ringY = (D_8014F898 + tileY) - baseY;
-  fracY = arg0->unk2 & 255;
-  radius = (u32) (((f32) (arg2 + arg3)) / 256);
-  radius++;
-  for (x = 1 - radius; x < (radius + 1); x++)
-  {
-    if (x <= 0)
-    {
-      dx = ((s16) fracX) + (x * (-256));
-    }
-    else
-    {
-      dx = ((cellSize - fracX) + (x << 8)) - 256;
-    }
-    for (y = 1 - radius; y < (radius + 1); y++)
-    {
-      if (y <= 0)
-      {
-        dy = fracY + (y * (-256));
-      }
-      else
-      {
-        dy = ((cellSize - fracY) + (y << 8)) - 256;
-      }
-      distance = ((s32) sqrtf((dy * dy) + (dx * dx))) - arg2;
-      if (distance < 0)
-      {
-        distance = -distance;
-      }
-      distance = arg3 - distance;
-      if (distance <= 0)
-      {
-        continue;
-      }
-      {
-        distance = (((f32) distance) / arg3) * 255.0f;
-        if (distance >= 256)
-        {
-          distance = 255;
-        }
-        if ((((s16) (x + tileX)) < baseX) || (((s16) (x + tileX)) > ((s16) (baseX + 19))))
-        {
-          continue;
-        }
-        {
-          if ((((s16) (y + tileY)) < baseY) || (((s16) (y + tileY)) > ((s16) (baseY + 19))))
-          {
-            continue;
-          }
-          {
-            pixel = &((EffectRgb (*)[19]) D_80152740)[(u16) ((s16) ((y + ringY) % 19))][(u16) ((s16) ((x + ringX) % 19))];
-            color = (((s32) arg1[0]) * distance) >> 8;
-            if (color >= 256)
-            {
-              color = 255;
-            }
-            pixel->r = color;
-            color = (((s32) arg1[1]) * distance) >> 8;
-            if (color >= 256)
-            {
-              color = 255;
-            }
-            pixel->g = color;
-            color = (((s32) arg1[2]) * distance) >> 8;
-            if (color >= 256)
-            {
-              color = 255;
-            }
-            pixel->b = color;
-          }
-        }
-      }
-    }
-
-  }
-
+				distance = ((f32)distance / arg3) * 255.0f;
+				if (distance >= 256) distance = 255;
+				if ((s16)(x + tileX) < baseX || (s16)(x + tileX) > (s16)(baseX + 19)) { continue; }
+{
+					if ((s16)(y + tileY) < baseY || (s16)(y + tileY) > (s16)(baseY + 19)) { continue; }
+{
+						pixel = &((EffectRgb (*)[19])D_80152740)[(u16)(s16)((y + ringY) % 19)][(u16)(s16)((x + ringX) % 19)];
+						color = ((s32)arg1[0] * distance) >> 8;
+						if (color >= 256) color = 255;
+						pixel->r = color;
+						color = ((s32)arg1[1] * distance) >> 8;
+						if (color >= 256) color = 255;
+						pixel->g = color;
+						color = ((s32)arg1[2] * distance) >> 8;
+						if (color >= 256) color = 255;
+						pixel->b = color;
+					}
+				}
+			}
+		}
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
