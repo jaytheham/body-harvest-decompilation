@@ -489,7 +489,6 @@ extern s32 D_8003449C_3509C;
 extern s32 D_800344A0_350A0;
 extern u16 D_800344A2_350A2;
 extern s32 D_800344A4_350A4;
-extern u8 D_800344A8_350A8;
 extern NameRef D_800344B4_350B4[]; // English string table
 extern NameRef D_80034C44_35844[]; // French string table
 extern NameRef D_80034D0C_3590C[]; // German string table

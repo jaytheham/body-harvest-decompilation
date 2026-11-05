@@ -94,7 +94,6 @@ s32 D_80034498_35098 = 0;
 s32 D_8003449C_3509C = 0;
 s32 D_800344A0_350A0 = 0;
 s32 D_800344A4_350A4 = 0;
-u8 D_800344A8_350A8 = 0;
 
 const char D_800383B0_38FB0[] = "%i%@%X%Y";
 const char D_800383BC_38FBC[] = "%i%@%X%Y";
@@ -819,15 +818,14 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 #pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_800190D4_19CD4.s")
 #endif
 
-// CURRENT(969)
-#ifdef NON_MATCHING
 void func_80019ABC_1A6BC(arg0, arg1)
 s32 arg0;
 s32 arg1;
 {
+	static u8 D_800344A8_350A8 = 0;
 	s32 framePhase;
-	u8 cnt;
-	
+	u8 pad;
+
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
@@ -835,25 +833,23 @@ s32 arg1;
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(D_80265880));
+
 	if (D_8003445C_3505C != 0) {
 		func_800153D8_15FD8(0x156);
 		D_8003445C_3505C = 0;
 		D_800344A8_350A8 = 0;
 	}
-	cnt = D_800344A8_350A8;
-	framePhase = cnt % 3;
-	switch (framePhase) { case 2:
-		D_8006C56C = (D_8006C56C + 1) % 6; break;
+	framePhase = D_800344A8_350A8 % 3;
+	switch (framePhase) {
+	case 2:
+		D_8006C56C = (D_8006C56C + 1) % 6;
+		break;
 	}
-	cnt++; gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_80264B00[D_8006C56C]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, (arg0 + 0x12) << 2, (arg1 + 0x12) << 2, arg0 * 4, arg1 * 4, G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
-	D_800344A8_350A8 = cnt;
+	D_800344A8_350A8++; gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_80264B00[D_8006C56C]), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gSPTextureRectangle(D_8005BB2C++, arg0 * 4, arg1 * 4, (arg0 + 0x12) << 2, (arg1 + 0x12) << 2, G_TX_RENDERTILE, 0, 0, 0x0555, 0x0555);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_80019ABC_1A6BC.s")
-#endif
 
 void func_80019EA8_1AAA8(u8 arg0) {
 	D_80034478_35078 = 1;
