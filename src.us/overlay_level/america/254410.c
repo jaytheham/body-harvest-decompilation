@@ -3332,6 +3332,7 @@ void func_802DC880_25BFC0(u8 alienIdx)
 	u8 sp50[3];
 	Vec2_S16 sp4C;
 	s16 z;
+	s32 tmp0;
 
 	sp5C = 0x190;
 	sp58 = 0x2BC, sp54 = 0x384;
@@ -3348,25 +3349,28 @@ void func_802DC880_25BFC0(u8 alienIdx)
 	{
 		func_80137468_146418(alienIdx, 0x25D);
 	}
-	spA6 = D_8014DD50[alienInstances[alienIdx].unkC].unkC;
+	node = &D_8014DD50[alienInstances[alienIdx].unkC];
+	spA6 = node->unkC;
 	x = alienInstances[alienIdx].unk0;
 	z = alienInstances[alienIdx].unk4;
-	node = &D_8014DD50[D_8014DD50[spA6].unkD];
-	spA0 = node->unkD;
-	spA2 = D_8014DD50[spA6].unkD;
+	node = &D_8014DD50[spA6];
 	sp50[0] = 0xFF;
+	spA2 = node->unkD;
 	sp50[1] = 0xFF;
+	node = &D_8014DD50[spA2];
+	spA0 = node->unkD;
 	sp50[2] = 0xFF;
 	sp4C.x = x;
 	sp4C.z = z;
-	ratio = (f32)((func_800B84D0_C7480_4Args(x, z, spA6, spA2) >> 8) - alienInstances[alienIdx].unk2 + 0x4B0) / 600.0f;
+	tmp0 = func_800B84D0_C7480(x, z) >> 8;
+	ratio = (f32)(tmp0 - alienInstances[alienIdx].unk2 + 0x4B0) / 600.0f;
 	func_800B2354_C1304(&sp4C.x, sp50, ratio * 256.0f, ratio * 800.0f);
 	func_800A92E0_B8290(alienIdx, 0x7000);
 	if (alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKF)
 	{
 		sp58 = 0x258;
 		sp54 = 0x320;
-		if (sp60->unk20 & ALIEN_FLAG_UNKD)
+		if (ALIEN_FLAG_UNKD & sp60->unk20)
 		{
 			sp5C = 0x2BC;
 		}
@@ -3386,7 +3390,7 @@ void func_802DC880_25BFC0(u8 alienIdx)
 	dx = alienInstances[alienIdx].unk0 - D_80052B34->unk0;
 	dz = alienInstances[alienIdx].unk4 - D_80052B34->unk4;
 	sp88 = (s32)sqrtf((f32)(dx * dx + dz * dz));
-	if (sp60->unk18Byte & 1)
+	if (1 & sp60->unk18Byte)
 	{
 		if ((func_80084FE8_93F98(alienIdx, 0x1000) != 0) && (sp88 >= 0x5DD))
 		{
@@ -3410,9 +3414,9 @@ void func_802DC880_25BFC0(u8 alienIdx)
 			if (sp88 < (sp58 - alienInstances[alienIdx].unk12))
 			{
 				calc = 2;
-				sp60->unk20 |= ALIEN_FLAG_UNKE;
+				sp60->unk20 = sp60->unk20 | ALIEN_FLAG_UNKE;
 			}
-			else if ((alienInstances[alienIdx].unk12 + sp54) < sp88)
+			else if ((sp54 + alienInstances[alienIdx].unk12) < sp88)
 			{
 				sp60->unk20 &= ~ALIEN_FLAG_UNKE;
 				if (((sp54 + 0x190) < sp88) && (alienInstances[alienIdx].unk20 & ALIEN_FLAG_UNKF) && !(sp60->unk20 & (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKD)))
