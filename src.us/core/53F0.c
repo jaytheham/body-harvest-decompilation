@@ -3,6 +3,7 @@
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
+#include "core/53F0.h"
 #include "core/1B100.h"
 #include "core/12C80.h"
 #include "core/1050.h"

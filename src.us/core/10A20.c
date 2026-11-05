@@ -1,6 +1,7 @@
 #define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
+#include "core/53F0.h"
 #include "core/10A20.h"
 #include "core/1050.h"
 

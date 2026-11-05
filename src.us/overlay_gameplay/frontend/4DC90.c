@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/53F0.h"
 #include "core/1050.h"
 
 void func_8007D7E0_4DC90(void) {

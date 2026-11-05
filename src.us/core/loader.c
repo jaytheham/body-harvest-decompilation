@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/53F0.h"
 #include "overlay_level/greece/18D7E0.h"
 
 /* ROM offsets and RAM destinations used by the loader. EU moves the level data and the
