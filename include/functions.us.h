@@ -1567,7 +1567,6 @@ extern void (*__printfunc)(s32, s32);
 void func_8000EFB8_FBB8(void *);
 void func_80095100_A40B0(s16, s16);
 void func_80095530_A44E0(s16);
-void func_800047D0_53D0(s32, s32);
 void func_8000F6B0_102B0(void *);
 void __osSiCreateAccessQueue(void);
 void func_8000F218_FE18(void);
