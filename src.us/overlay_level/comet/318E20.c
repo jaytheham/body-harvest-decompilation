@@ -8,9 +8,9 @@
 s32 D_802E4E80_328FD0 = 0;
 
 void (*D_802E4E84_328FD4[21])(void) = {
-	(void (*)(void))LEVEL_PTR(0x802D4F4C), (void (*)(void))OVERLAY_PTR(0x80076820), (void (*)(void))LEVEL_PTR(0x802D5F24), (void (*)(void))LEVEL_PTR(0x802D60B8),
+	(void (*)(void))LEVEL_PTR(0x802D4F4C), func_80076820_857D0, (void (*)(void))LEVEL_PTR(0x802D5F24), (void (*)(void))LEVEL_PTR(0x802D60B8),
 	(void (*)(void))LEVEL_PTR(0x802D624C), (void (*)(void))LEVEL_PTR(0x802D63E0), (void (*)(void))LEVEL_PTR(0x802D6428), (void (*)(void))LEVEL_PTR(0x802D6458),
-	(void (*)(void))LEVEL_PTR(0x802D6558), (void (*)(void))OVERLAY_PTR(0x80076820), (void (*)(void))LEVEL_PTR(0x802D5C40), (void (*)(void))LEVEL_PTR(0x802D5C98),
+	(void (*)(void))LEVEL_PTR(0x802D6558), func_80076820_857D0, (void (*)(void))LEVEL_PTR(0x802D5C40), (void (*)(void))LEVEL_PTR(0x802D5C98),
 	(void (*)(void))LEVEL_PTR(0x802D5CF0), (void (*)(void))LEVEL_PTR(0x802D5D48), (void (*)(void))LEVEL_PTR(0x802D5DA0), (void (*)(void))LEVEL_PTR(0x802D657C),
 	(void (*)(void))LEVEL_PTR(0x802D6770), (void (*)(void))LEVEL_PTR(0x802D58BC), (void (*)(void))LEVEL_PTR(0x802D59BC), (void (*)(void))LEVEL_PTR(0x802D659C),
 	(void (*)(void))0x00000000

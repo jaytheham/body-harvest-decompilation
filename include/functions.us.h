@@ -12,6 +12,34 @@ s32 __osPfsGetStatus(OSMesgQueue* queue, int channel);
 
 #include "functions.h"
 
+void func_80076820_857D0(void);
+void func_800FE910_10D8C0(s32 arg0);
+void func_800FE954_10D904(s32 arg0);
+void func_800FE9AC_10D95C(s32 arg0);
+void func_800FEA2C_10D9DC(s32 arg0);
+void func_800FEAA0_10DA50(s32 arg0);
+void func_800FEB04_10DAB4(s32 arg0);
+void func_800FEB5C_10DB0C(s32 arg0);
+void func_800FEC78_10DC28(s32 arg0);
+void func_800FECD4_10DC84(s32 arg0);
+void func_800FED60_10DD10(s32 arg0);
+void func_800FEDBC_10DD6C(s32 arg0);
+void func_800FF164_10E114(s32 arg0);
+void func_800FF258_10E208(s32 arg0);
+void func_800FF2BC_10E26C(s32 arg0);
+void func_800FF334_10E2E4(s32 arg0);
+void func_800FF390_10E340(s32 arg0);
+void func_800FF5A8_10E558(s32 arg0);
+void func_800FF720_10E6D0(s32 arg0);
+void func_800FF794_10E744(s32 arg0);
+void func_800FF80C_10E7BC(s32 arg0);
+void func_800FF88C_10E83C(s32 arg0);
+void func_800FF90C_10E8BC(s32 arg0);
+void func_800FF984_10E934(s32 arg0);
+void func_800FFA00_10E9B0(s32 arg0);
+void func_800FFC3C_10EBEC(s32 arg0);
+void func_800FFCB8_10EC68(s32 arg0);
+
 void func_8007ED9C_8DD4C(u8 arg0);
 s32 func_80085340_942F0(u8 arg0, u16 arg1);
 void func_802E1630_325780(u8 arg0);
