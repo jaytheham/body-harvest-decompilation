@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/145D70.h"
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
 #include "version_shift.h"
