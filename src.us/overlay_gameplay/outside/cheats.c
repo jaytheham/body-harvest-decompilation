@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
 #include "overlay_gameplay/outside/cheats.h"
 #include "overlay_gameplay/outside/B49C0.h"
 #include "overlay_gameplay/outside/148000.h"

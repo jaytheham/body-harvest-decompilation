@@ -1,6 +1,7 @@
 #define OUTSIDE_BF9C0_FUNCTIONS
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
 #include "overlay_gameplay/outside/145D70.h"
 #include "core/53F0.h"
 #include "core/12C80.h"

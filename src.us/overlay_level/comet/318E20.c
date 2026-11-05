@@ -1,6 +1,7 @@
 #define COMET_CUTSCENE_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
 #include "overlay_gameplay/outside/B8290.h"
 #include "overlay_gameplay/outside/B2CB0.h"
 #include "overlay_gameplay/outside/9BFF0.h"
