@@ -196,295 +196,265 @@ s16 func_8000A43C_B03C(s8 *arg0)
 	return (((s16) (((s16) (var_v1 << 8)) + var_a0)) / 2);
 }
 
-#ifdef NON_MATCHING
 void drawText(char *arg0, ...) {
-	char *s3;
-	s8 *s0;
-	va_list s2;
-	u32 v0;
-	s32 s1;
-	s32 s4;
-	u32 s5;
-	s32 v1;
-	s32 a0;
+	char *text;
+	s8 *out;
+	f64 number;
+	va_list args;
+	u32 value;
+	s32 base;
 	u32 isDigit;
-	u32 a1;
-	s32 sp64;
-	s32 sp60;
+	u32 unsignedBase;
+	s32 specifier;
+	s32 integerPart;
+	s32 fractionalPart;
+	u32 precision;
 
-	va_start(s2, arg0);
-	v0 = (u8)*arg0;
-	s0 = &D_80052BE0[(u16)D_80053BE0];
-	s3 = arg0;
+	va_start(args, arg0);
+	out = &D_80052BE0[(u16)D_80053BE0];
+	text = arg0;
+	value = (u8)*text;
 
-	if (v0 != 0) {
-		v0 = (u8)v0;
-		a0 = (0x25U == v0);
-		while (1) {
-			s3++;
-			if (a0 != 0) {
-				switch ((u8)*s3 - '0') {
+	if (value != 0) {
+		do {
+			if ((u8)*text++ == 0x25U) {
+				switch ((u8)*text - '0') {
 				case 0:
-					s3[-1] = '\0';
-					*s3 = 1U;
-					s3++;
+					text[-1] = '\0';
+					*text = 1U;
+					text++;
 					break;
 				case 1:
-					s3[-1] = '\0';
-					*s3 = 2U;
-					s3++;
+					text[-1] = '\0';
+					*text = 2U;
+					text++;
 					break;
 				case 2:
-					s3[-1] = '\0';
-					*s3 = 3U;
-					s3++;
+					text[-1] = '\0';
+					*text = 3U;
+					text++;
 					break;
 				case 3:
-					s3[-1] = '\0';
-					*s3 = 4U;
-					s3++;
+					text[-1] = '\0';
+					*text = 4U;
+					text++;
 					break;
 				case 4:
-					s3[-1] = '\0';
-					*s3 = 5U;
-					s3++;
+					text[-1] = '\0';
+					*text = 5U;
+					text++;
 					break;
 				case 5:
-					s3[-1] = '\0';
-					*s3 = 6U;
-					s3++;
+					text[-1] = '\0';
+					*text = 6U;
+					text++;
 					break;
 				}
 			}
-			v0 = (u8)*s3;
-			if (v0 != 0) {
-				a0 = (0x25U == v0);
-				continue;
-			}
-			break;
-		}
-		s3 = arg0;
-		v0 = (u8)*s3;
+		} while ((u8)*text != 0);
+		text = arg0;
+		value = (u8)*arg0;
 	}
 
-	s1 = 10;
-	s4 = -4;
-	s5 = 10;
-	if (v0 != 0) {
-		v0 = (u8)*s3;
-		do {
-			a1 = 6;
-			if (0x25U != v0) {
-				*s0++ = (s8)v0;
-				s3++;
+	base = 10;
+	unsignedBase = 10;
+	while ((value = (u8)*text) != 0) {
+		value = (u8)*text;
+			precision = 6;
+			if ((value ^ 0) != 0x25U) {
+				*out++ = (s8)value;
+				text++;
 			} else {
-				v0 = ((u8 *)s3)[1];
-				v1 = (u8)s3[1];
-				s3++;
-				if ((s32)v0 < '0' || v1 >= ':') {
+				value = ((u8 *)text)[1];
+				specifier = (u8)text[1];
+				text++;
+				if ((s32)value < '0' || specifier >= ':') {
 					isDigit = 0;
 				} else {
 					isDigit = 1;
 				}
 				if (isDigit != 0) {
-					v0 = ((u8 *)s3)[1];
-					a1 = v1 - '0';
-					v1 = (u8)s3[1];
-					s3++;
+					value = ((u8 *)text)[1];
+					precision = specifier - '0';
+					specifier = (u8)text[1];
+					text++;
 				}
-				switch (v1 ^ 0) {
+				switch (specifier ^ 0) {
 		case 0:
 			break;
 		case 'c':
-			*s0++ = va_arg(s2, s32);
+			*out++ = va_arg(args, s32);
 			break;
 		case 'd':
-			v0 = 1000000;
-			v1 = va_arg(s2, s32);
-			if (v1 < 0) {
-				*s0++ = '-';
-				v1 = -v1;
+			value = 1000000;
+			specifier = va_arg(args, s32);
+			if (specifier < 0) {
+				*out++ = '-';
+				specifier = -specifier;
 			}
-			if ((v1 / (s32)v0) % s1 == 0) {
+			if ((specifier / (s32)value) % base == 0) {
 				do {
-					v0 = (s32)v0 / s1;
-				} while ((v1 / (s32)v0) % s1 == 0 && (s32)v0 >= 2);
+					value = (s32)value / base;
+				} while ((specifier / (s32)value) % base == 0 && (s32)value >= 2);
 			}
-			if (v0 != 0) {
+			if (value != 0) {
 				do {
-					*s0++ = ((v1 / (s32)v0) % s1) + '0';
-					v0 = (s32)v0 / s1;
-				} while (v0 != 0);
+					*out++ = ((specifier / (s32)value) % base) + '0';
+					value = (s32)value / base;
+				} while (value != 0);
 			}
 			break;
 		case 'f': {
 			u32 index;
-			v0 = 1000000;
+			value = 1000000;
 			index = 1;
-			func_80004254_4E54(va_arg(s2, double), a1, &sp64, &sp60);
-			if (sp64 < 0) {
-				*s0++ = '-';
-				sp64 = -sp64;
+			number = va_arg(args, double);
+			func_80004254_4E54(number, precision, &integerPart, &fractionalPart);
+			if (integerPart < 0) {
+				*out++ = '-';
+				integerPart = -integerPart;
 			}
-			if ((sp64 / (s32)v0) % s1 == 0) {
+			if ((integerPart / (s32)value) % base == 0) {
 				do {
-					v0 = (s32)v0 / s1;
-				} while ((sp64 / (s32)v0) % s1 == 0 && (s32)v0 >= 2);
+					value = (s32)value / base;
+				} while ((integerPart / (s32)value) % base == 0 && (s32)value >= 2);
 			}
-			if (v0 != 0) {
+			if (value != 0) {
 				do {
-					*s0++ = ((sp64 / (s32)v0) % s1) + '0';
-					v0 = (s32)v0 / s1;
-				} while (v0 != 0);
+					*out++ = ((integerPart / (s32)value) % base) + '0';
+					value = (s32)value / base;
+				} while (value != 0);
 			}
-			*s0++ = '.';
-			v0 = 1;
-			if ((s32)a1 >= 2) {
+			*out++ = '.';
+			value = 1;
+			if ((s32)precision >= 2) {
 				do {
-					v0 *= s1;
+					value *= base;
 					index++;
-				} while (index != a1);
+				} while (index != precision);
 			}
-			if (v0 != 0) {
+			if (value != 0) {
 				do {
-					*s0++ = (((u32)sp60 / v0) % s5) + '0';
-					v0 = (s32)v0 / s1;
-				} while (v0 != 0);
+					*out++ = (((u32)fractionalPart / value) % unsignedBase) + '0';
+					value = (s32)value / base;
+				} while (value != 0);
 			}
 			break;
 		}
 		case 'i':
-			*s0++ = 0x12;
+			*out++ = 0x12;
 			break;
 		case 'r':
-			*s0++ = 0x13;
+			*out++ = 0x13;
 			break;
 		case 's': {
 			char *str;
-			str = va_arg(s2, char *);
-			v0 = (u8)*str;
-			if (v0 != 0) {
+			str = va_arg(args, char *);
+			value = (u8)*str;
+			if (value != 0) {
 			do {
-				if (0x25U == v0) {
+				if ((value ^ 0) == 0x25U) {
 					str++;
 					switch ((u8)*str - '0') {
-					case 0: *s0++ = 1U; break;
-					case 1: *s0++ = 2U; break;
-					case 2: *s0++ = 3U; break;
-					case 3: *s0++ = 4U; break;
-					case 4: *s0++ = 5U; break;
-					case 5: *s0++ = 6U; break;
+					case 0: *out++ = 1U; break;
+					case 1: *out++ = 2U; break;
+					case 2: *out++ = 3U; break;
+					case 3: *out++ = 4U; break;
+					case 4: *out++ = 5U; break;
+					case 5: *out++ = 6U; break;
 					default:
-						*s0++ = 0x25U;
+						*out++ = 0x25U;
 						str--;
 						break;
 					}
 				} else {
-					*s0++ = v0;
+					*out++ = value;
 				}
-				v0 = (u8)str[1];
+				value = (u8)str[1];
 				str++;
-			} while (v0 != 0);
+			} while (value != 0);
 			}
 			break;
 		}
 		case '@': {
-			D_80053C80 = va_arg(s2, s32);
-			v1 = va_arg(s2, s32);
-			D_80053C92 = (s16)((v1 * 20 + 24) >> 2);
-			a0 = D_80053C80;
-			if (a0 != 0x80) {
-				if (a0 == 0x81) {
-				*s0++ = (s8)s5;
-				*s0++ = 0x1D;
-				*s0++ = (s8)(s16)D_80053C92;
+			D_80053C80 = va_arg(args, s32);
+			D_80053C92 = (s16)((va_arg(args, s32) * 20 + 24) >> 2);
+			if (D_80053C80 != 0x80) {
+				if (D_80053C80 == 0x81) {
+				*out++ = (s8)unsignedBase;
+				*out++ = 0x1D;
+				*out++ = (s8)(s16)D_80053C92;
 				} else {
-				D_80053C90 = (s16)(D_800319C1_325C1 * a0 + D_80053C94);
-				*s0++ = (s8)s5;
-				*s0++ = 0x14;
-				*s0++ = (s8)(D_80053C90 >> 2);
-				*s0++ = (s8)(s16)D_80053C92;
+				D_80053C90 = (s16)(D_80031720_32320[0x2A1] * D_80053C80 + D_80053C94);
+				*out++ = (s8)unsignedBase;
+				*out++ = 0x14;
+				*out++ = (s8)(D_80053C90 >> 2);
+				*out++ = (s8)(s16)D_80053C92;
 				}
 			} else {
-				*s0++ = (s8)s5;
-				*s0++ = 0x1A;
-				*s0++ = (s8)(s16)D_80053C92;
+				*out++ = (s8)unsignedBase;
+				*out++ = 0x1A;
+				*out++ = (s8)(s16)D_80053C92;
 			}
 			break;
 		}
 		case 'C': {
-			*s0++ = 0x15;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)a0;
-			v1 = va_arg(s2, s32);
-			*s0++ = (s8)v1;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)a0;
+			*out++ = 0x15;
+			*out++ = va_arg(args, s32);
+			*out++ = va_arg(args, s32);
+			*out++ = va_arg(args, s32);
 			break;
 		}
 		case 'a': {
-			*s0++ = 0x16;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)a0;
+			*out++ = 0x16;
+			*out++ = va_arg(args, s32);
 			break;
 		}
 		case 'W': {
-			*s0++ = 0x18;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)(a0 >> 2);
-			v1 = va_arg(s2, s32);
-			*s0++ = (s8)(v1 >> 2);
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)(a0 >> 2);
-			v1 = va_arg(s2, s32);
-			*s0++ = (s8)(v1 >> 2);
+			*out++ = 0x18;
+			*out++ = va_arg(args, s32) >> 2;
+			*out++ = va_arg(args, s32) >> 2;
+			*out++ = va_arg(args, s32) >> 2;
+			*out++ = va_arg(args, s32) >> 2;
 			break;
 		}
 		case 'X': {
-			*s0++ = 0x19;
-			func_8000A3DC_AFDC((s16)(va_arg(s2, s32) >> 2), s0);
-			s0 += 2;
+			*out++ = 0x19;
+			func_8000A3DC_AFDC((s16)(va_arg(args, s32) >> 2), out);
+			out += 2;
 			break;
 		}
 		case 'Y': {
-			*s0++ = 0x17;
-			func_8000A3DC_AFDC((s16)(va_arg(s2, s32) >> 2), s0);
-			s0 += 2;
+			*out++ = 0x17;
+			func_8000A3DC_AFDC((s16)(va_arg(args, s32) >> 2), out);
+			out += 2;
 			break;
 		}
 		case 'H': {
-			*s0++ = 0x1B;
-			func_8000A3DC_AFDC(va_arg(s2, s32), s0);
-			s0 += 2;
+			*out++ = 0x1B;
+			func_8000A3DC_AFDC(va_arg(args, s32), out);
+			out += 2;
 			break;
 		}
 		case 'V': {
-			*s0++ = 0x1C;
-			func_8000A3DC_AFDC(va_arg(s2, s32), s0);
-			s0 += 2;
+			*out++ = 0x1C;
+			func_8000A3DC_AFDC(va_arg(args, s32), out);
+			out += 2;
 			break;
 		}
 		default:
-			*s0 = v0;
-			s0++;
+			*out = value;
+			out++;
 			break;
 				}
-				s3++;
+				text++;
 			}
 
-		} while ((v0 = (u8)*s3) != 0);
 	}
 
-	*s0 = '\0';
-	D_80053BE0 = s0 - D_80052BE0;
+	*out = '\0';
+	D_80053BE0 = out - D_80052BE0;
 }
-#else
-#ifdef VERSION_US
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s", "src.us/core/AD60_text_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s", "src.us/core/AD60_text_late_rodata.eu.s")
-#endif
-#endif
 
 
 void func_8000AFDC_BBDC(void)
@@ -804,7 +774,11 @@ void func_8000B044_BC44(void) {
 	D_80053BE0 = 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
+#ifdef VERSION_US
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s", "src.us/core/AD60_text_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s", "src.us/core/AD60_text_late_rodata.eu.s")
+#endif
 #endif
 
 s32 func_8000C670_D270(s16 arg0) {
