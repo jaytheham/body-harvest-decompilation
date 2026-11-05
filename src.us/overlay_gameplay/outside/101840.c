@@ -4096,7 +4096,6 @@ void func_800FDE00_10CDB0(void) {
 }
 
 // AI - Eject the player from a destroyed vehicle and find a safe landing spot on the ground (disembark)
-#ifdef NON_MATCHING
 void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 {
 	VehicleInstance *vehicle;
@@ -4129,6 +4128,11 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	s32 hitAdjusted;
 	s32 stepCount;
 	s32 maxStepCount;
+	union
+	{
+		s32 signedValue;
+		u32 unsignedValue;
+	} iterationCount;
 	if (arg0) {} vehicle = arg0->unk38;
 	player = vehicleInstances;
 	hitAdjusted = vehicle->unk1A;
@@ -4217,19 +4221,23 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 		i = maxStepCount;
 		do
 		{
+			iterationCount.signedValue = i;
 			if (stepCount < maxStepCount)
 			{
 				stepCount = 0;
+				iterationCount.unsignedValue = iterationCount.unsignedValue & -1;
+			}
+			else
+			{
+				iterationCount.unsignedValue = iterationCount.unsignedValue | 0;
 			}
 			scanIndex = i - 1;
-			if (i != 0)
+			if (iterationCount.signedValue != 0)
 			{
 				do
 				{
-					offset = (s16)((s32)(((((f64)((f32)coss(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk34)) * scale));
-					/* Retain the integer temporary order after AS1 removes this round trip. */
-					offset = (s16)(u64)offset;
-					s3 = (s16)((s32)(((((f64)((f32)sins(scanAngle.unsignedValue & 0xFFFF))) / 32768.0) * ((f64)halfTypeUnk36)) * scale));
+					offset = (s16)((s32)(((((f64)((f32)coss((u32)scanAngle.unsignedValue))) / 32768.0) * ((f64)halfTypeUnk34)) * scale));
+					s3 = (s16)((s32)(((((f64)((f32)sins((u32)scanAngle.unsignedValue))) / 32768.0) * ((f64)halfTypeUnk36)) * scale));
 					if (scanIndex == 8)
 					{
 						func_800FB44C_10A3FC(player, (f32)vehicle->unk0);
@@ -4237,10 +4245,10 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 					}
 					else
 					{
-						s1 = coss(yaw & 0xFFFF);
-						func_800FB44C_10A3FC(player, (f32)((((f64)vehicle->unk0) + ((((f64)((f32)s1)) / 32768.0) * ((f64)offset))) - ((((f64)((f32)sins(yaw & 0xFFFF))) / 32768.0) * ((f64)s3))));
-						s1 = sins(yaw & 0xFFFF);
-						func_800FB484_10A434(player, (f32)(((((f64)((f32)coss(yaw & 0xFFFF))) / 32768.0) * ((f64)s3)) + (((f64)vehicle->unk4) + ((((f64)((f32)s1)) / 32768.0) * ((f64)offset)))));
+						s1 = coss((u32)yaw);
+						func_800FB44C_10A3FC(player, (f32)((((f64)vehicle->unk0) + ((((f64)((f32)s1)) / 32768.0) * ((f64)offset))) - ((((f64)((f32)sins((u32)yaw))) / 32768.0) * ((f64)s3))));
+						s1 = sins((u32)yaw);
+						func_800FB484_10A434(player, (f32)(((((f64)((f32)coss((u32)yaw))) / 32768.0) * ((f64)s3)) + (((f64)vehicle->unk4) + ((((f64)((f32)s1)) / 32768.0) * ((f64)offset)))));
 					}
 					func_80115604_1245B4(player);
 					temp = func_800F9D60_108D10(player->unk0, player->unk4, &lockY, &lockZ, &lockX);
@@ -4251,15 +4259,15 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 					}
 					if ((func_80110FB4_11FF64(player, 1) == 0) && (player->unk2 >= lockY))
 					{
-						s32 allow = 1;
+						s16 allowed = 1;
 						if ((((arg1 == 0) && ((lockX + 0x64) < player->unk2)) && ((D_80222A70 + 0x64) < player->unk2)) && (stepCount < maxStepCount))
 						{
 							stepCount++;
-							allow = 0;
+							allowed = 0;
 						}
 						else if (((arg1 == 0) && (player->unk2 < (lockX - 0x32))) && (lockZ < (vehicleTypes[0].unk38 + player->unk2)))
 						{
-							allow = 0;
+							allowed = 0;
 						}
 						else
 						{
@@ -4268,12 +4276,12 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 							{
 								if ((D_80259D90[s0].unk0 >= 0xE) && (func_8010EF40_11DEF0((f32)D_80259D90[s0].unk10, (f32)D_80259D90[s0].unk14, (f32)D_80259D90[s0].unk30, (f32)D_80259D90[s0].unk34, (f32)vehicle->unk0, (f32)vehicle->unk4, (f32)player->unk0, (f32)player->unk4, &tmpA, &tmpB) != 0))
 								{
-									allow = 0;
+									allowed = 0;
 									break;
 								}
 							} while (s0--);
 						}
-						if (allow != 0)
+						if (allowed != 0)
 						{
 							foundSpot = 1;
 							if ((vehicleTypes[0].unk38 + player->unk2) < lockZ)
@@ -4323,7 +4331,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 						}
 						priorIndex = scanIndex;
 						scanAngle.signedValue += (priorIndex & 1) ? (0xA000) : (0x8000);
-						scanIndex = priorIndex - 1;
+						scanIndex = (priorIndex - 1) & 0xFFFF;
 					}
 				} while (priorIndex);
 			}
@@ -4358,9 +4366,7 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800FDEA8_10CE58.s")
-#endif
+
 
 
 void func_800FE910_10D8C0(s32 arg0) {
