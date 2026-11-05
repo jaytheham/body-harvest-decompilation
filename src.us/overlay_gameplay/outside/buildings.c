@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "overlay_gameplay/outside/F7870.h"
 #include "overlay_gameplay/outside/B8290_tail.h"
 #include "overlay_gameplay/outside/B49C0.h"
 #include "overlay_gameplay/outside/7F220.h"
