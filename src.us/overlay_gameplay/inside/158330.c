@@ -9201,97 +9201,96 @@ void func_80077B94_15FC54(void) {
 	}
 }
 
+// CURRENT(525)
 #ifdef NON_MATCHING
 void func_800784B8_160578(void) {
-	s32 interiorId;
-	u16 maxHp;
-	s32 temp;
+    s32 interiorId;
+    u16 maxHp;
+    s32 temp;
 
-	if ((currentLevel == 2) && (func_8000726C_7E6C(0x11) != 0)) {
-		interiorId = buildingInteriorToLoadId;
-		if ((interiorId == 0x7E) || (interiorId == 0x81) || (interiorId == 0x89)) {
-			if (!(D_800E65AC % 4)) {
-				func_800153D8_15FD8(0xB3);
-			}
-		}
-	}
+    if ((currentLevel == 2) && (func_8000726C_7E6C(0x11) != 0)) {
+        interiorId = buildingInteriorToLoadId;
+        if ((interiorId == 0x7E) || (interiorId == 0x81) || (interiorId == 0x89)) {
+            if (!(D_800E65AC % 4)) {
+                func_800153D8_15FD8(0xB3);
+            }
+        }
+    }
 
-	if (currentLevel == 3) {
-		if (buildingInteriorToLoadId == 0x41) {
-			buildingInstances[0x35].rotationIndex = 6;
-		}
-	} else if (currentLevel == 4) {
-		interiorId = buildingInteriorToLoadId;
-		switch (interiorId ^ 0) {
-				case 0x1F:
-					if (func_8000726C_7E6C(0x38) != 0) {
-						D_80052B34->unk1C += 2;
-						maxHp = vehicleTypes[D_80052B34->unk1A].hitPoints;
-						if (maxHp < D_80052B34->unk1C) {
-							D_80052B34->unk1C = maxHp;
-						}
-					}
-					interiorId = buildingInteriorToLoadId;
-					break;
+    if (currentLevel == 3) {
+        if (buildingInteriorToLoadId == 0x41) {
+            buildingInstances[0x35].rotationIndex = 6;
+        }
+    } else if (currentLevel == 4) {
+        interiorId = buildingInteriorToLoadId;
+        switch (interiorId ^ 0) {
+            case 0x1F:
+                if (func_8000726C_7E6C(0x38) != 0) {
+                    D_80052B34->unk1C += 2;
+                    maxHp = vehicleTypes[D_80052B34->unk1A].hitPoints;
+                    if (maxHp < D_80052B34->unk1C) {
+                        D_80052B34->unk1C = maxHp;
+                    }
+                }
+                interiorId = buildingInteriorToLoadId;
+                break;
 
-				case 0x20:
-					if ((func_8000726C_7E6C(2) == 0) && ((D_800E65AC % 10) == 0)) {
-						if (D_80052B34->unk1C > 0) {
-							D_80052B34->unk20 |= 0x2000;
-							temp = D_80052B34->unk1C - 2;
-							if (temp < 0) {
-								D_80052B34->unk1C = 0;
-							} else {
-								D_80052B34->unk1C = temp;
-							}
-						}
-					}
-					interiorId = buildingInteriorToLoadId;
-					break;
+            case 0x20:
+                if ((func_8000726C_7E6C(2) == 0) && ((D_800E65AC % 10) == 0)) {
+                    if (D_80052B34->unk1C > 0) {
+                        D_80052B34->unk20 |= 0x2000;
+                        temp = D_80052B34->unk1C - 2;
+                        if (temp < 0) {
+                            D_80052B34->unk1C = 0;
+                        } else {
+                            D_80052B34->unk1C = temp;
+                        }
+                    }
+                }
+                interiorId = buildingInteriorToLoadId;
+                break;
 
-				case 0x24:
-				case 0x25:
-				case 0x2F:
-				case 0x30:
-				case 0x31:
-					if ((D_800E65AC % 20) == 0) {
-						D_8004D1B0[1]++;
-					}
-					break;
+            case 0x24:
+            case 0x25:
+            case 0x2F:
+            case 0x30:
+            case 0x31:
+                if ((D_800E65AC % 20) == 0) {
+                    D_8004D1B0[1]++;
+                }
+                break;
 
-				case 0x6E:
-					if (func_8000726C_7E6C(0x37) == 0) {
-						func_800072CC_7ECC(0x37);
-					}
-					interiorId = buildingInteriorToLoadId;
-					break;
+            case 0x6E:
+                if (func_8000726C_7E6C(0x37) == 0) {
+                    func_800072CC_7ECC(0x37);
+                }
+                interiorId = buildingInteriorToLoadId;
+                break;
 
-					}
+        }
 
-		if (interiorId != 0x6E) {
-			func_800073B8_7FB8(0x37);
-		}
-	}
+        if (interiorId != 0x6E) {
+            func_800073B8_7FB8(0x37);
+        }
+    }
 
-	do {} while (0);
-	if ((f32)(s32)*(unsigned int *)&currentLevel * (f32)(s32)*(unsigned int *)&currentLevel) {}
-	if (currentLevel == 5) {
-		interiorId = buildingInteriorToLoadId;
-		if (interiorId == 1) {
-			if ((D_800E65AC % 100) == 0) {
-				func_80014A3C_1563C((s32)D_80052B34, 0xA0, 0, 0, 0.1f);
-				interiorId = buildingInteriorToLoadId;
-			}
-		}
+    if (currentLevel == 5) {
+        interiorId = buildingInteriorToLoadId;
+        if (interiorId == 1) {
+            if ((D_800E65AC % 100) == 0) {
+                func_80014A3C_1563C((s32)D_80052B34, 0xA0, 0, 0, 0.1f);
+                interiorId = buildingInteriorToLoadId;
+            }
+        }
 
-		if ((interiorId == 2) && (func_8000726C_7E6C(0x1E) == 0)) {
-			func_80014A3C_1563C((s32)D_80052B34, 0x184, 0, 0, 0.2f);
-		}
-	}
+        if ((interiorId == 2) && (func_8000726C_7E6C(0x1E) == 0)) {
+            func_80014A3C_1563C((s32)D_80052B34, 0x184, 0, 0, 0.2f);
+        }
+    }
 
-	if (func_8000726C_7E6C(0x27) != 0) {
-		D_800E65A8 |= 0x100;
-	}
+    if (func_8000726C_7E6C(0x27) != 0) {
+        D_800E65A8 |= 0x100;
+    }
 }
 #else
 #ifdef VERSION_EU
