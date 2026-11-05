@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/frontend/52690.h"
 #include "core/53F0.h"
 #include "core/1050.h"
 

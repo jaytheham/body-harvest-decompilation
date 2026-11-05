@@ -1,6 +1,7 @@
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/frontend/52690.h"
 #include "overlay_gameplay/frontend/40720.h"
 #include "core/loader.h"
 #include "core/53F0.h"
