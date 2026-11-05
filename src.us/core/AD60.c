@@ -548,6 +548,8 @@ void func_8000B044_BC44(void) {
 		/* Space character */
 		if ((s16)glyph_code == 0x150) {
 			x_cursor += D_80031720_32320[0x2A1];
+			glyph_code = i + 1;
+			continue;
 		}
 
 		/* Control codes */
@@ -569,6 +571,7 @@ void func_8000B044_BC44(void) {
 		if ((x_pos + 16) < clip_x_min || clip_x_max < x_pos ||
 			(y_pos + 16) < clip_y_min || clip_y_max < y_pos) {
 			x_cursor += glyph_data[1];
+			glyph_code = i + 1;
 			continue;
 		}
 
@@ -755,10 +758,10 @@ void func_8000B044_BC44(void) {
 			case 16: case 17:
 				break;
 }
-			continue;
 
 		}
-		} while (++i < (u16)D_80053BE0);
+			glyph_code = i + 1;
+		} while ((i = glyph_code) < (u16)D_80053BE0);
 	}
 
 	/* Restore render state */
