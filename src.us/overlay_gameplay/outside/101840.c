@@ -1,6 +1,5 @@
 #include <ultra64.h>
 #include "common.h"
-#include "version_shift.h"
 
 const char D_801446A0_153650[] = "Error in walker index"; // "Error in walker index"
 const char D_801446B8_153668[] = "Attempt to get info on unallocated walker ID"; // "Attempt to get info on unallocated walker ID"
@@ -74,7 +73,7 @@ EffectRgb D_8013FCD4_14EC84[3][5][3] = {
 s32 D_8013FD5C_14ED0C[5] = {220, 255, 180, 100, 0};
 s32 D_8013FD70_14ED20 = 0x20;
 s32 D_8013FD74_14ED24 = 0xAF;
-VehicleInstance *D_8013FD78_14ED28 = (VehicleInstance *)OVERLAY_PTR(0x800505C8);
+VehicleInstance *D_8013FD78_14ED28 = &vehicleInstances[114];
 s32 D_8013FD7C_14ED2C = 0;
 s32 D_8013FD80_14ED30 = 0x00FB0000;
 s16 D_8013FD84_14ED34 = 0;
