@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1B100.h"
 #include "core/1050.h"
 #include "version_shift.h"
 
