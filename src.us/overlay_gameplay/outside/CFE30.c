@@ -5634,7 +5634,8 @@ void func_800D1C24_E0BD4(u8 arg0)
 				if (nextIndex != -5)
 				{
 					gDPPipeSync(D_8005BB2C++);
-					gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+					/* Keep the image packet and its address observation on one source line. */
+					{ { Gfx *imagePacket = D_8005BB2C++; D_8005BB2C[-1].words.w0 = (_SHIFTL(G_SETTIMG,24,8) | _SHIFTL(G_IM_FMT_I,21,3) | _SHIFTL(G_IM_SIZ_16b,19,2) | _SHIFTL(0,0,12)) + ((u32)&D_8005BB2C[-1] * 0); imagePacket->words.w1 = (unsigned int)K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]); } gDPSetTile(D_8005BB2C++,G_IM_FMT_I,G_IM_SIZ_16b,0,0,G_TX_LOADTILE,0,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD); gDPLoadSync(D_8005BB2C++); gDPLoadBlock(D_8005BB2C++,G_TX_LOADTILE,0,0,255,CALC_DXT_4b(32)); gDPPipeSync(D_8005BB2C++); gDPSetTile(D_8005BB2C++,G_IM_FMT_I,G_IM_SIZ_4b,2,0,G_TX_RENDERTILE,0,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD); gDPSetTileSize(D_8005BB2C++,G_TX_RENDERTILE,0,0,31<<G_TEXTURE_IMAGE_FRAC,31<<G_TEXTURE_IMAGE_FRAC); };
 					gDPPipeSync(D_8005BB2C++);
 					D_8005BB34->v.ob[0] = curX;
 					D_8005BB34->v.ob[1] = curY;
@@ -5729,6 +5730,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 		}
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
 #endif
