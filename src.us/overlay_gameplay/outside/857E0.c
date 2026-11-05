@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 const s16 D_801416A0_150650[] = {0x0040, 0x00C0, 0x0040, 0x00C0};

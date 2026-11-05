@@ -1,5 +1,10 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/inside/167C90.h"
+#include "core/loader.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
 
 // 32x32 8-bit intensity texture - player shadow?
 u8 D_8009CE60_184F20[0x400] = {

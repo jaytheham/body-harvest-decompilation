@@ -1,5 +1,14 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "core/loader.h"
+#include "core/FD80.h"
+#include "core/53F0.h"
+#include "core/1B100.h"
+#include "core/12C80.h"
+#include "overlay_gameplay/outside/trigger.h"
+#include "overlay_level/greece/18D7E0.h"
 #include "version_shift.h"
 
 void func_800AE2C0_BD270(void) {

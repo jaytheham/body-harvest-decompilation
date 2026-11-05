@@ -1,5 +1,18 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/F7870.h"
+#include "overlay_gameplay/outside/B8290_tail.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "overlay_gameplay/outside/B2CB0.h"
+#include "overlay_gameplay/outside/7F220.h"
+#include "overlay_gameplay/outside/145D70.h"
+#include "overlay_gameplay/outside/1416E0.h"
+#include "core/loader.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
+#include "overlay_gameplay/outside/trigger.h"
 #include "857E0.h"
 
 const char D_801417B0_150760[] = "explode walker\n"; // "explode walker\n"

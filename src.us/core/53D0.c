@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/53D0.h"
 
 
 void func_800047D0_53D0(s32 arg0, s32 arg1) {

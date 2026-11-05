@@ -1,5 +1,9 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/FD80.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
 
 /* Audio queue, music playback, fade, and volume state. */
 s32 D_80031CA0_328A0 = 0;
@@ -1172,9 +1176,8 @@ void func_80013810_14410(s8 arg0) {
 /* Advance audio fades and timers, then process queued sounds. */
 void func_80013818_14418(void)
 {
-    /* Reserve D_8006AB10 before the private count at D_8006AB14. */
-    static s32 soundPlayerSlot;
-    static s16 D_8006AB14;
+    /* Keep the private count four bytes after the reserved sound-player slot. */
+    static AudioSoundPlayerState soundPlayerState;
     static s16 D_80033C94_34894 = -1;
     s16 slot;
     f32 pitch;
@@ -1224,12 +1227,12 @@ void func_80013818_14418(void)
         }
     }
     func_80013FC4_14BC4(D_8006AB10);
-    D_8006AB14 = func_80013F64_14B64();
+    soundPlayerState.availableSounds = func_80013F64_14B64();
 
-    if (D_8006AB14 > 0) {
+    if (soundPlayerState.availableSounds > 0) {
         Unk8006AA80Node *node;
 
-        for (slot = 0; slot < D_8006AB14; slot++) {
+        for (slot = 0; slot < soundPlayerState.availableSounds; slot++) {
             node = func_80012720_13320();
             if (node == NULL) {
                 break;

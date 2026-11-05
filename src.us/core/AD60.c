@@ -1,6 +1,8 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "core/loader.h"
+#include "core/1050.h"
 
 /* Extended character indices. */
 s16 D_80031650_32250[] = {

@@ -1,5 +1,15 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/cheats.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "overlay_gameplay/outside/148000.h"
+#include "core/53F0.h"
+#include "core/1B100.h"
+#include "core/12C80.h"
+#include "core/1050.h"
+#include "overlay_gameplay/outside/trigger.h"
+#include "overlay_level/greece/18D7E0.h"
 #include "version_shift.h"
 
 s32 D_8013BA90_14AA40[12] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0};

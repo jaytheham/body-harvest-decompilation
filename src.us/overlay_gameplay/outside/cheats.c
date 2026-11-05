@@ -1,5 +1,12 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/cheats.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "overlay_gameplay/outside/148000.h"
+#include "core/1B100.h"
+#include "core/1050.h"
+#include "overlay_gameplay/outside/trigger.h"
 #include "version_shift.h"
 
 Cheat cheatData[21] = {

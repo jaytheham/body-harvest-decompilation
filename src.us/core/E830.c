@@ -1,6 +1,7 @@
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3);

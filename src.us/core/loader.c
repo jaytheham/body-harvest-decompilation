@@ -1,5 +1,9 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/loader.h"
+#include "core/FD80.h"
+#include "core/53F0.h"
+#include "overlay_level/greece/18D7E0.h"
 
 /* ROM offsets and RAM destinations used by the loader. EU moves the level data and the
  * level overlays, so the values are per version. */
@@ -707,7 +711,6 @@ s32 func_800119F4_125F4(s32 arg0)
 
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {
 	/* Preserve unsigned address arguments through the original C89 call. */
-	extern s32 func_800101F0_10DF0();
 
 	D_8006AA70 = arg1;
 	func_800101F0_10DF0((u32)D_8006AA70, (u32)D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
@@ -728,7 +731,6 @@ s32 func_80011B14_12714(s32 arg0) {
 
 s32 func_80011B60_12760(u8 arg0, s32 arg1) {
 	/* Preserve unsigned address arguments through the original C89 call. */
-	extern s32 func_800101F0_10DF0();
 
 	D_8006AA70 = arg1;
 	func_800101F0_10DF0((u32)D_8006AA70, (u32)D_80031BDC_327DC[arg0 - 1], D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1]);

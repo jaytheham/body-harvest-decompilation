@@ -4589,4 +4589,9 @@ typedef struct {
     s16 flags;
 } OutsideTreeStyle;
 
+typedef struct AudioSoundPlayerState {
+    s32 reservedSoundPlayer;
+    s16 availableSounds;
+} AudioSoundPlayerState;
+
 #endif /* LIBULTRA_REFERENCE */

@@ -1,5 +1,9 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/10A20.h"
+#include "core/1050.h"
 
 /*
  * The boot entry is handwritten assembly (entry.s) assembled into this unit rather than into an object of its own:

@@ -1,5 +1,9 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/F6A50.h"
+#include "overlay_gameplay/outside/7F220.h"
+#include "overlay_gameplay/outside/1416E0.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 

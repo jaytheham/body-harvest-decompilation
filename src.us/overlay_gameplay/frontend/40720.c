@@ -1,6 +1,12 @@
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/frontend/52690.h"
+#include "overlay_gameplay/frontend/40720.h"
+#include "core/loader.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
 
 typedef enum FrontEndState
 {
@@ -3137,8 +3143,6 @@ s32 func_800779FC_47EAC(void) {
 	extern s32 D_80052B18;
 	extern u8 D_800D6D90[];
 	extern s32 D_800D6D98[];
-	extern s32 func_80002A88_3688(s32 arg0);
-	extern s32 func_80002B20_3720(s32 arg0);
 	extern s32 func_80002AB4(s32 arg0, u8* arg1);
 
 	frameCounter = 0;

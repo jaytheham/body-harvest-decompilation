@@ -1,5 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/B8290_tail.h"
+#include "overlay_gameplay/outside/B2CB0.h"
+#include "overlay_gameplay/outside/9BFF0.h"
 
 AlienType D_8032B7D0_2ADA00[0x30] = {
 	/* [0x00] */

@@ -5,6 +5,19 @@
 #endif
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/B8290.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "overlay_gameplay/outside/B2CB0.h"
+#include "overlay_gameplay/outside/9BFF0.h"
+#include "overlay_gameplay/outside/145D70.h"
+#include "overlay_gameplay/outside/1416E0.h"
+#include "overlay_gameplay/frontend/52690.h"
+#include "core/loader.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
+#include "overlay_gameplay/outside/trigger.h"
 
 /* Earlier overlay BSS variables occupy 0x802E0E30 through 0x802E0E47. */
 static u8 americaBssPrefix[0x18];

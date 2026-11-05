@@ -1,5 +1,10 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/F6A50.h"
+#include "overlay_gameplay/outside/B8290_tail.h"
+#include "overlay_gameplay/outside/9BFF0.h"
+#include "core/53F0.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 const char D_80142910_1518C0[] = "Stop running to target\n"; // "Stop running to target\n"

@@ -1,6 +1,10 @@
 #define OUTSIDE_F7870_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/F7870.h"
+#include "overlay_gameplay/outside/7F220.h"
+#include "core/loader.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 // StripModelToBones

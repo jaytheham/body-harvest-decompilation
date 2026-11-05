@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/A40B0.h"
 #include "version_shift.h"
 
 const char D_80141F30_150EE0[] = "Max Speed";

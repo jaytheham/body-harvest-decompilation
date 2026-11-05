@@ -1,5 +1,14 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/B8290_tail.h"
+#include "overlay_gameplay/outside/B8290.h"
+#include "overlay_gameplay/outside/B2CB0.h"
+#include "overlay_gameplay/outside/9BFF0.h"
+#include "overlay_gameplay/outside/145D70.h"
+#include "overlay_gameplay/outside/1416E0.h"
+#include "core/53F0.h"
+#include "core/1050.h"
 #include "884C0.h"
 
 const char D_80141E80_150E30[] = "%s says I'm busy\n";						   // "%s says I'm busy\n"

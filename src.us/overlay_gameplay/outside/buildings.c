@@ -1,6 +1,18 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/F7870.h"
+#include "overlay_gameplay/outside/B8290_tail.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "overlay_gameplay/outside/7F220.h"
+#include "overlay_gameplay/outside/145D70.h"
+#include "overlay_gameplay/outside/1416E0.h"
+#include "core/FD80.h"
+#include "core/53F0.h"
+#include "core/1B100.h"
+#include "core/1050.h"
+#include "overlay_level/greece/18D7E0.h"
 #include "version_shift.h"
 
 const char D_80144DC0_153D70[] = "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"; // "**** SERIOUS WARNING: Room behind door %d on building %d, (%d,%d).This type hasn't got door %d\n"

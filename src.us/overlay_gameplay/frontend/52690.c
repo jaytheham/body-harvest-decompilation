@@ -1,5 +1,10 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/frontend/52690.h"
+#include "core/loader.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
 
 // AI - Sets up colored background viewport with geometry modes for frontend screen
 void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {

@@ -1,0 +1,77 @@
+#ifndef CORE_53F0_H
+#define CORE_53F0_H
+
+/* Functions defined in 53F0.c. */
+void debug_drawTimingGraphBars(void);
+s32 func_800047FC_53FC(s16 arg0);
+s32 func_80004818_5418(s8, s8, u8);
+void func_800048B8_54B8(void);
+void func_800048E8_54E8(void);
+void func_80004918_5518(void);
+void func_80004948_5548(void);
+void func_800049D4_55D4(u16 arg0, u16 arg1);
+void func_80004A38_5638(u8 arg0, s8 *arg1, s8 *arg2, s8 *arg3);
+void func_80004AEC_56EC(void);
+void func_80004C34_5834(void);
+void func_80004C8C_588C(void);
+void func_80004CC8_58C8(void);
+void func_80004D38_5938(void);
+void func_80004DDC_59DC(u8 arg0, u8 arg1, u8 arg2, s32 arg3, s32 arg4);
+void func_80004F64_5B64(void);
+void func_8000505C_5C5C(void);
+void func_800050C4_5CC4(void);
+void func_80005110_5D10(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4);
+void func_80005654_6254(u8, u8, u8);
+void func_800056A8_62A8(void);
+s32 func_800056D0_62D0(s16 arg0, s16 arg1);
+void func_8000577C_637C(void);
+void func_80005844_6444(u8, u8, u8, u8);
+void func_80005AEC_66EC(u8, u8, u8, u8);
+s32 func_80005B30_6730(void);
+void func_80005B84_6784(void);
+void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5, s32 arg6, s32 arg7, f32 arg8, f32 arg9, u16 *arg10);
+s16 func_80006520_7120(s16 arg0, s16 arg1, u16 arg2);
+s16 func_800065A4_71A4(s16 arg0, s16 arg1, u16 arg2);
+s16 func_80006654_7254(s16 arg0, s16 arg1, u16 arg2);
+s16 func_800067B4_73B4(s16 arg0, s16 arg1, u16 arg2, s16 arg3, s16 arg4);
+void func_800069FC_75FC(void);
+void func_80006DAC_79AC(s32 arg0, s32 arg1);
+void func_80006DDC_79DC(void);
+void func_800071D8_7DD8(void);
+s32 func_8000726C_7E6C(u64);
+void func_800072CC_7ECC(u64);
+void func_800073B8_7FB8(u64);
+void func_80007410_8010(void *arg0);
+void func_800074BC_80BC(void *arg0);
+void func_800074F4_80F4(void);
+void func_80007548_8148(void);
+void func_80007570_8170(void);
+void func_80007690_8290(void);
+void func_800076D4_82D4(s32 arg0);
+void func_80007728_8328(u8 *, s16 *, s16 *);
+u8 func_8000789C_849C(s32 arg0);
+s32 func_800078B8_84B8(s32, s32*);
+void func_800078CC_84CC(s32, s32*);
+void func_800078E4_84E4(s32 arg0, s32 *arg1);
+void func_80007900_8500(u8 *arg0);
+void func_80007A20_8620(u8 *arg0);
+void func_80007C78_8878(u8 *arg0);
+s32 func_80007D44_8944(u8 *arg0);
+s32 func_80007DE0_89E0(u8 *arg0);
+s32 func_80007F60_8B60(u8 *arg0);
+int func_8000807C_8C7C(u8 *arg0, u8 *arg1);
+int func_800081D4_8DD4(u8 *arg0);
+s32 func_80008478_9078(void);
+u8 func_8000851C_911C(s16 arg0);
+void func_80008C18_9818(void);
+s32 func_80008C44_9844(s32 arg0);
+void func_80008CA8_98A8(int arg0);
+void func_800092B8_9EB8(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u8 arg4);
+s32 func_80009F18_AB18(s32);
+void guess_checkMissions(void);
+s32 guess_displayInventory(void);
+void leoInitUnit_atten(void);
+void setFullResolution(void);
+void setGameplayResolution(void);
+
+#endif

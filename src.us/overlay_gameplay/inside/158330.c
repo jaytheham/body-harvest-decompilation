@@ -1,6 +1,12 @@
 #define INSIDE_158330_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/inside/16AF30.h"
+#include "overlay_gameplay/inside/167C90.h"
+#include "core/loader.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
 #include <stddef.h>
 #include "version_shift.h"
 

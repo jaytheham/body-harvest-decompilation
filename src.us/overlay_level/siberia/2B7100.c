@@ -1,5 +1,18 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/missions.h"
+#include "overlay_gameplay/outside/B8290_tail.h"
+#include "overlay_gameplay/outside/B8290.h"
+#include "overlay_gameplay/outside/B49C0.h"
+#include "overlay_gameplay/outside/B2CB0.h"
+#include "overlay_gameplay/outside/9BFF0.h"
+#include "overlay_gameplay/outside/145D70.h"
+#include "overlay_gameplay/outside/1416E0.h"
+#include "core/53F0.h"
+#include "core/12C80.h"
+#include "core/1050.h"
+#include "overlay_gameplay/outside/trigger.h"
+#include "overlay_level/siberia/2B7100.h"
 
 /* Earlier Siberia BSS variables occupy offsets 0x00 through 0x5F. */
 static u8 siberiaBssPrefix[0x60];
