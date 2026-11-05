@@ -1,0 +1,5 @@
+incorrect ASM: In `func_800C541C_D43CC`, selecting `spawnCount` with a ternary emits an extra unconditional branch; a word iterator plus a named effect pointer produces a 0x60-byte frame, and storing the effect link before the parameter-backed entry fields schedules its `sh` ahead of the entry-address computation.
+
+-> code changed: Use a byte iterator, place the short index declaration after the direction vector, and access the effect directly. Assign `spawnCount = i` inside the final capacity-test operand of the suppression condition. Initialize lifetime, Y position, and RGB first; then store the link through `(Unk801541F8Entry *)(s32)&D_80154088[effect]`; then initialize X, Z, kind, and the direction vector. Keep the self-assignment of the effect flag as a direct named-array access.
+
+-> correct ASM: The final capacity branch has `move s5,s0` in its delay slot, followed by the shared `move s5,zero`. The frame is 0x58 bytes with the vector at sp+0x44. The complete entry address is computed before the flag self-store, all stack arguments load before the link store, and all 162 instructions match. The full native US ROM checksum passes.

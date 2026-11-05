@@ -3069,6 +3069,16 @@ typedef struct {
 typedef struct {
 	/* 0x00 */ s16 position[3];
 	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 age;
+	/* 0x0A */ u8 opacity;
+	/* 0x0B */ u8 growth;
+	/* 0x0C */ u8 onWater;
+	/* 0x0D */ u8 padD;
+} WaterSplashState; /* size = 0x0E */
+
+typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
 	/* 0x09 */ u8 shadowColor[3];
 } SpurtVisualState; /* size = 0x0C */
 
@@ -3228,6 +3238,21 @@ typedef struct {
 } EffectLightningTrailState;
 
 typedef struct {
+	/* 0x00 */ s16 position[3];
+	/* 0x06 */ u8 color[3];
+	/* 0x09 */ u8 mode;
+} PhotonEmitterState; /* size = 0x0A */
+
+typedef struct {
+	/* 0x00 */ u8 opacity;
+	/* 0x01 */ s8 quadrant;
+	/* 0x02 */ u8 phase;
+	/* 0x03 */ u8 pad3[2];
+	/* 0x05 */ u8 extent;
+	/* 0x06 */ u8 pad6[6];
+} PhotonRingState; /* size = 0x0C */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 unk1;
 	/* 0x02 */ s16 unk2;
@@ -3235,9 +3260,12 @@ typedef struct {
 	/* 0x06 */ s16 unk6;
 	union {
 		EffectInterpolationState interpolation;
+		PhotonEmitterState photonEmitter;
+		PhotonRingState photonRing;
 		AnimatedFlareState animatedFlare;
 		FallingRibbonParticleState fallingRibbon;
 		SparkEmitterState sparkEmitter;
+		WaterSplashState waterSplash;
 		Unk80154318Sub ribbonState;
 		JetStreamParticleState jetStreamParticle;
 		struct {
