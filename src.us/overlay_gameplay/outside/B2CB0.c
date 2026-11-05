@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/B2CB0.h"
 #include "overlay_gameplay/outside/9BFF0.h"
 #include "overlay_gameplay/outside/145D70.h"
 #include "core/1050.h"
