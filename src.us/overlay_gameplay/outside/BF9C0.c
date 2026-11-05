@@ -1832,12 +1832,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	u16 t;
 	u8 modeByte;
 
-	y = 0;
-	do {
-		counts[y] = -1;
-		y++;
-	} while (y < 8);
-
+	for (y = 0; y < 8; y++) { counts[y] = -1; }
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
 		y = 0;
@@ -2126,16 +2121,15 @@ void func_800B753C_C64EC(void) {
 	gDPTileSync(D_8005BB2C++);
 
 	for (group = 0; group < 8; group++) {
-
-		if (counts[group] == -1) {
-			continue;
-		}
+		if (counts[group] != -1) {
 
 		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(group << 11) + 0x4000]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		lineCount[0] = counts[group] + 1;
+		bucket = counts[group] + 1;
 		rowOffset = 0;
-		while (lineCount[0] > 0) {
+		if (bucket > 0) {
+			lineCount[0] = bucket;
+			do {
 
 
 			if (lineCount[0] >= 9) {
@@ -2192,6 +2186,10 @@ void func_800B753C_C64EC(void) {
 			}
 
 			rowOffset += 8;
+
+			} while (lineCount[0] > 0);
+		}
+
 		}
 	}
 
@@ -2217,16 +2215,15 @@ void func_800B753C_C64EC(void) {
 	}
 
 	for (group = 0; group < 8; group++) {
-
-		if (counts[group] == -1) {
-			continue;
-		}
+		if (counts[group] != -1) {
 
 		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[group << 11]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		lineCount[0] = counts[group] + 1;
+		bucket = counts[group] + 1;
 		rowOffset = 0;
-		while (lineCount[0] > 0) {
+		if (bucket > 0) {
+			lineCount[0] = bucket;
+			do {
 
 
 			if (lineCount[0] >= 9) {
@@ -2283,11 +2280,16 @@ void func_800B753C_C64EC(void) {
 			}
 
 			rowOffset += 8;
+
+			} while (lineCount[0] > 0);
+		}
+
 		}
 	}
 
 	gDPPipeSync(D_8005BB2C++);
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B753C_C64EC.s")
 #endif
