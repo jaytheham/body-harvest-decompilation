@@ -1827,6 +1827,8 @@ extern Unk8009E8DC D_8013E5AC_14D55C[110];
 extern u8 D_8013E5B0_14D560[];
 extern s32 D_8013ECC8_14DC78;
 extern s32 D_8013FCD0_14EC80; // Is Lard cheat enabled (fat legs)
+extern EffectRgb D_8013FCD4_14EC84[3][5][3];
+extern s32 D_8013FD5C_14ED0C[5];
 extern VehicleInstance *D_8013FD78_14ED28;
 extern s32 D_8013FD7C_14ED2C;
 extern Unk8013FDA8Entry D_8013FDA8_14ED58[];

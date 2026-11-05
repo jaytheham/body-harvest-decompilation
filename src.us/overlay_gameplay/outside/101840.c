@@ -47,18 +47,31 @@ const ShadowGeometryConstant D_80144A10_1539C0 = {3.14};
 const ShadowGeometryConstant D_80144A18_1539C8 = {180};
 
 s32 D_8013FCD0_14EC80 = 0;
-u8 D_8013FCD4_14EC84[0x9C] = {
-	0x8C, 0x00, 0x00, 0x46, 0xFF, 0x28, 0xFF, 0xFF, 0x00, 0xD2, 0x23, 0x00, 0xFF, 0x62, 0x00, 0xFA,
-	0x78, 0x00, 0xC3, 0x96, 0x00, 0x82, 0x5A, 0xD7, 0x14, 0x14, 0x5A, 0xAF, 0x8C, 0x05, 0x50, 0xA0,
-	0x82, 0x50, 0xDC, 0xE6, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC8, 0x00, 0x00,
-	0x46, 0xFF, 0x28, 0xFF, 0x6E, 0x00, 0xFF, 0x55, 0x7D, 0xFF, 0xC3, 0x00, 0xFF, 0xFF, 0x00, 0xF0,
-	0xB4, 0x00, 0x78, 0xFA, 0xD2, 0xFF, 0xD2, 0xFF, 0x00, 0xA0, 0xAA, 0x1E, 0x6E, 0x3C, 0xA5, 0xFF,
-	0x82, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xC8, 0x00, 0x00, 0x3C, 0x96, 0x14,
-	0xFF, 0xFF, 0x00, 0xEB, 0x6E, 0x00, 0xFF, 0xA0, 0x37, 0xFF, 0xFF, 0x00, 0xA0, 0x00, 0x78, 0x5A,
-	0x41, 0x85, 0xC3, 0xE6, 0x78, 0x41, 0x55, 0x69, 0x28, 0x69, 0x5F, 0x73, 0xE1, 0x78, 0x37, 0x37,
-	0x37, 0x6E, 0x4B, 0x69, 0xA0, 0x82, 0x7D, 0x00, 0x00, 0x00, 0x00, 0xDC, 0x00, 0x00, 0x00, 0xFF,
-	0x00, 0x00, 0x00, 0xB4, 0x00, 0x00, 0x00, 0x64, 0x00, 0x00, 0x00, 0x00,
+/* [effect variant][level - 1][color], three RGB colors per level. */
+EffectRgb D_8013FCD4_14EC84[3][5][3] = {
+	{
+		{{0x8C, 0x00, 0x00}, {0x46, 0xFF, 0x28}, {0xFF, 0xFF, 0x00}},
+		{{0xD2, 0x23, 0x00}, {0xFF, 0x62, 0x00}, {0xFA, 0x78, 0x00}},
+		{{0xC3, 0x96, 0x00}, {0x82, 0x5A, 0xD7}, {0x14, 0x14, 0x5A}},
+		{{0xAF, 0x8C, 0x05}, {0x50, 0xA0, 0x82}, {0x50, 0xDC, 0xE6}},
+		{{0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}},
+	},
+	{
+		{{0xC8, 0x00, 0x00}, {0x46, 0xFF, 0x28}, {0xFF, 0x6E, 0x00}},
+		{{0xFF, 0x55, 0x7D}, {0xFF, 0xC3, 0x00}, {0xFF, 0xFF, 0x00}},
+		{{0xF0, 0xB4, 0x00}, {0x78, 0xFA, 0xD2}, {0xFF, 0xD2, 0xFF}},
+		{{0x00, 0xA0, 0xAA}, {0x1E, 0x6E, 0x3C}, {0xA5, 0xFF, 0x82}},
+		{{0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}, {0x00, 0x00, 0x00}},
+	},
+	{
+		{{0xC8, 0x00, 0x00}, {0x3C, 0x96, 0x14}, {0xFF, 0xFF, 0x00}},
+		{{0xEB, 0x6E, 0x00}, {0xFF, 0xA0, 0x37}, {0xFF, 0xFF, 0x00}},
+		{{0xA0, 0x00, 0x78}, {0x5A, 0x41, 0x85}, {0xC3, 0xE6, 0x78}},
+		{{0x41, 0x55, 0x69}, {0x28, 0x69, 0x5F}, {0x73, 0xE1, 0x78}},
+		{{0x37, 0x37, 0x37}, {0x6E, 0x4B, 0x69}, {0xA0, 0x82, 0x7D}},
+	},
 };
+s32 D_8013FD5C_14ED0C[5] = {220, 255, 180, 100, 0};
 s32 D_8013FD70_14ED20 = 0x20;
 s32 D_8013FD74_14ED24 = 0xAF;
 VehicleInstance *D_8013FD78_14ED28 = (VehicleInstance *)OVERLAY_PTR(0x800505C8);
@@ -1227,7 +1240,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 cosAComp;
 	s32 baseGreen;
 	f32 radius;
-	u8 *levelColor;
+	EffectRgb *levelColor;
 	s16 colorA;
 	s16 colorB;
 	s16 colorC;
@@ -1258,22 +1271,22 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	sinB = (f32)((f64)(f32)sins(angleA) / 32768.0);
 	cosBValue = coss(angleA);
 
-	levelColor = &D_8013FCD4_14EC84[currentLevel * 9];
-	colorA = levelColor[0x24];
-	colorB = levelColor[0x25];
-	colorC = levelColor[0x26];
+	levelColor = D_8013FCD4_14EC84[1][currentLevel - 1];
+	colorA = levelColor[0].r;
+	colorB = levelColor[0].g;
+	colorC = levelColor[0].b;
 	if (&colorA) {}
 	if (&colorB) {}
 	if (&colorC) {}
 	colorAClamped = (colorA - 0xB4 < 0) ? 0 : colorA - 0xB4;
 	colorBClamped = (colorB - 0xB4 < 0) ? 0 : colorB - 0xB4;
 	colorCClamped = (colorC - 0xB4 < 0) ? 0 : colorC - 0xB4;
-	colorTopA = D_8013FCD4_14EC84[currentLevel * 9 + 0x2A];
-	colorTopB = D_8013FCD4_14EC84[currentLevel * 9 + 0x2B];
-	colorTopC = D_8013FCD4_14EC84[currentLevel * 9 + 0x2C];
-	cR = D_8013FCD4_14EC84[currentLevel * 9 + 0x27];
-	cG = D_8013FCD4_14EC84[currentLevel * 9 + 0x28];
-	cB = D_8013FCD4_14EC84[currentLevel * 9 + 0x29];
+	colorTopA = D_8013FCD4_14EC84[1][currentLevel - 1][2].r;
+	colorTopB = D_8013FCD4_14EC84[1][currentLevel - 1][2].g;
+	colorTopC = D_8013FCD4_14EC84[1][currentLevel - 1][2].b;
+	cR = D_8013FCD4_14EC84[1][currentLevel - 1][1].r;
+	cG = D_8013FCD4_14EC84[1][currentLevel - 1][1].g;
+	cB = D_8013FCD4_14EC84[1][currentLevel - 1][1].b;
 
 	if (cR) {}
 	if (cG) {}
@@ -1522,7 +1535,6 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 sp104;
 	s16 temp_v1_2;
 	s16 temp_f6_3;
-	u8 *temp_a3;
 
 	if (&temp_f0) {}
 	var_f2 = (f32)D_801601F0[arg3].unk8;
@@ -1547,19 +1559,18 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	temp_f6 = (s16)(s64)(s32)(direction.x * temp_f12);
 	temp_f8 = (s16)(s32)(direction.y * temp_f12);
 	temp_f10 = (s16)(s32)(direction.z * temp_f12);
-	temp_a3 = D_8013FCD4_14EC84;
-	sp11A = temp_a3[currentLevel * 9 + 0x51];
-	sp118 = temp_a3[currentLevel * 9 + 0x52];
-	sp116 = temp_a3[currentLevel * 9 + 0x53];
+	sp11A = D_8013FCD4_14EC84[2][currentLevel - 1][0].r;
+	sp118 = D_8013FCD4_14EC84[2][currentLevel - 1][0].g;
+	sp116 = D_8013FCD4_14EC84[2][currentLevel - 1][0].b;
 	sp114 = (sp11A - 0x82 < 0) ? 0 : sp11A - 0x82;
 	sp112 = (sp118 - 0x82 < 0) ? 0 : sp118 - 0x82;
 	sp110 = (sp116 - 0x82 < 0) ? 0 : sp116 - 0x82;
-	sp10C = temp_a3[currentLevel * 9 + 0x55];
-	sp10A = temp_a3[currentLevel * 9 + 0x56];
-	sp108 = temp_a3[currentLevel * 9 + 0x57];
-	sp106 = temp_a3[currentLevel * 9 + 0x58];
-	sp104 = temp_a3[currentLevel * 9 + 0x59];
-	temp_ra = (temp_v0 = temp_a3[currentLevel * 9 + 0x54]);
+	sp10C = D_8013FCD4_14EC84[2][currentLevel - 1][1].g;
+	sp10A = D_8013FCD4_14EC84[2][currentLevel - 1][1].b;
+	sp108 = D_8013FCD4_14EC84[2][currentLevel - 1][2].r;
+	sp106 = D_8013FCD4_14EC84[2][currentLevel - 1][2].g;
+	sp104 = D_8013FCD4_14EC84[2][currentLevel - 1][2].b;
+	temp_ra = (temp_v0 = D_8013FCD4_14EC84[2][currentLevel - 1][1].r);
 
 	D_8005BB34->v.ob[0] = (s32)((f32)arg0[0] - direction.x * 4.0f);
 	D_8005BB34->v.ob[1] = arg0[1];
@@ -1916,17 +1927,17 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	}
 
 	
-	spEA = D_8013FCD4_14EC84[currentLevel * 9 -9]; spE8 = D_8013FCD4_14EC84[currentLevel * 9 -8]; spE6 = D_8013FCD4_14EC84[currentLevel * 9 -7];
+	spEA = D_8013FCD4_14EC84[0][currentLevel - 1][0].r; spE8 = D_8013FCD4_14EC84[0][currentLevel - 1][0].g; spE6 = D_8013FCD4_14EC84[0][currentLevel - 1][0].b;
 	phase = *(s16 *)&spEA - 0xB4;
 	spE4 = phase < 0 ? 0 : phase;
 	phase = *(s16 *)&spE8 - 0xB4;
 	spE2 = phase < 0 ? 0 : phase;
 	phase = *(s16 *)&spE6 - 0xB4;
 	spE0 = phase < 0 ? 0 : phase;
-	spD2 = D_8013FCD4_14EC84[currentLevel * 9 -3]; spD0 = D_8013FCD4_14EC84[currentLevel * 9 -2]; spCE = D_8013FCD4_14EC84[currentLevel * 9 -1];
-	cR = D_8013FCD4_14EC84[currentLevel * 9 -6];
-	cG = D_8013FCD4_14EC84[currentLevel * 9 -5];
-	cB = D_8013FCD4_14EC84[currentLevel * 9 -4];
+	spD2 = D_8013FCD4_14EC84[0][currentLevel - 1][2].r; spD0 = D_8013FCD4_14EC84[0][currentLevel - 1][2].g; spCE = D_8013FCD4_14EC84[0][currentLevel - 1][2].b;
+	cR = D_8013FCD4_14EC84[0][currentLevel - 1][1].r;
+	cG = D_8013FCD4_14EC84[0][currentLevel - 1][1].g;
+	cB = D_8013FCD4_14EC84[0][currentLevel - 1][1].b;
 
 	D_8005BB34->v.ob[0] = arg0[0];
 	D_8005BB34->v.ob[1] = arg0[1];
