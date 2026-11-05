@@ -3,6 +3,7 @@
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 
 s16 D_800313D0_31FD0 = 0;    // Language
 s32 D_800313D4_31FD4 = 0;

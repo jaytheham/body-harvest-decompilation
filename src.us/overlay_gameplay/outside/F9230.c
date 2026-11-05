@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 const char D_801442E0_153290[16] = "NO ANIM STORED"; // "NO ANIM STORED"

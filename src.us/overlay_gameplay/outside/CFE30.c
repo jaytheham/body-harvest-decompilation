@@ -1,6 +1,7 @@
 #define OUTSIDE_CFE30_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n"; // "ERROR: tried to create a new effect at %d\n"

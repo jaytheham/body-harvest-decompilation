@@ -1,6 +1,7 @@
 #define OUTSIDE_F7870_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 // StripModelToBones

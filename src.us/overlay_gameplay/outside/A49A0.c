@@ -1,6 +1,7 @@
 #define GAME_OSSETTIME_IMPL
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 u8 D_8013D1B0_14C160[] = {

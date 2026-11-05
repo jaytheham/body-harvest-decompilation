@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 
 // Menu strings (English)
 const char D_80142510_1514C0[] = "%Y%a";

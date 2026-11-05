@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 // max ammo counts allowed for each weapon type- unlimited pistol, 100 shotgun, 999 machine gun...

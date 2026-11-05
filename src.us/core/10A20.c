@@ -1,6 +1,7 @@
 #define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 
 
 s16 D_80031B50_32750 = 0;

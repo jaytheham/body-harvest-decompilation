@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 u8 D_8013D778_14C730[0x8] = {

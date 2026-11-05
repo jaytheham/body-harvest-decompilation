@@ -1,6 +1,7 @@
 #define INSIDE_158330_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include <stddef.h>
 #include "version_shift.h"
 

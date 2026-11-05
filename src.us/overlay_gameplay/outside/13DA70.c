@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "version_shift.h"
 
 const char D_801453C0_154370[] = "*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n";

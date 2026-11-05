@@ -1,6 +1,7 @@
 #define CORE_FD80_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 
 
 Vp D_80031B60_32760[] = {

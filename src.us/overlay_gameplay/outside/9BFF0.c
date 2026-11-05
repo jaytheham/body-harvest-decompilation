@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "core/1050.h"
 #include "884C0.h"
 
 const char D_80141E80_150E30[] = "%s says I'm busy\n";						   // "%s says I'm busy\n"
