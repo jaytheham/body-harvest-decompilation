@@ -5692,7 +5692,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 					D_8005BB34->v.cn[2] = blue;
 					D_8005BB34->v.cn[3] = 0xFF;
 					D_8005BB34++;
-					D_8005BB34->v.ob[0] = nextX2;
+					if (1) {} D_8005BB34->v.ob[0] = nextX2;
 					D_8005BB34->v.ob[1] = nextY2;
 					D_8005BB34->v.ob[2] = nextZ2;
 					D_8005BB34->v.flag = 0;

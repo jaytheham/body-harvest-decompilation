@@ -30,6 +30,37 @@ lui t3,0xf590
 andi t4,v0,3
 ```
 
-The retained partial improves the full native diff from 328 to 50. All 542 instructions have the target order, `0x100` frame, and stack homes. Nine instruction words still differ: the high store uses `-8(t9)` instead of `0(s3)`, the next-position pointer uses `s3` instead of `s0` in five instructions, and the final Z conversion and its two consumers use `f0` instead of `f2`. The enabled C ROM SHA1 is `c95860b96e23b9a5eb12b558381f0527e2fbc712`.
+The packet change alone improves the full native diff from 328 to 50. All 542 instructions have the target order, `0x100` frame, and stack homes. Nine instruction words still differ: the high store uses `-8(t9)` instead of `0(s3)`, the next-position pointer uses `s3` instead of `s0` in five instructions, and the final Z conversion and its two consumers use `f0` instead of `f2`. The enabled C ROM SHA1 is `c95860b96e23b9a5eb12b558381f0527e2fbc712`.
 
 The function remains `NON_MATCHING`; the full native US ROM checksum passes with its assembly fallback selected.
+
+`incorrect ASM`
+
+After the packet correction, the next-position pointer still occupied `s3`:
+
+```asm
+addu s3,t3,t4
+lh t5,0(s3)
+/* Later coordinate reads also use s3. */
+```
+
+-> `code changed`
+
+Separate the position reads from the final vertex-packet commands with an empty optimizer region immediately before the fourth vertex. Keep this boundary and the first vertex write on the same physical source line:
+
+```c
+D_8005BB34++;
+if (1) {} D_8005BB34->v.ob[0] = nextX2;
+```
+
+The earlier allocation trace showed that the position expression and the cached display-list cursor overlapped only in the block containing the last coordinate calculations and final graphics commands. The boundary makes their lifetimes separable without emitting an instruction.
+
+-> `correct ASM`
+
+```asm
+addu s0,t3,t4
+lh t5,0(s0)
+/* All four later coordinate reads now use the target s0. */
+```
+
+The combined retained partial scores 25, with all 542 instruction positions, the `0x100` frame, and stack homes matching. Four words remain: the image high-word store uses the equivalent `-8(t9)` address instead of `0(s3)`, and the final Z conversion and its two consumers use `f0` instead of `f2`. The function remains `NON_MATCHING`.
