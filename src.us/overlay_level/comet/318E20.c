@@ -1,6 +1,7 @@
 #define COMET_CUTSCENE_BSS
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/outside/1416E0.h"
 #include "core/loader.h"
 #include "core/53F0.h"
 #include "core/12C80.h"

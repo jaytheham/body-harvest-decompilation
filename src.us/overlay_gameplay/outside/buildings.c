@@ -1,6 +1,7 @@
 #include <ultra64.h>
 #include <stdarg.h>
 #include "common.h"
+#include "overlay_gameplay/outside/1416E0.h"
 #include "core/FD80.h"
 #include "core/53F0.h"
 #include "core/1B100.h"
