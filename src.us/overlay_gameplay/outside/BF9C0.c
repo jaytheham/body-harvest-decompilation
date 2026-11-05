@@ -1834,7 +1834,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 	for (y = 0; y < 8; y++) { counts[y] = -1; }
 
-
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
 		y = 0;
 		do {

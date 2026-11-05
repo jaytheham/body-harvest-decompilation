@@ -3210,8 +3210,6 @@ void func_800C978C_D873C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C978C_D873C.s")
 #endif
 
-
-
 // spawn random water particle?
 void func_800CA1B0_D9160(u8 arg0) {
 	u8 effect;

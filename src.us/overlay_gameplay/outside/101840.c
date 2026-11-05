@@ -4367,8 +4367,6 @@ void func_800FDEA8_10CE58(Unk80052B2C *arg0, s32 arg1)
 	}
 }
 
-
-
 void func_800FE910_10D8C0(s32 arg0) {
 	func_800039D0_45D0(&D_8013FDA8_14ED58[arg0].unk8, 0, 0, D_8005BB38);
 }
