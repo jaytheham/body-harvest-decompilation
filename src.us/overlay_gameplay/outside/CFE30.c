@@ -4431,62 +4431,68 @@ void func_800CDD7C_DCD2C(s16 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
-void func_800CDDE4_DCD94(void) {
-	s16 index;
-	Gfx *gfx;
-
-	s16 scale[3];
-	u16 rotation[3];
-	Unk80052B40 translation;
-	Unk80052B40 *position;
-
-	scale[2] = 0x46; scale[2] = scale[2];
-	index = D_8015426A;
-
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-	gfx = D_8005BB2C++; gDPSetRenderMode(gfx, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
-	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
-
-	if ((index != -6) && (index != -5)) {
-		do {
-			gDPPipeSync(D_8005BB2C++);
-
-			position = &D_80154318[index].positionVector;
-			if (D_80154318[index].unk11 == 1) {
-				rotation[0] = 0;
-				rotation[1] = 0;
-				rotation[2] = 0x8000; rotation[2] = rotation[2];
-				scale[2] = 0x96; scale[1] = scale[2] & 0xFFFF; scale[0] = scale[2];
-			} else {
-				rotation[1] = 0;
-				rotation[0] = 0;
-				rotation[2] = 0; rotation[2] = rotation[2];
-				scale[2] = 0x46; scale[1] = scale[2] & 0xFFFF; scale[0] = scale[2];
-			}
-
-			translation.unk0 = position->unk0;
-			translation.unk2 = position->unk2;
-			translation.unk4 = position->unk4;
-
-			func_800039D0_45D0(&translation, (Unk80052B40 *)rotation, (Unk80052B40 *)scale, D_8005BB38);
-
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			gSPDisplayList(D_8005BB2C++, D_5033E00);
-			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-
-			index = D_80154318[index].unk4;
-			D_80156EDA += 0x1E;
-		} while ((index != -6) && (index != -5));
-	}
+void func_800CDDE4_DCD94(void)
+{
+  s16 index;
+  u16 new_var;
+  Gfx *gfx;
+  s16 scale[3];
+  u16 new_var2;
+  u16 rotation[3];
+  Unk80052B40 translation;
+  Unk80052B40 *position;
+  scale[2] = 0x46;
+  scale[2] = scale[2];
+  index = D_8015426A;
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetCycleType(D_8005BB2C++, 0 << 20);
+  gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
+  gfx = D_8005BB2C++;
+  gDPSetRenderMode(gfx, (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (1 << 18), (((((((((0x8 | 0x10) | 0x20) | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
+  gSPSetGeometryMode(D_8005BB2C++, 0x00000001 | 0x00020000);
+  if ((index != (-6)) && (index != (-5)))
+  {
+    do
+    {
+      gDPPipeSync(D_8005BB2C++);
+      position = &D_80154318[index].positionVector;
+      if (D_80154318[index].unk11 == 1)
+      {
+        rotation[0] = 0;
+        rotation[1] = 0;
+        rotation[2] = 0x8000;
+        new_var = rotation[2];
+        rotation[2] = new_var;
+        scale[2] = 0x96;
+        scale[1] = scale[2] & 0xFFFF;
+        scale[0] = scale[2];
+      }
+      else
+      {
+        rotation[1] = 0;
+        rotation[0] = 0;
+        rotation[2] = (index != (-6)) * 0;
+        new_var2 = rotation[2];
+        rotation[2] = new_var2;
+        scale[2] = 0x46;
+        scale[1] = scale[2] & 0xFFFF;
+        scale[0] = scale[2];
+      }
+      translation.unk0 = position->unk0;
+      translation.unk2 = position->unk2;
+      translation.unk4 = position->unk4;
+      func_800039D0_45D0(&translation, (Unk80052B40 *) rotation, (Unk80052B40 *) scale, D_8005BB38);
+      gSPMatrix(D_8005BB2C++, ((u32) (D_8005BB38++)) & 0x1FFFFFFF, (G_MTX_PUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
+      gSPDisplayList(D_8005BB2C++, D_5033E00);
+      gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+      index = D_80154318[index].unk4;
+      D_80156EDA += 0x1E;
+    }
+    while ((index != (-6)) && (index != (-5)));
+  }
 }
 
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800CDDE4_DCD94.s")
-#endif
 
 u8 func_800CE040_DCFF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5)
 {
