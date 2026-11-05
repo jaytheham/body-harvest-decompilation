@@ -485,8 +485,6 @@ extern s32 D_80034490_35090;
 extern s32 D_80034494_35094;
 extern s32 D_80034498_35098;
 extern s32 D_8003449C_3509C;
-extern s32 D_800344A0_350A0;
-extern u16 D_800344A2_350A2;
 extern s32 D_800344A4_350A4;
 extern NameRef D_800344B4_350B4[]; // English string table
 extern NameRef D_80034C44_35844[]; // French string table
@@ -1167,9 +1165,6 @@ extern u8 D_8006C56C;
 extern s8 D_8006C56D;
 extern s8 D_8006C56E;
 extern s32 D_8006C570;
-extern u16 D_8006C574;
-extern u16 D_8006C576;
-extern u32 D_8006C578;
 extern u8 D_8006C580[]; // comms ring buffer (8 entries x 0x28 bytes)
 extern u16 D_8006C6C4;
 extern u16 D_8006C6C6;

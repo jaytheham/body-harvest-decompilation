@@ -298,6 +298,7 @@ segments:
       - [0x3F490, .rodata, ../src.us/core/rsp_data]
 
       - {start: 0x40750, type: .fixed_bss, name: ../src.us/core/12C80, vram: 0x8006AB40}
+      - {start: 0x40750, type: .fixed_bss, name: ../src.us/core/17EE0, vram: 0x8006C5A0}
 
   - name: overlay_gameplay_frontend
     type: code
