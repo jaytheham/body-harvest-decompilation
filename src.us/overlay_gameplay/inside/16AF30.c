@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "overlay_gameplay/inside/16AF30.h"
 #include "core/1050.h"
 
 // AI - Lens flare glow texture pointers indexed by flare type (D_800FB6A2)
