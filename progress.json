@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-05T04:59:30Z",
-  "commit": "323ab160",
-  "commit_timestamp": "2026-11-05T17:58:37+13:00",
+  "generated": "2026-11-05T06:53:46Z",
+  "commit": "5025215f",
+  "commit_timestamp": "2026-11-05T19:52:42+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 2978,
@@ -121,7 +121,7 @@
       "asm_stubs": 0,
       "total": 4,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "core/12C80.c",
@@ -141,7 +141,7 @@
       "asm_stubs": 0,
       "total": 28,
       "matched_pct": 89.3,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "core/1B060.c",
@@ -171,7 +171,7 @@
       "asm_stubs": 0,
       "total": 2,
       "matched_pct": 100.0,
-      "contributor": "Meridian Lex"
+      "contributor": "jaytheham"
     },
     {
       "path": "core/53F0.c",
@@ -2241,7 +2241,7 @@
       "asm_stubs": 0,
       "total": 16,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/857E0.c",
@@ -2311,7 +2311,7 @@
       "asm_stubs": 0,
       "total": 10,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/B49C0.c",
@@ -2371,7 +2371,7 @@
       "asm_stubs": 0,
       "total": 8,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/F7870.c",
@@ -2431,7 +2431,7 @@
       "asm_stubs": 0,
       "total": 26,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/constData.c",
@@ -2461,7 +2461,7 @@
       "asm_stubs": 0,
       "total": 38,
       "matched_pct": 100.0,
-      "contributor": "lunarlaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/mutableData.c",
@@ -2597,9 +2597,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 89,
-      "matched": 2510,
-      "non_matching": 76,
+      "files": 97,
+      "matched": 2639,
+      "non_matching": 79,
       "asm_stubs": 0
     },
     {
@@ -2611,15 +2611,8 @@
     },
     {
       "name": "lunarlaurus",
-      "files": 11,
-      "matched": 131,
-      "non_matching": 3,
-      "asm_stubs": 0
-    },
-    {
-      "name": "Meridian Lex",
-      "files": 1,
-      "matched": 2,
+      "files": 4,
+      "matched": 4,
       "non_matching": 0,
       "asm_stubs": 0
     }
@@ -2900,7 +2893,7 @@
     },
     {
       "date": "2026-11-01",
-      "commit": "959752a",
+      "commit": "c0a9973",
       "matched": 2978,
       "non_matching": 79,
       "total": 3057
