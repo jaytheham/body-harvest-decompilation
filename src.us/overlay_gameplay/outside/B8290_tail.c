@@ -192,73 +192,72 @@ void func_800AB80C_BA7BC(u8 arg0) {
 
 void func_800AB8CC_BA87C(u8 arg0)
 {
-	AlienInstance *inst;
-	s32 parentHeight;
-	AlienInstance *parent;
-	s32 helper0;
-	s32 helper1;
-	s32 helper2;
-	u16 rand2[1];
-	u16 rand1;
-	u16 parentIndex;
-	inst = &alienInstances[arg0];
-	parentIndex = inst->unk25;
-	parent = &alienInstances[parentIndex];
-	parentHeight = parent->typeIndex;
-	if (parentHeight == 2)
-	{
-		inst->unk0 = parent->unk0;
-		inst->unk4 = parent->unk4;
-		if (parent->unk20 & ALIEN_FLAG_UNKF)
-		{
-			parentHeight = parent->unk2;
-			func_8008FF54_9EF04(parent->unk25, &helper0, &helper1, &helper2);
-			inst->unk2 = (parent->unk2C * (helper1 - parentHeight)) / 0xF;
-			inst->unk2 += parentHeight;
-		}
-		else
-		{
-			inst->unk2 = (((((f32)sins((arg0 + D_80052A8C) * 0x1388)) / 32768.0) * 4.0) + parent->unk2) - 4.0;
-		}
-	}
-	else if (parentHeight == 0x19)
-	{
-		func_8008FF54_9EF04(parentIndex, &helper0, &helper1, &helper2);
-		inst->unk0 = helper0;
-		inst->unk2 = helper1;
-		inst->unk4 = helper2;
-		if (parent->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
-		{
-			inst->unk2 += D_8014DD50[parent->unkC].unk2;
-		}
-		inst->unk2C++;
-		if ((inst->unk2C % 0xC) == 0)
-		{
-			if ((inst->unk24 == 1) || (inst->unk24 == 0x1D))
-			{
-				parentIndex = func_800038E0_44E0();
-				rand1 = func_800038E0_44E0();
-				rand2[0] = func_800038E0_44E0();
-				parentHeight = func_800038E0_44E0();
-				func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4, (parentIndex % 50) - 0x19, 0x50, (rand1 % 50) - 0x19, 0x19, 5, (rand2[0] % 8) + 0xC, (parentHeight % 0x23) + 0x69, 0, 0xFF, 0, 0xFF);
-			}
-			else
-			{
-				func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0xC8);
-			}
-		}
-	}
-	else
-	{
-		inst->unk24 = 0;
-		inst->unk20 |= ALIEN_FLAG_UNKF;
-		inst->unk2C = 0x64;
-	}
-	/* These discarded conversions preserve IDO's stack and register allocation. */
-	if ((f64)(s32)inst * (f64)(s32)inst) {}
-	if (((f32)((u32)parentIndex & 7) + (f32)((u32)parentIndex & 15) + (f32)((u32)parentIndex & 31) + (f64)(s32)inst) != 0.0f)
-	{
-	}
+  AlienInstance *inst;
+  s32 parentHeight;
+  AlienInstance *parent;
+  s32 helper0;
+  s32 helper1;
+  s32 helper2;
+  s32 parentIndex;
+  u16 rand1;
+  u16 rand2;
+  inst = &alienInstances[(s32) arg0];
+  parentIndex = inst->unk25;
+  parent = &alienInstances[parentIndex];
+  if (parent->typeIndex == 2)
+  {
+    inst->unk0 = parent->unk0;
+    inst->unk4 = parent->unk4;
+    parentHeight = parent->unk20;
+    if (parentHeight & ALIEN_FLAG_UNKF)
+    {
+      parentHeight = parent->unk2;
+      func_8008FF54_9EF04(parent->unk25, &helper0, &helper1, &helper2);
+      inst->unk2 = (parent->unk2C * (helper1 - parentHeight)) / 0xF;
+      inst->unk2 += parentHeight;
+    }
+    else
+    {
+      inst->unk2 = (((((f32) sins((arg0 + D_80052A8C) * 0x1388)) / 32768.0) * 4.0) + parent->unk2) - 4.0;
+    }
+  }
+  else
+    if (parent->typeIndex == 0x19)
+  {
+    func_8008FF54_9EF04(parentIndex, &helper0, &helper1, &helper2);
+    inst->unk0 = helper0;
+    inst->unk2 = helper1;
+    inst->unk4 = helper2;
+    if (parent->unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
+    {
+      inst->unk2 += D_8014DD50[parent->unkC].unk2;
+    }
+    inst->unk2C++;
+    if ((inst->unk2C % 0xC) == 0)
+    {
+      if ((inst->unk24 == 1) || (inst->unk24 == 0x1D))
+      {
+        parentIndex = (u16) func_800038E0_44E0();
+        rand1 = func_800038E0_44E0();
+        rand2 = func_800038E0_44E0();
+        parentHeight = func_800038E0_44E0();
+        func_800CA5EC_D959C(inst->unk0, inst->unk2, inst->unk4, (parentIndex % 50) - 0x19, 0x50, (rand1 % 50) - 0x19, 0x19, 5, (rand2 % 8) + 0xC, (parentHeight % 0x23) + 0x69, 0, 0xFF, 0, 0xFF);
+      }
+      else
+      {
+        func_800E05B4_EF564(inst->unk0, inst->unk2, inst->unk4, 0xC8);
+      }
+    }
+  }
+  else
+  {
+    inst->unk24 = 0;
+    inst->unk20 |= ALIEN_FLAG_UNKF;
+    inst->unk2C = 0x64;
+  }
+  if ((((((f32) (parentIndex & 7)) + ((f32) (parentIndex & 15))) + ((f32) (parentIndex & 31))) + ((f64) ((s32) inst))) != 0.0)
+  {
+  }
 }
 
 // AI - Stun knockback timer
