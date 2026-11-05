@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_80019ABC_1A6BC`, an external animation counter cached in a local uses `t4` instead of `t5`, the pipe-sync constant uses `t5` instead of `t4`, and the counter store follows the complete texture rectangle. Directly updating the external counter also introduces address/reload differences.
+
+-> `code changed`: Move the initialized byte counter from file scope into the rendering function as a function-local static, preserving its data position. Update it directly on the same source line as the following texture-load macro. Retain the word phase local followed by a byte reservation in the function's declarations. Pass the rectangle's upper-left coordinates first and its lower-right coordinates last to `gSPTextureRectangle`.
+
+-> `correct ASM`: The counter loads into `t5`, the pipe-sync constant uses `t4`, and `sb t5,0x44a8(at)` appears at ROM `0x1AA28`, between the rectangle packet and its half commands. The palette macro's pointer spills to `sp+0x18` in the required `0x48` frame. The US and EU ROM checksums both pass.
