@@ -731,17 +731,15 @@ void func_80018D7C_1997C(u16 arg0) {
 	}
 }
 
-// CURRENT(5760)
-#ifdef NON_MATCHING
 void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	Unk800190D4 *entry;
 	u8 *texture;
-	s32 sp12C;
-	s32 sp128;
-	s32 pad0;
-	s32 pad1;
-	u16 sp2C;
-	u16 sp28;
+	s32 eyeX;
+	s32 eyeY;
+	s32 mouthX;
+	s32 mouthY;
+	u16 pad2;
+	u16 pad3;
 	u16 portraitIndex;
 
 	portraitIndex = arg2;
@@ -772,51 +770,47 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 		texture = D_80265A80;
 		break;
 	default:
-		entry = &D_8003429C_34E9C[D_80034453_35053[currentLevel] + portraitIndex - 1];
-		texture = (u8 *)((portraitIndex * 0x1600) + D_80034470_35070 - 0x1600);
+		entry = &D_8003429C_34E9C[D_80034454_35054[currentLevel - 1] + portraitIndex - 1];
+		texture = &((u8 *)(portraitIndex * 0x1600 + D_80034470_35070))[-0x1600];
 		break;
 	}
 
 	gDPPipeSync(D_8005BB2C++);
-	gDPLoadTLUT_pal256(D_8005BB2C++, texture + 0x1400);
+	gDPLoadTLUT_pal256(D_8005BB2C++, &texture[0x1400]);
 	gDPLoadTextureBlock(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPTextureRectangle(D_8005BB2C++, arg0 << 2, arg1 << 2, (arg0 + 0x40) << 2, (arg1 + 0x20) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
-	gDPLoadTextureBlock(D_8005BB2C++, texture + 0x800, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+	gDPLoadTextureBlock(D_8005BB2C++, &texture[0x800], G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gSPTextureRectangle(D_8005BB2C++, arg0 << 2, (arg1 + 0x20) << 2, (arg0 + 0x40) << 2, (arg1 + 0x40) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
 	if ((entry->unk0 != 0) && (entry->unk2 != 0) && (arg3 != 0)) {
-		sp12C = entry->unk0 + arg0;
-		sp128 = entry->unk2 + arg1;
+		eyeX = entry->unk0 + arg0;
+		eyeY = entry->unk2 + arg1;
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 64, texture);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 5, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
 		gDPLoadTile(D_8005BB2C++, G_TX_LOADTILE, 0, 64 << 2, 32 << 2, 80 << 2);
 		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 8, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 5, 0, G_TX_RENDERTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 64 << 2, 32 << 2, 80 << 2);
-		gSPTextureRectangle(D_8005BB2C++, sp12C << 2, sp128 << 2, (sp12C + 0x20) << 2, (sp128 + 0x10) << 2, G_TX_RENDERTILE, 0, 64 << 5, 1 << 10, 1 << 10);
+		gSPTextureRectangle(D_8005BB2C++, eyeX << 2, eyeY << 2, (eyeX + 0x20) << 2, (eyeY + 0x10) << 2, G_TX_RENDERTILE, 0, 64 << 5, 1 << 10, 1 << 10);
 	}
 
-	sp2C = entry->unk4;
-	if ((sp2C != 0) && (sp28 = entry->unk6, sp28 != 0)) {
+	if ((entry->unk4 != 0) && (entry->unk6 != 0)) {
 		if (arg4 == 1) {
-			sp12C = sp2C + arg0;
-			sp128 = sp28 + arg1;
+			mouthX = entry->unk4 + arg0;
+			mouthY = entry->unk6 + arg1;
 			gDPLoadTextureTile(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 80, 32, 64, 48, 80, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-			gSPTextureRectangle(D_8005BB2C++, sp12C << 2, sp128 << 2, (sp12C + 0x10) << 2, (sp128 + 0x10) << 2, G_TX_RENDERTILE, 32 << 5, 64 << 5, 1 << 10, 1 << 10);
+			gSPTextureRectangle(D_8005BB2C++, mouthX << 2, mouthY << 2, (mouthX + 0x10) << 2, (mouthY + 0x10) << 2, G_TX_RENDERTILE, 32 << 5, 64 << 5, 1 << 10, 1 << 10);
 			return;
 		}
 		if (arg4 == 2) {
-			sp12C = sp2C + arg0;
-			sp128 = sp28 + arg1;
+			mouthX = entry->unk4 + arg0;
+			mouthY = entry->unk6 + arg1;
 			gDPLoadTextureTile(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 80, 48, 64, 64, 80, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-			gSPTextureRectangle(D_8005BB2C++, sp12C << 2, sp128 << 2, (sp12C + 0x10) << 2, (sp128 + 0x10) << 2, G_TX_RENDERTILE, 48 << 5, 64 << 5, 1 << 10, 1 << 10);
+			gSPTextureRectangle(D_8005BB2C++, mouthX << 2, mouthY << 2, (mouthX + 0x10) << 2, (mouthY + 0x10) << 2, G_TX_RENDERTILE, 48 << 5, 64 << 5, 1 << 10, 1 << 10);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/17EE0/func_800190D4_19CD4.s")
-#endif
 
 void func_80019ABC_1A6BC(arg0, arg1)
 s32 arg0;
