@@ -305,7 +305,7 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
-// CURRENT(1537)
+// CURRENT(882)
 // AI - Sets D_80157F58/D_80157F5C/D_80157F60/D_80157F68 from the arguments, calls func_800F02EC_FF29C, then switch-selects D_80157586/D_80157588/D_8015758A from
 #ifdef NON_MATCHING
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
@@ -336,10 +336,10 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
       break;
 
     case 2:
-      D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (*((u16 *) (&D_80159DE0)));
+      D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (*(&D_80159DE0));
       D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
       D_80157588 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
-      D_8015758A = (buildingInstances[entryS16[7]].zCoord >> 2) + (*((u16 *) (&D_80159DE4)));
+      D_8015758A = (*((u16 *) (&D_80159DE4))) + (buildingInstances[entryS16[7]].zCoord >> 2);
       break;
 
     case 3:
