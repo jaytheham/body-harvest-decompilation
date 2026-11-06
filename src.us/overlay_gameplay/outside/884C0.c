@@ -2550,7 +2550,7 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
-// CURRENT(91)
+// CURRENT(51)
 // AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
@@ -2564,6 +2564,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	s16 zA;
 	s16 xB;
 	s16 zB;
+	u8 new_var2;
 	s32 scratch;
 	s32 recurseFlag;
 	s32 moved;
@@ -2590,7 +2591,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	}
 
 
-	if ((((alienInstances[arg0].unk0 != alienInstances[arg0].unk2E) || (alienInstances[arg0].unk2 != alienInstances[arg0].unk30)) || (alienInstances[arg0].unk4 != alienInstances[arg0].unk32)) || (arg2 == ((0x1A == otherTypeIndex) * 0))) {
+	new_var2 = otherTypeIndex;
+	if ((((alienInstances[arg0].unk0 != alienInstances[arg0].unk2E) || (alienInstances[arg0].unk2 != alienInstances[arg0].unk30)) || (alienInstances[arg0].unk4 != alienInstances[arg0].unk32)) || (arg2 == ((0x1A == new_var2) * 0))) {
 
 		if (alienTypes[typeIndex].unk54 & 0x20) {
 			collisionCheck = func_800836D0_92680(selfIndex, &xA, &zA);
@@ -2705,13 +2707,12 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			/* Keep the type pointer ahead of the active index in IDO's cache. */
 			if ((u32)otherType * 0) {}
 
-			if (!(otherType->unk54 & 4) || (i == selfIndex) || (other->unk47 & 0x80)) {
+			if (((!(otherType->unk54 & 4)) || (i == selfIndex)) || ((&alienInstances[i])->unk47 & 0x80)) {
 				arg1++;
 				continue;
 			}
 
-			if ((((0x1A == otherTypeIndex) || ((otherTypeIndex >= 0x1B) && (otherTypeIndex < 0x20))) && (alienInstances[arg0].unk20 & ALIEN_FLAG_X)) ||
-				(((0x1A == typeIndex) || ((typeIndex >= 0x1B) && (typeIndex < 0x20))) && (other->unk20 & ALIEN_FLAG_X))) {
+			if ((((0x1A == otherTypeIndex) || ((otherTypeIndex >= 0x1B) && (otherTypeIndex < 0x20))) && (alienInstances[arg0].unk20 & ALIEN_FLAG_X)) || (((0x1A == typeIndex) || ((typeIndex >= 0x1B) && (typeIndex < 0x20))) && ((&alienInstances[i])->unk20 & ALIEN_FLAG_X))) {
 				arg1++;
 				continue;
 			}
@@ -2735,15 +2736,15 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			recurseFlag = 1;
 
 			if (alienInstances[arg0].unk20 & ALIEN_FLAG_FALL) {
-				if (((alienInstances[arg0].unk2 < other->unk2) && (alienInstances[arg0].unk10 > 0)) || ((other->unk2 < alienInstances[arg0].unk2) && (alienInstances[arg0].unk10 < 0))) {
+				if (((alienInstances[arg0].unk2 < other->unk2) && (alienInstances[arg0].unk10 > 0)) || (((&alienInstances[i])->unk2 < alienInstances[arg0].unk2) && (alienInstances[arg0].unk10 < 0))) {
 					alienInstances[arg0].unk10 = 0;
 				}
 			}
 			func_8007ED9C_8DD4C(selfIndex);
 
-			if (other->unk20 & ALIEN_FLAG_FALL) {
-				if (((other->unk2 < alienInstances[arg0].unk2) && (other->unk10 > 0)) || ((alienInstances[arg0].unk2 < other->unk2) && (other->unk10 < 0))) {
-					other->unk10 = 0;
+			if ((&alienInstances[i])->unk20 & ALIEN_FLAG_FALL) {
+				if ((((&alienInstances[i])->unk2 < alienInstances[arg0].unk2) && ((&alienInstances[i])->unk10 > 0)) || ((alienInstances[arg0].unk2 < (&alienInstances[i])->unk2) && ((&alienInstances[i])->unk10 < 0))) {
+					(&alienInstances[i])->unk10 = 0;
 				}
 			}
 			func_8007ED9C_8DD4C(i);
