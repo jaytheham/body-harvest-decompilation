@@ -759,10 +759,12 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(31662)
+// CURRENT(26238)
+// AI - Renders D_8015EB90 Projectile sparks/trails and D_8015F9F8 fades using GBI calls and func_800C1ECC.
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
+	Vtx *new_var2;
 	Unk80052B40 fadeVec;
 
 	s16 pos[2];
@@ -904,8 +906,9 @@ void func_80124D60_133D10(void) {
 				D_8005BB34->v.tc[1] = 0;
 				D_8005BB34->v.cn[0] = color[3];
 				D_8005BB34->v.cn[1] = trailColor[7];
+				new_var2 = D_8005BB34;
 				D_8005BB34->v.cn[2] = trailColor[8];
-				D_8005BB34->v.cn[3] = trailColor[9];
+				new_var2->v.cn[3] = trailColor[9];
 				D_8005BB34++;
 
 				gDPPipeSync(D_8005BB30++);
