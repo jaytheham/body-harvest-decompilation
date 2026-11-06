@@ -293,7 +293,7 @@ void func_800F02EC_FF29C(s16 arg0)
 }
 
 // CURRENT(882)
-// AI - Sets D_80157F58/D_80157F5C/D_80157F60/D_80157F68 from the arguments, calls func_800F02EC_FF29C, then switch-selects D_80157586/D_80157588/D_8015758A from
+// AI - Sets D_80157F58/D_80157F5C/D_80157F60/D_80157F68 from the arguments, calls func_800F02EC_FF29C
 #ifdef NON_MATCHING
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
 {

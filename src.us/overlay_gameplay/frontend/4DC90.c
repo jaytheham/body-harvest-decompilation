@@ -1073,7 +1073,7 @@ void func_80080588_50A38(u8 arg0) {
 }
 
 // CURRENT(605)
-// AI - Iterates over arg3 AnimChannelState entries in arg1, interpolating rotation/position fields toward target fields by fraction arg2/(unk20-unk1C), advancing
+// AI - Iterates over arg3 AnimChannelState entries in arg1, interpolating rotation/position fields toward target fields by fraction arg2/(unk20-unk1C)
 #ifdef NON_MATCHING
 void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3)
 {

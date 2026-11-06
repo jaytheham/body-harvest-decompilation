@@ -2551,7 +2551,7 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 }
 
 // CURRENT(91)
-// AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680, checks vehicle hits with
+// AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	u8 selfIndex;

@@ -2122,7 +2122,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #endif
 
 // CURRENT(870)
-// AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1, using D_801601F0 limb data and sin/cos to build transforms and display-list matrices via
+// AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
 	UnkF9230ShadowWalker *walker;
