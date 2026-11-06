@@ -2185,7 +2185,7 @@ s32 func_8007E500_8D4B0(EntityInstance *arg0, EntityType *arg1, EntityInstance *
 	return 0;
 }
 
-#ifdef NON_MATCHING
+// AI - Picks alienTypes/vehicleTypes via arg1->unkD/unk1A, saves/restores unk8, calls func_8007E500_8D4B0.
 s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 	AlienType *type0;
 	EntityType *type1;
@@ -2193,12 +2193,13 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 	u32 saved1;
 	s32 result;
 	s32 vehicleState;
+	int new_var;
 	s32 state;
 
 	type0 = &alienTypes[arg0->typeIndex];
 	vehicleState = -2;
 	state = arg1->unkD;
-	if (vehicleState == state) {
+	if (vehicleState == (state ^ 0)) {
 		type1 = (EntityType *)&vehicleTypes[arg1->unk1A];
 	} else {
 		type1 = (EntityType *)&alienTypes[arg1->unk1A];
@@ -2208,7 +2209,7 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 	if (vehicleState != state) {
 		state = currentLevel;
 		if (state == 1) {
-			if (((arg0->typeIndex != 0xD) || (arg1->unk1A == 9)) && (arg1->unk1A == 0xD) && (arg0->typeIndex != 9)) {
+			if (((arg0->typeIndex != 0xD) || (arg1->unk1A == 9)) && (new_var = arg1->unk1A == 0xD) && (arg0->typeIndex != 9)) {
 			}
 		} else if (state == 2) {
 			/* Preserve the original empty debug guards. */
@@ -2221,14 +2222,10 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 		}
 	}
 	result = func_8007E500_8D4B0((EntityInstance *)arg0, (EntityType *)type0, arg1, type1);
-	type0->unk8 = saved0;
+	type0->unk8 = (u64) saved0;
 	type1->unk8 = saved1;
 	return result;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007E608_8D5B8.s")
-#endif
 
 s32 func_8007E734_8D6E4(AlienInstance *arg0, s16 arg1)
 {
