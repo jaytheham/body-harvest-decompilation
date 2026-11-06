@@ -559,6 +559,8 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
+// CURRENT(5192)
+// AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	TileEntry *tile; Level *level;
@@ -639,8 +641,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				tileGroup >>= 3;
 
 				if (selected == tileGroup) {
-					tileGroup = D_8013D510_14C4C0 << 4;
-					bright = tileGroup % modBase;
+					tileGroup = D_8013D510_14C4C0 << 4; bright = tileGroup % modBase;
 					alpha0 = bright;
 					alpha2 = (tileGroup + 0x200) % 0x1FF;
 					if (alpha0 >= 0x100) {
@@ -664,9 +665,9 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 					v3->v.cn[2] = alpha2;
 					v2->v.cn[2] = alpha2;
 					v1->v.cn[2] = alpha2;
-					v0->v.cn[2] = alpha2;
 
 					selected = 0xFF; bright = selected;
+					v0->v.cn[2] = alpha2;
 				} else {
 					v3->v.cn[0] = color0;
 					v2->v.cn[0] = color0;
