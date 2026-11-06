@@ -2550,7 +2550,7 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
-// CURRENT(480)
+// CURRENT(91)
 // AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680, checks vehicle hits with
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
@@ -2568,8 +2568,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	s32 recurseFlag;
 	s32 moved;
 	AlienInstance *other;
-	u8 *new_var;
 	s32 collisionCheck;
+	u8 *new_var;
 	AlienType *otherType;
 
 	selfIndex = arg0;
@@ -2590,7 +2590,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	}
 
 
-	if ((alienInstances[arg0].unk0 != alienInstances[arg0].unk2E) || (alienInstances[arg0].unk2 != alienInstances[arg0].unk30) || (alienInstances[arg0].unk4 != alienInstances[arg0].unk32) || (arg2 == 0)) {
+	if ((((alienInstances[arg0].unk0 != alienInstances[arg0].unk2E) || (alienInstances[arg0].unk2 != alienInstances[arg0].unk30)) || (alienInstances[arg0].unk4 != alienInstances[arg0].unk32)) || (arg2 == ((0x1A == otherTypeIndex) * 0))) {
 
 		if (alienTypes[typeIndex].unk54 & 0x20) {
 			collisionCheck = func_800836D0_92680(selfIndex, &xA, &zA);
@@ -2728,6 +2728,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 			func_8007EB74_8DB24(&alienInstances[arg0], other);
 			if (arg2 == 0) {
+				if (0) { }
 				return 1;
 			}
 
