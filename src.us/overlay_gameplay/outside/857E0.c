@@ -86,6 +86,8 @@ void func_800769A8_85958(s32 arg0) {
 	D_8014D298[arg0] = D_8014D298[D_8014D2EC = D_8014D2EC - 1];
 }
 
+// CURRENT(2997)
+// AI - Spawns D_80259D90 entries from D_80221A30/D_8021FA30 patterns via func_80076830_857E0 and func_800B84D0_C7480.
 #ifdef NON_MATCHING
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	s32 pattern;
@@ -125,7 +127,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 		return;
 	}
 
-	pattern = D_80221A30[arg2][arg1];
+	pattern = D_80221A30[arg2][arg1] & 0xFF;
 	if (pattern == 0xFF) {
 		return;
 	}
