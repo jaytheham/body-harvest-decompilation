@@ -1573,7 +1573,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
 	rowWrap = 0; do { new_var = indexByte[0]; ringRow = D_80151DD8.tiles[new_var];
-	shade = ((EffectRgb (*)[19]) D_80152740)[new_var];
+	shade = ((EffectRgb (*)[19])D_80152740)[new_var];
 		worldBaseY = (s16)((color2 - 0x80) << 8);
 		edgeParityY = color2 % 2;
 		ringCol = 0;
@@ -1614,24 +1614,12 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			if (shade[col].r != 0) {
 				component = shade[col].r + (*new_var2)[0];
 				if (component > 255) component = 255;
-				{
-				}
-				{
-				}
 				rgb[0] = component;
 				component = shade[col].g + tileCenter->color[1];
 				if (component > 255) component = 255;
-				{
-				}
-				{
-				}
 				rgb[1] = component;
 				component = shade[col].b + (*new_var2)[2];
 				if (component > 255) component = 255;
-				{
-				}
-				{
-				}
 				rgb[2] = component;
 			} else {
 				rgb[0] = tileCenter->color[0];
