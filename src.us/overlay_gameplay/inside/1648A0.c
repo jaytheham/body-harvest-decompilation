@@ -2368,22 +2368,23 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s", "src.us/overlay_gameplay/inside/1648A0_player_update_late_rodata.s")
 #endif
 
-// CURRENT(10096)
 // AI - Draw shadow/floor marker quad beneath the player
-#ifdef NON_MATCHING
 void func_8007EB1C_166BDC(void *arg0) {
 	s16 sp2E;
 	s16 sp2C;
-	s16 temp_y;
 	s16 sp2A;
+	char new_var;
+	s16 temp_y;
+	int new_var2;
 	s16 temp_a2;
+	Gfx *new_var3;
 	s16 temp_a3;
 	s16 temp_t0;
 	s16 temp_t1;
 	u8 temp_v0;
 	sp2E = (s16) (s32) ((f64) (((VehicleInstance *)arg0)->unk4C - 96.0f) + 0.5);
-	sp2A = (s16) (s32) ((f64) (((VehicleInstance *)arg0)->unk54 - 96.0f) + 0.5);
 	sp2C = (s16) (s32) (((VehicleInstance *)arg0)->unk50 + 2.0f);
+	sp2A = (s16) (s32) ((f64) (((VehicleInstance *)arg0)->unk54 - 96.0f) + 0.5);
 	temp_v0 = func_800717A8_159868();
 	temp_y = sp2C;
 	temp_a2 = sp2E - 0x14;
@@ -2405,9 +2406,10 @@ void func_8007EB1C_166BDC(void *arg0) {
 	D_8005BB34->v.ob[2] = temp_a3;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
+	new_var2 = 1;
 	D_8005BB34->v.tc[1] = 0x800;
 	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
+	D_8005BB34->v.cn[new_var2] = 0;
 	D_8005BB34->v.cn[2] = 0;
 	D_8005BB34->v.cn[3] = temp_v0;
 	D_8005BB34++;
@@ -2437,28 +2439,31 @@ void func_8007EB1C_166BDC(void *arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+	new_var3 = D_8005BB2C++;
+	do { } while (0);
+	gDPSetRenderMode(new_var3, G_RM_AA_ZB_XLU_SURF, G_RM_AA_ZB_XLU_SURF2);
+	new_var = 0;
 	gDPSetCombineLERP(D_8005BB2C++, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0, 1, 0, SHADE, 0, TEXEL0, 0, SHADE, 0);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, new_var, G_TX_RENDERTILE, G_ON);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPLoadSync(D_8005BB2C++);
-	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 1, &D_8009CE60_184F20);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0x050, 1, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, &D_8009CE60_184F20);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, 1, 0, 0, 0x1FF, 0x200);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 0x1FF, 0x200);
 	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 2, 0x050, 0, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 4, 0, G_TX_RENDERTILE, 0, G_TX_WRAP, 5, G_TX_NOLOD, G_TX_WRAP, 5, G_TX_NOLOD);
 	gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 0x7C, 0x7C);
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	{
+		Gfx *gfx = D_8005BB2C++;
+		gDPSetRenderMode(gfx, G_RM_AA_ZB_OPA_SURF, G_RM_AA_ZB_OPA_SURF2);
+	}
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007EB1C_166BDC.s")
-#endif
 
 // CURRENT(12777)
 // AI - Render player character model with full matrix setup and damage flash
