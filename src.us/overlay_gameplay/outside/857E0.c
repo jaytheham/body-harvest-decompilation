@@ -86,7 +86,7 @@ void func_800769A8_85958(s32 arg0) {
 	D_8014D298[arg0] = D_8014D298[D_8014D2EC = D_8014D2EC - 1];
 }
 
-// CURRENT(2997)
+// CURRENT(2163)
 // AI - Spawns D_80259D90 entries from D_80221A30/D_8021FA30 patterns via func_80076830_857E0 and func_800B84D0_C7480.
 #ifdef NON_MATCHING
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
@@ -159,7 +159,8 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 					entry->unk6 = z;
 
 					if (type < 0xE) {
-						spA8.unk0 = x, spA8.unk4 = z, spA8.unk2 = (s16) (func_800B84D0_C7480_4Args(x, z, zOff, z) >> 8);
+						pattern = (spA8.unk0 = x);
+						pattern, spA8.unk4 = z, spA8.unk2 = (s16) (func_800B84D0_C7480_4Args(x, z, zOff, z) >> 8);
 						x = spA8.unk0;
 						z = spA8.unk4;
 						entry->unk8 = (void*)D_80222A30[type];
@@ -169,7 +170,8 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						temp = temp % 32 + 240;
 						sp98.unk0 = temp;
 						sp98.unk4 = temp;
-						sp98.unk2 = ((((z * 0x41C64E6D + 0x3039) >> 16) / 256) % 32) + 240;
+						sp98.unk2 = 256;
+						sp98.unk2 = (((((z * 0x41C64E6D) + 0x3039) >> 16) / sp98.unk2) % 32) + 240;
 
 						if (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2) {
 							spA0.unk0 = inner << 0xE;
@@ -178,7 +180,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 					} else {
 						spA8.unk0 = x;
 						spA8.unk4 = z;
-						xOff -= 0x8000;
+						xOff = xOff - 0x8000;
 						zOff -= 0x8000;
 						if ((inner == 0) || (inner == 3)) {
 							c0 = 0xFF;
@@ -219,8 +221,9 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						vertexZ = D_801416C0_150670[inner][1] + zOff;
 						entry->vertices[1].v.tc[1] = (temp << 0xB) - 0x20;
 						entry->vertices[1].v.cn[3] = 0xFF;
+						x = c1;
 						entry->vertices[1].v.cn[2] = c2;
-						entry->vertices[1].v.cn[1] = c1;
+						entry->vertices[1].v.cn[1] = x;
 						entry->vertices[1].v.cn[0] = c0;
 
 						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
@@ -229,7 +232,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						entry->vertices[2].v.ob[1] = tempTable->height + temp;
 						entry->vertices[2].v.flag = 0;
 						entry->vertices[2].v.ob[2] = vertexZ;
-						entry->vertices[2].v.tc[0] = tempTable->width << 0xB;
+						entry->vertices[2].v.tc[0] = (tempTable->width << 3) << 8;
 						entry->vertices[2].v.cn[3] = 0xFF;
 						entry->vertices[2].v.cn[2] = c2;
 						entry->vertices[2].v.cn[1] = c1;
@@ -240,8 +243,8 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						entry->vertices[3].v.ob[2] = vertexZ;
 						entry->vertices[3].v.ob[1] = temp;
 						entry->vertices[3].v.ob[0] = vertexX;
-						entry->vertices[3].v.tc[0] = tempTable->width << 0xB;
-						entry->vertices[3].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
+						entry->vertices[3].v.tc[0] = (tempTable->width << 10) << 1;
+						entry->vertices[3].v.tc[1] = ((tempTable->scale << 1) << 10) - 0x20;
 						entry->vertices[3].v.cn[3] = 0xFF;
 						entry->vertices[3].v.cn[2] = c2;
 						entry->vertices[3].v.cn[1] = c1;
