@@ -1072,6 +1072,8 @@ void func_80080588_50A38(u8 arg0) {
 	}
 }
 
+// CURRENT(605)
+// AI - Iterates over arg3 AnimChannelState entries in arg1, interpolating rotation/position fields toward target fields by fraction arg2/(unk20-unk1C), advancing
 #ifdef NON_MATCHING
 void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3)
 {
@@ -1120,9 +1122,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 				target[1] = (((f32)channel->unk2C) * degrees) / units;
 				target[2] = (((f32)channel->unk2E) * degrees) / units;
 				rotation[0] = (((f32)channel->unk0) * degrees) / units;
-
 				rotation[1] = (((f32)channel->unk2) * degrees) / units;
-
 				rotation[2] = (((f32)channel->unk4) * degrees) / units;
 				rotation[0] += ((target[0] - rotation[0]) * fraction);
 				rotation[1] = rotation[1] + ((target[1] - rotation[1]) * fraction);
@@ -1156,6 +1156,8 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 				channel->unk1C += arg2;
 				if (channel->unk1C >= channel->unk20)
 				{
+					if (1)
+					{
 					channel->unk8 = channel->unk24;
 					channel->unk10 = x;
 					channel->unk18++;
@@ -1163,7 +1165,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 					channel->unk2 = channel->unk2C;
 					channel->unkC = channel->unk26;
 					channel->unk4 = channel->unk2E;
-					if (channel->unk14 == channel->unk18)
+					if ((*channel).unk14 == channel->unk18)
 					{
 						channel->unk14 = 0;
 						channel->unk18 = 0;
@@ -1178,7 +1180,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 					}
 				}
 			}
-			i = (i + 1) & 0xFF;
+		} i = (i + 1) & 0xFF;
 		} while (i != arg3);
 	}
 }
