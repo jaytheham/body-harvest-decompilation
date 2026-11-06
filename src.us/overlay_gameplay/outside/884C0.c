@@ -1789,8 +1789,11 @@ void func_8007D424_8C3D4(void) {
 	} while (idx < 0xFF);
 }
 
+// CURRENT(9860)
+// AI - Iterates alienInstances via D_8014D510/D_8014ECCC, updating flags and ground using func_800B84D0_C7480.
 #ifdef NON_MATCHING
 void func_8007D690_8C640(void) {
+	AlienInstance *new_var;
 	s16 groundHeight;
 	f32 bobScale;
 	/* Retain the target snapshot store and post-helper reload. */
@@ -1861,7 +1864,7 @@ void func_8007D690_8C640(void) {
 								typeFlags = type->unkC;
 								bobScale = 4.0f;
 								if (typeFlags >= 0x65) {
-									bobScale = (f32) (bobScale * (((f64) (typeFlags - 0x64) / 50.0) + 1.0));
+									bobScale = (f32) (bobScale * ((((f64) (typeFlags - 0x64)) / 50.0) + ((long) 1.0)));
 								}
 							} else {
 								bobScale = 0.0f;
@@ -2035,7 +2038,7 @@ void func_8007D690_8C640(void) {
 
 								if (alien->unk48 != 0) {
 									func_80137468_146418(alienIndex, 0x15);
-									alien->unk48 = alien->unk48 - 1;
+									(new_var = alien)->unk48 = alien->unk48 - 1;
 								}
 							}
 
