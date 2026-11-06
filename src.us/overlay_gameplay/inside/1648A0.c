@@ -2368,7 +2368,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s", "src.us/overlay_gameplay/inside/1648A0_player_update_late_rodata.s")
 #endif
 
-// CURRENT(2610)
+// CURRENT(1390)
 // AI - Draw shadow/floor marker quad beneath the player
 #ifdef NON_MATCHING
 void func_8007EB1C_166BDC(void *arg0)
@@ -2383,8 +2383,9 @@ void func_8007EB1C_166BDC(void *arg0)
   s16 temp_t1;
   u8 temp_v0;
   sp2E = (s16) ((s32) (((f64) (((VehicleInstance *) arg0)->unk4C - 96.0f)) + 0.5));
+  temp_v0 = (s16) ((s32) (((VehicleInstance *) arg0)->unk50 + 2.0f));
   sp2A = (s16) ((s32) (((f64) (((VehicleInstance *) arg0)->unk54 - 96.0f)) + 0.5));
-  sp2C = (s16) ((s32) (((VehicleInstance *) arg0)->unk50 + 2.0f));
+  sp2C = temp_v0;
   temp_v0 = func_800717A8_159868();
   temp_y = sp2C;
   temp_a2 = sp2E - 0x14;
@@ -2414,7 +2415,7 @@ void func_8007EB1C_166BDC(void *arg0)
   D_8005BB34++;
   D_8005BB34->v.ob[0] = temp_t0;
   D_8005BB34->v.ob[1] = temp_y;
-  temp_t1 = sp2A + 0x14;
+  temp_t1 = 0x14 + sp2A;
   D_8005BB34->v.ob[2] = temp_t1;
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
