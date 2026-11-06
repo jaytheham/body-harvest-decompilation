@@ -1012,16 +1012,15 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 	return arg3;
 }
 
-#ifdef NON_MATCHING
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
+    f32 z, x, y;
+    f32 elapsed, duration;
     f32 targetRotation[3];
     f32 rotation[3];
-    f32 rotationCopy[3];
-    f32 z, x, y;
-    f32 elapsed, duration, fraction;
+    f32 fraction;
     f32 scale;
     f64 units, degrees;
-    s32 i;
+    u8 i;
     AnimChannelState *channel;
 
     i = 0;
@@ -1030,25 +1029,24 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
         units = 4096.0;
         if (scale) { }
         if (units) { }
-        degrees = D_80037610_38210_R;
+        degrees = 180.0;
         do {
             channel = &arg1[i];
             if (channel->unk14 != 0) {
                 elapsed = channel->unk1C;
                 duration = channel->unk20;
                 fraction = arg3 / (duration - elapsed);
+                y = fraction;
+                x = fraction;
                 targetRotation[0] = ((f32)channel->unk2A * degrees) / units;
                 targetRotation[1] = ((f32)channel->unk2C * degrees) / units;
                 targetRotation[2] = ((f32)channel->unk2E * degrees) / units;
                 rotation[0] = ((f32)channel->unk0 * degrees) / units;
-                rotationCopy[0] = targetRotation[0];
                 rotation[1] = ((f32)channel->unk2 * degrees) / units;
-                rotationCopy[1] = targetRotation[1];
-                rotationCopy[2] = targetRotation[2];
                 rotation[2] = ((f32)channel->unk4 * degrees) / units;
-                rotation[0] = ((rotationCopy[0] - rotation[0]) * fraction) + rotation[0];
-                rotation[1] = ((rotationCopy[1] - rotation[1]) * fraction) + rotation[1];
-                rotation[2] = ((rotationCopy[2] - rotation[2]) * fraction) + rotation[2];
+                rotation[0] = rotation[0] + ((targetRotation[0] - rotation[0]) * y);
+                rotation[1] = rotation[1] + ((targetRotation[1] - rotation[1]) * y);
+                rotation[2] = rotation[2] + ((targetRotation[2] - rotation[2]) * x);
                 x = channel->unk8;
                 y = channel->unkC;
                 z = channel->unk10;
@@ -1062,12 +1060,12 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
                 channel->unk1C += arg3;
                 if (channel->unk20 <= channel->unk1C) {
                     channel->unk8 = channel->unk24;
+                    channel->unkC = ((volatile AnimChannelState *)channel)->unk26;
                     channel->unk10 = x;
-                    channel->unk18++;
                     channel->unk0 = channel->unk2A;
                     channel->unk2 = channel->unk2C;
-                    channel->unkC = channel->unk26;
                     channel->unk4 = channel->unk2E;
+                    channel->unk18++;
                     if (channel->unk14 == channel->unk18) {
                         channel->unk14 = 0;
                         channel->unk18 = 0;
@@ -1079,13 +1077,10 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
                     }
                 }
             }
-            i = (i + 1) & 0xFF;
+            i++;
         } while (arg2 != i);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
-#endif
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
 	arg0->unkE50 = 0;

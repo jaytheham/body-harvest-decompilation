@@ -18,6 +18,3 @@ glabel D_80037600_38200
 glabel D_80037608_38208
 .double 0.0
 
-glabel D_80037610_38210
-.double 180.0
-
