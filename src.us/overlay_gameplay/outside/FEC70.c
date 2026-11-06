@@ -25,19 +25,6 @@ const f64 D_80144600_1535B0[1] = {360.0};
 const f64 D_80144608_1535B8[1] = {6.283185307};
 const f64 D_80144610_1535C0[1] = {360.0};
 
-const u32 jtbl_80144618_1535C8[] = {
-	OVERLAY_PTR(0x800F106C), OVERLAY_PTR(0x800F107C), OVERLAY_PTR(0x800F108C), OVERLAY_PTR(0x800F109C), OVERLAY_PTR(0x800F10AC)
-};
-
-const f32 D_8014462C_1535DC[1] = {0.3f};
-
-const u32 jtbl_80144630_1535E0[] = {
-	OVERLAY_PTR(0x800F12B0), OVERLAY_PTR(0x800F1394), OVERLAY_PTR(0x800F14C8), OVERLAY_PTR(0x800F1578), OVERLAY_PTR(0x800F16C8),
-	OVERLAY_PTR(0x800F1798), OVERLAY_PTR(0x800F1988), OVERLAY_PTR(0x800F1B58), OVERLAY_PTR(0x800F1D18), OVERLAY_PTR(0x800F1D90)
-};
-
-const f32 D_80144658_153608[1] = {0.8f};
-
 u32 D_8013FCC4_14EC70[1] = {(u32)&vehicleInstances[63]};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
 
@@ -563,7 +550,6 @@ s32 func_800F066C_FF61C(void) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F066C_FF61C.s")
 #endif
 
-#ifdef NON_MATCHING
 // Spawn boss after delay and dialogue
 void func_800F1004_FFFB4(void) {
 	AlienInstance *alien;
@@ -589,7 +575,7 @@ void func_800F1004_FFFB4(void) {
 				break;
 		}
 
-		func_80014A3C_1563C(0, 0x17B, 0.0f, 0, D_8014462C_1535DC);
+		func_80014A3C_1563C(0, 0x17B, 0.0f, 0, 0.3f);
 	}
 
 	if (D_80157FD0 <= 0) {
@@ -599,9 +585,6 @@ void func_800F1004_FFFB4(void) {
 		func_800074BC_80BC(func_800F1004_FFFB4);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1004_FFFB4.s")
-#endif
 
 // CURRENT(29635)
 #ifdef NON_MATCHING
@@ -678,7 +661,7 @@ void func_800F1134_1000E4(void) {
 
 			if (D_80157F8E >= 0x5B) {
 				if ((D_80052A8C & 1) == 0) {
-					func_80014A3C_1563C(0, 0xEB, 0.0f, 0, D_80144658_153608);
+					func_80014A3C_1563C(0, 0xEB, 0.0f, 0, 0.8f);
 					func_80135D08_144CB8(10.0f, 1, 1, 1);
 				}
 			}
@@ -934,7 +917,11 @@ void func_800F1134_1000E4(void) {
 	return;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1134_1000E4.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1134_1000E4.s", "src.us/overlay_gameplay/outside/FEC70_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F1134_1000E4.s", "src.us/overlay_gameplay/outside/FEC70_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 // Cutscene - Alpha 1 landing at start of levels 1-4 (Comet uses func_802D67A8 in Comet overlay)
