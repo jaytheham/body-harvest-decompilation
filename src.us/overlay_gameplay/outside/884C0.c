@@ -2547,7 +2547,7 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
-// CURRENT(51)
+// CURRENT(35)
 // AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
@@ -2639,7 +2639,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 					return 1;
 				}
 			} else {
-				func_8007ED9C_8DD4C(selfIndex);
+				func_8007ED9C_8DD4C(arg0);
 				recurseFlag = 1;
 			}
 
@@ -2660,7 +2660,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 				func_8010C4EC_11B49C(&vehicleInstances[vehIndex]);
 				if (func_8010E684_11D634(&vehicleInstances[vehIndex], &alienInstances[arg0]) != 0) {
 					if ((typeIndex < 3) || (typeIndex == 0x20)) {
-						func_80080D98_8FD48(selfIndex, vehIndex);
+						func_80080D98_8FD48(arg0, vehIndex);
 						i++;
 						continue;
 					}
@@ -2677,7 +2677,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 						D_8014ECD8 = vehIndex;
 						recurseFlag = 1;
 						if (scratch != 0) {
-							func_8007ED9C_8DD4C(selfIndex);
+							func_8007ED9C_8DD4C(arg0);
 						}
 					}
 
@@ -2704,7 +2704,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			/* Keep the type pointer ahead of the active index in IDO's cache. */
 			if ((u32)otherType * 0) {}
 
-			if (((!(otherType->unk54 & 4)) || (i == selfIndex)) || ((&alienInstances[i])->unk47 & 0x80)) {
+			if (((!(otherType->unk54 & 4)) || (i == arg0)) || ((&alienInstances[i])->unk47 & 0x80)) {
 				arg1++;
 				continue;
 			}
@@ -2737,7 +2737,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 					alienInstances[arg0].unk10 = 0;
 				}
 			}
-			func_8007ED9C_8DD4C(selfIndex);
+			func_8007ED9C_8DD4C(arg0);
 
 			if ((&alienInstances[i])->unk20 & ALIEN_FLAG_FALL) {
 				if ((((&alienInstances[i])->unk2 < alienInstances[arg0].unk2) && ((&alienInstances[i])->unk10 > 0)) || ((alienInstances[arg0].unk2 < (&alienInstances[i])->unk2) && ((&alienInstances[i])->unk10 < 0))) {
