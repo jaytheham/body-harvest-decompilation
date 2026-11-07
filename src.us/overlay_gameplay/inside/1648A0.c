@@ -1683,7 +1683,7 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	return var_f2;
 }
 
-// CURRENT(2073)
+// CURRENT(956)
 // AI - Handle player input, movement, and collision
 #ifdef NON_MATCHING
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
@@ -1691,13 +1691,14 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 	s16 sp4E;
 	s16 sp4C;
 	s64 stackPad;
-	s32 sp2C;
+	f32 new_var;
 	s32 var_v0;
 	s32 sp34;
 	s32 sp30;
+	s32 sp2C;
 	f32 sp20;
-	f32 sp1C;
 	f32 sp24;
+	f32 sp1C;
 	if (((s16)D_80052B34->unk1C <= 0) && (D_80052AD0 != 0))
 	{
 		D_800E65A8 |= 0x4000;
@@ -1733,13 +1734,14 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
-			sp1C = (f32)(((f64)(f32)((arg0->unk6 - D_800E6A74) + 0x4000) * D_800A4D08_18CDC8[0]) / 32768.0);
+			new_var = (f32) ((arg0->unk6 - D_800E6A74) + 0x4000);
+			sp1C = (f32) ((((f64) new_var) * D_800A4D08_18CDC8[0]) / 32768.0);
 
 			sp24 = cosf(sp1C);
 			sp2C = (((f32)arg1->stick_x * sp24) - (sinf(sp1C) * (f32)arg1->stick_y));
 			sp24 = sinf(sp1C);
 			var_v0 = (cosf(sp1C) * (f32)arg1->stick_y) + ((f32)arg1->stick_x * sp24);
-			D_800E6A64 = func_80003824_4424((f32)-sp2C, (f32)var_v0);
+			D_800E6A64 = func_80003824_4424((f32) (-sp2C), (f32) (var_v0 ^ 0));
 			if (D_800A08F8_1889B8 > 0.0f)
 			{
 				func_8007D37C_16543C(arg0, D_800E6A66, 0);
@@ -1749,16 +1751,18 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
-			D_800E733C = (s16)(s32)D_800A08F8_1889B8;
+			sp20 = D_800A08F8_1889B8;
+			D_800E733C = (s16) ((s32) sp20);
 		}
 
 		if (!(var_v0 & 0x10))
 		{
 			if ((var_v0 & 0x800) && (D_8009E8D8_186998 == 0))
 			{
-				var_v0 = (s32)(((Unk80157600 *)D_800E6F00)->unk8 - ((Unk80157600 *)D_800E6F00)->unk414) / 4;
 				sp30 = arg0->unkE;
-				sp34 = (s32)(((Unk80157600 *)D_800E6F00)->unk10 - ((Unk80157600 *)D_800E6F00)->unk418) / 4;
+				var_v0 = ((s32) (((Unk80157600 *) D_800E6F00)->unk8 - ((Unk80157600 *) D_800E6F00)->unk414)) / 4;
+				sp24 = ((Unk80157600 *) D_800E6F00)->unk10 - ((Unk80157600 *) D_800E6F00)->unk418;
+				sp34 = ((s32) sp24) / 4;
 				sp24 = cosf((f32)(((f64)(f32)sp30 * D_800A4D10_18CDD0[0]) / 32768.0));
 				D_800E7340.x = ((sp24 * (f32)sp34) - (sinf((f32)(((f64)(f32)arg0->unkE * D_800A4D18_18CDD8[0]) / 32768.0)) * (f32)var_v0));
 
@@ -1770,7 +1774,7 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 				sp30 = (s16)((f64)(D_8008DDF0_175EB0 * 32768.0f) / D_800A4D30_18CDF0[0]);
 				D_800A08F8_1889B8 = sqrtf((f32)((sp4E * sp4E) + (sp4C * sp4C)));
 				sp1C = (f32)(((f64)(f32)sp30 * D_800A4D38_18CDF8[0]) / 32768.0);
-				D_800E7340.z = (f32)(sinf(sp1C) * D_800A08F8_1889B8);
+				D_800E7340.z = (f32) (sinf((f32) ((((f64) ((f32) sp30)) * D_800A4D38_18CDF8[0]) / 32768.0)) * D_800A08F8_1889B8);
 				D_800E7340.x = (f32)(cosf(sp1C) * D_800A08F8_1889B8);
 			}
 			else
@@ -1810,7 +1814,7 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 						}
 					}
 				}
-				if (D_800E6A40.unkE != 0)
+				if ((D_800E6A40.unkE & 0xFFFFu) != 0)
 				{
 					D_800E6A78.unk4C = D_800E6A40.unk0;
 					D_800E6A78.unk54 = D_800E6A40.unk8;

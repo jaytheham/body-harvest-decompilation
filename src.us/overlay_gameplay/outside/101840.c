@@ -2121,6 +2121,8 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
 
+// CURRENT(870)
+// AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
 	UnkF9230ShadowWalker *walker;
@@ -2189,10 +2191,10 @@ void func_800F842C_1073DC(s32 arg0) {
 			func_800039D0_45D0(&sp8C, &sp84, NULL, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-			spAC[0] = (s32)((((f64)(f32)coss(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk4);
-			spAC[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk4);
+			spAC[0] = (s32) (((f64) D_801601F0[walker->limbs[0].unk23].unk4) * (((f64) ((f32) coss(heading & 0xFFFF))) / 32768.0));
+			spAC[2] = (s32) (((f64) D_801601F0[walker->limbs[0].unk23].unk4) * (((f64) ((f32) sins(heading & 0xFFFF))) / 32768.0));
 			spAC[1] = D_801601F0[walker->limbs[0].unk23].unkA;
-			spB8[0] = (s32)((((f64)(f32)coss(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk6);
+			spB8[0] = (s32) (((f64) D_801601F0[walker->limbs[0].unk23].unk6) * (((f64) ((f32) coss(heading & 0xFFFF))) / 32768.0));
 			spB8[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk6);
 			spB8[1] = 0;
 			func_800F4258_103208(walker, D_801601F0[walker->limbs[0].unk23].unk4, spAC[1], D_801601F0[walker->limbs[0].unk23].unk6, 0, &spD2, &spD0);
