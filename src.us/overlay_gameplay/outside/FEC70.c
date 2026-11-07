@@ -292,7 +292,7 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
-// CURRENT(882)
+// CURRENT(107)
 // AI - Sets D_80157F58/D_80157F5C/D_80157F60/D_80157F68 from the arguments, calls func_800F02EC_FF29C
 #ifdef NON_MATCHING
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
@@ -305,12 +305,13 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
   D_80157F60 = (s16) arg1;
   D_80157F68 = arg2 - ((s16) (new_var = arg1));
   func_800F02EC_FF29C(D_80157F60 + D_80157F5C);
-  entry = D_80157F4C;
+  entry = (entryS16 = D_80157F4C);
   entryS16 = (s16 *) entry;
   switch (entry->unk11)
   {
     case 0:
       D_80157586 = entry->unk6;
+      entry = entryS16;
       D_80157588 = entry->unk8;
       D_8015758A = entry->unkA;
       break;
@@ -318,15 +319,15 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
     case 1:
       D_80157586 = D_80052B34->unk0 >> 2;
       D_80157588 = D_80052B34->unk2 >> 2;
-      D_80157588 += vehicleTypes[D_80052B34->unk1A].unk38 >> 3;
+      D_80157588 += ((int) vehicleTypes[D_80052B34->unk1A].unk38) >> 3;
       D_8015758A = D_80052B34->unk4 >> 2;
       break;
 
     case 2:
-      D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (*(&D_80159DE0));
+      D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (u16) D_80159DE0;
       D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
       D_80157588 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
-      D_8015758A = (*((u16 *) (&D_80159DE4))) + (buildingInstances[entryS16[7]].zCoord >> 2);
+      D_8015758A = (u16) D_80159DE4 + (buildingInstances[entryS16[7]].zCoord >> 2);
       break;
 
     case 3:
