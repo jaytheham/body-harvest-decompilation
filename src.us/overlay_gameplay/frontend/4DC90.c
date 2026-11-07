@@ -1154,7 +1154,8 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 				channel->unk2 = (rotation[new_var2] * scale) / degrees;
 				channel->unk4 = (rotation[2] * scale) / ((0, degrees));
 				channel->unk8 = ((((f32)channel->unk24) - x) * fraction) + x;
-				channel->unkC = ((((f32) channel->unk26) - y) * fraction) + y; x = channel->unk28;
+				channel->unkC = ((((f32)channel->unk26) - y) * fraction) + y;
+				x = channel->unk28;
 				channel->unk10 = ((x - z) * fraction) + z;
 				channel->unk1C += arg2;
 				if (channel->unk1C >= channel->unk20)

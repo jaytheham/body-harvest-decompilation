@@ -166,7 +166,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						x = spA8.unk0;
 						entry->unk8 = (void*)D_80222A30[type];
 
-						temp = ((367838415 * (3 * (z * x))) + 0x3039) >> 16;
+						temp = (z * x * 0x41C64E6D + 0x3039) >> 16;
 						temp /= 256;
 						temp = temp % 32 + 240;
 						sp98.unk0 = temp;

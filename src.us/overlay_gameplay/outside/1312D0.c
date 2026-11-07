@@ -1325,7 +1325,7 @@ prevTileZ = tileZ >> 8;
 	if (D_8015F9D0.unkC != 0) {
 		D_8015F9D0.position[0] = *arg3;
 		D_8015F9D0.position[1] = *arg4;
-		stepCount = ((((((((((*arg5) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF;
+		stepCount = *arg5 & 0xFFFF;
 		D_8015F9D0.unk8 = 0xD;
 		D_8015F9D0.position[2] = stepCount;
 		return 5;
