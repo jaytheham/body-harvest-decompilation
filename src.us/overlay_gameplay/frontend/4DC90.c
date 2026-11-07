@@ -1072,7 +1072,7 @@ void func_80080588_50A38(u8 arg0) {
 	}
 }
 
-// CURRENT(550)
+// CURRENT(530)
 // AI - Iterates over arg3 AnimChannelState entries in arg1, interpolating rotation/position fields toward target fields by fraction arg2/(unk20-unk1C)
 #ifdef NON_MATCHING
 void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3)
@@ -1154,8 +1154,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 				channel->unk2 = (rotation[new_var2] * scale) / degrees;
 				channel->unk4 = (rotation[2] * scale) / ((0, degrees));
 				channel->unk8 = ((((f32)channel->unk24) - x) * fraction) + x;
-				channel->unkC = ((((f32)channel->unk26) - y) * fraction) + y;
-				x = channel->unk28;
+				channel->unkC = ((((f32) channel->unk26) - y) * fraction) + y; x = channel->unk28;
 				channel->unk10 = ((x - z) * fraction) + z;
 				channel->unk1C += arg2;
 				if (channel->unk1C >= channel->unk20)
@@ -1164,9 +1163,9 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 					{
 					channel->unk8 = channel->unk24;
 					channel->unk10 = x;
-					channel->unk0 = channel->unk2A;
 					channel->unk2 = channel->unk2C;
 					channel->unkC = channel->unk26;
+					channel->unk0 = channel->unk2A;
 					channel->unk2 = channel->unk2C;
 					channel->unk4 = channel->unk2E;
 					channel->unk18++;
