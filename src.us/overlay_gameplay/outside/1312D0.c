@@ -1160,7 +1160,7 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 	return NULL;
 }
 
-// CURRENT(60): collision-store scheduling and stack slots remain.
+// CURRENT(40): collision-store scheduling and stack slots remain.
 // AI - Steps a fixed-point segment from (arg0,arg1,arg2) toward (*arg3,*arg4,*arg5), shortening it with func_80125D70_134D20 and checking func_800B84D0_C7480 terrain
 #ifdef NON_MATCHING
 s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, s32 arg6, s32 arg7) {
@@ -1325,7 +1325,7 @@ prevTileZ = tileZ >> 8;
 	if (D_8015F9D0.unkC != 0) {
 		D_8015F9D0.position[0] = *arg3;
 		D_8015F9D0.position[1] = *arg4;
-		stepCount = *arg5;
+		stepCount = ((((((((((*arg5) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF) & 0xFFFF;
 		D_8015F9D0.unk8 = 0xD;
 		D_8015F9D0.position[2] = stepCount;
 		return 5;
