@@ -635,6 +635,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	}
+	// Draw an icon overlay on top of the bar if a texture pointer is provided
 	if (arg4 != 0) {
 		vtx3 = D_8005BB34++;
 		vtx2 = D_8005BB34++;
