@@ -23,7 +23,7 @@ Vtx D_800316E0_322E0[] = {
 	{ {{ 16, -8, 0 }, 0, { 1024, 0 }, { 230, 230, 230, 255 }} },
 };
 
-/* Glyph vertical offsets and advances; D_800319C1_325C1 aliases the space advance. */
+/* Glyph vertical offsets and advances. */
 s8 D_80031720_32320[] = {
 	0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14,
 	0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14, 0, 14,
@@ -196,295 +196,265 @@ s16 func_8000A43C_B03C(s8 *arg0)
 	return (((s16) (((s16) (var_v1 << 8)) + var_a0)) / 2);
 }
 
-#ifdef NON_MATCHING
 void drawText(char *arg0, ...) {
-	char *s3;
-	s8 *s0;
-	va_list s2;
-	u32 v0;
-	s32 s1;
-	s32 s4;
-	u32 s5;
-	s32 v1;
-	s32 a0;
+	char *text;
+	s8 *out;
+	f64 number;
+	va_list args;
+	u32 value;
+	s32 base;
 	u32 isDigit;
-	u32 a1;
-	s32 sp64;
-	s32 sp60;
+	u32 unsignedBase;
+	s32 specifier;
+	s32 integerPart;
+	s32 fractionalPart;
+	u32 precision;
 
-	va_start(s2, arg0);
-	v0 = (u8)*arg0;
-	s0 = &D_80052BE0[(u16)D_80053BE0];
-	s3 = arg0;
+	va_start(args, arg0);
+	out = &D_80052BE0[(u16)D_80053BE0];
+	text = arg0;
+	value = (u8)*text;
 
-	if (v0 != 0) {
-		v0 = (u8)v0;
-		a0 = (0x25U == v0);
-		while (1) {
-			s3++;
-			if (a0 != 0) {
-				switch ((u8)*s3 - '0') {
+	if (value != 0) {
+		do {
+			if ((u8)*text++ == 0x25U) {
+				switch ((u8)*text - '0') {
 				case 0:
-					s3[-1] = '\0';
-					*s3 = 1U;
-					s3++;
+					text[-1] = '\0';
+					*text = 1U;
+					text++;
 					break;
 				case 1:
-					s3[-1] = '\0';
-					*s3 = 2U;
-					s3++;
+					text[-1] = '\0';
+					*text = 2U;
+					text++;
 					break;
 				case 2:
-					s3[-1] = '\0';
-					*s3 = 3U;
-					s3++;
+					text[-1] = '\0';
+					*text = 3U;
+					text++;
 					break;
 				case 3:
-					s3[-1] = '\0';
-					*s3 = 4U;
-					s3++;
+					text[-1] = '\0';
+					*text = 4U;
+					text++;
 					break;
 				case 4:
-					s3[-1] = '\0';
-					*s3 = 5U;
-					s3++;
+					text[-1] = '\0';
+					*text = 5U;
+					text++;
 					break;
 				case 5:
-					s3[-1] = '\0';
-					*s3 = 6U;
-					s3++;
+					text[-1] = '\0';
+					*text = 6U;
+					text++;
 					break;
 				}
 			}
-			v0 = (u8)*s3;
-			if (v0 != 0) {
-				a0 = (0x25U == v0);
-				continue;
-			}
-			break;
-		}
-		s3 = arg0;
-		v0 = (u8)*s3;
+		} while ((u8)*text != 0);
+		text = arg0;
+		value = (u8)*arg0;
 	}
 
-	s1 = 10;
-	s4 = -4;
-	s5 = 10;
-	if (v0 != 0) {
-		v0 = (u8)*s3;
-		do {
-			a1 = 6;
-			if (0x25U != v0) {
-				*s0++ = (s8)v0;
-				s3++;
+	base = 10;
+	unsignedBase = 10;
+	while ((value = (u8)*text) != 0) {
+		value = (u8)*text;
+			precision = 6;
+			if ((value ^ 0) != 0x25U) {
+				*out++ = (s8)value;
+				text++;
 			} else {
-				v0 = ((u8 *)s3)[1];
-				v1 = (u8)s3[1];
-				s3++;
-				if ((s32)v0 < '0' || v1 >= ':') {
+				value = ((u8 *)text)[1];
+				specifier = (u8)text[1];
+				text++;
+				if ((s32)value < '0' || specifier >= ':') {
 					isDigit = 0;
 				} else {
 					isDigit = 1;
 				}
 				if (isDigit != 0) {
-					v0 = ((u8 *)s3)[1];
-					a1 = v1 - '0';
-					v1 = (u8)s3[1];
-					s3++;
+					value = ((u8 *)text)[1];
+					precision = specifier - '0';
+					specifier = (u8)text[1];
+					text++;
 				}
-				switch (v1 ^ 0) {
+				switch (specifier ^ 0) {
 		case 0:
 			break;
 		case 'c':
-			*s0++ = va_arg(s2, s32);
+			*out++ = va_arg(args, s32);
 			break;
 		case 'd':
-			v0 = 1000000;
-			v1 = va_arg(s2, s32);
-			if (v1 < 0) {
-				*s0++ = '-';
-				v1 = -v1;
+			value = 1000000;
+			specifier = va_arg(args, s32);
+			if (specifier < 0) {
+				*out++ = '-';
+				specifier = -specifier;
 			}
-			if ((v1 / (s32)v0) % s1 == 0) {
+			if ((specifier / (s32)value) % base == 0) {
 				do {
-					v0 = (s32)v0 / s1;
-				} while ((v1 / (s32)v0) % s1 == 0 && (s32)v0 >= 2);
+					value = (s32)value / base;
+				} while ((specifier / (s32)value) % base == 0 && (s32)value >= 2);
 			}
-			if (v0 != 0) {
+			if (value != 0) {
 				do {
-					*s0++ = ((v1 / (s32)v0) % s1) + '0';
-					v0 = (s32)v0 / s1;
-				} while (v0 != 0);
+					*out++ = ((specifier / (s32)value) % base) + '0';
+					value = (s32)value / base;
+				} while (value != 0);
 			}
 			break;
 		case 'f': {
 			u32 index;
-			v0 = 1000000;
+			value = 1000000;
 			index = 1;
-			func_80004254_4E54(va_arg(s2, double), a1, &sp64, &sp60);
-			if (sp64 < 0) {
-				*s0++ = '-';
-				sp64 = -sp64;
+			number = va_arg(args, double);
+			func_80004254_4E54(number, precision, &integerPart, &fractionalPart);
+			if (integerPart < 0) {
+				*out++ = '-';
+				integerPart = -integerPart;
 			}
-			if ((sp64 / (s32)v0) % s1 == 0) {
+			if ((integerPart / (s32)value) % base == 0) {
 				do {
-					v0 = (s32)v0 / s1;
-				} while ((sp64 / (s32)v0) % s1 == 0 && (s32)v0 >= 2);
+					value = (s32)value / base;
+				} while ((integerPart / (s32)value) % base == 0 && (s32)value >= 2);
 			}
-			if (v0 != 0) {
+			if (value != 0) {
 				do {
-					*s0++ = ((sp64 / (s32)v0) % s1) + '0';
-					v0 = (s32)v0 / s1;
-				} while (v0 != 0);
+					*out++ = ((integerPart / (s32)value) % base) + '0';
+					value = (s32)value / base;
+				} while (value != 0);
 			}
-			*s0++ = '.';
-			v0 = 1;
-			if ((s32)a1 >= 2) {
+			*out++ = '.';
+			value = 1;
+			if ((s32)precision >= 2) {
 				do {
-					v0 *= s1;
+					value *= base;
 					index++;
-				} while (index != a1);
+				} while (index != precision);
 			}
-			if (v0 != 0) {
+			if (value != 0) {
 				do {
-					*s0++ = (((u32)sp60 / v0) % s5) + '0';
-					v0 = (s32)v0 / s1;
-				} while (v0 != 0);
+					*out++ = (((u32)fractionalPart / value) % unsignedBase) + '0';
+					value = (s32)value / base;
+				} while (value != 0);
 			}
 			break;
 		}
 		case 'i':
-			*s0++ = 0x12;
+			*out++ = 0x12;
 			break;
 		case 'r':
-			*s0++ = 0x13;
+			*out++ = 0x13;
 			break;
 		case 's': {
 			char *str;
-			str = va_arg(s2, char *);
-			v0 = (u8)*str;
-			if (v0 != 0) {
+			str = va_arg(args, char *);
+			value = (u8)*str;
+			if (value != 0) {
 			do {
-				if (0x25U == v0) {
+				if ((value ^ 0) == 0x25U) {
 					str++;
 					switch ((u8)*str - '0') {
-					case 0: *s0++ = 1U; break;
-					case 1: *s0++ = 2U; break;
-					case 2: *s0++ = 3U; break;
-					case 3: *s0++ = 4U; break;
-					case 4: *s0++ = 5U; break;
-					case 5: *s0++ = 6U; break;
+					case 0: *out++ = 1U; break;
+					case 1: *out++ = 2U; break;
+					case 2: *out++ = 3U; break;
+					case 3: *out++ = 4U; break;
+					case 4: *out++ = 5U; break;
+					case 5: *out++ = 6U; break;
 					default:
-						*s0++ = 0x25U;
+						*out++ = 0x25U;
 						str--;
 						break;
 					}
 				} else {
-					*s0++ = v0;
+					*out++ = value;
 				}
-				v0 = (u8)str[1];
+				value = (u8)str[1];
 				str++;
-			} while (v0 != 0);
+			} while (value != 0);
 			}
 			break;
 		}
 		case '@': {
-			D_80053C80 = va_arg(s2, s32);
-			v1 = va_arg(s2, s32);
-			D_80053C92 = (s16)((v1 * 20 + 24) >> 2);
-			a0 = D_80053C80;
-			if (a0 != 0x80) {
-				if (a0 == 0x81) {
-				*s0++ = (s8)s5;
-				*s0++ = 0x1D;
-				*s0++ = (s8)(s16)D_80053C92;
+			D_80053C80 = va_arg(args, s32);
+			D_80053C92 = (s16)((va_arg(args, s32) * 20 + 24) >> 2);
+			if (D_80053C80 != 0x80) {
+				if (D_80053C80 == 0x81) {
+				*out++ = (s8)unsignedBase;
+				*out++ = 0x1D;
+				*out++ = (s8)(s16)D_80053C92;
 				} else {
-				D_80053C90 = (s16)(D_800319C1_325C1 * a0 + D_80053C94);
-				*s0++ = (s8)s5;
-				*s0++ = 0x14;
-				*s0++ = (s8)(D_80053C90 >> 2);
-				*s0++ = (s8)(s16)D_80053C92;
+				D_80053C90 = (s16)(D_80031720_32320[0x2A1] * D_80053C80 + D_80053C94);
+				*out++ = (s8)unsignedBase;
+				*out++ = 0x14;
+				*out++ = (s8)(D_80053C90 >> 2);
+				*out++ = (s8)(s16)D_80053C92;
 				}
 			} else {
-				*s0++ = (s8)s5;
-				*s0++ = 0x1A;
-				*s0++ = (s8)(s16)D_80053C92;
+				*out++ = (s8)unsignedBase;
+				*out++ = 0x1A;
+				*out++ = (s8)(s16)D_80053C92;
 			}
 			break;
 		}
 		case 'C': {
-			*s0++ = 0x15;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)a0;
-			v1 = va_arg(s2, s32);
-			*s0++ = (s8)v1;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)a0;
+			*out++ = 0x15;
+			*out++ = va_arg(args, s32);
+			*out++ = va_arg(args, s32);
+			*out++ = va_arg(args, s32);
 			break;
 		}
 		case 'a': {
-			*s0++ = 0x16;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)a0;
+			*out++ = 0x16;
+			*out++ = va_arg(args, s32);
 			break;
 		}
 		case 'W': {
-			*s0++ = 0x18;
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)(a0 >> 2);
-			v1 = va_arg(s2, s32);
-			*s0++ = (s8)(v1 >> 2);
-			a0 = va_arg(s2, s32);
-			*s0++ = (s8)(a0 >> 2);
-			v1 = va_arg(s2, s32);
-			*s0++ = (s8)(v1 >> 2);
+			*out++ = 0x18;
+			*out++ = va_arg(args, s32) >> 2;
+			*out++ = va_arg(args, s32) >> 2;
+			*out++ = va_arg(args, s32) >> 2;
+			*out++ = va_arg(args, s32) >> 2;
 			break;
 		}
 		case 'X': {
-			*s0++ = 0x19;
-			func_8000A3DC_AFDC((s16)(va_arg(s2, s32) >> 2), s0);
-			s0 += 2;
+			*out++ = 0x19;
+			func_8000A3DC_AFDC((s16)(va_arg(args, s32) >> 2), out);
+			out += 2;
 			break;
 		}
 		case 'Y': {
-			*s0++ = 0x17;
-			func_8000A3DC_AFDC((s16)(va_arg(s2, s32) >> 2), s0);
-			s0 += 2;
+			*out++ = 0x17;
+			func_8000A3DC_AFDC((s16)(va_arg(args, s32) >> 2), out);
+			out += 2;
 			break;
 		}
 		case 'H': {
-			*s0++ = 0x1B;
-			func_8000A3DC_AFDC(va_arg(s2, s32), s0);
-			s0 += 2;
+			*out++ = 0x1B;
+			func_8000A3DC_AFDC(va_arg(args, s32), out);
+			out += 2;
 			break;
 		}
 		case 'V': {
-			*s0++ = 0x1C;
-			func_8000A3DC_AFDC(va_arg(s2, s32), s0);
-			s0 += 2;
+			*out++ = 0x1C;
+			func_8000A3DC_AFDC(va_arg(args, s32), out);
+			out += 2;
 			break;
 		}
 		default:
-			*s0 = v0;
-			s0++;
+			*out = value;
+			out++;
 			break;
 				}
-				s3++;
+				text++;
 			}
 
-		} while ((v0 = (u8)*s3) != 0);
 	}
 
-	*s0 = '\0';
-	D_80053BE0 = s0 - D_80052BE0;
+	*out = '\0';
+	D_80053BE0 = out - D_80052BE0;
 }
-#else
-#ifdef VERSION_US
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s", "src.us/core/AD60_text_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/drawText.s", "src.us/core/AD60_text_late_rodata.eu.s")
-#endif
-#endif
 
 
 void func_8000AFDC_BBDC(void)
@@ -521,6 +491,8 @@ void func_8000B044_BC44(void) {
     s16 glyph_y_off;
     s8 *glyph_data;
     f32 minimum;
+    s32 vertical_offset;
+    s32 more_text;
 
 	alpha = 0xFF;
 
@@ -534,9 +506,11 @@ void func_8000B044_BC44(void) {
 	D_80053C96 = (s16)(D_80068084 - 0x1E);
 
 	if (gameplayMode == 0) {
-		clip_x_max = 0x280; clip_y_max = 0x1E0;
+		clip_x_max = 0x280;
+		clip_y_max = 0x1E0;
 	} else {
-		clip_x_max = 0x140; clip_y_max = 0xF0;
+		clip_x_max = 0x140;
+		clip_y_max = 0xF0;
 	}
 
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
@@ -556,13 +530,13 @@ void func_8000B044_BC44(void) {
 	i = 0;
 
 	if ((u16)D_80053BE0 > 0) {
-		minimum = D_80037578_38178_R;
+		minimum = 0.01f; if (minimum) { }
 		do { } while (0);
 		/* Retain the target constant candidate priorities without emitted work. */
 		if (minimum < D_80053BE8 * 1024 + D_80053BEC / 1024 +
 		              D_80053BE8 / 1024 + 1024) { }
-		do {
-        glyph_code = text_ptr[i];
+		for (more_text = 1; more_text || i < (u16)D_80053BE0; i++, more_text = 0) {
+        glyph_code = ((u8 *)D_80052BE0)[i];
         char_value = glyph_code;
         if (minimum * (f32)(x_cursor + 1) < 1024 + (f32)(x_cursor + 2)) { }
 		if (glyph_code & 0x80) {
@@ -570,12 +544,22 @@ void func_8000B044_BC44(void) {
 			char_idx = (s16)glyph_code;
 		} else {
             glyph_code = char_value + 0x130;
-			char_idx = (s16)glyph_code;
+            if (r == 0) { }
+            if (r == 0) { }
+            if (r == 0) { }
+            if (r == 0) { }
+            char_idx = (s16)(char_value + 0x130);
 		}
+
+        if (char_value == 0) { }
+        if (char_value == 0) { }
+        if (char_value == 0) { }
+        if (char_value == 0) { }
 
 		/* Space character */
 		if ((s16)glyph_code == 0x150) {
-			x_cursor = (s16)(x_cursor + D_800319C1_325C1);
+			x_cursor += D_80031720_32320[0x2A1];
+			continue;
 		}
 
 		/* Control codes */
@@ -587,11 +571,11 @@ void func_8000B044_BC44(void) {
 		}
 
 		glyph_data = &D_80031720_32320[char_idx * 2];
-		glyph_y_off = glyph_data[0];
+		vertical_offset = glyph_data[0];
 
 		x_pos = (s16)(x_cursor + D_80053BE2);
-		glyph_y = y_cursor + glyph_y_off;
-		y_pos = (s16)(glyph_y + D_80053BE4);
+		glyph_y = y_cursor + vertical_offset;
+		y_pos = (s16)(y_cursor + vertical_offset + D_80053BE4);
 
 		/* Bounds check */
 		if ((x_pos + 16) < clip_x_min || clip_x_max < x_pos ||
@@ -627,11 +611,11 @@ void func_8000B044_BC44(void) {
 						x_cursor = D_80053C94 + (D_80053C96 - D_80053C94 - width) / 2;
 					} else {
 						/* right-align */
-						x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
+						x_cursor = (s16)(D_80053C96 - (s16)width - D_80031720_32320[0x2A1]);
 					}
 				} else {
 					/* left-align */
-					x_cursor = (s16)(D_800319C1_325C1 + D_80053C94);
+					x_cursor = (s16)(D_80031720_32320[0x2A1] + D_80053C94);
 				}
 				y_cursor = (s16)(y_cursor + 0x14);
 				break;
@@ -640,27 +624,27 @@ void func_8000B044_BC44(void) {
 				s16 width;
 
 
-				y_cursor = text_ptr[(s16)(i++ + 1)] * 4;
-				flag_78 = 1;
+				glyph_y_off = i++ + 1; y_cursor = ((u8 *)D_80052BE0)[glyph_y_off] * 4;
 
 				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
+				flag_78 = 1;
 				x_cursor = D_80053C94 + (D_80053C96 - D_80053C94 - width) / 2;
 				break;
 			}
 			case 29: { /* newline y-scroll + right-align */
 				s16 width;
-				y_cursor = text_ptr[(s16)(i++ + 1)] * 4;
-				flag_74 = 1;
+				glyph_y_off = i++ + 1; y_cursor = ((u8 *)D_80052BE0)[glyph_y_off] * 4;
 				width = func_8000A2B8_AEB8(text_ptr, (s16)(i + 1));
-				x_cursor = (s16)(D_80053C96 - (s16)width - D_800319C1_325C1);
+				flag_74 = 1;
+				x_cursor = (s16)(D_80053C96 - (s16)width - D_80031720_32320[0x2A1]);
 				break;
 			}
 						case 20:
-                x_cursor = text_ptr[(s16)(i++ + 1)];
+                glyph_y_off = i++ + 1; x_cursor = ((u8 *)D_80052BE0)[glyph_y_off];
                 flag_78 = 0;
                 if (x_cursor & 0x80) { x_cursor -= 0x100; }
                 x_cursor *= 4;
-                y_cursor = text_ptr[(s16)(i++ + 1)];
+                glyph_y_off = i++ + 1; y_cursor = ((u8 *)D_80052BE0)[glyph_y_off];
                 if (y_cursor & 0x80) { y_cursor -= 0x100; }
                 y_cursor *= 4;
                 break;
@@ -669,7 +653,7 @@ void func_8000B044_BC44(void) {
 				break;
 			case 1: /* gray */
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x96, 0x96, 0x96, 0xFF);
-				r = 0x96; g = 0x96; b = 0x96;
+				b = 0x96; g = 0x96; r = 0x96;
 				break;
 			case 2: /* light gray */
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xE6, 0xE6, 0xE6, 0xFF);
@@ -700,19 +684,22 @@ void func_8000B044_BC44(void) {
 					counter = (D_80052AD8 - D_80053C8C) - D_80053C88;
 				}
 				if (counter < 0) {
-					r = D_80053BF1; g = D_80053BF3; b = D_80053BF5;
+					r = (u8)D_80053BF0;
+                    g = (u8)D_80053BF2;
+                    b = (u8)D_80053BF4;
 					alpha = (u8)D_80053BF6;
 				} else if (counter >= 0x10) {
-					r = D_80053BF9; g = D_80053BFB; b = D_80053BFD;
+					r = (u8)D_80053BF8;
+                    g = (u8)D_80053BFA;
+                    b = (u8)D_80053BFC;
 					alpha = (u8)D_80053BFE;
 				} else {
 					f64 fraction;
 					s16 endpoint_r, endpoint_g, endpoint_b, endpoint_a;
 					endpoint_r = D_80053BF8;
-					fraction = (f32)(u32)(u8)(0xFF - (counter << 4)) / D_80037600_38200_R;
+					fraction = (f32)(u32)(u8)(0xFF - (counter << 4)) / 255.0;
 					r = (u32)(endpoint_r - (f32)(endpoint_r - D_80053BF0) * fraction) & 0xFF;
-					endpoint_g = D_80053BFA;
-					g = (u32)(endpoint_g - (f32)(endpoint_g - D_80053BF2) * fraction) & 0xFF;
+					endpoint_g = D_80053BFA; g = (u32)(endpoint_g - (f32)(endpoint_g - D_80053BF2) * fraction) & 0xFF;
 					endpoint_b = D_80053BFC;
 					b = (u32)(endpoint_b - (f32)(endpoint_b - D_80053BF4) * fraction) & 0xFF;
 					endpoint_a = D_80053BFE;
@@ -724,46 +711,39 @@ void func_8000B044_BC44(void) {
 				break;
 			}
 			case 21: { /* set RGB from next 3 bytes */
-                s32 first_index;
-                u32 second_index;
-                s32 third_index;
-                first_index = i + 1;
-                r = text_ptr[(s16)first_index];
-                second_index = first_index + 1U;
-                g = text_ptr[(s16)second_index];
-                third_index = (s32)second_index + 1;
-                b = text_ptr[(s16)third_index];
-                i = third_index;
+                glyph_y_off = i++ + 1; r = ((u8 *)D_80052BE0)[glyph_y_off];
+                glyph_y_off = i++ + 1; g = ((u8 *)D_80052BE0)[glyph_y_off];
+                glyph_y_off = i++ + 1; b = ((u8 *)D_80052BE0)[glyph_y_off];
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				break;
 			}
 			case 22: { /* set alpha from next 1 byte */
-				alpha = text_ptr[(s16)(i++ + 1)];
+				glyph_y_off = i++ + 1; alpha = ((u8 *)D_80052BE0)[glyph_y_off];
 				gDPPipeSync(D_8005BB2C++);
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, alpha);
 				break;
 			}
 			case 24:
-                clip_x_min = text_ptr[(s16)(i++ + 1)] * 4;
-                clip_y_min = text_ptr[(s16)(i++ + 1)] * 4;
-                clip_x_max = text_ptr[(s16)(i++ + 1)] * 4;
-                clip_y_max = text_ptr[(s16)(i++ + 1)] * 4;
+                glyph_y_off = i++ + 1; clip_x_min = ((u8 *)D_80052BE0)[glyph_y_off] * 4;
+                glyph_y_off = i++ + 1; clip_y_min = ((u8 *)D_80052BE0)[glyph_y_off] * 4;
+                glyph_y_off = i++ + 1; clip_x_max = ((u8 *)D_80052BE0)[glyph_y_off] * 4;
+                glyph_y_off = i++ + 1; clip_y_max = ((u8 *)D_80052BE0)[glyph_y_off] * 4;
                 gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, clip_x_min, clip_y_min, clip_x_max, clip_y_max);
                 break;
 			case 25: { /* call func, store in D_80053BE2 */
-				D_80053BE2 = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; D_80053BE2 = func_8000A43C_B03C((s8 *)&((u8 *)D_80052BE0)[glyph_y_off]);
 				i = (s16)(i + 1);
 				break;
 			}
 			case 23: { /* call func, store in D_80053BE4 */
-				D_80053BE4 = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; D_80053BE4 = func_8000A43C_B03C((s8 *)&((u8 *)D_80052BE0)[glyph_y_off]);
 				i = (s16)(i + 1);
 				break;
 			}
 			case 27: { /* call func, scale x */
 				s32 val;
-				val = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; val = func_8000A43C_B03C((s8 *)&((u8 *)D_80052BE0)[glyph_y_off]);
 				D_80053BE8 = (f32)((f64)val * (1.0 / 1024.0));
 				if ((f64)D_80053BE8 < 0.01) {
 					D_80053BE8 = minimum;
@@ -773,7 +753,7 @@ void func_8000B044_BC44(void) {
 			}
 			case 28: { /* call func, scale y */
 				s32 val;
-				val = func_8000A43C_B03C((s8 *)&text_ptr[(s16)(i++ + 1)]);
+				glyph_y_off = i++ + 1; val = func_8000A43C_B03C((s8 *)&((u8 *)D_80052BE0)[glyph_y_off]);
 				D_80053BEC = (f32)((f64)val * (1.0 / 1024.0));
 				if ((f64)D_80053BEC < 0.01) {
 					D_80053BEC = minimum;
@@ -786,10 +766,9 @@ void func_8000B044_BC44(void) {
 			case 16: case 17:
 				break;
 }
-			continue;
 
 		}
-		} while (++i < (u16)D_80053BE0);
+		}
 	}
 
 	/* Restore render state */
@@ -804,7 +783,11 @@ void func_8000B044_BC44(void) {
 	D_80053BE0 = 0;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s")
+#ifdef VERSION_US
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s", "src.us/core/AD60_text_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s", "src.us/core/AD60_text_late_rodata.eu.s")
+#endif
 #endif
 
 s32 func_8000C670_D270(s16 arg0) {
@@ -1036,16 +1019,15 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 	return arg3;
 }
 
-#ifdef NON_MATCHING
 void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
+    f32 z, x, y;
+    f32 elapsed, duration;
     f32 targetRotation[3];
     f32 rotation[3];
-    f32 rotationCopy[3];
-    f32 z, x, y;
-    f32 elapsed, duration, fraction;
+    f32 fraction;
     f32 scale;
     f64 units, degrees;
-    s32 i;
+    u8 i;
     AnimChannelState *channel;
 
     i = 0;
@@ -1054,25 +1036,24 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
         units = 4096.0;
         if (scale) { }
         if (units) { }
-        degrees = D_80037610_38210_R;
+        degrees = 180.0;
         do {
             channel = &arg1[i];
             if (channel->unk14 != 0) {
                 elapsed = channel->unk1C;
                 duration = channel->unk20;
                 fraction = arg3 / (duration - elapsed);
+                y = fraction;
+                x = fraction;
                 targetRotation[0] = ((f32)channel->unk2A * degrees) / units;
                 targetRotation[1] = ((f32)channel->unk2C * degrees) / units;
                 targetRotation[2] = ((f32)channel->unk2E * degrees) / units;
                 rotation[0] = ((f32)channel->unk0 * degrees) / units;
-                rotationCopy[0] = targetRotation[0];
                 rotation[1] = ((f32)channel->unk2 * degrees) / units;
-                rotationCopy[1] = targetRotation[1];
-                rotationCopy[2] = targetRotation[2];
                 rotation[2] = ((f32)channel->unk4 * degrees) / units;
-                rotation[0] = ((rotationCopy[0] - rotation[0]) * fraction) + rotation[0];
-                rotation[1] = ((rotationCopy[1] - rotation[1]) * fraction) + rotation[1];
-                rotation[2] = ((rotationCopy[2] - rotation[2]) * fraction) + rotation[2];
+                rotation[0] = rotation[0] + ((targetRotation[0] - rotation[0]) * y);
+                rotation[1] = rotation[1] + ((targetRotation[1] - rotation[1]) * y);
+                rotation[2] = rotation[2] + ((targetRotation[2] - rotation[2]) * x);
                 x = channel->unk8;
                 y = channel->unkC;
                 z = channel->unk10;
@@ -1086,12 +1067,12 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
                 channel->unk1C += arg3;
                 if (channel->unk20 <= channel->unk1C) {
                     channel->unk8 = channel->unk24;
+                    channel->unkC = ((volatile AnimChannelState *)channel)->unk26;
                     channel->unk10 = x;
-                    channel->unk18++;
                     channel->unk0 = channel->unk2A;
                     channel->unk2 = channel->unk2C;
-                    channel->unkC = channel->unk26;
                     channel->unk4 = channel->unk2E;
+                    channel->unk18++;
                     if (channel->unk14 == channel->unk18) {
                         channel->unk14 = 0;
                         channel->unk18 = 0;
@@ -1103,13 +1084,10 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
                     }
                 }
             }
-            i = (i + 1) & 0xFF;
+            i++;
         } while (arg2 != i);
     }
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000CF4C_DB4C.s")
-#endif
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {
 	arg0->unkE50 = 0;

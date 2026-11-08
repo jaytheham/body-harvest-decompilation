@@ -51,3 +51,17 @@ Outputs under `$diag` (copy before another run overwrites them):
 - `ugen/fresh-ugen.log`: code-generation/register/scheduling events.
 
 Wait for each build to finish; do not overlap builds. Compare the full target object SHA256 between native and diagnostic runs to verify observational fidelity. Keep behavior-forcing controls disabled. Use traces to guide C edits, restore the build override afterward, and validate matches with the normal `make.ps1` and `diff.ps1` workflow.
+
+## Private stage copies
+
+Keep a private compiler-stage directory separate from its diagnostic output directories. The driver invokes extensionless stage names such as `uopt` and `ugen`. A log directory named `uopt` inside the stage directory shadows `uopt.exe`, causing `cc: Error: can't find or exec: /usr/lib/uopt` before the proxy starts. When copying launchers, copy files only; put log subdirectories elsewhere.
+
+Retarget both copied proxies' snapshot paths and `freopen` paths, even when one backend is set to `native`: those writes occur before backend selection. Retarget the copied UOPT proxy's `CDX_OUT` as well. Do not overwrite another diagnostic run's logs.
+
+`CDX_PROC` uses the zero-based `procindex` printed by the trace. Assembly-processor fallbacks can expand into several compiler procedures, so counting only visible C functions gives the wrong index.
+
+## UGEN spill regeneration
+
+IDO 5.3 can emit the same procedure twice under one `procindex`. If the first pass discovers a temporary spill area, `f_eval` calls `f_restore_i_ptrs`, adjusts the frame, cleans the expression tree and initializes temporary slots before evaluating it again. It does **not** call `f_init_regs` again: the first pass's FP free-list order carries into the second pass.
+
+Compare the final emission pass with the binasm output. The first matching source-line event can belong to discarded code. In `func_8000CF4C_DB4C`, three commutative addition spellings changed first-pass operand deaths and thereby fixed the register cycle at the beginning of the regenerated function, without changing the instruction sequence. See [the matched example](ExampleFixes/animation-fp-return-order-and-regeneration.md).

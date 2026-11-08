@@ -4019,7 +4019,6 @@ extern const f32 D_80036C88_37888_R;
 extern const f32 D_80037578_38178_R;
 extern const f64 D_80037580_38180_R;
 extern const f64 D_80037600_38200_R;
-extern const f64 D_80037610_38210_R;
 
 extern s16 D_8013DAFC_14CAAC[2];
 extern u8 D_8013DB00_14CAB0;
