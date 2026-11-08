@@ -202,11 +202,14 @@ s32 func_8000E52C_F12C(s32 arg0) {
 	return arg0 * arg0;
 }
 
-#ifdef NON_MATCHING
-s32 func_8000E53C_F13C(void)
-{
-	s32 temp_v0_13;
+extern const f32 D_80037650_38250[];
+extern const f32 D_80037654_38254[];
+extern const f32 D_80037658_38258[];
+
+// AI - Builds 12x16 tiled textured background DL from D_803DA800, scrolling via D_80059CD0; returns 1 when done.
+s32 func_8000E53C_F13C(void) {
 	s32 temp_v1;
+	s32 var_t5;
 	u16 sp136;
 	Vtx *temp_s4;
 	Vtx *temp_s0;
@@ -218,28 +221,26 @@ s32 func_8000E53C_F13C(void)
 	s32 sp114;
 	s32 var_t3;
 	s32 var_v1;
-	s32 var_t5;
 	s32 sp108;
-	Unk80052B40 spFC;
 	u32 sp74;
-	s16 *yAddr;
+	Unk80052B40 spFC;
 	sp120 = D_8005BAEC / 0x10;
 	sp118 = (-D_8005BAEC) / 2;
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);
-	gSPClearGeometryMode(D_8005BB2C++, (G_ZBUFFER | G_CULL_BOTH) | G_LIGHTING);
+	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, 1);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective(D_8005BB38, &sp136, 30.0f, ((f32)D_8005BAEC) / ((f32)D_8005BAF0), 10.0f, 6000.0f, 1.0f);
-	gSPPerspNormalize(D_8005BB2C++, (u32)(&sp136));
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_PROJECTION);
+	guPerspective(D_8005BB38, &sp136, 30.0f, ((f32) D_8005BAEC) / ((f32) D_8005BAF0), 10.0f, D_80037650_38250[0], 1.0f);
+	gSPPerspNormalize(D_8005BB2C++, (u32) (&sp136));
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	D_8005BB38++;
-	guLookAt(D_8005BB38, 0.0f, 0.0f, ((f32)D_8005BAF0) / ((sinf(0.2617993950843811f) / cosf(0.2617993950843811f)) * 2), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_PROJECTION);
+	guLookAt(D_8005BB38, 0.0f, 0.0f, ((f32) D_8005BAF0) / ((sinf(D_80037654_38254[0]) / cosf(D_80037658_38258[0])) * 2), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	D_8005BB38++;
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), (G_MTX_NOPUSH | G_MTX_LOAD) | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	spFC.unk0 = 0;
 	var_t0 = 0x14 - (D_8005BAF0 % 0x14);
 	if (var_t0 == 0x14)
@@ -249,9 +250,8 @@ s32 func_8000E53C_F13C(void)
 	spFC.unk2 = -var_t0;
 	spFC.unk4 = 0;
 	func_800039D0_45D0(&spFC, 0, 0, D_8005BB38);
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), (G_MTX_NOPUSH | G_MTX_MUL) | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 	D_8005BB38++;
-	sp74 = (u32)(&D_803DA800);
 	for (var_v1 = 0; var_v1 != 12; var_v1++)
 	{
 		for (var_t5 = 0; var_t5 != 16; var_t5++)
@@ -260,64 +260,65 @@ s32 func_8000E53C_F13C(void)
 			temp_s0 = D_8005BB34++;
 			temp_s1 = D_8005BB34++;
 			temp_s2 = D_8005BB34++;
-			var_t0 = (s16)var_t5;
 			sp114 = var_t5 * sp120;
 			temp_v1 = var_t5 + 1;
 			var_t3 = temp_v1 * sp120;
-			temp_v0_13 = var_v1 + 1;
+			var_t0 = var_v1 + 1;
 			if (D_8005BAEC < var_t3)
 			{
 				var_t3 = D_8005BAEC;
 			}
-			sp108 = temp_v0_13 * 20;
+			sp108 = var_t0 * 20;
 			if (D_8005BAF0 < sp108)
 			{
 				sp108 = D_8005BAF0;
 			}
 			D_80059CD2 = sp114 + sp118;
-			temp_v0_13 = 0x78 - sp108;
-			D_80059CD4 = temp_v0_13;
+			var_t0 = (D_80059CD4 = 0x78 - sp108);
+			var_t0 = 20;
 			D_80059CD6 = 0;
-			D_80059CDC->unk0((s16)var_t0, (s16)var_v1, 0, 1);
+			D_80059CDC->unk0((s16) var_t5, (s16) var_v1, 0, 1);
 			temp_s4->v.ob[0] = D_80059CD2;
-			yAddr = &D_80059CD4;
-			*yAddr = (temp_s4->v.ob[1] = *yAddr, temp_s4->v.ob[2] = D_80059CD6, D_80059CD6 = 0, temp_v0_13);
+			temp_s4->v.ob[1] = D_80059CD4;
+			temp_s4->v.ob[2] = D_80059CD6;
+			D_80059CD6 = 0;
+			D_80059CD4 = 0x78 - sp108;
 			temp_v1 = var_t3 + sp118;
 			D_80059CD2 = temp_v1;
-			D_80059CDC->unk0((s16)var_t0, (s16)var_v1, 1, 1);
+			D_80059CDC->unk0((s16) var_t5, (s16) var_v1, 1, 1);
+			temp_v1 = var_v1 * var_t0;
 			temp_s0->v.ob[0] = D_80059CD2;
 			temp_s0->v.ob[1] = D_80059CD4;
 			temp_s0->v.ob[2] = D_80059CD6;
 			D_80059CD2 = sp114 + sp118;
-			D_80059CD4 = 0x78 - (var_v1 * 20);
+			D_80059CD4 = 0x78 - temp_v1;
 			D_80059CD6 = 0;
-			D_80059CDC->unk0((s16)var_t0, (s16)var_v1, 0, 0);
+			D_80059CDC->unk0((s16) var_t5, (s16) var_v1, 0, 0);
 			temp_s1->v.ob[0] = D_80059CD2;
 			temp_s1->v.ob[1] = D_80059CD4;
 			temp_s1->v.ob[2] = D_80059CD6;
 			D_80059CD2 = var_t3 + sp118;
-			D_80059CD4 = 0x78 - (var_v1 * 20);
+			D_80059CD4 = 0x78 - temp_v1;
 			D_80059CD6 = 0;
 			if (D_8005BAEC < D_80059CD2)
 			{
 				D_80059CD2 = D_8005BAEC;
 			}
-			D_80059CDC->unk0((s16)var_t0, (s16)var_v1, 1, 0);
+			D_80059CDC->unk0((s16) var_t5, (s16) var_v1, 1, 0);
 			temp_s2->v.ob[0] = D_80059CD2;
 			temp_s2->v.ob[1] = D_80059CD4;
 			temp_s2->v.ob[2] = D_80059CD6;
 			temp_s4->v.tc[0] = (temp_s1->v.tc[0] = 8 * (8 * sp114));
 			temp_s4->v.tc[1] = (temp_s0->v.tc[1] = sp108 << 6);
 			temp_s2->v.tc[0] = (temp_s0->v.tc[0] = var_t3 << 6);
-			temp_s1->v.tc[1] = (temp_s2->v.tc[1] = 8 * (8 * (var_v1 * 20)));
+			temp_s1->v.tc[1] = (temp_s2->v.tc[1] = 8 * (8 * temp_v1));
 			temp_s4->v.cn[0] = (temp_s4->v.cn[1] = (temp_s4->v.cn[2] = (temp_s4->v.cn[3] = 0xFF)));
+			sp74 = (u32) (&D_803DA800);
 			temp_s0->v.cn[0] = (temp_s0->v.cn[1] = (temp_s0->v.cn[2] = (temp_s0->v.cn[3] = 0xFF)));
-
 			temp_s0 = temp_s1;
-			temp_s1->v.cn[0] = temp_s0->v.cn[1] = temp_s0->v.cn[2] = temp_s0->v.cn[3] = 0xFF;
+			temp_s1->v.cn[0] = (temp_s0->v.cn[1] = (temp_s0->v.cn[2] = (temp_s0->v.cn[3] = 0xFF)));
 			temp_s2->v.cn[0] = (temp_s2->v.cn[1] = (temp_s2->v.cn[2] = (temp_s2->v.cn[3] = 0xFF)));
-
-			gDPLoadTextureTile(D_8005BB2C++, sp74, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, 240, sp114, var_v1 * 20, var_t3, sp108, 0, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
+			gDPLoadTextureTile(D_8005BB2C++, sp74, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, 240, sp114, temp_v1, var_t3, sp108, G_TX_RENDERTILE, G_TX_CLAMP, G_TX_CLAMP, 0, 0, 0, 0);
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(temp_s4), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
 		}
@@ -329,7 +330,7 @@ s32 func_8000E53C_F13C(void)
 		D_80059CE0 = 0.0f;
 		return 1;
 	}
-	D_80059CD0 = (s16)(D_80059CD0 + D_80059CE0);
+	D_80059CD0 = (s16) (D_80059CD0 + D_80059CE0);
 	D_80059CE0 += D_80059CDC->unkC;
 	D_80059CD8++;
 	if (D_80059CD8 >= 0x80)
@@ -338,6 +339,3 @@ s32 func_8000E53C_F13C(void)
 	}
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/E830/func_8000E53C_F13C.s")
-#endif
