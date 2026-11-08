@@ -950,7 +950,7 @@ void func_8008CF2C_174FEC(void) {
 			func_800153D8_15FD8(0xC6);
 		}
 
-		func_8001A54C_Menu(D_800A56F0_18D7B0, -1);
+		func_8001A54C_1B14C((u8 *)D_800A56F0_18D7B0);
 		slotValue = slots[D_800A4340_Menu4];
 
 		switch (slotValue) {
