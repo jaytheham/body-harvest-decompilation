@@ -1,23 +1,23 @@
 {
-  "generated": "2026-11-08T18:26:06Z",
-  "commit": "4516c598",
-  "commit_timestamp": "2026-11-09T07:25:14+13:00",
+  "generated": "2026-11-08T18:27:06Z",
+  "commit": "8fcaa19f",
+  "commit_timestamp": "2026-11-09T07:26:01+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 2989,
-    "non_matching": 68,
+    "matched": 2990,
+    "non_matching": 67,
     "asm_stubs": 0,
-    "matched_pct": 97.78,
+    "matched_pct": 97.81,
     "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 352,
-      "non_matching": 3,
+      "matched": 353,
+      "non_matching": 2,
       "asm_stubs": 0,
       "total": 355,
-      "matched_pct": 99.2,
+      "matched_pct": 99.4,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
@@ -196,12 +196,12 @@
     {
       "path": "core/E830.c",
       "segment": "core",
-      "matched": 9,
-      "non_matching": 1,
+      "matched": 10,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 10,
-      "matched_pct": 90.0,
-      "contributor": "jaytheham"
+      "matched_pct": 100.0,
+      "contributor": "LunarLaurus"
     },
     {
       "path": "core/FD80.c",
@@ -2597,15 +2597,15 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 86,
-      "matched": 1835,
-      "non_matching": 25,
+      "files": 85,
+      "matched": 1826,
+      "non_matching": 24,
       "asm_stubs": 0
     },
     {
       "name": "LunarLaurus",
-      "files": 11,
-      "matched": 815,
+      "files": 12,
+      "matched": 825,
       "non_matching": 43,
       "asm_stubs": 0
     },
@@ -2907,9 +2907,9 @@
     },
     {
       "date": "2026-11-08",
-      "commit": "9494ede",
-      "matched": 2989,
-      "non_matching": 68,
+      "commit": "8fcaa19",
+      "matched": 2990,
+      "non_matching": 67,
       "total": 3057
     }
   ]
