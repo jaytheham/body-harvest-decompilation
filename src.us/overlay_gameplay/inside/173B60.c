@@ -515,10 +515,10 @@ void func_8008BB6C_173C2C(u8 arg0, u8 arg1) {
 #ifdef NON_MATCHING
 void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
 	s16 scrollOffset;
-	Vtx *vtx2;
-	Vtx *vtx1;
-	Vtx *vtx3;
 	Vtx *vtx0;
+	Vtx *vtx1;
+	Vtx *vtx2;
+	Vtx *vtx3;
 	D_8005BB34++;
 	D_8005BB34++;
 	D_8005BB34++;
@@ -546,7 +546,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 		scrollOffset = D_800FCF26;
 	}
 
-	D_80052B40.unk0 = 0;
+	D_80052B40_HudX = 0;
 	D_80052B40.unk2 = arg1 + scrollOffset;
 	D_80052B40.unk4 = 0;
 	D_80052B50.unk0 = 0x100;
@@ -578,10 +578,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 		vtx2->v.ob[2] = -1;
 		vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 		if (arg5 == 2) {
-			vtx1->v.cn[0] = 0xFFU;
-			vtx2->v.cn[0] = 0xFFU;
-			vtx3->v.cn[0] = 0xFFU;
-			vtx0->v.cn[0] = 0xFFU;
+			vtx0->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
 
 			arg7 <<= 5;
 			vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, ((1.0f - arg2) * 255.0) + arg7);
@@ -589,29 +586,27 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 			vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, arg7);
 
 			vtx1->v.tc[1] = 0;
-			vtx0->v.tc[1] = vtx0->v.tc[0] = vtx3->v.tc[0] = vtx1->v.tc[1];
+			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
 			vtx2->v.tc[1] = 0x400;
 			vtx3->v.tc[1] = vtx2->v.tc[1];
 
 			vtx2->v.tc[0] = vtx1->v.tc[0] = (f32) (arg8 * D_80047712) * arg2;
 		} else {
-			vtx3->v.cn[0] = 0xFFU;
-			vtx0->v.cn[0] = 0xFFU;
+			vtx0->v.cn[0] = vtx3->v.cn[0] = 0xFF;
 
 			arg7 <<= 5;
 			vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(255, arg7);
 
 			vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(255, arg7);
 
-			vtx1->v.cn[0] = 0xFFU;
-			vtx2->v.cn[0] = 0xFFU;
+			vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
 
 			vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, (arg2 * 255.0) + arg7);
 
 			vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, arg7);
 
 			vtx1->v.tc[1] = 0;
-			vtx0->v.tc[1] = vtx0->v.tc[0] = vtx3->v.tc[0] = vtx1->v.tc[1];
+			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
 			vtx2->v.tc[1] = 0x400;
 			vtx3->v.tc[1] = vtx2->v.tc[1];
 
@@ -661,20 +656,11 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		vtx3->v.tc[1] = vtx2->v.tc[1] = vtx1->v.tc[0] = vtx2->v.tc[0] = -arg6 * 0x30;
 
-		vtx2->v.cn[0] = 0xB9;
-		vtx3->v.cn[0] = 0xB9;
-		vtx1->v.cn[0] = 0xB9;
-		vtx0->v.cn[0] = 0xB9;
+		vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
+		vtx0->v.cn[0] = vtx1->v.cn[0] = 0xB9;
 
-		vtx2->v.cn[1] = 0xFFU;
-		vtx3->v.cn[1] = 0xFFU;
-		vtx1->v.cn[1] = 0xFFU;
-		vtx0->v.cn[1] = 0xFFU;
-
-		vtx2->v.cn[2] = 0xFFU;
-		vtx3->v.cn[2] = 0xFFU;
-		vtx1->v.cn[2] = 0xFFU;
-		vtx0->v.cn[2] = 0xFFU;
+		vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = 0xFF;
+		vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = 0xFF;
 
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 
@@ -686,7 +672,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gDPLoadTextureBlock(D_8005BB2C++, arg4, G_IM_FMT_IA, G_IM_SIZ_8b, 24, 24, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 1, 0, PRIMITIVE, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
 
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 
