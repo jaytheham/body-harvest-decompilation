@@ -459,14 +459,6 @@ const u8 D_800A56F0_18D7B0[] = {
 	0x20, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 };
 
-const f64 D_800A56F8_18D7B8[1] = {255.0};
-
-const f64 D_800A5700_18D7C0[1] = {255.0};
-
-const f64 D_800A5708_18D7C8[1] = {255.0};
-
-const f64 D_800A5710_18D7D0[1] = {255.0};
-
 // AI - Initialize HUD state variables to default values
 void func_8008BAA0_173B60(void) {
 	D_8004794A = 0;
@@ -519,51 +511,23 @@ void func_8008BB6C_173C2C(u8 arg0, u8 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
+// Render a HUD bar with an optional icon overlay
 #ifdef NON_MATCHING
-// AI - Render a HUD bar element (health/ammo fill bar) with optional icon overlay
-void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s32 arg8) {
-	f32 var_f14;
-	s16 temp_t1;
-	s16 temp_t3;
-	s16 temp_v0;
-	s32 sp20;
-	Vtx_t *temp_a0;
-	Vtx_t *temp_a1;
-	Vtx_t *temp_a3;
-	Vtx_t *temp_t1_2;
-	Vtx_t *temp_a0_2;
-	Vtx_t *temp_a1_2;
-	Vtx_t *temp_a3_2;
-	Vtx_t *temp_t1_3;
-	u32 temp_v0_8;
-	u32 temp_v0_9;
-	f64 temp_f2;
-	f64 temp_f2_2;
-	f64 var_f0;
-	f64 var_f0_2;
-	s32 temp_t6;
-	s32 temp_t7_3;
-	s8 var_v0_2;
-	s8 var_v0_3;
-	s8 var_v0_4;
-	s8 var_v0_5;
-	Vtx_t *temp_t7;
-	Vtx_t *temp_t9;
-	Vtx_t *temp_t7_2;
-
-	temp_t7 = D_8005BB34 + 1;
-	D_8005BB34 = temp_t7;
-	temp_t9 = temp_t7 + 1;
-	D_8005BB34 = temp_t9;
-	temp_t7_2 = temp_t9 + 1;
-	D_8005BB34 = temp_t7_2;
-	D_8005BB34 = temp_t7_2 + 1;
+void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
+	s16 scrollOffset;
+	Vtx *vtx0;
+	Vtx *vtx1;
+	Vtx *vtx2;
+	Vtx *vtx3;
+	D_8005BB34++;
+	D_8005BB34++;
+	D_8005BB34++;
+	D_8005BB34++;
 
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x3C, 0x50, 0x78, 0xC8);
 
-	var_f14 = arg2;
 	if (func_80004498_5098(arg2) == 0) {
-		var_f14 = 0.0f;
+		arg2 = 0.0f;
 	}
 
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
@@ -577,140 +541,76 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 	gDPPipeSync(D_8005BB2C++);
 
 	if (arg3 != 0) {
-		temp_v0 = D_800FCF22;
+		scrollOffset = D_800FCF22;
 	} else {
-		temp_v0 = D_800FCF26;
+		scrollOffset = D_800FCF26;
 	}
 
-	D_80052B40.unk0 = 0;
-	temp_t1 = arg1 + temp_v0;
-	D_80052B40.unk2 = temp_t1;
+	D_80052B40_HudX = 0;
+	D_80052B40.unk2 = arg1 + scrollOffset;
 	D_80052B40.unk4 = 0;
 	D_80052B50.unk0 = 0x100;
 	D_80052B50.unk2 = 0x100;
 	D_80052B50.unk4 = 0;
-	sp20 = temp_t1;
 
 	func_800039D0_45D0(&D_80052B40, 0, &D_80052B50, D_8005BB38);
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
-	temp_t3 = arg0 + 7;
-	func_800092B8_9EB8(((temp_t3 - arg8) - 0xF) * 4, (temp_t1 - 8) * 4, (temp_t3 + 4) * 4, (temp_t1 + 6) * 4, 3);
+	arg0 += 7;
+	func_800092B8_9EB8(((arg0 - arg8) - 0xF) << 2, (arg1 + scrollOffset - 8) << 2, (arg0 + 4) << 2, (arg1 + scrollOffset + 6) << 2, 3);
 
 	if (arg5 != 0) {
-		temp_t1_2 = D_8005BB34;
-		temp_a1 = temp_t1_2 + 1;
-		temp_a0 = temp_a1 + 1;
-		temp_a3 = temp_a0 + 1;
-		D_8005BB34 = temp_a3 + 1;
+		vtx0 = D_8005BB34++;
+		vtx1 = D_8005BB34++;
+		vtx2 = D_8005BB34++;
+		vtx3 = D_8005BB34++;
 
-		temp_t1_2->unk0 = temp_t3 - 0x2F;
-		temp_a3->unk0 = temp_t3 - 0x2F;
+		vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 0x2F;
 
-		temp_a1->unk0 = (s16) ((f32) (temp_t3 - 0x30) + ((f32) arg8 * var_f14) + 1.0f);
-		temp_a1->unk2 = 3;
-		temp_a0->unk0 = temp_a1->unk0;
-		temp_t1_2->unk2 = temp_a1->unk2;
+		vtx1->v.ob[0] = vtx2->v.ob[0] = (f32) (arg0 - 0x30) + ((f32) arg8 * arg2) + 1.0f;
+		vtx1->v.ob[1] = 3;
+		vtx0->v.ob[1] = vtx1->v.ob[1];
 
-		temp_a0->unk2 = -4;
-		temp_a3->unk2 = temp_a0->unk2;
+		vtx2->v.ob[1] = -4;
+		vtx3->v.ob[1] = vtx2->v.ob[1];
 
-		temp_a0->unk4 = -1;
-		temp_a3->unk4 = temp_a0->unk4;
-		temp_a1->unk4 = temp_a0->unk4;
-		temp_t1_2->unk4 = temp_a0->unk4;
-		// Gradient bar fill?
+		vtx2->v.ob[2] = -1;
+		vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 		if (arg5 == 2) {
-			temp_a1->unkC = 0xFF;
-			temp_a0->unkC = 0xFF;
-			temp_a3->unkC = 0xFF;
-			temp_t1_2->unkC = 0xFF;
+			vtx0->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
 
-			temp_t7_3 = arg7 << 5;
-			temp_f2 = ((f64) (1.0f - var_f14) * D_800A5700_18D7C0[0]) + (f64) temp_t7_3;
-			if (D_800A56F8_18D7B8[0] < temp_f2) {
-				var_f0 = D_800A56F8_18D7B8[0];
-			} else {
-				var_f0 = temp_f2;
-			}
-			temp_v0_8 = (u32) var_f0;
-			temp_a1->unkD = (s8) temp_v0_8;
-			temp_a0->unkD = (s8) temp_v0_8;
-			temp_a3->unkD = (s8) temp_v0_8;
-			temp_t1_2->unkD = (s8) temp_v0_8;
+			arg7 <<= 5;
+			vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, ((1.0f - arg2) * 255.0) + arg7);
 
-			if (temp_t7_3 >= 0x100) {
-				var_v0_2 = -1;
-			} else {
-				var_v0_2 = temp_t7_3;
-			}
-			temp_a1->unkE = var_v0_2;
-			temp_a0->unkE = var_v0_2;
-			temp_a3->unkE = var_v0_2;
-			temp_t1_2->unkE = var_v0_2;
+			vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, arg7);
 
-			temp_a1->unkA = 0;
-			temp_a3->unk8 = temp_a1->unkA;
-			temp_t1_2->unk8 = temp_a1->unkA;
-			temp_t1_2->unkA = temp_a1->unkA;
-			temp_a0->unkA = 0x400;
-			temp_a3->unkA = temp_a0->unkA;
+			vtx1->v.tc[1] = 0;
+			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
+			vtx2->v.tc[1] = 0x400;
+			vtx3->v.tc[1] = vtx2->v.tc[1];
 
-			temp_a1->unk8 = (s16) ((f32) (arg8 * D_80047712) * var_f14);
-			temp_a0->unk8 = temp_a1->unk8;
+			vtx2->v.tc[0] = vtx1->v.tc[0] = (f32) (arg8 * D_80047712) * arg2;
 		} else {
-			// solid bar fill?
-			temp_a3->unkC = 0xFF;
-			temp_t1_2->unkC = 0xFF;
+			vtx0->v.cn[0] = vtx3->v.cn[0] = 0xFF;
 
-			temp_t6 = arg7 << 5;
-			if (temp_t6 >= 0x100) {
-				var_v0_3 = -1;
-			} else {
-				var_v0_3 = temp_t6;
-			}
-			temp_a3->unkD = var_v0_3;
-			temp_t1_2->unkD = var_v0_3;
+			arg7 <<= 5;
+			vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(255, arg7);
 
-			if (temp_t6 >= 0x100) {
-				var_v0_4 = -1;
-			} else {
-				var_v0_4 = temp_t6;
-			}
-			temp_a3->unkE = var_v0_4;
-			temp_t1_2->unkE = var_v0_4;
+			vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(255, arg7);
 
-			temp_a1->unkC = 0xFF;
-			temp_a0->unkC = 0xFF;
+			vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
 
-			temp_f2_2 = ((f64) var_f14 * D_800A5710_18D7D0[0]) + (f64) temp_t6;
-			if (D_800A5708_18D7C8[0] < temp_f2_2) {
-				var_f0_2 = D_800A5708_18D7C8[0];
-			} else {
-				var_f0_2 = temp_f2_2;
-			}
-			temp_v0_9 = (u32) var_f0_2;
-			temp_a1->unkD = (s8) temp_v0_9;
-			temp_a0->unkD = (s8) temp_v0_9;
+			vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, (arg2 * 255.0) + arg7);
 
-			if (temp_t6 >= 0x100) {
-				var_v0_5 = -1;
-			} else {
-				var_v0_5 = temp_t6;
-			}
-			temp_a1->unkE = var_v0_5;
-			temp_a0->unkE = var_v0_5;
+			vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, arg7);
 
-			temp_a1->unkA = 0;
-			temp_a3->unk8 = temp_a1->unkA;
-			temp_t1_2->unk8 = temp_a1->unkA;
-			temp_t1_2->unkA = temp_a1->unkA;
-			temp_a0->unkA = 0x400;
-			temp_a3->unkA = temp_a0->unkA;
+			vtx1->v.tc[1] = 0;
+			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
+			vtx2->v.tc[1] = 0x400;
+			vtx3->v.tc[1] = vtx2->v.tc[1];
 
-			temp_a1->unk8 = (s16) ((f32) (D_80047716 << 0xA) * var_f14);
-			temp_a0->unk8 = temp_a1->unk8;
+			vtx2->v.tc[0] = vtx1->v.tc[0] = (f32) (D_80047716 << 0xA) * arg2;
 		}
 
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -737,52 +637,31 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 	}
 	// Draw an icon overlay on top of the bar if a texture pointer is provided
 	if (arg4 != 0) {
-		temp_a3_2 = D_8005BB34;
-		temp_a0_2 = temp_a3_2 + 1;
-		temp_t1_3 = temp_a0_2 + 1;
-		temp_a1_2 = temp_t1_3 + 1;
-		D_8005BB34 = temp_a1_2 + 1;
+		vtx3 = D_8005BB34++;
+		vtx2 = D_8005BB34++;
+		vtx0 = D_8005BB34++;
+		vtx1 = D_8005BB34++;
 
-		temp_a3_2->unk0 = temp_t3 - 0x30;
-		temp_t1_3->unk0 = temp_t3 - 0x30;
-		temp_a0_2->unk0 = temp_t3 - 0x42;
+		vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 0x30;
+		vtx1->v.ob[0] = vtx2->v.ob[0] = arg0 - 0x42;
+		vtx1->v.ob[1] = 9;
+		vtx0->v.ob[1] = vtx1->v.ob[1];
 
-		temp_a1_2->unk0 = temp_t3 - 0x42;
-		temp_a1_2->unk2 = 9;
-		temp_t1_3->unk2 = temp_a1_2->unk2;
+		vtx2->v.ob[1] = -9;
+		vtx3->v.ob[1] = vtx2->v.ob[1];
 
-		temp_a0_2->unk2 = -9;
-		temp_a3_2->unk2 = temp_a0_2->unk2;
+		vtx2->v.ob[2] = -1;
+		vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
-		temp_a0_2->unk4 = -1;
-		temp_a3_2->unk4 = temp_a0_2->unk4;
-		temp_a1_2->unk4 = temp_a0_2->unk4;
-		temp_t1_3->unk4 = temp_a0_2->unk4;
+		vtx0->v.tc[1] = vtx1->v.tc[1] = vtx0->v.tc[0] = vtx3->v.tc[0] = (arg6 * 0x30) + 0x600;
 
-		temp_a3_2->unk8 = (arg6 * 0x30) + 0x600;
-		temp_t1_3->unk8 = temp_a3_2->unk8;
-		temp_a1_2->unkA = temp_a3_2->unk8;
-		temp_t1_3->unkA = temp_a3_2->unk8;
+		vtx3->v.tc[1] = vtx2->v.tc[1] = vtx1->v.tc[0] = vtx2->v.tc[0] = -arg6 * 0x30;
 
-		temp_a0_2->unk8 = -arg6 * 0x30;
-		temp_a1_2->unk8 = temp_a0_2->unk8;
-		temp_a0_2->unkA = temp_a0_2->unk8;
-		temp_a3_2->unkA = temp_a0_2->unk8;
+		vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
+		vtx0->v.cn[0] = vtx1->v.cn[0] = 0xB9;
 
-		temp_a0_2->unkC = 0xB9;
-		temp_a3_2->unkC = 0xB9;
-		temp_a1_2->unkC = 0xB9;
-		temp_t1_3->unkC = 0xB9;
-
-		temp_a0_2->unkD = 0xFF;
-		temp_a3_2->unkD = 0xFF;
-		temp_a1_2->unkD = 0xFF;
-		temp_t1_3->unkD = 0xFF;
-
-		temp_a0_2->unkE = 0xFF;
-		temp_a3_2->unkE = 0xFF;
-		temp_a1_2->unkE = 0xFF;
-		temp_t1_3->unkE = 0xFF;
+		vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = 0xFF;
+		vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = 0xFF;
 
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 
@@ -794,7 +673,7 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gDPLoadTextureBlock(D_8005BB2C++, arg4, G_IM_FMT_IA, G_IM_SIZ_8b, 24, 24, 0, G_TX_MIRROR | G_TX_CLAMP, G_TX_MIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		gDPSetCombineLERP(D_8005BB2C++, TEXEL0, 0, SHADE, 1, 0, PRIMITIVE, 0, ENVIRONMENT, TEXEL0, 0, SHADE, 0, 0, 0, 0, TEXEL0);
+		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
 
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 
@@ -810,6 +689,14 @@ void func_8008BD18_173DD8(s32 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 #else
+const f64 D_800A56F8_18D7B8[1] = {255.0};
+
+const f64 D_800A5700_18D7C0[1] = {255.0};
+
+const f64 D_800A5708_18D7C8[1] = {255.0};
+
+const f64 D_800A5710_18D7D0[1] = {255.0};
+
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
 #endif
 
@@ -956,8 +843,7 @@ void func_8008CF2C_174FEC(void) {
 		if ((stickX < -0x1E) && (D_800A4340_Menu1 >= 4) && (slots[D_800A4340_Menu1 - 1] != 0xF)) {
 			D_800A4340_18C400_W = D_800A4340_Menu1 - 1;
 			D_800FCF20 = 0;
-			func_800153D8_15FD8(0xC7);
-			stickX = D_8004758A;
+			func_800153D8_15FD8(0xC7); stickX = D_8004758A;
 		}
 
 		if ((stickX >= 0x1F) && (D_800A4340_Nav1 < 5) && (slots[D_800A4340_Nav1 + 1] != 0xF) && (D_800A4348_18C408 == 0)) {
@@ -970,8 +856,7 @@ void func_8008CF2C_174FEC(void) {
 		if ((stickY >= 0x1F) && (D_800A4340_Nav2 >= 2) && (slots[D_800A4340_Nav2 - 3] != 0xF)) {
 			D_800A4340_18C400_W = D_800A4340_Nav2 - 3;
 			D_800FCF20 = 0;
-			func_800153D8_15FD8(0xC7);
-			stickY = D_8004758B;
+			func_800153D8_15FD8(0xC7); stickY = D_8004758B;
 		}
 
 		if ((stickY < -0x1E) && (D_800A4340_Nav3 < 7) && (slots[D_800A4340_Nav3 + 3] != 0xF)) {
@@ -993,18 +878,15 @@ void func_8008CF2C_174FEC(void) {
 			case 0:
 			default:
 				D_800A4344_18C404_W = slotValue;
-				func_8001A54C_Menu((u8 *) D_800A428C_18C34C[slotValue], slotValue);
-				fade = D_800FCA92_Lang0;
+				func_8001A54C_Menu((u8 *) D_800A428C_18C34C[slotValue], slotValue); fade = D_800FCA92_Lang0;
 				break;
 			case 2:
 				D_800A4344_18C404_W = slotValue;
-				func_8001A54C_Menu((u8 *) D_800A4304_18C3C4[slotValue], slotValue);
-				fade = D_800FCA92_Lang1;
+				func_8001A54C_Menu((u8 *) D_800A4304_18C3C4[slotValue], slotValue); fade = D_800FCA92_Lang1;
 				break;
 			case 1:
 				D_800A4344_18C404_W = slotValue;
-				func_8001A54C_Menu((u8 *) D_800A42C8_18C388[slotValue], slotValue);
-				fade = D_800FCA92_Lang2;
+				func_8001A54C_Menu((u8 *) D_800A42C8_18C388[slotValue], slotValue); fade = D_800FCA92_Lang2;
 				break;
 			}
 		}
@@ -1050,7 +932,7 @@ void func_8008CF2C_174FEC(void) {
 			func_800153D8_15FD8(0xC6);
 		}
 
-		func_8001A54C_Menu(D_800A56F0_18D7B0, -1);
+		func_8001A54C_1B14C((u8 *)D_800A56F0_18D7B0);
 		slotValue = slots[D_800A4340_Menu4];
 
 		switch (slotValue) {

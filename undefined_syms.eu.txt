@@ -6033,3 +6033,5 @@ D_800D6DB6 = D_800D7916;
 
 /* Read view of the function-local flash counter. */
 D_8013DB00_14CAB0 = D_8013DB04_14CAB4 - 0x4;
+
+D_80052B40_HudX = D_80052B40;
