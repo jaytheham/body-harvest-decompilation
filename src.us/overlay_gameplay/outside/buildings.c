@@ -810,7 +810,7 @@ Unk80148620 *func_801176B0_126660(void)
   return NULL;
 }
 
-#ifdef NON_MATCHING
+// AI - Bounds vehicleInstances[arg2] via func_801165FC_1255AC; func_80079910_888C0 on overlapping alienInstances.
 void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	s16 centerX;
 	s16 centerY;
@@ -829,17 +829,15 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	s32 halfX;
 	s32 halfZ;
 
-	halfX = vehicleTypes[vehicleInstances[arg2].unk1A].unk34 + 0xC8;
 	halfZ = vehicleTypes[vehicleInstances[arg2].unk1A].unk36 + 0xC8;
-
-	halfX /= 2;
+	halfX = (vehicleTypes[vehicleInstances[arg2].unk1A].unk34 + 0xC8) / 2;
 
 	func_801165FC_1255AC(arg0, arg1, &centerX, &centerY, &centerZ, &orientation);
 
-	cornerX0 = centerX - (((f32)coss(orientation) / 32768.0) * halfX);
-	cornerZ0 = (centerZ - (((f32)sins(orientation) / 32768.0) * halfX));
-	cornerX1 = (centerX + halfZ * ((f32)sins(orientation) / 32768.0)) + ((f32)coss(orientation) / 32768.0) * halfX;
-	cornerZ1 = (centerZ + halfZ * ((f32)coss(orientation) / 32768.0)) + ((f32)sins(orientation) / 32768.0) * halfX;
+	cornerX0 = centerX - ((f32)coss(orientation) / 32768.0) * halfX;
+	cornerZ0 = centerZ - ((f32)sins(orientation) / 32768.0) * halfX;
+	cornerX1 = centerX + halfZ * ((f32)sins(orientation) / 32768.0) + ((f32)coss(orientation) / 32768.0) * halfX;
+	cornerZ1 = centerZ + halfZ * ((f32)coss(orientation) / 32768.0) + ((f32)sins(orientation) / 32768.0) * halfX;
 
 	if (cornerX1 < cornerX0) {
 		minX = cornerX1;
@@ -850,7 +848,6 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 	}
 
 	/* Keep this optimizer block boundary for the bounds' register lifetimes. */
-	if (1) {}
 	if (cornerZ1 < cornerZ0) {
 		minZ = cornerZ1;
 		maxZ = cornerZ0;
@@ -874,9 +871,6 @@ void func_801176F4_1266A4(u8 arg0, u8 arg1, s32 arg2) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_801176F4_1266A4.s")
-#endif
 
 void func_80117A4C_1269FC(Unk80148620 *entry) {
 	VehicleInstance *vehicle;
