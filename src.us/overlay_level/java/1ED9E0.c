@@ -1109,7 +1109,6 @@ void func_802D6DF8_1EFB08(void) {
 }
 
 // AI - Lightning controller
-#ifdef NON_MATCHING
 void func_802D6E70_1EFB80(void) {
 	s16 sp6E;
 	s16 sp6C;
@@ -1152,11 +1151,10 @@ void func_802D6E70_1EFB80(void) {
 	sp4C = (f32) (func_800038E0_44E0() % 100) / 2000.0f;
 	if (D_80047F94 != 3) {
 		func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - 0xFA0), D_80052B34->unk4, (f32) (0.325 + (f64) sp4C));
-		if ((((u32) D_80052A8C % 400U) == 0) && (((u32)D_80052A8C == 400U) || (((u32) D_80052A8C >= 0x191U) && ((func_800038E0_44E0() % 10) == 0)))) {
+		if ((((u32) D_80052A8C % 400U) == 0) && (((u32) D_80052A8C == 400U) || (((u32) D_80052A8C >= 0x191U) && ((func_800038E0_44E0() % 10) == 0)))) {
 			func_800C0D1C_CFCCC(-0x50, 0x50, 0);
 		}
 	}
-	(void)&sp4C;
 	if (D_80047F94 == 3) {
 		var_v1_2 = D_80052B34->unk4;
 		if (var_v1_2 >= 0x3C01) {
@@ -1165,10 +1163,13 @@ void func_802D6E70_1EFB80(void) {
 			if ((((u32) D_80052A8C % 10U) == 0) && !(func_800038E0_44E0() % 4) && (func_800C0D1C_CFCCC(-0x50, 0x50, 1) != 0)) {
 				sp62 = 0x400 - (func_800038E0_44E0_U16() >> 5);
 				randomZ = 0x400 - (func_800038E0_44E0_U16() >> 5);
+				sp6E = D_80052B34->unk0 + sp62;
+				sp6C = D_80052B34->unk2 + 0x5DC;
+				sp6A = D_80052B34->unk4 + randomZ;
 				sp68 = D_80052B34->unk0;
 				sp66 = D_80052B34->unk2;
 				sp64 = D_80052B34->unk4;
-				func_800D16BC_E066C((s16)(sp68 + sp62), (s16)(sp66 + 0x5DC), (s16)(D_80052B34->unk4 + randomZ), sp68, sp66, sp64, 6);
+				func_800D16BC_E066C(sp6E, sp6C, sp6A, sp68, sp66, sp64, 6);
 				func_800C541C_D43CC(sp68, sp66, sp64, 0, 0x7F, 0, 0x64, 0xFF, 0x18, 2, 0xD2, 0xD2, 0xFA);
 				func_800D05A8_DF558(sp68, sp66, sp64, 0xC8, 0xC8, 0xC8, 0xFF);
 				func_800DEA08_ED9B8(sp68, sp66, sp64, 0xC8, 0xA, 8, 0x28, 0xDC, 0x50, 0x50, 0x50);
@@ -1181,10 +1182,9 @@ void func_802D6E70_1EFB80(void) {
 				func_80123E90_132E40(D_80052B34, 0x4B);
 			}
 		} else {
-			temp_f0 = (f64)sp4C;
+			temp_f0 = (f64) sp4C;
 			if (var_v1_2 >= 0x2301) {
-
-				func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - (s16)(s32) ((2500.0f * ((f32)(0x3C00 - var_v1_2) / 12800.0f)) + 1500.0f)), var_v1_2, (f32) (((f64) (1.0f - ((f32)(0x3C00 - var_v1_2) / 12800.0f)) * 0.075) + 0.325 + temp_f0));
+				func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - (s16) (s32) ((2500.0f * ((f32) (0x3C00 - var_v1_2) / 12800.0f)) + 1500.0f)), var_v1_2, (f32) (((f64) (1.0f - ((f32) (0x3C00 - var_v1_2) / 12800.0f)) * 0.075) + 0.325 + temp_f0));
 				if ((((u32) D_80052A8C % 10U) == 0) && !(func_800038E0_44E0() % 8) && (func_800C0D1C_CFCCC(-0x50, 0x50, 1) != 0)) {
 					sp62 = 0x400 - (func_800038E0_44E0_U16() >> 5);
 					randomZ = 0x400 - (func_800038E0_44E0_U16() >> 5);
@@ -1194,8 +1194,6 @@ void func_802D6E70_1EFB80(void) {
 					sp68 = D_80052B34->unk0 + (sp62 / 2);
 					sp64 = D_80052B34->unk4 + (randomZ / 2);
 
-
-
 					sp66 = func_800B84D0_C7480_4Args(sp68, sp64, sp6A, D_80052B34->unk0) >> 8;
 					func_800D16BC_E066C(sp6E, sp6C, sp6A, sp68, sp66, sp64, 5);
 					func_800DEA08_ED9B8(sp68, sp66, sp64, 0xC8, 0xA, 8, 0x28, 0xDC, 0x50, 0x50, 0x50);
@@ -1203,8 +1201,7 @@ void func_802D6E70_1EFB80(void) {
 					func_80135D44_144CF4(sp68, sp66, sp64, 3.0f);
 				}
 			} else if (var_v1_2 >= 0xA01) {
-
-				func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - (s16)(s32) ((2500.0f * ((f32)(0x3C00 - var_v1_2) / 12800.0f)) + 1500.0f)), var_v1_2, (f32) (((f64) (1.0f - ((f32)(0x3C00 - var_v1_2) / 12800.0f)) * 0.075) + 0.325 + temp_f0));
+				func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - (s16) (s32) ((2500.0f * ((f32) (0x3C00 - var_v1_2) / 12800.0f)) + 1500.0f)), var_v1_2, (f32) (((f64) (1.0f - ((f32) (0x3C00 - var_v1_2) / 12800.0f)) * 0.075) + 0.325 + temp_f0));
 				if ((((u32) D_80052A8C % 10U) == 0) && ((func_800038E0_44E0() % 12) == 0) && (func_800C0D1C_CFCCC(-0x50, 0x50, 1) != 0)) {
 					sp62 = 0x400 - (func_800038E0_44E0_U16() >> 5);
 					randomZ = 0x400 - (func_800038E0_44E0_U16() >> 5);
@@ -1213,7 +1210,6 @@ void func_802D6E70_1EFB80(void) {
 					sp6A = D_80052B34->unk4 + randomZ;
 					sp68 = D_80052B34->unk0 + (sp62 * 2);
 					sp64 = D_80052B34->unk4 + (randomZ * 2);
-	
 
 					sp66 = func_800B84D0_C7480(sp68, sp64) >> 8;
 					func_800D16BC_E066C(sp6E, sp6C, sp6A, sp68, sp66, sp64, 4);
@@ -1231,13 +1227,6 @@ void func_802D6E70_1EFB80(void) {
 		}
 	}
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s", "src.us/overlay_level/java/1ED9E0_lightning_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/java/1ED9E0/func_802D6E70_1EFB80.s", "src.us/overlay_level/java/1ED9E0_lightning_late_rodata.eu.s")
-#endif
-#endif
 
 // 0xC cutscene/mission called thru level overlay table
 void func_802D7938_1F0648(void) {
