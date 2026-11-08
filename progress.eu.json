@@ -1,25 +1,25 @@
 {
-  "generated": "2026-11-07T08:35:30Z",
-  "commit": "118a5626",
-  "commit_timestamp": "2026-11-07T07:20:13+13:00",
+  "generated": "2026-11-08T04:51:54Z",
+  "commit": "010eb099",
+  "commit_timestamp": "2026-11-08T17:50:55+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2649,
-    "non_matching": 73,
+    "matched": 2651,
+    "non_matching": 71,
     "asm_stubs": 0,
-    "matched_pct": 97.32,
+    "matched_pct": 97.39,
     "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 350,
-      "non_matching": 5,
+      "matched": 352,
+      "non_matching": 3,
       "asm_stubs": 0,
       "total": 355,
-      "matched_pct": 98.6,
+      "matched_pct": 99.2,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
@@ -188,11 +188,11 @@
     {
       "path": "core/AD60.c",
       "segment": "core",
-      "matched": 23,
-      "non_matching": 3,
+      "matched": 25,
+      "non_matching": 1,
       "asm_stubs": 0,
       "total": 26,
-      "matched_pct": 88.5,
+      "matched_pct": 96.2,
       "contributor": ""
     },
     {
@@ -834,6 +834,13 @@
       "commit": "118a562",
       "matched": 2649,
       "non_matching": 73,
+      "total": 2722
+    },
+    {
+      "date": "2026-11-08",
+      "commit": "010eb09",
+      "matched": 2651,
+      "non_matching": 71,
       "total": 2722
     }
   ]
