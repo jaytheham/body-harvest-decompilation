@@ -1,0 +1,5 @@
+`incorrect ASM`: The far-plane and look-at angle constants had to come from data symbols, so the target emits `lui $at, %hi(D_80037650_38250)` then `lwc1 $f4, %lo(D_80037650_38250)($at)` (and `lui $at, %hi(D_80037654_38254)`), with the `guPerspective` float arguments stored as `swc1 $f18, 0x10($sp)`, `swc1 $f4, 0x14($sp)`, and `swc1 $f8, 0x18($sp)`.
+
+-> `code changed`: Added `extern const f32 D_80037650_38250[]`, `D_80037654_38254[]`, and `D_80037658_38258[]`, indexing `[0]` in place of the `6000.0f` far plane and the `sinf`/`cosf` angle literals; replaced `temp_v0_13` with `var_t0`, set `var_t0 = 20`, computed `temp_v1 = var_v1 * var_t0`, and reused that `temp_v1` in the `0x78 - temp_v1` assignments, the `tc[1]` expression, and `gDPLoadTextureTile`; removed the `s16 *yAddr` comma expression in favor of separate `temp_s4->v.ob[]`/`D_80059CD4` assignments and moved `sp74 = (u32)(&D_803DA800)` inside the loop.
+
+-> `correct ASM`: The function compiles to the target, and the US and EU ROMs both match.
