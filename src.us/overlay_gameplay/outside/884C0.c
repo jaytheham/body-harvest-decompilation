@@ -1789,8 +1789,11 @@ void func_8007D424_8C3D4(void) {
 	} while (idx < 0xFF);
 }
 
+// CURRENT(9860)
+// AI - Iterates alienInstances via D_8014D510/D_8014ECCC, updating flags and ground using func_800B84D0_C7480.
 #ifdef NON_MATCHING
 void func_8007D690_8C640(void) {
+	AlienInstance *new_var;
 	s16 groundHeight;
 	f32 bobScale;
 	/* Retain the target snapshot store and post-helper reload. */
@@ -1861,7 +1864,7 @@ void func_8007D690_8C640(void) {
 								typeFlags = type->unkC;
 								bobScale = 4.0f;
 								if (typeFlags >= 0x65) {
-									bobScale = (f32) (bobScale * (((f64) (typeFlags - 0x64) / 50.0) + 1.0));
+									bobScale = (f32) (bobScale * ((((f64) (typeFlags - 0x64)) / 50.0) + ((long) 1.0)));
 								}
 							} else {
 								bobScale = 0.0f;
@@ -2035,7 +2038,7 @@ void func_8007D690_8C640(void) {
 
 								if (alien->unk48 != 0) {
 									func_80137468_146418(alienIndex, 0x15);
-									alien->unk48 = alien->unk48 - 1;
+									(new_var = alien)->unk48 = alien->unk48 - 1;
 								}
 							}
 
@@ -2544,6 +2547,8 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
+// CURRENT(35)
+// AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680
 #ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	u8 selfIndex;
@@ -2556,11 +2561,13 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	s16 zA;
 	s16 xB;
 	s16 zB;
+	u8 new_var2;
 	s32 scratch;
 	s32 recurseFlag;
 	s32 moved;
 	AlienInstance *other;
 	s32 collisionCheck;
+	u8 *new_var;
 	AlienType *otherType;
 
 	selfIndex = arg0;
@@ -2572,6 +2579,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	if (alienInstances[arg0].unk47 & 0x80) {
 		return 0;
 	}
+	new_var = &alienInstances[arg0].unk47;
 
 	D_8014D304++;
 	if (D_8014D304 >= 9) {
@@ -2580,7 +2588,8 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	}
 
 
-	if ((alienInstances[arg0].unk0 != alienInstances[arg0].unk2E) || (alienInstances[arg0].unk2 != alienInstances[arg0].unk30) || (alienInstances[arg0].unk4 != alienInstances[arg0].unk32) || (arg2 == 0)) {
+	new_var2 = otherTypeIndex;
+	if ((((alienInstances[arg0].unk0 != alienInstances[arg0].unk2E) || (alienInstances[arg0].unk2 != alienInstances[arg0].unk30)) || (alienInstances[arg0].unk4 != alienInstances[arg0].unk32)) || (arg2 == ((0x1A == new_var2) * 0))) {
 
 		if (alienTypes[typeIndex].unk54 & 0x20) {
 			collisionCheck = func_800836D0_92680(selfIndex, &xA, &zA);
@@ -2630,7 +2639,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 					return 1;
 				}
 			} else {
-				func_8007ED9C_8DD4C(selfIndex);
+				func_8007ED9C_8DD4C(arg0);
 				recurseFlag = 1;
 			}
 
@@ -2651,7 +2660,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 				func_8010C4EC_11B49C(&vehicleInstances[vehIndex]);
 				if (func_8010E684_11D634(&vehicleInstances[vehIndex], &alienInstances[arg0]) != 0) {
 					if ((typeIndex < 3) || (typeIndex == 0x20)) {
-						func_80080D98_8FD48(selfIndex, vehIndex);
+						func_80080D98_8FD48(arg0, vehIndex);
 						i++;
 						continue;
 					}
@@ -2668,7 +2677,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 						D_8014ECD8 = vehIndex;
 						recurseFlag = 1;
 						if (scratch != 0) {
-							func_8007ED9C_8DD4C(selfIndex);
+							func_8007ED9C_8DD4C(arg0);
 						}
 					}
 
@@ -2686,7 +2695,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 	/* Keep the active-list counter live for IDO's parameter normalization. */
 	if (arg1) { }
-	if (!(alienInstances[arg0].unk47 & 0x80) && (alienTypes[typeIndex].unk54 & 4)) {
+	if ((!((*new_var) & 0x80)) && (alienTypes[typeIndex].unk54 & 4)) {
 		while ((u32)arg1 < D_8014ECCC) {
 			i = D_8014D510[arg1];
 			other = &alienInstances[i];
@@ -2695,13 +2704,12 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			/* Keep the type pointer ahead of the active index in IDO's cache. */
 			if ((u32)otherType * 0) {}
 
-			if (!(otherType->unk54 & 4) || (i == selfIndex) || (other->unk47 & 0x80)) {
+			if (((!(otherType->unk54 & 4)) || (i == arg0)) || ((&alienInstances[i])->unk47 & 0x80)) {
 				arg1++;
 				continue;
 			}
 
-			if ((((0x1A == otherTypeIndex) || ((otherTypeIndex >= 0x1B) && (otherTypeIndex < 0x20))) && (alienInstances[arg0].unk20 & ALIEN_FLAG_X)) ||
-				(((0x1A == typeIndex) || ((typeIndex >= 0x1B) && (typeIndex < 0x20))) && (other->unk20 & ALIEN_FLAG_X))) {
+			if ((((0x1A == otherTypeIndex) || ((otherTypeIndex >= 0x1B) && (otherTypeIndex < 0x20))) && (alienInstances[arg0].unk20 & ALIEN_FLAG_X)) || (((0x1A == typeIndex) || ((typeIndex >= 0x1B) && (typeIndex < 0x20))) && ((&alienInstances[i])->unk20 & ALIEN_FLAG_X))) {
 				arg1++;
 				continue;
 			}
@@ -2718,21 +2726,22 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 			func_8007EB74_8DB24(&alienInstances[arg0], other);
 			if (arg2 == 0) {
+				if (0) { }
 				return 1;
 			}
 
 			recurseFlag = 1;
 
 			if (alienInstances[arg0].unk20 & ALIEN_FLAG_FALL) {
-				if (((alienInstances[arg0].unk2 < other->unk2) && (alienInstances[arg0].unk10 > 0)) || ((other->unk2 < alienInstances[arg0].unk2) && (alienInstances[arg0].unk10 < 0))) {
+				if (((alienInstances[arg0].unk2 < other->unk2) && (alienInstances[arg0].unk10 > 0)) || (((&alienInstances[i])->unk2 < alienInstances[arg0].unk2) && (alienInstances[arg0].unk10 < 0))) {
 					alienInstances[arg0].unk10 = 0;
 				}
 			}
-			func_8007ED9C_8DD4C(selfIndex);
+			func_8007ED9C_8DD4C(arg0);
 
-			if (other->unk20 & ALIEN_FLAG_FALL) {
-				if (((other->unk2 < alienInstances[arg0].unk2) && (other->unk10 > 0)) || ((alienInstances[arg0].unk2 < other->unk2) && (other->unk10 < 0))) {
-					other->unk10 = 0;
+			if ((&alienInstances[i])->unk20 & ALIEN_FLAG_FALL) {
+				if ((((&alienInstances[i])->unk2 < alienInstances[arg0].unk2) && ((&alienInstances[i])->unk10 > 0)) || ((alienInstances[arg0].unk2 < (&alienInstances[i])->unk2) && ((&alienInstances[i])->unk10 < 0))) {
+					(&alienInstances[i])->unk10 = 0;
 				}
 			}
 			func_8007ED9C_8DD4C(i);

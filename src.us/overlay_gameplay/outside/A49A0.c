@@ -256,58 +256,71 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 	gDPPipeSync(D_8005BB2C++);
 }
 
+// CURRENT(525)
 // draws vehicle triangle icons on map
 #ifdef NON_MATCHING
-void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4) {
-	Vtx_t *vtx0;
-	Vtx_t *vtx1;
-	Vtx_t *vtx2;
-	Gfx *gfx = NULL;
-
-
-	if ((arg4 != arg2) || (arg3 != 0)) {
-		if ((((u8 (*)[64])D_8021EA30)[((arg1 >> 8) + 0x80) >> 2][((arg0 >> 8) + 0x80) >> 2] & 0xF0) == 0) {
-			return;
-		}
-	}
-
-	vtx0 = &D_8005BB34->v;
-	arg0 >>= 5;
-	arg1 = (0xFF - arg1) >> 5;
-	vtx0->ob[0] = arg0 - 7;
-	D_8005BB34++;
-	vtx0->ob[1] = arg1 - 0xE;
-	vtx0->ob[2] = 0;
-	vtx0->tc[0] = 0x400;
-	vtx0->tc[1] = 0x400;
-
-	vtx1 = &D_8005BB34->v;
-	vtx1->ob[0] = arg0 + 7;
-	D_8005BB34++;
-	vtx1->ob[1] = arg1 - 0xE;
-	vtx1->ob[2] = 0;
-	vtx1->tc[0] = 0x400;
-	vtx1->tc[1] = 0;
-
-	vtx2 = &D_8005BB34->v;
-	vtx2->ob[0] = arg0;
-	D_8005BB34++;
-	vtx2->ob[1] = arg1;
-	vtx2->ob[2] = 0;
-	vtx2->tc[0] = 0;
-	vtx2->tc[1] = 0x400;
-	vtx0->flag = vtx1->flag = vtx2->flag = 0;
-	vtx2->cn[0] = arg2;
-	vtx1->cn[0] = arg2;
-	vtx0->cn[0] = arg2;
-	vtx0->cn[1] = vtx1->cn[1] = vtx2->cn[1] = arg3;
-	vtx0->cn[2] = vtx1->cn[2] = vtx2->cn[2] = arg4;
-	arg4 = 0xFF;
-	vtx0->cn[3] = vtx1->cn[3] = vtx2->cn[3] = arg4;
-
-	gfx = D_8005BB2C++; gfx->words.w0 = 0x04000C2F; gfx->words.w1 = K0_TO_PHYS(vtx0);
-	gfx = D_8005BB2C++; gfx->words.w1 = 0x204; gfx->words.w0 = 0xBF000000;
-	gfx = D_8005BB2C++; gfx->words.w0 = 0xE7000000; gfx->words.w1 = 0;
+void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4)
+{
+  u32 new_var3;
+  Vtx_t *new_var;
+  Vtx_t *vtx0;
+  Gfx *new_var4;
+  Vtx_t *vtx1;
+  Vtx_t *vtx2;
+  Gfx *gfx = NULL;
+  short new_var2;
+  if ((arg4 != arg2) || (((unsigned char) arg3) != 0))
+  {
+    if ((((u8 (*)[64]) D_8021EA30)[((arg1 >> 8) + 0x80) >> 2][((arg0 >> 8) + 0x80) >> 2] & 0xF0) == 0)
+    {
+      return;
+    }
+  }
+  vtx0 = &D_8005BB34->v;
+  arg0 >>= 5;
+  arg1 = (0xFF - arg1) >> 5;
+  vtx0->ob[0] = arg0 - 7;
+  D_8005BB34++;
+  vtx0->ob[1] = arg1 - 0xE;
+  vtx0->ob[2] = 0;
+  vtx0->tc[0] = 0x400;
+ vtx0->tc[1] = 0x400; vtx1 = &D_8005BB34->v;
+ vtx1->ob[0] = arg0 + 7;
+  D_8005BB34++;
+  vtx1->ob[1] = arg1 - 0xE;
+  new_var2 = 0;
+  vtx1->ob[2] = new_var2;
+  vtx1->tc[new_var2] = 0x400;
+  vtx1->tc[1] = new_var2;
+  vtx2 = &D_8005BB34->v;
+  vtx2->ob[new_var2] = arg0;
+  D_8005BB34++;
+  vtx2->ob[1] = arg1;
+  vtx2->ob[2] = 0;
+  vtx2->tc[new_var2] = new_var2;
+  new_var3 = (u32) vtx0;
+  vtx2->tc[1] = 0x400;
+  vtx0->flag = (vtx1->flag = (vtx2->flag = new_var2));
+  vtx1->cn[new_var2] = arg2;
+  vtx2->cn[0] = arg2;
+  new_var = vtx1;
+  vtx0->cn[0] = arg2;
+  vtx0->cn[1] = (new_var->cn[1] = (vtx2->cn[1] = arg3));
+  vtx0->cn[2] = (vtx1->cn[2] = (vtx2->cn[2] = arg4));
+  vtx2->ob[1] = arg1;
+  arg4 = 0xFF;
+  vtx0->cn[3] = (vtx1->cn[3] = (vtx2->cn[3] = arg4));
+  gfx = D_8005BB2C++;
+  new_var4 = gfx;
+  new_var4->words.w0 = 0x04000C2F; new_var4->words.w1 = new_var3 & 0x1FFFFFFF;
+  if (1)
+  {
+  gfx = D_8005BB2C++;
+  gfx->words.w1 = 0x204;
+  (&gfx->words)->w0 = 0xBF000000;
+  }
+  gfx = D_8005BB2C++;
+  gfx->words.w0 = 0xE7000000; gfx->words.w1 = 0;
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
@@ -551,6 +564,8 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
+// CURRENT(4802)
+// AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	TileEntry *tile; Level *level;
@@ -564,6 +579,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	s32 loop;
 	s16 color0;
 	s32 color2;
+	Vtx *new_var;
 	s16 alpha0;
 	s16 alpha2;
 	s16 bright;
@@ -614,10 +630,11 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 
 				v0->v.ob[0] = v1->v.ob[0] = left[-48].x * 8;
 				v0->v.ob[1] = v1->v.ob[1] = -left[-48].z * 8;
-				left = &left[-48]; color2 = right[-48].x * 8;
+				left = &left[-(rightIdx = 48)];
+				color2 = right[-rightIdx].x * 8;
 				v3->v.ob[0] = color2;
 				v2->v.ob[0] = color2;
-				right = &right[-48]; alpha2 = -right->z * 8;
+				right = &right[-rightIdx]; alpha2 = -right->z * 8;
 				v3->v.ob[1] = alpha2;
 				v2->v.ob[1] = alpha2;
 
@@ -631,11 +648,9 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				tileGroup >>= 3;
 
 				if (selected == tileGroup) {
-					tileGroup = D_8013D510_14C4C0 << 4;
-					bright = tileGroup % modBase;
+					tileGroup = D_8013D510_14C4C0 << 4; bright = tileGroup % modBase;
 					alpha0 = bright;
-					alpha2 = (tileGroup + 0x200) % 0x1FF;
-					if (alpha0 >= 0x100) {
+					alpha2 = (tileGroup + 0x200) % 0x1FF; if (alpha0 >= 0x100) {
 						alpha0 = modBase - alpha0;
 					}
 
@@ -656,13 +671,14 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 					v3->v.cn[2] = alpha2;
 					v2->v.cn[2] = alpha2;
 					v1->v.cn[2] = alpha2;
-					v0->v.cn[2] = alpha2;
 
 					selected = 0xFF; bright = selected;
+					v0->v.cn[2] = alpha2;
 				} else {
+					new_var = v1;
 					v3->v.cn[0] = color0;
 					v2->v.cn[0] = color0;
-					v1->v.cn[0] = color0;
+					new_var->v.cn[0] = color0;
 					v0->v.cn[0] = color0;
 					color0 = 0xBE;
 
@@ -672,9 +688,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 					v0->v.cn[1] = color0;
 
 					color0 = 0xFF; v3->v.cn[2] = color0;
-					v2->v.cn[2] = color0;
-					v1->v.cn[2] = color0;
-					v0->v.cn[2] = color0;
+					v0->v.cn[2] = (v1->v.cn[2] = (v2->v.cn[2] = color0));
 
 					bright = 0x46;
 				}

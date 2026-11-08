@@ -759,10 +759,12 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(31662)
+// CURRENT(26238)
+// AI - Renders D_8015EB90 Projectile sparks/trails and D_8015F9F8 fades using GBI calls and func_800C1ECC.
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
+	Vtx *new_var2;
 	Unk80052B40 fadeVec;
 
 	s16 pos[2];
@@ -904,8 +906,9 @@ void func_80124D60_133D10(void) {
 				D_8005BB34->v.tc[1] = 0;
 				D_8005BB34->v.cn[0] = color[3];
 				D_8005BB34->v.cn[1] = trailColor[7];
+				new_var2 = D_8005BB34;
 				D_8005BB34->v.cn[2] = trailColor[8];
-				D_8005BB34->v.cn[3] = trailColor[9];
+				new_var2->v.cn[3] = trailColor[9];
 				D_8005BB34++;
 
 				gDPPipeSync(D_8005BB30++);
@@ -1157,7 +1160,8 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 	return NULL;
 }
 
-// CURRENT(1335): collision-store scheduling and stack slots remain.
+// CURRENT(40): collision-store scheduling and stack slots remain.
+// AI - Steps a fixed-point segment from (arg0,arg1,arg2) toward (*arg3,*arg4,*arg5), shortening it with func_80125D70_134D20 and checking func_800B84D0_C7480 terrain
 #ifdef NON_MATCHING
 s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, s32 arg6, s32 arg7) {
 	s32 xFixed;
@@ -1173,18 +1177,19 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 
 	s32 mapY; s16 groundY;
 	s32 tileX;
-	s32 tileZ; s32 buildingIdx;
+	s32 buildingIdx;
+	s32 tileZ;
 	Unk80259D90 *surface;
 
-	 s8 pad;
+	 BuildingInstance *building;
 	s16 prevTileX;
 	s16 prevTileZ;
+	s8 pad;
 	s16 maxBuildingY;
 	f32 hitScale;
 
 
 
-	BuildingInstance *building;
 
 	xFixed = arg0 << 8;
 	yFixed = arg1 << 8;
@@ -1203,10 +1208,10 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		if (surface != NULL) {
 			D_8015F9DC = (s32)surface;
 			dx = (s32) ((f32) dx * hitScale);
-			*arg3 = arg0 + dx;
 			dy = (s32) ((f32) dy * hitScale);
-			*arg4 = arg1 + dy;
 			dz = (s32) ((f32) dz * hitScale);
+			*arg3 = arg0 + dx;
+			*arg4 = arg1 + dy;
 			*arg5 = arg2 + dz;
 		}
 	}
@@ -1216,24 +1221,23 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 
 		stepCount = (-dy < dy ? dy : -dy) >> arg7;
 		stepX = 0; stepZ = 0; stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
-	} else {
+	} else
 
 
 
 if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
+			D_8015F9D0.unkC += 0;
 			if ((stepCount = ((-dx) < dx ? dx : (-dx)) >> arg7) != 0) {
 				stepX = ((-dx) > 0 ? -0x100 : 0x100) << arg7;
 				stepY = (dy << 8) / stepCount;
 				stepZ = (dz << 8) / stepCount;
 			}
-		} else {
+		} else
 			if ((stepCount = ((-dz) < dz ? dz : (-dz)) >> arg7) != 0) {
 				stepX = (dx << 8) / stepCount;
 				stepY = (dy << 8) / stepCount;
 				stepZ = ((-dz) > 0 ? -0x100 : 0x100) << arg7;
 			}
-		}
-	}
 
 	if (D_801591A8 != 0) {
 		D_80158FE8 = NULL;
@@ -1252,19 +1256,19 @@ if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
 		if ((yFixed >> 8) < (s16) mapY) {
 			*arg3 = tileX;
 			*arg4 = groundY;
-			*arg5 = tileZ;
+			*arg5 = zFixed >> 8;
 			D_8015F9D8 = 1;
 			return 1;
 		}
 
 		if ((arg6 & 4) == 0) {
-			s32 collisionIdx = func_8012E114_13D0C4((s16) tileX, (s16) (yFixed >> 8), (s16) tileZ);
+			s32 collisionIdx = func_8012E114_13D0C4((s16) tileX, (s16) (yFixed >> 8), (s16) (zFixed >> 8));
 			if (collisionIdx != -1) {
 				D_8015F9D0.position[0] = tileX;
 				*arg3 = D_8015F9D0.position[0];
 				D_8015F9D0.position[1] = yFixed >> 8;
 				*arg4 = D_8015F9D0.position[1];
-				D_8015F9D0.position[2] = tileZ;
+				D_8015F9D0.position[2] = zFixed >> 8;
 				*arg5 = D_8015F9D0.position[2];
 				if (D_8015FAD0[collisionIdx].unk24 == (void (*)(s32, s16))func_8012E1F8_13D1A8) {
 					D_8015F9D0.unk8 = 6;
@@ -1277,9 +1281,9 @@ if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
 		}
 
 		func_8011DE60_12CE10(1);
-		if ((prevTileZ == (tileZ >> 8)) && (prevTileX == (tileX >> 8))) {
+		if ((prevTileZ == ((zFixed >> 8) >> 8)) && (prevTileX == (tileX >> 8))) {
 			if (building != NULL) {
-				func_8011DE6C_12CE1C((s16) tileX, (s16) tileZ, &maxBuildingY, (s16) buildingIdx);
+				func_8011DE6C_12CE1C((s16) tileX, (s16) (zFixed >> 8), &maxBuildingY, (s16) buildingIdx);
 			}
 		} else {
 
@@ -1302,7 +1306,7 @@ prevTileZ = tileZ >> 8;
 			*arg3 = D_8015F9D0.position[0];
 			D_8015F9D0.position[1] = yFixed >> 8;
 			*arg4 = D_8015F9D0.position[1];
-			D_8015F9D0.position[2] = tileZ;
+			D_8015F9D0.position[2] = zFixed >> 8;
 			*arg5 = D_8015F9D0.position[2];
 			D_8015F9D0.unk8 = 3;
 			D_8015F9D0.unkC = buildingIdx;
@@ -1321,8 +1325,9 @@ prevTileZ = tileZ >> 8;
 	if (D_8015F9D0.unkC != 0) {
 		D_8015F9D0.position[0] = *arg3;
 		D_8015F9D0.position[1] = *arg4;
+		stepCount = *arg5 & 0xFFFF;
 		D_8015F9D0.unk8 = 0xD;
-		D_8015F9D0.position[2] = *arg5;
+		D_8015F9D0.position[2] = stepCount;
 		return 5;
 	}
 

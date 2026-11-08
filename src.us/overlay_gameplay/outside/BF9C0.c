@@ -1523,11 +1523,14 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 }
 
 /* Build vertex buffer for the 19x19 tile ring: compute positions, heights, colors, and texture coords */
+// CURRENT(5017)
+// AI - Fills 18x19 Vtx rows from D_80151DD8 tiles, D_80152740 shade, coss/sins and func_800B0A10_BF9C0.
 #ifdef NON_MATCHING
 void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	u8 rowWrap;
 	u8 ringCol;
 	u8 col;
+	u8 (*new_var2)[3];
 	u8 indexByte[1];
 	u8 color1;
 	u8 color2;
@@ -1537,6 +1540,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	RingEntry *tileCenter;
 	s32 amp;
 	RingEntry *tileSouth;
+	RingEntry *tileEast;
 	RingEntry *tileNorth;
 	u8 rgb[3];
 	s32 edgeParityX;
@@ -1544,16 +1548,17 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	s16 posX;
 	s16 posY;
 	s16 posZ;
+	short new_var3;
 	s16 hueX;
 	s16 hueY;
 	s16 scrollY;
 	s16 scrollX;
-	s16 waveX;
+	short waveX;
 	s16 waveY;
 	s32 cellH;
 	RingEntry *ringRow;
 	s32 worldBaseY;
-	RingEntry *tileEast;
+	u8 new_var;
 	RingEntry *tileWest;
 	s32 rowIndex;
 	EffectRgb *shade;
@@ -1567,13 +1572,8 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	color2 = D_8014F89D = D_80151DD8.mapPosY;
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
-	rowWrap = 0;
-
-
-	do {
-
-		ringRow = D_80151DD8.tiles[indexByte[0]];
-		shade = ((EffectRgb (*)[19])D_80152740)[indexByte[0]];
+	rowWrap = 0; do { new_var = indexByte[0]; ringRow = D_80151DD8.tiles[new_var];
+	shade = ((EffectRgb (*)[19])D_80152740)[new_var];
 		worldBaseY = (s16)((color2 - 0x80) << 8);
 		edgeParityY = color2 % 2;
 		ringCol = 0;
@@ -1589,7 +1589,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			if (col != 0x12) {
 				tileEast = &ringRow[col + 1];
 			} else {
-				tileEast = &D_80151DD8.tiles[indexByte[0]][0];
+				tileEast = &D_80151DD8.tiles[new_var][(scrollY + 1) * 0];
 			}
 
 			if (rowIndex != 0x12) {
@@ -1602,6 +1602,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			} else {
 				tileWest = &D_80151DD8.tiles[indexByte[0]][18];
 			}
+			new_var2 = &tileCenter->color;
 
 			if (rowIndex != 0) {
 				tileNorth = &D_80151DD8.tiles[rowIndex - 1][col];
@@ -1611,13 +1612,13 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 
 			
 			if (shade[col].r != 0) {
-				component = shade[col].r + tileCenter->color[0];
+				component = shade[col].r + (*new_var2)[0];
 				if (component > 255) component = 255;
 				rgb[0] = component;
 				component = shade[col].g + tileCenter->color[1];
 				if (component > 255) component = 255;
 				rgb[1] = component;
-				component = shade[col].b + tileCenter->color[2];
+				component = shade[col].b + (*new_var2)[2];
 				if (component > 255) component = 255;
 				rgb[2] = component;
 			} else {
@@ -1642,6 +1643,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			posX = ((color1 - 0x80) << 8);
 			cellH = (tileCenter->tileType & 0x3F) << 5;
 			posZ = cellH;
+			new_var3 = (color1 - 0x80) << 8;
 
 			if (scrollX < 0) {
 				waveX = 255 - (BH_ABS(scrollX + 1) % 256);
@@ -1650,7 +1652,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			}
 
 			if (tilesMinX < (s16)((color1 - 0x80) << 8)) {
-				posX = ((color1 - 0x80) << 8) + waveX - 0x100;
+				posX = (new_var3 + waveX) - 0x100;
 				posZ = func_800B0A10_BF9C0((tileWest->tileType & 0x3F) << 5, cellH, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = waveX;
@@ -1658,7 +1660,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 					hueX = 0xFF - waveX;
 				}
 			} else if ((s16)((color1 - 0x80) << 8) < (scrollX - 0x901)) {
-				posX = ((color1 - 0x80) << 8) + waveX;
+				posX = new_var3 + waveX;
 				posZ = func_800B0A10_BF9C0(cellH, (tileEast->tileType & 0x3F) << 5, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = 0xFF - waveX;

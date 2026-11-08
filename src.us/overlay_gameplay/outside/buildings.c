@@ -384,27 +384,31 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 	return 0;
 }
 
+// CURRENT(3445)
 // guess_initBuildingsDoors
+// AI - Initializes buildingTypes, buildingInstances, D_800522C0 and D_80052A7C via func_80116784_125734.
 #ifdef NON_MATCHING
 void func_8011694C_1258FC(void) {
-	Unk800522C0 *doorRef;
-	BuildingType *type;
-	UnkBuildDoorMap *doorMap;
-	BuildingInstance *gridCell;
-	BuildingInstance *inst;
-	Unk80146688 *zoneEntry;
-	s8 *zoneCounts;
-	s32 level;
-	s32 count;
-	s16 i;
-	s16 j;
-	s16 idx;
-	s16 idx2;
-	s32 bestDelta;
-	s32 bestGrid;
 	u8 targetType;
+	u8 *new_var;
+	s32 bestDelta;
+	s8 *zoneCounts;
+	Unk80146688 *zoneEntry;
+	s16 idx2;
+	s32 bestGrid;
+	u8 *new_var2;
+	BuildingType *type;
+	BuildingInstance *gridCell;
+	Unk800522C0 *doorRef;
+	s32 count;
 	s16 lookupId;
+	s16 idx;
 	s16 difference;
+	UnkBuildDoorMap *doorMap;
+	s16 j;
+	s32 level;
+	BuildingInstance *inst;
+	s16 i;
 
 	D_8015EB80 = 0;
 	type = buildingTypes;
@@ -438,10 +442,10 @@ void func_8011694C_1258FC(void) {
 			do {
 				type = &buildingTypes[lookupId];
 				if ((s32) type->model == doorMap->unk0) {
-					targetType = type->unk1A[3];
 					bestDelta = type->unk1A[2];
+					targetType = type->unk1A[3];
 					doorMap->unk0 = lookupId;
-					type->unk1A[3] = targetType + 1;
+					type->unk1A[3] = 1 + targetType;
 					if (bestDelta == 0xFF) {
 						type->unk1A[2] = count;
 					}
@@ -484,25 +488,27 @@ void func_8011694C_1258FC(void) {
 	D_8015EA28 = 0xFF;
 	count = 0x1F;
 	do {
+		new_var = D_5002D40;
 		if ((s32) buildingTypes[count].model == ((s32 *) D_80140A00_14F9B0)[currentLevel]) {
 			D_8015EA28 = count;
 		}
-		if ((s32) buildingTypes[count].model == (s32) D_5002D40) {
+		if (((s32) buildingTypes[count].model) == ((s32) new_var)) {
 			D_8015EA29 = count;
 		}
 	} while (count--);
+	new_var2 = &D_8015EA28_Read;
 
 	i = 0x1F;
 	do {
 		level = currentLevel;
 		type = &buildingTypes[i];
 		if (level == 1) {
-			if ((i == D_8015EA28_Read) || (i == 4) || (i == 6) || (i == 0x14)) {
+			if ((((i == (*new_var2)) || (i == 4)) || (i == 6)) || (i == 0x14)) {
 				type->unk1A[0] |= 8;
 			}
 		} else if (level == 2) {
 			if ((i == D_8015EA28) || (i == 6) || (i == 0xD) || (i == 0xE) || (i == 0x10) || (i == 0x16)) {
-				type->unk1A[0] |= 8;
+				type->unk1A[0] = type->unk1A[0] | 8;
 			}
 		} else if (level == 3) {
 			if ((i == 7) || (i == 0x12) || (i == 0xC) || (i == 0x15)) {
@@ -519,7 +525,7 @@ void func_8011694C_1258FC(void) {
 	do {
 		if (gridCell->buildingType == targetType) {
 			gridCell->xCoord = (gridCell->xCoord & 0xFF00) + 0x80;
-			gridCell->zCoord = (gridCell->zCoord & 0xFF00) + 0x80;
+			gridCell->zCoord = 0x80 + (gridCell->zCoord & 0xFF00);
 			targetType = D_8015EA28;
 		}
 		gridCell--;
@@ -604,8 +610,8 @@ void func_8011694C_1258FC(void) {
 		inst = &buildingInstances[i];
 		type = &buildingTypes[inst->buildingType];
 
-		if ((type->unk1A[0] & 4) || (inst->rotationIndexWord != 0xF) || (func_80118114_1270C4(i) != 0)) {
-			inst->statusFlags |= 0x1000;
+		if ((4 & type->unk1A[0]) || (inst->rotationIndexWord != 0xF) || (func_80118114_1270C4(i) != 0)) {
+			inst->statusFlags = inst->statusFlags | (0x1000 & 0xFFFFFFFFFFFFFFFFu);
 		}
 
 		if (type->pad16[2] == 0) {
@@ -645,7 +651,7 @@ void func_8011694C_1258FC(void) {
 	zoneCounts = D_80146680_155630;
 	level = currentLevel;
 	i = 0;
-	if (zoneCounts[level - 1] > 0) {
+	if (0 < zoneCounts[level - 1]) {
 		do {
 			zoneEntry = &D_80146688_155638[level][i];
 			count = func_8011C42C_12B3DC((s8 *)&zoneEntry[-0x20]);
@@ -653,10 +659,10 @@ void func_8011694C_1258FC(void) {
 			zoneEntry = &D_80146688_155638[level][i];
 			zoneEntry[-0x20].unk08 = count;
 			zoneEntry[-0x20].unk0A = zoneEntry[-0x20].unk08;
-			i++;
+			i += 1;
 			zoneEntry[-0x20].pad0E[0] = 0xFF;
 			zoneEntry[-0x20].unk0C = 0;
-		} while (i < zoneCounts[level - 1]);
+		} while (i < D_80146680_155630[level - 1]);
 	}
 
 	func_8011CDA4_12BD54();
@@ -665,7 +671,8 @@ void func_8011694C_1258FC(void) {
 	do {
 		inst = &buildingInstances[i];
 		if (inst->buildingType == D_8015EA28) {
-			switch (inst->unk8 & 3) {
+			lookupId += 0;
+			switch (3 & inst->unk8) {
 				case 0:
 					func_8011629C_12524C(inst, 1, 0);
 					break;
@@ -688,7 +695,7 @@ void func_8011694C_1258FC(void) {
 		i = 0xFE;
 		do {
 			inst = &buildingInstances[i];
-			inst->hitPoints = inst->hitPoints * 3;
+			inst->hitPoints *= 3;
 		} while (i--);
 		break;
 	}
@@ -696,7 +703,7 @@ void func_8011694C_1258FC(void) {
 	i = 0xFE;
 	do {
 		inst = &buildingInstances[i];
-			if ((((u32) inst->unk8 >> 12) & 1) != 0) {
+			if ((1 & ((u32) inst->unk8 >> 12)) != 0) {
 			j = 2;
 			do {
 					if (inst->doorInteriorIds[j] != 0xFF) {
