@@ -1,0 +1,5 @@
+`incorrect ASM`: The function had to produce the target's 0xC8-byte frame, with `$s0` saved at `0x40($sp)`, `$ra` at `0x44($sp)`, `$a0` at `0xC8($sp)` and reloaded by `lbu $t6, 0xCB($sp)`, and separate stack temporaries written by `sh $t2, 0xC4($sp)`, `sh $t3, 0xBE($sp)`, `sh $t8, 0xBC($sp)`, `sh $t9, 0xBA($sp)`, and `sh $t4, 0xB8($sp)`; the old shared `flags`/`trig`/`heading` temporaries and cached `alien`/`type` pointers did not produce that layout.
+
+-> `code changed`: Replaced the cached pointers and shared `flags`, `trig`, and `heading` locals with direct `alienInstances[arg0]`/`alienTypes[...]` accesses and distinct typed temporaries (`u16 sp6A`, `s16 spC4`, `s32 joint1`, `s16 joints[2]`, `s32 scaleOrFlags`, `s32 tempV1`, `f32 sp7C`, `s16 sp72`), split the position math into `sp9C`, `sp94`, and `sp92` with `u16` sine/cosine casts, used `root->unkA` and `root->unkAUnsigned`, and added empty `(f64)tempV1 * (f64)tempV1` and `(f32)tempV1 * (f32)tempV1` conditions.
+
+-> `correct ASM`: The function compiles to the target, and the US and EU ROMs both match.
