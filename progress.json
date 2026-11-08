@@ -1,13 +1,13 @@
 {
-  "generated": "2026-11-08T04:51:47Z",
-  "commit": "010eb099",
-  "commit_timestamp": "2026-11-08T17:50:55+13:00",
+  "generated": "2026-11-08T04:53:45Z",
+  "commit": "5f4b6aad",
+  "commit_timestamp": "2026-11-08T17:52:49+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 2986,
-    "non_matching": 71,
+    "matched": 2987,
+    "non_matching": 70,
     "asm_stubs": 0,
-    "matched_pct": 97.68,
+    "matched_pct": 97.71,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -31,11 +31,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1399,
-      "non_matching": 50,
+      "matched": 1400,
+      "non_matching": 49,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 96.5,
+      "matched_pct": 96.6,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -2416,12 +2416,12 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 102,
-      "non_matching": 4,
+      "matched": 103,
+      "non_matching": 3,
       "asm_stubs": 0,
       "total": 106,
-      "matched_pct": 96.2,
-      "contributor": "jaytheham"
+      "matched_pct": 97.2,
+      "contributor": "LunarLaurus"
     },
     {
       "path": "overlay_gameplay/outside/cheats.c",
@@ -2597,9 +2597,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 94,
-      "matched": 2446,
-      "non_matching": 61,
+      "files": 93,
+      "matched": 2344,
+      "non_matching": 57,
       "asm_stubs": 0
     },
     {
@@ -2611,9 +2611,9 @@
     },
     {
       "name": "LunarLaurus",
-      "files": 2,
-      "matched": 190,
-      "non_matching": 6,
+      "files": 3,
+      "matched": 293,
+      "non_matching": 9,
       "asm_stubs": 0
     },
     {
@@ -2907,16 +2907,16 @@
     },
     {
       "date": "2026-11-01",
-      "commit": "118a562",
-      "matched": 2984,
-      "non_matching": 73,
+      "commit": "d3f282d",
+      "matched": 2985,
+      "non_matching": 72,
       "total": 3057
     },
     {
       "date": "2026-11-08",
-      "commit": "010eb09",
-      "matched": 2986,
-      "non_matching": 71,
+      "commit": "5f4b6aa",
+      "matched": 2987,
+      "non_matching": 70,
       "total": 3057
     }
   ]
