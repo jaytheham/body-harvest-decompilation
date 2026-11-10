@@ -9,3 +9,9 @@
 `code changed` -> As an allocator control, add `if ((f32)maxSpeed * (f32)maxSpeed) {}` immediately before each of the two trig calls in the acceleration branch.
 
 `correct ASM` -> The private IDO trace shows the control reserving a four-byte slot at `-140` before the double, which aligns the double to `-152`. The terrain-height temporary reuses `-140`. The frame stays `0xE0` and the double store and reload use `sp+0x48`. The control also emits a float multiply and a store for the additional value, so the guarded draft retains its original two-word difference.
+
+`incorrect ASM` -> Assigning `(f64)temp_f10` after `coss` to a named `f64` field and using that field in both multiplies emits `sdc1 f2,0x70(sp)` and `ldc1 f2,0x70(sp)`. Moving the three integer caches into the same struct leaves the trial at 73 differing words.
+
+`code changed` -> Restore the direct `(f64)temp_f10` operand in each multiply and keep the existing scalar integer caches.
+
+`correct ASM` -> The spill and reload use the target register `f0` again, and the other 71 words match. Reassigning any of the three integer caches beside the trig calls, or capturing the early terrain result in the local used for the late height clamp, leaves those two spill operands at `sp+0x50`.
