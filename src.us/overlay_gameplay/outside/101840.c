@@ -1551,7 +1551,6 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 temp_f6_3;
 	s32 temp_v0;
 
-	if (&temp_f0) {}
 	var_f2 = (f32)D_801601F0[arg3].unk8;
 	var_f16 = (var_f2 * 3) / 4;
 	if (D_8013FCD0_14EC80 != 0) {

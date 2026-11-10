@@ -39,3 +39,9 @@
 -> `code changed`: Compute the next Z width before the preceding vertex's alpha store, and compute the next X width immediately before advancing the vertex cursor.
 
 -> `correct ASM`: The cursor advance uses the target's `sw $t7,0($a0)` and follows the X direction product directly. The halfword stack store moves earlier than both. The linked diff score falls from 20269 to 20219.
+
+`incorrect ASM`: Earlier drafts needed an empty `if (&temp_f0)` to preserve the width's stack home at `sp+0x13C`.
+
+-> `code changed`: Remove the empty address check after separating the middle width conversions. Keep the named width assignment and its use in the negative Z product.
+
+-> `correct ASM`: The linked function is byte-identical to the preceding draft. The named width at `sp+0x13C` and the separate width cache at `sp+0x54` are both preserved.
