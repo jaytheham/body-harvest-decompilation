@@ -38,3 +38,9 @@ add.s   $f0,$f8,$f16
 -> `code changed`: Retain the earlier allocation conditions for the Y swap and the two return paths. Use `slope` to save the upper X bound during the X swap and leave that swap free of an empty condition. Assign `dx = arg6 - arg4` before the vertical path's zero-Y-span test and use it as the denominator.
 
 -> `correct ASM`: The linked function bytes equal those of the earlier four-condition draft. The starting X coordinate uses `$f2` and the intercept uses `$f16`. The remaining six differing words all use `$f14` where the quotient requires `$f0`, for a linked score of 30.
+
+`incorrect ASM`: In the six-word draft, IDO's optimizer allocates the `slope` local to `$f0` and the division expression to `$f14`. The two live ranges interfere in both division blocks. The assembly listing shows a copy from `$f14` to `$f0` after each initial division, which the assembler folds into the surrounding uses.
+
+-> `code changed`: In a scratch allocator replay, exchange the colors for the local and the division expression while pinning the starting X and Y coordinates to `$f2` and `$f12`. The unforced replay produces the same object code as the standard compiler.
+
+-> `correct ASM`: The initial divisions and all their quotient operands use `$f0`. The eight final-coordinate register fields then use `$f14` where the target also requires `$f0`, including the destination of the final horizontal division. The replay separates the quotient mismatch from the result mismatch and leaves both results to be reconciled in C.

@@ -9317,7 +9317,7 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 		{
 			*arg8 = arg0;
 			*arg9 = arg5;
-			if ((arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5) == 0.0f) {} return (arg1 <= arg5) && (arg5 <= arg3);
+			if ((arg5 + arg5 + arg5 + arg5 + arg5 + arg5) == arg5) {} return (arg1 <= arg5) && (arg5 <= arg3);
 		}
 		slope = intercept / dx;
 		*arg8 = arg0;
@@ -9346,7 +9346,7 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 	slope = (arg1 - intercept) / slope;
 	*arg8 = slope;
 	*arg9 = arg1;
-	if ((arg4 + arg4 + arg4 + arg4 + arg4 + arg4) == 0.0f) {} return (arg0 <= slope) && (slope <= arg2);
+	if ((arg4 + arg4 + arg4 + arg4) == 0.0f) {} return (arg0 <= slope) && (slope <= arg2);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010EF40_11DEF0.s")
