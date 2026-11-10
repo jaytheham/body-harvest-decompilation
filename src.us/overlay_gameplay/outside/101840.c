@@ -1534,7 +1534,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 sp128;
 	s32 sp124;
 	s32 sp120;
-	s32 absDistance;
+	s32 delta;
 	s16 sp11A;
 	s16 sp118;
 	s16 sp116;
@@ -1576,14 +1576,16 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	sp118 = D_8013FCD4_14EC84[2][currentLevel - 1][0].g;
 	sp116 = D_8013FCD4_14EC84[2][currentLevel - 1][0].b;
 	sp114 = (sp11A - 0x82 < 0) ? 0 : sp11A - 0x82;
-	sp112 = (sp118 - 0x82 < 0) ? 0 : sp118 - 0x82;
-	sp110 = (sp116 - 0x82 < 0) ? 0 : sp116 - 0x82;
+	delta = sp118 - 0x82;
+	sp112 = (delta < 0) ? 0 : delta;
+	delta = sp116 - 0x82;
+	sp110 = (delta < 0) ? 0 : delta;
 	sp10C = D_8013FCD4_14EC84[2][currentLevel - 1][1].g;
 	sp10A = D_8013FCD4_14EC84[2][currentLevel - 1][1].b;
 	sp108 = D_8013FCD4_14EC84[2][currentLevel - 1][2].r;
 	sp106 = D_8013FCD4_14EC84[2][currentLevel - 1][2].g;
 	sp104 = D_8013FCD4_14EC84[2][currentLevel - 1][2].b;
-	temp_ra = (temp_v0 = D_8013FCD4_14EC84[2][currentLevel - 1][1].r);
+	temp_ra = D_8013FCD4_14EC84[2][currentLevel - 1][1].r;
 
 	D_8005BB34->v.ob[0] = (s32)((f32)arg0[0] - direction.x * 4.0f);
 	D_8005BB34->v.ob[1] = arg0[1];
@@ -1701,11 +1703,11 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	temp_v0 = arg1[0] - arg2[0];
-	absDistance = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
-	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)absDistance * 0.5));
+	delta = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
+	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
 	temp_v0_2 = arg1[2] - arg2[2];
-	absDistance = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
-	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistance * 0.5));
+	delta = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
+	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)delta * 0.5));
 	sp124 = arg1[1] - (s16)(s32)(direction.y * (var_f16 * 3.0f));
 	temp_f6 = (s16)(temp_f6_3 / 2);
 	temp_f10 = (s16)(temp_v1_2 / 2);
