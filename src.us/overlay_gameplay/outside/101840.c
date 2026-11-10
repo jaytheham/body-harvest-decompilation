@@ -5819,16 +5819,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	}
 	spring = D_80144AA8_153A58[0];
 	chainZ = D_801594E0[1].pos.z;
-	if (chainZ)
-	{
-	}
 	chainY = D_801594E0[1].pos.y;
-	if (chainY)
-	{
-	}
-	if (chainY)
-	{
-	}
 	chainX = D_801594E0[1].pos.x;
 	do
 	{
@@ -5863,12 +5854,6 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	lastZ = oldZ;
 	lastY = oldY;
 	lastX = oldX;
-	if (lastZ < lastY)
-	{
-	}
-	if (lastY < lastX)
-	{
-	}
 	if (lastX < lastZ)
 	{
 	}
