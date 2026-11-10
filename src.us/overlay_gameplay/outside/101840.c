@@ -1287,8 +1287,8 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 
 	levelColor = D_8013FCD4_14EC84[1][currentLevel - 1];
 	colorA = levelColor[0].r;
-	colorB = levelColor[0].g;
-	colorC = levelColor[0].b;
+	colorB = D_8013FCD4_14EC84[1][currentLevel - 1][0].g;
+	colorC = D_8013FCD4_14EC84[1][currentLevel - 1][0].b;
 	if (&colorA) {}
 	if (&colorB) {}
 	if (&colorC) {}
