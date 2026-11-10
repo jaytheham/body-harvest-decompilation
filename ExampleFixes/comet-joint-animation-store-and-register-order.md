@@ -21,3 +21,9 @@
 `code changed` -> As an allocation control, hold the initial parent index in `sp4C` through the early return and `joints[5]` store. Keep the later halfword `parent` reload. Apply the second-link source reorder above.
 
 `correct ASM` -> The prologue through `0x31F3BC` matches byte-for-byte. The allocator selects the parent first at priority `3.333333`, ahead of the final joint index at `3.000000`, and assigns the final joint index to `a0`. The later actor-ID reload at `0x31F42C` then trades places with `li a1,-0xC8` at `0x31F458`. The retained draft keeps those two instructions in target order.
+
+`incorrect ASM` -> The final parent check builds the alien table address in `v0`, scales the index in `t7`, and loads the type into `v0`.
+
+`code changed` -> Reload `joints[5]` into the existing word scratch `sp4C`, retain the empty test on that value, and combine the sentinel and type checks with `&&`.
+
+`correct ASM` -> The table address uses `t7`, the final shift uses `t8`, and `lbu t7,-0x7E4E(t7)` feeds the type branch. The parent index still uses `a0` where the ROM uses `v1`. The linked US draft falls from 59 to 56 differing words and from score 375 to 335.

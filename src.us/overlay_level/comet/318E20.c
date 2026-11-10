@@ -2842,7 +2842,7 @@ void func_802DAD78_31EEC8(u8 arg0) {
 	}
 }
 
-// CURRENT(480)
+// CURRENT(335)
 // AI - Updates an alien instance via alienInstances, D_8014DD50 joint data, and alienTypes: returning early on ALIEN_FLAG_UNKA/UNKB without ALIEN_FLAG_UNKL
 #ifdef NON_MATCHING
 void func_802DB1D4_31F324(u8 arg0) {
@@ -2948,13 +2948,10 @@ void func_802DB1D4_31F324(u8 arg0) {
 		}
 		if (alienInstances[arg0].unk2C == 1) {
 			func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC, 6, 0);
-			parent = joints[5];
-			if (parent) {}
-			if (parent != 0xFF) {
-				value = alienInstances[parent].typeIndex;
-				if (value == 0x1B) {
-					func_800797A4_88754(arg0, (func_800038E0_44E0() % 4) + 0x14);
-				}
+			sp4C = joints[5];
+			if (sp4C) {}
+			if (sp4C != 0xFF && alienInstances[sp4C].typeIndex == 0x1B) {
+				func_800797A4_88754(arg0, (func_800038E0_44E0() % 4) + 0x14);
 			}
 		}
 	}
