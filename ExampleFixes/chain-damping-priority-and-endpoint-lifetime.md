@@ -15,3 +15,9 @@
 -> `code changed`: Use the existing `f64 half` local in all three endpoint midpoint calculations and remove the empty condition after `unused = arg1->unk2`.
 
 -> `correct ASM`: The linked function bytes are identical to the draft with the empty condition. The midpoint spill homes and floating register assignments stay the same, and the original loop scheduling and final Y register differences remain.
+
+`incorrect ASM`: The walking-pointer loop uses `t0` for the chain cursor but emits no `.noalias $8,$sp` around the loop. The assembler schedules the Z load ahead of the 4.0 constant setup and each X/Y midpoint spill ahead of the next neighbor load.
+
+-> `code changed`: In a diagnostic draft, use direct `D_801594E0[index]` and `D_801594E0[index - 1]` field accesses with a decrementing index. The compiler emits `.noalias $2,$sp` before the loop and closes the region after it. A scratch assembler replay added the equivalent directive for `t0` to isolate its effect.
+
+-> `correct ASM`: The Z load follows the constant setup, and the neighbor Y and Z loads precede `swc1 $f4,0x44(sp)` and `swc1 $f8,0x40(sp)`, respectively. The replay changes exactly the nine words that differ in the linked loop. The indexed C draft reproduces that order with `v0` as the cursor, but changes the cursor setup and register allocation, so it is not selected.
