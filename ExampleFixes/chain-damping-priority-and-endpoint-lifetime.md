@@ -9,3 +9,9 @@
 -> `code changed`: Remove the empty `if (chainZ)`, both empty `if (chainY)` blocks, and the empty `lastZ < lastY` and `lastY < lastX` comparisons. Retain `if (lastX < lastZ)` and the existing `if (1)` before the spring load.
 
 -> `correct ASM`: The linked diagnostic ROM with the chain C draft enabled is byte-identical before and after removing those five blocks. Removing `if (1)` separately changes that ROM and worsens the function diff score from 260 to 290. The assembly fallback remains selected.
+
+`incorrect ASM`: Deleting the final empty `if (unused)` while retaining literal `0.5` in the three endpoint midpoint calculations changes register allocation and raises the linked function diff score from 260 to 740.
+
+-> `code changed`: Use the existing `f64 half` local in all three endpoint midpoint calculations and remove the empty condition after `unused = arg1->unk2`.
+
+-> `correct ASM`: The linked function bytes are identical to the draft with the empty condition. The midpoint spill homes and floating register assignments stay the same, and the original loop scheduling and final Y register differences remain.

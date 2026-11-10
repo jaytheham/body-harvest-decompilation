@@ -5860,17 +5860,14 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	if (lastX < lastZ)
 	{
 	}
-	lastX = (f32)(oldX - ((oldX - ((f32)arg1->unk0)) * 0.5));
-	lastY = (f32)(oldY - ((oldY - ((f32)arg1->unk2)) * 0.5));
-	lastZ = (f32)(oldZ - ((oldZ - ((f32)arg1->unk4)) * 0.5));
+	lastX = (f32)(oldX - ((oldX - ((f32)arg1->unk0)) * half));
+	lastY = (f32)(oldY - ((oldY - ((f32)arg1->unk2)) * half));
+	lastZ = (f32)(oldZ - ((oldZ - ((f32)arg1->unk4)) * half));
 	D_801593F0[0].vel.x = (f32)((lastX - D_801593F0[0].pos.x) + (D_801593F0[0].vel.x * damping));
 	D_801593F0[0].vel.y = (f32)(((lastY - D_801593F0[0].pos.y) + (D_801593F0[0].vel.y * damping)) - 4.0);
 	D_801593F0[0].vel.z = (f32)((lastZ - D_801593F0[0].pos.z) + (D_801593F0[0].vel.z * damping));
 	D_801593F0[0].pos.x = (f32)arg1->unk0;
 	unused = arg1->unk2;
-	if (unused)
-	{
-	}
 	D_801593F0[0].pos.y = (f32)(vehicleTypes[arg1->unk1A].unk38 + unused);
 	D_801593F0[0].pos.z = (f32)arg1->unk4;
 }
