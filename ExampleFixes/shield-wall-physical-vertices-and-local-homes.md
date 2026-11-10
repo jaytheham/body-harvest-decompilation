@@ -58,3 +58,27 @@ mfc1 v1,$f8
 ```
 
 The conversion and store schedules still differ, including the position of the ending T integer delta and the reloads of the origin and vertex constants.
+
+`incorrect ASM`
+
+The first texture packet stores its scale word before its opcode. The ROM writes the opcode at offset 0 before the scale at offset 4.
+
+-> `code changed`
+
+Assign `gfx->words.w1 = 0x80008000` before the opcode assignment for the first texture packet. Keep the order of the second packet, whose scale word is stored first in the ROM.
+
+-> `correct ASM`
+
+The first packet now emits `sw ra,0(v0)` followed by `sw t5,4(v0)`. Both store offsets and their order agree with the target. The ROM uses `s1` and `s2` for these words.
+
+`incorrect ASM`
+
+Narrowing both ending texture coordinates before assigning their word locals puts the end-S vertex-pointer load after the delta conversion and uses `sh a2,0x28(t9)`.
+
+-> `code changed`
+
+Keep the ending S and T results as signed words and let the vertex stores narrow them. Remove the separate discarded tests of `minY` and `texEndT`. Keep the combined test of the texture values and alpha.
+
+-> `correct ASM`
+
+The end-S vertex-pointer load moves ahead of the delta conversion and its store uses `sh a2,0x28(t6)`. Removing the two discarded tests leaves the emitted bytes identical. The frame remains `0x160` and the C body has 839 instruction words against the ROM's 838. The store-order corrections are retained with the assembly fallback.
