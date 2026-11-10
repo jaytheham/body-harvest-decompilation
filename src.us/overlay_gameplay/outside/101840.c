@@ -2016,9 +2016,9 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	xTri = arg1[0];
 	phase = xTri - arg2[0];
 	angle = -phase;
+	zTri = arg1[2] - arg2[2];
+	if (zTri ^ halfSin) {}
 	if (angle + angle) {}
-	phase = arg1[2] - arg2[2];
-	if (phase) {}
 	halfSin /= 2;
 	halfCos /= 2; if (halfSin + halfCos) {}
 

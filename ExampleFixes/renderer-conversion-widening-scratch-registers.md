@@ -20,4 +20,10 @@ incorrect ASM: Deleting all eleven empty conditions from the 8055 draft changes 
 
 code changed: Retain the address conditions and the conditions that consume the intermediate angle values. Removing any one condition from the endpoint color draft increases the linked diff score.
 
-correct ASM: The frame returns to 0x138. The angle block retains the three loads, first SUBU, and NEGU. The second SUBU at ROM 0x106CE8 still needs matching.
+correct ASM: The frame returns to 0x138. The angle block retains the three loads, first SUBU, and NEGU. This draft still lacks the second SUBU at ROM 0x106CE8.
+
+incorrect ASM: The renderer loads both operands of the second subtraction, then reloads a half-width from the stack in place of the target SUBU.
+
+code changed: Assign the Z difference to the existing zTri local before the empty angle condition and test zTri ^ halfSin in the preceding empty condition. This retains the subtraction without an emitted XOR or branch.
+
+correct ASM: SUBU, NEGU, SUBU precede the two signed halvings, as in the original. The second SUBU still uses a3, t8, t6 instead of v0, t7, t8. The linked diff score improves from 7932 to 7658 and the structural edit rows decrease from 56 to 51.
