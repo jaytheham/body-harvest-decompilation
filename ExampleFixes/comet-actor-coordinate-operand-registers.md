@@ -9,3 +9,9 @@
 `code changed` -> As an allocation control, insert two consecutive `if (nodeC != &D_8014DD50[spawnY]) {}` tests after `spawnY = nodeC->unkD` and before storing `chain.joints[1]`.
 
 `correct ASM` -> The raw root load uses `t5` and the shift pair and copy use `ra`, matching the ROM at `0x3229A0`, `0x3229AC`, `0x3229B0`, and `0x3229C0`. The control also spills the child word at `sp+0xAC`, grows the frame from `0xF0` to `0xF8`, and moves the table base from `v1` to `t3`. A single empty test of `rootIndex != spawnY` also selects `t5` while preserving the instruction count. It leaves the narrowing in `t0` and still gives the `0xF8` frame and the `t3` table base. The guarded draft retains the `0xF0` frame and has 19 register-only differences.
+
+`incorrect ASM` -> Passing `chain.child` directly to `func_802D997C_31DACC` produces 219 differing instruction words in `func_802DE7C4_322914`. The ROM bytes outside that function match.
+
+`code changed` -> Assign `chain.child` to the existing `spawnZ` word, retain `switch (spawnZ) {}` before the call, and pass `spawnZ`. Replacing the empty switch with `if (spawnZ) {}` produces 76 differing words. Seven alternate expressions in the same empty switch all leave 19 differing words.
+
+`correct ASM` -> With the empty switch, the frame and instruction order match the target, and only 19 register operands remain to resolve. An additional empty switch before the root or child reads worsens the comparison, so the location of the existing switch matters.
