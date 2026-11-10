@@ -760,7 +760,6 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 baseY;
 	s16 baseX;
@@ -780,19 +779,16 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 ringX;
 	s16 ringY;
 
+	baseX = D_8014F89C - 127;
 	baseY = D_8014F89D - 127;
 	tileX = (arg0[0] >> 8) + 1;
-	baseX = D_8014F89C;
 	tileY = (arg0[1] >> 8) + 1;
-	baseX -= 127;
+	fracX = arg0[0] & 255;
+	fracY = arg0[1] & 255;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-
-	fracY = arg0[1] & 255;
 	radius = (f32)(arg2 + arg3) / 256;
-
 	radius++;
-	fracX = arg0[0] & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
@@ -803,9 +799,9 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (y <= 0) {
 				dy = (s16)fracY + y * -256;
 			} else {
-				dy = cellSize - fracY + (y << 8) - 256;
+				dy = (s16)(cellSize - fracY) + (y << 8) - 256;
 			}
-			intensity = (s32)sqrtf(dy * dy + dx * dx) - arg2;
+			intensity = (s16)(s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (intensity > 0) {
 				intensity = arg3 - intensity;
 				if (intensity > 0) {
@@ -846,11 +842,7 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 baseY;
 	s16 baseX;
@@ -873,17 +865,16 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 ringY;
 	EffectRgb *pixel;
 
+	baseX = D_8014F89C - 127;
 	baseY = D_8014F89D - 127;
 	tileX = (arg0->unk0 >> 8) + 1;
-	baseX = D_8014F89C;
 	tileY = (arg0->unk2 >> 8) + 1;
-	baseX -= 127;
+	fracX = arg0->unk0 & 255;
+	fracY = arg0->unk2 & 255;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-	fracY = arg0->unk2 & 255;
 	radius = (f32)(arg2 + arg3) / 256;
 	radius++;
-	fracX = arg0->unk0 & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
@@ -895,9 +886,9 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (y <= 0) {
 				dy = (s16)fracY + y * -256;
 			} else {
-				dy = cellSize - fracY + (y << 8) - 256;
+				dy = (s16)(cellSize - fracY) + (y << 8) - 256;
 			}
-			distance = (s32)sqrtf(dy * dy + dx * dx) - arg2;
+			distance = (s16)(s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (distance < 0) {
 				distance = -distance;
 			}
@@ -926,9 +917,6 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
-#endif
 
 void func_800B2CF0_C1CA0(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s32 temp_v0;
@@ -1530,52 +1518,51 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 	u8 rowWrap;
 	u8 ringCol;
 	u8 col;
-	u8 (*new_var2)[3];
 	u8 indexByte[1];
 	u8 color1;
 	u8 color2;
 	u16 component;
-	s32 tilesMinX;
-	s32 tilesMinY;
 	RingEntry *tileCenter;
 	s32 amp;
 	RingEntry *tileSouth;
 	RingEntry *tileEast;
 	RingEntry *tileNorth;
+	RingEntry *tileWest;
 	u8 rgb[3];
 	s32 edgeParityX;
 	s32 edgeParityY;
 	s16 posX;
 	s16 posY;
 	s16 posZ;
-	short new_var3;
 	s16 hueX;
 	s16 hueY;
 	s16 scrollY;
 	s16 scrollX;
-	short waveX;
+	u8 *tileColor;
+	s16 baseX;
+	s16 waveX;
+	RingEntry *ringRow;
 	s16 waveY;
 	s32 cellH;
-	RingEntry *ringRow;
 	s32 worldBaseY;
-	u8 new_var;
-	RingEntry *tileWest;
 	s32 rowIndex;
 	EffectRgb *shade;
+	s32 tilesMinX;
+	s32 tilesMinY;
 
 	D_8014F89A = 0;
 	scrollX = D_80149434;
 	scrollY = D_80149436;
-	col = D_8014F899 = D_80151DD8.ringX;
+	col = D_80151DD8.ringX; D_8014F899 = col;
 	indexByte[0] = D_8014F898 = D_80151DD8.ringY;
 	color1 = D_8014F89C = D_80151DD8.mapPosX;
 	color2 = D_8014F89D = D_80151DD8.mapPosY;
 	tilesMinX = scrollX + 0x701;
 	tilesMinY = scrollY + 0x701;
-	rowWrap = 0; do { new_var = indexByte[0]; ringRow = D_80151DD8.tiles[new_var];
-	shade = ((EffectRgb (*)[19])D_80152740)[new_var];
-		worldBaseY = (s16)((color2 - 0x80) << 8);
+	rowWrap = 0; do { ringRow = D_80151DD8.tiles[indexByte[0]];
+		shade = ((EffectRgb (*)[19])D_80152740)[indexByte[0]];
 		edgeParityY = color2 % 2;
+		worldBaseY = (s16)((color2 - 0x80) << 8);
 		ringCol = 0;
 		rowIndex = indexByte[0];
 
@@ -1589,7 +1576,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			if (col != 0x12) {
 				tileEast = &ringRow[col + 1];
 			} else {
-				tileEast = &D_80151DD8.tiles[new_var][(scrollY + 1) * 0];
+				tileEast = &D_80151DD8.tiles[rowIndex][0];
 			}
 
 			if (rowIndex != 0x12) {
@@ -1602,7 +1589,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			} else {
 				tileWest = &D_80151DD8.tiles[indexByte[0]][18];
 			}
-			new_var2 = &tileCenter->color;
+			tileColor = tileCenter->color;
 
 			if (rowIndex != 0) {
 				tileNorth = &D_80151DD8.tiles[rowIndex - 1][col];
@@ -1612,19 +1599,19 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 
 			
 			if (shade[col].r != 0) {
-				component = shade[col].r + (*new_var2)[0];
+				component = shade[col].r + tileColor[0];
 				if (component > 255) component = 255;
 				rgb[0] = component;
-				component = shade[col].g + tileCenter->color[1];
+				component = shade[col].g + tileColor[1];
 				if (component > 255) component = 255;
 				rgb[1] = component;
-				component = shade[col].b + (*new_var2)[2];
+				component = shade[col].b + tileColor[2];
 				if (component > 255) component = 255;
 				rgb[2] = component;
 			} else {
-				rgb[0] = tileCenter->color[0];
-				rgb[1] = tileCenter->color[1];
-				rgb[2] = tileCenter->color[2];
+				rgb[0] = tileColor[0];
+				rgb[1] = tileColor[1];
+				rgb[2] = tileColor[2];
 			}
 
 			edgeParityX = color1 % 2;
@@ -1643,7 +1630,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			posX = ((color1 - 0x80) << 8);
 			cellH = (tileCenter->tileType & 0x3F) << 5;
 			posZ = cellH;
-			new_var3 = (color1 - 0x80) << 8;
+			baseX = (color1 - 0x80) << 8;
 
 			if (scrollX < 0) {
 				waveX = 255 - (BH_ABS(scrollX + 1) % 256);
@@ -1652,7 +1639,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 			}
 
 			if (tilesMinX < (s16)((color1 - 0x80) << 8)) {
-				posX = (new_var3 + waveX) - 0x100;
+				posX = (baseX + waveX) - 0x100;
 				posZ = func_800B0A10_BF9C0((tileWest->tileType & 0x3F) << 5, cellH, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = waveX;
@@ -1660,7 +1647,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 					hueX = 0xFF - waveX;
 				}
 			} else if ((s16)((color1 - 0x80) << 8) < (scrollX - 0x901)) {
-				posX = new_var3 + waveX;
+				posX = baseX + waveX;
 				posZ = func_800B0A10_BF9C0(cellH, (tileEast->tileType & 0x3F) << 5, waveX, 0x100);
 				if (edgeParityX == 1) {
 					hueX = 0xFF - waveX;
@@ -1773,9 +1760,8 @@ void func_800B5090_C4040(Vtx **arg0, s32 arg1) {
 		indexByte[0] = (rowIndex + 1) % 0x13;
 		color1 = D_8014F89C;
 		color2++;
-		rowWrap++;
 		col = D_8014F899;
-	} while (rowWrap < 0x12);
+	} while (++rowWrap < 0x12);
 }
 
 #else
@@ -1835,11 +1821,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	s16 counts[8];
 	u16 tile;
 	s16 b;
-	s16 idx;
-	u16 t;
+	Gfx *packet;
 	u8 modeByte;
 
-	for (y = 0; y < 8; y++) { counts[y] = -1; }
+	for (x = 0; x < 8; x++) {
+		counts[x] = -1;
+	}
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
 		y = 0;
@@ -1870,10 +1857,10 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * 5) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * 5) + x;
 					}
 				}
 			}
@@ -1892,8 +1879,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
 				order = orders[y][x] + 4;
@@ -1905,10 +1891,14 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 
 	if (((arg3 - arg1) * (arg4 - arg2)) < 0xC) {
+		s32 fullCols;
+		s32 fullRows;
 		width = arg3 - arg1;
 		height = arg4 - arg2;
-		cols = width + 1;
-		rows = height + 1;
+		fullCols = width + 1;
+		cols = fullCols;
+		fullRows = height + 1;
+		rows = fullRows;
 
 		for (y = 0; y < rows; y++) {
 			for (x = 0; x < cols; x++) {
@@ -1917,21 +1907,21 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
+		gSPVertex(D_8005BB2C++, D_8005BB34 - rows * cols, rows * cols, 4);
 		modeByte = D_8014F854;
 
 		for (y = 0; y < height; y++) {
 			for (x = 0; x < width; x++) {
 				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
-				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
+				v = &(&(D_8005BB34 - fullRows * fullCols)[y * fullCols])[x];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * cols) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * cols) + x;
 					}
 				}
 			}
@@ -1950,10 +1940,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
-					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
-					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				packet = D_8005BB2C++;
+				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
+					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
+					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
+				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
+					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
 				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + cols, 0, order + 1, order + cols, order + 1 + cols, 0);
 			}
@@ -1987,10 +1979,10 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * cols) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * cols) + x;
 					}
 				}
 			}
@@ -2009,10 +2001,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
-					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
-					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				packet = D_8005BB2C++;
+				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
+					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
+					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
+				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
+					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
 				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 4, 0, order + 1, order + 4, order + 5, 0);
 			}
@@ -2048,10 +2042,10 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * cols) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * cols) + x;
 					}
 				}
 			}
@@ -2070,10 +2064,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
-					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
-					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				packet = D_8005BB2C++;
+				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
+					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
+					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
+				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
+					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
 				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
@@ -2081,6 +2077,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 		return;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 #endif
@@ -2094,13 +2091,14 @@ void func_800B753C_C64EC(void) {
 	s16 indices[8][0x121];
 	s16 counts[8];
 	s16 emittedQuads;
-	s16 lineCount[1];
+	s16 lineCount[2]; // Remaining count uses the second halfword.
 	s16 bucket;
 	s16 rowOffset;
 	s16 run;
-	s32 v0, v1, v2;
+	s32 v1, v2;
 	Unk800B753CEntry *entry;
 	Vtx *source;
+	Gfx *tile;
 
 	emittedQuads = 0;
 	{
@@ -2135,21 +2133,20 @@ void func_800B753C_C64EC(void) {
 		bucket = counts[group] + 1;
 		rowOffset = 0;
 		if (bucket > 0) {
-			lineCount[0] = bucket;
+			lineCount[1] = bucket;
 			do {
 
 
-			if (lineCount[0] >= 9) {
+			if (lineCount[1] >= 9) {
 				run = 8;
 			} else {
-				run = lineCount[0];
+				run = lineCount[1];
 			}
 
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
-				source = entry->unk0;
-				D_8005BB34[0] = source[0];
+				D_8005BB34[0] = entry->unk0[0];
 				source = entry->unk0;
 				D_8005BB34++;
 				D_8005BB34[0] = source[1];
@@ -2162,39 +2159,36 @@ void func_800B753C_C64EC(void) {
 				D_8005BB34++;
 			}
 
-			if (lineCount[0] != 0) {
-				gSPVertex(D_8005BB2C++, &D_8005BB34[-(run * 4)], run * 4, 0);
+			if (lineCount[1] != 0) {
+				gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
 			}
 
-			v0 = 0;
-			v1 = 2;
-			v2 = 1;
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
+				v1 = i * 4 + 2;
+				v2 = i * 4 + 1;
 				rawMode = entry->unk4;
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (rawMode % 2) << 7, G_TX_RENDERTILE, 0,
-				entry->unk6 & 3, 5, G_TX_NOLOD,
-				entry->unk5 & 3, 5, G_TX_NOLOD);
+				tile = D_8005BB2C++;
+				tile->words.w0 = ((((rawMode % 2) << 7) & 0x1FF) | _SHIFTL(4, 9, 9)) |
+					(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) | _SHIFTL(G_IM_SIZ_8b, 19, 2));
+				tile->words.w1 = _SHIFTL(entry->unk5, 8, 2) | _SHIFTL(entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
 				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v0 + 3, 0);
+				gSP2Triangles(D_8005BB2C++, i * 4, v1, v2, 0, v2, v1, i * 4 + 3, 0);
 
 				emittedQuads++;
-				v0 += 4;
-				v1 += 4;
-				v2 += 4;
 			}
 
-			if (lineCount[0] >= 9) {
-				lineCount[0] -= 8;
+			if (lineCount[1] >= 9) {
+				lineCount[1] -= 8;
 			} else {
-				lineCount[0] = 0;
+				lineCount[1] = 0;
 			}
 
 			rowOffset += 8;
 
-			} while (lineCount[0] > 0);
+			} while (lineCount[1] > 0);
 		}
 
 		}
@@ -2210,8 +2204,7 @@ void func_800B753C_C64EC(void) {
 		counts[i++] = -1;
 	}
 
-	if ((s32)D_8014F89A > 0) {
-
+	{
 		for (i = 0; i < (s32)D_8014F89A; i++) {
 			rawMode = D_8014F8A8[i].unk4;
 			bucket = rawMode / 2;
@@ -2229,21 +2222,20 @@ void func_800B753C_C64EC(void) {
 		bucket = counts[group] + 1;
 		rowOffset = 0;
 		if (bucket > 0) {
-			lineCount[0] = bucket;
+			lineCount[1] = bucket;
 			do {
 
 
-			if (lineCount[0] >= 9) {
+			if (lineCount[1] >= 9) {
 				run = 8;
 			} else {
-				run = lineCount[0];
+				run = lineCount[1];
 			}
 
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
-				source = entry->unk0;
-				D_8005BB34[0] = source[0];
+				D_8005BB34[0] = entry->unk0[0];
 				source = entry->unk0;
 				D_8005BB34++;
 				D_8005BB34[0] = source[1];
@@ -2256,39 +2248,36 @@ void func_800B753C_C64EC(void) {
 				D_8005BB34++;
 			}
 
-			if (lineCount[0] != 0) {
-				gSPVertex(D_8005BB2C++, &D_8005BB34[-(run * 4)], run * 4, 0);
+			if (lineCount[1] != 0) {
+				gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
 			}
 
-			v0 = 0;
-			v1 = 2;
-			v2 = 1;
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
+				v1 = i * 4 + 2;
+				v2 = i * 4 + 1;
 				rawMode = entry->unk4;
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (rawMode % 2) << 7, G_TX_RENDERTILE, 0,
-				entry->unk6 & 3, 5, G_TX_NOLOD,
-				entry->unk5 & 3, 5, G_TX_NOLOD);
+				tile = D_8005BB2C++;
+				tile->words.w0 = ((((rawMode % 2) << 7) & 0x1FF) | _SHIFTL(4, 9, 9)) |
+					(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) | _SHIFTL(G_IM_SIZ_8b, 19, 2));
+				tile->words.w1 = _SHIFTL(entry->unk5, 8, 2) | _SHIFTL(entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
 				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v0 + 3, 0);
+				gSP2Triangles(D_8005BB2C++, i * 4, v1, v2, 0, v2, v1, i * 4 + 3, 0);
 
 				emittedQuads++;
-				v0 += 4;
-				v1 += 4;
-				v2 += 4;
 			}
 
-			if (lineCount[0] >= 9) {
-				lineCount[0] -= 8;
+			if (lineCount[1] >= 9) {
+				lineCount[1] -= 8;
 			} else {
-				lineCount[0] = 0;
+				lineCount[1] = 0;
 			}
 
 			rowOffset += 8;
 
-			} while (lineCount[0] > 0);
+			} while (lineCount[1] > 0);
 		}
 
 		}
@@ -2869,13 +2858,16 @@ void func_800B9DB8_C8D68(u8 arg0)
 {
 	u8 row;
 	s16 tileSize;
-	Vtx *startVertices;
+	union {
+		Vtx *startVertices;
+		s32 rowIndex;
+	} scratch;
 	s16 pad;
 	s16 mapX;
 	s16 mapZ;
 	Gfx *gfx;
-	s32 worldZ;
-	Vtx *vertices[2];
+	u8 (*textureRow)[64];
+	struct { Vtx *column; Vtx *row; } vertices;
 	u8 tileZ;
 	s16 visibleCount;
 	s16 culledCount;
@@ -2886,7 +2878,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	{
 		func_800B879C_C774C();
 	}
-	startVertices = D_8005BB34;
+	scratch.startVertices = D_8005BB34;
 	func_800B5090_C4040(&D_8005BB34, arg0 & 0xFF);
 	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
 
@@ -2894,15 +2886,16 @@ void func_800B9DB8_C8D68(u8 arg0)
 	D_8014FD28 = 0x8F;
 	mapX = D_80151DD8.mapPosX;
 	mapZ = D_80151DD8.mapPosY;
-	vertices[0] = startVertices;
-	vertices[1] = startVertices;
-	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
+	vertices.column = scratch.startVertices;
+	vertices.row = scratch.startVertices;
+	gfx = D_8005BB2C++;
+	gDPSetRenderMode(gfx, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
 	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
 	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
 	gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
 	gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)D_80254E80 & 0x1FFFFFFF));
-	gDPLoadSync(D_8005BB2C++);
+	gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
 
 	tileSize = 4;
 	if (D_801493CC != 0)
@@ -2923,46 +2916,46 @@ void func_800B9DB8_C8D68(u8 arg0)
 		u8 palette;
 		u8 tileX;
 		u8 tile;
-		s32 firstTile[2];
-		firstTile[1] = mapZ; firstTile[1] /= 4;
-		firstTile[0] = mapX; firstTile[0] /= 4;
-		for (row = 0; row < 5; row++, row ^= 0)
+		for (row = 0; row < 5; row++)
 		{
-			tileZ = (firstTile[1] + row) & 0xFF;
-			worldZ = (s16)((tileZ << 10) + 0x8000);
+			s32 firstTileX;
+			scratch.rowIndex = row;
+			tileZ = mapZ / 4 + scratch.rowIndex;
+			firstTileX = mapX / 4;
+			textureRow = &((u8 (*)[64])D_8021EA30)[tileZ];
 			for (column = 0; column < 5; column++)
 			{
-				left = (column == 0) ? (mapX % 4) : 0;
+				left = ((u32)column == 0) ? (mapX % 4) : 0;
 				right = (column == tileSize) ? (mapX % 4) + 1 : tileSize;
 				top = (row == 0) ? (mapZ % 4) : 0;
 				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
-				tileX = (firstTile[0] + column) & 0xFF;
-				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX]; palette &= 0xF;
+				tileX = (u32)firstTileX + column;
+				palette = (*textureRow)[tileX]; palette &= 0xF;
 				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
-				gDPLoadSync(D_8005BB2C++);
+				gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
 
-				tile = ((u8(*)[64])D_8021EA30)[tileZ][tileX];
+				tile = (*textureRow)[tileX];
 				if ((tile & 0xF0) != 0xF0)
 				{
-					((u8(*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
+					(*textureRow)[tileX] = tile + 0x10;
 				}
 				gfx = D_8005BB2C++; gfx->words.w0 = G_CLEARGEOMETRYMODE << 24; gfx->words.w1 = G_LIGHTING;
-				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
+				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), (s16)((tileZ << 10) + 0x8000), 0x400, 0x400) != 0)
 				{
 					visibleCount += 1;
-					func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
+					func_800B604C_C4FFC(vertices.column, left, top, right, bottom, (u16)((u16)(tileX * 4 + ((tileZ & 0x3F) * 0x400)) + top * 0x100) + left, palette);
 				}
 				else
 				{
 					culledCount += 1;
 				}
 
-				vertices[0] = &vertices[0][tileSize - left];
+				vertices.column = &vertices.column[tileSize - left];
 			}
 
-			vertices[1] = &vertices[1][(tileSize - top) * 18];
-			vertices[0] = vertices[1];
+			vertices.row = &vertices.row[(tileSize - top) * 18];
+			vertices.column = vertices.row;
 		}
 	}
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
@@ -3006,7 +2999,7 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
-	u8 *padPalette;
+	u8 *rowFlags;
 	Gfx *gfx;
 	s16 texXBase;
 	s16 texZBase;
@@ -3027,11 +3020,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	s16 row;
 	s16 col;
 	s32 tileBase;
-	s32 phase;
+	s32 tileScratch;
 	s32 phaseAbs;
 	s32 rowPhase;
 	s32 texAnim;
-	s32 color;
+	u8 color;
 	s32 heightDiff;
 	s32 magnitude;
 	f32 worldXf;
@@ -3042,7 +3035,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	waterX = water->unk3C;
 	waterZ[0] = water->unk3E;
 	hiddenCount = 0;
-	if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
+	if (((u32)gameplayMode == GAMEPLAY_MODE_UNKB) || ((u32)gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 		waterX = D_80157F44;
 		waterZ[0] = D_80157F46;
 	}
@@ -3084,11 +3077,15 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_CYCLETYPE, 8, 8) | 2; gfx->words.w1 = G_CYC_2CYCLE;
 
-	phase = 0x40 - ((D_80052A8C * 2) & 0x7F);
-	phaseAbs = ((u32)-phase < (u32)phase) ? phase : -phase;
+	tileScratch = 0x40 - ((D_80052A8C * 2) & 0x7F);
+	phaseAbs = ((u32)-tileScratch < (u32)tileScratch) ? tileScratch : -tileScratch;
 	color = (0x78 - phaseAbs) & 0xFF;
 
-	gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w0 = _SHIFTL(G_SETKEYR, 24, 8);
+		packet->words.w1 = 0x8000 | color;
+	}
 	gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 
 	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, TEXEL1, SCALE, TEXEL1, TEXEL0, 0, TEXEL1, 0, ENVIRONMENT, PRIMITIVE, COMBINED, PRIMITIVE, 0, 0, 0, SHADE);
@@ -3105,41 +3102,49 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
 
-	phase = (u32)D_80052A8C >> 1;
-	gDPSetTileSize(D_8005BB2C++, 1, -phase, 60, 252 - phase, 312);
+	tileScratch = (u32)D_80052A8C >> 1;
+	gDPSetTileSize(D_8005BB2C++, 1, -tileScratch, 60, 252 - tileScratch, 312);
 
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 8, 0, 2, 0,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
 
-	phase = D_80052A8C & 0xFFF;
-	texAnim = (D_80052A8C + 0xFC) & 0xFFF;
-	gDPSetTileSize(D_8005BB2C++, 2, phase, phase, texAnim, texAnim);
+	tileScratch = D_80052A8C;
+	texAnim = tileScratch + 0xFC;
+	gDPSetTileSize(D_8005BB2C++, 2, tileScratch, tileScratch, texAnim, texAnim);
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 1, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 
-	phase = (s16)(waterX % 0x200);
-	waterX = waterX - phase;
+	tileScratch = (s16)(waterX % 0x200);
+	if (tileScratch) {}
+	waterX = waterX - (s16)tileScratch;
 
-	phase = waterZ[0] % 0x200;
-	snappedZ = waterZ[0] - phase;
+	tileScratch = waterZ[0] % 0x200;
+	snappedZ = waterZ[0] - tileScratch;
 
-	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8);
+		packet->words.w1 = G_CULL_BOTH;
+	}
 
 	wavePhase[0] = D_80052A8C * 0x2BC;
-	phase = waterX % 0x1000;
-	texXBase = phase * 4;
+	tileScratch = waterX % 0x1000;
+	texXBase = tileScratch * 4;
 
-	phase = snappedZ % 0x1000;
-	texZBase = phase * 4;
+	tileScratch = snappedZ % 0x1000;
+	texZBase = tileScratch * 4;
 
 	for (row = 0; row < 9; row++) {
-		rowZ = snappedZ - (s16)(row << 9) + 0x700;
+		rowFlags = flags[row];
+
 		rowTexZ = texZBase - (row << 0xB);
-		worldZf = (f32)rowZ;
+
 		for (col = 0; col < 9; col++) {
-			flag = &flags[row][col];
+			rowZ = snappedZ - (s16)(row << 9) + 0x700;
+			worldZf = (f32)rowZ;
+			flag = &rowFlags[col];
 			worldX = waterX + (s16)(col << 9) - 0x900;
 			*flag = 4;
 			waveDepth = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
@@ -3155,7 +3160,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				maxAlpha = 0x64;
 			}
 
-			if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
+			if (((u32)gameplayMode == GAMEPLAY_MODE_UNKB) || ((u32)gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 				worldXf = (f32)worldX;
 				maxAlpha = func_800BA52C_C94DC((s16)(s32)(worldXf - D_80157F08.unk0), (s16)(s32)(worldZf - D_80157F08.unk8), 0, maxAlpha);
 			} else {
@@ -3194,11 +3199,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 			heightDiff = D_80052B34->unk0 - worldX;
 			if (heightDiff >= 0) {
-				magnitude = heightDiff;
+				tileScratch = heightDiff;
 			} else {
-				magnitude = -heightDiff;
+				tileScratch = -heightDiff;
 			}
-			if (magnitude < 0x100) {
+			if (tileScratch < 0x100) {
 				heightDiff = D_80052B34->unk4 - rowZ;
 				if (heightDiff >= 0) {
 					magnitude = heightDiff;
@@ -3238,7 +3243,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				}
 
 				tileBase = (s16)(row * 9);
-				if (((s16)(((col % 2) + ((waterX / 0x200) % 2)) % 2)) != 0) {
+				if (((col % 2) + ((waterX / 0x200) % 2)) % 2) {
 					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 1, (col + tileBase) + 9, 0);
 					gSP1Triangle(D_8005BB2C++, (col + tileBase) + 1, (col + tileBase) + 10, (col + tileBase) + 9, 0);
 				} else {
@@ -3247,7 +3252,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				}
 			}
 
-			rowPhase = 0x40 - ((((batch * 2) + row + D_80052A8C) * 3) & 0x7F);
+			rowPhase = 0x40 - ((((batch * 2) + row + D_80052A8C) * (u16)3) & 0x7F);
 			phaseAbs = ((u32)-rowPhase < (u32)rowPhase) ? rowPhase : -rowPhase;
 			color = (0x78 - phaseAbs) & 0xFF;
 
@@ -3399,7 +3404,7 @@ void func_800BB5E0_CA590(void) {
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTPERSP, 8, 8) | 1; gfx->words.w1 = G_TP_PERSP;
 	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_TEXTURE, 24, 8) | G_ON; gfx->words.w1 = 0x80008000;
+	gfx->words.w1 = 0x80008000; gfx->words.w0 = _SHIFTL(G_TEXTURE, 24, 8) | G_ON;
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTFILT, 8, 8) | 2; gfx->words.w1 = G_TF_BILERP;
 	gfx = D_8005BB2C++;
@@ -3498,6 +3503,7 @@ void func_800BB5E0_CA590(void) {
 
 						
 						 if (baseX) {} if (baseZ) {} if (baseX) {} if (baseZ) {}
+						texEndT = baseZ - segEndZ;
 						D_8005BB34[0].v.ob[0] = segStartX;
 						D_8005BB34[0].v.ob[1] = minY;
 						D_8005BB34[0].v.ob[2] = segStartZ;
@@ -3524,8 +3530,8 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[2].v.ob[1] = minY;
 						D_8005BB34[2].v.ob[2] = segEndZ;
 						D_8005BB34[2].v.flag = 0;
-						D_8005BB34[2].v.tc[0] = texEndS = (s16)((baseX - segEndX) * texScale + scrollS);
-						D_8005BB34[2].v.tc[1] = texEndT = (s16)((baseZ - segEndZ) * texScale + scrollT);
+						D_8005BB34[2].v.tc[0] = texEndS = (baseX - segEndX) * texScale + scrollS;
+						D_8005BB34[2].v.tc[1] = texEndT = texEndT * texScale + scrollT;
 						D_8005BB34[2].v.cn[0] = 0x46;
 						D_8005BB34[2].v.cn[1] = 0x46;
 						D_8005BB34[2].v.cn[2] = 0x96;
@@ -3587,8 +3593,7 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[7].v.cn[2] = 0x96;
 						D_8005BB34[7].v.cn[3] = 0;
 
-						if (minY) {}
-						if (texEndT) {}
+						if (alphaEnd | texStartS | texStartT | texEndT) {}
 						gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(D_8005BB34), 8, 0);
 
 						D_8005BB34 += 8;

@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800B753C_C64EC`, the vertex upload computed the address with `negu`, `sll`, and `addu`. The road tile command loaded the T wrap field before the S wrap field. The group pointer spilled to `sp+0x4C` and the remaining count lived at `sp+0x118`.
+
+-> `code changed`: Use `D_8005BB34 - run * 4` for the typed vertex upload pointer. Pack the road tile words with the GBI field shifts in S-then-T order and reuse the tile packet pointer across both passes. Keep the remaining count in the second halfword of its array. Read the first source vertex directly from the road entry and pass `i * 4` directly as the first triangle vertex. Use a single `for` guard for the second gather pass.
+
+-> `correct ASM`: The vertex address uses `sll` and `subu`, both road tile commands load the S wrap field before the T wrap field, and the stack accesses use `sp+0x50` and `sp+0x116`. The frame is `0x1348` and both the target and reconstructed function have 997 instructions. The weighted assembly diff fell from 15,214 to 11,293. The triangle loop comparison and command scheduling still differ, so the assembly fallback remains active.

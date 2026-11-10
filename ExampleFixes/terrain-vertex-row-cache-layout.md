@@ -26,3 +26,15 @@ The frame becomes 0xD8; RGB homes become SP+B4/B5/B6, positions SP+AA/A8, scroll
 -> `code changed`: Replace the crater references to the global 1.022, 0.7f, and 3.2f constants with their inline literals. Keep the manual switch table only in the NON_MATCHING fallback branch, so enabling C removes it with the assembly stub.
 
 -> `correct ASM`: The generated switch table precedes the later crater literals. All three already-matched crater functions retain their bytes; the complete native US fallback ROM checksum passes.
+
+`incorrect ASM`
+
+The later draft kept a duplicate byte row index live into the wrapped east-neighbor path. IDO reserved a `0xE8` frame, spilled the shadow byte, and wrote RGB to `sp+0xB8..0xBA` and position X to `sp+0xAE`.
+
+-> `code changed`
+
+Index the ring and shade rows from the existing row byte and use the existing word row index for the wrapped east address. Put the west tile pointer just above the RGB array. Move the clipping limit declarations below the row pointers and place the cached ring row between the X and Y wave offsets.
+
+-> `correct ASM`
+
+The frame is `0xD8`. The RGB homes are `sp+0xB4..0xB6`, the position homes are `sp+0xAA` and `sp+0xA8`, and scroll Y uses `sp+0xA0`. The cached ring row, word row index, and shade row are stored at `sp+0x90`, `sp+0x80`, and `sp+0x7C`, respectively. The enabled C is one instruction short, and its weighted score rises from 4205 to 6165 as other registers and lower spills change. The function still uses its assembly fallback.
