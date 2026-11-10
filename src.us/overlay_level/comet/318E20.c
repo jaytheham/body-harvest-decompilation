@@ -3779,7 +3779,7 @@ void func_802DE0F4_322244(u8 arg0) {
 	if (!(D_80052A8C & 7)) {
 		effectNode = sp44;
 		if (temp_s0->unk3C != 0xFB && effectNode->unkAUnsigned < 0x1F41) {
-			func_80128428_1373D8(temp_s0, effectNode->unk0 - 0x96, effectNode->unk2, effectNode->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+			func_80128428_1373D8(temp_s0, sp44->unk0 - 0x96, effectNode->unk2, effectNode->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0 = D_80222A70;
 			} else {

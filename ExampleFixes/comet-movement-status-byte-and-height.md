@@ -27,3 +27,15 @@
 `code changed` -> Read the second effect's joint fields directly through `sp40`. Keep `effectNode` for the first effect.
 
 `correct ASM` -> The flag test uses `lw t7,0x20(s0)`, `andi t8,t7,0x7000`, and `bnezl t8`, matching the target at `0x3225C0`, `0x3225C8`, and `0x3225CC`. The frame and structural differences are unchanged. Across the function, the differing word count falls from 209 to 204 and the assembly diff score falls from 2046 to 2016.
+
+`incorrect ASM` -> After `sll t7,a1,16` at `0x32248C`, the linked draft calculates the Z output address in `t2` and stores it before `sra a1,t7,16`. The second effect has the same scheduling difference. UGEN assigns the first call's X, Y, and Z addresses to `t9`, `t1`, and `t2`. The instrumented run produces the same binary assembly stream as the native build.
+
+`code changed` -> As controls, cache the narrowed X input before the call, split the three output addresses across source lines, and pass the addresses of equivalent scalar or union members. These variants preserve the output slots and leave eight differing words in each call window. The native compiler listing already finishes the X narrowing before it computes the output addresses.
+
+`correct ASM` -> At `0x322490` the target uses `sra a1,t7,16` followed by `addiu t7,sp,0x5C`. Both instructions use `t7`, which creates the dependency absent from the draft. The target's second call likewise reuses `t8`. Matching these registers requires changing the temporaries allocated by UGEN or the register reuse established during final assembly.
+
+`incorrect ASM` -> The second effect's status byte loads into `t4` at `0x322460` and `0x322504`. The branch at `0x322510` also reads `t4`.
+
+`code changed` -> Read the first effect's X coordinate through `sp44` and keep its Y and Z reads through `effectNode`. Both names refer to the same joint.
+
+`correct ASM` -> The two `lb` instructions and the following `beq` use `t6` at the target offsets. The linked draft falls from 204 to 202 differing words and from score 2016 to 2006.
