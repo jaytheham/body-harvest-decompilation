@@ -39,3 +39,9 @@
 `code changed` -> Read the first effect's X coordinate through `sp44` and keep its Y and Z reads through `effectNode`. Both names refer to the same joint.
 
 `correct ASM` -> The two `lb` instructions and the following `beq` use `t6` at the target offsets. The linked draft falls from 204 to 202 differing words and from score 2016 to 2006.
+
+`incorrect ASM` -> The distance calculation loads the Z coordinate from `sp+0x68` at `0x3223AC`, before the first `multu`. Squaring the named X difference before computing the Z difference still lets IDO move the Z load ahead of the multiply.
+
+`code changed` -> Load the player's X coordinate into `temp`, calculate and square the shifted X difference, then reuse `temp` for the Z coordinate loaded from `position[0]`. Use `sp74` to hold the X square until the square root calculation.
+
+`correct ASM` -> `multu t7,t7` matches at `0x3223BC`, and the Z load follows it at the target address `0x3223C0`. The load still uses `v0` where the target uses `t9`. This removes the distance instruction-order difference. The additional register differences raise the total from 202 to 213 words.

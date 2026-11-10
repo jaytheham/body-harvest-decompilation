@@ -3767,9 +3767,12 @@ void func_802DE0F4_322244(u8 arg0) {
 
 	func_80128428_1373D8(temp_s0, 0x19, 0, 0x226, &position[2], &position[1], &position[0]);
 
-	temp = (D_80052B34->unk0 - position[2]) >> 1;
-	temp_lo = (D_80052B34->unk4 - position[0]) >> 1;
-	sp74 = (s32)sqrtf((f32)(temp * temp + temp_lo * temp_lo)) * 2;
+	temp = D_80052B34->unk0;
+	temp = (temp - position[2]) >> 1;
+	sp74 = temp * temp;
+	temp = position[0];
+	temp_lo = (D_80052B34->unk4 - temp) >> 1;
+	sp74 = (s32)sqrtf((f32)(sp74 + temp_lo * temp_lo)) * 2;
 
 	alienTypes[temp_s0->typeIndex].unk58 = 0;
 
