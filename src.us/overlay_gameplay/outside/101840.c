@@ -1521,7 +1521,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	Vec3f direction;
 	f32 temp_f14;
 	s32 wideX;
-	s32 temp_v0;
+	s32 angle;
 	f32 temp_f0_2;
 	f32 temp_f12;
 	s16 temp_f6;
@@ -1549,6 +1549,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 sp104;
 	s16 temp_v1_2;
 	s16 temp_f6_3;
+	s32 temp_v0;
 
 	if (&temp_f0) {}
 	var_f2 = (f32)D_801601F0[arg3].unk8;
@@ -1563,11 +1564,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	direction.y = (f32)(arg1[1] - arg0[1]);
 	direction.z = (f32)(arg1[2] - arg0[2]);
 	func_800F54AC_10445C(&direction, &direction);
-	temp_v0 = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
-	temp_v0_2 = temp_v0 + 0x4000;
-	temp_f14 = (f32)((f64)(f32)sins(temp_v0_2) / 32768.0);
-	temp_v0_2 = temp_v0 + 0x4000;
-	temp_v0_2 = coss(temp_v0_2);
+	angle = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	temp_f14 = (f32)((f64)(f32)sins(angle + 0x4000) / 32768.0);
+	temp_v0_2 = coss(angle + 0x4000);
 	gDPPipeSync(D_8005BB2C++);
 	temp_f12 = var_f2 * 2;
 	temp_f6 = (s16)(s64)(s32)(direction.x * temp_f12);

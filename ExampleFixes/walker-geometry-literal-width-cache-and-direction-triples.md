@@ -9,3 +9,9 @@
 -> `code changed`: Use the signed word expressions `temp_f6 * 3` and `temp_f10 * 3` directly in the vertex coordinates. Retain the signed-halfword component conversions before multiplying. Compute palette clamps directly from the palette halfwords, leaving the later geometric halfword temporaries out of the clamp calculations.
 
 -> `correct ASM`: The direction offsets use `sll reg,component,2` followed by `subu reg,reg,component`, without a second halfword narrowing or division-by-two branches. The palette clamp comparisons also omit the extra `sll`/`sra` pairs.
+
+`incorrect ASM` → Reusing the later integer scratch for the angle gives a `0x160` frame. The first trig call stores the angle at `0x148(sp)` in its delay slot, and the second call reloads it through `v1`.
+
+→ `code changed` → Give the angle its own signed word at the old scratch declaration site and move the scratch declaration after the halfword locals. Pass `angle + 0x4000` to each trig function and let its parameter type narrow the argument.
+
+→ `correct ASM` → The `0x168` frame, named width at `0x13C(sp)`, and width cache at `0x54(sp)` match. The angle store uses `0x150(sp)` before the first `jal`, its delay slot moves `t9` to `a0`, and the second call reloads the angle into `a0`. The first 118 words differ only at two relocated data references in the linked candidate. Its diff score improves from 22998 to 22109, with the assembly fallback still selected.
