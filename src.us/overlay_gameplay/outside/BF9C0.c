@@ -1821,11 +1821,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	s16 counts[8];
 	u16 tile;
 	s16 b;
-	s16 idx;
-	u16 t;
+	Gfx *packet;
 	u8 modeByte;
 
-	for (y = 0; y < 8; y++) { counts[y] = -1; }
+	for (x = 0; x < 8; x++) {
+		counts[x] = -1;
+	}
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
 		y = 0;
@@ -1856,10 +1857,10 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * 5) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * 5) + x;
 					}
 				}
 			}
@@ -1878,8 +1879,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
 				order = orders[y][x] + 4;
@@ -1891,10 +1891,14 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 
 	if (((arg3 - arg1) * (arg4 - arg2)) < 0xC) {
+		s32 fullCols;
+		s32 fullRows;
 		width = arg3 - arg1;
 		height = arg4 - arg2;
-		cols = width + 1;
-		rows = height + 1;
+		fullCols = width + 1;
+		cols = fullCols;
+		fullRows = height + 1;
+		rows = fullRows;
 
 		for (y = 0; y < rows; y++) {
 			for (x = 0; x < cols; x++) {
@@ -1903,21 +1907,21 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			}
 		}
 
-		gSPVertex(D_8005BB2C++, &D_8005BB34[-(rows * cols)], (rows * cols), 4);
+		gSPVertex(D_8005BB2C++, D_8005BB34 - rows * cols, rows * cols, 4);
 		modeByte = D_8014F854;
 
 		for (y = 0; y < height; y++) {
 			for (x = 0; x < width; x++) {
 				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
-				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
+				v = &(&(D_8005BB34 - fullRows * fullCols)[y * fullCols])[x];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * cols) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * cols) + x;
 					}
 				}
 			}
@@ -1936,10 +1940,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
-					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
-					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				packet = D_8005BB2C++;
+				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
+					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
+					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
+				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
+					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
 				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + cols, 0, order + 1, order + cols, order + 1 + cols, 0);
 			}
@@ -1973,10 +1979,10 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * cols) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * cols) + x;
 					}
 				}
 			}
@@ -1995,10 +2001,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
-					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
-					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				packet = D_8005BB2C++;
+				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
+					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
+					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
+				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
+					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
 				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 4, 0, order + 1, order + 4, order + 5, 0);
 			}
@@ -2034,10 +2042,10 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
 						b = ((u8)((tile & 0x3C0) >> 6)) / 2;
-						idx = ++counts[b];
+						++counts[b];
 
-						tiles[b][idx] = tile;
-						orders[b][idx] = (y * cols) + x;
+						tiles[b][counts[b]] = tile;
+						orders[b][counts[b]] = (y * cols) + x;
 					}
 				}
 			}
@@ -2056,10 +2064,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				t = (((u8)((tile & 0x3C0) >> 6)) % 2);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (t << 7) & 0x1FF, G_TX_RENDERTILE, 0,
-					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
-					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				packet = D_8005BB2C++;
+				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
+					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
+					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
+				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
+					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
 				order = orders[y][x] + 4;
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
@@ -2067,6 +2077,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 		return;
 	}
 }
+
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
 #endif
