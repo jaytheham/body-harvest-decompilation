@@ -27,3 +27,9 @@
 → `code changed` → Store `3` in the existing signed scratch and use `(s32)(s64)temp_v0` as both divisors. A plain scratch read or a single cast to `s32` gives the original multiplication sequence.
 
 → `correct ASM` → The divisions remain signed, and the later tripled offsets use `sll` by two followed by `subu`. The X sequence still repeats for the second vertex. The linked diff score improves from 21608 to 21129 while retaining the `0x168` frame and `0x54(sp)` width cache.
+
+`incorrect ASM`: In the middle vertex setup, the X direction product loads its component into `$f6` and computes the product in `$f4`. The target uses `$f10` and `$f8` at those sites.
+
+-> `code changed`: Compute the signed X and Z width offsets together, before the three direction products. Keep the casts and the order of the direction products.
+
+-> `correct ASM`: The X product uses `mul.s $f8,$f10,$f2`, the Y product uses `mul.s $f10,$f4,$f16`, and the Z product uses `mul.s $f4,$f6,$f2`. Their registers match the target, with scheduling differences still present. The linked diff score falls from 21129 to 20269.

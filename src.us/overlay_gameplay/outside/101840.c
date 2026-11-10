@@ -1663,10 +1663,10 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	temp_f6_3 = (s16)(s32)(var_f16 * temp_f14);
+	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
 	temp_f6 = (s16)(s32)(direction.x * var_f2);
 	temp_f8 = (s32)(direction.y * var_f16);
 	temp_f10 = (s16)(s32)(direction.z * var_f2);
-	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
 	D_8005BB34->v.ob[0] = arg1[0] + temp_f6_3 + (temp_f6 * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8;
 	D_8005BB34->v.ob[2] = arg1[2] + temp_v1_2 + (temp_f10 * 3);
