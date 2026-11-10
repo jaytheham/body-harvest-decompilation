@@ -2862,7 +2862,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	s16 mapX;
 	s16 mapZ;
 	Gfx *gfx;
-	s32 worldZ;
+	u8 (*textureRow)[64];
 	Vtx *vertices[2];
 	u8 tileZ;
 	s16 visibleCount;
@@ -2890,7 +2890,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
 	gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
 	gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)D_80254E80 & 0x1FFFFFFF));
-	gDPLoadSync(D_8005BB2C++);
+	gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
 
 	tileSize = 4;
 	if (D_801493CC != 0)
@@ -2911,13 +2911,12 @@ void func_800B9DB8_C8D68(u8 arg0)
 		u8 palette;
 		u8 tileX;
 		u8 tile;
-		s32 firstTile[2];
-		firstTile[1] = mapZ; firstTile[1] /= 4;
-		firstTile[0] = mapX; firstTile[0] /= 4;
 		for (row = 0; row < 5; row++, row ^= 0)
 		{
-			tileZ = (firstTile[1] + row) & 0xFF;
-			worldZ = (s16)((tileZ << 10) + 0x8000);
+			s32 firstTileX;
+			tileZ = row + mapZ / 4;
+			firstTileX = mapX / 4;
+			textureRow = &((u8 (*)[64])D_8021EA30)[tileZ];
 			for (column = 0; column < 5; column++)
 			{
 				left = (column == 0) ? (mapX % 4) : 0;
@@ -2925,21 +2924,21 @@ void func_800B9DB8_C8D68(u8 arg0)
 				top = (row == 0) ? (mapZ % 4) : 0;
 				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
-				tileX = (firstTile[0] + column) & 0xFF;
-				palette = ((u8(*)[64])D_8021EA30)[tileZ][tileX]; palette &= 0xF;
+				tileX = firstTileX + column;
+				palette = (*textureRow)[tileX]; palette &= 0xF;
 				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
-				gDPLoadSync(D_8005BB2C++);
+				gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
 
-				tile = ((u8(*)[64])D_8021EA30)[tileZ][tileX];
+				tile = (*textureRow)[tileX];
 				if ((tile & 0xF0) != 0xF0)
 				{
-					((u8(*)[64])D_8021EA30)[tileZ][tileX] = tile + 0x10;
+					(*textureRow)[tileX] = tile + 0x10;
 				}
 				gfx = D_8005BB2C++; gfx->words.w0 = G_CLEARGEOMETRYMODE << 24; gfx->words.w1 = G_LIGHTING;
-				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), worldZ, 0x400, 0x400) != 0)
+				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), (s16)((tileZ << 10) + 0x8000), 0x400, 0x400) != 0)
 				{
 					visibleCount += 1;
-					func_800B604C_C4FFC(vertices[0], left, top, right, bottom, ((((tileX * 4) + (tileZ * 0x400)) + (top * 0x100)) & 0xFFFF) + left, palette);
+					func_800B604C_C4FFC(vertices[0], left, top, right, bottom, (u16)((u16)(tileX * 4 + ((tileZ & 0x3F) * 0x400)) + top * 0x100) + left, palette);
 				}
 				else
 				{
