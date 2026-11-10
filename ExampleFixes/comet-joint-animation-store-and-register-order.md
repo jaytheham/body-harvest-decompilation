@@ -9,3 +9,15 @@
 `code changed` -> Keep the unmasked sum in `sp4C` in case 5 and cast it to `u16` at each trig call. Use `alienInstances[arg0].unkA += 0x4B` in the lower-timer path. Put the child coordinate first in each case 2 sum. After checking the parent index against `0xFF`, load its type into `value` before checking for type `0x1B`.
 
 `correct ASM` -> Case 5 updates `v1` in place, and the lower-timer angle uses `lh t6` and `addiu t7,t6,0x4B`. The instructions from `0x31F7CC` through `0x31FAD4` match byte-for-byte. The first coordinate load for each axis in case 2 uses `t6`. The final parent branch's argument mask and delay-slot move match. The linked US draft drops from 79 to 60 register-only differences and from score 480 to 385, with matching bytes outside the routine.
+
+`incorrect ASM` -> The second chain link at `0x31F3FC` loads into `t0`. The ROM loads it into `a3`.
+
+`code changed` -> Assign `chain2_d` immediately after `chain1_d`, then assign `childC`. Both source reads still precede the joint-array stores.
+
+`correct ASM` -> IDO keeps the target load order and emits `lb a3,0xD(t4)`. The following shift also reads `a3`, with its destination still different. The linked draft has 59 register-only differences, down from 60, and score 375, down from 385.
+
+`incorrect ASM` -> The prologue uses `v1` for the instance table and `a1` for the parent index. The ROM uses `a1` and `v1` respectively.
+
+`code changed` -> As an allocation control, hold the initial parent index in `sp4C` through the early return and `joints[5]` store. Keep the later halfword `parent` reload. Apply the second-link source reorder above.
+
+`correct ASM` -> The prologue through `0x31F3BC` matches byte-for-byte. The allocator selects the parent first at priority `3.333333`, ahead of the final joint index at `3.000000`, and assigns the final joint index to `a0`. The later actor-ID reload at `0x31F42C` then trades places with `li a1,-0xC8` at `0x31F458`. The retained draft keeps those two instructions in target order.

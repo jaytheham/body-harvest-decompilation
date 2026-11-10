@@ -2888,8 +2888,8 @@ void func_802DB1D4_31F324(u8 arg0) {
 	rootJoint = alienInstances[arg0].unkC;
 	chain0 = D_8014DD50[rootJoint].unkC;
 	chain1_d = D_8014DD50[chain0].unkD;
-	childC = D_8014DD50[chain0].unkC;
 	chain2_d = D_8014DD50[chain1_d].unkD;
+	childC = D_8014DD50[chain0].unkC;
 	spA0 = D_8014DD50[chain1_d].unkC & 0xFFFFu;
 	chain3_d = D_8014DD50[chain2_d].unkD;
 	sp9C = D_8014DD50[chain2_d].unkC;
