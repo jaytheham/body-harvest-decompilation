@@ -2427,7 +2427,7 @@ void func_800F9118_1080C8(s32 arg0) {
 								if (index >= terrain.value) {
 									heading += 0x8000;
 								}
-								terrain.value = heading & 0xFFFF;
+								terrain.value = (s32)(s64)(s32)(s64)(heading & 0xFFFF);
 								cosOffset = (s16)(s32)((((f64)(f32)coss(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
 								sinOffset = (s16)(s32)((((f64)(f32)sins(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
 								oldX = limb->unkA;
@@ -2504,22 +2504,23 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[0] = 0;
 								D_8005BB34->v.cn[1] = 0;
 								D_8005BB34->v.cn[2] = 0;
+								terrain.value = heading - 0x4000;
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
 
-								terrain.value = (u16)(heading - 0x4000);
-								terrain.value &= 0xFFFF;
+								terrain.value = (u16)terrain.value;
 								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
 									terrain.value = heading + 0x4000; if (terrain.value) {}
 									terrain.value &= 0xFFFF;
 									coss(terrain.value & 0xFFFF);
 									sins(terrain.value & 0xFFFF);
 								} else {
-									coss(terrain.value & 0xFFFF);
-									sins(terrain.value & 0xFFFF);
+									coss(terrain.value);
+									sins(terrain.value);
 								}
 
-								if (8 != count) {
+								terrain.value = 8; if (terrain.value == count) {}
+								if (terrain.value != count) {
 									gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
 									terrain.gfx = D_8005BB2C++; terrain.gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); terrain.gfx->words.w1 = __gsSP1Triangle_w1f(0, 1, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 1, 4, 3, 0);
