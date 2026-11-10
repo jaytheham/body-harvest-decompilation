@@ -1625,8 +1625,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - temp_f6 / 3;
-	D_8005BB34->v.ob[1] = arg1[1] + temp_f8 / 3;
+	temp_v0 = 3;
+	D_8005BB34->v.ob[0] = arg1[0] - temp_f6 / (s32)(s64)temp_v0;
+	D_8005BB34->v.ob[1] = arg1[1] + temp_f8 / (s32)(s64)temp_v0;
 	D_8005BB34->v.ob[2] = arg1[2] - temp_f10;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x180;

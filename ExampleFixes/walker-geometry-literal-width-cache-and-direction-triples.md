@@ -21,3 +21,9 @@
 → `code changed` → Start the Z difference before the X product and keep the absolute Z distance in its own signed word, using the declaration slot of the unused float.
 
 → `correct ASM` → The Z loads and subtraction occur at the target positions starting at `0x105CB4`, while the X calculation is still in progress. The frame stays at `0x168`, and the width cache stays at `0x54(sp)`. The linked diff score improves from 21843 to 21608. Other instruction and register differences remain.
+
+`incorrect ASM` → The two signed divisions by literal `3` leave a register holding the constant. IDO reuses it for three `multu`/`mflo` pairs in the subsequent vertex offsets, where the target uses shifts and subtractions.
+
+→ `code changed` → Store `3` in the existing signed scratch and use `(s32)(s64)temp_v0` as both divisors. A plain scratch read or a single cast to `s32` gives the original multiplication sequence.
+
+→ `correct ASM` → The divisions remain signed, and the later tripled offsets use `sll` by two followed by `subu`. The X sequence still repeats for the second vertex. The linked diff score improves from 21608 to 21129 while retaining the `0x168` frame and `0x54(sp)` width cache.
