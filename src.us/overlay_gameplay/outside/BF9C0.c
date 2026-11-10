@@ -2080,13 +2080,14 @@ void func_800B753C_C64EC(void) {
 	s16 indices[8][0x121];
 	s16 counts[8];
 	s16 emittedQuads;
-	s16 lineCount[1];
+	s16 lineCount[2]; // Remaining count uses the second halfword.
 	s16 bucket;
 	s16 rowOffset;
 	s16 run;
-	s32 v0, v1, v2;
+	s32 v1, v2;
 	Unk800B753CEntry *entry;
 	Vtx *source;
+	Gfx *tile;
 
 	emittedQuads = 0;
 	{
@@ -2121,21 +2122,20 @@ void func_800B753C_C64EC(void) {
 		bucket = counts[group] + 1;
 		rowOffset = 0;
 		if (bucket > 0) {
-			lineCount[0] = bucket;
+			lineCount[1] = bucket;
 			do {
 
 
-			if (lineCount[0] >= 9) {
+			if (lineCount[1] >= 9) {
 				run = 8;
 			} else {
-				run = lineCount[0];
+				run = lineCount[1];
 			}
 
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
-				source = entry->unk0;
-				D_8005BB34[0] = source[0];
+				D_8005BB34[0] = entry->unk0[0];
 				source = entry->unk0;
 				D_8005BB34++;
 				D_8005BB34[0] = source[1];
@@ -2148,39 +2148,36 @@ void func_800B753C_C64EC(void) {
 				D_8005BB34++;
 			}
 
-			if (lineCount[0] != 0) {
-				gSPVertex(D_8005BB2C++, &D_8005BB34[-(run * 4)], run * 4, 0);
+			if (lineCount[1] != 0) {
+				gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
 			}
 
-			v0 = 0;
-			v1 = 2;
-			v2 = 1;
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
+				v1 = i * 4 + 2;
+				v2 = i * 4 + 1;
 				rawMode = entry->unk4;
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (rawMode % 2) << 7, G_TX_RENDERTILE, 0,
-				entry->unk6 & 3, 5, G_TX_NOLOD,
-				entry->unk5 & 3, 5, G_TX_NOLOD);
+				tile = D_8005BB2C++;
+				tile->words.w0 = ((((rawMode % 2) << 7) & 0x1FF) | _SHIFTL(4, 9, 9)) |
+					(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) | _SHIFTL(G_IM_SIZ_8b, 19, 2));
+				tile->words.w1 = _SHIFTL(entry->unk5, 8, 2) | _SHIFTL(entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
 				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v0 + 3, 0);
+				gSP2Triangles(D_8005BB2C++, i * 4, v1, v2, 0, v2, v1, i * 4 + 3, 0);
 
 				emittedQuads++;
-				v0 += 4;
-				v1 += 4;
-				v2 += 4;
 			}
 
-			if (lineCount[0] >= 9) {
-				lineCount[0] -= 8;
+			if (lineCount[1] >= 9) {
+				lineCount[1] -= 8;
 			} else {
-				lineCount[0] = 0;
+				lineCount[1] = 0;
 			}
 
 			rowOffset += 8;
 
-			} while (lineCount[0] > 0);
+			} while (lineCount[1] > 0);
 		}
 
 		}
@@ -2196,8 +2193,7 @@ void func_800B753C_C64EC(void) {
 		counts[i++] = -1;
 	}
 
-	if ((s32)D_8014F89A > 0) {
-
+	{
 		for (i = 0; i < (s32)D_8014F89A; i++) {
 			rawMode = D_8014F8A8[i].unk4;
 			bucket = rawMode / 2;
@@ -2215,21 +2211,20 @@ void func_800B753C_C64EC(void) {
 		bucket = counts[group] + 1;
 		rowOffset = 0;
 		if (bucket > 0) {
-			lineCount[0] = bucket;
+			lineCount[1] = bucket;
 			do {
 
 
-			if (lineCount[0] >= 9) {
+			if (lineCount[1] >= 9) {
 				run = 8;
 			} else {
-				run = lineCount[0];
+				run = lineCount[1];
 			}
 
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
-				source = entry->unk0;
-				D_8005BB34[0] = source[0];
+				D_8005BB34[0] = entry->unk0[0];
 				source = entry->unk0;
 				D_8005BB34++;
 				D_8005BB34[0] = source[1];
@@ -2242,39 +2237,36 @@ void func_800B753C_C64EC(void) {
 				D_8005BB34++;
 			}
 
-			if (lineCount[0] != 0) {
-				gSPVertex(D_8005BB2C++, &D_8005BB34[-(run * 4)], run * 4, 0);
+			if (lineCount[1] != 0) {
+				gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
 			}
 
-			v0 = 0;
-			v1 = 2;
-			v2 = 1;
 			for (i = 0; i < run; i++) {
 				entry = &D_8014F8A8[indices[group][rowOffset + i]];
 
+				v1 = i * 4 + 2;
+				v2 = i * 4 + 1;
 				rawMode = entry->unk4;
 				gDPTileSync(D_8005BB2C++);
-				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, (rawMode % 2) << 7, G_TX_RENDERTILE, 0,
-				entry->unk6 & 3, 5, G_TX_NOLOD,
-				entry->unk5 & 3, 5, G_TX_NOLOD);
+				tile = D_8005BB2C++;
+				tile->words.w0 = ((((rawMode % 2) << 7) & 0x1FF) | _SHIFTL(4, 9, 9)) |
+					(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) | _SHIFTL(G_IM_SIZ_8b, 19, 2));
+				tile->words.w1 = _SHIFTL(entry->unk5, 8, 2) | _SHIFTL(entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
 				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, v0, v1, v2, 0, v2, v1, v0 + 3, 0);
+				gSP2Triangles(D_8005BB2C++, i * 4, v1, v2, 0, v2, v1, i * 4 + 3, 0);
 
 				emittedQuads++;
-				v0 += 4;
-				v1 += 4;
-				v2 += 4;
 			}
 
-			if (lineCount[0] >= 9) {
-				lineCount[0] -= 8;
+			if (lineCount[1] >= 9) {
+				lineCount[1] -= 8;
 			} else {
-				lineCount[0] = 0;
+				lineCount[1] = 0;
 			}
 
 			rowOffset += 8;
 
-			} while (lineCount[0] > 0);
+			} while (lineCount[1] > 0);
 		}
 
 		}
