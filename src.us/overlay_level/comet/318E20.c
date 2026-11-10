@@ -3738,8 +3738,8 @@ void func_802DE0F4_322244(u8 arg0) {
 	if (&sp44) {} if (&sp40) {}
 	temp_s0 = &alienInstances[arg0];
 	spA4 = D_8014DD50[temp_s0->unkC].unkC;
-	spA0 = D_8014DD50[spA4].unkD;
 	spA2 = D_8014DD50[spA4].unkC;
+	spA0 = D_8014DD50[spA4].unkD;
 	sp9E = D_8014DD50[spA0].unkD;
 	sp98 = D_8014DD50[sp9E].unkD;
 	{
