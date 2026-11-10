@@ -9287,21 +9287,19 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9)
 {
 	f32 slope;
-	f32 originY;
 	f32 intercept;
-
-	intercept = arg2;
+	f32 dx;
 	if (arg2 < arg0)
 	{
+		slope = arg2;
 		arg2 = arg0;
-		arg0 = intercept;
+		arg0 = slope;
 	}
-	if (arg3 < arg1)
+	if (arg1 > arg3)
 	{
-		f32 swap = arg3;
-
+		intercept = arg3;
 		arg3 = arg1;
-		arg1 = swap;
+		if (arg0 == arg1) {} arg1 = intercept;
 	}
 	if (arg0 == arg2)
 	{
@@ -9309,21 +9307,21 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 		{
 			return 0;
 		}
-		originY = arg5;
 		if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0))))
 		{
 			return 0;
 		}
-		intercept = arg7 - originY;
+		intercept = arg7 - arg5;
+		dx = arg6 - arg4;
 		if (0.0 == intercept)
 		{
 			*arg8 = arg0;
-			*arg9 = originY;
-			return (arg1 <= originY) && (originY <= arg3);
+			*arg9 = arg5;
+			if ((arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5) == 0.0f) {} return (arg1 <= arg5) && (arg5 <= arg3);
 		}
-		slope = intercept / (arg6 - arg4);
+		slope = intercept / dx;
 		*arg8 = arg0;
-		intercept = originY - slope * arg4;
+		intercept = arg5 - slope * arg4;
 		slope = intercept + slope * arg0;
 		*arg9 = slope;
 		return (arg1 <= slope) && (slope <= arg3);
@@ -9348,7 +9346,7 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 	slope = (arg1 - intercept) / slope;
 	*arg8 = slope;
 	*arg9 = arg1;
-	return (arg0 <= slope) && (slope <= arg2);
+	if ((arg4 + arg4 + arg4 + arg4 + arg4 + arg4) == 0.0f) {} return (arg0 <= slope) && (slope <= arg2);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010EF40_11DEF0.s")

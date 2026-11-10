@@ -32,3 +32,9 @@ sub.s   $f16,$f12,$f6
 mul.s   $f8,$f14,$f20
 add.s   $f0,$f8,$f16
 ```
+
+`incorrect ASM`: The draft with no discarded conditions uses `$f14` for the starting X coordinate and `$f2` for the quotient. The linked score is 115 across 21 differing words.
+
+-> `code changed`: Retain the earlier allocation conditions for the Y swap and the two return paths. Use `slope` to save the upper X bound during the X swap and leave that swap free of an empty condition. Assign `dx = arg6 - arg4` before the vertical path's zero-Y-span test and use it as the denominator.
+
+-> `correct ASM`: The linked function bytes equal those of the earlier four-condition draft. The starting X coordinate uses `$f2` and the intercept uses `$f16`. The remaining six differing words all use `$f14` where the quotient requires `$f0`, for a linked score of 30.
