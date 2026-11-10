@@ -780,19 +780,16 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 ringX;
 	s16 ringY;
 
+	baseX = D_8014F89C - 127;
 	baseY = D_8014F89D - 127;
 	tileX = (arg0[0] >> 8) + 1;
-	baseX = D_8014F89C;
 	tileY = (arg0[1] >> 8) + 1;
-	baseX -= 127;
+	fracX = arg0[0] & 255;
+	fracY = arg0[1] & 255;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-
-	fracY = arg0[1] & 255;
 	radius = (f32)(arg2 + arg3) / 256;
-
 	radius++;
-	fracX = arg0[0] & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
@@ -803,7 +800,8 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (y <= 0) {
 				dy = (s16)fracY + y * -256;
 			} else {
-				dy = cellSize - fracY + (y << 8) - 256;
+				dy = (s16)(cellSize - fracY) + (y << 8);
+				dy -= 256;
 			}
 			intensity = (s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (intensity > 0) {

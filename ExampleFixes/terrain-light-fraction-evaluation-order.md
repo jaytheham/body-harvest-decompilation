@@ -19,3 +19,15 @@
 Incorrect ASM: func_800B2854_C1804 used `addu v0,t6,s5` in the negative-Y arm, with the following square/sum temporary registers diverging as well. Code changed: narrow the unsigned byte fraction only at this halfword geometry operation, `dy = (s16)fracY + y * -256`, matching the existing signed-halfword handling of the X fraction. Correct ASM: `multu s0,s8; mflo t6; addu v0,s5,t6; sll t7,v0,16; b ...; sra v0,t7,16`. The function remains NON_MATCHING, improving from 1370 to 970 with the target 0x90 frame and instruction count; all instructions from the square-root return conversion through the epilogue match.
 
 Incorrect ASM: the sibling func_800B2354_C1304 also emitted `addu v0,t6,s5` and diverging square/sum temporaries. Code changed: apply the same `(s16)fracY` operand narrowing in its negative-Y branch. Correct ASM: the six-instruction multiply, ordered addition and halfword normalization sequence matches its target at ROM 0xC1530; the enabled score improves from 1480 to 970 with the exact 0x90 frame and instruction count. Startup ordering remains NON_MATCHING.
+
+`incorrect ASM`: In `func_800B2354_C1304`, the Y origin is narrowed with `t7` before the X origin uses `t9`. The ring offsets use `lb t7`, and the X fraction spills after the unsigned radius conversion.
+
+-> `code changed`: Subtract the origin bias from X before Y. Compute both tile indices and their byte fractions before the two ring offsets, then convert and increment the radius.
+
+-> `correct ASM`: The origins narrow with `t7` for X and `t9` for Y. The ring offsets use `lb t8`. The radius division is followed by `andi t7,v0,0xff; move s1,a1; sw t7,0x68(sp)` before the FCSR-controlled conversion.
+
+`incorrect ASM`: The positive Y arm uses `subu t9,a3,s5` in the branch delay slot and `sll t6,s0,8` at the destination.
+
+-> `code changed`: Assign `(s16)(cellSize - fracY) + (y << 8)` to the signed halfword distance, then subtract 256 in a separate assignment.
+
+-> `correct ASM`: The delay slot uses `subu t7,a3,s5` and the destination starts with `sll t8,s0,8`. Seven instruction words still differ in the addition and the argument to `sqrtf`.
