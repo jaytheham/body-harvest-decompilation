@@ -2547,9 +2547,7 @@ void func_8007EE98_8DE48(AlienInstance *arg0, AlienInstance *arg1) {
 	arg1->unk4 = (s16)(s32)((f32)arg1->unk4 - pushZ);
 }
 
-// CURRENT(35)
 // AI - Recursively processes an alien instance's collision/movement via func_800831A4_92154 and func_800836D0_92680
-#ifdef NON_MATCHING
 s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	u8 selfIndex;
 	u8 typeIndex;
@@ -2572,8 +2570,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 
 	selfIndex = arg0;
 	typeIndex = alienInstances[arg0].typeIndex;
-	recurseFlag = 0;
-	collisionCheck = 0;
+	collisionCheck = (recurseFlag = 0);
 	moved = 0;
 
 	if (alienInstances[arg0].unk47 & 0x80) {
@@ -2608,9 +2605,13 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			}
 
 			if ((u32)soundId != 0xFF) {
-				scratch = BH_ABS(alienInstances[arg0].unk12);
+				if (-alienInstances[arg0].unk12 < alienInstances[arg0].unk12) {
+					otherType = (AlienType *)alienInstances[arg0].unk12;
+				} else {
+					otherType = (AlienType *)-alienInstances[arg0].unk12;
+				}
 
-				scratch = ((alienTypes[alienInstances[arg0].typeIndex].unk52 * (scratch + 1)) / 200) >> 5;
+				scratch = ((alienTypes[alienInstances[arg0].typeIndex].unk52 * ((s32)otherType + 1)) / 200) >> 5;
 				if ((u32)soundId != 0) {
 					func_8011BEA0_12AE50(soundId, scratch);
 				}
@@ -2676,7 +2677,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 					} else {
 						D_8014ECD8 = vehIndex;
 						recurseFlag = 1;
-						if (scratch != 0) {
+						if (scratch != ((0x1A == vehIndex) * 0)) {
 							func_8007ED9C_8DD4C(arg0);
 						}
 					}
@@ -2768,9 +2769,6 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	return recurseFlag;
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007F0E8_8E098.s")
-#endif
 
 s32 func_8007F9C8_8E978(u8 arg0, u8 arg1) {
 	s16 var_v1 = -1;

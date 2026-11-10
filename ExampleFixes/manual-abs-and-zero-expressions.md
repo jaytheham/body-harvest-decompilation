@@ -1,0 +1,5 @@
+`incorrect ASM`: The code had to produce the target's explicit absolute-value sequence, loading `lh $v0, 0x12($s1)`, forming `negu $v1, $v0`, comparing with `slt $at, $v1, $v0`, and selecting the result into `$a0` with `or $a0, $v1, $zero` or `or $a0, $v0, $zero`; the two zero initializations also had to appear as the target's separate stack stores `sw $zero, 0x68($sp)` and `sw $zero, 0x5C($sp)`.
+
+-> `code changed`: Replaced `BH_ABS(alienInstances[arg0].unk12)` with a signed conditional using an `AlienType *otherType` temporary that holds either `alienInstances[arg0].unk12` or `-alienInstances[arg0].unk12`, then cast that temporary back with `(s32)otherType` inside `(alienTypes[alienInstances[arg0].typeIndex].unk52 * ((s32)otherType + 1)) / 200) >> 5`; changed the separate zero assignments to `collisionCheck = (recurseFlag = 0);`, and changed the `scratch != 0` condition to `scratch != ((0x1A == vehIndex) * 0)`.
+
+-> `correct ASM`: The function compiles to the target, and the US and EU ROMs both match.
