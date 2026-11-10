@@ -3719,8 +3719,8 @@ void func_802DE0F4_322244(u8 arg0) {
 	s32 var_t0;
 	s32 var_t0_2;
 	s32 temp;
-	s16 cachedX;
-	s16 cachedZ;
+	s16 firstCoordinate;
+	s16 secondCoordinate;
 	Unk8014DD50 *effectNode;
 	AlienInstance *temp_s0;
 	s32 sp74;
@@ -3782,32 +3782,36 @@ void func_802DE0F4_322244(u8 arg0) {
 	if (!(D_80052A8C & 7)) {
 		effectNode = sp44;
 		if (temp_s0->unk3C != 0xFB && effectNode->unkAUnsigned < 0x1F41) {
-			func_80128428_1373D8(temp_s0, sp44->unk0 - 0x96, effectNode->unk2, effectNode->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+			firstCoordinate = effectNode->unk2;
+			secondCoordinate = effectNode->unk4;
+			func_80128428_1373D8(temp_s0, sp44->unk0 - 0x96, firstCoordinate, secondCoordinate, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0 = D_80222A70;
 			} else {
 				var_t0 = func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8;
 			}
 			if ((s16)var_t0) {}
-			cachedX = effectPosition[2];
-			cachedZ = effectPosition[0];
+			firstCoordinate = effectPosition[2];
+			secondCoordinate = effectPosition[0];
 			sp4F = temp_s0->unk3C;
 			effectPosition[1] = var_t0;
-			func_800CD2E8_DC298(cachedX, var_t0, cachedZ, sp4F);
+			func_800CD2E8_DC298(firstCoordinate, var_t0, secondCoordinate, sp4F);
 		}
 		if (temp_s0->unk3D != 0xFB && sp40->unkAUnsigned < 0x1F41) {
-			func_80128428_1373D8(temp_s0, sp40->unk0 + 0x96, sp40->unk2, sp40->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+			firstCoordinate = sp40->unk2;
+			secondCoordinate = sp40->unk4;
+			func_80128428_1373D8(temp_s0, sp40->unk0 + 0x96, firstCoordinate, secondCoordinate, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0_2 = D_80222A70;
 			} else {
 				var_t0_2 = func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8;
 			}
 			if ((s16)var_t0_2) {}
-			cachedX = effectPosition[2];
-			cachedZ = effectPosition[0];
+			firstCoordinate = effectPosition[2];
+			secondCoordinate = effectPosition[0];
 			sp4F = temp_s0->unk3D;
 			effectPosition[1] = var_t0_2;
-			func_800CD2E8_DC298(cachedX, var_t0_2, cachedZ, sp4F);
+			func_800CD2E8_DC298(firstCoordinate, var_t0_2, secondCoordinate, sp4F);
 		}
 	}
 
