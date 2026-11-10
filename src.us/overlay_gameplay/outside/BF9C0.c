@@ -3485,6 +3485,7 @@ void func_800BB5E0_CA590(void) {
 
 						
 						 if (baseX) {} if (baseZ) {} if (baseX) {} if (baseZ) {}
+						texEndT = baseZ - segEndZ;
 						D_8005BB34[0].v.ob[0] = segStartX;
 						D_8005BB34[0].v.ob[1] = minY;
 						D_8005BB34[0].v.ob[2] = segStartZ;
@@ -3512,7 +3513,7 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[2].v.ob[2] = segEndZ;
 						D_8005BB34[2].v.flag = 0;
 						D_8005BB34[2].v.tc[0] = texEndS = (s16)((baseX - segEndX) * texScale + scrollS);
-						D_8005BB34[2].v.tc[1] = texEndT = (s16)((baseZ - segEndZ) * texScale + scrollT);
+						D_8005BB34[2].v.tc[1] = texEndT = (s16)(texEndT * texScale + scrollT);
 						D_8005BB34[2].v.cn[0] = 0x46;
 						D_8005BB34[2].v.cn[1] = 0x46;
 						D_8005BB34[2].v.cn[2] = 0x96;
@@ -3574,6 +3575,7 @@ void func_800BB5E0_CA590(void) {
 						D_8005BB34[7].v.cn[2] = 0x96;
 						D_8005BB34[7].v.cn[3] = 0;
 
+						if (alphaEnd | texStartS | texStartT | texEndT) {}
 						if (minY) {}
 						if (texEndT) {}
 						gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(D_8005BB34), 8, 0);
