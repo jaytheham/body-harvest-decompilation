@@ -1072,126 +1072,80 @@ void func_80080588_50A38(u8 arg0) {
 	}
 }
 
-// CURRENT(530)
 // AI - Iterates over arg3 AnimChannelState entries in arg1, interpolating rotation/position fields toward target fields by fraction arg2/(unk20-unk1C)
-#ifdef NON_MATCHING
-void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3)
-{
-	s32 pad[5];
-	f32 target[3];
-	f32 rotation[3];
+void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 arg2, u8 arg3) {
 	f32 z;
-	int new_var2;
 	f32 x;
 	f32 y;
 	f32 elapsed;
-	AnimChannelState *new_var;
 	f32 duration;
+	f32 targetRotation[3];
+	f32 rotation[3];
 	f32 fraction;
 	f32 scale;
 	f64 units;
-	int new_var3;
-
 	f64 degrees;
-	s32 i;
+	u8 i;
 	AnimChannelState *channel;
-	// This if/do/while looks a lot like it should actually be a for loop, need to try
+
 	i = 0;
-	if (arg3 != 0)
-	{
+	if (arg3 != 0) {
 		scale = 4096.0f;
 		units = 4096.0;
-		if (scale)
-		{
-		}
-		if (units)
-		{
-		}
+		if (scale) {}
+		if (units) {}
 		degrees = D_800AEA50_7EF00[0];
-		do
-		{
+		do {
 			channel = &arg1[i];
-			if (channel->unk14 != 0)
-			{
-				if ((arg2 * (f32)i) == channel->unk8)
-				{
-				}
+			if (channel->unk14 != 0) {
 				elapsed = channel->unk1C;
 				duration = channel->unk20;
-				new_var = channel;
 				fraction = arg2 / (duration - elapsed);
-				target[0] = (((f32)new_var->unk2A) * degrees) / units;
-				target[1] = (((f32)channel->unk2C) * degrees) / units;
-				target[2] = (((f32)channel->unk2E) * degrees) / units;
-				rotation[0] = (((f32)channel->unk0) * degrees) / units;
-				rotation[1] = (((f32)channel->unk2) * degrees) / units;
-				new_var3 = 1;
-				rotation[2] = (((f32)channel->unk4) * degrees) / units;
-				rotation[0] += ((target[0] - rotation[0]) * fraction);
-				rotation[new_var3] = rotation[new_var3] + ((target[new_var3] - rotation[new_var3]) * fraction);
-				rotation[2] += ((target[2] - rotation[2]) * fraction);
+				y = fraction;
+				x = fraction;
+				targetRotation[0] = ((f32)channel->unk2A * degrees) / units;
+				targetRotation[1] = ((f32)channel->unk2C * degrees) / units;
+				targetRotation[2] = ((f32)channel->unk2E * degrees) / units;
+				rotation[0] = ((f32)channel->unk0 * degrees) / units;
+				rotation[1] = ((f32)channel->unk2 * degrees) / units;
+				rotation[2] = ((f32)channel->unk4 * degrees) / units;
+				rotation[0] = rotation[0] + ((targetRotation[0] - rotation[0]) * y);
+				rotation[1] = rotation[1] + ((targetRotation[1] - rotation[1]) * y);
+				rotation[2] = rotation[2] + ((targetRotation[2] - rotation[2]) * x);
 				x = channel->unk8;
 				y = channel->unkC;
-
-				channel->unk0 = (rotation[0] * scale) / degrees;
-				if ((arg2 * (f32)i) == elapsed)
-				{
-				}
 				z = channel->unk10;
-				if (z == x)
-				{
-				}
-				if (x == y)
-				{
-				}
-				if (y == elapsed)
-				{
-				}
-				if (elapsed == duration)
-				{
-				}
-				new_var2 = 1;
-				channel->unk2 = (rotation[new_var2] * scale) / degrees;
-				channel->unk4 = (rotation[2] * scale) / ((0, degrees));
-				channel->unk8 = ((((f32)channel->unk24) - x) * fraction) + x;
-				channel->unkC = ((((f32)channel->unk26) - y) * fraction) + y;
+				channel->unk0 = (rotation[0] * scale) / degrees;
+				channel->unk2 = (rotation[1] * scale) / degrees;
+				channel->unk4 = (rotation[2] * scale) / degrees;
+				channel->unk8 = (((f32)channel->unk24 - x) * fraction) + x;
+				channel->unkC = (((f32)channel->unk26 - y) * fraction) + y;
 				x = channel->unk28;
 				channel->unk10 = ((x - z) * fraction) + z;
 				channel->unk1C += arg2;
-				if (channel->unk1C >= channel->unk20)
-				{
-					if (1)
-					{
+				if (channel->unk20 <= channel->unk1C) {
 					channel->unk8 = channel->unk24;
+					channel->unkC = ((volatile AnimChannelState*)channel)->unk26;
 					channel->unk10 = x;
-					channel->unk2 = channel->unk2C;
-					channel->unkC = channel->unk26;
 					channel->unk0 = channel->unk2A;
 					channel->unk2 = channel->unk2C;
 					channel->unk4 = channel->unk2E;
 					channel->unk18++;
-					if ((*channel).unk14 == channel->unk18)
-					{
+					if (channel->unk14 == channel->unk18) {
 						channel->unk14 = 0;
 						channel->unk18 = 0;
-						if (i == 0)
-						{
+						if (i == 0) {
 							arg0->unk54 = 0;
 						}
-					}
-					else
-					{
-						func_80080AD4_50F84(arg0, &arg1[i], i);
+					} else {
+						func_80080AD4_50F84(arg0, channel, i);
 					}
 				}
 			}
-		} i = (i + 1) & 0xFF;
-		} while ((i ^ 0) != arg3);
+			i++;
+		} while (i != arg3);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/frontend/4DC90/func_80080668_50B18.s")
-#endif
 
 void func_8008098C_50E3C(void) {
 	u8 i;
