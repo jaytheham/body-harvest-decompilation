@@ -3876,7 +3876,7 @@ void func_802DE7C4_322914(u8 arg0) {
 	CometJointChain chain;
 	SignedWord spC7;
 	AlienInstance *alien;
-	s32 entryPad;
+	s32 actorIndex;
 	Unk8014DD50 *nodeB;
 	Unk8014DD50 *nodeC;
 	Unk8014DD50 *nodeD;
@@ -3897,6 +3897,7 @@ void func_802DE7C4_322914(u8 arg0) {
 	u16 sp5A;
 	u16 sp58;
 
+	actorIndex = arg0;
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
 		alienInstances[arg0].unk36 = 0;
 		alienInstances[arg0].unk2C = 0x7D00;
@@ -3954,7 +3955,7 @@ void func_802DE7C4_322914(u8 arg0) {
 		nodeC = &D_8014DD50[chain.joints[6]];
 		func_80088E40_97DF0(arg0, (u16)chain.joints[7],
 			(s16) (spawnX + nodeB->unk0 + nodeC->unk0),
-			(s16) (spawnX + nodeB->unk2 + nodeC->unk2),
+			(s16) (spawnX + D_8014DD50[chain.joints[5]].unk2 + nodeC->unk2),
 			spawnX + nodeB->unk4 + nodeC->unk4,
 			(s32) spAC, 0xF, (s32)(f32)((f32)spawnZ / 32768.0 * -15.0));
 		break;
@@ -3968,7 +3969,7 @@ void func_802DE7C4_322914(u8 arg0) {
 		nodeC = &D_8014DD50[chain.joints[12]];
 		func_80088E40_97DF0(arg0, (u16)chain.joints[13],
 			(s16) (spawnX + nodeB->unk0 + nodeC->unk0),
-			(s16) (spawnX + nodeB->unk2 + nodeC->unk2),
+			(s16) (spawnX + D_8014DD50[chain.joints[11]].unk2 + nodeC->unk2),
 			spawnX + nodeB->unk4 + nodeC->unk4,
 			(s32) spAC, 0xF, (s32)(f32)((f32)spawnZ / 32768.0 * -15.0));
 		break;
@@ -3987,12 +3988,12 @@ void func_802DE7C4_322914(u8 arg0) {
 		func_800DF038_EDFE8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC * 2, 0xA, NULL);
 		func_800C541C_D43CC(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0, 0x7F, 0, 0xDC, 0xFF, 0x64, 0x14, 0xFF, 0xFF, 0xC8);
 		alienInstances[arg0].unk2C = 0;
-		func_800797A4_88754(arg0, 0x14);
-		func_800797A4_88754(arg0, 0x14);
-		func_800797A4_88754(arg0, 0x17);
-		func_800797A4_88754(arg0, 0x17);
-		func_800797A4_88754(arg0, 0x15);
-		func_800797A4_88754(arg0, 0x16);
+		func_800797A4_88754(actorIndex, 0x14);
+		func_800797A4_88754(actorIndex, 0x14);
+		func_800797A4_88754(actorIndex, 0x17);
+		func_800797A4_88754(actorIndex, 0x17);
+		func_800797A4_88754(actorIndex, 0x15);
+		func_800797A4_88754(actorIndex, 0x16);
 		break;
 	}
 
