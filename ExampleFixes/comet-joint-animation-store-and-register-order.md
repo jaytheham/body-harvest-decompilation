@@ -27,3 +27,9 @@
 `code changed` -> Reload `joints[5]` into the existing word scratch `sp4C`, retain the empty test on that value, and combine the sentinel and type checks with `&&`.
 
 `correct ASM` -> The table address uses `t7`, the final shift uses `t8`, and `lbu t7,-0x7E4E(t7)` feeds the type branch. The parent index still uses `a0` where the ROM uses `v1`. The linked US draft falls from 59 to 56 differing words and from score 375 to 335.
+
+`incorrect ASM` -> The first halfword link at `0x31F400` uses `lb t7,0xC(t4)`. The following node lookup uses `t8` for the scaled index, and the halfword store reads `t7`.
+
+`code changed` -> Move the explicit `& 0xFFFFu` from the `spA0` assignment to the `sp9C` assignment. Both destinations are signed halfwords.
+
+`correct ASM` -> IDO emits `lb t6,0xC(t4)`, `sll t7,a3,4`, `addu t5,t3,t7`, and `sh t6,0xA0(sp)` at the target offsets. The linked US draft falls from 56 to 52 differing words and from score 335 to 315.
