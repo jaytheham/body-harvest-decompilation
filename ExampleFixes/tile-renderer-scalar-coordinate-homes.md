@@ -39,3 +39,9 @@
 -> `code changed`: Assign the packet to the existing `gfx` cursor before passing it to `gDPSetRenderMode`.
 
 -> `correct ASM`: The map-position base uses `t5`, the load-sync word uses `ra`, and the lighting branch zeros `ra` in its delay slot. The entire setup matches. With the C body enabled, the full US ROM differs in only two words. The Z-index addition uses `addu v1,ra,t6` instead of `addu v1,t6,ra`, and the left-edge branch uses `bnez s7` instead of `bnez t5`. The assembly fallback remains active.
+
+`incorrect ASM`: Writing `row + mapZ / 4` emits `addu v1,ra,t6`. Reversing the expression fixes the operand order but swaps the row counter and Z quotient spill homes. A separate signed word for the row index fixes the spill order but grows the frame to `0x120`.
+
+-> `code changed`: Use a union for the initial vertex pointer and the signed row index. Copy the pointer into both vertex cursors before assigning the row index. Compute the byte-sized Z index as `mapZ / 4 + scratch.rowIndex`.
+
+-> `correct ASM`: IDO emits `addu v1,t6,ra` with the row counter at `sp+0x70`, the Z quotient at `sp+0x6c`, and a `0x118` frame. The full US ROM differs only in the branch word at `0xC9108`, where the C build uses `bnez s7` and the target uses `bnez t5`. The assembly fallback remains active.

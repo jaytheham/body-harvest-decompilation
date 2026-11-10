@@ -2858,7 +2858,10 @@ void func_800B9DB8_C8D68(u8 arg0)
 {
 	u8 row;
 	s16 tileSize;
-	Vtx *startVertices;
+	union {
+		Vtx *startVertices;
+		s32 rowIndex;
+	} scratch;
 	s16 pad;
 	s16 mapX;
 	s16 mapZ;
@@ -2875,7 +2878,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	{
 		func_800B879C_C774C();
 	}
-	startVertices = D_8005BB34;
+	scratch.startVertices = D_8005BB34;
 	func_800B5090_C4040(&D_8005BB34, arg0 & 0xFF);
 	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
 
@@ -2883,8 +2886,8 @@ void func_800B9DB8_C8D68(u8 arg0)
 	D_8014FD28 = 0x8F;
 	mapX = D_80151DD8.mapPosX;
 	mapZ = D_80151DD8.mapPosY;
-	vertices.column = startVertices;
-	vertices.row = startVertices;
+	vertices.column = scratch.startVertices;
+	vertices.row = scratch.startVertices;
 	gfx = D_8005BB2C++;
 	gDPSetRenderMode(gfx, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
 	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
@@ -2916,7 +2919,8 @@ void func_800B9DB8_C8D68(u8 arg0)
 		for (row = 0; row < 5; row++)
 		{
 			s32 firstTileX;
-			tileZ = row + mapZ / 4;
+			scratch.rowIndex = row;
+			tileZ = mapZ / 4 + scratch.rowIndex;
 			firstTileX = mapX / 4;
 			textureRow = &((u8 (*)[64])D_8021EA30)[tileZ];
 			for (column = 0; column < 5; column++)
