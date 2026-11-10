@@ -3722,15 +3722,15 @@ void func_802DE0F4_322244(u8 arg0) {
 	s32 temp;
 	s16 cachedX;
 	s16 cachedZ;
-	s32 pad30;
+	Unk8014DD50 *effectNode;
 	AlienInstance *temp_s0;
 	s32 sp74;
 	s32 position[3];
 	s32 effectPosition[3];
-	u8 sp4F;
-	Unk8014DD50 *sp44;
-	Unk8014DD50 *sp40;
 	s32 sp3C;
+	Unk8014DD50 *sp40;
+	Unk8014DD50 *sp44;
+	u8 sp4F;
 
 
 	if (&sp44) {} if (&sp40) {}
@@ -3740,7 +3740,16 @@ void func_802DE0F4_322244(u8 arg0) {
 	spA2 = D_8014DD50[spA4].unkC;
 	sp9E = D_8014DD50[spA0].unkD;
 	sp98 = D_8014DD50[sp9E].unkD;
-	sp9C = D_8014DD50[D_8014DD50[D_8014DD50[D_8014DD50[sp98].unkD].unkD].unkD].unkD;
+	{
+		s16 firstJoint;
+		s16 secondJoint;
+		s16 thirdJoint;
+
+		firstJoint = D_8014DD50[sp98].unkD;
+		secondJoint = D_8014DD50[firstJoint].unkD;
+		thirdJoint = D_8014DD50[secondJoint].unkD;
+		sp9C = D_8014DD50[thirdJoint].unkD;
+	}
 
 	if (sp9C) {}
 	sp9A = D_8014DD50[sp9C].unkC;
@@ -3769,8 +3778,9 @@ void func_802DE0F4_322244(u8 arg0) {
 	func_80086230_951E0(arg0, spA4, 0x2000);
 
 	if (!(D_80052A8C & 7)) {
-		if (temp_s0->unk3C != 0xFB && (u16)sp44->unkA < 0x1F41) {
-			func_80128428_1373D8(temp_s0, sp44->unk0 - 0x96, sp44->unk2, sp44->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+		effectNode = sp44;
+		if (temp_s0->unk3C != 0xFB && effectNode->unkAUnsigned < 0x1F41) {
+			func_80128428_1373D8(temp_s0, effectNode->unk0 - 0x96, effectNode->unk2, effectNode->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0 = D_80222A70;
 			} else {
@@ -3783,8 +3793,9 @@ void func_802DE0F4_322244(u8 arg0) {
 			effectPosition[1] = var_t0;
 			func_800CD2E8_DC298(cachedX, var_t0, cachedZ, sp4F);
 		}
-		if (temp_s0->unk3D != 0xFB && (u16)sp40->unkA < 0x1F41) {
-			func_80128428_1373D8(temp_s0, sp40->unk0 + 0x96, sp40->unk2, sp40->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+		effectNode = sp40;
+		if (temp_s0->unk3D != 0xFB && effectNode->unkAUnsigned < 0x1F41) {
+			func_80128428_1373D8(temp_s0, effectNode->unk0 + 0x96, effectNode->unk2, effectNode->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0_2 = D_80222A70;
 			} else {
@@ -3800,7 +3811,6 @@ void func_802DE0F4_322244(u8 arg0) {
 	}
 
 	func_8008554C_944FC(arg0);
-	temp = temp_s0->unk20;
 	if (!(temp_s0->unk20 & (ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKD)) && func_80084FE8_93F98(arg0, 0x1000) && temp_s0->unk4E != 0) {
 		temp_v0 = temp_s0->unk20 & ALIEN_FLAG_UNKG;
 		if ((temp_v0 == 0 && sp74 < 0x1F4) || (temp_v0 != 0 && sp74 < 0x3E8)) {
@@ -3827,7 +3837,7 @@ void func_802DE0F4_322244(u8 arg0) {
 	func_802DDFFC_32214C(arg0, sp9C, sp9A);
 
 	if (temp_s0->unk20 & ALIEN_FLAG_UNKG) {
-		if (func_80084FE8_93F98(arg0, 0x1000) && temp_s0->unk2 >= D_80052B34->unk2 + 100 && D_80052B34->unk2 + 300 >= temp_s0->unk2 && temp_s0->unk4E != 0 && !(temp_s0->unk47 & 0xE)) {
+		if (func_80084FE8_93F98(arg0, 0x1000) && alienInstances[arg0].unk2 >= D_80052B34->unk2 + 100 && alienInstances[arg0].unk2 <= D_80052B34->unk2 + 300 && temp_s0->unk4E != 0 && !(temp_s0->unk47 & 0xE)) {
 			sp4F = 1;
 		} else {
 			sp4F = 0;
