@@ -2993,7 +2993,7 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 // DrawVtxBufferWater
 void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
-	u8 *padPalette;
+	u8 *rowFlags;
 	Gfx *gfx;
 	s16 texXBase;
 	s16 texZBase;
@@ -3029,7 +3029,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	waterX = water->unk3C;
 	waterZ[0] = water->unk3E;
 	hiddenCount = 0;
-	if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
+	if (((u32)gameplayMode == GAMEPLAY_MODE_UNKB) || ((u32)gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 		waterX = D_80157F44;
 		waterZ[0] = D_80157F46;
 	}
@@ -3075,8 +3075,14 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	phaseAbs = ((u32)-phase < (u32)phase) ? phase : -phase;
 	color = (0x78 - phaseAbs) & 0xFF;
 
-	gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
-	gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w1 = 0x8000 | color; packet->words.w0 = _SHIFTL(G_SETKEYR, 24, 8);
+	}
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w0 = _SHIFTL(G_SETKEYGB, 24, 8); packet->words.w1 = 0x80008000 | (color << 16) | color;
+	}
 
 	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, TEXEL1, SCALE, TEXEL1, TEXEL0, 0, TEXEL1, 0, ENVIRONMENT, PRIMITIVE, COMBINED, PRIMITIVE, 0, 0, 0, SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_INTER2);
@@ -3099,20 +3105,25 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
 
-	phase = D_80052A8C & 0xFFF;
-	texAnim = (D_80052A8C + 0xFC) & 0xFFF;
+	phase = D_80052A8C;
+	texAnim = phase + 0xFC;
 	gDPSetTileSize(D_8005BB2C++, 2, phase, phase, texAnim, texAnim);
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 1, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 
 	phase = (s16)(waterX % 0x200);
+	if (phase) {}
 	waterX = waterX - phase;
 
 	phase = waterZ[0] % 0x200;
 	snappedZ = waterZ[0] - phase;
 
-	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8);
+		packet->words.w1 = G_CULL_BOTH;
+	}
 
 	wavePhase[0] = D_80052A8C * 0x2BC;
 	phase = waterX % 0x1000;
@@ -3122,11 +3133,12 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	texZBase = phase * 4;
 
 	for (row = 0; row < 9; row++) {
+		rowFlags = flags[row];
 		rowZ = snappedZ - (s16)(row << 9) + 0x700;
 		rowTexZ = texZBase - (row << 0xB);
 		worldZf = (f32)rowZ;
 		for (col = 0; col < 9; col++) {
-			flag = &flags[row][col];
+			flag = &rowFlags[col];
 			worldX = waterX + (s16)(col << 9) - 0x900;
 			*flag = 4;
 			waveDepth = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
@@ -3142,7 +3154,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				maxAlpha = 0x64;
 			}
 
-			if ((gameplayMode == GAMEPLAY_MODE_UNKB) || (gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
+			if (((u32)gameplayMode == GAMEPLAY_MODE_UNKB) || ((u32)gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 				worldXf = (f32)worldX;
 				maxAlpha = func_800BA52C_C94DC((s16)(s32)(worldXf - D_80157F08.unk0), (s16)(s32)(worldZf - D_80157F08.unk8), 0, maxAlpha);
 			} else {
@@ -3225,7 +3237,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				}
 
 				tileBase = (s16)(row * 9);
-				if (((s16)(((col % 2) + ((waterX / 0x200) % 2)) % 2)) != 0) {
+				if (((col % 2) + ((waterX / 0x200) % 2)) % 2) {
 					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 1, (col + tileBase) + 9, 0);
 					gSP1Triangle(D_8005BB2C++, (col + tileBase) + 1, (col + tileBase) + 10, (col + tileBase) + 9, 0);
 				} else {
@@ -3234,7 +3246,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				}
 			}
 
-			rowPhase = 0x40 - ((((batch * 2) + row + D_80052A8C) * 3) & 0x7F);
+			rowPhase = 0x40 - ((((batch * 2) + row + D_80052A8C) * (u16)3) & 0x7F);
 			phaseAbs = ((u32)-rowPhase < (u32)rowPhase) ? rowPhase : -rowPhase;
 			color = (0x78 - phaseAbs) & 0xFF;
 
