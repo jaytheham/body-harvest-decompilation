@@ -848,7 +848,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 baseY;
 	s16 baseX;
@@ -871,17 +870,16 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 ringY;
 	EffectRgb *pixel;
 
+	baseX = D_8014F89C - 127;
 	baseY = D_8014F89D - 127;
 	tileX = (arg0->unk0 >> 8) + 1;
-	baseX = D_8014F89C;
 	tileY = (arg0->unk2 >> 8) + 1;
-	baseX -= 127;
+	fracX = arg0->unk0 & 255;
+	fracY = arg0->unk2 & 255;
 	ringX = D_8014F899 + tileX - baseX;
 	ringY = D_8014F898 + tileY - baseY;
-	fracY = arg0->unk2 & 255;
 	radius = (f32)(arg2 + arg3) / 256;
 	radius++;
-	fracX = arg0->unk0 & 255;
 	for (x = 1 - radius; x < radius + 1; x++) {
 		if (x <= 0) {
 			dx = (s16)fracX + x * -256;
@@ -893,9 +891,9 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (y <= 0) {
 				dy = (s16)fracY + y * -256;
 			} else {
-				dy = cellSize - fracY + (y << 8) - 256;
+				dy = (s16)(cellSize - fracY) + (y << 8) - 256;
 			}
-			distance = (s32)sqrtf(dy * dy + dx * dx) - arg2;
+			distance = (s16)(s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (distance < 0) {
 				distance = -distance;
 			}
@@ -924,9 +922,6 @@ void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2854_C1804.s")
-#endif
 
 void func_800B2CF0_C1CA0(u8 *arg0, u8 *arg1, u8 *arg2) {
 	s32 temp_v0;

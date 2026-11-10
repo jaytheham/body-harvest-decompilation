@@ -31,3 +31,9 @@ Incorrect ASM: the sibling func_800B2354_C1304 also emitted `addu v0,t6,s5` and 
 -> `code changed`: Assign `(s16)(cellSize - fracY) + (y << 8)` to the signed halfword distance, then subtract 256 in a separate assignment.
 
 -> `correct ASM`: The delay slot uses `subu t7,a3,s5` and the destination starts with `sll t8,s0,8`. Seven instruction words still differ in the addition and the argument to `sqrtf`.
+
+`incorrect ASM`: In `func_800B2854_C1804`, splitting the positive Y distance into two assignments uses `addu t6,t7,t8` and `mflo t9` before the square-root call. Narrowing only `cellSize - fracY` in a single expression changes the temporary registers after the call.
+
+-> `code changed`: Keep `(s16)(cellSize - fracY) + (y << 8) - 256` in one assignment and narrow the square-root result to a signed halfword before subtracting the inner radius.
+
+-> `correct ASM`: The Y arm uses `addu v0,t7,t8; addiu v0,v0,-256`, the square uses `mflo t7`, and the temporary registers after `sqrtf` match. The full function matches.
