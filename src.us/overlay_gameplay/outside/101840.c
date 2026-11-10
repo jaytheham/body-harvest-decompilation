@@ -2377,9 +2377,8 @@ void func_800F8B24_107AD4(s32 arg0) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F9118_1080C8(s32 arg0) {
-	s32 index;
+	union { Unk801601F0 *descriptor; s32 index; } setup;
 	s16 oldX;
 	s16 rearY;
 	UnkF9230ShadowWalker *walker;
@@ -2392,7 +2391,7 @@ void func_800F9118_1080C8(s32 arg0) {
 	s32 minusX;
 	s16 heading;
 	u8 count;
-	union { s32 value; Gfx *gfx; Unk801601F0 *descriptor; } terrain;
+	union { s32 value; Gfx *gfx; } terrain;
 	s16 radius;
 	s16 centerZ;
 	s16 groundY;
@@ -2402,8 +2401,9 @@ void func_800F9118_1080C8(s32 arg0) {
 		walker = &D_80158000[arg0];
 		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &groundY) == -1) &&
 			(walker->limbs[0].unk22 != 0x10)) {
-			terrain.descriptor = &D_801601F0[walker->limbs[0].unk23]; count = terrain.descriptor->unkC;
-			radius = D_801601F0[walker->limbs[0].unk23].unk8;
+			setup.descriptor = &D_801601F0[walker->limbs[0].unk23];
+			count = setup.descriptor->unkC;
+			radius = setup.descriptor->unk8;
 			if (D_8013FCD0_14EC80 != 0) {
 				radius *= 2;
 			}
@@ -2414,8 +2414,8 @@ void func_800F9118_1080C8(s32 arg0) {
 						func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
 						walker->limbs[0].words[5]) == 0) {
 					
-					for (index = 0; index < count; index++) {
-							UnkF9230ShadowLimb *limb = &walker->limbs[index + 1];
+					for (setup.index = 0; setup.index < count; setup.index++) {
+							UnkF9230ShadowLimb *limb = &walker->limbs[setup.index + 1];
 
 							if (limb->unk23 == 0) {
 								terrain.value = count / 2;
@@ -2424,12 +2424,12 @@ void func_800F9118_1080C8(s32 arg0) {
 								} else {
 									heading = walker->limbs[0].unk18;
 								}
-								if (index >= terrain.value) {
+								if (setup.index >= terrain.value) {
 									heading += 0x8000;
 								}
-								terrain.value = (s32)(s64)(s32)(s64)(heading & 0xFFFF);
-								cosOffset = (s16)(s32)((((f64)(f32)coss(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
-								sinOffset = (s16)(s32)((((f64)(f32)sins(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
+								terrain.value = heading & 0xFFFF;
+								cosOffset = (s16)(s32)((((f64)(f32)coss(terrain.value)) / 32768.0) * (f64)radius);
+								sinOffset = (s16)(s32)((((f64)(f32)sins(terrain.value)) / 32768.0) * (f64)radius);
 								oldX = limb->unkA;
 								oldZ = limb->unkC;
 								centerX = func_800B84D0_C7480(oldX, oldZ) >> 8;
@@ -2507,9 +2507,8 @@ void func_800F9118_1080C8(s32 arg0) {
 								terrain.value = heading - 0x4000;
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
-
 								terrain.value = (u16)terrain.value;
-								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
+								if (setup.index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
 									terrain.value = heading + 0x4000; if (terrain.value) {}
 									terrain.value &= 0xFFFF;
 									coss(terrain.value & 0xFFFF);
@@ -2533,9 +2532,6 @@ void func_800F9118_1080C8(s32 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F9118_1080C8.s")
-#endif
 
 // DrawLegsShadows ?
 void func_800F97FC_1087AC(void) {

@@ -8,4 +8,10 @@
 
 -> `code changed`: Widen and narrow the first masked heading twice with `(s32)(s64)(s32)(s64)`. Reuse `terrain.value` for the final count limit. Keep the empty equality test on the same line as `terrain.value = 8` before the packet guard.
 
--> `correct ASM`: The conversions emit no extra instructions, and the packet guard uses `li t1,8; beq t1,t2`. The linked draft has 75 differing words. Of those, 63 are explained by a `t8`/`t9` swap beginning at the sine offset's sign extension, and 12 occur in the descriptor setup. The assembly fallback remains selected in both ROM builds.
+-> `correct ASM`: The conversions emit no extra instructions, and the packet guard uses `li t1,8; beq t1,t2`. That checkpoint has 75 differing words. Of those, 63 are explained by a `t8`/`t9` swap beginning at the sine offset's sign extension, and 12 occur in the descriptor setup.
+
+`incorrect ASM`: The temporary swap begins at `sll t9,s2,16` and continues through the vertex and packet writes. The descriptor setup uses `t1` for the reloaded walker, `t0` for the descriptor, and `t2` for the radius. A standalone descriptor local corrects those registers but grows the frame to `0xC8` and moves the index, center height, and rear height eight bytes up.
+
+-> `code changed`: Mask the heading once, then pass the word directly to the first `coss` and `sins` so their `u16` prototypes perform argument conversion. Share the descriptor pointer and the later loop index in a typed union. Read count and radius through that descriptor and keep the visibility argument's indexed read. Keep the existing positive-angle and packet-count probes. Removing either individually changes the linked assembly.
+
+-> `correct ASM`: The sine sign extension starts with `sll t8,s2,16`, and all following temporaries match. The walker, descriptor, and radius use `t0`, `v1`, and `t1`. The frame is `0xC0` with index, center height, and rear height at `0xBC`, `0xAC`, and `0xB8`. All 441 instructions match with the C implementation enabled.
