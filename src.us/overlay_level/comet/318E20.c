@@ -3349,9 +3349,9 @@ void func_802DC8F4_320A44(u8 arg0) {
 		if (temp_s0->unkA == 0 && temp_s0->unk8 == 0) { temp_s0->unk3A = 1; }
 	} else {
 		velocity = coss(temp_s0->unkE - temp_s0->unk6);
-		temp_s0->unkA = (s16)(s32)((f64)temp_s0->unkA + (f64)temp_f10 * ((f64)(f32)velocity / 32768.0));
+		temp_s0->unkA = (s16)(s32)((f64)temp_s0->unkA + temp_f10 * ((f32)velocity / 32768.0));
 		velocity = sins(temp_s0->unkE - temp_s0->unk6);
-		temp_s0->unk8 = (s16)(s32)((f64)temp_s0->unk8 + (f64)temp_f10 * ((f64)(f32)velocity / 32768.0));
+		temp_s0->unk8 = (s16)(s32)((f64)temp_s0->unk8 + temp_f10 * ((f32)velocity / 32768.0));
 		temp_s0->unk3A = 0;
 		temp_s0->unk48 = 0;
 	}
