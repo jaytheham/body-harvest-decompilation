@@ -3016,11 +3016,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	s16 row;
 	s16 col;
 	s32 tileBase;
-	s32 phase;
+	s32 tileScratch;
 	s32 phaseAbs;
 	s32 rowPhase;
 	s32 texAnim;
-	s32 color;
+	u8 color;
 	s32 heightDiff;
 	s32 magnitude;
 	f32 worldXf;
@@ -3073,18 +3073,16 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_CYCLETYPE, 8, 8) | 2; gfx->words.w1 = G_CYC_2CYCLE;
 
-	phase = 0x40 - ((D_80052A8C * 2) & 0x7F);
-	phaseAbs = ((u32)-phase < (u32)phase) ? phase : -phase;
+	tileScratch = 0x40 - ((D_80052A8C * 2) & 0x7F);
+	phaseAbs = ((u32)-tileScratch < (u32)tileScratch) ? tileScratch : -tileScratch;
 	color = (0x78 - phaseAbs) & 0xFF;
 
 	{
 		Gfx *packet = D_8005BB2C++;
-		packet->words.w1 = 0x8000 | color; packet->words.w0 = _SHIFTL(G_SETKEYR, 24, 8);
+		packet->words.w0 = _SHIFTL(G_SETKEYR, 24, 8);
+		packet->words.w1 = 0x8000 | color;
 	}
-	{
-		Gfx *packet = D_8005BB2C++;
-		packet->words.w0 = _SHIFTL(G_SETKEYGB, 24, 8); packet->words.w1 = 0x80008000 | (color << 16) | color;
-	}
+	gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 
 	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, TEXEL1, SCALE, TEXEL1, TEXEL0, 0, TEXEL1, 0, ENVIRONMENT, PRIMITIVE, COMBINED, PRIMITIVE, 0, 0, 0, SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_INTER2);
@@ -3100,26 +3098,26 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
 
-	phase = (u32)D_80052A8C >> 1;
-	gDPSetTileSize(D_8005BB2C++, 1, -phase, 60, 252 - phase, 312);
+	tileScratch = (u32)D_80052A8C >> 1;
+	gDPSetTileSize(D_8005BB2C++, 1, -tileScratch, 60, 252 - tileScratch, 312);
 
 	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 8, 0, 2, 0,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
 		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
 
-	phase = D_80052A8C;
-	texAnim = phase + 0xFC;
-	gDPSetTileSize(D_8005BB2C++, 2, phase, phase, texAnim, texAnim);
+	tileScratch = D_80052A8C;
+	texAnim = tileScratch + 0xFC;
+	gDPSetTileSize(D_8005BB2C++, 2, tileScratch, tileScratch, texAnim, texAnim);
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 1, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 
-	phase = (s16)(waterX % 0x200);
-	if (phase) {}
-	waterX = waterX - phase;
+	tileScratch = (s16)(waterX % 0x200);
+	if (tileScratch) {}
+	waterX = waterX - (s16)tileScratch;
 
-	phase = waterZ[0] % 0x200;
-	snappedZ = waterZ[0] - phase;
+	tileScratch = waterZ[0] % 0x200;
+	snappedZ = waterZ[0] - tileScratch;
 
 	{
 		Gfx *packet = D_8005BB2C++;
@@ -3128,18 +3126,20 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	}
 
 	wavePhase[0] = D_80052A8C * 0x2BC;
-	phase = waterX % 0x1000;
-	texXBase = phase * 4;
+	tileScratch = waterX % 0x1000;
+	texXBase = tileScratch * 4;
 
-	phase = snappedZ % 0x1000;
-	texZBase = phase * 4;
+	tileScratch = snappedZ % 0x1000;
+	texZBase = tileScratch * 4;
 
 	for (row = 0; row < 9; row++) {
 		rowFlags = flags[row];
-		rowZ = snappedZ - (s16)(row << 9) + 0x700;
+
 		rowTexZ = texZBase - (row << 0xB);
-		worldZf = (f32)rowZ;
+
 		for (col = 0; col < 9; col++) {
+			rowZ = snappedZ - (s16)(row << 9) + 0x700;
+			worldZf = (f32)rowZ;
 			flag = &rowFlags[col];
 			worldX = waterX + (s16)(col << 9) - 0x900;
 			*flag = 4;
@@ -3195,11 +3195,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 			heightDiff = D_80052B34->unk0 - worldX;
 			if (heightDiff >= 0) {
-				magnitude = heightDiff;
+				tileScratch = heightDiff;
 			} else {
-				magnitude = -heightDiff;
+				tileScratch = -heightDiff;
 			}
-			if (magnitude < 0x100) {
+			if (tileScratch < 0x100) {
 				heightDiff = D_80052B34->unk4 - rowZ;
 				if (heightDiff >= 0) {
 					magnitude = heightDiff;

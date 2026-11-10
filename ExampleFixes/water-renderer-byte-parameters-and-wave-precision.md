@@ -48,3 +48,39 @@ Compare the gameplay modes as unsigned words and use `(u16)3` as the row phase m
 -> `correct ASM`
 
 The batch setup loads `li t5,3` at `CA034`, and the row phase uses `multu t8,t5` at `CA2A0`. The enabled comparison score is 8021. The water renderer remains `NON_MATCHING` with 903 instructions against the target's 904, and other vertex and packet schedules still differ.
+
+`incorrect ASM`
+
+Using the same magnitude local for both axes puts the X magnitude in `v1`. IDO reloads the narrowed Z argument into `a1` before the X subtraction and emits a NOP in the comparison branch's delay slot.
+
+-> `code changed`
+
+Reuse the phase temporary for the X magnitude after snapping and texture setup. Keep the separate magnitude local for the Z check.
+
+-> `correct ASM`
+
+The X subtraction and absolute-value sequence writes the magnitude to `a1`, then uses `slti at,a1,0x100`. The Z halfword reload moves into the branch's delay slot as in the ROM and removes the NOP. The reload still uses `sp+0x7A` where the target uses `sp+0x86`.
+
+`incorrect ASM`
+
+Packing the first green and blue key centers as `0x80008000` shares the constant with the texture scale packet. The key packet then uses two register OR instructions in place of the target's separate high and low center fields.
+
+-> `code changed`
+
+Assign the first red key's opcode before its scale word in the C packet block. Use `gDPSetKeyGB` for the following packet, with a center of `0x80`, the animated scale, and zero width for both channels.
+
+-> `correct ASM`
+
+The first green and blue key packet materializes the high center with `lui at,0x8000` and inserts the low center with `ori ...,0x8000`. Together with the X-distance branch change, this gives the target's 904 instruction words and places all seven calls at their original ROM offsets. The packet and vertex schedules still have differences.
+
+`incorrect ASM`
+
+The narrowed row Z value spills to `sp+0x78`. The terrain call and the X-distance branch reload its low halfword from `sp+0x7A`.
+
+-> `code changed`
+
+Assign the word row Z and its floating-point copy at the start of the column loop, before using the flag pointer.
+
+-> `correct ASM`
+
+IDO still hoists both assignments ahead of the column loop. The narrowed value spills to `sp+0x84`, and the terrain call and distance branch use `lh a1,0x86(sp)`. The original call offsets and 0x1C0 frame are preserved. The enabled comparison score is 7525. The full row Z spill and snapped coordinate still have different homes, so the assembly fallback remains active.
