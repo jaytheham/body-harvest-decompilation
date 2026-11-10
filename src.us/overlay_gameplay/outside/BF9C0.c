@@ -760,7 +760,6 @@ void func_800B1A68_C0A18(Vec2_S16 *arg0, Vec2_S16 *arg1, EffectRgb *arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 baseY;
 	s16 baseX;
@@ -800,10 +799,9 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 			if (y <= 0) {
 				dy = (s16)fracY + y * -256;
 			} else {
-				dy = (s16)(cellSize - fracY) + (y << 8);
-				dy -= 256;
+				dy = (s16)(cellSize - fracY) + (y << 8) - 256;
 			}
-			intensity = (s32)sqrtf(dy * dy + dx * dx) - arg2;
+			intensity = (s16)(s32)sqrtf(dy * dy + dx * dx) - arg2;
 			if (intensity > 0) {
 				intensity = arg3 - intensity;
 				if (intensity > 0) {
@@ -844,9 +842,6 @@ void func_800B2354_C1304(s16 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B2354_C1304.s")
-#endif
 
 void func_800B2854_C1804(Unk80152B80 *arg0, u8 *arg1, s16 arg2, s16 arg3) {
 	s16 baseY;

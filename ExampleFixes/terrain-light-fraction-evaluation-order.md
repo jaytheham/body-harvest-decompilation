@@ -36,4 +36,4 @@ Incorrect ASM: the sibling func_800B2354_C1304 also emitted `addu v0,t6,s5` and 
 
 -> `code changed`: Keep `(s16)(cellSize - fracY) + (y << 8) - 256` in one assignment and narrow the square-root result to a signed halfword before subtracting the inner radius.
 
--> `correct ASM`: The Y arm uses `addu v0,t7,t8; addiu v0,v0,-256`, the square uses `mflo t7`, and the temporary registers after `sqrtf` match. The full function matches.
+-> `correct ASM`: The Y arm uses `addu v0,t7,t8; addiu v0,v0,-256`, the square uses `mflo t7`, and the temporary registers after `sqrtf` match. The same change produces a byte-for-byte match in `func_800B2354_C1304`. Both US and PAL ROM checksums pass with both C implementations enabled.
