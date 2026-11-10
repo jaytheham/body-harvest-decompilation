@@ -33,3 +33,9 @@
 -> `code changed`: Compute the signed X and Z width offsets together, before the three direction products. Keep the casts and the order of the direction products.
 
 -> `correct ASM`: The X product uses `mul.s $f8,$f10,$f2`, the Y product uses `mul.s $f10,$f4,$f16`, and the Z product uses `mul.s $f4,$f6,$f2`. Their registers match the target, with scheduling differences still present. The linked diff score falls from 21129 to 20269.
+
+`incorrect ASM`: The cursor advance before the middle vertices uses `sw $t8,0($a0)`. A halfword stack store appears between the X direction product and the cursor advance.
+
+-> `code changed`: Compute the next Z width before the preceding vertex's alpha store, and compute the next X width immediately before advancing the vertex cursor.
+
+-> `correct ASM`: The cursor advance uses the target's `sw $t7,0($a0)` and follows the X direction product directly. The halfword stack store moves earlier than both. The linked diff score falls from 20269 to 20219.
