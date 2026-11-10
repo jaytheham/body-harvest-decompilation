@@ -3795,9 +3795,8 @@ void func_802DE0F4_322244(u8 arg0) {
 			effectPosition[1] = var_t0;
 			func_800CD2E8_DC298(cachedX, var_t0, cachedZ, sp4F);
 		}
-		effectNode = sp40;
-		if (temp_s0->unk3D != 0xFB && effectNode->unkAUnsigned < 0x1F41) {
-			func_80128428_1373D8(temp_s0, effectNode->unk0 + 0x96, effectNode->unk2, effectNode->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+		if (temp_s0->unk3D != 0xFB && sp40->unkAUnsigned < 0x1F41) {
+			func_80128428_1373D8(temp_s0, sp40->unk0 + 0x96, sp40->unk2, sp40->unk4, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0_2 = D_80222A70;
 			} else {
