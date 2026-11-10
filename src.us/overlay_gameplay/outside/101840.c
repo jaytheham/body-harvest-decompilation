@@ -1266,8 +1266,9 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 colorTopA;
 	s16 colorTopB;
 	s16 colorTopC;
+	s16 sinAOffset;
 	u8 cR;
-	u16 cG;
+	u8 cG;
 	u8 cB;
 
 	radius = D_801601F0[arg3].unk8;
@@ -1359,12 +1360,12 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	sinAComp = (s16)(s32)(radius * sinA);
+	sinAOffset = (s16)(s32)(radius * sinA);
 	cosAComp = (s16)(s32)(radius * cosA);
 	sinBComp = (s16)(s32)((2 * radiusThird) * sinB);
 	cosBComp = (s16)(s32)((2 * radiusThird) * (f32)((f64)(f32)cosBValue / 32768.0));
 
-	D_8005BB34->v.ob[0] = (arg1[0] + sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1376,7 +1377,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (arg1[0] - sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1388,7 +1389,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (arg1[0] + sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1400,7 +1401,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (arg1[0] - sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1461,7 +1462,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg2[0] + sinAComp / 2;
+	D_8005BB34->v.ob[0] = arg2[0] + sinAOffset / 2;
 	D_8005BB34->v.ob[1] = (s16)(s32)((f32)arg2[1] - (2 * radiusThird));
 	D_8005BB34->v.ob[2] = arg2[2] + cosAComp / 2;
 	D_8005BB34->v.flag = 0;
@@ -1473,7 +1474,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg2[0] - sinAComp / 2;
+	D_8005BB34->v.ob[0] = arg2[0] - sinAOffset / 2;
 	D_8005BB34->v.ob[1] = (s16)(s32)((f32)arg2[1] - (2 * radiusThird));
 	D_8005BB34->v.ob[2] = arg2[2] - cosAComp / 2;
 	D_8005BB34->v.flag = 0;
