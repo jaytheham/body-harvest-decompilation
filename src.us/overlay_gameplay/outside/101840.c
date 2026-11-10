@@ -2237,13 +2237,12 @@ void func_800F842C_1073DC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F842C_1073DC.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800F8B24_107AD4(s32 arg0) {
 	Unk80052B40 sp140;
 	Unk80052B40 sp138;
 	UnkF9230ShadowWalker *walker;
 	union { s32 coord; Gfx *gfx; } work;
-	s32 y0, z0, x1, z1, x2, y2, z2;
+	s32 x0, y0, z0, z1, x2, y2, z2;
 	u8 count;
 	u8 renderType;
 	s16 y1;
@@ -2257,122 +2256,125 @@ void func_800F8B24_107AD4(s32 arg0) {
 		return;
 	}
 
-	walker = (UnkF9230ShadowWalker *)(u32)&D_80158000[arg0];
-	i = walker->alienIdx;
+	{
+		UnkF9230ShadowWalker *cullWalker = &D_80158000[arg0];
 
-	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)D_801601F0[walker->limbs[0].unk23].unk6, (s16)D_80052B2C->unk0,
-	(s32)D_80052B2C->unk8, 0x4000 - D_80047950)
-	!= 0)
-	|| (walker->limbs[0].unk22 == 8)) {
-		if (D_801601F0[walker->limbs[0].unk23].unk14 != 0) {
-			work.gfx = D_8005BB2C++;
-			work.gfx->words.w1 = 0;
-			work.gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8);
-			guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
-			gSPLookAt(D_8005BB2C++, &walker->lookAt);
-			gDPPipeSync(D_8005BB2C++);
+		i = cullWalker->alienIdx;
+		if (func_800B93AC_C835C(cullWalker->limbs[0].unk12, cullWalker->limbs[0].unk16,
+			(u16)D_801601F0[cullWalker->limbs[0].unk23].unk6, (s16)D_80052B2C->unk0,
+			(s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0 && cullWalker->limbs[0].unk22 != 8) {
+			return;
 		}
+		walker = (UnkF9230ShadowWalker *)(u32)cullWalker;
+	}
 
-		gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
-		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
+	if (D_801601F0[walker->limbs[0].unk23].unk14 != 0) {
+		work.gfx = D_8005BB2C++;
+		work.gfx->words.w1 = 0;
+		work.gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8);
+		guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
+		gSPLookAt(D_8005BB2C++, &walker->lookAt);
+		gDPPipeSync(D_8005BB2C++);
+	}
 
-		if (((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) {
-			func_800F842C_1073DC(arg0);
+	gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
+	gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
+
+	if (((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) {
+		func_800F842C_1073DC(arg0);
+	}
+
+	if (walker->limbs[0].unk22 == 0x10) {
+		AlienInstance *alien;
+
+		alien = &alienInstances[i];
+		sp140.unk0 = alien->unk0;
+		sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
+		sp140.unk4 = alien->unk4;
+		func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
+
+		sp138.unk0 = -walker->limbs[0].unk18;
+		sp138.unk2 = -(u16)D_8014DD50[alien->unkC].unkA;
+		sp138.unk4 = 0;
+		func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
+
+		sp140.unk2 = walker->unk16A;
+		for (i = 0; i < 3; i++) {
+			sp140.components[i] = -sp140.components[i];
 		}
+		func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
 
-		if (walker->limbs[0].unk22 == 0x10) {
-			AlienInstance *alien;
+	}
 
-			alien = &alienInstances[i];
-			sp140.unk0 = alien->unk0;
-			sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
-			sp140.unk4 = alien->unk4;
-			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38++;
+	count = D_801601F0[walker->limbs[0].unk23].unkC;
+	i = 0;
+	if (count > 0) {
+		UnkF9230ShadowLimb *cursor = &walker->limbs[0];
+		do {
+			UnkF9230ShadowLimb *entry;
 
-			sp138.unk0 = -walker->limbs[0].unk18;
-			sp138.unk2 = -(u16)D_8014DD50[alien->unkC].unkA;
-			sp138.unk4 = 0;
-			func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38++;
+			entry = &cursor[1];
+			if (cursor[1].unk23 == 0) {
 
-			sp140.unk2 = walker->unk16A;
-			for (i = 0; i < 3; i++) {
-				sp140.components[i] = -sp140.components[i];
-			}
-			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38++;
-
-		}
-
-		count = D_801601F0[walker->limbs[0].unk23].unkC;
-		i = 0;
-		if (count > 0) {
-			UnkF9230ShadowLimb *cursor = &walker->limbs[0];
-			do {
-				UnkF9230ShadowLimb *entry;
-
-				entry = &cursor[1];
-				if (cursor[1].unk23 == 0) {
-
-					work.coord = entry->unkA;
-					y0 = entry->unk2;
-					z0 = entry->unkC;
-					x1 = entry->unk1E;
-					if (walker->limbs[0].unk22 == 0x10) {
-						y1 = walker->unk16A;
-					} else {
-						y1 = entry->unk16;
-					}
-
-					z1 = entry->unk20;
-					x2 = entry->unkE;
-					y2 = entry->unk10;
-					z2 = entry->unk12;
-					sp100[0] = work.coord;
-					sp100[1] = y0;
-					sp100[2] = z0;
-					spF4[0] = x1;
-					spF4[1] = y1;
-					spF4[2] = z1;
-					spE8[0] = x2;
-					spE8[1] = y2;
-					spE8[2] = z2;
-
-					if (walker->limbs[0].unk22 == 4) {
-						spE8[0] += func_800038E0_44E0() % 16 - 8;
-						spE8[2] += func_800038E0_44E0() % 16 - 8;
-					}
-
-					renderType = walker->limbs[0].unk23;
-					switch (D_801601F0[renderType].unk14) {
-					case 0:
-						func_800F7790_106740(sp100, spE8, spF4, renderType);
-						break;
-					case 1:
-						func_800F554C_1044FC(sp100, spE8, spF4, renderType);
-						break;
-					case 2:
-						func_800F63D0_105380(sp100, spE8, spF4, renderType);
-						break;
-					}
+				x0 = entry->unkA;
+				y0 = entry->unk2;
+				z0 = entry->unkC;
+				work.coord = entry->unk1E;
+				if (walker->limbs[0].unk22 == 0x10) {
+					y1 = walker->unk16A;
+				} else {
+					y1 = entry->unk16;
 				}
-				i++;
-				cursor++;
-			} while (i != count);
-		}
 
-		if (walker->limbs[0].unk22 & 0x10) {
-			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-		}
+				z1 = entry->unk20;
+				x2 = entry->unkE;
+				y2 = entry->unk10;
+				z2 = entry->unk12;
+				sp100[0] = x0;
+				sp100[1] = y0;
+				sp100[2] = z0;
+				spF4[0] = work.coord;
+				spF4[1] = y1;
+				spF4[2] = z1;
+				spE8[0] = x2;
+				spE8[1] = y2;
+				spE8[2] = z2;
+
+				if (walker->limbs[0].unk22 == 4) {
+					spE8[0] += func_800038E0_44E0() % 16 - 8;
+					spE8[2] += func_800038E0_44E0() % 16 - 8;
+				}
+
+				renderType = walker->limbs[0].unk23;
+				switch (D_801601F0[renderType].unk14) {
+				case 0:
+					func_800F7790_106740(sp100, spE8, spF4, renderType);
+					break;
+				case 1:
+					func_800F554C_1044FC(sp100, spE8, spF4, renderType);
+					break;
+				case 2:
+					func_800F63D0_105380(sp100, spE8, spF4, renderType);
+					break;
+				}
+			}
+			i++;
+			cursor++;
+		} while (i != count);
+	}
+
+	if (walker->limbs[0].unk22 & 0x10) {
+		work.gfx = D_8005BB2C++;
+		work.gfx->words.w1 = G_MTX_MODELVIEW;
+		work.gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F8B24_107AD4.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800F9118_1080C8(s32 arg0) {
