@@ -3312,7 +3312,6 @@ void func_802DC8F4_320A44(u8 arg0) {
 	s16 offset[3];
 	s32 rotated[3];
 	s32 sp74;
-	s32 dx;
 	s32 dz;
 
 	temp_s0 = &alienInstances[arg0];
@@ -3322,6 +3321,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 	sp60 = arg0;
 	spDA = sp64->unkD;
 	func_80137468_146418(arg0, 0x26A);
+	if (D_80222A70) {} /* Keep the clamp cache request ahead of the type pointer. */
 	spCC = func_80084E54_93E04(temp_s0, D_80052B34);
 	func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4);
 	sp74 = func_802DC874_3209C4(arg0);
@@ -3454,9 +3454,9 @@ void func_802DC8F4_320A44(u8 arg0) {
 		}
 	}
 	if (alienTypes[temp_s0->typeIndex].unk54 & 0x2000) {
-		dx = temp_s0->unk0 - D_80052B34->unk0;
+		sp60 = temp_s0->unk0 - D_80052B34->unk0;
 		dz = temp_s0->unk4 - D_80052B34->unk4;
-		temp_s0->unk6 = func_80003824_4424((f32)dx, (f32)dz) + 0x8000;
+		temp_s0->unk6 = func_80003824_4424((f32)sp60, (f32)dz) + 0x8000;
 	}
 	if (temp_s0->unk1E != 0) { temp_s0->unk1E--; }
 	if (temp_s0->unk26 != 0) { temp_s0->unk26--; }
