@@ -1266,8 +1266,9 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 colorTopA;
 	s16 colorTopB;
 	s16 colorTopC;
+	s16 sinAOffset;
 	u8 cR;
-	u16 cG;
+	u8 cG;
 	u8 cB;
 
 	radius = D_801601F0[arg3].unk8;
@@ -1286,8 +1287,8 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 
 	levelColor = D_8013FCD4_14EC84[1][currentLevel - 1];
 	colorA = levelColor[0].r;
-	colorB = levelColor[0].g;
-	colorC = levelColor[0].b;
+	colorB = D_8013FCD4_14EC84[1][currentLevel - 1][0].g;
+	colorC = D_8013FCD4_14EC84[1][currentLevel - 1][0].b;
 	if (&colorA) {}
 	if (&colorB) {}
 	if (&colorC) {}
@@ -1359,12 +1360,12 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	sinAComp = (s16)(s32)(radius * sinA);
+	sinAOffset = (s16)(s32)(radius * sinA);
 	cosAComp = (s16)(s32)(radius * cosA);
 	sinBComp = (s16)(s32)((2 * radiusThird) * sinB);
 	cosBComp = (s16)(s32)((2 * radiusThird) * (f32)((f64)(f32)cosBValue / 32768.0));
 
-	D_8005BB34->v.ob[0] = (arg1[0] + sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1376,7 +1377,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (arg1[0] - sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1388,7 +1389,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (arg1[0] + sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1400,7 +1401,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (arg1[0] - sinAComp) - sinBComp;
+	D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - sinBComp;
 	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - ((2 * radiusThird) / 2));
 	D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - cosBComp;
 	D_8005BB34->v.flag = 0;
@@ -1461,7 +1462,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg2[0] + sinAComp / 2;
+	D_8005BB34->v.ob[0] = arg2[0] + sinAOffset / 2;
 	D_8005BB34->v.ob[1] = (s16)(s32)((f32)arg2[1] - (2 * radiusThird));
 	D_8005BB34->v.ob[2] = arg2[2] + cosAComp / 2;
 	D_8005BB34->v.flag = 0;
@@ -1473,7 +1474,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg2[0] - sinAComp / 2;
+	D_8005BB34->v.ob[0] = arg2[0] - sinAOffset / 2;
 	D_8005BB34->v.ob[1] = (s16)(s32)((f32)arg2[1] - (2 * radiusThird));
 	D_8005BB34->v.ob[2] = arg2[2] - cosAComp / 2;
 	D_8005BB34->v.flag = 0;
@@ -1520,8 +1521,8 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	Vec3f direction;
 	f32 temp_f14;
 	s32 wideX;
-	s32 temp_v0;
-	f32 temp_f0_2;
+	s32 angle;
+	s32 absDistanceZ;
 	f32 temp_f12;
 	s16 temp_f6;
 	s32 temp_f8;
@@ -1533,7 +1534,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 sp128;
 	s32 sp124;
 	s32 sp120;
-	s32 absDistance;
+	s32 delta;
 	s16 sp11A;
 	s16 sp118;
 	s16 sp116;
@@ -1548,8 +1549,8 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 sp104;
 	s16 temp_v1_2;
 	s16 temp_f6_3;
+	s32 temp_v0;
 
-	if (&temp_f0) {}
 	var_f2 = (f32)D_801601F0[arg3].unk8;
 	var_f16 = (var_f2 * 3) / 4;
 	if (D_8013FCD0_14EC80 != 0) {
@@ -1562,11 +1563,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	direction.y = (f32)(arg1[1] - arg0[1]);
 	direction.z = (f32)(arg1[2] - arg0[2]);
 	func_800F54AC_10445C(&direction, &direction);
-	temp_v0 = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
-	temp_v0_2 = temp_v0 + 0x4000;
-	temp_f14 = (f32)((f64)(f32)sins(temp_v0_2) / 32768.0);
-	temp_v0_2 = temp_v0 + 0x4000;
-	temp_v0_2 = coss(temp_v0_2);
+	angle = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
+	temp_f14 = (f32)((f64)(f32)sins(angle + 0x4000) / 32768.0);
+	temp_v0_2 = coss(angle + 0x4000);
 	gDPPipeSync(D_8005BB2C++);
 	temp_f12 = var_f2 * 2;
 	temp_f6 = (s16)(s64)(s32)(direction.x * temp_f12);
@@ -1576,14 +1575,16 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	sp118 = D_8013FCD4_14EC84[2][currentLevel - 1][0].g;
 	sp116 = D_8013FCD4_14EC84[2][currentLevel - 1][0].b;
 	sp114 = (sp11A - 0x82 < 0) ? 0 : sp11A - 0x82;
-	sp112 = (sp118 - 0x82 < 0) ? 0 : sp118 - 0x82;
-	sp110 = (sp116 - 0x82 < 0) ? 0 : sp116 - 0x82;
+	delta = sp118 - 0x82;
+	sp112 = (delta < 0) ? 0 : delta;
+	delta = sp116 - 0x82;
+	sp110 = (delta < 0) ? 0 : delta;
 	sp10C = D_8013FCD4_14EC84[2][currentLevel - 1][1].g;
 	sp10A = D_8013FCD4_14EC84[2][currentLevel - 1][1].b;
 	sp108 = D_8013FCD4_14EC84[2][currentLevel - 1][2].r;
 	sp106 = D_8013FCD4_14EC84[2][currentLevel - 1][2].g;
 	sp104 = D_8013FCD4_14EC84[2][currentLevel - 1][2].b;
-	temp_ra = (temp_v0 = D_8013FCD4_14EC84[2][currentLevel - 1][1].r);
+	temp_ra = D_8013FCD4_14EC84[2][currentLevel - 1][1].r;
 
 	D_8005BB34->v.ob[0] = (s32)((f32)arg0[0] - direction.x * 4.0f);
 	D_8005BB34->v.ob[1] = arg0[1];
@@ -1623,8 +1624,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - temp_f6 / 3;
-	D_8005BB34->v.ob[1] = arg1[1] + temp_f8 / 3;
+	temp_v0 = 3;
+	D_8005BB34->v.ob[0] = arg1[0] - temp_f6 / (s32)(s64)temp_v0;
+	D_8005BB34->v.ob[1] = arg1[1] + temp_f8 / (s32)(s64)temp_v0;
 	D_8005BB34->v.ob[2] = arg1[2] - temp_f10;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x180;
@@ -1656,14 +1658,14 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[0] = temp_ra;
 	D_8005BB34->v.cn[1] = sp10C;
 	D_8005BB34->v.cn[2] = sp10A;
+	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
 	D_8005BB34->v.cn[3] = 0xFF;
+	temp_f6_3 = (s16)(s32)(var_f16 * temp_f14);
 	D_8005BB34++;
 
-	temp_f6_3 = (s16)(s32)(var_f16 * temp_f14);
 	temp_f6 = (s16)(s32)(direction.x * var_f2);
 	temp_f8 = (s32)(direction.y * var_f16);
 	temp_f10 = (s16)(s32)(direction.z * var_f2);
-	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
 	D_8005BB34->v.ob[0] = arg1[0] + temp_f6_3 + (temp_f6 * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8;
 	D_8005BB34->v.ob[2] = arg1[2] + temp_v1_2 + (temp_f10 * 3);
@@ -1701,11 +1703,11 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	temp_v0 = arg1[0] - arg2[0];
-	absDistance = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
-	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)absDistance * 0.5));
+	delta = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
 	temp_v0_2 = arg1[2] - arg2[2];
-	absDistance = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
-	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistance * 0.5));
+	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
+	absDistanceZ = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
+	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistanceZ * 0.5));
 	sp124 = arg1[1] - (s16)(s32)(direction.y * (var_f16 * 3.0f));
 	temp_f6 = (s16)(temp_f6_3 / 2);
 	temp_f10 = (s16)(temp_v1_2 / 2);
@@ -1896,9 +1898,9 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 spD0;
 	s16 spCE;
 	s32 cB;
-	s16 baseBlue;
-	s16 baseRed;
-	s16 baseGreen;
+	s32 baseBlue;
+	s32 baseRed;
+	s32 baseGreen;
 
 /* Keep the addressed parameter and color halfwords in their target homes. */
 	if (&arg0) {}
@@ -2014,9 +2016,9 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	xTri = arg1[0];
 	phase = xTri - arg2[0];
 	angle = -phase;
+	zTri = arg1[2] - arg2[2];
+	if (zTri ^ halfSin) {}
 	if (angle + angle) {}
-	phase = arg1[2] - arg2[2];
-	if (phase) {}
 	halfSin /= 2;
 	halfCos /= 2; if (halfSin + halfCos) {}
 
@@ -2060,13 +2062,12 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = arg2[1];
 	D_8005BB34->v.ob[2] = arg2[2];
 	D_8005BB34->v.flag = 0;
+	baseGreen = spE8;
+	baseBlue = spE6;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	baseRed = *(s16 *)&spEA;
-	D_8005BB34->v.cn[0] = baseRed;
-	baseGreen = *(s16 *)&spE8;
+	D_8005BB34->v.cn[0] = (baseRed = spEA);
 	D_8005BB34->v.cn[1] = baseGreen;
-	baseBlue = *(s16 *)&spE6;
 	D_8005BB34->v.cn[2] = baseBlue;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
@@ -2121,7 +2122,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
 
-// CURRENT(870)
+// CURRENT(725)
 // AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
@@ -2131,9 +2132,9 @@ void func_800F842C_1073DC(s32 arg0) {
 	s32 spC4[3];
 	s32 spB8[3];
 	s32 spAC[3];
-	s32 phase;
 	s32 heading;
 	s32 reach;
+	u16 padding;
 	f32 trig;
 	s32 i;
 	UnkF9230ShadowLimb *nextEntry;
@@ -2142,6 +2143,7 @@ void func_800F842C_1073DC(s32 arg0) {
 	Unk80052B40 sp84;
 	s16 sp82;
 	s16 sp80;
+	s32 phase;
 
 	if (D_80157FF0[arg0] != -1) {
 		return;
@@ -2195,7 +2197,7 @@ void func_800F842C_1073DC(s32 arg0) {
 			spAC[2] = (s32) (((f64) D_801601F0[walker->limbs[0].unk23].unk4) * (((f64) ((f32) sins(heading & 0xFFFF))) / 32768.0));
 			spAC[1] = D_801601F0[walker->limbs[0].unk23].unkA;
 			spB8[0] = (s32) (((f64) D_801601F0[walker->limbs[0].unk23].unk6) * (((f64) ((f32) coss(heading & 0xFFFF))) / 32768.0));
-			spB8[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)D_801601F0[walker->limbs[0].unk23].unk6);
+			spB8[2] = (s32)((f64)D_801601F0[walker->limbs[0].unk23].unk6 * (((f64)(f32)sins(heading & 0xFFFF)) / 32768.0));
 			spB8[1] = 0;
 			func_800F4258_103208(walker, D_801601F0[walker->limbs[0].unk23].unk4, spAC[1], D_801601F0[walker->limbs[0].unk23].unk6, 0, &spD2, &spD0);
 			spC4[2] = (s32)((((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)spD2);
@@ -2237,13 +2239,12 @@ void func_800F842C_1073DC(s32 arg0) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F842C_1073DC.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800F8B24_107AD4(s32 arg0) {
 	Unk80052B40 sp140;
 	Unk80052B40 sp138;
 	UnkF9230ShadowWalker *walker;
 	union { s32 coord; Gfx *gfx; } work;
-	s32 y0, z0, x1, z1, x2, y2, z2;
+	s32 x0, y0, z0, z1, x2, y2, z2;
 	u8 count;
 	u8 renderType;
 	s16 y1;
@@ -2257,126 +2258,128 @@ void func_800F8B24_107AD4(s32 arg0) {
 		return;
 	}
 
-	walker = (UnkF9230ShadowWalker *)(u32)&D_80158000[arg0];
-	i = walker->alienIdx;
+	{
+		UnkF9230ShadowWalker *cullWalker = &D_80158000[arg0];
 
-	if ((func_800B93AC_C835C(walker->limbs[0].unk12, walker->limbs[0].unk16, (u16)D_801601F0[walker->limbs[0].unk23].unk6, (s16)D_80052B2C->unk0,
-	(s32)D_80052B2C->unk8, 0x4000 - D_80047950)
-	!= 0)
-	|| (walker->limbs[0].unk22 == 8)) {
-		if (D_801601F0[walker->limbs[0].unk23].unk14 != 0) {
-			work.gfx = D_8005BB2C++;
-			work.gfx->words.w1 = 0;
-			work.gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8);
-			guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
-			gSPLookAt(D_8005BB2C++, &walker->lookAt);
-			gDPPipeSync(D_8005BB2C++);
+		i = cullWalker->alienIdx;
+		if (func_800B93AC_C835C(cullWalker->limbs[0].unk12, cullWalker->limbs[0].unk16,
+			(u16)D_801601F0[cullWalker->limbs[0].unk23].unk6, (s16)D_80052B2C->unk0,
+			(s32)D_80052B2C->unk8, 0x4000 - D_80047950) == 0 && cullWalker->limbs[0].unk22 != 8) {
+			return;
 		}
+		walker = (UnkF9230ShadowWalker *)(u32)cullWalker;
+	}
 
-		gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
-		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
+	if (D_801601F0[walker->limbs[0].unk23].unk14 != 0) {
+		work.gfx = D_8005BB2C++;
+		work.gfx->words.w1 = 0;
+		work.gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8);
+		guLookAtReflect(&spA8, &walker->lookAt, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 50.0f, 0.0f, 1.0f, 0.0f);
+		gSPLookAt(D_8005BB2C++, &walker->lookAt);
+		gDPPipeSync(D_8005BB2C++);
+	}
 
-		if (((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) {
-			func_800F842C_1073DC(arg0);
+	gSPLightColor(D_8005BB2C++, LIGHT_1, 0xFFFFFFFF);
+	gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
+
+	if (((walker->limbs[0].unk22 == 2) || (walker->limbs[0].unk22 == 4) || (walker->limbs[0].unk22 == 8)) ? 1 : 0) {
+		func_800F842C_1073DC(arg0);
+	}
+
+	if (walker->limbs[0].unk22 == 0x10) {
+		AlienInstance *alien;
+
+		alien = &alienInstances[i];
+		sp140.unk0 = alien->unk0;
+		sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
+		sp140.unk4 = alien->unk4;
+		func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
+
+		sp138.unk0 = -walker->limbs[0].unk18;
+		sp138.unk2 = -(u16)D_8014DD50[alien->unkC].unkA;
+		sp138.unk4 = 0;
+		func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
+
+		sp140.unk2 = walker->unk16A;
+		for (i = 0; i < 3; i++) {
+			sp140.components[i] = -sp140.components[i];
 		}
+		func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
+		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+		D_8005BB38++;
 
-		if (walker->limbs[0].unk22 == 0x10) {
-			AlienInstance *alien;
+	}
 
-			alien = &alienInstances[i];
-			sp140.unk0 = alien->unk0;
-			sp140.unk2 = D_8014DD50[alien->unkC].unk2 + alien->unk2;
-			sp140.unk4 = alien->unk4;
-			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38++;
+	count = D_801601F0[walker->limbs[0].unk23].unkC;
+	i = 0;
+	if (count > 0) {
+		UnkF9230ShadowLimb *cursor = &walker->limbs[0];
+		do {
+			UnkF9230ShadowLimb *entry;
 
-			sp138.unk0 = -walker->limbs[0].unk18;
-			sp138.unk2 = -(u16)D_8014DD50[alien->unkC].unkA;
-			sp138.unk4 = 0;
-			func_800039D0_45D0(NULL, &sp138, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38++;
+			entry = &cursor[1];
+			if (cursor[1].unk23 == 0) {
 
-			sp140.unk2 = walker->unk16A;
-			for (i = 0; i < 3; i++) {
-				sp140.components[i] = -sp140.components[i];
-			}
-			func_800039D0_45D0(&sp140, NULL, NULL, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			D_8005BB38++;
-
-		}
-
-		count = D_801601F0[walker->limbs[0].unk23].unkC;
-		i = 0;
-		if (count > 0) {
-			UnkF9230ShadowLimb *cursor = &walker->limbs[0];
-			do {
-				UnkF9230ShadowLimb *entry;
-
-				entry = &cursor[1];
-				if (cursor[1].unk23 == 0) {
-
-					work.coord = entry->unkA;
-					y0 = entry->unk2;
-					z0 = entry->unkC;
-					x1 = entry->unk1E;
-					if (walker->limbs[0].unk22 == 0x10) {
-						y1 = walker->unk16A;
-					} else {
-						y1 = entry->unk16;
-					}
-
-					z1 = entry->unk20;
-					x2 = entry->unkE;
-					y2 = entry->unk10;
-					z2 = entry->unk12;
-					sp100[0] = work.coord;
-					sp100[1] = y0;
-					sp100[2] = z0;
-					spF4[0] = x1;
-					spF4[1] = y1;
-					spF4[2] = z1;
-					spE8[0] = x2;
-					spE8[1] = y2;
-					spE8[2] = z2;
-
-					if (walker->limbs[0].unk22 == 4) {
-						spE8[0] += func_800038E0_44E0() % 16 - 8;
-						spE8[2] += func_800038E0_44E0() % 16 - 8;
-					}
-
-					renderType = walker->limbs[0].unk23;
-					switch (D_801601F0[renderType].unk14) {
-					case 0:
-						func_800F7790_106740(sp100, spE8, spF4, renderType);
-						break;
-					case 1:
-						func_800F554C_1044FC(sp100, spE8, spF4, renderType);
-						break;
-					case 2:
-						func_800F63D0_105380(sp100, spE8, spF4, renderType);
-						break;
-					}
+				x0 = entry->unkA;
+				y0 = entry->unk2;
+				z0 = entry->unkC;
+				work.coord = entry->unk1E;
+				if (walker->limbs[0].unk22 == 0x10) {
+					y1 = walker->unk16A;
+				} else {
+					y1 = entry->unk16;
 				}
-				i++;
-				cursor++;
-			} while (i != count);
-		}
 
-		if (walker->limbs[0].unk22 & 0x10) {
-			gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-		}
+				z1 = entry->unk20;
+				x2 = entry->unkE;
+				y2 = entry->unk10;
+				z2 = entry->unk12;
+				sp100[0] = x0;
+				sp100[1] = y0;
+				sp100[2] = z0;
+				spF4[0] = work.coord;
+				spF4[1] = y1;
+				spF4[2] = z1;
+				spE8[0] = x2;
+				spE8[1] = y2;
+				spE8[2] = z2;
+
+				if (walker->limbs[0].unk22 == 4) {
+					spE8[0] += func_800038E0_44E0() % 16 - 8;
+					spE8[2] += func_800038E0_44E0() % 16 - 8;
+				}
+
+				renderType = walker->limbs[0].unk23;
+				switch (D_801601F0[renderType].unk14) {
+				case 0:
+					func_800F7790_106740(sp100, spE8, spF4, renderType);
+					break;
+				case 1:
+					func_800F554C_1044FC(sp100, spE8, spF4, renderType);
+					break;
+				case 2:
+					func_800F63D0_105380(sp100, spE8, spF4, renderType);
+					break;
+				}
+			}
+			i++;
+			cursor++;
+		} while (i != count);
+	}
+
+	if (walker->limbs[0].unk22 & 0x10) {
+		work.gfx = D_8005BB2C++;
+		work.gfx->words.w1 = G_MTX_MODELVIEW;
+		work.gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8);
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F8B24_107AD4.s")
-#endif
 
-#ifdef NON_MATCHING
 void func_800F9118_1080C8(s32 arg0) {
-	s32 index;
+	union { Unk801601F0 *descriptor; s32 index; } setup;
 	s16 oldX;
 	s16 rearY;
 	UnkF9230ShadowWalker *walker;
@@ -2389,7 +2392,7 @@ void func_800F9118_1080C8(s32 arg0) {
 	s32 minusX;
 	s16 heading;
 	u8 count;
-	union { s32 value; Gfx *gfx; Unk801601F0 *descriptor; } terrain;
+	union { s32 value; Gfx *gfx; } terrain;
 	s16 radius;
 	s16 centerZ;
 	s16 groundY;
@@ -2399,8 +2402,9 @@ void func_800F9118_1080C8(s32 arg0) {
 		walker = &D_80158000[arg0];
 		if ((func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &groundY) == -1) &&
 			(walker->limbs[0].unk22 != 0x10)) {
-			terrain.descriptor = &D_801601F0[walker->limbs[0].unk23]; count = terrain.descriptor->unkC;
-			radius = D_801601F0[walker->limbs[0].unk23].unk8;
+			setup.descriptor = &D_801601F0[walker->limbs[0].unk23];
+			count = setup.descriptor->unkC;
+			radius = setup.descriptor->unk8;
 			if (D_8013FCD0_14EC80 != 0) {
 				radius *= 2;
 			}
@@ -2411,8 +2415,8 @@ void func_800F9118_1080C8(s32 arg0) {
 						func_800B84D0_C7480(walker->limbs[0].unk12, walker->limbs[0].unk16) >> 8,
 						walker->limbs[0].words[5]) == 0) {
 					
-					for (index = 0; index < count; index++) {
-							UnkF9230ShadowLimb *limb = &walker->limbs[index + 1];
+					for (setup.index = 0; setup.index < count; setup.index++) {
+							UnkF9230ShadowLimb *limb = &walker->limbs[setup.index + 1];
 
 							if (limb->unk23 == 0) {
 								terrain.value = count / 2;
@@ -2421,12 +2425,12 @@ void func_800F9118_1080C8(s32 arg0) {
 								} else {
 									heading = walker->limbs[0].unk18;
 								}
-								if (index >= terrain.value) {
+								if (setup.index >= terrain.value) {
 									heading += 0x8000;
 								}
 								terrain.value = heading & 0xFFFF;
-								cosOffset = (s16)(s32)((((f64)(f32)coss(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
-								sinOffset = (s16)(s32)((((f64)(f32)sins(terrain.value & 0xFFFF)) / 32768.0) * (f64)radius);
+								cosOffset = (s16)(s32)((((f64)(f32)coss(terrain.value)) / 32768.0) * (f64)radius);
+								sinOffset = (s16)(s32)((((f64)(f32)sins(terrain.value)) / 32768.0) * (f64)radius);
 								oldX = limb->unkA;
 								oldZ = limb->unkC;
 								centerX = func_800B84D0_C7480(oldX, oldZ) >> 8;
@@ -2501,22 +2505,22 @@ void func_800F9118_1080C8(s32 arg0) {
 								D_8005BB34->v.cn[0] = 0;
 								D_8005BB34->v.cn[1] = 0;
 								D_8005BB34->v.cn[2] = 0;
+								terrain.value = heading - 0x4000;
 								D_8005BB34->v.cn[3] = 0x80;
 								D_8005BB34++;
-
-								terrain.value = (u16)(heading - 0x4000);
-								terrain.value &= 0xFFFF;
-								if (index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
+								terrain.value = (u16)terrain.value;
+								if (setup.index >= ((s32)D_801601F0[walker->limbs[0].unk23].unkC / 2)) {
 									terrain.value = heading + 0x4000; if (terrain.value) {}
 									terrain.value &= 0xFFFF;
 									coss(terrain.value & 0xFFFF);
 									sins(terrain.value & 0xFFFF);
 								} else {
-									coss(terrain.value & 0xFFFF);
-									sins(terrain.value & 0xFFFF);
+									coss(terrain.value);
+									sins(terrain.value);
 								}
 
-								if (8 != count) {
+								terrain.value = 8; if (terrain.value == count) {}
+								if (terrain.value != count) {
 									gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
 									terrain.gfx = D_8005BB2C++; terrain.gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); terrain.gfx->words.w1 = __gsSP1Triangle_w1f(0, 1, 3, 0);
 									gSP1Triangle(D_8005BB2C++, 1, 4, 3, 0);
@@ -2529,9 +2533,6 @@ void func_800F9118_1080C8(s32 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F9118_1080C8.s")
-#endif
 
 // DrawLegsShadows ?
 void func_800F97FC_1087AC(void) {
@@ -5819,16 +5820,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	}
 	spring = D_80144AA8_153A58[0];
 	chainZ = D_801594E0[1].pos.z;
-	if (chainZ)
-	{
-	}
 	chainY = D_801594E0[1].pos.y;
-	if (chainY)
-	{
-	}
-	if (chainY)
-	{
-	}
 	chainX = D_801594E0[1].pos.x;
 	do
 	{
@@ -5863,26 +5855,17 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	lastZ = oldZ;
 	lastY = oldY;
 	lastX = oldX;
-	if (lastZ < lastY)
-	{
-	}
-	if (lastY < lastX)
-	{
-	}
 	if (lastX < lastZ)
 	{
 	}
-	lastX = (f32)(oldX - ((oldX - ((f32)arg1->unk0)) * 0.5));
-	lastY = (f32)(oldY - ((oldY - ((f32)arg1->unk2)) * 0.5));
-	lastZ = (f32)(oldZ - ((oldZ - ((f32)arg1->unk4)) * 0.5));
+	lastX = (f32)(oldX - ((oldX - ((f32)arg1->unk0)) * half));
+	lastY = (f32)(oldY - ((oldY - ((f32)arg1->unk2)) * half));
+	lastZ = (f32)(oldZ - ((oldZ - ((f32)arg1->unk4)) * half));
 	D_801593F0[0].vel.x = (f32)((lastX - D_801593F0[0].pos.x) + (D_801593F0[0].vel.x * damping));
 	D_801593F0[0].vel.y = (f32)(((lastY - D_801593F0[0].pos.y) + (D_801593F0[0].vel.y * damping)) - 4.0);
 	D_801593F0[0].vel.z = (f32)((lastZ - D_801593F0[0].pos.z) + (D_801593F0[0].vel.z * damping));
 	D_801593F0[0].pos.x = (f32)arg1->unk0;
 	unused = arg1->unk2;
-	if (unused)
-	{
-	}
 	D_801593F0[0].pos.y = (f32)(vehicleTypes[arg1->unk1A].unk38 + unused);
 	D_801593F0[0].pos.z = (f32)arg1->unk4;
 }
@@ -9303,13 +9286,14 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 {
 	f32 slope;
 	f32 intercept;
+	f32 dx;
 	if (arg2 < arg0)
 	{
-		intercept = arg2;
+		slope = arg2;
 		arg2 = arg0;
-		if (arg0 == arg1) {} arg0 = intercept;
+		arg0 = slope;
 	}
-	if (arg3 < arg1)
+	if (arg1 > arg3)
 	{
 		intercept = arg3;
 		arg3 = arg1;
@@ -9326,13 +9310,14 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 			return 0;
 		}
 		intercept = arg7 - arg5;
+		dx = arg6 - arg4;
 		if (0.0 == intercept)
 		{
 			*arg8 = arg0;
 			*arg9 = arg5;
-			if ((arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5 + arg5) == 0.0f) {} return (arg1 <= arg5) && (arg5 <= arg3);
+			if ((arg5 + arg5 + arg5 + arg5 + arg5 + arg5) == arg5) {} return (arg1 <= arg5) && (arg5 <= arg3);
 		}
-		slope = intercept / (arg6 - arg4);
+		slope = intercept / dx;
 		*arg8 = arg0;
 		intercept = arg5 - slope * arg4;
 		slope = intercept + slope * arg0;
@@ -9359,7 +9344,7 @@ int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 a
 	slope = (arg1 - intercept) / slope;
 	*arg8 = slope;
 	*arg9 = arg1;
-	if ((arg4 + arg4 + arg4 + arg4 + arg4 + arg4) == 0.0f) {} return (arg0 <= slope) && (slope <= arg2);
+	if ((arg4 + arg4 + arg4 + arg4) == 0.0f) {} return (arg0 <= slope) && (slope <= arg2);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010EF40_11DEF0.s")
