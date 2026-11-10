@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_802DB1D4_31F324`, the first joint-array store occupied the actor-ID reload's position at ROM `0x31F42C`. IDO moved the `lbu a0,0xB3(sp)` past the timer branch. The high-timer particle block started with `lh t7,0x2C(s0)` and used a different scratch-register sequence through the effect call.
+
+-> `code changed`: Assign `joints[4]` before the four preceding array elements. Mask the assignments to `joints[0]` and `joints[1]` to their low halfwords. Keep one explicit byte mask on the actor ID at the animation switch call. Reuse the existing word scratch for the masked lower-timer angle before writing the halfword, and capture `joints[5]` in the parent local with an empty test before the final parent-type condition.
+
+-> `correct ASM`: `lbu a0,0xB3(sp)` precedes the last link lookup and all five joint-array stores. The high-timer random-effect block from `0x31F46C` through `0x31F570` matches byte-for-byte. The lower-timer effect block differs by two words and the final parent reload uses `lh v1,0x92(sp)`. The frame remains `0xB0`. This is a partial match with a diff score of 480, down from 1211.
