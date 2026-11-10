@@ -33,3 +33,9 @@
 `code changed` -> Move the explicit `& 0xFFFFu` from the `spA0` assignment to the `sp9C` assignment. Both destinations are signed halfwords.
 
 `correct ASM` -> IDO emits `lb t6,0xC(t4)`, `sll t7,a3,4`, `addu t5,t3,t7`, and `sh t6,0xA0(sp)` at the target offsets. The linked US draft falls from 56 to 52 differing words and from score 335 to 315.
+
+`incorrect ASM` -> The linked case 2 heading load at `0x31F5C4` uses `lh t6,6(s0)`. The native compiler listing before final assembly already uses `lh v1,6(s0)`, followed by a mask into `t6`, a copy to `v1`, and the argument mask into `a0`.
+
+`code changed` -> As a control, assign the unmasked heading to `sp4C` and let the unsigned-halfword trig parameters apply the mask. IDO reserves the same spill offsets in both forms. Its assembly listing drops the first mask and copy, and the later scratch-register sequence changes.
+
+`correct ASM` -> The linked control uses `lh v1,6(s0)` at `0x31F5C4`. It retains the argument spill at `sp+0x4C` and increases the routine's total to 163 differing words. Masking just the X or Y sum to its low halfword before passing it to `func_80088E40_97DF0` brings the total back to 55 while retaining the correct heading load. That control changes the order of instructions in the coordinate setup. The guarded draft keeps the explicit heading mask and its 52 differing words.
