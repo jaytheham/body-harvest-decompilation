@@ -2864,7 +2864,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	s16 mapZ;
 	Gfx *gfx;
 	u8 (*textureRow)[64];
-	Vtx *vertices[2];
+	struct { Vtx *column; Vtx *row; } vertices;
 	u8 tileZ;
 	s16 visibleCount;
 	s16 culledCount;
@@ -2883,9 +2883,10 @@ void func_800B9DB8_C8D68(u8 arg0)
 	D_8014FD28 = 0x8F;
 	mapX = D_80151DD8.mapPosX;
 	mapZ = D_80151DD8.mapPosY;
-	vertices[0] = startVertices;
-	vertices[1] = startVertices;
-	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
+	vertices.column = startVertices;
+	vertices.row = startVertices;
+	gfx = D_8005BB2C++;
+	gDPSetRenderMode(gfx, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
 	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
 	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
@@ -2912,7 +2913,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 		u8 palette;
 		u8 tileX;
 		u8 tile;
-		for (row = 0; row < 5; row++, row ^= 0)
+		for (row = 0; row < 5; row++)
 		{
 			s32 firstTileX;
 			tileZ = row + mapZ / 4;
@@ -2920,12 +2921,12 @@ void func_800B9DB8_C8D68(u8 arg0)
 			textureRow = &((u8 (*)[64])D_8021EA30)[tileZ];
 			for (column = 0; column < 5; column++)
 			{
-				left = (column == 0) ? (mapX % 4) : 0;
+				left = ((u32)column == 0) ? (mapX % 4) : 0;
 				right = (column == tileSize) ? (mapX % 4) + 1 : tileSize;
 				top = (row == 0) ? (mapZ % 4) : 0;
 				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
-				tileX = firstTileX + column;
+				tileX = (u32)firstTileX + column;
 				palette = (*textureRow)[tileX]; palette &= 0xF;
 				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
 				gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
@@ -2939,18 +2940,18 @@ void func_800B9DB8_C8D68(u8 arg0)
 				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), (s16)((tileZ << 10) + 0x8000), 0x400, 0x400) != 0)
 				{
 					visibleCount += 1;
-					func_800B604C_C4FFC(vertices[0], left, top, right, bottom, (u16)((u16)(tileX * 4 + ((tileZ & 0x3F) * 0x400)) + top * 0x100) + left, palette);
+					func_800B604C_C4FFC(vertices.column, left, top, right, bottom, (u16)((u16)(tileX * 4 + ((tileZ & 0x3F) * 0x400)) + top * 0x100) + left, palette);
 				}
 				else
 				{
 					culledCount += 1;
 				}
 
-				vertices[0] = &vertices[0][tileSize - left];
+				vertices.column = &vertices.column[tileSize - left];
 			}
 
-			vertices[1] = &vertices[1][(tileSize - top) * 18];
-			vertices[0] = vertices[1];
+			vertices.row = &vertices.row[(tileSize - top) * 18];
+			vertices.column = vertices.row;
 		}
 	}
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
