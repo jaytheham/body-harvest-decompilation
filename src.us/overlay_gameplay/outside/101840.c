@@ -1898,9 +1898,9 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 spD0;
 	s16 spCE;
 	s32 cB;
-	s16 baseBlue;
-	s16 baseRed;
-	s16 baseGreen;
+	s32 baseBlue;
+	s32 baseRed;
+	s32 baseGreen;
 
 /* Keep the addressed parameter and color halfwords in their target homes. */
 	if (&arg0) {}
@@ -2062,13 +2062,12 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = arg2[1];
 	D_8005BB34->v.ob[2] = arg2[2];
 	D_8005BB34->v.flag = 0;
+	baseGreen = spE8;
+	baseBlue = spE6;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
-	baseRed = *(s16 *)&spEA;
-	D_8005BB34->v.cn[0] = baseRed;
-	baseGreen = *(s16 *)&spE8;
+	D_8005BB34->v.cn[0] = (baseRed = spEA);
 	D_8005BB34->v.cn[1] = baseGreen;
-	baseBlue = *(s16 *)&spE6;
 	D_8005BB34->v.cn[2] = baseBlue;
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
