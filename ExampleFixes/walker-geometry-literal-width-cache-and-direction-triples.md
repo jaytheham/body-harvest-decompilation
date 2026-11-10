@@ -15,3 +15,9 @@
 → `code changed` → Give the angle its own signed word at the old scratch declaration site and move the scratch declaration after the halfword locals. Pass `angle + 0x4000` to each trig function and let its parameter type narrow the argument.
 
 → `correct ASM` → The `0x168` frame, named width at `0x13C(sp)`, and width cache at `0x54(sp)` match. The angle store uses `0x150(sp)` before the first `jal`, its delay slot moves `t9` to `a0`, and the second call reloads the angle into `a0`. The first 118 words differ only at two relocated data references in the linked candidate. Its diff score improves from 22998 to 22109, with the assembly fallback still selected.
+
+`incorrect ASM` → The Z coordinate loads and subtraction are delayed until after the midpoint X product and store.
+
+→ `code changed` → Start the Z difference before the X product and keep the absolute Z distance in its own signed word, using the declaration slot of the unused float.
+
+→ `correct ASM` → The Z loads and subtraction occur at the target positions starting at `0x105CB4`, while the X calculation is still in progress. The frame stays at `0x168`, and the width cache stays at `0x54(sp)`. The linked diff score improves from 21843 to 21608. Other instruction and register differences remain.

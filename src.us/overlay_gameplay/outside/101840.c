@@ -1522,7 +1522,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 temp_f14;
 	s32 wideX;
 	s32 angle;
-	f32 temp_f0_2;
+	s32 absDistanceZ;
 	f32 temp_f12;
 	s16 temp_f6;
 	s32 temp_f8;
@@ -1704,10 +1704,10 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 
 	temp_v0 = arg1[0] - arg2[0];
 	delta = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
-	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
 	temp_v0_2 = arg1[2] - arg2[2];
-	delta = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
-	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)delta * 0.5));
+	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
+	absDistanceZ = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
+	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistanceZ * 0.5));
 	sp124 = arg1[1] - (s16)(s32)(direction.y * (var_f16 * 3.0f));
 	temp_f6 = (s16)(temp_f6_3 / 2);
 	temp_f10 = (s16)(temp_v1_2 / 2);
