@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-10T17:25:36Z",
-  "commit": "3c578f98",
-  "commit_timestamp": "2026-11-11T06:24:42+13:00",
+  "generated": "2026-11-11T01:49:46Z",
+  "commit": "bfab698e",
+  "commit_timestamp": "2026-11-11T14:48:39+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 2996,
@@ -2521,7 +2521,7 @@
       "asm_stubs": 0,
       "total": 122,
       "matched_pct": 95.9,
-      "contributor": "LunarLaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_level/comet/alien_types.c",
@@ -2597,16 +2597,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 87,
-      "matched": 2108,
-      "non_matching": 36,
+      "files": 88,
+      "matched": 2225,
+      "non_matching": 41,
       "asm_stubs": 0
     },
     {
       "name": "LunarLaurus",
-      "files": 10,
-      "matched": 549,
-      "non_matching": 25,
+      "files": 9,
+      "matched": 432,
+      "non_matching": 20,
       "asm_stubs": 0
     },
     {
@@ -2907,7 +2907,7 @@
     },
     {
       "date": "2026-11-08",
-      "commit": "3c578f9",
+      "commit": "f27135b",
       "matched": 2996,
       "non_matching": 61,
       "total": 3057
