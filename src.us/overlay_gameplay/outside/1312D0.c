@@ -759,7 +759,7 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(1325)
+// CURRENT(420)
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
@@ -804,10 +804,9 @@ void func_80124D60_133D10(void) {
 			sparkDLs = D_80140AD8_14FA88;
 
 			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
-				weaponFlags = D_80145BE0_154B90[bullet->unk20].weaponFlags;
-				if ((weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
+				if ((D_80145BE0_154B90[bullet->unk20].weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
 					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E);
-				} else if ((weaponFlags << 9) < 0) {
+				} else if ((D_80145BE0_154B90[bullet->unk20].weaponFlags << 9) < 0) {
 					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 				} else {
 					switch (bullet->unk20 - 0x5C) {
@@ -976,8 +975,8 @@ void func_80124D60_133D10(void) {
 		} while (i--);
 
 		gSPVertex(D_8005BB30++, &D_8005BB34[-24], 24, 0);
-		i = 0x16;
 		point = &D_8015FA40[2];
+		i = 0x16;
 		do {
 			if ((point[0].unk0 != 0x7FFF) && (point[-1].unk0 != 0x7FFF)) {
 				gSPLineW3D(D_8005BB30++, i, i + 1, 4, 0);
@@ -996,9 +995,9 @@ void func_80124D60_133D10(void) {
 				s32 invFade;
 				s32 scale;
 
-				fade = (D_8015F9F8[i][3] << 6) - 1;
-				invFade = (0xFF - fade) & 0xFF;
-				scale = (fade << 2) - fade;
+				fade = (D_8015F9F8[i][3] * 64) - 1;
+				invFade = 0xFF - fade;
+				scale = fade * 3;
 				fadeVec.unk0 = scale;
 				fadeVec.unk2 = scale;
 				fadeVec.unk4 = scale;
