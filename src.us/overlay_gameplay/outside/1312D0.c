@@ -1619,22 +1619,22 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 
 	if ((distSqBest != 0x7FFFFFFF) && (exactHit == 0)) {
 		dx = (x - hit.pointer->unk0) >> 2;
-		dy = (arg2 - hit.pointer->unk2) >> 2;
+		y = (arg2 - hit.pointer->unk2) >> 2;
 		dz = (z - hit.pointer->unk4) >> 2;
-		interp = (f32)((dx * dx) + (dy * dy) + (dz * dz) - (lineDistBest >> 4));
+		interp = (f32)((dx * dx) + (y * y) + (dz * dz) - (lineDistBest >> 4));
 
 		dx = (x - *arg4) >> 2;
-		dy = (arg2 - *arg5) >> 2;
+		y = (arg2 - *arg5) >> 2;
 		dz = (z - *arg6) >> 2;
 
 		if (interp < 10.0f) {
 			bestDistF = 1.0f;
 		} else {
-			bestDistF = sqrtf(interp / (f32)((dx * dx) + (dy * dy) + (dz * dz)));
+			bestDistF = sqrtf(interp / (f32)((dx * dx) + (y * y) + (dz * dz)));
 		}
 
 		hit.pointer->unk0 = (s16)((f32)x - ((f32)(dx * 4) * bestDistF));
-		hit.pointer->unk2 = (s16)((f32)arg2 - ((f32)(dy * 4) * bestDistF));
+		hit.pointer->unk2 = (s16)((f32)arg2 - ((f32)(y * 4) * bestDistF));
 		hit.pointer->unk4 = (s16)((f32)z - ((f32)(dz * 4) * bestDistF));
 
 		if (interp > 10.0f) {
