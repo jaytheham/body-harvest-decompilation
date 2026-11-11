@@ -1556,10 +1556,10 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 					}
 				}
 				dx = (x - entity.alien->unk0) >> 2;
-					dy = (arg2 - entity.alien->unk2) >> 2;
+					scratch = (arg2 - entity.alien->unk2) >> 2;
 				dz = (z - entity.alien->unk4) >> 2;
 				if ((data.alien->unk16 & 0xF) == 1) {
-					absX = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq)
+					absX = (s32)((sqrtf((f32)((dx * dx) + (scratch * scratch) + (dz * dz)) / pathDistSq)
 						* (f32)(*arg5 - arg2)) + (f32)arg2);
 					absZ = entity.alien->unk2;
 					if ((data.alien->unk16 & 0x10) != 0) {
@@ -1569,7 +1569,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 						continue;
 					}
 				}
-				objDist = (dx * dx) + (dy * dy) + (dz * dz);
+				objDist = (dx * dx) + (scratch * scratch) + (dz * dz);
 				if (objDist < (f32)distSqBest) {
 					if (D_801591A8 != 0) {
 						D_80158FEC = entity.alien;
