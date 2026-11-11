@@ -61,3 +61,46 @@ if (level) {} gDPPipeSync(D_8005BB2C++);
 ```
 
 Correct ASM: the entry now saves the address register, emits `lui` / `addiu` for `currentLevel`, and loads its value through offset zero before the helper. This reproduces the target's entry instruction sequence and total size `0x4fc`; the saved-register role still differs. Enabled score improves from5761 to5382. Loop address rematerialization and color/register scheduling remain unmatched, so the function stays under `NON_MATCHING`.
+
+## Left shield-wall coordinate stores
+
+Incorrect ASM: The left Z-coordinate calculation narrowed the scaled value with
+`sll ..., 0x13` and `sra ..., 0x10` before two halfword stores.
+
+-> Code changed: The improved C candidate advances the global vertex cursor
+with explicit `D_8005BB34 = &v0[1]` assignments for each vertex, and reads Z
+through the adjusted left-point pointer. The color byte and signed coordinate
+scratch use separate locals.
+
+-> Correct ASM: The left Z-coordinate calculation uses `negu`, a single
+`sll ..., 3`, and the two halfword stores. The enabled C function occupies
+the target's 0x4FC bytes. Its register allocation and other instruction
+scheduling still differ, so the function retains its assembly fallback.
+
+## Counter write alias and default blue load
+
+Incorrect ASM shared the counter address between the final halfword load and
+store. It also hoisted the default blue value out of the loop.
+
+-> Code changed: read `D_8013D510_14C4C0` into the signed halfword scratch
+and write the incremented value through the existing `D_8013D510`
+declaration. Bind the write alias to the existing object in both linker
+symbol files. Use `rightX * 0 + 0xFF` for the default blue value.
+
+-> Correct ASM uses separate `lui` instructions for the signed `lh` and
+`sh`, with the write address in `at`. The default branch emits
+`li v1, 0xFF` immediately before its four blue-channel stores. The full
+function still differs and retains its assembly fallback.
+
+## Right Z-coordinate scratch
+
+Incorrect ASM placed the scaled right Z-coordinate copy after the left
+vertex depth store.
+
+-> Code changed: load the right point Z-coordinate into a signed halfword
+scratch before scaling it. Convert the scaled value to `u16` at the
+second right vertex store.
+
+-> Correct ASM restores the copy into `a0` ahead of the left vertex depth
+store. The generated function has the target length of 0x4FC bytes.
+Signed narrowing and other instruction-order differences remain.
