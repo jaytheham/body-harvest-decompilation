@@ -590,7 +590,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
 
 	loop = 0x20;
-	if (level) {} gDPPipeSync(D_8005BB2C++);
+	gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -639,8 +639,8 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			v0->v.ob[2] = lowerHeight;
 			v3->v.ob[2] = 0x40;
 			v1->v.ob[2] = v3->v.ob[2];
-			/* Keep the point table and level address live through vertex setup. */
-			if ((u32)right | (u32)level | (u32)coords) {}
+			/* Keep the point table, level address, and raw right Z live here. */
+			if ((u32)right | (u32)level | (u32)coords | (u32)pointCoord) {}
 
 			tileGroup = tile - D_801479B0_156960[*level - 1];
 			tileGroup >>= 3;
@@ -706,7 +706,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	alpha0 = D_8013D510_14C4C0;
 	D_8013D510 = alpha0 + 1;
 	gDPPipeSync(D_8005BB2C++);
-	if (alpha0 | modBase) {}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
