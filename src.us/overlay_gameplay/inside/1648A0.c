@@ -1683,7 +1683,6 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	return var_f2;
 }
 
-// CURRENT(956)
 // AI - Handle player input, movement, and collision
 #ifdef NON_MATCHING
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
@@ -2062,7 +2061,6 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 	}
 }
 
-// CURRENT(14377)
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
 #ifdef NON_MATCHING
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
@@ -2134,6 +2132,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				{
 					s32 routeStride;
 					routeStride = 0x1C;
+					// Need to replace all the ptr math in this function with proper structs
 					route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * routeStride);
 				}
 				pathView = route->unk14;
@@ -2469,7 +2468,6 @@ void func_8007EB1C_166BDC(void *arg0) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 }
 
-// CURRENT(12777)
 // AI - Render player character model with full matrix setup and damage flash
 #ifdef NON_MATCHING
 void func_8007EFD4_167094(VehicleInstance *arg0) {

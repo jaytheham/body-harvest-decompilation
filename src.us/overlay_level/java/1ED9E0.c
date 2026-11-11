@@ -801,7 +801,6 @@ void func_802D5FBC_1EECCC(void) {
 	func_800EFEB4_FEE64(0, 0xF, 0);
 }
 
-// CURRENT(10)
 // unused? appears to spawn Doodlebugs to attack the aircraft carrier in Blackness Naval Base (buildinginstance 34)
 #ifdef NON_MATCHING
 void func_802D5FE4_1EECF4(void)

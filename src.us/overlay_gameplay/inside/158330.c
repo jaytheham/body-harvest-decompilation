@@ -8074,7 +8074,7 @@ void func_80074FF0_15D0B0(void) {
 					(u16) (u32) ((f64) halfDim * radiusScale),
 					(s32) D_8008DDF4_175EB4,
 					(s32) D_8008DDF8_175EB8,
-					(cameraZ = (s32)(s64)((s32)D_8008DDFC_175EBC)),
+					((s32)(s64)((s32)D_8008DDFC_175EBC)),
 					(u16) (s32) (((f64) (D_8008DDF0_175EB0 * angleScale)) / temp_f20),
 					0x238E
 				)) {
@@ -8277,7 +8277,6 @@ void func_8007568C_15D74C(void) {
 								0x40
 							);
 
-
 							func_800773F4_15F4B4(D_800E65BC[objIdx].unk4, D_800E65BC[objIdx].unk2C << 0x10, D_800E65BC[objIdx].unk2E << 0x10, D_800E65BC[objIdx].unk30 << 0x10,
 								0, 0, 0, D_8005BB38++, 1, 0x100);
 
@@ -8313,7 +8312,6 @@ void func_8007568C_15D74C(void) {
 					}
 				}
 			}
-
 	}
 
 	if (D_800E65F0 == 5) {
@@ -8346,7 +8344,6 @@ void func_8007568C_15D74C(void) {
 		gSPSetLights2(D_8005BB2C++, D_8008DE50_175F10.lights);
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_8007568C_15D74C.s", "src.us/overlay_gameplay/inside/158330_gradient_late_rodata.s")
 #endif

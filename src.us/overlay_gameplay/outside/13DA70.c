@@ -807,7 +807,6 @@ void func_80130BA0_13FB50(void)
 	s32 score;
 	Unk80052B2C *player;
 
-
 	if (D_80140CA4_14FC54 != 0) {
 		D_80140CA8_14FC58 = 0;
 		D_8016006C = 0;
@@ -878,7 +877,9 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = stageScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145500_1544B0, width, baseScore);
+				width = baseScore * 12;
+				D_8016006D_W = baseScore = baseScore + 1;
+				drawText(D_80145500_1544B0, width, baseScore);
 			} else {
 				drawText(D_80145504_1544B4, 0xFF, baseScore);
 			}
@@ -909,7 +910,9 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = score;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12; baseScore = (u8)(baseScore + 1); D_8016006D_W = baseScore; drawText(D_80145550_154500, width, baseScore);
+				width = baseScore * 12;
+				D_8016006D_W = baseScore = baseScore + 1;
+				drawText(D_80145550_154500, width, baseScore);
 			} else {
 				drawText(D_80145554_154504, 0xFF, baseScore);
 			}

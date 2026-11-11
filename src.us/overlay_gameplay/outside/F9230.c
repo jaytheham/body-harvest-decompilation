@@ -1322,9 +1322,6 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 
 	arg0->unk6 = arg0->unkE;
 }
-
-
-
 #else
 #if defined(VERSION_US)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
@@ -1852,9 +1849,6 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 		D_8013FC04_14EBB4[0] = 0.0f;
 	}
 }
-
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
 #endif

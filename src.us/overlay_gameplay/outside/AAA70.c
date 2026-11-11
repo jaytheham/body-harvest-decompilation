@@ -341,7 +341,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	Vtx *vtx1;
 	Vtx *vtx2;
 	Vtx *vtx3;
-	f64 pad; /* Original double stack home. */
+	f64 pad;
 	s32 tempT2;
 	s32 iconSwap;
 
@@ -576,9 +576,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C6CC_AB67C.s")
 #endif
@@ -1117,7 +1114,6 @@ void func_8009EE30_ADDE0(void)
 	gSP1Quadrangle(D_8005BB2C++, 0, 7, 8, 9, 0);
 }
 
-// CURRENT(7532)
 #ifdef NON_MATCHING
 void func_8009F130_AE0E0(void) {
 	static SignedWord selectedIndex = { 4 };
@@ -1330,8 +1326,6 @@ void func_8009F130_AE0E0(void) {
 
 	gDPPipeSync(D_8005BB2C++);
 }
-
-
 #else
 s32 D_8013D730_14C6E0 = 4;
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009F130_AE0E0.s")

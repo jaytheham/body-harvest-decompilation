@@ -1789,7 +1789,6 @@ void func_8007D424_8C3D4(void) {
 	} while (idx < 0xFF);
 }
 
-// CURRENT(9860)
 // AI - Iterates alienInstances via D_8014D510/D_8014ECCC, updating flags and ground using func_800B84D0_C7480.
 #ifdef NON_MATCHING
 void func_8007D690_8C640(void) {
@@ -1809,6 +1808,7 @@ void func_8007D690_8C640(void) {
 	if (workValue != 0) {
 		do {
 			s32 alienIndex;
+			// Need to try removing alien ptr and replacing with direct array access
 			AlienInstance *alien;
 			u8 typeIndex;
 			s32 flags;
@@ -1857,7 +1857,6 @@ void func_8007D690_8C640(void) {
 						typeFlags = type->unk54;
 						if (!(typeFlags & 0x20000)) {
 							workValue = D_80052A8C;
-							/* The original masks the logical-not result, not the flags word. */
 							typeFlags = !typeFlags;
 							if (typeFlags & 0x4000) {
 
@@ -2134,9 +2133,7 @@ void func_8007D690_8C640(void) {
 	}
 
 	func_8011DE60_12CE10(0);
-
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/884C0/func_8007D690_8C640.s")
 #endif

@@ -384,7 +384,6 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 	return 0;
 }
 
-// CURRENT(3445)
 // guess_initBuildingsDoors
 // AI - Initializes buildingTypes, buildingInstances, D_800522C0 and D_80052A7C via func_80116784_125734.
 #ifdef NON_MATCHING
@@ -611,7 +610,7 @@ void func_8011694C_1258FC(void) {
 		type = &buildingTypes[inst->buildingType];
 
 		if ((4 & type->unk1A[0]) || (inst->rotationIndexWord != 0xF) || (func_80118114_1270C4(i) != 0)) {
-			inst->statusFlags = inst->statusFlags | (0x1000 & 0xFFFFFFFFFFFFFFFFu);
+			inst->statusFlags |= 0x1000;
 		}
 
 		if (type->pad16[2] == 0) {

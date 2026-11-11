@@ -86,7 +86,6 @@ void func_800769A8_85958(s32 arg0) {
 	D_8014D298[arg0] = D_8014D298[D_8014D2EC = D_8014D2EC - 1];
 }
 
-// CURRENT(1564)
 // AI - Spawns D_80259D90 entries from D_80221A30/D_8021FA30 patterns via func_80076830_857E0 and func_800B84D0_C7480.
 #ifdef NON_MATCHING
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
@@ -248,7 +247,6 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						entry->vertices[3].v.cn[0] = c0;
 					}
 				}
-
 			}
 		}
 	}
@@ -404,7 +402,6 @@ void func_8007764C_865FC(void) {
 			} else {
 				obj->unk2++;
 			}
-
 		}
 
 		D_8014D2F0--;
@@ -430,7 +427,6 @@ void func_8007764C_865FC(void) {
 			} else {
 				obj->unk2--;
 			}
-
 		}
 
 		D_8014D2F0++;
@@ -456,7 +452,6 @@ void func_8007764C_865FC(void) {
 			} else {
 				obj->unk2 += 5;
 			}
-
 		}
 
 		D_8014D2F4--;
@@ -482,7 +477,6 @@ void func_8007764C_865FC(void) {
 			} else {
 				obj->unk2 -= 5;
 			}
-
 		}
 
 		D_8014D2F4++;
@@ -534,8 +528,6 @@ void func_8007764C_865FC(void) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(i), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, obj->unk8);
-
-
 	}
 
 	if (obj < (Unk857E0Obj*)&D_80259D90[150]) {}
@@ -627,8 +619,6 @@ void func_8007764C_865FC(void) {
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(i), 4, 0);
 
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
-
-
 	}
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);

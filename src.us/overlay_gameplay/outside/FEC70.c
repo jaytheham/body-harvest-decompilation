@@ -28,9 +28,6 @@ const f64 D_80144610_1535C0[1] = {360.0};
 u32 D_8013FCC4_14EC70[1] = {(u32)&vehicleInstances[63]};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
 
-
-
-// CURRENT(3405)
 #ifdef NON_MATCHING
 s32 func_800EFCC0_FEC70(s32 *arg0) {
 	s32 i;
@@ -58,6 +55,7 @@ s32 func_800EFCC0_FEC70(s32 *arg0) {
 		src += 6;
 	} while (i != 1);
 
+	// Test if this is actually an unrolled for loop
 	if (i != 5) {
 		src1 = (s32 *)&cutsceneData[i];
 		src2 = (s32 *)&cutsceneData[i + 1];
@@ -292,8 +290,6 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
-// CURRENT(107)
-// AI - Sets D_80157F58/D_80157F5C/D_80157F60/D_80157F68 from the arguments, calls func_800F02EC_FF29C
 #ifdef NON_MATCHING
 void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
 {
@@ -309,46 +305,46 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
   entryS16 = (s16 *) entry;
   switch (entry->unk11)
   {
-    case 0:
-      D_80157586 = entry->unk6;
-      entry = entryS16;
-      D_80157588 = entry->unk8;
-      D_8015758A = entry->unkA;
-      break;
+	case 0:
+	  D_80157586 = entry->unk6;
+	  entry = entryS16;
+	  D_80157588 = entry->unk8;
+	  D_8015758A = entry->unkA;
+	  break;
 
-    case 1:
-      D_80157586 = D_80052B34->unk0 >> 2;
-      D_80157588 = D_80052B34->unk2 >> 2;
-      D_80157588 += ((int) vehicleTypes[D_80052B34->unk1A].unk38) >> 3;
-      D_8015758A = D_80052B34->unk4 >> 2;
-      break;
+	case 1:
+	  D_80157586 = D_80052B34->unk0 >> 2;
+	  D_80157588 = D_80052B34->unk2 >> 2;
+	  D_80157588 += ((int) vehicleTypes[D_80052B34->unk1A].unk38) >> 3;
+	  D_8015758A = D_80052B34->unk4 >> 2;
+	  break;
 
-    case 2:
-      D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (u16) D_80159DE0;
-      D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
-      D_80157588 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
-      D_8015758A = (u16) D_80159DE4 + (buildingInstances[entryS16[7]].zCoord >> 2);
-      break;
+	case 2:
+	  D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (u16) D_80159DE0;
+	  D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
+	  D_80157588 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
+	  D_8015758A = (u16) D_80159DE4 + (buildingInstances[entryS16[7]].zCoord >> 2);
+	  break;
 
-    case 3:
-      D_80157586 = vehicleInstances[entryS16[7]].unk0 >> 2;
-      D_80157588 = vehicleInstances[entryS16[7]].unk2 >> 2;
-      D_8015758A = vehicleInstances[entryS16[7]].unk4 >> 2;
-      break;
+	case 3:
+	  D_80157586 = vehicleInstances[entryS16[7]].unk0 >> 2;
+	  D_80157588 = vehicleInstances[entryS16[7]].unk2 >> 2;
+	  D_8015758A = vehicleInstances[entryS16[7]].unk4 >> 2;
+	  break;
 
   }
 
   if (entry->unk10 == 0)
   {
-    D_80157580 = D_80157586 + entryS16[0];
-    D_80157582 = D_80157588 + entryS16[1];
-    D_80157584 = D_8015758A + entryS16[2];
+	D_80157580 = D_80157586 + entryS16[0];
+	D_80157582 = D_80157588 + entryS16[1];
+	D_80157584 = D_8015758A + entryS16[2];
   }
   else
   {
-    D_80157580 = entryS16[0];
-    D_80157582 = entryS16[1];
-    D_80157584 = entryS16[2];
+	D_80157580 = entryS16[0];
+	D_80157582 = entryS16[1];
+	D_80157584 = entryS16[2];
   }
   D_80157590 = 3;
   D_8004DC60 = 0x25;
@@ -360,7 +356,6 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F0340_FF2F0.s")
 #endif
 
-// CURRENT(24469)
 #ifdef NON_MATCHING
 s32 func_800F066C_FF61C(void) {
 	Unk84EECEffect *entry;
@@ -594,7 +589,6 @@ void func_800F1004_FFFB4(void) {
 	}
 }
 
-// CURRENT(29635)
 #ifdef NON_MATCHING
 // Boss fight cutscene & setup
 void func_800F1134_1000E4(void) {
