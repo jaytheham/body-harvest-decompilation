@@ -639,6 +639,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			v0->v.ob[2] = lowerHeight;
 			v3->v.ob[2] = 0x40;
 			v1->v.ob[2] = v3->v.ob[2];
+			if (right) {}
 			normalColor = 0x8C;
 
 			tileGroup = tile - D_801479B0_156960[*level - 1];
