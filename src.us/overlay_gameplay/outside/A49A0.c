@@ -645,7 +645,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			tileGroup >>= 3;
 
 			if (selected == tileGroup) {
-				tileGroup = D_8013D510_14C4C0 << 4;
+				tileGroup = D_8013D510_14C4C0 * 16;
 				alpha0 = tileGroup % modBase;
 				bright = 0xFF;
 				alpha2 = (tileGroup + 0x200) % 0x1FF; if (alpha0 >= 0x100) {
