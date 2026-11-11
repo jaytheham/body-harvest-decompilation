@@ -708,8 +708,8 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
 	alpha0 = D_8013D510_14C4C0;
 	D_8013D510 = alpha0 + 1;
-	if (alpha0) {}
 	gDPPipeSync(D_8005BB2C++);
+	if (alpha0 | modBase) {}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
