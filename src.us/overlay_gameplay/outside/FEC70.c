@@ -28,83 +28,17 @@ const f64 D_80144610_1535C0[1] = {360.0};
 u32 D_8013FCC4_14EC70[1] = {(u32)&vehicleInstances[63]};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
 
-#ifdef NON_MATCHING
-s32 func_800EFCC0_FEC70(s32 *arg0) {
+s32 func_800EFCC0_FEC70(CutsceneEntry *arg0) {
+	s32 count;
 	s32 i;
-	s32 *src;
-	s32 *src1;
-	s32 *src2;
-	s32 *src3;
-	s32 *src4;
-	s32 *srcEnd;
-	CutsceneEntry *cutsceneData;
 
-	i = 0;
-	src = (s32 *)D_80157E90;
-	cutsceneData = D_80157E90;
+	count = 5;
 
-	do {
-		arg0[0] = src[0];
-		arg0[1] = src[1];
-		arg0[2] = src[2];
-		arg0[3] = src[3];
-		arg0[4] = src[4];
-		arg0[5] = src[5];
-		i++;
-		arg0 += 6;
-		src += 6;
-	} while (i != 1);
-
-	// Test if this is actually an unrolled for loop
-	if (i != 5) {
-		src1 = (s32 *)&cutsceneData[i];
-		src2 = (s32 *)&cutsceneData[i + 1];
-		src3 = (s32 *)&cutsceneData[i + 2];
-		src4 = (s32 *)&cutsceneData[i + 3];
-		srcEnd = (s32 *)&cutsceneData[i + 7];
-
-		do {
-			src4 += 24;
-			arg0 += 24;
-			arg0[-24] = src1[0];
-			arg0[-23] = src1[1];
-			src1 += 24;
-			src2 += 24;
-			arg0[-22] = src1[-22];
-			src3 += 24;
-			arg0[-21] = src1[-21];
-			arg0[-20] = src1[-20];
-			arg0[-19] = src1[-19];
-			arg0[-18] = src1[-18];
-
-			arg0[-17] = src2[-24];
-			arg0[-16] = src2[-23];
-			arg0[-15] = src2[-22];
-			arg0[-14] = src2[-21];
-			arg0[-13] = src2[-20];
-			arg0[-12] = src2[-19];
-
-			arg0[-11] = src3[-24];
-			arg0[-10] = src3[-23];
-			arg0[-9] = src3[-22];
-			arg0[-8] = src3[-21];
-			arg0[-7] = src3[-20];
-			arg0[-6] = src3[-19];
-
-			arg0[-5] = src4[-24];
-			arg0[-4] = src4[-23];
-			arg0[-3] = src4[-22];
-			arg0[-2] = src4[-21];
-			arg0[-1] = src4[-20];
-			arg0[0] = src4[-19];
-		} while (src4 != srcEnd);
+	for (i = 0; i != count; i++) {
+		*arg0++ = D_80157E90[i];
 	}
-
-	return 5;
+	return count;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800EFCC0_FEC70.s")
-#endif
 
 void func_800EFE50_FEE00(u8 arg0) {
 	func_800101F0_10DF0((s32)D_80157E90,

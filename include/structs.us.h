@@ -760,9 +760,12 @@ typedef struct {
 
 
 /* Cutscene entry: 24 bytes (6 s32), stored in D_80157E90[5] (120 bytes) */
-typedef struct {
-	/* 0x00 */ Unk84EECEffect effect;
-	/* 0x16 */ u8 pad[2];
+typedef union {
+	struct {
+		/* 0x00 */ Unk84EECEffect effect;
+		/* 0x16 */ u8 pad[2];
+	} data;
+	s32 words[6];
 } CutsceneEntry; /* size = 0x18 */
 
 // AI - Special-effect entry: effect display list + state for interior rendering (D_8008DED0_175F90)
