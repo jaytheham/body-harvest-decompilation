@@ -1992,19 +1992,18 @@ end_simulation:
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 	Gfx *packet;
-	s32 midX;
-	s32 midY;
-	s32 midZ;
-	f64 fade;
+	s32 endStep;
+	u8 upperStackPadding[16]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
 	f32 length;
 	f32 dirX;
 	f32 dirY;
 	f32 dirZ;
 	s32 startStep;
-	u32 endStep;
-	s32 stepLength;
+	u8 lowerStackPadding[8]; /* Keep the half-delta spills at sp+0x30 through sp+0x28. */
 
-	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
+	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1))
+	             + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1))
+	             + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
 	if (length == 0.0f) {
 		return;
 	}
@@ -2013,35 +2012,31 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	dirY = ((arg4 - arg1) >> 1) / length;
 	dirZ = ((arg5 - arg2) >> 1) / length;
 
-	startStep = (func_800038E0_44E0() % 30);
-	startStep = (startStep * length) / 100.0f;
+	startStep = ((func_800038E0_44E0() % 30) * length) / 100.0f;
 
 	arg0 += dirX * startStep;
-	midX = arg0;
 	arg1 += dirY * startStep;
-	midY = arg1;
 	arg2 += dirZ * startStep;
-	midZ = arg2;
 
-	endStep = (func_800038E0_44E0() % 30); if (255) {}
-	packet = D_8005BB30;
-	endStep = (s32)(((s32)endStep * length) / 100.0f);
-	stepLength = endStep;
+	endStep = func_800038E0_44E0() % 30;
+	endStep = (endStep * length) / 100.0f;
 
-	(&arg3)[0] = arg3 - dirX * stepLength;
-	(&arg4)[0] = arg4 - dirY * stepLength;
-	(&arg5)[0] = arg5 - dirZ * stepLength;
+	arg3 = arg3 - dirX * endStep;
+	if (1) {}
+	packet = D_8005BB30++;
+	arg4 = arg4 - dirY * endStep;
+	if (1) {}
+	arg5 = arg5 - dirZ * endStep;
 
-
-	D_8005BB30++;
+	if (1) {}
 	gDPSetRenderMode(packet, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 	gSPClearGeometryMode(D_8005BB30++, G_FOG);
 
-	D_8005BB34->v.ob[0] = midX;
-	D_8005BB34->v.ob[1] = midY;
-	D_8005BB34->v.ob[2] = midZ;
+	D_8005BB34->v.ob[0] = arg0;
+	D_8005BB34->v.ob[1] = arg1;
+	D_8005BB34->v.ob[2] = arg2;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2051,13 +2046,12 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	stepLength = startStep;
-	fade = (length - stepLength) - (s32)endStep;
-	stepLength = (s32)(fade * 0.7);
-	(*(Vtx * volatile *)&D_8005BB34)->v.ob[0] = midX + dirX * stepLength;
+	if (1) {}
+	startStep = (s32)(((length - startStep) - endStep) * 0.7);
+	D_8005BB34->v.ob[0] = arg0 + dirX * startStep;
 	if (255) {}
-	D_8005BB34->v.ob[1] = midY + dirY * stepLength;
-	D_8005BB34->v.ob[2] = midZ + dirZ * stepLength;
+	D_8005BB34->v.ob[1] = arg1 + dirY * startStep;
+	D_8005BB34->v.ob[2] = arg2 + dirZ * startStep;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2080,7 +2074,7 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34++;
 
 	gDPPipeSync(D_8005BB30++);
-	gSPVertex(D_8005BB30++, D_8005BB34 - 3, 3, 0);
+	gSPVertex(D_8005BB30++, &D_8005BB34[-3], 3, 0);
 	gSPLine3D(D_8005BB30++, 0, 1, 0);
 	gSPLine3D(D_8005BB30++, 1, 2, 0);
 }
