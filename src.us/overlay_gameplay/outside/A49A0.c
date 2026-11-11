@@ -575,7 +575,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	Vtx *v3;
 	s32 selectedGroup;
 	s32 loop;
-	s32 entry;
 	u8 color0;
 	s16 normalColor;
 	s32 rightX;
@@ -604,109 +603,102 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 
 	coords = D_801475F0_1565A0;
-	entry = loop--;
 	modBase = selectedGroup * 0 + 0x1FF; if (modBase) {}
-	// TODO replace this with for loop
-	if (entry) {
-		do {
-			s8 leftIdx = tile->startIdx;
-			const ShieldWallPoint *left;
-			const ShieldWallPoint *right;
-			s16 selected;
+	for (; loop--; tile++) {
+		s8 leftIdx = tile->startIdx;
+		const ShieldWallPoint *left;
+		const ShieldWallPoint *right;
+		s16 selected;
 
-			if (leftIdx != -1) {
-				selected = selectedGroup;
-				left = &coords[currentLevel - 1][leftIdx];
-				right = &coords[currentLevel - 1][tile->endIdx];
+		if (leftIdx != -1) {
+			selected = selectedGroup;
+			left = &coords[currentLevel - 1][leftIdx];
+			right = &coords[currentLevel - 1][tile->endIdx];
 
-				v0 = D_8005BB34;
-				D_8005BB34 = &v0[1];
-				v1 = D_8005BB34;
-				D_8005BB34 = &v1[1];
-				v2 = D_8005BB34;
-				D_8005BB34 = &v2[1];
-				v3 = D_8005BB34;
-				D_8005BB34 = &v3[1];
+			v0 = D_8005BB34;
+			D_8005BB34 = &v0[1];
+			v1 = D_8005BB34;
+			D_8005BB34 = &v1[1];
+			v2 = D_8005BB34;
+			D_8005BB34 = &v2[1];
+			v3 = D_8005BB34;
+			D_8005BB34 = &v3[1];
 
-				v0->v.ob[0] = v1->v.ob[0] = left->x * 8;
-				v0->v.ob[1] = v1->v.ob[1] = -left->z * 8;
-				rightX = right->x * 8;
-				v3->v.ob[0] = rightX;
-				v2->v.ob[0] = rightX;
-				pointCoord = right->z;
-				alpha0 = (s32)((u32)(-pointCoord) << 19) >> 16;
-				v3->v.ob[1] = alpha0;
+			v0->v.ob[0] = v1->v.ob[0] = left->x * 8;
+			v0->v.ob[1] = v1->v.ob[1] = -left->z * 8;
+			rightX = right->x * 8;
+			v3->v.ob[0] = rightX;
+			v2->v.ob[0] = rightX;
+			pointCoord = right->z;
+			alpha0 = (s32)((u32)(-pointCoord) << 19) >> 16;
+			v3->v.ob[1] = alpha0;
 
-				v2->v.ob[2] = 0;
-				lowerHeight = v2->v.ob[2];
-				v2->v.ob[1] = (u16)alpha0;
-				v0->v.ob[2] = lowerHeight;
-				v3->v.ob[2] = 0x40;
-				v1->v.ob[2] = v3->v.ob[2];
-				normalColor = (selected * 0) + 0x8C;
+			v2->v.ob[2] = 0;
+			lowerHeight = v2->v.ob[2];
+			v2->v.ob[1] = (u16)alpha0;
+			v0->v.ob[2] = lowerHeight;
+			v3->v.ob[2] = 0x40;
+			v1->v.ob[2] = v3->v.ob[2];
+			normalColor = 0x8C;
 
-				tileGroup = tile - D_801479B0_156960[*level - 1];
-				tileGroup >>= 3;
-				if (normalColor) {}
+			tileGroup = tile - D_801479B0_156960[*level - 1];
+			tileGroup >>= 3;
 
-				if (selected == tileGroup) {
-					tileGroup = D_8013D510_14C4C0 << 4; bright = tileGroup % modBase;
-					alpha0 = bright;
-					alpha2 = (tileGroup + 0x200) % 0x1FF; if (alpha0 >= 0x100) {
-						alpha0 = modBase - alpha0;
-					}
-
-					v3->v.cn[0] = alpha0;
-					v2->v.cn[0] = alpha0;
-					v1->v.cn[0] = alpha0;
-					v0->v.cn[0] = alpha0;
-
-					color0 = (s16)(0xFF - alpha0);
-					v3->v.cn[1] = color0;
-					v2->v.cn[1] = color0;
-					v1->v.cn[1] = color0;
-					v0->v.cn[1] = color0;
-
-					if (alpha2 >= 0x100) {
-						alpha2 = modBase - alpha2;
-					}
-					v3->v.cn[2] = alpha2;
-					v2->v.cn[2] = alpha2;
-					v1->v.cn[2] = alpha2;
-
-					selected = 0xFF + color0 * 0; bright = selected;
-					v0->v.cn[2] = alpha2;
-				} else {
-					v3->v.cn[0] = normalColor;
-					v2->v.cn[0] = normalColor;
-					v1->v.cn[0] = normalColor;
-					v0->v.cn[0] = normalColor;
-					normalColor = 0xBE;
-
-					v3->v.cn[1] = normalColor;
-					v2->v.cn[1] = normalColor;
-					v1->v.cn[1] = normalColor;
-					v0->v.cn[1] = normalColor;
-
-					normalColor = rightX * 0 + 0xFF; v3->v.cn[2] = normalColor;
-					v0->v.cn[2] = (v1->v.cn[2] = (v2->v.cn[2] = normalColor));
-
-					bright = 0x46;
+			if (selected == tileGroup) {
+				tileGroup = D_8013D510_14C4C0 << 4; bright = tileGroup % modBase;
+				alpha0 = bright;
+				alpha2 = (tileGroup + 0x200) % 0x1FF; if (alpha0 >= 0x100) {
+					alpha0 = modBase - alpha0;
 				}
 
-				v2->v.cn[3] = bright;
-				v0->v.cn[3] = bright;
-				v3->v.cn[3] = 0;
-				v1->v.cn[3] = 0;
+				v3->v.cn[0] = alpha0;
+				v2->v.cn[0] = alpha0;
+				v1->v.cn[0] = alpha0;
+				v0->v.cn[0] = alpha0;
 
-				gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
-				gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
+				color0 = (s16)(0xFF - alpha0);
+				v3->v.cn[1] = color0;
+				v2->v.cn[1] = color0;
+				v1->v.cn[1] = color0;
+				v0->v.cn[1] = color0;
+				bright = 0xFF;
+
+				if (alpha2 >= 0x100) {
+					alpha2 = modBase - alpha2;
+				}
+				v3->v.cn[2] = alpha2;
+				v2->v.cn[2] = alpha2;
+				v1->v.cn[2] = alpha2;
+
+				v0->v.cn[2] = alpha2;
+			} else {
+				v3->v.cn[0] = normalColor;
+				v2->v.cn[0] = normalColor;
+				v1->v.cn[0] = normalColor;
+				v0->v.cn[0] = normalColor;
+				normalColor = 0xBE;
+
+				v3->v.cn[1] = normalColor;
+				v2->v.cn[1] = normalColor;
+				v1->v.cn[1] = normalColor;
+				v0->v.cn[1] = normalColor;
+
+				normalColor = rightX * 0 + 0xFF; v3->v.cn[2] = normalColor;
+				v0->v.cn[2] = (v1->v.cn[2] = (v2->v.cn[2] = normalColor));
+
+				bright = 0x46;
 			}
-			if (coords) {}
-			if (tile) {}
-			if (level) {}
-			tile++;
-		} while (loop--);
+
+			v2->v.cn[3] = bright;
+			v0->v.cn[3] = bright;
+			v3->v.cn[3] = 0;
+			v1->v.cn[3] = 0;
+
+			gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
+			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
+		}
+		if (coords) {}
+		if (level) {}
 	}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
