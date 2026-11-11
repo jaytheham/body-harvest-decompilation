@@ -579,6 +579,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	u8 color0;
 	s16 normalColor;
 	s32 rightX;
+	s16 pointCoord;
 	s16 alpha0;
 	s16 alpha2;
 	s16 bright;
@@ -631,12 +632,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				rightX = right->x * 8;
 				v3->v.ob[0] = rightX;
 				v2->v.ob[0] = rightX;
-				alpha0 = -right->z * 8;
+				pointCoord = right->z;
+				alpha0 = -pointCoord * 8;
 				v3->v.ob[1] = alpha0;
 
 				v2->v.ob[2] = 0;
 				v0->v.ob[2] = v2->v.ob[2];
-				v2->v.ob[1] = alpha0;
+				v2->v.ob[1] = (u16)alpha0;
 				v3->v.ob[2] = 0x40;
 				v1->v.ob[2] = v3->v.ob[2];
 				normalColor = (selected * 0) + 0x8C;

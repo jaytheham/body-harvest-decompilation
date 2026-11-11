@@ -91,3 +91,16 @@ symbol files. Use `rightX * 0 + 0xFF` for the default blue value.
 `sh`, with the write address in `at`. The default branch emits
 `li v1, 0xFF` immediately before its four blue-channel stores. The full
 function still differs and retains its assembly fallback.
+
+## Right Z-coordinate scratch
+
+Incorrect ASM placed the scaled right Z-coordinate copy after the left
+vertex depth store.
+
+-> Code changed: load the right point Z-coordinate into a signed halfword
+scratch before scaling it. Convert the scaled value to `u16` at the
+second right vertex store.
+
+-> Correct ASM restores the copy into `a0` ahead of the left vertex depth
+store. The generated function has the target length of 0x4FC bytes.
+Signed narrowing and other instruction-order differences remain.
