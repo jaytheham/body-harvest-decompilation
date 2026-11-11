@@ -4202,5 +4202,12 @@ extern const f32 D_801451C8_154178[1];
 extern s16 D_8014ED30_Select;
 extern s16 D_8014ED30_Label;
 extern s16 D_8014ED2E_Write;
+extern s32 D_80052AD8_MapWrite;
+extern f32 D_8014ED18_Marker;
+extern f32 D_8014ED20_Transition;
+extern s16 D_8013D534_14C4E4_Update;
+extern f32 D_8014ED1C_Label;
+extern Unk80146688 *D_8013D528_14C4D8_Label;
+extern Unk80146688 *D_8013D528_14C4D8_Color;
 
 #endif /* LIBULTRA_REFERENCE */

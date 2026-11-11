@@ -18,3 +18,34 @@ is a multiple of four. This restored the target shift, negation, address
 addition, and argument-load sequence at ROM `0xA7614`. The overall diff
 score increased through register changes, while structural differences
 decreased. This is a local sequence match, not a complete function match.
+
+## Incorrect ASM
+
+`D_8005BB4C[-index]` negates the index before scaling it.
+
+```asm
+negu    t9,v0
+sll     t6,t9,2
+sll     t8,v0,2
+```
+
+## Code changed
+
+Index the same two-element table for both framebuffers. `D_8005BB4C` aliases
+`D_8005BB48[1]`.
+
+```c
+func_8000DC9C_E89C(D_8005BB48[index], D_8005BB48[1 - index]);
+```
+
+## Correct ASM
+
+The shifted index is shared. The array expression produced the same ROM
+bytes as the byte-indexed cast expression above.
+
+```asm
+sll     t8,v0,2
+negu    t6,t8
+addu    a1,a1,t6
+addu    a0,a0,t8
+```
