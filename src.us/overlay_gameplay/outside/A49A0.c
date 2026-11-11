@@ -575,7 +575,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	Vtx *v3;
 	s32 selectedGroup;
 	s32 loop;
-	u8 color0;
+	u16 color0;
 	s32 rightX;
 	s16 pointCoord;
 	s16 lowerHeight;
@@ -657,7 +657,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				v1->v.cn[0] = alpha0;
 				v0->v.cn[0] = alpha0;
 
-				color0 = (s16)(0xFF - alpha0);
+				color0 = 0xFF - alpha0;
 				v3->v.cn[1] = color0;
 				v2->v.cn[1] = color0;
 				v1->v.cn[1] = color0;
