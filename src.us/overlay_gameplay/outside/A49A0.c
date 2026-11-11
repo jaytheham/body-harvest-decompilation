@@ -626,7 +626,8 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 
 			v0->v.ob[0] = v1->v.ob[0] = left->x * 8;
 			v0->v.ob[1] = v1->v.ob[1] = -left->z * 8;
-			rightX = right->x * 8;
+			pointCoord = right->x * 8;
+			rightX = pointCoord;
 			v3->v.ob[0] = rightX;
 			v2->v.ob[0] = rightX;
 			pointCoord = right->z;
@@ -646,8 +647,9 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			tileGroup >>= 3;
 
 			if (selected == tileGroup) {
-				tileGroup = D_8013D510_14C4C0 << 4; bright = tileGroup % modBase;
-				alpha0 = bright;
+				tileGroup = D_8013D510_14C4C0 << 4;
+				alpha0 = tileGroup % modBase;
+				bright = 0xFF;
 				alpha2 = (tileGroup + 0x200) % 0x1FF; if (alpha0 >= 0x100) {
 					alpha0 = modBase - alpha0;
 				}
@@ -662,7 +664,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				v2->v.cn[1] = color0;
 				v1->v.cn[1] = color0;
 				v0->v.cn[1] = color0;
-				bright = 0xFF;
 
 				if (alpha2 >= 0x100) {
 					alpha2 = modBase - alpha2;
