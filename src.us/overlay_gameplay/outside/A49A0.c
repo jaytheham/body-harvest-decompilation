@@ -257,73 +257,72 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 }
 
 // draws vehicle triangle icons on map
-#ifdef NON_MATCHING
-void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4)
+void func_80095D4C_A4CFC(s16 x, s16 y, u8 red, u8 green, u8 blue)
 {
-  u32 new_var3;
-  Vtx_t *new_var;
-  Vtx_t *vtx0;
-  Gfx *new_var4;
-  Vtx_t *vtx1;
-  Vtx_t *vtx2;
-  Gfx *gfx = NULL;
-  short new_var2;
-  if ((arg4 != arg2) || (((unsigned char) arg3) != 0))
-  {
-	if ((((u8 (*)[64]) D_8021EA30)[((arg1 >> 8) + 0x80) >> 2][((arg0 >> 8) + 0x80) >> 2] & 0xF0) == 0)
-	{
-	  return;
+	Vtx_t *vtx1;
+	Vtx_t *firstVertex;
+	Vtx_t *rightVertex = NULL;
+	Vtx_t *vtx0 = NULL;
+	Vtx_t *vtx2 = NULL;
+	s16 zero;
+
+	if ((red != blue) || (green != 0)) {
+		if ((((u8 (*)[64])D_8021EA30)[((y >> 8) + 0x80) >> 2][((x >> 8) + 0x80) >> 2] & 0xF0) == 0) {
+			return;
+		}
 	}
-  }
-  vtx0 = &D_8005BB34->v;
-  arg0 >>= 5;
-  arg1 = (0xFF - arg1) >> 5;
-  vtx0->ob[0] = arg0 - 7;
-  D_8005BB34++;
-  vtx0->ob[1] = arg1 - 0xE;
-  vtx0->ob[2] = 0;
-  vtx0->tc[0] = 0x400;
- vtx0->tc[1] = 0x400; vtx1 = &D_8005BB34->v;
- vtx1->ob[0] = arg0 + 7;
-  D_8005BB34++;
-  vtx1->ob[1] = arg1 - 0xE;
-  new_var2 = 0;
-  vtx1->ob[2] = new_var2;
-  vtx1->tc[new_var2] = 0x400;
-  vtx1->tc[1] = new_var2;
-  vtx2 = &D_8005BB34->v;
-  vtx2->ob[new_var2] = arg0;
-  D_8005BB34++;
-  vtx2->ob[1] = arg1;
-  vtx2->ob[2] = 0;
-  vtx2->tc[new_var2] = new_var2;
-  new_var3 = (u32) vtx0;
-  vtx2->tc[1] = 0x400;
-  vtx0->flag = (vtx1->flag = (vtx2->flag = new_var2));
-  vtx1->cn[new_var2] = arg2;
-  vtx2->cn[0] = arg2;
-  new_var = vtx1;
-  vtx0->cn[0] = arg2;
-  vtx0->cn[1] = (new_var->cn[1] = (vtx2->cn[1] = arg3));
-  vtx0->cn[2] = (vtx1->cn[2] = (vtx2->cn[2] = arg4));
-  vtx2->ob[1] = arg1;
-  arg4 = 0xFF;
-  vtx0->cn[3] = (vtx1->cn[3] = (vtx2->cn[3] = arg4));
-  gfx = D_8005BB2C++;
-  new_var4 = gfx;
-  new_var4->words.w0 = 0x04000C2F; new_var4->words.w1 = new_var3 & 0x1FFFFFFF;
-  if (1)
-  {
-  gfx = D_8005BB2C++;
-  gfx->words.w1 = 0x204;
-  (&gfx->words)->w0 = 0xBF000000;
-  }
-  gfx = D_8005BB2C++;
-  gfx->words.w0 = 0xE7000000; gfx->words.w1 = 0;
+
+	vtx0 = &D_8005BB34->v;
+	x >>= 5;
+	y = (0xFF - y) >> 5;
+	vtx0->ob[0] = x - 7;
+	D_8005BB34++;
+	vtx0->ob[1] = y - 0xE;
+	vtx0->ob[2] = 0;
+	vtx0->tc[0] = 0x400;
+	vtx0->tc[1] = 0x400;
+
+	vtx1 = &D_8005BB34->v;
+	vtx1->ob[0] = x + 7;
+	D_8005BB34++;
+	vtx1->ob[1] = y - 0xE;
+	zero = 0;
+	vtx1->ob[2] = zero;
+	vtx1->tc[zero] = 0x400;
+	vtx1->tc[1] = zero;
+
+	if (vtx2 == NULL) {
+		vtx2 = &D_8005BB34->v;
+	}
+	vtx2->ob[zero] = x;
+	D_8005BB34++;
+	vtx2->ob[1] = y;
+	vtx2->ob[2] = 0;
+	vtx2->tc[zero] = zero;
+	vtx2->tc[1] = 0x400;
+
+	if (rightVertex == NULL) {
+		rightVertex = vtx1;
+	}
+	vtx0->flag = (rightVertex->flag = (vtx2->flag = zero));
+	vtx2->cn[0] = red;
+	vtx1->cn[zero] = red;
+	firstVertex = 0;
+	if (!firstVertex) {
+		firstVertex = vtx0;
+	}
+	vtx0->cn[0] = red;
+	vtx0->cn[1] = (vtx1->cn[1] = (vtx2->cn[1] = green));
+	vtx0->cn[2] = (vtx1->cn[2] = (vtx2->cn[2] = blue));
+	vtx0->cn[3] = vtx1->cn[3] = vtx2->cn[3] = 0xFF;
+
+	gSPVertex(D_8005BB2C++, K0_TO_PHYS(firstVertex), 3, 0);
+	/* Keep the display-list cursor and first packet in the target registers. */
+	if (green) {}
+	if (red) {}
+	gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
+	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80095D4C_A4CFC.s")
-#endif
 
 void func_80095F08_A4EB8(void) {
 	s16* dst;
