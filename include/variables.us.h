@@ -963,9 +963,11 @@ extern s32 D_80052B38; // CPU frame preparation time: elapsed time from the sche
 extern s32 D_80052B3C; // Graphics-task completion latency: elapsed time from just after graphics-task submission until the scheduler receives its completion message.
 extern Unk80052B40 D_80052B40;
 extern s16 D_80052B40_HudX;
+extern s16 D_80052B42; // Alias of D_80052B40.unk2.
 extern s16 D_80052B44;
 extern Unk80052B48 D_80052B48;
 extern Unk80052B48 D_80052B48_Reset;
+extern s16 D_80052B4A; // Alias of D_80052B48.unk2.
 extern Unk80052B40 D_80052B50;
 extern s16 D_80052B54;
 extern s32 D_80052B58;

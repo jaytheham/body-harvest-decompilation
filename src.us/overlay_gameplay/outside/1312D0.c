@@ -30,16 +30,16 @@ s32 D_80140AC8_14FA78 = 0;
 s32 D_80140ACC_14FA7C = 0x00080019;
 s32 D_80140AD0_14FA80 = 0x00100009;
 s32 D_80140AD4_14FA84 = 0;
-s32 D_80140AD8_14FA88 = 0;
+u32 D_80140AD8_14FA88[24] = {
+	0x00000000, 0x0502F6E0, 0x0502F9E0, 0x05030358, 0x05030698,
+	0x050309D0, 0x0502FF70, 0x0502F098, 0x0502F2F8, 0x0502F380,
+	0x0502F4A0, 0x0502F270, 0x0503C048, 0x0503C408, 0x0503B9A8,
+	0x0503C6B0, 0x0503B588, 0x0503AFC8, 0x0504D420, 0x0503A480,
+	0x00000000, 0x0502E960, 0x0503C7C0, 0x0503A778,
+};
 
-u8 D_80140ADC_14FA8C[0x68] = {
-	0x05, 0x02, 0xF6, 0xE0, 0x05, 0x02, 0xF9, 0xE0, 0x05, 0x03, 0x03, 0x58, 0x05, 0x03, 0x06, 0x98,
-	0x05, 0x03, 0x09, 0xD0, 0x05, 0x02, 0xFF, 0x70, 0x05, 0x02, 0xF0, 0x98, 0x05, 0x02, 0xF2, 0xF8,
-	0x05, 0x02, 0xF3, 0x80, 0x05, 0x02, 0xF4, 0xA0, 0x05, 0x02, 0xF2, 0x70, 0x05, 0x03, 0xC0, 0x48,
-	0x05, 0x03, 0xC4, 0x08, 0x05, 0x03, 0xB9, 0xA8, 0x05, 0x03, 0xC6, 0xB0, 0x05, 0x03, 0xB5, 0x88,
-	0x05, 0x03, 0xAF, 0xC8, 0x05, 0x04, 0xD4, 0x20, 0x05, 0x03, 0xA4, 0x80, 0x00, 0x00, 0x00, 0x00,
-	0x05, 0x02, 0xE9, 0x60, 0x05, 0x03, 0xC7, 0xC0, 0x05, 0x03, 0xA7, 0x78, 0x64, 0x96, 0xFF, 0x14,
-	0x28, 0xB4, 0x46, 0xFF, 0x50, 0x14, 0xBE, 0x28,
+u8 D_80140B38_14FAE8[12] = {
+	0x64, 0x96, 0xFF, 0x14, 0x28, 0xB4, 0x46, 0xFF, 0x50, 0x14, 0xBE, 0x28,
 };
 
 u8 D_80140B44_14FAF4[0x2C] = {
@@ -759,27 +759,29 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(26238)
-// AI - Renders D_8015EB90 Projectile sparks/trails and D_8015F9F8 fades using GBI calls and func_800C1ECC.
+// CURRENT(1325)
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
-	Vtx *new_var2;
-	Unk80052B40 fadeVec;
-
-	s16 pos[2];
-	s8 color[4];
+	u8 framePadding[8];
 	Projectile *bullet;
 	const WeaponEntry_80129864 *weaponEntry;
 	s32 i;
-	u8 sparkType;
+	s32 sparkType;
 	s32 weaponFlags;
-	const u8 *trailColor;
-	const u8 (*trailColors)[0xB];
 	u8 *extraPtr;
-	u32 *sparkDLs;
-	s16 (*fadeData)[4];
-	s32 fadeIndex;
+	const u32 *sparkDLs;
+	Unk80052B40 fadeVec;
+	u8 red;
+	u8 green;
+	u8 blue;
+	u8 trailRed;
+	u8 trailGreen;
+	u8 trailBlue;
+	u8 trailAlpha;
+	u8 endAlpha;
+	s16 pos[2];
+	u8 color[4];
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
@@ -793,49 +795,48 @@ void func_80124D60_133D10(void) {
 	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_2CYCLE);
 
-
 	if (D_8015F9E4 != 0) {
 		i = D_8015F9E4;
 		while (i--) {
 			bullet = &D_8015EB90[i];
 			weaponEntry = &D_80145BE0_154B90[bullet->unk20];
 			sparkType = weaponEntry->unk16;
-			sparkDLs = (const u32 *)&D_80140AD8_14FA88;
+			sparkDLs = D_80140AD8_14FA88;
 
 			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
-				weaponFlags = weaponEntry->unk8 >> 8;
+				weaponFlags = D_80145BE0_154B90[bullet->unk20].weaponFlags;
 				if ((weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
 					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E);
 				} else if ((weaponFlags << 9) < 0) {
 					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 				} else {
 					switch (bullet->unk20 - 0x5C) {
-							case 0:
-								func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
-								break;
-							case 2:
-								func_800D55C0_E4570(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
-								break;
-							case 5:
-								func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-								break;
-							case 4:
-								func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-								break;
-							case 3:
-							case 0xA:
-							case 0xC:
-							case 0x10:
-							case 0x13:
-								func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-								break;
-							default:
-								break;
-						}
+						case 0:
+							func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+							break;
+						case 2:
+							func_800D55C0_E4570(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+							break;
+						case 5:
+							func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							break;
+						case 4:
+							func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							break;
+						case 3:
+						case 0xA:
+						case 0xC:
+						case 0x10:
+						case 0x13:
+							func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							break;
+						default:
+							break;
 					}
-				if ((((s32)(weaponEntry->unk8 >> 8)) & 0x10000) != 0) {
+				}
+				if ((weaponEntry->weaponFlags << 15) < 0) {
 					if ((bullet->unk20 == 0x1D) || (bullet->unk20 == 0x2A) || (bullet->unk20 == 0x0C)) {
-						if ((D_80052A8C % 3) == 0) {
+						if (((u32)D_80052A8C % 3) == 0) {
 							func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 2);
 						}
 					} else if (bullet->unk20 == 0x5B) {
@@ -844,121 +845,121 @@ void func_80124D60_133D10(void) {
 						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 0);
 					}
 				}
-			}
 
-			if (sparkType == 0x80) {
-				trailColors = (const u8 (*)[0xB])&D_80140768_14F718[4];
-				trailColor = trailColors[bullet->unk20];
+				if (sparkType == 0x80) {
+					red = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB)];
+					green = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 1];
+					blue = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 2];
+					trailRed = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 6];
+					trailGreen = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 7];
+					trailBlue = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 8];
+					trailAlpha = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 9];
+					endAlpha = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 10];
 
-				color[0] = trailColor[0];
-				color[1] = trailColor[1];
-				color[2] = trailColor[2];
-				color[3] = trailColor[6];
-
-				if ((D_80052A8C & 1) == 0) {
-					color[0] = (color[0] + 0x96 > 0xFF) ? 0xFF : color[0] + 0x96;
-					color[1] = (color[1] + 0x96 > 0xFF) ? 0xFF : color[1] + 0x96;
-					color[2] = (color[2] + 0x96 > 0xFF) ? 0xFF : color[2] + 0x96;
-					color[3] = (color[3] + 0x4B > 0xFF) ? 0xFF : color[3] + 0x4B;
-				}
-
-				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
-				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
-				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[3];
-				D_8005BB34->v.cn[1] = trailColor[7];
-				D_8005BB34->v.cn[2] = trailColor[8];
-				D_8005BB34->v.cn[3] = trailColor[9];
-				D_8005BB34++;
-
-				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[0];
-				D_8005BB34->v.cn[1] = color[1];
-				D_8005BB34->v.cn[2] = color[2];
-				D_8005BB34->v.cn[3] = 0xFF;
-				D_8005BB34++;
-
-				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
-				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
-				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[3];
-				D_8005BB34->v.cn[1] = color[3];
-				D_8005BB34->v.cn[2] = color[3];
-				D_8005BB34->v.cn[3] = trailColor[0xA];
-				D_8005BB34++;
-
-				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[3];
-				D_8005BB34->v.cn[1] = trailColor[7];
-				new_var2 = D_8005BB34;
-				D_8005BB34->v.cn[2] = trailColor[8];
-				new_var2->v.cn[3] = trailColor[9];
-				D_8005BB34++;
-
-				gDPPipeSync(D_8005BB30++);
-				gSPVertex(D_8005BB30++, D_8005BB34 - 4, 4, 0);
-				gSPLine3D(D_8005BB30++, 0, 8, 0);
-				gSPLine3D(D_8005BB30++, 2, 3, 0);
-				gSPLine3D(D_8005BB30++, 0, 1, 0);
-
-				gSPDisplayList(D_8005BB30++, K0_TO_PHYS(sparkDLs[sparkType]));
-			} else if (sparkType != 0) {
-				if ((weaponEntry->unkB & 1) == 0) {
-					D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
-					D_80052B40.unk2 = (s16)(s32)bullet->unk4 >> 2;
-					D_80052B40.unk4 = (s16)(s32)bullet->unk8 >> 2;
-
-					if (weaponEntry->unkE != 0) {
-						D_80052B48.unk0 = 0x4000 - bullet->unk10S16;
-						D_80052B48.unk2 = 0;
-						D_80052B48.unk4 = -func_80003824_4424((f32)bullet->unk14S16, (f32)bullet->unk12S16);
-					} else {
-						D_80052B48.unk0 = bullet->unk1C_u8 << 8;
-						D_80052B48.unk2 = bullet->unk1D_u8 << 8;
-						D_80052B48.unk4 = 0;
+					if ((D_80052A8C & 1) == 0) {
+						red = (red + 0x96 > 0xFF) ? 0xFF : red + 0x96;
+						green = (green + 0x96 > 0xFF) ? 0xFF : green + 0x96;
+						blue = (blue + 0x96 > 0xFF) ? 0xFF : blue + 0x96;
+						trailRed = (trailRed + 0x4B > 0xFF) ? 0xFF : trailRed + 0x4B;
+						trailGreen = (trailGreen + 0x4B > 0xFF) ? 0xFF : trailGreen + 0x4B;
+						trailBlue = (trailBlue + 0x4B > 0xFF) ? 0xFF : trailBlue + 0x4B;
 					}
 
-					func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
-					gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
-					D_8005BB38 += 0x40;
-					gSPDisplayList(D_8005BB2C++, sparkDLs[sparkType]);
-				}
-			}
+					D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+					D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+					D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = trailRed;
+					D_8005BB34->v.cn[1] = trailGreen;
+					D_8005BB34->v.cn[2] = trailBlue;
+					D_8005BB34->v.cn[3] = trailAlpha;
+					D_8005BB34++;
 
-			if ((s8)weaponEntry->unkB != 0) {
-			extraPtr = &D_80140B7C_14FB2C[((weaponEntry->unkB & 7) * 3) - 4];
-				color[0] = ((extraPtr[0] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[1] = ((extraPtr[1] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[2] = ((extraPtr[2] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[3] = 0;
-				pos[0] = (s16)(s32)bullet->unk0;
-				pos[1] = (s16)(s32)bullet->unk8;
-				func_800B2354_C1304(pos, color, 0x100, 0x258);
+					D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+					D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+					D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18F32);
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = red;
+					D_8005BB34->v.cn[1] = green;
+					D_8005BB34->v.cn[2] = blue;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34++;
+
+					D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+					D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+					D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = trailRed;
+					D_8005BB34->v.cn[1] = trailRed;
+					D_8005BB34->v.cn[2] = trailRed;
+					D_8005BB34->v.cn[3] = endAlpha;
+					D_8005BB34++;
+
+					D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+					D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+					D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18F32);
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = trailRed;
+					D_8005BB34->v.cn[1] = trailGreen;
+					D_8005BB34->v.cn[2] = trailBlue;
+					D_8005BB34->v.cn[3] = trailAlpha;
+					D_8005BB34++;
+
+					gDPPipeSync(D_8005BB30++);
+					gSPVertex(D_8005BB30++, &D_8005BB34[-4], 4, 0);
+					gSPLineW3D(D_8005BB30++, 2, 3, 0xD, 0);
+					gSPLineW3D(D_8005BB30++, 0, 1, 4, 0);
+				} else if (sparkType != 0) {
+					if ((weaponEntry->weaponFlags & 0x1000) == 0) {
+						D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
+						D_80052B42 = (s16)(s32)bullet->unk4 >> 2;
+						D_80052B44 = (s16)(s32)bullet->unk8 >> 2;
+
+						if (D_80145BE0_154B90[bullet->unk20].unkE != 0) {
+							D_80052B48.unk0 = 0x4000 - bullet->unk10S16;
+							D_80052B48.unk4 = -func_80003824_4424((f32)bullet->unk14S16, (f32)bullet->unk12S16);
+							D_80052B48.unk2 = 0;
+						} else {
+							D_80052B48.unk0 = bullet->unk1C_u8 << 8;
+							D_80052B4A = bullet->unk1D_u8 << 8;
+							D_80052B48.unk4 = 0;
+						}
+
+						func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
+						gSPMatrix(D_8005BB2C++, ((s32)D_8005BB38 & 0x1FFFFFFF), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+						D_8005BB38++;
+						gSPDisplayList(D_8005BB2C++, sparkDLs[sparkType]);
+					}
+				}
+
+				weaponFlags = weaponEntry->unkB;
+				if (weaponFlags != 0) {
+					extraPtr = &D_80140B7C_14FB2C[(weaponFlags & 7) * 3];
+					color[0] = ((extraPtr[0] * (weaponFlags & 0xF8)) >> 9);
+					color[1] = ((extraPtr[1] * (weaponFlags & 0xF8)) >> 9);
+					color[2] = ((extraPtr[2] * (weaponFlags & 0xF8)) >> 9);
+					pos[0] = (s16)(s32)bullet->unk0;
+					pos[1] = (s16)(s32)bullet->unk8;
+					func_800B2354_C1304(pos, color, 0x100, 0x258);
+				}
 			}
 		}
 	}
 
 	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
 		s32 alpha;
+		Unk8015FA40Entry *point;
 
-
-		for (i = 0x17; i >= 0; i--) {
+		i = 0x17;
+		do {
 			D_8005BB34->v.ob[0] = D_8015FA40[i].unk0;
 			D_8005BB34->v.ob[1] = D_8015FA40[i].unk2;
 			D_8005BB34->v.ob[2] = D_8015FA40[i].unk4;
@@ -966,43 +967,47 @@ void func_80124D60_133D10(void) {
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
 
-			alpha = 0x80 - (i * 4);
+			alpha = 0x80 - ((u8)i * 4);
 			D_8005BB34->v.cn[0] = alpha;
 			D_8005BB34->v.cn[1] = alpha;
 			D_8005BB34->v.cn[2] = alpha;
 			D_8005BB34->v.cn[3] = 0x40;
 			D_8005BB34++;
-		}
+		} while (i--);
 
-		gSPVertex(D_8005BB30++, D_8005BB34 - 24, 24, 0);
-		for (i = 0x16; i >= 0; i--) {
-			if ((D_8015FA40[i + 2].unk0 != 0x7FFF) && (D_8015FA40[i + 1].unk0 != 0x7FFF)) {
+		gSPVertex(D_8005BB30++, &D_8005BB34[-24], 24, 0);
+		i = 0x16;
+		point = &D_8015FA40[2];
+		do {
+			if ((point[0].unk0 != 0x7FFF) && (point[-1].unk0 != 0x7FFF)) {
 				gSPLineW3D(D_8005BB30++, i, i + 1, 4, 0);
 			}
-		}
+			point++;
+		} while (i--);
 	}
 
+	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
 	{
-		fadeData = D_8015F9F8;
-		for (fadeIndex = 0; fadeIndex < 8; fadeIndex++) {
-			if (fadeData[fadeIndex][3] != 0) {
+		for (i = 0; i < 8; i++) {
+			if (D_8015F9F8[i][3] != 0) {
 				s32 fade;
 				s32 invFade;
+				s32 scale;
 
-
-				fade = (fadeData[fadeIndex][3] << 6) - 1;
+				fade = (D_8015F9F8[i][3] << 6) - 1;
 				invFade = (0xFF - fade) & 0xFF;
-				fadeVec.unk0 = (fade << 2) - fade;
-				fadeVec.unk2 = fadeVec.unk0;
-				fadeVec.unk4 = fadeVec.unk0;
+				scale = (fade << 2) - fade;
+				fadeVec.unk0 = scale;
+				fadeVec.unk2 = scale;
+				fadeVec.unk4 = scale;
 
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, invFade, invFade, invFade, 0xFF);
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, invFade, invFade, invFade);
 
-				func_800039D0_45D0((Unk80052B40 *)fadeData[fadeIndex], NULL, &fadeVec, D_8005BB38);
-				gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
-				D_8005BB38 += 0x40;
+				func_800039D0_45D0((Unk80052B40 *)D_8015F9F8[i], NULL, &fadeVec, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+				D_8005BB38++;
 				gSPDisplayList(D_8005BB2C++, &D_50332A0);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
