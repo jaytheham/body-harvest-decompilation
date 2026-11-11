@@ -1169,27 +1169,26 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 	s32 zFixed;
 	s32 stepCount;
 
-
-
 	s32 dx;
-	s32 dy; s32 stepX; s32 stepY; s32 stepZ;
+	s32 dy;
+	s32 stepX;
+	s32 stepY;
+	s32 stepZ;
 	s32 dz;
 
-	s32 mapY; s16 groundY;
+	s32 mapY;
+	s16 groundY;
 	s32 tileX;
 	s32 buildingIdx;
 	s32 tileZ;
 	Unk80259D90 *surface;
 
-	 BuildingInstance *building;
+	BuildingInstance *building;
 	s16 prevTileX;
 	s16 prevTileZ;
-	s8 pad;
+	s8 pad; /* Preserve the IDO stack layout. */
 	s16 maxBuildingY;
 	f32 hitScale;
-
-
-
 
 	xFixed = arg0 << 8;
 	yFixed = arg1 << 8;
@@ -1207,53 +1206,50 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		surface = func_80125D70_134D20(arg0, arg1, arg2, arg3, arg4, arg5, &hitScale);
 		if (surface != NULL) {
 			D_8015F9DC = (s32)surface;
-			dx = (s32) ((f32) dx * hitScale);
-			dy = (s32) ((f32) dy * hitScale);
-			dz = (s32) ((f32) dz * hitScale);
+			dx = dx * hitScale;
+			dy = dy * hitScale;
+			dz = dz * hitScale;
 			*arg3 = arg0 + dx;
 			*arg4 = arg1 + dy;
 			*arg5 = arg2 + dz;
 		}
 	}
 
-
 	if ((dx == 0) && (dz == 0)) {
-
-		stepCount = (-dy < dy ? dy : -dy) >> arg7;
-		stepX = 0; stepZ = 0; stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
-	} else
-
-
-
-if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
-			D_8015F9D0.unkC += 0;
-			if ((stepCount = ((-dx) < dx ? dx : (-dx)) >> arg7) != 0) {
-				stepX = ((-dx) > 0 ? -0x100 : 0x100) << arg7;
-				stepY = (dy << 8) / stepCount;
-				stepZ = (dz << 8) / stepCount;
-			}
-		} else
-			if ((stepCount = ((-dz) < dz ? dz : (-dz)) >> arg7) != 0) {
-				stepX = (dx << 8) / stepCount;
-				stepY = (dy << 8) / stepCount;
-				stepZ = ((-dz) > 0 ? -0x100 : 0x100) << arg7;
-			}
+		stepCount = BH_ABS(dy) >> arg7;
+		stepX = 0;
+		stepZ = 0;
+		stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
+	} else if (BH_ABS(dx) > BH_ABS(dz)) {
+		D_8015F9D0.unkC += 0; /* Preserve the IDO branch code generation. */
+		if ((stepCount = BH_ABS(dx) >> arg7) != 0) {
+			stepX = (-dx > 0 ? -0x100 : 0x100) << arg7;
+			stepY = (dy << 8) / stepCount;
+			stepZ = (dz << 8) / stepCount;
+		}
+	} else {
+		if ((stepCount = BH_ABS(dz) >> arg7) != 0) {
+			stepX = (dx << 8) / stepCount;
+			stepY = (dy << 8) / stepCount;
+			stepZ = (-dz > 0 ? -0x100 : 0x100) << arg7;
+		}
+	}
 
 	if (D_801591A8 != 0) {
 		D_80158FE8 = NULL;
 	}
 
-	for (; stepCount--; ) {
-
+	for (; stepCount--;) {
 		xFixed += stepX;
 		yFixed += stepY;
 		zFixed += stepZ;
 
 		tileX = xFixed >> 8;
 		tileZ = zFixed >> 8;
-		mapY = func_800B84D0_C7480((s16) tileX, (s16) tileZ) >> 8; groundY = mapY;
+		mapY = func_800B84D0_C7480((s16)tileX, (s16)tileZ) >> 8;
+		groundY = mapY;
 
-		if ((yFixed >> 8) < (s16) mapY) {
+		if ((yFixed >> 8) < (s16)mapY) {
 			*arg3 = tileX;
 			*arg4 = groundY;
 			*arg5 = zFixed >> 8;
@@ -1262,7 +1258,7 @@ if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
 		}
 
 		if ((arg6 & 4) == 0) {
-			s32 collisionIdx = func_8012E114_13D0C4((s16) tileX, (s16) (yFixed >> 8), (s16) (zFixed >> 8));
+			s32 collisionIdx = func_8012E114_13D0C4((s16)tileX, (s16)(yFixed >> 8), (s16)(zFixed >> 8));
 			if (collisionIdx != -1) {
 				D_8015F9D0.position[0] = tileX;
 				*arg3 = D_8015F9D0.position[0];
@@ -1283,18 +1279,18 @@ if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
 		func_8011DE60_12CE10(1);
 		if ((prevTileZ == ((zFixed >> 8) >> 8)) && (prevTileX == (tileX >> 8))) {
 			if (building != NULL) {
-				func_8011DE6C_12CE1C((s16) tileX, (s16) (zFixed >> 8), &maxBuildingY, (s16) buildingIdx);
+				func_8011DE6C_12CE1C((s16)tileX, (s16)(zFixed >> 8), &maxBuildingY, (s16)buildingIdx);
 			}
 		} else {
 
-			buildingIdx = func_8011E6FC_12D6AC((s16) tileX, (s16) tileZ, &maxBuildingY);
+			buildingIdx = func_8011E6FC_12D6AC((s16)tileX, (s16)tileZ, &maxBuildingY);
 			if (buildingIdx != -1) {
 				building = &buildingInstances[buildingIdx];
 			} else {
 				building = NULL;
 			}
 			prevTileX = tileX >> 8;
-prevTileZ = tileZ >> 8;
+			prevTileZ = tileZ >> 8;
 		}
 		func_8011DE60_12CE10(0);
 
