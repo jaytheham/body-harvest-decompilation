@@ -51,3 +51,9 @@
 `code changed` -> Reuse the two signed coordinate locals for the joint Y and Z inputs before the terrain transform, then for the world X and Z outputs before the effect update.
 
 `correct ASM` -> Both OR instructions and the store use `t6`, matching the original. Register changes elsewhere bring the total down from 213 to 212 differing words. The two sign-extension scheduling differences remain.
+
+`incorrect ASM` -> With the sum of squares inside the square root argument, the type index scaling uses `t7` and the frame counter load uses `t8`.
+
+`code changed` -> Add the Z square to the local holding the X square before passing the accumulated value to `sqrtf`.
+
+`correct ASM` -> The type index scaling uses `t6` at `0x322408` and `0x322410`, and the frame counter load uses `t7` at `0x322440`. The Z load still follows the first multiply. The total falls from 209 to 201 differing words with the same structural differences.

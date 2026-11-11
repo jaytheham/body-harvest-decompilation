@@ -3772,7 +3772,8 @@ void func_802DE0F4_322244(u8 arg0) {
 	sp74 = temp * temp;
 	temp = position[0];
 	temp_lo = (D_80052B34->unk4 - temp) >> 1;
-	sp74 = (s32)sqrtf((f32)(sp74 + temp_lo * temp_lo)) * 2;
+	sp74 += temp_lo * temp_lo;
+	sp74 = (s32)sqrtf((f32)sp74) * 2;
 
 	alienTypes[temp_s0->typeIndex].unk58 = 0;
 
