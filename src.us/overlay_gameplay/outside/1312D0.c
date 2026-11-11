@@ -1429,7 +1429,8 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 		scratch = D_80158FD8;
 		vehicleCount = scratch;
 		if (vehicleCount) {} /* Preserve the counter register allocation. */
-		if (vehicleCount--) {
+		if (scratch--) {
+			vehicleCount = scratch;
 			do {
 				entity.vehicle = &vehicleInstances[D_80158E80[vehicleCount]];
 				hit.bits = (s32)&D_8015F9D0; if (hit.bits) {}
