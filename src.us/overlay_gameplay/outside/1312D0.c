@@ -1354,6 +1354,8 @@ s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 a
 }
 
 #ifdef NON_MATCHING
+Unk8015F9D0 D_8015F9D0; /* Share the high address across the alien coordinate stores. */
+
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
 	s32 vehicleCount;
 	s32 x = arg1;
@@ -1576,8 +1578,8 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 					objThreshold = data.alien->unk8;
 					lineDistBest = lineDist;
 					distSqBest = objDist;
-					hit.pointer->unk0 = entity.alien->unk0;
-					hit.pointer->unk2 = entity.alien->unk2;
+					D_8015F9D0.unk0 = entity.alien->unk0; if (1) {}
+					D_8015F9D0.unk2 = entity.alien->unk2;
 					D_8015F9D0.unk4 = entity.alien->unk4;
 					D_8015F9DC = (s32)entity.alien;
 					hit.pointer->unk8 = 7;
