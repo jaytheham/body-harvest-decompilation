@@ -759,7 +759,7 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(420)
+// CURRENT(370)
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
@@ -780,6 +780,8 @@ void func_80124D60_133D10(void) {
 	u8 trailBlue;
 	u8 trailAlpha;
 	u8 endAlpha;
+	s32 alpha;
+	Unk8015FA40Entry *point;
 	s16 pos[2];
 	u8 color[4];
 
@@ -954,8 +956,6 @@ void func_80124D60_133D10(void) {
 	}
 
 	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
-		s32 alpha;
-		Unk8015FA40Entry *point;
 
 		i = 0x17;
 		do {
