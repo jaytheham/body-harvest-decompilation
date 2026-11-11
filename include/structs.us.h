@@ -632,6 +632,20 @@ typedef struct {
 } Unk84EECEffect; /* size = 0x16 */
 
 typedef struct {
+	/* 0x00 */ s16 cameraX;
+	/* 0x02 */ s16 cameraY;
+	/* 0x04 */ s16 cameraZ;
+	/* 0x06 */ s16 targetX;
+	/* 0x08 */ s16 targetY;
+	/* 0x0A */ s16 targetZ;
+	/* 0x0C */ s16 duration;
+	/* 0x0E */ s16 targetIndex;
+	/* 0x10 */ u8 cameraMode;
+	/* 0x11 */ u8 targetMode;
+	/* 0x12 */ u8 pad12[6];
+} CutsceneCameraKeyframe; /* size = 0x18 */
+
+typedef struct {
 	/* 0x00 */ u8 unk0;
 	/* 0x01 */ u8 pad1;
 	/* 0x02 */ u16 unk2;
