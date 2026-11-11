@@ -30,16 +30,16 @@ s32 D_80140AC8_14FA78 = 0;
 s32 D_80140ACC_14FA7C = 0x00080019;
 s32 D_80140AD0_14FA80 = 0x00100009;
 s32 D_80140AD4_14FA84 = 0;
-s32 D_80140AD8_14FA88 = 0;
+u32 D_80140AD8_14FA88[24] = {
+	0x00000000, 0x0502F6E0, 0x0502F9E0, 0x05030358, 0x05030698,
+	0x050309D0, 0x0502FF70, 0x0502F098, 0x0502F2F8, 0x0502F380,
+	0x0502F4A0, 0x0502F270, 0x0503C048, 0x0503C408, 0x0503B9A8,
+	0x0503C6B0, 0x0503B588, 0x0503AFC8, 0x0504D420, 0x0503A480,
+	0x00000000, 0x0502E960, 0x0503C7C0, 0x0503A778,
+};
 
-u8 D_80140ADC_14FA8C[0x68] = {
-	0x05, 0x02, 0xF6, 0xE0, 0x05, 0x02, 0xF9, 0xE0, 0x05, 0x03, 0x03, 0x58, 0x05, 0x03, 0x06, 0x98,
-	0x05, 0x03, 0x09, 0xD0, 0x05, 0x02, 0xFF, 0x70, 0x05, 0x02, 0xF0, 0x98, 0x05, 0x02, 0xF2, 0xF8,
-	0x05, 0x02, 0xF3, 0x80, 0x05, 0x02, 0xF4, 0xA0, 0x05, 0x02, 0xF2, 0x70, 0x05, 0x03, 0xC0, 0x48,
-	0x05, 0x03, 0xC4, 0x08, 0x05, 0x03, 0xB9, 0xA8, 0x05, 0x03, 0xC6, 0xB0, 0x05, 0x03, 0xB5, 0x88,
-	0x05, 0x03, 0xAF, 0xC8, 0x05, 0x04, 0xD4, 0x20, 0x05, 0x03, 0xA4, 0x80, 0x00, 0x00, 0x00, 0x00,
-	0x05, 0x02, 0xE9, 0x60, 0x05, 0x03, 0xC7, 0xC0, 0x05, 0x03, 0xA7, 0x78, 0x64, 0x96, 0xFF, 0x14,
-	0x28, 0xB4, 0x46, 0xFF, 0x50, 0x14, 0xBE, 0x28,
+u8 D_80140B38_14FAE8[12] = {
+	0x64, 0x96, 0xFF, 0x14, 0x28, 0xB4, 0x46, 0xFF, 0x50, 0x14, 0xBE, 0x28,
 };
 
 u8 D_80140B44_14FAF4[0x2C] = {
@@ -759,27 +759,31 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(26238)
-// AI - Renders D_8015EB90 Projectile sparks/trails and D_8015F9F8 fades using GBI calls and func_800C1ECC.
+// CURRENT(370)
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
-	Vtx *new_var2;
-	Unk80052B40 fadeVec;
-
-	s16 pos[2];
-	s8 color[4];
+	u8 framePadding[8];
 	Projectile *bullet;
 	const WeaponEntry_80129864 *weaponEntry;
 	s32 i;
-	u8 sparkType;
+	s32 sparkType;
 	s32 weaponFlags;
-	const u8 *trailColor;
-	const u8 (*trailColors)[0xB];
 	u8 *extraPtr;
-	u32 *sparkDLs;
-	s16 (*fadeData)[4];
-	s32 fadeIndex;
+	const u32 *sparkDLs;
+	Unk80052B40 fadeVec;
+	u8 red;
+	u8 green;
+	u8 blue;
+	u8 trailRed;
+	u8 trailGreen;
+	u8 trailBlue;
+	u8 trailAlpha;
+	u8 endAlpha;
+	s32 alpha;
+	Unk8015FA40Entry *point;
+	s16 pos[2];
+	u8 color[4];
 
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
@@ -793,49 +797,47 @@ void func_80124D60_133D10(void) {
 	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_2CYCLE);
 
-
 	if (D_8015F9E4 != 0) {
 		i = D_8015F9E4;
 		while (i--) {
 			bullet = &D_8015EB90[i];
 			weaponEntry = &D_80145BE0_154B90[bullet->unk20];
 			sparkType = weaponEntry->unk16;
-			sparkDLs = (const u32 *)&D_80140AD8_14FA88;
+			sparkDLs = D_80140AD8_14FA88;
 
 			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
-				weaponFlags = weaponEntry->unk8 >> 8;
-				if ((weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
+				if ((D_80145BE0_154B90[bullet->unk20].weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
 					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E);
-				} else if ((weaponFlags << 9) < 0) {
+				} else if ((D_80145BE0_154B90[bullet->unk20].weaponFlags << 9) < 0) {
 					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 				} else {
 					switch (bullet->unk20 - 0x5C) {
-							case 0:
-								func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
-								break;
-							case 2:
-								func_800D55C0_E4570(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
-								break;
-							case 5:
-								func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-								break;
-							case 4:
-								func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-								break;
-							case 3:
-							case 0xA:
-							case 0xC:
-							case 0x10:
-							case 0x13:
-								func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
-								break;
-							default:
-								break;
-						}
+						case 0:
+							func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+							break;
+						case 2:
+							func_800D55C0_E4570(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+							break;
+						case 5:
+							func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							break;
+						case 4:
+							func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							break;
+						case 3:
+						case 0xA:
+						case 0xC:
+						case 0x10:
+						case 0x13:
+							func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							break;
+						default:
+							break;
 					}
-				if ((((s32)(weaponEntry->unk8 >> 8)) & 0x10000) != 0) {
+				}
+				if ((weaponEntry->weaponFlags << 15) < 0) {
 					if ((bullet->unk20 == 0x1D) || (bullet->unk20 == 0x2A) || (bullet->unk20 == 0x0C)) {
-						if ((D_80052A8C % 3) == 0) {
+						if (((u32)D_80052A8C % 3) == 0) {
 							func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 2);
 						}
 					} else if (bullet->unk20 == 0x5B) {
@@ -844,121 +846,119 @@ void func_80124D60_133D10(void) {
 						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 0);
 					}
 				}
-			}
 
-			if (sparkType == 0x80) {
-				trailColors = (const u8 (*)[0xB])&D_80140768_14F718[4];
-				trailColor = trailColors[bullet->unk20];
+				if (sparkType == 0x80) {
+					red = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB)];
+					green = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 1];
+					blue = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 2];
+					trailRed = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 6];
+					trailGreen = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 7];
+					trailBlue = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 8];
+					trailAlpha = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 9];
+					endAlpha = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 10];
 
-				color[0] = trailColor[0];
-				color[1] = trailColor[1];
-				color[2] = trailColor[2];
-				color[3] = trailColor[6];
-
-				if ((D_80052A8C & 1) == 0) {
-					color[0] = (color[0] + 0x96 > 0xFF) ? 0xFF : color[0] + 0x96;
-					color[1] = (color[1] + 0x96 > 0xFF) ? 0xFF : color[1] + 0x96;
-					color[2] = (color[2] + 0x96 > 0xFF) ? 0xFF : color[2] + 0x96;
-					color[3] = (color[3] + 0x4B > 0xFF) ? 0xFF : color[3] + 0x4B;
-				}
-
-				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
-				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
-				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[3];
-				D_8005BB34->v.cn[1] = trailColor[7];
-				D_8005BB34->v.cn[2] = trailColor[8];
-				D_8005BB34->v.cn[3] = trailColor[9];
-				D_8005BB34++;
-
-				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[0];
-				D_8005BB34->v.cn[1] = color[1];
-				D_8005BB34->v.cn[2] = color[2];
-				D_8005BB34->v.cn[3] = 0xFF;
-				D_8005BB34++;
-
-				D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
-				D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
-				D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[3];
-				D_8005BB34->v.cn[1] = color[3];
-				D_8005BB34->v.cn[2] = color[3];
-				D_8005BB34->v.cn[3] = trailColor[0xA];
-				D_8005BB34++;
-
-				D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-				D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-				D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18);
-				D_8005BB34->v.flag = 0;
-				D_8005BB34->v.tc[0] = 0;
-				D_8005BB34->v.tc[1] = 0;
-				D_8005BB34->v.cn[0] = color[3];
-				D_8005BB34->v.cn[1] = trailColor[7];
-				new_var2 = D_8005BB34;
-				D_8005BB34->v.cn[2] = trailColor[8];
-				new_var2->v.cn[3] = trailColor[9];
-				D_8005BB34++;
-
-				gDPPipeSync(D_8005BB30++);
-				gSPVertex(D_8005BB30++, D_8005BB34 - 4, 4, 0);
-				gSPLine3D(D_8005BB30++, 0, 8, 0);
-				gSPLine3D(D_8005BB30++, 2, 3, 0);
-				gSPLine3D(D_8005BB30++, 0, 1, 0);
-
-				gSPDisplayList(D_8005BB30++, K0_TO_PHYS(sparkDLs[sparkType]));
-			} else if (sparkType != 0) {
-				if ((weaponEntry->unkB & 1) == 0) {
-					D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
-					D_80052B40.unk2 = (s16)(s32)bullet->unk4 >> 2;
-					D_80052B40.unk4 = (s16)(s32)bullet->unk8 >> 2;
-
-					if (weaponEntry->unkE != 0) {
-						D_80052B48.unk0 = 0x4000 - bullet->unk10S16;
-						D_80052B48.unk2 = 0;
-						D_80052B48.unk4 = -func_80003824_4424((f32)bullet->unk14S16, (f32)bullet->unk12S16);
-					} else {
-						D_80052B48.unk0 = bullet->unk1C_u8 << 8;
-						D_80052B48.unk2 = bullet->unk1D_u8 << 8;
-						D_80052B48.unk4 = 0;
+					if ((D_80052A8C & 1) == 0) {
+						red = (red + 0x96 > 0xFF) ? 0xFF : red + 0x96;
+						green = (green + 0x96 > 0xFF) ? 0xFF : green + 0x96;
+						blue = (blue + 0x96 > 0xFF) ? 0xFF : blue + 0x96;
+						trailRed = (trailRed + 0x4B > 0xFF) ? 0xFF : trailRed + 0x4B;
+						trailGreen = (trailGreen + 0x4B > 0xFF) ? 0xFF : trailGreen + 0x4B;
+						trailBlue = (trailBlue + 0x4B > 0xFF) ? 0xFF : trailBlue + 0x4B;
 					}
 
-					func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
-					gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
-					D_8005BB38 += 0x40;
-					gSPDisplayList(D_8005BB2C++, sparkDLs[sparkType]);
-				}
-			}
+					D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+					D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+					D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = trailRed;
+					D_8005BB34->v.cn[1] = trailGreen;
+					D_8005BB34->v.cn[2] = trailBlue;
+					D_8005BB34->v.cn[3] = trailAlpha;
+					D_8005BB34++;
 
-			if ((s8)weaponEntry->unkB != 0) {
-			extraPtr = &D_80140B7C_14FB2C[((weaponEntry->unkB & 7) * 3) - 4];
-				color[0] = ((extraPtr[0] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[1] = ((extraPtr[1] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[2] = ((extraPtr[2] * (weaponEntry->unkB & 0xF8)) >> 9);
-				color[3] = 0;
-				pos[0] = (s16)(s32)bullet->unk0;
-				pos[1] = (s16)(s32)bullet->unk8;
-				func_800B2354_C1304(pos, color, 0x100, 0x258);
+					D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+					D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+					D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18F32);
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = red;
+					D_8005BB34->v.cn[1] = green;
+					D_8005BB34->v.cn[2] = blue;
+					D_8005BB34->v.cn[3] = 0xFF;
+					D_8005BB34++;
+
+					D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
+					D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
+					D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = trailRed;
+					D_8005BB34->v.cn[1] = trailRed;
+					D_8005BB34->v.cn[2] = trailRed;
+					D_8005BB34->v.cn[3] = endAlpha;
+					D_8005BB34++;
+
+					D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
+					D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
+					D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18F32);
+					D_8005BB34->v.flag = 0;
+					D_8005BB34->v.tc[0] = 0;
+					D_8005BB34->v.tc[1] = 0;
+					D_8005BB34->v.cn[0] = trailRed;
+					D_8005BB34->v.cn[1] = trailGreen;
+					D_8005BB34->v.cn[2] = trailBlue;
+					D_8005BB34->v.cn[3] = trailAlpha;
+					D_8005BB34++;
+
+					gDPPipeSync(D_8005BB30++);
+					gSPVertex(D_8005BB30++, &D_8005BB34[-4], 4, 0);
+					gSPLineW3D(D_8005BB30++, 2, 3, 0xD, 0);
+					gSPLineW3D(D_8005BB30++, 0, 1, 4, 0);
+				} else if (sparkType != 0) {
+					if ((weaponEntry->weaponFlags & 0x1000) == 0) {
+						D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
+						D_80052B42 = (s16)(s32)bullet->unk4 >> 2;
+						D_80052B44 = (s16)(s32)bullet->unk8 >> 2;
+
+						if (D_80145BE0_154B90[bullet->unk20].unkE != 0) {
+							D_80052B48.unk0 = 0x4000 - bullet->unk10S16;
+							D_80052B48.unk4 = -func_80003824_4424((f32)bullet->unk14S16, (f32)bullet->unk12S16);
+							D_80052B48.unk2 = 0;
+						} else {
+							D_80052B48.unk0 = bullet->unk1C_u8 << 8;
+							D_80052B4A = bullet->unk1D_u8 << 8;
+							D_80052B48.unk4 = 0;
+						}
+
+						func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
+						gSPMatrix(D_8005BB2C++, ((s32)D_8005BB38 & 0x1FFFFFFF), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+						D_8005BB38++;
+						gSPDisplayList(D_8005BB2C++, sparkDLs[sparkType]);
+					}
+				}
+
+				weaponFlags = weaponEntry->unkB;
+				if (weaponFlags != 0) {
+					extraPtr = &D_80140B7C_14FB2C[(weaponFlags & 7) * 3];
+					color[0] = ((extraPtr[0] * (weaponFlags & 0xF8)) >> 9);
+					color[1] = ((extraPtr[1] * (weaponFlags & 0xF8)) >> 9);
+					color[2] = ((extraPtr[2] * (weaponFlags & 0xF8)) >> 9);
+					pos[0] = (s16)(s32)bullet->unk0;
+					pos[1] = (s16)(s32)bullet->unk8;
+					func_800B2354_C1304(pos, color, 0x100, 0x258);
+				}
 			}
 		}
 	}
 
 	if (((D_80159320 & 0x40) != 0) && (gameplayMode == 1) && (currentLevel == 2) && func_800A2A88_B1A38()) {
-		s32 alpha;
 
-
-		for (i = 0x17; i >= 0; i--) {
+		i = 0x17;
+		do {
 			D_8005BB34->v.ob[0] = D_8015FA40[i].unk0;
 			D_8005BB34->v.ob[1] = D_8015FA40[i].unk2;
 			D_8005BB34->v.ob[2] = D_8015FA40[i].unk4;
@@ -966,43 +966,47 @@ void func_80124D60_133D10(void) {
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
 
-			alpha = 0x80 - (i * 4);
+			alpha = 0x80 - ((u8)i * 4);
 			D_8005BB34->v.cn[0] = alpha;
 			D_8005BB34->v.cn[1] = alpha;
 			D_8005BB34->v.cn[2] = alpha;
 			D_8005BB34->v.cn[3] = 0x40;
 			D_8005BB34++;
-		}
+		} while (i--);
 
-		gSPVertex(D_8005BB30++, D_8005BB34 - 24, 24, 0);
-		for (i = 0x16; i >= 0; i--) {
-			if ((D_8015FA40[i + 2].unk0 != 0x7FFF) && (D_8015FA40[i + 1].unk0 != 0x7FFF)) {
+		gSPVertex(D_8005BB30++, &D_8005BB34[-24], 24, 0);
+		point = &D_8015FA40[2];
+		i = 0x16;
+		do {
+			if ((point[0].unk0 != 0x7FFF) && (point[-1].unk0 != 0x7FFF)) {
 				gSPLineW3D(D_8005BB30++, i, i + 1, 4, 0);
 			}
-		}
+			point++;
+		} while (i--);
 	}
 
+	gDPPipeSync(D_8005BB2C++);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_PRIMITIVE, G_CC_PRIMITIVE);
 
 	{
-		fadeData = D_8015F9F8;
-		for (fadeIndex = 0; fadeIndex < 8; fadeIndex++) {
-			if (fadeData[fadeIndex][3] != 0) {
+		for (i = 0; i < 8; i++) {
+			if (D_8015F9F8[i][3] != 0) {
 				s32 fade;
 				s32 invFade;
+				s32 scale;
 
+				fade = (D_8015F9F8[i][3] * 64) - 1;
+				invFade = 0xFF - fade;
+				scale = fade * 3;
+				fadeVec.unk0 = scale;
+				fadeVec.unk2 = scale;
+				fadeVec.unk4 = scale;
 
-				fade = (fadeData[fadeIndex][3] << 6) - 1;
-				invFade = (0xFF - fade) & 0xFF;
-				fadeVec.unk0 = (fade << 2) - fade;
-				fadeVec.unk2 = fadeVec.unk0;
-				fadeVec.unk4 = fadeVec.unk0;
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, invFade, invFade, invFade);
 
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, invFade, invFade, invFade, 0xFF);
-
-				func_800039D0_45D0((Unk80052B40 *)fadeData[fadeIndex], NULL, &fadeVec, D_8005BB38);
-				gSPVertex(D_8005BB2C++, D_8005BB38, 4, 0);
-				D_8005BB38 += 0x40;
+				func_800039D0_45D0((Unk80052B40 *)D_8015F9F8[i], NULL, &fadeVec, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_MODELVIEW | G_MTX_MUL | G_MTX_PUSH);
+				D_8005BB38++;
 				gSPDisplayList(D_8005BB2C++, &D_50332A0);
 				gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 			}
@@ -1169,27 +1173,26 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 	s32 zFixed;
 	s32 stepCount;
 
-
-
 	s32 dx;
-	s32 dy; s32 stepX; s32 stepY; s32 stepZ;
+	s32 dy;
+	s32 stepX;
+	s32 stepY;
+	s32 stepZ;
 	s32 dz;
 
-	s32 mapY; s16 groundY;
+	s32 mapY;
+	s16 groundY;
 	s32 tileX;
 	s32 buildingIdx;
 	s32 tileZ;
 	Unk80259D90 *surface;
 
-	 BuildingInstance *building;
+	BuildingInstance *building;
 	s16 prevTileX;
 	s16 prevTileZ;
-	s8 pad;
+	s8 pad; /* Preserve the IDO stack layout. */
 	s16 maxBuildingY;
 	f32 hitScale;
-
-
-
 
 	xFixed = arg0 << 8;
 	yFixed = arg1 << 8;
@@ -1207,53 +1210,50 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		surface = func_80125D70_134D20(arg0, arg1, arg2, arg3, arg4, arg5, &hitScale);
 		if (surface != NULL) {
 			D_8015F9DC = (s32)surface;
-			dx = (s32) ((f32) dx * hitScale);
-			dy = (s32) ((f32) dy * hitScale);
-			dz = (s32) ((f32) dz * hitScale);
+			dx = dx * hitScale;
+			dy = dy * hitScale;
+			dz = dz * hitScale;
 			*arg3 = arg0 + dx;
 			*arg4 = arg1 + dy;
 			*arg5 = arg2 + dz;
 		}
 	}
 
-
 	if ((dx == 0) && (dz == 0)) {
-
-		stepCount = (-dy < dy ? dy : -dy) >> arg7;
-		stepX = 0; stepZ = 0; stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
-	} else
-
-
-
-if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
-			D_8015F9D0.unkC += 0;
-			if ((stepCount = ((-dx) < dx ? dx : (-dx)) >> arg7) != 0) {
-				stepX = ((-dx) > 0 ? -0x100 : 0x100) << arg7;
-				stepY = (dy << 8) / stepCount;
-				stepZ = (dz << 8) / stepCount;
-			}
-		} else
-			if ((stepCount = ((-dz) < dz ? dz : (-dz)) >> arg7) != 0) {
-				stepX = (dx << 8) / stepCount;
-				stepY = (dy << 8) / stepCount;
-				stepZ = ((-dz) > 0 ? -0x100 : 0x100) << arg7;
-			}
+		stepCount = BH_ABS(dy) >> arg7;
+		stepX = 0;
+		stepZ = 0;
+		stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
+	} else if (BH_ABS(dx) > BH_ABS(dz)) {
+		D_8015F9D0.unkC += 0; /* Preserve the IDO branch code generation. */
+		if ((stepCount = BH_ABS(dx) >> arg7) != 0) {
+			stepX = (-dx > 0 ? -0x100 : 0x100) << arg7;
+			stepY = (dy << 8) / stepCount;
+			stepZ = (dz << 8) / stepCount;
+		}
+	} else {
+		if ((stepCount = BH_ABS(dz) >> arg7) != 0) {
+			stepX = (dx << 8) / stepCount;
+			stepY = (dy << 8) / stepCount;
+			stepZ = (-dz > 0 ? -0x100 : 0x100) << arg7;
+		}
+	}
 
 	if (D_801591A8 != 0) {
 		D_80158FE8 = NULL;
 	}
 
-	for (; stepCount--; ) {
-
+	for (; stepCount--;) {
 		xFixed += stepX;
 		yFixed += stepY;
 		zFixed += stepZ;
 
 		tileX = xFixed >> 8;
 		tileZ = zFixed >> 8;
-		mapY = func_800B84D0_C7480((s16) tileX, (s16) tileZ) >> 8; groundY = mapY;
+		mapY = func_800B84D0_C7480((s16)tileX, (s16)tileZ) >> 8;
+		groundY = mapY;
 
-		if ((yFixed >> 8) < (s16) mapY) {
+		if ((yFixed >> 8) < (s16)mapY) {
 			*arg3 = tileX;
 			*arg4 = groundY;
 			*arg5 = zFixed >> 8;
@@ -1262,7 +1262,7 @@ if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
 		}
 
 		if ((arg6 & 4) == 0) {
-			s32 collisionIdx = func_8012E114_13D0C4((s16) tileX, (s16) (yFixed >> 8), (s16) (zFixed >> 8));
+			s32 collisionIdx = func_8012E114_13D0C4((s16)tileX, (s16)(yFixed >> 8), (s16)(zFixed >> 8));
 			if (collisionIdx != -1) {
 				D_8015F9D0.position[0] = tileX;
 				*arg3 = D_8015F9D0.position[0];
@@ -1283,18 +1283,18 @@ if (((-dx) < dx ? dx : (-dx)) > ((-dz) < dz ? dz : (-dz))) {
 		func_8011DE60_12CE10(1);
 		if ((prevTileZ == ((zFixed >> 8) >> 8)) && (prevTileX == (tileX >> 8))) {
 			if (building != NULL) {
-				func_8011DE6C_12CE1C((s16) tileX, (s16) (zFixed >> 8), &maxBuildingY, (s16) buildingIdx);
+				func_8011DE6C_12CE1C((s16)tileX, (s16)(zFixed >> 8), &maxBuildingY, (s16)buildingIdx);
 			}
 		} else {
 
-			buildingIdx = func_8011E6FC_12D6AC((s16) tileX, (s16) tileZ, &maxBuildingY);
+			buildingIdx = func_8011E6FC_12D6AC((s16)tileX, (s16)tileZ, &maxBuildingY);
 			if (buildingIdx != -1) {
 				building = &buildingInstances[buildingIdx];
 			} else {
 				building = NULL;
 			}
 			prevTileX = tileX >> 8;
-prevTileZ = tileZ >> 8;
+			prevTileZ = tileZ >> 8;
 		}
 		func_8011DE60_12CE10(0);
 
@@ -1353,42 +1353,42 @@ s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 a
 	return (s32)__ll_div((s64)func_80126990_135940((arg5 - arg1) * (arg2 - arg0) - (arg4 - arg0) * (arg3 - arg1)), denom);
 }
 
-// CURRENT(49020)
 #ifdef NON_MATCHING
+Unk8015F9D0 D_8015F9D0; /* Share the high address across the alien coordinate stores. */
+
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
-s32 vehicleCount;
-s32 x = arg1;
-s32 z = arg3;
-s32 distSqBest;
-s32 lineDist;
-s32 lineDistBest;
-s32 y = arg2;
-f32 interp;
-f32 objDist;
-s16 minX;
-s16 maxX;
-s16 minZ;
-s16 maxZ;
-f32 bestDistF;
-s32 exactHit;
-s32 ax;
-s32 az;
-s32 absX;
-f32 pathDistSq;
-s32 dx;
-s32 shadowX;
-s32 shadowY;
-s32 shadowZ;
-union { VehicleInstance *vehicle; AlienInstance *alien; } entity;
-union { VehicleType *vehicle; AlienType *alien; s32 radius; } data;
-s32 objThreshold;
-s32 dy;
-s32 dz;
-union { Unk8015F9D0 *pointer; s32 bits; } hit;
-s16 hitX;
-s16 hitZ;
-s32 sideDist;
-s32 absZ;
+	s32 vehicleCount;
+	s32 x = arg1;
+	s32 z = arg3;
+	s32 distSqBest;
+	s32 lineDist;
+	s32 lineDistBest;
+	s32 y = arg2;
+	f32 interp;
+	f32 objDist;
+	s16 minX;
+	s16 maxX;
+	s16 minZ;
+	s16 maxZ;
+	f32 bestDistF;
+	s32 exactHit;
+	s32 ax;
+	s32 scratch;
+	s32 absX;
+	f32 pathDistSq;
+	s32 dx;
+	s32 shadowX;
+	s32 shadowY;
+	s32 shadowZ;
+	union { VehicleInstance *vehicle; AlienInstance *alien; } entity;
+	union { VehicleType *vehicle; AlienType *alien; s32 radius; } data;
+	s32 objThreshold;
+	s32 dy;
+	s32 dz;
+	union { Unk8015F9D0 *pointer; s32 bits; } hit;
+	s16 hitX;
+	s16 hitZ;
+	s32 absZ;
 
 	arg2 = y; distSqBest = 0x7FFFFFFF;
 
@@ -1427,12 +1427,14 @@ s32 absZ;
 
 
 	if ((currentLevel != LEVEL_COMET) || (arg0 != D_80052B34)) {
-		vehicleCount = D_80158FD8;
-		if (vehicleCount--) {
-			
-			hit.bits = (s32)&D_8015F9D0; if (hit.bits) {}
+		scratch = D_80158FD8;
+		vehicleCount = scratch;
+		if (vehicleCount) {} /* Preserve the counter register allocation. */
+		if (scratch--) {
+			vehicleCount = scratch;
 			do {
 				entity.vehicle = &vehicleInstances[D_80158E80[vehicleCount]];
+				hit.bits = (s32)&D_8015F9D0; if (hit.bits) {}
 				data.vehicle = &vehicleTypes[entity.vehicle->unk1A];
 				if ((entity.vehicle == arg0) || (entity.vehicle->unk0 < minX) || (entity.vehicle->unk0 > maxX) || (entity.vehicle->unk4 < minZ) || (entity.vehicle->unk4 > maxZ)) { continue; }
 					if (dx == 0 && dz == 0) {
@@ -1440,10 +1442,11 @@ s32 absZ;
 							func_8010C4EC_11B49C(entity.vehicle);
 							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
 								hit.pointer->unk0 = (s16)x;
-								hit.pointer->unk2 = (s16)(entity.vehicle->unk2 + data.vehicle->unk38);
-								hit.pointer->unk4 = (s16)z;
 								exactHit = 1;
 								bestDistF = (f32)distSqBest;
+								if (bestDistF) {}
+								hit.pointer->unk2 = (s16)(entity.vehicle->unk2 + data.vehicle->unk38);
+								hit.pointer->unk4 = (s16)z;
 							} else { continue; }
 						} else { continue; }
 					} else {
@@ -1453,15 +1456,16 @@ s32 absZ;
 						case 0: {
 							ax = x - *arg4;
 							absX = (-ax < ax) ? ax : -ax;
-							az = z - *arg6;
-							absZ = (-az < az) ? az : -az;
+							scratch = z - *arg6;
+							absZ = (-scratch < scratch) ? scratch : -scratch;
 							if (absZ < absX) {
-								sideDist = func_801269BC_13596C(x, arg2, *arg4, *arg5, entity.vehicle->unk0, entity.vehicle->unk2);
-								if (data.vehicle->unk8 < sideDist) continue;
+								scratch = func_801269BC_13596C(x, arg2, *arg4, *arg5, entity.vehicle->unk0, entity.vehicle->unk2);
+								if (data.vehicle->unk8 < scratch) continue;
 							} else {
-								sideDist = func_801269BC_13596C(z, arg2, *arg6, *arg5, entity.vehicle->unk4, entity.vehicle->unk2);
-								if (data.vehicle->unk8 < sideDist) continue;
+								scratch = func_801269BC_13596C(z, arg2, *arg6, *arg5, entity.vehicle->unk4, entity.vehicle->unk2);
+								if (data.vehicle->unk8 < scratch) continue;
 							}
+							if (1) {}
 							hit.pointer->unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
@@ -1470,8 +1474,9 @@ s32 absZ;
 							dx = (x - entity.vehicle->unk0) >> 2;
 							dy = (arg2 - entity.vehicle->unk2) >> 2;
 							dz = (z - entity.vehicle->unk4) >> 2;
-							absX = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-							if ((absX < entity.vehicle->unk2) || (absX > entity.vehicle->unk2 + data.vehicle->unk38)) continue;
+							scratch = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
+							y = entity.vehicle->unk2;
+							if ((scratch < y) || (scratch > (s32)y + data.vehicle->unk38)) continue;
 							hit.pointer->unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
@@ -1481,18 +1486,20 @@ s32 absZ;
 							if (func_8010D4EC_11C49C((s16)x, (s16)z, &hitX, &hitZ, entity.vehicle) == 0) continue;
 							dx = (x - hitX) >> 2;
 							dz = (z - hitZ) >> 2;
-							absX = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
-							if ((absX < entity.vehicle->unk2) || (absX > entity.vehicle->unk2 + data.vehicle->unk38)) continue;
+							scratch = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
+							y = entity.vehicle->unk2;
+							if ((scratch < y) || (scratch > (s32)y + data.vehicle->unk38)) continue;
 							hit.pointer->unk0 = hitX;
-							hit.pointer->unk2 = (s16)absX;
-							hit.pointer->unk4 = hitZ;
-							exactHit = 1;
 							bestDistF = (f32)distSqBest;
+							if (bestDistF) {}
+							hit.pointer->unk4 = hitZ;
+							hit.pointer->unk2 = (s16)scratch;
+							exactHit = 1;
 							break;
 						default:
 							bestDistF = (f32)distSqBest;
 						}
-						
+
 					} else { continue; }
 				}
 
@@ -1502,18 +1509,20 @@ s32 absZ;
 				dy = (arg2 - entity.vehicle->unk2) >> 2;
 				dz = (z - entity.vehicle->unk4) >> 2;
 				objDist = (dx * dx) + (dy * dy) + (dz * dz);
-				if ((f32)objDist < bestDistF) {
+				if (objDist < bestDistF) {
 					lineDistBest = lineDist;
 					if (D_801591A8 != 0) D_80158FE4 = entity.vehicle;
+					scratch = hit.pointer->unk8;
 					objThreshold = data.vehicle->unk8;
 					distSqBest = objDist;
-					if (hit.pointer->unk8 == 0) {
+
+					if (scratch == 0) {
 						hit.pointer->unk0 = entity.vehicle->unk0;
 						hit.pointer->unk2 = entity.vehicle->unk2;
-						hit.pointer->unk4 = entity.vehicle->unk4;
 						exactHit = 0;
+						hit.pointer->unk4 = entity.vehicle->unk4;
 					}
-					hit.pointer->unkC = (s32)entity.vehicle;
+					hit.pointer->vehicle = entity.vehicle;
 					hit.pointer->unk8 = 5;
 				}
 
@@ -1535,22 +1544,22 @@ s32 absZ;
 				if ((data.alien->unk16 & 0xF) == 0) {
 					ax = x - *arg4;
 							absX = (-ax < ax) ? ax : -ax;
-							az = z - *arg6;
-					absZ = (-az < az) ? az : -az;
+							scratch = z - *arg6;
+					absZ = (-scratch < scratch) ? scratch : -scratch;
 					if (absZ < absX) {
-						sideDist = func_801269BC_13596C(x, arg2, *arg4, *arg5, entity.alien->unk0, entity.alien->unk2);
+						scratch = func_801269BC_13596C(x, arg2, *arg4, *arg5, entity.alien->unk0, entity.alien->unk2);
 					} else {
-						sideDist = func_801269BC_13596C(z, arg2, *arg6, *arg5, entity.alien->unk4, entity.alien->unk2);
+						scratch = func_801269BC_13596C(z, arg2, *arg6, *arg5, entity.alien->unk4, entity.alien->unk2);
 					}
-					if (data.alien->unk8 < sideDist) {
+					if (data.alien->unk8 < scratch) {
 						continue;
 					}
 				}
 				dx = (x - entity.alien->unk0) >> 2;
-					dy = (arg2 - entity.alien->unk2) >> 2;
+					scratch = (arg2 - entity.alien->unk2) >> 2;
 				dz = (z - entity.alien->unk4) >> 2;
 				if ((data.alien->unk16 & 0xF) == 1) {
-					absX = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq)
+					absX = (s32)((sqrtf((f32)((dx * dx) + (scratch * scratch) + (dz * dz)) / pathDistSq)
 						* (f32)(*arg5 - arg2)) + (f32)arg2);
 					absZ = entity.alien->unk2;
 					if ((data.alien->unk16 & 0x10) != 0) {
@@ -1560,8 +1569,8 @@ s32 absZ;
 						continue;
 					}
 				}
-				objDist = (dx * dx) + (dy * dy) + (dz * dz);
-				if ((f32)objDist < (f32)distSqBest) {
+				objDist = (dx * dx) + (scratch * scratch) + (dz * dz);
+				if (objDist < (f32)distSqBest) {
 					if (D_801591A8 != 0) {
 						D_80158FEC = entity.alien;
 						D_80158FE4 = NULL;
@@ -1569,26 +1578,28 @@ s32 absZ;
 					objThreshold = data.alien->unk8;
 					lineDistBest = lineDist;
 					distSqBest = objDist;
-					D_8015F9D0.unk0 = entity.alien->unk0;
+					D_8015F9D0.unk0 = entity.alien->unk0; if (1) {}
 					D_8015F9D0.unk2 = entity.alien->unk2;
 					D_8015F9D0.unk4 = entity.alien->unk4;
 					D_8015F9DC = (s32)entity.alien;
 					hit.pointer->unk8 = 7;
-					if (data.alien->unk5A != -1) {
-						Unk80147090Entry_8012B26C *entry = &D_80147090_156040[data.alien->unk5A];
+					if ((scratch = data.alien->unk5A) != -1) {
+						Unk80147090Entry_8012B26C *entry;
+						entry = &D_80147090_156040[scratch];
 						func_80128428_1373D8(entity.alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
 						data.radius = entry->radius * entry->radius;
-						if ((f32)func_801269BC_13596C(x, z, *arg4, *arg6, shadowX, shadowZ) < (f32)data.radius) {
+						objDist = func_801269BC_13596C(x, z, *arg4, *arg6, shadowX, shadowZ);
+						if (objDist < (f32)data.radius) {
 							ax = x - *arg4;
 							absX = (-ax < ax) ? ax : -ax;
-							az = z - *arg6;
-							absZ = (-az < az) ? az : -az;
+							scratch = z - *arg6;
+							absZ = (-scratch < scratch) ? scratch : -scratch;
 							if (absZ < absX) {
-								sideDist = func_801269BC_13596C(x, arg2, *arg4, *arg5, shadowX, shadowY);
+								scratch = func_801269BC_13596C(x, arg2, *arg4, *arg5, shadowX, shadowY);
 							} else {
-								sideDist = func_801269BC_13596C(z, arg2, *arg6, *arg5, shadowZ, shadowY);
+								scratch = func_801269BC_13596C(z, arg2, *arg6, *arg5, shadowZ, shadowY);
 							}
-							if (sideDist < data.radius) {
+							if (scratch < data.radius) {
 								dx = (x - shadowX) >> 2;
 								dy = (arg2 - shadowY) >> 2;
 								dz = (z - shadowZ) >> 2;
@@ -1610,22 +1621,22 @@ s32 absZ;
 
 	if ((distSqBest != 0x7FFFFFFF) && (exactHit == 0)) {
 		dx = (x - hit.pointer->unk0) >> 2;
-		dy = (arg2 - hit.pointer->unk2) >> 2;
+		y = (arg2 - hit.pointer->unk2) >> 2;
 		dz = (z - hit.pointer->unk4) >> 2;
-		interp = (f32)((dx * dx) + (dy * dy) + (dz * dz) - (lineDistBest >> 4));
+		interp = (f32)((dx * dx) + (y * y) + (dz * dz) - (lineDistBest >> 4));
 
 		dx = (x - *arg4) >> 2;
-		dy = (arg2 - *arg5) >> 2;
+		y = (arg2 - *arg5) >> 2;
 		dz = (z - *arg6) >> 2;
 
 		if (interp < 10.0f) {
 			bestDistF = 1.0f;
 		} else {
-			bestDistF = sqrtf(interp / (f32)((dx * dx) + (dy * dy) + (dz * dz)));
+			bestDistF = sqrtf(interp / (f32)((dx * dx) + (y * y) + (dz * dz)));
 		}
 
 		hit.pointer->unk0 = (s16)((f32)x - ((f32)(dx * 4) * bestDistF));
-		hit.pointer->unk2 = (s16)((f32)arg2 - ((f32)(dy * 4) * bestDistF));
+		hit.pointer->unk2 = (s16)((f32)arg2 - ((f32)(y * 4) * bestDistF));
 		hit.pointer->unk4 = (s16)((f32)z - ((f32)(dz * 4) * bestDistF));
 
 		if (interp > 10.0f) {
@@ -1991,20 +2002,19 @@ end_simulation:
 
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-	Gfx *packet;
-	s32 midX;
-	s32 midY;
-	s32 midZ;
-	f64 fade;
+	s32 endStep;
+	s32 midpoint;
+	u8 upperStackPadding[16]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
 	f32 length;
 	f32 dirX;
 	f32 dirY;
 	f32 dirZ;
 	s32 startStep;
-	u32 endStep;
-	s32 stepLength;
+	u8 lowerStackPadding[8]; /* Keep the half-delta spills at sp+0x30 through sp+0x28. */
 
-	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1)) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
+	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1))
+	             + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1))
+	             + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
 	if (length == 0.0f) {
 		return;
 	}
@@ -2013,35 +2023,28 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	dirY = ((arg4 - arg1) >> 1) / length;
 	dirZ = ((arg5 - arg2) >> 1) / length;
 
-	startStep = (func_800038E0_44E0() % 30);
-	startStep = (startStep * length) / 100.0f;
+	startStep = ((func_800038E0_44E0() % 30) * length) / 100.0f;
 
 	arg0 += dirX * startStep;
-	midX = arg0;
 	arg1 += dirY * startStep;
-	midY = arg1;
 	arg2 += dirZ * startStep;
-	midZ = arg2;
 
-	endStep = (func_800038E0_44E0() % 30); if (255) {}
-	packet = D_8005BB30;
-	endStep = (s32)(((s32)endStep * length) / 100.0f);
-	stepLength = endStep;
+	endStep = func_800038E0_44E0() % 30;
+	endStep = (endStep * length) / 100.0f;
 
-	(&arg3)[0] = arg3 - dirX * stepLength;
-	(&arg4)[0] = arg4 - dirY * stepLength;
-	(&arg5)[0] = arg5 - dirZ * stepLength;
+	arg3 = arg3 - dirX * endStep;
+	if (endStep) {}
+	arg4 = arg4 - dirY * endStep;
+	arg5 = arg5 - dirZ * endStep;
 
-
-	D_8005BB30++;
-	gDPSetRenderMode(packet, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 	gSPClearGeometryMode(D_8005BB30++, G_FOG);
 
-	D_8005BB34->v.ob[0] = midX;
-	D_8005BB34->v.ob[1] = midY;
-	D_8005BB34->v.ob[2] = midZ;
+	D_8005BB34->v.ob[0] = arg0;
+	D_8005BB34->v.ob[1] = arg1;
+	D_8005BB34->v.ob[2] = arg2;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2051,13 +2054,11 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	stepLength = startStep;
-	fade = (length - stepLength) - (s32)endStep;
-	stepLength = (s32)(fade * 0.7);
-	(*(Vtx * volatile *)&D_8005BB34)->v.ob[0] = midX + dirX * stepLength;
+	midpoint = (s32)(((length - startStep) - endStep) * 0.7);
+	D_8005BB34->v.ob[0] = arg0 + dirX * midpoint;
 	if (255) {}
-	D_8005BB34->v.ob[1] = midY + dirY * stepLength;
-	D_8005BB34->v.ob[2] = midZ + dirZ * stepLength;
+	D_8005BB34->v.ob[1] = arg1 + dirY * midpoint;
+	D_8005BB34->v.ob[2] = arg2 + dirZ * midpoint;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -2080,7 +2081,7 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34++;
 
 	gDPPipeSync(D_8005BB30++);
-	gSPVertex(D_8005BB30++, D_8005BB34 - 3, 3, 0);
+	gSPVertex(D_8005BB30++, &D_8005BB34[-3], 3, 0);
 	gSPLine3D(D_8005BB30++, 0, 1, 0);
 	gSPLine3D(D_8005BB30++, 1, 2, 0);
 }
