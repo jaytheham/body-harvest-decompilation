@@ -76,3 +76,18 @@ scratch use separate locals.
 `sll ..., 3`, and the two halfword stores. The enabled C function occupies
 the target's 0x4FC bytes. Its register allocation and other instruction
 scheduling still differ, so the function retains its assembly fallback.
+
+## Counter write alias and default blue load
+
+Incorrect ASM shared the counter address between the final halfword load and
+store. It also hoisted the default blue value out of the loop.
+
+-> Code changed: read `D_8013D510_14C4C0` into the signed halfword scratch
+and write the incremented value through the existing `D_8013D510`
+declaration. Bind the write alias to the existing object in both linker
+symbol files. Use `rightX * 0 + 0xFF` for the default blue value.
+
+-> Correct ASM uses separate `lui` instructions for the signed `lh` and
+`sh`, with the write address in `at`. The default branch emits
+`li v1, 0xFF` immediately before its four blue-channel stores. The full
+function still differs and retains its assembly fallback.
