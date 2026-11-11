@@ -1,15 +1,15 @@
 {
-  "generated": "2026-11-11T21:02:14Z",
-  "commit": "a163400f",
-  "commit_timestamp": "2026-11-12T10:01:11+13:00",
+  "generated": "2026-11-11T21:53:31Z",
+  "commit": "7d4564d2",
+  "commit_timestamp": "2026-11-12T10:52:30+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2722,
-    "matched": 2663,
-    "non_matching": 59,
+    "matched": 2664,
+    "non_matching": 58,
     "asm_stubs": 0,
-    "matched_pct": 97.83,
+    "matched_pct": 97.87,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -33,11 +33,11 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1407,
-      "non_matching": 42,
+      "matched": 1408,
+      "non_matching": 41,
       "asm_stubs": 0,
       "total": 1449,
-      "matched_pct": 97.1,
+      "matched_pct": 97.2,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
@@ -668,11 +668,11 @@
     {
       "path": "overlay_gameplay/outside/FEC70.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 11,
-      "non_matching": 4,
+      "matched": 12,
+      "non_matching": 3,
       "asm_stubs": 0,
       "total": 15,
-      "matched_pct": 73.3,
+      "matched_pct": 80.0,
       "contributor": ""
     },
     {
@@ -838,9 +838,9 @@
     },
     {
       "date": "2026-11-08",
-      "commit": "a163400",
-      "matched": 2663,
-      "non_matching": 59,
+      "commit": "9d23bc0",
+      "matched": 2664,
+      "non_matching": 58,
       "total": 2722
     }
   ]
