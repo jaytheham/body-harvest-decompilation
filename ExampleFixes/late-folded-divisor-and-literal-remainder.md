@@ -61,3 +61,18 @@ if (level) {} gDPPipeSync(D_8005BB2C++);
 ```
 
 Correct ASM: the entry now saves the address register, emits `lui` / `addiu` for `currentLevel`, and loads its value through offset zero before the helper. This reproduces the target's entry instruction sequence and total size `0x4fc`; the saved-register role still differs. Enabled score improves from5761 to5382. Loop address rematerialization and color/register scheduling remain unmatched, so the function stays under `NON_MATCHING`.
+
+## Left shield-wall coordinate stores
+
+Incorrect ASM: The left Z-coordinate calculation narrowed the scaled value with
+`sll ..., 0x13` and `sra ..., 0x10` before two halfword stores.
+
+-> Code changed: The improved C candidate advances the global vertex cursor
+with explicit `D_8005BB34 = &v0[1]` assignments for each vertex, and reads Z
+through the adjusted left-point pointer. The color byte and signed coordinate
+scratch use separate locals.
+
+-> Correct ASM: The left Z-coordinate calculation uses `negu`, a single
+`sll ..., 3`, and the two halfword stores. The enabled C function occupies
+the target's 0x4FC bytes. Its register allocation and other instruction
+scheduling still differ, so the function retains its assembly fallback.

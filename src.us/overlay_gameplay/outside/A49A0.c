@@ -566,18 +566,18 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 // AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
-	TileEntry *tile; Level *level;
+	ShieldWallLink *tile;
+	Level *level;
 	ShieldWallPoint *levelCoords; ShieldWallPoint (*coords)[48];
 	Vtx *v0;
 	Vtx *v1;
 	Vtx *v2;
 	Vtx *v3;
-	Vtx **vtxHead;
 	s32 selectedGroup;
 	s32 loop;
-	s16 color0;
+	s32 entry;
+	u8 color0;
 	s32 color2;
-	Vtx *new_var;
 	s16 alpha0;
 	s16 alpha2;
 	s16 bright;
@@ -585,9 +585,10 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	s32 tileGroup;
 
 	level = &currentLevel;
-	tile = (TileEntry *)D_801479B0_156960[level[0] - 1];
+	tile = D_801479B0_156960[*level - 1];
 	selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
 
+	loop = 0x20;
 	if (level) {} gDPPipeSync(D_8005BB2C++);
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_SHADING_SMOOTH);
 	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG | G_LIGHTING);
@@ -599,13 +600,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPPipeSync(D_8005BB2C++);
 
-	coords = D_801475F0_1565A0; vtxHead = &D_8005BB34;
-	loop = 0x20;
+	coords = D_801475F0_1565A0;
+	entry = loop--;
 	modBase = selectedGroup * 0 + 0x1FF; if (modBase) {}
 	// TODO replace this with for loop
-	if (loop--) {
+	if (entry) {
 		do {
-			s8 leftIdx = tile->unk0;
+			s8 leftIdx = tile->startIdx;
 			s8 rightIdx;
 			ShieldWallPoint *left;
 			ShieldWallPoint *right;
@@ -613,34 +614,39 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 
 			if (leftIdx != -1) {
 				selected = selectedGroup;
-				levelCoords = coords[level[0]];
-				rightIdx = tile->unk1;
+				levelCoords = coords[currentLevel];
+				rightIdx = tile->endIdx;
 				left = &levelCoords[leftIdx];
 				right = &levelCoords[rightIdx];
 
-				v0 = D_8005BB34++;
-				v1 = D_8005BB34++;
-				v2 = D_8005BB34++;
-				v3 = D_8005BB34++;
+				v0 = D_8005BB34;
+				D_8005BB34 = &v0[1];
+				v1 = D_8005BB34;
+				D_8005BB34 = &v1[1];
+				v2 = D_8005BB34;
+				D_8005BB34 = &v2[1];
+				v3 = D_8005BB34;
+				D_8005BB34 = &v3[1];
 
 				v0->v.ob[0] = v1->v.ob[0] = left[-48].x * 8;
-				v0->v.ob[1] = v1->v.ob[1] = -left[-48].z * 8;
 				left = &left[-(rightIdx = 48)];
+				v0->v.ob[1] = v1->v.ob[1] = -left->z * 8;
 				color2 = right[-rightIdx].x * 8;
 				v3->v.ob[0] = color2;
 				v2->v.ob[0] = color2;
-				right = &right[-rightIdx]; alpha2 = -right->z * 8;
-				v3->v.ob[1] = alpha2;
-				v2->v.ob[1] = alpha2;
+				right = &right[-rightIdx]; alpha0 = -right->z * 8;
+				v3->v.ob[1] = alpha0;
+				v2->v.ob[1] = alpha0;
 
 				v2->v.ob[2] = 0;
 				v0->v.ob[2] = v2->v.ob[2];
 				v3->v.ob[2] = 0x40;
 				v1->v.ob[2] = v3->v.ob[2];
-				color0 = (int)(selected * 0) + 0x8C;
+				color0 = (selected * 0) + 0x8C;
 
-				tileGroup = tile - ((TileEntry (*)[64])D_801479B0_156960)[level[0] - 1];
+				tileGroup = tile - D_801479B0_156960[*level - 1];
 				tileGroup >>= 3;
+				if (color0) {}
 
 				if (selected == tileGroup) {
 					tileGroup = D_8013D510_14C4C0 << 4; bright = tileGroup % modBase;
@@ -654,7 +660,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 					v1->v.cn[0] = alpha0;
 					v0->v.cn[0] = alpha0;
 
-					color0 = 0xFF - alpha0;
+					color0 = (s16)(0xFF - alpha0);
 					v3->v.cn[1] = color0;
 					v2->v.cn[1] = color0;
 					v1->v.cn[1] = color0;
@@ -667,13 +673,12 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 					v2->v.cn[2] = alpha2;
 					v1->v.cn[2] = alpha2;
 
-					selected = 0xFF; bright = selected;
+					selected = 0xFF + color0 * 0; bright = selected;
 					v0->v.cn[2] = alpha2;
 				} else {
-					new_var = v1;
 					v3->v.cn[0] = color0;
 					v2->v.cn[0] = color0;
-					new_var->v.cn[0] = color0;
+					v1->v.cn[0] = color0;
 					v0->v.cn[0] = color0;
 					color0 = 0xBE;
 
@@ -697,13 +702,20 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 			}
 			if (coords) {}
+			if (tile) {}
+			if (level) {}
 			tile++;
 		} while (loop--);
 	}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
-	D_8013D510_14C4C0++;
+	{
+		Gfx *packet = D_8005BB2C++;
+		packet->words.w1 = G_CULL_BACK;
+		packet->words.w0 = _SHIFTL(G_SETGEOMETRYMODE, 24, 8);
+	}
+	alpha0 = D_8013D510_14C4C0++;
+	if (alpha0) {}
 	gDPPipeSync(D_8005BB2C++);
 }
 #else
