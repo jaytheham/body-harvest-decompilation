@@ -1490,8 +1490,8 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							hit.pointer->unk0 = hitX;
 							bestDistF = (f32)distSqBest;
 							if (bestDistF) {}
-							hit.pointer->unk2 = (s16)scratch;
 							hit.pointer->unk4 = hitZ;
+							hit.pointer->unk2 = (s16)scratch;
 							exactHit = 1;
 							break;
 						default:
