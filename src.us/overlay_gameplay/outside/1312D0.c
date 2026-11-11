@@ -2027,7 +2027,7 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	endStep = (endStep * length) / 100.0f;
 
 	arg3 = arg3 - dirX * endStep;
-	if (1) {}
+	if (endStep) {}
 	arg4 = arg4 - dirY * endStep;
 	arg5 = arg5 - dirZ * endStep;
 
