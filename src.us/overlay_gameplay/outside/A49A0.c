@@ -697,6 +697,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 		}
+		if (((u32)tile & 1) | ((u32)tile & 2)) {}
 		if (coords) {}
 		if (level) {}
 	}
