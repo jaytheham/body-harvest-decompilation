@@ -3860,10 +3860,10 @@ void func_802DE0F4_322244(u8 arg0) {
 			if (temp_s0->unk4E == 0) {
 				sp4F = 3;
 			} else {
-				temp_lo = temp_s0->unk12;
-				if (sp74 < (0x1F4 - temp_lo)) {
+				temp = temp_s0->unk12;
+				if (sp74 < (0x1F4 - temp)) {
 					sp4F = 2;
-				} else if ((temp_lo + 0x258) < sp74) {
+				} else if ((temp + 0x258) < sp74) {
 					sp4F = 1;
 				} else {
 					sp4F = 3;
