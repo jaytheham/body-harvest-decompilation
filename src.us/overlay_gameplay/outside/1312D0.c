@@ -1439,8 +1439,8 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 						if ((entity.vehicle->unk2 + data.vehicle->unk38) >= *arg5) {
 							func_8010C4EC_11B49C(entity.vehicle);
 							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
-								exactHit = 1;
 								hit.pointer->unk0 = (s16)x;
+								exactHit = 1;
 								bestDistF = (f32)distSqBest;
 								if (bestDistF) {}
 								hit.pointer->unk2 = (s16)(entity.vehicle->unk2 + data.vehicle->unk38);
