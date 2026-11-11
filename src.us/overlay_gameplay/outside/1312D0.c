@@ -1996,10 +1996,9 @@ end_simulation:
 
 #ifdef NON_MATCHING
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-	Gfx *packet;
 	s32 endStep;
 	s32 midpoint;
-	u8 upperStackPadding[12]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
+	u8 upperStackPadding[16]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
 	f32 length;
 	f32 dirX;
 	f32 dirY;
@@ -2029,13 +2028,10 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 
 	arg3 = arg3 - dirX * endStep;
 	if (1) {}
-	packet = D_8005BB30++;
 	arg4 = arg4 - dirY * endStep;
-	if (1) {}
 	arg5 = arg5 - dirZ * endStep;
 
-	if (1) {}
-	gDPSetRenderMode(packet, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
+	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 	gSPClearGeometryMode(D_8005BB30++, G_FOG);
@@ -2052,7 +2048,6 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	if (1) {}
 	midpoint = (s32)(((length - startStep) - endStep) * 0.7);
 	D_8005BB34->v.ob[0] = arg0 + dirX * midpoint;
 	if (255) {}
