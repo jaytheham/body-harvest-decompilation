@@ -1998,7 +1998,8 @@ end_simulation:
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 	Gfx *packet;
 	s32 endStep;
-	u8 upperStackPadding[16]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
+	s32 midpoint;
+	u8 upperStackPadding[12]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
 	f32 length;
 	f32 dirX;
 	f32 dirY;
@@ -2052,11 +2053,11 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34++;
 
 	if (1) {}
-	startStep = (s32)(((length - startStep) - endStep) * 0.7);
-	D_8005BB34->v.ob[0] = arg0 + dirX * startStep;
+	midpoint = (s32)(((length - startStep) - endStep) * 0.7);
+	D_8005BB34->v.ob[0] = arg0 + dirX * midpoint;
 	if (255) {}
-	D_8005BB34->v.ob[1] = arg1 + dirY * startStep;
-	D_8005BB34->v.ob[2] = arg2 + dirZ * startStep;
+	D_8005BB34->v.ob[1] = arg1 + dirY * midpoint;
+	D_8005BB34->v.ob[2] = arg2 + dirZ * midpoint;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
