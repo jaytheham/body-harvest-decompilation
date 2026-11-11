@@ -1472,7 +1472,6 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							dz = (z - entity.vehicle->unk4) >> 2;
 							absX = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
 							if ((absX < entity.vehicle->unk2) || (absX > entity.vehicle->unk2 + data.vehicle->unk38)) continue;
-							if (1) {}
 							hit.pointer->unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
@@ -1487,10 +1486,11 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							vehicleY = entity.vehicle->unk2;
 							if ((scratch < vehicleY) || (scratch > vehicleY + data.vehicle->unk38)) continue;
 							hit.pointer->unk0 = hitX;
+							bestDistF = (f32)distSqBest;
+							if (bestDistF) {}
 							hit.pointer->unk2 = (s16)scratch;
 							hit.pointer->unk4 = hitZ;
 							exactHit = 1;
-							bestDistF = (f32)distSqBest;
 							break;
 						}
 						default:
