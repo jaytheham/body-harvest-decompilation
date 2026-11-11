@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-11T01:49:46Z",
-  "commit": "bfab698e",
-  "commit_timestamp": "2026-11-11T14:48:39+13:00",
+  "generated": "2026-11-11T08:53:51Z",
+  "commit": "f1596613",
+  "commit_timestamp": "2026-11-11T21:53:12+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 2996,
@@ -2181,7 +2181,7 @@
       "asm_stubs": 0,
       "total": 53,
       "matched_pct": 92.5,
-      "contributor": "LunarLaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/1312D0_rodata.c",
@@ -2597,16 +2597,16 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 88,
-      "matched": 2225,
-      "non_matching": 41,
+      "files": 89,
+      "matched": 2274,
+      "non_matching": 45,
       "asm_stubs": 0
     },
     {
       "name": "LunarLaurus",
-      "files": 9,
-      "matched": 432,
-      "non_matching": 20,
+      "files": 8,
+      "matched": 383,
+      "non_matching": 16,
       "asm_stubs": 0
     },
     {
@@ -2907,7 +2907,7 @@
     },
     {
       "date": "2026-11-08",
-      "commit": "f27135b",
+      "commit": "32b7deb",
       "matched": 2996,
       "non_matching": 61,
       "total": 3057
