@@ -639,7 +639,8 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			v0->v.ob[2] = lowerHeight;
 			v3->v.ob[2] = 0x40;
 			v1->v.ob[2] = v3->v.ob[2];
-			if (right) {}
+			/* Keep the point table and level address live through vertex setup. */
+			if ((u32)right | (u32)level | (u32)coords) {}
 
 			tileGroup = tile - D_801479B0_156960[*level - 1];
 			tileGroup >>= 3;
@@ -687,7 +688,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				normalColor = rightX * 0 + 0xFF; v3->v.cn[2] = normalColor;
 				v0->v.cn[2] = (v1->v.cn[2] = (v2->v.cn[2] = normalColor));
 
-				bright = 0x46;
+				bright = (u32)tile * 0 + 0x46;
 			}
 
 			v2->v.cn[3] = bright;
@@ -698,10 +699,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(v0), 4, 0);
 			gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 		}
-		if (((u32)tile & 1) | ((u32)tile & 2)) {}
-		if (loop | modBase) {}
-		if (coords) {}
-		if (level) {}
 	}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
