@@ -604,14 +604,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	coords = D_801475F0_1565A0;
 	modBase = selectedGroup * 0 + 0x1FF; if (modBase) {}
 	for (; loop--; tile++) {
-		s8 leftIdx = tile->startIdx;
 		const ShieldWallPoint *left;
 		const ShieldWallPoint *right;
 		s16 selected;
 
-		if (leftIdx != -1) {
+		if (tile->startIdx != -1) {
 			selected = selectedGroup;
-			left = &coords[currentLevel - 1][leftIdx];
+			left = &coords[currentLevel - 1][tile->startIdx];
 			right = &coords[currentLevel - 1][tile->endIdx];
 
 			v0 = D_8005BB34;
