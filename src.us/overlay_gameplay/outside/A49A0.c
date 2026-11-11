@@ -576,7 +576,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	s32 selectedGroup;
 	s32 loop;
 	u8 color0;
-	s16 normalColor;
 	s32 rightX;
 	s16 pointCoord;
 	s16 lowerHeight;
@@ -641,7 +640,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			v3->v.ob[2] = 0x40;
 			v1->v.ob[2] = v3->v.ob[2];
 			if (right) {}
-			normalColor = 0x8C;
 
 			tileGroup = tile - D_801479B0_156960[*level - 1];
 			tileGroup >>= 3;
@@ -674,6 +672,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 
 				v0->v.cn[2] = alpha2;
 			} else {
+				u8 normalColor = 0x8C;
 				v3->v.cn[0] = normalColor;
 				v2->v.cn[0] = normalColor;
 				v1->v.cn[0] = normalColor;
