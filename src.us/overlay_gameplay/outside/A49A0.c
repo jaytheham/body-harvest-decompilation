@@ -602,12 +602,13 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 
 	coords = D_801475F0_1565A0;
-	modBase = selectedGroup * 0 + 0x1FF; if (modBase) {}
+	modBase = selectedGroup * 0 + 0x1FF;
 	for (; loop--; tile++) {
 		const ShieldWallPoint *left;
 		const ShieldWallPoint *right;
 		s16 selected;
 
+		if (modBase) {}
 		if (tile->startIdx != -1) {
 			selected = selectedGroup;
 			left = &coords[currentLevel - 1][tile->startIdx];
