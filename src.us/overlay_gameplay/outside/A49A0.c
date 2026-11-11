@@ -256,7 +256,6 @@ void func_80095BD4_A4B84(int arg0, unsigned char arg1, unsigned char arg2, unsig
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// CURRENT(525)
 // draws vehicle triangle icons on map
 #ifdef NON_MATCHING
 void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4)
@@ -271,10 +270,10 @@ void func_80095D4C_A4CFC(s16 arg0, s16 arg1, u8 arg2, u8 arg3, u8 arg4)
   short new_var2;
   if ((arg4 != arg2) || (((unsigned char) arg3) != 0))
   {
-    if ((((u8 (*)[64]) D_8021EA30)[((arg1 >> 8) + 0x80) >> 2][((arg0 >> 8) + 0x80) >> 2] & 0xF0) == 0)
-    {
-      return;
-    }
+	if ((((u8 (*)[64]) D_8021EA30)[((arg1 >> 8) + 0x80) >> 2][((arg0 >> 8) + 0x80) >> 2] & 0xF0) == 0)
+	{
+	  return;
+	}
   }
   vtx0 = &D_8005BB34->v;
   arg0 >>= 5;
@@ -564,7 +563,6 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-// CURRENT(4802)
 // AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
@@ -604,6 +602,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	coords = D_801475F0_1565A0; vtxHead = &D_8005BB34;
 	loop = 0x20;
 	modBase = selectedGroup * 0 + 0x1FF; if (modBase) {}
+	// TODO replace this with for loop
 	if (loop--) {
 		do {
 			s8 leftIdx = tile->unk0;
@@ -619,14 +618,10 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				left = &levelCoords[leftIdx];
 				right = &levelCoords[rightIdx];
 
-				v0 = D_8005BB34;
-				D_8005BB34 = v0 + 1;
-				v1 = D_8005BB34;
-				D_8005BB34 = v1 + 1;
-				v2 = D_8005BB34;
-				D_8005BB34 = v2 + 1;
-				v3 = D_8005BB34;
-				D_8005BB34 = v3 + 1;
+				v0 = D_8005BB34++;
+				v1 = D_8005BB34++;
+				v2 = D_8005BB34++;
+				v3 = D_8005BB34++;
 
 				v0->v.ob[0] = v1->v.ob[0] = left[-48].x * 8;
 				v0->v.ob[1] = v1->v.ob[1] = -left[-48].z * 8;
@@ -715,7 +710,6 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
 
-#ifdef NON_MATCHING
 void func_800970C0_A6070(void)
 {
 	Vtx *vtx0;
@@ -724,37 +718,35 @@ void func_800970C0_A6070(void)
 	Vtx *vtx3;
 	u32 col;
 	u32 row;
-	u32 x0;
+	int new_var;
+	int x0;
 	u32 x1;
 	s32 y0;
 	s32 y1;
 	Gfx *gfx;
 	gDPPipeSync(D_8005BB2C++);
 	gSPClearGeometryMode(D_8005BB2C++, (0x00000001 | 0x00003000) | 0x00020000);
-	gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+	gDPSetRenderMode(D_8005BB2C++, (((((((0x8 | 0x40) | 0) | 0) | 0x2000) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (1 << 18), (((((((0x8 | 0x40) | 0) | 0) | 0x2000) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (1 << 16));
 	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
 	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
 	gDPSetColorDither(D_8005BB2C++, 2 << 6);
+	new_var = -0x20;
 	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
 	for (row = 0; row < 8; row++)
 	{
 		y1 = -((row - 4) << 8);
-		y0 = y1 - 0x100;
-
+		y0 = y1;
+		y0 = y0 - 0x100;
 		for (col = 0; col < 8; col++)
 		{
 			x1 = col - 4;
 			x0 = x1 << 8;
 			x1 = x0 + 0x100;
-			vtx0 = D_8005BB34;
-			D_8005BB34 = vtx0 + 1;
-			vtx1 = D_8005BB34;
-			D_8005BB34 = vtx1 + 1;
-			vtx2 = D_8005BB34;
-			D_8005BB34 = vtx2 + 1;
-			vtx3 = D_8005BB34;
-			D_8005BB34 = vtx3 + 1;
+			vtx0 = D_8005BB34++;
+			vtx1 = D_8005BB34++;
+			vtx2 = D_8005BB34++;
+			vtx3 = D_8005BB34++;
 			vtx0->v.ob[0] = x0;
 			vtx0->v.ob[1] = y0;
 			vtx0->v.ob[2] = 0;
@@ -767,23 +759,23 @@ void func_800970C0_A6070(void)
 			vtx3->v.ob[0] = x1;
 			vtx3->v.ob[1] = y1;
 			vtx3->v.ob[2] = 0;
-			vtx0->v.tc[0] = -0x20;
+			vtx0->v.tc[0] = new_var;
 			vtx0->v.tc[1] = 0x7E0;
-			vtx2->v.tc[0] = -0x20;
-			vtx2->v.tc[1] = -0x20;
+			vtx2->v.tc[0] = new_var;
+			vtx2->v.tc[1] = new_var;
 			vtx3->v.tc[0] = 0x7E0;
-			vtx3->v.tc[1] = -0x20;
+			vtx3->v.tc[1] = new_var;
 			vtx1->v.tc[0] = 0x7E0;
 			vtx1->v.tc[1] = 0x7E0;
 			gfx = D_8005BB2C++;
-			gDPSetTextureImage(gfx, G_IM_FMT_RGBA, G_IM_SIZ_16b, 1, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10]);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0);
+			gDPSetTextureImage(gfx, 0, G_IM_SIZ_16b, 1, &((u16 *)D_8006AA6C)[((row << 3) + col) << 10]);
+			gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 0, 0, 7, 0, 0x2, 0, 0, 0x2, 0, 0);
 			gDPLoadSync(D_8005BB2C++);
-			gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, CALC_DXT(32, G_IM_SIZ_16b_BYTES));
+			gDPLoadBlock(D_8005BB2C++, 7, 0, 0, 1023, (((1 << 11) + MAX(1, (32 * G_IM_SIZ_16b_BYTES) / 8)) - 1) / MAX(1, (32 * G_IM_SIZ_16b_BYTES) / 8));
 			gDPPipeSync(D_8005BB2C++);
-			gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 8, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, 0, 0, G_TX_CLAMP, 0, 0);
-			gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 124, 124);
-			gSPVertex(gfx = D_8005BB2C++, K0_TO_PHYS(vtx0), 4, 0);
+			gDPSetTile(D_8005BB2C++, 0, G_IM_SIZ_16b, 8, 0, 0, 0, 0x2, 0, 0, 0x2, 0, 0);
+			gDPSetTileSize(D_8005BB2C++, 0, 0, 0, 124, 124);
+			gSPVertex(gfx = D_8005BB2C++, ((u32)vtx0) & 0x1FFFFFFF, 4, 0);
 			gSP1Triangle(gfx = D_8005BB2C++, 0, 1, 2, 0);
 			gSP1Triangle(D_8005BB2C++, 2, 1, 3, 0);
 		}
@@ -791,9 +783,6 @@ void func_800970C0_A6070(void)
 
 	gDPPipeSync(D_8005BB2C++);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_800970C0_A6070.s")
-#endif
 
 void func_80097444_A63F4(s16 arg0, s16 arg1) {
 	Vtx_t *vtx0;
@@ -1954,8 +1943,6 @@ void func_8009811C_A70CC(void) {
 	gameplayMode = GAMEPLAY_MODE_NORMAL;
 	func_80013324_13F24();
 }
-
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_8009811C_A70CC.s")
 #endif
