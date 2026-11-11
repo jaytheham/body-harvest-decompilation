@@ -290,71 +290,59 @@ void func_800F02EC_FF29C(s16 arg0)
   D_80157F54 = 0;
 }
 
-#ifdef NON_MATCHING
-void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s32 arg2)
-{
-  volatile long new_var;
-  Unk84EECEffect *entry;
-  s16 *entryS16;
-  D_80157F58 = arg0;
-  D_80157F5C = 0;
-  D_80157F60 = (s16) arg1;
-  D_80157F68 = arg2 - ((s16) (new_var = arg1));
-  func_800F02EC_FF29C(D_80157F60 + D_80157F5C);
-  entry = (entryS16 = D_80157F4C);
-  entryS16 = (s16 *) entry;
-  switch (entry->unk11)
-  {
+void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s16 arg2) {
+	CutsceneCameraKeyframe *entry;
+
+	D_80157F58 = arg0;
+	D_80157F5C = 0;
+	D_80157F60 = arg1;
+	D_80157F68 = arg2 - arg1;
+	func_800F02EC_FF29C(D_80157F60 + D_80157F5C);
+	entry = D_80157F4C;
+
+	switch (entry->targetMode) {
 	case 0:
-	  D_80157586 = entry->unk6;
-	  entry = entryS16;
-	  D_80157588 = entry->unk8;
-	  D_8015758A = entry->unkA;
-	  break;
+		D_80157586 = entry->targetX;
+		D_80157588 = entry->targetY;
+		D_8015758A = entry->targetZ;
+		break;
 
 	case 1:
-	  D_80157586 = D_80052B34->unk0 >> 2;
-	  D_80157588 = D_80052B34->unk2 >> 2;
-	  D_80157588 += ((int) vehicleTypes[D_80052B34->unk1A].unk38) >> 3;
-	  D_8015758A = D_80052B34->unk4 >> 2;
-	  break;
+		D_80157586 = D_80052B34->unk0 >> 2;
+		D_80157588 = D_80052B34->unk2 >> 2;
+		D_80157588 += vehicleTypes[D_80052B34->unk1A].unk38 >> 3;
+		D_8015758A = D_80052B34->unk4 >> 2;
+		break;
 
 	case 2:
-	  D_80157586 = (buildingInstances[entryS16[7]].xCoord >> 2) + (u16) D_80159DE0;
-	  D_80157588 = (buildingInstances[entryS16[7]].yCoord >> 2) + D_80159DE2;
-	  D_80157588 += buildingTypes[buildingInstances[entryS16[7]].buildingType].unk14 >> 3;
-	  D_8015758A = (u16) D_80159DE4 + (buildingInstances[entryS16[7]].zCoord >> 2);
-	  break;
+		D_80157586 = (buildingInstances[entry->targetIndex].xCoord >> 2) + (u16) D_80159DE0;
+		D_80157588 = (buildingInstances[entry->targetIndex].yCoord >> 2) + D_80159DE2;
+		D_80157588 += buildingTypes[buildingInstances[entry->targetIndex].buildingType].unk14 >> 3;
+		D_8015758A = (u16) D_80159DE4 + (buildingInstances[entry->targetIndex].zCoord >> 2);
+		break;
 
 	case 3:
-	  D_80157586 = vehicleInstances[entryS16[7]].unk0 >> 2;
-	  D_80157588 = vehicleInstances[entryS16[7]].unk2 >> 2;
-	  D_8015758A = vehicleInstances[entryS16[7]].unk4 >> 2;
-	  break;
+		D_80157586 = vehicleInstances[entry->targetIndex].unk0 >> 2;
+		D_80157588 = vehicleInstances[entry->targetIndex].unk2 >> 2;
+		D_8015758A = vehicleInstances[entry->targetIndex].unk4 >> 2;
+		break;
+	}
 
-  }
-
-  if (entry->unk10 == 0)
-  {
-	D_80157580 = D_80157586 + entryS16[0];
-	D_80157582 = D_80157588 + entryS16[1];
-	D_80157584 = D_8015758A + entryS16[2];
-  }
-  else
-  {
-	D_80157580 = entryS16[0];
-	D_80157582 = entryS16[1];
-	D_80157584 = entryS16[2];
-  }
-  D_80157590 = 3;
-  D_8004DC60 = 0x25;
-  D_80157FB0 = 0;
-  D_80157FAE = D_80157FB0;
-  D_80157FAC = D_80157FAE;
+	if (entry->cameraMode == 0) {
+		D_80157580 = D_80157586 + entry->cameraX;
+		D_80157582 = D_80157588 + entry->cameraY;
+		D_80157584 = D_8015758A + entry->cameraZ;
+	} else {
+		D_80157580 = entry->cameraX;
+		D_80157582 = entry->cameraY;
+		D_80157584 = entry->cameraZ;
+	}
+	D_80157590 = 3;
+	D_8004DC60 = 0x25;
+	D_80157FB0 = 0;
+	D_80157FAE = D_80157FB0;
+	D_80157FAC = D_80157FAE;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F0340_FF2F0.s")
-#endif
 
 #ifdef NON_MATCHING
 s32 func_800F066C_FF61C(void) {
