@@ -1578,7 +1578,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 					distSqBest = objDist;
 					hit.pointer->unk0 = entity.alien->unk0;
 					hit.pointer->unk2 = entity.alien->unk2;
-					hit.pointer->unk4 = entity.alien->unk4;
+					D_8015F9D0.unk4 = entity.alien->unk4;
 					D_8015F9DC = (s32)entity.alien;
 					hit.pointer->unk8 = 7;
 					if ((scratch = data.alien->unk5A) != -1) {
