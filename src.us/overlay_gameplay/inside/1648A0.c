@@ -1594,24 +1594,6 @@ const char D_800A4CD0_18CD90[] = "Turn to door\n"; // "Turn to door\n"
 const char D_800A4CE0_18CDA0[] = "ouch\n"; // "ouch\n"
 const char D_800A4CE8_18CDA8[] = "ALLOCATE 2 CHARACTER BUFFERS\n"; // "ALLOCATE 2 CHARACTER BUFFERS\n"
 
-const f64 D_800A4D08_18CDC8[1] = {3.141592654};
-
-const f64 D_800A4D10_18CDD0[1] = {3.141592654};
-
-const f64 D_800A4D18_18CDD8[1] = {3.141592654};
-
-const f64 D_800A4D20_18CDE0[1] = {3.141592654};
-
-const f64 D_800A4D28_18CDE8[1] = {3.141592654};
-
-const f64 D_800A4D30_18CDF0[1] = {180.0};
-
-const f64 D_800A4D38_18CDF8[1] = {3.141592654};
-
-const f64 D_800A4D40_18CE00[1] = {3.141592654};
-
-const f64 D_800A4D48_18CE08[1] = {3.141592654};
-
 // AI - Initialize player character state and animation
 void func_8007C7E0_1648A0(void) {
 	VehicleInstance *v0 = &D_800E6A78;
@@ -1683,21 +1665,23 @@ f32 func_8007C96C_164A2C(OSContPad *arg0) {
 	return var_f2;
 }
 
+/* Keep the conversion in the trig expressions so IDO can reuse its spill slot. */
+#define PLAYER_ANGLE_TO_RADIANS(angle) ((f32)((f64)(f32)(angle) * 3.141592654 / 32768.0))
+
 // AI - Handle player input, movement, and collision
-#ifdef NON_MATCHING
 void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 {
-	s16 sp4E;
-	s16 sp4C;
-	s64 stackPad;
-	f32 new_var;
-	s32 var_v0;
-	s32 sp34;
-	s32 sp30;
-	s32 sp2C;
-	f32 sp20;
-	f32 sp24;
-	f32 sp1C;
+	s16 stickX;
+	s16 stickY;
+	s64 stackPad40;
+	f32 stickInput;
+	s32 movementWord;
+	s32 deltaZ;
+	s32 overrideYaw;
+	s32 rotatedStickX;
+	s32 stackPad28; /* Preserve the trig temporary's stack home. */
+	f32 trig;
+
 	if (((s16)D_80052B34->unk1C <= 0) && (D_80052AD0 != 0))
 	{
 		D_800E65A8 |= 0x4000;
@@ -1706,84 +1690,83 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 
 	if ((D_800E6A68 & 0x200) != 0x200)
 	{
-		var_v0 = D_8009E8E0_1869A0[((Unk80157600 *)D_800E6F00)->unk40C].unk0;
-		if (!(var_v0 & 0x40) && ((D_800E6A68 & 0x200) != 0x200))
+		movementWord = D_8009E8E0_1869A0[((Unk80157600 *)D_800E6F00)->unk40C].unk0;
+		if (!(movementWord & 0x40) && ((D_800E6A68 & 0x200) != 0x200))
 		{
 			arg0->unk22 = 0;
-			sp4E = (s16)((f64)arg1->stick_x / 5.0);
-			sp4C = (s16)(-((f64)arg1->stick_y / 5.0));
-			sp1C = sqrtf((f32)((sp4E * sp4E) + (sp4C * sp4C)));
-			if (sp1C <= 0.0f)
+			stickX = (s16)((f64)arg1->stick_x / 5.0);
+			stickY = (s16)(-((f64)arg1->stick_y / 5.0));
+			stickInput = sqrtf((f32)((stickX * stickX) + (stickY * stickY)));
+			if (stickInput <= 0.0f)
 			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
 			else
 			{
-				if (sp1C >= 8.0f)
+				if (stickInput >= 8.0f)
 				{
-					sp24 = 8.0f;
+					trig = 8.0f;
 				}
 				else
 				{
-					sp24 = sp1C;
+					trig = stickInput;
 				}
-				D_800A08F8_1889B8 = sp24;
+				D_800A08F8_1889B8 = trig;
 			}
 			if (D_8009E8E0_1869A0[D_800E730C].unk0 & 0x10)
 			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
-			new_var = (f32) ((arg0->unk6 - D_800E6A74) + 0x4000);
-			sp1C = (f32) ((((f64) new_var) * D_800A4D08_18CDC8[0]) / 32768.0);
-
-			sp24 = cosf(sp1C);
-			sp2C = (((f32)arg1->stick_x * sp24) - (sinf(sp1C) * (f32)arg1->stick_y));
-			sp24 = sinf(sp1C);
-			var_v0 = (cosf(sp1C) * (f32)arg1->stick_y) + ((f32)arg1->stick_x * sp24);
-			D_800E6A64 = func_80003824_4424((f32) (-sp2C), (f32) (var_v0 ^ 0));
+			stickInput = (f32)((arg0->unk6 - D_800E6A74) + 0x4000);
+			trig = cosf(PLAYER_ANGLE_TO_RADIANS(stickInput));
+			rotatedStickX = (f32)arg1->stick_x * trig - sinf(PLAYER_ANGLE_TO_RADIANS(stickInput)) * (f32)arg1->stick_y;
+			trig = sinf(PLAYER_ANGLE_TO_RADIANS(stickInput));
+			movementWord = (cosf(PLAYER_ANGLE_TO_RADIANS(stickInput)) * (f32)arg1->stick_y) + ((f32)arg1->stick_x * trig);
+			/* The identity keeps IDO's movement register and spill order. */
+			D_800E6A64 = func_80003824_4424((f32)-rotatedStickX, (f32)(movementWord ^ 0));
 			if (D_800A08F8_1889B8 > 0.0f)
 			{
 				func_8007D37C_16543C(arg0, D_800E6A66, 0);
 			}
-			var_v0 = D_8009E8E0_1869A0[D_800E730C].unk0;
-			if (var_v0 & 0x100)
+			movementWord = D_8009E8E0_1869A0[D_800E730C].unk0;
+			if (movementWord & 0x100)
 			{
 				D_800A08F8_1889B8 = 0.0f;
 			}
-			sp20 = D_800A08F8_1889B8;
-			D_800E733C = (s16) ((s32) sp20);
+			D_800E733C = (s16)(s32)D_800A08F8_1889B8;
 		}
 
-		if (!(var_v0 & 0x10))
+		if (!(movementWord & 0x10))
 		{
-			if ((var_v0 & 0x800) && (D_8009E8D8_186998 == 0))
+			if ((movementWord & 0x800) && (D_8009E8D8_186998 == 0))
 			{
-				sp30 = arg0->unkE;
-				var_v0 = ((s32) (((Unk80157600 *) D_800E6F00)->unk8 - ((Unk80157600 *) D_800E6F00)->unk414)) / 4;
-				sp24 = ((Unk80157600 *) D_800E6F00)->unk10 - ((Unk80157600 *) D_800E6F00)->unk418;
-				sp34 = ((s32) sp24) / 4;
-				sp24 = cosf((f32)(((f64)(f32)sp30 * D_800A4D10_18CDD0[0]) / 32768.0));
-				D_800E7340.x = ((sp24 * (f32)sp34) - (sinf((f32)(((f64)(f32)arg0->unkE * D_800A4D18_18CDD8[0]) / 32768.0)) * (f32)var_v0));
+				movementWord = (s32)(((Unk80157600 *)D_800E6F00)->unk8 - ((Unk80157600 *)D_800E6F00)->unk414);
+				deltaZ = (s32)(((Unk80157600 *)D_800E6F00)->unk10 - ((Unk80157600 *)D_800E6F00)->unk418);
+				movementWord /= 4;
+				deltaZ /= 4;
+				trig = cosf(PLAYER_ANGLE_TO_RADIANS(arg0->unkE));
+				D_800E7340.x = trig * (f32)deltaZ - sinf(PLAYER_ANGLE_TO_RADIANS(arg0->unkE)) * (f32)movementWord;
 
-				sp24 = sinf((f32)(((f64)(f32)arg0->unkE * D_800A4D20_18CDE0[0]) / 32768.0));
-				D_800E7340.z = ((cosf((f32)(((f64)(f32)arg0->unkE * D_800A4D28_18CDE8[0]) / 32768.0)) * (f32)var_v0) + (sp24 * (f32)sp34));
+				trig = sinf(PLAYER_ANGLE_TO_RADIANS(arg0->unkE));
+				D_800E7340.z = cosf(PLAYER_ANGLE_TO_RADIANS(arg0->unkE)) * (f32)movementWord + trig * (f32)deltaZ;
 			}
 			else if (D_8009E8D8_186998)
 			{
-				sp30 = (s16)((f64)(D_8008DDF0_175EB0 * 32768.0f) / D_800A4D30_18CDF0[0]);
-				D_800A08F8_1889B8 = sqrtf((f32)((sp4E * sp4E) + (sp4C * sp4C)));
-				sp1C = (f32)(((f64)(f32)sp30 * D_800A4D38_18CDF8[0]) / 32768.0);
-				D_800E7340.z = (f32) (sinf((f32) ((((f64) ((f32) sp30)) * D_800A4D38_18CDF8[0]) / 32768.0)) * D_800A08F8_1889B8);
-				D_800E7340.x = (f32)(cosf(sp1C) * D_800A08F8_1889B8);
+				overrideYaw = (s16)((f64)(D_8008DDF0_175EB0 * 32768.0f) / 180.0);
+				D_800A08F8_1889B8 = sqrtf((f32)((stickX * stickX) + (stickY * stickY)));
+				D_800E7340.z = sinf(PLAYER_ANGLE_TO_RADIANS(overrideYaw)) * D_800A08F8_1889B8;
+				D_800E7340.x = cosf(PLAYER_ANGLE_TO_RADIANS(overrideYaw)) * D_800A08F8_1889B8;
 			}
 			else
 			{
-				D_800E7340.z = (f32)(sinf((f32)(((f64)(f32)D_800E6A78.unkE * D_800A4D40_18CE00[0]) / 32768.0)) * D_800A08F8_1889B8);
-				D_800E7340.x = (f32)(cosf((f32)(((f64)(f32)D_800E6A78.unkE * D_800A4D48_18CE08[0]) / 32768.0)) * D_800A08F8_1889B8);
+				D_800E7340.z = sinf(PLAYER_ANGLE_TO_RADIANS(D_800E6A78.unkE)) * D_800A08F8_1889B8;
+				D_800E7340.x = cosf(PLAYER_ANGLE_TO_RADIANS(D_800E6A78.unkE)) * D_800A08F8_1889B8;
 			}
 			D_800E7314 = ((Unk80157600 *)D_800E6F00)->unk8;
-			D_800E7318 = ((Unk80157600 *)D_800E6F00)->unk10;
-			if ((D_800E730C == 8) || (D_800E730C == 0x2D) || (D_800E730C == 0x2E))
+			((Unk80157600 *)D_800E6F00)->unk418 = ((Unk80157600 *)D_800E6F00)->unk10;
+			if ((((Unk80157600 *)D_800E6F00)->unk40C == 8) ||
+				(((Unk80157600 *)D_800E6F00)->unk40C == 0x2D) ||
+				(((Unk80157600 *)D_800E6F00)->unk40C == 0x2E))
 			{
 				D_800E6A78.unk4C += D_800E7340.x;
 				D_800E6A78.unk54 += D_800E7340.z;
@@ -1802,18 +1785,18 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 						if ((D_800E6A40.unkE == 1) || (D_800E6A40.unkE == 2))
 						{
 							D_800E7340.x = 0.0f;
-							D_800E7340.z = (f32)(D_800E7340.z / 2);
+							D_800E7340.z /= 2;
 							func_8007B65C_16371C(&D_800E6A10, &D_800E7340, 15.0f, &D_800E6A40);
 						}
 						else
 						{
+							D_800E7340.x /= 2;
 							D_800E7340.z = 0.0f;
-							D_800E7340.x = (f32)(D_800E7340.x / 2);
 							func_8007B65C_16371C(&D_800E6A10, &D_800E7340, 15.0f, &D_800E6A40);
 						}
 					}
 				}
-				if ((D_800E6A40.unkE & 0xFFFFu) != 0)
+				if (D_800E6A40.unkE != 0)
 				{
 					D_800E6A78.unk4C = D_800E6A40.unk0;
 					D_800E6A78.unk54 = D_800E6A40.unk8;
@@ -1832,9 +1815,8 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007CAA8_164B68.s")
-#endif
+
+#undef PLAYER_ANGLE_TO_RADIANS
 
 // AI - Smoothly rotate player toward target yaw angle
 void func_8007D37C_16543C(VehicleInstance *arg0, s16 arg1, s32 arg2) {
