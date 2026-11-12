@@ -112,7 +112,7 @@ void func_800EB7CC_FA77C(Unk80157600 *arg0, s32 arg1, s32 arg2, f32 arg3);
 void func_800EB8A4_FA854(Unk80157600 *arg0, f32 arg1);
 s32 func_800EB9C4_FA974(s32 arg0, Unk80157600 *arg1);
 void func_800EBA54_FAA04(Unk80052B40 *arg0, s32 arg1, AnimChannelState *arg2);
-s32 func_800F066C_FF61C();
+s32 func_800F066C_FF61C(void);
 u16 func_800038E0_44E0_U16(void);
 u8 func_800C8C7C_D7C2C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
 void func_800CEE00_DDDB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3);
