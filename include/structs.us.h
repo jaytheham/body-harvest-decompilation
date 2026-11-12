@@ -516,20 +516,15 @@ typedef struct {
 	/* 0x04 */ f32 unk4;
 	/* 0x08 */ f32 unk8;
 	/* 0x0C */ s32 unkC;
-	/* 0x10 */ s32 unk10;
-} Unk165E60Keyframe; /* size = 0x14 */
+	/* 0x10 */ s16 unk10;
+	/* 0x12 */ s16 unk12;
+} Unk169EC8Entry; /* stride 0x14 */
 
 typedef struct {
-	/* 0x00 */ s16 unk0; // start X
-	/* 0x02 */ s16 unk2; // start Y
-	/* 0x04 */ s16 unk4; // start Z
-	/* 0x06 */ s16 unk6[7]; // waypoint coords (X, Y, Z triples)
-	/* 0x14 */ s32 unk14; // timing
-	/* 0x18 */ s32 unk18;
-	/* 0x1C */ s32 unk1C;
-	/* 0x20 */ s32 unk20; // step frame id
-	/* 0x24 */ s32 unk24;
-	/* 0x28 */ s32 unk28;
+	/* 0x00 */ s16 points[3][3];
+	/* 0x12 */ s16 unk12;
+	/* 0x14 */ s32 headings[3];
+	/* 0x20 */ s32 frames[3];
 	/* 0x2C */ s32 unk2C; // character / vehicle id
 	/* 0x30 */ s16 unk30; // min frame
 	/* 0x32 */ s16 unk32; // max frame
@@ -539,51 +534,11 @@ typedef struct {
 	/* 0x3C */ f32 *unk3C; // speed curve pointer (2000.0f sentinel-terminated)
 } Unk165E60Path; /* size = 0x40 */
 
-typedef union {
-	struct {
-		s16 unk0;
-		s16 unk2;
-		s16 unk4;
-		s16 unk6[7];
-		s32 unk14;
-		s32 unk18;
-		s32 unk1C;
-		s32 unk20;
-		s32 unk24;
-		s32 unk28;
-		s32 unk2C;
-		s16 unk30;
-		s16 unk32;
-		f32 unk34;
-		s16 unk38;
-		s16 unk3A;
-		f32 *unk3C;
-	} metadata;
-	struct {
-		s16 points[2][6];
-	} coordinates;
-	struct {
-		u8 pad0[0x14];
-		s32 headings[2];
-	} heading;
-	struct {
-		u8 pad0[0x20];
-		s32 frames[2];
-	} animation;
-} Unk165E60PathView;
-
 typedef struct {
-	/* 0x00 */ Unk165E60Keyframe keyframes[3]; // movement keyframes
-	/* 0x3C */ s32 unk3C;
-	/* 0x40 */ s32 unk40;
-	/* 0x44 */ s32 unk44;
-	/* 0x48 */ s16 unk48;
-	/* 0x4A */ s16 unk4A;
-	/* 0x4C */ s32 unk4C;
-	/* 0x50 */ s32 unk50;
-	/* 0x54 */ s32 unk54;
-	/* 0x58 */ s32 unk58;
-	/* 0x5C */ s32 unk5C;
+	/* 0x00 */ Unk169EC8Entry keyframes[3]; // movement keyframes
+	/* 0x3C */ s32 transitionFrames[3];
+	/* 0x48 */ s16 transitionValues[3][2];
+	/* 0x54 */ s32 fadeFrames[3];
 } Unk165E60Timeline; /* size = 0x60 */
 
 typedef struct {
@@ -593,9 +548,14 @@ typedef struct {
 	/* 0x0C */ u8 padC[0x2];
 	/* 0x0E */ s16 unkE;
 	/* 0x10 */ u8 pad10[0x4];
-	/* 0x14 */ Unk165E60PathView *unk14;
+	/* 0x14 */ Unk165E60Path *unk14;
 	/* 0x18 */ Unk165E60Timeline *unk18;
 } Unk165E60Route;
+
+typedef union {
+	Unk165E60Route entries[8];
+	u8 bytes[sizeof(Unk165E60Route) * 8];
+} Unk165E60RouteTable;
 
 typedef struct {
 	/* 0x00 */ Unk165E60Timeline *unk0;
@@ -2959,15 +2919,6 @@ typedef struct {
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
 } Unk9C804; /* stride 0x38 */
-
-typedef struct {
-	/* 0x00 */ f32 unk0;
-	/* 0x04 */ f32 unk4;
-	/* 0x08 */ f32 unk8;
-	/* 0x0C */ s32 unkC;
-	/* 0x10 */ s16 unk10;
-	/* 0x12 */ s16 unk12;
-} Unk169EC8Entry; /* stride 0x14 */
 
 typedef struct {
 	/* 0x00 */ s8 phaseCount;

@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 #include "overlay_gameplay/inside/167C90.h"
 #include "core/loader.h"
 #include "core/53F0.h"
@@ -620,39 +621,40 @@ f32 D_800A0124_188164[22] = {
 // AI - Player path definitions (8 paths), each a start position + waypoints + timing/character data.
 // Referenced by D_800A05FC_1886BC route table (route->unk14).
 Unk165E60Path D_800A00FC_1881BC[8] = {
-	{ 0x014B, 0x0000, 0x01AC, {0x014B,0x0000,0x01B3,0x014B,0x0000,0x01B3,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x00000035, 0x00000011, 0x00000011, 0x0000000A, 0x0000, 0x0064, 0.3f, 0x0028, 0x0000, D_800A0124_188164 },
-	{ 0x0143, 0x0000, 0x01E0, {0x0143,0x0000,0x01E0,0x0143,0x0000,0x01F4,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x00000031, 0x00000032, 0x00000011, 0x00000007, 0x0046, 0x00AA, 1.0f, 0x0091, 0x0000, &D_800A0124_188164[11] },
-	{ 0x0158, 0x0000, 0x00FA, {0x0143,0x0000,0x01E0,0x0143,0x0000,0x01F4,0x0000}, 0x0000005A, 0x000000B4, 0x000007D0, 0x00000033, 0x00000034, 0x00000011, 0x0000000B, 0x0000, 0x008D, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
-	{ 0x0211, 0x0000, 0x0276, {0x0211,0x0000,0x0282,0x0211,0x0000,0x0282,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x00000036, 0x00000011, 0x00000011, 0x0000000C, 0x0016, 0x0054, 1.0f, 0x003C, 0x0000, &D_800A0124_188164[11] },
-	{ 0x014C, 0x0000, 0x0174, {0x0216,0x0000,0x0284,0x0216,0x0000,0x0284,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x00000037, 0x00000011, 0x00000011, 0x0000000D, 0x0000, 0x0023, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
-	{ 0x011C, 0x0000, 0x018E, {0x0000,0x0000,0x0000,0x011C,0x0000,0x0188,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x00000038, 0x00000011, 0x00000011, 0x00000000, 0x0000, 0x0000, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
-	{ 0x018B, 0x0000, 0x01A4, {0x0000,0x0000,0x0000,0x011C,0x0000,0x0188,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x0000003F, 0x00000011, 0x00000011, 0x00000000, 0x0000, 0x0000, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
-	{ 0x0142, 0x0000, 0x0176, {0x0000,0x0000,0x0000,0x011C,0x0000,0x0188,0x0000}, 0x0000005A, 0x000007D0, 0x000007D0, 0x00000040, 0x00000011, 0x00000011, 0x00000000, 0x0000, 0x0000, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
+	{ {{0x014B, 0x0000, 0x01AC}, {0x014B, 0x0000, 0x01B3}, {0x014B, 0x0000, 0x01B3}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x00000035, 0x00000011, 0x00000011}, 0x0000000A, 0x0000, 0x0064, 0.3f, 0x0028, 0x0000, D_800A0124_188164 },
+	{ {{0x0143, 0x0000, 0x01E0}, {0x0143, 0x0000, 0x01E0}, {0x0143, 0x0000, 0x01F4}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x00000031, 0x00000032, 0x00000011}, 0x00000007, 0x0046, 0x00AA, 1.0f, 0x0091, 0x0000, &D_800A0124_188164[11] },
+	{ {{0x0158, 0x0000, 0x00FA}, {0x0143, 0x0000, 0x01E0}, {0x0143, 0x0000, 0x01F4}}, 0x0000, {0x0000005A, 0x000000B4, 0x000007D0}, {0x00000033, 0x00000034, 0x00000011}, 0x0000000B, 0x0000, 0x008D, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
+	{ {{0x0211, 0x0000, 0x0276}, {0x0211, 0x0000, 0x0282}, {0x0211, 0x0000, 0x0282}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x00000036, 0x00000011, 0x00000011}, 0x0000000C, 0x0016, 0x0054, 1.0f, 0x003C, 0x0000, &D_800A0124_188164[11] },
+	{ {{0x014C, 0x0000, 0x0174}, {0x0216, 0x0000, 0x0284}, {0x0216, 0x0000, 0x0284}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x00000037, 0x00000011, 0x00000011}, 0x0000000D, 0x0000, 0x0023, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
+	{ {{0x011C, 0x0000, 0x018E}, {0x0000, 0x0000, 0x0000}, {0x011C, 0x0000, 0x0188}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x00000038, 0x00000011, 0x00000011}, 0x00000000, 0x0000, 0x0000, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
+	{ {{0x018B, 0x0000, 0x01A4}, {0x0000, 0x0000, 0x0000}, {0x011C, 0x0000, 0x0188}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x0000003F, 0x00000011, 0x00000011}, 0x00000000, 0x0000, 0x0000, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
+	{ {{0x0142, 0x0000, 0x0176}, {0x0000, 0x0000, 0x0000}, {0x011C, 0x0000, 0x0188}}, 0x0000, {0x0000005A, 0x000007D0, 0x000007D0}, {0x00000040, 0x00000011, 0x00000011}, 0x00000000, 0x0000, 0x0000, 1.0f, 0x0000, 0x0000, (f32 *)&D_8009E8E0_1869A0[116].unk30 },
 };
 
 // AI - NPC/camera movement timelines (8 entries), each 3 keyframes + event/timing data.
 // Referenced by D_800A05FC_1886BC route table (route->unk18).
 Unk165E60Timeline D_800A02FC_1883BC[8] = {
-	{ {{204.0f, 53.0f, 360.0f, 0x000021E8, 0xF3EF007F}, {204.0f, 53.0f, 375.0f, 0x00000E00, 0x0EF300A0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x0000003C, 0x000007D0, 0x0000, 0x0001, 0x00000014, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0 },
-	{ {{228.0f, 50.0f, 426.0f, 0x000030B1, 0x0E3C009C}, {228.0f, 50.0f, 426.0f, 0x000032D3, 0x0226005E}, {227.0f, 50.0f, 409.0f, 0x00005CA0, 0x0B0A0073}}, 0x00000000, 0x00000028, 0x00000046, 0x0000, 0x0001, 0x00000014, 0x00000001, 0x00000044, 0x000007D0, 0x000007D0 },
-	{ {{251.0f, 50.0f, 208.0f, 0x000025FC, 0x0CDD00BB}, {252.0f, 30.0f, 196.0f, 0xFFFFFDDA, 0x1064008C}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x0000003C, 0x000007D0, 0x0000, 0x0001, 0x00000001, 0x00000001, 0x000007D0, 0x000007D0, 0x000007D0 },
-	{ {{433.0f, 26.0f, 573.0f, 0x000029EB, 0x0D3E0095}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x000007D0, 0x000007D0, 0x0000, 0x0001, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0 },
-	{ {{240.0f, 46.0f, 287.0f, 0x0000678D, 0x0DF400C0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x000007D0, 0x000007D0, 0x0000, 0x0001, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0 },
-	{ {{188.0f, 30.0f, 296.0f, 0x000058DE, 0x06D800C0}, {187.0f, 30.0f, 295.0f, 0x000040FC, 0x229200C0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x00000028, 0x000007D0, 0x0000, 0x0001, 0x0000000A, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0 },
-	{ {{316.0f, 27.0f, 375.0f, 0xFFFF9B45, 0x04860087}, {299.0f, 30.0f, 341.0f, 0xFFFFF6C2, 0x09B000C0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x00000014, 0x000007D0, 0x0000, 0x0001, 0x0000000A, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0 },
-	{ {{265.0f, 30.0f, 313.0f, 0x00000543, 0x10CC00C0}, {316.0f, 46.0f, 375.0f, 0xFFFFD6FD, 0x04860087}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x00000000}}, 0x00000000, 0x000007D0, 0x000007D0, 0x0000, 0x0001, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0, 0x000007D0 },
+	{ {{204.0f, 53.0f, 360.0f, 0x000021E8, 0xF3EF, 0x007F}, {204.0f, 53.0f, 375.0f, 0x00000E00, 0x0EF3, 0x00A0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x0000003C, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x0014}, {0x0000, 0x07D0}}, {0x000007D0, 0x000007D0, 0x000007D0} },
+	{ {{228.0f, 50.0f, 426.0f, 0x000030B1, 0x0E3C, 0x009C}, {228.0f, 50.0f, 426.0f, 0x000032D3, 0x0226, 0x005E}, {227.0f, 50.0f, 409.0f, 0x00005CA0, 0x0B0A, 0x0073}}, {0x00000000, 0x00000028, 0x00000046}, {{0x0000, 0x0001}, {0x0000, 0x0014}, {0x0000, 0x0001}}, {0x00000044, 0x000007D0, 0x000007D0} },
+	{ {{251.0f, 50.0f, 208.0f, 0x000025FC, 0x0CDD, 0x00BB}, {252.0f, 30.0f, 196.0f, 0xFFFFFDDA, 0x1064, 0x008C}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x0000003C, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x0001}, {0x0000, 0x0001}}, {0x000007D0, 0x000007D0, 0x000007D0} },
+	{ {{433.0f, 26.0f, 573.0f, 0x000029EB, 0x0D3E, 0x0095}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x000007D0, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x07D0}, {0x0000, 0x07D0}}, {0x000007D0, 0x000007D0, 0x000007D0} },
+	{ {{240.0f, 46.0f, 287.0f, 0x0000678D, 0x0DF4, 0x00C0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x000007D0, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x07D0}, {0x0000, 0x07D0}}, {0x000007D0, 0x000007D0, 0x000007D0} },
+	{ {{188.0f, 30.0f, 296.0f, 0x000058DE, 0x06D8, 0x00C0}, {187.0f, 30.0f, 295.0f, 0x000040FC, 0x2292, 0x00C0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x00000028, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x000A}, {0x0000, 0x07D0}}, {0x000007D0, 0x000007D0, 0x000007D0} },
+	{ {{316.0f, 27.0f, 375.0f, 0xFFFF9B45, 0x0486, 0x0087}, {299.0f, 30.0f, 341.0f, 0xFFFFF6C2, 0x09B0, 0x00C0}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x00000014, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x000A}, {0x0000, 0x07D0}}, {0x000007D0, 0x000007D0, 0x000007D0} },
+	{ {{265.0f, 30.0f, 313.0f, 0x00000543, 0x10CC, 0x00C0}, {316.0f, 46.0f, 375.0f, 0xFFFFD6FD, 0x0486, 0x0087}, {0.0f, 0.0f, 0.0f, 0x00000000, 0x0000, 0x0000}}, {0x00000000, 0x000007D0, 0x000007D0}, {{0x0000, 0x0001}, {0x0000, 0x07D0}, {0x0000, 0x07D0}}, {0x000007D0, 0x000007D0, 0x000007D0} },
 };
 
 // AI - Player route table (8 routes), each referencing a path & timeline
-Unk165E60Route D_800A05FC_1886BC[8] = {
-	{ 0x000000AA, 0x00000046, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[1], &D_800A02FC_1883BC[1] },
-	{ 0x0000008D, 0x00000050, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[2], &D_800A02FC_1883BC[2] },
-	{ 0x0000006E, 0x00000044, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)D_800A00FC_1881BC, D_800A02FC_1883BC },
-	{ 0x00000054, 0x00000016, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[3], &D_800A02FC_1883BC[3] },
-	{ 0x00000024, 0x00000023, 0x0000000C, {0x00,0x00}, 0x007D, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[4], &D_800A02FC_1883BC[4] },
-	{ 0x00000046, 0x00000001, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[5], &D_800A02FC_1883BC[5] },
-	{ 0x0000005D, 0x00000014, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[6], &D_800A02FC_1883BC[6] },
-	{ 0x00000078, 0x00000014, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, (Unk165E60PathView *)&D_800A00FC_1881BC[7], &D_800A02FC_1883BC[7] },
+Unk165E60RouteTable D_800A05FC_1886BC = { {
+	{ 0x000000AA, 0x00000046, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[1], &D_800A02FC_1883BC[1] },
+	{ 0x0000008D, 0x00000050, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[2], &D_800A02FC_1883BC[2] },
+	{ 0x0000006E, 0x00000044, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, D_800A00FC_1881BC, D_800A02FC_1883BC },
+	{ 0x00000054, 0x00000016, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[3], &D_800A02FC_1883BC[3] },
+	{ 0x00000024, 0x00000023, 0x0000000C, {0x00,0x00}, 0x007D, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[4], &D_800A02FC_1883BC[4] },
+	{ 0x00000046, 0x00000001, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[5], &D_800A02FC_1883BC[5] },
+	{ 0x0000005D, 0x00000014, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[6], &D_800A02FC_1883BC[6] },
+	{ 0x00000078, 0x00000014, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[7], &D_800A02FC_1883BC[7] },
+}
 };
 
 // AI - Per-route animation lookup table
@@ -1474,15 +1476,15 @@ void func_8007DB98_165C58(void *arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 // AI - Handle animation-end callback with yaw and chained anims
-void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
+void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, f32 arg2) {
 	if (((Unk8007F878_404 *)arg1->unk404)->unkE50 == 0) {
 		arg0->unkE += (s16)((f32)D_8009E8DC_18699C[arg1->unk40C].unk10 * 32768.0f / 180.0);
 		arg1->unk2 = 0;
 		if (D_8009E8DC_18699C[arg1->unk40C].unk4 & 1) {
-			func_8007DAA8_165B68(arg1, arg1->unk40C, (void *)D_8009E8DC_18699C[arg1->unk40C].unk8, *(f32*)&arg2, 0x10);
+			func_8007DAA8_165B68(arg1, arg1->unk40C, (void *)D_8009E8DC_18699C[arg1->unk40C].unk8, arg2, 0x10);
 		}
 		if (D_8009E8DC_18699C[arg1->unk40C].unk4 & 2) {
-			func_8007DAA8_165B68(arg1, D_8009E8DC_18699C[arg1->unk40C].unk8, NULL, *(f32*)&arg2, 0x10);
+			func_8007DAA8_165B68(arg1, D_8009E8DC_18699C[arg1->unk40C].unk8, NULL, arg2, 0x10);
 		}
 	}
 }
@@ -1490,10 +1492,10 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, s32 arg2) {
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
 #ifdef NON_MATCHING
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
-	u8 stackPad2[0x10];
+	u8 padBeforeSpeed[0x10];
 	f32 speedScale;
 	s32 anim;
-	u8 stackPad[0x28];
+	s32 targetYaw;
 	s32 flags;
 
 	speedScale = 1.0f;
@@ -1514,15 +1516,18 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			return;
 		}
 	} else if (flags & 0x8000) {
-		
 		Unk165E60Route *route;
-		Unk165E60PathView *pathView;
-		s32 sp34;
-		s32 *timeline;
-		s32 *timelineEntry;
-		s16 transitionValue;
-		s16 previousTimelineStep;
+		Unk165E60Path *pathView;
+		Unk165E60Timeline *timeline;
+		s32 timelineStep;
+		s32 frame;
+		s32 routeIndex;
+		s32 routeByteOffset;
 		s32 canAdvance;
+		u8 padBeforeAnimation[4];
+		u8 padBeforeFade[8];
+		s32 fadeComplete;
+		u8 padAfterFade[0x10];
 		s32 stepFrame;
 
 		D_800E6A34 = func_80079304_1613C4();
@@ -1545,86 +1550,93 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			D_800A091C_1889DC = 0;
 
 			if (D_800A0918_1889D8 != 0) {
+				Unk165E60Path *initialPath;
+				VehicleInstance *initialVehicle;
+
+				routeIndex = D_800E6A34;
+
 				D_800A0918_1889D8 = 0;
 				D_800A0910_1889D0 = 0;
 				D_800A0908_1889C8 = 0;
-				D_800A0900_1889C0 = 0;
-				D_800A0904_1889C4 = 0;
-
-				func_80081A18_169AD8(D_800A0614_1886D4[D_800E6A34].unk14);
+				D_800A0900_1889C0 = 0; D_800A0904_1889C4 = 0; func_80081A18_169AD8(D_800A05FC_1886BC.entries[routeIndex].unk18->keyframes);
 				func_80081A24_169AE4();
 				func_80081E08_169EC8(D_800A090A_1889CA);
 
-				{
-					s32 routeStride;
-					routeStride = 0x1C;
-					// Need to replace all the ptr math in this function with proper structs
-					route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * routeStride);
-				}
-				pathView = route->unk14;
-				arg0->unkE = (s16)((f64)((f32)pathView->heading.headings[D_800A0904_1889C4] * 32768.0f) / D_800A4D98_18CE58[0]);
+				frame = D_800A0904_1889C4;
+				timelineStep = D_800A0908_1889C8 + 1;
+				arg0->unkE = (D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14->headings[frame] * 32768.0f / 180.0);
+				initialPath = D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14;
 
-				D_800E6A78.unk4C = (f32)pathView->coordinates.points[D_800A0904_1889C4][0];
-				D_800E6A78.unk50 = (f32)pathView->coordinates.points[D_800A0904_1889C4][1];
-				D_800E6A78.unk54 = (f32)pathView->coordinates.points[D_800A0904_1889C4][2];
-				D_800E6A38 = pathView->metadata.unk34;
+				initialVehicle = (VehicleInstance *)(u64)&D_800E6A78;
+				initialVehicle->unk4C = initialPath->points[frame][0];
+				initialVehicle->unk50 = initialPath->points[frame][1];
+				initialVehicle->unk54 = initialPath->points[frame][2];
+				D_800E6A38 = initialPath->unk34;
+				anim = initialPath->frames[frame];
 				D_800A090C_1889CC = 0;
-				D_800A0908_1889C8++;
+				D_800A0908_1889C8_W = timelineStep;
 
-				func_8007DAA8_165B68(D_800E6F00, pathView->animation.frames[D_800A0904_1889C4], NULL, 0.0f, 0x10);
+				func_8007DAA8_165B68(D_800E6F00, anim, NULL, 0.0f, 0x10);
 			}
 
-			if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
-				D_800A0904_1889C4++;
-			}
-
-			route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			routeByteOffset = D_800E6A34 * (s32)sizeof(*route); if (!((Unk8007F878_404 *)D_800E7304)->unkE50) { D_800A0904_1889C4++; } route = (Unk165E60Route *)&D_800A05FC_1886BC.bytes[routeByteOffset];
 			pathView = route->unk14;
-			if (D_800E730C != (stepFrame = pathView->animation.frames[D_800A0904_1889C4])) {
-				func_8007DAA8_165B68(D_800E6F00, pathView->animation.frames[D_800A0904_1889C4], NULL, 0.0f, 0x10);
-				route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			stepFrame = pathView->frames[D_800A0904_1889C4];
+			if (D_800E730C != stepFrame) {
+				func_8007DAA8_165B68(D_800E6F00, stepFrame, NULL, 0.0f, 0x10);
+				route = &D_800A05FC_1886BC.entries[D_800E6A34];
 				pathView = route->unk14;
 			}
 
-			if (pathView->heading.headings[D_800A0904_1889C4] != 0x7D0) {
-				arg0->unkE = (s16)((f64)((f32)pathView->heading.headings[D_800A0904_1889C4] * 32768.0f) / D_800A4DA0_18CE60[0]);
-				route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			targetYaw = pathView->headings[D_800A0904_1889C4];
+			if (targetYaw != 0x7D0) {
+				arg0->unkE = (targetYaw * 32768.0f / 180.0);
+				route = &D_800A05FC_1886BC.entries[D_800E6A34];
 			}
 
-			timeline = (s32 *)route->unk18;
-			timelineEntry = timeline + D_800A0908_1889C8;
-			if (D_800A0900_1889C0 >= timelineEntry[15]) {
-				if (D_800A0908_1889C8 < 3) {
-					previousTimelineStep = (s16)(D_800A0908_1889C8 - 1);
-					transitionValue = *(s16 *)((u8 *)timelineEntry + 0x4A);
-					func_80081E90_169F50(previousTimelineStep, (s16)D_800A0908_1889C8, transitionValue);
-					D_800A0908_1889C8++;
-					timeline = (s32 *)D_800A0614_1886D4[D_800E6A34].unk0;
+			timeline = route->unk18;
+			timelineStep = D_800A0908_1889C8;
+			frame = D_800A0900_1889C0;
+			if (frame >= timeline->transitionFrames[timelineStep]) {
+				D_800A0900_1889C0 = frame;
+				D_800A0908_1889C8_W = timelineStep;
+				if (timelineStep < 3) {
+					s16 transition;
+					func_80081E90_169F50(timelineStep - 1, timelineStep,
+					    (transition = timeline->transitionValues[timelineStep][1],
+					     *(s32 *)OVERLAY_PTR(0x800A0908) = timelineStep,
+					     transition));
+					D_800A0908_1889C8++; timeline = D_800A05FC_1886BC.entries[D_800E6A34].unk18;
 				}
 			}
 
-			if (D_800A0900_1889C0 == timeline[D_800A0910_1889D0 + 21]) {
+			if (D_800A0900_1889C0_R == timeline->fadeFrames[D_800A0910_1889D0]) {
 				D_800A0920_1889E0 = 1;
 				func_80005AEC_66EC(0, 0, 0, 0x14);
 				D_800A0910_1889D0++;
 			}
 
+			frame = D_800A0900_1889C0;
 			if (D_800A0920_1889E0 != 0) {
-				sp34 = func_80005B30_6730();
+				canAdvance = func_80005B30_6730();
+				frame = D_800A0900_1889C0;
+				fadeComplete = canAdvance;
 			}
 
-			route = (Unk165E60Route *)((u8 *)D_800A05FC_1886BC + D_800E6A34 * 0x1C);
+			routeIndex = D_800E6A34;
+			route = &D_800A05FC_1886BC.entries[routeIndex];
 			pathView = route->unk14;
-			if (sp34 != 0) {
+			/* The original checks this stack slot even when the fade callback did not run. */
+			if (fadeComplete != 0) {
 				D_800A0920_1889E0 = 0;
 			}
-			if ((D_800A0900_1889C0 >= pathView->metadata.unk30) && (pathView->metadata.unk32 >= D_800A0900_1889C0)) {
-				if (pathView->metadata.unk2C != 0) {
-					D_800E6A70 = pathView->metadata.unk2C;
-					if (D_800A0900_1889C0 >= pathView->metadata.unk38) {
+			if ((frame >= pathView->unk30) && (pathView->unk32 >= frame)) {
+				if (pathView->unk2C != 0) {
+					D_800E6A70 = pathView->unk2C;
+					if (frame >= pathView->unk38) {
 						f32 speed;
 
-						speed = pathView->metadata.unk3C[D_800A090C_1889CC];
+						speed = pathView->unk3C[D_800A090C_1889CC];
 						if (speed != 2000.0f) {
 							D_800E6A38 = speed;
 							D_800A090C_1889CC++;
@@ -1635,19 +1647,24 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800E6A70 = 0;
 			}
 
-			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk4) {
+			D_800A0900_1889C0 = frame;
+			if (frame == route->unk4) {
 				func_8007B124_1631E4(D_800E6A1C);
-				if (D_800E6A34 == 7) {
+				routeIndex = D_800E6A34;
+				if (routeIndex == 7) {
 					func_8007DAA8_165B68(&D_800E6AD8, 0x73, NULL, 0.0f, 0x10);
 				}
 			}
 
-			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk8) {
-				func_800153D8_15FD8(D_800A05FC_1886BC[D_800E6A34].unkE);
+			frame = D_800A0900_1889C0;
+			route = &D_800A05FC_1886BC.entries[D_800E6A34];
+			if (frame == route->unk8) {
+				func_800153D8_15FD8(route->unkE); routeIndex = D_800E6A34; route = &D_800A05FC_1886BC.entries[routeIndex]; frame = D_800A0900_1889C0;
 			}
 
-			D_800A0900_1889C0++;
-			if (D_800A0900_1889C0 == D_800A05FC_1886BC[D_800E6A34].unk0) {
+			frame++;
+			D_800A0900_1889C0 = frame;
+			if (frame == route->unk0) {
 				if ((D_800E6A34 == 6) || (D_800E6A34 == 7)) {
 					D_800E65A8 |= 0x100;
 				} else {
@@ -1660,19 +1677,20 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 		}
-			} else if (flags & 4) {
+	} else if ((u8)flags & 4) {
 		if (func_8008DDC0_175E80() != 0) {
 			func_8007D69C_16575C(arg0);
 		}
-				} else if (flags & 0x40) {
+	} else if (flags & 0x40) {
 		func_8007D52C_1655EC();
-		anim = 4;
 		if (arg1->button & 0x2000) {
 			anim = 5;
+		} else {
+			anim = 4;
 		}
 
 		if (D_800A0914_1889D4 == 0) {
-			D_800A0914_1889D4 = 1;
+			D_800A0914_1889D4_W = 1;
 			func_8007DAA8_165B68(D_800E6F00, anim, NULL, 0.0f, 0x10);
 		} else if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
 			D_800E6A68 |= 0x200;
@@ -1680,8 +1698,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 			}
 		}
-	} else if ((flags & 0x800) || (flags & 0x80)) {
-		s32 targetYaw;
+	} else if (((u16)flags & 0x800) || (flags & 0x80)) {
 		s32 currentYaw;
 		s32 originX;
 		f32 xDiff;
@@ -1720,11 +1737,10 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		} else if ((flags & ~0x4102) == 1) {
 			s32 nextAnim;
 
-			D_800A0914_1889D4 = 0;
+			D_800A0914_1889D4_W = 0;
 			func_8007D52C_1655EC();
-			nextAnim = 0xF;
-
 			if (arg1->button & 1) {
+				nextAnim = 0xF;
 				D_800E733C = 0xD;
 			} else if (arg1->button & 2) {
 				nextAnim = 0xE;
@@ -1742,13 +1758,11 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				speedScale = 0.0f;
 			}
 
-			anim = D_800E730C;
-			if (!(D_8009E8E0_1869A0[anim].unk0 & 0x100)) {
+			if (!(D_8009E8E0_1869A0[D_800E730C].unk0 & 0x100)) {
 				func_8007DB98_165C58(D_800E6F00, 0x11, nextAnim, speedScale);
-				anim = D_800E730C;
 			}
 
-			if (anim == 0x11) {
+			if (D_800E730C == 0x11) {
 				D_800E7328++;
 			} else {
 				D_800E7328 = 0;
@@ -1766,11 +1780,9 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		vehicleInstances[0].unk1C++;
 	}
 
-	func_8007DC80_165D40(arg0, (Unk80157600 *)D_800E6F00, *(s32 *)&speedScale);
+	func_8007DC80_165D40(arg0, (Unk80157600 *)D_800E6F00, speedScale);
 	if (D_8009E8E0_1869A0[D_800E730C].unk0 & 4) {
-		f32 channelRate;
-		channelRate = *(f32 *)&D_800E7310;
-		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, channelRate);
+		func_8000D8DC_E4DC((Unk8007F878_404 *)D_800E7304, (Unk8007F878_404 *)D_800E7308, (AnimChannelState *)D_800E6F00, 0x10, speedScale, D_800E7310);
 	} else {
 		func_8000CF4C_DB4C((void *)D_800E7304, D_800E6F00, 0x10, D_800E7310);
 	}
@@ -1778,14 +1790,13 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 	{
 		Unk165E60AnimState *animState;
 		f32 randomFrame;
-		s32 currentAnim;
 
-		animState = (Unk165E60AnimState *)D_800E6F00;
+		animState = (Unk165E60AnimState *)(u32)D_800E6F00;
 		if (animState->unk40C == 0) {
-			currentAnim = animState->unk18;
-			if (((currentAnim == 3) || (currentAnim == 8)) && (animState->unk1C == 1.0f)) {
+			flags = animState->unk18;
+			if (((flags == 3) || (flags == 8)) && (animState->unk1C == 1.0f)) {
 				func_800153D8_15FD8(0x96);
-				randomFrame = (f32)(((f64)(func_800038E0_44E0() & 1) * D_800A4DA8_18CE68[0]) + D_800A4DB0_18CE70[0]);
+				randomFrame = (f32)(((f64)(func_800038E0_44E0() & 1) * 0.1) + 0.2);
 				func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, randomFrame);
 			}
 		}

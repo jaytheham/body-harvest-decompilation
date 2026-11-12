@@ -744,8 +744,8 @@ void func_80081764_169824(void) {
 
 
 // AI - Store pointer to camera waypoint table
-void func_80081A18_169AD8(s32 arg0) {
-	D_800E7488 = (Unk169EC8Entry *) arg0;
+void func_80081A18_169AD8(Unk169EC8Entry *arg0) {
+	D_800E7488 = arg0;
 }
 
 // AI - Save current camera state for cutscene/transition
