@@ -18,7 +18,7 @@ void func_80080FD8_169098(void);
 s32 func_800811DC_16929C(s16 arg0, s32 arg1);
 s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2);
 void func_80081764_169824(void);
-void func_80081A18_169AD8(s32 arg0);
+void func_80081A18_169AD8(Unk169EC8Entry *arg0);
 void func_80081A24_169AE4(void);
 void func_80081AA8_169B68(void);
 void func_80081B58_169C18(void);
