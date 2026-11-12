@@ -8034,107 +8034,101 @@ void func_80074D98_15CE58(s32 arg0) {
 // AI - Renders 3D room objects with visibility culling and texture offsets
 #ifdef NON_MATCHING
 void func_80074FF0_15D0B0(void) {
-	s32 cameraZ;
 	f64 radiusScale = 1.5;
-	f64 temp_f20;
-	u8 objIdx;
-	s32 flags;
+	f64 angleDivisor;
+	u32 objectIndex;
+	Unk800E66A8 *entry;
+	s32 halfDimensionOrFlags;
+	s32 cameraZ;
 	s32 i;
-	s32 halfDim;
+	s32 pad;
 	u16 rotation[6];
 	f32 positionScale = 65536.0f;
 	f32 angleScale = 32768.0f;
 	f32 halfDivisor = 2.0f;
 	s32 position[6];
-	f32 dimX;
-	f32 dimZ;
+	f32 width;
+	f32 depth;
 	s16 scale[6];
 	Gfx *displayList;
 
-	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
+	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0,
+		PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 
 	for (i = 0; i < D_800E668C; i++) {
-			temp_f20 = 180.0;
-			objIdx = D_800E66A8[i].unk0;
-			if (D_800E65BC[objIdx].unk44 & 1) {
-				displayList = D_800E65BC[objIdx].unk0;
-				dimX = D_800E65BC[objIdx].unk18;
-				dimZ = D_800E65BC[objIdx].unk1A;
-				if (dimZ < dimX) {
-					halfDim = (s32) (dimX / halfDivisor);
-				} else {
-					halfDim = (s32) (dimZ / halfDivisor);
-				}
+		angleDivisor = 180.0;
+		entry = &D_800E66A8[i];
+		objectIndex = entry->unk0;
+		if (D_800E65BC[objectIndex].unk44 & 1) {
+			displayList = D_800E65BC[objectIndex].unk0;
+			width = (u32) D_800E65BC[objectIndex].unk18;
+			depth = (u32) D_800E65BC[objectIndex].unk1A;
+			if (depth < width) {
+				halfDimensionOrFlags = (s32) (width / halfDivisor);
+			} else {
+				halfDimensionOrFlags = (s32) (depth / halfDivisor);
+			}
 
-				if (func_8007C428_1644E8(
-					D_800E66A8[i].unk2 - 0x60,
-					D_800E66A8[i].unk4,
-					D_800E66A8[i].unk6 - 0x60,
-					(u16) (u32) ((f64) halfDim * radiusScale),
-					(s32) D_8008DDF4_175EB4,
-					(s32) D_8008DDF8_175EB8,
-					((s32)(s64)((s32)D_8008DDFC_175EBC)),
-					(u16) (s32) (((f64) (D_8008DDF0_175EB0 * angleScale)) / temp_f20),
-					0x238E
-				)) {
-					flags = D_800E65BC[objIdx].unk40;
-					if (flags & 0x100) {
-						rotation[0] = D_800E66A8[i].unk8 << 0xE;
-						rotation[1] = 0;
-						rotation[2] = 0;
-						position[0] = (D_800E66A8[i].unk2 - 0x60) << 0x10;
-						position[1] = D_800E66A8[i].unk4 << 0x10;
-						position[2] = (D_800E66A8[i].unk6 - 0x60) << 0x10;
-						scale[0] = 0x40;
-						scale[1] = 0x40;
-						scale[2] = 0x40;
-						rotation[3] = (s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20);
-						rotation[4] = (s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20);
-						rotation[5] = (s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20);
-						position[3] = (s32) (D_800E66A8[i].unk20 * positionScale);
-						position[4] = (s32) (D_800E66A8[i].unk24 * positionScale);
-						position[5] = (s32) (D_800E66A8[i].unk28 * positionScale);
-						scale[3] = 0x100; scale[4] = 0x100; scale[5] = 0x100;
-							func_80076A58_15EB18(1, &rotation[0], &position[0], &scale[0], displayList);
-					} else if (((flags & 0x04000000) && (D_800E66A8[i].unk2E & 1)) ||
-						   ((flags & 0x08000000) && !(D_800E66A8[i].unk2E & 1))) {
-
-						func_800773F4_15F4B4(
+			if (func_8007C428_1644E8(
+				entry->unk2 - 0x60,
+				entry->unk4,
+				entry->unk6 - 0x60,
+				(u16) (u32) ((f64) halfDimensionOrFlags * radiusScale),
+				D_8008DDF4_175EB4,
+				D_8008DDF8_175EB8,
+				(cameraZ = (s32) (s64) (s32) D_8008DDFC_175EBC),
+				(u16) (s32) ((f64) (D_8008DDF0_175EB0 * angleScale) / angleDivisor),
+				0x238E)) {
+				halfDimensionOrFlags = D_800E65BC[objectIndex].unk40;
+				if (halfDimensionOrFlags & 0x100) {
+					rotation[0] = entry->unk8 << 0xE;
+					rotation[1] = 0;
+					rotation[2] = 0;
+					position[0] = (entry->unk2 - 0x60) << 0x10;
+					position[1] = entry->unk4 << 0x10;
+					position[2] = (entry->unk6 - 0x60) << 0x10;
+					scale[0] = 0x40;
+					scale[1] = 0x40;
+					scale[2] = 0x40;
+					rotation[3] = (s16) (s32) ((f64) (entry->unk18 * angleScale) / angleDivisor);
+					rotation[4] = (s16) (s32) ((f64) (entry->unk1C * angleScale) / angleDivisor);
+					rotation[5] = (s16) (s32) ((f64) (entry->unk14 * angleScale) / angleDivisor);
+					position[3] = (s32) (entry->unk20 * positionScale);
+					position[4] = (s32) (entry->unk24 * positionScale);
+					position[5] = (s32) (entry->unk28 * positionScale);
+					scale[3] = 0x100; scale[4] = 0x100; scale[5] = 0x100;
+					func_80076A58_15EB18(1, rotation, position, scale, displayList);
+				} else if (((halfDimensionOrFlags & 0x04000000) && (entry->unk2E & 1)) ||
+					((halfDimensionOrFlags & 0x08000000) && !(entry->unk2E & 1))) {
+					func_800773F4_15F4B4(
 						displayList,
-						((D_800E66A8[i].unk2 - 0x60) << 0x10) + (s32) (D_800E66A8[i].unk20 * positionScale),
-						(D_800E66A8[i].unk4 << 0x10) + (s32) (D_800E66A8[i].unk24 * positionScale),
-						((D_800E66A8[i].unk6 - 0x60) << 0x10) + (s32) (D_800E66A8[i].unk28 * positionScale),
-						0,
-						D_800E66A8[i].unk8 << 0xE,
-						0,
-						D_8005BB38++,
-						0,
-						0x40);
-
-						func_800773F4_15F4B4(D_800E65BC[objIdx].unk4, D_800E65BC[objIdx].unk2C << 0x10, D_800E65BC[objIdx].unk2E << 0x10, D_800E65BC[objIdx].unk30 << 0x10,
+						(s32) (entry->unk20 * positionScale) + ((entry->unk2 - 0x60) << 0x10),
+						(s32) (entry->unk24 * positionScale) + (entry->unk4 << 0x10),
+						(s32) (entry->unk28 * positionScale) + ((entry->unk6 - 0x60) << 0x10),
+						0, entry->unk8 << 0xE, 0, D_8005BB38++, 0, 0x40);
+					func_800773F4_15F4B4(
+						D_800E65BC[objectIndex].unk4,
+						D_800E65BC[objectIndex].unk2C << 0x10,
+						D_800E65BC[objectIndex].unk2E << 0x10,
+						D_800E65BC[objectIndex].unk30 << 0x10,
 						0, 0, 0, D_8005BB38++, 1, 0x100);
-
-						gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
-					} else {
-
-						func_800773F4_15F4B4(
+					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+				} else {
+					func_800773F4_15F4B4(
 						displayList,
-						((D_800E66A8[i].unk2 - 0x60) << 0x10) + (s32) (D_800E66A8[i].unk20 * positionScale),
-						(D_800E66A8[i].unk4 << 0x10) + (s32) (D_800E66A8[i].unk24 * positionScale),
-						((D_800E66A8[i].unk6 - 0x60) << 0x10) + (s32) (D_800E66A8[i].unk28 * positionScale),
-						(s16) (s32) (((f64) (D_800E66A8[i].unk14 * angleScale)) / temp_f20),
-						(s16) (s32) (((f64) (D_800E66A8[i].unk18 * angleScale)) / temp_f20) + (D_800E66A8[i].unk8 << 0xE),
-						(s16) (s32) (((f64) (D_800E66A8[i].unk1C * angleScale)) / temp_f20),
-						D_8005BB38++,
-						1,
-						0x40);
-					}
+						(s32) (entry->unk20 * positionScale) + ((entry->unk2 - 0x60) << 0x10),
+						(s32) (entry->unk24 * positionScale) + (entry->unk4 << 0x10),
+						(s32) (entry->unk28 * positionScale) + ((entry->unk6 - 0x60) << 0x10),
+						(s16) (s32) ((f64) (entry->unk14 * angleScale) / angleDivisor),
+						(entry->unk8 << 0xE) + (s16) (s32) ((f64) (entry->unk18 * angleScale) / angleDivisor),
+						(s16) (s32) ((f64) (entry->unk1C * angleScale) / angleDivisor),
+						D_8005BB38++, 1, 0x40);
 				}
 			}
+		}
 	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/158330/func_80074FF0_15D0B0.s")
 #endif
@@ -8161,6 +8155,7 @@ void func_8007568C_15D74C(void) {
 	s32 padPosition0;
 	s32 padPosition1;
 	s16 scale[6];
+	Gfx *displayList;
 	s32 scratch;
 	Unk8008DED0Entry *entry2;
 
