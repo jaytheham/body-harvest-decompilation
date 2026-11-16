@@ -1,14 +1,14 @@
 {
-  "generated": "2026-11-16T10:56:19Z",
-  "commit": "2d008103",
-  "commit_timestamp": "2026-11-16T23:55:09+13:00",
+  "generated": "2026-11-16T18:27:34Z",
+  "commit": "81e69b0b",
+  "commit_timestamp": "2026-11-17T07:26:36+13:00",
   "overall": {
-    "total_functions": 3058,
+    "total_functions": 3057,
     "matched": 3004,
     "non_matching": 53,
-    "asm_stubs": 1,
-    "matched_pct": 98.23,
-    "decompiled_pct": 99.97
+    "asm_stubs": 0,
+    "matched_pct": 98.27,
+    "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
@@ -33,10 +33,10 @@
       "display_name": "Gameplay / Outside",
       "matched": 1409,
       "non_matching": 40,
-      "asm_stubs": 1,
-      "total": 1450,
+      "asm_stubs": 0,
+      "total": 1449,
       "matched_pct": 97.2,
-      "decompiled_pct": 99.9
+      "decompiled_pct": 100.0
     },
     "overlay_gameplay/inside": {
       "display_name": "Gameplay / Inside",
@@ -2408,9 +2408,9 @@
       "segment": "overlay_gameplay/outside",
       "matched": 13,
       "non_matching": 2,
-      "asm_stubs": 1,
-      "total": 16,
-      "matched_pct": 81.2,
+      "asm_stubs": 0,
+      "total": 15,
+      "matched_pct": 86.7,
       "contributor": "jaytheham"
     },
     {
@@ -2600,7 +2600,7 @@
       "files": 95,
       "matched": 2617,
       "non_matching": 53,
-      "asm_stubs": 1
+      "asm_stubs": 0
     },
     {
       "name": "Jay",
@@ -2707,56 +2707,56 @@
       "commit": "5e8d27d",
       "matched": 1326,
       "non_matching": 626,
-      "total": 2716
+      "total": 2710
     },
     {
       "date": "2026-04-26",
       "commit": "4d7e83d",
       "matched": 1327,
       "non_matching": 625,
-      "total": 2716
+      "total": 2710
     },
     {
       "date": "2026-05-03",
       "commit": "970f57c",
       "matched": 1339,
       "non_matching": 680,
-      "total": 2715
+      "total": 2709
     },
     {
       "date": "2026-05-10",
       "commit": "873dd5b",
       "matched": 1364,
       "non_matching": 888,
-      "total": 2715
+      "total": 2709
     },
     {
       "date": "2026-05-17",
       "commit": "5108678",
       "matched": 1379,
       "non_matching": 943,
-      "total": 2714
+      "total": 2708
     },
     {
       "date": "2026-05-24",
       "commit": "54d4241",
       "matched": 1385,
       "non_matching": 1058,
-      "total": 2712
+      "total": 2707
     },
     {
       "date": "2026-05-31",
       "commit": "3365ed1",
       "matched": 1407,
       "non_matching": 1062,
-      "total": 2712
+      "total": 2707
     },
     {
       "date": "2026-06-07",
       "commit": "da91528",
       "matched": 1451,
       "non_matching": 1124,
-      "total": 2715
+      "total": 2710
     },
     {
       "date": "2026-06-14",
@@ -2910,14 +2910,14 @@
       "commit": "491e152",
       "matched": 3003,
       "non_matching": 54,
-      "total": 3058
+      "total": 3057
     },
     {
       "date": "2026-11-15",
       "commit": "c5a5f7d",
       "matched": 3004,
       "non_matching": 53,
-      "total": 3058
+      "total": 3057
     }
   ]
 }
