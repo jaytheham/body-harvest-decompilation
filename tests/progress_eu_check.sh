@@ -48,8 +48,9 @@ quick_args=()
 # the vendored tree-sitter on PYTHONPATH.
 git show "$base:tools/progress.py" > "$work/progress_base.py"
 # The old tool counted the handwritten boot entry as a stub, and counted a PAL-only C body under VERSION_EU as a
-# second NTSC definition; the current one does neither (HANDWRITTEN_ASM, ntsc_definitions). Give the old tool those
-# two corrections so the comparison still shows nothing else changed.
+# second NTSC definition; the current one does neither (HANDWRITTEN_ASM, ntsc_definitions). It also counted the
+# GLOBAL_ASM fallback of an `#ifdef NON_MATCHING_<suffix>` group as a stub; the current one does not. Give the old
+# tool those three corrections so the comparison still shows nothing else changed.
 "$PY" - "$work/progress_base.py" <<'PYEOF' || { echo "FAIL could not correct the old progress.py"; exit 1; }
 import sys
 from pathlib import Path
@@ -69,6 +70,8 @@ replacements = [
     ("total_defs = count_function_defs(text)", "total_defs = count_function_defs(_ntsc_definitions(text))"),
     ("total_defs = count_function_defs(blob)", "total_defs = count_function_defs(_ntsc_definitions(blob))"),
     ("def count_function_defs(text: str) -> int:", ntsc_definitions),
+    ('if any(first == "NON_MATCHING" and branch != first for first, branch in groups):',
+     'if any(first.startswith("NON_MATCHING") and branch != first for first, branch in groups):'),
 ]
 path = Path(sys.argv[1])
 text = path.read_text(encoding="utf-8")
@@ -259,6 +262,12 @@ for description, source, stubs in (
     ("the handwritten boot entry", f"{PRAGMA_ENTRY}\n", 0),
     ("an undecompiled function", f"{PRAGMA_US}\n", 1),
     ("the boot entry beside an undecompiled function", f"{PRAGMA_ENTRY}\n{PRAGMA_US}\n", 1),
+    ("a plain NON_MATCHING group with a pragma fallback",
+     f"#ifdef NON_MATCHING\nvoid f(void) {{ }}\n#else\n{PRAGMA_US}\n#endif\n", 0),
+    ("a suffixed NON_MATCHING_XYZ group with a pragma fallback",
+     f"#ifdef NON_MATCHING_XYZ\nvoid f(void) {{ }}\n#else\n{PRAGMA_US}\n#endif\n", 0),
+    ("a suffixed NON_MATCHING_XYZ group beside an undecompiled function",
+     f"#ifdef NON_MATCHING_XYZ\nvoid f(void) {{ }}\n#else\n{PRAGMA_US}\n#endif\n{PRAGMA_US}\n", 1),
 ):
     check(progress.count_global_asm_stubs(source) == stubs, f"NTSC stubs of {description}")
     check(progress.scan_active_branches(source, progress.EU_DEFINES)[2] == stubs, f"PAL stubs of {description}")

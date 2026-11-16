@@ -172,7 +172,8 @@ def count_global_asm_stubs(text: str) -> int:
             if groups:
                 groups.pop()
         elif is_stub_pragma(line):
-            if any(first == "NON_MATCHING" and branch != first for first, branch in groups):
+            # Same prefix rule as RE_NON_MATCHING, so `#ifdef NON_MATCHING_<suffix>` groups are fallback groups too.
+            if any(first.startswith("NON_MATCHING") and branch != first for first, branch in groups):
                 continue
             if any("VERSION_EU" in branch for _, branch in groups):
                 continue
