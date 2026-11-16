@@ -120,7 +120,8 @@ def prune_asm(asm_cont: str) -> Tuple[str, str]:
 
         if cur_section == ".late_rodata":
             if not changed_section:
-                late_rodata.append(line)
+                if not line.strip().startswith(".late_rodata_alignment"):
+                    late_rodata.append(line)
             continue
 
         if (
@@ -158,39 +159,49 @@ def find_global_asm_func(root_dir: str, c_file: str, func_name: str) -> str:
         print("Could not open C file:", e, file=sys.stderr)
         sys.exit(1)
 
+    # A file-backed pragma may name both the function and companion rodata.
+    # Accumulate through ')' so quoted path lists can also span source lines.
     global_asm: Optional[List[str]] = None
+    arguments: Optional[str] = None
     for line in source.splitlines(keepends=True):
-        stop_global_asm = False
-        if global_asm is not None:
-            if line.startswith(")"):
-                stop_global_asm = True
-            else:
-                global_asm.append(line)
-        else:
-            if not line.startswith("GLOBAL_ASM(") and not line.startswith(
-                "#pragma GLOBAL_ASM("
-            ):
+        if global_asm is None:
+            start = re.match(r'^\s*(?:#pragma\s+)?GLOBAL_ASM\s*\(', line)
+            if start is None:
                 continue
             global_asm = []
-            if ")" in line:
-                ind = line.index("(")
-                ind2 = line.index(")", ind)
-                fname = os.path.join(root_dir, line[ind + 2 : ind2 - 1])
+            arguments = line[start.end():]
+        elif arguments is not None:
+            arguments += line
+        elif not global_asm and line.lstrip().startswith('"'):
+            arguments = line
+        elif not line.lstrip().startswith(")"):
+            global_asm.append(line)
+            continue
+
+        if arguments is not None:
+            if ")" not in arguments:
+                # An empty opening line can also introduce an inline asm block.
+                if not arguments.strip():
+                    arguments = None
+                continue
+            paths = arguments[:arguments.index(")")]
+            if not re.fullmatch(r'\s*"[^"\n]+"(?:\s*,\s*"[^"\n]+")*\s*', paths):
+                print("Expected quoted GLOBAL_ASM paths", file=sys.stderr)
+                sys.exit(1)
+            for asm_path in re.findall(r'"([^"\n]+)"', paths):
+                fname = os.path.join(root_dir, asm_path)
                 try:
-                    with open(fname) as f2:
-                        for line2 in f2:
-                            global_asm.append(line2)
+                    with open(fname, encoding="utf-8") as f2:
+                        global_asm.append(f2.read().rstrip("\n") + "\n")
                 except OSError as e:
-                    print(
-                        f"Failed to open GLOBAL_ASM file {fname}:", e, file=sys.stderr
-                    )
+                    print(f"Failed to open GLOBAL_ASM file {fname}:", e, file=sys.stderr)
                     sys.exit(1)
-                stop_global_asm = True
-        if stop_global_asm:
-            for line2 in global_asm:
-                if "glabel " + func_name in line2:
-                    return "".join(global_asm)
-            global_asm = None
+
+        if any(re.search(r"\bglabel\s+" + re.escape(func_name) + r"(?:\s|$)", line2)
+               for line2 in global_asm):
+            return "".join(global_asm)
+        global_asm = None
+        arguments = None
     print(f"Failed to find GLOBAL_ASM for function {func_name}.", file=sys.stderr)
     sys.exit(1)
 
