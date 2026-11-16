@@ -804,25 +804,25 @@ void func_802D5FBC_1EECCC(void) {
 // unused? appears to spawn Doodlebugs to attack the aircraft carrier in Blackness Naval Base (buildinginstance 34)
 void func_802D5FE4_1EECF4(void)
 {
-  s32 i;
-  u8 result;
-  s16 x;
-  s16 z;
-  for (i = 0; i < 8; i++)
-  {
-    
-      x = (s32)((D_802E0570_1F9280[i * 2] << 8) * 1.7);
-    z = (s32) ((D_802E0570_1F9280[(i * 2) + 1] << 8) * 1.5);
-      x += buildingInstances[34].xCoord;
-    z += buildingInstances[34].zCoord;
-    
-    result = func_80092A50_A1A00_WordArgs(x, z, -1);
-    if (result == 0xFF)
-    {
-      continue;
-    }
-    func_80080B44_8FAF4(result, 0x22);
-  }
+	s32 i;
+	u8 result;
+	s16 x;
+	s16 z;
+	for (i = 0; i < 8; i++)
+	{
+
+		x = (s32)((D_802E0570_1F9280[i * 2] << 8) * 1.7);
+		z = (s32)((D_802E0570_1F9280[(i * 2) + 1] << 8) * 1.5);
+		x += buildingInstances[34].xCoord;
+		z += buildingInstances[34].zCoord;
+
+		result = func_80092A50_A1A00_WordArgs(x, z, -1);
+		if (result == 0xFF)
+		{
+			continue;
+		}
+		func_80080B44_8FAF4(result, 0x22);
+	}
 }
 
 // called through mission data table in java overlay D_802E04A4 entry 10
