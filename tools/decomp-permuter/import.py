@@ -463,6 +463,22 @@ def preprocess_c_with_macros(
         flags=re.MULTILINE,
     )
 
+    # Hidden definitions are ordinary text to cpp. Protect paste operands from
+    # expansion there: e.g. mbi.h's _SHIFT alias must stay _SHIFT in siz##_SHIFT.
+    paste_operands: Dict[str, str] = {}
+
+    def protect_paste(match: Match[str]) -> str:
+        def protect_operand(operand: Match[str]) -> str:
+            token = operand.group(2)
+            placeholder = "_permuter_paste_" + token.encode("utf-8").hex()
+            paste_operands[placeholder] = token
+            return operand.group(1) + placeholder
+
+        return re.sub(r"(##\s*)([a-zA-Z_][a-zA-Z0-9_]*)", protect_operand, match.group(0))
+
+    source = re.sub(r"^_permuter define (?:[^\n]*\\\n)*[^\n]*", protect_paste,
+                    source, flags=re.MULTILINE)
+
     # Get rid of auto-inserted macros which the second cpp invocation will
     # warn about.
     source = re.sub(r"^#define __STDC_.*\n", "", source, flags=re.MULTILINE)
@@ -471,6 +487,9 @@ def preprocess_c_with_macros(
     source = subprocess.check_output(
         CPP + STUB_FN_MACROS, cwd=cwd, encoding="utf-8", input=source
     )
+
+    for placeholder, token in paste_operands.items():
+        source = re.sub(r"\b" + placeholder + r"\b", lambda _match: token, source)
 
     # Finally, find all function-like defines that we hid (some might have
     # been comments, so we couldn't do this before), and construct fake

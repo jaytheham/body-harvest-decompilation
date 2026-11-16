@@ -452,10 +452,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 			vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
 			if (arg5 == 3) {
-				vtx1->v.cn[0] = 0xFF;
-				vtx2->v.cn[0] = 0xFF;
-				vtx3->v.cn[0] = 0xFF;
-				vtx0->v.cn[0] = 0xFF;
+				vtx0->v.cn[0] = (vtx3->v.cn[0] = (vtx2->v.cn[0] = (vtx1->v.cn[0] = 0xFF)));
 
 				if (D_8013D5DC_14C58C != 0) {
 					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, arg7 << 5);

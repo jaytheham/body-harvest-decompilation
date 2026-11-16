@@ -1,18 +1,25 @@
 """Exercise the importer helpers without requiring the permuter's compiler dependencies."""
 import ast
+from base64 import b64encode
+from collections import defaultdict
+import shutil
+import subprocess
 import os
 import re
 import sys
 import tempfile
 import unittest
 from pathlib import Path
-from typing import List, Optional, Tuple
+from typing import Callable, Dict, List, Match, Optional, Pattern, Set, Tuple
 
 ROOT = Path(__file__).resolve().parents[2]
 IMPORTER = ROOT / 'tools/decomp-permuter/import.py'
 helpers = ast.parse(IMPORTER.read_text(encoding='utf-8'))
 helpers.body = [node for node in helpers.body if isinstance(node, ast.FunctionDef)
-                and node.name in ('find_global_asm_func', 'prune_asm')]
+                and node.name in ('find_global_asm_func', 'prune_asm', 'preprocess_c_with_macros')]
+PreserveMacros = Tuple[Pattern[str], Callable[[str], str]]
+CPP = ['cpp', '-P', '-undef']
+STUB_FN_MACROS = []
 exec(compile(helpers, str(IMPORTER), 'exec'))
 RE_FUNC_NAME = r'[a-zA-Z0-9_$]+'
 
@@ -39,13 +46,43 @@ class GlobalAsmImport(unittest.TestCase):
                     self.assertEqual('.double 1.7' in assembly, has_data)
                     self.assertNotIn('.late_rodata_alignment', assembly)
 
-    def test_reported_java_function(self):
-        source = ROOT / 'src.us/overlay_level/java/1ED9E0.c'
-        assembly = find_global_asm_func(str(ROOT), str(source), 'func_802D5FE4_1EECF4')
-        name, assembly = prune_asm(assembly)
-        self.assertEqual(name, 'func_802D5FE4_1EECF4')
-        self.assertIn('.double 1.7', assembly)
-        self.assertNotIn('.late_rodata_alignment', assembly)
+    @unittest.skipUnless(shutil.which('cpp'), 'requires GNU cpp')
+    def test_preserved_token_paste_operand_is_not_expanded(self):
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.c'
+            source.write_text(
+                '#define _SHIFT _SHIFTL\n'
+                '#define G_IM_SIZ_8b_SHIFT 1\n'
+                '#define load(siz) \\\n'
+                ' (siz ## _SHIFT)\n'
+                'int target(void) { return load(G_IM_SIZ_8b); }\n')
+            result, macros = preprocess_c_with_macros(
+                CPP + [str(source)], directory, (re.compile('^load$'), lambda name: 'int'))
+            self.assertIn('load', macros)
+            self.assertIn('## _SHIFT', result)
+            self.assertNotIn('## _SHIFTL', result)
+            self.assertNotIn('_permuter_paste_', result)
+
+    @unittest.skipUnless(shutil.which('cpp'), 'requires GNU cpp')
+    def test_light_color_paste_preserves_arguments_and_constants(self):
+        import toml
+        settings = toml.loads((ROOT / 'permuter_settings.toml').read_text())
+        pattern = re.compile('^(?:' + '|'.join(settings['preserve_macros']) + ')$')
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / 'source.c'
+            source.write_text(
+                '#define LIGHT_1 1\n'
+                '#define G_MWO_aLIGHT_1 0\n'
+                '#define G_MWO_bLIGHT_1 4\n'
+                '#define gSPLightColor(n) (G_MWO_a##n + G_MWO_b##n)\n'
+                'int target(void) { return gSPLightColor(LIGHT_1); }\n')
+            result, macros = preprocess_c_with_macros(
+                CPP + [str(source)], directory, (pattern, lambda name: 'int'))
+            self.assertIn('gSPLightColor(LIGHT_1)', result)
+            self.assertIn('#pragma _permuter define G_MWO_aLIGHT_1 ', result)
+            self.assertIn('#pragma _permuter define G_MWO_bLIGHT_1 ', result)
+            self.assertIn('#pragma _permuter define LIGHT_1 ', result)
+
 
 
 if __name__ == '__main__':
