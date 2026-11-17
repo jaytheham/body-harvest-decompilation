@@ -388,24 +388,26 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 // AI - Initializes buildingTypes, buildingInstances, D_800522C0 and D_80052A7C via func_80116784_125734.
 #ifdef NON_MATCHING
 void func_8011694C_1258FC(void) {
-	u8 targetType;
-	s32 bestDelta;
-	Unk80146688 *zoneEntry;
-	s32 bestGrid;
-	u8 *targetTypeRead;
+	union {
+		s32 bestDelta;
+		Unk80146688 *zoneEntry;
+	} locals_f;
 	BuildingType *type;
 	union {
 		BuildingInstance *gridCell;
-		s8 *zoneCounts;
-		UnkBuildDoorMap *doorMap;
+		s32 level;
 	} cursor;
-	s32 count;
-	s16 lookupId;
+	u8 targetType;
 	s16 difference;
 	s16 j;
-	s32 level;
-	BuildingInstance *inst;
+	s32 count;
+	s32 bestGrid;
+	union {
+		u8 *targetTypeRead;
+		BuildingInstance *inst;
+	} buildings;
 	s16 i;
+	s16 lookupId;
 
 	D_8015EB80 = 0;
 	type = buildingTypes;
@@ -414,7 +416,7 @@ void func_8011694C_1258FC(void) {
 		if (D_800522C0[count].unk13 != 0) {
 			lookupId = 0x1F;
 			do {
-				if (!((u32)type[lookupId].model - (u32)D_800522C0[count].unkC)) {
+				if (!((u32)type[lookupId].model != (u32)D_800522C0[count].unkC)) {
 					D_800522C0[count].unkC = lookupId;
 				}
 			} while (lookupId--);
@@ -429,27 +431,24 @@ void func_8011694C_1258FC(void) {
 		buildingTypes[count].unk1A[2] = 0xFF;
 	}
 
-	cursor.doorMap = (UnkBuildDoorMap *) D_80052A7C;
-	count = 0x6D;
-	do {
-		if (cursor.doorMap->unk8 != cursor.doorMap->unkA) {
+	count = 0x6E;
+	while (count--) {
+		if (((UnkBuildDoorMap *)D_80052560)[count].unkA != ((UnkBuildDoorMap *)D_80052560)[count].unk8) {
 			lookupId = 0x1F;
 			do {
 				type = &buildingTypes[lookupId];
-				if ((s32) type->model == cursor.doorMap->unk0) {
-					bestDelta = type->unk1A[2];
-					cursor.doorMap->unk0 = lookupId;
+				if (!(((UnkBuildDoorMap *)D_80052560)[count].unk0 != (s32)type->model)) {
+					((UnkBuildDoorMap *)D_80052560)[count].unk0 = lookupId;
 					type->unk1A[3]++;
-					if (bestDelta == 0xFF) {
+					if (type->unk1A[2] == 0xFF) {
 						type->unk1A[2] = count;
 					}
 				}
 			} while (lookupId--);
 		} else {
-			cursor.doorMap->unk0 = 0x3E8;
+			((UnkBuildDoorMap *)D_80052560)[count].unk0 = 0x3E8;
 		}
-		cursor.doorMap--;
-	} while (count--);
+	}
 
 	func_80116784_125734();
 	D_8015EA44 = 0x100;
@@ -482,63 +481,64 @@ void func_8011694C_1258FC(void) {
 	D_8015EA28 = 0xFF;
 	count = 0x20;
 	while (count--) {
-		targetTypeRead = D_5002D40;
+		buildings.targetTypeRead = D_5002D40;
 		if ((s32) buildingTypes[count].model == ((s32 *) D_80140A00_14F9B0)[currentLevel]) {
 			D_8015EA28 = count;
 		}
-		if (((s32) buildingTypes[count].model) == ((s32) targetTypeRead)) {
+		if (((s32) buildingTypes[count].model) == ((s32) buildings.targetTypeRead)) {
 			D_8015EA29 = count;
 		}
 	}
-	targetTypeRead = &D_8015EA28_Read;
+	buildings.targetTypeRead = &D_8015EA28_Read;
 
+	locals_f.bestDelta = 4;
 	i = 0x1F;
 	do {
-		level = currentLevel;
+		cursor.level = currentLevel;
 		type = &buildingTypes[i];
-		if (level == 1) {
-			if ((((i == (*targetTypeRead)) || (i == 4)) || (i == 6)) || (i == 0x14)) {
+		if (cursor.level == 1) {
+			if ((((i == (*buildings.targetTypeRead)) || (i == locals_f.bestDelta)) || (i == 6)) || (i == 0x14)) {
 				type->unk1A[0] |= 8;
 			}
-		} else if (level == 2) {
+		} else if (cursor.level == 2) {
 			if ((i == D_8015EA28) || (i == 6) || (i == 0xD) || (i == 0xE) || (i == 0x10) || (i == 0x16)) {
 				type->unk1A[0] = type->unk1A[0] | 8;
 			}
-		} else if (level == 3) {
+		} else if (cursor.level == 3) {
 			if ((i == 7) || (i == 0x12) || (i == 0xC) || (i == 0x15)) {
 				type->unk1A[0] |= 8;
 			}
-		} else if ((level == 4) && ((i == 4) || (i == 5) || (i == 0x10) || (i == 0x14))) {
+		} else if ((locals_f.bestDelta == cursor.level) && ((i == locals_f.bestDelta) || (i == 5) || (i == 0x10) || (i == 0x14))) {
 			type->unk1A[0] |= 8;
 		}
 	} while (i--);
 
 	cursor.gridCell = &buildingInstances[254];
-	targetType = *targetTypeRead;
+	targetType = *buildings.targetTypeRead;
 	count = 0xFE;
 	do {
 		if (cursor.gridCell->buildingType == targetType) {
 			cursor.gridCell->xCoord = (cursor.gridCell->xCoord & 0xFF00) + 0x80;
 			cursor.gridCell->zCoord = 0x80 + (cursor.gridCell->zCoord & 0xFF00);
-			targetType = *targetTypeRead;
+			targetType = *buildings.targetTypeRead;
 		}
 		cursor.gridCell--;
 	} while (count--);
 
 	i = 0xFF;
 	while (i--) {
-		inst = &buildingInstances[i];
-		if (inst->buildingType == targetType) {
-			switch (inst->unk8 & 3) {
+		buildings.inst = &buildingInstances[i];
+		if (buildings.inst->buildingType == targetType) {
+			switch (buildings.inst->unk8 & 3) {
 			case 0:
-				bestDelta = -0x10000;
+				locals_f.bestDelta = -0x10000;
 				bestGrid = 0xFF;
 				count = 0xFE;
 				do {
-					if ((buildingInstances[count].zCoord >> 8) == (inst->zCoord >> 8)) {
-						difference = inst->xCoord - buildingInstances[count].xCoord;
-						if ((difference < 0) && (bestDelta < difference)) {
-							bestDelta = difference;
+					if ((buildingInstances[count].zCoord >> 8) == (buildings.inst->zCoord >> 8)) {
+						difference = buildings.inst->xCoord - buildingInstances[count].xCoord;
+						if ((difference < 0) && (locals_f.bestDelta < difference)) {
+							locals_f.bestDelta = difference;
 							bestGrid = count;
 						}
 					}
@@ -548,14 +548,14 @@ void func_8011694C_1258FC(void) {
 				}
 				break;
 			case 3:
-				bestDelta = -0x10000;
+				locals_f.bestDelta = -0x10000;
 				bestGrid = 0xFF;
 				count = 0xFF;
 				while (count--) {
-					if ((buildingInstances[count].xCoord >> 8) == (inst->xCoord >> 8)) {
-						difference = inst->zCoord - buildingInstances[count].zCoord;
-						if ((difference < 0) && (bestDelta < difference)) {
-							bestDelta = difference;
+					if ((buildingInstances[count].xCoord >> 8) == (buildings.inst->xCoord >> 8)) {
+						difference = buildings.inst->zCoord - buildingInstances[count].zCoord;
+						if ((difference < 0) && (locals_f.bestDelta < difference)) {
+							locals_f.bestDelta = difference;
 							bestGrid = count;
 						}
 					}
@@ -597,27 +597,27 @@ void func_8011694C_1258FC(void) {
 
 	for (i = 0; i < 0xFF; i++) {
 		D_8015EA60[i] = i;
-		inst = &buildingInstances[i];
-		type = &buildingTypes[inst->buildingType];
+		buildings.inst = &buildingInstances[i];
+		type = &buildingTypes[buildings.inst->buildingType];
 
-		if ((4 & type->unk1A[0]) || (inst->rotationIndexWord != 0xF) || (func_80118114_1270C4(i) != 0)) {
-			inst->statusFlags |= 0x1000;
+		if ((4 & type->unk1A[0]) || (buildings.inst->rotationIndexWord != 0xF) || (func_80118114_1270C4(i) != 0)) {
+			buildings.inst->statusFlags |= 0x1000;
 		}
 
 		if (type->pad16[2] == 0) {
-			inst->statusFlags |= 8;
+			buildings.inst->statusFlags |= 8;
 		} else {
-			inst->statusFlags |= 0x8000;
+			buildings.inst->statusFlags |= 0x8000;
 		}
 
-		if ((((u32) inst->unk8 >> 12) & 1) == 0) {
-			inst->zCoord = 0x7FFF;
+		if ((((u32) buildings.inst->unk8 >> 12) & 1) == 0) {
+			buildings.inst->zCoord = 0x7FFF;
 		} else {
 			D_80048172++;
 		}
 
-		inst->unkE = 0xFF;
-		inst->unk11 = func_8011C594_12B544((u8) i);
+		buildings.inst->unkE = 0xFF;
+		buildings.inst->unk11 = func_8011C594_12B544((u8) i);
 	}
 
 	j = 0x1F;
@@ -638,35 +638,34 @@ void func_8011694C_1258FC(void) {
 	D_8015EA14 = func_8011C4D4_12B484();
 	D_8015EA18 = D_8015EA14;
 
-	cursor.zoneCounts = D_80146680_155630;
-	level = currentLevel;
+	cursor.level = currentLevel;
 	i = 0;
-	if (0 < cursor.zoneCounts[level - 1]) {
+	if (0 < D_80146680_155630[cursor.level - 1]) {
 		do {
-			zoneEntry = &D_80146688_155638[level][i];
-			count = func_8011C42C_12B3DC((s8 *)&zoneEntry[-0x20]);
-			level = currentLevel;
-			zoneEntry = &D_80146688_155638[level][i];
-			zoneEntry[-0x20].unk08 = count;
-			zoneEntry[-0x20].unk0A = zoneEntry[-0x20].unk08;
+			locals_f.zoneEntry = &D_80146688_155638[cursor.level][i];
+			count = func_8011C42C_12B3DC((s8 *)&locals_f.zoneEntry[-0x20]);
+			cursor.level = currentLevel;
+			locals_f.zoneEntry = &D_80146688_155638[cursor.level][i];
+			locals_f.zoneEntry[-0x20].unk08 = count;
+			locals_f.zoneEntry[-0x20].unk0A = locals_f.zoneEntry[-0x20].unk08;
 			i += 1;
-			zoneEntry[-0x20].pad0E[0] = 0xFF;
-			zoneEntry[-0x20].unk0C = 0;
-		} while (i < D_80146680_155630[level - 1]);
+			locals_f.zoneEntry[-0x20].pad0E[0] = 0xFF;
+			locals_f.zoneEntry[-0x20].unk0C = 0;
+		} while (i < D_80146680_155630[cursor.level - 1]);
 	}
 
 	func_8011CDA4_12BD54();
 
 	i = 0xFE;
 	do {
-		inst = &buildingInstances[i];
-		if (inst->buildingType == D_8015EA28) {
-			switch (3 & inst->unk8) {
+		buildings.inst = &buildingInstances[i];
+		if (buildings.inst->buildingType == D_8015EA28) {
+			switch (3 & buildings.inst->unk8) {
 				case 0:
-					func_8011629C_12524C(inst, 1, 0);
+					func_8011629C_12524C(buildings.inst, 1, 0);
 					break;
 				case 3:
-					func_8011629C_12524C(inst, 0, 1);
+					func_8011629C_12524C(buildings.inst, 0, 1);
 					break;
 			}
 		}
@@ -683,22 +682,22 @@ void func_8011694C_1258FC(void) {
 	case 5:
 		i = 0xFE;
 		do {
-			inst = &buildingInstances[i];
-			inst->hitPoints *= 3;
+			buildings.inst = &buildingInstances[i];
+			buildings.inst->hitPoints *= 3;
 		} while (i--);
 		break;
 	}
 
 	i = 0xff;
 	while (i--) {
-		inst = &buildingInstances[i];
-		if ((1 & ((u32) inst->unk8 >> 12)) != 0) {
+		buildings.inst = &buildingInstances[i];
+		if ((1 & ((u32) buildings.inst->unk8 >> 12)) != 0) {
 			j = 2;
 			do {
-				if (inst->doorInteriorIds[j] != 0xFF) {
-					if (func_801168E8_125898(inst->buildingType, j) == 0) {
+				if (buildings.inst->doorInteriorIds[j] != 0xFF) {
+					if (func_801168E8_125898(buildings.inst->buildingType, j) == 0) {
 						count = j + 1;
-						osSyncPrintf(D_80144DC0_153D70, count, i, inst->xCoord >> 8, inst->zCoord >> 8, count);
+						osSyncPrintf(D_80144DC0_153D70, count, i, buildings.inst->xCoord >> 8, buildings.inst->zCoord >> 8, count);
 					}
 				}
 			} while (j--);
