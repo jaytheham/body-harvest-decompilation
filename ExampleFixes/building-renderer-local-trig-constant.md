@@ -29,3 +29,9 @@
 -> `code changed`: Spell the zero as `(f32)(prop->unk12 * 0)` and the scale as `(f32)(16384 + prop->unk12 * 0)` inside the guarded door block, letting IDO fold both after optimization.
 
 -> `correct ASM`: IDO materializes the constants inside the door block and saves only $f20, matching the target saved-register set. Other renderer differences remain.
+
+`incorrect ASM`: Separate matrix and pop macro temporaries expand the frame to 0x208, with the coordinate, scan-array, and search-index homes displaced.
+
+-> `code changed`: Reuse one `Gfx *` for the matrix and pop packets and order the main declarations by their stack homes. Keep the five door coordinates in one halfword struct with a leading halfword so the helper calls see the original contiguous layout. Store the door tag as a word and read its lowest byte through `SignedWord.bytes[3]`.
+
+-> `correct ASM`: The frame is 0x1D8 and the position, bounding-box, scan-array, and door-tag homes agree with the original. The word tag uses `sw` at sp+0x14C and `lbu` at sp+0x14F. The scan dispatch and other scheduling differences remain.
