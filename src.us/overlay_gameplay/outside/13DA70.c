@@ -788,7 +788,6 @@ u32 D_80140CD4_14FC84 = 0;
 u32 D_80140CD8_14FC88 = 0;
 s32 D_80140CDC_14FC8C = 0x82;
 
-#ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
 	static s32 bonusPrefix; /* Preserve the preceding score state slot. */
@@ -881,7 +880,9 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = stageScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12; baseScore = (u8)(baseScore + 1); bonusAlpha = baseScore; drawText(D_80145500_1544B0, width, baseScore);
+				/* The byte comparison adds zero and schedules the store with the draw arguments. */
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText(D_80145500_1544B0,
+					width + ((bonusAlpha = baseScore) != (u8)baseScore), baseScore);
 			} else {
 				drawText(D_80145504_1544B4, 0xFF);
 			}
@@ -911,7 +912,8 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = secondBonusScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12; baseScore = (u8)(baseScore + 1); bonusAlpha = baseScore; drawText(D_80145550_154500, width, baseScore);
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText(D_80145550_154500,
+					width + ((bonusAlpha = baseScore) != (u8)baseScore), baseScore);
 			} else {
 				drawText(D_80145554_154504, 0xFF);
 			}
@@ -982,9 +984,6 @@ void func_80130BA0_13FB50(void)
 		D_8015FF80 = 4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80130BA0_13FB50.s")
-#endif
 
 void func_80131280_140230(u8 *arg0)
 {

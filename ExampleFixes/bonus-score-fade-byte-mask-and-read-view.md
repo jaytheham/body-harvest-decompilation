@@ -9,3 +9,15 @@
 `code changed` -> Keep the function-local static for writes to preserve its BSS slot. Read the same backing word through the overlay's existing `D_80160060` symbol.
 
 `correct ASM` -> The first bonus uses `lui v1; lw v1; sw v1` for the score, leaving `t7` available for the fade mask and restoring the subsequent temporary register sequence.
+
+
+`incorrect ASM` -> With the byte store in a separate statement, both fades issue `lui at; lui a0; addiu a0; sb`.
+
+`code changed` -> Set the byte through the width argument. Comparing the assigned byte with its own conversion contributes zero to the width. IDO keeps the store in the argument setup and uses the masked value for both the store and the third argument.
+
+```c
+width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText(D_80145500_1544B0,
+    width + ((bonusAlpha = baseScore) != (u8)baseScore), baseScore);
+```
+
+`correct ASM` -> Both fades issue `lui a0; lui at; sb; addiu a0` after the mask, followed by the move into `a2`. With the C function enabled, the US and PAL ROM checksums pass.
