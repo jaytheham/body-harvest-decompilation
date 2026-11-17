@@ -3,7 +3,6 @@
 #include "core/53F0.h"
 #include "core/12C80.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 const char D_801453C0_154370[] = "*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n";
 const char D_80145408_1543B8[] = "%X%Y\n";
@@ -1112,7 +1111,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	Unk80052B40 pos;
 	Unk80052B40 result;
 	s32 *screenWidth = &D_80068084;
-	s32 swayPadding;
+	s32 glyphThreshold;
 	s32 currentSway;
 	s32 renderWidth;
 	s32 uly;
@@ -1214,16 +1213,17 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 		}
 	}
 
-	if (charWidth) {} if (charCount) {}
+	if (charCount) {}
 	for (charIndex = 0; charIndex < charCount; charIndex++)
 	{
+		glyphThreshold = (charIndex * 10 + 0x5A);
 		charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
 		if (text[charIndex] == 0x31)
 		{
 			renderX -= halfWidth;
 		}
 
-		if (((charIndex * 10 + 0x5A) < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
+		if ((glyphThreshold < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
 		{
 			currentSway = (s32)((f32)(((f32)sins((((D_80140CE0_14FC90 + charIndex) % 8) * 8192)) / 32768.0) * 32.0) / 2);
 			gDPPipeSync(D_8005BB2C++);
@@ -1249,7 +1249,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			D_800311A0.unk0 = D_800311A0.unk0 * 2.5;
 			D_800311A0.unk2 = D_800311A0.unk2 * -2.5;
 			D_800311A0.unk4 = D_800311A0.unk4 * 2.5;
-			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[((u32)(*(s32 *)OVERLAY_PTR(0x80052A8C)) % 7) << 9]));
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[(((u32)D_80052A8C % 7) << 1) << 8]));
 
 			func_800039D0_45D0(&pos, &result, &D_800311A0, D_8005BB38);
 
@@ -1264,7 +1264,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			D_800311A0.unk4 = result.unk4;
 		}
 
-		if (((charIndex * 10 + 0x5A) < D_80140CE0_14FC90) && (D_80068084 >= charScreenX))
+		if ((glyphThreshold < D_80140CE0_14FC90) && (D_80068084 >= charScreenX))
 		{
 			if (func_8012EC3C_13DBEC(text[charIndex]) != 0)
 			{
@@ -1316,13 +1316,13 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			}
 		}
 
-		renderX += charWidth;
+
 		if ((charCount == charIndex + 1) && (charScreenX <= 0))
 		{
 			D_80140CE0_14FC90 = 0;
 			return 1;
 		}
-		renderX += 2;
+		renderX = (renderX + charWidth) + 2;
 
 	}
 
