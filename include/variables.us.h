@@ -852,6 +852,7 @@ extern s16 D_8004816E; // living humans "harvested" - a dead human eaten by harv
 extern s16 D_80048170; // humans "killed" not harvested
 extern s16 D_80048172;
 extern s16 D_80048174;
+extern s16 D_80048174_Read;
 extern s16 D_80048176;
 extern s32 D_80048178;
 extern s32 D_8004817C; // bookkeeping for Doodlebugs during Greece ambulance mission
