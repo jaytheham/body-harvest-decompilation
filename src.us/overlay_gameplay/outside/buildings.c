@@ -1181,7 +1181,7 @@ void func_80118774_127724(void) {
 	s16 sp1B8;
 	s16 sp1B6;
 	s16 sp1B4;
-	u16 sp1B2;
+	s16 sp1B2;
 	s32 sp1A4;
 	u8 sp19F;
 	s32 sp198;
@@ -1206,12 +1206,12 @@ void func_80118774_127724(void) {
 	s16 halfX;
 	s16 halfZ;
 	s32 bboxTest;
+	s32 doorFlags;
 	u8 currentIndex;
 	u8 revisitIndex;
 	u8 *scanPtr;
 	u8 *revisitPtr;
 	u8 *specialPtr;
-	f32 tempF;
 	f64 scale;
 
 	sp1D6 = D_80149434 - 0x900;
@@ -1329,16 +1329,16 @@ void func_80118774_127724(void) {
 
 				specialPtr = &D_8015EB67;
 				propMode = building->statusFlags & 4;
-				searchCount = 7;
+				bboxTest = 7;
 				do {
 					temp = propMode ? 0x80 : 0;
 					if (*specialPtr == temp + sp1C8) {
 						break;
 					}
 					specialPtr--;
-				} while (searchCount--);
+				} while (bboxTest--);
 
-				if (specialPtr == (&D_8015EB67 - 8)) {
+				if (specialPtr == D_8015EB5F) {
 					sp19F = currentIndex;
 					func_8011D438_12C3E8((u8)sp1C8, propMode);
 				}
@@ -1371,7 +1371,7 @@ void func_80118774_127724(void) {
 					D_80052B40.unk4 += (u16)D_80159DE4;
 				}
 
-				func_800039D0_45D0(&D_80052B40, &D_80052B48, (Unk80052B40 *)&D_800311A0, D_8005BB38);
+				func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 				if (building->buildingType == D_8015EA28) {
@@ -1389,7 +1389,7 @@ void func_80118774_127724(void) {
 					func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
 					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 					gSPTexture(D_8005BB2C++, building->unkD << 12, 0x2000, 5, G_TX_RENDERTILE, G_ON);
-					gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A14_14F9C4)[currentLevel]);
+					gSPDisplayList(D_8005BB2C++, D_80140A14_14F9C4[currentLevel]);
 					if (D_80052554 != 0x400) {
 						gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A28_14F9D8)[currentLevel]);
 					}
@@ -1423,9 +1423,9 @@ void func_80118774_127724(void) {
 						sp14C = 0xA;
 						sp1A4++;
 						if (propMode) {
-							bboxTest = 1;
+							doorFlags = 1;
 						} else {
-							bboxTest = prop->unk16;
+							doorFlags = prop->unk16;
 						}
 
 						sp1BA = doorRef->unk0;
@@ -1433,12 +1433,12 @@ void func_80118774_127724(void) {
 						sp1B6 = doorRef->unk4;
 						func_80116554_125504(building->unk8 & 3, &sp1BA, &sp1B6);
 
-						sp90 = bboxTest & 2;
+						sp90 = doorFlags & 2;
 						sp1B4 = prop->unkC >> (sp90 == 0);
 						sp1B2 = prop->unkE;
-						func_80116554_125504(doorRef->unk6, &sp1B4, (s16 *)&sp1B2);
-						func_80116554_125504(building->unk8 & 3, &sp1B4, (s16 *)&sp1B2);
-						if (bboxTest & 0x80) {
+						func_80116554_125504(doorRef->unk6, &sp1B4, &sp1B2);
+						func_80116554_125504(building->unk8 & 3, &sp1B4, &sp1B2);
+						if (doorFlags & 0x80) {
 							sp14C = 0xB;
 						}
 
@@ -1449,20 +1449,20 @@ void func_80118774_127724(void) {
 
 							if ((building->doorInteriorIds[sp1A4] != 0xF0) && !(building->statusFlags & 4)) {
 								temp = currentIndex * 0x10;
-								if (bboxTest & 0x20) {
+								if (doorFlags & 0x20) {
 									func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
-										0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_801183EC_12739C, 0);
+										0, 0, 0, sp1B4, sp1B2, prop->unk10 >> 1, func_801183EC_12739C, 0);
 								} else {
 									func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
-										0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_80118418_1273C8, 0);
+										0, 0, 0, sp1B4, sp1B2, prop->unk10 >> 1, func_80118418_1273C8, 0);
 								}
 							}
 
 							if (prop->unk0 != NULL) {
-								D_80052B40.unk0 = doorRef->unk0;
-								D_80052B40.unk2 = doorRef->unk2;
-								D_80052B40.unk4 = doorRef->unk4;
-								D_80052B48.unk0 = doorRef->unk6 << 14;
+								D_80052B40_HudX = doorRef->unk0;
+								D_80052B42 = doorRef->unk2;
+								D_80052B44 = doorRef->unk4;
+								D_80052B48_Reset.unk0 = doorRef->unk6 << 14;
 								D_80052B48.unk2 = 0;
 								D_80052B48.unk4 = 0;
 								temp = currentIndex * 0x10 + sp1A4;
@@ -1474,23 +1474,24 @@ void func_80118774_127724(void) {
 								func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
 								gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
-				if (1) {}
-								if ((prop->unk8 != NULL) && ((prop->unk8 != D_5038D48) || ((D_8005254C == temp) && (D_8015EA2C != 0.0f)))) {
+								if (1) {}
+								if (1) {} /* Keep the property check in its own allocation block. */
+								if ((prop->unk8 != NULL) && ((prop->unk8 != D_5038D48) || ((D_8005254C == temp) && (D_8015EA2C != (f32)(prop->unk12 * 0))))) {
 									gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 									gSPDisplayList(D_8005BB2C++, prop->unk8);
 								}
 
-								if (bboxTest & 8) {
+								if (doorFlags & 8) {
 									D_80052B40.unk0 = -prop->unkC;
-								} else if (bboxTest & 1) {
+								} else if (doorFlags & 1) {
 									D_80052B40.unk0 = prop->unkC >> 1;
-								} else if (bboxTest & 0x40) {
+								} else if (doorFlags & 0x40) {
 									D_80052B40.unk0 = (-prop->unkC) >> 1;
 								} else {
 									D_80052B40.unk0 = 0;
 								}
 
-								if (bboxTest & 4) {
+								if (doorFlags & 4) {
 									D_80052B40.unk2 = 0x7A;
 								} else {
 									D_80052B40.unk2 = 0;
@@ -1512,15 +1513,15 @@ void func_80118774_127724(void) {
 											D_80052B48.unk0 = (s16)((s32)((f64)D_8015EA2C * scale) + 0x8000);
 											break;
 										case 2:
-											tempF = (f32)(u32)prop->unkC;
-											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * tempF) * D_80144F60_153F10[0]));
+											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * (f32)(u32)prop->unkC) * D_80144F60_153F10[0]));
 											break;
 										case 7:
-											tempF = (f32)(u32)prop->unkC;
-											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * tempF) * D_80144F68_153F18[0]));
+											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * (f32)(u32)prop->unkC) * D_80144F68_153F18[0]));
 											break;
 										case 3:
-											D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * 16384.0f));
+											if (1) {}
+											/* Delay folding the scale until after IDO allocates registers. */
+											D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * (f32)(16384 + prop->unk12 * 0)));
 											D_80052B40.unk2 = (s16)(s32)((f32)(u32)prop->unk10 * D_8015EA2C);
 											break;
 										case 4:
@@ -1531,7 +1532,7 @@ void func_80118774_127724(void) {
 									D_80052B48.unk0 = 0x8000;
 								}
 
-								if (bboxTest & 0x10) {
+								if (doorFlags & 0x10) {
 									D_80052B48.unk0 += 0x8000;
 								}
 
@@ -1540,8 +1541,8 @@ void func_80118774_127724(void) {
 								}
 
 								gDPSetPrimColor(D_8005BB2C++, 0, 0, doorRef->pad10[0], doorRef->pad10[1], doorRef->pad10[2], 0);
-								sp74 = bboxTest & 4;
-								sp78 = bboxTest & 0x10;
+								sp74 = doorFlags & 4;
+								sp78 = doorFlags & 0x10;
 								func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
 								gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 
@@ -1549,7 +1550,8 @@ void func_80118774_127724(void) {
 									gSPDisplayList(D_8005BB2C++, D_5038A00);
 									gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 								} else {
-									if ((D_8015EA2C != 0.0f) && (D_8005254C == temp)) {
+									if (1) {}
+									if ((D_8015EA2C != (f32)(prop->unk12 * 0)) && (D_8005254C == temp)) {
 										gSPDisplayList(D_8005BB2C++, prop->unk4);
 									} else {
 										gSPDisplayList(D_8005BB2C++, prop->unk0);
@@ -1557,9 +1559,12 @@ void func_80118774_127724(void) {
 									gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 
 									if (sp90 != 0) {
-										D_80052B48.unk0 = (sp78 != 0) ? 0x8000 : 0;
+										D_80052B48.unk0 = 0;
 										D_80052B48.unk2 = 0;
 										D_80052B48.unk4 = 0;
+										if (sp78 != 0) {
+											D_80052B48.unk0 += 0x8000;
+										}
 										D_80052B50.unk0 = -0x100;
 										D_80052B50.unk2 = 0x100;
 										D_80052B50.unk4 = 0x100;
@@ -1593,6 +1598,9 @@ void func_80118774_127724(void) {
 
 								gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, 0);
 								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+								flags = building->statusFlags;
+								propMode = flags & 4;
+							} else {
 								flags = building->statusFlags;
 								propMode = flags & 4;
 							}
@@ -1639,14 +1647,14 @@ void func_80118774_127724(void) {
 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				doorMap = (UnkBuildDoorMap *)D_80052A7C;
-				searchCount = 0x6D;
+				i = 0x6D;
 				do {
 					if (building->buildingType == doorMap->unk0) {
 						D_80159DC8 = doorMap->unk4;
 						D_80159DCC = doorMap->unk6;
 					}
 					doorMap--;
-				} while (searchCount--);
+				} while (i--);
 			}
 
 			if (sp168 == 0) {

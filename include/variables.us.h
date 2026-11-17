@@ -2865,6 +2865,7 @@ extern u8 D_8015EA56;
 extern u16 D_8015EA58;
 extern u8 D_8015EA60[];
 extern u8 D_8015EB60[];
+extern u8 D_8015EB5F[9];
 extern u8 D_8015EB67;
 extern s16 D_8015EB68;
 extern s16 D_8015EB6A;

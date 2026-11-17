@@ -23,3 +23,9 @@
 -> `code changed`: Store both bytes first, then decrement both pointers in separate statements.
 
 -> `correct ASM`: The two SB instructions precede the two ADDIU pointer decrements, matching the target initialization loop's instruction order.
+
+`incorrect ASM`: The door-property check cached 0.0f in $f22 and the rotation scale cached 16384.0f in $f24. The renderer saved both registers on entry.
+
+-> `code changed`: Spell the zero as `(f32)(prop->unk12 * 0)` and the scale as `(f32)(16384 + prop->unk12 * 0)` inside the guarded door block, letting IDO fold both after optimization.
+
+-> `correct ASM`: IDO materializes the constants inside the door block and saves only $f20, matching the target saved-register set. Other renderer differences remain.
