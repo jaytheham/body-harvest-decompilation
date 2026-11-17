@@ -1999,8 +1999,8 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ s8 unk0;
-	/* 0x01 */ u8 pad1;
-	/* 0x02 */ u8 unk2;
+	/* 0x01 */ union { u8 pad1; s8 tileIndex; };
+	/* 0x02 */ union { u8 unk2; s8 chunkIndex; };
 	/* 0x03 */ u8 pad3;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
