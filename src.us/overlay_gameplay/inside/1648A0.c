@@ -1492,11 +1492,11 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, f32 arg2) {
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
 #ifdef NON_MATCHING
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
-	u8 padBeforeSpeed[0x10];
+	u8 padBeforeSpeed[16];
 	f32 speedScale;
 	s32 anim;
 	s32 targetYaw;
-	s32 flags;
+	s32 flags; 
 
 	speedScale = 1.0f;
 	flags = D_800E65A8;
@@ -1521,7 +1521,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		Unk165E60Timeline *timeline;
 		s32 timelineStep;
 		s32 frame;
-		s32 routeIndex;
+		s32 routeIndex; 
 		s32 routeByteOffset;
 		s32 canAdvance;
 		u8 padBeforeAnimation[4];
@@ -1551,7 +1551,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 
 			if (D_800A0918_1889D8 != 0) {
 				Unk165E60Path *initialPath;
-				VehicleInstance *initialVehicle;
+				VehicleInstance *initialVehicle; 
 
 				routeIndex = D_800E6A34;
 
@@ -1562,17 +1562,17 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				func_80081A24_169AE4();
 				func_80081E08_169EC8(D_800A090A_1889CA);
 
-				frame = D_800A0904_1889C4;
-				timelineStep = D_800A0908_1889C8 + 1;
-				arg0->unkE = (D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14->headings[frame] * 32768.0f / 180.0);
-				initialPath = D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14;
+				routeIndex = D_800A0904_1889C4;
+				timelineStep = D_800A0908_1889C8 + 1; if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {} if(routeIndex * 4) {}
+				arg0->unkE = (D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14->headings[routeIndex] * 32768.0f / 180.0);
+				pathView = D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14;
 
-				initialVehicle = (VehicleInstance *)(u64)&D_800E6A78;
-				initialVehicle->unk4C = initialPath->points[frame][0];
-				initialVehicle->unk50 = initialPath->points[frame][1];
-				initialVehicle->unk54 = initialPath->points[frame][2];
-				D_800E6A38 = initialPath->unk34;
-				anim = initialPath->frames[frame];
+				initialVehicle = &D_800E6A78;
+				initialVehicle->unk4C = pathView->points[routeIndex].x;
+				initialVehicle->unk50 = pathView->points[routeIndex].y;
+				initialVehicle->unk54 = pathView->points[routeIndex].z;
+				D_800E6A38 = pathView->unk34;
+				anim = pathView->frames[routeIndex];
 				D_800A090C_1889CC = 0;
 				D_800A0908_1889C8_W = timelineStep;
 
@@ -1588,9 +1588,9 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				pathView = route->unk14;
 			}
 
-			targetYaw = pathView->headings[D_800A0904_1889C4];
-			if (targetYaw != 0x7D0) {
-				arg0->unkE = (targetYaw * 32768.0f / 180.0);
+			canAdvance = pathView->headings[D_800A0904_1889C4];
+			if (canAdvance != 0x7D0) {
+				arg0->unkE = (canAdvance * 32768.0f / 180.0);
 				route = &D_800A05FC_1886BC.entries[D_800E6A34];
 			}
 
@@ -1610,7 +1610,8 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 
-			if (D_800A0900_1889C0_R == timeline->fadeFrames[D_800A0910_1889D0]) {
+			frame = D_800A0900_1889C0_R;
+ if (frame == timeline->fadeFrames[D_800A0910_1889D0]) {
 				D_800A0920_1889E0 = 1;
 				func_80005AEC_66EC(0, 0, 0, 0x14);
 				D_800A0910_1889D0++;
@@ -1623,7 +1624,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				fadeComplete = canAdvance;
 			}
 
-			routeIndex = D_800E6A34;
+			routeIndex = D_800E6A34; if(routeIndex) {} if(routeIndex) {} if(routeIndex) {} if(routeIndex) {}
 			route = &D_800A05FC_1886BC.entries[routeIndex];
 			pathView = route->unk14;
 			/* The original checks this stack slot even when the fade callback did not run. */
@@ -1631,16 +1632,13 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800A0920_1889E0 = 0;
 			}
 			if ((frame >= pathView->unk30) && (pathView->unk32 >= frame)) {
-				if (pathView->unk2C != 0) {
-					D_800E6A70 = pathView->unk2C;
+				if ((canAdvance = pathView->unk2C) != 0) {
+					D_800E6A70 = canAdvance;
 					if (frame >= pathView->unk38) {
 						f32 speed;
 
-						speed = pathView->unk3C[D_800A090C_1889CC];
-						if (speed != 2000.0f) {
-							D_800E6A38 = speed;
-							D_800A090C_1889CC++;
-						}
+						anim = D_800A090C_1889CC; speed = pathView->unk3C[anim];
+						if (2000.0f != speed) { D_800E6A38 = speed; anim++; D_800A090C_1889CC = anim; }
 					}
 				}
 			} else {
@@ -1677,7 +1675,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 		}
-	} else if ((u8)flags & 4) {
+	} else if (flags & 4) {
 		if (func_8008DDC0_175E80() != 0) {
 			func_8007D69C_16575C(arg0);
 		}
@@ -1705,8 +1703,8 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 
 		func_8007D52C_1655EC();
 		originX = func_800703D0_158490();
-		xDiff = D_800E6A78.unk4C - 96.0f;
-		targetYaw = (func_80003824_4424((f32)(s32)(xDiff - (f32)originX),
+		
+		targetYaw = (func_80003824_4424((f32)(s32)((D_800E6A78.unk4C - 96.0f) - (f32)originX),
 										 (f32)(s32)D_800E6A78.unk54) + 0x8000) & 0xFFFF;
 
 		currentYaw = arg0->unkE;
@@ -1805,8 +1803,17 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 	D_800A08FC_1889BC = D_800E65A8;
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s", "src.us/overlay_gameplay/inside/1648A0_player_update_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/func_8007DDA0/src.us/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s")
 #endif
+
+
+
+
+
+
+
+
+
 
 // AI - Draw shadow/floor marker quad beneath the player
 void func_8007EB1C_166BDC(void *arg0) {
