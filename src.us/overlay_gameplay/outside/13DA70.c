@@ -1117,7 +1117,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	s32 uly;
 	s32 lry;
 	s32 cursorPadding;
-	u8 currentChar;
+	s16 currentChar;
 	s16 charCount;
 	u8 colorData[3];
 	s32 six = 6;
@@ -1203,7 +1203,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 		}
 	}
 
-	if (six) {} /* Keeps the width and character count reloads in this region. */
 	renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + halfWidth;
 	if ((D_80140CE0_14FC90 >= 0x60) && (D_80140CE0_14FC90 < 0xBE))
 	{
@@ -1213,7 +1212,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 		}
 	}
 
-	if (charCount) {}
 	for (charIndex = 0; charIndex < charCount; charIndex++)
 	{
 		glyphThreshold = (charIndex * 10 + 0x5A);
