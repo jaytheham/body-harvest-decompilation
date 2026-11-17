@@ -791,19 +791,21 @@ s32 D_80140CDC_14FC8C = 0x82;
 #ifdef NON_MATCHING
 void func_80130BA0_13FB50(void)
 {
-	static s32 bonusPrefix;
+	static s32 bonusPrefix; /* Preserve the preceding score state slot. */
 	static u8 D_80160058;
 	static s32 D_8016005C;
-	static s32 D_80160060;
-	static s32 D_80160064;
-	static s32 bonusPadding;
+	static s32 firstBonusScore;
+	static s32 secondBonusScore;
+	static s32 bonusPadding; /* Preserve the slot before the two timers. */
 	static u8 D_8016006C;
-	static u8 alphaStorage;
+	static u8 bonusAlpha;
 	static s32 D_80160070;
 
 	s32 baseScore;
 	s32 bonusScore;
-	s32 stageScore; u8 scoreText[8]; s32 width;
+	s32 stageScore;
+	u8 scoreText[8];
+	s32 width;
 	s32 score;
 	Unk80052B2C *player;
 
@@ -815,8 +817,8 @@ void func_80130BA0_13FB50(void)
 		D_80160070 = bonusScore = D_80052B2C->unk30;
 		D_80140CAC_14FC5C = 0;
 		D_80140CB0_14FC60 = 0;
-		D_8016006D_W = 0;
-		// if no humans killed, give 5000 bonus to score
+		bonusAlpha = 0;
+		/* Award 5000 points when no humans were killed. */
 		stageScore = bonusScore;
 		score = bonusScore;
 		baseScore = bonusScore;
@@ -827,14 +829,14 @@ void func_80130BA0_13FB50(void)
 			D_8016005C = score;
 			bonusScore = stageScore = score;
 		}
-		// if no humans harvested, give 5000 bonus to score
+		/* Award 5000 points when no humans were harvested. */
 		score = stageScore + 0x1388;
 		if (D_8004816E == 0) {
-			D_80160060 = stageScore;
-			D_80160064 = score;
+			firstBonusScore = stageScore;
+			secondBonusScore = score;
 		} else {
-			D_80160060 = stageScore;
-			D_80160064 = stageScore;
+			firstBonusScore = stageScore;
+			secondBonusScore = stageScore;
 		}
 	}
 
@@ -842,7 +844,7 @@ void func_80130BA0_13FB50(void)
 	bonusScore = player->unk30;
 	if ((D_80160070 == player->unk30) && (D_8016006C == 0x1E)) {
 		D_8016006C = 0;
-		D_8016006D_W = 0;
+		bonusAlpha = 0;
 		if (D_80160058 + 1 < 4) {
 			D_80160058 = D_80160058 + 1;
 		} else {
@@ -877,11 +879,9 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = stageScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12;
-				D_8016006D_W = baseScore = baseScore + 1;
-				drawText(D_80145500_1544B0, width, baseScore);
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); bonusAlpha = baseScore; drawText(D_80145500_1544B0, width, baseScore);
 			} else {
-				drawText(D_80145504_1544B4, 0xFF, baseScore);
+				drawText(D_80145504_1544B4, 0xFF);
 			}
 		}
 		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
@@ -896,7 +896,7 @@ void func_80130BA0_13FB50(void)
 			drawText(D_80145530_1544E0, 2, 2);
 			break;
 		}
-		if (D_80048170 == 0) { // text: "No people killed: 5000" else 0
+		if (D_80048170 == 0) {
 			drawText(D_80145540_1544F0, 0x1D, 2, 0x1388);
 		} else {
 			drawText(D_80145548_1544F8, 0x1D, 2, 0);
@@ -910,11 +910,9 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = score;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12;
-				D_8016006D_W = baseScore = baseScore + 1;
-				drawText(D_80145550_154500, width, baseScore);
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); bonusAlpha = baseScore; drawText(D_80145550_154500, width, baseScore);
 			} else {
-				drawText(D_80145554_154504, 0xFF, baseScore);
+				drawText(D_80145554_154504, 0xFF);
 			}
 		}
 		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
@@ -929,7 +927,7 @@ void func_80130BA0_13FB50(void)
 			drawText(D_80145588_154538, 2, 3);
 			break;
 		}
-		if (D_8004816E == 0) { // text: "No people harvested: 5000" else 0
+		if (D_8004816E == 0) {
 			drawText(D_801455A0_154550, 0x1D, 3, 0x1388);
 		} else {
 			drawText(D_801455A8_154558, 0x1D, 3, 0);
@@ -965,15 +963,15 @@ void func_80130BA0_13FB50(void)
 
 	if (isButtonNewlyPressed(0, 0xD000) != 0) {
 		if ((D_80140CB0_14FC60 == 0) || (D_80160058 < 3)) {
-			score = D_80160064;
-			D_80140CB0_14FC60 = 1;
+			D_80140CB0_W_BUTTON = 1;
 			D_80140CAC_14FC5C = 0;
+			score = secondBonusScore;
 			D_80160058 = 3;
 			D_80160070 = score;
 			D_80052B2C->unk30 = score;
 		} else {
 			D_80140CA8_14FC58 = 1;
-			D_80140CB0_14FC60 = 0;
+			D_80140CB0_W_BUTTON = 0;
 			D_80160058 = 3;
 		}
 	}
