@@ -819,12 +819,12 @@ void func_80130BA0_13FB50(void)
 		D_80140CB0_14FC60 = 0;
 		bonusAlpha = 0;
 		/* Award 5000 points when no humans were killed. */
-		stageScore = bonusScore;
 		score = bonusScore;
+		stageScore = bonusScore;
 		baseScore = bonusScore;
 		if (D_80048170 == 0) {
-			D_8016005C = baseScore;
-			bonusScore = stageScore += 0x1388;
+			D_8016005C = stageScore;
+			stageScore = score + 0x1388;
 		} else {
 			D_8016005C = score;
 			bonusScore = stageScore = score;
@@ -838,6 +838,8 @@ void func_80130BA0_13FB50(void)
 			firstBonusScore = stageScore;
 			secondBonusScore = stageScore;
 		}
+		/* Keep the original score live for IDO's register allocator. */
+		if (bonusScore) {}
 	}
 
 	player = D_80052B2C;
@@ -906,8 +908,7 @@ void func_80130BA0_13FB50(void)
 	if (D_80160058 >= 2) {
 		if (D_80160058 == 2) {
 			func_8000577C_637C();
-			score = D_80160064;
-			D_80160070 = score;
+			D_80160070 = secondBonusScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
 				width = baseScore * 12; baseScore = (u8)(baseScore + 1); bonusAlpha = baseScore; drawText(D_80145550_154500, width, baseScore);
