@@ -1116,7 +1116,8 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	s32 renderWidth;
 	s32 uly;
 	s32 lry;
-	s32 cursorPadding;
+	s16 digitPadding;
+	s16 digitOne = 0x31;
 	s16 currentChar;
 	s16 charCount;
 	u8 colorData[3];
@@ -1131,7 +1132,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 		do
 		{
 			renderWidth = renderWidth + charWidth + 2;
-			if (currentChar == 0x31)
+			if (digitOne == currentChar)
 			{
 				renderWidth -= halfWidth;
 			}
@@ -1214,7 +1215,7 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 
 	for (charIndex = 0; charIndex < charCount; charIndex++)
 	{
-		glyphThreshold = (charIndex * 10 + 0x5A);
+		glyphThreshold = ((charIndex + charIndex) * 5) + 0x5A;
 		charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
 		if (text[charIndex] == 0x31)
 		{
