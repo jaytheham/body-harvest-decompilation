@@ -1099,7 +1099,6 @@ void func_80131280_140230(u8 *arg0)
 	}
 }
 
-#ifdef NON_MATCHING
 s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5)
 {
 	static s32 D_80140CE0_14FC90 = 0;
@@ -1136,6 +1135,11 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			{
 				renderWidth -= halfWidth;
 			}
+			/* Keep IDO's glyph-delay and threshold spills in ROM order. */
+			charIndex = 0;
+			if (((charIndex + charIndex) * 5) + 0x5A) {}
+			if (charIndex * 10) {}
+			if (((charIndex + charIndex) * 5) + 0x5A) {}
 			charCount += 1;
 			currentChar = text[charCount];
 		} while (currentChar != 0);
@@ -1216,13 +1220,13 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	for (charIndex = 0; charIndex < charCount; charIndex++)
 	{
 		glyphThreshold = ((charIndex + charIndex) * 5) + 0x5A;
-		charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
+		charScreenX = (D_80068084_TextRead - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
 		if (text[charIndex] == 0x31)
 		{
 			renderX -= halfWidth;
 		}
 
-		if ((glyphThreshold < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
+		if ((glyphThreshold < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084_TextRead >= charScreenX))
 		{
 			currentSway = (s32)((f32)(((f32)sins((((D_80140CE0_14FC90 + charIndex) % 8) * 8192)) / 32768.0) * 32.0) / 2);
 			gDPPipeSync(D_8005BB2C++);
@@ -1334,7 +1338,3 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 	return 0;
 }
-#else
-s32 D_80140CE0_14FC90 = 0;
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131858_140808.s")
-#endif
