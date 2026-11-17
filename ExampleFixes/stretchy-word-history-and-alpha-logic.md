@@ -9,3 +9,9 @@
 -> `code changed` keeps two discarded width tests immediately before the rendering branch and one discarded Y-origin test at the start of the band loop. Compute the right edge in the packet operand, pass the texture steps as signed words for the SDK macro to mask, and iterate the bands with a descending `for` loop. Define both the phase and the 48-word history as private statics when building the C renderer, and reserve their original space only when using its assembly fallback.
 
 -> `correct ASM` matches the first 162 instruction words, including the second byte load. All six saved floating-point registers hold the target values. The animated vertical step has the target `mfc1`, mask, and register move sequence, and the band decrement returns to the target position around the last packet write. The C differences are confined to the renderer in both ROM versions. The routine still requires its assembly fallback.
+
+`incorrect ASM` stores the bottom coordinate at `sp+0x7c` and the center at `sp+0x74`. Inlining both the half-width and band index moves the two values to the target offsets in reverse order.
+
+-> `code changed` uses the half-width and band index expressions directly. Assign the bottom coordinate to the same local before the pipe sync in each rendering branch. Use the unsigned working type for the packed X coordinates.
+
+-> `correct ASM` stores and reloads the bottom at `sp+0x74` and the center at `sp+0x70`. The center sum uses `addu t4,t5,t9`. Active C builds differ in 122 instruction words in both ROMs, with every difference inside this function. The animated packet still requires its assembly fallback.

@@ -252,11 +252,11 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 	static s32 D_8015FF90[48];
 	s32 idx;
 	s32 x;
-	s32 halfW;
-	s32 stackPad0;
+	s32 halfWidthPad;
+	s32 bottom;
 	s32 alpha;
 	s32 sHalf;
-	s32 rowBase;
+	s32 bandIndexPad;
 	s32 stackPad1;
 	s32 band;
 	s32 i;
@@ -307,7 +307,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	x = (D_80068084 / 2) - (textWidth >> 1);
 
-	halfW = arg1 >> 1;
 	i = 0;
 	if (textLen > 0) {
 		do {
@@ -323,18 +322,15 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 				if (arg1) {}
 				if (arg1) {}
 				if (arg5 != 0) {
-
-					rowBase = i * 2;
-
 					for (band = 7; band >= 0; band--) {
 
 						if (arg3) {} /* Preserve the IDO allocation in the band loop. */
-						if (rowBase + band >= 0x30) {
+						if ((i * 2) + band >= 0x30) {
 							osSyncPrintf(D_801453C0_154370);
 						} else {
 
 							if ((arg7 & 0x10) != 0) {
-								alpha = D_8015FF90[band + rowBase];
+								alpha = D_8015FF90[band + (i * 2)];
 							} else {
 								alpha = D_8015FF90[band];
 							}
@@ -348,7 +344,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 							}
 						}
 
-						textWidth = halfW - (s32)(((f32)alpha / 100.0f) * (f32)halfW);
+						textWidth = (arg1 >> 1) - (s32)(((f32)alpha / 100.0f) * (f32)(arg1 >> 1));
 						if (textWidth <= 0) {
 							sHalf = 1;
 						} else {
@@ -371,14 +367,15 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 								alpha = (arg7 & 4) ? 100 : 0;
 							}
 						}
+						bottom = arg3 + arg2;
 						gDPPipeSync(D_8005BB2C++);
 						/* Evaluate the right edge as part of the packet operand for IDO. */
 						gSPTextureRectangle(
-							(textWidth = ((x + halfW) + sHalf) * 4, D_8005BB2C++),
-							((x + halfW) - sHalf) * 4,
+							(textWidth = (((u32)x + (arg1 >> 1)) + sHalf) * 4, D_8005BB2C++),
+							(((u32)x + (arg1 >> 1)) - sHalf) * 4,
 							(arg3 - alpha) * 4,
 							textWidth,
-							((arg3 + arg2) + alpha) * 4,
+							(bottom + alpha) * 4,
 							G_TX_RENDERTILE,
 							0,
 							0,
@@ -394,13 +391,14 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 						gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
 					}
 
+					bottom = arg3 + arg2;
 					gDPPipeSync(D_8005BB2C++);
 					gSPTextureRectangle(
 						D_8005BB2C++,
 						x * 4,
 						arg3 * 4,
 						(x + arg1) * 4,
-						(arg3 + arg2) * 4,
+						bottom * 4,
 						G_TX_RENDERTILE,
 						0,
 						0,
