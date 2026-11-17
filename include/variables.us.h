@@ -1901,7 +1901,7 @@ extern SignedWord D_8013D5D0_14C580;
 extern SignedWord D_8013D5D4_14C584;
 extern SignedWord D_8013D5D8_14C588;
 extern s32 D_8013D5DC_14C58C;
-extern s32 D_8013D5E0_14C590;
+extern u8 *D_8013D5E0_14C590;
 extern Vtx D_8013D5E8[4];
 extern u8 D_8013D66C_14C61C[];
 extern u32 D_8013D67C_14C62C[];
