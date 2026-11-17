@@ -1205,8 +1205,6 @@ void func_80118774_127724(void) {
 	s32 doorFlags;
 	u8 currentIndex;
 	u8 revisitIndex;
-	u8 *scanPtr;
-	u8 *revisitPtr;
 	u8 *specialPtr;
 	f64 scale;
 	Gfx *gfx;
@@ -1319,7 +1317,7 @@ void func_80118774_127724(void) {
 					sp16E++;
 				}
 
-				specialPtr = &D_8015EB67;
+				specialPtr = &D_8015EB5F[8];
 				propMode = building->statusFlags & 4;
 				bboxTest = 7;
 				do {
@@ -1364,8 +1362,7 @@ void func_80118774_127724(void) {
 				}
 
 				func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
-				gfx = D_8005BB2C++;
-				gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 				if (building->buildingType == D_8015EA28) {
 					gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -1380,8 +1377,7 @@ void func_80118774_127724(void) {
 					}
 					D_80052B40.unk4 = 0;
 					func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
-					gfx = D_8005BB2C++;
-					gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 					gSPTexture(D_8005BB2C++, building->unkD << 12, 0x2000, 5, G_TX_RENDERTILE, G_ON);
 					gSPDisplayList(D_8005BB2C++, D_80140A14_14F9C4[currentLevel]);
 					if (D_80052554 != 0x400) {
@@ -1727,48 +1723,46 @@ void func_80118774_127724(void) {
 
 				if (sp16E != -1) {
 					sp16E = 0;
-					scanPtr = &sp180[0xF];
 					i = 0xF;
 					do {
-						currentIndex = *scanPtr;
+						currentIndex = sp180[i];
 						if (currentIndex != 0xFF) {
 							building = &buildingInstances[currentIndex];
 							func_80115F20_124ED0(building->xCoord, building->zCoord, &sp194, &sp196);
-							revisitIndex = (sp194 != currentIndex) ? (u8)sp194 : (u8)sp196;
-							specialPtr = &sp180[0xF];
+							if (sp194 == currentIndex) {
+								revisitIndex = (u8)sp196;
+							} else {
+								revisitIndex = (u8)sp194;
+							}
 							temp = 0xF;
 							do {
-								if (revisitIndex == *specialPtr) {
+								if (revisitIndex == sp180[temp]) {
 									revisitIndex = 0xFF;
 								}
-								specialPtr--;
 							} while (temp--);
 							if (revisitIndex != 0xFF) {
 								sp170[sp16E] = revisitIndex;
 								sp16E++;
 							}
 						}
-						scanPtr--;
 					} while (i--);
 					sp16E = -1;
 					sp194 = -1;
 					sp196 = -1;
 				}
 
-				revisitPtr = &sp170[0xF];
 				i = 0xF;
 				do {
-					currentIndex = *revisitPtr;
+					currentIndex = sp170[i];
 					if (currentIndex != 0xFF) {
 						building = &buildingInstances[currentIndex];
-						*revisitPtr = 0xFF;
+						sp170[i] = 0xFF;
 						sp168 = 1;
 						sp88 = building - buildingInstances;
 						sp1A4 = -1;
 						processBuilding = 2;
 						break;
 					}
-					revisitPtr--;
 				} while (i--);
 			} while (0);
 			if (!processBuilding) {

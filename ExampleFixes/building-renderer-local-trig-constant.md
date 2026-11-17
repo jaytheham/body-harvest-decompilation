@@ -35,3 +35,9 @@
 -> `code changed`: Reuse one `Gfx *` for the matrix and pop packets and order the main declarations by their stack homes. Keep the five door coordinates in one halfword struct with a leading halfword so the helper calls see the original contiguous layout. Store the door tag as a word and read its lowest byte through `SignedWord.bytes[3]`.
 
 -> `correct ASM`: The frame is 0x1D8 and the position, bounding-box, scan-array, and door-tag homes agree with the original. The word tag uses `sw` at sp+0x14C and `lbu` at sp+0x14F. The scan dispatch and other scheduling differences remain.
+
+`incorrect ASM`: The revisit selection's ternary tests equality and loads the 0x195 halfword's low byte on fallthrough, reversing the target's branch and the order of the byte reads.
+
+-> `code changed`: Compare the first saved index to the current building in an explicit if/else, reading the alternate index in the equal arm. Use array indexing for the revisit scans and restore two standard matrix macros to preserve the frame after removing their old cursor locals.
+
+-> `correct ASM`: The comparison emits `bne`; its fallthrough reads sp+0x197 and its taken arm reads sp+0x195. The frame stays 0x1D8. The surrounding register and control-flow differences remain.
