@@ -45,3 +45,8 @@ One `lbu` shared by the byte copy and index lookup, followed by `andi index, cop
 The compaction counter decremented before loading the active-entry pointer.
 -> Keep `i--; activeEntry--;` on one physical source line.
 -> `lw t8, 0x80(sp); lw t6, 0xc0(sp); addiu t9, t8, -1; addiu t7, t6, -1; sw t7, 0xc0(sp); sw t9, 0x80(sp)`.
+
+
+`sb t4, 0(v0)` scheduled before the cursor increment.
+-> Walk the active IDs with a signed index. Copy the next array element directly, and cast the address of the indexed current element before loading the next ID for the flag check. The indexed address lets IDO use the same induction pointer for both reads and mark the table store independent of the building flag load.
+-> `addiu v0, v0, 1; sltu at, v0, end; sb t4, -1(v0)`, in that order, followed by the indexed flag load.

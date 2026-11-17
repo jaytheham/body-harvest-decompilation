@@ -1871,7 +1871,10 @@ void func_8011A604_1295B4(void) {
 	BuildingInstance *inst;
 	BuildingType *type;
 	s32 randomZ;
-	u8 *cursor;
+	union {
+		s32 index;
+		VehicleInstance *vehicle;
+	} scratch;
 	u8 *activeEntry;
 
 	func_8011A2A0_129250();
@@ -1980,16 +1983,15 @@ void func_8011A604_1295B4(void) {
 				}
 
 				if (((buildingInstances[*activeEntry].statusFlags & 0xFFFF) & 1) && (i < 0xFE)) {
-
-					cursor = &D_8015EA60[i];
+					scratch.index = i;
 					do {
-						*cursor = cursor[1];
-						/* Preserve the fresh next-ID read rather than forwarding the byte copy. */
-						if (((buildingInstances[((volatile u8 *)cursor)[1]].statusFlags) & 1) == 0) {
+						D_8015EA60[scratch.index] = D_8015EA60[scratch.index + 1];
+						/* Read the next ID separately for the active-building check. */
+						if (!(buildingInstances[((volatile u8 *)&D_8015EA60[scratch.index])[1]].statusFlags & 1)) {
 							break;
 						}
-						cursor++;
-					} while (cursor < &D_8015EA60[0xFE]);
+						scratch.index++;
+					} while (&D_8015EA60[scratch.index] < &D_8015EA60[0xFE]);
 				}
 
 				if (inst->unk11 != -1) {
@@ -2037,7 +2039,7 @@ void func_8011A604_1295B4(void) {
 			} else {
 				flags = inst->statusFlags;
 				if (flags & 4) {
-							if (!(flags & 0x10) && (inst->hitPoints < (type->unk19 >> 2))) {
+					if (!(flags & 0x10) && (inst->hitPoints < (type->unk19 >> 2))) {
 						inst->unk8 = (((flags | 0x210) ^ flags) << 12) ^ inst->unk8;
 						if ((currentLevel < 5) && ((currentLevel != 4) || (inst->buildingType != 4)) &&
 							((currentLevel != 3) || (inst->buildingType != 2))) {
@@ -2092,20 +2094,23 @@ void func_8011A604_1295B4(void) {
 			if ((currentLevel == 3) && (type->model == D_B007F80)) {
 				xPos = inst->xCoord;
 				zPos = inst->zCoord;
-				if (((D_80052B34->unk0 - xPos) * (D_80052B34->unk0 - xPos)) + ((D_80052B34->unk4 - zPos) * (D_80052B34->unk4 - zPos)) < 0x3D0900) {
+				scratch.vehicle = D_80052B34;
+				if (((scratch.vehicle->unk0 - xPos) * (scratch.vehicle->unk0 - xPos)) + ((scratch.vehicle->unk4 - zPos) * (scratch.vehicle->unk4 - zPos)) < 0x3D0900) {
 					func_801371B8_146168(inst, 0x32, xPos, inst->yCoord, zPos, D_80144F90_153F40[0]);
 				}
 			} else if ((currentLevel == 1) && (type->model == D_90193F8) && (func_8000726C_7E6C((u64) 0x13) == 0)) {
 				xPos = inst->xCoord;
 				zPos = inst->zCoord;
-				if (((D_80052B34->unk0 - xPos) * (D_80052B34->unk0 - xPos)) + ((D_80052B34->unk4 - zPos) * (D_80052B34->unk4 - zPos)) < 0x3D0900) {
+				scratch.vehicle = D_80052B34;
+				if (((scratch.vehicle->unk0 - xPos) * (scratch.vehicle->unk0 - xPos)) + ((scratch.vehicle->unk4 - zPos) * (scratch.vehicle->unk4 - zPos)) < 0x3D0900) {
 					func_801371B8_146168(inst, 0x175, xPos, inst->yCoord, zPos, D_80144F94_153F44[0]);
 				}
 			} else if (((currentLevel == 2) && (type->model == D_A01E340)) || ((currentLevel == 4) && (type->model == D_C014920)) ||
 					   ((currentLevel == 5) && (type->model == D_D010EB0))) {
 				xPos = inst->xCoord;
 				zPos = inst->zCoord;
-				if (((D_80052B34->unk0 - xPos) * (D_80052B34->unk0 - xPos)) + ((D_80052B34->unk4 - zPos) * (D_80052B34->unk4 - zPos)) < 0x3D0900) {
+				scratch.vehicle = D_80052B34;
+				if (((scratch.vehicle->unk0 - xPos) * (scratch.vehicle->unk0 - xPos)) + ((scratch.vehicle->unk4 - zPos) * (scratch.vehicle->unk4 - zPos)) < 0x3D0900) {
 					func_801371B8_146168(inst, 0x17F, xPos, inst->yCoord, zPos, D_80144F98_153F48[0]);
 				}
 			}
