@@ -245,24 +245,25 @@ void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 }
 
 
-#ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
 	static s32 D_8015FF88;
+	static s32 D_8015FF90[48];
 	s32 idx;
 	s32 x;
-	s32 halfW;
-	s32 bottomY;
+	s32 halfWPad;
+	s32 bottom;
 	s32 alpha;
 	s32 sHalf;
-	s32 rowBase;
-	s32 stackPad;
+	s32 rowBasePad;
+	s32 stackPad1;
 	s32 band;
 	s32 i;
 	s32 textWidth;
 	u8 textLen;
 	s32 allMatched;
 	u8 pulseColor[12];
+
 	allMatched = 1;
 
 	if (arg6 != 0) {
@@ -305,33 +306,28 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	x = (D_80068084 / 2) - (textWidth >> 1);
 
-	halfW = arg1 >> 1;
 	i = 0;
 	if (textLen > 0) {
 		do {
 			if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
 				x += arg1 + 2;
 			} else {
-
-				bottomY = arg3 + arg2;
-
 				if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
 					x -= arg1 >> 1;
 				}
 
+				/* Keep the width live in IDO across the draw branch. */
+				if (arg1) {}
 				if (arg5 != 0) {
-
-					rowBase = i * 2;
-
-					band = 7;
-					do {
-
-						if (rowBase + band >= 0x30) {
+					for (band = 7; band >= 0; band--) {
+						/* Keep the band counter in the original saved register. */
+						if (band) {}
+						if ((i * 2) + band >= 0x30) {
 							osSyncPrintf(D_801453C0_154370);
 						} else {
 
 							if ((arg7 & 0x10) != 0) {
-								alpha = D_8015FF90[band + rowBase];
+								alpha = D_8015FF90[band + (i * 2)];
 							} else {
 								alpha = D_8015FF90[band];
 							}
@@ -345,7 +341,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 							}
 						}
 
-						textWidth = halfW - (s32)(((f32)alpha / 100.0f) * (f32)halfW);
+						textWidth = (arg1 >> 1) - (s32)(((f32)alpha / 100.0f) * (f32)(arg1 >> 1));
 						if (textWidth <= 0) {
 							sHalf = 1;
 						} else {
@@ -368,22 +364,22 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 								alpha = (arg7 & 4) ? 100 : 0;
 							}
 						}
+						bottom = arg3 + arg2;
 						gDPPipeSync(D_8005BB2C++);
+						/* The right edge assignment and zero texture T expression control IDO allocation. */
 						gSPTextureRectangle(
-						D_8005BB2C++,
-						((x + halfW) - sHalf) * 4,
-						(arg3 - alpha) * 4,
-						((x + halfW) + sHalf) * 4,
-						(bottomY + alpha) * 4,
-						G_TX_RENDERTILE,
-						0,
-						0,
-						(u16)(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
-						(u16)(s32)((1.0f / ((f32)((alpha * 2) + arg2) / 32)) * 1024.0f)
+							(textWidth = (((u32)x + (arg1 >> 1)) + sHalf) * 4, D_8005BB2C++),
+							(((u32)x + (arg1 >> 1)) - sHalf) * 4,
+							(arg3 - alpha) * 4,
+							textWidth,
+							(bottom + alpha) * 4,
+							G_TX_RENDERTILE,
+							0,
+							((u32)arg3 - (u32)sHalf) * 0U,
+							(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
+							(s32)((1.0f / ((f32)((alpha * 2) + arg2) / 32)) * 1024.0f)
 						);
-					} while (--band >= 0);
-
-
+					}
 				} else {
 					if ((arg7 & 0x20) != 0) {
 						gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
@@ -391,20 +387,20 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 						gDPSetPrimColor(D_8005BB2C++, 0, 0, arg4[0], arg4[1], arg4[2], 0xFF);
 					}
 
+					bottom = arg3 + arg2;
 					gDPPipeSync(D_8005BB2C++);
 					gSPTextureRectangle(
-					D_8005BB2C++,
-					x * 4,
-					arg3 * 4,
-					(x + arg1) * 4,
-					bottomY * 4,
-					G_TX_RENDERTILE,
-					0,
-					0,
-					(u16)(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
-					(u16)(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
+						D_8005BB2C++,
+						x * 4,
+						arg3 * 4,
+						(x + arg1) * 4,
+						bottom * 4,
+						G_TX_RENDERTILE,
+						0,
+						0,
+						(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
+						(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
 					);
-
 				}
 
 				x += arg1 + 2;
@@ -424,9 +420,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	return allMatched;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F4E0_13E490.s")
-#endif
 
 void func_8012FE6C_13EE1C(s16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
@@ -458,7 +451,6 @@ s32 func_8012FFB0_13EF60(void)
 // End of level state manager
 void func_8013001C_13EFCC(void)
 {
-	static u8 stretchState[0xC8]; /* Existing stretch phase and history precede the fade step. */
 	static s32 D_80160050;
 	static s32 D_80140C7C_14FC2C = 0;
 	static u32 D_80140C80_14FC30 = 0;
