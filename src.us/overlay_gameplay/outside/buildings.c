@@ -1851,7 +1851,6 @@ void func_8011A2A0_129250(void) {
 }
 
 // building instance updater
-#ifdef NON_MATCHING
 // Keep the X delta live in the optimizer until it assigns registers.
 #define BUILDING_SOUND_DISTANCE_SQ(x, z) \
 	((s32)((u32)((D_80052B34->unk0 - (x)) * (D_80052B34->unk0 - (x))) + \
@@ -1859,7 +1858,8 @@ void func_8011A2A0_129250(void) {
 		   ((u32)(D_80052B34->unk0 - (x)) * 0U)))
 
 void func_8011A604_1295B4(void) {
-	f64 tempF64;
+	s32 randomZ;
+	s32 compactIndex;
 	Unk80148620 *foundEntry;
 	s32 i;
 	s32 yTerrain;
@@ -1876,16 +1876,12 @@ void func_8011A604_1295B4(void) {
 	s32 entryId;
 	BuildingInstance *inst;
 	BuildingType *type;
-	s32 randomZ;
-	s32 compactIndex;
 
 	func_8011A2A0_129250();
 	if ((f64) D_8015EA30 != 0.0) {
-		tempF64 = (f64) D_8015EA2C;
-		if (tempF64 < 1.0) {
+		if ((f64) D_8015EA2C < 1.0) {
 			D_8015EA2C += D_8015EA30;
-			tempF64 = (f64) D_8015EA2C;
-		} else if (tempF64 >= 1.0) {
+		} else if ((f64) D_8015EA2C >= 1.0) {
 			D_8015EA2C = 1.0f;
 			D_8015EA30 = D_80144F80_153F30[0];
 			foundEntry = func_801176B0_126660();
@@ -1896,13 +1892,12 @@ void func_8011A604_1295B4(void) {
 				if (D_80052544 == 0) {
 					func_80117A4C_1269FC(foundEntry);
 				}
-				tempF64 = (f64) D_8015EA2C;
 			} else {
-				tempF64 = (f64) D_8015EA2C;
+				// Preserve the separate null branch for IDO.
 			}
 		}
 
-		if (tempF64 <= 0.0) {
+		if ((f64) D_8015EA2C <= 0.0) {
 			D_8015EA2C = 0.0f;
 			D_8015EA30 = 0.0f;
 		}
@@ -1984,7 +1979,9 @@ void func_8011A604_1295B4(void) {
 					func_800AE190_BD140(inst->unk7); // add "humans inside this building" to global humans killed count
 				}
 
-				for (compactIndex = i; (buildingInstances[D_8015EA60[compactIndex]].statusFlags & 1) && (compactIndex < 0xFE); ++compactIndex) {
+				for (compactIndex = i;
+				     (buildingInstances[D_8015EA60[compactIndex]].statusFlags & 1) && (compactIndex < 0xFE);
+				     ++compactIndex) {
 					D_8015EA60[compactIndex] = D_8015EA60[compactIndex + 1];
 				}
 
@@ -2110,9 +2107,6 @@ void func_8011A604_1295B4(void) {
 }
 
 #undef BUILDING_SOUND_DISTANCE_SQ
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A604_1295B4.s")
-#endif
 
 s32 func_8011B3F0_12A3A0(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 	s16 sp26;
