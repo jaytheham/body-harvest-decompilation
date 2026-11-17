@@ -1441,10 +1441,10 @@ void func_80118774_127724(void) {
 							if ((building->doorInteriorIds[sp1A4] != 0xF0) && !(building->statusFlags & 4)) {
 								temp = currentIndex * 0x10;
 								if (doorFlags & 0x20) {
-									func_8012D700_13C6B0(sp14C.bytes[3], (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + bounds.x), (s16)(building->yCoord + bounds.y), building->zCoord + bounds.z,
+									func_8012D700_13C6B0(sp14C.bytes[3], temp + sp1A4, building->xCoord + bounds.x, building->yCoord + bounds.y, building->zCoord + bounds.z,
 										0, 0, 0, bounds.radiusX, bounds.radiusZ, prop->unk10 >> 1, func_801183EC_12739C, 0);
 								} else {
-									func_8012D700_13C6B0(sp14C.bytes[3], (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + bounds.x), (s16)(building->yCoord + bounds.y), building->zCoord + bounds.z,
+									func_8012D700_13C6B0(sp14C.bytes[3], temp + sp1A4, building->xCoord + bounds.x, building->yCoord + bounds.y, building->zCoord + bounds.z,
 										0, 0, 0, bounds.radiusX, bounds.radiusZ, prop->unk10 >> 1, func_80118418_1273C8, 0);
 								}
 							}
