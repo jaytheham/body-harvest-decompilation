@@ -389,16 +389,15 @@ s32 func_801168E8_125898(s16 arg0, s16 arg1) {
 #ifdef NON_MATCHING
 void func_8011694C_1258FC(void) {
 	u8 targetType;
-	u8 *new_var;
+	u8 *alternateModel;
 	s32 bestDelta;
 	s8 *zoneCounts;
 	Unk80146688 *zoneEntry;
 	s16 idx2;
 	s32 bestGrid;
-	u8 *new_var2;
+	u8 *targetTypeRead;
 	BuildingType *type;
 	BuildingInstance *gridCell;
-	Unk800522C0 *doorRef;
 	s32 count;
 	s16 lookupId;
 	s16 idx;
@@ -411,27 +410,25 @@ void func_8011694C_1258FC(void) {
 
 	D_8015EB80 = 0;
 	type = buildingTypes;
-	doorRef = &D_800522C0[0x1F];
-	count = 0x1F;
-	do {
-		if (doorRef->unk13 != 0) {
+	count = 0x20;
+	while (count--) {
+		if (D_800522C0[count].unk13 != 0) {
 			lookupId = 0x1F;
 			do {
-				if (doorRef->unkC == (s32) type[lookupId].model) {
-					doorRef->unkC = lookupId;
+				if (D_800522C0[count].unkC == (s32) type[lookupId].model) {
+					D_800522C0[count].unkC = lookupId;
 				}
 			} while (lookupId--);
 		} else {
-			doorRef->unkC = 0x3E8;
+			D_800522C0[count].unkC = 0x3E8;
 		}
-		doorRef--;
-	} while (count--);
+	}
 
-	count = 0x1F;
-	do {
+	count = 0x20;
+	while (count--) {
 		buildingTypes[count].unk1A[3] = 0;
 		buildingTypes[count].unk1A[2] = 0xFF;
-	} while (count--);
+	}
 
 	doorMap = (UnkBuildDoorMap *) D_80052A7C;
 	count = 0x6D;
@@ -442,9 +439,8 @@ void func_8011694C_1258FC(void) {
 				type = &buildingTypes[lookupId];
 				if ((s32) type->model == doorMap->unk0) {
 					bestDelta = type->unk1A[2];
-					targetType = type->unk1A[3];
 					doorMap->unk0 = lookupId;
-					type->unk1A[3] = 1 + targetType;
+					type->unk1A[3]++;
 					if (bestDelta == 0xFF) {
 						type->unk1A[2] = count;
 					}
@@ -485,24 +481,24 @@ void func_8011694C_1258FC(void) {
 	} while (idx--);
 
 	D_8015EA28 = 0xFF;
-	count = 0x1F;
-	do {
-		new_var = D_5002D40;
+	count = 0x20;
+	while (count--) {
+		alternateModel = D_5002D40;
 		if ((s32) buildingTypes[count].model == ((s32 *) D_80140A00_14F9B0)[currentLevel]) {
 			D_8015EA28 = count;
 		}
-		if (((s32) buildingTypes[count].model) == ((s32) new_var)) {
+		if (((s32) buildingTypes[count].model) == ((s32) alternateModel)) {
 			D_8015EA29 = count;
 		}
-	} while (count--);
-	new_var2 = &D_8015EA28_Read;
+	}
+	targetTypeRead = &D_8015EA28_Read;
 
 	i = 0x1F;
 	do {
 		level = currentLevel;
 		type = &buildingTypes[i];
 		if (level == 1) {
-			if ((((i == (*new_var2)) || (i == 4)) || (i == 6)) || (i == 0x14)) {
+			if ((((i == (*targetTypeRead)) || (i == 4)) || (i == 6)) || (i == 0x14)) {
 				type->unk1A[0] |= 8;
 			}
 		} else if (level == 2) {
@@ -519,36 +515,34 @@ void func_8011694C_1258FC(void) {
 	} while (i--);
 
 	gridCell = &buildingInstances[254];
-	targetType = D_8015EA28;
+	targetType = D_8015EA28_Read;
 	count = 0xFE;
 	do {
 		if (gridCell->buildingType == targetType) {
 			gridCell->xCoord = (gridCell->xCoord & 0xFF00) + 0x80;
 			gridCell->zCoord = 0x80 + (gridCell->zCoord & 0xFF00);
-			targetType = D_8015EA28;
+			targetType = D_8015EA28_Read;
 		}
 		gridCell--;
 	} while (count--);
 
-	i = 0xFE;
-	do {
+	i = 0xFF;
+	while (i--) {
 		inst = &buildingInstances[i];
 		if (inst->buildingType == targetType) {
-			count = 0xFE;
 			switch (inst->unk8 & 3) {
 			case 0:
+				count = 0xFE;
 				bestDelta = -0x10000;
 				bestGrid = 0xFF;
-				gridCell = &buildingInstances[254];
 				do {
-					if ((gridCell->zCoord >> 8) == (inst->zCoord >> 8)) {
-						difference = inst->xCoord - gridCell->xCoord;
+					if ((buildingInstances[count].zCoord >> 8) == (inst->zCoord >> 8)) {
+						difference = inst->xCoord - buildingInstances[count].xCoord;
 						if ((difference < 0) && (bestDelta < difference)) {
 							bestDelta = difference;
 							bestGrid = count;
 						}
 					}
-					gridCell--;
 				} while (count--);
 				if (bestGrid != 0xFF) {
 					buildingInstances[bestGrid].buildingType = 0x1F;
@@ -557,25 +551,23 @@ void func_8011694C_1258FC(void) {
 			case 3:
 				bestDelta = -0x10000;
 				bestGrid = 0xFF;
-				gridCell = &buildingInstances[254];
-				count = 0xFE;
-				do {
-					if ((gridCell->xCoord >> 8) == (inst->xCoord >> 8)) {
-						difference = inst->zCoord - gridCell->zCoord;
+				count = 0xFF;
+				while (count--) {
+					if ((buildingInstances[count].xCoord >> 8) == (inst->xCoord >> 8)) {
+						difference = inst->zCoord - buildingInstances[count].zCoord;
 						if ((difference < 0) && (bestDelta < difference)) {
 							bestDelta = difference;
 							bestGrid = count;
 						}
 					}
-					gridCell--;
-				} while (count--);
+				}
 				if (bestGrid != 0xFF) {
 					buildingInstances[bestGrid].buildingType = 0x1F;
 				}
 				break;
 			}
 		}
-	} while (i--);
+	}
 
 	type = &buildingTypes[targetType];
 	D_80048172 = 0;
@@ -595,14 +587,14 @@ void func_8011694C_1258FC(void) {
 	D_8015EB68 = D_8015EB6C;
 	D_8015EB6E = 0xFF;
 
-	i = 7;
-	do {
+	i = 0x8;
+	while (i--) {
 		D_8015EB60[i] = 0xFF;
-	} while (i--);
-	i = 7;
-	do {
-		(D_8015EB70[i]) = 0xFF;
-	} while (i--);
+	}
+	i = 0x8;
+	while (i--) {
+		D_8015EB70[i] = 0xFF;
+	}
 
 	for (i = 0; i < 0xFF; i++) {
 		D_8015EA60[i] = i;
@@ -636,12 +628,12 @@ void func_8011694C_1258FC(void) {
 
 	i = 0x1C;
 	do {
-		j = 0x1F;
-		do {
+		j = 0x20;
+		while (j--) {
 			if ((s32) buildingTypes[j].model == D_801486A0_157650[i].unk0) {
 				buildingTypes[j].unk1A[1] = i;
 			}
-		} while (j--);
+		}
 	} while (i--);
 
 	D_8015EA14 = func_8011C4D4_12B484();
@@ -670,7 +662,6 @@ void func_8011694C_1258FC(void) {
 	do {
 		inst = &buildingInstances[i];
 		if (inst->buildingType == D_8015EA28) {
-			lookupId += 0;
 			switch (3 & inst->unk8) {
 				case 0:
 					func_8011629C_12524C(inst, 1, 0);
@@ -699,13 +690,13 @@ void func_8011694C_1258FC(void) {
 		break;
 	}
 
-	i = 0xFE;
-	do {
+	i = 0xff;
+	while (i--) {
 		inst = &buildingInstances[i];
-			if ((1 & ((u32) inst->unk8 >> 12)) != 0) {
+		if ((1 & ((u32) inst->unk8 >> 12)) != 0) {
 			j = 2;
 			do {
-					if (inst->doorInteriorIds[j] != 0xFF) {
+				if (inst->doorInteriorIds[j] != 0xFF) {
 					if (func_801168E8_125898(inst->buildingType, j) == 0) {
 						count = j + 1;
 						osSyncPrintf(D_80144DC0_153D70, count, i, inst->xCoord >> 8, inst->zCoord >> 8, count);
@@ -713,7 +704,7 @@ void func_8011694C_1258FC(void) {
 				}
 			} while (j--);
 		}
-	} while (i--);
+	}
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011694C_1258FC.s")
