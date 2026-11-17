@@ -1825,9 +1825,15 @@ void func_8011A2A0_129250(void) {
 }
 
 // building instance updater
-#ifdef NON_MATCHING
+// Keep the X delta live in the optimizer until it assigns registers.
+#define BUILDING_SOUND_DISTANCE_SQ(x, z) \
+	((s32)((u32)((D_80052B34->unk0 - (x)) * (D_80052B34->unk0 - (x))) + \
+		   (u32)((D_80052B34->unk4 - (z)) * (D_80052B34->unk4 - (z))) + \
+		   ((u32)(D_80052B34->unk0 - (x)) * 0U)))
+
 void func_8011A604_1295B4(void) {
-	f64 tempF64;
+	s32 randomZ;
+	s32 compactIndex;
 	Unk80148620 *foundEntry;
 	s32 i;
 	s32 yTerrain;
@@ -1844,17 +1850,12 @@ void func_8011A604_1295B4(void) {
 	s32 entryId;
 	BuildingInstance *inst;
 	BuildingType *type;
-	s32 randomZ;
-	u8 *cursor;
-	u8 *activeEntry;
 
 	func_8011A2A0_129250();
 	if ((f64) D_8015EA30 != 0.0) {
-		tempF64 = (f64) D_8015EA2C;
-		if (tempF64 < 1.0) {
+		if ((f64) D_8015EA2C < 1.0) {
 			D_8015EA2C += D_8015EA30;
-			tempF64 = (f64) D_8015EA2C;
-		} else if (tempF64 >= 1.0) {
+		} else if ((f64) D_8015EA2C >= 1.0) {
 			D_8015EA2C = 1.0f;
 			D_8015EA30 = D_80144F80_153F30[0];
 			foundEntry = func_801176B0_126660();
@@ -1865,13 +1866,12 @@ void func_8011A604_1295B4(void) {
 				if (D_80052544 == 0) {
 					func_80117A4C_1269FC(foundEntry);
 				}
-				tempF64 = (f64) D_8015EA2C;
 			} else {
-				tempF64 = (f64) D_8015EA2C;
+				// Preserve the separate null branch for IDO.
 			}
 		}
 
-		if (tempF64 <= 0.0) {
+		if ((f64) D_8015EA2C <= 0.0) {
 			D_8015EA2C = 0.0f;
 			D_8015EA30 = 0.0f;
 		}
@@ -1888,8 +1888,8 @@ void func_8011A604_1295B4(void) {
 		func_800072CC_7ECC((u64) 0x17);
 	}
 
-	for (i = 0, activeEntry = D_8015EA60; i < 0xFF; i++, activeEntry++) {
-		entryId = *activeEntry;
+	for (i = 0; i < 0xFF; i++) {
+		entryId = D_8015EA60[i];
 		inst = &buildingInstances[entryId];
 		flags = inst->statusFlags;
 		if (!(flags & 1)) {
@@ -1953,17 +1953,10 @@ void func_8011A604_1295B4(void) {
 					func_800AE190_BD140(inst->unk7); // add "humans inside this building" to global humans killed count
 				}
 
-				if (((buildingInstances[*activeEntry].statusFlags & 0xFFFF) & 1) && (i < 0xFE)) {
-
-					cursor = &D_8015EA60[i];
-					do {
-						*cursor = cursor[1];
-						/* Preserve the fresh next-ID read rather than forwarding the byte copy. */
-						if (((buildingInstances[((volatile u8 *)cursor)[1]].statusFlags) & 1) == 0) {
-							break;
-						}
-						cursor++;
-					} while (cursor < &D_8015EA60[0xFE]);
+				for (compactIndex = i;
+				     (buildingInstances[D_8015EA60[compactIndex]].statusFlags & 1) && (compactIndex < 0xFE);
+				     ++compactIndex) {
+					D_8015EA60[compactIndex] = D_8015EA60[compactIndex + 1];
 				}
 
 				if (inst->unk11 != -1) {
@@ -1973,7 +1966,7 @@ void func_8011A604_1295B4(void) {
 				flags = inst->statusFlags;
 				inst->unk7 = 0;
 				inst->unk8 = (((flags & ~1) ^ flags) << 12) ^ inst->unk8;
-				i--; activeEntry--;
+				i--;
 				inst->yCoord = (s16) (func_800B84D0_C7480(inst->xCoord, inst->zCoord) >> 8);
 
 				if (currentLevel == 3) {
@@ -2011,7 +2004,7 @@ void func_8011A604_1295B4(void) {
 			} else {
 				flags = inst->statusFlags;
 				if (flags & 4) {
-							if (!(flags & 0x10) && (inst->hitPoints < (type->unk19 >> 2))) {
+					if (!(flags & 0x10) && (inst->hitPoints < (type->unk19 >> 2))) {
 						inst->unk8 = (((flags | 0x210) ^ flags) << 12) ^ inst->unk8;
 						if ((currentLevel < 5) && ((currentLevel != 4) || (inst->buildingType != 4)) &&
 							((currentLevel != 3) || (inst->buildingType != 2))) {
@@ -2045,7 +2038,7 @@ void func_8011A604_1295B4(void) {
 				} else if (inst->hitPoints < (type->unk19 >> 1)) {
 					inst->unk8 = (((flags | 0x24) ^ flags) << 12) ^ inst->unk8;
 					if (D_80052ACA != 2) {
-						D_80048174++;
+						D_80048174 = D_80048174_Read + 1;
 					}
 				}
 			}
@@ -2066,29 +2059,28 @@ void func_8011A604_1295B4(void) {
 			if ((currentLevel == 3) && (type->model == D_B007F80)) {
 				xPos = inst->xCoord;
 				zPos = inst->zCoord;
-				if (((D_80052B34->unk0 - xPos) * (D_80052B34->unk0 - xPos)) + ((D_80052B34->unk4 - zPos) * (D_80052B34->unk4 - zPos)) < 0x3D0900) {
+				if (BUILDING_SOUND_DISTANCE_SQ(xPos, zPos) < 0x3D0900) {
 					func_801371B8_146168(inst, 0x32, xPos, inst->yCoord, zPos, D_80144F90_153F40[0]);
 				}
 			} else if ((currentLevel == 1) && (type->model == D_90193F8) && (func_8000726C_7E6C((u64) 0x13) == 0)) {
 				xPos = inst->xCoord;
 				zPos = inst->zCoord;
-				if (((D_80052B34->unk0 - xPos) * (D_80052B34->unk0 - xPos)) + ((D_80052B34->unk4 - zPos) * (D_80052B34->unk4 - zPos)) < 0x3D0900) {
+				if (BUILDING_SOUND_DISTANCE_SQ(xPos, zPos) < 0x3D0900) {
 					func_801371B8_146168(inst, 0x175, xPos, inst->yCoord, zPos, D_80144F94_153F44[0]);
 				}
 			} else if (((currentLevel == 2) && (type->model == D_A01E340)) || ((currentLevel == 4) && (type->model == D_C014920)) ||
 					   ((currentLevel == 5) && (type->model == D_D010EB0))) {
 				xPos = inst->xCoord;
 				zPos = inst->zCoord;
-				if (((D_80052B34->unk0 - xPos) * (D_80052B34->unk0 - xPos)) + ((D_80052B34->unk4 - zPos) * (D_80052B34->unk4 - zPos)) < 0x3D0900) {
+				if (BUILDING_SOUND_DISTANCE_SQ(xPos, zPos) < 0x3D0900) {
 					func_801371B8_146168(inst, 0x17F, xPos, inst->yCoord, zPos, D_80144F98_153F48[0]);
 				}
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/buildings/func_8011A604_1295B4.s")
-#endif
+
+#undef BUILDING_SOUND_DISTANCE_SQ
 
 s32 func_8011B3F0_12A3A0(s16 arg0, s16 *arg1, s16 *arg2, s16 *arg3) {
 	s16 sp26;
