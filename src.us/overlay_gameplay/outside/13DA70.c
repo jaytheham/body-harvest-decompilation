@@ -245,18 +245,17 @@ void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 }
 
 
-#ifdef NON_MATCHING
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
 	static s32 D_8015FF88;
 	static s32 D_8015FF90[48];
 	s32 idx;
 	s32 x;
-	s32 halfWidthPad;
+	s32 halfWPad;
 	s32 bottom;
 	s32 alpha;
 	s32 sHalf;
-	s32 bandIndexPad;
+	s32 rowBasePad;
 	s32 stackPad1;
 	s32 band;
 	s32 i;
@@ -313,18 +312,16 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 			if (func_8012EC3C_13DBEC(arg0[i]) == 0) {
 				x += arg1 + 2;
 			} else {
-
 				if ((arg0[i] == 'i') || (arg0[i] == 'I') || (arg0[i] == '1')) {
 					x -= arg1 >> 1;
 				}
 
 				/* Keep the width live in IDO across the draw branch. */
 				if (arg1) {}
-				if (arg1) {}
 				if (arg5 != 0) {
 					for (band = 7; band >= 0; band--) {
-
-						if (arg3) {} /* Preserve the IDO allocation in the band loop. */
+						/* Keep the band counter in the original saved register. */
+						if (band) {}
 						if ((i * 2) + band >= 0x30) {
 							osSyncPrintf(D_801453C0_154370);
 						} else {
@@ -369,7 +366,7 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 						}
 						bottom = arg3 + arg2;
 						gDPPipeSync(D_8005BB2C++);
-						/* Evaluate the right edge as part of the packet operand for IDO. */
+						/* The right edge assignment and zero texture T expression control IDO allocation. */
 						gSPTextureRectangle(
 							(textWidth = (((u32)x + (arg1 >> 1)) + sHalf) * 4, D_8005BB2C++),
 							(((u32)x + (arg1 >> 1)) - sHalf) * 4,
@@ -378,12 +375,11 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 							(bottom + alpha) * 4,
 							G_TX_RENDERTILE,
 							0,
-							0,
+							((u32)arg3 - (u32)sHalf) * 0U,
 							(s32) ((1.0f / (((f32) (sHalf * 2)) / 32)) * 1024.0f),
 							(s32)((1.0f / ((f32)((alpha * 2) + arg2) / 32)) * 1024.0f)
 						);
 					}
-
 				} else {
 					if ((arg7 & 0x20) != 0) {
 						gDPSetPrimColor(D_8005BB2C++, 0, 0, pulseColor[0], pulseColor[1], pulseColor[2], 0xFF);
@@ -405,7 +401,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 						(s32) ((1.0f / (((f32) arg1) / 32)) * 1024.0f),
 						(s32) ((1.0f / (((f32) arg2) / 32)) * 1024.0f)
 					);
-
 				}
 
 				x += arg1 + 2;
@@ -425,10 +420,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	return allMatched;
 }
-#else
-#define STRETCH_WORD_ASM
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_8012F4E0_13E490.s")
-#endif
 
 void func_8012FE6C_13EE1C(s16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
@@ -460,10 +451,6 @@ s32 func_8012FFB0_13EF60(void)
 // End of level state manager
 void func_8013001C_13EFCC(void)
 {
-#ifdef STRETCH_WORD_ASM
-	static u8 stretchState[0xC8]; /* Reserve the assembly renderer's phase and glyph history. */
-#undef STRETCH_WORD_ASM
-#endif
 	static s32 D_80160050;
 	static s32 D_80140C7C_14FC2C = 0;
 	static u32 D_80140C80_14FC30 = 0;
