@@ -512,9 +512,9 @@ void func_8008BB6C_173C2C(u8 arg0, u8 arg1) {
 }
 
 // Render a HUD bar with an optional icon overlay
-#ifdef NON_MATCHING
 void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
 	s16 scrollOffset;
+	s32 flashAmount;
 	Vtx *vtx0;
 	Vtx *vtx1;
 	Vtx *vtx2;
@@ -568,7 +568,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 0x2F;
 
-		vtx1->v.ob[0] = vtx2->v.ob[0] = (f32) (arg0 - 0x30) + ((f32) arg8 * arg2) + 1.0f;
+		vtx1->v.ob[0] = vtx2->v.ob[0] = (arg0 - 0x30) + (arg8 * arg2) + 1.0f;
 		vtx1->v.ob[1] = 3;
 		vtx0->v.ob[1] = vtx1->v.ob[1];
 
@@ -580,37 +580,37 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 		if (arg5 == 2) {
 			vtx0->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
 
-			arg7 <<= 5;
-			vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, ((1.0f - arg2) * 255.0) + arg7);
+			flashAmount = arg7 << 5;
+			vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, ((1.0f - arg2) * 255.0) + flashAmount);
 
-			vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, arg7);
+			vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, flashAmount);
 
 			vtx1->v.tc[1] = 0;
 			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
 			vtx2->v.tc[1] = 0x400;
 			vtx3->v.tc[1] = vtx2->v.tc[1];
 
-			vtx2->v.tc[0] = vtx1->v.tc[0] = (f32) (arg8 * D_80047712) * arg2;
+			vtx2->v.tc[0] = vtx1->v.tc[0] = (arg8 * D_80047712) * arg2;
 		} else {
 			vtx0->v.cn[0] = vtx3->v.cn[0] = 0xFF;
 
-			arg7 <<= 5;
-			vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(255, arg7);
+			flashAmount = arg7 << 5;
+			vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(255, flashAmount);
 
-			vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(255, arg7);
+			vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(255, flashAmount);
 
 			vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
 
-			vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, (arg2 * 255.0) + arg7);
+			vtx2->v.cn[1] = vtx1->v.cn[1] = (u32) MIN((f64)255.0f, (arg2 * 255.0) + flashAmount);
 
-			vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, arg7);
+			vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(255, flashAmount);
 
 			vtx1->v.tc[1] = 0;
 			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
 			vtx2->v.tc[1] = 0x400;
 			vtx3->v.tc[1] = vtx2->v.tc[1];
 
-			vtx2->v.tc[0] = vtx1->v.tc[0] = (f32) (D_80047716 << 0xA) * arg2;
+			vtx2->v.tc[0] = vtx1->v.tc[0] = (D_80047716 << 0xA) * arg2;
 		}
 
 		gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -625,7 +625,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
 
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 
 		gDPPipeSync(D_8005BB2C++);
 
@@ -653,15 +653,20 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 		vtx2->v.ob[2] = -1;
 		vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
-		vtx0->v.tc[1] = vtx1->v.tc[1] = vtx0->v.tc[0] = vtx3->v.tc[0] = (arg6 * 0x30) + 0x600;
+		vtx0->v.tc[0] = vtx3->v.tc[0] = (arg6 * 0x30) + 0x600;
+		vtx0->v.tc[1] = vtx1->v.tc[1] = (arg6 * 0x30) + 0x600;
 
 		vtx3->v.tc[1] = vtx2->v.tc[1] = vtx1->v.tc[0] = vtx2->v.tc[0] = -arg6 * 0x30;
 
-		vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
-		vtx0->v.cn[0] = vtx1->v.cn[0] = 0xB9;
+		vtx0->v.cn[0] = vtx1->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
 
-		vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = 0xFF;
-		vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = 0xFF;
+		/* The zero term folds in IDO. The cursor test keeps the display-list cursor in v0. */
+		do {
+			vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] =
+				vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] =
+				0xFF + ((u32)arg6 - (u32)arg6);
+			if (D_8005BB2C != NULL) {}
+		} while (0);
 
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 
@@ -675,7 +680,7 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIDECALA, G_CC_MODULATEIDECALA);
 
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
 
@@ -688,17 +693,6 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-const f64 D_800A56F8_18D7B8[1] = {255.0};
-
-const f64 D_800A5700_18D7C0[1] = {255.0};
-
-const f64 D_800A5708_18D7C8[1] = {255.0};
-
-const f64 D_800A5710_18D7D0[1] = {255.0};
-
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008BD18_173DD8.s")
-#endif
 
 // Main HUD renderer: projection, scrolling, health bars, and status text
 void func_8008C8A4_174964(void) {
