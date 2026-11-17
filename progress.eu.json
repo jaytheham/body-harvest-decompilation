@@ -1,15 +1,15 @@
 {
-  "generated": "2026-11-17T08:36:06Z",
-  "commit": "ba2f7bc0",
-  "commit_timestamp": "2026-11-17T21:34:48+13:00",
+  "generated": "2026-11-17T10:22:09Z",
+  "commit": "efd1b209",
+  "commit_timestamp": "2026-11-17T23:21:03+13:00",
   "version": "eu",
   "note": "This page counts the PAL (EU) build. Counted: the core and every gameplay and level overlay file in shared_overlay_files.txt, which are the same C as on the US page, so the two pages count the same functions and must not be summed; and libultra/sl.c, which is shared with NTSC as well. Not counted: the rest of libultra, which has no tracked EU source.\nWhere PAL differs, a shared function has a PAL body under `#ifdef VERSION_EU` beside the NTSC one, and each page counts the body its build compiles; a PAL body still written as a GLOBAL_ASM pragma is an ASM stub here only.",
   "overall": {
     "total_functions": 2723,
-    "matched": 2672,
-    "non_matching": 51,
+    "matched": 2673,
+    "non_matching": 50,
     "asm_stubs": 0,
-    "matched_pct": 98.13,
+    "matched_pct": 98.16,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -33,8 +33,8 @@
     },
     "overlay_gameplay/outside": {
       "display_name": "Gameplay / Outside",
-      "matched": 1412,
-      "non_matching": 38,
+      "matched": 1413,
+      "non_matching": 37,
       "asm_stubs": 0,
       "total": 1450,
       "matched_pct": 97.4,
@@ -678,11 +678,11 @@
     {
       "path": "overlay_gameplay/outside/buildings.c",
       "segment": "overlay_gameplay/outside",
-      "matched": 103,
-      "non_matching": 3,
+      "matched": 104,
+      "non_matching": 2,
       "asm_stubs": 0,
       "total": 106,
-      "matched_pct": 97.2,
+      "matched_pct": 98.1,
       "contributor": ""
     },
     {
@@ -845,9 +845,9 @@
     },
     {
       "date": "2026-11-15",
-      "commit": "ba2f7bc",
-      "matched": 2672,
-      "non_matching": 51,
+      "commit": "efd1b20",
+      "matched": 2673,
+      "non_matching": 50,
       "total": 2723
     }
   ]
