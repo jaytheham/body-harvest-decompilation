@@ -62,14 +62,6 @@ const char D_801426B8_151668[] = " ";
 
 const f64 D_801426C0_151670[1] = {150.0};
 const f64 D_801426C8_151678[1] = {150.0};
-const f64 D_801426D0_151680[1] = {255.0};
-const f64 D_801426D8_151688[1] = {255.0};
-const f64 D_801426E0_151690[1] = {255.0};
-const f64 D_801426E8_151698[1] = {255.0};
-const f64 D_801426F0_1516A0[1] = {255.0};
-const f64 D_801426F8_1516A8[1] = {255.0};
-const f64 D_80142700_1516B0[1] = {255.0};
-const f64 D_80142708_1516B8[1] = {255.0};
 
 u32 D_8013D540_14C4F0[16] = {
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
@@ -93,7 +85,7 @@ SignedWord D_8013D5D0_14C580 = { 0 };
 SignedWord D_8013D5D4_14C584 = { 0 };
 SignedWord D_8013D5D8_14C588 = { 0 };
 s32 D_8013D5DC_14C58C = 0;
-s32 D_8013D5E0_14C590 = 0;
+u8 *D_8013D5E0_14C590 = NULL;
 u8 D_8013D5E4_14C594[4] = { 0x00, 0x00, 0x00, 0x00 };
 Vtx D_8013D5E8_14C598[4] = {
 	{ { { 0x0018, -24, 0x0000 }, 0, { 0x07E0, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
@@ -334,21 +326,20 @@ void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 // sp1c Alters color of the bar - used to make it flash
 // sp20 Length of the bar background
 // drawHudBarWithIcon
-#ifdef NON_MATCHING
-// Rectangle shifts and chained vertex stores restored; remaining differences are cursor caching and floating clamp scheduling.
 void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, s32 arg7, s16 arg8) {
 	Vtx *vtx0;
-	Vtx *vtx1;
 	Vtx *vtx2;
+	Vtx *vtx1;
 	Vtx *vtx3;
-	f64 pad;
-	s32 tempT2;
+	s32 pad; /* Preserve the original stack homes. */
 	s32 iconSwap;
+	s32 pad2;
+	s32 tempT2;
 
-	vtx0 = D_8005BB34++;
-	vtx1 = D_8005BB34++;
-	vtx2 = D_8005BB34++;
-	vtx3 = D_8005BB34++;
+	D_8005BB34++;
+	D_8005BB34++;
+	D_8005BB34++;
+	D_8005BB34++;
 
 	iconSwap = 0;
 
@@ -374,7 +365,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 		tempT2 = D_8014F1FA;
 	}
 
-	D_80052B40.unk0 = 0;
+	D_80052B40_HudX = 0;
 	if (arg5 == 2) {
 		D_80052B40.unk2 = 0;
 	} else {
@@ -410,7 +401,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 		vtx3 = D_8005BB34++;
 
 		if (arg5 == 2) {
-			vtx3->v.ob[0] = vtx0->v.ob[0] = arg0 - 0xD;
+			vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 0xD;
 			vtx1->v.ob[0] = vtx2->v.ob[0] = arg0 - 5;
 
 			vtx0->v.ob[1] = vtx1->v.ob[1] = arg1 - 0xA;
@@ -420,26 +411,25 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 			vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
 			vtx0->v.cn[0] = vtx1->v.cn[0] = 0xFF;
-			vtx0->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, arg7 << 5);
-			vtx0->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
+			tempT2 = arg7 << 5;
+			vtx0->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, tempT2);
+			vtx0->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, tempT2);
 
 			vtx3->v.cn[0] = vtx2->v.cn[0] = 0xFF;
-			vtx3->v.cn[1] = vtx2->v.cn[1] = (u32)MIN(D_801426D0_151680[0], arg2 * D_801426D8_151688[0] + (arg7 << 5));
-			vtx3->v.cn[2] = vtx2->v.cn[2] = MIN(0xFF, arg7 << 5);
+			vtx3->v.cn[1] = vtx2->v.cn[1] = (u32)MIN((f64)255.0f, arg2 * 255.0 + tempT2);
+			vtx3->v.cn[2] = vtx2->v.cn[2] = MIN(0xFF, tempT2);
 
 			vtx3->v.tc[0] = 0;
-			vtx1->v.tc[1] = vtx2->v.tc[1] = vtx2->v.tc[0] = vtx3->v.tc[0];
+			vtx1->v.tc[1] = vtx2->v.tc[0] = vtx2->v.tc[1] = vtx3->v.tc[0];
 			vtx0->v.tc[0] = vtx1->v.tc[0] = (s16)((f32)(arg8 * D_80047710 * 0x10) * arg2);
 			vtx3->v.tc[1] = 0x400;
 			vtx0->v.tc[1] = vtx3->v.tc[1];
 		} else {
 			if (arg3 != 0) {
-				vtx0->v.ob[0] = arg0 - 1;
-				vtx3->v.ob[0] = arg0 - 1;
+				vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 1;
 				vtx1->v.ob[0] = vtx2->v.ob[0] = (s16)(((f32)arg0 - ((f32)arg8 * arg2)) - 1.0f);
 			} else {
-				vtx0->v.ob[0] = arg0 - 0x2F;
-				vtx3->v.ob[0] = arg0 - 0x2F;
+				vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 0x2F;
 				vtx1->v.ob[0] = vtx2->v.ob[0] = (s16)((f32)(arg0 - 0x30) + ((f32)arg8 * arg2) + 1.0f);
 			}
 
@@ -454,37 +444,36 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 			if (arg5 == 3) {
 				vtx0->v.cn[0] = (vtx3->v.cn[0] = (vtx2->v.cn[0] = (vtx1->v.cn[0] = 0xFF)));
 
+				tempT2 = arg7 << 5;
 				if (D_8013D5DC_14C58C != 0) {
-					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, arg7 << 5);
+					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = MIN(0xFF, tempT2);
 				} else {
-					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426E0_151690[0], (1.0f - arg2) * D_801426E8_151698[0] + (arg7 << 5));
+					vtx0->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN((f64)255.0f, (1.0f - arg2) * 255.0 + tempT2);
 				}
 
-				vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
+				vtx0->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, tempT2);
 			} else if (arg5 == 4) {
-				vtx0->v.cn[0] = vtx3->v.cn[0] = MIN(0xFF, arg7 << 5);
-				vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(0xFF, arg7 << 5);
-				vtx3->v.cn[2] = 0xFF;
-				vtx0->v.cn[2] = 0xFF;
+				tempT2 = arg7 << 5;
+				vtx0->v.cn[0] = vtx3->v.cn[0] = MIN(0xFF, tempT2);
+				vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(0xFF, tempT2);
+				vtx0->v.cn[2] = vtx3->v.cn[2] = 0xFF;
 
-				vtx2->v.cn[0] = vtx1->v.cn[0] = (u32)MIN(D_801426F0_1516A0[0], arg2 * D_801426F8_1516A8[0] + (arg7 << 5));
-				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_801426F0_1516A0[0], arg2 * D_801426F8_1516A8[0] + (arg7 << 5));
-				vtx1->v.cn[2] = 0xFF;
-				vtx2->v.cn[2] = 0xFF;
+				vtx2->v.cn[0] = vtx1->v.cn[0] = (u32)MIN((f64)255.0f, arg2 * 255.0 + tempT2);
+				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN((f64)255.0f, arg2 * 255.0 + tempT2);
+				vtx2->v.cn[2] = vtx1->v.cn[2] = 0xFF;
 			} else {
-				vtx3->v.cn[0] = 0xFF;
-				vtx0->v.cn[0] = 0xFF;
-				vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(0xFF, arg7 << 5);
-				vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(0xFF, arg7 << 5);
+				vtx0->v.cn[0] = vtx3->v.cn[0] = 0xFF;
+				tempT2 = arg7 << 5;
+				vtx0->v.cn[1] = vtx3->v.cn[1] = MIN(0xFF, tempT2);
+				vtx0->v.cn[2] = vtx3->v.cn[2] = MIN(0xFF, tempT2);
 
-				vtx1->v.cn[0] = 0xFF;
-				vtx2->v.cn[0] = 0xFF;
-				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN(D_80142700_1516B0[0], arg2 * D_80142708_1516B8[0] + (arg7 << 5));
-				vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, arg7 << 5);
+				vtx2->v.cn[0] = vtx1->v.cn[0] = 0xFF;
+				vtx2->v.cn[1] = vtx1->v.cn[1] = (u32)MIN((f64)255.0f, arg2 * 255.0 + tempT2);
+				vtx2->v.cn[2] = vtx1->v.cn[2] = MIN(0xFF, tempT2);
 			}
 
 			vtx1->v.tc[1] = 0;
-			vtx0->v.tc[1] = vtx0->v.tc[0] = vtx3->v.tc[0] = vtx1->v.tc[1];
+			vtx0->v.tc[0] = vtx0->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[1];
 			vtx2->v.tc[1] = 0x400;
 			vtx3->v.tc[1] = vtx2->v.tc[1];
 			vtx2->v.tc[0] = vtx1->v.tc[0] = (s16)((f64)arg8 * 128.0 * (f64)arg2);
@@ -504,53 +493,47 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	}
 
 	if (arg4 != NULL) {
+		vtx3 = D_8005BB34++;
+		vtx2 = D_8005BB34++;
 		vtx0 = D_8005BB34++;
 		vtx1 = D_8005BB34++;
-		vtx2 = D_8005BB34++;
-		vtx3 = D_8005BB34++;
 
 		if (arg5 == 2) {
-			vtx0->v.ob[0] = arg0 - 0x12;
-			vtx2->v.ob[0] = arg0 - 0x12;
-			vtx1->v.ob[0] = arg0;
-			vtx3->v.ob[0] = arg0;
+			vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - 0x12;
+			vtx2->v.ob[0] = arg0;
+			vtx1->v.ob[0] = vtx2->v.ob[0];
 
-			vtx3->v.ob[1] = arg1 + 9;
-			vtx2->v.ob[1] = arg1 + 9;
-			vtx1->v.ob[1] = arg1 - 9;
-			vtx0->v.ob[1] = arg1 - 9;
+			vtx1->v.ob[1] = arg1 + 9;
+			vtx0->v.ob[1] = arg1 + 9;
+			vtx2->v.ob[1] = arg1 - 9;
+			vtx3->v.ob[1] = arg1 - 9;
 		} else {
-			vtx2->v.ob[0] = vtx0->v.ob[0] = arg0 - (arg3 != 0 ? 0 : 0x30);
-			vtx3->v.ob[0] = vtx1->v.ob[0] = arg0 - (arg3 != 0 ? -0x12 : 0x42);
+			vtx0->v.ob[0] = vtx3->v.ob[0] = arg0 - (arg3 != 0 ? 0 : 0x30);
+			vtx1->v.ob[0] = vtx2->v.ob[0] = arg0 - (arg3 != 0 ? -0x12 : 0x42);
 
-			vtx3->v.ob[1] = 9;
-			vtx2->v.ob[1] = vtx3->v.ob[1];
-			vtx1->v.ob[1] = -9;
+			vtx1->v.ob[1] = 9;
 			vtx0->v.ob[1] = vtx1->v.ob[1];
+			vtx2->v.ob[1] = -9;
+			vtx3->v.ob[1] = vtx2->v.ob[1];
 		}
 
-		vtx1->v.ob[2] = -1;
-		vtx2->v.ob[2] = vtx3->v.ob[2] = vtx0->v.ob[2] = vtx1->v.ob[2];
+		vtx2->v.ob[2] = -1;
+		vtx0->v.ob[2] = vtx1->v.ob[2] = vtx3->v.ob[2] = vtx2->v.ob[2];
 
-		vtx2->v.tc[1] = vtx3->v.tc[1] = vtx2->v.tc[0] = vtx0->v.tc[0] = (arg6 * 0x30) + 0x600;
-		vtx0->v.tc[1] = vtx1->v.tc[1] = vtx3->v.tc[0] = vtx1->v.tc[0] = -arg6 * 0x30;
+		vtx3->v.tc[0] = (arg6 * 0x30) + 0x600;
+		vtx0->v.tc[0] = (arg6 * 0x30) + 0x600;
+		vtx1->v.tc[1] = (arg6 * 0x30) + 0x600;
+		vtx0->v.tc[1] = (arg6 * 0x30) + 0x600;
+		vtx3->v.tc[1] = vtx2->v.tc[1] = vtx1->v.tc[0] = vtx2->v.tc[0] = -arg6 * 0x30;
 
-		vtx1->v.cn[0] = 0xB9;
-		vtx0->v.cn[0] = 0xB9;
-		vtx3->v.cn[0] = 0xB9;
-		vtx2->v.cn[0] = 0xB9;
-		vtx1->v.cn[1] = 0xFF;
-		vtx0->v.cn[1] = 0xFF;
-		vtx3->v.cn[1] = 0xFF;
-		vtx2->v.cn[1] = 0xFF;
-		vtx1->v.cn[2] = 0xFF;
-		vtx0->v.cn[2] = 0xFF;
-		vtx3->v.cn[2] = 0xFF;
-		vtx2->v.cn[2] = 0xFF;
+		vtx0->v.cn[0] = vtx1->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
+		/* Reuse the expired offset to preserve the byte-conversion temporaries. */
+		tempT2 = 0xFF;
+		vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = tempT2;
 
 		if ((arg5 == 2) && (arg4 == &D_8025CCC0[0x1F80]) && (D_80158FEC != NULL) && (D_80158FEC->typeIndex == 1)) {
 			arg4 = &D_8025F780;
-			D_8013D5E0_14C590 = (s32)&D_8025F780;
+			D_8013D5E0_14C590 = &D_8025F780;
 			iconSwap = 1;
 		}
 
@@ -573,9 +556,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/AAA70/func_8009C6CC_AB67C.s")
-#endif
+
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;
@@ -731,9 +712,9 @@ void func_8009D96C_AC91C(void)
 		barWidth = 0;
 		entityId = 0;
 		healthFraction = 0.0f;
-		texture = (u8 *)D_8013D5E0_14C590;
+		texture = D_8013D5E0_14C590;
 	}
-	D_8013D5E0_14C590 = (s32)texture;
+	D_8013D5E0_14C590 = texture;
 	func_8009E994_AD944(healthFraction, texture, flashTimer, barWidth, entityId);
 	D_8014F203 = D_8014F202;
 	if (D_8014F1FA != 0x80)
