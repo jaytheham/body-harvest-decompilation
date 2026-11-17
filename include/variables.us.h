@@ -2866,6 +2866,7 @@ extern u8 D_8015EA56;
 extern u16 D_8015EA58;
 extern u8 D_8015EA60[];
 extern u8 D_8015EB60[];
+extern u8 D_8015EB5F[9];
 extern u8 D_8015EB67;
 extern s16 D_8015EB68;
 extern s16 D_8015EB6A;
@@ -4183,7 +4184,9 @@ extern const ShadowGeometryConstant D_802E0DF0_260530;
 
 extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];
+extern s32 D_80140A00_14F9B0[5];
 extern Gfx *D_80140A14_14F9C4[5];
+extern Gfx *D_80140A28_14F9D8[6];
 extern const ShadowGeometryConstant D_80144F08_153EB8;
 /* Terrain/effect constants following the frustum-culling switch table. */
 extern const f64 D_80142E68_151E18[1];

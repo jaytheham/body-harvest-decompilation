@@ -69,18 +69,16 @@ const f32 D_80144F94_153F44[1] = {0.20000000298023224};
 const f32 D_80144F98_153F48[1] = {0.6000000238418579};
 
 // .data
-u8 D_80140A00_14F9B0[0x14] = {
-	0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0xD4, 0x08, 0x0A, 0x00, 0x1B, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00,
+s32 D_80140A00_14F9B0[5] = {
+	0, 0x0901D408, 0x0A001B00, 0, 0,
 };
 
 Gfx *D_80140A14_14F9C4[5] = {
 	NULL, (Gfx *)0x0901D578, (Gfx *)0x0A001CB8, NULL, NULL,
 };
 
-u8 D_80140A28_14F9D8[0x18] = {
-	0x00, 0x00, 0x00, 0x00, 0x09, 0x01, 0xD5, 0xD0, 0x0A, 0x00, 0x1D, 0x60, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+Gfx *D_80140A28_14F9D8[6] = {
+	NULL, (Gfx *)0x0901D5D0, (Gfx *)0x0A001D60, NULL, NULL, NULL,
 };
 
 BuildingHeightDecode D_80140A40_14F9F0[10] = {
@@ -1140,53 +1138,50 @@ s32 func_80118670_127620(s32 arg0, s32 arg1) {
 #ifdef NON_MATCHING
 // DisplayBuildings
 void func_80118774_127724(void) {
+	s16 sp1D6;
+	s16 sp1D4;
+	s32 maxY;
+	s32 maxYClamped;
+	s32 sp1C8;
 	BuildingInstance *building;
 	BuildingType *type;
 	Unk800522C0 *doorRef;
+	struct {
+		s16 pad, radiusZ, radiusX, z, y, x;
+	} bounds;
 	UnkBuildDoorMap *doorMap;
 	UnkBuildingProp_80118774 *prop;
-	UnkBuildingAction_80118774 *action;
-	u8 sp180[0x10];
-	u8 sp170[0x10];
-	s16 sp1D6;
-	s16 sp1D4;
-	s32 sp1C8;
-	s16 sp1BA;
-	s16 sp1B8;
-	s16 sp1B6;
-	s16 sp1B4;
-	u16 sp1B2;
 	s32 sp1A4;
+	UnkBuildingAction_80118774 *action;
 	u8 sp19F;
 	s32 sp198;
 	s16 sp196;
 	s16 sp194;
 	s16 sp192;
+	u8 sp180[0x10];
+	u8 sp170[0x10];
 	s16 sp16E;
 	s32 sp168;
-	s32 sp14C;
-	s32 sp90;
-	s32 sp88;
-	s32 sp78;
-	s32 sp74;
-	s32 temp;
+	s16 halfX;
+	s16 halfZ;
 	s32 flags;
 	s32 propMode;
 	s32 i;
 	s32 searchCount;
 	s32 processBuilding;
-	s32 maxY;
-	s32 maxYClamped;
-	s16 halfX;
-	s16 halfZ;
+	SignedWord sp14C;
+	s32 sp90;
+	s32 sp88;
+	s32 sp78;
+	s32 sp74;
+	s32 temp;
 	s32 bboxTest;
+	s32 doorFlags;
 	u8 currentIndex;
 	u8 revisitIndex;
-	u8 *scanPtr;
-	u8 *revisitPtr;
 	u8 *specialPtr;
-	f32 tempF;
 	f64 scale;
+	Gfx *gfx;
 
 	sp1D6 = D_80149434 - 0x900;
 	sp1D4 = D_80149436 - 0x900;
@@ -1210,25 +1205,21 @@ void func_80118774_127724(void) {
 	}
 
 	i = 0xF;
-	scanPtr = &sp180[0xF];
-	revisitPtr = &sp170[0xF];
 	D_80052558 &= ~8;
 	do {
-		*scanPtr = 0xFF;
-		*revisitPtr = 0xFF;
-		scanPtr--;
-		revisitPtr--;
+		sp180[i] = 0xFF;
+		sp170[i] = 0xFF;
 	} while (i--);
 
 	if (func_8000726C_7E6C(0x2A) == 0) {
 		if ((gameplayMode == 0xB) || (gameplayMode == 3)) {
-			sp1BA = D_80157F08.unk18 >> 6;
-			sp1B6 = D_80157F08.unk1A >> 6;
+			bounds.x = D_80157F08.unk18 >> 6;
+			bounds.z = D_80157F08.unk1A >> 6;
 		} else {
-			sp1BA = D_80052B2C->unk18 >> 8;
-			sp1B6 = D_80052B2C->unk1A >> 8;
+			bounds.x = D_80052B2C->unk18 >> 8;
+			bounds.z = D_80052B2C->unk1A >> 8;
 		}
-		D_80052554 = func_80118670_127620(sp1BA, sp1B6);
+		D_80052554 = func_80118670_127620(bounds.x, bounds.z);
 	}
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
@@ -1257,7 +1248,7 @@ void func_80118774_127724(void) {
 
 				do {
 					sp88 = building - buildingInstances;
-					sp19F = (u8)sp88;
+					currentIndex = sp19F = (u8)sp88;
 					if (!func_8011853C_1274EC(building, sp1D6)) {
 						break;
 					}
@@ -1272,7 +1263,6 @@ void func_80118774_127724(void) {
 					}
 
 					bboxTest = (s16)func_800B960C_C85BC(building->xCoord - halfX, building->zCoord - halfZ, halfX * 2, halfZ * 2);
-					currentIndex = sp19F;
 					if (func_801184F4_1274A4(building)) {
 						bboxTest = 1;
 					}
@@ -1301,18 +1291,18 @@ void func_80118774_127724(void) {
 					sp16E++;
 				}
 
-				specialPtr = &D_8015EB67;
+				specialPtr = &D_8015EB5F[8];
 				propMode = building->statusFlags & 4;
-				searchCount = 7;
+				bboxTest = 7;
 				do {
 					temp = propMode ? 0x80 : 0;
 					if (*specialPtr == temp + sp1C8) {
 						break;
 					}
 					specialPtr--;
-				} while (searchCount--);
+				} while (bboxTest--);
 
-				if (specialPtr == (&D_8015EB67 - 8)) {
+				if (specialPtr == D_8015EB5F) {
 					sp19F = currentIndex;
 					func_8011D438_12C3E8((u8)sp1C8, propMode);
 				}
@@ -1345,12 +1335,12 @@ void func_80118774_127724(void) {
 					D_80052B40.unk4 += (u16)D_80159DE4;
 				}
 
-				func_800039D0_45D0(&D_80052B40, &D_80052B48, (Unk80052B40 *)&D_800311A0, D_8005BB38);
+				func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 				if (building->buildingType == D_8015EA28) {
 					gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-					gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A00_14F9B0)[currentLevel]);
+					gSPDisplayList(D_8005BB2C++, D_80140A00_14F9B0[currentLevel]);
 
 					if (D_80052554 == 0x400) {
 						D_80052B40.unk0 = (building->unkD << 7) - 0x80;
@@ -1363,11 +1353,12 @@ void func_80118774_127724(void) {
 					func_800039D0_45D0(&D_80052B40, NULL, NULL, D_8005BB38);
 					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 					gSPTexture(D_8005BB2C++, building->unkD << 12, 0x2000, 5, G_TX_RENDERTILE, G_ON);
-					gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A14_14F9C4)[currentLevel]);
+					gSPDisplayList(D_8005BB2C++, D_80140A14_14F9C4[currentLevel]);
 					if (D_80052554 != 0x400) {
-						gSPDisplayList(D_8005BB2C++, ((u32 *)D_80140A28_14F9D8)[currentLevel]);
+						gSPDisplayList(D_8005BB2C++, D_80140A28_14F9D8[currentLevel]);
 					}
-					gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+					gfx = D_8005BB2C++;
+					gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8); gfx->words.w1 = G_MTX_MODELVIEW;
 					gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 				} else {
 					if (building->buildingType == D_8015EA29) {
@@ -1394,26 +1385,26 @@ void func_80118774_127724(void) {
 				do {
 					prop = &D_80148390_157340[doorRef->pad8[0]];
 					if (building->buildingType == doorRef->unkC) {
-						sp14C = 0xA;
+						sp14C.word = 0xA;
 						sp1A4++;
 						if (propMode) {
-							bboxTest = 1;
+							doorFlags = 1;
 						} else {
-							bboxTest = prop->unk16;
+							doorFlags = prop->unk16;
 						}
 
-						sp1BA = doorRef->unk0;
-						sp1B8 = doorRef->unk2 + (prop->unk10 >> 1);
-						sp1B6 = doorRef->unk4;
-						func_80116554_125504(building->unk8 & 3, &sp1BA, &sp1B6);
+						bounds.x = doorRef->unk0;
+						bounds.y = doorRef->unk2 + (prop->unk10 >> 1);
+						bounds.z = doorRef->unk4;
+						func_80116554_125504(building->unk8 & 3, &bounds.x, &bounds.z);
 
-						sp90 = bboxTest & 2;
-						sp1B4 = prop->unkC >> (sp90 == 0);
-						sp1B2 = prop->unkE;
-						func_80116554_125504(doorRef->unk6, &sp1B4, (s16 *)&sp1B2);
-						func_80116554_125504(building->unk8 & 3, &sp1B4, (s16 *)&sp1B2);
-						if (bboxTest & 0x80) {
-							sp14C = 0xB;
+						sp90 = doorFlags & 2;
+						bounds.radiusX = prop->unkC >> (sp90 == 0);
+						bounds.radiusZ = prop->unkE;
+						func_80116554_125504(doorRef->unk6, &bounds.radiusX, &bounds.radiusZ);
+						func_80116554_125504(building->unk8 & 3, &bounds.radiusX, &bounds.radiusZ);
+						if (doorFlags & 0x80) {
+							sp14C.word = 0xB;
 						}
 
 						if ((building->doorInteriorIds[sp1A4] == 0xFF) && ((func_80118114_1270C4((s16)sp88) == 0) || (sp1A4 != 0))) {
@@ -1423,20 +1414,20 @@ void func_80118774_127724(void) {
 
 							if ((building->doorInteriorIds[sp1A4] != 0xF0) && !(building->statusFlags & 4)) {
 								temp = currentIndex * 0x10;
-								if (bboxTest & 0x20) {
-									func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
-										0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_801183EC_12739C, 0);
+								if (doorFlags & 0x20) {
+									func_8012D700_13C6B0(sp14C.bytes[3], temp + sp1A4, building->xCoord + bounds.x, building->yCoord + bounds.y, building->zCoord + bounds.z,
+										0, 0, 0, bounds.radiusX, bounds.radiusZ, prop->unk10 >> 1, func_801183EC_12739C, 0);
 								} else {
-									func_8012D700_13C6B0((u8)sp14C, (temp + sp1A4) & 0xFFFF, (s16)(building->xCoord + sp1BA), (s16)(building->yCoord + sp1B8), building->zCoord + sp1B6,
-										0, 0, 0, sp1B4, (s16)sp1B2, prop->unk10 >> 1, func_80118418_1273C8, 0);
+									func_8012D700_13C6B0(sp14C.bytes[3], temp + sp1A4, building->xCoord + bounds.x, building->yCoord + bounds.y, building->zCoord + bounds.z,
+										0, 0, 0, bounds.radiusX, bounds.radiusZ, prop->unk10 >> 1, func_80118418_1273C8, 0);
 								}
 							}
 
 							if (prop->unk0 != NULL) {
-								D_80052B40.unk0 = doorRef->unk0;
-								D_80052B40.unk2 = doorRef->unk2;
-								D_80052B40.unk4 = doorRef->unk4;
-								D_80052B48.unk0 = doorRef->unk6 << 14;
+								D_80052B40_HudX = doorRef->unk0;
+								D_80052B42 = doorRef->unk2;
+								D_80052B44 = doorRef->unk4;
+								D_80052B48_Reset.unk0 = doorRef->unk6 << 14;
 								D_80052B48.unk2 = 0;
 								D_80052B48.unk4 = 0;
 								temp = currentIndex * 0x10 + sp1A4;
@@ -1446,25 +1437,26 @@ void func_80118774_127724(void) {
 
 								gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
 								func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-								gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+								gfx = D_8005BB2C++;
+								gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
 
-				if (1) {}
-								if ((prop->unk8 != NULL) && ((prop->unk8 != D_5038D48) || ((D_8005254C == temp) && (D_8015EA2C != 0.0f)))) {
+								if (1) {} /* Keep the property check in its own allocation block. */
+								if ((prop->unk8 != NULL) && ((prop->unk8 != D_5038D48) || ((D_8005254C == temp) && (D_8015EA2C != (f32)(prop->unk12 * 0))))) {
 									gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 									gSPDisplayList(D_8005BB2C++, prop->unk8);
 								}
 
-								if (bboxTest & 8) {
+								if (doorFlags & 8) {
 									D_80052B40.unk0 = -prop->unkC;
-								} else if (bboxTest & 1) {
+								} else if (doorFlags & 1) {
 									D_80052B40.unk0 = prop->unkC >> 1;
-								} else if (bboxTest & 0x40) {
+								} else if (doorFlags & 0x40) {
 									D_80052B40.unk0 = (-prop->unkC) >> 1;
 								} else {
 									D_80052B40.unk0 = 0;
 								}
 
-								if (bboxTest & 4) {
+								if (doorFlags & 4) {
 									D_80052B40.unk2 = 0x7A;
 								} else {
 									D_80052B40.unk2 = 0;
@@ -1486,15 +1478,15 @@ void func_80118774_127724(void) {
 											D_80052B48.unk0 = (s16)((s32)((f64)D_8015EA2C * scale) + 0x8000);
 											break;
 										case 2:
-											tempF = (f32)(u32)prop->unkC;
-											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * tempF) * D_80144F60_153F10[0]));
+											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 - ((f64)(D_8015EA2C * (f32)(u32)prop->unkC) * D_80144F60_153F10[0]));
 											break;
 										case 7:
-											tempF = (f32)(u32)prop->unkC;
-											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * tempF) * D_80144F68_153F18[0]));
+											D_80052B40.unk0 = (s16)(s32)((f64)D_80052B40.unk0 + ((f64)(D_8015EA2C * (f32)(u32)prop->unkC) * D_80144F68_153F18[0]));
 											break;
 										case 3:
-											D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * 16384.0f));
+											if (1) {}
+											/* Delay folding the scale until after IDO allocates registers. */
+											D_80052B48.unk4 = (s16)(-(s32)(D_8015EA2C * (f32)(16384 + prop->unk12 * 0)));
 											D_80052B40.unk2 = (s16)(s32)((f32)(u32)prop->unk10 * D_8015EA2C);
 											break;
 										case 4:
@@ -1505,7 +1497,7 @@ void func_80118774_127724(void) {
 									D_80052B48.unk0 = 0x8000;
 								}
 
-								if (bboxTest & 0x10) {
+								if (doorFlags & 0x10) {
 									D_80052B48.unk0 += 0x8000;
 								}
 
@@ -1514,26 +1506,33 @@ void func_80118774_127724(void) {
 								}
 
 								gDPSetPrimColor(D_8005BB2C++, 0, 0, doorRef->pad10[0], doorRef->pad10[1], doorRef->pad10[2], 0);
-								sp74 = bboxTest & 4;
-								sp78 = bboxTest & 0x10;
+								sp74 = doorFlags & 4;
+								sp78 = doorFlags & 0x10;
 								func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-								gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+								gfx = D_8005BB2C++;
+								gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
 
 								if (building->statusFlags & 4) {
 									gSPDisplayList(D_8005BB2C++, D_5038A00);
-									gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+									gfx = D_8005BB2C++;
+									gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8); gfx->words.w1 = G_MTX_MODELVIEW;
 								} else {
-									if ((D_8015EA2C != 0.0f) && (D_8005254C == temp)) {
+									if (1) {}
+									if ((D_8015EA2C != (f32)(prop->unk12 * 0)) && (D_8005254C == temp)) {
 										gSPDisplayList(D_8005BB2C++, prop->unk4);
 									} else {
 										gSPDisplayList(D_8005BB2C++, prop->unk0);
 									}
-									gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+									gfx = D_8005BB2C++;
+									gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8); gfx->words.w1 = G_MTX_MODELVIEW;
 
 									if (sp90 != 0) {
-										D_80052B48.unk0 = (sp78 != 0) ? 0x8000 : 0;
+										D_80052B48.unk0 = 0;
 										D_80052B48.unk2 = 0;
 										D_80052B48.unk4 = 0;
+										if (sp78 != 0) {
+											D_80052B48.unk0 += 0x8000;
+										}
 										D_80052B50.unk0 = -0x100;
 										D_80052B50.unk2 = 0x100;
 										D_80052B50.unk4 = 0x100;
@@ -1544,7 +1543,8 @@ void func_80118774_127724(void) {
 										D_80052B40.unk2 = 0;
 										D_80052B40.unk4 = -2;
 										func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_80052B50, D_8005BB38);
-										gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+										gfx = D_8005BB2C++;
+										gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
 										gSPClearGeometryMode(D_8005BB2C++, G_CULL_BACK);
 										gSPSetGeometryMode(D_8005BB2C++, G_CULL_FRONT);
 										gSPDisplayList(D_8005BB2C++, prop->unk0);
@@ -1560,13 +1560,18 @@ void func_80118774_127724(void) {
 										D_80052B48.unk2 = 0;
 										D_80052B48.unk4 = (s16)(0x10000 - (s32)(D_8015EA2C * D_80144F74_153F24[0]));
 										func_800039D0_45D0(&D_80052B40, &D_80052B48, NULL, D_8005BB38);
-										gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+										gfx = D_8005BB2C++;
+										gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(D_8005BB38++);
 										gSPDisplayList(D_8005BB2C++, D_504EC90);
 									}
 								}
 
 								gDPSetPrimColor(D_8005BB2C++, 0, 0, 0, 0, 0, 0);
-								gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
+								gfx = D_8005BB2C++;
+								gfx->words.w0 = _SHIFTL(G_POPMTX, 24, 8); gfx->words.w1 = G_MTX_MODELVIEW;
+								flags = building->statusFlags;
+								propMode = flags & 4;
+							} else {
 								flags = building->statusFlags;
 								propMode = flags & 4;
 							}
@@ -1611,16 +1616,17 @@ void func_80118774_127724(void) {
 					}
 				}
 
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+				gfx = D_8005BB2C++;
+				gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(&D_80031160);
 				doorMap = (UnkBuildDoorMap *)D_80052A7C;
-				searchCount = 0x6D;
+				i = 0x6D;
 				do {
 					if (building->buildingType == doorMap->unk0) {
 						D_80159DC8 = doorMap->unk4;
 						D_80159DCC = doorMap->unk6;
 					}
 					doorMap--;
-				} while (searchCount--);
+				} while (i--);
 			}
 
 			if (sp168 == 0) {
@@ -1691,48 +1697,46 @@ void func_80118774_127724(void) {
 
 				if (sp16E != -1) {
 					sp16E = 0;
-					scanPtr = &sp180[0xF];
 					i = 0xF;
 					do {
-						currentIndex = *scanPtr;
+						currentIndex = sp180[i];
 						if (currentIndex != 0xFF) {
 							building = &buildingInstances[currentIndex];
 							func_80115F20_124ED0(building->xCoord, building->zCoord, &sp194, &sp196);
-							revisitIndex = (sp194 != currentIndex) ? (u8)sp194 : (u8)sp196;
-							specialPtr = &sp180[0xF];
+							if (sp194 == currentIndex) {
+								revisitIndex = (u8)sp196;
+							} else {
+								revisitIndex = (u8)sp194;
+							}
 							temp = 0xF;
 							do {
-								if (revisitIndex == *specialPtr) {
+								if (revisitIndex == sp180[temp]) {
 									revisitIndex = 0xFF;
 								}
-								specialPtr--;
 							} while (temp--);
 							if (revisitIndex != 0xFF) {
 								sp170[sp16E] = revisitIndex;
 								sp16E++;
 							}
 						}
-						scanPtr--;
 					} while (i--);
 					sp16E = -1;
 					sp194 = -1;
 					sp196 = -1;
 				}
 
-				revisitPtr = &sp170[0xF];
 				i = 0xF;
 				do {
-					currentIndex = *revisitPtr;
+					currentIndex = sp170[i];
 					if (currentIndex != 0xFF) {
 						building = &buildingInstances[currentIndex];
-						*revisitPtr = 0xFF;
+						sp170[i] = 0xFF;
 						sp168 = 1;
 						sp88 = building - buildingInstances;
 						sp1A4 = -1;
 						processBuilding = 2;
 						break;
 					}
-					revisitPtr--;
 				} while (i--);
 			} while (0);
 			if (!processBuilding) {
@@ -1747,7 +1751,8 @@ void func_80118774_127724(void) {
 		type--;
 	} while (i--);
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_MTX, 24, 8) | _SHIFTL(G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW, 16, 8) | sizeof(Mtx); gfx->words.w1 = K0_TO_PHYS(&D_80031160);
 	gDPTileSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }

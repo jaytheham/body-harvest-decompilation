@@ -23,3 +23,21 @@
 -> `code changed`: Store both bytes first, then decrement both pointers in separate statements.
 
 -> `correct ASM`: The two SB instructions precede the two ADDIU pointer decrements, matching the target initialization loop's instruction order.
+
+`incorrect ASM`: The door-property check cached 0.0f in $f22 and the rotation scale cached 16384.0f in $f24. The renderer saved both registers on entry.
+
+-> `code changed`: Spell the zero as `(f32)(prop->unk12 * 0)` and the scale as `(f32)(16384 + prop->unk12 * 0)` inside the guarded door block, letting IDO fold both after optimization.
+
+-> `correct ASM`: IDO materializes the constants inside the door block and saves only $f20, matching the target saved-register set. Other renderer differences remain.
+
+`incorrect ASM`: Separate matrix and pop macro temporaries expand the frame to 0x208, with the coordinate, scan-array, and search-index homes displaced.
+
+-> `code changed`: Reuse one `Gfx *` for the matrix and pop packets and order the main declarations by their stack homes. Keep the five door coordinates in one halfword struct with a leading halfword so the helper calls see the original contiguous layout. Store the door tag as a word and read its lowest byte through `SignedWord.bytes[3]`.
+
+-> `correct ASM`: The frame is 0x1D8 and the position, bounding-box, scan-array, and door-tag homes agree with the original. The word tag uses `sw` at sp+0x14C and `lbu` at sp+0x14F. The scan dispatch and other scheduling differences remain.
+
+`incorrect ASM`: The revisit selection's ternary tests equality and loads the 0x195 halfword's low byte on fallthrough, reversing the target's branch and the order of the byte reads.
+
+-> `code changed`: Compare the first saved index to the current building in an explicit if/else, reading the alternate index in the equal arm. Use array indexing for the revisit scans and restore two standard matrix macros to preserve the frame after removing their old cursor locals.
+
+-> `correct ASM`: The comparison emits `bne`; its fallthrough reads sp+0x197 and its taken arm reads sp+0x195. The frame stays 0x1D8. The surrounding register and control-flow differences remain.
