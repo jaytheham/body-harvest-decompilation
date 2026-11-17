@@ -1,0 +1,5 @@
+incorrect ASM (`func_8007C044_8AFF4`): A word-only final index eliminates the target `move s2,s3` copies and frees S2 for another light-colour constant. A flat `index << 9` texture address schedules the texture-base LUI before the index shift and rotates subsequent temporaries. Starting cleanup at `0xFE` places `li s5,0xFE` before the mask ORI and array-base ADDIU.
+
+-> code changed: Share one `u8 alienId` across the three passes. Promote it explicitly to `u32` in the unsigned human-animation arithmetic, while retaining ordinary signed integer promotion in the final sine phase. Preserve the separate word draw ID. Express both 512-byte texture strides as `((index << 1) << 8)`, retaining the two-byte pixel and 256-pixel tile stages. Clear the instance flags with `for (i = 0xFF; i--; )`.
+
+-> correct ASM: The shared index occupies S3, the final helper ID occupies S2, and only the target light colours remain hoisted. The texture index shift precedes the base materialization with the target temporary registers. Cleanup materializes the mask and pointer before `li s5,0xFE`. The complete US ROM matches.

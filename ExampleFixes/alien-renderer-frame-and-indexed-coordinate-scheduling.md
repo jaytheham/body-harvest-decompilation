@@ -1,0 +1,5 @@
+incorrect ASM (`func_8007C044_8AFF4`): The enabled draft reserved a `0x228` frame, placing the two drawn-type flags at `sp+0x226/sp+0x224` and rotation at `sp+0x21C`. Reflection-coordinate divisions were serialized with argument stores, and named distance components reserved three extra float homes.
+
+-> code changed: Keep the iterator and animation short before the drawn-type flags. Read coordinates directly through `alienInstances[alienId]` so IDO can distinguish them from local vectors. Assign the saved position in X/Y/Z order and use inline `SQ` terms in the distance calculation. Keep the original scale-template aggregate copy. Put the final draw-ID word after the distance and state workspaces, and use the unsigned component view when restoring rotation.
+
+-> correct ASM: The frame is `addiu sp,sp,-0x210`; drawn-type flags use `sp+0x208/sp+0x206`, rotation uses `sp+0x200`, the scale templates use `sp+0x1EC/sp+0x1E4/sp+0x1DC`, position uses `sp+0x1D4`, and the final floating spill uses `sp+0x1C0`. Reflection loads/divisions and the complete distance calculation have the target order. All 1272 function instructions match, and the native US ROM checksum is OK.
