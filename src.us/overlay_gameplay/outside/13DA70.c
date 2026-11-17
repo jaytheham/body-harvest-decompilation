@@ -3,7 +3,6 @@
 #include "core/53F0.h"
 #include "core/12C80.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 const char D_801453C0_154370[] = "*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n";
 const char D_80145408_1543B8[] = "%X%Y\n";
@@ -1090,29 +1089,28 @@ void func_80131280_140230(u8 *arg0)
 	}
 }
 
-#ifdef NON_MATCHING
 s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 arg4, s32 arg5)
 {
 	static s32 D_80140CE0_14FC90 = 0;
 	s32 charIndex;
+	s32 halfWidth = charWidth >> 1;
 	s32 charScreenX;
-	s32 modelX;
 	s32 renderX;
-	s32 temp_v0;
+	s32 glyphX;
 	Unk80052B40 pos;
 	Unk80052B40 result;
 	s32 *screenWidth = &D_80068084;
+	s32 glyphThreshold;
 	s32 currentSway;
-	volatile s32 swayOffset;
 	s32 renderWidth;
 	s32 uly;
 	s32 lry;
-	s32 padding;
-	u8 currentChar;
+	s16 digitPadding;
+	s16 digitOne = 0x31;
+	s16 currentChar;
 	s16 charCount;
 	u8 colorData[3];
-	s32 curX;
-	u32 six = 6;
+	s32 six = 6;
 
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 35, 0, *screenWidth - 0x21, D_80068088);
 	charCount = 0;
@@ -1123,10 +1121,15 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 		do
 		{
 			renderWidth = renderWidth + charWidth + 2;
-			if (currentChar == 0x31)
+			if (digitOne == currentChar)
 			{
-				renderWidth -= charWidth >> 1;
+				renderWidth -= halfWidth;
 			}
+			/* Keep IDO's glyph-delay and threshold spills in ROM order. */
+			charIndex = 0;
+			if (((charIndex + charIndex) * 5) + 0x5A) {}
+			if (charIndex * 10) {}
+			if (((charIndex + charIndex) * 5) + 0x5A) {}
 			charCount += 1;
 			currentChar = text[charCount];
 		} while (currentChar != 0);
@@ -1142,11 +1145,11 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	}
 
 	{
-		modelX = (*screenWidth - (D_80140CE0_14FC90 * six)) + 0x168;
+		charScreenX = (*screenWidth - (D_80140CE0_14FC90 * (u32)six)) + 0x168;
 		func_8012F2DC_13E28C(D_80140C74_14FC24, colorData, 5);
 		if (D_80140CE0_14FC90 >= 0x3D)
 		{
-			if ((modelX >= 0) && (modelX <= *screenWidth))
+			if ((charScreenX >= 0) && (charScreenX <= *screenWidth))
 			{
 				if (D_80140CE0_14FC90 == 0x46)
 				{
@@ -1178,8 +1181,8 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				gDPSetTileSize(D_8005BB2C++, 1, 0, 0, (15 << G_TEXTURE_IMAGE_FRAC), (15 << G_TEXTURE_IMAGE_FRAC));
 				gDPPipeSync(D_8005BB2C++);
 
-				temp_v0 = (s16)((D_80140CE0_14FC90 & 0xE) >> 1);
-				pos.unk0 = modelX;
+				six = (s16)((D_80140CE0_14FC90 & 0xE) >> 1);
+				pos.unk0 = charScreenX;
 				pos.unk4 = 0;
 				pos.unk2 = yPos + 0x1E;
 				result.unk0 = 0;
@@ -1190,12 +1193,12 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 				guRotateRPY(D_8005BB38, 0.0f, 90.0f, 180.0f);
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[temp_v0]);
+				gSPDisplayList(D_8005BB2C++, D_80140C48_14FBF8[six]); six = 6;
 			}
 		}
 	}
 
-	renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + (charWidth >> 1);
+	renderX = ((*screenWidth / 2) - (renderWidth >> 1)) + halfWidth;
 	if ((D_80140CE0_14FC90 >= 0x60) && (D_80140CE0_14FC90 < 0xBE))
 	{
 		if (((D_80140CE0_14FC90 - 0x5F) % (s32)six) == 0)
@@ -1204,122 +1207,116 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 		}
 	}
 
-	charIndex = 0;
-	if (charCount > 0)
+	for (charIndex = 0; charIndex < charCount; charIndex++)
 	{
-		currentSway = swayOffset;
-		do
+		glyphThreshold = ((charIndex + charIndex) * 5) + 0x5A;
+		charScreenX = (D_80068084_TextRead - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
+		if (text[charIndex] == 0x31)
 		{
-			charScreenX = (D_80068084 - ((D_80140CE0_14FC90 - charIndex * 10) * 6)) + 0x21C;
-			if (text[charIndex] == 0x31)
+			renderX -= halfWidth;
+		}
+
+		if ((glyphThreshold < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084_TextRead >= charScreenX))
+		{
+			currentSway = (s32)((f32)(((f32)sins((((D_80140CE0_14FC90 + charIndex) % 8) * 8192)) / 32768.0) * 32.0) / 2);
+			gDPPipeSync(D_8005BB2C++);
+			gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
+			gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+			gSPDisplayList(D_8005BB2C++, D_80031230);
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+			gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_NOOP2);
+
+			pos.unk0 = charScreenX;
+			pos.unk2 = yPos + 0x1E;
+			pos.unk4 = 0;
+			gSPLightColor(D_8005BB2C++, LIGHT_1, 0x80E580FF);
+			gSPLightColor(D_8005BB2C++, LIGHT_2, 0x407F40FF);
+
+			result.unk0 = D_800311A0.unk0;
+			result.unk2 = D_800311A0.unk2;
+			result.unk4 = D_800311A0.unk4;
+			D_800311A0.unk2 += currentSway;
+			D_800311A0.unk0 -= currentSway / 2;
+			D_800311A0.unk4 -= currentSway / 2;
+			D_800311A0.unk0 = D_800311A0.unk0 * 2.5;
+			D_800311A0.unk2 = D_800311A0.unk2 * -2.5;
+			D_800311A0.unk4 = D_800311A0.unk4 * 2.5;
+			gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[(((u32)D_80052A8C % 7) << 1) << 8]));
+
+			func_800039D0_45D0(&pos, &result, &D_800311A0, D_8005BB38);
+
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+			guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
+			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+			gDPPipeSync(D_8005BB2C++);
+			gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
+
+			D_800311A0.unk0 = result.unk0;
+			D_800311A0.unk2 = result.unk2;
+			D_800311A0.unk4 = result.unk4;
+		}
+
+		if ((glyphThreshold < D_80140CE0_14FC90) && (D_80068084 >= charScreenX))
+		{
+			if (func_8012EC3C_13DBEC(text[charIndex]) != 0)
 			{
-				renderX -= (charWidth >> 1);
-			}
+				glyphX = renderX;
 
-			if (((charIndex * 10 + 0x5A) < D_80140CE0_14FC90) && (charScreenX >= 0) && (D_80068084 >= charScreenX))
-			{
-				swayOffset = (s32)((f32)(((f32)sins((u16)((((D_80140CE0_14FC90 + charIndex) % 8) << 13) & 0xFFFF)) / 32768.0) * 32.0) / 2);
-				gDPPipeSync(D_8005BB2C++);
-				gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
-				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-				gSPDisplayList(D_8005BB2C++, D_80031230);
-				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-				gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-				gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_NOOP2);
-
-				pos.unk0 = charScreenX;
-				pos.unk2 = yPos + 0x1E;
-				pos.unk4 = 0;
-				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, 0x80E580FF);
-				gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (currentSway = swayOffset, 0x80E580FF));
-				gSPLightColor(D_8005BB2C++, LIGHT_2, 0x407F40FF);
-
-				result.unk0 = D_800311A0.unk0;
-				result.unk2 = D_800311A0.unk2;
-				result.unk4 = D_800311A0.unk4;
-				D_800311A0.unk2 += currentSway;
-				D_800311A0.unk0 -= currentSway / 2;
-				D_800311A0.unk4 -= currentSway / 2;
-				D_800311A0.unk0 = (s16)(D_800311A0.unk0 * 2.5);
-				D_800311A0.unk2 = (s16)(D_800311A0.unk2 * -2.5);
-				D_800311A0.unk4 = (s16)(D_800311A0.unk4 * 2.5);
-				gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 16, K0_TO_PHYS(&D_503CF60[((u32)D_80052A8C % 7) << 9]));
-
-				func_800039D0_45D0(&pos, &result, &D_800311A0, D_8005BB38);
-
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				guRotate(D_8005BB38, 90.0f, 0.0f, 1.0f, 0.0f);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gDPPipeSync(D_8005BB2C++);
-				gSPDisplayList(D_8005BB2C++, alienTypes[2].unk0);
-
-				D_800311A0.unk0 = result.unk0;
-				D_800311A0.unk2 = result.unk2;
-				D_800311A0.unk4 = result.unk4;
-			}
-
-			if (((charIndex * 10 + 0x5A) < D_80140CE0_14FC90) && (D_80068084 >= charScreenX))
-			{
-				if (func_8012EC3C_13DBEC(text[charIndex]) != 0)
+				if (charScreenX < renderX)
 				{
-					curX = renderX;
-
-					if (charScreenX < renderX)
+					lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFF; \
+					uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFF;
+					currentSway = 0;
+				}
+				else
+				{
+					lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFF; \
+					uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFF;
+					if (text[charIndex] == 0x31)
 					{
-						lry = (((yPos - (charHeight >> 1)) + charHeight) * 4) & 0xFFF;
-						uly = ((yPos - (charHeight >> 1)) * 4) & 0xFFF;
-						currentSway = 0;
+						glyphX = charScreenX - halfWidth;
 					}
 					else
 					{
-						lry = (((yPos - (charHeight >> 1) - (currentSway >> 1)) + charHeight) * 4) & 0xFFF;
-						uly = ((yPos - (charHeight >> 1) - (currentSway >> 1)) * 4) & 0xFFF;
-						if (text[charIndex] == 0x31)
-						{
-							curX = charScreenX - (charWidth >> 1);
-						}
-						else
-						{
-							curX = charScreenX;
-						}
-					}
-
-					gDPPipeSync(D_8005BB2C++);
-					gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-					gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-					gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-
-					if (curX == renderX)
-					{
-						gDPSetPrimColor(D_8005BB2C++, 0, 0, colorData[0], colorData[1], colorData[2], 0xFF);
-					}
-					else
-					{
-						gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140C74_14FC24[0], D_80140C74_14FC24[1], D_80140C74_14FC24[2], 0xFF);
-					}
-
-					{
-						Gfx *gfx = D_8005BB2C++;
-						gfx->words.w0 = _SHIFTL(G_TEXRECT, 24, 8) | _SHIFTL(((charWidth >> 1) + curX) * 4, 12, 12) | lry;
-						gfx->words.w1 = _SHIFTL((curX - (charWidth >> 1)) * 4, 12, 12) | uly;
-						gImmp1(D_8005BB2C++, G_RDPHALF_1, 0);
-						gImmp1(D_8005BB2C++, G_RDPHALF_2,
-							_SHIFTL((s32)((1.0f / ((f32)charWidth / 32)) * 1024.0f), 16, 16) |
-							_SHIFTL((s32)((1.0f / ((f32)charHeight / 32)) * 1024.0f), 0, 16));
+						glyphX = charScreenX;
 					}
 				}
-			}
 
-			renderX += charWidth;
-			if ((charCount == charIndex + 1) && (charScreenX <= 0))
-			{
-				D_80140CE0_14FC90 = 0;
-				return 1;
-			}
+				gDPPipeSync(D_8005BB2C++);
+				gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
+				gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 
-			charIndex += 1;
-		} while ((renderX += 2, charIndex) != charCount);
-		swayOffset = currentSway;
+				if (glyphX == renderX)
+				{
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, colorData[0], colorData[1], colorData[2], 0xFF);
+				}
+				else
+				{
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, D_80140C74_14FC24[0], D_80140C74_14FC24[1], D_80140C74_14FC24[2], 0xFF);
+				}
+
+				{
+					Gfx *gfx = D_8005BB2C++;
+					gfx->words.w0 = _SHIFTL(G_TEXRECT, 24, 8) | _SHIFTL((halfWidth + glyphX) * 4, 12, 12) | lry;
+					gfx->words.w1 = _SHIFTL((glyphX - halfWidth) * 4, 12, 12) | uly;
+					gImmp1(D_8005BB2C++, G_RDPHALF_1, 0);
+					gImmp1(D_8005BB2C++, G_RDPHALF_2,
+						_SHIFTL((s32)((1.0f / ((f32)charWidth / 32)) * 1024.0f), 16, 16) |
+						_SHIFTL((s32)((1.0f / ((f32)charHeight / 32)) * 1024.0f), 0, 16));
+				}
+			}
+		}
+
+
+		if ((charCount == charIndex + 1) && (charScreenX <= 0))
+		{
+			D_80140CE0_14FC90 = 0;
+			return 1;
+		}
+		renderX = (renderX + charWidth) + 2;
+
 	}
 
 	if (D_80140CE0_14FC90 < 0xFFFF)
@@ -1331,7 +1328,3 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 	gDPSetScissor(D_8005BB2C++, G_SC_NON_INTERLACE, 0, 0, D_80068084, D_80068088);
 	return 0;
 }
-#else
-s32 D_80140CE0_14FC90 = 0;
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/13DA70/func_80131858_140808.s")
-#endif
