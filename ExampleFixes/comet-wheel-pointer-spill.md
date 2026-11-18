@@ -9,3 +9,9 @@
 `code changed` -> Chain the assignment through `offset0.value` before calculating `turn`. The memory store keeps the rotation division and conversion ahead of the first correction store in optimized Ucode.
 
 `correct ASM` -> The native build restores `div.d f8,f2,f6` at `0x32475C` and the target FP registers and constant order. The extra `swc1 f14,8(sp)` still prevents a match. The first divergence comes from expression placement in UOPT, so source-line scheduling alone cannot remove the store while retaining that order.
+
+`incorrect ASM` -> A forced write of the base rotation adds `swc1 $f14,8($sp)` at `0x3247F0`. With an ordinary assignment alone, the first `div.d` moves to `0x324808`.
+
+`code changed` -> Assign `rotation` before loading the wheel radius. Write the radius as `D_8014DD50[joint0].unk0 + ((s32)rotation * 0)`. The zero product gives IDO an earlier use of the rotation and is folded out of the emitted code.
+
+`correct ASM` -> The base rotation uses `div.d $f8,$f2,$f6` at `0x32475C`. The fifth wheel pointer stores and reloads at `0x30($sp)`. The first correction uses `swc1 $f4,8($sp)` and `lwc1 $f4,8($sp)`. The full function diff is zero.
