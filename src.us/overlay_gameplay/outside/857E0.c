@@ -356,9 +356,8 @@ void func_800772EC_8629C(s32 arg0) {
 }
 
 // DisplayTrees
-#ifdef NON_MATCHING
 void func_8007764C_865FC(void) {
-	Unk857E0Obj* end;
+	Gfx* phasePacket;
 	s32 camX;
 	s32 camZ;
 	s32 cellX;
@@ -366,7 +365,8 @@ void func_8007764C_865FC(void) {
 	s32 i;
 	s32 value;
 	s32 group;
-	Unk857E0Obj* obj;
+	s32 typeWord;
+	Unk80259D90* obj;
 
 	camX = (D_80149434 - 0x880) >> 8;
 	camZ = (D_80149436 - 0x880) >> 8;
@@ -388,19 +388,20 @@ void func_8007764C_865FC(void) {
 	}
 
 	while (cellX < D_8014D2F0) {
-		obj = (Unk857E0Obj*)D_80259D90;
+		obj = D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			value = obj->unk2;
+			value = obj->chunkIndex;
 			group = value;
 			group = (s8)group;
-			value = i;
+			/* Keep the word type carrier's allocation priority. */
+			typeWord = obj->unk0; if (typeWord) {} value = i;
 			if (group == -1) {
 				continue;
 			}
 			if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
 				func_80076868_85818(value);
 			} else {
-				obj->unk2++;
+				obj->chunkIndex++;
 			}
 		}
 
@@ -413,9 +414,9 @@ void func_8007764C_865FC(void) {
 	}
 
 	while (D_8014D2F0 < cellX) {
-		obj = (Unk857E0Obj*)D_80259D90;
+		obj = D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			value = obj->unk2;
+			value = obj->chunkIndex;
 			group = value;
 			group = (s8)group;
 			value = i;
@@ -425,7 +426,7 @@ void func_8007764C_865FC(void) {
 			if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
 				func_80076868_85818(value);
 			} else {
-				obj->unk2--;
+				obj->chunkIndex--;
 			}
 		}
 
@@ -438,9 +439,9 @@ void func_8007764C_865FC(void) {
 	}
 
 	while (cellZ < D_8014D2F4) {
-		obj = (Unk857E0Obj*)D_80259D90;
+		obj = D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			value = obj->unk2;
+			value = obj->chunkIndex;
 			group = value;
 			group = (s8)group;
 			value = i;
@@ -450,7 +451,7 @@ void func_8007764C_865FC(void) {
 			if (group >= 0x14) {
 				func_80076868_85818(value);
 			} else {
-				obj->unk2 += 5;
+				obj->chunkIndex += 5;
 			}
 		}
 
@@ -463,9 +464,9 @@ void func_8007764C_865FC(void) {
 	}
 
 	while (D_8014D2F4 < cellZ) {
-		obj = (Unk857E0Obj*)D_80259D90;
+		obj = D_80259D90;
 		for (i = 0; i != 0x96; i++, obj++) {
-			value = obj->unk2;
+			value = obj->chunkIndex;
 			group = value;
 			group = (s8)group;
 			value = i;
@@ -475,7 +476,7 @@ void func_8007764C_865FC(void) {
 			if (group < 5) {
 				func_80076868_85818(value);
 			} else {
-				obj->unk2 -= 5;
+				obj->chunkIndex -= 5;
 			}
 		}
 
@@ -487,7 +488,7 @@ void func_8007764C_865FC(void) {
 		func_80076A10_859C0(0x18, (s16) (D_8014D2F0 + 4), (s16) (D_8014D2F4 + 4));
 	}
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	phasePacket = D_8005BB2C++; phasePacket->words.w0 = 0x01020040; phasePacket->words.w1 = K0_TO_PHYS(&D_80031160);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -495,31 +496,30 @@ void func_8007764C_865FC(void) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 
-	obj = (Unk857E0Obj*) D_80259D90;
-	for (; obj < (Unk857E0Obj*) &D_80259D90[0x96]; obj++) {
+	for (obj = D_80259D90; obj < &D_80259D90[0x96]; obj++) {
 		if (obj->unk0 >= 0xE) {
 			continue;
 		}
-		group = obj->unk2;
+		group = obj->chunkIndex;
 		if (group == -1) {
 			continue;
 		}
 		if (group < 5) {
-			if ((obj->unk1 >> 2) < (camZ - (cellZ << 2))) {
+			if ((obj->tileIndex >> 2) < (camZ - (cellZ << 2))) {
 				continue;
 			}
 		} else if (group >= 0x14) {
-			if ((obj->unk1 >> 2) >= ((camZ - ((cellZ + 4) << 2)) + 0x10)) {
+			if ((obj->tileIndex >> 2) >= ((camZ - ((cellZ + 4) << 2)) + 0x10)) {
 				continue;
 			}
 		}
 
 		if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
-			if ((obj->unk1 & 3) < (camX - (cellX << 2))) {
+			if ((obj->tileIndex & 3) < (camX - (cellX << 2))) {
 				continue;
 			}
 		} else if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
-			if ((obj->unk1 & 3) >= ((camX - ((cellX + 4) << 2)) + 0x10)) {
+			if ((obj->tileIndex & 3) >= ((camX - ((cellX + 4) << 2)) + 0x10)) {
 				continue;
 			}
 		}
@@ -528,9 +528,14 @@ void func_8007764C_865FC(void) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(i), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, obj->unk8);
+		if (phasePacket) {}
+		if (phasePacket) {}
+
 	}
 
-	if (obj < (Unk857E0Obj*)&D_80259D90[150]) {}
+
+	if (obj < &D_80259D90[150]) {}
+	if ((u32)phasePacket == 0x01020040U) {}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
@@ -559,39 +564,39 @@ void func_8007764C_865FC(void) {
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 5, G_TX_RENDERTILE, G_ON);
 
+	if (phasePacket) {}
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	value = -1;
-	end = (Unk857E0Obj*)&D_80259D90[150];
-	obj = (Unk857E0Obj*) D_80259D90;
-	for (; obj != end; obj++) {
+	obj = D_80259D90; do {
 		if (obj->unk0 < 0xE) {
 			continue;
 		}
-		group = obj->unk2;
+		group = obj->chunkIndex;
 		if (group == -1) {
 			continue;
 		}
 		if (group < 5) {
-			if ((obj->unk1 >> 2) < (camZ - (cellZ << 2))) {
+			if ((obj->tileIndex >> 2) < (camZ - (cellZ << 2))) {
 				continue;
 			}
 		} else if (group >= 0x14) {
-			if ((obj->unk1 >> 2) >= ((camZ - ((cellZ + 4) << 2)) + 0x10)) {
+			if ((obj->tileIndex >> 2) >= ((camZ - ((cellZ + 4) << 2)) + 0x10)) {
 				continue;
 			}
 		}
 
 		if ((group == 0) || (group == 5) || (group == 0xA) || (group == 0xF) || (group == 0x14)) {
-			if ((obj->unk1 & 3) < (camX - (cellX << 2))) {
+			if ((obj->tileIndex & 3) < (camX - (cellX << 2))) {
 				continue;
 			}
 		} else if ((group == 4) || (group == 9) || (group == 0xE) || (group == 0x13) || (group == 0x18)) {
-			if ((obj->unk1 & 3) >= ((camX - ((cellX + 4) << 2)) + 0x10)) {
+			if ((obj->tileIndex & 3) >= ((camX - ((cellX + 4) << 2)) + 0x10)) {
 				continue;
 			}
 		}
 
+		typeWord = obj->unk0; if (typeWord) {}
 		i = (s32)obj->vertices;
 		i *= 1;
 		if (value != obj->unk0) {
@@ -619,7 +624,7 @@ void func_8007764C_865FC(void) {
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(i), 4, 0);
 
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
-	}
+	} while (++obj != D_8025CC70);
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);
@@ -628,9 +633,6 @@ void func_8007764C_865FC(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_8007764C_865FC.s")
-#endif
 
 u16 func_80078530_874E0(s16 arg0, s16 arg1) {
 	u8 temp_v1;

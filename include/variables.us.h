@@ -3041,6 +3041,7 @@ extern u8 D_80259470[];
 extern Unk80259490 D_80259490[128]; // vehicle instances as loaded from ROM, how is different from 8004DCD0?
 extern u8 D_80259D7E[];
 extern Unk80259D90 D_80259D90[0x97];
+extern Unk80259D90 D_8025CC70[];
 extern s16 D_8013BB14_14AAC4[46];
 extern u8 D_8025CCC0[];
 extern u8 D_8025D800;
