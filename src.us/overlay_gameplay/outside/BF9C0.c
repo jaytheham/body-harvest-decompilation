@@ -2837,7 +2837,6 @@ void func_800B9C28_C8BD8(void) {
 }
 
 // DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
-#ifdef NON_MATCHING
 void func_800B9DB8_C8D68(u8 arg0)
 {
 	u8 row;
@@ -2851,10 +2850,14 @@ void func_800B9DB8_C8D68(u8 arg0)
 	s16 mapZ;
 	Gfx *gfx;
 	u8 (*textureRow)[64];
-	struct { Vtx *column; Vtx *row; } vertices;
+	struct {
+		Vtx *column;
+		Vtx *row;
+	} vertices;
 	u8 tileZ;
 	s16 visibleCount;
 	s16 culledCount;
+
 	visibleCount = 0;
 	culledCount = 0;
 	func_800B9AC8_C8A78();
@@ -2864,7 +2867,7 @@ void func_800B9DB8_C8D68(u8 arg0)
 	}
 	scratch.startVertices = D_8005BB34;
 	func_800B5090_C4040(&D_8005BB34, arg0 & 0xFF);
-	gDPSetTextureFilter(D_8005BB2C++, 2 << 12);
+	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 
 	D_8014F89A = 0;
 	D_8014FD28 = 0x8F;
@@ -2874,11 +2877,11 @@ void func_800B9DB8_C8D68(u8 arg0)
 	vertices.row = scratch.startVertices;
 	gfx = D_8005BB2C++;
 	gDPSetRenderMode(gfx, G_RM_FOG_SHADE_A, G_RM_ZB_OPA_SURF2);
-	gDPSetTexturePersp(D_8005BB2C++, 1 << 19);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
-	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
-	gSPSetGeometryMode(D_8005BB2C++, (0x00002000 | 0x00020000) | 0x00000200);
-	gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)D_80254E80 & 0x1FFFFFFF));
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING | G_SHADING_SMOOTH);
+	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(D_80254E80));
 	gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
 
 	tileSize = 4;
@@ -2909,26 +2912,31 @@ void func_800B9DB8_C8D68(u8 arg0)
 			textureRow = &((u8 (*)[64])D_8021EA30)[tileZ];
 			for (column = 0; column < 5; column++)
 			{
-				left = ((u32)column == 0) ? (mapX % 4) : 0;
+				left = (column == 0) ? (mapX % 4) : 0;
 				right = (column == tileSize) ? (mapX % 4) + 1 : tileSize;
 				top = (row == 0) ? (mapZ % 4) : 0;
 				bottom = (row == tileSize) ? (mapZ % 4) + 1 : tileSize;
 
 				tileX = (u32)firstTileX + column;
-				palette = (*textureRow)[tileX]; palette &= 0xF;
-				gDPLoadTLUT_pal256(D_8005BB2C++, ((u32)(&D_80254E80[palette * 512])) & 0x1FFFFFFF);
+				palette = (*textureRow)[tileX];
+				palette &= 0xF;
+				gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(&D_80254E80[palette * 512]));
 				gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_RDPLOADSYNC << 24; gfx->words.w1 = 0;
 
 				tile = (*textureRow)[tileX];
-				if ((tile & 0xF0) != 0xF0)
+				/* The zero products here and in the cull call preserve IDO register allocation. */
+				if (((tile & 0xF0) + (u32)tile * 0 + (u32)&(*textureRow)[tileX] * 0) != 0xF0)
 				{
 					(*textureRow)[tileX] = tile + 0x10;
 				}
-				gfx = D_8005BB2C++; gfx->words.w0 = G_CLEARGEOMETRYMODE << 24; gfx->words.w1 = G_LIGHTING;
-				if (func_800B960C_C85BC((s16)((tileX << 10) + 0x8000), (s16)((tileZ << 10) + 0x8000), 0x400, 0x400) != 0)
+				gfx = D_8005BB2C++; gfx->words.w0 = (u32)G_CLEARGEOMETRYMODE << 24; gfx->words.w1 = G_LIGHTING;
+				if (func_800B960C_C85BC((s16)(((tileX << 10) + (u32)tileX * 0) + 0x8000),
+				                       (s16)((tileZ << 10) + 0x8000), 0x400, 0x400) != 0)
 				{
 					visibleCount += 1;
-					func_800B604C_C4FFC(vertices.column, left, top, right, bottom, (u16)((u16)(tileX * 4 + ((tileZ & 0x3F) * 0x400)) + top * 0x100) + left, palette);
+					func_800B604C_C4FFC(vertices.column, left, top, right, bottom,
+					                   (u16)((u16)(tileX * 4 + ((tileZ & 0x3F) * 0x400)) + top * 0x100) + left,
+					                   palette);
 				}
 				else
 				{
@@ -2943,13 +2951,10 @@ void func_800B9DB8_C8D68(u8 arg0)
 		}
 	}
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEI, G_CC_PASS2);
-	gDPSetTextureLUT(D_8005BB2C++, 2 << 14);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	func_800B753C_C64EC();
-	gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B9DB8_C8D68.s")
-#endif
 
 /* Clamps arg0 to the range [arg1, arg2] */
 s16 func_800BA4DC_C948C(s16 arg0, s16 arg1, s16 arg2) {

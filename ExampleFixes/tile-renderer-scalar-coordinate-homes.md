@@ -45,3 +45,15 @@
 -> `code changed`: Use a union for the initial vertex pointer and the signed row index. Copy the pointer into both vertex cursors before assigning the row index. Compute the byte-sized Z index as `mapZ / 4 + scratch.rowIndex`.
 
 -> `correct ASM`: IDO emits `addu v1,t6,ra` with the row counter at `sp+0x70`, the Z quotient at `sp+0x6c`, and a `0x118` frame. The full US ROM differs only in the branch word at `0xC9108`, where the C build uses `bnez s7` and the target uses `bnez t5`. The assembly fallback remains active.
+
+`incorrect ASM`: The left-edge test at `0xC9108` used `bnez s7`. Comparing the byte column directly produced `bnez t4` and swapped the texture byte to `t5`. IDO assigned allocation priorities of 102 and 100 to the column and texture byte respectively.
+
+-> `code changed`: Compare `column == 0` directly. Add `(u32)tile * 0` and `(u32)&(*textureRow)[tileX] * 0` to the masked texture-byte comparison. Add `(u32)tileX * 0` to the shifted X coordinate in the frustum call. IDO counts these unsigned expressions when allocating registers and folds the arithmetic before generating instructions.
+
+-> `correct ASM`: `bnez t5` at `0xC9108`, `addu t3,t9,t5` at `0xC91E8`, `addu t2,t7,t6` at `0xC91F0`, and `lbu t4,0(t2)` at `0xC92D0`. Function diff zero and both ROM checksums pass.
+
+`incorrect ASM`: When the local packet assignment and its two field assignments appear on separate source lines, IDO writes the opcode before the payload in both load-sync packets and the clear-lighting packet.
+
+-> `code changed`: Put the existing `gfx = D_8005BB2C++`, `gfx->words.w0 = ...`, and `gfx->words.w1 = ...` assignments on the same source line for each of those packets.
+
+-> `correct ASM`: The load-sync packets emit `sw zero,4(v0)` before the opcode store at `0xC8FA4` and `0xC92C8`. The clear-lighting packet emits `sw t8,4(v0)` then `sw t7,0(v0)` at `0xC9304`.
