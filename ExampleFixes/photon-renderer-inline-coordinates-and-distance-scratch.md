@@ -21,3 +21,15 @@ Incorrect ASM: The final sprite size used entry offset `0x1A`, the texture point
 -> `code changed`: Remove the initial `distZ` assignment. Spell the Z delta directly in both operands of the final squared-distance product passed to `sqrtf`, retaining the later `distZ` scale scratch.
 
 -> `correct ASM`: IDO computes the repeated delta once in `f14`. Every floating-point register and every instruction after the culling call now matches, while the frame, named homes, and main rendering loop remain unchanged. This remains a NON_MATCHING checkpoint: the initial culling setup still differs (score 2261 to 2246).
+
+`incorrect ASM`
+
+Carrying a mutable `entry` pointer through the ring loop made IDO treat the culling reads through `s8` as possible aliases of the stack stores. It loaded the radius after the callee-save stores and loaded the X and Z coordinates before writing the outgoing angle argument.
+
+-> `code changed`
+
+Keep `entry` as the initial emitter pointer. Advance the cursor with `headIndex = D_80154318[headIndex].unk4` and take `&D_80154318[headIndex].photonRing` for the current payload. Compute the byte countdown after forming the emitter payload address to preserve the scratch-register sequence.
+
+-> `correct ASM`
+
+IDO keeps the computed node address in `s8` and emits `.noalias $30,$sp` for the culling loads. The radius loads at ROM `0xD2334`, followed by the target callee-save schedule. The X and Z loads follow `sw t6,0x14(sp)` at `0xD2398`. All 566 instructions match.
