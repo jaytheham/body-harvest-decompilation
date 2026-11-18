@@ -555,9 +555,6 @@ extern const char D_80036C50_37850[]; /* osSyncPrintf format string - load faile
 extern const char D_80036C64_37864[];
 extern const char D_80036C74_37874[];
 extern const f32 D_80036C88_37888[];
-extern const f32 D_80037578_38178[];
-extern const f64 D_80037580_38180[];
-extern const f64 D_80037600_38200[];
 extern const f64 D_80037610_38210[];
 extern const char D_80037764_38364[]; /* osSyncPrintf format string - defined in FD80.c, used by 10A20.c */
 extern const Unk80154082 D_800378CC_384CC;
@@ -4046,9 +4043,6 @@ extern Unk8014DD50 D_802E6E30_32AF80[32];
 
 /* Scalar reads preserve the original IDO access and register-allocation patterns. */
 extern const f32 D_80036C88_37888_R;
-extern const f32 D_80037578_38178_R;
-extern const f64 D_80037580_38180_R;
-extern const f64 D_80037600_38200_R;
 
 extern s16 D_8013DAFC_14CAAC[2];
 extern u8 D_8013DB00_14CAB0;
