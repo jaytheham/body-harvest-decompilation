@@ -1255,7 +1255,6 @@ void func_800C3288_D2238(u8 arg0) {
 	func_800C1384_D0334(arg0);
 }
 
-#ifdef NON_MATCHING
 void func_800C3300_D22B0(u8 arg0) {
 	Unk801541F8Entry *effect;
 	Unk80154318Entry *entry;
@@ -1279,11 +1278,10 @@ void func_800C3300_D22B0(u8 arg0) {
 	s8 mode;
 
 	effect = &D_80154088[arg0];
-	/* End each consumed index lifetime after forming the node address. */
 	headIndex = effect->unkA;
-	count = effect->unk4 - 1;
-	entry = &D_80154318[headIndex]; headIndex = 0;
+	entry = &D_80154318[headIndex];
 	baseSub = &entry->photonEmitter;
+	count = effect->unk4 - 1;
 
 	if (func_800B93AC_C835C(entry->unk8, entry->unkC, (u16)(entry->unk2 * 4), (s16)(D_80047954 * 4), (s32)(D_8004795C * 4),
 			0x4000 - D_80047950) != 0) {
@@ -1312,9 +1310,8 @@ void func_800C3300_D22B0(u8 arg0) {
 		if (count > 0) {
 
 			do {
-				headIndex = entry->unk4;
-				entry = &D_80154318[headIndex]; headIndex = 0;
-				sub = &entry->photonRing;
+				headIndex = D_80154318[headIndex].unk4;
+				sub = &D_80154318[headIndex].photonRing;
 
 				distZ = distBias * ((f32)(u32)sub->extent * (1.0 / 256.0));
 
@@ -1407,10 +1404,6 @@ void func_800C3300_D22B0(u8 arg0) {
 		gDPPipeSync(D_8005BB2C++);
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C3300_D22B0.s")
-#endif
 
 s16 func_800C3BD8_D2B88(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u16 arg4, u8 arg5, u8 arg6, u8 arg7) {
 	s16 slot;
