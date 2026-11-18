@@ -365,6 +365,7 @@ void func_8007764C_865FC(void) {
 	s32 i;
 	s32 value;
 	s32 group;
+	s32 typeWord;
 	Unk80259D90* obj;
 
 	camX = (D_80149434 - 0x880) >> 8;
@@ -392,7 +393,8 @@ void func_8007764C_865FC(void) {
 			value = obj->chunkIndex;
 			group = value;
 			group = (s8)group;
-			value = i;
+			/* Keep the word type carrier's allocation priority. */
+			typeWord = obj->unk0; if (typeWord) {} value = i;
 			if (group == -1) {
 				continue;
 			}
@@ -527,7 +529,6 @@ void func_8007764C_865FC(void) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(i), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, obj->unk8);
-		/* Preserve model-pass address priorities. */
 		if (i == 150 && obj < &D_80259D90[150]) {}
 	}
 
@@ -560,7 +561,7 @@ void func_8007764C_865FC(void) {
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 5, G_TX_RENDERTILE, G_ON);
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	end = (Unk80259D90*)D_8005BB2C++; ((Gfx*)end)->words.w0 = 0x01020040; ((Gfx*)end)->words.w1 = K0_TO_PHYS(&D_80031160);
 
 	value = -1;
 	end = &D_80259D90[150];
@@ -593,6 +594,7 @@ void func_8007764C_865FC(void) {
 			}
 		}
 
+		typeWord = obj->unk0; if (typeWord) {}
 		i = (s32)obj->vertices;
 		i *= 1;
 		if (value != obj->unk0) {
