@@ -1,23 +1,23 @@
 {
-  "generated": "2026-11-18T00:31:30Z",
-  "commit": "5c295724",
-  "commit_timestamp": "2026-11-18T13:30:20+13:00",
+  "generated": "2026-11-18T01:31:35Z",
+  "commit": "697ca625",
+  "commit_timestamp": "2026-11-18T14:30:39+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 3015,
-    "non_matching": 42,
+    "matched": 3016,
+    "non_matching": 41,
     "asm_stubs": 0,
-    "matched_pct": 98.63,
+    "matched_pct": 98.66,
     "decompiled_pct": 100.0
   },
   "segments": {
     "core": {
       "display_name": "Core",
-      "matched": 353,
-      "non_matching": 2,
+      "matched": 354,
+      "non_matching": 1,
       "asm_stubs": 0,
       "total": 355,
-      "matched_pct": 99.4,
+      "matched_pct": 99.7,
       "decompiled_pct": 100.0
     },
     "overlay_gameplay/frontend": {
@@ -186,11 +186,21 @@
     {
       "path": "core/AD60.c",
       "segment": "core",
-      "matched": 25,
-      "non_matching": 1,
+      "matched": 26,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 26,
-      "matched_pct": 96.2,
+      "matched_pct": 100.0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/AD60_rodata.c",
+      "segment": "core",
+      "matched": 0,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 0,
+      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -2607,9 +2617,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 96,
-      "matched": 2628,
-      "non_matching": 42,
+      "files": 97,
+      "matched": 2629,
+      "non_matching": 41,
       "asm_stubs": 0
     },
     {
@@ -2924,9 +2934,9 @@
     },
     {
       "date": "2026-11-15",
-      "commit": "5c29572",
-      "matched": 3015,
-      "non_matching": 42,
+      "commit": "697ca62",
+      "matched": 3016,
+      "non_matching": 41,
       "total": 3057
     }
   ]
