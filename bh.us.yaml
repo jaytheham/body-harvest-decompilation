@@ -363,6 +363,7 @@ segments:
       - [0xA40B0, c, overlay_gameplay/outside/A40B0] # Debug
       - [0xA49A0, c, overlay_gameplay/outside/A49A0] # Map
       - [0xAAA70, c, overlay_gameplay/outside/AAA70] # HUD
+      - [0xAE0E0, c, overlay_gameplay/outside/AE0E0]
       - [0xB2CB0, c, overlay_gameplay/outside/B2CB0] # Aliens
       - [0xB49C0, c, overlay_gameplay/outside/B49C0] # Beacons, Powerups
       - [0xB8290, c, overlay_gameplay/outside/B8290] # Aliens
@@ -391,6 +392,7 @@ segments:
       - [0x14BB20, .data, overlay_gameplay/outside/A40B0]
       - [0x14C160, .data, overlay_gameplay/outside/A49A0]
       - [0x14C4F0, .data, overlay_gameplay/outside/AAA70]
+      - [0x14C6E0, .data, overlay_gameplay/outside/AE0E0]
       - [0x14C730, .data, overlay_gameplay/outside/B2CB0]
       - [0x14C840, .data, overlay_gameplay/outside/B49C0]
       - [0x14C870, .data, overlay_gameplay/outside/B8290]
@@ -440,12 +442,25 @@ segments:
 
       # Shadow state includes the private StripModelToBones pointers and count.
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/AAA70, vram: 0x8014F6A0}
+      - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/AE0E0, vram: 0x8014F6A4, linker_entry: false}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/B49C0, vram: 0x8014F800}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/F7870, vram: 0x801575A0}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/FEC70, vram: 0x80157FC0}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/101840, vram: 0x80159D10}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/buildings, vram: 0x8015EB80}
       - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/13DA70, vram: 0x8015FF80}
+
+  # The unused weak palette storage overlaps the HUD BSS before pendingSelection.
+  - name: overlay_gameplay_outside_menu
+    type: code
+    start: 0x158330
+    vram: 0x8014F6A4
+    bss_size: 0x30
+    subalign: 4
+    exclusive_ram_id: 80070270
+    overlay: true
+    subsegments:
+      - {start: 0x158330, type: .fixed_bss, name: overlay_gameplay/outside/AE0E0, vram: 0x8014F6A4}
 
   - name: overlay_gameplay_inside
     type: code
