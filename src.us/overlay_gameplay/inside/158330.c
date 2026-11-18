@@ -8137,7 +8137,7 @@ void func_80074FF0_15D0B0(void) {
 #ifdef NON_MATCHING
 void func_8007568C_15D74C(void) {
 	s32 effectKind;
-	s32 cameraZ;
+	s32 heading;
 	f64 radiusScale = 1.5;
 	f64 temp_f20;
 	Unk800E66A8 *entry;
@@ -8152,12 +8152,10 @@ void func_8007568C_15D74C(void) {
 	f32 angleScale = 32768.0f;
 	f32 halfDivisor = 2.0f;
 	s32 position[6];
-	s32 padPosition0;
-	s32 padPosition1;
-	s16 scale[6];
-	Gfx *displayList;
+	s32 effectIndex;
 	s32 scratch;
-	Unk8008DED0Entry *entry2;
+	s16 scale[6];
+	Unk8008DED0Entry *effectEntry;
 
 	gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
@@ -8200,7 +8198,7 @@ void func_8007568C_15D74C(void) {
 					halfDim = (dimZ < dimX) ? (s32)(dimX / halfDivisor) : (s32)(dimZ / halfDivisor);
 					if (func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
 						((u16)(u32)((f64)halfDim * radiusScale)), D_8008DDF4_175EB4, D_8008DDF8_175EB8,
-						(s32)(s64)(cameraZ = (s32)D_8008DDFC_175EBC), (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
+						(s32)(s64)(s32)D_8008DDFC_175EBC, (u32)((heading = (s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20)) & 0xFFFF), 0x238E)) {
 						func_8007F8F4_1679B4(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60, entry->unk8 << 0xE);
 					}
 				} else {
@@ -8215,19 +8213,20 @@ void func_8007568C_15D74C(void) {
 					dimZ = (u32)D_800E65BC[objIdx].unk1A;
 					halfDim = (dimZ < dimX) ? (s32)(dimX / halfDivisor) : (s32)(dimZ / halfDivisor);
 
-					if (func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
+					if ((s32)(s64)func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
 						((u16)(u32)((f64)halfDim * radiusScale)), D_8008DDF4_175EB4, D_8008DDF8_175EB8,
-						D_8008DDFC_175EBC, (u16)(s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20), 0x238E)) {
+						(s32)(s64)(s32)D_8008DDFC_175EBC, (u32)((heading = (s32)(((f64)(D_8008DDF0_175EB0 * angleScale)) / temp_f20)) & 0xFFFF), 0x238E)) {
 						if (objIdx == 0x1E) {
+							u8 paletteSelector;
 							gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-							scratch = D_800E65C4[(entry->unk2C & 0xFC) >> 2];
+							paletteSelector = entry->unk2C; scratch = D_800E65C4[(s32)(s64)(s32)(s64)((paletteSelector & 0xFC) >> 2)];
 							gSPSegment(D_8005BB2C++, 6, &D_800A5720[scratch * 2]);
 
 							func_800773F4_15F4B4(
 								variant,
 								(s32)(entry->unk20 * positionScale) + ((entry->unk2 - 0x60) << 0x10),
 								(s32)(entry->unk24 * positionScale) + (entry->unk4 << 0x10),
-								(s32)(entry->unk28 * positionScale) + ((entry->unk6 - 0x60) << 0x10),
+								((entry->unk6 - 0x60) << 0x10) + (s32)(entry->unk28 * positionScale),
 								0,
 								entry->unk8 << 0xE,
 								0,
@@ -8314,25 +8313,25 @@ void func_8007568C_15D74C(void) {
 	}
 
 	if (D_800E65A8 & 0x10) {
-		scratch = ((s32)(D_800E664E & 0xFC) >> 2);
+		effectIndex = ((s32)(D_800E664E & 0xFC) >> 2);
 		effectKind = D_800E664E & 3;
 		if (effectKind == 2) {
-			entry2 = &D_8008DED0_175F90[scratch];
-			if (entry2->unk8 != 0) {
+			effectEntry = &D_8008DED0_175F90[effectIndex];
+			if (effectEntry->unk8 != 0) {
 				gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 
 
-				func_800773F4_15F4B4(entry2->unk0, (s32)(D_800E6650.x * 65536.0f), (s32)(D_800E6650.y * 65536.0f),
+				func_800773F4_15F4B4(effectEntry->unk0, (s32)(D_800E6650.x * 65536.0f), (s32)(D_800E6650.y * 65536.0f),
 					(s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, D_8005BB38++, 1, 0x40);
 
 				gDPSetCombineLERP(D_8005BB2C++, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0, PRIMITIVE, 0, SHADE, 0);
 			} else {
-				func_8008B53C_1735FC((s16)(s32)D_800E6650.x, (s16)(s32)D_800E6650.y, (s16)(s32)D_800E6650.z, 0x28, scratch);
+				func_8008B53C_1735FC((s16)(s32)D_800E6650.x, (s16)(s32)D_800E6650.y, (s16)(s32)D_800E6650.z, 0x28, effectIndex);
 			}
 		} else {
 
 
-			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][scratch], (s32)(D_800E6650.x * 65536.0f),
+			func_800773F4_15F4B4(D_8008DFA0_176060[currentLevel][effectIndex], (s32)(D_800E6650.x * 65536.0f),
 				(s32)(D_800E6650.y * 65536.0f), (s32)(D_800E6650.z * 65536.0f), 0, D_800E6634, 0, D_8005BB38++, 1, 0x40);
 		}
 

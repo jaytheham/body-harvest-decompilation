@@ -21,3 +21,9 @@ incorrect ASM: The room renderer also reverses its two independent LI 256 instru
 -> code changed: Keep all three offset-scale assignments on one physical source line in func_8007568C_15D74C.
 
 -> correct ASM: Both constant loads match the target, retaining the 0x138-byte frame and 0xEAC-byte body. The native score improves from 1032 to 1022; separate culling and cache-register differences remain.
+
+incorrect ASM: In the room renderer, padding between position and scale produced a 0x140-byte frame with rotation at sp+0x100 and position at sp+0xDC. Scale was at sp+0xC8 instead of sp+0xC0.
+
+-> code changed: Remove the two padding words after position. Declare the padding slot and scratch word before scale, leaving the effect-entry pointer after it.
+
+-> correct ASM: Rotation, position and scale use sp+0xF8, sp+0xD4 and sp+0xC0 in the target 0x138-byte frame. The C build preserves all bytes outside the US renderer. The culling calls and palette/effect index still have scheduling and register differences.
