@@ -3529,6 +3529,7 @@ s32 func_802DCCD8_25C418(u8 arg0)
 	return 0;
 }
 
+#ifdef NON_MATCHING
 void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
 	s16 root;
@@ -3728,6 +3729,9 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 		alienInstances[arg0].unk1E--;
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DD104_25C844.s")
+#endif
 
 
 void func_802DD9C8_25D108(u8 arg0) {

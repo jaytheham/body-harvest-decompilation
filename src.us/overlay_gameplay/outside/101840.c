@@ -1240,6 +1240,7 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	}
 }
 
+#ifdef NON_MATCHING
 void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sinA;
 	f32 cosA;
@@ -1510,6 +1511,9 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
 	gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s")
+#endif
 
 
 #ifdef NON_MATCHING
