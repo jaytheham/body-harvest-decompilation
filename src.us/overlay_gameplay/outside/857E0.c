@@ -357,7 +357,7 @@ void func_800772EC_8629C(s32 arg0) {
 
 // DisplayTrees
 void func_8007764C_865FC(void) {
-	Unk80259D90* end;
+	Gfx* phasePacket;
 	s32 camX;
 	s32 camZ;
 	s32 cellX;
@@ -488,7 +488,7 @@ void func_8007764C_865FC(void) {
 		func_80076A10_859C0(0x18, (s16) (D_8014D2F0 + 4), (s16) (D_8014D2F4 + 4));
 	}
 
-	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+	phasePacket = D_8005BB2C++; phasePacket->words.w0 = 0x01020040; phasePacket->words.w1 = K0_TO_PHYS(&D_80031160);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
@@ -496,8 +496,7 @@ void func_8007764C_865FC(void) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_PASS2);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 
-	obj = D_80259D90;
-	for (; obj < &D_80259D90[0x96]; obj++) {
+	for (obj = D_80259D90; obj < &D_80259D90[0x96]; obj++) {
 		if (obj->unk0 >= 0xE) {
 			continue;
 		}
@@ -529,10 +528,14 @@ void func_8007764C_865FC(void) {
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 		gSPMatrix(D_8005BB2C++, K0_TO_PHYS(i), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 		gSPDisplayList(D_8005BB2C++, obj->unk8);
-		if (i == 150 && obj < &D_80259D90[150]) {}
+		if (phasePacket) {}
+		if (phasePacket) {}
+
 	}
 
+
 	if (obj < &D_80259D90[150]) {}
+	if ((u32)phasePacket == 0x01020040U) {}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetTextureLOD(D_8005BB2C++, G_TL_LOD);
@@ -561,12 +564,11 @@ void func_8007764C_865FC(void) {
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 5, G_TX_RENDERTILE, G_ON);
 
-	end = (Unk80259D90*)D_8005BB2C++; ((Gfx*)end)->words.w0 = 0x01020040; ((Gfx*)end)->words.w1 = K0_TO_PHYS(&D_80031160);
+	if (phasePacket) {}
+	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 
 	value = -1;
-	end = &D_80259D90[150];
-	obj = D_80259D90;
-	for (; obj != end; obj++) {
+	obj = D_80259D90; do {
 		if (obj->unk0 < 0xE) {
 			continue;
 		}
@@ -622,7 +624,7 @@ void func_8007764C_865FC(void) {
 		gSPVertex(D_8005BB2C++, K0_TO_PHYS(i), 4, 0);
 
 		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 1, 2, 3, 0);
-	}
+	} while (++obj != D_8025CC70);
 
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);

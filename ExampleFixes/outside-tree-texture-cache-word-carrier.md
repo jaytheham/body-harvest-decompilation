@@ -1,35 +1,35 @@
-incorrect ASM (`func_8007764C_865FC`, texture cache):
+incorrect ASM (`func_8007764C_865FC`, texture-cache carrier and frame):
 
 ```asm
+addiu   sp,sp,-0x130
+...
 move    a0,s4
 beq     a0,v0,vertex_commands
-...
-lb      a0,0(s1)
 ```
 
 -> code changed:
 
-Keep a separate signed word type carrier. Observe the current object's type once in the first streaming scan, immediately before the existing `value = i`, and again after billboard culling, before computing the vertex address:
+Keep a separate signed word type carrier. Observe the current object's type in the first streaming scan, immediately before the existing `value = i`, and after billboard culling:
 
 ```c
 s32 typeWord;
-/* First streaming scan, after the chunk-byte normalization: */
+/* First streaming scan, after chunk-byte normalization: */
 typeWord = obj->unk0; if (typeWord) {} value = i;
 /* Billboard pass, after culling: */
 typeWord = obj->unk0; if (typeWord) {}
 ```
 
-These checks emit no instructions. The trace gives the carrier total saving 220 across two occurrences, density 110, and color `a0`. The original mixed raw-byte/texture-cache word then receives `a1`. Retain the original model-pass endpoint priority check; omitting it independently changes the saved registers.
+The checks emit no instructions. Compiler diagnostics give this memory-defined carrier total saving 220 across two occurrences, density 110, and color `a0`. The original mixed raw-byte/texture-cache word receives `a1`.
 
-The additional word would enlarge the frame from `0x128` to `0x130`. Reuse the expired `end` pointer for the final camera matrix packet, replacing that one macro's private packet local:
+Use a typed `Gfx* phasePacket` in the first local slot for the first camera matrix command, replacing the macro's private packet local. Keep the command's three statements on one physical line:
 
 ```c
-end = (Unk80259D90*)D_8005BB2C++; ((Gfx*)end)->words.w0 = 0x01020040; ((Gfx*)end)->words.w1 = K0_TO_PHYS(&D_80031160);
+phasePacket = D_8005BB2C++; phasePacket->words.w0 = 0x01020040; phasePacket->words.w1 = K0_TO_PHYS(&D_80031160);
 ```
 
-Keep these three packet statements on one physical line. `end` is assigned the pool bound afterward.
+Retain this pointer through the model pass and the state-command bridge as shown in `outside-tree-render-address-priority.md`. The final camera matrix command uses the normal `gSPMatrix` macro. There is no separate endpoint local.
 
--> correct ASM (cache register and frame only; the function remains unmatched):
+-> correct ASM:
 
 ```asm
 addiu   sp,sp,-0x128
@@ -40,4 +40,4 @@ beq     a1,v0,vertex_commands
 lb      a1,0(s1)
 ```
 
-Normal `tools/make.ps1` and the function diff verify the cache change and the original first 376 instructions. The remaining endpoint rematerialization and associated scheduling differences give score 585; the full ROM checksum still fails.
+The complete function has diff score 0, and normal `tools/make.ps1` reports `build/bh.us.z64: OK`.
