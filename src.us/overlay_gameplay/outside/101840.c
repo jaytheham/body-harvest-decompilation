@@ -1240,7 +1240,6 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sinA;
 	f32 cosA;
@@ -1253,7 +1252,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 cosAComp;
 	s32 baseGreen;
 	f32 radius;
-	EffectRgb *levelColor;
+	EffectRgb (*levelColor)[3];
 	s16 colorA;
 	s16 colorB;
 	s16 colorC;
@@ -1268,8 +1267,8 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 colorTopC;
 	s16 sinAOffset;
 	u8 cR;
-	u8 cG;
-	u8 cB;
+	u16 cG;
+	s32 cB;
 
 	radius = D_801601F0[arg3].unk8;
 	if (D_8013FCD0_14EC80 != 0) {
@@ -1285,8 +1284,8 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	sinB = (f32)((f64)(f32)sins(angleA) / 32768.0);
 	cosBValue = coss(angleA);
 
-	levelColor = D_8013FCD4_14EC84[1][currentLevel - 1];
-	colorA = levelColor[0].r;
+	levelColor = &D_8013FCD4_14EC84[0][currentLevel];
+	colorA = levelColor[4][0].r;
 	colorB = D_8013FCD4_14EC84[1][currentLevel - 1][0].g;
 	colorC = D_8013FCD4_14EC84[1][currentLevel - 1][0].b;
 	if (&colorA) {}
@@ -1319,8 +1318,8 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	sinAComp = (s32)(radiusThird * sinA);
-	cosAComp = (s32)(radiusThird * cosA);
 	sinBComp = (s32)(radiusThird * sinB);
+	cosAComp = (s32)(radiusThird * cosA);
 	cosBComp = (s32)((f32)radiusThird * (f32)((f64)(f32)cosBValue / 32768.0));
 
 
@@ -1512,9 +1511,6 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
 
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s")
-#endif
 
 #ifdef NON_MATCHING
 void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {

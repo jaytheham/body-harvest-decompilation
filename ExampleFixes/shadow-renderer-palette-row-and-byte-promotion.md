@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_800F554C_1044FC`, the saved red-palette pointer introduces `addiu v1,a0,0x24` before `lbu t9,0(v1)`. The middle blue channel also requires `andi s1,t5,0xff` when its byte local is promoted across the geometry phases.
+
+-> `code changed`: Preserve the existing palette pointer home, but make it a pointer to three-color rows: `EffectRgb (*levelColor)[3]`. Assign `levelColor = &D_8013FCD4_14EC84[0][currentLevel]` and read the red component through `levelColor[4][0].r`. Keep the other palette reads indexed directly. Declare the middle green channel `u16` and the middle blue channel `s32`; both originate in unsigned palette bytes and retain their values.
+
+-> `correct ASM`: The red load uses the existing indexed base directly as `lbu t9,0x24(a0)`, without a separate row-address instruction. The required palette SH/LH readbacks remain, and blue's redundant mask becomes `move s1,t5`. Together with the initial component-definition ordering correction, the verified normal-build function score improves from 3941 to 3478. This is a partial checkpoint: register choices, the promoted trig-argument home, RGB spills, and some scheduling still differ.
