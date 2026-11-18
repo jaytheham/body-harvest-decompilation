@@ -39,3 +39,15 @@
 `code changed` -> As a control, assign the unmasked heading to `sp4C` and let the unsigned-halfword trig parameters apply the mask. IDO reserves the same spill offsets in both forms. Its assembly listing drops the first mask and copy, and the later scratch-register sequence changes.
 
 `correct ASM` -> The linked control uses `lh v1,6(s0)` at `0x31F5C4`. It retains the argument spill at `sp+0x4C` and increases the routine's total to 163 differing words. Masking just the X or Y sum to its low halfword before passing it to `func_80088E40_97DF0` brings the total back to 55 while retaining the correct heading load. That control changes the order of instructions in the coordinate setup. The guarded draft keeps the explicit heading mask and its 52 differing words.
+
+`incorrect ASM` -> The direct parent copy loads the root into `a1` and the penultimate link into `a0`. The direct terminal load uses `t9`, shifting the timer into `t0` and shifting the joint pointers through the preceding registers. Treating the parent as the sixth joint gives `lh a0,0x92(sp)` at the end.
+
+`code changed` -> Declare an independent `s16 parent` immediately before the five joint IDs. Copy the parent into that local inside an `if (1)` block. Read the first child before the sibling chain, cache the terminal joint in a named halfword, and apply `& 0xFFFFu` to the first four joint stores to retain IDO's temporary register order.
+
+`correct ASM` -> The root uses `lh a0,0xC(s0)`, the cache uses `sh v1,0x92(sp)`, and the two final links use `lb v1,0xC(t6)` and `lb t0,0xC(t8)`. The timer stays in `t1`, the first joint in `ra`, and the final parent reload uses `lh v1,0x92(sp)`.
+
+`incorrect ASM` -> The explicit selector and heading masks allocate scratch registers before the animation call and both trigonometric cases. The animation table address uses `t9`, and the case 2 heading uses `lh t6,6(s0)`.
+
+`code changed` -> Remove the selector's explicit byte mask and both headings' explicit halfword masks together. Retain the typed byte and halfword function parameters. Put the parent-joint coordinate first in each case 2 addition.
+
+`correct ASM` -> The table address uses `t7`, case 2 uses `lh v1,6(s0)`, and case 3 uses `addu v1,v1,at`. The coordinate additions use the target load order and registers. The linked US function diff is zero.
