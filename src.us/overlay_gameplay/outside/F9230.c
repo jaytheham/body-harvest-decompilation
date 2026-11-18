@@ -168,13 +168,6 @@ Unk8009E8DC D_8013E5AC_14D55C[] = {
 
 f32 D_8013FC04_14EBB4[2] = {0.0f, 0.0f};
 
-s16 D_8013FC0C_14EBBC = 0;
-
-f32 D_8013FC10_14EBC0 = 0.0f;
-s32 D_8013FC14_14EBC4[9] = {0x640, 0x1F40, 0, 0xDAC0, 0xBB80, 0x9C40, 0x7D00, 0x5DC0, 0xFA00};
-s32 D_8013FC38_14EBE8[9] = {0x1A, 0x1F, 0x1B, 0x20, 0x19, 0x1E, 0x1C, 0x1D, 0x1B};
-s32 D_8013FC5C_14EC0C[9] = {0x12, 0x12, 0x15, 0x14, 0x14, 0x14, 0x13, 0x12, 0x15};
-
 void func_800EA280_F9230(void) { D_80047948 = 0; D_80157E7C = 4; }
 
 void func_800EA298_F9248(s16 arg0) {
@@ -1036,8 +1029,9 @@ void func_800EC450_FB400(void) { D_80157A28 |= PLAYER_STATE_FLAG_WARPING; }
 
 void func_800EC468_FB418(void) { D_80157A28 &= ~PLAYER_STATE_FLAG_WARPING; }
 
-#ifdef NON_MATCHING
 void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
+	static s16 D_8013FC0C_14EBBC = 0;
+	static f32 D_8013FC10_14EBC0 = 0.0f;
 	f32 animationRate;
 	s16 spBA;
 	s32 padBC;
@@ -1054,7 +1048,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 	Vec3f sp80;
 	Vec3f sp74;
 	s32 var_a2;
-	s32 statePadding;
+	s32 *flags;
 	f32 sp68;
 	s16 headingPadding;
 	s16 var_t0;
@@ -1078,7 +1072,6 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 		func_800ED78C_FC73C(arg0, arg1);
 	} else {
 		var_a2 = D_80157A28;
-		temp_t6 = var_a2 | 1;
 
 		if (var_a2 & 0x200) {
 			if (D_80157A0C != 0x23) {
@@ -1093,8 +1086,8 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, animationRate);
 		} else {
-			D_80157A28 = temp_t6;
-			D_80157A28 = D_80157A28 & ~PLAYER_STATE_FLAG_AIMING;
+			D_80157A28 = var_a2 |= PLAYER_STATE_FLAG_MOVING;
+			D_80157A28 &= ~PLAYER_STATE_FLAG_AIMING;
 
 			func_800FB430_10A3E0(arg0, 0.0f);
 			func_8000345C_405C(0x20);
@@ -1110,13 +1103,14 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 
-			var_a2 = D_80157A28;
+			flags = &D_80157A28;
+			var_a2 = *flags;
 
-			if ((arg1->button & 0x20) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
-				D_80157A28 |= PLAYER_STATE_FLAG_COMM_LINK;
+			if ((arg1->button & 0x20) && ((var_a2 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
+				D_80157A28 = var_a2 | PLAYER_STATE_FLAG_COMM_LINK;
 				var_a2 = D_80157A28;
-			} else if ((arg1->button & 0x10) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
-				D_80157A28 |= PLAYER_STATE_FLAG_AIMING;
+			} else if ((arg1->button & 0x10) && ((var_a2 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
+				D_80157A28 = var_a2 | PLAYER_STATE_FLAG_AIMING;
 				func_800EABE0_F9B90(arg0);
 
 				var_a0 = arg1->stick_x;
@@ -1140,9 +1134,9 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 				if (var_v0 >= 0x40) {
 				}
 
-				sp80.x = (f32)((s16)D_80159020->unk0 / 4);
-				sp80.y = (f32)((s16)D_80159020->unk2 / 4);
-				sp80.z = (f32)((s16)D_80159020->unk4 / 4);
+				sp80.x = (f32)(D_80159020->unk0 / 4);
+				sp80.y = (f32)(D_80159020->unk2 / 4);
+				sp80.z = (f32)(D_80159020->unk4 / 4);
 				stickX[1] = (s16)var_a0;
 				sp74.x = D_80047954;
 				sp74.y = D_80047958;
@@ -1157,11 +1151,11 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 
 				sp90 = (f32)D_8003E820_3F420[temp_v1_2] / 61.0f;
-				temp_v1_2 = D_8013FC0C_14EBBC - stickX[1];
-				if (temp_v1_2 >= 0) {
-					var_f2 = (f32)temp_v1_2;
+				var_a2 = D_8013FC0C_14EBBC - stickX[1];
+				if (var_a2 >= 0) {
+					var_f2 = (f32)var_a2;
 				} else {
-					var_f2 = (f32)-temp_v1_2;
+					var_f2 = (f32)-var_a2;
 				}
 
 				if (var_f2 < D_8013FC10_14EBC0) {
@@ -1199,23 +1193,26 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					func_800EB534_FA4E4(&D_80157600, ANIM_ROLL_FORWARD, 0, sp68);
 				} else if ((D_80157A0C != 0x16) && (D_80157A0C != 0x17) && (D_80157A0C != 0x18)) {
 					if (arg1->button & 0x2000) {
-						spA8 = ((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC].unk04;
+						spA8 = D_8013E45C_14D40C[D_801575DC].unk04;
 						D_80157A28 &= ~PLAYER_STATE_FLAG_AIMING;
-						func_800EB534_FA4E4(&D_80157600, spA8, 0, func_800EA604_F95B4(&arg0->unk0, &sp80));
+						temp_f0 = func_800EA604_F95B4(&arg0->unk0, &sp80);
+						/* Keep the animation ID load ahead of the player address setup. */
+						if (spA8) {}
+						func_800EB534_FA4E4(&D_80157600, spA8, 0, temp_f0);
 						D_80157A28 &= ~PLAYER_STATE_FLAG_MOVING;
 					} else {
-						D_80157A28 |= PLAYER_STATE_FLAG_MOVING;
+						D_80157A28 = *flags | PLAYER_STATE_FLAG_MOVING;
 						if ((D_8013E5AC_14D55C[D_80157A0C].unk4 & 8) == 0) {
-							func_800EB534_FA4E4(&D_80157600, ((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC].unk00, 0,
+							func_800EB534_FA4E4(&D_80157600, D_8013E45C_14D40C[D_801575DC].unk00, 0,
 												func_800EA604_F95B4(&arg0->unk0, &sp80));
 						}
 					}
 				}
 				var_a2 = D_80157A28;
-			} else if ((arg1->button & 0x2000) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
-				sp80.x = (f32)((s16)D_80159020->unk0 / 4);
-				sp80.y = (f32)((s16)D_80159020->unk2 / 4);
-				sp80.z = (f32)((s16)D_80159020->unk4 / 4);
+			} else if ((arg1->button & 0x2000) && ((var_a2 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
+				sp80.x = (f32)(D_80159020->unk0 / 4);
+				sp80.y = (f32)(D_80159020->unk2 / 4);
+				sp80.z = (f32)(D_80159020->unk4 / 4);
 
 				sp68 = func_800EA604_F95B4(&arg0->unk0, &sp80);
 
@@ -1228,13 +1225,13 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 				} else if ((D_80157A0C != 0x16) && (D_80157A0C != 0x17) && (D_80157A0C != 0x18)) {
 					func_800EBC94_FAC44(arg0, arg1);
 					if ((D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 0x480) == 0) {
-						func_800EB534_FA4E4(&D_80157600, ((Unk8013E45C *)D_8013E45C_14D40C)[D_801575DC].unk04, 0, sp68);
+						func_800EB534_FA4E4(&D_80157600, D_8013E45C_14D40C[D_801575DC].unk04, 0, sp68);
 					}
 					D_80157A28 &= ~PLAYER_STATE_FLAG_MOVING;
 				}
 				var_a2 = D_80157A28;
 			} else {
-				D_80157A28 |= PLAYER_STATE_FLAG_MOVING;
+				D_80157A28 = var_a2 | PLAYER_STATE_FLAG_MOVING;
 				arg0->unk22 = 0;
 
 				temp_f0 = sqrtf((f32)((arg1->stick_x * arg1->stick_x) + (arg1->stick_y * arg1->stick_y)));
@@ -1298,7 +1295,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 					}
 				}
 
-				if ((D_80157A0C == 5) && (((s16)arg0->unk12 >> 5) < 0xA)) {
+				if ((D_80157A0C == 5) && ((arg0->unk12 >> 5) < 0xA)) {
 					func_800FB430_10A3E0(arg0, 20.0f);
 				}
 
@@ -1322,13 +1319,10 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 
 	arg0->unk6 = arg0->unkE;
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800EC484_FB434.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.eu.s")
-#endif
-#endif
+
+s32 D_8013FC14_14EBC4[9] = {0x640, 0x1F40, 0, 0xDAC0, 0xBB80, 0x9C40, 0x7D00, 0x5DC0, 0xFA00};
+s32 D_8013FC38_14EBE8[9] = {0x1A, 0x1F, 0x1B, 0x20, 0x19, 0x1E, 0x1C, 0x1D, 0x1B};
+s32 D_8013FC5C_14EC0C[9] = {0x12, 0x12, 0x15, 0x14, 0x14, 0x14, 0x13, 0x12, 0x15};
 
 s32 func_800ED55C_FC50C(VehicleInstance *arg0, s32 arg1) {
 	s32 compareAngle;
@@ -1850,7 +1844,11 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s")
+#if defined(VERSION_US)
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.eu.s")
+#endif
 #endif
 
 // Is first weapon model valid
