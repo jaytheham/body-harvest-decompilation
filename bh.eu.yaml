@@ -260,6 +260,7 @@ segments:
       - [0x37470, .rodata, ../src.us/core/1050]
       - [0x378E0, .rodata, ../src.us/core/53F0]
       - [0x38090, .rodata, ../src.us/core/AD60]
+      - [0x38240, .rodata, ../src.us/core/AD60_rodata]
       - [0x38250, .rodata, ../src.us/core/E830]
       - [0x38280, .rodata, ../src.us/core/FD80]
       - [0x383B0, .rodata, ../src.us/core/loader]

@@ -473,7 +473,6 @@ void func_8000AFDC_BBDC(void)
 	}
 }
 
-#ifdef NON_MATCHING
 void func_8000B044_BC44(void) {
     s16 i;
     u32 r, g, b;
@@ -516,7 +515,7 @@ void func_8000B044_BC44(void) {
 	gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BOTH | G_LIGHTING);
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-	gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0, 0, r, g, b, 0xFF);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -782,13 +781,6 @@ void func_8000B044_BC44(void) {
 
 	D_80053BE0 = 0;
 }
-#else
-#ifdef VERSION_US
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s", "src.us/core/AD60_text_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/core/AD60/func_8000B044_BC44.s", "src.us/core/AD60_text_late_rodata.eu.s")
-#endif
-#endif
 
 s32 func_8000C670_D270(s16 arg0) {
 	s32 temp;
@@ -1036,7 +1028,7 @@ void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2,
         units = 4096.0;
         if (scale) { }
         if (units) { }
-        degrees = 180.0;
+        degrees = D_80037610_38210[0];
         do {
             channel = &arg1[i];
             if (channel->unk14 != 0) {
