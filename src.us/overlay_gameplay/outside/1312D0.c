@@ -52,10 +52,19 @@ u8 D_80140B70_14FB20[0x0C] = {
 	0xFA, 0xE6, 0xC8, 0xE6, 0xDC, 0x32, 0xB4, 0x82, 0x46, 0xE6, 0x96, 0x00,
 };
 
-u8 D_80140B7C_14FB2C[0x24] = {
-	0xFF, 0xFF, 0xFF, 0xFF, 0x3C, 0x3C, 0x3C, 0xFF, 0x3C, 0x80, 0x80, 0xFF, 0xFF, 0xFF, 0x3C, 0x3C,
-	0xFF, 0xFF, 0xFF, 0x3C, 0xFF, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-	0x00, 0x00, 0x00, 0x00,
+EffectRgb D_80140B7C_14FB2C[12] = {
+	{ 0xFF, 0xFF, 0xFF },
+	{ 0xFF, 0x3C, 0x3C },
+	{ 0x3C, 0xFF, 0x3C },
+	{ 0x80, 0x80, 0xFF },
+	{ 0xFF, 0xFF, 0x3C },
+	{ 0x3C, 0xFF, 0xFF },
+	{ 0xFF, 0x3C, 0xFF },
+	{ 0x00, 0x00, 0x00 },
+	{ 0x00, 0x00, 0x00 },
+	{ 0x00, 0x00, 0x00 },
+	{ 0x00, 0x00, 0x00 },
+	{ 0x00, 0x00, 0x00 },
 };
 
 s32 func_80122320_1312D0(s32 arg0)
@@ -759,7 +768,6 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-// CURRENT(370)
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
@@ -769,7 +777,7 @@ void func_80124D60_133D10(void) {
 	s32 i;
 	s32 sparkType;
 	s32 weaponFlags;
-	u8 *extraPtr;
+	const EffectRgb *lightColor;
 	const u32 *sparkDLs;
 	Unk80052B40 fadeVec;
 	u8 red;
@@ -811,24 +819,25 @@ void func_80124D60_133D10(void) {
 				} else if ((D_80145BE0_154B90[bullet->unk20].weaponFlags << 9) < 0) {
 					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 				} else {
-					switch (bullet->unk20 - 0x5C) {
-						case 0:
+					switch (bullet->unk20) {
+						case 0x5C:
 							func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
 							break;
-						case 2:
+						case 0x5E:
+						case 0x6F:
 							func_800D55C0_E4570(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
 							break;
-						case 5:
+						case 0x61:
 							func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 							break;
-						case 4:
+						case 0x60:
+						case 0x63:
 							func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 							break;
-						case 3:
-						case 0xA:
-						case 0xC:
-						case 0x10:
-						case 0x13:
+						case 0x5F:
+						case 0x66:
+						case 0x68:
+						case 0x6C:
 							func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
 							break;
 						default:
@@ -943,10 +952,10 @@ void func_80124D60_133D10(void) {
 
 				weaponFlags = weaponEntry->unkB;
 				if (weaponFlags != 0) {
-					extraPtr = &D_80140B7C_14FB2C[(weaponFlags & 7) * 3];
-					color[0] = ((extraPtr[0] * (weaponFlags & 0xF8)) >> 9);
-					color[1] = ((extraPtr[1] * (weaponFlags & 0xF8)) >> 9);
-					color[2] = ((extraPtr[2] * (weaponFlags & 0xF8)) >> 9);
+					lightColor = &D_80140B7C_14FB2C[(u8)weaponFlags & 7];
+					color[0] = ((lightColor->r * (weaponFlags & 0xF8)) >> 9);
+					color[1] = ((lightColor->g * (weaponFlags & 0xF8)) >> 9);
+					color[2] = ((lightColor->b * (weaponFlags & 0xF8)) >> 9);
 					pos[0] = (s16)(s32)bullet->unk0;
 					pos[1] = (s16)(s32)bullet->unk8;
 					func_800B2354_C1304(pos, color, 0x100, 0x258);
@@ -966,7 +975,7 @@ void func_80124D60_133D10(void) {
 			D_8005BB34->v.tc[0] = 0;
 			D_8005BB34->v.tc[1] = 0;
 
-			alpha = 0x80 - ((u8)i * 4);
+			alpha = 0x80 - (i << 2);
 			D_8005BB34->v.cn[0] = alpha;
 			D_8005BB34->v.cn[1] = alpha;
 			D_8005BB34->v.cn[2] = alpha;
