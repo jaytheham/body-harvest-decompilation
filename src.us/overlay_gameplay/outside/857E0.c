@@ -87,6 +87,7 @@ void func_800769A8_85958(s32 arg0) {
 }
 
 // AI - Spawns D_80259D90 entries from D_80221A30/D_8021FA30 patterns via func_80076830_857E0 and func_800B84D0_C7480.
+#ifdef NON_MATCHING
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 	s32 pattern;
 	s32 outer;
@@ -251,6 +252,9 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 		}
 	}
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
+#endif
 
 
 void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
