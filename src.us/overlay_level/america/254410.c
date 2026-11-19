@@ -3529,7 +3529,6 @@ s32 func_802DCCD8_25C418(u8 arg0)
 	return 0;
 }
 
-#ifdef NON_MATCHING
 void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 {
 	s16 root;
@@ -3554,12 +3553,10 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 	s8 animationResult;
 	u8 typeIndex;
 	AlienInstance *grandParent;
-	int tempVar;
-	AlienInstance *parent;
+	s32 pad54; /* Preserves the original stack layout. */
 	typeIndex = alienInstances[arg0].typeIndex;
 	parentId = alienInstances[arg0].unk25;
-	parent = &alienInstances[parentId];
-	grandParent = &alienInstances[parent->unk25];
+	grandParent = &alienInstances[alienInstances[parentId].unk25];
 	sp61 = grandParent->alienIds[0];
 	sp60 = grandParent->alienIds[1];
 	root = alienInstances[arg0].unkC;
@@ -3659,7 +3656,7 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 			 (!((alienInstances[sp60].unk20 & 0xA000) &&
 				(!(alienInstances[sp60].unk20 & 0x100000))))))
 		{
-			if (((((alienInstances[arg0].unk26 == 0) && (grandParent->unk20 & ALIEN_FLAG_UNKE)) && func_800851C8_94178(arg0, (u8)child, 0x800)) && (D_802E0E30 >= 0x101)) && (parent->unk20 & ALIEN_FLAG_UNKF))
+			if (((((alienInstances[arg0].unk26 == 0) && (grandParent->unk20 & ALIEN_FLAG_UNKE)) && func_800851C8_94178(arg0, (u8)child, 0x800)) && (D_802E0E30 >= 0x101)) && (alienInstances[parentId].unk20 & ALIEN_FLAG_UNKF))
 			{
 				alienInstances[arg0].unk20 |= ALIEN_FLAG_UNKE | ALIEN_FLAG_UNKF;
 				alienInstances[arg0].unk36 = 0;
@@ -3672,29 +3669,25 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 				sp90[1] = sp7C[1];
 				sp90[2] = sp7C[2];
 				func_800A931C_B82CC(root, sp90, sp7C);
+				sp7C[0] *= D_802DF3A8_25EAE8;
+				sp7C[1] *= D_802DF3A8_25EAE8;
+				sp7C[2] *= D_802DF3A8_25EAE8;
+				/* IDO allocates a temporary for the original frame and discards this test. */
+				if ((f64)D_802DF3A8_25EAE8 * (f64)D_802DF3A8_25EAE8)
 				{
-					flags = sp7C[0];
-					flags = (((f32)flags) * D_802DF3A8_25EAE8);
-					tempVar = sp7C[1];
-					tempVar = (((f32)tempVar) * D_802DF3A8_25EAE8);
-					callResult = sp7C[2];
-					callResult = (((f32)callResult) * D_802DF3A8_25EAE8);
-					alienTypes[typeIndex].unk20 = flags;
-					alienTypes[typeIndex].unk22 = tempVar;
-					alienTypes[typeIndex].unk24 = callResult;
-					if (parent->unk20 & ALIEN_FLAG_UNKF)
-					{
-						sp7C[0] = flags; sp7C[1] = tempVar; sp7C[2] = callResult; func_80128428_1373D8(&alienInstances[arg0], flags, tempVar, callResult, &sp78, &sp74, &sp70);
-						func_80135D44_144CF4(sp78, sp74, sp70, 2.0f);
-						alienTypes[typeIndex].unk1C = 0x60;
-					}
-					else
-					{
-						sp7C[2] = callResult;
-						sp7C[1] = tempVar;
-						sp7C[0] = flags;
-						alienTypes[typeIndex].unk1C = 0x22;
-					}
+				}
+				alienTypes[typeIndex].unk20 = sp7C[0];
+				alienTypes[typeIndex].unk22 = sp7C[1];
+				alienTypes[typeIndex].unk24 = sp7C[2];
+				if (alienInstances[parentId].unk20 & ALIEN_FLAG_UNKF)
+				{
+					func_80128428_1373D8(&alienInstances[arg0], sp7C[0], sp7C[1], sp7C[2], &sp78, &sp74, &sp70);
+					func_80135D44_144CF4(sp78, sp74, sp70, 2.0f);
+					alienTypes[typeIndex].unk1C = 0x60;
+				}
+				else
+				{
+					alienTypes[typeIndex].unk1C = 0x22;
 				}
 				if (func_800868A4_95854(arg0, 0, -D_8014DD50[child].unk6Unsigned, D_8014DD50[root].unkA))
 				{
@@ -3711,7 +3704,7 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 					{
 						alienInstances[arg0].unk20 &= ~ALIEN_FLAG_UNKD;
 						alienInstances[arg0].unk26 = 0;
-						if (parent->unk20 & ALIEN_FLAG_UNKF)
+						if (alienInstances[parentId].unk20 & ALIEN_FLAG_UNKF)
 						{
 							alienInstances[arg0].unk1E = (func_800038E0_44E0() % 100) + 0x28;
 						}
@@ -3729,9 +3722,6 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 		alienInstances[arg0].unk1E--;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/america/254410/func_802DD104_25C844.s")
-#endif
 
 
 void func_802DD9C8_25D108(u8 arg0) {
