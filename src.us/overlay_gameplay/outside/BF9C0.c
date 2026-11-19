@@ -1988,6 +1988,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 				gDPTileSync(D_8005BB2C++);
 				packet = D_8005BB2C++;
+				// These manual Gfx commands should be replaced with macros if possible
 				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
 					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
 					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
@@ -3112,6 +3113,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	D_8013D950_14C900 = D_8013D988_14C938[currentLevel * 6 - 2];
 	D_8013D954_14C904 = D_8013D988_14C938[currentLevel * 6 - 1];
 
+	// As many as possible of these Gfx commands need to be turned into macros
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTLOD, 8, 8) | 1; gfx->words.w1 = G_TL_TILE;
 	gfx = D_8005BB2C++;
