@@ -7076,71 +7076,85 @@ void func_800D702C_E5FDC(s16 arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-#ifdef NON_MATCHING
-void func_800D7284_E6234(u8 arg0) {
+void func_800D7284_E6234(u8 effectId) {
 	s16 index;
-	f32 z;
-	Unk80154318Entry *sp2C;
-	f32 x;
-	f32 y;
-	f32 temp_f0;
-	f32 temp_f14;
-	f32 temp_f2;
-	s32 temp_a0;
-	u8 color[3];
-	s16 position[2];
-	s32 var_v0;
-	s32 temp_v0_13;
-	NukeEffectState *var_v1;
+	f32 effectZ;
+	Unk80154318Entry *entry;
+	f32 effectX;
+	f32 effectY;
+	f32 dx;
+	f32 dz;
+	f32 dy;
+	s32 framePad; /* Preserve the IDO stack layout. */
+	u8 shadowColor[3];
+	s16 shadowPosition[2];
+	s32 alpha;
+	NukeEffectState *payload;
 
-index = D_80154088[arg0].unk6;
-	if ((sp2C = &D_80154318[index], func_800B93AC_C835C(sp2C->unk8, sp2C->unkC, (u16) sp2C->unk2, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950)) != 0) {
+	index = D_80154088[effectId].unk6;
+	entry = &D_80154318[index];
+	if (func_800B93AC_C835C(entry->nukeEffect.position[0], entry->nukeEffect.position[2], (u16) entry->unk2, D_80047954 * 4.0f, D_8004795C * 4.0f, 0x4000 - D_80047950) == 0) {
+		return;
+	}
 
-gDPPipeSync(D_8005BB2C++);
-		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
-		gDPPipeSync(D_8005BB2C++);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100B0F0), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPPipeSync(D_8005BB2C++);
-
-func_800D702C_E5FDC(index, 0);
-		func_800D702C_E5FDC(index, 1);
-		func_800D702C_E5FDC(index, 2);
-		func_800D702C_E5FDC(index, 3);
-		func_800D702C_E5FDC(index, 4);
-		position[0] = sp2C->unk8;
-		position[1] = sp2C->unkC;
-		color[0] = 0xFF;
-		color[1] = 0xFF;
-		color[2] = 0xFF;
-		temp_v0_13 = sp2C->unkE;
-		var_v1 = &sp2C->nukeEffect; if (var_v1) {}
-		if (temp_v0_13 < 4) {
-			func_800B2354_C1304(&position[0], &color[0], 0x200, (s16) ((temp_v0_13 << 9) + 0x200));
-		} else if (temp_v0_13 < 9) {
-			func_800B2354_C1304(&position[0], &color[0], 0x100, (s16) (0x1300 - (temp_v0_13 << 9)));
-		}
-		x = var_v1->position[0];
-		y = var_v1->position[1];
-		z = var_v1->position[2];
-		temp_f0 = x - (D_80153BA0.x * 4.0f);
-		temp_f2 = y - (D_80153BA0.y * 4.0f);
-		temp_f14 = z - (D_80153BA0.z * 4.0f);
-		sqrtf((temp_f0 * temp_f0) + (temp_f2 * temp_f2) + (temp_f14 * temp_f14));
-		var_v0 = var_v1->age;
-		if (var_v0 < 0x51) {
-			temp_a0 = 0xFF - (var_v0 * 2);
-			if (temp_a0 < 0) {
-				var_v0 = 0;
-			} else {
-				var_v0 = temp_a0;
+	/* These control-flow scopes let IDO spill the entry and index across the model draws. */
+	if (1) {
+		if (1) {
+			if (1) {
+				if (1) {
+					if (1) {
+						if (1) {
+							gDPPipeSync(D_8005BB2C++);
+							gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
+							gDPPipeSync(D_8005BB2C++);
+							gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100B0F0), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+							gDPPipeSync(D_8005BB2C++);
+						}
+					}
+				}
 			}
-			func_800E35E0_F2590(var_v0); if (var_v1) {}
 		}
 	}
+
+	func_800D702C_E5FDC(index, 0);
+	func_800D702C_E5FDC(index, 1);
+	func_800D702C_E5FDC(index, 2);
+	func_800D702C_E5FDC(index, 3);
+	func_800D702C_E5FDC(index, 4);
+	/* Use the same payload view for the shadow and flash. */
+	payload = &entry->nukeEffect;
+	if (payload) {}
+	shadowPosition[0] = payload->position[0];
+	shadowPosition[1] = payload->position[2];
+	shadowColor[0] = 0xFF;
+	shadowColor[1] = 0xFF;
+	shadowColor[2] = 0xFF;
+	if (payload->age < 4) {
+		func_800B2354_C1304(shadowPosition, shadowColor, 0x200, (payload->age << 9) + 0x200);
+	} else if (payload->age < 9) {
+		func_800B2354_C1304(shadowPosition, shadowColor, 0x100, 0x1300 - (payload->age << 9));
+	} else {
+		if (payload) {}
+	}
+	effectX = payload->position[0];
+	effectY = payload->position[1];
+	effectZ = payload->position[2];
+	dx = effectX - (D_80153BA0.x * 4.0f);
+	dy = effectY - (D_80153BA0.y * 4.0f);
+	dz = effectZ - (D_80153BA0.z * 4.0f);
+	sqrtf((dx * dx) + (dy * dy) + (dz * dz));
+	/* These checks preserve the entry and payload spill slots. */
+	if (entry) {}
+	if (entry) {}
+	alpha = payload->age;
+	if (alpha < 0x51) {
+		alpha = (0xFF - (alpha * 2) < 0) ? 0 : (0xFF - (alpha * 2));
+		func_800E35E0_F2590(alpha);
+		/* Keep the original index and payload allocation through the flash. */
+		if (index * 0) {}
+		if (payload) {}
+	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D7284_E6234.s")
-#endif
 
 s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2) {
 	s16 temp_v0;
