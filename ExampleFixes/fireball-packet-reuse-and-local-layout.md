@@ -9,3 +9,15 @@
 -> `code changed`: Place `if (1) {}` immediately after the first final triangle's second-word store, before assigning the shared packet cursor for the remaining three triangles. This preserves an optimizer block boundary without emitting a branch.
 
 -> `correct ASM`: The first final triangle separately materializes its opcode with `lui t8,0xBF00` at `0xE7E8C`. The retained function has exactly 900 instructions and the same count of every opcode as the target. The frame remains `0x100`; register allocation and instruction scheduling remain unmatched.
+
+`incorrect ASM` -> In func_800D8190_E7140, the third-height divide used t3 instead of t5. The cached Y coordinates used t5 and ra instead of ra and s3. An earlier candidate also loaded 0xD7 at ROM offset 0xE7C24 instead of 0xE7908.
+
+-> `code changed` -> Use a signed scalar radius so the compiler spills it naturally. Reference both perpendicular offsets and the three projected center coordinates in the empty corner condition. Reference the original half-height and its low bit in the empty condition after the second tip vertex. Replace the final empty constant condition with an empty comparison of the third-height quotient against zero.
+
+-> `correct ASM` -> The frame is 0x100, the two 0xD7 loads occupy 0xE7908 and 0xE7C00, and the divide and cached Y coordinates use t5, ra, and s3. The conditions emit no extra branches. All 900 instruction positions and opcodes match. Eleven words still differ across the raw Z conversion, triangle opcode, and vertex-count address registers.
+
+`incorrect ASM` -> In `func_800D8190_E7140`, keeping the final triangle and vertex-count addresses in `a2` and `a3` moved `lh s3,4(s5)` from `0xE7EF0` to `0xE7EF8`. Keeping the reads together restored the schedule but exchanged the saved registers for the display-list base and effect-list index.
+
+-> `code changed` -> Reference the low bit of the display-list cursor in both the corner-coordinate and tip-alpha liveness conditions. The additional uses favor the display-list base during allocation and emit no instructions. Keep the triangle-word and count liveness conditions separate, with the count increment and next-index assignment together before the latter condition.
+
+-> `correct ASM` -> The display-list base stays in `s2` and the next effect index in `s3`. The final `lh t8,0(a3)` and `lh s3,4(s5)` precede the increment and store at `0xE7EEC–0xE7EF8`. The C function matches all 900 words, and both ROM checksums pass.
