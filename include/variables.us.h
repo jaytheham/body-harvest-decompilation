@@ -2604,7 +2604,7 @@ extern s32 D_80157F54;
 extern void *D_80157F58;
 extern s32 D_80157F5C;
 extern s32 D_80157F60;
-extern s32 D_80157F64;
+extern u32 D_80157F64;
 extern s16 D_80157F68;
 extern s8 D_80157F6A;
 extern s32 D_80157F70;
@@ -2644,7 +2644,7 @@ extern s32 D_80157FB4;
 extern s16 D_80157FC0;
 extern s16 D_80157FC2;
 extern s16 D_80157FC4;
-#ifndef NON_MATCHING_FF61C
+#ifndef FEC70_BSS
 extern f32 D_80157FC8;
 extern s16 D_80157FCC;
 extern s16 D_80157FCE;
@@ -2841,13 +2841,8 @@ extern s16 D_80159DDA;
 extern s16 D_80159DDC;
 extern s8 D_80159DDE;
 extern u8 D_80159DDF;
-#ifdef NON_MATCHING_FF61C
-extern u16 D_80159DE0;
-extern u16 D_80159DE4;
-#else
 extern s16 D_80159DE0;
 extern s16 D_80159DE4;
-#endif
 extern u16 D_80159DE2;
 extern u16 D_80159DE8[];
 extern u8 D_8015D0B0[];
