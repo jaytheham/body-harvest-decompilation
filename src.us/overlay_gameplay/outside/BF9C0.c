@@ -1545,26 +1545,40 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
 	D_8014F89A = 0;
 	scrollX = D_80149434;
 	scrollY = D_80149436;
-	col = (u8)(D_8014F899 = (s8)(u16)D_80151DD8.ringX);
+	col = (u8)(D_8014F899 = D_80151DD8.ringX + scrollY * 0);
 	D_8014F898 = D_80151DD8.ringY;
-	initialRow = *(u8 *)&D_8014F898;
+	initialRow = (u8)D_8014F898;
 	cursor.index[0] = initialRow;
-	mapX = D_8014F89C = D_80151DD8.mapPosX;
-	mapY = D_8014F89D = D_80151DD8.mapPosY;
-	for (rowWrap = 0; rowWrap < 0x12;) {
+	D_8014F89C = (D_80151DD8.mapPosX & 0xFF);
+	mapX = (u8)(u64)D_8014F89C;
+	D_8014F89D = (D_80151DD8.mapPosY & 0xFF);
+	mapY = (u8)(s16)(s8)D_8014F89D;
+	for (rowWrap = 0; rowWrap < 0x12; rowWrap++) {
 		u8 rowY = cursor.index[0];
-		RingEntry *ringRow;
+		RingEntry *ringRow[1];
 		s32 columnIndex;
-		rowIndex = rowY;
 		shade = ((EffectRgb (*)[19])D_80152740)[rowY];
+		scratch = (s32)col;
+		rowIndex = rowY;
 		edgeParityY = mapY % 2;
 
-		for (ringCol = 0, ringRow = D_80151DD8.tiles[rowY]; ringCol < 0x12; ringCol++) {
+		for (hueX = scrollX + 0x701, ringCol = 0, ringRow[0] = D_80151DD8.tiles[rowY]; ringCol < 0x12; ringCol++) {
 
-			if ((columnIndex = col, scratch = (s32)(&ringRow)[0],
-			     tileCenter = &((RingEntry *)scratch)[col],
-			     posY = (mapY - 0x80) << 8, columnIndex != 0x12)) {
-				scratch = (s32)(tileEast = &((RingEntry *)scratch)[col + 1]);
+			columnIndex = col;
+			terrain.value = (s32)(u32)((mapY - 0x80) << 8);
+			posX = (s16)(scrollY + 0x701);
+			scratch = (s32)(u64)ringRow[0];
+			if (scratch != 0) {}
+			if (((u32)col + 1) < 2) {}
+			if (((u32)col + 2) < 4) {}
+			if (((u32)col + 3) < 6) {}
+			if (((u32)col + 4) < 8) {}
+			if ((u16)columnIndex != 0) {}
+			tileCenter = &((RingEntry *)scratch)[col];
+			posY = (s16)(u32)((mapY - 0x80) << 8);
+			if ((u32)columnIndex != 0x12) {
+				if ((u32)col < 0x12) {}
+				scratch = (s32)(tileEast = &((RingEntry *)scratch)[columnIndex + 1]);
 			} else {
 				tileEast = &D_80151DD8.tiles[cursor.wrapped][0];
 			}
@@ -1575,7 +1589,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
 				tileSouth = &D_80151DD8.tiles[0][col];
 			}
 			if (col != 0) {
-				tileWest = &(ringRow = &ringRow[0])[col - 1];
+				tileWest = &ringRow[0][col - 1];
 			} else {
 				tileWest = &D_80151DD8.tiles[cursor.index[0]][18];
 			}
@@ -1587,6 +1601,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
 				tileNorth = &D_80151DD8.tiles[18][col];
 			}
 
+			scratch = scrollY + 0x701;
 			if (shade[col].r != 0) {
 				scratch = (u16)(terrain.color[0] + shade[col].r);
 				if (scratch > 255) scratch = 255;
@@ -1745,8 +1760,10 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
 		}
 
 		cursor.index[0] = (rowIndex + 1) % 0x13;
-		/* Keep these updates on one line for the row-latch instruction order. */
-		mapX = D_8014F89C; mapY++; col = D_8014F899; rowWrap++;
+		if (rowIndex != 0) {}
+		mapX = D_8014F89C;
+		col = D_8014F899;
+		mapY++;
 	}
 }
 #else
