@@ -57,3 +57,15 @@
 `code changed` -> Add the Z square to the local holding the X square before passing the accumulated value to `sqrtf`.
 
 `correct ASM` -> The type index scaling uses `t6` at `0x322408` and `0x322410`, and the frame counter load uses `t7` at `0x322440`. The Z load still follows the first multiply. The total falls from 209 to 201 differing words with the same structural differences.
+
+`incorrect ASM` -> In `func_802DE0F4_322244`, loading both saved joint pointers as ordinary locals let UOPT forward the stack load into every field access. UGEN then selected a temporary register for `lw` at `0x322458` and `0x32250C`.
+
+`code changed` -> Give each pointer cache a union with a regular pointer member for the store and a volatile pointer member for the reload. In each effect block, read the volatile member once into a nonvolatile local and use that local for the angle and coordinate loads.
+
+`correct ASM` -> Both `lw` instructions and their dependent field loads use the target base register `v0`. The frame stays at `0xA8`. The cache offsets and the coordinate call setup still differ.
+
+`incorrect ASM` -> With an explicit volatile pointer reload in `func_802DE0F4_322244`, IDO placed the X output pointer store in the delay slot of each terrain-transform call. The native assembler trace showed dependencies from the joint field loads to both outgoing stack stores.
+
+`code changed` -> Use `D_8014DD50[spA0]` and `D_8014DD50[sp9E]` directly for the corresponding status and coordinate fields. IDO still spills and reloads the shared addresses, and the direct indexed loads retain the joint table's alias information.
+
+`correct ASM` -> In both calls, the X pointer is stored at `sp+0x10` before `jal`. The Y pointer is stored to `sp+0x14` in the delay slot. The two joint cache reloads use `v0` at `sp+0x44` and `sp+0x40`.
