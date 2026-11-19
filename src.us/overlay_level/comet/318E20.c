@@ -4042,7 +4042,11 @@ void func_802DE7C4_322914(u8 arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s")
+#ifdef VERSION_US
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.eu.s")
+#endif
 #endif
 
 void func_802DF188_3232D8(void) {
