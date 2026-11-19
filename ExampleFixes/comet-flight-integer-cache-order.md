@@ -15,3 +15,9 @@
 `code changed` -> Restore the direct `(f64)temp_f10` operand in each multiply and keep the existing scalar integer caches.
 
 `correct ASM` -> The spill and reload use the target register `f0` again, and the other 71 words match. Reassigning any of the three integer caches beside the trig calls, or capturing the early terrain result in the local used for the late height clamp, leaves those two spill operands at `sp+0x50`.
+
+`incorrect ASM` -> In `func_802DC8F4_320A44`, IDO used `sdc1 f0,0x50(sp)` and `ldc1 f0,0x50(sp)` for the converted acceleration. An early discarded signed joint-angle test and one in each later joint clamp moved the double to `0x48(sp)`, but the first clamp then used `lh v0,8(v1)` in place of `lhu v0,8(v1)`. Switching the subtraction to the unsigned alias with only one discarded test returned the double to `0x50(sp)`.
+
+`code changed` -> Keep both clamp calculations on `unk8Unsigned`. In the subtraction clamp, keep two consecutive discarded tests of `unk8` before the unsigned read. Retain the early joint-angle test after the cosine call. Include the saved parent joint index in the discarded water-level guard. Use the word at the end of the local declarations for roll damping and reuse the earlier distance word for the final Z difference.
+
+`correct ASM` -> The duplicate test reserves a word before the double without emitting instructions. The spill pair is `sdc1 f0,0x48(sp)` and `ldc1 f0,0x48(sp)`, both clamp loads are `lhu`, and the prologue, damping, and final heading registers match. Both ROM checksums pass.

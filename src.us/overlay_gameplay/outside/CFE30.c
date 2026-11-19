@@ -7095,27 +7095,13 @@ void func_800D7284_E6234(u8 arg0) {
 
 index = D_80154088[arg0].unk6;
 	if ((sp2C = &D_80154318[index], func_800B93AC_C835C(sp2C->unk8, sp2C->unkC, (u16) sp2C->unk2, (s16) (D_80047954 * 4.0f), (s32) (D_8004795C * 4.0f), 0x4000 - D_80047950)) != 0) {
-		if (1) {
-if (1) {
-if (1) {
-if (1) {
-if (1) {
-if (1) {
-if (1) {
-if (1) {
+
 gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0, 0, 0, 0, PRIMITIVE, PRIMITIVE, 0, TEXEL0, 0);
 		gDPPipeSync(D_8005BB2C++);
 		gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100B0F0), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPPipeSync(D_8005BB2C++);
-		}
-}
-}
-}
-}
-}
-}
-}
+
 func_800D702C_E5FDC(index, 0);
 		func_800D702C_E5FDC(index, 1);
 		func_800D702C_E5FDC(index, 2);
@@ -7390,259 +7376,242 @@ void func_800D80B4_E7064(void) {
 }
 
 #ifdef NON_MATCHING
-void func_800D8190_E7140(void) {
-	Unk80154318Entry *entry;
-	Vec3f direction;
-	s16 current;
-	Vec3s *position;
-	s32 partial;
-	s16 size[1];
-	s16 x0;
-	s16 y0;
-	s16 z0;
-	s16 x1;
-	s16 y1;
-	s16 z1;
-	s16 x2;
-	s16 y2;
-	s16 z2;
-	s16 halfZ;
-	s16 halfX;
-	int alpha;
-	Gfx *gfx;
+void func_800D8190_E7140(void)
+{
+  Unk80154318Entry *entry;
+  Vec3f direction;
+  s16 current;
+  Vec3s *position;
+  int new_var;
+  s32 partial;
+  s16 size[1];
+  s16 x0;
+  s16 y0;
+  s16 z0;
+  s16 x1;
+  s16 y1;
+  s16 z1;
+  s16 x2;
+  s16 y2;
+  s16 z2;
+  s16 halfZ;
+  s16 halfX;
+  int alpha;
+  Gfx *gfx;
+  current = D_801542D6;
+  gDPPipeSync(D_8005BB2C++);
+  gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+  gDPPipeSync(D_8005BB2C++);
+  gfx = D_8005BB2C++;
+  gfx->words.w0 = (unsigned int) ((((unsigned int) 0xe7) & ((0x01 << 8) - 1)) << 24);
+  gfx->words.w1 = 0;
+  gDPLoadTextureBlock_4b(D_8005BB2C++, ((u32) D_1007A70[func_800038E0_44E0() % 16]) & 0x1FFFFFFF, 4, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
+  gfx = D_8005BB2C++;
+  gfx->words.w0 = (unsigned int) ((((unsigned int) 0xe7) & ((0x01 << 8) - 1)) << 24);
+  gfx->words.w1 = 0;
+  while ((current != (-5)) && (current != (-6)))
+  {
+    entry = &D_80154318[current];
+    direction.x = entry->unk8 - entry->previousPosition[0];
+    direction.y = entry->unkA - entry->previousPosition[1];
+    direction.z = entry->unkC - entry->previousPosition[2];
+    position = &entry->positionPair.positionVector;
+    x0 = entry->unk2;
+    if (((direction.x == 0.0f) && (direction.y == 0.0f)) && (direction.z == 0.0f))
+    {
+      current = D_80154318[current].unk4;
+      continue;
+    }
+    func_800C1024_CFFD4(&direction, &direction);
+    size[0] = x0;
+    func_800C1128_D00D8((f32) x0, &direction, &direction);
+    alpha = 0xD2;
+    halfZ = (s16) (direction.z / 2);
+    halfX = (s16) (direction.x / 2);
+    x2 = position->x + ((s16) (direction.x * 3.0f));
+    y2 = position->y + ((s16) (direction.y * 3.0f));
+    z2 = position->z + ((s16) (direction.z * 3.0f));
+    D_8005BB34->v.ob[0] = (f32) (position->x + halfZ);
+    D_8005BB34->v.ob[1] = (f32) (position->y + (partial = size[0] / 2));
+    D_8005BB34->v.ob[2] = (f32) (position->z - halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0;
+    D_8005BB34->v.tc[1] = 0;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (f32) (position->x - halfZ);
+    D_8005BB34->v.ob[1] = (f32) (position->y - partial);
+    D_8005BB34->v.ob[2] = (f32) (position->z + halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0x800;
+    D_8005BB34->v.tc[1] = 0;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    if (1)
+    {
+    }
+    new_var = 0x800;
+    D_8005BB34->v.ob[0] = (x0 = (f32) (x2 + halfZ));
+    D_8005BB34->v.ob[1] = (y0 = (f32) (y2 + partial));
+    D_8005BB34->v.ob[2] = (z0 = (f32) (z2 - halfX));
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0;
+    D_8005BB34->v.tc[1] = new_var;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = 0xFF;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (x1 = (f32) (x2 - halfZ));
+    D_8005BB34->v.ob[1] = (y1 = (f32) (y2 - partial));
+    D_8005BB34->v.ob[2] = (z1 = (f32) (z2 + halfX));
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = new_var;
+    D_8005BB34->v.tc[1] = new_var;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = 0xFF;
+    D_8005BB34++;
+    gSPVertex(D_8005BB2C++, ((u32) (D_8005BB34 - 4)) & 0x1FFFFFFF, 4, 0);
+    gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
+    gfx = D_8005BB2C++;
+    gfx->words.w0 = (unsigned int) ((((unsigned int) 0xe7) & ((0x01 << 8) - 1)) << 24);
+    gfx->words.w1 = 0;
+    D_8005BB34->v.ob[0] = (f32) (position->x + halfZ);
+    D_8005BB34->v.ob[1] = (f32) (position->y - partial);
+    D_8005BB34->v.ob[2] = (f32) (position->z - halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0;
+    D_8005BB34->v.tc[1] = 0;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (f32) (position->x - halfZ);
+    D_8005BB34->v.ob[1] = (f32) (position->y + partial);
+    D_8005BB34->v.ob[2] = (f32) (position->z + halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0x800;
+    D_8005BB34->v.tc[1] = 0;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = x0;
+    D_8005BB34->v.ob[1] = y1;
+    D_8005BB34->v.ob[2] = z0;
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0;
+    D_8005BB34->v.tc[1] = new_var;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = 0xFF;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = x1;
+    D_8005BB34->v.ob[1] = y0;
+    D_8005BB34->v.ob[2] = z1;
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = new_var;
+    D_8005BB34->v.tc[1] = 0x800;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = 0xFF;
+    D_8005BB34++;
+    gSPVertex(D_8005BB2C++, ((u32) (D_8005BB34 - 4)) & 0x1FFFFFFF, 4, 0);
+    gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
+    x2 = position->x + ((s16) (direction.x * 2.5));
+    y2 = position->y + ((s16) (direction.y * 2.5));
+    z2 = position->z + ((s16) (direction.z * 2.5));
+    halfZ = (s16) (direction.z / 3.0f);
+    halfX = (s16) (direction.x / 3.0f);
+    D_8005BB34->v.ob[0] = (f32) (x2 + halfZ);
+    D_8005BB34->v.ob[1] = (f32) (y2 + (partial = size[0] / 3));
+    D_8005BB34->v.ob[2] = (f32) (z2 - halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0;
+    D_8005BB34->v.tc[1] = 0x800;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    alpha = 0xD7;
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (f32) (x2 + halfZ);
+    D_8005BB34->v.ob[1] = (f32) (y2 - partial);
+    D_8005BB34->v.ob[2] = (f32) (z2 - halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0x800;
+    D_8005BB34->v.tc[1] = new_var;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (f32) (x2 - halfZ);
+    D_8005BB34->v.ob[1] = (f32) (y2 + partial);
+    D_8005BB34->v.ob[2] = (f32) (z2 + halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0;
+    D_8005BB34->v.tc[1] = 0x800;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (f32) (x2 - halfZ);
+    D_8005BB34->v.ob[1] = (f32) (y2 - partial);
+    D_8005BB34->v.ob[2] = (f32) (z2 + halfX);
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0x800;
+    D_8005BB34->v.tc[1] = 0x800;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = alpha;
+    D_8005BB34++;
+    D_8005BB34->v.ob[0] = (f32) x2;
+    D_8005BB34->v.ob[1] = (f32) y2;
+    D_8005BB34->v.ob[2] = (f32) z2;
+    D_8005BB34->v.flag = 0;
+    D_8005BB34->v.tc[0] = 0x400;
+    D_8005BB34->v.tc[1] = 0;
+    D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
+    D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
+    D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
+    D_8005BB34->v.cn[3] = 0xFF;
+    D_8005BB34++;
+    gSPVertex(D_8005BB2C++, ((u32) (&D_8005BB34[-5])) & 0x1FFFFFFF, 5, 0);
+    gfx = D_8005BB2C++;
+    gfx->words.w0 = (unsigned int) ((((unsigned int) ((-65) - 0)) & ((0x01 << 8) - 1)) << 24);
+    gfx->words.w1 = (0 == 0) ? ((((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (0 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (1 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((0 == 1) ? ((((unsigned int) ((((unsigned int) (0 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (1 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((((unsigned int) ((((unsigned int) (1 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (0 * 2)) & ((0x01 << 8) - 1)) << 0))));
+    if (1)
+    {
+    }
+    gfx = D_8005BB2C++;
+    gfx->words.w0 = (unsigned int) ((((unsigned int) ((-65) - 0)) & ((0x01 << 8) - 1)) << 24);
+    gfx->words.w1 = (0 == 0) ? ((((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (0 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (2 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((0 == 1) ? ((((unsigned int) ((((unsigned int) (0 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (2 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((((unsigned int) ((((unsigned int) (2 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (0 * 2)) & ((0x01 << 8) - 1)) << 0))));
+    gfx = D_8005BB2C++;
+    gfx->words.w0 = (unsigned int) ((((unsigned int) ((-65) - 0)) & ((0x01 << 8) - 1)) << 24);
+    gfx->words.w1 = (0 == 0) ? ((((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (2 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (3 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((0 == 1) ? ((((unsigned int) ((((unsigned int) (2 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (3 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((((unsigned int) ((((unsigned int) (3 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (2 * 2)) & ((0x01 << 8) - 1)) << 0))));
+    gfx = D_8005BB2C++;
+    gfx->words.w0 = (unsigned int) ((((unsigned int) ((-65) - 0)) & ((0x01 << 8) - 1)) << 24);
+    gfx->words.w1 = (0 == 0) ? ((((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (3 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (1 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((0 == 1) ? ((((unsigned int) ((((unsigned int) (3 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (1 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 0))) : ((((unsigned int) ((((unsigned int) (1 * 2)) & ((0x01 << 8) - 1)) << 16)) | ((unsigned int) ((((unsigned int) (4 * 2)) & ((0x01 << 8) - 1)) << 8))) | ((unsigned int) ((((unsigned int) (3 * 2)) & ((0x01 << 8) - 1)) << 0))));
+    D_80156EDA += 0xD;
+    current = D_80154318[current].unk4;
+  }
 
-	current = D_801542D6;
-
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPPipeSync(D_8005BB2C++);
-	gfx = D_8005BB2C++; \
-	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
-	gfx->words.w1 = 0;
-	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[func_800038E0_44E0() % 16]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gfx = D_8005BB2C++; \
-	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
-	gfx->words.w1 = 0;
-
-	while ((current != -5) && (current != -6)) {
-		entry = &D_80154318[current];
-		direction.x = entry->unk8 - entry->previousPosition[0];
-		direction.y = entry->unkA - entry->previousPosition[1];
-		direction.z = entry->unkC - entry->previousPosition[2];
-
-		position = &entry->positionPair.positionVector;
-		x0 = entry->unk2;
-		if ((direction.x == 0.0f) && (direction.y == 0.0f) && (direction.z == 0.0f)) {
-			current = D_80154318[current].unk4;
-			continue;
-		}
-
-		func_800C1024_CFFD4(&direction, &direction);
-		size[0] = x0;
-		func_800C1128_D00D8((f32)x0, &direction, &direction);
-
-		alpha = 0xD2;
-		halfZ = (s16)(direction.z / 2);
-		halfX = (s16)(direction.x / 2);
-		x2 = position->x + (s16)(direction.x * 3.0f);
-		y2 = position->y + (s16)(direction.y * 3.0f);
-		z2 = position->z + (s16)(direction.z * 3.0f);
-
-		D_8005BB34->v.ob[0] = (f32)(position->x + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->y + (partial = size[0] / 2));
-		D_8005BB34->v.ob[2] = (f32)(position->z - halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = (f32)(position->x - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->y - partial);
-		D_8005BB34->v.ob[2] = (f32)(position->z + halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x800;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		/* Keep cached corners in a separate IDO block. */
-		if (1) {}
-		D_8005BB34->v.ob[0] = x0 = (f32)(x2 + halfZ);
-		D_8005BB34->v.ob[1] = y0 = (f32)(y2 + partial);
-		D_8005BB34->v.ob[2] = z0 = (f32)(z2 - halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xFF;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = x1 = (f32)(x2 - halfZ);
-		D_8005BB34->v.ob[1] = y1 = (f32)(y2 - partial);
-		D_8005BB34->v.ob[2] = z1 = (f32)(z2 + halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x800;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xFF;
-		D_8005BB34++;
-
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
-		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
-		gfx = D_8005BB2C++; \
-		gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); \
-		gfx->words.w1 = 0;
-
-		D_8005BB34->v.ob[0] = (f32)(position->x + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->y - partial);
-		D_8005BB34->v.ob[2] = (f32)(position->z - halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = (f32)(position->x - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(position->y + partial);
-		D_8005BB34->v.ob[2] = (f32)(position->z + halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x800;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[3];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[4];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[5];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = x0;
-		D_8005BB34->v.ob[1] = y1;
-		D_8005BB34->v.ob[2] = z0;
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xFF;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = x1;
-		D_8005BB34->v.ob[1] = y0;
-		D_8005BB34->v.ob[2] = z1;
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x800;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xFF;
-		D_8005BB34++;
-
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
-		gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 2, 3, 1, 0);
-
-		x2 = position->x + (s16)(direction.x * 2.5);
-		y2 = position->y + (s16)(direction.y * 2.5);
-		z2 = position->z + (s16)(direction.z * 2.5);
-		halfZ = (s16)(direction.z / 3.0f);
-		halfX = (s16)(direction.x / 3.0f);
-
-		D_8005BB34->v.ob[0] = (f32)(x2 + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 + (partial = size[0] / 3));
-		D_8005BB34->v.ob[2] = (f32)(z2 - halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		alpha = 0xD7;
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = (f32)(x2 + halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 - partial);
-		D_8005BB34->v.ob[2] = (f32)(z2 - halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x800;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 + partial);
-		D_8005BB34->v.ob[2] = (f32)(z2 + halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = (f32)(x2 - halfZ);
-		D_8005BB34->v.ob[1] = (f32)(y2 - partial);
-		D_8005BB34->v.ob[2] = (f32)(z2 + halfX);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x800;
-		D_8005BB34->v.tc[1] = 0x800;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = alpha;
-		D_8005BB34++;
-
-		D_8005BB34->v.ob[0] = (f32)(x2);
-		D_8005BB34->v.ob[1] = (f32)(y2);
-		D_8005BB34->v.ob[2] = (f32)(z2);
-		D_8005BB34->v.flag = 0;
-		D_8005BB34->v.tc[0] = 0x400;
-		D_8005BB34->v.tc[1] = 0;
-		D_8005BB34->v.cn[0] = D_8013E31C_14D2CC[0];
-		D_8005BB34->v.cn[1] = D_8013E31C_14D2CC[1];
-		D_8005BB34->v.cn[2] = D_8013E31C_14D2CC[2];
-		D_8005BB34->v.cn[3] = 0xFF;
-		D_8005BB34++;
-
-		gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-5]), 5, 0);
-		gfx = D_8005BB2C++; \
-		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
-		gfx->words.w1 = __gsSP1Triangle_w1f(4, 0, 1, 0);
-		/* Preserve the first triangle's separate opcode materialization. */
-		if (1) {}
-		gfx = D_8005BB2C++; \
-		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
-		gfx->words.w1 = __gsSP1Triangle_w1f(4, 0, 2, 0);
-		gfx = D_8005BB2C++; \
-		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
-		gfx->words.w1 = __gsSP1Triangle_w1f(4, 2, 3, 0);
-		gfx = D_8005BB2C++; \
-		gfx->words.w0 = _SHIFTL(G_TRI1, 24, 8); \
-		gfx->words.w1 = __gsSP1Triangle_w1f(4, 3, 1, 0);
-
-		D_80156EDA += 0xD;
-		current = D_80154318[current].unk4;
-	}
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D8190_E7140.s")
 #endif
@@ -11241,8 +11210,6 @@ void func_800E64B4_F5464(void) {
 #ifdef NON_MATCHING
 void func_800E6A38_F59E8(void)
 {
-	// This features multiple unlikely lines of code - it needs to be fixed to have more "normal" code
-	// e.g. the Vtx Gfx union, vertex3 & 4 treated differently to the rest, the useless gfx pointer
   s32 slotCount = 4;
   s16 angle;
   s16 radius;
@@ -11258,18 +11225,9 @@ void func_800E6A38_F59E8(void)
   Vtx *vtx0;
   Vtx *vtx1;
   Vtx *vtx2;
-  union 
-  {
-	Vtx *v;
-	Gfx *g;
-  } vertex3;
-  union 
-  {
-	Vtx *v;
-	s32 uv;
-  } vertex4;
+  Vtx *vtx3;
+  Vtx *vtx4;
   Vtx *vtx5;
-  void *gfx;
   if ((currentLevel != 1) || (D_80052ACA == 2))
   {
 	return;
@@ -11321,70 +11279,64 @@ void func_800E6A38_F59E8(void)
 		zOff = (((f32) sins(-angle)) / 32768.0) * (radius + 20);
 		// Most other matched functions that create vertices using D_8005BB34
 		// follow a particular structure, can we not reuse that common structure here too?
-		vtx0 = (gfx = D_8005BB34);
+		vtx0 = D_8005BB34++;
 		vtx0->v.ob[0] = baseX;
-		D_8005BB34++;
 		vtx0->v.ob[1] = baseY;
 		vtx0->v.ob[2] = baseZ;
-		vtx0->v.tc[0] = (vertex4.uv = 0x1000);
+		vtx0->v.tc[0] = 0x1000;
 		vtx0->v.tc[1] = 0x0800;
-		vtx1 = (gfx = D_8005BB34);
+		vtx1 = D_8005BB34++;
 		vtx1->v.ob[0] = baseX;
-		D_8005BB34++;
 		vtx1->v.ob[1] = (yTop = baseY + 0x14);
 		vtx1->v.ob[2] = baseZ;
-		vtx1->v.tc[0] = vertex4.uv;
+		vtx1->v.tc[0] = 0x1000;
 		vtx1->v.tc[1] = 0;
-		vtx2 = (gfx = D_8005BB34);
+		vtx2 = D_8005BB34++;
 		vtx2->v.ob[0] = baseX + xOff;
-		D_8005BB34++;
 		vtx2->v.ob[1] = yTop;
 		vtx2->v.ob[2] = baseZ + zOff;
 		vtx2->v.tc[0] = 0;
 		vtx2->v.tc[1] = 0x0800;
-		vertex3.v = D_8005BB34;
-		vertex3.v->v.ob[0] = baseX - xOff;
-		D_8005BB34++;
-		vertex3.v->v.ob[1] = yTop;
-		vertex3.v->v.ob[2] = baseZ - zOff;
-		vertex3.v->v.tc[0] = vertex4.uv;
-		vertex3.v->v.tc[1] = 0;
-		vertex4.v = (gfx = D_8005BB34);
-		vertex4.v->v.ob[0] = baseX + (entry->unkC >> 7);
-		D_8005BB34++;
-		vertex4.v->v.ob[1] = (baseY + (entry->unk10 >> 7)) + 0x14;
-		vertex4.v->v.ob[2] = baseZ + (entry->unk14 >> 7);
-		vertex4.v->v.tc[0] = 0;
-		vertex4.v->v.tc[1] = 0x0800;
-		vtx5 = (gfx = D_8005BB34);
-		vtx5->v.ob[0] = vertex4.v->v.ob[0];
-		D_8005BB34++;
-		vtx5->v.ob[1] = vertex4.v->v.ob[1];
-		vtx5->v.ob[2] = vertex4.v->v.ob[2];
+		vtx3 = D_8005BB34++;
+		vtx3->v.ob[0] = baseX - xOff;
+		vtx3->v.ob[1] = yTop;
+		vtx3->v.ob[2] = baseZ - zOff;
+		vtx3->v.tc[0] = 0x1000;
+		vtx3->v.tc[1] = 0;
+		vtx4 = D_8005BB34++;
+		vtx4->v.ob[0] = baseX + (entry->unkC >> 7);
+		vtx4->v.ob[1] = (baseY + (entry->unk10 >> 7)) + 0x14;
+		vtx4->v.ob[2] = baseZ + (entry->unk14 >> 7);
+		vtx4->v.tc[0] = 0;
+		vtx4->v.tc[1] = 0x0800;
+		vtx5 = D_8005BB34++;
+		vtx5->v.ob[0] = vtx4->v.ob[0];
+		vtx5->v.ob[1] = vtx4->v.ob[1];
+		vtx5->v.ob[2] = vtx4->v.ob[2];
 		vtx5->v.tc[0] = 0;
 		vtx5->v.tc[1] = 0;
 		vtx5->v.cn[0] = 0;
-		vertex4.v->v.cn[0] = 0;
-		vertex3.v->v.cn[0] = 0;
+		vtx4->v.cn[0] = 0;
+		vtx3->v.cn[0] = 0;
 		vtx2->v.cn[0] = 0;
 		vtx1->v.cn[0] = 0;
 		vtx0->v.cn[0] = 0;
 		vtx5->v.cn[1] = 0;
-		vertex4.v->v.cn[1] = 0;
-		vertex3.v->v.cn[1] = 0;
+		vtx4->v.cn[1] = 0;
+		vtx3->v.cn[1] = 0;
 		vtx2->v.cn[1] = 0;
 		vtx1->v.cn[1] = 0;
 		vtx0->v.cn[1] = 0;
 		vtx5->v.cn[2] = 0;
-		vertex4.v->v.cn[2] = 0;
-		vertex3.v->v.cn[2] = 0;
+		vtx4->v.cn[2] = 0;
+		vtx3->v.cn[2] = 0;
 		vtx2->v.cn[2] = 0;
 		vtx1->v.cn[2] = 0;
 		vtx0->v.cn[2] = 0;
-		vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vertex3.v->v.cn[3] = (vertex4.v->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
+		vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vtx3->v.cn[3] = (vtx4->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
 		gSPVertex(D_8005BB2C++, ((u32) vtx0) & 0x1FFFFFFF, 6, 0);
 		gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
-		gSP1Triangle(vertex3.g = D_8005BB2C++, 2, 3, 5, 0);
+		gSP1Triangle(D_8005BB2C++, 2, 3, 5, 0);
 	  }
 
 	}

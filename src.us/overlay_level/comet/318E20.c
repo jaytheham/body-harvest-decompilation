@@ -3286,7 +3286,6 @@ s32 func_802DC874_3209C4(u8 arg0) {
 	return 1;
 }
 
-#ifdef NON_MATCHING
 void func_802DC8F4_320A44(u8 arg0) {
 	u8 spDF;
 	s16 spDC;
@@ -3315,7 +3314,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 	s16 offset[3];
 	s32 rotated[3];
 	s32 sp74;
-	s32 dz;
+	s32 rollDamping;
 
 	temp_s0 = &alienInstances[arg0];
 	spDF = alienInstances[arg0].typeIndex;
@@ -3324,7 +3323,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 	sp60 = arg0;
 	spDA = sp64->unkD;
 	func_80137468_146418(arg0, 0x26A);
-	if (D_80222A70) {} /* Keep the clamp cache request ahead of the type pointer. */
+	if (D_80222A70 && spDC) {} /* Preserve the clamp cache and parent joint register order. */
 	spCC = func_80084E54_93E04(temp_s0, D_80052B34);
 	func_800B84D0_C7480(temp_s0->unk0, temp_s0->unk4);
 	sp74 = func_802DC874_3209C4(arg0);
@@ -3335,12 +3334,12 @@ void func_802DC8F4_320A44(u8 arg0) {
 	temp_f10 = (s32)((f32)speedDifference / (f32)maxSpeed * D_802E7B54_32BCA4.value * 2);
 	if (temp_f10 == 0 || currentSpeed >= maxSpeed - sp58->unk3E * 2) {
 		if (temp_s0->unkA > 0) {
-			velocity = temp_s0->unkA - 0x100;
-			if (velocity < 0) { temp_s0->unkA = 0; } else { temp_s0->unkA = velocity; }
+			rollDamping = temp_s0->unkA - 0x100;
+			if (rollDamping < 0) { temp_s0->unkA = 0; } else { temp_s0->unkA = rollDamping; }
 		}
 		if (temp_s0->unkA < 0) {
-			velocity = temp_s0->unkA + 0x100;
-			if (velocity > 0) { temp_s0->unkA = 0; } else { temp_s0->unkA = velocity; }
+			rollDamping = temp_s0->unkA + 0x100;
+			if (rollDamping > 0) { temp_s0->unkA = 0; } else { temp_s0->unkA = rollDamping; }
 		}
 		if (temp_s0->unk8 > 0) {
 			velocityZ = temp_s0->unk8 - 0x100;
@@ -3353,6 +3352,7 @@ void func_802DC8F4_320A44(u8 arg0) {
 		if (temp_s0->unkA == 0 && temp_s0->unk8 == 0) { temp_s0->unk3A = 1; }
 	} else {
 		velocity = coss(temp_s0->unkE - temp_s0->unk6);
+		if (D_8014DD50[spDA].unk8) {} /* Reserve the joint cache before the double spill. */
 		temp_s0->unkA = (s32)((f64)temp_s0->unkA + temp_f10 * ((f32)velocity / 32768.0));
 		velocity = sins(temp_s0->unkE - temp_s0->unk6);
 		temp_s0->unk8 = (s32)((f64)temp_s0->unk8 + temp_f10 * ((f32)velocity / 32768.0));
@@ -3391,7 +3391,9 @@ void func_802DC8F4_320A44(u8 arg0) {
 		func_80128428_1373D8(temp_s0, rotated[0], rotated[1], rotated[2], &spBC, &spB8, &spB4);
 		func_800D16BC_E066C((s16)spC8, (s16)spC4, (s16)spC0, (s16)spBC, (s16)spB8, (s16)spB4, 1);
 		if (temp_s0->unk26 >= 0x6E) {
-			lower = (u16)D_8014DD50[spDA].unk8 - 0x64;
+			if (D_8014DD50[spDA].unk8) {} /* Keep both cache requests before the unsigned load. */
+			if (D_8014DD50[spDA].unk8) {}
+			lower = D_8014DD50[spDA].unk8Unsigned - 0x64;
 			if (lower < -0x1194) { D_8014DD50[spDA].unk8 = -0x1194; } else { D_8014DD50[spDA].unk8 = lower; }
 			if ((u16)sp64->unk8 + 0x64 > 0x1194) { sp64->unk8 = 0x1194; } else { sp64->unk8 = (u16)sp64->unk8 + 0x64; }
 			func_80137468_146418(sp60, 0x261);
@@ -3409,7 +3411,8 @@ void func_802DC8F4_320A44(u8 arg0) {
 			temp_s0->unk48 = 0;
 		}
 	} else {
-		lower = (u16)D_8014DD50[spDA].unk8 + 0x64;
+		if (D_8014DD50[spDA].unk8) {}
+		lower = D_8014DD50[spDA].unk8Unsigned + 0x64;
 		if (lower > 0) { D_8014DD50[spDA].unk8 = 0; } else { D_8014DD50[spDA].unk8 = lower; }
 		if ((u16)sp64->unk8 - 0x64 < 0) { sp64->unk8 = 0; } else { sp64->unk8 = (u16)sp64->unk8 - 0x64; }
 		func_8008554C_944FC(arg0);
@@ -3458,19 +3461,12 @@ void func_802DC8F4_320A44(u8 arg0) {
 	}
 	if (alienTypes[temp_s0->typeIndex].unk54 & 0x2000) {
 		sp60 = temp_s0->unk0 - D_80052B34->unk0;
-		dz = temp_s0->unk4 - D_80052B34->unk4;
-		temp_s0->unk6 = func_80003824_4424((f32)sp60, (f32)dz) + 0x8000;
+		spCC = temp_s0->unk4 - D_80052B34->unk4;
+		temp_s0->unk6 = func_80003824_4424((f32)sp60, (f32)spCC) + 0x8000;
 	}
 	if (temp_s0->unk1E != 0) { temp_s0->unk1E--; }
 	if (temp_s0->unk26 != 0) { temp_s0->unk26--; }
 }
-#else
-#ifdef VERSION_US
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DC8F4_320A44.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DC8F4_320A44.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.eu.s")
-#endif
-#endif
 
 void func_802DD554_3216A4(u8 arg0) {
 	s16 child;
@@ -4410,7 +4406,6 @@ s32 func_802E0234_324384(u8 arg0) {
 	return 1;
 }
 
-#ifdef NON_MATCHING
 void func_802E0588_3246D8(u8 arg0) {
 	s32 joint0;
 	s32 joint1;
@@ -4419,13 +4414,16 @@ void func_802E0588_3246D8(u8 arg0) {
 	s32 joint4;
 	s32 joint5;
 	f32 rotation;
-	f32 *rotationPtr = &rotation;
+	s32 padRotation;
 	s16 delta;
 	s32 radius;
 	f32 offset2;
-	f32 speed;
+	Unk8014DD50 *wheel4;
 	s32 yaw;
-	f64 turn[2];
+	Unk8014DD50 **wheel4Ptr = &wheel4;
+	f32 speed;
+	f64 turn;
+	u8 pad[12];
 	union { f32 value; volatile f32 reload; } offset0;
 
 	speed = alienInstances[arg0].unk12 / 32;
@@ -4434,26 +4432,25 @@ void func_802E0588_3246D8(u8 arg0) {
 	joint2 = D_8014DD50[joint1].unkD;
 	joint3 = D_8014DD50[joint2].unkD;
 	joint4 = D_8014DD50[joint3].unkD;
-	joint5 = D_8014DD50[joint4].unkD;
+	*wheel4Ptr = &D_8014DD50[joint4];
+	joint5 = wheel4->unkD;
 	yaw = alienInstances[arg0].unk6;
 	delta = yaw - D_802E7184_32B2D4;
-	radius = D_8014DD50[joint0].unk0;
-	*rotationPtr = (speed / (200.0 * 3.141592654)) * 65536.0;
-	turn[0] = (f32)((radius * 2) * 3.141592654 * ((f32)delta / 65536.0f));
-	offset0.value = (turn[0] / 628.3185308) * 65536.0;
+	rotation = (speed / (200.0 * 3.141592654)) * 65536.0;
+	/* The zero product keeps the rotation calculation in the target order. */
+	radius = D_8014DD50[joint0].unk0 + ((s32)rotation * 0);
+	turn = (f32)((radius * 2) * 3.141592654 * ((f32)delta / 65536.0f));
+	offset0.value = (turn / 628.3185308) * 65536.0;
 	D_8014DD50[joint0].unkAUnsigned += rotation + offset0.value;
 	offset0.value = offset0.reload;
 	D_8014DD50[joint1].unkAUnsigned += rotation - offset0.value;
-	D_8014DD50[joint2].unkAUnsigned += (f32)((speed / (128.0 * 3.141592654)) * 65536.0) + (f32)((turn[0] / 402.123859712) * 65536.0);
-	D_8014DD50[joint3].unkAUnsigned += rotation - (f32)((turn[0] / 402.123859712) * 65536.0);
-	offset2 = (turn[0] / 270.176968244) * 65536.0;
-	D_8014DD50[joint4].unkAUnsigned += (f32)((speed / (86.0 * 3.141592654)) * 65536.0) + offset2;
+	D_8014DD50[joint2].unkAUnsigned += (f32)((speed / (128.0 * 3.141592654)) * 65536.0) + (f32)((turn / 402.123859712) * 65536.0);
+	D_8014DD50[joint3].unkAUnsigned += rotation - (f32)((turn / 402.123859712) * 65536.0);
+	offset2 = (turn / 270.176968244) * 65536.0;
+	wheel4->unkAUnsigned += (f32)((speed / (86.0 * 3.141592654)) * 65536.0) + offset2;
 	D_8014DD50[joint5].unkAUnsigned += rotation - offset2;
 	D_802E7184_32B2D4 = yaw;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802E0588_3246D8.s", "src.us/overlay_level/comet/318E20_wheel_rotation_late_rodata.s")
-#endif
 
 void func_802E0B64_324CB4(u8 arg0) {
 	u8 sp6F;
