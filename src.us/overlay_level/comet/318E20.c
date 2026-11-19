@@ -3887,6 +3887,7 @@ void func_802DE0F4_322244(u8 arg0) {
 }
 void func_802DE7BC_32290C(s32 arg0) { }
 
+#ifdef NON_MATCHING
 void func_802DE7C4_322914(u8 arg0) {
 	CometJointChain chain;
 	SignedWord animationResult;
@@ -4054,6 +4055,13 @@ void func_802DE7C4_322914(u8 arg0) {
 		func_801371B8_146168(NULL, 0xE8, alien->unk0, alien->unk2, (s32) alien->unk4, (f32) (D_802E7B80_32BCD0[0] + ((f32)(func_800038E0_44E0() % 100) / 500.0f)));
 	}
 }
+#else
+#ifdef VERSION_US
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.eu.s")
+#endif
+#endif
 
 void func_802DF188_3232D8(void) {
 	D_802E6814_32A964 = (f32)((f64)D_802E7C58 / 256.0);
