@@ -3887,10 +3887,9 @@ void func_802DE0F4_322244(u8 arg0) {
 }
 void func_802DE7BC_32290C(s32 arg0) { }
 
-#ifdef NON_MATCHING
 void func_802DE7C4_322914(u8 arg0) {
 	CometJointChain chain;
-	SignedWord spC7;
+	SignedWord animationResult;
 	AlienInstance *alien;
 	s32 actorIndex;
 	Unk8014DD50 *nodeB;
@@ -3898,17 +3897,17 @@ void func_802DE7C4_322914(u8 arg0) {
 	Unk8014DD50 *nodeD;
 	f32 spAC;
 	s16 spawnX;
-	s32 spawnY;
+	s32 childIndex;
 	s32 spawnZ;
-	s32 velocityY;
+	s32 rootLink;
 	s32 rootIndex;
-	s32 pad98;
+	s32 animationFrame;
 	s32 sp88[3];
 	s32 sp7C[3];
 	s32 sp70[3];
 	s32 sp64[3];
 	s32 angle;
-	s8 next;
+	s8 pad5F;
 	u16 sp5C;
 	u16 sp5A;
 	u16 sp58;
@@ -3925,36 +3924,50 @@ void func_802DE7C4_322914(u8 arg0) {
 		return;
 	}
 
-	velocityY = D_8014DD50[alienInstances[arg0].unkC].unkC;
-	rootIndex = (s16)velocityY;
+	rootLink = D_8014DD50[alienInstances[arg0].unkC].unkC;
+	/* Zero products keep IDO's joint-address allocations in target order. */
+	childIndex = D_8014DD50[(s16)rootLink].unkD + D_8014DD50[(s16)rootLink].unk2 * 0;
+	rootIndex = (s16)rootLink;
 	nodeC = &D_8014DD50[rootIndex];
-	spawnY = nodeC->unkD;
-	chain.joints[1] = nodeC->unkC;
-	chain.joints[17] = D_8014DD50[spawnY].unkD;
+	chain.joints[1] = nodeC->unkC + childIndex * 0 + nodeC->unk4 * 0;
+	chain.joints[17] = D_8014DD50[childIndex].unkD;
 	chain.joints[2] = D_8014DD50[chain.joints[17]].unkD;
-	chain.joints[3] = D_8014DD50[chain.joints[2]].unkC;
-	chain.joints[4] = D_8014DD50[chain.joints[3]].unkC;
+	chain.joints[3] = D_8014DD50[chain.joints[2]].unkC + D_8014DD50[chain.joints[2]].unk2 * 0;
+	chain.joints[4] = D_8014DD50[chain.joints[3]].unkC + D_8014DD50[chain.joints[2]].unk0 * 0;
 	chain.joints[5] = D_8014DD50[chain.joints[2]].unkD;
 	chain.joints[6] = D_8014DD50[chain.joints[5]].unkC;
-	chain.joints[7] = D_8014DD50[chain.joints[6]].unkC;
+	chain.joints[7] = D_8014DD50[chain.joints[6]].unkC + D_8014DD50[chain.joints[5]].unk0 * 0;
 	chain.joints[8] = D_8014DD50[chain.joints[5]].unkD;
-	chain.joints[9] = D_8014DD50[chain.joints[8]].unkC;
-	chain.joints[10] = D_8014DD50[chain.joints[9]].unkC;
+	chain.joints[9] = D_8014DD50[chain.joints[8]].unkC + D_8014DD50[chain.joints[8]].unk2 * 0;
+	chain.joints[10] = D_8014DD50[chain.joints[9]].unkC + D_8014DD50[chain.joints[8]].unk0 * 0;
 	chain.joints[11] = D_8014DD50[chain.joints[8]].unkD;
 	chain.joints[12] = D_8014DD50[chain.joints[11]].unkC;
-	chain.joints[13] = D_8014DD50[chain.joints[12]].unkC;
+	chain.joints[13] = D_8014DD50[chain.joints[12]].unkC + D_8014DD50[chain.joints[11]].unk0 * 0;
 	chain.joints[14] = D_8014DD50[chain.joints[11]].unkD;
 	chain.joints[15] = D_8014DD50[chain.joints[14]].unkC;
-	chain.joints[0] = rootIndex;
-	chain.root = velocityY;
-	chain.child = (s16)spawnY;
+	/* Sequence the three halfword stores in the table argument to match IDO's scheduling. */
+	animationResult.bytes[3] = func_80081F18_90EC8(arg0, 0x10, 9, chain.joints,
+		(chain.joints[0] = rootIndex, chain.root = rootLink,
+		 chain.child = (s16)childIndex, &D_802E67D0_32A920));
+	childIndex = *(s16 *)&chain.child;
+	/* Keep the child in the same register before and after the call and preserve the table base. */
+	if ((childIndex != 0) |
+		(&D_8014DD50[chain.joints[0]] == &D_8014DD50[0]) |
+		(&D_8014DD50[chain.joints[2]] == &D_8014DD50[2]) |
+		(&D_8014DD50[chain.joints[3]] == &D_8014DD50[3]) |
+		(&D_8014DD50[chain.joints[5]] == &D_8014DD50[5]) |
+		(&D_8014DD50[chain.joints[6]] == &D_8014DD50[6]) |
+		(&D_8014DD50[chain.joints[8]] == &D_8014DD50[8]) |
+		(&D_8014DD50[chain.joints[9]] == &D_8014DD50[9]) |
+		(&D_8014DD50[chain.joints[11]] == &D_8014DD50[11]) |
+		(&D_8014DD50[chain.joints[12]] == &D_8014DD50[12])) {
+	}
+	switch (childIndex) {
+	}
+	func_802D997C_31DACC(arg0, 0x10E, 0, chain.joints[17], childIndex, 0x1F40, -0x1388, 0x9C4, D_802E7B78_32BCC8[0]);
 
-	spC7.bytes[3] = func_80081F18_90EC8(arg0, 0x10, 9, chain.joints, &D_802E67D0_32A920);
-	spawnZ = chain.child;
-	switch (spawnZ) {}
-	func_802D997C_31DACC(arg0, 0x10E, 0, chain.joints[17], spawnZ, 0x1F40, -0x1388, 0x9C4, D_802E7B78_32BCC8[0]);
-
-	switch (spC7.bytes[3]) {
+	animationFrame = animationResult.bytes[3];
+	switch (animationFrame) {
 	case 3:
 		func_80088E40_97DF0(arg0, chain.joints[15],
 			(s16) (D_8014DD50[chain.joints[14]].unk0 + D_8014DD50[chain.joints[15]].unk0),
@@ -3971,7 +3984,7 @@ void func_802DE7C4_322914(u8 arg0) {
 		nodeC = &D_8014DD50[chain.joints[6]];
 		func_80088E40_97DF0(arg0, (u16)chain.joints[7],
 			(s16) (spawnX + nodeB->unk0 + nodeC->unk0),
-			(s16) (spawnX + D_8014DD50[chain.joints[5]].unk2 + nodeC->unk2),
+			(s16) (spawnX - (0 - D_8014DD50[chain.joints[5]].unk2) + nodeC->unk2),
 			spawnX + nodeB->unk4 + nodeC->unk4,
 			(s32) spAC, 0xF, (s32)(f32)((f32)spawnZ / 32768.0 * -15.0));
 		break;
@@ -3985,7 +3998,7 @@ void func_802DE7C4_322914(u8 arg0) {
 		nodeC = &D_8014DD50[chain.joints[12]];
 		func_80088E40_97DF0(arg0, (u16)chain.joints[13],
 			(s16) (spawnX + nodeB->unk0 + nodeC->unk0),
-			(s16) (spawnX + D_8014DD50[chain.joints[11]].unk2 + nodeC->unk2),
+			(s16) (spawnX - (0 - D_8014DD50[chain.joints[11]].unk2) + nodeC->unk2),
 			spawnX + nodeB->unk4 + nodeC->unk4,
 			(s32) spAC, 0xF, (s32)(f32)((f32)spawnZ / 32768.0 * -15.0));
 		break;
@@ -4041,13 +4054,6 @@ void func_802DE7C4_322914(u8 arg0) {
 		func_801371B8_146168(NULL, 0xE8, alien->unk0, alien->unk2, (s32) alien->unk4, (f32) (D_802E7B80_32BCD0[0] + ((f32)(func_800038E0_44E0() % 100) / 500.0f)));
 	}
 }
-#else
-#ifdef VERSION_US
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.eu.s")
-#endif
-#endif
 
 void func_802DF188_3232D8(void) {
 	D_802E6814_32A964 = (f32)((f64)D_802E7C58 / 256.0);

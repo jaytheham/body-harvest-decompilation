@@ -15,3 +15,9 @@
 `code changed` -> Assign `chain.child` to the existing `spawnZ` word, retain `switch (spawnZ) {}` before the call, and pass `spawnZ`. Replacing the empty switch with `if (spawnZ) {}` produces 76 differing words. Seven alternate expressions in the same empty switch all leave 19 differing words.
 
 `correct ASM` -> With the empty switch, the frame and instruction order match the target, and only 19 register operands remain to resolve. An additional empty switch before the root or child reads worsens the comparison, so the location of the existing switch matters.
+
+`incorrect ASM` -> In `func_802DE7C4_322914`, an inline root assignment put the raw byte in `ra` at `0x3229A0` and began the signed halfword conversion with `sll t5,ra,16` at `0x3229AC`. The child reload used `t0` in the earlier straight-line implementation.
+
+`code changed` -> Assign the raw byte to `rootLink` in its own statement and copy the animation result into the existing word local before the case switch. Add zero-scaled uses of the child and the four joint addresses in the traversal. After reloading the child, retain the empty comparison of the child and existing table addresses followed by the empty switch. Group the three pre-animation halfword stores in the animation call's table argument with comma operators.
+
+`correct ASM` -> The byte load uses `t5`, the conversion uses `sll ra,t5,16`, and the child uses `lh t4,0xEC(sp)` followed by `sw t4,0x10(sp)` for the helper argument. The stack frame stays at `0xF0`. The US function diff is zero and both ROM checksums pass.
