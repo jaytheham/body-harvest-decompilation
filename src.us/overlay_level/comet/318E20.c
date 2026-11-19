@@ -3708,16 +3708,17 @@ void func_802DDFFC_32214C(u8 arg0, s16 arg1, s16 arg2) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_802DE0F4_322244(u8 arg0) {
-	s16 padA6;
+	s16 jointScratch; /* Preserve the joint-index stack layout. */
 	s16 spA4;
 	s16 spA2;
 	s16 spA0;
 	s16 sp9E;
-	s16 sp9C;
-	s16 sp9A;
-	s16 sp98;
+	struct {
+		s16 first;
+		s16 third;
+		s16 link;
+	} lowerJoints;
 	s32 temp_v0;
 	s32 temp_lo;
 	s32 var_t0;
@@ -3725,39 +3726,41 @@ void func_802DE0F4_322244(u8 arg0) {
 	s32 temp;
 	s16 firstCoordinate;
 	s16 secondCoordinate;
-	Unk8014DD50 *effectNode;
 	AlienInstance *temp_s0;
+	s32 thirdJoint;
 	s32 sp74;
 	s32 position[3];
 	s32 effectPosition[3];
 	s32 sp3C;
-	Unk8014DD50 *sp40;
-	Unk8014DD50 *sp44;
+	s32 firstJoint;
+	s32 secondJoint;
 	u8 sp4F;
 
-
-	if (&sp44) {} if (&sp40) {}
 	temp_s0 = &alienInstances[arg0];
-	spA4 = D_8014DD50[temp_s0->unkC].unkC;
+	spA4 = D_8014DD50[(firstCoordinate = temp_s0->unkC)].unkC;
 	spA2 = D_8014DD50[spA4].unkC;
 	spA0 = D_8014DD50[spA4].unkD;
 	sp9E = D_8014DD50[spA0].unkD;
-	sp98 = D_8014DD50[sp9E].unkD;
-	{
-		s16 firstJoint;
-		s16 secondJoint;
-		s16 thirdJoint;
+	lowerJoints.first = D_8014DD50[sp9E].unkD;
+	/* The zero-scaled fields preserve IDO's joint-address lifetimes. */
+	firstJoint = D_8014DD50[lowerJoints.first].unkD + D_8014DD50[lowerJoints.first].unk2 * 0;
+	secondJoint = D_8014DD50[firstJoint].unkD + D_8014DD50[firstJoint].unk2 * 0;
+	thirdJoint = D_8014DD50[secondJoint].unkD + D_8014DD50[secondJoint].unk2 * 0;
+	lowerJoints.link = D_8014DD50[thirdJoint].unkD + D_8014DD50[thirdJoint].unk2 * 0;
+	lowerJoints.third = D_8014DD50[lowerJoints.link].unkC;
 
-		firstJoint = D_8014DD50[sp98].unkD;
-		secondJoint = D_8014DD50[firstJoint].unkD;
-		thirdJoint = D_8014DD50[secondJoint].unkD;
-		sp9C = D_8014DD50[thirdJoint].unkD;
-	}
+	/* Keep the link indices and cached effect addresses in IDO's original register ranges. */
+	if ((lowerJoints.first ^ 1) == 0x50) {}
+	if (((firstJoint ^ 1) == 91) |
+		((firstJoint ^ 2) == 92) |
+		((secondJoint ^ 1) == 93) |
+		((secondJoint ^ 2) == 94) |
+		((thirdJoint ^ 1) == 95) |
+		((thirdJoint ^ 2) == 96) |
+		((D_8014DD50[spA0].unk0 ^ D_8014DD50[spA0].unk2) == 0x50) |
+		((D_8014DD50[sp9E].unk0 ^ D_8014DD50[sp9E].unk2 ^
+		  D_8014DD50[sp9E].unk4 ^ D_8014DD50[sp9E].unkAUnsigned) == 0x50)) {}
 
-	if (sp9C) {}
-	sp9A = D_8014DD50[sp9C].unkC;
-	sp44 = &D_8014DD50[spA0];
-	sp40 = &D_8014DD50[sp9E];
 	if (D_802E4E80_328FD0 == 0) {
 		func_8011C080_12B030(0x71);
 		func_8011C080_12B030(0x7A);
@@ -3771,13 +3774,9 @@ void func_802DE0F4_322244(u8 arg0) {
 
 	func_80128428_1373D8(temp_s0, 0x19, 0, 0x226, &position[2], &position[1], &position[0]);
 
-	temp = D_80052B34->unk0;
-	temp = (temp - position[2]) >> 1;
-	sp74 = temp * temp;
-	temp = position[0];
-	temp_lo = (D_80052B34->unk4 - temp) >> 1;
-	sp74 += temp_lo * temp_lo;
-	sp74 = (s32)sqrtf((f32)sp74) * 2;
+	temp = (D_80052B34->unk0 - position[2]) >> 1;
+	temp_lo = (D_80052B34->unk4 - position[0]) >> 1;
+	sp74 = (s32)sqrtf((f32)(temp * temp + temp_lo * temp_lo)) * 2;
 
 	alienTypes[temp_s0->typeIndex].unk58 = 0;
 
@@ -3785,11 +3784,11 @@ void func_802DE0F4_322244(u8 arg0) {
 	func_80086230_951E0(arg0, spA4, 0x2000);
 
 	if (!(D_80052A8C & 7)) {
-		effectNode = sp44;
-		if (temp_s0->unk3C != 0xFB && effectNode->unkAUnsigned < 0x1F41) {
-			firstCoordinate = effectNode->unk2;
-			secondCoordinate = effectNode->unk4;
-			func_80128428_1373D8(temp_s0, sp44->unk0 - 0x96, firstCoordinate, secondCoordinate, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+		if (temp_s0->unk3C != 0xFB && D_8014DD50[spA0].unkAUnsigned < 0x1F41) {
+			jointScratch = D_8014DD50[spA0].unk0 - 0x96;
+			firstCoordinate = D_8014DD50[spA0].unk2;
+			secondCoordinate = D_8014DD50[spA0].unk4;
+			func_80128428_1373D8(temp_s0, jointScratch, firstCoordinate, secondCoordinate, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0 = D_80222A70;
 			} else {
@@ -3802,10 +3801,11 @@ void func_802DE0F4_322244(u8 arg0) {
 			effectPosition[1] = var_t0;
 			func_800CD2E8_DC298(firstCoordinate, var_t0, secondCoordinate, sp4F);
 		}
-		if (temp_s0->unk3D != 0xFB && sp40->unkAUnsigned < 0x1F41) {
-			firstCoordinate = sp40->unk2;
-			secondCoordinate = sp40->unk4;
-			func_80128428_1373D8(temp_s0, sp40->unk0 + 0x96, firstCoordinate, secondCoordinate, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
+		if (temp_s0->unk3D != 0xFB && D_8014DD50[sp9E].unkAUnsigned < 0x1F41) {
+			jointScratch = D_8014DD50[sp9E].unk0 + 0x96;
+			firstCoordinate = D_8014DD50[sp9E].unk2;
+			secondCoordinate = D_8014DD50[sp9E].unk4;
+			func_80128428_1373D8(temp_s0, jointScratch, firstCoordinate, secondCoordinate, &effectPosition[2], &effectPosition[1], &effectPosition[0]);
 			if ((func_800B84D0_C7480((s16)effectPosition[2], (s16)effectPosition[0]) >> 8) < D_80222A70) {
 				var_t0_2 = D_80222A70;
 			} else {
@@ -3842,9 +3842,9 @@ void func_802DE0F4_322244(u8 arg0) {
 		}
 	}
 
-	func_802DD750_3218A0(arg0, sp74, spA4, spA2, (s32)sp98);
-	func_802DDC44_321D94(arg0, spA4, spA2, sp98, position[2], position[1], position[0]);
-	func_802DDFFC_32214C(arg0, sp9C, sp9A);
+	func_802DD750_3218A0(arg0, sp74, spA4, spA2, (s32)lowerJoints.first);
+	func_802DDC44_321D94(arg0, spA4, spA2, lowerJoints.first, position[2], position[1], position[0]);
+	func_802DDFFC_32214C(arg0, lowerJoints.link, lowerJoints.third);
 
 	if (temp_s0->unk20 & ALIEN_FLAG_UNKG) {
 		if (func_80084FE8_93F98(arg0, 0x1000) && alienInstances[arg0].unk2 >= D_80052B34->unk2 + 100 && alienInstances[arg0].unk2 <= D_80052B34->unk2 + 300 && temp_s0->unk4E != 0 && !(temp_s0->unk47 & 0xE)) {
@@ -3885,14 +3885,6 @@ void func_802DE0F4_322244(u8 arg0) {
 		temp_s0->unk1E = temp - 1;
 	}
 }
-#else
-#ifdef VERSION_US
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE0F4_322244.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE0F4_322244.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.eu.s")
-#endif
-#endif
-
 void func_802DE7BC_32290C(s32 arg0) { }
 
 #ifdef NON_MATCHING
@@ -4050,7 +4042,11 @@ void func_802DE7C4_322914(u8 arg0) {
 	}
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s")
+#ifdef VERSION_US
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.us.s")
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_level/comet/318E20/func_802DE7C4_322914.s", "src.us/overlay_level/comet/318E20_after_joint_animation_late_rodata.eu.s")
+#endif
 #endif
 
 void func_802DF188_3232D8(void) {
