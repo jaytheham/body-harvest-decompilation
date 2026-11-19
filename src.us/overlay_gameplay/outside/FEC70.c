@@ -1,3 +1,4 @@
+
 #define FEC70_BSS
 #include <ultra64.h>
 #include "common.h"
@@ -11,21 +12,6 @@
 const char D_801444F0_1534A0[] = "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n"; // "**** ERROR: Cutscenes: RaiseAtlantis: Building not present ****\n"
 const char D_80144534_1534E4[] = "**** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****\n"; // "**** ERROR: Cutscenes: BridgeBlowerUpper: Building not present ****\n"
 const char D_8014457C_15352C[] = "**** ERROR: Cutscenes: AlphaTransmute: Building not present ****\n"; // "**** ERROR: Cutscenes: AlphaTransmute: Building not present ****\n"
-
-#ifndef NON_MATCHING_FF61C
-const u32 jtbl_801445C0_153570[] = {
-	OVERLAY_PTR(0x800F0858), OVERLAY_PTR(0x800F0B3C), OVERLAY_PTR(0x800F08EC), OVERLAY_PTR(0x800F08D4), OVERLAY_PTR(0x800F0938), 0x0
-};
-
-const f64 D_801445D8_153588[1] = {6.283185307};
-const f64 D_801445E0_153590[1] = {360.0};
-const f64 D_801445E8_153598[1] = {6.283185307};
-const f64 D_801445F0_1535A0[1] = {360.0};
-const f64 D_801445F8_1535A8[1] = {6.283185307};
-const f64 D_80144600_1535B0[1] = {360.0};
-const f64 D_80144608_1535B8[1] = {6.283185307};
-const f64 D_80144610_1535C0[1] = {360.0};
-#endif
 
 u32 D_8013FCC4_14EC70[1] = {(u32)&vehicleInstances[63]};
 s32 D_8013FCC4_14EC74[3] = {-136, 2021168790, -1774437316};
@@ -280,14 +266,13 @@ void func_800F0340_FF2F0(u8 *arg0, s16 arg1, s16 arg2) {
 	D_80157FAC = D_80157FAE;
 }
 
-#ifdef NON_MATCHING_FF61C
 s32 func_800F066C_FF61C(void) {
 	static u8 orbitOffsetReservation[8];
 	static f32 D_80157FC8;
 	static s16 D_80157FCC;
 	static s16 D_80157FCE;
 	s32 finished;
-	s16 z;
+	s16 z, currentZ;
 	f32 orbitXOffset;
 	s16 x, y;
 	s16 targetX, targetY, targetZ;
@@ -299,7 +284,6 @@ s32 func_800F066C_FF61C(void) {
 	CutsceneCameraKeyframe *entry;
 	f32 trig;
 	f32 ratio;
-	s32 frame;
 
 
 	finished = 0;
@@ -323,23 +307,24 @@ s32 func_800F066C_FF61C(void) {
 		targetZ = savedTarget.z.stored;
 		break;
 	case 2: {
-		BuildingInstance *building = &buildingInstances[entry->targetIndex];
+		s32 index = (s32)(s64)(s32)(u64)(s32)(s64)entry->targetIndex;
+		BuildingInstance *building = &buildingInstances[index];
 		s32 rawZ;
-		s16 height;
+		u16 shiftedY;
 
 		u16 shiftedX = (s32)(s64)building->xCoord >> 2;
-		y = buildingInstances[entry->targetIndex].yCoord;
-		savedTarget.x.stored = (u32)(shiftedX + D_80159DE0) & 0xFFFF;
-		targetY = ((s32)(s64)y >> 2) + D_80159DE2;
-		height = (s32)(s64)buildingTypes[building->buildingType].unk14 >> 3;
-		targetY += height;
-		rawZ = (building->zCoord >> 2) + D_80159DE4;
+		savedTarget.x.stored = (u32)(shiftedX + (u16)D_80159DE0) & 0xFFFF;
+		shiftedY = (s32)(s64)(building->yCoord >> 2);
+		targetY = (s16)shiftedY + D_80159DE2;
+		targetY += buildingTypes[(s32)(s64)building->buildingType].unk14 >> 3;
+		rawZ = (building->zCoord >> 2) + (u16)D_80159DE4;
 		savedTarget.z.stored = rawZ;
 		targetZ = rawZ;
 		/* Prioritize the left shift over the halfword store in the IDO scheduler. */
 #line 101
 		targetZ = (u32)targetZ & 0xFFFF;
 		targetX = (u32)savedTarget.x.value & 0xFFFF;
+		targetX = (u32)targetX & 0xFFFF;
 		break;
 	}
 	case 3: {
@@ -369,16 +354,16 @@ s32 func_800F066C_FF61C(void) {
 		D_80157586 = targetX;
 		D_80157588 = targetY;
 		D_8015758A = (s64)targetZ;
-		D_80157580 = (s32)(s64)D_80157586 + x_0;
-		D_80157582 = D_80157588 + y_0;
-		D_80157584 = (s64)D_8015758A + z_0;
+		D_80157580 = (((s16)(u16)D_80157586) + ((s16)(u16)x_0));
+		D_80157582 = (u32)(D_80157588 + y_0) & 0xffff;
+		D_80157584 = (u32)(((s32)((u32)D_8015758A << 16) >> 16) + z_0) & 0xffff;
 		D_80157FC0 = x_0;
-		D_80157FC2 = y_0;
-		D_80157FC4 = z_0;
+		D_80157FC2 = (s64)y_0;
+		D_80157FC4 = (u32)z_0 & 0xFFFF;
 		break;
 	}
 	case 3:
-		if ((s32)(s64)D_80157F54 == 0) {
+		if (D_80157F54 == 0) {
 			D_80068080 = 8;
 		}
 		/* fall through */
@@ -392,17 +377,14 @@ s32 func_800F066C_FF61C(void) {
 		break;
 	case 4: {
 		s16 x_1, y_1, z_1;
-		s32 frameDuration;
 
 		D_80157F78 = 0.0f;
-		frame = D_80157F54;
 		D_80157F74 = 0;
 		x_1 = entry->cameraX;
 		y_1 = entry->cameraY;
 		z_1 = entry->cameraZ;
 
-		frameDuration = D_80157F64;
-		if (frameDuration == frame) {
+		if (D_80157F64 == D_80157F54) {
 			D_80157580 = x_1;
 			D_80157582 = y_1;
 			D_80157584 = z_1;
@@ -410,29 +392,34 @@ s32 func_800F066C_FF61C(void) {
 			D_80157588 = targetY;
 			D_8015758A = targetZ;
 		} else {
-			savedTarget.z.stored = targetZ;
+			if ((D_80157F54) && (D_80157F54 == (D_80157F54 & 0xFFFF))) {}
+			savedTarget.z.value = targetZ;
 			savedTarget.x.stored = targetX;
-			ratio = (f32)D_80157F54 / (f32)(u32)D_80157F64;
-			D_80157580 = (s16)(D_80157580 + (x_1 - D_80157580) * ratio);
-			D_80157582 = (s16)(D_80157582 + (y_1 - D_80157582) * ratio);
-			D_80157584 = (s16)(D_80157584 + (z_1 - D_80157584) * ratio);
-			targetX = D_80157586;
-			targetZ = D_8015758A;
-			D_80157586 = (s16)(targetX + (savedTarget.x.stored - targetX) * ratio);
-			D_80157588 = (s16)(D_80157588 + (targetY - D_80157588) * ratio);
-			D_8015758A = (s16)(targetZ + (savedTarget.z.stored - targetZ) * ratio);
+
+			if (1) {
+				ratio = (f32)D_80157F54 / (f32)D_80157F64;
+				D_80157580 = (s16)(D_80157580 + (x_1 - D_80157580) * ratio);
+				D_80157582 = (s16)(D_80157582 + (y_1 - D_80157582) * ratio);
+				currentZ = D_80157584;
+				D_80157584 = (s16)(currentZ + (z_1 - currentZ) * ratio);
+				targetX = D_80157586;
+				targetZ = D_8015758A;
+				D_80157586 = (s16)(targetX + (savedTarget.x.stored - targetX) * ratio);
+				D_80157588 = (s16)(D_80157588 + (targetY - D_80157588) * ratio);
+				D_8015758A = (s16)(targetZ + (savedTarget.z.stored - targetZ) * ratio);
+			}
 		}
 		break;
 	}
-	case 1:
+	case 1: {
 		if (D_80157F54 == 0) {
 			D_80157FC8 = 0.0f;
 			x = entry->cameraX - (s32)(s64)targetX;
 			y = (s64)entry->cameraY - targetY;
-			z = entry->cameraZ;
+			z = entry->cameraZ - targetZ;
 			D_80157FC0 = x;
 			D_80157FC2 = y;
-			D_80157FC4 = z - targetZ;
+			D_80157FC4 = z;
 		}
 
 		if (targetY == entry->targetY || targetY == entry->cameraY) {
@@ -446,18 +433,20 @@ s32 func_800F066C_FF61C(void) {
 		trig = sinf((f32)((D_80157FC8 * 6.283185307) / 360.0));
 		ratio = cosf((f32)((D_80157FC8 * 6.283185307) / 360.0));
 		x = D_80157FC0;
-		z = D_80157FC4;
-		orbitXOffset = (0,ratio) * z + x * trig;
+		currentZ = D_80157FC4;
+		orbitXOffset = (0,ratio) * currentZ + x * trig;
 		trig = cosf((f32)((D_80157FC8 * 6.283185307) / 360.0));
 		ratio = sinf((f32)((D_80157FC8 * 6.283185307) / 360.0));
 
-		targetX = (s64)savedTarget.x.stored;
-		z = D_80157FC4;
-		y = D_80157FC2;
-		x = D_80157FC0;
+		targetX = (u32)savedTarget.x.value & 0xFFFF;
+		targetX = (u32)targetX & 0xFFFF;
+#line 100
+		x = D_80157FC0; y = D_80157FC2; z = D_80157FC4;
+#line 218
+
 		D_80157586 = targetX;
 		targetY = savedTarget.y.stored;
-		targetZ = (u32)savedTarget.z.value & 0xFFFF;
+		targetZ = (s32)((u32)savedTarget.z.value << 16) >> 16;
 		D_80157588 = targetY;
 		D_8015758A = targetZ;
 		D_80157580 = (s16)((f32)D_80157586 + orbitXOffset);
@@ -476,6 +465,7 @@ s32 func_800F066C_FF61C(void) {
 			}
 		}
 		break;
+	}
 	}
 
 	D_80157586 = D_80157586 + D_80157FAC;
@@ -513,10 +503,6 @@ s32 func_800F066C_FF61C(void) {
 	func_800B4050_C3000((targetX >> 6) + 0x77, (targetZ >> 6) + 0x77, (u8 *)D_801FEA30, 0);
 	return finished;
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/FEC70/func_800F066C_FF61C.s")
-#endif
 
 // Spawn boss after delay and dialogue
 void func_800F1004_FFFB4(void) {
