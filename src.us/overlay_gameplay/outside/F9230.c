@@ -918,11 +918,10 @@ void func_800EC0D0_FB080(s32 arg0) {
 	s16 sp40;
 	f32 sp3C;
 	s16 sp3A;
-	f32 pad;
+	UnkBuildingProp_80118774 *temp_v1;
 	s32 temp_f6;
 	f32 sp2C;
 	f32 sp28;
-	UnkBuildingProp_80118774 *temp_v1;
 
 	D_80048188 = 1;
 	D_801575E0.unk0 = 2;
@@ -942,8 +941,8 @@ void func_800EC0D0_FB080(s32 arg0) {
 				D_801575E0.unk16 = 0x36;
 			}
 			func_801165FC_1255AC(D_80052543, D_80052547, &sp46, &sp44, &sp42, &sp40);
-			temp_f6 = (s32)(((f64)(f32)sp40 * D_80144470_153420.value) / 32768.0);
-			switch ((s32)(((f64)(f32)sp40 * D_80144470_153420.value) / 32768.0)) {
+			temp_f6 = (s32)(((f64)(f32)sp40 * 180.0) / 32768.0);
+			switch ((s32)(((f64)(f32)sp40 * 180.0) / 32768.0)) {
 				case 0:
 				case 0x168:
 					sp3A = 0x4000;
@@ -1065,7 +1064,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 	if ((D_80048188 != 0) || (D_8013E5AC_14D55C[D_80157A0C].unk4 & 0x40)) {
 		func_800137F0_143F0(D_80157A28);
 		if ((D_80157A0C == 0x12) || (D_80157A0C == 0x15) || (D_80157A0C == 0x14) || (D_80157A0C == 0x13)) {
-			if ((f32)((f64)sqrtf((f32)((arg1->stick_x * arg1->stick_x) + (arg1->stick_y * arg1->stick_y))) / D_80144478_153428.value) > 0.0f) {
+			if ((f32)((f64)sqrtf((f32)((arg1->stick_x * arg1->stick_x) + (arg1->stick_y * arg1->stick_y))) / 70.0) > 0.0f) {
 				func_800EB534_FA4E4(&D_80157600, ANIM_WALKING, 0, 0.0f);
 			}
 		}
@@ -1174,9 +1173,9 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 				D_8013FC10_14EBC0 = var_f2;
 
 				if (stickX[1] < 0) {
-					D_801575CC = (s32)((f32)(s16)(s32)(((f64)sp90 * -2.5 * 32768.0) / D_80144480_153430.value) * var_f12);
+					D_801575CC = (s32)((f32)(s16)(s32)(((f64)sp90 * -2.5 * 32768.0) / 180.0) * var_f12);
 				} else {
-					D_801575CC = (s32)((f32)(s16)(s32)(((f64)sp90 * 2.5 * 32768.0) / D_80144488_153438.value) * var_f12);
+					D_801575CC = (s32)((f32)(s16)(s32)(((f64)sp90 * 2.5 * 32768.0) / 180.0) * var_f12);
 				}
 
 				if (currentControllerStates[0].button & 0x8000) {
@@ -1236,7 +1235,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 
 				temp_f0 = sqrtf((f32)((arg1->stick_x * arg1->stick_x) + (arg1->stick_y * arg1->stick_y)));
 				sp8C = temp_f0;
-				sp90 = (f32)((f64)temp_f0 / D_80144490_153440.value);
+				sp90 = (f32)((f64)temp_f0 / 70.0);
 				spB0 = sp90 * 15.0f;
 
 				var_t0 = (s16)(func_80003824_4424((f32)arg1->stick_x, (f32)-arg1->stick_y) - D_80157A40);
@@ -1248,7 +1247,7 @@ void func_800EC484_FB434(VehicleInstance *arg0, OSContPad *arg1) {
 
 				if (((f64)sp8C > 10.0) && (D_80157A0C != 0x10)) {
 					s16 angleDiff;
-					if ((D_80157A0C == 0) && (D_80144498_153448.value <= (f64)D_8013FC04_14EBB4[0]) && !(D_80159320 & 0x800000) && (((angleDiff = (s16)(arg0->unkE - var_t0)) >= 0x4000) || (angleDiff < -0x3FFF))) {
+					if ((D_80157A0C == 0) && (0.8 <= (f64)D_8013FC04_14EBB4[0]) && !(D_80159320 & 0x800000) && (((angleDiff = (s16)(arg0->unkE - var_t0)) >= 0x4000) || (angleDiff < -0x3FFF))) {
 						func_800EB534_FA4E4(&D_80157600, ANIM_RUN_TURN_LEFT, 0, 0.0f);
 						D_8013E5AC_14D55C[16].unk10 = var_t0;
 					} else {

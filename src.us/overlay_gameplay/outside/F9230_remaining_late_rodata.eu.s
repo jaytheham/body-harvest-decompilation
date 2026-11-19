@@ -1,23 +1,6 @@
 .late_rodata
 .late_rodata_alignment 8
 
-dlabel D_80144470_153420
-.double 180.0
-
-dlabel D_80144478_153428
-.double 70.0
-
-dlabel D_80144480_153430
-.double 180.0
-
-dlabel D_80144488_153438
-.double 180.0
-
-dlabel D_80144490_153440
-.double 70.0
-
-dlabel D_80144498_153448
-.double 0.8
 
 dlabel jtbl_801444A0_153450
 .word 0x800EDB80
