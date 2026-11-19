@@ -1511,272 +1511,318 @@ void func_800B4D4C_C3CFC(s32 arg0) {
 }
 
 /* Build the 18x18 terrain vertex patch from the 19x19 tile ring. */
-#ifdef NON_MATCHING
-void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
-	u8 rowWrap;
-	u8 ringCol;
-	u8 col;
-	union { u8 index[1]; volatile u8 wrapped; } cursor;
-	u8 mapX;
-	u8 mapY;
-	RingEntry *tileCenter;
-	union {
-		u8 *color;
-		s32 value;
-	} terrain;
-	RingEntry *tileSouth;
-	RingEntry *tileNorth;
-	RingEntry *tileEast;
-	RingEntry *tileWest;
-	u8 rgb[3];
-	s32 edgeParityY;
-	s16 waveOffset;
-	s16 scrollX;
-	s16 posX;
-	s16 posY;
-	s16 posZ;
-	s16 hueX;
-	s16 hueY;
-	s16 scrollY;
-	s32 rowIndex;
-	EffectRgb *shade;
-	u8 initialRow;
-
-	D_8014F89A = 0;
-	scrollX = D_80149434;
-	scrollY = D_80149436;
-	col = (u8)(D_8014F899 = D_80151DD8.ringX + scrollY * 0);
-	D_8014F898 = D_80151DD8.ringY;
-	initialRow = (u8)D_8014F898;
-	cursor.index[0] = initialRow;
-	D_8014F89C = (D_80151DD8.mapPosX & 0xFF);
-	mapX = (u8)(u64)D_8014F89C;
-	D_8014F89D = (D_80151DD8.mapPosY & 0xFF);
-	mapY = (u8)(s16)(s8)D_8014F89D;
-	for (rowWrap = 0; rowWrap < 0x12; rowWrap++) {
-		u8 rowY = cursor.index[0];
-		RingEntry *ringRow[1];
-		s32 columnIndex;
-		shade = ((EffectRgb (*)[19])D_80152740)[rowY];
-		scratch = (s32)col;
-		rowIndex = rowY;
-		edgeParityY = mapY % 2;
-
-		for (hueX = scrollX + 0x701, ringCol = 0, ringRow[0] = D_80151DD8.tiles[rowY]; ringCol < 0x12; ringCol++) {
-
-			columnIndex = col;
-			terrain.value = (s32)(u32)((mapY - 0x80) << 8);
-			posX = (s16)(scrollY + 0x701);
-			scratch = (s32)(u64)ringRow[0];
-			if (scratch != 0) {}
-			if (((u32)col + 1) < 2) {}
-			if (((u32)col + 2) < 4) {}
-			if (((u32)col + 3) < 6) {}
-			if (((u32)col + 4) < 8) {}
-			if ((u16)columnIndex != 0) {}
-			tileCenter = &((RingEntry *)scratch)[col];
-			posY = (s16)(u32)((mapY - 0x80) << 8);
-			if ((u32)columnIndex != 0x12) {
-				if ((u32)col < 0x12) {}
-				scratch = (s32)(tileEast = &((RingEntry *)scratch)[columnIndex + 1]);
-			} else {
-				tileEast = &D_80151DD8.tiles[cursor.wrapped][0];
-			}
-
-			if (rowIndex != 0x12) {
-				tileSouth = &D_80151DD8.tiles[rowIndex + 1][col];
-			} else {
-				tileSouth = &D_80151DD8.tiles[0][col];
-			}
-			if (col != 0) {
-				tileWest = &ringRow[0][col - 1];
-			} else {
-				tileWest = &D_80151DD8.tiles[cursor.index[0]][18];
-			}
-			terrain.color = tileCenter->color;
-
-			if (rowIndex != 0) {
-				tileNorth = &D_80151DD8.tiles[rowIndex - 1][col];
-			} else {
-				tileNorth = &D_80151DD8.tiles[18][col];
-			}
-
-			scratch = scrollY + 0x701;
-			if (shade[col].r != 0) {
-				scratch = (u16)(terrain.color[0] + shade[col].r);
-				if (scratch > 255) scratch = 255;
-				rgb[0] = scratch;
-				scratch = (u16)(terrain.color[1] + shade[col].g);
-				if (scratch > 255) scratch = 255;
-				rgb[1] = scratch;
-				scratch = (u16)(terrain.color[2] + shade[col].b);
-				if (scratch > 255) scratch = 255;
-				rgb[2] = scratch;
-			} else {
-				rgb[0] = terrain.color[0];
-				rgb[1] = terrain.color[1];
-				rgb[2] = terrain.color[2];
-			}
-
-			scratch = mapX % 2;
-			if (scratch == 1) {
-				hueX = D_8013DACC_14CA7C[0];
-			} else {
-				hueX = D_8013DAD4_14CA84[0];
-			}
-
-			if (edgeParityY == 1) {
-				hueY = D_8013DAD0_14CA80[0];
-			} else {
-				hueY = D_8013DAD8_14CA88[0];
-			}
-
-			posX = ((mapX - 0x80) << 8);
-			terrain.value = (tileCenter->tileType & 0x3F) << 5;
-			posZ = terrain.value;
-
-			if (scrollX < 0) {
-				waveOffset = 255 - (BH_ABS(scrollX + 1) % 256);
-			} else {
-				waveOffset = (scrollX % 256);
-			}
-
-			if ((scrollX + 0x701) < (s16)((mapX - 0x80) << 8)) {
-				posX = (posX + waveOffset) - 0x100;
-				posZ = func_800B0A10_BF9C0((tileWest->tileType & 0x3F) << 5, terrain.value, waveOffset, 0x100);
-				if (scratch == 1) {
-					hueX = waveOffset;
-				} else {
-					hueX = 0xFF - waveOffset;
-				}
-			} else if ((s16)((mapX - 0x80) << 8) < (scrollX - 0x901)) {
-				posX = posX + waveOffset;
-				posZ = func_800B0A10_BF9C0(terrain.value, (tileEast->tileType & 0x3F) << 5, waveOffset, 0x100);
-				if (scratch == 1) {
-					hueX = 0xFF - waveOffset;
-				} else {
-					hueX = waveOffset;
-				}
-			}
-
-			if (scrollY < 0) {
-				waveOffset = 255 - (BH_ABS(scrollY + 1) % 256);
-			} else {
-				waveOffset = (scrollY % 256);
-			}
-
-			if ((scrollY + 0x701) < (s16)((mapY - 0x80) << 8)) {
-				posY = (s16)((mapY - 0x80) << 8) + waveOffset - 0x100;
-				posZ = func_800B0A10_BF9C0((tileNorth->tileType & 0x3F) << 5, posZ, waveOffset, 0x100);
-				if (edgeParityY == 1) {
-					hueY = waveOffset;
-				} else {
-					hueY = 0xFF - waveOffset;
-				}
-			} else if ((s16)((mapY - 0x80) << 8) < (scrollY - 0x901)) {
-				posY = (s16)((mapY - 0x80) << 8) + waveOffset;
-				posZ = func_800B0A10_BF9C0(posZ, (tileSouth->tileType & 0x3F) << 5, waveOffset, 0x100);
-				if (edgeParityY == 1) {
-					hueY = 0xFF - waveOffset;
-				} else {
-					hueY = waveOffset;
-				}
-			}
-
-			scratch = D_8013DADC_14CA8C[0]; hueX = (hueX * 8) + scratch;
-			hueY = (hueY * 8) + scratch;
-
-			if ((posZ < (D_80222A70 - 0x46)) && (D_801493CC == 0)) {
-				s16 dist;
-
-				dist = ((D_80222A70 - posZ) - 0x46) / 10;
-				posZ -= dist * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-			}
-
-			if ((D_80222A70 + 0x3C) < posZ && (D_801493CC != 0)) {
-				s16 dist2;
-
-				dist2 = ((D_80222A70 - posZ) - 0x3C) / 20;
-				posZ -= dist2 * (((f64)(f32)coss((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-			}
-
-			terrain.value = func_800056D0_62D0(posX, posY);
-			switch (currentLevel) {
-				case 1:
-					if ((u8)terrain.value == 0x10) {
-						terrain.value = 0x1E;
-						hueX -= terrain.value * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-						hueY -= terrain.value * (((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-					}
-					break;
-				case 2:
-					if ((u8)terrain.value == 0x15 || (u8)terrain.value == 0x10) {
-						scratch = ((scrollX >> 8) + ringCol) * 0x58AC; terrain.value = ((u8)terrain.value == 0x10) ? 0x1E : 0x50;
-						hueX -= terrain.value * (((f64)(f32)coss((D_80052A8C * 900U + scratch)) / 32768.0));
-						hueY -= terrain.value * (((f64)(f32)sins((D_80052A8C * 900 + scratch)) / 32768.0));
-					}
-					break;
-				case 3:
-					if ((u8)terrain.value == 0x10) {
-						terrain.value = 0x1E;
-						hueX -= terrain.value * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-						hueY -= terrain.value * (((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-					}
-					break;
-				case 4:
-					if ((u8)terrain.value == 0x10) {
-						terrain.value = 0x1E;
-						hueX -= terrain.value * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-						hueY -= terrain.value * (((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-					}
-					break;
-				case 5:
-					if ((u8)terrain.value == 0x10 || (u8)terrain.value == 0x14) {
-						terrain.value = 0x28;
-						hueX -= terrain.value * (((f64)(f32)coss((D_80052A8C * 900U + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-						hueY -= terrain.value * (((f64)(f32)sins((D_80052A8C * 900 + ((scrollX >> 8) + ringCol) * 0x58AC)) / 32768.0));
-					}
-					break;
-			}
-
-			if (D_8015273E != 0) {
-				posZ += (D_8015273E * 4);
-			}
-
-			(*arg0)->v.ob[0] = posX;
-			(*arg0)->v.ob[1] = posZ;
-			(*arg0)->v.ob[2] = posY;
-			(*arg0)->v.flag = 0;
-			(*arg0)->v.tc[0] = hueX;
-			(*arg0)->v.tc[1] = hueY;
-			(*arg0)->v.cn[0] = rgb[0];
-			(*arg0)->v.cn[1] = rgb[1];
-			(*arg0)->v.cn[2] = rgb[2];
-			(*arg0)->v.cn[3] = 0xFF;
-			(*arg0)++;
-
-			mapX++;
-			col = (col + 1) % 0x13;
+void func_800B5090_C4040(Vtx **arg0, s32 scratch)
+{
+  u8 rowWrap;
+  u8 ringCol;
+  u8 col;
+  u8 cursor;
+  u8 mapX;
+  u8 mapY;
+  RingEntry *tileCenter;
+  union
+  {
+	u8 *color;
+	s32 value;
+  } terrain;
+  RingEntry *tileSouth;
+  RingEntry *tileNorth;
+  RingEntry *tileEast;
+  RingEntry *tileWest;
+  u8 rgb[3];
+  s32 edgeParityY;
+  s16 waveOffset;
+  s16 scrollX;
+  s16 posX;
+  s16 posY;
+  s16 posZ;
+  s16 hueX;
+  s16 hueY;
+  s16 scrollY;
+  s32 rowIndex;
+  EffectRgb *shade;
+  u8 initialRow;
+  D_8014F89A = 0;
+  scrollX = D_80149434;
+  scrollY = D_80149436;
+  /* Expose the early intermediates before IDO assigns their spill slots. */
+  scratch = -(scrollX + 1);
+  col = (u8)(D_8014F899 = D_80151DD8.ringX + scrollY * 0);
+  hueX = col;
+  D_8014F898 = D_80151DD8.ringY;
+  initialRow = D_8014F898;
+  cursor = initialRow;
+  D_8014F89C = D_80151DD8.mapPosX & 0xFF;
+  mapX = (u64) D_8014F89C;
+  D_8014F89D = D_80151DD8.mapPosY & 0xFF;
+  mapY = D_8014F89D;
+  for (rowWrap = 0; rowWrap < 0x12; rowWrap++)
+  {
+	u8 rowY = cursor;
+	s16 distance;
+	RingEntry *ringRow[1];
+	rowIndex = rowY;
+	shade = ((EffectRgb (*)[19]) D_80152740)[rowY];
+	for (ringCol = 0, ringRow[0] = D_80151DD8.tiles[rowY]; ringCol < 0x12; ringCol++)
+	{
+	  u8 parityMapX;
+	  scratch = (mapX - 0x80) << 8;
+	  tileCenter = &ringRow[0][col];
+	  terrain.color = tileCenter->color;
+	  edgeParityY = mapY % 2;
+	  hueX = scrollX + 0x701;
+	  posY = (s16)((mapY - 0x80) << 8);
+	  posX = scrollY + 0x701;
+	  if (col != 0x12) {
+		tileEast = &ringRow[0][col + 1];
+	  } else {
+		tileEast = &D_80151DD8.tiles[cursor][0];
+	  }
+	  if (rowIndex != 0x12)
+	  {
+		tileSouth = &D_80151DD8.tiles[rowIndex + 1][col];
+	  }
+	  else
+	  {
+		tileSouth = &D_80151DD8.tiles[0][col];
+	  }
+	  if (col != 0)
+	  {
+		tileWest = &ringRow[0][col - 1];
+	  }
+	  else
+	  {
+		tileWest = &D_80151DD8.tiles[cursor][18];
+	  }
+	  if (rowIndex != 0)
+	  {
+		tileNorth = &D_80151DD8.tiles[rowIndex - 1][col];
+	  }
+	  else
+	  {
+		tileNorth = &D_80151DD8.tiles[18][col];
+	  }
+	  /* Copy mapX in both shade paths to retain IDO's parity and Y spill order. */
+	  if (shade[col].r != 0)
+	  {
+		scratch = (u16) (terrain.color[0] + shade[col].r);
+		if (scratch > 255)
+		  scratch = 255;
+		rgb[0] = scratch;
+		scratch = (u16) (terrain.color[1] + shade[col].g);
+		if (scratch > 255)
+		  scratch = 255;
+		rgb[1] = scratch;
+		scratch = (u16) (terrain.color[2] + shade[col].b);
+		if (scratch > 255)
+		  scratch = 255;
+		rgb[2] = scratch;
+		parityMapX = mapX;
+	  }
+	  else
+	  {
+		rgb[0] = terrain.color[0];
+		rgb[1] = terrain.color[1];
+		rgb[2] = terrain.color[2];
+		parityMapX = mapX;
+	  }
+	  scratch = parityMapX % 2;
+	  if (scratch == 1)
+	  {
+		hueX = D_8013DACC_14CA7C[0];
+	  }
+	  else
+	  {
+		hueX = D_8013DAD4_14CA84[0];
+	  }
+	  if (edgeParityY == 1)
+	  {
+		hueY = D_8013DAD0_14CA80[0];
+	  }
+	  else
+	  {
+		hueY = D_8013DAD8_14CA88[0];
+	  }
+	  posX = (mapX - 0x80) << 8;
+	  terrain.value = (tileCenter->tileType & 0x3F) << 5;
+	  posZ = terrain.value;
+	  if (scrollX < 0)
+	  {
+		if (-(scrollX + 1) < scrollX + 1)
+		{
+		  scratch = scrollX + 1;
 		}
+		else
+		{
+		  scratch = -(scrollX + 1);
+		}
+		waveOffset = 255 - (scratch % 256);
+	  }
+	  else
+	  {
+		waveOffset = scrollX % 256;
+	  }
+	  if ((scrollX + 0x701) < ((s16) ((mapX - 0x80) << 8)))
+	  {
+		posX = (posX + waveOffset) - 0x100;
+		posZ = func_800B0A10_BF9C0((tileWest->tileType & 0x3F) << 5, terrain.value, waveOffset, 0x100);
+		if (parityMapX % 2 == 1)
+		{
+		  hueX = waveOffset;
+		}
+		else
+		{
+		  hueX = 0xFF - waveOffset;
+		}
+	  }
+	  else
+		if (((s16) ((mapX - 0x80) << 8)) < (scrollX - 0x901))
+	  {
+		posX = posX + waveOffset;
+		posZ = func_800B0A10_BF9C0(terrain.value, (tileEast->tileType & 0x3F) << 5, waveOffset, 0x100);
+		if (parityMapX % 2 == 1)
+		{
+		  hueX = 0xFF - waveOffset;
+		}
+		else
+		{
+		  hueX = waveOffset;
+		}
+	  }
+	  if (scrollY < 0)
+	  {
+		if (-(scrollY + 1) < scrollY + 1)
+		{
+		  scratch = scrollY + 1;
+		}
+		else
+		{
+		  scratch = -(scrollY + 1);
+		}
+		waveOffset = 255 - (scratch % 256);
+	  }
+	  else
+	  {
+		waveOffset = scrollY % 256;
+	  }
+	  if ((scrollY + 0x701) < ((s32)posY))
+	  {
+		posY = (((s32)posY) + waveOffset) - 0x100;
+		posZ = func_800B0A10_BF9C0((tileNorth->tileType & 0x3F) << 5, posZ, waveOffset, 0x100);
+		if (edgeParityY == 1)
+		{
+		  hueY = waveOffset;
+		}
+		else
+		{
+		  hueY = 0xFF - waveOffset;
+		}
+	  }
+	  else
+		if (((s32)posY) < (scrollY - 0x901))
+	  {
+		posY = ((s32)posY) + waveOffset;
+		posZ = func_800B0A10_BF9C0(posZ, (tileSouth->tileType & 0x3F) << 5, waveOffset, 0x100);
+		if (edgeParityY == 1)
+		{
+		  hueY = 0xFF - waveOffset;
+		}
+		else
+		{
+		  hueY = waveOffset;
+		}
+	  }
+	  scratch = D_8013DADC_14CA8C[0];
+	  hueX = (hueX * 8) + scratch;
+	  hueY = (hueY * 8) + scratch;
+	  if ((posZ < (D_80222A70 - 0x46)) && (D_801493CC == 0))
+	  {
+		distance = ((D_80222A70 - posZ) - 0x46) / 10;
+		posZ -= distance * ((((f32) coss((D_80052A8C * 900U) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+	  }
+	  if (((D_80222A70 + 0x3C) < posZ) && (D_801493CC != 0))
+	  {
+		distance = ((D_80222A70 - posZ) - 0x3C) / 20;
+		posZ -= distance * ((((f32) coss((D_80052A8C * 900) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+	  }
+	  terrain.value = func_800056D0_62D0(posX, posY);
+	  /* Keep the cached row in the original register allocation. */
+	  if ((u32)ringRow[0] * 0) {}
+	  switch (currentLevel)
+	  {
+		case 1:
+		  if (((u8) terrain.value) == 0x10)
+		{
+		  terrain.value = 0x1E;
+		  hueX -= terrain.value * ((((f32) coss((D_80052A8C * 900U) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		  hueY -= terrain.value * ((((f32) sins((D_80052A8C * 900) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		}
+		  break;
 
-		cursor.index[0] = (rowIndex + 1) % 0x13;
-		if (rowIndex != 0) {}
-		mapX = D_8014F89C;
-		col = D_8014F899;
-		mapY++;
+		case 2:
+		  if ((((u8) terrain.value) == 0x15) || (((u8) terrain.value) == 0x10))
+		{
+		  scratch = ((scrollX >> 8) + ringCol) * 0x58AC;
+		  terrain.value = (((u8) terrain.value) == 0x10) ? (0x1E) : (0x50);
+		  hueX -= terrain.value * ((((f32) coss((D_80052A8C * 900U) + scratch))) / 32768.0);
+		  hueY -= terrain.value * ((((f32) sins((D_80052A8C * 900) + scratch))) / 32768.0);
+		}
+		  break;
+
+		case 3:
+		  if (((u8) terrain.value) == 0x10)
+		{
+		  terrain.value = 0x1E;
+		  hueX -= terrain.value * ((((f32) coss((D_80052A8C * 900U) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		  hueY -= terrain.value * ((((f32) sins((D_80052A8C * 900) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		}
+		  break;
+
+		case 4:
+		  if (((u8) terrain.value) == 0x10)
+		{
+		  terrain.value = 0x1E;
+		  hueX -= terrain.value * ((((f32) coss((D_80052A8C * 900U) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		  hueY -= terrain.value * ((((f32) sins((D_80052A8C * 900) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		}
+		  break;
+
+		case 5:
+		  if ((((u8) terrain.value) == 0x10) || (((u8) terrain.value) == 0x14))
+		{
+		  terrain.value = 0x28;
+		  hueX -= terrain.value * ((((f32) coss((D_80052A8C * 900U) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		  hueY -= terrain.value * ((((f32) sins((D_80052A8C * 900) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
+		}
+		  break;
+	  }
+
+	  if (D_8015273E != 0)
+	  {
+		posZ += D_8015273E * 4;
+	  }
+	  (*arg0)->v.ob[0] = posX;
+	  (*arg0)->v.ob[1] = posZ;
+	  (*arg0)->v.ob[2] = posY;
+	  (*arg0)->v.flag = 0;
+	  (*arg0)->v.tc[0] = hueX;
+	  (*arg0)->v.tc[1] = hueY;
+	  (*arg0)->v.cn[0] = rgb[0];
+	  (*arg0)->v.cn[1] = rgb[1];
+	  (*arg0)->v.cn[2] = rgb[2];
+	  (*arg0)->v.cn[3] = 0xFF;
+	  (*arg0)++;
+	  mapX++;
+	  col = (col + 1) % 0x13;
 	}
+
+	cursor = (cursor + 1) % 0x13;
+	mapX = D_8014F89C;
+	col = D_8014F899;
+	mapY++;
+  }
+
 }
-#else
-/* Jump table for func_800B5538 */
-const u32 jtbl_80142E28_151DD8[] = {
-	OVERLAY_PTR(0x800B58D4),
-	OVERLAY_PTR(0x800B59C0),
-	OVERLAY_PTR(0x800B5AC8),
-	OVERLAY_PTR(0x800B5BB4),
-	OVERLAY_PTR(0x800B5CA0),
-};
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B5090_C4040.s")
-#endif
 
 s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, u32 arg2, u8 arg3, u8 arg4, s32 arg5) {
 
