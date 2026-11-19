@@ -64,3 +64,21 @@ lh t5,0(s0)
 ```
 
 The combined retained partial scores 25, with all 542 instruction positions, the `0x100` frame, and stack homes matching. Four words remain: the image high-word store uses the equivalent `-8(t9)` address instead of `0(s3)`, and the final Z conversion and its two consumers use `f0` instead of `f2`. The function remains `NON_MATCHING`.
+
+`incorrect ASM`: Writing the image command through the preceding cursor entry produces `sw t3,-8(t9)` at ROM `0xE0F30`. Writing both words through the captured packet with the earlier block boundaries instead exchanges the saved registers for the packet and the display-list cursor.
+
+-> `code changed`: Use `gDPSetTextureImage` with width `1 + ((u32)D_8005BB2C * 0)`, and keep it and the six following SDK commands on one logical source line. Preserve the seven existing endpoint boundaries as `if (0) {}` and compare the linked-list end sentinel using `(u32)nextIndex != (u32)(-5)` in the loop condition.
+
+-> `correct ASM`: The cursor address stays in `s2`, the texture packet stays in `s3`, and the high word stores with `sw t3,0(s3)`. Both signed-index comparisons retain their own immediate loads into `at`, and the complete packet instruction sequence matches. The C-enabled builds of both ROMs differ by three words in the following Z conversion and its two consumers.
+
+`incorrect ASM`: The shared signed Z conversion uses `cvt.s.w f0,f4`, `add.s f30,f0,f20`, and `sub.s f12,f0,f20`.
+
+-> `code changed`: After calculating the current Y pair, retain the discarded comparison `if (((f32)position->unk2 * spread < 0.0f) + ((f32)position->unk2 * spread > curY2)) {}`. Replace the empty boundary before the fourth vertex with `if (nextZ + nextZ + nextZ + nextZ) {}`. Keep each comparison on the same logical source line as its adjacent coordinate statement.
+
+-> `correct ASM`: The shared conversion and both consumers use `f2`. The first comparison also retains `f14` for the previous Y value, including its spills and reloads. IDO emits no instructions for the comparisons.
+
+`incorrect ASM`: With those comparisons, IDO assigns the display-list cursor to `s3` and the captured texture packet to `s2`. The cursor’s allocation weight falls from 2305/15 to 2305/16, below the packet’s 300/2.
+
+-> `code changed`: Replace the first empty condition on the `curX = nextX2` line with `if (D_8005BB2C) {}`.
+
+-> `correct ASM`: The cursor uses `s2`, the packet uses `s3`, and both complete ROMs match with the C implementation enabled.

@@ -5540,7 +5540,6 @@ void func_800D1A94_E0A44(u8 arg0) {
 	func_80137368_146318(sp34->position[0], sp34->position[1], sp34->position[2], 7, arg0);
 }
 
-#ifdef NON_MATCHING
 void func_800D1C24_E0BD4(u8 arg0)
 {
 	f32 spread;
@@ -5605,7 +5604,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 			{
 				spread = 0.0f - spread;
 			}
-			position = (Unk80052B40 *)(s32)D_80154318[index].payload;
+			position = (Unk80052B40 *)(s32)&D_80154318[index].positionVector;
 			curX = position->unk0 + spread;
 			curX2 = position->unk0 - spread;
 			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
@@ -5614,7 +5613,10 @@ void func_800D1C24_E0BD4(u8 arg0)
 				spread = 0.0f - spread;
 			}
 			curY2 = position->unk2 - spread;
-			curY = position->unk2 + spread;
+			/* This discarded test reserves an FP register during IDO allocation. */
+			curY = position->unk2 + spread; \
+				if (((f32)position->unk2 * spread < 0.0f) + \
+				    ((f32)position->unk2 * spread > curY2)) {}
 			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
 			if ((func_800038E0_44E0() % 11) < 6)
 			{
@@ -5631,8 +5633,22 @@ void func_800D1C24_E0BD4(u8 arg0)
 				if (nextIndex != -5)
 				{
 					gDPPipeSync(D_8005BB2C++);
-					/* Keep the image packet and its address observation on one source line. */
-					{ { Gfx *imagePacket = D_8005BB2C++; D_8005BB2C[-1].words.w0 = (_SHIFTL(G_SETTIMG,24,8) | _SHIFTL(G_IM_FMT_I,21,3) | _SHIFTL(G_IM_SIZ_16b,19,2) | _SHIFTL(0,0,12)) + ((u32)&D_8005BB2C[-1] * 0); imagePacket->words.w1 = (unsigned int)K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]); } gDPSetTile(D_8005BB2C++,G_IM_FMT_I,G_IM_SIZ_16b,0,0,G_TX_LOADTILE,0,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD); gDPLoadSync(D_8005BB2C++); gDPLoadBlock(D_8005BB2C++,G_TX_LOADTILE,0,0,255,CALC_DXT_4b(32)); gDPPipeSync(D_8005BB2C++); gDPSetTile(D_8005BB2C++,G_IM_FMT_I,G_IM_SIZ_4b,2,0,G_TX_RENDERTILE,0,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD); gDPSetTileSize(D_8005BB2C++,G_TX_RENDERTILE,0,0,31<<G_TEXTURE_IMAGE_FRAC,31<<G_TEXTURE_IMAGE_FRAC); };
+					/* Keep the SDK texture commands in one logical source line for IDO scheduling. */
+					{ \
+						gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, \
+							1 + ((u32)D_8005BB2C * 0), K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9])); \
+						gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD); \
+						gDPLoadSync(D_8005BB2C++); \
+						gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, CALC_DXT_4b(32)); \
+						gDPPipeSync(D_8005BB2C++); \
+						gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD); \
+						gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, \
+							31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC); \
+					};
 					gDPPipeSync(D_8005BB2C++);
 					D_8005BB34->v.ob[0] = curX;
 					D_8005BB34->v.ob[1] = curY;
@@ -5661,7 +5677,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 					{
 						spread = 0.0f - spread;
 					}
-					position = (Unk80052B40 *)(s32)D_80154318[nextIndex].payload;
+					position = (Unk80052B40 *)(s32)&D_80154318[nextIndex].positionVector;
 					nextX = position->unk0 + spread;
 					nextX2 = position->unk0 - spread;
 					spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
@@ -5689,7 +5705,8 @@ void func_800D1C24_E0BD4(u8 arg0)
 					D_8005BB34->v.cn[2] = blue;
 					D_8005BB34->v.cn[3] = 0xFF;
 					D_8005BB34++;
-					if (1) {} D_8005BB34->v.ob[0] = nextX2;
+					/* Weight the positive endpoint before IDO colors the shared Z conversion. */
+					if (nextZ + nextZ + nextZ + nextZ) {} D_8005BB34->v.ob[0] = nextX2;
 					D_8005BB34->v.ob[1] = nextY2;
 					D_8005BB34->v.ob[2] = nextZ2;
 					D_8005BB34->v.flag = 0;
@@ -5700,37 +5717,34 @@ void func_800D1C24_E0BD4(u8 arg0)
 					D_8005BB34->v.cn[2] = blue;
 					D_8005BB34->v.cn[3] = 0xFF;
 					D_8005BB34++;
-					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+					gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 					gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 					D_80156EDA += 4;
 					curX2 = nextX;
-					if (1)
+					if (0)
 					{
 					}
 					curY2 = nextY;
-					if (1)
+					if (0)
 					{
 					}
 					curZ2 = nextZ;
-					curX = nextX2; if (1) {} if (1) {}
-					if (1)
+					/* Keep the display-list cursor referenced in this carry block. */
+					curX = nextX2; if (D_8005BB2C) {} if (0) {}
+					if (0)
 					{
 					}
 					curY = nextY2;
-					if (1)
+					if (0)
 					{
 					}
 					curZ = nextZ2;
 				}
 				index = nextIndex;
-			} while (nextIndex != -5 && index != -6);
+			} while ((u32)nextIndex != (u32)-5 && index != -6);
 		}
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
-#endif
 
 s16 func_800D249C_E144C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, u8 arg7) {
 	Unk80154318Entry *child;
