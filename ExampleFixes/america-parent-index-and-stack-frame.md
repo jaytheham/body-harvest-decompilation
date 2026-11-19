@@ -1,0 +1,5 @@
+`incorrect ASM`: In `func_802DD104_25C844`, copying the idle-state vector through separate scalars puts the alien-type pointer in `t1` and the Z coordinate in `v0`. The pointer spill lands after the coordinate stores. When the parent access is inlined and the vector is scaled in place, the order is correct but the frame shrinks to `0xA0`, shifting the stack references.
+
+-> `code changed`: Save the parent index and access `alienInstances[parentId]` directly. Scale all three elements of `sp7C` in place. Between the last scale and the first alien-type field store, write `if ((f64)D_802DF3A8_25EAE8 * (f64)D_802DF3A8_25EAE8) {}`. IDO allocates the double temporary below the existing spills and discards the test. Converting the already-multiplied single-precision result to double before the main branch restored the frame but swapped `t1` and `t2` in the opening joint chain.
+
+-> `correct ASM`: The first frame adjustment is `addiu sp,sp,-0xA8`. The parent and first two joint stores use `sp+0x4C`, `sp+0x48`, and `sp+0x44`. The idle-state call stores `v0` to `0x40(sp)` before the X and Y stores and places `sw t1,0x84(sp)` in its delay slot.
