@@ -2744,6 +2744,7 @@ typedef struct {
 			s16 unk6, unk8, unkA, unkC, unkE, unk10, unk12, unk14;
 		};
 		s16 coordinates[4][2];
+		s16 coordinateValues[8];
 	};
 	/* 0x16 */ s16 unk16;
 } Unk801575E0; /* size = 0x18 */
