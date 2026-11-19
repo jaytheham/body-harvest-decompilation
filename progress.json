@@ -1,13 +1,13 @@
 {
-  "generated": "2026-11-19T00:31:38Z",
-  "commit": "8ab9b06f",
-  "commit_timestamp": "2026-11-19T13:30:56+13:00",
+  "generated": "2026-11-19T03:19:35Z",
+  "commit": "79b491b6",
+  "commit_timestamp": "2026-11-19T16:18:31+13:00",
   "overall": {
     "total_functions": 3057,
-    "matched": 3023,
-    "non_matching": 34,
+    "matched": 3024,
+    "non_matching": 33,
     "asm_stubs": 0,
-    "matched_pct": 98.89,
+    "matched_pct": 98.92,
     "decompiled_pct": 100.0
   },
   "segments": {
@@ -67,11 +67,11 @@
     },
     "overlay_level/america": {
       "display_name": "Level / America",
-      "matched": 73,
-      "non_matching": 1,
+      "matched": 74,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 74,
-      "matched_pct": 98.6,
+      "matched_pct": 100.0,
       "decompiled_pct": 100.0
     },
     "overlay_level/siberia": {
@@ -2506,11 +2506,11 @@
     {
       "path": "overlay_level/america/254410.c",
       "segment": "overlay_level/america",
-      "matched": 73,
-      "non_matching": 1,
+      "matched": 74,
+      "non_matching": 0,
       "asm_stubs": 0,
       "total": 74,
-      "matched_pct": 98.6,
+      "matched_pct": 100.0,
       "contributor": "jaytheham"
     },
     {
@@ -2618,8 +2618,8 @@
     {
       "name": "jaytheham",
       "files": 97,
-      "matched": 2636,
-      "non_matching": 34,
+      "matched": 2637,
+      "non_matching": 33,
       "asm_stubs": 0
     },
     {
@@ -2934,9 +2934,9 @@
     },
     {
       "date": "2026-11-15",
-      "commit": "8f083b8",
-      "matched": 3023,
-      "non_matching": 34,
+      "commit": "79b491b",
+      "matched": 3024,
+      "non_matching": 33,
       "total": 3057
     }
   ]
