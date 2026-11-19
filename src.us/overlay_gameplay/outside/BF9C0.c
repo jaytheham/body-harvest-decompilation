@@ -1549,6 +1549,7 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
 	D_8014F898 = D_80151DD8.ringY;
 	initialRow = *(u8 *)&D_8014F898;
 	cursor.index[0] = initialRow;
+	tileEast = &((RingEntry *) scratch)[col + 1];
 	mapX = D_8014F89C = D_80151DD8.mapPosX;
 	mapY = D_8014F89D = D_80151DD8.mapPosY;
 	for (rowWrap = 0; rowWrap < 0x12;) {
@@ -1590,12 +1591,18 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch) {
 			if (shade[col].r != 0) {
 				scratch = (u16)(terrain.color[0] + shade[col].r);
 				if (scratch > 255) scratch = 255;
+				{
+				}
 				rgb[0] = scratch;
 				scratch = (u16)(terrain.color[1] + shade[col].g);
 				if (scratch > 255) scratch = 255;
+				{
+				}
 				rgb[1] = scratch;
 				scratch = (u16)(terrain.color[2] + shade[col].b);
 				if (scratch > 255) scratch = 255;
+				{
+				}
 				rgb[2] = scratch;
 			} else {
 				rgb[0] = terrain.color[0];
