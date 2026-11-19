@@ -11238,7 +11238,6 @@ void func_800E64B4_F5464(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800E6A38_F59E8(void)
 {
   s32 slotCount = 4;
@@ -11251,8 +11250,8 @@ void func_800E6A38_F59E8(void)
   s16 baseZ;
   s16 xOff;
   s32 remain;
+  Gfx *packet;
   s16 zOff;
-  s16 yTop;
   Vtx *vtx0;
   Vtx *vtx1;
   Vtx *vtx2;
@@ -11307,41 +11306,49 @@ void func_800E6A38_F59E8(void)
 		}
 		radius *= 20;
 		xOff = (((f32) coss(-angle)) / 32768.0) * (radius + 20);
-		zOff = (((f32) sins(-angle)) / 32768.0) * (radius + 20);
-		// Most other matched functions that create vertices using D_8005BB34
-		// follow a particular structure, can we not reuse that common structure here too?
-		vtx0 = D_8005BB34++;
-		vtx0->v.ob[0] = baseX;
+		/* Both trig calls have read the angle. Reuse it for the sine result. */
+		angle = sins(-angle);
+		zOff = (((f32) angle) / 32768.0) * (radius + 20);
+
+		/* Store the first coordinate before advancing the vertex cursor. */
+		vtx0 = D_8005BB34;
+		vtx0->v.ob[0] = (u16)baseX;
+		D_8005BB34++;
 		vtx0->v.ob[1] = baseY;
 		vtx0->v.ob[2] = baseZ;
 		vtx0->v.tc[0] = 0x1000;
 		vtx0->v.tc[1] = 0x0800;
-		vtx1 = D_8005BB34++;
-		vtx1->v.ob[0] = baseX;
-		vtx1->v.ob[1] = (yTop = baseY + 0x14);
+		vtx1 = D_8005BB34;
+		D_8005BB34->v.ob[0] = (u16)baseX;
+		D_8005BB34++;
+		vtx1->v.ob[1] = baseY + 0x14;
 		vtx1->v.ob[2] = baseZ;
 		vtx1->v.tc[0] = 0x1000;
 		vtx1->v.tc[1] = 0;
-		vtx2 = D_8005BB34++;
+		vtx2 = D_8005BB34;
 		vtx2->v.ob[0] = baseX + xOff;
-		vtx2->v.ob[1] = yTop;
-		vtx2->v.ob[2] = baseZ + zOff;
+		D_8005BB34++;
+		vtx2->v.ob[1] = baseY + 0x14;
 		vtx2->v.tc[0] = 0;
 		vtx2->v.tc[1] = 0x0800;
-		vtx3 = D_8005BB34++;
+		vtx2->v.ob[2] = baseZ + zOff;
+		vtx3 = D_8005BB34;
 		vtx3->v.ob[0] = baseX - xOff;
-		vtx3->v.ob[1] = yTop;
+		D_8005BB34++;
+		vtx3->v.ob[1] = baseY + 0x14;
 		vtx3->v.ob[2] = baseZ - zOff;
 		vtx3->v.tc[0] = 0x1000;
 		vtx3->v.tc[1] = 0;
-		vtx4 = D_8005BB34++;
-		vtx4->v.ob[0] = baseX + (entry->unkC >> 7);
+		vtx4 = D_8005BB34;
+		D_8005BB34->v.ob[0] = baseX + (entry->unkC >> 7);
+		D_8005BB34++;
 		vtx4->v.ob[1] = (baseY + (entry->unk10 >> 7)) + 0x14;
 		vtx4->v.ob[2] = baseZ + (entry->unk14 >> 7);
 		vtx4->v.tc[0] = 0;
-		vtx4->v.tc[1] = 0x0800;
-		vtx5 = D_8005BB34++;
+		((u16 *)vtx4->v.tc)[1] = 0x0800;
+		vtx5 = D_8005BB34;
 		vtx5->v.ob[0] = vtx4->v.ob[0];
+		D_8005BB34++;
 		vtx5->v.ob[1] = vtx4->v.ob[1];
 		vtx5->v.ob[2] = vtx4->v.ob[2];
 		vtx5->v.tc[0] = 0;
@@ -11364,10 +11371,27 @@ void func_800E6A38_F59E8(void)
 		vtx2->v.cn[2] = 0;
 		vtx1->v.cn[2] = 0;
 		vtx0->v.cn[2] = 0;
-		vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vtx3->v.cn[3] = (vtx4->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
-		gSPVertex(D_8005BB2C++, ((u32) vtx0) & 0x1FFFFFFF, 6, 0);
-		gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
-		gSP1Triangle(D_8005BB2C++, 2, 3, 5, 0);
+
+		/* These discarded tests preserve IDO's vertex and packet register lifetimes. */
+		if (((u32)vtx1 & 0x20) |
+		    ((angle & 1) + (angle & 2)) |
+		    (((u32)vtx3 & 0x20) + ((u32)vtx3 & 0x40) + ((u32)vtx3 & 0x80) +
+		     ((u32)vtx3 & 0x100) + ((u32)vtx3 & 0x200)) |
+		    (((u32)vtx5 & 0x20) + ((u32)vtx5 & 0x40) + ((u32)vtx5 & 0x80)) |
+		    (((u32)D_8005BB34 & 2) + ((u32)D_8005BB34 & 4) + ((u32)D_8005BB34 & 8)) |
+		    ((baseX & 1) + (baseX & 2) + (baseX & 4)) |
+		    (zOff == 0x0800) | ((zOff & 1) + (zOff & 2) + (zOff & 4))) {}
+		vtx0->v.cn[3] = vtx1->v.cn[3] = vtx2->v.cn[3] = vtx3->v.cn[3] = vtx4->v.cn[3] = vtx5->v.cn[3] = 0xFF;
+		if (((D_8005BB2C != 0) + ((u32)D_8005BB2C & 8) + ((u32)D_8005BB2C & 16)) |
+		    (xOff == 0x0800) | (remain & 8)) {}
+		/* Keep the vertex upload on one source line for IDO's schedule. */
+		packet = D_8005BB2C++; packet->words.w0 = _SHIFTL(G_VTX, 24, 8) | (6 << 10) | (6 * sizeof(Vtx) - 1); packet->words.w1 = K0_TO_PHYS(vtx0);
+		if ((entry->unk0 & 1) | (entry->unk4 & 2) | (entry->unk8 & 4)) {}
+		packet = D_8005BB2C;
+		D_8005BB2C = &packet[1];
+		gSP1Triangle(packet, 0, 1, 4, 0);
+		/* Reuse the fourth vertex local for the last packet. */
+		gSP1Triangle(vtx3 = (Vtx *)D_8005BB2C++, 2, 3, 5, 0);
 	  }
 
 	}
@@ -11378,11 +11402,9 @@ void func_800E6A38_F59E8(void)
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
   gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
   gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+  if (((u32)D_8005BB2C & 64) + ((u32)D_8005BB2C & 128)) {}
   gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
-#endif
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
