@@ -56,6 +56,13 @@ incorrect ASM → In the enabled func_800F63D0_105380, the midpoint triangle cac
 
 incorrect ASM → The later candidate had an extra packet-pointer move before the second texture pipe sync. The palette channels and midpoint math also changed the size of the function enough to move the linked data references.
 
-→ code changed → Cache the three original shade channels in signed halfwords when writing their first vertex. Declare the three one-use tip colors together as s16 tipColors[3] in blue, green, red stack order. Start the midpoint block with the Z distance and stop it before the first vertex that reloads the calculated midpoint. Keep the extra float-to-word widening on the Y projection only.
+→ code changed → Cache the three original shade channels in signed halfwords when writing their first vertex. Declare the three one-use tip colors together as s16 tipColors[3] in blue, green, red stack order. Start the midpoint block with the Z distance and stop it before the first vertex that reloads the calculated midpoint. Keep the extra word widening on the Y projection and use the direct float-to-word conversion on Z.
 
 → correct ASM → The tip colors load from sp+0x108, sp+0x106, and sp+0x104. The second texture pipe sync has the target load, increment, and two packet stores without a separate pointer move. The function is one instruction shorter than the target and the linked data references align. The enabled diff score is 13232, with 75 opcode or alignment changes.
+
+
+incorrect ASM → The candidate reloaded the X base too late for the midpoint X sum. Its signed width and half-width lifetimes yielded a function one instruction shorter than the target.
+
+→ code changed → Capture the X base in the left operand of the first distance subtraction and reuse it in the midpoint sum. Keep the X width in a signed word after narrowing it and use the signed division results for the later half-widths. Capture the first midpoint vertex Y load before the discarded half-width conditions.
+
+→ correct ASM → The X base is stored in the absolute-distance branch delay slot and reloaded before adding the X projection. The epilogue ends at 0x10673C as in the target. The selected C candidate scores 12186 with 64 opcode or alignment changes, and stack-slot and register differences remain.
