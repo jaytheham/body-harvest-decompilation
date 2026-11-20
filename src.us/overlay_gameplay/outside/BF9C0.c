@@ -3048,7 +3048,6 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 }
 
 /* Draw water surfaces: textured quads with scrolling UV animation */
-#ifdef NON_MATCHING
 // DrawVtxBufferWater
 void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
@@ -3058,23 +3057,25 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	s16 texZBase;
 	s32 worldX;
 	s16 waterX;
-	s16 waterZ[1];
-	s16 snappedZ;
+	s16 waterZ;
 	s16 waveY;
 	s16 waveDepth;
 	s32 rowZ;
+	s32 maxAlpha;
 	s32 rowTexZ;
 	u8 flags[9][9];
 	u8 *flag;
 	s32 hiddenCount;
 	u16 wavePhase[1];
-	s32 maxAlpha;
 	s16 batch;
 	s16 row;
-	s16 col;
+	// IDO shares this slot between the pipe-sync packet and the grid column.
+	union {
+		s32 column;
+		Gfx *packet;
+	} scratch;
 	s32 tileBase;
 	s32 tileScratch;
-	s32 phaseAbs;
 	s32 rowPhase;
 	s32 texAnim;
 	u8 color;
@@ -3086,11 +3087,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 	water = &(&D_80052AE8)[arg0];
 	waterX = water->unk3C;
-	waterZ[0] = water->unk3E;
+	waterZ = water->unk3E;
 	hiddenCount = 0;
 	if (((u32)gameplayMode == GAMEPLAY_MODE_UNKB) || ((u32)gameplayMode == GAMEPLAY_MODE_LEVEL_START_CUTSCENE)) {
 		waterX = D_80157F44;
-		waterZ[0] = D_80157F46;
+		waterZ = D_80157F46;
 	}
 
 	if (waterX < 0) {
@@ -3099,11 +3100,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	if (waterX > 0) {
 		waterX = waterX + 0x100;
 	}
-	if (waterZ[0] < 0) {
-		waterZ[0] = waterZ[0] - 0x100;
+	if (waterZ < 0) {
+		waterZ = waterZ - 0x100;
 	}
-	if (waterZ[0] > 0) {
-		waterZ[0] = waterZ[0] + 0x100;
+	if (waterZ > 0) {
+		waterZ = waterZ + 0x100;
 	}
 
 	D_8013D940_14C8F0 = D_8013D988_14C938[currentLevel * 6 - 6];
@@ -3113,48 +3114,36 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	D_8013D950_14C900 = D_8013D988_14C938[currentLevel * 6 - 2];
 	D_8013D954_14C904 = D_8013D988_14C938[currentLevel * 6 - 1];
 
-	// As many as possible of these Gfx commands need to be turned into macros
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTLOD, 8, 8) | 1; gfx->words.w1 = G_TL_TILE;
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_SETENVCOLOR, 24, 8); gfx->words.w1 = _SHIFTL(D_8013D940_14C8F0, 24, 8) | _SHIFTL(D_8013D944_14C8F4, 16, 8) | _SHIFTL(D_8013D948_14C8F8, 8, 8) | 0xFF;
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF; gfx->words.w1 = _SHIFTL(D_8013D94C_14C8FC, 24, 8) | _SHIFTL(D_8013D950_14C900, 16, 8) | _SHIFTL(D_8013D954_14C904, 8, 8) | 0xFF;
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_TEXTPERSP, 8, 8) | 1; gfx->words.w1 = G_TP_PERSP;
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8); gfx->words.w1 = G_CULL_BOTH | G_FOG;
-	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_TEXTURE, 24, 8) | _SHIFTL(1, 11, 3) | G_ON; gfx->words.w1 = 0x80008000;
+	// Configure the two-cycle water combiner and texture tiles.
+	gDPSetTextureLOD(D_8005BB2C++, G_TL_TILE);
+	gDPSetEnvColor(D_8005BB2C++, D_8013D940_14C8F0, D_8013D944_14C8F4, D_8013D948_14C8F8, 0xFF);
+	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_8013D94C_14C8FC, D_8013D950_14C900, D_8013D954_14C904, 0xFF);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_FOG);
+	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 1, 0, G_ON);
 	gfx = D_8005BB2C++;
 	gfx->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); gfx->words.w1 = 0;
+	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+
+	texAnim = 0x40 - ((D_80052A8C * 2) & 0x7F);
+	tileBase = BH_ABS((u32)texAnim);
+	gDPSetKeyR(D_8005BB2C++,0x80,(color = (0x78 - tileBase) & 0xFF),0);
 	gfx = D_8005BB2C++;
-	gfx->words.w0 = _SHIFTL(G_SETOTHERMODE_H, 24, 8) | _SHIFTL(G_MDSFT_CYCLETYPE, 8, 8) | 2; gfx->words.w1 = G_CYC_2CYCLE;
-
-	tileScratch = 0x40 - ((D_80052A8C * 2) & 0x7F);
-	phaseAbs = ((u32)-tileScratch < (u32)tileScratch) ? tileScratch : -tileScratch;
-	color = (0x78 - phaseAbs) & 0xFF;
-
-	{
-		Gfx *packet = D_8005BB2C++;
-		packet->words.w0 = _SHIFTL(G_SETKEYR, 24, 8);
-		packet->words.w1 = 0x8000 | color;
-	}
-	gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
+	gfx->words.w0 = _SHIFTL(G_SETKEYGB, 24, 8); gfx->words.w1 = _SHIFTL(color, 16, 8) | 0x80000000 | 0x8000 | _SHIFTL(color, 0, 8);
 
 	gDPSetCombineLERP(D_8005BB2C++, TEXEL0, TEXEL1, SCALE, TEXEL1, TEXEL0, 0, TEXEL1, 0, ENVIRONMENT, PRIMITIVE, COMBINED, PRIMITIVE, 0, 0, 0, SHADE);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_PASS, G_RM_AA_ZB_XLU_INTER2);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_BILERP);
 	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_5041A80));
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
-	gDPLoadSync(D_8005BB2C++);
-	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 2047, 256);
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_8b, 8, 0, 1, 0,
-		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD,
-		G_TX_NOMIRROR | G_TX_WRAP, 6, G_TX_NOLOD);
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD, G_TX_WRAP, G_TX_NOMASK, G_TX_NOLOD);
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_RDPLOADSYNC, 24, 8); gfx->words.w1 = 0;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL(G_LOADBLOCK, 24, 8); gfx->words.w1 = _SHIFTL(G_TX_LOADTILE, 24, 3) | _SHIFTL(2047, 12, 12) | 256;
+	scratch.packet = D_8005BB2C;
+	D_8005BB2C = scratch.packet + 1; scratch.packet->words.w0 = _SHIFTL(G_RDPPIPESYNC, 24, 8); scratch.packet->words.w1 = 0;
+	gfx = D_8005BB2C++;
+	gfx->words.w0 = _SHIFTL((G_SETTILE), 24, 8) | _SHIFTL((G_IM_FMT_I), 21, 3) | _SHIFTL((G_IM_SIZ_8b), 19, 2) | _SHIFTL((8), 9, 9) | _SHIFTL((0), 0, 9); gfx->words.w1 = _SHIFTL((1), 24, 3) | _SHIFTL((0), 20, 4) | _SHIFTL((G_TX_NOMIRROR | G_TX_WRAP), 18, 2) | _SHIFTL((6), 14, 4) | _SHIFTL((G_TX_NOLOD), 10, 4) | _SHIFTL((G_TX_NOMIRROR | G_TX_WRAP), 8, 2) | _SHIFTL((6), 4, 4) | _SHIFTL((G_TX_NOLOD), 0, 4);
 
 	tileScratch = (u32)D_80052A8C >> 1;
 	gDPSetTileSize(D_8005BB2C++, 1, -tileScratch, 60, 252 - tileScratch, 312);
@@ -3170,24 +3159,20 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 1, G_ON);
 	gDPPipeSync(D_8005BB2C++);
 
-	tileScratch = (s16)(waterX % 0x200);
-	if (tileScratch) {}
-	waterX = waterX - (s16)tileScratch;
+	texXBase = waterX % 0x200;
+	waterX -= texXBase;
+	// Keep the discarded halfword read for the original register allocation.
+	if (texXBase) {}
 
-	tileScratch = waterZ[0] % 0x200;
-	snappedZ = waterZ[0] - tileScratch;
+	waterZ -= (s16)(waterZ % 0x200);
 
-	{
-		Gfx *packet = D_8005BB2C++;
-		packet->words.w0 = _SHIFTL(G_CLEARGEOMETRYMODE, 24, 8);
-		packet->words.w1 = G_CULL_BOTH;
-	}
+	gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH);
 
 	wavePhase[0] = D_80052A8C * 0x2BC;
 	tileScratch = waterX % 0x1000;
 	texXBase = tileScratch * 4;
 
-	tileScratch = snappedZ % 0x1000;
+	tileScratch = waterZ % 0x1000;
 	texZBase = tileScratch * 4;
 
 	for (row = 0; row < 9; row++) {
@@ -3195,15 +3180,18 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 		rowTexZ = texZBase - (row << 0xB);
 
-		for (col = 0; col < 9; col++) {
-			rowZ = snappedZ - (s16)(row << 9) + 0x700;
-			worldZf = (f32)rowZ;
-			flag = &rowFlags[col];
-			worldX = waterX + (s16)(col << 9) - 0x900;
+		for (scratch.column = 0; scratch.column < 9; scratch.column = (s16)(scratch.column + 1)) {
+			worldX = waterX + (s16)(scratch.column << 9) - 0x900;
+			worldZf = (f32)(waterZ - (s16)(row << 9) + 0x700);
+			// The zero-valued term keeps the full Z spill at its original stack slot.
+			rowZ = (0 & (u32)rowFlags) + (waterZ - (s16)(row << 9) + 0x700);
+			flag = &rowFlags[scratch.column];
 			*flag = 4;
 			waveDepth = D_80222A70 - (func_800B84D0_C7480(worldX, rowZ) >> 8);
 			if (waveDepth > 0) {
-				waveY = (s16)(((f32)coss((u16)(wavePhase[0] + ((((waterX / 0x200) + col) % 2) * 0x58AC) + ((((snappedZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
+				waveY = (s16)(((f32)coss((u16)(wavePhase[0] +
+					((((waterX / 0x200) + scratch.column) % 2) * 0x58AC) +
+					((((waterZ / 0x200) + row + 1) % 2) * 0x9B14))) / 32768.0) * (waveDepth / 10));
 			} else {
 				waveY = 0;
 			}
@@ -3226,7 +3214,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 			D_8005BB34->v.ob[1] = waveY + D_80222A70;
 			D_8005BB34->v.ob[2] = rowZ;
 			D_8005BB34->v.flag = 0;
-			D_8005BB34->v.tc[0] = texXBase - (col << 0xB);
+			D_8005BB34->v.tc[0] = texXBase - (scratch.column << 0xB);
 			D_8005BB34->v.tc[1] = rowTexZ;
 			D_8005BB34->v.cn[0] = 0;
 			D_8005BB34->v.cn[1] = 0;
@@ -3251,13 +3239,13 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 				}
 			}
 
-			heightDiff = D_80052B34->unk0 - worldX;
-			if (heightDiff >= 0) {
-				tileScratch = heightDiff;
+			tileScratch = D_80052B34->unk0 - worldX;
+			if (tileScratch >= 0) {
+				tileBase = tileScratch;
 			} else {
-				tileScratch = -heightDiff;
+				tileBase = -tileScratch;
 			}
-			if (tileScratch < 0x100) {
+			if (tileBase < 0x100) {
 				heightDiff = D_80052B34->unk4 - rowZ;
 				if (heightDiff >= 0) {
 					magnitude = heightDiff;
@@ -3275,7 +3263,7 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 			}
 			if (func_800B9228_C81D8(worldX, rowZ, (s16)(s32)D_80052B2C->unk0, (s16)(s32)D_80052B2C->unk8, 0x4000 - D_80047950) != 0) {
 				hiddenCount++;
-				*flag &= 0xFB;
+				*flag &= ~4;
 				*flag |= 1;
 			}
 		}
@@ -3287,37 +3275,38 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(&D_8005BB34[-0x1B] - batch * 0x12), 0x1B, 0);
 
 		for (row = 0; row < 2; row++) {
-			for (col = 0; col < 8; col++) {
-				flag = &flags[(s16)(6 - (batch * 2)) + row][col];
-				if ((flag[0] & 2) && (flag[1] & 2) && (flag[9] & 2) && (flag[10] & 2)) {
+			// Form the flag-row address before IDO clears the column register.
+			scratch.column = (u32)&flags[(s16)(6 - (batch * 2)) + row][0] * 0U;
+			do {
+				flag = &flags[(s16)(6 - (batch * 2)) + row][scratch.column];
+				if ((flag[0] & 2) && (flag[1] & 2) && (flags[(s16)(6 - (batch * 2)) + row + 1][scratch.column] & 2) && (flags[(s16)(6 - (batch * 2)) + row + 1][scratch.column + 1] & 2)) {
 					continue;
 				}
-				if ((flag[0] & 4) && (flag[1] & 4) && (flag[9] & 4) && (flag[10] & 4)) {
+				if ((flag[0] & 4) && (flag[1] & 4) && (flags[(s16)(6 - (batch * 2)) + row + 1][scratch.column] & 4) && (flags[(s16)(6 - (batch * 2)) + row + 1][scratch.column + 1] & 4)) {
 					continue;
 				}
 
 				tileBase = (s16)(row * 9);
-				if (((col % 2) + ((waterX / 0x200) % 2)) % 2) {
-					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 1, (col + tileBase) + 9, 0);
-					gSP1Triangle(D_8005BB2C++, (col + tileBase) + 1, (col + tileBase) + 10, (col + tileBase) + 9, 0);
+				if (((scratch.column % 2) + ((waterX / 0x200) % 2)) % 2) {
+					gSP1Triangle(D_8005BB2C++, (scratch.column + tileBase), (scratch.column + tileBase) + 1, (scratch.column + tileBase) + 9, 0);
+					gSP1Triangle(D_8005BB2C++, (scratch.column + tileBase) + 1, (scratch.column + tileBase) + 10, (scratch.column + tileBase) + 9, 0);
 				} else {
-					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 1, (col + tileBase) + 10, 0);
-					gSP1Triangle(D_8005BB2C++, (col + tileBase), (col + tileBase) + 10, (col + tileBase) + 9, 0);
+					gSP1Triangle(D_8005BB2C++, (scratch.column + tileBase), (scratch.column + tileBase) + 1, (scratch.column + tileBase) + 10, 0);
+					gSP1Triangle(D_8005BB2C++, (scratch.column + tileBase), (scratch.column + tileBase) + 10, (scratch.column + tileBase) + 9, 0);
 				}
-			}
+			} while ((scratch.column = (s16)(scratch.column + 1)) < 8);
 
 			rowPhase = 0x40 - ((((batch * 2) + row + D_80052A8C) * (u16)3) & 0x7F);
-			phaseAbs = ((u32)-rowPhase < (u32)rowPhase) ? rowPhase : -rowPhase;
-			color = (0x78 - phaseAbs) & 0xFF;
+			worldX = BH_ABS((u32)rowPhase);
+			color = (0x78 - worldX) & 0xFF;
 
 			gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
+			// Preserve the register allocation for the per-row key packets.
+			if (((u32)D_8005BB2C & 1U) + ((u32)D_8005BB2C & 2U)) {}
 			gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800BA5B0_C9560.s")
-#endif
 
 
 /* Rectangle bounding overlap test with parameter extraction */
