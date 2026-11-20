@@ -47,8 +47,15 @@
 -> `correct ASM`: The linked function is byte-identical to the preceding draft. The named width at `sp+0x13C` and the separate width cache at `sp+0x54` are both preserved.
 
 
-incorrect ASM → In the enabled func_800F63D0_105380, the midpoint triangle cached its three calculated coordinates in registers. The signed half-width computations sank into the following vertices, and the display-list cursor advanced before the expected reloads.
+incorrect ASM → In the enabled func_800F63D0_105380, the midpoint triangle cached its three calculated coordinates in registers. The signed half-width computations sank into the following vertices, and the midpoint vertex stores omitted the expected coordinate reloads.
 
 → code changed → Keep the three midpoint coordinates in volatile s32 locals. Store the X projection in the existing halfword geometry scratch before adding it to the center. In the midpoint block, place the discarded half-width conditions after the first two vertex coordinate stores. Reserve the word padding after the geometry locals to retain the 0x168 frame.
 
 → correct ASM → All three midpoint vertices reload X, Y, and Z from sp+0x120, sp+0x124, and sp+0x128. Both signed half-width divisions complete in the first midpoint vertex block. The enabled diff score falls from 20219 to 14577. The assembly fallback continues to supply the function while instruction-order and register differences remain.
+
+
+incorrect ASM → The later candidate had an extra packet-pointer move before the second texture pipe sync. The palette channels and midpoint math also changed the size of the function enough to move the linked data references.
+
+→ code changed → Cache the three original shade channels in signed halfwords when writing their first vertex. Declare the three one-use tip colors together as s16 tipColors[3] in blue, green, red stack order. Start the midpoint block with the Z distance and stop it before the first vertex that reloads the calculated midpoint. Keep the extra float-to-word widening on the Y projection only.
+
+→ correct ASM → The tip colors load from sp+0x108, sp+0x106, and sp+0x104. The second texture pipe sync has the target load, increment, and two packet stores without a separate pointer move. The function is one instruction shorter than the target and the linked data references align. The enabled diff score is 13232, with 75 opcode or alignment changes.
