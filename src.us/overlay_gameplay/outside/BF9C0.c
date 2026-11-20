@@ -2113,14 +2113,17 @@ void func_800B753C_C64EC(void) {
 	s16 indices[8][0x121];
 	s16 counts[8];
 	s16 emittedQuads;
-	s16 lineCount[2]; // Remaining count uses the second halfword.
 	s16 bucket;
+	s16 lineCount[2];
+
 	s16 rowOffset;
 	s16 run;
-	s32 v1, v2;
-	Unk800B753CEntry *entry;
-	Vtx *source;
+	s32 quad;
+	union { Unk800B753CEntry *entry; s32 remaining; } road;
 	Gfx *tile;
+	union { const s16 *batch; const Vtx *source; } cursor;
+	s16 index;
+	s32 drawLimit;
 
 	emittedQuads = 0;
 	{
@@ -2131,14 +2134,14 @@ void func_800B753C_C64EC(void) {
 		}
 	}
 
-	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(&D_80254E80[0x200]));
+	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(D_80255080));
 	gDPLoadSync(D_8005BB2C++);
 
 	{
 
 		for (i = D_8014FD28 + 1; i < 0x90; i++) {
-			rawMode = D_8014F8A8[i].unk4;
-			bucket = rawMode / 2;
+			run = D_8014F8A8[i].unk4;
+			bucket = run / 2;
 
 			counts[bucket]++;
 			indices[bucket][counts[bucket]] = i;
@@ -2150,73 +2153,82 @@ void func_800B753C_C64EC(void) {
 	for (group = 0; group < 8; group++) {
 		if (counts[group] != -1) {
 
-		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(group << 11) + 0x4000]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(group << 11) + 0x4000]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		bucket = counts[group] + 1;
-		rowOffset = 0;
-		if (bucket > 0) {
-			lineCount[1] = bucket;
-			do {
+			bucket = counts[group] + 1;
+			rowOffset = 0;
+			if (bucket > 0) {
+				lineCount[1] = bucket;
+				do {
 
+					road.remaining = lineCount[1];
+					if (road.remaining >= 9) {
+						run = 8;
+					} else {
+						run = lineCount[1];
+					}
 
-			if (lineCount[1] >= 9) {
-				run = 8;
-			} else {
-				run = lineCount[1];
+					for (i = 0; i < run;) {
+						index = indices[group][(i++) + (rowOffset)];
+						road.entry = &D_8014F8A8[index];
+
+						D_8005BB34[0] = road.entry->unk0[0];
+						D_8005BB34++;
+						D_8005BB34[0] = road.entry->unk0[1];
+						D_8005BB34++;
+						cursor.source = road.entry->unk0;
+						D_8005BB34[0] = cursor.source[0x12];
+						D_8005BB34++;
+						cursor.source = road.entry->unk0;
+						D_8005BB34[0] = cursor.source[0x13];
+						D_8005BB34++;
+					}
+
+					if (lineCount[1] != 0) {
+						gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
+					}
+
+					i = 0;
+					if (run > 0) {
+						rawMode = run;
+						drawLimit = rawMode;
+						cursor.batch = &indices[group][rowOffset];
+						quad = 0;
+						do {
+							road.entry = &D_8014F8A8[cursor.batch[quad]];
+
+							run = road.entry->unk4;
+							gDPTileSync(D_8005BB2C++);
+							tile = D_8005BB2C++;
+							tile->words.w0 = _SHIFTL((run % 2) << 7, 0, 9) | 0xF5480800U;
+							tile->words.w1 = _SHIFTL(road.entry->unk5, 8, 2) | _SHIFTL(road.entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
+							gDPPipeSync(D_8005BB2C++);
+							gSP2Triangles(D_8005BB2C++, i, quad * 4 + 2, quad * 4 + 1, 0, quad * 4 + 1, quad * 4 + 2, quad * 4 + 3, 0);
+
+							if (((road.entry == &D_8014F8A8[0]) | (road.entry == &D_8014F8A8[1]) | (road.entry == &D_8014F8A8[2]) | (road.entry == &D_8014F8A8[3]) | (road.entry == &D_8014F8A8[4]) | (road.entry == &D_8014F8A8[5])) == rawMode) {}
+							i += 4;
+							quad++;
+							emittedQuads++;
+						} while (quad != drawLimit);
+					}
+
+					if (lineCount[1] >= 9) {
+						lineCount[1] = (s16)((lineCount[1] - 8U) & 0xFFFFU);
+					} else {
+						lineCount[1] = 0;
+					}
+
+					rowOffset = (s16)((rowOffset + 8U) & 0xFFFFU);
+					if (rowOffset == lineCount[1]) {}
+
+				} while (lineCount[1] > 0);
 			}
-
-			for (i = 0; i < run; i++) {
-				entry = &D_8014F8A8[indices[group][rowOffset + i]];
-
-				D_8005BB34[0] = entry->unk0[0];
-				source = entry->unk0;
-				D_8005BB34++;
-				D_8005BB34[0] = source[1];
-				source = entry->unk0;
-				D_8005BB34++;
-				D_8005BB34[0] = source[0x12];
-				source = entry->unk0;
-				D_8005BB34++;
-				D_8005BB34[0] = source[0x13];
-				D_8005BB34++;
-			}
-
-			if (lineCount[1] != 0) {
-				gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
-			}
-
-			for (i = 0; i < run; i++) {
-				entry = &D_8014F8A8[indices[group][rowOffset + i]];
-
-				v1 = i * 4 + 2;
-				v2 = i * 4 + 1;
-				rawMode = entry->unk4;
-				gDPTileSync(D_8005BB2C++);
-				tile = D_8005BB2C++;
-				tile->words.w0 = ((((rawMode % 2) << 7) & 0x1FF) | _SHIFTL(4, 9, 9)) |
-					(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) | _SHIFTL(G_IM_SIZ_8b, 19, 2));
-				tile->words.w1 = _SHIFTL(entry->unk5, 8, 2) | _SHIFTL(entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
-				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, i * 4, v1, v2, 0, v2, v1, i * 4 + 3, 0);
-
-				emittedQuads++;
-			}
-
-			if (lineCount[1] >= 9) {
-				lineCount[1] -= 8;
-			} else {
-				lineCount[1] = 0;
-			}
-
-			rowOffset += 8;
-
-			} while (lineCount[1] > 0);
-		}
 
 		}
 	}
 
 	gDPPipeSync(D_8005BB2C++);
+	if (D_8005BB2C) {}
 	gDPLoadTLUT_pal256(D_8005BB2C++, K0_TO_PHYS(D_80254E80));
 	gDPLoadSync(D_8005BB2C++);
 
@@ -2228,86 +2240,85 @@ void func_800B753C_C64EC(void) {
 
 	{
 		for (i = 0; i < (s32)D_8014F89A; i++) {
-			rawMode = D_8014F8A8[i].unk4;
-			bucket = rawMode / 2;
+			run = D_8014F8A8[i].unk4;
+			bucket = run / 2;
 
 			counts[bucket]++;
 			indices[bucket][counts[bucket]] = i;
 		}
 	}
 
-	for (group = 0; group < 8; group++) {
+	for (group = 0; group < 8U; group++) {
 		if (counts[group] != -1) {
 
-		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[group << 11]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[group << 11]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
-		bucket = counts[group] + 1;
-		rowOffset = 0;
-		if (bucket > 0) {
-			lineCount[1] = bucket;
-			do {
+			bucket = counts[group] + 1;
+			rowOffset = 0;
+			if (bucket > 0) {
+				lineCount[1] = bucket;
+				do {
 
+					road.remaining = lineCount[1];
+					if (road.remaining >= 9) {
+						run = 8;
+					} else {
+						run = lineCount[1];
+					}
 
-			if (lineCount[1] >= 9) {
-				run = 8;
-			} else {
-				run = lineCount[1];
+					for (i = 0; i < run; i++) {
+						index = indices[group][rowOffset + i];
+						road.entry = &D_8014F8A8[index];
+
+						D_8005BB34[0] = road.entry->unk0[0];
+						D_8005BB34++;
+						D_8005BB34[0] = road.entry->unk0[1];
+						D_8005BB34++;
+						D_8005BB34[0] = road.entry->unk0[0x12];
+						D_8005BB34++;
+						D_8005BB34[0] = road.entry->unk0[0x13];
+						D_8005BB34++;
+					}
+
+					if (lineCount[1] != 0) {
+						gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
+					}
+
+					cursor.batch = &indices[group][rowOffset];
+					rawMode = run;
+					for (quad = 0; quad != rawMode; quad++) {
+						road.entry = &D_8014F8A8[cursor.batch[quad]];
+
+						run = road.entry->unk4;
+						gDPTileSync(D_8005BB2C++);
+						tile = D_8005BB2C++;
+						tile->words.w0 = _SHIFTL((run % 2) << 7, 0, 9) | 0xF5480800U;
+						tile->words.w1 = _SHIFTL(road.entry->unk5, 8, 2) | _SHIFTL(road.entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
+						gDPPipeSync(D_8005BB2C++);
+						i = quad * 4 + 0;
+						gSP2Triangles(D_8005BB2C++, i, quad * 4 + 2, quad * 4 + 1, 0, quad * 4 + 1, quad * 4 + 2, quad * 4 + 3, 0);
+
+						if (quad == rawMode) {}
+						emittedQuads++;
+					}
+
+					if (lineCount[1] >= 9) {
+						lineCount[1] = (s16)((lineCount[1] - 8U) & 0xFFFFU);
+					} else {
+						lineCount[1] = 0;
+					}
+
+					rowOffset += 8;
+					if (rowOffset == lineCount[1]) {}
+
+				} while (lineCount[1] > 0);
 			}
-
-			for (i = 0; i < run; i++) {
-				entry = &D_8014F8A8[indices[group][rowOffset + i]];
-
-				D_8005BB34[0] = entry->unk0[0];
-				source = entry->unk0;
-				D_8005BB34++;
-				D_8005BB34[0] = source[1];
-				source = entry->unk0;
-				D_8005BB34++;
-				D_8005BB34[0] = source[0x12];
-				source = entry->unk0;
-				D_8005BB34++;
-				D_8005BB34[0] = source[0x13];
-				D_8005BB34++;
-			}
-
-			if (lineCount[1] != 0) {
-				gSPVertex(D_8005BB2C++, D_8005BB34 - run * 4, run * 4, 0);
-			}
-
-			for (i = 0; i < run; i++) {
-				entry = &D_8014F8A8[indices[group][rowOffset + i]];
-
-				v1 = i * 4 + 2;
-				v2 = i * 4 + 1;
-				rawMode = entry->unk4;
-				gDPTileSync(D_8005BB2C++);
-				tile = D_8005BB2C++;
-				tile->words.w0 = ((((rawMode % 2) << 7) & 0x1FF) | _SHIFTL(4, 9, 9)) |
-					(_SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) | _SHIFTL(G_IM_SIZ_8b, 19, 2));
-				tile->words.w1 = _SHIFTL(entry->unk5, 8, 2) | _SHIFTL(entry->unk6, 18, 2) | (5 << 14) | (5 << 4);
-				gDPPipeSync(D_8005BB2C++);
-				gSP2Triangles(D_8005BB2C++, i * 4, v1, v2, 0, v2, v1, i * 4 + 3, 0);
-
-				emittedQuads++;
-			}
-
-			if (lineCount[1] >= 9) {
-				lineCount[1] -= 8;
-			} else {
-				lineCount[1] = 0;
-			}
-
-			rowOffset += 8;
-
-			} while (lineCount[1] > 0);
-		}
 
 		}
 	}
 
 	gDPPipeSync(D_8005BB2C++);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B753C_C64EC.s")
 #endif

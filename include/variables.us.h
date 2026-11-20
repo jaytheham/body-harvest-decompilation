@@ -3023,6 +3023,7 @@ extern AlienWaveInstance D_80223780[0xC0]; // Alien Wave Instances 80223780
 extern u8 D_80224680; // missions?
 extern u8 D_80224E80[];
 extern u8 D_80254E80[]; // Tile palette data
+extern u8 D_80255080[];
 extern AlienType alienTypes[0x30]; // 80256680
 extern AlienType D_802566E8; // aliases alienTypes[1]
 extern AlienType D_80256750; // aliases alienTypes[2]
