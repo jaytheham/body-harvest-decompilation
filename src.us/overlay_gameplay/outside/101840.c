@@ -1535,13 +1535,13 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 temp_f6;
 	s32 temp_f8;
 	f32 temp_f0;
-	s16 temp_f10;
+	s32 temp_f10;
 	f32 var_f16;
 	f32 var_f2;
 	s32 temp_v0_2;
-	s32 sp128;
-	s32 sp124;
-	s32 sp120;
+	volatile s32 sp128;
+	volatile s32 sp124;
+	volatile s32 sp120;
 	s32 delta;
 	s16 sp11A;
 	s16 sp118;
@@ -1558,6 +1558,8 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 temp_v1_2;
 	s16 temp_f6_3;
 	s32 temp_v0;
+	s16 initialProjectionX;
+	s32 framePad[2];
 
 	var_f2 = (f32)D_801601F0[arg3].unk8;
 	var_f16 = (var_f2 * 3) / 4;
@@ -1576,7 +1578,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	temp_v0_2 = coss(angle + 0x4000);
 	gDPPipeSync(D_8005BB2C++);
 	temp_f12 = var_f2 * 2;
-	temp_f6 = (s16)(s64)(s32)(direction.x * temp_f12);
+	initialProjectionX = (s16)(s32)(direction.x * temp_f12);
 	temp_f8 = (s16)(s32)(direction.y * temp_f12);
 	temp_f10 = (s16)(s32)(direction.z * temp_f12);
 	sp11A = D_8013FCD4_14EC84[currentLevel + 9][0].r;
@@ -1607,10 +1609,10 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	wideX = (s32)((f32)((f64)var_f16 * 1.2) * temp_f14);
-	temp_f6_3 = (s32)((f32)((f64)var_f16 * 1.2) * (f32)((f64)(f32)temp_v0_2 / 32768.0));
-	D_8005BB34->v.ob[0] = arg0[0] + wideX + temp_f6;
+
+	D_8005BB34->v.ob[0] = (s32)((s64)arg0[0] + (s64)wideX) + initialProjectionX;
 	D_8005BB34->v.ob[1] = arg0[1];
-	D_8005BB34->v.ob[2] = arg0[2] + temp_f6_3 + temp_f10;
+	D_8005BB34->v.ob[2] = arg0[2] + (temp_f6_3 = (s32)((f32)((f64)var_f16 * 1.2) * (f32)((f64)(f32)temp_v0_2 / 32768.0))) + temp_f10;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x180;
 	D_8005BB34->v.tc[1] = 0;
@@ -1620,7 +1622,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg0[0] - wideX + temp_f6;
+	D_8005BB34->v.ob[0] = arg0[0] - wideX + initialProjectionX;
 	D_8005BB34->v.ob[1] = arg0[1];
 	D_8005BB34->v.ob[2] = arg0[2] - temp_f6_3 + temp_f10;
 	D_8005BB34->v.flag = 0;
@@ -1633,7 +1635,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	temp_v0 = 3;
-	D_8005BB34->v.ob[0] = arg1[0] - temp_f6 / (s32)(s64)temp_v0;
+	D_8005BB34->v.ob[0] = arg1[0] - initialProjectionX / (s32)(s64)temp_v0;
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8 / (s32)(s64)temp_v0;
 	D_8005BB34->v.ob[2] = arg1[2] - temp_f10;
 	D_8005BB34->v.flag = 0;
@@ -1645,7 +1647,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] + wideX + temp_f6;
+	D_8005BB34->v.ob[0] = arg1[0] + wideX + initialProjectionX;
 	D_8005BB34->v.ob[1] = arg1[1];
 	D_8005BB34->v.ob[2] = arg1[2] + temp_f6_3 + temp_f10;
 	D_8005BB34->v.flag = 0;
@@ -1657,7 +1659,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - wideX + temp_f6;
+	D_8005BB34->v.ob[0] = arg1[0] - wideX + initialProjectionX;
 	D_8005BB34->v.ob[1] = arg1[1];
 	D_8005BB34->v.ob[2] = arg1[2] - (s32)(temp_f0 * (f32)((f64)(f32)temp_v0_2 / 32768.0)) + temp_f10;
 	D_8005BB34->v.flag = 0;
@@ -1666,17 +1668,19 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[0] = temp_ra;
 	D_8005BB34->v.cn[1] = sp10C;
 	D_8005BB34->v.cn[2] = sp10A;
-	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
+
 	D_8005BB34->v.cn[3] = 0xFF;
-	temp_f6_3 = (s16)(s32)(var_f16 * temp_f14);
+
+	temp_f6_3 = (s16)(s64)(s32)(var_f16 * temp_f14);
+	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
 	D_8005BB34++;
 
 	temp_f6 = (s16)(s32)(direction.x * var_f2);
 	temp_f8 = (s32)(direction.y * var_f16);
 	temp_f10 = (s16)(s32)(direction.z * var_f2);
-	D_8005BB34->v.ob[0] = arg1[0] + temp_f6_3 + (temp_f6 * 3);
+	D_8005BB34->v.ob[0] = arg1[0] + temp_f6_3 + (s32)((u32)temp_f6 * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8;
-	D_8005BB34->v.ob[2] = arg1[2] + temp_v1_2 + (temp_f10 * 3);
+	D_8005BB34->v.ob[2] = arg1[2] + temp_v1_2 + (s32)((u32)temp_f10 * 3);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x240;
 	D_8005BB34->v.tc[1] = 0x258;
@@ -1686,9 +1690,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - temp_f6_3 + (temp_f6 * 3);
+	D_8005BB34->v.ob[0] = arg1[0] - temp_f6_3 + (s32)((u32)temp_f6 * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8;
-	D_8005BB34->v.ob[2] = arg1[2] - temp_v1_2 + (temp_f10 * 3);
+	D_8005BB34->v.ob[2] = arg1[2] - temp_v1_2 + (s32)((u32)temp_f10 * 3);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x258;
@@ -1710,86 +1714,91 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	temp_v0 = arg1[0] - arg2[0];
-	delta = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
-	temp_v0_2 = arg1[2] - arg2[2];
-	sp120 = arg1[0] + (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
-	absDistanceZ = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
-	sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistanceZ * 0.5));
-	sp124 = arg1[1] - (s16)(s32)(direction.y * (var_f16 * 3.0f));
-	temp_f6 = (s16)(temp_f6_3 / 2);
-	temp_f10 = (s16)(temp_v1_2 / 2);
-	D_8005BB34->v.ob[0] = arg1[0];
-	D_8005BB34->v.ob[1] = arg1[1];
-	D_8005BB34->v.ob[2] = arg1[2];
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x240;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = sp114;
-	D_8005BB34->v.cn[1] = sp112;
-	D_8005BB34->v.cn[2] = sp110;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
+	if (1) {
+		temp_v0 = arg1[0] - arg2[0];
+		delta = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
+		temp_v0_2 = arg1[2] - arg2[2];
+		temp_f6 = (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
+		absDistanceZ = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
+		sp120 = arg1[0] + temp_f6;
+		sp128 = arg1[2] + (s16)(s32)((f64)direction.z * ((f64)absDistanceZ * 0.5));
+		sp124 = arg1[1] - (s16)(s32)(direction.y * (var_f16 * 3.0f));
+		temp_f6 = (s16)(s64)(temp_f6_3 / 2);
+		temp_f10 = (s16)(s64)(temp_v1_2 / 2);
+		D_8005BB34->v.ob[0] = arg1[0];
+		D_8005BB34->v.ob[1] = arg1[1];
+		if (temp_f6) {}
+		if (temp_f10) {}
+		D_8005BB34->v.ob[2] = arg1[2];
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0x240;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = sp114;
+		D_8005BB34->v.cn[1] = sp112;
+		D_8005BB34->v.cn[2] = sp110;
+		D_8005BB34->v.cn[3] = 0xFF;
+		D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] + temp_f6;
-	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - temp_f12);
-	D_8005BB34->v.ob[2] = arg1[2] + temp_f10;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = sp114;
-	D_8005BB34->v.cn[1] = sp112;
-	D_8005BB34->v.cn[2] = sp110;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
+		D_8005BB34->v.ob[0] = arg1[0] + temp_f6;
+		D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - temp_f12);
+		D_8005BB34->v.ob[2] = arg1[2] + temp_f10;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = sp114;
+		D_8005BB34->v.cn[1] = sp112;
+		D_8005BB34->v.cn[2] = sp110;
+		D_8005BB34->v.cn[3] = 0xFF;
+		D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - temp_f6;
-	D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - temp_f12);
-	D_8005BB34->v.ob[2] = arg1[2] - temp_f10;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = sp114;
-	D_8005BB34->v.cn[1] = sp112;
-	D_8005BB34->v.cn[2] = sp110;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
+		D_8005BB34->v.ob[0] = arg1[0] - temp_f6;
+		D_8005BB34->v.ob[1] = (s32)((f32)arg1[1] - temp_f12);
+		D_8005BB34->v.ob[2] = arg1[2] - temp_f10;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0;
+		D_8005BB34->v.cn[0] = sp114;
+		D_8005BB34->v.cn[1] = sp112;
+		D_8005BB34->v.cn[2] = sp110;
+		D_8005BB34->v.cn[3] = 0xFF;
+		D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = sp120;
-	D_8005BB34->v.ob[1] = sp124;
-	D_8005BB34->v.ob[2] = sp128;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x240;
-	D_8005BB34->v.tc[1] = 0x258;
-	D_8005BB34->v.cn[0] = sp114;
-	D_8005BB34->v.cn[1] = sp112;
-	D_8005BB34->v.cn[2] = sp110;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
+		D_8005BB34->v.ob[0] = sp120;
+		D_8005BB34->v.ob[1] = sp124;
+		D_8005BB34->v.ob[2] = sp128;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0x240;
+		D_8005BB34->v.tc[1] = 0x258;
+		D_8005BB34->v.cn[0] = sp114;
+		D_8005BB34->v.cn[1] = sp112;
+		D_8005BB34->v.cn[2] = sp110;
+		D_8005BB34->v.cn[3] = 0xFF;
+		D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = sp120 + temp_f6;
-	D_8005BB34->v.ob[1] = (s32)((f32)sp124 - var_f2);
-	D_8005BB34->v.ob[2] = sp128 + temp_f10;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x258;
-	D_8005BB34->v.cn[0] = sp114;
-	D_8005BB34->v.cn[1] = sp112;
-	D_8005BB34->v.cn[2] = sp110;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
+		D_8005BB34->v.ob[0] = sp120 + temp_f6;
+		D_8005BB34->v.ob[1] = (s32)((f32)sp124 - var_f2);
+		D_8005BB34->v.ob[2] = sp128 + temp_f10;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0x258;
+		D_8005BB34->v.cn[0] = sp114;
+		D_8005BB34->v.cn[1] = sp112;
+		D_8005BB34->v.cn[2] = sp110;
+		D_8005BB34->v.cn[3] = 0xFF;
+		D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = sp120 - temp_f6;
-	D_8005BB34->v.ob[1] = (s32)((f32)sp124 - var_f2);
-	D_8005BB34->v.ob[2] = sp128 - temp_f10;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x258;
-	D_8005BB34->v.cn[0] = sp114;
-	D_8005BB34->v.cn[1] = sp112;
-	D_8005BB34->v.cn[2] = sp110;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
+		D_8005BB34->v.ob[0] = sp120 - temp_f6;
+		D_8005BB34->v.ob[1] = (s32)((f32)sp124 - var_f2);
+		D_8005BB34->v.ob[2] = sp128 - temp_f10;
+		D_8005BB34->v.flag = 0;
+		D_8005BB34->v.tc[0] = 0;
+		D_8005BB34->v.tc[1] = 0x258;
+		D_8005BB34->v.cn[0] = sp114;
+		D_8005BB34->v.cn[1] = sp112;
+		D_8005BB34->v.cn[2] = sp110;
+		D_8005BB34->v.cn[3] = 0xFF;
+		D_8005BB34++;
+	}
 
 	D_8005BB34->v.ob[0] = arg2[0];
 	D_8005BB34->v.ob[1] = arg2[1];
