@@ -2059,7 +2059,7 @@ extern const WeaponEntry_80129864 D_80145C10_154BC0;
 extern const WeaponEntry_80129864 D_801465B8_155568;
 extern Unk80050ADA D_80145BE2_154B92[];
 extern s32 D_80145BE8_154B98[][6];
-extern BuildingInstance D_80145E98;
+extern WeaponEntry_80129864 D_80145E98;
 extern s16 D_8014619A;
 extern Unk80146212 D_80146212_1551C2[];
 extern s16 D_80146492_155442[];
