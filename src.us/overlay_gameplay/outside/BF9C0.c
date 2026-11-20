@@ -1853,41 +1853,39 @@ s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, u32 arg2, u8 arg3, u8 arg4, s32 arg
 }
 
 /* Emit ground quad geometry: vertices + sorted-by-texture-bucket triangles */
-#ifdef NON_MATCHING
 void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 arg5, u8 arg6) {
 	Vtx *v;
 	s16 width;
 	s16 height;
-	s16 x;
+	s16 stackPad; /* IDO retains this slot to align the arrays and spills. */
 	s16 y;
-	s32 order;
 	s16 cols;
 	s16 rows;
+	u16 tile;
 	u16 orders[8][16];
 	u16 tiles[8][16];
 	s16 counts[8];
-	u16 tile;
+	s32 order;
 	s16 b;
-	Gfx *packet;
+	s16 x;
 	u8 modeByte;
 
-	for (x = 0; x < 8; x++) {
-		counts[x] = -1;
+	for (y = 0; y < 8; y++) {
+		counts[y] = -1;
 	}
 
 	if ((arg1 == 0) && (arg2 == 0) && (arg3 == 4) && (arg4 == 4)) {
 		y = 0;
 		do {
-
-			D_8005BB34[0] = (&arg0[y * 0x12])[0];
+			D_8005BB34[0] = arg0[y * 18 + 0];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[1];
+			D_8005BB34[0] = arg0[y * 18 + 1];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[2];
+			D_8005BB34[0] = arg0[y * 18 + 2];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[3];
+			D_8005BB34[0] = arg0[y * 18 + 3];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[4];
+			D_8005BB34[0] = arg0[y * 18 + 4];
 			D_8005BB34++;
 			y++;
 		} while (y < 5);
@@ -1898,7 +1896,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 4; x++) {
-				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				tile = ((u16 *)D_8014F8A0)[arg5 + (y << 8) + x];
 				v = &(&(&D_8005BB34[-0x19])[y * 5])[x];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
@@ -1914,8 +1912,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 		}
 
 		for (y = 0; y < 8; y++) {
-
-
 			if (counts[y] == -1) {
 				continue;
 			}
@@ -1929,23 +1925,18 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), G_TX_RENDERTILE, 0,
 					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
 					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
-				order = orders[y][x] + 4;
+				order = (s16)(orders[y][x] + 4);
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 
-
 	if (((arg3 - arg1) * (arg4 - arg2)) < 0xC) {
-		s32 fullCols;
-		s32 fullRows;
 		width = arg3 - arg1;
 		height = arg4 - arg2;
-		fullCols = width + 1;
-		cols = fullCols;
-		fullRows = height + 1;
-		rows = fullRows;
+		cols = width + 1;
+		rows = height + 1;
 
 		for (y = 0; y < rows; y++) {
 			for (x = 0; x < cols; x++) {
@@ -1959,8 +1950,12 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 		for (y = 0; y < height; y++) {
 			for (x = 0; x < width; x++) {
-				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
-				v = &(&(D_8005BB34 - fullRows * fullCols)[y * fullCols])[x];
+				/* These discarded comparisons keep the row offsets in the original IDO registers. */
+				if ((y << 8) == arg5) {}
+				if ((((height + 1) * (width + 1)) << 4) == x) {}
+				if (((y * (width + 1)) << 4) == x) {}
+				tile = ((u16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				v = &(&(D_8005BB34 - (height + 1) * (width + 1))[y * (width + 1)])[x];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
 					if (func_800B5EE4_C4E94(tile, arg0, (u8)y, x, y, arg6)) {
@@ -1975,8 +1970,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 		}
 
 		for (y = 0; y < 8; y++) {
-
-
 			if (counts[y] == -1) {
 				continue;
 			}
@@ -1984,35 +1977,32 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			for (x = 0; x <= counts[y]; x++) {
+				/* Keep the tile-sync command in its original register even on this path. */
+				if (((u32)x << 16) == _SHIFTL(G_RDPTILESYNC, 24, 8)) {}
 				tile = tiles[y][x];
 
-				gDPTileSync(D_8005BB2C++);
-				packet = D_8005BB2C++;
-				// These manual Gfx commands should be replaced with macros if possible
-				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
-					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
-					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
-				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
-					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
-				order = orders[y][x] + 4;
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = (s16)(orders[y][x] + 4);
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + cols, 0, order + 1, order + cols, order + 1 + cols, 0);
 			}
 		}
 		return;
 	}
 
-	if ((s16)(arg4 - arg2) == 4) {
+	if ((arg4 - arg2) == 4) {
 		cols = 4;
 		rows = 5;
 
 		for (y = 0; y < 5; y++) {
-			D_8005BB34[0] = (&arg0[y * 0x12])[0];
+			D_8005BB34[0] = arg0[y * 18 + 0];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[1];
+			D_8005BB34[0] = arg0[y * 18 + 1];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[2];
+			D_8005BB34[0] = arg0[y * 18 + 2];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[3];
+			D_8005BB34[0] = arg0[y * 18 + 3];
 			D_8005BB34++;
 		}
 
@@ -2021,7 +2011,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 		for (y = 0; y < 4; y++) {
 			for (x = 0; x < 3; x++) {
-				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				tile = ((u16 *)D_8014F8A0)[arg5 + (y << 8) + x];
 				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
@@ -2037,8 +2027,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 		}
 
 		for (y = 0; y < 8; y++) {
-
-
 			if (counts[y] == -1) {
 				continue;
 			}
@@ -2049,33 +2037,28 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				packet = D_8005BB2C++;
-				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
-					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
-					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
-				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
-					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
-				order = orders[y][x] + 4;
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = (s16)(orders[y][x] + 4);
 				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 4, 0, order + 1, order + 4, order + 5, 0);
 			}
 		}
 		return;
-	}
-
-	else {
+	} else {
 		cols = 5;
 		rows = 4;
 
 		for (y = 0; y < 4; y++) {
-			D_8005BB34[0] = (&arg0[y * 0x12])[0];
+			D_8005BB34[0] = arg0[y * 18 + 0];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[1];
+			D_8005BB34[0] = arg0[y * 18 + 1];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[2];
+			D_8005BB34[0] = arg0[y * 18 + 2];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[3];
+			D_8005BB34[0] = arg0[y * 18 + 3];
 			D_8005BB34++;
-			D_8005BB34[0] = (&arg0[y * 0x12])[4];
+			D_8005BB34[0] = arg0[y * 18 + 4];
 			D_8005BB34++;
 		}
 
@@ -2084,7 +2067,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 		for (y = 0; y < 3; y++) {
 			for (x = 0; x < 4; x++) {
-				tile = ((s16 *)D_8014F8A0)[arg5 + (y << 8) + x];
+				tile = ((u16 *)D_8014F8A0)[arg5 + (y << 8) + x];
 				v = &(&(&D_8005BB34[-(rows * cols)])[y * cols])[x];
 
 				if ((modeByte != 1) || func_800B960C_C85BC(v->v.ob[0], v->v.ob[2], 0x100, 0x100)) {
@@ -2100,8 +2083,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 		}
 
 		for (y = 0; y < 8; y++) {
-
-
 			if (counts[y] == -1) {
 				continue;
 			}
@@ -2112,23 +2093,16 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 				tile = tiles[y][x];
 
 				gDPTileSync(D_8005BB2C++);
-				packet = D_8005BB2C++;
-				packet->words.w0 = _SHIFTL(G_SETTILE, 24, 8) | _SHIFTL(G_IM_FMT_CI, 21, 3) |
-					_SHIFTL(G_IM_SIZ_8b, 19, 2) | _SHIFTL(4, 9, 9) |
-					_SHIFTL(((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), 0, 9);
-				packet->words.w1 = _SHIFTL((tile & 0x2000) >> 13, 18, 2) | _SHIFTL(5, 14, 4) |
-					_SHIFTL((tile & 0x4000) >> 14, 8, 2) | _SHIFTL(5, 4, 4);
-				order = orders[y][x] + 4;
-				gSP2Triangles(D_8005BB2C++, order + 1, order, order + 5, 0, order + 1, order + 5, order + 6, 0);
+				gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 4, ((((u8)((tile & 0x3C0) >> 6)) % 2) << 7), G_TX_RENDERTILE, 0,
+					(((tile & 0x2000) >> 13) & 3), 5, G_TX_NOLOD,
+					(((tile & 0x4000) >> 14) & 3), 5, G_TX_NOLOD);
+				order = (s16)(orders[y][x] + 4);
+				gSP2Triangles(D_8005BB2C++, order, order + 5, order + 1, 0, order + 1, order + 5, order + 6, 0);
 			}
 		}
 		return;
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/BF9C0/func_800B604C_C4FFC.s")
-#endif
 
 /* Emit rotated/angled tile geometry from the road draw buffer (grouped by texture bucket) */
 #ifdef NON_MATCHING
