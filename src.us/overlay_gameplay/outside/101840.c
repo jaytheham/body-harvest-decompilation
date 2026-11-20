@@ -1524,7 +1524,6 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s")
 #endif
 
-
 #ifdef NON_MATCHING
 void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	Vec3f direction;
@@ -1889,8 +1888,6 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 sinTerm;
 	f32 spF8;
 	f32 spF4;
-	
-	
 	s32 pad;
 	s32 pad2;
 	volatile s16 spEA;
@@ -1930,7 +1927,6 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	direction.vector.y = (f32)(arg1[1] - arg0[1]);
 	direction.vector.z = (f32)(arg1[2] - arg0[2]);
 	
-	
 	func_800F54AC_10445C(&direction.vector, &direction.vector);
 
 	trigResult = func_80003824_4424((f32)(arg0[arg0[0] * 0 + 2] - arg2[2]), (f32)(arg0[arg0[0] * 0] - arg2[0]));
@@ -1950,7 +1946,6 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 		}
 	}
 
-	
 	spEA = D_8013FCD4_14EC84[currentLevel - 1][0].r; spE8 = D_8013FCD4_14EC84[currentLevel - 1][0].g; spE6 = D_8013FCD4_14EC84[currentLevel - 1][0].b;
 	phase = *(s16 *)&spEA - 0xB4;
 	spE4 = phase < 0 ? 0 : phase;
@@ -2126,12 +2121,10 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 }
-
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
 #endif
 
-// CURRENT(725)
 // AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1
 #ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
@@ -5816,7 +5809,6 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	midX = (f32)(arg0->unk0 - ((((f32)arg0->unk0) - D_801593F0[10].pos.x) * 0.5));
 	midY = (f32)(arg0->unk2 - ((((f32)arg0->unk2) - D_801593F0[10].pos.y) * 0.5));
 	midZ = (f32)(arg0->unk4 - ((((f32)arg0->unk4) - D_801593F0[10].pos.z) * 0.5));
-	unused = arg0->unk6;
 	point = D_801594E0;
 	D_801593F0[11].vel.x = (f32)((midX - D_801593F0[11].pos.x) + (D_801593F0[11].vel.x * damping));
 	D_801593F0[11].vel.y = (f32)(((midY - D_801593F0[11].pos.y) + (D_801593F0[11].vel.y * damping)) - 4.0);
@@ -5824,9 +5816,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	D_801593F0[11].pos.x = (f32)arg0->unk0;
 	D_801593F0[11].pos.y = (f32)(arg0->unk2 + 0x26);
 	D_801593F0[11].pos.z = (f32)arg0->unk4;
-	if (1)
-	{
-	}
+
 	spring = D_80144AA8_153A58[0];
 	chainZ = D_801594E0[1].pos.z;
 	chainY = D_801594E0[1].pos.y;
@@ -5836,9 +5826,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 		posX = point->pos.x;
 		posY = point->pos.y;
 		posZ = point->pos.z;
-		if ((posX - posY) + 2.0 + 3.0 + 5.0 + 2.0 + 3.0 + 5.0 < (posZ - posX) + 5.0 + 3.0 + 2.0 + 5.0 + 3.0 + 2.0)
-		{
-		}
+
 		loopX = (f32)(chainX - ((chainX - point[-1].pos.x) * 0.5));
 		loopY = (f32)(chainY - ((chainY - point[-1].pos.y) * 0.5));
 		loopZ = (f32)(chainZ - ((chainZ - point[-1].pos.z) * 0.5));
@@ -5851,12 +5839,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 		point->pos.x = chainX;
 		point->pos.y = chainY;
 		point->pos.z = chainZ;
-		if (unused)
-		{
-		}
-		if ((posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + chainX + chainY + chainZ + chainX + chainY + chainZ + chainX + chainY + chainZ + chainX + chainY + chainX) * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping + 2.0 + 3.0 + 5.0 + 2.0 + 3.0 + 5.0 < (posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + chainX + chainY + chainX + chainZ + chainY + chainX + chainZ + chainY + chainX + chainZ + chainY + chainX) * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half * damping * spring * half + 5.0 + 3.0 + 2.0 + 5.0 + 3.0 + 2.0)
-		{
-		}
+
 	} while ((point--) >= D_80159420);
 	oldX = D_801593F0[1].pos.x;
 	oldY = D_801593F0[1].pos.y;
@@ -5864,9 +5847,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	lastZ = oldZ;
 	lastY = oldY;
 	lastX = oldX;
-	if (lastX < lastZ)
-	{
-	}
+
 	lastX = (f32)(oldX - ((oldX - ((f32)arg1->unk0)) * half));
 	lastY = (f32)(oldY - ((oldY - ((f32)arg1->unk2)) * half));
 	lastZ = (f32)(oldZ - ((oldZ - ((f32)arg1->unk4)) * half));
@@ -5874,8 +5855,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 	D_801593F0[0].vel.y = (f32)(((lastY - D_801593F0[0].pos.y) + (D_801593F0[0].vel.y * damping)) - 4.0);
 	D_801593F0[0].vel.z = (f32)((lastZ - D_801593F0[0].pos.z) + (D_801593F0[0].vel.z * damping));
 	D_801593F0[0].pos.x = (f32)arg1->unk0;
-	unused = arg1->unk2;
-	D_801593F0[0].pos.y = (f32)(vehicleTypes[arg1->unk1A].unk38 + unused);
+	D_801593F0[0].pos.y = (f32)(vehicleTypes[arg1->unk1A].unk38 + arg1->unk2);
 	D_801593F0[0].pos.z = (f32)arg1->unk4;
 }
 #else
