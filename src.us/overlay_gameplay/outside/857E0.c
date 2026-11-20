@@ -88,113 +88,120 @@ void func_800769A8_85958(s32 arg0) {
 
 // AI - Spawns D_80259D90 entries from D_80221A30/D_8021FA30 patterns via func_80076830_857E0 and func_800B84D0_C7480.
 #ifdef NON_MATCHING
-void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
+void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
+{
 	s32 pattern;
 	s32 outer;
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
 	Unk80052B40 sp98;
-	Unk857E0Obj* entry;
+	Unk857E0Obj *entry;
 	s32 obj;
 	s16 x;
 	s32 z;
 	s32 inner;
 	s32 type;
 	s32 temp;
-	OutsideTreeStyle* tempTable;
+	OutsideTreeStyle *tempTable;
 	s32 vertexX;
 	s32 vertexZ;
 	u32 packed;
 	u8 c0;
 	u8 c1;
 	u8 c2;
-	u16* table;
+	u16 *table;
 	u32 packedBackup[1];
 	s32 xOff;
 	s32 zOff;
-
 	spA0 = D_8013BCCC_Vector;
 	sp98 = D_8013BCD4_Vector;
-
-	if (D_8014D2E8 == 0x96) {
+	if (D_8014D2E8 == 0x96)
+	{
 		return;
 	}
-
 	arg1 += 0x20;
 	arg2 += 0x20;
-	if ((arg1 < 0) || (arg1 >= 0x40) || (arg2 < 0) || (arg2 >= 0x40)) {
+	if ((((arg1 < 0) || (arg1 >= 0x40)) || (arg2 < 0)) || (arg2 >= 0x40))
+	{
 		return;
 	}
-
-	pattern = D_80221A30[arg2][arg1] & 0xFF;
-	if (pattern == 0xFF) {
+	pattern = D_80221A30[arg2][arg1];
+	if (pattern == 0xFF)
+	{
 		return;
 	}
-
 	table = D_8021FA30[pattern];
-	for (outer = 0; outer != 0x10; outer++, table++) {
+	for (outer = 0; outer != 0x10; outer++, table++)
+	{
 		packed = *table;
-		if (packed != 0) {
-			for (inner = 0; packed != 0; inner++, packed = (u16)(packedBackup[0] >> 4)) {
+		if (packed != 0)
+		{
+			for (inner = 0; packed != 0; inner++, packed = (u16)(packedBackup[0] >> 4))
+			{
 				type = packed & 0xF;
 				packedBackup[0] = packed;
-				if (type != 0) {
+				if (type != 0)
+				{
 					obj = func_80076830_857E0();
-					if (obj == -1) {
+					if (obj == (-1))
+					{
 						break;
 					}
-
-					entry = (Unk857E0Obj*)&D_80259D90[obj];
+					entry = (Unk857E0Obj *)(&D_80259D90[obj]);
 					entry->unk0 = type;
 					entry->unk1 = outer;
 					entry->unk2 = arg0;
 					entry->unk3 = inner;
-
 					xOff = ((arg1 << 2) + (outer & 3)) << 8;
 					zOff = ((arg2 << 2) + (outer >> 2)) << 8;
-					x = D_801416A0_150650[inner] + xOff - 0x8000;
-					z = (s16)(D_801416A8_150658[inner] + zOff - 0x8000);
+					x = (D_801416A0_150650[inner] + xOff) - 0x8000;
+					z = (s16)((D_801416A8_150658[inner] + zOff) - 0x8000);
 					entry->unk4 = x;
 					entry->unk6 = z;
-
-					if (type < 0xE) {
+					if (type < 0xE)
+					{
 						pattern = (spA8.unk0 = x);
 						spA8.unk0 = x;
-						pattern, spA8.unk4 = z, spA8.unk2 = (s16) (func_800B84D0_C7480(x, z) >> 8);
+						spA8.unk4 = z;
+						spA8.unk2 = (s16)(func_800B84D0_C7480(x, z) >> 8);
 						z = spA8.unk4;
 						x = spA8.unk0;
 						entry->unk8 = (u32)D_80222A30[type];
-
-						temp = ((z | 0) * x * 0x41C64E6D + 0x3039) >> 16;
+						temp = ((((z | 0) * x) * 0x41C64E6D) + 0x3039) >> 16;
 						temp /= 256;
-						temp = temp % 32 + 240;
+						temp = (temp % 32) + 240;
 						sp98.unk0 = temp;
 						sp98.unk4 = temp;
 						sp98.unk2 = 256;
 						sp98.unk2 = ((((((z | 0) * 0x41C64E6D) + 0x3039) >> 16) / sp98.unk2) % 32) + 240;
-
-						if (((s16 (*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2) {
+						if (((s16(*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2)
+						{
 							spA0.unk0 = inner << 0xE;
 						}
 						func_800039D0_45D0(&spA8, &spA0, &sp98, &entry->matrix);
-					} else {
+					}
+					else
+					{
 						spA8.unk0 = x;
 						spA8.unk4 = z;
-						xOff = xOff - 0x8000; zOff -= 0x8000; if ((inner == 0) || (inner == 3)) {
+						xOff = xOff - 0x8000;
+						zOff -= 0x8000;
+						if ((inner == 0) || (inner == 3))
+						{
 							c0 = 0xFF;
 							c1 = 0xFF;
 							c2 = 0xFF;
-						} else {
+						}
+						else
+						{
 							c0 = 0xC8;
 							c1 = 0xC8;
 							c2 = 0xC8;
 						}
-
-						tempTable = &((OutsideTreeStyle (*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
-
+						tempTable = &((OutsideTreeStyle(*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
 						vertexX = D_801416B0_150660[inner][0] + xOff;
 						vertexZ = D_801416C0_150670[inner][0] + zOff;
-						entry = (Unk857E0Obj*)&D_80259D90[obj];
+						entry = (Unk857E0Obj *)(&D_80259D90[obj]);
 						entry->unk8 = (u32)tempTable->texture;
 						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
 
@@ -214,17 +221,16 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 						entry->vertices[1].v.flag = 0;
 						entry->vertices[1].v.ob[2] = vertexZ;
 						entry->vertices[1].v.ob[0] = vertexX;
-						temp = tempTable->scale;
-						vertexX = D_801416B0_150660[inner][1] + xOff;
-						vertexZ = D_801416C0_150670[inner][1] + zOff;
-						entry->vertices[1].v.tc[1] = (temp << 0xB) - 0x20; entry->vertices[1].v.cn[3] = 0xFF;
-						x = c1;
+						entry->vertices[1].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
+						entry->vertices[1].v.cn[3] = 0xFF;
 						entry->vertices[1].v.cn[2] = c2;
-						entry->vertices[1].v.cn[1] = x;
+						entry->vertices[1].v.cn[1] = c1;
 						entry->vertices[1].v.cn[0] = c0;
 
-						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
+						vertexX = D_801416B0_150660[inner][1] + xOff;
+						vertexZ = D_801416C0_150670[inner][1] + zOff;
 
+						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
 						entry->vertices[2].v.ob[0] = vertexX;
 						entry->vertices[2].v.ob[1] = tempTable->height + temp;
 						entry->vertices[2].v.flag = 0;
@@ -255,7 +261,6 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2) {
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
 #endif
-
 
 void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 	s32 i;
