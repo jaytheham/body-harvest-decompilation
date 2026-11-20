@@ -3055,9 +3055,9 @@ void func_800C9668_D8618(void) {
 }
 
 // DrawNonZBufferedEffects?
-#ifdef NON_MATCHING
 void func_800C978C_D873C(void) {
-#define WATER_SPLASH_STATE(index) ((WaterSplashState *)(s32)(s64)(s32)&D_80154318[index].waterSplash)
+#define WATER_SPLASH_PIPE_WORD ((u32)G_RDPPIPESYNC << 24)
+#define WATER_SPLASH_STATE(index) ((WaterSplashState *)(s32)(s64)(s32)&D_80154318[(index)].waterSplash)
 	s16 unitId;
 	s16 height2;
 	s16 height3;
@@ -3067,9 +3067,18 @@ void func_800C978C_D873C(void) {
 	Unk80052B40 corner2;
 	Unk80052B40 corner3;
 	Unk80052B40 corner4;
+	Gfx *gfx;
 
 	unitId = D_80154222;
-	gDPPipeSync(D_8005BB2C++);
+	if (1) {}
+
+	/* Keep the setup and cleanup pipe-sync word in the same saved register. */
+	if ((unitId ^ (s32)WATER_SPLASH_PIPE_WORD) == (s32)WATER_SPLASH_PIPE_WORD) {}
+	{
+		gfx = D_8005BB2C++;
+		gfx->words.w0 = WATER_SPLASH_PIPE_WORD;
+		gfx->words.w1 = 0;
+	}
 	gSPClearGeometryMode(D_8005BB2C++, -1);
 	gSPSetGeometryMode(D_8005BB2C++, G_SHADE);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -3079,42 +3088,69 @@ void func_800C978C_D873C(void) {
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100E080), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPPipeSync(D_8005BB2C++);
+	/* Load the 32-by-32 intensity texture, reusing the tile packet cursor. */
+	{
+		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, K0_TO_PHYS(D_100E080));
+		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPLoadSync(D_8005BB2C++);
+		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, ((32 * 32 + 3) >> 2) - 1, CALC_DXT_4b(32));
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTile(gfx = D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, (((32 >> 1) + 7) >> 3), 0, G_TX_RENDERTILE, 0,
+			G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+		gDPSetTileSize(gfx = D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
+	}
+	{ gfx = D_8005BB2C++; gfx->words.w0 = WATER_SPLASH_PIPE_WORD; gfx->words.w1 = 0; }
+	if (((s16)(unitId ^ 0) ^ (s32)WATER_SPLASH_PIPE_WORD) == (s32)WATER_SPLASH_PIPE_WORD) {}
 
 	toggle = 0;
 
 	if ((D_80156ED9 != 2) && (unitId != -6) && (unitId != -5)) {
 		do {
+			WaterSplashState *splash = (WaterSplashState *)(s32)(s64)(s32)&D_80154318[unitId].waterSplash;
+
 			/* Keep IDO's loop region boundary. */
 			if (1) {}
 
-
 			if (((D_80156ED9 == 1) && (toggle == 0)) || (D_80156ED9 == 0)) {
-
-
 				if ((func_800703B0_7F360(WATER_SPLASH_STATE(unitId)->position[0], WATER_SPLASH_STATE(unitId)->position[2]) != 0) &&
-					(func_800B93AC_C835C(WATER_SPLASH_STATE(unitId)->position[0], WATER_SPLASH_STATE(unitId)->position[2], (u16)D_80154318[unitId].unk2, (s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0)) {
-					if (WATER_SPLASH_STATE(unitId)->onWater == 1) {
-						gDPPipeSync(D_8005BB2C++);
+					(func_800B93AC_C835C(splash->position[0], splash->position[2],
+						(u16)(((u16)D_80154318[unitId].unk2) ^ 0),
+						(s16)(D_80047954 * 4.0f), (s32)(D_8004795C * 4.0f), 0x4000 - D_80047950) != 0)) {
+					if (splash->onWater == 1) {
+						{ gfx = D_8005BB2C++; gfx->words.w0 = WATER_SPLASH_PIPE_WORD; gfx->words.w1 = 0; }
 						gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER);
 						gDPSetRenderMode(D_8005BB2C++, G_RM_ZB_XLU_SURF, G_RM_ZB_XLU_SURF2);
-					gDPPipeSync(D_8005BB2C++);
+						gDPPipeSync(D_8005BB2C++);
 					} else {
 						gDPPipeSync(D_8005BB2C++);
 						gSPClearGeometryMode(D_8005BB2C++, G_ZBUFFER);
 						gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
-					gDPPipeSync(D_8005BB2C++);
+						gDPPipeSync(D_8005BB2C++);
+						/* Keep the pipe-sync word live across this branch. */
+						if (splash->onWater == WATER_SPLASH_PIPE_WORD) {}
 					}
 
 					/* Keep these corner coordinates in their original stack homes. */
-					if (&corner3) {} if (&corner4) {}
-					corner1.unk0=D_80154318[unitId].unk2+WATER_SPLASH_STATE(unitId)->position[0];
-					corner1.unk4=D_80154318[unitId].unk2+WATER_SPLASH_STATE(unitId)->position[2];
-					corner2.unk0=WATER_SPLASH_STATE(unitId)->position[0]-D_80154318[unitId].unk2;
-					corner2.unk4=D_80154318[unitId].unk2+WATER_SPLASH_STATE(unitId)->position[2];
-					corner4.unk4=corner3.components[2]=WATER_SPLASH_STATE(unitId)->position[2]-D_80154318[unitId].unk2; corner3.unk0=corner2.unk0; corner4.unk0=corner1.unk0;
-					if (WATER_SPLASH_STATE(unitId)->onWater == 1) {
+					if (&corner3) {}
+					if (&corner4) {}
+					{
+						s32 posX, negX, negZ;
+
+						corner1.unk0 = WATER_SPLASH_STATE(unitId)->position[0] + D_80154318[unitId].unk2;
+						posX = D_80154318[unitId].unk2 + WATER_SPLASH_STATE(unitId)->position[0];
+						corner1.unk4 = WATER_SPLASH_STATE(unitId)->position[2] + D_80154318[unitId].unk2;
+						corner2.unk0 = WATER_SPLASH_STATE(unitId)->position[0] - D_80154318[unitId].unk2;
+						negX = WATER_SPLASH_STATE(unitId)->position[0] - D_80154318[unitId].unk2;
+						corner2.unk4 = D_80154318[unitId].unk2 + WATER_SPLASH_STATE(unitId)->position[2];
+						negZ = WATER_SPLASH_STATE(unitId)->position[2] - D_80154318[unitId].unk2;
+						corner3.unk0 = negX;
+						corner3.unk4 = negZ;
+						corner4.unk0 = posX;
+						corner4.unk4 = negZ;
+					}
+
+					if (splash->onWater == 1) {
 						corner1.unk2 = D_80222A70;
 						height2 = D_80222A70;
 						height3 = D_80222A70;
@@ -3132,10 +3168,10 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
-					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
-					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
-					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
+					D_8005BB34->v.cn[0] = splash->color[0];
+					D_8005BB34->v.cn[1] = splash->color[1];
+					D_8005BB34->v.cn[2] = splash->color[2];
+					D_8005BB34->v.cn[3] = splash->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner2.unk0;
@@ -3144,10 +3180,10 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0;
-					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
-					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
-					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
-					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
+					D_8005BB34->v.cn[0] = splash->color[0];
+					D_8005BB34->v.cn[1] = splash->color[1];
+					D_8005BB34->v.cn[2] = splash->color[2];
+					D_8005BB34->v.cn[3] = splash->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner3.unk0;
@@ -3156,10 +3192,10 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x800;
 					D_8005BB34->v.tc[1] = 0x800;
-					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
-					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
-					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
-					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
+					D_8005BB34->v.cn[0] = splash->color[0];
+					D_8005BB34->v.cn[1] = splash->color[1];
+					D_8005BB34->v.cn[2] = splash->color[2];
+					D_8005BB34->v.cn[3] = splash->opacity;
 					D_8005BB34++;
 
 					D_8005BB34->v.ob[0] = (f32)corner4.unk0;
@@ -3168,22 +3204,22 @@ void func_800C978C_D873C(void) {
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0x800;
-					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
-					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
-					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
-					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
+					D_8005BB34->v.cn[0] = splash->color[0];
+					D_8005BB34->v.cn[1] = splash->color[1];
+					D_8005BB34->v.cn[2] = splash->color[2];
+					D_8005BB34->v.cn[3] = splash->opacity;
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (f32)WATER_SPLASH_STATE(unitId)->position[0];
-					D_8005BB34->v.ob[1] = (f32)WATER_SPLASH_STATE(unitId)->position[1];
-					D_8005BB34->v.ob[2] = (f32)WATER_SPLASH_STATE(unitId)->position[2];
+					D_8005BB34->v.ob[0] = (f32)splash->position[0];
+					D_8005BB34->v.ob[1] = (f32)splash->position[1];
+					D_8005BB34->v.ob[2] = (f32)splash->position[2];
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0x400;
 					D_8005BB34->v.tc[1] = 0x400;
-					D_8005BB34->v.cn[0] = WATER_SPLASH_STATE(unitId)->color[0];
-					D_8005BB34->v.cn[1] = WATER_SPLASH_STATE(unitId)->color[1];
-					D_8005BB34->v.cn[2] = WATER_SPLASH_STATE(unitId)->color[2];
-					D_8005BB34->v.cn[3] = WATER_SPLASH_STATE(unitId)->opacity;
+					D_8005BB34->v.cn[0] = splash->color[0];
+					D_8005BB34->v.cn[1] = splash->color[1];
+					D_8005BB34->v.cn[2] = splash->color[2];
+					D_8005BB34->v.cn[3] = splash->opacity;
 					D_8005BB34++;
 
 					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 5), 5, 0);
@@ -3194,20 +3230,18 @@ void func_800C978C_D873C(void) {
 				}
 			}
 
-			toggle = (1 - toggle) & 0xFF;
+			toggle = 1 - toggle;
 			unitId = D_80154318[unitId].unk4;
 		} while ((unitId != -6) && (unitId != -5));
 	}
 
-	gDPPipeSync(D_8005BB2C++);
+	{ gfx = D_8005BB2C++; gfx->words.w0 = WATER_SPLASH_PIPE_WORD; gfx->words.w1 = 0; }
 	gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 	gSPSetGeometryMode(D_8005BB2C++, G_FOG);
 	gDPPipeSync(D_8005BB2C++);
 }
 #undef WATER_SPLASH_STATE
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800C978C_D873C.s")
-#endif
+#undef WATER_SPLASH_PIPE_WORD
 
 // spawn random water particle?
 void func_800CA1B0_D9160(u8 arg0) {
@@ -5540,7 +5574,6 @@ void func_800D1A94_E0A44(u8 arg0) {
 	func_80137368_146318(sp34->position[0], sp34->position[1], sp34->position[2], 7, arg0);
 }
 
-#ifdef NON_MATCHING
 void func_800D1C24_E0BD4(u8 arg0)
 {
 	f32 spread;
@@ -5605,7 +5638,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 			{
 				spread = 0.0f - spread;
 			}
-			position = (Unk80052B40 *)(s32)D_80154318[index].payload;
+			position = (Unk80052B40 *)(s32)&D_80154318[index].positionVector;
 			curX = position->unk0 + spread;
 			curX2 = position->unk0 - spread;
 			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
@@ -5614,7 +5647,10 @@ void func_800D1C24_E0BD4(u8 arg0)
 				spread = 0.0f - spread;
 			}
 			curY2 = position->unk2 - spread;
-			curY = position->unk2 + spread;
+			/* This discarded test reserves an FP register during IDO allocation. */
+			curY = position->unk2 + spread; \
+				if (((f32)position->unk2 * spread < 0.0f) + \
+				    ((f32)position->unk2 * spread > curY2)) {}
 			spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
 			if ((func_800038E0_44E0() % 11) < 6)
 			{
@@ -5631,8 +5667,22 @@ void func_800D1C24_E0BD4(u8 arg0)
 				if (nextIndex != -5)
 				{
 					gDPPipeSync(D_8005BB2C++);
-					/* Keep the image packet and its address observation on one source line. */
-					{ { Gfx *imagePacket = D_8005BB2C++; D_8005BB2C[-1].words.w0 = (_SHIFTL(G_SETTIMG,24,8) | _SHIFTL(G_IM_FMT_I,21,3) | _SHIFTL(G_IM_SIZ_16b,19,2) | _SHIFTL(0,0,12)) + ((u32)&D_8005BB2C[-1] * 0); imagePacket->words.w1 = (unsigned int)K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9]); } gDPSetTile(D_8005BB2C++,G_IM_FMT_I,G_IM_SIZ_16b,0,0,G_TX_LOADTILE,0,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD); gDPLoadSync(D_8005BB2C++); gDPLoadBlock(D_8005BB2C++,G_TX_LOADTILE,0,0,255,CALC_DXT_4b(32)); gDPPipeSync(D_8005BB2C++); gDPSetTile(D_8005BB2C++,G_IM_FMT_I,G_IM_SIZ_4b,2,0,G_TX_RENDERTILE,0,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD,G_TX_NOMIRROR | G_TX_CLAMP,G_TX_NOMASK,G_TX_NOLOD); gDPSetTileSize(D_8005BB2C++,G_TX_RENDERTILE,0,0,31<<G_TEXTURE_IMAGE_FRAC,31<<G_TEXTURE_IMAGE_FRAC); };
+					/* Keep the SDK texture commands in one logical source line for IDO scheduling. */
+					{ \
+						gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, \
+							1 + ((u32)D_8005BB2C * 0), K0_TO_PHYS(&D_100B4F0[(func_800038E0_44E0() % 4) << 9])); \
+						gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD); \
+						gDPLoadSync(D_8005BB2C++); \
+						gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 255, CALC_DXT_4b(32)); \
+						gDPPipeSync(D_8005BB2C++); \
+						gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, \
+							G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD); \
+						gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, \
+							31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC); \
+					};
 					gDPPipeSync(D_8005BB2C++);
 					D_8005BB34->v.ob[0] = curX;
 					D_8005BB34->v.ob[1] = curY;
@@ -5661,7 +5711,7 @@ void func_800D1C24_E0BD4(u8 arg0)
 					{
 						spread = 0.0f - spread;
 					}
-					position = (Unk80052B40 *)(s32)D_80154318[nextIndex].payload;
+					position = (Unk80052B40 *)(s32)&D_80154318[nextIndex].positionVector;
 					nextX = position->unk0 + spread;
 					nextX2 = position->unk0 - spread;
 					spread = ((func_800038E0_44E0() % 5) * 4) + 0x14;
@@ -5689,7 +5739,8 @@ void func_800D1C24_E0BD4(u8 arg0)
 					D_8005BB34->v.cn[2] = blue;
 					D_8005BB34->v.cn[3] = 0xFF;
 					D_8005BB34++;
-					if (1) {} D_8005BB34->v.ob[0] = nextX2;
+					/* Weight the positive endpoint before IDO colors the shared Z conversion. */
+					if (nextZ + nextZ + nextZ + nextZ) {} D_8005BB34->v.ob[0] = nextX2;
 					D_8005BB34->v.ob[1] = nextY2;
 					D_8005BB34->v.ob[2] = nextZ2;
 					D_8005BB34->v.flag = 0;
@@ -5700,37 +5751,34 @@ void func_800D1C24_E0BD4(u8 arg0)
 					D_8005BB34->v.cn[2] = blue;
 					D_8005BB34->v.cn[3] = 0xFF;
 					D_8005BB34++;
-					gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
+					gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-4]), 4, 0);
 					gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 2, 3, 1, 0);
 					D_80156EDA += 4;
 					curX2 = nextX;
-					if (1)
+					if (0)
 					{
 					}
 					curY2 = nextY;
-					if (1)
+					if (0)
 					{
 					}
 					curZ2 = nextZ;
-					curX = nextX2; if (1) {} if (1) {}
-					if (1)
+					/* Keep the display-list cursor referenced in this carry block. */
+					curX = nextX2; if (D_8005BB2C) {} if (0) {}
+					if (0)
 					{
 					}
 					curY = nextY2;
-					if (1)
+					if (0)
 					{
 					}
 					curZ = nextZ2;
 				}
 				index = nextIndex;
-			} while (nextIndex != -5 && index != -6);
+			} while ((u32)nextIndex != (u32)-5 && index != -6);
 		}
 	}
 }
-
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800D1C24_E0BD4.s")
-#endif
 
 s16 func_800D249C_E144C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, u8 arg7) {
 	Unk80154318Entry *child;
@@ -11238,7 +11286,6 @@ void func_800E64B4_F5464(void) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800E6A38_F59E8(void)
 {
   s32 slotCount = 4;
@@ -11251,8 +11298,8 @@ void func_800E6A38_F59E8(void)
   s16 baseZ;
   s16 xOff;
   s32 remain;
+  Gfx *packet;
   s16 zOff;
-  s16 yTop;
   Vtx *vtx0;
   Vtx *vtx1;
   Vtx *vtx2;
@@ -11307,41 +11354,49 @@ void func_800E6A38_F59E8(void)
 		}
 		radius *= 20;
 		xOff = (((f32) coss(-angle)) / 32768.0) * (radius + 20);
-		zOff = (((f32) sins(-angle)) / 32768.0) * (radius + 20);
-		// Most other matched functions that create vertices using D_8005BB34
-		// follow a particular structure, can we not reuse that common structure here too?
-		vtx0 = D_8005BB34++;
-		vtx0->v.ob[0] = baseX;
+		/* Both trig calls have read the angle. Reuse it for the sine result. */
+		angle = sins(-angle);
+		zOff = (((f32) angle) / 32768.0) * (radius + 20);
+
+		/* Store the first coordinate before advancing the vertex cursor. */
+		vtx0 = D_8005BB34;
+		vtx0->v.ob[0] = (u16)baseX;
+		D_8005BB34++;
 		vtx0->v.ob[1] = baseY;
 		vtx0->v.ob[2] = baseZ;
 		vtx0->v.tc[0] = 0x1000;
 		vtx0->v.tc[1] = 0x0800;
-		vtx1 = D_8005BB34++;
-		vtx1->v.ob[0] = baseX;
-		vtx1->v.ob[1] = (yTop = baseY + 0x14);
+		vtx1 = D_8005BB34;
+		D_8005BB34->v.ob[0] = (u16)baseX;
+		D_8005BB34++;
+		vtx1->v.ob[1] = baseY + 0x14;
 		vtx1->v.ob[2] = baseZ;
 		vtx1->v.tc[0] = 0x1000;
 		vtx1->v.tc[1] = 0;
-		vtx2 = D_8005BB34++;
+		vtx2 = D_8005BB34;
 		vtx2->v.ob[0] = baseX + xOff;
-		vtx2->v.ob[1] = yTop;
-		vtx2->v.ob[2] = baseZ + zOff;
+		D_8005BB34++;
+		vtx2->v.ob[1] = baseY + 0x14;
 		vtx2->v.tc[0] = 0;
 		vtx2->v.tc[1] = 0x0800;
-		vtx3 = D_8005BB34++;
+		vtx2->v.ob[2] = baseZ + zOff;
+		vtx3 = D_8005BB34;
 		vtx3->v.ob[0] = baseX - xOff;
-		vtx3->v.ob[1] = yTop;
+		D_8005BB34++;
+		vtx3->v.ob[1] = baseY + 0x14;
 		vtx3->v.ob[2] = baseZ - zOff;
 		vtx3->v.tc[0] = 0x1000;
 		vtx3->v.tc[1] = 0;
-		vtx4 = D_8005BB34++;
-		vtx4->v.ob[0] = baseX + (entry->unkC >> 7);
+		vtx4 = D_8005BB34;
+		D_8005BB34->v.ob[0] = baseX + (entry->unkC >> 7);
+		D_8005BB34++;
 		vtx4->v.ob[1] = (baseY + (entry->unk10 >> 7)) + 0x14;
 		vtx4->v.ob[2] = baseZ + (entry->unk14 >> 7);
 		vtx4->v.tc[0] = 0;
-		vtx4->v.tc[1] = 0x0800;
-		vtx5 = D_8005BB34++;
+		((u16 *)vtx4->v.tc)[1] = 0x0800;
+		vtx5 = D_8005BB34;
 		vtx5->v.ob[0] = vtx4->v.ob[0];
+		D_8005BB34++;
 		vtx5->v.ob[1] = vtx4->v.ob[1];
 		vtx5->v.ob[2] = vtx4->v.ob[2];
 		vtx5->v.tc[0] = 0;
@@ -11364,10 +11419,27 @@ void func_800E6A38_F59E8(void)
 		vtx2->v.cn[2] = 0;
 		vtx1->v.cn[2] = 0;
 		vtx0->v.cn[2] = 0;
-		vtx0->v.cn[3] = (vtx1->v.cn[3] = (vtx2->v.cn[3] = (vtx3->v.cn[3] = (vtx4->v.cn[3] = (vtx5->v.cn[3] = 0xFF)))));
-		gSPVertex(D_8005BB2C++, ((u32) vtx0) & 0x1FFFFFFF, 6, 0);
-		gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
-		gSP1Triangle(D_8005BB2C++, 2, 3, 5, 0);
+
+		/* These discarded tests preserve IDO's vertex and packet register lifetimes. */
+		if (((u32)vtx1 & 0x20) |
+		    ((angle & 1) + (angle & 2)) |
+		    (((u32)vtx3 & 0x20) + ((u32)vtx3 & 0x40) + ((u32)vtx3 & 0x80) +
+		     ((u32)vtx3 & 0x100) + ((u32)vtx3 & 0x200)) |
+		    (((u32)vtx5 & 0x20) + ((u32)vtx5 & 0x40) + ((u32)vtx5 & 0x80)) |
+		    (((u32)D_8005BB34 & 2) + ((u32)D_8005BB34 & 4) + ((u32)D_8005BB34 & 8)) |
+		    ((baseX & 1) + (baseX & 2) + (baseX & 4)) |
+		    (zOff == 0x0800) | ((zOff & 1) + (zOff & 2) + (zOff & 4))) {}
+		vtx0->v.cn[3] = vtx1->v.cn[3] = vtx2->v.cn[3] = vtx3->v.cn[3] = vtx4->v.cn[3] = vtx5->v.cn[3] = 0xFF;
+		if (((D_8005BB2C != 0) + ((u32)D_8005BB2C & 8) + ((u32)D_8005BB2C & 16)) |
+		    (xOff == 0x0800) | (remain & 8)) {}
+		/* Keep the vertex upload on one source line for IDO's schedule. */
+		packet = D_8005BB2C++; packet->words.w0 = _SHIFTL(G_VTX, 24, 8) | (6 << 10) | (6 * sizeof(Vtx) - 1); packet->words.w1 = K0_TO_PHYS(vtx0);
+		if ((entry->unk0 & 1) | (entry->unk4 & 2) | (entry->unk8 & 4)) {}
+		packet = D_8005BB2C;
+		D_8005BB2C = &packet[1];
+		gSP1Triangle(packet, 0, 1, 4, 0);
+		/* Reuse the fourth vertex local for the last packet. */
+		gSP1Triangle(vtx3 = (Vtx *)D_8005BB2C++, 2, 3, 5, 0);
 	  }
 
 	}
@@ -11378,11 +11450,9 @@ void func_800E6A38_F59E8(void)
   gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
   gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
   gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+  if (((u32)D_8005BB2C & 64) + ((u32)D_8005BB2C & 128)) {}
   gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/CFE30/func_800E6A38_F59E8.s")
-#endif
 
 // displayFXUnderWater
 void func_800E71F8_F61A8(void) {
