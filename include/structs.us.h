@@ -4364,6 +4364,12 @@ typedef struct {
 	s16 unk8;     // 0x08
 } Unk14C280Entry; // 0x0A bytes
 
+typedef union {
+	Unk14C280Entry entries[25];
+	s16 halfwords[125];
+	s16 rows[5][25];
+} MapCameraStages;
+
 
 
 typedef u8 MapTextureStrip[2048];

@@ -37,32 +37,34 @@ u8 D_8013D2B0_14C260[] = {
 	OVERLAY_PTR_B3(0x801423D4), OVERLAY_PTR_B2(0x801423D4), OVERLAY_PTR_B1(0x801423D4), OVERLAY_PTR_B0(0x801423D4), OVERLAY_PTR_B3(0x801423DC), OVERLAY_PTR_B2(0x801423DC), OVERLAY_PTR_B1(0x801423DC), OVERLAY_PTR_B0(0x801423DC),
 };
 
-Unk14C280Entry D_8013D2D0_14C280[25] = {
-	{ 0xFF90, 0x006C, 0x0000, 0x0000, 0x0154 },
-	{ 0xFF90, 0xFF94, 0x0000, 0x0000, 0x0154 },
-	{ 0x0070, 0xFF94, 0x0000, 0x00D8, 0x0154 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x00B4 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-	{ 0x0002, 0xFF72, 0x0000, 0x0000, 0x0104 },
-	{ 0x0087, 0xFF97, 0x0000, 0x0000, 0x015E },
-	{ 0x0078, 0x0074, 0xFF9A, 0x0000, 0x0136 },
-	{ 0xFF68, 0x0099, 0x0000, 0xFEC9, 0x00C8 },
-	{ 0xFFED, 0xFFEC, 0x0000, 0x0000, 0x00C8 },
-	{ 0xFF7D, 0xFF7D, 0x0000, 0x0080, 0x010E },
-	{ 0xFF7B, 0x0089, 0x010A, 0x0000, 0x00FA },
-	{ 0x0061, 0xFFC3, 0x0000, 0x0000, 0x01EA },
-	{ 0x00B0, 0xFF51, 0x0000, 0x0000, 0x008C },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0096 },
-	{ 0x008A, 0xFF79, 0x0000, 0x010C, 0x010E },
-	{ 0xFFEB, 0xFF76, 0xFF92, 0x0000, 0x0104 },
-	{ 0xFF60, 0x000C, 0x0000, 0x0000, 0x00C8 },
-	{ 0xFFB1, 0x0054, 0x0000, 0x0000, 0x019A },
-	{ 0x0038, 0x000C, 0x0000, 0x0000, 0x00D2 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0280 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
-	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+MapCameraStages D_8013D2D0_14C280 = {
+	{
+		{ 0xFF90, 0x006C, 0x0000, 0x0000, 0x0154 },
+		{ 0xFF90, 0xFF94, 0x0000, 0x0000, 0x0154 },
+		{ 0x0070, 0xFF94, 0x0000, 0x00D8, 0x0154 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x00B4 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+		{ 0x0002, 0xFF72, 0x0000, 0x0000, 0x0104 },
+		{ 0x0087, 0xFF97, 0x0000, 0x0000, 0x015E },
+		{ 0x0078, 0x0074, 0xFF9A, 0x0000, 0x0136 },
+		{ 0xFF68, 0x0099, 0x0000, 0xFEC9, 0x00C8 },
+		{ 0xFFED, 0xFFEC, 0x0000, 0x0000, 0x00C8 },
+		{ 0xFF7D, 0xFF7D, 0x0000, 0x0080, 0x010E },
+		{ 0xFF7B, 0x0089, 0x010A, 0x0000, 0x00FA },
+		{ 0x0061, 0xFFC3, 0x0000, 0x0000, 0x01EA },
+		{ 0x00B0, 0xFF51, 0x0000, 0x0000, 0x008C },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0096 },
+		{ 0x008A, 0xFF79, 0x0000, 0x010C, 0x010E },
+		{ 0xFFEB, 0xFF76, 0xFF92, 0x0000, 0x0104 },
+		{ 0xFF60, 0x000C, 0x0000, 0x0000, 0x00C8 },
+		{ 0xFFB1, 0x0054, 0x0000, 0x0000, 0x019A },
+		{ 0x0038, 0x000C, 0x0000, 0x0000, 0x00D2 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0280 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+		{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000 },
+	},
 };
 
 u8 D_8013D3CC_14C37C[] = {
@@ -196,11 +198,13 @@ const f64 D_801424C8_151478[1] = { 2145 };
 const f64 D_801424D0_151480[1] = { 162144 };
 const f64 D_801424D8_151488[1] = { 32767 };
 const f32 D_801424E0_151490[1] = { 850.0f };
+#ifndef NON_MATCHING
 const f64 D_801424E8_151498[1] = { 0.1 };
 const f64 D_801424F0_1514A0[1] = { 500 };
 const f64 D_801424F8_1514A8[1] = { 500 };
 const f64 D_80142500_1514B0[1] = { 4000 };
 const f64 D_80142508_1514B8[1] = { 0.02 };
+#endif
 
 s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
 	red = red < 0x1F ? red : 0x1F;
@@ -994,7 +998,7 @@ void func_8009811C_A70CC(void) {
 	OrbitCam cam3A4;
 	OrbitCam cams340[5];
 	OrbitCam cam32C;
-	s32 startupFlags;
+	const Unk14C280Entry *stageTable;
 	OrbitCam *sp324;
 	OrbitCam *sp320[1];
 	volatile s32 frameCount;
@@ -1022,12 +1026,12 @@ void func_8009811C_A70CC(void) {
 	volatile s32 mapStep;
 	Unk80052B40 sp2A4;
 	u32 sp2A0;
-	s32 temp_v1;
+	s32 var_t4;
 	s32 var_t0;
 	s32 var_a1;
-	f32 sp28C[2];
-	s32 var_s0;
-	s32 sp284;
+	struct { f32 y; f32 x; } proposed;
+	s32 temp_v1;
+	union { s32 value; u32 bits; } mapLock;
 	s32 var_s1;
 	s32 sp27C;
 	s16 temp_a1;
@@ -1036,9 +1040,8 @@ void func_8009811C_A70CC(void) {
 	s8 zoneCount;
 	u8 markerBrightness;
 	s8 previousY;
-	s32 var_t4;
-	union { const Unk14C280Entry *entries; u16 *pixels; VehicleInstance *vehicle; } scratch;
-	union { MapStage *stage; Mtx *matrix; } drawItem;
+	union { u16 *pixels; VehicleInstance *vehicle; } scratch;
+	union { s32 value; MapStage *stage; Mtx *matrix; Unk80146688 *zone; } drawItem;
 
 	frameCount = 0x6E;
 	sp30C = 0;
@@ -1046,34 +1049,33 @@ void func_8009811C_A70CC(void) {
 	sp2B0 = D_8013D514_14C4C4;
 	mapStep = 0;
 	sp2A4 = D_8013D51C_14C4CC;
-	startupFlags = 0;
+	temp_v0 = 0;
 	D_8004D14C = 0;
 	D_8014ED00 = -1;
-	scratch.entries = &D_8013D2D0_14C280[currentLevel * 5];
-	stage = &scratch.entries[D_80047F94];
+	stage = &(stageTable = &D_8013D2D0_14C280.entries[currentLevel * 5])[D_80047F94 - 5];
+
 	sp27C = 0;
-	cam3CC.distance = stage[-5].unk8;
-	stage = &stage[-5];
+	cam3CC.distance = stage->unk8;
 	cam3CC.pitch = 0x384;
 	cam3CC.yaw = -0x4000;
 	cam3CC.targetZ = 0.0f;
 	if (D_8014ED04 != 0x186A0) {
-		startupFlags = 0x20;
+		temp_v0 = 0x20;
 	}
-	temp_v1 = stage->unk4;
-	if ((temp_v1 > 0) || (stage->unk6 > 0)) {
-		if (temp_v1 > 0) {
+	var_t3 = stage->unk4;
+	if ((var_t3 > 0) || (stage->unk6 > 0)) {
+		if (var_t3 > 0) {
 			temp_t3 = stage->unk0;
-			var_t4 = (D_80052B34->unk0 >> 7) - temp_t3;
-			var_t4 = MAX(0, MIN(var_t4, temp_v1));
-			cam3CC.targetX = temp_t3 + var_t4;
+			var_a1 = (D_80052B34->unk0 >> 7) - temp_t3;
+			var_t0 = MAX(0, MIN(var_a1, var_t3));
+			cam3CC.targetX = var_t0 + temp_t3;
 			cam3CC.targetY = stage->unk2;
 		} else {
-			var_t4 = (-D_80052B34->unk4 >> 7) - stage->unk2;
+			var_a1 = (-D_80052B34->unk4 >> 7) - stage->unk2;
 			cam3CC.targetX = stage->unk0;
-			temp_v1 = stage->unk6;
-			var_t4 = MAX(0, MIN(var_t4, temp_v1));
-			cam3CC.targetY = var_t4 + stage->unk2;
+			var_t3 = stage->unk6;
+			var_t0 = MAX(0, MIN(var_a1, var_t3));
+			cam3CC.targetY = var_t0 + stage->unk2;
 		}
 	} else {
 		cam3CC.targetX = stage->unk0;
@@ -1082,23 +1084,24 @@ void func_8009811C_A70CC(void) {
 	cam3B8.distance = 0x50;
 	cam3B8.yaw = 0x8000 - D_80052B34->unk6;
 	cam3B8.pitch = 0x2710;
-	stage = &scratch.entries[-5];
+	stage = &stageTable[-5];
 	var_s3 = &cam3B8;
 	cam3B8.targetX = D_80052B34->unk0 >> 7;
 	cam3B8.targetY = -D_80052B34->unk4 >> 7;
 	cam3B8.targetZ = 0.0f;
 	cam3A4 = cam3CC;
 	cam3A4.distance = 0x154;
-	sp2E8[0] = startupFlags;
-	if (0x3FFF == cam3CC.distance) {} /* Schedule the initial angle constant. */
-	for (temp_v0 = 0; temp_v0 < 5; stage = &scratch.entries[++temp_v0 - 5]) {
-		cams340[temp_v0].distance = stage->unk8;
-		cams340[temp_v0].pitch = 0x384;
-		cams340[temp_v0].yaw = -0x4000;
-		cams340[temp_v0].targetX = stage->unk0;
-		cams340[temp_v0].targetY = stage->unk2;
-		cams340[temp_v0].targetZ = 0.0f;
+
+	for (drawItem.value = 0; drawItem.value < 5; stage = &stageTable[++drawItem.value - 5]) {
+		cams340[drawItem.value].distance = stage->unk8;
+		cams340[drawItem.value].pitch = 0x384;
+		cams340[drawItem.value].yaw = -0x4000;
+		cams340[drawItem.value].targetX = stage->unk0;
+		cams340[drawItem.value].targetY = stage->unk2;
+		sp2E8[0] = temp_v0;
+		cams340[drawItem.value].targetZ = 0.0f;
 	}
+	if (0x3FFF == cam3CC.distance) {} /* Schedule the initial angle constant. */
 	D_8014ED0C = 0.0f;
 	temp_f0 = cam3CC.distance;
 	D_8014ED10 = cam3CC.targetY - temp_f0;
@@ -1122,32 +1125,32 @@ void func_8009811C_A70CC(void) {
 	osSetTime(D_80068084, D_80068088);
 	setGameplayResolution();
 	func_8000E4C4_F0C4(0);
-	sp284 = 1;
+	mapLock.value = 1;
 	func_8000AFDC_BBDC();
 	if (D_8014ED00 != 0x18) {
 		sp2E8[0] |= 1;
 	}
 	temp_f22 = 0.1;
 	
-	var_s0 = frameCount;
-	while (1) {
-	if (var_s0 == 1) {
+	var_a1 = frameCount; while (1) {
+	if (var_a1 == 1) {
 		D_80052ACC = 1;
+		D_8014ED2C = 3;
+		cam32C.distance = cam3B8.distance;
 		cam32C.yaw = cam3B8.yaw;
 		cam32C.pitch = cam3B8.pitch;
-		D_8014ED2C = 3;
 		sp324 = &cam3B8;
-		cam32C.distance = cam3B8.distance;
 		sp320[0] = &cam3A4;
 		D_8004802C = 1;
 		var_s3 = &cam32C;
-		D_8014ED2E = 0;
 		cam32C.targetX = cam3B8.targetX;
 		cam32C.targetY = cam3B8.targetY;
 		cam32C.targetZ = cam3B8.targetZ;
-		func_80018D7C_1997C(D_8013D3D4_14C384[(D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF].music);
+		sp2A0 = (D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF;
+		drawItem.stage = &D_8013D3D4_14C384[sp2A0];
+		func_80018D7C_1997C((D_8014ED2E = 0, drawItem.stage->music));
 	}
-	if (var_s0 == 0) {
+	if (var_a1 == 0) {
 		func_8000AFDC_BBDC();
 		if (var_s3 == &cam32C) {
 			temp_f0 = (f32) sins(D_8014ED2E & 0xFFFF);
@@ -1157,7 +1160,7 @@ void func_8009811C_A70CC(void) {
 			if (temp_a2_2 >= 0x3FFF) {
 				var_s3 = nextCamera;
 				if (nextCamera == &cam3CC) {
-					sp284 = 0;
+					mapLock.value = 0;
 				}
 			}
 			if (D_8014ED2C == 3) {
@@ -1182,18 +1185,17 @@ void func_8009811C_A70CC(void) {
 				cam32C.pitch = var_s3->pitch;
 				cam32C.targetX = var_s3->targetX;
 				cam32C.targetY = var_s3->targetY;
-				temp_f2 = var_s3->targetZ;
+				cam32C.targetZ = var_s3->targetZ;
 				D_8014ED34 = 0;
 				D_8014ED2D = D_8014ED2C;
 				D_8014ED30 = D_8014ED30_Select + 1;
 				sp324 = var_s3;
 				var_s3 = &cam32C;
 				sp30C = 0;
-				sp284 = 1;
+				mapLock.value = 1;
 				D_8014ED2E = 0;
-				cam32C.targetZ = temp_f2;
 				func_800153D8_15FD8(0x3C);
-				if ((D_8014ED30 == 5) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30) - 5].unk8 == 0)) {
+				if ((D_8014ED30 == 5) || ((temp_v1 = (currentLevel << 2) + currentLevel, D_8013D2D0_14C280.halfwords[(s32)(((u32)temp_v1 << 2) + (u32)temp_v1) + D_8014ED30 * 5 - 21]) == 0)) {
 					D_8014ED30 = -1;
 					sp320[0] = &cam3CC;
 					D_8014ED2C = 0;
@@ -1216,36 +1218,38 @@ void func_8009811C_A70CC(void) {
 					temp_f2 = var_s3->targetX;
 					oldY = var_s3->targetY;
 					temp_v1 = D_8014ED2C;
-					sp28C[1] = temp_f2 - ((temp_f0 * sp2C0) - (sp2C8 * sp2BC));
-					sp28C[0] = oldY + ((sp2C8 * sp2C0) - (temp_f0 * sp2BC));
+					proposed.x = temp_f2 - ((temp_f0 * sp2C0) - (sp2C8 * sp2BC));
+					sp2C8 = (sp2C8 * sp2C0) - (temp_f0 * sp2BC);
+					proposed.y = oldY + sp2C8;
 					if (temp_v1 == 0) {
-						var_s3->targetX = sp28C[1];
-						var_s3->targetY = sp28C[0];
-						if ((sp284 == 1) && ((currentControllerStates[0].stick_x < -1) || (currentControllerStates[0].stick_x >= 2) || (currentControllerStates[0].stick_y < -1) || (currentControllerStates[0].stick_y >= 2))) {
-							sp284 = 0;
+						sp2C8 = proposed.y;
+						var_s3->targetX = proposed.x;
+						var_s3->targetY = sp2C8;
+						if ((mapLock.value == 1) && ((currentControllerStates[0].stick_x < -1) || (currentControllerStates[0].stick_x >= 2) || (currentControllerStates[0].stick_y < -1) || (currentControllerStates[0].stick_y >= 2))) {
+							mapLock.value = 0;
 						}
 					} else {
-						var_f12 = sp28C[0];
-						stage = &D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30) - 5];
+						sp2C8 = proposed.y;
+						stage = &D_8013D2D0_14C280.entries[currentLevel * 5 + (D_8014ED30) - 5];
 						temp_t3 = stage->unk0;
 						var_t4 = stage->unk4;
 						var_t4 += temp_t3;
-						temp_v0 = ((MIN(var_t4, temp_t3) <= temp_f2) && (temp_f2 <= MAX(var_t4, temp_t3))) ? 1 : 0;
-						if (temp_v0) {
+						var_s1 = ((MIN(var_t4, temp_t3) <= temp_f2) && (temp_f2 <= MAX(var_t4, temp_t3))) ? 1 : 0;
+						if (var_s1) {
 							var_a1 = stage->unk2;
 							var_t0 = stage->unk6 + var_a1;
-							temp_v0 = ((MIN(var_a1, var_t0) <= oldY) && (oldY <= MAX(var_a1, var_t0))) ? 1 : 0;
-							if (temp_v0) {
-								temp_v0 = ((MIN(var_t4, temp_t3) <= sp28C[1]) && (sp28C[1] <= MAX(var_t4, temp_t3))) ? 1 : 0;
-								if (temp_v0) {
-									var_s3->targetX = sp28C[1];
+							var_s1 = ((MIN(var_a1, var_t0) <= oldY) && (oldY <= MAX(var_a1, var_t0))) ? 1 : 0;
+							if (var_s1) {
+								var_s1 = ((MIN(var_t4, temp_t3) <= proposed.x) && (proposed.x <= MAX(var_t4, temp_t3))) ? 1 : 0;
+								if (var_s1) {
+									var_s3->targetX = proposed.x;
 									var_t0 = stage->unk6;
 									var_a1 = stage->unk2;
 									var_t0 += var_a1;
 								}
-								temp_v0 = ((MIN(var_a1, var_t0) <= var_f12) && (var_f12 <= MAX(var_a1, var_t0))) ? 1 : 0;
-								if (temp_v0) {
-									var_s3->targetY = var_f12;
+								var_s1 = ((MIN(var_a1, var_t0) <= sp2C8) && (sp2C8 <= MAX(var_a1, var_t0))) ? 1 : 0;
+								if (var_s1) {
+									var_s3->targetY = sp2C8;
 								}
 							}
 						}
@@ -1273,12 +1277,12 @@ void func_8009811C_A70CC(void) {
 				var_s3->targetY = 256.0f;
 			}
 			if (var_s3 == &cam3CC) {
-				temp_v0 = var_s3->distance;
-				var_s3->distance = MAX(0x78, MIN(0x352, temp_v0));
+				var_t3 = var_s3->distance;
+				var_s3->distance = MAX(0x78, MIN(0x352, var_t3));
 			}
 			if (var_s3 == &cam3B8) {
-				temp_v0 = var_s3->distance;
-				var_s3->distance = MAX(0x50, MIN(0x12C, temp_v0));
+				var_t3 = var_s3->distance;
+				var_s3->distance = MAX(0x50, MIN(0x12C, var_t3));
 			}
 			if ((isButtonNewlyPressed(0, 0x8000U) != 0) && (D_8014ED2C != 2)) {
 				D_8014ED2D = D_8014ED2C;
@@ -1302,9 +1306,9 @@ void func_8009811C_A70CC(void) {
 				D_8014ED2E = 0;
 				cam32C.targetZ = temp_f2;
 				if (var_a1 == 0) {
-					sp320[0] = &cam3CC;
-					sp284 = 1;
 					sp30C = 0;
+					mapLock.bits = 1U;
+					sp320[0] = &cam3CC;
 					func_80018D14_19914();
 					D_8014ED34 = 1;
 					D_8013D528_14C4D8 = 0;
@@ -1356,67 +1360,66 @@ void func_8009811C_A70CC(void) {
 	}
 	func_80095BD4_A4B84(D_8005BB48[D_80031B84_32784], 0x28U, 0xFU, 0x1AU);
 	func_80097E1C_A6DCC(var_s3);
-	var_s0 = mapStep;
-	if (var_s0 >= 0x10) {
-		if (var_s0 < 0x20) {
-			temp_v0 = var_s0 - 0x10;
-			temp_v1 = temp_v0 << 4;
+	drawItem.value = mapStep;
+	if (drawItem.value >= 0x10) {
+		if (drawItem.value < 0x20) {
+			var_s1 = drawItem.value - 0x10;
+			temp_v1 = var_s1 << 4;
 			D_80052B50.unk0 = temp_v1;
 			D_80052B50.unk2 = temp_v1;
 			D_80052B50.unk4 = temp_v1;
 			func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			var_s0 = mapStep;
+			drawItem.value = mapStep;
 		}
 		func_800970C0_A6070();
 	}
-	if ((var_s0 >= 0x20) && (var_s0 < 0x61)) {
-		temp_v0 = mapStep - 0x20;
-		var_t0 = temp_v0 >> 3;
-		temp_v0 = temp_v0 & 7;
-		temp_v1 = temp_v0;
+	if ((drawItem.value >= 0x20) && (drawItem.value < 0x61)) {
+		var_s1 = mapStep - 0x20;
+		var_t0 = var_s1 >> 3;
+		var_s1 = var_s1 & 7;
+		temp_v1 = var_s1;
 		var_a1 = var_t0;
 		var_a1 <<= 10;
 		temp_v1 <<= 2;
-		var_s0 = 7; do {
-			scratch.pixels = &(&((u16 (*)[8192]) D_8006AA6C)[var_s0][var_a1])[temp_v1];
+		drawItem.value = 7; do {
+			scratch.pixels = &(&((u16 (*)[8192]) D_8006AA6C)[drawItem.value][var_a1])[temp_v1];
 			scratch.pixels[0] |= 0x7800;
 			scratch.pixels[1] |= 0x7800;
 			scratch.pixels = &scratch.pixels[3];
 			scratch.pixels[-1] |= 0x7800;
 			scratch.pixels[0] |= 0x7800;
-		} while (var_s0--);
+		} while (drawItem.value--);
 		var_a1 = var_t0;
-		temp_v1 = temp_v0;
+		temp_v1 = var_s1;
 		temp_v1 <<= 7;
 		var_a1 <<= 13;
-		var_s0 = 7;
-		do {
-			scratch.pixels = &((u16 (*)[1024]) &((u16 *) D_8006AA6C)[var_a1])[var_s0][temp_v1];
+		drawItem.value = 7; do {
+			scratch.pixels = &((u16 (*)[1024]) &((u16 *) D_8006AA6C)[var_a1])[drawItem.value][temp_v1];
 			scratch.pixels[0] |= 0x7800;
 			scratch.pixels[32] |= 0x7800;
 			scratch.pixels = &scratch.pixels[96];
 			scratch.pixels[-32] |= 0x7800;
 			scratch.pixels[0] |= 0x7800;
-		} while (var_s0--);
+		} while (drawItem.value--);
 	}
-	if ((frameCount == 0) && (var_s3 == &cam3CC) && (sp284 == 0)) {
+	if ((frameCount == 0) && (var_s3 == &cam3CC) && (mapLock.value == 0)) {
 		var_t3 = 0x40;
 		zoneCount = D_8014667F_15562F[currentLevel];
 		if (zoneCount > 0) {
 			var_t2 = &D_80146688_155638[currentLevel - 1][0];
-			var_s1 = 0;
+			var_t0 = 0;
 			do {
 				temp_t3 = (s32) (var_t2->unk0 - (var_s3->targetX / 2));
 				var_t4 = (s32) (var_t2->unk1 + (var_s3->targetY / 2));
-				var_t0 = MAX(MAX(temp_t3, -temp_t3), MAX(var_t4, -var_t4));
-				if (var_t0 < var_t3) {
-					var_t3 = var_t0;
-					sp30C = var_t2;
+				drawItem.zone = var_t2;
+				temp_v1 = MAX(MAX(temp_t3, -temp_t3), MAX(var_t4, -var_t4));
+				if (temp_v1 < var_t3) {
+					var_t3 = temp_v1;
+					sp30C = drawItem.zone;
 				}
-				var_s1 += 0x10;
-				var_t2 = &var_t2[1];
-			} while (var_s1 < (zoneCount * 0x10));
+				var_t0 += 0x10;
+			} while ((var_t2 = &drawItem.zone[1], var_t0) < (zoneCount * 0x10));
 		}
 		if (sp30C != D_8013D524_14C4D4) {
 			D_8013D528_14C4D8 = D_8013D524_14C4D4;
@@ -1448,7 +1451,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawText(&D_801423F4_1513A4, 0x80, 8, &D_801423FC_1513AC);
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30_Select == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30_Select + 1) - 5].unk8 == 0)) {
+				if ((D_8014ED30_Select == 4) || ((temp_v1 = (currentLevel << 2) + currentLevel, D_8013D2D0_14C280.halfwords[(s32)(((u32)temp_v1 << 2) + (u32)temp_v1) + D_8014ED30_Select * 5 - 16]) == 0)) {
 					drawText(&D_8014240C_1513BC, 0x80, 8, &D_80142414_1513C4);
 				} else {
 					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30_Label + 1);
@@ -1490,11 +1493,11 @@ void func_8009811C_A70CC(void) {
 			drawText(&D_80142470_151420, 0x80, 8, sp30C->name);
 		}
 	}
-	var_s0 = frameCount;
-	if (var_s0 < 0x32) {
+	drawItem.value = frameCount;
+	if (drawItem.value < 0x32) {
 		func_80097444_A63F4(var_s3->yaw, var_s3->pitch);
 	}
-	if ((var_s0 == 0) && ((sp2E8[0] |= 4, (sp30C != NULL)) || (D_8013D528_14C4D8 != 0))) {
+	if ((drawItem.value == 0) && ((sp2E8[0] |= 4, (sp30C != NULL)) || (D_8013D528_14C4D8 != 0))) {
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32) D_1010A80);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
 				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
@@ -1527,8 +1530,7 @@ void func_8009811C_A70CC(void) {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0x00, 0x00, 0x96);
 				break;
 			}
-			temp_t3 = sp30C->unk2;
-			func_800966EC_A569C(NULL, (sp30C->unk0 << 8), (sp30C->unk1 << 8), temp_t3 * D_8014ED18_Marker, 1);
+			func_800966EC_A569C(NULL, (sp30C->unk0 * 256), (sp30C->unk1 * 256), sp30C->unk2 * D_8014ED18_Marker, 1);
 		}
 		if ((D_8013D528_14C4D8 != 0) && (D_8014ED1C_Label > 0.0f)) {
 			temp_f0_3 = D_8014ED1C_Label;
@@ -1544,24 +1546,23 @@ void func_8009811C_A70CC(void) {
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0x00, 0x00, 0x96);
 				break;
 			}
-			previousY = D_8013D528_14C4D8_Label->unk1;
-			func_800966EC_A569C(NULL, D_8013D528_14C4D8_Label->unk0 * 256, previousY * 256, D_8013D528_14C4D8_Label->unk2 * D_8014ED1C, 1);
+			previousY = ((const volatile Unk80146688 *)D_8013D528_14C4D8_Label)->unk1;
+			func_800966EC_A569C(NULL, (temp_t3 = ((const volatile Unk80146688 *)D_8013D528_14C4D8_Label)->unk0, temp_t3 * 256), previousY * 256, D_8013D528_14C4D8_Label->unk2 * D_8014ED1C, 1);
 		}
 	}
 	{
 		s32 spA0;
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-		var_s0_4 = &alienInstances[0xFE];
 		spA0 = sp2E8[0] & 0x20;
-		var_s1 = 0xFE;
-		do {
+		var_s1 = 0xFF;
+		while (var_s1--) {
+			var_s0_4 = &alienInstances[var_s1];
 			if ((var_s0_4->typeIndex >= 2) && (var_s0_4->hitPoints > 0) && (var_s0_4->typeIndex != 0x1A) && (var_s0_4->typeIndex != 0x18)) {
 				func_80095D4C_A4CFC(var_s0_4->unk0, var_s0_4->unk4, 0xE6, 0xF, 0xF);
 			}
-			var_s0_4 = &var_s0_4[-1];
 
-		} while (var_s1--);
+		}
 		var_s1 = D_80158FD8;
 		if (var_s1--) {
 			do {
@@ -1580,13 +1581,13 @@ void func_8009811C_A70CC(void) {
 			gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
 			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
-			temp_v0 = D_8013D534_14C4E4_Update + 0x800;
-			var_a1 = D_8014D50A;
-			var_s0 = D_8014D509;
-			D_8013D534_14C4E4 = temp_v0;
-			if (var_s0 < var_a1) {
+			temp_v1 = D_8013D534_14C4E4_Update + 0x800;
+			var_t0 = D_8014D50A;
+			drawItem.value = D_8014D509;
+			D_8013D534_14C4E4 = temp_v1;
+			if (drawItem.value < var_t0) {
 				do {
-					temp_t3 = D_8014D408[var_s0];
+					temp_t3 = D_8014D408[drawItem.value];
 					if (!(alienInstances[temp_t3].unk20 & ALIEN_FLAG_UNKL)) {
 						switch (alienInstances[temp_t3].typeIndex) {
 						case 25:
@@ -1602,7 +1603,7 @@ void func_8009811C_A70CC(void) {
 									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
-							var_a1 = D_8014D50A;
+							var_t0 = D_8014D50A;
 							break;
 						case 26:
 							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u32) D_50323B0);
@@ -1617,7 +1618,7 @@ void func_8009811C_A70CC(void) {
 									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
-							var_a1 = D_8014D50A;
+							var_t0 = D_8014D50A;
 							break;
 						case 24:
 							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u32) D_50325B0);
@@ -1632,12 +1633,12 @@ void func_8009811C_A70CC(void) {
 									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
 							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
-							var_a1 = D_8014D50A;
+							var_t0 = D_8014D50A;
 							break;
 						}
 					}
-					var_s0 += 1;
-				} while (var_s0 < var_a1);
+					drawItem.value += 1;
+				} while (drawItem.value < var_t0);
 			}
 		}
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
@@ -1653,18 +1654,20 @@ void func_8009811C_A70CC(void) {
 		var_t4 = -1;
 		if ((var_s3 == &cam3CC) && (var_s3->distance < 0x12C) && (var_s1 >= 2)) {
 			do {
-				temp_t3 = D_80158E80[var_s1 - 1];
-				temp_a1 = vehicleInstances[temp_t3].unk4;
-				temp_a2_2 = vehicleInstances[temp_t3].unk0;
+				temp_v0 = D_80158E80[var_s1 - 1];
+				if (temp_v0) {}
+				temp_a2_2 = vehicleInstances[temp_v0].unk4;
+				temp_a1 = vehicleInstances[temp_v0].unk0;
 				var_s1 -= 1;
-				if (D_8021EA30[((((temp_a1 >> 8) + 0x80) >> 2) << 6) + (((temp_a2_2 >> 8) + 0x80) >> 2)] & 0xF0) {
-					temp_f0 = (temp_a1 >> 7) + var_s3->targetY;
-					temp_f2 = (temp_a2_2 >> 7) - var_s3->targetX;
+				if (D_8021EA30[((((temp_a2_2 >> 8) + 0x80) >> 2) << 6) + (((temp_a1 >> 8) + 0x80) >> 2)] & 0xF0) {
+					temp_f0 = (temp_a2_2 >> 7) + var_s3->targetY;
+					temp_f2 = (temp_a1 >> 7) - var_s3->targetX;
 					temp_v1 = (s32) ((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
-					if (temp_v1 == _SHIFTL(G_RDPPIPESYNC, 24, 8)) {} /* Keep the distance conversion before the player check and the pipe-sync word in s4. */
-					if ((D_80052B34 != &vehicleInstances[temp_t3]) && (temp_v1 < var_t3) && ((currentLevel != LEVEL_GREECE) || (vehicleInstances[temp_t3].unk1A != 0x12))) {
+					if (var_t4 == _SHIFTL(G_RDPPIPESYNC, 24, 8)) {}
+					if (temp_v1) {}
+					if ((D_80052B34_MapScan != &vehicleInstances[temp_v0]) && (temp_v1 < var_t3) && ((currentLevel != LEVEL_GREECE) || (vehicleInstances[temp_v0].unk1A != 0x12))) {
 						var_t3 = temp_v1;
-						var_t4 = temp_t3;
+						var_t4 = temp_v0;
 					}
 				}
 			} while (var_s1 >= 2);
@@ -1691,8 +1694,8 @@ void func_8009811C_A70CC(void) {
 		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 		gDPSetFogColor(D_8005BB2C++, 0, 0, 0, 0xFF);
 		gSPFogPosition(D_8005BB2C++, 0x1900, 0xE800);
-		gSPLightColor(D_8005BB2C++, LIGHT_1, -1U);
-		D_8013D530_14C4E0 = var_t4;
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, -1U);
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (D_8013D530_14C4E0 = var_t4, -1U));
 		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
@@ -1706,8 +1709,8 @@ void func_8009811C_A70CC(void) {
 			vec2DC.unk4 = temp_v1;
 			vec2DC.unk2 = temp_v1;
 			vec2DC.unk0 = temp_v1;
-			drawItem.matrix = D_8005BB38;
-			D_8014ED20 = temp_f2;
+			drawItem.matrix = D_8005BB38; D_8014ED20 = temp_f2;
+
 			func_800039D0_45D0(NULL, NULL, &vec2DC, drawItem.matrix);
 			temp_f2 = D_8014ED20;
 			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
@@ -1733,8 +1736,8 @@ void func_8009811C_A70CC(void) {
 				func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
 				var_f12 = D_8014ED24;
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-				temp_v0 = D_8013D52C_14C4DC;
-				func_80097B74_A6B24(D_8013D52E_14C4DE, (s32) ((vehicleInstances[temp_v0].unk0 >> 5) / var_f12), (s32) (-(vehicleInstances[temp_v0].unk4 >> 5) / var_f12), 0, 0x4000 - vehicleInstances[temp_v0].unk6);
+				scratch.vehicle = &vehicleInstances[D_8013D52C_14C4DC];
+				func_80097B74_A6B24(D_8013D52E_14C4DE, (s32) ((scratch.vehicle->unk0 >> 5) / var_f12), (s32) (-(scratch.vehicle->unk4 >> 5) / var_f12), 0, 0x4000 - scratch.vehicle->unk6);
 				func_80097E1C_A6DCC(var_s3);
 			}
 		}
@@ -1851,46 +1854,46 @@ void func_8009811C_A70CC(void) {
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xA0, 0x00, 0xA0, 0xAA);
 		if (((D_8014ED2D == 2) || (D_8014ED34 != 0)) && ((D_8014ED2C == 2) || ((D_8014ED2D == 2) && (D_8014ED34 == 0)))) {
 			if (D_8014ED30 == -1) {
-				var_s0 = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
+				drawItem.value = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30_Select == 4) || (D_8013D2D0_14C280[currentLevel * 5 + (D_8014ED30_Select + 1) - 5].unk8 == 0)) {
-					var_s0 = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
+				if ((D_8014ED30_Select == 4) || ((temp_v1 = (currentLevel << 2) + currentLevel, D_8013D2D0_14C280.halfwords[(s32)(((u32)temp_v1 << 2) + (u32)temp_v1) + D_8014ED30_Select * 5 - 16]) == 0)) {
+					drawItem.value = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
 				} else {
-					var_s0 = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
+					drawItem.value = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
 				}
 			} else {
-				var_s0 = func_8000A2B8_AEB8(D_801424A0_151450, 0) + 0x20;
+				drawItem.value = func_8000A2B8_AEB8(D_801424A0_151450, 0) + 0x20;
 			}
-			temp_v1 = var_s0 >> 1;
+			temp_v1 = drawItem.value >> 1;
 			func_800092B8_9EB8((((s32) D_80068084 / 2) - temp_v1) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + temp_v1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
 		} else {
 			if (D_8013D528_14C4D8 != 0) {
-				var_s0 = func_8000A2B8_AEB8(D_8013D528_14C4D8->name, 0) + 0x20;
+				drawItem.value = func_8000A2B8_AEB8(D_8013D528_14C4D8->name, 0) + 0x20;
 			} else {
-				var_s0 = 0;
+				drawItem.value = 0;
 			}
 			if (sp30C != NULL) {
-				var_t0 = func_8000A2B8_AEB8(sp30C->name, 0) + 0x20;
+				var_s1 = func_8000A2B8_AEB8(sp30C->name, 0) + 0x20;
 			} else {
-				var_t0 = 0;
+				var_s1 = 0;
 			}
 			if (D_8014ED2C == 1) {
-				var_t0 = var_s0;
+				var_s1 = drawItem.value;
 			}
 			if ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1)) {
-				if ((var_s0 < var_t0) || (var_t0 == 0)) {
-					var_s0 = (s32) ((1.0 - D_8014ED1C_Label) * (f32) (var_t0 - var_s0)) + var_s0;
+				if ((drawItem.value < var_s1) || (var_s1 == 0)) {
+					drawItem.value = (s32) ((1.0 - D_8014ED1C_Label) * (f32) (var_s1 - drawItem.value)) + drawItem.value;
 				}
-				if ((D_8013D528_14C4D8_Label != 0) && (var_s0 > 0)) {
-					temp_v1 = var_s0 >> 1;
+				if ((D_8013D528_14C4D8_Label != 0) && (drawItem.value > 0)) {
+					temp_v1 = drawItem.value >> 1;
 					func_800092B8_9EB8(((((s32) D_80068084 / 2) - temp_v1) - 5) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + temp_v1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
 				}
 			} else {
-				if (var_t0 < var_s0) {
-					var_t0 += (s32) ((1.0 - D_8014ED18) * (f32) (var_s0 - var_t0));
+				if (var_s1 < drawItem.value) {
+					var_s1 += (s32) ((1.0 - D_8014ED18) * (f32) (drawItem.value - var_s1));
 				}
-				if ((sp30C != NULL) && (var_t0 > 0)) {
-					temp_v1 = var_t0 >> 1;
+				if ((sp30C != NULL) && (var_s1 > 0)) {
+					temp_v1 = var_s1 >> 1;
 					func_800092B8_9EB8(((((s32) D_80068084 / 2) - temp_v1) - 5) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + temp_v1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
 				}
 			}
@@ -1919,9 +1922,9 @@ void func_8009811C_A70CC(void) {
 	}
 	func_8000B044_BC44();
 	func_8000505C_5C5C();
-	var_s0 = frameCount; /* Reload the timer after the call. */
-	if (var_s0 != 0) {
-		var_s0 -= 1;
+	var_a1 = frameCount; /* Reload the timer after the call. */
+	if (var_a1 != 0) {
+		var_a1 -= 1;
 	}
 	mapStep += 1;
 	D_80052AD8_MapWrite = D_80052AD8 + 1;
@@ -1932,7 +1935,7 @@ void func_8009811C_A70CC(void) {
 		D_8014ED56 = 0;
 		break;
 	} else {
-		frameCount = var_s0;
+		frameCount = var_a1;
 	}
 	}
 	func_8000AFDC_BBDC();

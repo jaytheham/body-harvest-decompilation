@@ -956,6 +956,12 @@ extern s16 D_80052B1C;
 extern VehicleInstance* D_80052B20;
 extern Unk80052B2C* D_80052B2C;
 extern VehicleInstance *D_80052B34_Read;
+/* Use the version's absolute slot for the map scan so IDO emits a direct displacement load. */
+#if defined(VERSION_US)
+#define D_80052B34_MapScan (*(VehicleInstance *volatile *)0x80052B34)
+#elif defined(VERSION_EU)
+#define D_80052B34_MapScan (*(VehicleInstance *volatile *)0x80052B64)
+#endif
 extern VehicleInstance* D_80052B34; // Ptr to active vehicle instance
 extern s32 D_80052B38; // CPU frame preparation time: elapsed time from the scheduler starting a frame until the gameplay thread signals that its work is complete, before graphics-task submission.
 extern s32 D_80052B3C; // Graphics-task completion latency: elapsed time from just after graphics-task submission until the scheduler receives its completion message.
@@ -4022,7 +4028,7 @@ BitFlags64 D_8004DC48;
 Flags2x32 D_8004DC50;
 u8 weaponSlots[7];
 
-extern Unk14C280Entry D_8013D2D0_14C280[25];
+extern MapCameraStages D_8013D2D0_14C280;
 extern Unk80052B40 D_8013D514_14C4C4;
 extern Unk80052B40 D_8013D51C_14C4CC;
 
@@ -4132,11 +4138,6 @@ extern const f64 D_801424C8_151478[1];
 extern const f64 D_801424D0_151480[1];
 extern const f64 D_801424D8_151488[1];
 extern const f32 D_801424E0_151490[1];
-extern const f64 D_801424E8_151498[1];
-extern const f64 D_801424F0_1514A0[1];
-extern const f64 D_801424F8_1514A8[1];
-extern const f64 D_80142500_1514B0[1];
-extern const f64 D_80142508_1514B8[1];
 extern s16 D_80258062;
 extern f32 D_8004DCC4;
 extern f32 D_8004DCC8;
