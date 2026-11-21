@@ -937,9 +937,9 @@ extern u32 D_80052A90; // millseconds played in current level
 extern D_801FEA30_Row *D_80052A94; // AI - Pointer to the center cell [0x80][0x80] of the terrain tile grid.
 extern Unk80052A98 D_80052A98[]; // LevelStats
 extern s16 D_80052AC8;
-extern u8 D_80052ACA;
+extern u8 D_80052ACA; // GamePhase
 extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
-extern u8 D_80052ACC;
+extern u8 D_80052ACC; // Force 30/25 FPS max (NTSC/PAL)
 typedef enum D_80052ACDFlags {
 	D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL = 0x2,
 

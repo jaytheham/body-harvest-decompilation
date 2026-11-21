@@ -206,7 +206,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	tempS6 = tempS6 * 10 + 0x10; sp80 = ((spFC - sp100) * 0xA) + 0xA; do {
 		sp70 = (tempS6 - varS4) * 4;
 
-		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 		func_80011E14_12A14(0);
 		func_80004CC8_58C8();
 		func_80004D38_5938();

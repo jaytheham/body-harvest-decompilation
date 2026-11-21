@@ -846,7 +846,7 @@ void func_800720F4_810A4(void)
 	do
 	{
 		func_800702C0_7F270(0);
-		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 		if ((gameplayMode == 12) && (D_8006C558 == (-1)))
 		{
 			currentControllerStates[0].button = 0;

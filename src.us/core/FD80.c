@@ -159,7 +159,7 @@ void func_8000F5A8_101A8(s32 arg0, void *arg1, s32 arg2) {
 
 	osWritebackDCacheAll();
 	osPiStartDma(&sp28, 0, 0, arg0, arg1, arg2, &D_80067FD0);
-	osRecvMesg(&D_80067FD0, &D_80068038, 1);
+	osRecvMesg(&D_80067FD0, &D_80068038, OS_MESG_BLOCK);
 }
 
 void func_8000F618_10218()
@@ -270,10 +270,12 @@ void func_8000F6B0_102B0(void *arg0) {
 			osSyncPrintf("Load Level Stack Overflow\n");
 		}
 
-		osRecvMesg(&D_8006A908, (OSMesg *)&message, 1);
+		osRecvMesg(&D_8006A908, (OSMesg *)&message, OS_MESG_BLOCK);
 
 		switch (message->type) {
-		case 1:
+		case OS_SC_RETRACE_MSG:
+			// Vertical retrace occurred
+			// Try process a new frame if there are less than 2 pending graphics tasks, otherwise count a hang.
 			D_800313D4_31FD4++;
 			retraceCount++;
 			if (pendingTasks >= 2) {
@@ -285,8 +287,8 @@ void func_8000F6B0_102B0(void *arg0) {
 			}
 			func_80013818_14418();
 			func_80004C34_5834();
-			if (D_80052ACA == 0 || D_80052ACA == 2 || D_80052ACA == 5 || D_80052ACA == 4) {
-				if (gameplayMode == 6) {
+			if (D_80052ACA == NORMAL_GAMEPLAY || D_80052ACA == GAME_PHASE_BOSS || D_80052ACA == GAME_PHASE_LEVEL_LOADING || D_80052ACA == GAME_PHASE_BETWEEN_LEVELS) {
+				if (gameplayMode == GAMEPLAY_MODE_INSIDE) {
 					retraceInterval = 2;
 				} else {
 					retraceInterval = 3;
@@ -294,7 +296,7 @@ void func_8000F6B0_102B0(void *arg0) {
 			} else {
 				retraceInterval = 1;
 			}
-			if (gameplayMode == 0 || gameplayMode == 0xE || gameplayMode == 7 || gameplayMode == 4 || gameplayMode == 0x10) {
+			if (gameplayMode == GAMEPLAY_MODE_LEVEL_MAP || gameplayMode == GAMEPLAY_MODE_UNKE || gameplayMode == GAMEPLAY_MODE_LOADING_LEVEL || gameplayMode == GAMEPLAY_MODE_UNK4 || gameplayMode == GAMEPLAY_MODE_INVENTORY) {
 				retraceInterval = 1;
 			}
 			if (D_80052ACC != 0) {
@@ -327,7 +329,7 @@ void func_8000F6B0_102B0(void *arg0) {
 				if (D_8006809C == 2) {
 					D_8006809C--;
 				}
-				osRecvMesg(&D_8006A8B0, &D_80068038, 1);
+				osRecvMesg(&D_8006A8B0, &D_80068038, OS_MESG_BLOCK);
 				D_80052B38 = osGetCount() - frameStartCount;
 				gSPEndDisplayList(&((BhGfxBuffer *)D_8005BB20)->displayList[0x1C1F]);
 				func_8000F478_10078(&D_8006A940[taskIndex]);
@@ -338,7 +340,7 @@ void func_8000F6B0_102B0(void *arg0) {
 			}
 			break;
 
-		case 2:
+		case OS_SC_DONE_MSG:
 			hangCount = 0;
 			D_80052B3C = osGetCount() - taskStartCounts[completedTaskIndex];
 			pendingTasks--;
@@ -350,7 +352,7 @@ void func_8000F6B0_102B0(void *arg0) {
 			}
 			break;
 
-		case 4:
+		case OS_SC_PRE_NMI_MSG: // Pre-reset?
 			D_80068078 = 1;
 			taskIndex = 0;
 			pendingTasks = 0;

@@ -60,6 +60,16 @@ typedef enum GameplayMode {
 	GAMEPLAY_MODE_INVENTORY = 0x10
 } GameplayMode;
 
+typedef enum GamePhase {
+	NORMAL_GAMEPLAY = 0, // Set by the level/gameplay transition driver.
+	GAME_PHASE_UNKNOWN = 1,
+	GAME_PHASE_BOSS = 2, // Boss encounter / boss phase
+	GAME_PHASE_FRONTEND = 3, // Frontend / menus
+	GAME_PHASE_BETWEEN_LEVELS = 4, // Between-level transition
+	GAME_PHASE_LEVEL_LOADING = 5,
+	GAME_PHASE_MOVIE_PLAYBACK = 6 // Movie playback
+} GamePhase;
+
 typedef enum Level {
 	LEVEL_GREECE = 1,
 	LEVEL_JAVA = 2,

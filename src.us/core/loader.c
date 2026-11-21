@@ -108,7 +108,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	s32 var_s2;
 	s32 temp_v0;
 	OSIoMesg sp58;
-	/* The original TU saw no prototype for osRecvMesg, so the `1U` flag keeps
+	/* The original TU saw no prototype for osRecvMesg, so the unsigned flag cast keeps
 	   its unsigned type through the call. include/2.0I/PR/os.h declares the
 	   flag `s32`, which coerces it to a signed node and merges it with the
 	   `case 1:` constant (move $a2,$s4 where the ROM materialises $a2 fresh).
@@ -125,7 +125,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	if (arg3 / 2048 != 0) {
 		do {
 			osPiStartDma(&sp58, 0, 0, var_s2, var_s1, 0x800, arg0);
-			osRecvMesg(arg0, 0, 1U);
+			osRecvMesg(arg0, 0, (u32)OS_MESG_BLOCK);
 			temp_v0 = func_8001F6E0_202E0();
 			switch (temp_v0) {
 			case 2:
@@ -145,7 +145,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	temp_v0 = arg3 - ((arg3 / 2048) << 0xB);
 	if (temp_v0 != 0) {
 		osPiStartDma(&sp58, 0, 0, var_s2, var_s1, temp_v0, arg0);
-		osRecvMesg(arg0, 0, 1U);
+		osRecvMesg(arg0, 0, (u32)OS_MESG_BLOCK);
 		temp_v0 = func_8001F6E0_202E0();
 		switch (temp_v0) {
 		case 2:
@@ -176,10 +176,9 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 
 	osWritebackDCacheAll();
 	osPiStartDma(&io_msg, 0, 0, rom_addr, dest_buffer, 0x18, &D_80067F70);
-	osRecvMesg(&D_80067F70, NULL, 1);
+	osRecvMesg(&D_80067F70, NULL, OS_MESG_BLOCK);
 }
 
-// https://decomp.me/scratch/cg2WJ
 s32 func_80010290_10E90(s32 arg0)
 {
 	s32 header[6];
@@ -228,7 +227,6 @@ s32 func_8001032C_10F2C(s32 arg0, s32 arg1, s32 arg2) {
 	}
 	if (D_8006AA64 == 0xBABEFACE) {
 		osSyncPrintf("packed %6d, unpacked %6d, ", header[1], header[2]);
-		// packed %6d, unpacked %6d, 
 	}
 	var_a2 = header[1];
 	if (header[1] & 3) {
@@ -348,7 +346,7 @@ s32 func_800105F0_111F0(void *arg0, s32 *arg1, s32 *arg2, s32 arg3, u8 arg4, s32
 s32 destroyThreadIfMessageInQueue(void) {
 	s32 result;
 
-	result = osRecvMesg(&D_80067F88, NULL, 0);
+	result = osRecvMesg(&D_80067F88, NULL, OS_MESG_NOBLOCK);
 	if (result != -1) {
 		func_8000F1E8_FDE8();
 		return 1;
@@ -382,7 +380,6 @@ void loadLevel(s32 arg0) {
 const Unk80154082 D_800378CC_384CC = {'O', 'K', 0};
 const Unk80378D0 D_800378D0_384D0 = {0x2A2A2A2A, 0x20455252, 0x4F52202A, 0x2A2A2A00};
 
-// https://decomp.me/scratch/8dWr0
 void loadLevelData(u8 arg0)
 {
 	s32 j;
@@ -710,8 +707,6 @@ s32 func_800119F4_125F4(s32 arg0)
 }
 
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {
-	/* Preserve unsigned address arguments through the original C89 call. */
-
 	D_8006AA70 = arg1;
 	func_800101F0_10DF0((u32)D_8006AA70, (u32)D_80031B90_32790[arg0], D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0]);
 	return D_80031BAC_327AC[arg0] - D_80031B90_32790[arg0] + arg1;
@@ -730,8 +725,6 @@ s32 func_80011B14_12714(s32 arg0) {
 }
 
 s32 func_80011B60_12760(u8 arg0, s32 arg1) {
-	/* Preserve unsigned address arguments through the original C89 call. */
-
 	D_8006AA70 = arg1;
 	func_800101F0_10DF0((u32)D_8006AA70, (u32)D_80031BDC_327DC[arg0 - 1], D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1]);
 	return D_80031BF0_327F0[arg0 - 1] - D_80031BDC_327DC[arg0 - 1] + arg1;

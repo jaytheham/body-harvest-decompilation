@@ -4374,7 +4374,7 @@ void func_8007A038_4A4E8(void) {
 
 	for (timer = 0x1F4; timer-- + D_80094900 * 0; ) {
 		fade += 2;
-		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 		func_80011E14_12A14(0);
 		func_80004CC8_58C8();
 		func_80004D38_5938();

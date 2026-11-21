@@ -19,13 +19,13 @@ u8 D_80031B58_32758 = 1;
 #endif
 
 void func_8000FE50_10A50(void *arg0) {
-	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 	osViSetSpecialFeatures(0x40);
 	func_8000F618_10218();
 	D_80052ACA = 3;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
-	osRecvMesg(&D_8006A8F0, &D_80068038, 1);
+	osRecvMesg(&D_8006A8F0, &D_80068038, OS_MESG_BLOCK);
 	func_80001984_2584();
 	osSyncPrintf(D_80037764_38364, 0x28928);
 	loadFrontendData();
@@ -43,7 +43,7 @@ void func_8000FF40_10B40(void) {
 	if (__osSiAccessQueueEnabled == 0) {
 		func_8000FEF0_10AF0();
 	}
-	osRecvMesg(&__osSiAccessQueue, &D_80068038, 1);
+	osRecvMesg(&__osSiAccessQueue, &D_80068038, OS_MESG_BLOCK);
 }
 
 // __osSiRelAccess duplicate ?
