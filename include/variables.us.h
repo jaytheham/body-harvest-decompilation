@@ -4076,7 +4076,6 @@ extern const InteriorAngleScale D_800A4A00_18CAC0;
 extern const f64 D_800A4AA0_18CB60[1];
 extern const f64 D_800A4AA8_18CB68[1];
 extern const f32 D_800A4AB8_18CB78[1];
-extern const InteriorAngleScale D_800A4AB0_18CB70;
 extern const InteriorAngleScale D_800A4AC0_18CB80;
 
 
