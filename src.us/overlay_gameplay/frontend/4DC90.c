@@ -387,7 +387,7 @@ s32 func_8007E12C_4E5DC(void) {
 					D_80094950_64E00 = 0.0f;
 					break;
 				default:
-					osSyncPrintf(D_800AE8E0_7ED90);
+					osSyncPrintf("INVALID MOVIE EVENT!!!!!\n");
 					break;
 			}
 
@@ -480,7 +480,7 @@ void func_8007EBB8_4F068(void) {
 
 	if ((((FrontendCamState*)D_800D7A18)->unk10.x == ((FrontendCamState*)D_800D7A18)->unk1C.x)
 		&& (((FrontendCamState*)D_800D7A18)->unk10.z == ((FrontendCamState*)D_800D7A18)->unk1C.z)) {
-		osSyncPrintf(D_800AE8FC_7EDAC);
+		osSyncPrintf("ERROR: guLookAt is going to CRASH.\n");
 	}
 
 	guPerspective(D_8005BB38, &perspNorm, (f32)((FrontendCamState*)D_800D7A18)->unk3A, D_800D7974, D_800D8510, 4000.0f, 1.0f);
@@ -1019,7 +1019,7 @@ void* func_8008035C_5080C(FrontendStreamSlot* arg0, AnimChannelState* arg1, Fron
 			state->unk18 = 0;
 			state->unk14 = arg0->header.channels[i].count;
 			if (state->unk14 >= 0x65) {
-				osSyncPrintf(&D_800AE920_7EDD0);
+				osSyncPrintf("ERROR: Too many keyframes for buffers! 100 KF Maximum!\n");
 			}
 
 			func_80080AD4_50F84(arg0, state, i);
@@ -1062,7 +1062,7 @@ void func_80080588_50A38(u8 arg0) {
 	color = selection->unk0;
 	if (color != 0xFF) {
 		D_800D7A86 = D_800D7A38[color];
-		osSyncPrintf(D_800AE958_7EE08, D_800D7A86.unk0, D_800D7A86.unk1, D_800D7A86.unk2);
+		osSyncPrintf("newAmbientLight r: %d g: %d b: %d\n", D_800D7A86.unk0, D_800D7A86.unk1, D_800D7A86.unk2);
 	}
 	for (i = 0; i < 3; i++) {
 		color = selection->lights[i];
@@ -1169,7 +1169,7 @@ FrontendStreamSlot* func_800809DC_50E8C(s32 arg0) {
 			return slot;
 		}
 	}
-	osSyncPrintf(D_800AE97C_7EE2C);
+	osSyncPrintf("ERROR: No free animation buffers! See Frank. \n");
 }
 
 void func_80080A84_50F34(FrontendStreamSlot* arg0) {
@@ -1703,8 +1703,3 @@ void func_80082074_52524(void) {
 	D_800D7A1C[26].unk24 = alpha;
 }
 
-const char D_800AE8E0_7ED90[] = "INVALID MOVIE EVENT!!!!!\012";
-const char D_800AE8FC_7EDAC[] = "ERROR: guLookAt is going to CRASH.\012";
-const char D_800AE920_7EDD0[] = "ERROR: Too many keyframes for buffers! 100 KF Maximum!\012";
-const char D_800AE958_7EE08[] = "newAmbientLight r: %d g: %d b: %d\012";
-const char D_800AE97C_7EE2C[] = "ERROR: No free animation buffers! See Frank. \012";
