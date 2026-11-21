@@ -1,4 +1,3 @@
-#define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
 #include "core/loader.h"
@@ -17,20 +16,6 @@ u8 D_80031B58_32758 = 1;
 #else
 #error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
 #endif
-
-void func_8000FE50_10A50(void *arg0) {
-	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
-	osViSetSpecialFeatures(0x40);
-	func_8000F618_10218();
-	D_80052ACA = 3;
-	func_800056A8_62A8();
-	func_800056A8_62A8();
-	osRecvMesg(&D_8006A8F0, &D_80068038, OS_MESG_BLOCK);
-	func_80001984_2584();
-	osSyncPrintf(D_80037764_38364, 0x28928);
-	loadFrontendData();
-	func_80070270(1);
-}
 
 // __osSiCreateAccessQueue duplicate ?
 void func_8000FEF0_10AF0(void) {

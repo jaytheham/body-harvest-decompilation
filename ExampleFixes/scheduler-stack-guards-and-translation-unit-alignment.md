@@ -29,7 +29,7 @@ fell inside the preceding boot thread's epilogue. Its C compilation ended at
 its 32-byte alignment phase. Reunite the boot and scheduler code in one
 translation unit starting at `0xFB00`. The scheduler epilogue then starts at
 `0x10A20` naturally. Remove its separate assembly placeholder and start the
-next code segment at `0x10A50`. No padding instructions or object patches are
+next code segment at `0x10A50` (subsequently moved to `0x10AF0` as described below). No padding instructions or object patches are
 needed.
 
 Unused local slots and declaration order retain the target `0xA0` frame,
@@ -40,6 +40,18 @@ argument, consistent with `osCreateThread`.
 
 Verified: function diff score 0, including the epilogue through `0x10A50`, and
 full-ROM checksum `build/bh.us.z64: OK`.
+
+`incorrect ASM`: Inlining `D_80037764_38364` in the separate `10A20.c`
+object changes the format-string address from `0x80037764` to `0x80037770`
+because of rodata alignment.
+
+-> `code changed`: Move `func_8000FE50_10A50` to the end of `FD80.c` and use
+`"level data %x\n"` directly; remove the named string and its extern. Move
+the remaining `10A20.c` code boundary to US `0x10AF0` / EU `0x10B20`.
+
+-> `correct ASM`: The generated string retains the original address within
+FD80's constant pool, and the call and all ROM bytes match. US and EU
+full-ROM checksums are OK (2026-11-22).
 
 ### Save-code controller thread (func_80000ED4_1AD4)
 

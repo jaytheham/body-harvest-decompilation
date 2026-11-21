@@ -152,7 +152,7 @@ extern const s16 D_801416C0_150670[4][2];
 
 // Overlay entry point (shared RAM address 0x80070270 for all gameplay
 // overlays).  Declared as a data array here; TUs that genuinely call it as a
-// function (10A20.c, 53F0.c) define OVERLAY_ENTRY_AS_FUNC to get the function
+// function (FD80.c, 53F0.c) define OVERLAY_ENTRY_AS_FUNC to get the function
 // prototype from functions.us.h instead.
 #ifndef OVERLAY_ENTRY_AS_FUNC
 extern u8 func_80070270[];
@@ -556,7 +556,6 @@ extern const char D_80036C64_37864[];
 extern const char D_80036C74_37874[];
 extern const f32 D_80036C88_37888[];
 extern const f64 D_80037610_38210[];
-extern const char D_80037764_38364[]; /* osSyncPrintf format string - defined in FD80.c, used by 10A20.c */
 extern const Unk80154082 D_800378CC_384CC;
 extern const Unk80378D0 D_800378D0_384D0;
 extern const char D_800383B0_38FB0[];

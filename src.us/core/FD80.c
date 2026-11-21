@@ -1,3 +1,4 @@
+#define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
 #include "core/FD80.h"
@@ -6,6 +7,7 @@
 #include "core/12C80.h"
 #include "core/10A20.h"
 #include "core/1050.h"
+#include "core/loader.h"
 
 u64 D_8005BB50;
 u64 D_8005BF58;
@@ -373,6 +375,16 @@ void func_8000F6B0_102B0(void *arg0) {
 		}
 	}
 }
-/* Defined last: 10A20.c references this string, and it has to land after the literals
- * of the functions above to keep its place at the end of this file's .rodata. */
-const char D_80037764_38364[] = "level data %x\n";
+void func_8000FE50_10A50(void *arg0) {
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
+	osViSetSpecialFeatures(0x40);
+	func_8000F618_10218();
+	D_80052ACA = 3;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	osRecvMesg(&D_8006A8F0, &D_80068038, OS_MESG_BLOCK);
+	func_80001984_2584();
+	osSyncPrintf("level data %x\n", 0x28928);
+	loadFrontendData();
+	func_80070270(1);
+}
