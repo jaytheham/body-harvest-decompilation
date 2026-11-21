@@ -185,16 +185,16 @@ s16 D_800946E0_64B90[0x70] = {
 s32 D_800947C0_64C70[6] = {
     0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)"",
 };
-s32 D_800947D8_64C88[3] = {
-    (s32)"Fuel", (s32)"Carburant", (s32)"Sprit",
+char *D_800947D8_64C88[3] = {
+    "Fuel", "Carburant", "Sprit",
 };
-s32 D_800947E4_64C94[3] = {
-    (s32)"Vehicle Weapon 1", (s32)"Arme 1", (s32)"Waffe 1",
+char *D_800947E4_64C94[3] = {
+    "Vehicle Weapon 1", "Arme 1", "Waffe 1",
 };
-s32 D_800947F0_64CA0[13] = {
-    (s32)"Vehicle Weapon 2", (s32)"Arme 2", (s32)"Waffe 2", (s32)"Chaingun", (s32)"Fragcannon",
-    (s32)"Lazer Missiles", (s32)"Resonator", (s32)"Plasma Bombs", (s32)"", (s32)"",
-    0x00000000, 0x00000000, 0x00000000,
+char *D_800947F0_64CA0[13] = {
+    "Vehicle Weapon 2", "Arme 2", "Waffe 2", "Chaingun", "Fragcannon",
+    "Lazer Missiles", "Resonator", "Plasma Bombs", "", "",
+    NULL, NULL, NULL,
 };
 
 s16 D_80094824_64CD4 = 0;
@@ -1979,7 +1979,7 @@ void func_800731A8_43658(void)
 					switch (temp_v0_15)
 					{
 					case 0x1:
-						var_s5 = D_800947D8_64C88[D_800313D0_31FD0];
+						var_s5 = (s32)D_800947D8_64C88[D_800313D0_31FD0];
 						break;
 					case 0x2:
 						var_s5 = (s32)&D_800AED70[D_800AED74[49]];
@@ -2024,10 +2024,10 @@ void func_800731A8_43658(void)
 						}
 						break;
 					case 0xB:
-						var_s5 = D_800947E4_64C94[D_800313D0_31FD0];
+						var_s5 = (s32)D_800947E4_64C94[D_800313D0_31FD0];
 						break;
 					case 0xC:
-						var_s5 = D_800947F0_64CA0[D_800313D0_31FD0];
+						var_s5 = (s32)D_800947F0_64CA0[D_800313D0_31FD0];
 						break;
 					default:
 						weaponType = temp_v0_15;
@@ -4884,20 +4884,12 @@ void func_8007B900_4BDB0(void) {
 		drawText("%@Developed by DMA Design Ltd.", 128, 3);
 #ifdef VERSION_EU
 		drawText("%Y%@Published by", 48, 128, 4);
-#else
-		drawText("%Y%@MIDWAY is a registered", 48, 128, 4);
-#endif
-#ifdef VERSION_EU
 		drawText("%@Gremlin Interactive Ltd", 128, 5);
-#else
-		drawText("%@trademark of Midway Games Inc.", 128, 5);
-#endif
-#ifdef VERSION_EU
 		drawText("%@under license.", 128, 6);
 #else
+		drawText("%Y%@MIDWAY is a registered", 48, 128, 4);
+		drawText("%@trademark of Midway Games Inc.", 128, 5);
 		drawText("%@Distributed by Midway Home", 128, 6);
-#endif
-#ifndef VERSION_EU
 		drawText("%@Entertainment Inc. under license.", 128, 7);
 #endif
 		drawText("%Y%@LICENSED BY NINTENDO", 0, 128, 9);

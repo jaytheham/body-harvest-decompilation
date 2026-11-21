@@ -1199,9 +1199,9 @@ extern s16 D_800946DC_64B8C;
 extern s16 currentFrontendState; // 0x800946DC
 extern s16 D_800946E0_64B90[0x70];
 extern s32 D_800947C0_64C70[6];
-extern s32 D_800947D8_64C88[3];
-extern s32 D_800947E4_64C94[3];
-extern s32 D_800947F0_64CA0[13];
+extern char *D_800947D8_64C88[3];
+extern char *D_800947E4_64C94[3];
+extern char *D_800947F0_64CA0[13];
 extern s16 D_80094824_64CD4;
 extern s16 D_80094828_64CD8;
 extern s16 D_8009482C_64CDC;
