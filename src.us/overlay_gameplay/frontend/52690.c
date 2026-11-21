@@ -7,6 +7,34 @@
 #include "core/1050.h"
 
 // AI - Sets up colored background viewport with geometry modes for frontend screen
+/* The first two entries of the English table are zero, in the
+ * preceding data section's padding. Its base is a linker symbol. */
+s32 D_800949E0_64E90[3] = { (s32)"JAVA 1941", (s32)"AMERICA 1966", (s32)"SIBERIA 1991" };
+s32 D_800949EC_64E9C[5] = { (s32)"ALIEN COMET 2016", 0, (s32)"JAVA 1941", (s32)"USA 1966", (s32)"SIBERIE 1991" };
+s32 D_80094A00_64EB0[7] = {
+	(s32)"COMETE 2016", 0, (s32)"JAVA 1941", (s32)"AMERIKA 1966", (s32)"SIBIRIEN 1991", (s32)"KOMET 2016", 0,
+};
+Frontend52690Entry D_80094A1C_64ECC[5] = {
+	{ 0x0000077C, 0x00000795, (void *)0x040073A0, (void *)0x040083A0 },
+	{ 0x00000795, 0x000007AE, (void *)0x040083A0, (void *)0x040093A0 },
+	{ 0x000007AE, 0x000007C7, (void *)0x040093A0, (void *)0x0400A3A0 },
+	{ 0x000007C7, 0x000007E0, (void *)0x0400A3A0, (void *)0x0400B3A0 },
+	{ 0, 0, NULL, NULL },
+};
+
+Unk80052B40 D_80094A6C_64F1C = { 0, 0, 0x076C };
+Unk80052B40 D_80094A74_64F24 = { 0x8000, 0, 0 };
+Unk80052B40 D_80094A7C_64F2C = { 0x0100, 0x0100, 0x0100 };
+Unk80052B40 D_80094A84_64F34 = { 0, 0, 0x00A0 };
+Unk80052B40 D_80094A8C_64F3C = { 0, 0, 0xFF6A };
+Unk80052B40 D_80094A94_64F44 = { 0x8000, 0, 0 };
+Unk80052B40 D_80094A9C_64F4C = { 0x8000, 0, 0 };
+Unk80052B40 D_80094AA4_64F54 = { 0, 0, 0xFF9C };
+Unk80052B40 D_80094AAC_64F5C = { 0xD8F0, 0xE0C0, 0xFF9C };
+u32 D_80094AB4_64F64 = 0;
+u32 D_80094AB8_64F68 = 0;
+u32 D_80094ABC_64F6C = 0;
+
 void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
 	((Frontend52690Viewport *)D_8005BB24)->unk2 = 0x140;
 
@@ -226,7 +254,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 			sp124.unk4 = ((varS4 - tempS6) * 0x10) - 0x12C;
 		}
 
-		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC[0], 1.0f);
+		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, 20000.0f, 1.0f);
 		guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 0.0f, (f32)sp10C.unk0, (f32)sp10C.unk2, (f32)sp10C.unk4,
 				 0.0f, 1.0f, 0.0f);
 		spB8 = D_8005BB38;
@@ -281,37 +309,37 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 
 			switch (varV0_3) {
 				case 0:
-					drawText(D_800AEB2C_7EFDC, 0x50, 0, 0);
-					drawText(D_800AEB30_7EFE0, 0x80, 2);
-					drawText(D_800AEB50_7F000, 0x80, 3);
-					drawText(D_800AEB68_7F018, 0x80, 4);
+					drawText("%C", 0x50, 0, 0);
+					drawText("%@Primary objective complete.", 0x80, 2);
+					drawText("%@Co-ordinates for next", 0x80, 3);
+					drawText("%@objective selected:", 0x80, 4);
 					varV0_3 = D_800313D0_31FD0;
 					break;
 				case 1:
-					drawText(D_800AEB80_7F030, 0x50, 0, 0);
-					drawText(D_800AEB84_7F034, 0x80, 2);
-					drawText(D_800AEBA4_7F054, 0x80, 3);
-					drawText(D_800AEBC4_7F074, 0x80, 4);
+					drawText("%C", 0x50, 0, 0);
+					drawText("%@Objectif principal atteint.", 0x80, 2);
+					drawText("%@Co-ordonn\351e selectionn\351e pour", 0x80, 3);
+					drawText("%@le prochain objectif:", 0x80, 4);
 					varV0_3 = D_800313D0_31FD0;
 					break;
 				case 2:
-					drawText(D_800AEBDC_7F08C, 0x50, 0, 0);
-					drawText(D_800AEBE0_7F090, 0x80, 2);
-					drawText(D_800AEBF8_7F0A8, 0x80, 3);
-					drawText(D_800AEC14_7F0C4, 0x80, 4);
+					drawText("%C", 0x50, 0, 0);
+					drawText("%@Prim\344rziel erf\374llt.", 0x80, 2);
+					drawText("%@Koordinaten f\374r n\344chstes", 0x80, 3);
+					drawText("%@Ziel gew\344hlt:", 0x80, 4);
 					varV0_3 = D_800313D0_31FD0;
 					break;
 			}
 
 			switch (varV0_3) {
 				case 0:
-					drawText(D_800AEC24_7F0D4, 0x80, 6, D_800949D8_64E88[currentLevel]);
+					drawText("%@%s", 0x80, 6, D_800949D8_64E88[currentLevel]);
 					break;
 				case 1:
-					drawText(D_800AEC2C_7F0DC, 0x80, 6, D_800949EC_64E9C[currentLevel]);
+					drawText("%@%s", 0x80, 6, D_800949EC_64E9C[currentLevel]);
 					break;
 				case 2:
-					drawText(D_800AEC34_7F0E4, 0x80, 6, D_80094A00_64EB0[currentLevel]);
+					drawText("%@%s", 0x80, 6, D_80094A00_64EB0[currentLevel]);
 					break;
 			}
 

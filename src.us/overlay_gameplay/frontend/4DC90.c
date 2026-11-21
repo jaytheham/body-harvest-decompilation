@@ -662,8 +662,8 @@ void func_8007F3F8_4F8A8(FrontendStruct* arg0, Light* arg1) {
 	f64 radians;
 	f64 degrees;
 
-	radians = D_800AEA40_7EEF0[0];
-	degrees = D_800AEA48_7EEF8[0];
+	radians = 6.283185307;
+	degrees = 360.0;
 	sinY = sinf((f32)((f32)arg0->unk12 * radians / degrees));
 	cosY = cosf((f32)((f32)arg0->unk12 * radians / degrees));
 	sinX = sinf((f32)((f32)arg0->unk10 * radians / degrees));
@@ -1089,7 +1089,7 @@ void func_80080668_50B18(FrontendStreamSlot *arg0, AnimChannelState *arg1, f32 a
 		units = 4096.0;
 		if (scale) {}
 		if (units) {}
-		degrees = D_800AEA50_7EF00[0];
+		degrees = 180.0;
 		do {
 			channel = &arg1[i];
 			if (channel->unk14 != 0) {
@@ -1466,8 +1466,8 @@ void func_80081290_51740(void) {
 	}
 
 	if (D_800AC0CC.unk18 != 0.0f) {
-		D_800AC0CC.unk18 = D_800AC0CC.unk18 + D_800AEA58_7EF08.value > 1.0 ?
-			1.0 : D_800AC0CC.unk18 + D_800AEA58_7EF08.value;
+		D_800AC0CC.unk18 = D_800AC0CC.unk18 + 0.01 > 1.0 ?
+			1.0 : D_800AC0CC.unk18 + 0.01;
 	}
 
 	gDPPipeSync(D_8005BB2C++);
@@ -1485,9 +1485,9 @@ void func_80081290_51740(void) {
 	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 31 << G_TEXTURE_IMAGE_FRAC, 31 << G_TEXTURE_IMAGE_FRAC);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 
-	sp84.unk0 = (s16) ((f64) sp84.unk0 * D_800AEA60_7EF10.value);
-	sp84.unk2 = (s16) ((f64) sp84.unk2 * D_800AEA60_7EF10.value);
-	sp84.unk4 = (s16) ((f64) sp84.unk4 * D_800AEA60_7EF10.value);
+	sp84.unk0 = (s16) ((f64) sp84.unk0 * 0.128);
+	sp84.unk2 = (s16) ((f64) sp84.unk2 * 0.128);
+	sp84.unk4 = (s16) ((f64) sp84.unk4 * 0.128);
 
 	func_800039D0_45D0(NULL, NULL, &sp84, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
@@ -1609,32 +1609,6 @@ void func_80081CAC_5215C(s32 arg0, s32 arg1, u32 arg2, u32 arg3) {
 }
 u8 D_800949D4_64E84 = 0;
 
-s32 D_800949D8_64E88[5] = { 0, 0, (s32)D_800AEA80_7EF30, (s32)D_800AEA8C_7EF3C, (s32)D_800AEA9C_7EF4C };
-s32 D_800949EC_64E9C[5] = { (s32)D_800AEAAC_7EF5C, 0, (s32)D_800AEAC0_7EF70, (s32)D_800AEACC_7EF7C, (s32)D_800AEAD8_7EF88 };
-s32 D_80094A00_64EB0[7] = {
-	(s32)D_800AEAE8_7EF98, 0, (s32)D_800AEAF4_7EFA4, (s32)D_800AEB00_7EFB0, (s32)D_800AEB10_7EFC0, (s32)D_800AEB20_7EFD0, 0,
-};
-Frontend52690Entry D_80094A1C_64ECC[5] = {
-	{ 0x0000077C, 0x00000795, (void *)0x040073A0, (void *)0x040083A0 },
-	{ 0x00000795, 0x000007AE, (void *)0x040083A0, (void *)0x040093A0 },
-	{ 0x000007AE, 0x000007C7, (void *)0x040093A0, (void *)0x0400A3A0 },
-	{ 0x000007C7, 0x000007E0, (void *)0x0400A3A0, (void *)0x0400B3A0 },
-	{ 0, 0, NULL, NULL },
-};
-
-Unk80052B40 D_80094A6C_64F1C = { 0, 0, 0x076C };
-Unk80052B40 D_80094A74_64F24 = { 0x8000, 0, 0 };
-Unk80052B40 D_80094A7C_64F2C = { 0x0100, 0x0100, 0x0100 };
-Unk80052B40 D_80094A84_64F34 = { 0, 0, 0x00A0 };
-Unk80052B40 D_80094A8C_64F3C = { 0, 0, 0xFF6A };
-Unk80052B40 D_80094A94_64F44 = { 0x8000, 0, 0 };
-Unk80052B40 D_80094A9C_64F4C = { 0x8000, 0, 0 };
-Unk80052B40 D_80094AA4_64F54 = { 0, 0, 0xFF9C };
-Unk80052B40 D_80094AAC_64F5C = { 0xD8F0, 0xE0C0, 0xFF9C };
-u32 D_80094AB4_64F64 = 0;
-u32 D_80094AB8_64F68 = 0;
-u32 D_80094ABC_64F6C = 0;
-
 void func_80081F9C_5244C(void) {
 	s32 index;
 
@@ -1653,7 +1627,7 @@ void func_80081FF0_524A0(void) {
 	} else {
 		absVal = -D_800D8528;
 	}
-	if ((f64)absVal < D_800AEA68_7EF18[0]) {
+	if ((f64)absVal < 0.4) {
 		D_800D8528 = 0.0f;
 		return;
 	}
@@ -1674,11 +1648,11 @@ void func_80082074_52524(void) {
 	if (D_8009494C_64DFC == 1) {
 		start = 0;
 		end = 255;
-		step = D_800AEA70_7EF20[0];
+		step = 0.0025f;
 	} else {
 		start = 255;
 		end = 0;
-		step = D_800AEA74_7EF24[0];
+		step = 0.005f;
 	}
 	limit = 1.0;
 	t = D_80094950[0];
