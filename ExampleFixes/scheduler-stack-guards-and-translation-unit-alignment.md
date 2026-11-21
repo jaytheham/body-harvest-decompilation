@@ -53,6 +53,12 @@ the remaining `10A20.c` code boundary to US `0x10AF0` / EU `0x10B20`.
 FD80's constant pool, and the call and all ROM bytes match. US and EU
 full-ROM checksums are OK (2026-11-22).
 
+The remaining SI access-queue functions and data were subsequently merged
+into FD80 as well, removing `10A20.c` and its header. FD80's data now starts
+at US `0x32750` / EU `0x32780`; the next code segment is the loader at US
+`0x10BC0` / EU `0x10BF0`. Run extraction for each version after YAML changes
+to regenerate linker inputs before building. Both full-ROM checksums remain OK.
+
 ### Save-code controller thread (func_80000ED4_1AD4)
 
 The controller-message handler matched every executable instruction, stack home, and register, but its unreachable epilogue lacked four NOPs. With core/1050 starting at ROM 0x1050, IDO's object-relative 32-byte alignment landed sixteen bytes early. Start the existing C unit at 0x1000 instead, including the unchanged handwritten boot instructions as an inline GLOBAL_ASM block before the save code. Merge the two code entries in bh.us.yaml and regenerate the linker input (or remove the separate core/1000 object entries from the existing bh.ld). The standalone boot assembly remains untouched. asm_processor cannot directly include that complete assembly file because its .include/.set preamble is unsupported; the inline block contains only its labels and instructions. No new file or artificial padding is needed. Verified function diff zero and full ROM OK on 2026-10-12.

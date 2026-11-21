@@ -9,7 +9,6 @@ extern Addr _2E150_s;
 extern Addr _61620_bin;
 extern Addr _65730_bin;
 extern Addr ___src_us_core_1050_c;
-extern Addr ___src_us_core_10A20_c;
 extern Addr ___src_us_core_12C80_c;
 extern Addr ___src_us_core_17EE0_c;
 extern Addr ___src_us_core_1B060_c;

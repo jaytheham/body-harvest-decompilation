@@ -44,7 +44,6 @@ segments:
       - [0xAD60, c, core/AD60] # Text rendering?
       - [0xE830, c, core/E830]
       - [0xFB00, c, core/FD80] # Boot and scheduler share epilogue alignment.
-      - [0x10AF0, c, core/10A20]
       - [0x10BC0, c, core/loader] # original src filename
       - [0x12C80, c, core/12C80] # Sounds, Dialogue
       - [0x17EE0, c, core/17EE0] # Dialogue
@@ -227,8 +226,7 @@ segments:
       - [0x31FD0, .data, core/53F0]
       - [0x32250, .data, core/AD60]
       - [0x32680, .data, core/E830]
-      - [0x32750, .data, core/10A20]
-      - [0x32760, .data, core/FD80]
+      - [0x32750, .data, core/FD80]
       - [0x32790, .data, core/loader]
       - [0x328A0, .data, core/12C80]
       - [0x348C0, .data, core/17EE0]
