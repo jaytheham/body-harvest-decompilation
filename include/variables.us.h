@@ -4094,17 +4094,8 @@ extern const ShadowGeometryConstant D_80144A58_153A08;
 extern const ShadowGeometryConstant D_80144A60_153A10;
 extern const ShadowGeometryConstant D_80144A68_153A18;
 extern const ShadowGeometryConstant D_80144A70_153A20;
-extern const f64 D_80144A88_153A38[1];
-extern const f64 D_80144A90_153A40[1];
-extern const f64 D_80144A98_153A48[1];
-extern const f64 D_80144AA0_153A50[1];
-extern const f64 D_80144AA8_153A58[1];
-extern const f64 D_80144AB0_153A60[1];
-extern const f64 D_80144AB8_153A68[1];
-extern const f64 D_80144AC0_153A70[1];
 extern const f32 D_801449E8_153998[1];
 
-extern const ShadowGeometryConstant D_80144A80_153A30;
 extern const ShadowGeometryConstant D_80144D70_153D20;
 
 
