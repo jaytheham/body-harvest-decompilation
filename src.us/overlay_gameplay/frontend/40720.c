@@ -37,7 +37,6 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
-#ifndef VERSION_EU
 const char D_800AD0F0_7D5A0[] = "";
 const char D_800AD0F4_7D5A4[] = "Credits";
 const char D_800AD0FC_7D5AC[] = "";
@@ -163,39 +162,6 @@ const char D_800AD6F0_7DBA0[] = "";
 const char D_800AD6F4_7DBA4[] = "";
 const char D_800AD6F8_7DBA8[] = "";
 const char D_800AD6FC_7DBAC[] = "#";
-#else
-const char D_800AD8B0_7DD60[] =
-    "\000\000\000\000Credits\000\000\000\000\000\000\000\000\000Project Leader\000\000John Wh"
-    "yte\000\000\000\000\000\000Game Programmers\000\000\000\000Adam Fowler\000Alan Campbell"
-    "\000\000\000Frank Arnot\000Grant Clarke\000\000\000\000Doug Smith\000\000Andrew West\000"
-    "Andy J S Innes\000\000\000\000\000\000Game and Editor Programmer\000\000John Gurney\000"
-    "\000\000\000\000Lead Artist\000Stacey Jamieson\000\000\000\000\000Alien Artist\000\000"
-    "\000\000Alan Davidson\000\000\000\000\000\000\000Artwork\000Craig Moore\000Ian McQue\000"
-    "\000\000Pat McGovern\000\000\000\000Paul Reeves\000\000\000\000\000Audio Programmers\000"
-    "\000\000Ciaran Rooney\000\000\000Raymond Usher\000\000\000\000\000\000\000Music and Soun"
-    "d effects\000Stuart Ross\000Allan Walker\000\000\000\000\000\000\000\000Editor Programmi"
-    "ng\000\000Graeme Anderson\000\000\000\000\000Level Design\000\000\000\000Richard Ralfe"
-    "\000\000\000Lorne Campbell\000\000Mike Stirling\000\000\000\000\000\000\000Game Design"
-    "\000John Whyte\000\000Alan Davidson\000\000\000Richard Ralfe\000\000\000Lorne Campbell"
-    "\000\000Stacey Jamieson\000Adam Fowler\000EAD Japan\000\000\000\000\000\000\000DMA Quali"
-    "ty Assurance\000\000\000Craig Arbuthnott\000\000\000\000Steve Taylor\000\000\000\000Alle"
-    "n Shiels\000\000\000\000Sean Taylor\000Alan Dobson\000William Mills\000\000\000Sean Brow"
-    "n\000\000\000\000\000\000Gremlin Quality Assurance\000\000\000Carl Cavers\000Jon Watson"
-    "\000\000Julia Sturman\000\000\000Travis Ryan\000Les Dungate\000Daniel Webster\000\000Mat"
-    "thew Tucket\000\000Andrew Wilson\000\000\000Stephen Woodward\000\000\000\000Martin Berri"
-    "dge\000Matthew Fu\000\000\000\000\000\000Public Relations\000\000\000\000Brian Baglow"
-    "\000\000\000\000\000\000\000\000Localisation\000\000\000\000Sarah Bennett\000\000\000"
-    "\000\000\000\000Development Manager\000Jim Woods\000\000\000\000\000\000\000Boss and Gen"
-    "eral Nuisance\000\000\000Dave Jones\000\000\000\000\000\000Thanks to:\000\000John Harris"
-    "on\000\000\000Martin Good\000Robert Jeffrey\000\000Darren Baines\000\000\000Jeff Cairns"
-    "\000Aaron Garbut\000\000\000\000Gary Thomson\000\000\000\000Kenneth Fee\000Craig Conner"
-    "\000\000\000\000Andy Strachan\000\000\000Andy Hay\000\000\000\000Liam O'Neill\000\000"
-    "\000\000Shoya Tanaka\000\000\000\000EAD Nintendo Japan\000\000Gary Penn\000\000\000Mark "
-    "Ettle\000\000Julian Glendinning\000\000Kevin Kelly\000Ian Thomson\000Corinne Cervetti"
-    "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
-    "\000\000THE END\000\000\000\000\000\000\000\000\000\000\000\000\000[ DMA Design 1998\000"
-    "\000\000\000\000\000\000\000\000\000\000\000\000\000\000#\000\000";
-#endif
 
 // Frontend animation/frame data
 s16 D_800946E0_64B90[0x70] = {

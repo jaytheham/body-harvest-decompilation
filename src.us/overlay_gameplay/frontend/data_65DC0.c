@@ -1,5 +1,6 @@
 #include <ultra64.h>
 #include "common.h"
+#include "version_shift.h"
 
 // Frontend animation script (Unk80080530_Src entries)
 Unk80080530_Src D_80095910_65DC0[83] = {
@@ -90,5 +91,5 @@ Unk80080530_Src D_80095910_65DC0[83] = {
 
 // Frontend data pointers
 s32 D_80095D9C_6624C[5] = {
-    0x800A4C28, 0x8009BF40, 0x800A75F0, 0x800A7A58, 0x800A9120,
+    FRONTEND_PTR(0x800A4C28), FRONTEND_PTR(0x8009BF40), FRONTEND_PTR(0x800A75F0), FRONTEND_PTR(0x800A7A58), FRONTEND_PTR(0x800A9120),
 };
