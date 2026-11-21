@@ -4,10 +4,15 @@ Matched `func_8000F6B0_102B0` with IDO 5.3 -O2 -mips2 -32.
 
 The stack guard is one `u64` containing `0xCEC`, rather than two independent
 word globals. Assign and compare the complete guard. Tentative definitions
-selected by `CORE_FD80_BSS` in `include/variables.us.h` reproduce the shared
+in `src.us/core/FD80.c` reproduce the shared
 address load and low-word-first initialization stores. External declarations
 alone emit an extra `lui` and store the high word first. See also
 [the earlier tentative-definition fix](tentative-bss-definitions-u64-stores-and-folded-increment.md).
+
+External-only guards: extra `lui`, high-word-first stores -> move tentative
+`u64` definitions into `FD80.c`, retaining unconditional `extern` declarations
+in `variables.us.h` -> shared address load and low-word-first stores, without
+`CORE_FD80_BSS`. Verified US and EU full-ROM checksums remain OK.
 
 Use `1U - D_80031B84_32784` for the buffer swap. The unsigned literal gets its
 own `li` instead of sharing the signed saved-register constant used throughout

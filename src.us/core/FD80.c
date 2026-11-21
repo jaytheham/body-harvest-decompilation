@@ -1,4 +1,3 @@
-#define CORE_FD80_BSS
 #include <ultra64.h>
 #include "common.h"
 #include "core/FD80.h"
@@ -8,6 +7,14 @@
 #include "core/10A20.h"
 #include "core/1050.h"
 
+u64 D_8005BB50;
+u64 D_8005BF58;
+u64 D_8005C760;
+u64 D_8005CF68;
+u64 D_80064F70;
+u64 D_80065F78;
+u64 D_80066780;
+u64 D_80068328;
 
 Vp D_80031B60_32760[] = {
 	{ {{640, 480, 511, 0}, {640, 480, 511, 0}} },
