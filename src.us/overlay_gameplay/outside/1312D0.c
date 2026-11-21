@@ -1375,7 +1375,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	s32 distSqBest;
 	s32 lineDist;
 	s32 lineDistBest;
-	s32 y = arg2;
+	s32 scratch;
 	f32 interp;
 	f32 objDist;
 	s16 minX;
@@ -1385,7 +1385,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	f32 bestDistF;
 	s32 exactHit;
 	s32 ax;
-	s32 scratch;
+	s32 y = arg2;
 	s32 absX;
 	f32 pathDistSq;
 	s32 dx;
@@ -1400,6 +1400,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	union { Unk8015F9D0 *pointer; s32 bits; } hit;
 	s16 hitX;
 	s16 hitZ;
+	s32 hitCoordinate;
 	s32 absZ;
 
 	arg2 = y; distSqBest = 0x7FFFFFFF;
@@ -1427,9 +1428,9 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	}
 
 	dx = (x - *arg4) >> 2;
-	dy = (arg2 - *arg5) >> 2;
+	y = (arg2 - *arg5) >> 2;
 	dz = (z - *arg6) >> 2;
-	pathDistSq = (f32)((dx * dx) + (dy * dy) + (dz * dz));
+	pathDistSq = (f32)((dx * dx) + (y * y) + (dz * dz));
 
 	if (pathDistSq == 0.0f) {
 		return;
@@ -1453,27 +1454,29 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							func_8010C4EC_11B49C(entity.vehicle);
 							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
 								hit.pointer->unk0 = (s16)x;
-								exactHit = 1;
-								bestDistF = (f32)distSqBest;
-								if (bestDistF) {}
-								hit.pointer->unk2 = (s16)(entity.vehicle->unk2 + data.vehicle->unk38);
+								hitCoordinate = (u16)(entity.vehicle->unk2 + data.vehicle->unk38);
+								if (1) {}
+								bestDistF = (f32)(distSqBest + ((exactHit = 1) - 1));
+								hit.pointer->unk2 = hitCoordinate;
 								hit.pointer->unk4 = (s16)z;
 							} else { continue; }
 						} else { continue; }
 					} else {
-					lineDist = func_801269BC_13596C(x, z, *arg4, *arg6, entity.vehicle->unk0, entity.vehicle->unk4);
+					lineDist = func_801269BC_13596C(arg1, arg3, *arg4, *arg6, entity.vehicle->unk0, entity.vehicle->unk4);
 					if (lineDist < data.vehicle->unk8) {
 						switch (data.vehicle->unk16 & 0xF) {
 						case 0: {
 							ax = x - *arg4;
-							absX = (-ax < ax) ? ax : -ax;
+							absZ = -ax;
+							absX = (absZ < ax) ? ax : absZ;
+							absX += absZ * 0; /* Keep the negated value live during register allocation. */
 							scratch = z - *arg6;
-							absZ = (-scratch < scratch) ? scratch : -scratch;
-							if (absZ < absX) {
-								scratch = func_801269BC_13596C(x, arg2, *arg4, *arg5, entity.vehicle->unk0, entity.vehicle->unk2);
+							dy = (-scratch < scratch) ? scratch : -scratch;
+							if (dy < absX) {
+								scratch = func_801269BC_13596C(arg1, arg2, *arg4, *arg5, entity.vehicle->unk0, entity.vehicle->unk2);
 								if (data.vehicle->unk8 < scratch) continue;
 							} else {
-								scratch = func_801269BC_13596C(z, arg2, *arg6, *arg5, entity.vehicle->unk4, entity.vehicle->unk2);
+								scratch = func_801269BC_13596C(arg3, arg2, *arg6, *arg5, entity.vehicle->unk4, entity.vehicle->unk2);
 								if (data.vehicle->unk8 < scratch) continue;
 							}
 							if (1) {}
@@ -1483,9 +1486,9 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 						}
 						case 1:
 							dx = (x - entity.vehicle->unk0) >> 2;
-							dy = (arg2 - entity.vehicle->unk2) >> 2;
+							y = (arg2 - entity.vehicle->unk2) >> 2;
 							dz = (z - entity.vehicle->unk4) >> 2;
-							scratch = (s32)((sqrtf((f32)((dx * dx) + (dy * dy) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
+							scratch = (s32)(((f32)(*arg5 - arg2) * sqrtf((f32)((dx * dx) + (y * y) + (dz * dz)) / pathDistSq)) + (f32)arg2);
 							y = entity.vehicle->unk2;
 							if ((scratch < y) || (scratch > (s32)y + data.vehicle->unk38)) continue;
 							hit.pointer->unk8 = 0;
@@ -1497,15 +1500,16 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							if (func_8010D4EC_11C49C((s16)x, (s16)z, &hitX, &hitZ, entity.vehicle) == 0) continue;
 							dx = (x - hitX) >> 2;
 							dz = (z - hitZ) >> 2;
-							scratch = (s32)((sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq) * (f32)(*arg5 - arg2)) + (f32)arg2);
+							scratch = (s32)(((f32)(*arg5 - arg2) * sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq)) + (f32)arg2);
 							y = entity.vehicle->unk2;
 							if ((scratch < y) || (scratch > (s32)y + data.vehicle->unk38)) continue;
 							hit.pointer->unk0 = hitX;
+							dx = hitZ;
+							if (exactHit) {}
 							bestDistF = (f32)distSqBest;
-							if (bestDistF) {}
-							hit.pointer->unk4 = hitZ;
 							hit.pointer->unk2 = (s16)scratch;
-							exactHit = 1;
+							exactHit = 1 + (dx * 0);
+							hit.pointer->unk4 = (u32)dx & 0x7FFFFFFFU;
 							break;
 						default:
 							bestDistF = (f32)distSqBest;
@@ -1515,21 +1519,21 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 				}
 
 				dx = (x - entity.vehicle->unk0) >> 2;
-				dy = (arg2 - entity.vehicle->unk2) >> 2;
+				y = (arg2 - entity.vehicle->unk2) >> 2;
 				dz = (z - entity.vehicle->unk4) >> 2;
-				objDist = (dx * dx) + (dy * dy) + (dz * dz);
+				objDist = (dx * dx) + (y * y) + (dz * dz);
 				if (objDist < bestDistF) {
 					lineDistBest = lineDist;
 					if (D_801591A8 != 0) D_80158FE4 = entity.vehicle;
-					scratch = hit.pointer->unk8;
 					objThreshold = data.vehicle->unk8;
 					distSqBest = objDist;
 
-					if (scratch == 0) {
+					if (D_8015F9D0.unk8 == 0) {
 						hit.pointer->unk0 = entity.vehicle->unk0;
 						hit.pointer->unk2 = entity.vehicle->unk2;
-						hit.pointer->unk4 = entity.vehicle->unk4;
+						hitCoordinate = entity.vehicle->unk4;
 						exactHit = 0;
+						hit.pointer->unk4 = (u32)hitCoordinate & 0x7FFFFFFFU; /* Keep the signed load in the temporary register. */
 					}
 					hit.pointer->vehicle = entity.vehicle;
 					hit.pointer->unk8 = 5;
@@ -1539,44 +1543,43 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 	}
 
 	hit.bits = (s32)&D_8015F9D0; if (hit.bits) {}
-	entity.alien = &alienInstances[0xFE];
-	vehicleCount = 0xFE;
+	vehicleCount = 0xFE + (x * 0); if (vehicleCount) {} /* Preserve the countdown register. */ entity.alien = &alienInstances[0xFE];
 	do {
 		if ((arg0 != entity.alien) && (func_8012235C_13130C((Unk8004D0F8 *)entity.alien) != 0)
 			&& ((func_80122320_1312D0((s32)entity.alien) == 0) || (func_80122320_1312D0((s32)arg0) == 0))
 			&& (entity.alien->unk0 >= minX) && (entity.alien->unk0 <= maxX) && (entity.alien->unk4 >= minZ) && (entity.alien->unk4 <= maxZ)) {
 			data.alien = &alienTypes[entity.alien->typeIndex];
-			lineDist = func_801269BC_13596C(x, z, *arg4, *arg6, entity.alien->unk0, entity.alien->unk4);
+			lineDist = func_801269BC_13596C(arg1, arg3, *arg4, *arg6, entity.alien->unk0, entity.alien->unk4);
 			if (lineDist < data.alien->unk8) {
 				if ((data.alien->unk16 & 0xF) == 0) {
 					ax = x - *arg4;
-							absX = (-ax < ax) ? ax : -ax;
-							scratch = z - *arg6;
+					dy = (-ax < ax) ? ax : -ax;
+					scratch = z - *arg6;
 					absZ = (-scratch < scratch) ? scratch : -scratch;
-					if (absZ < absX) {
-						scratch = func_801269BC_13596C(x, arg2, *arg4, *arg5, entity.alien->unk0, entity.alien->unk2);
+					if (absZ < dy) {
+						scratch = func_801269BC_13596C(arg1, arg2, *arg4, *arg5, entity.alien->unk0, entity.alien->unk2);
 					} else {
-						scratch = func_801269BC_13596C(z, arg2, *arg6, *arg5, entity.alien->unk4, entity.alien->unk2);
+						scratch = func_801269BC_13596C(arg3, arg2, *arg6, *arg5, entity.alien->unk4, entity.alien->unk2);
 					}
 					if (data.alien->unk8 < scratch) {
 						continue;
 					}
 				}
 				dx = (x - entity.alien->unk0) >> 2;
-					scratch = (arg2 - entity.alien->unk2) >> 2;
+					y = (arg2 - entity.alien->unk2) >> 2;
 				dz = (z - entity.alien->unk4) >> 2;
 				if ((data.alien->unk16 & 0xF) == 1) {
-					absX = (s32)((sqrtf((f32)((dx * dx) + (scratch * scratch) + (dz * dz)) / pathDistSq)
-						* (f32)(*arg5 - arg2)) + (f32)arg2);
-					absZ = entity.alien->unk2;
+					ax = (s32)(((f32)(*arg5 - arg2)
+						* sqrtf((f32)((dx * dx) + (y * y) + (dz * dz)) / pathDistSq)) + (f32)arg2);
+					hitCoordinate = entity.alien->unk2;
 					if ((data.alien->unk16 & 0x10) != 0) {
-						absZ -= data.alien->unk38;
+						hitCoordinate -= data.alien->unk38;
 					}
-					if ((absX < (absZ - 0x14)) || (absX > (entity.alien->unk2 + data.alien->unk38 + 0x14))) {
+					if ((ax < (hitCoordinate - 0x14)) || (ax > (entity.alien->unk2 + data.alien->unk38 + 0x14))) {
 						continue;
 					}
 				}
-				objDist = (dx * dx) + (scratch * scratch) + (dz * dz);
+				objDist = (dx * dx) + (y * y) + (dz * dz);
 				if (objDist < (f32)distSqBest) {
 					if (D_801591A8 != 0) {
 						D_80158FEC = entity.alien;
@@ -1595,19 +1598,19 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 						entry = &D_80147090_156040[scratch];
 						func_80128428_1373D8(entity.alien, entry->x, entry->y, entry->z, &shadowX, &shadowY, &shadowZ);
 						data.radius = entry->radius * entry->radius;
-						objDist = func_801269BC_13596C(x, z, *arg4, *arg6, shadowX, shadowZ);
+						objDist = func_801269BC_13596C(arg1, arg3, *arg4, *arg6, shadowX, shadowZ);
 						if (objDist < (f32)data.radius) {
 							ax = x - *arg4;
-							absX = (-ax < ax) ? ax : -ax;
+							dy = (-ax < ax) ? ax : -ax;
 							scratch = z - *arg6;
 							absZ = (-scratch < scratch) ? scratch : -scratch;
-							if (absZ < absX) {
-								scratch = func_801269BC_13596C(x, arg2, *arg4, *arg5, shadowX, shadowY);
+							if (absZ < dy) {
+								scratch = func_801269BC_13596C(arg1, arg2, *arg4, *arg5, shadowX, shadowY);
 							} else {
-								scratch = func_801269BC_13596C(z, arg2, *arg6, *arg5, shadowZ, shadowY);
+								scratch = func_801269BC_13596C(arg3, arg2, *arg6, *arg5, shadowZ, shadowY);
 							}
 							if (scratch < data.radius) {
-								dx = (x - shadowX) >> 2;
+								dx = (arg1 - shadowX) >> 2;
 								dy = (arg2 - shadowY) >> 2;
 								dz = (z - shadowZ) >> 2;
 								if (((dx * dx) + (dy * dy) + (dz * dz)) < distSqBest) {
