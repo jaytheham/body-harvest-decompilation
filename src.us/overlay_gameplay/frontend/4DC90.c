@@ -515,9 +515,7 @@ void func_8007EE0C_4F2BC(FrontendCamEntry* arg0) {
 	}
 }
 
-/**
- * @brief Initializes the global frontend playback block (D_800D7A18) from a pointer-to-pointer source.
- */
+// AI - Initializes the global frontend playback block (D_800D7A18) from a pointer-to-pointer source.
 void func_8007EE8C_4F33C(s32** arg0) {
 	D_800D7A18[2] = 0;
 	if (*arg0 != 0) {
@@ -814,9 +812,6 @@ void func_8007F830_4FCE0(Unk80080588Entry1C* arg0) {
 	}
 }
 
-/**
- * @brief Initializes a small frontend playback/state block from a source descriptor.
- */
 void func_8007FB90_50040(s32* arg0, s32* arg1) {
 	arg0[2] = 0;
 	if (arg1[0] != 0) {
@@ -1649,9 +1644,7 @@ void func_80081F9C_5244C(void) {
 	D_800949D4_64E84 = (index + 1) % 4;
 }
 
-/**
- * @brief Dampens D_800D8528 by 87.5% and reverses direction, zeroing if below threshold.
- */
+// AI - Dampens D_800D8528 by 87.5% and reverses direction, zeroing if below threshold.
 void func_80081FF0_524A0(void) {
 	f32 absVal;
 
