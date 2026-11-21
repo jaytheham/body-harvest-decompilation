@@ -37,6 +37,166 @@ typedef enum FrontEndState
 		FE_STATE_LANGUAGE_SELECT = 0x18
 } FrontEndState;
 
+#ifndef VERSION_EU
+const char D_800AD0F0_7D5A0[] = "";
+const char D_800AD0F4_7D5A4[] = "Credits";
+const char D_800AD0FC_7D5AC[] = "";
+const char D_800AD100_7D5B0[] = "";
+const char D_800AD104_7D5B4[] = "Project Leader";
+const char D_800AD114_7D5C4[] = "John Whyte";
+const char D_800AD120_7D5D0[] = "";
+const char D_800AD124_7D5D4[] = "Game Programmers";
+const char D_800AD138_7D5E8[] = "Adam Fowler";
+const char D_800AD144_7D5F4[] = "Alan Campbell";
+const char D_800AD154_7D604[] = "Frank Arnot";
+const char D_800AD160_7D610[] = "Grant Clarke";
+const char D_800AD170_7D620[] = "Doug Smith";
+const char D_800AD17C_7D62C[] = "Andrew West";
+const char D_800AD188_7D638[] = "Andy J S Innes";
+const char D_800AD198_7D648[] = "";
+const char D_800AD19C_7D64C[] = "Game and Editor Programmer";
+const char D_800AD1B8_7D668[] = "John Gurney";
+const char D_800AD1C4_7D674[] = "";
+const char D_800AD1C8_7D678[] = "Lead Artist";
+const char D_800AD1D4_7D684[] = "Stacey Jamieson";
+const char D_800AD1E4_7D694[] = "";
+const char D_800AD1E8_7D698[] = "Alien Artist";
+const char D_800AD1F8_7D6A8[] = "Alan Davidson";
+const char D_800AD208_7D6B8[] = "";
+const char D_800AD20C_7D6BC[] = "Artwork";
+const char D_800AD214_7D6C4[] = "Craig Moore";
+const char D_800AD220_7D6D0[] = "Ian McQue";
+const char D_800AD22C_7D6DC[] = "Pat McGovern";
+const char D_800AD23C_7D6EC[] = "Paul Reeves";
+const char D_800AD248_7D6F8[] = "";
+const char D_800AD24C_7D6FC[] = "Audio Programmers";
+const char D_800AD260_7D710[] = "Ciaran Rooney";
+const char D_800AD270_7D720[] = "Raymond Usher";
+const char D_800AD280_7D730[] = "";
+const char D_800AD284_7D734[] = "Music and Sound effects";
+const char D_800AD29C_7D74C[] = "Stuart Ross";
+const char D_800AD2A8_7D758[] = "Allan Walker";
+const char D_800AD2B8_7D768[] = "";
+const char D_800AD2BC_7D76C[] = "Editor Programming";
+const char D_800AD2D0_7D780[] = "Graeme Anderson";
+const char D_800AD2E0_7D790[] = "";
+const char D_800AD2E4_7D794[] = "Level Design";
+const char D_800AD2F4_7D7A4[] = "Richard Ralfe";
+const char D_800AD304_7D7B4[] = "Lorne Campbell";
+const char D_800AD314_7D7C4[] = "Mike Stirling";
+const char D_800AD324_7D7D4[] = "";
+const char D_800AD328_7D7D8[] = "Game Design";
+const char D_800AD334_7D7E4[] = "John Whyte";
+const char D_800AD340_7D7F0[] = "Alan Davidson";
+const char D_800AD350_7D800[] = "Richard Ralfe";
+const char D_800AD360_7D810[] = "Lorne Campbell";
+const char D_800AD370_7D820[] = "Stacey Jamieson";
+const char D_800AD380_7D830[] = "Adam Fowler";
+const char D_800AD38C_7D83C[] = "EAD Japan";
+const char D_800AD398_7D848[] = "";
+const char D_800AD39C_7D84C[] = "DMA Quality Assurance";
+const char D_800AD3B4_7D864[] = "Craig Arbuthnott";
+const char D_800AD3C8_7D878[] = "Steve Taylor";
+const char D_800AD3D8_7D888[] = "Allen Shiels";
+const char D_800AD3E8_7D898[] = "Sean Taylor";
+const char D_800AD3F4_7D8A4[] = "Alan Dobson";
+const char D_800AD400_7D8B0[] = "William Mills";
+const char D_800AD410_7D8C0[] = "Sean Brown";
+const char D_800AD41C_7D8CC[] = "";
+const char D_800AD420_7D8D0[] = "Gremlin Quality Assurance";
+const char D_800AD43C_7D8EC[] = "Carl Cavers";
+const char D_800AD448_7D8F8[] = "Jon Watson";
+const char D_800AD454_7D904[] = "Julia Sturman";
+const char D_800AD464_7D914[] = "Travis Ryan";
+const char D_800AD470_7D920[] = "Les Dungate";
+const char D_800AD47C_7D92C[] = "Daniel Webster";
+const char D_800AD48C_7D93C[] = "Matthew Tucket";
+const char D_800AD49C_7D94C[] = "Andrew Wilson";
+const char D_800AD4AC_7D95C[] = "Stephen Woodward";
+const char D_800AD4C0_7D970[] = "Martin Berridge";
+const char D_800AD4D0_7D980[] = "Matthew Fu";
+const char D_800AD4DC_7D98C[] = "";
+const char D_800AD4E0_7D990[] = "Public Relations";
+const char D_800AD4F4_7D9A4[] = "Brian Baglow";
+const char D_800AD504_7D9B4[] = "";
+const char D_800AD508_7D9B8[] = "Localisation";
+const char D_800AD518_7D9C8[] = "Sarah Bennett";
+const char D_800AD528_7D9D8[] = "";
+const char D_800AD52C_7D9DC[] = "Development Manager";
+const char D_800AD540_7D9F0[] = "Jim Woods";
+const char D_800AD54C_7D9FC[] = "";
+const char D_800AD550_7DA00[] = "Boss and General Nuisance";
+const char D_800AD56C_7DA1C[] = "Dave Jones";
+const char D_800AD578_7DA28[] = "";
+const char D_800AD57C_7DA2C[] = "Thanks to:";
+const char D_800AD588_7DA38[] = "John Harrison";
+const char D_800AD598_7DA48[] = "Martin Good";
+const char D_800AD5A4_7DA54[] = "Robert Jeffrey";
+const char D_800AD5B4_7DA64[] = "Darren Baines";
+const char D_800AD5C4_7DA74[] = "Jeff Cairns";
+const char D_800AD5D0_7DA80[] = "Aaron Garbut";
+const char D_800AD5E0_7DA90[] = "Gary Thomson";
+const char D_800AD5F0_7DAA0[] = "Kenneth Fee";
+const char D_800AD5FC_7DAAC[] = "Craig Conner";
+const char D_800AD60C_7DABC[] = "Andy Strachan";
+const char D_800AD61C_7DACC[] = "Andy Hay";
+const char D_800AD628_7DAD8[] = "Liam O'Neill";
+const char D_800AD638_7DAE8[] = "Shoya Tanaka";
+const char D_800AD648_7DAF8[] = "EAD Nintendo Japan";
+const char D_800AD65C_7DB0C[] = "Gary Penn";
+const char D_800AD668_7DB18[] = "Mark Ettle";
+const char D_800AD674_7DB24[] = "Julian Glendinning";
+const char D_800AD688_7DB38[] = "Kevin Kelly";
+const char D_800AD694_7DB44[] = "Ian Thomson";
+const char D_800AD6A0_7DB50[] = "Corinne Cervetti";
+const char D_800AD6B4_7DB64[] = "";
+const char D_800AD6B8_7DB68[] = "";
+const char D_800AD6BC_7DB6C[] = "";
+const char D_800AD6C0_7DB70[] = "";
+const char D_800AD6C4_7DB74[] = "";
+const char D_800AD6C8_7DB78[] = "THE END";
+const char D_800AD6D0_7DB80[] = "";
+const char D_800AD6D4_7DB84[] = "";
+const char D_800AD6D8_7DB88[] = "";
+const char D_800AD6DC_7DB8C[] = "[ DMA Design 1998";
+const char D_800AD6F0_7DBA0[] = "";
+const char D_800AD6F4_7DBA4[] = "";
+const char D_800AD6F8_7DBA8[] = "";
+const char D_800AD6FC_7DBAC[] = "#";
+#else
+const char D_800AD8B0_7DD60[] =
+    "\000\000\000\000Credits\000\000\000\000\000\000\000\000\000Project Leader\000\000John Wh"
+    "yte\000\000\000\000\000\000Game Programmers\000\000\000\000Adam Fowler\000Alan Campbell"
+    "\000\000\000Frank Arnot\000Grant Clarke\000\000\000\000Doug Smith\000\000Andrew West\000"
+    "Andy J S Innes\000\000\000\000\000\000Game and Editor Programmer\000\000John Gurney\000"
+    "\000\000\000\000Lead Artist\000Stacey Jamieson\000\000\000\000\000Alien Artist\000\000"
+    "\000\000Alan Davidson\000\000\000\000\000\000\000Artwork\000Craig Moore\000Ian McQue\000"
+    "\000\000Pat McGovern\000\000\000\000Paul Reeves\000\000\000\000\000Audio Programmers\000"
+    "\000\000Ciaran Rooney\000\000\000Raymond Usher\000\000\000\000\000\000\000Music and Soun"
+    "d effects\000Stuart Ross\000Allan Walker\000\000\000\000\000\000\000\000Editor Programmi"
+    "ng\000\000Graeme Anderson\000\000\000\000\000Level Design\000\000\000\000Richard Ralfe"
+    "\000\000\000Lorne Campbell\000\000Mike Stirling\000\000\000\000\000\000\000Game Design"
+    "\000John Whyte\000\000Alan Davidson\000\000\000Richard Ralfe\000\000\000Lorne Campbell"
+    "\000\000Stacey Jamieson\000Adam Fowler\000EAD Japan\000\000\000\000\000\000\000DMA Quali"
+    "ty Assurance\000\000\000Craig Arbuthnott\000\000\000\000Steve Taylor\000\000\000\000Alle"
+    "n Shiels\000\000\000\000Sean Taylor\000Alan Dobson\000William Mills\000\000\000Sean Brow"
+    "n\000\000\000\000\000\000Gremlin Quality Assurance\000\000\000Carl Cavers\000Jon Watson"
+    "\000\000Julia Sturman\000\000\000Travis Ryan\000Les Dungate\000Daniel Webster\000\000Mat"
+    "thew Tucket\000\000Andrew Wilson\000\000\000Stephen Woodward\000\000\000\000Martin Berri"
+    "dge\000Matthew Fu\000\000\000\000\000\000Public Relations\000\000\000\000Brian Baglow"
+    "\000\000\000\000\000\000\000\000Localisation\000\000\000\000Sarah Bennett\000\000\000"
+    "\000\000\000\000Development Manager\000Jim Woods\000\000\000\000\000\000\000Boss and Gen"
+    "eral Nuisance\000\000\000Dave Jones\000\000\000\000\000\000Thanks to:\000\000John Harris"
+    "on\000\000\000Martin Good\000Robert Jeffrey\000\000Darren Baines\000\000\000Jeff Cairns"
+    "\000Aaron Garbut\000\000\000\000Gary Thomson\000\000\000\000Kenneth Fee\000Craig Conner"
+    "\000\000\000\000Andy Strachan\000\000\000Andy Hay\000\000\000\000Liam O'Neill\000\000"
+    "\000\000Shoya Tanaka\000\000\000\000EAD Nintendo Japan\000\000Gary Penn\000\000\000Mark "
+    "Ettle\000\000Julian Glendinning\000\000Kevin Kelly\000Ian Thomson\000Corinne Cervetti"
+    "\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000"
+    "\000\000THE END\000\000\000\000\000\000\000\000\000\000\000\000\000[ DMA Design 1998\000"
+    "\000\000\000\000\000\000\000\000\000\000\000\000\000\000#\000\000";
+#endif
+
 // Frontend animation/frame data
 s16 D_800946E0_64B90[0x70] = {
     0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
@@ -57,17 +217,17 @@ s16 D_800946E0_64B90[0x70] = {
 
 // Weapon selection text pointers
 s32 D_800947C0_64C70[6] = {
-    0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)D_800AD700_7DBB0,
+    0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)"",
 };
 s32 D_800947D8_64C88[3] = {
-    (s32)D_800AD704_7DBB4, (s32)D_800AD70C_7DBBC, (s32)D_800AD718_7DBC8,
+    (s32)"Fuel", (s32)"Carburant", (s32)"Sprit",
 };
 s32 D_800947E4_64C94[3] = {
-    (s32)D_800AD720_7DBD0, (s32)D_800AD734_7DBE4, (s32)D_800AD73C_7DBEC,
+    (s32)"Vehicle Weapon 1", (s32)"Arme 1", (s32)"Waffe 1",
 };
 s32 D_800947F0_64CA0[13] = {
-    (s32)D_800AD744_7DBF4, (s32)D_800AD758_7DC08, (s32)D_800AD760_7DC10, (s32)D_800AD768_7DC18, (s32)D_800AD774_7DC24,
-    (s32)D_800AD780_7DC30, (s32)D_800AD790_7DC40, (s32)D_800AD79C_7DC4C, (s32)D_800AD7AC_7DC5C, (s32)D_800AD7B0_7DC60,
+    (s32)"Vehicle Weapon 2", (s32)"Arme 2", (s32)"Waffe 2", (s32)"Chaingun", (s32)"Fragcannon",
+    (s32)"Lazer Missiles", (s32)"Resonator", (s32)"Plasma Bombs", (s32)"", (s32)"",
     0x00000000, 0x00000000, 0x00000000,
 };
 
@@ -185,7 +345,7 @@ void func_80070514_409C4(s16 arg0)
 	new_var2 = &D_800D6DC0[var_v1];
 	if (var_v1 == -1)
 	{
-		osSyncPrintf(D_800AD7B4_7DC64);
+		osSyncPrintf("ERROR: No free windows\n");
 		return;
 	}
 	temp_a0 = new_var2;
@@ -248,7 +408,7 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 	}
 	newSource = &D_800909B0[arg0];
 	if (index == -1) {
-		osSyncPrintf(D_800AD7CC_7DC7C);
+		osSyncPrintf("ERROR: No free windows\n");
 		return NULL;
 	}
 	entry = &D_800D6DC0[index];
@@ -727,7 +887,7 @@ s32 func_80071760_41C10(s32 arg0)
 	digitCount = 0;
 	totalWidth = 0;
 	value = arg0;
-	textWidth = func_8000A2B8_AEB8(D_800AD7E4_7DC94, 0) * 0x1C;
+	textWidth = func_8000A2B8_AEB8("7", 0) * 0x1C;
 	while (value > 0)
 	{
 		value = value / 10.0f;
@@ -748,7 +908,7 @@ s32 func_80071760_41C10(s32 arg0)
 	}
 	if (arg0 == 0)
 	{
-		totalWidth = func_8000A2B8_AEB8(D_800AD7E8_7DC98, 0) * 4;
+		totalWidth = func_8000A2B8_AEB8("0", 0) * 4;
 	}
 	return textWidth - totalWidth;
 }
@@ -1416,8 +1576,8 @@ void func_800731A8_43658(void)
 					bodyValue = (s16)(s32)((f32)(temp_v0 << 0xA) / (f32)var_s4->unkC);
 				}
 				spE8[0] = (s16)(s32)((f32)(temp_s6 << 0xA) / (f32)temp_v0_2);
-				drawText(D_800AD7EC_7DC9C, spE7, spE6, spE5, 0xFF);
-				drawText(D_800AD7F4_7DCA4, bodyValue, spE8[0], temp_fp + var_s4->unk1E + D_8009485C_64D0C, temp_s3 + var_s4->unk20);
+				drawText("%C%a", spE7, spE6, spE5, 0xFF);
+				drawText("%H%V%X%Y", bodyValue, spE8[0], temp_fp + var_s4->unk1E + D_8009485C_64D0C, temp_s3 + var_s4->unk20);
 				switch (D_800313D0_31FD0)
 				{
 				default:
@@ -1441,113 +1601,113 @@ void func_800731A8_43658(void)
 				switch (temp_v1_13)
 				{
 				case 0x0:
-					drawText(D_800AD800_7DCB0, -1, -1, &D_800AED70[D_800AED74[0]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[0]]);
 
 				case 0x1:
-					drawText(D_800AD808_7DCB8, -1, -1, &D_800AED70[D_800AED74[1]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[1]]);
 
 				case 0x2:
-					drawText(D_800AD810_7DCC0, -1, -1, &D_800AED70[D_800AED74[2]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[2]]);
 
 				case 0x3:
-					drawText(D_800AD818_7DCC8, -1, -1, &D_800AED70[D_800AED74[3]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[3]]);
 
 				case 0x4:
-					drawText(D_800AD820_7DCD0, -1, -1, &D_800AED70[D_800AED74[4]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[4]]);
 
 				case 0x5:
-					drawText(D_800AD828_7DCD8, -1, -1, &D_800AED70[D_800AED74[5]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[5]]);
 					break;
 				case 0x6:
 					switch (D_800313D0_31FD0)
 					{
 					default:
 					case 0x0:
-						drawText(D_800AD830_7DCE0, -1, -1, D_800D6DA8, 0xA, -1, D_800314F0_320F0[*D_800D6D90]);
+						drawText("%@%s%@%s", -1, -1, D_800D6DA8, 0xA, -1, D_800314F0_320F0[*D_800D6D90]);
 						break;
 					case 0x1:
-						drawText(D_800AD83C_7DCEC, -1, -1, D_800D6DA8, 0xA, -1, D_80031508_32108[*D_800D6D90]);
+						drawText("%@%s%@%s", -1, -1, D_800D6DA8, 0xA, -1, D_80031508_32108[*D_800D6D90]);
 						break;
 					case 0x2:
-						drawText(D_800AD848_7DCF8, -1, -1, D_800D6DA8, 8, -1, D_80031520_32120[*D_800D6D90]);
+						drawText("%@%s%@%s", -1, -1, D_800D6DA8, 8, -1, D_80031520_32120[*D_800D6D90]);
 						break;
 					}
 					textWidth = func_80071760_41C10(*D_800D6D98);
-					drawText(D_800AD854_7DD04, 0x14, -1, temp_fp + var_s4->unk1E + textWidth + 0x2C, *D_800D6D98);
+					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + textWidth + 0x2C, *D_800D6D98);
 					break;
 				case 0x7:
 					switch (D_800313D0_31FD0)
 					{
 					default:
 					case 0x0:
-						drawText(D_800AD85C_7DD0C, -1, -1, D_800D6DA8[1], 0xA, -1, D_800314F0_320F0[D_800D6D90[1]]);
+						drawText("%@%s%@%s", -1, -1, D_800D6DA8[1], 0xA, -1, D_800314F0_320F0[D_800D6D90[1]]);
 						break;
 					case 0x1:
-						drawText(D_800AD868_7DD18, -1, -1, D_800D6DA8[1], 0xA, -1, D_80031508_32108[D_800D6D90[1]]);
+						drawText("%@%s%@%s", -1, -1, D_800D6DA8[1], 0xA, -1, D_80031508_32108[D_800D6D90[1]]);
 						break;
 					case 0x2:
-						drawText(D_800AD874_7DD24, -1, -1, D_800D6DA8[1], 8, -1, D_80031520_32120[D_800D6D90[1]]);
+						drawText("%@%s%@%s", -1, -1, D_800D6DA8[1], 8, -1, D_80031520_32120[D_800D6D90[1]]);
 						break;
 					}
 					textWidth = func_80071760_41C10(D_800D6D98[1]);
-					drawText(D_800AD880_7DD30, 0x14, -1, temp_fp + var_s4->unk1E + textWidth + 0x2C, D_800D6D98[1]);
+					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + textWidth + 0x2C, D_800D6D98[1]);
 					break;
 				case 0x8:
 					switch (D_800313D0_31FD0)
 					{
 					default:
 					case 0x0:
-						drawText(D_800AD888_7DD38, -1, -1, &D_800D6DB6, 0xA, -1, D_800314F0_320F0[(u8)D_800D6D92]);
+						drawText("%@%s%@%s", -1, -1, &D_800D6DB6, 0xA, -1, D_800314F0_320F0[(u8)D_800D6D92]);
 						break;
 					case 0x1:
-						drawText(D_800AD894_7DD44, -1, -1, &D_800D6DB6, 0xA, -1, D_80031508_32108[(u8)D_800D6D92]);
+						drawText("%@%s%@%s", -1, -1, &D_800D6DB6, 0xA, -1, D_80031508_32108[(u8)D_800D6D92]);
 						break;
 					case 0x2:
-						drawText(D_800AD8A0_7DD50, -1, -1, &D_800D6DB6, 8, -1, D_80031520_32120[(u8)D_800D6D92]);
+						drawText("%@%s%@%s", -1, -1, &D_800D6DB6, 8, -1, D_80031520_32120[(u8)D_800D6D92]);
 						break;
 					}
 					textWidth = func_80071760_41C10(D_800D6DA0);
-					drawText(D_800AD8AC_7DD5C, 0x14, -1, temp_fp + var_s4->unk1E + textWidth + 0x2C, D_800D6DA0);
+					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + textWidth + 0x2C, D_800D6DA0);
 					break;
 				case 0x9:
-					drawText(D_800AD8B4_7DD64, -1, -1, &D_800AED70[D_800AED74[6]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[6]]);
 					break;
 				case 0xA:
-					drawText(D_800AD8BC_7DD6C, -1, -1, &D_800AED70[D_800AED74[7]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[7]]);
 					break;
 				case 0xB:
-					drawText(D_800AD8C4_7DD74, -1, -1, &D_800AED70[D_800AED74[8]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[8]]);
 					break;
 				case 0xC:
-					drawText(D_800AD8CC_7DD7C, -1, -1, &D_800AED70[D_800AED74[9]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[9]]);
 					break;
 				case 0xD:
-					drawText(D_800AD8D4_7DD84, -1, -1, &D_800AED70[D_800AED74[10]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[10]]);
 					break;
 				case 0xE:
-					drawText(D_800AD8DC_7DD8C, -1, -1, &D_800AED70[D_800AED74[8]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[8]]);
 					break;
 				case 0xF:
-					drawText(D_800AD8E4_7DD94, -1, -1, &D_800AED70[D_800AED74[11]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[11]]);
 					break;
 				case 0x10:
-					drawText(D_800AD8EC_7DD9C, -1, -1, &D_800AED70[D_800AED74[12]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[12]]);
 					break;
 				case 0x11:
 					temp_t6 = (u32)(D_80031420_32020 & 0x60) >> 5;
 					switch (temp_t6)
 					{
 					case 0x0:
-						drawText(D_800AD8F4_7DDA4, -1, -1, &D_800AED70[D_800AED74[13]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[13]]);
 						break;
 					case 0x1:
-						drawText(D_800AD8FC_7DDAC, -1, -1, &D_800AED70[D_800AED74[14]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[14]]);
 						break;
 					case 0x2:
-						drawText(D_800AD904_7DDB4, -1, -1, &D_800AED70[D_800AED74[15]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[15]]);
 						break;
 					case 0x3:
-						drawText(D_800AD90C_7DDBC, -1, -1, &D_800AED70[D_800AED74[16]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[16]]);
 						break;
 					}
 					break;
@@ -1556,27 +1716,27 @@ void func_800731A8_43658(void)
 					switch (temp_t9)
 					{
 					case 0x0:
-						drawText(D_800AD914_7DDC4, -1, -1, &D_800AED70[D_800AED74[17]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[17]]);
 						break;
 					case 0x1:
-						drawText(D_800AD91C_7DDCC, -1, -1, &D_800AED70[D_800AED74[18]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[18]]);
 						break;
 					case 0x2:
-						drawText(D_800AD924_7DDD4, -1, -1, &D_800AED70[D_800AED74[19]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[19]]);
 						break;
 					case 0x3:
-						drawText(D_800AD92C_7DDDC, -1, -1, &D_800AED70[D_800AED74[20]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[20]]);
 						break;
 					}
 					break;
 				case 0x13:
 					if (D_80031420_32020 & 4)
 					{
-						drawText(D_800AD934_7DDE4, -1, -1, &D_800AED70[D_800AED74[21]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[21]]);
 					}
 					else
 					{
-						drawText(D_800AD93C_7DDEC, -1, -1, &D_800AED70[D_800AED74[22]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[22]]);
 					}
 					break;
 				case 0x14:
@@ -1584,39 +1744,39 @@ void func_800731A8_43658(void)
 					switch (temp_t7)
 					{
 					case 0x0:
-						drawText(D_800AD944_7DDF4, -1, -1, &D_800AED70[D_800AED74[23]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[23]]);
 						break;
 					case 0x1:
-						drawText(D_800AD94C_7DDFC, -1, -1, &D_800AED70[D_800AED74[24]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[24]]);
 						break;
 					case 0x3:
-						drawText(D_800AD954_7DE04, -1, -1, &D_800AED70[D_800AED74[25]]);
+						drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[25]]);
 						break;
 					}
 					break;
 				case 0x15:
-					drawText(D_800AD95C_7DE0C, -1, -1, &D_800AED70[D_800AED74[11]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[11]]);
 					break;
 				case 0x16:
-					drawText(D_800AD964_7DE14, -1, -1, &D_800AED70[D_800AED74[26]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[26]]);
 					break;
 				case 0x17:
-					drawText(D_800AD96C_7DE1C, -1, -1, &D_800AED70[D_800AED74[27]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[27]]);
 					break;
 				case 0x18:
-					drawText(D_800AD974_7DE24, -1, -1, &D_800AED70[D_800AED74[28]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[28]]);
 					break;
 				case 0x19:
-					drawText(D_800AD97C_7DE2C, -1, -1, &D_800AED70[D_800AED74[29]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[29]]);
 					break;
 				case 0x1A:
-					drawText(D_800AD984_7DE34, -1, -1, &D_800AED70[D_800AED74[29]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[29]]);
 					break;
 				case 0x1B:
-					drawText(D_800AD98C_7DE3C, -1, -1, &D_800AED70[D_800AED74[30]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[30]]);
 					break;
 				case 0x1C:
-					drawText(D_800AD994_7DE44, -1, -1, &D_800AED70[D_800AED74[31]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[31]]);
 					break;
 				case 0x1D:
 				case 0x1E:
@@ -1644,45 +1804,45 @@ void func_800731A8_43658(void)
 				case 0x34:
 				case 0x35:
 				case 0x36:
-					drawText(D_800AD99C_7DE4C, -1, -1, temp_v1_13 + 0x24);
+					drawText("%@%c", -1, -1, temp_v1_13 + 0x24);
 					break;
 				case 0x37:
-					drawText(D_800AD9A4_7DE54, -1, -1, 0x7C);
+					drawText("%@%c", -1, -1, 0x7C);
 					break;
 				case 0x38:
-					drawText(D_800AD9AC_7DE5C, -1, -1, 0x7B);
+					drawText("%@%c", -1, -1, 0x7B);
 					break;
 				case 0x39:
-					drawText(D_800AD9B4_7DE64, -1, -1, D_80047FA8);
+					drawText("%@%s", -1, -1, D_80047FA8);
 					break;
 				case 0x3A:
-					drawText(D_800AD9BC_7DE6C, -1, -1, &D_800AED70[D_800AED74[32]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[32]]);
 					break;
 				case 0x3B:
-					drawText(D_800AD9C4_7DE74, -1, -1, &D_800AED70[D_800AED74[33]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[33]]);
 					break;
 				case 0x3C:
-					drawText(D_800AD9CC_7DE7C, -1, -1, &D_800AED70[D_800AED74[34]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[34]]);
 					break;
 				case 0x3D:
-					drawText(D_800AD9D4_7DE84, -1, -1, &D_800AED70[D_800AED74[35]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[35]]);
 					break;
 				case 0x3E:
-					drawText(D_800AD9DC_7DE8C, -1, -1, &D_800AED70[D_800AED74[36]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[36]]);
 					break;
 				case 0x3F:
-					drawText(D_800AD9E4_7DE94, -1, -1, &D_800AED70[D_800AED74[37]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[37]]);
 					break;
 				case 0x40:
-					drawText(D_800AD9EC_7DE9C, -1, -1, &D_800AED70[D_800AED74[38]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
 					func_80071900_41DB0(0x4F, 0x7E, var_f20, spEC);
 					break;
 				case 0x41:
-					drawText(D_800AD9F4_7DEA4, -1, -1, &D_800AED70[D_800AED74[39]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
 					func_80072E18_432C8(0xB4, -0x3C, -0x190, var_f20);
 					break;
 				case 0x42:
-					drawText(D_800AD9FC_7DEAC, -1, -1, &D_800AED70[D_800AED74[40]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[40]]);
 					break;
 				case 0x43:
 					temp_v0_14 = func_80070420_408D0();
@@ -1708,89 +1868,89 @@ void func_800731A8_43658(void)
 					}
 					if ((var_t0_3 < 0xAU) && (var_t1_3 < 0xAU) && (var_t2 < 0xAU))
 					{
-						drawText(D_800ADA04_7DEB4, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s 0%d:0%d:0%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else if ((var_t1_3 < 0xAU) && (var_t2 < 0xAU))
 					{
-						drawText(D_800ADA18_7DEC8, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s %d:0%d:0%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else if ((var_t0_3 < 0xAU) && (var_t1_3 < 0xAU))
 					{
-						drawText(D_800ADA28_7DED8, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s 0%d:0%d:%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else if ((var_t0_3 < 0xAU) && (var_t2 < 0xAU))
 					{
-						drawText(D_800ADA38_7DEE8, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s 0%d:%d:0%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else if (var_t0_3 < 0xAU)
 					{
-						drawText(D_800ADA48_7DEF8, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s 0%d:%d:%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else if (var_t1_3 < 0xAU)
 					{
-						drawText(D_800ADA58_7DF08, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s %d:0%d:%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else if (var_t2 < 0xAU)
 					{
-						drawText(D_800ADA68_7DF18, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s %d:%d:0%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					else
 					{
-						drawText(D_800ADA78_7DF28, bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
+						drawText("%@%s %d:%d:%d", bodyValue, 0, &D_800AED70[D_800AED74[41]], var_t0_3, var_t1_3, var_t2);
 					}
 					if (D_800313D0_31FD0 == 1)
 					{
 						temp_lo_3 = (s32)(D_8004816A * 0x64) / (s32)(u8)D_800314C4;
-						drawText(D_800ADA88_7DF38, -2, 0, &D_800AED70[D_800AED74[42]], (temp_lo_3 > 0x64 ? 0x64 : temp_lo_3));
+						drawText("%@%s %d%%", -2, 0, &D_800AED70[D_800AED74[42]], (temp_lo_3 > 0x64 ? 0x64 : temp_lo_3));
 					}
 					else
 					{
 						temp_lo_4 = (s32)(D_8004816A * 0x64) / (s32)(u8)D_800314C4;
-						drawText(D_800ADA94_7DF44, -1, 0, &D_800AED70[D_800AED74[42]], (temp_lo_4 > 0x64 ? 0x64 : temp_lo_4));
+						drawText("%@%s %d%%", -1, 0, &D_800AED70[D_800AED74[42]], (temp_lo_4 > 0x64 ? 0x64 : temp_lo_4));
 					}
 					if (bodyValue) {}
 					switch (D_800313D0_31FD0)
 					{
 					default:
 					case 0x0:
-						drawText(D_800ADAA0_7DF50, -1, -1, D_80047FA8, 0xA, -1, D_800314F0_320F0[currentLevel]);
+						drawText("%@%s%@%s", -1, -1, D_80047FA8, 0xA, -1, D_800314F0_320F0[currentLevel]);
 						break;
 					case 0x1:
-						drawText(D_800ADAAC_7DF5C, -1, -1, D_80047FA8, 0xA, -1, D_80031508_32108[currentLevel]);
+						drawText("%@%s%@%s", -1, -1, D_80047FA8, 0xA, -1, D_80031508_32108[currentLevel]);
 						break;
 					case 0x2:
-						drawText(D_800ADAB8_7DF68, -1, -1, D_80047FA8, 8, -1, D_80031520_32120[currentLevel]);
+						drawText("%@%s%@%s", -1, -1, D_80047FA8, 8, -1, D_80031520_32120[currentLevel]);
 						break;
 					}
 					bodyValue = (s16)func_80071760_41C10(func_80070390_40840());
-					drawText(D_800ADAC4_7DF74, 0x14, -1, temp_fp + var_s4->unk1E + bodyValue + 0x2C, func_80070390_40840());
+					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + bodyValue + 0x2C, func_80070390_40840());
 					break;
 				case 0x44:
-					drawText(D_800ADACC_7DF7C, -1, -1, &D_800AED70[D_800AED74[38]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
 					func_80071900_41DB0(0x4F, 0x83, var_f20, spEC);
 					break;
 				case 0x45:
-					drawText(D_800ADAD4_7DF84, -1, -1, &D_800AED70[D_800AED74[39]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
 					func_80072E18_432C8(0xB4, -0x3C, -0x190, var_f20);
 					break;
 				case 0x46:
-					drawText(D_800ADADC_7DF8C, -1, -1, &D_800AED70[D_800AED74[43]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[43]]);
 					break;
 				case 0x47:
-					drawText(D_800ADAE4_7DF94, -1, -1, &D_800AED70[D_800AED74[44]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[44]]);
 					break;
 				case 0x48:
-					drawText(D_800ADAEC_7DF9C, -1, -1, &D_800AED70[D_800AED74[45]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[45]]);
 					break;
 				case 0x49:
-					drawText(D_800ADAF4_7DFA4, -1, -1, &D_800AED70[D_800AED74[46]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[46]]);
 					break;
 				case 0x4A:
-					drawText(D_800ADAFC_7DFAC, -1, -1, &D_800AED70[D_800AED74[47]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[47]]);
 					func_80071E80_42330(0xD7, 0x78, var_f20, spEC);
 					break;
 				case 0x4B:
-					drawText(D_800ADB04_7DFB4, -1, -1, &D_800AED70[D_800AED74[48]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[48]]);
 					if (D_800D74AC == 0xC)
 					{
 						switch (D_800313D0_31FD0)
@@ -1816,31 +1976,31 @@ void func_800731A8_43658(void)
 							break;
 						}
 						sp64 = var_t0_4;
-						drawText(D_800ADB0C_7DFBC, 0, 0, 0, 0xFF);
+						drawText("%C%a", 0, 0, 0, 0xFF);
 						temp_v1_14 = (D_80048026 & 1) + (((s16)D_80048026 >> 1) & 1) + (((s16)D_80048026 >> 2) & 1);
 						if (D_800313D0_31FD0 == 2)
 						{
 							sp64 = var_t0_4;
-							drawText(D_800ADB14_7DFC4, -1, -1, 0x5A, 0x17C, temp_v1_14);
+							drawText("%@%X%YGriechen.: %d:3", -1, -1, 0x5A, 0x17C, temp_v1_14);
 						}
 						else
 						{
 							sp64 = var_t0_4;
-							drawText(D_800ADB2C_7DFDC, -1, -1, 0x5A, 0x17C, bodyValue, temp_v1_14);
+							drawText("%@%X%Y%s: %d:3", -1, -1, 0x5A, 0x17C, bodyValue, temp_v1_14);
 						}
 						temp_v1_14 = (((s16)D_80048026 >> 3) & 1) + (((s16)D_80048026 >> 4) & 1) + (((s16)D_80048026 >> 5) & 1);
-						drawText(D_800ADB3C_7DFEC, -1, -1, 0x5A, 0x1C2, sp64, temp_v1_14);
+						drawText("%@%X%Y%s: %d:3", -1, -1, 0x5A, 0x1C2, sp64, temp_v1_14);
 						temp_v1_14 = (((s16)D_80048026 >> 6) & 1) + (((s16)D_80048026 >> 7) & 1) + (((s16)D_80048026 >> 8) & 1);
-						drawText(D_800ADB4C_7DFFC, -1, -1, 0x5A, 0x208, sp60, temp_v1_14);
+						drawText("%@%X%Y%s: %d:3", -1, -1, 0x5A, 0x208, sp60, temp_v1_14);
 #if defined(VERSION_EU)
 						if (!(D_80052ACD & 0x80)) {
 #endif
 						temp_v1_14 = (((s16)D_80048026 >> 9) & 1) + (((s16)D_80048026 >> 0xA) & 1) + (((s16)D_80048026 >> 0xB) & 1);
-						drawText(D_800ADB5C_7E00C, -1, -1, 0x5A, 0x24E, sp5C, temp_v1_14);
+						drawText("%@%X%Y%s: %d:3", -1, -1, 0x5A, 0x24E, sp5C, temp_v1_14);
 #if defined(VERSION_EU)
 						}
 #endif
-						drawText(D_800ADB6C_7E01C, -1, -1);
+						drawText("%@", -1, -1);
 					}
 					func_80072B68_43018(-0xC8, -0x32, -0x190, var_f20);
 					break;
@@ -1908,8 +2068,8 @@ void func_800731A8_43658(void)
 						var_s5 = D_800947C0_64C70[weaponType];
 						break;
 					}
-					drawText(D_800ADB70_7E020, 0);
-					drawText(D_800ADB74_7E024, 0x80, -1, var_s5);
+					drawText("%X", 0);
+					drawText("%@%s", 0x80, -1, var_s5);
 					break;
 				case 0x4D:
 					if (D_800D74AC != 0)
@@ -2033,44 +2193,44 @@ void func_800731A8_43658(void)
 					{
 						var_s5 = (s32)&D_800AED70[D_800AED74[85]];
 					}
-					drawText(D_800ADB7C_7E02C, 0);
-					drawText(D_800ADB80_7E030, 0x80, -1, var_s5);
+					drawText("%X", 0);
+					drawText("%@%s", 0x80, -1, var_s5);
 					break;
 				case 0x4E:
-					drawText(D_800ADB88_7E038, -1, -1, &D_800AED70[D_800AED74[93]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[93]]);
 					break;
 				case 0x4F:
-					drawText(D_800ADB90_7E040, -1, -1);
+					drawText("%@Leviathan", -1, -1);
 					break;
 				case 0x50:
-					drawText(D_800ADB9C_7E04C, -1, -1);
+					drawText("%@Cerberus", -1, -1);
 					break;
 				case 0x51:
-					drawText(D_800ADBA8_7E058, -1, -1);
+					drawText("%@Moloch", -1, -1);
 					break;
 				case 0x52:
-					drawText(D_800ADBB4_7E064, -1, -1);
+					drawText("%@Beelzebub", -1, -1);
 					break;
 				case 0x53:
-					drawText(D_800ADBC0_7E070, -1, -1);
+					drawText("%@Tomegatherion", -1, -1);
 					break;
 				case 0x55:
-					drawText(D_800ADBD0_7E080, -1, -1);
+					drawText("%@Deutsch", -1, -1);
 					break;
 				case 0x56:
-					drawText(D_800ADBDC_7E08C, -1, -1);
+					drawText("%@English", -1, -1);
 					break;
 				case 0x57:
-					drawText(D_800ADBE8_7E098, -1, -1);
+					drawText("%@Fran\347ais", -1, -1);
 					break;
 				case 0x58:
-					drawText(D_800ADBF4_7E0A4, -1, -1, &D_800AED70[D_800AED74[96]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[96]]);
 					break;
 				case 0x59:
-					drawText(D_800ADBFC_7E0AC, -1, -1, &D_800AED70[D_800AED74[94]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[94]]);
 					break;
 				case 0x5A:
-					drawText(D_800ADC04_7E0B4, -1, -1, &D_800AED70[D_800AED74[95]]);
+					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[95]]);
 					break;
 				}
 			}
@@ -2100,7 +2260,7 @@ void func_800731A8_43658(void)
 		}
 	} while (var_s4++, var_s0--);
 	sp114[0] = var_s5;
-	drawText(D_800ADC0C_7E0BC, 0x400, 0x400, 0, 0);
+	drawText("%H%V%X%Y", 0x400, 0x400, 0, 0);
 }
 
 s32 D_8009485C_64D0C = 0;
@@ -2184,9 +2344,17 @@ void func_80075C84_46134(void) {
 				if (D_800D6DA8[2][3] == 0x4D) {
 					if (D_800D6DA8[2][4] == 0x4C) {
 						if (D_800D6DA8[2][2] == 0x49) {
-							drawText(&D_800ADC18_7E0C8, 0x14, 0x14, 0x12C, 0xF0);
-							drawText(&D_800ADC1C_7E0CC, 1, 0, &D_800ADC30_7E0E0, &D_800ADC3C_7E0EC);
-							drawText(&D_800ADC48_7E0F8, 1, 1);
+							drawText("%W", 0x14, 0x14, 0x12C, 0xF0);
+#ifdef VERSION_EU
+							drawText("%@Made: %s on %s\n", 1, 0, "10:59:24", "Aug 28 1998");
+#else
+							drawText("%@Made: %s on %s\n", 1, 0, "19:43:03", "Aug 27 1998");
+#endif
+#ifdef VERSION_EU
+							drawText("%@version F2.6 PAL", 1, 1);
+#else
+							drawText("%@version B6.5 Midway", 1, 1);
+#endif
 						}
 					}
 				}
@@ -2306,9 +2474,9 @@ s32 func_80076504_469B4(void)
   D_800D6D8C = 1;
   gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
   gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
-  drawText(D_800ADC60, 0xE6, 0xE6, 0xE6, 0xFF);
+  drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
   func_8007D7E0_4DC90();
-  osSyncPrintf(D_800ADC68);
+  osSyncPrintf("startup\n");
   func_80013684_14284();
   do
   {
@@ -2337,7 +2505,7 @@ s32 func_80076504_469B4(void)
   gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
   gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
   func_8007D7E0_4DC90();
-  osSyncPrintf(D_800ADC74);
+  osSyncPrintf("kiss sequence\n");
   do
   {
 	func_800791A0_49650(1);
@@ -2425,7 +2593,7 @@ s32 func_800768C4_46D74(void) {
 	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
 	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
 
-	drawText(D_800ADC84_7E134, 0xE6, 0xE6, 0xE6, 0xFF);
+	drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
 	func_8007D7E0_4DC90();
 	func_8007BFC4_4C474();
 
@@ -2607,10 +2775,10 @@ s16 func_80076C98_47148(void) {
 		if (currentSaveFileIndex < 3) {
 			guess_loadSavedGame(currentSaveFileIndex);
 			getSaveFileName(currentSaveFileIndex, saveFileName);
-			osSyncPrintf(&D_800ADC8C_7E13C, saveFileName);
+			osSyncPrintf("slot name: %s\n", saveFileName);
 			if (saveFileName[1] == 'm') {
 				result = 1;
-				osSyncPrintf(&D_800ADC9C_7E14C);
+				osSyncPrintf("empty slot!!!!!!!!!!!!!!!!!!!!!!!!!\n");
 			}
 
 			if (result < 5) {
@@ -3285,7 +3453,7 @@ s32 func_80077E88_48338(void) {
 	frameCounter = 0;
 	state = 1;
 	D_800D74A4 = D_800D74A6;
-	osSyncPrintf(D_800ADCC4_7E174, D_80047FA0 + 0x10, 0x13);
+	osSyncPrintf("locking windows %d to %d\n", D_80047FA0 + 0x10, 0x13);
 
 	while (state == 1) {
 		if (frameCounter < 0x3E8U) {
@@ -4145,23 +4313,23 @@ void func_800796D0_49B80(s32 arg0, u16 arg1) {
 		func_800791A0_49650(0);
 		func_8000AFDC_BBDC();
 
-		drawText(&D_800ADCE0_7E190, 0xFF, 0, 0);
-		drawText(&D_800ADCE4_7E194, 0xFF);
+		drawText("%C", 0xFF, 0, 0);
+		drawText("%a", 0xFF);
 
 		switch (D_800313D0_31FD0) {
 		case 0:
 		default:
-			drawText(&D_800ADCE8_7E198, 0x80, 0);
+			drawText("%@TOP SCORES", 0x80, 0);
 			break;
 		case 2:
-			drawText(&D_800ADCF8_7E1A8, 0x80, 0);
+			drawText("%@HIGH SCORES", 0x80, 0);
 			break;
 		case 1:
-			drawText(&D_800ADD08_7E1B8, 0x80, 0);
+			drawText("%@TOP SCORES", 0x80, 0);
 			break;
 		}
 
-		drawText(&D_800ADD18_7E1C8, 0x14, 0x32, 0x12C, 0xFA);
+		drawText("%W", 0x14, 0x32, 0x12C, 0xFA);
 
 		for (i = 0; i < 5; i++) {
 			if (timer < (i * 250 + 0x14)) {
@@ -4181,68 +4349,68 @@ void func_800796D0_49B80(s32 arg0, u16 arg1) {
 			if (i != 4) {
 				t = MIN(0x12C, MAX(0, (fade * 6) - 0x384));
 
-				drawText(&D_800ADD1C_7E1CC, t);
-				drawText(&D_800ADD20_7E1D0, (s32)(255.0f - (((f32)t / 300.0f) * 255.0f)));
+				drawText("%Y", t);
+				drawText("%a", (s32)(255.0f - (((f32)t / 300.0f) * 255.0f)));
 			}
 
-			drawText(&D_800ADD24_7E1D4, 0x80, 2, D_80031538_32138[4 - i]);
+			drawText("%@%s", 0x80, 2, D_80031538_32138[4 - i]);
 
 			if (fade >= 0x10) {
 				if (i == 4) {
 					func_8000577C_637C();
 				} else {
-					drawText(&D_800ADD2C_7E1DC, 0, 0xFF, 0);
+					drawText("%C", 0, 0xFF, 0);
 				}
 
-				drawText(&D_800ADD30_7E1E0, 0x800);
+				drawText("%H", 0x800);
 
 				entry = &D_80047FB8[4 - i];
 				t = 6 - func_8007946C_4991C(entry->name);
 				t /= 2;
-				drawText(&D_800ADD34_7E1E4, t + 4, 3, entry->name);
-				drawText(&D_800ADD3C_7E1EC, 0x400);
+				drawText("%@%s", t + 4, 3, entry->name);
+				drawText("%H", 0x400);
 			}
 
 			t = MIN(0x280, MAX(0, (fade << 4) - 0x1E0));
 
 			entry = &D_80047FB8[4 - i];
-			drawText(&D_800ADD40_7E1F0, t);
+			drawText("%X", t);
 
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				drawText(&D_800ADD44_7E1F4, -0x10, 4);
+				drawText("%@Score:", -0x10, 4);
 				break;
 			case 2:
-				drawText(&D_800ADD50_7E200, -0x10, 4);
+				drawText("%@Punkte:", -0x10, 4);
 				break;
 			case 1:
-				drawText(&D_800ADD5C_7E20C, -0x10, 4);
+				drawText("%@Score:", -0x10, 4);
 				break;
 			}
 
-			drawText(&D_800ADD68_7E218, -t);
-			drawText(&D_800ADD6C_7E21C, 0x30, 4, entry->score);
+			drawText("%X", -t);
+			drawText("%@%d", 0x30, 4, entry->score);
 
 			t = MIN(0x280, MAX(0, (fade << 4) - 0x2D0));
 
-			drawText(&D_800ADD74_7E224, t);
+			drawText("%X", t);
 
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				drawText(&D_800ADD78_7E228, -0x10, 5);
+				drawText("%@Humans killed:", -0x10, 5);
 				break;
 			case 2:
-				drawText(&D_800ADD8C_7E23C, -0x10, 5);
+				drawText("%@Opfer:", -0x10, 5);
 				break;
 			case 1:
-				drawText(&D_800ADD98_7E248, -0x10, 5);
+				drawText("%@Humains tu\351s:", -0x10, 5);
 				break;
 			}
 
-			drawText(&D_800ADDA8_7E258, -t);
-			drawText(&D_800ADDAC_7E25C, 0x30, 5, entry->humansKilled);
+			drawText("%X", -t);
+			drawText("%@%d", 0x30, 5, entry->humansKilled);
 
 			t = MIN(0x280, MAX(0, (fade << 4) - 0x3C0));
 
@@ -4257,39 +4425,39 @@ void func_800796D0_49B80(s32 arg0, u16 arg1) {
 				centiseconds = 59;
 			}
 
-			drawText(&D_800ADDB4_7E264, t);
+			drawText("%X", t);
 
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				drawText(&D_800ADDB8_7E268, -0x10, 6);
+				drawText("%@Time:", -0x10, 6);
 				break;
 			case 2:
-				drawText(&D_800ADDC0_7E270, -0x10, 6);
+				drawText("%@Zeit:", -0x10, 6);
 				break;
 			case 1:
-				drawText(&D_800ADDC8_7E278, -0x10, 6);
+				drawText("%@Dur\351e:", -0x10, 6);
 				break;
 			}
 
-			drawText(&D_800ADDD4_7E284, -t);
+			drawText("%X", -t);
 
 			if ((minutes < 10) && (seconds < 10) && (centiseconds < 10)) {
-				drawText(&D_800ADDD8_7E288, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@0%d:0%d:0%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else if ((minutes < 10) && (seconds < 10)) {
-				drawText(&D_800ADDE8_7E298, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@0%d:0%d:%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else if ((minutes < 10) && (centiseconds < 10)) {
-				drawText(&D_800ADDF8_7E2A8, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@0%d:%d:0%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else if ((seconds < 10) && (centiseconds < 10)) {
-				drawText(&D_800ADE08_7E2B8, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@%d:0%d:0%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else if (minutes < 10) {
-				drawText(&D_800ADE18_7E2C8, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@0%d:%d:%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else if (seconds < 10) {
-				drawText(&D_800ADE24_7E2D4, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@%d:0%d:%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else if (centiseconds < 10) {
-				drawText(&D_800ADE30_7E2E0, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@%d:%d:0%d", 0x30, 6, minutes, seconds, centiseconds);
 			} else {
-				drawText(&D_800ADE3C_7E2EC, 0x30, 6, minutes, seconds, centiseconds);
+				drawText("%@%d:%d:%d", 0x30, 6, minutes, seconds, centiseconds);
 			}
 		}
 
@@ -4304,7 +4472,7 @@ void func_800796D0_49B80(s32 arg0, u16 arg1) {
 	} while (shouldExit == 0);
 
 	func_800153D8_15FD8(0xC8);
-	drawText(&D_800ADE48_7E2F8, 0xFF, 0xFF, 0xFE);
+	drawText("%C", 0xFF, 0xFF, 0xFE);
 }
 
 void func_80079F30_4A3E0(u8 arg0) {
@@ -4678,26 +4846,26 @@ void func_8007B618_4BAC8(void) {
 	if (isButtonNewlyPressed(0, 0x1000) != 0) { selection = tempOsc; one = (int)(selection * 0) + 1; sp3D = sp3E; oscillation = sp3D; if (oscillation) {} do { func_800791A0_49650(one);
 			if (&D_8005BB2C) {} tempOsc = oscillation;
 			oscillation = (u8)(((s32)tempOsc + 2) % 64);
-			drawText(&D_800ADE4C_7E2FC, 0x82, 0xF0, 0x64);
-			drawText(&D_800ADE50_7E300, 0x80, 0);
-			drawText(&D_800ADE64_7E314, 0x64, 0xB4, 0x3C);
-			drawText(&D_800ADE68_7E318, 0x80, 3);
-			drawText(&D_800ADE80_7E330, 0x80, 4);
+			drawText("%C", 0x82, 0xF0, 0x64);
+			drawText("%@Clear Save Data", 0x80, 0);
+			drawText("%C", 0x64, 0xB4, 0x3C);
+			drawText("%@Are you sure you want", 0x80, 3);
+			drawText("%@to clear ALL of the save data?", 0x80, 4);
 
 			if (one == selection) {
-				drawText(&D_800ADEA4_7E354, (oscillation << 1) + 0x7F, 0x32, 0x32);
+				drawText("%C", (oscillation << 1) + 0x7F, 0x32, 0x32);
 			} else {
-				drawText(&D_800ADEA8_7E358, 0x5A, 0x5A, 0x32);
+				drawText("%C", 0x5A, 0x5A, 0x32);
 			}
 
-			drawText(&D_800ADEAC_7E35C, 0xA, 7);
+			drawText("%@Yes", 0xA, 7);
 			if (selection == 0) {
-				drawText(&D_800ADEB4_7E364, (oscillation << 1) + 0x7F, 0x32, 0x32);
+				drawText("%C", (oscillation << 1) + 0x7F, 0x32, 0x32);
 			} else {
-				drawText(&D_800ADEB8_7E368, 0x5A, 0x5A, 0x32);
+				drawText("%C", 0x5A, 0x5A, 0x32);
 			}
 
-			drawText(&D_800ADEBC_7E36C, 0x1A, 7);
+			drawText("%@No", 0x1A, 7);
 			if ((selection == 0) && (currentControllerStates[0].stick_x < -0xA)) {
 				selection = selection * 0 + 1;
 			}
@@ -4743,18 +4911,30 @@ void func_8007B900_4BDB0(void) {
 
 	do {
 		func_800791A0_49650(1);
-		drawText(&D_800ADEC4_7E374, 240, 240, 240);
-		drawText(&D_800ADEC8_7E378, 128, 0, 92, 91);
-		drawText(&D_800ADEE8_7E398, 128, 1);
-		drawText(&D_800ADF04_7E3B4, 128, 2);
-		drawText(&D_800ADF1C_7E3CC, 128, 3);
-		drawText(&D_800ADF3C_7E3EC, 48, 128, 4);
-		drawText(&D_800ADF58_7E408, 128, 5);
-		drawText(&D_800ADF7C_7E42C, 128, 6);
-#ifndef VERSION_EU
-		drawText(&D_800ADF9C_7E44C, 128, 7);
+		drawText("%C", 240, 240, 240);
+		drawText("%@Body Harvest %c and %c 1998", 128, 0, 92, 91);
+		drawText("%@Gremlin Interactive Ltd.", 128, 1);
+		drawText("%@All rights reserved.", 128, 2);
+		drawText("%@Developed by DMA Design Ltd.", 128, 3);
+#ifdef VERSION_EU
+		drawText("%Y%@Published by", 48, 128, 4);
+#else
+		drawText("%Y%@MIDWAY is a registered", 48, 128, 4);
 #endif
-		drawText(&D_800ADFC0_7E470, 0, 128, 9);
+#ifdef VERSION_EU
+		drawText("%@Gremlin Interactive Ltd", 128, 5);
+#else
+		drawText("%@trademark of Midway Games Inc.", 128, 5);
+#endif
+#ifdef VERSION_EU
+		drawText("%@under license.", 128, 6);
+#else
+		drawText("%@Distributed by Midway Home", 128, 6);
+#endif
+#ifndef VERSION_EU
+		drawText("%@Entertainment Inc. under license.", 128, 7);
+#endif
+		drawText("%Y%@LICENSED BY NINTENDO", 0, 128, 9);
 
 		if (counter == 0) {
 			func_80005AEC_66EC(0, 0, 0, 64);
@@ -4814,8 +4994,8 @@ void func_8007BC90_4C140(void) {
 
 	while (1) {
 		func_800791A0_49650(0);
-		drawText(&D_800ADFDC_7E48C, 250, 200, 200);
-		drawText(&D_800ADFE0_7E490, 128, 5);
+		drawText("%C", 250, 200, 200);
+		drawText("%@Controller is not connected.", 128, 5);
 		func_8000B044_BC44();
 		func_80005B84_6784();
 		gDPFullSync(D_8005BB2C++);
@@ -4839,9 +5019,13 @@ void func_8007BD98_4C248(void) {
 
 	do {
 		func_800791A0_49650(0);
-		drawText(&D_800AE000_7E4B0, 250, 200, 200);
-		drawText(&D_800AE004_7E4B4, 128, 4);
-		drawText(&D_800AE028_7E4D8, 128, 5);
+		drawText("%C", 250, 200, 200);
+		drawText("%@This game pak is only available", 128, 4);
+#ifdef VERSION_EU
+		drawText("%@for the PAL market", 128, 5);
+#else
+		drawText("%@for the NTSC and MPAL markets.", 128, 5);
+#endif
 		func_8000B044_BC44();
 		func_80005B84_6784();
 		gDPFullSync(D_8005BB2C++);
@@ -4946,27 +5130,27 @@ void func_8007BFC4_4C474(void) {
 		if ((fadeCounter == 0) && (startIndex < 0x59)) {
 			startIndex++;
 			fadeCounter = 0x4F;
-			drawText(&D_800AE04C_7E4FC, 0x4F);
+			drawText("%Y", 0x4F);
 		} else {
 			if (startIndex < 0x59) {
-				drawText(&D_800AE050_7E500, fadeCounter);
+				drawText("%Y", fadeCounter);
 			}
 		}
 
 		do {
 			if (currentLine > 0) {
 				if (currentLine < 3) {
-					drawText(&D_800AE054_7E504, 0xB4, 0xD7, 0xFE);
+					drawText("%C", 0xB4, 0xD7, 0xFE);
 				} else {
-					drawText(&D_800AE058_7E508, 0xEB, 0xE1, 0xFE);
+					drawText("%C", 0xEB, 0xE1, 0xFE);
 				}
 
-					drawText(&D_800AE05C_7E50C, 0xFF);
+					drawText("%a", 0xFF);
 				if (((0xC - startIndex) + currentLine) == 8) {
-					drawText(&D_800AE060_7E510, 0xFF - (fadeCounter * 3));
+					drawText("%a", 0xFF - (fadeCounter * 3));
 				}
 				if (((0xC - startIndex) + currentLine) == 0) {
-					drawText(&D_800AE064_7E514, fadeCounter * 3);
+					drawText("%a", fadeCounter * 3);
 				}
 			}
 			if (((0xC - startIndex) + currentLine) < 9) {
@@ -4993,7 +5177,7 @@ void func_8007BFC4_4C474(void) {
 					textBuffer[lineCount] = 0;
 				}
 
-				drawText(&D_800AE068_7E518, 0x80, ((0xC - startIndex) + currentLine), textBuffer);
+				drawText("%@%s", 0x80, ((0xC - startIndex) + currentLine), textBuffer);
 			}
 
 		} while ((--currentLine > 0) && ((startIndex - 0xD) < currentLine));
@@ -5037,37 +5221,37 @@ void func_8007C4BC_4C96C(void) {
 		if ((fadeCounter == 0) && (foundCount == 0)) {
 			startIndex++;
 			fadeCounter = 0x4F;
-			drawText(&D_800AE070_7E520, 0x4F);
+			drawText("%Y", 0x4F);
 			line = 0xC - startIndex;
 		} else {
-			drawText(&D_800AE074_7E524, fadeCounter);
+			drawText("%Y", fadeCounter);
 			line = 0xC - startIndex;
 		}
 
 		do {
 			if (i > 0) {
 				if (D_800944E8_64998[i - 1][0] == 0) {
-					drawText(&D_800AE078_7E528, 0xAA, 0xAA, 0xEB);
+					drawText("%C", 0xAA, 0xAA, 0xEB);
 				} else {
-					drawText(&D_800AE07C_7E52C, 0x6E, 0x6E, 0xAA);
+					drawText("%C", 0x6E, 0x6E, 0xAA);
 				}
 
-				drawText(&D_800AE080_7E530, 0xFF);
+				drawText("%a", 0xFF);
 				row = (line + 0) + i;
 
 				if (foundCount == 0) {
 					if (row == 8) {
-						drawText(&D_800AE084_7E534, 0xFF - (fadeCounter * 3));
+						drawText("%a", 0xFF - (fadeCounter * 3));
 					}
 					if (row == 0) {
-						drawText(&D_800AE088_7E538, fadeCounter * 3);
+						drawText("%a", fadeCounter * 3);
 					}
 				}
 
 			}
 			row = (line + 0) + i;
 			if (row < 9) {
-				drawText(&D_800AE08C_7E53C, 0x80, row, D_800944E8_64998[i]);
+				drawText("%@%s", 0x80, row, D_800944E8_64998[i]);
 			}
 
 			i--;
@@ -5091,14 +5275,14 @@ void func_8007C4BC_4C96C(void) {
 
 void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 	if (arg1 < arg0) {
-		drawText(&D_800AE094_7E544, 0);
+		drawText("%a", 0);
 		return;
 	}
 	if ((arg0 + 0x14) < arg1) {
-		drawText(&D_800AE098_7E548, 0xFF);
+		drawText("%a", 0xFF);
 		return;
 	}
-	drawText(&D_800AE09C_7E54C, (s32)((arg1 - arg0) * 0xFF) / 20);
+	drawText("%a", (s32)((arg1 - arg0) * 0xFF) / 20);
 }
 
 // AI - Shows the end-of-game summary screen (total score, time, humans) then returns to press-start.
@@ -5156,62 +5340,62 @@ void func_8007C7F4_4CCA4(void) {
 			default:
 #ifdef VERSION_EU
 				if ((D_80052ACD & 0x80) != 0) {
-					drawText(&D_800AE810_7ECC0, 0x80, 0);
+					drawText("%@Well done, trooper!", 0x80, 0);
 					func_8007C764_4CC14(0x3C, fadeTimer);
-					drawText(&D_800AE828_7ECD8, 0xC8, 0xC8, 0xFE);
-					drawText(&D_800AE82C_7ECDC, 0x80, 1);
+					drawText("%C", 0xC8, 0xC8, 0xFE);
+					drawText("%@You saved Earth's past from the", 0x80, 1);
 					func_8007C764_4CC14(0x46, fadeTimer);
-					drawText(&D_800AE850_7ED00, 0x80, 2);
+					drawText("%@alien threat. Now return to", 0x80, 2);
 					func_8007C764_4CC14(0x50, fadeTimer);
-					drawText(&eu_D_800AE870_7ED20, 0x80, 3);
+					drawText("%@the past to free the future and", 0x80, 3);
 					func_8007C764_4CC14(0x5A, fadeTimer);
-					drawText(&D_800AE894_7ED44, 0x80, 4);
+					drawText("%@become a HERO! Good luck!", 0x80, 4);
 					func_8007C764_4CC14(0x82, fadeTimer);
-					drawText(&eu_D_800AE8B0_7ED60, 0x80, 6, score);
+					drawText("%@Score:   %d", 0x80, 6, score);
 					func_8007C764_4CC14(0x96, fadeTimer);
 
 					if (minutes < 10U && seconds < 10U) {
-						drawText(&D_800AE8C0_7ED70, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Total Time:    %d:0%d:0%d", 0x80, 7, hours, minutes, seconds);
 					} else if (minutes < 10U) {
-						drawText(&D_800AE8DC_7ED8C, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Total Time:    %d:0%d:%d", 0x80, 7, hours, minutes, seconds);
 					} else if (seconds < 10U) {
-						drawText(&D_800AE8F8_7EDA8, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Total Time:    %d:%d:0%d", 0x80, 7, hours, minutes, seconds);
 					} else {
-						drawText(&D_800AE914_7EDC4, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Total Time:    %d:%d:%d", 0x80, 7, hours, minutes, seconds);
 					}
 
 					func_8007C764_4CC14(0xAA, fadeTimer);
-					drawText(&D_800AE930_7EDE0, 0xAA, 0xAA, 0xE0);
-					drawText(&D_800AE934_7EDE4, 0x80, 8, humans);
+					drawText("%C", 0xAA, 0xAA, 0xE0);
+					drawText("%@Humans lost: %d\n", 0x80, 8, humans);
 				} else {
 #endif
-				drawText(&D_800AE0A0_7E550, 0x80, 0);
+				drawText("%@Good work, soldier!", 0x80, 0);
 				func_8007C764_4CC14(0x3C, fadeTimer);
-				drawText(&D_800AE0B8_7E568, 0xC8, 0xC8, 0xFE);
-				drawText(&D_800AE0BC_7E56C, 0x80, 1);
+				drawText("%C", 0xC8, 0xC8, 0xFE);
+				drawText("%@The mission was successful. You", 0x80, 1);
 				func_8007C764_4CC14(0x46, fadeTimer);
-				drawText(&D_800AE0E0_7E590, 0x80, 2);
+				drawText("%@have saved mankind from the aliens.", 0x80, 2);
 				func_8007C764_4CC14(0x50, fadeTimer);
-				drawText(&D_800AE108_7E5B8, 0x80, 3);
+				drawText("%@Come on home.", 0x80, 3);
 				func_8007C764_4CC14(0x78, fadeTimer);
-				drawText(&D_800AE118_7E5C8, 0x80, 5, score);
+				drawText("%@Score:   %d", 0x80, 5, score);
 				func_8007C764_4CC14(0x8C, fadeTimer);
 
 				if (minutes < 10U && seconds < 10U) {
-					drawText(&D_800AE128_7E5D8, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Total Time:    %d:0%d:0%d", 0x80, 6, hours, minutes, seconds);
 				} else if (minutes < 10U) {
-					drawText(&D_800AE144_7E5F4, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Total Time:    %d:0%d:%d", 0x80, 6, hours, minutes, seconds);
 				} else if (seconds < 10U) {
-					drawText(&D_800AE160_7E610, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Total Time:    %d:%d:0%d", 0x80, 6, hours, minutes, seconds);
 				} else {
-					drawText(&D_800AE17C_7E62C, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Total Time:    %d:%d:%d", 0x80, 6, hours, minutes, seconds);
 				}
 
 				func_8007C764_4CC14(0xA0, fadeTimer);
-				drawText(&D_800AE198_7E648, 0xAA, 0xAA, 0xE0);
-				drawText(&D_800AE19C_7E64C, 0x80, 7, humans);
+				drawText("%C", 0xAA, 0xAA, 0xE0);
+				drawText("%@Humans lost: %d\n", 0x80, 7, humans);
 				func_8007C764_4CC14(0xB4, fadeTimer);
-				drawText(&D_800AE1B0_7E660, 0x80, 8, D_8004DC5E);
+				drawText("%@Artifacts: %d of 12", 0x80, 8, D_8004DC5E);
 #ifdef VERSION_EU
 				}
 #endif
@@ -5220,62 +5404,62 @@ void func_8007C7F4_4CCA4(void) {
 			case 1:
 #ifdef VERSION_EU
 				if ((D_80052ACD & 0x80) != 0) {
-					drawText(&eu_D_800AEA70_7EF20, 0x80, 0);
+					drawText("%@Du bon travail, mon gars!", 0x80, 0);
 					func_8007C764_4CC14(0x3C, fadeTimer);
-					drawText(&eu_D_800AEA8C_7EF3C, 0xC8, 0xC8, 0xFE);
-					drawText(&D_800AEA90_7EF40, 0x80, 1);
+					drawText("%C", 0xC8, 0xC8, 0xFE);
+					drawText("%@Ta's sauv\351 la Terre de la menace", 0x80, 1);
 					func_8007C764_4CC14(0x46, fadeTimer);
-					drawText(&D_800AEAB4_7EF64, 0x80, 2);
+					drawText("%@extra-terrestre. Rentre au pass\351", 0x80, 2);
 					func_8007C764_4CC14(0x50, fadeTimer);
-					drawText(&eu_D_800AEAD8_7EF88, 0x80, 3);
+					drawText("%@pour lib\351rer l'avenir et devenir", 0x80, 3);
 					func_8007C764_4CC14(0x5A, fadeTimer);
-					drawText(&D_800AEAFC_7EFAC, 0x80, 4);
+					drawText("%@un HEROS! Bon courage!", 0x80, 4);
 					func_8007C764_4CC14(0x82, fadeTimer);
-					drawText(&D_800AEB18_7EFC8, 0x80, 6, score);
+					drawText("%@Score:   %d", 0x80, 6, score);
 					func_8007C764_4CC14(0x96, fadeTimer);
 
 					if (minutes < 10U && seconds < 10U) {
-						drawText(&D_800AEB28_7EFD8, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Dur\351e totale:    %d:0%d:0%d", 0x80, 7, hours, minutes, seconds);
 					} else if (minutes < 10U) {
-						drawText(&D_800AEB48_7EFF8, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Dur\351e totale:    %d:0%d:%d", 0x80, 7, hours, minutes, seconds);
 					} else if (seconds < 10U) {
-						drawText(&eu_D_800AEB68_7F018, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Dur\351e totale:    %d:%d:0%d", 0x80, 7, hours, minutes, seconds);
 					} else {
-						drawText(&D_800AEB88_7F038, 0x80, 7, hours, minutes, seconds);
+						drawText("%@Dur\351e totale:    %d:%d:%d", 0x80, 7, hours, minutes, seconds);
 					}
 
 					func_8007C764_4CC14(0xAA, fadeTimer);
-					drawText(&eu_D_800AEBA4_7F054, 0xAA, 0xAA, 0xE0);
-					drawText(&D_800AEBA8_7F058, 0x80, 8, humans);
+					drawText("%C", 0xAA, 0xAA, 0xE0);
+					drawText("%@Pertes humaines: %d\n", 0x80, 8, humans);
 				} else {
 #endif
-				drawText(&D_800AE1C8_7E678, 0x80, 0);
+				drawText("%@Beau travail, soldat!", 0x80, 0);
 				func_8007C764_4CC14(0x3C, fadeTimer);
-				drawText(&D_800AE1E0_7E690, 0xC8, 0xC8, 0xFE);
-				drawText(&D_800AE1E4_7E694, 0x80, 1);
+				drawText("%C", 0xC8, 0xC8, 0xFE);
+				drawText("%@Cette mission est un triomphe.", 0x80, 1);
 				func_8007C764_4CC14(0x46, fadeTimer);
-				drawText(&D_800AE208_7E6B8, 0x80, 2);
+				drawText("%@L'humanit\351 est sauv\351e.", 0x80, 2);
 				func_8007C764_4CC14(0x50, fadeTimer);
-				drawText(&D_800AE224_7E6D4, 0x80, 3);
+				drawText("%@Rentre chez toi, en paix.", 0x80, 3);
 				func_8007C764_4CC14(0x78, fadeTimer);
-				drawText(&D_800AE240_7E6F0, 0x80, 5, score);
+				drawText("%@Score:   %d", 0x80, 5, score);
 				func_8007C764_4CC14(0x8C, fadeTimer);
 
 				if (minutes < 10U && seconds < 10U) {
-					drawText(&D_800AE250_7E700, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Dur\351e totale:    %d:0%d:0%d", 0x80, 6, hours, minutes, seconds);
 				} else if (minutes < 10U) {
-					drawText(&D_800AE270_7E720, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Dur\351e totale:    %d:0%d:%d", 0x80, 6, hours, minutes, seconds);
 				} else if (seconds < 10U) {
-					drawText(&D_800AE290_7E740, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Dur\351e totale:    %d:%d:0%d", 0x80, 6, hours, minutes, seconds);
 				} else {
-					drawText(&D_800AE2B0_7E760, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Dur\351e totale:    %d:%d:%d", 0x80, 6, hours, minutes, seconds);
 				}
 
 				func_8007C764_4CC14(0xA0, fadeTimer);
-				drawText(&D_800AE2CC_7E77C, 0xAA, 0xAA, 0xE0);
-				drawText(&D_800AE2D0_7E780, 0x80, 7, humans);
+				drawText("%C", 0xAA, 0xAA, 0xE0);
+				drawText("%@Pertes humaines: %d\n", 0x80, 7, humans);
 				func_8007C764_4CC14(0xB4, fadeTimer);
-				drawText(&D_800AE2E8_7E798, 0x80, 8, D_8004DC5E);
+				drawText("%@Reliques: %d de 12", 0x80, 8, D_8004DC5E);
 #ifdef VERSION_EU
 				}
 #endif
@@ -5284,64 +5468,64 @@ void func_8007C7F4_4CCA4(void) {
 			case 2:
 #ifdef VERSION_EU
 				if ((D_80052ACD & 0x80) != 0) {
-					drawText(&D_800AECF8_7F1A8, 0x80, 0);
+					drawText("%@Gute Arbeit, Soldat!", 0x80, 0);
 					func_8007C764_4CC14(0x3C, fadeTimer);
-					drawText(&D_800AED10_7F1C0, 0xC8, 0xC8, 0xFE);
-					drawText(&D_800AED14_7F1C4, 0x80, 1);
+					drawText("%C", 0xC8, 0xC8, 0xFE);
+					drawText("%@Du hast die Erde in der Vergangenheit", 0x80, 1);
 					func_8007C764_4CC14(0x46, fadeTimer);
-					drawText(&D_800AED3C_7F1EC, 0x80, 2);
+					drawText("%@vor den Aliens bewahrt. Jetzt reise", 0x80, 2);
 					func_8007C764_4CC14(0x50, fadeTimer);
-					drawText(&D_800AED64_7F214, 0x80, 3);
+					drawText("%@wieder zur\374ck und rette die Zukunft", 0x80, 3);
 					func_8007C764_4CC14(0x5A, fadeTimer);
-					drawText(&D_800AED8C_7F23C, 0x80, 4);
+					drawText("%@- und erweise Dich als wahrer HELD.", 0x80, 4);
 					func_8007C764_4CC14(0x64, fadeTimer);
-					drawText(&D_800AEDB4_7F264, 0x80, 5);
+					drawText("%@Viel Gl\374ck!", 0x80, 5);
 					func_8007C764_4CC14(0x8C, fadeTimer);
-					drawText(&D_800AEDC4_7F274, 0x80, 7, score);
+					drawText("%@Punkte:   %d", 0x80, 7, score);
 					func_8007C764_4CC14(0xA0, fadeTimer);
 
 					if (minutes < 10U && seconds < 10U) {
-						drawText(&D_800AEDD4_7F284, 0x80, 8, hours, minutes, seconds);
+						drawText("%@Gesamtzeit:    %d:0%d:0%d", 0x80, 8, hours, minutes, seconds);
 					} else if (minutes < 10U) {
-						drawText(&D_800AEDF0_7F2A0, 0x80, 8, hours, minutes, seconds);
+						drawText("%@Gesamtzeit:    %d:0%d:%d", 0x80, 8, hours, minutes, seconds);
 					} else if (seconds < 10U) {
-						drawText(&D_800AEE0C_7F2BC, 0x80, 8, hours, minutes, seconds);
+						drawText("%@Gesamtzeit:    %d:%d:0%d", 0x80, 8, hours, minutes, seconds);
 					} else {
-						drawText(&D_800AEE28_7F2D8, 0x80, 8, hours, minutes, seconds);
+						drawText("%@Gesamtzeit:    %d:%d:%d", 0x80, 8, hours, minutes, seconds);
 					}
 
 					func_8007C764_4CC14(0xB4, fadeTimer);
-					drawText(&D_800AEE44_7F2F4, 0xAA, 0xAA, 0xE0);
-					drawText(&D_800AEE48_7F2F8, 0x80, 9, humans);
+					drawText("%C", 0xAA, 0xAA, 0xE0);
+					drawText("%@Menschl. Verluste: %d\n", 0x80, 9, humans);
 				} else {
 #endif
-				drawText(&D_800AE300_7E7B0, 0x80, 0);
+				drawText("%@Gute Arbeit, Soldat!", 0x80, 0);
 				func_8007C764_4CC14(0x3C, fadeTimer);
-				drawText(&D_800AE318_7E7C8, 0xC8, 0xC8, 0xFE);
-				drawText(&D_800AE31C_7E7CC, 0x80, 1);
+				drawText("%C", 0xC8, 0xC8, 0xFE);
+				drawText("%@Der Einsatz war erfolgreich. Du", 0x80, 1);
 				func_8007C764_4CC14(0x46, fadeTimer);
-				drawText(&D_800AE340_7E7F0, 0x80, 2);
+				drawText("%@hast die Menschheit vor den Aliens", 0x80, 2);
 				func_8007C764_4CC14(0x50, fadeTimer);
-				drawText(&D_800AE368_7E818, 0x80, 3);
+				drawText("%@gerettet. Zeit, nach Hause zu gehen.", 0x80, 3);
 				func_8007C764_4CC14(0x78, fadeTimer);
-				drawText(&D_800AE390_7E840, 0x80, 5, score);
+				drawText("%@Punkte:   %d", 0x80, 5, score);
 				func_8007C764_4CC14(0x8C, fadeTimer);
 
 				if (minutes < 10U && seconds < 10U) {
-					drawText(&D_800AE3A0_7E850, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Gesamtzeit:    %d:0%d:0%d", 0x80, 6, hours, minutes, seconds);
 				} else if (minutes < 10U) {
-					drawText(&D_800AE3BC_7E86C, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Gesamtzeit:    %d:0%d:%d", 0x80, 6, hours, minutes, seconds);
 				} else if (seconds < 10U) {
-					drawText(&D_800AE3D8_7E888, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Gesamtzeit:    %d:%d:0%d", 0x80, 6, hours, minutes, seconds);
 				} else {
-					drawText(&D_800AE3F4_7E8A4, 0x80, 6, hours, minutes, seconds);
+					drawText("%@Gesamtzeit:    %d:%d:%d", 0x80, 6, hours, minutes, seconds);
 				}
 
 				func_8007C764_4CC14(0xA0, fadeTimer);
-				drawText(&D_800AE410_7E8C0, 0xAA, 0xAA, 0xE0);
-				drawText(&D_800AE414_7E8C4, 0x80, 7, humans);
+				drawText("%C", 0xAA, 0xAA, 0xE0);
+				drawText("%@Menschl. Verluste: %d\n", 0x80, 7, humans);
 				func_8007C764_4CC14(0xB4, fadeTimer);
-				drawText(&D_800AE430_7E8E0, 0x80, 8, D_8004DC5E);
+				drawText("%@Artefakte: %d of 12", 0x80, 8, D_8004DC5E);
 #ifdef VERSION_EU
 				}
 #endif
@@ -5506,7 +5690,7 @@ s32 func_8007D2B0_4D760(void) {
 	D_800AED78[0xC] = D_8004DC5E;
 
 	for (i = 0; i < 14; i++) {
-		osSyncPrintf(D_800AE448_7E8F8, i, func_8000726C_7E6C((s64)i));
+		osSyncPrintf("Tesking key %d,  result = %d \n", i, func_8000726C_7E6C((s64)i));
 		if (D_800AED78[i] != 0) {
 			if (((FrontendItemRenderData(*)[13])D_80094278_64728)[currentLevel][i].displayList != NULL) {
 				D_800D74AC = i;
@@ -5542,7 +5726,7 @@ s32 func_8007D2B0_4D760(void) {
 				menuWarmup++;
 			} else if (isButtonNewlyPressed(0, 0x9000)) {
 				selection = D_800D74A4 - 0x47;
-				osSyncPrintf(D_800AE468_7E918, D_800D74A4, 0x47, selection);
+				osSyncPrintf("WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\n", D_800D74A4, 0x47, selection);
 
 				switch (selection) {
 				case 0:
@@ -5550,7 +5734,7 @@ s32 func_8007D2B0_4D760(void) {
 
 				case 3:
 					timer = 0x10;
-					osSyncPrintf(D_800AE49C_7E94C, D_8004794A);
+					osSyncPrintf("*******************InventorySelect=%d, \n", D_8004794A);
 					break;
 
 				case 1:
@@ -5640,406 +5824,6 @@ s32 func_8007D2B0_4D760(void) {
 
 	func_8000AFDC_BBDC();
 	D_80047948 = D_800D74AE;
-	osSyncPrintf(D_800AE4C8_7E978, D_80047948);
+	osSyncPrintf("INV>>>>WeaponSelect=%d\n", D_80047948);
 	return 0;
 }
-
-#ifndef VERSION_EU
-const char D_800AD0F0_7D5A0[] = "";
-const char D_800AD0F4_7D5A4[] = "Credits";
-const char D_800AD0FC_7D5AC[] = "";
-const char D_800AD100_7D5B0[] = "";
-const char D_800AD104_7D5B4[] = "Project Leader";
-const char D_800AD114_7D5C4[] = "John Whyte";
-const char D_800AD120_7D5D0[] = "";
-const char D_800AD124_7D5D4[] = "Game Programmers";
-const char D_800AD138_7D5E8[] = "Adam Fowler";
-const char D_800AD144_7D5F4[] = "Alan Campbell";
-const char D_800AD154_7D604[] = "Frank Arnot";
-const char D_800AD160_7D610[] = "Grant Clarke";
-const char D_800AD170_7D620[] = "Doug Smith";
-const char D_800AD17C_7D62C[] = "Andrew West";
-const char D_800AD188_7D638[] = "Andy J S Innes";
-const char D_800AD198_7D648[] = "";
-const char D_800AD19C_7D64C[] = "Game and Editor Programmer";
-const char D_800AD1B8_7D668[] = "John Gurney";
-const char D_800AD1C4_7D674[] = "";
-const char D_800AD1C8_7D678[] = "Lead Artist";
-const char D_800AD1D4_7D684[] = "Stacey Jamieson";
-const char D_800AD1E4_7D694[] = "";
-const char D_800AD1E8_7D698[] = "Alien Artist";
-const char D_800AD1F8_7D6A8[] = "Alan Davidson";
-const char D_800AD208_7D6B8[] = "";
-const char D_800AD20C_7D6BC[] = "Artwork";
-const char D_800AD214_7D6C4[] = "Craig Moore";
-const char D_800AD220_7D6D0[] = "Ian McQue";
-const char D_800AD22C_7D6DC[] = "Pat McGovern";
-const char D_800AD23C_7D6EC[] = "Paul Reeves";
-const char D_800AD248_7D6F8[] = "";
-const char D_800AD24C_7D6FC[] = "Audio Programmers";
-const char D_800AD260_7D710[] = "Ciaran Rooney";
-const char D_800AD270_7D720[] = "Raymond Usher";
-const char D_800AD280_7D730[] = "";
-const char D_800AD284_7D734[] = "Music and Sound effects";
-const char D_800AD29C_7D74C[] = "Stuart Ross";
-const char D_800AD2A8_7D758[] = "Allan Walker";
-const char D_800AD2B8_7D768[] = "";
-const char D_800AD2BC_7D76C[] = "Editor Programming";
-const char D_800AD2D0_7D780[] = "Graeme Anderson";
-const char D_800AD2E0_7D790[] = "";
-const char D_800AD2E4_7D794[] = "Level Design";
-const char D_800AD2F4_7D7A4[] = "Richard Ralfe";
-const char D_800AD304_7D7B4[] = "Lorne Campbell";
-const char D_800AD314_7D7C4[] = "Mike Stirling";
-const char D_800AD324_7D7D4[] = "";
-const char D_800AD328_7D7D8[] = "Game Design";
-const char D_800AD334_7D7E4[] = "John Whyte";
-const char D_800AD340_7D7F0[] = "Alan Davidson";
-const char D_800AD350_7D800[] = "Richard Ralfe";
-const char D_800AD360_7D810[] = "Lorne Campbell";
-const char D_800AD370_7D820[] = "Stacey Jamieson";
-const char D_800AD380_7D830[] = "Adam Fowler";
-const char D_800AD38C_7D83C[] = "EAD Japan";
-const char D_800AD398_7D848[] = "";
-const char D_800AD39C_7D84C[] = "DMA Quality Assurance";
-const char D_800AD3B4_7D864[] = "Craig Arbuthnott";
-const char D_800AD3C8_7D878[] = "Steve Taylor";
-const char D_800AD3D8_7D888[] = "Allen Shiels";
-const char D_800AD3E8_7D898[] = "Sean Taylor";
-const char D_800AD3F4_7D8A4[] = "Alan Dobson";
-const char D_800AD400_7D8B0[] = "William Mills";
-const char D_800AD410_7D8C0[] = "Sean Brown";
-const char D_800AD41C_7D8CC[] = "";
-const char D_800AD420_7D8D0[] = "Gremlin Quality Assurance";
-const char D_800AD43C_7D8EC[] = "Carl Cavers";
-const char D_800AD448_7D8F8[] = "Jon Watson";
-const char D_800AD454_7D904[] = "Julia Sturman";
-const char D_800AD464_7D914[] = "Travis Ryan";
-const char D_800AD470_7D920[] = "Les Dungate";
-const char D_800AD47C_7D92C[] = "Daniel Webster";
-const char D_800AD48C_7D93C[] = "Matthew Tucket";
-const char D_800AD49C_7D94C[] = "Andrew Wilson";
-const char D_800AD4AC_7D95C[] = "Stephen Woodward";
-const char D_800AD4C0_7D970[] = "Martin Berridge";
-const char D_800AD4D0_7D980[] = "Matthew Fu";
-const char D_800AD4DC_7D98C[] = "";
-const char D_800AD4E0_7D990[] = "Public Relations";
-const char D_800AD4F4_7D9A4[] = "Brian Baglow";
-const char D_800AD504_7D9B4[] = "";
-const char D_800AD508_7D9B8[] = "Localisation";
-const char D_800AD518_7D9C8[] = "Sarah Bennett";
-const char D_800AD528_7D9D8[] = "";
-const char D_800AD52C_7D9DC[] = "Development Manager";
-const char D_800AD540_7D9F0[] = "Jim Woods";
-const char D_800AD54C_7D9FC[] = "";
-const char D_800AD550_7DA00[] = "Boss and General Nuisance";
-const char D_800AD56C_7DA1C[] = "Dave Jones";
-const char D_800AD578_7DA28[] = "";
-const char D_800AD57C_7DA2C[] = "Thanks to:";
-const char D_800AD588_7DA38[] = "John Harrison";
-const char D_800AD598_7DA48[] = "Martin Good";
-const char D_800AD5A4_7DA54[] = "Robert Jeffrey";
-const char D_800AD5B4_7DA64[] = "Darren Baines";
-const char D_800AD5C4_7DA74[] = "Jeff Cairns";
-const char D_800AD5D0_7DA80[] = "Aaron Garbut";
-const char D_800AD5E0_7DA90[] = "Gary Thomson";
-const char D_800AD5F0_7DAA0[] = "Kenneth Fee";
-const char D_800AD5FC_7DAAC[] = "Craig Conner";
-const char D_800AD60C_7DABC[] = "Andy Strachan";
-const char D_800AD61C_7DACC[] = "Andy Hay";
-const char D_800AD628_7DAD8[] = "Liam O'Neill";
-const char D_800AD638_7DAE8[] = "Shoya Tanaka";
-const char D_800AD648_7DAF8[] = "EAD Nintendo Japan";
-const char D_800AD65C_7DB0C[] = "Gary Penn";
-const char D_800AD668_7DB18[] = "Mark Ettle";
-const char D_800AD674_7DB24[] = "Julian Glendinning";
-const char D_800AD688_7DB38[] = "Kevin Kelly";
-const char D_800AD694_7DB44[] = "Ian Thomson";
-const char D_800AD6A0_7DB50[] = "Corinne Cervetti";
-const char D_800AD6B4_7DB64[] = "";
-const char D_800AD6B8_7DB68[] = "";
-const char D_800AD6BC_7DB6C[] = "";
-const char D_800AD6C0_7DB70[] = "";
-const char D_800AD6C4_7DB74[] = "";
-const char D_800AD6C8_7DB78[] = "THE END";
-const char D_800AD6D0_7DB80[] = "";
-const char D_800AD6D4_7DB84[] = "";
-const char D_800AD6D8_7DB88[] = "";
-const char D_800AD6DC_7DB8C[] = "[ DMA Design 1998";
-const char D_800AD6F0_7DBA0[] = "";
-const char D_800AD6F4_7DBA4[] = "";
-const char D_800AD6F8_7DBA8[] = "";
-const char D_800AD6FC_7DBAC[] = "#";
-const char D_800AD700_7DBB0[] = "";
-const char D_800AD704_7DBB4[] = "Fuel";
-const char D_800AD70C_7DBBC[] = "Carburant";
-const char D_800AD718_7DBC8[] = "Sprit";
-const char D_800AD720_7DBD0[] = "Vehicle Weapon 1";
-const char D_800AD734_7DBE4[] = "Arme 1";
-const char D_800AD73C_7DBEC[] = "Waffe 1";
-const char D_800AD744_7DBF4[] = "Vehicle Weapon 2";
-const char D_800AD758_7DC08[] = "Arme 2";
-const char D_800AD760_7DC10[] = "Waffe 2";
-const char D_800AD768_7DC18[] = "Chaingun";
-const char D_800AD774_7DC24[] = "Fragcannon";
-const char D_800AD780_7DC30[] = "Lazer Missiles";
-const char D_800AD790_7DC40[] = "Resonator";
-const char D_800AD79C_7DC4C[] = "Plasma Bombs";
-const char D_800AD7AC_7DC5C[] = "";
-const char D_800AD7B0_7DC60[] = "";
-const char D_800AD7B4_7DC64[] = "ERROR: No free windows\012";
-const char D_800AD7CC_7DC7C[] = "ERROR: No free windows\012";
-const char D_800AD7E4_7DC94[] = "7";
-const char D_800AD7E8_7DC98[] = "0";
-const char D_800AD7EC_7DC9C[] = "%C%a";
-const char D_800AD7F4_7DCA4[] = "%H%V%X%Y";
-const char D_800AD800_7DCB0[] = "%@%s";
-const char D_800AD808_7DCB8[] = "%@%s";
-const char D_800AD810_7DCC0[] = "%@%s";
-const char D_800AD818_7DCC8[] = "%@%s";
-const char D_800AD820_7DCD0[] = "%@%s";
-const char D_800AD828_7DCD8[] = "%@%s";
-const char D_800AD830_7DCE0[] = "%@%s%@%s";
-const char D_800AD83C_7DCEC[] = "%@%s%@%s";
-const char D_800AD848_7DCF8[] = "%@%s%@%s";
-const char D_800AD854_7DD04[] = "%@%X%d";
-const char D_800AD85C_7DD0C[] = "%@%s%@%s";
-const char D_800AD868_7DD18[] = "%@%s%@%s";
-const char D_800AD874_7DD24[] = "%@%s%@%s";
-const char D_800AD880_7DD30[] = "%@%X%d";
-const char D_800AD888_7DD38[] = "%@%s%@%s";
-const char D_800AD894_7DD44[] = "%@%s%@%s";
-const char D_800AD8A0_7DD50[] = "%@%s%@%s";
-const char D_800AD8AC_7DD5C[] = "%@%X%d";
-const char D_800AD8B4_7DD64[] = "%@%s";
-const char D_800AD8BC_7DD6C[] = "%@%s";
-const char D_800AD8C4_7DD74[] = "%@%s";
-const char D_800AD8CC_7DD7C[] = "%@%s";
-const char D_800AD8D4_7DD84[] = "%@%s";
-const char D_800AD8DC_7DD8C[] = "%@%s";
-const char D_800AD8E4_7DD94[] = "%@%s";
-const char D_800AD8EC_7DD9C[] = "%@%s";
-const char D_800AD8F4_7DDA4[] = "%@%s";
-const char D_800AD8FC_7DDAC[] = "%@%s";
-const char D_800AD904_7DDB4[] = "%@%s";
-const char D_800AD90C_7DDBC[] = "%@%s";
-const char D_800AD914_7DDC4[] = "%@%s";
-const char D_800AD91C_7DDCC[] = "%@%s";
-const char D_800AD924_7DDD4[] = "%@%s";
-const char D_800AD92C_7DDDC[] = "%@%s";
-const char D_800AD934_7DDE4[] = "%@%s";
-const char D_800AD93C_7DDEC[] = "%@%s";
-const char D_800AD944_7DDF4[] = "%@%s";
-const char D_800AD94C_7DDFC[] = "%@%s";
-const char D_800AD954_7DE04[] = "%@%s";
-const char D_800AD95C_7DE0C[] = "%@%s";
-const char D_800AD964_7DE14[] = "%@%s";
-const char D_800AD96C_7DE1C[] = "%@%s";
-const char D_800AD974_7DE24[] = "%@%s";
-const char D_800AD97C_7DE2C[] = "%@%s";
-const char D_800AD984_7DE34[] = "%@%s";
-const char D_800AD98C_7DE3C[] = "%@%s";
-const char D_800AD994_7DE44[] = "%@%s";
-const char D_800AD99C_7DE4C[] = "%@%c";
-const char D_800AD9A4_7DE54[] = "%@%c";
-const char D_800AD9AC_7DE5C[] = "%@%c";
-const char D_800AD9B4_7DE64[] = "%@%s";
-const char D_800AD9BC_7DE6C[] = "%@%s";
-const char D_800AD9C4_7DE74[] = "%@%s";
-const char D_800AD9CC_7DE7C[] = "%@%s";
-const char D_800AD9D4_7DE84[] = "%@%s";
-const char D_800AD9DC_7DE8C[] = "%@%s";
-const char D_800AD9E4_7DE94[] = "%@%s";
-const char D_800AD9EC_7DE9C[] = "%@%s";
-const char D_800AD9F4_7DEA4[] = "%@%s";
-const char D_800AD9FC_7DEAC[] = "%@%s";
-const char D_800ADA04_7DEB4[] = "%@%s 0%d:0%d:0%d";
-const char D_800ADA18_7DEC8[] = "%@%s %d:0%d:0%d";
-const char D_800ADA28_7DED8[] = "%@%s 0%d:0%d:%d";
-const char D_800ADA38_7DEE8[] = "%@%s 0%d:%d:0%d";
-const char D_800ADA48_7DEF8[] = "%@%s 0%d:%d:%d";
-const char D_800ADA58_7DF08[] = "%@%s %d:0%d:%d";
-const char D_800ADA68_7DF18[] = "%@%s %d:%d:0%d";
-const char D_800ADA78_7DF28[] = "%@%s %d:%d:%d";
-const char D_800ADA88_7DF38[] = "%@%s %d%%";
-const char D_800ADA94_7DF44[] = "%@%s %d%%";
-const char D_800ADAA0_7DF50[] = "%@%s%@%s";
-const char D_800ADAAC_7DF5C[] = "%@%s%@%s";
-const char D_800ADAB8_7DF68[] = "%@%s%@%s";
-const char D_800ADAC4_7DF74[] = "%@%X%d";
-const char D_800ADACC_7DF7C[] = "%@%s";
-const char D_800ADAD4_7DF84[] = "%@%s";
-const char D_800ADADC_7DF8C[] = "%@%s";
-const char D_800ADAE4_7DF94[] = "%@%s";
-const char D_800ADAEC_7DF9C[] = "%@%s";
-const char D_800ADAF4_7DFA4[] = "%@%s";
-const char D_800ADAFC_7DFAC[] = "%@%s";
-const char D_800ADB04_7DFB4[] = "%@%s";
-const char D_800ADB0C_7DFBC[] = "%C%a";
-const char D_800ADB14_7DFC4[] = "%@%X%YGriechen.: %d:3";
-const char D_800ADB2C_7DFDC[] = "%@%X%Y%s: %d:3";
-const char D_800ADB3C_7DFEC[] = "%@%X%Y%s: %d:3";
-const char D_800ADB4C_7DFFC[] = "%@%X%Y%s: %d:3";
-const char D_800ADB5C_7E00C[] = "%@%X%Y%s: %d:3";
-const char D_800ADB6C_7E01C[] = "%@";
-const char D_800ADB70_7E020[] = "%X";
-const char D_800ADB74_7E024[] = "%@%s";
-const char D_800ADB7C_7E02C[] = "%X";
-const char D_800ADB80_7E030[] = "%@%s";
-const char D_800ADB88_7E038[] = "%@%s";
-const char D_800ADB90_7E040[] = "%@Leviathan";
-const char D_800ADB9C_7E04C[] = "%@Cerberus";
-const char D_800ADBA8_7E058[] = "%@Moloch";
-const char D_800ADBB4_7E064[] = "%@Beelzebub";
-const char D_800ADBC0_7E070[] = "%@Tomegatherion";
-const char D_800ADBD0_7E080[] = "%@Deutsch";
-const char D_800ADBDC_7E08C[] = "%@English";
-const char D_800ADBE8_7E098[] = "%@Fran\347ais";
-const char D_800ADBF4_7E0A4[] = "%@%s";
-const char D_800ADBFC_7E0AC[] = "%@%s";
-const char D_800ADC04_7E0B4[] = "%@%s";
-const char D_800ADC0C_7E0BC[] = "%H%V%X%Y";
-const char D_800ADC18_7E0C8[] = "%W";
-const char D_800ADC1C_7E0CC[] = "%@Made: %s on %s\012";
-const char D_800ADC30_7E0E0[] = "19:43:03";
-const char D_800ADC3C_7E0EC[] = "Aug 27 1998";
-const char D_800ADC48_7E0F8[] = "%@version B6.5 Midway";
-const char D_800ADC60_7E110[] = "%C%a";
-const char D_800ADC68_7E118[] = "startup\012";
-const char D_800ADC74_7E124[] = "kiss sequence\012";
-const char D_800ADC84_7E134[] = "%C%a";
-const char D_800ADC8C_7E13C[] = "slot name: %s\012";
-const char D_800ADC9C_7E14C[] = "empty slot!!!!!!!!!!!!!!!!!!!!!!!!!\012";
-const char D_800ADCC4_7E174[] = "locking windows %d to %d\012";
-const char D_800ADCE0_7E190[] = "%C";
-const char D_800ADCE4_7E194[] = "%a";
-const char D_800ADCE8_7E198[] = "%@TOP SCORES";
-const char D_800ADCF8_7E1A8[] = "%@HIGH SCORES";
-const char D_800ADD08_7E1B8[] = "%@TOP SCORES";
-const char D_800ADD18_7E1C8[] = "%W";
-const char D_800ADD1C_7E1CC[] = "%Y";
-const char D_800ADD20_7E1D0[] = "%a";
-const char D_800ADD24_7E1D4[] = "%@%s";
-const char D_800ADD2C_7E1DC[] = "%C";
-const char D_800ADD30_7E1E0[] = "%H";
-const char D_800ADD34_7E1E4[] = "%@%s";
-const char D_800ADD3C_7E1EC[] = "%H";
-const char D_800ADD40_7E1F0[] = "%X";
-const char D_800ADD44_7E1F4[] = "%@Score:";
-const char D_800ADD50_7E200[] = "%@Punkte:";
-const char D_800ADD5C_7E20C[] = "%@Score:";
-const char D_800ADD68_7E218[] = "%X";
-const char D_800ADD6C_7E21C[] = "%@%d";
-const char D_800ADD74_7E224[] = "%X";
-const char D_800ADD78_7E228[] = "%@Humans killed:";
-const char D_800ADD8C_7E23C[] = "%@Opfer:";
-const char D_800ADD98_7E248[] = "%@Humains tu\351s:";
-const char D_800ADDA8_7E258[] = "%X";
-const char D_800ADDAC_7E25C[] = "%@%d";
-const char D_800ADDB4_7E264[] = "%X";
-const char D_800ADDB8_7E268[] = "%@Time:";
-const char D_800ADDC0_7E270[] = "%@Zeit:";
-const char D_800ADDC8_7E278[] = "%@Dur\351e:";
-const char D_800ADDD4_7E284[] = "%X";
-const char D_800ADDD8_7E288[] = "%@0%d:0%d:0%d";
-const char D_800ADDE8_7E298[] = "%@0%d:0%d:%d";
-const char D_800ADDF8_7E2A8[] = "%@0%d:%d:0%d";
-const char D_800ADE08_7E2B8[] = "%@%d:0%d:0%d";
-const char D_800ADE18_7E2C8[] = "%@0%d:%d:%d";
-const char D_800ADE24_7E2D4[] = "%@%d:0%d:%d";
-const char D_800ADE30_7E2E0[] = "%@%d:%d:0%d";
-const char D_800ADE3C_7E2EC[] = "%@%d:%d:%d";
-const char D_800ADE48_7E2F8[] = "%C";
-const char D_800ADE4C_7E2FC[] = "%C";
-const char D_800ADE50_7E300[] = "%@Clear Save Data";
-const char D_800ADE64_7E314[] = "%C";
-const char D_800ADE68_7E318[] = "%@Are you sure you want";
-const char D_800ADE80_7E330[] = "%@to clear ALL of the save data?";
-const char D_800ADEA4_7E354[] = "%C";
-const char D_800ADEA8_7E358[] = "%C";
-const char D_800ADEAC_7E35C[] = "%@Yes";
-const char D_800ADEB4_7E364[] = "%C";
-const char D_800ADEB8_7E368[] = "%C";
-const char D_800ADEBC_7E36C[] = "%@No";
-const char D_800ADEC4_7E374[] = "%C";
-const char D_800ADEC8_7E378[] = "%@Body Harvest %c and %c 1998";
-const char D_800ADEE8_7E398[] = "%@Gremlin Interactive Ltd.";
-const char D_800ADF04_7E3B4[] = "%@All rights reserved.";
-const char D_800ADF1C_7E3CC[] = "%@Developed by DMA Design Ltd.";
-const char D_800ADF3C_7E3EC[] = "%Y%@MIDWAY is a registered";
-const char D_800ADF58_7E408[] = "%@trademark of Midway Games Inc.";
-const char D_800ADF7C_7E42C[] = "%@Distributed by Midway Home";
-const char D_800ADF9C_7E44C[] = "%@Entertainment Inc. under license.";
-const char D_800ADFC0_7E470[] = "%Y%@LICENSED BY NINTENDO";
-const char D_800ADFDC_7E48C[] = "%C";
-const char D_800ADFE0_7E490[] = "%@Controller is not connected.";
-const char D_800AE000_7E4B0[] = "%C";
-const char D_800AE004_7E4B4[] = "%@This game pak is only available";
-const char D_800AE028_7E4D8[] = "%@for the NTSC and MPAL markets.";
-const char D_800AE04C_7E4FC[] = "%Y";
-const char D_800AE050_7E500[] = "%Y";
-const char D_800AE054_7E504[] = "%C";
-const char D_800AE058_7E508[] = "%C";
-const char D_800AE05C_7E50C[] = "%a";
-const char D_800AE060_7E510[] = "%a";
-const char D_800AE064_7E514[] = "%a";
-const char D_800AE068_7E518[] = "%@%s";
-const char D_800AE070_7E520[] = "%Y";
-const char D_800AE074_7E524[] = "%Y";
-const char D_800AE078_7E528[] = "%C";
-const char D_800AE07C_7E52C[] = "%C";
-const char D_800AE080_7E530[] = "%a";
-const char D_800AE084_7E534[] = "%a";
-const char D_800AE088_7E538[] = "%a";
-const char D_800AE08C_7E53C[] = "%@%s";
-const char D_800AE094_7E544[] = "%a";
-const char D_800AE098_7E548[] = "%a";
-const char D_800AE09C_7E54C[] = "%a";
-const char D_800AE0A0_7E550[] = "%@Good work, soldier!";
-const char D_800AE0B8_7E568[] = "%C";
-const char D_800AE0BC_7E56C[] = "%@The mission was successful. You";
-const char D_800AE0E0_7E590[] = "%@have saved mankind from the aliens.";
-const char D_800AE108_7E5B8[] = "%@Come on home.";
-const char D_800AE118_7E5C8[] = "%@Score:   %d";
-const char D_800AE128_7E5D8[] = "%@Total Time:    %d:0%d:0%d";
-const char D_800AE144_7E5F4[] = "%@Total Time:    %d:0%d:%d";
-const char D_800AE160_7E610[] = "%@Total Time:    %d:%d:0%d";
-const char D_800AE17C_7E62C[] = "%@Total Time:    %d:%d:%d";
-const char D_800AE198_7E648[] = "%C";
-const char D_800AE19C_7E64C[] = "%@Humans lost: %d\012";
-const char D_800AE1B0_7E660[] = "%@Artifacts: %d of 12";
-const char D_800AE1C8_7E678[] = "%@Beau travail, soldat!";
-const char D_800AE1E0_7E690[] = "%C";
-const char D_800AE1E4_7E694[] = "%@Cette mission est un triomphe.";
-const char D_800AE208_7E6B8[] = "%@L'humanit\351 est sauv\351e.";
-const char D_800AE224_7E6D4[] = "%@Rentre chez toi, en paix.";
-const char D_800AE240_7E6F0[] = "%@Score:   %d";
-const char D_800AE250_7E700[] = "%@Dur\351e totale:    %d:0%d:0%d";
-const char D_800AE270_7E720[] = "%@Dur\351e totale:    %d:0%d:%d";
-const char D_800AE290_7E740[] = "%@Dur\351e totale:    %d:%d:0%d";
-const char D_800AE2B0_7E760[] = "%@Dur\351e totale:    %d:%d:%d";
-const char D_800AE2CC_7E77C[] = "%C";
-const char D_800AE2D0_7E780[] = "%@Pertes humaines: %d\012";
-const char D_800AE2E8_7E798[] = "%@Reliques: %d de 12";
-const char D_800AE300_7E7B0[] = "%@Gute Arbeit, Soldat!";
-const char D_800AE318_7E7C8[] = "%C";
-const char D_800AE31C_7E7CC[] = "%@Der Einsatz war erfolgreich. Du";
-const char D_800AE340_7E7F0[] = "%@hast die Menschheit vor den Aliens";
-const char D_800AE368_7E818[] = "%@gerettet. Zeit, nach Hause zu gehen.";
-const char D_800AE390_7E840[] = "%@Punkte:   %d";
-const char D_800AE3A0_7E850[] = "%@Gesamtzeit:    %d:0%d:0%d";
-const char D_800AE3BC_7E86C[] = "%@Gesamtzeit:    %d:0%d:%d";
-const char D_800AE3D8_7E888[] = "%@Gesamtzeit:    %d:%d:0%d";
-const char D_800AE3F4_7E8A4[] = "%@Gesamtzeit:    %d:%d:%d";
-const char D_800AE410_7E8C0[] = "%C";
-const char D_800AE414_7E8C4[] = "%@Menschl. Verluste: %d\012";
-const char D_800AE430_7E8E0[] = "%@Artefakte: %d of 12";
-const char D_800AE448_7E8F8[] = "Tesking key %d,  result = %d \012";
-const char D_800AE468_7E918[] = "WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\012";
-const char D_800AE49C_7E94C[] = "*******************InventorySelect=%d, \012";
-const char D_800AE4C8_7E978[] = "INV>>>>WeaponSelect=%d\012";
-#endif
-
-#ifdef VERSION_EU
-const u32 D_800AF040_7F4F0[1] = { 0x25640A00 };
-#endif
