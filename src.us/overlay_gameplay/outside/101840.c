@@ -9278,74 +9278,68 @@ void func_8010ED84_11DD34(f32 *arg0, f32 *arg1, s32 arg2) {
 	*arg1 = D_80159D60->unk4 + (D_80159D40 * scale);
 }
 
-#ifdef NON_MATCHING
-int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9)
-{
+int func_8010EF40_11DEF0(f32 arg0, f32 arg1, f32 arg2, f32 arg3, f32 arg4, f32 arg5, f32 arg6, f32 arg7, f32 *arg8, f32 *arg9) {
 	f32 slope;
+	f32 hit;
 	f32 intercept;
 	f32 dx;
-	if (arg2 < arg0)
-	{
+
+	if (arg2 < arg0) {
 		slope = arg2;
 		arg2 = arg0;
 		arg0 = slope;
 	}
-	if (arg1 > arg3)
-	{
+	if (arg1 > arg3) {
 		intercept = arg3;
 		arg3 = arg1;
-		if (arg0 == arg1) {} arg1 = intercept;
+		arg1 = intercept;
 	}
-	if (arg0 == arg2)
-	{
-		if (arg4 == arg6)
-		{
+	if (arg0 == arg2) {
+		if (arg4 == arg6) {
 			return 0;
 		}
-		if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0))))
-		{
+		if (!(((arg4 <= arg0) && (arg0 <= arg6)) || ((arg0 <= arg4) && (arg6 <= arg0)))) {
 			return 0;
 		}
 		intercept = arg7 - arg5;
 		dx = arg6 - arg4;
-		if (0.0 == intercept)
-		{
+		if (0.0 == intercept) {
 			*arg8 = arg0;
+			/* Empty conditions in this function preserve IDO's register allocation. */
+			if ((arg4 + arg4) < arg0) {}
 			*arg9 = arg5;
-			if ((arg5 + arg5 + arg5 + arg5 + arg5 + arg5) == arg5) {} return (arg1 <= arg5) && (arg5 <= arg3);
+			if ((arg5 + arg5 + arg5 + arg5 + arg5) == arg5) {}
+			return (arg1 <= arg5) && (arg5 <= arg3);
 		}
 		slope = intercept / dx;
 		*arg8 = arg0;
 		intercept = arg5 - slope * arg4;
-		slope = intercept + slope * arg0;
-		*arg9 = slope;
-		return (arg1 <= slope) && (slope <= arg3);
+		if (arg3 == arg2) {}
+		hit = intercept + slope * arg0;
+		*arg9 = hit;
+		return (arg1 <= hit) && (hit <= arg3);
 	}
-	if (arg5 == arg7)
-	{
+	if (arg5 == arg7) {
 		return 0;
 	}
-	if (!(((arg5 <= arg1) && (arg1 <= arg7)) || ((arg1 <= arg5) && (arg7 <= arg1))))
-	{
+	if (!(((arg5 <= arg1) && (arg1 <= arg7)) || ((arg1 <= arg5) && (arg7 <= arg1)))) {
 		return 0;
 	}
 	intercept = arg6 - arg4;
-	if (0.0 == intercept)
-	{
+	if (0.0 == intercept) {
 		*arg8 = arg4;
 		*arg9 = arg1;
 		return (arg0 <= arg4) && (arg4 <= arg2);
 	}
 	slope = (arg7 - arg5) / intercept;
 	intercept = arg5 - slope * arg4;
-	slope = (arg1 - intercept) / slope;
-	*arg8 = slope;
+	hit = (arg1 - intercept) / slope;
+	if (arg4 <= arg6) {}
+	if (arg5 <= hit) {}
+	*arg8 = hit;
 	*arg9 = arg1;
-	if ((arg4 + arg4 + arg4 + arg4) == 0.0f) {} return (arg0 <= slope) && (slope <= arg2);
+	return (arg0 <= hit) && (hit <= arg2);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_8010EF40_11DEF0.s")
-#endif
 
 void func_8010F218_11E1C8(void) {
 	VehicleInstance *vehicle;
