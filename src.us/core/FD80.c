@@ -23,12 +23,6 @@ Vp D_80031B60_32760[] = {
 s32 D_80031B80_32780 = 0;
 s32 D_80031B84_32784 = 0;
 
-/* E830's remaining assembly constants follow its generated double literals.
-   Keep the final zero so the stack-overflow strings retain their addresses. */
-const f32 D_80037650_38250[] = {6000.0f};
-const f32 D_80037654_38254[] = {0.2617993950843811f};
-const f32 D_80037658_38258[] = {0.2617993950843811f, 0.0f};
-
 void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2) {
 }
 
@@ -189,7 +183,6 @@ void setVideoInterfaceYSize(s32 arg0) {
 }
 
 void func_8000F6B0_102B0(void *arg0) {
-	/* Unused locals retain the original IDO stack layout. */
 	s32 unused9C[4];
 	s32 taskIndex;
 	s32 pendingTasks;
