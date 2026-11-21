@@ -1178,15 +1178,21 @@ Unk80259D90 *func_80125D70_134D20(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *
 }
 
 // AI - Steps a fixed-point segment from (arg0,arg1,arg2) toward (*arg3,*arg4,*arg5), shortening it with func_80125D70_134D20 and checking func_800B84D0_C7480 terrain
-#ifdef NON_MATCHING
 s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, s32 arg6, s32 arg7) {
 	s32 xFixed;
 	s32 yFixed;
 	s32 zFixed;
 	s32 stepCount;
 
-	s32 dx;
-	s32 dy;
+	/* Reuse the delta slots for hit coordinates after computing the steps. */
+	union {
+		s32 dx;
+		s16 *hitY;
+	} savedDx;
+	union {
+		s32 dy;
+		s16 *hitZ;
+	} savedDy;
 	s32 stepX;
 	s32 stepY;
 	s32 stepZ;
@@ -1214,39 +1220,39 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 	D_8015F9DC = 0;
 	building = NULL;
 
-	dx = *arg3 - arg0;
-	dy = *arg4 - arg1;
+	savedDx.dx = *arg3 - arg0;
+	savedDy.dy = *arg4 - arg1;
 	dz = *arg5 - arg2;
 
 	if ((arg6 & 2) == 0) {
 		surface = func_80125D70_134D20(arg0, arg1, arg2, arg3, arg4, arg5, &hitScale);
 		if (surface != NULL) {
 			D_8015F9DC = (s32)surface;
-			dx = dx * hitScale;
-			dy = dy * hitScale;
+			savedDx.dx = savedDx.dx * hitScale;
+			savedDy.dy = savedDy.dy * hitScale;
 			dz = dz * hitScale;
-			*arg3 = arg0 + dx;
-			*arg4 = arg1 + dy;
+			*arg3 = arg0 + savedDx.dx;
+			*arg4 = arg1 + savedDy.dy;
 			*arg5 = arg2 + dz;
 		}
 	}
 
-	if ((dx == 0) && (dz == 0)) {
-		stepCount = BH_ABS(dy) >> arg7;
+	if ((savedDx.dx == 0) && (dz == 0)) {
+		stepCount = BH_ABS(savedDy.dy) >> arg7;
 		stepX = 0;
 		stepZ = 0;
-		stepY = (-dy > 0 ? -0x100 : 0x100) << arg7;
-	} else if (BH_ABS(dx) > BH_ABS(dz)) {
+		stepY = (-savedDy.dy > 0 ? -0x100 : 0x100) << arg7;
+	} else if (BH_ABS(savedDx.dx) > BH_ABS(dz)) {
 		D_8015F9D0.unkC += 0; /* Preserve the IDO branch code generation. */
-		if ((stepCount = BH_ABS(dx) >> arg7) != 0) {
-			stepX = (-dx > 0 ? -0x100 : 0x100) << arg7;
-			stepY = (dy << 8) / stepCount;
+		if ((stepCount = BH_ABS(savedDx.dx) >> arg7) != 0) {
+			stepX = (-savedDx.dx > 0 ? -0x100 : 0x100) << arg7;
+			stepY = (savedDy.dy << 8) / stepCount;
 			stepZ = (dz << 8) / stepCount;
 		}
 	} else {
 		if ((stepCount = BH_ABS(dz) >> arg7) != 0) {
-			stepX = (dx << 8) / stepCount;
-			stepY = (dy << 8) / stepCount;
+			stepX = (savedDx.dx << 8) / stepCount;
+			stepY = (savedDy.dy << 8) / stepCount;
 			stepZ = (-dz > 0 ? -0x100 : 0x100) << arg7;
 		}
 	}
@@ -1264,6 +1270,8 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		tileZ = zFixed >> 8;
 		mapY = func_800B84D0_C7480((s16)tileX, (s16)tileZ) >> 8;
 		groundY = mapY;
+		savedDy.hitZ = &D_8015F9D0.unk4;
+		savedDx.hitY = &D_8015F9D0.unk2;
 
 		if ((yFixed >> 8) < (s16)mapY) {
 			*arg3 = tileX;
@@ -1276,11 +1284,11 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		if ((arg6 & 4) == 0) {
 			s32 collisionIdx = func_8012E114_13D0C4((s16)tileX, (s16)(yFixed >> 8), (s16)(zFixed >> 8));
 			if (collisionIdx != -1) {
-				D_8015F9D0.position[0] = tileX;
+				D_8015F9D0.unk0 = tileX;
 				*arg3 = D_8015F9D0.position[0];
-				D_8015F9D0.position[1] = yFixed >> 8;
+				*savedDx.hitY = yFixed >> 8;
 				*arg4 = D_8015F9D0.position[1];
-				D_8015F9D0.position[2] = zFixed >> 8;
+				*savedDy.hitZ = zFixed >> 8;
 				*arg5 = D_8015F9D0.position[2];
 				if (D_8015FAD0[collisionIdx].unk24 == (void (*)(s32, s16))func_8012E1F8_13D1A8) {
 					D_8015F9D0.unk8 = 6;
@@ -1298,7 +1306,6 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 				func_8011DE6C_12CE1C((s16)tileX, (s16)(zFixed >> 8), &maxBuildingY, (s16)buildingIdx);
 			}
 		} else {
-
 			buildingIdx = func_8011E6FC_12D6AC((s16)tileX, (s16)tileZ, &maxBuildingY);
 			if (buildingIdx != -1) {
 				building = &buildingInstances[buildingIdx];
@@ -1314,11 +1321,11 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 			if (D_801591A8 != 0) {
 				D_80158FE8 = building;
 			}
-			D_8015F9D0.position[0] = tileX;
+			D_8015F9D0.unk0 = tileX;
 			*arg3 = D_8015F9D0.position[0];
-			D_8015F9D0.position[1] = yFixed >> 8;
+			*savedDx.hitY = yFixed >> 8;
 			*arg4 = D_8015F9D0.position[1];
-			D_8015F9D0.position[2] = zFixed >> 8;
+			*savedDy.hitZ = zFixed >> 8;
 			*arg5 = D_8015F9D0.position[2];
 			D_8015F9D0.unk8 = 3;
 			D_8015F9D0.unkC = buildingIdx;
@@ -1339,15 +1346,12 @@ s32 func_80126268_135218(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32
 		D_8015F9D0.position[1] = *arg4;
 		D_8015F9D0.position[2] = *arg5;
 		D_8015F9D0.unk8 = 0xD;
-		
+
 		return 5;
 	}
 
 	return 0;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80126268_135218.s")
-#endif
 
 u64 func_80126990_135940(u64 value) {
 	return __ll_mul(value, value);
@@ -1365,9 +1369,9 @@ s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 a
 	return (s32)__ll_div((s64)func_80126990_135940((arg5 - arg1) * (arg2 - arg0) - (arg4 - arg0) * (arg3 - arg1)), denom);
 }
 
-#ifdef NON_MATCHING
-Unk8015F9D0 D_8015F9D0; /* Share the high address across the alien coordinate stores. */
+Unk8015F9D0 D_8015F9D0; /* Share the high address across the coordinate stores. */
 
+#ifdef NON_MATCHING
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
 	s32 vehicleCount;
 	s32 x = arg1;
