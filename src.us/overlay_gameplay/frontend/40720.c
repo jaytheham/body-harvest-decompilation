@@ -139,9 +139,7 @@ s32 func_80070420_408D0(void) {
 	return totalSecondsElapsed;
 }
 
-/**
- * @brief Finds a mission entry by mission id stored in `unk26`.
- */
+// AI - Finds a mission entry by mission id stored in `unk26`.
 MissionData* func_80070494_40944(s16 arg0) {
 		s32 i;
 	s32 newv;
@@ -156,9 +154,6 @@ MissionData* func_80070494_40944(s16 arg0) {
 	} while (0);
 }
 
-/**
- * @brief Clears mission frontend byte flag `unk1C` when it equals 1.
- */
 void func_800704DC_4098C(void)
 {
    s32 var_v1;
@@ -298,9 +293,6 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 	return entry;
 }
 
-/**
- * @brief Finds a mission entry by id, clamps `unk12` to 0x4000, and sets `unk14` to -0x400.
- */
 void func_800708B8_40D68(short arg0)
 {
   int new_var;
@@ -317,9 +309,6 @@ void func_800708B8_40D68(short arg0)
   }
 }
 
-/**
- * @brief Finds a mission entry by id and clears three frontend fields.
- */
 void func_80070904_40DB4(s16 arg0) {
 	MissionData* entry;
 
@@ -342,9 +331,6 @@ void func_80070940_40DF0(void)
 	}
 }
 
-/**
- * @brief Clears transient mission fields, optionally fetches selected mission data, and tags active save entry state.
- */
 MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection)
 {
   int new_var;
@@ -374,9 +360,7 @@ MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection)
   return NULL;
 }
 
-/**
- * @brief Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
- */
+// AI - Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
 void func_800709F0_40EA0(void)
 {
   s32 i;
@@ -458,9 +442,7 @@ void func_80070BD8_41088(s16 arg0, s16 arg1) {
 	}
 }
 
-/**
- * @brief If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
- */
+// AI - If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
 void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 {
   s32 temp_v0;
@@ -547,7 +529,6 @@ void func_80070CC4_41174(void)
 	}
 }
 
-/* Keep these definitions after the function-local repeat timer in data order. */
 s16 D_80094830_64CE0 = 0x1E;
 s16 D_80094834_64CE4 = 0;
 s16 D_80094838_64CE8 = 0;
@@ -1421,7 +1402,7 @@ void func_800731A8_43658(void)
 				}
 				break;
 			}
-			if (temp_s6) {} /* Preserve the original saved-register priorities. */
+			if (temp_s6) {}
 			if (temp_v0) {}
 			if (((s32)var_s4->unk12 >= 0x2001) || ((var_s4->unkA == var_s4->unkC) && (var_s4->unkE == var_s4->unk10)) || (var_s4->unk26 == 0x32))
 			{
@@ -1455,7 +1436,7 @@ void func_800731A8_43658(void)
 					D_800AED74 = var_t6;
 					break;
 				}
-				if (bodyValue) {} /* Keep the text-value lifetime through dispatch. */
+				if (bodyValue) {}
 				temp_v1_13 = var_s4->unk8;
 				switch (temp_v1_13)
 				{
@@ -1767,7 +1748,7 @@ void func_800731A8_43658(void)
 						temp_lo_4 = (s32)(D_8004816A * 0x64) / (s32)(u8)D_800314C4;
 						drawText(D_800ADA94_7DF44, -1, 0, &D_800AED70[D_800AED74[42]], (temp_lo_4 > 0x64 ? 0x64 : temp_lo_4));
 					}
-					if (bodyValue) {} /* Keep the text-value lifetime through dispatch. */
+					if (bodyValue) {}
 					switch (D_800313D0_31FD0)
 					{
 					default:
@@ -2295,9 +2276,7 @@ void func_80075D58_46208(s32 arg0) {
 	}
 }
 
-/**
- * @brief Runs several frontend update/render passes for four ticks.
- */
+// AI - Runs several frontend update/render passes for four ticks.
 void func_800764B4_46964(void) {
 	s32 i;
 
@@ -2692,9 +2671,7 @@ s32 func_80076FD8_47488(void) {
 }
 #endif
 
-/**
- * @brief Copies tiled framebuffer data from a strided source to a contiguous destination.
- */
+// AI - Copies tiled framebuffer data from a strided source to a contiguous destination.
 void func_80076FE0_47490(s32 arg0, s32 arg1) {
 	s32 *src;
 	s32 *dst;
@@ -4090,9 +4067,7 @@ void func_800791A0_49650(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311D0));
 }
 
-/**
- * @brief Returns the byte length of a null-terminated string.
- */
+// AI - Returns the byte length of a null-terminated string.
 s32 func_8007946C_4991C(u8* arg0) {
 	s32 len;
 	u8* ptr;
@@ -4794,13 +4769,14 @@ void func_8007B900_4BDB0(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// displayPublisherLogo
 // The four values that place the publisher logo; PAL's picture is taller.
 #ifdef VERSION_EU
 #define PUBLISHER_LOGO_RECT 116, 58, 96, 128
 #else
 #define PUBLISHER_LOGO_RECT 24, 80, 288, 96
 #endif
+
+// displayPublisherLogo
 void func_8007BB0C_4BFBC(void) {
 	s32 counter;
 
@@ -5668,7 +5644,6 @@ s32 func_8007D2B0_4D760(void) {
 	return 0;
 }
 
-/* ===== Frontend .rodata (ROM 0x7D5A0 - 0x7F0F0) ===== */
 #ifndef VERSION_EU
 const char D_800AD0F0_7D5A0[] = "";
 const char D_800AD0F4_7D5A4[] = "Credits";
@@ -6066,6 +6041,5 @@ const char D_800AE4C8_7E978[] = "INV>>>>WeaponSelect=%d\012";
 #endif
 
 #ifdef VERSION_EU
-/* Tail of the preceding diagnostic string, before the generated table. */
 const u32 D_800AF040_7F4F0[1] = { 0x25640A00 };
 #endif
