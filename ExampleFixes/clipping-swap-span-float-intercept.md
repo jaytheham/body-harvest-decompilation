@@ -44,3 +44,18 @@ add.s   $f0,$f8,$f16
 -> `code changed`: In a scratch allocator replay, exchange the colors for the local and the division expression while pinning the starting X and Y coordinates to `$f2` and `$f12`. The unforced replay produces the same object code as the standard compiler.
 
 -> `correct ASM`: The initial divisions and all their quotient operands use `$f0`. The eight final-coordinate register fields then use `$f14` where the target also requires `$f0`, including the destination of the final horizontal division. The replay separates the quotient mismatch from the result mismatch and leaves both results to be reconciled in C.
+
+`incorrect ASM` in the four-word candidate. The horizontal intersection used `div.s $f14,$f8,$f0`, `c.le.s $f20,$f14`, and `swc1 $f14,0($t2)`. The two initial divisions and the vertical path already matched.
+
+-> `code changed`: Calculate both intersection results in a `hit` local separate from `slope`. Keep the discarded tests that establish the coordinate lifetimes. Remove the horizontal tests that share the `arg4 + arg4` expression, which had occupied `$f0` during the final division and comparisons.
+
+```c
+hit = (arg1 - intercept) / slope;
+if (arg4 <= arg6) {}
+if (arg5 <= hit) {}
+*arg8 = hit;
+*arg9 = arg1;
+return (arg0 <= hit) && (hit <= arg2);
+```
+
+-> `correct ASM`: The horizontal path emits `div.s $f0,$f8,$f0`, `c.le.s $f20,$f0`, `swc1 $f0,0($t2)`, and `c.le.s $f0,$f10`. All 182 function instructions match with stock IDO.
