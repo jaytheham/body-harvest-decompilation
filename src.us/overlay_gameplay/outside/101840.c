@@ -2134,7 +2134,6 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #endif
 
 // AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1
-#ifdef NON_MATCHING
 void func_800F842C_1073DC(s32 arg0) {
 	UnkF9230ShadowWalker *walker;
 	s16 spD2;
@@ -2144,36 +2143,33 @@ void func_800F842C_1073DC(s32 arg0) {
 	s32 spAC[3];
 	s32 heading;
 	s32 reach;
-	u16 padding;
+	s32 phase;
 	f32 trig;
 	s32 i;
 	UnkF9230ShadowLimb *nextEntry;
-	s16 initialHeight;
 	Unk80052B40 sp8C;
 	Unk80052B40 sp84;
 	s16 sp82;
 	s16 sp80;
-	s32 phase;
 
 	if (D_80157FF0[arg0] != -1) {
 		return;
 	}
 
 	walker = &D_80158000[arg0];
-	initialHeight = D_801601F0[walker->limbs[0].unk23].unkA;
-	if (&D_801601F0[walker->limbs[0].unk23]) {}
+	/* Keep the table address live through the loop cursor spill. */
+	sp82 = (s16)((D_801601F0[walker->limbs[0].unk23].unkA / 20) +
+	             (reach = (s32)&D_801601F0[walker->limbs[0].unk23]) * 0);
 
 	for (i = 0; i < 6; i++) {
-		sp82 = initialHeight / 20;
 		if (walker->limbs[i + 1].unk23 == 1) {
 
 			gDPPipeSync(D_8005BB2C++);
 
 			if (i < 3) {
-				phase = D_801601F0[walker->limbs[0].unk23].unk10 * i + D_801601F0[walker->limbs[0].unk23].unkE;
-				phase = (s16)(0x4000 - phase);
+				phase = (s16)(0x4000 - (u32)(D_801601F0[walker->limbs[0].unk23].unkE + D_801601F0[walker->limbs[0].unk23].unk10 * i));
 			} else {
-				phase = (s16)(((D_801601F0[walker->limbs[0].unk23].unk10 * (i - 3)) + D_801601F0[walker->limbs[0].unk23].unkE) - 0x4000);
+				phase = (s16)((D_801601F0[walker->limbs[0].unk23].unkE + (D_801601F0[walker->limbs[0].unk23].unk10 * (i - 3))) - 0x4000);
 			}
 
 			sp84.unk0 = walker->limbs[0].unk18 + 0x4000;
@@ -2184,13 +2180,15 @@ void func_800F842C_1073DC(s32 arg0) {
 			}
 			sp84.unk4 = (s16)(walker->unk168 * 0x12C * (i % 3));
 
-			heading = phase & 0xFFFF;
+			/* IDO assigns temporary registers before folding the repeated masks. */
+			heading = phase & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF &
+			          0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF;
 			trig = coss(heading & 0xFFFF);
-			reach = (i % 3) * sp82 + 10;
-			sp8C.unk0 = (s16)(s32)((f64)walker->limbs[0].words[4] - (((f64)trig) / 32768.0) * (f64)(walker->unk168 * reach));
+			reach = (i % 3) * sp82;
+			sp8C.unk0 = (s16)(s32)((f64)walker->limbs[0].words[4] - (((f64)trig) / 32768.0) * (f64)(walker->unk168 * (reach + 10)));
 			func_8011E6FC_12D6AC(walker->limbs[0].unk12, walker->limbs[0].unk16, &sp80);
 			sp8C.unk2 = sp80 + walker->unk16A;
-			sp8C.unk4 = (s16)(s32)((f64)walker->limbs[0].words[5] - (((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)(walker->unk168 * reach));
+			sp8C.unk4 = (s16)(s32)((f64)walker->limbs[0].words[5] - (((f64)(f32)sins(heading & 0xFFFF)) / 32768.0) * (f64)(walker->unk168 * (reach + 10)));
 
 			if (walker->limbs[0].unk22 == 8) {
 
@@ -2245,9 +2243,6 @@ void func_800F842C_1073DC(s32 arg0) {
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F842C_1073DC.s")
-#endif
 
 void func_800F8B24_107AD4(s32 arg0) {
 	Unk80052B40 sp140;
