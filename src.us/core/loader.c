@@ -5,93 +5,92 @@
 #include "core/53F0.h"
 #include "overlay_level/greece/18D7E0.h"
 
-/* ROM offsets and RAM destinations used by the loader. EU moves the level data and the
- * level overlays, so the values are per version. */
-#if defined(VERSION_US)
+/* ROM offsets and RAM destinations resolved by the linker for each version. */
 s32 D_80031B90_32790[] = {
-	0x0043A340, 0x00579D50, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
+	(s32)&D_43A340,
+	(s32)&D_579D50,
+	(s32)javaModelsRomStart,
+	(s32)americaModelsRomStart,
+	(s32)siberiaModelsRomStart,
+	(s32)cometModelsRomStart,
+	(s32)bossModelsRomStart,
 };
 
 s32 D_80031BAC_327AC[] = {
-	0x004EBF80, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
+	(s32)&D_4EBF80,
+	(s32)javaModelsRomStart,
+	(s32)americaModelsRomStart,
+	(s32)siberiaModelsRomStart,
+	(s32)cometModelsRomStart,
+	(s32)bossModelsRomStart,
 };
 
 s32 D_80031BC4_327C4[] = {
-	0x00791C20, 0x00196F70, 0x001F9CC0, 0x00260570, 0x002C54C0, 0x0032BD80,
+	(s32)&D_791C20,
+	(s32)_overlay_level_greeceSegmentRomEnd,
+	(s32)_overlay_level_javaSegmentRomEnd,
+	(s32)_overlay_level_americaSegmentRomEnd,
+	(s32)_overlay_level_siberiaSegmentRomEnd,
+	(s32)_overlay_level_cometSegmentRomEnd,
 };
 
 s32 D_80031BDC_327DC[] = {
-	0x007A4400, 0x007F9530, 0x008463D0, 0x00898450, 0x008E4090,
+	(s32)&D_7A4400,
+	(s32)javaInteriorModelsRomStart,
+	(s32)americaInteriorModelsRomStart,
+	(s32)siberiaInteriorModelsRomStart,
+	(s32)cometInteriorModelsRomStart,
 };
 
 s32 D_80031BF0_327F0[] = {
-	0x007E6E50, 0x0083B9B0, 0x0088BE20, 0x008D9D80, 0x008F3850,
+	(s32)greeceInteriorTexturesRomStart,
+	(s32)javaInteriorTexturesRomStart,
+	(s32)americaInteriorTexturesRomStart,
+	(s32)siberiaInteriorTexturesRomStart,
+	(s32)cometInteriorTexturesRomStart,
 };
 
 s32 D_80031C04_32804[] = {
-	0x007E6E50, 0x0083B9B0, 0x0088BE20, 0x008D9D80, 0x008F3850,
+	(s32)greeceInteriorTexturesRomStart,
+	(s32)javaInteriorTexturesRomStart,
+	(s32)americaInteriorTexturesRomStart,
+	(s32)siberiaInteriorTexturesRomStart,
+	(s32)cometInteriorTexturesRomStart,
 };
 
 s32 D_80031C18_32818[] = {
-	0x0018D7E0, 0x001ED9E0, 0x00254410, 0x002B7100, 0x00318E20,
+	(s32)_overlay_level_greeceSegmentRomStart,
+	(s32)_overlay_level_javaSegmentRomStart,
+	(s32)_overlay_level_americaSegmentRomStart,
+	(s32)_overlay_level_siberiaSegmentRomStart,
+	(s32)_overlay_level_cometSegmentRomStart,
 };
 
 s32 D_80031C2C_3282C[] = {
-	0x00196F70, 0x001F9CC0, 0x00260570, 0x002C54C0, 0x0032BD80,
+	(s32)_overlay_level_greeceSegmentRomEnd,
+	(s32)_overlay_level_javaSegmentRomEnd,
+	(s32)_overlay_level_americaSegmentRomEnd,
+	(s32)_overlay_level_siberiaSegmentRomEnd,
+	(s32)_overlay_level_cometSegmentRomEnd,
 };
 
 /* The fifth start address is also the first entry of the following table. */
 u8 *D_80031C40_32840[] = {
-	(u8 *)0x802D4CD0, (u8 *)0x802D4CD0, (u8 *)0x802D4CD0, (u8 *)0x802D4CD0,
+	_overlay_level_greeceSegmentStart,
+	_overlay_level_javaSegmentStart,
+	_overlay_level_americaSegmentStart,
+	_overlay_level_siberiaSegmentStart,
 };
 
+/* Model load destinations include the original per-level padding. */
 u8 *D_80031C50_32850[] = {
-	(u8 *)0x802D4CD0, (u8 *)0x802DE470, (u8 *)0x802E0FC0, (u8 *)0x802E0E50, (u8 *)0x802E3110, (u8 *)0x802E7C70,
+	_overlay_level_cometSegmentStart,
+	_overlay_level_greece_dataSegmentStart + 0x10,
+	_overlay_level_java_dataSegmentStart + 0x10,
+	_overlay_level_america_dataSegmentStart,
+	_overlay_level_siberia_dataSegmentStart + 0x10,
+	_overlay_level_cometSegmentEnd + 0x40,
 };
-#elif defined(VERSION_EU)
-s32 D_80031B90_32790[] = {
-	0x0043AEA0, 0x00576CB0, 0x005D9B10, 0x0064BD50, 0x006BCB10, 0x0072CD00, 0x0076DBD0,
-};
-
-s32 D_80031BAC_327AC[] = {
-	0x004E8EE0, 0x005D9B10, 0x0064BD50, 0x006BCB10, 0x0072CD00, 0x0076DBD0,
-};
-
-s32 D_80031BC4_327C4[] = {
-	0x0078EB80, 0x00197AD0, 0x001FA820, 0x002610D0, 0x002C6020, 0x0032C8E0,
-};
-
-s32 D_80031BDC_327DC[] = {
-	0x007A1360, 0x007F6490, 0x00843330, 0x008953B0, 0x008E0FF0,
-};
-
-s32 D_80031BF0_327F0[] = {
-	0x007E3DB0, 0x00838910, 0x00888D80, 0x008D6CE0, 0x008F07B0,
-};
-
-s32 D_80031C04_32804[] = {
-	0x007E3DB0, 0x00838910, 0x00888D80, 0x008D6CE0, 0x008F07B0,
-};
-
-s32 D_80031C18_32818[] = {
-	0x0018E340, 0x001EE540, 0x00254F70, 0x002B7C60, 0x00319980,
-};
-
-s32 D_80031C2C_3282C[] = {
-	0x00197AD0, 0x001FA820, 0x002610D0, 0x002C6020, 0x0032C8E0,
-};
-
-/* The fifth start address is also the first entry of the following table. */
-u8 *D_80031C40_32840[] = {
-	(u8 *)0x802D4D10, (u8 *)0x802D4D10, (u8 *)0x802D4D10, (u8 *)0x802D4D10,
-};
-
-u8 *D_80031C50_32850[] = {
-	(u8 *)0x802D4D10, (u8 *)0x802DE4B0, (u8 *)0x802E1000, (u8 *)0x802E0E90, (u8 *)0x802E3150, (u8 *)0x802E7CB0,
-};
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
 
 s32 D_80031C68_32868[] = {
 	0x00000004, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C, 0x0000000D, 0x0000000E,

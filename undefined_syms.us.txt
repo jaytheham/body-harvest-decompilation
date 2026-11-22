@@ -7083,3 +7083,20 @@ D_8014ED56_Write = D_8014ED56;
 D_8014EDDE = D_8014EDDC + 2;
 D_8014F1E0_Set = D_8014F1E0;
 D_800949D8_64E88 = D_800949E0_64E90 - 8;
+
+/* Loader asset banks packed in the unknown ROM segment. */
+javaModelsRomStart = _unknownSegmentRomStart + 0x2663F0;
+americaModelsRomStart = _unknownSegmentRomStart + 0x2D8630;
+siberiaModelsRomStart = _unknownSegmentRomStart + 0x3493F0;
+cometModelsRomStart = _unknownSegmentRomStart + 0x3B95E0;
+bossModelsRomStart = _unknownSegmentRomStart + 0x3FA4B0;
+greeceInteriorTexturesRomStart = _unknownSegmentRomStart + 0x470690;
+javaInteriorModelsRomStart = _unknownSegmentRomStart + 0x482D70;
+javaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x4C51F0;
+americaInteriorModelsRomStart = _unknownSegmentRomStart + 0x4CFC10;
+americaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x515660;
+siberiaInteriorModelsRomStart = _unknownSegmentRomStart + 0x521C90;
+siberiaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x5635C0;
+/* The loader skips the first 12 bytes of the Comet interior model bank. */
+cometInteriorModelsRomStart = _unknownSegmentRomStart + 0x56D8D0;
+cometInteriorTexturesRomStart = _unknownSegmentRomStart + 0x57D090;
