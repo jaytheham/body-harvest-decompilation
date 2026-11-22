@@ -151,7 +151,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
-	static s32 colorState; /* Reserve the preceding end-of-level state slot. */
+	static s32 colorState;
 	static s32 D_8015FF84;
 	s32 rem;
 	rem = D_8015FF84 % 300;
@@ -171,7 +171,6 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 	D_8015FF84 += arg1;
 }
 
-
 void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 {
 	static u32 D_80140C78_14FC28 = 0;
@@ -188,7 +187,6 @@ void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 
 	D_80140C78_14FC28 += increment;
 }
-
 
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
@@ -261,11 +259,9 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					x -= arg1 >> 1;
 				}
 
-				/* Keep the width live in IDO across the draw branch. */
 				if (arg1) {}
 				if (arg5 != 0) {
 					for (band = 7; band >= 0; band--) {
-						/* Keep the band counter in the original saved register. */
 						if (band) {}
 						if ((i * 2) + band >= 0x30) {
 							osSyncPrintf("*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n");
@@ -311,7 +307,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 						}
 						bottom = arg3 + arg2;
 						gDPPipeSync(D_8005BB2C++);
-						/* The right edge assignment and zero texture T expression control IDO allocation. */
 						gSPTextureRectangle(
 							(textWidth = (((u32)x + (arg1 >> 1)) + sHalf) * 4, D_8005BB2C++),
 							(((u32)x + (arg1 >> 1)) - sHalf) * 4,
@@ -492,7 +487,6 @@ void func_8013001C_13EFCC(void)
 		break;
 
 	case 1:
-		// Show "processor destroyed" message (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
@@ -517,7 +511,6 @@ void func_8013001C_13EFCC(void)
 		break;
 
 	case 4:
-		// Show "Stage / Level / Niveau N" label (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
@@ -547,7 +540,6 @@ void func_8013001C_13EFCC(void)
 		return;
 
 	case 5:
-		// Show "boss destroyed" message (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
@@ -564,7 +556,6 @@ void func_8013001C_13EFCC(void)
 		return;
 
 	case 6:
-		// Show "complete / beendet / terminé" message (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
@@ -588,7 +579,6 @@ void func_8013001C_13EFCC(void)
 		break;
 	}
 }
-
 
 u32 D_80140C84_14FC34 = 1;
 u32 D_80140C88_14FC38 = 0;
@@ -727,12 +717,12 @@ s32 D_80140CDC_14FC8C = 0x82;
 
 void func_80130BA0_13FB50(void)
 {
-	static s32 bonusPrefix; /* Preserve the preceding score state slot. */
+	static s32 bonusPrefix;
 	static u8 D_80160058;
 	static s32 D_8016005C;
 	static s32 firstBonusScore;
 	static s32 secondBonusScore;
-	static s32 bonusPadding; /* Preserve the slot before the two timers. */
+	static s32 bonusPadding;
 	static u8 D_8016006C;
 	static u8 bonusAlpha;
 	static s32 D_80160070;
@@ -774,7 +764,6 @@ void func_80130BA0_13FB50(void)
 			firstBonusScore = stageScore;
 			secondBonusScore = stageScore;
 		}
-		/* Keep the original score live for IDO's register allocator. */
 		if (bonusScore) {}
 	}
 
@@ -817,7 +806,6 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = stageScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				/* The byte comparison adds zero and schedules the store with the draw arguments. */
 				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText("%a",
 					width + ((bonusAlpha = baseScore) != (u8)baseScore), baseScore);
 			} else {
@@ -1071,7 +1059,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			{
 				renderWidth -= halfWidth;
 			}
-			/* Keep IDO's glyph-delay and threshold spills in ROM order. */
 			charIndex = 0;
 			if (((charIndex + charIndex) * 5) + 0x5A) {}
 			if (charIndex * 10) {}
@@ -1254,7 +1241,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				}
 			}
 		}
-
 
 		if ((charCount == charIndex + 1) && (charScreenX <= 0))
 		{
