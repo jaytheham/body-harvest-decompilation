@@ -2843,8 +2843,6 @@ extern s32 D_80160154;
 extern s32 D_80160158;
 extern s16 D_8016015C;
 extern u8 D_8016015E;
-extern const CameraFadeScale D_80145680_154630;
-extern const CameraFadeScale D_80145688_154638;
 extern const CameraFadeScale D_801456E8_154698;
 extern const CameraFadeScale D_801456F0_1546A0;
 extern s8 D_8016015F;
