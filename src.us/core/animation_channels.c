@@ -1,8 +1,6 @@
 #include <ultra64.h>
-#include <stdarg.h>
 #include "common.h"
 #include "core/loader.h"
-#include "core/1050.h"
 
 void func_8000C790_D390(Unk80157600 *arg0, s16 *arg1, s32 arg2) {
 	s32 var_v0;
@@ -118,6 +116,7 @@ void func_8000C81C_D41C(s32 *arg0, s16 *arg1, s16 *arg2, Mtx *arg3) {
 		src = &src[8];
 	} while ((void *)src != &D_80059CD0);
 }
+
 void func_8000CC3C_D83C(AnimChannelState *arg0, s32 arg1)
 {
 	u8 var_s0;
@@ -186,74 +185,87 @@ s32 func_8000CDFC_D9FC(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, 
 	return arg3;
 }
 
-void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3) {
-    f32 z, x, y;
-    f32 elapsed, duration;
-    f32 targetRotation[3];
-    f32 rotation[3];
-    f32 fraction;
-    f32 scale;
-    f64 units, degrees;
-    u8 i;
-    AnimChannelState *channel;
+void func_8000CF4C_DB4C(Unk8007F878_404 *arg0, AnimChannelState *arg1, s32 arg2, f32 arg3)
+{
+	f32 z, x, y;
+	f32 elapsed, duration;
+	f32 targetRotation[3];
+	f32 rotation[3];
+	f32 fraction;
+	f32 scale;
+	f64 units, degrees;
+	u8 i;
+	AnimChannelState *channel;
 
-    i = 0;
-    if (arg2 != 0) {
-        scale = 4096.0f;
-        units = 4096.0;
-        if (scale) { }
-        if (units) { }
-        degrees = 180.0;
-        do {
-            channel = &arg1[i];
-            if (channel->unk14 != 0) {
-                elapsed = channel->unk1C;
-                duration = channel->unk20;
-                fraction = arg3 / (duration - elapsed);
-                y = fraction;
-                x = fraction;
-                targetRotation[0] = ((f32)channel->unk2A * degrees) / units;
-                targetRotation[1] = ((f32)channel->unk2C * degrees) / units;
-                targetRotation[2] = ((f32)channel->unk2E * degrees) / units;
-                rotation[0] = ((f32)channel->unk0 * degrees) / units;
-                rotation[1] = ((f32)channel->unk2 * degrees) / units;
-                rotation[2] = ((f32)channel->unk4 * degrees) / units;
-                rotation[0] = rotation[0] + ((targetRotation[0] - rotation[0]) * y);
-                rotation[1] = rotation[1] + ((targetRotation[1] - rotation[1]) * y);
-                rotation[2] = rotation[2] + ((targetRotation[2] - rotation[2]) * x);
-                x = channel->unk8;
-                y = channel->unkC;
-                z = channel->unk10;
-                channel->unk0 = (rotation[0] * scale) / degrees;
-                channel->unk2 = (rotation[1] * scale) / degrees;
-                channel->unk4 = (rotation[2] * scale) / degrees;
-                channel->unk8 = (((f32)channel->unk24 - x) * fraction) + x;
-                channel->unkC = (((f32)channel->unk26 - y) * fraction) + y;
-                x = channel->unk28;
-                channel->unk10 = ((x - z) * fraction) + z;
-                channel->unk1C += arg3;
-                if (channel->unk20 <= channel->unk1C) {
-                    channel->unk8 = channel->unk24;
-                    channel->unkC = ((volatile AnimChannelState *)channel)->unk26;
-                    channel->unk10 = x;
-                    channel->unk0 = channel->unk2A;
-                    channel->unk2 = channel->unk2C;
-                    channel->unk4 = channel->unk2E;
-                    channel->unk18++;
-                    if (channel->unk14 == channel->unk18) {
-                        channel->unk14 = 0;
-                        channel->unk18 = 0;
-                        if (i == 0) {
-                            arg0->unkE50 = 0;
-                        }
-                    } else {
-                        func_8000CD54_D954(arg0, channel, i);
-                    }
-                }
-            }
-            i++;
-        } while (arg2 != i);
-    }
+	i = 0;
+	if (arg2 != 0)
+	{
+		scale = 4096.0f;
+		units = 4096.0;
+		if (scale)
+		{
+		}
+		if (units)
+		{
+		}
+		degrees = 180.0;
+		do
+		{
+			channel = &arg1[i];
+			if (channel->unk14 != 0)
+			{
+				elapsed = channel->unk1C;
+				duration = channel->unk20;
+				fraction = arg3 / (duration - elapsed);
+				y = fraction;
+				x = fraction;
+				targetRotation[0] = ((f32)channel->unk2A * degrees) / units;
+				targetRotation[1] = ((f32)channel->unk2C * degrees) / units;
+				targetRotation[2] = ((f32)channel->unk2E * degrees) / units;
+				rotation[0] = ((f32)channel->unk0 * degrees) / units;
+				rotation[1] = ((f32)channel->unk2 * degrees) / units;
+				rotation[2] = ((f32)channel->unk4 * degrees) / units;
+				rotation[0] = rotation[0] + ((targetRotation[0] - rotation[0]) * y);
+				rotation[1] = rotation[1] + ((targetRotation[1] - rotation[1]) * y);
+				rotation[2] = rotation[2] + ((targetRotation[2] - rotation[2]) * x);
+				x = channel->unk8;
+				y = channel->unkC;
+				z = channel->unk10;
+				channel->unk0 = (rotation[0] * scale) / degrees;
+				channel->unk2 = (rotation[1] * scale) / degrees;
+				channel->unk4 = (rotation[2] * scale) / degrees;
+				channel->unk8 = (((f32)channel->unk24 - x) * fraction) + x;
+				channel->unkC = (((f32)channel->unk26 - y) * fraction) + y;
+				x = channel->unk28;
+				channel->unk10 = ((x - z) * fraction) + z;
+				channel->unk1C += arg3;
+				if (channel->unk20 <= channel->unk1C)
+				{
+					channel->unk8 = channel->unk24;
+					channel->unkC = ((volatile AnimChannelState *)channel)->unk26;
+					channel->unk10 = x;
+					channel->unk0 = channel->unk2A;
+					channel->unk2 = channel->unk2C;
+					channel->unk4 = channel->unk2E;
+					channel->unk18++;
+					if (channel->unk14 == channel->unk18)
+					{
+						channel->unk14 = 0;
+						channel->unk18 = 0;
+						if (i == 0)
+						{
+							arg0->unkE50 = 0;
+						}
+					}
+					else
+					{
+						func_8000CD54_D954(arg0, channel, i);
+					}
+				}
+			}
+			i++;
+		} while (arg2 != i);
+	}
 }
 
 void func_8000D26C_DE6C(Unk8007F878_404 *arg0, void *arg1) {

@@ -384,6 +384,7 @@ void func_8000F6B0_102B0(void *arg0) {
 		}
 	}
 }
+
 void func_8000FE50_10A50(void *arg0) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 	osViSetSpecialFeatures(0x40);

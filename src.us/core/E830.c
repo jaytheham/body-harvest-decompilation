@@ -71,13 +71,13 @@ void func_8000DC9C_E89C(s32 arg0, s32 arg1)
 	while (new_var != (1 * 0));
 }
 
-/* Rotate the projection coordinates and attenuate them by the distortion angle. */
+// AI - Rotate the projection coordinates and attenuate them by the distortion angle.
 void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
 	s32 x;
 	s32 y;
 	s32 radiusSquared;
-	s32 screenRadiusSquared;
+	s32 screenRadiusSquared;	
 	s32 angle;
 	s32 rotatedX;
 	f32 scale;
@@ -104,7 +104,7 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 	D_80059CD4 = (s32)(((f32)cosine / 32768.0) * y + -((f32)trig / 32768.0) * x) * scale;
 }
 
-/* Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate. */
+// AI - Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate.
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
   s16 sp1E;
@@ -119,7 +119,7 @@ void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
   D_80059CD6 = (-D_80059CD0) * 2;
 }
 
-/* Apply distance-based lens distortion around the selected screen quadrant. */
+// AI - Apply distance-based lens distortion around the selected screen quadrant.
 void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
 	s32 x;
@@ -173,7 +173,7 @@ void func_8000E048_EC48(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 	}
 }
 
-/* Update projection coordinates from struct fields and screen-space offsets. */
+// AI - Update projection coordinates from struct fields and screen-space offsets.
 void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 	D_8005BAE8->unk0 = (f32) (D_8005BAE8->unk0 + D_8005BAE8->unkC);
 	D_8005BAE8->unk4 = (f32) (D_8005BAE8->unk4 + D_8005BAE8->unk10);
@@ -183,13 +183,12 @@ void func_8000E3DC_EFDC(s32 arg0, void *arg1, s16 arg2, s16 arg3) {
 	D_80059CD6 = 0;
 }
 
-// Redefining osSetTime to take two s32 arguments to matches? (the .h definition takes u64)
 void osSetTime(s32 arg0, s32 arg1) {
 	D_8005BAEC = arg0;
 	D_8005BAF0 = arg1;
 }
 
-/* Initialise projection state from entry arg0 in D_80031A90_32690 table, then copy framebuffer region. */
+// AI - Initialise projection state from entry arg0 in D_80031A90_32690 table, then copy framebuffer region.
 void func_8000E4C4_F0C4(s32 arg0) {
 	D_80059CDC = &D_80031A90_32690[arg0];
 	D_80059CD0 = D_80059CDC->unk4;
