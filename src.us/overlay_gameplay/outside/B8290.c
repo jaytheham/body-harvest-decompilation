@@ -4,14 +4,10 @@
 #include "overlay_gameplay/outside/145D70.h"
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
-#include "version_shift.h"
-
-
 
 /* Keep the death-effect literal pool before the human AI pool in B8290_tail.c. */
 
 const ShadowGeometryConstant D_80142900_1518B0 = {0.9};
-
 
 s32 D_8013D8C0_14C870[6] = { 0x00000000, 0x00000258, 0x00000258, 0x00000320, 0x00000320, 0x00000258 };
 u32 D_8013D8D8_14C888[6] = { 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000 };
@@ -102,6 +98,7 @@ void func_800A93A4_B8354(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	trig1 = coss(rotX);
 	alienInstances[arg0].unk4 = (s32)(alienInstances[arg0].unk4 + (((-offC) * ((f32)trig1 / 32768.0)) + (offB * ((f32)trig0 / 32768.0))));
 }
+
 // AI - Propagate flag set to squad
 void func_800A9738_B86E8(u8 arg0, s32 arg1)
 {
@@ -119,7 +116,6 @@ void func_800A9738_B86E8(u8 arg0, s32 arg1)
 	}
 }
 
-// https://decomp.me/scratch/I9lkq
 // AI - Propagate flag clear to squad
 void func_800A9820_B87D0(u8 arg0, s32 arg1)
 {
@@ -156,21 +152,21 @@ void func_800A9908_B88B8(u8 arg0, s32 arg1) {
 // AI - Rotate to face player
 void func_800A99B8_B8968(u8 arg0)
 {
-  int new_var;
-  int new_var2;
-  s16 step;
-  step = alienTypes[alienInstances[arg0].typeIndex].unk42;
-  new_var = D_80052B34->unk0 - alienInstances[arg0].unk0;
-  new_var2 = D_80052B34->unk4 - alienInstances[arg0].unk4;
-  new_var = func_80003824_4424(new_var, new_var2);
-  if (-step >= (s16)(new_var - alienInstances[arg0].unk6))
-  {
-	alienInstances[arg0].unk6 -= step;
-  }
-  else if (step < (s16)(new_var - alienInstances[arg0].unk6))
+	int new_var;
+	int new_var2;
+	s16 step;
+	step = alienTypes[alienInstances[arg0].typeIndex].unk42;
+	new_var = D_80052B34->unk0 - alienInstances[arg0].unk0;
+	new_var2 = D_80052B34->unk4 - alienInstances[arg0].unk4;
+	new_var = func_80003824_4424(new_var, new_var2);
+	if (-step >= (s16)(new_var - alienInstances[arg0].unk6))
 	{
-	  alienInstances[arg0].unk6 += step;
-	} 
+		alienInstances[arg0].unk6 -= step;
+	}
+	else if (step < (s16)(new_var - alienInstances[arg0].unk6))
+	{
+		alienInstances[arg0].unk6 += step;
+	}
 }
 
 s32 func_800A9A90_B8A40(u8 arg0, s32 arg1, f32 arg2) {
@@ -219,31 +215,31 @@ void func_800A9DC0_B8D70(func_800A9DC0_B8D70_arg *arg0) {
 // AI - Teleport alien to position
 void func_800A9E1C_B8DCC(Unk80222A78 *arg0)
 {
-  u8 alienIdx;
+	u8 alienIdx;
 	u8 temp;
-  AlienInstance *alien;
-  s32 x;
-  s32 z;
-  s32 a1, a2;
-  alienIdx = arg0->unk8;
-  alien = &alienInstances[alienIdx];
-  x = (arg0->unk1 << 8) + 0x80;
-  z = (arg0->unk2 << 8) + 0x80;
-  alien->unk0 = x;
-  alien->unk4 = z;
-  alien->unk2 += 0x8000;
-  alien->unk20 |= ALIEN_FLAG_UNKO;
-  if (alien->unk20 & ALIEN_FLAG_UNKK)
-  {
-	temp = alien->unk20 & 7;
-	func_800F2D48_101CF8(temp, x, z);
-  }
-  arg0->unk4 += 9;
-  arg0->unkC = func_800A9DC0_B8D70;
-  func_800AE454_BD404(arg0);
+	AlienInstance *alien;
+	s32 x;
+	s32 z;
+	s32 a1, a2;
+	alienIdx = arg0->unk8;
+	alien = &alienInstances[alienIdx];
+	x = (arg0->unk1 << 8) + 0x80;
+	z = (arg0->unk2 << 8) + 0x80;
+	alien->unk0 = x;
+	alien->unk4 = z;
+	alien->unk2 += 0x8000;
+	alien->unk20 |= ALIEN_FLAG_UNKO;
+	if (alien->unk20 & ALIEN_FLAG_UNKK)
+	{
+		temp = alien->unk20 & 7;
+		func_800F2D48_101CF8(temp, x, z);
+	}
+	arg0->unk4 += 9;
+	arg0->unkC = func_800A9DC0_B8D70;
+	func_800AE454_BD404(arg0);
 	a1 = D_80052B34->unk0 - alien->unk0;
 	a2 = D_80052B34->unk4 - alien->unk4;
-  alien->unkE = func_80003824_4424(a1, a2);
+	alien->unkE = func_80003824_4424(a1, a2);
 }
 
 // AI - Detect stuck and teleport
@@ -318,9 +314,6 @@ s32 func_800A9F34_B8EE4(u8 arg0) {
 	}
 	return 0;
 }
-
-// CURRENT(2251)
-
 
 void func_800AA340_B92F0(u8 arg0) {
 	s16 outer;
