@@ -183,7 +183,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x1F4, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_8008AF58_99F08, /* unk5C */
+		OnDeathHandlerScout, /* unk5C */
 		{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x04] */
@@ -633,7 +633,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x1F4, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_8008AF58_99F08, /* unk5C */
+		OnDeathHandlerScout, /* unk5C */
 		{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x0E] */
@@ -1578,7 +1578,7 @@ AlienType D_8032B7D0_30F720[0x30] = {
 		0x1F4, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_8008AF58_99F08, /* unk5C */
+		OnDeathHandlerScout, /* unk5C */
 		{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x23] */

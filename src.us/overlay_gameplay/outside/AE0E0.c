@@ -352,8 +352,8 @@ void func_8009FB58_AEB08(void) {
 	}
 }
 
-// DisplayScanner
-void func_800A03FC_AF3AC(void) {
+// US func_800A03FC_AF3AC
+void DisplayScanner(void) {
 	static u16 D_8013D754_14C704 = 0;
 	u32 *clearWords;
 	VehicleInstance *firstPlayer;
@@ -1075,8 +1075,9 @@ s32 func_800A2A88_B1A38(void) {
 	return 1;
 }
 
-// drawGhostTarget - R-trigger aiming reticle?
-void func_800A2B58_B1B08(void)
+// R-trigger aiming reticle?
+// US func_800A2B58_B1B08
+void DrawGhostTarget(void)
 {
 	u8 *new_var;
 	Gfx *dl;

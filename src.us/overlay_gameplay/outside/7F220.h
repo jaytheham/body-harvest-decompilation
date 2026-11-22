@@ -11,9 +11,8 @@ void func_80070FB8_7FF68(void);
 void func_800710D4_80084(u8 arg0, u8 arg1, u8 arg2);
 void func_80071148_800F8(u8 arg0, u8 arg1);
 void func_80071178_80128(void);
-void func_80071228_801D8(void);
 void func_80071E88_80E38(Unk80052B2C *arg0);
 void func_80071F28_80ED8(void);
-void func_800720F4_810A4(void);
+void doOutsideGameplayLoop(void);
 
 #endif

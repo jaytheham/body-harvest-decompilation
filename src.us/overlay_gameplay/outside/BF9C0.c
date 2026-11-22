@@ -583,9 +583,8 @@ void func_800B1814_C07C4(u8 arg0, u8 arg1, u8* arg2) {
 	}
 }
 
-// ClearDynamicLightBuffer
-// Clear the dynamic lighting buffer (19x19 grid of RGB values)
-void func_800B19F8_C09A8(void) {
+// US 800B19F8_C09A8 - Clear the dynamic lighting buffer (19x19 grid of RGB values)
+void ClearDynamicLightBuffer(void) {
 	s32 i = 0;
 	s32 j;
 	do {
@@ -2885,8 +2884,8 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
-void func_800B9DB8_C8D68(u8 arg0)
+// US 800B9DB8_C8D68 - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
+void DrawTileBuffer(u8 arg0)
 {
 	u8 row;
 	s16 tileSize;
@@ -3033,8 +3032,8 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 }
 
 /* Draw water surfaces: textured quads with scrolling UV animation */
-// DrawVtxBufferWater
-void func_800BA5B0_C9560(u8 arg0, s32 unused) {
+// US func_800BA5B0_C9560
+void DrawVtxBufferWater(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
 	u8 *rowFlags;
 	Gfx *gfx;
@@ -3054,7 +3053,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	u16 wavePhase[1];
 	s16 batch;
 	s16 row;
-	// IDO shares this slot between the pipe-sync packet and the grid column.
 	union {
 		s32 column;
 		Gfx *packet;
@@ -3146,7 +3144,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 	texXBase = waterX % 0x200;
 	waterX -= texXBase;
-	// Keep the discarded halfword read for the original register allocation.
 	if (texXBase) {}
 
 	waterZ -= (s16)(waterZ % 0x200);
@@ -3168,7 +3165,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		for (scratch.column = 0; scratch.column < 9; scratch.column = (s16)(scratch.column + 1)) {
 			worldX = waterX + (s16)(scratch.column << 9) - 0x900;
 			worldZf = (f32)(waterZ - (s16)(row << 9) + 0x700);
-			// The zero-valued term keeps the full Z spill at its original stack slot.
 			rowZ = (0 & (u32)rowFlags) + (waterZ - (s16)(row << 9) + 0x700);
 			flag = &rowFlags[scratch.column];
 			*flag = 4;
@@ -3260,7 +3256,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(&D_8005BB34[-0x1B] - batch * 0x12), 0x1B, 0);
 
 		for (row = 0; row < 2; row++) {
-			// Form the flag-row address before IDO clears the column register.
 			scratch.column = (u32)&flags[(s16)(6 - (batch * 2)) + row][0] * 0U;
 			do {
 				flag = &flags[(s16)(6 - (batch * 2)) + row][scratch.column];
@@ -3286,13 +3281,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 			color = (0x78 - worldX) & 0xFF;
 
 			gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
-			// Preserve the register allocation for the per-row key packets.
 			if (((u32)D_8005BB2C & 1U) + ((u32)D_8005BB2C & 2U)) {}
 			gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 		}
 	}
 }
-
 
 /* Rectangle bounding overlap test with parameter extraction */
 s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {
@@ -3388,8 +3381,8 @@ success:
 	return 1;
 }
 
-// DrawShieldWalls
-void func_800BB5E0_CA590(void) {
+// US func_800BB5E0_CA590
+void DrawShieldWalls(void) {
 	s16 i;
 	s16 segment;
 	s16 t;
@@ -3647,7 +3640,6 @@ void func_800BB5E0_CA590(void) {
 	gfx->words.w1 = (u32)D_80031200;
 }
 
-// (short playerX, short playerZ)
 void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	s16 tileZ;
 	s16 tileX;
@@ -3950,8 +3942,9 @@ void func_800BD2F4_CC2A4(void)
   func_800BD20C_CC1BC();
 }
 
-// DisplayGates - A gate is a portal through the shield wall
-void func_800BD360_CC310(void)
+// A gate is a portal through the shield wall
+// US func_800BD360_CC310
+void DisplayGates(void)
 {
 	u8 i;
 	s16 sp88[2];
@@ -4161,8 +4154,8 @@ void func_800BD8B8_CC868(void) {
 	}
 }
 
-// openCurrentStageGate
-void func_800BDAF4_CCAA4(void) {
+// func_800BDAF4_CCAA4
+void openCurrentStageGate(void) {
 	u8 stage;
 	GateEntry *gate;
 	s32 gateState;
@@ -4644,7 +4637,7 @@ void func_800C0678_CF628(void) {
 	if (remaining <= 0) {
 		var_a1 |= -1;
 		D_8013DAFC_14CAAC[0] = (s16)(((u64)(u32)func_800C0678_CF628 | ~(u64)0) & (u64)(s64)var_a1);
-		func_800074BC_80BC(func_800C0678_CF628);
+		DequeueCallback(func_800C0678_CF628);
 		remaining = D_8013D9C0_14C970[0];
 	}
 	if (remaining != 0) {
@@ -4671,7 +4664,7 @@ s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
 			D_8013D9C0_14C970[0] = D_8013D9C4_14C974[0] / 2;
 		}
 		D_800313F8 = D_80031634_32234[(currentLevel - 1) << 1];
-		func_80007410_8010(func_800C0678_CF628);
+		EnqueueCallback(func_800C0678_CF628);
 		return 1;
 	} else {
 		return 0;

@@ -424,96 +424,92 @@ void func_801238DC_13288C(s16 arg0) {
 	D_8015F790[D_8015EB90[arg0].unk2A].unk20 = &D_8015EB90[arg0];
 }
 
-
-
-
 // on Vehicle death
 void func_80123AC4_132A74(VehicleInstance *arg0)
 {
-  s16 i;
-  s16 sp44;
-  f64 div;
+	s16 i;
+	s16 sp44;
+	f64 div;
 	f64 x;
-  s32 *slot = &D_502D390;
-  if (!(arg0->unk20 & 0x8000))
-  {
-	return;
-  }
-  if (arg0->unk1A != 0)
-  {
-	sp44 = func_800DF038_EDFE8(arg0->unk0, arg0->unk2, arg0->unk4, vehicleTypes[arg0->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
-  }
-  arg0->unk1C = 0;
-  if (arg0 == D_80052B34)
-  {
-	if (((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (arg0->unk1A != 0)) && (gameplayMode == 1))
+	s32 *slot = &D_502D390;
+	if (!(arg0->unk20 & 0x8000))
 	{
-	  arg0->unk3C = 0;
-	  D_801591AC = 6;
-	  D_801591B8 = 2;
-	  osSyncPrintf(D_80145070_154020);
-	  return;
+		return;
 	}
-	if ((arg0->unk1A == 0) && (gameplayMode != 0xC)) // if Adam isnt already dead
+	if (arg0->unk1A != 0)
 	{
-	  if (D_80222A70 < D_80052B34->unk2) // if above water, scream?
-	  {
-		func_801371B8_146168(0, 0x185, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0.25f);
-	  }
-	  func_80133260_142210(&D_80160080);
-	  func_80006DAC_79AC(0x64, 0); // 5 second transition to frontend/game over
-	  // Do screen shake
-	  func_8009C458_AB408();
-	  return;
+		sp44 = func_800DF038_EDFE8(arg0->unk0, arg0->unk2, arg0->unk4, vehicleTypes[arg0->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
 	}
-  }
-  else if (arg0->unk20 & VEHICLE_FLAG_PATH_GUIDED) // if NPC vehicle...
-  {
-	func_800AE190_BD140(2); // ... add 2 to global humans killed count
-	x = 0.25;
-	/* Keep the offset's setup before the divisor load. */
-	if (x) {}
-	div = D_80145160_154110[0];
-	for (i = 0; i < 2; i++)
+	arg0->unk1C = 0;
+	if (arg0 == D_80052B34)
 	{
-		// Play sound effect at vehicle position
-	  func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, x + ((f32) (func_800038E0_44E0() % 100) / div));
-	  // Spawn particle effect at vehicle position
-	  func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleTypes[arg0->unk1A].unk36 * 2, slot, 1);
+		if (((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && (arg0->unk1A != 0)) && (gameplayMode == 1))
+		{
+			arg0->unk3C = 0;
+			D_801591AC = 6;
+			D_801591B8 = 2;
+			osSyncPrintf(D_80145070_154020);
+			return;
+		}
+		if ((arg0->unk1A == 0) && (gameplayMode != 0xC)) // if Adam isnt already dead
+		{
+			if (D_80222A70 < D_80052B34->unk2) // if above water, scream?
+			{
+				func_801371B8_146168(0, 0x185, D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, 0.25f);
+			}
+			func_80133260_142210(&D_80160080);
+			func_80006DAC_79AC(0x64, 0); // 5 second transition to frontend/game over
+			// Do screen shake
+			func_8009C458_AB408();
+			return;
+		}
 	}
-
-  }
-  // If Siberia, and target vehicle is SCUD launcher, and has not launched missile
-  if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & VEHICLE_FLAG_SCUD_LAUNCHED)))
-  {
-	osSyncPrintf(D_80145088_154038);
-	// Create nuke
-	func_800D6ADC_E5A8C(arg0->unk0, arg0->unk2, arg0->unk4, 5);
-	// If player is in a vehicle
-	if (D_80052B34->unk1A != 0)
+	else if (arg0->unk20 & VEHICLE_FLAG_PATH_GUIDED) // if NPC vehicle...
 	{
-		// Create explosion at vehicle position
-	  func_800DF038_EDFE8(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, vehicleTypes[D_80052B34->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
-	  D_80052B34->unk1C = 0;
-	  // Mark player vehicle as destroyed
-	  func_800FDD8C_10CD3C(D_80052B34);
-	  // Eject player from vehicle
-	  func_800FDEA8_10CE58(D_80052B2C, 1);
+		AddToHumanKilledCount(2);
+		x = 0.25;
+		if (x)
+		{
+		}
+		div = D_80145160_154110[0];
+		for (i = 0; i < 2; i++)
+		{
+			// Play sound effect at vehicle position
+			func_801371B8_146168(0, 0x185, arg0->unk0, arg0->unk2, arg0->unk4, x + ((f32)(func_800038E0_44E0() % 100) / div));
+			// Spawn particle effect at vehicle position
+			func_800C7924_D68D4(arg0->unk0, arg0->unk2, arg0->unk4, 0x10, sp44, vehicleTypes[arg0->unk1A].unk36 * 2, slot, 1);
+		}
 	}
-	func_80123AC4_132A74(D_80052B34); // recursive call of this func to ensure Adam dies if he was in a vehicle
-  }
-  // Mark target vehicle as destroyed
-  func_800FDD8C_10CD3C(arg0);
-  // If player is in the destroyed vehicle
-  if ((arg0 == D_80052B34) && (arg0->unk1A != 0))
-  {
-	osSyncPrintf(D_801450A4_154054);
-	// Eject player from vehicle
-	func_800FDEA8_10CE58(D_80052B2C, 1);
-	D_8015F9EC = 0xA;
-  }
+	// If Siberia, and target vehicle is SCUD launcher, and has not launched missile
+	if (((currentLevel == 4) && (arg0->unk1A == 0xD)) && (!(arg0->unk20 & VEHICLE_FLAG_SCUD_LAUNCHED)))
+	{
+		osSyncPrintf(D_80145088_154038);
+		// Create nuke
+		func_800D6ADC_E5A8C(arg0->unk0, arg0->unk2, arg0->unk4, 5);
+		// If player is in a vehicle
+		if (D_80052B34->unk1A != 0)
+		{
+			// Create explosion at vehicle position
+			func_800DF038_EDFE8(D_80052B34->unk0, D_80052B34->unk2, D_80052B34->unk4, vehicleTypes[D_80052B34->unk1A].unk36 * 2, (func_800038E0_44E0() % 3) + 3, 0);
+			D_80052B34->unk1C = 0;
+			// Mark player vehicle as destroyed
+			func_800FDD8C_10CD3C(D_80052B34);
+			// Eject player from vehicle
+			func_800FDEA8_10CE58(D_80052B2C, 1);
+		}
+		func_80123AC4_132A74(D_80052B34); // recursive call of this func to ensure Adam dies if he was in a vehicle
+	}
+	// Mark target vehicle as destroyed
+	func_800FDD8C_10CD3C(arg0);
+	// If player is in the destroyed vehicle
+	if ((arg0 == D_80052B34) && (arg0->unk1A != 0))
+	{
+		osSyncPrintf(D_801450A4_154054);
+		// Eject player from vehicle
+		func_800FDEA8_10CE58(D_80052B2C, 1);
+		D_8015F9EC = 0xA;
+	}
 }
-
 
 // Deal damage to vehicle. Reduces damage to Adam by 40% in easy
 void func_80123E90_132E40(VehicleInstance *arg0, s16 arg1) {
@@ -3447,8 +3443,9 @@ void func_8012D84C_13C7FC()
 	}
 }
 
-// DisplayForces - Debug draw interaction boxes
-void func_8012D884_13C834(void) {
+// Debug draw interaction boxes
+// US func_8012D884_13C834
+void DisplayForces(void) {
 	Unk8015FAD0 *entry;
 	s16 halfY;
 	s16 z;

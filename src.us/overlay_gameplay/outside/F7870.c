@@ -216,8 +216,8 @@ void func_800E8A00_F79B0(void) {
 }
 
 
-// SetupForShadows
-void func_800E94B8_F8468(void) {
+// US func_800E94B8_F8468
+void SetupForShadows(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_PRIM_A, G_RM_AA_XLU_SURF2);
 	gDPSetBlendColor(D_8005BB2C++, 0, 0, 0, 0x96);
@@ -466,8 +466,8 @@ void func_800E988C_F883C(AlienInstance *arg0, AlienType *arg1) {
 }
 
 
-// StopDrawingShadows
-void func_800EA088_F9038(void) {
+// US func_800EA088_F9038
+void StopDrawingShadows(void) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPTileSync(D_8005BB2C++);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
@@ -475,8 +475,8 @@ void func_800EA088_F9038(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_LIGHTING);
 }
 
-// DisplayVehicleShadows
-void func_800EA12C_F90DC(void) {
+// US func_800EA12C_F90DC
+void DisplayVehicleShadows(void) {
 	s32 i;
 
 	i = D_80158FD8;

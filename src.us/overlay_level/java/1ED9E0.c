@@ -294,13 +294,13 @@ void func_802D5508_1EE218(void) {
 	if (D_802E0FB0-- <= 0) {
 		func_80013468_14068(6);
 		func_800EFEB4_FEE64(&func_802D51F8_1EDF08, 0xC, 0);
-		func_800074BC_80BC(func_802D5508_1EE218);
+		DequeueCallback(func_802D5508_1EE218);
 	}
 }
 
 void func_802D5560_1EE270(void) {
 	D_802E0FB0 = 0x1E;
-	func_80007410_8010(&func_802D5508_1EE218);
+	EnqueueCallback(&func_802D5508_1EE218);
 }
 
 void func_802D5590_1EE2A0(void) {
@@ -311,7 +311,7 @@ void func_802D5590_1EE2A0(void) {
 	s32 var_v0_2;
 
 	if (D_802E0FB0 == -1) {
-		func_800076D4_82D4(8);
+		SetObjective(8);
 		func_80018D7C_1997C(0xDC);
 	}
 	D_802E0FB0++;
@@ -320,8 +320,8 @@ void func_802D5590_1EE2A0(void) {
 		D_802E0FB0 = 0;
 	}
 	if (vehicleInstances[80].unk1C <= 0) {
-		func_800074BC_80BC(func_802D5590_1EE2A0);
-		func_800AE190_BD140(D_801591C4);
+		DequeueCallback(func_802D5590_1EE2A0);
+		AddToHumanKilledCount(D_801591C4);
 		temp_s6 = (s16) func_800DF9C8_EE978(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0xC8, 0, 0);
 		var_s1 = 0;
 		if (D_801591C4 >= 9) {
@@ -345,7 +345,7 @@ void func_802D5590_1EE2A0(void) {
 			} while (var_s1 < var_v0_2);
 		}
 		D_801591C4 = 0;
-		func_800076D4_82D4(9);
+		SetObjective(9);
 	}
 }
 
@@ -397,7 +397,7 @@ int func_802D57F4_1EE504(void) {
 		alienTypes[1].unk54 |= 2;
 		osSyncPrintf("All done\n\n\n");
 		D_802E0FB0 = 0;
-		func_80007410_8010(&func_802D5590_1EE2A0);
+		EnqueueCallback(&func_802D5590_1EE2A0);
 		D_802E0FB0 = -0x32;
 		return 1;
 	default:
@@ -673,7 +673,7 @@ void func_802D5ADC_1EE7EC(void) {
 			D_801591C4 -= 1;
 			return;
 		}
-		func_800074BC_80BC((void *) func_802D5ADC_1EE7EC);
+		DequeueCallback((void *) func_802D5ADC_1EE7EC);
 	}
 }
 
@@ -681,9 +681,9 @@ void func_802D5BA0_1EE8B0(void) {
 	osSyncPrintf("end evac\n");
 	D_802E0FB0 = 0;
 	osSyncPrintf("stop boat damage\n");
-	func_800074BC_80BC(&func_802D5590_1EE2A0);
-	func_80007410_8010(&func_802D5ADC_1EE7EC);
-	func_800076D4_82D4(9);
+	DequeueCallback(&func_802D5590_1EE2A0);
+	EnqueueCallback(&func_802D5ADC_1EE7EC);
+	SetObjective(9);
 }
 
 // AI - Level 2 placement: func_802D4DB0_1EDAC0 and func_800DF038_EDFE8 at fixed coords, then schedules func_800072CC_7ECC(0x15).
@@ -744,12 +744,12 @@ void func_802D5E98_1EEBA8(void) {
 		func_800073B8_7FB8(0xDu);
 	}
 	if (vehicleInstances[49].unk1C <= 0) {
-		func_800074BC_80BC(func_802D5E98_1EEBA8);
+		DequeueCallback(func_802D5E98_1EEBA8);
 	}
 }
 
 void func_802D5F98_1EECA8(void) {
-	func_80007410_8010(&func_802D5E98_1EEBA8);
+	EnqueueCallback(&func_802D5E98_1EEBA8);
 }
 
 void func_802D5FBC_1EECCC(void) {
@@ -789,11 +789,11 @@ static void func_802D60FC_stub(void) {
 }
 
 void func_802D6104_1EEE14(void) {
-	func_80007410_8010((void *)func_802D60FC_stub);
+	EnqueueCallback((void *)func_802D60FC_stub);
 }
 
 void func_802D6128_1EEE38(void) {
-	func_800074BC_80BC((void *)func_802D60FC_stub);
+	DequeueCallback((void *)func_802D60FC_stub);
 }
 
 void func_802D614C_1EEE5C(void)
@@ -810,7 +810,7 @@ void func_802D614C_1EEE5C(void)
 		func_8011C080_12B030(0x32);
 		func_8011C080_12B030(0x31);
 		func_800E0F4C_EFEFC(buildingInstances[49].xCoord, (s16)(D_80222A70 + 0x64), buildingInstances[49].zCoord, 0x19);
-		func_800074BC_80BC((void *)func_802D614C_1EEE5C);
+		DequeueCallback((void *)func_802D614C_1EEE5C);
 		func_800DF038_EDFE8(buildingInstances[49].xCoord, (s16)(D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
 		func_800DF038_EDFE8(buildingInstances[50].xCoord, (s16)(D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x12C, 0x10, 0);
 		temp_v0 = D_802E0FB6;
@@ -835,8 +835,8 @@ void func_802D62A0_1EEFB0(void)
 	if (buildingInstances[50].xCoord < (-0x5207))
 	{
 		D_802E0FB6 = 0x28;
-		func_800074BC_80BC(func_802D62A0_1EEFB0);
-		func_80007410_8010(&func_802D614C_1EEE5C);
+		DequeueCallback(func_802D62A0_1EEFB0);
+		EnqueueCallback(&func_802D614C_1EEE5C);
 	}
 }
 
@@ -1169,72 +1169,72 @@ void func_802D6E70_1EFB80(void) {
 
 // 0xC cutscene/mission called thru level overlay table
 void func_802D7938_1F0648(void) {
-	func_80007410_8010(&func_802D6E70_1EFB80); // add lightning to callback list
+	EnqueueCallback(&func_802D6E70_1EFB80); // add lightning to callback list
 }
 
 // 0xD cutscene/mission called thru level overlay table
 void func_802D795C_1F066C(void) {
-	func_800074BC_80BC(&func_802D6E70_1EFB80); // remove lightning from callback list
+	DequeueCallback(&func_802D6E70_1EFB80); // remove lightning from callback list
 }
 
 void func_802D7980_1F0690(void) {
 	switch (D_80048030) {
 	case 0:
-		if (func_80004818_5418(-0x11, 0x43, 2) != 0) {
-			func_800076D4_82D4(1);
+		if (IsPlayerWithinXTilesOf(-0x11, 0x43, 2) != 0) {
+			SetObjective(1);
 		}
 		break;
 	case 1:
 		if (func_8000726C_7E6C(1) != 0) {
-			func_800076D4_82D4(2);
+			SetObjective(2);
 		}
 		break;
 	case 2:
-		if (func_80004818_5418(0x2C, 0x61, 3) != 0) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(0x2C, 0x61, 3) != 0) {
+			SetObjective(3);
 		}
 		break;
 	case 3:
-		if (func_80004818_5418(0x5B, 0x5F, 3) != 0) {
-			func_800076D4_82D4(4);
+		if (IsPlayerWithinXTilesOf(0x5B, 0x5F, 3) != 0) {
+			SetObjective(4);
 		}
 		break;
 	case 4:
-		if (func_80004818_5418(0x49, 0x23, 2) != 0) {
-			func_800076D4_82D4(5);
+		if (IsPlayerWithinXTilesOf(0x49, 0x23, 2) != 0) {
+			SetObjective(5);
 		}
 		break;
 	case 5:
-		if (func_80004818_5418(0x4E, 0x12, 2) != 0) {
-			func_800076D4_82D4(6);
+		if (IsPlayerWithinXTilesOf(0x4E, 0x12, 2) != 0) {
+			SetObjective(6);
 		}
 		break;
 	case 6:
-		if (func_80004818_5418(0x6A, -0xB, 3) != 0) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(0x6A, -0xB, 3) != 0) {
+			SetObjective(7);
 		}
 		break;
 	case 7:
 	case 8:
 		break;
 	case 9:
-		if (func_80004818_5418(7, -0x50, 8) != 0) {
-			func_800076D4_82D4(0xA);
+		if (IsPlayerWithinXTilesOf(7, -0x50, 8) != 0) {
+			SetObjective(0xA);
 		}
 		break;
 	case 10:
-		if (func_80004818_5418(-0x2F, -0x46, 3) != 0) {
-			func_800076D4_82D4(0xB);
+		if (IsPlayerWithinXTilesOf(-0x2F, -0x46, 3) != 0) {
+			SetObjective(0xB);
 		}
 		break;
 	case 11:
-		if (func_80004818_5418(-0x64, -0x23, 6) != 0) {
-			func_800076D4_82D4(0xC);
+		if (IsPlayerWithinXTilesOf(-0x64, -0x23, 6) != 0) {
+			SetObjective(0xC);
 		}
 		break;
 	case 12:
 		if (func_8000726C_7E6C(0x21) != 0) {
-			func_800076D4_82D4(0xD);
+			SetObjective(0xD);
 		}
 		break;
 	case 13:

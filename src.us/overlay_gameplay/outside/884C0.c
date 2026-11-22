@@ -1270,8 +1270,8 @@ s32 func_8007B9CC_8A97C(u8 arg0) {
 	gSPDisplayList(D_8005BB2C++, model);
 }
 
-// drawComplexObjectShadows e.g. humans
-void func_8007BEC0_8AE70(void)
+// US func_8007BEC0_8AE70 e.g. humans
+void DrawComplexObjectShadows(void)
 {
 	s32 i;
 	u8 new_var;
@@ -1320,7 +1320,8 @@ void func_8007BEC0_8AE70(void)
 	}
 }
 
-void func_8007C044_8AFF4(void) {
+// US func_8007C044_8AFF4
+void DrawComplexObjects(void) {
 	s32 i;
 	s16 animIndex;
 	s16 drewType1 = 0;
@@ -6206,7 +6207,7 @@ void func_80089574_98524(u8 arg0) {
 				if ((temp_v0 == 0x14) || (temp_v0 == 0xB) || (temp_v0 == 0xC) || (temp_v0 == 4)) {
 					D_8004816C--;
 				}
-				func_800AE190_BD140(1); // increase human meter + humans killed
+				AddToHumanKilledCount(1);
 			}
 		}
 		temp_v0 = s0->unk24;
@@ -6634,7 +6635,8 @@ void func_8008AC5C_99C0C(u8 arg0)
 }
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) on-death func
-void func_8008AF58_99F08(u8 arg0)
+// US func_8008AF58_99F08
+void OnDeathHandlerScout(u8 arg0)
 {
 	s32 inst;
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))

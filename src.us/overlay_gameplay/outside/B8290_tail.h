@@ -21,8 +21,8 @@ void func_800ADAF8_BCAA8(u8 arg0);
 void func_800ADB4C_BCAFC(u8 arg0);
 void func_800ADFC0_BCF70(u8);
 void func_800ADFE8_BCF98(u8 arg0);
-void func_800AE190_BD140(s16);
-void func_800AE1C0_BD170(void);
+void AddToHumanKilledCount(s16);
+void IncrementHumanHarvestedCount(void);
 void func_800AE1EC_BD19C(void);
 
 #endif

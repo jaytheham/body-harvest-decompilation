@@ -219,14 +219,14 @@ u32 D_802DD520_196030[] = {
 s32 D_802DDBF0_196700 = 0x7FFFFFFF;
 
 void (*D_802DDBF4_196704[])(void) = {
-	func_802D531C_18DE2C,
-	func_802D5460_18DF70,
-	func_802D562C_18E13C,
-	func_802D54AC_18DFBC,
+	StartParenthosBridgeLoweringCutscene,
+	StartPollsturaHouseFires,
+	StartAmbulanceOnBridge,
+	FailPollsturaHouseFires,
 	func_802D56E8_18E1F8,
-	func_802D5720_18E230,
-	func_802D5760_18E270,
-	func_802D5290_18DDA0,
+	StartBlackAdamDestroysBridgeCutscene,
+	StartBlackAdamDestroysAirplanesCutscene,
+	StartAirportTraining,
 	func_802D5434_18DF44,
 	func_80076820_857D0,
 	func_80076820_857D0,
@@ -497,7 +497,7 @@ void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 		func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0, 1); // alpha 1 landing start of level cutscene
 		break;
 	case 0x16:
-		func_800EFEB4_FEE64(func_802D57A0_18E2B0, 5, 1); // Atlantis raising cutscene
+		func_800EFEB4_FEE64(ExecuteAtlantisRaisingCutscene, 5, 1); // Atlantis raising cutscene
 		break;
 	case 0x17:
 		func_802D6F7C_18FA8C();
@@ -535,21 +535,21 @@ void func_802D4E28_18D938(void) {
 		buildingInstances[12].door2InteriorId = 0x77; // Greece 3 northern airfield - door interior changes to different room where trainer is gone
 	}
 	if (func_8000726C_7E6C(0xB) == 0) {
-		func_80007410_8010(func_802D4ECC_18D9DC);
+		EnqueueCallback(func_802D4ECC_18D9DC);
 	}
 }
 
 // AI - Polling callback checking mission conditions
 void func_802D4ECC_18D9DC(void) {
 	if (func_8000726C_7E6C(0xB) != 0) {
-		func_800074BC_80BC(func_802D4ECC_18D9DC);
+		DequeueCallback(func_802D4ECC_18D9DC);
 	}
-	if (func_80004818_5418(-0x1A, -0x26, 2) != 0) {
+	if (IsPlayerWithinXTilesOf(-0x1A, -0x26, 2) != 0) {
 		func_80018D7C_1997C(0x100);
-		func_800074BC_80BC(func_802D4ECC_18D9DC);
+		DequeueCallback(func_802D4ECC_18D9DC);
 	}
 	if (D_80052B34->unk1A != 0) {
-		func_800074BC_80BC(func_802D4ECC_18D9DC);
+		DequeueCallback(func_802D4ECC_18D9DC);
 	}
 }
 
@@ -559,8 +559,8 @@ void func_802D4F50_18DA60(void) {
 	osViExtendVStart((s32) &D_802DD170);
 }
 
-// Airport training sequence state machine
-void func_802D4F74_18DA84(void) {
+// US func_802D4F74_18DA84
+void ExecuteAirportTraining(void) {
 	if (D_802DE460 < 0x3E8) {
 		D_802DE460 += 1;
 	}
@@ -646,7 +646,7 @@ void func_802D4F74_18DA84(void) {
 	case 7:
 		if (D_802DE460 == 0x14) {
 			func_80018D7C_1997C(0xEC); // dialogue
-			func_800074BC_80BC(func_802D4F74_18DA84); // end mission
+			DequeueCallback(ExecuteAirportTraining); // end mission
 			func_800072CC_7ECC(0x1E);
 			D_80159320 &= ~0x400000;
 			D_802DE460 = 0;
@@ -656,14 +656,15 @@ void func_802D4F74_18DA84(void) {
 }
 
 // airport training called thru event/mission table offset 7
-void func_802D5290_18DDA0(void) {
+// US func_802D5290_18DDA0
+void StartAirportTraining(void) {
 	D_8004DC58 = 0;
 	D_802DE460 = 0;
-	func_80007410_8010(func_802D4F74_18DA84);
+	EnqueueCallback(ExecuteAirportTraining);
 }
 
-// Parenthos bridge lowering cutscene state/handling
-s32 func_802D52C4_18DDD4(void) {
+// US func_802D52C4_18DDD4
+s32 ExecuteParenthosBridgeLoweringCutscene(void) {
 	D_80052554 -= 0x55;
 	if (D_80052554 < 0x401) {
 		D_80052554 = 0x400;
@@ -673,17 +674,18 @@ s32 func_802D52C4_18DDD4(void) {
 	return 0;
 }
 
-// Parenthos bridge lowering event - called thru event/mission table offset 0
-void func_802D531C_18DE2C(void) {
+// called thru event/mission table offset 0
+// US func_802D531C_18DE2C
+void StartParenthosBridgeLoweringCutscene(void) {
 	func_800072CC_7ECC(0x2A);
 	D_80052554 = 0x38A4;
-	func_800EFEB4_FEE64(func_802D52C4_18DDD4, 1, 1); // play cutscene 1- bridge lowering
+	func_800EFEB4_FEE64(ExecuteParenthosBridgeLoweringCutscene, 1, 1);
 	func_80013468_14068(1);
 	D_801493E0 = 0;
 }
 
-// Pollstura suburbs buildings on fire callback
-void func_802D536C_18DE7C(void) {
+// US func_802D536C_18DE7C
+void ExecutePollsturaHouseFires(void) {
 	s16 temp_diff;
 	s16 status;
 
@@ -697,58 +699,58 @@ void func_802D536C_18DE7C(void) {
 		D_802DE464 += 1;
 	}
 	if ((status == 0) || (((s8) buildingInstances[55].hitPoints <= 0) && ((s8) buildingInstances[63].hitPoints <= 0) && ((s8) buildingInstances[57].hitPoints <= 0) && ((s8) buildingInstances[62].hitPoints <= 0))) {
-		func_800074BC_80BC(func_802D536C_18DE7C);
+		DequeueCallback(ExecutePollsturaHouseFires);
 	}
 }
 
 // Pollstura building fire event/mission -called thru table D_802DDBF4 offset 8
 void func_802D5434_18DF44(void) {
-	func_800074BC_80BC(func_802D536C_18DE7C);
-	func_800076D4_82D4(5);
+	DequeueCallback(ExecutePollsturaHouseFires);
+	SetObjective(5);
 }
 
-// AI - Enable building destruction and start fire
 // called thru event/mission table offset 1
-void func_802D5460_18DF70(void) {
+// US func_802D5460_18DF70
+void StartPollsturaHouseFires(void) {
 	func_8011BF7C_12AF2C(0x37); // 4 building instances in Pollstura
 	func_8011BF7C_12AF2C(0x3F);
 	func_8011BF7C_12AF2C(0x39);
 	func_8011BF7C_12AF2C(0x3E);
 	D_802DE464 = 0;
-	func_80007410_8010(func_802D536C_18DE7C);
+	EnqueueCallback(ExecutePollsturaHouseFires);
 }
 
 // called thru event/mission table offset 3
-// Pollstura failure? blow up the 4 buildings, add 3 each to human meter
-void func_802D54AC_18DFBC(void) {
+// US func_802D54AC_18DFBC
+void FailPollsturaHouseFires(void) {
 	if ((buildingInstances[55].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x37);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
 	if ((buildingInstances[63].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x3F);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
 	if ((buildingInstances[57].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x39);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
 	if ((buildingInstances[62].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x3E);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
-	func_800074BC_80BC(func_802D536C_18DE7C);
-	func_800076D4_82D4(5);
+	DequeueCallback(ExecutePollsturaHouseFires);
+	SetObjective(5);
 }
 
-// AI - Vehicle crash sequence callback
-void func_802D5578_18E088(void) {
+// US func_802D5578_18E088
+void ExecuteAmbulanceOnBridge(void) {
 	if (!(vehicleInstances[84].unk20 & 0x8000)) {
-		func_800074BC_80BC(func_802D5578_18E088);
+		DequeueCallback(ExecuteAmbulanceOnBridge);
 	}
 	if ((vehicleInstances[84].unk0 < 0x1000) && (vehicleInstances[84].unk4 < -0x6B00)) {
 		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & ~VEHICLE_FLAG_PATH_GUIDED);
-		func_800074BC_80BC(func_802D5578_18E088);
+		DequeueCallback(ExecuteAmbulanceOnBridge);
 	}
 	D_802DE466 = D_802DE466 + 1;
 	if (D_802DE466 == 0x9C4 && D_80048030 == 0xF) {
@@ -757,10 +759,11 @@ void func_802D5578_18E088(void) {
 }
 
 // Ambulance/bridge attack event -called thru table D_802DDBF4 offset 2
-void func_802D562C_18E13C(void) {
+// US func_802D562C_18E13C
+void StartAmbulanceOnBridge(void) {
 	func_80092ADC_A1A8C(); // spawns the 5 Doodlebugs that target the bridge
 	D_802DE466 = 0;
-	func_80007410_8010(func_802D5578_18E088);
+	EnqueueCallback(ExecuteAmbulanceOnBridge);
 }
 
 // AI - Vehicle damage and destruction
@@ -770,8 +773,8 @@ void func_802D5660_18E170(void) {
 	if (D_8014D182 >= 0x32) {
 		func_800072CC_7ECC(0x29);
 		func_800073B8_7FB8(0x2A);
-		func_800074BC_80BC(func_802D5660_18E170);
-		func_800076D4_82D4(0x10);
+		DequeueCallback(func_802D5660_18E170);
+		SetObjective(0x10);
 		func_80123AC4_132A74(&vehicleInstances[84]); // feed the Ambulance through the vehicle on-death handler
 	}
 }
@@ -780,25 +783,27 @@ void func_802D5660_18E170(void) {
 void func_802D56E8_18E1F8(void) {
 	D_8014D182 = 0;
 	func_800072CC_7ECC(0x2A);
-	func_80007410_8010(func_802D5660_18E170);
+	EnqueueCallback(func_802D5660_18E170);
 }
 
-// start TNT bridge cutscene - called thru table D_802DDBF4 offset 5
-void func_802D5720_18E230(void) {
+// called thru table D_802DDBF4 offset 5
+// US func_802D5720_18E230
+void StartBlackAdamDestroysBridgeCutscene(void) {
 	D_80157F94 = 0xFF;
-	func_800EFEB4_FEE64(func_802D64D0_18EFE0, 6, 1);
+	func_800EFEB4_FEE64(ExecuteBlackAdamDestroysBridgeCutscene, 6, 1);
 	func_80013468_14068(2);
 }
 
-// start airport TNT cutscene - called thru table D_802DDBF4 offset 6
-void func_802D5760_18E270(void) {
+// called thru table D_802DDBF4 offset 6
+// US func_802D5760_18E270
+void StartBlackAdamDestroysAirplanesCutscene(void) {
 	D_80157F94 = 0xFF;
-	func_800EFEB4_FEE64(func_802D6904_18F414, 7, 1);
+	func_800EFEB4_FEE64(ExecuteBlackAdamDestroysAirplanesCutscene, 7, 1);
 	func_80013468_14068(3);
 }
 
-// Atlantis raising cutscene
-s32 func_802D57A0_18E2B0(void) {
+// US func_802D57A0_18E2B0
+s32 ExecuteAtlantisRaisingCutscene(void) {
 	s32 i;
 	u16 x;
 	u16 z;
@@ -923,8 +928,8 @@ s32 func_802D57A0_18E2B0(void) {
 	return 0;
 }
 
-// Black Adam TNT bridge cutscene state machine
-s32 func_802D64D0_18EFE0(void) {
+// US func_802D64D0_18EFE0
+s32 ExecuteBlackAdamDestroysBridgeCutscene(void) {
 	u8 typeIndex;
 	s32 alienId;
 
@@ -1033,8 +1038,8 @@ s32 func_802D64D0_18EFE0(void) {
 	return 0;
 }
 
-// Airport TNT cutscene state handler
-s32 func_802D6904_18F414(void) {
+// US func_802D6904_18F414
+s32 ExecuteBlackAdamDestroysAirplanesCutscene(void) {
 	s32 pad[2];
 	s32 alienId;
 	s16 *idPtr;
@@ -1157,86 +1162,86 @@ s32 func_802D6904_18F414(void) {
 void func_802D6D20_18F830(void) {
 	switch (D_80048030) {
 	case 0:
-		if (func_80004818_5418(-0x25, -0x32, 1) != 0) {
-			func_800076D4_82D4(1);
+		if (IsPlayerWithinXTilesOf(-0x25, -0x32, 1) != 0) {
+			SetObjective(1);
 		}
 		break;
 
 	case 1:
 		if (func_801393A0_148350(7) != 0) {
-			func_800076D4_82D4(2);
+			SetObjective(2);
 		}
 		break;
 
 	case 2:
-		if (func_80004818_5418(-0x3E, -0x5C, 2) != 0) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(-0x3E, -0x5C, 2) != 0) {
+			SetObjective(3);
 		}
 		break;
 
 	case 3:
 		if (func_8000726C_7E6C(0xA) != 0) {
-			func_800076D4_82D4(4);
+			SetObjective(4);
 		}
 		break;
 
 	case 0x5:
 		if (D_80052B34->unk1A == 7) {
-			func_800076D4_82D4(6);
+			SetObjective(6);
 		}
 		break;
 
 	case 0x6:
-		if (func_80004818_5418(-0x61, 3, 3) != 0) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(-0x61, 3, 3) != 0) {
+			SetObjective(7);
 		}
 		break;
 
 	case 0x7:
-		if (func_80004818_5418(-0x67, 0x10, 0x10) == 0) {
-			func_800076D4_82D4(8);
+		if (IsPlayerWithinXTilesOf(-0x67, 0x10, 0x10) == 0) {
+			SetObjective(8);
 		}
 		break;
 
 	case 0x8:
-		if (func_80004818_5418(-0x21, 0x38, 2) != 0) {
-			func_800076D4_82D4(9);
+		if (IsPlayerWithinXTilesOf(-0x21, 0x38, 2) != 0) {
+			SetObjective(9);
 		}
 		break;
 
 	case 0x9:
-		if ((func_8000726C_7E6C(0x24) != 0) || (func_80004818_5418(-0x4E, 0x61, 1) != 0)) {
-			func_800076D4_82D4(0xA);
+		if ((func_8000726C_7E6C(0x24) != 0) || (IsPlayerWithinXTilesOf(-0x4E, 0x61, 1) != 0)) {
+			SetObjective(0xA);
 		}
 		break;
 
 	case 0xA:
 		if (func_8000726C_7E6C(0x14) != 0) {
-			func_800076D4_82D4(0xB);
+			SetObjective(0xB);
 		}
 		break;
 
 	case 0xB:
-		if (func_80004818_5418(0, 0x55, 2) != 0) {
-			func_800076D4_82D4(0xC);
+		if (IsPlayerWithinXTilesOf(0, 0x55, 2) != 0) {
+			SetObjective(0xC);
 		}
 		break;
 
 	case 0xC:
 		if (func_8000726C_7E6C(0x30) != 0) {
-			func_800076D4_82D4(0xD);
+			SetObjective(0xD);
 		}
 		break;
 
 	case 0xD:
 		if (func_8000726C_7E6C(0x1C) != 0) {
-			func_800076D4_82D4(0xE);
+			SetObjective(0xE);
 		}
 		break;
 
 	case 0xE:
 		if (func_8000726C_7E6C(0x1E) != 0) {
-			func_800076D4_82D4(0xF);
+			SetObjective(0xF);
 		}
 		break;
 
@@ -2325,8 +2330,8 @@ void func_802D9C60_192770(u8 arg0) {
 	}
 }
 
-// AI - Alien animation handler
-void func_802DA378_192E88(u8 arg0) {
+// US func_802DA378_192E88
+void OnDeathHandlerWarrior2(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
 		func_80137468_146418(arg0, 0xF);
 		func_802D9C60_192770(arg0);
@@ -2998,8 +3003,8 @@ void func_802DC500_195010(u8 arg0)
 	}
 }
 
-// AI - Alien type 1 setup with offsets
-void func_802DC91C_19542C(u8 arg0) {
+// US func_802DC91C_19542C
+void OnDeathHandlerCrabBossLowerLeftArm(u8 arg0) {
 	alienInstances[arg0].unk14 = -0x8D;
 	alienInstances[arg0].unk16 = -0x7;
 	alienInstances[arg0].unk18 = 0x26;
@@ -3034,8 +3039,8 @@ void func_802DCA6C_19557C(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
-// AI - Boss alien death sequence
-void func_802DCADC_1955EC(u8 arg0)
+// US func_802DCADC_1955EC
+void OnDeathHandlerCrabBoss(u8 arg0)
 {
 	s16 tmpB;
 	s16 tmpA;

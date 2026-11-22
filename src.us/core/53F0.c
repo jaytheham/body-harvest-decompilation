@@ -32,7 +32,8 @@ s32 func_800047FC_53FC(s16 arg0) {
 	return arg0 * arg0;
 }
 
-s32 func_80004818_5418(s8 arg0, s8 arg1, u8 arg2) {
+// US func_80004818_541_8
+s32 IsPlayerWithinXTilesOf(s8 arg0, s8 arg1, u8 arg2) {
 	s8 x = (s8)(D_80052B34->unk0 >> 8);
 	s8 z = (s8)(D_80052B34->unk4 >> 8);
 	s32 dx, dz, abs_dx, abs_dz;
@@ -860,8 +861,8 @@ void func_800073B8_7FB8(u64 arg0) {
 	D_8004DC48.unk0 &= ~temp_ret;
 }
 
-// Add callback to list
-void func_80007410_8010(void *arg0) {
+// US func_80007410_8010
+void EnqueueCallback(void *arg0) {
 	s32 i;
 	s32 temp;
 
@@ -894,8 +895,8 @@ void func_80007410_8010(void *arg0) {
 	D_8004DC68[i] = (s32)arg0;
 }
 
-// Remove callback from list
-void func_800074BC_80BC(void *arg0) {
+// US func_800074BC_80BC
+void DequeueCallback(void *arg0) {
 	s32 i = 4;
 	while (i--) {
 		if (arg0 == (void *)D_8004DC68[i]) {
@@ -969,8 +970,8 @@ void func_80007690_8290(void) {
 	func_8001A650_1B250(1);
 }
 
-// Set objective
-void func_800076D4_82D4(s32 arg0) {
+// US func_800076D4_82D4
+void SetObjective(s32 arg0) {
 	osSyncPrintf("Set objective %d\n", arg0);
 	if (D_80048030 < arg0) {
 		D_80048030 = (u8) arg0;

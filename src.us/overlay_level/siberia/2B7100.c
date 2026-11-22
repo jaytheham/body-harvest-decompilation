@@ -671,7 +671,7 @@ void func_802D4DCC_2B71FC(void) {
 	switch (D_80048030) {
 	case 0:
 		if (func_8000726C_7E6C(3)) {
-			func_800076D4_82D4(1);
+			SetObjective(1);
 		}
 		break;
 	case 1:
@@ -680,33 +680,33 @@ void func_802D4DCC_2B71FC(void) {
 	case 10:
 		break;
 	case 2:
-		if (func_80004818_5418(0x1D, 0x29, 3)) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(0x1D, 0x29, 3)) {
+			SetObjective(3);
 		}
 		break;
 	case 3:
 		if (func_8000726C_7E6C(2) || func_8000726C_7E6C(0x25)) {
-			func_800076D4_82D4(4);
+			SetObjective(4);
 		}
 		break;
 	case 4:
-		if (func_80004818_5418(-0x59, 0x1A, 3)) {
-			func_800076D4_82D4(5);
+		if (IsPlayerWithinXTilesOf(-0x59, 0x1A, 3)) {
+			SetObjective(5);
 		}
 		break;
 	case 6:
-		if (func_80004818_5418(-0x32, -0xF, 3)) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(-0x32, -0xF, 3)) {
+			SetObjective(7);
 		}
 		break;
 	case 7:
 		if (func_8000726C_7E6C(0x30)) {
-			func_800076D4_82D4(8);
+			SetObjective(8);
 		}
 		break;
 	case 8:
 		if (func_8000726C_7E6C(0x1C)) {
-			func_800076D4_82D4(9);
+			SetObjective(9);
 		}
 		break;
 	}
@@ -827,7 +827,7 @@ void func_802D5754_2B7B84(void) {
 		func_800073B8_7FB8(0x1AULL);
 	}
 	if (D_80157FA8 == 1) {
-		func_800074BC_80BC(func_802D5754_2B7B84);
+		DequeueCallback(func_802D5754_2B7B84);
 		func_800E2720_F16D0(0);
 	}
 	if (D_802E3094 == 1) {
@@ -861,7 +861,7 @@ void func_802D5980_2B7DB0(void)
 	D_80157FA8 = 0;
 	D_801591C4 = 0;
 	osSyncPrintf("Add set snow thickness\n");
-	func_80007410_8010(&func_802D5754_2B7B84);
+	EnqueueCallback(&func_802D5754_2B7B84);
 	if (D_80047F94 == 0)
 	{
 		func_802D4F1C_2B734C();
@@ -932,8 +932,8 @@ void func_802D5C24_2B8054(void) {
 
 	if (vehicleInstances[30].unk1C <= 0) {
 		func_80124118_1330C8(&vehicleInstances[54], vehicleInstances[54].unk1C * 2);
-		func_800074BC_80BC(func_802D5C24_2B8054);
-		func_800076D4_82D4(2);
+		DequeueCallback(func_802D5C24_2B8054);
+		SetObjective(2);
 	}
 	func_80014508_15108(&D_8004E798, 1, 2);
 	if (((u32)D_80052A8C % 12U) == 0 && D_8014D17C < 5) {
@@ -1038,8 +1038,8 @@ void func_802D5F28_2B8358(void) {
 
 	case 4:
 		func_80079910_888C0(actorIndex);
-		func_800074BC_80BC(func_802D5F28_2B8358);
-		func_80007410_8010(func_802D5C24_2B8054);
+		DequeueCallback(func_802D5F28_2B8358);
+		EnqueueCallback(func_802D5C24_2B8054);
 		D_802E30EC = 0;
 		D_8014D17C = 0;
 		break;
@@ -1056,13 +1056,13 @@ void func_802D6220_2B8650(void) {
 		D_802E30EC = 0;
 		D_8014D17C = 0;
 		func_800EFEB4_FEE64(0, 0x1C, 0);
-		func_80007410_8010(&func_802D5F28_2B8358);
+		EnqueueCallback(&func_802D5F28_2B8358);
 	}
 }
 
 void func_802D62B4_2B86E4(void) {
 	D_802E30F4 = 0x4B;
-	func_80007410_8010(&func_802D6220_2B8650);
+	EnqueueCallback(&func_802D6220_2B8650);
 }
 
 // pumphouse mission?
@@ -1072,12 +1072,12 @@ void func_802D62E4_2B8714(void) {
 	func_8009BF64_AAF14(temp); // draw timer
 
 	if ((temp < 0) || func_8000726C_7E6C(0x28)) {
-		func_800074BC_80BC(&func_802D62E4_2B8714);
+		DequeueCallback(&func_802D62E4_2B8714);
 	}
 }
 
 void func_802D6340_2B8770(void) {
-	func_80007410_8010(&func_802D62E4_2B8714);
+	EnqueueCallback(&func_802D62E4_2B8714);
 }
 
 void func_802D6364_2B8794(void) {
@@ -1160,7 +1160,7 @@ void func_802D6674_2B8AA4(void) {
 	if (D_8014D17C >= 0x15) {
 		func_802D64DC_2B890C(0xA0, D_8014D17C - 0x14, 0xC8, 0x18, &D_802E0E48, 6, 0x28, 1);
 		if (buildingInstances[160].hitPoints <= 0) {
-			func_800074BC_80BC(func_802D6674_2B8AA4);
+			DequeueCallback(func_802D6674_2B8AA4);
 			func_802D6364_2B8794();
 		}
 	}
@@ -1172,7 +1172,7 @@ void func_802D670C_2B8B3C(void) {
 	func_80135D08_144CB8(1.0f, 0x28, 0x46, 0x32);
 	D_8014D17C = 0;
 	func_800EFEB4_FEE64(0, 0x17, 0);
-	func_80007410_8010(&func_802D6674_2B8AA4);
+	EnqueueCallback(&func_802D6674_2B8AA4);
 }
 
 s32 func_802D6768_2B8B98(void) {
@@ -1240,7 +1240,7 @@ void func_802D69EC_2B8E1C(void) {
 }
 
 void func_802D6A4C_2B8E7C(void) {
-	func_800AE190_BD140(D_801591C4);
+	AddToHumanKilledCount(D_801591C4);
 }
 
 void func_802D6A70_2B8EA0(void) {
@@ -1265,7 +1265,7 @@ void func_802D6A70_2B8EA0(void) {
 			func_80080510_8F4C0(sp3F);
 			osSyncPrintf("Add Person @ posn %d, %d, %d\n", alienInstances[sp3F].unk0, alienInstances[sp3F].unk2, alienInstances[sp3F].unk4);
 			if (buildingInstances[D_802E30F8].unk7 == 0) {
-				func_800074BC_80BC(func_802D6A70_2B8EA0);
+				DequeueCallback(func_802D6A70_2B8EA0);
 				D_8014D17E++;
 				D_800476A2 = 1;
 			}
@@ -1309,14 +1309,14 @@ void func_802D6CA0_2B90D0(void) {
 					if ((s32)(((f64)(f32)sinVal / 32768.0) * (f64)dz + (f64)dx * ((f64)(f32)cosVal / 32768.0)) > 0) {
 						D_802E30F8 = buildingType;
 						D_802E30FC = D_80052B34 - vehicleInstances;
-						func_80007410_8010(func_802D6A70_2B8EA0);
+						EnqueueCallback(func_802D6A70_2B8EA0);
 					}
 				}
 			}
 		}
 		if (D_801591C4 == 0x14) {
 			func_800072CC_7ECC(0x21);
-			func_800074BC_80BC(func_802D6CA0_2B90D0);
+			DequeueCallback(func_802D6CA0_2B90D0);
 		}
 	}
 }
@@ -1329,7 +1329,7 @@ void func_802D6F4C_2B937C(void)
 	buildingInstances[0x56].statusFlags |= 0x10000;
 	D_8014D17E = 0;
 	D_801591C4 = 0;
-	func_80007410_8010(func_802D6CA0_2B90D0);
+	EnqueueCallback(func_802D6CA0_2B90D0);
 }
 
 void func_802D6FFC_2B942C(void) {
@@ -1347,7 +1347,7 @@ void func_802D6FFC_2B942C(void) {
 			(s8)buildingInstances[0x50].hitPoints <= 0 &&
 			(s8)buildingInstances[0x41].hitPoints <= 0 &&
 			(s8)buildingInstances[0x56].hitPoints <= 0) {
-			func_800074BC_80BC(func_802D6FFC_2B942C);
+			DequeueCallback(func_802D6FFC_2B942C);
 		}
 	}
 
@@ -1360,11 +1360,11 @@ void func_802D7114_2B9544(void) {
 	AlienInstance *alien;
 	s16 v1;
 
-	func_800074BC_80BC(func_802D6CA0_2B90D0);
+	DequeueCallback(func_802D6CA0_2B90D0);
 	func_80013468_14068(0xB);
 	D_8014D17C = 0;
-	func_80007410_8010(func_802D6FFC_2B942C);
-	func_800074BC_80BC(func_802D6A70_2B8EA0);
+	EnqueueCallback(func_802D6FFC_2B942C);
+	DequeueCallback(func_802D6A70_2B8EA0);
 	func_800EFEB4_FEE64(0, 0x19, 0);
 
 	for (i = 0; i < D_8014D507; i++) {
@@ -1465,9 +1465,9 @@ void func_802D7508_2B9938(void) {
 void func_802D7540_2B9970(void) {
 	D_8014D17C += 1;
 	if (D_8014D17C == 0x64) {
-		func_800074BC_80BC(func_802D7540_2B9970);
+		DequeueCallback(func_802D7540_2B9970);
 		func_800A6FD4_B5F84();
-		func_800076D4_82D4(0xB);
+		SetObjective(0xB);
 	}
 }
 
@@ -1475,16 +1475,16 @@ void func_802D7598_2B99C8(void) {
 	buildingInstances[150].stateAndRotation &= 0xF03F;
 	osSyncPrintf("Killed all three warriors\n");
 	D_8014D17C = 0;
-	func_80007410_8010(func_802D7540_2B9970);
+	EnqueueCallback(func_802D7540_2B9970);
 }
 
 void func_802D75E4_2B9A14(void) {
 	if (D_802E3100 == 0) {
-		func_800074BC_80BC(func_802D75E4_2B9A14);
+		DequeueCallback(func_802D75E4_2B9A14);
 		func_802D7598_2B99C8();
 	} else {
 		if (D_8014D17C >= 0xDAC) {
-			func_800074BC_80BC(func_802D75E4_2B9A14);
+			DequeueCallback(func_802D75E4_2B9A14);
 			func_802D7508_2B9938();
 		}
 	}
@@ -1529,7 +1529,7 @@ void func_802D77BC_2B9BEC(void) {
 	buildingInstances[150].door1InteriorId = 0x6E;
 	buildingInstances[150].stateAndRotation = (buildingInstances[150].stateAndRotation & 0xF03F) | 0x400;
 	D_8014D17C = 0;
-	func_80007410_8010(&func_802D75E4_2B9A14);
+	EnqueueCallback(&func_802D75E4_2B9A14);
 	func_802D769C_2B9ACC();
 }
 
@@ -3350,7 +3350,6 @@ void func_802DD240_2BF670(u8 arg0) {
 	vecZ *= 250.0f;
 	x = x - vecX;
 	z = z - vecZ;
-	/* This source line keeps IDO's terrain-call setup ordering. */
 	particleX = (s16)x; height = (func_800B84D0_C7480(x, z) >> 8) + 0x32;
 	if (!(D_80052A8C & 7)) {
 		random = func_800038E0_44E0();

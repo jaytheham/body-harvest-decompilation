@@ -471,8 +471,8 @@ void func_800A6FD4_B5F84(void)
 	D_80048025 |= 1 << sp1F;
 }
 
-// displayBeacons
-void func_800A70B8_B6068(void) {
+// US func_800A70B8_B6068
+void DisplayBeacons(void) {
 	s16 i;
 	s16 j;
 	Gfx *gfx;

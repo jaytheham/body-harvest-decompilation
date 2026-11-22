@@ -20,11 +20,11 @@
 s32 func_80070270_7F220(s32 arg0) {
 	if (arg0 != 7) {
 		if (arg0 == 8) {
-			func_800720F4_810A4();
+			doOutsideGameplayLoop();
 			D_800476A2 = 1;
 		}
 	} else {
-		func_800720F4_810A4();
+		doOutsideGameplayLoop();
 	}
 	return 0;
 }
@@ -354,8 +354,9 @@ void func_80071178_80128(void) {
 	}
 }
 
-// Draw world and objects
-void func_80071228_801D8(void)
+// Draw ground tiles, water, objects, and HUD
+// US func_80071228_801D8
+void DrawScene(void)
 {
 	s32 saved[3];
 	s32 offset;
@@ -366,12 +367,12 @@ void func_80071228_801D8(void)
 	gSPDisplayList(D_8005BB2C++, D_80031200);
 
 	func_80070FB8_7FF68();
-	func_800B9DB8_C8D68(0);
+	DrawTileBuffer(0);
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawTileBuffer OK\n");
 	}
-	func_800B19F8_C09A8();
+	ClearDynamicLightBuffer();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("ClearDynamicLightBuffer OK\n");
@@ -379,37 +380,37 @@ void func_80071228_801D8(void)
 
 	if (D_80052ACB == 0)
 	{
-		func_800E94B8_F8468();
+		SetupForShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("SetupForShadows OK\n");
 		}
 
-		func_8007BEC0_8AE70();
+		DrawComplexObjectShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DrawComplexObjectShadows OK\n");
 		}
 
-		func_800EA12C_F90DC();
+		DisplayVehicleShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DisplayVehicleShadows OK\n");
 		}
 
-		func_800F97FC_1087AC();
+		DrawLegsShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DrawLegsShadows OK\n");
 		}
 
-		func_800DD5E0_EC590();
+		DrawNonZBufferedEffects();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DrawNonZBufferedEffects OK\n");
 		}
 
-		func_800EA088_F9038();
+		StopDrawingShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("StopDrawingShadows OK\n");
@@ -425,7 +426,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800F98C0_108870();
+	DrawLegs();
 	if (D_80052ACB == 2)
 	{
 		return;
@@ -454,7 +455,7 @@ void func_80071228_801D8(void)
 
 	if (D_80052ACA != 2)
 	{
-		func_8007764C_865FC();
+		DisplayTrees();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DisplayTrees OK\n");
@@ -466,7 +467,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_8010065C_10F60C(0);
+	DisplayVehicles(0);
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayVehicles(0) OK\n");
@@ -477,7 +478,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_80101C14_110BC4();
+	DisplayDeadVehicles();
 	if (D_80052ACB == 2)
 	{
 		return;
@@ -490,7 +491,7 @@ void func_80071228_801D8(void)
 
 	if (D_80157590 != 0)
 	{
-		func_8010065C_10F60C(1);
+		DisplayVehicles(1);
 	}
 
 	if (currentControllerStates[0].button == 0x30)
@@ -538,7 +539,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_8007C044_8AFF4();
+	DrawComplexObjects();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawComplexObjects OK\n");
@@ -549,7 +550,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_8012D884_13C834();
+	DisplayForces();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayForces OK\n");
@@ -574,7 +575,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800A70B8_B6068();
+	DisplayBeacons();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayBeacons OK\n");
@@ -585,7 +586,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_801365E0_145590();
+	DisplaySignposts();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplaySignposts OK\n");
@@ -620,7 +621,7 @@ void func_80071228_801D8(void)
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 
 		func_80071178_80128();
-		func_8010065C_10F60C(1);
+		DisplayVehicles(1);
 		func_80070FB8_7FF68();
 
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -640,7 +641,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800E71F8_F61A8();
+	DisplayFXUnderWater();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayFXUnderWater OK\n");
@@ -651,7 +652,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800BA5B0_C9560(0, 1);
+	DrawVtxBufferWater(0, 1);
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawVtxBufferWater OK\n");
@@ -662,7 +663,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800BD360_CC310();
+	DisplayGates();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayGates OK\n");
@@ -675,7 +676,7 @@ void func_80071228_801D8(void)
 
 	if (D_80052ACA != 2)
 	{
-		func_800BB5E0_CA590();
+		DrawShieldWalls();
 	}
 
 	if (currentControllerStates[0].button == 0x30)
@@ -709,7 +710,7 @@ void func_80071228_801D8(void)
 
 	gSPDisplayList(D_8005BB2C++, D_80031230);
 
-	func_800E5044_F3FF4();
+	DisplayLasers();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayLasers OK\n");
@@ -720,7 +721,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800A2B58_B1B08();
+	DrawGhostTarget();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawGhostTarget OK\n");
@@ -738,7 +739,7 @@ void func_80071228_801D8(void)
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
-	func_800A03FC_AF3AC();
+	DisplayScanner();
 
 	if (currentControllerStates[0].button == 0x30)
 	{
@@ -761,7 +762,7 @@ void func_80071F28_80ED8(void)
 {
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
-	func_80071228_801D8();
+	DrawScene();
 	func_801052E8_114298(D_80052B2C, &currentControllerStates[CONTROLLER_ONE]);
 	D_80149406 = -D_80149406;
 	if (D_80149406 > 0)
@@ -809,11 +810,11 @@ void func_800720B8_81068(void)
 {
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
-	func_80071228_801D8();
+	DrawScene();
 }
 
-// doGameplayLoop
-void func_800720F4_810A4(void)
+// US 800720F4_810A4
+void doOutsideGameplayLoop(void)
 {
 	s32 gfxUsed;
 	s32 exitFlag;
@@ -883,7 +884,7 @@ void func_800720F4_810A4(void)
 		}
 		if (isButtonNewlyPressed(CONTROLLER_TWO, BUTTON_R))
 		{
-			func_800BDAF4_CCAA4();
+			openCurrentStageGate();
 		}
 		switch (gameplayMode)
 		{
@@ -929,7 +930,7 @@ void func_800720F4_810A4(void)
 			func_800E87C8_F7778();
 			D_80052B34 = D_80052B2C->unk38;
 			D_80149440 = D_80052B2C->unk34;
-			func_80071228_801D8();
+			DrawScene();
 			func_800A140C_B03BC();
 			func_8000B044_BC44();
 			func_800E8A00_F79B0();

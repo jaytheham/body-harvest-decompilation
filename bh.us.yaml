@@ -239,7 +239,7 @@ segments:
       - [0x35A10, .data, libultra/sins]
       - [0x36210, .data, libultra/parameters_data]
       - [0x36220, .data, libultra/globalintmask_data]
-      - [0x36230, .data, libultra/vidata]
+      - [0x36230, .data, libultra/vidata] # ToDo copy c from https://github.com/n64decomp/pw64/blob/72ba33bd6b008cdd13c7e02e6aba5862ffb91867/src/libultra/io/vitbl.c#L1137
       - [0x36F50, .data, libultra/vimgr]
       - [0x36F70, .data, libultra/pimgr]
       - [0x36FA0, .data, libultra/thread_data]

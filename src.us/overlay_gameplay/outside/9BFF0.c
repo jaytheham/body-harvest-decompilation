@@ -898,7 +898,7 @@ void func_8008DA24_9C9D4(u8 arg0)
 					{
 						D_8004816C -= 1;
 					}
-					func_800AE1C0_BD170(); // increase global "humans harvested" count
+					IncrementHumanHarvestedCount();
 				}
 			}
 			else

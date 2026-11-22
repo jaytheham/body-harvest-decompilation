@@ -381,8 +381,8 @@ void func_800772EC_8629C(s32 arg0) {
 	}
 }
 
-// DisplayTrees
-void func_8007764C_865FC(void) {
+// US func_8007764C_865FC
+void DisplayTrees(void) {
 	Gfx* phasePacket;
 	s32 camX;
 	s32 camZ;

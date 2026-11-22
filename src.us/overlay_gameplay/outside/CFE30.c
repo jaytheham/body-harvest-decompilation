@@ -8900,8 +8900,8 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 	}
 }
 
-// DrawNonZBufferedEffects
-void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
+// US func_800DD5E0_EC590
+void DrawNonZBufferedEffects(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
 void func_800DD604_EC5B4(void) {
 	u8 i;
@@ -10658,7 +10658,8 @@ void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-void func_800E5044_F3FF4(void) {
+// US func_800E5044_F3FF4
+void DisplayLasers(void) {
 	s32 i;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -11371,8 +11372,8 @@ void func_800E6A38_F59E8(void)
   gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 }
 
-// displayFXUnderWater
-void func_800E71F8_F61A8(void) {
+// US func_800E71F8_F61A8
+void DisplayFXUnderWater(void) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
 

@@ -535,7 +535,7 @@ void func_800F1004_FFFB4(void) {
 		alien = &alienInstances[D_80157F94];
 		z = alien->unk4 - 0x3E8;
 		func_800B0710_BF6C0(alien->unk0, z);
-		func_800074BC_80BC(func_800F1004_FFFB4);
+		DequeueCallback(func_800F1004_FFFB4);
 	}
 }
 
@@ -791,7 +791,7 @@ s32 func_800F1134_1000E4(void) {
 
 	case 9:
 		D_80157FD0 = 100;
-		func_80007410_8010(func_800F1004_FFFB4);
+		EnqueueCallback(func_800F1004_FFFB4);
 		func_800FAC90_109C40();
 		return 1;
 	}

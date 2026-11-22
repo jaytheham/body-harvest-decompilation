@@ -983,8 +983,8 @@ extern s32 D_80068080;
 extern s32 D_80068084;
 extern s32 D_80068084_TextRead;
 extern s32 D_80068088;
-extern f32 D_8006808C;
-extern f32 D_80068090;
+extern f32 videoInterfaceXScale; // US0x8006808C EU0x800680BC
+extern f32 videoInterfaceYScale; // US0x80068090 EU0x800680C0
 extern f32 D_80068094;
 extern f32 D_80068098;
 extern s32 D_8006809C;
