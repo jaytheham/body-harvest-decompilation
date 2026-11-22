@@ -3157,6 +3157,7 @@ void func_802DC4D0_2BE900(u8 arg0) {
 			alienTypes[alien->typeIndex].unkC, 6);
 	}
 }
+
 void func_802DCA14_2BEE44(u8 arg0) {
 	s8 rootJoint, joint3, joint1, joint5, joint6, joint8, joint2, joint4;
 	AlienInstance *alien;
@@ -3354,7 +3355,6 @@ void func_802DD240_2BF670(u8 arg0) {
 	}
 }
 
-// CURRENT(99)
 s32 func_802DD408_2BF838(u8 arg0, u16 arg1) {
     s32 diffX;
     s32 diffZ;
@@ -3376,7 +3376,6 @@ s32 func_802DD408_2BF838(u8 arg0, u16 arg1) {
     return 0;
 }
 
-// CURRENT(277)
 void func_802DD514_2BF944(u8 arg0) {
 	u8 newAlienIdx;
 	s32 typeIndex;
@@ -3439,7 +3438,6 @@ void func_802DD668_2BFA98(u8 arg0) {
 		}
 	}
 	activationRange = 0x190;
-	/* Keep IDO's three distinct vehicle-type value ranges. */
 	if (D_80052B34->unk1A == 1) {}
 	if (D_80052B34->unk1A == 2) {}
 	if (D_80052B34->unk1A == 3) {}
@@ -3601,7 +3599,6 @@ void func_802DD668_2BFA98(u8 arg0) {
 		alienInstances[arg0].unk1E--;
 	}
 }
-
 
 Unk8014DD50 D_802E2790_2C4BC0[97] = {
 	{ 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0xEDDE, 0x00, 0x01, 0x000A },
@@ -3831,7 +3828,7 @@ void func_802DDFF0_2C0420(u8 arg0)
 	joints[9] = joint9;
 	joints[10] = joint10;
 	joints[11] = joint11;
-	(void)&joint11; /* Preserve the adjacent leaf-index stack home. */
+	(void)&joint11;
 	animationResult = func_80081F18_90EC8(arg0, 12, 8, joints, &D_802E2DA0_2C51D0);
 	if (alienInstances[arg0].unk36 < 3)
 	{
@@ -3882,7 +3879,6 @@ void func_802DDFF0_2C0420(u8 arg0)
 		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, (u16) (alienTypes[alienInstances[arg0].typeIndex].unkC >> 1), 0);
 	}
 }
-
 
 void func_802DE584_2C09B4(u8 arg0) {
 	static u8 mode = 0;
@@ -4075,7 +4071,6 @@ void func_802DEB5C_2C0F8C(u8 arg0) {
 	}
 }
 
-
 void func_802DEDE4_2C1214(u8 arg0) {
 	s32 pad5C;
 	u8 spawnIndex;
@@ -4112,7 +4107,6 @@ void func_802DEDE4_2C1214(u8 arg0) {
 		child->unk18 = (s16)((f32)sins(orientation) / 32768.0 * 1000.0 + parent->unk4);
 	}
 }
-
 
 void func_802DEFB4_2C13E4(u8 arg0) {
 	s16 rootJoint;
@@ -4185,8 +4179,6 @@ void func_802DEFB4_2C13E4(u8 arg0) {
 		alienInstances[arg0].unk48--;
 	}
 }
-
-
 
 void func_802DF4C8_2C18F8(u8 arg0) {
 	s32 pad2C;
@@ -4298,6 +4290,7 @@ void func_802DF4C8_2C18F8(u8 arg0) {
 		alienTypes[27].unk3E = 0x10;
 	}
 }
+
 void func_802DF98C_2C1DBC(u8 arg0) {
 	s16 pad0;
 	s16 childJoint;
@@ -4411,6 +4404,7 @@ void func_802DF98C_2C1DBC(u8 arg0) {
 		}
 	}
 }
+
 void func_802E0298_2C26C8(u8 arg0) {
 	func_800A93A4_B8354(arg0, -11, 182, -299);
 }
@@ -4486,6 +4480,7 @@ void func_802E02CC_2C26FC(u8 arg0) {
 		alienInstances[arg0].unk1E = 0x1E;
 	}
 }
+
 void func_802E07B4_2C2BE4(u8 arg0) {
 	func_800A93A4_B8354(arg0, -289, -26, 324);
 	func_802E02CC_2C26FC(arg0);
