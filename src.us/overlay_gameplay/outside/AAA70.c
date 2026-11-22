@@ -1,10 +1,7 @@
 #include <ultra64.h>
 #include "common.h"
-#include "overlay_gameplay/outside/missions.h"
 #include "overlay_gameplay/outside/148000.h"
 #include "core/53F0.h"
-#include "core/1B100.h"
-#include "core/12C80.h"
 #include "core/1050.h"
 
 u32 D_8013D540_14C4F0[16] = {
@@ -43,6 +40,7 @@ Vtx D_8013D628_14C5D8[4] = {
 	{ { { 24, 24, 0 }, 0, { 0x0800, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
 	{ { { -24, 24, 0 }, 0, { 0x0000, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
 };
+
 void func_8009BAC0_AAA70(void)
 {
   s32 i;
@@ -172,7 +170,6 @@ void func_8009BF64_AAF14(u16 arg0) {
 	func_8009BDB8_AAD68(0x41, digit);
 }
 
-// https://decomp.me/scratch/pjZZY
 // drawWaypointMarker ?
 void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2)
 {
@@ -246,7 +243,6 @@ void func_8009C4E8_AB498(void) {
 	D_8014F1F8 = -0x10;
 }
 
-// Textured-rect draw (same tile setup as func_8009BDB8_AAD68 above, screen-relative)
 // AI - Draws a 16x16 I4 tile (D_1009C70 + arg1<<7) as a screen-relative rectangle at arg0 via gSPTextureRectangle.
 void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1009C70 + (arg1 << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD);
@@ -275,7 +271,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	Vtx *vtx2;
 	Vtx *vtx1;
 	Vtx *vtx3;
-	s32 pad; /* Preserve the original stack homes. */
+	s32 pad;
 	s32 iconSwap;
 	s32 pad2;
 	s32 tempT2;
@@ -471,7 +467,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 		vtx3->v.tc[1] = vtx2->v.tc[1] = vtx1->v.tc[0] = vtx2->v.tc[0] = -arg6 * 0x30;
 
 		vtx0->v.cn[0] = vtx1->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
-		/* Reuse the expired offset to preserve the byte-conversion temporaries. */
 		tempT2 = 0xFF;
 		vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = tempT2;
 
@@ -500,7 +495,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;
@@ -849,7 +843,6 @@ void func_8009D96C_AC91C(void)
 
 // drawAlienHealth
 void func_8009E994_AD944(f32 arg0, u8 *arg1, s16 arg2, s16 arg3, s32 arg4) {
-	/* Preserve the existing shared BSS gaps around this private state. */
 	static s32 reservedPrefix;
 	static f32 startValue;
 	static s16 startLength;
