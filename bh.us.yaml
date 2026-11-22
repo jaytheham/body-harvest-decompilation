@@ -42,6 +42,7 @@ segments:
       - [0x53D0, c, core/53D0]
       - [0x53F0, c, core/53F0] # Objectives
       - [0xAD60, c, core/AD60] # Text rendering?
+      - [0xD390, c, core/animation_channels]
       - [0xE830, c, core/E830]
       - [0xFB00, c, core/FD80] # Boot and scheduler share epilogue alignment.
       - [0x10BC0, c, core/loader] # original src filename
@@ -255,7 +256,7 @@ segments:
       - [0x37440, .rodata, core/1050]
       - [0x378B0, .rodata, core/53F0]
       - [0x38060, .rodata, core/AD60]
-      - [0x38210, .rodata, core/AD60_rodata]
+      - [0x38210, .rodata, core/animation_channels]
       - [0x38220, .rodata, core/E830]
       - [0x38260, .rodata, core/FD80]
       - [0x38380, .rodata, core/loader]

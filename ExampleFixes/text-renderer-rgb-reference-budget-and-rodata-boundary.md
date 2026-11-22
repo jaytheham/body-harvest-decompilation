@@ -9,3 +9,9 @@
 -> `code changed`: Place the existing animation constant in `core/AD60_rodata.c` as `D_80037610_38210[] = {180.0, 0.0}` and load its first element into the existing `degrees` local. Give that unit its own rodata boundary at US ROM `0x38210` and EU ROM `0x38240`; the preceding renderer section's natural sixteen-byte alignment supplies its trailing zero double. Remove the obsolete renderer late-rodata stubs and scalar aliases.
 
 -> `correct ASM`: The renderer's generated literals and switch table retain their original addresses, `0x38208` contains eight zero bytes, the animation constant remains at `0x38210`, and the following zero padding remains at `0x38218`. The previously matched animation function keeps diff score zero.
+
+`incorrect ASM`: Inlining `180.0` in the same translation unit emits `ldc1 $f20, 0x7608($at)` and removes sixteen bytes from the combined rodata.
+
+-> `code changed`: Move the animation channel routines starting at US text offset `0xD390` to their own translation unit. Inline `180.0` there and link its generated rodata at the former constant-only section boundary.
+
+-> `correct ASM`: The two rodata sections each retain their alignment padding, and the US load is `ldc1 $f20, 0x7610($at)`. The US and EU ROM checksums both match.
