@@ -655,7 +655,6 @@ void func_802D4F74_18DA84(void) {
 	}
 }
 
-
 // airport training called thru event/mission table offset 7
 void func_802D5290_18DDA0(void) {
 	D_8004DC58 = 0;
@@ -1248,7 +1247,6 @@ void func_802D6D20_18F830(void) {
 		break;
 	}
 }
-
 
 // AI - Screen shake rotation effects
 void func_802D6F7C_18FA8C(void)
@@ -2255,7 +2253,6 @@ void func_802D9964_192474(u8 arg0)
 	}
 }
 
-// CURRENT(4762)
 // AI - Alien skeleton joint animation system
 void func_802D9C60_192770(u8 arg0) {
 	s32 sp6C;
