@@ -653,7 +653,6 @@ u16 D_802E0954_260094[32] = {
 	0xFFFF, 0x000D, 0x007E, 0x0000, 0x0000, 0x0078, 0x0100, 0x0008,
 };
 
-
 Unk80154082 D_802E0994_2600D4 = { 0x00, 0x00, 0x00 };
 Unk80154082 D_802E0998_2600D8 = { 0xFF, 0xFF, 0xFF };
 
@@ -748,22 +747,6 @@ Vec3s D_802E0CDC_26041C = { 0x00000000, 0x0000, 0x0000 };
 s16 D_802E0CE4_260424[2] = { 0x00F0, 0x0000 };
 
 s16 D_802E0CE8_260428[4] = { 0x0000, 0x0000, 0x0000, 0x0000 };
-
-
-void func_802D62A0_2559E0(u8 arg0);
-void func_802D65BC_255CFC(u8 arg0);
-void func_802D7968_2570A8(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4);
-s32 func_802D7840_256F80(u8 arg0, s16 arg1);
-void func_802D7C00_257340(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
-void func_802DA054_259794(u8 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7);
-void func_802DA120_259860(s16 arg0, s32 arg1);
-void func_802D99E4_259124(u8 arg0);
-void func_802DA520_259C60(u8 arg0);
-void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4);
-void func_802DDB68_25D2A8(u8 arg0);
-void func_802DB7B8_25AEF8(u8 arg0, s32 arg1, u8 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s16 arg7, f32 arg8);
-void func_802DBD84_25B4C4(u8 arg0);
-void func_802DC244_25B984(u8 arg0);
 
 // America mission/cutscene dispatcher
 void func_802D4CD0_254410(s32 arg0, s32 arg1) {
@@ -3722,7 +3705,6 @@ void func_802DD104_25C844(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4)
 		alienInstances[arg0].unk1E--;
 	}
 }
-
 
 void func_802DD9C8_25D108(u8 arg0) {
 	f32 scale = D_802DF3A4_25EAE4;
