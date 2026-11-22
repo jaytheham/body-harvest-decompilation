@@ -374,11 +374,6 @@ void loadLevel(s32 arg0) {
 	for (;;);
 }
 
-/* The two data-verified blobs stay here, between loadLevel and loadLevelData, so that
- * they keep their place between the two functions' string literals in .rodata. */
-const Unk80154082 D_800378CC_384CC = {'O', 'K', 0};
-const Unk80378D0 D_800378D0_384D0 = {0x2A2A2A2A, 0x20455252, 0x4F52202A, 0x2A2A2A00};
-
 void loadLevelData(u8 arg0)
 {
 	s32 j;
@@ -387,63 +382,60 @@ void loadLevelData(u8 arg0)
 	s32 sp64;
 	s32 sp60;
 	u16 new_var;
-	Unk8031C88 sp48;
-	Unk80154082 sp44;
-	Unk80378D0 sp34;
-	sp48 = D_80031C88_32888;
-	sp44 = D_800378CC_384CC;
-	sp34 = D_800378D0_384D0;
+	Unk8031C88 sp48 = D_80031C88_32888;
+	char okMessage[] = "OK";
+	char errorMessage[] = "**** ERROR ****";
 	var_s0 = func_80010490_11090(arg0);
 	osWritebackDCacheAll();
 	osSyncPrintf("         postData:");
 	var_s0 = func_80010420_11020(&D_801FEA30, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x20000, (D_8006AA60 == 0x20000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x20000, (D_8006AA60 == 0x20000) ? okMessage : errorMessage);
 	osSyncPrintf("      texBlockMap:");
 	var_s0 = func_80010420_11020(&D_8021EA30, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? okMessage : errorMessage);
 	osSyncPrintf(" landscapeColours:");
 	var_s0 = func_80010420_11020(&D_80260700, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x4000, (D_8006AA60 == 0x4000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x4000, (D_8006AA60 == 0x4000) ? okMessage : errorMessage);
 	osSyncPrintf(" landscapePalette:");
 	var_s0 = func_80010420_11020(&D_80264700, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? okMessage : errorMessage);
 	osSetThreadPri(0, 4);
 	osSyncPrintf("      treeStructs:");
 	var_s0 = func_80010420_11020(&D_8021FA30, var_s0);
 	osSyncPrintf("should be %6d, Free structs:%d\n", 0x2000, (((u32)(0x2000 - D_8006AA60)) >> 5) - 1);
 	osSyncPrintf("            trees:");
 	var_s0 = func_80010420_11020(&D_80221A30, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? okMessage : errorMessage);
 	osWritebackDCacheAll();
 	osSyncPrintf("          treeGfx:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80222A30, var_s0, 0x40);
-	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? okMessage : errorMessage);
 	osSyncPrintf(" WaterTableHeight:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80222A70, var_s0, 8);
 	D_80222A70 <<= 5;
-	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? okMessage : errorMessage);
 	osSyncPrintf("    BuildingTypes:                                ");
 	var_s0 = func_800101F0_10DF0(&buildingTypes, var_s0, 0x400);
-	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? okMessage : errorMessage);
 	osSyncPrintf("        Buildings:                                ");
 	var_s0 = func_800101F0_10DF0(&buildingInstances, var_s0, 0x17E8);
-	osSyncPrintf("should be %6d, %s\n", 0x17E8, (D_8006AA60 == 0x17E8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x17E8, (D_8006AA60 == 0x17E8) ? okMessage : errorMessage);
 	var_s0 += 4;
 	osSyncPrintf("     triggerArray:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80222A78, var_s0, 0xC00);
-	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xD00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xD00) ? okMessage : errorMessage);
 	osSyncPrintf("      nextTrigger:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80223778, var_s0, 8);
-	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? okMessage : errorMessage);
 	osSyncPrintf("    levelWaveData:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80223780, var_s0, 0xF00);
-	osSyncPrintf("should be %6d, %s\n", 0xF00, (D_8006AA60 == 0xF00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xF00, (D_8006AA60 == 0xF00) ? okMessage : errorMessage);
 	osSyncPrintf("VehicleStartInfos:                                ");
 	var_s0 = func_800101F0_10DF0(D_80259490, var_s0, 0x900);
-	osSyncPrintf("should be %6d, %s\n", 0x900, (D_8006AA60 == 0x900) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x900, (D_8006AA60 == 0x900) ? okMessage : errorMessage);
 	osSyncPrintf("         Missions:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80224680, var_s0, 0x800);
-	osSyncPrintf("should be %6d, %s, ", 0x800, (D_8006AA60 == 0x800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s, ", 0x800, (D_8006AA60 == 0x800) ? okMessage : errorMessage);
 	if (((D_80224680 == 0xA8) || (D_80224680 == 0x90)) || (D_80224680 == 0xB0))
 	{
 		osSyncPrintf("data verified\n");
@@ -458,30 +450,30 @@ void loadLevelData(u8 arg0)
 	}
 	osSyncPrintf("  terrainTextures:");
 	var_s0 = func_80010420_11020(&D_80224E80, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x30000, (D_8006AA60 == 0x30000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x30000, (D_8006AA60 == 0x30000) ? okMessage : errorMessage);
 	osSyncPrintf("      terrainCMAP:");
 	var_s0 = func_80010420_11020(&D_80254E80, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("      skyBackDrop:");
 	var_s0 = func_80010420_11020(&D_802CA8D0, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0xA000, (D_8006AA60 == 0xA000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xA000, (D_8006AA60 == 0xA000) ? okMessage : errorMessage);
 	osSyncPrintf("  skyBackDropCMAP:");
 	var_s0 = func_80010420_11020(&D_802D48D0, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x200, (D_8006AA60 == 0x200) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x200, (D_8006AA60 == 0x200) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("        typeArray:                                ");
 	var_s0 = func_800101F0_10DF0(&alienTypes, var_s0, 0x1380);
-	osSyncPrintf("should be %6d, %s\n", 0x1380, (D_8006AA60 == 0x1380) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1380, (D_8006AA60 == 0x1380) ? okMessage : errorMessage);
 	osSyncPrintf("     LandVehicles:                                ");
 	var_s0 = func_800101F0_10DF0(&vehicleTypes, var_s0, 0x930);
-	osSyncPrintf("should be %6d, %s, ", 0x930, (D_8006AA60 == 0x930) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s, ", 0x930, (D_8006AA60 == 0x930) ? okMessage : errorMessage);
 	if (vehicleTypes[0].unk14 == 0x3039)
 	{
 		osSyncPrintf("data verified\n");
@@ -496,7 +488,7 @@ void loadLevelData(u8 arg0)
 	}
 	osSyncPrintf("     SignPostData:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80258330, var_s0, 0x60);
-	osSyncPrintf("should be %6d, %s\n", 0x60, (D_8006AA60 == 0x60) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x60, (D_8006AA60 == 0x60) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
@@ -521,7 +513,7 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xC00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xC00) ? okMessage : errorMessage);
 	osSyncPrintf("    signs_dialogue_offsets:    ");
 	switch (D_800313D0_31FD0)
 	{
@@ -540,7 +532,7 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
@@ -565,7 +557,7 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? okMessage : errorMessage);
 	osSyncPrintf("    comms_dialogue_offsets:    ");
 	switch (D_800313D0_31FD0)
 	{
@@ -584,24 +576,24 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("commsSentenceInfo:                                ");
 	var_s0 = func_800101F0_10DF0(&D_8006C410, var_s0, 0x40);
-	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("            Doors:                                ");
 	var_s0 = func_800101F0_10DF0(&D_800522C0, var_s0, 0x280);
-	osSyncPrintf("should be %6d, %s\n", 0x280, (D_8006AA60 == 0x280) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x280, (D_8006AA60 == 0x280) ? okMessage : errorMessage);
 	osSyncPrintf("         BCPoints:                                ");
 	func_800101F0_10DF0(&D_80052560, var_s0, 0x528);
-	osSyncPrintf("should be %6d, %s\n", 0x528, (D_8006AA60 == 0x528) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x528, (D_8006AA60 == 0x528) ? okMessage : errorMessage);
 
 	for (row = 0; row != 0xFF; row++)
 	{

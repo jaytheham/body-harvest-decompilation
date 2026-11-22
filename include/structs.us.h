@@ -4001,13 +4001,6 @@ typedef struct {
 #pragma pack()
 
 typedef struct {
-	s32 unk0;
-	s32 unk4;
-	s32 unk8;
-	s32 unkC;
-} Unk80378D0; /* size = 0x10 - DMA range descriptor */
-
-typedef struct {
 	u8 pad00[0x04];
 	f32 unk04;
 	f32 unk08;
