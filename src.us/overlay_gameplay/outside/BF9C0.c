@@ -3032,8 +3032,8 @@ s32 func_800BA52C_C94DC(s16 arg0, s16 arg1, u8 arg2, u8 arg3)
 }
 
 /* Draw water surfaces: textured quads with scrolling UV animation */
-// DrawVtxBufferWater
-void func_800BA5B0_C9560(u8 arg0, s32 unused) {
+// US func_800BA5B0_C9560
+void DrawVtxBufferWater(u8 arg0, s32 unused) {
 	Unk80052B2C *water;
 	u8 *rowFlags;
 	Gfx *gfx;
@@ -3053,7 +3053,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 	u16 wavePhase[1];
 	s16 batch;
 	s16 row;
-	// IDO shares this slot between the pipe-sync packet and the grid column.
 	union {
 		s32 column;
 		Gfx *packet;
@@ -3145,7 +3144,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 
 	texXBase = waterX % 0x200;
 	waterX -= texXBase;
-	// Keep the discarded halfword read for the original register allocation.
 	if (texXBase) {}
 
 	waterZ -= (s16)(waterZ % 0x200);
@@ -3167,7 +3165,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		for (scratch.column = 0; scratch.column < 9; scratch.column = (s16)(scratch.column + 1)) {
 			worldX = waterX + (s16)(scratch.column << 9) - 0x900;
 			worldZf = (f32)(waterZ - (s16)(row << 9) + 0x700);
-			// The zero-valued term keeps the full Z spill at its original stack slot.
 			rowZ = (0 & (u32)rowFlags) + (waterZ - (s16)(row << 9) + 0x700);
 			flag = &rowFlags[scratch.column];
 			*flag = 4;
@@ -3259,7 +3256,6 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 		gSPVertex(D_8005BB2C++, OS_K0_TO_PHYSICAL(&D_8005BB34[-0x1B] - batch * 0x12), 0x1B, 0);
 
 		for (row = 0; row < 2; row++) {
-			// Form the flag-row address before IDO clears the column register.
 			scratch.column = (u32)&flags[(s16)(6 - (batch * 2)) + row][0] * 0U;
 			do {
 				flag = &flags[(s16)(6 - (batch * 2)) + row][scratch.column];
@@ -3285,13 +3281,11 @@ void func_800BA5B0_C9560(u8 arg0, s32 unused) {
 			color = (0x78 - worldX) & 0xFF;
 
 			gDPSetKeyR(D_8005BB2C++, 0x80, color, 0);
-			// Preserve the register allocation for the per-row key packets.
 			if (((u32)D_8005BB2C & 1U) + ((u32)D_8005BB2C & 2U)) {}
 			gDPSetKeyGB(D_8005BB2C++, 0x80, color, 0, 0x80, color, 0);
 		}
 	}
 }
-
 
 /* Rectangle bounding overlap test with parameter extraction */
 s32 func_800BB3D0_CA380(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 *arg4, s16 *arg5, s16 *arg6, s16 *arg7) {

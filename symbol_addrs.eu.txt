@@ -1374,7 +1374,7 @@ func_800B604C_C4FFC = 0x800B607C; // type:func rom:0xC5B5C
 func_800B753C_C64EC = 0x800B756C; // type:func rom:0xC704C
 func_800B960C_C85BC = 0x800B963C; // type:func rom:0xC911C
 DrawTileBuffer = 0x800B9DE8; // type:func rom:0xC98C8
-func_800BA5B0_C9560 = 0x800BA5E0; // type:func rom:0xCA0C0
+DrawVtxBufferWater = 0x800BA5E0; // type:func rom:0xCA0C0
 func_800BB5E0_CA590 = 0x800BB610; // type:func rom:0xCB0F0
 func_800BC760_CB710 = 0x800BC790; // type:func rom:0xCC270
 func_800BED30_CDCE0 = 0x800BED60; // type:func rom:0xCE840
@@ -1556,7 +1556,7 @@ func_8013493C_1438EC = 0x8013496C; // type:func rom:0x14444C
 func_80134D44_143CF4 = 0x80134D74; // type:func rom:0x144854
 func_801358E8_144898 = 0x80135918; // type:func rom:0x1453F8
 func_80135D44_144CF4 = 0x80135D74; // type:func rom:0x145854
-func_801365E0_145590 = 0x80136610; // type:func rom:0x1460F0
+DisplaySignposts = 0x80136610; // type:func rom:0x1460F0
 func_80136B50_145B00 = 0x80136B80; // type:func rom:0x146660
 // overlay_gameplay/frontend/40720 (shared from src.us): NTSC function names at their PAL addresses (the PAL code of this
 // file is 0x30 to 0x7C0 after the NTSC code). The functions that differ in PAL are named too: their PAL assembly is

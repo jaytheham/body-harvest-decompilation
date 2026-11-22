@@ -1493,8 +1493,8 @@ void func_80136570_145520(void) {
 	D_8006C550 = &D_80258F90;
 }
 
-// displaySignposts
-void func_801365E0_145590(void) {
+// US func_801365E0_145590
+void DisplaySignposts(void) {
 	Unk80052B40 spE0;
 	Unk80052B40 spD8;
 	Unk80052B40 spD0;

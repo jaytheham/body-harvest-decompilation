@@ -585,7 +585,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_801365E0_145590();
+	DisplaySignposts();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplaySignposts OK\n");
@@ -640,7 +640,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800E71F8_F61A8();
+	DisplayFXUnderWater();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayFXUnderWater OK\n");
@@ -651,7 +651,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800BA5B0_C9560(0, 1);
+	DrawVtxBufferWater(0, 1);
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawVtxBufferWater OK\n");

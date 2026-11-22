@@ -34,7 +34,7 @@ void func_80135F0C_144EBC(void);
 void func_80136198_145148(s32 arg0);
 s16 func_801361A4_145154(Unk80160080 *arg0);
 void func_80136214_1451C4(Unk80160080 *arg0);
-void func_801365E0_145590(void);
+void DisplaySignposts(void);
 void func_80136B50_145B00(s32 arg0, s16 arg1);
 
 #endif

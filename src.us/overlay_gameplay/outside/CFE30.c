@@ -11371,8 +11371,8 @@ void func_800E6A38_F59E8(void)
   gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
 }
 
-// displayFXUnderWater
-void func_800E71F8_F61A8(void) {
+// US func_800E71F8_F61A8
+void DisplayFXUnderWater(void) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031160), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
 
