@@ -583,9 +583,8 @@ void func_800B1814_C07C4(u8 arg0, u8 arg1, u8* arg2) {
 	}
 }
 
-// ClearDynamicLightBuffer
-// Clear the dynamic lighting buffer (19x19 grid of RGB values)
-void func_800B19F8_C09A8(void) {
+// US 800B19F8_C09A8 - Clear the dynamic lighting buffer (19x19 grid of RGB values)
+void ClearDynamicLightBuffer(void) {
 	s32 i = 0;
 	s32 j;
 	do {
@@ -2885,8 +2884,8 @@ void func_800B9C28_C8BD8(void) {
 	func_800B99A8_C8958(&pos, 200, 500, 255, &color4.r, 65, 7, 60);
 }
 
-// DrawTileBuffer - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
-void func_800B9DB8_C8D68(u8 arg0)
+// US 800B9DB8_C8D68 - Draw the visible ground tile grid: 5×5 macro-tiles centered on the player
+void DrawTileBuffer(u8 arg0)
 {
 	u8 row;
 	s16 tileSize;
@@ -3647,7 +3646,6 @@ void func_800BB5E0_CA590(void) {
 	gfx->words.w1 = (u32)D_80031200;
 }
 
-// (short playerX, short playerZ)
 void func_800BC2F8_CB2A8(s16 playerX, s16 playerZ) {
 	s16 tileZ;
 	s16 tileX;
@@ -4161,8 +4159,8 @@ void func_800BD8B8_CC868(void) {
 	}
 }
 
-// openCurrentStageGate
-void func_800BDAF4_CCAA4(void) {
+// func_800BDAF4_CCAA4
+void openCurrentStageGate(void) {
 	u8 stage;
 	GateEntry *gate;
 	s32 gateState;

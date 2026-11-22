@@ -165,7 +165,6 @@ void func_800E8190_F7140(void) {
 	D_8013B908_14A8B8 = 0;
 }
 
-// https://decomp.me/scratch/W9ybc
 void func_800E82AC_F725C(Unk80052B2C *arg0)
 {
 	f32 var_f0;

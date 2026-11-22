@@ -50,7 +50,7 @@ loads the frontend overlay and calls its entry point with argument 1. Later,
 overlay transitions lead into frontend, outdoor, or indoor gameplay loops on
 this same thread. The outdoor entry point
 [func_80070270_7F220](src.us/overlay_gameplay/outside/7F220.c) enters
-[func_800720F4_810A4](src.us/overlay_gameplay/outside/7F220.c) for arguments 7 or 8.
+[doOutsideGameplayLoop](src.us/overlay_gameplay/outside/7F220.c) for arguments 7 or 8.
 
 Additional thread 8 instances are temporary loading workers, created through
 [func_8000F190_FD90](src.us/core/FD80.c), rather than a permanent per-frame loop.
@@ -115,7 +115,7 @@ sequenceDiagram
    [func_800050C4_5CC4](src.us/core/53F0.c) to wait and initialize drawing state;
    the outdoor loop waits directly on the same queue.
 3. **Update and draw:** In outdoor gameplay,
-   [func_800720F4_810A4](src.us/overlay_gameplay/outside/7F220.c) processes input
+   [doOutsideGameplayLoop](src.us/overlay_gameplay/outside/7F220.c) processes input
    and dispatches according to `gameplayMode`. Normal mode (`1`) calls
    [func_80071F28_80ED8](src.us/overlay_gameplay/outside/7F220.c), which invokes
    rendering, player/controller processing, other gameplay systems, and

@@ -1007,7 +1007,7 @@ void func_802D5530_254C70(void) {
 	u8 id;
 
 	func_800076D4_82D4(9);
-	func_800BDAF4_CCAA4(); // open shield portal
+	openCurrentStageGate();
 	func_800074BC_80BC(func_802D536C_254AAC); // remove from callback
 
 	// despawn Black Adam

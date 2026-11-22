@@ -284,7 +284,7 @@ void func_800AEC34_BDBE4(void *arg0)
 		sp28.unk9 = 0;
 		sp28.unkC = func_800AEBC4_BDB74;
 		func_800AE454_BD404(&sp28);
-		func_800BDAF4_CCAA4();
+		openCurrentStageGate();
 	}
 	tmp = ((currentLevel * 10) + D_80047F94) - 10;
 	switch (tmp)

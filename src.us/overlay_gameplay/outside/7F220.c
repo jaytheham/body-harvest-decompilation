@@ -20,11 +20,11 @@
 s32 func_80070270_7F220(s32 arg0) {
 	if (arg0 != 7) {
 		if (arg0 == 8) {
-			func_800720F4_810A4();
+			doOutsideGameplayLoop();
 			D_800476A2 = 1;
 		}
 	} else {
-		func_800720F4_810A4();
+		doOutsideGameplayLoop();
 	}
 	return 0;
 }
@@ -366,12 +366,12 @@ void func_80071228_801D8(void)
 	gSPDisplayList(D_8005BB2C++, D_80031200);
 
 	func_80070FB8_7FF68();
-	func_800B9DB8_C8D68(0);
+	DrawTileBuffer(0);
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawTileBuffer OK\n");
 	}
-	func_800B19F8_C09A8();
+	ClearDynamicLightBuffer();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("ClearDynamicLightBuffer OK\n");
@@ -812,8 +812,8 @@ void func_800720B8_81068(void)
 	func_80071228_801D8();
 }
 
-// doGameplayLoop
-void func_800720F4_810A4(void)
+// US 800720F4_810A4
+void doOutsideGameplayLoop(void)
 {
 	s32 gfxUsed;
 	s32 exitFlag;
@@ -883,7 +883,7 @@ void func_800720F4_810A4(void)
 		}
 		if (isButtonNewlyPressed(CONTROLLER_TWO, BUTTON_R))
 		{
-			func_800BDAF4_CCAA4();
+			openCurrentStageGate();
 		}
 		switch (gameplayMode)
 		{

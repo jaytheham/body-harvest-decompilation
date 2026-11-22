@@ -111,7 +111,7 @@ s32 func_8000FFC0_10BC0(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
 	   its unsigned type through the call. include/2.0I/PR/os.h declares the
 	   flag `s32`, which coerces it to a signed node and merges it with the
 	   `case 1:` constant (move $a2,$s4 where the ROM materialises $a2 fresh).
-	   Retyping the shared header instead breaks func_800720F4_810A4. */
+	   Retyping the shared header instead breaks doOutsideGameplayLoop. */
 	extern s32 osRecvMesg();
 
 	if (D_80068078 == 1U) {
