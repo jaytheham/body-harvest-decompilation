@@ -6,11 +6,11 @@ void func_802D4CD0_18D7E0(s32, s32);
 void func_802D4ECC_18D9DC(void);
 void ExecuteAirportTraining(void);
 void ExecutePollsturaHouseFires(void);
-void func_802D5578_18E088(void);
-s32 func_802D57A0_18E2B0(void);
+void ExecuteAmbulanceOnBridge(void);
+s32 ExecuteAtlantisRaisingCutscene(void);
 void func_802D5660_18E170(void);
-s32 func_802D64D0_18EFE0(void);
-s32 func_802D6904_18F414(void);
+s32 ExecuteBlackAdamDestroysBridgeCutscene(void);
+s32 ExecuteBlackAdamDestroysAirplanesCutscene(void);
 void func_802D6D20_18F830(void);
 void func_802D6F7C_18FA8C(void);
 void func_802D7334_18FE44(void);
@@ -54,9 +54,9 @@ void func_802D531C_18DE2C(void);
 void func_802D5434_18DF44(void);
 void StartPollsturaHouseFires(void);
 void FailPollsturaHouseFires(void);
-void func_802D562C_18E13C(void);
+void StartAmbulanceOnBridge(void);
 void func_802D56E8_18E1F8(void);
-void func_802D5720_18E230(void);
-void func_802D5760_18E270(void);
+void StartBlackAdamDestroysBridgeCutscene(void);
+void StartBlackAdamDestroysAirplanesCutscene(void);
 
 #endif

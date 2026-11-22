@@ -1400,8 +1400,8 @@ void AddToHumanKilledCount(s16 arg0) {
 	D_80048170 += arg0; // increase "humans killed" count
 }
 
-// this is only ever called through func_8008DA24 when HCU carries a human to harvester
-void func_800AE1C0_BD170(void) {
+// US func_800AE1C0_BD170
+void IncrementHumanHarvestedCount(void) {
 	D_8004816A += 1; // increase human meter
 	D_8004816E += 1; // increase "humans harvested" count
 }

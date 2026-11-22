@@ -671,7 +671,7 @@ void func_802D4DCC_2B71FC(void) {
 	switch (D_80048030) {
 	case 0:
 		if (func_8000726C_7E6C(3)) {
-			func_800076D4_82D4(1);
+			SetObjective(1);
 		}
 		break;
 	case 1:
@@ -680,33 +680,33 @@ void func_802D4DCC_2B71FC(void) {
 	case 10:
 		break;
 	case 2:
-		if (func_80004818_5418(0x1D, 0x29, 3)) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(0x1D, 0x29, 3)) {
+			SetObjective(3);
 		}
 		break;
 	case 3:
 		if (func_8000726C_7E6C(2) || func_8000726C_7E6C(0x25)) {
-			func_800076D4_82D4(4);
+			SetObjective(4);
 		}
 		break;
 	case 4:
-		if (func_80004818_5418(-0x59, 0x1A, 3)) {
-			func_800076D4_82D4(5);
+		if (IsPlayerWithinXTilesOf(-0x59, 0x1A, 3)) {
+			SetObjective(5);
 		}
 		break;
 	case 6:
-		if (func_80004818_5418(-0x32, -0xF, 3)) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(-0x32, -0xF, 3)) {
+			SetObjective(7);
 		}
 		break;
 	case 7:
 		if (func_8000726C_7E6C(0x30)) {
-			func_800076D4_82D4(8);
+			SetObjective(8);
 		}
 		break;
 	case 8:
 		if (func_8000726C_7E6C(0x1C)) {
-			func_800076D4_82D4(9);
+			SetObjective(9);
 		}
 		break;
 	}
@@ -933,7 +933,7 @@ void func_802D5C24_2B8054(void) {
 	if (vehicleInstances[30].unk1C <= 0) {
 		func_80124118_1330C8(&vehicleInstances[54], vehicleInstances[54].unk1C * 2);
 		func_800074BC_80BC(func_802D5C24_2B8054);
-		func_800076D4_82D4(2);
+		SetObjective(2);
 	}
 	func_80014508_15108(&D_8004E798, 1, 2);
 	if (((u32)D_80052A8C % 12U) == 0 && D_8014D17C < 5) {
@@ -1467,7 +1467,7 @@ void func_802D7540_2B9970(void) {
 	if (D_8014D17C == 0x64) {
 		func_800074BC_80BC(func_802D7540_2B9970);
 		func_800A6FD4_B5F84();
-		func_800076D4_82D4(0xB);
+		SetObjective(0xB);
 	}
 }
 

@@ -311,7 +311,7 @@ void func_802D5590_1EE2A0(void) {
 	s32 var_v0_2;
 
 	if (D_802E0FB0 == -1) {
-		func_800076D4_82D4(8);
+		SetObjective(8);
 		func_80018D7C_1997C(0xDC);
 	}
 	D_802E0FB0++;
@@ -345,7 +345,7 @@ void func_802D5590_1EE2A0(void) {
 			} while (var_s1 < var_v0_2);
 		}
 		D_801591C4 = 0;
-		func_800076D4_82D4(9);
+		SetObjective(9);
 	}
 }
 
@@ -683,7 +683,7 @@ void func_802D5BA0_1EE8B0(void) {
 	osSyncPrintf("stop boat damage\n");
 	func_800074BC_80BC(&func_802D5590_1EE2A0);
 	func_80007410_8010(&func_802D5ADC_1EE7EC);
-	func_800076D4_82D4(9);
+	SetObjective(9);
 }
 
 // AI - Level 2 placement: func_802D4DB0_1EDAC0 and func_800DF038_EDFE8 at fixed coords, then schedules func_800072CC_7ECC(0x15).
@@ -1180,61 +1180,61 @@ void func_802D795C_1F066C(void) {
 void func_802D7980_1F0690(void) {
 	switch (D_80048030) {
 	case 0:
-		if (func_80004818_5418(-0x11, 0x43, 2) != 0) {
-			func_800076D4_82D4(1);
+		if (IsPlayerWithinXTilesOf(-0x11, 0x43, 2) != 0) {
+			SetObjective(1);
 		}
 		break;
 	case 1:
 		if (func_8000726C_7E6C(1) != 0) {
-			func_800076D4_82D4(2);
+			SetObjective(2);
 		}
 		break;
 	case 2:
-		if (func_80004818_5418(0x2C, 0x61, 3) != 0) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(0x2C, 0x61, 3) != 0) {
+			SetObjective(3);
 		}
 		break;
 	case 3:
-		if (func_80004818_5418(0x5B, 0x5F, 3) != 0) {
-			func_800076D4_82D4(4);
+		if (IsPlayerWithinXTilesOf(0x5B, 0x5F, 3) != 0) {
+			SetObjective(4);
 		}
 		break;
 	case 4:
-		if (func_80004818_5418(0x49, 0x23, 2) != 0) {
-			func_800076D4_82D4(5);
+		if (IsPlayerWithinXTilesOf(0x49, 0x23, 2) != 0) {
+			SetObjective(5);
 		}
 		break;
 	case 5:
-		if (func_80004818_5418(0x4E, 0x12, 2) != 0) {
-			func_800076D4_82D4(6);
+		if (IsPlayerWithinXTilesOf(0x4E, 0x12, 2) != 0) {
+			SetObjective(6);
 		}
 		break;
 	case 6:
-		if (func_80004818_5418(0x6A, -0xB, 3) != 0) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(0x6A, -0xB, 3) != 0) {
+			SetObjective(7);
 		}
 		break;
 	case 7:
 	case 8:
 		break;
 	case 9:
-		if (func_80004818_5418(7, -0x50, 8) != 0) {
-			func_800076D4_82D4(0xA);
+		if (IsPlayerWithinXTilesOf(7, -0x50, 8) != 0) {
+			SetObjective(0xA);
 		}
 		break;
 	case 10:
-		if (func_80004818_5418(-0x2F, -0x46, 3) != 0) {
-			func_800076D4_82D4(0xB);
+		if (IsPlayerWithinXTilesOf(-0x2F, -0x46, 3) != 0) {
+			SetObjective(0xB);
 		}
 		break;
 	case 11:
-		if (func_80004818_5418(-0x64, -0x23, 6) != 0) {
-			func_800076D4_82D4(0xC);
+		if (IsPlayerWithinXTilesOf(-0x64, -0x23, 6) != 0) {
+			SetObjective(0xC);
 		}
 		break;
 	case 12:
 		if (func_8000726C_7E6C(0x21) != 0) {
-			func_800076D4_82D4(0xD);
+			SetObjective(0xD);
 		}
 		break;
 	case 13:

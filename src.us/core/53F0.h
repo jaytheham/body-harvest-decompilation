@@ -4,7 +4,7 @@
 /* Functions defined in 53F0.c. */
 void debug_drawTimingGraphBars(void);
 s32 func_800047FC_53FC(s16 arg0);
-s32 func_80004818_5418(s8, s8, u8);
+s32 IsPlayerWithinXTilesOf(s8, s8, u8);
 void func_800048B8_54B8(void);
 void func_800048E8_54E8(void);
 void func_80004918_5518(void);
@@ -47,7 +47,7 @@ void func_800074F4_80F4(void);
 void func_80007548_8148(void);
 void func_80007570_8170(void);
 void func_80007690_8290(void);
-void func_800076D4_82D4(s32 arg0);
+void SetObjective(s32 arg0);
 void func_80007728_8328(u8 *, s16 *, s16 *);
 u8 func_8000789C_849C(s32 arg0);
 s32 func_800078B8_84B8(s32, s32*);

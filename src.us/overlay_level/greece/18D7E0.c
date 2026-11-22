@@ -221,11 +221,11 @@ s32 D_802DDBF0_196700 = 0x7FFFFFFF;
 void (*D_802DDBF4_196704[])(void) = {
 	func_802D531C_18DE2C,
 	StartPollsturaHouseFires,
-	func_802D562C_18E13C,
+	StartAmbulanceOnBridge,
 	FailPollsturaHouseFires,
 	func_802D56E8_18E1F8,
-	func_802D5720_18E230,
-	func_802D5760_18E270,
+	StartBlackAdamDestroysBridgeCutscene,
+	StartBlackAdamDestroysAirplanesCutscene,
 	EnqueueAirportTraining,
 	func_802D5434_18DF44,
 	func_80076820_857D0,
@@ -497,7 +497,7 @@ void func_802D4CD0_18D7E0(s32 arg0, s32 arg1) {
 		func_800EFEB4_FEE64(func_800F1DDC_100D8C, 0, 1); // alpha 1 landing start of level cutscene
 		break;
 	case 0x16:
-		func_800EFEB4_FEE64(func_802D57A0_18E2B0, 5, 1); // Atlantis raising cutscene
+		func_800EFEB4_FEE64(ExecuteAtlantisRaisingCutscene, 5, 1); // Atlantis raising cutscene
 		break;
 	case 0x17:
 		func_802D6F7C_18FA8C();
@@ -544,7 +544,7 @@ void func_802D4ECC_18D9DC(void) {
 	if (func_8000726C_7E6C(0xB) != 0) {
 		func_800074BC_80BC(func_802D4ECC_18D9DC);
 	}
-	if (func_80004818_5418(-0x1A, -0x26, 2) != 0) {
+	if (IsPlayerWithinXTilesOf(-0x1A, -0x26, 2) != 0) {
 		func_80018D7C_1997C(0x100);
 		func_800074BC_80BC(func_802D4ECC_18D9DC);
 	}
@@ -705,7 +705,7 @@ void ExecutePollsturaHouseFires(void) {
 // Pollstura building fire event/mission -called thru table D_802DDBF4 offset 8
 void func_802D5434_18DF44(void) {
 	func_800074BC_80BC(ExecutePollsturaHouseFires);
-	func_800076D4_82D4(5);
+	SetObjective(5);
 }
 
 // called thru event/mission table offset 1
@@ -739,17 +739,17 @@ void FailPollsturaHouseFires(void) {
 		AddToHumanKilledCount(3);
 	}
 	func_800074BC_80BC(ExecutePollsturaHouseFires);
-	func_800076D4_82D4(5);
+	SetObjective(5);
 }
 
-// AI - Vehicle crash sequence callback
-void func_802D5578_18E088(void) {
+// US func_802D5578_18E088
+void ExecuteAmbulanceOnBridge(void) {
 	if (!(vehicleInstances[84].unk20 & 0x8000)) {
-		func_800074BC_80BC(func_802D5578_18E088);
+		func_800074BC_80BC(ExecuteAmbulanceOnBridge);
 	}
 	if ((vehicleInstances[84].unk0 < 0x1000) && (vehicleInstances[84].unk4 < -0x6B00)) {
 		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & ~VEHICLE_FLAG_PATH_GUIDED);
-		func_800074BC_80BC(func_802D5578_18E088);
+		func_800074BC_80BC(ExecuteAmbulanceOnBridge);
 	}
 	D_802DE466 = D_802DE466 + 1;
 	if (D_802DE466 == 0x9C4 && D_80048030 == 0xF) {
@@ -758,10 +758,11 @@ void func_802D5578_18E088(void) {
 }
 
 // Ambulance/bridge attack event -called thru table D_802DDBF4 offset 2
-void func_802D562C_18E13C(void) {
+// US func_802D562C_18E13C
+void StartAmbulanceOnBridge(void) {
 	func_80092ADC_A1A8C(); // spawns the 5 Doodlebugs that target the bridge
 	D_802DE466 = 0;
-	func_80007410_8010(func_802D5578_18E088);
+	func_80007410_8010(ExecuteAmbulanceOnBridge);
 }
 
 // AI - Vehicle damage and destruction
@@ -772,7 +773,7 @@ void func_802D5660_18E170(void) {
 		func_800072CC_7ECC(0x29);
 		func_800073B8_7FB8(0x2A);
 		func_800074BC_80BC(func_802D5660_18E170);
-		func_800076D4_82D4(0x10);
+		SetObjective(0x10);
 		func_80123AC4_132A74(&vehicleInstances[84]); // feed the Ambulance through the vehicle on-death handler
 	}
 }
@@ -784,22 +785,24 @@ void func_802D56E8_18E1F8(void) {
 	func_80007410_8010(func_802D5660_18E170);
 }
 
-// start TNT bridge cutscene - called thru table D_802DDBF4 offset 5
-void func_802D5720_18E230(void) {
+// called thru table D_802DDBF4 offset 5
+// US func_802D5720_18E230
+void StartBlackAdamDestroysBridgeCutscene(void) {
 	D_80157F94 = 0xFF;
-	func_800EFEB4_FEE64(func_802D64D0_18EFE0, 6, 1);
+	func_800EFEB4_FEE64(ExecuteBlackAdamDestroysBridgeCutscene, 6, 1);
 	func_80013468_14068(2);
 }
 
-// start airport TNT cutscene - called thru table D_802DDBF4 offset 6
-void func_802D5760_18E270(void) {
+// called thru table D_802DDBF4 offset 6
+// US func_802D5760_18E270
+void StartBlackAdamDestroysAirplanesCutscene(void) {
 	D_80157F94 = 0xFF;
-	func_800EFEB4_FEE64(func_802D6904_18F414, 7, 1);
+	func_800EFEB4_FEE64(ExecuteBlackAdamDestroysAirplanesCutscene, 7, 1);
 	func_80013468_14068(3);
 }
 
-// Atlantis raising cutscene
-s32 func_802D57A0_18E2B0(void) {
+// US func_802D57A0_18E2B0
+s32 ExecuteAtlantisRaisingCutscene(void) {
 	s32 i;
 	u16 x;
 	u16 z;
@@ -924,8 +927,8 @@ s32 func_802D57A0_18E2B0(void) {
 	return 0;
 }
 
-// Black Adam TNT bridge cutscene state machine
-s32 func_802D64D0_18EFE0(void) {
+// US func_802D64D0_18EFE0
+s32 ExecuteBlackAdamDestroysBridgeCutscene(void) {
 	u8 typeIndex;
 	s32 alienId;
 
@@ -1034,8 +1037,8 @@ s32 func_802D64D0_18EFE0(void) {
 	return 0;
 }
 
-// Airport TNT cutscene state handler
-s32 func_802D6904_18F414(void) {
+// US func_802D6904_18F414
+s32 ExecuteBlackAdamDestroysAirplanesCutscene(void) {
 	s32 pad[2];
 	s32 alienId;
 	s16 *idPtr;
@@ -1158,86 +1161,86 @@ s32 func_802D6904_18F414(void) {
 void func_802D6D20_18F830(void) {
 	switch (D_80048030) {
 	case 0:
-		if (func_80004818_5418(-0x25, -0x32, 1) != 0) {
-			func_800076D4_82D4(1);
+		if (IsPlayerWithinXTilesOf(-0x25, -0x32, 1) != 0) {
+			SetObjective(1);
 		}
 		break;
 
 	case 1:
 		if (func_801393A0_148350(7) != 0) {
-			func_800076D4_82D4(2);
+			SetObjective(2);
 		}
 		break;
 
 	case 2:
-		if (func_80004818_5418(-0x3E, -0x5C, 2) != 0) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(-0x3E, -0x5C, 2) != 0) {
+			SetObjective(3);
 		}
 		break;
 
 	case 3:
 		if (func_8000726C_7E6C(0xA) != 0) {
-			func_800076D4_82D4(4);
+			SetObjective(4);
 		}
 		break;
 
 	case 0x5:
 		if (D_80052B34->unk1A == 7) {
-			func_800076D4_82D4(6);
+			SetObjective(6);
 		}
 		break;
 
 	case 0x6:
-		if (func_80004818_5418(-0x61, 3, 3) != 0) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(-0x61, 3, 3) != 0) {
+			SetObjective(7);
 		}
 		break;
 
 	case 0x7:
-		if (func_80004818_5418(-0x67, 0x10, 0x10) == 0) {
-			func_800076D4_82D4(8);
+		if (IsPlayerWithinXTilesOf(-0x67, 0x10, 0x10) == 0) {
+			SetObjective(8);
 		}
 		break;
 
 	case 0x8:
-		if (func_80004818_5418(-0x21, 0x38, 2) != 0) {
-			func_800076D4_82D4(9);
+		if (IsPlayerWithinXTilesOf(-0x21, 0x38, 2) != 0) {
+			SetObjective(9);
 		}
 		break;
 
 	case 0x9:
-		if ((func_8000726C_7E6C(0x24) != 0) || (func_80004818_5418(-0x4E, 0x61, 1) != 0)) {
-			func_800076D4_82D4(0xA);
+		if ((func_8000726C_7E6C(0x24) != 0) || (IsPlayerWithinXTilesOf(-0x4E, 0x61, 1) != 0)) {
+			SetObjective(0xA);
 		}
 		break;
 
 	case 0xA:
 		if (func_8000726C_7E6C(0x14) != 0) {
-			func_800076D4_82D4(0xB);
+			SetObjective(0xB);
 		}
 		break;
 
 	case 0xB:
-		if (func_80004818_5418(0, 0x55, 2) != 0) {
-			func_800076D4_82D4(0xC);
+		if (IsPlayerWithinXTilesOf(0, 0x55, 2) != 0) {
+			SetObjective(0xC);
 		}
 		break;
 
 	case 0xC:
 		if (func_8000726C_7E6C(0x30) != 0) {
-			func_800076D4_82D4(0xD);
+			SetObjective(0xD);
 		}
 		break;
 
 	case 0xD:
 		if (func_8000726C_7E6C(0x1C) != 0) {
-			func_800076D4_82D4(0xE);
+			SetObjective(0xE);
 		}
 		break;
 
 	case 0xE:
 		if (func_8000726C_7E6C(0x1E) != 0) {
-			func_800076D4_82D4(0xF);
+			SetObjective(0xF);
 		}
 		break;
 

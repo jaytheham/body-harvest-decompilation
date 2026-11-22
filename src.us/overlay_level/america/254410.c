@@ -794,37 +794,37 @@ void func_802D4E70_2545B0(void) {
 	switch (D_80048030) {
 	case 1:
 		if (func_8000726C_7E6C(0x2D) != 0) {
-			func_800076D4_82D4(2);
+			SetObjective(2);
 		}
 		break;
 	case 2:
-		if (func_80004818_5418(-0x37, -0x33, 3) != 0) {
-			func_800076D4_82D4(3);
+		if (IsPlayerWithinXTilesOf(-0x37, -0x33, 3) != 0) {
+			SetObjective(3);
 		}
 		break;
 	case 3:
-		if (func_80004818_5418(0x15, -0x3E, 3) != 0) {
-			func_800076D4_82D4(4);
+		if (IsPlayerWithinXTilesOf(0x15, -0x3E, 3) != 0) {
+			SetObjective(4);
 		}
 		break;
 	case 4:
-		if (func_80004818_5418(0x54, -0x3E, 2) != 0) {
-			func_800076D4_82D4(5);
+		if (IsPlayerWithinXTilesOf(0x54, -0x3E, 2) != 0) {
+			SetObjective(5);
 		}
 		break;
 	case 5:
-		if (func_80004818_5418(0x56, -0x2E, 3) != 0) {
-			func_800076D4_82D4(6);
+		if (IsPlayerWithinXTilesOf(0x56, -0x2E, 3) != 0) {
+			SetObjective(6);
 		}
 		break;
 	case 6:
-		if (func_80004818_5418(0x60, 0x25, 2) != 0) {
-			func_800076D4_82D4(7);
+		if (IsPlayerWithinXTilesOf(0x60, 0x25, 2) != 0) {
+			SetObjective(7);
 		}
 		break;
 	case 7:
-		if (func_80004818_5418(0x41, 0x55, 2) != 0) {
-			func_800076D4_82D4(8);
+		if (IsPlayerWithinXTilesOf(0x41, 0x55, 2) != 0) {
+			SetObjective(8);
 		}
 		break;
 	case 0:
@@ -839,7 +839,7 @@ void func_802D4FBC_2546FC(void) {
 	if (D_802E0E34 != 0x96) { // delay timer before school cutscene starts (7.5ish seconds)
 		return;
 	}
-	func_800076D4_82D4(1);
+	SetObjective(1);
 	func_80013468_14068(0x10);
 	func_800EFEB4_FEE64(NULL, 0x14, 0); // play cutscene
 	func_800072CC_7ECC(0x1E);
@@ -1006,7 +1006,7 @@ void func_802D546C_254BAC(void) {
 void func_802D5530_254C70(void) {
 	u8 id;
 
-	func_800076D4_82D4(9);
+	SetObjective(9);
 	openCurrentStageGate();
 	func_800074BC_80BC(func_802D536C_254AAC); // remove from callback
 
