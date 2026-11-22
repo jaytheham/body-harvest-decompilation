@@ -558,51 +558,6 @@ extern const f32 D_80036C88_37888[];
 extern const f64 D_80037610_38210[];
 extern const Unk80154082 D_800378CC_384CC;
 extern const Unk80378D0 D_800378D0_384D0;
-extern const char D_800383B0_38FB0[];
-extern const char D_800383BC_38FBC[];
-extern const char D_800383C8_38FC8[];
-extern const char D_800383CC_38FCC[];
-extern const char D_800383D4_38FD4[];
-extern const char D_800383DC_38FDC[];
-extern const char D_800383E0_38FE0[];
-extern const char D_800383E4_38FE4[];
-extern const char D_800383EC_38FEC[];
-extern const char D_800383F8_38FF8[];
-extern const char D_80038404_39004[];
-extern const char D_8003840C_3900C[];
-extern const char D_80038418_39018[];
-extern const char D_80038424_39024[];
-extern const char D_8003843C_3903C[]; /* osSyncPrintf format string */
-extern const char D_8003845C_3905C[]; /* osSyncPrintf format string */
-extern const char D_80038470_39070[]; /* osSyncPrintf format string */
-extern const char D_80038480_39080[]; /* osSyncPrintf format string */
-extern const char D_80038484_39084[]; /* osSyncPrintf format string */
-extern const char D_8003849C_3909C[]; /* osSyncPrintf format string */
-extern const char D_800384A8_390A8[]; /* osSyncPrintf format string */
-extern const char D_800384B4_390B4[]; /* osSyncPrintf format string */
-extern const char D_800384C4_390C4[]; /* osSyncPrintf format string */
-extern const char D_800384C8_390C8[]; /* osSyncPrintf format string */
-extern const char D_800384E0_390E0[];
-extern const char D_80038500_39100[];
-extern const char D_80038530_39130[];
-extern const char D_80038534_39134[];
-extern const char D_8003853C_3913C[];
-extern const char D_80038540_39140[];
-extern const char D_80038554_39154[];
-extern const char D_8003855C_3915C[];
-extern const char D_8003856C_3916C[];
-extern const char D_80038574_39174[];
-extern const char D_80038588_39188[];
-extern const char D_80038590_39190[];
-extern const char D_800385A4_391A4[];
-extern const char D_800385A8_391A8[];
-extern const char D_800385BC_391BC[];
-extern const char D_800385C4_391C4[];
-extern const char D_800385D8_391D8[];
-extern const char D_800385E0_391E0[]; /* osSyncPrintf format string */
-extern const char D_800385E4_391E4[]; /* osSyncPrintf format string */
-extern const char D_80038614_39214[]; /* osSyncPrintf format string */
-extern const char D_80038618_39218[]; /* osSyncPrintf format string */
 extern const Unk8014DD50 D_8003A040_3AC40[6];
 extern const Unk8014DD50 D_8003A0A0_3ACA0[2];
 extern const Unk8014DD50 D_8003A0C0_3ACC0[2];

@@ -95,51 +95,6 @@ s32 D_80034494_35094 = 0;
 s32 D_80034498_35098 = 0;
 s32 D_8003449C_3509C = 0;
 
-const char D_800383B0_38FB0[] = "%i%@%X%Y";
-const char D_800383BC_38FBC[] = "%i%@%X%Y";
-const char D_800383C8_38FC8[] = "%X";
-const char D_800383CC_38FCC[] = " %r%s";
-const char D_800383D4_38FD4[] = " %r%s";
-const char D_800383DC_38FDC[] = "%@";
-const char D_800383E0_38FE0[] = "%X";
-const char D_800383E4_38FE4[] = " %r%s";
-const char D_800383EC_38FEC[] = "%i%@%X%Y";
-const char D_800383F8_38FF8[] = "%i%@%X%Y";
-const char D_80038404_39004[] = " %r%s";
-const char D_8003840C_3900C[] = "%i%@%X%Y";
-const char D_80038418_39018[] = "%i%@%X%Y";
-const char D_80038424_39024[] = "--------talkyIndex=%d\n";
-const char D_8003843C_3903C[] = "Playing dialogue for testing\n";
-const char D_8003845C_3905C[] = "PlayDialogue: %d\n";
-const char D_80038470_39070[] = "----\n%c,%c,%c\n";
-const char D_80038480_39080[] = "\n";
-const char D_80038484_39084[] = "wayPoint x: %d z: %d\n";
-const char D_8003849C_3909C[] = "Index:%d\n";
-const char D_800384A8_390A8[] = "Offset:%d\n";
-const char D_800384B4_390B4[] = "keyNumber =%d\n";
-const char D_800384C4_390C4[] = "\n";
-const char D_800384C8_390C8[] = "wayPoint x: %d z: %d\n";
-const char D_800384E0_390E0[] = "3)Changing mailMessageIndex=%d\n";
-const char D_80038500_39100[] = "INSIDE InitCommsMessages,  dialogue_offsets=%d\n";
-const char D_80038530_39130[] = "\n";
-const char D_80038534_39134[] = "%X%Y";
-const char D_8003853C_3913C[] = "%@";
-const char D_80038540_39140[] = "       Yes      ";
-const char D_80038554_39154[] = "%CNo\n";
-const char D_8003855C_3915C[] = "       Ja      ";
-const char D_8003856C_3916C[] = "%CNein\n";
-const char D_80038574_39174[] = "       Oui      ";
-const char D_80038588_39188[] = "%CNon\n";
-const char D_80038590_39190[] = "       %CYes      ";
-const char D_800385A4_391A4[] = "No\n";
-const char D_800385A8_391A8[] = "       %CJa      ";
-const char D_800385BC_391BC[] = "Nein\n";
-const char D_800385C4_391C4[] = "       %COui      ";
-const char D_800385D8_391D8[] = "Non\n";
-const char D_800385E0_391E0[] = "%c\n";
-const char D_800385E4_391E4[] = "Character read as key number was not a digit\n";
-const char D_80038614_39214[] = "%c\n";
-const char D_80038618_39218[] = "Character read as key number was not a digit\n";
 
 
 s16 func_800172E0_17EE0(u8 *arg0)
@@ -231,10 +186,10 @@ void func_80017490_18090(u8 *text) {
 
 	if (func_800172E0_17EE0(&text[offset]) == 1) {
 		line = 7;
-		drawText(D_800383B0_38FB0, 0, line++, 0, D_80068088 * 4 - 0x3DC);
+		drawText("%i%@%X%Y", 0, line++, 0, D_80068088 * 4 - 0x3DC);
 	} else {
 		line = 7;
-		drawText(D_800383BC_38FBC, 0, line++, 0, D_80068088 * 4 - 0x40C);
+		drawText("%i%@%X%Y", 0, line++, 0, D_80068088 * 4 - 0x40C);
 	}
 
 	if (D_80034488_35088 != 0 || D_8006C558[D_80034468_35068] == 0xFF || D_8003447C_3507C == 1) {
@@ -243,7 +198,7 @@ void func_80017490_18090(u8 *text) {
 		x = (-(width / 2) << 2) + 0x154;
 	}
 
-	drawText(D_800383C8_38FC8, x);
+	drawText("%X", x);
 	word = wordBuffer;
 
 	do {
@@ -251,7 +206,7 @@ void func_80017490_18090(u8 *text) {
 		case 0x20:
 			D_8006C55A++;
 			word[wordLength] = 0;
-			wordLength = 0; drawText(D_800383CC_38FCC, word);
+			wordLength = 0; drawText(" %r%s", word);
 			break;
 
 		case 0x3B: {
@@ -259,8 +214,8 @@ void func_80017490_18090(u8 *text) {
 			u8 *nextText;
 			D_8006C55A++;
 			word[wordLength] = 0;
-			nextText = &text[offset + 1]; wordLength = 0; drawText(D_800383D4_38FD4, word);
-			drawText(D_800383DC_38FDC, 0, line++);
+			nextText = &text[offset + 1]; wordLength = 0; drawText(" %r%s", word);
+			drawText("%@", 0, line++);
 			if (D_8003447C_3507C != 0) {
 				nextWidth = func_80017394_17F94(nextText, 0);
 			} else {
@@ -271,7 +226,7 @@ void func_80017490_18090(u8 *text) {
 			} else {
 				x = (-(nextWidth / 2) << 2) + 0x154;
 			}
-			drawText(D_800383E0_38FE0, x);
+			drawText("%X", x);
 			break;
 		}
 		case 0x25:
@@ -285,11 +240,11 @@ void func_80017490_18090(u8 *text) {
 		case 0x40:
 			D_8006C55A++;
 			word[wordLength] = 0;
-			drawText(D_800383E4_38FE4, word); wordLength = 0; finished = 1;
+			drawText(" %r%s", word); wordLength = 0; finished = 1;
 			if (func_800172E0_17EE0(&text[offset]) == 1) {
-				drawText(D_800383EC_38FEC, 0, line++, 0, D_80068088 * 4 - 0x3DC);
+				drawText("%i%@%X%Y", 0, line++, 0, D_80068088 * 4 - 0x3DC);
 			} else {
-				drawText(D_800383F8_38FF8, 0, line++, 0, D_80068088 * 4 - 0x40C);
+				drawText("%i%@%X%Y", 0, line++, 0, D_80068088 * 4 - 0x40C);
 			}
 			offset--;
 			break;
@@ -304,11 +259,11 @@ void func_80017490_18090(u8 *text) {
 			if (offset >= D_8006C550[D_8006C558 + 1]) {
 				D_8006C55A++;
 				word[wordLength] = 0;
-				drawText(D_80038404_39004, word); wordLength = 0; finished = 1;
+				drawText(" %r%s", word); wordLength = 0; finished = 1;
 				if (func_800172E0_17EE0(&text[offset]) == 1) {
-					drawText(D_8003840C_3900C, 0, line++, 0, D_80068088 * 4 - 0x3DC);
+					drawText("%i%@%X%Y", 0, line++, 0, D_80068088 * 4 - 0x3DC);
 				} else {
-					drawText(D_80038418_39018, 0, line++, 0, D_80068088 * 4 - 0x40C);
+					drawText("%i%@%X%Y", 0, line++, 0, D_80068088 * 4 - 0x40C);
 				}
 			}
 		}
@@ -341,7 +296,7 @@ void func_80017AE0_186E0(void) {
 void func_80017B08_18708(s32 arg0) {
 	D_8006C55C = 0;
 	D_8006C558 = arg0;
-	osSyncPrintf(D_80038424_39024, D_8006C558);
+	osSyncPrintf("--------talkyIndex=%d\n", D_8006C558);
 	// --------talkyIndex=%d
 	D_8006C55E = 1;
 	D_8006C564 = 0;
@@ -428,7 +383,7 @@ s16 func_80017CA4_188A4(void) {
 		if (D_8003447C_3507C != 0) {
 			D_8003447C_3507C = 0;
 			if (D_8004771C == -1) {
-				osSyncPrintf(D_8003843C_3903C);
+				osSyncPrintf("Playing dialogue for testing\n");
 				func_80018D7C_1997C(D_8004771A);
 				D_80034480_35080 = 0xFFFF;
 			} else if (D_80034480_35080 != 0xFFFF) {
@@ -668,7 +623,7 @@ void func_80018D7C_1997C(u16 arg0) {
 	s32 character;
 
 	D_80034494_35094 = 0;
-	osSyncPrintf(D_8003845C_3905C, arg0); // PlayDialogue: %d
+	osSyncPrintf("PlayDialogue: %d\n", arg0); // PlayDialogue: %d
 	if (!(D_800313C8 & 8) && !(D_80052ACD & 0x10)) {
 		if (arg0 >= 0xCD) {
 			func_80019F80_1AB80();
@@ -693,7 +648,7 @@ void func_80018D7C_1997C(u16 arg0) {
 
 			if (D_80034460_35060[D_8006C550[dialogueIndex]] == 0x5E) {
 				// ----%c,%c,%c
-				osSyncPrintf(D_80038470_39070,
+				osSyncPrintf("----\n%c,%c,%c\n",
 					D_80034460_35060[D_8006C550[dialogueIndex]],
 					D_80034460_35060[D_8006C550[dialogueIndex] + 1],
 					D_80034460_35060[D_8006C550[dialogueIndex] + 2]);
@@ -708,15 +663,15 @@ void func_80018D7C_1997C(u16 arg0) {
 				gzip_data_0000 = 1;
 				D_8006C56D = D_80034460_35060[D_8006C550[dialogueIndex] + 2];
 				D_8006C56E = D_80034460_35060[D_8006C550[dialogueIndex] + 3];
-				osSyncPrintf(D_80038480_39080); // \n
-				osSyncPrintf(D_80038484_39084, D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
+				osSyncPrintf("\n"); // \n
+				osSyncPrintf("wayPoint x: %d z: %d\n", D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
 			}
 		} else {
-			osSyncPrintf(D_8003849C_3909C, arg0); // Index:%d
-			osSyncPrintf(D_800384A8_390A8, D_8006C550[arg0]); // Offset:%d
+			osSyncPrintf("Index:%d\n", arg0); // Index:%d
+			osSyncPrintf("Offset:%d\n", D_8006C550[arg0]); // Offset:%d
 			if (D_80034460_35060[D_8006C550[arg0]] == 0x5E) {
 				D_8006C570 = func_8001A37C_1AF7C(&D_80034460_35060[D_8006C550[arg0]]);
-				osSyncPrintf(D_800384B4_390B4, D_8006C570, &D_8006C570); // keyNumber =%d
+				osSyncPrintf("keyNumber =%d\n", D_8006C570, &D_8006C570); // keyNumber =%d
 				D_80034498_35098 = 0;
 				D_80034494_35094 = 1;
 				D_80034490_35090 = 1;
@@ -724,8 +679,8 @@ void func_80018D7C_1997C(u16 arg0) {
 				gzip_data_0000 = 1;
 				D_8006C56D = D_80034460_35060[D_8006C550[arg0] + 1];
 				D_8006C56E = D_80034460_35060[D_8006C550[arg0] + 2];
-				osSyncPrintf(D_800384C4_390C4); // \n
-				osSyncPrintf(D_800384C8_390C8, D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
+				osSyncPrintf("\n"); // \n
+				osSyncPrintf("wayPoint x: %d z: %d\n", D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
 			}
 			func_80017B08_18708(arg0);
 		}
@@ -849,7 +804,7 @@ s32 arg1;
 void func_80019EA8_1AAA8(u8 arg0) {
 	D_80034478_35078 = 1;
 	D_80034480_35080 = arg0;
-	osSyncPrintf(D_800384E0_390E0, D_80034480_35080, arg0);
+	osSyncPrintf("3)Changing mailMessageIndex=%d\n", D_80034480_35080, arg0);
 	// 3)Changing mailMessageIndex=%d
 	D_8003447C_3507C = 0;
 	D_8006C56C = 0;
@@ -879,7 +834,7 @@ void func_80019F80_1AB80(void) {
 	D_80034468_35068 = &D_8006C410;
 	D_80034470_35070 = (s32)&D_3059BA0;
 	D_8006C550 = &D_8006C450;
-	osSyncPrintf(D_80038500_39100, D_8006C550, &D_80034468_35068, &D_80034470_35070);
+	osSyncPrintf("INSIDE InitCommsMessages,  dialogue_offsets=%d\n", D_8006C550, &D_80034468_35068, &D_80034470_35070);
 	// INSIDE InitCommsMessages,  dialogue_offsets=%d
 }
 
@@ -916,7 +871,7 @@ void func_8001A130_1AD30() {
 }
 
 void func_8001A160_1AD60(void) {
-	drawText(D_80038530_39130);
+	drawText("\n");
 	D_80034498_35098 = 0;
 	if (currentControllerStates[CONTROLLER_ONE].stick_x >= 0x1F) {
 		D_80034490_35090 = 0;
@@ -924,44 +879,44 @@ void func_8001A160_1AD60(void) {
 	if (currentControllerStates[CONTROLLER_ONE].stick_x < -0x1E) {
 		D_80034490_35090 = 1;
 	}
-	drawText(D_80038534_39134, 0, 0);
-	drawText(D_8003853C_3913C, 0, 8);
+	drawText("%X%Y", 0, 0);
+	drawText("%@", 0, 8);
 	if (D_80034490_35090 != 0) {
 		switch (D_800313D0_31FD0) {
 		default:
 		case 0:
 			func_8000577C_637C();
-			drawText(D_80038540_39140);
-			drawText(D_80038554_39154, 0x32, 0x5A, 0x32);
+			drawText("       Yes      ");
+			drawText("%CNo\n", 0x32, 0x5A, 0x32);
 			break;
 		case 2:
 			func_8000577C_637C();
-			drawText(D_8003855C_3915C);
-			drawText(D_8003856C_3916C, 0x32, 0x5A, 0x32);
+			drawText("       Ja      ");
+			drawText("%CNein\n", 0x32, 0x5A, 0x32);
 			break;
 		case 1:
 			func_8000577C_637C();
-			drawText(D_80038574_39174);
-			drawText(D_80038588_39188, 0x32, 0x5A, 0x32);
+			drawText("       Oui      ");
+			drawText("%CNon\n", 0x32, 0x5A, 0x32);
 			break;
 		}
 	} else {
 		switch (D_800313D0_31FD0) {
 		default:
 		case 0:
-			drawText(D_80038590_39190, 0x32, 0x5A, 0x32);
+			drawText("       %CYes      ", 0x32, 0x5A, 0x32);
 			func_8000577C_637C();
-			drawText(D_800385A4_391A4);
+			drawText("No\n");
 			break;
 		case 2:
-			drawText(D_800385A8_391A8, 0x32, 0x5A, 0x32);
+			drawText("       %CJa      ", 0x32, 0x5A, 0x32);
 			func_8000577C_637C();
-			drawText(D_800385BC_391BC);
+			drawText("Nein\n");
 			break;
 		case 1:
-			drawText(D_800385C4_391C4, 0x32, 0x5A, 0x32);
+			drawText("       %COui      ", 0x32, 0x5A, 0x32);
 			func_8000577C_637C();
-			drawText(D_800385D8_391D8);
+			drawText("Non\n");
 			break;
 		}
 	}
@@ -976,18 +931,18 @@ s32 func_8001A37C_1AF7C(char *arg0) {
 
 	sp20 = (u8) arg0[1];
 	var_s0 = 0;
-	osSyncPrintf(D_800385E0_391E0, sp20); // %c
+	osSyncPrintf("%c\n", sp20); // %c
 	if (sp20 >= 0x30 && sp20 < 0x3A) {
 		var_s0 = (sp20 * 0xA - 0x1E0) & 0xFF;
 	} else {
-		osSyncPrintf(D_800385E4_391E4, sp20); // Character read as key number was not a digit
+		osSyncPrintf("Character read as key number was not a digit\n", sp20); // Character read as key number was not a digit
 	}
 	sp20 = (u8) arg0[2];
-	osSyncPrintf(D_80038614_39214, sp20); // %c
+	osSyncPrintf("%c\n", sp20); // %c
 	if (sp20 >= 0x30 && sp20 < 0x3A) {
 		var_s0 = (var_s0 + sp20 - 0x30) & 0xFF;
 	} else {
-		osSyncPrintf(D_80038618_39218, sp20); // Character read as key number was not a digit
+		osSyncPrintf("Character read as key number was not a digit\n", sp20); // Character read as key number was not a digit
 	}
 	return var_s0;
 }
