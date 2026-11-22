@@ -1270,8 +1270,8 @@ s32 func_8007B9CC_8A97C(u8 arg0) {
 	gSPDisplayList(D_8005BB2C++, model);
 }
 
-// drawComplexObjectShadows e.g. humans
-void func_8007BEC0_8AE70(void)
+// US func_8007BEC0_8AE70 e.g. humans
+void DrawComplexObjectShadows(void)
 {
 	s32 i;
 	u8 new_var;

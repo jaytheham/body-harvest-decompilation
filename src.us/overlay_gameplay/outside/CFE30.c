@@ -8900,8 +8900,8 @@ void func_800DC5B8_EB568(Vec3f *arg0, f32 arg1, s8 arg2, s32 arg3) {
 	}
 }
 
-// DrawNonZBufferedEffects
-void func_800DD5E0_EC590(void) { D_80156EDA = 0; func_800C978C_D873C(); }
+// US func_800DD5E0_EC590
+void DrawNonZBufferedEffects(void) { D_80156EDA = 0; func_800C978C_D873C(); }
 
 void func_800DD604_EC5B4(void) {
 	u8 i;

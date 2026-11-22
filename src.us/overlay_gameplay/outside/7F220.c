@@ -379,37 +379,37 @@ void func_80071228_801D8(void)
 
 	if (D_80052ACB == 0)
 	{
-		func_800E94B8_F8468();
+		SetupForShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("SetupForShadows OK\n");
 		}
 
-		func_8007BEC0_8AE70();
+		DrawComplexObjectShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DrawComplexObjectShadows OK\n");
 		}
 
-		func_800EA12C_F90DC();
+		DisplayVehicleShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DisplayVehicleShadows OK\n");
 		}
 
-		func_800F97FC_1087AC();
+		DrawLegsShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DrawLegsShadows OK\n");
 		}
 
-		func_800DD5E0_EC590();
+		DrawNonZBufferedEffects();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DrawNonZBufferedEffects OK\n");
 		}
 
-		func_800EA088_F9038();
+		StopDrawingShadows();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("StopDrawingShadows OK\n");
@@ -425,7 +425,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800F98C0_108870();
+	DrawLegs();
 	if (D_80052ACB == 2)
 	{
 		return;
@@ -454,7 +454,7 @@ void func_80071228_801D8(void)
 
 	if (D_80052ACA != 2)
 	{
-		func_8007764C_865FC();
+		DisplayTrees();
 		if (currentControllerStates[0].button == 0x30)
 		{
 			osSyncPrintf("DisplayTrees OK\n");
@@ -466,7 +466,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_8010065C_10F60C(0);
+	DisplayVehicles(0);
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayVehicles(0) OK\n");
@@ -490,7 +490,7 @@ void func_80071228_801D8(void)
 
 	if (D_80157590 != 0)
 	{
-		func_8010065C_10F60C(1);
+		DisplayVehicles(1);
 	}
 
 	if (currentControllerStates[0].button == 0x30)
@@ -620,7 +620,7 @@ void func_80071228_801D8(void)
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 
 		func_80071178_80128();
-		func_8010065C_10F60C(1);
+		DisplayVehicles(1);
 		func_80070FB8_7FF68();
 
 		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);

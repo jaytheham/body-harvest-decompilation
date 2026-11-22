@@ -2539,8 +2539,8 @@ void func_800F9118_1080C8(s32 arg0) {
 	}
 }
 
-// DrawLegsShadows ?
-void func_800F97FC_1087AC(void) {
+// US func_800F97FC_1087AC
+void DrawLegsShadows(void) {
 	s32 i;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -2554,8 +2554,8 @@ void func_800F97FC_1087AC(void) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// drawLegs
-void func_800F98C0_108870(void) {
+// US func_800F98C0_108870
+void DrawLegs(void) {
 	s32 i;
 	u32 textureAddr;
 
@@ -4927,8 +4927,8 @@ void func_80100638_10F5E8(u8 arg0, u8 arg1) {
 	D_80159320 |= 0x800000;
 }
 
-// DisplayVehicles
-void func_8010065C_10F60C(s32 arg0) {
+// US func_8010065C_10F60C
+void DisplayVehicles(s32 arg0) {
 	s32 index;
 	s32 i;
 	VehicleType *type;
