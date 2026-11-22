@@ -183,7 +183,7 @@ AlienType D_8032B7D0_1E42E0[0x30] = {
 		0x190, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_8008AF58_99F08, /* unk5C */
+		OnDeathHandlerScout, /* unk5C */
 		{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x04] */
@@ -408,7 +408,7 @@ AlienType D_8032B7D0_1E42E0[0x30] = {
 		0x64, /* unk58 */
 		0x3, /* unk5A */
 		0x00, /* pad5B */
-		func_802DA378_192E88, /* unk5C */
+		OnDeathHandlerWarrior2, /* unk5C */
 		{ 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x09] */
@@ -588,7 +588,7 @@ AlienType D_8032B7D0_1E42E0[0x30] = {
 		0x80, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_802DA378_192E88, /* unk5C */
+		OnDeathHandlerWarrior2, /* unk5C */
 		{ 0x03, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x0D] */
@@ -1263,7 +1263,7 @@ AlienType D_8032B7D0_1E42E0[0x30] = {
 		0xAF, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_802DCADC_1955EC, /* unk5C */
+		OnDeathHandlerCrabBoss, /* unk5C */
 		{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x1C] */
@@ -1308,7 +1308,7 @@ AlienType D_8032B7D0_1E42E0[0x30] = {
 		0x32, /* unk58 */
 		0xFF, /* unk5A */
 		0x00, /* pad5B */
-		func_802DC91C_19542C, /* unk5C */
+		OnDeathHandlerCrabBossLowerLeftArm, /* unk5C */
 		{ 0x10, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }, /* pad60 */
 	},
 	/* [0x1D] */

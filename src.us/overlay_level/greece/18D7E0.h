@@ -4,7 +4,7 @@
 /* Functions defined in the greece level overlay (18D7E0.c). */
 void func_802D4CD0_18D7E0(s32, s32);
 void func_802D4ECC_18D9DC(void);
-void func_802D4F74_18DA84(void);
+void ExecuteAirportTraining(void);
 void func_802D536C_18DE7C(void);
 void func_802D5578_18E088(void);
 s32 func_802D57A0_18E2B0(void);
@@ -35,21 +35,21 @@ void func_802D8D84_191894(u8 arg0);
 void func_802D90C8_191BD8(u8 arg0);
 void func_802D911C_191C2C(u8 arg0);
 void func_802D9964_192474(u8 arg0);
-void func_802DA378_192E88(u8 arg0);
+void OnDeathHandlerWarrior2(u8 arg0);
 void func_802DA3EC_192EFC(u8 arg0);
 void func_802DBA00_194510(u8 arg0);
 void func_802DBBBC_1946CC(u8 arg0);
 void func_802DBDDC_1948EC(u8 arg0);
 void func_802DBF98_194AA8(u8 arg0);
-void func_802DC91C_19542C(u8 arg0);
+void OnDeathHandlerCrabBossLowerLeftArm(u8 arg0);
 void func_802DC98C_19549C(u8 arg0);
 void func_802DC9FC_19550C(u8 arg0);
 void func_802DCA6C_19557C(u8 arg0);
-void func_802DCADC_1955EC(u8 arg0);
+void OnDeathHandlerCrabBoss(u8 arg0);
 
 void func_802D4E28_18D938(void);
 void func_802D4F50_18DA60(void);
-void func_802D5290_18DDA0(void);
+void EnqueueAirportTraining(void);
 void func_802D531C_18DE2C(void);
 void func_802D5434_18DF44(void);
 void func_802D5460_18DF70(void);

@@ -226,7 +226,7 @@ void (*D_802DDBF4_196704[])(void) = {
 	func_802D56E8_18E1F8,
 	func_802D5720_18E230,
 	func_802D5760_18E270,
-	func_802D5290_18DDA0,
+	EnqueueAirportTraining,
 	func_802D5434_18DF44,
 	func_80076820_857D0,
 	func_80076820_857D0,
@@ -559,8 +559,8 @@ void func_802D4F50_18DA60(void) {
 	osViExtendVStart((s32) &D_802DD170);
 }
 
-// Airport training sequence state machine
-void func_802D4F74_18DA84(void) {
+// US func_802D4F74_18DA84
+void ExecuteAirportTraining(void) {
 	if (D_802DE460 < 0x3E8) {
 		D_802DE460 += 1;
 	}
@@ -646,7 +646,7 @@ void func_802D4F74_18DA84(void) {
 	case 7:
 		if (D_802DE460 == 0x14) {
 			func_80018D7C_1997C(0xEC); // dialogue
-			func_800074BC_80BC(func_802D4F74_18DA84); // end mission
+			func_800074BC_80BC(ExecuteAirportTraining); // end mission
 			func_800072CC_7ECC(0x1E);
 			D_80159320 &= ~0x400000;
 			D_802DE460 = 0;
@@ -656,10 +656,11 @@ void func_802D4F74_18DA84(void) {
 }
 
 // airport training called thru event/mission table offset 7
-void func_802D5290_18DDA0(void) {
+// US func_802D5290_18DDA0
+void EnqueueAirportTraining(void) {
 	D_8004DC58 = 0;
 	D_802DE460 = 0;
-	func_80007410_8010(func_802D4F74_18DA84);
+	func_80007410_8010(ExecuteAirportTraining);
 }
 
 // Parenthos bridge lowering cutscene state/handling
@@ -2325,8 +2326,8 @@ void func_802D9C60_192770(u8 arg0) {
 	}
 }
 
-// AI - Alien animation handler
-void func_802DA378_192E88(u8 arg0) {
+// US func_802DA378_192E88
+void OnDeathHandlerWarrior2(u8 arg0) {
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL)) {
 		func_80137468_146418(arg0, 0xF);
 		func_802D9C60_192770(arg0);
@@ -2998,8 +2999,8 @@ void func_802DC500_195010(u8 arg0)
 	}
 }
 
-// AI - Alien type 1 setup with offsets
-void func_802DC91C_19542C(u8 arg0) {
+// US func_802DC91C_19542C
+void OnDeathHandlerCrabBossLowerLeftArm(u8 arg0) {
 	alienInstances[arg0].unk14 = -0x8D;
 	alienInstances[arg0].unk16 = -0x7;
 	alienInstances[arg0].unk18 = 0x26;
@@ -3034,8 +3035,8 @@ void func_802DCA6C_19557C(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0x99, 0x32, 0xD4);
 }
 
-// AI - Boss alien death sequence
-void func_802DCADC_1955EC(u8 arg0)
+// US func_802DCADC_1955EC
+void OnDeathHandlerCrabBoss(u8 arg0)
 {
 	s16 tmpB;
 	s16 tmpA;

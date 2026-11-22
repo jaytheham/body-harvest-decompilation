@@ -380,7 +380,7 @@ void func_80089C40_98BF0(u8 arg0);
 void func_80089D04_98CB4(u8 arg0);
 void func_80089FAC_98F5C(u8 arg0);
 void func_8008A3EC_9939C(u8 arg0);
-void func_8008AF58_99F08(u8 arg0);
+void OnDeathHandlerScout(u8 arg0);
 void func_8008B190_9A140(u8 arg0);
 void func_8008B8E4_9A894(u8 arg0);
 void func_8008BC58_9AC08(u8 arg0);

@@ -6635,7 +6635,8 @@ void func_8008AC5C_99C0C(u8 arg0)
 }
 
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) on-death func
-void func_8008AF58_99F08(u8 arg0)
+// US func_8008AF58_99F08
+void OnDeathHandlerScout(u8 arg0)
 {
 	s32 inst;
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
