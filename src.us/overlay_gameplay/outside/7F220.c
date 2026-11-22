@@ -354,8 +354,9 @@ void func_80071178_80128(void) {
 	}
 }
 
-// Draw world and objects
-void func_80071228_801D8(void)
+// Draw ground tiles, water, objects, and HUD
+// US func_80071228_801D8
+void DrawScene(void)
 {
 	s32 saved[3];
 	s32 offset;
@@ -662,7 +663,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800BD360_CC310();
+	DisplayGates();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayGates OK\n");
@@ -675,7 +676,7 @@ void func_80071228_801D8(void)
 
 	if (D_80052ACA != 2)
 	{
-		func_800BB5E0_CA590();
+		DrawShieldWalls();
 	}
 
 	if (currentControllerStates[0].button == 0x30)
@@ -709,7 +710,7 @@ void func_80071228_801D8(void)
 
 	gSPDisplayList(D_8005BB2C++, D_80031230);
 
-	func_800E5044_F3FF4();
+	DisplayLasers();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayLasers OK\n");
@@ -720,7 +721,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800A2B58_B1B08();
+	DrawGhostTarget();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawGhostTarget OK\n");
@@ -738,7 +739,7 @@ void func_80071228_801D8(void)
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x140), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(*(&D_8005BB20) + 0x200), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 
-	func_800A03FC_AF3AC();
+	DisplayScanner();
 
 	if (currentControllerStates[0].button == 0x30)
 	{
@@ -761,7 +762,7 @@ void func_80071F28_80ED8(void)
 {
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
-	func_80071228_801D8();
+	DrawScene();
 	func_801052E8_114298(D_80052B2C, &currentControllerStates[CONTROLLER_ONE]);
 	D_80149406 = -D_80149406;
 	if (D_80149406 > 0)
@@ -809,7 +810,7 @@ void func_800720B8_81068(void)
 {
 	D_80052B34 = D_80052B2C->unk38;
 	D_80149440 = D_80052B2C->unk34;
-	func_80071228_801D8();
+	DrawScene();
 }
 
 // US 800720F4_810A4
@@ -929,7 +930,7 @@ void doOutsideGameplayLoop(void)
 			func_800E87C8_F7778();
 			D_80052B34 = D_80052B2C->unk38;
 			D_80149440 = D_80052B2C->unk34;
-			func_80071228_801D8();
+			DrawScene();
 			func_800A140C_B03BC();
 			func_8000B044_BC44();
 			func_800E8A00_F79B0();

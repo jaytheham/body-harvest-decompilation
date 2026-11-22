@@ -3381,8 +3381,8 @@ success:
 	return 1;
 }
 
-// DrawShieldWalls
-void func_800BB5E0_CA590(void) {
+// US func_800BB5E0_CA590
+void DrawShieldWalls(void) {
 	s16 i;
 	s16 segment;
 	s16 t;
@@ -3942,8 +3942,9 @@ void func_800BD2F4_CC2A4(void)
   func_800BD20C_CC1BC();
 }
 
-// DisplayGates - A gate is a portal through the shield wall
-void func_800BD360_CC310(void)
+// A gate is a portal through the shield wall
+// US func_800BD360_CC310
+void DisplayGates(void)
 {
 	u8 i;
 	s16 sp88[2];

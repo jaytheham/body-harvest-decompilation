@@ -10658,7 +10658,8 @@ void func_800E4CEC_F3C9C(AlienInstance *arg0, u8 arg1) {
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-void func_800E5044_F3FF4(void) {
+// US func_800E5044_F3FF4
+void DisplayLasers(void) {
 	s32 i;
 
 	gDPPipeSync(D_8005BB2C++);
