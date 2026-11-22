@@ -777,7 +777,6 @@ void func_8001286C_1346C(void) {
 			if (node->unk6 >= 0) {
 				alSndpSetSound(D_8006AB10, node->unk6);
 				osSyncPrintf(" ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d\n", node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20, node->unk28, (s32) node->unk0E);
-				//  ID%d obj %lx Slot%d State%d Vol %d T %ld Ct %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
@@ -788,7 +787,6 @@ void func_8001286C_1346C(void) {
 		do {
 			if (node->unk6 == -1) {
 				osSyncPrintf(" Snd ID%d obj %lx Slot%d State%d Vol %d\n", node->unk0, node->unk2C, node->unk6, alSndpGetState(D_8006AB10), (s32) node->unk20);
-				//  Snd ID%d obj %lx Slot%d State%d Vol %d
 			}
 			node = node->unk34;
 		} while (node != NULL);
@@ -916,7 +914,6 @@ void func_80012A74_13674(void)
 	D_80048020 = 8;
 }
 
-
 s32 func_80012E88_13A88(s8 arg0) {
 	if (D_8006AB88 == 0) {
 		return 0;
@@ -1005,7 +1002,6 @@ void func_80013314_13F14(void) {
 	D_80031CA4_328A4 = -1;
 }
 
-// https://decomp.me/scratch/ZleAv
 void func_80013324_13F24(void)
 {
 	s8 arr_val;
@@ -1176,72 +1172,87 @@ void func_80013810_14410(s8 arg0) {
 /* Advance audio fades and timers, then process queued sounds. */
 void func_80013818_14418(void)
 {
-    /* Keep the private count four bytes after the reserved sound-player slot. */
-    static AudioSoundPlayerState soundPlayerState;
-    static s16 D_80033C94_34894 = -1;
-    s16 slot;
-    f32 pitch;
-    f32 dx;
-    f32 dz;
-    f32 dy;
+	static AudioSoundPlayerState soundPlayerState;
+	static s16 D_80033C94_34894 = -1;
+	s16 slot;
+	f32 pitch;
+	f32 dx;
+	f32 dz;
+	f32 dy;
 
-    if (D_8006AB88 == 0) {
-        return;
-    }
-    func_80017224_17E24();
-    for (slot = 0; slot < 2; slot++) {
-        if (D_80031D28_32928[slot] != 0) {
-            func_80016CD8_178D8(slot);
-        }
-    }
+	if (D_8006AB88 == 0)
+	{
+		return;
+	}
+	func_80017224_17E24();
+	for (slot = 0; slot < 2; slot++)
+	{
+		if (D_80031D28_32928[slot] != 0)
+		{
+			func_80016CD8_178D8(slot);
+		}
+	}
 
-    if (D_80031D4C_3294C != 0) {
-        func_80016E54_17A54();
-    }
-    if (D_80031CD4_328D4 != -1U) {
-        D_80031CD4_328D4 -= 1;
-        if (D_80031CD4_328D4 == -1U) {
-            func_80013324_13F24();
-        }
-    }
-    if ((D_80052ACA == 0 || D_80052ACA == 1 || D_80052ACA == 2) && gameplayMode == 1) {
-        if (D_80033C94_34894 > 0) {
-            D_80033C94_34894--;
-        }
-        if (D_80033C94_34894 == 0) {
-            D_80033C94_34894 = -1;
-            pitch = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
-            dx = (f32)D_80052B34->unk0 / 4 - D_80047954;
-            dy = (f32)D_80052B34->unk2 / 4 - D_80047958;
-            dz = (f32)D_80052B34->unk4 / 4 - D_8004795C;
-            func_80014A3C_1563C((s32)D_80052B34, 0x97, sqrtf(dx * dx + dy * dy + dz * dz), 0, pitch);
-        }
-        if (currentLevel == 3 && gameplayMode == 1 && D_80052ACA != 3 && D_80052B34->unk1A == 3 && (currentControllerStates[0].button & 0x2000)) {
-            func_80014A3C_1563C((s32)D_80052B34, 0x35, 0.0f, 0, -1.0f);
-        }
-    }
-    if (D_80031CD4_328D4 != -1U) {
-        D_80031CD4_328D4 -= 1;
-        if (D_80031CD4_328D4 == -1U) {
-            func_80013324_13F24();
-        }
-    }
-    func_80013FC4_14BC4(D_8006AB10);
-    soundPlayerState.availableSounds = func_80013F64_14B64();
+	if (D_80031D4C_3294C != 0)
+	{
+		func_80016E54_17A54();
+	}
+	if (D_80031CD4_328D4 != -1U)
+	{
+		D_80031CD4_328D4 -= 1;
+		if (D_80031CD4_328D4 == -1U)
+		{
+			func_80013324_13F24();
+		}
+	}
+	if ((D_80052ACA == 0 || D_80052ACA == 1 || D_80052ACA == 2) && gameplayMode == 1)
+	{
+		if (D_80033C94_34894 > 0)
+		{
+			D_80033C94_34894--;
+		}
+		if (D_80033C94_34894 == 0)
+		{
+			D_80033C94_34894 = -1;
+			pitch = D_800323BC_32FBC[func_800056D0_62D0(D_80052B34->unk0, D_80052B34->unk4)];
+			dx = (f32)D_80052B34->unk0 / 4 - D_80047954;
+			dy = (f32)D_80052B34->unk2 / 4 - D_80047958;
+			dz = (f32)D_80052B34->unk4 / 4 - D_8004795C;
+			func_80014A3C_1563C((s32)D_80052B34, 0x97, sqrtf(dx * dx + dy * dy + dz * dz), 0, pitch);
+		}
+		if (currentLevel == 3 && gameplayMode == 1 && D_80052ACA != 3 && D_80052B34->unk1A == 3 && (currentControllerStates[0].button & 0x2000))
+		{
+			func_80014A3C_1563C((s32)D_80052B34, 0x35, 0.0f, 0, -1.0f);
+		}
+	}
+	if (D_80031CD4_328D4 != -1U)
+	{
+		D_80031CD4_328D4 -= 1;
+		if (D_80031CD4_328D4 == -1U)
+		{
+			func_80013324_13F24();
+		}
+	}
+	func_80013FC4_14BC4(D_8006AB10);
+	soundPlayerState.availableSounds = func_80013F64_14B64();
 
-    if (soundPlayerState.availableSounds > 0) {
-        Unk8006AA80Node *node;
+	if (soundPlayerState.availableSounds > 0)
+	{
+		Unk8006AA80Node *node;
 
-        for (slot = 0; slot < soundPlayerState.availableSounds; slot++) {
-            node = func_80012720_13320();
-            if (node == NULL) {
-                break;
-            }
-            if (func_80013B48_14748(node, D_80033C90_34890) != -1U && node->unk0 == 0x96) {
-                D_80033C94_34894 = 1;
-            }
-        }
-    }
+		for (slot = 0; slot < soundPlayerState.availableSounds; slot++)
+		{
+			node = func_80012720_13320();
+			if (node == NULL)
+			{
+				break;
+			}
+			if (func_80013B48_14748(node, D_80033C90_34890) != -1U && node->unk0 == 0x96)
+			{
+				D_80033C94_34894 = 1;
+			}
+		}
+	}
 }
 
 /* These follow the function-private countdown in the data section. */
@@ -1253,74 +1264,74 @@ s32 D_80033CBC_348BC = 0;
 
 s16 func_80013B48_14748(Unk8006AA80Node *arg0, s16 arg1)
 {
-  s32 phantom1;
-  f32 var_f2;
-  s32 phantom2;
-  s16 sp22;
-  s32 temp_rand;
-  sp22 = 0;
-  if (D_8006AB88 == 0)
-  {
-	return 0;
-  }
-  if (arg0->unk0C >= 0)
-  {
-	arg0->unk0C = arg0->unk0C - 1;
-  }
-  {
-	s16 id;
-	id = alSndpAllocate(D_8006AB10, D_8006AB8C->instArray[arg0->unk0]->soundArray[0]);
-	if (id >= 0)
+	s32 phantom1;
+	f32 var_f2;
+	s32 phantom2;
+	s16 sp22;
+	s32 temp_rand;
+	sp22 = 0;
+	if (D_8006AB88 == 0)
 	{
-	  s16 var_a1;
-	  arg0->unk6 = id;
-	  D_8006ABB8[arg0->unk6] = 1;
-	  alSndpSetPriority(D_8006AB10, arg0->unk6, D_80032228_32E28[arg0->unk0]);
-	  alSndpSetSound(D_8006AB10, arg0->unk6);
-	  var_f2 = arg0->unk24;
-	  if (arg0->unk0 == 0xD3)
-	  {
-		var_f2 += ((f32) func_800038E0_44E0()) / 171000.0f;
-	  }
-	  if (arg0->unk0 == 0x97)
-	  {
-		temp_rand = func_800038E0_44E0();
-		sp22 = temp_rand / ((f32) D_80031D14_32914);
-		var_f2 += ((f32) temp_rand) / ((f32) D_80031D10_32910);
-		sp22 = temp_rand / ((f32) D_80031D14_32914);
-	  }
-	  if (arg0->unk0 == 0x96)
-	  {
-		sp22 = (s16) ((s32) (((f32) func_800038E0_44E0()) / ((f32) D_80031D18_32918)));
-	  }
-	  if (arg0->unk0 == 0xEB)
-	  {
-		alSndpSetFXMix(D_8006AB10, 0x50);
-	  }
-	  if (0.1 < ((f64) var_f2))
-	  {
-		alSndpSetPitch(D_8006AB10, var_f2);
-	  }
-	  if (D_80031D4C_3294C == 1)
-	  {
-		var_a1 = ((((arg0->unk20 * D_80031D58_32958) + ((D_80031D5C_3295C * (arg0->unk20 * D_80031D50_32950)) / D_80031D54_32954)) * D_80031D60_32960));
-	  }
-	  else
-	  {
-		var_a1 = (s16) ((s32) (((f32) arg0->unk20) * D_80031D60_32960));
-	  }
-	  if (sp22 < var_a1)
-	  {
-		var_a1 -= sp22;
-	  }
-	  alSndpSetVol(D_8006AB10, var_a1);
-	  alSndpSetPan(D_8006AB10, arg0->unk22);
-	  alSndpPlay(D_8006AB10);
-	  arg0->unk8 = 9;
-	  return arg0->unk6;
+		return 0;
 	}
-	return -1;
-  }
+	if (arg0->unk0C >= 0)
+	{
+		arg0->unk0C = arg0->unk0C - 1;
+	}
+	{
+		s16 id;
+		id = alSndpAllocate(D_8006AB10, D_8006AB8C->instArray[arg0->unk0]->soundArray[0]);
+		if (id >= 0)
+		{
+			s16 var_a1;
+			arg0->unk6 = id;
+			D_8006ABB8[arg0->unk6] = 1;
+			alSndpSetPriority(D_8006AB10, arg0->unk6, D_80032228_32E28[arg0->unk0]);
+			alSndpSetSound(D_8006AB10, arg0->unk6);
+			var_f2 = arg0->unk24;
+			if (arg0->unk0 == 0xD3)
+			{
+				var_f2 += ((f32)func_800038E0_44E0()) / 171000.0f;
+			}
+			if (arg0->unk0 == 0x97)
+			{
+				temp_rand = func_800038E0_44E0();
+				sp22 = temp_rand / ((f32)D_80031D14_32914);
+				var_f2 += ((f32)temp_rand) / ((f32)D_80031D10_32910);
+				sp22 = temp_rand / ((f32)D_80031D14_32914);
+			}
+			if (arg0->unk0 == 0x96)
+			{
+				sp22 = (s16)((s32)(((f32)func_800038E0_44E0()) / ((f32)D_80031D18_32918)));
+			}
+			if (arg0->unk0 == 0xEB)
+			{
+				alSndpSetFXMix(D_8006AB10, 0x50);
+			}
+			if (0.1 < ((f64)var_f2))
+			{
+				alSndpSetPitch(D_8006AB10, var_f2);
+			}
+			if (D_80031D4C_3294C == 1)
+			{
+				var_a1 = ((((arg0->unk20 * D_80031D58_32958) + ((D_80031D5C_3295C * (arg0->unk20 * D_80031D50_32950)) / D_80031D54_32954)) * D_80031D60_32960));
+			}
+			else
+			{
+				var_a1 = (s16)((s32)(((f32)arg0->unk20) * D_80031D60_32960));
+			}
+			if (sp22 < var_a1)
+			{
+				var_a1 -= sp22;
+			}
+			alSndpSetVol(D_8006AB10, var_a1);
+			alSndpSetPan(D_8006AB10, arg0->unk22);
+			alSndpPlay(D_8006AB10);
+			arg0->unk8 = 9;
+			return arg0->unk6;
+		}
+		return -1;
+	}
 }
 
 void func_80013E44_14A44(void *arg0) {
@@ -1503,135 +1514,130 @@ s32 func_800143C4_14FC4(s16 arg0)
 	return func_800121B4_12DB4(sp58, &D_8006AA80, &D_8006AA84);
 }
 
-// https://decomp.me/scratch/qeywv
-
 void func_80014508_15108(VehicleInstance *arg0, s16 arg1, s16 arg2)
 {
-  f32 temp_f14;
-  VehicleType *type;
-  f32 temp_f12;
-  f32 temp_f2;
-  type = &vehicleTypes[arg0->unk1A];
-  if (!D_8006AB88)
-  {
-	return;
-  }
-  if (arg0->unk3C <= 0)
-  {
-	return;
-  }
-  if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == (-1))
-  {
-	return;
-  }
-  if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == 0x27)
-  {
-	if (arg0->unk12 < 0x14)
+	f32 temp_f14;
+	VehicleType *type;
+	f32 temp_f12;
+	f32 temp_f2;
+	type = &vehicleTypes[arg0->unk1A];
+	if (!D_8006AB88)
 	{
-	  f32 dist = func_8001D940(((((((f32) arg0->unk0) / 4) - D_80047954) * ((((f32) arg0->unk0) / 4) - D_80047954)) + (((((f32) arg0->unk2) / 4) - D_80047958) * ((((f32) arg0->unk2) / 4) - D_80047958))) + (((((f32) arg0->unk4) / 4) - D_8004795C) * ((((f32) arg0->unk4) / 4) - D_8004795C)));
-	  s16 temp_v0 = arg0->unk12;
-	  s32 temp_v1;
-	  if (temp_v0 >= 0)
-	  {
-		temp_v1 = temp_v0;
-	  }
-	  else
-	  {
-		temp_v1 = -temp_v0;
-	  }
-	  func_80014A3C_1563C((s32) D_80052B34, 0x170, ((f32) (temp_v1 * 100)) + dist, 0, -1.0f);
-	  if (arg0->unk12 == 0)
-	  {
 		return;
-	  }
 	}
-  }
-  if (arg1 != 0)
-  {
-	switch (type->unk58)
+	if (arg0->unk3C <= 0)
 	{
-	  case 0:
-		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / ((f32) 1));
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
-		break;
-
-	  case 1:
-		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / 24382.0f);
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
-		break;
-
-	  case 3:
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
-		/* The direct minPitch read preserves IDO's intermediate product register. */
-		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 9753.0f);
-		temp_f14 += temp_f12;
-		break;
-
-	  case 7:
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
-		temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 4500.0f);
-		temp_f14 += temp_f12;
-		break;
-
-	  case 5:
-		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / 25.0f);
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
-		break;
-
-	  default:
-		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32) arg2) / ((f32) 1));
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
-		break;
-
+		return;
 	}
-
-  }
-  else
-  {
-	if (((s32) (type->unk4C << 9)) >= 0)
+	if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == (-1))
 	{
-	  if ((type->unk58 == 3) || (type->unk58 == 7))
-	  {
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-		temp_f14 = temp_f2;
-	  }
-	  else
-	  {
-		temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * D_8004DCC0;
-		temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-	  }
-	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		return;
+	}
+	if (D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId == 0x27)
+	{
+		if (arg0->unk12 < 0x14)
+		{
+			f32 dist = func_8001D940(((((((f32)arg0->unk0) / 4) - D_80047954) * ((((f32)arg0->unk0) / 4) - D_80047954)) + (((((f32)arg0->unk2) / 4) - D_80047958) * ((((f32)arg0->unk2) / 4) - D_80047958))) + (((((f32)arg0->unk4) / 4) - D_8004795C) * ((((f32)arg0->unk4) / 4) - D_8004795C)));
+			s16 temp_v0 = arg0->unk12;
+			s32 temp_v1;
+			if (temp_v0 >= 0)
+			{
+				temp_v1 = temp_v0;
+			}
+			else
+			{
+				temp_v1 = -temp_v0;
+			}
+			func_80014A3C_1563C((s32)D_80052B34, 0x170, ((f32)(temp_v1 * 100)) + dist, 0, -1.0f);
+			if (arg0->unk12 == 0)
+			{
+				return;
+			}
+		}
+	}
+	if (arg1 != 0)
+	{
+		switch (type->unk58)
+		{
+		case 0:
+			temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32)arg2) / ((f32)1));
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+			break;
+
+		case 1:
+			temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32)arg2) / 24382.0f);
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+			break;
+
+		case 3:
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+			temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 9753.0f);
+			temp_f14 += temp_f12;
+			break;
+
+		case 7:
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+			temp_f14 = (temp_f2 - D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch) * ((f32)arg2 / 4500.0f);
+			temp_f14 += temp_f12;
+			break;
+
+		case 5:
+			temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32)arg2) / 25.0f);
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+			break;
+
+		default:
+			temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * (((f32)arg2) / ((f32)1));
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+			break;
+		}
 	}
 	else
 	{
-	  f32 spd = func_8001D940((arg0->unk30 * arg0->unk30) + (arg0->unk38 * arg0->unk38));
-	  temp_f14 = (f32) (((f64) spd) / 60.0);
-	  temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
-	  temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		if (((s32)(type->unk4C << 9)) >= 0)
+		{
+			if ((type->unk58 == 3) || (type->unk58 == 7))
+			{
+				temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+				temp_f14 = temp_f2;
+			}
+			else
+			{
+				temp_f14 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].pitchFactor * D_8004DCC0;
+				temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			}
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		}
+		else
+		{
+			f32 spd = func_8001D940((arg0->unk30 * arg0->unk30) + (arg0->unk38 * arg0->unk38));
+			temp_f14 = (f32)(((f64)spd) / 60.0);
+			temp_f2 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].maxPitch;
+			temp_f12 = D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].minPitch;
+		}
 	}
-  }
-  if (temp_f2 < temp_f14)
-  {
-	temp_f14 = temp_f2;
-  }
-  if (temp_f14 < temp_f12)
-  {
-	temp_f14 = temp_f12;
-  }
-  if (((f64) temp_f14) < 0.1)
-  {
-	temp_f14 = 0.1f;
-  }
-  {
-	f32 dist = func_8001D940(((((((f32) arg0->unk0) / 4) - D_80047954) * ((((f32) arg0->unk0) / 4) - D_80047954)) + (((((f32) arg0->unk2) / 4) - D_80047958) * ((((f32) arg0->unk2) / 4) - D_80047958))) + (((((f32) arg0->unk4) / 4) - D_8004795C) * ((((f32) arg0->unk4) / 4) - D_8004795C)));
-	func_80014A3C_1563C((s32) (&vehicleTypes[arg0->unk1A]), D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId, dist, 0, temp_f14);
-  }
+	if (temp_f2 < temp_f14)
+	{
+		temp_f14 = temp_f2;
+	}
+	if (temp_f14 < temp_f12)
+	{
+		temp_f14 = temp_f12;
+	}
+	if (((f64)temp_f14) < 0.1)
+	{
+		temp_f14 = 0.1f;
+	}
+	{
+		f32 dist = func_8001D940(((((((f32)arg0->unk0) / 4) - D_80047954) * ((((f32)arg0->unk0) / 4) - D_80047954)) + (((((f32)arg0->unk2) / 4) - D_80047958) * ((((f32)arg0->unk2) / 4) - D_80047958))) + (((((f32)arg0->unk4) / 4) - D_8004795C) * ((((f32)arg0->unk4) / 4) - D_8004795C)));
+		func_80014A3C_1563C((s32)(&vehicleTypes[arg0->unk1A]), D_800330B0_33CB0[currentLevel - 1][arg0->unk1A].soundId, dist, 0, temp_f14);
+	}
 }
 
 void func_80014A3C_1563C(s32 arg0, s16 arg1, f32 arg2, s16 arg3, f32 arg4)

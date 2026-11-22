@@ -96,7 +96,6 @@ s32 D_80034498_35098 = 0;
 s32 D_8003449C_3509C = 0;
 
 
-
 s16 func_800172E0_17EE0(u8 *arg0)
 {
 	s32 count = 0;
@@ -168,13 +167,11 @@ void func_80017490_18090(u8 *text) {
 
 	D_8006C55A = 0;
 
-
 	if (D_8003447C_3507C != 0) {
 		offset = (u16)D_8006C564;
 	} else {
 		offset = D_8006C550[D_8006C558] + (u16)D_8006C564;
 	}
-
 
 	if (D_8003447C_3507C != 0) {
 		width = func_80017394_17F94(&text[offset], 0);
@@ -277,7 +274,6 @@ void func_80017490_18090(u8 *text) {
 	}
 }
 
-
 void func_80017AAC_186AC(void) {
 	D_8006C55C = 0;
 	D_8006C558 = -1;
@@ -297,7 +293,6 @@ void func_80017B08_18708(s32 arg0) {
 	D_8006C55C = 0;
 	D_8006C558 = arg0;
 	osSyncPrintf("--------talkyIndex=%d\n", D_8006C558);
-	// --------talkyIndex=%d
 	D_8006C55E = 1;
 	D_8006C564 = 0;
 	D_8006C566 = 0;
@@ -332,11 +327,10 @@ s16 func_80017CA4_188A4(void) {
 	s16 arrowX;
 	s16 arrowY;
 	u32 value;
-	s32 pad; /* IDO macro spill reservation. */
+	s32 pad;
 	u8 portrait;
 	s16 phase;
 
-	/* Preserve the original discarded timing divisions. */
 	phase = D_8006C55C / 40;
 	if (phase) {}
 	phase = D_8006C55C / 65;
@@ -348,12 +342,10 @@ s16 func_80017CA4_188A4(void) {
 		return -1;
 	}
 
-	{
-		gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
-		gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-		gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
-	}
+	gDPSetRenderMode(D_8005BB2C++, G_RM_OPA_SURF, G_RM_OPA_SURF2);
+	gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
 
 	if (D_8003447C_3507C != 0) {
 		portrait = 0xFF;
@@ -623,7 +615,7 @@ void func_80018D7C_1997C(u16 arg0) {
 	s32 character;
 
 	D_80034494_35094 = 0;
-	osSyncPrintf("PlayDialogue: %d\n", arg0); // PlayDialogue: %d
+	osSyncPrintf("PlayDialogue: %d\n", arg0);
 	if (!(D_800313C8 & 8) && !(D_80052ACD & 0x10)) {
 		if (arg0 >= 0xCD) {
 			func_80019F80_1AB80();
@@ -647,7 +639,6 @@ void func_80018D7C_1997C(u16 arg0) {
 			}
 
 			if (D_80034460_35060[D_8006C550[dialogueIndex]] == 0x5E) {
-				// ----%c,%c,%c
 				osSyncPrintf("----\n%c,%c,%c\n",
 					D_80034460_35060[D_8006C550[dialogueIndex]],
 					D_80034460_35060[D_8006C550[dialogueIndex] + 1],
@@ -663,15 +654,15 @@ void func_80018D7C_1997C(u16 arg0) {
 				gzip_data_0000 = 1;
 				D_8006C56D = D_80034460_35060[D_8006C550[dialogueIndex] + 2];
 				D_8006C56E = D_80034460_35060[D_8006C550[dialogueIndex] + 3];
-				osSyncPrintf("\n"); // \n
-				osSyncPrintf("wayPoint x: %d z: %d\n", D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
+				osSyncPrintf("\n");
+				osSyncPrintf("wayPoint x: %d z: %d\n", D_8006C56D, D_8006C56E);
 			}
 		} else {
-			osSyncPrintf("Index:%d\n", arg0); // Index:%d
-			osSyncPrintf("Offset:%d\n", D_8006C550[arg0]); // Offset:%d
+			osSyncPrintf("Index:%d\n", arg0);
+			osSyncPrintf("Offset:%d\n", D_8006C550[arg0]);
 			if (D_80034460_35060[D_8006C550[arg0]] == 0x5E) {
 				D_8006C570 = func_8001A37C_1AF7C(&D_80034460_35060[D_8006C550[arg0]]);
-				osSyncPrintf("keyNumber =%d\n", D_8006C570, &D_8006C570); // keyNumber =%d
+				osSyncPrintf("keyNumber =%d\n", D_8006C570, &D_8006C570);
 				D_80034498_35098 = 0;
 				D_80034494_35094 = 1;
 				D_80034490_35090 = 1;
@@ -679,8 +670,8 @@ void func_80018D7C_1997C(u16 arg0) {
 				gzip_data_0000 = 1;
 				D_8006C56D = D_80034460_35060[D_8006C550[arg0] + 1];
 				D_8006C56E = D_80034460_35060[D_8006C550[arg0] + 2];
-				osSyncPrintf("\n"); // \n
-				osSyncPrintf("wayPoint x: %d z: %d\n", D_8006C56D, D_8006C56E); // wayPoint x: %d z: %d
+				osSyncPrintf("\n");
+				osSyncPrintf("wayPoint x: %d z: %d\n", D_8006C56D, D_8006C56E);
 			}
 			func_80017B08_18708(arg0);
 		}
@@ -805,7 +796,6 @@ void func_80019EA8_1AAA8(u8 arg0) {
 	D_80034478_35078 = 1;
 	D_80034480_35080 = arg0;
 	osSyncPrintf("3)Changing mailMessageIndex=%d\n", D_80034480_35080, arg0);
-	// 3)Changing mailMessageIndex=%d
 	D_8003447C_3507C = 0;
 	D_8006C56C = 0;
 	D_8003445C_3505C = 1;
@@ -835,7 +825,6 @@ void func_80019F80_1AB80(void) {
 	D_80034470_35070 = (s32)&D_3059BA0;
 	D_8006C550 = &D_8006C450;
 	osSyncPrintf("INSIDE InitCommsMessages,  dialogue_offsets=%d\n", D_8006C550, &D_80034468_35068, &D_80034470_35070);
-	// INSIDE InitCommsMessages,  dialogue_offsets=%d
 }
 
 void func_8001A024_1AC24(void) {
@@ -931,18 +920,18 @@ s32 func_8001A37C_1AF7C(char *arg0) {
 
 	sp20 = (u8) arg0[1];
 	var_s0 = 0;
-	osSyncPrintf("%c\n", sp20); // %c
+	osSyncPrintf("%c\n", sp20);
 	if (sp20 >= 0x30 && sp20 < 0x3A) {
 		var_s0 = (sp20 * 0xA - 0x1E0) & 0xFF;
 	} else {
-		osSyncPrintf("Character read as key number was not a digit\n", sp20); // Character read as key number was not a digit
+		osSyncPrintf("Character read as key number was not a digit\n", sp20);
 	}
 	sp20 = (u8) arg0[2];
 	osSyncPrintf("%c\n", sp20); // %c
 	if (sp20 >= 0x30 && sp20 < 0x3A) {
 		var_s0 = (var_s0 + sp20 - 0x30) & 0xFF;
 	} else {
-		osSyncPrintf("Character read as key number was not a digit\n", sp20); // Character read as key number was not a digit
+		osSyncPrintf("Character read as key number was not a digit\n", sp20);
 	}
 	return var_s0;
 }

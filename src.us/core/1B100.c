@@ -343,7 +343,7 @@ void func_8001A598_1B198(u8 *arg0) {
 	s32 temp;
 	s32 count;
 	dst = &D_8006C580[D_8006C6C2 * 0x28];
-	temp = 0; // dead init; forces IDO to assign temp->$v1 and c->$a2 (matches target regalloc)
+	temp = 0;
 	count = 1;
 	c = *arg0;
 	if (c != 0) {
