@@ -1,14 +1,13 @@
 #include <ultra64.h>
 #include "common.h"
-#include "version_shift.h"
 
 // Frontend data pointers (outside overlay function addresses)
 s32 D_80096370_66820[5] = {
-	FRONTEND_PTR(0x800A4BC8),
-	FRONTEND_PTR(0x8009BE8C),
-	FRONTEND_PTR(0x8009BED4),
-	FRONTEND_PTR(0x800A7048),
-	FRONTEND_PTR(0x800A706C),
+	(u32)&D_80098FFC_694AC[0x2EF3],
+	(u32)&D_80098FFC_694AC[0xBA4],
+	(u32)&D_80098FFC_694AC[0xBB6],
+	(u32)&D_80098FFC_694AC[0x3813],
+	(u32)&D_80098FFC_694AC[0x381C],
 };
 
 // Frontend light animation state entries
@@ -50,8 +49,8 @@ Unk80080588Entry5 D_80096540_669F0[1] = {
 
 // Frontend animation entries
 Unk8007E12CEntry8 D_80096548_669F8[18] = {
-	{ FRONTEND_PTR(0x80094C18), 0x05, 0x00, { 0x00, 0x00 } },
-	{ FRONTEND_PTR(0x80094EB0), 0x12, 0x00, { 0x00, 0x00 } },
+	{ (u32)&D_80094C10_650C0[0x2], 0x05, 0x00, { 0x00, 0x00 } },
+	{ (u32)&D_80094EA0_65350[0x4], 0x12, 0x00, { 0x00, 0x00 } },
 	{ 0x00000001, 0x00, 0x00, { 0x00, 0x01 } },
 	{ 0x00000001, 0x00, 0x00, { 0x00, 0x01 } },
 	{ 0x00000001, 0x00, 0x00, { 0x00, 0x01 } },
@@ -72,8 +71,8 @@ Unk8007E12CEntry8 D_80096548_669F8[18] = {
 
 // Frontend animation pointers
 Unk8007E12CEntry8 D_800965D8_66A88[2] = {
-	{ FRONTEND_PTR(0x80096558), 0x0E, 0x00, { 0x00, 0x00 } },
-	{ FRONTEND_PTR(0x80096598), 0x0E, 0x00, { 0x00, 0x00 } },
+	{ (u32)&D_80096548_669F8[2], 0x0E, 0x00, { 0x00, 0x00 } },
+	{ (u32)&D_80096548_669F8[10], 0x0E, 0x00, { 0x00, 0x00 } },
 };
 
 // Frontend animation scales

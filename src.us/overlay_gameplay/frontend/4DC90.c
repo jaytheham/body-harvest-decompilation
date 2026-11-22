@@ -241,7 +241,7 @@ s32 func_8007E12C_4E5DC(void) {
 					dst->unk29 = 0xFF;
 					dst->unk2A = 0xFF;
 					dst->unk1C = 1;
-					func_80080F8C_5143C((AnimChannelState*)&D_800D7B10[D_800D7A84], ((FrontendObjectResourceHeader*)dst)->pose, dst->unk19);
+					func_80080F8C_5143C((AnimChannelState*)&D_800D7B10[D_800D7A84], dst->resource.pose, dst->unk19);
 					func_80080A84_50F34((FrontendStreamSlot*)dst->unk8);
 					dst->unk18 = D_800D7A84;
 					D_800D7A84 += dst->unk19;

@@ -7,7 +7,6 @@
 #include "core/53F0.h"
 #include "core/12C80.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n"; // "ERROR: tried to create a new effect at %d\n"
 const char D_80142ECC_151E7C[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n"; // "EFFECTS WARNING : Call to free up an effect which does not exist\n"
@@ -349,11 +348,11 @@ u8 D_8013E2EC_14D29C[0x08] = {
 	0x03, 0x03, 0x06, 0x03, 0x08, 0x00, 0x00, 0x00,
 };
 s32 D_8013E2F4_14D2A4[5] = {
-	(s32)OVERLAY_PTR(0x8013E120U),
-	(s32)OVERLAY_PTR(0x8013E15CU),
-	(s32)OVERLAY_PTR(0x8013E198U),
-	(s32)OVERLAY_PTR(0x8013E210U),
-	(s32)OVERLAY_PTR(0x8013E24CU),
+	(s32)&D_8013E108_14D0B8.bytes[0x18],
+	(s32)&D_8013E108_14D0B8.bytes[0x54],
+	(s32)&D_8013E108_14D0B8.bytes[0x90],
+	(s32)&D_8013E108_14D0B8.bytes[0x108],
+	(s32)&D_8013E108_14D0B8.bytes[0x144],
 };
 s32 D_8013E308_14D2B8[5] = {
 	0x0504B770,
