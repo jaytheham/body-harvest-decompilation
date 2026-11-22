@@ -107,16 +107,15 @@ void func_8000DCCC_E8CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 // AI - Rotate (D_80059CD2, D_80059CD4) by angle derived from D_80059CD0, update spin rate.
 void func_8000DEFC_EAFC(s32 arg0, s32 arg1, s32 arg2, s32 arg3)
 {
-  s16 sp1E;
-  sp1E = coss(D_80059CD0 << 5);
-  D_80059CD2 = (
-	  (D_80059CD0 / 10) * 
-		  (((f32) sins(D_80059CD0 * 0x10)) / 32768.0)) + (D_80059CD2 * (((f32) sp1E) / 32768.0));
-  D_80059CD4 = (
-	  (D_80059CD0 / 10) * 
-		  (((f32) coss(D_80059CD0 * 0x10)) / 32768.0))
-	  + ((0, D_80059CD4));
-  D_80059CD6 = (-D_80059CD0) * 2;
+	s16 sp1E;
+	sp1E = coss(D_80059CD0 << 5);
+	D_80059CD2 = ((D_80059CD0 / 10) *
+				  (((f32)sins(D_80059CD0 * 0x10)) / 32768.0)) +
+				 (D_80059CD2 * (((f32)sp1E) / 32768.0));
+	D_80059CD4 = ((D_80059CD0 / 10) *
+				  (((f32)coss(D_80059CD0 * 0x10)) / 32768.0)) +
+				 ((0, D_80059CD4));
+	D_80059CD6 = (-D_80059CD0) * 2;
 }
 
 // AI - Apply distance-based lens distortion around the selected screen quadrant.

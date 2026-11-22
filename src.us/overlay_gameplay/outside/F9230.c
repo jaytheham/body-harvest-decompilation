@@ -180,10 +180,10 @@ void func_800EA2B0_F9260(s32 arg0) { D_801575DC = arg0; }
 // If not in vehicle, play the scottish dance animation.
 void func_800EA2BC_F926C(void)
 {
-  if (D_80052B34->unk1A == 0)
-  {
-	func_800EB534_FA4E4(&D_80157600, ANIM_SCOTTISH, 0, 0);
-  }
+	if (D_80052B34->unk1A == 0)
+	{
+		func_800EB534_FA4E4(&D_80157600, ANIM_SCOTTISH, 0, 0);
+	}
 }
 
 void func_800EA2FC_F92AC(s16 arg0)
@@ -404,23 +404,24 @@ void func_800EA8F8_F98A8(VehicleInstance *arg0, s16 arg1, f32 arg2) {
 	}
 }
 
-void func_800EABE0_F9B90(VehicleInstance *arg0) {
-    Vec3f sp2C;
-    s16 sp2A;
-    s16 temp_v0;
-    f32 temp_f2;
-    UnkF9230TypeView *type;
+void func_800EABE0_F9B90(VehicleInstance *arg0)
+{
+	Vec3f sp2C;
+	s16 sp2A;
+	s16 temp_v0;
+	f32 temp_f2;
+	UnkF9230TypeView *type;
 
-    sp2C.x = D_80159020->unk0 / 4;
-    sp2C.y = D_80159020->unk2 / 4;
-    sp2C.z = D_80159020->unk4 / 4;
-    temp_f2 = func_800EA604_F95B4(&arg0->unk0, &sp2C);
-    temp_v0 = D_8013E45C_14D40C[D_801575DC].unk1E;
-    sp2A = (s16)(temp_v0 * (1.0f - temp_f2) + -temp_v0 * temp_f2);
-    type = func_800FAFB8_109F68(arg0);
-    type->unk20 = D_8013E45C_14D40C[D_801575DC].unk18;
-    type->unk22 = ((f32)D_8013E45C_14D40C[D_801575DC].unk1A * 64.0) / (f32)D_80157A3C + ((f32)sins(sp2A) / 32768.0) * D_8013E45C_14D40C[D_801575DC].unk1C;
-    type->unk24 = D_8013E45C_14D40C[D_801575DC].unk1C * ((f32)coss(sp2A) / 32768.0);
+	sp2C.x = D_80159020->unk0 / 4;
+	sp2C.y = D_80159020->unk2 / 4;
+	sp2C.z = D_80159020->unk4 / 4;
+	temp_f2 = func_800EA604_F95B4(&arg0->unk0, &sp2C);
+	temp_v0 = D_8013E45C_14D40C[D_801575DC].unk1E;
+	sp2A = (s16)(temp_v0 * (1.0f - temp_f2) + -temp_v0 * temp_f2);
+	type = func_800FAFB8_109F68(arg0);
+	type->unk20 = D_8013E45C_14D40C[D_801575DC].unk18;
+	type->unk22 = ((f32)D_8013E45C_14D40C[D_801575DC].unk1A * 64.0) / (f32)D_80157A3C + ((f32)sins(sp2A) / 32768.0) * D_8013E45C_14D40C[D_801575DC].unk1C;
+	type->unk24 = D_8013E45C_14D40C[D_801575DC].unk1C * ((f32)coss(sp2A) / 32768.0);
 }
 
 void func_800EADF8_F9DA8(VehicleInstance *arg0, s16 arg1) {

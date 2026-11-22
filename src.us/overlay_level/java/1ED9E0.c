@@ -798,46 +798,46 @@ void func_802D6128_1EEE38(void) {
 
 void func_802D614C_1EEE5C(void)
 {
-  s16 temp_v0;
-  temp_v0 = D_802E0FB6;
-  if (temp_v0 > 0)
-  {
-	D_802E0FB6 = temp_v0 - 1;
+	s16 temp_v0;
 	temp_v0 = D_802E0FB6;
-  }
-  if (temp_v0 == 0)
-  {
-	func_8011C080_12B030(0x32);
-	func_8011C080_12B030(0x31);
-	func_800E0F4C_EFEFC(buildingInstances[49].xCoord, (s16) (D_80222A70 + 0x64), buildingInstances[49].zCoord, 0x19);
-	func_800074BC_80BC((void *) func_802D614C_1EEE5C);
-	func_800DF038_EDFE8(buildingInstances[49].xCoord, (s16) (D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
-	func_800DF038_EDFE8(buildingInstances[50].xCoord, (s16) (D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x12C, 0x10, 0);
-	temp_v0 = D_802E0FB6;
-  }
-  if ((temp_v0 % 5) == 0)
-  {
-	func_800E0F4C_EFEFC((s16) (((buildingInstances[50].xCoord) - (temp_v0 * 0x32)) + 0x3E8), (s16) (D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x19);
-  }
+	if (temp_v0 > 0)
+	{
+		D_802E0FB6 = temp_v0 - 1;
+		temp_v0 = D_802E0FB6;
+	}
+	if (temp_v0 == 0)
+	{
+		func_8011C080_12B030(0x32);
+		func_8011C080_12B030(0x31);
+		func_800E0F4C_EFEFC(buildingInstances[49].xCoord, (s16)(D_80222A70 + 0x64), buildingInstances[49].zCoord, 0x19);
+		func_800074BC_80BC((void *)func_802D614C_1EEE5C);
+		func_800DF038_EDFE8(buildingInstances[49].xCoord, (s16)(D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
+		func_800DF038_EDFE8(buildingInstances[50].xCoord, (s16)(D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x12C, 0x10, 0);
+		temp_v0 = D_802E0FB6;
+	}
+	if ((temp_v0 % 5) == 0)
+	{
+		func_800E0F4C_EFEFC((s16)(((buildingInstances[50].xCoord) - (temp_v0 * 0x32)) + 0x3E8), (s16)(D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x19);
+	}
 }
 
 // AI - Positions an effect from buildingInstances and calls func_800E0F4C_EFEFC; uses the D_80157F8C / D_80157F8E pair.
 void func_802D62A0_1EEFB0(void)
 {
-  s16 v0;
-  v0 = D_802E0FB6;
-  if ((v0 < 0x1E) && ((((u32) D_80052A8C) % 5) == 0))
-  {
-	D_802E0FB6 = v0 + 1;
+	s16 v0;
 	v0 = D_802E0FB6;
-  }
-  buildingInstances[50].xCoord -= v0;
-  if (buildingInstances[50].xCoord < (-0x5207))
-  {
-	D_802E0FB6 = 0x28;
-	func_800074BC_80BC(func_802D62A0_1EEFB0);
-	func_80007410_8010(&func_802D614C_1EEE5C);
-  }
+	if ((v0 < 0x1E) && ((((u32)D_80052A8C) % 5) == 0))
+	{
+		D_802E0FB6 = v0 + 1;
+		v0 = D_802E0FB6;
+	}
+	buildingInstances[50].xCoord -= v0;
+	if (buildingInstances[50].xCoord < (-0x5207))
+	{
+		D_802E0FB6 = 0x28;
+		func_800074BC_80BC(func_802D62A0_1EEFB0);
+		func_80007410_8010(&func_802D614C_1EEE5C);
+	}
 }
 
 /* State machine for java zone building display sequence

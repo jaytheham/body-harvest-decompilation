@@ -1321,14 +1321,15 @@ void func_802D6CA0_2B90D0(void) {
 	}
 }
 
-void func_802D6F4C_2B937C(void) {
-    buildingInstances[0x45].statusFlags |= 0x10000;
-    buildingInstances[0x50].statusFlags |= 0x10000;
-    buildingInstances[0x41].statusFlags |= 0x10000;
-    buildingInstances[0x56].statusFlags |= 0x10000;
-    D_8014D17E = 0;
-    D_801591C4 = 0;
-    func_80007410_8010(func_802D6CA0_2B90D0);
+void func_802D6F4C_2B937C(void)
+{
+	buildingInstances[0x45].statusFlags |= 0x10000;
+	buildingInstances[0x50].statusFlags |= 0x10000;
+	buildingInstances[0x41].statusFlags |= 0x10000;
+	buildingInstances[0x56].statusFlags |= 0x10000;
+	D_8014D17E = 0;
+	D_801591C4 = 0;
+	func_80007410_8010(func_802D6CA0_2B90D0);
 }
 
 void func_802D6FFC_2B942C(void) {
@@ -2769,7 +2770,8 @@ void func_802DB3F0_2BD820(u8 arg0) {
 	}
 }
 
-void func_802DB620_2BDA50(u8 arg0) {
+void func_802DB620_2BDA50(u8 arg0)
+{
 	s16 padding;
 	s16 colorIndex;
 	s16 effectX;
@@ -2777,29 +2779,32 @@ void func_802DB620_2BDA50(u8 arg0) {
 	s16 effectZ;
 	u16 size;
 
-	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL) && (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))) {
+	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL) && (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
+	{
 		func_801371B8_146168(&alienInstances[arg0], 0xEB, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 		alienInstances[arg0].unk2C = 0x50;
 		func_800D05A8_DF558(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x7D0,
-						   D_802E2230_2C4660[0], D_802E2230_2C4660[1], D_802E2230_2C4660[2]);
+							D_802E2230_2C4660[0], D_802E2230_2C4660[1], D_802E2230_2C4660[2]);
 		return;
 	}
 
-	if ((alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 10) + 4)) == 0) {
+	if ((alienInstances[arg0].unk2C % ((func_800038E0_44E0() % 10) + 4)) == 0)
+	{
 		colorIndex = func_800038E0_44E0() % 4;
 		effectX = alienInstances[arg0].unk0 + (func_800038E0_44E0() % 90) - 0x2D;
 		effectY = alienInstances[arg0].unk2 + (func_800038E0_44E0() % 160);
 		effectZ = alienInstances[arg0].unk4 + (func_800038E0_44E0() % 90) - 0x2D;
 		size = (func_800038E0_44E0() % 400) + 0x64;
 		func_800D05A8_DF558(effectX, effectY, effectZ, size,
-						   D_802E2230_2C4660[colorIndex * 3], D_802E2230_2C4660[colorIndex * 3 + 1], D_802E2230_2C4660[colorIndex * 3 + 2]);
+							D_802E2230_2C4660[colorIndex * 3], D_802E2230_2C4660[colorIndex * 3 + 1], D_802E2230_2C4660[colorIndex * 3 + 2]);
 		func_800CA5EC_D959C(effectX, effectY, effectZ, 0, 0x7F, 0, 0x64, 0xC, 0x8, 0xFF,
-						   D_802E2230_2C4660[colorIndex * 3], D_802E2230_2C4660[colorIndex * 3 + 1], D_802E2230_2C4660[colorIndex * 3 + 2], 0x96);
+							D_802E2230_2C4660[colorIndex * 3], D_802E2230_2C4660[colorIndex * 3 + 1], D_802E2230_2C4660[colorIndex * 3 + 2], 0x96);
 	}
-	if (alienInstances[arg0].unk2C == 1) {
+	if (alienInstances[arg0].unk2C == 1)
+	{
 		func_801371B8_146168(&alienInstances[arg0], 0xEB, alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, -1.0f);
 		func_800D05A8_DF558(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, 0x7D0,
-						   D_802E2230_2C4660[0], D_802E2230_2C4660[1], D_802E2230_2C4660[2]);
+							D_802E2230_2C4660[0], D_802E2230_2C4660[1], D_802E2230_2C4660[2]);
 	}
 }
 
@@ -3355,25 +3360,27 @@ void func_802DD240_2BF670(u8 arg0) {
 	}
 }
 
-s32 func_802DD408_2BF838(u8 arg0, u16 arg1) {
-    s32 diffX;
-    s32 diffZ;
-    s32 heading;
-    s16 pad;
-    s16 firstHeading;
-    AlienInstance *alien;
+s32 func_802DD408_2BF838(u8 arg0, u16 arg1)
+{
+	s32 diffX;
+	s32 diffZ;
+	s32 heading;
+	s16 pad;
+	s16 firstHeading;
+	AlienInstance *alien;
 
-    alien = &alienInstances[arg0];
-    diffX = D_80052B34->unk0 - alien->unk0;
-    diffZ = D_80052B34->unk4 - alien->unk4;
-    firstHeading = func_80003824_4424((f32)diffX, (f32)diffZ);
-    heading = (-(func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000)) < (firstHeading - alien->unk6 + 0x8000)
-        ? func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000
-        : -(func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000);
-    if (heading < arg1) {
-        return 1;
-    }
-    return 0;
+	alien = &alienInstances[arg0];
+	diffX = D_80052B34->unk0 - alien->unk0;
+	diffZ = D_80052B34->unk4 - alien->unk4;
+	firstHeading = func_80003824_4424((f32)diffX, (f32)diffZ);
+	heading = (-(func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000)) < (firstHeading - alien->unk6 + 0x8000)
+				  ? func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000
+				  : -(func_80003824_4424((f32)diffX, (f32)diffZ) - alien->unk6 + 0x8000);
+	if (heading < arg1)
+	{
+		return 1;
+	}
+	return 0;
 }
 
 void func_802DD514_2BF944(u8 arg0) {

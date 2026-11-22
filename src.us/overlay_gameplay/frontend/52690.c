@@ -4000,55 +4000,54 @@ void func_8008EAB0_5EF60(s16 arg0, s16 arg1, s16 arg2, s32 arg3, s8 arg4) {
 // AI - Creates a full explosion effect: particle + sprites + child effects based on strength
 s16 func_8008EB20_5EFD0(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 arg4, u8 *arg5, u8 arg6)
 {
-  s16 pad1;
-  u8 i;
-  u8 slot;
-  s32 pad0;
-  s16 ret;
-  
-  func_800038E0_44E0();
-  if (arg3 < 0x1E)
-  {
-	arg3 = 0x1E;
-  }
-  if (arg3 >= 0x3E9)
-  {
-	arg3 = 0x3E8;
-  }
-  ret = func_80086C58_57108(arg0, arg1, arg2, arg3, arg5, (u8) arg6);
-  if (ret != (-3))
-  {
-	if (arg3 >= 0x51)
-	{
-	  func_8008EAB0_5EF60(arg0, arg1, arg2, (u8) ((arg3 / 10) + 0x14), 6);
-	}
-	func_8008DE44_5E2F4(func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 8), 0xB4);
-	slot = func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 6);
-	func_8008DE44_5E2F4(slot, 0x6E);
-	func_8008DF08_5E3B8(slot, 1);
-	i = 0;
-	if (arg4 > 0)
-	{
-	  while (1)
-	  {
-		i++;
-		if (i >= arg4)
-		{
-		  break;
-		}
-	  }
+	s16 pad1;
+	u8 i;
+	u8 slot;
+	s32 pad0;
+	s16 ret;
 
-	}
-	if (arg3 < 0x96)
+	func_800038E0_44E0();
+	if (arg3 < 0x1E)
 	{
-	  func_8008E9DC_5EE8C(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x1E, 0x96, 0x32, 0x32, 0x32);
+		arg3 = 0x1E;
 	}
-	else
+	if (arg3 >= 0x3E9)
 	{
-	  func_8008E9DC_5EE8C(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x3C, 0x96, 0x32, 0x32, 0x32);
+		arg3 = 0x3E8;
 	}
-  }
-  return ret;
+	ret = func_80086C58_57108(arg0, arg1, arg2, arg3, arg5, (u8)arg6);
+	if (ret != (-3))
+	{
+		if (arg3 >= 0x51)
+		{
+			func_8008EAB0_5EF60(arg0, arg1, arg2, (u8)((arg3 / 10) + 0x14), 6);
+		}
+		func_8008DE44_5E2F4(func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 8), 0xB4);
+		slot = func_8008DC34_5E0E4(arg0, arg1, arg2, 6, arg3 * 6);
+		func_8008DE44_5E2F4(slot, 0x6E);
+		func_8008DF08_5E3B8(slot, 1);
+		i = 0;
+		if (arg4 > 0)
+		{
+			while (1)
+			{
+				i++;
+				if (i >= arg4)
+				{
+					break;
+				}
+			}
+		}
+		if (arg3 < 0x96)
+		{
+			func_8008E9DC_5EE8C(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x1E, 0x96, 0x32, 0x32, 0x32);
+		}
+		else
+		{
+			func_8008E9DC_5EE8C(arg0, arg1, arg2, arg3, arg3 / 16, 1, 0x3C, 0x96, 0x32, 0x32, 0x32);
+		}
+	}
+	return ret;
 }
 
 // AI - Wrapper for explosion effect that temporarily sets a global flag
@@ -4108,73 +4107,72 @@ void func_8008EEC4_5F374(void) {
 // AI - Creates orbiting particle effects for cinematic lighting mode
 void func_8008F1E0_5F690(void)
 {
-  s16 temp_a0;
-  u8 var_s1;
-  f32 sp90[3];
-  f32 trigAngle;
-  if (D_800DE0B7 == 1)
-  {
-	var_s1 = 0;
-	if (D_800DE0BB > 0)
+	s16 temp_a0;
+	u8 var_s1;
+	f32 sp90[3];
+	f32 trigAngle;
+	if (D_800DE0B7 == 1)
 	{
-	  D_800DE0BB -= 2;
-	}
+		var_s1 = 0;
+		if (D_800DE0BB > 0)
+		{
+			D_800DE0BB -= 2;
+		}
 
-	do
-	{
-	  sp90[2] = 0.0f;
-	  temp_a0 = func_800038E0_44E0() % 0x168;
-	  if (temp_a0 == 0)
-	  {
-		sp90[1] = 500.0f;
-		sp90[0] = 0.0f;
-	  }
-	  else if (temp_a0 < 0x5A)
-	  {
-		trigAngle = (((f32) temp_a0 * 6.2831853070000001) / 360.0);
-		sp90[1] = cosf(trigAngle) * 500.0f;
-		sp90[0] = sinf(trigAngle) * 500.0f;
-	  }
-		else if (temp_a0 == 0x5A)
-	  {
-		sp90[1] = 0.0f;
-		sp90[0] = 500.0f;
-	  }
-		else if (temp_a0 < 0xB4)
-	  {
-		trigAngle = (((f32) (0xB4 - temp_a0) * 6.2831853070000001) / 360.0);
-		sp90[1] = cosf(trigAngle) * (-500.0f);
-		sp90[0] = sinf(trigAngle) * 500.0f;
-	  }
-		else if (temp_a0 == 0xB4)
-	  {
-		sp90[1] = -500.0f;
-		sp90[0] = 0.0f;
-	  }
-		else if (temp_a0 < 0x10E)
-	  {
-		trigAngle = (((f32) (temp_a0 - 0xB4) * 6.2831853070000001) / 360.0);
-		sp90[1] = cosf(trigAngle) * (-500.0f);
-		sp90[0] = sinf(trigAngle) * (-500.0f);
-	  }
-		else if (temp_a0 == 0x10E)
-	  {
-		sp90[1] = 0.0f;
-		sp90[0] = -500.0f;
-	  }
-		else if (temp_a0 < 0x168)
-	  {
-		trigAngle = (((f32) (0x168 - temp_a0) * 6.2831853070000001) / 360.0);
-		sp90[1] = cosf(trigAngle) * 500.0f;
-		sp90[0] = sinf(trigAngle) * (-500.0f);
-	  }
-	  func_800837B4_53C64(sp90, sp90);
-	  func_800838B8_53D68(250.0f, sp90, sp90);
-	  func_80085CEC_5619C((s32)sp90[0], (s32)sp90[1], (s32)sp90[2], 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
-	  var_s1++;
+		do
+		{
+			sp90[2] = 0.0f;
+			temp_a0 = func_800038E0_44E0() % 0x168;
+			if (temp_a0 == 0)
+			{
+				sp90[1] = 500.0f;
+				sp90[0] = 0.0f;
+			}
+			else if (temp_a0 < 0x5A)
+			{
+				trigAngle = (((f32)temp_a0 * 6.2831853070000001) / 360.0);
+				sp90[1] = cosf(trigAngle) * 500.0f;
+				sp90[0] = sinf(trigAngle) * 500.0f;
+			}
+			else if (temp_a0 == 0x5A)
+			{
+				sp90[1] = 0.0f;
+				sp90[0] = 500.0f;
+			}
+			else if (temp_a0 < 0xB4)
+			{
+				trigAngle = (((f32)(0xB4 - temp_a0) * 6.2831853070000001) / 360.0);
+				sp90[1] = cosf(trigAngle) * (-500.0f);
+				sp90[0] = sinf(trigAngle) * 500.0f;
+			}
+			else if (temp_a0 == 0xB4)
+			{
+				sp90[1] = -500.0f;
+				sp90[0] = 0.0f;
+			}
+			else if (temp_a0 < 0x10E)
+			{
+				trigAngle = (((f32)(temp_a0 - 0xB4) * 6.2831853070000001) / 360.0);
+				sp90[1] = cosf(trigAngle) * (-500.0f);
+				sp90[0] = sinf(trigAngle) * (-500.0f);
+			}
+			else if (temp_a0 == 0x10E)
+			{
+				sp90[1] = 0.0f;
+				sp90[0] = -500.0f;
+			}
+			else if (temp_a0 < 0x168)
+			{
+				trigAngle = (((f32)(0x168 - temp_a0) * 6.2831853070000001) / 360.0);
+				sp90[1] = cosf(trigAngle) * 500.0f;
+				sp90[0] = sinf(trigAngle) * (-500.0f);
+			}
+			func_800837B4_53C64(sp90, sp90);
+			func_800838B8_53D68(250.0f, sp90, sp90);
+			func_80085CEC_5619C((s32)sp90[0], (s32)sp90[1], (s32)sp90[2], 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
+			var_s1++;
+		} while (var_s1 < 3);
 	}
-	while (var_s1 < 3);
-  }
 }
 
 // AI - Initializes a particle slot entry to default values

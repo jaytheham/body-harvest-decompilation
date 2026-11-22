@@ -6988,7 +6988,7 @@ void func_8007279C_15A85C(void)
 		}
 		D_800E65DC += D_800E65C8->unk20;
 		D_800E65E0 += 1.0f;
-		do { } while (0);  
+		do { } while (0);
 	}
 	else if (D_800E65A8 & 0x80)
 	{

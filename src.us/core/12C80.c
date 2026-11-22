@@ -1020,18 +1020,18 @@ void func_80013324_13F24(void)
 
 void func_80013398_13F98(void)
 {
-  s8 arr_val;
-  s8 idx;
-  u8 newVal;
-  if (D_80031CA4_328A4 != 4)
-  {
-	arr_val = D_80033C80_34880 % 16;
-	idx = (s8) arr_val;
-	newVal = D_80033C80_34880 + 1;
-	arr_val = D_80033C70_34870[idx] + 0xF;
-	D_80033C80_34880_W = newVal;
-	func_80015C94_16894(arr_val, 4);
-  }
+	s8 arr_val;
+	s8 idx;
+	u8 newVal;
+	if (D_80031CA4_328A4 != 4)
+	{
+		arr_val = D_80033C80_34880 % 16;
+		idx = (s8)arr_val;
+		newVal = D_80033C80_34880 + 1;
+		arr_val = D_80033C70_34870[idx] + 0xF;
+		D_80033C80_34880_W = newVal;
+		func_80015C94_16894(arr_val, 4);
+	}
 }
 
 void func_80013410_14010(void) {
@@ -1128,16 +1128,17 @@ void func_800136F0_142F0(void) {
 /* Cycle the house music variation. The index is function-private data. */
 void func_80013720_14320(void)
 {
-    static u8 D_80033C88_34888 = 0;
-    s8 index;
+	static u8 D_80033C88_34888 = 0;
+	s8 index;
 
-    if (D_8006AB88 != 0) {
-        index = D_80033C88_34888 % 4;
-        D_80033C88_34888++;
-        osSyncPrintf("house offset %d\n", index);
-        index = D_80033C84_34884[index] + 0x1F;
-        func_80015C94_16894(index, 6);
-    }
+	if (D_8006AB88 != 0)
+	{
+		index = D_80033C88_34888 % 4;
+		D_80033C88_34888++;
+		osSyncPrintf("house offset %d\n", index);
+		index = D_80033C84_34884[index] + 0x1F;
+		func_80015C94_16894(index, 6);
+	}
 }
 
 /* Keep these definitions after the private index to preserve data order. */

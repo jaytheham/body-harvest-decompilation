@@ -487,27 +487,35 @@ void func_80080FD8_169098(void) {
 }
 
 // AI - Map yaw angle to a compass-direction marker index for the debug map
-s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
-    f32 angle = 0.0f;
-    f32 base;
-    u32 result;
+s32 func_800811DC_16929C(s16 arg0, s32 arg1)
+{
+	f32 angle = 0.0f;
+	f32 base;
+	u32 result;
 
-    base = arg0 / 182.04444444444445;
-    if (base) {}
-    if (arg1 != 0) {
-        base = angle = base + 15.0f;
-        if (angle < 0.0f) {
-            angle += 360.0f;
-        }
-        result = (u8) (angle / 30.0f);
-    } else {
-        base = angle = base + 22.5;
-        if (angle < 0.0f) {
-            angle += 360.0f;
-        }
-        result = (u8) (angle / 45.0f);
-    }
-    return result;
+	base = arg0 / 182.04444444444445;
+	if (base)
+	{
+	}
+	if (arg1 != 0)
+	{
+		base = angle = base + 15.0f;
+		if (angle < 0.0f)
+		{
+			angle += 360.0f;
+		}
+		result = (u8)(angle / 30.0f);
+	}
+	else
+	{
+		base = angle = base + 22.5;
+		if (angle < 0.0f)
+		{
+			angle += 360.0f;
+		}
+		result = (u8)(angle / 45.0f);
+	}
+	return result;
 }
 
 // AI - Check if camera yaw direction is clear by scanning collision-map markers
@@ -634,61 +642,78 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 }
 
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation
-void func_80081764_169824(void) {
-    s32 buttons;
+void func_80081764_169824(void)
+{
+	s32 buttons;
 
 	buttons = currentControllerStates[CONTROLLER_TWO].button;
 
-	if (buttons & 0x2000) {
-		if (buttons & 0x800) {
+	if (buttons & 0x2000)
+	{
+		if (buttons & 0x800)
+		{
 			D_800E73F0.z++;
 		}
-		if (buttons & 0x400) {
+		if (buttons & 0x400)
+		{
 			D_800E73F0.z--;
 		}
-	} else {
-		if (buttons & 0x800) {
+	}
+	else
+	{
+		if (buttons & 0x800)
+		{
 			D_800E73F0.y++;
 		}
-		if (buttons & 0x400) {
+		if (buttons & 0x400)
+		{
 			D_800E73F0.y--;
 		}
 	}
 
-	if (buttons & 0x200) {
+	if (buttons & 0x200)
+	{
 		D_800E73F0.x++;
 	}
-	if (buttons & 0x100) {
+	if (buttons & 0x100)
+	{
 		D_800E73F0.x--;
 	}
 
-	if (buttons & 2) {
+	if (buttons & 2)
+	{
 		D_800E73E0 -= 0xB6;
 	}
-	if (buttons & 1) {
+	if (buttons & 1)
+	{
 		D_800E73E0 += 0xB6;
 	}
 
-	if (buttons & 8) {
+	if (buttons & 8)
+	{
 		D_800E73E4 += 0xB6;
 	}
-	if (buttons & 4) {
+	if (buttons & 4)
+	{
 		D_800E73E4 -= 0xB6;
 	}
 
-	if (buttons & 0x8000) {
+	if (buttons & 0x8000)
+	{
 		D_800E73E8++;
 	}
-	if (buttons & 0x4000) {
+	if (buttons & 0x4000)
+	{
 		D_800E73E8--;
 	}
 
 	func_800033D4_3FD4(0x20, 1);
 
-	if (currentControllerStates[CONTROLLER_TWO].button & 0x20) {
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x20)
+	{
 		osSyncPrintf("\n\n");
 		osSyncPrintf("lookAt, cameraYaw, cameraPitch, cameraViewDistance\n");
-		osSyncPrintf("%f, %f, %f, %d, %d, %f,\n", (f64) D_800E73F0.x, (f64) D_800E73F0.y, (f64) D_800E73F0.z, D_800E73E0, D_800E73E4, (f64) D_800E73E8);
+		osSyncPrintf("%f, %f, %f, %d, %d, %f,\n", (f64)D_800E73F0.x, (f64)D_800E73F0.y, (f64)D_800E73F0.z, D_800E73E0, D_800E73E4, (f64)D_800E73E8);
 		osSyncPrintf("\n\n");
 	}
 

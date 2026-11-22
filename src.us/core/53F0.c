@@ -68,10 +68,10 @@ void func_800048B8_54B8(void)
 void func_800048E8_54E8(void)
 {
 	s32 i;
-  for (i = 0; i < (sizeof(D_80047F40) / sizeof(D_80047F40[0])); i++)
-  {
-	D_80047F40[i]= 0;
-  }
+	for (i = 0; i < (sizeof(D_80047F40) / sizeof(D_80047F40[0])); i++)
+	{
+		D_80047F40[i] = 0;
+	}
 }
 
 void func_80004918_5518(void)

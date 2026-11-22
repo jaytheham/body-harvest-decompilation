@@ -423,68 +423,68 @@ s32 func_8001A7A0_1B3A0(s16 arg0) {
 
 void func_8001A828_1B428(void)
 {
-  if (currentLevel == 1)
-  {
-	D_80053BF8 = 0x78;
-	D_80053BFA = 0xC8;
-	D_80053BFC = 0x1E;
-  }
-  else
-  {
-	D_80053BF8 = 0x1E;
-	D_80053BFA = 0x8C;
-	D_80053BFC = 0xF0;
-  }
-  drawText("%X%i%r%@%s\n", 0, 0x80, 0, &D_8006C6D8);
-  if (((D_8006C6C0 != D_8006C6C2) || (D_8006C6C6 != 0)) && (D_80052AD0 != 0))
-  {
-	if (func_80018AC8_196C8() == 0)
+	if (currentLevel == 1)
 	{
-	  s32 cur = D_8006C6C6;
-	  if ((cur == 0) || (((cur >= 9) && (cur < 0x12)) && (D_8006C6C0 != D_8006C6C2)))
-	  {
-		D_8006C6CC = cur;
-		D_8006C6CE = D_8006C6C8;
-		D_8006C6CA = (D_8006C6C0 + 7) % 8;
-		D_8006C6C6 = ((func_8000A2B8_AEB8(&D_8006C580[D_8006C6C0 * 0x28], 0) + 0x50) / 3) + 0x10;
-		D_8006C6C4 = D_8006C6C6;
-		if (D_8006C6CC != 0)
-		{
-		  D_8006C6C6 -= 8;
-		}
-		D_8006C6C8 = 0;
-		D_8006C6C0++;
-		if (D_8006C6C0 == 8)
-		{
-		  D_8006C6C0 = 0;
-		}
-	  }
+		D_80053BF8 = 0x78;
+		D_80053BFA = 0xC8;
+		D_80053BFC = 0x1E;
 	}
-	if (D_8006C6C6 != 0)
+	else
 	{
-	  if (func_80018AC8_196C8() == 0)
-	  {
-		D_8006C6C6--;
-		if ((D_8006C6C4 - 8) >= D_8006C6C6)
-		{
-		  drawText("%W", 0x78, 0xB8, 0xBE, 0xCC);
-		  drawText("%C%a", 0xFF, 0xFF, 0xFF, 0xFF);
-		  drawText("%Y", 0x4E);
-		  drawText("%X", D_8006C6C8 * 4);
-		  D_8006C6C8 -= 3;
-		  drawText("%@%s", 0x18, 7, &D_8006C580[((D_8006C6C0 + 7) % 8) * 0x28]);
-		  if (D_8006C6CC != 0)
-		  {
-			D_8006C6CC--;
-			drawText("%X", D_8006C6CE * 4);
-			D_8006C6CE -= 3;
-			drawText("%@%s", 0x18, 7, &D_8006C580[D_8006C6CA * 0x28]);
-		  }
-		  drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
-		  drawText("%X", 0);
-		  drawText("%Y", 0);
-		}
-	  }
+		D_80053BF8 = 0x1E;
+		D_80053BFA = 0x8C;
+		D_80053BFC = 0xF0;
 	}
-  }
+	drawText("%X%i%r%@%s\n", 0, 0x80, 0, &D_8006C6D8);
+	if (((D_8006C6C0 != D_8006C6C2) || (D_8006C6C6 != 0)) && (D_80052AD0 != 0))
+	{
+		if (func_80018AC8_196C8() == 0)
+		{
+			s32 cur = D_8006C6C6;
+			if ((cur == 0) || (((cur >= 9) && (cur < 0x12)) && (D_8006C6C0 != D_8006C6C2)))
+			{
+				D_8006C6CC = cur;
+				D_8006C6CE = D_8006C6C8;
+				D_8006C6CA = (D_8006C6C0 + 7) % 8;
+				D_8006C6C6 = ((func_8000A2B8_AEB8(&D_8006C580[D_8006C6C0 * 0x28], 0) + 0x50) / 3) + 0x10;
+				D_8006C6C4 = D_8006C6C6;
+				if (D_8006C6CC != 0)
+				{
+					D_8006C6C6 -= 8;
+				}
+				D_8006C6C8 = 0;
+				D_8006C6C0++;
+				if (D_8006C6C0 == 8)
+				{
+					D_8006C6C0 = 0;
+				}
+			}
+		}
+		if (D_8006C6C6 != 0)
+		{
+			if (func_80018AC8_196C8() == 0)
+			{
+				D_8006C6C6--;
+				if ((D_8006C6C4 - 8) >= D_8006C6C6)
+				{
+					drawText("%W", 0x78, 0xB8, 0xBE, 0xCC);
+					drawText("%C%a", 0xFF, 0xFF, 0xFF, 0xFF);
+					drawText("%Y", 0x4E);
+					drawText("%X", D_8006C6C8 * 4);
+					D_8006C6C8 -= 3;
+					drawText("%@%s", 0x18, 7, &D_8006C580[((D_8006C6C0 + 7) % 8) * 0x28]);
+					if (D_8006C6CC != 0)
+					{
+						D_8006C6CC--;
+						drawText("%X", D_8006C6CE * 4);
+						D_8006C6CE -= 3;
+						drawText("%@%s", 0x18, 7, &D_8006C580[D_8006C6CA * 0x28]);
+					}
+					drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
+					drawText("%X", 0);
+					drawText("%Y", 0);
+				}
+			}
+		}
+	}
 }

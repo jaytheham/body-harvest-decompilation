@@ -8,86 +8,6 @@
 #include "core/12C80.h"
 #include "core/1050.h"
 
-const char D_80142EA0_151E50[] = "ERROR: tried to create a new effect at %d\n"; // "ERROR: tried to create a new effect at %d\n"
-const char D_80142ECC_151E7C[] = "EFFECTS WARNING : Call to free up an effect which does not exist\n"; // "EFFECTS WARNING : Call to free up an effect which does not exist\n"
-const char D_80142F10_151EC0[] = "ERROR : freeing all effect units for unused effect\n"; // "ERROR : freeing all effect units for unused effect\n"
-const char D_80142F44_151EF4[] = "Do not allocate because in pause\n"; // "Do not allocate because in pause\n"
-const char D_80142F68_151F18[] = "ERROR: tried to allocate a permanent effect\n"; // "ERROR: tried to allocate a permanent effect\n"
-const char D_80142F98_151F48[] = "WARNING : Out of space to create a new dynamic effect of type %d.\n"; // "WARNING : Out of space to create a new dynamic effect of type %d.\n"
-const char D_80142FDC_151F8C[] = "ERROR: tried to create a unit at %d (firstEmpty = %d, used=%d)\n"; // "ERROR: tried to create a unit at %d (firstEmpty = %d, used=%d)\n"
-const char D_8014301C_151FCC[] = "Do not allocate because in pause\n"; // "Do not allocate because in pause\n"
-const char D_80143040_151FF0[] = "WARNING - New permanent effect unit (type %d) cannot be allocated - out of space.\n"; // "WARNING - New permanent effect unit (type %d) cannot be allocated - out of space.\n"
-const char D_80143094_152044[] = "WARNING - New dynamic effect unit (type %d) cannot be allocated - out of space.\n"; // "WARNING - New dynamic effect unit (type %d) cannot be allocated - out of space.\n"
-const char D_801430E8_152098[] = "*** Tried to allocate a unit that is already being used!! ***\n"; // "*** Tried to allocate a unit that is already being used!! ***\n"
-const char D_80143128_1520D8[] = "ERROR - call to free invalid unit: index %d from permanent effect %d\n"; // "ERROR - call to free invalid unit: index %d from permanent effect %d\n"
-const char D_80143170_152120[] = "ERROR - call to free invalid unit: index %d from effect %d\n"; // "ERROR - call to free invalid unit: index %d from effect %d\n"
-const char D_801431AC_15215C[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from permanent effect %d\n"; // "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from permanent effect %d\n"
-const char D_80143200_1521B0[] = "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n"; // "UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n"
-const char D_80143248_1521F8[] = "ERROR : Tried to kill unit from effect which has no units.\n"; // "ERROR : Tried to kill unit from effect which has no units.\n"
-const char D_80143284_152234[] = "ERROR : Unit list inconsistency occurred with 2 units left.\n"; // "ERROR : Unit list inconsistency occurred with 2 units left.\n"
-const char D_801432C4_152274[] = "EFFECTS WARNING : Call to free up invalid triple effect unit.\n"; // "EFFECTS WARNING : Call to free up invalid triple effect unit.\n"
-const char D_80143304_1522B4[] = "EFFECTS WARNING : Call to free up invalid double effect unit.\n"; // "EFFECTS WARNING : Call to free up invalid double effect unit.\n"
-const char D_80143344_1522F4[] = "** WARNING: tried to update a smoke trail effect that doesn't exist! **\n"; // "** WARNING: tried to update a smoke trail effect that doesn't exist! **\n"
-const char D_80143390_152340[] = "DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!\n"
-const char D_801433D8_152388[] = "DYNAMIC EFFECTS : Cancelled new photon effect - couldn't allocated any effect units\n"; // "DYNAMIC EFFECTS : Cancelled new photon effect - couldn't allocated any effect units\n"
-const char D_80143430_1523E0[] = "DYNAMIC EFFECTS : Tried to update photon effect which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to update photon effect which does not exist!\n"
-const char D_80143478_152428[] = "DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!\n"
-const char D_801434C0_152470[] = "EFFECTS WARNING : Call to move a fire effect which doesn't exist\n"; // "EFFECTS WARNING : Call to move a fire effect which doesn't exist\n"
-const char D_80143504_1524B4[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"; // "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"
-const char D_80143554_152504[] = "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"; // "EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n"
-const char D_801435A4_152554[] = "EFFECTS WARNING : Trapped call to create chunk for explosion which does not exist.\n"; // "EFFECTS WARNING : Trapped call to create chunk for explosion which does not exist.\n"
-const char D_801435F8_1525A8[] = "EFFECTS WARNING : Spurt effect not created - could not allocated any units\n"; // "EFFECTS WARNING : Spurt effect not created - could not allocated any units\n"
-const char D_80143644_1525F4[] = "** WARNING: tried to update a bubble effect that doesn't exist! **\n"; // "** WARNING: tried to update a bubble effect that doesn't exist! **\n"
-const char D_80143688_152638[] = "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n"; // "EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n"
-const char D_801436D8_152688[] = "** WARNING: tried to update a jet stream effect that doesn't exist! **\n"; // "** WARNING: tried to update a jet stream effect that doesn't exist! **\n"
-const char D_80143720_1526D0[] = "EFFECTS WARNING: Failed to create a water jet - could not allocate any units\n"; // "EFFECTS WARNING: Failed to create a water jet - could not allocate any units\n"
-const char D_80143770_152720[] = "EFFECTS WARNING: Failed to create lightning - could not allocate enough units\n"; // "EFFECTS WARNING: Failed to create lightning - could not allocate enough units\n"
-const char D_801437C0_152770[] = "EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist.\n"; // "EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist.\n"
-const char D_80143814_1527C4[] = "** WARNING: tried to update a ring weapon bullet that doesn't exist! **\n"; // "** WARNING: tried to update a ring weapon bullet that doesn't exist! **\n"
-const char D_80143860_152810[] = "** WARNING: tried to update a triple spinner that doesn't exist! **\n"; // "** WARNING: tried to update a triple spinner that doesn't exist! **\n"
-const char D_801438A8_152858[] = "TRIPLESPINNER draw warning : trajection is zero.\n"; // "TRIPLESPINNER draw warning : trajection is zero.\n"
-const char D_801438DC_15288C[] = "Can't create a nuke - one already in progress\n"; // "Can't create a nuke - one already in progress\n"
-const char D_8014390C_1528BC[] = "DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!\n"
-const char D_80143958_152908[] = "DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!\n"
-const char D_801439A4_152954[] = "DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!\n"
-const char D_801439EC_15299C[] = "DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!\n"; // "DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!\n"
-const char D_80143A38_1529E8[] = "Create group effect\n"; // "Create group effect\n"
-const char D_80143A50_152A00[] = "ERROR : Tried to update a dynamic effect with permanent type %d!\n"; // "ERROR : Tried to update a dynamic effect with permanent type %d!\n"
-const char D_80143A94_152A44[] = "ERROR : Tried to update a dynamic effect with invalid type!\n"; // "ERROR : Tried to update a dynamic effect with invalid type!\n"
-const char D_80143AD4_152A84[] = "ERROR : Tried to update a permanent effect with a normal type %d!\n"; // "ERROR : Tried to update a permanent effect with a normal type %d!\n"
-const char D_80143B18_152AC8[] = "ERROR : Tried to update a permanent effect with invalid type!\n"; // "ERROR : Tried to update a permanent effect with invalid type!\n"
-const char D_80143B58_152B08[] = "EFFECTS WARNING : Trying to sort unsortable effect\n"; // "EFFECTS WARNING : Trying to sort unsortable effect\n"
-const char D_80143B8C_152B3C[] = "AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n"; // "AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n"
-const char D_80143BD4_152B84[] = "AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n"; // "AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n"
-const char D_80143C08_152BB8[] = "ERROR : Call to draw an effect of permanent type %d.\n"; // "ERROR : Call to draw an effect of permanent type %d.\n"
-const char D_80143C40_152BF0[] = "ERROR : Call to draw an effect of unknown type %d.\n"; // "ERROR : Call to draw an effect of unknown type %d.\n"
-const char D_80143C74_152C24[] = "AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n"; // "AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n"
-const char D_80143CBC_152C6C[] = "AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n"; // "AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n"
-const char D_80143CF0_152CA0[] = "ERROR : Call to draw a permanent effect of normal type %d.\n"; // "ERROR : Call to draw a permanent effect of normal type %d.\n"
-const char D_80143D2C_152CDC[] = "ERROR : Call to draw a permanent effect of unknown type %d.\n"; // "ERROR : Call to draw a permanent effect of unknown type %d.\n"
-const char D_80143D6C_152D1C[] = "CheckNum: %d\n"; // "CheckNum: %d\n"
-const char D_80143D7C_152D2C[] = "further info: %d,%d,%d,%d,%d,%d,%d,%d\n"; // "further info: %d,%d,%d,%d,%d,%d,%d,%d\n"
-const char D_80143DA4_152D54[] = "further info: %d,%d,%d,%d,%d,%d,%d,%d\n"; // "further info: %d,%d,%d,%d,%d,%d,%d,%d\n"
-const char D_80143DCC_152D7C[] = "further info: %d,%d,%d,%d,%d,%d,%d,%d\n"; // "further info: %d,%d,%d,%d,%d,%d,%d,%d\n"
-const char D_80143DF4_152DA4[] = "trans[X] = %d,%d,%d,%d : %f\n"; // "trans[X] = %d,%d,%d,%d : %f\n"
-const char D_80143E14_152DC4[] = "trans[Y] = %d,%d,%d,%d : %f\n"; // "trans[Y] = %d,%d,%d,%d : %f\n"
-const char D_80143E34_152DE4[] = "trans[Z] = %d,%d,%d,%d : "; // "trans[Z] = %d,%d,%d,%d : "
-const char D_80143E50_152E00[] = " %f\n"; // " %f\n"
-const char D_80143E58_152E08[] = "---------------------------\n"; // "---------------------------\n"
-const char D_80143E78_152E28[] = "Call to draw generic flat effect with unknown render type.\n"; // "Call to draw generic flat effect with unknown render type.\n"
-const char D_80143EB4_152E64[] = "Initialise special effects\n"; // "Initialise special effects\n"
-const char D_80143ED0_152E80[] = "\n\nDUMP SPECIAL EFFECTS INFO\n\n"; // "\n\nDUMP SPECIAL EFFECTS INFO\n\n"
-const char D_80143EF0_152EA0[] = "Effect %d :  Type %d  numUints %d\n"; // "Effect %d :  Type %d  numUints %d\n"
-const char D_80143F14_152EC4[] = "EFFECTS WARNING : Call to CreateExplosion with an unknown type %d.\n"; // "EFFECTS WARNING : Call to CreateExplosion with an unknown type %d.\n"
-const char D_80143F58_152F08[] = "Error: too many shields allocated\n"; // "Error: too many shields allocated\n"
-const char D_80143F7C_152F2C[] = "removing shield : %d\n"; // "removing shield : %d\n"
-const char D_80143F94_152F44[] = "shield remove\n"; // "shield remove\n"
-const char D_80143FA4_152F54[] = "removing shield : %d\n"; // "removing shield : %d\n"
-
-const f64 D_80143FC0_152F70[1] = {255.0};
-const f64 D_80143FC8_152F78[1] = {255.0};
-const f64 D_80143FD0_152F80[1] = {255.0};
-
 VehicleSpawnOffset D_8013DB10_14CAC0[4][23] = {
 	/* Greece */
 	{
@@ -534,13 +454,13 @@ void func_800C1288_D0238(u8 arg0, u8 arg1, s32 arg2) {
 			} while (var_v0 < 0x1E);
 		}
 	} else {
-		osSyncPrintf(&D_80142EA0_151E50, arg0);
+		osSyncPrintf("ERROR: tried to create a new effect at %d\n", arg0);
 	}
 }
 
 void func_800C1384_D0334(u8 arg0) {
 	if (D_80154088[arg0].unk0 == 0xFA) {
-		osSyncPrintf(&D_80142ECC_151E7C);
+		osSyncPrintf("EFFECTS WARNING : Call to free up an effect which does not exist\n");
 		return;
 	}
 	D_80154088[arg0].unk0 = 0xFA;
@@ -564,7 +484,7 @@ void func_800C1418_D03C8(u8 arg0, s32 arg1)
 	}
 	if (entry->unk0 == 0xFA)
 	{
-		osSyncPrintf(&D_80142F10_151EC0);
+		osSyncPrintf("ERROR : freeing all effect units for unused effect\n");
 		return;
 	}
 	while (entry->unk4 > 0)
@@ -579,7 +499,7 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	s32 temp;
 
 	if ((gameplayMode == GAMEPLAY_MODE_PAUSE_MENU) || (gameplayMode == GAMEPLAY_MODE_DIALOGUE)) {
-		osSyncPrintf(&D_80142F44_151EF4);
+		osSyncPrintf("Do not allocate because in pause\n");
 	}
 
 	if (arg0 >= 0xA) {
@@ -589,12 +509,12 @@ u8 func_800C14D4_D0484(u8 arg0) {
 	}
 
 	if (temp != 0) {
-		osSyncPrintf(&D_80142F68_151F18, arg0);
+		osSyncPrintf("ERROR: tried to allocate a permanent effect\n", arg0);
 		return 0xFB;
 	}
 
 	if (D_80154304 >= 0x1E) {
-		osSyncPrintf(&D_80142F98_151F48, arg0);
+		osSyncPrintf("WARNING : Out of space to create a new dynamic effect of type %d.\n", arg0);
 		temp_slot = 0xFB;
 	} else {
 		temp_slot = D_8015430C;
@@ -659,7 +579,7 @@ void func_800C15C0_D0570(u8 arg0, s32 arg1, s16 arg2, s32 arg3) {
 		return;
 	}
 
-	osSyncPrintf(&D_80142FDC_151F8C, arg2, D_80154310, D_8015430E);
+	osSyncPrintf("ERROR: tried to create a unit at %d (firstEmpty = %d, used=%d)\n", arg2, D_80154310, D_8015430E);
 }
 
 // AI - Allocate effect slot
@@ -667,20 +587,20 @@ s16 func_800C17B4_D0764(u8 arg0, s32 arg1) {
 	s16 var_a2;
 
 	if (gameplayMode == 2 || gameplayMode == 9) {
-		osSyncPrintf(&D_8014301C_151FCC);
+		osSyncPrintf("Do not allocate because in pause\n");
 	}
 	if (D_8015430E >= 0x190) {
 		if (arg1 != 0) {
-			osSyncPrintf(&D_80143040_151FF0, D_801541F8[arg0].unk0);
+			osSyncPrintf("WARNING - New permanent effect unit (type %d) cannot be allocated - out of space.\n", D_801541F8[arg0].unk0);
 			var_a2 = -3;
 		} else {
-			osSyncPrintf(&D_80143094_152044, D_80154088[arg0].unk0);
+			osSyncPrintf("WARNING - New dynamic effect unit (type %d) cannot be allocated - out of space.\n", D_80154088[arg0].unk0);
 			var_a2 = -3;
 		}
 	} else {
 		var_a2 = D_80154310;
 		if (D_80154318[var_a2].unk0 & 1) {
-			osSyncPrintf(&D_801430E8_152098);
+			osSyncPrintf("*** Tried to allocate a unit that is already being used!! ***\n");
 		}
 		func_800C15C0_D0570(arg0, arg1, var_a2, 0);
 	}
@@ -694,25 +614,25 @@ s16 func_800C18D0_D0880(u8 arg0) {
 
 s16 func_800C18FC_D08AC(u8 arg0, s32 arg1)
 {
-  s16 temp_v0;
-  s16 temp_v0_2;
-  temp_v0 = func_800C17B4_D0764(arg0, arg1);
-  if (temp_v0 != (-3))
-  {
-	  temp_v0_2 = func_800C17B4_D0764(arg0, arg1);
-	  if (temp_v0_2 == (-3))
-	  {
-		func_800C1A4C_D09FC(temp_v0, arg0, arg1);
-		temp_v0 = -3;
-	  } else
-	  if (func_800C17B4_D0764(arg0, arg1) == (-3))
-	  {
-		func_800C1A4C_D09FC(temp_v0, arg0, arg1);
-		func_800C1A4C_D09FC(temp_v0_2, arg0, arg1);
-		temp_v0 = -3;
-	  }
-  }
-  return temp_v0;
+	s16 temp_v0;
+	s16 temp_v0_2;
+	temp_v0 = func_800C17B4_D0764(arg0, arg1);
+	if (temp_v0 != (-3))
+	{
+		temp_v0_2 = func_800C17B4_D0764(arg0, arg1);
+		if (temp_v0_2 == (-3))
+		{
+			func_800C1A4C_D09FC(temp_v0, arg0, arg1);
+			temp_v0 = -3;
+		}
+		else if (func_800C17B4_D0764(arg0, arg1) == (-3))
+		{
+			func_800C1A4C_D09FC(temp_v0, arg0, arg1);
+			func_800C1A4C_D09FC(temp_v0_2, arg0, arg1);
+			temp_v0 = -3;
+		}
+	}
+	return temp_v0;
 }
 
 s16 func_800C19D4_D0984(u8 arg0, s32 arg1) {
@@ -741,9 +661,9 @@ void func_800C1A4C_D09FC(s16 arg0, u8 arg1, s32 arg2) {
 	Unk801541F8Entry* effect;
 	if ((arg0 < 0) || (arg0 >= 0x190)) {
 		if (arg2 != 0) {
-			osSyncPrintf(&D_80143128_1520D8, arg0, arg1);
+			osSyncPrintf("ERROR - call to free invalid unit: index %d from permanent effect %d\n", arg0, arg1);
 		} else {
-			osSyncPrintf(&D_80143170_152120, arg0, arg1);
+			osSyncPrintf("ERROR - call to free invalid unit: index %d from effect %d\n", arg0, arg1);
 		}
 		return;
 	}
@@ -751,9 +671,9 @@ void func_800C1A4C_D09FC(s16 arg0, u8 arg1, s32 arg2) {
 	unit = &D_80154318[arg0];
 	if ((unit->unk0 & 1) == 0) {
 		if (arg2 != 0) {
-			osSyncPrintf(&D_801431AC_15215C, arg0, arg1);
+			osSyncPrintf("UNIT POOL CRITICAL ERROR - Call to free unused unit %d from permanent effect %d\n", arg0, arg1);
 		} else {
-			osSyncPrintf(&D_80143200_1521B0, arg0, arg1);
+			osSyncPrintf("UNIT POOL CRITICAL ERROR - Call to free unused unit %d from effect %d\n", arg0, arg1);
 		}
 		return;
 	}
@@ -766,7 +686,7 @@ void func_800C1A4C_D09FC(s16 arg0, u8 arg1, s32 arg2) {
 
 	switch (effect->unk4) {
 		case 0:
-			osSyncPrintf(&D_80143248_1521F8);
+			osSyncPrintf("ERROR : Tried to kill unit from effect which has no units.\n");
 			effect->unk6 = -6;
 			effect->unk8 = -6;
 			return;
@@ -786,7 +706,7 @@ void func_800C1A4C_D09FC(s16 arg0, u8 arg1, s32 arg2) {
 				((Unk80154318Link*) &D_80154318[effect->unk6])->unk6 = -4;
 				((Unk80154318Link*) &D_80154318[effect->unk6])->unk4 = -5;
 			} else {
-				osSyncPrintf(&D_80143284_152234);
+				osSyncPrintf("ERROR : Unit list inconsistency occurred with 2 units left.\n");
 			}
 			break;
 
@@ -815,34 +735,36 @@ void func_800C1A4C_D09FC(s16 arg0, u8 arg1, s32 arg2) {
 
 void func_800C1D40_D0CF0(s16 arg0, u8 arg1, s32 arg2)
 {
-  s16 sp1E;
-  if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
-  {
-	sp1E = D_80154318[arg0].unk4;
-	func_800C1A4C_D09FC(arg0 & 0xFFFFFFFFu, arg1, arg2);
-	arg0 = D_80154318[sp1E].unk4;
-	  if (1){}
-	  func_800C1A4C_D09FC(sp1E, arg1, arg2);
-	  func_800C1A4C_D09FC(arg0, arg1, arg2); 
-	return;
-  }
-  osSyncPrintf(&D_801432C4_152274);
+	s16 sp1E;
+	if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
+	{
+		sp1E = D_80154318[arg0].unk4;
+		func_800C1A4C_D09FC(arg0 & 0xFFFFFFFFu, arg1, arg2);
+		arg0 = D_80154318[sp1E].unk4;
+		if (1)
+		{
+		}
+		func_800C1A4C_D09FC(sp1E, arg1, arg2);
+		func_800C1A4C_D09FC(arg0, arg1, arg2);
+		return;
+	}
+	osSyncPrintf("EFFECTS WARNING : Call to free up invalid triple effect unit.\n");
 }
 
 void func_800C1E24_D0DD4(s16 arg0, u8 arg1, s32 arg2)
 {
 	s16 sp1E;
-	  u8 sp27;
-  
-	  if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
-	  {
+	u8 sp27;
+
+	if ((arg0 >= 0) && (arg0 < 0x190) && (arg1 < 0x1E) && (D_80154318[arg0].unk0 & 1))
+	{
 		sp1E = D_80154318[arg0].unk4;
 		sp27 = arg1;
 		func_800C1A4C_D09FC(arg0, arg1, arg2);
 		func_800C1A4C_D09FC(sp1E, sp27, arg2);
 		return;
-	  }
-	osSyncPrintf(&D_80143304_1522B4);
+	}
+	osSyncPrintf("EFFECTS WARNING : Call to free up invalid double effect unit.\n");
 }
 
 void func_800C1ECC_D0E7C(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4) {
@@ -924,7 +846,7 @@ void func_800C22EC_D129C(u8 arg0) {
 	unitId = D_80154088[arg0].unk6;
 
 	if ((arg0 == 0xFB) || (D_80154088[arg0].unk0 == 0xFA)) {
-		osSyncPrintf(&D_80143344_1522F4);
+		osSyncPrintf("** WARNING: tried to update a smoke trail effect that doesn't exist! **\n");
 		return;
 	}
 
@@ -970,7 +892,7 @@ void func_800C22EC_D129C(u8 arg0) {
 // Kill smoke puff unit?
 void func_800C2554_D1504(s16 arg0, u8 arg1) {
 	if (arg1 >= 0x1E || D_80154088[arg1].unk0 != 0) {
-		osSyncPrintf(&D_80143390_152340);
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to kill smoke puff unit which does not exist!\n");
 		return;
 	}
 	if (arg0 == D_80154088[arg1].unkA) {
@@ -1124,7 +1046,7 @@ s32 func_800C2D50_D1D00(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5)
 		if (unitId == -3) {
 			func_800C1384_D0334(effectId);
 			effectId = 0xFB;
-			osSyncPrintf(&D_801433D8_152388);
+			osSyncPrintf("DYNAMIC EFFECTS : Cancelled new photon effect - couldn't allocated any effect units\n");
 		} else {
 			D_80154088[effectId].unkA = unitId;
 			D_80154088[effectId].unk1 |= 1;
@@ -1234,7 +1156,7 @@ void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 
 	if (arg3 >= 0x1E || D_80154088[arg3].unk0 != 1 || D_80154088[arg3].unk0 == 0xFA
 		|| !(D_80154318[D_80154088[arg3].unkA].unk0 & 1)) {
-		osSyncPrintf(&D_80143430_1523E0, arg1, arg2);
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to update photon effect which does not exist!\n", arg1, arg2);
 		return;
 	}
 	sub = (Unk80154318Sub *)&D_80154318[D_80154088[arg3].unkA].unk8;
@@ -1247,7 +1169,7 @@ void func_800C31AC_D215C(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 // Kill photon effect?
 void func_800C3288_D2238(u8 arg0) {
 	if (arg0 >= 0x1E || D_80154088[arg0].unk0 != 1) {
-		osSyncPrintf(&D_80143478_152428);
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to kill photon effect which does not exist!\n");
 		return;
 	}
 	func_800C1418_D03C8(arg0, 0);
@@ -1492,7 +1414,7 @@ void func_800C3D88_D2D38(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801434C0_152470);
+	osSyncPrintf("EFFECTS WARNING : Call to move a fire effect which doesn't exist\n");
 }
 
 void func_800C3E2C_D2DDC(void) {
@@ -1802,19 +1724,19 @@ void func_800C4F48_D3EF8(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 		newUnit->position[1] = effectUnit->position[1];
 		newUnit->position[2] = effectUnit->position[2];
 
-		velocity.x = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC0_152F70[0]);
+		velocity.x = (f32)((f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
 			velocity.x = 0.0f - velocity.x;
 		}
 		velocity.x += arg1->x;
 
-		velocity.y = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FC8_152F78[0]);
+		velocity.y = (f32)((f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
 			velocity.y = 0.0f - velocity.y;
 		}
 		velocity.y += arg1->y;
 
-		velocity.z = (f32)((f32)(func_800038E0_44E0() % arg3) / D_80143FD0_152F80[0]);
+		velocity.z = (f32)((f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 0x15) < 0xA) {
 			velocity.z = 0.0f - velocity.z;
 		}
@@ -1874,7 +1796,7 @@ void func_800C541C_D43CC(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 
 	idx = func_800C17B4_D0764(effect, 0);
 	if (idx == -3) {
-		osSyncPrintf(&D_80143504_1524B4);
+		osSyncPrintf("EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n");
 		func_800C1384_D0334(effect);
 		return;
 	}
@@ -1942,7 +1864,7 @@ void func_800C56A4_D4654(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	allocation = func_800C17B4_D0764(effect, 0);
 	unitId = allocation;
 	if (allocation == -3) {
-		osSyncPrintf(&D_80143554_152504);
+		osSyncPrintf("EFFECTS WARNING : Failed to create sparks system - cannot allocate any units\n");
 		func_800C1384_D0334(effect);
 		return;
 	}
@@ -2501,7 +2423,7 @@ s16 func_800C7924_D68D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 	}
 
 	if (arg4 == -3) {
-		osSyncPrintf(D_801435A4_152554);
+		osSyncPrintf("EFFECTS WARNING : Trapped call to create chunk for explosion which does not exist.\n");
 		return -3;
 	}
 
@@ -3359,7 +3281,7 @@ u8 func_800CA5EC_D959C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
 	if (effect != 0xFB) {
 		unitIdx = func_800C19D4_D0984(effect, 0);
 		if (unitIdx == -3) {
-			osSyncPrintf(&D_801435F8_1525A8);
+			osSyncPrintf("EFFECTS WARNING : Spurt effect not created - could not allocated any units\n");
 			func_800C1384_D0334(effect);
 			return 0xFB;
 		}
@@ -3662,7 +3584,7 @@ void func_800CB23C_DA1EC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, s16 arg4, s32 ar
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143644_1525F4);
+	osSyncPrintf("** WARNING: tried to update a bubble effect that doesn't exist! **\n");
 }
 
 void func_800CB394_DA344(void) {
@@ -4187,7 +4109,7 @@ u8 func_800CD1F8_DC1A8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5) 
 		D_80154088[sp1F].unk1 |= 1;
 		temp_v0 = func_800C17B4_D0764(sp1F, 0);
 		if (temp_v0 == -3) {
-			osSyncPrintf(&D_80143688_152638);
+			osSyncPrintf("EFFECTS WARNING: Failed to create a jet stream - could not allocate any units\n");
 			func_800C1384_D0334(sp1F);
 			return 0xFB;
 		}
@@ -4218,7 +4140,7 @@ void func_800CD2E8_DC298(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801436D8_152688);
+	osSyncPrintf("** WARNING: tried to update a jet stream effect that doesn't exist! **\n");
 }
 
 void func_800CD390_DC340(u8 arg0) {
@@ -4480,7 +4402,7 @@ u8 func_800CE040_DCFF0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 		temp_v0 = func_800C18D0_D0880(sp1F);
 		if (temp_v0 == (-3))
 		{
-			osSyncPrintf(&D_80143720_1526D0, (unsigned long)sp1F);
+			osSyncPrintf("EFFECTS WARNING: Failed to create a water jet - could not allocate any units\n", (unsigned long)sp1F);
 			func_800C1384_D0334(sp1F);
 			return 0xFBU;
 		}
@@ -5492,7 +5414,7 @@ s32 func_800D16BC_E066C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 ar
 				entryIndex = func_800C18D0_D0880(effectIndex);
 				if (var_s1) {}
 				if (entryIndex == -3) {
-					osSyncPrintf(&D_80143770_152720);
+					osSyncPrintf("EFFECTS WARNING: Failed to create lightning - could not allocate enough units\n");
 					func_800C1418_D03C8(effectIndex, 0);
 					func_800C1384_D0334(effectIndex);
 					return 0xFB;
@@ -5524,7 +5446,7 @@ void func_800D1A1C_E09CC(u8 arg0) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_801437C0_152770);
+	osSyncPrintf("EFFECTS WARNING : You have tried to kill a lightning effect which doesn't exist.\n");
 }
 
 // effect type 7
@@ -6378,7 +6300,7 @@ void func_800D4AB0_E3A60(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143814_1527C4);
+	osSyncPrintf("** WARNING: tried to update a ring weapon bullet that doesn't exist! **\n");
 }
 
 void func_800D4B44_E3AF4(void) {
@@ -6592,7 +6514,7 @@ void func_800D55C0_E4570(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 			return;
 		}
 	}
-	osSyncPrintf(&D_80143860_152810, arg1, arg2, arg3);
+	osSyncPrintf("** WARNING: tried to update a triple spinner that doesn't exist! **\n", arg1, arg2, arg3);
 }
 
 void func_800D5684_E4634(void) {
@@ -6721,7 +6643,7 @@ void func_800D5AF4_E4AA4(void) {
 			} else if (yStep < 0) {
 				next = -0x8000;
 			} else {
-				osSyncPrintf(D_801438A8_152858);
+				osSyncPrintf("TRIPLESPINNER draw warning : trajection is zero.\n");
 				return;
 			}
 		}
@@ -6964,7 +6886,7 @@ void func_800D6ADC_E5A8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	Unk80154318Entry *entry;
 
 	if (D_80153AB0 == 1) {
-		osSyncPrintf(&D_801438DC_15288C);
+		osSyncPrintf("Can't create a nuke - one already in progress\n");
 		return;
 	}
 	temp_a0 = func_800C14D4_D0484(7);
@@ -7222,7 +7144,7 @@ s16 func_800D7624_E65D4(s16 arg0, s16 arg1, s16 arg2) {
 // Kill mini photon effect?
 void func_800D76A8_E6658(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_8014390C_1528BC);
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to kill minin photon effect which does not exist!\n");
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x11, 1);
@@ -7234,7 +7156,7 @@ void func_800D76F4_E66A4(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 *temp_v0;
 
 	if ((arg3 == -3) || (temp_v1 = (u8 *)&D_80154318[arg3], temp_v0 = (s16 *)(temp_v1 + 8), ((*temp_v1 & 1) == 0))) {
-		osSyncPrintf(&D_80143958_152908, arg1, arg2);
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to update mini photon effect which does not exist!\n", arg1, arg2);
 		return;
 	}
 	temp_v0[0] = arg0;
@@ -7393,7 +7315,7 @@ s16 func_800D7EF8_E6EA8(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 // Kill fireball effect?
 void func_800D7FB4_E6F64(s16 arg0) {
 	if (arg0 == -3) {
-		osSyncPrintf(&D_801439A4_152954);
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to kill fire ball effect which does not exist!\n");
 		return;
 	}
 	func_800C1A4C_D09FC(arg0, 0x12, 1);
@@ -7405,7 +7327,7 @@ void func_800D8000_E6FB0(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	s16 *temp_v1;
 
 	if ((arg3 == -3) || (entry = &D_80154318[arg3], temp_v0 = (s16 *)(s32)entry->coordinates, ((entry->unk0 & 1) == 0))) {
-		osSyncPrintf(&D_801439EC_15299C); // DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!
+		osSyncPrintf("DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!\n"); // DYNAMIC EFFECTS : Tried to update fire ball effect which does not exist!
 	} else {
 
 		temp_v1 = (s16 *)(s32)entry->previousPosition;
@@ -7903,7 +7825,7 @@ s32 func_800D99F4_E89A4(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4) {
 	s16 temp_v0;
 	Unk80154318Entry *temp_v1;
 
-	osSyncPrintf(&D_80143A38_1529E8);
+	osSyncPrintf("Create group effect\n");
 	temp_v0 = func_800C19D4_D0984(0x15, 1);
 	if (temp_v0 != -3) {
 		temp_v1 = &D_80154318[temp_v0];
@@ -8305,9 +8227,9 @@ void func_800DABBC_E9B6C(void) {
 		default:
 			temp = (type >= 10) ? 1 : 0;
 			if (temp != 0) {
-				osSyncPrintf(D_80143A50_152A00, type);
+				osSyncPrintf("ERROR : Tried to update a dynamic effect with permanent type %d!\n", type);
 			} else {
-				osSyncPrintf(D_80143A94_152A44);
+				osSyncPrintf("ERROR : Tried to update a dynamic effect with invalid type!\n");
 			}
 		}
 	}
@@ -8406,9 +8328,9 @@ void func_800DABBC_E9B6C(void) {
 		case 0xFA: continue;
 		default:
 			if ((i < 10) && ((temp = i) >= 0)) {
-				osSyncPrintf(D_80143AD4_152A84, temp);
+				osSyncPrintf("ERROR : Tried to update a permanent effect with a normal type %d!\n", temp);
 			} else {
-				osSyncPrintf(D_80143B18_152AC8);
+				osSyncPrintf("ERROR : Tried to update a permanent effect with invalid type!\n");
 			}
 		}
 
@@ -8697,7 +8619,7 @@ void func_800DBE20_EADD0(void) {
 						break;
 					}
 					default:
-						osSyncPrintf(D_80143B58_152B08);
+						osSyncPrintf("EFFECTS WARNING : Trying to sort unsortable effect\n");
 						break;
 				}
 			}
@@ -9008,12 +8930,12 @@ void func_800DD604_EC5B4(void) {
 		effect = D_80157540[i];
 
 		if (D_80156EDA >= 0x321) {
-			osSyncPrintf(D_80143B8C_152B3C);
+			osSyncPrintf("AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n");
 			continue;
 		}
 
 		if (D_80052ACB != 0) {
-			osSyncPrintf(D_80143BD4_152B84);
+			osSyncPrintf("AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n");
 			continue;
 		}
 
@@ -9065,20 +8987,20 @@ void func_800DD604_EC5B4(void) {
 			invalid = 0;
 		}
 		if (invalid != 0) {
-			osSyncPrintf(D_80143C08_152BB8, type);
+			osSyncPrintf("ERROR : Call to draw an effect of permanent type %d.\n", type);
 		} else {
-			osSyncPrintf(D_80143C40_152BF0, type);
+			osSyncPrintf("ERROR : Call to draw an effect of unknown type %d.\n", type);
 		}
 	}
 
 	for (i = 0; i < 0x16; i++) {
 		if (D_80156EDA >= 0x321) {
-			osSyncPrintf(D_80143C74_152C24);
+			osSyncPrintf("AAARRRGH! EFFECTS HAVE REACHED MAX VERTICES - ABORT DRAWING THIS FRAME\n");
 			continue;
 		}
 
 		if (D_80052ACB != 0) {
-			osSyncPrintf(D_80143CBC_152C6C);
+			osSyncPrintf("AAARRRGH! CAN'T DRAW EFFECTS - ABOUT TO OVERFLOW\n");
 			continue;
 		}
 
@@ -9136,9 +9058,9 @@ void func_800DD604_EC5B4(void) {
 		}
 
 		if ((type >= 0) && (type < 10)) {
-			osSyncPrintf(D_80143CF0_152CA0, type);
+			osSyncPrintf("ERROR : Call to draw a permanent effect of normal type %d.\n", type);
 		} else {
-			osSyncPrintf(D_80143D2C_152CDC, type);
+			osSyncPrintf("ERROR : Call to draw a permanent effect of unknown type %d.\n", type);
 		}
 	}
 
@@ -9286,23 +9208,23 @@ void func_800DDF18_ECEC8(u8 arg0) {
 void func_800DDF78_ECF28(s16 arg0)
 {
 	u8 *entry;
-	osSyncPrintf(&D_80143D6C_152D1C, arg0);
+	osSyncPrintf("CheckNum: %d\n", arg0);
 	entry = &D_80157608;
 	D_80157560 = entry;
 	;
-	osSyncPrintf(&D_80143D7C_152D2C, D_80157560[0xC], D_80157560[0xD], D_80157560[0xE], D_80157560[0xF], D_80157560[0x10], D_80157560[0x11], D_80157560[0x12], D_80157560[0x13]);
+	osSyncPrintf("further info: %d,%d,%d,%d,%d,%d,%d,%d\n", D_80157560[0xC], D_80157560[0xD], D_80157560[0xE], D_80157560[0xF], D_80157560[0x10], D_80157560[0x11], D_80157560[0x12], D_80157560[0x13]);
 	;
-	osSyncPrintf(&D_80143DA4_152D54, D_80157560[0x14], D_80157560[0x15], D_80157560[0x16], D_80157560[0x17], D_80157560[0x18], D_80157560[0x19], D_80157560[0x1A], D_80157560[0x1B]);
+	osSyncPrintf("further info: %d,%d,%d,%d,%d,%d,%d,%d\n", D_80157560[0x14], D_80157560[0x15], D_80157560[0x16], D_80157560[0x17], D_80157560[0x18], D_80157560[0x19], D_80157560[0x1A], D_80157560[0x1B]);
 	entry = D_80157560;
-	osSyncPrintf(&D_80143DCC_152D7C, entry[0x1C], entry[0x1D], entry[0x1E], entry[0x1F], entry[0x20], entry[0x21], entry[0x22], entry[0x23]);
+	osSyncPrintf("further info: %d,%d,%d,%d,%d,%d,%d,%d\n", entry[0x1C], entry[0x1D], entry[0x1E], entry[0x1F], entry[0x20], entry[0x21], entry[0x22], entry[0x23]);
 	entry = D_80157560;
-	osSyncPrintf(&D_80143DF4_152DA4, entry[0], entry[1], entry[2], entry[3], (f64)(*((f32 *)(&D_80157608))));
+	osSyncPrintf("trans[X] = %d,%d,%d,%d : %f\n", entry[0], entry[1], entry[2], entry[3], (f64)(*((f32 *)(&D_80157608))));
 	entry = D_80157560;
-	osSyncPrintf(&D_80143E14_152DC4, entry[4], entry[5], entry[6], entry[7], (f64)D_8015760C);
+	osSyncPrintf("trans[Y] = %d,%d,%d,%d : %f\n", entry[4], entry[5], entry[6], entry[7], (f64)D_8015760C);
 	entry = D_80157560;
-	osSyncPrintf(&D_80143E34_152DE4, entry[8], entry[9], entry[0xA], entry[0xB]);
-	osSyncPrintf(&D_80143E50_152E00, (f64)D_80157610);
-	osSyncPrintf(&D_80143E58_152E08);
+	osSyncPrintf("trans[Z] = %d,%d,%d,%d : ", entry[8], entry[9], entry[0xA], entry[0xB]);
+	osSyncPrintf(" %f\n", (f64)D_80157610);
+	osSyncPrintf("---------------------------\n");
 }
 
 void func_800DE150_ED100(void) {
@@ -9391,7 +9313,7 @@ void func_800DE2E8_ED298(void) {
 					break;
 
 				default:
-					osSyncPrintf(&D_80143E78_152E28);
+					osSyncPrintf("Call to draw generic flat effect with unknown render type.\n");
 					break;
 			}
 		}
@@ -9725,7 +9647,7 @@ void func_800E0134_EF0E4(void) {
 	u8 tempA3;
 	u8 tempA0;
 
-	osSyncPrintf(&D_80143EB4_152E64);
+	osSyncPrintf("Initialise special effects\n");
 	D_80153AB0 = 0;
 	D_80153B87 = 0;
 	D_80156ED9 = 0;
@@ -9804,10 +9726,10 @@ void func_800E0134_EF0E4(void) {
 void func_800E03FC_EF3AC(void) {
 	u8 i;
 
-	osSyncPrintf(&D_80143ED0_152E80);
+	osSyncPrintf("\n\nDUMP SPECIAL EFFECTS INFO\n\n");
 	for (i = 0; i < 0x1E; i++) {
 		if (D_80154088[i].unk0 != 0xFA) {
-			osSyncPrintf(&D_80143EF0_152EA0, i, D_80154088[i].unk0, D_80154088[i].unk4);
+			osSyncPrintf("Effect %d :  Type %d  numUints %d\n", i, D_80154088[i].unk0, D_80154088[i].unk4);
 		}
 	}
 }
@@ -10030,7 +9952,7 @@ void func_800E0F4C_EFEFC(s16 arg0, s16 arg1, s16 arg2, s32 arg3) {
 		func_800DDB60_ECB10(arg0, arg1, arg2, 0xE, 0x18);
 	} else {
 		if (arg3 != 0x1F) {
-			osSyncPrintf(D_80143F14_152EC4, arg3);
+			osSyncPrintf("EFFECTS WARNING : Call to CreateExplosion with an unknown type %d.\n", arg3);
 		}
 		return;
 	}
@@ -11011,7 +10933,7 @@ void func_800E5CF4_F4CA4(u8 arg0, u8 arg1) {
 	entry->unk2 = 0;
 
 	if (count >= 0x20) {
-		osSyncPrintf(&D_80143F58_152F08);
+		osSyncPrintf("Error: too many shields allocated\n");
 		return;
 	}
 
@@ -11037,7 +10959,7 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 	s32 id[1];
 	s32 type;
 
-	osSyncPrintf(&D_80143F7C_152F2C, id[0] = arg1);
+	osSyncPrintf("removing shield : %d\n", id[0] = arg1);
 	count = D_80152C96;
 	type = arg0;
 
@@ -11059,7 +10981,7 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 				D_80152CA0[j + 1].unk2 = 0;
 				D_80152CA0[j + 1].unk0 = 0;
 				D_80152CA0[j + 1].unk1 = 0;
-				osSyncPrintf(&D_80143F94_152F44), count = D_80152C96;
+				osSyncPrintf("shield remove\n"), count = D_80152C96;
 			}
 		}
 	}
@@ -11068,7 +10990,7 @@ void func_800E5E3C_F4DEC(u8 arg0, u8 arg1) {
 void func_800E6028_F4FD8(u8 arg0, u8 arg1) {
 	s16 i;
 
-	osSyncPrintf(&D_80143FA4_152F54, (s32) arg1);
+	osSyncPrintf("removing shield : %d\n", (s32) arg1);
 	for (i = 0; i < D_80152C96; i++) {
 		if ((arg0 == D_80152CA0[i].unk1) && (arg1 == D_80152CA0[i].unk0)) {
 			D_80152CA0[i].unk2 = 0x64;
