@@ -16,7 +16,6 @@
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
 #include "overlay_level/greece/18D7E0.h"
-#include "version_shift.h"
 
 s32 func_80070270_7F220(s32 arg0) {
 	if (arg0 != 7) {

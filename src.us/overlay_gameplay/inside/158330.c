@@ -8,7 +8,6 @@
 #include "core/12C80.h"
 #include "core/1050.h"
 #include <stddef.h>
-#include "version_shift.h"
 
 // AI - Interior lighting constants
 f32 D_8008DE00_175EC0 = 180.0f;
