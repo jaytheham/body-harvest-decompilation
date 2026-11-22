@@ -477,7 +477,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_80101C14_110BC4();
+	DisplayDeadVehicles();
 	if (D_80052ACB == 2)
 	{
 		return;
@@ -538,7 +538,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_8007C044_8AFF4();
+	DrawComplexObjects();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DrawComplexObjects OK\n");
@@ -549,7 +549,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_8012D884_13C834();
+	DisplayForces();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayForces OK\n");
@@ -574,7 +574,7 @@ void func_80071228_801D8(void)
 		return;
 	}
 
-	func_800A70B8_B6068();
+	DisplayBeacons();
 	if (currentControllerStates[0].button == 0x30)
 	{
 		osSyncPrintf("DisplayBeacons OK\n");

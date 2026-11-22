@@ -1,7 +1,6 @@
 #ifndef OVERLAY_GAMEPLAY_OUTSIDE_B49C0_H
 #define OVERLAY_GAMEPLAY_OUTSIDE_B49C0_H
 
-/* Functions defined in B49C0.c. */
 PowerupItem *func_800A5A10_B49C0(void);
 void func_800A5BD0_B4B80(s32 arg0);
 void func_800A5D3C_B4CEC(void);
@@ -10,7 +9,7 @@ void func_800A5F24_B4ED4(s32 arg0);
 void func_800A6020_B4FD0(s16 arg0);
 void func_800A68CC_B587C(void);
 void func_800A6FD4_B5F84(void);
-void func_800A70B8_B6068(void);
+void DisplayBeacons(void);
 void func_800A7B84_B6B34(s32 beaconX, s32 beaconZ);
 void func_800A7C6C_B6C1C(void);
 void func_800A854C_B74FC(void);

@@ -3447,8 +3447,9 @@ void func_8012D84C_13C7FC()
 	}
 }
 
-// DisplayForces - Debug draw interaction boxes
-void func_8012D884_13C834(void) {
+// Debug draw interaction boxes
+// US func_8012D884_13C834
+void DisplayForces(void) {
 	Unk8015FAD0 *entry;
 	s16 halfY;
 	s16 z;

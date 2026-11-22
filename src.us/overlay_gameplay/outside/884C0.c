@@ -1320,7 +1320,8 @@ void DrawComplexObjectShadows(void)
 	}
 }
 
-void func_8007C044_8AFF4(void) {
+// US func_8007C044_8AFF4
+void DrawComplexObjects(void) {
 	s32 i;
 	s16 animIndex;
 	s16 drewType1 = 0;

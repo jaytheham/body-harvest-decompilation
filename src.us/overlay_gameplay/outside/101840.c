@@ -5326,8 +5326,8 @@ void DisplayVehicles(s32 arg0) {
 	gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
 }
 
-// DisplayDeadVehicles
-void func_80101C14_110BC4(void) {
+// US func_80101C14_110BC4
+void DisplayDeadVehicles(void) {
 	s32 i;
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
