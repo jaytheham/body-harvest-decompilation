@@ -63,7 +63,7 @@ void func_8000EFB8_FBB8(void *arg0) {
 		ptr[-4] = 0;
 		continue;
 	} while (ptr != (s16 *)&D_802B2080);
-	osCreateViManager(0xFE);
+	osCreateViManager(OS_PRIORITY_VIMGR);
 	if (osTvType == 0) {
 		func_8000EF98_FB98();
 		osViSetMode(&D_80035B30_36730);
@@ -183,13 +183,13 @@ void func_8000F618_10218()
 
 void setVideoInterfaceXSize(s32 arg0) {
 	D_80068084 = arg0;
-	D_8006808C = (f32) arg0 / 320.0f;
+	videoInterfaceXScale = (f32) arg0 / 320.0f;
 	D_8006809C = 2;
 }
 
 void setVideoInterfaceYSize(s32 arg0) {
 	D_80068088 = arg0;
-	D_80068090 = (f32) arg0 / 240.0f;
+	videoInterfaceYScale = (f32) arg0 / 240.0f;
 	D_8006809C = 2;
 }
 
@@ -327,7 +327,7 @@ void func_8000F6B0_102B0(void *arg0) {
 						osSyncPrintf("black screen off\n");
 						osViBlack(0);
 						D_80035B5C_3675C = 0x36D;
-						osViSetYScale(D_80068090);
+						osViSetYScale(videoInterfaceYScale);
 						D_8006807C = 0;
 					} else {
 						osSyncPrintf("black screen on\n");
@@ -357,8 +357,8 @@ void func_8000F6B0_102B0(void *arg0) {
 			pendingTasks--;
 			completedTaskIndex ^= 1;
 			if (D_8006809C == 1 && D_8006807C == 0) {
-				osViSetXScale(D_8006808C);
-				osViSetYScale(D_80068090);
+				osViSetXScale(videoInterfaceXScale);
+				osViSetYScale(videoInterfaceYScale);
 				D_8006809C--;
 			}
 			break;
@@ -387,7 +387,7 @@ void func_8000F6B0_102B0(void *arg0) {
 
 void func_8000FE50_10A50(void *arg0) {
 	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
-	osViSetSpecialFeatures(0x40);
+	osViSetSpecialFeatures(OS_VI_DITHER_FILTER_ON);
 	func_8000F618_10218();
 	D_80052ACA = 3;
 	func_800056A8_62A8();
