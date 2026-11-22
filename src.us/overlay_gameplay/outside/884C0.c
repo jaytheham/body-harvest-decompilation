@@ -15,90 +15,6 @@
 #include "overlay_gameplay/outside/trigger.h"
 #include "857E0.h"
 
-const char D_801417B0_150760[] = "explode walker\n"; // "explode walker\n"
-const char D_801417C0_150770[] = "No mode active components\n"; // "No mode active components\n"
-const char D_801417DC_15078C[] = "Too many objects onscreen\n"; // "Too many objects onscreen\n"
-const char D_801417F8_1507A8[] = "%d already active\n"; // "%d already active\n"
-const char D_8014180C_1507BC[] = "Can't add active obj: SetActiveObjectYPos set\n"; // "Can't add active obj: SetActiveObjectYPos set\n"
-const char D_8014183C_1507EC[] = "Can't add active obj: CheckWithOthers set\n"; // "Can't add active obj: CheckWithOthers set\n"
-const char D_80141868_150818[] = "Can't add active obj: AddActiveObjectComponent set\n"; // "Can't add active obj: AddActiveObjectComponent set\n"
-const char D_8014189C_15084C[] = "Too many walkers on screen\n"; // "Too many walkers on screen\n"
-const char D_801418B8_150868[] = "Object %d is not active %d\n"; // "Object %d is not active %d\n"
-const char D_801418D4_150884[] = "Trying to free already freed obj %d active %d\n"; // "Trying to free already freed obj %d active %d\n"
-const char D_80141904_1508B4[] = "Is %d,%d in shield wall/on invalid tile, Screen centre %d,%d, offset %d,%d\n"; // "Is %d,%d in shield wall/on invalid tile, Screen centre %d,%d, offset %d,%d\n"
-const char D_80141950_150900[] = "Is %d,%d on invalid tile, Screen centre %d,%d, offset %d,%d\n"; // "Is %d,%d on invalid tile, Screen centre %d,%d, offset %d,%d\n"
-const char D_80141990_150940[] = "Object %d\n"; // "Object %d\n"
-const char D_8014199C_15094C[] = "Type %s\n"; // "Type %s\n"
-const char D_801419A8_150958[] = "Posn %d,%d,%d\n"; // "Posn %d,%d,%d\n"
-const char D_801419B8_150968[] = "Orien %d,%d,%d\n"; // "Orien %d,%d,%d\n"
-const char D_801419C8_150978[] = "Direction %d\n"; // "Direction %d\n"
-const char D_801419D8_150988[] = "Elevation %d\n"; // "Elevation %d\n"
-const char D_801419E8_150998[] = "Speed %d\n"; // "Speed %d\n"
-const char D_801419F4_1509A4[] = "Inc %f,%f,%f\n"; // "Inc %f,%f,%f\n"
-const char D_80141A04_1509B4[] = "Flags 0x%x:"; // "Flags 0x%x:"
-const char D_80141A10_1509C0[] = "AIRBORNE "; // "AIRBORNE "
-const char D_80141A1C_1509CC[] = "ON BRIDGE "; // "ON BRIDGE "
-const char D_80141A28_1509D8[] = "HALF ON BRIDGE "; // "HALF ON BRIDGE "
-const char D_80141A38_1509E8[] = "UNDER BRIDGE "; // "UNDER BRIDGE "
-const char D_80141A48_1509F8[] = "\n"; // "\n"
-const char D_80141A4C_1509FC[] = "Object %d\n"; // "Object %d\n"
-const char D_80141A58_150A08[] = "Type %s\n"; // "Type %s\n"
-const char D_80141A64_150A14[] = "Human type %d\n"; // "Human type %d\n"
-const char D_80141A74_150A24[] = "Posn %d,%d,%d\n"; // "Posn %d,%d,%d\n"
-const char D_80141A84_150A34[] = "Orien %d,%d,%d\n"; // "Orien %d,%d,%d\n"
-const char D_80141A94_150A44[] = "Direction %d\n"; // "Direction %d\n"
-const char D_80141AA4_150A54[] = "Desired Direction %d\n"; // "Desired Direction %d\n"
-const char D_80141ABC_150A6C[] = "Speed %d\n"; // "Speed %d\n"
-const char D_80141AC8_150A78[] = "Y Velocity %d\n"; // "Y Velocity %d\n"
-const char D_80141AD8_150A88[] = "Flags 0x%x: "; // "Flags 0x%x: "
-const char D_80141AE8_150A98[] = " TARGET OBJ"; // " TARGET OBJ"
-const char D_80141AF4_150AA4[] = " TARGET VEHICLE"; // " TARGET VEHICLE"
-const char D_80141B04_150AB4[] = " TARGET PT"; // " TARGET PT"
-const char D_80141B10_150AC0[] = " PLAYER"; // " PLAYER"
-const char D_80141B18_150AC8[] = " AWAY"; // " AWAY"
-const char D_80141B20_150AD0[] = " FALL"; // " FALL"
-const char D_80141B28_150AD8[] = " INVINCIBLE"; // " INVINCIBLE"
-const char D_80141B34_150AE4[] = "\n"; // "\n"
-const char D_80141B38_150AE8[] = "Hit points %d\n"; // "Hit points %d\n"
-const char D_80141B48_150AF8[] = "Collision flags 0x%x\n"; // "Collision flags 0x%x\n"
-const char D_80141B60_150B10[] = "Target %d @ %d,%d,%d\n"; // "Target %d @ %d,%d,%d\n"
-const char D_80141B78_150B28[] = "Last collision tile %d,%d\n"; // "Last collision tile %d,%d\n"
-const char D_80141B94_150B44[] = "Counters: %d coll %d anim %d hit %d wait %d water %d weapons %d\n"; // "Counters: %d coll %d anim %d hit %d wait %d water %d weapons %d\n"
-const char D_80141BD8_150B88[] = "Stage: %d\n"; // "Stage: %d\n"
-const char D_80141BE4_150B94[] = "King Drone/Boss extra parameters\n"; // "King Drone/Boss extra parameters\n"
-const char D_80141C08_150BB8[] = "Counter1 %d, Counter2 %d\n"; // "Counter1 %d, Counter2 %d\n"
-const char D_80141C24_150BD4[] = "Extra flags 0x%x\n"; // "Extra flags 0x%x\n"
-const char D_80141C38_150BE8[] = "Human %d, HCU %d\n"; // "Human %d, HCU %d\n"
-const char D_80141C4C_150BFC[] = "Draw a gun\n"; // "Draw a gun\n"
-const char D_80141C58_150C08[] = "ERROR: trying to process alien type %d\n"; // "ERROR: trying to process alien type %d\n"
-const char D_80141C80_150C30[] = "Problems deleting active object because it is dead\n"; // "Problems deleting active object because it is dead\n"
-const char D_80141CB4_150C64[] = "Problems deleting active object in off screen\n"; // "Problems deleting active object in off screen\n"
-const char D_80141CE4_150C94[] = "%s deleted because of function recursion\n"; // "%s deleted because of function recursion\n"
-const char D_80141D10_150CC0[] = "Vehicle %s force offscreen %s\n"; // "Vehicle %s force offscreen %s\n"
-const char D_80141D30_150CE0[] = "Alien %s force offscreen %s\n"; // "Alien %s force offscreen %s\n"
-const char D_80141D50_150D00[] = "Problems deleting active object to force off screen\n"; // "Problems deleting active object to force off screen\n"
-const char D_80141D88_150D38[] = "Human enters\n"; // "Human enters\n"
-const char D_80141D98_150D48[] = "Force player off in direction %d\n"; // "Force player off in direction %d\n"
-const char D_80141DBC_150D6C[] = "Rioter %d Dead\n"; // "Rioter %d Dead\n"
-const char D_80141DCC_150D7C[] = "PROCESSOR DYING:\n"; // "PROCESSOR DYING:\n"
-const char D_80141DE0_150D90[] = "doing processor death\n"; // "doing processor death\n"
-const char D_80141DF8_150DA8[] = "**change to skeleton model**\n"; // "**change to skeleton model**\n"
-const f32 D_80141E18_150DC8[1] = { 550.0f };
-const f32 D_80141E1C_150DCC[1] = { 1300.0f };
-const ShadowGeometryConstant D_80141E20_150DD0 = { 0.95 };
-const ShadowGeometryConstant D_80141E28_150DD8 = { 0.95 };
-const f64 D_80141E30_150DE0[1] = { 2000.0 };
-const f64 D_80141E38_150DE8[1] = { 2000.0 };
-const f64 D_80141E40_150DF0[1] = { 15000.0 };
-const f64 D_80141E48_150DF8[1] = { 15000.0 };
-const f64 D_80141E50_150E00[1] = { 3.141592654 };
-const f32 D_80141E58_150E08[1] = { -15000.0f };
-const f32 D_80141E5C_150E0C[1] = { 0.0f };
-const f64 D_80141E60_150E10[1] = { 3.141592654 };
-const f64 D_80141E68_150E18[1] = { 3.141592654 };
-const f64 D_80141E70_150E20[1] = { 3.141592654 };
-const f64 D_80141E78_150E28[1] = { 3.141592654 };
-
 s16 D_8013BB70_14AB20[14] = {
 	0x0001, 0x0000, 0x0000, 0x0000, 0x0028, 0x0001, 0x0001, 0x0000,
 	0x0000, 0x0000, 0x0028, 0x0001, 0x0001, 0x0000
@@ -549,7 +465,7 @@ void func_80079910_888C0(s32 arg0)
 		}
 		else
 		{
-			osSyncPrintf(&D_801417B0_150760);
+			osSyncPrintf("explode walker\n");
 			func_800F3038_101FE8(alien->unk20 & 7);
 		}
 		alien->unk20 &= ~ALIEN_FLAG_UNKK;
@@ -607,7 +523,7 @@ s32 func_80079C8C_88C3C(s32 arg0) {
 	D_8014D300 = 0;
 	if (D_8014ECD0 == 0x78) {
 		alienInstances[arg0].unkC = -1;
-		osSyncPrintf(&D_801417C0_150770);
+		osSyncPrintf("No mode active components\n");
 		return 0;
 	}
 
@@ -765,18 +681,18 @@ s32 func_8007A2A0_89250(s32 arg0)
 	sp34 = alienInstances[arg0].typeIndex;
 	if (D_8014ECCC == 0x40)
 	{
-		osSyncPrintf(&D_801417DC_15078C);
+		osSyncPrintf("Too many objects onscreen\n");
 		return -1;
 	}
 	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB))
 	{
-		osSyncPrintf(&D_801417F8_1507A8, arg0);
+		osSyncPrintf("%d already active\n", arg0);
 		return -1;
 	}
 	D_8014D510[D_8014ECCC] = arg0;
 	if (func_80079F08_88EB8(arg0) != 0)
 	{
-		osSyncPrintf(&D_8014180C_1507BC);
+		osSyncPrintf("Can't add active obj: SetActiveObjectYPos set\n");
 		return -1;
 	}
 	if (alienTypes[alienInstances[arg0].typeIndex].unk54 & 0x3E)
@@ -784,13 +700,13 @@ s32 func_8007A2A0_89250(s32 arg0)
 		D_8014D304 = 0;
 		if (func_8007F0E8_8E098((u8)arg0, 0, 0) != 0)
 		{
-			osSyncPrintf(&D_8014183C_1507EC);
+			osSyncPrintf("Can't add active obj: CheckWithOthers set\n");
 			return -1;
 		}
 	}
 	if (func_80079C8C_88C3C(arg0) == 0)
 	{
-		osSyncPrintf(&D_80141868_150818);
+		osSyncPrintf("Can't add active obj: AddActiveObjectComponent set\n");
 		return -1;
 	}
 	if ((s8)alienTypes[sp34].unk50 != (-1))
@@ -801,7 +717,7 @@ s32 func_8007A2A0_89250(s32 arg0)
 		slot = (s8)func_800F3990_102940((u8)arg0, (u8)alienTypes[sp34].unk50);
 		if (slot == (-1))
 		{
-			osSyncPrintf(&D_8014189C_15084C);
+			osSyncPrintf("Too many walkers on screen\n");
 			func_80079DC0_88D70(alienInstances[arg0].unkC);
 			return -1;
 		}
@@ -827,12 +743,12 @@ s32 func_8007A4F8_894A8(s32 arg0)
 	alienIdx = D_8014D510[arg0];
 	if (((u32)arg0) >= D_8014ECCC)
 	{
-		osSyncPrintf(&D_801418B8_150868, alienIdx, arg0);
+		osSyncPrintf("Object %d is not active %d\n", alienIdx, arg0);
 		return 0;
 	}
 	if (!(alienInstances[alienIdx].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)))
 	{
-		osSyncPrintf(&D_801418D4_150884, alienIdx, arg0);
+		osSyncPrintf("Trying to free already freed obj %d active %d\n", alienIdx, arg0);
 		return 0;
 	}
 	alienInstances[alienIdx].unk20 &= ~(ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB);
@@ -945,7 +861,7 @@ void func_8007A6B4_89664(u8 arg0)
 		{
 			alienInstances[arg0].unk0 -= stepX;
 			alienInstances[arg0].unk4 -= stepZ;
-			osSyncPrintf(&D_80141904_1508B4, alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
+			osSyncPrintf("Is %d,%d in shield wall/on invalid tile, Screen centre %d,%d, offset %d,%d\n", alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
 			i++;
 		}
 	}
@@ -955,7 +871,7 @@ void func_8007A6B4_89664(u8 arg0)
 		{
 			alienInstances[arg0].unk0 -= stepX;
 			alienInstances[arg0].unk4 -= stepZ;
-			osSyncPrintf(&D_80141950_150900, alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
+			osSyncPrintf("Is %d,%d on invalid tile, Screen centre %d,%d, offset %d,%d\n", alienInstances[arg0].unk0, alienInstances[arg0].unk4, D_80149434, D_80149436, stepX, stepZ);
 			if (!stepX)
 			{
 			}
@@ -1021,93 +937,93 @@ void func_8007AAEC_89A9C(void)
 	{
 		if (vehicle != NULL)
 		{
-			osSyncPrintf(&D_80141990_150940, vehicle - vehicleInstances);
-			osSyncPrintf(&D_8014199C_15094C, D_800344B4_350B4[vehicleTypes[vehicle->unk1A].unk18].name);
-			osSyncPrintf(&D_801419A8_150958, (s32)vehicle->unk0, vehicle->unk2, vehicle->unk4);
-			osSyncPrintf(&D_801419B8_150968, (s32)vehicle->unk6, vehicle->unkA, vehicle->unk8);
-			osSyncPrintf(&D_801419C8_150978, (s32)vehicle->unkE);
-			osSyncPrintf(&D_801419D8_150988, (s32)vehicle->unk10);
-			osSyncPrintf(&D_801419E8_150998, (s32)vehicle->unk12);
-			osSyncPrintf(&D_801419F4_1509A4, (double)vehicle->unk30, (double)vehicle->unk34, (double)vehicle->unk38);
-			osSyncPrintf(&D_80141A04_1509B4, (s32)vehicle->unk20);
+			osSyncPrintf("Object %d\n", vehicle - vehicleInstances);
+			osSyncPrintf("Type %s\n", D_800344B4_350B4[vehicleTypes[vehicle->unk1A].unk18].name);
+			osSyncPrintf("Posn %d,%d,%d\n", (s32)vehicle->unk0, vehicle->unk2, vehicle->unk4);
+			osSyncPrintf("Orien %d,%d,%d\n", (s32)vehicle->unk6, vehicle->unkA, vehicle->unk8);
+			osSyncPrintf("Direction %d\n", (s32)vehicle->unkE);
+			osSyncPrintf("Elevation %d\n", (s32)vehicle->unk10);
+			osSyncPrintf("Speed %d\n", (s32)vehicle->unk12);
+			osSyncPrintf("Inc %f,%f,%f\n", (double)vehicle->unk30, (double)vehicle->unk34, (double)vehicle->unk38);
+			osSyncPrintf("Flags 0x%x:", (s32)vehicle->unk20);
 			if (vehicle->unk20 & VEHICLE_FLAG_AIRBORNE)
 			{
-				osSyncPrintf(&D_80141A10_1509C0);
+				osSyncPrintf("AIRBORNE ");
 			}
 			if (vehicle->unk20 & VEHICLE_FLAG_ON_BRIDGE)
 			{
-				osSyncPrintf(&D_80141A1C_1509CC);
+				osSyncPrintf("ON BRIDGE ");
 			}
 			if (vehicle->unk20 & VEHICLE_FLAG_HALF_ON_BRIDGE)
 			{
-				osSyncPrintf(&D_80141A28_1509D8);
+				osSyncPrintf("HALF ON BRIDGE ");
 			}
 			if (vehicle->unk20 & VEHICLE_FLAG_UNDER_BRIDGE)
 			{
-				osSyncPrintf(&D_80141A38_1509E8);
+				osSyncPrintf("UNDER BRIDGE ");
 			}
-			osSyncPrintf(&D_80141A48_1509F8);
+			osSyncPrintf("\n");
 		}
 		if (alien != NULL)
 		{
-			osSyncPrintf(&D_80141A4C_1509FC, alien - alienInstances);
-			osSyncPrintf(&D_80141A58_150A08, alienTypes[alien->typeIndex].unk18);
+			osSyncPrintf("Object %d\n", alien - alienInstances);
+			osSyncPrintf("Type %s\n", alienTypes[alien->typeIndex].unk18);
 			if (alien->typeIndex == 1)
 			{
-				osSyncPrintf(&D_80141A64_150A14, (s32)alien->unk24);
+				osSyncPrintf("Human type %d\n", (s32)alien->unk24);
 			}
-			osSyncPrintf(&D_80141A74_150A24, (s32)alien->unk0, alien->unk2, alien->unk4);
-			osSyncPrintf(&D_80141A84_150A34, (s32)alien->unk6, alien->unkA, alien->unk8);
-			osSyncPrintf(&D_80141A94_150A44, (s32)alien->unkE);
-			osSyncPrintf(&D_80141AA4_150A54, (s32)alien->unk2A);
-			osSyncPrintf(&D_80141ABC_150A6C, (s32)alien->unk12);
-			osSyncPrintf(&D_80141AC8_150A78, (s32)alien->unk10);
-			osSyncPrintf(&D_80141AD8_150A88, alien->unk20);
+			osSyncPrintf("Posn %d,%d,%d\n", (s32)alien->unk0, alien->unk2, alien->unk4);
+			osSyncPrintf("Orien %d,%d,%d\n", (s32)alien->unk6, alien->unkA, alien->unk8);
+			osSyncPrintf("Direction %d\n", (s32)alien->unkE);
+			osSyncPrintf("Desired Direction %d\n", (s32)alien->unk2A);
+			osSyncPrintf("Speed %d\n", (s32)alien->unk12);
+			osSyncPrintf("Y Velocity %d\n", (s32)alien->unk10);
+			osSyncPrintf("Flags 0x%x: ", alien->unk20);
 			if (alien->unk20 & ALIEN_FLAG_TARGET_OBJ)
 			{
-				osSyncPrintf(&D_80141AE8_150A98);
+				osSyncPrintf(" TARGET OBJ");
 			}
 			if (alien->unk20 & ALIEN_FLAG_TARGET_VEHICLE)
 			{
-				osSyncPrintf(&D_80141AF4_150AA4);
+				osSyncPrintf(" TARGET VEHICLE");
 			}
 			if (alien->unk20 & ALIEN_FLAG_TARGET_PT)
 			{
-				osSyncPrintf(&D_80141B04_150AB4);
+				osSyncPrintf(" TARGET PT");
 			}
 			if (alien->unk20 & ALIEN_FLAG_PLAYER)
 			{
-				osSyncPrintf(&D_80141B10_150AC0);
+				osSyncPrintf(" PLAYER");
 			}
 			if (alien->unk20 & ALIEN_FLAG_AWAY)
 			{
-				osSyncPrintf(&D_80141B18_150AC8);
+				osSyncPrintf(" AWAY");
 			}
 			if (alien->unk20 & ALIEN_FLAG_FALL)
 			{
-				osSyncPrintf(&D_80141B20_150AD0);
+				osSyncPrintf(" FALL");
 			}
 			if (alien->unk20 & ALIEN_FLAG_INVINCIBLE)
 			{
-				osSyncPrintf(&D_80141B28_150AD8);
+				osSyncPrintf(" INVINCIBLE");
 			}
-			osSyncPrintf(&D_80141B34_150AE4);
-			osSyncPrintf(&D_80141B38_150AE8, (s32)alien->hitPoints);
-			osSyncPrintf(&D_80141B48_150AF8, (s32)alien->unk47);
-			osSyncPrintf(&D_80141B60_150B10, (s32)alien->unk38, alien->unk14, alien->unk16, (s32)alien->unk18);
-			osSyncPrintf(&D_80141B78_150B28, (s32)alien->unk28, (s32)alien->unk29);
-			osSyncPrintf(&D_80141B94_150B44, (s32)alien->unk2C, alien->unk34, (s32)alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32)alien->unk1E);
-			osSyncPrintf(&D_80141BD8_150B88, (s32)alien->unk1B);
+			osSyncPrintf("\n");
+			osSyncPrintf("Hit points %d\n", (s32)alien->hitPoints);
+			osSyncPrintf("Collision flags 0x%x\n", (s32)alien->unk47);
+			osSyncPrintf("Target %d @ %d,%d,%d\n", (s32)alien->unk38, alien->unk14, alien->unk16, (s32)alien->unk18);
+			osSyncPrintf("Last collision tile %d,%d\n", (s32)alien->unk28, (s32)alien->unk29);
+			osSyncPrintf("Counters: %d coll %d anim %d hit %d wait %d water %d weapons %d\n", (s32)alien->unk2C, alien->unk34, (s32)alien->unk36, alien->unk37, alien->unk3A, alien->unk40, (s32)alien->unk1E);
+			osSyncPrintf("Stage: %d\n", (s32)alien->unk1B);
 			if ((alien->typeIndex == 0x19) || (alien->typeIndex == 0x1B))
 			{
 				AlienInstance *parent;
 				parent = &alienInstances[alien->unk25];
-				osSyncPrintf(&D_80141BE4_150B94);
-				osSyncPrintf(&D_80141C08_150BB8, *((s32 *)(&parent->unk10)), *((s32 *)(&parent->unk14)));
-				osSyncPrintf(&D_80141C24_150BD4, parent->unk20);
+				osSyncPrintf("King Drone/Boss extra parameters\n");
+				osSyncPrintf("Counter1 %d, Counter2 %d\n", *((s32 *)(&parent->unk10)), *((s32 *)(&parent->unk14)));
+				osSyncPrintf("Extra flags 0x%x\n", parent->unk20);
 				if (alien->typeIndex == 0x19)
 				{
-					osSyncPrintf(&D_80141C38_150BE8, (s32)parent->unk1B, ((u8 *)parent)[0x1E]);
+					osSyncPrintf("Human %d, HCU %d\n", (s32)parent->unk1B, ((u8 *)parent)[0x1E]);
 				}
 			}
 		}
@@ -1573,11 +1489,11 @@ void func_8007C044_8AFF4(void) {
 
 			distance = sqrtf(SQ(position.unk0 - (D_80047954 * four)) + SQ(position.unk2 - (D_80047958 * four)) + SQ(position.unk4 - (D_8004795C * four)));
 
-			if (distance < D_80141E18_150DC8[0]) {
+			if (distance < 550.0f) {
 				lod = 0;
 			} else if (distance < 900.0f) {
 				lod = 1;
-			} else if (distance < D_80141E1C_150DCC[0]) {
+			} else if (distance < 1300.0f) {
 				lod = 2;
 			} else {
 				lod = 3;
@@ -1610,7 +1526,7 @@ void func_8007C044_8AFF4(void) {
 							alienInstances[alienId].unk36 = 0x10;
 						}
 						animIndex = (alienInstances[alienId].unk36 / 2) + 0x18;
-						osSyncPrintf(D_80141C4C_150BFC);
+						osSyncPrintf("Draw a gun\n");
 						drawId = alienInstances[alienId].unk24;
 					} else if (alienInstances[alienId].unk12 == 0) {
 						animIndex = 0;
@@ -1763,7 +1679,7 @@ void func_8007D424_8C3D4(void) {
 					inst->unk2A = func_80081390_90340(idxU8);
 				}
 				tickCallback = alienTypes[typeIndex].unk4C;
-				if (tickCallback == NULL) osSyncPrintf(&D_80141C58_150C08, typeIndex);
+				if (tickCallback == NULL) osSyncPrintf("ERROR: trying to process alien type %d\n", typeIndex);
 				else tickCallback(idxU8);
 			}
 			dx = inst->unk0 - D_80149434;
@@ -1817,7 +1733,7 @@ void func_8007D690_8C640(void) {
 				if (func_8007A4F8_894A8(activeIndex) != 0) {
 					activeIndex = (activeIndex - 1) & 0xFF;
 				} else {
-					osSyncPrintf(D_80141C80_150C30);
+					osSyncPrintf("Problems deleting active object because it is dead\n");
 				}
 				workValue = D_8014ECCC;
 				continue;
@@ -1841,10 +1757,10 @@ void func_8007D690_8C640(void) {
 						alienInstances[alienIndex].unk37 = alienInstances[alienIndex].unk37 - 1;
 					}
 					if (alienInstances[alienIndex].unk42) {
-						alienInstances[alienIndex].unk42 = ((f64) alienInstances[alienIndex].unk42 * D_80141E20_150DD0.value);
+						alienInstances[alienIndex].unk42 = ((f64) alienInstances[alienIndex].unk42 * 0.95);
 					}
 					if (alienInstances[alienIndex].unk44) {
-						alienInstances[alienIndex].unk44 = ((f64) alienInstances[alienIndex].unk44 * D_80141E28_150DD8.value);
+						alienInstances[alienIndex].unk44 = ((f64) alienInstances[alienIndex].unk44 * 0.95);
 					}
 
 					if (!(alienInstances[alienIndex].unk20 & ALIEN_FLAG_UNKL)) {
@@ -2128,7 +2044,7 @@ void func_8007D690_8C640(void) {
 								if (func_8007A4F8_894A8(activeIndex) != 0) {
 									activeIndex = (activeIndex - 1) & 0xFF;
 								} else {
-									osSyncPrintf(D_80141CB4_150C64);
+									osSyncPrintf("Problems deleting active object in off screen\n");
 								}
 								alienInstances[alienIndex].unk0 = alienInstances[alienIndex].unk2E;
 								alienInstances[alienIndex].unk2 = alienInstances[alienIndex].unk30;
@@ -2588,7 +2504,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 	D_8014D304++;
 	if (D_8014D304 >= 9) {
 		alienInstances[arg0].unk47 |= 0x80;
-		osSyncPrintf(&D_80141CE4_150C94, alienTypes[typeIndex].unk18);
+		osSyncPrintf("%s deleted because of function recursion\n", alienTypes[typeIndex].unk18);
 	}
 
 
@@ -2679,7 +2595,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 							return 1;
 						}
 					} else if (D_8014ECD8 == vehIndex) {
-						osSyncPrintf(&D_80141D10_150CC0, D_800344B4_350B4[vehicleTypes[vehicleInstances[vehIndex].unk1A].unk18].name, alienTypes[typeIndex].unk18);
+						osSyncPrintf("Vehicle %s force offscreen %s\n", D_800344B4_350B4[vehicleTypes[vehicleInstances[vehIndex].unk1A].unk18].name, alienTypes[typeIndex].unk18);
 						alienInstances[arg0].unk47 |= 0x80;
 					} else {
 						D_8014ECD8 = vehIndex;
@@ -2760,7 +2676,7 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			/* Preserve IDO's reload across this index-check boundary. */
 			if (i) { }
 			if (D_8014ECD4 == i) {
-				osSyncPrintf(&D_80141D30_150CE0, otherType->unk18, alienTypes[typeIndex].unk18);
+				osSyncPrintf("Alien %s force offscreen %s\n", otherType->unk18, alienTypes[typeIndex].unk18);
 				alienInstances[arg0].unk47 |= 0x80;
 			}
 			}
@@ -2945,7 +2861,7 @@ void func_8007FDD8_8ED88(void)
 			}
 			else
 			{
-				osSyncPrintf(&D_80141D50_150D00);
+				osSyncPrintf("Problems deleting active object to force off screen\n");
 			}
 		}
 		if (alienTypes[alienInstances[finalIndex].typeIndex].unk54) { }
@@ -3290,7 +3206,7 @@ s32 func_80080D98_8FD48(u8 arg0, u8 arg1) {
 		if (arg1 == alienInstances[arg0].unk38) {
 			alienFlags = alienInstances[arg0].unk20;
 			if (((alienFlags & ALIEN_FLAG_TARGET_VEHICLE) && !(alienFlags & ALIEN_FLAG_UNKI)) || (alienInstances[arg0].unk24 == 0x1B)) {
-				osSyncPrintf(&D_80141D88_150D38);
+				osSyncPrintf("Human enters\n");
 				if ((currentLevel == 4) && (D_80047F94 == 2)) {
 					func_800153D8_15FD8(0xC5);
 				}
@@ -4597,8 +4513,8 @@ void func_80084904_938B4(u8 arg0)
 		}
 	}
 	sp2A = alienInstances[arg0].unk2A + var_a3;
-	alienInstances[arg0].unk14 = alienInstances[arg0].unk0 + (D_80141E30_150DE0[0] * ((f32)coss(sp2A) / 32768.0));
-	alienInstances[arg0].unk18 = alienInstances[arg0].unk4 + (D_80141E38_150DE8[0] * ((f32)sins(sp2A) / 32768.0));
+	alienInstances[arg0].unk14 = alienInstances[arg0].unk0 + (2000.0 * ((f32)coss(sp2A) / 32768.0));
+	alienInstances[arg0].unk18 = alienInstances[arg0].unk4 + (2000.0 * ((f32)sins(sp2A) / 32768.0));
 	if (alienTypes[typeIdx].unk40 > 0)
 	{
 		alienInstances[arg0].unk34 = 0x5DC / (alienTypes[typeIdx].unk40 >> 5);
@@ -4643,7 +4559,7 @@ void func_80084C48_93BF8(VehicleInstance *arg0)
 	dy = D_80052B34->unk4 - arg0->unk4;
 	sqrtf((f32) ((dx * dx) + (dy * dy)));
 	angle = func_80003824_4424((f32) dx, (f32) dy);
-	osSyncPrintf(&D_80141D98_150D48, angle);
+	osSyncPrintf("Force player off in direction %d\n", angle);
 	func_80102DDC_111D8C(D_80052B34, angle, 0x2000, 20.0f);
 }
 
@@ -5332,26 +5248,24 @@ s32 func_800865F4_955A4(u8 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 
 s32 func_800868A4_95854(u8 arg0, s32 arg1, s16 arg2, s16 arg3)
 {
-	s32 sp4C;
-	s32 sp50;
-	s32 stackPad4C;
-	s32 sp48;
-	f64 sp38;
-	f64 stackPad38;
-	f32 sp2C;
-	f32 sp30;
-	f32 stackPad2C;
+	s32 targetY;
+	s32 targetX;
+	s32 pad4C;
+	s32 targetZ;
+	s32 stackPad[4];
+	f32 slope;
+	f32 cosine;
+	s32 pad2C;
+	f32 angle[1];
 
-	f32 temp_f12;
+	targetX = (15000.0 * ((f32)coss(alienInstances[arg0].unk6 + arg2) / 32768.0)) + alienInstances[arg0].unk0;
 
-	sp50 = (D_80141E40_150DF0[0] * ((f32)coss(alienInstances[arg0].unk6 + arg2) / 32768.0)) + alienInstances[arg0].unk0;
-
-	sp48 = (D_80141E48_150DF8[0] * ((f32)sins(alienInstances[arg0].unk6 + arg2) / 32768.0)) + alienInstances[arg0].unk4;
-	temp_f12 = (D_80141E50_150E00[0] * (sp38 = (f32)arg3)) / 32768;
-	sp30 = cosf(temp_f12);
-	sp2C = sinf(temp_f12) / sp30;
-	sp4C = (D_80141E58_150E08[0] * sp2C) + alienInstances[arg0].unk2;
-	return func_800865F4_955A4(arg0, arg1, sp50, sp4C, sp48);
+	targetZ = (15000.0 * ((f32)sins(alienInstances[arg0].unk6 + arg2) / 32768.0)) + alienInstances[arg0].unk4;
+	angle[0] = (3.141592654 * (f32)arg3) / 32768;
+	cosine = cosf(angle[0]);
+	slope = sinf(angle[0]) / cosine;
+	targetY = (-15000.0f * slope) + alienInstances[arg0].unk2;
+	return func_800865F4_955A4(arg0, arg1, targetX, targetY, targetZ);
 }
 
 s32 func_80086A34_959E4(u8 arg0, s32 arg1, s16 arg2)
@@ -5382,8 +5296,8 @@ s32 func_80086A34_959E4(u8 arg0, s32 arg1, s16 arg2)
 
 	sp46 = (alienInstances[arg0].unk0 - var_s1->unk0) >> 2;
 	sp44 = (alienInstances[arg0].unk4 - var_s1->unk4) >> 2;
-	sp3C = sinf(((D_80141E60_150E10[0] * (f64)(f32)alienTypes[temp_v1].unk3C) / 32768.0));
-	sp48 = sp3C / cosf(((D_80141E68_150E18[0] * (f64)(f32)alienTypes[temp_v1].unk3C) / (32768.0 * 1.0)));
+	sp3C = sinf(((3.141592654 * (f64)(f32)alienTypes[temp_v1].unk3C) / 32768.0));
+	sp48 = sp3C / cosf(((3.141592654 * (f64)(f32)alienTypes[temp_v1].unk3C) / (32768.0 * 1.0)));
 	sp4E = (s32)sqrtf(sp46 * sp46 + sp44 * sp44) * 4;
 	angle = alienInstances[arg0].unk6 + arg2;
 	sp3C = coss(angle & 0xFFFF);
@@ -5437,8 +5351,8 @@ s32 func_80086D70_95D20(u8 arg0, s32 arg1, s16 arg2)
 	func_80128504_1374B4(&alienInstances[arg0], arg1, &originX, &originY, &originZ);
 	dx = ((originX - target->unk0) >> 2);
 	dz = ((originZ - target->unk4) >> 2);
-	sine = sinf((f32)((D_80141E70_150E20[0] * (f32)alienTypes[typeIndex].unk3C) / 32768.0));
-	slope = sine / cosf((f32)((D_80141E78_150E28[0] * (f64)(f32)alienTypes[typeIndex].unk3C) / (32768.0 * 1.0)));
+	sine = sinf((f32)((3.141592654 * (f32)alienTypes[typeIndex].unk3C) / 32768.0));
+	slope = sine / cosf((f32)((3.141592654 * (f64)(f32)alienTypes[typeIndex].unk3C) / (32768.0 * 1.0)));
 	distance = ((s32)sqrtf((f32)((dx * dx) + (dz * dz))) * 4);
 	targetX = (((f32)coss((u16)(alienInstances[arg0].unk6 + arg2)) / 32768.0 * distance) + originX);
 	targetZ = (((f32)sins((u16)(alienInstances[arg0].unk6 + arg2)) / 32768.0 * distance) + originZ);
@@ -6310,7 +6224,7 @@ void func_80089574_98524(u8 arg0) {
 		temp_v0 = s0->unk24;
 		if ((temp_v0 == 0xF) || (temp_v0 == 0x10)) {
 			D_8014D180--;
-			osSyncPrintf(&D_80141DBC_150D6C, D_8014D180);
+			osSyncPrintf("Rioter %d Dead\n", D_8014D180);
 		}
 		s0->unk2C = 0xFA0;
 	} else if ((s0->unk2C == 1) && (temp_v0_2 & 0x600)) {
@@ -6918,11 +6832,11 @@ void func_8008B8E4_9A894(u8 arg0)
 	route = &D_8014DD50[new_var];
 	if (!(alienInstances[arg0].unk20 & ALIEN_FLAG_UNKL))
 	{
-		osSyncPrintf(D_80141DCC_150D7C);
+		osSyncPrintf("PROCESSOR DYING:\n");
 		func_8008B870_9A820(arg0);
 		return;
 	}
-	osSyncPrintf(D_80141DE0_150D90);
+	osSyncPrintf("doing processor death\n");
 	nodes[0] = D_8014DD50[alienInstances[arg0].unkC].unkC;
 	if (nodes[0] != (-1))
 	{
@@ -6977,7 +6891,7 @@ void func_8008B8E4_9A894(u8 arg0)
 	}
 	if (alienInstances[arg0].unk2C == 0x2A)
 	{
-		osSyncPrintf(D_80141DF8_150DA8);
+		osSyncPrintf("**change to skeleton model**\n");
 		new_var = alienInstances[arg0].unkC;
 		route = &D_8014DD50[new_var];
 		func_80079DC0_88D70(route->unkC);
