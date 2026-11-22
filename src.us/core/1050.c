@@ -107,7 +107,6 @@ s32 D_80031374_31F74[20] = {0, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 s32 D_800313C4_31FC4 = 0;
 s32 D_800313CC = 0;
 
-// https://decomp.me/scratch/cHVpz
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 {
 	s32 s2;
@@ -180,7 +179,6 @@ void func_80000730_1330(s32 arg0) {
 		osRecvMesg(&D_8003FCE8, &message, OS_MESG_BLOCK);
 		switch (((OSScMsg *)message)->type) {
 		case OS_SC_RETRACE_MSG:
-			/* Keep the shared frame-counter address live during dispatch. */
 			if ((u32)&D_800431A0 * 0) {}
 			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], lastInfo) != 0) {
 				osRecvMesg(&D_8003FD20, &message, OS_MESG_BLOCK);
@@ -206,7 +204,6 @@ void func_80000730_1330(s32 arg0) {
 	}
 	alClose(&D_8003FD58);
 }
-
 
 s32 func_8000091C_151C(BhAudioTask *arg0, BhAudioBuf *arg1) {
 	s32 sp3C;
@@ -312,11 +309,9 @@ s32 func_80000B14_1714(s32 addr, s32 len, void *state) {
 	osPiStartDma(&D_8006A330[D_800312F0_31EF0++], 0, 0, addr, buffer = dmaBuffer->unk10, 0x400, &D_80067F58);
 	D_80031300_31F00 += 1;
 	addr = osVirtualToPhysical(buffer);
-	/* Keep the alignment offset live across address translation. */
 	if (offset * 0) {}
 	return addr + offset;
 }
-
 
 void* (*func_80000CD4_18D4(Unk80042DA8** arg0))(void) {
 	if (D_80042DA8.unk0 == 0) {
@@ -397,7 +392,6 @@ void checkForRumblePak(void) {
 	D_80047698 = gameplayMode;
 }
 
-// Matched: thread epilogue alignment shares the boot translation unit.
 void func_80000ED4_1AD4(void) {
 	s32 pad0;
 	Unk80047578 *sp58;
@@ -433,7 +427,6 @@ void func_80000ED4_1AD4(void) {
 		}
 	}
 }
-
 
 void func_80001050_1C50(s32 arg0) {
 	D_80047578.unk4 = arg0;
@@ -568,7 +561,6 @@ void func_80001424_2024(void) {
 	}
 }
 
-// https://decomp.me/scratch/zsK5T
 void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	s32 temp_at;
 	s32 temp_t3;
@@ -584,7 +576,7 @@ void func_800015B4_21B4(s32 arg0, s32 arg1) {
 	for (var_a3 = 0; var_a3 < arg1; var_a3++) {
 		var_a2 += D_800431C0[var_v1++];
 	}
-	D_800431C0[arg0 + 2] = var_a2 & 0xFFFF; // Fake cast to bump regalloc
+	D_800431C0[arg0 + 2] = var_a2 & 0xFFFF;
 	D_800431C0[arg0 + 3] = (var_a2) >> 8;
 }
 
@@ -615,7 +607,6 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 	return 1;
 }
 
-// https://decomp.me/scratch/vCY8e
 void func_800016D8_22D8(void) {
 	u16 i;
 	u16 j, writeIdx;
@@ -1173,7 +1164,6 @@ void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 
 void func_80002ED4_3AD4(void) { osContGetReadData(&D_800475B8); }
 
-// https://decomp.me/scratch/VRB5q
 // Background controller/EEPROM thread: polls input and services pending requests.
 void func_80002EF8_3AF8(void *arg0)
 {
@@ -1226,9 +1216,7 @@ void func_80002EF8_3AF8(void *arg0)
 	func_8000FF40_10B40();
 	osContStartReadData(&D_80043388);
   }
-
 }
-
 
 void func_80003064_3C64(void)
 {
@@ -1335,8 +1323,6 @@ void func_80003064_3C64(void)
 	}
 }
 
-
-// https://decomp.me/scratch/66U7q
 void func_800033D4_3FD4(u16 arg0, s32 controllerNum)
 {
 	int new_var2;
@@ -1474,7 +1460,6 @@ s32 func_800038E0_44E0(void)
 /* The RNG always returns 0..0xFFFF. This view keeps sample temporaries halfword-sized. */
 #pragma weak func_800038E0_44E0_U16 = func_800038E0_44E0
 
-// https://decomp.me/scratch/7UqC0
 f32 func_80003910_4510(f32 arg0, s32 arg1)
 {
 	f32 result;
@@ -1487,7 +1472,6 @@ f32 func_80003910_4510(f32 arg0, s32 arg1)
 	return result;
 }
 
-// https://decomp.me/scratch/UjwLi
 f32 func_8000393C_453C(f32 arg0, s32 arg1)
 {
 	f32 var_f20;
@@ -1568,7 +1552,6 @@ void func_800039D0_45D0(Unk80052B40 *arg0, Unk80052B40 *arg1, Unk80052B40 *arg2,
 		D_800476C8[1].unk4 = ((-sinZ * cosY) >> 15) * 2;
 		D_800476C8[0].unk8 = ((-sinX * cosY) >> 15) * 2;
 		D_800476C8[0].unk18 = ((cosXSinZ + 0) + ((sinXCosZ * sinY) >> 15)) * 2;
-		/* Retain the lifetimes of the shared products during optimization. */
 		if (sinXCosZ * cosXSinZ * 0) {}
 		D_800476F0 = (cosXCosZ - (((sinZSinX + 0) * sinY) >> 15)) * 2;
 	} else {
@@ -1716,7 +1699,6 @@ void func_80003DE8_49E8(TransformRow *arg0, s16 *arg1, s16 *arg2, Mtx *arg3) {
 	} while (src != &D_80047708.unk0);
 }
 
-
 void func_80004214_4E14(s16 arg0, s32 arg1) {
 	Unk80052B40 v;
 	v.unk0 = arg0;
@@ -1766,7 +1748,6 @@ s32 func_80004254_4E54(f32 arg0, s32 arg1, s32 *arg2, s32 *arg3) {
     return 1;
 }
 
-// https://decomp.me/scratch/X3gxG
 s32 func_80004498_5098(f32 arg0)
 {
 	int new_var;
@@ -1781,7 +1762,6 @@ s32 func_80004498_5098(f32 arg0)
 	return 1;
 }
 
-// https://decomp.me/scratch/KebvT
 void func_800044D4_50D4(s16 *arg0, s32 *arg1, s16 *arg2)
 {
 	s32 sp64;
