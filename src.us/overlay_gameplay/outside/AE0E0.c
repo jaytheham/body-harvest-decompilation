@@ -250,11 +250,7 @@ void func_8009FB58_AEB08(void) {
 
 	mapTexture = K0_TO_PHYS(D_5032190);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, mapTexture, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	{
-		Gfx *gfx = D_8005BB2C++;
-		gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF;
-		gfx->words.w1 = (((D_80052A8C * 12) & 0xFF) << 24) | (((D_80052A8C * 12) & 0xFF) << 16) | 0xFF;
-	}
+	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_80052A8C * 12, D_80052A8C * 12, 0, 0xFF);
 
 	gDPLoadTLUT_pal16(D_8005BB2C++, 0, (u32)D_5032390);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
@@ -295,11 +291,7 @@ void func_8009FB58_AEB08(void) {
 
 	if (D_8014ED04 != 0x186A0) {
 
-		{
-			Gfx *gfx = D_8005BB2C++;
-			gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF;
-			gfx->words.w1 = (((D_80052A8C * 20) & 0xFF) << 24) | (((D_80052A8C * 20) & 0xFF) << 8) | 0xFF;
-		}
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_80052A8C * 20, 0, D_80052A8C * 20, 0xFF);
 
 		func_8009C1D8_AB188(((SignedWord *)&D_8014ED04)->halves.low, ((SignedWord *)&D_8014ED08)->halves.low, 1);
 

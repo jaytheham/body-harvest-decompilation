@@ -7856,14 +7856,12 @@ void func_800D9754_E8704(s16 arg0) {
 }
 
 void func_800D978C_E873C(void) {
-	u32 opcode;
 	s16 var_v1;
 	s32 linkedIndex;
 	Unk80154318Entry *entry;
 	Unk80154318Entry *linkedEntry;
 	Unk80052B40 *spatial;
 
-	opcode = 0x06000000;
 	var_v1 = D_801542EE;
 	if ((var_v1 != -6) && (var_v1 != -5)) {
 		gSPDisplayList(D_8005BB2C++, D_80031230);
@@ -7886,13 +7884,11 @@ void func_800D978C_E873C(void) {
 						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_PUSH | G_MTX_MUL | G_MTX_MODELVIEW);
 						{
 							Gfx *cmd = D_8005BB2C++;
-							cmd->words.w0 = opcode;
-							cmd->words.w1 = (u32)entry->displayList;
+							gSPDisplayList(cmd, entry->displayList);
 						}
 						{
 							Gfx *cmd = D_8005BB2C++;
-							cmd->words.w1 = 0;
-							cmd->words.w0 = -0x43000000;
+							gSPPopMatrix(cmd, G_MTX_MODELVIEW);
 						}
 					}
 					var_v1 = linkedEntry->unk4;

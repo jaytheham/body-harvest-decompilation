@@ -1202,7 +1202,7 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 	if ((arg3 = (itemEntry->scale * 2) * arg3,1)) {} itemRotation = itemRotation + 0x16C;
 
-	packet=D_8005BB2C++; packet->words.w0=0xE7000000; packet->words.w1=0;
+	packet = D_8005BB2C++; gDPPipeSync(packet);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	packet=D_8005BB2C++; packet->words.w0=0xBB000000; packet->words.w1=0x80008000;
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
