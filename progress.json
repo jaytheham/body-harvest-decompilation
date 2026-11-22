@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-22T00:06:42Z",
-  "commit": "e1eae50a",
-  "commit_timestamp": "2026-11-22T13:05:26+13:00",
+  "generated": "2026-11-22T03:33:46Z",
+  "commit": "7eb2c5b2",
+  "commit_timestamp": "2026-11-22T16:32:48+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 3040,
@@ -176,21 +176,11 @@
     {
       "path": "core/AD60.c",
       "segment": "core",
-      "matched": 26,
+      "matched": 13,
       "non_matching": 0,
       "asm_stubs": 0,
-      "total": 26,
+      "total": 13,
       "matched_pct": 100.0,
-      "contributor": "jaytheham"
-    },
-    {
-      "path": "core/AD60_rodata.c",
-      "segment": "core",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
       "contributor": "jaytheham"
     },
     {
@@ -231,6 +221,16 @@
       "asm_stubs": 0,
       "total": 0,
       "matched_pct": 0,
+      "contributor": "jaytheham"
+    },
+    {
+      "path": "core/animation_channels.c",
+      "segment": "core",
+      "matched": 13,
+      "non_matching": 0,
+      "asm_stubs": 0,
+      "total": 13,
+      "matched_pct": 100.0,
       "contributor": "jaytheham"
     },
     {
@@ -2484,16 +2484,6 @@
       "contributor": "jaytheham"
     },
     {
-      "path": "overlay_level/america/254410_rodata.c",
-      "segment": "overlay_level/america",
-      "matched": 0,
-      "non_matching": 0,
-      "asm_stubs": 0,
-      "total": 0,
-      "matched_pct": 0,
-      "contributor": "jaytheham"
-    },
-    {
       "path": "overlay_level/america/alien_types.c",
       "segment": "overlay_level/america",
       "matched": 0,
@@ -2587,7 +2577,7 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 96,
+      "files": 95,
       "matched": 2701,
       "non_matching": 17,
       "asm_stubs": 0
@@ -2911,7 +2901,7 @@
     },
     {
       "date": "2026-11-22",
-      "commit": "cc75b38",
+      "commit": "3b14ebf",
       "matched": 3040,
       "non_matching": 17,
       "total": 3057
