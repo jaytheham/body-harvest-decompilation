@@ -108,67 +108,6 @@ s32 D_800313C4_31FC4 = 0;
 s32 D_800313CC = 0;
 
 // https://decomp.me/scratch/cHVpz
-/* Save/load diagnostics and main-loop switch targets. */
-const char D_80036840_37440[] = "Rumble pak(tm)  detected!\n";
-const char D_8003685C_3745C[] = "Version %d failed\n";
-const char D_80036870_37470[] = "Checksum failed\n";
-const char D_80036884_37484[] = "Save:score %d\n";
-const char D_80036894_37494[] = "People %d\n";
-const char D_800368A0_374A0[] = "Time %d\n";
-const char D_800368AC_374AC[] = "-----Save Info-------\n";
-const char D_800368C4_374C4[] = "Level:%d, completed %d\n";
-const char D_800368DC_374DC[] = "WarpPointNumber :%d\n";
-const char D_800368F4_374F4[] = "Game State %x\n";
-const char D_80036904_37504[] = "Inventory\n{";
-const char D_80036910_37510[] = "SAVING Inventory[%d] = %d,\n";
-const char D_8003692C_3752C[] = "}\n";
-const char D_80036930_37530[] = "\nKeys:\n";
-const char D_80036938_37538[] = "(%llX)\n";
-const char D_80036940_37540[] = "\n*************SAVING AlienArtefacts=%d:\n";
-const char D_8003696C_3756C[] = "\nConversation states:\n";
-const char D_80036984_37584[] = "(%llX)\n";
-const char D_8003698C_3758C[] = "beacon states:%d\n";
-const char D_800369A0_375A0[] = "complete set: %x\n";
-const char D_800369B4_375B4[] = "failed set: %x\n";
-const char D_800369C4_375C4[] = "AMMO SAVE\n{";
-const char D_800369D0_375D0[] = "SAVING AMMO to the nearest multiple of 1, 2 or 4\n";
-const char D_80036A04_37604[] = "SAVING aAmmunition[%d]==%d,";
-const char D_80036A20_37620[] = "current objective:%d\n";
-const char D_80036A38_37638[] = "game info:%d\n";
-const char D_80036A48_37648[] = "alpha tank ammos: %d,%d,%d,%d\n";
-const char D_80036A68_37668[] = "}\n";
-const char D_80036A6C_3766C[] = "------------------------------\n";
-const char D_80036A8C_3768C[] = "Restore:Score %d\n";
-const char D_80036AA0_376A0[] = "People:%d\n";
-const char D_80036AAC_376AC[] = "Time:%d\n";
-const char D_80036AB8_376B8[] = "-----Restore Info------\n";
-const char D_80036AD4_376D4[] = "Level:%d, completed %d\n";
-const char D_80036AEC_376EC[] = "Warp point:%d\n";
-const char D_80036AFC_376FC[] = "game state: %x\n";
-const char D_80036B0C_3770C[] = "Inventory\n{";
-const char D_80036B18_37718[] = "%d,";
-const char D_80036B1C_3771C[] = "}\n";
-const char D_80036B20_37720[] = "\nKeys:\n";
-const char D_80036B28_37728[] = "(%llX)\n";
-const char D_80036B30_37730[] = "\n******************LOADING AlienArtefacts=%d:\n";
-const char D_80036B60_37760[] = "\nConversation states:\n";
-const char D_80036B78_37778[] = "(%llX)\n";
-const char D_80036B80_37780[] = "beacon states:%d\n";
-const char D_80036B94_37794[] = "Start point:%d\n";
-const char D_80036BA4_377A4[] = "complete set: %x\n";
-const char D_80036BB8_377B8[] = "failed set: %x\n";
-const char D_80036BC8_377C8[] = "AMMO LOAD\n{";
-const char D_80036BD4_377D4[] = "LOADING aAmmunition[%d]==%d\n";
-const char D_80036BF4_377F4[] = "current objective : %d\n";
-const char D_80036C0C_3780C[] = "game info: %x\n";
-const char D_80036C1C_3781C[] = "game info: %x\n";
-const char D_80036C2C_3782C[] = "alpha tank ammos: %d,%d,%d,%d\n";
-const char D_80036C4C_3784C[] = "}\n";
-const char D_80036C50_37850[] = "CALLING RECURSIVELY";
-const char D_80036C64_37864[] = "SCRUB GAMENOTE\n";
-const char D_80036C74_37874[] = "RESTORE GAMENOTE\n";
-const f32 D_80036C88_37888[] = {10000.0f};
-
 void func_80000450_1050(ALSynConfig *arg0, s32 arg1)
 {
 	s32 s2;
@@ -446,7 +385,7 @@ void checkForRumblePak(void) {
 		return;
 	}
 
-	osSyncPrintf(D_80036840_37440); // Rumble pak(tm)  detected!
+	osSyncPrintf("Rumble pak(tm)  detected!\n");
 	D_80047678 = 1;
 	func_8000108C_1C8C(0);
 	D_800313CC = 0;
@@ -657,7 +596,7 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 
 	if (D_800431C0[arg0] != 0x1C)
 	{
-		osSyncPrintf(D_8003685C_3745C, D_800431C0[arg0]);
+		osSyncPrintf("Version %d failed\n", D_800431C0[arg0]);
 		return 0;
 	}
 	stored_checksum = D_800431C0[arg0 + 2] + (D_800431C0[arg0 + 3] << 8);
@@ -670,7 +609,7 @@ s32 validateSaveVersionAndChecksum(s32 arg0, s32 arg1)
 	}
 	if (stored_checksum != computed_checksum)
 	{
-		osSyncPrintf(D_80036870_37470);
+		osSyncPrintf("Checksum failed\n");
 		return 0;
 	}
 	return 1;
@@ -762,43 +701,43 @@ void guess_prepareToSaveGame(s32 arg0) {
 	stride = arg0 * 0x7A;
 	offset = stride + 0x53;
 	for (i = 0; i < 6U; i++) {
-		osSyncPrintf(D_80036884_37484, D_80052A98[i].score);
+		osSyncPrintf("Save:score %d\n", D_80052A98[i].score);
 		D_800431C0[offset++] = D_80052A98[i].score & 0xFF;
 		D_800431C0[offset++] = (D_80052A98[i].score >> 8) & 0xFF;
 		D_800431C0[offset++] = (D_80052A98[i].score >> 16) & 0xFF;
 		D_800431C0[offset++] = (D_80052A98[i].score >> 24) & 0xFF;
-		osSyncPrintf(D_80036894_37494, D_80052A98[i].humansKilled);
+		osSyncPrintf("People %d\n", D_80052A98[i].humansKilled);
 		offset += 1;
 		D_800431C0[offset - 1] = D_80052A98[i].humansKilled;
-		osSyncPrintf(D_800368A0_374A0, D_80052A98[i].secondsElapsed);
+		osSyncPrintf("Time %d\n", D_80052A98[i].secondsElapsed);
 		D_800431C0[offset++] = D_80052A98[i].secondsElapsed & 0xFF;
 		D_800431C0[offset++] = (D_80052A98[i].secondsElapsed >> 8) & 0xFF;
 		D_800431C0[offset++] = (D_80052A98[i].secondsElapsed >> 16) & 0xFF;
 	}
-	osSyncPrintf(D_800368AC_374AC);
+	osSyncPrintf("-----Save Info-------\n");
 	D_800431C0[offset++] = (u8)((D_80047FA0 * 0x10) | currentLevel);
-	osSyncPrintf(D_800368C4_374C4, currentLevel, D_80047FA0);
+	osSyncPrintf("Level:%d, completed %d\n", currentLevel, D_80047FA0);
 	D_800431C0[offset++] = D_80047F9C & 0xFF;
-	osSyncPrintf(D_800368DC_374DC, D_80047F9C);
+	osSyncPrintf("WarpPointNumber :%d\n", D_80047F9C);
 	D_800431C0[offset] = D_80031420;
 	D_800431C0[offset + 1] = ((u32)D_80031420 >> 8) & 0xFF;
 	D_800431C0[offset + 2] = ((u32)D_80031420 >> 0x10) & 0xFF;
 	D_800431C0[offset + 3] = ((u32)D_80031420 >> 0x18) & 0xFF;
 	offset += 4;
-	osSyncPrintf(D_800368F4_374F4, (s32)D_80031420);
+	osSyncPrintf("Game State %x\n", (s32)D_80031420);
 	for (i = 0; i < 6; i++) {
 		D_800431C0[offset++] = D_80047FA8[i];
 	}
-	osSyncPrintf(D_80036904_37504);
+	osSyncPrintf("Inventory\n{");
 	for (i = 0; (s32)i < 7; i++) {
 		D_800431C0[offset++] = weaponSlots[i];
-		osSyncPrintf(D_80036910_37510, i, weaponSlots[i]);
+		osSyncPrintf("SAVING Inventory[%d] = %d,\n", i, weaponSlots[i]);
 	}
-	osSyncPrintf(D_8003692C_3752C);
+	osSyncPrintf("}\n");
 	{
 		u64 flags1;
 		flags1 = D_8004DC48.unk0;
-		osSyncPrintf(D_80036930_37530);
+		osSyncPrintf("\nKeys:\n");
 		D_800431C0[offset++] = flags1 & 0xFF;
 		D_800431C0[offset++] = (flags1 >> 8) & 0xFF;
 		D_800431C0[offset++] = (flags1 >> 0x10) & 0xFF;
@@ -807,15 +746,15 @@ void guess_prepareToSaveGame(s32 arg0) {
 		D_800431C0[offset++] = (flags1 >> 0x28) & 0xFF;
 		D_800431C0[offset++] = (flags1 >> 0x30) & 0xFF;
 		D_800431C0[offset++] = (flags1 >> 0x38) & 0xFF;
-		osSyncPrintf(D_80036938_37538, D_8004DC48.unk0);
+		osSyncPrintf("(%llX)\n", D_8004DC48.unk0);
 	}
 	D_800431C0[offset++] = (((D_8004DC5C << 4) & 0xFF) + D_8004DC5E);
 	D_800431C0[offset++] = D_80048026 & 0xFF;
 	D_800431C0[offset++] = (D_80048026 >> 8) & 0xFF;
-	osSyncPrintf(D_80036940_37540, (s32)D_80048026);
+	osSyncPrintf("\n*************SAVING AlienArtefacts=%d:\n", (s32)D_80048026);
 	D_800431C0[offset++] = D_80048028 & 0xFF;
 	D_800431C0[offset++] = (D_80048028 >> 8) & 0xFF;
-	osSyncPrintf(D_8003696C_3756C);
+	osSyncPrintf("\nConversation states:\n");
 	D_800431C0[offset++] = D_8004DC50.flags & 0xFF;
 	D_800431C0[offset++] = (D_8004DC50.flags >> 8) & 0xFF;
 	D_800431C0[offset++] = (D_8004DC50.flags >> 0x10) & 0xFF;
@@ -824,7 +763,7 @@ void guess_prepareToSaveGame(s32 arg0) {
 	D_800431C0[offset++] = (D_8004DC50.flags >> 0x28) & 0xFF;
 	D_800431C0[offset++] = (D_8004DC50.flags >> 0x30) & 0xFF;
 	D_800431C0[offset++] = (D_8004DC50.flags >> 0x38) & 0xFF;
-	osSyncPrintf(D_80036984_37584, D_8004DC50.flags);
+	osSyncPrintf("(%llX)\n", D_8004DC50.flags);
 	if (D_80052A90 == 0) {
 		D_80052A90 = 1;
 	}
@@ -834,37 +773,37 @@ void guess_prepareToSaveGame(s32 arg0) {
 	D_800431C0[offset + 3] = (D_80052A90 >> 0x18) & 0xFF;
 	D_800431C0[offset + 4] = (s8)D_80047F98;
 	offset += 5;
-	osSyncPrintf(D_8003698C_3758C, D_80047F98);
+	osSyncPrintf("beacon states:%d\n", D_80047F98);
 	offset += 4;
 	D_800431C0[offset - 4] = D_8004D154 & 0xFF;
 	D_800431C0[offset - 3] = ((u32)D_8004D154 >> 8) & 0xFF;
 	D_800431C0[offset - 2] = ((u32)D_8004D154 >> 0x10) & 0xFF;
 	D_800431C0[offset - 1] = ((u32)D_8004D154 >> 0x18) & 0xFF;
-	osSyncPrintf(D_800369A0_375A0, (s32)D_8004D154);
+	osSyncPrintf("complete set: %x\n", (s32)D_8004D154);
 	offset += 4;
 	D_800431C0[offset - 4] = D_8004D158 & 0xFF;
 	D_800431C0[offset - 3] = ((u32)D_8004D158 >> 8) & 0xFF;
 	D_800431C0[offset - 2] = ((u32)D_8004D158 >> 0x10) & 0xFF;
 	D_800431C0[offset - 1] = ((u32)D_8004D158 >> 0x18) & 0xFF;
-	osSyncPrintf(D_800369B4_375B4, (s32)D_8004D158);
-	osSyncPrintf(D_800369C4_375C4);
-	osSyncPrintf(D_800369D0_375D0);
+	osSyncPrintf("failed set: %x\n", (s32)D_8004D158);
+	osSyncPrintf("AMMO SAVE\n{");
+	osSyncPrintf("SAVING AMMO to the nearest multiple of 1, 2 or 4\n");
 	for (i = 0; (s32)i < 7; i++) {
 		D_800431C0[offset++] = (s8)(D_80048140[weaponSlots[i]] >> D_80031374_31F74[weaponSlots[i]]);
-		osSyncPrintf(D_80036A04_37604, i, (s32)D_80048140[i]);
+		osSyncPrintf("SAVING aAmmunition[%d]==%d,", i, (s32)D_80048140[i]);
 	}
 	D_800431C0[offset++] = D_80048030;
-	osSyncPrintf(D_80036A20_37620, (s32)D_80048030);
+	osSyncPrintf("current objective:%d\n", (s32)D_80048030);
 	D_800431C0[offset++] = D_80052ACD;
-	osSyncPrintf(D_80036A38_37638, (s32)D_80052ACD);
+	osSyncPrintf("game info:%d\n", (s32)D_80052ACD);
 	D_800431C0[offset++] = D_8004815C;
 	D_800431C0[offset++] = D_80048160;
 	D_800431C0[offset++] = D_80048162;
 	D_800431C0[offset] = D_8004815E;
-	osSyncPrintf(D_80036A48_37648, D_8004815C, D_80048160, D_80048162, D_8004815E);
-	osSyncPrintf(D_80036A68_37668);
+	osSyncPrintf("alpha tank ammos: %d,%d,%d,%d\n", D_8004815C, D_80048160, D_80048162, D_8004815E);
+	osSyncPrintf("}\n");
 	func_800015B4_21B4(stride + 0x4F, 0x76);
-	osSyncPrintf(D_80036A6C_3766C);
+	osSyncPrintf("------------------------------\n");
 }
 
 void func_800020E0_2CE0(s32 arg0, s32 arg1) {
@@ -997,16 +936,16 @@ void guess_loadSavedGame(s32 arg0) {
 			D_80052A98[j].score += D_800431C0[src++] << 8;
 			D_80052A98[j].score += D_800431C0[src++] << 16;
 			D_80052A98[j].score += D_800431C0[src++] << 24;
-			osSyncPrintf(D_80036A8C_3768C, D_80052A98[j].score);
+			osSyncPrintf("Restore:Score %d\n", D_80052A98[j].score);
 			D_80052A98[j].humansKilled = D_800431C0[src++];
-			osSyncPrintf(D_80036AA0_376A0, D_80052A98[j].humansKilled);
+			osSyncPrintf("People:%d\n", D_80052A98[j].humansKilled);
 			D_80052A98[j].secondsElapsed = D_800431C0[src++];
 			D_80052A98[j].secondsElapsed += D_800431C0[src++] << 8;
 			D_80052A98[j].secondsElapsed += D_800431C0[src++] << 16;
-			osSyncPrintf(D_80036AAC_376AC, D_80052A98[j].secondsElapsed);
+			osSyncPrintf("Time:%d\n", D_80052A98[j].secondsElapsed);
 			j++;
 		} while (&D_80052A98[j] < &D_80052A98[6]);
-		osSyncPrintf(D_80036AB8_376B8);
+		osSyncPrintf("-----Restore Info------\n");
 		{
 			s32 b;
 
@@ -1015,9 +954,9 @@ void guess_loadSavedGame(s32 arg0) {
 			D_80047FA0 = (s32)b >> 4;
 			src++;
 		}
-		osSyncPrintf(D_80036AD4_376D4, currentLevel, D_80047FA0, &currentLevel);
+		osSyncPrintf("Level:%d, completed %d\n", currentLevel, D_80047FA0, &currentLevel);
 		D_80047F9C = D_800431C0[src++] & 0xF;
-		osSyncPrintf(D_80036AEC_376EC, D_80047F9C);
+		osSyncPrintf("Warp point:%d\n", D_80047F9C);
 		D_80031420 = 0;
 		i = 0;
 		do {
@@ -1030,19 +969,19 @@ void guess_loadSavedGame(s32 arg0) {
 		}
 		func_80016FD0_17BD0((s16)(((u32)D_80031420 & 0x60) >> 5));
 		func_800170F4_17CF4((s16)(((u32)D_80031420 & 0x18) >> 3));
-		osSyncPrintf(D_80036AFC_376FC, D_80031420);
+		osSyncPrintf("game state: %x\n", D_80031420);
 		for (i = 0; &D_80047FA8[i] < &D_80047FA8[6]; i++) {
 			D_80047FA8[i] = D_800431C0[src++];
 		}
 		D_80047FAE_NameEnd = 0;
-		osSyncPrintf(D_80036B0C_3770C);
+		osSyncPrintf("Inventory\n{");
 		for (weapon = weaponSlots; weapon < &weaponSlots[7]; weapon++) {
 			*weapon = D_800431C0[src++];
-			osSyncPrintf(D_80036B18_37718, *weapon);
+			osSyncPrintf("%d,", *weapon);
 		}
-		osSyncPrintf(D_80036B1C_3771C);
+		osSyncPrintf("}\n");
 		flags = 0;
-		osSyncPrintf(D_80036B20_37720);
+		osSyncPrintf("\nKeys:\n");
 		i = 0;
 		do {
 			flags += (u64)D_800431C0[src++] << (s32)i;
@@ -1050,7 +989,7 @@ void guess_loadSavedGame(s32 arg0) {
 		} while ((s32)i < 64);
 		D_8004DC48.unk0 = flags;
 		if ((u32)&D_8004DC48 * 0) {}
-		osSyncPrintf(D_80036B28_37728, flags);
+		osSyncPrintf("(%llX)\n", flags);
 		{
 			s32 b;
 
@@ -1061,16 +1000,16 @@ void guess_loadSavedGame(s32 arg0) {
 		D_80048026 = D_800431C0[src + (1)];
 		D_80048026 += (u16)(D_800431C0[src + (2)] << 8);
 		src += 3;
-		osSyncPrintf(D_80036B30_37730, D_80048026);
+		osSyncPrintf("\n******************LOADING AlienArtefacts=%d:\n", D_80048026);
 		D_80048028 = D_800431C0[src + (0)];
 		D_80048028 += (u16)(D_800431C0[src + (1)] << 8);
 		src += 2;
 		D_8004DC50.flags = 0;
-		osSyncPrintf(D_80036B60_37760);
+		osSyncPrintf("\nConversation states:\n");
 		for (i = 0; (s32)i < 64; i += 8) {
 			D_8004DC50.flags += (u64)D_800431C0[src++] << (s32)i;
 		}
-		osSyncPrintf(D_80036B78_37778, D_8004DC50.flags);
+		osSyncPrintf("(%llX)\n", D_8004DC50.flags);
 		D_80052A90 = 0;
 		i = 0;
 		do {
@@ -1078,11 +1017,11 @@ void guess_loadSavedGame(s32 arg0) {
 			i += 8;
 		} while ((s32)i < 0x20);
 		D_80047F98 = D_800431C0[src++];
-		osSyncPrintf(D_80036B80_37780, D_80047F98);
+		osSyncPrintf("beacon states:%d\n", D_80047F98);
 		if (D_80047F98 < D_80047F9C) {
 			D_80047F98 = D_80047F9C;
 		}
-		osSyncPrintf(D_80036B94_37794, D_80047F98);
+		osSyncPrintf("Start point:%d\n", D_80047F98);
 		D_80047F94 = D_8003E000_3EC00[currentLevel-1][D_80047F98].unk4;
 		D_8004D154 = 0;
 		i = 0;
@@ -1090,7 +1029,7 @@ void guess_loadSavedGame(s32 arg0) {
 			D_8004D154 += D_800431C0[src++] << (s32)i;
 			i += 8;
 		} while ((s32)i < 0x20);
-		osSyncPrintf(D_80036BA4_377A4, D_8004D154);
+		osSyncPrintf("complete set: %x\n", D_8004D154);
 		D_8004D150 = 0;
 		D_8004D158 = 0;
 		i = 0;
@@ -1099,26 +1038,26 @@ void guess_loadSavedGame(s32 arg0) {
 			i += 8;
 			continue;
 		} while ((s32)i < 0x20);
-		osSyncPrintf(D_80036BB8_377B8, D_8004D158);
-		osSyncPrintf(D_80036BC8_377C8);
+		osSyncPrintf("failed set: %x\n", D_8004D158);
+		osSyncPrintf("AMMO LOAD\n{");
 		/* Keep this setup on one line for IDO instruction scheduling. */
         weapon = weaponSlots; k = 0; if ((u32)weapon * 0) {} if ((u32)weapon * 0) {} i = 0; j = 0; for (; k != 7; k++, i++, j++) {
 			D_80048140[weaponSlots[i]] = D_800431C0[src++] << D_80031374_31F74[weaponSlots[i]];
-			osSyncPrintf(D_80036BD4_377D4, k, D_80048140[j]);
+			osSyncPrintf("LOADING aAmmunition[%d]==%d\n", k, D_80048140[j]);
 		}
 		D_80048030 = D_800431C0[src++];
-		osSyncPrintf(D_80036BF4_377F4, D_80048030);
-		osSyncPrintf(D_80036C0C_3780C, D_80052ACD);
+		osSyncPrintf("current objective : %d\n", D_80048030);
+		osSyncPrintf("game info: %x\n", D_80052ACD);
 		D_80052ACD = D_800431C0[src++];
-		osSyncPrintf(D_80036C1C_3781C, D_80052ACD);
+		osSyncPrintf("game info: %x\n", D_80052ACD);
 		D_80048140[14] = D_800431C0[src++];
 		D_80048140[16] = D_800431C0[src++];
 		D_80048140[17] = D_800431C0[src++];
 		D_80048140[15] = D_800431C0[src];
-		osSyncPrintf(D_80036C2C_3782C, D_80048140[14], D_80048140[16], D_80048140[17], D_80048140[15]);
-		osSyncPrintf(D_80036C4C_3784C);
+		osSyncPrintf("alpha tank ammos: %d,%d,%d,%d\n", D_80048140[14], D_80048140[16], D_80048140[17], D_80048140[15]);
+		osSyncPrintf("}\n");
 	} else {
-		osSyncPrintf(D_80036C50_37850, 0);
+		osSyncPrintf("CALLING RECURSIVELY", 0);
 		func_800021CC_2DCC(arg0);
 		guess_loadSavedGame(arg0);
 		D_80052A90 = 0;
@@ -1204,7 +1143,7 @@ void guess_deleteSavedData(void)
 	short new_var;
 	u8 *var_v1;
 	do {
-		osSyncPrintf(D_80036C64_37864); // SCRUB GAMENOTE
+		osSyncPrintf("SCRUB GAMENOTE\n");
 		var_v0 = &D_800431C0; new_var = 0; var_v1 = &D_8004337D;
 		do { var_v0++; *(var_v0 - 1) = new_var; } while (((u32) var_v0) < ((u32) var_v1));
 		func_80001830_2430();
@@ -1222,11 +1161,13 @@ void guess_restoreSavedData(void) {
 	if (D_80047608 != 0) {
 		func_8001D5A0_1E1A0(&D_80043388, 0, &D_800431C0, 0x1BD);
 	}
-	osSyncPrintf(D_80036C74_37874); // RESTORE GAMENOTE
+	osSyncPrintf("RESTORE GAMENOTE\n");
 	if (validateSaveVersionAndChecksum(0, 0x1B9) == 0) {
 		guess_deleteSavedData();
 	}
 }
+
+const f32 D_80036C88_37888[] = {10000.0f};
 
 void func_80002EB0_3AB0(void) { osContStartReadData(&D_80043388); }
 

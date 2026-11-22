@@ -496,64 +496,6 @@ extern OSViMode D_800356D0_362D0;
 extern OSViMode D_80035B30_36730;
 extern s32 D_80035B5C_3675C;
 extern OSViMode D_80035F90_36B90;
-extern const char D_80036840_37440[]; // Rumble pak(tm) detected!
-extern const char D_8003685C_3745C[]; /* osSyncPrintf format string - save version mismatch */
-extern const char D_80036870_37470[]; /* osSyncPrintf format string - save checksum mismatch */
-extern const char D_80036884_37484[]; /* osSyncPrintf format string - save score */
-extern const char D_80036894_37494[]; /* osSyncPrintf format string - save humans killed */
-extern const char D_800368A0_374A0[]; /* osSyncPrintf format string - save seconds elapsed */
-extern const char D_800368AC_374AC[]; /* osSyncPrintf format string */
-extern const char D_800368C4_374C4[]; /* osSyncPrintf format string - save level/warp */
-extern const char D_800368DC_374DC[]; /* osSyncPrintf format string - save warp point */
-extern const char D_800368F4_374F4[]; /* osSyncPrintf format string - save play time */
-extern const char D_80036904_37504[]; /* osSyncPrintf format string */
-extern const char D_80036910_37510[]; /* osSyncPrintf format string - save weapon slot */
-extern const char D_8003692C_3752C[]; /* osSyncPrintf format string */
-extern const char D_80036930_37530[]; /* osSyncPrintf format string */
-extern const char D_80036938_37538[]; /* osSyncPrintf format string */
-extern const char D_80036940_37540[]; /* osSyncPrintf format string - save D_80048026 */
-extern const char D_8003696C_3756C[]; /* osSyncPrintf format string */
-extern const char D_80036984_37584[]; /* osSyncPrintf format string */
-extern const char D_8003698C_3758C[]; /* osSyncPrintf format string - save D_80047F98 */
-extern const char D_800369A0_375A0[]; /* osSyncPrintf format string - save D_8004D154 */
-extern const char D_800369B4_375B4[]; /* osSyncPrintf format string - save D_8004D158 */
-extern const char D_800369C4_375C4[]; /* osSyncPrintf format string */
-extern const char D_800369D0_375D0[]; /* osSyncPrintf format string */
-extern const char D_80036A04_37604[]; /* osSyncPrintf format string - save weapon damage */
-extern const char D_80036A20_37620[]; /* osSyncPrintf format string - save D_80048030 */
-extern const char D_80036A38_37638[]; /* osSyncPrintf format string - save D_80052ACD */
-extern const char D_80036A48_37648[]; /* osSyncPrintf format string - save D_8004815x */
-extern const char D_80036A68_37668[]; /* osSyncPrintf format string */
-extern const char D_80036A6C_3766C[]; /* osSyncPrintf format string */
-extern const char D_80036A8C_3768C[]; /* osSyncPrintf format string - load score */
-extern const char D_80036AA0_376A0[]; /* osSyncPrintf format string - load humansKilled */
-extern const char D_80036AAC_376AC[]; /* osSyncPrintf format string - load secondsElapsed */
-extern const char D_80036AB8_376B8[]; /* osSyncPrintf format string */
-extern const char D_80036AD4_376D4[]; /* osSyncPrintf format string - load level/warp */
-extern const char D_80036AEC_376EC[]; /* osSyncPrintf format string - load warp point */
-extern const char D_80036AFC_376FC[]; /* osSyncPrintf format string - load D_80031420 */
-extern const char D_80036B0C_3770C[]; /* osSyncPrintf format string */
-extern const char D_80036B18_37718[]; /* osSyncPrintf format string - load weapon slot */
-extern const char D_80036B1C_3771C[]; /* osSyncPrintf format string */
-extern const char D_80036B20_37720[]; /* osSyncPrintf format string */
-extern const char D_80036B28_37728[]; /* osSyncPrintf format string - load bitflags */
-extern const char D_80036B30_37730[]; /* osSyncPrintf format string - load D_80048026 */
-extern const char D_80036B60_37760[]; /* osSyncPrintf format string */
-extern const char D_80036B78_37778[]; /* osSyncPrintf format string - load D_8004DC50 */
-extern const char D_80036B80_37780[]; /* osSyncPrintf format string - load D_80047F98 */
-extern const char D_80036B94_37794[]; /* osSyncPrintf format string - load D_80047F98 clamped */
-extern const char D_80036BA4_377A4[]; /* osSyncPrintf format string - load D_8004D154 */
-extern const char D_80036BB8_377B8[]; /* osSyncPrintf format string - load D_8004D158 */
-extern const char D_80036BC8_377C8[]; /* osSyncPrintf format string */
-extern const char D_80036BD4_377D4[]; /* osSyncPrintf format string - load weapon damage */
-extern const char D_80036BF4_377F4[]; /* osSyncPrintf format string - load D_80048030 */
-extern const char D_80036C0C_3780C[]; /* osSyncPrintf format string - load old D_80052ACD */
-extern const char D_80036C1C_3781C[]; /* osSyncPrintf format string - load new D_80052ACD */
-extern const char D_80036C2C_3782C[]; /* osSyncPrintf format string - load D_8004815x */
-extern const char D_80036C4C_3784C[]; /* osSyncPrintf format string */
-extern const char D_80036C50_37850[]; /* osSyncPrintf format string - load failed */
-extern const char D_80036C64_37864[];
-extern const char D_80036C74_37874[];
 extern const f32 D_80036C88_37888[];
 extern const f64 D_80037610_38210[];
 extern const Unk80154082 D_800378CC_384CC;
