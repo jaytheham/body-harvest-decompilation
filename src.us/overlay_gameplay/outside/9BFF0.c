@@ -633,7 +633,6 @@ s32 func_8008D0E0_9C090(u8 arg0)
 	return 0;
 }
 
-// AI - Set targeting mode to parent
 // HCU behavior - set target back to parent Harvester
 void func_8008D3B0_9C360(u8 arg0)
 {
@@ -691,7 +690,6 @@ void func_8008D4A0_9C450(unsigned int arg0)
 	}
 }
 
-// AI - Start interaction sequence with player
 // HCU - player capture
 void func_8008D634_9C5E4(u8 arg0)
 {
@@ -784,7 +782,6 @@ void func_8008D71C_9C6CC(u32 arg0)
 	}
 }
 
-// AI - Detach alien from parent
 // Goliath/"Spyder" behavior - set unk25 parent to FF if parent harvester died?
 s32 func_8008D978_9C928(u8 arg0)
 {
@@ -805,7 +802,6 @@ s32 func_8008D978_9C928(u8 arg0)
 	return 0;
 }
 
-// AI - following logic for carried humans
 // HCU - captured human/player handling with parent Harvester
 void func_8008DA24_9C9D4(u8 arg0)
 {
@@ -1495,7 +1491,6 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	}
 }
 
-
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior/targeting
 void func_8008F6C0_9E670(u8 arg0)
 {
@@ -1654,7 +1649,6 @@ void func_8008F9E4_9E994(u8 arg0)
 	func_8008E978_9D928(arg0, tmpB);
 	func_8008EF1C_9DECC(arg0);
 }
-
 
 // AI - Spawn a new alien instance from pool
 u8 func_8008FC78_9EC28(u8 arg0)
@@ -1960,8 +1954,6 @@ void func_8009012C_9F0DC(u32 arg0)
 		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
 	}
 }
-
-
 
 // AI - Decrement parent death timer or run standard AI
 void func_800908C4_9F874(u8 arg0)
@@ -2657,7 +2649,6 @@ void func_800920C0_A1070(u8 arg0)
 				func_80137468_146418(arg0, 0x135);
 
 				cappedValue = MIN(0x2710, vehicleTypes[D_80052B34->unk1A].unk32);
-				/* The comma expression preserves IDO's division scheduling. */
 				scale = ((f32)alienInstances[arg0].unk12 / (f32)0x200) * (f32)(1.0 - ((f32)cappedValue / (0, 12000.0f)));
 				fx = (s16)((f32)D_80145BE2_154B92[alienTypes[alienInstances[arg0].typeIndex].unk1C].unk0 * scale);
 				func_80122524_1314D4(D_80052B34, fx, alienInstances[arg0].unk0, alienInstances[arg0].unk4);
@@ -3575,7 +3566,6 @@ void func_80093C7C_A2C2C(u8 arg0)
 			}
 			else
 			{
-				/* Keep both index scales for IDO's target temporary allocation. */
 				path2Index = ((s8 (*)[8])D_8014DD5C)[path3->unkD << 1][0];
 				pathNodes[0] = path2Index;
 			}
@@ -3895,4 +3885,3 @@ void func_800950D0_A4080(u8 arg0)
 }
 
 #pragma weak func_80092A50_A1A00_WordArgs = func_80092A50_A1A00
-
