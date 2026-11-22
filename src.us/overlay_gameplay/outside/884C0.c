@@ -300,15 +300,15 @@ u32 D_8013C544_14B4F4[] = {
 
 void func_80079510_884C0(u8 arg0)
 {
-  AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
-  *((s32 *)&inst->unk8) = 0;
-  *((s32 *)&inst->unkC) = 0;
-  *((s32 *)&inst->unk10) = 0;
-  *((s32 *)&inst->unk14) = 0;
-  inst->typeIndex = 0;
-  inst->hitPoints = 0x32;
-  inst->unk1B = 0xFF;
-  *((u8*)&inst->unk1E) = 0xFF;
+	AlienInstance *inst = &alienInstances[alienInstances[arg0].unk25];
+	*((s32 *)&inst->unk8) = 0;
+	*((s32 *)&inst->unkC) = 0;
+	*((s32 *)&inst->unk10) = 0;
+	*((s32 *)&inst->unk14) = 0;
+	inst->typeIndex = 0;
+	inst->hitPoints = 0x32;
+	inst->unk1B = 0xFF;
+	*((u8 *)&inst->unk1E) = 0xFF;
 }
 
 // Spawn alien of type arg0, return instance index or -1 if no slots available
@@ -381,44 +381,44 @@ s32 func_8007956C_8851C(u8 arg0)
 // Skip this and aliens freeze when they die, never disappear
 void func_800797A4_88754(s32 arg0, u8 arg1)
 {
-  s16 i;
-  s16 nibble;unsigned int new_var;
-  if (arg1 == 0)
-  {
-	return;
-  }
-  if (arg1 >= 0x19)
-  {
-	return;
-  }
-  for (i = 0; i < 4; i++)
-  {
-	new_var = arg1;
-	switch (i)
+	s16 i;
+	s16 nibble;
+	unsigned int new_var;
+	if (arg1 == 0)
 	{
-	  case 0:
-		nibble = ((u32) D_8013C1B8_14B168[new_var * 2]) >> 4;
-		break;
-
-	  case 1:
-		nibble = D_8013C1B8_14B168[new_var * 2] & 0xF;
-		break;
-
-	  case 2:
-		nibble = ((u32) D_8013C1B8_14B168[(new_var * 2) + 1]) >> 4;
-		break;
-
-	  case 3:
-		nibble = D_8013C1B8_14B168[(new_var * 2) + 1] & 0xF;
-		break;
-
+		return;
 	}
-
-	if (nibble != 0)
+	if (arg1 >= 0x19)
 	{
-	  func_800A8A68_B7A18(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_8013C178_14B128[0x2F + nibble]);
+		return;
 	}
-  }
+	for (i = 0; i < 4; i++)
+	{
+		new_var = arg1;
+		switch (i)
+		{
+		case 0:
+			nibble = ((u32)D_8013C1B8_14B168[new_var * 2]) >> 4;
+			break;
+
+		case 1:
+			nibble = D_8013C1B8_14B168[new_var * 2] & 0xF;
+			break;
+
+		case 2:
+			nibble = ((u32)D_8013C1B8_14B168[(new_var * 2) + 1]) >> 4;
+			break;
+
+		case 3:
+			nibble = D_8013C1B8_14B168[(new_var * 2) + 1] & 0xF;
+			break;
+		}
+
+		if (nibble != 0)
+		{
+			func_800A8A68_B7A18(alienInstances[arg0].unk0, alienInstances[arg0].unk2, alienInstances[arg0].unk4, D_8013C178_14B128[0x2F + nibble]);
+		}
+	}
 }
 
 // a lot of alien death bookkeeping/effects
@@ -1120,13 +1120,13 @@ void func_8007B20C_8A1BC(Unk8014DD50 *arg0) {
 
 void func_8007B2A0_8A250(u8 arg0)
 {
-  u8 typeIndex = alienInstances[arg0].typeIndex;
-  if (alienTypes[typeIndex].unk44 != NULL)
-  {
-	gSPSegment(D_8005BB2C++, 0x07, osVirtualToPhysical((void *) D_8005BB38));
-	func_8007B20C_8A1BC((Unk8014DD50 *) alienTypes[typeIndex].unk44);
-  }
-  gSPDisplayList(D_8005BB2C++, (Gfx *) alienTypes[typeIndex].unk0);
+	u8 typeIndex = alienInstances[arg0].typeIndex;
+	if (alienTypes[typeIndex].unk44 != NULL)
+	{
+		gSPSegment(D_8005BB2C++, 0x07, osVirtualToPhysical((void *)D_8005BB38));
+		func_8007B20C_8A1BC((Unk8014DD50 *)alienTypes[typeIndex].unk44);
+	}
+	gSPDisplayList(D_8005BB2C++, (Gfx *)alienTypes[typeIndex].unk0);
 }
 
 void func_8007B370_8A320(u8 arg0) {
@@ -1270,8 +1270,6 @@ s32 func_8007B9CC_8A97C(u8 arg0) {
 	gSPDisplayList(D_8005BB2C++, model);
 }
 
-
-
 // drawComplexObjectShadows e.g. humans
 void func_8007BEC0_8AE70(void)
 {
@@ -1328,7 +1326,7 @@ void func_8007C044_8AFF4(void) {
 	s16 drewType1 = 0;
 	s16 drewType2Or20 = 0;
 	Unk80052B40 rotation;
-	AlienRenderScales scales; /* Keep the original template workspace copy. */
+	AlienRenderScales scales;
 	Unk80052B40 smallScale;
 	Unk80052B40 fullScale;
 	Unk80052B40 position;
@@ -1392,7 +1390,6 @@ void func_8007C044_8AFF4(void) {
 				gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
 			}
 
-			/* Preserve the type-address lifetime during register allocation. */
 			if (rotation.unk0) { }
 			if (rotation.unk2) { }
 			if (alienTypes[typeIndex].unk54 & 0x10000) {
@@ -1499,7 +1496,6 @@ void func_8007C044_8AFF4(void) {
 				lod = 3;
 			}
 
-			/* The zero ORs below preserve the current-state carrier. */
 			if (alienInstances[alienId].unk20 & 0x100000) {
 				animIndex = 0x40;
 				drawId = alienInstances[alienId].unk24;
@@ -1514,7 +1510,6 @@ void func_8007C044_8AFF4(void) {
 				} else if (alienInstances[alienId].unk2 < (D_80222A70 - 0x1E)) {
 					animIndex = ((((u32)alienId + D_80052A8C) & 0xE) >> 1) + 0x30;
 				} else {
-					/* Keep the speed cache ahead of the preserved state word. */
 					if (alienInstances[alienId].unk12 * alienInstances[alienId].unk12) { }
 					if (alienInstances[alienId].unk12 == 0x40) {
 						animIndex = (((u32)alienId + D_80052A8C) / 3U) & 7;
@@ -1717,8 +1712,8 @@ void func_8007D690_8C640(void) {
 	s32 absX;
 	s32 signZ;
 	s32 absZ;
-	s32 stackPad; /* Preserve the snapshot home at sp + 0x60. */
-	int helperTemp; /* Replaces IDO's anonymous word temporaries. */
+	s32 stackPad;
+	int helperTemp;
 	s32 indexSnapshot[1];
 
 	workValue = D_8014ECCC;
@@ -1822,7 +1817,6 @@ void func_8007D690_8C640(void) {
 									} else {
 										spinDirection = 0;
 									}
-									/* Retain the inner-to-outer sign copy. */
 									workValue = (spinDirection = spinDirection) * 0 + spinDirection;
 								}
 								alienInstances[alienIndex].unk8 = (workValue * alienInstances[alienIndex].unkA) >> 3;
@@ -2135,7 +2129,6 @@ s32 func_8007E608_8D5B8(AlienInstance *arg0, EntityInstance *arg1) {
 			if (((arg0->typeIndex != 0xD) || (arg1->unk1A == 9)) && (new_var = arg1->unk1A == 0xD) && (arg0->typeIndex != 9)) {
 			}
 		} else if (state == 2) {
-			/* Preserve the original empty debug guards. */
 			if (arg0->typeIndex != 0xD) {
 				saved0 = (u64)saved0;
 			}
@@ -2617,7 +2610,6 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 		}
 	}
 
-	/* Keep the active-list counter live for IDO's parameter normalization. */
 	if (arg1) { }
 	if ((!((*new_var) & 0x80)) && (alienTypes[typeIndex].unk54 & 4)) {
 		while ((u32)arg1 < D_8014ECCC) {
@@ -2625,7 +2617,6 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			other = &alienInstances[i];
 			otherTypeIndex = other->typeIndex;
 			otherType = &alienTypes[otherTypeIndex];
-			/* Keep the type pointer ahead of the active index in IDO's cache. */
 			if ((u32)otherType * 0) {}
 
 			if (((!(otherType->unk54 & 4)) || (i == arg0)) || ((&alienInstances[i])->unk47 & 0x80)) {
@@ -2673,7 +2664,6 @@ s32 func_8007F0E8_8E098(u8 arg0, u8 arg1, u8 arg2) {
 			D_8014ECD4 = selfIndex;
 			func_8007F0E8_8E098(i, 0, arg2);
 			D_8014ECD4 = -1;
-			/* Preserve IDO's reload across this index-check boundary. */
 			if (i) { }
 			if (D_8014ECD4 == i) {
 				osSyncPrintf("Alien %s force offscreen %s\n", otherType->unk18, alienTypes[typeIndex].unk18);
@@ -3541,18 +3531,16 @@ void func_80081CF0_90CA0(Unk8014DD50 *arg0, Unk8014DD50 *arg1, s16 arg2) {
 
 void func_80081E5C_90E0C(s16 arg0)
 {
-  s16 counter = D_8014DD50[arg0].unkE;
-  if (counter != 0)
-  {
-	func_80081CF0_90CA0(&D_8014DD50[arg0], &D_8014E4D0[arg0], counter);
-	D_8014DD50[arg0].unk6 =
-		(
-			(
-				(D_8014E4D0[arg0].unk6 - ((s16) ((u16) D_8014DD50[arg0].unk6))) / counter
-			) + (u16) D_8014DD50[arg0].unk6
-		);
-	D_8014DD50[arg0].unkE--;
-  }
+	s16 counter = D_8014DD50[arg0].unkE;
+	if (counter != 0)
+	{
+		func_80081CF0_90CA0(&D_8014DD50[arg0], &D_8014E4D0[arg0], counter);
+		D_8014DD50[arg0].unk6 =
+			((
+				 (D_8014E4D0[arg0].unk6 - ((s16)((u16)D_8014DD50[arg0].unk6))) / counter) +
+			 (u16)D_8014DD50[arg0].unk6);
+		D_8014DD50[arg0].unkE--;
+	}
 }
 
 s8 func_80081F18_90EC8(u8 arg0, u8 arg1, u8 arg2, s16 *arg3, Unk8014DD50 **arg4) {
@@ -5722,22 +5710,22 @@ void func_80087F08_96EB8(void)
 
 void func_80088000_96FB0(s16 arg0)
 {
-  s32 i;
-  for (i = 0; i != 0xFF; i++)
-  {
-	if (arg0 == i)
+	s32 i;
+	for (i = 0; i != 0xFF; i++)
 	{
-		continue;
+		if (arg0 == i)
+		{
+			continue;
+		}
+		if (alienInstances[i].typeIndex == ALIEN_TYPE_HUMAN)
+		{
+			func_80079910_888C0(i);
+		}
+		else if (alienInstances[i].typeIndex != ALIEN_TYPE_NOTHING)
+		{
+			func_80088760_97710(&alienInstances[i]);
+		}
 	}
-	if (alienInstances[i].typeIndex == ALIEN_TYPE_HUMAN)
-	{
-		func_80079910_888C0(i);
-	}
-	else if (alienInstances[i].typeIndex != ALIEN_TYPE_NOTHING)
-	{
-		func_80088760_97710(&alienInstances[i]);
-	}  
-  }
 }
 
 // Is any Harvester within 2 meals of spawning a mutant?
