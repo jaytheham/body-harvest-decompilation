@@ -5,7 +5,6 @@
 #include "core/53F0.h"
 #include "core/1B100.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 // max ammo counts allowed for each weapon type- unlimited pistol, 100 shotgun, 999 machine gun...
 s16 D_80140D40_14FCF0[] = {
@@ -77,58 +76,62 @@ s32 func_80139150_148100(u8 arg0, u16 arg1) {
 // guess_giveItem
 s32 func_801391DC_14818C(s32 arg0, s16 arg1)
 {
-  s32 pad1;
-  s32 pad2;
-  s32 result;
-  s32 pad3;
-  s32 i;
-  u8 *p;
-  u8 prev;
-  if (func_801393A0_148350(arg0) != 0)
-  {
-	return (s16) func_80139150_148100(arg0, arg1);
-  }
-  p = weaponSlots;
-  if (weaponSlots[6] != 0)
-  {
-	if (weaponSlots[0] != 1)
+	s32 pad1;
+	s32 pad2;
+	s32 result;
+	s32 pad3;
+	s32 i;
+	u8 *p;
+	u8 prev;
+	if (func_801393A0_148350(arg0) != 0)
 	{
-	  osSyncPrintf("No space left in inventory for the new item.\n");
-	  return 0;
+		return (s16)func_80139150_148100(arg0, arg1);
 	}
-	for (i = 1; i < 7; i++)
+	p = weaponSlots;
+	if (weaponSlots[6] != 0)
 	{
-	  weaponSlots[i - 1] = weaponSlots[i];
-	}
+		if (weaponSlots[0] != 1)
+		{
+			osSyncPrintf("No space left in inventory for the new item.\n");
+			return 0;
+		}
+		for (i = 1; i < 7; i++)
+		{
+			weaponSlots[i - 1] = weaponSlots[i];
+		}
 
-	weaponSlots[6] = 0;
-  }
-	for (i = 6; i > 0; i--) {
-		if (arg0 < weaponSlots[i-1]) {
-			weaponSlots[i] = weaponSlots[i -1];
+		weaponSlots[6] = 0;
+	}
+	for (i = 6; i > 0; i--)
+	{
+		if (arg0 < weaponSlots[i - 1])
+		{
+			weaponSlots[i] = weaponSlots[i - 1];
 			continue;
-		} 
-		if (weaponSlots[i -1] != 0) {
+		}
+		if (weaponSlots[i - 1] != 0)
+		{
 			break;
 		}
 	}
 	weaponSlots[i] = arg0;
 
-  result = func_80139150_148100(arg0, arg1);
-  func_80139050_148000();
-  return result;
+	result = func_80139150_148100(arg0, arg1);
+	func_80139050_148000();
+	return result;
 }
 
 void func_801392FC_1482AC(s32 arg0)
 {
-  s32 i;
-  for (i = 0; (i < 7) && (arg0 != weaponSlots[i]); i++)
-  { }
+	s32 i;
+	for (i = 0; (i < 7) && (arg0 != weaponSlots[i]); i++)
+	{
+	}
 
-  if (i == 7)
-  {
-	  return;
-  }
+	if (i == 7)
+	{
+		return;
+	}
 	while (i++ < 7)
 	{
 		weaponSlots[i - 1] = weaponSlots[i];
@@ -166,25 +169,25 @@ void func_80139460_148410(void) {
 
 void func_801394DC_14848C(void)
 {
-  s32 bit;
-  s32 i;
-  for (i = 2; i != 0xB; i++)
-  {
-	bit = 1 << i;
-	if (bit & D_801601E8)
+	s32 bit;
+	s32 i;
+	for (i = 2; i != 0xB; i++)
 	{
-	  func_801391DC_14818C(i, 0);
-	  bit = 1 << i;
-	  D_801601E8 &= ~bit;
+		bit = 1 << i;
+		if (bit & D_801601E8)
+		{
+			func_801391DC_14818C(i, 0);
+			bit = 1 << i;
+			D_801601E8 &= ~bit;
+		}
 	}
-  }
 
-  if (currentLevel == LEVEL_COMET)
-  {
-	D_80048140[3] = 0x64; // 100 shotgun ammo
-	D_80048140[4] = 0x190; // 400 rifle ammo? wtf
-	D_80048140[6] = 0x18; // 24 rockets
-  }
+	if (currentLevel == LEVEL_COMET)
+	{
+		D_80048140[3] = 0x64;  // 100 shotgun ammo
+		D_80048140[4] = 0x190; // 400 rifle ammo? wtf
+		D_80048140[6] = 0x18;  // 24 rockets
+	}
 }
 
 void func_8013958C_14853C(void)
@@ -486,7 +489,7 @@ void func_8013A764_149714(u8 arg0)
 	s16 ammo;
 	s16 yPos;
 	u8 state;
-	u8 padding[4]; // Keeps the cached RGB row offset at sp+0x20.
+	u8 padding[4];
 	s16 clipX;
 	s16 clipY;
 	s32 textureIndex;
@@ -562,7 +565,6 @@ void func_8013B004_149FB4(void) {
 	func_801390F4_1480A4(weaponSlots[D_8004794A]);
 }
 
-// CURRENT(13285)
 void func_8013B054_14A004(void) {
 	if (D_80048188 != 0) {
 		return;

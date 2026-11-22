@@ -5754,3 +5754,23 @@ D_8014ED56_Text2 = D_8014ED56;
 D_8014ED56_Write = D_8014ED56;
 D_8014EDDE = D_8014EDDC + 2;
 D_8014F1E0_Set = D_8014F1E0;
+
+/* Loader asset banks packed in the unknown ROM segment. */
+javaModelsRomStart = _unknownSegmentRomStart + 0x2AD230;
+americaModelsRomStart = _unknownSegmentRomStart + 0x31F470;
+siberiaModelsRomStart = _unknownSegmentRomStart + 0x390230;
+cometModelsRomStart = _unknownSegmentRomStart + 0x400420;
+bossModelsRomStart = _unknownSegmentRomStart + 0x4412F0;
+greeceInteriorTexturesRomStart = _unknownSegmentRomStart + 0x4B74D0;
+javaInteriorModelsRomStart = _unknownSegmentRomStart + 0x4C9BB0;
+javaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x50C030;
+americaInteriorModelsRomStart = _unknownSegmentRomStart + 0x516A50;
+americaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x55C4A0;
+siberiaInteriorModelsRomStart = _unknownSegmentRomStart + 0x568AD0;
+siberiaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x5AA400;
+/* The loader skips the first 12 bytes of the Comet interior model bank. */
+cometInteriorModelsRomStart = _unknownSegmentRomStart + 0x5B4710;
+cometInteriorTexturesRomStart = _unknownSegmentRomStart + 0x5C3ED0;
+
+/* Shared blank menu label in AAA70.c rodata. */
+D_801426B8_151668 = D_801426E8_1521C8;

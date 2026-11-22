@@ -79,7 +79,6 @@ void func_8009F130_AE0E0(void) {
 				selected = -stickY;
 			}
 			if (selected < 0x14) {
-				/* Preserve IDO's address and stick value across the store. */
 				stickReady = (s16 *)(s32)&D_8014F1E0_Set; if (stickReady) {}
 				*stickReady = 1; if (stickY) {}
 			}
@@ -235,13 +234,12 @@ void func_8009FB58_AEB08(void) {
 	VehicleInstance *player;
 	s32 value;
 	s32 pad1;
-	s32 gapA; /* Original unused word homes. */
+	s32 gapA;
 	s32 gapB;
 	s16 *scannerValues;
 	u32 mapTexture;
 	s32 reserved[1];
 
-	/* Preserve the original stack home and IDO address priorities. */
 	if ((void *)reserved != &D_8014EDDC) {}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
@@ -250,11 +248,7 @@ void func_8009FB58_AEB08(void) {
 
 	mapTexture = K0_TO_PHYS(D_5032190);
 	gDPLoadTextureBlock_4b(D_8005BB2C++, mapTexture, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	{
-		Gfx *gfx = D_8005BB2C++;
-		gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF;
-		gfx->words.w1 = (((D_80052A8C * 12) & 0xFF) << 24) | (((D_80052A8C * 12) & 0xFF) << 16) | 0xFF;
-	}
+	gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_80052A8C * 12, D_80052A8C * 12, 0, 0xFF);
 
 	gDPLoadTLUT_pal16(D_8005BB2C++, 0, (u32)D_5032390);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
@@ -295,11 +289,7 @@ void func_8009FB58_AEB08(void) {
 
 	if (D_8014ED04 != 0x186A0) {
 
-		{
-			Gfx *gfx = D_8005BB2C++;
-			gfx->words.w0 = _SHIFTL(G_SETPRIMCOLOR, 24, 8) | 0xFFFF;
-			gfx->words.w1 = (((D_80052A8C * 20) & 0xFF) << 24) | (((D_80052A8C * 20) & 0xFF) << 8) | 0xFF;
-		}
+		gDPSetPrimColor(D_8005BB2C++, 0xFF, 0xFF, D_80052A8C * 20, 0, D_80052A8C * 20, 0xFF);
 
 		func_8009C1D8_AB188(((SignedWord *)&D_8014ED04)->halves.low, ((SignedWord *)&D_8014ED08)->halves.low, 1);
 
@@ -348,7 +338,6 @@ void func_8009FB58_AEB08(void) {
 
 			value = func_800F9C40_108BF0((D_80052B34->unk0 - alien->unk0) >> 2);
 			if (func_800F9C40_108BF0((D_80052B34->unk4 - alien->unk4) >> 2) + value >= 0xC351) {
-				/* The redundant masks preserve IDO's temporary-register cycle. */
 				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0, 0, ((D_80052A8C & 0xFFFF) * 0x10) & 0xFF & 0xFF & 0xFF & 0xFF);
 
 				func_8009C1D8_AB188(alien->unk0, alien->unk4, 1);
@@ -368,7 +357,6 @@ void func_800A03FC_AF3AC(void) {
 	static u16 D_8013D754_14C704 = 0;
 	u32 *clearWords;
 	VehicleInstance *firstPlayer;
-	/* Pack halfwords into the gaps preceding the six-byte vectors. */
 	s16 mapX;
 	Unk80052B40 sp170;
 	s16 temp;
@@ -449,7 +437,6 @@ void func_800A03FC_AF3AC(void) {
 		while (i < D_80158FD8) {
 			player = D_80052B34;
 			vehicle = &vehicleInstances[D_80158E80[i]];
-			/* Preserve the original IDO pointer priorities without emitted checks. */
 			if (((player == NULL) + ((void *)player == &D_80052A8C) + ((void *)player == &D_80068084)) && (player == vehicle)) {}
 
 			if ((player != vehicle) && ((currentLevel != 1) || (vehicle->unk1A != 0x12))) {
@@ -606,14 +593,14 @@ u8 D_8013D768_14C718 = 0;
 
 void func_800A1364_B0314(void)
 {
-  D_8013D758_14C708 = D_8013D75C_14C70C;
-  D_8013D75C_14C70C = osGetCount();
-  D_8014F210[D_8014F20C][D_8014F610] = D_8013D75C_14C70C - D_8013D758_14C708;
-  D_8014F20C++;
-  if (D_8014F20C >= 0x20)
-  {
-	D_8014F20C = 0;
-  }
+	D_8013D758_14C708 = D_8013D75C_14C70C;
+	D_8013D75C_14C70C = osGetCount();
+	D_8014F210[D_8014F20C][D_8014F610] = D_8013D75C_14C70C - D_8013D758_14C708;
+	D_8014F20C++;
+	if (D_8014F20C >= 0x20)
+	{
+		D_8014F20C = 0;
+	}
 }
 
 void func_800A13E8_B0398(void) {
@@ -866,7 +853,7 @@ void func_800A1A18_B09C8(void) {
 
 	D_8013D768_14C718 = var_v1;
 }
-// CURRENT(3131)
+
 void func_800A1DD8_B0D88(u8 arg0) {
 	f32 tempF0;
 	f32 tempF2;
@@ -875,7 +862,6 @@ void func_800A1DD8_B0D88(u8 arg0) {
 	f32 tempF14;
 	f32 tempF16;
 	f32 tempF18;
-
 
 	tempF0 = (f32)((u32)D_8014F618.unk60 * 0.03125);
 	tempF2 = tempF0 * D_80153AB8.x;
@@ -887,7 +873,6 @@ void func_800A1DD8_B0D88(u8 arg0) {
 
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_1009C70[D_8014F618.textureIndices[arg0] << 7]), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
-
 
 	D_8005BB34->v.ob[0] = (D_8014F618.positions[arg0].x + tempF2);
 	D_8005BB34->v.ob[1] = (D_8014F618.positions[arg0].y + tempF12);
@@ -941,6 +926,7 @@ void func_800A1DD8_B0D88(u8 arg0) {
 	gSP1Quadrangle(D_8005BB2C++, 0, 1, 2, 3, 0);
 	gDPPipeSync(D_8005BB2C++);
 }
+
 void func_800A2260_B1210(void)
 {
 	f32 sp6C;
@@ -1028,7 +1014,7 @@ void func_800A2260_B1210(void)
 	D_8005BB34->v.ob[2] = D_8014F618.head.unk8 - D_8014F618.head.unk20;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
-D_8005BB34->v.tc[1] = 0;
+	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = 0;
 	D_8005BB34->v.cn[1] = 0;
 	D_8005BB34->v.cn[2] = 0;
@@ -1063,6 +1049,7 @@ D_8005BB34->v.tc[1] = 0;
 	gSP2Triangles(D_8005BB2C++, 8, 4, 5, 0, 7, 4, 8, 0);
 	gDPPipeSync(D_8005BB2C++);
 }
+
 s32 func_800A2A88_B1A38(void) {
 	s32 temp_v0;
 

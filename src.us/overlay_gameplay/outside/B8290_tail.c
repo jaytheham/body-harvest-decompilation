@@ -259,14 +259,12 @@ void func_800AB8CC_BA87C(u8 arg0)
 		inst->unk20 |= ALIEN_FLAG_UNKF;
 		inst->unk2C = 0x64;
 	}
-	/* These discarded conversions preserve IDO's stack and register allocation. */
 	if ((f64)(s32)inst * (f64)(s32)inst) {}
 	if (((f32)((u32)parentIndex & 7) + (f32)((u32)parentIndex & 15) + (f32)((u32)parentIndex & 31) + (f64)(s32)inst) != 0.0f)
 	{
 	}
 }
 
-// AI - Stun knockback timer
 // Human behavior- case 1 - ZOMBIE
 void func_800ABC2C_BABDC(u8 arg0) {
 	AlienInstance *ptr = &alienInstances[arg0];

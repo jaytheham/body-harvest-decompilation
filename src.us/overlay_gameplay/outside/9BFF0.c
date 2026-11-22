@@ -11,20 +11,6 @@
 #include "core/1050.h"
 #include "884C0.h"
 
-const char D_80141E80_150E30[] = "%s says I'm busy\n";						   // "%s says I'm busy\n"
-const char D_80141E94_150E44[] = "nearest human %d @ %d,%d\n";				   // "nearest human %d @ %d,%d\n"
-const char D_80141EB0_150E60[] = "Drone Hunter stops targeting building %d\n"; // "Drone Hunter stops targeting building %d\n"
-const f64 D_80141EE0_150E90[] = {0.9};
-const f64 D_80141EE8_150E98[] = {0.9};
-const ShadowGeometryConstant D_80141EF0_150EA0 = {0.9};
-const f64 D_80141EF8_150EA8[] = {65.0};
-const f64 D_80141F00_150EB0[] = {65.0};
-const f32 D_80141F08_150EB8[] = {12000.0f};
-const ShadowGeometryConstant D_80141F10_150EC0 = {1000.0};
-const ShadowGeometryConstant D_80141F18_150EC8 = {1500.0};
-const f64 D_80141F20_150ED0[] = {9.424777962};
-const f64 D_80141F28_150ED8[] = {0.0};
-
 Unk8014DD50 *D_8013C610_14B5C0[] = {(Unk8014DD50 *)&D_8013C544_14B4F4[39], (Unk8014DD50 *)&D_8013C544_14B4F4[27]};
 
 u8 D_8013C618_14B5C8[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -593,7 +579,7 @@ void func_8008D040_9BFF0(u8 arg0)
 		} while (0);
 		do
 		{
-			osSyncPrintf(&D_80141E80_150E30, *((s32 *)(&alienTypes[inst->typeIndex].unk18)), parent, parentUnk20);
+			osSyncPrintf("%s says I'm busy\n", *((s32 *)(&alienTypes[inst->typeIndex].unk18)), parent, parentUnk20);
 		} while (0);
 	}
 }
@@ -647,7 +633,6 @@ s32 func_8008D0E0_9C090(u8 arg0)
 	return 0;
 }
 
-// AI - Set targeting mode to parent
 // HCU behavior - set target back to parent Harvester
 void func_8008D3B0_9C360(u8 arg0)
 {
@@ -705,7 +690,6 @@ void func_8008D4A0_9C450(unsigned int arg0)
 	}
 }
 
-// AI - Start interaction sequence with player
 // HCU - player capture
 void func_8008D634_9C5E4(u8 arg0)
 {
@@ -798,7 +782,6 @@ void func_8008D71C_9C6CC(u32 arg0)
 	}
 }
 
-// AI - Detach alien from parent
 // Goliath/"Spyder" behavior - set unk25 parent to FF if parent harvester died?
 s32 func_8008D978_9C928(u8 arg0)
 {
@@ -819,7 +802,6 @@ s32 func_8008D978_9C928(u8 arg0)
 	return 0;
 }
 
-// AI - following logic for carried humans
 // HCU - captured human/player handling with parent Harvester
 void func_8008DA24_9C9D4(u8 arg0)
 {
@@ -1236,7 +1218,7 @@ void func_8008E978_9D928(u8 arg0, s32 arg1)
 	{
 		alienInstances[arg0].unkA += 0x1F4;
 	}
-	alienInstances[arg0].unkA *= D_80141EE0_150E90[0];
+	alienInstances[arg0].unkA *= 0.9;
 	sp2C = -alienInstances[arg0].unk12 < alienInstances[arg0].unk12 ? alienInstances[arg0].unk12 : -alienInstances[arg0].unk12;
 	if (sp2C < 0x301)
 	{
@@ -1295,7 +1277,7 @@ void func_8008EB20_9DAD0(u8 arg0, s32 arg1, s32 arg2)
 		factor = (((alienInstances[arg0].unk2 - arg1) / 160) > 1.0) ? (1.0) : ((alienInstances[arg0].unk2 - arg1) / 160);
 		alienInstances[arg0].unkA = alienInstances[arg0].unkA + (arg2 * factor);
 	}
-	alienInstances[arg0].unkA *= D_80141EE8_150E98[0];
+	alienInstances[arg0].unkA *= 0.9;
 	temp2 = -alienInstances[arg0].unk12 < alienInstances[arg0].unk12 ? alienInstances[arg0].unk12 : -alienInstances[arg0].unk12;
 	if (temp2 < 0x101)
 	{
@@ -1509,7 +1491,6 @@ void func_8008F0BC_9E06C(u8 arg0, s32 arg1)
 	}
 }
 
-
 // Scout (flying mosquito bug type 0x03, also 0x0D and 0x22 in Siberia) behavior/targeting
 void func_8008F6C0_9E670(u8 arg0)
 {
@@ -1662,13 +1643,12 @@ void func_8008F9E4_9E994(u8 arg0)
 	}
 
 	func_800808F0_8F8A0(arg0, &alienInstances[arg0].unk8);
-	alienInstances[arg0].unk8 = alienInstances[arg0].unk8 * D_80141EF0_150EA0.value;
+	alienInstances[arg0].unk8 = alienInstances[arg0].unk8 * 0.9;
 	alienInstances[arg0].unkE += alienInstances[arg0].unk8 / 8;
 	tmpB = func_8008E524_9D4D4(arg0, sp24, 2);
 	func_8008E978_9D928(arg0, tmpB);
 	func_8008EF1C_9DECC(arg0);
 }
-
 
 // AI - Spawn a new alien instance from pool
 u8 func_8008FC78_9EC28(u8 arg0)
@@ -1774,9 +1754,9 @@ void func_8008FF54_9EF04(u8 arg0, s32 *arg1, s32 *arg2, s32 *arg3)
 	z = D_8014DD50[root].unk4 + D_8014DD50[child].unk4;
 	angle = D_8014DD50[child].unkA;
 
-	y += ((-50.0 * ((f32)coss(angle) / 32768.0)) - (D_80141EF8_150EA8[0] * ((f32)sins(angle) / 32768.0)));
+	y += ((-50.0 * ((f32)coss(angle) / 32768.0)) - (65.0 * ((f32)sins(angle) / 32768.0)));
 
-	z += ((-50.0 * ((f32)sins(angle) / 32768.0)) + (D_80141F00_150EB0[0] * ((f32)coss(angle) / 32768.0)));
+	z += ((-50.0 * ((f32)sins(angle) / 32768.0)) + (65.0 * ((f32)coss(angle) / 32768.0)));
 
 	func_80128428_1373D8(&alienInstances[arg0], (s16)x, (s16)y, (s16)z, arg1, arg2, arg3);
 }
@@ -1869,7 +1849,7 @@ void func_8009012C_9F0DC(u32 arg0)
 			target = func_80082394_91344(alienInstances[arg0].unk0, alienInstances[arg0].unk4, 8);
 			if (target < 0xFF)
 			{
-				osSyncPrintf(&D_80141E94_150E44, target, alienInstances[target].unk0, alienInstances[target].unk4);
+				osSyncPrintf("nearest human %d @ %d,%d\n", target, alienInstances[target].unk0, alienInstances[target].unk4);
 				alienInstances[arg0].unk14 = alienInstances[target].unk0;
 				alienInstances[arg0].unk16 = alienInstances[target].unk2;
 				alienInstances[arg0].unk18 = alienInstances[target].unk4;
@@ -1974,8 +1954,6 @@ void func_8009012C_9F0DC(u32 arg0)
 		alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_UNKF | ALIEN_FLAG_UNKE);
 	}
 }
-
-
 
 // AI - Decrement parent death timer or run standard AI
 void func_800908C4_9F874(u8 arg0)
@@ -2290,7 +2268,7 @@ void func_80091470_A0420(u8 arg0)
 		buildingIdx = (u8)alienInstances[parentIdx].unk38;
 		if (buildingInstances[buildingIdx].hitPoints < (buildingTypes[buildingInstances[buildingIdx].buildingType].unk19 / 2))
 		{
-			osSyncPrintf(&D_80141EB0_150E60, buildingIdx);
+			osSyncPrintf("Drone Hunter stops targeting building %d\n", buildingIdx);
 			found = (u8)func_8011B6C0_12A670(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unk51 / 20, 1, 0x100C);
 			if (found != 0xFF)
 			{
@@ -2671,11 +2649,11 @@ void func_800920C0_A1070(u8 arg0)
 				func_80137468_146418(arg0, 0x135);
 
 				cappedValue = MIN(0x2710, vehicleTypes[D_80052B34->unk1A].unk32);
-				scale = ((f32)alienInstances[arg0].unk12 / (f32)0x200) * (f32)(1.0 - ((f32)cappedValue / D_80141F08_150EB8[0]));
+				scale = ((f32)alienInstances[arg0].unk12 / (f32)0x200) * (f32)(1.0 - ((f32)cappedValue / (0, 12000.0f)));
 				fx = (s16)((f32)D_80145BE2_154B92[alienTypes[alienInstances[arg0].typeIndex].unk1C].unk0 * scale);
 				func_80122524_1314D4(D_80052B34, fx, alienInstances[arg0].unk0, alienInstances[arg0].unk4);
 
-				func_80128288_137238(D_80052B34, alienInstances[arg0].unk6, (s16)(scale * D_80141F10_150EC0.value), (s16)(scale * D_80141F18_150EC8.value));
+				func_80128288_137238(D_80052B34, alienInstances[arg0].unk6, (s16)(scale * 1000.0), (s16)(scale * 1500.0));
 
 				sp6C = (f32)((f32)sins((u16)(alienInstances[arg0].unk6 + 0x4000)) / 32768.0);
 				fx = coss((u16)(alienInstances[arg0].unk6 + 0x4000));
@@ -2743,7 +2721,7 @@ void func_800920C0_A1070(u8 arg0)
 			targetSpeed = 0;
 			if ((D_80052B34->unk1A == 0) && (alienInstances[arg0].unk20 & ALIEN_FLAG_PLAYER))
 			{
-				swing = (f32)(alienInstances[arg0].unk2C * 0x32) * sinf((f32)((D_80141F20_150ED0[0] * (f64)(alienInstances[arg0].unk2C - 0x46)) / 30.0));
+				swing = (f32)(alienInstances[arg0].unk2C * 0x32) * sinf((f32)((9.424777962 * (f64)(alienInstances[arg0].unk2C - 0x46)) / 30.0));
 				if (-swing >= swing)
 				{
 					swing = -swing;
@@ -3588,7 +3566,6 @@ void func_80093C7C_A2C2C(u8 arg0)
 			}
 			else
 			{
-				/* Keep both index scales for IDO's target temporary allocation. */
 				path2Index = ((s8 (*)[8])D_8014DD5C)[path3->unkD << 1][0];
 				pathNodes[0] = path2Index;
 			}
@@ -3908,4 +3885,3 @@ void func_800950D0_A4080(u8 arg0)
 }
 
 #pragma weak func_80092A50_A1A00_WordArgs = func_80092A50_A1A00
-

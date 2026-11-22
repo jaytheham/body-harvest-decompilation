@@ -12,7 +12,6 @@
 #include "core/12C80.h"
 #include "core/1050.h"
 #include "overlay_gameplay/outside/trigger.h"
-#include "overlay_level/greece/18D7E0.h"
 
 static void func_802D5DDC_stub(void);
 
@@ -63,27 +62,6 @@ Unk802E04F8Entry D_802E04F8_1F9208[] = {
 
 s32 D_802E0568_1F9278 = 0x45284827;
 
-/* ====================== .rodata ====================== */
-
-const char D_802E0D50_1F9A60[] = "Unwritten Java Function %d\n";
-const char D_802E0D6C_1F9A7C[] = "bladam creation fuckup\n";
-const char D_802E0D84_1F9A94[] = "Destroyed alien holding cable car\n";
-const char D_802E0DA8_1F9AB8[] = "Destroyed battery blob\n";
-const char D_802E0DC0_1F9AD0[] = "JAVA: Request native hut height map\n";
-const char D_802E0DE8_1F9AF8[] = "JAVA: Start humans exiting\n";
-const char D_802E0E04_1F9B14[] = "All done\n\n\n";
-const char D_802E0E10_1F9B20[] = "Init\n";
-const char D_802E0E18_1F9B28[] = "finishing\n";
-const char D_802E0E24_1F9B34[] = "add human\n";
-const char D_802E0E30_1F9B40[] = "end evac\n";
-const char D_802E0E3C_1F9B4C[] = "stop boat damage\n";
-const char D_802E0E50_1F9B60[] = "4:%d\n";
-const char D_802E0E58_1F9B68[] = "5:%d\n";
-const char D_802E0E60_1F9B70[] = "Lava pools killed\n";
-const char D_802E0E74_1F9B84[] = "Damage\n";
-const char D_802E0E7C_1F9B8C[] = "CREATE LIGHTNING!\n";
-
-
 void func_802D6DF8_1EFB08(void);
 
 // AI - Mission id dispatcher: calls D_802E04A4_1F91B4[arg0] for ids < 0x14, else the 0x14/0x15 cutscene and 0x44/0x45 cases.
@@ -110,7 +88,7 @@ void func_802D4CD0_1ED9E0(s32 arg0, s32 arg1) {
 		func_80007690_8290();
 		break;
 	default:
-		osSyncPrintf(&D_802E0D50_1F9A60, arg0);
+		osSyncPrintf("Unwritten Java Function %d\n", arg0);
 		break;
 	}
 }
@@ -162,7 +140,6 @@ void func_802D4F70_1EDC80(s32 arg0) {
 }
 
 // Blackness Harbor Black Adam encounter
-// AI - Spawns the Black Adam alien via func_8007956C_8851C(0x12), sets D_80256DEC and D_80157E7C, arms func_802D4F70_1EDC80.
 void func_802D4F98_1EDCA8(void) {
 	Unk80222A78 callback_struct;
 	s16 position;
@@ -183,11 +160,11 @@ void func_802D4F98_1EDCA8(void) {
 		func_800AE454_BD404(&callback_struct);
 		return;
 	}
-	osSyncPrintf(D_802E0D6C_1F9A7C);
+	osSyncPrintf("bladam creation fuckup\n");
 }
 
 void func_802D507C_1EDD8C(s32 arg0) {
-	osSyncPrintf(D_802E0D84_1F9A94);
+	osSyncPrintf("Destroyed alien holding cable car\n");
 	func_800073B8_7FB8(0xBLL);
 }
 
@@ -211,7 +188,7 @@ void func_802D50B0_1EDDC0(void) {
 }
 
 void func_802D513C_1EDE4C(s32 arg0) {
-	osSyncPrintf(&D_802E0DA8_1F9AB8);
+	osSyncPrintf("Destroyed battery blob\n");
 	func_800072CC_7ECC(0xC);
 }
 
@@ -313,7 +290,6 @@ s32 func_802D51F8_1EDF08(void) {
 	return 0;
 }
 
-
 void func_802D5508_1EE218(void) {
 	if (D_802E0FB0-- <= 0) {
 		func_80013468_14068(6);
@@ -373,7 +349,6 @@ void func_802D5590_1EE2A0(void) {
 	}
 }
 
-
 int func_802D57F4_1EE504(void) {
 	static s16 missionFrames = 0;
 
@@ -382,7 +357,7 @@ int func_802D57F4_1EE504(void) {
 		buildingInstances[38].statusFlags |= 0x10000;
 		missionFrames = 0;
 		if (D_80157F8E == 1) {
-			osSyncPrintf(D_802E0DC0_1F9AD0);
+			osSyncPrintf("JAVA: Request native hut height map\n");
 			func_8011D438_12C3E8(0xC, 0);
 		}
 		if (D_80157F8E++ >= 0x15) {
@@ -394,7 +369,7 @@ int func_802D57F4_1EE504(void) {
 	case 1:
 		alienTypes[1].unk54 &= ~2;
 		if (D_80157F8E == 5) {
-			osSyncPrintf(D_802E0DE8_1F9AF8);
+			osSyncPrintf("JAVA: Start humans exiting\n");
 			buildingInstances[38].statusFlags |= 0x20;
 			buildingInstances[38].unkE = 0x50;
 		}
@@ -420,7 +395,7 @@ int func_802D57F4_1EE504(void) {
 
 	case 3:
 		alienTypes[1].unk54 |= 2;
-		osSyncPrintf(D_802E0E04_1F9B14);
+		osSyncPrintf("All done\n\n\n");
 		D_802E0FB0 = 0;
 		func_80007410_8010(&func_802D5590_1EE2A0);
 		D_802E0FB0 = -0x32;
@@ -673,7 +648,7 @@ AlienType D_802E0CE4_1F99F4 = {
 };
 
 void func_802D5A78_1EE788(void) {
-	osSyncPrintf(&D_802E0E10_1F9B20);
+	osSyncPrintf("Init\n");
 	D_801591C4 = 0;
 	D_802E0FB2 = 0;
 	D_802E0FB4 = 0xA;
@@ -689,11 +664,11 @@ void func_802D5ADC_1EE7EC(void) {
 	sp1E = vehicleInstances[80].unk0;
 	sp1C = vehicleInstances[80].unk4;
 	D_802E0FB0 += 1;
-	osSyncPrintf(&D_802E0E18_1F9B28);
+	osSyncPrintf("finishing\n");
 	if (D_802E0FB0 == 3) {
 		D_802E0FB0 = 0;
 		if (D_801591C4 != 0) {
-			osSyncPrintf(&D_802E0E24_1F9B34);
+			osSyncPrintf("add human\n");
 			func_800AD554_BC504(sp1E + 0x64, sp1C + 0x64, 0x33);
 			D_801591C4 -= 1;
 			return;
@@ -703,9 +678,9 @@ void func_802D5ADC_1EE7EC(void) {
 }
 
 void func_802D5BA0_1EE8B0(void) {
-	osSyncPrintf(&D_802E0E30_1F9B40);
+	osSyncPrintf("end evac\n");
 	D_802E0FB0 = 0;
-	osSyncPrintf(&D_802E0E3C_1F9B4C);
+	osSyncPrintf("stop boat damage\n");
 	func_800074BC_80BC(&func_802D5590_1EE2A0);
 	func_80007410_8010(&func_802D5ADC_1EE7EC);
 	func_800076D4_82D4(9);
@@ -730,26 +705,6 @@ void func_802D5BF8_1EE908(void) {
 
 static void func_802D5DDC_stub(void) {
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 void func_802D5DE4_1EEAF4(void) {
 	vehicleInstances[79].unk20 = (u16) (vehicleInstances[79].unk20 & ~VEHICLE_FLAG_PATH_GUIDED);
@@ -843,46 +798,46 @@ void func_802D6128_1EEE38(void) {
 
 void func_802D614C_1EEE5C(void)
 {
-  s16 temp_v0;
-  temp_v0 = D_802E0FB6;
-  if (temp_v0 > 0)
-  {
-	D_802E0FB6 = temp_v0 - 1;
+	s16 temp_v0;
 	temp_v0 = D_802E0FB6;
-  }
-  if (temp_v0 == 0)
-  {
-	func_8011C080_12B030(0x32);
-	func_8011C080_12B030(0x31);
-	func_800E0F4C_EFEFC(buildingInstances[49].xCoord, (s16) (D_80222A70 + 0x64), buildingInstances[49].zCoord, 0x19);
-	func_800074BC_80BC((void *) func_802D614C_1EEE5C);
-	func_800DF038_EDFE8(buildingInstances[49].xCoord, (s16) (D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
-	func_800DF038_EDFE8(buildingInstances[50].xCoord, (s16) (D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x12C, 0x10, 0);
-	temp_v0 = D_802E0FB6;
-  }
-  if ((temp_v0 % 5) == 0)
-  {
-	func_800E0F4C_EFEFC((s16) (((buildingInstances[50].xCoord) - (temp_v0 * 0x32)) + 0x3E8), (s16) (D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x19);
-  }
+	if (temp_v0 > 0)
+	{
+		D_802E0FB6 = temp_v0 - 1;
+		temp_v0 = D_802E0FB6;
+	}
+	if (temp_v0 == 0)
+	{
+		func_8011C080_12B030(0x32);
+		func_8011C080_12B030(0x31);
+		func_800E0F4C_EFEFC(buildingInstances[49].xCoord, (s16)(D_80222A70 + 0x64), buildingInstances[49].zCoord, 0x19);
+		func_800074BC_80BC((void *)func_802D614C_1EEE5C);
+		func_800DF038_EDFE8(buildingInstances[49].xCoord, (s16)(D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
+		func_800DF038_EDFE8(buildingInstances[50].xCoord, (s16)(D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x12C, 0x10, 0);
+		temp_v0 = D_802E0FB6;
+	}
+	if ((temp_v0 % 5) == 0)
+	{
+		func_800E0F4C_EFEFC((s16)(((buildingInstances[50].xCoord) - (temp_v0 * 0x32)) + 0x3E8), (s16)(D_80222A70 + 0x96), buildingInstances[50].zCoord, 0x19);
+	}
 }
 
 // AI - Positions an effect from buildingInstances and calls func_800E0F4C_EFEFC; uses the D_80157F8C / D_80157F8E pair.
 void func_802D62A0_1EEFB0(void)
 {
-  s16 v0;
-  v0 = D_802E0FB6;
-  if ((v0 < 0x1E) && ((((u32) D_80052A8C) % 5) == 0))
-  {
-	D_802E0FB6 = v0 + 1;
+	s16 v0;
 	v0 = D_802E0FB6;
-  }
-  buildingInstances[50].xCoord -= v0;
-  if (buildingInstances[50].xCoord < (-0x5207))
-  {
-	D_802E0FB6 = 0x28;
-	func_800074BC_80BC(func_802D62A0_1EEFB0);
-	func_80007410_8010(&func_802D614C_1EEE5C);
-  }
+	if ((v0 < 0x1E) && ((((u32)D_80052A8C) % 5) == 0))
+	{
+		D_802E0FB6 = v0 + 1;
+		v0 = D_802E0FB6;
+	}
+	buildingInstances[50].xCoord -= v0;
+	if (buildingInstances[50].xCoord < (-0x5207))
+	{
+		D_802E0FB6 = 0x28;
+		func_800074BC_80BC(func_802D62A0_1EEFB0);
+		func_80007410_8010(&func_802D614C_1EEE5C);
+	}
 }
 
 /* State machine for java zone building display sequence
@@ -933,7 +888,7 @@ s32 func_802D6338_1EF048(void) {
 		break;
 	case 4:
 		/* Announce state progress; at frame 1 trigger building sequence; every 5 frames update offsets */
-		osSyncPrintf(&D_802E0E50_1F9B60, D_80157F8E);
+		osSyncPrintf("4:%d\n", D_80157F8E);
 		if (D_802E04A0_1F91B0 != 0xFF) {
 			func_80087AAC_96A5C(D_802E04A0_1F91B0);
 		}
@@ -953,7 +908,7 @@ s32 func_802D6338_1EF048(void) {
 		break;
 	case 5:
 		/* Announce; at frame 1 trigger display callbacks; at frame 0x1E trigger second callback */
-		osSyncPrintf(&D_802E0E58_1F9B68, D_80157F8E);
+		osSyncPrintf("5:%d\n", D_80157F8E);
 		if (D_80157F8E == 1) {
 			func_8011C080_12B030(0x32);
 			func_800DF038_EDFE8(buildingInstances[49].xCoord, (s16) (D_80222A70 + 0x96), buildingInstances[49].zCoord, 0x12C, 8, 0);
@@ -1076,9 +1031,6 @@ int func_802D68F4_1EF604(void) {
 	return 0;
 }
 
-
-
-
 void func_802D6DBC_1EFACC(void) {
 	D_802E0FB8 = 0;
 	func_80013468_14068(5);
@@ -1088,7 +1040,7 @@ void func_802D6DBC_1EFACC(void) {
 void func_802D6DF8_1EFB08(void) {
 	s16 i;
 
-	osSyncPrintf(D_802E0E60_1F9B70);
+	osSyncPrintf("Lava pools killed\n");
 	for (i = 0; i < 0xE; i++) {
 		func_802D4E34_1EDB44(D_802E04F8_1F9208[i].unk0);
 		D_802E04F8_1F9208[i].unk0 = -3;
@@ -1145,7 +1097,7 @@ void func_802D6E70_1EFB80(void) {
 	if (D_80047F94 == 3) {
 		var_v1_2 = D_80052B34->unk4;
 		if (var_v1_2 >= 0x3C01) {
-			osSyncPrintf(D_802E0E74_1F9B84);
+			osSyncPrintf("Damage\n");
 			func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - 0x5DC), D_80052B34->unk4, 0.4f);
 			if ((((u32) D_80052A8C % 10U) == 0) && !(func_800038E0_44E0() % 4) && (func_800C0D1C_CFCCC(-0x50, 0x50, 1) != 0)) {
 				sp62 = 0x400 - (func_800038E0_44E0_U16() >> 5);
@@ -1207,7 +1159,7 @@ void func_802D6E70_1EFB80(void) {
 			} else {
 				func_801371B8_146168(D_802E0FBA, 0x18C, D_80052B34->unk0, (s16) (D_80052B34->unk2 - 0xFA0), var_v1_2, (f32) (temp_f0 + 0.325));
 				if ((((u32) D_80052A8C % 100U) == 0) && ((func_800038E0_44E0() % 10) == 0)) {
-					osSyncPrintf(D_802E0E7C_1F9B8C);
+					osSyncPrintf("CREATE LIGHTNING!\n");
 					func_800C0D1C_CFCCC(-0x50, 0x50, 0);
 				}
 			}
@@ -1376,6 +1328,7 @@ void func_802D7B68_1F0878(u8 arg0) {
 		}
 	}
 }
+
 void func_802D7EAC_1F0BBC(u8 arg0) {
 	if (alienInstances[arg0].unk20 & (ALIEN_FLAG_UNKA | ALIEN_FLAG_UNKB)) {
 		func_800DF848_EE7F8(alienInstances[arg0].unk0, alienInstances[arg0].unk2 + 0x14, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC, 0);
@@ -2100,7 +2053,6 @@ void func_802D9CB8_1F29C8(u8 alienIdx) {
 	}
 }
 
-
 void func_802DA18C_1F2E9C(u8 arg0, s16 arg1, s16 arg2) {
 	alienInstances[arg0].unk20 = alienInstances[arg0].unk20 | ALIEN_FLAG_UNKD;
 	if ((func_800038E0_44E0() & 1) && (arg2 != -1)) {
@@ -2195,7 +2147,6 @@ void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2)
 	}
 }
 
-void func_802DA210_1F2F20(u8 arg0, s16 arg1, s16 arg2);
 // AI - Uses vehicle D_80052B34->unk1A to pick func_800877E8_96798 ranges, then func_802DA18C_1F2E9C/func_80090A6C_9FA1C on player distance.
 void func_802DA548_1F3258(u8 arg0)
 {
@@ -2598,7 +2549,6 @@ void func_802DBBE4_1F48F4(u8 arg0) {
 }
 
 // Locust (Greece green glider enemy) behavior specs.unk4C
-// AI - Locust behavior: func_8008E478_9D428/func_8008E30C_9D2BC select func_802DBB58_1F4868 or func_802DBBE4_1F48F4, with a buildingInstances bit test.
 void func_802DBCB0_1F49C0(u8 arg0) {
 	u8 new_var;
 	s16 temp_v0;
@@ -2659,9 +2609,6 @@ void func_802DBDDC_1F4AEC(u8 arg0)
 	func_80137468_146418(arg0, 7);
 }
 
-// Transplanted from the matched greece twin func_802D8898_1913A8 (same `unk5C` on-death handler slot).
-// Java overlay differs only in: no func_80137468(arg0, 0x66) else-branch; alienTypes table resolved
-// via D_8025668C. Literals taken from the java target .s.
 // AI - Alien death/spin handler: unk20 0x600 sets unk2C=0x7FFF, ramps unk38/unk10 fall, emits func_800DEA08_ED9B8 dust and func_8008AAFC_99AAC.
 void func_802DBF34_1F4C44(u8 arg0) {
 	if (alienInstances[arg0].unk20 & 0x600) {
@@ -2960,7 +2907,6 @@ void func_802DCE34_1F5B44(u8 arg0) {
 			randomX = func_800038E0_44E0();
 			randomY = func_800038E0_44E0();
 			randomZ = func_800038E0_44E0();
-			/* Keep the draw and emission in one expression for IDO scheduling. */
 			result = func_800038E0_44E0(),
 			func_800DF848_EE7F8(
 				(randomX % width) + ((const AlienInstance *)&alienInstances[arg0])->unk0 - (width >> 1),
@@ -3445,7 +3391,6 @@ void func_802DE0C8_1F6DD8(u8 arg0) {
 
 }
 
-
 void func_802DE594_1F72A4(u8 arg0) {
 	AlienInstance *parentAlien;
 	s32 flags;
@@ -3526,7 +3471,6 @@ void func_802DE594_1F72A4(u8 arg0) {
 	}
 }
 
-
 void func_802DE9B8_1F76C8(u8 arg0) {
 	Vec3s sp90;
 	Vec3s sp88;
@@ -3596,7 +3540,6 @@ void func_802DE9B8_1F76C8(u8 arg0) {
 		func_80086D70_95D20(arg0, 1, func_800870D8_96088(0x200, 0x10) - entry2->unk6Unsigned);
 		alien->unk1E = 1;
 	}
-
 }
 
 void func_802DEE18_1F7B28(u8 arg0) {
@@ -3699,7 +3642,7 @@ void func_802DEFC0_1F7CD0(u8 arg0, s16 arg1, s16 arg2, s16 arg3) {
 	}
 }
 
-/* Process an alien attack against the vehicle. */
+// AI - Process an alien attack against the vehicle
 void func_802DF1F8_1F7F08(u8 arg0) {
 	AlienInstance *alien;
 	s16 type_idx;
@@ -3830,7 +3773,7 @@ void func_802DF8A8_1F85B8(u8 arg0) {
 	func_800A93A4_B8354(arg0, 0xAE, 0x7E, 0x183);
 }
 
-/* Copies template type data into an alien's type entry and initializes its instance fields */
+// AI - Copies template type data into an alien's type entry and initializes its instance fields
 void func_802DF8DC_1F85EC(u8 arg0, s32 arg1) {
 	u8 typeIndex;
 	AlienInstance *inst;
@@ -4050,5 +3993,3 @@ void func_802E01A0_1F8EB0(u8 arg0) {
 		func_800DF038_EDFE8(self->unk0, self->unk2, self->unk4, 0x190, 0, 0);
 	}
 }
-
-/* final fresh baseline f0acd23e-065a-4e14-9a37-4a05d83b82b1 */

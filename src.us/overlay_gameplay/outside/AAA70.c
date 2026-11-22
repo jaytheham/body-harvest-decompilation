@@ -1,67 +1,8 @@
 #include <ultra64.h>
 #include "common.h"
-#include "overlay_gameplay/outside/missions.h"
 #include "overlay_gameplay/outside/148000.h"
 #include "core/53F0.h"
-#include "core/1B100.h"
-#include "core/12C80.h"
 #include "core/1050.h"
-
-// Menu strings (English)
-const char D_80142510_1514C0[] = "%Y%a";
-const char D_80142518_1514C8[] = "Change Weapon";
-const char D_80142528_1514D8[] = "Use Fuel";
-const char D_80142534_1514E4[] = "Unhitch";
-const char D_8014253C_1514EC[] = "Map";
-const char D_80142540_1514F0[] = "Auto";
-const char D_80142548_1514F8[] = "Unload";
-const char D_80142550_151500[] = "Load";
-const char D_80142558_151508[] = "Exit";
-const char D_80142560_151510[] = "Play";
-const char D_80142568_151518[] = "Print";
-const char D_80142570_151520[] = "Save";
-const char D_80142578_151528[] = "Nowt 2";
-const char D_80142580_151530[] = "Clue Screen";
-const char D_8014258C_15153C[] = "Inventory";
-const char D_80142598_151548[] = "Quit";
-
-// Menu strings (French)
-const char D_801425A0_151550[] = "Change Weapon";
-const char D_801425B0_151560[] = "Carburant";
-const char D_801425BC_15156C[] = "Unhitch";
-const char D_801425C4_151574[] = "Carte";
-const char D_801425CC_15157C[] = "Auto";
-const char D_801425D4_151584[] = "Unload";
-const char D_801425DC_15158C[] = "Load";
-const char D_801425E4_151594[] = "Exit";
-const char D_801425EC_15159C[] = "Jouer";
-const char D_801425F4_1515A4[] = "Print";
-const char D_801425FC_1515AC[] = "Save";
-const char D_80142604_1515B4[] = "Nowt 2";
-const char D_8014260C_1515BC[] = "Clue Screen";
-const char D_80142618_1515C8[] = "Inventaire";
-const char D_80142624_1515D4[] = "Quitter";
-
-// Menu strings (German)
-const char D_8014262C_1515DC[] = "Change Weapon";
-const char D_8014263C_1515EC[] = "Tanken";
-const char D_80142644_1515F4[] = "Unhitch";
-const char D_8014264C_1515FC[] = "Karte";
-const char D_80142654_151604[] = "Auto";
-const char D_8014265C_15160C[] = "Unload";
-const char D_80142664_151614[] = "Load";
-const char D_8014266C_15161C[] = "Exit";
-const char D_80142674_151624[] = "Spielen";
-const char D_8014267C_15162C[] = "Print";
-const char D_80142684_151634[] = "Save";
-const char D_8014268C_15163C[] = "Nowt 2";
-const char D_80142694_151644[] = "Clue Screen";
-const char D_801426A0_151650[] = "Inventar";
-const char D_801426AC_15165C[] = "Verlassen";
-const char D_801426B8_151668[] = " ";
-
-const f64 D_801426C0_151670[1] = {150.0};
-const f64 D_801426C8_151678[1] = {150.0};
 
 u32 D_8013D540_14C4F0[16] = {
 	0xFFFFFFFF, 0xFFFFFF00, 0xFFFFFFFF, 0xFFFFFF00,
@@ -99,6 +40,7 @@ Vtx D_8013D628_14C5D8[4] = {
 	{ { { 24, 24, 0 }, 0, { 0x0800, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
 	{ { { -24, 24, 0 }, 0, { 0x0000, 0x0000 }, { 0xFF, 0xFF, 0xFF, 0xFF } } },
 };
+
 void func_8009BAC0_AAA70(void)
 {
   s32 i;
@@ -228,7 +170,6 @@ void func_8009BF64_AAF14(u16 arg0) {
 	func_8009BDB8_AAD68(0x41, digit);
 }
 
-// https://decomp.me/scratch/pjZZY
 // drawWaypointMarker ?
 void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2)
 {
@@ -237,8 +178,8 @@ void func_8009C1D8_AB188(s16 arg0, s16 arg1, s32 arg2)
 	s16 var_v1;
 
 	sp36 = func_80003824_4424((f32)(D_80052B34->unk4 - arg1), (f32)(D_80052B34->unk0 - arg0)) - D_80047950;
-	sp34 = ((D_801426C0_151670[0] * ((f32)sins(sp36) / 32768.0)) + (D_80068084 >> 1));
-	var_v1 = ((D_801426C8_151678[0] * ((f32)coss(sp36) / 32768.0)) + (D_80068088 >> 1));
+	sp34 = ((150.0 * ((f32)sins(sp36) / 32768.0)) + (D_80068084 >> 1));
+	var_v1 = ((150.0 * ((f32)coss(sp36) / 32768.0)) + (D_80068088 >> 1));
 	if (sp34 > 0x117)
 	{
 		sp34 = 0x117;
@@ -302,7 +243,6 @@ void func_8009C4E8_AB498(void) {
 	D_8014F1F8 = -0x10;
 }
 
-// Textured-rect draw (same tile setup as func_8009BDB8_AAD68 above, screen-relative)
 // AI - Draws a 16x16 I4 tile (D_1009C70 + arg1<<7) as a screen-relative rectangle at arg0 via gSPTextureRectangle.
 void func_8009C4F8_AB4A8(u8 arg0, u8 arg1) {
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1009C70 + (arg1 << 7)), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, 5, 5, G_TX_NOLOD, G_TX_NOLOD);
@@ -331,7 +271,7 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 	Vtx *vtx2;
 	Vtx *vtx1;
 	Vtx *vtx3;
-	s32 pad; /* Preserve the original stack homes. */
+	s32 pad;
 	s32 iconSwap;
 	s32 pad2;
 	s32 tempT2;
@@ -527,7 +467,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 		vtx3->v.tc[1] = vtx2->v.tc[1] = vtx1->v.tc[0] = vtx2->v.tc[0] = -arg6 * 0x30;
 
 		vtx0->v.cn[0] = vtx1->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
-		/* Reuse the expired offset to preserve the byte-conversion temporaries. */
 		tempT2 = 0xFF;
 		vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] = vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] = tempT2;
 
@@ -556,7 +495,6 @@ void func_8009C6CC_AB67C(s16 arg0, s16 arg1, f32 arg2, s32 arg3, u8 *arg4, s32 a
 
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
-
 
 void func_8009D900_AC8B0(s16 *arg0, f32 *arg1, s16 arg2) {
 	f32 temp_f0;
@@ -883,7 +821,7 @@ void func_8009D96C_AC91C(void)
 	{
 		D_8014ED52--;
 	}
-	drawText(&D_80142510_1514C0, 0, 0xFF);
+	drawText("%Y%a", 0, 0xFF);
 	if ((D_8006C6C6 > 0) && (func_80018AC8_196C8() == 0))
 	{
 		if ((D_8006C6C4 - 8) < D_8006C6C6)
@@ -905,7 +843,6 @@ void func_8009D96C_AC91C(void)
 
 // drawAlienHealth
 void func_8009E994_AD944(f32 arg0, u8 *arg1, s16 arg2, s16 arg3, s32 arg4) {
-	/* Preserve the existing shared BSS gaps around this private state. */
 	static s32 reservedPrefix;
 	static f32 startValue;
 	static s16 startLength;
@@ -991,19 +928,19 @@ u8 D_8013D66C_14C61C[16] = {
 	0x0F, 0x11, 0x04, 0x00,
 };
 // English menu strings
-u32 D_8013D67C_14C62C[15] = { (u32)D_80142518_1514C8,
-	(u32)D_80142528_1514D8, (u32)D_80142534_1514E4, (u32)D_8014253C_1514EC, (u32)D_80142540_1514F0, (u32)D_80142548_1514F8, (u32)D_80142550_151500, (u32)D_80142558_151508,
-	(u32)D_80142560_151510, (u32)D_80142568_151518, (u32)D_80142570_151520, (u32)D_80142578_151528, (u32)D_80142580_151530, (u32)D_8014258C_15153C, (u32)D_80142598_151548,
+u32 D_8013D67C_14C62C[15] = { (u32)"Change Weapon",
+	(u32)"Use Fuel", (u32)"Unhitch", (u32)"Map", (u32)"Auto", (u32)"Unload", (u32)"Load", (u32)"Exit",
+	(u32)"Play", (u32)"Print", (u32)"Save", (u32)"Nowt 2", (u32)"Clue Screen", (u32)"Inventory", (u32)"Quit",
 };
 // French menu strings
-u32 D_8013D6B8_14C668[15] = { (u32)D_801425A0_151550,
-	(u32)D_801425B0_151560, (u32)D_801425BC_15156C, (u32)D_801425C4_151574, (u32)D_801425CC_15157C, (u32)D_801425D4_151584, (u32)D_801425DC_15158C, (u32)D_801425E4_151594,
-	(u32)D_801425EC_15159C, (u32)D_801425F4_1515A4, (u32)D_801425FC_1515AC, (u32)D_80142604_1515B4, (u32)D_8014260C_1515BC, (u32)D_80142618_1515C8, (u32)D_80142624_1515D4,
+u32 D_8013D6B8_14C668[15] = { (u32)"Change Weapon",
+	(u32)"Carburant", (u32)"Unhitch", (u32)"Carte", (u32)"Auto", (u32)"Unload", (u32)"Load", (u32)"Exit",
+	(u32)"Jouer", (u32)"Print", (u32)"Save", (u32)"Nowt 2", (u32)"Clue Screen", (u32)"Inventaire", (u32)"Quitter",
 };
 // German menu strings
-u32 D_8013D6F4_14C6A4[15] = { (u32)D_8014262C_1515DC,
-	(u32)D_8014263C_1515EC, (u32)D_80142644_1515F4, (u32)D_8014264C_1515FC, (u32)D_80142654_151604, (u32)D_8014265C_15160C, (u32)D_80142664_151614, (u32)D_8014266C_15161C,
-	(u32)D_80142674_151624, (u32)D_8014267C_15162C, (u32)D_80142684_151634, (u32)D_8014268C_15163C, (u32)D_80142694_151644, (u32)D_801426A0_151650, (u32)D_801426AC_15165C,
+u32 D_8013D6F4_14C6A4[15] = { (u32)"Change Weapon",
+	(u32)"Tanken", (u32)"Unhitch", (u32)"Karte", (u32)"Auto", (u32)"Unload", (u32)"Load", (u32)"Exit",
+	(u32)"Spielen", (u32)"Print", (u32)"Save", (u32)"Nowt 2", (u32)"Clue Screen", (u32)"Inventar", (u32)"Verlassen",
 };
 void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 	s32 var_v0;
@@ -1033,6 +970,8 @@ void func_8009EC90_ADC40(s16 arg0, f32 *arg1, f32 *arg2) {
 		*arg2 = -1.0f;
 	}
 	*arg1 = (f32) (((f64) *arg2 * ((f64) (f32) sins(arg0) / 32768.0)) / ((f64) (f32) coss(arg0) / 32768.0));
+	/* AE0E0.c references this literal through the linker symbol. */
+	(void) " ";
 }
 
 // AI - Draws a 10-vertex arc sized by vehicleTypes[D_80052B34->unk1A].arcOfFire via func_8009EC90_ADC40 and four gSP1Quadrangle.

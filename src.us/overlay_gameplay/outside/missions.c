@@ -1109,20 +1109,24 @@ s32 func_80076208_851B8(s32 arg0)
 	return func_800078B8_84B8(arg0, &D_8004D150);
 }
 
-// https://decomp.me/scratch/iNhL3
 // AI - Register a mission callback function
-void func_8007622C_851DC(s32 arg0) {
+void func_8007622C_851DC(s32 arg0)
+{
 	s32 v1;
 
 	v1 = 0x10;
-	while (v1--) {
-		if (arg0 == D_80149478[v1]) {
+	while (v1--)
+	{
+		if (arg0 == D_80149478[v1])
+		{
 			return;
 		}
 	}
 
 	v1 = 0x10;
-    while (v1-- && D_80149478[v1] != 0) { }
+	while (v1-- && D_80149478[v1] != 0)
+	{
+	}
 	D_80149478[v1] = arg0;
 }
 

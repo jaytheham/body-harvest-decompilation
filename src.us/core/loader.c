@@ -5,93 +5,92 @@
 #include "core/53F0.h"
 #include "overlay_level/greece/18D7E0.h"
 
-/* ROM offsets and RAM destinations used by the loader. EU moves the level data and the
- * level overlays, so the values are per version. */
-#if defined(VERSION_US)
+/* ROM offsets and RAM destinations resolved by the linker for each version. */
 s32 D_80031B90_32790[] = {
-	0x0043A340, 0x00579D50, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
+	(s32)&D_43A340,
+	(s32)&D_579D50,
+	(s32)javaModelsRomStart,
+	(s32)americaModelsRomStart,
+	(s32)siberiaModelsRomStart,
+	(s32)cometModelsRomStart,
+	(s32)bossModelsRomStart,
 };
 
 s32 D_80031BAC_327AC[] = {
-	0x004EBF80, 0x005DCBB0, 0x0064EDF0, 0x006BFBB0, 0x0072FDA0, 0x00770C70,
+	(s32)&D_4EBF80,
+	(s32)javaModelsRomStart,
+	(s32)americaModelsRomStart,
+	(s32)siberiaModelsRomStart,
+	(s32)cometModelsRomStart,
+	(s32)bossModelsRomStart,
 };
 
 s32 D_80031BC4_327C4[] = {
-	0x00791C20, 0x00196F70, 0x001F9CC0, 0x00260570, 0x002C54C0, 0x0032BD80,
+	(s32)&D_791C20,
+	(s32)_overlay_level_greeceSegmentRomEnd,
+	(s32)_overlay_level_javaSegmentRomEnd,
+	(s32)_overlay_level_americaSegmentRomEnd,
+	(s32)_overlay_level_siberiaSegmentRomEnd,
+	(s32)_overlay_level_cometSegmentRomEnd,
 };
 
 s32 D_80031BDC_327DC[] = {
-	0x007A4400, 0x007F9530, 0x008463D0, 0x00898450, 0x008E4090,
+	(s32)&D_7A4400,
+	(s32)javaInteriorModelsRomStart,
+	(s32)americaInteriorModelsRomStart,
+	(s32)siberiaInteriorModelsRomStart,
+	(s32)cometInteriorModelsRomStart,
 };
 
 s32 D_80031BF0_327F0[] = {
-	0x007E6E50, 0x0083B9B0, 0x0088BE20, 0x008D9D80, 0x008F3850,
+	(s32)greeceInteriorTexturesRomStart,
+	(s32)javaInteriorTexturesRomStart,
+	(s32)americaInteriorTexturesRomStart,
+	(s32)siberiaInteriorTexturesRomStart,
+	(s32)cometInteriorTexturesRomStart,
 };
 
 s32 D_80031C04_32804[] = {
-	0x007E6E50, 0x0083B9B0, 0x0088BE20, 0x008D9D80, 0x008F3850,
+	(s32)greeceInteriorTexturesRomStart,
+	(s32)javaInteriorTexturesRomStart,
+	(s32)americaInteriorTexturesRomStart,
+	(s32)siberiaInteriorTexturesRomStart,
+	(s32)cometInteriorTexturesRomStart,
 };
 
 s32 D_80031C18_32818[] = {
-	0x0018D7E0, 0x001ED9E0, 0x00254410, 0x002B7100, 0x00318E20,
+	(s32)_overlay_level_greeceSegmentRomStart,
+	(s32)_overlay_level_javaSegmentRomStart,
+	(s32)_overlay_level_americaSegmentRomStart,
+	(s32)_overlay_level_siberiaSegmentRomStart,
+	(s32)_overlay_level_cometSegmentRomStart,
 };
 
 s32 D_80031C2C_3282C[] = {
-	0x00196F70, 0x001F9CC0, 0x00260570, 0x002C54C0, 0x0032BD80,
+	(s32)_overlay_level_greeceSegmentRomEnd,
+	(s32)_overlay_level_javaSegmentRomEnd,
+	(s32)_overlay_level_americaSegmentRomEnd,
+	(s32)_overlay_level_siberiaSegmentRomEnd,
+	(s32)_overlay_level_cometSegmentRomEnd,
 };
 
 /* The fifth start address is also the first entry of the following table. */
 u8 *D_80031C40_32840[] = {
-	(u8 *)0x802D4CD0, (u8 *)0x802D4CD0, (u8 *)0x802D4CD0, (u8 *)0x802D4CD0,
+	_overlay_level_greeceSegmentStart,
+	_overlay_level_javaSegmentStart,
+	_overlay_level_americaSegmentStart,
+	_overlay_level_siberiaSegmentStart,
 };
 
+/* Model load destinations include the original per-level padding. */
 u8 *D_80031C50_32850[] = {
-	(u8 *)0x802D4CD0, (u8 *)0x802DE470, (u8 *)0x802E0FC0, (u8 *)0x802E0E50, (u8 *)0x802E3110, (u8 *)0x802E7C70,
+	_overlay_level_cometSegmentStart,
+	_overlay_level_greece_dataSegmentStart + 0x10,
+	_overlay_level_java_dataSegmentStart + 0x10,
+	_overlay_level_america_dataSegmentStart,
+	_overlay_level_siberia_dataSegmentStart + 0x10,
+	_overlay_level_cometSegmentEnd + 0x40,
 };
-#elif defined(VERSION_EU)
-s32 D_80031B90_32790[] = {
-	0x0043AEA0, 0x00576CB0, 0x005D9B10, 0x0064BD50, 0x006BCB10, 0x0072CD00, 0x0076DBD0,
-};
-
-s32 D_80031BAC_327AC[] = {
-	0x004E8EE0, 0x005D9B10, 0x0064BD50, 0x006BCB10, 0x0072CD00, 0x0076DBD0,
-};
-
-s32 D_80031BC4_327C4[] = {
-	0x0078EB80, 0x00197AD0, 0x001FA820, 0x002610D0, 0x002C6020, 0x0032C8E0,
-};
-
-s32 D_80031BDC_327DC[] = {
-	0x007A1360, 0x007F6490, 0x00843330, 0x008953B0, 0x008E0FF0,
-};
-
-s32 D_80031BF0_327F0[] = {
-	0x007E3DB0, 0x00838910, 0x00888D80, 0x008D6CE0, 0x008F07B0,
-};
-
-s32 D_80031C04_32804[] = {
-	0x007E3DB0, 0x00838910, 0x00888D80, 0x008D6CE0, 0x008F07B0,
-};
-
-s32 D_80031C18_32818[] = {
-	0x0018E340, 0x001EE540, 0x00254F70, 0x002B7C60, 0x00319980,
-};
-
-s32 D_80031C2C_3282C[] = {
-	0x00197AD0, 0x001FA820, 0x002610D0, 0x002C6020, 0x0032C8E0,
-};
-
-/* The fifth start address is also the first entry of the following table. */
-u8 *D_80031C40_32840[] = {
-	(u8 *)0x802D4D10, (u8 *)0x802D4D10, (u8 *)0x802D4D10, (u8 *)0x802D4D10,
-};
-
-u8 *D_80031C50_32850[] = {
-	(u8 *)0x802D4D10, (u8 *)0x802DE4B0, (u8 *)0x802E1000, (u8 *)0x802E0E90, (u8 *)0x802E3150, (u8 *)0x802E7CB0,
-};
-#else
-#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
-#endif
 
 s32 D_80031C68_32868[] = {
 	0x00000004, 0x00000009, 0x0000000A, 0x0000000B, 0x0000000C, 0x0000000D, 0x0000000E,
@@ -179,6 +178,8 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 	osRecvMesg(&D_80067F70, NULL, OS_MESG_BLOCK);
 }
 
+#define MIO0_MAGIC 0x4D494F30
+
 s32 func_80010290_10E90(s32 arg0)
 {
 	s32 header[6];
@@ -189,7 +190,7 @@ s32 func_80010290_10E90(s32 arg0)
 	var_v1 = header[1] - (header[1] & 3);
 	var_v1 = var_v1 + 4;
 	func_80010228_10E28(arg0, header);
-	if (header[0] != 0x4D494F30) // MI0O
+	if (header[0] != MIO0_MAGIC)
 	{
 		return 0;
 	}
@@ -219,7 +220,7 @@ s32 func_8001032C_10F2C(s32 arg0, s32 arg1, s32 arg2) {
 		return 0;
 	}
 	func_80010228_10E28(arg1, header);
-	if (header[0] != 0x4D494F30) { // MIO0
+	if (header[0] != MIO0_MAGIC) {
 		if (D_8006AA64 == 0xBABEFACE) {
 			osSyncPrintf("header ID wrong, ");
 		}
@@ -375,11 +376,6 @@ void loadLevel(s32 arg0) {
 	for (;;);
 }
 
-/* The two data-verified blobs stay here, between loadLevel and loadLevelData, so that
- * they keep their place between the two functions' string literals in .rodata. */
-const Unk80154082 D_800378CC_384CC = {'O', 'K', 0};
-const Unk80378D0 D_800378D0_384D0 = {0x2A2A2A2A, 0x20455252, 0x4F52202A, 0x2A2A2A00};
-
 void loadLevelData(u8 arg0)
 {
 	s32 j;
@@ -388,63 +384,60 @@ void loadLevelData(u8 arg0)
 	s32 sp64;
 	s32 sp60;
 	u16 new_var;
-	Unk8031C88 sp48;
-	Unk80154082 sp44;
-	Unk80378D0 sp34;
-	sp48 = D_80031C88_32888;
-	sp44 = D_800378CC_384CC;
-	sp34 = D_800378D0_384D0;
+	Unk8031C88 sp48 = D_80031C88_32888;
+	char okMessage[] = "OK";
+	char errorMessage[] = "**** ERROR ****";
 	var_s0 = func_80010490_11090(arg0);
 	osWritebackDCacheAll();
 	osSyncPrintf("         postData:");
 	var_s0 = func_80010420_11020(&D_801FEA30, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x20000, (D_8006AA60 == 0x20000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x20000, (D_8006AA60 == 0x20000) ? okMessage : errorMessage);
 	osSyncPrintf("      texBlockMap:");
 	var_s0 = func_80010420_11020(&D_8021EA30, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? okMessage : errorMessage);
 	osSyncPrintf(" landscapeColours:");
 	var_s0 = func_80010420_11020(&D_80260700, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x4000, (D_8006AA60 == 0x4000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x4000, (D_8006AA60 == 0x4000) ? okMessage : errorMessage);
 	osSyncPrintf(" landscapePalette:");
 	var_s0 = func_80010420_11020(&D_80264700, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? okMessage : errorMessage);
 	osSetThreadPri(0, 4);
 	osSyncPrintf("      treeStructs:");
 	var_s0 = func_80010420_11020(&D_8021FA30, var_s0);
 	osSyncPrintf("should be %6d, Free structs:%d\n", 0x2000, (((u32)(0x2000 - D_8006AA60)) >> 5) - 1);
 	osSyncPrintf("            trees:");
 	var_s0 = func_80010420_11020(&D_80221A30, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1000, (D_8006AA60 == 0x1000) ? okMessage : errorMessage);
 	osWritebackDCacheAll();
 	osSyncPrintf("          treeGfx:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80222A30, var_s0, 0x40);
-	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? okMessage : errorMessage);
 	osSyncPrintf(" WaterTableHeight:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80222A70, var_s0, 8);
 	D_80222A70 <<= 5;
-	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? okMessage : errorMessage);
 	osSyncPrintf("    BuildingTypes:                                ");
 	var_s0 = func_800101F0_10DF0(&buildingTypes, var_s0, 0x400);
-	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x400, (D_8006AA60 == 0x400) ? okMessage : errorMessage);
 	osSyncPrintf("        Buildings:                                ");
 	var_s0 = func_800101F0_10DF0(&buildingInstances, var_s0, 0x17E8);
-	osSyncPrintf("should be %6d, %s\n", 0x17E8, (D_8006AA60 == 0x17E8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x17E8, (D_8006AA60 == 0x17E8) ? okMessage : errorMessage);
 	var_s0 += 4;
 	osSyncPrintf("     triggerArray:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80222A78, var_s0, 0xC00);
-	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xD00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xD00) ? okMessage : errorMessage);
 	osSyncPrintf("      nextTrigger:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80223778, var_s0, 8);
-	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 8, (D_8006AA60 == 8) ? okMessage : errorMessage);
 	osSyncPrintf("    levelWaveData:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80223780, var_s0, 0xF00);
-	osSyncPrintf("should be %6d, %s\n", 0xF00, (D_8006AA60 == 0xF00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xF00, (D_8006AA60 == 0xF00) ? okMessage : errorMessage);
 	osSyncPrintf("VehicleStartInfos:                                ");
 	var_s0 = func_800101F0_10DF0(D_80259490, var_s0, 0x900);
-	osSyncPrintf("should be %6d, %s\n", 0x900, (D_8006AA60 == 0x900) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x900, (D_8006AA60 == 0x900) ? okMessage : errorMessage);
 	osSyncPrintf("         Missions:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80224680, var_s0, 0x800);
-	osSyncPrintf("should be %6d, %s, ", 0x800, (D_8006AA60 == 0x800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s, ", 0x800, (D_8006AA60 == 0x800) ? okMessage : errorMessage);
 	if (((D_80224680 == 0xA8) || (D_80224680 == 0x90)) || (D_80224680 == 0xB0))
 	{
 		osSyncPrintf("data verified\n");
@@ -459,30 +452,30 @@ void loadLevelData(u8 arg0)
 	}
 	osSyncPrintf("  terrainTextures:");
 	var_s0 = func_80010420_11020(&D_80224E80, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x30000, (D_8006AA60 == 0x30000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x30000, (D_8006AA60 == 0x30000) ? okMessage : errorMessage);
 	osSyncPrintf("      terrainCMAP:");
 	var_s0 = func_80010420_11020(&D_80254E80, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("      skyBackDrop:");
 	var_s0 = func_80010420_11020(&D_802CA8D0, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0xA000, (D_8006AA60 == 0xA000) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xA000, (D_8006AA60 == 0xA000) ? okMessage : errorMessage);
 	osSyncPrintf("  skyBackDropCMAP:");
 	var_s0 = func_80010420_11020(&D_802D48D0, var_s0);
-	osSyncPrintf("should be %6d, %s\n", 0x200, (D_8006AA60 == 0x200) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x200, (D_8006AA60 == 0x200) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("        typeArray:                                ");
 	var_s0 = func_800101F0_10DF0(&alienTypes, var_s0, 0x1380);
-	osSyncPrintf("should be %6d, %s\n", 0x1380, (D_8006AA60 == 0x1380) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1380, (D_8006AA60 == 0x1380) ? okMessage : errorMessage);
 	osSyncPrintf("     LandVehicles:                                ");
 	var_s0 = func_800101F0_10DF0(&vehicleTypes, var_s0, 0x930);
-	osSyncPrintf("should be %6d, %s, ", 0x930, (D_8006AA60 == 0x930) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s, ", 0x930, (D_8006AA60 == 0x930) ? okMessage : errorMessage);
 	if (vehicleTypes[0].unk14 == 0x3039)
 	{
 		osSyncPrintf("data verified\n");
@@ -497,7 +490,7 @@ void loadLevelData(u8 arg0)
 	}
 	osSyncPrintf("     SignPostData:                                ");
 	var_s0 = func_800101F0_10DF0(&D_80258330, var_s0, 0x60);
-	osSyncPrintf("should be %6d, %s\n", 0x60, (D_8006AA60 == 0x60) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x60, (D_8006AA60 == 0x60) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
@@ -522,7 +515,7 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xC00) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0xC00, (D_8006AA60 == 0xC00) ? okMessage : errorMessage);
 	osSyncPrintf("    signs_dialogue_offsets:    ");
 	switch (D_800313D0_31FD0)
 	{
@@ -541,7 +534,7 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
@@ -566,7 +559,7 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x1800, (D_8006AA60 == 0x1800) ? okMessage : errorMessage);
 	osSyncPrintf("    comms_dialogue_offsets:    ");
 	switch (D_800313D0_31FD0)
 	{
@@ -585,24 +578,24 @@ void loadLevelData(u8 arg0)
 		break;
 	}
 
-	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x100, (D_8006AA60 == 0x100) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("commsSentenceInfo:                                ");
 	var_s0 = func_800101F0_10DF0(&D_8006C410, var_s0, 0x40);
-	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x40, (D_8006AA60 == 0x40) ? okMessage : errorMessage);
 	if (var_s0 & 0xF)
 	{
 		var_s0 = (var_s0 - (var_s0 & 0xF)) + 0x10;
 	}
 	osSyncPrintf("            Doors:                                ");
 	var_s0 = func_800101F0_10DF0(&D_800522C0, var_s0, 0x280);
-	osSyncPrintf("should be %6d, %s\n", 0x280, (D_8006AA60 == 0x280) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x280, (D_8006AA60 == 0x280) ? okMessage : errorMessage);
 	osSyncPrintf("         BCPoints:                                ");
 	func_800101F0_10DF0(&D_80052560, var_s0, 0x528);
-	osSyncPrintf("should be %6d, %s\n", 0x528, (D_8006AA60 == 0x528) ? ((void *)(&sp44)) : ((void *)(&sp34)));
+	osSyncPrintf("should be %6d, %s\n", 0x528, (D_8006AA60 == 0x528) ? okMessage : errorMessage);
 
 	for (row = 0; row != 0xFF; row++)
 	{
@@ -615,6 +608,7 @@ void loadLevelData(u8 arg0)
 		}
 	}
 }
+
 void loadFrontendData(void) {
 	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
@@ -693,17 +687,17 @@ void func_800118F8_124F8(void) {
 
 s32 func_800119A8_125A8(s32 arg0)
 {
-  void (*new_var2)(s32, s32);
-  new_var2 = (__printfunc = (void (*)(s32, s32)) arg0);
-  func_800101F0_10DF0(new_var2, &D_4EBF80, &D_500A00 - &D_4EBF80);
-  return &D_500A00 - &D_4EBF80 + arg0;
+	void (*new_var2)(s32, s32);
+	new_var2 = (__printfunc = (void (*)(s32, s32))arg0);
+	func_800101F0_10DF0(new_var2, &D_4EBF80, &D_500A00 - &D_4EBF80);
+	return &D_500A00 - &D_4EBF80 + arg0;
 }
 
 s32 func_800119F4_125F4(s32 arg0)
 {
-  D_8006AA6C = arg0;
-  func_800101F0_10DF0(D_8006AA6C, &D_500A00, &D_55B0A0 - &D_500A00);
-  return &D_55B0A0 - &D_500A00 + arg0;
+	D_8006AA6C = arg0;
+	func_800101F0_10DF0(D_8006AA6C, &D_500A00, &D_55B0A0 - &D_500A00);
+	return &D_55B0A0 - &D_500A00 + arg0;
 }
 
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {

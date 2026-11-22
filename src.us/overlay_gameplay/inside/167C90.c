@@ -2,47 +2,12 @@
 #include "common.h"
 #include "overlay_gameplay/inside/167C90.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 // AI - Interior camera constants (room render distance / view thresholds)
 f32 D_8008DDF0_175EB0 = 180.0f;
 f32 D_8008DDF4_175EB4 = 100.0f;
 f32 D_8008DDF8_175EB8 = 75.0f;
 f32 D_8008DDFC_175EBC = 700.0f;
-
-// ============================================================
-// 167C90 rodata
-// ============================================================
-
-const char D_800A4DC0_18CE80[] = "PlayerInside.RealXpos=%f\n";
-
-const char D_800A4DDC_18CE9C[] = "\n\n";
-
-const char D_800A4DE0_18CEA0[] = "lookAt, cameraYaw, cameraPitch, cameraViewDistance\n";
-
-const char D_800A4E14_18CED4[] = "%f, %f, %f, %d, %d, %f,\n";
-
-const char D_800A4E30_18CEF0[] = "\n\n";
-
-const char D_800A4E34_18CEF4[] = "--MAP\n";
-
-const char D_800A4E3C_18CEFC[] = "%d ";
-
-const char D_800A4E40_18CF00[] = "\n";
-
-const char D_800A4E44_18CF04[] = "Camera Collision Occured x: %d z: %d\n";
-
-const char D_800A4E6C_18CF2C[] = "Left Face Hit\n";
-
-const char D_800A4E7C_18CF3C[] = "Right Face Hit\n";
-
-const char D_800A4E8C_18CF4C[] = "Front Face Hit\n";
-
-const char D_800A4E9C_18CF5C[] = "Back Face Hit\n";
-
-const char D_800A4EAC_18CF6C[] = "ERROR: NO FACES HIT\n";
-
-const char D_800A4EC4_18CF84[] = "CAMERA IS OUTSIDE ROOM,  RESETTING YAW inWallYaw=%d, cameraYaw=%d\n";
 
 // AI - Reset all camera/view state variables to default values
 void func_8007FBD0_167C90(void) {
@@ -149,8 +114,6 @@ void func_8007FC74_167D34(void) {
 	guMtxL2F(D_800E7350, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
-
-
 
 // AI - Store three view-related values (NPC target coordinates)
 void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
@@ -278,7 +241,6 @@ void func_800804E0_1685A0(void) {
 	D_800E65A4 = (((f32) (u32) D_800E73DA + D_800E6A78.unk54) * (f64)0.5f) - scale;
 }
 
-
 // AI - Entering/exiting view: set a fixed camera position relative to the player
 void func_800806F8_1687B8(void) {
 	f32 temp_f0;
@@ -317,7 +279,7 @@ void func_800808D0_168990(void) {
 	D_800E73F0.x = D_800E6A78.unk4C - 96.0f;
 	D_800E73F0.y = 40.0f;
 	D_800E73F0.z = D_800E6A78.unk54 - 96.0f;
-	osSyncPrintf(&D_800A4DC0_18CE80, &D_800E73F0, (f64) D_800E6A78.unk4C);
+	osSyncPrintf("PlayerInside.RealXpos=%f\n", &D_800E73F0, (f64) D_800E6A78.unk4C);
 	D_800E7400.x = 0.0f;
 	D_800E7400.y = 0.0f;
 	D_800E7400.z = 0.0f;
@@ -482,7 +444,6 @@ void func_80080E28_168EE8(void) {
 	}
 }
 
-
 // AI - Camera-wall collision check: prevent camera from clipping through walls
 void func_80080FD8_169098(void) {
 	f32 sp84;
@@ -525,29 +486,36 @@ void func_80080FD8_169098(void) {
 	}
 }
 
-
 // AI - Map yaw angle to a compass-direction marker index for the debug map
-s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
-    f32 angle = 0.0f;
-    f32 base;
-    u32 result;
+s32 func_800811DC_16929C(s16 arg0, s32 arg1)
+{
+	f32 angle = 0.0f;
+	f32 base;
+	u32 result;
 
-    base = arg0 / 182.04444444444445;
-    if (base) {}
-    if (arg1 != 0) {
-        base = angle = base + 15.0f;
-        if (angle < 0.0f) {
-            angle += 360.0f;
-        }
-        result = (u8) (angle / 30.0f);
-    } else {
-        base = angle = base + 22.5;
-        if (angle < 0.0f) {
-            angle += 360.0f;
-        }
-        result = (u8) (angle / 45.0f);
-    }
-    return result;
+	base = arg0 / 182.04444444444445;
+	if (base)
+	{
+	}
+	if (arg1 != 0)
+	{
+		base = angle = base + 15.0f;
+		if (angle < 0.0f)
+		{
+			angle += 360.0f;
+		}
+		result = (u8)(angle / 30.0f);
+	}
+	else
+	{
+		base = angle = base + 22.5;
+		if (angle < 0.0f)
+		{
+			angle += 360.0f;
+		}
+		result = (u8)(angle / 45.0f);
+	}
+	return result;
 }
 
 // AI - Check if camera yaw direction is clear by scanning collision-map markers
@@ -674,62 +642,79 @@ s32 func_800813B4_169474(s16 arg0, s16 arg1, f32 arg2) {
 }
 
 // AI - Debug/free camera: controller 2 manually controls camera position and rotation
-void func_80081764_169824(void) {
-    s32 buttons;
+void func_80081764_169824(void)
+{
+	s32 buttons;
 
 	buttons = currentControllerStates[CONTROLLER_TWO].button;
 
-	if (buttons & 0x2000) {
-		if (buttons & 0x800) {
+	if (buttons & 0x2000)
+	{
+		if (buttons & 0x800)
+		{
 			D_800E73F0.z++;
 		}
-		if (buttons & 0x400) {
+		if (buttons & 0x400)
+		{
 			D_800E73F0.z--;
 		}
-	} else {
-		if (buttons & 0x800) {
+	}
+	else
+	{
+		if (buttons & 0x800)
+		{
 			D_800E73F0.y++;
 		}
-		if (buttons & 0x400) {
+		if (buttons & 0x400)
+		{
 			D_800E73F0.y--;
 		}
 	}
 
-	if (buttons & 0x200) {
+	if (buttons & 0x200)
+	{
 		D_800E73F0.x++;
 	}
-	if (buttons & 0x100) {
+	if (buttons & 0x100)
+	{
 		D_800E73F0.x--;
 	}
 
-	if (buttons & 2) {
+	if (buttons & 2)
+	{
 		D_800E73E0 -= 0xB6;
 	}
-	if (buttons & 1) {
+	if (buttons & 1)
+	{
 		D_800E73E0 += 0xB6;
 	}
 
-	if (buttons & 8) {
+	if (buttons & 8)
+	{
 		D_800E73E4 += 0xB6;
 	}
-	if (buttons & 4) {
+	if (buttons & 4)
+	{
 		D_800E73E4 -= 0xB6;
 	}
 
-	if (buttons & 0x8000) {
+	if (buttons & 0x8000)
+	{
 		D_800E73E8++;
 	}
-	if (buttons & 0x4000) {
+	if (buttons & 0x4000)
+	{
 		D_800E73E8--;
 	}
 
 	func_800033D4_3FD4(0x20, 1);
 
-	if (currentControllerStates[CONTROLLER_TWO].button & 0x20) {
-		osSyncPrintf(&D_800A4DDC_18CE9C);
-		osSyncPrintf(&D_800A4DE0_18CEA0);
-		osSyncPrintf(&D_800A4E14_18CED4, (f64) D_800E73F0.x, (f64) D_800E73F0.y, (f64) D_800E73F0.z, D_800E73E0, D_800E73E4, (f64) D_800E73E8);
-		osSyncPrintf(&D_800A4E30_18CEF0);
+	if (currentControllerStates[CONTROLLER_TWO].button & 0x20)
+	{
+		osSyncPrintf("\n\n");
+		osSyncPrintf("lookAt, cameraYaw, cameraPitch, cameraViewDistance\n");
+		osSyncPrintf("%f, %f, %f, %d, %d, %f,\n", (f64)D_800E73F0.x, (f64)D_800E73F0.y, (f64)D_800E73F0.z, D_800E73E0, D_800E73E4, (f64)D_800E73E8);
+		osSyncPrintf("\n\n");
 	}
 
 	func_80080190_168250(&D_800E7410, &D_800E73F0, D_800E73E0, D_800E73E4, D_800E73E8);
@@ -741,7 +726,6 @@ void func_80081764_169824(void) {
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-
 
 // AI - Store pointer to camera waypoint table
 void func_80081A18_169AD8(Unk169EC8Entry *arg0) {
@@ -805,7 +789,6 @@ void func_80081B58_169C18(void) {
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-
 
 // AI - Load a camera waypoint entry from the waypoint table
 void func_80081E08_169EC8(s16 arg0) {
@@ -943,18 +926,19 @@ void func_80081F98_16A058(void) {
 		}
 	}
 
-	osSyncPrintf(D_800A4E34_18CEF4);
+	osSyncPrintf("--MAP\n");
 	for (row = 0; row < (D_800E6464 + 2); row++) {
 		if ((D_800E6460 + 2) > 0) {
 			col = 0;
 			do {
-				osSyncPrintf(D_800A4E3C_18CEFC, D_800E6468[(row * D_800E6464) + col]);
+				osSyncPrintf("%d ", D_800E6468[(row * D_800E6464) + col]);
 				col++;
 			} while (col < (D_800E6460 + 2));
 		}
-		osSyncPrintf(D_800A4E40_18CF00);
+		osSyncPrintf("\n");
 	}
 }
+
 // AI - Camera wall avoidance: detect collisions and rotate camera to prevent clipping
 void func_8008247C_16A53C(void) {
 	s32 magnitude;
@@ -1000,7 +984,7 @@ void func_8008247C_16A53C(void) {
 	if (sp2C.unk1C != 0) {
 		sp6B = sp2C.unkC;
 		sp6A = sp2C.unkD;
-		osSyncPrintf(&D_800A4E44_18CF04, sp6B, sp6A);
+		osSyncPrintf("Camera Collision Occured x: %d z: %d\n", sp6B, sp6A);
 
 		switch (sp2C.unkE) {
 				case 1:
@@ -1016,7 +1000,7 @@ void func_8008247C_16A53C(void) {
 					} else {
 						D_800E7484 = 0x7FFF;
 					}
-					osSyncPrintf(&D_800A4E6C_18CF2C);
+					osSyncPrintf("Left Face Hit\n");
 					return;
 
 				case 2:
@@ -1032,7 +1016,7 @@ void func_8008247C_16A53C(void) {
 					} else {
 						D_800E7484 = 0;
 					}
-					osSyncPrintf(&D_800A4E7C_18CF3C);
+					osSyncPrintf("Right Face Hit\n");
 					return;
 
 				case 3:
@@ -1049,7 +1033,7 @@ void func_8008247C_16A53C(void) {
 					} else {
 						D_800E7484 = -0x4000;
 					}
-					osSyncPrintf(&D_800A4E8C_18CF4C);
+					osSyncPrintf("Front Face Hit\n");
 					return;
 
 				case 4:
@@ -1066,18 +1050,18 @@ void func_8008247C_16A53C(void) {
 					} else {
 						D_800E7484 = 0x4000;
 					}
-					osSyncPrintf(&D_800A4E9C_18CF5C);
+					osSyncPrintf("Back Face Hit\n");
 					return;
 
 				case 0:
-					osSyncPrintf(&D_800A4EAC_18CF6C);
+					osSyncPrintf("ERROR: NO FACES HIT\n");
 					return;
 		}
 	} else if (D_800E73E0 == D_800E7484) {
 		if (func_8007C698_164758((s32) D_800E7410.x, (s32) D_800E7410.z) != 0) {
 			D_800E7480 = 1;
 			D_800E7484 = (D_800E73E0 + 0x4000) % 0x10000;
-			osSyncPrintf(&D_800A4EC4_18CF84, D_800E7484, D_800E73E0);
+			osSyncPrintf("CAMERA IS OUTSIDE ROOM,  RESETTING YAW inWallYaw=%d, cameraYaw=%d\n", D_800E7484, D_800E73E0);
 		}
 	}
 }

@@ -4185,7 +4185,6 @@ void func_802DF290_3233E0(void) {
 	D_8014D17C++;
 }
 
-
 void func_802DF940_323A90(void) {
 	s32 randomYaw;
 	s32 randomPitch;

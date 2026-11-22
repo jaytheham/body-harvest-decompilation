@@ -1,0 +1,1 @@
+`incorrect ASM` `func_8009FB58_AEB08` opened with `addiu sp,sp,-0x128` and spilled `t5` to `0x3c(sp)` when a separate `Gfx *gfx` was passed to `gDPSetPrimColor`. -> `code changed` Pass `D_8005BB2C++` directly to `gDPSetPrimColor` and remove the separate pointer. -> `correct ASM` The prologue uses `addiu sp,sp,-0x120` and the spill is `sw t5,0x38(sp)`, matching the original ROM.

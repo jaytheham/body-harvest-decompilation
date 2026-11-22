@@ -24,10 +24,6 @@ s16 D_800313F8_31FF8 = 0x03CF;
 s16 D_800313FC_31FFC = 0x03E8;
 
 
-
-
-
-
 f32 func_800047F0_53F0(f32 arg0) {
 	return arg0 * arg0;
 }
@@ -72,18 +68,19 @@ void func_800048B8_54B8(void)
 void func_800048E8_54E8(void)
 {
 	s32 i;
-  for (i = 0; i < (sizeof(D_80047F40) / sizeof(D_80047F40[0])); i++)
-  {
-	D_80047F40[i]= 0;
-  }
+	for (i = 0; i < (sizeof(D_80047F40) / sizeof(D_80047F40[0])); i++)
+	{
+		D_80047F40[i] = 0;
+	}
 }
 
-void func_80004918_5518(void) {
+void func_80004918_5518(void)
+{
 	s32 i;
-  for (i = 0; i < (sizeof(D_80047D40) / sizeof(D_80047D40[0])); i++)
-  {
-	D_80047D40[i]= 0;
-  }
+	for (i = 0; i < (sizeof(D_80047D40) / sizeof(D_80047D40[0])); i++)
+	{
+		D_80047D40[i] = 0;
+	}
 }
 
 void func_80004948_5548(void) {
@@ -557,7 +554,6 @@ void func_80005C5C_685C(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 ar
 			if (319.0f < bottom) {
 				bottom = 319.0f;
 			}
-			/* Share the packet pointer for the rectangle and its texture coordinates. */
 			{
 				Gfx *gfx = D_8005BB2C++;
 
@@ -970,14 +966,12 @@ void func_80007570_8170(void)
 void func_80007690_8290(void) {
 	D_80048030 = D_80048030 + 1;
 	osSyncPrintf("Increment objective %d\n", D_80048030);
-	// Increment objective %d
 	func_8001A650_1B250(1);
 }
 
 // Set objective
 void func_800076D4_82D4(s32 arg0) {
 	osSyncPrintf("Set objective %d\n", arg0);
-	// Set objective %d
 	if (D_80048030 < arg0) {
 		D_80048030 = (u8) arg0;
 		func_8001A650_1B250(1);
@@ -1017,11 +1011,11 @@ void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 
 u8 func_8000789C_849C(s32 arg0)
 {
-  u8 *new_var;
-  s32 *new_var2;
-  new_var2 = &arg0;
-  new_var = D_80048038;
-  return new_var[(s16) (*new_var2)];
+	u8 *new_var;
+	s32 *new_var2;
+	new_var2 = &arg0;
+	new_var = D_80048038;
+	return new_var[(s16)(*new_var2)];
 }
 
 s32 func_800078B8_84B8(s32 arg0, s32 *arg1) {
@@ -1062,6 +1056,7 @@ void func_80007900_8500(u8 *arg0) {
 			break;
 	}
 }
+
 void func_80007A20_8620(u8 *arg0) {
 	switch (arg0[8]) {
 		case 0xB3:
@@ -1138,6 +1133,7 @@ void func_80007A20_8620(u8 *arg0) {
 			break;
 	}
 }
+
 void func_80007C78_8878(u8 *arg0) {
 	s32 i;
 	u8 *ptr;
@@ -1232,7 +1228,6 @@ int func_8000807C_8C7C(u8 *arg0, u8 *arg1)
 {
 	while (1)
 	{
-		/* Preserve the selector reload when either command follows a link. */
 		switch (((volatile u8 *)arg0)[0])
 		{
 		case 0x98:
@@ -1262,7 +1257,6 @@ int func_8000807C_8C7C(u8 *arg0, u8 *arg1)
 		break;
 	}
 }
-
 
 int func_800081D4_8DD4(u8 *arg0) {
 	switch (arg0[8]) {
@@ -1326,7 +1320,6 @@ s32 func_80008478_9078(void) {
 	return 0;
 }
 
-// https://decomp.me/scratch/6ZUC8
 u8 func_8000851C_911C(s16 arg0) {
 	u8 *entry;
 	u8 *item;
@@ -1638,8 +1631,6 @@ void func_800092B8_9EB8(u32 arg0, u32 arg1, u32 arg2, u32 arg3, u8 arg4) {
 		gDPPipeSync(D_8005BB2C++);
 	}
 }
-
-
 
 s32 func_80009F18_AB18(s32 arg0) {
 	s32 sp1C;

@@ -2,96 +2,6 @@
 #include "common.h"
 #include "overlay_gameplay/outside/A40B0.h"
 
-const char D_80141F30_150EE0[] = "Max Speed";
-const char D_80141F3C_150EEC[] = "Min Speed";
-const char D_80141F48_150EF8[] = "Acceleration";
-const char D_80141F58_150F08[] = "Max Steer";
-const char D_80141F64_150F14[] = "Steer Change";
-const char D_80141F74_150F24[] = "Steer Point";
-const char D_80141F80_150F30[] = "Pivot Point";
-const char D_80141F8C_150F3C[] = "Hill Climb";
-const char D_80141F98_150F48[] = "Water Drag";
-const char D_80141FA4_150F54[] = "Arc of Fire";
-const char D_80141FB0_150F60[] = "Launch Angle";
-const char D_80141FC0_150F70[] = "1st Weapon";
-const char D_80141FCC_150F7C[] = "2nd Weapon";
-const char D_80141FD8_150F88[] = "Gun 1 Xpos";
-const char D_80141FE4_150F94[] = "Gun 1 Ypos";
-const char D_80141FF0_150FA0[] = "Gun 1 Zpos";
-const char D_80141FFC_150FAC[] = "Mass";
-const char D_80142004_150FB4[] = "Hits";
-const char D_8014200C_150FBC[] = "Grip";
-const char D_80142014_150FC4[] = "Side Grip";
-const char D_80142020_150FD0[] = "Frontal Armour";
-const char D_80142030_150FE0[] = "Side Armour";
-const char D_8014203C_150FEC[] = "Rear Armour";
-const char D_80142048_150FF8[] = "Camera Min";
-const char D_80142054_151004[] = "Camera Max";
-const char D_80142060_151010[] = "Tension";
-const char D_80142068_151018[] = "Damping";
-const char D_80142070_151020[] = "Penalty";
-const char D_80142078_151028[] = "Shadow Size";
-const char D_80142084_151034[] = "Shadow X";
-const char D_80142090_151040[] = "Shadow Z";
-const char D_8014209C_15104C[] = "Collision type";
-const char D_801420AC_15105C[] = "Red";
-const char D_801420B0_151060[] = "Green";
-const char D_801420B8_151068[] = "Blue";
-const char D_801420C0_151070[] = "Alpha";
-const char D_801420C8_151078[] = "Near Clip";
-const char D_801420D4_151084[] = "Far Clip";
-const char D_801420E0_151090[] = "Primitive R";
-const char D_801420EC_15109C[] = "Primitive G";
-const char D_801420F8_1510A8[] = "Primitive B";
-const char D_80142104_1510B4[] = "Environment R";
-const char D_80142114_1510C4[] = "Environment G";
-const char D_80142124_1510D4[] = "Environment B";
-const char D_80142134_1510E4[] = "Not Used";
-const char D_80142140_1510F0[] = "TestNum1";
-const char D_8014214C_1510FC[] = "TestNum2";
-const char D_80142158_151108[] = "TestNum3";
-const char D_80142164_151114[] = "TestNum4";
-const char D_80142170_151120[] = "TestNum5";
-const char D_8014217C_15112C[] = "TestNum6";
-const char D_80142188_151138[] = "TestNum7";
-const char D_80142194_151144[] = "TestNum8";
-const char D_801421A0_151150[] = "%@%s%@";
-const char D_801421A8_151158[] = "%s";
-const char D_801421AC_15115C[] = "%d";
-const char D_801421B0_151160[] = "%d";
-const char D_801421B4_151164[] = "%f";
-const char D_801421B8_151168[] = "%d, %d";
-const char D_801421C0_151170[] = "%X%Y";
-const char D_801421C8_151178[] = "%@>";
-const char D_801421CC_151180[] = "%C";
-const char D_801421D0_151188[] = "%C";
-const char D_801421D4_151190[] = "%@MAIN MENU";
-const char D_801421E0_15119C[] = "%@Vehicles";
-const char D_801421EC_1511A8[] = "%@Aliens";
-const char D_801421F8_1511B4[] = "%@Requests";
-const char D_80142204_1511C0[] = "%@Global variables";
-const char D_80142218_1511D4[] = "%@Timing bars";
-const char D_80142228_1511E4[] = "%@Keys";
-const char D_80142230_1511F0[] = "%@Terrain";
-const char D_8014223C_1511FC[] = "%@CutCam";
-const char D_80142248_151208[] = "%@GLOBALS MENU";
-const char D_80142258_151214[] = "%@Testing";
-const char D_80142264_151220[] = "%@Camera";
-const char D_80142270_15122C[] = "%@Colours";
-const char D_8014227C_151238[] = "%@Fog";
-const char D_80142284_151244[] = "%@TESTING MENU";
-const char D_80142294_151250[] = "%@COLOURS MENU";
-const char D_801422A4_15125C[] = "%@FOG MENU";
-const char D_801422B0_151268[] = "%@TIMING BARS MENU";
-const char D_801422C4_151274[] = "%@Off";
-const char D_801422CC_151280[] = "%@On";
-const char D_801422D4_15128C[] = "%@Scale +";
-const char D_801422E0_151298[] = "%@Scale -";
-const char D_801422EC_1512A4[] = "%@KEYS MENU";
-const char D_801422F8_1512B0[] = "%C";
-const char D_801422FC_1512B4[] = "%@%c";
-const char D_80142304_1512B8[] = "%C";
-
 u32 D_8013CB70_14BB20[] = {
 	0x00000000, 0x00000000, 0x01000001, 0x00000030,
 	0x00000000, 0x00000000, 0x01000003,
@@ -110,63 +20,62 @@ s16 D_8013CBB4_14BB64 = 0;
 u32 D_8013CBB8_14BB68 = 0;
 u8 D_8013CBBC_14BB6C = 0;
 DebugPropEntry D_8013CBC0_14BB70[] = {
-	{D_80141F30_150EE0, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk40, 0, 32767, 4, 0, 0x00000002},
-	{D_80141F3C_150EEC, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk42, -32768, 0, 4, 0, 0x00000002},
-	{D_80141F48_150EF8, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk3E, 0, 255, 3, 0, 0x00000000},
-	{D_80141F58_150F08, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk48, 0, 32767, 3, 0, 0x00000002},
-	{D_80141F64_150F14, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad5A[0], 0, 255, 4, 0, 0x00000000},
-	{D_80141F74_150F24, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk66, -32768, 32767, 3, 0, 0x00000002},
-	{D_80141F80_150F30, (s32)vehicleTypes, (s32)&vehicleTypes[0].pivotPoint, 0, 255, 3, 0, 0x00000000},
-	{D_80141F8C_150F3C, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk46, 0, 255, 4, 0, 0x00000000},
-	{D_80141F98_150F48, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk47, 0, 255, 4, 0, 0x00000000},
-	{D_80141FA4_150F54, (s32)vehicleTypes, (s32)&vehicleTypes[0].arcOfFire, 0, 32767, 3, 0, 0x00000002},
-	{D_80141FB0_150F60, (s32)vehicleTypes, (s32)&vehicleTypes[0].launchAngle, 0, 255, 3, 0, 0x00000000},
-	{D_80141FC0_150F70, (s32)vehicleTypes, (s32)&vehicleTypes[0].weapon1, 0, 99, 4, 0, 0x00000003},
-	{D_80141FCC_150F7C, (s32)vehicleTypes, (s32)&vehicleTypes[0].weapon2, 0, 62, 4, 0, 0x00000003},
-	{D_80141FD8_150F88, (s32)vehicleTypes, (s32)&vehicleTypes[0].gun1X, -32768, 32767, 3, 0, 0x00000002},
-	{D_80141FE4_150F94, (s32)vehicleTypes, (s32)&vehicleTypes[0].gun1Y, -32768, 32767, 3, 0, 0x00000002},
-	{D_80141FF0_150FA0, (s32)vehicleTypes, (s32)&vehicleTypes[0].gun1Z, -32768, 32767, 3, 0, 0x00000002},
-	{D_80141FFC_150FAC, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk32, 0, 32767, 3, 0, 0x00000002},
-	{D_80142004_150FB4, (s32)vehicleTypes, (s32)&vehicleTypes[0].hitPoints, 0, 32767, 3, 0, 0x00000002},
-	{D_8014200C_150FBC, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad56[1], 0, 255, 3, 0, 0x00000000},
-	{D_80142014_150FC4, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad56[0], 0, 255, 3, 0, 0x00000000},
-	{D_80142020_150FD0, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad0E[0], 0, 32767, 3, 0, 0x00000002},
-	{D_80142030_150FE0, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad0E[2], 0, 32767, 3, 0, 0x00000002},
-	{D_8014203C_150FEC, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad0E[4], 0, 32767, 3, 0, 0x00000002},
-	{D_80142048_150FF8, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk5C, 0, 255, 3, 0, 0x00000000},
-	{D_80142054_151004, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk5D, 0, 255, 3, 0, 0x00000000},
-	{D_80142060_151010, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk44, 0, 255, 3, 0, 0x00000000},
-	{D_80142068_151018, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk45, 0, 255, 3, 0, 0x00000000},
-	{D_80142070_151020, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk14, -32768, 32767, 3, 0, 0x00000002},
-	{D_80142078_151028, (s32)vehicleTypes, (s32)&vehicleTypes[0].pad65, 0, 255, 3, 0, 0x00000000},
-	{D_80142084_151034, (s32)vehicleTypes, (s32)&vehicleTypes[0].shadowWidth, 0, 1000, 3, 0, 0x00000000},
-	{D_80142090_151040, (s32)vehicleTypes, (s32)&vehicleTypes[0].shadowDepth, 0, 255, 3, 0, 0x00000000},
-	{D_8014209C_15104C, (s32)vehicleTypes, (s32)&vehicleTypes[0].unk16, 0, 3, 3, 0, 0x00000000},
-	{D_801420AC_15105C, (s32)&D_80047743, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_801420B0_151060, (s32)&D_80047744, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_801420B8_151068, (s32)&D_80047745, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_801420C0_151070, (s32)&D_800313F4_31FF4, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_801420C8_151078, (s32)&D_800313F8_31FF8, 0x00000000, 0, 1000, 4, 0, 0x00000002},
-	{D_801420D4_151084, (s32)&D_800313FC_31FFC, 0x00000000, 0, 1000, 4, 0, 0x00000002},
-	{D_801420E0_151090, (s32)&D_8013D94C_14C8FC, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_801420EC_15109C, (s32)&D_8013D950_14C900, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_801420F8_1510A8, (s32)&D_8013D954_14C904, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_80142104_1510B4, (s32)&D_8013D940_14C8F0, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_80142114_1510C4, (s32)&D_8013D944_14C8F4, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_80142124_1510D4, (s32)&D_8013D948_14C8F8, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_80142134_1510E4, (s32)&D_8013D948_14C8F8, 0x00000000, 0, 255, 4, 0, 0x00000000},
-	{D_80142140_1510F0, (s32)&D_80047710, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_8014214C_1510FC, (s32)&D_80047712, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_80142158_151108, (s32)&D_80047714, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_80142164_151114, (s32)&D_80047716, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_80142170_151120, (s32)&D_80047718, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_8014217C_15112C, (s32)&D_8004771A, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_80142188_151138, (s32)&D_8004771C, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
-	{D_80142194_151144, (s32)&D_8004771E, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"Max Speed", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk40, 0, 32767, 4, 0, 0x00000002},
+	{"Min Speed", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk42, -32768, 0, 4, 0, 0x00000002},
+	{"Acceleration", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk3E, 0, 255, 3, 0, 0x00000000},
+	{"Max Steer", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk48, 0, 32767, 3, 0, 0x00000002},
+	{"Steer Change", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad5A[0], 0, 255, 4, 0, 0x00000000},
+	{"Steer Point", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk66, -32768, 32767, 3, 0, 0x00000002},
+	{"Pivot Point", (s32)vehicleTypes, (s32)&vehicleTypes[0].pivotPoint, 0, 255, 3, 0, 0x00000000},
+	{"Hill Climb", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk46, 0, 255, 4, 0, 0x00000000},
+	{"Water Drag", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk47, 0, 255, 4, 0, 0x00000000},
+	{"Arc of Fire", (s32)vehicleTypes, (s32)&vehicleTypes[0].arcOfFire, 0, 32767, 3, 0, 0x00000002},
+	{"Launch Angle", (s32)vehicleTypes, (s32)&vehicleTypes[0].launchAngle, 0, 255, 3, 0, 0x00000000},
+	{"1st Weapon", (s32)vehicleTypes, (s32)&vehicleTypes[0].weapon1, 0, 99, 4, 0, 0x00000003},
+	{"2nd Weapon", (s32)vehicleTypes, (s32)&vehicleTypes[0].weapon2, 0, 62, 4, 0, 0x00000003},
+	{"Gun 1 Xpos", (s32)vehicleTypes, (s32)&vehicleTypes[0].gun1X, -32768, 32767, 3, 0, 0x00000002},
+	{"Gun 1 Ypos", (s32)vehicleTypes, (s32)&vehicleTypes[0].gun1Y, -32768, 32767, 3, 0, 0x00000002},
+	{"Gun 1 Zpos", (s32)vehicleTypes, (s32)&vehicleTypes[0].gun1Z, -32768, 32767, 3, 0, 0x00000002},
+	{"Mass", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk32, 0, 32767, 3, 0, 0x00000002},
+	{"Hits", (s32)vehicleTypes, (s32)&vehicleTypes[0].hitPoints, 0, 32767, 3, 0, 0x00000002},
+	{"Grip", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad56[1], 0, 255, 3, 0, 0x00000000},
+	{"Side Grip", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad56[0], 0, 255, 3, 0, 0x00000000},
+	{"Frontal Armour", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad0E[0], 0, 32767, 3, 0, 0x00000002},
+	{"Side Armour", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad0E[2], 0, 32767, 3, 0, 0x00000002},
+	{"Rear Armour", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad0E[4], 0, 32767, 3, 0, 0x00000002},
+	{"Camera Min", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk5C, 0, 255, 3, 0, 0x00000000},
+	{"Camera Max", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk5D, 0, 255, 3, 0, 0x00000000},
+	{"Tension", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk44, 0, 255, 3, 0, 0x00000000},
+	{"Damping", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk45, 0, 255, 3, 0, 0x00000000},
+	{"Penalty", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk14, -32768, 32767, 3, 0, 0x00000002},
+	{"Shadow Size", (s32)vehicleTypes, (s32)&vehicleTypes[0].pad65, 0, 255, 3, 0, 0x00000000},
+	{"Shadow X", (s32)vehicleTypes, (s32)&vehicleTypes[0].shadowWidth, 0, 1000, 3, 0, 0x00000000},
+	{"Shadow Z", (s32)vehicleTypes, (s32)&vehicleTypes[0].shadowDepth, 0, 255, 3, 0, 0x00000000},
+	{"Collision type", (s32)vehicleTypes, (s32)&vehicleTypes[0].unk16, 0, 3, 3, 0, 0x00000000},
+	{"Red", (s32)&D_80047743, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Green", (s32)&D_80047744, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Blue", (s32)&D_80047745, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Alpha", (s32)&D_800313F4_31FF4, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Near Clip", (s32)&D_800313F8_31FF8, 0x00000000, 0, 1000, 4, 0, 0x00000002},
+	{"Far Clip", (s32)&D_800313FC_31FFC, 0x00000000, 0, 1000, 4, 0, 0x00000002},
+	{"Primitive R", (s32)&D_8013D94C_14C8FC, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Primitive G", (s32)&D_8013D950_14C900, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Primitive B", (s32)&D_8013D954_14C904, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Environment R", (s32)&D_8013D940_14C8F0, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Environment G", (s32)&D_8013D944_14C8F4, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Environment B", (s32)&D_8013D948_14C8F8, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"Not Used", (s32)&D_8013D948_14C8F8, 0x00000000, 0, 255, 4, 0, 0x00000000},
+	{"TestNum1", (s32)&D_80047710, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum2", (s32)&D_80047712, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum3", (s32)&D_80047714, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum4", (s32)&D_80047716, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum5", (s32)&D_80047718, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum6", (s32)&D_8004771A, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum7", (s32)&D_8004771C, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
+	{"TestNum8", (s32)&D_8004771E, 0x00000000, -32768, 32767, 3, 0, 0x00000002},
 	{0, 0, 0, 0, 0, 0, 0, 0},
 };
 
-// https://decomp.me/scratch/tIoTN
 // Debug - display property
 void func_80095100_A40B0(s16 arg0, s16 arg1)
 {
@@ -205,7 +114,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
 	{
 	propPtr = (DebugPropertyValue *)&((u8 *)&D_80140768_14F718[vehicleTypes[D_80052B34->unk1A].unk55])[entry->unk8 - entry->unk4];
 	}
-	drawText(D_801421A0_151150, 3, arg1, entry->unk0, 0x1C, arg1);
+	drawText("%@%s%@", 3, arg1, entry->unk0, 0x1C, arg1);
 	switch (entry->type)
 	{
 	case 0:
@@ -243,7 +152,7 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
 	{
 	if ((D_8013CBB4_14BB64 == 0xB) || (D_8013CBB4_14BB64 == 0xC))
 	{
-		drawText(D_801421A8_151158, D_800344B0_350B0[value + 24].name);
+		drawText("%s", D_800344B0_350B0[value + 24].name);
 		return;
 	}
 	}
@@ -253,19 +162,19 @@ void func_80095100_A40B0(s16 arg0, s16 arg1)
 	case 1:
 	case 2:
 	case 3:
-		drawText(D_801421AC_15115C, value);
+		drawText("%d", value);
 		return;
 	case 4:
-		drawText(D_801421B0_151160, value);
+		drawText("%d", value);
 		return;
 	case 5:
 	{
 		floatValue = value;
-		drawText(D_801421B4_151164, ((f64)floatValue * 180.0) / 32767.0);
+		drawText("%f", ((f64)floatValue * 180.0) / 32767.0);
 		return;
 	}
 	case 6:
-		drawText(D_801421B8_151168, value2, value);
+		drawText("%d, %d", value2, value);
 		return;
 	}
 }
@@ -381,7 +290,6 @@ void func_80095530_A44E0(s16 arg0) {
 		}
 }
 
-// https://decomp.me/scratch/hG8iA
 // Debug - display menu items
 void func_8009594C_A48FC(s16 arg0, s16 arg1)
 {
@@ -396,4 +304,35 @@ void func_8009594C_A48FC(s16 arg0, s16 arg1)
 
 // Debug - main method (stubbed)
 void func_800959DC_A498C(void) {
+	/* IDO emits these unused menu strings in the original rodata order. */
+	(void) "%X%Y";
+	(void) "%@>";
+	(void) "%C";
+	(void) "%C";
+	(void) "%@MAIN MENU";
+	(void) "%@Vehicles";
+	(void) "%@Aliens";
+	(void) "%@Requests";
+	(void) "%@Global variables";
+	(void) "%@Timing bars";
+	(void) "%@Keys";
+	(void) "%@Terrain";
+	(void) "%@CutCam";
+	(void) "%@GLOBALS MENU";
+	(void) "%@Testing";
+	(void) "%@Camera";
+	(void) "%@Colours";
+	(void) "%@Fog";
+	(void) "%@TESTING MENU";
+	(void) "%@COLOURS MENU";
+	(void) "%@FOG MENU";
+	(void) "%@TIMING BARS MENU";
+	(void) "%@Off";
+	(void) "%@On";
+	(void) "%@Scale +";
+	(void) "%@Scale -";
+	(void) "%@KEYS MENU";
+	(void) "%C";
+	(void) "%@%c";
+	(void) "%C";
 }

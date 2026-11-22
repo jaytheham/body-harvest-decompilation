@@ -4,60 +4,6 @@
 #include "core/12C80.h"
 #include "core/1050.h"
 
-const char D_801453C0_154370[] = "*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n";
-const char D_80145408_1543B8[] = "%X%Y\n";
-const char D_80145410_1543C0[] = "%W";
-const char D_80145414_1543C4[] = "processor destroyed";
-const char D_80145428_1543D8[] = "prozessor zerst\x3Art";
-const char D_8014543C_1543EC[] = "processeur d\xe9truit";
-const char D_80145450_154400[] = " stage ";
-const char D_80145458_154408[] = " level ";
-const char D_80145460_154410[] = " niveau ";
-const char D_8014546C_15441C[] = "boss destroyed";
-const char D_8014547C_15442C[] = "bo\x26 zerst\x3Art";
-const char D_8014548C_15443C[] = "boss d\xe9truit";
-const char D_8014549C_15444C[] = " complete";
-const char D_801454A8_154458[] = " beendet";
-const char D_801454B4_154464[] = " termin\xe9";
-const char D_801454C0_154470[] = "score";
-const char D_801454C8_154478[] = "punkte";
-const char D_801454D0_154480[] = "score";
-const char D_801454D8_154488[] = "score";
-const char D_801454E0_154490[] = "punkte";
-const char D_801454E8_154498[] = "score";
-const char D_801454F0_1544A0[] = "%H%V";
-const char D_801454F8_1544A8[] = "%C%a";
-const char D_80145500_1544B0[] = "%a";
-const char D_80145504_1544B4[] = "%a";
-const char D_80145508_1544B8[] = "%@No people killed:\n";
-const char D_80145520_1544D0[] = "%@Keine toten:\n";
-const char D_80145530_1544E0[] = "%@Pas de mort:\n";
-const char D_80145540_1544F0[] = "%@%d\n";
-const char D_80145548_1544F8[] = "%@%d\n";
-const char D_80145550_154500[] = "%a";
-const char D_80145554_154504[] = "%a";
-const char D_80145558_154508[] = "%@No people harvested:\n";
-const char D_80145570_154520[] = "%@Keine gesammelten:\n";
-const char D_80145588_154538[] = "%@Pas de prisonnier:\n";
-const char D_801455A0_154550[] = "%@%d\n";
-const char D_801455A8_154558[] = "%@%d\n";
-const char D_801455B0_154560[] = "bonus";
-const char D_801455B8_154568[] = "bonus";
-const char D_801455C0_154570[] = "score";
-const char D_801455C8_154578[] = "punkte";
-const char D_801455D0_154580[] = "score";
-const char D_801455D8_154588[] = "total";
-const char D_801455E0_154590[] = "gesamtpunkte";
-const char D_801455F0_1545A0[] = "score";
-const char D_801455F8_1545A8[] = "score";
-const char D_80145600_1545B0[] = "total";
-const char D_80145608_1545B8[] = "score";
-const char D_80145610_1545C0[] = "gesamtpunkte";
-const char D_80145620_1545D0[] = "score";
-const char D_80145628_1545D8[] = "total";
-
-const f32 D_80145630_1545E0[1] = {65535.0f};
-
 u32 D_80140BA0_14FB50[] = {
 	0x05059CA0, 0x05058AA0, 0x05058CA0, 0x05058EA0, 0x050590A0,
 	0x050592A0, 0x050594A0, 0x050596A0, 0x050598A0, 0x05059AA0,
@@ -205,7 +151,7 @@ s32 func_8012EC3C_13DBEC(u8 ch)
 
 void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 {
-	static s32 colorState; /* Reserve the preceding end-of-level state slot. */
+	static s32 colorState;
 	static s32 D_8015FF84;
 	s32 rem;
 	rem = D_8015FF84 % 300;
@@ -225,7 +171,6 @@ void func_8012F24C_13E1FC(u8 *arg0, s32 arg1)
 	D_8015FF84 += arg1;
 }
 
-
 void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 {
 	static u32 D_80140C78_14FC28 = 0;
@@ -242,7 +187,6 @@ void func_8012F2DC_13E28C(u8 *src, u8 *dst, s32 increment)
 
 	D_80140C78_14FC28 += increment;
 }
-
 
 s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 arg5, s32 arg6, u8 arg7)
 {
@@ -315,14 +259,12 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 					x -= arg1 >> 1;
 				}
 
-				/* Keep the width live in IDO across the draw branch. */
 				if (arg1) {}
 				if (arg5 != 0) {
 					for (band = 7; band >= 0; band--) {
-						/* Keep the band counter in the original saved register. */
 						if (band) {}
 						if ((i * 2) + band >= 0x30) {
-							osSyncPrintf(D_801453C0_154370);
+							osSyncPrintf("*** DrawStretchyWord() needs a bigger stretch array!! (see John G) ***\n");
 						} else {
 
 							if ((arg7 & 0x10) != 0) {
@@ -365,7 +307,6 @@ s32 func_8012F4E0_13E490(u8 *arg0, s32 arg1, s32 arg2, s32 arg3, u8 *arg4, s32 a
 						}
 						bottom = arg3 + arg2;
 						gDPPipeSync(D_8005BB2C++);
-						/* The right edge assignment and zero texture T expression control IDO allocation. */
 						gSPTextureRectangle(
 							(textWidth = (((u32)x + (arg1 >> 1)) + sHalf) * 4, D_8005BB2C++),
 							(((u32)x + (arg1 >> 1)) - sHalf) * 4,
@@ -489,7 +430,7 @@ void func_8013001C_13EFCC(void)
 	if (D_80140C7C_14FC2C > 0) {
 
 		// Convert the fade phase to a brightness value (0–180) for the screen
-		func_8012FE6C_13EE1C((s16)(((f32)D_80140C7C_14FC2C / D_80145630_1545E0[0]) * 180.0f));
+		func_8012FE6C_13EE1C((s16)(((f32)D_80140C7C_14FC2C / 65535.0f) * 180.0f));
 
 		// Configure RDP for simple 2D rendering (no lighting, culling, or fog)
 		gDPPipeSync(D_8005BB2C++);
@@ -531,8 +472,8 @@ void func_8013001C_13EFCC(void)
 
 	// -- Fade complete: draw the end-of-level screen content --
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-	drawText(D_80145408_1543B8, 0, 0);
-	drawText(D_80145410_1543C0,
+	drawText("%X%Y\n", 0, 0);
+	drawText("%W",
 		(s16)((D_80068084 >> 1) - 0x82),
 		(s16)((D_80068088 >> 1) - 0x64),
 		(s16)((D_80068084 >> 1) + 0x82),
@@ -546,18 +487,17 @@ void func_8013001C_13EFCC(void)
 		break;
 
 	case 1:
-		// Show "processor destroyed" message (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
 		default:
-			func_801306C4_13F674(D_80145414_1543C4);
+			func_801306C4_13F674("processor destroyed");
 			break;
 		case 2:
-			func_801306C4_13F674(D_80145428_1543D8);
+			func_801306C4_13F674("prozessor zerst\x3Art");
 			break;
 		case 1:
-			func_801306C4_13F674(D_8014543C_1543EC);
+			func_801306C4_13F674("processeur d\xe9truit");
 			break;
 		}
 		return;
@@ -571,21 +511,20 @@ void func_8013001C_13EFCC(void)
 		break;
 
 	case 4:
-		// Show "Stage / Level / Niveau N" label (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
 		default:
 			levelName = D_800314F0_320F0[currentLevel];
-			func_8012EBC0_13DB70(levelName, D_80145450_154400, levelText);
+			func_8012EBC0_13DB70(levelName, " stage ", levelText);
 			break;
 		case 2:
 			levelName = D_80031520_32120[currentLevel];
-			func_8012EBC0_13DB70(levelName, D_80145458_154408, levelText);
+			func_8012EBC0_13DB70(levelName, " level ", levelText);
 			break;
 		case 1:
 			levelName = D_80031508_32108[currentLevel];
-			func_8012EBC0_13DB70(levelName, D_80145460_154410, levelText);
+			func_8012EBC0_13DB70(levelName, " niveau ", levelText);
 			break;
 		}
 
@@ -601,38 +540,36 @@ void func_8013001C_13EFCC(void)
 		return;
 
 	case 5:
-		// Show "boss destroyed" message (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
 		default:
-			func_801306C4_13F674(D_8014546C_15441C);
+			func_801306C4_13F674("boss destroyed");
 			break;
 		case 2:
-			func_801306C4_13F674(D_8014547C_15442C);
+			func_801306C4_13F674("bo\x26 zerst\x3Art");
 			break;
 		case 1:
-			func_801306C4_13F674(D_8014548C_15443C);
+			func_801306C4_13F674("boss d\xe9truit");
 			break;
 		}
 		return;
 
 	case 6:
-		// Show "complete / beendet / terminé" message (localised)
 		language = D_800313D0_31FD0;
 		switch (language) {
 		case 0:
 		default:
 			levelName = D_800314F0_320F0[currentLevel];
-			func_8012EBC0_13DB70(levelName, D_8014549C_15444C, levelText);
+			func_8012EBC0_13DB70(levelName, " complete", levelText);
 			break;
 		case 2:
 			levelName = D_80031520_32120[currentLevel];
-			func_8012EBC0_13DB70(levelName, D_801454A8_154458, levelText);
+			func_8012EBC0_13DB70(levelName, " beendet", levelText);
 			break;
 		case 1:
 			levelName = D_80031508_32108[currentLevel];
-			func_8012EBC0_13DB70(levelName, D_801454B4_154464, levelText);
+			func_8012EBC0_13DB70(levelName, " termin\xe9", levelText);
 			break;
 		}
 		func_80131280_140230(levelText);
@@ -642,7 +579,6 @@ void func_8013001C_13EFCC(void)
 		break;
 	}
 }
-
 
 u32 D_80140C84_14FC34 = 1;
 u32 D_80140C88_14FC38 = 0;
@@ -683,15 +619,15 @@ void func_801306C4_13F674(u8 *arg0)
 			case 0:
 
 			default:
-				D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454C0_154470, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
+				D_80140C9C_14FC4C = func_8012F4E0_13E490("score", 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
 				break;
 
 			case 2:
-				D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454C8_154478, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
+				D_80140C9C_14FC4C = func_8012F4E0_13E490("punkte", 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
 				break;
 
 			case 1:
-				D_80140C9C_14FC4C = func_8012F4E0_13E490(D_801454D0_154480, 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
+				D_80140C9C_14FC4C = func_8012F4E0_13E490("score", 0x12, 0x18, 0x82, D_80140C70_14FC20, D_80140C9C_14FC4C == 0, D_80140C90_14FC40 == 0, 0xC);
 				break;
 			}
 
@@ -712,16 +648,16 @@ void func_801306C4_13F674(u8 *arg0)
 		case 0:
 
 		default:
-			func_8012F4E0_13E490(D_801454D8_154488, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+			func_8012F4E0_13E490("score", 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
 			break;
 
 		case 2:
-			new_var = D_801454E0_154490;
+			new_var = "punkte";
 			func_8012F4E0_13E490(new_var, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
 			break;
 
 		case 1:
-			func_8012F4E0_13E490(D_801454E8_154498, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+			func_8012F4E0_13E490("score", 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
 			break;
 		}
 
@@ -781,12 +717,12 @@ s32 D_80140CDC_14FC8C = 0x82;
 
 void func_80130BA0_13FB50(void)
 {
-	static s32 bonusPrefix; /* Preserve the preceding score state slot. */
+	static s32 bonusPrefix;
 	static u8 D_80160058;
 	static s32 D_8016005C;
 	static s32 firstBonusScore;
 	static s32 secondBonusScore;
-	static s32 bonusPadding; /* Preserve the slot before the two timers. */
+	static s32 bonusPadding;
 	static u8 D_8016006C;
 	static u8 bonusAlpha;
 	static s32 D_80160070;
@@ -828,7 +764,6 @@ void func_80130BA0_13FB50(void)
 			firstBonusScore = stageScore;
 			secondBonusScore = stageScore;
 		}
-		/* Keep the original score live for IDO's register allocator. */
 		if (bonusScore) {}
 	}
 
@@ -861,8 +796,8 @@ void func_80130BA0_13FB50(void)
 		D_8016006C = 0;
 	}
 
-	drawText(D_801454F0_1544A0, 0x400, 0x400);
-	drawText(D_801454F8_1544A8, 0x7F, 0xC8, 0xDC, 0xFF);
+	drawText("%H%V", 0x400, 0x400);
+	drawText("%C%a", 0x7F, 0xC8, 0xDC, 0xFF);
 
 	if (D_80160058 > 0) {
 		if (D_80160058 == 1) {
@@ -871,29 +806,28 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = stageScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				/* The byte comparison adds zero and schedules the store with the draw arguments. */
-				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText(D_80145500_1544B0,
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText("%a",
 					width + ((bonusAlpha = baseScore) != (u8)baseScore), baseScore);
 			} else {
-				drawText(D_80145504_1544B4, 0xFF);
+				drawText("%a", 0xFF);
 			}
 		}
 		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 		case 0:
 		default:
-			drawText(D_80145508_1544B8, 2, 2);
+			drawText("%@No people killed:\n", 2, 2);
 			break;
 		case 2:
-			drawText(D_80145520_1544D0, 2, 2);
+			drawText("%@Keine toten:\n", 2, 2);
 			break;
 		case 1:
-			drawText(D_80145530_1544E0, 2, 2);
+			drawText("%@Pas de mort:\n", 2, 2);
 			break;
 		}
 		if (D_80048170 == 0) {
-			drawText(D_80145540_1544F0, 0x1D, 2, 0x1388);
+			drawText("%@%d\n", 0x1D, 2, 0x1388);
 		} else {
-			drawText(D_80145548_1544F8, 0x1D, 2, 0);
+			drawText("%@%d\n", 0x1D, 2, 0);
 		}
 	}
 
@@ -903,37 +837,37 @@ void func_80130BA0_13FB50(void)
 			D_80160070 = secondBonusScore;
 			baseScore = D_8016006D;
 			if (baseScore < 0x15) {
-				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText(D_80145550_154500,
+				width = baseScore * 12; baseScore = (u8)(baseScore + 1); drawText("%a",
 					width + ((bonusAlpha = baseScore) != (u8)baseScore), baseScore);
 			} else {
-				drawText(D_80145554_154504, 0xFF);
+				drawText("%a", 0xFF);
 			}
 		}
 		bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 		case 0:
 		default:
-			drawText(D_80145558_154508, 2, 3);
+			drawText("%@No people harvested:\n", 2, 3);
 			break;
 		case 2:
-			drawText(D_80145570_154520, 2, 3);
+			drawText("%@Keine gesammelten:\n", 2, 3);
 			break;
 		case 1:
-			drawText(D_80145588_154538, 2, 3);
+			drawText("%@Pas de prisonnier:\n", 2, 3);
 			break;
 		}
 		if (D_8004816E == 0) {
-			drawText(D_801455A0_154550, 0x1D, 3, 0x1388);
+			drawText("%@%d\n", 0x1D, 3, 0x1388);
 		} else {
-			drawText(D_801455A8_154558, 0x1D, 3, 0);
+			drawText("%@%d\n", 0x1D, 3, 0);
 		}
 	}
 
 	if (D_80140CA8_14FC58 == 0) {
-		D_80140CB0_14FC60 = func_8012F4E0_13E490(D_801455B0_154560, 0xA, 0x14, 0x26, D_80140C70_14FC20,
+		D_80140CB0_14FC60 = func_8012F4E0_13E490("bonus", 0xA, 0x14, 0x26, D_80140C70_14FC20,
 			D_80140CB0_14FC60 == 0, D_80140CAC_14FC5C == 0, 0x14);
 		D_80140CAC_14FC5C = 1;
 	} else {
-		D_80140CB0_14FC60 = func_8012F4E0_13E490(D_801455B8_154568, 0xA, 0x14, 0x26, D_80140C70_14FC20,
+		D_80140CB0_14FC60 = func_8012F4E0_13E490("bonus", 0xA, 0x14, 0x26, D_80140C70_14FC20,
 			D_80140CB0_14FC60 == 0, D_80140CAC_14FC5C == 0, 8);
 		D_80140CAC_14FC5C = 1;
 	}
@@ -943,13 +877,13 @@ void func_80130BA0_13FB50(void)
 	bonusScore = D_800313D0_31FD0; switch (bonusScore) {
 	case 0:
 	default:
-		func_8012F4E0_13E490(D_801455C0_154570, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+		func_8012F4E0_13E490("score", 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
 		break;
 	case 2:
-		func_8012F4E0_13E490(D_801455C8_154578, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+		func_8012F4E0_13E490("punkte", 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
 		break;
 	case 1:
-		func_8012F4E0_13E490(D_801455D0_154580, 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
+		func_8012F4E0_13E490("score", 0x12, 0x18, 0x82, D_80140C70_14FC20, 0, 0, 0);
 		break;
 	}
 
@@ -1012,13 +946,13 @@ void func_80131280_140230(u8 *arg0)
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				D_80140CC8_14FC78 = func_8012F4E0_13E490(D_801455D8_154588, 0x12, 0x18, 0x50, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
+				D_80140CC8_14FC78 = func_8012F4E0_13E490("total", 0x12, 0x18, 0x50, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
 				break;
 			case 2:
-				D_80140CC8_14FC78 = func_8012F4E0_13E490(D_801455E0_154590, 0xF, 0x18, 0x6E, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
+				D_80140CC8_14FC78 = func_8012F4E0_13E490("gesamtpunkte", 0xF, 0x18, 0x6E, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
 				break;
 			case 1:
-				D_80140CC8_14FC78 = func_8012F4E0_13E490(D_801455F0_1545A0, 0x12, 0x18, 0x6E, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
+				D_80140CC8_14FC78 = func_8012F4E0_13E490("score", 0x12, 0x18, 0x6E, D_80140C70_14FC20, D_80140CC8_14FC78 == 0, D_80140CC4_14FC74 == 0, 0x14);
 				break;
 			}
 
@@ -1028,7 +962,7 @@ void func_80131280_140230(u8 *arg0)
 		switch (D_800313D0_31FD0) {
 		case 0:
 		default:
-			func_8012F4E0_13E490(D_801455F8_1545A8, 0x12, 0x18, D_80140CDC_14FC8C, D_80140C70_14FC20, 0, 0, 0);
+			func_8012F4E0_13E490("score", 0x12, 0x18, D_80140CDC_14FC8C, D_80140C70_14FC20, 0, 0, 0);
 			break;
 		case 1:
 			break;
@@ -1048,15 +982,15 @@ void func_80131280_140230(u8 *arg0)
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				func_8012F4E0_13E490(D_80145600_1545B0, 0x12, 0x18, 0x50, D_80140C70_14FC20, 1, 0, 8);
-				func_8012F4E0_13E490(D_80145608_1545B8, 0x12, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490("total", 0x12, 0x18, 0x50, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490("score", 0x12, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
 				break;
 			case 2:
-				func_8012F4E0_13E490(D_80145610_1545C0, 0xF, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490("gesamtpunkte", 0xF, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
 				break;
 			case 1:
-				func_8012F4E0_13E490(D_80145620_1545D0, 0x12, 0x18, 0x50, D_80140C70_14FC20, 1, 0, 8);
-				func_8012F4E0_13E490(D_80145628_1545D8, 0x12, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490("score", 0x12, 0x18, 0x50, D_80140C70_14FC20, 1, 0, 8);
+				func_8012F4E0_13E490("total", 0x12, 0x18, 0x6E, D_80140C70_14FC20, 1, 0, 8);
 				break;
 			}
 
@@ -1125,7 +1059,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 			{
 				renderWidth -= halfWidth;
 			}
-			/* Keep IDO's glyph-delay and threshold spills in ROM order. */
 			charIndex = 0;
 			if (((charIndex + charIndex) * 5) + 0x5A) {}
 			if (charIndex * 10) {}
@@ -1308,7 +1241,6 @@ s32 func_80131858_140808(u8 *text, s32 charWidth, s32 charHeight, s32 yPos, s32 
 				}
 			}
 		}
-
 
 		if ((charCount == charIndex + 1) && (charScreenX <= 0))
 		{

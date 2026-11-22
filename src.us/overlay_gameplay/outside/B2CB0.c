@@ -156,7 +156,7 @@ void func_800A41B0_B3160(u8 arg0) {
 	s8 armB;
 	f32 cosDir;
 	f32 sinDir;
-	s16 pad; /* Retains the halfword before typeIndex in the stack layout. */
+	s16 pad;
 	s16 typeIndex;
 	s32 x;
 	s32 y;
@@ -403,7 +403,7 @@ void func_800A4C28_B3BD8(u8 arg0) {
 	s32 originalTypeValue;
 	s16 coords[3];
 	s32 point[3];
-	s16 pad; /* Keeps the saved sine and compiler spill slots at their original offsets. */
+	s16 pad;
 	s16 sinDirection;
 	s16 cosDirection;
 
@@ -448,7 +448,6 @@ void func_800A4C28_B3BD8(u8 arg0) {
 			if (alienInstances[arg0].unk36 == 3) {
 				sinDirection = sins(direction);
 				cosDirection = coss(direction);
-				/* Pointer casts preserve IDO's member-access weighting and FP operand order. */
 				func_80128428_1373D8(
 					&alienInstances[arg0],
 					(s16)(((f32)sinDirection / 32768.0) * ((AlienType *)&alienTypes[typeIndex])->unk24),

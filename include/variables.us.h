@@ -387,6 +387,21 @@ extern u8 D_80031B58_32758;
 extern Vp D_80031B60_32760[];
 extern s32 D_80031B80_32780;
 extern s32 D_80031B84_32784;
+extern u8 javaModelsRomStart[];
+extern u8 americaModelsRomStart[];
+extern u8 siberiaModelsRomStart[];
+extern u8 cometModelsRomStart[];
+extern u8 bossModelsRomStart[];
+extern u8 greeceInteriorTexturesRomStart[];
+extern u8 javaInteriorModelsRomStart[];
+extern u8 javaInteriorTexturesRomStart[];
+extern u8 americaInteriorModelsRomStart[];
+extern u8 americaInteriorTexturesRomStart[];
+extern u8 siberiaInteriorModelsRomStart[];
+extern u8 siberiaInteriorTexturesRomStart[];
+extern u8 cometInteriorModelsRomStart[];
+extern u8 cometInteriorTexturesRomStart[];
+
 extern s32 D_80031B90_32790[];
 extern s32 D_80031BAC_327AC[];
 extern s32 D_80031BC4_327C4[];
@@ -496,113 +511,7 @@ extern OSViMode D_800356D0_362D0;
 extern OSViMode D_80035B30_36730;
 extern s32 D_80035B5C_3675C;
 extern OSViMode D_80035F90_36B90;
-extern const char D_80036840_37440[]; // Rumble pak(tm) detected!
-extern const char D_8003685C_3745C[]; /* osSyncPrintf format string - save version mismatch */
-extern const char D_80036870_37470[]; /* osSyncPrintf format string - save checksum mismatch */
-extern const char D_80036884_37484[]; /* osSyncPrintf format string - save score */
-extern const char D_80036894_37494[]; /* osSyncPrintf format string - save humans killed */
-extern const char D_800368A0_374A0[]; /* osSyncPrintf format string - save seconds elapsed */
-extern const char D_800368AC_374AC[]; /* osSyncPrintf format string */
-extern const char D_800368C4_374C4[]; /* osSyncPrintf format string - save level/warp */
-extern const char D_800368DC_374DC[]; /* osSyncPrintf format string - save warp point */
-extern const char D_800368F4_374F4[]; /* osSyncPrintf format string - save play time */
-extern const char D_80036904_37504[]; /* osSyncPrintf format string */
-extern const char D_80036910_37510[]; /* osSyncPrintf format string - save weapon slot */
-extern const char D_8003692C_3752C[]; /* osSyncPrintf format string */
-extern const char D_80036930_37530[]; /* osSyncPrintf format string */
-extern const char D_80036938_37538[]; /* osSyncPrintf format string */
-extern const char D_80036940_37540[]; /* osSyncPrintf format string - save D_80048026 */
-extern const char D_8003696C_3756C[]; /* osSyncPrintf format string */
-extern const char D_80036984_37584[]; /* osSyncPrintf format string */
-extern const char D_8003698C_3758C[]; /* osSyncPrintf format string - save D_80047F98 */
-extern const char D_800369A0_375A0[]; /* osSyncPrintf format string - save D_8004D154 */
-extern const char D_800369B4_375B4[]; /* osSyncPrintf format string - save D_8004D158 */
-extern const char D_800369C4_375C4[]; /* osSyncPrintf format string */
-extern const char D_800369D0_375D0[]; /* osSyncPrintf format string */
-extern const char D_80036A04_37604[]; /* osSyncPrintf format string - save weapon damage */
-extern const char D_80036A20_37620[]; /* osSyncPrintf format string - save D_80048030 */
-extern const char D_80036A38_37638[]; /* osSyncPrintf format string - save D_80052ACD */
-extern const char D_80036A48_37648[]; /* osSyncPrintf format string - save D_8004815x */
-extern const char D_80036A68_37668[]; /* osSyncPrintf format string */
-extern const char D_80036A6C_3766C[]; /* osSyncPrintf format string */
-extern const char D_80036A8C_3768C[]; /* osSyncPrintf format string - load score */
-extern const char D_80036AA0_376A0[]; /* osSyncPrintf format string - load humansKilled */
-extern const char D_80036AAC_376AC[]; /* osSyncPrintf format string - load secondsElapsed */
-extern const char D_80036AB8_376B8[]; /* osSyncPrintf format string */
-extern const char D_80036AD4_376D4[]; /* osSyncPrintf format string - load level/warp */
-extern const char D_80036AEC_376EC[]; /* osSyncPrintf format string - load warp point */
-extern const char D_80036AFC_376FC[]; /* osSyncPrintf format string - load D_80031420 */
-extern const char D_80036B0C_3770C[]; /* osSyncPrintf format string */
-extern const char D_80036B18_37718[]; /* osSyncPrintf format string - load weapon slot */
-extern const char D_80036B1C_3771C[]; /* osSyncPrintf format string */
-extern const char D_80036B20_37720[]; /* osSyncPrintf format string */
-extern const char D_80036B28_37728[]; /* osSyncPrintf format string - load bitflags */
-extern const char D_80036B30_37730[]; /* osSyncPrintf format string - load D_80048026 */
-extern const char D_80036B60_37760[]; /* osSyncPrintf format string */
-extern const char D_80036B78_37778[]; /* osSyncPrintf format string - load D_8004DC50 */
-extern const char D_80036B80_37780[]; /* osSyncPrintf format string - load D_80047F98 */
-extern const char D_80036B94_37794[]; /* osSyncPrintf format string - load D_80047F98 clamped */
-extern const char D_80036BA4_377A4[]; /* osSyncPrintf format string - load D_8004D154 */
-extern const char D_80036BB8_377B8[]; /* osSyncPrintf format string - load D_8004D158 */
-extern const char D_80036BC8_377C8[]; /* osSyncPrintf format string */
-extern const char D_80036BD4_377D4[]; /* osSyncPrintf format string - load weapon damage */
-extern const char D_80036BF4_377F4[]; /* osSyncPrintf format string - load D_80048030 */
-extern const char D_80036C0C_3780C[]; /* osSyncPrintf format string - load old D_80052ACD */
-extern const char D_80036C1C_3781C[]; /* osSyncPrintf format string - load new D_80052ACD */
-extern const char D_80036C2C_3782C[]; /* osSyncPrintf format string - load D_8004815x */
-extern const char D_80036C4C_3784C[]; /* osSyncPrintf format string */
-extern const char D_80036C50_37850[]; /* osSyncPrintf format string - load failed */
-extern const char D_80036C64_37864[];
-extern const char D_80036C74_37874[];
 extern const f32 D_80036C88_37888[];
-extern const f64 D_80037610_38210[];
-extern const Unk80154082 D_800378CC_384CC;
-extern const Unk80378D0 D_800378D0_384D0;
-extern const char D_800383B0_38FB0[];
-extern const char D_800383BC_38FBC[];
-extern const char D_800383C8_38FC8[];
-extern const char D_800383CC_38FCC[];
-extern const char D_800383D4_38FD4[];
-extern const char D_800383DC_38FDC[];
-extern const char D_800383E0_38FE0[];
-extern const char D_800383E4_38FE4[];
-extern const char D_800383EC_38FEC[];
-extern const char D_800383F8_38FF8[];
-extern const char D_80038404_39004[];
-extern const char D_8003840C_3900C[];
-extern const char D_80038418_39018[];
-extern const char D_80038424_39024[];
-extern const char D_8003843C_3903C[]; /* osSyncPrintf format string */
-extern const char D_8003845C_3905C[]; /* osSyncPrintf format string */
-extern const char D_80038470_39070[]; /* osSyncPrintf format string */
-extern const char D_80038480_39080[]; /* osSyncPrintf format string */
-extern const char D_80038484_39084[]; /* osSyncPrintf format string */
-extern const char D_8003849C_3909C[]; /* osSyncPrintf format string */
-extern const char D_800384A8_390A8[]; /* osSyncPrintf format string */
-extern const char D_800384B4_390B4[]; /* osSyncPrintf format string */
-extern const char D_800384C4_390C4[]; /* osSyncPrintf format string */
-extern const char D_800384C8_390C8[]; /* osSyncPrintf format string */
-extern const char D_800384E0_390E0[];
-extern const char D_80038500_39100[];
-extern const char D_80038530_39130[];
-extern const char D_80038534_39134[];
-extern const char D_8003853C_3913C[];
-extern const char D_80038540_39140[];
-extern const char D_80038554_39154[];
-extern const char D_8003855C_3915C[];
-extern const char D_8003856C_3916C[];
-extern const char D_80038574_39174[];
-extern const char D_80038588_39188[];
-extern const char D_80038590_39190[];
-extern const char D_800385A4_391A4[];
-extern const char D_800385A8_391A8[];
-extern const char D_800385BC_391BC[];
-extern const char D_800385C4_391C4[];
-extern const char D_800385D8_391D8[];
-extern const char D_800385E0_391E0[]; /* osSyncPrintf format string */
-extern const char D_800385E4_391E4[]; /* osSyncPrintf format string */
-extern const char D_80038614_39214[]; /* osSyncPrintf format string */
-extern const char D_80038618_39218[]; /* osSyncPrintf format string */
 extern const Unk8014DD50 D_8003A040_3AC40[6];
 extern const Unk8014DD50 D_8003A0A0_3ACA0[2];
 extern const Unk8014DD50 D_8003A0C0_3ACC0[2];
@@ -2934,8 +2843,6 @@ extern s32 D_80160154;
 extern s32 D_80160158;
 extern s16 D_8016015C;
 extern u8 D_8016015E;
-extern const CameraFadeScale D_80145680_154630;
-extern const CameraFadeScale D_80145688_154638;
 extern const CameraFadeScale D_801456E8_154698;
 extern const CameraFadeScale D_801456F0_1546A0;
 extern s8 D_8016015F;
@@ -3216,47 +3123,14 @@ extern AlienType D_802E0CE4_1F99F4; // 0x802E0CE4
 extern const char D_802E0CF0_260430[];
 extern const char D_802E0D08_260448[];
 extern const char D_802E0D28_260468[];
-extern const char D_802E0D50_1F9A60[];
-extern const char D_802E0D6C_1F9A7C[];
 extern const f64 D_802E0D78_2604B8[];
-extern const char D_802E0D84_1F9A94[];
-extern const char D_802E0DA8_1F9AB8[];
-extern const f64 D_802E0DB0_2604F0[];
-extern const f64 D_802E0DB8_2604F8[];
-extern const f64 D_802E0DC0_260500[];
-extern const char D_802E0DC0_1F9AD0[];
-extern const f32 D_802E0DC8_260508[];
-extern const FloatConstant D_802E0DCC_26050C;
-extern const FloatConstant D_802E0DD0_260510;
-extern const char D_802E0DE8_1F9AF8[];
 extern void (*D_802E0DF0_2C3220[])(void);
-extern const ShadowGeometryConstant D_802E0DF8_260538;
-extern const f32 D_802E0E00_260540[];
-extern const char D_802E0E04_1F9B14[];
-extern const f32 D_802E0E04_260544[];
-extern const f32 D_802E0E08_260548[];
-extern const f32 D_802E0E0C_26054C[];
-extern const f32 D_802E0E10_260550[];
-extern const f32 D_802E0E14_260554[];
-extern const f32 D_802E0E18_260558[];
-extern const f32 D_802E0E1C_26055C[];
-extern const f32 D_802E0E20_260560[];
-extern const char D_802E0E10_1F9B20[];
-extern const char D_802E0E18_1F9B28[];
-extern const char D_802E0E24_1F9B34[];
-extern const char D_802E0E30_1F9B40[];
 extern s16 D_802E0E30;
 extern s16 D_802E0E32;
 extern s16 D_802E0E34; // used for delay timer to start school cutscene in America 1 
-extern const char D_802E0E3C_1F9B4C[];
 extern u8 D_802E0E44;
 extern s32 D_802E0E48;
-extern const char D_802E0E50_1F9B60[];
-extern const char D_802E0E58_1F9B68[];
-extern const char D_802E0E60_1F9B70[];
 extern UnkPos16_8012B26C D_802E0E6C_2C329C[5];
-extern const char D_802E0E74_1F9B84[];
-extern const char D_802E0E7C_1F9B8C[];
 extern u32 D_802E0E8C_2C32BC[4];
 extern UnkPos16_8012B26C D_802E0E9C_2C32CC[5];
 extern const u32 jtbl_802E0E90_1F9BA0[];
@@ -3851,10 +3725,6 @@ extern s32 D_80160070_LIMIT;
 extern u8 D_8016006D_W;
 
 
-extern const ShadowGeometryConstant D_802E0DD8_260518;
-extern const ShadowGeometryConstant D_802E0DE0_260520;
-extern const ShadowGeometryConstant D_802E0DE8_260528;
-extern const ShadowGeometryConstant D_802E0DF0_260530;
 
 extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];

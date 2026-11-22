@@ -282,17 +282,19 @@ MissionData* func_80070494_40944(s16 arg0) {
 
 void func_800704DC_4098C(void)
 {
-   s32 var_v1;
-  int new_var;
-  int new_var2;
-  new_var = D_800D6DC0[var_v1].unk1C == 1;
-  var_v1 = 0x29; do {
-	  new_var = D_800D6DC0[var_v1].unk1C == 1;
-	  new_var2 = new_var;
-	  if (new_var2) {
-		  D_800D6DC0[var_v1].unk1C = 0U;
-	  }
-  } while (var_v1--);
+	s32 var_v1;
+	int new_var;
+	int new_var2;
+	new_var = D_800D6DC0[var_v1].unk1C == 1;
+	var_v1 = 0x29;do
+	{
+		new_var = D_800D6DC0[var_v1].unk1C == 1;
+		new_var2 = new_var;
+		if (new_var2)
+		{
+			D_800D6DC0[var_v1].unk1C = 0U;
+		}
+	} while (var_v1--);
 }
 
 void func_80070514_409C4(s16 arg0)
@@ -421,18 +423,18 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 
 void func_800708B8_40D68(short arg0)
 {
-  int new_var;
-  MissionData *entry;
-  entry = func_80070494_40944((s16) arg0);
-  new_var = -0x400;
-  if (entry != NULL)
-  {
-	if (entry->unk12 > 0x4000)
+	int new_var;
+	MissionData *entry;
+	entry = func_80070494_40944((s16)arg0);
+	new_var = -0x400;
+	if (entry != NULL)
 	{
-	  entry->unk12 = 0x4000;
+		if (entry->unk12 > 0x4000)
+		{
+			entry->unk12 = 0x4000;
+		}
+		entry->unk14 = new_var;
 	}
-	entry->unk14 = new_var;
-  }
 }
 
 void func_80070904_40DB4(s16 arg0) {
@@ -457,72 +459,71 @@ void func_80070940_40DF0(void)
 	}
 }
 
-MissionData* func_80070970_40E20(MissionData* entry, s32 hasSelection)
+MissionData *func_80070970_40E20(MissionData *entry, s32 hasSelection)
 {
-  int new_var;
-  MissionData *selectedEntry;
-  int new_var2;
-  entry->unk12 = 0;
-  entry->unk14 = 0;
-  entry->unk16 = 0;
-  new_var = hasSelection != 0;
-  if (new_var)
-  {
-	selectedEntry = func_800706E8_40B98(D_800D74AA);
-	new_var2 = selectedEntry->unk26 != (currentSaveFileIndex + 2);
-	if (new_var2)
+	int new_var;
+	MissionData *selectedEntry;
+	int new_var2;
+	entry->unk12 = 0;
+	entry->unk14 = 0;
+	entry->unk16 = 0;
+	new_var = hasSelection != 0;
+	if (new_var)
 	{
-	  selectedEntry->unk1C = 0;
-	}
-	else
-	{
-	  selectedEntry->unk1C = 1;
-	  selectedEntry->unk28 = -1;
+		selectedEntry = func_800706E8_40B98(D_800D74AA);
+		new_var2 = selectedEntry->unk26 != (currentSaveFileIndex + 2);
+		if (new_var2)
+		{
+			selectedEntry->unk1C = 0;
+		}
+		else
+		{
+			selectedEntry->unk1C = 1;
+			selectedEntry->unk28 = -1;
+		}
+		D_800D74AA = 0;
+		return selectedEntry;
 	}
 	D_800D74AA = 0;
-	return selectedEntry;
-  }
-  D_800D74AA = 0;
-  return NULL;
+	return NULL;
 }
 
 // AI - Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
 void func_800709F0_40EA0(void)
 {
-  s32 i;
-  i = 0x29; do
-  {
-	if (D_800D6DC0[i].unk16 == 4)
+	s32 i;
+	i = 0x29;do
 	{
-	  func_80070970_40E20(&D_800D6DC0[i], 0);
-		continue;
-	}
-	if (D_800D6DC0[i].unk12 > 0x4000)
-	{
-	  D_800D6DC0[i].unk12 = 0x4000;
-	}
-	D_800D6DC0[i].unk14 = -0x400;
-  }
-  while (i--);
+		if (D_800D6DC0[i].unk16 == 4)
+		{
+			func_80070970_40E20(&D_800D6DC0[i], 0);
+			continue;
+		}
+		if (D_800D6DC0[i].unk12 > 0x4000)
+		{
+			D_800D6DC0[i].unk12 = 0x4000;
+		}
+		D_800D6DC0[i].unk14 = -0x400;
+	} while (i--);
 }
 
 void func_80070A8C_40F3C(s16 arg0)
 {
-  s32 temp_v0;
-  s32 var_v1;
-  s32 var_v2;
-  if ((!arg0) != 0)
-  {
-  }
-  var_v1 = 0x29; do {
-	if (arg0 == D_800D6DC0[var_v1].unk26)
+	s32 temp_v0;
+	s32 var_v1;
+	s32 var_v2;
+	if ((!arg0) != 0)
 	{
-	  D_800909B0[D_800D6DC0[var_v1].unk26].unk1C = 3;
-	  D_800D6DC0[var_v1].unk1C = 3;
 	}
-	temp_v0 = var_v1;
-  }
-  while (var_v1--);
+	var_v1 = 0x29;do
+	{
+		if (arg0 == D_800D6DC0[var_v1].unk26)
+		{
+			D_800909B0[D_800D6DC0[var_v1].unk26].unk1C = 3;
+			D_800D6DC0[var_v1].unk1C = 3;
+		}
+		temp_v0 = var_v1;
+	} while (var_v1--);
 }
 
 void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
@@ -534,7 +535,7 @@ void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
 		if (missionId >= arg0 && missionId <= arg1) {
 			D_800909B0[missionId].unk1C = 3;
 			D_800D6DC0[i].unk1C = 3;
-		}  
+		}
 	}
 }
 
@@ -571,15 +572,15 @@ void func_80070BD8_41088(s16 arg0, s16 arg1) {
 // AI - If arg2 is divisible by 8 and arg2/8 is less than arg1, calls func_80070514 to process the resulting slot index.
 void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 {
-  s32 temp_v0;
-  if (!(arg2 & 7))
-  {
-	temp_v0 = arg2 >> 3;
-	if (temp_v0 < arg1)
+	s32 temp_v0;
+	if (!(arg2 & 7))
 	{
-	  func_80070514_409C4((s16) ((temp_v0 ^ 0) + arg0));
+		temp_v0 = arg2 >> 3;
+		if (temp_v0 < arg1)
+		{
+			func_80070514_409C4((s16)((temp_v0 ^ 0) + arg0));
+		}
 	}
-  }
 }
 
 void func_80070CC4_41174(void)
@@ -1202,7 +1203,7 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 
 	if ((arg3 = (itemEntry->scale * 2) * arg3,1)) {} itemRotation = itemRotation + 0x16C;
 
-	packet=D_8005BB2C++; packet->words.w0=0xE7000000; packet->words.w1=0;
+	packet = D_8005BB2C++; gDPPipeSync(packet);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 	packet=D_8005BB2C++; packet->words.w0=0xBB000000; packet->words.w1=0x80008000;
 	func_800039D0_45D0(NULL, NULL, &D_800311A0, D_8005BB38);
@@ -2232,7 +2233,7 @@ void func_800731A8_43658(void)
 s32 D_8009485C_64D0C = 0;
 
 void func_80075710_45BC0(void) {
-    s32 pad[22];
+	s32 pad[22];
 
 	guOrtho(D_8005BB38, 0.0f, 160.0f, 120.0f, 0.0f, -10000.0f, 10000.0f, 1.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
@@ -2427,71 +2428,69 @@ void func_800764B4_46964(void) {
 // AI - Plays the comet-explosion end-game movie, then shows the credits and returns to the title screen.
 s32 func_80076504_469B4(void)
 {
-  s32 result;
-  s32 fadeResult;
-  result = 1;
-  func_8007949C_4994C(func_80070390_40840(), 0);
-  D_80052ACA = 6;
-  D_8004772C = 0xFF;
-  D_80047730 = 0x40;
-  D_80047734 = 0;
-  D_80047738 = D_80047739 = D_8004773A = 0;
-  D_800D74AA = 0;
-  D_800D6D8C = 1;
-  gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
-  gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
-  drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
-  func_8007D7E0_4DC90();
-  osSyncPrintf("startup\n");
-  func_80013684_14284();
-  do
-  {
-	func_800791A0_49650(1);
-	gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
-	fadeResult = func_8007D91C_4DDCC(1);
-	gDPFullSync(D_8005BB2C++);
-	gSPEndDisplayList(D_8005BB2C++);
-	osSendMesg(&D_8006A8B0, &D_800314CC, 1);
-	if (fadeResult != 0)
+	s32 result;
+	s32 fadeResult;
+	result = 1;
+	func_8007949C_4994C(func_80070390_40840(), 0);
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	D_80047738 = D_80047739 = D_8004773A = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+	drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
+	func_8007D7E0_4DC90();
+	osSyncPrintf("startup\n");
+	func_80013684_14284();
+	do
 	{
-	  result = 2;
-	  func_80005AEC_66EC(0, 0, 0, 0x10);
-	}
-  }
-  while (func_80005B30_6730() == 0);
-  func_8007C4BC_4C96C();
-  func_8007C7F4_4CCA4();
-  D_80052ACA = 6;
-  D_8004772C = 0xFF;
-  D_80047730 = 0x40;
-  D_80047734 = 0;
-  D_80047738 = D_80047739 = D_8004773A = 0;
-  D_800D74AA = 0;
-  D_800D6D8C = 1;
-  gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
-  gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
-  func_8007D7E0_4DC90();
-  osSyncPrintf("kiss sequence\n");
-  do
-  {
-	func_800791A0_49650(1);
-	gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
-	fadeResult = func_8007D91C_4DDCC(2);
-	gDPFullSync(D_8005BB2C++);
-	gSPEndDisplayList(D_8005BB2C++);
-	osSendMesg(&D_8006A8B0, &D_800314CC, 1);
-	if (fadeResult != 0)
+		func_800791A0_49650(1);
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(1);
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		osSendMesg(&D_8006A8B0, &D_800314CC, 1);
+		if (fadeResult != 0)
+		{
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+	func_8007C4BC_4C96C();
+	func_8007C7F4_4CCA4();
+	D_80052ACA = 6;
+	D_8004772C = 0xFF;
+	D_80047730 = 0x40;
+	D_80047734 = 0;
+	D_80047738 = D_80047739 = D_8004773A = 0;
+	D_800D74AA = 0;
+	D_800D6D8C = 1;
+	gDPSetAlphaDither(D_8005BB2C++, G_AD_NOISE);
+	gDPSetColorDither(D_8005BB2C++, G_CD_BAYER);
+	func_8007D7E0_4DC90();
+	osSyncPrintf("kiss sequence\n");
+	do
 	{
-	  result = 2;
-	  func_80005AEC_66EC(0, 0, 0, 0x10);
-	}
-  }
-  while (func_80005B30_6730() == 0);
-  D_80052ACA = 3;
-  func_800056A8_62A8();
-  func_800056A8_62A8();
-  func_80070940_40DF0();
-  return result;
+		func_800791A0_49650(1);
+		gDPSetAlphaDither(D_8005BB2C++, G_AD_PATTERN);
+		fadeResult = func_8007D91C_4DDCC(2);
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		osSendMesg(&D_8006A8B0, &D_800314CC, 1);
+		if (fadeResult != 0)
+		{
+			result = 2;
+			func_80005AEC_66EC(0, 0, 0, 0x10);
+		}
+	} while (func_80005B30_6730() == 0);
+	D_80052ACA = 3;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	func_80070940_40DF0();
+	return result;
 }
 
 // displayEndGameMessage
@@ -2514,8 +2513,17 @@ u32 D_80094864_64D14 = 0;
 
 // Intro movie event start frames
 IntroStartFrames D_80094868_64D18 = {{
-    0x00000000, 0x0000021C, 0x0000045B, 0x00000596, 0x000006E7, 0x000008B1,
-    0x00000A87, 0x00000C03, 0x00000D89, 0x00000F87, 0x0000128E,
+	0x00000000,
+	0x0000021C,
+	0x0000045B,
+	0x00000596,
+	0x000006E7,
+	0x000008B1,
+	0x00000A87,
+	0x00000C03,
+	0x00000D89,
+	0x00000F87,
+	0x0000128E,
 }};
 
 IntroStopFrames D_80094894_64D44 = {{
@@ -2613,8 +2621,14 @@ s32 func_800768C4_46D74(void) {
 
 // Weapon/vehicle display list offsets
 DListPtrsCopy D_800948C0_64D70 = {{
-    0x040A32C0, 0x040A2850, 0x040A20A0, 0x040A1820,
-    0x040A4348, 0x040A0F98, 0x040A09C0, 0x040A5248,
+	0x040A32C0,
+	0x040A2850,
+	0x040A20A0,
+	0x040A1820,
+	0x040A4348,
+	0x040A0F98,
+	0x040A09C0,
+	0x040A5248,
 }};
 
 u32 D_800948E0_64D90 = 0;
@@ -2922,56 +2936,56 @@ s32 func_8007704C_474FC(void) {
 
 s32 func_80077204_476B4(void)
 {
-  u32 frameCounter;
-  s32 state;
-  volatile s16 *selectedSaveSlot;
-  frameCounter = 0;
-  state = 1;
-  func_800709F0_40EA0();
-  D_800D74A6 = 0x37;
-  selectedSaveSlot = &D_800D74A4;
-  *selectedSaveSlot = D_800D74A6;
-  while (state == 1)
-  {
-	if (frameCounter < 0x3E8U)
+	u32 frameCounter;
+	s32 state;
+	volatile s16 *selectedSaveSlot;
+	frameCounter = 0;
+	state = 1;
+	func_800709F0_40EA0();
+	D_800D74A6 = 0x37;
+	selectedSaveSlot = &D_800D74A4;
+	*selectedSaveSlot = D_800D74A6;
+	while (state == 1)
 	{
-	  func_80070C64_41114(0x36, 3, (s16) frameCounter);
-	}
-	if (frameCounter >= 0x21U)
-	{
-	  func_80070CC4_41174();
-	  func_8007166C_41B1C();
-	  if (isButtonNewlyPressed(0, 0x9000) != 0)
-	  {
-		state = 0;
-		if ((*selectedSaveSlot) == 0x38)
+		if (frameCounter < 0x3E8U)
 		{
-		  state = 2;
+			func_80070C64_41114(0x36, 3, (s16)frameCounter);
 		}
-	   else
+		if (frameCounter >= 0x21U)
 		{
-		  state = state ^ 0;
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+			if (isButtonNewlyPressed(0, 0x9000) != 0)
+			{
+				state = 0;
+				if ((*selectedSaveSlot) == 0x38)
+				{
+					state = 2;
+				}
+				else
+				{
+					state = state ^ 0;
+				}
+			}
+			if (isButtonNewlyPressed(0, 0x4000) != 0)
+			{
+				state = 0;
+			}
 		}
-	  }
-	  if (isButtonNewlyPressed(0, 0x4000) != 0)
-	  {
-		state = 0;
-	  }
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+		if (frameCounter < 0x3E8U)
+		{
+			frameCounter++;
+		}
 	}
-	func_80075D58_46208(0);
-	func_800731A8_43658();
-	func_8000B044_BC44();
-	func_8000505C_5C5C();
-	if (frameCounter < 0x3E8U)
-	{
-	  frameCounter++;
-	}
-  }
 
-  func_8000AFDC_BBDC();
-  func_800153D8_15FD8(0xC8);
-  func_800709F0_40EA0();
-  return state;
+	func_8000AFDC_BBDC();
+	func_800153D8_15FD8(0xC8);
+	func_800709F0_40EA0();
+	return state;
 }
 
 // displaySelectFileDifficulty
@@ -3025,221 +3039,262 @@ s32 func_80077344_477F4(void) {
 }
 
 // doDeleteFile
-s32 func_80077494_47944(void) {
-  u32 frameCounter;
-  s32 i;
-  s32 nameIndex;
-  s32 foundSelectableFile;
-  s32 state;
-  s32 saveSlot;
+s32 func_80077494_47944(void)
+{
+	u32 frameCounter;
+	s32 i;
+	s32 nameIndex;
+	s32 foundSelectableFile;
+	s32 state;
+	s32 saveSlot;
 
-  frameCounter = 0;
-  state = 1;
-  foundSelectableFile = 0;
-
-  func_800708B8_40D68(1);
-  func_800708B8_40D68(5);
-  func_800708B8_40D68(6);
-  func_80070514_409C4(0x33);
-
-  currentSaveFileIndex = 0;
-  i = currentSaveFileIndex;
-  nameIndex = 0;
-  if (i < 3) {
-	do {
-	  getSaveFileName(i, D_800D6DA8[nameIndex]);
-	  saveSlot = i + 2;
-
-	  if (D_800D6DA8[nameIndex][1] == 0x6D) {
-		func_80070A8C_40F3C(saveSlot); // If the second letter of filename is "m" it cannot be copied or deleted
-	  } else {
-		func_80070B68_41018(saveSlot);
-		if (foundSelectableFile == 0) {
-		  frontendSelectedEntry = saveSlot;
-		  foundSelectableFile = 1;
-		}
-	  }
-	  i++;
-	  nameIndex++;
-	} while (i < 3);
-  }
-
-  func_8007166C_41B1C();
-  D_800909B0[4].unk25 = 0;
-
-  while (state == 1) {
-	if (frameCounter >= 0x29U) {
-	  func_80070CC4_41174();
-	  func_8007166C_41B1C();
-
-	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		if (D_800D6DA8[(0, frontendSelectedEntry - 2)][1] != 0x6D) {
-		  state = 2;
-		}
-	  }
-
-	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0) {
-		state = 0;
-	  }
-	}
-
-	func_80075D58_46208(0);
-	func_800731A8_43658();
-	func_8000B044_BC44();
-	func_8000505C_5C5C();
-
-	if (frameCounter < 0x3E8U) {
-	  frameCounter++;
-	}
-  }
-
-  func_800153D8_15FD8(0xC8);
-
-  currentSaveFileIndex = frontendSelectedEntry - 2;
-  if ((state != 0) && (func_80077204_476B4() == 2)) {
-	D_800476A0 = 3;
-  }
-
-  func_8000AFDC_BBDC();
-  func_800709F0_40EA0();
-  func_800764B4_46964();
-
-  return currentSaveFileIndex;
-}
-
-// doCopyFile
-s32 func_800776BC_47B6C(void) {
-  s32 *indexPointer = &currentSaveFileIndex;
-  s32 nameIndex;
-  s32 padding[4];
-  s32 saveSlotSp;
-  s32 saveSlot;
-  s32 i;
-  s32 foundSelectableFile;
-  s32 state;
-  u32 frameCounter;
-
-  frameCounter = 0;
-  state = 1;
-  foundSelectableFile = 0;
-
-  func_800708B8_40D68(1);
-  func_800708B8_40D68(5);
-  func_800708B8_40D68(6);
-  func_80070514_409C4(0x34);
-  *indexPointer = 0;
-
-  i = currentSaveFileIndex;
-  nameIndex = 0;
-  if (i < 3) {
-	do {
-	  getSaveFileName(i, D_800D6DA8[nameIndex]);
-	  saveSlot = i + 2;
-	  if (D_800D6DA8[nameIndex][1] == 0x6D) {
-		func_80070A8C_40F3C(i + 2);
-	  } else {
-		saveSlotSp = saveSlot;
-		func_80070B68_41018(saveSlot);
-		if (foundSelectableFile == 0) {
-		  frontendSelectedEntry = saveSlotSp;
-		  foundSelectableFile = 1;
-		}
-	  }
-	  i++;
-	  nameIndex++;
-	} while (i < 3);
-  }
-
-  func_8007166C_41B1C();
-  D_800909B0[4].unk25 = 0;
-
-  while (state == 1) {
-	if (frameCounter >= 0x29U) {
-	  func_80070CC4_41174();
-	  func_8007166C_41B1C();
-
-	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		D_80047F88 = frontendSelectedEntry - 2;
-		if (D_800D6DA8[D_80047F88][1] != 0x6D) {
-		  state = 2;
-		}
-	  }
-	  if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0) {
-		state = 0;
-	  }
-	}
-
-	func_80075D58_46208(0);
-	func_800731A8_43658();
-	func_8000B044_BC44();
-	func_8000505C_5C5C();
-
-	if (frameCounter < 0x3E8U) {
-	  frameCounter++;
-	}
-
-	if (state == 0) {
-	  func_8000AFDC_BBDC();
-	  func_800709F0_40EA0();
-	}
-  }
-
-  func_80070BD8_41088(2, 4);
-  func_800153D8_15FD8(0xC8);
-  func_80070A8C_40F3C(frontendSelectedEntry);
-
-  if (frontendSelectedEntry == 2) {
-	frontendSelectedEntry = 3;
-  } else {
-	frontendSelectedEntry = 2;
-  }
-
-  func_80070CC4_41174();
-  if (state != 0) {
+	frameCounter = 0;
 	state = 1;
-	func_800708B8_40D68(0x34);
-	func_80070514_409C4(0x35);
+	foundSelectableFile = 0;
 
-	do {
-	  if (frameCounter >= 0x41U) {
-		func_80070CC4_41174();
-		func_8007166C_41B1C();
+	func_800708B8_40D68(1);
+	func_800708B8_40D68(5);
+	func_800708B8_40D68(6);
+	func_80070514_409C4(0x33);
 
-		if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0) {
-		  D_80047F8C = frontendSelectedEntry - 2;
-		  if ((0, D_80047F88) != D_80047F8C) {
-			state = 2;
-		  }
+	currentSaveFileIndex = 0;
+	i = currentSaveFileIndex;
+	nameIndex = 0;
+	if (i < 3)
+	{
+		do
+		{
+			getSaveFileName(i, D_800D6DA8[nameIndex]);
+			saveSlot = i + 2;
+
+			if (D_800D6DA8[nameIndex][1] == 0x6D)
+			{
+				func_80070A8C_40F3C(saveSlot); // If the second letter of filename is "m" it cannot be copied or deleted
+			}
+			else
+			{
+				func_80070B68_41018(saveSlot);
+				if (foundSelectableFile == 0)
+				{
+					frontendSelectedEntry = saveSlot;
+					foundSelectableFile = 1;
+				}
+			}
+			i++;
+			nameIndex++;
+		} while (i < 3);
+	}
+
+	func_8007166C_41B1C();
+	D_800909B0[4].unk25 = 0;
+
+	while (state == 1)
+	{
+		if (frameCounter >= 0x29U)
+		{
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)
+			{
+				if (D_800D6DA8[(0, frontendSelectedEntry - 2)][1] != 0x6D)
+				{
+					state = 2;
+				}
+			}
+
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0)
+			{
+				state = 0;
+			}
 		}
 
-		if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0) {
-		  state = 0;
-		}
-	  }
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
 
-	  func_80075D58_46208(0);
-	  func_800731A8_43658();
-	  func_8000B044_BC44();
-	  func_8000505C_5C5C();
-	  frameCounter++;
-	} while (state == 1);
+		if (frameCounter < 0x3E8U)
+		{
+			frameCounter++;
+		}
+	}
 
 	func_800153D8_15FD8(0xC8);
-	if ((state == 2) && (func_80077204_476B4() == 2)) {
-	  D_800476A0 = 5;
+
+	currentSaveFileIndex = frontendSelectedEntry - 2;
+	if ((state != 0) && (func_80077204_476B4() == 2))
+	{
+		D_800476A0 = 3;
 	}
 
 	func_8000AFDC_BBDC();
-	if (state == 2) {
-	  func_800764B4_46964();
-	  func_800709F0_40EA0();
-	} else {
-	  func_800708B8_40D68(0x35);
-	  func_800776BC_47B6C();
-	}
-  }
+	func_800709F0_40EA0();
+	func_800764B4_46964();
 
-  return state;
+	return currentSaveFileIndex;
+}
+
+// doCopyFile
+s32 func_800776BC_47B6C(void)
+{
+	s32 *indexPointer = &currentSaveFileIndex;
+	s32 nameIndex;
+	s32 padding[4];
+	s32 saveSlotSp;
+	s32 saveSlot;
+	s32 i;
+	s32 foundSelectableFile;
+	s32 state;
+	u32 frameCounter;
+
+	frameCounter = 0;
+	state = 1;
+	foundSelectableFile = 0;
+
+	func_800708B8_40D68(1);
+	func_800708B8_40D68(5);
+	func_800708B8_40D68(6);
+	func_80070514_409C4(0x34);
+	*indexPointer = 0;
+
+	i = currentSaveFileIndex;
+	nameIndex = 0;
+	if (i < 3)
+	{
+		do
+		{
+			getSaveFileName(i, D_800D6DA8[nameIndex]);
+			saveSlot = i + 2;
+			if (D_800D6DA8[nameIndex][1] == 0x6D)
+			{
+				func_80070A8C_40F3C(i + 2);
+			}
+			else
+			{
+				saveSlotSp = saveSlot;
+				func_80070B68_41018(saveSlot);
+				if (foundSelectableFile == 0)
+				{
+					frontendSelectedEntry = saveSlotSp;
+					foundSelectableFile = 1;
+				}
+			}
+			i++;
+			nameIndex++;
+		} while (i < 3);
+	}
+
+	func_8007166C_41B1C();
+	D_800909B0[4].unk25 = 0;
+
+	while (state == 1)
+	{
+		if (frameCounter >= 0x29U)
+		{
+			func_80070CC4_41174();
+			func_8007166C_41B1C();
+
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)
+			{
+				D_80047F88 = frontendSelectedEntry - 2;
+				if (D_800D6DA8[D_80047F88][1] != 0x6D)
+				{
+					state = 2;
+				}
+			}
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0)
+			{
+				state = 0;
+			}
+		}
+
+		func_80075D58_46208(0);
+		func_800731A8_43658();
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+
+		if (frameCounter < 0x3E8U)
+		{
+			frameCounter++;
+		}
+
+		if (state == 0)
+		{
+			func_8000AFDC_BBDC();
+			func_800709F0_40EA0();
+		}
+	}
+
+	func_80070BD8_41088(2, 4);
+	func_800153D8_15FD8(0xC8);
+	func_80070A8C_40F3C(frontendSelectedEntry);
+
+	if (frontendSelectedEntry == 2)
+	{
+		frontendSelectedEntry = 3;
+	}
+	else
+	{
+		frontendSelectedEntry = 2;
+	}
+
+	func_80070CC4_41174();
+	if (state != 0)
+	{
+		state = 1;
+		func_800708B8_40D68(0x34);
+		func_80070514_409C4(0x35);
+
+		do
+		{
+			if (frameCounter >= 0x41U)
+			{
+				func_80070CC4_41174();
+				func_8007166C_41B1C();
+
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)
+				{
+					D_80047F8C = frontendSelectedEntry - 2;
+					if ((0, D_80047F88) != D_80047F8C)
+					{
+						state = 2;
+					}
+				}
+
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0)
+				{
+					state = 0;
+				}
+			}
+
+			func_80075D58_46208(0);
+			func_800731A8_43658();
+			func_8000B044_BC44();
+			func_8000505C_5C5C();
+			frameCounter++;
+		} while (state == 1);
+
+		func_800153D8_15FD8(0xC8);
+		if ((state == 2) && (func_80077204_476B4() == 2))
+		{
+			D_800476A0 = 5;
+		}
+
+		func_8000AFDC_BBDC();
+		if (state == 2)
+		{
+			func_800764B4_46964();
+			func_800709F0_40EA0();
+		}
+		else
+		{
+			func_800708B8_40D68(0x35);
+			func_800776BC_47B6C();
+		}
+	}
+
+	return state;
 }
 
 // doFileDetailsLoop
@@ -4996,32 +5051,32 @@ void func_8007BD98_4C248(void) {
 // displayDmaLogo
 void func_8007BEC0_4C370(void)
 {
-  u16 counter;
-  counter = 0x4F;
-  func_8001355C_1415C();
-  D_800D7960 = 0;
-  D_800D7962 = 5;
-  while (1)
-  {
-	func_800791A0_49650(1);
-	func_8007A774_4AC24(0);
-	if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0))
+	u16 counter;
+	counter = 0x4F;
+	func_8001355C_1415C();
+	D_800D7960 = 0;
+	D_800D7962 = 5;
+	while (1)
 	{
-	  func_80005AEC_66EC(0, 0, 0, 0x40);
-	  if (!D_800D7962)
-	  {
-	  }
+		func_800791A0_49650(1);
+		func_8007A774_4AC24(0);
+		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0))
+		{
+			func_80005AEC_66EC(0, 0, 0, 0x40);
+			if (!D_800D7962)
+			{
+			}
+		}
+		counter--;
+		func_80005B84_6784();
+		gDPFullSync(D_8005BB2C++);
+		gSPEndDisplayList(D_8005BB2C++);
+		func_8000505C_5C5C();
+		if (func_80005B30_6730() != 0)
+		{
+			break;
+		}
 	}
-	counter--;
-	func_80005B84_6784();
-	gDPFullSync(D_8005BB2C++);
-	gSPEndDisplayList(D_8005BB2C++);
-	func_8000505C_5C5C();
-	if (func_80005B30_6730() != 0)
-	{
-	  break;
-	}
-  }
 }
 
 void func_8007BFC4_4C474(void) {

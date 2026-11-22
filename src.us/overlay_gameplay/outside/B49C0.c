@@ -8,7 +8,6 @@
 #include "core/1B100.h"
 #include "core/12C80.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 u8 D_8013D890_14C840 = 0; // Triggers beacon warp
 u8 D_8013D894_14C844 = 0;
@@ -120,7 +119,6 @@ void func_800A5D3C_B4CEC(void)
 }
 
 // warpToSaveBeacon
-// AI - Initiate warp/teleport to beacon
 void func_800A5EA8_B4E58(u8 arg0) {
 	osSyncPrintf("teleport to:%d\n", arg0);
 	D_8013D890_14C840 = 1;
@@ -135,7 +133,6 @@ void func_800A5EE8_B4E98(u8 arg0) {
 	func_800153D8_15FD8(0xD7);
 }
 
-// https://decomp.me/scratch/xqKk4
 // AI - Find next beacon to warp to
 void func_800A5F24_B4ED4(s32 arg0)
 {
@@ -302,7 +299,7 @@ void func_800A68CC_B587C(void) {
 	s16 sp28;
 	s16 sp26;
 
-	static s32 timerPadding[2]; /* Reserve the two preceding beacon flag words. */
+	static s32 timerPadding[2];
 	static u8 warpTimer;
 	u8 cachedTimer;
 	if (func_8000726C_7E6C(0x27ULL) != 0) {
@@ -405,16 +402,13 @@ void func_800A68CC_B587C(void) {
 			func_800153D8_15FD8(0xD7);
 		}
 
-
 		if (warpTimer == 0x12) {
 			func_800E35E0_F2590(0x50);
 		}
 
-
 		if (warpTimer == 0x13) {
 			func_800E35E0_F2590(0xA0);
 		}
-
 
 		if (warpTimer >= 0x14) {
 			func_800E35E0_F2590(0xFF);
@@ -459,9 +453,6 @@ void func_800A68CC_B587C(void) {
 	}
 }
 
-
-
-// https://decomp.me/scratch/j8WAR
 // Launch beacon
 void func_800A6FD4_B5F84(void)
 {
@@ -481,7 +472,6 @@ void func_800A6FD4_B5F84(void)
 }
 
 // displayBeacons
-// AI - Render all beacons in 3D world
 void func_800A70B8_B6068(void) {
 	s16 i;
 	s16 j;
@@ -840,129 +830,131 @@ void func_800A7C6C_B6C1C(void) {
 // Update PowerupItems
 void func_800A854C_B74FC(void)
 {
-  u8 alpha;
-  f32 deltaX;
-  s16 accel;
-  s16 sp8C;
-  s16 sp8A;
-  s16 sp88;
-  f32 deltaZ;
-  PowerupItem *entry;
-  f32 distCopy;
-  s16 yLimit;
-  s16 sp78;
-  f32 dist;
-  s32 i = 16;
-  s32 lod;
+	u8 alpha;
+	f32 deltaX;
+	s16 accel;
+	s16 sp8C;
+	s16 sp8A;
+	s16 sp88;
+	f32 deltaZ;
+	PowerupItem *entry;
+	f32 distCopy;
+	s16 yLimit;
+	s16 sp78;
+	f32 dist;
+	s32 i = 16;
+	s32 lod;
 
-  while (i--) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
-  {
-	if (i) {}
-	entry = &D_8014F6D0[i];
-	if (D_8014F6D0[i].unkC != -1)
+	while (i--) // iterate through the pickup pool at D_8014F6D0, which has 16 available slots
 	{
-	  D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6;
-	  D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
-	  D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
-	  func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
-	  yLimit = (sp88 < sp8C) ? sp8C : sp88;
-	  
-	  if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < D_80222A70) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
-	  {
-		yLimit = D_80222A70;
-	  }
-	  if (entry->unk2 < yLimit)
-	  {
-		entry->unk2 = yLimit;
-		entry->unk8 = 0;
-
-		if (D_80222A70 < yLimit)
+		if (i)
 		{
-		  if (sp8C < sp88)
-		  {
-			D_8014F6D0[i].unk6 += (func_800038E0_44E0() & 0xF) - 8;
-			D_8014F6D0[i].unkA += (func_800038E0_44E0() & 0xF) - 8;
-		  }
-		  else
-		  {
-			D_8014F6D0[i].unk6 = ((D_8014F6D0[i].unk6 + yLimit) - func_800F9FAC_108F5C((D_8014F6D0[i].unk0 + 0x1E), D_8014F6D0[i].unk4));
-			D_8014F6D0[i].unkA = ((D_8014F6D0[i].unkA + yLimit) - func_800F9FAC_108F5C(D_8014F6D0[i].unk0, (D_8014F6D0[i].unk4 + 0x1E)));
-		  }
-		  //horizontal velocities capped between -30 and 30
-		  if (D_8014F6D0[i].unk6 < (-0x1E))
-		  {
-			D_8014F6D0[i].unk6 = -0x1E;
-		  }
-		  if (D_8014F6D0[i].unk6 >= 0x1F)
-		  {
-			D_8014F6D0[i].unk6 = 0x1E;
-		  }
-		  if (D_8014F6D0[i].unkA < (-0x1E))
-		  {
-			D_8014F6D0[i].unkA = -0x1E;
-		  }
-		  if (D_8014F6D0[i].unkA >= 0x1F)
-		  {
-			D_8014F6D0[i].unkA = 0x1E;
-		  }
 		}
-	  }
-	  else
-
-	  // horizontal damping - bugged? positive velocities keep drifting, negative velocities reach 0 and pickup stops moving
-	  {
-		D_8014F6D0[i].unk6 -= (D_8014F6D0[i].unk6 >> 2);
-		if (D_80222A70 < D_8014F6D0[i].unk2)
+		entry = &D_8014F6D0[i];
+		if (D_8014F6D0[i].unkC != -1)
 		{
-		  D_8014F6D0[i].unk8 -= 3;
-		}
-		D_8014F6D0[i].unkA -= (D_8014F6D0[i].unkA >> 2);
-	  }
+			D_8014F6D0[i].unk0 += D_8014F6D0[i].unk6;
+			D_8014F6D0[i].unk2 += D_8014F6D0[i].unk8;
+			D_8014F6D0[i].unk4 += D_8014F6D0[i].unkA;
+			func_800F9D60_108D10(D_8014F6D0[i].unk0, D_8014F6D0[i].unk4, &sp8C, &sp8A, &sp88);
+			yLimit = (sp88 < sp8C) ? sp8C : sp88;
 
-	  // attract the pickup to player if close enough
-	  deltaX = (D_80052B34->unk0 - D_8014F6D0[i].unk0);
-	  deltaZ = (D_80052B34->unk4 - D_8014F6D0[i].unk4);
-	  dist = sqrtf((deltaX * deltaX) + (deltaZ * deltaZ));
-	  distCopy = dist;
-	  sp78 = (D_80052B34->unk1A == 0) ? 0x96 : 0x12C;
-	  
-	  if (((dist < (f32)(vehicleTypes[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
-	  {
+			if ((currentLevel != 4 || D_80047F94 != 2) && yLimit < D_80222A70) // underwater height check for Siberia 3 pickups allowed to spawn and rest underwater
+			{
+				yLimit = D_80222A70;
+			}
+			if (entry->unk2 < yLimit)
+			{
+				entry->unk2 = yLimit;
+				entry->unk8 = 0;
 
-		if (D_80052B34->unk2 == (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8))
-		{
-		  accel = (((vehicleTypes[D_80052B34->unk1A].unkC + sp78) - (s16)distCopy) >> 2);
-		  D_8014F6D0[i].unk6 = (((f32)accel) * deltaX) / distCopy;
-		  D_8014F6D0[i].unkA = (((f32)accel) * deltaZ) / distCopy;
+				if (D_80222A70 < yLimit)
+				{
+					if (sp8C < sp88)
+					{
+						D_8014F6D0[i].unk6 += (func_800038E0_44E0() & 0xF) - 8;
+						D_8014F6D0[i].unkA += (func_800038E0_44E0() & 0xF) - 8;
+					}
+					else
+					{
+						D_8014F6D0[i].unk6 = ((D_8014F6D0[i].unk6 + yLimit) - func_800F9FAC_108F5C((D_8014F6D0[i].unk0 + 0x1E), D_8014F6D0[i].unk4));
+						D_8014F6D0[i].unkA = ((D_8014F6D0[i].unkA + yLimit) - func_800F9FAC_108F5C(D_8014F6D0[i].unk0, (D_8014F6D0[i].unk4 + 0x1E)));
+					}
+					// horizontal velocities capped between -30 and 30
+					if (D_8014F6D0[i].unk6 < (-0x1E))
+					{
+						D_8014F6D0[i].unk6 = -0x1E;
+					}
+					if (D_8014F6D0[i].unk6 >= 0x1F)
+					{
+						D_8014F6D0[i].unk6 = 0x1E;
+					}
+					if (D_8014F6D0[i].unkA < (-0x1E))
+					{
+						D_8014F6D0[i].unkA = -0x1E;
+					}
+					if (D_8014F6D0[i].unkA >= 0x1F)
+					{
+						D_8014F6D0[i].unkA = 0x1E;
+					}
+				}
+			}
+			else
+
+			// horizontal damping - bugged? positive velocities keep drifting, negative velocities reach 0 and pickup stops moving
+			{
+				D_8014F6D0[i].unk6 -= (D_8014F6D0[i].unk6 >> 2);
+				if (D_80222A70 < D_8014F6D0[i].unk2)
+				{
+					D_8014F6D0[i].unk8 -= 3;
+				}
+				D_8014F6D0[i].unkA -= (D_8014F6D0[i].unkA >> 2);
+			}
+
+			// attract the pickup to player if close enough
+			deltaX = (D_80052B34->unk0 - D_8014F6D0[i].unk0);
+			deltaZ = (D_80052B34->unk4 - D_8014F6D0[i].unk4);
+			dist = sqrtf((deltaX * deltaX) + (deltaZ * deltaZ));
+			distCopy = dist;
+			sp78 = (D_80052B34->unk1A == 0) ? 0x96 : 0x12C;
+
+			if (((dist < (f32)(vehicleTypes[D_80052B34->unk1A].unkC + sp78)) && (0.0f < dist)) && (yLimit == D_8014F6D0[i].unk2))
+			{
+
+				if (D_80052B34->unk2 == (func_800B84D0_C7480(D_80052B34->unk0, D_80052B34->unk4) >> 8))
+				{
+					accel = (((vehicleTypes[D_80052B34->unk1A].unkC + sp78) - (s16)distCopy) >> 2);
+					D_8014F6D0[i].unk6 = (((f32)accel) * deltaX) / distCopy;
+					D_8014F6D0[i].unkA = (((f32)accel) * deltaZ) / distCopy;
+				}
+			}
+
+			alpha = (D_8014F6D0[i].unkE < 0x10) ? (D_8014F6D0[i].unkE * 4) : 0x40;
+			lod = (D_8014F6D0[i].unkE < 0x64) ? (D_8014F6D0[i].unkE / 0x32) + 1 : 0;
+
+			func_800CB23C_DA1EC((s16)(D_8014F6D0[i].unk0 >> 2), (s16)(D_8014F6D0[i].unk2 >> 2), (s16)(D_8014F6D0[i].unk4 >> 2), alpha, D_8014F6D0[i].unk10, lod);
+
+			if ((D_8014F6D0[i].unkC != 9) && ((u32)D_8014F6D0[i].unkE-- <= 0))
+			{
+				func_800CBD1C_DACCC(D_8014F6D0[i].unk10);
+				D_8014F6D0[i].unkC = -1;
+			}
 		}
-	  }
-	  
-	  alpha = (D_8014F6D0[i].unkE < 0x10) ? (D_8014F6D0[i].unkE * 4) : 0x40;
-	  lod = (D_8014F6D0[i].unkE < 0x64) ? (D_8014F6D0[i].unkE / 0x32) + 1 : 0;
-	  
-	  func_800CB23C_DA1EC((s16)(D_8014F6D0[i].unk0 >> 2), (s16)(D_8014F6D0[i].unk2 >> 2), (s16)(D_8014F6D0[i].unk4 >> 2), alpha, D_8014F6D0[i].unk10, lod);
-	  
-	  if ((D_8014F6D0[i].unkC != 9) && ((u32)D_8014F6D0[i].unkE-- <= 0))
-	  {
-		func_800CBD1C_DACCC(D_8014F6D0[i].unk10);
-		D_8014F6D0[i].unkC = -1;
-	  }
 	}
-  }
-  
-  // countdown timer for pickup effect- used for Defender shield effect
-  if (D_8014F7F0 != 0)
-  {
-	D_8014F7F0--;
-  }
-  if (D_8014F7F4 != 0)
-  {
-	D_8014F7F4--;
-	if (D_8014F7F4 == 0)
+
+	// countdown timer for pickup effect- used for Defender shield effect
+	if (D_8014F7F0 != 0)
 	{
-	  func_800E5E3C_F4DEC(2, (u8) D_80052B2C->unk34);
+		D_8014F7F0--;
 	}
-  }
+	if (D_8014F7F4 != 0)
+	{
+		D_8014F7F4--;
+		if (D_8014F7F4 == 0)
+		{
+			func_800E5E3C_F4DEC(2, (u8)D_80052B2C->unk34);
+		}
+	}
 }
 
 /* Spawn PowerupItem
@@ -1081,185 +1073,184 @@ void func_800A8C44_B7BF4(s16 arg0, s16 arg1, s16 arg2)
 // AI - Give power-up to player
 s32 func_800A8E18_B7DC8(u32 arg0)
 {
-  s32 result = 0;
+	s32 result = 0;
 
 	switch (arg0)
 	{
-	  case 0:
+	case 0:
 		result = func_801391DC_14818C(9, -0x8000); // give infinite grenades
 		break;
 
-	  case 1: // small heart
-	  case 16: // large heart
+	case 1:	 // small heart
+	case 16: // large heart
 		if (vehicleInstances[0].unk1C != 0)
-	  {
-		if (D_80052B34->unk1C < vehicleTypes[D_80052B34->unk1A].hitPoints)
 		{
-		  if (arg0 == 1) 
-		  {
-			D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].hitPoints / 4;
-			
-			if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C)
+			if (D_80052B34->unk1C < vehicleTypes[D_80052B34->unk1A].hitPoints)
 			{
-			  D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+				if (arg0 == 1)
+				{
+					D_80052B34->unk1C += vehicleTypes[D_80052B34->unk1A].hitPoints / 4;
+
+					if (vehicleTypes[D_80052B34->unk1A].hitPoints < D_80052B34->unk1C)
+					{
+						D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+					}
+				}
+				else
+				{
+					D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
+				}
+				result = 1;
 			}
-		  }
-		  else
-		  {
-			D_80052B34->unk1C = vehicleTypes[D_80052B34->unk1A].hitPoints;
-		  }
+			else
+			{
+				if (vehicleInstances[0].unk1C < vehicleTypes[vehicleInstances[0].unk1A].hitPoints)
+				{
+					if (arg0 == 1)
+					{
+						vehicleInstances[0].unk1C += vehicleTypes[vehicleInstances[0].unk1A].hitPoints / 4;
+
+						if (vehicleTypes[vehicleInstances[0].unk1A].hitPoints < vehicleInstances[0].unk1C)
+						{
+							vehicleInstances[0].unk1C = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
+						}
+					}
+					else
+					{
+						vehicleInstances[0].unk1C = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
+					}
+					result = 1;
+				}
+			}
+		}
+
+		break;
+
+	case 2:
+		result = func_801391DC_14818C(1, -0x8000); // ??
+		break;
+
+	case 3:
+		result = func_801391DC_14818C(2, -0x8000); // unlimited pistol
+		break;
+
+	case 4:
+		if ((currentLevel == 4) && (D_80047F94 == 0)) // if Siberia stage 1..
+		{
+			result = func_801391DC_14818C(3, 0); // give 0 shotgun ammo
+		}
+		else
+		{
+			result = func_801391DC_14818C(3, 0xA); // else give 10 shotgun ammo
+		}
+		break;
+
+	case 5:
+		result = func_801391DC_14818C(4, 0xA); // give 10 rifle ammo
+		break;
+
+	case 6:
+		result = func_801391DC_14818C(5, 0x64); // give 100 machine gun ammo.. case 6 has no break and feeds directly into case 9 why?
+	case 9:
+		break;
+
+	case 7:
+		result = func_801391DC_14818C(6, 5); // give 5 rockets
+		break;
+
+	case 8:
+		result = func_801391DC_14818C(7, 3); // give 3 TNT
+		break;
+
+	case 10: // creates small temporary shield used by the ZDefender cheat
+		if (func_800E60CC_F507C(2, (u8)D_80052B2C->unk34) != 0)
+		{
+			D_8014F7F4 += 0x258; // add 600 units (~30 seconds) to effect timer if already running
 			result = 1;
 		}
 		else
 		{
-		  if (vehicleInstances[0].unk1C < vehicleTypes[vehicleInstances[0].unk1A].hitPoints)
-		  {
-			if (arg0 == 1)
-			{
-			  vehicleInstances[0].unk1C += vehicleTypes[vehicleInstances[0].unk1A].hitPoints / 4;
-			  
-			  if (vehicleTypes[vehicleInstances[0].unk1A].hitPoints < vehicleInstances[0].unk1C)
-			  {
-				vehicleInstances[0].unk1C = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-			  }
-			}
-			else
-			{
-			  vehicleInstances[0].unk1C = vehicleTypes[vehicleInstances[0].unk1A].hitPoints;
-			}
-			result = 1;  
-		  }
+			D_8014F7F4 = 0x258; // set effect timer to 600 units (~30 seconds)
+			func_800E5CF4_F4CA4(2, (u8)D_80052B2C->unk34);
+			result = 1;
 		}
-	  }
-		  
 		break;
 
-	  case 2:
-		result = func_801391DC_14818C(1, -0x8000); // ??
-		break;
-
-	  case 3:
-		result = func_801391DC_14818C(2, -0x8000); // unlimited pistol
-		break;
-
-	  case 4:
-		if ((currentLevel == 4) && (D_80047F94 == 0)) // if Siberia stage 1..
-	  {
-		result = func_801391DC_14818C(3, 0); // give 0 shotgun ammo
-	  }
-	  else
-	  {
-		result = func_801391DC_14818C(3, 0xA); //else give 10 shotgun ammo
-	  }
-		break;
-
-	  case 5:
-		result = func_801391DC_14818C(4, 0xA); // give 10 rifle ammo
-		break;
-
-	  case 6:
-		result = func_801391DC_14818C(5, 0x64); // give 100 machine gun ammo.. case 6 has no break and feeds directly into case 9 why?
-	  case 9:
-		break;
-
-	  case 7:
-		result = func_801391DC_14818C(6, 5); // give 5 rockets
-		break;
-
-	  case 8:
-		result = func_801391DC_14818C(7, 3); // give 3 TNT
-		break;
-
-	  case 10: // creates small temporary shield used by the ZDefender cheat
-		if (func_800E60CC_F507C(2, (u8) D_80052B2C->unk34) != 0)
-	  {
-		D_8014F7F4 += 0x258; // add 600 units (~30 seconds) to effect timer if already running
-		result = 1;
-	  }
-	  else
-	  {
-		D_8014F7F4 = 0x258; // set effect timer to 600 units (~30 seconds)
-		func_800E5CF4_F4CA4(2, (u8) D_80052B2C->unk34);
-		result = 1;
-	  }
-		break;
-
-	  case 11:
+	case 11:
 		result = func_80139150_148100(3, 5); // give 5 shotgun ammo
 		break;
 
-	  case 12:
+	case 12:
 		result = func_80139150_148100(3, 0x14); // give 20 shotgun ammo
 		break;
 
-	  case 13:
+	case 13:
 		result = func_80139150_148100(6, 3); // give 3 rockets
 		break;
 
-	  case 14:
+	case 14:
 		result = func_80139150_148100(6, 0xA); // give 10 rockets
 		break;
 
-	  case 15:
+	case 15:
 		result = func_80139150_148100(0xA, 0x19); // give 25 special weapon ammo
 		break;
 
-	  case 17:
+	case 17:
 		result = func_80139150_148100(5, 0x32); // give 50 machine gun ammo
 		break;
 
-	  case 18:
+	case 18:
 		result = func_80139150_148100(4, 0x14); // give 20 fragcannon
 		break;
 
-	  case 19: 
-		D_8004DC5C++; // give 1 Weapon Crystal
+	case 19:
+		D_8004DC5C++;		 // give 1 Weapon Crystal
 		if (D_8004DC5C == 3) // if now have 3 Weapon Crystals...
-	  {
-		result = func_801391DC_14818C(0xA, 0x32); // ...give 50 Special Weapon ammo and gun
-		func_800DA994_E9944();
-		func_8001A650_1B250(0x15);
-	  }
+		{
+			result = func_801391DC_14818C(0xA, 0x32); // ...give 50 Special Weapon ammo and gun
+			func_800DA994_E9944();
+			func_8001A650_1B250(0x15);
+		}
 		break;
 
-	  case 20:
+	case 20:
 		D_8004DC5E++; // increment total Alien Artifacts collected count
 		break;
 
-	  case 21:
+	case 21:
 		result = func_80139150_148100(0xE, 0x14); // give 20 fragcannon ammo
 		break;
 
-	  case 22:
+	case 22:
 		result = func_80139150_148100(0xE, 0xA); // give 10 fragcannon ammo
 		break;
 
-	  case 23:
+	case 23:
 		result = func_80139150_148100(0x10, 3); // give 3 resonator ammo
 		break;
 
-	  case 24:
+	case 24:
 		result = func_80139150_148100(0x11, 5); // give 5 plasma bomb ammo
 		break;
 
-	  case 25:
+	case 25:
 		result = func_80139150_148100(0xF, 0x1E); // give 30 laser missile ammo
 		break;
 
-	  case 26:
+	case 26:
 		result = func_80139150_148100(0xF, 0xF); // give 15 laser missile ammo
 		break;
 
-	  case 27:
+	case 27:
 		result = func_80139150_148100(3, 2); // give 2 shotgun ammo
 		break;
-
 	}
-  if (result != 0)
-  {
-	func_80139020_147FD0(arg0);
-  }
-  return result;
+	if (result != 0)
+	{
+		func_80139020_147FD0(arg0);
+	}
+	return result;
 }
 
 // guess_givePowerUp
@@ -1278,7 +1269,6 @@ void func_800A9238_B81E8() {
 	}
 }
 
-// AI - Reset all beacon display entries
 // reset the pickup items pool?
 void func_800A92B0_B8260(void) {
 	s32 i;
