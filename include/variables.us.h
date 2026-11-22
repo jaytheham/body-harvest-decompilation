@@ -3221,26 +3221,10 @@ extern const char D_802E0D6C_1F9A7C[];
 extern const f64 D_802E0D78_2604B8[];
 extern const char D_802E0D84_1F9A94[];
 extern const char D_802E0DA8_1F9AB8[];
-extern const f64 D_802E0DB0_2604F0[];
-extern const f64 D_802E0DB8_2604F8[];
-extern const f64 D_802E0DC0_260500[];
 extern const char D_802E0DC0_1F9AD0[];
-extern const f32 D_802E0DC8_260508[];
-extern const FloatConstant D_802E0DCC_26050C;
-extern const FloatConstant D_802E0DD0_260510;
 extern const char D_802E0DE8_1F9AF8[];
 extern void (*D_802E0DF0_2C3220[])(void);
-extern const ShadowGeometryConstant D_802E0DF8_260538;
-extern const f32 D_802E0E00_260540[];
 extern const char D_802E0E04_1F9B14[];
-extern const f32 D_802E0E04_260544[];
-extern const f32 D_802E0E08_260548[];
-extern const f32 D_802E0E0C_26054C[];
-extern const f32 D_802E0E10_260550[];
-extern const f32 D_802E0E14_260554[];
-extern const f32 D_802E0E18_260558[];
-extern const f32 D_802E0E1C_26055C[];
-extern const f32 D_802E0E20_260560[];
 extern const char D_802E0E10_1F9B20[];
 extern const char D_802E0E18_1F9B28[];
 extern const char D_802E0E24_1F9B34[];
@@ -3851,10 +3835,6 @@ extern s32 D_80160070_LIMIT;
 extern u8 D_8016006D_W;
 
 
-extern const ShadowGeometryConstant D_802E0DD8_260518;
-extern const ShadowGeometryConstant D_802E0DE0_260520;
-extern const ShadowGeometryConstant D_802E0DE8_260528;
-extern const ShadowGeometryConstant D_802E0DF0_260530;
 
 extern Gfx D_A01D390;
 extern BuildingHeightDecode D_80140A40_14F9F0[10];
