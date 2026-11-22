@@ -126,38 +126,41 @@ void func_8008311C_16B1DC(void) {
 // AI - Allocate an effect slot from the pool of 15
 u8 func_80083224_16B2E4(u8 arg0)
 {
-  u8 slot;
-  u8 count;
-  UnkFB6F8Entry *slotPtr;
-  u8 i;
-  count = D_800FB7AC;
-  if (count >= 0xF)
-  {
-	osSyncPrintf("WARNING : Out of space to create a new special effect of type %d.\n", arg0);
-	slot = 0xFB;
-  }
-  else
-  {
-	slot = D_800FB7AD;
-	slotPtr = &D_800FB6F8[slot];
-	slotPtr->unk0 = arg0;
-	slotPtr->unk4 = 0;
-	slotPtr->unk6 = -6;
-	slotPtr->unk8 = -6;
-	D_800FB7AC = count + 1;
-	D_800FB7AD = 0xF;
-	i = slot;
-	if (i < 0xF) {
-	  do {
-		if (D_800FB6F8[i].unk0 == 0xFA) {
-		  D_800FB7AD = i;
-		  i = 0xF;
-		}
-		i++;
-	  } while (i < 0xF);
+	u8 slot;
+	u8 count;
+	UnkFB6F8Entry *slotPtr;
+	u8 i;
+	count = D_800FB7AC;
+	if (count >= 0xF)
+	{
+		osSyncPrintf("WARNING : Out of space to create a new special effect of type %d.\n", arg0);
+		slot = 0xFB;
 	}
-  }
-  return slot;
+	else
+	{
+		slot = D_800FB7AD;
+		slotPtr = &D_800FB6F8[slot];
+		slotPtr->unk0 = arg0;
+		slotPtr->unk4 = 0;
+		slotPtr->unk6 = -6;
+		slotPtr->unk8 = -6;
+		D_800FB7AC = count + 1;
+		D_800FB7AD = 0xF;
+		i = slot;
+		if (i < 0xF)
+		{
+			do
+			{
+				if (D_800FB6F8[i].unk0 == 0xFA)
+				{
+					D_800FB7AD = i;
+					i = 0xF;
+				}
+				i++;
+			} while (i < 0xF);
+		}
+	}
+	return slot;
 }
 
 // AI - Free/return an effect slot to the pool
@@ -421,7 +424,6 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	spawn->unkA = 0;
 }
 
-
 // AI - Create a burst effect (explosion) with randomized particle positions
 void func_80083F08_16BFC8(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12) {
 	s16 effect;
@@ -647,39 +649,41 @@ void func_80084628_16C6E8(u8 arg0) {
 // AI - Create a child effect based on a parent effect's position
 void func_80084980_16CA40(u8 arg0, u8 arg1)
 {
-  u16 quarter;
-  s16 effect;
-  Unk84EECEffectPositionView *basePos;
-  s16 spread;
-  Unk84EECEffectPositionView *effectPos;
+	u16 quarter;
+	s16 effect;
+	Unk84EECEffectPositionView *basePos;
+	s16 spread;
+	Unk84EECEffectPositionView *effectPos;
 
-  basePos = (Unk84EECEffectPositionView *)&D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
-  spread = D_800FB7B0[D_800FB6F8[arg0].unk6].unk2;
-  if (arg1 == 0xFB) {
-    return;
-  }
-  effect = func_80083390_16B450(arg1);
-  if (effect == -3) {
-    return;
-  }
+	basePos = (Unk84EECEffectPositionView *)&D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
+	spread = D_800FB7B0[D_800FB6F8[arg0].unk6].unk2;
+	if (arg1 == 0xFB)
+	{
+		return;
+	}
+	effect = func_80083390_16B450(arg1);
+	if (effect == -3)
+	{
+		return;
+	}
 
-  quarter = spread / 4;
-  D_800FB7B0[effect].unk2 = (func_800038E0_44E0() % 5) + quarter;
-  effectPos = (Unk84EECEffectPositionView *)&D_800FB7B0[effect].unk8;
+	quarter = spread / 4;
+	D_800FB7B0[effect].unk2 = (func_800038E0_44E0() % 5) + quarter;
+	effectPos = (Unk84EECEffectPositionView *)&D_800FB7B0[effect].unk8;
 
-  effectPos->unk0 = (basePos->unk0 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+	effectPos->unk0 = (basePos->unk0 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
 
-  effectPos->unk2 = ((func_800038E0_44E0() % 10) + basePos->unk2) + quarter;
+	effectPos->unk2 = ((func_800038E0_44E0() % 10) + basePos->unk2) + quarter;
 
-  effectPos->unk4 = (basePos->unk4 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
-  effectPos->unk9 = 0x3C;
-  effectPos->unkA = 0;
+	effectPos->unk4 = (basePos->unk4 + ((func_800038E0_44E0() % spread) / 2)) - quarter;
+	effectPos->unk9 = 0x3C;
+	effectPos->unkA = 0;
 
-  effectPos->unk6.bytes.high = (func_800038E0_44E0() % 30) + 0xB4;
+	effectPos->unk6.bytes.high = (func_800038E0_44E0() % 30) + 0xB4;
 
-  effectPos->unk6.bytes.low = (func_800038E0_44E0() % 30) + 0xA0;
+	effectPos->unk6.bytes.low = (func_800038E0_44E0() % 30) + 0xA0;
 
-  effectPos->unk8 = (func_800038E0_44E0() % 30) + 0xA0;
+	effectPos->unk8 = (func_800038E0_44E0() % 30) + 0xA0;
 }
 
 // AI - Allocate an effect slot and store a value
@@ -765,7 +769,6 @@ u8 func_80084C68_16CD28(s16 arg0, volatile s16 arg1, s16 arg2, u16 arg3, u16 arg
 	return slot;
 }
 
-
 // AI - Create a linked paired effect (two entries linked together)
 s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg4, u8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11) {
 	s16 effect;
@@ -823,7 +826,6 @@ s16 func_80084EEC_16CFAC(s16 arg0, s16 arg1, s16 arg2, volatile s16 arg3, u8 arg
 	return effect;
 }
 
-
 // Create a candle flame effect
 s16 func_8008506C_16D12C(s16 arg0, s16 arg1, s16 arg2, s16 arg3)
 {
@@ -856,10 +858,10 @@ void func_800852B8_16D378(u8 arg0) {
 	Unk84EECEffectTemplateData *emitter;
 	Vec3f base;
 	Vec3f random;
-	Unk84EECEffect *head[2]; /* The second slot preserves the original frame. */
+	Unk84EECEffect *head[2];
 
 	headIndex = D_800FB6F8[arg0].unk6;
-	headIndex &= -1; /* IDO: retain the initial v0/v1 allocation. */
+	headIndex &= -1;
 	templateIndex = D_800FB7B0[headIndex].unk4;
 	head[0] = &D_800FB7B0[headIndex];
 	index = func_80083390_16B450(arg0);
@@ -1140,7 +1142,6 @@ void func_80085F28_16DFE8(u8 arg0) {
 
 		slot = &D_800FB6F8[arg0];
 		rootIndex = slot->unk6;
-		/* Identity masks retain IDO's index register allocation. */
 		rootIndex &= -1;
 		root = &D_800FB7B0[rootIndex];
 		emitterIndex = root->unk4;
@@ -1365,7 +1366,6 @@ void func_80086B34_16EBF4(u8 arg0) {
 	Unk84EECEffectTail *emitter;
 	s32 rootIndex;
 	s32 emitterIndex;
-	/* Keep the emitter header addressable across helper calls. */
 	Unk84EECEffect *emitterHeader[1];
 	Unk84EECEffect *entry;
 	s16 next;
@@ -1748,58 +1748,56 @@ void func_80087E3C_16FEFC(void) {
 
 void func_800881C0_170280(void)
 {
-  /* Preserve the original previous-payload stack read before the first iteration. */
-  Unk89834Pos *previous;
-  s16 textureSide;
-  s16 effect;
-  Vec3f towardCamera;
-  Unk89834Pos *particle;
-  effect = D_800FB79A;
-  gDPPipeSync(D_8005BB2C++);
-  gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
-  D_800FB6E5 = 0x20;
-  D_800FB6E6 = 0x20;
-  textureSide = 0;
-  if ((effect != -5) && (effect != -6))
-  {
-    previous = previous;
-    do
-    {
-      gDPPipeSync(D_8005BB2C++);
-      if (textureSide == 0)
-      {
-        gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        textureSide = 1;
-        D_800FB6E4 = previous->unk9 - 0x28;
-      }
-      else
-      {
-        gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-        textureSide = 0;
-        D_800FB6E4 = previous->unk9 + previous->unkA;
-      }
-      gDPPipeSync(D_8005BB2C++);
-      particle = (Unk89834Pos *)&D_800FB7B0[effect].unk8;
-      previous = particle;
-      towardCamera.x = (D_800E7410.x * 4.0f) - D_800FB7B0[effect].unk8;
-      towardCamera.y = (D_800E7410.y * 4.0f) - D_800FB7B0[effect].unkA;
-      towardCamera.z = (D_800E7410.z * 4.0f) - D_800FB7B0[effect].unkC;
-      func_80083014_16B0D4(&towardCamera, &towardCamera);
-      D_800FB6D0.x = particle->unk0 + (towardCamera.x * ((f32)(u32)particle->unkD));
-      D_800FB6D0.y = particle->unk2 + (towardCamera.y * ((f32)(u32)particle->unkD));
-      D_800FB6D0.z = particle->unk4 + (towardCamera.z * ((f32)(u32)particle->unkD));
-      D_800FB6DC = &particle->unk6;
-      D_800FB6E0 = D_800FB7B0[effect].unk2;
-      D_800FB6E4 = particle->unk9 + particle->unkA;
-      func_8008A1D8_172298();
-      effect = D_800FB7B0[effect].unk4;
-    }
-    while ((effect != -5) && (effect != -6));
-    if (effect == -6)
-    {
-      previous = previous;
-    }
-  }
+	Unk89834Pos *previous;
+	s16 textureSide;
+	s16 effect;
+	Vec3f towardCamera;
+	Unk89834Pos *particle;
+	effect = D_800FB79A;
+	gDPPipeSync(D_8005BB2C++);
+	gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0, 0, 0, 0, SHADE, TEXEL0, 0, SHADE, 0);
+	D_800FB6E5 = 0x20;
+	D_800FB6E6 = 0x20;
+	textureSide = 0;
+	if ((effect != -5) && (effect != -6))
+	{
+		previous = previous;
+		do
+		{
+			gDPPipeSync(D_8005BB2C++);
+			if (textureSide == 0)
+			{
+				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DA00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+				textureSide = 1;
+				D_800FB6E4 = previous->unk9 - 0x28;
+			}
+			else
+			{
+				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_100DC00), G_IM_FMT_I, 32, 32, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+				textureSide = 0;
+				D_800FB6E4 = previous->unk9 + previous->unkA;
+			}
+			gDPPipeSync(D_8005BB2C++);
+			particle = (Unk89834Pos *)&D_800FB7B0[effect].unk8;
+			previous = particle;
+			towardCamera.x = (D_800E7410.x * 4.0f) - D_800FB7B0[effect].unk8;
+			towardCamera.y = (D_800E7410.y * 4.0f) - D_800FB7B0[effect].unkA;
+			towardCamera.z = (D_800E7410.z * 4.0f) - D_800FB7B0[effect].unkC;
+			func_80083014_16B0D4(&towardCamera, &towardCamera);
+			D_800FB6D0.x = particle->unk0 + (towardCamera.x * ((f32)(u32)particle->unkD));
+			D_800FB6D0.y = particle->unk2 + (towardCamera.y * ((f32)(u32)particle->unkD));
+			D_800FB6D0.z = particle->unk4 + (towardCamera.z * ((f32)(u32)particle->unkD));
+			D_800FB6DC = &particle->unk6;
+			D_800FB6E0 = D_800FB7B0[effect].unk2;
+			D_800FB6E4 = particle->unk9 + particle->unkA;
+			func_8008A1D8_172298();
+			effect = D_800FB7B0[effect].unk4;
+		} while ((effect != -5) && (effect != -6));
+		if (effect == -6)
+		{
+			previous = previous;
+		}
+	}
 }
 
 // Render slot type 5 fire particles.
@@ -2576,7 +2574,7 @@ void func_8008B0AC_17316C(void) {
 	D_800FB7AD = 0;
 	D_800FB7AC = 4;
 }
-// Matched - Needs below funcs also matched so rodata builds properly.
+
 // AI - Main render dispatcher: set up RDP state and render all active slots
 void func_8008B1A8_173268(void) {
 	s32 i;
@@ -2665,7 +2663,6 @@ void func_8008B594_173654(void) {
 	static u8 D_800A26A4_18A764 = 0;
 	s8 spA4[3];
 
-	/* Consume the one-shot request in the condition to retain its shared address. */
 	if (D_800A26A0_18A760 && (D_800A26A0_18A760 = 0, 1)) {
 
 		D_800FB6E5 = 0x20;
