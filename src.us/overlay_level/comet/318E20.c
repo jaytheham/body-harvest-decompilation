@@ -1168,7 +1168,7 @@ void func_802D5BFC_319D4C(void) {
 		return;
 	}
 	func_80018D7C_1997C(0xE0);
-	func_800074BC_80BC(func_802D5BFC_319D4C);
+	DequeueCallback(func_802D5BFC_319D4C);
 }
 
 void func_802D5C40_319D90(void) {
@@ -1176,7 +1176,7 @@ void func_802D5C40_319D90(void) {
 		D_80047F9C = 1;
 		func_800072CC_7ECC(0x29);
 		D_802E7C3C = 0x28;
-		func_80007410_8010(&func_802D5BFC_319D4C);
+		EnqueueCallback(&func_802D5BFC_319D4C);
 	}
 }
 
@@ -1185,7 +1185,7 @@ void func_802D5C98_319DE8(void) {
 		D_80047F9C = 2;
 		func_800072CC_7ECC(0x2A);
 		D_802E7C3C = 0x28;
-		func_80007410_8010(&func_802D5BFC_319D4C);
+		EnqueueCallback(&func_802D5BFC_319D4C);
 	}
 }
 
@@ -1194,7 +1194,7 @@ void func_802D5CF0_319E40(void) {
 		D_80047F9C = 3;
 		func_800072CC_7ECC(0x2B);
 		D_802E7C3C = 0x28;
-		func_80007410_8010(&func_802D5BFC_319D4C);
+		EnqueueCallback(&func_802D5BFC_319D4C);
 	}
 }
 
@@ -1205,13 +1205,13 @@ void func_802D5D48_319E98(void) {
 	D_80047F9C = 4;
 	func_800072CC_7ECC(0x2C);
 	D_802E7C3C = 0x28;
-	func_80007410_8010(&func_802D5BFC_319D4C);
+	EnqueueCallback(&func_802D5BFC_319D4C);
 }
 
 void func_802D5DA0_319EF0(void) {
 	D_80047F9C = 5;
 	D_802E7C3C = 0;
-	func_80007410_8010(func_802D5BFC_319D4C);
+	EnqueueCallback(func_802D5BFC_319D4C);
 }
 
 s32 func_802D5DD8_319F28(void) {
@@ -1441,14 +1441,14 @@ void func_802D6670_31A7C0(void) {
 	}
 
 	if (D_802E7C40 == 0xA) {
-		func_800074BC_80BC(func_802D6670_31A7C0);
+		DequeueCallback(func_802D6670_31A7C0);
 	}
 }
 
 void func_802D6770_31A8C0(void) {
 	D_802E7C40 = 0;
 	osSyncPrintf(D_802E7A7C_32BBCC);
-	func_80007410_8010(func_802D6670_31A7C0);
+	EnqueueCallback(func_802D6670_31A7C0);
 }
 
 // Comet starting cutscene - Alpha-1 landing cutscene with buildinginstance moved and vehicleinstance creation
@@ -1492,7 +1492,7 @@ s32 func_802D67A8_31A8F8(void) {
 		func_800FB484_10A434(D_80052B34, (f32)buildingInstances[D_80159DDF].zCoord);
 		D_80052B34->unk6 = -0x41E3;
 		D_802E7C40 = 0;
-		func_80007410_8010(func_802D6670_31A7C0);
+		EnqueueCallback(func_802D6670_31A7C0);
 		D_80159320 &= 0xFFEFFFFF;
 		func_800F0234_FF1E4();
 		return 1;
@@ -4166,7 +4166,7 @@ void func_802DF290_3233E0(void) {
 			func_80137468_146418(D_802E7C5C, 0x25F);
 			if (D_802E7C58 >= 0x101) {
 				D_802E7C58 = 0x100;
-				func_800074BC_80BC(&func_802DF290_3233E0);
+				DequeueCallback(&func_802DF290_3233E0);
 				func_800D1054_E0004(D_802E7C5A);
 				func_80018D7C_1997C(0xDD);
 			}
@@ -4250,7 +4250,7 @@ void func_802DF940_323A90(void) {
 				shortY = (s16)y;
 				func_800DEA08_ED9B8(shortX, shortY, shortZ, 0xC8, 8, 4, 0x3C, 0xD2, 0xFF, 0xFF, 0xFF);
 				func_800C541C_D43CC(shortX, shortY, shortZ, 0, -0x80, 0, 0x50, 0xFF, 0x14, 6, 0xFF, 0xFF, 0xFF);
-				func_800074BC_80BC(&func_802DF940_323A90);
+				DequeueCallback(&func_802DF940_323A90);
 				func_80079910_888C0(D_8014D17E);
 				func_8007A2A0_89250(newAlienIndex);
 				D_8014D17E = (s16)newAlienIndex;
@@ -4278,7 +4278,7 @@ void func_802DFE68_323FB8() {
 		D_8014D17E = alien_index;
 	}
 	D_8014D17C = 0;
-	func_80007410_8010(&func_802DF290_3233E0);
+	EnqueueCallback(&func_802DF290_3233E0);
 }
 
 s16 func_802DFF04_324054(u8 arg0) {
@@ -5419,7 +5419,7 @@ void func_802E3E64_327FB4(u8 arg0) {
 		if (result == 4) {
 			D_8014D17C = 0;
 			D_8014D17E = arg0;
-			func_80007410_8010(&func_802DF940_323A90);
+			EnqueueCallback(&func_802DF940_323A90);
 		}
 
 		if (result == 9) {

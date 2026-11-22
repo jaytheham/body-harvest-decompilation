@@ -4637,7 +4637,7 @@ void func_800C0678_CF628(void) {
 	if (remaining <= 0) {
 		var_a1 |= -1;
 		D_8013DAFC_14CAAC[0] = (s16)(((u64)(u32)func_800C0678_CF628 | ~(u64)0) & (u64)(s64)var_a1);
-		func_800074BC_80BC(func_800C0678_CF628);
+		DequeueCallback(func_800C0678_CF628);
 		remaining = D_8013D9C0_14C970[0];
 	}
 	if (remaining != 0) {
@@ -4664,7 +4664,7 @@ s32 func_800C0D1C_CFCCC(s16 arg0, s16 arg1, s32 arg2) {
 			D_8013D9C0_14C970[0] = D_8013D9C4_14C974[0] / 2;
 		}
 		D_800313F8 = D_80031634_32234[(currentLevel - 1) << 1];
-		func_80007410_8010(func_800C0678_CF628);
+		EnqueueCallback(func_800C0678_CF628);
 		return 1;
 	} else {
 		return 0;

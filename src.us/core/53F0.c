@@ -861,8 +861,8 @@ void func_800073B8_7FB8(u64 arg0) {
 	D_8004DC48.unk0 &= ~temp_ret;
 }
 
-// Add callback to list
-void func_80007410_8010(void *arg0) {
+// US func_80007410_8010
+void EnqueueCallback(void *arg0) {
 	s32 i;
 	s32 temp;
 
@@ -895,8 +895,8 @@ void func_80007410_8010(void *arg0) {
 	D_8004DC68[i] = (s32)arg0;
 }
 
-// Remove callback from list
-void func_800074BC_80BC(void *arg0) {
+// US func_800074BC_80BC
+void DequeueCallback(void *arg0) {
 	s32 i = 4;
 	while (i--) {
 		if (arg0 == (void *)D_8004DC68[i]) {

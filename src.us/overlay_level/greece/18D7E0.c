@@ -219,14 +219,14 @@ u32 D_802DD520_196030[] = {
 s32 D_802DDBF0_196700 = 0x7FFFFFFF;
 
 void (*D_802DDBF4_196704[])(void) = {
-	func_802D531C_18DE2C,
+	StartParenthosBridgeLoweringCutscene,
 	StartPollsturaHouseFires,
 	StartAmbulanceOnBridge,
 	FailPollsturaHouseFires,
 	func_802D56E8_18E1F8,
 	StartBlackAdamDestroysBridgeCutscene,
 	StartBlackAdamDestroysAirplanesCutscene,
-	EnqueueAirportTraining,
+	StartAirportTraining,
 	func_802D5434_18DF44,
 	func_80076820_857D0,
 	func_80076820_857D0,
@@ -535,21 +535,21 @@ void func_802D4E28_18D938(void) {
 		buildingInstances[12].door2InteriorId = 0x77; // Greece 3 northern airfield - door interior changes to different room where trainer is gone
 	}
 	if (func_8000726C_7E6C(0xB) == 0) {
-		func_80007410_8010(func_802D4ECC_18D9DC);
+		EnqueueCallback(func_802D4ECC_18D9DC);
 	}
 }
 
 // AI - Polling callback checking mission conditions
 void func_802D4ECC_18D9DC(void) {
 	if (func_8000726C_7E6C(0xB) != 0) {
-		func_800074BC_80BC(func_802D4ECC_18D9DC);
+		DequeueCallback(func_802D4ECC_18D9DC);
 	}
 	if (IsPlayerWithinXTilesOf(-0x1A, -0x26, 2) != 0) {
 		func_80018D7C_1997C(0x100);
-		func_800074BC_80BC(func_802D4ECC_18D9DC);
+		DequeueCallback(func_802D4ECC_18D9DC);
 	}
 	if (D_80052B34->unk1A != 0) {
-		func_800074BC_80BC(func_802D4ECC_18D9DC);
+		DequeueCallback(func_802D4ECC_18D9DC);
 	}
 }
 
@@ -646,7 +646,7 @@ void ExecuteAirportTraining(void) {
 	case 7:
 		if (D_802DE460 == 0x14) {
 			func_80018D7C_1997C(0xEC); // dialogue
-			func_800074BC_80BC(ExecuteAirportTraining); // end mission
+			DequeueCallback(ExecuteAirportTraining); // end mission
 			func_800072CC_7ECC(0x1E);
 			D_80159320 &= ~0x400000;
 			D_802DE460 = 0;
@@ -657,14 +657,14 @@ void ExecuteAirportTraining(void) {
 
 // airport training called thru event/mission table offset 7
 // US func_802D5290_18DDA0
-void EnqueueAirportTraining(void) {
+void StartAirportTraining(void) {
 	D_8004DC58 = 0;
 	D_802DE460 = 0;
-	func_80007410_8010(ExecuteAirportTraining);
+	EnqueueCallback(ExecuteAirportTraining);
 }
 
-// Parenthos bridge lowering cutscene state/handling
-s32 func_802D52C4_18DDD4(void) {
+// US func_802D52C4_18DDD4
+s32 ExecuteParenthosBridgeLoweringCutscene(void) {
 	D_80052554 -= 0x55;
 	if (D_80052554 < 0x401) {
 		D_80052554 = 0x400;
@@ -674,11 +674,12 @@ s32 func_802D52C4_18DDD4(void) {
 	return 0;
 }
 
-// Parenthos bridge lowering event - called thru event/mission table offset 0
-void func_802D531C_18DE2C(void) {
+// called thru event/mission table offset 0
+// US func_802D531C_18DE2C
+void StartParenthosBridgeLoweringCutscene(void) {
 	func_800072CC_7ECC(0x2A);
 	D_80052554 = 0x38A4;
-	func_800EFEB4_FEE64(func_802D52C4_18DDD4, 1, 1); // play cutscene 1- bridge lowering
+	func_800EFEB4_FEE64(ExecuteParenthosBridgeLoweringCutscene, 1, 1);
 	func_80013468_14068(1);
 	D_801493E0 = 0;
 }
@@ -698,13 +699,13 @@ void ExecutePollsturaHouseFires(void) {
 		D_802DE464 += 1;
 	}
 	if ((status == 0) || (((s8) buildingInstances[55].hitPoints <= 0) && ((s8) buildingInstances[63].hitPoints <= 0) && ((s8) buildingInstances[57].hitPoints <= 0) && ((s8) buildingInstances[62].hitPoints <= 0))) {
-		func_800074BC_80BC(ExecutePollsturaHouseFires);
+		DequeueCallback(ExecutePollsturaHouseFires);
 	}
 }
 
 // Pollstura building fire event/mission -called thru table D_802DDBF4 offset 8
 void func_802D5434_18DF44(void) {
-	func_800074BC_80BC(ExecutePollsturaHouseFires);
+	DequeueCallback(ExecutePollsturaHouseFires);
 	SetObjective(5);
 }
 
@@ -716,7 +717,7 @@ void StartPollsturaHouseFires(void) {
 	func_8011BF7C_12AF2C(0x39);
 	func_8011BF7C_12AF2C(0x3E);
 	D_802DE464 = 0;
-	func_80007410_8010(ExecutePollsturaHouseFires);
+	EnqueueCallback(ExecutePollsturaHouseFires);
 }
 
 // called thru event/mission table offset 3
@@ -738,18 +739,18 @@ void FailPollsturaHouseFires(void) {
 		func_8011C080_12B030(0x3E);
 		AddToHumanKilledCount(3);
 	}
-	func_800074BC_80BC(ExecutePollsturaHouseFires);
+	DequeueCallback(ExecutePollsturaHouseFires);
 	SetObjective(5);
 }
 
 // US func_802D5578_18E088
 void ExecuteAmbulanceOnBridge(void) {
 	if (!(vehicleInstances[84].unk20 & 0x8000)) {
-		func_800074BC_80BC(ExecuteAmbulanceOnBridge);
+		DequeueCallback(ExecuteAmbulanceOnBridge);
 	}
 	if ((vehicleInstances[84].unk0 < 0x1000) && (vehicleInstances[84].unk4 < -0x6B00)) {
 		vehicleInstances[84].unk20 = (u16)(vehicleInstances[84].unk20 & ~VEHICLE_FLAG_PATH_GUIDED);
-		func_800074BC_80BC(ExecuteAmbulanceOnBridge);
+		DequeueCallback(ExecuteAmbulanceOnBridge);
 	}
 	D_802DE466 = D_802DE466 + 1;
 	if (D_802DE466 == 0x9C4 && D_80048030 == 0xF) {
@@ -762,7 +763,7 @@ void ExecuteAmbulanceOnBridge(void) {
 void StartAmbulanceOnBridge(void) {
 	func_80092ADC_A1A8C(); // spawns the 5 Doodlebugs that target the bridge
 	D_802DE466 = 0;
-	func_80007410_8010(ExecuteAmbulanceOnBridge);
+	EnqueueCallback(ExecuteAmbulanceOnBridge);
 }
 
 // AI - Vehicle damage and destruction
@@ -772,7 +773,7 @@ void func_802D5660_18E170(void) {
 	if (D_8014D182 >= 0x32) {
 		func_800072CC_7ECC(0x29);
 		func_800073B8_7FB8(0x2A);
-		func_800074BC_80BC(func_802D5660_18E170);
+		DequeueCallback(func_802D5660_18E170);
 		SetObjective(0x10);
 		func_80123AC4_132A74(&vehicleInstances[84]); // feed the Ambulance through the vehicle on-death handler
 	}
@@ -782,7 +783,7 @@ void func_802D5660_18E170(void) {
 void func_802D56E8_18E1F8(void) {
 	D_8014D182 = 0;
 	func_800072CC_7ECC(0x2A);
-	func_80007410_8010(func_802D5660_18E170);
+	EnqueueCallback(func_802D5660_18E170);
 }
 
 // called thru table D_802DDBF4 offset 5

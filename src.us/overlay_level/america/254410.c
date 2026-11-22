@@ -846,7 +846,7 @@ void func_802D4FBC_2546FC(void) {
 	D_801493E0 = 0;
 	D_8004816C = 0;
 	func_802D5190_2548D0(); // update bit/flag on the church building
-	func_800074BC_80BC(func_802D4FBC_2546FC);
+	DequeueCallback(func_802D4FBC_2546FC);
 }
 
 // kids/church mission
@@ -863,13 +863,13 @@ void func_802D5044_254784(void) {
 	if (val967 >= 7) { // 7 or more kids entered church?
 		func_800072CC_7ECC(0x2E);
 		func_800072CC_7ECC(0x2D);
-		func_800074BC_80BC(func_802D5044_254784); // end mission
+		DequeueCallback(func_802D5044_254784); // end mission
 		osSyncPrintf("Kids entered church\n");
 	}
 
 	if (temp < 7) { // less than 7 kids entered church?
 		func_800072CC_7ECC(0x2D);
-		func_800074BC_80BC(func_802D5044_254784); // end mission
+		DequeueCallback(func_802D5044_254784); // end mission
 		osSyncPrintf("Kids failed to enter church\n");
 	}
 
@@ -879,8 +879,8 @@ void func_802D5044_254784(void) {
 // mission- get kids to church- called thru mission dispatcher case 0x1C
 void func_802D5110_254850(void) {
 	D_802E0E34 = 0; // delay timer for school cutscene - starts at 0 and counts up to 0x96 (7.5ish seconds)
-	func_80007410_8010(func_802D4FBC_2546FC);
-	func_80007410_8010(func_802D5044_254784);
+	EnqueueCallback(func_802D4FBC_2546FC);
+	EnqueueCallback(func_802D5044_254784);
 }
 
 void func_802D5148_254888(void) {
@@ -953,7 +953,7 @@ void func_802D536C_254AAC(void) {
 	s16 temp = 0x96 - D_8004D1B2; // timer for 2:30
 	func_8009BF64_AAF14((u16)temp); // draw timer
 	if (temp == -1) { // if time runs out end mission
-		func_800074BC_80BC(func_802D536C_254AAC);
+		DequeueCallback(func_802D536C_254AAC);
 	}
 }
 
@@ -977,7 +977,7 @@ void func_802D53BC_254AFC(void) {
 // Doomsday device mission/event offset 0xA in level overlay table
 void func_802D5440_254B80(void) {
 	func_802D53BC_254AFC(); // Black Adam spawn
-	func_80007410_8010(func_802D536C_254AAC);
+	EnqueueCallback(func_802D536C_254AAC);
 }
 
 void func_802D546C_254BAC(void) {
@@ -993,7 +993,7 @@ void func_802D546C_254BAC(void) {
 		}
 	}
 
-	func_800074BC_80BC(func_802D536C_254AAC);
+	DequeueCallback(func_802D536C_254AAC);
 
 	id = D_802E0E44;
 	if (id != 0xFF) {
@@ -1008,7 +1008,7 @@ void func_802D5530_254C70(void) {
 
 	SetObjective(9);
 	openCurrentStageGate();
-	func_800074BC_80BC(func_802D536C_254AAC); // remove from callback
+	DequeueCallback(func_802D536C_254AAC); // remove from callback
 
 	// despawn Black Adam
 	id = D_802E0E44;

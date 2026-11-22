@@ -49,8 +49,8 @@ void OnDeathHandlerCrabBoss(u8 arg0);
 
 void func_802D4E28_18D938(void);
 void func_802D4F50_18DA60(void);
-void EnqueueAirportTraining(void);
-void func_802D531C_18DE2C(void);
+void StartAirportTraining(void);
+void StartParenthosBridgeLoweringCutscene(void);
 void func_802D5434_18DF44(void);
 void StartPollsturaHouseFires(void);
 void FailPollsturaHouseFires(void);
