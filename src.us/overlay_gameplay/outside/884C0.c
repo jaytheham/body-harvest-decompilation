@@ -6207,7 +6207,7 @@ void func_80089574_98524(u8 arg0) {
 				if ((temp_v0 == 0x14) || (temp_v0 == 0xB) || (temp_v0 == 0xC) || (temp_v0 == 4)) {
 					D_8004816C--;
 				}
-				func_800AE190_BD140(1); // increase human meter + humans killed
+				AddToHumanKilledCount(1);
 			}
 		}
 		temp_v0 = s0->unk24;

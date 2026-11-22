@@ -1394,8 +1394,8 @@ void func_800AE010_BCFC0(u8 arg0) {
 	alienInstances[arg0].unk20 &= ~(ALIEN_FLAG_TARGET_OBJ | ALIEN_FLAG_AWAY);
 }
 
-// AI - Add to globals
-void func_800AE190_BD140(s16 arg0) {
+// US func_800AE190_BD140
+void AddToHumanKilledCount(s16 arg0) {
 	D_8004816A += arg0; // increase human meter
 	D_80048170 += arg0; // increase "humans killed" count
 }

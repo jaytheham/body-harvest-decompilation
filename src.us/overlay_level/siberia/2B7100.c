@@ -1240,7 +1240,7 @@ void func_802D69EC_2B8E1C(void) {
 }
 
 void func_802D6A4C_2B8E7C(void) {
-	func_800AE190_BD140(D_801591C4);
+	AddToHumanKilledCount(D_801591C4);
 }
 
 void func_802D6A70_2B8EA0(void) {

@@ -321,7 +321,7 @@ void func_802D5590_1EE2A0(void) {
 	}
 	if (vehicleInstances[80].unk1C <= 0) {
 		func_800074BC_80BC(func_802D5590_1EE2A0);
-		func_800AE190_BD140(D_801591C4);
+		AddToHumanKilledCount(D_801591C4);
 		temp_s6 = (s16) func_800DF9C8_EE978(vehicleInstances[80].unk0, (s16) (vehicleInstances[80].unk2 + 0xA), vehicleInstances[80].unk4, 0xC8, 0, 0);
 		var_s1 = 0;
 		if (D_801591C4 >= 9) {

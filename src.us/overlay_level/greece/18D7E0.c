@@ -220,9 +220,9 @@ s32 D_802DDBF0_196700 = 0x7FFFFFFF;
 
 void (*D_802DDBF4_196704[])(void) = {
 	func_802D531C_18DE2C,
-	func_802D5460_18DF70,
+	StartPollsturaHouseFires,
 	func_802D562C_18E13C,
-	func_802D54AC_18DFBC,
+	FailPollsturaHouseFires,
 	func_802D56E8_18E1F8,
 	func_802D5720_18E230,
 	func_802D5760_18E270,
@@ -683,8 +683,8 @@ void func_802D531C_18DE2C(void) {
 	D_801493E0 = 0;
 }
 
-// Pollstura suburbs buildings on fire callback
-void func_802D536C_18DE7C(void) {
+// US func_802D536C_18DE7C
+void ExecutePollsturaHouseFires(void) {
 	s16 temp_diff;
 	s16 status;
 
@@ -698,47 +698,47 @@ void func_802D536C_18DE7C(void) {
 		D_802DE464 += 1;
 	}
 	if ((status == 0) || (((s8) buildingInstances[55].hitPoints <= 0) && ((s8) buildingInstances[63].hitPoints <= 0) && ((s8) buildingInstances[57].hitPoints <= 0) && ((s8) buildingInstances[62].hitPoints <= 0))) {
-		func_800074BC_80BC(func_802D536C_18DE7C);
+		func_800074BC_80BC(ExecutePollsturaHouseFires);
 	}
 }
 
 // Pollstura building fire event/mission -called thru table D_802DDBF4 offset 8
 void func_802D5434_18DF44(void) {
-	func_800074BC_80BC(func_802D536C_18DE7C);
+	func_800074BC_80BC(ExecutePollsturaHouseFires);
 	func_800076D4_82D4(5);
 }
 
-// AI - Enable building destruction and start fire
 // called thru event/mission table offset 1
-void func_802D5460_18DF70(void) {
+// US func_802D5460_18DF70
+void StartPollsturaHouseFires(void) {
 	func_8011BF7C_12AF2C(0x37); // 4 building instances in Pollstura
 	func_8011BF7C_12AF2C(0x3F);
 	func_8011BF7C_12AF2C(0x39);
 	func_8011BF7C_12AF2C(0x3E);
 	D_802DE464 = 0;
-	func_80007410_8010(func_802D536C_18DE7C);
+	func_80007410_8010(ExecutePollsturaHouseFires);
 }
 
 // called thru event/mission table offset 3
-// Pollstura failure? blow up the 4 buildings, add 3 each to human meter
-void func_802D54AC_18DFBC(void) {
+// US func_802D54AC_18DFBC
+void FailPollsturaHouseFires(void) {
 	if ((buildingInstances[55].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x37);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
 	if ((buildingInstances[63].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x3F);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
 	if ((buildingInstances[57].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x39);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
 	if ((buildingInstances[62].unk8 >> 0xC) & 0x10) {
 		func_8011C080_12B030(0x3E);
-		func_800AE190_BD140(3);
+		AddToHumanKilledCount(3);
 	}
-	func_800074BC_80BC(func_802D536C_18DE7C);
+	func_800074BC_80BC(ExecutePollsturaHouseFires);
 	func_800076D4_82D4(5);
 }
 

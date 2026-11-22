@@ -1993,7 +1993,7 @@ void func_8011A604_1295B4(void) {
 						D_80048174++;
 					}
 					D_80048176++;
-					func_800AE190_BD140(inst->unk7); // add "humans inside this building" to global humans killed count
+					AddToHumanKilledCount(inst->unk7); // add "humans inside this building"
 				}
 
 				for (compactIndex = i;

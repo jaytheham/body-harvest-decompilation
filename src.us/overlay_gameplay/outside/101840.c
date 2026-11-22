@@ -4080,7 +4080,7 @@ void func_800FDC30_10CBE0(s16 arg0) {
 			D_8004DC58 = 5;
 			break;
 		case 0xC:
-			func_800AE190_BD140(0xA);// ambulance dying adds 10 to human meter (during mission, NPC vehicle dying adds 2 more separately)
+			AddToHumanKilledCount(0xA);// ambulance dying
 			return;
 		}
 		break;
