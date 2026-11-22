@@ -7100,3 +7100,6 @@ siberiaInteriorTexturesRomStart = _unknownSegmentRomStart + 0x5635C0;
 /* The loader skips the first 12 bytes of the Comet interior model bank. */
 cometInteriorModelsRomStart = _unknownSegmentRomStart + 0x56D8D0;
 cometInteriorTexturesRomStart = _unknownSegmentRomStart + 0x57D090;
+
+/* Shared blank menu label in AAA70.c rodata. */
+D_801426B8_151668 = 0x801426B8;
