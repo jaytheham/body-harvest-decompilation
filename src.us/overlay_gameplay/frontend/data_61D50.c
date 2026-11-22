@@ -98,7 +98,11 @@ char D_800918A0_61D50[] =
 	"Aircraft Factory Unlocked\0"
 	"Replay Boss\0"
 	"Hero\0"
+#ifdef VERSION_EU
+	"Zero\0"
+#else
 	"Easy\0"
+#endif
 	"Select Difficulty\0"
 	".\0"
 	"\0"

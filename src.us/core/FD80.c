@@ -1,13 +1,31 @@
-#define CORE_FD80_BSS
+#define OVERLAY_ENTRY_AS_FUNC
 #include <ultra64.h>
 #include "common.h"
 #include "core/FD80.h"
 #include "core/53F0.h"
 #include "core/53D0.h"
 #include "core/12C80.h"
-#include "core/10A20.h"
 #include "core/1050.h"
+#include "core/loader.h"
 
+u64 D_8005BB50;
+u64 D_8005BF58;
+u64 D_8005C760;
+u64 D_8005CF68;
+u64 D_80064F70;
+u64 D_80065F78;
+u64 D_80066780;
+u64 D_80068328;
+
+s16 D_80031B50_32750 = 0;
+s32 __osSiAccessQueueEnabled = 0;
+#if defined(VERSION_US)
+u8 D_80031B58_32758 = 0;
+#elif defined(VERSION_EU)
+u8 D_80031B58_32758 = 1;
+#else
+#error "Unknown version: compile with -DVERSION_US or -DVERSION_EU"
+#endif
 
 Vp D_80031B60_32760[] = {
 	{ {{640, 480, 511, 0}, {640, 480, 511, 0}} },
@@ -15,12 +33,6 @@ Vp D_80031B60_32760[] = {
 };
 s32 D_80031B80_32780 = 0;
 s32 D_80031B84_32784 = 0;
-
-/* E830's remaining assembly constants follow its generated double literals.
-   Keep the final zero so the stack-overflow strings retain their addresses. */
-const f32 D_80037650_38250[] = {6000.0f};
-const f32 D_80037654_38254[] = {0.2617993950843811f};
-const f32 D_80037658_38258[] = {0.2617993950843811f, 0.0f};
 
 void sourceTaggedPrintF(char *arg0, char *arg1, s32 arg2) {
 }
@@ -159,7 +171,7 @@ void func_8000F5A8_101A8(s32 arg0, void *arg1, s32 arg2) {
 
 	osWritebackDCacheAll();
 	osPiStartDma(&sp28, 0, 0, arg0, arg1, arg2, &D_80067FD0);
-	osRecvMesg(&D_80067FD0, &D_80068038, 1);
+	osRecvMesg(&D_80067FD0, &D_80068038, OS_MESG_BLOCK);
 }
 
 void func_8000F618_10218()
@@ -182,7 +194,6 @@ void setVideoInterfaceYSize(s32 arg0) {
 }
 
 void func_8000F6B0_102B0(void *arg0) {
-	/* Unused locals retain the original IDO stack layout. */
 	s32 unused9C[4];
 	s32 taskIndex;
 	s32 pendingTasks;
@@ -270,10 +281,12 @@ void func_8000F6B0_102B0(void *arg0) {
 			osSyncPrintf("Load Level Stack Overflow\n");
 		}
 
-		osRecvMesg(&D_8006A908, (OSMesg *)&message, 1);
+		osRecvMesg(&D_8006A908, (OSMesg *)&message, OS_MESG_BLOCK);
 
 		switch (message->type) {
-		case 1:
+		case OS_SC_RETRACE_MSG:
+			// Vertical retrace occurred
+			// Try process a new frame if there are less than 2 pending graphics tasks, otherwise count a hang.
 			D_800313D4_31FD4++;
 			retraceCount++;
 			if (pendingTasks >= 2) {
@@ -285,8 +298,8 @@ void func_8000F6B0_102B0(void *arg0) {
 			}
 			func_80013818_14418();
 			func_80004C34_5834();
-			if (D_80052ACA == 0 || D_80052ACA == 2 || D_80052ACA == 5 || D_80052ACA == 4) {
-				if (gameplayMode == 6) {
+			if (D_80052ACA == NORMAL_GAMEPLAY || D_80052ACA == GAME_PHASE_BOSS || D_80052ACA == GAME_PHASE_LEVEL_LOADING || D_80052ACA == GAME_PHASE_BETWEEN_LEVELS) {
+				if (gameplayMode == GAMEPLAY_MODE_INSIDE) {
 					retraceInterval = 2;
 				} else {
 					retraceInterval = 3;
@@ -294,7 +307,7 @@ void func_8000F6B0_102B0(void *arg0) {
 			} else {
 				retraceInterval = 1;
 			}
-			if (gameplayMode == 0 || gameplayMode == 0xE || gameplayMode == 7 || gameplayMode == 4 || gameplayMode == 0x10) {
+			if (gameplayMode == GAMEPLAY_MODE_LEVEL_MAP || gameplayMode == GAMEPLAY_MODE_UNKE || gameplayMode == GAMEPLAY_MODE_LOADING_LEVEL || gameplayMode == GAMEPLAY_MODE_UNK4 || gameplayMode == GAMEPLAY_MODE_INVENTORY) {
 				retraceInterval = 1;
 			}
 			if (D_80052ACC != 0) {
@@ -327,7 +340,7 @@ void func_8000F6B0_102B0(void *arg0) {
 				if (D_8006809C == 2) {
 					D_8006809C--;
 				}
-				osRecvMesg(&D_8006A8B0, &D_80068038, 1);
+				osRecvMesg(&D_8006A8B0, &D_80068038, OS_MESG_BLOCK);
 				D_80052B38 = osGetCount() - frameStartCount;
 				gSPEndDisplayList(&((BhGfxBuffer *)D_8005BB20)->displayList[0x1C1F]);
 				func_8000F478_10078(&D_8006A940[taskIndex]);
@@ -338,7 +351,7 @@ void func_8000F6B0_102B0(void *arg0) {
 			}
 			break;
 
-		case 2:
+		case OS_SC_DONE_MSG:
 			hangCount = 0;
 			D_80052B3C = osGetCount() - taskStartCounts[completedTaskIndex];
 			pendingTasks--;
@@ -350,7 +363,7 @@ void func_8000F6B0_102B0(void *arg0) {
 			}
 			break;
 
-		case 4:
+		case OS_SC_PRE_NMI_MSG: // Pre-reset?
 			D_80068078 = 1;
 			taskIndex = 0;
 			pendingTasks = 0;
@@ -371,6 +384,35 @@ void func_8000F6B0_102B0(void *arg0) {
 		}
 	}
 }
-/* Defined last: 10A20.c references this string, and it has to land after the literals
- * of the functions above to keep its place at the end of this file's .rodata. */
-const char D_80037764_38364[] = "level data %x\n";
+void func_8000FE50_10A50(void *arg0) {
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
+	osViSetSpecialFeatures(0x40);
+	func_8000F618_10218();
+	D_80052ACA = 3;
+	func_800056A8_62A8();
+	func_800056A8_62A8();
+	osRecvMesg(&D_8006A8F0, &D_80068038, OS_MESG_BLOCK);
+	func_80001984_2584();
+	osSyncPrintf("level data %x\n", 0x28928);
+	loadFrontendData();
+	func_80070270(1);
+}
+
+// __osSiCreateAccessQueue duplicate ?
+void func_8000FEF0_10AF0(void) {
+	__osSiAccessQueueEnabled = 1;
+	osCreateMesgQueue(&__osSiAccessQueue, &siacs_bss_0000, 1);
+	osSendMesg(&__osSiAccessQueue, 0, 0);
+}
+
+void func_8000FF40_10B40(void) {
+	if (__osSiAccessQueueEnabled == 0) {
+		func_8000FEF0_10AF0();
+	}
+	osRecvMesg(&__osSiAccessQueue, &D_80068038, OS_MESG_BLOCK);
+}
+
+// __osSiRelAccess duplicate ?
+void func_8000FF88_10B88(void) {
+	osSendMesg(&__osSiAccessQueue, 0, 0);
+}

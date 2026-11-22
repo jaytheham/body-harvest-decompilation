@@ -72,11 +72,11 @@ line and accepts only `//` comments; `ld -T` accepts only `/* */`.
   `src.us/core/rsp_data.c` uses the same `[344]` array for both versions.
 - E830's rodata and FD80's rodata are byte-identical between the versions
   (EU `0x38250`-`0x383C0` against NA `0x38220`-`0x38390`). E830's rodata is
-  `0x30` bytes in both maps, and FD80's starts at EU `0x38280` (NA `0x38250`) with
-  the three `const f32` arrays, so the shared `FD80.c` emits them for both
-  versions. The EU asm's labels for those floats are aliased to the shared
-  names in `undefined_syms.eu.txt` (`D_80037680_38280 = D_80037650_38250;` and
-  the two that follow it).
+  originally occupied `0x30` bytes, followed by three explicit `const f32`
+  arrays at EU `0x38280` (NA `0x38250`). These are now inline literals in
+  `E830.c`; its generated constant pool occupies `0x40` bytes, preserving
+  the following strings' addresses. The three EU linker aliases for the
+  removed arrays are no longer needed.
 - The frontend overlay starts at EU `0x40750`, vram `0x800702A0`; see
   `docs/pal-vs-na.md`.
 - An earlier version of the port started FD80's rodata at `0x38290` and the

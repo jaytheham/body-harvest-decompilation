@@ -6678,7 +6678,7 @@ void func_800717B4_159874(void)
 void func_80071854_159914(void) {
 	s32 pad;
 
-	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 	func_80011E14_12A14(D_80047F93);
 
 	gSPViewport(D_8005BB2C++, D_314D0);

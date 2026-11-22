@@ -4,10 +4,15 @@ Matched `func_8000F6B0_102B0` with IDO 5.3 -O2 -mips2 -32.
 
 The stack guard is one `u64` containing `0xCEC`, rather than two independent
 word globals. Assign and compare the complete guard. Tentative definitions
-selected by `CORE_FD80_BSS` in `include/variables.us.h` reproduce the shared
+in `src.us/core/FD80.c` reproduce the shared
 address load and low-word-first initialization stores. External declarations
 alone emit an extra `lui` and store the high word first. See also
 [the earlier tentative-definition fix](tentative-bss-definitions-u64-stores-and-folded-increment.md).
+
+External-only guards: extra `lui`, high-word-first stores -> move tentative
+`u64` definitions into `FD80.c`, retaining unconditional `extern` declarations
+in `variables.us.h` -> shared address load and low-word-first stores, without
+`CORE_FD80_BSS`. Verified US and EU full-ROM checksums remain OK.
 
 Use `1U - D_80031B84_32784` for the buffer swap. The unsigned literal gets its
 own `li` instead of sharing the signed saved-register constant used throughout
@@ -24,7 +29,7 @@ fell inside the preceding boot thread's epilogue. Its C compilation ended at
 its 32-byte alignment phase. Reunite the boot and scheduler code in one
 translation unit starting at `0xFB00`. The scheduler epilogue then starts at
 `0x10A20` naturally. Remove its separate assembly placeholder and start the
-next code segment at `0x10A50`. No padding instructions or object patches are
+next code segment at `0x10A50` (subsequently moved to `0x10AF0` as described below). No padding instructions or object patches are
 needed.
 
 Unused local slots and declaration order retain the target `0xA0` frame,
@@ -35,6 +40,24 @@ argument, consistent with `osCreateThread`.
 
 Verified: function diff score 0, including the epilogue through `0x10A50`, and
 full-ROM checksum `build/bh.us.z64: OK`.
+
+`incorrect ASM`: Inlining `D_80037764_38364` in the separate `10A20.c`
+object changes the format-string address from `0x80037764` to `0x80037770`
+because of rodata alignment.
+
+-> `code changed`: Move `func_8000FE50_10A50` to the end of `FD80.c` and use
+`"level data %x\n"` directly; remove the named string and its extern. Move
+the remaining `10A20.c` code boundary to US `0x10AF0` / EU `0x10B20`.
+
+-> `correct ASM`: The generated string retains the original address within
+FD80's constant pool, and the call and all ROM bytes match. US and EU
+full-ROM checksums are OK (2026-11-22).
+
+The remaining SI access-queue functions and data were subsequently merged
+into FD80 as well, removing `10A20.c` and its header. FD80's data now starts
+at US `0x32750` / EU `0x32780`; the next code segment is the loader at US
+`0x10BC0` / EU `0x10BF0`. Run extraction for each version after YAML changes
+to regenerate linker inputs before building. Both full-ROM checksums remain OK.
 
 ### Save-code controller thread (func_80000ED4_1AD4)
 

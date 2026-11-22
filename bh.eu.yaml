@@ -48,7 +48,6 @@ segments:
       - [0xAD90, c, ../src.us/core/AD60] # Text rendering?
       - [0xE860, c, ../src.us/core/E830]
       - [0xFB30, c, ../src.us/core/FD80] # Boot and scheduler share epilogue alignment.
-      - [0x10A80, c, ../src.us/core/10A20]
       - [0x10BF0, c, ../src.us/core/loader] # original src filename
       - [0x12CB0, c, ../src.us/core/12C80] # Sounds, Dialogue
       - [0x17F10, c, ../src.us/core/17EE0] # Dialogue
@@ -231,8 +230,7 @@ segments:
       - [0x32000, .data, ../src.us/core/53F0]
       - [0x32280, .data, ../src.us/core/AD60]
       - [0x326B0, .data, ../src.us/core/E830]
-      - [0x32780, .data, ../src.us/core/10A20]
-      - [0x32790, .data, ../src.us/core/FD80]
+      - [0x32780, .data, ../src.us/core/FD80]
       - [0x327C0, .data, ../src.us/core/loader]
       - [0x328D0, .data, ../src.us/core/12C80]
       - [0x348F0, .data, ../src.us/core/17EE0]
@@ -312,16 +310,41 @@ segments:
       - [0x40750, c, ../src.us/overlay_gameplay/frontend/40720]
       - [0x4E450, c, ../src.us/overlay_gameplay/frontend/4DC90]
       - [0x52E50, c, ../src.us/overlay_gameplay/frontend/52690]
-      - [0x61620, bin]
+      - [0x61620, .data, ../src.us/overlay_gameplay/frontend/data_60E60]
+      - [0x62510, .data, ../src.us/overlay_gameplay/frontend/data_61D50]
+      - [0x62D10, .data, ../src.us/overlay_gameplay/frontend/data_62550]
+      - [0x62E10, .data, ../src.us/overlay_gameplay/frontend/data_62650]
+      - [0x63610, .data, ../src.us/overlay_gameplay/frontend/data_62650]
+      - [0x63710, .data, ../src.us/overlay_gameplay/frontend/data_62650]
+      - [0x63F10, .data, ../src.us/overlay_gameplay/frontend/data_62650]
+      - [0x64010, .data, ../src.us/overlay_gameplay/frontend/data_63850]
+      - [0x64510, .data, ../src.us/overlay_gameplay/frontend/data_63850]
+      - [0x64A10, .data, ../src.us/overlay_gameplay/frontend/data_63850]
+      - [0x64F10, .data, ../src.us/overlay_gameplay/frontend/data_64750]
       - [0x65350, .data, ../src.us/overlay_gameplay/frontend/40720]
-      # NTSC 0x64E00-0x64F70 is compiled from 4DC90.c (bh.us.yaml); PAL has the same 368 bytes at +0x7C0, apart from 12 string pointers.
+      # This data is shared with NTSC at +0x7C0, with relocated level-name pointers.
       - [0x655C0, .data, ../src.us/overlay_gameplay/frontend/4DC90]
-      - [0x65730, bin]
-      - [0x7DD60, .rodata, ../src.us/overlay_gameplay/frontend/data_7DD60]
-      - [0x7F4F0, .rodata, ../src.us/overlay_gameplay/frontend/40720]
+      - [0x65650, .data, ../src.us/overlay_gameplay/frontend/52690]
+      - [0x65730, .data, ../src.us/overlay_gameplay/frontend/data_64F70]
+      - [0x65880, .data, ../src.us/overlay_gameplay/frontend/data_650C0]
+      - [0x65B10, .data, ../src.us/overlay_gameplay/frontend/data_65350]
+      - [0x65CF0, .data, ../src.us/overlay_gameplay/frontend/data_65530]
+      - [0x65D30, .data, ../src.us/overlay_gameplay/frontend/data_65570]
+      - [0x66580, .data, ../src.us/overlay_gameplay/frontend/data_65DC0]
+      - [0x66A20, .data, ../src.us/overlay_gameplay/frontend/data_66260]
+      - [0x66FE0, .data, ../src.us/overlay_gameplay/frontend/data_66820]
+      - [0x67260, .data, ../src.us/overlay_gameplay/frontend/data_66AA0]
+      - [0x69760, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x79EB0, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7A6B0, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7AEB0, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7B0B0, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7B2B0, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7CD58, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7D560, .data, ../src.us/overlay_gameplay/frontend/data_68FA0]
+      - [0x7DD60, .rodata, ../src.us/overlay_gameplay/frontend/40720]
       - [0x7F8F0, .rodata, ../src.us/overlay_gameplay/frontend/4DC90]
-      - [0x7FA50, .rodata, ../src.us/overlay_gameplay/frontend/data_7EEF0]
-      - [0x7FC50, .rodata, ../src.us/overlay_gameplay/frontend/52690]
+      - [0x7FA90, .rodata, ../src.us/overlay_gameplay/frontend/52690]
 
   - name: overlay_gameplay_outside
     type: code

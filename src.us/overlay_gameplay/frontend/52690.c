@@ -7,6 +7,34 @@
 #include "core/1050.h"
 
 // AI - Sets up colored background viewport with geometry modes for frontend screen
+/* The first two entries of the English table are zero, in the
+ * preceding data section's padding. Its base is a linker symbol. */
+s32 D_800949E0_64E90[3] = { (s32)"JAVA 1941", (s32)"AMERICA 1966", (s32)"SIBERIA 1991" };
+s32 D_800949EC_64E9C[5] = { (s32)"ALIEN COMET 2016", 0, (s32)"JAVA 1941", (s32)"USA 1966", (s32)"SIBERIE 1991" };
+s32 D_80094A00_64EB0[7] = {
+	(s32)"COMETE 2016", 0, (s32)"JAVA 1941", (s32)"AMERIKA 1966", (s32)"SIBIRIEN 1991", (s32)"KOMET 2016", 0,
+};
+Frontend52690Entry D_80094A1C_64ECC[5] = {
+	{ 0x0000077C, 0x00000795, (void *)0x040073A0, (void *)0x040083A0 },
+	{ 0x00000795, 0x000007AE, (void *)0x040083A0, (void *)0x040093A0 },
+	{ 0x000007AE, 0x000007C7, (void *)0x040093A0, (void *)0x0400A3A0 },
+	{ 0x000007C7, 0x000007E0, (void *)0x0400A3A0, (void *)0x0400B3A0 },
+	{ 0, 0, NULL, NULL },
+};
+
+Unk80052B40 D_80094A6C_64F1C = { 0, 0, 0x076C };
+Unk80052B40 D_80094A74_64F24 = { 0x8000, 0, 0 };
+Unk80052B40 D_80094A7C_64F2C = { 0x0100, 0x0100, 0x0100 };
+Unk80052B40 D_80094A84_64F34 = { 0, 0, 0x00A0 };
+Unk80052B40 D_80094A8C_64F3C = { 0, 0, 0xFF6A };
+Unk80052B40 D_80094A94_64F44 = { 0x8000, 0, 0 };
+Unk80052B40 D_80094A9C_64F4C = { 0x8000, 0, 0 };
+Unk80052B40 D_80094AA4_64F54 = { 0, 0, 0xFF9C };
+Unk80052B40 D_80094AAC_64F5C = { 0xD8F0, 0xE0C0, 0xFF9C };
+u32 D_80094AB4_64F64 = 0;
+u32 D_80094AB8_64F68 = 0;
+u32 D_80094ABC_64F6C = 0;
+
 void func_800821E0_52690(u8 arg0, u8 arg1, u8 arg2) {
 	((Frontend52690Viewport *)D_8005BB24)->unk2 = 0x140;
 
@@ -89,7 +117,6 @@ void func_800823D8_52888(s32 arg0, s32 arg1) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-
 // AI - Loads a 16x16 texture tile from atlas into TMEM for digit rendering
 void func_80082868_52D18(s32 arg0) {
 	gDPSetPrimColor(D_8005BB2C++, 0, 0, 255, 255, 255, 255);
@@ -142,8 +169,6 @@ void func_800829E4_52E94(s32 arg0) {
 }
 
 // transitionToNextLevel
-
-// AI - Main level completion/transition animation loop with 3D rotation and text
 s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	s32 padTop[3];
 	u16 sp132;
@@ -206,7 +231,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	tempS6 = tempS6 * 10 + 0x10; sp80 = ((spFC - sp100) * 0xA) + 0xA; do {
 		sp70 = (tempS6 - varS4) * 4;
 
-		osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+		osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 		func_80011E14_12A14(0);
 		func_80004CC8_58C8();
 		func_80004D38_5938();
@@ -229,7 +254,7 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 			sp124.unk4 = ((varS4 - tempS6) * 0x10) - 0x12C;
 		}
 
-		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, D_800AEC3C_7F0EC[0], 1.0f);
+		guPerspective((Mtx *)D_8005BB3C, &sp132, 55.0f, 1.3333334f, 50.0f, 20000.0f, 1.0f);
 		guLookAt((Mtx *)D_8005BB38, 0.0f, 0.0f, 0.0f, (f32)sp10C.unk0, (f32)sp10C.unk2, (f32)sp10C.unk4,
 				 0.0f, 1.0f, 0.0f);
 		spB8 = D_8005BB38;
@@ -284,37 +309,37 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 
 			switch (varV0_3) {
 				case 0:
-					drawText(D_800AEB2C_7EFDC, 0x50, 0, 0);
-					drawText(D_800AEB30_7EFE0, 0x80, 2);
-					drawText(D_800AEB50_7F000, 0x80, 3);
-					drawText(D_800AEB68_7F018, 0x80, 4);
+					drawText("%C", 0x50, 0, 0);
+					drawText("%@Primary objective complete.", 0x80, 2);
+					drawText("%@Co-ordinates for next", 0x80, 3);
+					drawText("%@objective selected:", 0x80, 4);
 					varV0_3 = D_800313D0_31FD0;
 					break;
 				case 1:
-					drawText(D_800AEB80_7F030, 0x50, 0, 0);
-					drawText(D_800AEB84_7F034, 0x80, 2);
-					drawText(D_800AEBA4_7F054, 0x80, 3);
-					drawText(D_800AEBC4_7F074, 0x80, 4);
+					drawText("%C", 0x50, 0, 0);
+					drawText("%@Objectif principal atteint.", 0x80, 2);
+					drawText("%@Co-ordonn\351e selectionn\351e pour", 0x80, 3);
+					drawText("%@le prochain objectif:", 0x80, 4);
 					varV0_3 = D_800313D0_31FD0;
 					break;
 				case 2:
-					drawText(D_800AEBDC_7F08C, 0x50, 0, 0);
-					drawText(D_800AEBE0_7F090, 0x80, 2);
-					drawText(D_800AEBF8_7F0A8, 0x80, 3);
-					drawText(D_800AEC14_7F0C4, 0x80, 4);
+					drawText("%C", 0x50, 0, 0);
+					drawText("%@Prim\344rziel erf\374llt.", 0x80, 2);
+					drawText("%@Koordinaten f\374r n\344chstes", 0x80, 3);
+					drawText("%@Ziel gew\344hlt:", 0x80, 4);
 					varV0_3 = D_800313D0_31FD0;
 					break;
 			}
 
 			switch (varV0_3) {
 				case 0:
-					drawText(D_800AEC24_7F0D4, 0x80, 6, D_800949D8_64E88[currentLevel]);
+					drawText("%@%s", 0x80, 6, D_800949D8_64E88[currentLevel]);
 					break;
 				case 1:
-					drawText(D_800AEC2C_7F0DC, 0x80, 6, D_800949EC_64E9C[currentLevel]);
+					drawText("%@%s", 0x80, 6, D_800949EC_64E9C[currentLevel]);
 					break;
 				case 2:
-					drawText(D_800AEC34_7F0E4, 0x80, 6, D_80094A00_64EB0[currentLevel]);
+					drawText("%@%s", 0x80, 6, D_80094A00_64EB0[currentLevel]);
 					break;
 			}
 
@@ -362,7 +387,6 @@ s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
 	return 1;
 }
 
-/* 3x3 matrix-vector multiply: out = mat^T * vec */
 // AI - 3x3 matrix-vector multiply: out = mat^T * vec
 void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
 	out[0] = vec[0] * mat[0] + vec[1] * mat[3] + vec[2] * mat[6];
@@ -370,7 +394,6 @@ void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
 	out[2] = vec[0] * mat[2] + vec[1] * mat[5] + vec[2] * mat[8];
 }
 
-/* 3D vector cross product: arg2 = arg0 x arg1 */
 // AI - 3D vector cross product: arg2 = arg0 x arg1
 void func_800836A4_53B54(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg0[1] * arg1[2] - arg1[1] * arg0[2];
@@ -378,7 +401,6 @@ void func_800836A4_53B54(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[2] = arg0[0] * arg1[1] - arg1[0] * arg0[1];
 }
 
-/* Divides a 3D vector by a scalar: arg2 = arg1 / arg0 */
 // AI - Divides a 3D vector by a scalar: arg2 = arg1 / arg0
 void func_80083714_53BC4(f32 arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] / arg0;
@@ -386,7 +408,6 @@ void func_80083714_53BC4(f32 arg0, f32 *arg1, f32 *arg2) {
 	arg2[2] = arg1[2] / arg0;
 }
 
-/* Returns the squared magnitude of a 3D vector */
 // AI - Returns the squared magnitude of a 3D vector
 f32 func_8008373C_53BEC(f32 *arg0) {
 	f32 x = arg0[0];
@@ -395,7 +416,6 @@ f32 func_8008373C_53BEC(f32 *arg0) {
 	return (x * x) + (y * y) + (z * z);
 }
 
-/* Computes the magnitude (length) of a 3D vector */
 // AI - Computes the magnitude (length) of a 3D vector
 f32 func_80083764_53C14(f32 *arg0) {
 	f32 sqMag = func_8008373C_53BEC(arg0);
@@ -405,8 +425,7 @@ f32 func_80083764_53C14(f32 *arg0) {
 	return sqMag;
 }
 
-/* Normalizes vector arg0 into arg1; if magnitude is 0, copies arg0 to arg1 */
-// AI - Normalizes a 3D vector; copies if magnitude is zero
+// AI - Normalizes vector arg0 into arg1; if magnitude is 0, copies arg0 to arg1
 void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
 	f32 mag;
 
@@ -418,13 +437,11 @@ void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
 	}
 }
 
-/* Computes the dot product of two 3D vectors */
 // AI - Computes the dot product of two 3D vectors
 f32 func_80083820_53CD0(Vec3f *arg0, Vec3f *arg1) {
 	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
 
-/* Subtracts two 3D vectors: arg2 = arg0 - arg1 */
 // AI - Subtracts two 3D vectors: arg2 = arg0 - arg1
 void func_80083850_53D00(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg0[0] - arg1[0];
@@ -432,7 +449,6 @@ void func_80083850_53D00(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[2] = arg0[2] - arg1[2];
 }
 
-/* Adds two 3D vectors: arg2 = arg0 + arg1 */
 // AI - Adds two 3D vectors: arg2 = arg0 + arg1
 void func_80083884_53D34(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] + arg0[0];
@@ -440,7 +456,6 @@ void func_80083884_53D34(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[2] = arg1[2] + arg0[2];
 }
 
-/* Multiplies a 3D vector by a scalar: arg2 = arg1 * arg0 */
 // AI - Multiplies a 3D vector by a scalar: arg2 = arg1 * arg0
 void func_800838B8_53D68(f32 arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] * arg0;
@@ -473,7 +488,6 @@ void func_800838E0_53D90(Mtx *arg0) {
 	func_800837B4_53C64(D_800DE0D8, D_800DE0D8);
 }
 
-/* Copies a 3D float vector to D_800DE100 and truncates another to s16 shorts */
 // AI - Copies a 3D float vector to global state and truncates another to s16 shorts
 void func_800839F0_53EA0(f32 *arg0, f32 *arg1) {
 	D_800DE100[0] = arg0[0];
@@ -514,7 +528,6 @@ u8 func_80083A58_53F08(u8 arg0) {
 	return orig;
 }
 
-/* Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index */
 // AI - Marks a D_800DE130 entry as freed (0xFA), decrements count, updates min index
 void func_80083B14_53FC4(u8 arg0) {
 	if (D_800DE130[arg0].unk0 != 0xFA) {
@@ -566,8 +579,7 @@ s16 func_80083B7C_5402C(u8 arg0) {
 	return idx;
 }
 
-/* Allocate 3 linked entries for arg0; free on failure, return first idx or -3 */
-// AI - Allocates three linked entries; rolls back all on any allocation failure
+// AI - Allocate 3 linked entries for arg0; free on failure, return first idx or -3
 s16 func_80083C98_54148(u8 arg0) {
 	s16 result, idx2;
 
@@ -586,7 +598,6 @@ s16 func_80083C98_54148(u8 arg0) {
 	return result;
 }
 
-/* Calls func_80083B7C twice; if second call returns -3, calls func_80083DBC */
 // AI - Allocates two linked entries; rolls back both on allocation failure
 s16 func_80083D50_54200(u8 arg0) {
 	s16 result;
@@ -680,7 +691,6 @@ void func_80083DBC_5426C(s16 arg0, u8 arg1) {
 	}
 }
 
-/* Free 3 linked entries from D_800DE840 chain starting at arg0 */
 // AI - Frees three linked entries from the D_800DE840 pool chain
 void func_80083F8C_5443C(s16 arg0, u8 arg1) {
 	s16 sp1E;
@@ -696,7 +706,6 @@ void func_80083F8C_5443C(s16 arg0, u8 arg1) {
 	}
 }
 
-/* Calls func_80083DBC twice if arg0 and arg1 are in range */
 // AI - Frees two linked entries from the D_800DE840 pool
 void func_8008404C_544FC(s16 arg0, u8 arg1) {
 	if (arg0 >= 0 && arg0 < 0x1C2 && arg1 < 0x96) {
@@ -706,7 +715,6 @@ void func_8008404C_544FC(s16 arg0, u8 arg1) {
 	}
 }
 
-/* Calls func_80083DBC for each active unk4 iteration of a D_800DE130 entry */
 // AI - Frees all active linked entries for a given D_800DE130 parent
 void func_800840C4_54574(u8 arg0) {
 	if (D_800DE130[arg0].unk4 > 0) {
@@ -789,6 +797,7 @@ u8 func_80084324_547D4(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 
 	return (u8)sp2A;
 }
+
 // AI - Updates particle state each frame: animates frames, handles velocity, updates alpha
 void func_80084508_549B8(u8 arg0) {
 	s16 cur;
@@ -862,7 +871,6 @@ void func_80084508_549B8(u8 arg0) {
 	} while ((cur != -5) && (cur != -6));
 }
 
-/* Decrement timer and update positions or free entry */
 // AI - Decrements timer on an effect; frees it if expired, otherwise updates position
 void func_8008472C_54BDC(u8 arg0) {
 	s16 *ptr;
@@ -890,7 +898,6 @@ void func_800847E4_54C94(u8 arg0) {
 	Vec3f outA;
 	Vec3f outB;
 	Vec3f origin;
-	/* Reset the consumed index to keep the node address in its own IDO live range. */
 	s32 headIndex;
 	f32 camDx;
 	f32 camDy;
@@ -906,7 +913,7 @@ void func_800847E4_54C94(u8 arg0) {
 
 	entry130 = &D_800DE130[arg0];
 	headIndex = entry130->unkA;
-	count = entry130->unk4 - 1; if (&count) {} /* Retain the byte home across helper calls. */
+	count = entry130->unk4 - 1; if (&count) {}
 
 	if ((D_800DE0B8 == 1) || (D_800DE0B9 != 0)) {
 		color[0] = 0x82;
@@ -944,7 +951,6 @@ void func_800847E4_54C94(u8 arg0) {
 
 			headIndex = entry840->unk4;
 			entry840 = &D_800DE840[headIndex]; headIndex = 0;
-			/* The scale is consumed before point0.z is used as a coordinate. */
 			point0.z = (f32)(distBias * ((f64)(f32)((FrontendAuraPayload *)&entry840->unk8)->segment.radius * 0.00390625));
 
 			func_800838B8_53D68(point0.z, &D_800DE0C0.x, &vecA.x);
@@ -1059,7 +1065,7 @@ void func_800847E4_54C94(u8 arg0) {
 			gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 3), 3, 0);
 			gSP1Triangle(D_8005BB2C++, 0, 1, 2, 0);
 
-			remaining--; if (D_800DE0BB * 20 + entry840->unk0) {} /* Preserve IDO constant/node priorities. */
+			remaining--; if (D_800DE0BB * 20 + entry840->unk0) {}
 			count = remaining;
 		} while (remaining > 0);
 	}
@@ -1225,7 +1231,6 @@ void func_800857D4_55C84(u8 arg0, f32 *arg1, u8 arg2, u8 arg3) {
 	spawn->unkA = 0;
 }
 
-/* Clamps a value to the range [1, 80] */
 // AI - Clamps a value to the range [1, 80]
 s32 func_80085CB8_56168(s16 arg0) {
 	if (arg0 >= 0x51) {
@@ -1356,7 +1361,6 @@ void func_80085FF0_564A0(u8 arg0) {
 			particle->unk7 = (s8)((startUnk8->unk2 - particle->unk2) / startUnk8->unk9);
 			particle->unk8 = (s8)((startUnk8->unk4 - particle->unk4) / startUnk8->unk9);
 
-			/* Keep X/Y and two Z uses for IDO's target allocation priorities. */
 			particle->unk0 += particle->unk6; if (particle->unk0 + particle->unk2 + (particle->unk4 * particle->unk4)) {}
 			particle->unk2 += particle->unk7;
 			particle->unk4 += particle->unk8;
@@ -1595,7 +1599,6 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4, u8 arg
 			work.motion->rate = 1;
 		}
 
-		/* Reuse the node carrier for the linked shape entry. */
 		parent.address = (u32)&D_800DE840[linkIdx].unk8;
 		parent.shape->size = 0;
 		if ((func_800038E0_44E0() % 3) == 1) {
@@ -1731,7 +1734,7 @@ void func_800870AC_5755C(void) {
 
 // Renders interpolated particles with camera-facing matrices and animated textures.
 void func_800878A4_57D54(void) {
-	s32 padScale[3]; /* Preserve the transform-vector stack homes. */
+	s32 padScale[3];
 	s32 parentIndex;
 	union {
 		s16 array[3];
@@ -2029,7 +2032,6 @@ void func_80088BDC_5908C(void) {
 
 	index = D_800DE826;
 	if (index == -6) {
-		/* IDO: rematerialize this sentinel so the gravity limit stays cached. */
 	}
 	if ((index != -5) && (index != -6)) {
 		s16 childFramePeriod;
@@ -2094,7 +2096,6 @@ void func_80088BDC_5908C(void) {
 	}
 }
 
-
 // Renders linked solid particles using their model and motion nodes.
 void func_80088E18_592C8(void) {
 	s16 cur;
@@ -2106,7 +2107,7 @@ void func_80088E18_592C8(void) {
 	Unk800DE840 *nextLink;
 	s32 parentIndex;
 	s32 motionIndex;
-	s32 pad4; /* Preserves the transform vectors' stack homes. */
+	s32 pad4;
 
 	cur = D_800DE826;
 	while ((cur != -6) && (cur != -5)) {
@@ -2164,8 +2165,6 @@ void func_80088E18_592C8(void) {
 	}
 }
 
-
-// https://decomp.me/scratch/7xbIK
 // AI - Allocates a child particle (type 4) linked to a parent; copies template data and returns allocation ID
 u8 func_800891F8_596A8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4)
 {
@@ -2487,10 +2486,10 @@ void func_8008A094_5A544(u8 arg0) {
 	FrontendSpurtEmitterState *emitter;
 	Vec3f base;
 	Vec3f random;
-	Unk800DE840 *head[2]; /* The second slot preserves the original frame. */
+	Unk800DE840 *head[2];
 
 	headIndex = D_800DE130[arg0].unk6;
-	headIndex &= -1; /* IDO: retain the initial v0/v1 allocation. */
+	headIndex &= -1;
 	templateIndex = D_800DE840[headIndex].unk4;
 	head[0] = &D_800DE840[headIndex];
 	index = func_80083B7C_5402C(arg0);
@@ -2536,7 +2535,6 @@ void func_8008A094_5A544(u8 arg0) {
 	particle->velocity[1] = (emitter->size / 4) * random.y;
 	particle->velocity[2] = (emitter->size / 4) * random.z;
 }
-
 
 // Creates an emitter and initializes its visual and control nodes.
 u8 func_8008A460_5A910(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6, u16 arg7, u8 arg8, u8 arg9, u8 arg10, u8 arg11, u8 arg12, u8 arg13, u8 arg14) {
@@ -2830,7 +2828,6 @@ void func_8008AEC8_5B378(u8 arg0) {
 	}
 }
 
-/* Allocate entry with given params; returns allocId or 0xFB on failure */
 // AI - Allocates a type-7 particle entry with position, color, and size
 u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
 {
@@ -2857,7 +2854,6 @@ u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, 
   return allocId;
 }
 
-/* Sets 3D position (s16 x,y,z) in D_800DE840 entry indexed via D_800DE130 */
 // AI - Sets the 3D position of a type-7 particle
 void func_8008B148_5B5F8(s16 arg0, s16 arg1, s16 arg2, u8 arg3) {
 	s16 idx = D_800DE130[arg3].unk6;
@@ -3010,7 +3006,6 @@ u8 func_8008B7BC_5BC6C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg
 			}
 
 			entry = (Frontend52690LineParticle *)&D_800DE840[idx];
-			/* Keep the node-base and stride register priorities; IDO removes this read. */
 			if (D_800DE840[idx].unk0) {}
 			entry->duration = arg6;
 			entry->position[0] = arg0 + (step.x * i);
@@ -3278,7 +3273,6 @@ void func_8008BC00_5C0B0(u8 arg0) {
 				curX = nextX2;
 				curY = nextY2;
 				curZ = nextZ2;
-				/* Keep a separate source boundary before the loop sentinel load. */
 				(void)0;
 
 			}
@@ -3287,7 +3281,6 @@ void func_8008BC00_5C0B0(u8 arg0) {
 		} while ((nextIdx != -5) && (idx != -6));
 	}
 }
-
 
 // AI - Creates a type-9 trail entry with position, color, and velocity
 void func_8008C73C_5CBEC(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u8 arg4, u8 arg5, s16 arg6, s16 arg7, s16 arg8, u8 arg9) {
@@ -3402,7 +3395,6 @@ void func_8008C8E0_5CD90(void) {
 	}
 }
 
-
 // Dispatches particle updates and advances the global fade.
 void func_8008CC3C_5D0EC(void) {
 	u8 i;
@@ -3470,7 +3462,6 @@ void func_8008CC3C_5D0EC(void) {
 	}
 }
 
-
 // AI - Renders a camera-aligned billboard quad for a single particle
 void func_8008CDC8_5D278(void) {
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + D_800DE128);
@@ -3524,7 +3515,6 @@ void func_8008CDC8_5D278(void) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(D_8005BB34 - 4), 4, 0);
 	gSP2Triangles(D_8005BB2C++, 0, 1, 3, 0, 3, 1, 2, 0);
 }
-
 
 // AI - Renders a camera-facing billboard quad using orientation basis vectors
 void func_8008D14C_5D5FC(void) {
@@ -3743,8 +3733,6 @@ void func_8008D98C_5DE3C(void) {
 	func_800878A4_57D54();
 }
 
-
-/* Clears unkA field in all 50 D_800E1980 entries and resets globals */
 // AI - Clears sprite slot tracking state and resets globals
 void func_8008DBEC_5E09C(void) {
 	u8 i;
@@ -3771,7 +3759,6 @@ u8 func_8008DC34_5E0E4(s16 arg0, s16 arg1, s16 arg2, u8 arg3, u16 arg4) {
 	D_800E1980[D_800E1D69].unk2 = arg1;
 	D_800E1980[D_800E1D69].unk4 = arg2;
 	D_800E1980[D_800E1D69].unkF = 0;
-	/* The explicit typed address avoids an extra IDO pointer-temporary home. */
 	D_800E1980[D_800E1D69].unk10 = ((Unk800AA694Entry *)&D_800AA694[arg3])->unk1;
 	D_800E1980[D_800E1D69].unk11 = ((Unk800AA694Entry *)&D_800AA694[arg3])->unk2;
 	D_800E1980[D_800E1D69].unk12 = ((Unk800AA694Entry *)&D_800AA694[arg3])->unk3;
@@ -3927,7 +3914,6 @@ void func_8008E158_5E608(void) {
 
 					sprite = &D_800E1980[i];
 					type = D_800E1980[i].unkC;
-					/* Preserve the folded lifetime dependency for IDO register allocation. */
 					value = (D_800E1980[i].unkA * 0) + 0xFF;
 					savedIndex = i;
 					if ((value != type) || (value != D_800E1980[i].unkE)) {
@@ -3985,7 +3971,6 @@ void func_8008E158_5E608(void) {
 		} while (value > 0);
 	}
 }
-
 
 // AI - Creates a 2D sprite with color, velocity, and animation parameters
 void func_8008E9DC_5EE8C(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s8 arg4, s8 arg5, u8 arg6, u8 arg7, u8 arg8, u8 arg9, u8 arg10) {
@@ -4120,7 +4105,6 @@ void func_8008EEC4_5F374(void) {
 	}
 }
 
-// https://decomp.me/scratch/fAy3j
 // AI - Creates orbiting particle effects for cinematic lighting mode
 void func_8008F1E0_5F690(void)
 {
@@ -4192,7 +4176,6 @@ void func_8008F1E0_5F690(void)
 	while (var_s1 < 3);
   }
 }
-
 
 // AI - Initializes a particle slot entry to default values
 void func_8008F534_5F9E4(u8 arg0, u8 arg1) {
@@ -4550,7 +4533,6 @@ void func_8008FE98_60348(u8 arg0) {
 			break;
 	}
 }
-
 
 // AI - Sets up the 3D rendering pipeline: projection, camera look-at, and viewport
 void func_80090648_60AF8(void) {

@@ -60,6 +60,16 @@ typedef enum GameplayMode {
 	GAMEPLAY_MODE_INVENTORY = 0x10
 } GameplayMode;
 
+typedef enum GamePhase {
+	NORMAL_GAMEPLAY = 0, // Set by the level/gameplay transition driver.
+	GAME_PHASE_UNKNOWN = 1,
+	GAME_PHASE_BOSS = 2, // Boss encounter / boss phase
+	GAME_PHASE_FRONTEND = 3, // Frontend / menus
+	GAME_PHASE_BETWEEN_LEVELS = 4, // Between-level transition
+	GAME_PHASE_LEVEL_LOADING = 5,
+	GAME_PHASE_MOVIE_PLAYBACK = 6 // Movie playback
+} GamePhase;
+
 typedef enum Level {
 	LEVEL_GREECE = 1,
 	LEVEL_JAVA = 2,
@@ -2278,12 +2288,12 @@ typedef struct {
 } FrontendLineParticle; /* size = 0x12 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[4];
+	/* 0x00 */ u32 displayList;
 	/* 0x04 */ s16* pose;
 } FrontendObjectResourceHeader; /* size = 0x08 */
 
 typedef struct {
-	/* 0x00 */ u8 pad0[0x8];
+	/* 0x00 */ FrontendObjectResourceHeader resource;
 	/* 0x08 */ void* unk8;
 	/* 0x0C */ s16 unkC;
 	/* 0x0E */ s16 unkE;
@@ -2302,6 +2312,22 @@ typedef struct {
 	/* 0x2A */ u8 unk2A;
 	/* 0x2B */ u8 pad2B;
 } Unk80080530_Dst; /* size = 0x2C */
+
+typedef struct {
+	u8 settings[8];
+	const char *names[6];
+} FrontendLoadMenuData;
+
+typedef struct {
+	u8 texture[0x74];
+	const char *labels[12];
+	u8 settings[0x28];
+} HudTextureData;
+
+typedef struct {
+	Unk8014DD50 *nodes[2];
+	u8 settings[0x40];
+} AnimationNodeTable;
 
 typedef struct {
 	/* 0x00 */ u8 pad0[0x10];
@@ -4546,6 +4572,41 @@ typedef struct {
     EffectColorPalette colors;
     Unk8014DD50 transforms[2];
 } CometLandingData;
+
+typedef struct {
+	Unk8014DD50 transforms[13];
+	struct {
+		s16 settings[4];
+		s16 *transforms[2];
+	} path;
+	Unk8014DD50 remainingTransforms[144];
+} CometFinalPathData;
+
+typedef struct {
+	Unk8014DD50 transforms[41];
+	struct {
+		s16 settings[4];
+		Unk8014DD50 **node;
+		s16 *transform;
+	} firstPath;
+	s16 *paths[3][4];
+	Unk8014DD50 remainingTransforms[70];
+} CometMainPathData;
+
+typedef struct {
+	Unk8014DD50 *nodes[5];
+	Unk8014DD50 transforms[2];
+} CometExitNodes;
+
+typedef struct {
+	Unk8014DD50 *nodes[5];
+	Unk8014DD50 transforms[10];
+} CometApproachNodes;
+
+typedef struct {
+	Unk8014DD50 *nodes[1];
+	Unk8014DD50 transforms[10];
+} CometLandingNodes;
 
 typedef struct {
     s32 x;

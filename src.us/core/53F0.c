@@ -217,7 +217,7 @@ void func_8000505C_5C5C(void) {
 }
 
 void func_800050C4_5CC4(void) {
-	osRecvMesg(&D_8006A8D0, &D_80068038, 1);
+	osRecvMesg(&D_8006A8D0, &D_80068038, OS_MESG_BLOCK);
 	func_80011E14_12A14(D_80047F93);
 	func_80004CC8_58C8();
 	func_80004D38_5938();

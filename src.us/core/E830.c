@@ -202,10 +202,6 @@ s32 func_8000E52C_F12C(s32 arg0) {
 	return arg0 * arg0;
 }
 
-extern const f32 D_80037650_38250[];
-extern const f32 D_80037654_38254[];
-extern const f32 D_80037658_38258[];
-
 // AI - Builds 12x16 tiled textured background DL from D_803DA800, scrolling via D_80059CD0; returns 1 when done.
 s32 func_8000E53C_F13C(void) {
 	s32 temp_v1;
@@ -233,11 +229,11 @@ s32 func_8000E53C_F13C(void) {
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, 1);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gDPSetTextureFilter(D_8005BB2C++, G_TF_POINT);
-	guPerspective(D_8005BB38, &sp136, 30.0f, ((f32) D_8005BAEC) / ((f32) D_8005BAF0), 10.0f, D_80037650_38250[0], 1.0f);
+	guPerspective(D_8005BB38, &sp136, 30.0f, ((f32) D_8005BAEC) / ((f32) D_8005BAF0), 10.0f, 6000.0f, 1.0f);
 	gSPPerspNormalize(D_8005BB2C++, (u32) (&sp136));
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_PROJECTION);
 	D_8005BB38++;
-	guLookAt(D_8005BB38, 0.0f, 0.0f, ((f32) D_8005BAF0) / ((sinf(D_80037654_38254[0]) / cosf(D_80037658_38258[0])) * 2), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
+	guLookAt(D_8005BB38, 0.0f, 0.0f, ((f32) D_8005BAF0) / ((sinf(0.2617993950843811f) / cosf(0.2617993950843811f)) * 2), 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 	D_8005BB38++;
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);

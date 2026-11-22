@@ -2,7 +2,7 @@
 #include "common.h"
 #include "core/53F0.h"
 #include "core/12C80.h"
-#include "core/10A20.h"
+#include "core/FD80.h"
 #include "core/1050.h"
 
 /*
@@ -238,13 +238,13 @@ void func_80000730_1330(s32 arg0) {
 	lastInfo = 0;
 	osScAddClient(&D_800680A0, &client, &D_8003FCE8);
 	while (done == 0) {
-		osRecvMesg(&D_8003FCE8, &message, 1);
+		osRecvMesg(&D_8003FCE8, &message, OS_MESG_BLOCK);
 		switch (((OSScMsg *)message)->type) {
 		case OS_SC_RETRACE_MSG:
 			/* Keep the shared frame-counter address live during dispatch. */
 			if ((u32)&D_800431A0 * 0) {}
 			if (func_8000091C_151C(D_8003FB28[D_800431A0 % 3], lastInfo) != 0) {
-				osRecvMesg(&D_8003FD20, &message, 1);
+				osRecvMesg(&D_8003FD20, &message, OS_MESG_BLOCK);
 				func_80000AD4_16D4(((BhAudioMsg *)message)->audioBuf);
 				lastInfo = ((BhAudioMsg *)message)->audioBuf;
 			}
@@ -400,7 +400,7 @@ void func_80000D0C_190C(void)
 	{
 		do
 		{
-			osRecvMesg(&D_80067F58, &sp40, 0);
+			osRecvMesg(&D_80067F58, &sp40, OS_MESG_NOBLOCK);
 			var_s0 += 1;
 		}
 		while (var_s0 < ((u32) D_800312F0_31EF0));
@@ -467,7 +467,7 @@ void func_80000ED4_1AD4(void) {
 	s32 idx;
 
 	while (1) {
-		osRecvMesg(&D_800433A8, (OSMesg *)&sp58, 1);
+		osRecvMesg(&D_800433A8, (OSMesg *)&sp58, OS_MESG_BLOCK);
 		if (D_80047678 == 1) {
 			func_8000FF40_10B40();
 			cmd = sp58->unk0;
@@ -1242,7 +1242,7 @@ void func_80002EF8_3AF8(void *arg0)
   osContStartReadData(&D_80043388);
   while (1)
   {
-	osRecvMesg(&D_80043388, &message, 1);
+	osRecvMesg(&D_80043388, &message, OS_MESG_BLOCK);
 	func_80002ED4_3AD4();
 	func_8000FF88_10B88();
 	func_80001190_1D90();

@@ -1,6 +1,5 @@
 #include <ultra64.h>
 #include "common.h"
-#include "version_shift.h"
 #include "overlay_gameplay/inside/167C90.h"
 #include "core/loader.h"
 #include "core/53F0.h"
@@ -1604,7 +1603,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 					s16 transition;
 					func_80081E90_169F50(timelineStep - 1, timelineStep,
 					    (transition = timeline->transitionValues[timelineStep][1],
-					     *(s32 *)OVERLAY_PTR(0x800A0908) = timelineStep,
+					     D_800A0908_1889C8_W = timelineStep,
 					     transition));
 					D_800A0908_1889C8++; timeline = D_800A05FC_1886BC.entries[D_800E6A34].unk18;
 				}

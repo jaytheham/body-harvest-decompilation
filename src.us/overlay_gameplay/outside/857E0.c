@@ -95,7 +95,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 	Unk80052B40 spA8;
 	Unk80052B40 spA0;
 	Unk80052B40 sp98;
-	Unk857E0Obj *entry;
+	Unk80259D90 *entry;
 	s32 obj;
 	s16 x;
 	s32 z;
@@ -140,6 +140,9 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 			{
 				type = packed & 0xF;
 				packedBackup[0] = packed;
+				/* Preserve IDO's temporary register order at the allocation call. */
+				packed = (u32)(u64)packed;
+				packed = (u32)(u64)packed;
 				if (type != 0)
 				{
 					obj = func_80076830_857E0();
@@ -147,45 +150,58 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 					{
 						break;
 					}
-					entry = (Unk857E0Obj *)(&D_80259D90[obj]);
+					entry = &D_80259D90[obj];
 					entry->unk0 = type;
-					entry->unk1 = outer;
-					entry->unk2 = arg0;
-					entry->unk3 = inner;
+					entry->tileIndex = outer;
+					entry->chunkIndex = arg0;
+					entry->pad3 = inner;
 					xOff = ((arg1 << 2) + (outer & 3)) << 8;
 					zOff = ((arg2 << 2) + (outer >> 2)) << 8;
 					x = (D_801416A0_150650[inner] + xOff) - 0x8000;
 					z = (s16)((D_801416A8_150658[inner] + zOff) - 0x8000);
 					entry->unk4 = x;
+					if (x) {
+						/* Keep the X coordinate live through IDO register allocation. */
+					}
 					entry->unk6 = z;
 					if (type < 0xE)
 					{
-						pattern = (spA8.unk0 = x);
-						spA8.unk0 = x;
+						/* IDO schedules the Z store with the call and leaves the X store for its delay slot. */
+#line 177
 						spA8.unk4 = z;
-						spA8.unk2 = (s16)(func_800B84D0_C7480(x, z) >> 8);
-						z = spA8.unk4;
-						x = spA8.unk0;
-						entry->unk8 = (u32)D_80222A30[type];
-						temp = ((((z | 0) * x) * 0x41C64E6D) + 0x3039) >> 16;
-						temp /= 256;
-						temp = (temp % 32) + 240;
-						sp98.unk0 = temp;
-						sp98.unk4 = temp;
-						sp98.unk2 = 256;
-						sp98.unk2 = ((((((z | 0) * 0x41C64E6D) + 0x3039) >> 16) / sp98.unk2) % 32) + 240;
-						if (((s16(*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2)
+						spA8.components[0] = x;
+#line 177
+						spA8.components[1] = func_800B84D0_C7480(x, z) >> 8;
+#line 183
 						{
-							spA0.unk0 = inner << 0xE;
+							const s16 *zAddress = &spA8.components[2];
+							z = *zAddress;
+							x = spA8.unk0;
+							entry->unk8 = (void *)D_80222A30[type];
+							temp = ((((z | 0) * x) * 0x41C64E6D) + 0x3039) >> 16;
+							temp /= 256;
+							temp = (temp % 32) + 240;
+							sp98.unk0 = temp;
+							sp98.unk4 = temp;
+							sp98.unk2 = 256;
+							sp98.unk2 = ((((((z | 0) * 0x41C64E6D) + 0x3039) >> 16) / sp98.unk2) % 32) + 240;
+							if (((s16(*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2)
+							{
+								spA0.unk0 = inner << 0xE;
+							}
+							func_800039D0_45D0(&spA8, &spA0, &sp98, &entry->matrix);
 						}
-						func_800039D0_45D0(&spA8, &spA0, &sp98, &entry->matrix);
 					}
 					else
 					{
-						spA8.unk0 = x;
+#line 180
 						spA8.unk4 = z;
+#line 181
+						spA8.unk0 = x;
+#line 240
 						xOff = xOff - 0x8000;
 						zOff -= 0x8000;
+#line 205
 						if ((inner == 0) || (inner == 3))
 						{
 							c0 = 0xFF;
@@ -199,10 +215,10 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 							c2 = 0xC8;
 						}
 						tempTable = &((OutsideTreeStyle(*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
+						entry = &D_80259D90[obj];
+						entry->unk8 = (void *)tempTable->texture;
 						vertexX = D_801416B0_150660[inner][0] + xOff;
 						vertexZ = D_801416C0_150670[inner][0] + zOff;
-						entry = (Unk857E0Obj *)(&D_80259D90[obj]);
-						entry->unk8 = (u32)tempTable->texture;
 						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
 
 						entry->vertices[0].v.ob[0] = vertexX;
@@ -221,8 +237,8 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 						entry->vertices[1].v.flag = 0;
 						entry->vertices[1].v.ob[2] = vertexZ;
 						entry->vertices[1].v.ob[0] = vertexX;
-						entry->vertices[1].v.tc[1] = (tempTable->scale << 0xB) - 0x20;
-						entry->vertices[1].v.cn[3] = 0xFF;
+						/* Keep both stores on one line for IDO scheduling. */
+						entry->vertices[1].v.tc[1] = (tempTable->scale << 0xB) - 0x20; entry->vertices[1].v.cn[3] = 0xFF;
 						entry->vertices[1].v.cn[2] = c2;
 						entry->vertices[1].v.cn[1] = c1;
 						entry->vertices[1].v.cn[0] = c0;
@@ -246,6 +262,9 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 						entry->vertices[3].v.ob[2] = vertexZ;
 						entry->vertices[3].v.ob[1] = temp;
 						entry->vertices[3].v.ob[0] = vertexX;
+						entry = (Unk80259D90 *)(u64)entry;
+						entry = (Unk80259D90 *)(u64)entry;
+						entry = (Unk80259D90 *)(u64)entry;
 						entry->vertices[3].v.tc[0] = (tempTable->width << 10) << 1;
 						entry->vertices[3].v.tc[1] = ((tempTable->scale << 1) << 10) - 0x20;
 						entry->vertices[3].v.cn[3] = 0xFF;
