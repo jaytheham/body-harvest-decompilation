@@ -178,6 +178,8 @@ void func_80010228_10E28(u32 rom_addr, void *dest_buffer) {
 	osRecvMesg(&D_80067F70, NULL, OS_MESG_BLOCK);
 }
 
+#define MIO0_MAGIC 0x4D494F30
+
 s32 func_80010290_10E90(s32 arg0)
 {
 	s32 header[6];
@@ -188,7 +190,7 @@ s32 func_80010290_10E90(s32 arg0)
 	var_v1 = header[1] - (header[1] & 3);
 	var_v1 = var_v1 + 4;
 	func_80010228_10E28(arg0, header);
-	if (header[0] != 0x4D494F30) // MI0O
+	if (header[0] != MIO0_MAGIC)
 	{
 		return 0;
 	}
@@ -218,7 +220,7 @@ s32 func_8001032C_10F2C(s32 arg0, s32 arg1, s32 arg2) {
 		return 0;
 	}
 	func_80010228_10E28(arg1, header);
-	if (header[0] != 0x4D494F30) { // MIO0
+	if (header[0] != MIO0_MAGIC) {
 		if (D_8006AA64 == 0xBABEFACE) {
 			osSyncPrintf("header ID wrong, ");
 		}
@@ -606,6 +608,7 @@ void loadLevelData(u8 arg0)
 		}
 	}
 }
+
 void loadFrontendData(void) {
 	osInvalICache(func_80070270, (u8 *)&D_800909B0 - (u8*)&func_80070270);
 	osInvalDCache(&D_800909B0, (u8 *)&D_800AED70 - (u8 *)&D_800909B0);
@@ -684,17 +687,17 @@ void func_800118F8_124F8(void) {
 
 s32 func_800119A8_125A8(s32 arg0)
 {
-  void (*new_var2)(s32, s32);
-  new_var2 = (__printfunc = (void (*)(s32, s32)) arg0);
-  func_800101F0_10DF0(new_var2, &D_4EBF80, &D_500A00 - &D_4EBF80);
-  return &D_500A00 - &D_4EBF80 + arg0;
+	void (*new_var2)(s32, s32);
+	new_var2 = (__printfunc = (void (*)(s32, s32))arg0);
+	func_800101F0_10DF0(new_var2, &D_4EBF80, &D_500A00 - &D_4EBF80);
+	return &D_500A00 - &D_4EBF80 + arg0;
 }
 
 s32 func_800119F4_125F4(s32 arg0)
 {
-  D_8006AA6C = arg0;
-  func_800101F0_10DF0(D_8006AA6C, &D_500A00, &D_55B0A0 - &D_500A00);
-  return &D_55B0A0 - &D_500A00 + arg0;
+	D_8006AA6C = arg0;
+	func_800101F0_10DF0(D_8006AA6C, &D_500A00, &D_55B0A0 - &D_500A00);
+	return &D_55B0A0 - &D_500A00 + arg0;
 }
 
 s32 func_80011A40_12640(u8 arg0, s32 arg1) {
