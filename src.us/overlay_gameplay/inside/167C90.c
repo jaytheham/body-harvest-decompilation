@@ -2,7 +2,6 @@
 #include "common.h"
 #include "overlay_gameplay/inside/167C90.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 // AI - Interior camera constants (room render distance / view thresholds)
 f32 D_8008DDF0_175EB0 = 180.0f;
@@ -115,8 +114,6 @@ void func_8007FC74_167D34(void) {
 	guMtxL2F(D_800E7350, D_8005BB38);
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
 }
-
-
 
 // AI - Store three view-related values (NPC target coordinates)
 void func_80080168_168228(u16 arg0, u16 arg1, u16 arg2) {
@@ -243,7 +240,6 @@ void func_800804E0_1685A0(void) {
 	D_800E65A0 = 50.0f;
 	D_800E65A4 = (((f32) (u32) D_800E73DA + D_800E6A78.unk54) * (f64)0.5f) - scale;
 }
-
 
 // AI - Entering/exiting view: set a fixed camera position relative to the player
 void func_800806F8_1687B8(void) {
@@ -448,7 +444,6 @@ void func_80080E28_168EE8(void) {
 	}
 }
 
-
 // AI - Camera-wall collision check: prevent camera from clipping through walls
 void func_80080FD8_169098(void) {
 	f32 sp84;
@@ -490,7 +485,6 @@ void func_80080FD8_169098(void) {
 		}
 	}
 }
-
 
 // AI - Map yaw angle to a compass-direction marker index for the debug map
 s32 func_800811DC_16929C(s16 arg0, s32 arg1) {
@@ -708,7 +702,6 @@ void func_80081764_169824(void) {
 	D_800E65A4 = D_800E73F0.z;
 }
 
-
 // AI - Store pointer to camera waypoint table
 void func_80081A18_169AD8(Unk169EC8Entry *arg0) {
 	D_800E7488 = arg0;
@@ -771,7 +764,6 @@ void func_80081B58_169C18(void) {
 	D_800E65A0 = D_800E73F0.y;
 	D_800E65A4 = D_800E73F0.z;
 }
-
 
 // AI - Load a camera waypoint entry from the waypoint table
 void func_80081E08_169EC8(s16 arg0) {
@@ -921,6 +913,7 @@ void func_80081F98_16A058(void) {
 		osSyncPrintf("\n");
 	}
 }
+
 // AI - Camera wall avoidance: detect collisions and rotate camera to prevent clipping
 void func_8008247C_16A53C(void) {
 	s32 magnitude;
