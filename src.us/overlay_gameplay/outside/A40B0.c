@@ -76,7 +76,6 @@ DebugPropEntry D_8013CBC0_14BB70[] = {
 	{0, 0, 0, 0, 0, 0, 0, 0},
 };
 
-// https://decomp.me/scratch/tIoTN
 // Debug - display property
 void func_80095100_A40B0(s16 arg0, s16 arg1)
 {
@@ -291,7 +290,6 @@ void func_80095530_A44E0(s16 arg0) {
 		}
 }
 
-// https://decomp.me/scratch/hG8iA
 // Debug - display menu items
 void func_8009594C_A48FC(s16 arg0, s16 arg1)
 {

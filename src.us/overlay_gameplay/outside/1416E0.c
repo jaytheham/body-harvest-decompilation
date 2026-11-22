@@ -3,7 +3,6 @@
 #include "overlay_gameplay/outside/1416E0.h"
 #include "core/12C80.h"
 #include "core/1050.h"
-#include "version_shift.h"
 
 s16 D_8013E410_14D3C0[] = {
 	0x001E, 0x0000, 0x0000, 0x0000,
