@@ -1011,11 +1011,11 @@ void func_80007728_8328(u8 *arg0, s16 *arg1, s16 *arg2) {
 
 u8 func_8000789C_849C(s32 arg0)
 {
-  u8 *new_var;
-  s32 *new_var2;
-  new_var2 = &arg0;
-  new_var = D_80048038;
-  return new_var[(s16) (*new_var2)];
+	u8 *new_var;
+	s32 *new_var2;
+	new_var2 = &arg0;
+	new_var = D_80048038;
+	return new_var[(s16)(*new_var2)];
 }
 
 s32 func_800078B8_84B8(s32 arg0, s32 *arg1) {
