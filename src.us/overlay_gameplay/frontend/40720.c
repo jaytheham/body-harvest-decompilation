@@ -266,15 +266,15 @@ s32 StoreCurrentLevelPlayTimeAndGetTotalPlayTimeSeconds(void) {
 	return totalSecondsElapsed;
 }
 
-// AI - Finds a mission entry by mission id stored in `unk26`.
+// US func_80070494_40944
 InterfaceItem* GetInterfaceItemById(s16 arg0) {
 		s32 i;
 	s32 newv;
 	i = 0x29; do { do {
 			newv = i;
-			if (D_800D6DC0[newv].id == arg0)
+			if (interfaceItems[newv].id == arg0)
 			{
-				return (InterfaceItem *)(&D_800D6DC0[newv]);
+				return &interfaceItems[newv];
 			}
 		} while (i--);
 		return 0;
@@ -286,14 +286,14 @@ void func_800704DC_4098C(void)
 	s32 var_v1;
 	int new_var;
 	int new_var2;
-	new_var = D_800D6DC0[var_v1].unk1C == 1;
+	new_var = interfaceItems[var_v1].unk1C == 1;
 	var_v1 = 0x29;do
 	{
-		new_var = D_800D6DC0[var_v1].unk1C == 1;
+		new_var = interfaceItems[var_v1].unk1C == 1;
 		new_var2 = new_var;
 		if (new_var2)
 		{
-			D_800D6DC0[var_v1].unk1C = 0U;
+			interfaceItems[var_v1].unk1C = 0U;
 		}
 	} while (var_v1--);
 }
@@ -307,11 +307,11 @@ void func_80070514_409C4(s16 arg0)
 	{
 		return;
 	}
-	while ((var_v1--) && D_800D6DC0[var_v1].unk16)
+	while ((var_v1--) && interfaceItems[var_v1].unk16)
 	{
 	}
 
-	new_var2 = &D_800D6DC0[var_v1];
+	new_var2 = &interfaceItems[var_v1];
 	if (var_v1 == -1)
 	{
 		osSyncPrintf("ERROR: No free windows\n");
@@ -364,7 +364,6 @@ void func_80070514_409C4(s16 arg0)
 	}
 }
 
-// Allocates a transient frontend mission entry from its template.
 InterfaceItem* func_800706E8_40B98(s16 arg0) {
 	s32 index;
 	InterfaceItem* entry;
@@ -373,14 +372,14 @@ InterfaceItem* func_800706E8_40B98(s16 arg0) {
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		do {} while (index-- && D_800D6DC0[index].unk16);
+		do {} while (index-- && interfaceItems[index].unk16);
 	}
 	newSource = &D_800909B0[arg0];
 	if (index == -1) {
 		osSyncPrintf("ERROR: No free windows\n");
 		return NULL;
 	}
-	entry = &D_800D6DC0[index];
+	entry = &interfaceItems[index];
 	source = newSource;
 	entry->unk0 = source->unk0 * 4;
 	entry->xCoord = source->xCoord * 4;
@@ -454,9 +453,9 @@ void func_80070940_40DF0(void)
 	s32 i;
 	i = 0x2A;
 	while (i--) {
-		D_800D6DC0[i].unk14 = 0;
-		D_800D6DC0[i].unk12 = 0;
-		D_800D6DC0[i].unk16 = 0;
+		interfaceItems[i].unk14 = 0;
+		interfaceItems[i].unk12 = 0;
+		interfaceItems[i].unk16 = 0;
 	}
 }
 
@@ -489,22 +488,21 @@ InterfaceItem *func_80070970_40E20(InterfaceItem *entry, s32 hasSelection)
 	return NULL;
 }
 
-// AI - Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
 void func_800709F0_40EA0(void)
 {
 	s32 i;
 	i = 0x29;do
 	{
-		if (D_800D6DC0[i].unk16 == 4)
+		if (interfaceItems[i].unk16 == 4)
 		{
-			func_80070970_40E20(&D_800D6DC0[i], 0);
+			func_80070970_40E20(&interfaceItems[i], 0);
 			continue;
 		}
-		if (D_800D6DC0[i].unk12 > 0x4000)
+		if (interfaceItems[i].unk12 > 0x4000)
 		{
-			D_800D6DC0[i].unk12 = 0x4000;
+			interfaceItems[i].unk12 = 0x4000;
 		}
-		D_800D6DC0[i].unk14 = -0x400;
+		interfaceItems[i].unk14 = -0x400;
 	} while (i--);
 }
 
@@ -518,10 +516,10 @@ void func_80070A8C_40F3C(s16 arg0)
 	}
 	var_v1 = 0x29;do
 	{
-		if (arg0 == D_800D6DC0[var_v1].id)
+		if (arg0 == interfaceItems[var_v1].id)
 		{
-			D_800909B0[D_800D6DC0[var_v1].id].unk1C = 3;
-			D_800D6DC0[var_v1].unk1C = 3;
+			D_800909B0[interfaceItems[var_v1].id].unk1C = 3;
+			interfaceItems[var_v1].unk1C = 3;
 		}
 		temp_v0 = var_v1;
 	} while (var_v1--);
@@ -532,10 +530,10 @@ void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
 	s32 i;
 	i = 0x2A;
 	while (i--) {
-		missionId = D_800D6DC0[i].id;
+		missionId = interfaceItems[i].id;
 		if (missionId >= arg0 && missionId <= arg1) {
 			D_800909B0[missionId].unk1C = 3;
-			D_800D6DC0[i].unk1C = 3;
+			interfaceItems[i].unk1C = 3;
 		}
 	}
 }
@@ -546,11 +544,11 @@ void func_80070B68_41018(s16 arg0) {
 
 	i = 0x2A;
 	while (i--) {
-		missionId = D_800D6DC0[i].id;
-		if (arg0 == missionId && D_800D6DC0[i].unk1C == 3) {
+		missionId = interfaceItems[i].id;
+		if (arg0 == missionId && interfaceItems[i].unk1C == 3) {
 			D_800909B0[missionId].unk1C = 0;
-			D_800D6DC0[i].unk1C = 0;
-			D_800D6DC0[i].unk28 = 0;
+			interfaceItems[i].unk1C = 0;
+			interfaceItems[i].unk28 = 0;
 		}
 	}
 }
@@ -561,11 +559,11 @@ void func_80070BD8_41088(s16 arg0, s16 arg1) {
 
 	var_v1 = 0x2A;
 	while (var_v1--) {
-		missionId = D_800D6DC0[var_v1].id;
-		if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && D_800D6DC0[var_v1].unk1C == 3) {
+		missionId = interfaceItems[var_v1].id;
+		if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && interfaceItems[var_v1].unk1C == 3) {
 			D_800909B0[missionId].unk1C = 0;
-			D_800D6DC0[var_v1].unk1C = 0;
-			D_800D6DC0[var_v1].unk28 = 0;
+			interfaceItems[var_v1].unk1C = 0;
+			interfaceItems[var_v1].unk28 = 0;
 		}
 	}
 }
@@ -834,7 +832,7 @@ void func_80071738_41BE8(void) {
 	s32 i;
 	i = 0x2A;
 	while (i--) {
-		D_800D6DC0[i].unk16 = 0;
+		interfaceItems[i].unk16 = 0;
 	}
 }
 
@@ -881,7 +879,8 @@ s32 func_80071760_41C10(s32 arg0)
 	return textWidth - totalWidth;
 }
 
-void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
+// US func_80071900_41DB0
+void DrawWeaponIcon(s32 xCoord, s32 yCoord, f32 xScale, f32 yScale) {
 	s32 i;
 	s32 weaponIndex;
 	s32 sizeX;
@@ -893,12 +892,12 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	i = 0;
 	weaponIndex = 7; do {
 		if (weaponSlots[weaponIndex] != 0) {
-			posX = arg0 - (s16)((64.0f * arg2) / 2) + (((i % 3) * 32.0) * arg2);
-			posY = arg1 - (s16)((64.0f * arg3) / 2) + (((i / 3) * 32.0) * arg3);
+			posX = xCoord - (s16)((64.0f * xScale) / 2) + (((i % 3) * 32.0) * xScale);
+			posY = yCoord - (s16)((64.0f * yScale) / 2) + (((i / 3) * 32.0) * yScale);
 			i++;
 			texIndex = D_80031474[weaponSlots[weaponIndex]];
-			sizeX = 12 * arg2;
-			sizeY = 12 * arg3;
+			sizeX = 12 * xScale;
+			sizeY = 12 * yScale;
 
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 			gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -930,8 +929,8 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 				((posX + sizeX) + 0xC) << 2,
 				((posY + sizeY) + 0xC) << 2,
 				G_TX_RENDERTILE, 0, 0,
-				(s32)((1.0f / arg2) * 1024.0f),
-				(s32)((1.0f / arg3) * 1024.0f));
+				(s32)((1.0f / xScale) * 1024.0f),
+				(s32)((1.0f / yScale) * 1024.0f));
 
 			gDPPipeSync(D_8005BB2C++);
 		}
@@ -1358,7 +1357,7 @@ void func_800731A8_43658(void)
 	s32 sp60;
 	s32 sp5C;
 
-	var_s4 = D_800D6DC0;
+	var_s4 = interfaceItems;
 	func_800038E0_44E0();
 	D_800946E0_64B90[0] += 0x320;
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -1803,7 +1802,7 @@ void func_800731A8_43658(void)
 					break;
 				case 0x40:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
-					func_80071900_41DB0(0x4F, 0x7E, var_f20, spEC);
+					DrawWeaponIcon(0x4F, 0x7E, var_f20, spEC);
 					break;
 				case 0x41:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
@@ -1895,7 +1894,7 @@ void func_800731A8_43658(void)
 					break;
 				case 0x44:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
-					func_80071900_41DB0(0x4F, 0x83, var_f20, spEC);
+					DrawWeaponIcon(0x4F, 0x83, var_f20, spEC);
 					break;
 				case 0x45:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);

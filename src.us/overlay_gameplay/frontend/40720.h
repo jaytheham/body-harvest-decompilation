@@ -15,7 +15,7 @@ void func_80070CC4_41174(void);
 void func_800710D8_41588(s16 arg0, s16 arg1);
 void func_8007166C_41B1C(void);
 s32 func_80071760_41C10(s32 arg0);
-void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3);
+void DrawWeaponIcon(s32 arg0, s32 arg1, f32 arg2, f32 arg3);
 void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3);
 void func_800722A4_42754(void);
 void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3);

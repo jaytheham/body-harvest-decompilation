@@ -1393,7 +1393,7 @@ extern s8 D_800D6D92;
 extern s32 D_800D6DA0;
 extern u8 D_800D6DA8[][7];
 extern u8 D_800D6DB6;
-extern InterfaceItem D_800D6DC0[42];
+extern InterfaceItem interfaceItems[42];
 extern InterfaceItem D_800D747A;
 extern u8 D_800D7490;
 extern s16 D_800D74A4;
