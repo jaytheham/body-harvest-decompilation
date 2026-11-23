@@ -3,9 +3,9 @@
 
 s32 func_80070270_40720(s32 arg0);
 s32 StoreCurrentLevelStatsAndGetTotalScore(void);
-MissionData* func_80070494_40944(s16 arg0);
+InterfaceItem* GetInterfaceItemById(s16 arg0);
 void func_80070514_409C4(s16 arg0);
-extern MissionData* func_800706E8_40B98(s16 arg0);
+extern InterfaceItem* func_800706E8_40B98(s16 arg0);
 void func_800708B8_40D68(s16 arg0);
 void func_80070940_40DF0(void);
 void func_80070A8C_40F3C(s16 arg0);

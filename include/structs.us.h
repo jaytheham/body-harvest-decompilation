@@ -3,10 +3,10 @@
 #define LIBULTRA_STRUCTS_US_H
 /* Reference: reference/ultralib/src/os/initialize.c. */
 typedef struct {
-    u32 inst1;
-    u32 inst2;
-    u32 inst3;
-    u32 inst4;
+	u32 inst1;
+	u32 inst2;
+	u32 inst3;
+	u32 inst4;
 } __osExceptionVector;
 #endif
 #else
@@ -16,28 +16,28 @@ typedef struct {
 #include <PR/sched.h>
 
 typedef union ShadowModelCommand {
-    Gwords words;
-    s8 bytes[8];
-    struct {
-        s8 opcode;
-        s8 args[7];
-    } command;
+	Gwords words;
+	s8 bytes[8];
+	struct {
+		s8 opcode;
+		s8 args[7];
+	} command;
 } ShadowModelCommand;
 
 typedef struct CometJointChain {
-    s16 joints[18];
-    s16 child;
-    s16 root;
+	s16 joints[18];
+	s16 child;
+	s16 root;
 } CometJointChain;
 
 typedef struct MissionCommand {
-    u8 opcode;
-    u8 args[2];
+	u8 opcode;
+	u8 args[2];
 } MissionCommand; /* size = 0x03 */
 
 typedef struct MissionInfo {
-    u8 flags;
-    u8 command[3];
+	u8 flags;
+	u8 command[3];
 } MissionInfo;
 
 typedef enum GameplayMode {
@@ -283,8 +283,8 @@ typedef struct {
 	/* 0x36 */ s16 unk36;
 } Unk8010D234Data; /* size = 0x38 */
 typedef union {
-    u8 value;
-    s8 signedValue;
+	u8 value;
+	s8 signedValue;
 } CameraScanCompletion;
 
 typedef union {
@@ -1713,13 +1713,13 @@ typedef struct {
 			/* 0x09 */ u8 unk9;
 			/* 0x0A */ u8 state;
 			/* 0x0B */ union {
-                u8 rotation;
-                struct {
-                    u8 rotationHighFlags : 2;
-                    u8 rotationIndex : 4;
-                    u8 rotationLowFlags : 2;
-                };
-            };
+				u8 rotation;
+				struct {
+					u8 rotationHighFlags : 2;
+					u8 rotationIndex : 4;
+					u8 rotationLowFlags : 2;
+				};
+			};
 		};
 		/* 0x08 */ u32 unk8;
 		struct { u8 padState[2]; u16 stateAndRotation; };
@@ -2169,9 +2169,9 @@ typedef struct {
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
-	/* 0x02 */ s16 unk2;
+	/* 0x02 */ s16 xCoord;
 	/* 0x04 */ s16 unk4;
-	/* 0x06 */ s16 unk6;
+	/* 0x06 */ s16 yCoord;
 	/* 0x08 */ s16 unk8;
 	/* 0x0A */ s16 unkA;
 	/* 0x0C */ s16 unkC;
@@ -2191,10 +2191,10 @@ typedef struct {
 	/* 0x23 */ u8 unk23;
 	/* 0x24 */ u8 unk24;
 	/* 0x25 */ u8 unk25;
-	/* 0x26 */ u8 unk26;
+	/* 0x26 */ u8 id;
 	/* 0x27 */ u8 unk27;
 	/* 0x28 */ s16 unk28;
-} MissionData; /* size = 0x2A */
+} InterfaceItem; /* size = 0x2A */
 
 typedef struct {
 	/* 0x00 */ s16 unk0;
@@ -2517,16 +2517,16 @@ typedef struct {
 } FrontendBillboardParticle; /* size = 0x1C */
 
 typedef struct {
-    u8 flags[2];
-    s16 size;
-    s16 next;
-    s16 previous;
-    s16 position[3];
-    u8 color[3];
-    u8 age;
-    u8 opacity;
-    u8 growth;
-    u8 pad14[8];
+	u8 flags[2];
+	s16 size;
+	s16 next;
+	s16 previous;
+	s16 position[3];
+	u8 color[3];
+	u8 age;
+	u8 opacity;
+	u8 growth;
+	u8 pad14[8];
 } FrontendGroundParticle; /* size = 0x1C */
 
 typedef struct {
@@ -2795,16 +2795,16 @@ typedef struct {
 	s16 a; s16 b; s16 c; s16 d; s16 e; s16 f; u16 g;
 } AnimFrameData14; /* size = 0x0E */
 typedef struct {
-    u16 frameOffset;
-    u16 frameCount;
+	u16 frameOffset;
+	u16 frameCount;
 } AnimChannelDescriptor;
 
 typedef struct {
-    /* 0x000 */ u8 pad0[0x8];
-    /* 0x008 */ s32 unk8; /* num animation frames */
-    /* 0x00C */ AnimChannelDescriptor channels[17];
-    /* 0x050 */ AnimFrameData14 frames[256];
-    /* 0xE50 */ s32 unkE50;
+	/* 0x000 */ u8 pad0[0x8];
+	/* 0x008 */ s32 unk8; /* num animation frames */
+	/* 0x00C */ AnimChannelDescriptor channels[17];
+	/* 0x050 */ AnimFrameData14 frames[256];
+	/* 0xE50 */ s32 unkE50;
 } Unk8007F878_404; /* size = 0xE54 */
 
 /* 64-byte per-channel animation state element */
@@ -2820,9 +2820,9 @@ typedef struct {
 	/* 0x18 */ s32 unk18;
 	/* 0x1C */ f32 unk1C;
 	/* 0x20 */ f32 unk20;
-    union {
-        AnimFrameData14 frame;
-        struct {
+	union {
+		AnimFrameData14 frame;
+		struct {
 	/* 0x24 */ s16 unk24;
 	/* 0x26 */ s16 unk26;
 	/* 0x28 */ s16 unk28;
@@ -2830,8 +2830,8 @@ typedef struct {
 	/* 0x2C */ s16 unk2C;
 	/* 0x2E */ s16 unk2E;
 	/* 0x30 */ u16 unk30;
-        };
-    };
+		};
+	};
 	/* 0x32 */ s16 unk32;
 	/* 0x34 */ s16 unk34;
 	/* 0x36 */ s16 unk36;
@@ -3144,20 +3144,20 @@ typedef struct {
 } FrontendSpurtEmitterState; /* size = 0x0C */
 
 typedef struct {
-    s16 position[3];
-    u8 color[3];
-    u8 lifetime;
-    u8 kind;
-    u8 padB;
-    s16 radius;
+	s16 position[3];
+	u8 color[3];
+	u8 lifetime;
+	u8 kind;
+	u8 padB;
+	s16 radius;
 } SparkEmitterState; /* size = 0x0E */
 
 typedef struct {
-    s16 position[3];
-    s8 velocity[3];
-    u8 opacity;
-    u8 age;
-    u8 padB;
+	s16 position[3];
+	s8 velocity[3];
+	u8 opacity;
+	u8 age;
+	u8 padB;
 } SparkParticleState; /* size = 0x0C */
 
 typedef struct {
@@ -3333,10 +3333,10 @@ typedef struct {
 } Unk8007E12CEntry8;
 
 typedef struct {
-    /* 0x00 */ FrontendStreamHeader* stream;
-    /* 0x04 */ u8 objectIndex;
-    /* 0x05 */ u8 flags;
-    /* 0x06 */ u8 pad6[2];
+	/* 0x00 */ FrontendStreamHeader* stream;
+	/* 0x04 */ u8 objectIndex;
+	/* 0x05 */ u8 flags;
+	/* 0x06 */ u8 pad6[2];
 } FrontendMovieResource; /* size = 0x08 */
 
 typedef struct {
@@ -4137,13 +4137,13 @@ typedef struct {
 } InteriorRoomData; /* size = 0x100 */
 
 typedef union {
-    u8 bytes[0x80];
-    Lights2 lights;
-    struct {
-        Lights2 lights;
-        s32 torchHandles[4];
-        u8 padding[0x48];
-    } room;
+	u8 bytes[0x80];
+	Lights2 lights;
+	struct {
+		Lights2 lights;
+		s32 torchHandles[4];
+		u8 padding[0x48];
+	} room;
 } InteriorLightData;
 
 // Interior light-data storage reused for four torch effect handles.
@@ -4315,11 +4315,11 @@ typedef struct {
 } DListPtrsCopy;
 
 typedef struct {
-    s32 frames[11];
+	s32 frames[11];
 } IntroStartFrames;
 
 typedef struct {
-    s32 frames[8];
+	s32 frames[8];
 } IntroStopFrames;
 
 
@@ -4442,19 +4442,19 @@ typedef struct {
 } InteriorAngleScale;
 
 typedef struct {
-    u8 width;
-    u8 height;
+	u8 width;
+	u8 height;
 } InteriorRoomMapSize;
 
 typedef union {
-    s32 flat[25 * 8];
-    s32 rows[25][8];
-    u8 bytes[25 * 32];
+	s32 flat[25 * 8];
+	s32 rows[25][8];
+	u8 bytes[25 * 32];
 } InteriorRoomOffsetTable;
 
 typedef union {
-    Gfx *rows[25][8];
-    u8 bytes[25 * 32];
+	Gfx *rows[25][8];
+	u8 bytes[25 * 32];
 } InteriorRoomDisplayListTable;
 
 typedef union {
@@ -4531,8 +4531,8 @@ typedef struct {
 
 /* Pointer and raw-address views of a vehicle reference. */
 typedef union {
-    VehicleInstance *vehicle;
-    u32 address;
+	VehicleInstance *vehicle;
+	u32 address;
 } VehicleAddressValue;
 
 /* Word water height with its low signed halfword used by particle effects. */
@@ -4557,13 +4557,13 @@ typedef struct {
 
 /* Landing-effect colors followed by the two comet joint transforms. */
 typedef union {
-    s32 words[3];
-    s8 rgb[4][3];
+	s32 words[3];
+	s8 rgb[4][3];
 } EffectColorPalette;
 
 typedef struct {
-    EffectColorPalette colors;
-    Unk8014DD50 transforms[2];
+	EffectColorPalette colors;
+	Unk8014DD50 transforms[2];
 } CometLandingData;
 
 typedef struct {
@@ -4602,25 +4602,25 @@ typedef struct {
 } CometLandingNodes;
 
 typedef struct {
-    s32 x;
-    s32 z;
+	s32 x;
+	s32 z;
 } TreeFallDirection;
 
 typedef struct {
-    TreeFallDirection direction[4];
+	TreeFallDirection direction[4];
 } TreeFallDirections;
 
 typedef struct {
-    u32 texture;
-    s16 height;
-    s16 width;
-    s16 scale;
-    s16 flags;
+	u32 texture;
+	s16 height;
+	s16 width;
+	s16 scale;
+	s16 flags;
 } OutsideTreeStyle;
 
 typedef struct AudioSoundPlayerState {
-    s32 reservedSoundPlayer;
-    s16 availableSounds;
+	s32 reservedSoundPlayer;
+	s16 availableSounds;
 } AudioSoundPlayerState;
 
 #endif /* LIBULTRA_REFERENCE */
