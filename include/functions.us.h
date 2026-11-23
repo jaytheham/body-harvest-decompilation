@@ -1058,7 +1058,7 @@ void func_8000B044_BC44(void);
 s32 func_8000C670_D270(s16 arg0);
 s32 func_8000C6C4_D2C4(void);
 void func_8001A160_1AD60(void);
-void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4);
+void DrawDialoguePortrait(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4);
 void func_800F0094_FF044(void);
 void func_800EC330_FB2E0(void);
 void func_8011D4FC_12C4AC(u8 arg0, u16 *arg1);
