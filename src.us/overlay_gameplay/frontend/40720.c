@@ -165,81 +165,82 @@ const char D_800AD6FC_7DBAC[] = "#";
 
 // Frontend animation/frame data
 s16 D_800946E0_64B90[0x70] = {
-    0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0103, 0x0000, 0xFFF8, 0xFFC0, 0x0008, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0xFFF8, 0xFFC4, 0xFFFD, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0x0012, 0xFFF8, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0103, 0x0000, 0x0005, 0xFFC1, 0x0006, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0x0002, 0xFFC3, 0xFFFF, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0x0000, 0x000C, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0x0000, 0x0032, 0x0004, 0x0000, 0x0000, 0x0000,
-    0x0102, 0x0000, 0x0000, 0x000F, 0x0002, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0xFFE6, 0x002C, 0xFFFE, 0x0000, 0x0000, 0x0000,
-    0x0103, 0x0000, 0xFFF1, 0xFFD8, 0xFFF9, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0xFFFA, 0xFFDA, 0x0015, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0x001A, 0x002B, 0xFFFD, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0x000C, 0xFFD9, 0xFFFB, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0103, 0x0000, 0xFFF8, 0xFFC0, 0x0008, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0xFFF8, 0xFFC4, 0xFFFD, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0x0012, 0xFFF8, 0x0001, 0x0000, 0x0000, 0x0000,
+	0x0103, 0x0000, 0x0005, 0xFFC1, 0x0006, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0x0002, 0xFFC3, 0xFFFF, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0x0000, 0x000C, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0x0000, 0x0032, 0x0004, 0x0000, 0x0000, 0x0000,
+	0x0102, 0x0000, 0x0000, 0x000F, 0x0002, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0xFFE6, 0x002C, 0xFFFE, 0x0000, 0x0000, 0x0000,
+	0x0103, 0x0000, 0xFFF1, 0xFFD8, 0xFFF9, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0xFFFA, 0xFFDA, 0x0015, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0x001A, 0x002B, 0xFFFD, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0x000C, 0xFFD9, 0xFFFB, 0x0000, 0x0000, 0x0000,
 };
 
 // Weapon selection text pointers
 s32 D_800947C0_64C70[6] = {
-    0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)"",
+	0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)"",
 };
 char *D_800947D8_64C88[3] = {
-    "Fuel", "Carburant", "Sprit",
+	"Fuel", "Carburant", "Sprit",
 };
 char *D_800947E4_64C94[3] = {
-    "Vehicle Weapon 1", "Arme 1", "Waffe 1",
+	"Vehicle Weapon 1", "Arme 1", "Waffe 1",
 };
 char *D_800947F0_64CA0[13] = {
-    "Vehicle Weapon 2", "Arme 2", "Waffe 2", "Chaingun", "Fragcannon",
-    "Lazer Missiles", "Resonator", "Plasma Bombs", "", "",
-    NULL, NULL, NULL,
+	"Vehicle Weapon 2", "Arme 2", "Waffe 2", "Chaingun", "Fragcannon",
+	"Lazer Missiles", "Resonator", "Plasma Bombs", "", "",
+	NULL, NULL, NULL,
 };
 
 s16 D_80094824_64CD4 = 0;
 s16 D_80094828_64CD8 = 0;
 // Frontend overlay entry point; dispatches frontend actions.
 s32 func_80070270_40720(s32 arg0) {
-		switch (arg0) {
-		case 1:
-				func_800789E4_48E94();
-				break;
-		case 2:
-				D_800476A2 = 1;
-				return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
-		case 3:
-				func_8007A038_4A4E8();
-				break;
-		case 4:
-				func_800796D0_49B80(0, 0);
-				break;
-		case 5:
-				func_800796D0_49B80(func_80070390_40840(), 0);
-				break;
-		case 6:
-				func_80076504_469B4();
-				break;
-		case 13:
-				func_8007685C_46D0C();
-				break;
-		case 9:
-				return func_8007CFB4_4D464(1);
-		case 14:
-				return func_8007CFB4_4D464(0);
-		case 11:
-				return func_8007D2B0_4D760();
-		case 12:
-				D_800946DC_64B8C = FE_STATE_PRESS_START;
-				func_800789E4_48E94();
-				break;
-		}
+	switch (arg0)
+	{
+	case 1:
+		func_800789E4_48E94();
+		break;
+	case 2:
+		D_800476A2 = 1;
+		return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
+	case 3:
+		func_8007A038_4A4E8();
+		break;
+	case 4:
+		ShowHighScores(0, 0);
+		break;
+	case 5:
+		ShowHighScores(StoreCurrentLevelStatsAndGetTotalScore(), 0);
+		break;
+	case 6:
+		func_80076504_469B4();
+		break;
+	case 13:
+		func_8007685C_46D0C();
+		break;
+	case 9:
+		return func_8007CFB4_4D464(1);
+	case 14:
+		return func_8007CFB4_4D464(0);
+	case 11:
+		return func_8007D2B0_4D760();
+	case 12:
+		D_800946DC_64B8C = FE_STATE_PRESS_START;
+		func_800789E4_48E94();
+		break;
+	}
 
-		return 0;
+	return 0;
 }
 
-// calculatePlayersTotalScore
-s32 func_80070390_40840(void) {
+// US func_80070390_40840
+s32 StoreCurrentLevelStatsAndGetTotalScore(void) {
 	s32 total;
 	s32 i;
 	D_80052A98[currentLevel - 1].score = D_80052B2C->unk30;
@@ -252,8 +253,8 @@ s32 func_80070390_40840(void) {
 	return total;
 }
 
-// Stores the current level's play time in seconds and returns the total play time across all levels.
-s32 func_80070420_408D0(void) {
+// US func_80070420_408D0
+s32 StoreCurrentLevelPlayTimeAndGetTotalPlayTimeSeconds(void) {
 	s32 totalSecondsElapsed;
 	s32 i;
 	D_80052A98[currentLevel - 1].secondsElapsed = (u16)((u32)D_80052A90 / 1000U);
@@ -265,15 +266,15 @@ s32 func_80070420_408D0(void) {
 	return totalSecondsElapsed;
 }
 
-// AI - Finds a mission entry by mission id stored in `unk26`.
-MissionData* func_80070494_40944(s16 arg0) {
+// US func_80070494_40944
+InterfaceItem* GetInterfaceItemById(s16 arg0) {
 		s32 i;
 	s32 newv;
 	i = 0x29; do { do {
 			newv = i;
-			if (D_800D6DC0[newv].unk26 == arg0)
+			if (interfaceItems[newv].id == arg0)
 			{
-				return (MissionData *)(&D_800D6DC0[newv]);
+				return &interfaceItems[newv];
 			}
 		} while (i--);
 		return 0;
@@ -285,14 +286,14 @@ void func_800704DC_4098C(void)
 	s32 var_v1;
 	int new_var;
 	int new_var2;
-	new_var = D_800D6DC0[var_v1].unk1C == 1;
+	new_var = interfaceItems[var_v1].unk1C == 1;
 	var_v1 = 0x29;do
 	{
-		new_var = D_800D6DC0[var_v1].unk1C == 1;
+		new_var = interfaceItems[var_v1].unk1C == 1;
 		new_var2 = new_var;
 		if (new_var2)
 		{
-			D_800D6DC0[var_v1].unk1C = 0U;
+			interfaceItems[var_v1].unk1C = 0U;
 		}
 	} while (var_v1--);
 }
@@ -300,17 +301,17 @@ void func_800704DC_4098C(void)
 void func_80070514_409C4(s16 arg0)
 {
 	s32 var_v1 = 42;
-	MissionData *temp_a0;
-	MissionData *new_var2;
+	InterfaceItem *temp_a0;
+	InterfaceItem *new_var2;
 	if (arg0 == D_800D74AA)
 	{
 		return;
 	}
-	while ((var_v1--) && D_800D6DC0[var_v1].unk16)
+	while ((var_v1--) && interfaceItems[var_v1].unk16)
 	{
 	}
 
-	new_var2 = &D_800D6DC0[var_v1];
+	new_var2 = &interfaceItems[var_v1];
 	if (var_v1 == -1)
 	{
 		osSyncPrintf("ERROR: No free windows\n");
@@ -318,9 +319,9 @@ void func_80070514_409C4(s16 arg0)
 	}
 	temp_a0 = new_var2;
 	temp_a0->unk0 = D_800909B0[arg0].unk0 * 4;
-	temp_a0->unk2 = D_800909B0[arg0].unk2 * 4;
+	temp_a0->xCoord = D_800909B0[arg0].xCoord * 4;
 	temp_a0->unk4 = D_800909B0[arg0].unk4 * 4;
-	temp_a0->unk6 = D_800909B0[arg0].unk6 * 4;
+	temp_a0->yCoord = D_800909B0[arg0].yCoord * 4;
 	temp_a0->unk8 = D_800909B0[arg0].unk8;
 	temp_a0->unkA = D_800909B0[arg0].unkA * 4;
 	temp_a0->unkC = D_800909B0[arg0].unkC * 4;
@@ -337,7 +338,7 @@ void func_80070514_409C4(s16 arg0)
 	{
 		temp_a0->unk1C = D_800909B0[arg0].unk1C;
 	}
-	temp_a0->unk26 = arg0;
+	temp_a0->id = arg0;
 	temp_a0->unk28 = -1;
 	switch (D_800313D0_31FD0)
 	{
@@ -363,28 +364,27 @@ void func_80070514_409C4(s16 arg0)
 	}
 }
 
-// Allocates a transient frontend mission entry from its template.
-MissionData* func_800706E8_40B98(s16 arg0) {
+InterfaceItem* func_800706E8_40B98(s16 arg0) {
 	s32 index;
-	MissionData* entry;
-	MissionData* newSource;
-	MissionData* source;
+	InterfaceItem* entry;
+	InterfaceItem* newSource;
+	InterfaceItem* source;
 
 	index = 0x29;
 	if (D_800D7490 != 0) {
-		do {} while (index-- && D_800D6DC0[index].unk16);
+		do {} while (index-- && interfaceItems[index].unk16);
 	}
 	newSource = &D_800909B0[arg0];
 	if (index == -1) {
 		osSyncPrintf("ERROR: No free windows\n");
 		return NULL;
 	}
-	entry = &D_800D6DC0[index];
+	entry = &interfaceItems[index];
 	source = newSource;
 	entry->unk0 = source->unk0 * 4;
-	entry->unk2 = source->unk2 * 4;
+	entry->xCoord = source->xCoord * 4;
 	entry->unk4 = source->unk4 * 4;
-	entry->unk6 = source->unk6 * 4;
+	entry->yCoord = source->yCoord * 4;
 	entry->unk8 = source->unk8;
 	entry->unkA = source->unkA * 4;
 	entry->unkC = source->unkC * 4;
@@ -399,7 +399,7 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 	} else {
 		entry->unk1C = source->unk1C;
 	}
-	entry->unk26 = arg0;
+	entry->id = arg0;
 	entry->unk28 = source->unk28;
 	switch (D_800313D0_31FD0) {
 	case 0:
@@ -424,8 +424,8 @@ MissionData* func_800706E8_40B98(s16 arg0) {
 void func_800708B8_40D68(short arg0)
 {
 	int new_var;
-	MissionData *entry;
-	entry = func_80070494_40944((s16)arg0);
+	InterfaceItem *entry;
+	entry = GetInterfaceItemById((s16)arg0);
 	new_var = -0x400;
 	if (entry != NULL)
 	{
@@ -438,9 +438,9 @@ void func_800708B8_40D68(short arg0)
 }
 
 void func_80070904_40DB4(s16 arg0) {
-	MissionData* entry;
+	InterfaceItem* entry;
 
-	entry = func_80070494_40944((s16)arg0);
+	entry = GetInterfaceItemById((s16)arg0);
 	if (entry != NULL) {
 		entry->unk14 = 0;
 		entry->unk12 = 0;
@@ -453,16 +453,16 @@ void func_80070940_40DF0(void)
 	s32 i;
 	i = 0x2A;
 	while (i--) {
-		D_800D6DC0[i].unk14 = 0;
-		D_800D6DC0[i].unk12 = 0;
-		D_800D6DC0[i].unk16 = 0;
+		interfaceItems[i].unk14 = 0;
+		interfaceItems[i].unk12 = 0;
+		interfaceItems[i].unk16 = 0;
 	}
 }
 
-MissionData *func_80070970_40E20(MissionData *entry, s32 hasSelection)
+InterfaceItem *func_80070970_40E20(InterfaceItem *entry, s32 hasSelection)
 {
 	int new_var;
-	MissionData *selectedEntry;
+	InterfaceItem *selectedEntry;
 	int new_var2;
 	entry->unk12 = 0;
 	entry->unk14 = 0;
@@ -471,7 +471,7 @@ MissionData *func_80070970_40E20(MissionData *entry, s32 hasSelection)
 	if (new_var)
 	{
 		selectedEntry = func_800706E8_40B98(D_800D74AA);
-		new_var2 = selectedEntry->unk26 != (currentSaveFileIndex + 2);
+		new_var2 = selectedEntry->id != (currentSaveFileIndex + 2);
 		if (new_var2)
 		{
 			selectedEntry->unk1C = 0;
@@ -488,22 +488,21 @@ MissionData *func_80070970_40E20(MissionData *entry, s32 hasSelection)
 	return NULL;
 }
 
-// AI - Scans mission entries in reverse, clears the first entry in state 4, and eases others toward default values.
 void func_800709F0_40EA0(void)
 {
 	s32 i;
 	i = 0x29;do
 	{
-		if (D_800D6DC0[i].unk16 == 4)
+		if (interfaceItems[i].unk16 == 4)
 		{
-			func_80070970_40E20(&D_800D6DC0[i], 0);
+			func_80070970_40E20(&interfaceItems[i], 0);
 			continue;
 		}
-		if (D_800D6DC0[i].unk12 > 0x4000)
+		if (interfaceItems[i].unk12 > 0x4000)
 		{
-			D_800D6DC0[i].unk12 = 0x4000;
+			interfaceItems[i].unk12 = 0x4000;
 		}
-		D_800D6DC0[i].unk14 = -0x400;
+		interfaceItems[i].unk14 = -0x400;
 	} while (i--);
 }
 
@@ -517,10 +516,10 @@ void func_80070A8C_40F3C(s16 arg0)
 	}
 	var_v1 = 0x29;do
 	{
-		if (arg0 == D_800D6DC0[var_v1].unk26)
+		if (arg0 == interfaceItems[var_v1].id)
 		{
-			D_800909B0[D_800D6DC0[var_v1].unk26].unk1C = 3;
-			D_800D6DC0[var_v1].unk1C = 3;
+			D_800909B0[interfaceItems[var_v1].id].unk1C = 3;
+			interfaceItems[var_v1].unk1C = 3;
 		}
 		temp_v0 = var_v1;
 	} while (var_v1--);
@@ -531,10 +530,10 @@ void func_80070AEC_40F9C(s16 arg0, s16 arg1) {
 	s32 i;
 	i = 0x2A;
 	while (i--) {
-		missionId = D_800D6DC0[i].unk26;
+		missionId = interfaceItems[i].id;
 		if (missionId >= arg0 && missionId <= arg1) {
 			D_800909B0[missionId].unk1C = 3;
-			D_800D6DC0[i].unk1C = 3;
+			interfaceItems[i].unk1C = 3;
 		}
 	}
 }
@@ -545,11 +544,11 @@ void func_80070B68_41018(s16 arg0) {
 
 	i = 0x2A;
 	while (i--) {
-		missionId = D_800D6DC0[i].unk26;
-		if (arg0 == missionId && D_800D6DC0[i].unk1C == 3) {
+		missionId = interfaceItems[i].id;
+		if (arg0 == missionId && interfaceItems[i].unk1C == 3) {
 			D_800909B0[missionId].unk1C = 0;
-			D_800D6DC0[i].unk1C = 0;
-			D_800D6DC0[i].unk28 = 0;
+			interfaceItems[i].unk1C = 0;
+			interfaceItems[i].unk28 = 0;
 		}
 	}
 }
@@ -560,11 +559,11 @@ void func_80070BD8_41088(s16 arg0, s16 arg1) {
 
 	var_v1 = 0x2A;
 	while (var_v1--) {
-		missionId = D_800D6DC0[var_v1].unk26;
-		if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && D_800D6DC0[var_v1].unk1C == 3) {
+		missionId = interfaceItems[var_v1].id;
+		if ((s32)missionId >= arg0 && arg1 >= (s32)missionId && interfaceItems[var_v1].unk1C == 3) {
 			D_800909B0[missionId].unk1C = 0;
-			D_800D6DC0[var_v1].unk1C = 0;
-			D_800D6DC0[var_v1].unk28 = 0;
+			interfaceItems[var_v1].unk1C = 0;
+			interfaceItems[var_v1].unk28 = 0;
 		}
 	}
 }
@@ -586,7 +585,7 @@ void func_80070C64_41114(s16 arg0, s16 arg1, s16 arg2)
 void func_80070CC4_41174(void)
 {
 	s16 selectedFileIndex;
-	MissionData* selectedFileData;
+	InterfaceItem* selectedFileData;
 	s32 playAltMoveSfx = 0;
 	static s16 horizontalRepeatDelay = 0x1E;
 
@@ -696,7 +695,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 				} while (--i >= 0);
 
 					if (D_800D74AC != 0) {
-						func_80070494_40944(0x4E)->unk28 = 0x64;
+						GetInterfaceItemById(0x4E)->unk28 = 0x64;
 						func_800153D8_15FD8(0xCB);
 					}
 				break;
@@ -706,7 +705,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 					}
 				} while (weaponSlots[D_800D74AE] == 0 && --i >= 0);
 
-				func_80070494_40944(0x4D)->unk28 = 0x64;
+				GetInterfaceItemById(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
 				break;
 			default:
@@ -737,7 +736,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 				} while (--i >= 0);
 
 					if (D_800D74AC != 0) {
-						func_80070494_40944(0x4E)->unk28 = 0x64;
+						GetInterfaceItemById(0x4E)->unk28 = 0x64;
 						func_800153D8_15FD8(0xCB);
 					}
 				break;
@@ -749,7 +748,7 @@ void func_800710D8_41588(s16 arg0, s16 arg1) {
 					}
 				} while (weaponSlots[D_800D74AE] == 0 && --i >= 0);
 
-				func_80070494_40944(0x4D)->unk28 = 0x64;
+				GetInterfaceItemById(0x4D)->unk28 = 0x64;
 				func_800153D8_15FD8(0xCB);
 				break;
 			default:
@@ -802,11 +801,11 @@ s32 D_80094848_64CF8 = 0;
 
 void func_8007166C_41B1C(void)
 {
-	MissionData *entryA;
-	MissionData *entryB;
+	InterfaceItem *entryA;
+	InterfaceItem *entryB;
 
-	entryA = func_80070494_40944(D_800D74A4);
-	entryB = func_80070494_40944(D_800D74A6);
+	entryA = GetInterfaceItemById(D_800D74A4);
+	entryB = GetInterfaceItemById(D_800D74A6);
 
 	if (entryA != NULL && ((entryA != entryB) || (entryB == NULL)) && entryA->unk1C != 3)
 	{
@@ -833,7 +832,7 @@ void func_80071738_41BE8(void) {
 	s32 i;
 	i = 0x2A;
 	while (i--) {
-		D_800D6DC0[i].unk16 = 0;
+		interfaceItems[i].unk16 = 0;
 	}
 }
 
@@ -880,7 +879,8 @@ s32 func_80071760_41C10(s32 arg0)
 	return textWidth - totalWidth;
 }
 
-void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
+// US func_80071900_41DB0
+void DrawWeaponIcon(s32 xCoord, s32 yCoord, f32 xScale, f32 yScale) {
 	s32 i;
 	s32 weaponIndex;
 	s32 sizeX;
@@ -892,12 +892,12 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	i = 0;
 	weaponIndex = 7; do {
 		if (weaponSlots[weaponIndex] != 0) {
-			posX = arg0 - (s16)((64.0f * arg2) / 2) + (((i % 3) * 32.0) * arg2);
-			posY = arg1 - (s16)((64.0f * arg3) / 2) + (((i / 3) * 32.0) * arg3);
+			posX = xCoord - (s16)((64.0f * xScale) / 2) + (((i % 3) * 32.0) * xScale);
+			posY = yCoord - (s16)((64.0f * yScale) / 2) + (((i / 3) * 32.0) * yScale);
 			i++;
 			texIndex = D_80031474[weaponSlots[weaponIndex]];
-			sizeX = 12 * arg2;
-			sizeY = 12 * arg3;
+			sizeX = 12 * xScale;
+			sizeY = 12 * yScale;
 
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 			gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -929,15 +929,16 @@ void func_80071900_41DB0(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 				((posX + sizeX) + 0xC) << 2,
 				((posY + sizeY) + 0xC) << 2,
 				G_TX_RENDERTILE, 0, 0,
-				(s32)((1.0f / arg2) * 1024.0f),
-				(s32)((1.0f / arg3) * 1024.0f));
+				(s32)((1.0f / xScale) * 1024.0f),
+				(s32)((1.0f / yScale) * 1024.0f));
 
 			gDPPipeSync(D_8005BB2C++);
 		}
 	} while (weaponIndex-- >= 0);
 }
 
-void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
+// US func_80071E80_42330
+void DrawLargeWeaponIcon(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 textureIndex;
 	s32 weaponType;
 	s16 sizeX;
@@ -990,6 +991,7 @@ void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
+// Something to do with inventory models
 void func_800722A4_42754(void) {
 	u16 perspNorm;
 	s16 i;
@@ -1102,7 +1104,8 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 // Renders the twelve artifact slots around the rotating inventory display.
-void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+// US func_800728F4_42DA4
+void DrawAlienArtifactBackgroundModels(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 unused3;
 	s32 unused4;
 	s32 unused5;
@@ -1161,8 +1164,8 @@ void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
 
-// Checks if selected inventory item is 0xb (weapon crystals)
-void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+// US func_80072B68_43018
+void DrawLargeSelectedInventoryItemModel(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	static s32 itemRotation = 0;
 	Gfx *packet;
 	s32 unusedPad1;
@@ -1187,7 +1190,7 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 
 	if (selectedItem == 0xC) {
-		func_800728F4_42DA4(-0xB4, -0x32, -0x190, arg3);
+		DrawAlienArtifactBackgroundModels(-0xB4, -0x32, -0x190, arg3);
 		return;
 	}
 
@@ -1231,8 +1234,8 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// display inventory models
-void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+// US func_80072E18_432C8
+void DrawSmallInventoryModels(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	static s32 itemRotation = 0;
 	s32 padding[3];
 	f32 baseX;
@@ -1318,7 +1321,7 @@ void func_800731A8_43658(void)
 	u8 spE6;
 	u8 spE5;
 	s32 sp64;
-	MissionData *var_s4;
+	InterfaceItem *var_s4;
 	f32 var_f20;
 	s16 textWidth;
 	s16 temp_fp;
@@ -1357,7 +1360,7 @@ void func_800731A8_43658(void)
 	s32 sp60;
 	s32 sp5C;
 
-	var_s4 = D_800D6DC0;
+	var_s4 = interfaceItems;
 	func_800038E0_44E0();
 	D_800946E0_64B90[0] += 0x320;
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -1368,8 +1371,8 @@ void func_800731A8_43658(void)
 	{
 		if (var_s4->unk16 != 0)
 		{
-			temp_fp = func_800067B4_73B4(var_s4->unk0, var_s4->unk2, var_s4->unk12, 0, 0);
-			temp_s3 = func_800067B4_73B4(var_s4->unk4, var_s4->unk6, var_s4->unk12, 0, 0);
+			temp_fp = func_800067B4_73B4(var_s4->unk0, var_s4->xCoord, var_s4->unk12, 0, 0);
+			temp_s3 = func_800067B4_73B4(var_s4->unk4, var_s4->yCoord, var_s4->unk12, 0, 0);
 			temp_s6 = func_800067B4_73B4(var_s4->unkE, var_s4->unk10, var_s4->unk12, 0, 0);
 			temp_v0 = func_800067B4_73B4(var_s4->unkA, var_s4->unkC, var_s4->unk12, 0, 0);
 			temp_v1_4 = var_s4->unkC;
@@ -1531,10 +1534,10 @@ void func_800731A8_43658(void)
 			}
 			if (temp_s6) {}
 			if (temp_v0) {}
-			if (((s32)var_s4->unk12 >= 0x2001) || ((var_s4->unkA == var_s4->unkC) && (var_s4->unkE == var_s4->unk10)) || (var_s4->unk26 == 0x32))
+			if (((s32)var_s4->unk12 >= 0x2001) || ((var_s4->unkA == var_s4->unkC) && (var_s4->unkE == var_s4->unk10)) || (var_s4->id == 0x32))
 			{
 				temp_v0_2 = var_s4->unk10;
-				if ((var_s4->unk26 == 0x32) && (var_s4->unkA != 0) && (var_s4->unkC != 0))
+				if ((var_s4->id == 0x32) && (var_s4->unkA != 0) && (var_s4->unkC != 0))
 				{
 					bodyValue = 0x400;
 				}
@@ -1802,17 +1805,17 @@ void func_800731A8_43658(void)
 					break;
 				case 0x40:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
-					func_80071900_41DB0(0x4F, 0x7E, var_f20, spEC);
+					DrawWeaponIcon(0x4F, 0x7E, var_f20, spEC);
 					break;
 				case 0x41:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
-					func_80072E18_432C8(0xB4, -0x3C, -0x190, var_f20);
+					DrawSmallInventoryModels(0xB4, -0x3C, -0x190, var_f20);
 					break;
 				case 0x42:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[40]]);
 					break;
 				case 0x43:
-					temp_v0_14 = func_80070420_408D0();
+					temp_v0_14 = StoreCurrentLevelPlayTimeAndGetTotalPlayTimeSeconds();
 					temp_lo = temp_v0_14 / 60U;
 					temp_lo_2 = temp_lo / 60U;
 					var_t0_3 = temp_lo_2;
@@ -1889,16 +1892,16 @@ void func_800731A8_43658(void)
 						drawText("%@%s%@%s", -1, -1, D_80047FA8, 8, -1, D_80031520_32120[currentLevel]);
 						break;
 					}
-					bodyValue = (s16)func_80071760_41C10(func_80070390_40840());
-					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + bodyValue + 0x2C, func_80070390_40840());
+					bodyValue = (s16)func_80071760_41C10(StoreCurrentLevelStatsAndGetTotalScore());
+					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + bodyValue + 0x2C, StoreCurrentLevelStatsAndGetTotalScore());
 					break;
 				case 0x44:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
-					func_80071900_41DB0(0x4F, 0x83, var_f20, spEC);
+					DrawWeaponIcon(0x4F, 0x83, var_f20, spEC);
 					break;
 				case 0x45:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
-					func_80072E18_432C8(0xB4, -0x3C, -0x190, var_f20);
+					DrawSmallInventoryModels(0xB4, -0x3C, -0x190, var_f20);
 					break;
 				case 0x46:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[43]]);
@@ -1914,7 +1917,7 @@ void func_800731A8_43658(void)
 					break;
 				case 0x4A:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[47]]);
-					func_80071E80_42330(0xD7, 0x78, var_f20, spEC);
+					DrawLargeWeaponIcon(0xD7, 0x78, var_f20, spEC);
 					break;
 				case 0x4B:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[48]]);
@@ -1969,7 +1972,7 @@ void func_800731A8_43658(void)
 #endif
 						drawText("%@", -1, -1);
 					}
-					func_80072B68_43018(-0xC8, -0x32, -0x190, var_f20);
+					DrawLargeSelectedInventoryItemModel(-0xC8, -0x32, -0x190, var_f20);
 					break;
 				case 0x4C:
 					temp_v0_15 = weaponSlots[D_800D74AE];
@@ -2232,6 +2235,7 @@ void func_800731A8_43658(void)
 
 s32 D_8009485C_64D0C = 0;
 
+// Draws the main menu items transparency effect ?
 void func_80075710_45BC0(void) {
 	s32 pad[22];
 
@@ -2277,20 +2281,16 @@ void func_80075710_45BC0(void) {
 				gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTopY << 2, (right << 2) - 1,
 				(rowBottomY << 2) - 1, G_TX_RENDERTILE, 0, 0, 0x1000, 0x400);
 			}
-
 		}
-
 	}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-
 }
 
-
-
+// Sets background color of selectable interface items?
 void func_80075B64_46014(s16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -2304,7 +2304,8 @@ void func_80075B64_46014(s16 arg0) {
 }
 
 // Show version info on title screen if slot 3 named GRIMLN
-void func_80075C84_46134(void) {
+// US func_80075C84_46134
+void DrawBuildInfo(void) {
 	if (D_800D6DA8[2][0] == 0x47) {
 		if (D_800D6DA8[2][1] == 0x52) {
 			if (D_800D6DA8[2][5] == 0x4E) {
@@ -2403,7 +2404,7 @@ void func_80075D58_46208(s32 arg0) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, D_40519B0);
 
-	func_80075C84_46134();
+	DrawBuildInfo();
 	gDPPipeSync(D_8005BB2C++);
 
 	if (arg0 == 0) {
@@ -2431,7 +2432,7 @@ s32 func_80076504_469B4(void)
 	s32 result;
 	s32 fadeResult;
 	result = 1;
-	func_8007949C_4994C(func_80070390_40840(), 0);
+	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 	D_80052ACA = 6;
 	D_8004772C = 0xFF;
 	D_80047730 = 0x40;
@@ -2496,7 +2497,7 @@ s32 func_80076504_469B4(void)
 // displayEndGameMessage
 // AI - Shows the end-game message then scrolls the credits; returns to the title screen.
 s32 func_8007685C_46D0C(void) {
-	func_8007949C_4994C(func_80070390_40840(), 0);
+	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 	func_8007C7F4_4CCA4();
 	func_80013684_14284();
 	func_8007C4BC_4C96C();
@@ -2537,7 +2538,8 @@ IntroStopFrames D_80094894_64D44 = {{
 	0x00000FD2,
 }};
 
-s32 func_800768C4_46D74(void) {
+// US func_800768C4_46D74
+s32 StartIntroCutscene(void) {
 	static s32 movieFrame = 0;
 	static s8 startIndex = 0;
 	static s8 stopIndex = 0;
@@ -2659,9 +2661,8 @@ u8 D_80094944_64DF4 = 0xFF;
 s32 D_80094948_64DF8 = 0;
 u8 D_8009494C_64DFC = 0;
 
-// Called once before showing the 'Select Slot' screen
-// doFileSelectLoop
-s16 func_80076C98_47148(void) {
+// US func_80076C98_47148
+s16 ShowSelectSlotScreen(void) {
 	s32 selectedFile;
 	u32 frameCounter;
 	s32 saveFile;
@@ -2832,11 +2833,9 @@ void func_80076FE0_47490(s32 arg0, s32 arg1) {
 		arg1 = 9;
 		do {
 			s32 inner;
-
 			inner = 0x1F;
 			do {
 				s32 tile;
-
 				tile = 0xF;
 				do {
 					arg0 = tile;
@@ -3303,8 +3302,8 @@ s32 func_800779FC_47EAC(void) {
 	s32 state;
 	s32 saveFileIndex;
 	s32 temp;
-	MissionData* selectedFileData;
-	MissionData* missionEntry;
+	InterfaceItem* selectedFileData;
+	InterfaceItem* missionEntry;
 	extern s32 D_80047F84;
 	extern s32 D_80052B18;
 	extern u8 D_800D6D90[];
@@ -3342,7 +3341,7 @@ s32 func_800779FC_47EAC(void) {
 
 			if (isButtonNewlyPressed(0, 0x9000) != 0) {
 				state = D_800D74A4 - 0x3A;
-				missionEntry = func_80070494_40944(0x39);
+				missionEntry = GetInterfaceItemById(0x39);
 				*((s16*) ((u8*) D_800909B0 + 0x95E)) = -0x20;
 				missionEntry->unk4 = (s16)(*((s16*) ((u8*) D_800909B0 + 0x95E)) << 2);
 				D_800D74AA = 0;
@@ -3355,9 +3354,9 @@ s32 func_800779FC_47EAC(void) {
 			if (isButtonNewlyPressed(0, 0x4000) != 0) {
 				selectedFileData = &D_800909B0[saveFileIndex];
 				state = 0;
-				missionEntry = func_80070494_40944(0x39);
-				missionEntry->unk4 = missionEntry->unk6;
-				missionEntry->unk6 = *((s16*) ((u8*) selectedFileData + 0x30)) * 4;
+				missionEntry = GetInterfaceItemById(0x39);
+				missionEntry->unk4 = missionEntry->yCoord;
+				missionEntry->yCoord = *((s16*) ((u8*) selectedFileData + 0x30)) * 4;
 				missionEntry->unk16 = 4;
 				missionEntry->unk1C = 1;
 				missionEntry->unk28 = -1;
@@ -3493,9 +3492,9 @@ s32 func_80077E88_48338(void) {
 #endif
 
 			if ((D_80048026 & 7) != 7
-			    && ((D_80048026 & 0x38) != 0x38 || D_80047FA0 < 2)
-			    && ((D_80048026 & 0x1C0) != 0x1C0 || D_80047FA0 < 3)
-			    && ((D_80048026 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
+				&& ((D_80048026 & 0x38) != 0x38 || D_80047FA0 < 2)
+				&& ((D_80048026 & 0x1C0) != 0x1C0 || D_80047FA0 < 3)
+				&& ((D_80048026 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
 				func_80070A8C_40F3C(0x14);
 			}
 		} else {
@@ -3680,8 +3679,8 @@ s32 func_80078424_488D4(void) {
 	} while (i--);
 
 	func_80070514_409C4(0x15);
-	D_800909B0[50].unk0 = 0xA0; D_800909B0[50].unk2 = 0x88;
-	D_800909B0[50].unk4 = 0xD2; D_800909B0[50].unk6 = 0xC2;
+	D_800909B0[50].unk0 = 0xA0; D_800909B0[50].xCoord = 0x88;
+	D_800909B0[50].unk4 = 0xD2; D_800909B0[50].yCoord = 0xC2;
 	D_800909B0[50].unkC = 0x30;
 	D_800909B0[50].unkA = 0;
 	D_800909B0[50].unk10 = 0x23;
@@ -3692,7 +3691,7 @@ s32 func_80078424_488D4(void) {
 	D_800909B0[22].unk1C = 1;
 
 	while (state == 1) {
-		MissionData *entry;
+		InterfaceItem *entry;
 
 		changed = 0;
 
@@ -3728,7 +3727,7 @@ s32 func_80078424_488D4(void) {
 						func_80070BD8_41088(0x16, 0x2F);
 					}
 
-					entry = func_80070494_40944(0x30);
+					entry = GetInterfaceItemById(0x30);
 					entry->unk12 = 0x36B0;
 					entry->unk14 = 0x100;
 					func_800153D8_15FD8(0xCB);
@@ -3737,7 +3736,7 @@ s32 func_80078424_488D4(void) {
 				case 0x31:
 					if (nameLength > 0) {
 						state = 2;
-						entry = func_80070494_40944(0x32);
+						entry = GetInterfaceItemById(0x32);
 						entry->unkA = 0;
 						entry->unkE = 0;
 						entry->unk4 = 0x308;
@@ -3760,7 +3759,7 @@ s32 func_80078424_488D4(void) {
 						func_80070AEC_40F9C(0x16, 0x2F);
 					}
 
-					entry = func_80070494_40944(D_800D74A4);
+					entry = GetInterfaceItemById(D_800D74A4);
 					entry->unk12 = 0x36B0;
 					entry->unk14 = 0x100;
 					func_800153D8_15FD8(0xCB);
@@ -3771,7 +3770,7 @@ s32 func_80078424_488D4(void) {
 			if (isButtonNewlyPressed(0, 0x4000) != 0) {
 				D_800476A0 = 3;
 				state = 0;
-				entry = func_80070494_40944(0x32);
+				entry = GetInterfaceItemById(0x32);
 				entry->unkA = 0;
 				entry->unkE = 0;
 				entry->unk4 = 0x308;
@@ -3790,16 +3789,16 @@ s32 func_80078424_488D4(void) {
 			}
 			typedName[i] = 0;
 			textWidth = func_8000A2B8_AEB8(typedName, 0) + 0x30;
-			D_800909B0[50].unk0 = D_800909B0[50].unk2;
-			D_800909B0[50].unk4 = D_800909B0[50].unk6;
+			D_800909B0[50].unk0 = D_800909B0[50].xCoord;
+			D_800909B0[50].unk4 = D_800909B0[50].yCoord;
 			D_800909B0[50].unkA = D_800909B0[50].unkC;
 			D_800909B0[50].unkE = D_800909B0[50].unk10;
-			D_800909B0[50].unk2 = 0xA0 - (textWidth >> 1);
+			D_800909B0[50].xCoord = 0xA0 - (textWidth >> 1);
 			D_800909B0[50].unkC = textWidth;
 
-			func_80070494_40944(0x32)->unk16 = 0;
+			GetInterfaceItemById(0x32)->unk16 = 0;
 			func_80070514_409C4(0x32);
-			func_80070494_40944(0x32)->unk28 = 0x64;
+			GetInterfaceItemById(0x32)->unk28 = 0x64;
 		}
 
 		func_80075D58_46208(0);
@@ -3890,15 +3889,15 @@ void func_800789E4_48E94(void) {
 		if (osTvType == 0)
 #endif
 		{
-			func_8007BD98_4C248();
+			ShowWrongConsoleRegionScreen();
 		}
 		if (D_80047584 == 0) {
-			func_8007BC90_4C140();
+			ShowNoControllerScreen();
 		}
-		func_8007B618_4BAC8();
-		func_8007B900_4BDB0();
-		func_8007BB0C_4BFBC();
-		func_8007BEC0_4C370();
+		ShowClearSaveScreen();
+		ShowCopyrightScreen();
+		ShowPublisherLogoScreen();
+		ShowDmaLogoScreen();
 	}
 
 	fileSelectCycle = 0;
@@ -3909,7 +3908,7 @@ void func_800789E4_48E94(void) {
 
 		switch (*(u16*)&currentFrontendState) {
 			case FE_STATE_INTRO_MOVIE:
-				result = func_800768C4_46D74();
+				result = StartIntroCutscene();
 				switch (result) {
 					case 2:
 						currentFrontendState = FE_STATE_PRESS_START;
@@ -3953,7 +3952,7 @@ void func_800789E4_48E94(void) {
 				break;
 
 			case FE_STATE_FILE_SELECT:
-				result = func_80076C98_47148();
+				result = ShowSelectSlotScreen();
 
 				switch (result) {
 
@@ -4161,7 +4160,7 @@ void func_800789E4_48E94(void) {
 
 			case FE_STATE_HIGH_SCORES:
 				optionArg = 0;
-				func_800796D0_49B80(0, 0);
+				ShowHighScores(0, 0);
 				currentFrontendState = FE_STATE_PRESS_START;
 				break;
 
@@ -4308,8 +4307,8 @@ void func_8007949C_4994C(s32 arg0, u16 arg1) {
 	}
 }
 
-// displayHighScores
-void func_800796D0_49B80(s32 arg0, u16 arg1) {
+// US func_800796D0_49B80
+void ShowHighScores(s32 arg0, u16 arg1) {
 	s16 shouldExit;
 	s16 i;
 	s16 timer;
@@ -4617,7 +4616,6 @@ void func_8007A038_4A4E8(void) {
 		if (isButtonNewlyPressed(0, 0xD000) != 0) {
 			break;
 		}
-
 	}
 
 	D_80052ACC = 0;
@@ -4843,8 +4841,8 @@ void func_8007A774_4AC24(s32 arg0) {
 	}
 }
 
-// displayClearSaveData
-void func_8007B618_4BAC8(void) {
+// US func_8007B618_4BAC8
+void ShowClearSaveScreen(void) {
 	s32 pad0;
 	s32 pad1;
 	u8 sp3D;
@@ -4920,8 +4918,8 @@ void func_8007B618_4BAC8(void) {
 	}
 }
 
-// displayCopyright
-void func_8007B900_4BDB0(void) {
+// US func_8007B900_4BDB0
+void ShowCopyrightScreen(void) {
 	s32 counter;
 
 	counter = 120;
@@ -4969,8 +4967,8 @@ void func_8007B900_4BDB0(void) {
 #define PUBLISHER_LOGO_RECT 24, 80, 288, 96
 #endif
 
-// displayPublisherLogo
-void func_8007BB0C_4BFBC(void) {
+// US func_8007BB0C_4BFBC
+void ShowPublisherLogoScreen(void) {
 	s32 counter;
 
 	counter = 100;
@@ -4997,8 +4995,8 @@ void func_8007BB0C_4BFBC(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// displayNoControllerNotice
-void func_8007BC90_4C140(void) {
+// US func_8007BC90_4C140
+void ShowNoControllerScreen(void) {
 	func_800791A0_49650(1);
 	gDPFullSync(D_8005BB2C++);
 	gSPEndDisplayList(D_8005BB2C++);
@@ -5022,8 +5020,8 @@ void func_8007BC90_4C140(void) {
 	}
 }
 
-// displayWrongConsoleRegionNotice
-void func_8007BD98_4C248(void) {
+// US func_8007BD98_4C248
+void ShowWrongConsoleRegionScreen(void) {
 	func_800791A0_49650(1);
 	gDPFullSync(D_8005BB2C++);
 	gSPEndDisplayList(D_8005BB2C++);
@@ -5048,8 +5046,8 @@ void func_8007BD98_4C248(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// displayDmaLogo
-void func_8007BEC0_4C370(void)
+// US func_8007BEC0_4C370
+void ShowDmaLogoScreen(void)
 {
 	u16 counter;
 	counter = 0x4F;
@@ -5757,7 +5755,7 @@ s32 func_8007D2B0_4D760(void) {
 					func_80070514_409C4(0x4D);
 					func_80070514_409C4(0x4B);
 					D_800D74A4 = 0x4B;
-					func_80070494_40944(0x48)->unk1C = 2;
+					GetInterfaceItemById(0x48)->unk1C = 2;
 					func_800153D8_15FD8(0xC8);
 					break;
 
@@ -5767,7 +5765,7 @@ s32 func_8007D2B0_4D760(void) {
 					func_800708B8_40D68(0x4A);
 					func_80070514_409C4(0x4E);
 					func_80070514_409C4(0x4C);
-					func_80070494_40944(0x49)->unk1C = 2;
+					GetInterfaceItemById(0x49)->unk1C = 2;
 					D_800D74A4 = 0x4C;
 					func_800153D8_15FD8(0xC8);
 					break;
@@ -5779,7 +5777,7 @@ s32 func_8007D2B0_4D760(void) {
 					func_80070514_409C4(0x49);
 					func_80070514_409C4(0x4A);
 					D_800D74A4 = 0x48;
-					func_80070494_40944(0x48)->unk1C = 1;
+					GetInterfaceItemById(0x48)->unk1C = 1;
 					selection = 0;
 					func_800153D8_15FD8(0xC8);
 					break;
@@ -5791,7 +5789,7 @@ s32 func_8007D2B0_4D760(void) {
 					func_80070514_409C4(0x48);
 					func_80070514_409C4(0x4A);
 					D_800D74A4 = 0x49;
-					func_80070494_40944(0x49)->unk1C = 1;
+					GetInterfaceItemById(0x49)->unk1C = 1;
 					selection = 0;
 					func_800153D8_15FD8(0xC8);
 					break;
