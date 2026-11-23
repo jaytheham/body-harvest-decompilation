@@ -69,4 +69,54 @@ beql    a1,v1,...
 move    a1,v1
 ```
 
-The function is still unmatched: the statics need their data and BSS placed at the original addresses, and the constant 3 shared by `case 3` and the cursor test stays in `at` instead of `a0`.
+The function is still unmatched: the statics need their data and BSS placed at the original addresses.
+
+## Continue guard frees a constant shared after the loop
+
+The draw loop divides by 3 (`i % 3`, `i / 3`), and the switch after it tests `case 3` and, in the default case,
+`selectedIndex.word != 3`. With the loop body wrapped in `if (slots[i] != 0xF) { ... }`, all four 3s stayed as
+one candidate and none got a register.
+
+Incorrect ASM:
+
+```mips
+li      at,3
+beq     v1,at,...        # case 3
+...
+li      at,3
+beq     t8,at,...        # cursor test
+```
+
+Code changed (same machine control flow):
+
+```c
+/* Before */
+do {
+    if (slots[i] != 0xF) {
+        /* draw body with i % 3 and i / 3 */
+    }
+} while (i--);
+
+/* After */
+do {
+    if (slots[i] == 0xF) {
+        continue;
+    }
+
+    /* same draw body */
+} while (i--);
+```
+
+Correct ASM:
+
+```mips
+li      a0,3
+...
+beq     v1,a0,...        # case 3
+...
+beq     t8,a0,...        # cursor test
+```
+
+The loop keeps `li at,3` before each `div`; only the code after the loop changes. Changing the divisor value
+had shown the coupling, but the right fix was the loop's source shape, not the constant (see also
+`continue-guard-trigger-saved-register-rotation.md`).

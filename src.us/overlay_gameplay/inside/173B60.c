@@ -799,14 +799,14 @@ void func_8008C8A4_174964(void) {
 
 // doPauseMenu ?
 // Render and handle the pause menu: 3x3 icon grid, analog stick navigation
-// CURRENT(233)
+// CURRENT(58)
 // The cursor, the shown label, the navigation lock and the deferred selection are private to this function:
 // only function statics give the target's uncached loads and stores. To build it, D_800A4340_18C400,
 // D_800A4344_18C404 and D_800A4348_18C408 have to become these statics (the data defined after them then moves
 // below the function), and the BSS of this file has to place pendingSelection at D_800FCF4C.
-// Remaining difference: the target keeps the constant 3 of `case 3` in a0 and reuses it for the cursor test of
-// the default case; here both tests load it into at. Replacing the 3 of the two divisions in the draw loop with
-// another value gives the target's registers, so that constant is shared with the loop in this form.
+// The code is instruction-identical to the target; the remaining score is the D_800FCA92_W spelling and the
+// placement of the statics. The early `continue` in the draw loop is what lets `case 3` and the cursor test of
+// the default case share the constant 3 in a0 (with the loop body inside `if (slots[i] != 0xF)` they do not).
 #ifdef NON_MATCHING
 void func_8008CF2C_174FEC(void) {
 	static SignedWord selectedIndex = { 4 }; // D_800A4340_18C400
@@ -916,24 +916,26 @@ void func_8008CF2C_174FEC(void) {
 
 	i = 8;
 	do {
-		if (slots[i] != 0xF) {
-			x = ((i % 3) << 5) + (D_80068084 / 2) - 0x2C;
-			texIndex = D_800A427C_18C33C[slots[i]];
-
-			if (i == selectedIndex.word) {
-				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0xC8, 0xFF, D_800FCA92);
-				if (selectedIndex.word != D_800FCB1E) {
-					func_80013810_14410(selectedIndex.signedBytes[3]);
-					D_800FCB1E = selectedIndex.word;
-				}
-			} else {
-				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0x64, 0x7F, D_800FCA92);
-			}
-
-			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-			y = (i / 3) * 0x1E + 0x38;
-			gSPTextureRectangle(D_8005BB2C++, x << 2, y << 2, (x + 24) << 2, (y + 24) << 2, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
+		if (slots[i] == 0xF) {
+			continue;
 		}
+
+		x = ((i % 3) << 5) + (D_80068084 / 2) - 0x2C;
+		texIndex = D_800A427C_18C33C[slots[i]];
+
+		if (i == selectedIndex.word) {
+			gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0xC8, 0xFF, D_800FCA92);
+			if (selectedIndex.word != D_800FCB1E) {
+				func_80013810_14410(selectedIndex.signedBytes[3]);
+				D_800FCB1E = selectedIndex.word;
+			}
+		} else {
+			gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0x64, 0x7F, D_800FCA92);
+		}
+
+		gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+		y = (i / 3) * 0x1E + 0x38;
+		gSPTextureRectangle(D_8005BB2C++, x << 2, y << 2, (x + 24) << 2, (y + 24) << 2, G_TX_RENDERTILE, 0, 0, 0x0400, 0x0400);
 	} while (i--);
 
 	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START | BUTTON_A) != 0) && (D_800FCA92 == 0xFF) && (D_800FCA84 == 0)) {
