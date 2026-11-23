@@ -7,6 +7,7 @@
 #include "core/53F0.h"
 #include "core/12C80.h"
 #include "core/1050.h"
+#include "40720.h"
 
 typedef enum FrontEndState
 {
@@ -204,13 +205,13 @@ s32 func_80070270_40720(s32 arg0) {
 	switch (arg0)
 	{
 	case 1:
-		func_800789E4_48E94();
+		BootToStartMenu();
 		break;
 	case 2:
 		D_800476A2 = 1;
-		return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
+		return ShowTransitionToNextLevel(currentLevel - 2, &D_80052B2C->unk30);
 	case 3:
-		func_8007A038_4A4E8();
+		ShowGameOverScreen();
 		break;
 	case 4:
 		ShowHighScores(0, 0);
@@ -219,20 +220,20 @@ s32 func_80070270_40720(s32 arg0) {
 		ShowHighScores(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 		break;
 	case 6:
-		func_80076504_469B4();
+		PerformGameCompletedSequence();
 		break;
 	case 13:
 		func_8007685C_46D0C();
 		break;
 	case 9:
-		return func_8007CFB4_4D464(1);
+		return ShowSaveBeaconScreen(1);
 	case 14:
-		return func_8007CFB4_4D464(0);
+		return ShowSaveBeaconScreen(0);
 	case 11:
-		return func_8007D2B0_4D760();
+		return ShowInventoryScreen();
 	case 12:
 		D_800946DC_64B8C = FE_STATE_PRESS_START;
-		func_800789E4_48E94();
+		BootToStartMenu();
 		break;
 	}
 
@@ -2425,9 +2426,9 @@ void func_800764B4_46964(void) {
 	} while (i--);
 }
 
-// displayCometExplodesMovie
-// AI - Plays the comet-explosion end-game movie, then shows the credits and returns to the title screen.
-s32 func_80076504_469B4(void)
+// Comet explodes, credits, mission success screen, then kiss sequence
+// US func_80076504_469B4
+s32 PerformGameCompletedSequence(void)
 {
 	s32 result;
 	s32 fadeResult;
@@ -2460,8 +2461,8 @@ s32 func_80076504_469B4(void)
 			func_80005AEC_66EC(0, 0, 0, 0x10);
 		}
 	} while (func_80005B30_6730() == 0);
-	func_8007C4BC_4C96C();
-	func_8007C7F4_4CCA4();
+	ShowGameCredits();
+	ShowMissionSuccessScreen();
 	D_80052ACA = 6;
 	D_8004772C = 0xFF;
 	D_80047730 = 0x40;
@@ -2498,9 +2499,9 @@ s32 func_80076504_469B4(void)
 // AI - Shows the end-game message then scrolls the credits; returns to the title screen.
 s32 func_8007685C_46D0C(void) {
 	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
-	func_8007C7F4_4CCA4();
+	ShowMissionSuccessScreen();
 	func_80013684_14284();
-	func_8007C4BC_4C96C();
+	ShowGameCredits();
 	D_80052ACA = 3;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
@@ -3856,8 +3857,8 @@ void func_80078968_48E18(void) {
 	func_80070940_40DF0();
 }
 
-// Drives the frontend state machine, including file selection and gameplay transitions.
-void func_800789E4_48E94(void) {
+// US func_800789E4_48E94
+void BootToStartMenu(void) {
 	s32 result;
 	s16 fileSelectCycle;
 	s16 optionArg;
@@ -4506,8 +4507,8 @@ void func_80079F30_4A3E0(u8 arg0) {
 	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
 }
 
-// displayGameOver
-void func_8007A038_4A4E8(void) {
+// US func_8007A038_4A4E8
+void ShowGameOverScreen(void) {
 	s32 timer;
 	s32 fade;
 	s32 i;
@@ -4624,7 +4625,7 @@ void func_8007A038_4A4E8(void) {
 }
 
 void func_8007A754_4AC04(void) {
-	func_8007C7F4_4CCA4();
+	ShowMissionSuccessScreen();
 }
 
 void func_8007A774_4AC24(s32 arg0) {
@@ -5206,7 +5207,8 @@ void func_8007BFC4_4C474(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-void func_8007C4BC_4C96C(void) {
+// US func_8007C4BC_4C96C
+void ShowGameCredits(void) {
 	u16 fadeCounter;
 	s16 foundCount;
 	s16 startIndex;
@@ -5296,8 +5298,8 @@ void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 	drawText("%a", (s32)((arg1 - arg0) * 0xFF) / 20);
 }
 
-// AI - Shows the end-of-game summary screen (total score, time, humans) then returns to press-start.
-void func_8007C7F4_4CCA4(void) {
+// US func_8007C7F4_4CCA4
+void ShowMissionSuccessScreen(void) {
 	s16 level;
 	u16 fadeTimer;
 	s32 timer;
@@ -5561,8 +5563,8 @@ void func_8007C7F4_4CCA4(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// doSaveBeaconLoop
-s32 func_8007CFB4_4D464(s32 arg0) {
+// US func_8007CFB4_4D464
+s32 ShowSaveBeaconScreen(s32 isWarpEnabled) {
 	s16 timer;
 	s32 selection;
 	u32* frameCounter;
@@ -5589,7 +5591,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 			}
 		}
 
-		if (arg0 == 0) {
+		if (isWarpEnabled == 0) {
 			func_80070A8C_40F3C(0x45);
 		}
 
@@ -5666,7 +5668,8 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 	return 0;
 }
 
-s32 func_8007D2B0_4D760(void) {
+// US func_8007D2B0_4D760
+s32 ShowInventoryScreen(void) {
 	s16 timer;
 	s32 i;
 	s32 selection;

@@ -5,7 +5,7 @@
 void func_800823C8_52878(Unk80052B40 *arg0, Unk80052B40 *arg1, s32 arg2);
 void func_800823D8_52888(s32 arg0, s32 arg1);
 void func_800829E4_52E94(s32 arg0);
-s32 func_80082CBC_5316C(s32 arg0, s32* arg1);
+s32 ShowTransitionToNextLevel(s32 arg0, s32* arg1);
 void func_800837B4_53C64(f32 *arg0, f32 *arg1);
 void func_800838B8_53D68(f32 arg0, f32 *arg1, f32 *arg2);
 void func_800838E0_53D90(Mtx* arg0);

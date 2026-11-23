@@ -168,8 +168,8 @@ void func_800829E4_52E94(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, D_4000170);
 }
 
-// transitionToNextLevel
-s32 func_80082CBC_5316C(s32 arg0, s32* arg1) {
+// US func_80082CBC_5316C
+s32 ShowTransitionToNextLevel(s32 arg0, s32* arg1) {
 	s32 padTop[3];
 	u16 sp132;
 	Unk80052B40 sp12C;
