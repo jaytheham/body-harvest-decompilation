@@ -1000,6 +1000,7 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 	model1 = D_8005BB30++; model1->words.w0 = 0x01020040; model1->words.w1 = K0_TO_PHYS(&D_80031160);
 }
 
+// CURRENT(11830) measured over the whole function (diff.py --max-size 6000)
 #ifdef NON_MATCHING
 void func_8009811C_A70CC(void) {
 	f32 temp_f0;
@@ -1023,7 +1024,7 @@ void func_8009811C_A70CC(void) {
 	f64 temp_f0_3;
 	f64 temp_f22;
 	s32 temp_v0;
-	u32 sp2E8[1];
+	u32 sp2E8;
 	s32 sp2E4;
 	Unk80052B40 vec2DC;
 	Unk80052B40 vec2D4;
@@ -1060,10 +1061,10 @@ void func_8009811C_A70CC(void) {
 	sp2B0 = D_8013D514_14C4C4;
 	mapStep = 0;
 	sp2A4 = D_8013D51C_14C4CC;
-	temp_v0 = 0;
+	sp2E8 = 0;
 	D_8004D14C = 0;
 	D_8014ED00 = -1;
-	stage = &(stageTable = &D_8013D2D0_14C280.entries[currentLevel * 5])[D_80047F94 - 5];
+	stage = &D_8013D2D0_14C280.entries[currentLevel * 5 + D_80047F94 - 5];
 
 	sp27C = 0;
 	cam3CC.distance = stage->unk8;
@@ -1071,7 +1072,7 @@ void func_8009811C_A70CC(void) {
 	cam3CC.yaw = -0x4000;
 	cam3CC.targetZ = 0.0f;
 	if (D_8014ED04 != 0x186A0) {
-		temp_v0 = 0x20;
+		sp2E8 = 0x20;
 	}
 	var_t3 = stage->unk4;
 	if ((var_t3 > 0) || (stage->unk6 > 0)) {
@@ -1095,7 +1096,6 @@ void func_8009811C_A70CC(void) {
 	cam3B8.distance = 0x50;
 	cam3B8.yaw = 0x8000 - D_80052B34->unk6;
 	cam3B8.pitch = 0x2710;
-	stage = &stageTable[-5];
 	var_s3 = &cam3B8;
 	cam3B8.targetX = D_80052B34->unk0 >> 7;
 	cam3B8.targetY = -D_80052B34->unk4 >> 7;
@@ -1103,16 +1103,15 @@ void func_8009811C_A70CC(void) {
 	cam3A4 = cam3CC;
 	cam3A4.distance = 0x154;
 
-	for (drawItem.value = 0; drawItem.value < 5; stage = &stageTable[++drawItem.value - 5]) {
+	for (drawItem.value = 0; drawItem.value < 5; drawItem.value++) {
+		stage = &D_8013D2D0_14C280.entries[currentLevel * 5 + drawItem.value - 5];
 		cams340[drawItem.value].distance = stage->unk8;
 		cams340[drawItem.value].pitch = 0x384;
 		cams340[drawItem.value].yaw = -0x4000;
 		cams340[drawItem.value].targetX = stage->unk0;
 		cams340[drawItem.value].targetY = stage->unk2;
-		sp2E8[0] = temp_v0;
 		cams340[drawItem.value].targetZ = 0.0f;
 	}
-	if (0x3FFF == cam3CC.distance) {} /* Schedule the initial angle constant. */
 	D_8014ED0C = 0.0f;
 	temp_f0 = cam3CC.distance;
 	D_8014ED10 = cam3CC.targetY - temp_f0;
@@ -1124,6 +1123,7 @@ void func_8009811C_A70CC(void) {
 	D_8014ED1C = 0.0f;
 	D_8014ED18 = 0.0f;
 	*(u32 *)&D_8014ED34 = 1;
+	if (0x3FFF == var_t3) {} /* Keep the initial angle constant in a register. */
 	D_8014ED2E = 0x3FFF;
 	D_8014ED32 = 0;
 	func_8000505C_5C5C();
@@ -1139,7 +1139,7 @@ void func_8009811C_A70CC(void) {
 	mapLock.value = 1;
 	func_8000AFDC_BBDC();
 	if (D_8014ED00 != 0x18) {
-		sp2E8[0] |= 1;
+		sp2E8 |= 1;
 	}
 	temp_f22 = 0.1;
 	
@@ -1206,7 +1206,7 @@ void func_8009811C_A70CC(void) {
 				mapLock.value = 1;
 				D_8014ED2E = 0;
 				func_800153D8_15FD8(0x3C);
-				if ((D_8014ED30 == 5) || ((temp_v1 = (currentLevel << 2) + currentLevel, D_8013D2D0_14C280.halfwords[(s32)(((u32)temp_v1 << 2) + (u32)temp_v1) + D_8014ED30 * 5 - 21]) == 0)) {
+				if ((D_8014ED30 == 5) || (D_8013D2D0_14C280.entries[currentLevel * 5 + D_8014ED30 - 5].unk8 == 0)) {
 					D_8014ED30 = -1;
 					sp320[0] = &cam3CC;
 					D_8014ED2C = 0;
@@ -1346,14 +1346,14 @@ void func_8009811C_A70CC(void) {
 			}
 		}
 	}
-	if ((isButtonNewlyPressed(0, 0x10U) != 0) && (sp2E8[0] & 4) && (D_8014ED2C == 0)) {
-		if (sp2E8[0] & 0x20) {
+	if ((isButtonNewlyPressed(0, 0x10U) != 0) && (sp2E8 & 4) && (D_8014ED2C == 0)) {
+		if (sp2E8 & 0x20) {
 			D_8014ED04 = 0x186A0;
-			sp2E8[0] &= ~0x20;
+			sp2E8 &= ~0x20;
 		} else {
 			D_8014ED04 = (s16) (s32) var_s3->targetX << 7;
 			D_8014ED08 = (s16) (s32) -var_s3->targetY << 7;
-			sp2E8[0] |= 0x20;
+			sp2E8 |= 0x20;
 		}
 		func_800153D8_15FD8(0x14F);
 	}
@@ -1462,7 +1462,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawText(&D_801423F4_1513A4, 0x80, 8, &D_801423FC_1513AC);
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30_Select == 4) || ((temp_v1 = (currentLevel << 2) + currentLevel, D_8013D2D0_14C280.halfwords[(s32)(((u32)temp_v1 << 2) + (u32)temp_v1) + D_8014ED30_Select * 5 - 16]) == 0)) {
+				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280.entries[currentLevel * 5 + D_8014ED30 - 4].unk8 == 0)) {
 					drawText(&D_8014240C_1513BC, 0x80, 8, &D_80142414_1513C4);
 				} else {
 					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30_Label + 1);
@@ -1508,20 +1508,10 @@ void func_8009811C_A70CC(void) {
 	if (drawItem.value < 0x32) {
 		func_80097444_A63F4(var_s3->yaw, var_s3->pitch);
 	}
-	if ((drawItem.value == 0) && ((sp2E8[0] |= 4, (sp30C != NULL)) || (D_8013D528_14C4D8 != 0))) {
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32) D_1010A80);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+	if ((drawItem.value == 0) && ((sp2E8 |= 4, (sp30C != NULL)) || (D_8013D528_14C4D8 != 0))) {
+		gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_1010A80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
 		if (sp30C != NULL) {
 			if (0.0f == D_8014ED1C) {
 				temp_f0_3 = D_8014ED18 + temp_f22;
@@ -1565,7 +1555,7 @@ void func_8009811C_A70CC(void) {
 		s32 spA0;
 		gDPPipeSync(D_8005BB2C++);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-		spA0 = sp2E8[0] & 0x20;
+		spA0 = sp2E8 & 0x20;
 		var_s1 = 0xFF;
 		while (var_s1--) {
 			var_s0_4 = &alienInstances[var_s1];
@@ -1602,47 +1592,17 @@ void func_8009811C_A70CC(void) {
 					if (!(alienInstances[temp_t3].unk20 & ALIEN_FLAG_UNKL)) {
 						switch (alienInstances[temp_t3].typeIndex) {
 						case 25:
-							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u32) D_50323B0);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPLoadSync(D_8005BB2C++);
-							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+							gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50323B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
 							var_t0 = D_8014D50A;
 							break;
 						case 26:
-							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u32) D_50323B0);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPLoadSync(D_8005BB2C++);
-							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+							gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50323B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
 							var_t0 = D_8014D50A;
 							break;
 						case 24:
-							gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 1, (u32) D_50325B0);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPLoadSync(D_8005BB2C++);
-							gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-							gDPPipeSync(D_8005BB2C++);
-							gDPSetTile(D_8005BB2C++, G_IM_FMT_IA, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-									   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-							gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+							gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50325B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
 							var_t0 = D_8014D50A;
 							break;
@@ -1701,10 +1661,10 @@ void func_8009811C_A70CC(void) {
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH);
 		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_LIGHTING);
 		gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
 		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 		gDPSetFogColor(D_8005BB2C++, 0, 0, 0, 0xFF);
-		gSPFogPosition(D_8005BB2C++, 0x1900, 0xE800);
+		gSPFogFactor(D_8005BB2C++, 0x1900, 0xE800);
 		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, -1U);
 		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (D_8013D530_14C4E0 = var_t4, -1U));
 		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
@@ -1818,17 +1778,7 @@ void func_8009811C_A70CC(void) {
 		func_80096BC4_A5B74((s16) (s32) var_s3->targetX * 128, (s16) (s32) var_s3->targetY * 128);
 
 		gDPLoadTLUT_pal16(D_8005BB2C++, 0, (u32) D_5032390);
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 1, (u32) D_5032190);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_5032190, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
@@ -1840,19 +1790,9 @@ void func_8009811C_A70CC(void) {
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	}
 	if (D_8014ED2C == 3) {
-		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 1, (u32) D_1010A80);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_16b, 0, 0, G_TX_LOADTILE, 0,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPLoadSync(D_8005BB2C++);
-		gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, 1023, 256);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetTile(D_8005BB2C++, G_IM_FMT_I, G_IM_SIZ_4b, 2, 0, G_TX_RENDERTILE, 0,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD,
-				   G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
-		gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, 0x7C, 0x7C);
+		gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_1010A80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
+		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x80, 0xFF, 0xFF, 0xC8);
 		drawItem.stage = &D_8013D3D4_14C384[(D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF];
 		func_800966EC_A569C(var_s3, drawItem.stage->x << 8, drawItem.stage->z << 8, drawItem.stage->size, 1);
@@ -1867,7 +1807,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawItem.value = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30_Select == 4) || ((temp_v1 = (currentLevel << 2) + currentLevel, D_8013D2D0_14C280.halfwords[(s32)(((u32)temp_v1 << 2) + (u32)temp_v1) + D_8014ED30_Select * 5 - 16]) == 0)) {
+				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280.entries[currentLevel * 5 + D_8014ED30 - 4].unk8 == 0)) {
 					drawItem.value = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
 				} else {
 					drawItem.value = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
