@@ -302,6 +302,7 @@ extern Addr core_53F0_c;
 extern Addr core_AD60_c;
 extern Addr core_E830_c;
 extern Addr core_FD80_c;
+extern Addr core_animation_channels_c;
 extern Addr core_loader_c;
 extern Addr header_s;
 extern Addr libultra_ai_c;

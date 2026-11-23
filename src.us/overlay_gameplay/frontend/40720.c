@@ -165,36 +165,36 @@ const char D_800AD6FC_7DBAC[] = "#";
 
 // Frontend animation/frame data
 s16 D_800946E0_64B90[0x70] = {
-    0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0103, 0x0000, 0xFFF8, 0xFFC0, 0x0008, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0xFFF8, 0xFFC4, 0xFFFD, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0x0012, 0xFFF8, 0x0001, 0x0000, 0x0000, 0x0000,
-    0x0103, 0x0000, 0x0005, 0xFFC1, 0x0006, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0x0002, 0xFFC3, 0xFFFF, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0x0000, 0x000C, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0x0000, 0x0032, 0x0004, 0x0000, 0x0000, 0x0000,
-    0x0102, 0x0000, 0x0000, 0x000F, 0x0002, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0xFFE6, 0x002C, 0xFFFE, 0x0000, 0x0000, 0x0000,
-    0x0103, 0x0000, 0xFFF1, 0xFFD8, 0xFFF9, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0xFFFA, 0xFFDA, 0x0015, 0x0000, 0x0000, 0x0000,
-    0xFFFF, 0x0000, 0x001A, 0x002B, 0xFFFD, 0x0000, 0x0000, 0x0000,
-    0x01FF, 0x0000, 0x000C, 0xFFD9, 0xFFFB, 0x0000, 0x0000, 0x0000,
+	0x0000, 0x0000, 0xFFF2, 0xFFF8, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x0103, 0x0000, 0xFFF8, 0xFFC0, 0x0008, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0xFFF8, 0xFFC4, 0xFFFD, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0x0012, 0xFFF8, 0x0001, 0x0000, 0x0000, 0x0000,
+	0x0103, 0x0000, 0x0005, 0xFFC1, 0x0006, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0x0002, 0xFFC3, 0xFFFF, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0x0000, 0x000C, 0x0000, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0x0000, 0x0032, 0x0004, 0x0000, 0x0000, 0x0000,
+	0x0102, 0x0000, 0x0000, 0x000F, 0x0002, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0xFFE6, 0x002C, 0xFFFE, 0x0000, 0x0000, 0x0000,
+	0x0103, 0x0000, 0xFFF1, 0xFFD8, 0xFFF9, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0xFFFA, 0xFFDA, 0x0015, 0x0000, 0x0000, 0x0000,
+	0xFFFF, 0x0000, 0x001A, 0x002B, 0xFFFD, 0x0000, 0x0000, 0x0000,
+	0x01FF, 0x0000, 0x000C, 0xFFD9, 0xFFFB, 0x0000, 0x0000, 0x0000,
 };
 
 // Weapon selection text pointers
 s32 D_800947C0_64C70[6] = {
-    0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)"",
+	0x01FF0000, 0x0007FFDB, 0x00150000, 0x00000000, 0xFFFF0000, (s32)"",
 };
 char *D_800947D8_64C88[3] = {
-    "Fuel", "Carburant", "Sprit",
+	"Fuel", "Carburant", "Sprit",
 };
 char *D_800947E4_64C94[3] = {
-    "Vehicle Weapon 1", "Arme 1", "Waffe 1",
+	"Vehicle Weapon 1", "Arme 1", "Waffe 1",
 };
 char *D_800947F0_64CA0[13] = {
-    "Vehicle Weapon 2", "Arme 2", "Waffe 2", "Chaingun", "Fragcannon",
-    "Lazer Missiles", "Resonator", "Plasma Bombs", "", "",
-    NULL, NULL, NULL,
+	"Vehicle Weapon 2", "Arme 2", "Waffe 2", "Chaingun", "Fragcannon",
+	"Lazer Missiles", "Resonator", "Plasma Bombs", "", "",
+	NULL, NULL, NULL,
 };
 
 s16 D_80094824_64CD4 = 0;
@@ -215,7 +215,7 @@ s32 func_80070270_40720(s32 arg0) {
 				func_800796D0_49B80(0, 0);
 				break;
 		case 5:
-				func_800796D0_49B80(func_80070390_40840(), 0);
+				func_800796D0_49B80(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 				break;
 		case 6:
 				func_80076504_469B4();
@@ -238,8 +238,8 @@ s32 func_80070270_40720(s32 arg0) {
 		return 0;
 }
 
-// calculatePlayersTotalScore
-s32 func_80070390_40840(void) {
+// US func_80070390_40840
+s32 StoreCurrentLevelStatsAndGetTotalScore(void) {
 	s32 total;
 	s32 i;
 	D_80052A98[currentLevel - 1].score = D_80052B2C->unk30;
@@ -252,8 +252,8 @@ s32 func_80070390_40840(void) {
 	return total;
 }
 
-// Stores the current level's play time in seconds and returns the total play time across all levels.
-s32 func_80070420_408D0(void) {
+// US func_80070420_408D0
+s32 StoreCurrentLevelPlayTimeAndGetTotalPlayTimeSeconds(void) {
 	s32 totalSecondsElapsed;
 	s32 i;
 	D_80052A98[currentLevel - 1].secondsElapsed = (u16)((u32)D_80052A90 / 1000U);
@@ -1812,7 +1812,7 @@ void func_800731A8_43658(void)
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[40]]);
 					break;
 				case 0x43:
-					temp_v0_14 = func_80070420_408D0();
+					temp_v0_14 = StoreCurrentLevelPlayTimeAndGetTotalPlayTimeSeconds();
 					temp_lo = temp_v0_14 / 60U;
 					temp_lo_2 = temp_lo / 60U;
 					var_t0_3 = temp_lo_2;
@@ -1889,8 +1889,8 @@ void func_800731A8_43658(void)
 						drawText("%@%s%@%s", -1, -1, D_80047FA8, 8, -1, D_80031520_32120[currentLevel]);
 						break;
 					}
-					bodyValue = (s16)func_80071760_41C10(func_80070390_40840());
-					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + bodyValue + 0x2C, func_80070390_40840());
+					bodyValue = (s16)func_80071760_41C10(StoreCurrentLevelStatsAndGetTotalScore());
+					drawText("%@%X%d", 0x14, -1, temp_fp + var_s4->unk1E + bodyValue + 0x2C, StoreCurrentLevelStatsAndGetTotalScore());
 					break;
 				case 0x44:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[38]]);
@@ -2431,7 +2431,7 @@ s32 func_80076504_469B4(void)
 	s32 result;
 	s32 fadeResult;
 	result = 1;
-	func_8007949C_4994C(func_80070390_40840(), 0);
+	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 	D_80052ACA = 6;
 	D_8004772C = 0xFF;
 	D_80047730 = 0x40;
@@ -2496,7 +2496,7 @@ s32 func_80076504_469B4(void)
 // displayEndGameMessage
 // AI - Shows the end-game message then scrolls the credits; returns to the title screen.
 s32 func_8007685C_46D0C(void) {
-	func_8007949C_4994C(func_80070390_40840(), 0);
+	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 	func_8007C7F4_4CCA4();
 	func_80013684_14284();
 	func_8007C4BC_4C96C();
@@ -3493,9 +3493,9 @@ s32 func_80077E88_48338(void) {
 #endif
 
 			if ((D_80048026 & 7) != 7
-			    && ((D_80048026 & 0x38) != 0x38 || D_80047FA0 < 2)
-			    && ((D_80048026 & 0x1C0) != 0x1C0 || D_80047FA0 < 3)
-			    && ((D_80048026 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
+				&& ((D_80048026 & 0x38) != 0x38 || D_80047FA0 < 2)
+				&& ((D_80048026 & 0x1C0) != 0x1C0 || D_80047FA0 < 3)
+				&& ((D_80048026 & 0xE00) != 0xE00 || D_80047FA0 < 4)) {
 				func_80070A8C_40F3C(0x14);
 			}
 		} else {

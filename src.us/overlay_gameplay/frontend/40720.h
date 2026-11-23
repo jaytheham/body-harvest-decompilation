@@ -1,9 +1,8 @@
 #ifndef OVERLAY_GAMEPLAY_FRONTEND_40720_H
 #define OVERLAY_GAMEPLAY_FRONTEND_40720_H
 
-/* Functions defined in 40720.c. */
 s32 func_80070270_40720(s32 arg0);
-s32 func_80070390_40840(void);
+s32 StoreCurrentLevelStatsAndGetTotalScore(void);
 MissionData* func_80070494_40944(s16 arg0);
 void func_80070514_409C4(s16 arg0);
 extern MissionData* func_800706E8_40B98(s16 arg0);
