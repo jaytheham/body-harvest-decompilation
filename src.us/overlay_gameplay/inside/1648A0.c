@@ -644,7 +644,7 @@ Unk165E60Timeline D_800A02FC_1883BC[8] = {
 };
 
 // AI - Player route table (8 routes), each referencing a path & timeline
-Unk165E60RouteTable D_800A05FC_1886BC = { {
+Unk165E60Route D_800A05FC_1886BC[8] = {
 	{ 0x000000AA, 0x00000046, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[1], &D_800A02FC_1883BC[1] },
 	{ 0x0000008D, 0x00000050, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[2], &D_800A02FC_1883BC[2] },
 	{ 0x0000006E, 0x00000044, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, D_800A00FC_1881BC, D_800A02FC_1883BC },
@@ -653,7 +653,6 @@ Unk165E60RouteTable D_800A05FC_1886BC = { {
 	{ 0x00000046, 0x00000001, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[5], &D_800A02FC_1883BC[5] },
 	{ 0x0000005D, 0x00000014, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[6], &D_800A02FC_1883BC[6] },
 	{ 0x00000078, 0x00000014, 0xFFFFFFFF, {0x00,0x00}, 0x07D0, {0x00,0x00,0x00,0x00}, &D_800A00FC_1881BC[7], &D_800A02FC_1883BC[7] },
-}
 };
 
 // AI - Per-route animation lookup table
@@ -1012,20 +1011,6 @@ Unk8007D62C_Entry D_800A08F0_1889B0[4] = {
 
 // AI - Route-following state variables
 f32 D_800A08F8_1889B8 = 0.0f;
-s32 D_800A08FC_1889BC = 0x00000001;
-s32 D_800A0900_1889C0 = 0x00000000;
-s32 D_800A0904_1889C4 = 0x00000000;
-s32 D_800A0908_1889C8 = 0x00000000;
-s32 D_800A090C_1889CC = 0x00000000;
-s32 D_800A0910_1889D0 = 0x00000000;
-s32 D_800A0914_1889D4 = 0x00000000;
-s32 D_800A0918_1889D8 = 0x00000000;
-s32 D_800A091C_1889DC = 0x00000000;
-s32 D_800A0920_1889E0 = 0x00000000;
-s32 D_800A0924_1889E4 = 0x00000000;
-
-// AI - Unnamed padding between route state scalars and fade tables
-u8 pad_1889E8[4] = { 0x00, 0x00, 0x00, 0x00 };
 
 const char D_800A4BB0_18CC70[] = "ALLOCATE 2 PLAYER BUFFERS:\n"; // "ALLOCATE 2 PLAYER BUFFERS:\n"
 const char D_800A4BCC_18CC8C[] = "ERROR: could not find search animation for object %d. Using SEARCH_MED\n"; // "ERROR: could not find search animation for object %d. Using SEARCH_MED\n"
@@ -1489,20 +1474,46 @@ void func_8007DC80_165D40(VehicleInstance *arg0, Unk80157600 *arg1, f32 arg2) {
 }
 
 // AI - Main player update FSM: search, cutscene, enter/exit, free control
-#ifdef NON_MATCHING
 void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
-	u8 padBeforeSpeed[0x10];
+	// Route-following state, 0x800A08FC to 0x800A0924 in the data section
+	static s32 prevFlags = 1;
+	static s32 cutsceneFrame = 0;
+	static s32 pathIndex = 0;
+	static s32 timelineIndex = 0;
+	static s32 speedIndex = 0;
+	static s32 fadeIndex = 0;
+	static s32 exitStarted = 0;
+	static s32 cutsceneStarting = 0;
+	static s32 fadeInPending = 0;
+	static s32 fadeOutPending = 0;
+	static s32 cutsceneRoute = 0;
+	s32 pad1;
+	s32 pad2;
+	s32 pad3;
+	s32 pad4;
 	f32 speedScale;
 	s32 anim;
 	s32 targetYaw;
 	s32 flags;
+	s32 hasSearchAnim;
+	s32 canAdvance;
+	s32 dx;
+	s32 dz;
+	s32 nextAnim;
+	Unk165E60AnimState *animState;
+	f32 randomFrame;
+	s32 pad5;
+	s32 pad6;
+	s32 pad7;
+	s32 pad8;
+	s32 pad9;
+	s32 fadeComplete;
+	s32 pad10;
 
 	speedScale = 1.0f;
 	flags = D_800E65A8;
 
 	if (flags & 0x4000) {
-		s32 hasSearchAnim;
-
 		hasSearchAnim = D_800E6A68 & 0x10;
 		if ((hasSearchAnim != 0x10) && (D_80052B34->unk1C <= 0)) {
 			func_8007DAA8_165B68(D_800E6F00, D_800A06DC_18879C[D_800E6A6C], NULL, 0.0f, 0x10);
@@ -1515,130 +1526,86 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			return;
 		}
 	} else if (flags & 0x8000) {
-		Unk165E60Route *route;
-		Unk165E60Path *pathView;
-		Unk165E60Timeline *timeline;
-		s32 timelineStep;
-		s32 frame;
-		s32 routeIndex;
-		s32 routeByteOffset;
-		s32 canAdvance;
-		u8 padBeforeAnimation[4];
-		u8 padBeforeFade[8];
-		s32 fadeComplete;
-		u8 padAfterFade[0x10];
-		s32 stepFrame;
-
 		D_800E6A34 = func_80079304_1613C4();
-		D_800A0924_1889E4 = D_800E6A34;
+		cutsceneRoute = D_800E6A34;
 
-		if (!(D_800A08FC_1889BC & 0x8000)) {
-			D_800A091C_1889DC = 1;
+		if (!(prevFlags & 0x8000)) {
+			fadeInPending = 1;
 			func_80005AEC_66EC(0, 0, 0, 0x14);
-			D_800A0918_1889D8 = 1;
+			cutsceneStarting = 1;
 			func_8007D52C_1655EC();
 		}
 
-		if (D_800A091C_1889DC != 0) {
+		if (fadeInPending != 0) {
 			canAdvance = func_80005B30_6730();
 		} else {
 			canAdvance = 1;
 		}
 
 		if (canAdvance != 0) {
-			D_800A091C_1889DC = 0;
+			fadeInPending = 0;
 
-			if (D_800A0918_1889D8 != 0) {
-				Unk165E60Path *initialPath;
-				VehicleInstance *initialVehicle;
-
-				routeIndex = D_800E6A34;
-
-				D_800A0918_1889D8 = 0;
-				D_800A0910_1889D0 = 0;
-				D_800A0908_1889C8 = 0;
-				D_800A0900_1889C0 = 0; D_800A0904_1889C4 = 0; func_80081A18_169AD8(D_800A05FC_1886BC.entries[routeIndex].unk18->keyframes);
+			if (cutsceneStarting != 0) {
+				cutsceneStarting = 0;
+				fadeIndex = 0;
+				timelineIndex = 0;
+				cutsceneFrame = 0;
+				pathIndex = 0;
+				func_80081A18_169AD8(D_800A05FC_1886BC[D_800E6A34].unk18->keyframes);
 				func_80081A24_169AE4();
-				func_80081E08_169EC8(D_800A090A_1889CA);
+				func_80081E08_169EC8(timelineIndex);
 
-				frame = D_800A0904_1889C4;
-				timelineStep = D_800A0908_1889C8 + 1;
-				arg0->unkE = (D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14->headings[frame] * 32768.0f / 180.0);
-				initialPath = D_800A05FC_1886BC.entries[(u32)D_800E6A34].unk14;
-
-				initialVehicle = (VehicleInstance *)(u64)&D_800E6A78;
-				initialVehicle->unk4C = initialPath->points[frame][0];
-				initialVehicle->unk50 = initialPath->points[frame][1];
-				initialVehicle->unk54 = initialPath->points[frame][2];
-				D_800E6A38 = initialPath->unk34;
-				anim = initialPath->frames[frame];
-				D_800A090C_1889CC = 0;
-				D_800A0908_1889C8_W = timelineStep;
-
-				func_8007DAA8_165B68(D_800E6F00, anim, NULL, 0.0f, 0x10);
+				arg0->unkE = (D_800A05FC_1886BC[D_800E6A34].unk14->headings[pathIndex] * 32768.0f / 180.0);
+				D_800E6A78.unk4C = D_800A05FC_1886BC[D_800E6A34].unk14->points[pathIndex][0];
+				D_800E6A78.unk50 = D_800A05FC_1886BC[D_800E6A34].unk14->points[pathIndex][1];
+				D_800E6A78.unk54 = D_800A05FC_1886BC[D_800E6A34].unk14->points[pathIndex][2];
+				D_800E6A38 = D_800A05FC_1886BC[D_800E6A34].unk14->unk34;
+				timelineIndex++;
+				speedIndex = 0;
+				func_8007DAA8_165B68(D_800E6F00, D_800A05FC_1886BC[D_800E6A34].unk14->frames[pathIndex], NULL, 0.0f, 0x10);
 			}
 
-			routeByteOffset = D_800E6A34 * (s32)sizeof(*route); if (!((Unk8007F878_404 *)D_800E7304)->unkE50) { D_800A0904_1889C4++; } route = (Unk165E60Route *)&D_800A05FC_1886BC.bytes[routeByteOffset];
-			pathView = route->unk14;
-			stepFrame = pathView->frames[D_800A0904_1889C4];
-			if (D_800E730C != stepFrame) {
-				func_8007DAA8_165B68(D_800E6F00, stepFrame, NULL, 0.0f, 0x10);
-				route = &D_800A05FC_1886BC.entries[D_800E6A34];
-				pathView = route->unk14;
+			if (!((Unk8007F878_404 *)D_800E7304)->unkE50) {
+				pathIndex++;
 			}
 
-			targetYaw = pathView->headings[D_800A0904_1889C4];
-			if (targetYaw != 0x7D0) {
-				arg0->unkE = (targetYaw * 32768.0f / 180.0);
-				route = &D_800A05FC_1886BC.entries[D_800E6A34];
+			if (D_800E730C != D_800A05FC_1886BC[D_800E6A34].unk14->frames[pathIndex]) {
+				func_8007DAA8_165B68(D_800E6F00, D_800A05FC_1886BC[D_800E6A34].unk14->frames[pathIndex], NULL, 0.0f, 0x10);
 			}
 
-			timeline = route->unk18;
-			timelineStep = D_800A0908_1889C8;
-			frame = D_800A0900_1889C0;
-			if (frame >= timeline->transitionFrames[timelineStep]) {
-				D_800A0900_1889C0 = frame;
-				D_800A0908_1889C8_W = timelineStep;
-				if (timelineStep < 3) {
-					s16 transition;
-					func_80081E90_169F50(timelineStep - 1, timelineStep,
-					    (transition = timeline->transitionValues[timelineStep][1],
-					     D_800A0908_1889C8_W = timelineStep,
-					     transition));
-					D_800A0908_1889C8++; timeline = D_800A05FC_1886BC.entries[D_800E6A34].unk18;
+			if (D_800A05FC_1886BC[D_800E6A34].unk14->headings[pathIndex] != 0x7D0) {
+				arg0->unkE = (D_800A05FC_1886BC[D_800E6A34].unk14->headings[pathIndex] * 32768.0f / 180.0);
+			}
+
+			if (cutsceneFrame >= D_800A05FC_1886BC[D_800E6A34].unk18->transitionFrames[timelineIndex]) {
+				if (timelineIndex < 3) {
+					func_80081E90_169F50(timelineIndex - 1, timelineIndex, D_800A05FC_1886BC[D_800E6A34].unk18->transitionValues[timelineIndex][1]);
+					timelineIndex++;
 				}
 			}
 
-			if (D_800A0900_1889C0_R == timeline->fadeFrames[D_800A0910_1889D0]) {
-				D_800A0920_1889E0 = 1;
+			if (cutsceneFrame == D_800A05FC_1886BC[D_800E6A34].unk18->fadeFrames[fadeIndex]) {
+				fadeOutPending = 1;
 				func_80005AEC_66EC(0, 0, 0, 0x14);
-				D_800A0910_1889D0++;
+				fadeIndex++;
 			}
 
-			frame = D_800A0900_1889C0;
-			if (D_800A0920_1889E0 != 0) {
-				canAdvance = func_80005B30_6730();
-				frame = D_800A0900_1889C0;
-				fadeComplete = canAdvance;
+			if (fadeOutPending != 0) {
+				fadeComplete = func_80005B30_6730();
 			}
 
-			routeIndex = D_800E6A34;
-			route = &D_800A05FC_1886BC.entries[routeIndex];
-			pathView = route->unk14;
 			/* The original checks this stack slot even when the fade callback did not run. */
 			if (fadeComplete != 0) {
-				D_800A0920_1889E0 = 0;
+				fadeOutPending = 0;
 			}
-			if ((frame >= pathView->unk30) && (pathView->unk32 >= frame)) {
-				if (pathView->unk2C != 0) {
-					D_800E6A70 = pathView->unk2C;
-					if (frame >= pathView->unk38) {
-						f32 speed;
 
-						speed = pathView->unk3C[D_800A090C_1889CC];
-						if (speed != 2000.0f) {
-							D_800E6A38 = speed;
-							D_800A090C_1889CC++;
+			if ((cutsceneFrame >= D_800A05FC_1886BC[D_800E6A34].unk14->unk30) && (D_800A05FC_1886BC[D_800E6A34].unk14->unk32 >= cutsceneFrame)) {
+				if (D_800A05FC_1886BC[D_800E6A34].unk14->unk2C != 0) {
+					D_800E6A70 = D_800A05FC_1886BC[D_800E6A34].unk14->unk2C;
+					if (cutsceneFrame >= D_800A05FC_1886BC[D_800E6A34].unk14->unk38) {
+						if (D_800A05FC_1886BC[D_800E6A34].unk14->unk3C[speedIndex] != 2000.0f) {
+							D_800E6A38 = D_800A05FC_1886BC[D_800E6A34].unk14->unk3C[speedIndex];
+							speedIndex++;
 						}
 					}
 				}
@@ -1646,24 +1613,19 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				D_800E6A70 = 0;
 			}
 
-			D_800A0900_1889C0 = frame;
-			if (frame == route->unk4) {
+			if (cutsceneFrame == D_800A05FC_1886BC[D_800E6A34].unk4) {
 				func_8007B124_1631E4(D_800E6A1C);
-				routeIndex = D_800E6A34;
-				if (routeIndex == 7) {
+				if (D_800E6A34 == 7) {
 					func_8007DAA8_165B68(&D_800E6AD8, 0x73, NULL, 0.0f, 0x10);
 				}
 			}
 
-			frame = D_800A0900_1889C0;
-			route = &D_800A05FC_1886BC.entries[D_800E6A34];
-			if (frame == route->unk8) {
-				func_800153D8_15FD8(route->unkE); routeIndex = D_800E6A34; route = &D_800A05FC_1886BC.entries[routeIndex]; frame = D_800A0900_1889C0;
+			if (cutsceneFrame == D_800A05FC_1886BC[D_800E6A34].unk8) {
+				func_800153D8_15FD8(D_800A05FC_1886BC[D_800E6A34].unkE);
 			}
 
-			frame++;
-			D_800A0900_1889C0 = frame;
-			if (frame == route->unk0) {
+			cutsceneFrame++;
+			if (cutsceneFrame == D_800A05FC_1886BC[D_800E6A34].unk0) {
 				if ((D_800E6A34 == 6) || (D_800E6A34 == 7)) {
 					D_800E65A8 |= 0x100;
 				} else {
@@ -1676,7 +1638,7 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				}
 			}
 		}
-	} else if ((u8)flags & 4) {
+	} else if (flags & 4) {
 		if (func_8008DDC0_175E80() != 0) {
 			func_8007D69C_16575C(arg0);
 		}
@@ -1688,8 +1650,8 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			anim = 4;
 		}
 
-		if (D_800A0914_1889D4 == 0) {
-			D_800A0914_1889D4_W = 1;
+		if (exitStarted == 0) {
+			exitStarted = 1;
 			func_8007DAA8_165B68(D_800E6F00, anim, NULL, 0.0f, 0x10);
 		} else if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
 			D_800E6A68 |= 0x200;
@@ -1697,19 +1659,13 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 			}
 		}
-	} else if (((u16)flags & 0x800) || (flags & 0x80)) {
-		s32 currentYaw;
-		s32 originX;
-		f32 xDiff;
-
+	} else if ((flags & 0x800) || (flags & 0x80)) {
 		func_8007D52C_1655EC();
-		originX = func_800703D0_158490();
-		xDiff = D_800E6A78.unk4C - 96.0f;
-		targetYaw = (func_80003824_4424((f32)(s32)(xDiff - (f32)originX),
-										 (f32)(s32)D_800E6A78.unk54) + 0x8000) & 0xFFFF;
+		dx = (D_800E6A78.unk4C - 96.0f) - func_800703D0_158490();
+		dz = D_800E6A78.unk54;
+		targetYaw = (func_80003824_4424(dx, dz) + 0x8000) & 0xFFFF;
 
-		currentYaw = arg0->unkE;
-		if ((u16)targetYaw != (u16)currentYaw) {
+		if ((arg0->unkE & 0xFFFF) != (targetYaw & 0xFFFF)) {
 			if ((D_800E730C != 0x11) && (D_800E730C != 0xB) && (D_800E730C != 0xA)) {
 				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 			}
@@ -1721,61 +1677,57 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 			}
 			D_800E65A8 = 0x80;
 		}
-	} else {
-		if (flags & 0x40000) {
-			if (D_800E730C != 0x16) {
-				func_8007DAA8_165B68(D_800E6F00, 0x16, NULL, 0.0f, 0x10);
-			}
+	} else if (flags & 0x40000) {
+		if (D_800E730C != 0x16) {
+			func_8007DAA8_165B68(D_800E6F00, 0x16, NULL, 0.0f, 0x10);
+		}
 
-			if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
-				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
-				func_8001A068_1AC68();
-				D_800E65A8 |= 0x1000;
-				D_800E65A8 &= ~0x40000;
-			}
-		} else if ((flags & ~0x4102) == 1) {
-			s32 nextAnim;
-
-			D_800A0914_1889D4_W = 0;
-			func_8007D52C_1655EC();
-			if (arg1->button & 1) {
-				nextAnim = 0xF;
-				D_800E733C = 0xD;
-			} else if (arg1->button & 2) {
-				nextAnim = 0xE;
-				D_800E733C = 0xD;
-			} else {
-				nextAnim = 0;
-			}
-
-			if (D_800E733C >= 0xE) {
-				D_800E733C = 0xD;
-			}
-
-			speedScale = (f32)((f64)D_800E733C / 13.0);
-			if (speedScale < 0.0f) {
-				speedScale = 0.0f;
-			}
-
-			if (!(D_8009E8E0_1869A0[D_800E730C].unk0 & 0x100)) {
-				func_8007DB98_165C58(D_800E6F00, 0x11, nextAnim, speedScale);
-			}
-
-			if (D_800E730C == 0x11) {
-				D_800E7328++;
-			} else {
-				D_800E7328 = 0;
-			}
+		if (((Unk8007F878_404 *)D_800E7304)->unkE50 == 0) {
+			func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
+			func_8001A068_1AC68();
+			D_800E65A8 |= 0x1000;
+			D_800E65A8 &= ~0x40000;
+		}
+	} else if ((flags & ~0x4102) == 1) {
+		exitStarted = 0;
+		func_8007D52C_1655EC();
+		if (arg1->button & 1) {
+			nextAnim = 0xF;
+			D_800E733C = 0xD;
+		} else if (arg1->button & 2) {
+			nextAnim = 0xE;
+			D_800E733C = 0xD;
 		} else {
-			D_800E6A68 |= 0x200;
-			if (D_800E730C != 0x11) {
-				func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
-			}
+			nextAnim = 0;
+		}
+
+		if (D_800E733C >= 0xE) {
+			D_800E733C = 0xD;
+		}
+
+		speedScale = D_800E733C / 13.0;
+		if (speedScale < 0.0f) {
+			speedScale = 0.0f;
+		}
+
+		if (!(D_8009E8E0_1869A0[D_800E730C].unk0 & 0x100)) {
+			func_8007DB98_165C58(D_800E6F00, 0x11, nextAnim, speedScale);
+		}
+
+		if (D_800E730C == 0x11) {
+			D_800E7328++;
+		} else {
+			D_800E7328 = 0;
+		}
+	} else {
+		D_800E6A68 |= 0x200;
+		if (D_800E730C != 0x11) {
+			func_8007DAA8_165B68(D_800E6F00, 0x11, NULL, 0.0f, 0x10);
 		}
 	}
 
 	anim = D_800E730C;
-	if ((anim == 2) && ((currentLevel != 4) || (buildingInteriorToLoadId != 0x20) || (func_8000726C_7E6C((u64)2) != 0))) {
+	if ((anim == 2) && ((currentLevel != 4) || (buildingInteriorToLoadId != 0x20) || (func_8000726C_7E6C(2) != 0))) {
 		vehicleInstances[0].unk1C++;
 	}
 
@@ -1786,26 +1738,21 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 		func_8000CF4C_DB4C((void *)D_800E7304, D_800E6F00, 0x10, D_800E7310);
 	}
 
-	{
-		Unk165E60AnimState *animState;
-		f32 randomFrame;
-
-		animState = (Unk165E60AnimState *)(u32)D_800E6F00;
-		if (animState->unk40C == 0) {
-			flags = animState->unk18;
-			if (((flags == 3) || (flags == 8)) && (animState->unk1C == 1.0f)) {
-				func_800153D8_15FD8(0x96);
-				randomFrame = (f32)(((f64)(func_800038E0_44E0() & 1) * 0.1) + 0.2);
-				func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, randomFrame);
-			}
+	animState = (Unk165E60AnimState *)(u32)D_800E6F00;
+	if (animState->unk40C == 0) {
+		flags = animState->unk18;
+		if (((flags == 3) || (flags == 8)) && (animState->unk1C == 1.0f)) {
+			func_800153D8_15FD8(0x96);
+			randomFrame = ((func_800038E0_44E0() & 1) * 0.1) + 0.2;
+			func_80014A3C_1563C(D_800E6F00, 0x97, 0, 0, randomFrame);
 		}
 	}
 
-	D_800A08FC_1889BC = D_800E65A8;
+	prevFlags = D_800E65A8;
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/1648A0/func_8007DDA0_165E60.s", "src.us/overlay_gameplay/inside/1648A0_player_update_late_rodata.s")
-#endif
+
+// AI - Unnamed padding between route state scalars and fade tables
+u8 pad_1889E8[4] = { 0x00, 0x00, 0x00, 0x00 };
 
 // AI - Draw shadow/floor marker quad beneath the player
 void func_8007EB1C_166BDC(void *arg0) {

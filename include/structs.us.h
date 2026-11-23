@@ -562,18 +562,6 @@ typedef struct {
 	/* 0x18 */ Unk165E60Timeline *unk18;
 } Unk165E60Route;
 
-typedef union {
-	Unk165E60Route entries[8];
-	u8 bytes[sizeof(Unk165E60Route) * 8];
-} Unk165E60RouteTable;
-
-typedef struct {
-	/* 0x00 */ Unk165E60Timeline *unk0;
-	/* 0x04 */ u8 pad4[0x10];
-	/* 0x14 */ Unk165E60Path *unk14;
-	/* 0x18 */ u8 pad18[0x4];
-} Unk165E60RouteData;
-
 typedef struct {
 	/* 0x00 */ u8 pad0[0x18];
 	/* 0x18 */ s32 unk18;
