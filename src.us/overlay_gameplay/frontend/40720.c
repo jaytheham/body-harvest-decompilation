@@ -213,10 +213,10 @@ s32 func_80070270_40720(s32 arg0) {
 		func_8007A038_4A4E8();
 		break;
 	case 4:
-		func_800796D0_49B80(0, 0);
+		ShowHighScores(0, 0);
 		break;
 	case 5:
-		func_800796D0_49B80(StoreCurrentLevelStatsAndGetTotalScore(), 0);
+		ShowHighScores(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 		break;
 	case 6:
 		func_80076504_469B4();
@@ -937,7 +937,8 @@ void DrawWeaponIcon(s32 xCoord, s32 yCoord, f32 xScale, f32 yScale) {
 	} while (weaponIndex-- >= 0);
 }
 
-void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
+// US func_80071E80_42330
+void DrawLargeWeaponIcon(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	s32 textureIndex;
 	s32 weaponType;
 	s16 sizeX;
@@ -990,6 +991,7 @@ void func_80071E80_42330(s32 arg0, s32 arg1, f32 arg2, f32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
+// Something to do with inventory models
 void func_800722A4_42754(void) {
 	u16 perspNorm;
 	s16 i;
@@ -1102,7 +1104,8 @@ void func_80072604_42AB4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 }
 
 // Renders the twelve artifact slots around the rotating inventory display.
-void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+// US func_800728F4_42DA4
+void DrawAlienArtifactBackgroundModels(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	s32 unused3;
 	s32 unused4;
 	s32 unused5;
@@ -1161,8 +1164,8 @@ void func_800728F4_42DA4(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	D_80094848_64CF8 = D_80094848_64CF8 + 0xB6;
 }
 
-// Checks if selected inventory item is 0xb (weapon crystals)
-void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+// US func_80072B68_43018
+void DrawLargeSelectedInventoryItemModel(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	static s32 itemRotation = 0;
 	Gfx *packet;
 	s32 unusedPad1;
@@ -1187,7 +1190,7 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	}
 
 	if (selectedItem == 0xC) {
-		func_800728F4_42DA4(-0xB4, -0x32, -0x190, arg3);
+		DrawAlienArtifactBackgroundModels(-0xB4, -0x32, -0x190, arg3);
 		return;
 	}
 
@@ -1231,8 +1234,8 @@ void func_80072B68_43018(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 }
 
-// display inventory models
-void func_80072E18_432C8(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
+// US func_80072E18_432C8
+void DrawSmallInventoryModels(s32 arg0, s32 arg1, s32 arg2, f32 arg3) {
 	static s32 itemRotation = 0;
 	s32 padding[3];
 	f32 baseX;
@@ -1806,7 +1809,7 @@ void func_800731A8_43658(void)
 					break;
 				case 0x41:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
-					func_80072E18_432C8(0xB4, -0x3C, -0x190, var_f20);
+					DrawSmallInventoryModels(0xB4, -0x3C, -0x190, var_f20);
 					break;
 				case 0x42:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[40]]);
@@ -1898,7 +1901,7 @@ void func_800731A8_43658(void)
 					break;
 				case 0x45:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[39]]);
-					func_80072E18_432C8(0xB4, -0x3C, -0x190, var_f20);
+					DrawSmallInventoryModels(0xB4, -0x3C, -0x190, var_f20);
 					break;
 				case 0x46:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[43]]);
@@ -1914,7 +1917,7 @@ void func_800731A8_43658(void)
 					break;
 				case 0x4A:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[47]]);
-					func_80071E80_42330(0xD7, 0x78, var_f20, spEC);
+					DrawLargeWeaponIcon(0xD7, 0x78, var_f20, spEC);
 					break;
 				case 0x4B:
 					drawText("%@%s", -1, -1, &D_800AED70[D_800AED74[48]]);
@@ -1969,7 +1972,7 @@ void func_800731A8_43658(void)
 #endif
 						drawText("%@", -1, -1);
 					}
-					func_80072B68_43018(-0xC8, -0x32, -0x190, var_f20);
+					DrawLargeSelectedInventoryItemModel(-0xC8, -0x32, -0x190, var_f20);
 					break;
 				case 0x4C:
 					temp_v0_15 = weaponSlots[D_800D74AE];
@@ -2232,6 +2235,7 @@ void func_800731A8_43658(void)
 
 s32 D_8009485C_64D0C = 0;
 
+// Draws the main menu items transparency effect ?
 void func_80075710_45BC0(void) {
 	s32 pad[22];
 
@@ -2277,20 +2281,16 @@ void func_80075710_45BC0(void) {
 				gSPTextureRectangle(D_8005BB2C++, rowTextureOffset << 2, rowTopY << 2, (right << 2) - 1,
 				(rowBottomY << 2) - 1, G_TX_RENDERTILE, 0, 0, 0x1000, 0x400);
 			}
-
 		}
-
 	}
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 	gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-
 }
 
-
-
+// Sets background color of selectable interface items?
 void func_80075B64_46014(s16 arg0) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
@@ -2304,7 +2304,8 @@ void func_80075B64_46014(s16 arg0) {
 }
 
 // Show version info on title screen if slot 3 named GRIMLN
-void func_80075C84_46134(void) {
+// US func_80075C84_46134
+void DrawBuildInfo(void) {
 	if (D_800D6DA8[2][0] == 0x47) {
 		if (D_800D6DA8[2][1] == 0x52) {
 			if (D_800D6DA8[2][5] == 0x4E) {
@@ -2403,7 +2404,7 @@ void func_80075D58_46208(s32 arg0) {
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 	gSPDisplayList(D_8005BB2C++, D_40519B0);
 
-	func_80075C84_46134();
+	DrawBuildInfo();
 	gDPPipeSync(D_8005BB2C++);
 
 	if (arg0 == 0) {
@@ -2537,7 +2538,8 @@ IntroStopFrames D_80094894_64D44 = {{
 	0x00000FD2,
 }};
 
-s32 func_800768C4_46D74(void) {
+// US func_800768C4_46D74
+s32 StartIntroCutscene(void) {
 	static s32 movieFrame = 0;
 	static s8 startIndex = 0;
 	static s8 stopIndex = 0;
@@ -2659,9 +2661,8 @@ u8 D_80094944_64DF4 = 0xFF;
 s32 D_80094948_64DF8 = 0;
 u8 D_8009494C_64DFC = 0;
 
-// Called once before showing the 'Select Slot' screen
-// doFileSelectLoop
-s16 func_80076C98_47148(void) {
+// US func_80076C98_47148
+s16 ShowSelectSlotScreen(void) {
 	s32 selectedFile;
 	u32 frameCounter;
 	s32 saveFile;
@@ -2832,11 +2833,9 @@ void func_80076FE0_47490(s32 arg0, s32 arg1) {
 		arg1 = 9;
 		do {
 			s32 inner;
-
 			inner = 0x1F;
 			do {
 				s32 tile;
-
 				tile = 0xF;
 				do {
 					arg0 = tile;
@@ -3890,15 +3889,15 @@ void func_800789E4_48E94(void) {
 		if (osTvType == 0)
 #endif
 		{
-			func_8007BD98_4C248();
+			ShowWrongConsoleRegionScreen();
 		}
 		if (D_80047584 == 0) {
-			func_8007BC90_4C140();
+			ShowNoControllerScreen();
 		}
-		func_8007B618_4BAC8();
-		func_8007B900_4BDB0();
-		func_8007BB0C_4BFBC();
-		func_8007BEC0_4C370();
+		ShowClearSaveScreen();
+		ShowCopyrightScreen();
+		ShowPublisherLogoScreen();
+		ShowDmaLogoScreen();
 	}
 
 	fileSelectCycle = 0;
@@ -3909,7 +3908,7 @@ void func_800789E4_48E94(void) {
 
 		switch (*(u16*)&currentFrontendState) {
 			case FE_STATE_INTRO_MOVIE:
-				result = func_800768C4_46D74();
+				result = StartIntroCutscene();
 				switch (result) {
 					case 2:
 						currentFrontendState = FE_STATE_PRESS_START;
@@ -3953,7 +3952,7 @@ void func_800789E4_48E94(void) {
 				break;
 
 			case FE_STATE_FILE_SELECT:
-				result = func_80076C98_47148();
+				result = ShowSelectSlotScreen();
 
 				switch (result) {
 
@@ -4161,7 +4160,7 @@ void func_800789E4_48E94(void) {
 
 			case FE_STATE_HIGH_SCORES:
 				optionArg = 0;
-				func_800796D0_49B80(0, 0);
+				ShowHighScores(0, 0);
 				currentFrontendState = FE_STATE_PRESS_START;
 				break;
 
@@ -4308,8 +4307,8 @@ void func_8007949C_4994C(s32 arg0, u16 arg1) {
 	}
 }
 
-// displayHighScores
-void func_800796D0_49B80(s32 arg0, u16 arg1) {
+// US func_800796D0_49B80
+void ShowHighScores(s32 arg0, u16 arg1) {
 	s16 shouldExit;
 	s16 i;
 	s16 timer;
@@ -4617,7 +4616,6 @@ void func_8007A038_4A4E8(void) {
 		if (isButtonNewlyPressed(0, 0xD000) != 0) {
 			break;
 		}
-
 	}
 
 	D_80052ACC = 0;
@@ -4843,8 +4841,8 @@ void func_8007A774_4AC24(s32 arg0) {
 	}
 }
 
-// displayClearSaveData
-void func_8007B618_4BAC8(void) {
+// US func_8007B618_4BAC8
+void ShowClearSaveScreen(void) {
 	s32 pad0;
 	s32 pad1;
 	u8 sp3D;
@@ -4920,8 +4918,8 @@ void func_8007B618_4BAC8(void) {
 	}
 }
 
-// displayCopyright
-void func_8007B900_4BDB0(void) {
+// US func_8007B900_4BDB0
+void ShowCopyrightScreen(void) {
 	s32 counter;
 
 	counter = 120;
@@ -4969,8 +4967,8 @@ void func_8007B900_4BDB0(void) {
 #define PUBLISHER_LOGO_RECT 24, 80, 288, 96
 #endif
 
-// displayPublisherLogo
-void func_8007BB0C_4BFBC(void) {
+// US func_8007BB0C_4BFBC
+void ShowPublisherLogoScreen(void) {
 	s32 counter;
 
 	counter = 100;
@@ -4997,8 +4995,8 @@ void func_8007BB0C_4BFBC(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// displayNoControllerNotice
-void func_8007BC90_4C140(void) {
+// US func_8007BC90_4C140
+void ShowNoControllerScreen(void) {
 	func_800791A0_49650(1);
 	gDPFullSync(D_8005BB2C++);
 	gSPEndDisplayList(D_8005BB2C++);
@@ -5022,8 +5020,8 @@ void func_8007BC90_4C140(void) {
 	}
 }
 
-// displayWrongConsoleRegionNotice
-void func_8007BD98_4C248(void) {
+// US func_8007BD98_4C248
+void ShowWrongConsoleRegionScreen(void) {
 	func_800791A0_49650(1);
 	gDPFullSync(D_8005BB2C++);
 	gSPEndDisplayList(D_8005BB2C++);
@@ -5048,8 +5046,8 @@ void func_8007BD98_4C248(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// displayDmaLogo
-void func_8007BEC0_4C370(void)
+// US func_8007BEC0_4C370
+void ShowDmaLogoScreen(void)
 {
 	u16 counter;
 	counter = 0x4F;
