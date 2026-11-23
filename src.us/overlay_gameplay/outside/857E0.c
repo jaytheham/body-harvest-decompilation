@@ -87,7 +87,6 @@ void func_800769A8_85958(s32 arg0) {
 }
 
 // AI - Spawns D_80259D90 entries from D_80221A30/D_8021FA30 patterns via func_80076830_857E0 and func_800B84D0_C7480.
-#ifdef NON_MATCHING
 void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 {
 	s32 pattern;
@@ -97,22 +96,21 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 	Unk80052B40 sp98;
 	Unk80259D90 *entry;
 	s32 obj;
-	s16 x;
-	s32 z;
 	s32 inner;
 	s32 type;
 	s32 temp;
-	OutsideTreeStyle *tempTable;
+	OutsideTreeStyle *style;
 	s32 vertexX;
 	s32 vertexZ;
-	u32 packed;
 	u8 c0;
 	u8 c1;
 	u8 c2;
+	u32 packed;
+	s32 baseX;
+	s32 baseZ;
 	u16 *table;
-	u32 packedBackup[1];
-	s32 xOff;
-	s32 zOff;
+	u32 current[1];
+
 	spA0 = D_8013BCCC_Vector;
 	sp98 = D_8013BCD4_Vector;
 	if (D_8014D2E8 == 0x96)
@@ -121,7 +119,7 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 	}
 	arg1 += 0x20;
 	arg2 += 0x20;
-	if ((((arg1 < 0) || (arg1 >= 0x40)) || (arg2 < 0)) || (arg2 >= 0x40))
+	if ((arg1 < 0) || (arg1 >= 0x40) || (arg2 < 0) || (arg2 >= 0x40))
 	{
 		return;
 	}
@@ -134,152 +132,120 @@ void func_80076A10_859C0(s16 arg0, s16 arg1, s16 arg2)
 	for (outer = 0; outer != 0x10; outer++, table++)
 	{
 		packed = *table;
-		if (packed != 0)
+		/* The mask is redundant after the halfword load, but it keeps the temporary register order. */
+		if ((packed & 0xFFFF) != 0)
 		{
-			for (inner = 0; packed != 0; inner++, packed = (u16)(packedBackup[0] >> 4))
+			for (inner = 0; packed != 0; inner++, packed = (u16)(current[0] >> 4))
 			{
 				type = packed & 0xF;
-				packedBackup[0] = packed;
-				/* Preserve IDO's temporary register order at the allocation call. */
-				packed = (u32)(u64)packed;
-				packed = (u32)(u64)packed;
+				/* Stack copy of the word: every saved register is in use across the calls below. */
+				current[0] = packed;
 				if (type != 0)
 				{
 					obj = func_80076830_857E0();
-					if (obj == (-1))
+					if (obj == -1)
 					{
 						break;
 					}
-					entry = &D_80259D90[obj];
-					entry->unk0 = type;
-					entry->tileIndex = outer;
-					entry->chunkIndex = arg0;
-					entry->pad3 = inner;
-					xOff = ((arg1 << 2) + (outer & 3)) << 8;
-					zOff = ((arg2 << 2) + (outer >> 2)) << 8;
-					x = (D_801416A0_150650[inner] + xOff) - 0x8000;
-					z = (s16)((D_801416A8_150658[inner] + zOff) - 0x8000);
-					entry->unk4 = x;
-					if (x) {
-						/* Keep the X coordinate live through IDO register allocation. */
-					}
-					entry->unk6 = z;
+					D_80259D90[obj].unk0 = type;
+					D_80259D90[obj].tileIndex = outer;
+					D_80259D90[obj].chunkIndex = arg0;
+					D_80259D90[obj].pad3 = inner;
+					/* Vertex origins for the flat tree quad; they are only needed when type >= 0xE. */
+					baseX = (((arg1 << 2) + (outer & 3)) << 8) - 0x8000;
+					spA8.unk0 = D_801416A0_150650[inner] + (((arg1 << 2) + (outer & 3)) << 8) - 0x8000;
+					baseZ = (((arg2 << 2) + (outer >> 2)) << 8) - 0x8000;
+					spA8.unk4 = D_801416A8_150658[inner] + (((arg2 << 2) + (outer >> 2)) << 8) - 0x8000;
+					D_80259D90[obj].unk4 = spA8.unk0;
+					D_80259D90[obj].unk6 = spA8.unk4;
 					if (type < 0xE)
 					{
-						/* IDO schedules the Z store with the call and leaves the X store for its delay slot. */
-#line 177
-						spA8.unk4 = z;
-						spA8.components[0] = x;
-#line 177
-						spA8.components[1] = func_800B84D0_C7480(x, z) >> 8;
-#line 183
+						spA8.unk2 = func_800B84D0_C7480(spA8.unk0, spA8.unk4) >> 8;
+						entry = &D_80259D90[obj];
+						entry->unk8 = (void *)D_80222A30[type];
+						temp = (((spA8.unk4 * spA8.unk0 * 0x41C64E6D) + 0x3039) >> 16) / 256;
+						temp = (temp % 32) + 240;
+						sp98.unk0 = temp;
+						sp98.unk4 = temp;
+						sp98.unk2 = (((((spA8.unk4 * 0x41C64E6D) + 0x3039) >> 16) / 256) % 32) + 240;
+						if (((s16(*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2)
 						{
-							const s16 *zAddress = &spA8.components[2];
-							z = *zAddress;
-							x = spA8.unk0;
-							entry->unk8 = (void *)D_80222A30[type];
-							temp = ((((z | 0) * x) * 0x41C64E6D) + 0x3039) >> 16;
-							temp /= 256;
-							temp = (temp % 32) + 240;
-							sp98.unk0 = temp;
-							sp98.unk4 = temp;
-							sp98.unk2 = 256;
-							sp98.unk2 = ((((((z | 0) * 0x41C64E6D) + 0x3039) >> 16) / sp98.unk2) % 32) + 240;
-							if (((s16(*)[16])D_8013BC0C_14ABBC)[currentLevel][type] == 2)
-							{
-								spA0.unk0 = inner << 0xE;
-							}
-							func_800039D0_45D0(&spA8, &spA0, &sp98, &entry->matrix);
+							spA0.unk0 = inner << 0xE;
 						}
+						func_800039D0_45D0(&spA8, &spA0, &sp98, &entry->matrix);
+						continue;
+					}
+					if ((inner == 0) || (inner == 3))
+					{
+						c0 = 0xFF;
+						c1 = 0xFF;
+						c2 = 0xFF;
 					}
 					else
 					{
-#line 180
-						spA8.unk4 = z;
-#line 181
-						spA8.unk0 = x;
-#line 240
-						xOff = xOff - 0x8000;
-						zOff -= 0x8000;
-#line 205
-						if ((inner == 0) || (inner == 3))
-						{
-							c0 = 0xFF;
-							c1 = 0xFF;
-							c2 = 0xFF;
-						}
-						else
-						{
-							c0 = 0xC8;
-							c1 = 0xC8;
-							c2 = 0xC8;
-						}
-						tempTable = &((OutsideTreeStyle(*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
-						entry = &D_80259D90[obj];
-						entry->unk8 = (void *)tempTable->texture;
-						vertexX = D_801416B0_150660[inner][0] + xOff;
-						vertexZ = D_801416C0_150670[inner][0] + zOff;
-						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
-
-						entry->vertices[0].v.ob[0] = vertexX;
-						entry->vertices[0].v.ob[1] = tempTable->height + temp;
-						entry->vertices[0].v.cn[3] = 0xFF;
-						entry->vertices[0].v.cn[2] = c2;
-						entry->vertices[0].v.cn[1] = c1;
-						entry->vertices[0].v.cn[0] = c0;
-						entry->vertices[0].v.tc[1] = 0;
-						entry->vertices[0].v.tc[0] = 0;
-						entry->vertices[0].v.flag = 0;
-						entry->vertices[0].v.ob[2] = vertexZ;
-
-						entry->vertices[1].v.ob[1] = temp;
-						entry->vertices[1].v.tc[0] = 0;
-						entry->vertices[1].v.flag = 0;
-						entry->vertices[1].v.ob[2] = vertexZ;
-						entry->vertices[1].v.ob[0] = vertexX;
-						/* Keep both stores on one line for IDO scheduling. */
-						entry->vertices[1].v.tc[1] = (tempTable->scale << 0xB) - 0x20; entry->vertices[1].v.cn[3] = 0xFF;
-						entry->vertices[1].v.cn[2] = c2;
-						entry->vertices[1].v.cn[1] = c1;
-						entry->vertices[1].v.cn[0] = c0;
-
-						vertexX = D_801416B0_150660[inner][1] + xOff;
-						vertexZ = D_801416C0_150670[inner][1] + zOff;
-
-						temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
-						entry->vertices[2].v.ob[0] = vertexX;
-						entry->vertices[2].v.ob[1] = tempTable->height + temp;
-						entry->vertices[2].v.flag = 0;
-						entry->vertices[2].v.ob[2] = vertexZ;
-						entry->vertices[2].v.tc[0] = (tempTable->width << 3) << 8;
-						entry->vertices[2].v.cn[3] = 0xFF;
-						entry->vertices[2].v.cn[2] = c2;
-						entry->vertices[2].v.cn[1] = c1;
-						entry->vertices[2].v.cn[0] = c0;
-						entry->vertices[2].v.tc[1] = 0;
-
-						entry->vertices[3].v.flag = 0;
-						entry->vertices[3].v.ob[2] = vertexZ;
-						entry->vertices[3].v.ob[1] = temp;
-						entry->vertices[3].v.ob[0] = vertexX;
-						entry = (Unk80259D90 *)(u64)entry;
-						entry = (Unk80259D90 *)(u64)entry;
-						entry = (Unk80259D90 *)(u64)entry;
-						entry->vertices[3].v.tc[0] = (tempTable->width << 10) << 1;
-						entry->vertices[3].v.tc[1] = ((tempTable->scale << 1) << 10) - 0x20;
-						entry->vertices[3].v.cn[3] = 0xFF;
-						entry->vertices[3].v.cn[2] = c2;
-						entry->vertices[3].v.cn[1] = c1;
-						entry->vertices[3].v.cn[0] = c0;
+						c0 = 0xC8;
+						c1 = 0xC8;
+						c2 = 0xC8;
 					}
+					style = &((OutsideTreeStyle(*)[2])D_8013BB14_14AAC4)[currentLevel - 1][type - 14];
+					entry = &D_80259D90[obj];
+					entry->unk8 = (void *)style->texture;
+					vertexX = D_801416B0_150660[inner][0] + baseX;
+					vertexZ = D_801416C0_150670[inner][0] + baseZ;
+					temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
+
+					entry->vertices[0].v.ob[0] = vertexX;
+					entry->vertices[0].v.ob[1] = style->height + temp;
+					entry->vertices[0].v.cn[3] = 0xFF;
+					entry->vertices[0].v.cn[2] = c2;
+					entry->vertices[0].v.cn[1] = c1;
+					entry->vertices[0].v.cn[0] = c0;
+					entry->vertices[0].v.tc[1] = 0;
+					entry->vertices[0].v.tc[0] = 0;
+					entry->vertices[0].v.flag = 0;
+					entry->vertices[0].v.ob[2] = vertexZ;
+
+					entry->vertices[1].v.ob[1] = temp;
+					entry->vertices[1].v.tc[0] = 0;
+					entry->vertices[1].v.flag = 0;
+					entry->vertices[1].v.ob[2] = vertexZ;
+					entry->vertices[1].v.ob[0] = vertexX;
+					/* Both stores stay on one line: the alpha store is scheduled before the texture coordinate. */
+					entry->vertices[1].v.tc[1] = ((style->scale << 6) << 5) - 0x20; entry->vertices[1].v.cn[3] = 0xFF;
+					entry->vertices[1].v.cn[2] = c2;
+					entry->vertices[1].v.cn[1] = c1;
+					entry->vertices[1].v.cn[0] = c0;
+
+					vertexX = D_801416B0_150660[inner][1] + baseX;
+					vertexZ = D_801416C0_150670[inner][1] + baseZ;
+					temp = func_800B84D0_C7480(vertexX, vertexZ) >> 8;
+
+					entry->vertices[2].v.ob[0] = vertexX;
+					entry->vertices[2].v.ob[1] = style->height + temp;
+					entry->vertices[2].v.flag = 0;
+					entry->vertices[2].v.ob[2] = vertexZ;
+					entry->vertices[2].v.tc[0] = (style->width << 6) << 5;
+					entry->vertices[2].v.cn[3] = 0xFF;
+					entry->vertices[2].v.cn[2] = c2;
+					entry->vertices[2].v.cn[1] = c1;
+					entry->vertices[2].v.cn[0] = c0;
+					entry->vertices[2].v.tc[1] = 0;
+
+					entry->vertices[3].v.flag = 0;
+					entry->vertices[3].v.ob[2] = vertexZ;
+					entry->vertices[3].v.ob[1] = temp;
+					entry->vertices[3].v.ob[0] = vertexX;
+					entry->vertices[3].v.tc[0] = (style->width << 6) << 5;
+					entry->vertices[3].v.tc[1] = ((style->scale << 6) << 5) - 0x20;
+					entry->vertices[3].v.cn[3] = 0xFF;
+					entry->vertices[3].v.cn[2] = c2;
+					entry->vertices[3].v.cn[1] = c1;
+					entry->vertices[3].v.cn[0] = c0;
 				}
 			}
 		}
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/857E0/func_80076A10_859C0.s")
-#endif
 
 void func_80076FCC_85F7C(s32 arg0, s32 arg1) {
 	s32 i;
