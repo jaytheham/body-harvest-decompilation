@@ -1317,10 +1317,6 @@ extern u8 D_800A427C_18C33C[];
 extern char *D_800A428C_18C34C[];
 extern char *D_800A42C8_18C388[];
 extern char *D_800A4304_18C3C4[];
-extern s32 D_800A4340_18C400; // AI - interiorMenuCursor: index into the interior menu's slot table (read)
-extern s8 D_800A4343_18C403;
-extern s32 D_800A4344_18C404;
-extern s16 D_800A4348_18C408;
 extern Unk800A4354 D_800A4354_18C414;
 extern Unk800A4354 D_800A435C_18C41C;
 extern Unk800A4354 D_800A4364_18C424;

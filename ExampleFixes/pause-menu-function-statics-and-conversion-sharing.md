@@ -69,7 +69,16 @@ beql    a1,v1,...
 move    a1,v1
 ```
 
-The function is still unmatched: the statics need their data and BSS placed at the original addresses.
+To place the statics: the file-scope D_800A4340/44/48 definitions were removed and the data defined after them
+moved below the function, so the three initialised statics are emitted at 0x800A4340..0x800A4348. The BSS static
+`pendingSelection` lives at the word-aligned 0x800FCF4C (EU 0x800FCF7C), but IDO gives `.bss` 16-byte alignment, so a
+plain `.fixed_bss` entry put it at 0x800FCF50. As for outside/AE0E0, the inside segment lists the entry with
+`linker_entry: false` and a separate `overlay_gameplay_inside_menu` segment with `subalign: 4` and `bss_size: 0x10`
+links it.
+
+The last byte difference was the spill slot of the loop's slot pointer (`sw t5,0x24(sp)` instead of `0x28`).
+Locals take frame space in declaration order; declaring `s16 fade` right after `u8 slotValue` packs it into the
+alignment gap before `s32 i`, shrinking the locals by 4 bytes and moving the spill to 0x28 with the same 0xC0 frame.
 
 ## Continue guard frees a constant shared after the loop
 

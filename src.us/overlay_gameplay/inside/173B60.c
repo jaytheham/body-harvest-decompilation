@@ -366,32 +366,6 @@ char *D_800A4304_18C3C4[15] = {
 };
 // Pause menu label pointers (German)
 
-s32 D_800A4340_18C400 = 4;
-
-s32 D_800A4344_18C404 = 0;
-
-s16 D_800A4348_18C408 = 0;
-
-u8 pad_18C49C[0x8] = {
-	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-};
-// padding before D_800A4354 (2 bytes auto-aligned)
-
-Unk800A4354 D_800A4354_18C414 = { 0x0110, 0x0028, 0xFFFF };
-
-Unk800A4354 D_800A435C_18C41C = { 0, 0, 0 };
-
-Unk800A4354 D_800A4364_18C424 = { 0, 0, 0 };
-
-u16 D_800A436C_18C42C = 0x0000;
-
-s16 D_800A4370_18C430 = 0x0000;
-
-u8 pad_18C4C4[0xC] = {
-	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
-};
-// trailing padding (2 bytes auto-aligned)
-
 // ============================================================
 // 173B60 rodata
 // ============================================================
@@ -799,15 +773,6 @@ void func_8008C8A4_174964(void) {
 
 // doPauseMenu ?
 // Render and handle the pause menu: 3x3 icon grid, analog stick navigation
-// CURRENT(58)
-// The cursor, the shown label, the navigation lock and the deferred selection are private to this function:
-// only function statics give the target's uncached loads and stores. To build it, D_800A4340_18C400,
-// D_800A4344_18C404 and D_800A4348_18C408 have to become these statics (the data defined after them then moves
-// below the function), and the BSS of this file has to place pendingSelection at D_800FCF4C.
-// The code is instruction-identical to the target; the remaining score is the D_800FCA92_W spelling and the
-// placement of the statics. The early `continue` in the draw loop is what lets `case 3` and the cursor test of
-// the default case share the constant 3 in a0 (with the loop body inside `if (slots[i] != 0xF)` they do not).
-#ifdef NON_MATCHING
 void func_8008CF2C_174FEC(void) {
 	static SignedWord selectedIndex = { 4 }; // D_800A4340_18C400
 	static s32 shownItem = 0; // D_800A4344_18C404
@@ -815,13 +780,13 @@ void func_8008CF2C_174FEC(void) {
 	static s32 pendingSelection; // D_800FCF4C
 	u8 slots[9];
 	u8 slotValue;
+	s16 fade;
 	s32 i;
 	s32 texIndex;
 	s16 x;
 	s16 y;
 	s32 stickX;
 	s32 stickY;
-	s16 fade;
 
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 	gDPSetTexturePersp(D_8005BB2C++, G_TP_NONE);
@@ -981,9 +946,26 @@ void func_8008CF2C_174FEC(void) {
 	}
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/inside/173B60/func_8008CF2C_174FEC.s")
-#endif
+
+u8 pad_18C49C[0x8] = {
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+// padding before D_800A4354 (2 bytes auto-aligned)
+
+Unk800A4354 D_800A4354_18C414 = { 0x0110, 0x0028, 0xFFFF };
+
+Unk800A4354 D_800A435C_18C41C = { 0, 0, 0 };
+
+Unk800A4354 D_800A4364_18C424 = { 0, 0, 0 };
+
+u16 D_800A436C_18C42C = 0x0000;
+
+s16 D_800A4370_18C430 = 0x0000;
+
+u8 pad_18C4C4[0xC] = {
+	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+};
+// trailing padding (2 bytes auto-aligned)
 
 // Main update/tick: drive HUD scrolling, call HUD/pause renderers, handle Start
 void func_8008D900_1759C0(void) {
