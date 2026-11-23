@@ -799,8 +799,20 @@ void func_8008C8A4_174964(void) {
 
 // doPauseMenu ?
 // Render and handle the pause menu: 3x3 icon grid, analog stick navigation
+// CURRENT(233)
+// The cursor, the shown label, the navigation lock and the deferred selection are private to this function:
+// only function statics give the target's uncached loads and stores. To build it, D_800A4340_18C400,
+// D_800A4344_18C404 and D_800A4348_18C408 have to become these statics (the data defined after them then moves
+// below the function), and the BSS of this file has to place pendingSelection at D_800FCF4C.
+// Remaining difference: the target keeps the constant 3 of `case 3` in a0 and reuses it for the cursor test of
+// the default case; here both tests load it into at. Replacing the 3 of the two divisions in the draw loop with
+// another value gives the target's registers, so that constant is shared with the loop in this form.
 #ifdef NON_MATCHING
 void func_8008CF2C_174FEC(void) {
+	static SignedWord selectedIndex = { 4 }; // D_800A4340_18C400
+	static s32 shownItem = 0; // D_800A4344_18C404
+	static s16 navLocked = 0; // D_800A4348_18C408
+	static s32 pendingSelection; // D_800FCF4C
 	u8 slots[9];
 	u8 slotValue;
 	s32 i;
@@ -818,10 +830,10 @@ void func_8008CF2C_174FEC(void) {
 	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
 	gDPSetRenderMode(D_8005BB2C++, G_RM_XLU_SURF, G_RM_XLU_SURF2);
 
-	i = 8;
-	do {
+	i = 9;
+	while (i--) {
 		slots[i] = 0xF;
-	} while (i--);
+	}
 
 	if (D_800FCA90 != 0) {
 		slots[4] = 0xE;
@@ -841,61 +853,59 @@ void func_8008CF2C_174FEC(void) {
 	}
 
 	if (D_800FCF20 == 1) {
-		if ((stickX < -0x1E) && (D_800A4340_Menu1 >= 4) && (slots[D_800A4340_Menu1 - 1] != 0xF)) {
-			D_800A4340_18C400_W = D_800A4340_Menu1 - 1;
+		if ((stickX < -0x1E) && (selectedIndex.word >= 4) && (slots[selectedIndex.word - 1] != 0xF)) {
+			selectedIndex.word = selectedIndex.word - 1;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7); stickX = D_8004758A;
 		}
 
-		if ((stickX >= 0x1F) && (D_800A4340_Nav1 < 5) && (slots[D_800A4340_Nav1 + 1] != 0xF) && (D_800A4348_18C408 == 0)) {
-			D_800A4340_18C400_W = D_800A4340_Nav1 + 1;
+		if ((stickX >= 0x1F) && (selectedIndex.word < 5) && (slots[selectedIndex.word + 1] != 0xF) && (navLocked == 0)) {
+			selectedIndex.word = selectedIndex.word + 1;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
 		}
 
 		stickY = D_8004758B;
-		if ((stickY >= 0x1F) && (D_800A4340_Nav2 >= 2) && (slots[D_800A4340_Nav2 - 3] != 0xF)) {
-			D_800A4340_18C400_W = D_800A4340_Nav2 - 3;
+		if ((stickY >= 0x1F) && (selectedIndex.word >= 2) && (slots[selectedIndex.word - 3] != 0xF)) {
+			selectedIndex.word = selectedIndex.word - 3;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7); stickY = D_8004758B;
 		}
 
-		if ((stickY < -0x1E) && (D_800A4340_Nav3 < 7) && (slots[D_800A4340_Nav3 + 3] != 0xF)) {
-			D_800A4340_18C400_W = D_800A4340_Nav3 + 3;
+		if ((stickY < -0x1E) && (selectedIndex.word < 7) && (slots[selectedIndex.word + 3] != 0xF)) {
+			selectedIndex.word = selectedIndex.word + 3;
 			D_800FCF20 = 0;
 			func_800153D8_15FD8(0xC7);
 		}
 	}
 
 	fade = D_800FCA92;
-	slotValue = slots[D_800A4340_Menu2];
+	slotValue = slots[selectedIndex.word];
 	if (fade != 0xFF) {
-		D_800A4344_18C404_W = -1;
-		func_8001A54C_Menu(D_800A56EC_18D7AC, -1);
+		shownItem = -1;
+		func_8001A54C_1B14C((u8 *) D_800A56EC_18D7AC);
 		fade = (D_800FCA92_W = D_800FCA92 - 0x20);
 	} else {
-		if (D_800A4344_18C404 != slotValue) {
+		if (shownItem != (u32) slotValue) {
+			shownItem = slotValue;
 			switch (D_800313D0_31FD0) {
 			case 0:
 			default:
-				D_800A4344_18C404_W = slotValue;
-				func_8001A54C_Menu((u8 *) D_800A428C_18C34C[slotValue], slotValue); fade = D_800FCA92_Lang0;
+				func_8001A54C_1B14C((u8 *) D_800A428C_18C34C[shownItem]); fade = D_800FCA92_W;
 				break;
 			case 2:
-				D_800A4344_18C404_W = slotValue;
-				func_8001A54C_Menu((u8 *) D_800A4304_18C3C4[slotValue], slotValue); fade = D_800FCA92_Lang1;
+				func_8001A54C_1B14C((u8 *) D_800A4304_18C3C4[shownItem]); fade = D_800FCA92_W;
 				break;
 			case 1:
-				D_800A4344_18C404_W = slotValue;
-				func_8001A54C_Menu((u8 *) D_800A42C8_18C388[slotValue], slotValue); fade = D_800FCA92_Lang2;
+				func_8001A54C_1B14C((u8 *) D_800A42C8_18C388[shownItem]); fade = D_800FCA92_W;
 				break;
 			}
 		}
-		D_800FCF4C = 0xFFFFFFFFU;
+		pendingSelection = -1;
 	}
 
-	if (D_800FCF4C != 0xFFFFFFFFU) {
-		D_800A4340_18C400_W = D_800FCF4C;
+	if (pendingSelection != -1) {
+		selectedIndex.word = pendingSelection;
 	}
 
 	if (fade < 0xFF) {
@@ -906,19 +916,18 @@ void func_8008CF2C_174FEC(void) {
 
 	i = 8;
 	do {
-		slotValue = slots[i];
-		if (slotValue != 0xF) {
+		if (slots[i] != 0xF) {
 			x = ((i % 3) << 5) + (D_80068084 / 2) - 0x2C;
-			texIndex = D_800A427C_18C33C[slotValue];
+			texIndex = D_800A427C_18C33C[slots[i]];
 
-			if (i == D_800A4340_Menu3) {
-				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0xC8, 0xFF, D_800FCA92 & 0xFF);
-				if (D_800A4340_DrawCompare != D_800FCB1E) {
-					func_80013810_14410(D_800A4343_18C403);
-					D_800FCB1E = D_800A4340_DrawAfterCall;
+			if (i == selectedIndex.word) {
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0xC8, 0xFF, D_800FCA92);
+				if (selectedIndex.word != D_800FCB1E) {
+					func_80013810_14410(selectedIndex.signedBytes[3]);
+					D_800FCB1E = selectedIndex.word;
 				}
 			} else {
-				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0x64, 0x7F, D_800FCA92 & 0xFF);
+				gDPSetPrimColor(D_8005BB2C++, 1, 0, 0, 0x64, 0x7F, D_800FCA92);
 			}
 
 			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(D_8025CCC0 + (texIndex * 0x240)), G_IM_FMT_CI, G_IM_SIZ_8b, 24, 24, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
@@ -934,9 +943,7 @@ void func_8008CF2C_174FEC(void) {
 		}
 
 		func_8001A54C_1B14C((u8 *)D_800A56F0_18D7B0);
-		slotValue = slots[D_800A4340_Menu4];
-
-		switch (slotValue) {
+		switch (slots[selectedIndex.word]) {
 		case 6:
 			D_800E65A8 |= 0x100;
 			return;
@@ -957,18 +964,18 @@ void func_8008CF2C_174FEC(void) {
 			D_800E65A8 |= 0x80000;
 			return;
 		default:
-			if (((D_80052B34->unk1A != 0) || (D_800A4340_Menu4 != 3)) && (slotValue != 0xF) && (slotValue != 8)) {
-				D_80050AD4 = slotValue;
+			if (((D_80052B34->unk1A != 0) || (selectedIndex.word != 3)) && (slots[selectedIndex.word] != 0xF) && (slots[selectedIndex.word] != 8)) {
+				D_80050AD4 = slots[selectedIndex.word];
 			}
 			D_800E65A8 &= ~2;
 			D_800FCA92_W = D_800FCA92 - 1;
-			D_800FCF4C = D_800A4340_Menu4;
+			pendingSelection = selectedIndex.word;
 			break;
 		}
 	}
 
 	if (D_800FCA92 < 0x21) {
-		D_800A4340_18C400_W = 4;
+		selectedIndex.word = 4;
 	}
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 }
