@@ -1066,8 +1066,8 @@ void func_8007C8FC_1649BC(void) {
 
 // AI - Dispatch player rendering (shadow + model)
 void func_8007C93C_1649FC(void) {
-	func_8007EB1C_166BDC(&D_800E6A78);
-	func_8007EFD4_167094(&D_800E6A78);
+	DrawPlayerShadow(&D_800E6A78);
+	DrawPlayer(&D_800E6A78);
 }
 
 // AI - Normalize analog stick input to speed scalar (0.0-1.0)
@@ -1109,7 +1109,7 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 	s32 deltaZ;
 	s32 overrideYaw;
 	s32 rotatedStickX;
-	s32 stackPad28; /* Preserve the trig temporary's stack home. */
+	s32 stackPad28;
 	f32 trig;
 
 	if (((s16)D_80052B34->unk1C <= 0) && (D_80052AD0 != 0))
@@ -1152,7 +1152,6 @@ void func_8007CAA8_164B68(VehicleInstance *arg0, OSContPad *arg1)
 			rotatedStickX = (f32)arg1->stick_x * trig - sinf(PLAYER_ANGLE_TO_RADIANS(stickInput)) * (f32)arg1->stick_y;
 			trig = sinf(PLAYER_ANGLE_TO_RADIANS(stickInput));
 			movementWord = (cosf(PLAYER_ANGLE_TO_RADIANS(stickInput)) * (f32)arg1->stick_y) + ((f32)arg1->stick_x * trig);
-			/* The identity keeps IDO's movement register and spill order. */
 			D_800E6A64 = func_80003824_4424((f32)-rotatedStickX, (f32)(movementWord ^ 0));
 			if (D_800A08F8_1889B8 > 0.0f)
 			{
@@ -1299,7 +1298,6 @@ void func_8007D548_165608(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	D_800E6A30 = (func_80003824_4424(xDiff, zDiff) + 0x8000) & 0xFFFF;
 	D_800E6A68 |= 0x80;
 }
-
 
 // AI - Look up search animation ID for a given object
 s32 func_8007D62C_1656EC(Unk8007D62C_Entry *arg0, s32 arg1) {
@@ -1594,7 +1592,6 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 				fadeComplete = func_80005B30_6730();
 			}
 
-			/* The original checks this stack slot even when the fade callback did not run. */
 			if (fadeComplete != 0) {
 				fadeOutPending = 0;
 			}
@@ -1754,8 +1751,8 @@ void func_8007DDA0_165E60(VehicleInstance *arg0, OSContPad *arg1) {
 // AI - Unnamed padding between route state scalars and fade tables
 u8 pad_1889E8[4] = { 0x00, 0x00, 0x00, 0x00 };
 
-// AI - Draw shadow/floor marker quad beneath the player
-void func_8007EB1C_166BDC(void *arg0) {
+// US func_8007EB1C_166BDC
+void DrawPlayerShadow(void *arg0) {
 	s16 sp2E;
 	s16 sp2C;
 	s16 sp2A;
@@ -1851,14 +1848,13 @@ void func_8007EB1C_166BDC(void *arg0) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 }
 
-// AI - Render player character model with full matrix setup and damage flash
-void func_8007EFD4_167094(VehicleInstance *arg0) {
+// US func_8007EFD4_167094
+void DrawPlayer(VehicleInstance *arg0) {
 	Unk80052B40_fp translation;
 	Unk80052B40 position;
 	Unk80052B40 scale;
 	Unk80052B40 rotation;
 	f32 scaleFactors[6] = {0.8f, 0.7f, 0.6f, 0.4f, 0.2f, 0.0f};
-	/* The original initializes a second copy of the scale table. */
 	f32 unusedScaleFactors[6] = {0.8f, 0.7f, 0.6f, 0.4f, 0.2f, 0.0f};
 	static s32 renderScaleIndex = 0;
 
@@ -1922,7 +1918,6 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 		if (D_800E65A8 & 0x8000) {
 			u16 fixedScale = (s32)(256.0f * D_800E6A38) & 0xFFFF;
 			scale.unk4 = fixedScale;
-			/* Reuse the dead vehicle pointer to preserve the original stack frame. */
 			arg0 = (VehicleInstance *)D_8005BB38;
 			D_8005BB38 = &((Mtx *)arg0)[1];
 			scale.unk2 = fixedScale;
@@ -1946,6 +1941,7 @@ void func_8007EFD4_167094(VehicleInstance *arg0) {
 	}
 	gSPMatrix(D_8005BB2C++, K0_TO_PHYS(&D_80031120_31D20), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
 }
+
 // Initialized data following the player render scale counter.
 u8 D_800A0960_188A20 = 0x04;
 s32 D_800A0964_188A24 = 0x00000001;
@@ -2562,8 +2558,8 @@ void func_8007F878_167938(void) {
 	func_8000CF4C_DB4C(temp, ptr, D_8009E4C8_186588[category][model].unkC, D_800E6AD8.unk410);
 }
 
-// AI - Render NPC model with full matrix transforms
-void func_8007F8F4_1679B4(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
+// US func_8007F8F4_1679B4
+void DrawNpc(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
 {
 	Unk80052B40_fp position;
 	Unk80052B40 scale;

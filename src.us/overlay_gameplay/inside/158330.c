@@ -6077,7 +6077,7 @@ void func_80070294_158354(Unk8007CAA8_6A40 *arg0)
 	{
 		return;
 	}
-	if ((isButtonNewlyPressed(0, 0x8000) == 0) && (D_800E65C8->unk0 != 4))
+	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A) == 0) && (D_800E65C8->unk0 != 4))
 	{
 		return;
 	}
@@ -6840,7 +6840,6 @@ void func_80071F08_159FC8(void) {
 	}
 }
 
-// jtbl_800A4A08_18CAC8
 // AI - Processes tile map to set up wall/collision boundaries
 void func_80072300_15A3C0(void)
 {
@@ -6855,7 +6854,6 @@ void func_80072300_15A3C0(void)
 		D_800E6468[v0] = 0xFF;
 	}
 
-	
 	fp = 0x60;
 	for (y = 0; y < D_800E6464; y++) {
 		for (x = 0; x < D_800E6460; x++) {
@@ -7175,7 +7173,7 @@ void func_8007290C_15A9CC(void)
 	D_80068080 = 7;
 }
 
-// AI - Checks if current interior has special vehicle-spawn rooms
+// Returning 1 makes the NPC in the building animate?
 s32 func_80072E88_15AF48(void)
 {
 	switch (currentLevel)
@@ -7441,7 +7439,6 @@ void func_80073A48_15BB08(void) {
 
 // AI - Renders the top-of-screen HUD gradient bar with level-specific colors
 void func_80073A50_15BB10(void) {
-	/* Preserve halfword arithmetic and signed vertex-coordinate reads. */
 	union { u16 value; s16 signedValue; } baseY;
 	s32 y1;
 	s32 y2;
@@ -7717,8 +7714,8 @@ void func_80073A50_15BB10(void) {
 	gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_CULL_BACK | G_LIGHTING);
 }
 
-// Render one visible floor tile.
-void func_8007453C_15C5FC(s32 arg0, s32 arg1) {
+// US func_8007453C_15C5FC
+void DrawOrCullBuildingTile(s32 arg0, s32 arg1) {
 	s32 cellType;
 	s32 rotation;
 	s32 textureOffset;
@@ -7853,7 +7850,7 @@ void func_80074998_15CA58(void) {
 			var_s0 = D_800E6464 - 1;
 			if (var_s0 >= 0) {
 				do {
-					func_8007453C_15C5FC(var_s1, var_s0);
+					DrawOrCullBuildingTile(var_s1, var_s0);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -7873,7 +7870,7 @@ void func_80074A0C_15CACC(void) {
 			if (D_800E6464 > 0) {
 				var_s0 = 0;
 				do {
-					func_8007453C_15C5FC(var_s1, var_s0);
+					DrawOrCullBuildingTile(var_s1, var_s0);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6464);
 			}
@@ -7893,7 +7890,7 @@ void func_80074A8C_15CB4C(void) {
 			var_s0 = D_800E6464 - 1;
 			if (var_s0 >= 0) {
 				do {
-					func_8007453C_15C5FC(var_s1, var_s0);
+					DrawOrCullBuildingTile(var_s1, var_s0);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -7913,7 +7910,7 @@ void func_80074B0C_15CBCC(void) {
 			if (D_800E6464 > 0) {
 				var_s0 = 0;
 				do {
-					func_8007453C_15C5FC(var_s1, var_s0);
+					DrawOrCullBuildingTile(var_s1, var_s0);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6464);
 			}
@@ -7933,7 +7930,7 @@ void func_80074B98_15CC58(void) {
 			if (D_800E6460 > 0) {
 				var_s0 = 0;
 				do {
-					func_8007453C_15C5FC(var_s0, var_s1);
+					DrawOrCullBuildingTile(var_s0, var_s1);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6460);
 			}
@@ -7953,7 +7950,7 @@ void func_80074C18_15CCD8(void) {
 			var_s0 = D_800E6460 - 1;
 			if (var_s0 >= 0) {
 				do {
-					func_8007453C_15C5FC(var_s0, var_s1);
+					DrawOrCullBuildingTile(var_s0, var_s1);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -7973,7 +7970,7 @@ void func_80074C8C_15CD4C(void) {
 			if (D_800E6460 > 0) {
 				var_s0 = 0;
 				do {
-					func_8007453C_15C5FC(var_s0, var_s1);
+					DrawOrCullBuildingTile(var_s0, var_s1);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6460);
 			}
@@ -7993,7 +7990,7 @@ void func_80074D18_15CDD8(void) {
 			var_s0 = D_800E6460 - 1;
 			if (var_s0 >= 0) {
 				do {
-					func_8007453C_15C5FC(var_s0, var_s1);
+					DrawOrCullBuildingTile(var_s0, var_s1);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -8188,7 +8185,7 @@ void func_8007568C_15D74C(void) {
 				if (func_8007C428_1644E8(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60,
 					halfDim * radiusScale, D_8008DDF4_175EB4, D_8008DDF8_175EB8,
 					D_8008DDFC_175EBC, (u16)((s32)((u32)(s32)((D_8008DDF0_175EB0 * angleScale) / angleDivisor) << 16) >> 16), 0x238E)) {
-					func_8007F8F4_1679B4(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60, entry->unk8 << 0xE);
+					DrawNpc(entry->unk2 - 0x60, entry->unk4, entry->unk6 - 0x60, entry->unk8 << 0xE);
 				}
 			} else {
 				if ((D_800E65BC[objIdx].unk40 & 0x10000000) && (entry->unk2E & 1)) {
@@ -8791,7 +8788,7 @@ void func_800775F0_15F6B0(s32 arg0, s32 arg1)
 	}
 }
 
-// AI - Spawns objects/enemies in a room based on type
+// Spawns dynamic effects at room entry?
 void func_8007774C_15F80C(s32 arg0, s32 arg1) {
 	s32 objType;
 	s32 x;
@@ -9297,6 +9294,7 @@ void func_800787E8_1608A8(u8 arg0, u8 arg1) {
 }
 
 static void func_80078994_stub(void) {}
+
 // AI - Remaps button directions based on room orientation
 u8 func_8007899C_160A5C(s32 arg0, s32 arg1)
 {
