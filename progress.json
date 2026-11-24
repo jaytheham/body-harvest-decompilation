@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-23T10:32:15Z",
-  "commit": "bd72e211",
-  "commit_timestamp": "2026-11-23T19:36:37+13:00",
+  "generated": "2026-11-24T07:51:43Z",
+  "commit": "7b4083f5",
+  "commit_timestamp": "2026-11-24T20:50:45+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 3045,
@@ -2091,7 +2091,7 @@
       "asm_stubs": 0,
       "total": 95,
       "matched_pct": 100.0,
-      "contributor": "TheGh0stShip"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/inside/1648A0.c",
@@ -2101,7 +2101,7 @@
       "asm_stubs": 0,
       "total": 22,
       "matched_pct": 100.0,
-      "contributor": "TheGh0stShip"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/inside/167C90.c",
@@ -2577,16 +2577,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 89,
-      "matched": 2357,
+      "files": 91,
+      "matched": 2474,
       "non_matching": 10,
-      "asm_stubs": 0
-    },
-    {
-      "name": "TheGh0stShip",
-      "files": 6,
-      "matched": 349,
-      "non_matching": 2,
       "asm_stubs": 0
     },
     {
@@ -2594,6 +2587,13 @@
       "files": 148,
       "matched": 335,
       "non_matching": 0,
+      "asm_stubs": 0
+    },
+    {
+      "name": "TheGh0stShip",
+      "files": 4,
+      "matched": 232,
+      "non_matching": 2,
       "asm_stubs": 0
     },
     {
@@ -2908,7 +2908,7 @@
     },
     {
       "date": "2026-11-22",
-      "commit": "bd72e21",
+      "commit": "1d08214",
       "matched": 3045,
       "non_matching": 12,
       "total": 3057
