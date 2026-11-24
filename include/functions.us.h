@@ -767,7 +767,7 @@ void func_8008DC44_175D04(s32 arg0);
 void func_8008DCF4_175DB4(s32 arg0);
 void func_80071510_1595D0(void);
 void func_80079330_1613F0(void);
-void DrawOrCullBuildingTile(s32 arg0, s32 arg1);
+void DrawOrCullRoomTile(s32 arg0, s32 arg1);
 void func_80074D98_15CE58(s32 arg0);
 void func_800773F4_15F4B4(Gfx *arg0, s32 arg1, s32 arg2, s32 arg3, u16 arg4, u16 arg5, u16 arg6, Mtx *arg7, s32 arg8, s16 arg9);
 void DrawNpc(s16 arg0, s16 arg1, s16 arg2, s32 arg3);

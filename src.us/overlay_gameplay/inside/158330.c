@@ -7715,7 +7715,7 @@ void func_80073A50_15BB10(void) {
 }
 
 // US func_8007453C_15C5FC
-void DrawOrCullBuildingTile(s32 arg0, s32 arg1) {
+void DrawOrCullRoomTile(s32 arg0, s32 arg1) {
 	s32 cellType;
 	s32 rotation;
 	s32 textureOffset;
@@ -7850,7 +7850,7 @@ void func_80074998_15CA58(void) {
 			var_s0 = D_800E6464 - 1;
 			if (var_s0 >= 0) {
 				do {
-					DrawOrCullBuildingTile(var_s1, var_s0);
+					DrawOrCullRoomTile(var_s1, var_s0);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -7870,7 +7870,7 @@ void func_80074A0C_15CACC(void) {
 			if (D_800E6464 > 0) {
 				var_s0 = 0;
 				do {
-					DrawOrCullBuildingTile(var_s1, var_s0);
+					DrawOrCullRoomTile(var_s1, var_s0);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6464);
 			}
@@ -7890,7 +7890,7 @@ void func_80074A8C_15CB4C(void) {
 			var_s0 = D_800E6464 - 1;
 			if (var_s0 >= 0) {
 				do {
-					DrawOrCullBuildingTile(var_s1, var_s0);
+					DrawOrCullRoomTile(var_s1, var_s0);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -7910,7 +7910,7 @@ void func_80074B0C_15CBCC(void) {
 			if (D_800E6464 > 0) {
 				var_s0 = 0;
 				do {
-					DrawOrCullBuildingTile(var_s1, var_s0);
+					DrawOrCullRoomTile(var_s1, var_s0);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6464);
 			}
@@ -7930,7 +7930,7 @@ void func_80074B98_15CC58(void) {
 			if (D_800E6460 > 0) {
 				var_s0 = 0;
 				do {
-					DrawOrCullBuildingTile(var_s0, var_s1);
+					DrawOrCullRoomTile(var_s0, var_s1);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6460);
 			}
@@ -7950,7 +7950,7 @@ void func_80074C18_15CCD8(void) {
 			var_s0 = D_800E6460 - 1;
 			if (var_s0 >= 0) {
 				do {
-					DrawOrCullBuildingTile(var_s0, var_s1);
+					DrawOrCullRoomTile(var_s0, var_s1);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
@@ -7970,7 +7970,7 @@ void func_80074C8C_15CD4C(void) {
 			if (D_800E6460 > 0) {
 				var_s0 = 0;
 				do {
-					DrawOrCullBuildingTile(var_s0, var_s1);
+					DrawOrCullRoomTile(var_s0, var_s1);
 					var_s0 += 1;
 				} while (var_s0 < D_800E6460);
 			}
@@ -7990,7 +7990,7 @@ void func_80074D18_15CDD8(void) {
 			var_s0 = D_800E6460 - 1;
 			if (var_s0 >= 0) {
 				do {
-					DrawOrCullBuildingTile(var_s0, var_s1);
+					DrawOrCullRoomTile(var_s0, var_s1);
 					var_s0 -= 1;
 				} while (var_s0 >= 0);
 			}
