@@ -924,6 +924,7 @@ void func_80007548_8148(void)
 	}
 }
 
+// Clear state in preparation for a new level
 void func_80007570_8170(void)
 {
 	s32 temp;

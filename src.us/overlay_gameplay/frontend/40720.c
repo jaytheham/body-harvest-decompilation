@@ -2571,7 +2571,7 @@ s32 StartIntroCutscene(void) {
 
 	drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
 	func_8007D7E0_4DC90();
-	func_8007BFC4_4C474();
+	ShowIntroTextCrawl();
 
 	do {
 		if (result) {}
@@ -3662,8 +3662,8 @@ s32 func_80078110_485C0(void) {
 	return state;
 }
 
-// doChooseFileNameLoop
-s32 func_80078424_488D4(void) {
+// US func_80078424_488D4
+s32 ShowEnterSaveSlotNameScreen(void) {
 	s32 state;
 	u32 frameCounter;
 	s32 changed;
@@ -3821,7 +3821,7 @@ s32 func_80078424_488D4(void) {
 			D_800476A0 = 1;
 		} else {
 			D_800476A0 = 3;
-			state = func_80078424_488D4();
+			state = ShowEnterSaveSlotNameScreen();
 		}
 	}
 
@@ -3982,7 +3982,7 @@ void BootToStartMenu(void) {
 				break;
 
 			case FE_STATE_CHOOSE_FILE_NAME:
-				result = func_80078424_488D4();
+				result = ShowEnterSaveSlotNameScreen();
 				switch (result) {
 					case 2:
 						currentFrontendState = FE_STATE_FILE_DETAILS;
@@ -4259,8 +4259,8 @@ void func_800791A0_49650(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311D0));
 }
 
-// AI - Returns the byte length of a null-terminated string.
-s32 func_8007946C_4991C(u8* arg0) {
+// US func_8007946C_4991C
+s32 GetLengthOfString(u8* arg0) {
 	s32 len;
 	u8* ptr;
 
@@ -4390,7 +4390,7 @@ void ShowHighScores(s32 arg0, u16 arg1) {
 				drawText("%H", 0x800);
 
 				entry = &D_80047FB8[4 - i];
-				t = 6 - func_8007946C_4991C(entry->name);
+				t = 6 - GetLengthOfString(entry->name);
 				t /= 2;
 				drawText("%@%s", t + 4, 3, entry->name);
 				drawText("%H", 0x400);
@@ -4632,7 +4632,8 @@ void func_8007A754_4AC04(void) {
 	ShowMissionSuccessScreen();
 }
 
-void func_8007A774_4AC24(s32 arg0) {
+// US func_8007A774_4AC24
+void DrawDmaLogoAndHcu(s32 arg0) {
 	u16 perspNorm;
 	s16 cameraPulse;
 	s16 blend;
@@ -5062,8 +5063,8 @@ void ShowDmaLogoScreen(void)
 	while (1)
 	{
 		func_800791A0_49650(1);
-		func_8007A774_4AC24(0);
-		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0))
+		DrawDmaLogoAndHcu(0);
+		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)))
 		{
 			func_80005AEC_66EC(0, 0, 0, 0x40);
 			if (!D_800D7962)
@@ -5082,7 +5083,8 @@ void ShowDmaLogoScreen(void)
 	}
 }
 
-void func_8007BFC4_4C474(void) {
+// US func_8007BFC4_4C474
+void ShowIntroTextCrawl(void) {
 	s16 lineCount;
 	s16 currentLine;
 	u16 fadeCounter;
@@ -5604,7 +5606,7 @@ s32 ShowSaveBeaconScreen(s32 isWarpEnabled) {
 				func_80070CC4_41174();
 				func_8007166C_41B1C();
 
-				if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 					selection = D_800D74A4 - 0x42;
 					func_800708B8_40D68(0x43);
 					func_800708B8_40D68(0x44);
@@ -5618,7 +5620,7 @@ s32 ShowSaveBeaconScreen(s32 isWarpEnabled) {
 					}
 				}
 
-				if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 					selection = 2;
 					timer = 0x10;
 				}
@@ -5742,7 +5744,7 @@ s32 ShowInventoryScreen(void) {
 
 			if (menuWarmup < 0x10) {
 				menuWarmup++;
-			} else if (isButtonNewlyPressed(0, 0x9000)) {
+			} else if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				selection = D_800D74A4 - 0x47;
 				osSyncPrintf("WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\n", D_800D74A4, 0x47, selection);
 
