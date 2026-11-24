@@ -3898,12 +3898,6 @@ typedef struct {
 			s32 weaponFlags : 24;
 			u32 weaponFlagsLow : 8;
 		};
-		struct {
-			/* 0x08 */ u8 pad8;
-			/* 0x09 */ u8 pad9;
-			/* 0x0A */ u8 padA;
-			/* 0x0B */ s8 unkB;
-		};
 	};
 	s16 unkC;
 	s16 unkE;

@@ -851,7 +851,7 @@ extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
 extern u8 D_80052ACC; // Force 30/25 FPS max (NTSC/PAL)
 typedef enum D_80052ACDFlags {
 	D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL = 0x2,
-
+	D_80052ACD_FLAG_CHEAT_SNUFFLE = 4,
 	D_80052ACD_FLAG_EASY_MODE = 0x40,
 } D_80052ACDFlags;
 extern u8 D_80052ACD; // Bitflags. See D_80052ACDFlags.

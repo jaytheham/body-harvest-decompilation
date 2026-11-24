@@ -317,7 +317,7 @@ void func_80139984_148934(void) {
 			func_800A8E18_B7DC8(0x18);
 		}
 	}
-	if (D_80052ACD & 4) {
+	if (D_80052ACD & D_80052ACD_FLAG_CHEAT_SNUFFLE) {
 		D_80031424[2] = 0xD;
 		D_80031424[3] = 0xF;
 		D_80031424[4] = 0xB;
