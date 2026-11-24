@@ -667,7 +667,6 @@ void func_8008BD18_173DD8(s16 arg0, s16 arg1, f32 arg2, s32 arg3, void *arg4, s3
 
 		vtx0->v.cn[0] = vtx1->v.cn[0] = vtx3->v.cn[0] = vtx2->v.cn[0] = 0xB9;
 
-		/* The zero term folds in IDO. The cursor test keeps the display-list cursor in v0. */
 		do {
 			vtx0->v.cn[2] = vtx1->v.cn[2] = vtx3->v.cn[2] = vtx2->v.cn[2] =
 				vtx0->v.cn[1] = vtx1->v.cn[1] = vtx3->v.cn[1] = vtx2->v.cn[1] =
@@ -1022,7 +1021,7 @@ void func_8008D900_1759C0(void) {
 	} else {
 		D_800FCA90 = 0;
 	}
-	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START) != 0) {
+	if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_START)) {
 		if (D_800FCA80 == 0) {
 			if (D_800E65A8 == 1) {
 				if (D_800FCA92 != 0xFF) {

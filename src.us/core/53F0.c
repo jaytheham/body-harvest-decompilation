@@ -32,7 +32,7 @@ s32 func_800047FC_53FC(s16 arg0) {
 	return arg0 * arg0;
 }
 
-// US func_80004818_541_8
+// US func_80004818_5418
 s32 IsPlayerWithinXTilesOf(s8 arg0, s8 arg1, u8 arg2) {
 	s8 x = (s8)(D_80052B34->unk0 >> 8);
 	s8 z = (s8)(D_80052B34->unk4 >> 8);
@@ -924,6 +924,7 @@ void func_80007548_8148(void)
 	}
 }
 
+// Clear state in preparation for a new level
 void func_80007570_8170(void)
 {
 	s32 temp;

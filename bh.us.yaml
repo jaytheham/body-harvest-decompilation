@@ -309,9 +309,9 @@ segments:
     exclusive_ram_id: 80070270
     overlay: true
     subsegments:
-      - [0x40720, c, overlay_gameplay/frontend/40720]
-      - [0x4DC90, c, overlay_gameplay/frontend/4DC90]
-      - [0x52690, c, overlay_gameplay/frontend/52690]
+      - [0x40720, c, overlay_gameplay/frontend/40720] # User interface, frontend state management
+      - [0x4DC90, c, overlay_gameplay/frontend/4DC90] # Intro cutscene
+      - [0x52690, c, overlay_gameplay/frontend/52690] # Level transition, intro cutscene effects
       - [0x60E60, .data, overlay_gameplay/frontend/data_60E60]
       - [0x61D50, .data, overlay_gameplay/frontend/data_61D50]
       - [0x62550, .data, overlay_gameplay/frontend/data_62550]

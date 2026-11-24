@@ -412,6 +412,25 @@ typedef union {
 	f32 components[3];
 } Vec3fComponents; /* size = 0x0C */
 
+typedef union {
+	f32 m[3][3];
+	struct {
+		f32 xx, yx, zx,
+			xy, yy, zy,
+			xz, yz, zz;
+	};
+} Mtx3f;
+
+typedef union {
+	f32 m[4][4];
+	struct {
+		f32 xx, yx, zx, wx,
+			xy, yy, zy, wy,
+			xz, yz, zz, wz,
+			xw, yw, zw, ww;
+	};
+} Mtx4f;
+
 typedef struct {
 	/* 0x00 */ s16 x;
 	/* 0x02 */ s16 y;
@@ -4459,8 +4478,8 @@ typedef union {
 
 /* Adjacent camera basis vectors share a single six-float storage block. */
 typedef struct {
-	f32 x, y, z;
-	f32 rightX, rightY, rightZ;
+	Vec3f up;
+	Vec3f right;
 } CameraBasis;
 
 typedef struct {

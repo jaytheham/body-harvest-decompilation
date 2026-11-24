@@ -357,7 +357,7 @@ s16 func_80017CA4_188A4(void) {
 	portraitForArrow = portrait;
 
 	if (portrait != 0xFF) {
-		func_800190D4_19CD4(D_80068084 - 0x5B, D_80068088 - 0x60, portrait, D_8006C568, D_8006C56A);
+		DrawDialoguePortrait(D_80068084 - 0x5B, D_80068088 - 0x60, portrait, D_8006C568, D_8006C56A);
 	}
 
 	if (D_8006C55C == 0) {
@@ -678,7 +678,8 @@ void func_80018D7C_1997C(u16 arg0) {
 	}
 }
 
-void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
+// US func_800190D4_19CD4
+void DrawDialoguePortrait(s32 xCoord, s32 yCoord, u16 portraitId, u16 isBlinking, u16 mouthState) {
 	Unk800190D4 *entry;
 	u8 *texture;
 	s32 eyeX;
@@ -689,7 +690,7 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	u16 pad3;
 	u16 portraitIndex;
 
-	portraitIndex = arg2;
+	portraitIndex = portraitId;
 	switch (portraitIndex) {
 	case 0:
 		func_80017BF8_187F8(0);
@@ -725,13 +726,13 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	gDPPipeSync(D_8005BB2C++);
 	gDPLoadTLUT_pal256(D_8005BB2C++, &texture[0x1400]);
 	gDPLoadTextureBlock(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, arg0 << 2, arg1 << 2, (arg0 + 0x40) << 2, (arg1 + 0x20) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+	gSPTextureRectangle(D_8005BB2C++, xCoord << 2, yCoord << 2, (xCoord + 0x40) << 2, (yCoord + 0x20) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 	gDPLoadTextureBlock(D_8005BB2C++, &texture[0x800], G_IM_FMT_CI, G_IM_SIZ_8b, 64, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gSPTextureRectangle(D_8005BB2C++, arg0 << 2, (arg1 + 0x20) << 2, (arg0 + 0x40) << 2, (arg1 + 0x40) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
+	gSPTextureRectangle(D_8005BB2C++, xCoord << 2, (yCoord + 0x20) << 2, (xCoord + 0x40) << 2, (yCoord + 0x40) << 2, G_TX_RENDERTILE, 0, 0, 1 << 10, 1 << 10);
 
-	if ((entry->unk0 != 0) && (entry->unk2 != 0) && (arg3 != 0)) {
-		eyeX = entry->unk0 + arg0;
-		eyeY = entry->unk2 + arg1;
+	if ((entry->unk0 != 0) && (entry->unk2 != 0) && (isBlinking != 0)) {
+		eyeX = entry->unk0 + xCoord;
+		eyeY = entry->unk2 + yCoord;
 		gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 64, texture);
 		gDPSetTile(D_8005BB2C++, G_IM_FMT_CI, G_IM_SIZ_8b, 5, 0, G_TX_LOADTILE, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
 		gDPLoadSync(D_8005BB2C++);
@@ -743,16 +744,16 @@ void func_800190D4_19CD4(s32 arg0, s32 arg1, u16 arg2, u16 arg3, u16 arg4) {
 	}
 
 	if ((entry->unk4 != 0) && (entry->unk6 != 0)) {
-		if (arg4 == 1) {
-			mouthX = entry->unk4 + arg0;
-			mouthY = entry->unk6 + arg1;
+		if (mouthState == 1) {
+			mouthX = entry->unk4 + xCoord;
+			mouthY = entry->unk6 + yCoord;
 			gDPLoadTextureTile(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 80, 32, 64, 48, 80, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gSPTextureRectangle(D_8005BB2C++, mouthX << 2, mouthY << 2, (mouthX + 0x10) << 2, (mouthY + 0x10) << 2, G_TX_RENDERTILE, 32 << 5, 64 << 5, 1 << 10, 1 << 10);
 			return;
 		}
-		if (arg4 == 2) {
-			mouthX = entry->unk4 + arg0;
-			mouthY = entry->unk6 + arg1;
+		if (mouthState == 2) {
+			mouthX = entry->unk4 + xCoord;
+			mouthY = entry->unk6 + yCoord;
 			gDPLoadTextureTile(D_8005BB2C++, texture, G_IM_FMT_CI, G_IM_SIZ_8b, 64, 80, 48, 64, 64, 80, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 			gSPTextureRectangle(D_8005BB2C++, mouthX << 2, mouthY << 2, (mouthX + 0x10) << 2, (mouthY + 0x10) << 2, G_TX_RENDERTILE, 48 << 5, 64 << 5, 1 << 10, 1 << 10);
 		}

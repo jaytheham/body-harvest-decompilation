@@ -7,6 +7,7 @@
 #include "core/53F0.h"
 #include "core/12C80.h"
 #include "core/1050.h"
+#include "40720.h"
 
 typedef enum FrontEndState
 {
@@ -204,13 +205,13 @@ s32 func_80070270_40720(s32 arg0) {
 	switch (arg0)
 	{
 	case 1:
-		func_800789E4_48E94();
+		DoBootToStartMenuSequence();
 		break;
 	case 2:
 		D_800476A2 = 1;
-		return func_80082CBC_5316C(currentLevel - 2, &D_80052B2C->unk30);
+		return ShowTransitionToNextLevel(currentLevel - 2, &D_80052B2C->unk30);
 	case 3:
-		func_8007A038_4A4E8();
+		ShowGameOverScreen();
 		break;
 	case 4:
 		ShowHighScores(0, 0);
@@ -219,20 +220,20 @@ s32 func_80070270_40720(s32 arg0) {
 		ShowHighScores(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 		break;
 	case 6:
-		func_80076504_469B4();
+		DoGameCompletedSequence();
 		break;
 	case 13:
-		func_8007685C_46D0C();
+		DoPalZeroGameCompletedSequence();
 		break;
 	case 9:
-		return func_8007CFB4_4D464(1);
+		return ShowSaveBeaconScreen(1);
 	case 14:
-		return func_8007CFB4_4D464(0);
+		return ShowSaveBeaconScreen(0);
 	case 11:
-		return func_8007D2B0_4D760();
+		return ShowInventoryScreen();
 	case 12:
 		D_800946DC_64B8C = FE_STATE_PRESS_START;
-		func_800789E4_48E94();
+		DoBootToStartMenuSequence();
 		break;
 	}
 
@@ -2425,9 +2426,9 @@ void func_800764B4_46964(void) {
 	} while (i--);
 }
 
-// displayCometExplodesMovie
-// AI - Plays the comet-explosion end-game movie, then shows the credits and returns to the title screen.
-s32 func_80076504_469B4(void)
+// Comet explodes, credits, mission success screen, then kiss sequence
+// US func_80076504_469B4
+s32 DoGameCompletedSequence(void)
 {
 	s32 result;
 	s32 fadeResult;
@@ -2460,8 +2461,8 @@ s32 func_80076504_469B4(void)
 			func_80005AEC_66EC(0, 0, 0, 0x10);
 		}
 	} while (func_80005B30_6730() == 0);
-	func_8007C4BC_4C96C();
-	func_8007C7F4_4CCA4();
+	ShowGameCredits();
+	ShowMissionSuccessScreen();
 	D_80052ACA = 6;
 	D_8004772C = 0xFF;
 	D_80047730 = 0x40;
@@ -2494,13 +2495,12 @@ s32 func_80076504_469B4(void)
 	return result;
 }
 
-// displayEndGameMessage
-// AI - Shows the end-game message then scrolls the credits; returns to the title screen.
-s32 func_8007685C_46D0C(void) {
+// US func_8007685C_46D0C
+s32 DoPalZeroGameCompletedSequence(void) {
 	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
-	func_8007C7F4_4CCA4();
+	ShowMissionSuccessScreen();
 	func_80013684_14284();
-	func_8007C4BC_4C96C();
+	ShowGameCredits();
 	D_80052ACA = 3;
 	func_800056A8_62A8();
 	func_800056A8_62A8();
@@ -2571,7 +2571,7 @@ s32 StartIntroCutscene(void) {
 
 	drawText("%C%a", 0xE6, 0xE6, 0xE6, 0xFF);
 	func_8007D7E0_4DC90();
-	func_8007BFC4_4C474();
+	ShowIntroTextCrawl();
 
 	do {
 		if (result) {}
@@ -2856,8 +2856,8 @@ void func_80076FE0_47490(s32 arg0, s32 arg1) {
 	} while (arg0 != 0);
 }
 
-// doPressStartLoop
-s32 func_8007704C_474FC(void) {
+// US func_8007704C_474FC
+s32 ShowStartScreen(void) {
 	u32 frameCounter;
 	s32 state;
 	s32 value;
@@ -2876,11 +2876,11 @@ s32 func_8007704C_474FC(void) {
 		}
 
 		if (frameCounter >= 0x11U) {
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				state = 2;
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				state = 0;
 			}
 		}
@@ -2933,7 +2933,8 @@ s32 func_8007704C_474FC(void) {
 	return state;
 }
 
-s32 func_80077204_476B4(void)
+// US func_80077204_476B4
+s32 ShowAreYouSureScreen(void)
 {
 	u32 frameCounter;
 	s32 state;
@@ -2954,7 +2955,7 @@ s32 func_80077204_476B4(void)
 		{
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
-			if (isButtonNewlyPressed(0, 0x9000) != 0)
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A|BUTTON_START))
 			{
 				state = 0;
 				if ((*selectedSaveSlot) == 0x38)
@@ -2966,7 +2967,7 @@ s32 func_80077204_476B4(void)
 					state = state ^ 0;
 				}
 			}
-			if (isButtonNewlyPressed(0, 0x4000) != 0)
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B))
 			{
 				state = 0;
 			}
@@ -2987,8 +2988,8 @@ s32 func_80077204_476B4(void)
 	return state;
 }
 
-// displaySelectFileDifficulty
-s32 func_80077344_477F4(void) {
+// US func_80077344_477F4
+s32 ShowSelectDifficultyScreen(void) {
 	u32 frameCounter;
 	s32 state;
 
@@ -3008,14 +3009,14 @@ s32 func_80077344_477F4(void) {
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A|BUTTON_START)) {
 				state = 2;
 				if (D_800D74A4 == 0x5A) {
 					D_80052ACD |= 0x80;
 				}
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				state = 0;
 			}
 		}
@@ -3037,8 +3038,8 @@ s32 func_80077344_477F4(void) {
 	return state;
 }
 
-// doDeleteFile
-s32 func_80077494_47944(void)
+// US func_80077494_47944
+s32 ShowDeleteSaveSlotScreen(void)
 {
 	u32 frameCounter;
 	s32 i;
@@ -3122,7 +3123,7 @@ s32 func_80077494_47944(void)
 	func_800153D8_15FD8(0xC8);
 
 	currentSaveFileIndex = frontendSelectedEntry - 2;
-	if ((state != 0) && (func_80077204_476B4() == 2))
+	if ((state != 0) && (ShowAreYouSureScreen() == 2))
 	{
 		D_800476A0 = 3;
 	}
@@ -3134,8 +3135,8 @@ s32 func_80077494_47944(void)
 	return currentSaveFileIndex;
 }
 
-// doCopyFile
-s32 func_800776BC_47B6C(void)
+// US func_800776BC_47B6C
+s32 ShowCopySaveSlotScreen(void)
 {
 	s32 *indexPointer = &currentSaveFileIndex;
 	s32 nameIndex;
@@ -3194,7 +3195,7 @@ s32 func_800776BC_47B6C(void)
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START))
 			{
 				D_80047F88 = frontendSelectedEntry - 2;
 				if (D_800D6DA8[D_80047F88][1] != 0x6D)
@@ -3202,7 +3203,7 @@ s32 func_800776BC_47B6C(void)
 					state = 2;
 				}
 			}
-			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0)
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B))
 			{
 				state = 0;
 			}
@@ -3252,7 +3253,7 @@ s32 func_800776BC_47B6C(void)
 				func_80070CC4_41174();
 				func_8007166C_41B1C();
 
-				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0)
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START))
 				{
 					D_80047F8C = frontendSelectedEntry - 2;
 					if ((0, D_80047F88) != D_80047F8C)
@@ -3261,7 +3262,7 @@ s32 func_800776BC_47B6C(void)
 					}
 				}
 
-				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B) != 0)
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B))
 				{
 					state = 0;
 				}
@@ -3275,7 +3276,7 @@ s32 func_800776BC_47B6C(void)
 		} while (state == 1);
 
 		func_800153D8_15FD8(0xC8);
-		if ((state == 2) && (func_80077204_476B4() == 2))
+		if ((state == 2) && (ShowAreYouSureScreen() == 2))
 		{
 			D_800476A0 = 5;
 		}
@@ -3289,15 +3290,15 @@ s32 func_800776BC_47B6C(void)
 		else
 		{
 			func_800708B8_40D68(0x35);
-			func_800776BC_47B6C();
+			ShowCopySaveSlotScreen();
 		}
 	}
 
 	return state;
 }
 
-// doFileDetailsLoop
-s32 func_800779FC_47EAC(void) {
+// US func_800779FC_47EAC
+s32 ShowSaveSlotDetailsScreen(void) {
 	u32 frameCounter;
 	s32 state;
 	s32 saveFileIndex;
@@ -3339,7 +3340,7 @@ s32 func_800779FC_47EAC(void) {
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				state = D_800D74A4 - 0x3A;
 				missionEntry = GetInterfaceItemById(0x39);
 				*((s16*) ((u8*) D_800909B0 + 0x95E)) = -0x20;
@@ -3351,7 +3352,7 @@ s32 func_800779FC_47EAC(void) {
 				currentLevel = D_800D6D90[D_80047F84];
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				selectedFileData = &D_800909B0[saveFileIndex];
 				state = 0;
 				missionEntry = GetInterfaceItemById(0x39);
@@ -3388,7 +3389,8 @@ s32 func_800779FC_47EAC(void) {
 	return state;
 }
 
-s32 func_80077CE0_48190(s32 arg0) {
+// US func_80077CE0_48190
+s32 ShowOptionsScreen(s32 arg0) {
 	u32 frameCounter;
 	s32 state;
 	s32 selectedSlot;
@@ -3416,11 +3418,11 @@ s32 func_80077CE0_48190(s32 arg0) {
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				state = D_800D74A4 - 6;
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				state = 0;
 			}
 		}
@@ -3438,21 +3440,21 @@ s32 func_80077CE0_48190(s32 arg0) {
 	func_8000AFDC_BBDC();
 
 	switch (state) {
-	case 3:
+	case 3: // View Scores
 		func_800153D8_15FD8(0xC8);
 		func_80070940_40DF0();
 		D_800476A0 = 1;
 		break;
 	case 0:
-	case 2:
+	case 2: // Replay Level
 		func_800153D8_15FD8(0xC8);
 		func_800709F0_40EA0();
 		D_800476A0 = 1;
 		break;
-	case 4:
-	case 5:
-	case 6:
-	case 7:
+	case 4: // Sfx
+	case 5: // Music
+	case 6: // Aim
+	case 7: // Blood
 		func_800153D8_15FD8(0xCB);
 		break;
 	}
@@ -3464,7 +3466,8 @@ s32 func_80077E78_48328(s32 arg0, s32 arg1) {
 	return 0;
 }
 
-s32 func_80077E88_48338(void) {
+// US func_80077E88_48338
+s32 ShowReplayLevelScreen(void) {
 	s32 selectedSlot;
 	s32 state;
 	u32 frameCounter;
@@ -3505,14 +3508,14 @@ s32 func_80077E88_48338(void) {
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				selectedSlot = D_800D74A4;
 				if (D_800D74A4 == 0x14) {
 					state = 3;
 				} else {
 					selectedSlot = D_800D74A4;
 					func_800153D8_15FD8(0xC8);
-					if (func_80077204_476B4() == 2) {
+					if (ShowAreYouSureScreen() == 2) {
 						D_80048030 = 0;
 						D_800D74A6 = selectedSlot;
 						state = 2;
@@ -3527,7 +3530,7 @@ s32 func_80077E88_48338(void) {
 				}
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				state = 0;
 			}
 		}
@@ -3551,6 +3554,7 @@ s32 func_80077E88_48338(void) {
 	return state;
 }
 
+// ShowReplayBossScreen?
 s32 func_80078110_485C0(void) {
 	s32 state;
 	u32 frameCounter;
@@ -3630,13 +3634,13 @@ s32 func_80078110_485C0(void) {
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				D_80048030 = 0;
 				state = 2;
 				currentLevel = D_800D74A4 - 0x4F;
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				state = 0;
 			}
 		}
@@ -3658,8 +3662,8 @@ s32 func_80078110_485C0(void) {
 	return state;
 }
 
-// doChooseFileNameLoop
-s32 func_80078424_488D4(void) {
+// US func_80078424_488D4
+s32 ShowEnterSaveSlotNameScreen(void) {
 	s32 state;
 	u32 frameCounter;
 	s32 changed;
@@ -3710,7 +3714,7 @@ s32 func_80078424_488D4(void) {
 			func_80070CC4_41174();
 			func_8007166C_41B1C();
 
-			if (isButtonNewlyPressed(0, 0x9000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				switch (D_800D74A4) {
 				case 0x30:
 					if (nameLength > 0) {
@@ -3767,7 +3771,7 @@ s32 func_80078424_488D4(void) {
 				}
 			}
 
-			if (isButtonNewlyPressed(0, 0x4000) != 0) {
+			if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 				D_800476A0 = 3;
 				state = 0;
 				entry = GetInterfaceItemById(0x32);
@@ -3813,11 +3817,11 @@ s32 func_80078424_488D4(void) {
 
 	func_800153D8_15FD8(0xC8);
 	if (state != 0) {
-		if (func_80077344_477F4() == 2) {
+		if (ShowSelectDifficultyScreen() == 2) {
 			D_800476A0 = 1;
 		} else {
 			D_800476A0 = 3;
-			state = func_80078424_488D4();
+			state = ShowEnterSaveSlotNameScreen();
 		}
 	}
 
@@ -3856,8 +3860,8 @@ void func_80078968_48E18(void) {
 	func_80070940_40DF0();
 }
 
-// Drives the frontend state machine, including file selection and gameplay transitions.
-void func_800789E4_48E94(void) {
+// US func_800789E4_48E94
+void DoBootToStartMenuSequence(void) {
 	s32 result;
 	s16 fileSelectCycle;
 	s16 optionArg;
@@ -3922,7 +3926,7 @@ void func_800789E4_48E94(void) {
 				break;
 
 			case FE_STATE_PRESS_START:
-				result = func_8007704C_474FC();
+				result = ShowStartScreen();
 				switch (result) {
 					case 2:
 						currentLevel = LEVEL_GREECE;
@@ -3978,7 +3982,7 @@ void func_800789E4_48E94(void) {
 				break;
 
 			case FE_STATE_CHOOSE_FILE_NAME:
-				result = func_80078424_488D4();
+				result = ShowEnterSaveSlotNameScreen();
 				switch (result) {
 					case 2:
 						currentFrontendState = FE_STATE_FILE_DETAILS;
@@ -3993,7 +3997,7 @@ void func_800789E4_48E94(void) {
 
 			case FE_STATE_FILE_DETAILS:
 				optionArg = 0;
-				result = func_800779FC_47EAC();
+				result = ShowSaveSlotDetailsScreen();
 				switch (result) {
 					case 2:
 						currentFrontendState = FE_STATE_FILE_OPTIONS;
@@ -4021,7 +4025,7 @@ void func_800789E4_48E94(void) {
 				break;
 
 			case FE_STATE_FILE_OPTIONS:
-				result = func_80077CE0_48190(optionArg);
+				result = ShowOptionsScreen(optionArg);
 
 				switch (result) {
 
@@ -4083,7 +4087,7 @@ void func_800789E4_48E94(void) {
 
 			case FE_STATE_REPLAY_LEVEL_SELECT:
 				optionArg = 0;
-				result = func_80077E88_48338();
+				result = ShowReplayLevelScreen();
 				switch (result) {
 					case 2:
 						func_80007570_8170();
@@ -4183,12 +4187,12 @@ void func_800789E4_48E94(void) {
 				break;
 
 			case FE_STATE_DELETE_FILE:
-				func_80077494_47944();
+				ShowDeleteSaveSlotScreen();
 				currentFrontendState = FE_STATE_FILE_SELECT;
 				break;
 
 			case FE_STATE_COPY_FILE:
-				func_800776BC_47B6C();
+				ShowCopySaveSlotScreen();
 				currentFrontendState = FE_STATE_FILE_SELECT;
 				break;
 
@@ -4255,8 +4259,8 @@ void func_800791A0_49650(s32 arg0) {
 	gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311D0));
 }
 
-// AI - Returns the byte length of a null-terminated string.
-s32 func_8007946C_4991C(u8* arg0) {
+// US func_8007946C_4991C
+s32 GetLengthOfString(u8* arg0) {
 	s32 len;
 	u8* ptr;
 
@@ -4271,6 +4275,7 @@ s32 func_8007946C_4991C(u8* arg0) {
 	return len;
 }
 
+// Save high score?
 void func_8007949C_4994C(s32 arg0, u16 arg1) {
 	s32 i;
 	s32 j;
@@ -4385,7 +4390,7 @@ void ShowHighScores(s32 arg0, u16 arg1) {
 				drawText("%H", 0x800);
 
 				entry = &D_80047FB8[4 - i];
-				t = 6 - func_8007946C_4991C(entry->name);
+				t = 6 - GetLengthOfString(entry->name);
 				t /= 2;
 				drawText("%@%s", t + 4, 3, entry->name);
 				drawText("%H", 0x400);
@@ -4506,8 +4511,8 @@ void func_80079F30_4A3E0(u8 arg0) {
 	gDPFillRectangle(D_8005BB2C++, 0, 0, 320, 240);
 }
 
-// displayGameOver
-void func_8007A038_4A4E8(void) {
+// US func_8007A038_4A4E8
+void ShowGameOverScreen(void) {
 	s32 timer;
 	s32 fade;
 	s32 i;
@@ -4624,10 +4629,11 @@ void func_8007A038_4A4E8(void) {
 }
 
 void func_8007A754_4AC04(void) {
-	func_8007C7F4_4CCA4();
+	ShowMissionSuccessScreen();
 }
 
-void func_8007A774_4AC24(s32 arg0) {
+// US func_8007A774_4AC24
+void DrawDmaLogoAndHcu(s32 arg0) {
 	u16 perspNorm;
 	s16 cameraPulse;
 	s16 blend;
@@ -5057,8 +5063,8 @@ void ShowDmaLogoScreen(void)
 	while (1)
 	{
 		func_800791A0_49650(1);
-		func_8007A774_4AC24(0);
-		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START) != 0))
+		DrawDmaLogoAndHcu(0);
+		if ((D_800D7962 == 0xB) || (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)))
 		{
 			func_80005AEC_66EC(0, 0, 0, 0x40);
 			if (!D_800D7962)
@@ -5077,7 +5083,8 @@ void ShowDmaLogoScreen(void)
 	}
 }
 
-void func_8007BFC4_4C474(void) {
+// US func_8007BFC4_4C474
+void ShowIntroTextCrawl(void) {
 	s16 lineCount;
 	s16 currentLine;
 	u16 fadeCounter;
@@ -5206,7 +5213,8 @@ void func_8007BFC4_4C474(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-void func_8007C4BC_4C96C(void) {
+// US func_8007C4BC_4C96C
+void ShowGameCredits(void) {
 	u16 fadeCounter;
 	s16 foundCount;
 	s16 startIndex;
@@ -5296,8 +5304,8 @@ void func_8007C764_4CC14(u16 arg0, u16 arg1) {
 	drawText("%a", (s32)((arg1 - arg0) * 0xFF) / 20);
 }
 
-// AI - Shows the end-of-game summary screen (total score, time, humans) then returns to press-start.
-void func_8007C7F4_4CCA4(void) {
+// US func_8007C7F4_4CCA4
+void ShowMissionSuccessScreen(void) {
 	s16 level;
 	u16 fadeTimer;
 	s32 timer;
@@ -5561,8 +5569,8 @@ void func_8007C7F4_4CCA4(void) {
 	} while (func_80005B30_6730() == 0);
 }
 
-// doSaveBeaconLoop
-s32 func_8007CFB4_4D464(s32 arg0) {
+// US func_8007CFB4_4D464
+s32 ShowSaveBeaconScreen(s32 isWarpEnabled) {
 	s16 timer;
 	s32 selection;
 	u32* frameCounter;
@@ -5589,7 +5597,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 			}
 		}
 
-		if (arg0 == 0) {
+		if (isWarpEnabled == 0) {
 			func_80070A8C_40F3C(0x45);
 		}
 
@@ -5598,7 +5606,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 				func_80070CC4_41174();
 				func_8007166C_41B1C();
 
-				if (isButtonNewlyPressed(0, 0x9000) != 0) {
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 					selection = D_800D74A4 - 0x42;
 					func_800708B8_40D68(0x43);
 					func_800708B8_40D68(0x44);
@@ -5612,7 +5620,7 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 					}
 				}
 
-				if (isButtonNewlyPressed(0, 0x4000) != 0) {
+				if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_B)) {
 					selection = 2;
 					timer = 0x10;
 				}
@@ -5666,7 +5674,8 @@ s32 func_8007CFB4_4D464(s32 arg0) {
 	return 0;
 }
 
-s32 func_8007D2B0_4D760(void) {
+// US func_8007D2B0_4D760
+s32 ShowInventoryScreen(void) {
 	s16 timer;
 	s32 i;
 	s32 selection;
@@ -5735,7 +5744,7 @@ s32 func_8007D2B0_4D760(void) {
 
 			if (menuWarmup < 0x10) {
 				menuWarmup++;
-			} else if (isButtonNewlyPressed(0, 0x9000)) {
+			} else if (isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_A | BUTTON_START)) {
 				selection = D_800D74A4 - 0x47;
 				osSyncPrintf("WindowSelection=%d,  INVENTORY_WINDOW=%d, Done=%d\n", D_800D74A4, 0x47, selection);
 

@@ -51,17 +51,17 @@ void func_8007FC74_167D34(void) {
 	}
 
 	switch (D_800E73DF - 1) {
-		case 2: // Talking to NPC view
-			func_800804E0_1685A0();
+		case 2:
+			CameraFocusOnNpc();
 			break;
 
-		case 0: // Entering/Exiting view
-			func_800806F8_1687B8();
+		case 0:
+			CameraTrackPlayerEnteringExitingRoom();
 			break;
 
-		case 3: // Normal view
+		case 3:
 			if (!(D_800E65A8 & 2)) {
-				func_80080A38_168AF8();
+				CameraTrackPlayer();
 			}
 			break;
 
@@ -207,15 +207,14 @@ void func_80080190_168250(Vec3f *arg0, Vec3f *arg1, s16 arg2, s16 arg3, f32 arg4
 	}
 }
 
-// AI - Talking-to-NPC camera: smoothly interpolate view toward the NPC's position
-void func_800804E0_1685A0(void) {
+// US func_800804E0_1685A0
+void CameraFocusOnNpc(void) {
 	f64 scale = 96.0;
 	f32 cameraX;
 	f32 cameraY;
 	f32 cameraZ;
 	CameraInterpolationStep previousCoord;
 
-	/* Integer address conversion preserves the shared anchor base without a pointer home. */
 	cameraX = ((u32) ((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->cellX - 0.5) * scale;
 	cameraY = ((((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->height >> 1) & 0x7F) + 50;
 	cameraZ = ((u32) ((InteriorRoomAnchor *)(s32)&D_800E7394->anchor)->cellZ - 0.5) * scale;
@@ -241,8 +240,8 @@ void func_800804E0_1685A0(void) {
 	D_800E65A4 = (((f32) (u32) D_800E73DA + D_800E6A78.unk54) * (f64)0.5f) - scale;
 }
 
-// AI - Entering/exiting view: set a fixed camera position relative to the player
-void func_800806F8_1687B8(void) {
+// US func_800806F8_1687B8
+void CameraTrackPlayerEnteringExitingRoom(void) {
 	f32 temp_f0;
 
 	temp_f0 = D_800E6A78.unk4C - 96.0f;
@@ -293,8 +292,8 @@ void func_800808D0_168990(void) {
 	D_800E6A74 = 0x4000 - D_800E73E0;
 }
 
-// AI - Normal view loop: handle first-person/third-person toggle and smooth camera tracking
-void func_80080A38_168AF8(void) {
+// US func_80080A38_168AF8
+void CameraTrackPlayer(void) {
 	f32 temp_f0;
 	s32 pad0;
 	s32 pad1;
@@ -343,7 +342,7 @@ void func_80080A38_168AF8(void) {
 		D_800E73E8 = 96.0f;
 	}
 
-	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_C_UP) != 0) && !(D_800E65A8 & 2)) {
+	if ((isButtonNewlyPressed(CONTROLLER_ONE, BUTTON_C_UP)) && !(D_800E65A8 & 2)) {
 		if (D_800A0964_188A24 != 0) {
 			D_800A0964_188A24 = 0;
 		} else {
