@@ -388,10 +388,10 @@ s32 ShowTransitionToNextLevel(s32 arg0, s32* arg1) {
 }
 
 // AI - 3x3 matrix-vector multiply: out = mat^T * vec
-void func_80083610_53AC0(f32 *mat, f32 *vec, f32 *out) {
-	out[0] = vec[0] * mat[0] + vec[1] * mat[3] + vec[2] * mat[6];
-	out[1] = vec[0] * mat[1] + vec[1] * mat[4] + vec[2] * mat[7];
-	out[2] = vec[0] * mat[2] + vec[1] * mat[5] + vec[2] * mat[8];
+void func_80083610_53AC0(f32 *mat, Vec3f *vec, f32 *out) {
+	out[0] = vec->x * mat[0] + vec->y * mat[3] + vec->z * mat[6];
+	out[1] = vec->x * mat[1] + vec->y * mat[4] + vec->z * mat[7];
+	out[2] = vec->x * mat[2] + vec->y * mat[5] + vec->z * mat[8];
 }
 
 // AI - 3D vector cross product: arg2 = arg0 x arg1
@@ -402,22 +402,22 @@ void func_800836A4_53B54(f32 *arg0, f32 *arg1, f32 *arg2) {
 }
 
 // AI - Divides a 3D vector by a scalar: arg2 = arg1 / arg0
-void func_80083714_53BC4(f32 arg0, f32 *arg1, f32 *arg2) {
-	arg2[0] = arg1[0] / arg0;
-	arg2[1] = arg1[1] / arg0;
-	arg2[2] = arg1[2] / arg0;
+void func_80083714_53BC4(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
+	arg2->x = arg1->x / arg0;
+	arg2->y = arg1->y / arg0;
+	arg2->z = arg1->z / arg0;
 }
 
 // AI - Returns the squared magnitude of a 3D vector
-f32 func_8008373C_53BEC(f32 *arg0) {
-	f32 x = arg0[0];
-	f32 y = arg0[1];
-	f32 z = arg0[2];
+f32 func_8008373C_53BEC(Vec3f *arg0) {
+	f32 x = arg0->x;
+	f32 y = arg0->y;
+	f32 z = arg0->z;
 	return (x * x) + (y * y) + (z * z);
 }
 
 // AI - Computes the magnitude (length) of a 3D vector
-f32 func_80083764_53C14(f32 *arg0) {
+f32 func_80083764_53C14(Vec3f *arg0) {
 	f32 sqMag = func_8008373C_53BEC(arg0);
 	if (sqMag != 0.0) {
 		sqMag = sqrtf(sqMag);
@@ -425,28 +425,28 @@ f32 func_80083764_53C14(f32 *arg0) {
 	return sqMag;
 }
 
-// AI - Normalizes vector arg0 into arg1; if magnitude is 0, copies arg0 to arg1
-void func_800837B4_53C64(f32 *arg0, f32 *arg1) {
+// US func_800837B4_53C64
+void NormalizeVec3f(Vec3f *source, Vec3f *normalized) {
 	f32 mag;
 
-	mag = func_80083764_53C14(arg0);
+	mag = func_80083764_53C14(source);
 	if (mag == 0.0) {
-		*(Vec3f*)arg1 = *(Vec3f*)arg0;
+		*normalized = *source;
 	} else {
-		func_80083714_53BC4(mag, arg0, arg1);
+		func_80083714_53BC4(mag, source, normalized);
 	}
 }
 
-// AI - Computes the dot product of two 3D vectors
-f32 func_80083820_53CD0(Vec3f *arg0, Vec3f *arg1) {
+// US func_80083820_53CD0
+f32 GetDotProductVec3f(Vec3f *arg0, Vec3f *arg1) {
 	return (arg0->x * arg1->x) + (arg0->y * arg1->y) + (arg0->z * arg1->z);
 }
 
-// AI - Subtracts two 3D vectors: arg2 = arg0 - arg1
-void func_80083850_53D00(f32 *arg0, f32 *arg1, f32 *arg2) {
-	arg2[0] = arg0[0] - arg1[0];
-	arg2[1] = arg0[1] - arg1[1];
-	arg2[2] = arg0[2] - arg1[2];
+// US func_80083850_53D00
+void SubtractVec3f(Vec3f *source, Vec3f *subtracted, Vec3f *result) {
+	result->x = source->x - subtracted->x;
+	result->y = source->y - subtracted->y;
+	result->z = source->z - subtracted->z;
 }
 
 // AI - Adds two 3D vectors: arg2 = arg0 + arg1
@@ -457,10 +457,10 @@ void func_80083884_53D34(f32 *arg0, f32 *arg1, f32 *arg2) {
 }
 
 // AI - Multiplies a 3D vector by a scalar: arg2 = arg1 * arg0
-void func_800838B8_53D68(f32 arg0, f32 *arg1, f32 *arg2) {
-	arg2[0] = arg1[0] * arg0;
-	arg2[1] = arg1[1] * arg0;
-	arg2[2] = arg1[2] * arg0;
+void func_800838B8_53D68(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
+	arg2->x = arg1->x * arg0;
+	arg2->y = arg1->y * arg0;
+	arg2->z = arg1->z * arg0;
 }
 
 // AI - Extracts 3D basis vectors from a matrix for particle orientation
@@ -469,7 +469,7 @@ void func_800838E0_53D90(Mtx *arg0) {
 	f32 sp34[3][3];
 	s16 i;
 	s16 j;
-	f32 sp24[3];
+	Vec3f sp24;
 
 	guMtxL2F(sp58, arg0);
 	for (i = 0; i < 3; i++) {
@@ -478,14 +478,14 @@ void func_800838E0_53D90(Mtx *arg0) {
 		}
 	}
 
-	sp24[0] = -0.5f;
-	sp24[1] = 0.5f;
-	sp24[2] = 0.0f;
-	func_80083610_53AC0((f32 *)sp34, sp24, &D_800DE0C0.x);
-	sp24[0] = -sp24[0];
-	func_80083610_53AC0((f32 *)sp34, sp24, D_800DE0CC);
-	func_800836A4_53B54(&D_800DE0C0.x, D_800DE0CC, D_800DE0D8);
-	func_800837B4_53C64(D_800DE0D8, D_800DE0D8);
+	sp24.x = -0.5f;
+	sp24.y = 0.5f;
+	sp24.z = 0.0f;
+	func_80083610_53AC0((f32 *)sp34, &sp24, &D_800DE0C0.up.x);
+	sp24.x = -sp24.x;
+	func_80083610_53AC0((f32 *)sp34, &sp24, &D_800DE0CC.x);
+	func_800836A4_53B54((f32 *)&D_800DE0C0.up, (f32 *)&D_800DE0CC, (f32 *)&D_800DE0D8);
+	NormalizeVec3f(&D_800DE0D8, &D_800DE0D8);
 }
 
 // AI - Copies a 3D float vector to global state and truncates another to s16 shorts
@@ -953,8 +953,8 @@ void func_800847E4_54C94(u8 arg0) {
 			entry840 = &D_800DE840[headIndex]; headIndex = 0;
 			point0.z = (f32)(distBias * ((f64)(f32)((FrontendAuraPayload *)&entry840->unk8)->segment.radius * 0.00390625));
 
-			func_800838B8_53D68(point0.z, &D_800DE0C0.x, &vecA.x);
-			func_800838B8_53D68(point0.z, D_800DE0CC, &vecB.x);
+			func_800838B8_53D68(point0.z, &D_800DE0C0.up, &vecA);
+			func_800838B8_53D68(point0.z, &D_800DE0CC, &vecB);
 
 			payload = (FrontendAuraPayload *)&entry840->unk8;
 			payload = (FrontendAuraPayload *)((u32)payload & -1);
@@ -967,12 +967,12 @@ void func_800847E4_54C94(u8 arg0) {
 				func_80083884_53D34(&origin.x, &vecB.x, &outB.x);
 			} else if (quadrant == 1) {
 				func_80083884_53D34(&origin.x, &vecB.x, &outA.x);
-				func_80083850_53D00(&origin.x, &vecA.x, &outB.x);
+				SubtractVec3f(&origin, &vecA, &outB);
 			} else if (quadrant == 2) {
-				func_80083850_53D00(&origin.x, &vecA.x, &outA.x);
-				func_80083850_53D00(&origin.x, &vecB.x, &outB.x);
+				SubtractVec3f(&origin, &vecA, &outA);
+				SubtractVec3f(&origin, &vecB, &outB);
 			} else {
-				func_80083850_53D00(&origin.x, &vecB.x, &outA.x);
+				SubtractVec3f(&origin, &vecB, &outA);
 				func_80083884_53D34(&origin.x, &vecA.x, &outB.x);
 			}
 
@@ -1095,12 +1095,12 @@ void func_800847E4_54C94(u8 arg0) {
 void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	FrontendRingOffsets offsets;
 
-	offsets.x0 = D_800DE0C0.x * ((void)0, (f32)arg3);
-	offsets.y0 = D_800DE0C0.y * ((void)0, (f32)arg3);
-	offsets.z0 = D_800DE0C0.z * ((void)0, (f32)arg3);
-	offsets.x1 = D_800DE0C0.rightX * ((void)0, (f32)arg3);
-	offsets.y1 = D_800DE0C0.rightY * ((void)0, (f32)arg3);
-	offsets.z1 = D_800DE0C0.rightZ * ((void)0, (f32)arg3);
+	offsets.x0 = D_800DE0C0.up.x * ((void)0, (f32)arg3);
+	offsets.y0 = D_800DE0C0.up.y * ((void)0, (f32)arg3);
+	offsets.z0 = D_800DE0C0.up.z * ((void)0, (f32)arg3);
+	offsets.x1 = D_800DE0C0.right.x * ((void)0, (f32)arg3);
+	offsets.y1 = D_800DE0C0.right.y * ((void)0, (f32)arg3);
+	offsets.z1 = D_800DE0C0.right.z * ((void)0, (f32)arg3);
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + offsets.x0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + offsets.y0);
@@ -1168,7 +1168,7 @@ void func_800853A8_55858(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 }
 
 // Spawns a child particle with randomized direction or a radial position offset.
-void func_800857D4_55C84(u8 arg0, f32 *arg1, u8 arg2, u8 arg3) {
+void func_800857D4_55C84(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	Frontend52690Unk8Motion *template;
 	Frontend52690Unk8Motion *spawn;
 	Vec3f random;
@@ -1193,21 +1193,21 @@ void func_800857D4_55C84(u8 arg0, f32 *arg1, u8 arg2, u8 arg3) {
 		if ((func_800038E0_44E0() % 21) < 10) {
 			random.x = 0.0f - random.x;
 		}
-		random.x += arg1[0];
+		random.x += arg1->x;
 
 		random.y = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			random.y = 0.0f - random.y;
 		}
-		random.y += arg1[1];
+		random.y += arg1->y;
 
 		random.z = (f32)((f64)(f32)(func_800038E0_44E0() % arg3) / 255.0);
 		if ((func_800038E0_44E0() % 21) < 10) {
 			random.z = 0.0f - random.z;
 		}
-		random.z += arg1[2];
+		random.z += arg1->z;
 
-		func_800837B4_53C64(&random.x, &random.x);
+		NormalizeVec3f(&random, &random);
 		spawn->unk6 = (arg2 / 4) * random.x;
 		spawn->unk7 = (arg2 / 4) * random.y;
 		spawn->unk8 = (arg2 / 4) * random.z;
@@ -1252,7 +1252,7 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 		s32 value;
 		Unk800DE840 *node;
 	} state;
-	f32 direction[3];
+	Vec3f direction;
 
 	temp_s5 = func_80083A58_53F08(1);
 	if (temp_s5 == 0xFB) {
@@ -1277,10 +1277,10 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	state.node->unk10 = arg12;
 	((Frontend52690Unk8Motion *)&state.node->unk8)->unkA = arg13;
 
-	direction[0] = arg3;
-	direction[1] = arg4;
-	direction[2] = arg5;
-	func_800837B4_53C64(direction, direction);
+	direction.x = arg3;
+	direction.y = arg4;
+	direction.z = arg5;
+	NormalizeVec3f(&direction, &direction);
 
 	state.value = arg8;
 	state.value = func_80085CB8_56168((s16)state.value);
@@ -1288,7 +1288,7 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	i = 0;
 	if (state.value > 0) {
 		do {
-			func_800857D4_55C84(temp_s5, direction, arg6, arg7);
+			func_800857D4_55C84(temp_s5, &direction, arg6, arg7);
 			i++;
 		} while (i < arg8);
 	}
@@ -1933,7 +1933,7 @@ s16 func_800885A0_58A50(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 ar
 		}
 
 		direction.z = (f32)((func_800038E0_44E0() % 20) - 10);
-		func_800837B4_53C64(&direction.x, &direction.x);
+		NormalizeVec3f(&direction, &direction);
 
 		motion = (FrontendSolidParticleMotion *)(s32)&D_800DE840[linkIdx].unk8;
 		motion->velocity[0] = (u8)((s8)((f32)(u32)arg5 * direction.x));
@@ -2509,7 +2509,7 @@ void func_8008A094_5A544(u8 arg0) {
 	base.x = emitter->velocity[0];
 	base.y = emitter->velocity[1];
 	base.z = emitter->velocity[2];
-	func_800837B4_53C64(&base.x, &base.x);
+	NormalizeVec3f(&base, &base);
 
 	random.x = (f32)((f64)(f32)(func_800038E0_44E0() % emitter->spread) / 255.0);
 	if ((func_800038E0_44E0() % 21) < 10) {
@@ -2530,7 +2530,7 @@ void func_8008A094_5A544(u8 arg0) {
 	random.z += base.z;
 
 	particle = (JetStreamParticleState *)&D_800DE840[index].unk8;
-	func_800837B4_53C64(&random.x, &random.x);
+	NormalizeVec3f(&random, &random);
 	particle->velocity[0] = (emitter->size / 4) * random.x;
 	particle->velocity[1] = (emitter->size / 4) * random.y;
 	particle->velocity[2] = (emitter->size / 4) * random.z;
@@ -2749,12 +2749,12 @@ void func_8008A928_5ADD8(u8 arg0) {
 			x = D_800DE840[idx].unk8;
 			y = D_800DE840[idx].unkA;
 			z = D_800DE840[idx].unkC;
-			dx0 = cur->scale * D_800DE0C0.x;
-			dy0 = cur->scale * D_800DE0C0.y;
-			dz0 = cur->scale * D_800DE0C0.z;
-			dx1 = cur->scale * D_800DE0C0.rightX;
-			dy1 = cur->scale * D_800DE0C0.rightY;
-			dz1 = cur->scale * D_800DE0C0.rightZ;
+			dx0 = cur->scale * D_800DE0C0.up.x;
+			dy0 = cur->scale * D_800DE0C0.up.y;
+			dz0 = cur->scale * D_800DE0C0.up.z;
+			dx1 = cur->scale * D_800DE0C0.right.x;
+			dy1 = cur->scale * D_800DE0C0.right.y;
+			dz1 = cur->scale * D_800DE0C0.right.z;
 
 			D_8005BB34->v.ob[0] = x + dx0; D_8005BB34->v.ob[1] = y + dy0; D_8005BB34->v.ob[2] = z + dz0; D_8005BB34->v.flag = 0;
 			D_8005BB34->v.tc[0] = 0;
@@ -3526,17 +3526,17 @@ void func_8008D14C_5D5FC(void) {
 	f32 temp_f18;
 
 	temp_f0 = D_800DE128;
-	temp_f0 *= D_800DE0C0.x;
+	temp_f0 *= D_800DE0C0.up.x;
 	temp_f12 = D_800DE128;
-	temp_f12 *= D_800DE0C0.y;
+	temp_f12 *= D_800DE0C0.up.y;
 	temp_f14 = D_800DE128;
-	temp_f14 *= D_800DE0C0.z;
+	temp_f14 *= D_800DE0C0.up.z;
 	temp_f16 = D_800DE128;
-	temp_f16 *= D_800DE0C0.rightX;
+	temp_f16 *= D_800DE0C0.right.x;
 	temp_f18 = D_800DE128;
-	temp_f18 *= D_800DE0C0.rightY;
+	temp_f18 *= D_800DE0C0.right.y;
 	temp_f8 = D_800DE128;
-	temp_f8 *= D_800DE0C0.rightZ;
+	temp_f8 *= D_800DE0C0.right.z;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + temp_f12);
@@ -3597,12 +3597,12 @@ void func_8008D510_5D9C0(void) {
 
 	width = (f32)D_800AA7C0_7AC70[D_800E1D6B] + D_800DE128;
 	height = D_800DE128 - (f32)D_800AA7C0_7AC70[D_800E1D6B];
-	offsets.x0 = width * D_800DE0C0.x;
-	offsets.y0 = width * D_800DE0C0.y;
-	offsets.z0 = width * D_800DE0C0.z;
-	offsets.x1 = height * D_800DE0C0.rightX;
-	offsets.y1 = height * D_800DE0C0.rightY;
-	offsets.z1 = height * D_800DE0C0.rightZ;
+	offsets.x0 = width * D_800DE0C0.up.x;
+	offsets.y0 = width * D_800DE0C0.up.y;
+	offsets.z0 = width * D_800DE0C0.up.z;
+	offsets.x1 = height * D_800DE0C0.right.x;
+	offsets.y1 = height * D_800DE0C0.right.y;
+	offsets.z1 = height * D_800DE0C0.right.z;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_800DE118.x + offsets.x0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_800DE118.y + offsets.y0);
@@ -4079,27 +4079,27 @@ void func_8008EDB4_5F264(u8 arg0[][3]) {
 // AI - Spawns initial ambient particle effects with random positions
 void func_8008EEC4_5F374(void) {
 	s32 var_s1;
-	f32 sp60[3];
+	Vec3f sp60;
 
 	if (D_800DE0B6 == 1) {
 		var_s1 = 0;
 		do {
-			sp60[0] = (f32) ((func_800038E0_44E0() % 1000) - 1000);
-			sp60[1] = (f32) ((func_800038E0_44E0() % 1000) - 500);
-			sp60[2] = (f32) ((func_800038E0_44E0() % 1000) - 1000);
-			func_800837B4_53C64(sp60, sp60);
-			func_800838B8_53D68(80.0f, sp60, sp60);
-			func_80085CEC_5619C((s16) (s32) sp60[0], (s16) (s32) sp60[1], (s16) (s32) sp60[2], -1, 0, 0, 0x46, 0x19, 3,
+			sp60.x = (f32) ((func_800038E0_44E0() % 1000) - 1000);
+			sp60.y = (f32) ((func_800038E0_44E0() % 1000) - 500);
+			sp60.z = (f32) ((func_800038E0_44E0() % 1000) - 1000);
+			NormalizeVec3f(&sp60, &sp60);
+			func_800838B8_53D68(80.0f, &sp60, &sp60);
+			func_80085CEC_5619C((s16) (s32) sp60.x, (s16) (s32) sp60.y, (s16) (s32) sp60.z, -1, 0, 0, 0x46, 0x19, 3,
 							0x6E, 0xFF, 0xFF, 0xFF, 3);
 			var_s1 = (var_s1 + 1) & 0xFF;
 		} while (var_s1 < 3);
 
-		sp60[0] = (f32) ((func_800038E0_44E0() % 1000) - 500);
-		sp60[1] = (f32) ((func_800038E0_44E0() % 1000) - 500);
-		sp60[2] = (f32) ((func_800038E0_44E0() % 1000) - 500);
-		func_800837B4_53C64(sp60, sp60);
-		func_800838B8_53D68(340.0f, sp60, sp60);
-		func_8008DC34_5E0E4((s16) (s32) sp60[0], (s16) (s32) sp60[1], (s16) (s32) sp60[2], 0xD,
+		sp60.x = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		sp60.y = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		sp60.z = (f32) ((func_800038E0_44E0() % 1000) - 500);
+		NormalizeVec3f(&sp60, &sp60);
+		func_800838B8_53D68(340.0f, &sp60, &sp60);
+		func_8008DC34_5E0E4((s16) (s32) sp60.x, (s16) (s32) sp60.y, (s16) (s32) sp60.z, 0xD,
 						  (func_800038E0_44E0() % 0xF) + 0xF);
 	}
 }
@@ -4109,7 +4109,7 @@ void func_8008F1E0_5F690(void)
 {
 	s16 temp_a0;
 	u8 var_s1;
-	f32 sp90[3];
+	Vec3f sp90;
 	f32 trigAngle;
 	if (D_800DE0B7 == 1)
 	{
@@ -4121,55 +4121,55 @@ void func_8008F1E0_5F690(void)
 
 		do
 		{
-			sp90[2] = 0.0f;
+			sp90.z = 0.0f;
 			temp_a0 = func_800038E0_44E0() % 0x168;
 			if (temp_a0 == 0)
 			{
-				sp90[1] = 500.0f;
-				sp90[0] = 0.0f;
+				sp90.y = 500.0f;
+				sp90.x = 0.0f;
 			}
 			else if (temp_a0 < 0x5A)
 			{
 				trigAngle = (((f32)temp_a0 * 6.2831853070000001) / 360.0);
-				sp90[1] = cosf(trigAngle) * 500.0f;
-				sp90[0] = sinf(trigAngle) * 500.0f;
+				sp90.y = cosf(trigAngle) * 500.0f;
+				sp90.x = sinf(trigAngle) * 500.0f;
 			}
 			else if (temp_a0 == 0x5A)
 			{
-				sp90[1] = 0.0f;
-				sp90[0] = 500.0f;
+				sp90.y = 0.0f;
+				sp90.x = 500.0f;
 			}
 			else if (temp_a0 < 0xB4)
 			{
 				trigAngle = (((f32)(0xB4 - temp_a0) * 6.2831853070000001) / 360.0);
-				sp90[1] = cosf(trigAngle) * (-500.0f);
-				sp90[0] = sinf(trigAngle) * 500.0f;
+				sp90.y = cosf(trigAngle) * (-500.0f);
+				sp90.x = sinf(trigAngle) * 500.0f;
 			}
 			else if (temp_a0 == 0xB4)
 			{
-				sp90[1] = -500.0f;
-				sp90[0] = 0.0f;
+				sp90.y = -500.0f;
+				sp90.x = 0.0f;
 			}
 			else if (temp_a0 < 0x10E)
 			{
 				trigAngle = (((f32)(temp_a0 - 0xB4) * 6.2831853070000001) / 360.0);
-				sp90[1] = cosf(trigAngle) * (-500.0f);
-				sp90[0] = sinf(trigAngle) * (-500.0f);
+				sp90.y = cosf(trigAngle) * (-500.0f);
+				sp90.x = sinf(trigAngle) * (-500.0f);
 			}
 			else if (temp_a0 == 0x10E)
 			{
-				sp90[1] = 0.0f;
-				sp90[0] = -500.0f;
+				sp90.y = 0.0f;
+				sp90.x = -500.0f;
 			}
 			else if (temp_a0 < 0x168)
 			{
 				trigAngle = (((f32)(0x168 - temp_a0) * 6.2831853070000001) / 360.0);
-				sp90[1] = cosf(trigAngle) * 500.0f;
-				sp90[0] = sinf(trigAngle) * (-500.0f);
+				sp90.y = cosf(trigAngle) * 500.0f;
+				sp90.x = sinf(trigAngle) * (-500.0f);
 			}
-			func_800837B4_53C64(sp90, sp90);
-			func_800838B8_53D68(250.0f, sp90, sp90);
-			func_80085CEC_5619C((s32)sp90[0], (s32)sp90[1], (s32)sp90[2], 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
+			NormalizeVec3f(&sp90, &sp90);
+			func_800838B8_53D68(250.0f, &sp90, &sp90);
+			func_80085CEC_5619C((s32)sp90.x, (s32)sp90.y, (s32)sp90.z, 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
 			var_s1++;
 		} while (var_s1 < 3);
 	}

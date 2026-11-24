@@ -4459,8 +4459,8 @@ typedef union {
 
 /* Adjacent camera basis vectors share a single six-float storage block. */
 typedef struct {
-	f32 x, y, z;
-	f32 rightX, rightY, rightZ;
+	Vec3f up;
+	Vec3f right;
 } CameraBasis;
 
 typedef struct {

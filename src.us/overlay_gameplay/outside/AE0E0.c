@@ -864,12 +864,12 @@ void func_800A1DD8_B0D88(u8 arg0) {
 	f32 tempF18;
 
 	tempF0 = (f32)((u32)D_8014F618.unk60 * 0.03125);
-	tempF2 = tempF0 * D_80153AB8.x;
-	tempF12 = tempF0 * D_80153AB8.y;
-	tempF14 = tempF0 * D_80153AB8.z;
-	tempF16 = tempF0 * D_80153AB8.rightX;
-	tempF18 = tempF0 * D_80153AB8.rightY;
-	tempF10 = tempF0 * D_80153AB8.rightZ;
+	tempF2 = tempF0 * D_80153AB8.up.x;
+	tempF12 = tempF0 * D_80153AB8.up.y;
+	tempF14 = tempF0 * D_80153AB8.up.z;
+	tempF16 = tempF0 * D_80153AB8.right.x;
+	tempF18 = tempF0 * D_80153AB8.right.y;
+	tempF10 = tempF0 * D_80153AB8.right.z;
 
 	gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(&D_1009C70[D_8014F618.textureIndices[arg0] << 7]), G_IM_FMT_I, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 	gDPPipeSync(D_8005BB2C++);
@@ -1183,12 +1183,12 @@ void func_800A2D98_B1D48(s16 arg0, s16 arg1, s16 arg2, s32 arg3)
   distScale = sqrtf(((dx * dx) + (dy * dy)) + (dz * dz));
   D_8014F618.unk60 = distScale;
   distScale /= 6.0f;
-  D_8014F618.head.unkC = distScale * D_80153AB8.x;
-  D_8014F618.head.unk10 = distScale * D_80153AB8.y;
-  D_8014F618.head.unk14 = distScale * D_80153AB8.z;
-  D_8014F618.head.unk18 = distScale * D_80153AB8.rightX;
-  D_8014F618.head.unk1C = distScale * D_80153AB8.rightY;
-  D_8014F618.head.unk20 = distScale * D_80153AB8.rightZ;
+  D_8014F618.head.unkC = distScale * D_80153AB8.up.x;
+  D_8014F618.head.unk10 = distScale * D_80153AB8.up.y;
+  D_8014F618.head.unk14 = distScale * D_80153AB8.up.z;
+  D_8014F618.head.unk18 = distScale * D_80153AB8.right.x;
+  D_8014F618.head.unk1C = distScale * D_80153AB8.right.y;
+  D_8014F618.head.unk20 = distScale * D_80153AB8.right.z;
   D_8014F618.head.unk24 = D_8014F618.head.unk0 + D_8014F618.head.unk18;
   D_8014F618.head.unk28 = D_8014F618.head.unk4 + D_8014F618.head.unk1C;
   D_8014F618.head.unk2C = D_8014F618.head.unk8 + D_8014F618.head.unk20;

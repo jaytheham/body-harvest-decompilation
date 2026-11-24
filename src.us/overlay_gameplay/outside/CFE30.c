@@ -422,7 +422,7 @@ void func_800C1150_D0100(void) {
 	func_800C0E80_CFE30((f32 *)sp34, spvec, (f32 *)&D_80153AB8);
 	spvec[0] = -spvec[0];
 	func_800C0E80_CFE30((f32 *)sp34, spvec, (f32 *)&D_80153AC4);
-	func_800C0F14_CFEC4(&D_80153AB8, &D_80153AC4, &D_80153AD0);
+	func_800C0F14_CFEC4(&D_80153AB8.up, &D_80153AC4, &D_80153AD0);
 	func_800C1024_CFFD4(&D_80153AD0, &D_80153AD0);
 }
 
@@ -1236,7 +1236,7 @@ void func_800C3300_D22B0(u8 arg0) {
 
 				distZ = distBias * ((f32)(u32)sub->extent * (1.0 / 256.0));
 
-				func_800C1128_D00D8(distZ, &D_80153AB8, &left);
+				func_800C1128_D00D8(distZ, &D_80153AB8.up, &left);
 				func_800C1128_D00D8(distZ, &D_80153AC4, &right);
 
 				stepScale = (f32)(u32)sub->phase / 256;
@@ -1525,7 +1525,7 @@ void func_800C4274_D3224(void) {
 				gDPLoadTextureBlock_4b(D_8005BB2C++, K0_TO_PHYS(D_1007A70[((u8 *)&D_80154318[nextUnit].unkC)[0]]), G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 				gDPPipeSync(D_8005BB2C++);
 
-				func_800C1128_D00D8((f32)entry->unk2, &D_80153AB8, &spAC);
+				func_800C1128_D00D8((f32)entry->unk2, &D_80153AB8.up, &spAC);
 				func_800C1128_D00D8((f32)entry->unk2, &D_80153AC4, &spA0);
 
 				D_8005BB34->v.ob[0] = (s16)((f32)sub->unk0 + spAC.x);
@@ -3472,12 +3472,12 @@ void func_800CABC8_D9B78(u8 arg0) {
 				x = D_80154318[index].unk8;
 				y = D_80154318[index].unkA;
 				z = D_80154318[index].unkC;
-				leftX = D_80154318[index].unk2 * D_80153AB8.x;
-				leftY = D_80154318[index].unk2 * D_80153AB8.y;
-				leftZ = D_80154318[index].unk2 * D_80153AB8.z;
-				rightX = D_80154318[index].unk2 * D_80153AB8.rightX;
-				rightY = D_80154318[index].unk2 * D_80153AB8.rightY;
-				rightZ = D_80154318[index].unk2 * D_80153AB8.rightZ;
+				leftX = D_80154318[index].unk2 * D_80153AB8.up.x;
+				leftY = D_80154318[index].unk2 * D_80153AB8.up.y;
+				leftZ = D_80154318[index].unk2 * D_80153AB8.up.z;
+				rightX = D_80154318[index].unk2 * D_80153AB8.right.x;
+				rightY = D_80154318[index].unk2 * D_80153AB8.right.y;
+				rightZ = D_80154318[index].unk2 * D_80153AB8.right.z;
 
 				D_8005BB34->v.ob[0] = (x + leftX); D_8005BB34->v.ob[1] = (y + leftY); D_8005BB34->v.ob[2] = (z + leftZ);
 				D_8005BB34->v.flag = 0;
@@ -3852,12 +3852,12 @@ void func_800CC090_DB040(void) {
 				scale = magnitude - (((strip->phase - 0x14) / 25.0f) * 2.5f);
 			}
 
-			leftX = scale * D_80153AB8.x;
-			leftY = scale * D_80153AB8.y;
-			leftZ = scale * D_80153AB8.z;
-			rightX = scale * D_80153AB8.rightX;
-			rightY = scale * D_80153AB8.rightY;
-			rightZ = scale * D_80153AB8.rightZ;
+			leftX = scale * D_80153AB8.up.x;
+			leftY = scale * D_80153AB8.up.y;
+			leftZ = scale * D_80153AB8.up.z;
+			rightX = scale * D_80153AB8.right.x;
+			rightY = scale * D_80153AB8.right.y;
+			rightZ = scale * D_80153AB8.right.z;
 
 			D_8005BB34->v.ob[0] = (strip->x + leftX);
 			D_8005BB34->v.ob[1] = (strip->y + leftY + 10000.0f);
@@ -4830,7 +4830,7 @@ void func_800CF2E0_DE290(void) {
 				extent = D_80154318[index].unk2 * 3.0;
 				D_80153BCC = ribbon->unkC;
 				D_80153BC4 = &ribbon->unk6;
-				func_800C1128_D00D8(extent, &D_80153AB8, &left);
+				func_800C1128_D00D8(extent, &D_80153AB8.up, &left);
 				func_800C1128_D00D8(extent, &D_80153AC4, &right);
 
 				point0.x = ((left.x - right.x) * 0.5) + (f32)ribbon->unk0;
@@ -7216,12 +7216,12 @@ void func_800D7870_E6820(void) {
 
 		off0 = (f32)entry->unk2;
 		scale = off0;
-		off0 = scale * D_80153AB8.x;
-		off1 = scale * D_80153AB8.y;
-		off2 = scale * D_80153AB8.z;
-		off3 = scale * D_80153AB8.rightX;
-		off4 = scale * D_80153AB8.rightY;
-		off5 = scale * D_80153AB8.rightZ;
+		off0 = scale * D_80153AB8.up.x;
+		off1 = scale * D_80153AB8.up.y;
+		off2 = scale * D_80153AB8.up.z;
+		off3 = scale * D_80153AB8.right.x;
+		off4 = scale * D_80153AB8.right.y;
+		off5 = scale * D_80153AB8.right.z;
 
 		D_8005BB34->v.ob[0] = ((f32)sub->unk0 + off0);
 		D_8005BB34->v.ob[1] = ((f32)sub->unk2 + off1);
@@ -8412,15 +8412,15 @@ void func_800DB350_EA300(void) {
 	f32 temp_f16;
 	f32 temp_f18;
 
-	temp_f0 = D_80153BC8 * D_80153AB8.x;
-	temp_f12 = D_80153BC8 * D_80153AB8.y;
-	temp_f14 = D_80153BC8 * D_80153AB8.z;
+	temp_f0 = D_80153BC8 * D_80153AB8.up.x;
+	temp_f12 = D_80153BC8 * D_80153AB8.up.y;
+	temp_f14 = D_80153BC8 * D_80153AB8.up.z;
 	temp_f16 = D_80153BC8;
-	temp_f16 *= ((f32 *)&D_80153AB8)[3];
+	temp_f16 *= D_80153AB8.right.x;
 	temp_f18 = D_80153BC8;
-	temp_f18 *= ((f32 *)&D_80153AB8)[4];
+	temp_f18 *= D_80153AB8.right.y;
 	sp4 = D_80153BC8;
-	sp4 *= ((f32 *)&D_80153AB8)[5];
+	sp4 *= D_80153AB8.right.z;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(D_80153BB8.x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(D_80153BB8.y + temp_f12);
@@ -8673,12 +8673,12 @@ void func_800DC18C_EB13C(Vec3f *arg0, u8 *arg1, u8 *arg2, u16 arg3, u8 arg4) {
 	f32 temp_f16;
 	f32 temp_f18;
 
-	temp_f0 = (f32)arg3 * D_80153AB8.x;
-	temp_f12 = (f32)arg3 * D_80153AB8.y;
-	temp_f14 = (f32)arg3 * D_80153AB8.z;
-	temp_f16 = (f32)arg3 * D_80153AB8.rightX;
-	temp_f18 = (f32)arg3 * D_80153AB8.rightY;
-	sp4 = (f32)arg3 * D_80153AB8.rightZ;
+	temp_f0 = (f32)arg3 * D_80153AB8.up.x;
+	temp_f12 = (f32)arg3 * D_80153AB8.up.y;
+	temp_f14 = (f32)arg3 * D_80153AB8.up.z;
+	temp_f16 = (f32)arg3 * D_80153AB8.right.x;
+	temp_f18 = (f32)arg3 * D_80153AB8.right.y;
+	sp4 = (f32)arg3 * D_80153AB8.right.z;
 
 	D_8005BB34->v.ob[0] = (s16)(s32)(arg0->x + temp_f0);
 	D_8005BB34->v.ob[1] = (s16)(s32)(arg0->y + temp_f12);
@@ -10509,10 +10509,10 @@ void func_800E3928_F28D8(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 a
 	}
 
 	if (arg8 == 3) {
-		x1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.x);
-		z1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.z);
-		x2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.rightX);
-		z2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.rightZ);
+		x1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.up.x);
+		z1 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.up.z);
+		x2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.right.x);
+		z2 = (s16)((f32)(D_8013DD18_14CCC8[arg8] - arg7 + size) * D_80153AB8.right.z);
 	} else {
 		x1 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)coss((u16)rot) / 32768.0);
 		z1 = (size + D_8013DD18_14CCC8[arg8] - arg7) * ((f32)sins((u16)rot) / 32768.0);
