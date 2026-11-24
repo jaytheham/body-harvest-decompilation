@@ -1064,8 +1064,8 @@ void func_8007C8FC_1649BC(void) {
 	func_8007CAA8_164B68(&D_800E6A78, currentControllerStates);
 }
 
-// AI - Dispatch player rendering (shadow + model)
-void func_8007C93C_1649FC(void) {
+// US func_8007C93C_1649FC
+void DrawPlayerAndShadow(void) {
 	DrawPlayerShadow(&D_800E6A78);
 	DrawPlayer(&D_800E6A78);
 }

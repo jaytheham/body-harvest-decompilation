@@ -217,7 +217,7 @@ void func_80071854_159914(void);
 void func_8007313C_15B1FC(void);
 void func_8007356C_15B62C(void);
 void func_8007C8BC_16497C(void);
-void func_8007C93C_1649FC(void);
+void DrawPlayerAndShadow(void);
 void func_8007F724_1677E4(void);
 void func_8008BAA0_173B60(void);
 void func_8008BAFC_173BBC(void);

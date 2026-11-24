@@ -7053,7 +7053,7 @@ void func_8007290C_15A9CC(void)
 
 		func_8007FC74_167D34();
 		func_8007568C_15D74C();
-		func_8007C93C_1649FC();
+		DrawPlayerAndShadow();
 		func_80074FF0_15D0B0();
 		func_8008B1A8_173268();
 		func_80082B50_16AC10();
