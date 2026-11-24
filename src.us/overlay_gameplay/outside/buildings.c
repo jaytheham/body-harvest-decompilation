@@ -3481,7 +3481,7 @@ void func_8011EFBC_12DF6C(void *arg0, s16 arg1) {
 	BuildingInstance *temp_v0;
 	s32 objIndex;
 
-	objIndex = (const WeaponEntry_80129864 *)arg0 - D_80145BE0_154B90;
+	objIndex = (const WeaponType *)arg0 - D_80145BE0_154B90;
 	if ((temp_v0 = &buildingInstances[D_8015FAD0[arg1].unk1E >> 4],
 		 objIndex == 0x4F)) {
 		if (temp_v0->unkD != 2) {
@@ -3996,7 +3996,7 @@ void func_8012101C_12FFCC(BuildingInstance *arg0, s16 arg1) {
 
 	building = &buildingInstances[D_8015FAD0[arg1].unk1E >> 4];
 
-	if ((const WeaponEntry_80129864 *)arg0 - D_80145BE0_154B90 == 0xA) {
+	if ((const WeaponType *)arg0 - D_80145BE0_154B90 == 0xA) {
 		building->unkD |= (D_8015FAD0[arg1].unk1E & 0xF);
 		func_800DF038_EDFE8(
 			(s16)(D_8015FAD0[arg1].unk0 >> 0x10),

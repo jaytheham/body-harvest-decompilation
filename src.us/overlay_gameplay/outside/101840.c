@@ -3114,7 +3114,7 @@ void func_800FB504_10A4B4(void)
 	s16 cosVal;
 	f32 scale;
 	s32 selectedInput;
-	WeaponEntry_80129864 *animBase;
+	WeaponType *animBase;
 	s32 animFrame;
 	s32 worldX;
 	s32 worldY;
@@ -3440,11 +3440,11 @@ void func_800FB504_10A4B4(void)
 		selectedInput = type->weapon1;
 	}
 
-	animBase = (WeaponEntry_80129864 *)&D_80145BE0_154B90[selectedInput];
+	animBase = (WeaponType *)&D_80145BE0_154B90[selectedInput];
 	animFrame = (u16)animBase->unk0;
 	if (animFrame >= 0x1195)
 	{
-		((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = 0x1194;
+		((WeaponType *)D_80145BE0_154B90)[selectedInput].unk0 = 0x1194;
 	}
 
 	D_801591A8 = 1;
@@ -3452,7 +3452,7 @@ void func_800FB504_10A4B4(void)
 	func_8012B150_13A100((s32)D_80052B34, nextX, (InputStruct_8012B150 *)D_80158FF4, work.value);
 
 	D_801591B4 = D_801591F8.hit.unk8;
-	((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = animFrame;
+	((WeaponType *)D_80145BE0_154B90)[selectedInput].unk0 = animFrame;
 	D_80159028.unk0 = D_801591F8.hit.unk0;
 	D_80159028.unk2 = D_801591F8.hit.unk2;
 	D_80159028.unk4 = D_801591F8.hit.unk4;
