@@ -7,7 +7,7 @@ void func_800823D8_52888(s32 arg0, s32 arg1);
 void func_800829E4_52E94(s32 arg0);
 s32 ShowTransitionToNextLevel(s32 arg0, s32* arg1);
 void NormalizeVec3f(Vec3f *arg0, Vec3f *arg1);
-void func_800838B8_53D68(f32 arg0, Vec3f *arg1, Vec3f *arg2);
+void MultiplyVec3fByScalar(f32 arg0, Vec3f *arg1, Vec3f *arg2);
 void func_800838E0_53D90(Mtx* arg0);
 void func_800839F0_53EA0(f32* arg0, f32* arg1);
 u8 func_80083A58_53F08(u8);

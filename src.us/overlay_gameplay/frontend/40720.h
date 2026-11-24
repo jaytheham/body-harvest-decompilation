@@ -26,7 +26,7 @@ void func_800731A8_43658(void);
 void func_80075710_45BC0(void);
 void func_80075B64_46014(s16 arg0);
 void func_80075D58_46208(s32 arg0);
-s32 PerformEndGameSequence(void);
+s32 PerformGameCompletedSequence(void);
 s32 PerformPalZeroGameCompletedSequence(void);
 s32 StartIntroCutscene(void);
 void func_80076FE0_47490(s32 source, s32 destination);

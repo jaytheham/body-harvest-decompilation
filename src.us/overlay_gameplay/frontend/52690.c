@@ -387,38 +387,38 @@ s32 ShowTransitionToNextLevel(s32 arg0, s32* arg1) {
 	return 1;
 }
 
-// AI - 3x3 matrix-vector multiply: out = mat^T * vec
-void func_80083610_53AC0(f32 *mat, Vec3f *vec, f32 *out) {
-	out[0] = vec->x * mat[0] + vec->y * mat[3] + vec->z * mat[6];
-	out[1] = vec->x * mat[1] + vec->y * mat[4] + vec->z * mat[7];
-	out[2] = vec->x * mat[2] + vec->y * mat[5] + vec->z * mat[8];
+// US func_80083610_53AC0
+void MultiplyMatrixWithVec3f(f32 *mat, Vec3f *vec, Vec3f *out) {
+	out->x = vec->x * mat[0] + vec->y * mat[3] + vec->z * mat[6];
+	out->y = vec->x * mat[1] + vec->y * mat[4] + vec->z * mat[7];
+	out->z = vec->x * mat[2] + vec->y * mat[5] + vec->z * mat[8];
 }
 
-// AI - 3D vector cross product: arg2 = arg0 x arg1
-void func_800836A4_53B54(f32 *arg0, f32 *arg1, f32 *arg2) {
-	arg2[0] = arg0[1] * arg1[2] - arg1[1] * arg0[2];
-	arg2[1] = arg0[2] * arg1[0] - arg1[2] * arg0[0];
-	arg2[2] = arg0[0] * arg1[1] - arg1[0] * arg0[1];
+// US func_800836A4_53B54
+void GetVec3fCrossProduct(f32 *arg0, f32 *arg1, f32 *out) {
+	out[0] = arg0[1] * arg1[2] - arg1[1] * arg0[2];
+	out[1] = arg0[2] * arg1[0] - arg1[2] * arg0[0];
+	out[2] = arg0[0] * arg1[1] - arg1[0] * arg0[1];
 }
 
-// AI - Divides a 3D vector by a scalar: arg2 = arg1 / arg0
-void func_80083714_53BC4(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
-	arg2->x = arg1->x / arg0;
-	arg2->y = arg1->y / arg0;
-	arg2->z = arg1->z / arg0;
+// US func_80083714_53BC4
+void DivideVec3fByScalar(f32 arg0, Vec3f *arg1, Vec3f *out) {
+	out->x = arg1->x / arg0;
+	out->y = arg1->y / arg0;
+	out->z = arg1->z / arg0;
 }
 
-// AI - Returns the squared magnitude of a 3D vector
-f32 func_8008373C_53BEC(Vec3f *arg0) {
+// US func_8008373C_53BEC
+f32 GetSquaredMagnitude(Vec3f *arg0) {
 	f32 x = arg0->x;
 	f32 y = arg0->y;
 	f32 z = arg0->z;
 	return (x * x) + (y * y) + (z * z);
 }
 
-// AI - Computes the magnitude (length) of a 3D vector
-f32 func_80083764_53C14(Vec3f *arg0) {
-	f32 sqMag = func_8008373C_53BEC(arg0);
+// US func_80083764_53C14
+f32 GetMagnitude(Vec3f *arg0) {
+	f32 sqMag = GetSquaredMagnitude(arg0);
 	if (sqMag != 0.0) {
 		sqMag = sqrtf(sqMag);
 	}
@@ -429,11 +429,11 @@ f32 func_80083764_53C14(Vec3f *arg0) {
 void NormalizeVec3f(Vec3f *source, Vec3f *normalized) {
 	f32 mag;
 
-	mag = func_80083764_53C14(source);
+	mag = GetMagnitude(source);
 	if (mag == 0.0) {
 		*normalized = *source;
 	} else {
-		func_80083714_53BC4(mag, source, normalized);
+		DivideVec3fByScalar(mag, source, normalized);
 	}
 }
 
@@ -443,21 +443,21 @@ f32 GetDotProductVec3f(Vec3f *arg0, Vec3f *arg1) {
 }
 
 // US func_80083850_53D00
-void SubtractVec3f(Vec3f *source, Vec3f *subtracted, Vec3f *result) {
-	result->x = source->x - subtracted->x;
-	result->y = source->y - subtracted->y;
-	result->z = source->z - subtracted->z;
+void SubtractVec3f(Vec3f *source, Vec3f *subtracted, Vec3f *out) {
+	out->x = source->x - subtracted->x;
+	out->y = source->y - subtracted->y;
+	out->z = source->z - subtracted->z;
 }
 
-// AI - Adds two 3D vectors: arg2 = arg0 + arg1
-void func_80083884_53D34(f32 *arg0, f32 *arg1, f32 *arg2) {
+// US func_80083884_53D34
+void AddVec3f(f32 *arg0, f32 *arg1, f32 *arg2) {
 	arg2[0] = arg1[0] + arg0[0];
 	arg2[1] = arg1[1] + arg0[1];
 	arg2[2] = arg1[2] + arg0[2];
 }
 
-// AI - Multiplies a 3D vector by a scalar: arg2 = arg1 * arg0
-void func_800838B8_53D68(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
+// US func_800838B8_53D68
+void MultiplyVec3fByScalar(f32 arg0, Vec3f *arg1, Vec3f *arg2) {
 	arg2->x = arg1->x * arg0;
 	arg2->y = arg1->y * arg0;
 	arg2->z = arg1->z * arg0;
@@ -481,10 +481,10 @@ void func_800838E0_53D90(Mtx *arg0) {
 	sp24.x = -0.5f;
 	sp24.y = 0.5f;
 	sp24.z = 0.0f;
-	func_80083610_53AC0((f32 *)sp34, &sp24, &D_800DE0C0.up.x);
+	MultiplyMatrixWithVec3f((f32 *)sp34, &sp24, &D_800DE0C0.up);
 	sp24.x = -sp24.x;
-	func_80083610_53AC0((f32 *)sp34, &sp24, &D_800DE0CC.x);
-	func_800836A4_53B54((f32 *)&D_800DE0C0.up, (f32 *)&D_800DE0CC, (f32 *)&D_800DE0D8);
+	MultiplyMatrixWithVec3f((f32 *)sp34, &sp24, &D_800DE0CC);
+	GetVec3fCrossProduct((f32 *)&D_800DE0C0.up, (f32 *)&D_800DE0CC, (f32 *)&D_800DE0D8);
 	NormalizeVec3f(&D_800DE0D8, &D_800DE0D8);
 }
 
@@ -953,8 +953,8 @@ void func_800847E4_54C94(u8 arg0) {
 			entry840 = &D_800DE840[headIndex]; headIndex = 0;
 			point0.z = (f32)(distBias * ((f64)(f32)((FrontendAuraPayload *)&entry840->unk8)->segment.radius * 0.00390625));
 
-			func_800838B8_53D68(point0.z, &D_800DE0C0.up, &vecA);
-			func_800838B8_53D68(point0.z, &D_800DE0CC, &vecB);
+			MultiplyVec3fByScalar(point0.z, &D_800DE0C0.up, &vecA);
+			MultiplyVec3fByScalar(point0.z, &D_800DE0CC, &vecB);
 
 			payload = (FrontendAuraPayload *)&entry840->unk8;
 			payload = (FrontendAuraPayload *)((u32)payload & -1);
@@ -963,17 +963,17 @@ void func_800847E4_54C94(u8 arg0) {
 
 			quadrant = payload->segment.quadrant;
 			if (quadrant == 0) {
-				func_80083884_53D34(&origin.x, &vecA.x, &outA.x);
-				func_80083884_53D34(&origin.x, &vecB.x, &outB.x);
+				AddVec3f(&origin.x, &vecA.x, &outA.x);
+				AddVec3f(&origin.x, &vecB.x, &outB.x);
 			} else if (quadrant == 1) {
-				func_80083884_53D34(&origin.x, &vecB.x, &outA.x);
+				AddVec3f(&origin.x, &vecB.x, &outA.x);
 				SubtractVec3f(&origin, &vecA, &outB);
 			} else if (quadrant == 2) {
 				SubtractVec3f(&origin, &vecA, &outA);
 				SubtractVec3f(&origin, &vecB, &outB);
 			} else {
 				SubtractVec3f(&origin, &vecB, &outA);
-				func_80083884_53D34(&origin.x, &vecA.x, &outB.x);
+				AddVec3f(&origin.x, &vecA.x, &outB.x);
 			}
 
 
@@ -4088,7 +4088,7 @@ void func_8008EEC4_5F374(void) {
 			sp60.y = (f32) ((func_800038E0_44E0() % 1000) - 500);
 			sp60.z = (f32) ((func_800038E0_44E0() % 1000) - 1000);
 			NormalizeVec3f(&sp60, &sp60);
-			func_800838B8_53D68(80.0f, &sp60, &sp60);
+			MultiplyVec3fByScalar(80.0f, &sp60, &sp60);
 			func_80085CEC_5619C((s16) (s32) sp60.x, (s16) (s32) sp60.y, (s16) (s32) sp60.z, -1, 0, 0, 0x46, 0x19, 3,
 							0x6E, 0xFF, 0xFF, 0xFF, 3);
 			var_s1 = (var_s1 + 1) & 0xFF;
@@ -4098,7 +4098,7 @@ void func_8008EEC4_5F374(void) {
 		sp60.y = (f32) ((func_800038E0_44E0() % 1000) - 500);
 		sp60.z = (f32) ((func_800038E0_44E0() % 1000) - 500);
 		NormalizeVec3f(&sp60, &sp60);
-		func_800838B8_53D68(340.0f, &sp60, &sp60);
+		MultiplyVec3fByScalar(340.0f, &sp60, &sp60);
 		func_8008DC34_5E0E4((s16) (s32) sp60.x, (s16) (s32) sp60.y, (s16) (s32) sp60.z, 0xD,
 						  (func_800038E0_44E0() % 0xF) + 0xF);
 	}
@@ -4168,7 +4168,7 @@ void func_8008F1E0_5F690(void)
 				sp90.x = sinf(trigAngle) * (-500.0f);
 			}
 			NormalizeVec3f(&sp90, &sp90);
-			func_800838B8_53D68(250.0f, &sp90, &sp90);
+			MultiplyVec3fByScalar(250.0f, &sp90, &sp90);
 			func_80085CEC_5619C((s32)sp90.x, (s32)sp90.y, (s32)sp90.z, 0, 0, -1, 0x46, 0x1E, 3, 0x6E, 0xFF, 0xFF, 0xFF, 4);
 			var_s1++;
 		} while (var_s1 < 3);
