@@ -369,7 +369,6 @@ void func_80083A20_16BAE0(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	s16 spreadY;
 	s16 spreadZ;
 
-	/* The integer address view preserves the separate payload base in IDO. */
 	template = (Frontend52690Unk8Motion *)(s32)&D_800FB7B0[D_800FB6F8[arg0].unk6].unk8;
 	spawnIdx = func_80083390_16B450(arg0);
 	if (spawnIdx == -3) {
