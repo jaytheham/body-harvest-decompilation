@@ -1685,7 +1685,7 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 	sp3C = arg4;
 	sp38 = arg5;
 	sp34 = arg6;
-	if (func_800B1028_BFFD8(arg1, arg2, arg3, &sp3C, &sp38, &sp34, &sp2F) != 0) {
+	if (ClipLineToShieldWalls(arg1, arg2, arg3, &sp3C, &sp38, &sp34, &sp2F) != 0) {
 		return 8;
 	}
 
@@ -1719,7 +1719,7 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 	D_8015F9D0.unk4 = arg7;
 	D_8015F9D0.unk8 = 0xA;
 
-	if (func_800B1028_BFFD8(arg2, arg3, arg4, &arg5, &arg6, &arg7, &sp3B[-5]) != 0) {
+	if (ClipLineToShieldWalls(arg2, arg3, arg4, &arg5, &arg6, &arg7, &sp3B[-5]) != 0) {
 		D_8015F9D0.unk10 = sp3B[-5];
 		D_8015F9D0.unk0 = arg5;
 		D_8015F9D0.unk2 = arg6;
@@ -1932,7 +1932,7 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 			break;
 		}
 
-		if (func_800B0D10_BFCC0((s32)arg0->unk0, (s32)arg0->unk8, 0) != 0) {
+		if (IsPositionOutsideCurrentStageShieldWall((s32)arg0->unk0, (s32)arg0->unk8, 0) != 0) {
 			D_8015F9D0.unk8 = 6;
 			break;
 		}
@@ -2902,7 +2902,7 @@ void func_8012B26C_13A21C(void)
         projectile->unk4 = (f32) D_80222A70;
       }
       impactDamage = entry->unk2;
-      if (func_800B0D10_BFCC0((s32) projectile->unk0, (s32) projectile->unk8, 0) != 0)
+      if (IsPositionOutsideCurrentStageShieldWall((s32) projectile->unk0, (s32) projectile->unk8, 0) != 0)
       {
         alive = 0;
       }

@@ -218,7 +218,7 @@ void func_80070440_7F3F0(void)
 	}
 	func_80007548_8148();
 	func_80017AAC_186AC();
-	func_800BD2F4_CC2A4();
+	CloseCurrentLevelGates();
 	func_80004AEC_56EC();
 	{
 		f32 fx = (f32)spawnX;
@@ -257,7 +257,7 @@ void func_80070440_7F3F0(void)
 	D_80052B2C->unk8 = ((((((f32)sins(0xFA0)) / 32768.0) * (D_80052B2C->unk1C)) * (((f32)c0) / 32768.0)) + D_80052B2C->unk14);
 	D_80157590 = 0;
 	D_8004DC60 = 0;
-	func_800B0C80_BFC30();
+	SetCurrentShieldWallBounds();
 	func_800FAC90_109C40();
 	if (showDemoText == 1)
 	{
@@ -1011,7 +1011,7 @@ void doOutsideGameplayLoop(void)
 				D_8004DC60 = 0;
 			}
 			D_80047F94 = func_800B0F20_BFED0(D_80052B34->unk0, D_80052B34->unk4);
-			func_800B0C80_BFC30();
+			SetCurrentShieldWallBounds();
 			func_800A9238_B81E8();
 			func_80115A74_124A24();
 			func_800702C0_7F270((s16)1);

@@ -364,7 +364,7 @@ void func_800A68CC_B587C(void) {
 				D_80047F94 = D_8013D894_14C844 - 1;
 			}
 
-			func_800B0C80_BFC30();
+			SetCurrentShieldWallBounds();
 
 			func_800FB44C_10A3FC(D_80052B34, sp2E);
 			func_800FB484_10A434(D_80052B34, sp2C);
