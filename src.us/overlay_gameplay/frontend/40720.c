@@ -205,7 +205,7 @@ s32 func_80070270_40720(s32 arg0) {
 	switch (arg0)
 	{
 	case 1:
-		BootToStartMenu();
+		DoBootToStartMenuSequence();
 		break;
 	case 2:
 		D_800476A2 = 1;
@@ -220,10 +220,10 @@ s32 func_80070270_40720(s32 arg0) {
 		ShowHighScores(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 		break;
 	case 6:
-		PerformGameCompletedSequence();
+		DoGameCompletedSequence();
 		break;
 	case 13:
-		PerformPalZeroGameCompletedSequence();
+		DoPalZeroGameCompletedSequence();
 		break;
 	case 9:
 		return ShowSaveBeaconScreen(1);
@@ -233,7 +233,7 @@ s32 func_80070270_40720(s32 arg0) {
 		return ShowInventoryScreen();
 	case 12:
 		D_800946DC_64B8C = FE_STATE_PRESS_START;
-		BootToStartMenu();
+		DoBootToStartMenuSequence();
 		break;
 	}
 
@@ -2428,7 +2428,7 @@ void func_800764B4_46964(void) {
 
 // Comet explodes, credits, mission success screen, then kiss sequence
 // US func_80076504_469B4
-s32 PerformGameCompletedSequence(void)
+s32 DoGameCompletedSequence(void)
 {
 	s32 result;
 	s32 fadeResult;
@@ -2496,7 +2496,7 @@ s32 PerformGameCompletedSequence(void)
 }
 
 // US func_8007685C_46D0C
-s32 PerformPalZeroGameCompletedSequence(void) {
+s32 DoPalZeroGameCompletedSequence(void) {
 	func_8007949C_4994C(StoreCurrentLevelStatsAndGetTotalScore(), 0);
 	ShowMissionSuccessScreen();
 	func_80013684_14284();
@@ -3861,7 +3861,7 @@ void func_80078968_48E18(void) {
 }
 
 // US func_800789E4_48E94
-void BootToStartMenu(void) {
+void DoBootToStartMenuSequence(void) {
 	s32 result;
 	s16 fileSelectCycle;
 	s16 optionArg;

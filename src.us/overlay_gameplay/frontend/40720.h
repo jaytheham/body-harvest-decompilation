@@ -26,15 +26,15 @@ void func_800731A8_43658(void);
 void func_80075710_45BC0(void);
 void func_80075B64_46014(s16 arg0);
 void func_80075D58_46208(s32 arg0);
-s32 PerformGameCompletedSequence(void);
-s32 PerformPalZeroGameCompletedSequence(void);
+s32 DoGameCompletedSequence(void);
+s32 DoPalZeroGameCompletedSequence(void);
 s32 StartIntroCutscene(void);
 void func_80076FE0_47490(s32 source, s32 destination);
 s32 ShowStartScreen(void);
 s32 ShowAreYouSureScreen(void);
 s32 ShowSelectDifficultyScreen(void);
 s32 ShowCopySaveSlotScreen(void);
-void BootToStartMenu(void);
+void DoBootToStartMenuSequence(void);
 void func_800791A0_49650(s32 arg0);
 s32 GetLengthOfString(u8 *arg0);
 void func_8007949C_4994C(s32 arg0, u16 arg1);
@@ -55,6 +55,6 @@ void func_8007C764_4CC14(u16 arg0, u16 arg1);
 void ShowMissionSuccessScreen(void);
 s32 ShowSaveBeaconScreen(s32 arg0);
 s32 ShowInventoryScreen(void);
-s32 PerformGameCompletedSequence(void);
+s32 DoGameCompletedSequence(void);
 
 #endif
