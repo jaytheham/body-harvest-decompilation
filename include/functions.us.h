@@ -239,7 +239,6 @@ void func_80017AAC_186AC(void);
 void func_80017AE0_186E0(void);
 void func_8001A024_1AC24(void);
 void func_80017490_18090(u8 *arg0);
-void func_8001A54C_Menu(const u8 *arg0, s32 arg1);
 s32 func_80018A58_19658(void);
 s32 func_8001F6E0_202E0(void);
 s32 func_8007B51C_1635DC(s32 arg0);

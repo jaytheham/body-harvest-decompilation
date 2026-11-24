@@ -482,6 +482,19 @@ segments:
       - [0x18D9E0, .rodata, ../src.us/overlay_gameplay/inside/167C90]
       - [0x18DB90, .rodata, ../src.us/overlay_gameplay/inside/16AF30]
       - [0x18E100, .rodata, ../src.us/overlay_gameplay/inside/173B60]
+      - {start: 0x18E340, type: .fixed_bss, name: ../src.us/overlay_gameplay/inside/173B60, vram: 0x800FCF7C, linker_entry: false}
+
+  # The pause menu's deferred selection is a function static at a word-aligned address.
+  - name: overlay_gameplay_inside_menu
+    type: code
+    start: 0x18E340
+    vram: 0x800FCF7C
+    bss_size: 0x10
+    subalign: 4
+    exclusive_ram_id: 800702A0
+    overlay: true
+    subsegments:
+      - {start: 0x18E340, type: .fixed_bss, name: ../src.us/overlay_gameplay/inside/173B60, vram: 0x800FCF7C}
 
   - name: overlay_level_greece
     type: code
