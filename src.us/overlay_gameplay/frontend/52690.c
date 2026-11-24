@@ -724,6 +724,7 @@ void func_800840C4_54574(u8 arg0) {
 	}
 }
 
+// Effect for Adam gunshot in the intro sequence?
 // AI - Initializes a particle node with randomized parameters (type, frame, velocity, lifespan)
 void func_8008412C_545DC(u8 arg0, u8 arg1) {
 	s32 pad0;
@@ -976,7 +977,6 @@ void func_800847E4_54C94(u8 arg0) {
 				AddVec3f(&origin.x, &vecA.x, &outB.x);
 			}
 
-
 			point0.x = ((outB.x - outA.x) * t0) + outA.x;
 			point0.y = ((outB.y - outA.y) * t0) + outA.y;
 			point0.z = ((outB.z - outA.z) * t0) + outA.z;
@@ -1057,7 +1057,6 @@ void func_800847E4_54C94(u8 arg0) {
 				D_8005BB34->v.cn[2] = 0;
 				D_8005BB34->v.cn[3] = 20;
 				D_8005BB34++;
-
 			}
 
 			remaining = count;
@@ -1231,8 +1230,8 @@ void func_800857D4_55C84(u8 arg0, Vec3f *arg1, u8 arg2, u8 arg3) {
 	spawn->unkA = 0;
 }
 
-// AI - Clamps a value to the range [1, 80]
-s32 func_80085CB8_56168(s16 arg0) {
+// US func_80085CB8_56168
+s32 ClampBetween1And80(s16 arg0) {
 	if (arg0 >= 0x51) {
 		arg0 = 0x50;
 	} else if (arg0 == 0) {
@@ -1283,7 +1282,7 @@ void func_80085CEC_5619C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5
 	NormalizeVec3f(&direction, &direction);
 
 	state.value = arg8;
-	state.value = func_80085CB8_56168((s16)state.value);
+	state.value = ClampBetween1And80((s16)state.value);
 	arg8 = state.value;
 	i = 0;
 	if (state.value > 0) {
@@ -1325,7 +1324,7 @@ void func_80085EA8_56358(s16 arg0, s16 arg1, s16 arg2, s16 arg3, u8 arg4, u8 arg
 	*((u8*) &D_800DE840[temp_v0].unk12) = 2;
 	D_800DE840[temp_v0].unk11 = arg4;
 
-	temp_v0_2 = func_80085CB8_56168(arg5);
+	temp_v0_2 = ClampBetween1And80(arg5);
 	temp_a0 = temp_v0_2 & 0xFF;
 	var_s0 = 0;
 	if (temp_a0 > 0) {
@@ -1440,8 +1439,8 @@ void func_80085FF0_564A0(u8 arg0) {
 	}
 }
 
-// Renders fading particle trails as pairs of colored vertices.
-void func_80086528_569D8(u8 arg0) {
+// US func_80086528_569D8
+void DrawCometTrailParticles(u8 arg0) {
 	/* Keep the payload base separate from the cached full-node address. */
 	union {
 		u32 address;
@@ -1646,6 +1645,7 @@ s16 func_80086C58_57108(s16 arg0, s16 arg1, s16 arg2, u16 arg3, u8 *arg4, u8 arg
 	return ret;
 }
 
+// Something to do with explosion effects in intro movie?
 // AI - Updates type-2 particles: animates growth, interpolates colors toward target, cycles animation frames, frees expired entries
 void func_800870AC_5755C(void) {
 	s16 idx;
@@ -2829,29 +2829,27 @@ void func_8008AEC8_5B378(u8 arg0) {
 }
 
 // AI - Allocates a type-7 particle entry with position, color, and size
-u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5, u8 arg6)
-{
-  s16 idx;s32 new_var;
-  u8 allocId;
-  allocId = func_80083A58_53F08(7);
-  if (allocId != 0xFB)
-  {
-	idx = func_80083B7C_5402C(allocId);
-	if (idx == (-3))
-	{
-	  func_80083B14_53FC4(allocId);
-	  return 0xFB;
+u8 func_8008B08C_5B53C(s16 arg0, s16 arg1, s16 arg2, s8 arg3, s8 arg4, s8 arg5,u8 arg6) {
+	s16 idx;
+	s32 new_var;
+	u8 allocId;
+	allocId = func_80083A58_53F08(7);
+	if (allocId != 0xFB) {
+		idx = func_80083B7C_5402C(allocId);
+		if (idx == (-3)) {
+			func_80083B14_53FC4(allocId);
+			return 0xFB;
+		}
+		D_800DE840[idx].unk8 = arg0;
+		D_800DE840[idx].unkA = arg1;
+		D_800DE840[idx].unkC = arg2;
+		D_800DE840[idx].unkE = arg3;
+		D_800DE840[idx].unkF = arg4;
+		D_800DE840[idx].unk10 = arg5;
+		D_800DE840[idx].unk11 = 1;
+		*((u8 *)(&D_800DE840[idx].unk12)) = arg6;
 	}
-	D_800DE840[idx].unk8 = arg0;
-	D_800DE840[idx].unkA = arg1;
-	D_800DE840[idx].unkC = arg2;
-	D_800DE840[idx].unkE = arg3;
-	D_800DE840[idx].unkF = arg4;
-	D_800DE840[idx].unk10 = arg5;
-	D_800DE840[idx].unk11 = 1;
-	*((u8 *) (&D_800DE840[idx].unk12)) = arg6;
-  }
-  return allocId;
+	return allocId;
 }
 
 // AI - Sets the 3D position of a type-7 particle
@@ -3274,7 +3272,6 @@ void func_8008BC00_5C0B0(u8 arg0) {
 				curY = nextY2;
 				curZ = nextZ2;
 				(void)0;
-
 			}
 
 			idx = nextIdx;
@@ -4305,8 +4302,8 @@ void func_8008FA60_5FF10(void) {
 	}
 }
 
-// AI - Handles debug controller input for camera position manipulation
-void func_8008FAAC_5FF5C(void) {
+// US func_8008FAAC_5FF5C
+void MoveIntroCutsceneDebugBillboard(void) {
 	func_800033D4_3FD4(0x800, 0);
 	if (currentControllerStates[CONTROLLER_ONE].button & BUTTON_D_UP) {
 		D_800DE0B0.unk2 += 0x28;
@@ -4338,8 +4335,8 @@ void func_8008FAAC_5FF5C(void) {
 	}
 }
 
-// AI - Renders a debug position marker quad at the current camera location
-void func_8008FBD4_60084(void) {
+// US func_8008FBD4_60084
+void DrawIntroCutsceneDebugBillboard(void) {
 	u8 pad;
 	struct { u8 unk0; u8 unk1; u8 unk2; } sp44;
 
@@ -4377,7 +4374,7 @@ void func_8008FDF0_602A0(void) {
 	func_8008DFA0_5E450();
 	func_8008EEC4_5F374();
 	func_8008F1E0_5F690();
-	func_8008FAAC_5FF5C();
+	MoveIntroCutsceneDebugBillboard();
 }
 
 // AI - Effect command dispatcher: creates particle effects from a structured command table (30 effect types)
@@ -4573,7 +4570,7 @@ void func_80090648_60AF8(void) {
 
 	for (i = 0; i < 0x96; i++) {
 		if (D_800DE130[i].unk0 == 1) {
-			func_80086528_569D8((u8)i);
+			DrawCometTrailParticles((u8)i);
 		} else if (D_800DE130[i].unk0 == 0xA) {
 			func_8008C8E0_5CD90();
 		}
