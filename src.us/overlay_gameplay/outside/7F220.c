@@ -1184,12 +1184,12 @@ void doOutsideGameplayLoop(void)
 		{
 			if (D_80149380 == 0)
 			{
-				D_80149380 = 100;
+				D_80149380 = 100; // For the next 100 frames, add the per-frame usage to:
 				D_80149394 = 0;
-				D_80149384 = 0;
-				D_80149388 = 0;
-				D_8014938C = 0;
-				D_80149390 = 0;
+				D_80149384 = 0; // graphics display-list commands
+				D_80149388 = 0; // line-list commands
+				D_8014938C = 0; // vertices
+				D_80149390 = 0; // matrices
 			}
 		}
 		func_80073B78_82B28();
