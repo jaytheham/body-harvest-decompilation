@@ -1980,12 +1980,12 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 
 	sinTerm = (s32)(spF8 * sp11C);
 	cosTerm = (s32)(spF8 * (f32)((f64)(f32)trigResult / 32768.0));
-	if (sinTerm + cosTerm) {}
+	if (sinTerm + cosTerm + cG + cB) {}
 	halfSin = (s16)sinTerm;
 	halfCos = (s16)cosTerm;
 	xStep = (s16)(s32)(direction.vector.x * spF4);
 	yStep = (s16)(s32)(direction.vector.y * spF4);
-	zStep = (s16)(s64)(s32)(direction.vector.z * spF4);
+	zStep = (s16)(s32)(direction.vector.z * spF4);
 	xTri = *(s16 *)&xStep * 3;
 
 	D_8005BB34->v.ob[0] = arg1[0] + halfSin + xTri;
@@ -2074,13 +2074,11 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = arg2[1];
 	D_8005BB34->v.ob[2] = arg2[2];
 	D_8005BB34->v.flag = 0;
-	baseGreen = spE8;
-	baseBlue = spE6;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = (baseRed = spEA);
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = baseBlue;
+	D_8005BB34->v.cn[1] = (baseGreen = spE8);
+	D_8005BB34->v.cn[2] = (baseBlue = spE6);
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
