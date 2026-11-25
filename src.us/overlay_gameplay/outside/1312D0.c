@@ -765,15 +765,15 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
   }
 }
 
-#ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
-	u8 framePadding[12];
+	u8 framePadding[8];
 	Projectile *bullet;
 	const WeaponType *weaponEntry;
 	s32 i;
 	s32 sparkType;
 	s32 lightFlags;
+	u8 paletteIndex;
 	const EffectRgb *lightColor;
 	Unk80052B40 fadeVec;
 	u8 red;
@@ -947,10 +947,12 @@ void func_80124D60_133D10(void) {
 
 				lightFlags = weaponEntry->lightFlags;
 				if (lightFlags != 0) {
-					lightColor = &D_80140B7C_14FB2C[(u8)(lightFlags & 7)];
-					color[0] = ((lightColor->r * (lightFlags & 0xF8)) >> 9);
-					color[1] = ((lightColor->g * (lightFlags & 0xF8)) >> 9);
-					color[2] = ((lightColor->b * (lightFlags & 0xF8)) >> 9);
+					paletteIndex = lightFlags & 7;
+					lightFlags &= ~7;
+					lightColor = &D_80140B7C_14FB2C[paletteIndex];
+					color[0] = (lightColor->r * (u8)lightFlags) >> 9;
+					color[1] = (lightColor->g * (u8)lightFlags) >> 9;
+					color[2] = (lightColor->b * (u8)lightFlags) >> 9;
 					pos[0] = (s16)bullet->unk0;
 					pos[1] = (s16)bullet->unk8;
 					func_800B2354_C1304(pos, color, 0x100, 0x258);
@@ -1023,13 +1025,6 @@ void func_80124D60_133D10(void) {
 	gDPSetRenderMode(D_8005BB2C++, AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_INTER | ALPHA_CVG_SEL | GBL_c1(G_BL_CLR_FOG, G_BL_A_SHADE, G_BL_CLR_MEM, G_BL_A_MEM), AA_EN | Z_CMP | Z_UPD | IM_RD | CVG_DST_CLAMP | ZMODE_INTER | ALPHA_CVG_SEL | G_RM_NOOP2);
 	gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124D60_133D10.s", "src.us/overlay_gameplay/outside/1312D0_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80124D60_133D10.s", "src.us/overlay_gameplay/outside/1312D0_remaining_late_rodata.eu.s")
-#endif
-#endif
 
 void func_80125C48_134BF8(s16 arg0, s16 arg1, s16 arg2) {
 	s32 index;
