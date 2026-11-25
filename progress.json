@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-25T11:01:46Z",
-  "commit": "824f2fd9",
-  "commit_timestamp": "2026-11-24T21:49:56+13:00",
+  "generated": "2026-11-25T18:08:05Z",
+  "commit": "49bd5a32",
+  "commit_timestamp": "2026-11-26T07:07:23+13:00",
   "overall": {
     "total_functions": 3057,
     "matched": 3046,
@@ -2341,7 +2341,7 @@
       "asm_stubs": 0,
       "total": 75,
       "matched_pct": 100.0,
-      "contributor": "TheGh0stShip"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/CFE30.c",
@@ -2431,7 +2431,7 @@
       "asm_stubs": 0,
       "total": 0,
       "matched_pct": 0,
-      "contributor": "LunarLaurus"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/constData2.c",
@@ -2577,8 +2577,8 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 91,
-      "matched": 2475,
+      "files": 93,
+      "matched": 2550,
       "non_matching": 9,
       "asm_stubs": 0
     },
@@ -2591,8 +2591,8 @@
     },
     {
       "name": "TheGh0stShip",
-      "files": 4,
-      "matched": 232,
+      "files": 3,
+      "matched": 157,
       "non_matching": 2,
       "asm_stubs": 0
     },
@@ -2600,13 +2600,6 @@
       "name": "lunarlaurus",
       "files": 3,
       "matched": 4,
-      "non_matching": 0,
-      "asm_stubs": 0
-    },
-    {
-      "name": "LunarLaurus",
-      "files": 1,
-      "matched": 0,
       "non_matching": 0,
       "asm_stubs": 0
     }
@@ -2908,7 +2901,7 @@
     },
     {
       "date": "2026-11-22",
-      "commit": "824f2fd",
+      "commit": "f89ff44",
       "matched": 3046,
       "non_matching": 11,
       "total": 3057
