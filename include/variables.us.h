@@ -2775,6 +2775,7 @@ extern s8 D_8015EB88[1];
 extern Projectile D_8015EB90[64];
 extern Unk8015F790 D_8015F790[16]; // Projectile trails?
 extern Unk8015F9D0 D_8015F9D0;
+extern Unk8015F9D0 CollisionHitRecord; /* Linker alias of D_8015F9D0. */
 extern s32 D_8015F9D8;
 extern s32 D_8015F9DC;
 extern s32 D_8015F9E4;
