@@ -42,10 +42,11 @@ u8 D_80140B38_14FAE8[12] = {
 	0x64, 0x96, 0xFF, 0x14, 0x28, 0xB4, 0x46, 0xFF, 0x50, 0x14, 0xBE, 0x28,
 };
 
-u8 D_80140B44_14FAF4[0x2C] = {
-	0x82, 0x00, 0xBE, 0xFF, 0xFF, 0xFF, 0x32, 0x00, 0x50, 0x2D, 0x13, 0xA1, 0x00, 0xDF, 0xFF, 0xFF,
-	0xFF, 0xFF, 0x8B, 0x00, 0x2D, 0x13, 0xFD, 0x55, 0x00, 0xFF, 0xFF, 0xFF, 0xE8, 0x73, 0x0C, 0x2D,
-	0x13, 0xFD, 0x55, 0x00, 0xFF, 0xFF, 0xFF, 0xE8, 0x73, 0x0C, 0x2D, 0x13,
+ProjectileTrailColors D_80140B44_14FAF4[4] = {
+	{ { 0x82, 0x00, 0xBE }, { 0xFF, 0xFF, 0xFF }, { 0x32, 0x00, 0x50 }, 0x2D, 0x13 },
+	{ { 0xA1, 0x00, 0xDF }, { 0xFF, 0xFF, 0xFF }, { 0xFF, 0x8B, 0x00 }, 0x2D, 0x13 },
+	{ { 0xFD, 0x55, 0x00 }, { 0xFF, 0xFF, 0xFF }, { 0xE8, 0x73, 0x0C }, 0x2D, 0x13 },
+	{ { 0xFD, 0x55, 0x00 }, { 0xFF, 0xFF, 0xFF }, { 0xE8, 0x73, 0x0C }, 0x2D, 0x13 },
 };
 
 u8 D_80140B70_14FB20[0x0C] = {
@@ -471,7 +472,7 @@ void func_80123AC4_132A74(VehicleInstance *arg0)
 		if (x)
 		{
 		}
-		div = D_80145160_154110[0];
+		div = 1000.0;
 		for (i = 0; i < 2; i++)
 		{
 			// Play sound effect at vehicle position
@@ -767,14 +768,13 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
 #ifdef NON_MATCHING
 // DisplayBullets
 void func_80124D60_133D10(void) {
-	u8 framePadding[8];
+	u8 framePadding[12];
 	Projectile *bullet;
 	const WeaponType *weaponEntry;
 	s32 i;
 	s32 sparkType;
-	s32 weaponFlags;
+	s32 lightFlags;
 	const EffectRgb *lightColor;
-	const u32 *sparkDLs;
 	Unk80052B40 fadeVec;
 	u8 red;
 	u8 green;
@@ -807,34 +807,33 @@ void func_80124D60_133D10(void) {
 			bullet = &D_8015EB90[i];
 			weaponEntry = &D_80145BE0_154B90[bullet->unk20];
 			sparkType = weaponEntry->unk16;
-			sparkDLs = D_80140AD8_14FA88;
 
 			if ((gameplayMode == 1) || (gameplayMode == 0xC) || (gameplayMode == 3) || (gameplayMode == 0xB)) {
 				if ((D_80145BE0_154B90[bullet->unk20].weaponFlags & 0x1000) || (bullet->unk20 == 0x5D)) {
-					func_800C31AC_D215C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E);
+					func_800C31AC_D215C((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2E);
 				} else if ((D_80145BE0_154B90[bullet->unk20].weaponFlags << 9) < 0) {
-					func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+					func_800D9B14_E8AC4((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2C);
 				} else {
 					switch (bullet->unk20) {
 						case 0x5C:
-							func_800D4AB0_E3A60(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+							func_800D4AB0_E3A60(bullet->unk2C, (s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8);
 							break;
 						case 0x5E:
 						case 0x6F:
-							func_800D55C0_E4570(bullet->unk2C, (s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8);
+							func_800D55C0_E4570(bullet->unk2C, (s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8);
 							break;
 						case 0x61:
-							func_800D76F4_E66A4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							func_800D76F4_E66A4((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2C);
 							break;
 						case 0x60:
 						case 0x63:
-							func_800D8000_E6FB0((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							func_800D8000_E6FB0((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2C);
 							break;
 						case 0x5F:
 						case 0x66:
 						case 0x68:
 						case 0x6C:
-							func_800D9B14_E8AC4((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2C);
+							func_800D9B14_E8AC4((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2C);
 							break;
 						default:
 							break;
@@ -843,28 +842,24 @@ void func_80124D60_133D10(void) {
 				if ((weaponEntry->weaponFlags << 15) < 0) {
 					if ((bullet->unk20 == 0x1D) || (bullet->unk20 == 0x2A) || (bullet->unk20 == 0x0C)) {
 						if (((u32)D_80052A8C % 3) == 0) {
-							func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 2);
+							func_800C1ECC_D0E7C((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2E, 2);
 						}
 					} else if (bullet->unk20 == 0x5B) {
-						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 1);
+						func_800C1ECC_D0E7C((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2E, 1);
 					} else {
-						func_800C1ECC_D0E7C((s16)(s32)bullet->unk0, (s16)(s32)bullet->unk4, (s16)(s32)bullet->unk8, bullet->unk2E, 0);
+						func_800C1ECC_D0E7C((s16)bullet->unk0, (s16)bullet->unk4, (s16)bullet->unk8, bullet->unk2E, 0);
 					}
 				}
 
 				if (sparkType == 0x80) {
-					// This array access math seems overcomplicated
-					// is the source array not defined correctly?
-					// Can we redifine it in a way that makes this simpler?
-					// It would seem likely to be like array[bullet->unk20][0] etc?
-					red = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB)];
-					green = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 1];
-					blue = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 2];
-					trailRed = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 6];
-					trailGreen = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 7];
-					trailBlue = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 8];
-					trailAlpha = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 9];
-					endAlpha = D_80140B44_14FAF4[bullet->unk20 * 0xB - (0x54 * 0xB) + 10];
+					red = D_80140B44_14FAF4[bullet->unk20 - 0x54].bright.r;
+					green = D_80140B44_14FAF4[bullet->unk20 - 0x54].bright.g;
+					blue = D_80140B44_14FAF4[bullet->unk20 - 0x54].bright.b;
+					trailRed = D_80140B44_14FAF4[bullet->unk20 - 0x54].trail.r;
+					trailGreen = D_80140B44_14FAF4[bullet->unk20 - 0x54].trail.g;
+					trailBlue = D_80140B44_14FAF4[bullet->unk20 - 0x54].trail.b;
+					trailAlpha = D_80140B44_14FAF4[bullet->unk20 - 0x54].trailAlpha;
+					endAlpha = D_80140B44_14FAF4[bullet->unk20 - 0x54].endAlpha;
 
 					if ((D_80052A8C & 1) == 0) {
 						red = (red + 0x96 > 0xFF) ? 0xFF : red + 0x96;
@@ -875,9 +870,9 @@ void func_80124D60_133D10(void) {
 						trailBlue = (trailBlue + 0x4B > 0xFF) ? 0xFF : trailBlue + 0x4B;
 					}
 
-					D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
-					D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
-					D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+					D_8005BB34->v.ob[0] = (s16)bullet->unk0;
+					D_8005BB34->v.ob[1] = (s16)bullet->unk4;
+					D_8005BB34->v.ob[2] = (s16)bullet->unk8;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -887,9 +882,9 @@ void func_80124D60_133D10(void) {
 					D_8005BB34->v.cn[3] = trailAlpha;
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-					D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-					D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18F32);
+					D_8005BB34->v.ob[0] = (s16)(bullet->unk0 + bullet->unk10);
+					D_8005BB34->v.ob[1] = (s16)(bullet->unk4 + bullet->unk14);
+					D_8005BB34->v.ob[2] = (s16)(bullet->unk8 + bullet->unk18F32);
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -899,9 +894,9 @@ void func_80124D60_133D10(void) {
 					D_8005BB34->v.cn[3] = 0xFF;
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (s16)(s32)bullet->unk0;
-					D_8005BB34->v.ob[1] = (s16)(s32)bullet->unk4;
-					D_8005BB34->v.ob[2] = (s16)(s32)bullet->unk8;
+					D_8005BB34->v.ob[0] = (s16)bullet->unk0;
+					D_8005BB34->v.ob[1] = (s16)bullet->unk4;
+					D_8005BB34->v.ob[2] = (s16)bullet->unk8;
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -911,9 +906,9 @@ void func_80124D60_133D10(void) {
 					D_8005BB34->v.cn[3] = endAlpha;
 					D_8005BB34++;
 
-					D_8005BB34->v.ob[0] = (s16)(s32)(bullet->unk0 + bullet->unk10);
-					D_8005BB34->v.ob[1] = (s16)(s32)(bullet->unk4 + bullet->unk14);
-					D_8005BB34->v.ob[2] = (s16)(s32)(bullet->unk8 + bullet->unk18F32);
+					D_8005BB34->v.ob[0] = (s16)(bullet->unk0 + bullet->unk10);
+					D_8005BB34->v.ob[1] = (s16)(bullet->unk4 + bullet->unk14);
+					D_8005BB34->v.ob[2] = (s16)(bullet->unk8 + bullet->unk18F32);
 					D_8005BB34->v.flag = 0;
 					D_8005BB34->v.tc[0] = 0;
 					D_8005BB34->v.tc[1] = 0;
@@ -929,13 +924,13 @@ void func_80124D60_133D10(void) {
 					gSPLineW3D(D_8005BB30++, 0, 1, 4, 0);
 				} else if (sparkType != 0) {
 					if ((weaponEntry->weaponFlags & 0x1000) == 0) {
-						D_80052B40.unk0 = (s16)(s32)bullet->unk0 >> 2;
-						D_80052B42 = (s16)(s32)bullet->unk4 >> 2;
-						D_80052B44 = (s16)(s32)bullet->unk8 >> 2;
+						D_80052B40.unk0 = (s16)bullet->unk0 >> 2;
+						D_80052B42 = (s16)bullet->unk4 >> 2;
+						D_80052B44 = (s16)bullet->unk8 >> 2;
 
 						if (D_80145BE0_154B90[bullet->unk20].unkE != 0) {
 							D_80052B48.unk0 = 0x4000 - bullet->unk10S16;
-							D_80052B48.unk4 = -func_80003824_4424((f32)bullet->unk14S16, (f32)bullet->unk12S16);
+							D_80052B48.unk4 = -func_80003824_4424(bullet->unk14S16, bullet->unk12S16);
 							D_80052B48.unk2 = 0;
 						} else {
 							D_80052B48.unk0 = bullet->unk1C_u8 << 8;
@@ -944,20 +939,20 @@ void func_80124D60_133D10(void) {
 						}
 
 						func_800039D0_45D0(&D_80052B40, &D_80052B48, &D_800311A0, D_8005BB38);
-						gSPMatrix(D_8005BB2C++, ((s32)D_8005BB38 & 0x1FFFFFFF), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
+						gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38), G_MTX_MODELVIEW | G_MTX_LOAD | G_MTX_NOPUSH);
 						D_8005BB38++;
-						gSPDisplayList(D_8005BB2C++, sparkDLs[sparkType]);
+						gSPDisplayList(D_8005BB2C++, D_80140AD8_14FA88[sparkType]);
 					}
 				}
 
-				weaponFlags = weaponEntry->unkB;
-				if (weaponFlags != 0) {
-					lightColor = &D_80140B7C_14FB2C[(u8)weaponFlags & 7];
-					color[0] = ((lightColor->r * (weaponFlags & 0xF8)) >> 9);
-					color[1] = ((lightColor->g * (weaponFlags & 0xF8)) >> 9);
-					color[2] = ((lightColor->b * (weaponFlags & 0xF8)) >> 9);
-					pos[0] = (s16)(s32)bullet->unk0;
-					pos[1] = (s16)(s32)bullet->unk8;
+				lightFlags = weaponEntry->lightFlags;
+				if (lightFlags != 0) {
+					lightColor = &D_80140B7C_14FB2C[(u8)(lightFlags & 7)];
+					color[0] = ((lightColor->r * (lightFlags & 0xF8)) >> 9);
+					color[1] = ((lightColor->g * (lightFlags & 0xF8)) >> 9);
+					color[2] = ((lightColor->b * (lightFlags & 0xF8)) >> 9);
+					pos[0] = (s16)bullet->unk0;
+					pos[1] = (s16)bullet->unk8;
 					func_800B2354_C1304(pos, color, 0x100, 0x258);
 				}
 			}

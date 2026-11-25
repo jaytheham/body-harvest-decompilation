@@ -3896,7 +3896,7 @@ typedef struct {
 		/* 0x08 */ s32 unk8;
 		struct {
 			s32 weaponFlags : 24;
-			u32 weaponFlagsLow : 8;
+			s32 lightFlags : 8;
 		};
 	};
 	s16 unkC; // Sound effect
@@ -4433,6 +4433,14 @@ typedef struct {
 	u8 g;
 	u8 b;
 } EffectRgb;
+
+typedef struct {
+	EffectRgb bright;
+	u8 unk3[3];
+	EffectRgb trail;
+	u8 trailAlpha;
+	u8 endAlpha;
+} ProjectileTrailColors;
 
 /* A palette fade reuses one halfword for timing and packed RGB. */
 typedef union {

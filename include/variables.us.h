@@ -1844,6 +1844,9 @@ extern u8 D_80140AA8_14FA58[8];
 extern AlienInstance *D_80140AB0_14FA60[];
 extern AlienInstance *D_80140AC4_14FA74;
 extern s32 D_80140AC8_14FA78;
+extern u32 D_80140AD8_14FA88[24];
+extern ProjectileTrailColors D_80140B44_14FAF4[4];
+extern EffectRgb D_80140B7C_14FB2C[12];
 extern Lights1 D_80140C30_14FBE0;
 extern TextAnimationScale D_80140C68_14FC18;
 extern u8 D_80140C70[4];
@@ -3693,7 +3696,6 @@ extern const f64 D_800A4D98_18CE58[1];
 extern const f64 D_800A4DA0_18CE60[1];
 extern const f64 D_800A4DA8_18CE68[1];
 extern const f64 D_800A4DB0_18CE70[1];
-extern const f64 D_80145160_154110[1];
 extern const f32 D_801451C8_154178[1];
 
 
