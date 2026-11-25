@@ -1367,7 +1367,6 @@ s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 a
 
 Unk8015F9D0 D_8015F9D0; /* Share the high address across the coordinate stores. */
 
-#ifdef NON_MATCHING
 void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
 	s32 vehicleCount;
 	s32 x = arg1;
@@ -1436,6 +1435,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 		return;
 	}
 
+	if (pathDistSq) {} /* Preserve the alien cursor spill slot. */
 	exactHit = 0;
 
 	if ((currentLevel != LEVEL_COMET) || (arg0 != D_80052B34)) {
@@ -1446,19 +1446,18 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 			vehicleCount = scratch;
 			do {
 				entity.vehicle = &vehicleInstances[D_80158E80[vehicleCount]];
-				hit.bits = (s32)&D_8015F9D0; if (hit.bits) {}
+				hit.pointer = &CollisionHitRecord;
 				data.vehicle = &vehicleTypes[entity.vehicle->unk1A];
 				if ((entity.vehicle == arg0) || (entity.vehicle->unk0 < minX) || (entity.vehicle->unk0 > maxX) || (entity.vehicle->unk4 < minZ) || (entity.vehicle->unk4 > maxZ)) { continue; }
 					if (dx == 0 && dz == 0) {
 						if ((entity.vehicle->unk2 + data.vehicle->unk38) >= *arg5) {
 							func_8010C4EC_11B49C(entity.vehicle);
 							if (func_8010CF7C_11BF2C((s16)x, (s16)z) != 0) {
+								hit.bits += x * 0;
 								hit.pointer->unk0 = (s16)x;
 								hitCoordinate = (u16)(entity.vehicle->unk2 + data.vehicle->unk38);
-								if (1) {}
-								bestDistF = (f32)(distSqBest + ((exactHit = 1) - 1));
-								hit.pointer->unk2 = hitCoordinate;
-								hit.pointer->unk4 = (s16)z;
+								/* Keep the stores on one line for IDO scheduling. */
+								if (1) {} CollisionHitRecord.unk2 = hitCoordinate; hit.pointer->unk4 = (s16)z; exactHit = 1; bestDistF = (f32)distSqBest;
 							} else { continue; }
 						} else { continue; }
 					} else {
@@ -1480,7 +1479,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 								if (data.vehicle->unk8 < scratch) continue;
 							}
 							if (1) {}
-							hit.pointer->unk8 = 0;
+							CollisionHitRecord.unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
 						}
@@ -1491,7 +1490,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							scratch = (s32)(((f32)(*arg5 - arg2) * sqrtf((f32)((dx * dx) + (y * y) + (dz * dz)) / pathDistSq)) + (f32)arg2);
 							y = entity.vehicle->unk2;
 							if ((scratch < y) || (scratch > (s32)y + data.vehicle->unk38)) continue;
-							hit.pointer->unk8 = 0;
+							CollisionHitRecord.unk8 = 0;
 							bestDistF = (f32)distSqBest;
 							break;
 						case 2:
@@ -1503,13 +1502,13 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 							scratch = (s32)(((f32)(*arg5 - arg2) * sqrtf((f32)((dx * dx) + (dz * dz)) / pathDistSq)) + (f32)arg2);
 							y = entity.vehicle->unk2;
 							if ((scratch < y) || (scratch > (s32)y + data.vehicle->unk38)) continue;
-							hit.pointer->unk0 = hitX;
-							dx = hitZ;
-							if (exactHit) {}
-							bestDistF = (f32)distSqBest;
-							hit.pointer->unk2 = (s16)scratch;
-							exactHit = 1 + (dx * 0);
-							hit.pointer->unk4 = (u32)dx & 0x7FFFFFFFU;
+							CollisionHitRecord.unk0 = hitX;
+							hit.bits += x * 0;
+							dy = hitZ;
+							CollisionHitRecord.unk2 = (s16)scratch;
+							bestDistF = (f32)(distSqBest | (dy & 0));
+							hit.pointer->unk4 = dy;
+							exactHit = 1 + (x * 0);
 							break;
 						default:
 							bestDistF = (f32)distSqBest;
@@ -1528,21 +1527,20 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 					objThreshold = data.vehicle->unk8;
 					distSqBest = objDist;
 
-					if (D_8015F9D0.unk8 == 0) {
-						hit.pointer->unk0 = entity.vehicle->unk0;
-						hit.pointer->unk2 = entity.vehicle->unk2;
+					if (CollisionHitRecord.unk8 == 0) {
+						CollisionHitRecord.unk0 = entity.vehicle->unk0;
+						CollisionHitRecord.unk2 = entity.vehicle->unk2;
 						hitCoordinate = entity.vehicle->unk4;
 						exactHit = 0;
-						hit.pointer->unk4 = (u32)hitCoordinate & 0x7FFFFFFFU; /* Keep the signed load in the temporary register. */
+						CollisionHitRecord.unk4 = (u32)hitCoordinate & 0x7FFFFFFFU; /* Keep the signed load in the temporary register. */
 					}
-					hit.pointer->vehicle = entity.vehicle;
-					hit.pointer->unk8 = 5;
+					CollisionHitRecord.vehicle = entity.vehicle;
+					CollisionHitRecord.unk8 = 5;
 				}
 			} while (vehicleCount--);
 		}
 	}
 
-	hit.bits = (s32)&D_8015F9D0; if (hit.bits) {}
 	vehicleCount = 0xFE + (x * 0); if (vehicleCount) {} /* Preserve the countdown register. */ entity.alien = &alienInstances[0xFE];
 	do {
 		if ((arg0 != entity.alien) && (func_8012235C_13130C((Unk8004D0F8 *)entity.alien) != 0)
@@ -1592,7 +1590,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 					D_8015F9D0.unk2 = entity.alien->unk2;
 					D_8015F9D0.unk4 = entity.alien->unk4;
 					D_8015F9DC = (s32)entity.alien;
-					hit.pointer->unk8 = 7;
+					CollisionHitRecord.unk8 = 7;
 					if ((scratch = data.alien->unk5A) != -1) {
 						Unk80147090Entry_8012B26C *entry;
 						entry = &D_80147090_156040[scratch];
@@ -1617,7 +1615,7 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 									if (D_801591A8 != 0) {
 										D_80158FF0 = (s32)entity.alien;
 									}
-									hit.pointer->unk8 = 8;
+									CollisionHitRecord.unk8 = 8;
 									osSyncPrintf(D_801450DC_15408C);
 								}
 							}
@@ -1627,12 +1625,12 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 			}
 		}
 
-		} while (entity.alien--, vehicleCount--);
+	} while (entity.alien--, vehicleCount--);
 
 	if ((distSqBest != 0x7FFFFFFF) && (exactHit == 0)) {
-		dx = (x - hit.pointer->unk0) >> 2;
-		y = (arg2 - hit.pointer->unk2) >> 2;
-		dz = (z - hit.pointer->unk4) >> 2;
+		dx = (x - CollisionHitRecord.unk0) >> 2;
+		y = (arg2 - CollisionHitRecord.unk2) >> 2;
+		dz = (z - CollisionHitRecord.unk4) >> 2;
 		interp = (f32)((dx * dx) + (y * y) + (dz * dz) - (lineDistBest >> 4));
 
 		dx = (x - *arg4) >> 2;
@@ -1645,26 +1643,25 @@ void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s
 			bestDistF = sqrtf(interp / (f32)((dx * dx) + (y * y) + (dz * dz)));
 		}
 
-		hit.pointer->unk0 = (s16)((f32)x - ((f32)(dx * 4) * bestDistF));
-		hit.pointer->unk2 = (s16)((f32)arg2 - ((f32)(y * 4) * bestDistF));
-		hit.pointer->unk4 = (s16)((f32)z - ((f32)(dz * 4) * bestDistF));
+		((Unk8015F9D0 *)(u32)&CollisionHitRecord)->unk0 = (s16)((f32)x - ((f32)(dx * 4) * bestDistF));
+		((Unk8015F9D0 *)(u32)&CollisionHitRecord)->unk2 = (s16)((f32)arg2 - ((f32)(y * 4) * bestDistF));
+		((Unk8015F9D0 *)(u32)&CollisionHitRecord)->unk4 = (s16)((f32)z - ((f32)(dz * 4) * bestDistF));
 
 		if (interp > 10.0f) {
 			interp = sqrtf((f32)((objThreshold - lineDistBest) >> 4) / interp);
-			hit.pointer->unk0 = (s16)((f32)hit.pointer->unk0 + ((f32)(x - hit.pointer->unk0) * interp));
-			hit.pointer->unk4 = (s16)((f32)hit.pointer->unk4 + ((f32)(z - hit.pointer->unk4) * interp));
+			hit.bits = (s32)&CollisionHitRecord; if (hit.bits) {}
+			ax = CollisionHitRecord.unk0; y = CollisionHitRecord.unk4;
+			hit.pointer->unk0 = (s16)((f32)ax + ((f32)(x - ax) * interp));
+			hit.pointer->unk4 = (s16)((f32)y + ((f32)(z - y) * interp));
 		}
 	}
 
 	if (distSqBest != 0x7FFFFFFF) {
-		*arg4 = hit.pointer->unk0;
-		*arg5 = hit.pointer->unk2;
-		*arg6 = hit.pointer->unk4;
+		*arg4 = CollisionHitRecord.unk0;
+		*arg5 = CollisionHitRecord.unk2;
+		*arg6 = CollisionHitRecord.unk4;
 	}
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80126B80_135B30.s")
-#endif
 
 s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 arg5, s16 arg6, s32 *arg7) {
 	s32 sp3C;
