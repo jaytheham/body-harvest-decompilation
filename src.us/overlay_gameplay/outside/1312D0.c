@@ -162,7 +162,7 @@ s16 func_801225C4_131574(Projectile *arg0)
 	return index;
 }
 
-Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponEntry_80129864 *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
+Projectile *func_801226F8_1316A8(VehicleInstance *arg0, WeaponType *arg1, s16 arg2, s16 arg3, s16 arg4, f32 arg5, f32 arg6, f32 arg7) {
     Projectile *entry;
     s16 sp7A;
     s16 sp78;
@@ -347,7 +347,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 	u16 randZ;
 	s16 halfSpan;
 	s16 height;
-	WeaponEntry_80129864 *building;
+	WeaponType *building;
 	sp64[0] = arg0;
 	sp64[2] = arg2;
 	height = func_800B84D0_C7480(sp64[0], sp64[2]) >> 8;
@@ -374,7 +374,7 @@ void func_801236F0_1326A0(s16 arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16 
 }
 
 void func_801238DC_13288C(s16 arg0) {
-	const WeaponEntry_80129864 *building;
+	const WeaponType *building;
 	s32 buildingIndex;
 
 	if (D_8015F9E4 == 0) {
@@ -769,7 +769,7 @@ void func_80124C40_133BF0(EntityInstance *arg0, s32 arg1, s16 arg2, s16 arg3)
 void func_80124D60_133D10(void) {
 	u8 framePadding[8];
 	Projectile *bullet;
-	const WeaponEntry_80129864 *weaponEntry;
+	const WeaponType *weaponEntry;
 	s32 i;
 	s32 sparkType;
 	s32 weaponFlags;
@@ -1685,7 +1685,7 @@ s32 func_80127C08_136BB8(void *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, s16
 	sp3C = arg4;
 	sp38 = arg5;
 	sp34 = arg6;
-	if (func_800B1028_BFFD8(arg1, arg2, arg3, &sp3C, &sp38, &sp34, &sp2F) != 0) {
+	if (ClipLineToShieldWalls(arg1, arg2, arg3, &sp3C, &sp38, &sp34, &sp2F) != 0) {
 		return 8;
 	}
 
@@ -1719,7 +1719,7 @@ void func_80127D88_136D38(BuildingInstance *arg0, VehicleInstance *arg1, s16 arg
 	D_8015F9D0.unk4 = arg7;
 	D_8015F9D0.unk8 = 0xA;
 
-	if (func_800B1028_BFFD8(arg2, arg3, arg4, &arg5, &arg6, &arg7, &sp3B[-5]) != 0) {
+	if (ClipLineToShieldWalls(arg2, arg3, arg4, &arg5, &arg6, &arg7, &sp3B[-5]) != 0) {
 		D_8015F9D0.unk10 = sp3B[-5];
 		D_8015F9D0.unk0 = arg5;
 		D_8015F9D0.unk2 = arg6;
@@ -1868,7 +1868,7 @@ void func_80128504_1374B4(AlienInstance *arg0, s32 arg1, s32 *arg2, s32 *arg3, s
 }
 
 void func_80128650_137600(Projectile *arg0, s32 arg1) {
-	const WeaponEntry_80129864 *building;
+	const WeaponType *building;
 	VehicleInstance *vehicle;
 	AlienInstance *alien;
 	BuildingInstance *instance;
@@ -1932,7 +1932,7 @@ building = &D_80145BE0_154B90[arg0->unk20]; iteration = 0;
 			break;
 		}
 
-		if (func_800B0D10_BFCC0((s32)arg0->unk0, (s32)arg0->unk8, 0) != 0) {
+		if (IsPositionOutsideCurrentStageShieldWall((s32)arg0->unk0, (s32)arg0->unk8, 0) != 0) {
 			D_8015F9D0.unk8 = 6;
 			break;
 		}
@@ -2104,7 +2104,7 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 #endif
 
 Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-	union { EntityType *entity; const WeaponEntry_80129864 *weapon; } data;
+	union { EntityType *entity; const WeaponType *weapon; } data;
 	s16 weaponType;
 	s32 x;
 	s32 y;
@@ -2153,7 +2153,7 @@ Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 			i = 9;
 		}
 
-		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].weaponFlags &= ~0x20000;
+		((WeaponType *)D_80145BE0_154B90)[2].weaponFlags &= ~0x20000;
 
 		while (i--) {
 			halfDistance = distance / 2;
@@ -2168,7 +2168,7 @@ Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 		}
 
 		arg0->unk1E = 0;
-		((WeaponEntry_80129864 *)D_80145BE0_154B90)[2].weaponFlags |= 0x20000;
+		((WeaponType *)D_80145BE0_154B90)[2].weaponFlags |= 0x20000;
 		value.projectile = func_80129864_138814(arg0, arg1, arg2, arg3, arg4);
 	} else {
 		power = data.weapon->unk2;
@@ -2194,7 +2194,7 @@ Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 
 Projectile *func_80129864_138814(EntityInstance *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	EntityType *weaponData;
-	WeaponEntry_80129864 *entry;
+	WeaponType *entry;
 	s16 spE6;
 	f32 finalX;
 	f32 finalY;
@@ -2606,7 +2606,7 @@ Projectile *func_80129864_138814(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 		normZ = finalZ * scale;
 
 		if (D_801591A8 != 0) {
-			spawned = func_801226F8_1316A8(((VehicleInstance *)arg0), (WeaponEntry_80129864 *)&D_80145BE0_154B90[20], hitX, hitY, hitZ, len, normX, normZ);
+			spawned = func_801226F8_1316A8(((VehicleInstance *)arg0), (WeaponType *)&D_80145BE0_154B90[20], hitX, hitY, hitZ, len, normX, normZ);
 		} else {
 			spawned = func_801226F8_1316A8(((VehicleInstance *)arg0), entry, hitX, hitY, hitZ, len, normX, normZ);
 		}
@@ -2703,7 +2703,7 @@ void func_8012B26C_13A21C(void)
   s16 spawnPos[3];
   Projectile *projectile;
   Unk8015F790 *queueEntry;
-  const WeaponEntry_80129864 *entry;
+  const WeaponType *entry;
   union
   {
     UnkProjectileCtrl_8012B26C *ctrl;
@@ -2902,7 +2902,7 @@ void func_8012B26C_13A21C(void)
         projectile->unk4 = (f32) D_80222A70;
       }
       impactDamage = entry->unk2;
-      if (func_800B0D10_BFCC0((s32) projectile->unk0, (s32) projectile->unk8, 0) != 0)
+      if (IsPositionOutsideCurrentStageShieldWall((s32) projectile->unk0, (s32) projectile->unk8, 0) != 0)
       {
         alive = 0;
       }
@@ -3245,7 +3245,7 @@ void func_8012B26C_13A21C(void)
                 spawnAngle = (s16) (func_800038E0_44E0() & 0xFFFF);
                 cosValue = coss((u16) spawnAngle);
                 height = sins((u16) spawnAngle);
-                spawned = func_801226F8_1316A8((VehicleInstance *) spawnPos, (WeaponEntry_80129864 *) D_801464C8_155478, 0, 0, 0, (f32) ((((f64) ((f32) cosValue)) / 32768.0) * 100.0), 0.0f, (f32) ((((f64) ((f32) height)) / 32768.0) * 100.0));
+                spawned = func_801226F8_1316A8((VehicleInstance *) spawnPos, (WeaponType *) D_801464C8_155478, 0, 0, 0, (f32) ((((f64) ((f32) cosValue)) / 32768.0) * 100.0), 0.0f, (f32) ((((f64) ((f32) height)) / 32768.0) * 100.0));
                 if (spawned != NULL)
                 {
                   spawned->unk24 = D_8015EB90[i].unk24;

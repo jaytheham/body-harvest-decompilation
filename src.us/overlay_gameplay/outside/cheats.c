@@ -159,7 +159,6 @@ void func_800734AC_8245C() {
 		func_800762A8_85258(func_800734AC_8245C);
 		D_801591AC = 0;
 	}
-
 }
 
 // Cheat Wander - Move player around with left stick
@@ -188,7 +187,7 @@ void func_8007368C_8263C(void) {
 
 // Cheat Snuffle - Increase weapon power?
 void func_8007377C_8272C() {
-	D_80052ACD ^= 4;
+	D_80052ACD ^= D_80052ACD_FLAG_CHEAT_SNUFFLE;
 }
 
 // Cheat ZAward - Unlock all levels for Replay Level option (must save game)

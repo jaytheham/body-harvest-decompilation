@@ -2896,7 +2896,7 @@ void func_800FAC90_109C40(void) {
 
 	var_s0 = vehicleInstances, end = (VehicleInstance *)&D_80050AD0;
 	do {
-		if (func_800B0D10_BFCC0(var_s0->unk0, var_s0->unk4, 0) != 0) {
+		if (IsPositionOutsideCurrentStageShieldWall(var_s0->unk0, var_s0->unk4, 0) != 0) {
 			var_s0->unk20 = var_s0->unk20 & ~VEHICLE_FLAG_INSIDE_PLAY_BOUNDS;
 		} else {
 			var_s0->unk20 = var_s0->unk20 | VEHICLE_FLAG_INSIDE_PLAY_BOUNDS;
@@ -3114,7 +3114,7 @@ void func_800FB504_10A4B4(void)
 	s16 cosVal;
 	f32 scale;
 	s32 selectedInput;
-	WeaponEntry_80129864 *animBase;
+	WeaponType *animBase;
 	s32 animFrame;
 	s32 worldX;
 	s32 worldY;
@@ -3440,11 +3440,11 @@ void func_800FB504_10A4B4(void)
 		selectedInput = type->weapon1;
 	}
 
-	animBase = (WeaponEntry_80129864 *)&D_80145BE0_154B90[selectedInput];
+	animBase = (WeaponType *)&D_80145BE0_154B90[selectedInput];
 	animFrame = (u16)animBase->unk0;
 	if (animFrame >= 0x1195)
 	{
-		((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = 0x1194;
+		((WeaponType *)D_80145BE0_154B90)[selectedInput].unk0 = 0x1194;
 	}
 
 	D_801591A8 = 1;
@@ -3452,7 +3452,7 @@ void func_800FB504_10A4B4(void)
 	func_8012B150_13A100((s32)D_80052B34, nextX, (InputStruct_8012B150 *)D_80158FF4, work.value);
 
 	D_801591B4 = D_801591F8.hit.unk8;
-	((WeaponEntry_80129864 *)D_80145BE0_154B90)[selectedInput].unk0 = animFrame;
+	((WeaponType *)D_80145BE0_154B90)[selectedInput].unk0 = animFrame;
 	D_80159028.unk0 = D_801591F8.hit.unk0;
 	D_80159028.unk2 = D_801591F8.hit.unk2;
 	D_80159028.unk4 = D_801591F8.hit.unk4;
@@ -9790,11 +9790,11 @@ s32 func_80110144_11F0F4(VehicleInstance *arg0, s32 arg1) {
 
 	i = 4;
 	while (i--) {
-		var_s4 = func_800B0D10_BFCC0((s32) (D_80159D78[i] + arg0->unk4C), (s32) (D_80159D98[i] + arg0->unk54), 0);
+		var_s4 = IsPositionOutsideCurrentStageShieldWall((s32) (D_80159D78[i] + arg0->unk4C), (s32) (D_80159D98[i] + arg0->unk54), 0);
 		if ((var_s4 != 0) &&
 			(func_800BD688_CC638((s16) (s32) (D_80159D78[i] + arg0->unk4C), (s16) (s32) arg0->unk50, (s16) (s32) (D_80159D98[i] + arg0->unk54), arg0) != 0)) {
 			if (arg1 == 0) {
-				temp_v0 = func_800B0DF4_BFDA4((s32) (D_80159D78[i] + arg0->unk4C), (s32) (D_80159D98[i] + arg0->unk54), 0, var_s4);
+				temp_v0 = GetShieldWallPushbackAngle((s32) (D_80159D78[i] + arg0->unk4C), (s32) (D_80159D98[i] + arg0->unk54), 0, var_s4);
 				if ((temp_v0 == 0x4000) || (temp_v0 == -0x4000)) {
 					var_s4 = 1;
 					if (temp_v0 == 0x4000) {

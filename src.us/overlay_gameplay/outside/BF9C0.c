@@ -196,14 +196,15 @@ s32 func_800B0C4C_BFBFC(s32 arg0, s32 arg1) {
 	return D_8014FDD0[(arg1 << 5) + (arg0 >> 3)] & (1 << (arg0 & 7));
 }
 
-// Set current shield wall bounds
-void func_800B0C80_BFC30(void) {
+// US func_800B0C80_BFC30
+void SetCurrentShieldWallBounds(void) {
 	D_8014FD30 = D_80147C30_156BE0[(currentLevel - 1)][D_80047F94];
 }
 
 // Is target position outside the current stage shield wall bounds, or overlapping one of the 2 sub-regions?
 // Each stage has 1 main shield wall, and 0-2 overlapping sub-regions
-s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius)
+// US func_800B0D10_BFCC0
+s32 IsPositionOutsideCurrentStageShieldWall(s32 xPosition, s32 zPosition, s32 bufferRadius)
 {
 	s32 minX;
 	s32 maxX;
@@ -233,8 +234,8 @@ s32 func_800B0D10_BFCC0(s32 xPosition, s32 zPosition, s32 bufferRadius)
 	return 0;
 }
 
-// Get direction to bounce from shield wall if outside bounds or overlapping sub-region
-s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 levelBoundsCheckResult) {
+// US func_800B0DF4_BFDA4
+s16 GetShieldWallPushbackAngle(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 levelBoundsCheckResult) {
 	s32 extW, extH;
 	s32 dx, dz;
 	s32 overlapX;
@@ -290,6 +291,7 @@ s16 func_800B0DF4_BFDA4(s32 xPosition, s32 zPosition, s32 bufferRadius, s32 leve
 	return -0x8000;
 }
 
+// Calculate which shield wall region (main or sub-region) a point is in, or 0xFF if outside all regions
 s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	Unk8014FD30Type *base;
 	Unk8014FD30Type *cur;
@@ -324,8 +326,8 @@ s32 func_800B0F20_BFED0(s32 arg0, s32 arg1) {
 	return 0xFF;
 }
 
-// ClipLineToShieldWalls — clips a 3D line segment to the shield wall bounds
-s32 func_800B1028_BFFD8(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
+// US func_800B1028_BFFD8
+s32 ClipLineToShieldWalls(s16 arg0, s16 arg1, s16 arg2, s32 *arg3, s32 *arg4, s32 *arg5, u8 *arg6) {
 	s32 pad54; s32 pad50; s32 pad4C; s32 pad48; s32 pad44; s32 pad40;
 	s32 var_a2; s32 var_a3; s32 wallIndex; BoundingBox *wall;
 	f32 temp_f0;
@@ -1195,7 +1197,7 @@ void func_800B415C_C310C(s16 arg0, s16 arg1) {
 void func_800B41C8_C3178(u8 arg0, u8 arg1, u8 *arg2, u8 arg3) {
 	s16 i;
 
-	func_800B0C80_BFC30();
+	SetCurrentShieldWallBounds();
 	func_800B32AC_C225C(arg2);
 	func_800B4050_C3000(arg0, arg1, arg2, arg3);
 	func_800B0B94_BFB44();
@@ -1544,7 +1546,6 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch)
   D_8014F89A = 0;
   scrollX = D_80149434;
   scrollY = D_80149436;
-  /* Expose the early intermediates before IDO assigns their spill slots. */
   scratch = -(scrollX + 1);
   col = (u8)(D_8014F899 = D_80151DD8.ringX + scrollY * 0);
   hueX = col;
@@ -1601,7 +1602,6 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch)
 	  {
 		tileNorth = &D_80151DD8.tiles[18][col];
 	  }
-	  /* Copy mapX in both shade paths to retain IDO's parity and Y spill order. */
 	  if (shade[col].r != 0)
 	  {
 		scratch = (u16) (terrain.color[0] + shade[col].r);
@@ -1745,7 +1745,6 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch)
 		posZ -= distance * ((((f32) coss((D_80052A8C * 900) + (((scrollX >> 8) + ringCol) * 0x58AC)))) / 32768.0);
 	  }
 	  terrain.value = func_800056D0_62D0(posX, posY);
-	  /* Keep the cached row in the original register allocation. */
 	  if ((u32)ringRow[0] * 0) {}
 	  switch (currentLevel)
 	  {
@@ -1820,7 +1819,6 @@ void func_800B5090_C4040(Vtx **arg0, s32 scratch)
 	col = D_8014F899;
 	mapY++;
   }
-
 }
 
 s32 func_800B5EE4_C4E94(u16 arg0, Vtx *arg1, u32 arg2, u8 arg3, u8 arg4, s32 arg5) {
@@ -1856,7 +1854,7 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 	Vtx *v;
 	s16 width;
 	s16 height;
-	s16 stackPad; /* IDO retains this slot to align the arrays and spills. */
+	s16 stackPad;
 	s16 y;
 	s16 cols;
 	s16 rows;
@@ -1949,7 +1947,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 
 		for (y = 0; y < height; y++) {
 			for (x = 0; x < width; x++) {
-				/* These discarded comparisons keep the row offsets in the original IDO registers. */
 				if ((y << 8) == arg5) {}
 				if ((((height + 1) * (width + 1)) << 4) == x) {}
 				if (((y * (width + 1)) << 4) == x) {}
@@ -1976,7 +1973,6 @@ void func_800B604C_C4FFC(Vtx *arg0, s16 arg1, s16 arg2, s16 arg3, s16 arg4, u16 
 			gDPLoadTextureBlock(D_8005BB2C++, K0_TO_PHYS(&D_80224E80[(((arg6 * 8) + y) << 11)]), G_IM_FMT_CI, G_IM_SIZ_8b, 32, 64, 0, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMIRROR | G_TX_WRAP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
 
 			for (x = 0; x <= counts[y]; x++) {
-				/* Keep the tile-sync command in its original register even on this path. */
 				if (((u32)x << 16) == _SHIFTL(G_RDPTILESYNC, 24, 8)) {}
 				tile = tiles[y][x];
 
@@ -3438,7 +3434,6 @@ void DrawShieldWalls(void) {
 						segEndZ = endZ;
 					}
 
-					/* Empty tests preserve IDO's original register allocation. */
 					if (segEndX) {}
 					if (segEndX) {}
 					lightStart.x = segStartX;
@@ -3470,7 +3465,6 @@ void DrawShieldWalls(void) {
 						alphaEnd = func_800BA52C_C94DC((s16)(s32)((f32)segEndX - D_80157F08.unk0), (s16)(s32)((f32)segEndZ - D_80157F08.unk8), 0, 0x64);
 					}
 
-					/* Reuse the lighting inputs and height sample after their last use. */
 					colorStart = baseX;
 					if (colorStart) {}
 					colorEnd = baseZ;
@@ -3887,8 +3881,8 @@ void func_800BD20C_CC1BC(void)
 	}
 }
 
-// Reset gates for current level to closed
-void func_800BD2F4_CC2A4(void)
+// US func_800BD2F4_CC2A4
+void CloseCurrentLevelGates(void)
 {
   u8 i;
   for (i = 0;i < 8;i++)
@@ -4052,7 +4046,7 @@ void func_800BD8B8_CC868(void) {
 
 	if (D_801591AC == 5) {
 		D_80047F94 = func_800B0F20_BFED0(D_80052B34->unk0, D_80052B34->unk4);
-		func_800B0C80_BFC30();
+		SetCurrentShieldWallBounds();
 		func_800FAC90_109C40();
 	}
 
@@ -4097,7 +4091,7 @@ void func_800BD8B8_CC868(void) {
 					} else {
 						D_80047F94 = D_8003E0FC_3ECFC[currentLevel - 1][i].unk7;
 					}
-					func_800B0C80_BFC30();
+					SetCurrentShieldWallBounds();
 					func_800FAC90_109C40();
 					D_8013D9A8_14C958.halves.high = 30;
 				}
@@ -4110,7 +4104,7 @@ void func_800BD8B8_CC868(void) {
 	}
 }
 
-// func_800BDAF4_CCAA4
+// US func_800BDAF4_CCAA4
 void openCurrentStageGate(void) {
 	u8 stage;
 	GateEntry *gate;

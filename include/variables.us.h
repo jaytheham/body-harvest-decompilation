@@ -851,7 +851,7 @@ extern u8 D_80052ACB; // Rendering Flags? 1=Shadows 2=Objects
 extern u8 D_80052ACC; // Force 30/25 FPS max (NTSC/PAL)
 typedef enum D_80052ACDFlags {
 	D_80052ACD_FLAG_USE_BLACK_ADAM_MODEL = 0x2,
-
+	D_80052ACD_FLAG_CHEAT_SNUFFLE = 4,
 	D_80052ACD_FLAG_EASY_MODE = 0x40,
 } D_80052ACDFlags;
 extern u8 D_80052ACD; // Bitflags. See D_80052ACDFlags.
@@ -1931,16 +1931,16 @@ extern char D_80144828[];
 extern char D_80144840[];
 extern char D_80144868;
 extern char D_80144880;
-extern const WeaponEntry_80129864 D_80145BE0_154B90[];
-extern const WeaponEntry_80129864 D_80145C10_154BC0;
-extern const WeaponEntry_80129864 D_801465B8_155568;
+extern const WeaponType D_80145BE0_154B90[];
+extern const WeaponType D_80145C10_154BC0;
+extern const WeaponType D_801465B8_155568;
 extern Unk80050ADA D_80145BE2_154B92[];
 extern s32 D_80145BE8_154B98[][6];
-extern WeaponEntry_80129864 D_80145E98;
+extern WeaponType D_80145E98;
 extern s16 D_8014619A;
 extern Unk80146212 D_80146212_1551C2[];
 extern s16 D_80146492_155442[];
-extern const WeaponEntry_80129864 D_801464C8_155478[];
+extern const WeaponType D_801464C8_155478[];
 extern s8 D_8014667F_15562F[];
 extern s8 D_80146680_155630[];
 extern Unk80146688 D_80146688_155638[][0x20];

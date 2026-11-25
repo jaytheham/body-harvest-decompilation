@@ -857,7 +857,7 @@ void func_8007A6B4_89664(u8 arg0)
 	alienInstances[arg0].unk32 = z;
 	if (D_80047F94 == alienInstances[arg0].unk1B)
 	{
-		while (i < 10 && (func_800B0D10_BFCC0(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC) != 0 || func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) != 0))
+		while (i < 10 && (IsPositionOutsideCurrentStageShieldWall(alienInstances[arg0].unk0, alienInstances[arg0].unk4, alienTypes[alienInstances[arg0].typeIndex].unkC) != 0 || func_8007F9C8_8E978(arg0, alienInstances[arg0].typeIndex) != 0))
 		{
 			alienInstances[arg0].unk0 -= stepX;
 			alienInstances[arg0].unk4 -= stepZ;
@@ -2920,10 +2920,10 @@ s32 func_80080418_8F3C8(s32 arg0, s32 arg1, s32 arg2)
 	u8 new_var;
 
 	new_var = alienTypes[alienInstances[arg0].typeIndex].unkC;
-	bounceResult = func_800B0D10_BFCC0(arg1, arg2, new_var);
+	bounceResult = IsPositionOutsideCurrentStageShieldWall(arg1, arg2, new_var);
 	if (bounceResult != 0)
 	{
-		angle = func_800B0DF4_BFDA4(alienInstances[arg0].unk0, alienInstances[arg0].unk4, new_var, bounceResult);
+		angle = GetShieldWallPushbackAngle(alienInstances[arg0].unk0, alienInstances[arg0].unk4, new_var, bounceResult);
 		if ((angle == 0x4000) || (angle == (-0x4000)))
 		{
 			arg1 = (s32)alienInstances[arg0].unk0;

@@ -3888,33 +3888,48 @@ typedef struct {
 } Unk8008B264NodeSub; /* size = 0x0E */
 
 typedef struct {
-	s16 unk0;
-	s16 unk2;
-	s16 unk4;
-	s16 unk6;
+	s16 unk0; // range
+	s16 unk2; // base damage
+	s16 unk4; // area of effect radius
+	s16 unk6; // recoil and knockback
 	union {
 		/* 0x08 */ s32 unk8;
 		struct {
 			s32 weaponFlags : 24;
 			u32 weaponFlagsLow : 8;
 		};
-		struct {
-			/* 0x08 */ u8 pad8;
-			/* 0x09 */ u8 pad9;
-			/* 0x0A */ u8 padA;
-			/* 0x0B */ s8 unkB;
-		};
 	};
-	s16 unkC;
-	s16 unkE;
-	s16 unk10;
-	u8 unk12;
-	u8 unk13;
-	u8 unk14;
-	u8 unk15;
-	u8 unk16;
-	u8 unk17;
-} WeaponEntry_80129864;
+	s16 unkC; // Sound effect
+	s16 unkE; // homing turn rate
+	s16 unk10;// spread
+	u8 unk12;//max vertical velocity change
+	u8 unk13;//projectile speed
+	u8 unk14;//cooldown
+	u8 unk15;//sound timing threshold
+	u8 unk16;//photon size and color
+	u8 unk17;//padding
+} WeaponType;
+
+/* WeaponType flags
+0x1	Allows a projectile to pass below the water plane; without it, crossing below the plane ends the projectile.
+0x2, 0x4	Select ray/collision-trace handling instead of the usual projectile path. 0x4 also selects impact-effect code 7.
+0x8	In the aim/preview path, allows projectile spawning; also initializes the projectile’s acceleration ramp as complete.
+0x40	Enables extra impact sounds in certain collision cases.
+0x80	Selects special impact handling/effects.
+0x100	Creates a projectile trail.
+0x200	Clamps a projectile to the water plane and ends it on contact from above.
+0x400	Suppresses the usual impact-effect switch when the projectile ends.
+0x800	Alters the launch trajectory to add spread.
+0x1000	Creates a photon-style dynamic effect at projectile spawn.
+0x2000	Starts the projectile with its acceleration ramp complete.
+0x4000	Replaces the aim target with the launch X/Z and Y=0, producing a special trajectory.
+0x8000	Records the impact position in a small effect-position list.
+0x10000	Creates a position-based dynamic effect; the effect variant depends on the weapon.
+0x20000	Adds an extra impact effect in a player-on-foot case; it is temporarily toggled during one weapon’s pellet-spread handling.
+0x40000	Creates a line/lightning-style effect between two positions.
+0x100000	Creates a dynamic effect connecting the shot’s start and collision positions.
+0x400000	Creates another special projectile-associated effect, with its own cleanup path.
+*/
 
 typedef struct {
 	/* 0x00 */ Gfx* displayList;
