@@ -41,3 +41,27 @@
 -> `code changed`: Compare the first saved index to the current building in an explicit if/else, reading the alternate index in the equal arm. Use array indexing for the revisit scans and restore two standard matrix macros to preserve the frame after removing their old cursor locals.
 
 -> `correct ASM`: The comparison emits `bne`; its fallthrough reads sp+0x197 and its taken arm reads sp+0x195. The frame stays 0x1D8. The surrounding register and control-flow differences remain.
+
+`incorrect ASM`: Door animation case 2 multiplies with `mul.d $f6,$f4,$f16`, and case 7 adds with `add.d $f10,$f6,$f8`.
+
+-> `code changed`: Represent the two existing `0.95` constants with `ShadowGeometryConstant` and read their `.value` fields. Keep both constant definitions in their original read-only data order after the jump table.
+
+-> `correct ASM`: Case 2 uses `mul.d $f6,$f16,$f4` at US ROM `0x12864C`, and case 7 uses `add.d $f10,$f8,$f6` at `0x1286B0`. The constants retain their original ROM addresses.
+
+`incorrect ASM`: In the first rotating-door matrix packet, the cursor increment reuses the pointer loaded for the packet address. The target reloads the cursor after storing that address.
+
+-> `code changed`: Scope the key copy around the matrix helper, read the matrix cursor for the packet separately, and increment the cursor in its own statement.
+
+-> `correct ASM`: The packet address store is followed by a fresh cursor load before the pointer increment. All seven door-animation jump-table entries remain byte-for-byte exact in US and PAL.
+
+`incorrect ASM` -> The scan flag is initialized with `sw $zero, 0x19C($sp)` after putting both index arrays in one backing store.
+
+`code changed` -> Exchange the position of the loop counter declaration with the scan flag declaration so the flag follows the queue declaration.
+
+`correct ASM` -> The initialization uses `sw $zero, 0x168($sp)` at US ROM `0x12793C`. The queue cursors still start at `sp+0x18F` and `sp+0x17F`.
+
+incorrect ASM -> The renderer reserves a 0x1E8-byte frame with the queue arrays grouped in a union and the mirror scale declared at function scope.
+
+code changed -> Use two indexed queues and limit the negative scale temporary to the mirroring block. Keep the queue count and scan flag immediately after the arrays in declaration order.
+
+correct ASM -> The frame uses addiu sp, sp, -0x1D8. The initialization still forms sp+0x18F and sp+0x17F for the queue cursors and stores the scan flag at sp+0x168.
