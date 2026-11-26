@@ -577,7 +577,8 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	Vtx *v2;
 	Vtx *v3;
 	s32 selectedGroup;
-	s32 loop; s32 remaining;
+	s32 loop;
+	s32 remaining;
 	s32 color0;
 	s8 activeGreen;
 	s32 maxColor;
@@ -586,8 +587,11 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	s32 rightX;
 	s16 pointCoord;
 	s16 lowerHeight;
-	s16 alpha0; s32 rawRed; s16 redCheck;
-	s32 alpha2; s16 blueCheck;
+	s16 alpha0;
+	s32 rawRed;
+	s16 redCheck;
+	s32 alpha2;
+	s16 blueCheck;
 	s16 bright;
 	s16 modBase;
 
@@ -607,8 +611,9 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 	gDPPipeSync(D_8005BB2C++);
 
-	coords = D_801475F0_1565A0; height = loop * 0 + 0x40; maxColor = loop * 0 + 0xFF;
-	modBase = selectedGroup * 0 + 0x1FF; missing = modBase * 0 - 1;
+	coords = D_801475F0_1565A0; maxColor = loop * 0 + 0xFF; height = loop * 0 + 0x40;
+	modBase = 0x1FF;
+	missing = modBase * 0 - 1;
 	v0 = v1 = v2 = 0;
 	if (loop--) do {
 		const ShieldWallPoint *left;
@@ -637,24 +642,25 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			rightX = -left->z;
 			v1->v.ob[1] = rightX * 8;
 			v0->v.ob[1] = rightX * 8;
-			rightX = right->x + ((u32)D_8005BB34 | (u32)&D_8005BB34) * 0;
+			rightX = ((const volatile ShieldWallPoint *)right)->x + ((u32)D_8005BB34 | (u32)&D_8005BB34) * 0;
 			color0 = (u32)right * 0 + 0x8C;
 			rightX = rightX * 8;
 			v3->v.ob[0] = rightX;
 			v2->v.ob[0] = rightX;
-			pointCoord = right->z;
-			alpha0 = (s32)((u32)(-pointCoord) << 19) >> 16;
+			rightX = right->z;
+			pointCoord = rightX;
+			alpha0 = (s32)((u32)(-rightX) << 19) >> 16;
 			v3->v.ob[1] = alpha0;
-
-			v2->v.ob[2] = 0; lowerHeight = v2->v.ob[2]; v2->v.ob[1] = (u16)alpha0; v0->v.ob[2] = lowerHeight;
-			v1->v.ob[2] = v3->v.ob[2] = height;
+			v3->v.ob[2] = height; v2->v.ob[2] = 0; lowerHeight = ((volatile Vtx *)v2)->v.ob[2]; v0->v.ob[2] = lowerHeight;
+			v2->v.ob[1] = (u16)alpha0;
+			v1->v.ob[2] = v3->v.ob[2];
 			/* Keep the geometry data live through the endpoint setup. */
 			color0 += ((u32)right | (u32)left | (u32)v0 | (u32)coords | (u32)level | (u32)&D_8005BB2C | (u32)tile | ((u32)tile >> 16) | (u32)missing) * 0;
 
 			if (selected == (((tile - D_801479B0_156960[currentLevel - 1]) >> 3) + (s32)left * 0 + ((s32)left >> 8) * 0)) {
 				color0 = D_8013D510_14C4C0 * 16;
 				rawRed = color0 % modBase;
-				alpha2 = (color0 + 0x200) % 0x1FF;
+				alpha2 = (color0 + 0x200) % (modBase + selectedGroup * 0);
 				redCheck = rawRed;
 				alpha0 = rawRed;
 				blueCheck = alpha2 + redCheck * 0;
@@ -675,7 +681,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				v0->v.cn[1] = alpha0;
 
 				alpha0 = (s16)alpha2;
-				if (blueCheck >= 0x100) {
+				if (alpha2 >= 0x100) {
 					alpha0 = modBase - blueCheck;
 				}
 				v3->v.cn[2] = alpha0;
@@ -698,7 +704,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 				v0->v.cn[1] = color0;
 				if (v3) {}
 
-				color0 = rightX * 0 + 0xFF; v3->v.cn[2] = color0;
+				color0 = pointCoord * 0 + 0xFF; v3->v.cn[2] = color0;
 				v0->v.cn[2] = (v1->v.cn[2] = (v2->v.cn[2] = color0));
 
 				bright = color0 * 0 + 0x46;
@@ -714,7 +720,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 		}
 		tile++;
 	} while (remaining--);
-	if ((u32)v0 | (u32)v1 | (u32)v2) {}
+	if ((u32)v0 | (u32)v1 | (u32)v2 | maxColor | remaining) {}
 
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
 	gSPSetGeometryMode(D_8005BB2C++, G_CULL_BACK);
