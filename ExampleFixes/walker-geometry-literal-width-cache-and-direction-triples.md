@@ -66,3 +66,24 @@ incorrect ASM → The candidate reloaded the X base too late for the midpoint X 
 → code changed → Capture the X base in the left operand of the first distance subtraction and reuse it in the midpoint sum. Keep the X width in a signed word after narrowing it and use the signed division results for the later half-widths. Capture the first midpoint vertex Y load before the discarded half-width conditions.
 
 → correct ASM → The X base is stored in the absolute-distance branch delay slot and reloaded before adding the X projection. The epilogue ends at 0x10673C as in the target. The selected C candidate scores 12186 with 64 opcode or alignment changes, and stack-slot and register differences remain.
+
+
+`incorrect ASM` → The initial Y sign extension finishes before the palette index calculation. At ROM offset `0x105584` the candidate emits `sra` in the target's `addu` slot.
+
+`code changed` → Store the initial Z projection in a signed halfword local after converting the float to a signed word. Remove the intermediate widening to `s64`.
+
+`correct ASM` → The palette index `sll` and `addu` occupy `0x105580` and `0x105584`. The Y sign extension completes at `0x105590`, after the Z `mfc1`, as in the target. The full function still has register and scheduling differences.
+
+
+`incorrect ASM` → At the negative midpoint vertex, the candidate reloads the global vertex cursor between the cursor update and the X-coordinate store. The target uses the incremented cursor for that store.
+
+`code changed` → Evaluate `delta = midpoint.x - temp_f6` before advancing `D_8005BB34`. Assign `delta` to `D_8005BB34->v.ob[0]` after the advance. For the positive midpoint, compute `wideX = midpoint.x + temp_f6` before the advance and store `wideX` afterward.
+
+`correct ASM` → The target's cursor setup appears as `lw t6,0(a0)`, `lw t7,0x120(sp)`, `addiu t9,t6,0x10`, and `sw t9,0(a0)`. The X store uses `0(t9)` directly after the subtraction. The subtraction's destination register still differs. The positive X store also uses the incremented cursor directly. The cursor advances and coordinate stores align in opcode order. A late color reload still differs.
+
+
+`incorrect ASM` → The first projected X store omits `move v1,t6` and adds the width to the direction offset before adding the starting X coordinate.
+
+`code changed` → In the first X expression, assign the converted float product to `rawWidth`, narrow that assignment to `s16`, and assign the result to `wideX` as part of the coordinate calculation.
+
+`correct ASM` → IDO emits `move v1,t6` and adds the width to the starting coordinate first. It loads the vertex cursor before adding the direction offset. The first X calculation matches this instruction order, and the function still has later opcode differences.
