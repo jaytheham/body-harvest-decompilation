@@ -1997,11 +1997,13 @@ end_simulation:
 	func_801238DC_13288C((s16)(arg0 - D_8015EB90));
 }
 
-#ifdef NON_MATCHING
+/* sqrtf has no memory side effects. */
+#pragma sgi_no_side_effects(sqrtf)
 void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
 	s32 endStep;
 	s32 midpoint;
-	u8 upperStackPadding[16]; /* Keep the length and direction spills at sp+0x6C through sp+0x60. */
+	u8 upperStackPadding[8]; /* Keep the length and direction spill slots. */
+	f64 fade;
 	f32 length;
 	f32 dirX;
 	f32 dirY;
@@ -2029,16 +2031,21 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	endStep = func_800038E0_44E0() % 30;
 	endStep = (endStep * length) / 100.0f;
 
-	arg3 = arg3 - dirX * endStep;
-	if (endStep) {}
-	arg4 = arg4 - dirY * endStep;
-	arg5 = arg5 - dirZ * endStep;
+	/* Store the adjusted endpoint coordinates in their argument slots. */
+	(&arg3)[0] = arg3 - dirX * endStep;
+	(&arg4)[0] = arg4 - dirY * endStep;
+	(&arg5)[0] = arg5 - dirZ * endStep;
 
+	/* These comparisons reserve temporary registers without generating branches. */
+	if (arg0 ^ arg1) {}
+	if (arg1 ^ arg2) {}
 	gDPSetRenderMode(D_8005BB30++, G_RM_AA_ZB_XLU_LINE, G_RM_NOOP2);
 	gDPSetCycleType(D_8005BB30++, G_CYC_1CYCLE);
 	gDPSetCombineMode(D_8005BB30++, G_CC_SHADE, G_CC_SHADE);
 	gSPClearGeometryMode(D_8005BB30++, G_FOG);
 
+	/* Start the third live range after mode setup to put the white color in t3. */
+	if (arg2 ^ arg0) {}
 	D_8005BB34->v.ob[0] = arg0;
 	D_8005BB34->v.ob[1] = arg1;
 	D_8005BB34->v.ob[2] = arg2;
@@ -2051,8 +2058,10 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	D_8005BB34->v.cn[3] = 0;
 	D_8005BB34++;
 
-	midpoint = (s32)(((length - startStep) - endStep) * 0.7);
-	D_8005BB34->v.ob[0] = arg0 + dirX * midpoint;
+	fade = (length - startStep) - endStep;
+	midpoint = (s32)(fade * 0.7);
+	/* Reload the vertex cursor after advancing from the first vertex. */
+	(*(Vtx * volatile *)&D_8005BB34)->v.ob[0] = arg0 + dirX * midpoint;
 	if (255) {}
 	D_8005BB34->v.ob[1] = arg1 + dirY * midpoint;
 	D_8005BB34->v.ob[2] = arg2 + dirZ * midpoint;
@@ -2080,15 +2089,11 @@ void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 
 	gDPPipeSync(D_8005BB30++);
 	gSPVertex(D_8005BB30++, &D_8005BB34[-3], 3, 0);
 	gSPLine3D(D_8005BB30++, 0, 1, 0);
+	if (arg0 ^ arg1) {}
+	if (arg1 ^ arg2) {}
+	if (arg2 ^ arg0) {}
 	gSPLine3D(D_8005BB30++, 1, 2, 0);
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s", "src.us/overlay_gameplay/outside/1312D0_after_prediction_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/1312D0/func_80128E48_137DF8.s", "src.us/overlay_gameplay/outside/1312D0_after_prediction_late_rodata.eu.s")
-#endif
-#endif
 
 Projectile *func_80129354_138304(EntityInstance *arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
 	union { EntityType *entity; const WeaponType *weapon; } data;
@@ -2303,7 +2308,7 @@ Projectile *func_80129864_138814(EntityInstance *arg0, s32 arg1, s32 arg2, s32 a
 
 		len = sqrtf(len);
 		if ((u16)entry->unk0 >= 0xBB9) {
-			scale = D_801451C8_154178[0] / len;
+			scale = 3000.0f / len;
 		} else {
 			scale = (f32)(u16)entry->unk0 / len;
 		}
