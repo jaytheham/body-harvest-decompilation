@@ -1000,7 +1000,7 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 	model1 = D_8005BB30++; model1->words.w0 = 0x01020040; model1->words.w1 = K0_TO_PHYS(&D_80031160);
 }
 
-// CURRENT(11830) measured over the whole function (diff.py --max-size 6000)
+// CURRENT(8325) measured over the whole function (diff.py --max-size 6000)
 #ifdef NON_MATCHING
 void func_8009811C_A70CC(void) {
 	f32 temp_f0;
@@ -1038,8 +1038,8 @@ void func_8009811C_A70CC(void) {
 	volatile s32 mapStep;
 	Unk80052B40 sp2A4;
 	u32 sp2A0;
-	s32 var_t4;
 	s32 var_t0;
+	s32 var_t4;
 	s32 var_a1;
 	struct { f32 y; f32 x; } proposed;
 	s32 temp_v1;
@@ -1064,34 +1064,34 @@ void func_8009811C_A70CC(void) {
 	sp2E8 = 0;
 	D_8004D14C = 0;
 	D_8014ED00 = -1;
-	stage = &D_8013D2D0_14C280.entries[currentLevel * 5 + D_80047F94 - 5];
+	stageTable = &D_8013D2D0_14C280.entries[currentLevel * 5 + D_80047F94 - 5];
 
 	sp27C = 0;
-	cam3CC.distance = stage->unk8;
+	cam3CC.distance = stageTable->unk8;
 	cam3CC.pitch = 0x384;
 	cam3CC.yaw = -0x4000;
 	cam3CC.targetZ = 0.0f;
-	if (D_8014ED04 != 0x186A0) {
+	if (0x186A0 != D_8014ED04) {
 		sp2E8 = 0x20;
 	}
-	var_t3 = stage->unk4;
-	if ((var_t3 > 0) || (stage->unk6 > 0)) {
-		if (var_t3 > 0) {
-			temp_t3 = stage->unk0;
-			var_a1 = (D_80052B34->unk0 >> 7) - temp_t3;
-			var_t0 = MAX(0, MIN(var_a1, var_t3));
-			cam3CC.targetX = var_t0 + temp_t3;
-			cam3CC.targetY = stage->unk2;
+	var_t4 = stageTable->unk4;
+	if ((stageTable->unk4 > 0) || (stageTable->unk6 > 0)) {
+		if (stageTable->unk4 > 0) {
+			temp_t3 = stageTable->unk0;
+			var_a1 = (D_80052B34->unk0 >> 7) - stageTable->unk0;
+			var_a1 = MAX(0, MIN(var_a1, stageTable->unk4));
+			cam3CC.targetX = var_a1 + temp_t3;
+			cam3CC.targetY = stageTable->unk2;
 		} else {
-			var_a1 = (-D_80052B34->unk4 >> 7) - stage->unk2;
-			cam3CC.targetX = stage->unk0;
-			var_t3 = stage->unk6;
-			var_t0 = MAX(0, MIN(var_a1, var_t3));
-			cam3CC.targetY = var_t0 + stage->unk2;
+			var_a1 = (-D_80052B34->unk4 >> 7) - stageTable->unk2;
+			cam3CC.targetX = stageTable->unk0;
+			var_t4 = stageTable->unk6;
+			var_a1 = MAX(0, MIN(var_a1, stageTable->unk6));
+			cam3CC.targetY = var_a1 + stageTable->unk2;
 		}
 	} else {
-		cam3CC.targetX = stage->unk0;
-		cam3CC.targetY = stage->unk2;
+		cam3CC.targetX = stageTable->unk0;
+		cam3CC.targetY = stageTable->unk2;
 	}
 	cam3B8.distance = 0x50;
 	cam3B8.yaw = 0x8000 - D_80052B34->unk6;
@@ -1104,15 +1104,16 @@ void func_8009811C_A70CC(void) {
 	cam3A4.distance = 0x154;
 
 	for (drawItem.value = 0; drawItem.value < 5; drawItem.value++) {
-		stage = &D_8013D2D0_14C280.entries[currentLevel * 5 + drawItem.value - 5];
-		cams340[drawItem.value].distance = stage->unk8;
+		stageTable = &D_8013D2D0_14C280.entries[currentLevel * 5 + drawItem.value - 5];
+		cams340[drawItem.value].distance = stageTable->unk8;
 		cams340[drawItem.value].pitch = 0x384;
 		cams340[drawItem.value].yaw = -0x4000;
-		cams340[drawItem.value].targetX = stage->unk0;
-		cams340[drawItem.value].targetY = stage->unk2;
+		cams340[drawItem.value].targetX = stageTable->unk0;
+		cams340[drawItem.value].targetY = stageTable->unk2;
 		cams340[drawItem.value].targetZ = 0.0f;
 	}
 	D_8014ED0C = 0.0f;
+	if (0x3FFF == cam3CC.distance) {}
 	temp_f0 = cam3CC.distance;
 	D_8014ED10 = cam3CC.targetY - temp_f0;
 	D_8014ED14 = temp_f0 + cam3CC.targetZ;
@@ -1123,7 +1124,7 @@ void func_8009811C_A70CC(void) {
 	D_8014ED1C = 0.0f;
 	D_8014ED18 = 0.0f;
 	*(u32 *)&D_8014ED34 = 1;
-	if (0x3FFF == var_t3) {} /* Keep the initial angle constant in a register. */
+	if (0x3FFF == var_t4) {}
 	D_8014ED2E = 0x3FFF;
 	D_8014ED32 = 0;
 	func_8000505C_5C5C();
@@ -1168,6 +1169,8 @@ void func_8009811C_A70CC(void) {
 			nextCamera = sp320[0];
 			func_80097CB4_A6C64(sp324, nextCamera, &cam32C, temp_f0 / 32768.0);
 			temp_a2_2 = D_8014ED2E + 0x200;
+			temp_a2_2 &= 0xFFFF;
+			temp_a2_2 &= 0xFFFF;
 			if (temp_a2_2 >= 0x3FFF) {
 				var_s3 = nextCamera;
 				if (nextCamera == &cam3CC) {
@@ -1206,7 +1209,7 @@ void func_8009811C_A70CC(void) {
 				mapLock.value = 1;
 				D_8014ED2E = 0;
 				func_800153D8_15FD8(0x3C);
-				if ((D_8014ED30 == 5) || (D_8013D2D0_14C280.entries[currentLevel * 5 + D_8014ED30 - 5].unk8 == 0)) {
+				if ((D_8014ED30 == 5) || ((&D_8013D2D0_14C280.entries[(currentLevel - 1) * 5])[D_8014ED30].unk8 == 0)) {
 					D_8014ED30 = -1;
 					sp320[0] = &cam3CC;
 					D_8014ED2C = 0;
@@ -1216,23 +1219,23 @@ void func_8009811C_A70CC(void) {
 				}
 			}
 			if (currentControllerStates->button & 0x10) {
-				temp_v1 = D_8014ED2C;
+				var_a1 = D_8014ED2C;
 			} else {
-				temp_v1 = D_8014ED2C;
-				if ((temp_v1 == 0) || (temp_v1 == 2)) {
+				var_a1 = D_8014ED2C;
+				if ((var_a1 == 0) || (var_a1 == 2)) {
 					f32 oldY;
-					temp_v1 = var_s3->distance * 2;
-					sp2C0 = (currentControllerStates->stick_x * temp_v1) / 4000.0;
-					sp2BC = (currentControllerStates->stick_y * temp_v1) / 4000.0;
+					var_a1 = var_s3->distance * 2;
+					sp2C0 = (currentControllerStates->stick_x * var_a1) / 4000.0;
+					sp2BC = (currentControllerStates->stick_y * var_a1) / 4000.0;
 					sp2C8 = (f32) coss(var_s3->yaw) / 32768.0;
 					temp_f0 = (f32) sins(var_s3->yaw) / 32768.0;
 					temp_f2 = var_s3->targetX;
 					oldY = var_s3->targetY;
-					temp_v1 = D_8014ED2C;
+					var_a1 = D_8014ED2C;
 					proposed.x = temp_f2 - ((temp_f0 * sp2C0) - (sp2C8 * sp2BC));
-					sp2C8 = (sp2C8 * sp2C0) - (temp_f0 * sp2BC);
-					proposed.y = oldY + sp2C8;
-					if (temp_v1 == 0) {
+					var_f12 = (sp2C8 * sp2C0) - (temp_f0 * sp2BC);
+					proposed.y = oldY + var_f12;
+					if (var_a1 == 0) {
 						sp2C8 = proposed.y;
 						var_s3->targetX = proposed.x;
 						var_s3->targetY = sp2C8;
@@ -1245,21 +1248,21 @@ void func_8009811C_A70CC(void) {
 						temp_t3 = stage->unk0;
 						var_t4 = stage->unk4;
 						var_t4 += temp_t3;
-						var_s1 = ((MIN(var_t4, temp_t3) <= temp_f2) && (temp_f2 <= MAX(var_t4, temp_t3))) ? 1 : 0;
-						if (var_s1) {
-							var_a1 = stage->unk2;
-							var_t0 = stage->unk6 + var_a1;
-							var_s1 = ((MIN(var_a1, var_t0) <= oldY) && (oldY <= MAX(var_a1, var_t0))) ? 1 : 0;
-							if (var_s1) {
-								var_s1 = ((MIN(var_t4, temp_t3) <= proposed.x) && (proposed.x <= MAX(var_t4, temp_t3))) ? 1 : 0;
-								if (var_s1) {
+						temp_v0 = ((MIN(var_t4, temp_t3) <= temp_f2) && (temp_f2 <= MAX(var_t4, temp_t3))) ? 1 : 0;
+						if (temp_v0) {
+							temp_a1 = stage->unk2;
+							var_t0 = temp_a1 + stage->unk6;
+							temp_v0 = ((MIN(temp_a1, var_t0) <= oldY) && (oldY <= MAX(temp_a1, var_t0))) ? 1 : 0;
+							if (temp_v0) {
+								temp_v0 = ((MIN(var_t4, temp_t3) <= proposed.x) && (proposed.x <= MAX(var_t4, temp_t3))) ? 1 : 0;
+								if (temp_v0) {
 									var_s3->targetX = proposed.x;
 									var_t0 = stage->unk6;
-									var_a1 = stage->unk2;
-									var_t0 += var_a1;
+									temp_a1 = stage->unk2;
+									var_t0 = temp_a1 + var_t0;
 								}
-								var_s1 = ((MIN(var_a1, var_t0) <= sp2C8) && (sp2C8 <= MAX(var_a1, var_t0))) ? 1 : 0;
-								if (var_s1) {
+								temp_v0 = ((MIN(temp_a1, var_t0) <= sp2C8) && (sp2C8 <= MAX(temp_a1, var_t0))) ? 1 : 0;
+								if (temp_v0) {
 									var_s3->targetY = sp2C8;
 								}
 							}
@@ -1267,7 +1270,7 @@ void func_8009811C_A70CC(void) {
 					}
 			}
 			}
-			if ((temp_v1 != 2) && (temp_v1 != 3)) {
+			if ((var_a1 != 2) && (var_a1 != 3)) {
 				if (currentControllerStates->button & 8) {
 					var_s3->distance -= 0xF;
 				}
@@ -1351,8 +1354,10 @@ void func_8009811C_A70CC(void) {
 			D_8014ED04 = 0x186A0;
 			sp2E8 &= ~0x20;
 		} else {
-			D_8014ED04 = (s16) (s32) var_s3->targetX << 7;
-			D_8014ED08 = (s16) (s32) -var_s3->targetY << 7;
+			temp_v1 = (s16) (s32) var_s3->targetX;
+			D_8014ED04 = temp_v1 * 128;
+			temp_f2 = -var_s3->targetY;
+			D_8014ED08 = (s16) (s32) temp_f2 * 128;
 			sp2E8 |= 0x20;
 		}
 		func_800153D8_15FD8(0x14F);
@@ -1462,7 +1467,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawText(&D_801423F4_1513A4, 0x80, 8, &D_801423FC_1513AC);
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280.entries[currentLevel * 5 + D_8014ED30 - 4].unk8 == 0)) {
+				if (((temp_v1 = D_8014ED30_Select, temp_v1 == 4)) || ((&D_8013D2D0_14C280.entries[(currentLevel - 1) * 5])[D_8014ED30_Select + 1].unk8 == 0)) {
 					drawText(&D_8014240C_1513BC, 0x80, 8, &D_80142414_1513C4);
 				} else {
 					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30_Label + 1);
@@ -1568,6 +1573,7 @@ void func_8009811C_A70CC(void) {
 		if (var_s1--) {
 			do {
 				temp_t3 = D_80158E80[var_s1];
+				temp_t3 &= 0xFF;
 				scratch.vehicle = &vehicleInstances[temp_t3];
 				if ((D_80052B34 != scratch.vehicle) && ((currentLevel != LEVEL_GREECE) || (scratch.vehicle->unk1A != 0x12))) {
 					func_80095D4C_A4CFC(scratch.vehicle->unk0, scratch.vehicle->unk4, 0xF, 0xE6, 0xF);
@@ -1577,15 +1583,17 @@ void func_8009811C_A70CC(void) {
 		}
 		if (frameCount < 0x32) {
 			temp_f0 = (((f32) coss(D_8013D534_14C4E4) / 32768.0) + 1.0) * 128.0;
+			if (temp_f0 != 0.0f) {} /* Preserve the pulse color conversion register order. */
 			gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, temp_f0, temp_f0, 0xFF);
 			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 			gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+			do {
+				gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+			} while (0);
 			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
-			temp_v1 = D_8013D534_14C4E4_Update + 0x800;
 			var_t0 = D_8014D50A;
 			drawItem.value = D_8014D509;
-			D_8013D534_14C4E4 = temp_v1;
+			D_8013D534_14C4E4 = D_8013D534_14C4E4_Update + 0x800;
 			if (drawItem.value < var_t0) {
 				do {
 					temp_t3 = D_8014D408[drawItem.value];
@@ -1614,6 +1622,8 @@ void func_8009811C_A70CC(void) {
 		}
 		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
 		markerBrightness = sp2E4 / 40;
+		markerBrightness &= 0xFF;
+		markerBrightness &= 0xFF;
 		func_80095D4C_A4CFC(D_80052B34->unk0, D_80052B34->unk4, markerBrightness, markerBrightness, markerBrightness);
 		if (spA0) {
 			func_80095D4C_A4CFC(D_8014ED06, D_8014ED0A, markerBrightness, 0, markerBrightness);
@@ -1622,10 +1632,12 @@ void func_8009811C_A70CC(void) {
 	if (frameCount < 0x32) {
 		var_s1 = D_80158FD8;
 		var_t3 = 0x7FFFFFFF;
-		var_t4 = -1;
+		var_t0 = -1;
 		if ((var_s3 == &cam3CC) && (var_s3->distance < 0x12C) && (var_s1 >= 2)) {
 			do {
 				temp_v0 = D_80158E80[var_s1 - 1];
+				temp_v0 &= 0xFF;
+				temp_v0 &= 0xFF;
 				if (temp_v0) {}
 				temp_a2_2 = vehicleInstances[temp_v0].unk4;
 				temp_a1 = vehicleInstances[temp_v0].unk0;
@@ -1634,17 +1646,17 @@ void func_8009811C_A70CC(void) {
 					temp_f0 = (temp_a2_2 >> 7) + var_s3->targetY;
 					temp_f2 = (temp_a1 >> 7) - var_s3->targetX;
 					temp_v1 = (s32) ((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
-					if (var_t4 == _SHIFTL(G_RDPPIPESYNC, 24, 8)) {}
+					if (var_t0 == _SHIFTL(G_RDPPIPESYNC, 24, 8)) {}
 					if (temp_v1) {}
 					if ((D_80052B34_MapScan != &vehicleInstances[temp_v0]) && (temp_v1 < var_t3) && ((currentLevel != LEVEL_GREECE) || (vehicleInstances[temp_v0].unk1A != 0x12))) {
 						var_t3 = temp_v1;
-						var_t4 = temp_v0;
+						var_t0 = temp_v0;
 					}
 				}
 			} while (var_s1 >= 2);
 		}
 		temp_v0 = var_s3->distance;
-		if (var_t4 != D_8013D530_14C4E0) {
+		if (var_t0 != D_8013D530_14C4E0) {
 			var_f12 = D_8014ED20_Transition;
 			D_8013D52C_14C4DC = D_8013D530_14C4E0;
 			D_8014ED20 = 0.0f;
@@ -1652,10 +1664,10 @@ void func_8009811C_A70CC(void) {
 		}
 		temp_f2 = D_8014ED20;
 		var_f12 = D_8014ED24;
-		if ((temp_v0 >= 0x12C) && (var_t4 != -1)) {
-			D_8013D52C_14C4DC = var_t4;
+		if ((temp_v0 >= 0x12C) && (var_t0 != -1)) {
+			D_8013D52C_14C4DC = var_t0;
 			var_f12 = temp_f2;
-			var_t4 = -1;
+			var_t0 = -1;
 		}
 		gDPPipeSync(D_8005BB2C++);
 		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH);
@@ -1666,16 +1678,16 @@ void func_8009811C_A70CC(void) {
 		gDPSetFogColor(D_8005BB2C++, 0, 0, 0, 0xFF);
 		gSPFogFactor(D_8005BB2C++, 0x1900, 0xE800);
 		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, -1U);
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (D_8013D530_14C4E0 = var_t4, -1U));
+		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (D_8013D530_14C4E0 = var_t0, -1U));
 		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
 		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
 		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
 		gDPPipeSync(D_8005BB2C++);
 		D_8014ED20 = temp_f2;
 		D_8014ED24 = var_f12;
-		if (var_t4 != -1) {
+		if (var_t0 != -1) {
 			temp_f2 = MIN(1, temp_f2 + temp_f22);
-			sp2A0 = var_t4;
+			sp2A0 = var_t0;
 			temp_v1 = (s32) (temp_f2 * 256.0);
 			vec2DC.unk4 = temp_v1;
 			vec2DC.unk2 = temp_v1;
@@ -1794,8 +1806,9 @@ void func_8009811C_A70CC(void) {
 		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
 		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
 		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x80, 0xFF, 0xFF, 0xC8);
-		drawItem.stage = &D_8013D3D4_14C384[(D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF];
-		func_800966EC_A569C(var_s3, drawItem.stage->x << 8, drawItem.stage->z << 8, drawItem.stage->size, 1);
+		sp2A0 = (D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF;
+		drawItem.stage = &D_8013D3D4_14C384[sp2A0];
+		func_800966EC_A569C(var_s3, drawItem.stage->x * 256, drawItem.stage->z * 256, drawItem.stage->size, 1);
 		temp_f0 = drawItem.stage->x * 2;
 		temp_f2 = (-drawItem.stage->z * 2) - 0x2E;
 		cam3A4.targetX = temp_f0;
@@ -1807,7 +1820,7 @@ void func_8009811C_A70CC(void) {
 			if (D_8014ED30 == -1) {
 				drawItem.value = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
 			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30 == 4) || (D_8013D2D0_14C280.entries[currentLevel * 5 + D_8014ED30 - 4].unk8 == 0)) {
+				if ((D_8014ED30_Label == 4) || ((temp_v0 = currentLevel, (&D_8013D2D0_14C280.entries[(temp_v0 - 1) * 5])[D_8014ED30_Label + 1].unk8) == 0)) {
 					drawItem.value = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
 				} else {
 					drawItem.value = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
