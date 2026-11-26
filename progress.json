@@ -1,7 +1,7 @@
 {
-  "generated": "2026-11-26T10:23:12Z",
-  "commit": "fa6673c3",
-  "commit_timestamp": "2026-11-26T23:21:58+13:00",
+  "generated": "2026-11-26T10:23:40Z",
+  "commit": "11d92e44",
+  "commit_timestamp": "2026-11-26T23:22:28+13:00",
   "overall": {
     "total_functions": 3056,
     "matched": 3049,
@@ -2261,7 +2261,7 @@
       "asm_stubs": 0,
       "total": 14,
       "matched_pct": 85.7,
-      "contributor": "TheGh0stShip"
+      "contributor": "jaytheham"
     },
     {
       "path": "overlay_gameplay/outside/AAA70.c",
@@ -2567,9 +2567,9 @@
   "contributors": [
     {
       "name": "jaytheham",
-      "files": 92,
-      "matched": 2553,
-      "non_matching": 5,
+      "files": 93,
+      "matched": 2565,
+      "non_matching": 7,
       "asm_stubs": 0
     },
     {
@@ -2581,9 +2581,9 @@
     },
     {
       "name": "TheGh0stShip",
-      "files": 3,
-      "matched": 157,
-      "non_matching": 2,
+      "files": 2,
+      "matched": 145,
+      "non_matching": 0,
       "asm_stubs": 0
     },
     {
@@ -2891,7 +2891,7 @@
     },
     {
       "date": "2026-11-22",
-      "commit": "fa6673c",
+      "commit": "11d92e4",
       "matched": 3049,
       "non_matching": 7,
       "total": 3056
