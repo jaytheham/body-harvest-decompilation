@@ -1241,9 +1241,12 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	f32 sinB;
 	u16 baseRed;
 	u8 cG;
-	EffectRgb (*levelColor)[3];
+	union {
+		EffectRgb (*colors)[3];
+		Vtx *vertex;
+	} render;
 	s32 angleA;
-	s32 cosAComp;
+	s16 cosAComp;
 	f32 radiusThird;
 	s32 baseGreen;
 	s16 sideX;
@@ -1264,9 +1267,9 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 		Vec2_S16 forward;
 		s16 blue;
 	} vertexData;
-	u32 textureS;
+	f32 rawCosine;
 	u8 cR;
-	u16 baseBlue;
+	s16 baseBlue;
 	s16 colorTopA;
 	s16 colorTopB;
 	s16 colorTopC;
@@ -1283,14 +1286,13 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	cosA = (f32)coss(angleA + 0x4000) / 32768.0;
 
 	sinB = (f32)sins(angleA) / 32768.0;
-	angleA = coss(angleA);
+	rawCosine = (f32)coss(angleA);
 
-	levelColor = &D_8013FCD4_14EC84[currentLevel];
-	textureS = 0x400;
-	colorA = levelColor[4][0].r;
+	render.colors = &D_8013FCD4_14EC84[currentLevel];
+	colorA = render.colors[4][0].r;
 	colorB = D_8013FCD4_14EC84[currentLevel + 4][0].g;
 	opacity = 0xFF;
-	colorC = levelColor[4][0].b;
+	colorC = render.colors[4][0].b;
 
 	if (&colorC) {}
 	colorAClamped = (colorA - 0xB4 < 0) ? 0 : colorA - 0xB4;
@@ -1309,7 +1311,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = arg0[1];
 	D_8005BB34->v.ob[2] = arg0[2];
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = textureS;
+	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = 0;
 	D_8005BB34->v.cn[1] = 0;
@@ -1320,15 +1322,15 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	sideX = (s32)(radiusThird * sinA);
 	vertexData.forward.x = (s32)(radiusThird * sinB);
 	component.sideZ = (s32)(radiusThird * cosA);
-	vertexData.forward.z = (s32)((f32)radiusThird * (f32)((f32)angleA / 32768.0));
+	vertexData.forward.z = (s32)((f32)radiusThird * (f32)(rawCosine / 32768.0));
 
-	baseBlue = (u8)cB;
+	angleA = (u8)cB;
 	D_8005BB34->v.ob[0] = (sideX + arg0[0]) - vertexData.forward.x;
 	D_8005BB34->v.ob[1] = arg0[1];
 	D_8005BB34->v.ob[2] = (component.sideZ + arg0[2]) - vertexData.forward.z;
 	baseGreen = cG;
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = textureS;
+	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x80;
 	D_8005BB34->v.cn[0] = 0;
 	D_8005BB34->v.cn[1] = 0;
@@ -1341,7 +1343,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[2] = (arg0[2] - component.sideZ) - vertexData.forward.z;
 	cR = baseRed;
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = textureS;
+	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0x80;
 	D_8005BB34->v.cn[0] = 0;
 	D_8005BB34->v.cn[1] = 0;
@@ -1362,7 +1364,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34++;
 
 	cosAComp = (s16)(s32)(radius * cosA);
-	vertexData.forward.z = (s32)((2 * radiusThird) * (f32)((f32)angleA / 32768.0));
+	vertexData.forward.z = (s32)((2 * radiusThird) * (f32)(rawCosine / 32768.0));
 	vertexData.forward.x = (s32)((2 * radiusThird) * sinB);
 	sinAOffset = (s32)(radius * sinA);
 
@@ -1416,11 +1418,12 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
+	baseBlue = angleA;
 	D_8005BB34->v.ob[0] = arg1[0] - (vertexData.forward.x / 2);
 	D_8005BB34->v.ob[1] = (s32)(arg1[1] + radius * 2);
 	D_8005BB34->v.ob[2] = arg1[2] - (vertexData.forward.z / 2);
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = textureS;
+	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = colorTopA;
 	D_8005BB34->v.cn[1] = colorTopB;
@@ -1432,7 +1435,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = (s32)(arg1[1] + (radius / 2));
 	D_8005BB34->v.ob[2] = arg1[2] - vertexData.forward.z;
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = textureS;
+	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = cR;
 	D_8005BB34->v.cn[1] = baseGreen;
@@ -1444,7 +1447,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = (s32)(arg1[1] + (radius / 2));
 	D_8005BB34->v.ob[2] = arg1[2] - vertexData.forward.z;
 	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = textureS;
+	D_8005BB34->v.tc[0] = 0x400;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = arg3;
 	D_8005BB34->v.cn[1] = colorBClamped;
@@ -1454,12 +1457,13 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 
 	D_8005BB34->v.ob[0] = arg2[0];
 	D_8005BB34->v.ob[1] = arg2[1];
-	baseGreen = colorB;
 	D_8005BB34->v.ob[2] = arg2[2];
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x280;
+	render.vertex = D_8005BB34;
+	render.vertex->v.tc[1] = 0x400;
 	baseRed = colorA;
-	D_8005BB34->v.tc[1] = textureS;
+	baseGreen = colorB;
 	vertexData.blue = colorC;
 	D_8005BB34->v.cn[0] = baseRed;
 	D_8005BB34->v.cn[1] = baseGreen;
@@ -1470,9 +1474,10 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[0] = arg2[0] + sinAOffset / 2;
 	D_8005BB34->v.ob[1] = (s32)(arg2[1] - (2 * radiusThird));
 	D_8005BB34->v.ob[2] = arg2[2] + cosAComp / 2;
+	if (&colorB) {}
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = textureS;
+	D_8005BB34->v.tc[1] = 0x400;
 	D_8005BB34->v.cn[0] = baseRed;
 	D_8005BB34->v.cn[1] = baseGreen;
 	D_8005BB34->v.cn[2] = vertexData.blue;
@@ -1484,7 +1489,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[2] = arg2[2] - cosAComp / 2;
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = textureS;
+	D_8005BB34->v.tc[1] = 0x400;
 	D_8005BB34->v.cn[0] = baseRed;
 	D_8005BB34->v.cn[1] = baseGreen;
 	D_8005BB34->v.cn[2] = vertexData.blue;
@@ -1512,7 +1517,6 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gDPPipeSync(D_8005BB2C++);
 	gSP1Triangle(D_8005BB2C++, 11, 10, 6, 0);
 	gSP1Triangle(D_8005BB2C++, 11, 6, 12, 0);
-	if (&colorB) {}
 	gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
 	{
 		Gfx *packet = D_8005BB2C++;
