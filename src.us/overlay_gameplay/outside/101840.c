@@ -1235,294 +1235,265 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 }
 
 #ifdef NON_MATCHING
-void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
-	f32 sinA;
-	f32 cosA;
-	f32 sinB;
-	u16 baseRed;
-	u8 cG;
-	union {
-		EffectRgb (*colors)[3];
-		Vtx *vertex;
-	} render;
-	s32 angleA;
-	s16 cosAComp;
-	f32 radiusThird;
-	s32 baseGreen;
-	s16 sideX;
-	union {
-		s16 sideZ;
-		s16 shadeBlue;
-	} component;
-	f32 radius;
-	u8 opacity;
-	s16 sinAOffset;
-	s16 colorA;
-	s16 colorB;
-	s16 colorC;
-	s16 colorAClamped;
-	s16 colorBClamped;
-	s16 colorCClamped;
-	union {
-		Vec2_S16 forward;
-		s16 blue;
-	} vertexData;
-	f32 rawCosine;
-	u8 cR;
-	s16 baseBlue;
-	s16 colorTopA;
-	s16 colorTopB;
-	s16 colorTopC;
-	s16 cB;
+void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
+{
+  f32 sinA;
+  f32 cosA;
+  f32 sinB;
+  s32 angleA;
+  s16 cosAComp;
+  f32 radiusThird;
+  s16 sideX;
+  s16 sideZ;
+  f32 radius;
+  s16 sinAOffset;
+  s16 colorA;
+  s16 colorB;
+  s16 colorC;
+  s16 colorAClamped;
+  s16 colorBClamped;
+  s16 colorCClamped;
+  s16 forwardX;
+  s16 forwardZ;
+  f32 rawCosine;
+  
+  s16 colorTopA;
+  s16 colorTopB;
+  s16 colorTopC;
+  u8 cR;
+  u8 cG;
+  u8 cB;
 
-	if (&colorA) {}
-	radius = D_801601F0[arg3].unk8;
-	if (D_8013FCD0_14EC80 != 0) {
-		radius *= 2;
-	}
+  radius = D_801601F0[arg3].unk8;
+  if (D_8013FCD0_14EC80 != 0)
+  {
+	radius *= 2;
+  }
+  angleA = func_80003824_4424(arg0[2] - arg2[2], arg0[0] - arg2[0]);
+  sinA = ((f32) sins(angleA + 0x4000)) / 32768.0;
+  cosA = ((f32) coss(angleA + 0x4000)) / 32768.0;
+  sinB = ((f32) sins(angleA)) / 32768.0;
+  rawCosine = (f32) coss(angleA);
+  
+  colorA = D_8013FCD4_14EC84[currentLevel + 4][0].r;
+  colorB = D_8013FCD4_14EC84[currentLevel + 4][0].g;
+  colorC = D_8013FCD4_14EC84[currentLevel + 4][0].b;
+	
+  colorAClamped = ((colorA - 0xB4) < 0) ? (0) : (colorA - 0xB4);
+  colorBClamped = ((colorB - 0xB4) < 0) ? (0) : (colorB - 0xB4);
+  colorCClamped = ((colorC - 0xB4) < 0) ? (0) : (colorC - 0xB4);
+	
+  cR = D_8013FCD4_14EC84[currentLevel + 4][1].r;
+  cG = D_8013FCD4_14EC84[currentLevel + 4][1].g;
+  cB = D_8013FCD4_14EC84[currentLevel + 4][1].b;
+	
+  colorTopA = D_8013FCD4_14EC84[currentLevel + 4][2].r;
+  colorTopB = D_8013FCD4_14EC84[currentLevel + 4][2].g;
+  colorTopC = D_8013FCD4_14EC84[currentLevel + 4][2].b;
+	
+  radiusThird = radius / 3.0f;
+	
+  D_8005BB34->v.ob[0] = arg0[0];
+  D_8005BB34->v.ob[1] = arg0[1];
+  D_8005BB34->v.ob[2] = arg0[2];
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  sideX = (radiusThird * sinA);
+  forwardX = (radiusThird * sinB);
+  sideZ = (radiusThird * cosA);
+  forwardZ = (((f32) radiusThird) * ((f32) (rawCosine / 32768.0)));
+	  
+  D_8005BB34->v.ob[0] = (sideX + arg0[0]) - forwardX;
+  D_8005BB34->v.ob[1] = arg0[1];
+  D_8005BB34->v.ob[2] = (sideZ + arg0[2]) - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = (arg0[0] - sideX) - forwardX;
+  D_8005BB34->v.ob[1] = arg0[1];
+  D_8005BB34->v.ob[2] = (arg0[2] - sideZ) - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.cn[0] = 0;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = 0;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = arg1[0];
+  D_8005BB34->v.ob[1] = arg1[1];
+  D_8005BB34->v.ob[2] = arg1[2];
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = cR;
+  D_8005BB34->v.cn[1] = cG;
+  D_8005BB34->v.cn[2] = cB;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  cosAComp = ((s32) (radius * cosA));
+  forwardZ = ((2 * radiusThird) * ((f32) (rawCosine / 32768.0)));
+  forwardX = ((2 * radiusThird) * sinB);
+  sinAOffset = (radius * sinA);
+	
+  D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - forwardX;
+  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.cn[0] = cR;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = (s8) cB;
+  D_8005BB34->v.cn[3] = 0xFF;
+	
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - forwardX;
+  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.cn[0] = cR;
+  D_8005BB34->v.cn[1] = 0;
+  D_8005BB34->v.cn[2] = cB;
+  D_8005BB34->v.cn[3] = 0xFF;
+	
+  D_8005BB34++;
+  D_8005BB34->v.ob[0] = (sinAOffset + arg1[0]) - forwardX;
+  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[2] = (cosAComp + arg1[2]) - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.cn[0] = colorAClamped;
+  D_8005BB34->v.cn[1] = colorBClamped;
+  D_8005BB34->v.cn[2] = colorCClamped;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - forwardX;
+  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.cn[0] = colorAClamped;
+  D_8005BB34->v.cn[1] = colorBClamped;
+  D_8005BB34->v.cn[2] = colorCClamped;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
 
-	angleA = func_80003824_4424(arg0[2] - arg2[2], arg0[0] - arg2[0]);
-	sinA = (f32)sins(angleA + 0x4000) / 32768.0;
-	cosA = (f32)coss(angleA + 0x4000) / 32768.0;
-
-	sinB = (f32)sins(angleA) / 32768.0;
-	rawCosine = (f32)coss(angleA);
-
-	render.colors = &D_8013FCD4_14EC84[currentLevel];
-	colorA = render.colors[4][0].r;
-	colorB = D_8013FCD4_14EC84[currentLevel + 4][0].g;
-	opacity = 0xFF;
-	colorC = render.colors[4][0].b;
-
-	if (&colorC) {}
-	colorAClamped = (colorA - 0xB4 < 0) ? 0 : colorA - 0xB4;
-	colorBClamped = (colorB - 0xB4 < 0) ? 0 : colorB - 0xB4;
-	colorCClamped = (colorC - 0xB4 < 0) ? 0 : colorC - 0xB4;
-	baseRed = arg3 = D_8013FCD4_14EC84[currentLevel + 4][1].r;
-	cG = D_8013FCD4_14EC84[currentLevel + 4][1].g;
-	cB = D_8013FCD4_14EC84[currentLevel + 4][1].b;
-	colorTopA = D_8013FCD4_14EC84[currentLevel + 4][2].r;
-	colorTopB = D_8013FCD4_14EC84[currentLevel + 4][2].g;
-	colorTopC = D_8013FCD4_14EC84[currentLevel + 4][2].b;
-
-	radiusThird = radius / 3.0f;
-
-	D_8005BB34->v.ob[0] = arg0[0];
-	D_8005BB34->v.ob[1] = arg0[1];
-	D_8005BB34->v.ob[2] = arg0[2];
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x400;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	sideX = (s32)(radiusThird * sinA);
-	vertexData.forward.x = (s32)(radiusThird * sinB);
-	component.sideZ = (s32)(radiusThird * cosA);
-	vertexData.forward.z = (s32)((f32)radiusThird * (f32)(rawCosine / 32768.0));
-
-	angleA = (u8)cB;
-	D_8005BB34->v.ob[0] = (sideX + arg0[0]) - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = arg0[1];
-	D_8005BB34->v.ob[2] = (component.sideZ + arg0[2]) - vertexData.forward.z;
-	baseGreen = cG;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x400;
-	D_8005BB34->v.tc[1] = 0x80;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (arg0[0] - sideX) - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = arg0[1];
-	D_8005BB34->v.ob[2] = (arg0[2] - component.sideZ) - vertexData.forward.z;
-	cR = baseRed;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x400;
-	D_8005BB34->v.tc[1] = 0x80;
-	D_8005BB34->v.cn[0] = 0;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = 0;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = arg1[0];
-	D_8005BB34->v.ob[1] = arg1[1];
-	D_8005BB34->v.ob[2] = arg1[2];
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = arg3;
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = cB;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	cosAComp = (s16)(s32)(radius * cosA);
-	vertexData.forward.z = (s32)((2 * radiusThird) * (f32)(rawCosine / 32768.0));
-	vertexData.forward.x = (s32)((2 * radiusThird) * sinB);
-	sinAOffset = (s32)(radius * sinA);
-
-	D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] - ((2 * radiusThird) / 2));
-	D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - vertexData.forward.z;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x80;
-	D_8005BB34->v.cn[0] = arg3;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = (s8)cB;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] - ((2 * radiusThird) / 2));
-	D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - vertexData.forward.z;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x80;
-	D_8005BB34->v.cn[0] = arg3;
-	D_8005BB34->v.cn[1] = 0;
-	D_8005BB34->v.cn[2] = cB;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (sinAOffset + arg1[0]) - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] - ((2 * radiusThird) / 2));
-	D_8005BB34->v.ob[2] = (cosAComp + arg1[2]) - vertexData.forward.z;
-	arg3 = colorAClamped;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x80;
-	D_8005BB34->v.cn[0] = colorAClamped;
-	component.shadeBlue = colorCClamped;
-	D_8005BB34->v.cn[1] = colorBClamped;
-	D_8005BB34->v.cn[2] = component.shadeBlue;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] - ((2 * radiusThird) / 2));
-	D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - vertexData.forward.z;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x80;
-	D_8005BB34->v.cn[0] = colorAClamped;
-	D_8005BB34->v.cn[1] = colorBClamped;
-	D_8005BB34->v.cn[2] = component.shadeBlue;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	baseBlue = angleA;
-	D_8005BB34->v.ob[0] = arg1[0] - (vertexData.forward.x / 2);
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] + radius * 2);
-	D_8005BB34->v.ob[2] = arg1[2] - (vertexData.forward.z / 2);
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x400;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = colorTopA;
-	D_8005BB34->v.cn[1] = colorTopB;
-	D_8005BB34->v.cn[2] = colorTopC;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = arg1[0] - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] + (radius / 2));
-	D_8005BB34->v.ob[2] = arg1[2] - vertexData.forward.z;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x400;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = cR;
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = baseBlue;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = arg1[0] - vertexData.forward.x;
-	D_8005BB34->v.ob[1] = (s32)(arg1[1] + (radius / 2));
-	D_8005BB34->v.ob[2] = arg1[2] - vertexData.forward.z;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x400;
-	D_8005BB34->v.tc[1] = 0;
-	D_8005BB34->v.cn[0] = arg3;
-	D_8005BB34->v.cn[1] = colorBClamped;
-	D_8005BB34->v.cn[2] = component.shadeBlue;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = arg2[0];
-	D_8005BB34->v.ob[1] = arg2[1];
-	D_8005BB34->v.ob[2] = arg2[2];
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0x280;
-	render.vertex = D_8005BB34;
-	render.vertex->v.tc[1] = 0x400;
-	baseRed = colorA;
-	baseGreen = colorB;
-	vertexData.blue = colorC;
-	D_8005BB34->v.cn[0] = baseRed;
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = vertexData.blue;
-	D_8005BB34->v.cn[3] = 0xFF;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = arg2[0] + sinAOffset / 2;
-	D_8005BB34->v.ob[1] = (s32)(arg2[1] - (2 * radiusThird));
-	D_8005BB34->v.ob[2] = arg2[2] + cosAComp / 2;
-	if (&colorB) {}
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x400;
-	D_8005BB34->v.cn[0] = baseRed;
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = vertexData.blue;
-	D_8005BB34->v.cn[3] = opacity;
-	D_8005BB34++;
-
-	D_8005BB34->v.ob[0] = arg2[0] - sinAOffset / 2;
-	D_8005BB34->v.ob[1] = (s32)(arg2[1] - (2 * radiusThird));
-	D_8005BB34->v.ob[2] = arg2[2] - cosAComp / 2;
-	D_8005BB34->v.flag = 0;
-	D_8005BB34->v.tc[0] = 0;
-	D_8005BB34->v.tc[1] = 0x400;
-	D_8005BB34->v.cn[0] = baseRed;
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = vertexData.blue;
-	D_8005BB34->v.cn[3] = opacity;
-	D_8005BB34++;
-
-	gDPPipeSync(D_8005BB2C++);
-	gSPSetGeometryMode(D_8005BB2C++, G_FOG);
-	gSPClearGeometryMode(D_8005BB2C++, G_LIGHTING);
-	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_ON);
-	gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
-	gDPPipeSync(D_8005BB2C++);
-	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-14]), 14, 0);
-	gDPLoadTextureBlock(D_8005BB2C++, D_1014080, G_IM_FMT_RGBA, G_IM_SIZ_16b, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPPipeSync(D_8005BB2C++);
-	gSP1Triangle(D_8005BB2C++, 3, 8, 5, 0);
-	gSP1Triangle(D_8005BB2C++, 4, 8, 3, 0);
-	gSP1Triangle(D_8005BB2C++, 8, 9, 5, 0);
-	gSP1Triangle(D_8005BB2C++, 4, 9, 8, 0);
-	gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
-	gSP1Triangle(D_8005BB2C++, 0, 4, 3, 0);
-	gSP1Triangle(D_8005BB2C++, 0, 5, 2, 0);
-	gSP1Triangle(D_8005BB2C++, 0, 3, 5, 0);
-	gDPLoadTextureBlock(D_8005BB2C++, D_1013E80, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPPipeSync(D_8005BB2C++);
-	gSP1Triangle(D_8005BB2C++, 11, 10, 6, 0);
-	gSP1Triangle(D_8005BB2C++, 11, 6, 12, 0);
-	gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
-	{
-		Gfx *packet = D_8005BB2C++;
-
-		gSP1Triangle(packet, 11, 10, 13, 0);
-	}
+  D_8005BB34->v.ob[0] = arg1[0] - (forwardX / 2);
+  D_8005BB34->v.ob[1] = (arg1[1] + (radius * 2));
+  D_8005BB34->v.ob[2] = arg1[2] - (forwardZ / 2);
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = colorTopA;
+  D_8005BB34->v.cn[1] = colorTopB;
+  D_8005BB34->v.cn[2] = colorTopC;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = arg1[0] - forwardX;
+  D_8005BB34->v.ob[1] = (arg1[1] + (radius / 2));
+  D_8005BB34->v.ob[2] = arg1[2] - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = cR;
+  D_8005BB34->v.cn[1] = cG;
+  D_8005BB34->v.cn[2] = cB;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = arg1[0] - forwardX;
+  D_8005BB34->v.ob[1] = (arg1[1] + (radius / 2));
+  D_8005BB34->v.ob[2] = arg1[2] - forwardZ;
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[1] = 0;
+  D_8005BB34->v.cn[0] = colorAClamped;
+  D_8005BB34->v.cn[1] = colorBClamped;
+  D_8005BB34->v.cn[2] = colorCClamped;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = arg2[0];
+  D_8005BB34->v.ob[1] = arg2[1];
+  D_8005BB34->v.ob[2] = arg2[2];
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0x280;
+  D_8005BB34->v.tc[1] = 0x400;
+  D_8005BB34->v.cn[0] = colorA;
+  D_8005BB34->v.cn[1] = colorB;
+  D_8005BB34->v.cn[2] = colorC;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = arg2[0] + (sinAOffset / 2);
+  D_8005BB34->v.ob[1] = (arg2[1] - (2 * radiusThird));
+  D_8005BB34->v.ob[2] = arg2[2] + (cosAComp / 2);
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x400;
+  D_8005BB34->v.cn[0] = colorA;
+  D_8005BB34->v.cn[1] = colorB;
+  D_8005BB34->v.cn[2] = colorC;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  D_8005BB34->v.ob[0] = arg2[0] - (sinAOffset / 2);
+  D_8005BB34->v.ob[1] = (arg2[1] - (2 * radiusThird));
+  D_8005BB34->v.ob[2] = arg2[2] - (cosAComp / 2);
+  D_8005BB34->v.flag = 0;
+  D_8005BB34->v.tc[0] = 0;
+  D_8005BB34->v.tc[1] = 0x400;
+  D_8005BB34->v.cn[0] = colorA;
+  D_8005BB34->v.cn[1] = colorB;
+  D_8005BB34->v.cn[2] = colorC;
+  D_8005BB34->v.cn[3] = 0xFF;
+  D_8005BB34++;
+	
+  gDPPipeSync(D_8005BB2C++);
+  gSPSetGeometryMode(D_8005BB2C++, 0x00010000);
+  gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
+  gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
+  gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA, G_CC_PASS2);
+  gDPPipeSync(D_8005BB2C++);
+  gSPVertex(D_8005BB2C++, ((u32) (&D_8005BB34[-14])) & 0x1FFFFFFF, 14, 0);
+  gDPLoadTextureBlock(D_8005BB2C++, D_1014080, 0, G_IM_SIZ_16b, 32, 32, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
+  gDPPipeSync(D_8005BB2C++);
+  gSP1Triangle(D_8005BB2C++, 3, 8, 5, 0);
+  gSP1Triangle(D_8005BB2C++, 4, 8, 3, 0);
+  gSP1Triangle(D_8005BB2C++, 8, 9, 5, 0);
+  gSP1Triangle(D_8005BB2C++, 4, 9, 8, 0);
+  gSP1Triangle(D_8005BB2C++, 0, 1, 4, 0);
+  gSP1Triangle(D_8005BB2C++, 0, 4, 3, 0);
+  gSP1Triangle(D_8005BB2C++, 0, 5, 2, 0);
+  gSP1Triangle(D_8005BB2C++, 0, 3, 5, 0);
+  gDPLoadTextureBlock(D_8005BB2C++, D_1013E80, 0, G_IM_SIZ_16b, 16, 16, 0, 0 | 0x2, 0 | 0x2, 0, 0, 0, 0);
+  gDPPipeSync(D_8005BB2C++);
+  gSP1Triangle(D_8005BB2C++, 11, 10, 6, 0);
+  gSP1Triangle(D_8005BB2C++, 11, 6, 12, 0);
+  gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
+  gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s")
@@ -2187,7 +2158,7 @@ void func_800F842C_1073DC(s32 arg0) {
 	walker = &D_80158000[arg0];
 	/* Keep the table address live through the loop cursor spill. */
 	sp82 = (s16)((D_801601F0[walker->limbs[0].unk23].unkA / 20) +
-	             (reach = (s32)&D_801601F0[walker->limbs[0].unk23]) * 0);
+				 (reach = (s32)&D_801601F0[walker->limbs[0].unk23]) * 0);
 
 	for (i = 0; i < 6; i++) {
 		if (walker->limbs[i + 1].unk23 == 1) {
@@ -2210,7 +2181,7 @@ void func_800F842C_1073DC(s32 arg0) {
 
 			/* IDO assigns temporary registers before folding the repeated masks. */
 			heading = phase & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF &
-			          0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF;
+					  0xFFFF & 0xFFFF & 0xFFFF & 0xFFFF;
 			trig = coss(heading & 0xFFFF);
 			reach = (i % 3) * sp82;
 			sp8C.unk0 = (s16)(s32)((f64)walker->limbs[0].words[4] - (((f64)trig) / 32768.0) * (f64)(walker->unk168 * (reach + 10)));
@@ -5874,7 +5845,7 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 		posY = point->pos.y;
 		posZ = point->pos.z;
 		if ((posX - posY) + 2.0 + 3.0 + 5.0 + 2.0 + 3.0 + 5.0 < (posZ - posX) + 5.0 + 3.0 + 2.0 + 5.0 + 3.0
-		    + 2.0) {}
+			+ 2.0) {}
 
 		loopX = (f32)(chainX - ((chainX - point[-1].pos.x) * 0.5));
 		loopY = (f32)(chainY - ((chainY - point[-1].pos.y) * 0.5));
@@ -5893,17 +5864,17 @@ void func_80103308_1122B8(VehicleInstance *arg0, VehicleInstance *arg1)
 		if (endpointZ) {}
 		if (arg1) {}
 		if ((posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + posX + posY + posZ + posX + posY
-		    + posZ + posX + posY + posZ + posX + posY + posZ + chainX + chainY + chainZ + chainX + chainY +
-		    chainZ + chainX + chainY + chainZ + chainX + chainY + chainX) * spring * half * damping * spring
-		    * half * damping * spring * half * damping * spring * half * damping * spring * half * damping *
-		    spring * half * damping * spring * half * damping * spring * half * damping * spring * half *
-		    damping * spring * half * damping + 2.0 + 3.0 + 5.0 + 2.0 + 3.0 + 5.0 < (posZ + posY + posX +
-		    posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY
-		    + posX + posZ + posY + posX + chainX + chainY + chainX + chainZ + chainY + chainX + chainZ +
-		    chainY + chainX + chainZ + chainY + chainX) * spring * half * damping * spring * half * damping
-		    * spring * half * damping * spring * half * damping * spring * half * damping * spring * half *
-		    damping * spring * half * damping * spring * half * damping * spring * half * damping * spring *
-		    half + 5.0 + 3.0 + 2.0 + 5.0 + 3.0 + 2.0) {}
+			+ posZ + posX + posY + posZ + posX + posY + posZ + chainX + chainY + chainZ + chainX + chainY +
+			chainZ + chainX + chainY + chainZ + chainX + chainY + chainX) * spring * half * damping * spring
+			* half * damping * spring * half * damping * spring * half * damping * spring * half * damping *
+			spring * half * damping * spring * half * damping * spring * half * damping * spring * half *
+			damping * spring * half * damping + 2.0 + 3.0 + 5.0 + 2.0 + 3.0 + 5.0 < (posZ + posY + posX +
+			posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY + posX + posZ + posY
+			+ posX + posZ + posY + posX + chainX + chainY + chainX + chainZ + chainY + chainX + chainZ +
+			chainY + chainX + chainZ + chainY + chainX) * spring * half * damping * spring * half * damping
+			* spring * half * damping * spring * half * damping * spring * half * damping * spring * half *
+			damping * spring * half * damping * spring * half * damping * spring * half * damping * spring *
+			half + 5.0 + 3.0 + 2.0 + 5.0 + 3.0 + 2.0) {}
 
 		index--;
 	} while (!keepGoing);
@@ -10088,9 +10059,9 @@ s32 func_80110818_11F7C8(VehicleInstance *arg0, VehicleType *arg1, s32 arg2) {
 #define IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ4(value) IDO_HEIGHT_READ4(value) IDO_HEIGHT_READ4(value) IDO_HEIGHT_READ4(value)
 #define IDO_HEIGHT_COLD_SPAN(value) do { IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ16(value) IDO_HEIGHT_READ16(value) } while (0)
 #define IDO_SIGNED_HEIGHT_READS(value) \
-    ((value) + (value) + (value) + (value) + (value) + (value) + (value) + \
-     (value) + (value) + (value) + (value) + (value) + (value) + (value) + \
-     (value) + (value) + (value) + (value) + (value) + (value) + (value))
+	((value) + (value) + (value) + (value) + (value) + (value) + (value) + \
+	 (value) + (value) + (value) + (value) + (value) + (value) + (value) + \
+	 (value) + (value) + (value) + (value) + (value) + (value) + (value))
 
 s32 func_80110FB4_11FF64(VehicleInstance *arg0, s32 arg1) {
 	f64 var_f0;
