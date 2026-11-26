@@ -1903,7 +1903,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s32 pad;
 	s32 pad2;
 	volatile s16 spEA;
-	volatile s16 spE8;
+	union { s16 value; volatile s16 ordered; } spE8;
 	volatile s16 spE6;
 	s16 spE4;
 	s16 spE2;
@@ -1958,16 +1958,19 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 		}
 	}
 
-	spEA = D_8013FCD4_14EC84[currentLevel - 1][0].r; spE8 = D_8013FCD4_14EC84[currentLevel - 1][0].g; spE6 = D_8013FCD4_14EC84[currentLevel - 1][0].b;
+	sinTerm = (s32)(spF8 * sp11C);
+	cosTerm = (s32)(spF8 * (f32)((f64)(f32)trigResult / 32768.0));
+	spEA = D_8013FCD4_14EC84[currentLevel - 1][0].r; spE8.value = D_8013FCD4_14EC84[currentLevel - 1][0].g; spE6 = D_8013FCD4_14EC84[currentLevel - 1][0].b;
 	phase = *(s16 *)&spEA - 0xB4;
 	spE4 = phase < 0 ? 0 : phase;
-	phase = *(s16 *)&spE8 - 0xB4;
+	phase = spE8.ordered - 0xB4;
 	spE2 = phase < 0 ? 0 : phase;
 	phase = *(s16 *)&spE6 - 0xB4;
 	spE0 = phase < 0 ? 0 : phase;
 	spD2 = D_8013FCD4_14EC84[currentLevel - 1][2].r; spD0 = D_8013FCD4_14EC84[currentLevel - 1][2].g; spCE = D_8013FCD4_14EC84[currentLevel - 1][2].b;
 	cR = D_8013FCD4_14EC84[currentLevel - 1][1].r;
 	cG = D_8013FCD4_14EC84[currentLevel - 1][1].g;
+	if (cG) {}
 	cB = D_8013FCD4_14EC84[currentLevel - 1][1].b;
 
 	D_8005BB34->v.ob[0] = arg0[0];
@@ -1978,21 +1981,17 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = cR;
 	D_8005BB34->v.cn[1] = cG;
-	D_8005BB34->v.cn[2] = cB;
+	D_8005BB34->v.cn[2] = ((u32)cB & 0xff);
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	sinTerm = (s32)(spF8 * sp11C);
-	cosTerm = (s32)(spF8 * (f32)((f64)(f32)trigResult / 32768.0));
-	if (sinTerm + cosTerm) {}
 	halfSin = (s16)sinTerm;
 	halfCos = (s16)cosTerm;
 	xStep = (s16)(s32)(direction.vector.x * spF4);
 	yStep = (s16)(s32)(direction.vector.y * spF4);
-	zStep = (s16)(s64)(s32)(direction.vector.z * spF4);
-	xTri = *(s16 *)&xStep * 3;
+	zStep = (s16)(s32)(direction.vector.z * spF4);
 
-	D_8005BB34->v.ob[0] = arg1[0] + halfSin + xTri;
+	D_8005BB34->v.ob[0] = arg1[0] + halfSin + (*(s16 *)&xStep * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + yStep;
 	zTri = *(s16 *)&zStep * 3;
 	D_8005BB34->v.ob[2] = arg1[2] + halfCos + zTri;
@@ -2005,7 +2004,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - halfSin + xTri;
+	D_8005BB34->v.ob[0] = arg1[0] - halfSin + (*(s16 *)&xStep * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + yStep;
 	D_8005BB34->v.ob[2] = arg1[2] - halfCos + zTri;
 	D_8005BB34->v.flag = 0;
@@ -2078,13 +2077,11 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = arg2[1];
 	D_8005BB34->v.ob[2] = arg2[2];
 	D_8005BB34->v.flag = 0;
-	baseGreen = spE8;
-	baseBlue = spE6;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
 	D_8005BB34->v.cn[0] = (baseRed = spEA);
-	D_8005BB34->v.cn[1] = baseGreen;
-	D_8005BB34->v.cn[2] = baseBlue;
+	D_8005BB34->v.cn[1] = (baseGreen = spE8.ordered);
+	D_8005BB34->v.cn[2] = (baseBlue = spE6);
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
@@ -2110,6 +2107,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[1] = baseGreen;
 	D_8005BB34->v.cn[2] = baseBlue;
 	D_8005BB34->v.cn[3] = 0xFF;
+	baseGreen = _SHIFTL(G_RDPPIPESYNC, 24, 8);
 	D_8005BB34++;
 
 	gDPPipeSync(D_8005BB2C++);
@@ -2122,15 +2120,38 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSPVertex(D_8005BB2C++, K0_TO_PHYS(&D_8005BB34[-10]), 10, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 1, 3, 0);
 	gSP1Triangle(D_8005BB2C++, 0, 3, 2, 0);
-	gSP1Triangle(D_8005BB2C++, 0, 2, 1, 0);
+	{
+		Gfx *packet = D_8005BB2C;
+		gSP1Triangle((D_8005BB2C = &packet[1], packet), 0, 2, 1, 0);
+	}
 	gSP1Triangle(D_8005BB2C++, 1, 2, 3, 0);
-	gDPLoadTextureBlock(D_8005BB2C++, D_1014680, G_IM_FMT_RGBA, G_IM_SIZ_16b, 16, 16, 0, G_TX_CLAMP, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-	gDPPipeSync(D_8005BB2C++);
+	gDPSetTextureImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 1, D_1014680);
+	if (D_8005BB2C) {}
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b_LOAD_BLOCK, 0, 0, G_TX_LOADTILE, 0, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	gDPLoadSync(D_8005BB2C++);
+	gDPLoadBlock(D_8005BB2C++, G_TX_LOADTILE, 0, 0, ((16 * 16 + G_IM_SIZ_16b_INCR) >> G_IM_SIZ_16b_SHIFT) - 1, CALC_DXT(16, G_IM_SIZ_16b_BYTES));
+	{
+		Gfx *syncPacket = D_8005BB2C++;
+		syncPacket->words.w1 = 0;
+		syncPacket->words.w0 = baseGreen;
+	}
+	gDPSetTile(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, (16 * G_IM_SIZ_16b_LINE_BYTES + 7) >> 3, 0, G_TX_RENDERTILE, 0, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD, G_TX_CLAMP, G_TX_NOMASK, G_TX_NOLOD);
+	if ((u32)baseGreen + (u32)baseGreen) {}
+	gDPSetTileSize(D_8005BB2C++, G_TX_RENDERTILE, 0, 0, (16 - 1) << G_TEXTURE_IMAGE_FRAC, (16 - 1) << G_TEXTURE_IMAGE_FRAC);
+	{
+		Gfx *syncPacket = D_8005BB2C++;
+		syncPacket->words.w1 = 0;
+		syncPacket->words.w0 = baseGreen;
+	}
 	gSP1Triangle(D_8005BB2C++, 6, 9, 7, 0);
 	gSP1Triangle(D_8005BB2C++, 6, 7, 4, 0);
 	gSP1Triangle(D_8005BB2C++, 4, 7, 8, 0);
 	gSP1Triangle(D_8005BB2C++, 4, 8, 5, 0);
-	gDPPipeSync(D_8005BB2C++);
+	{
+		Gfx *syncPacket = D_8005BB2C++;
+		syncPacket->words.w1 = 0;
+		syncPacket->words.w0 = baseGreen;
+	}
 	gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, G_TX_RENDERTILE, G_OFF);
 }
 #else
