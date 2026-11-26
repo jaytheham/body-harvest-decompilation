@@ -1234,243 +1234,252 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	}
 }
 
-#ifdef NON_MATCHING
 void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
 {
   f32 sinA;
   f32 cosA;
   f32 sinB;
+  union
+  {
+    s32 *end;
+  } work;
+  f32 rawCosine;
   s32 angleA;
   s16 cosAComp;
   f32 radiusThird;
   s16 sideX;
   s16 sideZ;
+  s16 forwardX;
+  s16 forwardZ;
   f32 radius;
   s16 sinAOffset;
+  s16 pad;
   s16 colorA;
   s16 colorB;
   s16 colorC;
   s16 colorAClamped;
   s16 colorBClamped;
   s16 colorCClamped;
-  s16 forwardX;
-  s16 forwardZ;
-  f32 rawCosine;
-  
+  u16 textureS;
+  u16 textureT;
+  s16 cR;
+  s16 cG;
+  u16 savedRed;
+  u16 savedGreen;
   s16 colorTopA;
   s16 colorTopB;
   s16 colorTopC;
-  u8 cR;
-  u8 cG;
-  u8 cB;
-
+  s16 cB;
+  u16 savedBlue;
   radius = D_801601F0[arg3].unk8;
   if (D_8013FCD0_14EC80 != 0)
   {
-	radius *= 2;
+    radius *= 2;
   }
   angleA = func_80003824_4424(arg0[2] - arg2[2], arg0[0] - arg2[0]);
   sinA = ((f32) sins(angleA + 0x4000)) / 32768.0;
   cosA = ((f32) coss(angleA + 0x4000)) / 32768.0;
   sinB = ((f32) sins(angleA)) / 32768.0;
   rawCosine = (f32) coss(angleA);
-  
   colorA = D_8013FCD4_14EC84[currentLevel + 4][0].r;
   colorB = D_8013FCD4_14EC84[currentLevel + 4][0].g;
   colorC = D_8013FCD4_14EC84[currentLevel + 4][0].b;
-	
   colorAClamped = ((colorA - 0xB4) < 0) ? (0) : (colorA - 0xB4);
   colorBClamped = ((colorB - 0xB4) < 0) ? (0) : (colorB - 0xB4);
   colorCClamped = ((colorC - 0xB4) < 0) ? (0) : (colorC - 0xB4);
-	
   cR = D_8013FCD4_14EC84[currentLevel + 4][1].r;
   cG = D_8013FCD4_14EC84[currentLevel + 4][1].g;
   cB = D_8013FCD4_14EC84[currentLevel + 4][1].b;
-	
   colorTopA = D_8013FCD4_14EC84[currentLevel + 4][2].r;
   colorTopB = D_8013FCD4_14EC84[currentLevel + 4][2].g;
   colorTopC = D_8013FCD4_14EC84[currentLevel + 4][2].b;
-	
+  textureS = 0x400;
+  textureT = 0x80;
   radiusThird = radius / 3.0f;
-	
   D_8005BB34->v.ob[0] = arg0[0];
   D_8005BB34->v.ob[1] = arg0[1];
   D_8005BB34->v.ob[2] = arg0[2];
   D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[0] = textureS;
   D_8005BB34->v.tc[1] = 0;
   D_8005BB34->v.cn[0] = 0;
   D_8005BB34->v.cn[1] = 0;
   D_8005BB34->v.cn[2] = 0;
+  savedRed = (u8) cR;
+  savedBlue = (u8) cB;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
-  sideX = (radiusThird * sinA);
-  forwardX = (radiusThird * sinB);
-  sideZ = (radiusThird * cosA);
-  forwardZ = (((f32) radiusThird) * ((f32) (rawCosine / 32768.0)));
-	  
+  sideX = radiusThird * sinA;
+  forwardX = radiusThird * sinB;
+  sideZ = radiusThird * cosA;
+  forwardZ = ((f32) radiusThird) * ((f32) (rawCosine / 32768.0));
   D_8005BB34->v.ob[0] = (sideX + arg0[0]) - forwardX;
   D_8005BB34->v.ob[1] = arg0[1];
   D_8005BB34->v.ob[2] = (sideZ + arg0[2]) - forwardZ;
   D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x400;
-  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.tc[0] = textureS;
+  D_8005BB34->v.tc[1] = textureT;
   D_8005BB34->v.cn[0] = 0;
   D_8005BB34->v.cn[1] = 0;
   D_8005BB34->v.cn[2] = 0;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
   D_8005BB34->v.ob[0] = (arg0[0] - sideX) - forwardX;
   D_8005BB34->v.ob[1] = arg0[1];
   D_8005BB34->v.ob[2] = (arg0[2] - sideZ) - forwardZ;
+  savedGreen = (u8) cG;
   D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x400;
-  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.tc[0] = textureS;
+  D_8005BB34->v.tc[1] = textureT;
   D_8005BB34->v.cn[0] = 0;
   D_8005BB34->v.cn[1] = 0;
   D_8005BB34->v.cn[2] = 0;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
   D_8005BB34->v.ob[0] = arg1[0];
   D_8005BB34->v.ob[1] = arg1[1];
   D_8005BB34->v.ob[2] = arg1[2];
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
   D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = cR;
+  D_8005BB34->v.cn[0] = (s8) cR;
   D_8005BB34->v.cn[1] = cG;
   D_8005BB34->v.cn[2] = cB;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
-  cosAComp = ((s32) (radius * cosA));
-  forwardZ = ((2 * radiusThird) * ((f32) (rawCosine / 32768.0)));
-  forwardX = ((2 * radiusThird) * sinB);
-  sinAOffset = (radius * sinA);
-	
+  cosAComp = (s32) (radius * cosA);
+  forwardZ = (2 * radiusThird) * ((f32) (rawCosine / 32768.0));
+  forwardX = (2 * radiusThird) * sinB;
+  sinAOffset = radius * sinA;
   D_8005BB34->v.ob[0] = (arg1[0] + sinAOffset) - forwardX;
-  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[1] = arg1[1] - ((2 * radiusThird) / 2);
   D_8005BB34->v.ob[2] = (arg1[2] + cosAComp) - forwardZ;
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.tc[1] = textureT;
   D_8005BB34->v.cn[0] = cR;
   D_8005BB34->v.cn[1] = 0;
   D_8005BB34->v.cn[2] = (s8) cB;
   D_8005BB34->v.cn[3] = 0xFF;
-	
   D_8005BB34++;
   D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - forwardX;
-  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[1] = arg1[1] - ((2 * radiusThird) / 2);
   D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - forwardZ;
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.tc[1] = textureT;
   D_8005BB34->v.cn[0] = cR;
   D_8005BB34->v.cn[1] = 0;
   D_8005BB34->v.cn[2] = cB;
   D_8005BB34->v.cn[3] = 0xFF;
-	
   D_8005BB34++;
   D_8005BB34->v.ob[0] = (sinAOffset + arg1[0]) - forwardX;
-  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[1] = arg1[1] - ((2 * radiusThird) / 2);
   D_8005BB34->v.ob[2] = (cosAComp + arg1[2]) - forwardZ;
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.tc[1] = textureT;
   D_8005BB34->v.cn[0] = colorAClamped;
   D_8005BB34->v.cn[1] = colorBClamped;
   D_8005BB34->v.cn[2] = colorCClamped;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
   D_8005BB34->v.ob[0] = (arg1[0] - sinAOffset) - forwardX;
-  D_8005BB34->v.ob[1] = (arg1[1] - ((2 * radiusThird) / 2));
+  D_8005BB34->v.ob[1] = arg1[1] - ((2 * radiusThird) / 2);
   D_8005BB34->v.ob[2] = (arg1[2] - cosAComp) - forwardZ;
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x80;
+  D_8005BB34->v.tc[1] = textureT;
   D_8005BB34->v.cn[0] = colorAClamped;
   D_8005BB34->v.cn[1] = colorBClamped;
   D_8005BB34->v.cn[2] = colorCClamped;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-
   D_8005BB34->v.ob[0] = arg1[0] - (forwardX / 2);
-  D_8005BB34->v.ob[1] = (arg1[1] + (radius * 2));
+  D_8005BB34->v.ob[1] = arg1[1] + (radius * 2);
   D_8005BB34->v.ob[2] = arg1[2] - (forwardZ / 2);
   D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[0] = textureS;
   D_8005BB34->v.tc[1] = 0;
   D_8005BB34->v.cn[0] = colorTopA;
   D_8005BB34->v.cn[1] = colorTopB;
   D_8005BB34->v.cn[2] = colorTopC;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
   D_8005BB34->v.ob[0] = arg1[0] - forwardX;
-  D_8005BB34->v.ob[1] = (arg1[1] + (radius / 2));
+  D_8005BB34->v.ob[1] = arg1[1] + (radius / 2);
   D_8005BB34->v.ob[2] = arg1[2] - forwardZ;
   D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[0] = textureS;
   D_8005BB34->v.tc[1] = 0;
-  D_8005BB34->v.cn[0] = cR;
-  D_8005BB34->v.cn[1] = cG;
-  D_8005BB34->v.cn[2] = cB;
+  D_8005BB34->v.cn[0] = savedRed;
+  D_8005BB34->v.cn[1] = savedGreen;
+  D_8005BB34->v.cn[2] = savedBlue;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
+
   D_8005BB34->v.ob[0] = arg1[0] - forwardX;
-  D_8005BB34->v.ob[1] = (arg1[1] + (radius / 2));
+  /* Keep IDO's block split before the final Z use. */
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  textureS = textureS;
+  D_8005BB34->v.ob[1] = arg1[1] + (radius / 2);
   D_8005BB34->v.ob[2] = arg1[2] - forwardZ;
   D_8005BB34->v.flag = 0;
-  D_8005BB34->v.tc[0] = 0x400;
+  D_8005BB34->v.tc[0] = textureS;
   D_8005BB34->v.tc[1] = 0;
   D_8005BB34->v.cn[0] = colorAClamped;
   D_8005BB34->v.cn[1] = colorBClamped;
   D_8005BB34->v.cn[2] = colorCClamped;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
-  D_8005BB34->v.ob[0] = arg2[0];
-  D_8005BB34->v.ob[1] = arg2[1];
-  D_8005BB34->v.ob[2] = arg2[2];
+  work.end = arg2;
+  D_8005BB34->v.ob[0] = work.end[0];
+  D_8005BB34->v.ob[1] = work.end[1];
+  D_8005BB34->v.ob[2] = work.end[2];
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0x280;
-  D_8005BB34->v.tc[1] = 0x400;
+  D_8005BB34->v.tc[1] = textureS;
   D_8005BB34->v.cn[0] = colorA;
   D_8005BB34->v.cn[1] = colorB;
   D_8005BB34->v.cn[2] = colorC;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
-  D_8005BB34->v.ob[0] = arg2[0] + (sinAOffset / 2);
-  D_8005BB34->v.ob[1] = (arg2[1] - (2 * radiusThird));
-  D_8005BB34->v.ob[2] = arg2[2] + (cosAComp / 2);
+  D_8005BB34->v.ob[0] = work.end[0] + (sinAOffset / 2);
+  /* Expand this occurrence to preserve IDO's spill allocation order. */
+  D_8005BB34->v.ob[1] = work.end[1] - (2 * (radius / 3.0f));
+  D_8005BB34->v.ob[2] = work.end[2] + (cosAComp / 2);
+  /* Keep the display-list address at the endpoint block boundary. */
+  if (((&pad) != NULL) & ((&D_8005BB2C) != NULL))
+  {
+  }
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x400;
+  D_8005BB34->v.tc[1] = textureS;
   D_8005BB34->v.cn[0] = colorA;
   D_8005BB34->v.cn[1] = colorB;
   D_8005BB34->v.cn[2] = colorC;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
-  D_8005BB34->v.ob[0] = arg2[0] - (sinAOffset / 2);
-  D_8005BB34->v.ob[1] = (arg2[1] - (2 * radiusThird));
-  D_8005BB34->v.ob[2] = arg2[2] - (cosAComp / 2);
+  D_8005BB34->v.ob[0] = work.end[0] - (sinAOffset / 2);
+  D_8005BB34->v.ob[1] = work.end[1] - (2 * radiusThird);
+  D_8005BB34->v.ob[2] = work.end[2] - (cosAComp / 2);
   D_8005BB34->v.flag = 0;
   D_8005BB34->v.tc[0] = 0;
-  D_8005BB34->v.tc[1] = 0x400;
+  D_8005BB34->v.tc[1] = textureS;
   D_8005BB34->v.cn[0] = colorA;
   D_8005BB34->v.cn[1] = colorB;
   D_8005BB34->v.cn[2] = colorC;
   D_8005BB34->v.cn[3] = 0xFF;
   D_8005BB34++;
-	
+
   gDPPipeSync(D_8005BB2C++);
   gSPSetGeometryMode(D_8005BB2C++, 0x00010000);
   gSPClearGeometryMode(D_8005BB2C++, 0x00020000);
@@ -1495,10 +1504,6 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
   gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
   gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F554C_1044FC.s")
-#endif
-
 #ifdef NON_MATCHING
 void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	Vec3f direction;
