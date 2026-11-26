@@ -651,7 +651,10 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1) {
 			pointCoord = rightX;
 			alpha0 = (s32)((u32)(-rightX) << 19) >> 16;
 			v3->v.ob[1] = alpha0;
-			v3->v.ob[2] = height; v2->v.ob[2] = 0; lowerHeight = ((volatile Vtx *)v2)->v.ob[2]; v0->v.ob[2] = lowerHeight;
+			v3->v.ob[2] = height;
+			v2->v.ob[2] = 0;
+			lowerHeight = ((volatile Vtx *)v2)->v.ob[2];
+			v0->v.ob[2] = lowerHeight;
 			v2->v.ob[1] = (u16)alpha0;
 			v1->v.ob[2] = v3->v.ob[2];
 			/* Keep the geometry data live through the endpoint setup. */
