@@ -1363,8 +1363,9 @@ s32 func_800ED55C_FC50C(VehicleInstance *arg0, s32 arg1) {
 	return bestResult;
 }
 
-#ifdef NON_MATCHING
 void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
+	/* Local-static storage preserves the original progress register lifetime. */
+	static PlayerInteractionScratch interaction;
 	f32 spAC;
 	f32 normalSpeed;
 	s32 spA4;
@@ -1377,17 +1378,19 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 	f32 temp_f12;
 	Vec2_S16 effectPosition;
 	u8 effectColor[4];
-	f32 sp74;
-	f32 temp_f18;
+	f32 magnitude;
+	s32 aiming;
 	f32 xDelta;
 	s32 temp_v1_6;
 	VehicleInstance *temp_v0_3;
-	f32 interpolated[2];
-	s16 temp_a3;
+	f32 resultY;
+	f32 resultZ;
 	s32 temp_v1;
 	u16 scripted;
 	s8 temp_v0_6;
 	s8 temp_v1_5;
+	f32 resultX;
+
 	if (D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 0x4000) {
 		func_80133E94_142E44((s32) (D_80157600.unkC / 4));
 	}
@@ -1428,8 +1431,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			} else if (D_80157600.unk40C != D_801575E0.unk16) {
 				func_800EB534_FA4E4(&D_80157600, (s32) D_801575E0.unk16, 0, 0);
 			} else if ((func_80118114_1270C4(D_80052542) != 0) && (D_80052544 == 0)) {
-				temp_f0 = D_8015EA30;
-				if (temp_f0 == 0.0) {
+				if (D_8015EA30 == 0.0) {
 					if ((((Unk8007F878_404 *)D_80157600.unk404)->unkE50 == 0) || (func_800EB9B4_FA964(&D_80157600) == 3)) {
 						func_800153D8_15FD8(0x33);
 						D_8015EA30 = 0.03f;
@@ -1470,7 +1472,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			if (((u32)targetHeading & 0xFFFF) != ((u32)arg0->unkE & 0xFFFF)) {
 				func_800EADF8_F9DA8(arg0, targetHeading);
 				D_801575C8 = 0;
-				D_801575C4 = temp_f18 = 0.0f;
+				interaction.progress = 0.0f;
 			} else {
 				if (D_80157600.unk40C != 0x5B) {
 					func_800EB534_FA4E4(&D_80157600, ANIM_ENTER_VEHICLE, 0, 0);
@@ -1480,36 +1482,28 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 					D_801575C8 = 1;
 				}
 				if (func_800EB9B4_FA964(&D_80157600) >= 5) {
-					const Unk801575E0 *path = &D_801575E0;
-					temp_v1_6 = path->coordinates[0][path->unk4];
-					scratchFloat = D_801575C4;
-					xDelta = temp_v1_6 - (temp_v1 = arg0->unk0);
-					temp_v1_6 = arg0->unk2;
-					temp_a3 = arg0->unk4;
-					temp_f12 = D_801575E0.coordinateValues[D_801575E0.unk4 + 4] - temp_a3;
-					normalSpeed = D_801575E0.coordinateValues[D_801575E0.unk4 + 2] - temp_v1_6;
-					scratchFloat += 1.0f;
-					D_801575C4 = scratchFloat;
-					xDelta = (xDelta * scratchFloat) / 6.0;
-					normalSpeed = (normalSpeed * scratchFloat) / 6.0;
-					temp_f12 = (temp_f12 * (0, scratchFloat)) / 6.0;
-					temp_f18 = temp_v1 + xDelta;
-					interpolated[1] = temp_v1_6 + normalSpeed;
-					interpolated[0] = temp_a3 + temp_f12;
-					func_800FB44C_10A3FC(arg0, temp_f18);
-					func_800FB468_10A418(arg0, interpolated[1]);
-					func_800FB484_10A434(arg0, interpolated[0]);
+
+					interaction.progress += 1.0f;
+					xDelta = ((D_801575E0.coordinates[0][D_801575E0.unk4] - arg0->unk0) * interaction.progress) / 6.0;
+					normalSpeed = ((D_801575E0.coordinates[1][D_801575E0.unk4] - arg0->unk2) * interaction.progress) / 6.0;
+					temp_f12 = ((D_801575E0.coordinates[2][D_801575E0.unk4] - arg0->unk4) * interaction.progress) / 6.0;
+					resultX = arg0->unk0 + xDelta;
+					resultY = arg0->unk2 + normalSpeed;
+					resultZ = arg0->unk4 + temp_f12;
+
+					func_800FB44C_10A3FC(arg0, resultX);
+					func_800FB468_10A418(arg0, resultY);
+					func_800FB484_10A434(arg0, resultZ);
 					temp_v0_3 = &vehicleInstances[D_80157E82];
-					sp92 = (s16)(u16)((s16)(s32)(u64)temp_v0_3->unk2 + (6 * (s32)(u64)vehicleTypes[temp_v0_3->unk1A].unk38));
-					temp_v1_6 = ((s32)(u32)(s32)D_80157600.unkC + (s32)(s64)(s32)(u64)(s32)(s64)arg0->unk2);
-					sp90 = (s16)(u16)temp_v1_6;
+					sp92 = temp_v0_3->unk2 + 6 * vehicleTypes[temp_v0_3->unk1A].unk38;
+					sp90 = (s16)D_80157600.unkC + arg0->unk2;
 					if (((sp92 - 0xC8) < sp90) && (sp90 < (sp92 + 0x32))) {
 						func_800E35E0_F2590(0xAA);
 						func_80001144_1D44(0x32, 0xF, 5);
 					}
 				}
-				temp_f18 = D_801575C4;
-				if ((f64) temp_f18 == 6.0) {
+
+				if ((f64) interaction.progress == 6.0) {
 					func_800FB44C_10A3FC(arg0, (f32) D_801575E0.coordinates[0][D_801575E4]);
 					func_800FB484_10A434(arg0, (f32) D_801575E0.coordinates[2][D_801575E4]);
 					D_80048188 = 0;
@@ -1517,8 +1511,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 					func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 0, 0);
 					func_800FD510_10C4C0(D_80157E80, D_80157E82);
 					func_800FDC30_10CBE0(D_80157E84);
-					temp_v1 = arg0->unk0;
-					effectPosition.x = (s32)(s64)(temp_v1);
+					effectPosition.x = arg0->unk0;
 					effectPosition.z = arg0->unk4;
 					effectColor[0] = 0xC8;
 					effectColor[1] = 0xC8;
@@ -1529,13 +1522,16 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				arg0->unk34 = 0.0f;
 				arg0->unk38 = 0.0f;
 			}
-			temp_v1 = D_80048188;
+
 			break;
 		}
 		case 1:
-			if ((D_80157600.unk40C != 0x5B) && (D_80157600.unk40C != 0x5C)) {
+
+			/* Preserve the original IDO control-flow region. */
+			if (D_80048188 == 0) {}
+			if (((temp_v1 = D_80157600.unk40C) != 0x5B) && (temp_v1 != 0x5C)) {
 				D_801575C8 = 0;
-				D_801575C4 = temp_f18 = 0.0f;
+				interaction.progress = 0.0f;
 				if (D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) {
 					func_800EB534_FA4E4(&D_80157600, ANIM_EXIT_BOAT, 8, 0);
 				} else {
@@ -1547,63 +1543,57 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				D_801575C8 = 1;
 			}
 			if (func_800EB9B4_FA964(&D_80157600) >= 5) {
-				temp_v1 = (s32)(s64)(D_801575E0.coordinates[0][D_801575E0.unk4]);
-				xDelta = temp_v1 - (temp_v1_6 = arg0->unk0);
-				temp_a3 = arg0->unk4;
-				temp_f12 = D_801575E0.coordinates[2][D_801575E0.unk4] - temp_a3;
-				temp_v1 = arg0->unk2;
-				normalSpeed = D_801575E0.coordinates[1][D_801575E0.unk4] - temp_v1;
-				temp_f18 = D_801575C4;
-				xDelta = (xDelta * temp_f18) / 24.0;
-				normalSpeed = (normalSpeed * temp_f18) / 24.0;
-				temp_f12 = (temp_f12 * temp_f18) / 24.0;
-				scratchFloat = temp_v1_6 + xDelta;
-				interpolated[1] = temp_v1 + normalSpeed;
-				interpolated[0] = temp_a3 + temp_f12;
-				func_800FB44C_10A3FC(arg0, scratchFloat);
-				func_800FB468_10A418(arg0, interpolated[1]);
-				func_800FB484_10A434(arg0, interpolated[0]);
+				xDelta = ((D_801575E0.coordinates[0][D_801575E0.unk4] - arg0->unk0) * interaction.progress) / 24.0;
+				normalSpeed = ((D_801575E0.coordinates[1][D_801575E0.unk4] - arg0->unk2) * interaction.progress) / 24.0;
+				temp_f12 = ((D_801575E0.coordinates[2][D_801575E0.unk4] - arg0->unk4) * interaction.progress) / 24.0;
+				resultX = arg0->unk0 + xDelta;
+				resultY = arg0->unk2 + normalSpeed;
+				resultZ = arg0->unk4 + temp_f12;
+				func_800FB44C_10A3FC(arg0, resultX);
+				func_800FB468_10A418(arg0, resultY);
+				func_800FB484_10A434(arg0, resultZ);
 			} else {
 				temp_v0_3 = &vehicleInstances[D_80052B1C];
-				scratchFloat = temp_v0_3->unk0;
-				sp92 = (s32)(u64)((vehicleTypes[temp_v0_3->unk1A].unk38 * 6) + temp_v0_3->unk2);
-				sp90 = (s32) D_80157600.unkC + arg0->unk2;
-				func_800FB44C_10A3FC(arg0, scratchFloat);
+				/* Retain X and the heights in their original temporary evaluation order. */
+				func_800FB44C_10A3FC(arg0, (f32)(temp_v0_3->unk0 +
+					(sp92 = temp_v0_3->unk2 + 6 * vehicleTypes[temp_v0_3->unk1A].unk38,
+					 sp90 = (s16)D_80157600.unkC + arg0->unk2, 0)));
 				func_800FB484_10A434(arg0, (f32) vehicleInstances[D_80052B1C].unk4);
 				if (((sp92 - 0x64) < sp90) && (sp90 < (sp92 + 0x5A))) {
 					func_800E35E0_F2590(0xAA);
 					func_80001144_1D44(0x32, 0xF, 5);
 				}
 			}
-			temp_f18 = D_801575C4;
-			temp_f0 = (f64) temp_f18;
-			if ((temp_f0 == 24.0) || ((D_80222A70 >= arg0->unk2) && (temp_f0 > 19.0) && (((PlayerInteractionScratch *)&D_801575C0)->progress = temp_f18, 1))) {
+
+			temp_f0 = (f64) interaction.progress;
+			if ((temp_f0 == 24.0) || ((D_80222A70 >= arg0->unk2) && (temp_f0 > 19.0))) {
 				func_800FB44C_10A3FC(arg0, (f32) D_801575E0.coordinates[0][D_801575E0.unk4]);
-				func_800FB468_10A418(arg0, (f32) D_801575E0.coordinates[1][D_801575E0.unk4]);
+				/* Keep the shared route address as an IDO register candidate. */
+				if (&D_801575E0 && (s32)&D_801575E0) {}
+				func_800FB468_10A418(arg0, (f32) D_801575E0.coordinates[1][((volatile Unk801575E0 *)&D_801575E0)->unk4]);
 				func_800FB484_10A434(arg0, (f32) D_801575E0.coordinates[2][D_801575E0.unk4]);
 				if ((D_80222A70 - 0x24) >= arg0->unk2) {
 					func_800EB05C_FA00C();
-					D_801575C4 = 24.0f;
+					interaction.progress = 24.0f;
 					func_800EB534_FA4E4(&D_80157600, ANIM_TREAD_WATER, 4, 0);
 				} else {
 					func_800EB090_FA040();
 					func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 0, 0);
 				}
 				D_80048188 = 0;
-				temp_v1 = arg0->unk0;
-				effectPosition.x = temp_v1;
+				effectPosition.x = arg0->unk0;
 				effectPosition.z = arg0->unk4;
 				effectColor[0] = 0xC8;
 				effectColor[1] = 0xC8;
 				effectColor[2] = 0xC8;
 				func_800B99A8_C8958(&effectPosition, 0x25, 0xD3, 0x84, effectColor, 0x34, 7, 0);
-				temp_f18 = D_801575C4;
+
 			}
 			arg0->unk30 = 0.0f;
 			arg0->unk34 = 0.0f;
-			temp_f18 += 1.0f;
 			arg0->unk38 = 0.0f;
-			D_801575C4 = temp_f18;
+			interaction.progress += 1.0f;
+
 			break;
 		}
 	}
@@ -1623,7 +1613,8 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			func_8000CF4C_DB4C(D_80157600.unk404, &D_80157600, 0x10, D_80157600.unk410);
 			return;
 		}
-		if ((f64) ((f32) arg0->unk1C / (f32) vehicleTypes[arg0->unk1A].hitPoints) < 0.25) {
+		xDelta = (f32)arg0->unk1C / (f32)vehicleTypes[arg0->unk1A].hitPoints;
+		if ((f64)xDelta < 0.25) {
 			D_80157A28 = D_80157A28 | PLAYER_STATE_FLAG_LOW_HEALTH;
 			if (D_80157600.unk40C == 0x24) {
 				arg0->unk1C = (s16) (arg0->unk1C + 1);
@@ -1654,17 +1645,16 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 		temp_v0_6 = arg1->stick_x;
 		temp_v1_5 = arg1->stick_y;
 		scratchFloat = sqrtf((f32) ((temp_v0_6 * temp_v0_6) + (temp_v1_5 * temp_v1_5)));
-		sp74 = scratchFloat;
+		magnitude = scratchFloat;
 		if (70.0 < (f64) scratchFloat) {
-			sp74 = 70.0f;
+			magnitude = 70.0f;
 		}
-		temp_v1_6 = D_80157A28 & PLAYER_STATE_FLAG_SWIMMING;
-		if (temp_v1_6 != PLAYER_STATE_FLAG_SWIMMING) {
-			temp_f0 = (f64) sp74;
+
+		if ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) != PLAYER_STATE_FLAG_SWIMMING) {
+			temp_f0 = (f64) magnitude;
 			if (temp_f0 <= 10.0) {
-				temp_f0 = (f64)D_8013FC04_14EBB4[0];
-				normalSpeed = (f32) (temp_f0 - 0.1);
-				D_8013FC04_14EBB4[0] = normalSpeed;
+				D_8013FC04_14EBB4[0] -= 0.1;
+				normalSpeed = D_8013FC04_14EBB4[0];
 				if (normalSpeed < 0.0f) {
 					normalSpeed = D_8013FC04_14EBB4[0] = 0.0f;
 				}
@@ -1672,13 +1662,16 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			} else if (temp_f0 <= 30.0) {
 				normalSpeed = D_8013FC04_14EBB4[0];
 				if (0.01 < (f64)normalSpeed) {
-					normalSpeed = (f32) ((f64)(0, normalSpeed) - 0.1);
+					normalSpeed = (f32) ((f64)normalSpeed - 0.1);
 					D_8013FC04_14EBB4[0] = normalSpeed;
 				}
 				if ((f64)normalSpeed < 0.01) {
 					normalSpeed = 0.01f;
 					D_8013FC04_14EBB4[0] = normalSpeed;
 				}
+				/* Preserve IDO temporary-FP order across the following speed branches. */
+				if ((f32)D_80157A28 < magnitude || (f32)D_80157A28 > magnitude) {}
+				if ((f32)(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) < magnitude || (f32)(D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) > magnitude) {}
 				spAC = normalSpeed;
 			} else {
 				normalSpeed = D_8013FC04_14EBB4[0];
@@ -1694,19 +1687,21 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 				} else {
 					if (temp_f12 < normalSpeed) {
 						normalSpeed = (f32) ((f64) normalSpeed - 0.1);
+						if ((f32)D_80157A28 < magnitude || (f32)D_80157A28 > magnitude) {}
 						D_8013FC04_14EBB4[0] = normalSpeed;
 					} else if (normalSpeed < temp_f12) {
 						normalSpeed = (f32) ((f64) normalSpeed + 0.1);
 						D_8013FC04_14EBB4[0] = normalSpeed;
 					}
 				}
+				if ((f32)D_80157A28 < magnitude || (f32)D_80157A28 > magnitude) {}
 				spAC = normalSpeed;
 			}
 		} else {
-			spAC = (f32) ((f64) sp74 / 70.0);
+			spAC = (f32) ((f64) magnitude / 70.0);
 		}
 
-		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && (temp_v1_6 == 0)) {
+		if ((arg0->unk20 & VEHICLE_FLAG_AIRBORNE) && !(arg0->unk20 & VEHICLE_FLAG_ON_BRIDGE) && ((D_80157A28 & PLAYER_STATE_FLAG_SWIMMING) == 0)) {
 			D_801575F8 += 1;
 			if ((++D_801575D8 == 4) && (arg0->unk34 > 0.0f)) {
 				if (BH_ABS((s16)(arg0->unkE - D_80157A2C)) < 0x4000) {
@@ -1739,7 +1734,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			D_80157E78 -= 1;
 		}
 		if (D_80157A34 != 0) {
-			if (sp74 == 0.0f) {
+			if (magnitude == 0.0f) {
 				D_80157A34 = 0;
 			} else {
 				D_80157A34 -= 1;
@@ -1799,33 +1794,33 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 			func_800EB534_FA4E4(&D_80157600, ANIM_DEFAULT, 0, 0);
 		}
 		if (D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 0x480) {
-			xDelta = (f32)(D_80159020->unk0 / 4);
-			sp94.x = xDelta;
+			sp94.x = D_80159020->unk0 / 4;
 			sp94.y = D_80159020->unk2 / 4;
 			sp94.z = D_80159020->unk4 / 4;
 			spAC = func_800EA604_F95B4(&arg0->unk0, &sp94);
 		}
-		temp_v1_6 = D_80157A28 & PLAYER_STATE_FLAG_AIMING;
+		aiming = D_80157A28 & PLAYER_STATE_FLAG_AIMING;
+		/* Keep the aiming value in its original IDO live range. */
+		if ((f32)aiming < magnitude || aiming == 0) {}
 		if ((D_80157600.unk40C == 0x23) || (D_80157600.unk40C == 0x24)) {
 			D_801575D0 += 1;
 		} else if (D_801575D0 >= 0x65) {
 			D_801575D0 = 0x64;
 		}
-		if (temp_v1_6 == PLAYER_STATE_FLAG_AIMING) {
+		if (aiming == PLAYER_STATE_FLAG_AIMING) {
 			D_801575D0 = 0;
 		}
-		if (((temp_v1 = D_801575D0) == 0x63) && (D_801575DC == 0)) {
+		if ((D_801575D0 == 0x63) && (D_801575DC == 0)) {
 			func_800EB534_FA4E4(&D_80157600, ANIM_COCK_GUN, 0, 0);
-			temp_v1_6 = D_80157A28 & PLAYER_STATE_FLAG_AIMING;
-			D_801575D0 = 0x64;
+			/* One source line preserves the original MOVE/store scheduling. */
+			D_801575D0 = 0x64; aiming = D_80157A28 & PLAYER_STATE_FLAG_AIMING;
 		}
-		if (temp_v1_6 != PLAYER_STATE_FLAG_AIMING) {
-			func_800EB7CC_FA77C(&D_80157600, (s32)(u64)spA0, spA4, spAC);
+		if (aiming != PLAYER_STATE_FLAG_AIMING) {
+			func_800EB7CC_FA77C(&D_80157600, spA0, spA4, spAC);
 		}
 	}
 	func_800EB8A4_FA854(&D_80157600, spAC);
-	temp_v1 = (s32)(s64)(D_8013E5AC_14D55C[D_80157600.unk40C].unk4);
-	if (temp_v1 & 4) {
+	if (D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 4) {
 		func_8000D8DC_E4DC((Unk8007F878_404 *) D_80157600.unk404, (Unk8007F878_404 *) D_80157600.unk408,
 			   (AnimChannelState *) &D_80157600, 0x10, spAC, D_80157600.unk410);
 	} else {
@@ -1842,13 +1837,7 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 		D_8013FC04_14EBB4[0] = 0.0f;
 	}
 }
-#else
-#if defined(VERSION_US)
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.us.s")
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/F9230/func_800ED78C_FC73C.s", "src.us/overlay_gameplay/outside/F9230_remaining_late_rodata.eu.s")
-#endif
-#endif
+
 
 // Is first weapon model valid
 s32 func_800EF0B0_FE060(s32 arg0)
