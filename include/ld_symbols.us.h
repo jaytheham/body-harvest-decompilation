@@ -302,7 +302,7 @@ extern Addr boot_bin;
 extern Addr core_1050_c;
 extern Addr core_12C80_c;
 extern Addr core_17EE0_c;
-extern Addr core_1B060_c;
+extern Addr core_1B060_s;
 extern Addr core_1B100_c;
 extern Addr core_53D0_c;
 extern Addr core_53F0_c;
