@@ -567,7 +567,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-// AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
+// AI - Fills D_8005BB34 with 0x20 tile quads
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1)
 {
@@ -578,24 +578,27 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1)
   Vtx *v3;
   s32 selectedGroup;
   s32 remaining;
-  s32 color0;
+  u32 color0;
   s8 activeGreen;
   s32 maxColor;
   s16 height;
-  s32 rightX;
+  s16 rightX;
   s16 pointCoord;
   s16 lowerHeight;
   s16 alpha0;
   s32 rawRed;
   s16 redCheck;
-  s32 alpha2;
   s16 blueCheck;
   s16 bright;
-  s16 modBase;
+  s32 modBase;
   
   tile = D_801479B0_156960[currentLevel - 1];
   selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
   remaining = 0x20;
+  bright = 0;
+  if (selectedGroup) {}
+  modBase = 0x1FF + selectedGroup * 0;
+
     
   gDPPipeSync(D_8005BB2C++);
   gSPSetGeometryMode(D_8005BB2C++, (0x00000001 | 0x00000004) | 0x00000200);
@@ -608,90 +611,103 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1)
   gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
   gDPPipeSync(D_8005BB2C++);
     
-  while (tile++, remaining--)
+  while (remaining--)
   {
     ShieldWallPoint *left;
-    ShieldWallPoint *right;
 
+    if (((u32)tile) | modBase) {}
     if (tile->startIdx != -1)
     {
+      remaining = remaining;
+      remaining = remaining;
+      remaining = remaining;
+      remaining = remaining;
+      remaining = remaining;
+      remaining = remaining;
       left = &D_801475F0_1565A0[currentLevel - 1][tile->startIdx];
-      right = &D_801475F0_1565A0[currentLevel - 1][tile->endIdx];
+      rightData.point = &D_801475F0_1565A0[currentLevel - 1][tile->endIdx];
       v0 = D_8005BB34++;
       v1 = D_8005BB34++;
       v2 = D_8005BB34++;
       v3 = D_8005BB34++;
       
       rightX = left->x;
-      v1->v.ob[0] = rightX * 8;
-      v0->v.ob[0] = rightX * 8;
+      rightX *= 8;
+      v1->v.ob[0] = rightX;
+      v0->v.ob[0] = rightX;
         
-      rightX = -left->z;
-      v1->v.ob[1] = rightX * 8;
-      v0->v.ob[1] = rightX * 8;
+      rightX = left->z;
+      rightX = -rightX * 8;
+      v1->v.ob[1] = rightX;
+      v0->v.ob[1] = rightX;
         
-      rightX = right[0].x;
-      color0 = 0x8C;
+      rightX = rightData.point[0].x;
+      color0 = 0x8C + rightX * 0; 
       rightX = rightX * 8;
       v3->v.ob[0] = rightX;
       v2->v.ob[0] = rightX;
       
-        rightX = right->z;
-      alpha0 = (-rightX << 19) >> 16;
-      v3->v.ob[1] = alpha0;
-      v3->v.ob[2] = 0x40;
+        rightX = rightData.point->z;
+      rightX = (s16)(-rightX * 8);
+      v3->v.ob[1] = rightX;
+
       v2->v.ob[2] = 0;
       
+      bright = selectedGroup + bright * 0;
+      v2->v.ob[1] = rightX;
       v0->v.ob[2] = v2->v.ob[2];
-      v2->v.ob[1] = (u16) alpha0;
+      v3->v.ob[2] = 0x40;
       v1->v.ob[2] = v3->v.ob[2];
 
-      if (selectedGroup == ((tile - D_801479B0_156960[currentLevel - 1]) >> 3))
+      if (((tile - D_801479B0_156960[currentLevel - 1]) >> 3) == bright)
       {
-        color0 = D_8013D510_14C4C0 * 16;
-        rawRed = color0 % 0x1FF;
-        alpha2 = (color0 + 0x200) % 0x1FF;
+        color0 = D_8013D510_14C4C0;
+        color0 *= 16;
+        rawRed = (s32)color0 % modBase;
+        color0 +=rawRed&0; rightData.phase = (rightData.phase & 0) + ((s32)color0+512)%511;
         redCheck = rawRed;
         alpha0 = rawRed;
-        blueCheck = alpha2;
-        bright = 0xFF;
+        blueCheck = rightData.phase;
+        bright = 0xFF + redCheck*0 + blueCheck*0; 
         if (redCheck >= 0x100)
         {
-          alpha0 = 0x1FF - redCheck;
+          alpha0 = modBase - redCheck;
         }
-        v3->v.cn[0] = alpha0;
-        v2->v.cn[0] = alpha0;
-        v1->v.cn[0] = alpha0;
-        v0->v.cn[0] = alpha0;
-        alpha0 = 0xFF - alpha0;
-        v3->v.cn[1] = alpha0;
-        v2->v.cn[1] = alpha0;
-        v1->v.cn[1] = alpha0;
-        v0->v.cn[1] = alpha0;
-        alpha0 = (s16) alpha2;
-        if (alpha2 >= 0x100)
+        v3->n.n[0] = alpha0;
+        v2->n.n[0] = alpha0;
+        v1->n.n[0] = alpha0;
+        v0->n.n[0] = alpha0;
+        color0 = v3->n.n[1] = 0xFF - alpha0;
+        v2->n.n[1] = color0;
+        v1->n.n[1] = color0;
+        v0->n.n[1] = color0;
+        alpha0 = (s16) rightData.phase;
+        if (blueCheck >= 0x100)
         {
-          alpha0 = 0x1FF - blueCheck;
+          alpha0 = modBase - blueCheck;
         }
-        v3->v.cn[2] = v2->v.cn[2] = v1->v.cn[2] = v0->v.cn[2] = alpha0;
+        v0->v.cn[2] = v1->v.cn[2] = v2->v.cn[2] = v3->v.cn[2] = alpha0;
       }
       else
       {
-        v3->v.cn[0] = v2->v.cn[0] = v1->v.cn[0] = v0->v.cn[0] = color0;
+        v0->v.cn[0] = v1->v.cn[0] = v2->v.cn[0] = v3->v.cn[0] = color0;
                 
-        v3->v.cn[1] = v2->v.cn[1] = v1->v.cn[1] = v0->v.cn[1] = 0xBE;
+        color0 = 0xBE + (color0 & 0); 
+        v0->v.cn[1] = v1->v.cn[1] = v2->v.cn[1] = v3->v.cn[1] = color0;
         
-        v3->v.cn[2] = v2->v.cn[2] = v1->v.cn[2] = v0->v.cn[2] = 0xFF;
-        bright = 0x46;
+        color0 = 0xFF + (color0 & 0); 
+        v0->v.cn[2] = v1->v.cn[2] = v2->v.cn[2] = v3->v.cn[2] = color0;
+        bright = 0x46; 
       }
-      v2->v.cn[3] = v0->v.cn[3] = bright;
-      v3->v.cn[3] = v1->v.cn[3] = 0;
+      v0->v.cn[3] = v2->v.cn[3] = bright;
+      v1->v.cn[3] = v3->v.cn[3] = 0;
       gSPVertex(D_8005BB2C++, ((u32) v0) & 0x1FFFFFFF, 4, 0);
       gSP2Triangles(D_8005BB2C++, 0, 1, 2, 0, 3, 1, 2, 0);
     }
-    
+    tile++;
   }
 
+  if (((selectedGroup ^ 1) == -1) | ((selectedGroup ^ 2) == -1) | ((ShieldWallPoint (*)[48])(selectedGroup ^ 1) == D_801475F0_1565A0) | ((ShieldWallPoint (*)[48])(selectedGroup ^ 2) == D_801475F0_1565A0) | ((selectedGroup ^ 1) == 0x40) | ((selectedGroup ^ 2) == 0x40) | ((selectedGroup ^ 1) == 0xFF) | ((selectedGroup ^ 2) == 0xFF)) {}
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 1);
   gSPSetGeometryMode(D_8005BB2C++, 0x00002000);
   D_8013D510 = D_8013D510_14C4C0 + 1;
@@ -700,6 +716,7 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1)
 #else
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
 #endif
+
 
 void func_800970C0_A6070(void)
 {
