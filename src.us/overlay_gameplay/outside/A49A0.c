@@ -199,6 +199,14 @@ const f64 D_801424D0_151480[1] = { 162144 };
 const f64 D_801424D8_151488[1] = { 32767 };
 const f32 D_801424E0_151490[1] = { 850.0f };
 
+#ifndef NON_MATCHING
+const f64 D_801424E8_151498[1] = { 0.1 };
+const f64 D_801424F0_1514A0[1] = { 500 };
+const f64 D_801424F8_1514A8[1] = { 500 };
+const f64 D_80142500_1514B0[1] = { 4000 };
+const f64 D_80142508_1514B8[1] = { 0.02 };
+#endif
+
 s32 func_800959F0_A49A0(u16 red, u16 green, u16 blue) {
 	red = red < 0x1F ? red : 0x1F;
 	green = green < 0x1F ? green : 0x1F;
