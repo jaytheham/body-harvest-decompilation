@@ -1234,48 +1234,49 @@ void func_800F54AC_10445C(Vec3f *arg0, Vec3f *arg1) {
 	}
 }
 
-void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
-{
-  f32 sinA;
-  f32 cosA;
-  f32 sinB;
-  union
-  {
-    s32 *end;
-  } work;
-  f32 rawCosine;
-  s32 angleA;
-  s16 cosAComp;
-  f32 radiusThird;
-  s16 sideX;
-  s16 sideZ;
-  s16 forwardX;
-  s16 forwardZ;
-  f32 radius;
-  s16 sinAOffset;
-  s16 pad;
-  s16 colorA;
-  s16 colorB;
-  s16 colorC;
-  s16 colorAClamped;
-  s16 colorBClamped;
-  s16 colorCClamped;
-  u16 textureS;
-  u16 textureT;
-  s16 cR;
-  s16 cG;
-  u16 savedRed;
-  u16 savedGreen;
-  s16 colorTopA;
-  s16 colorTopB;
-  s16 colorTopC;
-  s16 cB;
-  u16 savedBlue;
-  radius = D_801601F0[arg3].unk8;
-  if (D_8013FCD0_14EC80 != 0)
-  {
-    radius *= 2;
-  }
+void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
+	f32 sinA;
+	f32 cosA;
+	f32 sinB;
+	u16 baseRed;
+	u8 cG;
+	EffectRgb (*levelColor)[3];
+	s32 angleA;
+	s32 cosAComp;
+	f32 radiusThird;
+	s32 baseGreen;
+	s16 sideX;
+	union {
+		s16 sideZ;
+		s16 shadeBlue;
+	} component;
+	f32 radius;
+	u8 opacity;
+	s16 sinAOffset;
+	s16 colorA;
+	s16 colorB;
+	s16 colorC;
+	s16 colorAClamped;
+	s16 colorBClamped;
+	s16 colorCClamped;
+	u32 textureS;
+	u16 baseBlue;
+	unsigned int new_var;
+	s16 colorTopA;
+	s16 colorTopB;
+	s16 colorTopC;
+	s16 cB;
+	union
+	{
+	Vec2_S16 forward;
+	s16 blue;
+	} vertexData;
+
+	if ((&colorA) != 0) {}
+	radius = D_801601F0[arg3].unk8;
+	if (D_8013FCD0_14EC80 != 0) {
+		radius *= 2;
+	}
   angleA = func_80003824_4424(arg0[2] - arg2[2], arg0[0] - arg2[0]);
   sinA = ((f32) sins(angleA + 0x4000)) / 32768.0;
   cosA = ((f32) coss(angleA + 0x4000)) / 32768.0;
@@ -1504,45 +1505,49 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
   gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
   gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
-#ifdef NON_MATCHING
-void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
-	Vec3f direction;
-	f32 temp_f14;
-	s32 wideX;
-	s32 angle;
-	s32 absDistanceZ;
-	f32 temp_f12;
-	s16 temp_f6;
-	s32 temp_f8;
-	f32 temp_f0;
-	s16 temp_f10;
-	f32 var_f16;
-	f32 var_f2;
-	s32 temp_v0_2;
-	volatile Vec3i midpoint;
-	s32 delta;
-	s16 sp11A;
-	s16 sp118;
-	s16 sp116;
-	s16 sp114;
-	s16 sp112;
-	s16 sp110;
-	u8 temp_ra;
-	s16 sp10C;
-	s16 sp10A;
-	s16 tipColors[3]; /* Blue, green, red in stack order. */
-	s16 temp_v1_2;
-	s16 temp_f6_3;
-	s32 temp_v0;
-	s16 initialProjectionX;
-	s32 rawWidth;
-
-	var_f2 = (f32)D_801601F0[arg3].unk8;
-	var_f16 = (var_f2 * 3) / 4;
-	if (D_8013FCD0_14EC80 != 0) {
-		var_f16 *= 2;
-		var_f2 *= 2;
-	}
+void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
+{
+  f32 temp_f12;
+  Vec3f *new_var2;
+  Vec3f direction;
+  f32 temp_f14;
+  s32 wideX;
+  s32 angle;
+  long temp_f6;
+  s32 temp_v0;
+  s32 absDistanceZ;
+  s32 temp_f8;
+  f32 temp_f0;
+  s32 temp_f10;
+  f32 var_f16;
+  f32 var_f2;
+  s32 temp_v0_2;
+  volatile Vec3i midpoint;
+  s32 delta;
+  s16 sp11A;
+  s16 sp118;
+  s16 sp116;
+  s16 sp114;
+  s16 sp112;
+  s16 sp110;
+  unsigned short temp_ra;
+  s16 sp10C;
+  s16 sp10A;
+  s16 tipColors[3];
+  s16 temp_v1_2;
+  s16 new_var;
+  s16 initialProjectionX;
+  s16 baseShadeRed;
+  s16 baseShadeGreen;
+  s16 baseShadeBlue;
+  Gfx *new_var3;
+  var_f2 = (f32) D_801601F0[arg3].unk8;
+  var_f16 = (var_f2 * 3) / 4;
+  if (D_8013FCD0_14EC80 != 0)
+  {
+    var_f16 *= 2;
+    var_f2 *= 2;
+  }
 
 	temp_f0 = (f32)((f64)var_f16 * 1.2);
 	direction.x = (f32)(arg1[0] - arg0[0]);
@@ -1862,51 +1867,64 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 #pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F63D0_105380.s", "src.us/overlay_gameplay/outside/101840_width_constant.s")
 #endif
 
-#ifdef NON_MATCHING
-void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
-{
-  Vec3fComponents direction;
-  f32 sp120[3];
-  f32 sp11C;
-  s32 trigResult;
-  s32 phase;
-  s32 xTri = 0;
-  s32 angle;
-  s32 cosTerm;
-  s16 halfSin;
-  s16 xStep;
-  s16 zStep;
-  s16 yStep;
-  s32 sinTerm;
-  f32 spF8;
-  f32 spF4;
-  s32 pad;
-  s32 pad2;
-  s16 spEA;
-  s16 value;
-  s16 spE6;
-  s16 spE4;
-  s16 spE2;
-  s16 spE0;
-  s32 zTri = 0;
-  s16 halfCos;
-  u8 cR;
-  s32 cG;
-  s16 spD2;
-  s16 spD0;
-  s16 spCE;
-  s32 cB;
-  s32 baseBlue;
-  s32 baseRed;
-  s32 baseGreen;
+void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
+	Vec3fComponents direction;
+	f32 sp120[3];
+	f32 sp11C;
+	s32 **new_var;
+	s32 trigResult;
+	s32 phase;
+	s32 angle;
+	s32 cosTerm;
+	s16 halfSin;
+	s16 xStep;
+	s16 zStep;
+	s16 yStep;
+	s32 sinTerm;
+	f32 spF8;
+	f32 spF4;
+	
+	
+	s32 pad;
+	s32 pad2;
+	volatile s16 spEA;
+	volatile s16 spE8;
+	volatile s16 spE6;
+	s16 spE4;
+	s16 spE2;
+	s16 spE0;
+	int new_var2;
+	s16 halfCos;
+	u8 cR;
+	s32 cG;
+	s16 spD2;
+	s16 spD0;
+	s16 spCE;
+	s32 xTri = 0;
+	s32 cB;
+	s32 i;
+	s16 baseBlue;
+	s16 baseRed;
+	s16 baseGreen;
+	s16 new_var3;
+	s32 zTri = 0;
 
-  spF4 = (f32) D_801601F0[arg3].unk8;
-  spF8 = (spF4 * 3.0f) / 4;
-  if (D_8013FCD0_14EC80 != 0)
-  {
-	spF8 *= 4;
-	spF4 *= 2;
-  }
+/* Keep the addressed parameter and color halfwords in their target homes. */
+	new_var = &arg0;
+	if (new_var) {}
+	do { } while (0);
+	if (&xStep) {}
+	if (&yStep) {}
+	if (&zStep) {}
+	if (&spEA) {}
+	if (&spE8) {}
+	if (&spE6) {}
+	spF4 = (f32)D_801601F0[arg3].unk8;
+	spF8 = (spF4 * 3.0f) / 4;
+	if (D_8013FCD0_14EC80 != 0) {
+		spF8 = spF8 * 4;
+		spF4 *= 2;
+	}
   direction.vector.x = (f32) (arg1[0] - arg0[0]);
   direction.vector.y = (f32) (arg1[1] - arg0[1]);
   direction.vector.z = (f32) (arg1[2] - arg0[2]);
