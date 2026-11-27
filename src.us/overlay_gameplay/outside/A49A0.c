@@ -198,6 +198,7 @@ const f64 D_801424C8_151478[1] = { 2145 };
 const f64 D_801424D0_151480[1] = { 162144 };
 const f64 D_801424D8_151488[1] = { 32767 };
 const f32 D_801424E0_151490[1] = { 850.0f };
+
 #ifndef NON_MATCHING
 const f64 D_801424E8_151498[1] = { 0.1 };
 const f64 D_801424F0_1514A0[1] = { 500 };
@@ -975,32 +976,29 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 	model1 = D_8005BB30++; model1->words.w0 = 0x01020040; model1->words.w1 = K0_TO_PHYS(&D_80031160);
 }
 
-// CURRENT(8325) measured over the whole function (diff.py --max-size 6000)
 #ifdef NON_MATCHING
 void func_8009811C_A70CC(void) {
 	f32 temp_f0;
 	f32 temp_f2;
-	OrbitCam cam3CC;
-	OrbitCam cam3B8;
-	OrbitCam cam3A4;
-	OrbitCam cams340[5];
-	OrbitCam cam32C;
-	const Unk14C280Entry *stageTable;
-	OrbitCam *sp324;
-	OrbitCam *sp320[1];
-	volatile s32 frameCount;
-	const Unk14C280Entry *stage;
+	OrbitCam overviewCamera;
+	OrbitCam playerCamera;
+	OrbitCam stageMarkerCamera;
+	OrbitCam stageCameras[5];
+	OrbitCam interpolatedCamera;
+	const Unk14C280Entry *cameraBounds;
+	MapCameraTransition transitionState;
+	MapCameraTransition *transition = &transitionState;
 	AlienInstance *var_s0_4;
 	Unk80146688 *var_t2;
-	Unk80146688 *sp30C;
-	OrbitCam *var_s3;
+	Unk80146688 *selectedZone;
+	OrbitCam *activeCamera;
 	OrbitCam *nextCamera;
 	f32 var_f12;
 	f64 temp_f0_3;
 	f64 temp_f22;
 	s32 temp_v0;
-	u32 sp2E8;
-	s32 sp2E4;
+	u32 mapFlags;
+	s32 markerPulse;
 	Unk80052B40 vec2DC;
 	Unk80052B40 vec2D4;
 	Unk80052B40 vec2CC;
@@ -1010,10 +1008,10 @@ void func_8009811C_A70CC(void) {
 	f32 sp2BC;
 	f32 sp2B8;
 	Unk80052B40 sp2B0;
-	volatile s32 mapStep;
+	s32 revealFrame;
 	Unk80052B40 sp2A4;
-	u32 sp2A0;
 	s32 var_t0;
+	s32 sp2A0;
 	s32 var_t4;
 	s32 var_a1;
 	struct { f32 y; f32 x; } proposed;
@@ -1027,71 +1025,71 @@ void func_8009811C_A70CC(void) {
 	s8 zoneCount;
 	u8 markerBrightness;
 	s8 previousY;
-	union { u16 *pixels; VehicleInstance *vehicle; } scratch;
+	union { u16 *pixels; VehicleInstance *vehicle; const s32 *frame; } scratch;
 	union { s32 value; MapStage *stage; Mtx *matrix; Unk80146688 *zone; } drawItem;
 
-	frameCount = 0x6E;
-	sp30C = 0;
-	sp2E4 = 0;
+	transition->framesRemaining = 110;
+	selectedZone = NULL;
+	markerPulse = 0;
 	sp2B0 = D_8013D514_14C4C4;
-	mapStep = 0;
+	revealFrame = 0;
 	sp2A4 = D_8013D51C_14C4CC;
-	sp2E8 = 0;
+	mapFlags = 0;
 	D_8004D14C = 0;
 	D_8014ED00 = -1;
-	stageTable = &D_8013D2D0_14C280.entries[currentLevel * 5 + D_80047F94 - 5];
+	cameraBounds = &D_8013D2D0_14C280.entries[currentLevel * 5 + D_80047F94 - 5];
 
 	sp27C = 0;
-	cam3CC.distance = stageTable->unk8;
-	cam3CC.pitch = 0x384;
-	cam3CC.yaw = -0x4000;
-	cam3CC.targetZ = 0.0f;
-	if (0x186A0 != D_8014ED04) {
-		sp2E8 = 0x20;
+	overviewCamera.distance = cameraBounds->unk8;
+	overviewCamera.pitch = 0x384;
+	overviewCamera.yaw = -0x4000;
+	overviewCamera.targetZ = 0.0f;
+	if (D_8014ED04 != 0x186A0) {
+		mapFlags = 0x20;
 	}
-	var_t4 = stageTable->unk4;
-	if ((stageTable->unk4 > 0) || (stageTable->unk6 > 0)) {
-		if (stageTable->unk4 > 0) {
-			temp_t3 = stageTable->unk0;
-			var_a1 = (D_80052B34->unk0 >> 7) - stageTable->unk0;
-			var_a1 = MAX(0, MIN(var_a1, stageTable->unk4));
-			cam3CC.targetX = var_a1 + temp_t3;
-			cam3CC.targetY = stageTable->unk2;
+	var_t4 = cameraBounds->unk4;
+	if ((cameraBounds->unk4 > 0) || (cameraBounds->unk6 > 0)) {
+		if (cameraBounds->unk4 > 0) {
+			var_t4 = cameraBounds->unk0;
+			sp2A0 = (D_80052B34->unk0 >> 7) - var_t4;
+			temp_v1 = MAX(0, MIN(sp2A0, cameraBounds->unk4));
+			overviewCamera.targetX = temp_v1 + var_t4;
+			overviewCamera.targetY = cameraBounds->unk2;
 		} else {
-			var_a1 = (-D_80052B34->unk4 >> 7) - stageTable->unk2;
-			cam3CC.targetX = stageTable->unk0;
-			var_t4 = stageTable->unk6;
-			var_a1 = MAX(0, MIN(var_a1, stageTable->unk6));
-			cam3CC.targetY = var_a1 + stageTable->unk2;
+			sp2A0 = (-D_80052B34->unk4 >> 7) - cameraBounds->unk2;
+			overviewCamera.targetX = cameraBounds->unk0;
+			var_t4 = cameraBounds->unk6;
+			temp_t3 = MAX(0, MIN(sp2A0, cameraBounds->unk6));
+			overviewCamera.targetY = temp_t3 + cameraBounds->unk2;
 		}
 	} else {
-		cam3CC.targetX = stageTable->unk0;
-		cam3CC.targetY = stageTable->unk2;
+		overviewCamera.targetX = cameraBounds->unk0;
+		overviewCamera.targetY = cameraBounds->unk2;
 	}
-	cam3B8.distance = 0x50;
-	cam3B8.yaw = 0x8000 - D_80052B34->unk6;
-	cam3B8.pitch = 0x2710;
-	var_s3 = &cam3B8;
-	cam3B8.targetX = D_80052B34->unk0 >> 7;
-	cam3B8.targetY = -D_80052B34->unk4 >> 7;
-	cam3B8.targetZ = 0.0f;
-	cam3A4 = cam3CC;
-	cam3A4.distance = 0x154;
+	playerCamera.distance = 0x50;
+	playerCamera.yaw = 0x8000 - D_80052B34->unk6;
+	playerCamera.pitch = 0x2710;
+	activeCamera = &playerCamera;
+	playerCamera.targetX = D_80052B34->unk0 >> 7;
+	playerCamera.targetY = -D_80052B34->unk4 >> 7;
+	playerCamera.targetZ = 0.0f;
+	stageMarkerCamera = overviewCamera;
+	stageMarkerCamera.distance = 0x154;
 
 	for (drawItem.value = 0; drawItem.value < 5; drawItem.value++) {
-		stageTable = &D_8013D2D0_14C280.entries[currentLevel * 5 + drawItem.value - 5];
-		cams340[drawItem.value].distance = stageTable->unk8;
-		cams340[drawItem.value].pitch = 0x384;
-		cams340[drawItem.value].yaw = -0x4000;
-		cams340[drawItem.value].targetX = stageTable->unk0;
-		cams340[drawItem.value].targetY = stageTable->unk2;
-		cams340[drawItem.value].targetZ = 0.0f;
+		cameraBounds = &D_8013D2D0_14C280.entries[currentLevel * 5 + drawItem.value - 5];
+		stageCameras[drawItem.value].distance = cameraBounds->unk8;
+		stageCameras[drawItem.value].pitch = 0x384;
+		stageCameras[drawItem.value].yaw = -0x4000;
+		stageCameras[drawItem.value].targetX = cameraBounds->unk0;
+		stageCameras[drawItem.value].targetY = cameraBounds->unk2;
+		stageCameras[drawItem.value].targetZ = 0.0f;
 	}
 	D_8014ED0C = 0.0f;
-	if (0x3FFF == cam3CC.distance) {}
-	temp_f0 = cam3CC.distance;
-	D_8014ED10 = cam3CC.targetY - temp_f0;
-	D_8014ED14 = temp_f0 + cam3CC.targetZ;
+	if (0x3FFF == overviewCamera.distance) {}
+	temp_f0 = overviewCamera.distance;
+	D_8014ED10 = overviewCamera.targetY - temp_f0;
+	D_8014ED14 = temp_f0 + overviewCamera.targetZ;
 	D_8014ED2D = 1;
 	D_8014ED2C = 1;
 	D_8014ED28 = 0.0f;
@@ -1115,767 +1113,768 @@ void func_8009811C_A70CC(void) {
 	mapLock.value = 1;
 	func_8000AFDC_BBDC();
 	if (D_8014ED00 != 0x18) {
-		sp2E8 |= 1;
+		mapFlags |= 1;
 	}
 	temp_f22 = 0.1;
-	
-	var_a1 = frameCount; while (1) {
-	if (var_a1 == 1) {
-		D_80052ACC = 1;
-		D_8014ED2C = 3;
-		cam32C.distance = cam3B8.distance;
-		cam32C.yaw = cam3B8.yaw;
-		cam32C.pitch = cam3B8.pitch;
-		sp324 = &cam3B8;
-		sp320[0] = &cam3A4;
-		D_8004802C = 1;
-		var_s3 = &cam32C;
-		cam32C.targetX = cam3B8.targetX;
-		cam32C.targetY = cam3B8.targetY;
-		cam32C.targetZ = cam3B8.targetZ;
-		sp2A0 = (D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF;
-		drawItem.stage = &D_8013D3D4_14C384[sp2A0];
-		func_80018D7C_1997C((D_8014ED2E = 0, drawItem.stage->music));
-	}
-	if (var_a1 == 0) {
-		func_8000AFDC_BBDC();
-		if (var_s3 == &cam32C) {
-			temp_f0 = (f32) sins(D_8014ED2E & 0xFFFF);
-			nextCamera = sp320[0];
-			func_80097CB4_A6C64(sp324, nextCamera, &cam32C, temp_f0 / 32768.0);
-			temp_a2_2 = D_8014ED2E + 0x200;
-			temp_a2_2 &= 0xFFFF;
-			temp_a2_2 &= 0xFFFF;
-			if (temp_a2_2 >= 0x3FFF) {
-				var_s3 = nextCamera;
-				if (nextCamera == &cam3CC) {
-					mapLock.value = 0;
+
+	while (1) {
+		var_a1 = transition->framesRemaining;
+		if (var_a1 == 1) {
+			D_80052ACC = 1;
+			D_8014ED2C = 3;
+			interpolatedCamera.distance = playerCamera.distance;
+			interpolatedCamera.yaw = playerCamera.yaw;
+			interpolatedCamera.pitch = playerCamera.pitch;
+			transition->source = &playerCamera;
+			transition->destination = &stageMarkerCamera;
+			D_8004802C = 1;
+			activeCamera = &interpolatedCamera;
+			interpolatedCamera.targetX = playerCamera.targetX;
+			interpolatedCamera.targetY = playerCamera.targetY;
+			interpolatedCamera.targetZ = playerCamera.targetZ;
+			sp2A0 = (D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF;
+			drawItem.stage = &D_8013D3D4_14C384[sp2A0];
+			func_80018D7C_1997C((D_8014ED2E = 0, drawItem.stage->music));
+		}
+		if (var_a1 == 0) {
+			func_8000AFDC_BBDC();
+			if (activeCamera == &interpolatedCamera) {
+				temp_f0 = (f32) sins(D_8014ED2E & 0xFFFF);
+				nextCamera = transition->destination;
+				func_80097CB4_A6C64(transition->source, nextCamera, &interpolatedCamera, temp_f0 / 32768.0);
+				temp_a2_2 = D_8014ED2E + 0x200;
+				temp_a2_2 = (u16) temp_a2_2;
+				if (temp_a2_2 >= 0x3FFF) {
+					activeCamera = nextCamera;
+					if (nextCamera == &overviewCamera) {
+						mapLock.value = 0;
+					}
 				}
-			}
-			if (D_8014ED2C == 3) {
-				temp_a1 = (s32) (((f32) temp_a2_2 / 16384) * 500.0);
-				if (temp_a1 < 0) {} /* Preserve the volume conversion order. */
-				D_8014ED2E = temp_a2_2;
-				func_80014208_14E08(D_8014ED38, temp_a1, 0x40);
-			} else {
-				D_8014ED2E = temp_a2_2;
-				if (D_8014ED2C == 1) {
-					temp_a1 = (s32) ((1.0 - ((f32) temp_a2_2 / 16384)) * 500.0);
+				if (D_8014ED2C == 3) {
+					temp_a1 = (s32) (((f32) temp_a2_2 / 16384) * 500.0);
 					if (temp_a1 < 0) {} /* Preserve the volume conversion order. */
-					D_8014ED2E_Write = temp_a2_2;
+					D_8014ED2E = temp_a2_2;
 					func_80014208_14E08(D_8014ED38, temp_a1, 0x40);
-				}
-			}
-		} else {
-			func_80015860_16460(D_8014ED38);
-			if ((isButtonNewlyPressed(0, 0x20U) != 0) && (currentLevel < 5)) {
-				cam32C.distance = var_s3->distance;
-				cam32C.yaw = var_s3->yaw;
-				cam32C.pitch = var_s3->pitch;
-				cam32C.targetX = var_s3->targetX;
-				cam32C.targetY = var_s3->targetY;
-				cam32C.targetZ = var_s3->targetZ;
-				D_8014ED34 = 0;
-				D_8014ED2D = D_8014ED2C;
-				D_8014ED30 = D_8014ED30_Select + 1;
-				sp324 = var_s3;
-				var_s3 = &cam32C;
-				sp30C = 0;
-				mapLock.value = 1;
-				D_8014ED2E = 0;
-				func_800153D8_15FD8(0x3C);
-				if ((D_8014ED30 == 5) || ((&D_8013D2D0_14C280.entries[(currentLevel - 1) * 5])[D_8014ED30].unk8 == 0)) {
-					D_8014ED30 = -1;
-					sp320[0] = &cam3CC;
-					D_8014ED2C = 0;
 				} else {
-					sp320[0] = &cams340[D_8014ED30_Select];
-					D_8014ED2C = 2;
+					D_8014ED2E = temp_a2_2;
+					if (D_8014ED2C == 1) {
+						temp_a1 = (s32) ((1.0 - ((f32) temp_a2_2 / 16384)) * 500.0);
+						if (temp_a1 < 0) {} /* Preserve the volume conversion order. */
+						D_8014ED2E_Write = temp_a2_2;
+						func_80014208_14E08(D_8014ED38, temp_a1, 0x40);
+					}
 				}
-			}
-			if (currentControllerStates->button & 0x10) {
-				var_a1 = D_8014ED2C;
 			} else {
-				var_a1 = D_8014ED2C;
-				if ((var_a1 == 0) || (var_a1 == 2)) {
-					f32 oldY;
-					var_a1 = var_s3->distance * 2;
-					sp2C0 = (currentControllerStates->stick_x * var_a1) / 4000.0;
-					sp2BC = (currentControllerStates->stick_y * var_a1) / 4000.0;
-					sp2C8 = (f32) coss(var_s3->yaw) / 32768.0;
-					temp_f0 = (f32) sins(var_s3->yaw) / 32768.0;
-					temp_f2 = var_s3->targetX;
-					oldY = var_s3->targetY;
-					var_a1 = D_8014ED2C;
-					proposed.x = temp_f2 - ((temp_f0 * sp2C0) - (sp2C8 * sp2BC));
-					var_f12 = (sp2C8 * sp2C0) - (temp_f0 * sp2BC);
-					proposed.y = oldY + var_f12;
-					if (var_a1 == 0) {
-						sp2C8 = proposed.y;
-						var_s3->targetX = proposed.x;
-						var_s3->targetY = sp2C8;
-						if ((mapLock.value == 1) && ((currentControllerStates[0].stick_x < -1) || (currentControllerStates[0].stick_x >= 2) || (currentControllerStates[0].stick_y < -1) || (currentControllerStates[0].stick_y >= 2))) {
-							mapLock.value = 0;
-						}
+				f32 oldY;
+
+				func_80015860_16460(D_8014ED38);
+				if ((isButtonNewlyPressed(0, 0x20U) != 0) && (currentLevel < 5)) {
+					interpolatedCamera.distance = activeCamera->distance;
+					interpolatedCamera.yaw = activeCamera->yaw;
+					interpolatedCamera.pitch = activeCamera->pitch;
+					interpolatedCamera.targetX = activeCamera->targetX;
+					interpolatedCamera.targetY = activeCamera->targetY;
+					interpolatedCamera.targetZ = activeCamera->targetZ;
+					D_8014ED34 = 0;
+					D_8014ED2D = D_8014ED2C;
+					D_8014ED30 = D_8014ED30_Select + 1;
+					transition->source = activeCamera;
+					activeCamera = &interpolatedCamera;
+					selectedZone = NULL;
+					mapLock.value = 1;
+					D_8014ED2E = 0;
+					func_800153D8_15FD8(0x3C);
+					var_t3 = D_8014ED30;
+					if ((var_t3 == 5) || (D_8013D2D0_14C280.entries[(currentLevel - 1) * 5 + var_t3].unk8 == 0)) {
+						D_8014ED30 = -1;
+						transition->destination = &overviewCamera;
+						D_8014ED2C = 0;
 					} else {
-						sp2C8 = proposed.y;
-						stage = &D_8013D2D0_14C280.entries[currentLevel * 5 + (D_8014ED30) - 5];
-						temp_t3 = stage->unk0;
-						var_t4 = stage->unk4;
-						var_t4 += temp_t3;
-						temp_v0 = ((MIN(var_t4, temp_t3) <= temp_f2) && (temp_f2 <= MAX(var_t4, temp_t3))) ? 1 : 0;
-						if (temp_v0) {
-							temp_a1 = stage->unk2;
-							var_t0 = temp_a1 + stage->unk6;
-							temp_v0 = ((MIN(temp_a1, var_t0) <= oldY) && (oldY <= MAX(temp_a1, var_t0))) ? 1 : 0;
+						transition->destination = &stageCameras[D_8014ED30_Select];
+						D_8014ED2C = 2;
+					}
+				}
+				if (currentControllerStates->button & 0x10) {
+					var_a1 = D_8014ED2C;
+				} else {
+					var_a1 = D_8014ED2C;
+					if ((var_a1 == 0) || (var_a1 == 2)) {
+						sp2A0 = activeCamera->distance * 2;
+						sp2C0 = (currentControllerStates->stick_x * sp2A0) / 4000.0;
+						sp2BC = (currentControllerStates->stick_y * sp2A0) / 4000.0;
+						sp2C8 = (f32) coss(activeCamera->yaw) / 32768.0;
+						temp_f0 = (f32) sins(activeCamera->yaw) / 32768.0;
+						temp_f2 = activeCamera->targetX;
+						oldY = activeCamera->targetY;
+						var_a1 = D_8014ED2C;
+						proposed.x = temp_f2 - ((temp_f0 * sp2C0) - (sp2C8 * sp2BC));
+						var_f12 = (sp2C8 * sp2C0) - (temp_f0 * sp2BC);
+						proposed.y = oldY + var_f12;
+						if (var_a1 == 0) {
+							sp2C8 = proposed.y;
+							activeCamera->targetX = proposed.x;
+							activeCamera->targetY = sp2C8;
+							if ((mapLock.value == 1) && ((currentControllerStates[0].stick_x < -1) || (currentControllerStates[0].stick_x >= 2) || (currentControllerStates[0].stick_y < -1) || (currentControllerStates[0].stick_y >= 2))) {
+								mapLock.value = 0;
+							}
+						} else {
+							sp2C8 = proposed.y;
+							cameraBounds = &D_8013D2D0_14C280.entries[currentLevel * 5 + (D_8014ED30) - 5];
+							temp_t3 = cameraBounds->unk0;
+							var_t4 = cameraBounds->unk4;
+							var_t4 += temp_t3;
+							temp_v0 = ((MIN(var_t4, temp_t3) <= temp_f2) && (temp_f2 <= MAX(var_t4, temp_t3))) ? 1 : 0;
 							if (temp_v0) {
-								temp_v0 = ((MIN(var_t4, temp_t3) <= proposed.x) && (proposed.x <= MAX(var_t4, temp_t3))) ? 1 : 0;
+								temp_a1 = cameraBounds->unk2;
+								var_t0 = temp_a1 + cameraBounds->unk6;
+								temp_v0 = ((MIN(temp_a1, var_t0) <= oldY) && (oldY <= MAX(temp_a1, var_t0))) ? 1 : 0;
 								if (temp_v0) {
-									var_s3->targetX = proposed.x;
-									var_t0 = stage->unk6;
-									temp_a1 = stage->unk2;
-									var_t0 = temp_a1 + var_t0;
-								}
-								temp_v0 = ((MIN(temp_a1, var_t0) <= sp2C8) && (sp2C8 <= MAX(temp_a1, var_t0))) ? 1 : 0;
-								if (temp_v0) {
-									var_s3->targetY = sp2C8;
+									temp_v0 = ((MIN(var_t4, temp_t3) <= proposed.x) && (proposed.x <= MAX(var_t4, temp_t3))) ? 1 : 0;
+									if (temp_v0) {
+										activeCamera->targetX = proposed.x;
+										var_t0 = cameraBounds->unk6;
+										temp_a1 = cameraBounds->unk2;
+										var_t0 = temp_a1 + var_t0;
+									}
+									temp_v0 = ((MIN(temp_a1, var_t0) <= sp2C8) && (sp2C8 <= MAX(temp_a1, var_t0))) ? 1 : 0;
+									if (temp_v0) {
+										activeCamera->targetY = sp2C8;
+									}
 								}
 							}
 						}
 					}
-			}
-			}
-			if ((var_a1 != 2) && (var_a1 != 3)) {
-				if (currentControllerStates->button & 8) {
-					var_s3->distance -= 0xF;
 				}
-				if (currentControllerStates->button & 4) {
-					var_s3->distance += 0xF;
+				if ((var_a1 != 2) && (var_a1 != 3)) {
+					if (currentControllerStates->button & 8) {
+						activeCamera->distance -= 0xF;
+					}
+					if (currentControllerStates->button & 4) {
+						activeCamera->distance += 0xF;
+					}
+				}
+				if ((temp_f2 = activeCamera->targetX) < -256.0f) {
+					activeCamera->targetX = -256.0f;
+				}
+				if ((temp_f2 = activeCamera->targetX) > 256.0f) {
+					activeCamera->targetX = 256.0f;
+				}
+				if ((oldY = activeCamera->targetY) < -256.0f) {
+					activeCamera->targetY = -256.0f;
+				}
+				if ((oldY = activeCamera->targetY) > 256.0f) {
+					activeCamera->targetY = 256.0f;
+				}
+				if (activeCamera == &overviewCamera) {
+					var_t3 = activeCamera->distance;
+					activeCamera->distance = MAX(0x78, MIN(0x352, var_t3));
+				}
+				if (activeCamera == &playerCamera) {
+					var_t3 = activeCamera->distance;
+					activeCamera->distance = MAX(0x50, MIN(0x12C, var_t3));
+				}
+				if ((isButtonNewlyPressed(0, 0x8000U) != 0) && (D_8014ED2C != 2)) {
+					D_8014ED2D = D_8014ED2C;
+					if (D_8014ED2C == 1) {
+						D_8014ED2C = 3;
+					} else if (D_8014ED2C == 0) {
+						D_8014ED2C = 1;
+					} else {
+						D_8014ED2C = 0;
+					}
+					func_800153D8_15FD8(0xC3);
+					interpolatedCamera.distance = activeCamera->distance;
+					var_a1 = D_8014ED2C;
+					interpolatedCamera.yaw = activeCamera->yaw;
+					interpolatedCamera.pitch = activeCamera->pitch;
+					interpolatedCamera.targetX = activeCamera->targetX;
+					interpolatedCamera.targetY = activeCamera->targetY;
+					interpolatedCamera.targetZ = activeCamera->targetZ;
+					transition->source = activeCamera;
+					activeCamera = &interpolatedCamera;
+					D_8014ED2E = 0;
+					if (var_a1 == 0) {
+						selectedZone = NULL;
+						mapLock.bits = 1U;
+						transition->destination = &overviewCamera;
+						func_80018D14_19914();
+						D_8014ED34 = 1;
+						D_8013D528_14C4D8 = 0;
+						D_8004802C = 0;
+					} else if (var_a1 == 1) {
+						transition->destination = &playerCamera;
+						func_80018D14_19914();
+						D_8014ED34 = 0;
+						D_8013D528_14C4D8 = selectedZone;
+						selectedZone = NULL;
+						D_8014ED1C = D_8014ED18_Marker;
+						D_8014ED18 = 0.0f;
+						D_8004802C = 0;
+					} else {
+						transition->destination = &stageMarkerCamera;
+						D_8014ED34 = 0;
+						D_8013D528_14C4D8 = selectedZone;
+						D_8014ED1C = D_8014ED18_Marker;
+						selectedZone = NULL;
+						D_8014ED18 = 0.0f;
+						func_80018D7C_1997C(D_8013D3D4_14C384[(D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF].music);
+						D_8004802C = 1;
+					}
 				}
 			}
-			if (var_s3->targetX < -256.0f) {
-				var_s3->targetX = -256.0f;
-			}
-			if (var_s3->targetX > 256.0f) {
-				var_s3->targetX = 256.0f;
-			}
-			if (var_s3->targetY < -256.0f) {
-				var_s3->targetY = -256.0f;
-			}
-			if (var_s3->targetY > 256.0f) {
-				var_s3->targetY = 256.0f;
-			}
-			if (var_s3 == &cam3CC) {
-				var_t3 = var_s3->distance;
-				var_s3->distance = MAX(0x78, MIN(0x352, var_t3));
-			}
-			if (var_s3 == &cam3B8) {
-				var_t3 = var_s3->distance;
-				var_s3->distance = MAX(0x50, MIN(0x12C, var_t3));
-			}
-			if ((isButtonNewlyPressed(0, 0x8000U) != 0) && (D_8014ED2C != 2)) {
-				D_8014ED2D = D_8014ED2C;
-				if (D_8014ED2C == 1) {
-					D_8014ED2C = 3;
-				} else if (D_8014ED2C == 0) {
-					D_8014ED2C = 1;
-				} else {
-					D_8014ED2C = 0;
-				}
-				func_800153D8_15FD8(0xC3);
-				cam32C.distance = var_s3->distance;
-				var_a1 = D_8014ED2C;
-				cam32C.yaw = var_s3->yaw;
-				cam32C.pitch = var_s3->pitch;
-				cam32C.targetX = var_s3->targetX;
-				cam32C.targetY = var_s3->targetY;
-				temp_f2 = var_s3->targetZ;
-				sp324 = var_s3;
-				var_s3 = &cam32C;
-				D_8014ED2E = 0;
-				cam32C.targetZ = temp_f2;
-				if (var_a1 == 0) {
-					sp30C = 0;
-					mapLock.bits = 1U;
-					sp320[0] = &cam3CC;
-					func_80018D14_19914();
-					D_8014ED34 = 1;
-					D_8013D528_14C4D8 = 0;
-					D_8004802C = 0;
-				} else if (var_a1 == 1) {
-					sp320[0] = &cam3B8;
-					func_80018D14_19914();
-					D_8014ED34 = 0;
-					D_8013D528_14C4D8 = sp30C;
-					sp30C = 0;
-					D_8014ED1C = D_8014ED18_Marker;
-					D_8014ED18 = 0.0f;
-					D_8004802C = 0;
-				} else {
-					sp320[0] = &cam3A4;
-					D_8014ED34 = 0;
-					D_8013D528_14C4D8 = sp30C;
-					D_8014ED1C = D_8014ED18_Marker;
-					sp30C = 0;
-					D_8014ED18 = 0.0f;
-					func_80018D7C_1997C(D_8013D3D4_14C384[(D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF].music);
-					D_8004802C = 1;
-				}
-			}
 		}
-	}
-	if ((isButtonNewlyPressed(0, 0x10U) != 0) && (sp2E8 & 4) && (D_8014ED2C == 0)) {
-		if (sp2E8 & 0x20) {
-			D_8014ED04 = 0x186A0;
-			sp2E8 &= ~0x20;
-		} else {
-			temp_v1 = (s16) (s32) var_s3->targetX;
-			D_8014ED04 = temp_v1 * 128;
-			temp_f2 = -var_s3->targetY;
-			D_8014ED08 = (s16) (s32) temp_f2 * 128;
-			sp2E8 |= 0x20;
-		}
-		func_800153D8_15FD8(0x14F);
-	}
-	func_800050C4_5CC4();
-	if (frameCount < 0x32) {
-		gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
-		gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (u32) &D_3DA800);
-		gDPSetFillColor(D_8005BB2C++, 0xFFFCFFFC);
-		gDPFillRectangle(D_8005BB2C++, 0, 0, (D_80068084 - 1), (D_80068088 - 1));
-		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetDepthImage(D_8005BB2C++, (u32) &D_3DA800);
-	}
-	func_80095BD4_A4B84(D_8005BB48[D_80031B84_32784], 0x28U, 0xFU, 0x1AU);
-	func_80097E1C_A6DCC(var_s3);
-	drawItem.value = mapStep;
-	if (drawItem.value >= 0x10) {
-		if (drawItem.value < 0x20) {
-			var_s1 = drawItem.value - 0x10;
-			temp_v1 = var_s1 << 4;
-			D_80052B50.unk0 = temp_v1;
-			D_80052B50.unk2 = temp_v1;
-			D_80052B50.unk4 = temp_v1;
-			func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-			drawItem.value = mapStep;
-		}
-		func_800970C0_A6070();
-	}
-	if ((drawItem.value >= 0x20) && (drawItem.value < 0x61)) {
-		var_s1 = mapStep - 0x20;
-		var_t0 = var_s1 >> 3;
-		var_s1 = var_s1 & 7;
-		temp_v1 = var_s1;
-		var_a1 = var_t0;
-		var_a1 <<= 10;
-		temp_v1 <<= 2;
-		drawItem.value = 7; do {
-			scratch.pixels = &(&((u16 (*)[8192]) D_8006AA6C)[drawItem.value][var_a1])[temp_v1];
-			scratch.pixels[0] |= 0x7800;
-			scratch.pixels[1] |= 0x7800;
-			scratch.pixels = &scratch.pixels[3];
-			scratch.pixels[-1] |= 0x7800;
-			scratch.pixels[0] |= 0x7800;
-		} while (drawItem.value--);
-		var_a1 = var_t0;
-		temp_v1 = var_s1;
-		temp_v1 <<= 7;
-		var_a1 <<= 13;
-		drawItem.value = 7; do {
-			scratch.pixels = &((u16 (*)[1024]) &((u16 *) D_8006AA6C)[var_a1])[drawItem.value][temp_v1];
-			scratch.pixels[0] |= 0x7800;
-			scratch.pixels[32] |= 0x7800;
-			scratch.pixels = &scratch.pixels[96];
-			scratch.pixels[-32] |= 0x7800;
-			scratch.pixels[0] |= 0x7800;
-		} while (drawItem.value--);
-	}
-	if ((frameCount == 0) && (var_s3 == &cam3CC) && (mapLock.value == 0)) {
-		var_t3 = 0x40;
-		zoneCount = D_8014667F_15562F[currentLevel];
-		if (zoneCount > 0) {
-			var_t2 = &D_80146688_155638[currentLevel - 1][0];
-			var_t0 = 0;
-			do {
-				temp_t3 = (s32) (var_t2->unk0 - (var_s3->targetX / 2));
-				var_t4 = (s32) (var_t2->unk1 + (var_s3->targetY / 2));
-				drawItem.zone = var_t2;
-				temp_v1 = MAX(MAX(temp_t3, -temp_t3), MAX(var_t4, -var_t4));
-				if (temp_v1 < var_t3) {
-					var_t3 = temp_v1;
-					sp30C = drawItem.zone;
-				}
-				var_t0 += 0x10;
-			} while ((var_t2 = &drawItem.zone[1], var_t0) < (zoneCount * 0x10));
-		}
-		if (sp30C != D_8013D524_14C4D4) {
-			D_8013D528_14C4D8 = D_8013D524_14C4D4;
-			temp_f0 = D_8014ED18_Marker;
-			D_8014ED1C = temp_f0;
-			D_8014ED18 = 0.0f;
-		}
-		D_8013D524_14C4D4 = sp30C;
-	}
-	if (frameCount == 0) {
-		if (D_8014ED34 == 1) {
-			temp_a1 = MAX(0, D_8014ED32 - 4);
-		} else {
-			temp_a1 = MIN(0x3C, D_8014ED32 + 4);
-		}
-		/* Reload the label state after clamping the height. */
-		if ((*(u32 *)&D_8014ED34 == 0) && (temp_a1 == 0x3C) && ((D_8014ED2C == 2) || (D_8014ED2D == 2))) {
-			D_8014ED34 = 1;
-		}
-		if (D_8014ED34 == 0) {
-			D_8014ED32 = temp_a1;
-			drawText(&D_801423E4_151394, temp_a1 * 4);
-		} else {
-			D_8014ED32 = temp_a1;
-			drawText(&D_801423E8_151398, temp_a1 * 4);
-		}
-		if (((D_8014ED2D == 2) || (D_8014ED34 != 0)) && ((D_8014ED2C == 2) || ((D_8014ED2D == 2) && (D_8014ED34 == 0)))) {
-			drawText(&D_801423EC_15139C, 0, 0xFF, 0xE1, 0xFF);
-			if (D_8014ED30 == -1) {
-				drawText(&D_801423F4_1513A4, 0x80, 8, &D_801423FC_1513AC);
-			} else if (D_8014ED34 == 1) {
-				if (((temp_v1 = D_8014ED30_Select, temp_v1 == 4)) || ((&D_8013D2D0_14C280.entries[(currentLevel - 1) * 5])[D_8014ED30_Select + 1].unk8 == 0)) {
-					drawText(&D_8014240C_1513BC, 0x80, 8, &D_80142414_1513C4);
-				} else {
-					drawText(&D_80142424_1513D4, 0x80, 8, &D_8014242C_1513DC, D_8014ED30_Label + 1);
-				}
+		if ((isButtonNewlyPressed(0, 0x10U) != 0) && (mapFlags & 4) && (D_8014ED2C == 0)) {
+			if (mapFlags & 0x20) {
+				D_8014ED04 = 0x186A0;
+				mapFlags &= ~0x20;
 			} else {
-				drawText(&D_80142434_1513E4, 0x80, 8, &D_8014243C_1513EC, D_8014ED30_Label);
+				temp_v1 = (s16) (s32) activeCamera->targetX;
+				D_8014ED04 = temp_v1 * 128;
+				D_8014ED08 = (s16) (s32) -activeCamera->targetY * 128;
+				mapFlags |= 0x20;
 			}
-		} else if ((D_8013D528_14C4D8 != 0) && ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1))) {
-			switch (D_8013D528_14C4D8_Label->unk3) {
-			case 0:
-				drawText(&D_80142444_1513F4, 0xFF, 0xFF, 0);
-				break;
-			case 1:
-				drawText(&D_80142448_1513F8, 0xFF, 0xFF, 0xFF);
-				break;
-			case 2:
-				drawText(&D_8014244C_1513FC, 0xFF, 0, 0);
-				break;
-			}
-			if (D_8014ED2C == 1) {
-				drawText(&D_80142450_151400, 0xFF);
-			} else {
-				drawText(&D_80142454_151404, (s32) (D_8014ED1C * 255.0f));
-			}
-			drawText(&D_80142458_151408, 0x80, 8, D_8013D528_14C4D8->name);
-		} else if (sp30C != NULL) {
-			switch (sp30C->unk3) {
-			case 0:
-				drawText(&D_80142460_151410, 0xFF, 0xFF, 0);
-				break;
-			case 1:
-				drawText(&D_80142464_151414, 0xFF, 0xFF, 0xFF);
-				break;
-			case 2:
-				drawText(&D_80142468_151418, 0xFF, 0, 0);
-				break;
-			}
-			drawText(&D_8014246C_15141C, (s32) (D_8014ED18 * 255.0f));
-			drawText(&D_80142470_151420, 0x80, 8, sp30C->name);
+			func_800153D8_15FD8(0x14F);
 		}
-	}
-	drawItem.value = frameCount;
-	if (drawItem.value < 0x32) {
-		func_80097444_A63F4(var_s3->yaw, var_s3->pitch);
-	}
-	if ((drawItem.value == 0) && ((sp2E8 |= 4, (sp30C != NULL)) || (D_8013D528_14C4D8 != 0))) {
-		gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_1010A80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-		if (sp30C != NULL) {
-			if (0.0f == D_8014ED1C) {
-				temp_f0_3 = D_8014ED18 + temp_f22;
-				D_8014ED18 = (temp_f0_3 < 1.0) ? temp_f0_3 : 1.0;
-			}
-			if (D_8014ED18 == 0.5) {
-				func_800153D8_15FD8(0x91);
-			}
-			switch (sp30C->unk3) {
-			case 0:
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0x00, 0x96);
-				break;
-			case 1:
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0x96);
-				break;
-			case 2:
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0x00, 0x00, 0x96);
-				break;
-			}
-			func_800966EC_A569C(NULL, (sp30C->unk0 * 256), (sp30C->unk1 * 256), sp30C->unk2 * D_8014ED18_Marker, 1);
+		func_800050C4_5CC4();
+		if (transition->framesRemaining < 0x32) {
+			gSPDisplayList(D_8005BB2C++, K0_TO_PHYS(D_800311A8));
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetCycleType(D_8005BB2C++, G_CYC_FILL);
+			gDPSetColorImage(D_8005BB2C++, G_IM_FMT_RGBA, G_IM_SIZ_16b, 320, (u32) &D_3DA800);
+			gDPSetFillColor(D_8005BB2C++, 0xFFFCFFFC);
+			gDPFillRectangle(D_8005BB2C++, 0, 0, (D_80068084 - 1), (D_80068088 - 1));
+			gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetDepthImage(D_8005BB2C++, (u32) &D_3DA800);
 		}
-		if ((D_8013D528_14C4D8 != 0) && (D_8014ED1C_Label > 0.0f)) {
-			temp_f0_3 = D_8014ED1C_Label;
-			D_8014ED1C = (temp_f22 < temp_f0_3) ? (temp_f0_3 - temp_f22) : 0.0;
-			switch (D_8013D528_14C4D8_Color->unk3) {
-			case 0:
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0x00, 0x96);
-				break;
-			case 1:
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0x96);
-				break;
-			case 2:
-				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0x00, 0x00, 0x96);
-				break;
+		func_80095BD4_A4B84(D_8005BB48[D_80031B84_32784], 0x28U, 0xFU, 0x1AU);
+		scratch.frame = &revealFrame;
+		func_80097E1C_A6DCC(activeCamera);
+		drawItem.value = *scratch.frame;
+		if (drawItem.value >= 0x10) {
+			if (drawItem.value < 0x20) {
+				var_s1 = drawItem.value - 0x10;
+				temp_v1 = var_s1 << 4;
+				D_80052B50.unk0 = temp_v1;
+				D_80052B50.unk2 = temp_v1;
+				D_80052B50.unk4 = temp_v1;
+				func_800039D0_45D0(NULL, NULL, &D_80052B50, D_8005BB38);
+				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+				drawItem.value = *scratch.frame;
 			}
-			previousY = ((const volatile Unk80146688 *)D_8013D528_14C4D8_Label)->unk1;
-			func_800966EC_A569C(NULL, (temp_t3 = ((const volatile Unk80146688 *)D_8013D528_14C4D8_Label)->unk0, temp_t3 * 256), previousY * 256, D_8013D528_14C4D8_Label->unk2 * D_8014ED1C, 1);
+			func_800970C0_A6070();
 		}
-	}
-	{
-		s32 spA0;
-		gDPPipeSync(D_8005BB2C++);
-		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-		spA0 = sp2E8 & 0x20;
-		var_s1 = 0xFF;
-		while (var_s1--) {
-			var_s0_4 = &alienInstances[var_s1];
-			if ((var_s0_4->typeIndex >= 2) && (var_s0_4->hitPoints > 0) && (var_s0_4->typeIndex != 0x1A) && (var_s0_4->typeIndex != 0x18)) {
-				func_80095D4C_A4CFC(var_s0_4->unk0, var_s0_4->unk4, 0xE6, 0xF, 0xF);
-			}
-
+		if ((drawItem.value >= 0x20) && (drawItem.value < 0x61)) {
+			var_s1 = *scratch.frame - 0x20;
+			var_t0 = var_s1 >> 3;
+			var_s1 = var_s1 & 7;
+			temp_v1 = var_s1;
+			var_a1 = var_t0;
+			var_a1 <<= 10;
+			temp_v1 <<= 2;
+			drawItem.value = 7; do {
+				scratch.pixels = &(&((u16 (*)[8192]) D_8006AA6C)[drawItem.value][var_a1])[temp_v1];
+				scratch.pixels[0] |= 0x7800;
+				scratch.pixels[1] |= 0x7800;
+				scratch.pixels = &scratch.pixels[3];
+				scratch.pixels[-1] |= 0x7800;
+				scratch.pixels[0] |= 0x7800;
+			} while (drawItem.value--);
+			var_a1 = var_t0;
+			temp_v1 = var_s1;
+			temp_v1 <<= 7;
+			var_a1 <<= 13;
+			drawItem.value = 7; do {
+				scratch.pixels = &((u16 (*)[1024]) &((u16 *) D_8006AA6C)[var_a1])[drawItem.value][temp_v1];
+				scratch.pixels[0] |= 0x7800;
+				scratch.pixels[32] |= 0x7800;
+				scratch.pixels = &scratch.pixels[96];
+				scratch.pixels[-32] |= 0x7800;
+				scratch.pixels[0] |= 0x7800;
+			} while (drawItem.value--);
 		}
-		var_s1 = D_80158FD8;
-		if (var_s1--) {
-			do {
-				temp_t3 = D_80158E80[var_s1];
-				temp_t3 &= 0xFF;
-				scratch.vehicle = &vehicleInstances[temp_t3];
-				if ((D_80052B34 != scratch.vehicle) && ((currentLevel != LEVEL_GREECE) || (scratch.vehicle->unk1A != 0x12))) {
-					func_80095D4C_A4CFC(scratch.vehicle->unk0, scratch.vehicle->unk4, 0xF, 0xE6, 0xF);
-				}
-
-			} while (var_s1--);
-		}
-		if (frameCount < 0x32) {
-			temp_f0 = (((f32) coss(D_8013D534_14C4E4) / 32768.0) + 1.0) * 128.0;
-			if (temp_f0 != 0.0f) {} /* Preserve the pulse color conversion register order. */
-			gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, temp_f0, temp_f0, 0xFF);
-			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-			gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-			do {
-				gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-			} while (0);
-			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
-			var_t0 = D_8014D50A;
-			drawItem.value = D_8014D509;
-			D_8013D534_14C4E4 = D_8013D534_14C4E4_Update + 0x800;
-			if (drawItem.value < var_t0) {
+		if ((transition->framesRemaining == 0) && (activeCamera == &overviewCamera) && (mapLock.value == 0)) {
+			var_t3 = 0x40;
+			zoneCount = D_8014667F_15562F[currentLevel];
+			if (zoneCount > 0) {
+				var_t2 = &D_80146688_155638[currentLevel - 1][0];
+				var_t0 = 0;
 				do {
-					temp_t3 = D_8014D408[drawItem.value];
-					if (!(alienInstances[temp_t3].unk20 & ALIEN_FLAG_UNKL)) {
-						switch (alienInstances[temp_t3].typeIndex) {
-						case 25:
-							gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50323B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
-							var_t0 = D_8014D50A;
-							break;
-						case 26:
-							gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50323B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
-							var_t0 = D_8014D50A;
-							break;
-						case 24:
-							gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50325B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-							func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
-							var_t0 = D_8014D50A;
-							break;
+					temp_t3 = (s32) (var_t2->unk0 - (activeCamera->targetX / 2));
+					var_t4 = (s32) (var_t2->unk1 + (activeCamera->targetY / 2));
+					drawItem.zone = var_t2;
+					temp_v1 = MAX(MAX(temp_t3, -temp_t3), MAX(var_t4, -var_t4));
+					if (temp_v1 < var_t3) {
+						var_t3 = temp_v1;
+						selectedZone = drawItem.zone;
+					}
+					var_t0 += 0x10;
+					var_t2 = &drawItem.zone[1];
+				} while (var_t0 < zoneCount * 0x10);
+			}
+			if (selectedZone != D_8013D524_14C4D4) {
+				D_8013D528_14C4D8 = D_8013D524_14C4D4;
+				D_8014ED1C = D_8014ED18_Marker;
+				D_8014ED18 = 0.0f;
+			}
+			D_8013D524_14C4D4 = selectedZone;
+		}
+		if (transition->framesRemaining == 0) {
+			if (D_8014ED34 == 1) {
+				temp_a1 = MAX(0, D_8014ED32 - 4);
+			} else {
+				temp_a1 = MIN(0x3C, D_8014ED32 + 4);
+			}
+			/* Reload the label state after clamping the height. */
+			if ((*(u32 *)&D_8014ED34 == 0) && (temp_a1 == 0x3C) && ((D_8014ED2C == 2) || (D_8014ED2D == 2))) {
+				D_8014ED34 = 1;
+			}
+			if (D_8014ED34 == 0) {
+				D_8014ED32 = temp_a1;
+				drawText(D_801423E4_151394, temp_a1 * 4);
+			} else {
+				D_8014ED32 = temp_a1;
+				drawText(D_801423E8_151398, temp_a1 * 4);
+			}
+			if (((D_8014ED2D == 2) || (D_8014ED34 != 0)) && ((D_8014ED2C == 2) || ((D_8014ED2D == 2) && (D_8014ED34 == 0)))) {
+				drawText(D_801423EC_15139C, 0, 0xFF, 0xE1, 0xFF);
+				if (D_8014ED30 == -1) {
+					drawText(D_801423F4_1513A4, 0x80, 8, D_801423FC_1513AC);
+				} else if (D_8014ED34 == 1) {
+					var_t3 = D_8014ED30_Select;
+					if ((var_t3 == 4) || (D_8013D2D0_14C280.entries[(currentLevel - 1) * 5 + (var_t3 + 1)].unk8 == 0)) {
+						drawText(D_8014240C_1513BC, 0x80, 8, D_80142414_1513C4);
+					} else {
+						drawText(D_80142424_1513D4, 0x80, 8, D_8014242C_1513DC, D_8014ED30_Label + 1);
+					}
+				} else {
+					drawText(D_80142434_1513E4, 0x80, 8, D_8014243C_1513EC, D_8014ED30_Label);
+				}
+			} else if ((D_8013D528_14C4D8 != 0) && ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1))) {
+				switch (D_8013D528_14C4D8_Label->unk3) {
+				case 0:
+					drawText(D_80142444_1513F4, 0xFF, 0xFF, 0);
+					break;
+				case 1:
+					drawText(D_80142448_1513F8, 0xFF, 0xFF, 0xFF);
+					break;
+				case 2:
+					drawText(D_8014244C_1513FC, 0xFF, 0, 0);
+					break;
+				}
+				if (D_8014ED2C == 1) {
+					drawText(D_80142450_151400, 0xFF);
+				} else {
+					drawText(D_80142454_151404, (s32) (D_8014ED1C * 255.0f));
+				}
+				drawText(D_80142458_151408, 0x80, 8, D_8013D528_14C4D8->name);
+			} else if (selectedZone != NULL) {
+				switch (selectedZone->unk3) {
+				case 0:
+					drawText(D_80142460_151410, 0xFF, 0xFF, 0);
+					break;
+				case 1:
+					drawText(D_80142464_151414, 0xFF, 0xFF, 0xFF);
+					break;
+				case 2:
+					drawText(D_80142468_151418, 0xFF, 0, 0);
+					break;
+				}
+				drawText(D_8014246C_15141C, (s32) (D_8014ED18 * 255.0f));
+				drawText(D_80142470_151420, 0x80, 8, selectedZone->name);
+			}
+		}
+		drawItem.value = transition->framesRemaining;
+		if (drawItem.value < 0x32) {
+			func_80097444_A63F4(activeCamera->yaw, activeCamera->pitch);
+		}
+		if ((drawItem.value == 0) && ((mapFlags |= 4, (selectedZone != NULL)) || (D_8013D528_14C4D8 != 0))) {
+			gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_1010A80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+			if (selectedZone != NULL) {
+				if (0.0f == D_8014ED1C) {
+					temp_f0_3 = D_8014ED18 + temp_f22;
+					D_8014ED18 = (temp_f0_3 < 1.0) ? temp_f0_3 : 1.0;
+				}
+				if (D_8014ED18 == 0.5) {
+					func_800153D8_15FD8(0x91);
+				}
+				switch (selectedZone->unk3) {
+				case 0:
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0x00, 0x96);
+					break;
+				case 1:
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0x96);
+					break;
+				case 2:
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0x00, 0x00, 0x96);
+					break;
+				}
+				func_800966EC_A569C(NULL, (selectedZone->unk0 * 256), (selectedZone->unk1 * 256), selectedZone->unk2 * D_8014ED18_Marker, 1);
+			}
+			if ((D_8013D528_14C4D8 != 0) && (D_8014ED1C_Label > 0.0f)) {
+				temp_f0_3 = D_8014ED1C_Label;
+				D_8014ED1C = (temp_f22 < temp_f0_3) ? (temp_f0_3 - temp_f22) : 0.0;
+				switch (D_8013D528_14C4D8_Color->unk3) {
+				case 0:
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0x00, 0x96);
+					break;
+				case 1:
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0x96);
+					break;
+				case 2:
+					gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0x00, 0x00, 0x96);
+					break;
+				}
+				vec2CC.unk0 = D_8013D528_14C4D8_Label->unk0 * 256;
+				vec2CC.unk2 = D_8013D528_14C4D8_Label->unk1 * 256;
+				vec2CC.unk4 = D_8013D528_14C4D8_Label->unk2;
+				func_800966EC_A569C(NULL, vec2CC.unk0, vec2CC.unk2, vec2CC.unk4 * D_8014ED1C, 1);
+			}
+		}
+		{
+			s32 spA0;
+			gDPPipeSync(D_8005BB2C++);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+			spA0 = mapFlags & 0x20;
+			var_s1 = 0xFF;
+			while (var_s1--) {
+				var_s0_4 = &alienInstances[var_s1];
+				if ((var_s0_4->typeIndex >= 2) && (var_s0_4->hitPoints > 0) && (var_s0_4->typeIndex != 0x1A) && (var_s0_4->typeIndex != 0x18)) {
+					func_80095D4C_A4CFC(var_s0_4->unk0, var_s0_4->unk4, 0xE6, 0xF, 0xF);
+				}
+
+			}
+			var_s1 = D_80158FD8;
+			if (var_s1--) {
+				do {
+					temp_t3 = D_80158E80[var_s1];
+					temp_t3 &= 0xFF;
+					scratch.vehicle = &vehicleInstances[temp_t3];
+					if ((D_80052B34 != scratch.vehicle) && ((currentLevel != LEVEL_GREECE) || (scratch.vehicle->unk1A != 0x12))) {
+						func_80095D4C_A4CFC(scratch.vehicle->unk0, scratch.vehicle->unk4, 0xF, 0xE6, 0xF);
+					}
+
+				} while (var_s1--);
+			}
+			if (transition->framesRemaining < 0x32) {
+				temp_f0 = (((f32) coss(D_8013D534_14C4E4) / 32768.0) + 1.0) * 128.0;
+				if (temp_f0 != 0.0f) {} /* Preserve the pulse color conversion register order. */
+				gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, temp_f0, temp_f0, 0xFF);
+				gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+				gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+				do {
+					gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+				} while (0);
+				gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+				var_t0 = D_8014D50A;
+				drawItem.value = D_8014D509;
+				D_8013D534_14C4E4 = D_8013D534_14C4E4_Update + 0x800;
+				if (drawItem.value < var_t0) {
+					do {
+						temp_t3 = D_8014D408[drawItem.value];
+						if (!(alienInstances[temp_t3].unk20 & ALIEN_FLAG_UNKL)) {
+							switch (alienInstances[temp_t3].typeIndex) {
+							case 25:
+								gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50323B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+								func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
+								var_t0 = D_8014D50A;
+								break;
+							case 26:
+								gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50323B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+								func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
+								var_t0 = D_8014D50A;
+								break;
+							case 24:
+								gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_50325B0, G_IM_FMT_IA, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+								func_800966EC_A569C(NULL, alienInstances[temp_t3].unk0, alienInstances[temp_t3].unk4, 4.0f, 1);
+								var_t0 = D_8014D50A;
+								break;
+							}
+						}
+						drawItem.value += 1;
+					} while (drawItem.value < var_t0);
+				}
+			}
+			gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
+			markerBrightness = markerPulse / 40;
+			markerBrightness &= 0xFF;
+			markerBrightness &= 0xFF;
+			func_80095D4C_A4CFC(D_80052B34->unk0, D_80052B34->unk4, markerBrightness, markerBrightness, markerBrightness);
+			if (spA0) {
+				func_80095D4C_A4CFC(D_8014ED06, D_8014ED0A, markerBrightness, 0, markerBrightness);
+			}
+		}
+		if (transition->framesRemaining < 0x32) {
+			var_s1 = D_80158FD8;
+			var_t3 = 0x7FFFFFFF;
+			var_t0 = -1;
+			if ((activeCamera == &overviewCamera) && (activeCamera->distance < 0x12C) && (var_s1 >= 2)) {
+				do {
+					temp_v0 = D_80158E80[var_s1 - 1];
+					temp_v0 &= 0xFF;
+					temp_v0 &= 0xFF;
+					temp_a2_2 = vehicleInstances[temp_v0].unk4;
+					temp_a1 = vehicleInstances[temp_v0].unk0;
+					var_s1 -= 1;
+					if (D_8021EA30[((((temp_a2_2 >> 8) + 0x80) >> 2) << 6) + (((temp_a1 >> 8) + 0x80) >> 2)] & 0xF0) {
+						temp_f0 = (temp_a2_2 >> 7) + activeCamera->targetY;
+						temp_f2 = (temp_a1 >> 7) - activeCamera->targetX;
+						temp_v1 = (s32) ((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
+						if (var_t0 == _SHIFTL(G_RDPPIPESYNC, 24, 8)) {}
+						if (temp_v1) {}
+						if ((D_80052B34_MapScan != &vehicleInstances[temp_v0]) && (temp_v1 < var_t3) && ((currentLevel != LEVEL_GREECE) || (vehicleInstances[temp_v0].unk1A != 0x12))) {
+							var_t3 = temp_v1;
+							var_t0 = temp_v0;
 						}
 					}
-					drawItem.value += 1;
-				} while (drawItem.value < var_t0);
+				} while (var_s1 >= 2);
 			}
-		}
-		gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-		markerBrightness = sp2E4 / 40;
-		markerBrightness &= 0xFF;
-		markerBrightness &= 0xFF;
-		func_80095D4C_A4CFC(D_80052B34->unk0, D_80052B34->unk4, markerBrightness, markerBrightness, markerBrightness);
-		if (spA0) {
-			func_80095D4C_A4CFC(D_8014ED06, D_8014ED0A, markerBrightness, 0, markerBrightness);
-		}
-	}
-	if (frameCount < 0x32) {
-		var_s1 = D_80158FD8;
-		var_t3 = 0x7FFFFFFF;
-		var_t0 = -1;
-		if ((var_s3 == &cam3CC) && (var_s3->distance < 0x12C) && (var_s1 >= 2)) {
-			do {
-				temp_v0 = D_80158E80[var_s1 - 1];
-				temp_v0 &= 0xFF;
-				temp_v0 &= 0xFF;
-				if (temp_v0) {}
-				temp_a2_2 = vehicleInstances[temp_v0].unk4;
-				temp_a1 = vehicleInstances[temp_v0].unk0;
-				var_s1 -= 1;
-				if (D_8021EA30[((((temp_a2_2 >> 8) + 0x80) >> 2) << 6) + (((temp_a1 >> 8) + 0x80) >> 2)] & 0xF0) {
-					temp_f0 = (temp_a2_2 >> 7) + var_s3->targetY;
-					temp_f2 = (temp_a1 >> 7) - var_s3->targetX;
-					temp_v1 = (s32) ((temp_f0 * temp_f0) + (temp_f2 * temp_f2));
-					if (var_t0 == _SHIFTL(G_RDPPIPESYNC, 24, 8)) {}
-					if (temp_v1) {}
-					if ((D_80052B34_MapScan != &vehicleInstances[temp_v0]) && (temp_v1 < var_t3) && ((currentLevel != LEVEL_GREECE) || (vehicleInstances[temp_v0].unk1A != 0x12))) {
-						var_t3 = temp_v1;
-						var_t0 = temp_v0;
-					}
-				}
-			} while (var_s1 >= 2);
-		}
-		temp_v0 = var_s3->distance;
-		if (var_t0 != D_8013D530_14C4E0) {
-			var_f12 = D_8014ED20_Transition;
-			D_8013D52C_14C4DC = D_8013D530_14C4E0;
-			D_8014ED20 = 0.0f;
-			D_8014ED24 = var_f12;
-		}
-		temp_f2 = D_8014ED20;
-		var_f12 = D_8014ED24;
-		if ((temp_v0 >= 0x12C) && (var_t0 != -1)) {
-			D_8013D52C_14C4DC = var_t0;
-			var_f12 = temp_f2;
-			var_t0 = -1;
-		}
-		gDPPipeSync(D_8005BB2C++);
-		gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH);
-		gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_LIGHTING);
-		gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
-		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-		gDPSetFogColor(D_8005BB2C++, 0, 0, 0, 0xFF);
-		gSPFogFactor(D_8005BB2C++, 0x1900, 0xE800);
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, -1U);
-		gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (D_8013D530_14C4E0 = var_t0, -1U));
-		gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-		gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
-		gDPPipeSync(D_8005BB2C++);
-		D_8014ED20 = temp_f2;
-		D_8014ED24 = var_f12;
-		if (var_t0 != -1) {
-			temp_f2 = MIN(1, temp_f2 + temp_f22);
-			sp2A0 = var_t0;
-			temp_v1 = (s32) (temp_f2 * 256.0);
-			vec2DC.unk4 = temp_v1;
-			vec2DC.unk2 = temp_v1;
-			vec2DC.unk0 = temp_v1;
-			drawItem.matrix = D_8005BB38; D_8014ED20 = temp_f2;
-
-			func_800039D0_45D0(NULL, NULL, &vec2DC, drawItem.matrix);
+			temp_v0 = activeCamera->distance;
+			if (var_t0 != D_8013D530_14C4E0) {
+				var_f12 = D_8014ED20_Transition;
+				D_8013D52C_14C4DC = D_8013D530_14C4E0;
+				D_8014ED20 = 0.0f;
+				D_8014ED24 = var_f12;
+			}
 			temp_f2 = D_8014ED20;
-			gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-			if (temp_f22 <= temp_f2) {
-				temp_a2_2 = sp2A0;
-				if (temp_a2_2 < 0) {} /* Keep the index conversion before the coordinate arguments. */
-				D_8014ED20 = temp_f2;
-				func_80097B74_A6B24(temp_a2_2, (s32) ((vehicleInstances[sp2A0].unk0 >> 5) / temp_f2), (s32) (-(vehicleInstances[sp2A0].unk4 >> 5) / temp_f2), 0, 0x4000 - vehicleInstances[sp2A0].unk6);
+			var_f12 = D_8014ED24;
+			if ((temp_v0 >= 0x12C) && (var_t0 != -1)) {
+				D_8013D52C_14C4DC = var_t0;
+				var_f12 = temp_f2;
+				var_t0 = -1;
 			}
-			func_80097E1C_A6DCC(var_s3);
-		}
-		var_f12 = D_8014ED24;
-		if (D_8013D52C_14C4DC != -1U) {
-			temp_f0_3 = var_f12;
-			var_f12 = (temp_f0_3 < temp_f22) ? 0.0 : (temp_f0_3 - temp_f22);
-			temp_f0_3 = var_f12;
+			gDPPipeSync(D_8005BB2C++);
+			gSPSetGeometryMode(D_8005BB2C++, G_ZBUFFER | G_SHADE | G_FOG | G_SHADING_SMOOTH);
+			gSPClearGeometryMode(D_8005BB2C++, G_CULL_BOTH | G_LIGHTING);
+			gDPSetCycleType(D_8005BB2C++, G_CYC_2CYCLE);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_FOG_SHADE_A, G_RM_AA_ZB_OPA_SURF2);
+			gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+			gDPSetFogColor(D_8005BB2C++, 0, 0, 0, 0xFF);
+			gSPFogFactor(D_8005BB2C++, 0x1900, 0xE800);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_aLIGHT_1, -1U);
+			gMoveWd(D_8005BB2C++, G_MW_LIGHTCOL, G_MWO_bLIGHT_1, (D_8013D530_14C4E0 = var_t0, -1U));
+			gSPLightColor(D_8005BB2C++, LIGHT_2, 0x808080FF);
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+			gDPSetAlphaCompare(D_8005BB2C++, G_AC_NONE);
+			gDPPipeSync(D_8005BB2C++);
+			D_8014ED20 = temp_f2;
 			D_8014ED24 = var_f12;
-			if (temp_f22 <= temp_f0_3) {
-				temp_v1 = (s32) (temp_f0_3 * 256.0);
+			if (var_t0 != -1) {
+				temp_f2 = MIN(1, temp_f2 + temp_f22);
+				sp2A0 = var_t0;
+				temp_v1 = (s32) (temp_f2 * 256.0);
 				vec2DC.unk4 = temp_v1;
 				vec2DC.unk2 = temp_v1;
 				vec2DC.unk0 = temp_v1;
-				func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
-				var_f12 = D_8014ED24;
+				drawItem.matrix = D_8005BB38; D_8014ED20 = temp_f2;
+
+				func_800039D0_45D0(NULL, NULL, &vec2DC, drawItem.matrix);
+				temp_f2 = D_8014ED20;
 				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-				scratch.vehicle = &vehicleInstances[D_8013D52C_14C4DC];
-				func_80097B74_A6B24(D_8013D52E_14C4DE, (s32) ((scratch.vehicle->unk0 >> 5) / var_f12), (s32) (-(scratch.vehicle->unk4 >> 5) / var_f12), 0, 0x4000 - scratch.vehicle->unk6);
-				func_80097E1C_A6DCC(var_s3);
+				if (temp_f22 <= temp_f2) {
+					D_8014ED20 = temp_f2;
+					func_80097B74_A6B24(sp2A0, (s32) ((vehicleInstances[sp2A0].unk0 >> 5) / temp_f2), (s32) (-(vehicleInstances[sp2A0].unk4 >> 5) / temp_f2), 0, 0x4000 - vehicleInstances[sp2A0].unk6);
+				}
+				func_80097E1C_A6DCC(activeCamera);
 			}
-		}
-		temp_v0 = var_s3->distance;
-		var_a1 = D_8014ED2C;
-		if (temp_v0 >= 0x12C) {
-			temp_f0_3 = D_8014ED28;
-			D_8014ED28 = (temp_f0_3 < temp_f22) ? 0.0 : (temp_f0_3 - temp_f22);
-		}
-		if (temp_v0 < 0x12C) {
-			D_8014ED28 = MIN(1, D_8014ED28 + temp_f22);
-		}
-		if ((var_a1 == 1) || (D_8014ED2D == 1)) {
-			if (var_s3 == &cam3B8) {
-				sp2B8 = 1.0f;
-			} else if (var_s3 == &cam32C) {
-				if (var_a1 == 1) {
-					if (D_8014ED2E >= 0x2001) {
-						temp_f2 = D_8014ED2E - 0x2000;
+			var_f12 = D_8014ED24;
+			if (D_8013D52C_14C4DC != -1U) {
+				temp_f0_3 = var_f12;
+				var_f12 = (temp_f0_3 < temp_f22) ? 0.0 : (temp_f0_3 - temp_f22);
+				temp_f0_3 = var_f12;
+				D_8014ED24 = var_f12;
+				if (temp_f22 <= temp_f0_3) {
+					temp_v1 = (s32) (temp_f0_3 * 256.0);
+					vec2DC.unk4 = temp_v1;
+					vec2DC.unk2 = temp_v1;
+					vec2DC.unk0 = temp_v1;
+					func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
+					var_f12 = D_8014ED24;
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+					scratch.vehicle = &vehicleInstances[D_8013D52C_14C4DC];
+					func_80097B74_A6B24(D_8013D52E_14C4DE, (s32) ((scratch.vehicle->unk0 >> 5) / var_f12), (s32) (-(scratch.vehicle->unk4 >> 5) / var_f12), 0, 0x4000 - scratch.vehicle->unk6);
+					func_80097E1C_A6DCC(activeCamera);
+				}
+			}
+			temp_v0 = activeCamera->distance;
+			var_a1 = D_8014ED2C;
+			if (temp_v0 >= 0x12C) {
+				temp_f0_3 = D_8014ED28;
+				D_8014ED28 = (temp_f0_3 < temp_f22) ? 0.0 : (temp_f0_3 - temp_f22);
+			}
+			if (temp_v0 < 0x12C) {
+				D_8014ED28 = MIN(1, D_8014ED28 + temp_f22);
+			}
+			if ((var_a1 == 1) || (D_8014ED2D == 1)) {
+				if (activeCamera == &playerCamera) {
+					sp2B8 = 1.0f;
+				} else if (activeCamera == &interpolatedCamera) {
+					if (var_a1 == 1) {
+						if (D_8014ED2E >= 0x2001) {
+							temp_f2 = D_8014ED2E - 0x2000;
+							sp2B8 = temp_f2 / 8192;
+							D_8014ED2E = D_8014ED2E;
+						} else {
+							sp2B8 = 0.0f;
+						}
+					} else if (D_8014ED2E < 0x2000) {
+						temp_f2 = 0x2000 - D_8014ED2E;
 						sp2B8 = temp_f2 / 8192;
 						D_8014ED2E = D_8014ED2E;
 					} else {
 						sp2B8 = 0.0f;
 					}
-				} else if (D_8014ED2E < 0x2000) {
-					temp_f2 = 0x2000 - D_8014ED2E;
-					sp2B8 = temp_f2 / 8192;
-					D_8014ED2E = D_8014ED2E;
+				}
+				if (D_80052B34->unk1A == 0) {
+					vec2D4.unk0 = D_80052B34->unk0 >> 7;
+					vec2D4.unk2 = -D_80052B34->unk4 >> 7;
+					temp_v1 = (s32) (12.0f * sp2B8);
+					vec2D4.unk4 = (s32) (7.0f * sp2B8);
+					vec2CC.unk0 = 0x4000 - D_80052B34->unk6;
+					vec2CC.unk2 = 0;
+					vec2CC.unk4 = 0;
+					vec2DC.unk4 = temp_v1;
+					vec2DC.unk2 = temp_v1;
+					vec2DC.unk0 = temp_v1;
+					func_800039D0_45D0(&vec2D4, &sp2B0, NULL, D_8005BB38);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
+					func_800039D0_45D0(NULL, &vec2CC, &vec2DC, D_8005BB38);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
+					gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
+					if ((sp2B8 > 0.0f) && ((activeCamera == &playerCamera) || (activeCamera == &interpolatedCamera))) {
+						func_80097994_A6944();
+					}
 				} else {
-					sp2B8 = 0.0f;
-				}
-			}
-			if (D_80052B34->unk1A == 0) {
-				vec2D4.unk0 = D_80052B34->unk0 >> 7;
-				vec2D4.unk2 = -D_80052B34->unk4 >> 7;
-				temp_v1 = (s32) (12.0f * sp2B8);
-				vec2D4.unk4 = (s32) (7.0f * sp2B8);
-				vec2CC.unk0 = 0x4000 - D_80052B34->unk6;
-				vec2CC.unk2 = 0;
-				vec2CC.unk4 = 0;
-				vec2DC.unk4 = temp_v1;
-				vec2DC.unk2 = temp_v1;
-				vec2DC.unk0 = temp_v1;
-				func_800039D0_45D0(&vec2D4, &sp2B0, NULL, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_LOAD | G_MTX_MODELVIEW);
-				func_800039D0_45D0(NULL, &vec2CC, &vec2DC, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_MODELVIEW);
-				gSPSetGeometryMode(D_8005BB2C++, G_LIGHTING);
-				if ((sp2B8 > 0.0f) && ((var_s3 == &cam3B8) || (var_s3 == &cam32C))) {
-					func_80097994_A6944();
-				}
-			} else {
-				temp_v1 = (s32) (sp2B8 * 256.0);
-				vec2DC.unk4 = temp_v1;
-				vec2DC.unk2 = temp_v1;
-				vec2DC.unk0 = temp_v1;
-				func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
-				gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
-				if (sp2B8 > 0.0f) {
-					func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / sp2B8), (s32) ((-D_80052B34->unk4 >> 5) / sp2B8), 0, 0x4000 - D_80052B34->unk6);
+					temp_v1 = (s32) (sp2B8 * 256.0);
+					vec2DC.unk4 = temp_v1;
+					vec2DC.unk2 = temp_v1;
+					vec2DC.unk0 = temp_v1;
+					func_800039D0_45D0(NULL, NULL, &vec2DC, D_8005BB38);
+					gSPMatrix(D_8005BB2C++, K0_TO_PHYS(D_8005BB38++), G_MTX_NOPUSH | G_MTX_MUL | G_MTX_PROJECTION);
+					if (sp2B8 > 0.0f) {
+						func_80097B74_A6B24(D_80052B34 - vehicleInstances, (s32) ((D_80052B34->unk0 >> 5) / sp2B8), (s32) ((-D_80052B34->unk4 >> 5) / sp2B8), 0, 0x4000 - D_80052B34->unk6);
+					}
 				}
 			}
 		}
-	}
-	if (frameCount < 0x32) {
-		func_80097E1C_A6DCC(var_s3);
-		func_80096BC4_A5B74((s16) (s32) var_s3->targetX * 128, (s16) (s32) var_s3->targetY * 128);
+		if (transition->framesRemaining < 0x32) {
+			func_80097E1C_A6DCC(activeCamera);
+			func_80096BC4_A5B74((s16) (s32) activeCamera->targetX * 128, (s16) (s32) activeCamera->targetY * 128);
 
-		gDPLoadTLUT_pal16(D_8005BB2C++, 0, (u32) D_5032390);
-		gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_5032190, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
-		gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
-		gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
-		if (D_8014ED2C != 3) {
-			func_800966EC_A569C(var_s3, D_80052B34->unk0, D_80052B34->unk4, var_s3->distance * 0.02, 4);
+			gDPLoadTLUT_pal16(D_8005BB2C++, 0, (u32) D_5032390);
+			gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_5032190, G_IM_FMT_CI, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_RGBA16);
+			gDPSetTexturePersp(D_8005BB2C++, G_TP_PERSP);
+			gDPSetCombineMode(D_8005BB2C++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xFF, 0xFF, 0xFF, 0xFF);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_OPA_SURF, G_RM_AA_OPA_SURF2);
+			if (D_8014ED2C != 3) {
+				func_800966EC_A569C(activeCamera, D_80052B34->unk0, D_80052B34->unk4, activeCamera->distance * 0.02, 4);
+			}
+			gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
 		}
-		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-	}
-	if (D_8014ED2C == 3) {
-		gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_1010A80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
-		gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
-		gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x80, 0xFF, 0xFF, 0xC8);
-		sp2A0 = (D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF;
-		drawItem.stage = &D_8013D3D4_14C384[sp2A0];
-		func_800966EC_A569C(var_s3, drawItem.stage->x * 256, drawItem.stage->z * 256, drawItem.stage->size, 1);
-		temp_f0 = drawItem.stage->x * 2;
-		temp_f2 = (-drawItem.stage->z * 2) - 0x2E;
-		cam3A4.targetX = temp_f0;
-		cam3A4.targetY = temp_f2;
-	}
-	if (frameCount == 0) {
-		gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xA0, 0x00, 0xA0, 0xAA);
-		if (((D_8014ED2D == 2) || (D_8014ED34 != 0)) && ((D_8014ED2C == 2) || ((D_8014ED2D == 2) && (D_8014ED34 == 0)))) {
-			if (D_8014ED30 == -1) {
-				drawItem.value = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
-			} else if (D_8014ED34 == 1) {
-				if ((D_8014ED30_Label == 4) || ((temp_v0 = currentLevel, (&D_8013D2D0_14C280.entries[(temp_v0 - 1) * 5])[D_8014ED30_Label + 1].unk8) == 0)) {
-					drawItem.value = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
-				} else {
-					drawItem.value = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
-				}
-			} else {
-				drawItem.value = func_8000A2B8_AEB8(D_801424A0_151450, 0) + 0x20;
-			}
-			temp_v1 = drawItem.value >> 1;
-			func_800092B8_9EB8((((s32) D_80068084 / 2) - temp_v1) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + temp_v1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
-		} else {
-			if (D_8013D528_14C4D8 != 0) {
-				drawItem.value = func_8000A2B8_AEB8(D_8013D528_14C4D8->name, 0) + 0x20;
-			} else {
-				drawItem.value = 0;
-			}
-			if (sp30C != NULL) {
-				var_s1 = func_8000A2B8_AEB8(sp30C->name, 0) + 0x20;
-			} else {
-				var_s1 = 0;
-			}
-			if (D_8014ED2C == 1) {
-				var_s1 = drawItem.value;
-			}
-			if ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1)) {
-				if ((drawItem.value < var_s1) || (var_s1 == 0)) {
-					drawItem.value = (s32) ((1.0 - D_8014ED1C_Label) * (f32) (var_s1 - drawItem.value)) + drawItem.value;
-				}
-				if ((D_8013D528_14C4D8_Label != 0) && (drawItem.value > 0)) {
-					temp_v1 = drawItem.value >> 1;
-					func_800092B8_9EB8(((((s32) D_80068084 / 2) - temp_v1) - 5) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + temp_v1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
-				}
-			} else {
-				if (var_s1 < drawItem.value) {
-					var_s1 += (s32) ((1.0 - D_8014ED18) * (f32) (drawItem.value - var_s1));
-				}
-				if ((sp30C != NULL) && (var_s1 > 0)) {
-					temp_v1 = var_s1 >> 1;
-					func_800092B8_9EB8(((((s32) D_80068084 / 2) - temp_v1) - 5) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + temp_v1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
-				}
-			}
-		}
-	}
-	sp2E4 += 0x190;
-	gDPPipeSync(D_8005BB2C++);
-	gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
-	gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
-	if (sp27C == 0) {
-		gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
-		sp27C = func_8000E53C_F13C();
-	}
-	func_80018AEC_196EC(0x1E, 0x1E, 0x64);
-	if ((var_s3 == &cam3A4) && (func_80018A58_19658() != 0)) {
-		D_80053BF8 = 0x7F;
-		*(u16 *)&D_80053BF0 = 0x7F;
-		D_80053BFA = 0xC8;
-		*(u16 *)&D_80053BF2 = 0xC8;
-		D_80053BFC = 0xDC;
-		*(u16 *)&D_80053BF4 = 0xDC;
-		D_80053BF6 = 0;
-		D_80053BFE = 0xFF;
-		gDPPipeSync(D_8005BB2C++);
-		func_80017CA4_188A4();
-	}
-	func_8000B044_BC44();
-	func_8000505C_5C5C();
-	var_a1 = frameCount; /* Reload the timer after the call. */
-	if (var_a1 != 0) {
-		var_a1 -= 1;
-	}
-	mapStep += 1;
-	D_80052AD8_MapWrite = D_80052AD8 + 1;
-	if (isButtonNewlyPressed(0, 0x5000U)) {
 		if (D_8014ED2C == 3) {
-			func_80018D58_19958();
+			gDPLoadTextureBlock_4b(D_8005BB2C++, (u32) D_1010A80, G_IM_FMT_I, 32, 32, 0, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMIRROR | G_TX_CLAMP, G_TX_NOMASK, G_TX_NOMASK, G_TX_NOLOD, G_TX_NOLOD);
+			gDPSetCombineLERP(D_8005BB2C++, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0, 0, 0, 0, PRIMITIVE, TEXEL0, 0, PRIMITIVE, 0);
+			gDPSetRenderMode(D_8005BB2C++, G_RM_AA_XLU_SURF, G_RM_AA_XLU_SURF2);
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, 0x80, 0xFF, 0xFF, 0xC8);
+			sp2A0 = (D_8013D3CC_14C37C[currentLevel - 1] + D_80048030) & 0xFF;
+			drawItem.stage = &D_8013D3D4_14C384[sp2A0];
+			func_800966EC_A569C(activeCamera, drawItem.stage->x * 256, drawItem.stage->z * 256, drawItem.stage->size, 1);
+			temp_f0 = drawItem.stage->x * 2;
+			temp_f2 = (-drawItem.stage->z * 2) - 0x2E;
+			stageMarkerCamera.targetX = temp_f0;
+			stageMarkerCamera.targetY = temp_f2;
 		}
-		D_8014ED56 = 0;
-		break;
-	} else {
-		frameCount = var_a1;
-	}
+		if (transition->framesRemaining == 0) {
+			gDPSetPrimColor(D_8005BB2C++, 0, 0, 0xA0, 0x00, 0xA0, 0xAA);
+			if (((D_8014ED2D == 2) || (D_8014ED34 != 0)) && ((D_8014ED2C == 2) || ((D_8014ED2D == 2) && (D_8014ED34 == 0)))) {
+				if (D_8014ED30 == -1) {
+					drawItem.value = func_8000A2B8_AEB8(D_80142478_151428, 0) + 0x20;
+				} else if (D_8014ED34 == 1) {
+					var_t3 = D_8014ED30_Label;
+					if ((var_t3 == 4) || ((temp_v0 = currentLevel, D_8013D2D0_14C280.entries[(temp_v0 - 1) * 5 + (var_t3 + 1)].unk8) == 0)) {
+						drawItem.value = func_8000A2B8_AEB8(D_80142488_151438, 0) + 0x20;
+					} else {
+						drawItem.value = func_8000A2B8_AEB8(D_80142498_151448, 0) + 0x20;
+					}
+				} else {
+					drawItem.value = func_8000A2B8_AEB8(D_801424A0_151450, 0) + 0x20;
+				}
+				var_a1 = drawItem.value >> 1;
+				func_800092B8_9EB8((((s32) D_80068084 / 2) - var_a1) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + var_a1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
+			} else {
+				if (D_8013D528_14C4D8 != 0) {
+					drawItem.value = func_8000A2B8_AEB8(D_8013D528_14C4D8->name, 0) + 0x20;
+				} else {
+					drawItem.value = 0;
+				}
+				if (selectedZone != NULL) {
+					var_s1 = func_8000A2B8_AEB8(selectedZone->name, 0) + 0x20;
+				} else {
+					var_s1 = 0;
+				}
+				if (D_8014ED2C == 1) {
+					var_s1 = drawItem.value;
+				}
+				if ((D_8014ED1C > 0.0f) || (D_8014ED2C == 1)) {
+					if ((drawItem.value < var_s1) || (var_s1 == 0)) {
+						drawItem.value = (s32) ((1.0 - D_8014ED1C_Label) * (f32) (var_s1 - drawItem.value)) + drawItem.value;
+					}
+					if ((D_8013D528_14C4D8_Label != 0) && (drawItem.value > 0)) {
+						var_a1 = drawItem.value >> 1;
+						func_800092B8_9EB8(((((s32) D_80068084 / 2) - var_a1) - 5) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + var_a1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
+					}
+				} else {
+					if (var_s1 < drawItem.value) {
+						var_s1 += (s32) ((1.0 - D_8014ED18) * (f32) (drawItem.value - var_s1));
+					}
+					if ((selectedZone != NULL) && (var_s1 > 0)) {
+						var_a1 = var_s1 >> 1;
+						func_800092B8_9EB8(((((s32) D_80068084 / 2) - var_a1) - 5) << 2, (D_8014ED32 + 0xAE) << 2, (((s32) D_80068084 / 2) + var_a1) << 2, (D_8014ED32 + 0xD4) << 2, 2U);
+					}
+				}
+			}
+		}
+		markerPulse += 0x190;
+		gDPPipeSync(D_8005BB2C++);
+		gDPSetTextureLUT(D_8005BB2C++, G_TT_NONE);
+		gDPSetCycleType(D_8005BB2C++, G_CYC_1CYCLE);
+		if (sp27C == 0) {
+			gDPSetCombineMode(D_8005BB2C++, G_CC_DECALRGBA, G_CC_DECALRGBA);
+			sp27C = func_8000E53C_F13C();
+		}
+		func_80018AEC_196EC(0x1E, 0x1E, 0x64);
+		if ((activeCamera == &stageMarkerCamera) && (func_80018A58_19658() != 0)) {
+			D_80053BF8 = 0x7F;
+			D_80053BF0 = 0x7F;
+			D_80053BFA = 0xC8;
+			D_80053BF2 = 0xC8;
+			D_80053BFC = 0xDC;
+			D_80053BF4 = 0xDC;
+			D_80053BF6 = 0;
+			D_80053BFE = 0xFF;
+			gDPPipeSync(D_8005BB2C++);
+			func_80017CA4_188A4();
+		}
+		func_8000B044_BC44();
+		func_8000505C_5C5C();
+		var_a1 = transition->framesRemaining;
+		if (var_a1 != 0) {
+			var_a1 -= 1;
+		}
+		revealFrame += 1;
+		D_80052AD8++;
+		if (isButtonNewlyPressed(0, 0x5000)) {
+			if (D_8014ED2C == 3) {
+				func_80018D58_19958();
+			}
+			D_8014ED56 = 0;
+			break;
+		}
+		transition->framesRemaining = var_a1;
 	}
 	func_8000AFDC_BBDC();
 	func_800056A8_62A8();
