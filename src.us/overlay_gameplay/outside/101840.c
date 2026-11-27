@@ -1504,6 +1504,7 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
   gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
   gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
+#ifdef NON_MATCHING
 void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	Vec3fComponents direction;
 	f32 temp_f14;
@@ -1857,7 +1858,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 14, 17, 15, 0);
 	gSP1Triangle(D_8005BB2C++, 13, 15, 16, 0);
 }
-
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F63D0_105380.s", "src.us/overlay_gameplay/outside/101840_width_constant.s")
+#endif
 
 #ifdef NON_MATCHING
 void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
