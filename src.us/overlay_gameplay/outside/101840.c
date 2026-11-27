@@ -2116,7 +2116,7 @@ void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 0);
 }
 #else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s", "src.us/overlay_gameplay/outside/101840_animation_late_rodata.s")
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F7790_106740.s")
 #endif
 
 // AI - Renders six limbs of D_80158000[arg0] when D_80157FF0[arg0] is -1
