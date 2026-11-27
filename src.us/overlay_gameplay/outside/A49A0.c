@@ -570,7 +570,7 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 #ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1)
 {
-  ShieldWallLink *tile;
+  const ShieldWallLink *tile;
   Vtx *v0;
   Vtx *v1;
   Vtx *v2;
