@@ -1504,15 +1504,14 @@ void func_800F554C_1044FC(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
   gSP1Triangle(D_8005BB2C++, 11, 10, 7, 0);
   gSP1Triangle(D_8005BB2C++, 11, 10, 13, 0);
 }
-#ifdef NON_MATCHING
 void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
-	Vec3f direction;
+	Vec3fComponents direction;
 	f32 temp_f14;
 	s32 wideX;
 	s32 angle;
 	s32 absDistanceZ;
 	f32 temp_f12;
-	s16 temp_f6;
+	s32 temp_f6;
 	s32 temp_f8;
 	f32 temp_f0;
 	s16 temp_f10;
@@ -1528,12 +1527,10 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	s16 sp112;
 	s16 sp110;
 	u8 temp_ra;
-	s16 sp10C;
-	s16 sp10A;
-	s16 tipColors[3]; /* Blue, green, red in stack order. */
-	s16 temp_v1_2;
-	s16 temp_f6_3;
+	union { s16 value; volatile s16 ordered; } middleG;
+	union { s16 values[4]; struct { s16 pad[3]; volatile s16 b; } ordered; } tailColors;
 	s32 temp_v0;
+	s16 temp_f6_3;
 	s16 initialProjectionX;
 	s32 rawWidth;
 
@@ -1545,18 +1542,18 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	}
 
 	temp_f0 = (f32)((f64)var_f16 * 1.2);
-	direction.x = (f32)(arg1[0] - arg0[0]);
-	direction.y = (f32)(arg1[1] - arg0[1]);
-	direction.z = (f32)(arg1[2] - arg0[2]);
-	func_800F54AC_10445C(&direction, &direction);
+	direction.vector.x = (f32)(arg1[0] - arg0[0]);
+	direction.vector.y = (f32)(arg1[1] - arg0[1]);
+	direction.vector.z = (f32)(arg1[2] - arg0[2]);
+	func_800F54AC_10445C(&direction.vector, &direction.vector);
 	angle = func_80003824_4424((f32)(arg0[2] - arg2[2]), (f32)(arg0[0] - arg2[0]));
 	temp_f14 = (f32)((f64)(f32)sins(angle + 0x4000) / 32768.0);
 	temp_v0_2 = (s32)(u32)coss(angle + 0x4000);
 	gDPPipeSync(D_8005BB2C++);
 	temp_f12 = var_f2 * 2;
-	initialProjectionX = (s16)(s32)(direction.x * temp_f12);
-	temp_f10 = (s32)(direction.z * temp_f12);
-	temp_f8 = (s16)(s32)(direction.y * temp_f12);
+	initialProjectionX = (s16)(s32)(direction.vector.x * temp_f12);
+	temp_f8 = (s16)(s32)(direction.vector.y * temp_f12);
+	temp_f10 = (s32)(direction.vector.z * temp_f12);
 	sp11A = D_8013FCD4_14EC84[currentLevel + 9][0].r;
 	sp118 = D_8013FCD4_14EC84[currentLevel + 9][0].g;
 	sp116 = D_8013FCD4_14EC84[currentLevel + 9][0].b;
@@ -1565,16 +1562,16 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	sp112 = (delta < 0) ? 0 : delta;
 	delta = sp116 - 0x82;
 	sp110 = (delta < 0) ? 0 : delta;
-	sp10C = D_8013FCD4_14EC84[currentLevel + 9][1].g;
-	sp10A = D_8013FCD4_14EC84[currentLevel + 9][1].b;
-	tipColors[2] = D_8013FCD4_14EC84[currentLevel + 9][2].r;
-	tipColors[1] = D_8013FCD4_14EC84[currentLevel + 9][2].g;
-	tipColors[0] = D_8013FCD4_14EC84[currentLevel + 9][2].b;
+	middleG.value = D_8013FCD4_14EC84[currentLevel + 9][1].g;
+	tailColors.values[3] = D_8013FCD4_14EC84[currentLevel + 9][1].b;
+	tailColors.values[2] = D_8013FCD4_14EC84[currentLevel + 9][2].r;
+	tailColors.values[1] = D_8013FCD4_14EC84[currentLevel + 9][2].g;
+	tailColors.values[0] = D_8013FCD4_14EC84[currentLevel + 9][2].b;
 	temp_ra = D_8013FCD4_14EC84[currentLevel + 9][1].r;
 
-	D_8005BB34->v.ob[0] = (s32)((f32)arg0[0] - direction.x * 4.0f);
+	D_8005BB34->v.ob[0] = (s32)((f32)arg0[0] - direction.vector.x * 4.0f);
 	D_8005BB34->v.ob[1] = arg0[1];
-	D_8005BB34->v.ob[2] = (s32)((f32)arg0[2] - direction.z * 4.0f);
+	D_8005BB34->v.ob[2] = (s32)((f32)arg0[2] - direction.vector.z * 4.0f);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -1615,9 +1612,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x180;
 	D_8005BB34->v.tc[1] = 0x480;
-	D_8005BB34->v.cn[0] = (s32)((s64)tipColors[2] & 0xFF);
-	D_8005BB34->v.cn[1] = tipColors[1];
-	D_8005BB34->v.cn[2] = tipColors[0];
+	D_8005BB34->v.cn[0] = (s32)((s64)tailColors.values[2] & 0xFF);
+	D_8005BB34->v.cn[1] = tailColors.values[1];
+	D_8005BB34->v.cn[2] = tailColors.values[0];
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
@@ -1628,8 +1625,8 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x480;
 	D_8005BB34->v.cn[0] = temp_ra;
-	D_8005BB34->v.cn[1] = sp10C;
-	D_8005BB34->v.cn[2] = sp10A;
+	D_8005BB34->v.cn[1] = (angle = middleG.ordered);
+	D_8005BB34->v.cn[2] = (absDistanceZ = tailColors.ordered.b);
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
@@ -1637,24 +1634,26 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.ob[1] = arg1[1];
 	D_8005BB34->v.ob[2] = arg1[2] - (s32)(temp_f0 * (f32)((f64)(f32)temp_v0_2 / 32768.0)) + temp_f10;
 	rawWidth = (s32)(var_f16 * temp_f14);
+	if ((u32)rawWidth + (s16)rawWidth + (s16)rawWidth) {}
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x480;
 	D_8005BB34->v.cn[0] = temp_ra;
-	D_8005BB34->v.cn[1] = sp10C;
-	D_8005BB34->v.cn[2] = sp10A;
+	D_8005BB34->v.cn[1] = angle;
+	D_8005BB34->v.cn[2] = absDistanceZ;
 
 	D_8005BB34->v.cn[3] = 0xFF;
 
 	temp_f6_3 = (s16)rawWidth;
-	temp_v1_2 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0));
 	D_8005BB34++;
-	temp_f10 = (s32)(direction.z * var_f2);
-	temp_f6 = (s16)(s32)(direction.x * var_f2);
-	temp_f8 = (s32)(direction.y * var_f16);
-	D_8005BB34->v.ob[0] = arg1[0] + (initialProjectionX = (s16)rawWidth) + (temp_f6 * 3);
+	temp_f6 = (s32)(direction.components[0] * var_f2);
+	temp_v0 = (s16)temp_f6;
+	temp_f6 = (s16)(s64)temp_v0;
+	temp_f8 = (s32)(direction.vector.y * var_f16);
+	temp_f10 = (s32)(direction.vector.z * var_f2);
+	D_8005BB34->v.ob[0] = arg1[0] + (initialProjectionX = (s16)(s64)rawWidth) + (temp_v0 * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8;
-	D_8005BB34->v.ob[2] = arg1[2] + temp_v1_2 + (s32)((u32)temp_f10 * 3);
+	D_8005BB34->v.ob[2] = arg1[2] + (temp_f6_3 = (s16)(s32)(var_f16 * (f32)((f64)(f32)temp_v0_2 / 32768.0))) + (s32)((u32)temp_f10 * 3);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0x240;
 	D_8005BB34->v.tc[1] = 0x258;
@@ -1664,9 +1663,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = arg1[0] - initialProjectionX + (temp_f6 * 3);
+	D_8005BB34->v.ob[0] = arg1[0] - initialProjectionX + (temp_v0 * 3);
 	D_8005BB34->v.ob[1] = arg1[1] + temp_f8;
-	D_8005BB34->v.ob[2] = arg1[2] - temp_v1_2 + (s32)((u32)temp_f10 * 3);
+	D_8005BB34->v.ob[2] = arg1[2] - temp_f6_3 + (s32)((u32)temp_f10 * 3);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0x258;
@@ -1691,17 +1690,17 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	temp_v0 = (wideX = arg1[0]) - arg2[0];
 	delta = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
 	if (1) {
-		temp_v0_2 = arg1[2] - arg2[2];
-		temp_f6 = (s16)(s64)(s32)((f64)direction.x * ((f64)delta * 0.5));
-		absDistanceZ = -temp_v0_2 < temp_v0_2 ? temp_v0_2 : -temp_v0_2;
+		temp_v0 = arg1[2] - arg2[2];
+		temp_f6 = (s16)(s64)(s32)((f64)direction.vector.x * ((f64)delta * 0.5));
+		absDistanceZ = -temp_v0 < temp_v0 ? temp_v0 : -temp_v0;
 		delta = wideX;
 		delta += temp_f6;
 		midpoint.x = delta;
-		absDistanceZ = (s16)(s32)((f64)direction.z * ((f64)absDistanceZ * 0.5));
-		midpoint.y = arg1[1] - (s16)(s64)(s32)(direction.y * (var_f16 * 3.0f));
+		absDistanceZ = (s16)(s32)((f64)direction.vector.z * ((f64)absDistanceZ * 0.5));
+		midpoint.y = arg1[1] - (s16)(s64)(s32)(direction.vector.y * (var_f16 * 3.0f));
 		midpoint.z = arg1[2] + absDistanceZ;
-		temp_f6 = (s16)rawWidth / 2;
-		temp_f10 = temp_v1_2 / 2;
+		temp_f6 = (s16)(initialProjectionX / 2);
+		temp_f10 = temp_f6_3 / 2;
 		delta = arg1[1];
 		if (temp_f6) {}
 		if (temp_f10) {}
@@ -1818,9 +1817,9 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	D_8005BB34->v.cn[3] = 0xFF;
 	D_8005BB34++;
 
-	D_8005BB34->v.ob[0] = (s32)(direction.x * 4.0f + (f32)arg0[0]);
+	D_8005BB34->v.ob[0] = (s32)(direction.vector.x * 4.0f + (f32)arg0[0]);
 	D_8005BB34->v.ob[1] = arg0[1];
-	D_8005BB34->v.ob[2] = (s32)(direction.z * 4.0f + (f32)arg0[2]);
+	D_8005BB34->v.ob[2] = (s32)(direction.vector.z * 4.0f + (f32)arg0[2]);
 	D_8005BB34->v.flag = 0;
 	D_8005BB34->v.tc[0] = 0;
 	D_8005BB34->v.tc[1] = 0;
@@ -1858,9 +1857,7 @@ void func_800F63D0_105380(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3) {
 	gSP1Triangle(D_8005BB2C++, 14, 17, 15, 0);
 	gSP1Triangle(D_8005BB2C++, 13, 15, 16, 0);
 }
-#else
-#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/101840/func_800F63D0_105380.s", "src.us/overlay_gameplay/outside/101840_width_constant.s")
-#endif
+
 
 #ifdef NON_MATCHING
 void func_800F7790_106740(s32 *arg0, s32 *arg1, s32 *arg2, u8 arg3)
