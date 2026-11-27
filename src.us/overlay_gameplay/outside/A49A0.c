@@ -566,7 +566,8 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 	gSPPopMatrix(D_8005BB2C++, G_MTX_MODELVIEW);
 }
 
-// AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
+// AI - Fills D_8005BB34 with 0x20 tile quads
+#ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1)
 {
   ShieldWallLink *tile;
@@ -712,6 +713,9 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1)
   D_8013D510 = D_8013D510_14C4C0 + 1;
   gDPPipeSync(D_8005BB2C++);
 }
+#else
+#pragma GLOBAL_ASM("asm/nonmatchings/overlay_gameplay/outside/A49A0/func_80096BC4_A5B74.s")
+#endif
 
 
 void func_800970C0_A6070(void)
