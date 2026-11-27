@@ -1732,7 +1732,7 @@ typedef struct {
 		struct { u8 padState[2]; u16 stateAndRotation; };
 		struct { u32 statusFlags : 20; u32 lowFlags : 12; };
 		struct { u32 padKeyStatus : 20; u32 keyId : 6; u32 padKeyLow : 6; };
-		struct { u32 padRotationHigh : 26; u32 rotationIndexWord : 4; u32 padRotationLow : 2; };
+		struct { u32 padRotationHigh : 26; u32 rotationIndexWord : 4; u32 quarterTurn : 2; };
 	};
 	/* 0x0C */ u8 unkC;
 	/* 0x0D */ u8 unkD;
@@ -1787,9 +1787,12 @@ typedef struct {
 	/* 0x02 */ s16 unk2;
 	/* 0x04 */ s16 unk4;
 	/* 0x06 */ s16 unk6;
-	/* 0x08 */ u8 pad8[0x4];
+	/* 0x08 */ u8 propIndex;
+	/* 0x09 */ u8 pad9[3];
 	/* 0x0C */ s32 unkC;
-	/* 0x10 */ u8 pad10[0x3];
+	/* 0x10 */ u8 red;
+	/* 0x11 */ u8 green;
+	/* 0x12 */ u8 blue;
 	/* 0x13 */ u8 unk13;
 } Unk800522C0; /* size = 0x14 */
 
@@ -4354,6 +4357,12 @@ typedef struct {
 	/* 0x0C */ f32 targetY;  // look-at target Y
 	/* 0x10 */ f32 targetZ;  // look-at target Z
 } OrbitCam; /* size = 0x14 */
+
+typedef struct {
+	s32 framesRemaining;
+	OrbitCam *destination;
+	OrbitCam *source;
+} MapCameraTransition;
 
 typedef struct {
 	/* 0x00 */ u8 tick;
