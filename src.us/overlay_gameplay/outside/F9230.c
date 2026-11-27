@@ -1364,8 +1364,6 @@ s32 func_800ED55C_FC50C(VehicleInstance *arg0, s32 arg1) {
 }
 
 void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
-	/* Local-static storage preserves the original progress register lifetime. */
-	static PlayerInteractionScratch interaction;
 	f32 spAC;
 	f32 normalSpeed;
 	s32 spA4;
@@ -1378,19 +1376,18 @@ void func_800ED78C_FC73C(VehicleInstance *arg0, OSContPad *arg1) {
 	f32 temp_f12;
 	Vec2_S16 effectPosition;
 	u8 effectColor[4];
-	f32 magnitude;
-	s32 aiming;
+	f32 sp74;
+	f32 temp_f18;
 	f32 xDelta;
 	s32 temp_v1_6;
 	VehicleInstance *temp_v0_3;
-	f32 resultY;
-	f32 resultZ;
+	f32 interpolated[2];
+	s16 temp_a3;
 	s32 temp_v1;
 	u16 scripted;
 	s8 temp_v0_6;
 	s8 temp_v1_5;
-	f32 resultX;
-
+	s16 new_var;
 	if (D_8013E5AC_14D55C[D_80157600.unk40C].unk4 & 0x4000) {
 		func_80133E94_142E44((s32) (D_80157600.unkC / 4));
 	}

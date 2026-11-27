@@ -1105,54 +1105,76 @@ s32 func_80118670_127620(s32 arg0, s32 arg1) {
 }
 
 // DisplayBuildings
-void func_80118774_127724(void) {
-	s16 minX;
-	s16 minZ;
-	s32 cacheSlot;
-	s32 searchZ;
-	s32 typeIndex;
-	BuildingInstance *building;
-	BuildingType *type;
-	Unk800522C0 *doorRef;
-	s16 x, y, z, radiusX, radiusZ;
-	s32 lastTypeIndex;
-	UnkBuildingProp_80118774 *prop;
-	s32 doorIndex;
-	UnkBuildingAction_80118774 *action;
-	u8 currentIndex;
-	s32 specialBuildingSeen;
-	s16 neighborB;
-	s16 neighborA;
-	s16 firstBuilding;
-	u8 visited[0x10];
-	u8 pending[0x10];
-	s16 queueCount;
-	s32 revisiting;
-	s32 i;
-	s16 halfX;
-	s16 halfZ;
-	s32 visitedSlot;
-	s32 visible;
-	s32 doorFlags;
-	s32 doorKey;
-	s32 triggerType;
-	s32 firstIndex;
-
-	minX = D_80149434 - 0x900;
-	minZ = D_80149436 - 0x900;
-	searchZ = minZ - 0x4B0;
-	firstIndex = func_80117508_1264B8(searchZ < -0x8000 ? -0x8000 : searchZ);
-	building = &buildingInstances[firstIndex];
-	specialBuildingSeen = 0;
-	firstBuilding = func_80115F20_124ED0(D_80052B34->unk0, D_80052B34->unk4, &neighborA, &neighborB);
-	queueCount = 0;
-
-	if ((currentLevel == 2) && (D_80159320 & 0x800000)) {
-		D_80159DDF = func_8011D260_12C210(-0x10, 0x4D);
-		D_80159DE0 = 0;
-		D_80159DE2 = 0;
-		D_80159DE4 = 0;
-	}
+void func_80118774_127724(void)
+{
+  s16 sp1D6;
+  s16 sp1D4;
+  s32 maxY;
+  s32 maxYClamped;
+  s32 sp1C8;
+  BuildingInstance *building;
+  BuildingType *type;
+  Unk800522C0 *doorRef;
+  struct 
+  {
+    s16 pad;
+    s16 radiusZ;
+    s16 radiusX;
+    s16 z;
+    s16 y;
+    s16 x;
+  } bounds;
+  BuildingCollisionVolume *doorMap;
+  UnkBuildingProp_80118774 *prop;
+  s32 sp1A4;
+  UnkBuildingAction_80118774 *action;
+  u8 currentIndex;
+  s32 sp198;
+  s16 sp196;
+  s16 sp194;
+  s16 sp192;
+  u8 sp180[0x10];
+  u8 sp170[0x10];
+  s16 sp16E;
+  short new_var;
+  s32 sp168;
+  s16 halfX;
+  s16 halfZ;
+  s32 flags;
+  s32 propMode;
+  s32 i;
+  s32 temp;
+  s32 processBuilding;
+  volatile union 
+  {
+    s32 word;
+    u8 bytes[4];
+    f32 real;
+  } doorScratch;
+  union 
+  {
+    unsigned short flags;
+    u8 * volatile cursor;
+  } doorSearchScratch;
+  volatile s32 sp78;
+  s32 sp74;
+  s32 bboxTest;
+  s32 doorFlags;
+  u8 revisitIndex;
+  u8 neighborIndex;
+  u8 *specialPtr;
+  f64 scale;
+  Gfx *gfx;
+  s32 doorKeySave;
+  u32 resetMatrixAddress;
+  s32 buildingIndex;
+  sp1D6 = D_80149434 - 0x900;
+  sp1D4 = D_80149436 - 0x900;
+  maxY = ((s16) (D_80149436 - 0x900)) - 0x4B0;
+  if (maxY < (-0x8000))
+  {
+    maxYClamped = -0x8000;
+  }
 
 	i = 0xF;
 	D_80052558 &= ~8;

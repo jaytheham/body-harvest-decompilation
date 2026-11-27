@@ -20,6 +20,8 @@ const char D_801450DC_15408C[] = "hit weakpoint!\n"; // "hit weakpoint!\n"
 const char D_801450EC_15409C[] = "alpha chaingun\n"; // "alpha chaingun\n"
 const char D_801450FC_1540AC[] = "shoot force here\n"; // "shoot force here\n"
 
+const u8 rodataPad_func_80124D60_133D10[8] = {0};
+
 
 AlienInstance *D_80140AB0_14FA60[5] = {
 	NULL, NULL, NULL, NULL, NULL,
@@ -1357,50 +1359,61 @@ s32 func_801269BC_13596C(s64 arg0, s64 arg1, s64 arg2, s64 arg3, s64 arg4, s64 a
 
 Unk8015F9D0 D_8015F9D0; /* Share the high address across the coordinate stores. */
 
-void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6) {
-	s32 vehicleCount;
-	s32 x = arg1;
-	s32 z = arg3;
-	s32 distSqBest;
-	s32 lineDist;
-	s32 lineDistBest;
-	s32 scratch;
-	f32 interp;
-	f32 objDist;
-	s16 minX;
-	s16 maxX;
-	s16 minZ;
-	s16 maxZ;
-	f32 bestDistF;
-	s32 exactHit;
-	s32 ax;
-	s32 y = arg2;
-	s32 absX;
-	f32 pathDistSq;
-	s32 dx;
-	s32 shadowX;
-	s32 shadowY;
-	s32 shadowZ;
-	union { VehicleInstance *vehicle; AlienInstance *alien; } entity;
-	union { VehicleType *vehicle; AlienType *alien; s32 radius; } data;
-	s32 objThreshold;
-	s32 dy;
-	s32 dz;
-	union { Unk8015F9D0 *pointer; s32 bits; } hit;
-	s16 hitX;
-	s16 hitZ;
-	s32 hitCoordinate;
-	s32 absZ;
-
-	arg2 = y; distSqBest = 0x7FFFFFFF;
-
-	if (x < *arg4) {
-		minX = (s16)(x - 0xC8);
-		maxX = (s16)(*arg4 + 0xC8);
-	} else {
-		minX = (s16)(*arg4 - 0xC8);
-		maxX = (s16)(x + 0xC8);
-	}
+void func_80126B80_135B30(void *arg0, s32 arg1, s32 arg2, s32 arg3, s32 *arg4, s32 *arg5, s32 *arg6)
+{
+  s32 vehicleCount;
+  s32 x = arg1;
+  s32 z = arg3;
+  s32 distSqBest;
+  s32 lineDist;
+  s32 lineDistBest;
+  s32 scratch;
+  f32 interp;
+  f32 objDist;
+  s16 minX;
+  s16 maxX;
+  s16 minZ;
+  s16 maxZ;
+  f32 bestDistF;
+  s32 exactHit;
+  s32 ax;
+  s32 y = arg2;
+  s32 absX;
+  f32 pathDistSq;
+  s32 dx;
+  s32 shadowX;
+  s32 shadowY;
+  s32 shadowZ;
+  union 
+  {
+    VehicleInstance *vehicle;
+    AlienInstance *alien;
+  } entity;
+  union 
+  {
+    VehicleType *vehicle;
+    AlienType *alien;
+    s32 radius;
+  } data;
+  s32 objThreshold;
+  s32 dy;
+  s32 dz;
+  union 
+  {
+    Unk8015F9D0 *pointer;
+    s32 bits;
+  } hit;
+  s16 hitX;
+  s16 hitZ;
+  s32 hitCoordinate;
+  s32 absZ;
+  arg2 = y;
+  distSqBest = 0x7FFFFFFF;
+  if (x < (*arg4))
+  {
+    minX = (s16) (x - 0xC8);
+    maxX = (s16) ((*arg4) + 0xC8);
+  }
 
 	if (z < *arg6) {
 		minZ = (s16)(z - 0xC8);
@@ -1999,24 +2012,23 @@ end_simulation:
 
 /* sqrtf has no memory side effects. */
 #pragma sgi_no_side_effects(sqrtf)
-void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-	s32 endStep;
-	s32 midpoint;
-	u8 upperStackPadding[8]; /* Keep the length and direction spill slots. */
-	f64 fade;
-	f32 length;
-	f32 dirX;
-	f32 dirY;
-	f32 dirZ;
-	s32 startStep;
-	u8 lowerStackPadding[8]; /* Keep the half-delta spills at sp+0x30 through sp+0x28. */
-
-	length = sqrtf((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1))
-	             + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1))
-	             + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
-	if (length == 0.0f) {
-		return;
-	}
+void func_80128E48_137DF8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5)
+{
+  u8 lowerStackPadding[8];
+  s32 endStep;
+  s32 midpoint;
+  u8 upperStackPadding[8];
+  f32 length;
+  f32 dirX;
+  f32 dirY;
+  f32 dirZ;
+  s32 startStep;
+  Vtx *new_var;
+  length = sqrtf(((((arg3 - arg0) >> 1) * ((arg3 - arg0) >> 1)) + (((arg4 - arg1) >> 1) * ((arg4 - arg1) >> 1))) + (((arg5 - arg2) >> 1) * ((arg5 - arg2) >> 1))) * 2;
+  if (length == 0.0f)
+  {
+    return;
+  }
 
 	dirX = ((arg3 - arg0) >> 1) / length;
 	dirY = ((arg4 - arg1) >> 1) / length;

@@ -567,22 +567,26 @@ void func_800966EC_A569C(OrbitCam *arg0, s16 arg1, s16 arg2, f32 arg3, s16 arg4)
 }
 
 // AI - Fills D_8005BB34 with 0x20 tile quads using D_801479B0_156960, D_801475F0_1565A0, func_800B0F20_BFED0.
-#ifdef NON_MATCHING
 void func_80096BC4_A5B74(s16 arg0, s16 arg1)
 {
   ShieldWallLink *tile;
+  Level *level;
+  ShieldWallPoint (*coords)[48];
   Vtx *v0;
   Vtx *v1;
+  int new_var;
   Vtx *v2;
   Vtx *v3;
   s32 selectedGroup;
+  long loop;
   s32 remaining;
   s32 color0;
   s8 activeGreen;
   s32 maxColor;
-  s16 height;
+  int new_var2;
+  short height;
+  s32 missing;
   s32 rightX;
-  s16 pointCoord;
   s16 lowerHeight;
   s16 alpha0;
   s32 rawRed;
@@ -590,74 +594,40 @@ void func_80096BC4_A5B74(s16 arg0, s16 arg1)
   s32 alpha2;
   s16 blueCheck;
   s16 bright;
-  s16 modBase;
-  
-  tile = D_801479B0_156960[currentLevel - 1];
+  int modBase;
+  level = &currentLevel;
+  tile = D_801479B0_156960[(*level) - 1];
   selectedGroup = func_800B0F20_BFED0(arg0, -arg1);
-  remaining = 0x20;
-    
+  loop = 0x20;
+  remaining = loop - 1;
   gDPPipeSync(D_8005BB2C++);
   gSPSetGeometryMode(D_8005BB2C++, (0x00000001 | 0x00000004) | 0x00000200);
   gSPClearGeometryMode(D_8005BB2C++, (0x00003000 | 0x00010000) | 0x00020000);
+  height = 0 << 19;
   gDPSetCycleType(D_8005BB2C++, 0 << 20);
   gDPSetCombineMode(D_8005BB2C++, G_CC_SHADE, G_CC_SHADE);
-  gDPSetRenderMode(D_8005BB2C++, ((((((((0x8 | 0x40) | 0x100) | 0x80) | 0x4000) | 0) | (0 << 30)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((((0x8 | 0x40) | 0x100) | 0x80) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
+  gDPSetRenderMode(D_8005BB2C++, ((((((((0x8 | 0x40) | 0x100) | 0x80) | 0x4000) | 0) | (((((((0 << 30) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu) & 0xFFu)) | (0 << 26)) | (1 << 22)) | (0 << 18), ((((((((0x8 | 0x40) | 0x100) | 0x80) | 0x4000) | 0) | (0 << 28)) | (0 << 24)) | (1 << 20)) | (0 << 16));
   gSPTexture(D_8005BB2C++, 0x8000, 0x8000, 0, 0, 0);
-  gDPSetTexturePersp(D_8005BB2C++, 0 << 19);
+  gDPSetTexturePersp(D_8005BB2C++, height);
   gDPSetTextureLUT(D_8005BB2C++, 0 << 14);
   gDPPipeSync(D_8005BB2C++);
-    
-  while (tile++, remaining--)
+  coords = D_801475F0_1565A0;
+  maxColor = (loop * 0) + 0xFF;
+  height = (loop * 0) + 0x40;
+  modBase = (selectedGroup * 0) + 0x1FF;
+  missing = (modBase * 0) - 1;
+  v0 = (v1 = (v2 = 0));
+  if (loop--)
   {
-    ShieldWallPoint *left;
-    ShieldWallPoint *right;
-
-    if (tile->startIdx != -1)
+    v0 = D_8005BB34;
+    do
     {
-      left = &D_801475F0_1565A0[currentLevel - 1][tile->startIdx];
-      right = &D_801475F0_1565A0[currentLevel - 1][tile->endIdx];
-      v0 = D_8005BB34++;
-      v1 = D_8005BB34++;
-      v2 = D_8005BB34++;
-      v3 = D_8005BB34++;
-      
-      rightX = left->x;
-      v1->v.ob[0] = rightX * 8;
-      v0->v.ob[0] = rightX * 8;
-        
-      rightX = -left->z;
-      v1->v.ob[1] = rightX * 8;
-      v0->v.ob[1] = rightX * 8;
-        
-      rightX = right[0].x;
-      color0 = 0x8C;
-      rightX = rightX * 8;
-      v3->v.ob[0] = rightX;
-      v2->v.ob[0] = rightX;
-      
-        rightX = right->z;
-      alpha0 = (-rightX << 19) >> 16;
-      v3->v.ob[1] = alpha0;
-      v3->v.ob[2] = 0x40;
-      v2->v.ob[2] = 0;
-      
-      v0->v.ob[2] = v2->v.ob[2];
-      v2->v.ob[1] = (u16) alpha0;
-      v1->v.ob[2] = v3->v.ob[2];
-
-      if (selectedGroup == ((tile - D_801479B0_156960[currentLevel - 1]) >> 3))
+      const ShieldWallPoint *left;
+      const ShieldWallPoint *right;
+      s16 selected;
+      if (modBase)
       {
-        color0 = D_8013D510_14C4C0 * 16;
-        rawRed = color0 % 0x1FF;
-        alpha2 = (color0 + 0x200) % 0x1FF;
-        redCheck = rawRed;
-        alpha0 = rawRed;
-        blueCheck = alpha2;
-        bright = 0xFF;
-        if (redCheck >= 0x100)
-        {
-          alpha0 = 0x1FF - redCheck;
-        }
+      }
         v3->v.cn[0] = alpha0;
         v2->v.cn[0] = alpha0;
         v1->v.cn[0] = alpha0;
@@ -976,7 +946,6 @@ void func_80097E1C_A6DCC(OrbitCam *cam) {
 }
 
 // CURRENT(8325) measured over the whole function (diff.py --max-size 6000)
-#ifdef NON_MATCHING
 void func_8009811C_A70CC(void) {
 	f32 temp_f0;
 	f32 temp_f2;
